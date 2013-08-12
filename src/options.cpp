@@ -47,7 +47,7 @@
 
 #include "dychart.h"
 #include "chart1.h"
-#include "chart/chartdbs.h"
+#include "chart/ChartDB.h"
 #include "options.h"
 #include "styles.h"
 #include "datastream.h"

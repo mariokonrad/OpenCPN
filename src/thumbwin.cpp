@@ -21,7 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
@@ -35,7 +34,7 @@
 #include "dychart.h"
 #include "thumbwin.h"
 #include "chart1.h"
-#include "chart/chartdb.h"
+#include "chart/ChartDB.h"
 #include "chcanv.h"
 
 

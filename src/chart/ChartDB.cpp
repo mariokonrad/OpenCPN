@@ -36,7 +36,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "chartdb.h"
+#include "ChartDB.h"
 #include "chart/CacheEntry.h"
 #include "chart/ChartGEO.h"
 #include "chart/ChartKAP.h"

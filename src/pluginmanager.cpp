@@ -35,8 +35,8 @@
 #include "pluginmanager.h"
 #include "navutil.h"
 #include "chartbase.h"        // for ChartPlugInWrapper
-#include "chart/chartdb.h"
-#include "chart/chartdbs.h"
+#include "chart/ChartDB.h"
+#include "chart/ChartDatabase.h"
 #include "ocpndc.h"
 #include "styles.h"
 #include "options.h"

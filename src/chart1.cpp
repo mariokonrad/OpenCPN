@@ -25,9 +25,8 @@
 
 #ifndef  WX_PRECOMP
 	#include "wx/wx.h"
-#endif //precompiled headers
+#endif
 
-// Include CrashRpt Header
 #ifdef OCPN_USE_CRASHRPT
 	#include "CrashRpt.h"
 #endif
@@ -71,7 +70,7 @@
 
 #include "chart1.h"
 #include "chcanv.h"
-#include "chart/chartdb.h"
+#include "chart/ChartDB.h"
 #include "chart/ChartStack.h"
 #include "chart/CacheEntry.h"
 #include "navutil.h"

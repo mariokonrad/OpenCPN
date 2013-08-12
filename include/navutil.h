@@ -42,7 +42,7 @@
 #include "s52s57.h"
 #include "chcanv.h"
 #include "tinyxml/tinyxml.h"
-#include "chart/chartdbs.h"
+#include "chart/ChartDatabase.h"
 #include "RoutePoint.h"
 #include "vector2D.h"
 #include "Route.h"

@@ -347,9 +347,9 @@ SET(HDRS
 		include/chart1.h
 		include/bbox.h
 		include/ocpn_pixel.h
-		src/chart/chartdb.h
+		src/chart/ChartDB.h
 		src/chart/CacheEntry.h
-		src/chart/chartdbs.h
+		src/chart/ChartDatabase.h
 		src/chart/ChartGEO.h
 		src/chart/ChartKAP.h
 		src/chart/ChartStack.h
@@ -456,8 +456,8 @@ SET(SRCS
 		src/bbox.cpp
 		src/ocpn_pixel.cpp
 		src/ocpndc.cpp
-		src/chart/chartdb.cpp
-		src/chart/chartdbs.cpp
+		src/chart/ChartDB.cpp
+		src/chart/ChartDatabase.cpp
 		src/chart/ChartGEO.cpp
 		src/chart/ChartKAP.cpp
 		src/chart/ChartStack.cpp

@@ -45,7 +45,7 @@
 #include "kml.h"
 #include "concanv.h"
 #include "thumbwin.h"
-#include "chart/chartdb.h"
+#include "chart/ChartDB.h"
 #include "chart/ChartStack.h"
 #include "chartimg.h"
 #include "chart1.h"

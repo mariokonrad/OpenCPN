@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "ChartStack.h"
-#include "chart/chartdb.h" // FIXME: cyclic dependency
+#include "chart/ChartDB.h" // FIXME: cyclic dependency
 
 extern ChartDB * ChartData;
 

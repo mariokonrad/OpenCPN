@@ -29,7 +29,7 @@
 
 #include "dychart.h"
 #include "statwin.h"
-#include "chart/chartdb.h"
+#include "chart/ChartDB.h"
 #include "chart1.h"
 #include "chartbase.h"
 #include "styles.h"

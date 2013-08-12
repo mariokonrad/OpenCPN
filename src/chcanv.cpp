@@ -40,7 +40,7 @@
 #include "geodesic.h"
 #include "styles.h"
 #include "routeman.h"
-#include "statwin.h"
+#include "StatWin.h"
 #include "navutil.h"
 #include "kml.h"
 #include "concanv.h"

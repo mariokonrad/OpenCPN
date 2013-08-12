@@ -41,7 +41,7 @@
 #include "styles.h"
 #include "options.h"
 #include "multiplexer.h"
-#include "statwin.h"
+#include "StatWin.h"
 #include "routeman.h"
 #include "FontMgr.h"
 #include "OCPN_DataStreamEvent.h"

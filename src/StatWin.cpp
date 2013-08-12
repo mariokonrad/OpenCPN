@@ -27,9 +27,9 @@
 	#include "wx/wx.h"
 #endif
 
+#include "StatWin.h"
 #include "PianoWin.h"
 #include "dychart.h"
-#include "statwin.h"
 #include "chart/ChartDB.h"
 #include "chart1.h"
 #include "chartbase.h"

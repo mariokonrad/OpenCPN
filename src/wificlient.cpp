@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  NMEA Data Object
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -26,24 +24,22 @@
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
-#include "wx/wx.h"
+	#include "wx/wx.h"
 #endif //precompiled headers
 
-#include "dychart.h"
 
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
 
 #include "dychart.h"
-
 #include "wificlient.h"
 #include "chart1.h"
-#include "statwin.h"
+#include "StatWin.h"
 
-extern StatWin          *stats;
+extern StatWin * stats;
 
-static int              wifi_s_dns_test_flag;
+static int wifi_s_dns_test_flag;
 
 
 //------------------------------------------------------------------------------

@@ -77,6 +77,7 @@
 #include "styles.h"
 #include "routeman.h"
 #include "statwin.h"
+#include "PianoWin.h"
 #include "concanv.h"
 #include "options.h"
 #include "about.h"

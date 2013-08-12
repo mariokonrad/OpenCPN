@@ -403,6 +403,7 @@ SET(HDRS
 		include/PositionParser.h
 		include/printtable.h
 		include/statwin.h
+		include/PianoWin.h
 		include/tcmgr.h
 		include/Station_Data.h
 		include/IDX_entry.h
@@ -502,6 +503,7 @@ SET(SRCS
 		src/PositionParser.cpp
 		src/printtable.cpp
 		src/statwin.cpp
+		src/PianoWin.cpp
 		src/tcmgr.cpp
 		src/Station_Data.cpp
 		src/IDX_entry.cpp

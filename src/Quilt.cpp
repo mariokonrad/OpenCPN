@@ -25,10 +25,11 @@
 
 #include "Quilt.h"
 #include "chart/chartdb.h"
+#include "chart/ChartStack.h"
 #include "s52plib.h"
 #include "chcanv.h"
 #include "s57chart.h"
-#include "ocpn_pixel.h"                         // for ocpnUSE_DIBSECTION
+#include "ocpn_pixel.h"
 
 
 #include <wx/listimpl.cpp>

@@ -352,6 +352,7 @@ SET(HDRS
 		src/chart/chartdbs.h
 		src/chart/ChartGEO.h
 		src/chart/ChartKAP.h
+		src/chart/ChartStack.h
 		include/chartimg.h
 		include/chcanv.h
 		include/timers.h
@@ -459,6 +460,7 @@ SET(SRCS
 		src/chart/chartdbs.cpp
 		src/chart/ChartGEO.cpp
 		src/chart/ChartKAP.cpp
+		src/chart/ChartStack.cpp
 		src/chartimg.cpp
 		src/chcanv.cpp
 		src/ocpCursor.cpp

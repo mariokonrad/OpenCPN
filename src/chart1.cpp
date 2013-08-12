@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  OpenCPN Main wxWidgets Program
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -31,7 +29,7 @@
 
 // Include CrashRpt Header
 #ifdef OCPN_USE_CRASHRPT
-#include "CrashRpt.h"
+	#include "CrashRpt.h"
 #endif
 
 #include <wx/print.h>
@@ -74,6 +72,7 @@
 #include "chart1.h"
 #include "chcanv.h"
 #include "chart/chartdb.h"
+#include "chart/ChartStack.h"
 #include "chart/CacheEntry.h"
 #include "navutil.h"
 #include "styles.h"
@@ -99,7 +98,6 @@
 #include "NavObjectCollection.h"
 #include "OCP_DataStreamInput_Thread.h"
 #include "TrackPropDlg.h"
-
 #include "cutil.h"
 #include "routemanagerdialog.h"
 #include "pluginmanager.h"

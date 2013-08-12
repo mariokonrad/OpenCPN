@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Chart Canvas
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -30,17 +28,15 @@
 	#include "wx/wx.h"
 #endif
 
-#include "wx/image.h"
+#include <wx/image.h>
 #include <wx/graphics.h>
 #include <wx/listbook.h>
 #include <wx/clipbrd.h>
 #include <wx/aui/aui.h>
-
 #include <wx/listimpl.cpp>
 
 #include "chcanv.h"
 #include "dychart.h"
-
 #include "geodesic.h"
 #include "styles.h"
 #include "routeman.h"
@@ -50,6 +46,7 @@
 #include "concanv.h"
 #include "thumbwin.h"
 #include "chart/chartdb.h"
+#include "chart/ChartStack.h"
 #include "chartimg.h"
 #include "chart1.h"
 #include "cutil.h"

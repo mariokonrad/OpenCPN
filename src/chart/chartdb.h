@@ -35,9 +35,6 @@
 
 #include "chartbase.h"
 #include "chartdbs.h"
-
-#define MAXSTACK 100
-
 #include "s52s57.h"
 
 typedef struct  {
@@ -47,25 +44,7 @@ typedef struct  {
 
 
 class ChartBase;
-
-class ChartStack
-{
-public:
-      ChartStack();
-
-      bool        b_valid;
-      int         nEntry;
-      int         CurrentStackEntry;
-      int         GetCurrentEntrydbIndex(void);
-      void        SetCurrentEntryFromdbIndex(int current_db_index);
-      int         GetDBIndex(int stack_index);
-      void        SetDBIndex(int stack_index, int db_index);
-      bool        DoesStackContaindbIndex(int db_index);
-      void        AddChart( int db_add );
-
-private:
-      int         DBIndex[MAXSTACK];
-};
+class ChartStack;
 
 class ChartDB: public ChartDatabase
 {

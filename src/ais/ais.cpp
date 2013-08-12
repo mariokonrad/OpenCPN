@@ -35,8 +35,8 @@
 #include <math.h>
 #include <time.h>
 
+#include "ais/ais.h"
 #include "dychart.h"
-#include "ais.h"
 #include "chart1.h"
 #include "navutil.h"        // for Select
 #include "georef.h"

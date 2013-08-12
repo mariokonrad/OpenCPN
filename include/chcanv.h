@@ -44,7 +44,7 @@
 #include "GoToPositionDialog.h"
 #include "CM93DSlide.h"
 #include "RolloverWin.h"
-#include "AISTargetQueryDialog.h"
+#include "ais/AISTargetQueryDialog.h"
 #include "glChartCanvas.h"
 #include "TCWin.h"
 #include "timers.h"

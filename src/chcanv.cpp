@@ -27,19 +27,19 @@
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
-#include "wx/wx.h"
-#endif //precompiled headers
+	#include "wx/wx.h"
+#endif
+
 #include "wx/image.h"
 #include <wx/graphics.h>
 #include <wx/listbook.h>
 #include <wx/clipbrd.h>
 #include <wx/aui/aui.h>
 
-#include "dychart.h"
-
 #include <wx/listimpl.cpp>
 
 #include "chcanv.h"
+#include "dychart.h"
 
 #include "geodesic.h"
 #include "styles.h"
@@ -71,21 +71,24 @@
 #include "SelectItem.h"
 #include "Select.h"
 #include "FontMgr.h"
-#include "AIS_Decoder.h"
-#include "AIS_Target_Data.h"
-#include "AISTargetAlertDialog.h"
 #include "SendToGpsDlg.h"
 #include "compasswin.h"
 #include "OCPNRegion.h"
 #include "S57QueryDialog.h"
 
+// AIS
+#include "ais/ais.h"
+#include "ais/AIS_Decoder.h"
+#include "ais/AIS_Target_Data.h"
+#include "ais/AISTargetAlertDialog.h"
+
+// S57
 #ifdef USE_S57
-#include "cm93.h"                   // for chart outline draw
-#include "s57chart.h"               // for ArrayOfS57Obj
-#include "s52plib.h"
+	#include "cm93.h"                   // for chart outline draw
+	#include "s57chart.h"               // for ArrayOfS57Obj
+	#include "s52plib.h"
 #endif
 
-#include "ais.h"
 
 #ifdef __MSVC__
 #define _CRTDBG_MAP_ALLOC

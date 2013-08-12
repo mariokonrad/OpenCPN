@@ -31,8 +31,8 @@
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
+	#include "wx/wx.h"
+#endif
 
 #include <wx/datetime.h>
 #include <wx/listctrl.h>

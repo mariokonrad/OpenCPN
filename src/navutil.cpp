@@ -36,8 +36,6 @@
 #include <wx/graphics.h>
 #include <wx/dir.h>
 
-#include "dychart.h"
-
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
@@ -47,6 +45,7 @@
 #include <wx/listimpl.cpp>
 #include <wx/progdlg.h>
 
+#include "dychart.h"
 #include "chart1.h"
 #include "navutil.h"
 #include "chcanv.h"
@@ -63,7 +62,6 @@
 #include "geodesic.h"
 #include "datastream.h"
 #include "multiplexer.h"
-#include "ais.h"
 #include "Route.h"
 #include "Select.h"
 #include "FontMgr.h"
@@ -71,6 +69,8 @@
 #include "Layer.h"
 #include "NavObjectCollection.h"
 #include "NMEALogWindow.h"
+
+#include "ais/ais.h"
 
 #ifdef USE_S57
 	#include "s52plib.h"

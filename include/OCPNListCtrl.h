@@ -19,18 +19,17 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __OCPNLISTCTRL_H__
 #define __OCPNLISTCTRL_H__
 
 #include <wx/listctrl.h>
 
-#include "AISTargetListDialog.h"
-#include "ais.h"
+#include "ais/AISTargetListDialog.h"
+#include "ais/ais.h"
 
-class OCPNListCtrl: public wxListCtrl
+class OCPNListCtrl : public wxListCtrl
 {
 public:
     OCPNListCtrl( AISTargetListDialog* parent, wxWindowID id, const wxPoint& pos,

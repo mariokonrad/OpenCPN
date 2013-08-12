@@ -27,7 +27,7 @@
 #include <wx/tokenzr.h>
 
 #include "AISTargetListDialog.h"
-#include "ais.h"
+#include "ais/ais.h"
 #include "AIS_Decoder.h"
 #include "AIS_Target_Data.h"
 #include "OCPNListCtrl.h"

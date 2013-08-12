@@ -29,11 +29,13 @@
 #include <wx/aui/aui.h>
 #include <wx/statline.h>
 
-#include "dychart.h"
+#include "ais/ais.h"
+#include "ais/AIS_Decoder.h"
+#include "ais/AIS_Target_Data.h"
 
+#include "dychart.h"
 #include "pluginmanager.h"
 #include "navutil.h"
-#include "ais.h"
 #include "chartbase.h"        // for ChartPlugInWrapper
 #include "chartdb.h"
 #include "chartdbs.h"
@@ -44,8 +46,6 @@
 #include "statwin.h"
 #include "routeman.h"
 #include "FontMgr.h"
-#include "AIS_Decoder.h"
-#include "AIS_Target_Data.h"
 #include "OCPN_DataStreamEvent.h"
 #include "georef.h"
 #include "routemanagerdialog.h"
@@ -593,7 +593,7 @@ PlugInContainer *PlugInManager::LoadPlugIn(wxString plugin_file)
     case 110:
         pic->m_pplugin = dynamic_cast<opencpn_plugin_110*>(plug_in);
         break;
-        
+
     default:
         break;
     }
@@ -942,8 +942,6 @@ void PlugInManager::SendJSONMessageToAllPlugins(const wxString &message_id, wxJS
     wxString out;
     w.Write(v, out);
     SendMessageToAllPlugins(message_id,out);
-//   wxLogMessage(message_id);
-//   wxLogMessage(out);
 }
 
 void PlugInManager::SendMessageToAllPlugins(const wxString &message_id, const wxString &message_body)
@@ -1693,13 +1691,13 @@ int GetChartbarHeight( void )
 bool GetRoutepointGPX( RoutePoint *pRoutePoint, char *buffer, unsigned int buffer_length)
 {
     bool ret = false;
-    
+
     NavObjectCollection1 *pgpx = new NavObjectCollection1;
     pgpx->AddGPXWaypoint( pRoutePoint);
     wxString gpxfilename = wxFileName::CreateTempFileName(wxT("gpx"));
     pgpx->SaveFile(gpxfilename);
     delete pgpx;
-    
+
     wxFFile gpxfile( gpxfilename );
     wxString s;
     if( gpxfile.ReadAll( &s ) ) {
@@ -1928,7 +1926,7 @@ bool AddSingleWaypoint( PlugIn_Waypoint *pwaypoint, bool b_permanent)
                 h->DescrText = link->DescrText;
                 h->Link = link->Link;
                 h->LType = link->Type;
-            
+
                 pWP->m_HyperlinkList->Append( h );
 
                 linknode = linknode->GetNext();
@@ -2000,7 +1998,7 @@ bool UpdateSingleWaypoint( PlugIn_Waypoint *pwaypoint )
                     h->DescrText = link->DescrText;
                     h->Link = link->Link;
                     h->LType = link->Type;
-                    
+
                     prp->m_HyperlinkList->Append( h );
 
                     linknode = linknode->GetNext();
@@ -2052,7 +2050,7 @@ bool AddPlugInRoute( PlugIn_Route *proute, bool b_permanent )
                     h->DescrText = link->DescrText;
                     h->Link = link->Link;
                     h->LType = link->Type;
-                    
+
                     pWP->m_HyperlinkList->Append( h );
 
                     linknode = linknode->GetNext();
@@ -2063,7 +2061,7 @@ bool AddPlugInRoute( PlugIn_Route *proute, bool b_permanent )
         pWP->m_MarkDescription = pwp->m_MarkDescription;
         pWP->m_bShowName = false;
         pWP->SetCreateTime(pwp->m_CreateTime);
-        
+
         route->AddPoint( pWP );
 
 
@@ -2150,7 +2148,7 @@ bool AddPlugInTrack( PlugIn_Track *ptrack, bool b_permanent )
         pWP->m_MarkDescription = pwp->m_MarkDescription;
         pWP->m_bShowName = false;
         pWP->SetCreateTime( pwp->m_CreateTime );
-        
+
         track->AddPoint( pWP );
 
         pSelect->AddSelectableRoutePoint( pWP->m_lat, pWP->m_lon, pWP );
@@ -2547,7 +2545,7 @@ void PluginListPanel::UpdateSelections()
         }
     }
 }
-    
+
 void PluginListPanel::SelectPlugin( PluginPanel *pi )
 {
     if (m_PluginSelected == pi)

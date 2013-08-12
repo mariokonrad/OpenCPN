@@ -330,6 +330,15 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/nmea0183)
 #ENDIF (NOT WIN32)
 
 
+SET(HDR_AIS
+		src/ais/ais.h
+		src/ais/AISTargetQueryDialog.h
+		src/ais/AIS_Bitstring.h
+		src/ais/AISTargetListDialog.h
+		src/ais/AISTargetAlertDialog.h
+		src/ais/AIS_Decoder.h
+		src/ais/AIS_Target_Data.h
+	)
 
 
 SET(HDRS
@@ -344,13 +353,8 @@ SET(HDRS
 		include/chcanv.h
 		include/timers.h
 		include/emboss_data.h
-		include/AISTargetQueryDialog.h
-		include/AIS_Bitstring.h
-		include/AISTargetListDialog.h
+		${HDR_AIS}
 		include/OCPNListCtrl.h
-		include/AISTargetAlertDialog.h
-		include/AIS_Decoder.h
-		include/AIS_Target_Data.h
 		include/CM93DSlide.h
 		include/GoToPositionDialog.h
 		include/RolloverWin.h
@@ -409,7 +413,6 @@ SET(HDRS
 		include/kml.h
 		include/undo.h
 		include/about.h
-		include/ais.h
 		include/pluginmanager.h
 		include/ocpn_plugin.h
 		include/gpxdocument.h
@@ -427,17 +430,27 @@ SET(HDRS
 		include/ConnectionParams.h
 		include/OCP_DataStreamInput_Thread.h
 		include/dsPortType.h
-                include/multiplexer.h
-                include/OCPNRegion.h
-                include/TrackPropDlg.h
-                include/LinkPropDlg.h
+		include/multiplexer.h
+		include/OCPNRegion.h
+		include/TrackPropDlg.h
+		include/LinkPropDlg.h
 )
+
+SET(SRC_AIS
+		src/ais/ais.cpp
+		src/ais/AISTargetQueryDialog.cpp
+		src/ais/AIS_Bitstring.cpp
+		src/ais/AISTargetListDialog.cpp
+		src/ais/AISTargetAlertDialog.cpp
+		src/ais/AIS_Decoder.cpp
+		src/ais/AIS_Target_Data.cpp
+	)
 
 SET(SRCS
 		src/chart1.cpp
 		src/bbox.cpp
 		src/ocpn_pixel.cpp
-                src/ocpndc.cpp
+		src/ocpndc.cpp
 		src/chartdb.cpp
 		src/chartdbs.cpp
 		src/chartimg.cpp
@@ -452,12 +465,7 @@ SET(SRCS
 		src/glChartCanvas.cpp
 		src/glTextureDescriptor.cpp
 		src/ChInfoWin.cpp
-		src/AISTargetQueryDialog.cpp
-		src/AIS_Bitstring.cpp
-		src/AISTargetListDialog.cpp
-		src/AISTargetAlertDialog.cpp
-		src/AIS_Decoder.cpp
-		src/AIS_Target_Data.cpp
+		${SRC_AIS}
 		src/OCPNListCtrl.cpp
 		src/Quilt.cpp
 		src/Hyperlink.cpp
@@ -499,7 +507,6 @@ SET(SRCS
 		src/kml.cpp
 		src/undo.cpp
 		src/about.cpp
-		src/ais.cpp
 		src/pluginmanager.cpp
 		src/gpxdocument.cpp
 		src/wxJSON/jsonwriter.cpp
@@ -515,11 +522,11 @@ SET(SRCS
 		src/OCPN_DataStreamEvent.cpp
 		src/ConnectionParams.cpp
 		src/OCP_DataStreamInput_Thread.cpp
-                src/multiplexer.cpp
-                src/pugixml.cpp
-                src/OCPNRegion.cpp
-                src/TrackPropDlg.cpp
-                src/LinkPropDlg.cpp
+		src/multiplexer.cpp
+		src/pugixml.cpp
+		src/OCPNRegion.cpp
+		src/TrackPropDlg.cpp
+		src/LinkPropDlg.cpp
     )
 
 IF(wx_Version MATCHES "2.9")

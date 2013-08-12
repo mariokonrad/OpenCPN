@@ -1,11 +1,9 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  ChartBaseBSB and Friends
- * Author:   David Register
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register   *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,11 +18,8 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
- ***************************************************************************
- *
- *
- */
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
 
 
 #ifndef _CHARTIMG_H_
@@ -73,10 +68,8 @@ typedef enum BSB_Color_Capability
 //    Fwd Refs
 //-----------------------------------------------------------------------------
 
-class ChartKAP;
 class ViewPort;
 class PixelCache;
-class ocpnBitmap;
 
 class wxFileInputStream;
 
@@ -125,10 +118,6 @@ class opncpnPalette
         int nFwd;
         int nRev;
 };
-
-// ----------------------------------------------------------------------------
-// ChartBaseBSB
-// ----------------------------------------------------------------------------
 
 class  ChartBaseBSB     :public ChartBase
 {
@@ -320,39 +309,6 @@ protected:
       double    m_proj_lat, m_proj_lon;
 
       ViewPort  m_vp_render_last;
-};
-
-
-// ----------------------------------------------------------------------------
-// ChartKAP
-// ----------------------------------------------------------------------------
-
-class  ChartKAP : public ChartBaseBSB
-{
-public:
-//    Methods
-      ChartKAP();
-      ~ChartKAP();
-
-      InitReturn Init( const wxString& name, ChartInitFlag init_flags );
-
-
-};
-
-// ----------------------------------------------------------------------------
-// ChartGEO
-// ----------------------------------------------------------------------------
-
-class  ChartGEO : public ChartBaseBSB
-{
-public:
-//    Methods
-      ChartGEO();
-      ~ChartGEO();
-
-      InitReturn Init( const wxString& name, ChartInitFlag init_flags );
-
-
 };
 
 #endif

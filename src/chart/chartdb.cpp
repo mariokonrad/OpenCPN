@@ -38,6 +38,8 @@
 
 #include "chartdb.h"
 #include "chart/CacheEntry.h"
+#include "chart/ChartGEO.h"
+#include "chart/ChartKAP.h"
 
 #include "chartimg.h"
 #include "chart1.h"

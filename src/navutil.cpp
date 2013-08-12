@@ -26,7 +26,7 @@
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
-#include "wx/wx.h"
+	#include "wx/wx.h"
 #endif //precompiled headers
 
 #include <wx/tokenzr.h>
@@ -57,7 +57,7 @@
 #include "routeprop.h"
 #include "s52utils.h"
 #include "chartbase.h"
-#include "tinyxml.h"
+#include "tinyxml/tinyxml.h"
 #include "gpxdocument.h"
 #include "ocpndc.h"
 #include "geodesic.h"
@@ -73,8 +73,8 @@
 #include "NMEALogWindow.h"
 
 #ifdef USE_S57
-#include "s52plib.h"
-#include "cm93.h"
+	#include "s52plib.h"
+	#include "cm93.h"
 #endif
 
 //    Statics

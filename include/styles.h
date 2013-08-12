@@ -24,9 +24,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#pragma once
-#include <tinyxml.h>
+#ifndef __STYLES__H__
+#define __STYLES__H__
 
+#include <tinyxml/tinyxml.h>
 #include "ocpn_types.h"
 
 enum StyleToolIconTypes
@@ -45,7 +46,8 @@ namespace ocpnStyle {
 
 WX_DECLARE_STRING_HASH_MAP( int, intHash );
 
-class Tool {
+class Tool
+{
 public:
       wxString name;
       wxPoint iconLoc;
@@ -80,7 +82,8 @@ public:
       }
 };
 
-class Icon {
+class Icon
+{
 public:
       wxString name;
       wxPoint iconLoc;
@@ -95,8 +98,8 @@ public:
       Icon(void) { Unload(); }
 };
 
-class Style {
-
+class Style
+{
 public:
       Style( void );
       ~Style( void );
@@ -137,7 +140,7 @@ public:
 
       wxBitmap SetBitmapBrightness( wxBitmap& bitmap );
       wxBitmap SetBitmapBrightnessAbs( wxBitmap& bitmap, double level );
-      
+
       void SetOrientation( long orient );
       int GetOrientation();
       void SetColorScheme( ColorScheme cs );
@@ -199,7 +202,8 @@ private:
       bool hasBackground;
 };
 
-class StyleManager {
+class StyleManager
+{
 public:
       StyleManager(void);
       ~StyleManager(void);
@@ -221,3 +225,5 @@ private:
 };
 
 }
+
+#endif

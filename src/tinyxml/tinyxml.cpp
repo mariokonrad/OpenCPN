@@ -25,8 +25,8 @@ distribution.
 #include <ctype.h>
 
 #ifdef TIXML_USE_STL
-#include <sstream>
-#include <iostream>
+	#include <sstream>
+	#include <iostream>
 #endif
 
 #include "tinyxml.h"
@@ -57,7 +57,7 @@ void TiXmlBase::EncodeString( const TIXML_STRING& str, TIXML_STRING* outString )
 	{
 		unsigned char c = (unsigned char) str[i];
 
-		if (    c == '&' 
+		if (    c == '&'
 		     && i < ( (int)str.length() - 2 )
 			 && str[i+1] == '#'
 			 && str[i+2] == 'x' )

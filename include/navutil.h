@@ -26,26 +26,24 @@
 #ifndef __NAVUTIL__
 #define __NAVUTIL__
 
-
 #include <wx/config.h>
 #include <wx/confbase.h>
 #include <wx/fileconf.h>
 #include <wx/sound.h>
 
 #ifdef __WXMSW__
-#include <wx/msw/regconf.h>
-#include <wx/msw/iniconf.h>
+	#include <wx/msw/regconf.h>
+	#include <wx/msw/iniconf.h>
 #endif
 
 #ifdef OCPN_USE_PORTAUDIO
-#include "portaudio.h"
+	#include "portaudio.h"
 #endif
 
 #include "bbox.h"
 #include "s52s57.h"
 #include "chcanv.h"
-#include "tinyxml.h"
-//#include "gpxdocument.h"
+#include "tinyxml/tinyxml.h"
 #include "chartdbs.h"
 #include "RoutePoint.h"
 #include "vector2D.h"
@@ -115,7 +113,7 @@ class Track : public wxEvtHandler, public Route
             double GetXTE( double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon, double toLat, double toLon  );
 
             void AdjustCurrentTrackPoint( RoutePoint *prototype );
-            
+
       private:
             void OnTimerTrack(wxTimerEvent& event);
             void AddPointNow(bool do_add_point = false);
@@ -154,14 +152,6 @@ DECLARE_EVENT_TABLE()
 //----------------------------------------------------------------------------
 //    Static XML Helpers
 //----------------------------------------------------------------------------
-
-//RoutePoint *LoadGPXWaypoint (GpxWptElement *wptnode, wxString def_symbol_name, bool b_fullviz = false );
-//Route *LoadGPXRoute (GpxRteElement *rtenode, int routenum, bool b_fullviz = false );
-//Route *LoadGPXTrack (GpxTrkElement *trknode, bool b_fullviz = false );
-//void GPXLoadTrack ( GpxTrkElement *trknode, bool b_fullviz = false  );
-//void GPXLoadRoute ( GpxRteElement *rtenode, int routenum, bool b_fullviz = false );
-//void InsertRoute(Route *pTentRoute, int routenum);
-//void UpdateRoute(Route *pTentRoute);
 
 GpxWptElement *CreateGPXWpt ( RoutePoint *pr, char * waypoint_type, bool b_props_explicit = false, bool b_props_minimal = false );
 GpxRteElement *CreateGPXRte ( Route *pRoute );
@@ -233,22 +223,6 @@ public:
 
 };
 
-
-/*
-#include <wx/fontdlg.h>
-
-class WXDLLEXPORT X11FontPicker : public wxGenericFontDialog
-{
-public:
-      X11FontPicker(wxFrame *parent);
-      ~X11FontPicker();
-
-      virtual void CreateWidgets();
-
-
-};
-*/
-
 /*
  * X11FontPicker DIALOG
  */
@@ -259,18 +233,6 @@ class WXDLLEXPORT wxText;
 class wxCheckBox;
 class WXDLLEXPORT MyFontPreviewer;
 
-/*
-enum
-{
-      wxID_FONT_UNDERLINE = 3000,
-      wxID_FONT_STYLE,
-      wxID_FONT_WEIGHT,
-      wxID_FONT_FAMILY,
-      wxID_FONT_COLOUR,
-      wxID_FONT_SIZE
-};
-*/
-
 class WXDLLEXPORT X11FontPicker : public wxFontDialogBase
 {
       public:
@@ -280,10 +242,6 @@ class WXDLLEXPORT X11FontPicker : public wxFontDialogBase
 
             virtual int ShowModal();
 
-
-    // deprecated, for backwards compatibility only
-//            X11FontPicker(wxWindow *parent, const wxFontData *data)
-//      : wxFontDialogBase(parent, data) { Init(); }
 
     // Internal functions
             void OnCloseWindow(wxCloseEvent& event);

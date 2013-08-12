@@ -29,7 +29,7 @@
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
-#include "wx/wx.h"
+	#include "wx/wx.h"
 #endif
 
 #include <vector>
@@ -40,7 +40,7 @@
 
 #include "ocpn_types.h"
 #include "navutil.h"
-#include "tinyxml.h"
+#include "tinyxml/tinyxml.h"
 #include "kml.h"
 
 extern MyFrame *gFrame;

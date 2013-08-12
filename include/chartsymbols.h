@@ -23,13 +23,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#pragma once
+#ifndef __CHARTSYMBOLS__H__
+#define __CHARTSYMBOLS__H__
 
 #include "s52plib.h"
-#include <tinyxml.h>
+#include <tinyxml/tinyxml.h>
 
-
-class Lookup {
+class Lookup
+{
 public:
 	int	RCID;
 	int id;
@@ -55,7 +56,8 @@ typedef struct _SymbolSizeInfo {
 } SymbolSizeInfo_t;
 
 
-class OCPNPattern {
+class OCPNPattern
+{
 public:
 	int	RCID;
 	wxString name;
@@ -72,7 +74,8 @@ public:
 	wxString HPGL;
 };
 
-class LineStyle {
+class LineStyle
+{
 public:
 	int	RCID;
 	wxString name;
@@ -134,3 +137,4 @@ private:
 	s52plib* plib;
 };
 
+#endif

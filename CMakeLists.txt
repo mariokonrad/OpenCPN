@@ -531,10 +531,10 @@ ENDIF(wx_Version MATCHES "2.9")
 SET( PACKAGE_HEADERS "" )
 
 SET(SRC_TINYXML
-            src/tinyxml.cpp
-            src/tinyxmlerror.cpp
-            src/tinyxmlparser.cpp
-            include/tinyxml.h
+            src/tinyxml/tinyxml.cpp
+            src/tinyxml/tinyxmlerror.cpp
+            src/tinyxml/tinyxmlparser.cpp
+            src/tinyxml/tinyxml.h
       )
 
 IF(TINYXML_FOUND)

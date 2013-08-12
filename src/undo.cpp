@@ -29,7 +29,7 @@
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
-#include "wx/wx.h"
+	#include "wx/wx.h"
 #endif
 
 #include <wx/file.h>
@@ -41,7 +41,7 @@
 #include "styles.h"
 #include "routeman.h"
 #include "routemanagerdialog.h"
-#include "tinyxml.h"
+#include "tinyxml/tinyxml.h"
 #include "undo.h"
 #include "chcanv.h"
 
@@ -430,3 +430,4 @@ UndoAction::~UndoAction()
     }
     before.clear();
 }
+

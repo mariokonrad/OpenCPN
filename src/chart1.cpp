@@ -113,10 +113,12 @@
 #endif
 
 #ifdef USE_S57
-#include "cm93.h"
-#include "s52plib.h"
-#include "s57chart.h"
-#include "cpl_csv.h"
+	#include "s57RegistrarMgr.h"
+	#include "S57QueryDialog.h"
+	#include "cm93.h"
+	#include "s52plib.h"
+	#include "s57chart.h"
+	#include "cpl_csv.h"
 #endif
 
 #ifdef __WXMSW__
@@ -329,7 +331,7 @@ int                       g_lastClientRecth;
 s52plib                   *ps52plib;
 S57ClassRegistrar         *g_poRegistrar;
 s57RegistrarMgr           *m_pRegistrarMan;
-
+extern S57QueryDialog     *g_pObjectQueryDialog;
 CM93OffsetDialog          *g_pCM93OffsetDialog;
 #endif
 
@@ -431,8 +433,6 @@ int                       g_GroupIndex;
 wxString                  g_GPS_Ident;
 
 wxProgressDialog          *s_ProgDialog;
-
-S57QueryDialog            *g_pObjectQueryDialog;
 
 wxArrayString             TideCurrentDataSet;
 wxString                  g_TCData_Dir;

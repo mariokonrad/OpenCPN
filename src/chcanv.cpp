@@ -77,6 +77,7 @@
 #include "SendToGpsDlg.h"
 #include "compasswin.h"
 #include "OCPNRegion.h"
+#include "S57QueryDialog.h"
 
 #ifdef USE_S57
 #include "cm93.h"                   // for chart outline draw
@@ -282,7 +283,7 @@ extern wxString         g_default_wp_icon;
 
 extern int              g_current_arrow_scale;
 
-extern S57QueryDialog   *g_pObjectQueryDialog;
+S57QueryDialog            *g_pObjectQueryDialog = NULL;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern Multiplexer      *g_pMUX;
 extern wxArrayOfConnPrm *g_pConnectionParams;

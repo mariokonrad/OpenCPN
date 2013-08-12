@@ -40,7 +40,6 @@
 #include "iso8211.h"
 
 #include "gdal.h"
-#include "s57RegistrarMgr.h"
 #include "S57ClassRegistrar.h"
 #include "S57Light.h"
 

@@ -80,7 +80,7 @@
 #include "concanv.h"
 #include "options.h"
 #include "about.h"
-#include "thumbwin.h"
+#include "ThumbWin.h"
 #include "tcmgr.h"
 #include "chartimg.h"
 #include "routeprop.h"

@@ -1,8 +1,6 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Chart Thumbnail Object
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -21,60 +19,41 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- *
- */
+ **************************************************************************/
 
+#ifndef __THUMBWIN_H__
+#define __THUMBWIN_H__
 
-//
-
-#ifndef __thumbwin_H__
-#define __thumbwin_H__
-
-
-// Include wxWindows' headers
 
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
-
-//#include "ocpn_pixel.h"
-
-//----------------------------------------------------------------------------
-//   constants
-//----------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------
-// Fwd declarations
-//----------------------------------------------------------------------------
+#include "wx/wx.h"
+#endif
 
 class ChartBase;
 
-//----------------------------------------------------------------------------
-// ThumbWin
-//----------------------------------------------------------------------------
-class ThumbWin: public wxWindow
+class ThumbWin : public wxWindow
 {
-public:
-      ThumbWin();
-      ThumbWin(wxWindow *parent);
-      virtual ~ThumbWin();
+		DECLARE_EVENT_TABLE()
 
-      void Resize(void);
-      void SetMaxSize(wxSize const &max_size);
+	private:
+		wxSize m_max_size;
 
+	public:
+		wxBitmap * pThumbShowing;
+		ChartBase * pThumbChart;
 
-      wxBitmap     *pThumbShowing;
-      ChartBase    *pThumbChart;
+	private:
+		void OnPaint(wxPaintEvent& event);
 
-private:
-      void OnPaint(wxPaintEvent& event);
+	public:
+		ThumbWin();
+		ThumbWin(wxWindow * parent);
+		virtual ~ThumbWin();
 
-      wxSize      m_max_size;
-
-DECLARE_EVENT_TABLE()
+		void Resize(void);
+		void SetMaxSize(wxSize const & max_size);
 };
 
 #endif

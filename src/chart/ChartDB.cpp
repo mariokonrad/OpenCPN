@@ -44,7 +44,7 @@
 
 #include "chartimg.h"
 #include "chart1.h"
-#include "thumbwin.h"
+#include "ThumbWin.h"
 
 #ifdef USE_S57
 	#include "s57chart.h"

@@ -1,8 +1,6 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Status Window
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -21,25 +19,22 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- *
- *
- */
+ **************************************************************************/
 
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
-#include "wx/wx.h"
-#endif //precompiled headers
-#include "dychart.h"
+	#include "wx/wx.h"
+#endif
 
+#include "dychart.h"
 #include "statwin.h"
-#include "chartdb.h"
+#include "chart/chartdb.h"
 #include "chart1.h"
 #include "chartbase.h"
 #include "styles.h"
 
-#include <wx/arrimpl.cpp> 
+#include <wx/arrimpl.cpp>
 WX_DEFINE_OBJARRAY(RegionArray);
 
 //------------------------------------------------------------------------------

@@ -1,11 +1,9 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Chart Database Object
- * Author:   David Register
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register   *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,36 +18,27 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
- ***************************************************************************
- *
- *
- *
- */
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
 
 #ifndef __CHARTDB_H__
 #define __CHARTDB_H__
 
 
-#include "wx/file.h"
-#include "wx/stream.h"
-#include "wx/wfstream.h"
-#include "wx/tokenzr.h"
-#include "wx/dir.h"
-#include "wx/filename.h"
+#include <wx/file.h>
+#include <wx/stream.h>
+#include <wx/wfstream.h>
+#include <wx/tokenzr.h>
+#include <wx/dir.h>
+#include <wx/filename.h>
 #include <wx/xml/xml.h>
 
 #include "chartbase.h"
 #include "chartdbs.h"
 
-#define     MAXSTACK          100
+#define MAXSTACK 100
 
-#include "s52s57.h"           //types
-
-
-// ----------------------------------------------------------------------------
-//    Constants, etc.
-// ----------------------------------------------------------------------------
+#include "s52s57.h"
 
 typedef struct  {
     float y;
@@ -57,18 +46,12 @@ typedef struct  {
 } MyFlPoint;
 
 
-// ----------------------------------------------------------------------------
-//    Fwd Declarations
-// ----------------------------------------------------------------------------
 class ChartBase;
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
 
 class ChartStack
 {
 public:
-      ChartStack() { nEntry = 0; CurrentStackEntry = 0; b_valid = false;}
+      ChartStack();
 
       bool        b_valid;
       int         nEntry;
@@ -82,25 +65,7 @@ public:
 
 private:
       int         DBIndex[MAXSTACK];
-
-
 };
-
-class CacheEntry
-{
-public:
-      wxString    FullPath;
-      void        *pChart;
-      int         RecentTime;
-      int         dbIndex;
-      bool        b_in_use;
-};
-
-
-
-// ----------------------------------------------------------------------------
-// Chart Database
-// ----------------------------------------------------------------------------
 
 class ChartDB: public ChartDatabase
 {
@@ -163,7 +128,6 @@ private:
 
       MyFrame           *pParent;
       bool              m_b_locked;
-
 };
 
 

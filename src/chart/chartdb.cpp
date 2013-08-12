@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Chart Database Object
- * Author:   David Register, Mark A Sikes
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register   *
@@ -29,24 +27,25 @@
 
 #ifndef  WX_PRECOMP
       #include "wx/wx.h"
-#endif //precompiled headers
+#endif
 
 #include <wx/stopwatch.h>
 #include <wx/regex.h>
-
-#include "chartdb.h"
-#include "chartimg.h"
-#include "chart1.h"
-#include "thumbwin.h"
+#include <wx/progdlg.h>
 
 #include <stdio.h>
 #include <math.h>
 
-#include <wx/progdlg.h>
+#include "chartdb.h"
+#include "chart/CacheEntry.h"
+
+#include "chartimg.h"
+#include "chart1.h"
+#include "thumbwin.h"
 
 #ifdef USE_S57
-#include "s57chart.h"
-#include "cm93.h"
+	#include "s57chart.h"
+	#include "cm93.h"
 #endif
 
 class s52plib;
@@ -62,13 +61,15 @@ extern s52plib      *ps52plib;
 extern ChartDB      *ChartData;
 
 
-bool G_FloatPtInPolygon(MyFlPoint *rgpts, int wnumpts, float x, float y) ;
+bool G_FloatPtInPolygon(MyFlPoint *rgpts, int wnumpts, float x, float y);
 bool GetMemoryStatus(int *mem_total, int *mem_used);
 
-
-// ============================================================================
-// ChartStack implementation
-// ============================================================================
+ChartStack::ChartStack()
+{
+	nEntry = 0;
+	CurrentStackEntry = 0;
+	b_valid = false;
+}
 
 int ChartStack::GetCurrentEntrydbIndex(void)
 {

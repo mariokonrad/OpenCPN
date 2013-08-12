@@ -342,13 +342,14 @@ SET(HDR_AIS
 
 
 SET(HDRS
-                include/ocpn_types.h
-                include/ocpndc.h
+		include/ocpn_types.h
+		include/ocpndc.h
 		include/chart1.h
 		include/bbox.h
 		include/ocpn_pixel.h
-		include/chartdb.h
-		include/chartdbs.h
+		src/chart/chartdb.h
+		src/chart/CacheEntry.h
+		src/chart/chartdbs.h
 		include/chartimg.h
 		include/chcanv.h
 		include/timers.h
@@ -452,8 +453,8 @@ SET(SRCS
 		src/bbox.cpp
 		src/ocpn_pixel.cpp
 		src/ocpndc.cpp
-		src/chartdb.cpp
-		src/chartdbs.cpp
+		src/chart/chartdb.cpp
+		src/chart/chartdbs.cpp
 		src/chartimg.cpp
 		src/chcanv.cpp
 		src/ocpCursor.cpp

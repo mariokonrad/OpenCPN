@@ -1,11 +1,9 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Chart Thumbnail Object
- * Author:   David Register
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register   *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,34 +18,27 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
- ***************************************************************************
- *
- *
- */
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
 
 
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
+	#include "wx/wx.h"
+#endif
 
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
 
 #include "dychart.h"
-
 #include "thumbwin.h"
 #include "chart1.h"
-#include "chartdb.h"
+#include "chart/chartdb.h"
 #include "chcanv.h"
 
 
-//------------------------------------------------------------------------------
-//    External Static Storage
-//------------------------------------------------------------------------------
 extern ChartDB          *ChartData;
 extern ChartStack       *pCurrentStack;
 
@@ -56,14 +47,10 @@ extern ChartBase        *Current_Ch;
 extern ChartCanvas      *cc1;
 
 
-//------------------------------------------------------------------------------
-//    Thumbwin Implementation
-//------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE(ThumbWin, wxWindow)
   EVT_PAINT(ThumbWin::OnPaint)
 END_EVENT_TABLE()
 
-// Define a constructor
 
 ThumbWin::ThumbWin( wxWindow *parent ) :
         wxWindow( parent, wxID_ANY, wxPoint( 20, 20 ), wxSize( 5, 5 ), wxSIMPLE_BORDER )
@@ -111,3 +98,4 @@ void ThumbWin::OnPaint( wxPaintEvent& event )
         }
     }
 }
+

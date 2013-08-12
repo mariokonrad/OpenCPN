@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Options Dialog
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -26,9 +24,8 @@
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
 
-
 #ifndef WX_PRECOMP
-#include <wx/wx.h>
+	#include <wx/wx.h>
 #endif
 
 #include <wx/progdlg.h>
@@ -39,16 +36,18 @@
 #include <wx/display.h>
 #include <wx/choice.h>
 #include <wx/dirdlg.h>
+
 #if wxCHECK_VERSION(2,9,4) /* does this work in 2.8 too.. do we need a test? */
-#include <wx/renderer.h>
+	#include <wx/renderer.h>
 #endif
+
 #ifdef __WXGTK__
-#include <wx/colordlg.h>
+	#include <wx/colordlg.h>
 #endif
 
 #include "dychart.h"
 #include "chart1.h"
-#include "chartdbs.h"
+#include "chart/chartdbs.h"
 #include "options.h"
 #include "styles.h"
 #include "datastream.h"
@@ -56,13 +55,12 @@
 #include "FontMgr.h"
 #include "OCPN_Sound.h"
 #include "NMEALogWindow.h"
-
 #include "navutil.h"
 
 #ifdef USE_S57
-#include "s52plib.h"
-#include "s52utils.h"
-#include "cm93.h"
+	#include "s52plib.h"
+	#include "s52utils.h"
+	#include "cm93.h"
 #endif
 
 wxString GetOCPNKnownLanguage(wxString lang_canonical, wxString *lang_dir);
@@ -4394,6 +4392,13 @@ void SentenceListDlg::SetType(int io, ListType type)
 
 
 
-void SentenceListDlg::OnCancelClick( wxCommandEvent& event ) { event.Skip(); }
-void SentenceListDlg::OnOkClick( wxCommandEvent& event ) { event.Skip(); }
+void SentenceListDlg::OnCancelClick(wxCommandEvent & event)
+{
+	event.Skip();
+}
+
+void SentenceListDlg::OnOkClick(wxCommandEvent & event)
+{
+	event.Skip();
+}
 

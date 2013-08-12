@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Navigation Utility Functions
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -44,7 +42,7 @@
 #include "s52s57.h"
 #include "chcanv.h"
 #include "tinyxml/tinyxml.h"
-#include "chartdbs.h"
+#include "chart/chartdbs.h"
 #include "RoutePoint.h"
 #include "vector2D.h"
 #include "Route.h"

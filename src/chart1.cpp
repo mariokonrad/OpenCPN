@@ -41,9 +41,12 @@
 #include <wx/intl.h>
 #include <wx/listctrl.h>
 #include <wx/aui/aui.h>
-#include <version.h>
 #include <wx/dialog.h>
 #include <wx/progdlg.h>
+#include <wx/image.h>
+#include <wx/apptrait.h>
+
+#include <version.h>
 
 #if wxCHECK_VERSION(2, 9, 0)
 	#include <wx/dialog.h>
@@ -70,7 +73,8 @@
 
 #include "chart1.h"
 #include "chcanv.h"
-#include "chartdb.h"
+#include "chart/chartdb.h"
+#include "chart/CacheEntry.h"
 #include "navutil.h"
 #include "styles.h"
 #include "routeman.h"
@@ -99,9 +103,6 @@
 #include "cutil.h"
 #include "routemanagerdialog.h"
 #include "pluginmanager.h"
-
-#include <wx/image.h>
-#include "wx/apptrait.h"
 
 #ifdef __WXOSX__
 	#include "macutils.h"

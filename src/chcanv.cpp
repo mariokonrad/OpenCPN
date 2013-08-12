@@ -49,7 +49,7 @@
 #include "kml.h"
 #include "concanv.h"
 #include "thumbwin.h"
-#include "chartdb.h"
+#include "chart/chartdb.h"
 #include "chartimg.h"
 #include "chart1.h"
 #include "cutil.h"

@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  PlugIn Manager Object
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -37,8 +35,8 @@
 #include "pluginmanager.h"
 #include "navutil.h"
 #include "chartbase.h"        // for ChartPlugInWrapper
-#include "chartdb.h"
-#include "chartdbs.h"
+#include "chart/chartdb.h"
+#include "chart/chartdbs.h"
 #include "ocpndc.h"
 #include "styles.h"
 #include "options.h"
@@ -113,7 +111,7 @@ PlugIn_ViewPort CreatePlugInViewport( const ViewPort &vp)
 const wxEventType wxEVT_OCPN_MSG = wxNewEventType();
 
 OCPN_MsgEvent::OCPN_MsgEvent( wxEventType commandType, int id )
-:wxEvent(id, commandType)
+	: wxEvent(id, commandType)
 {
 }
 

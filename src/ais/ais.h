@@ -39,24 +39,22 @@
 #include <wx/spinctrl.h>
 #include <wx/aui/aui.h>
 #include <wx/wxhtml.h>
+#include <wx/sound.h>
 
 #include <vector>
 
-#include "wx/sound.h"
-
 #include "dychart.h"
 #include "chart1.h"
-#include "datastream.h"         // For GenericPosDatEx
+#include "datastream.h"
 #include "navutil.h"
 #include "OCPN_Sound.h"
+
 #include "AIS_Bitstring.h"
 #include "AISTargetListDialog.h"
 
-//    Constants
 #ifndef PI
-#define PI        3.1415926535897931160E0      /* pi */
+	#define PI 3.1415926535897931160E0
 #endif
-
 
 
 #define TIMER_AIS_MSEC      998

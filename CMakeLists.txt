@@ -434,6 +434,7 @@ SET(HDRS
 		include/OCPNRegion.h
 		include/TrackPropDlg.h
 		include/LinkPropDlg.h
+		include/OCPN_AlertDialog.h
 )
 
 SET(SRC_AIS
@@ -527,6 +528,7 @@ SET(SRCS
 		src/OCPNRegion.cpp
 		src/TrackPropDlg.cpp
 		src/LinkPropDlg.cpp
+		src/OCPN_AlertDialog.cpp
     )
 
 IF(wx_Version MATCHES "2.9")

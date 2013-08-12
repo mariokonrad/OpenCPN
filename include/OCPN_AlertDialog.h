@@ -21,55 +21,31 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __AISTARGETALERTDIALOG_H__
-#define __AISTARGETALERTDIALOG_H__
+#ifndef __OCPN_ALERTDIALOG__H__
+#define __OCPN_ALERTDIALOG__H__
 
-#include <OCPN_AlertDialog.h>
+#include <wx/dialog.h>
 
-class AIS_Decoder;
-class wxHtmlWindow;
-
-class AISTargetAlertDialog : public OCPN_AlertDialog
+class OCPN_AlertDialog : public wxDialog
 {
-		DECLARE_CLASS(AISTargetAlertDialog)
+		DECLARE_CLASS(OCPN_AlertDialog)
 		DECLARE_EVENT_TABLE()
 
 	public:
 
-		AISTargetAlertDialog();
-		~AISTargetAlertDialog();
-		bool Create(
-				int target_mmsi,
-				wxWindow * parent,
-				AIS_Decoder *pdecoder,
-				bool b_jumpto,
+		OCPN_AlertDialog();
+		virtual ~OCPN_AlertDialog();
+		virtual void Init();
+		virtual bool Create(
+				wxWindow *parent,
 				wxWindowID id = wxID_ANY,
-				const wxString& caption = _("OpenCPN AIS Alert"),
+				const wxString& caption = _("OpenCPN Alert"),
 				const wxPoint& pos = wxDefaultPosition,
 				const wxSize& size = wxDefaultSize,
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
-		void Init();
-		int Get_Dialog_MMSI(void) const;
-		void UpdateText();
 
 	private:
-		void CreateControls();
-		bool GetAlertText(void);
-		void OnClose(wxCloseEvent& event);
-		void OnIdAckClick(wxCommandEvent& event);
-		void OnMove(wxMoveEvent& event);
-		void OnSize(wxSizeEvent& event);
-		void OnIdSilenceClick(wxCommandEvent& event);
-		void OnIdJumptoClick(wxCommandEvent& event);
-
-		wxHtmlWindow      *m_pAlertTextCtl;
-		int               m_target_mmsi;
-		AIS_Decoder       *m_pdecoder;
-		wxFont            *m_pFont;
-		wxString          m_alert_text;
-		bool              m_bjumpto;
-
+		wxWindow * m_pparent;
 };
-
 
 #endif

@@ -21,55 +21,57 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __AISTARGETALERTDIALOG_H__
-#define __AISTARGETALERTDIALOG_H__
+#include "OCPN_AlertDialog.h"
+#include "ocpn_types.h"
 
-#include <OCPN_AlertDialog.h>
+extern ColorScheme global_color_scheme;
+extern bool g_bopengl;
 
-class AIS_Decoder;
-class wxHtmlWindow;
+IMPLEMENT_CLASS(OCPN_AlertDialog, wxDialog)
 
-class AISTargetAlertDialog : public OCPN_AlertDialog
+BEGIN_EVENT_TABLE(OCPN_AlertDialog, wxDialog)
+END_EVENT_TABLE()
+
+OCPN_AlertDialog::OCPN_AlertDialog()
 {
-		DECLARE_CLASS(AISTargetAlertDialog)
-		DECLARE_EVENT_TABLE()
+    Init();
+}
 
-	public:
+OCPN_AlertDialog::~OCPN_AlertDialog()
+{
+}
 
-		AISTargetAlertDialog();
-		~AISTargetAlertDialog();
-		bool Create(
-				int target_mmsi,
-				wxWindow * parent,
-				AIS_Decoder *pdecoder,
-				bool b_jumpto,
-				wxWindowID id = wxID_ANY,
-				const wxString& caption = _("OpenCPN AIS Alert"),
-				const wxPoint& pos = wxDefaultPosition,
-				const wxSize& size = wxDefaultSize,
-				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
-		void Init();
-		int Get_Dialog_MMSI(void) const;
-		void UpdateText();
+void OCPN_AlertDialog::Init(void)
+{
+    m_pparent = NULL;
+}
 
-	private:
-		void CreateControls();
-		bool GetAlertText(void);
-		void OnClose(wxCloseEvent& event);
-		void OnIdAckClick(wxCommandEvent& event);
-		void OnMove(wxMoveEvent& event);
-		void OnSize(wxSizeEvent& event);
-		void OnIdSilenceClick(wxCommandEvent& event);
-		void OnIdJumptoClick(wxCommandEvent& event);
+bool OCPN_AlertDialog::Create(
+		wxWindow * parent,
+		wxWindowID id,
+		const wxString & caption,
+		const wxPoint & pos,
+		const wxSize & size,
+		long style)
+{
+    //    As a display optimization....
+    //    if current color scheme is other than DAY,
+    //    Then create the dialog ..WITHOUT.. borders and title bar.
+    //    This way, any window decorations set by external themes, etc
+    //    will not detract from night-vision
 
-		wxHtmlWindow      *m_pAlertTextCtl;
-		int               m_target_mmsi;
-		AIS_Decoder       *m_pdecoder;
-		wxFont            *m_pFont;
-		wxString          m_alert_text;
-		bool              m_bjumpto;
+    long wstyle = wxDEFAULT_FRAME_STYLE;
+    if( ( global_color_scheme != GLOBAL_COLOR_SCHEME_DAY )
+        && ( global_color_scheme != GLOBAL_COLOR_SCHEME_RGB ) ) wstyle |= ( wxNO_BORDER );
 
-};
+    wxSize size_min = size;
+    size_min.IncTo( wxSize( 500, 600 ) );
+    if( !wxDialog::Create( parent, id, caption, pos, size_min, wstyle ) ) return false;
 
+    m_pparent = parent;
 
-#endif
+    if( !g_bopengl && CanSetTransparent() ) SetTransparent( 192 );
+
+    return true;
+}
+

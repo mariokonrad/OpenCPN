@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include <wx/html/htmlwin.h>
 
@@ -30,7 +29,6 @@
 #include "FontMgr.h"
 #include "ocpn_types.h"
 
-extern ColorScheme global_color_scheme;
 extern bool g_bopengl;
 extern AISTargetAlertDialog *g_pais_alert_dialog_active;
 extern MyFrame *gFrame;
@@ -40,74 +38,15 @@ extern int g_ais_alert_dialog_y;
 extern int g_ais_alert_dialog_sx;
 extern int g_ais_alert_dialog_sy;
 
+IMPLEMENT_CLASS(AISTargetAlertDialog, wxDialog)
 
-//---------------------------------------------------------------------------------------------------------------------
-//
-//      OCPN Alert Dialog Base Class implementation
-//
-//---------------------------------------------------------------------------------------------------------------------
-
-
-IMPLEMENT_CLASS ( OCPN_AlertDialog, wxDialog )
-
-BEGIN_EVENT_TABLE ( OCPN_AlertDialog, wxDialog )
-END_EVENT_TABLE()
-
-OCPN_AlertDialog::OCPN_AlertDialog()
-{
-    Init();
-}
-
-OCPN_AlertDialog::~OCPN_AlertDialog()
-{
-}
-
-void OCPN_AlertDialog::Init(void)
-{
-    m_pparent = NULL;
-}
-
-bool OCPN_AlertDialog::Create( wxWindow *parent, wxWindowID id,
-                                   const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-
-{
-    //    As a display optimization....
-    //    if current color scheme is other than DAY,
-    //    Then create the dialog ..WITHOUT.. borders and title bar.
-    //    This way, any window decorations set by external themes, etc
-    //    will not detract from night-vision
-    
-    long wstyle = wxDEFAULT_FRAME_STYLE;
-    if( ( global_color_scheme != GLOBAL_COLOR_SCHEME_DAY )
-        && ( global_color_scheme != GLOBAL_COLOR_SCHEME_RGB ) ) wstyle |= ( wxNO_BORDER );
-    
-    wxSize size_min = size;
-    size_min.IncTo( wxSize( 500, 600 ) );
-    if( !wxDialog::Create( parent, id, caption, pos, size_min, wstyle ) ) return false;
-    
-    m_pparent = parent;
-    
-    if( !g_bopengl && CanSetTransparent() ) SetTransparent( 192 );
-    
-    return true;
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------
-//
-//      AIS Target Alert Dialog implementation
-//
-//---------------------------------------------------------------------------------------------------------------------
-
-IMPLEMENT_CLASS ( AISTargetAlertDialog, wxDialog )
-
-BEGIN_EVENT_TABLE ( AISTargetAlertDialog, wxDialog )
+BEGIN_EVENT_TABLE(AISTargetAlertDialog, wxDialog)
     EVT_CLOSE(AISTargetAlertDialog::OnClose)
-    EVT_BUTTON( ID_ACKNOWLEDGE, AISTargetAlertDialog::OnIdAckClick )
-    EVT_BUTTON( ID_SILENCE, AISTargetAlertDialog::OnIdSilenceClick )
-    EVT_BUTTON( ID_JUMPTO, AISTargetAlertDialog::OnIdJumptoClick )
-    EVT_MOVE( AISTargetAlertDialog::OnMove )
-    EVT_SIZE( AISTargetAlertDialog::OnSize )
+    EVT_BUTTON(ID_ACKNOWLEDGE, AISTargetAlertDialog::OnIdAckClick)
+    EVT_BUTTON(ID_SILENCE, AISTargetAlertDialog::OnIdSilenceClick)
+    EVT_BUTTON(ID_JUMPTO, AISTargetAlertDialog::OnIdJumptoClick)
+    EVT_MOVE(AISTargetAlertDialog::OnMove)
+    EVT_SIZE(AISTargetAlertDialog::OnSize)
 END_EVENT_TABLE()
 
 AISTargetAlertDialog::AISTargetAlertDialog()
@@ -125,11 +64,17 @@ void AISTargetAlertDialog::Init()
 }
 
 
-bool AISTargetAlertDialog::Create( int target_mmsi, wxWindow *parent, AIS_Decoder *pdecoder, bool b_jumpto,
-             wxWindowID id,  const wxString& caption,  const wxPoint& pos,const wxSize& size, long style )
-                     
+bool AISTargetAlertDialog::Create(
+		int target_mmsi,
+		wxWindow * parent,
+		AIS_Decoder * pdecoder,
+		bool b_jumpto,
+		wxWindowID id,
+		const wxString & caption,
+		const wxPoint & pos,
+		const wxSize & size,
+		long style)
 {
-    
     OCPN_AlertDialog::Create(parent, id, caption, pos, size, style);
     m_bjumpto = b_jumpto;
 
@@ -316,5 +261,10 @@ void AISTargetAlertDialog::OnSize( wxSizeEvent& event )
     g_ais_alert_dialog_sy = p.y;
 
     event.Skip();
+}
+
+int AISTargetAlertDialog::Get_Dialog_MMSI(void) const
+{
+	return m_target_mmsi;
 }
 

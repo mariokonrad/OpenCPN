@@ -19,16 +19,23 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __WINDOWDESTROYLISTENER_H__
-#define __WINDOWDESTROYLISTENER_H__
+#ifndef __QUILTCANDIDATE__H__
+#define __QUILTCANDIDATE__H__
 
-class WindowDestroyListener
+#include "OCPNRegion.h"
+
+class QuiltCandidate
 {
-    public:
-        virtual void DestroyWindow() = 0;
+	public:
+		QuiltCandidate();
+
+		int dbIndex;
+		int ChartScale;
+		bool b_include;
+		bool b_eclipsed;
+		OCPNRegion quilt_region;
 };
 
 #endif

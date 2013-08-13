@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __NMEALOGWINDOW_H__
 #define __NMEALOGWINDOW_H__
@@ -33,48 +32,46 @@ class wxSize;
 class wxPoint;
 class TTYWindow;
 
-/**
- * This class provides access to the NMEA log/debug window.
- *
- * This provides everything needed to use the single NMEA log window.
- *
- * Singleton.
- *
- * Reading geometry information from the window will cache them
- * inside this class. This is used to store them permanently in
- * the configuration file.
- */
+/// This class provides access to the NMEA log/debug window.
+///
+/// This provides everything needed to use the single NMEA log window.
+///
+/// Singleton.
+///
+/// Reading geometry information from the window will cache them
+/// inside this class. This is used to store them permanently in
+/// the configuration file.
 class NMEALogWindow : public WindowDestroyListener
 {
-    public:
-        static NMEALogWindow & Get();
-        bool Active() const;
-        void Create(wxWindow * parent, int num_lines = 35);
-        void Add(const wxString & s);
-        void Refresh(bool do_refresh = false);
-        int GetSizeW();
-        int GetSizeH();
-        int GetPosX();
-        int GetPosY();
-        void SetSize(int w, int h);
-        void SetSize(const wxSize & size);
-        void SetPos(int x, int y);
-        void SetPos(const wxPoint & pos);
-        void CheckPos(int display_width, int display_height);
-        virtual void DestroyWindow();
-    private: // prevent class from being copied, needed by singleton
-        NMEALogWindow();
-        NMEALogWindow(const NMEALogWindow &) {}
-        ~NMEALogWindow() {};
-        NMEALogWindow & operator=(const NMEALogWindow &) { return *this; }
-        void UpdateGeometry();
-    private:
-        static NMEALogWindow * instance;
-        TTYWindow * window;
-        int width;
-        int height;
-        int pos_x;
-        int pos_y;
+	public:
+		static NMEALogWindow & Get();
+		bool Active() const;
+		void Create(wxWindow * parent, int num_lines = 35);
+		void Add(const wxString & s);
+		void Refresh(bool do_refresh = false);
+		int GetSizeW();
+		int GetSizeH();
+		int GetPosX();
+		int GetPosY();
+		void SetSize(int w, int h);
+		void SetSize(const wxSize & size);
+		void SetPos(int x, int y);
+		void SetPos(const wxPoint & pos);
+		void CheckPos(int display_width, int display_height);
+		virtual void DestroyWindow();
+	private: // prevent class from being copied, needed by singleton
+		NMEALogWindow();
+		NMEALogWindow(const NMEALogWindow &) {}
+		~NMEALogWindow() {};
+		NMEALogWindow & operator=(const NMEALogWindow &) { return *this; }
+		void UpdateGeometry();
+	private:
+		static NMEALogWindow * instance;
+		TTYWindow * window;
+		int width;
+		int height;
+		int pos_x;
+		int pos_y;
 };
 
 #endif

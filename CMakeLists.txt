@@ -378,7 +378,9 @@ SET(HDRS
 		include/tide_time.h
 		include/glChartCanvas.h
 		include/ChInfoWin.h
-		include/Quilt.h
+		src/Quilt.h
+		src/QuiltPatch.h
+		src/QuiltCandidate.h
 		include/Hyperlink.h
 		include/NavObjectCollection.h
 		include/RoutePoint.h
@@ -390,8 +392,8 @@ SET(HDRS
 		include/vector2D.h
 		include/OCPNSoundData.h
 		include/OCPN_Sound.h
-		include/NMEALogWindow.h
-		include/WindowDestroyListener.h
+		src/NMEALogWindow.h
+		src/WindowDestroyListener.h
 		include/TTYWindow.h
 		include/TTYScroll.h
 		include/Layer.h
@@ -486,6 +488,8 @@ SET(SRCS
 		${SRC_AIS}
 		src/OCPNListCtrl.cpp
 		src/Quilt.cpp
+		src/QuiltPatch.cpp
+		src/QuiltCandidate.cpp
 		src/Hyperlink.cpp
 		src/NavObjectCollection.cpp
 		src/RoutePoint.cpp

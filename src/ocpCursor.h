@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,16 +19,10 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __OCPCURSOR_H__
 #define __OCPCURSOR_H__
-
-#include "wx/wxprec.h"
-#ifndef  WX_PRECOMP
-#include "wx/wx.h"
-#endif //precompiled headers
 
 #include <wx/cursor.h>
 
@@ -37,10 +31,18 @@ class wxString;
 
 class ocpCursor : public wxCursor
 {
-      public:
+	public:
+		ocpCursor(
+				const wxString & cursorName,
+				long type,
+				int hotSpotX = 0,
+				int hotSpotY = 0);
 
-            ocpCursor(const wxString& cursorName, long type, int hotSpotX=0, int hotSpotY=0);
-            ocpCursor(const char **xpm_data, long type, int hotSpotX=0, int hotSpotY=0);
+		ocpCursor(
+				const char ** xpm_data,
+				long type,
+				int hotSpotX = 0,
+				int hotSpotY = 0);
 };
 
 #endif

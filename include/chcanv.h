@@ -40,7 +40,6 @@
 #include "gshhs.h"
 #include "undo.h"
 
-#include "ocpCursor.h"
 #include "GoToPositionDialog.h"
 #include "CM93DSlide.h"
 #include "RolloverWin.h"

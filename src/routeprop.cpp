@@ -38,7 +38,8 @@
 
 #include "styles.h"
 #include "routeprop.h"
-#include "navutil.h"                // for Route
+#include "navutil.h"
+#include "Track.h"
 #include "georef.h"
 #include "chart1.h"
 #include "routeman.h"

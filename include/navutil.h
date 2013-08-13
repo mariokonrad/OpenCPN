@@ -88,65 +88,6 @@ class NavObjectChanges;
 //----------------------------------------------------------------------------
 //    Track
 //----------------------------------------------------------------------------
-class Track : public wxEvtHandler, public Route
-{
-      public:
-            Track(void);
-            ~Track(void);
-
-            void SetPrecision(int precision);
-
-            void Start(void);
-            void Stop(bool do_add_point = false);
-            Track *DoExtendDaily(void);
-            bool IsRunning(){ return m_bRunning; }
-            void Draw(ocpnDC& dc, ViewPort &VP);
-
-            RoutePoint* AddNewPoint( vector2D point, wxDateTime time );
-            Route *RouteFromTrack(wxProgressDialog *pprog);
-
-            void DouglasPeuckerReducer( std::vector<RoutePoint*>& list, int from, int to, double delta );
-            int Simplify( double maxDelta );
-            double GetXTE(RoutePoint *fm1, RoutePoint *fm2, RoutePoint *to);
-            double GetXTE( double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon, double toLat, double toLon  );
-
-            void AdjustCurrentTrackPoint( RoutePoint *prototype );
-
-      private:
-            void OnTimerTrack(wxTimerEvent& event);
-            void AddPointNow(bool do_add_point = false);
-
-            bool              m_bRunning;
-            wxTimer           m_TimerTrack;
-
-            int               m_nPrecision;
-            double            m_TrackTimerSec;
-            double            m_allowedMaxXTE;
-            double            m_allowedMaxAngle;
-
-            vector2D          m_lastAddedPoint;
-            double            m_prev_dist;
-            wxDateTime        m_prev_time;
-
-            RoutePoint        *m_lastStoredTP;
-            RoutePoint        *m_removeTP;
-            RoutePoint        *m_prevFixedTP;
-            RoutePoint        *m_fixedTP;
-            int               m_track_run;
-            double            m_minTrackpoint_delta;
-
-            enum eTrackPointState {
-                firstPoint,
-                secondPoint,
-                potentialPoint
-            } trackPointState;
-
-            std::deque<vector2D> skipPoints;
-            std::deque<wxDateTime> skipTimes;
-
-DECLARE_EVENT_TABLE()
-};
-
 //----------------------------------------------------------------------------
 //    Static XML Helpers
 //----------------------------------------------------------------------------

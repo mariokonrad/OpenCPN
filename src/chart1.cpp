@@ -74,6 +74,7 @@
 #include "chart/ChartStack.h"
 #include "chart/CacheEntry.h"
 #include "navutil.h"
+#include "Track.h"
 #include "styles.h"
 #include "routeman.h"
 #include "StatWin.h"

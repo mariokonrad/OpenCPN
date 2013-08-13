@@ -37,6 +37,7 @@
 #include "styles.h"
 #include "dychart.h"
 #include "navutil.h"
+#include "Track.h"
 #include "routeprop.h"
 #include "routeman.h"
 #include "georef.h"

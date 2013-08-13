@@ -396,6 +396,7 @@ SET(HDRS
 		include/cutil.h
 		include/georef.h
 		include/navutil.h
+		src/Track.h
 		include/routeman.h
 		include/routemanagerdialog.h
 		include/routeprop.h
@@ -496,6 +497,7 @@ SET(SRCS
 		src/cutil.cpp
 		src/georef.cpp
 		src/navutil.cpp
+		src/Track.cpp
 		src/routeman.cpp
 		src/routemanagerdialog.cpp
 		src/routeprop.cpp

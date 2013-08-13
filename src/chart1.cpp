@@ -83,7 +83,7 @@
 #include "PianoWin.h"
 #include "concanv.h"
 #include "options.h"
-#include "about.h"
+#include "AboutDialog.h"
 #include "ThumbWin.h"
 #include "tcmgr.h"
 #include "chartimg.h"
@@ -540,7 +540,7 @@ int                       g_nautosave_interval_seconds;
 
 bool                      g_bPreserveScaleOnX;
 
-about                     *g_pAboutDlg;
+AboutDialog * g_pAboutDlg;
 
 wxPlatformInfo            *g_pPlatform;
 wxLocale                  *plocale_def_lang;
@@ -3440,7 +3440,7 @@ void MyFrame::OnToolLeftClick( wxCommandEvent& event )
         }
 
         case ID_HELP: {
-            if( !g_pAboutDlg ) g_pAboutDlg = new about( this, &g_SData_Locn );
+            if( !g_pAboutDlg ) g_pAboutDlg = new AboutDialog( this, &g_SData_Locn );
 
             g_pAboutDlg->Update();
             g_pAboutDlg->Show();

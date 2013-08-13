@@ -422,7 +422,7 @@ SET(HDRS
 		include/gshhs.h
 		include/kml.h
 		include/undo.h
-		include/about.h
+		src/AboutDialog.h
 		include/pluginmanager.h
 		include/ocpn_plugin.h
 		include/gpxdocument.h
@@ -526,7 +526,7 @@ SET(SRCS
 		src/gshhs.cpp
 		src/kml.cpp
 		src/undo.cpp
-		src/about.cpp
+		src/AboutDialog.cpp
 		src/pluginmanager.cpp
 		src/gpxdocument.cpp
 		src/wxJSON/jsonwriter.cpp

@@ -364,7 +364,7 @@ SET(HDRS
 		${HDR_AIS}
 		include/OCPNListCtrl.h
 		include/CM93DSlide.h
-		include/GoToPositionDialog.h
+		src/GoToPositionDialog.h
 		include/RolloverWin.h
 		include/S57QueryDialog.h
 		include/S57ObjectDesc.h

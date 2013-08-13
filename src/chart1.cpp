@@ -190,7 +190,6 @@ RouteProp                 *pRoutePropDialog;
 TrackPropDlg              *pTrackPropDialog;
 MarkInfoImpl              *pMarkInfoDialog;
 RouteManagerDialog        *pRouteManagerDialog;
-GoToPositionDialog        *pGoToPositionDialog;
 
 double                    gLat, gLon, gCog, gSog, gHdt, gHdm, gVar;
 double                    vLat, vLon;

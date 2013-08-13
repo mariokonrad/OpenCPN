@@ -36,6 +36,7 @@
 #include <wx/listimpl.cpp>
 
 #include "chcanv.h"
+#include "GoToPositionDialog.h"
 #include "TimedPopupWin.h"
 #include "dychart.h"
 #include "geodesic.h"
@@ -165,7 +166,7 @@ extern int              g_nAWMax;
 
 extern ocpnFloatingToolbarDialog *g_FloatingToolbarDialog;
 extern RouteManagerDialog *pRouteManagerDialog;
-extern GoToPositionDialog *pGoToPositionDialog;
+GoToPositionDialog * pGoToPositionDialog;
 extern wxString GetLayerName(int id);
 extern wxString         g_uploadConnection;
 

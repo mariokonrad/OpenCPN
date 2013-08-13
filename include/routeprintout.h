@@ -21,10 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <iostream>
-using namespace std; // FIXME: 'using namespace' must not be used in header files
-
-
 #ifndef __ROUTEPRINTOUT_H__
 #define __ROUTEPRINTOUT_H__
 
@@ -33,7 +29,7 @@ using namespace std; // FIXME: 'using namespace' must not be used in header file
 #include <wx/cmdline.h>
 
 #ifdef __WXMSW__
-#include <wx/msw/private.h>
+	#include <wx/msw/private.h>
 #endif
 
 #include "ocpn_types.h"
@@ -43,55 +39,49 @@ using namespace std; // FIXME: 'using namespace' must not be used in header file
 
 class MyRoutePrintout : public MyPrintout
 {
-public:
-    MyRoutePrintout( std::vector<bool> _toPrintOut,
-                     Route*            route,
-                     const wxChar*     title = _T( "My Route printout" ) );
-    virtual
-    bool
-    OnPrintPage( int page );
-    void
-    DrawPage( wxDC* dc );
-    virtual
-    void
-    OnPreparePrinting();
+	public:
+		MyRoutePrintout(
+				std::vector<bool> _toPrintOut,
+				Route * route,
+				const wxChar * title = _T( "My Route printout"));
 
-    virtual
-    bool
-    HasPage( int num )
-    {
-        return num > 0 || num <= 1;
-    };
+		virtual bool OnPrintPage(int page);
+		virtual void OnPreparePrinting();
+		void DrawPage(wxDC * dc);
 
-    virtual
-    void
-    GetPageInfo( int* minPage,
-                 int* maxPage,
-                 int* selPageFrom,
-                 int* selPageTo );
+		virtual bool HasPage(int num) const
+		{
+			return num > 0 || num <= 1;
+		}
 
-protected:
-    wxDC*             myDC;
-    PrintTable        table;
-    Route*            myRoute;
-    std::vector<bool> toPrintOut; // list of fields of bool, if certain element should be print out.
-    static const int  pN = 5;     // number of fields sofar
-    int               pageToPrint;
-    int               numberOfPages;
-    int               marginX;
-    int               marginY;
-    int               textOffsetX;
-    int               textOffsetY;
+		virtual void GetPageInfo( // FIXME: bad interface of method
+				int * minPage,
+				int * maxPage,
+				int * selPageFrom,
+				int * selPageTo);
+
+	protected:
+		static const int pN = 5;     // number of fields sofar
+
+		wxDC * myDC;
+		PrintTable table;
+		Route * myRoute;
+		std::vector<bool> toPrintOut; // list of fields of bool, if certain element should be print out.
+		int pageToPrint;
+		int numberOfPages;
+		int marginX;
+		int marginY;
+		int textOffsetX;
+		int textOffsetY;
 };
 
 
 // route elements selection dialog
-///@begin control identifiers
 #define ID_ROUTEPRINTSELECTION 9000
 #define SYMBOL_ROUTEPRINT_SELECTION_STYLE wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX
-#define SYMBOL_ROUTEPRINT_SELECTION_TITLE _( "Print Route Selection" )
+#define SYMBOL_ROUTEPRINT_SELECTION_TITLE _("Print Route Selection")
 #define SYMBOL_ROUTEPRINT_SELECTION_IDNAME ID_ROUTEPRINTSELECTION
-#define SYMBOL_ROUTEPRINT_SELECTION_SIZE wxSize( 750, 300 )
+#define SYMBOL_ROUTEPRINT_SELECTION_SIZE wxSize(750, 300)
 #define SYMBOL_ROUTEPRINT_SELECTION_POSITION wxDefaultPosition
 
 #define ID_ROUTEPRINT_SELECTION_OK 9001
@@ -100,59 +90,48 @@ protected:
 
 class RoutePrintSelection : public wxDialog
 {
-    DECLARE_DYNAMIC_CLASS( RoutePrintSelection )
-    DECLARE_EVENT_TABLE()
+		DECLARE_DYNAMIC_CLASS(RoutePrintSelection)
+		DECLARE_EVENT_TABLE()
 
-public:
-    // Constructors
-    RoutePrintSelection();
-    RoutePrintSelection( wxWindow*       parent,
-                         Route*          route,
-                         wxWindowID      id = SYMBOL_ROUTEPRINT_SELECTION_IDNAME,
-                         const wxString& caption = SYMBOL_ROUTEPRINT_SELECTION_TITLE,
-                         const wxPoint&  pos = SYMBOL_ROUTEPRINT_SELECTION_POSITION,
-                         const wxSize&   size = SYMBOL_ROUTEPRINT_SELECTION_SIZE,
-                         long            style = SYMBOL_ROUTEPRINT_SELECTION_STYLE );
-    ~RoutePrintSelection();
+	public:
+		RoutePrintSelection();
 
-    // Creation
-    bool
-    Create( wxWindow*       parent,
-            wxWindowID      id = SYMBOL_ROUTEPRINT_SELECTION_IDNAME,
-            const wxString& caption = SYMBOL_ROUTEPRINT_SELECTION_TITLE,
-            const wxPoint&  pos = SYMBOL_ROUTEPRINT_SELECTION_POSITION,
-            const wxSize&   size = SYMBOL_ROUTEPRINT_SELECTION_SIZE,
-            long            style = SYMBOL_ROUTEPRINT_SELECTION_STYLE );
+		RoutePrintSelection(
+				wxWindow * parent,
+				Route * route,
+				wxWindowID id = SYMBOL_ROUTEPRINT_SELECTION_IDNAME,
+				const wxString & caption = SYMBOL_ROUTEPRINT_SELECTION_TITLE,
+				const wxPoint & pos = SYMBOL_ROUTEPRINT_SELECTION_POSITION,
+				const wxSize & size = SYMBOL_ROUTEPRINT_SELECTION_SIZE,
+				long style = SYMBOL_ROUTEPRINT_SELECTION_STYLE );
 
-    void
-    CreateControls();
+		~RoutePrintSelection();
 
-    void
-    SetColorScheme( ColorScheme cs );
-    void
-    SetDialogTitle(const wxString & title);
-    void
-    OnRoutepropCancelClick( wxCommandEvent& event );
-    void
-    OnRoutepropOkClick( wxCommandEvent& event );
+		bool Create(
+				wxWindow * parent,
+				wxWindowID id = SYMBOL_ROUTEPRINT_SELECTION_IDNAME,
+				const wxString & caption = SYMBOL_ROUTEPRINT_SELECTION_TITLE,
+				const wxPoint & pos = SYMBOL_ROUTEPRINT_SELECTION_POSITION,
+				const wxSize & size = SYMBOL_ROUTEPRINT_SELECTION_SIZE,
+				long style = SYMBOL_ROUTEPRINT_SELECTION_STYLE);
 
+		void CreateControls();
 
-    // Should we show tooltips?
-    static bool
-    ShowToolTips();
+		void SetColorScheme(ColorScheme cs);
+		void SetDialogTitle(const wxString & title);
+		void OnRoutepropCancelClick(wxCommandEvent& event);
+		void OnRoutepropOkClick(wxCommandEvent& event);
 
+		static bool ShowToolTips();
 
-
-    wxButton*   m_CancelButton;
-    wxButton*   m_OKButton;
-
-    wxCheckBox* m_checkBoxWPName;
-    wxCheckBox* m_checkBoxWPPosition;
-    wxCheckBox* m_checkBoxWPCourse;
-    wxCheckBox* m_checkBoxWPDistanceToNext;
-    wxCheckBox* m_checkBoxWPDescription;
-
-    Route*      route;
+		wxButton * m_CancelButton;
+		wxButton * m_OKButton;
+		wxCheckBox * m_checkBoxWPName;
+		wxCheckBox * m_checkBoxWPPosition;
+		wxCheckBox * m_checkBoxWPCourse;
+		wxCheckBox * m_checkBoxWPDistanceToNext;
+		wxCheckBox * m_checkBoxWPDescription;
+		Route * route;
 };
 
 #endif

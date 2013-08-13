@@ -47,6 +47,7 @@
 #include "Layer.h"
 #include "SendToGpsDlg.h"
 #include "TrackPropDlg.h"
+#include "Undo.h"
 
 #define DIALOG_MARGIN 3
 

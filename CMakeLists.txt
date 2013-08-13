@@ -421,7 +421,8 @@ SET(HDRS
 		include/options.h
 		include/gshhs.h
 		include/kml.h
-		include/undo.h
+		src/Undo.h
+		src/UndoAction.h
 		src/AboutDialog.h
 		include/pluginmanager.h
 		include/ocpn_plugin.h
@@ -525,7 +526,8 @@ SET(SRCS
 		src/options.cpp
 		src/gshhs.cpp
 		src/kml.cpp
-		src/undo.cpp
+		src/Undo.cpp
+		src/UndoAction.cpp
 		src/AboutDialog.cpp
 		src/pluginmanager.cpp
 		src/gpxdocument.cpp

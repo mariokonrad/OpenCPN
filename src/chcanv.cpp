@@ -61,7 +61,7 @@
 #include "pluginmanager.h"
 #include "ocpn_pixel.h"
 #include "ocpndc.h"
-#include "undo.h"
+#include "Undo.h"
 #include "toolbar.h"
 #include "multiplexer.h"
 #include "timers.h"
@@ -1848,7 +1848,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
             pConfig->AddNewWayPoint( pWP, -1 );    // use auto next num
 
             if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
-            undo->BeforeUndoableAction( Undo_CreateWaypoint, pWP, Undo_HasParent, NULL );
+            undo->BeforeUndoableAction(UndoAction::Undo_CreateWaypoint, pWP, UndoAction::Undo_HasParent, NULL );
             undo->AfterUndoableAction( NULL );
             Refresh( false );
             break;
@@ -1875,7 +1875,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
             pConfig->AddNewWayPoint( pWP, -1 );    // use auto next num
 
             if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
-            undo->BeforeUndoableAction( Undo_CreateWaypoint, pWP, Undo_HasParent, NULL );
+            undo->BeforeUndoableAction(UndoAction::Undo_CreateWaypoint, pWP, UndoAction::Undo_HasParent, NULL );
             undo->AfterUndoableAction( NULL );
             Refresh( false );
             break;
@@ -5417,7 +5417,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
 
                     // Using existing waypoint, so nothing to delete for undo.
                     if( parent_frame->nRoute_State > 1 )
-                        undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
+                        undo->BeforeUndoableAction( UndoAction::Undo_AppendWaypoint, pMousePoint, UndoAction::Undo_HasParent, NULL );
 
                     // check all other routes to see if this point appears in any other route
                     // If it appears in NO other route, then it should e considered an isolated mark
@@ -5434,7 +5434,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                 pSelect->AddSelectableRoutePoint( rlat, rlon, pMousePoint );
 
                 if( parent_frame->nRoute_State > 1 )
-                    undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_IsOrphanded, NULL );
+                    undo->BeforeUndoableAction( UndoAction::Undo_AppendWaypoint, pMousePoint, UndoAction::Undo_IsOrphanded, NULL );
             }
 
             if( parent_frame->nRoute_State == 1 ) {
@@ -5567,8 +5567,8 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
             if( DraggingAllowed ) {
 
                 if( !undo->InUndoableAction() ) {
-                    undo->BeforeUndoableAction( Undo_MoveWaypoint, m_pRoutePointEditTarget,
-                            Undo_NeedsCopy, m_pFoundPoint );
+                    undo->BeforeUndoableAction( UndoAction::Undo_MoveWaypoint, m_pRoutePointEditTarget,
+                            UndoAction::Undo_NeedsCopy, m_pFoundPoint );
                 }
 
                 // Get the update rectangle for the union of the un-edited routes
@@ -5637,8 +5637,8 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
 
             if( DraggingAllowed ) {
                 if( !undo->InUndoableAction() ) {
-                    undo->BeforeUndoableAction( Undo_MoveWaypoint, m_pRoutePointEditTarget,
-                            Undo_NeedsCopy, m_pFoundPoint );
+                    undo->BeforeUndoableAction( UndoAction::Undo_MoveWaypoint, m_pRoutePointEditTarget,
+                            UndoAction::Undo_NeedsCopy, m_pFoundPoint );
                 }
 
                 //      The mark may be an anchorwatch
@@ -7082,7 +7082,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
         pConfig->AddNewWayPoint( pWP, -1 );    // use auto next num
 
         if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
-        undo->BeforeUndoableAction( Undo_CreateWaypoint, pWP, Undo_HasParent, NULL );
+        undo->BeforeUndoableAction(UndoAction::Undo_CreateWaypoint, pWP, UndoAction::Undo_HasParent, NULL );
         undo->AfterUndoableAction( NULL );
         Refresh( false );      // Needed for MSW, why not GTK??
         break;
@@ -7159,7 +7159,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
                 m_pFoundRoutePoint = NULL;
              }
             else {
-                undo->BeforeUndoableAction( Undo_DeleteWaypoint, m_pFoundRoutePoint, Undo_IsOrphanded, m_pFoundPoint );
+                undo->BeforeUndoableAction( UndoAction::Undo_DeleteWaypoint, m_pFoundRoutePoint, UndoAction::Undo_IsOrphanded, m_pFoundPoint );
                 pConfig->DeleteWayPoint( m_pFoundRoutePoint );
                 pSelect->DeleteSelectablePoint( m_pFoundRoutePoint, SELTYPE_ROUTEPOINT );
                 if( NULL != pWayPointMan )

@@ -347,6 +347,8 @@ SET(HDRS
 		include/chart1.h
 		include/bbox.h
 		include/ocpn_pixel.h
+		src/TimedPopupWin.h
+		src/MyPrintout.h
 		src/chart/ChartDB.h
 		src/chart/CacheEntry.h
 		src/chart/ChartDatabase.h
@@ -455,6 +457,8 @@ SET(SRC_AIS
 
 SET(SRCS
 		src/chart1.cpp
+		src/TimedPopupWin.cpp
+		src/MyPrintout.cpp
 		src/bbox.cpp
 		src/ocpn_pixel.cpp
 		src/ocpndc.cpp

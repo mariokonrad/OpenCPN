@@ -70,6 +70,7 @@
 
 #include "chart1.h"
 #include "chcanv.h"
+#include "TimedPopupWin.h"
 #include "chart/ChartDB.h"
 #include "chart/ChartStack.h"
 #include "chart/CacheEntry.h"
@@ -7463,111 +7464,6 @@ void MyCPLErrorHandler( CPLErr eErrClass, int nError, const char * pszErrorMsg )
 }
 #endif
 
-//----------------------------------------------------------------------------------------------------------
-//      Printing Framework Support
-//----------------------------------------------------------------------------------------------------------
-
-bool MyPrintout::OnPrintPage( int page )
-{
-    wxDC *dc = GetDC();
-    if( dc ) {
-        if( page == 1 ) DrawPageOne( dc );
-
-        return true;
-    } else
-        return false;
-}
-
-bool MyPrintout::OnBeginDocument( int startPage, int endPage )
-{
-    if( !wxPrintout::OnBeginDocument( startPage, endPage ) ) return false;
-
-    return true;
-}
-
-void MyPrintout::GetPageInfo( int *minPage, int *maxPage, int *selPageFrom, int *selPageTo )
-{
-    *minPage = 1;
-    *maxPage = 1;
-    *selPageFrom = 1;
-    *selPageTo = 1;
-}
-
-bool MyPrintout::HasPage( int pageNum )
-{
-    return ( pageNum == 1 );
-}
-
-void MyPrintout::DrawPageOne( wxDC *dc )
-{
-
-    // Get the Size of the Chart Canvas
-    int sx, sy;
-    cc1->GetClientSize( &sx, &sy );                       // of the canvas
-
-    float maxX = sx;
-    float maxY = sy;
-
-    // Let's have at least some device units margin
-    float marginX = 50;
-    float marginY = 50;
-
-    // Add the margin to the graphic size
-    maxX += ( 2 * marginX );
-    maxY += ( 2 * marginY );
-
-    // Get the size of the DC in pixels
-    int w, h;
-    dc->GetSize( &w, &h );
-
-    // Calculate a suitable scaling factor
-    float scaleX = (float) ( w / maxX );
-    float scaleY = (float) ( h / maxY );
-
-    // Use x or y scaling factor, whichever fits on the DC
-    float actualScale = wxMin(scaleX,scaleY);
-
-    // Calculate the position on the DC for centring the graphic
-    float posX = (float) ( ( w - ( maxX * actualScale ) ) / 2.0 );
-    float posY = (float) ( ( h - ( maxY * actualScale ) ) / 2.0 );
-
-    posX = wxMax(posX, marginX);
-    posY = wxMax(posY, marginY);
-
-    // Set the scale and origin
-    dc->SetUserScale( actualScale, actualScale );
-    dc->SetDeviceOrigin( (long) posX, (long) posY );
-
-//  Get the latest bitmap as rendered by the ChartCanvas
-
-    if(g_bopengl) {
-        int gsx = cc1->GetglCanvas()->GetSize().x;
-        int gsy = cc1->GetglCanvas()->GetSize().y;
-
-        unsigned char *buffer = (unsigned char *)malloc( gsx * gsy * 3 );
-        glReadPixels(0, 0, gsx, gsy, GL_RGB, GL_UNSIGNED_BYTE, buffer );
-        wxImage image( gsx,gsy );
-        image.SetData(buffer);
-        wxImage mir_imag = image.Mirror( false );
-        wxBitmap bmp( mir_imag );
-        wxMemoryDC mdc;
-        mdc.SelectObject( bmp );
-        dc->Blit( 0, 0, bmp.GetWidth(), bmp.GetHeight(), &mdc, 0, 0 );
-        mdc.SelectObject( wxNullBitmap );
-    }
-    else {
-
-//  And Blit/scale it onto the Printer DC
-        wxMemoryDC mdc;
-        mdc.SelectObject( *( cc1->pscratch_bm ) );
-
-        dc->Blit( 0, 0, cc1->pscratch_bm->GetWidth(), cc1->pscratch_bm->GetHeight(), &mdc, 0, 0 );
-
-        mdc.SelectObject( wxNullBitmap );
-    }
-
-}
-
 //---------------------------------------------------------------------------------------
 //
 //        GPS Positioning Device Detection
@@ -8513,56 +8409,6 @@ double AnchorDistFix( double const d, double const AnchorPointMinDist,
 }
 
 //      Auto timed popup Window implementation
-
-BEGIN_EVENT_TABLE(TimedPopupWin, wxWindow) EVT_PAINT(TimedPopupWin::OnPaint)
-EVT_TIMER(POPUP_TIMER, TimedPopupWin::OnTimer)
-
-END_EVENT_TABLE()
-
-// Define a constructor
-TimedPopupWin::TimedPopupWin( wxWindow *parent, int timeout ) :
-wxWindow( parent, wxID_ANY, wxPoint( 0, 0 ), wxSize( 1, 1 ), wxNO_BORDER )
-{
-    m_pbm = NULL;
-
-    m_timer_timeout.SetOwner( this, POPUP_TIMER );
-    m_timeout_sec = timeout;
-    isActive = false;
-    Hide();
-}
-
-TimedPopupWin::~TimedPopupWin()
-{
-    delete m_pbm;
-}
-void TimedPopupWin::OnTimer( wxTimerEvent& event )
-{
-    if( IsShown() )
-        Hide();
-}
-
-
-void TimedPopupWin::SetBitmap( wxBitmap &bmp )
-{
-    delete m_pbm;
-    m_pbm = new wxBitmap( bmp );
-
-    // Retrigger the auto timeout
-    if( m_timeout_sec > 0 )
-        m_timer_timeout.Start( m_timeout_sec * 1000, wxTIMER_ONE_SHOT );
-}
-
-void TimedPopupWin::OnPaint( wxPaintEvent& event )
-{
-    int width, height;
-    GetClientSize( &width, &height );
-    wxPaintDC dc( this );
-
-    wxMemoryDC mdc;
-    mdc.SelectObject( *m_pbm );
-    dc.Blit( 0, 0, width, height, &mdc, 0, 0 );
-
-}
 
 
 //      Console supporting printf functionality for Windows GUI app

@@ -72,24 +72,25 @@ void DimeControl(wxWindow* ctrl, wxColour col, wxColour col1, wxColour back_colo
 //----------------------------------------------------------------------------
 //    Forward Declarations
 //----------------------------------------------------------------------------
-      class Route;
-      class TCWin;
-      class RoutePoint;
-      class SelectItem;
-      class wxBoundingBox;
-      class ocpnBitmap;
-      class WVSChart;
-      class MyFrame;
-      class ChartBaseBSB;
-      class ChartBase;
-      class AIS_Target_Data;
-      class S57ObjectTree;
-      class S57ObjectDesc;
-      class RolloverWin;
-      class Quilt;
-      class PixelCache;
-      class ChInfoWin;
-      class glChartCanvas;
+class Route;
+class TCWin;
+class RoutePoint;
+class SelectItem;
+class wxBoundingBox;
+class ocpnBitmap;
+class WVSChart;
+class MyFrame;
+class ChartBaseBSB;
+class ChartBase;
+class AIS_Target_Data;
+class S57ObjectTree;
+class S57ObjectDesc;
+class RolloverWin;
+class Quilt;
+class PixelCache;
+class ChInfoWin;
+class glChartCanvas;
+class TimedPopupWin;
 
 enum                                //  specify the render behaviour of SetViewPoint()
 {

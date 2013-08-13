@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  OpenCP Route printout
- * Author:   Pavel Saviankou
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -41,8 +39,10 @@ using namespace std; // FIXME: 'using namespace' must not be used in header file
 #include "ocpn_types.h"
 #include "navutil.h"
 #include "printtable.h"
+#include "MyPrintout.h"
 
-class MyRoutePrintout : public MyPrintout {
+class MyRoutePrintout : public MyPrintout
+{
 public:
     MyRoutePrintout( std::vector<bool> _toPrintOut,
                      Route*            route,
@@ -98,7 +98,8 @@ protected:
 #define ID_ROUTEPRINT_SELECTION_CANCEL 9002
 
 
-class RoutePrintSelection : public wxDialog {
+class RoutePrintSelection : public wxDialog
+{
     DECLARE_DYNAMIC_CLASS( RoutePrintSelection )
     DECLARE_EVENT_TABLE()
 

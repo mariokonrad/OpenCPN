@@ -36,6 +36,7 @@
 #include <wx/listimpl.cpp>
 
 #include "chcanv.h"
+#include "TimedPopupWin.h"
 #include "dychart.h"
 #include "geodesic.h"
 #include "styles.h"

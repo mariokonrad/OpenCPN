@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  OpenCPN Main wxWidgets Program
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -45,8 +43,7 @@ WX_DEFINE_ARRAY_INT(int, ArrayOfInts);
 #include "cpl_error.h"
 
 //    Global Static error reporting function
-extern "C" void MyCPLErrorHandler( CPLErr eErrClass, int nError,
-                             const char * pszErrorMsg );
+extern "C" void MyCPLErrorHandler(CPLErr eErrClass, int nError, const char * pszErrorMsg);
 #endif
 
 wxArrayString *EnumerateSerialPorts(void);
@@ -55,7 +52,7 @@ wxColour GetGlobalColor(wxString colorName);
 int GetApplicationMemoryUse(void);
 
 // The point for anchor watch should really be a class...
-double AnchorDistFix( double const d, double const AnchorPointMinDist, double const AnchorPointMaxDist);   //  pjotrc 2010.02.22
+double AnchorDistFix(double const d, double const AnchorPointMinDist, double const AnchorPointMaxDist);   //  pjotrc 2010.02.22
 
 class NMEA_Msg_Container;
 WX_DECLARE_STRING_HASH_MAP( NMEA_Msg_Container*, MsgPriorityHash );
@@ -82,27 +79,27 @@ const int ID_TOOLBAR = 500;
 
 enum
 {
-      ID_ZOOMIN = 1550,
-      ID_ZOOMOUT,
-      ID_STKUP,
-      ID_STKDN,
-      ID_ROUTE,
-      ID_FOLLOW,
-      ID_SETTINGS,
-      ID_AIS,           // pjotrc 2010.02.09
-      ID_TEXT,
-      ID_CURRENT,
-      ID_TIDE,
-      ID_HELP,
-      ID_TBEXIT,
-      ID_TBSTAT,
-      ID_PRINT,
-      ID_COLSCHEME,
-      ID_ROUTEMANAGER,
-      ID_TRACK,
-      ID_TBSTATBOX,
-      ID_MOB,
-      ID_PLUGIN_BASE
+	ID_ZOOMIN = 1550,
+	ID_ZOOMOUT,
+	ID_STKUP,
+	ID_STKDN,
+	ID_ROUTE,
+	ID_FOLLOW,
+	ID_SETTINGS,
+	ID_AIS,           // pjotrc 2010.02.09
+	ID_TEXT,
+	ID_CURRENT,
+	ID_TIDE,
+	ID_HELP,
+	ID_TBEXIT,
+	ID_TBSTAT,
+	ID_PRINT,
+	ID_COLSCHEME,
+	ID_ROUTEMANAGER,
+	ID_TRACK,
+	ID_TBSTATBOX,
+	ID_MOB,
+	ID_PLUGIN_BASE
 
 };
 
@@ -111,21 +108,21 @@ static const long TOOLBAR_STYLE = wxTB_FLAT | wxTB_DOCKABLE | wxTB_TEXT ;
 
 enum
 {
-    IDM_TOOLBAR_TOGGLETOOLBARSIZE = 200,
-    IDM_TOOLBAR_TOGGLETOOLBARORIENT,
-    IDM_TOOLBAR_TOGGLETOOLBARROWS,
-    IDM_TOOLBAR_ENABLEPRINT,
-    IDM_TOOLBAR_DELETEPRINT,
-    IDM_TOOLBAR_INSERTPRINT,
-    IDM_TOOLBAR_TOGGLEHELP,
-    IDM_TOOLBAR_TOGGLE_TOOLBAR,
-    IDM_TOOLBAR_TOGGLE_ANOTHER_TOOLBAR,
-    IDM_TOOLBAR_CHANGE_TOOLTIP,
-    IDM_TOOLBAR_SHOW_TEXT,
-    IDM_TOOLBAR_SHOW_ICONS,
-    IDM_TOOLBAR_SHOW_BOTH,
+	IDM_TOOLBAR_TOGGLETOOLBARSIZE = 200,
+	IDM_TOOLBAR_TOGGLETOOLBARORIENT,
+	IDM_TOOLBAR_TOGGLETOOLBARROWS,
+	IDM_TOOLBAR_ENABLEPRINT,
+	IDM_TOOLBAR_DELETEPRINT,
+	IDM_TOOLBAR_INSERTPRINT,
+	IDM_TOOLBAR_TOGGLEHELP,
+	IDM_TOOLBAR_TOGGLE_TOOLBAR,
+	IDM_TOOLBAR_TOGGLE_ANOTHER_TOOLBAR,
+	IDM_TOOLBAR_CHANGE_TOOLTIP,
+	IDM_TOOLBAR_SHOW_TEXT,
+	IDM_TOOLBAR_SHOW_ICONS,
+	IDM_TOOLBAR_SHOW_BOTH,
 
-    ID_COMBO = 1000
+	ID_COMBO = 1000
 };
 
 
@@ -160,18 +157,18 @@ class DataStream;
 //      A class to contain NMEA messages, their receipt time, and their source priority
 class NMEA_Msg_Container
 {
-public:
-    wxDateTime  receipt_time;
-    int         current_priority;
-    wxString    stream_name;
+	public:
+		wxDateTime receipt_time;
+		int current_priority;
+		wxString stream_name;
 };
 
 //    A small class used in an array to describe chart directories
 class ChartDirInfo
 {
-      public:
-      wxString    fullpath;
-      wxString    magic_number;
+	public:
+		wxString fullpath;
+		wxString magic_number;
 };
 
 WX_DECLARE_OBJARRAY(ChartDirInfo, ArrayOfCDI);
@@ -180,258 +177,232 @@ WX_DECLARE_OBJARRAY(wxRect, ArrayOfRect);
 
 class MyApp: public wxApp
 {
-  public:
-    bool OnInit();
-    int OnExit();
-    void OnInitCmdLine(wxCmdLineParser& parser);
-    bool OnCmdLineParsed(wxCmdLineParser& parser);
-    void OnActivateApp(wxActivateEvent& event);
+		DECLARE_EVENT_TABLE()
 
-    void TrackOff(void);
-    
-    wxSingleInstanceChecker *m_checker;
+	public:
+		bool OnInit();
+		int OnExit();
+		void OnInitCmdLine(wxCmdLineParser& parser);
+		bool OnCmdLineParsed(wxCmdLineParser& parser);
+		void OnActivateApp(wxActivateEvent& event);
 
-    DECLARE_EVENT_TABLE()
+		void TrackOff(void);
 
+		wxSingleInstanceChecker * m_checker;
 };
 
 class MyFrame: public wxFrame
 {
-  public:
-    MyFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size, long style);
+	public:
+		MyFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size, long style);
 
-    ~MyFrame();
+		~MyFrame();
 
-    int GetApplicationMemoryUse(void);
+		int GetApplicationMemoryUse(void);
 
-    void OnEraseBackground(wxEraseEvent& event);
-    void OnActivate(wxActivateEvent& event);
-    void OnMaximize(wxMaximizeEvent& event);
-    void OnCloseWindow(wxCloseEvent& event);
-    void OnExit(wxCommandEvent& event);
-    void OnSize(wxSizeEvent& event);
-    void OnMove(wxMoveEvent& event);
-    void OnFrameTimer1(wxTimerEvent& event);
-    bool DoChartUpdate(void);
-    void OnEvtTHREADMSG(wxCommandEvent& event);
-    void OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event);
-    void OnEvtPlugInMessage( OCPN_MsgEvent & event );
-    void OnMemFootTimer(wxTimerEvent& event);
+		void OnEraseBackground(wxEraseEvent& event);
+		void OnActivate(wxActivateEvent& event);
+		void OnMaximize(wxMaximizeEvent& event);
+		void OnCloseWindow(wxCloseEvent& event);
+		void OnExit(wxCommandEvent& event);
+		void OnSize(wxSizeEvent& event);
+		void OnMove(wxMoveEvent& event);
+		void OnFrameTimer1(wxTimerEvent& event);
+		bool DoChartUpdate(void);
+		void OnEvtTHREADMSG(wxCommandEvent& event);
+		void OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event);
+		void OnEvtPlugInMessage( OCPN_MsgEvent & event );
+		void OnMemFootTimer(wxTimerEvent& event);
 
-    void UpdateAllFonts(void);
-    void PositionConsole(void);
-    void OnToolLeftClick(wxCommandEvent& event);
-    void ClearRouteTool();
-    void DoStackUp(void);
-    void DoStackDown(void);
+		void UpdateAllFonts(void);
+		void PositionConsole(void);
+		void OnToolLeftClick(wxCommandEvent& event);
+		void ClearRouteTool();
+		void DoStackUp(void);
+		void DoStackDown(void);
 
-    void MouseEvent(wxMouseEvent& event);
-    void SelectChartFromStack(int index,  bool bDir = false,  ChartTypeEnum New_Type = CHART_TYPE_DONTCARE, ChartFamilyEnum New_Family = CHART_FAMILY_DONTCARE);
-    void SelectdbChart(int dbindex);
-    void SelectQuiltRefChart(int selected_index);
-    void SelectQuiltRefdbChart(int db_index);
+		void MouseEvent(wxMouseEvent& event);
+		void SelectChartFromStack(int index,  bool bDir = false,  ChartTypeEnum New_Type = CHART_TYPE_DONTCARE, ChartFamilyEnum New_Family = CHART_FAMILY_DONTCARE);
+		void SelectdbChart(int dbindex);
+		void SelectQuiltRefChart(int selected_index);
+		void SelectQuiltRefdbChart(int db_index);
 
-    void JumpToPosition(double lat, double lon, double scale);
+		void JumpToPosition(double lat, double lon, double scale);
 
-    void ProcessCanvasResize(void);
+		void ProcessCanvasResize(void);
 
-    void ApplyGlobalSettings(bool bFlyingUpdate, bool bnewtoolbar);
-    void SetChartThumbnail(int index);
-    int  DoOptionsDialog();
-    int  ProcessOptionsDialog(int resultFlags , options* dialog );
-    void DoPrint(void);
-    void StopSockets(void);
-    void ResumeSockets(void);
-    void TogglebFollow(void);
-    void ToggleFullScreen();
-    void SetbFollow(void);
-    void ClearbFollow(void);
-    void ToggleChartOutlines(void);
-    void ToggleENCText(void);
-    void ToggleSoundings(void);
-    void ToggleRocks(void);
-    bool ToggleLights( bool doToggle = true, bool temporary = false );
-    void ToggleAnchor(void);
-    void TrackOn(void);
-    Track *TrackOff(bool do_add_point = false);
-    void TrackMidnightRestart(void);
-    void ToggleColorScheme();
-    int GetnChartStack(void);
-    void SetToolbarItemState ( int tool_id, bool state );
-    void SetToolbarItemBitmaps ( int tool_id, wxBitmap *bitmap, wxBitmap *bmpDisabled );
-    void ToggleQuiltMode(void);
-    void ToggleCourseUp(void);
-    void SetQuiltMode(bool bquilt);
-    bool GetQuiltMode(void);
-    void UpdateControlBar(void);
-    void RemoveChartFromQuilt(int dbIndex);
+		void ApplyGlobalSettings(bool bFlyingUpdate, bool bnewtoolbar);
+		void SetChartThumbnail(int index);
+		int  DoOptionsDialog();
+		int  ProcessOptionsDialog(int resultFlags , options* dialog );
+		void DoPrint(void);
+		void StopSockets(void);
+		void ResumeSockets(void);
+		void TogglebFollow(void);
+		void ToggleFullScreen();
+		void SetbFollow(void);
+		void ClearbFollow(void);
+		void ToggleChartOutlines(void);
+		void ToggleENCText(void);
+		void ToggleSoundings(void);
+		void ToggleRocks(void);
+		bool ToggleLights( bool doToggle = true, bool temporary = false );
+		void ToggleAnchor(void);
+		void TrackOn(void);
+		Track *TrackOff(bool do_add_point = false);
+		void TrackMidnightRestart(void);
+		void ToggleColorScheme();
+		int GetnChartStack(void);
+		void SetToolbarItemState ( int tool_id, bool state );
+		void SetToolbarItemBitmaps ( int tool_id, wxBitmap *bitmap, wxBitmap *bmpDisabled );
+		void ToggleQuiltMode(void);
+		void ToggleCourseUp(void);
+		void SetQuiltMode(bool bquilt);
+		bool GetQuiltMode(void);
+		void UpdateControlBar(void);
+		void RemoveChartFromQuilt(int dbIndex);
 
-    void SubmergeToolbar(void);
-    void SubmergeToolbarIfOverlap(int x, int y, int margin = 0);
-    void SurfaceToolbar(void);
+		void SubmergeToolbar(void);
+		void SubmergeToolbarIfOverlap(int x, int y, int margin = 0);
+		void SurfaceToolbar(void);
 
-    void HandlePianoClick(int selected_index, int selected_dbIndex);
-    void HandlePianoRClick(int x, int y,int selected_index, int selected_dbIndex);
-    void HandlePianoRollover(int selected_index, int selected_dbIndex);
-    void HandlePianoRolloverIcon(int selected_index, int selected_dbIndex);
+		void HandlePianoClick(int selected_index, int selected_dbIndex);
+		void HandlePianoRClick(int x, int y,int selected_index, int selected_dbIndex);
+		void HandlePianoRollover(int selected_index, int selected_dbIndex);
+		void HandlePianoRolloverIcon(int selected_index, int selected_dbIndex);
 
-    void PianoPopupMenu ( int x, int y, int selected_index, int selected_dbIndex );
-    void OnPianoMenuDisableChart(wxCommandEvent& event);
-    void OnPianoMenuEnableChart(wxCommandEvent& event);
+		void PianoPopupMenu ( int x, int y, int selected_index, int selected_dbIndex );
+		void OnPianoMenuDisableChart(wxCommandEvent& event);
+		void OnPianoMenuEnableChart(wxCommandEvent& event);
 
-    void SetGroupIndex(int index);
+		void SetGroupIndex(int index);
 
-    double GetBestVPScale(ChartBase *pchart);
+		double GetBestVPScale(ChartBase *pchart);
 
-    ChartCanvas *GetCanvasWindow(){ return m_pchart_canvas; }
-    void SetCanvasWindow(ChartCanvas *pcanv){ m_pchart_canvas = pcanv; }
+		ChartCanvas *GetCanvasWindow(){ return m_pchart_canvas; }
+		void SetCanvasWindow(ChartCanvas *pcanv){ m_pchart_canvas = pcanv; }
 
-    ColorScheme GetColorScheme();
-    void SetAndApplyColorScheme(ColorScheme cs);
+		ColorScheme GetColorScheme();
+		void SetAndApplyColorScheme(ColorScheme cs);
 
-    void OnFrameTCTimer(wxTimerEvent& event);
-    void OnFrameCOGTimer(wxTimerEvent& event);
-    void SetupQuiltMode(void);
+		void OnFrameTCTimer(wxTimerEvent& event);
+		void OnFrameCOGTimer(wxTimerEvent& event);
+		void SetupQuiltMode(void);
 
-    void ChartsRefresh(int dbi_hint, ViewPort &vp, bool b_purge = true);
+		void ChartsRefresh(int dbi_hint, ViewPort &vp, bool b_purge = true);
 
-    bool CheckGroup(int igroup);
+		bool CheckGroup(int igroup);
 
-    void TouchAISActive(void);
-    void UpdateAISTool(void);
+		void TouchAISActive(void);
+		void UpdateAISTool(void);
 
-    wxStatusBar         *m_pStatusBar;
-    int                 nRoute_State;
-    int                 nBlinkerTick;
-    bool                m_bTimeIsSet;
+		wxStatusBar         *m_pStatusBar;
+		int                 nRoute_State;
+		int                 nBlinkerTick;
+		bool                m_bTimeIsSet;
 
-    wxTimer             FrameTCTimer;
-    wxTimer             FrameTimer1;
-    wxTimer             FrameCOGTimer;
-    wxTimer             MemFootTimer;
+		wxTimer             FrameTCTimer;
+		wxTimer             FrameTimer1;
+		wxTimer             FrameCOGTimer;
+		wxTimer             MemFootTimer;
 
-    //      PlugIn support
-    int GetNextToolbarToolId(){return m_next_available_plugin_tool_id;}
-    void RequestNewToolbarArgEvent( wxCommandEvent & event ){ return RequestNewToolbar(); }
-    void RequestNewToolbar();
+		//      PlugIn support
+		int GetNextToolbarToolId(){return m_next_available_plugin_tool_id;}
+		void RequestNewToolbarArgEvent( wxCommandEvent & event ){ return RequestNewToolbar(); }
+		void RequestNewToolbar();
 
-    void ActivateMOB(void);
-    void UpdateGPSCompassStatusBox(bool b_force_new = false);
-    bool UpdateChartDatabaseInplace(ArrayOfCDI &DirArray,
-                                    bool b_force, bool b_prog,
-                                    const wxString &ChartListFileName);
+		void ActivateMOB(void);
+		void UpdateGPSCompassStatusBox(bool b_force_new = false);
+		bool UpdateChartDatabaseInplace(ArrayOfCDI &DirArray,
+				bool b_force, bool b_prog,
+				const wxString &ChartListFileName);
 
-    bool                m_bdefer_resize;
-    wxSize              m_defer_size;
+		bool                m_bdefer_resize;
+		wxSize              m_defer_size;
 
-  private:
-    void ODoSetSize(void);
-    void DoCOGSet(void);
+	private:
+		void ODoSetSize(void);
+		void DoCOGSet(void);
 
-        //      Toolbar support
-    ocpnToolBarSimple *CreateAToolbar();
-    void DestroyMyToolbar();
-    void UpdateToolbar(ColorScheme cs);
+		//      Toolbar support
+		ocpnToolBarSimple *CreateAToolbar();
+		void DestroyMyToolbar();
+		void UpdateToolbar(ColorScheme cs);
 
-    void EnableToolbar(bool newstate);
+		void EnableToolbar(bool newstate);
 
-    bool CheckAndAddPlugInTool(ocpnToolBarSimple *tb);
-    bool AddDefaultPositionPlugInTools(ocpnToolBarSimple *tb);
-    void FilterCogSog(void);
-    void SetChartUpdatePeriod(ViewPort &vp);
+		bool CheckAndAddPlugInTool(ocpnToolBarSimple *tb);
+		bool AddDefaultPositionPlugInTools(ocpnToolBarSimple *tb);
+		void FilterCogSog(void);
+		void SetChartUpdatePeriod(ViewPort &vp);
 
-    void ApplyGlobalColorSchemetoStatusBar(void);
-    void PostProcessNNEA(bool pos_valid, const wxString &sfixtime);
+		void ApplyGlobalColorSchemetoStatusBar(void);
+		void PostProcessNNEA(bool pos_valid, const wxString &sfixtime);
 
-    void ScrubGroupArray();
-    wxString GetGroupName(int igroup);
-    void LoadHarmonics();
+		void ScrubGroupArray();
+		wxString GetGroupName(int igroup);
+		void LoadHarmonics();
 
-    bool EvalPriority(const wxString & message, DataStream *pDS );
+		bool EvalPriority(const wxString & message, DataStream *pDS );
 
-    int                 m_StatusBarFieldCount;
+		int                 m_StatusBarFieldCount;
 
-    ChartCanvas         *m_pchart_canvas;
+		ChartCanvas         *m_pchart_canvas;
 
-    NMEA0183        m_NMEA0183;                 // Used to parse messages from NMEA threads
+		NMEA0183        m_NMEA0183;                 // Used to parse messages from NMEA threads
 
-    wxDateTime       m_MMEAeventTime;
-    unsigned long    m_ulLastNEMATicktime;
+		wxDateTime       m_MMEAeventTime;
+		unsigned long    m_ulLastNEMATicktime;
 
-    wxMutex          m_mutexNMEAEvent;         // Mutex to handle static data from NMEA threads
+		wxMutex          m_mutexNMEAEvent;         // Mutex to handle static data from NMEA threads
 
-    wxString         m_last_reported_chart_name;
-    wxString         m_last_reported_chart_pubdate;
+		wxString         m_last_reported_chart_name;
+		wxString         m_last_reported_chart_pubdate;
 
-    double           COGTable[MAX_COG_AVERAGE_SECONDS];
+		double           COGTable[MAX_COG_AVERAGE_SECONDS];
 
-    wxString         m_lastAISiconName;
+		wxString         m_lastAISiconName;
 
-    bool             m_toolbar_scale_tools_shown;
+		bool             m_toolbar_scale_tools_shown;
 
-    //      Plugin Support
-    int                 m_next_available_plugin_tool_id;
+		//      Plugin Support
+		int                 m_next_available_plugin_tool_id;
 
-    double              m_COGFilterLast;
-    double              COGFilterTable[MAX_COGSOG_FILTER_SECONDS];
-    double              SOGFilterTable[MAX_COGSOG_FILTER_SECONDS];
+		double              m_COGFilterLast;
+		double              COGFilterTable[MAX_COGSOG_FILTER_SECONDS];
+		double              SOGFilterTable[MAX_COGSOG_FILTER_SECONDS];
 
-    bool                m_bpersistent_quilt;
-    int                 m_ChartUpdatePeriod;
-    bool                m_last_bGPSValid;
+		bool                m_bpersistent_quilt;
+		int                 m_ChartUpdatePeriod;
+		bool                m_last_bGPSValid;
 
-    wxString            prev_locale;
-    bool                bPrevQuilt;
-    bool                bPrevFullScreenQuilt;
-    bool                bPrevOGL;
+		wxString            prev_locale;
+		bool                bPrevQuilt;
+		bool                bPrevFullScreenQuilt;
+		bool                bPrevOGL;
 
-    MsgPriorityHash     NMEA_Msg_Hash;
-    wxString            m_VDO_accumulator;
-    
-    time_t              m_fixtime;
+		MsgPriorityHash     NMEA_Msg_Hash;
+		wxString            m_VDO_accumulator;
 
-    DECLARE_EVENT_TABLE()
+		time_t              m_fixtime;
+
+		DECLARE_EVENT_TABLE()
 };
-
-//--------------------------------------------------------------------
-//          Printing Support
-//--------------------------------------------------------------------
-
-class MyPrintout: public wxPrintout
-{
- public:
-  MyPrintout(const wxChar *title = _T("My printout")):wxPrintout(title){}
-  virtual
-  bool OnPrintPage(int page);
-  virtual
-  bool HasPage(int page);
-  virtual
-  bool OnBeginDocument(int startPage, int endPage);
-  virtual
-  void GetPageInfo(int *minPage, int *maxPage, int *selPageFrom, int *selPageTo);
-
-  void DrawPageOne(wxDC *dc);
-
-
-
-
-};
-
 
 //      A global definition for window, timer and other ID's as needed.
 enum {
-    ID_NMEA_WINDOW      = wxID_HIGHEST,
-    ID_AIS_WINDOW,
-    FRAME_TIMER_1,
-    FRAME_TIMER_2,
-    TIMER_AIS1,
-    TIMER_AISAUDIO,
-    AIS_SOCKET_ID,
-    FRAME_TIMER_DOG,
-    FRAME_TC_TIMER,
-    FRAME_COG_TIMER,
-    MEMORY_FOOTPRINT_TIMER,
-    ID_NMEA_THREADMSG
+	ID_NMEA_WINDOW      = wxID_HIGHEST,
+	ID_AIS_WINDOW,
+	FRAME_TIMER_1,
+	FRAME_TIMER_2,
+	TIMER_AIS1,
+	TIMER_AISAUDIO,
+	AIS_SOCKET_ID,
+	FRAME_TIMER_DOG,
+	FRAME_TC_TIMER,
+	FRAME_COG_TIMER,
+	MEMORY_FOOTPRINT_TIMER,
+	ID_NMEA_THREADMSG
 
 };
 
@@ -440,52 +411,22 @@ enum {
 //-----------------------------------------------------------------------
 class DummyTextCtrl: public wxTextCtrl
 {
-public:
-      DummyTextCtrl(wxWindow *parent, wxWindowID id);
-      void OnChar(wxKeyEvent &event);
-      void OnMouseEvent(wxMouseEvent& event);
+	public:
+		DummyTextCtrl(wxWindow *parent, wxWindowID id);
+		void OnChar(wxKeyEvent &event);
+		void OnMouseEvent(wxMouseEvent& event);
 
-      wxTimer     m_MouseWheelTimer;
-      int         m_mouse_wheel_oneshot;
-      int         m_last_wheel_dir;
+		wxTimer m_MouseWheelTimer;
+		int m_mouse_wheel_oneshot;
+		int m_last_wheel_dir;
 
-      DECLARE_EVENT_TABLE()
+		DECLARE_EVENT_TABLE()
 };
 
 
 extern int OCPNMessageBox(wxWindow *parent,
-                          const wxString& message,
-                          const wxString& caption = _T("Message"),
-                          int style = wxOK, int x = -1, int y = -1);
-
-
-//----------------------------------------------------------------------------
-// Generic Auto Timed Window
-// Belongs to the creator, not deleted automatically on applicaiton close
-//----------------------------------------------------------------------------
-
-class TimedPopupWin: public wxWindow
-{
-public:
-    TimedPopupWin( wxWindow *parent, int timeout = -1 );
-    ~TimedPopupWin();
-    
-    void OnPaint( wxPaintEvent& event );
-    
-    void SetBitmap( wxBitmap &bmp );
-    wxBitmap* GetBitmap() { return m_pbm; }
-    void OnTimer( wxTimerEvent& event );
-    bool IsActive() { return isActive; }
-    void IsActive( bool state ) { isActive = state; }
-    
-private:
-    wxBitmap *m_pbm;
-    wxTimer m_timer_timeout;
-    int m_timeout_sec;
-    bool isActive;
-    
-    DECLARE_EVENT_TABLE()
-};
-
+		const wxString& message,
+		const wxString& caption = _T("Message"),
+		int style = wxOK, int x = -1, int y = -1);
 
 #endif

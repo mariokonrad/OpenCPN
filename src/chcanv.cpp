@@ -40,7 +40,7 @@
 #include "dychart.h"
 #include "geodesic.h"
 #include "styles.h"
-#include "routeman.h"
+#include "Routeman.h"
 #include "StatWin.h"
 #include "navutil.h"
 #include "Track.h"

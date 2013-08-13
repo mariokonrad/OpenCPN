@@ -51,7 +51,7 @@
 #include "georef.h"
 #include "cutil.h"
 #include "styles.h"
-#include "routeman.h"
+#include "Routeman.h"
 #include "WayPointman.h"
 #include "routeprop.h"
 #include "s52utils.h"

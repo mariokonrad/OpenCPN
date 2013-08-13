@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "CDI.h"
-#include "routeman.h"
+#include "Routeman.h"
 #include <math.h>
 
 extern Routeman * g_pRouteMan;

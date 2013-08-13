@@ -40,10 +40,10 @@
 #include <math.h>
 #include <time.h>
 
+#include "Routeman.h"
 #include "dychart.h"
 #include "styles.h"
 #include "CDI.h"
-#include "routeman.h"
 #include "WayPointman.h"
 #include "concanv.h"
 #include "navutil.h"
@@ -52,6 +52,7 @@
 #include "routemanagerdialog.h"
 #include "pluginmanager.h"
 #include "multiplexer.h"
+#include "Select.h"
 #include "MarkIcon.h"
 
 extern ConsoleCanvas * console;

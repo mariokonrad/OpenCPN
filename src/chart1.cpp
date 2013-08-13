@@ -78,7 +78,7 @@
 #include "navutil.h"
 #include "Track.h"
 #include "styles.h"
-#include "routeman.h"
+#include "Routeman.h"
 #include "StatWin.h"
 #include "PianoWin.h"
 #include "concanv.h"

@@ -400,7 +400,7 @@ SET(HDRS
 		include/georef.h
 		include/navutil.h
 		src/Track.h
-		include/routeman.h
+		src/Routeman.h
 		src/WayPointman.h
 		include/routemanagerdialog.h
 		include/routeprop.h
@@ -505,7 +505,7 @@ SET(SRCS
 		src/georef.cpp
 		src/navutil.cpp
 		src/Track.cpp
-		src/routeman.cpp
+		src/Routeman.cpp
 		src/WayPointman.cpp
 		src/routemanagerdialog.cpp
 		src/routeprop.cpp

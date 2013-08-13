@@ -24,7 +24,7 @@
 #include "WayPointman.h"
 #include "RoutePoint.h"
 #include "MarkIcon.h"
-#include "routeman.h"
+#include "Routeman.h"
 #include "Select.h"
 #include "navutil.h"
 

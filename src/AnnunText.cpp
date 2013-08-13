@@ -24,7 +24,7 @@
 #include "AnnunText.h"
 #include "FontMgr.h"
 #include "styles.h"
-#include "routeman.h"
+#include "Routeman.h"
 
 extern Routeman * g_pRouteMan;
 extern ocpnStyle::StyleManager * g_StyleManager;

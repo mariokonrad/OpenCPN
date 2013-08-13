@@ -36,12 +36,13 @@
 #include "ocpn_types.h"
 #include "navutil.h"
 #include "styles.h"
-#include "routeman.h"
+#include "Routeman.h"
 #include "WayPointman.h"
 #include "routemanagerdialog.h"
 #include "tinyxml/tinyxml.h"
 #include "undo.h"
 #include "chcanv.h"
+#include "Select.h"
 
 extern Routeman * g_pRouteMan;
 extern MyConfig * pConfig;

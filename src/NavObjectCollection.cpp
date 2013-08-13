@@ -23,7 +23,7 @@
 
 #include "NavObjectCollection.h"
 #include "RoutePoint.h"
-#include "routeman.h"
+#include "Routeman.h"
 #include "WayPointman.h"
 #include "navutil.h"
 #include "Track.h"

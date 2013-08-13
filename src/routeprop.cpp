@@ -37,12 +37,13 @@
 #include <wx/stattext.h>
 
 #include "styles.h"
+#include "Select.h"
 #include "routeprop.h"
 #include "navutil.h"
 #include "Track.h"
 #include "georef.h"
 #include "chart1.h"
-#include "routeman.h"
+#include "Routeman.h"
 #include "WayPointman.h"
 #include "routemanagerdialog.h"
 #include "routeprintout.h"

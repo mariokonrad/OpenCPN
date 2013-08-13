@@ -39,7 +39,7 @@
 #include "chart1.h"
 #include "concanv.h"
 #include "styles.h"
-#include "routeman.h"
+#include "Routeman.h"
 #include "navutil.h"
 #include "FontMgr.h"
 

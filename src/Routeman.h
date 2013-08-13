@@ -28,7 +28,6 @@
 
 #include "chart1.h"
 #include "styles.h"
-#include "Select.h"
 #include "nmea0183.h"
 
 class Route;

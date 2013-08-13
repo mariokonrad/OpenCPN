@@ -29,19 +29,22 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-#include "wx/image.h"
-#include "wx/tokenzr.h"
+#include <wx/image.h>
+#include <wx/tokenzr.h>
 #include <wx/progdlg.h>
-
-#include "dychart.h"
+#include <wx/listimpl.cpp>
+#include <wx/dir.h>
+#include <wx/filename.h>
+#include <wx/stdpaths.h>
+#include <wx/apptrait.h>
 
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
 
-#include <wx/listimpl.cpp>
-
+#include "dychart.h"
 #include "styles.h"
+#include "CDI.h"
 #include "routeman.h"
 #include "concanv.h"
 #include "navutil.h"
@@ -51,11 +54,6 @@
 #include "pluginmanager.h"
 #include "multiplexer.h"
 #include "MarkIcon.h"
-
-#include <wx/dir.h>
-#include <wx/filename.h>
-#include <wx/stdpaths.h>
-#include <wx/apptrait.h>
 
 extern ConsoleCanvas    *console;
 

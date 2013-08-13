@@ -21,52 +21,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CONCANV_H__
-#define __CONCANV_H__
+#ifndef __CDI__H__
+#define __CDI__H__
 
-#include <wx/dialog.h>
+#include <wx/window.h>
 #include "chart1.h"
 
-#define ID_LEGROUTE 1000
-
-class AnnunText;
-class CDI;
-
-class ConsoleCanvas: public wxDialog
+class CDI : public wxWindow
 {
 		DECLARE_EVENT_TABLE()
 
 	public:
-		ConsoleCanvas(wxWindow * frame);
-		virtual ~ConsoleCanvas();
-		void UpdateRouteData();
-		void ShowWithFreshFonts(void);
-		void UpdateFonts(void);
-		void SetColorScheme(ColorScheme cs);
-		void LegRoute();
-		void OnContextMenu(wxContextMenuEvent & event);
-		void OnContextMenuSelection(wxCommandEvent & event);
-		void RefreshConsoleData(void);
+		CDI(wxWindow * parent, wxWindowID id, long style, const wxString & name);
 
-		wxWindow * m_pParent;
-		wxStaticText * pThisLegText;
-		wxBoxSizer * m_pitemBoxSizerLeg;
-
-		AnnunText * pXTE;
-		AnnunText * pBRG;
-		AnnunText * pRNG;
-		AnnunText * pTTG;
-		AnnunText * pVMG;
-		CDI * pCDI;
-
-		wxFont * pThisLegFont;
-		bool m_bShowRouteTotal;
-		bool m_bNeedClear;
-		wxBrush * pbackBrush;
-
-	private:
 		void OnPaint(wxPaintEvent & event);
-		void OnShow(wxShowEvent & event);
+		void SetColorScheme(ColorScheme cs);
+
+		wxBrush * m_pbackBrush;
+		wxBrush * m_proadBrush;
+		wxPen * m_proadPen;
 };
 
 #endif

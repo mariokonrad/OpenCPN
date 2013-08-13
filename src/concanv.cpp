@@ -1,8 +1,6 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Console Canvas
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -21,12 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- *
- *
- *
- */
-
+ **************************************************************************/
 
 #include "wx/wxprec.h"
 
@@ -34,13 +27,15 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-#include "dychart.h"
+#include <wx/datetime.h>
 
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include "wx/datetime.h"
 
+#include "dychart.h"
+#include "AnnunText.h"
+#include "CDI.h"
 #include "chart1.h"
 #include "concanv.h"
 #include "styles.h"
@@ -48,13 +43,11 @@
 #include "navutil.h"
 #include "FontMgr.h"
 
-extern Routeman         *g_pRouteMan;
-extern MyFrame          *gFrame;
-extern bool             g_bShowActiveRouteHighway;
-extern double           gCog;
-extern double           gSog;
-
-extern ocpnStyle::StyleManager* g_StyleManager;
+extern Routeman * g_pRouteMan;
+extern MyFrame * gFrame;
+extern bool g_bShowActiveRouteHighway;
+extern double gCog;
+extern double gSog;
 
 enum eMenuItems {
     ID_NAVLEG,
@@ -62,9 +55,6 @@ enum eMenuItems {
     ID_NAVHIGHWAY
 } menuItems;
 
-//------------------------------------------------------------------------------
-//    ConsoleCanvas Implementation
-//------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE(ConsoleCanvas, wxWindow)
     EVT_PAINT(ConsoleCanvas::OnPaint)
     EVT_SHOW(ConsoleCanvas::OnShow)
@@ -75,12 +65,12 @@ BEGIN_EVENT_TABLE(ConsoleCanvas, wxWindow)
 END_EVENT_TABLE()
 
 // Define a constructor for my canvas
-ConsoleCanvas::ConsoleCanvas( wxWindow *frame )
+ConsoleCanvas::ConsoleCanvas(wxWindow * frame)
 {
     pbackBrush = NULL;
     m_bNeedClear = false;
 
-long style = wxSIMPLE_BORDER | wxCLIP_CHILDREN;
+	long style = wxSIMPLE_BORDER | wxCLIP_CHILDREN;
 #ifdef __WXOSX__
     style |= wxSTAY_ON_TOP;
 #endif
@@ -142,7 +132,7 @@ ConsoleCanvas::~ConsoleCanvas()
     delete pCDI;
 }
 
-void ConsoleCanvas::SetColorScheme( ColorScheme cs )
+void ConsoleCanvas::SetColorScheme(ColorScheme cs)
 {
     pbackBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("DILG1"/*UIBDR*/) ),
             wxSOLID );
@@ -161,7 +151,7 @@ void ConsoleCanvas::SetColorScheme( ColorScheme cs )
     pCDI->SetColorScheme( cs );
 }
 
-void ConsoleCanvas::OnPaint( wxPaintEvent& event )
+void ConsoleCanvas::OnPaint(wxPaintEvent & event)
 {
     wxPaintDC dc( this );
 
@@ -177,7 +167,7 @@ void ConsoleCanvas::OnPaint( wxPaintEvent& event )
     if( ! g_bShowActiveRouteHighway ) pCDI->Hide();
 }
 
-void ConsoleCanvas::OnShow( wxShowEvent& event )
+void ConsoleCanvas::OnShow(wxShowEvent & event)
 {
     pCDI->Show( g_bShowActiveRouteHighway );
     m_pitemBoxSizerLeg->SetSizeHints( this );
@@ -194,7 +184,8 @@ void ConsoleCanvas::LegRoute()
     RefreshConsoleData();
 }
 
-void ConsoleCanvas::OnContextMenu( wxContextMenuEvent& event ) {
+void ConsoleCanvas::OnContextMenu(wxContextMenuEvent& event)
+{
     wxMenu* contextMenu = new wxMenu();
     wxMenuItem* btnLeg = new wxMenuItem(contextMenu, ID_NAVLEG, _("This Leg"), _T(""), wxITEM_RADIO );
     wxMenuItem* btnRoute = new wxMenuItem(contextMenu, ID_NAVROUTE, _("Full Route"), _T(""), wxITEM_RADIO );
@@ -232,7 +223,7 @@ void ConsoleCanvas::OnContextMenuSelection( wxCommandEvent& event ) {
             } else {
                 pCDI->Hide();
             }
-            m_pitemBoxSizerLeg->SetSizeHints( this );
+            m_pitemBoxSizerLeg->SetSizeHints(this);
             break;
         }
     }
@@ -374,7 +365,7 @@ void ConsoleCanvas::UpdateRouteData()
     }
 }
 
-void ConsoleCanvas::RefreshConsoleData( void )
+void ConsoleCanvas::RefreshConsoleData(void)
 {
     UpdateRouteData();
 
@@ -386,7 +377,7 @@ void ConsoleCanvas::RefreshConsoleData( void )
     pCDI->Refresh();
 }
 
-void ConsoleCanvas::ShowWithFreshFonts( void )
+void ConsoleCanvas::ShowWithFreshFonts(void)
 {
     Hide();
     Move( 0, 0 );
@@ -397,7 +388,7 @@ void ConsoleCanvas::ShowWithFreshFonts( void )
 
 }
 
-void ConsoleCanvas::UpdateFonts( void )
+void ConsoleCanvas::UpdateFonts(void)
 {
     pBRG->RefreshFonts();
     pXTE->RefreshFonts();
@@ -405,231 +396,10 @@ void ConsoleCanvas::UpdateFonts( void )
     pRNG->RefreshFonts();
     pVMG->RefreshFonts();
 
-    m_pitemBoxSizerLeg->SetSizeHints( this );
+    m_pitemBoxSizerLeg->SetSizeHints(this);
     Layout();
     Fit();
 
     Refresh();
-}
-
-//------------------------------------------------------------------------------
-//    AnnunText Implementation
-//------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE(AnnunText, wxWindow) EVT_PAINT(AnnunText::OnPaint)
-END_EVENT_TABLE()
-
-AnnunText::AnnunText( wxWindow *parent, wxWindowID id, const wxString& LegendElement,
-        const wxString& ValueElement ) :
-        wxWindow( parent, id, wxDefaultPosition, wxDefaultSize, wxNO_BORDER )
-{
-    m_label = _T("Label");
-    m_value = _T("-----");
-
-    m_plabelFont = wxTheFontList->FindOrCreateFont( 14, wxFONTFAMILY_SWISS, wxNORMAL, wxBOLD, FALSE,
-            wxString( _T("Arial Bold") ) );
-    m_pvalueFont = wxTheFontList->FindOrCreateFont( 24, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD,
-            FALSE, wxString( _T("helvetica") ), wxFONTENCODING_ISO8859_1 );
-
-    m_LegendTextElement = LegendElement;
-    m_ValueTextElement = ValueElement;
-
-    RefreshFonts();
-}
-
-AnnunText::~AnnunText()
-{
-}
-
-void AnnunText::CalculateMinSize( void )
-{
-    //    Calculate the minimum required size of the window based on text size
-
-    int wl = 50;            // reasonable defaults?
-    int hl = 20;
-    int wv = 50;
-    int hv = 20;
-
-    if( m_plabelFont ) GetTextExtent( _T("1234"), &wl, &hl, NULL, NULL, m_plabelFont );
-
-    if( m_pvalueFont ) GetTextExtent( _T("123.456"), &wv, &hv, NULL, NULL, m_pvalueFont );
-
-    wxSize min;
-    min.x = wl + wv;
-    min.y = (int) ( ( hl + hv ) * 1.2 );
-
-    SetMinSize( min );
-}
-
-void AnnunText::SetColorScheme( ColorScheme cs )
-{
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-    m_pbackBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("UBLCK") ), wxSOLID );
-
-    m_text_color = style->consoleFontColor;
-}
-
-void AnnunText::RefreshFonts()
-{
-    m_plabelFont = FontMgr::Get().GetFont( m_LegendTextElement );
-    m_pvalueFont = FontMgr::Get().GetFont( m_ValueTextElement );
-
-    CalculateMinSize();
-
-}
-
-void AnnunText::SetLegendElement( const wxString &element )
-{
-    m_LegendTextElement = element;
-}
-
-void AnnunText::SetValueElement( const wxString &element )
-{
-    m_ValueTextElement = element;
-}
-
-void AnnunText::SetALabel( const wxString &l )
-{
-    m_label = l;
-}
-
-void AnnunText::SetAValue( const wxString &v )
-{
-    m_value = v;
-}
-
-void AnnunText::OnPaint( wxPaintEvent& event )
-{
-    int sx, sy;
-    GetClientSize( &sx, &sy );
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-
-    //    Do the drawing on an off-screen memory DC, and blit into place
-    //    to avoid objectionable flashing
-    wxMemoryDC mdc;
-
-    wxBitmap m_bitmap( sx, sy, -1 );
-    mdc.SelectObject( m_bitmap );
-    mdc.SetBackground( *m_pbackBrush );
-    mdc.Clear();
-
-    if( style->consoleTextBackground.IsOk() ) mdc.DrawBitmap( style->consoleTextBackground, 0, 0 );
-
-    mdc.SetTextForeground( m_text_color );
-
-    if( m_plabelFont ) {
-        mdc.SetFont( *m_plabelFont );
-        if ( m_pbackBrush->GetColour() != FontMgr::Get().GetFontColor( _("Console Legend") ) )
-            mdc.SetTextForeground( FontMgr::Get().GetFontColor( _("Console Legend") ) );
-        mdc.DrawText( m_label, 5, 2 );
-    }
-
-    if( m_pvalueFont ) {
-        mdc.SetFont( *m_pvalueFont );
-        if ( m_pbackBrush->GetColour() != FontMgr::Get().GetFontColor( _("Console Value") ) )
-            mdc.SetTextForeground( FontMgr::Get().GetFontColor( _("Console Value") ) );
-
-        int w, h;
-        mdc.GetTextExtent( m_value, &w, &h );
-        int cw, ch;
-        mdc.GetSize( &cw, &ch );
-
-        mdc.DrawText( m_value, cw - w - 2, ch - h - 2 );
-    }
-
-    wxPaintDC dc( this );
-    dc.Blit( 0, 0, sx, sy, &mdc, 0, 0 );
-
-}
-//------------------------------------------------------------------------------
-//    CDI Implementation
-//------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE(CDI, wxWindow) EVT_PAINT(CDI::OnPaint)
-END_EVENT_TABLE()
-
-CDI::CDI( wxWindow *parent, wxWindowID id, long style, const wxString& name ) :
-        wxWindow( parent, id, wxDefaultPosition, wxDefaultSize, style, name )
-
-{
-    SetMinSize( wxSize( 10, 150 ) );
-}
-
-void CDI::SetColorScheme( ColorScheme cs )
-{
-    m_pbackBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("DILG2") ), wxSOLID );
-    m_proadBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("DILG1") ), wxSOLID );
-    m_proadPen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T("CHBLK") ), 1, wxSOLID );
-}
-
-void CDI::OnPaint( wxPaintEvent& event )
-{
-    int sx, sy;
-    GetClientSize( &sx, &sy );
-
-    //    Do the drawing on an off-screen memory DC, and blit into place
-    //    to avoid objectionable flashing
-    wxMemoryDC mdc;
-
-    wxBitmap m_bitmap( sx, sy, -1 );
-    mdc.SelectObject( m_bitmap );
-    mdc.SetBackground( *m_pbackBrush );
-    mdc.Clear();
-
-    int xp = sx / 2;
-    int yp = sy * 9 / 10;
-
-    int path_length = sy * 3;
-    int pix_per_xte = 120;
-
-    if( g_pRouteMan->GetpActiveRoute() ) {
-        double angle = 90 - ( g_pRouteMan->GetCurrentSegmentCourse() - gCog );
-
-        double dy = path_length * sin( angle * PI / 180. );
-        double dx = path_length * cos( angle * PI / 180. );
-
-        int xtedir;
-        xtedir = g_pRouteMan->GetXTEDir();
-        double xte = g_pRouteMan->GetCurrentXTEToActivePoint();
-
-        double ddy = xtedir * pix_per_xte * xte * sin( ( 90 - angle ) * PI / 180. );
-        double ddx = xtedir * pix_per_xte * xte * cos( ( 90 - angle ) * PI / 180. );
-
-        int ddxi = (int) ddx;
-        int ddyi = (int) ddy;
-
-        int xc1 = xp - (int) ( dx / 2 ) + ddxi;
-        int yc1 = yp + (int) ( dy / 2 ) + ddyi;
-        int xc2 = xp + (int) ( dx / 2 ) + ddxi;
-        int yc2 = yp - (int) ( dy / 2 ) + ddyi;
-
-        wxPoint road[4];
-
-        int road_top_width = 10;
-        int road_bot_width = 40;
-
-        road[0].x = xc1 - (int) ( road_bot_width * cos( ( 90 - angle ) * PI / 180. ) );
-        road[0].y = yc1 - (int) ( road_bot_width * sin( ( 90 - angle ) * PI / 180. ) );
-
-        road[1].x = xc2 - (int) ( road_top_width * cos( ( 90 - angle ) * PI / 180. ) );
-        road[1].y = yc2 - (int) ( road_top_width * sin( ( 90 - angle ) * PI / 180. ) );
-
-        road[2].x = xc2 + (int) ( road_top_width * cos( ( 90 - angle ) * PI / 180. ) );
-        road[2].y = yc2 + (int) ( road_top_width * sin( ( 90 - angle ) * PI / 180. ) );
-
-        road[3].x = xc1 + (int) ( road_bot_width * cos( ( 90 - angle ) * PI / 180. ) );
-        road[3].y = yc1 + (int) ( road_bot_width * sin( ( 90 - angle ) * PI / 180. ) );
-
-        mdc.SetBrush( *m_proadBrush );
-        mdc.SetPen( *m_proadPen );
-        mdc.DrawPolygon( 4, road, 0, 0, wxODDEVEN_RULE );
-
-        mdc.DrawLine( xc1, yc1, xc2, yc2 );
-
-        mdc.DrawLine( 0, yp, sx, yp );
-        mdc.DrawCircle( xp, yp, 6 );
-        mdc.DrawLine( xp, yp + 5, xp, yp - 5 );
-    }
-
-    wxPaintDC dc( this );
-    dc.Blit( 0, 0, sx, sy, &mdc, 0, 0 );
 }
 

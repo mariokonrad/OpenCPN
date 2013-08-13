@@ -348,6 +348,8 @@ SET(HDRS
 		include/bbox.h
 		include/ocpn_pixel.h
 		src/TimedPopupWin.h
+		src/AnnunText.h
+		src/CDI.h
 		src/MyPrintout.h
 		src/chart/ChartDB.h
 		src/chart/CacheEntry.h
@@ -457,6 +459,8 @@ SET(SRC_AIS
 SET(SRCS
 		src/chart1.cpp
 		src/TimedPopupWin.cpp
+		src/AnnunText.cpp
+		src/CDI.cpp
 		src/MyPrintout.cpp
 		src/bbox.cpp
 		src/ocpn_pixel.cpp

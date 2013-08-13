@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Navigation Utility Functions
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -54,6 +52,7 @@
 #include "cutil.h"
 #include "styles.h"
 #include "routeman.h"
+#include "WayPointman.h"
 #include "routeprop.h"
 #include "s52utils.h"
 #include "chartbase.h"

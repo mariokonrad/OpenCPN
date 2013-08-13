@@ -47,6 +47,7 @@
 #include "kml.h"
 #include "concanv.h"
 #include "ThumbWin.h"
+#include "WayPointman.h"
 #include "chart/ChartDB.h"
 #include "chart/ChartStack.h"
 #include "chartimg.h"

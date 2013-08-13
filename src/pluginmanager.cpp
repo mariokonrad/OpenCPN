@@ -47,6 +47,7 @@
 #include "FontMgr.h"
 #include "OCPN_DataStreamEvent.h"
 #include "georef.h"
+#include "WayPointman.h"
 #include "routemanagerdialog.h"
 #include "NavObjectCollection.h"
 

@@ -72,15 +72,15 @@ void CDI::OnPaint(wxPaintEvent & event)
 	if( g_pRouteMan->GetpActiveRoute() ) {
 		double angle = 90 - ( g_pRouteMan->GetCurrentSegmentCourse() - gCog );
 
-		double dy = path_length * sin( angle * PI / 180. );
-		double dx = path_length * cos( angle * PI / 180. );
+		double dy = path_length * sin( angle * M_PI / 180. );
+		double dx = path_length * cos( angle * M_PI / 180. );
 
 		int xtedir;
 		xtedir = g_pRouteMan->GetXTEDir();
 		double xte = g_pRouteMan->GetCurrentXTEToActivePoint();
 
-		double ddy = xtedir * pix_per_xte * xte * sin( ( 90 - angle ) * PI / 180. );
-		double ddx = xtedir * pix_per_xte * xte * cos( ( 90 - angle ) * PI / 180. );
+		double ddy = xtedir * pix_per_xte * xte * sin( ( 90 - angle ) * M_PI / 180. );
+		double ddx = xtedir * pix_per_xte * xte * cos( ( 90 - angle ) * M_PI / 180. );
 
 		int ddxi = (int) ddx;
 		int ddyi = (int) ddy;
@@ -95,17 +95,17 @@ void CDI::OnPaint(wxPaintEvent & event)
 		int road_top_width = 10;
 		int road_bot_width = 40;
 
-		road[0].x = xc1 - (int) ( road_bot_width * cos( ( 90 - angle ) * PI / 180. ) );
-		road[0].y = yc1 - (int) ( road_bot_width * sin( ( 90 - angle ) * PI / 180. ) );
+		road[0].x = xc1 - (int) ( road_bot_width * cos( ( 90 - angle ) * M_PI / 180. ) );
+		road[0].y = yc1 - (int) ( road_bot_width * sin( ( 90 - angle ) * M_PI / 180. ) );
 
-		road[1].x = xc2 - (int) ( road_top_width * cos( ( 90 - angle ) * PI / 180. ) );
-		road[1].y = yc2 - (int) ( road_top_width * sin( ( 90 - angle ) * PI / 180. ) );
+		road[1].x = xc2 - (int) ( road_top_width * cos( ( 90 - angle ) * M_PI / 180. ) );
+		road[1].y = yc2 - (int) ( road_top_width * sin( ( 90 - angle ) * M_PI / 180. ) );
 
-		road[2].x = xc2 + (int) ( road_top_width * cos( ( 90 - angle ) * PI / 180. ) );
-		road[2].y = yc2 + (int) ( road_top_width * sin( ( 90 - angle ) * PI / 180. ) );
+		road[2].x = xc2 + (int) ( road_top_width * cos( ( 90 - angle ) * M_PI / 180. ) );
+		road[2].y = yc2 + (int) ( road_top_width * sin( ( 90 - angle ) * M_PI / 180. ) );
 
-		road[3].x = xc1 + (int) ( road_bot_width * cos( ( 90 - angle ) * PI / 180. ) );
-		road[3].y = yc1 + (int) ( road_bot_width * sin( ( 90 - angle ) * PI / 180. ) );
+		road[3].x = xc1 + (int) ( road_bot_width * cos( ( 90 - angle ) * M_PI / 180. ) );
+		road[3].y = yc1 + (int) ( road_bot_width * sin( ( 90 - angle ) * M_PI / 180. ) );
 
 		mdc.SetBrush( *m_proadBrush );
 		mdc.SetPen( *m_proadPen );

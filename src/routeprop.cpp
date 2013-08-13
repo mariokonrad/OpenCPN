@@ -43,6 +43,7 @@
 #include "georef.h"
 #include "chart1.h"
 #include "routeman.h"
+#include "WayPointman.h"
 #include "routemanagerdialog.h"
 #include "routeprintout.h"
 #include "chcanv.h"

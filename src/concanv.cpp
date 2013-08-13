@@ -277,7 +277,7 @@ void ConsoleCanvas::UpdateRouteData()
             if( !wxIsNaN(gCog) && !wxIsNaN(gSog) ) {
                 double BRG;
                 BRG = g_pRouteMan->GetCurrentBrgToActivePoint();
-                VMG = gSog * cos( ( BRG - gCog ) * PI / 180. );
+                VMG = gSog * cos( ( BRG - gCog ) * M_PI / 180. );
                 str_buf.Printf( _T("%6.2f"), VMG );
             } else
                 str_buf = _T("---");

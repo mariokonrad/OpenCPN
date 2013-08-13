@@ -71,6 +71,7 @@
 #include "chart1.h"
 #include "chcanv.h"
 #include "TimedPopupWin.h"
+#include "WayPointman.h"
 #include "chart/ChartDB.h"
 #include "chart/ChartStack.h"
 #include "chart/CacheEntry.h"

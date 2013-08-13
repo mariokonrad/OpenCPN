@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  * Purpose:  Framework for Undo features
@@ -21,10 +21,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- *
- *
- */
+ **************************************************************************/
 
 #include "wx/wxprec.h"
 
@@ -40,18 +37,19 @@
 #include "navutil.h"
 #include "styles.h"
 #include "routeman.h"
+#include "WayPointman.h"
 #include "routemanagerdialog.h"
 #include "tinyxml/tinyxml.h"
 #include "undo.h"
 #include "chcanv.h"
 
-extern Routeman *g_pRouteMan;
-extern MyConfig *pConfig;
-extern Select *pSelect;
-extern RouteManagerDialog *pRouteManagerDialog;
-extern WayPointman *pWayPointMan;
-extern ChartCanvas *cc1;
-extern MyFrame *gFrame;
+extern Routeman * g_pRouteMan;
+extern MyConfig * pConfig;
+extern Select * pSelect;
+extern RouteManagerDialog * pRouteManagerDialog;
+extern WayPointman * pWayPointMan;
+extern ChartCanvas * cc1;
+extern MyFrame * gFrame;
 
 Undo::Undo()
 {

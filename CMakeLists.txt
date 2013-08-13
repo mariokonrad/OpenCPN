@@ -376,7 +376,6 @@ SET(HDRS
 		include/tide_time.h
 		include/glChartCanvas.h
 		include/ChInfoWin.h
-		include/ocpCursor.h
 		include/Quilt.h
 		include/Hyperlink.h
 		include/NavObjectCollection.h
@@ -469,7 +468,6 @@ SET(SRCS
 		src/chart/ChartStack.cpp
 		src/chartimg.cpp
 		src/chcanv.cpp
-		src/ocpCursor.cpp
 		src/TCWin.cpp
 		src/S57QueryDialog.cpp
 		src/s57RegistrarMgr.cpp

@@ -21,11 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
-#include <wx/dcscreen.h>
-#include <wx/tokenzr.h>
-
 #include "RoutePoint.h"
 #include "Routeman.h"
 #include "WayPointman.h"
@@ -33,6 +28,9 @@
 #include "multiplexer.h"
 #include "navutil.h"
 #include "FontMgr.h"
+
+#include <wx/dcscreen.h>
+#include <wx/tokenzr.h>
 
 extern WayPointman * pWayPointMan;
 extern bool g_bIsNewLayer;

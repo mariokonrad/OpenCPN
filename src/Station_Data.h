@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __STATION_DATA_H__
 #define __STATION_DATA_H__
@@ -31,21 +30,21 @@
 
 class Station_Data
 {
-public:
-    Station_Data();
-    ~Station_Data();
-    char        *station_name;
-    wxChar      station_type;            // T or C
-    double      *amplitude;
-    double      *epoch;
-    double      DATUM;
-    int         meridian;               // **UNUSED**
-    double      zone_offset;
-    char        tzfile[40];
-    char        unit[40];
-    char        units_conv[40];         // printable converted units
-    char        units_abbrv[20];        // and abbreviation
-    int         have_BOGUS;
+	public:
+		Station_Data();
+		~Station_Data();
+		char * station_name;
+		wxChar station_type;            // T or C
+		double * amplitude;
+		double * epoch;
+		double DATUM;
+		int meridian;               // **UNUSED**
+		double zone_offset;
+		char tzfile[40];
+		char unit[40];
+		char units_conv[40];         // printable converted units
+		char units_abbrv[20];        // and abbreviation
+		int have_BOGUS;
 };
 
 WX_DECLARE_OBJARRAY(Station_Data, ArrayOfStationData);

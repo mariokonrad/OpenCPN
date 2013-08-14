@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include "Station_Data.h"
 #include <stdlib.h>
@@ -29,16 +28,24 @@
 WX_DEFINE_OBJARRAY(ArrayOfStationData);
 
 Station_Data::Station_Data()
-{
-    station_name = NULL;
-    amplitude = NULL;
-    epoch = NULL;
-}
+	: station_name(NULL)
+	, amplitude(NULL)
+	, epoch(NULL)
+{}
 
 Station_Data::~Station_Data()
 {
-    free( station_name );
-    free( amplitude );
-    free( epoch );
+	if (station_name) {
+		::free(station_name);
+		station_name = NULL;
+	}
+	if (amplitude) {
+		::free(amplitude);
+		amplitude = NULL;
+	}
+	if (epoch) {
+		::free(epoch);
+		epoch = NULL;
+	}
 }
 

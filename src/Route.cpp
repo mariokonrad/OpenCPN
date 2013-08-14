@@ -21,8 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
 #include "Route.h"
 #include "georef.h"
 #include "Routeman.h"
@@ -33,6 +31,9 @@
 #include "multiplexer.h"
 #include "Select.h"
 
+#include <wx/listimpl.cpp>
+WX_DEFINE_LIST(RouteList);
+
 extern WayPointman *pWayPointMan;
 extern bool g_bIsNewLayer;
 extern int g_LayerIdx;
@@ -41,9 +42,6 @@ extern int g_route_line_width;
 extern Select *pSelect;
 extern MyConfig *pConfig;
 extern Multiplexer *g_pMUX;
-
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST ( RouteList );
 
 Route::Route(void)
 {
@@ -996,29 +994,29 @@ bool Route::SendToGPS(const wxString & com_name, bool bsend_waypoints, wxGauge *
 bool Route::IsEqualTo( Route *ptargetroute )
 {
 	wxRoutePointListNode *pthisnode = ( this->pRoutePointList )->GetFirst();
-    wxRoutePointListNode *pthatnode = ( ptargetroute->pRoutePointList )->GetFirst();
+	wxRoutePointListNode *pthatnode = ( ptargetroute->pRoutePointList )->GetFirst();
 
-    if( NULL == pthisnode ) return false;
+	if( NULL == pthisnode ) return false;
 
-    if( this->m_bIsInLayer || ptargetroute->m_bIsInLayer ) return false;
+	if( this->m_bIsInLayer || ptargetroute->m_bIsInLayer ) return false;
 
-    if( this->GetnPoints() != ptargetroute->GetnPoints() ) return false;
+	if( this->GetnPoints() != ptargetroute->GetnPoints() ) return false;
 
-    while( pthisnode ) {
-        if( NULL == pthatnode ) return false;
+	while( pthisnode ) {
+		if( NULL == pthatnode ) return false;
 
-        RoutePoint *pthisrp = pthisnode->GetData();
-        RoutePoint *pthatrp = pthatnode->GetData();
+		RoutePoint *pthisrp = pthisnode->GetData();
+		RoutePoint *pthatrp = pthatnode->GetData();
 
-        if( ( fabs( pthisrp->m_lat - pthatrp->m_lat ) > 1.0e-6 )
-                || ( fabs( pthisrp->m_lon - pthatrp->m_lon ) > 1.0e-6 ) ) return false;
+		if( ( fabs( pthisrp->m_lat - pthatrp->m_lat ) > 1.0e-6 )
+				|| ( fabs( pthisrp->m_lon - pthatrp->m_lon ) > 1.0e-6 ) ) return false;
 
-        if( !pthisrp->GetName().IsSameAs( pthatrp->GetName() ) ) return false;
+		if( !pthisrp->GetName().IsSameAs( pthatrp->GetName() ) ) return false;
 
-        pthisnode = pthisnode->GetNext();
-        pthatnode = pthatnode->GetNext();
-    }
+		pthisnode = pthisnode->GetNext();
+		pthatnode = pthatnode->GetNext();
+	}
 
-    return true;                              // success, they are the same
+	return true;
 }
 

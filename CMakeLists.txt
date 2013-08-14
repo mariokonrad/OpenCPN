@@ -383,8 +383,8 @@ SET(HDRS
 		src/QuiltCandidate.h
 		include/Hyperlink.h
 		include/NavObjectCollection.h
-		include/RoutePoint.h
-		include/Route.h
+		src/RoutePoint.h
+		src/Route.h
 		src/SelectItem.h
 		src/Select.h
 		src/FontMgr.h
@@ -413,7 +413,7 @@ SET(HDRS
 		src/TextStatWin.h
 		src/PianoWin.h
 		include/tcmgr.h
-		include/Station_Data.h
+		src/Station_Data.h
 		include/IDX_entry.h
 		src/TC_Error_Code.h
 		src/TCDataFactory.h

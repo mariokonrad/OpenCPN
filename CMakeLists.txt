@@ -414,11 +414,11 @@ SET(HDRS
 		include/tcmgr.h
 		include/Station_Data.h
 		include/IDX_entry.h
-		include/TC_Error_Code.h
-		include/TCDataFactory.h
-		include/TCDS_Ascii_Harmonic.h
-		include/TCDS_Binary_Harmonic.h
-		include/TCDataSource.h
+		src/TC_Error_Code.h
+		src/TCDataFactory.h
+		src/TCDS_Ascii_Harmonic.h
+		src/TCDS_Binary_Harmonic.h
+		src/TCDataSource.h
 		include/ThumbWin.h
 		include/options.h
 		include/gshhs.h

@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,21 +19,57 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __TC_ERROR_CODE_H__
-#define __TC_ERROR_CODE_H__
+#ifndef __TCDATAFACTORY_H__
+#define __TCDATAFACTORY_H__
 
-typedef enum {
-    TC_NO_ERROR,
-    TC_GENERIC_ERROR,
-    TC_FILE_NOT_FOUND,
-    TC_INDEX_FILE_CORRUPT,
-    TC_INDEX_ENTRY_BAD,
-    TC_HARM_FILE_CORRUPT,
-    TC_MASTER_HARMONICS_NOT_FOUND,
-    TC_TCD_FILE_CORRUPT
-} TC_Error_Code;
+#include <wx/string.h>
+#include <wx/dynarray.h>
+
+#include "TC_Error_Code.h"
+
+#define NUMUNITS 4
+
+class IDX_entry;
+
+enum { REGION = 1, COUNTRY = 2, STATE = 3 };
+
+class TCDataFactory
+{
+	public:
+		enum unit_type { LENGTH, VELOCITY, BOGUS };
+
+		typedef struct {
+			char * name;
+			char * abbrv;
+			unit_type type;
+			double conv_factor;
+		} unit;
+
+		class AbbrEntry
+		{
+			public:
+				int type;
+				wxString short_s;
+				wxString long_s;
+		};
+
+	public:
+		TCDataFactory();
+		virtual ~TCDataFactory();
+
+		virtual TC_Error_Code LoadData(const wxString & data_file_path) = 0;
+
+		virtual int GetMaxIndex(void) const = 0;
+		virtual IDX_entry * GetIndexEntry(int n_index) = 0;
+
+		int findunit (const char *unit);
+		unit known_units[NUMUNITS];
+
+		wxString source_ident;
+};
+
+WX_DECLARE_OBJARRAY(TCDataFactory::AbbrEntry, ArrayOfAbbrEntry);
 
 #endif

@@ -21,55 +21,19 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TCDATAFACTORY_H__
-#define __TCDATAFACTORY_H__
+#ifndef __TC_ERROR_CODE_H__
+#define __TC_ERROR_CODE_H__
 
-#include <wx/string.h>
-#include <wx/dynarray.h>
-#include "TC_Error_Code.h"
-
-#define NUMUNITS 4
-
-#define REGION 1
-#define COUNTRY 2
-#define STATE 3
-
-class IDX_entry;
-
-typedef enum {LENGTH, VELOCITY, BOGUS} unit_type;
-
-typedef struct {
-    char *name;
-    char *abbrv;
-    unit_type type;
-    double conv_factor;
-} unit;
-
-class abbr_entry
+enum TC_Error_Code
 {
-public:
-    int         type;
-    wxString    short_s;
-    wxString    long_s;
+	TC_NO_ERROR,
+	TC_GENERIC_ERROR,
+	TC_FILE_NOT_FOUND,
+	TC_INDEX_FILE_CORRUPT,
+	TC_INDEX_ENTRY_BAD,
+	TC_HARM_FILE_CORRUPT,
+	TC_MASTER_HARMONICS_NOT_FOUND,
+	TC_TCD_FILE_CORRUPT
 };
-
-class TCDataFactory
-{
-public:
-    TCDataFactory();
-    virtual ~TCDataFactory();
-
-    virtual TC_Error_Code LoadData(const wxString &data_file_path) = 0;
-
-    virtual int GetMaxIndex(void) = 0;
-    virtual IDX_entry *GetIndexEntry(int n_index) = 0;
-
-    int findunit (const char *unit);
-    unit  known_units[NUMUNITS];
-
-    wxString source_ident;
-};
-
-WX_DECLARE_OBJARRAY(abbr_entry, ArrayOfAbbrEntry);
 
 #endif

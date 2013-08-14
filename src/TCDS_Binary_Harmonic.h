@@ -21,41 +21,48 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TCDATASOURCE_H__
-#define __TCDATASOURCE_H__
+#ifndef __TCDS_BINARY_HARMONIC_H__
+#define __TCDS_BINARY_HARMONIC_H__
 
 #include <wx/string.h>
-#include <wx/dynarray.h>
 
-#include "TC_Error_Code.h"
+#include "TCDataFactory.h"
+#include "Station_Data.h"
+#include "IDX_entry.h"
 
-class IDX_entry;
-class TCDataFactory;
-class TCDS_Ascii_Harmonic;
-class TCDS_Binary_Harmonic;
-
-class TCDataSource
+class TCDS_Binary_Harmonic : public TCDataFactory
 {
-public:
-    TCDataSource();
-    ~TCDataSource();
+	public:
+		TCDS_Binary_Harmonic();
+		virtual ~TCDS_Binary_Harmonic();
 
-    TC_Error_Code LoadData(const wxString &data_file_path);
+		TC_Error_Code LoadData(const wxString &data_file_path);
 
-    int GetMaxIndex(void);
-    IDX_entry *GetIndexEntry(int n_index);
-    TC_Error_Code LoadHarmonicData(IDX_entry *pIDX);
+		virtual int GetMaxIndex(void) const
+		{
+			return num_IDX;
+		}
 
-private:
-    wxString             m_data_source_path;
+		IDX_entry *GetIndexEntry(int n_index);
+		TC_Error_Code LoadHarmonicData(IDX_entry *pIDX);
 
-    TCDataFactory        *m_pfactory;
-    TCDS_Ascii_Harmonic  *pTCDS_Ascii_Harmonic;
-    TCDS_Binary_Harmonic *pTCDS_Binary_Harmonic;
+	private:
+		ArrayOfStationData m_msd_array;
 
+		wxString m_last_reference_not_found;
+
+		ArrayOfAbbrEntry m_abbreviation_array;
+		ArrayOfIDXEntry m_IDX_array;
+
+		int num_IDX;
+		int num_nodes;
+		int num_csts;
+		int num_epochs;
+		double * m_cst_speeds;
+		double ** m_cst_nodes;
+		double ** m_cst_epochs;
+		double * m_work_buffer;
+		int m_first_year;
 };
-
-
-WX_DECLARE_OBJARRAY(TCDataSource, ArrayOfTCDSources);
 
 #endif

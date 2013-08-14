@@ -36,54 +36,56 @@
 
 class TCDS_Ascii_Harmonic : public TCDataFactory
 {
-public:
-    TCDS_Ascii_Harmonic();
-    ~TCDS_Ascii_Harmonic();
+	public:
+		TCDS_Ascii_Harmonic();
+		virtual ~TCDS_Ascii_Harmonic();
 
-    TC_Error_Code LoadData(const wxString &data_file_path);
+		TC_Error_Code LoadData(const wxString & data_file_path);
 
-    int GetMaxIndex(void) {
-        return num_IDX;
-    };
-    IDX_entry *GetIndexEntry(int n_index);
-    TC_Error_Code LoadHarmonicData(IDX_entry *pIDX);
-    int pIDX_Ref;
+		virtual int GetMaxIndex(void) const
+		{
+			return num_IDX;
+		}
 
-private:
-    long IndexFileIO(int func, long value);
-    TC_Error_Code init_index_file();
-    TC_Error_Code build_IDX_entry(IDX_entry *pIDX );
-    TC_Error_Code LoadHarmonicConstants(const wxString &data_file_path);
-    int read_next_line (FILE *fp, char linrec[linelen], int end_ok);
-    int skipnl (FILE *fp);
-    char *nojunk (char *line);
-    int slackcmp (char *a, char *b);
+		IDX_entry *GetIndexEntry(int n_index);
+		TC_Error_Code LoadHarmonicData(IDX_entry *pIDX);
+		int pIDX_Ref;
 
-    void free_cst();
-    void free_nodes();
-    void free_epochs();
-    void free_data();
+	private:
+		long IndexFileIO(int func, long value);
+		TC_Error_Code init_index_file();
+		TC_Error_Code build_IDX_entry(IDX_entry * pIDX);
+		TC_Error_Code LoadHarmonicConstants(const wxString & data_file_path);
+		int read_next_line (FILE * fp, char linrec[linelen], int end_ok);
+		int skipnl (FILE * fp);
+		char *nojunk (char * line);
+		int slackcmp (char * a, char * b);
 
-    ArrayOfStationData  m_msd_array;
+		void free_cst();
+		void free_nodes();
+		void free_epochs();
+		void free_data();
 
-    wxString            m_indexfile_name;
-    wxString            m_harmfile_name;
-    wxString            m_last_reference_not_found;
+		ArrayOfStationData m_msd_array;
 
-    char                index_line_buffer[1024];
-    FILE                *m_IndexFile;
-    ArrayOfAbbrEntry    m_abbreviation_array;
-    ArrayOfIDXEntry     m_IDX_array;
+		wxString m_indexfile_name;
+		wxString m_harmfile_name;
+		wxString m_last_reference_not_found;
 
-    int         num_IDX;
-    int         num_nodes;
-    int         num_csts;
-    int         num_epochs;
-    double      *m_cst_speeds;
-    double      **m_cst_nodes;
-    double      **m_cst_epochs;
-    double      *m_work_buffer;
-    int         m_first_year;
+		char index_line_buffer[1024];
+		FILE * m_IndexFile;
+		ArrayOfAbbrEntry m_abbreviation_array;
+		ArrayOfIDXEntry m_IDX_array;
+
+		int num_IDX;
+		int num_nodes;
+		int num_csts;
+		int num_epochs;
+		double * m_cst_speeds;
+		double ** m_cst_nodes;
+		double ** m_cst_epochs;
+		double * m_work_buffer;
+		int m_first_year;
 };
 
 #endif

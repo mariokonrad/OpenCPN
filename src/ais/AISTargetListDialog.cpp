@@ -71,8 +71,19 @@ static int ItemCompare(AIS_Target_Data *pAISTarget1, AIS_Target_Data *pAISTarget
 	AIS_Target_Data *t1 = pAISTarget1;
 	AIS_Target_Data *t2 = pAISTarget2;
 
-	if( t1->Class == AIS_SART ) return -1;
-	if( t2->Class == AIS_SART ) return 1;
+    if( t1->Class == AIS_SART ) {
+        if( t2->Class == AIS_DSC )
+            return 0;
+        else
+            return -1;
+    }
+    
+    if( t2->Class == AIS_SART ) {
+        if( t1->Class == AIS_DSC )
+            return 0;
+        else
+            return 1;
+    }
 
 	switch( g_AisTargetList_sortColumn ){
 		case tlNAME:
@@ -218,14 +229,14 @@ static int ItemCompare(AIS_Target_Data *pAISTarget1, AIS_Target_Data *pAISTarget
 						break;
 					}
 		case tlRNG: {
-						n1 = t1->Range_NM;
-						n2 = t2->Range_NM;
-						b_cmptype_num = true;
-						break;
-					}
+			n1 = t1->Range_NM;
+			n2 = t2->Range_NM;
+			b_cmptype_num = true;
+			break;
+			}
 
 		default:
-					break;
+			break;
 	}
 
 	if( !b_cmptype_num ) {

@@ -25,6 +25,7 @@
 #define __THUMBWIN_H__
 
 #include <wx/window.h>
+#include <wx/bitmap.h>
 
 class ChartBase;
 
@@ -36,7 +37,7 @@ class ThumbWin : public wxWindow
 		wxSize m_max_size;
 
 	public:
-		wxBitmap * pThumbShowing;
+		wxBitmap m_bitmap;
 		ChartBase * pThumbChart;
 
 	private:
@@ -49,6 +50,7 @@ class ThumbWin : public wxWindow
 
 		void Resize(void);
 		void SetMaxSize(wxSize const & max_size);
+		const wxBitmap & GetBitmap(void);
 };
 
 #endif

@@ -24,12 +24,7 @@
 #ifndef __THUMBWIN_H__
 #define __THUMBWIN_H__
 
-
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-#include "wx/wx.h"
-#endif
+#include <wx/window.h>
 
 class ChartBase;
 

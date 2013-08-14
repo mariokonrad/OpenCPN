@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,28 +19,32 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include "FontDesc.h"
 
+#include <wx/font.h>
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(FontList);
 
-MyFontDesc::MyFontDesc( wxString DialogString, wxString ConfigString, wxFont *pFont,
-        wxColour color )
+FontDesc::FontDesc(
+		wxString DialogString,
+		wxString ConfigString,
+		wxFont * pFont,
+		wxColour color)
+	: m_dialogstring(DialogString)
+	, m_configstring(ConfigString)
+	, m_font(pFont)
+	, m_color(color)
 {
-    m_dialogstring = DialogString;
-    m_configstring = ConfigString;
-
-    m_nativeInfo = pFont->GetNativeFontInfoDesc();
-
-    m_font = pFont;
-    m_color = color;
+	m_nativeInfo = pFont->GetNativeFontInfoDesc();
 }
 
-MyFontDesc::~MyFontDesc()
+FontDesc::~FontDesc()
 {
-    delete m_font;
+	if (m_font) {
+		delete m_font;
+		m_font = NULL;
+	}
 }
 

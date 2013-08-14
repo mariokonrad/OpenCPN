@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,32 +19,51 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __FONTDESC_H__
-#define __FONTDESC_H__
+#ifndef __FONTMGR_H__
+#define __FONTMGR_H__
 
-#include <wx/string.h>
-#include <wx/font.h>
 #include <wx/colour.h>
-#include <wx/list.h>
+#include <wx/string.h>
 
-class MyFontDesc
+class wxFont;
+class FontList;
+
+/// Manages the font list.
+///
+/// Singleton.
+class FontMgr
 {
-public:
+	public:
+		static FontMgr & Get();
 
-      MyFontDesc(wxString DialogString, wxString ConfigString, wxFont *pFont, wxColour color);
-      ~MyFontDesc();
+		wxFont * GetFont(const wxString & TextElement, int default_size = 0);
+		wxColour GetFontColor(const wxString &TextElement) const;
 
-      wxString    m_dialogstring;
-      wxString    m_configstring;
-      wxString    m_nativeInfo;
-      wxFont      *m_font;
-      wxColour    m_color;
+		int GetNumFonts(void) const;
+		const wxString & GetConfigString(int i) const;
+		const wxString & GetDialogString(int i) const;
+		const wxString & GetNativeDesc(int i) const;
+		wxString GetFullConfigDesc(int i) const;
+		static wxString GetFontConfigKey(const wxString &description);
+
+		void LoadFontNative(wxString * pConfigString, wxString * pNativeDesc);
+		bool SetFont(const wxString & TextElement, wxFont * pFont, wxColour color);
+
+	private: // private for singleton
+		FontMgr();
+		~FontMgr();
+		FontMgr(const FontMgr &) {}
+		FontMgr & operator=(const FontMgr &) { return *this; }
+
+	private:
+		wxString GetSimpleNativeFont(int size);
+
+		static FontMgr * instance;
+
+		FontList * m_fontlist;
+		wxFont * pDefFont;
 };
-
-
-WX_DECLARE_LIST(MyFontDesc, FontList);
 
 #endif

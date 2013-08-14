@@ -387,8 +387,8 @@ SET(HDRS
 		include/Route.h
 		include/SelectItem.h
 		include/Select.h
-		include/FontMgr.h
-		include/FontDesc.h
+		src/FontMgr.h
+		src/FontDesc.h
 		include/vector2D.h
 		include/OCPNSoundData.h
 		include/OCPN_Sound.h

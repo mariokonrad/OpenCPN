@@ -21,52 +21,32 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __FONTMGR_H__
-#define __FONTMGR_H__
+#ifndef __FONTDESC_H__
+#define __FONTDESC_H__
 
-#include "wx/wxprec.h"
-#ifndef  WX_PRECOMP
-#include "wx/wx.h"
-#endif //precompiled headers
+#include <wx/string.h>
+#include <wx/colour.h>
+#include <wx/list.h>
 
-#include "FontDesc.h"
+class wxFont;
 
-/**
- * Manages the font list.
- *
- * Singleton.
- */
-class FontMgr
+class FontDesc
 {
-    public:
-        static FontMgr & Get();
-    
-        wxFont *GetFont(const wxString &TextElement, int default_size = 0);
-        wxColour GetFontColor( const wxString &TextElement ) const;
-    
-        int GetNumFonts(void) const;
-        const wxString & GetConfigString(int i) const;
-        const wxString & GetDialogString(int i) const;
-        const wxString & GetNativeDesc(int i) const;
-        wxString GetFullConfigDesc( int i ) const;
-        static wxString GetFontConfigKey( const wxString &description );
-    
-        void LoadFontNative(wxString *pConfigString, wxString *pNativeDesc);
-        bool SetFont(const wxString &TextElement, wxFont *pFont, wxColour color);
-    
-    private: // private for singleton
-        FontMgr();
-        ~FontMgr();
-        FontMgr(const FontMgr &) {}
-        FontMgr & operator=(const FontMgr &) { return *this; }
+	public:
+		FontDesc(
+				wxString DialogString,
+				wxString ConfigString,
+				wxFont * pFont,
+				wxColour color);
+		~FontDesc();
 
-    private:
-        wxString GetSimpleNativeFont(int size);
-    
-        static FontMgr * instance;
-    
-        FontList *m_fontlist;
-        wxFont   *pDefFont;
+		wxString m_dialogstring;
+		wxString m_configstring;
+		wxFont * m_font;
+		wxColour m_color;
+		wxString m_nativeInfo;
 };
+
+WX_DECLARE_LIST(FontDesc, FontList);
 
 #endif

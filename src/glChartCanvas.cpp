@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include "wx/wxprec.h"
 #include "GL/gl.h"
@@ -36,7 +35,7 @@
 #include "chartimg.h"
 #include "s57chart.h"
 #include "ChInfoWin.h"
-#include "thumbwin.h"
+#include "ThumbWin.h"
 
 extern bool GetMemoryStatus(int *mem_total, int *mem_used);
 

@@ -21,57 +21,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __STATWIN_H__
-#define __STATWIN_H__
+#ifndef __TEXTSTATWIN_H__
+#define __TEXTSTATWIN_H__
 
 #include <wx/window.h>
 
-#include "chart1.h"
-
-class PianoWin;
-
-class TStatWin : public wxWindow
+class TextStatWin : public wxWindow
 {
-	public:
-		TStatWin(wxFrame * frame);
-		~TStatWin();
+		DECLARE_EVENT_TABLE()
 
-		void OnSize(wxSizeEvent& event);
-		void OnPaint(wxPaintEvent& event);
-		void TextDraw(const wxString& text);
+	public:
+		TextStatWin(wxFrame * frame);
+		~TextStatWin();
+
+		void OnSize(wxSizeEvent & event);
+		void OnPaint(wxPaintEvent & event);
+		void TextDraw(const wxString & text);
 
 		wxString * pText;
 		bool bTextSet;
-
-		DECLARE_EVENT_TABLE()
-};
-
-
-class StatWin : public wxDialog
-{
-	public:
-		StatWin(wxWindow *win);
-		~StatWin();
-		void OnSize(wxSizeEvent& event);
-		void OnPaint(wxPaintEvent& event);
-		void MouseEvent(wxMouseEvent& event);
-		int  GetFontHeight();
-		int  GetRows(){ return m_rows;}
-		void SetColorScheme(ColorScheme cs);
-		void RePosition();
-		void ReSize();
-
-		void FormatStat(void);
-
-		PianoWin * pPiano;
-		TStatWin * pTStat1;
-		TStatWin * pTStat2;
-
-	private:
-		wxBrush m_backBrush;
-		int m_rows;
-
-		DECLARE_EVENT_TABLE()
 };
 
 #endif

@@ -21,181 +21,133 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-	#include "wx/wx.h"
-#endif
-
 #include "StatWin.h"
 #include "PianoWin.h"
+#include "TextStatWin.h"
 #include "dychart.h"
 #include "chart/ChartDB.h"
 #include "chart1.h"
 #include "chartbase.h"
 #include "styles.h"
 
-//------------------------------------------------------------------------------
-//    External Static Storage
-//------------------------------------------------------------------------------
 extern ChartDB *ChartData;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern MyFrame *gFrame;
 
-//------------------------------------------------------------------------------
-//    StatWin Implementation
-//------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE(StatWin, wxDialog)
-    EVT_PAINT(StatWin::OnPaint)
-    EVT_SIZE(StatWin::OnSize)
-    EVT_MOUSE_EVENTS(StatWin::MouseEvent)
+	EVT_PAINT(StatWin::OnPaint)
+	EVT_SIZE(StatWin::OnSize)
+	EVT_MOUSE_EVENTS(StatWin::MouseEvent)
 END_EVENT_TABLE()
 
-StatWin::StatWin( wxWindow *win )
+
+StatWin::StatWin(wxWindow *win)
 {
 
-    long wstyle = wxSIMPLE_BORDER | wxFRAME_NO_TASKBAR;
+	long wstyle = wxSIMPLE_BORDER | wxFRAME_NO_TASKBAR;
 #ifndef __WXMAC__
-    wstyle |= wxFRAME_SHAPED;
+	wstyle |= wxFRAME_SHAPED;
 #endif
 #ifdef __WXMAC__
-    wstyle |= wxSTAY_ON_TOP;
+	wstyle |= wxSTAY_ON_TOP;
 #endif
 
-    wxDialog::Create( win, wxID_ANY, _T(""), wxPoint( 20, 20 ), wxSize( 5, 5 ), wstyle );
+	wxDialog::Create( win, wxID_ANY, _T(""), wxPoint( 20, 20 ), wxSize( 5, 5 ), wstyle );
 
-    int x, y;
-    GetClientSize( &x, &y );
+	int x, y;
+	GetClientSize( &x, &y );
 
-    m_backBrush = wxBrush( GetGlobalColor( _T("UIBDR") ), wxSOLID );
+	m_backBrush = wxBrush( GetGlobalColor( _T("UIBDR") ), wxSOLID );
 
-    SetBackgroundColour( GetGlobalColor( _T("UIBDR") ) );
+	SetBackgroundColour( GetGlobalColor( _T("UIBDR") ) );
 
-    SetBackgroundStyle( wxBG_STYLE_CUSTOM ); // on WXMSW, this prevents flashing on color scheme change
+	SetBackgroundStyle( wxBG_STYLE_CUSTOM ); // on WXMSW, this prevents flashing on color scheme change
 
-    m_rows = 1;
+	m_rows = 1;
 
-    //   Create the Children
+	//   Create the Children
 
-    pPiano = new PianoWin( (wxFrame *) this );
+	pPiano = new PianoWin( (wxFrame *) this );
 
 }
 
 StatWin::~StatWin()
 {
-    pPiano->Close();
+	pPiano->Close();
 }
 
 void StatWin::RePosition()
 {
-    wxSize cs = GetParent()->GetClientSize();
-    wxPoint position;
-    position.x = 0;
-    position.y = cs.y - GetSize().y;
+	wxSize cs = GetParent()->GetClientSize();
+	wxPoint position;
+	position.x = 0;
+	position.y = cs.y - GetSize().y;
 
-    wxPoint screen_pos = GetParent()->ClientToScreen( position );
-    Move( screen_pos );
+	wxPoint screen_pos = GetParent()->ClientToScreen( position );
+	Move( screen_pos );
 }
 
 void StatWin::ReSize()
 {
-    wxSize cs = GetParent()->GetClientSize();
-    wxSize new_size;
-    new_size.x = cs.x;
-    new_size.y = 22 * GetRows();
-    SetSize(new_size);
+	wxSize cs = GetParent()->GetClientSize();
+	wxSize new_size;
+	new_size.x = cs.x;
+	new_size.y = 22 * GetRows();
+	SetSize(new_size);
 }
 
 void StatWin::OnPaint( wxPaintEvent& event )
 {
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 
-    wxPaintDC dc( this );
-    if( style->chartStatusWindowTransparent ) return;
+	wxPaintDC dc( this );
+	if( style->chartStatusWindowTransparent ) return;
 
-    dc.SetBackground( m_backBrush );
-    dc.Clear();
+	dc.SetBackground( m_backBrush );
+	dc.Clear();
 }
 
 void StatWin::OnSize( wxSizeEvent& event )
 {
-    int width, height;
-    GetClientSize( &width, &height );
-    int x, y;
-    GetPosition( &x, &y );
+	int width, height;
+	GetClientSize( &width, &height );
+	int x, y;
+	GetPosition( &x, &y );
 
-    if( width ) {
-        pPiano->SetSize( 0, 0, width * 6 / 10, height * 1 / m_rows );
-        pPiano->FormatKeys();
-    }
+	if( width ) {
+		pPiano->SetSize( 0, 0, width * 6 / 10, height * 1 / m_rows );
+		pPiano->FormatKeys();
+	}
 }
 
 void StatWin::FormatStat( void )
 {
-    pPiano->FormatKeys();
+	pPiano->FormatKeys();
 }
 
 void StatWin::MouseEvent( wxMouseEvent& event )
 {
-    int x, y;
-    event.GetPosition( &x, &y );
+	int x, y;
+	event.GetPosition( &x, &y );
 }
 
 int StatWin::GetFontHeight()
 {
-    wxClientDC dc( this );
+	wxClientDC dc( this );
 
-    wxCoord w, h;
-    GetTextExtent( _T("TEST"), &w, &h );
+	wxCoord w, h;
+	GetTextExtent( _T("TEST"), &w, &h );
 
-    return ( h );
+	return ( h );
 }
 
 void StatWin::SetColorScheme( ColorScheme cs )
 {
+	m_backBrush = wxBrush( GetGlobalColor( _T("UIBDR") ), wxSOLID );
 
-    m_backBrush = wxBrush( GetGlobalColor( _T("UIBDR") ), wxSOLID );
+	//  Also apply color scheme to all known children
+	pPiano->SetColorScheme( cs );
 
-    //  Also apply color scheme to all known children
-    pPiano->SetColorScheme( cs );
-
-    Refresh();
-}
-//------------------------------------------------------------------------------
-//          TextStat Window Implementation
-//------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE(TStatWin, wxWindow)
-    EVT_PAINT(TStatWin::OnPaint)
-    EVT_SIZE(TStatWin::OnSize)
-END_EVENT_TABLE()
-
-TStatWin::TStatWin( wxFrame *frame ) :
-        wxWindow( frame, wxID_ANY, wxPoint( 20, 20 ), wxSize( 5, 5 ), wxSIMPLE_BORDER )
-{
-    SetBackgroundColour( GetGlobalColor( _T("UIBDR") ) );
-    pText = new wxString();
-    bTextSet = false;
-}
-
-TStatWin::~TStatWin( void )
-{
-    delete pText;
-}
-
-void TStatWin::OnSize( wxSizeEvent& event )
-{
-}
-
-void TStatWin::OnPaint( wxPaintEvent& event )
-{
-    wxPaintDC dc( this );
-    dc.DrawText( *pText, 0, 0 );
-}
-
-void TStatWin::TextDraw( const wxString& text )
-{
-    *pText = text;
-    bTextSet = true;
-    Refresh( true );
+	Refresh();
 }
 

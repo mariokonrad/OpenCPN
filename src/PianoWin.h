@@ -33,6 +33,8 @@ WX_DECLARE_OBJARRAY(wxRegion, RegionArray);
 
 class PianoWin : public wxWindow
 {
+		DECLARE_EVENT_TABLE()
+
 	public:
 		PianoWin(wxFrame *frame);
 		~PianoWin();
@@ -99,8 +101,6 @@ class PianoWin : public wxWindow
 
 		int m_iactive;
 		bool m_brounded;
-
-		DECLARE_EVENT_TABLE()
 };
 
 #endif

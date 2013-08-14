@@ -434,7 +434,7 @@ S57Obj::S57Obj( char *first_line, wxInputStream *pfpx, double dummy, double dumm
 
             //              Develop Geometry
 
-            
+
             switch( prim ){
                 case 1: {
                     if( !bMulti ) {
@@ -503,11 +503,11 @@ S57Obj::S57Obj( char *first_line, wxInputStream *pfpx, double dummy, double dumm
 
                             easting = east;
                             northing = north;
-                            
+
                             *pdd++ = east;
                             *pdd++ = north;
                             *pdd++ = deep;
-#else                        
+#else
                             easting = *pfs++;
                             northing = *pfs++;
                             float depth = *pfs++;
@@ -558,14 +558,14 @@ S57Obj::S57Obj( char *first_line, wxInputStream *pfpx, double dummy, double dumm
                         pt *ppt = geoPt;
                         float *pf = (float *) ( buft + 9 );
                         float xmax, xmin, ymax, ymin;
-                        
+
 
 #ifdef ARMHF
                         for( int ip = 0; ip < npt; ip++ ) {
                             float east, north;
                             memcpy(&east, pf++, sizeof(float));
                             memcpy(&north, pf++, sizeof(float));
-                            
+
                             ppt->x = east;
                             ppt->y = north;
                             ppt++;
@@ -574,8 +574,8 @@ S57Obj::S57Obj( char *first_line, wxInputStream *pfpx, double dummy, double dumm
                         memcpy(&xmin, pf++, sizeof(float));
                         memcpy(&ymax, pf++, sizeof(float));
                         memcpy(&ymin, pf,   sizeof(float));
-                        
-#else                        
+
+#else
                         // Capture SM points
                         for( int ip = 0; ip < npt; ip++ ) {
                             ppt->x = *pf++;
@@ -869,7 +869,7 @@ wxString S57Obj::GetAttrValueAsString( char *AttrName )
 {
     wxString str;
     char *tattList = NULL;
-    
+
     wxCharBuffer buffer=attList->ToUTF8();
     if(buffer.data()) {
         size_t len = strlen( buffer.data() );
@@ -1038,10 +1038,10 @@ s57chart::s57chart()
 
     ref_lat = 0.0;
     ref_lon = 0.0;
-    
+
     m_b2pointLUPS = false;
     m_b2lineLUPS = false;
-    
+
 }
 
 s57chart::~s57chart()
@@ -1535,7 +1535,7 @@ bool s57chart::DoRenderRegionViewOnGL( const wxGLContext &glc, const ViewPort& V
     if( Region != m_last_Region ) force_new_view = true;
 
     ps52plib->PrepareForRender();
-    
+
     if( m_plib_state_hash != ps52plib->GetStateHash() ) {
         m_bLinePrioritySet = false;                     // need to reset line priorities
         UpdateLUPs( this );                               // and update the LUPs
@@ -3019,7 +3019,7 @@ bool s57chart::CreateHeaderDataFromENC( void )
                         pNoCovrCntArray->Add( npt );
                     }
                 }
-                
+
 
             delete pFeat;
             pFeat = GetChartNextM_COVR( catcov );
@@ -3278,13 +3278,13 @@ bool s57chart::CreateHeaderDataFromSENC( void )
     wxCharBuffer dbuffer=sd000.ToUTF8();
     if(dbuffer.data())
         d000 = atoi(dbuffer.data() );
-        
+
     int dupd = 0;
     wxString sdupd =date_upd.Mid( 0, 4 );
     wxCharBuffer ubuffer = sdupd.ToUTF8();
     if(ubuffer.data())
         dupd = atoi(ubuffer.data() );
-    
+
     if( dupd > d000 )
         m_PubYear = sdupd;
     else
@@ -3510,7 +3510,7 @@ int s57chart::GetUpdateFileArray( const wxFileName file000, wxArrayString *UpFil
             FileToAdd.Append( file.GetFullName() );
 
             wxCharBuffer buffer=FileToAdd.ToUTF8();             // Check file namme for convertability
-                
+
             if( buffer.data() && !filename.IsSameAs( _T("CATALOG.031"), false ) )           // don't process catalogs
             {
 //          We must check the update file for validity
@@ -3592,7 +3592,7 @@ int s57chart::GetUpdateFileArray( const wxFileName file000, wxArrayString *UpFil
         wxFileName fnl( Last );
         ext = fnl.GetExt();
         wxCharBuffer buffer=ext.ToUTF8();
-        if(buffer.data())            
+        if(buffer.data())
             retval = atoi( buffer.data() );
     }
 
@@ -3857,11 +3857,11 @@ int s57chart::BuildSENCFile( const wxString& FullPath000, const wxString& SENCFi
     fprintf( fps57, "SENC Version= %d\n", CURRENT_SENC_FORMAT_VERSION );
 
     wxCharBuffer buffer=nice_name.ToUTF8();
-    if(buffer.data()) 
+    if(buffer.data())
         strncpy( temp, buffer.data(), 200 );
     else
         strncpy( temp, "UTF8Error", 200 );
-    
+
     temp[200] = '\0';
     fprintf( fps57, "NAME=%s\n", temp );
 
@@ -4106,7 +4106,7 @@ int s57chart::BuildSENCFile( const wxString& FullPath000, const wxString& SENCFi
 
     }
 
-    if( bbad_update ) OCPNMessageBox(NULL, 
+    if( bbad_update ) OCPNMessageBox(NULL,
             _T("Errors encountered processing ENC update file(s).\nENC features may be incomplete or inaccurate."),
             _T("OpenCPN Create SENC"), wxOK | wxICON_EXCLAMATION );
 
@@ -4200,7 +4200,7 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
                         continue;
                     }
                 }
-                    
+
 //      This is where Simplified or Paper-Type point features are selected
                 switch( obj->Primitive_type ){
                     case GEO_POINT:
@@ -4809,12 +4809,12 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                 const char *pType = OGRFieldDefn::GetFieldTypeName( poFDefn->GetType() );
                 const char *pAttrName = poFDefn->GetNameRef();
                 const char *pAttrVal = pFeature->GetFieldAsString( iField );
- 
+
                 snprintf( line, MAX_HDR_LINE - 2, "  %s (%c) = ", pAttrName, *pType);
                 wxString AttrStringPrefix = wxString( line, wxConvUTF8 );
-                
+
                 wxString wxAttrValue;
-                
+
                 if( (0 == strncmp("NOBJNM",pAttrName, 6) ) ||
                     (0 == strncmp("NINFOM",pAttrName, 6) ) ||
                     (0 == strncmp("NTXTDS",pAttrName, 6) ) )
@@ -4825,7 +4825,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                         wxAttrValue = att_conv;
                     }
                 }
-                
+
                 if( wxAttrValue.IsEmpty()) {
     // Attempt different conversions to accomodate different language encodings in
     // the original ENC files.
@@ -4838,7 +4838,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                     if( wxAttrValue.Length() < strlen(pAttrVal) )
                         wxLogError( _T("Warning: CreateSENCRecord(): Failed to convert string value to wxString.") );
                 }
-               
+
                 sheader += AttrStringPrefix;
                 sheader += wxAttrValue;
                 sheader += '\n';
@@ -4931,8 +4931,8 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                     toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
                     memcpy(pdf++, &easting, sizeof(float));
                     memcpy(pdf++, &northing, sizeof(float));
-                    
-#else                    
+
+#else
                     lon = (float) *psd++;
                     lat = (float) *psd++;
 
@@ -4959,7 +4959,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                 memcpy(pdf++, &tmp, sizeof(float));
                 tmp = latmin;
                 memcpy(pdf, &tmp, sizeof(float));
-#else                
+#else
                 //      Store the Bounding Box as lat/lon
                 *pdf++ = lonmax;
                 *pdf++ = lonmin;
@@ -5094,7 +5094,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                 north = northing;
                 memcpy(pdf++, &east, sizeof(float));
                 memcpy(pdf,   &north, sizeof(float));
-#else                
+#else
                 *pdf++ = easting;
                 *pdf = northing;
 #endif
@@ -5155,8 +5155,8 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                     memcpy(pdf++, &east, sizeof(float));
                     memcpy(pdf++, &north, sizeof(float));
                     memcpy(pdf++, &deep, sizeof(float));
-                    
-#else                    
+
+#else
                     *pdf++ = easting;
                     *pdf++ = northing;
                     *pdf++ = (float) depth;
@@ -5180,7 +5180,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                 memcpy(pdf++, &tmp, sizeof(float));
                 tmp = latmin;
                 memcpy(pdf, &tmp, sizeof(float));
-#else                
+#else
                 *pdf++ = lonmax;
                 *pdf++ = lonmin;
                 *pdf++ = latmax;
@@ -5219,7 +5219,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                     wxLogMessage( _T("   Warning: S57 SENC Geometry Error %d, Some Features ignored."), ppg->ErrorCode );
                 else
                     ppg->Write_PolyTriGroup( fpOut );
-                
+
                 delete ppg;
 
                 //    Capture the Vector Table geometry indices
@@ -5285,7 +5285,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                     poReader->SetOptions( papszReaderOptions );
                     CSLDestroy( papszReaderOptions );
                 }
-                
+
                 break;
             }
 
@@ -6250,7 +6250,7 @@ wxString s57chart::CreateObjDescriptions( ListOfObjRazRules* rule_list )
             curr_att0 = (char *) calloc( len + 1, 1 );
             strncpy( curr_att0, buffer.data(), len );
         }
-        
+
         if(curr_att0) {
             char *curr_att = curr_att0;
 
@@ -6678,7 +6678,7 @@ void s57_DrawExtendedLightSectors( ocpnDC& dc, ViewPort& viewport, std::vector<s
         for( unsigned int i=0; i<sectorlegs.size(); i++ ) {
             if( fabs( sectorlegs[i].sector1 - sectorlegs[i].sector2 ) < 0.5 )
                 continue;
-            
+
             double endx, endy;
             ll_gc_ll( sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
                     sectorlegs[i].sector1 + 180.0, sectorlegs[i].range,
@@ -6767,9 +6767,9 @@ void s57_DrawExtendedLightSectors( ocpnDC& dc, ViewPort& viewport, std::vector<s
             int sec2 = (int)sectorlegs[i].sector2;
             if(sec1 > 360) sec1 -= 360;
             if(sec2 > 360) sec2 -= 360;
-            
+
             for( unsigned int j=0; j<sectorangles.size(); j++ ) {
-                
+
                 if( sectorangles[j] == sec1 ) haveAngle1 = true;
                 if( sectorangles[j] == sec2 ) haveAngle2 = true;
             }
@@ -6806,13 +6806,13 @@ bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vec
 
     bool bhas_red_green = false;
     bool bleading_attribute = false;
-    
+
     int opacity = 100;
     if( cc1->GetColorScheme() == GLOBAL_COLOR_SCHEME_DUSK ) opacity = 50;
     if( cc1->GetColorScheme() == GLOBAL_COLOR_SCHEME_NIGHT) opacity = 20;
-    
+
     int yOpacity = (float)opacity*1.3; // Matched perception of white/yellow with red/green
-    
+
     if( chart ) {
         sectorlegs.clear();
 
@@ -6845,18 +6845,17 @@ bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vec
                         curr_att0 = (char *) calloc( len + 1, 1 );
                         strncpy( curr_att0, buffer.data(), len );
                     }
-
                     if( curr_att0 ) {
                         char *curr_att = curr_att0;
                         bool bviz = true;
-                        
+
                         attrCounter = 0;
                         int noAttr = 0;
                         bool inDepthRange = false;
                         s57Sector_t sector;
 
                         bleading_attribute = false;
-                        
+
                         while( *curr_att ) {
                             curAttrName.Clear();
                             noAttr++;
@@ -6896,7 +6895,7 @@ bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vec
                                     value.Upper().StartsWith(_T("LEAD")) )
                                     bleading_attribute = true;
                             }
-                                
+
                             attrCounter++;
                         }
 
@@ -6906,14 +6905,14 @@ bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vec
                             if( sectr1 > sectr2 ) {             // normalize
                                 sectr2 += 360.0;
                             }
-                            
+
                             sector.pos.m_x = light->m_lon;
                             sector.pos.m_y = light->m_lat;
 
                             sector.range = (valnmr > 0.0) ? valnmr : 2.5; // Short default range.
                             sector.sector1 = sectr1;
                             sector.sector2 = sectr2;
-                            
+
                             if(!color.IsOk()){
                                 color = wxColor( 255, 255, 0, yOpacity );
                                 sector.iswhite = true;
@@ -6923,7 +6922,7 @@ bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vec
 
                             if( bleading_attribute )
                                 sector.isleading = true;
-                            
+
                             bool newsector = true;
                             for( unsigned int i=0; i<sectorlegs.size(); i++ ) {
                                 if( sectorlegs[i].pos == sector.pos &&
@@ -6938,7 +6937,7 @@ bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vec
                             }
                             if(!bviz)
                                 newsector = false;
-                            
+
                             if( newsector ) {
                                 sectorlegs.push_back( sector );
                                 newSectorsNeedDrawing = true;
@@ -6953,51 +6952,15 @@ bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vec
         delete rule_list;
     }
 
-#if 0    
-    //  Work with the sector legs vector to identify  and mark "Leading Lights"
-    int ns = sectorlegs.size();
-    if( sectorlegs.size() > 0 ) {
-        for( unsigned int i=0; i<sectorlegs.size(); i++ ) {
-            if( fabs( sectorlegs[i].sector1 - sectorlegs[i].sector2 ) < 0.5 )
-                continue;
-            
-            if(((sectorlegs[i].sector2 - sectorlegs[i].sector1) < 15)  && sectorlegs[i].iswhite ) {
-                //      Check to see if this sector has a visible range greater than any other white light
-                
-                if( sectorlegs.size() > 1 ) {
-                    bool bleading = true;
-                    for( unsigned int j=0; j<sectorlegs.size(); j++ ) {
-                        if(i == j)
-                            continue;
-                        if((sectorlegs[j].iswhite) && (sectorlegs[i].range <= sectorlegs[j].range) ){
-                            if((sectorlegs[j].sector2 - sectorlegs[j].sector1) >= 15){  // test sector should not be a leading light
-                                bleading = false;    // cannot be a sector, since its range is <= another white light
-                                break;
-                            }
-                        }
-                    }
-                    
-                    if(bleading)
-                        sectorlegs[i].isleading = true;
-                }
-            }
-            else
-                sectorlegs[i].isleading = false;
-                
-        }
-    }
-#endif    
-
 //  Work with the sector legs vector to identify  and mark "Leading Lights"
 //  Sectors with CATLIT "Leading" or "Directional" attribute set have already been marked
     for( unsigned int i=0; i<sectorlegs.size(); i++ ) {
- 
+
         if(((sectorlegs[i].sector2 - sectorlegs[i].sector1) < 15) ) {
             if( sectorlegs[i].iswhite && bhas_red_green )
                 sectorlegs[i].isleading = true;
         }
     }
-            
-    
+
     return newSectorsNeedDrawing;
 }

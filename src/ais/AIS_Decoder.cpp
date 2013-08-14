@@ -2008,7 +2008,7 @@ void AIS_Decoder::OnTimerAIS( wxTimerEvent& event )
 
             if( !m_AIS_Sound.IsOk() )
                 m_AIS_Sound.Create( g_sAIS_Alert_Sound_File );
-            
+
 #ifndef __WXMSW__
             if( m_AIS_Sound.IsOk() && !m_AIS_Sound.IsPlaying())
                 m_AIS_Sound.Play();

@@ -68,7 +68,6 @@ class AISTargetAlertDialog : public OCPN_AlertDialog
 		wxFont            *m_pFont;
 		wxString          m_alert_text;
 		bool              m_bjumpto;
-
 };
 
 

@@ -1199,7 +1199,7 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
         //  Walk the region list to determine whether we need a clear before starting
         if( b_clear ) {
             OCPNRegion clear_test_region = Region;
-            
+
             ChartBase *cchart = cc1->m_pQuilt->GetFirstChart();
             while( cchart ) {
                 if( ! cc1->IsChartLargeEnoughToRender( cchart, vp ) ) {
@@ -1813,12 +1813,12 @@ void glChartCanvas::render()
 
     if( cc1->m_bShowCurrent ) cc1->DrawAllCurrentsInBBox( gldc, cc1->GetVP().GetBBox(), true,
                 true );
-    
- 
+
+
     //  On some platforms, the opengl context window is always on top of any standard DC windows,
     //  so we need to draw the Chart Info Window and the Thumbnail as overlayed bmps.
 
-#ifdef __WXOSX__    
+#ifdef __WXOSX__
     if(cc1->m_pCIWin && cc1->m_pCIWin->IsShown()) {
         int x, y, width, height;
         cc1->m_pCIWin->GetClientSize( &width, &height );
@@ -1828,25 +1828,25 @@ void glChartCanvas::render()
         if(bmp.IsOk()){
             dc.SetBackground( wxBrush(GetGlobalColor( _T ( "UIBCK" ) ) ));
             dc.Clear();
- 
+
             dc.SetTextBackground( GetGlobalColor( _T ( "UIBCK" ) ) );
             dc.SetTextForeground( GetGlobalColor( _T ( "UITX1" ) ) );
-            
+
             int yt = 0;
             int xt = 0;
             wxString s = cc1->m_pCIWin->GetString();
             int h = cc1->m_pCIWin->GetCharHeight();
-            
+
             wxStringTokenizer tkz( s, _T("\n") );
             wxString token;
-            
+
             while(tkz.HasMoreTokens()) {
                 token = tkz.GetNextToken();
                 dc.DrawText(token, xt, yt);
                 yt += h;
             }
             dc.SelectObject(wxNullBitmap);
-            
+
             gldc.DrawBitmap( bmp, x, y, false);
         }
     }
@@ -1857,7 +1857,6 @@ void glChartCanvas::render()
         if( pthumbwin->GetBitmap().IsOk())
             gldc.DrawBitmap( pthumbwin->GetBitmap(), thumbx, thumby, false);
     }
-
 #endif
 
     //quiting?

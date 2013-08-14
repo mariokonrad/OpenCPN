@@ -385,8 +385,8 @@ SET(HDRS
 		include/NavObjectCollection.h
 		include/RoutePoint.h
 		include/Route.h
-		include/SelectItem.h
-		include/Select.h
+		src/SelectItem.h
+		src/Select.h
 		src/FontMgr.h
 		src/FontDesc.h
 		include/vector2D.h
@@ -447,6 +447,7 @@ SET(HDRS
 		include/multiplexer.h
 		include/OCPNRegion.h
 		include/TrackPropDlg.h
+		src/OCPNTrackListCtrl.h
 		include/LinkPropDlg.h
 		include/OCPN_AlertDialog.h
 )
@@ -554,6 +555,7 @@ SET(SRCS
 		src/pugixml.cpp
 		src/OCPNRegion.cpp
 		src/TrackPropDlg.cpp
+		src/OCPNTrackListCtrl.cpp
 		src/LinkPropDlg.cpp
 		src/OCPN_AlertDialog.cpp
     )

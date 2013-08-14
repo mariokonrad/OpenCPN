@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,35 +19,28 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __SELECTITEM_H__
-#define __SELECTITEM_H__
+#ifndef __OCPNTRACKLISTCTL__H__
+#define __OCPNTRACKLISTCTL__H__
 
-#include <wx/list.h>
+#include <wx/window.h>
+#include <wx/listctrl.h>
 
-class SelectItem
+class Route;
+
+class OCPNTrackListCtrl : public wxListCtrl
 {
-public:
-      SelectItem();
-      ~SelectItem();
+	public:
+		OCPNTrackListCtrl(wxWindow * parent, wxWindowID id, const wxPoint & pos, const wxSize & size, long style);
+		~OCPNTrackListCtrl();
 
-      int   GetUserData(void);
-      void  SetUserData(int data);
+		wxString OnGetItemText(long item, long column) const;
+		int OnGetItemColumnImage(long item, long column) const;
 
-      float m_slat;
-      float m_slon;
-      float m_slat2;
-      float m_slon2;
-      int   m_seltype;
-      bool  m_bIsSelected;
-      const void  *m_pData1;
-      void  *m_pData2;
-      void  *m_pData3;
-      int   m_Data4;
+		Route * m_pRoute;
+		int m_tz_selection;
+		int m_LMT_Offset;
 };
-
-WX_DECLARE_LIST(SelectItem, SelectableItemList);// establish class as list member
 
 #endif

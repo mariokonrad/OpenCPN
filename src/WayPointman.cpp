@@ -583,7 +583,7 @@ void WayPointman::DestroyWaypoint( RoutePoint *pRp )
 
 		// Now it is safe to delete the point
 		pConfig->DeleteWayPoint( pRp );
-		pSelect->DeleteSelectablePoint( pRp, SELTYPE_ROUTEPOINT );
+		pSelect->DeleteSelectablePoint(pRp, Select::TYPE_ROUTEPOINT);
 
 		//TODO  FIXME
 		// Some memory corruption occurs if the wp is deleted here.

@@ -2168,7 +2168,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     bool showAISRollover = false;
     if( g_pAIS && g_pAIS->GetNumTargets() && g_bShowAIS ) {
         SelectItem *pFind = pSelectAIS->FindSelection( m_cursor_lat, m_cursor_lon,
-                                                       SELTYPE_AISTARGET );
+                                                       Select::TYPE_AISTARGET );
         if( pFind ) {
             int FoundAIS_MMSI = (long) pFind->m_pData1; // cast to long avoids problems with 64bit compilers
             AIS_Target_Data *ptarget = g_pAIS->Get_Target_Data_From_MMSI( FoundAIS_MMSI );
@@ -2216,7 +2216,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
 
         SelectableItemList SelList = pSelect->FindSelectionList( m_cursor_lat, m_cursor_lon,
-                                     SELTYPE_ROUTESEGMENT );
+                                     Select::TYPE_ROUTESEGMENT );
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
             SelectItem *pFindSel = node->GetData();
@@ -5063,7 +5063,7 @@ void ChartCanvas::FindRoutePointsAtCursor( float selectRadius, bool setBeingEdit
 
     SelectItem *pFind = NULL;
     SelectableItemList SelList = pSelect->FindSelectionList( m_cursor_lat, m_cursor_lon,
-                                 SELTYPE_ROUTEPOINT );
+                                 Select::TYPE_ROUTEPOINT );
     wxSelectableItemListNode *node = SelList.GetFirst();
     while( node ) {
         pFind = node->GetData();
@@ -5157,7 +5157,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
         GetCanvasPixPoint( x, y, zlat, zlon );
 
         SelectItem *pFindAIS;
-        pFindAIS = pSelectAIS->FindSelection( zlat, zlon, SELTYPE_AISTARGET );
+        pFindAIS = pSelectAIS->FindSelection( zlat, zlon, Select::TYPE_AISTARGET );
 
         if( pFindAIS ) {
             m_FoundAIS_MMSI = pFindAIS->GetUserData();
@@ -5174,7 +5174,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
         }
 
         SelectItem* cursorItem;
-        cursorItem = pSelect->FindSelection( zlat, zlon, SELTYPE_ROUTESEGMENT );
+        cursorItem = pSelect->FindSelection( zlat, zlon, Select::TYPE_ROUTESEGMENT );
 
         if( cursorItem ) {
             Route *pr = (Route *) cursorItem->m_pData3;
@@ -5184,7 +5184,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
             }
         }
 
-        cursorItem = pSelect->FindSelection( zlat, zlon, SELTYPE_TRACKSEGMENT );
+        cursorItem = pSelect->FindSelection( zlat, zlon, Select::TYPE_TRACKSEGMENT );
 
         if( cursorItem ) {
             Route *pr = (Route *) cursorItem->m_pData3;
@@ -5797,7 +5797,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
         last_drag.y = my;
 
         if( parent_frame->nRoute_State )                     // creating route?
-            CanvasPopupMenu( x, y, SELTYPE_ROUTECREATE );
+            CanvasPopupMenu( x, y, Select::TYPE_ROUTECREATE );
         else                                                  // General Right Click
         {
             // Look for selectable objects
@@ -5836,16 +5836,16 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
             }
 
             //      Get all the selectable things at the cursor
-            pFindAIS = pSelectAIS->FindSelection( slat, slon, SELTYPE_AISTARGET );
-            pFindRP = pSelect->FindSelection( slat, slon, SELTYPE_ROUTEPOINT );
-            pFindRouteSeg = pSelect->FindSelection( slat, slon, SELTYPE_ROUTESEGMENT );
-            pFindTrackSeg = pSelect->FindSelection( slat, slon, SELTYPE_TRACKSEGMENT );
+            pFindAIS = pSelectAIS->FindSelection( slat, slon, Select::TYPE_AISTARGET );
+            pFindRP = pSelect->FindSelection( slat, slon, Select::TYPE_ROUTEPOINT );
+            pFindRouteSeg = pSelect->FindSelection( slat, slon, Select::TYPE_ROUTESEGMENT );
+            pFindTrackSeg = pSelect->FindSelection( slat, slon, Select::TYPE_TRACKSEGMENT );
 
             if( m_bShowCurrent ) pFindCurrent = pSelectTC->FindSelection( slat, slon,
-                                                    SELTYPE_CURRENTPOINT );
+                                                    Select::TYPE_CURRENTPOINT );
 
             if( m_bShowTide )                                // look for tide stations
-                pFindTide = pSelectTC->FindSelection( slat, slon, SELTYPE_TIDEPOINT );
+                pFindTide = pSelectTC->FindSelection( slat, slon, Select::TYPE_TIDEPOINT );
 
             int seltype = 0;
 
@@ -5855,7 +5855,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
 
                 //      Make sure the target data is available
                 if( g_pAIS->Get_Target_Data_From_MMSI( m_FoundAIS_MMSI ) ) seltype |=
-                        SELTYPE_AISTARGET;
+                        Select::TYPE_AISTARGET;
             }
 
             //    Now the various Route Parts
@@ -5870,7 +5870,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
 
                 //There is at least one routepoint, so get the whole list
                 SelectableItemList SelList = pSelect->FindSelectionList( slat, slon,
-                                             SELTYPE_ROUTEPOINT );
+                                             Select::TYPE_ROUTEPOINT );
                 wxSelectableItemListNode *node = SelList.GetFirst();
                 while( node ) {
                     SelectItem *pFindSel = node->GetData();
@@ -5940,16 +5940,16 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                     m_pFoundRoutePoint = pFirstVizPoint;
 
                 if( m_pSelectedRoute ) {
-                    if( m_pSelectedRoute->IsVisible() ) seltype |= SELTYPE_ROUTEPOINT;
-                } else if( m_pFoundRoutePoint ) seltype |= SELTYPE_MARKPOINT;
+                    if( m_pSelectedRoute->IsVisible() ) seltype |= Select::TYPE_ROUTEPOINT;
+                } else if( m_pFoundRoutePoint ) seltype |= Select::TYPE_MARKPOINT;
             }
 
-            // Note here that we use SELTYPE_ROUTESEGMENT to select tracks as well as routes
+            // Note here that we use Select::TYPE_ROUTESEGMENT to select tracks as well as routes
             // But call the popup handler with identifier appropriate to the type
             if( pFindRouteSeg )                  // there is at least one select item
             {
                 SelectableItemList SelList = pSelect->FindSelectionList( slat, slon,
-                                             SELTYPE_ROUTESEGMENT );
+                                             Select::TYPE_ROUTESEGMENT );
 
                 if( NULL == m_pSelectedRoute )  // the case where a segment only is selected
                 {
@@ -5972,10 +5972,10 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                             (RoutePoint *) pFindRouteSeg->m_pData1;
                     m_pFoundRoutePointSecond = (RoutePoint *) pFindRouteSeg->m_pData2;
 
-                    m_pSelectedRoute->m_bRtIsSelected = !(seltype & SELTYPE_ROUTEPOINT);
+                    m_pSelectedRoute->m_bRtIsSelected = !(seltype & Select::TYPE_ROUTEPOINT);
                     if( m_pSelectedRoute->m_bRtIsSelected )
                         m_pSelectedRoute->Draw( dc, GetVP() );
-                    seltype |= SELTYPE_ROUTESEGMENT;
+                    seltype |= Select::TYPE_ROUTESEGMENT;
                 }
 
             }
@@ -5983,7 +5983,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
             if( pFindTrackSeg ) {
                 m_pSelectedTrack = NULL;
                 SelectableItemList SelList = pSelect->FindSelectionList( slat, slon,
-                                             SELTYPE_TRACKSEGMENT );
+                                             Select::TYPE_TRACKSEGMENT );
 
                 //  Choose the first visible track containing segment in the list
                 wxSelectableItemListNode *node = SelList.GetFirst();
@@ -5998,7 +5998,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                     node = node->GetNext();
                 }
 
-                if( m_pSelectedTrack ) seltype |= SELTYPE_TRACKSEGMENT;
+                if( m_pSelectedTrack ) seltype |= Select::TYPE_TRACKSEGMENT;
             }
 
             bool bseltc = false;
@@ -6014,7 +6014,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
 
                     SelectItem *pFind = NULL;
                     SelectableItemList SelList = pSelectTC->FindSelectionList( m_cursor_lat,
-                                                 m_cursor_lon, SELTYPE_CURRENTPOINT );
+                                                 m_cursor_lon, Select::TYPE_CURRENTPOINT );
 
                     //      Default is first entry
                     wxSelectableItemListNode *node = SelList.GetFirst();
@@ -6046,7 +6046,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                         Refresh( false );
                         bseltc = true;
                     } else
-                        seltype |= SELTYPE_CURRENTPOINT;
+                        seltype |= Select::TYPE_CURRENTPOINT;
                 }
 
                 else if( pFindTide ) {
@@ -6057,11 +6057,11 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                         Refresh( false );
                         bseltc = true;
                     } else
-                        seltype |= SELTYPE_TIDEPOINT;
+                        seltype |= Select::TYPE_TIDEPOINT;
                 }
             }
 
-            if( 0 == seltype ) seltype |= SELTYPE_UNKNOWN;
+            if( 0 == seltype ) seltype |= Select::TYPE_UNKNOWN;
 
             if( !bseltc ) CanvasPopupMenu( x, y, seltype );
 
@@ -6144,7 +6144,7 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
 #endif
 #endif
 
-    if( seltype == SELTYPE_ROUTECREATE ) {
+    if( seltype == Select::TYPE_ROUTECREATE ) {
 #ifndef __WXOSX__
         contextMenu->Append( ID_RC_MENU_FINISH, _menuText( _( "End Route" ), _T("Esc") ) );
 #else
@@ -6252,7 +6252,7 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
 
     if( !bGPSValid ) contextMenu->Append( ID_DEF_MENU_MOVE_BOAT_HERE, _( "Move Boat Here" ) );
 
-    if( !( g_pRouteMan->GetpActiveRoute() || ( seltype & SELTYPE_MARKPOINT ) ) )
+    if( !( g_pRouteMan->GetpActiveRoute() || ( seltype & Select::TYPE_MARKPOINT ) ) )
         contextMenu->Append( ID_DEF_MENU_GOTO_HERE, _( "Navigate To Here" ) );
 
     contextMenu->Append( ID_DEF_MENU_GOTOPOSITION, _("Center View...") );
@@ -6346,7 +6346,7 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
     if( g_pAIS ) {
         contextMenu->Append( ID_DEF_MENU_AISTARGETLIST, _("AIS Target List...") );
 
-        if( seltype & SELTYPE_AISTARGET ) {
+        if( seltype & Select::TYPE_AISTARGET ) {
             menuAIS->Append( ID_DEF_MENU_AIS_QUERY, _( "Target Query..." ) );
             AIS_Target_Data *myptarget = g_pAIS->Get_Target_Data_From_MMSI( m_FoundAIS_MMSI );
             if( myptarget && myptarget->bCPA_Valid && (myptarget->n_alarm_state != AIS_ALARM_SET) ) {
@@ -6360,7 +6360,7 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
         }
     }
 
-    if( seltype & SELTYPE_ROUTESEGMENT ) {
+    if( seltype & Select::TYPE_ROUTESEGMENT ) {
         bool blay = false;
         if( m_pSelectedRoute && m_pSelectedRoute->m_bIsInLayer )
             blay = true;
@@ -6416,7 +6416,7 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
         menuFocus = menuRoute;
     }
 
-    if( seltype & SELTYPE_TRACKSEGMENT ) {
+    if( seltype & Select::TYPE_TRACKSEGMENT ) {
         bool blay = false;
         if( m_pSelectedTrack && m_pSelectedTrack->m_bIsInLayer )
             blay = true;
@@ -6436,7 +6436,7 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
         menuFocus = menuTrack;
     }
 
-    if( seltype & SELTYPE_ROUTEPOINT ) {
+    if( seltype & Select::TYPE_ROUTEPOINT ) {
         bool blay = false;
         if( m_pFoundRoutePoint && m_pFoundRoutePoint->m_bIsInLayer )
             blay = true;
@@ -6485,7 +6485,7 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
         menuFocus = menuWaypoint;
     }
 
-    if( seltype & SELTYPE_MARKPOINT ) {
+    if( seltype & Select::TYPE_MARKPOINT ) {
         bool blay = false;
         if( m_pFoundRoutePoint && m_pFoundRoutePoint->m_bIsInLayer )
             blay = true;
@@ -6541,13 +6541,13 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
 
     //  Add the Tide/Current selections if the item was not activated by shortcut in right-click handlers
     bool bsep = false;
-    if( seltype & SELTYPE_TIDEPOINT ){
+    if( seltype & Select::TYPE_TIDEPOINT ){
         menuFocus->AppendSeparator();
         bsep = true;
         menuFocus->Append( ID_DEF_MENU_TIDEINFO, _( "Show Tide Information" ) );
     }
 
-    if( seltype & SELTYPE_CURRENTPOINT ) {
+    if( seltype & Select::TYPE_CURRENTPOINT ) {
         if( !bsep )
             menuFocus->AppendSeparator();
         menuFocus->Append( ID_DEF_MENU_CURRENTINFO, _( "Show Current Information" ) );
@@ -7161,7 +7161,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
             else {
                 undo->BeforeUndoableAction( UndoAction::Undo_DeleteWaypoint, m_pFoundRoutePoint, UndoAction::Undo_IsOrphanded, m_pFoundPoint );
                 pConfig->DeleteWayPoint( m_pFoundRoutePoint );
-                pSelect->DeleteSelectablePoint( m_pFoundRoutePoint, SELTYPE_ROUTEPOINT );
+                pSelect->DeleteSelectablePoint( m_pFoundRoutePoint, Select::TYPE_ROUTEPOINT );
                 if( NULL != pWayPointMan )
                     pWayPointMan->m_pWayPointList->DeleteObject( m_pFoundRoutePoint );
                 m_pFoundRoutePoint = NULL;
@@ -9421,7 +9421,7 @@ void ChartCanvas::DrawAllTidesInBBox( ocpnDC& dc, LLBBox& BBox, bool bRebuildSel
     dc.SetPen( *pblack_pen );
     dc.SetBrush( *pgreen_brush );
 
-    if( bRebuildSelList ) pSelectTC->DeleteAllSelectableTypePoints( SELTYPE_TIDEPOINT );
+    if( bRebuildSelList ) pSelectTC->DeleteAllSelectableTypePoints( Select::TYPE_TIDEPOINT );
 
     wxBitmap bm;
     switch( m_cs ) {
@@ -9477,7 +9477,7 @@ void ChartCanvas::DrawAllTidesInBBox( ocpnDC& dc, LLBBox& BBox, bool bRebuildSel
 
 //    Manage the point selection list
                     if( bRebuildSelList ) pSelectTC->AddSelectablePoint( lat, lon, pIDX,
-                                SELTYPE_TIDEPOINT );
+                                Select::TYPE_TIDEPOINT );
 
                     wxPoint r;
                     GetCanvasPointPix( lat, nlon, &r );
@@ -9671,7 +9671,7 @@ void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LLBBox& BBox, bool bRebuild
               wxString( _T ( "Eurostile Extended" ) ) );
     int now = time( NULL );
 
-    if( bRebuildSelList ) pSelectTC->DeleteAllSelectableTypePoints( SELTYPE_CURRENTPOINT );
+    if( bRebuildSelList ) pSelectTC->DeleteAllSelectableTypePoints( Select::TYPE_CURRENTPOINT );
 
 //     if(1/*BBox.GetValid()*/)
     {
@@ -9694,7 +9694,7 @@ void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LLBBox& BBox, bool bRebuild
 
 //    Manage the point selection list
                     if( bRebuildSelList ) pSelectTC->AddSelectablePoint( lat, lon, pIDX,
-                                SELTYPE_CURRENTPOINT );
+                                Select::TYPE_CURRENTPOINT );
 
                     wxPoint r;
                     GetCanvasPointPix( lat, lon, &r );

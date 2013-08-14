@@ -824,7 +824,7 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 
         // Delete the stale AIS Target selectable point if not a CDDSE
         if( pStaleTarget && !dse_mmsi ) pSelectAIS->DeleteSelectablePoint( (void *) mmsi_long,
-                SELTYPE_AISTARGET );
+                Select::TYPE_AISTARGET );
 
         bool bhad_name = false;
         if( pStaleTarget ) bhad_name = pStaleTarget->b_nameValid;
@@ -979,7 +979,7 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
             if( !pTargetData->b_OwnShip ) {
                 if( pTargetData->b_positionOnceValid ) {
                     SelectItem *pSel = pSelectAIS->AddSelectablePoint( pTargetData->Lat,
-                            pTargetData->Lon, (void *) mmsi_long, SELTYPE_AISTARGET );
+                            pTargetData->Lon, (void *) mmsi_long, Select::TYPE_AISTARGET );
                     pSel->SetUserData( mmsi );
                 }
 
@@ -1831,8 +1831,7 @@ void AIS_Decoder::OnTimerAIS( wxTimerEvent& event )
 
         //      Mark lost targets if specified
         if( g_bMarkLost ) {
-            if( ( target_posn_age > g_MarkLost_Mins * 60 ) && ( td->Class != AIS_GPSG_BUDDY ) ) td->b_active =
-                    false;
+            if( ( target_posn_age > g_MarkLost_Mins * 60 ) && ( td->Class != AIS_GPSG_BUDDY ) ) td->b_active = false;
         }
 
         //      Remove lost targets if specified
@@ -1851,7 +1850,7 @@ void AIS_Decoder::OnTimerAIS( wxTimerEvent& event )
                 td->ROTAIS = -128;
 
                 long mmsi_long = td->MMSI;
-                pSelectAIS->DeleteSelectablePoint( (void *) mmsi_long, SELTYPE_AISTARGET );
+                pSelectAIS->DeleteSelectablePoint((void *) mmsi_long, Select::TYPE_AISTARGET);
 
                 //      If we have not seen a static report in 3 times the removal spec,
                 //      then remove the target from all lists.

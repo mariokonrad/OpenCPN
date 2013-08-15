@@ -46,7 +46,8 @@
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "routemanagerdialog.h"
-#include "routeprintout.h"
+#include "RoutePrintout.h"
+#include "RoutePrintSelection.h"
 #include "chcanv.h"
 #include "tcmgr.h"        // pjotrc 2011.03.02
 #include "PositionParser.h"
@@ -78,7 +79,7 @@ extern wxPrintData               *g_printData;
 extern wxPageSetupData*          g_pageSetupData;
 
 // Global print route selection dialog
-extern RoutePrintSelection * pRoutePrintSelection;
+RoutePrintSelection * pRoutePrintSelection = NULL;
 
 /*!
  * Helper stuff for calculating Route Plans
@@ -591,6 +592,7 @@ RouteProp::~RouteProp()
 
 	// delete global print route selection dialog
 	delete pRoutePrintSelection;
+	pRoutePrintSelection = NULL;
 }
 
 /*!

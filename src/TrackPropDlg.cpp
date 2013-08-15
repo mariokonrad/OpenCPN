@@ -29,7 +29,7 @@
 #include "Routeman.h"
 #include "Select.h"
 #include "routemanagerdialog.h"
-#include "routeprintout.h"
+#include "RoutePrintSelection.h"
 #include "pluginmanager.h"
 
 extern RouteList * pRouteList;
@@ -686,7 +686,7 @@ void TrackPropDlg::OnTrackPropCopyTxtClick( wxCommandEvent& event )
 
 void TrackPropDlg::OnPrintBtnClick( wxCommandEvent& event )
 {
-	RoutePrintSelection *pTrackPrintSelection = new RoutePrintSelection( this, m_pRoute );
+	RoutePrintSelection * pTrackPrintSelection = new RoutePrintSelection(this, m_pRoute);
 	pTrackPrintSelection->ShowModal();
 	delete pTrackPrintSelection;
 }

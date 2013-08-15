@@ -93,7 +93,6 @@
 #include "datastream.h"
 #include "OCPN_DataStreamEvent.h"
 #include "multiplexer.h"
-#include "routeprintout.h"
 #include "Select.h"
 #include "FontMgr.h"
 #include "NMEALogWindow.h"
@@ -104,6 +103,7 @@
 #include "cutil.h"
 #include "routemanagerdialog.h"
 #include "pluginmanager.h"
+#include "MyPrintout.h"
 
 #ifdef __WXOSX__
 	#include "macutils.h"
@@ -134,9 +134,9 @@
 WX_DECLARE_OBJARRAY(wxDialog *, MyDialogPtrArray);
 
 #include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY( ArrayOfCDI );
-WX_DEFINE_OBJARRAY( ArrayOfRect );
-WX_DEFINE_OBJARRAY( MyDialogPtrArray );
+WX_DEFINE_OBJARRAY(ArrayOfCDI);
+WX_DEFINE_OBJARRAY(ArrayOfRect);
+WX_DEFINE_OBJARRAY(MyDialogPtrArray);
 
 #ifdef __WXMSW__
 void RedirectIOToConsole();
@@ -192,7 +192,8 @@ MarkInfoImpl              *pMarkInfoDialog;
 RouteManagerDialog        *pRouteManagerDialog;
 
 double                    gLat, gLon, gCog, gSog, gHdt, gHdm, gVar;
-double                    vLat, vLon;
+double                    vLat;
+double                    vLon;
 double                    initial_scale_ppm;
 
 int                       g_nbrightness;
@@ -576,8 +577,6 @@ wxAuiManager              *g_pauimgr;
 wxAuiDefaultDockArt       *g_pauidockart;
 
 bool                      g_blocale_changed;
-
-RoutePrintSelection       *pRoutePrintSelection;
 
 wxMenu                    *g_FloatingToolbarConfigMenu;
 wxString                  g_toolbarConfig = _T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");

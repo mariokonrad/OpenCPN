@@ -37,10 +37,10 @@
 #include "printtable.h"
 #include "MyPrintout.h"
 
-class MyRoutePrintout : public MyPrintout
+class RoutePrintout : public MyPrintout
 {
 	public:
-		MyRoutePrintout(
+		RoutePrintout(
 				std::vector<bool> _toPrintOut,
 				Route * route,
 				const wxChar * title = _T( "My Route printout"));
@@ -73,65 +73,6 @@ class MyRoutePrintout : public MyPrintout
 		int marginY;
 		int textOffsetX;
 		int textOffsetY;
-};
-
-
-// route elements selection dialog
-#define ID_ROUTEPRINTSELECTION 9000
-#define SYMBOL_ROUTEPRINT_SELECTION_STYLE wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX
-#define SYMBOL_ROUTEPRINT_SELECTION_TITLE _("Print Route Selection")
-#define SYMBOL_ROUTEPRINT_SELECTION_IDNAME ID_ROUTEPRINTSELECTION
-#define SYMBOL_ROUTEPRINT_SELECTION_SIZE wxSize(750, 300)
-#define SYMBOL_ROUTEPRINT_SELECTION_POSITION wxDefaultPosition
-
-#define ID_ROUTEPRINT_SELECTION_OK 9001
-#define ID_ROUTEPRINT_SELECTION_CANCEL 9002
-
-
-class RoutePrintSelection : public wxDialog
-{
-		DECLARE_DYNAMIC_CLASS(RoutePrintSelection)
-		DECLARE_EVENT_TABLE()
-
-	public:
-		RoutePrintSelection();
-
-		RoutePrintSelection(
-				wxWindow * parent,
-				Route * route,
-				wxWindowID id = SYMBOL_ROUTEPRINT_SELECTION_IDNAME,
-				const wxString & caption = SYMBOL_ROUTEPRINT_SELECTION_TITLE,
-				const wxPoint & pos = SYMBOL_ROUTEPRINT_SELECTION_POSITION,
-				const wxSize & size = SYMBOL_ROUTEPRINT_SELECTION_SIZE,
-				long style = SYMBOL_ROUTEPRINT_SELECTION_STYLE );
-
-		~RoutePrintSelection();
-
-		bool Create(
-				wxWindow * parent,
-				wxWindowID id = SYMBOL_ROUTEPRINT_SELECTION_IDNAME,
-				const wxString & caption = SYMBOL_ROUTEPRINT_SELECTION_TITLE,
-				const wxPoint & pos = SYMBOL_ROUTEPRINT_SELECTION_POSITION,
-				const wxSize & size = SYMBOL_ROUTEPRINT_SELECTION_SIZE,
-				long style = SYMBOL_ROUTEPRINT_SELECTION_STYLE);
-
-		void CreateControls();
-
-		void SetColorScheme(ColorScheme cs);
-		void SetDialogTitle(const wxString & title);
-		void OnRoutepropCancelClick(wxCommandEvent& event);
-		void OnRoutepropOkClick(wxCommandEvent& event);
-
-		static bool ShowToolTips();
-
-		wxButton * m_CancelButton;
-		wxButton * m_OKButton;
-		wxCheckBox * m_checkBoxWPName;
-		wxCheckBox * m_checkBoxWPPosition;
-		wxCheckBox * m_checkBoxWPCourse;
-		wxCheckBox * m_checkBoxWPDistanceToNext;
-		wxCheckBox * m_checkBoxWPDescription;
-		Route * route;
 };
 
 #endif

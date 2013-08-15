@@ -405,7 +405,9 @@ SET(HDRS
 		src/Routeman.h
 		src/WayPointman.h
 		include/routemanagerdialog.h
-		include/routeprop.h
+		src/RouteProp.h
+		src/MarkInfo.h
+		src/LatLonTextCtrl.h
 		src/RoutePrintout.h
 		include/PositionParser.h
 		include/printtable.h
@@ -516,7 +518,9 @@ SET(SRCS
 		src/Routeman.cpp
 		src/WayPointman.cpp
 		src/routemanagerdialog.cpp
-		src/routeprop.cpp
+		src/RouteProp.cpp
+		src/MarkInfo.cpp
+		src/LatLonTextCtrl.cpp
 		src/RoutePrintout.cpp
 		src/RoutePrintSelection.cpp
 		src/PositionParser.cpp

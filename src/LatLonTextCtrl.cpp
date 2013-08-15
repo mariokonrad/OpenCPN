@@ -1,4 +1,4 @@
-/***************************************************************************
+/**************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -21,31 +21,33 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __positionparser_h__
-#define __positionparser_h__
+#include "LatLonTextCtrl.h"
 
-#include <wx/string.h>
+const wxEventType EVT_LLCHANGE = wxNewEventType();
 
-class PositionParser
+BEGIN_EVENT_TABLE(LatLonTextCtrl, wxWindow)
+	EVT_KILL_FOCUS(LatLonTextCtrl::OnKillFocus)
+END_EVENT_TABLE()
+
+LatLonTextCtrl::LatLonTextCtrl(
+		wxWindow * parent,
+		wxWindowID id,
+		const wxString & value,
+		const wxPoint & pos,
+		const wxSize & size,
+		long style,
+		const wxValidator& validator,
+		const wxString& name)
+	: wxTextCtrl(parent, id, value, pos, size, style, validator, name)
 {
-	public:
-		PositionParser(const wxString & src);
-		const wxString & GetSeparator() const { return separator; }
-		const wxString & GetLatitudeString() const { return latitudeString; }
-		const wxString & GetLongitudeString() const { return longitudeString; }
-		double GetLatitude() const { return latitude; }
-		double GetLongitude() const { return longitude; }
-		bool FindSeparator(const wxString & src);
-		bool IsOk() const { return parsedOk; }
+	m_pParentEventHandler = parent->GetEventHandler();
+}
 
-	private:
-		wxString source;
-		wxString separator;
-		wxString latitudeString;
-		wxString longitudeString;
-		double latitude;
-		double longitude;
-		bool parsedOk;
-};
+void LatLonTextCtrl::OnKillFocus(wxFocusEvent& event)
+{
+	//    Send an event to the Parent Dialog
+	wxCommandEvent up_event( EVT_LLCHANGE, GetId() );
+	up_event.SetEventObject( (wxObject *) this );
+	m_pParentEventHandler->AddPendingEvent( up_event );
+}
 
-#endif

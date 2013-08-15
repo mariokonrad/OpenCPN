@@ -53,7 +53,7 @@
 #include "styles.h"
 #include "Routeman.h"
 #include "WayPointman.h"
-#include "routeprop.h"
+#include "RouteProp.h"
 #include "s52utils.h"
 #include "chartbase.h"
 #include "tinyxml/tinyxml.h"

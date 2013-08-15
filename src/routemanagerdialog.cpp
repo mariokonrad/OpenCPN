@@ -40,7 +40,8 @@
 #include "Select.h"
 #include "WayPointman.h"
 #include "Track.h"
-#include "routeprop.h"
+#include "RouteProp.h"
+#include "MarkInfo.h"
 #include "Routeman.h"
 #include "georef.h"
 #include "chartbase.h"
@@ -119,25 +120,25 @@ enum { colTRKVISIBLE = 0, colTRKNAME, colTRKLENGTH };
 enum { colLAYVISIBLE = 0, colLAYNAME, colLAYITEMS };
 enum { colWPTICON = 0, colWPTNAME, colWPTDIST };
 
-// GLOBALS :0
-extern RouteList *pRouteList;
-extern LayerList *pLayerList;
 extern wxString GetLayerName(int id);
-extern RouteProp *pRoutePropDialog;
-extern TrackPropDlg *pTrackPropDialog;
-extern Routeman  *g_pRouteMan;
-extern MyConfig  *pConfig;
+
+extern RouteList * pRouteList;
+extern LayerList * pLayerList;
+extern RouteProp * pRoutePropDialog;
+extern TrackPropDlg * pTrackPropDialog;
+extern Routeman * g_pRouteMan;
+extern MyConfig * pConfig;
 extern ChartCanvas *cc1;
-extern ChartBase *Current_Ch;
-extern Track     *g_pActiveTrack;
-extern WayPointman      *pWayPointMan;
-extern MarkInfoImpl     *pMarkPropDialog;
-extern MyFrame          *gFrame;
-extern Select           *pSelect;
-extern double           gLat, gLon;
-extern double           gCog, gSog;
-extern bool             g_bShowLayers;
-extern wxString         g_default_wp_icon;
+extern ChartBase * Current_Ch;
+extern Track * g_pActiveTrack;
+extern WayPointman * pWayPointMan;
+extern MarkInfoImpl * pMarkPropDialog;
+extern MyFrame * gFrame;
+extern Select * pSelect;
+extern double gLat, gLon;
+extern double gCog, gSog;
+extern bool g_bShowLayers;
+extern wxString g_default_wp_icon;
 
 // sort callback. Sort by route name.
 int sort_route_name_dir;
@@ -286,7 +287,7 @@ int wxCALLBACK SortWaypointsOnName(long item1, long item2, long list)
     }
     else
         return 0;
-    
+
 }
 
 // sort callback. Sort by wpt distance.
@@ -1244,7 +1245,7 @@ void RouteManagerDialog::OnRteToggleVisibility( wxMouseEvent &event )
         int wpts_set_viz = wxID_YES;
         bool togglesharedwpts = true;
         bool has_shared_wpts = g_pRouteMan->DoesRouteContainSharedPoints(route);
-        
+
         if( has_shared_wpts && route->IsVisible() ) {
             wpts_set_viz = OCPNMessageBox(  this, _("Do you also want to make the shared waypoints being part of this route invisible?"), _("Question"), wxYES_NO );
             togglesharedwpts = (wpts_set_viz == wxID_YES);
@@ -1779,9 +1780,9 @@ void RouteManagerDialog::OnTrkRouteFromTrackClick( wxCommandEvent &event )
     if( item == -1 ) return;
 
     Track *track = (Track *) pRouteList->Item( m_pTrkListCtrl->GetItemData( item ) )->GetData();
-    
+
     TrackToRoute( track );
-    
+
     UpdateRouteListCtrl();
 }
 
@@ -1823,7 +1824,7 @@ void RouteManagerDialog::UpdateWptListCtrl( RoutePoint *rp_select, bool b_retain
 
     //  Freshen the image list
     m_pWptListCtrl->SetImageList( pWayPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
-    
+
     m_pWptListCtrl->DeleteAllItems();
 
     wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
@@ -1896,11 +1897,11 @@ void RouteManagerDialog::UpdateWptListCtrlViz( )
         item = m_pWptListCtrl->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_DONTCARE);
         if ( item == -1 )
             break;
-        
+
         RoutePoint *pRP = (RoutePoint *)m_pWptListCtrl->GetItemData(item);
         int image = pRP->IsVisible() ? pWayPointMan->GetIconIndex( pRP->m_pbmIcon )
         : pWayPointMan->GetXIconIndex( pRP->m_pbmIcon ) ;
-                        
+
         m_pWptListCtrl->SetItemImage(item, image);
     }
 }
@@ -2168,7 +2169,7 @@ void RouteManagerDialog::OnWptGoToClick( wxCommandEvent &event )
     rteName.Append( name );
     temp_route->m_RouteNameString = rteName;
     temp_route->m_RouteStartString = _("Here");
-    
+
     temp_route->m_RouteEndString = name;
     temp_route->m_bDeleteOnArrival = true;
 
@@ -2676,4 +2677,3 @@ void RouteManagerDialog::OnExportVizClick( wxCommandEvent &event )
     pConfig->ExportGPX( this, true, true );     // only visible objects, layers included
 }
 
-//END Event handlers

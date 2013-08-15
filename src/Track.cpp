@@ -27,7 +27,7 @@
 #include "chart1.h"
 #include "ocpndc.h"
 #include "chcanv.h"
-#include "routeprop.h"
+#include "RouteProp.h"
 #include "navutil.h"
 
 #define TIMER_TRACK1 778

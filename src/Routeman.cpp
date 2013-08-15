@@ -48,7 +48,7 @@
 #include "concanv.h"
 #include "navutil.h"
 #include "georef.h"
-#include "routeprop.h"
+#include "RouteProp.h"
 #include "routemanagerdialog.h"
 #include "pluginmanager.h"
 #include "multiplexer.h"

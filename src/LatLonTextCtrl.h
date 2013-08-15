@@ -21,31 +21,36 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __positionparser_h__
-#define __positionparser_h__
+#ifndef __LATLONTEXTCTRL__H__
+#define __LATLONTEXTCTRL__H__
 
-#include <wx/string.h>
+#include <wx/textctrl.h>
 
-class PositionParser
+//    LatLonTextCtrl Specification
+//    We need a derived wxText control for lat/lon input in the MarkProp dialog
+//    Specifically, we need to catch loss-of-focus events and signal the parent dialog
+//    to update the mark's lat/lon dynamically.
+
+extern const wxEventType EVT_LLCHANGE;
+
+class LatLonTextCtrl: public wxTextCtrl
 {
-	public:
-		PositionParser(const wxString & src);
-		const wxString & GetSeparator() const { return separator; }
-		const wxString & GetLatitudeString() const { return latitudeString; }
-		const wxString & GetLongitudeString() const { return longitudeString; }
-		double GetLatitude() const { return latitude; }
-		double GetLongitude() const { return longitude; }
-		bool FindSeparator(const wxString & src);
-		bool IsOk() const { return parsedOk; }
+		DECLARE_EVENT_TABLE()
 
-	private:
-		wxString source;
-		wxString separator;
-		wxString latitudeString;
-		wxString longitudeString;
-		double latitude;
-		double longitude;
-		bool parsedOk;
+	public:
+		LatLonTextCtrl(
+				wxWindow * parent,
+				wxWindowID id,
+				const wxString & value = _T(""),
+				const wxPoint & pos = wxDefaultPosition,
+				const wxSize & size = wxDefaultSize,
+				long style = 0,
+				const wxValidator & validator = wxDefaultValidator,
+				const wxString & name = wxTextCtrlNameStr);
+
+		void OnKillFocus(wxFocusEvent &event);
+
+		wxEvtHandler * m_pParentEventHandler;
 };
 
 #endif

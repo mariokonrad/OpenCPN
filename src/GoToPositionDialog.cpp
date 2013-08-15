@@ -23,7 +23,8 @@
 
 #include "GoToPositionDialog.h"
 #include "PositionParser.h"
-#include "routeprop.h"
+#include "RouteProp.h"
+#include "LatLonTextCtrl.h"
 #include "navutil.h"
 
 #include <wx/sizer.h>

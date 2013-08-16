@@ -1,11 +1,11 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  * Purpose:  Optimized wxBitmap Object
  * Author:   David Register
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register   *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,12 +20,8 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
- ***************************************************************************
- *
- *
- *
- */
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
 
 #ifndef _OCPN_PIXEL_H_
 #define _OCPN_PIXEL_H_
@@ -72,7 +68,7 @@ wxImage Image_Rotate(wxImage &base_image, double angle, const wxPoint & centre_o
 
 //    Some configuration sanity checks
 
-//          Use ocpnBitmap (Optimized wxBitmap)
+//          Use OCPNBitmap (Optimized wxBitmap)
 //          Required for X11 native systems, optional on MSW
 //          Also required for GTK PixBuf optimized configuration
 
@@ -136,7 +132,7 @@ wxImage Image_Rotate(wxImage &base_image, double angle, const wxPoint & centre_o
     BGR
 }_RGBO;
 
-class ocpnBitmap;
+class OCPNBitmap;
 
 #ifdef __PIX_CACHE_X11IMAGE__
 //----------------------------------------------------------------------
@@ -194,7 +190,7 @@ class PixelCache
         unsigned char     *pData;
 
 #ifdef ocpnUSE_ocpnBitmap
-      ocpnBitmap         *m_pbm;
+      OCPNBitmap         *m_pbm;
 #else
       wxBitmap          *m_pbm;
 #endif
@@ -227,116 +223,15 @@ class PixelCache
 
 #ifdef ocpnUSE_ocpnBitmap
 
-//-------------------------------------------------------------------------------
-//      ocpn_Bitmap Definition
-//          with helpers
-//-------------------------------------------------------------------------------
-
-
 #ifdef __WXMSW__
-#include "wx/msw/gdiimage.h"
-#include "wx/msw/dib.h"
+	#include "wx/msw/gdiimage.h"
+	#include "wx/msw/dib.h"
 #endif
 
 #ifdef __WXX11__
-#include "wx/x11/private.h"
+	#include "wx/x11/private.h"
 #endif
 
-class WXDLLEXPORT wxDC;
-class WXDLLEXPORT wxControl;
-class WXDLLEXPORT wxBitmap;
-class WXDLLEXPORT wxBitmapHandler;
-class WXDLLEXPORT wxIcon;
-class WXDLLEXPORT wxMask;
-class WXDLLEXPORT wxCursor;
-class WXDLLEXPORT wxControl;
-class WXDLLEXPORT wxImage;
-class WXDLLEXPORT wxPalette;
-
-// ----------------------------------------------------------------------------
-// ocpnBitmapo: an optimized wxBitmap
-// ----------------------------------------------------------------------------
-
-class /*WXDLLEXPORT*/ ocpnBitmap : public wxBitmap
-{
-public:
-    // default ctor creates an invalid bitmap, you must Create() it later
-    ocpnBitmap(); //{ Init(); }
-
-      // ctor
-      // Create from Data
-    ocpnBitmap(unsigned char *pPix, int width, int height, int depth)
-            { (void)CreateFromData(pPix, width, height, depth );}
-
-      // ctor
-      // Create from wxImage
-    ocpnBitmap(const wxImage& image, int depth)
-            { CreateFromImage(image, depth );}
-
-
-
-#ifdef __WXX11__
-      // Create from ocpnXImage
-      ocpnBitmap(ocpnXImage *ocpn_Ximage, int width, int height, int depth)
-            {CreateFromocpnXImage( ocpn_Ximage, width, height, depth );}
 #endif
 
-
-
-    // Implementation
-public:
-
-
-protected:
-//    creates the bitmap from data, supposed to be called from ctor
-      bool CreateFromData(void *pPix, int width, int height, int depth);
-
-//    or from wximage
-      bool CreateFromImage( const wxImage& image, int depth );
-
-
-//    or from ocpnXimage
-#ifdef __WXX11__
-      bool CreateFromocpnXImage( ocpnXImage *poXI, int width, int height, int depth );
 #endif
-
-private:
-
-    DECLARE_DYNAMIC_CLASS(ocpnBitmap)
-};
-
-
-#endif      // ocpnUSE_ocpnBitmap
-
-
-
-//----------------------------------------------------------------------------
-//      ocpnMemDC Definition
-//----------------------------------------------------------------------------
-
-class /*WXDLLEXPORT*/ ocpnMemDC : public wxMemoryDC
-{
-    public:
-        ocpnMemDC();
-
-//      void SelectObject(const wxBitmap& bitmap){wxMemoryDC::SelectObject(bitmap);}
-
-      //    Satisfy wxX11 2.8.0
-        void SelectObject(wxBitmap& bitmap){wxMemoryDC::SelectObject(bitmap);}
-
-//    Add a method to select a DIB section directly into the DC
-#ifdef ocpnUSE_DIBSECTION
-      void SelectObject(wxDIB& dib);
-#endif
-
-    protected:
-
-    private:
-#ifdef ocpnUSE_DIBSECTION
-      wxDIB *m_pselectedDIB;
-#endif
-
-   DECLARE_DYNAMIC_CLASS(ocpnMemDC)
-};
-
-#endif  // _OCPN_PIXEL_H_

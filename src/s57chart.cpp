@@ -48,6 +48,7 @@
 #include "ocpn_pixel.h"
 #include "ocpndc.h"
 #include "OCPNRegionIterator.h"
+#include "OCPNMemDC.h"
 
 #include "cpl_csv.h"
 #include "setjmp.h"
@@ -1977,7 +1978,7 @@ bool s57chart::DoRenderRegionViewOnDC( wxMemoryDC& dc, const ViewPort& VPoint,
         dc_clone.SelectObject( *m_pCloneBM );
 
 #ifdef ocpnUSE_DIBSECTION
-        ocpnMemDC memdc, dc_org;
+        OCPNMemDC memdc, dc_org;
 #else
         wxMemoryDC memdc, dc_org;
 #endif
@@ -2156,10 +2157,10 @@ bool s57chart::DoRenderViewOnDC( wxMemoryDC& dc, const ViewPort& VPoint, RenderT
             desy = -rul.y;
         }
 
-        ocpnMemDC dc_last;
+        OCPNMemDC dc_last;
         pDIB->SelectIntoDC( dc_last );
 
-        ocpnMemDC dc_new;
+        OCPNMemDC dc_new;
         PixelCache *pDIBNew = new PixelCache( VPoint.pix_width, VPoint.pix_height, BPP );
         pDIBNew->SelectIntoDC( dc_new );
 
@@ -2893,7 +2894,7 @@ bool s57chart::BuildThumbnail( const wxString &bmpname )
     ps52plib->m_nDisplayCategory = MARINERS_STANDARD;
 
 #ifdef ocpnUSE_DIBSECTION
-    ocpnMemDC memdc, dc_org;
+    OCPNMemDC memdc, dc_org;
 #else
     wxMemoryDC memdc, dc_org;
 #endif

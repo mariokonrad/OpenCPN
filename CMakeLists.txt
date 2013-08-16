@@ -347,6 +347,8 @@ SET(HDRS
 		include/chart1.h
 		include/bbox.h
 		include/ocpn_pixel.h
+		src/OCPNMemDC.h
+		src/OCPNBitmap.h
 		src/TimedPopupWin.h
 		src/AnnunText.h
 		src/CDI.h
@@ -475,6 +477,8 @@ SET(SRCS
 		src/MyPrintout.cpp
 		src/bbox.cpp
 		src/ocpn_pixel.cpp
+		src/OCPNMemDC.cpp
+		src/OCPNBitmap.cpp
 		src/ocpndc.cpp
 		src/chart/ChartDB.cpp
 		src/chart/ChartDatabase.cpp

@@ -19,23 +19,19 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __S57REGISTRARMGR_H__
-#define __S57REGISTRARMGR_H__
+#ifndef __S57OBJECTDESC_H__
+#define __S57OBJECTDESC_H__
 
 #include <wx/string.h>
 
-/**
- * s57RegistrarMgr Definition
- * This is a class holding the ctor and dtor for the global registrar
- */
-class s57RegistrarMgr
+class S57ObjectDesc
 {
-      public:
-            s57RegistrarMgr(const wxString& csv_dir, FILE *flog);
-            ~s57RegistrarMgr();
+	public:
+		wxString S57ClassName;
+		wxString S57ClassDesc;
+		wxString Attributes;
 };
 
 #endif

@@ -19,20 +19,20 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __S57OBJECTDESC_H__
-#define __S57OBJECTDESC_H__
+#ifndef __S57LIGHT_H__
+#define __S57LIGHT_H__
 
 #include <wx/string.h>
 
-class S57ObjectDesc
+class S57Light
 {
-public:
-      wxString    S57ClassName;
-      wxString    S57ClassDesc;
-      wxString    Attributes;
+	public:
+		wxArrayString attributeNames;
+		wxArrayString attributeValues;
+		wxString position;
+		bool hasSectors;
 };
 
 #endif

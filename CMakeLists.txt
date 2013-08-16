@@ -369,9 +369,9 @@ SET(HDRS
 		src/GoToPositionDialog.h
 		src/RolloverWin.h
 		include/S57QueryDialog.h
-		include/S57ObjectDesc.h
-		include/S57Light.h
-		include/s57RegistrarMgr.h
+		src/S57ObjectDesc.h
+		src/S57Light.h
+		src/S57RegistrarMgr.h
 		include/S57ClassRegistrar.h
 		src/MarkIcon.h
 		src/SendToGpsDlg.h
@@ -496,7 +496,7 @@ SET(SRCS
 		src/chcanv.cpp
 		src/TCWin.cpp
 		src/S57QueryDialog.cpp
-		src/s57RegistrarMgr.cpp
+		src/S57RegistrarMgr.cpp
 		src/GoToPositionDialog.cpp
 		src/CM93DSlide.cpp
 		src/RolloverWin.cpp

@@ -19,21 +19,19 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __S57LIGHT_H__
-#define __S57LIGHT_H__
+#ifndef __S57REGISTRARMGR_H__
+#define __S57REGISTRARMGR_H__
 
 #include <wx/string.h>
 
-class S57Light
+/// This is a class holding the ctor and dtor for the global registrar
+class S57RegistrarMgr
 {
-public:
-      wxArrayString attributeNames;
-      wxArrayString attributeValues;
-      wxString position;
-      bool hasSectors;
+	public:
+		S57RegistrarMgr(const wxString & csv_dir, FILE * flog);
+		~S57RegistrarMgr();
 };
 
 #endif

@@ -19,46 +19,44 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
+#include "S57RegistrarMgr.h"
+#include "S57ClassRegistrar.h"
 #include <wx/log.h>
 
-#include "s57RegistrarMgr.h"
-#include "S57ClassRegistrar.h"
-
 #ifdef USE_S57
-extern S57ClassRegistrar *g_poRegistrar;
+extern S57ClassRegistrar * g_poRegistrar;
 #endif
 
-static int s57_initialize( const wxString& csv_dir, FILE *flog )
+static int s57_initialize(const wxString & csv_dir, FILE * flog)
 {
+    // Get one instance of the s57classregistrar,
+    // And be prepared to give it to any module that needs it
 
-    //      Get one instance of the s57classregistrar,
-    //      And be prepared to give it to any module that needs it
-
-    if( g_poRegistrar == NULL ) {
+#ifdef USE_S57
+    if (g_poRegistrar == NULL) {
         g_poRegistrar = new S57ClassRegistrar();
-
-        if( !g_poRegistrar->LoadInfo( csv_dir.mb_str(), FALSE ) ) {
-            wxString msg( _T("   Error: Could not load S57 ClassInfo from ") );
-            msg.Append( csv_dir );
-            wxLogMessage( msg );
+        if (!g_poRegistrar->LoadInfo(csv_dir.mb_str(), FALSE)) {
+            wxString msg(_T("   Error: Could not load S57 ClassInfo from "));
+            msg.Append(csv_dir);
+            wxLogMessage(msg);
 
             delete g_poRegistrar;
             g_poRegistrar = NULL;
         }
     }
+#endif
 
     return 0;
 }
 
-s57RegistrarMgr::s57RegistrarMgr( const wxString& csv_dir, FILE *flog )
+S57RegistrarMgr::S57RegistrarMgr(const wxString & csv_dir, FILE * flog)
 {
-    s57_initialize( csv_dir, flog );
+    s57_initialize(csv_dir, flog);
 }
 
-s57RegistrarMgr::~s57RegistrarMgr()
+S57RegistrarMgr::~S57RegistrarMgr()
 {
     delete g_poRegistrar;
     g_poRegistrar = NULL;

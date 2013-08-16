@@ -112,7 +112,7 @@
 #endif
 
 #ifdef USE_S57
-	#include "s57RegistrarMgr.h"
+	#include "S57RegistrarMgr.h"
 	#include "S57QueryDialog.h"
 	#include "cm93.h"
 	#include "s52plib.h"
@@ -329,7 +329,7 @@ int                       g_lastClientRecth;
 #ifdef USE_S57
 s52plib                   *ps52plib;
 S57ClassRegistrar         *g_poRegistrar;
-s57RegistrarMgr           *m_pRegistrarMan;
+S57RegistrarMgr           *m_pRegistrarMan;
 extern S57QueryDialog     *g_pObjectQueryDialog;
 CM93OffsetDialog          *g_pCM93OffsetDialog;
 #endif
@@ -1481,7 +1481,7 @@ bool MyApp::OnInit()
         wxLogMessage( _T("   S52PLIB Initialization failed, disabling Vector charts.") );
 
 // Todo Maybe initialize only when an s57 chart is actually opened???
-    if( ps52plib->m_bOK ) m_pRegistrarMan = new s57RegistrarMgr( g_csv_locn, flog );
+    if( ps52plib->m_bOK ) m_pRegistrarMan = new S57RegistrarMgr( g_csv_locn, flog );
 
     if( !ps52plib->m_bOK ) {
         delete ps52plib;

@@ -383,7 +383,7 @@ SET(HDRS
 		src/Quilt.h
 		src/QuiltPatch.h
 		src/QuiltCandidate.h
-		include/Hyperlink.h
+		src/Hyperlink.h
 		include/NavObjectCollection.h
 		src/RoutePoint.h
 		src/Route.h

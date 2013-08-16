@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __HYPERLINK_H__
 #define __HYPERLINK_H__
@@ -28,14 +27,14 @@
 #include <wx/string.h>
 #include <wx/list.h>
 
-class Hyperlink // toh, 2009.02.14
+class Hyperlink
 {
-      public:
-            wxString DescrText;
-            wxString Link;
-            wxString LType;
+	public:
+		wxString DescrText;
+		wxString Link;
+		wxString LType;
 };
 
-WX_DECLARE_LIST(Hyperlink, HyperlinkList);// establish class as list member
+WX_DECLARE_LIST(Hyperlink, HyperlinkList);
 
 #endif

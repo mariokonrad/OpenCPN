@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,11 +19,10 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include "Hyperlink.h"
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST ( HyperlinkList ); // toh, 2009.02.22
+WX_DEFINE_LIST(HyperlinkList);
 

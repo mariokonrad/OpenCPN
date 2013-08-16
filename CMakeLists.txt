@@ -393,7 +393,7 @@ SET(HDRS
 		src/FontDesc.h
 		include/vector2D.h
 		include/OCPNSoundData.h
-		include/OCPN_Sound.h
+		src/OCPN_Sound.h
 		src/NMEALogWindow.h
 		src/WindowDestroyListener.h
 		src/TTYWindow.h

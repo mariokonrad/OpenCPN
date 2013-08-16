@@ -28,6 +28,7 @@
 #include "chcanv.h"
 #include "s57chart.h"
 #include "ocpn_pixel.h"
+#include "OCPNRegionIterator.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(PatchList);

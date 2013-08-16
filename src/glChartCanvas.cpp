@@ -38,6 +38,7 @@
 #include "s57chart.h"
 #include "ChInfoWin.h"
 #include "ThumbWin.h"
+#include "OCPNRegionIterator.h"
 
 extern bool GetMemoryStatus(int *mem_total, int *mem_used);
 

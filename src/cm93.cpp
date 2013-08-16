@@ -47,6 +47,7 @@
 #include "navutil.h"                            // for LogMessageOnce
 #include "ocpn_pixel.h"                         // for ocpnUSE_DIBSECTION
 #include "ocpndc.h"
+#include "OCPNRegionIterator.h"
 
 #include <stdio.h>
 

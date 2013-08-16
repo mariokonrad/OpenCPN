@@ -39,10 +39,11 @@
 
 #include "chartimg.h"
 #include "ocpn_pixel.h"
+#include "OCPNRegionIterator.h"
 
 #ifndef __WXMSW__
-#include <signal.h>
-#include <setjmp.h>
+	#include <signal.h>
+	#include <setjmp.h>
 
 #define OCPN_USE_CONFIG 1
 

@@ -21,52 +21,88 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHINFOWIN_H__
-#define __CHINFOWIN_H__
+#ifndef __TCWIN_H__
+#define __TCWIN_H__
 
-#include <wx/window.h>
-#include <wx/stattext.h>
+#include <wx/dialog.h>
+#include <wx/datetime.h>
+#include <wx/timer.h>
+#include <wx/list.h>
 
-class ChInfoWin : public wxWindow
+class IDX_entry;
+class ChartCanvas;
+class RolloverWin;
+class wxTimerEvent;
+class wxCommandEvent;
+class wxCloseEvent;
+class wxTextCtrl;
+class wxButton;
+class wxListBox;
+
+WX_DECLARE_LIST(wxPoint, SplineList);
+
+class TCWin : public wxDialog
 {
 		DECLARE_EVENT_TABLE()
 
 	public:
-		ChInfoWin( wxWindow *parent );
-		~ChInfoWin();
+		TCWin(ChartCanvas *parent, int x, int y, void *pvIDX);
+		virtual ~TCWin();
 
-		void SetString(const wxString & s)
-		{
-			m_string = s;
-		}
-
-		void SetPosition(wxPoint pt)
-		{
-			m_position = pt;
-		}
-
-		void SetWinSize(wxSize sz)
-		{
-			m_size = sz;
-		}
-
-		void SetBitmap(void);
-		void FitToChars(int char_width, int char_height);
-
-		wxSize GetWinSize(void)
-		{
-			return m_size;
-		}
-
-		void OnPaint( wxPaintEvent& event );
-		void OnEraseBackground( wxEraseEvent& event );
+		void OnSize(wxSizeEvent& event);
+		void OnPaint(wxPaintEvent& event);
+		void MouseEvent(wxMouseEvent& event);
+		void OnTCWinPopupTimerEvent(wxTimerEvent& event);
+		void OKEvent(wxCommandEvent& event);
+		void NXEvent(wxCommandEvent& event);
+		void PREvent(wxCommandEvent& event);
+		void OnCloseWindow(wxCloseEvent& event);
+		void Resize(void);
+		void RePosition(void);
 
 	private:
+		wxTextCtrl * m_ptextctrl;
+		wxTimer m_TCWinPopupTimer;
+		RolloverWin * m_pTCRolloverWin;
+		int curs_x;
+		int curs_y;
+		int m_plot_type;
 
-		wxString m_string;
-		wxSize m_size;
-		wxPoint m_position;
-		wxStaticText *m_pInfoTextCtl;
+		IDX_entry * pIDX;
+		wxButton * OK_button;
+		wxButton * NX_button;
+		wxButton * PR_button;
+
+		int im;
+		int ib;
+		int it;
+		int val_off;
+		wxRect m_graph_rect;
+
+
+		float tcv[26];
+		wxListBox * m_tList ;
+		bool btc_valid;
+		ChartCanvas *pParent;
+		int m_corr_mins;
+		wxString m_stz;
+		int m_t_graphday_00_at_station;
+		wxDateTime m_graphday;
+		int m_plot_y_offset;
+
+		SplineList m_sList;
+
+		wxFont * pSFont;
+		wxFont * pSMFont;
+		wxFont * pMFont;
+		wxFont * pLFont;
+
+		wxPen * pblack_1;
+		wxPen * pblack_2;
+		wxPen * pblack_3;
+		wxPen * pred_2;
+		wxBrush * pltgray;
+		wxBrush * pltgray2;
 };
 
 #endif

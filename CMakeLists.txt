@@ -375,11 +375,11 @@ SET(HDRS
 		include/S57ClassRegistrar.h
 		src/MarkIcon.h
 		src/SendToGpsDlg.h
-		include/TCWin.h
+		src/TCWin.h
 		include/glTextureDescriptor.h
 		include/tide_time.h
 		include/glChartCanvas.h
-		include/ChInfoWin.h
+		src/ChInfoWin.h
 		src/Quilt.h
 		src/QuiltPatch.h
 		src/QuiltCandidate.h
@@ -396,8 +396,8 @@ SET(HDRS
 		include/OCPN_Sound.h
 		src/NMEALogWindow.h
 		src/WindowDestroyListener.h
-		include/TTYWindow.h
-		include/TTYScroll.h
+		src/TTYWindow.h
+		src/TTYScroll.h
 		src/Layer.h
 		include/concanv.h
 		include/cutil.h

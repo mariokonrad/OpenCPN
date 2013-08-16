@@ -444,7 +444,12 @@ SET(HDRS
 		include/chartsymbols.h
 		include/razdsparser.h
 		include/styles.h
-		include/toolbar.h
+		src/ToolBarSimple.h
+		src/ToolTipWin.h
+		src/ToolBarTool.h
+		src/ToolbarMOBDialog.h
+		src/GrabberWin.h
+		src/OCPNFloatingToolbarDialog.h
 		include/compasswin.h
 		include/geodesic.h
 		include/datastream.h
@@ -561,7 +566,12 @@ SET(SRCS
 		src/chartsymbols.cpp
 		src/razdsparser.cpp
 		src/styles.cpp
-		src/toolbar.cpp
+		src/ToolBarSimple.cpp
+		src/ToolTipWin.cpp
+		src/ToolBarTool.cpp
+		src/ToolbarMOBDialog.cpp
+		src/GrabberWin.cpp
+		src/OCPNFloatingToolbarDialog.cpp
 		src/compasswin.cpp
 		src/geodesic.cpp
 		src/datastream.cpp

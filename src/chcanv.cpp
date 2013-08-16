@@ -63,7 +63,6 @@
 #include "ocpn_pixel.h"
 #include "ocpndc.h"
 #include "Undo.h"
-#include "toolbar.h"
 #include "multiplexer.h"
 #include "timers.h"
 #include "tide_time.h"
@@ -77,6 +76,7 @@
 #include "compasswin.h"
 #include "OCPNRegion.h"
 #include "S57QueryDialog.h"
+#include "OCPNFloatingToolbarDialog.h"
 
 // AIS
 #include "ais/ais.h"
@@ -165,7 +165,7 @@ extern wxString         g_AW2GUID;
 extern int              g_nAWDefault;
 extern int              g_nAWMax;
 
-extern ocpnFloatingToolbarDialog *g_FloatingToolbarDialog;
+extern OCPNFloatingToolbarDialog *g_FloatingToolbarDialog;
 extern RouteManagerDialog *pRouteManagerDialog;
 GoToPositionDialog * pGoToPositionDialog;
 extern wxString GetLayerName(int id);

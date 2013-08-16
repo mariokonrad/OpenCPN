@@ -150,7 +150,7 @@ enum
 //----------------------------------------------------------------------------
 class ChartBase;
 class wxSocketEvent;
-class ocpnToolBarSimple;
+class ToolBarSimple;
 class OCPN_DataStreamEvent;
 class DataStream;
 
@@ -325,14 +325,14 @@ class MyFrame: public wxFrame
 		void DoCOGSet(void);
 
 		//      Toolbar support
-		ocpnToolBarSimple *CreateAToolbar();
+		ToolBarSimple *CreateAToolbar();
 		void DestroyMyToolbar();
 		void UpdateToolbar(ColorScheme cs);
 
 		void EnableToolbar(bool newstate);
 
-		bool CheckAndAddPlugInTool(ocpnToolBarSimple *tb);
-		bool AddDefaultPositionPlugInTools(ocpnToolBarSimple *tb);
+		bool CheckAndAddPlugInTool(ToolBarSimple *tb);
+		bool AddDefaultPositionPlugInTools(ToolBarSimple *tb);
 		void FilterCogSog(void);
 		void SetChartUpdatePeriod(ViewPort &vp);
 

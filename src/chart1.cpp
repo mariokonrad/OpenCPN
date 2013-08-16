@@ -89,7 +89,7 @@
 #include "chartimg.h"
 #include "RouteProp.h"
 #include "MarkInfo.h"
-#include "toolbar.h"
+#include "ToolBarSimple.h"
 #include "compasswin.h"
 #include "datastream.h"
 #include "OCPN_DataStreamEvent.h"
@@ -105,6 +105,7 @@
 #include "routemanagerdialog.h"
 #include "pluginmanager.h"
 #include "MyPrintout.h"
+#include "OCPNFloatingToolbarDialog.h"
 
 #ifdef __WXOSX__
 	#include "macutils.h"
@@ -256,7 +257,7 @@ bool                      g_bCruising;
 
 ChartDummy                *pDummyChart;
 
-ocpnToolBarSimple*        g_toolbar;
+ToolBarSimple*        g_toolbar;
 ocpnStyle::StyleManager*  g_StyleManager;
 
 // Global print data, to remember settings during the session
@@ -581,7 +582,7 @@ bool                      g_blocale_changed;
 
 wxMenu                    *g_FloatingToolbarConfigMenu;
 wxString                  g_toolbarConfig = _T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-ocpnFloatingToolbarDialog *g_FloatingToolbarDialog;
+OCPNFloatingToolbarDialog *g_FloatingToolbarDialog;
 ocpnFloatingCompassWindow *g_FloatingCompassDialog;
 
 int                       g_toolbar_x;
@@ -1730,7 +1731,7 @@ if( 0 == g_memCacheLimit )
     g_toolbar_x = wxMin(g_toolbar_x, cw);
     g_toolbar_y = wxMin(g_toolbar_y, ch);
 
-    g_FloatingToolbarDialog = new ocpnFloatingToolbarDialog( cc1,
+    g_FloatingToolbarDialog = new OCPNFloatingToolbarDialog( cc1,
             wxPoint( g_toolbar_x, g_toolbar_y ), g_toolbar_orient );
     g_FloatingToolbarDialog->LockPosition(true);
 
@@ -2562,9 +2563,9 @@ bool _toolbarConfigMenuUtil( int toolid, wxString tipString )
     return menuitem->IsChecked();
 }
 
-ocpnToolBarSimple *MyFrame::CreateAToolbar()
+ToolBarSimple *MyFrame::CreateAToolbar()
 {
-    ocpnToolBarSimple *tb = NULL;
+    ToolBarSimple *tb = NULL;
     wxToolBarToolBase* newtool;
 
     if( g_FloatingToolbarDialog ) tb = g_FloatingToolbarDialog->GetToolbar();
@@ -2732,7 +2733,7 @@ ocpnToolBarSimple *MyFrame::CreateAToolbar()
     return tb;
 }
 
-bool MyFrame::CheckAndAddPlugInTool( ocpnToolBarSimple *tb )
+bool MyFrame::CheckAndAddPlugInTool( ToolBarSimple *tb )
 {
     if( !g_pi_manager ) return false;
 
@@ -2779,7 +2780,7 @@ bool MyFrame::CheckAndAddPlugInTool( ocpnToolBarSimple *tb )
     return bret;
 }
 
-bool MyFrame::AddDefaultPositionPlugInTools( ocpnToolBarSimple *tb )
+bool MyFrame::AddDefaultPositionPlugInTools( ToolBarSimple *tb )
 {
     if( !g_pi_manager ) return false;
 

@@ -23,25 +23,17 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-	#include "wx/wx.h"
-#endif
-
-#include <vector>
-
 #include <wx/file.h>
 #include <wx/datetime.h>
 #include <wx/clipbrd.h>
 
 #include "ocpn_types.h"
+#include "KmlFormatDialog.h"
 #include "navutil.h"
 #include "Track.h"
-#include "tinyxml/tinyxml.h"
 #include "kml.h"
 
-extern MyFrame *gFrame;
+extern MyFrame * gFrame;
 extern double gLat;
 extern double gLon;
 
@@ -626,39 +618,5 @@ Kml::~Kml()
 		delete parsedRoute;
 	}
 	if( parsedRoutePoint ) delete parsedRoutePoint;
-}
-
-//----------------------------------------------------------------------------------
-
-KmlFormatDialog::KmlFormatDialog( wxWindow* parent )
-	: wxDialog(parent, wxID_ANY, _("Choose Format for Copy"), wxDefaultPosition, wxSize(250, 230))
-{
-	wxBoxSizer* topSizer = new wxBoxSizer( wxVERTICAL );
-
-	wxBoxSizer* sizer = new wxBoxSizer( wxVERTICAL );
-	topSizer->Add( sizer, 0, wxALIGN_CENTER_HORIZONTAL | wxALL, 5 );
-
-	choices.push_back( new wxRadioButton( this, KML_COPY_STANDARD, _("KML Standard (Google Earth and others)"),
-				wxDefaultPosition, wxDefaultSize, wxRB_GROUP ) );
-
-	choices.push_back( new wxRadioButton( this, KML_COPY_EXTRADATA, _("KML with extended waypoint data (QtVlm)"),
-				wxDefaultPosition) );
-
-	wxStdDialogButtonSizer* buttonSizer = CreateStdDialogButtonSizer( wxOK | wxCANCEL );
-
-	sizer->Add( choices[0], 0, wxEXPAND | wxALL, 5 );
-	sizer->Add( choices[1], 0, wxEXPAND | wxALL, 5 );
-	sizer->Add( buttonSizer, 0, wxEXPAND | wxTOP, 5 );
-
-	topSizer->SetSizeHints(this);
-	SetSizer( topSizer );
-}
-
-int KmlFormatDialog::GetSelectedFormat()
-{
-	for( unsigned int i=0; i<choices.size(); i++ ) {
-		if( choices[i]->GetValue() ) return choices[i]->GetId();
-	}
-	return 0;
 }
 

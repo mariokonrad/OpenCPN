@@ -427,6 +427,7 @@ SET(HDRS
 		include/options.h
 		include/gshhs.h
 		include/kml.h
+		src/KmlFormatDialog.h
 		src/Undo.h
 		src/UndoAction.h
 		src/AboutDialog.h
@@ -539,6 +540,7 @@ SET(SRCS
 		src/options.cpp
 		src/gshhs.cpp
 		src/kml.cpp
+		src/KmlFormatDialog.cpp
 		src/Undo.cpp
 		src/UndoAction.cpp
 		src/AboutDialog.cpp

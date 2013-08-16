@@ -21,58 +21,18 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __ROUTEPRINTOUT_H__
-#define __ROUTEPRINTOUT_H__
+#ifndef __MARKICON_H__
+#define __MARKICON_H__
 
-#include <wx/print.h>
-#include <wx/datetime.h>
-#include <wx/cmdline.h>
+#include <wx/string.h>
+#include <wx/bitmap.h>
 
-#ifdef __WXMSW__
-	#include <wx/msw/private.h>
-#endif
-
-#include "ocpn_types.h"
-#include "navutil.h"
-#include "PrintTable.h"
-#include "MyPrintout.h"
-
-class RoutePrintout : public MyPrintout
+class MarkIcon
 {
 	public:
-		RoutePrintout(
-				std::vector<bool> _toPrintOut,
-				Route * route,
-				const wxChar * title = _T( "My Route printout"));
-
-		virtual bool OnPrintPage(int page);
-		virtual void OnPreparePrinting();
-		void DrawPage(wxDC * dc);
-
-		virtual bool HasPage(int num) const
-		{
-			return num > 0 || num <= 1;
-		}
-
-		virtual void GetPageInfo( // FIXME: bad interface of method
-				int * minPage,
-				int * maxPage,
-				int * selPageFrom,
-				int * selPageTo);
-
-	protected:
-		static const int pN = 5;     // number of fields sofar
-
-		wxDC * myDC;
-		PrintTable table;
-		Route * myRoute;
-		std::vector<bool> toPrintOut; // list of fields of bool, if certain element should be print out.
-		int pageToPrint;
-		int numberOfPages;
-		int marginX;
-		int marginY;
-		int textOffsetX;
-		int textOffsetY;
+		wxBitmap * picon_bitmap;
+		wxString icon_name;
+		wxString icon_description;
 };
 
 #endif

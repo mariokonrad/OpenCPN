@@ -56,7 +56,6 @@ using namespace std;
 #endif
 
 #include "RoutePrintout.h"
-#include "printtable.h"
 
 #define PRINT_WP_NAME 0
 #define PRINT_WP_POSITION 1
@@ -220,9 +219,9 @@ void RoutePrintout::DrawPage( wxDC* dc )
 
 	int currentX = marginX;
 	int currentY = marginY;
-	vector< PrintCell >& header_content = table.GetHeader();
+	const PrintTable::ContentRow & header_content = table.GetHeader();
 	for ( size_t j = 0; j < header_content.size(); j++ ) {
-		PrintCell& cell = header_content[ j ];
+		const PrintCell & cell = header_content[ j ];
 		dc->DrawRectangle( currentX, currentY, cell.GetWidth(), cell.GetHeight() );
 		dc->DrawText( cell.GetText(),  currentX +header_textOffsetX, currentY + header_textOffsetY );
 		currentX += cell.GetWidth();
@@ -231,14 +230,14 @@ void RoutePrintout::DrawPage( wxDC* dc )
 	wxFont  routePrintFont_normal( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL );
 	dc->SetFont( routePrintFont_normal );
 
-	vector< vector < PrintCell > > & cells = table.GetContent();
+	const PrintTable::Content & cells = table.GetContent();
 	currentY = marginY + table.GetHeaderHeight();
 	int currentHeight = 0;
 	for ( size_t i = 0; i < cells.size(); i++ ) {
-		vector< PrintCell >& content_row = cells[ i ];
+		const PrintTable::ContentRow & content_row = cells[ i ];
 		currentX = marginX;
 		for ( size_t j = 0; j < content_row.size(); j++ ) {
-			PrintCell& cell = content_row[ j ];
+			const PrintCell& cell = content_row[ j ];
 			if ( cell.GetPage() == pageToPrint ) {
 				wxRect r( currentX, currentY, cell.GetWidth(), cell.GetHeight() );
 				dc->DrawRectangle( r );

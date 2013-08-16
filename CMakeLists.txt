@@ -373,7 +373,7 @@ SET(HDRS
 		include/S57Light.h
 		include/s57RegistrarMgr.h
 		include/S57ClassRegistrar.h
-		include/MarkIcon.h
+		src/MarkIcon.h
 		src/SendToGpsDlg.h
 		include/TCWin.h
 		include/glTextureDescriptor.h
@@ -412,7 +412,9 @@ SET(HDRS
 		src/LatLonTextCtrl.h
 		src/RoutePrintout.h
 		src/PositionParser.h
-		include/printtable.h
+		src/PrintTable.h
+		src/Table.h
+		src/PrintCell.h
 		src/RoutePrintSelection.h
 		src/StatWin.h
 		src/TextStatWin.h
@@ -530,7 +532,9 @@ SET(SRCS
 		src/RoutePrintout.cpp
 		src/RoutePrintSelection.cpp
 		src/PositionParser.cpp
-		src/printtable.cpp
+		src/PrintTable.cpp
+		src/Table.cpp
+		src/PrintCell.cpp
 		src/StatWin.cpp
 		src/TextStatWin.cpp
 		src/PianoWin.cpp

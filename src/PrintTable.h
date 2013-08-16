@@ -21,12 +21,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __ROUTEPRINTOUT_H__
-#define __ROUTEPRINTOUT_H__
+#ifndef __PRINTTABLE_H__
+#define __PRINTTABLE_H__
 
-#include <wx/print.h>
-#include <wx/datetime.h>
-#include <wx/cmdline.h>
+#include <iostream>
+#include <vector>
 
 #ifdef __WXMSW__
 	#include <wx/msw/private.h>
@@ -34,45 +33,36 @@
 
 #include "ocpn_types.h"
 #include "navutil.h"
-#include "PrintTable.h"
-#include "MyPrintout.h"
+#include "Table.h"
+#include "PrintCell.h"
 
-class RoutePrintout : public MyPrintout
+///\brief Extension of a class Table with printing into dc.
+///
+/// It takes all elements, takes DC as a printing device, takes  a maximal
+/// possible table width,  calculate width of every column.
+/// For printing of every cell it modifies its content so, that it fits into cell by inserting
+/// new lines.
+class PrintTable : public Table
 {
 	public:
-		RoutePrintout(
-				std::vector<bool> _toPrintOut,
-				Route * route,
-				const wxChar * title = _T( "My Route printout"));
-
-		virtual bool OnPrintPage(int page);
-		virtual void OnPreparePrinting();
-		void DrawPage(wxDC * dc);
-
-		virtual bool HasPage(int num) const
-		{
-			return num > 0 || num <= 1;
-		}
-
-		virtual void GetPageInfo( // FIXME: bad interface of method
-				int * minPage,
-				int * maxPage,
-				int * selPageFrom,
-				int * selPageTo);
-
+		typedef std::vector<PrintCell> ContentRow;
+		typedef std::vector<ContentRow> Content;
 	protected:
-		static const int pN = 5;     // number of fields sofar
+		Content contents;
+		ContentRow header_content;
+		std::vector<int> rows_heights;
+		int header_height;
+		int number_of_pages; // stores the number of pages for printing of this table. It is set by AdjustCells
 
-		wxDC * myDC;
-		PrintTable table;
-		Route * myRoute;
-		std::vector<bool> toPrintOut; // list of fields of bool, if certain element should be print out.
-		int pageToPrint;
-		int numberOfPages;
-		int marginX;
-		int marginY;
-		int textOffsetX;
-		int textOffsetY;
+	public:
+		PrintTable();
+
+		// creates internally vector of PrintCell's, to calculate columns widths and row sizes
+		void AdjustCells(wxDC * _dc, int marginX, int marginY);
+
+		const Content & GetContent() const;
+		const ContentRow & GetHeader() const;
+		int GetNumberPages() const;
+		int GetHeaderHeight() const;
 };
-
 #endif

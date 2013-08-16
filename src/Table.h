@@ -21,58 +21,72 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __ROUTEPRINTOUT_H__
-#define __ROUTEPRINTOUT_H__
+#ifndef __TABLE__H__
+#define __TABLE__H__
 
-#include <wx/print.h>
-#include <wx/datetime.h>
-#include <wx/cmdline.h>
+#include <vector>
+#include <string>
+#include <ostream>
+#include <wx/string.h>
 
-#ifdef __WXMSW__
-	#include <wx/msw/private.h>
-#endif
+/// \brief
+/// Enumeration is used to notice the state of the table.
+///
+/// Different states are used to signalize different semanic of the data in
+/// the operator << of the class Table.
+/// If the state is "setup columns widths" -> then the data is used to store
+/// the width of the columns.
+/// If the state is "fill with data" -> then the data is the cell content.
+enum TableState
+{
+	TABLE_SETUP_WIDTHS = 0,
+	TABLE_FILL_DATA,
+	TABLE_FILL_HEADER
+};
 
-#include "ocpn_types.h"
-#include "navutil.h"
-#include "PrintTable.h"
-#include "MyPrintout.h"
 
-class RoutePrintout : public MyPrintout
+/// \brief Represents a NxM simple table with captions.
+///
+/// Input operator is "<<"
+/// Number of columns and rows are given dynamically by the input data.
+/// Captions are given by first input line.
+/// Every cell is given column by column.
+/// Next row is given by "<< '\n'" (or << endl)
+class Table
 {
 	public:
-		RoutePrintout(
-				std::vector<bool> _toPrintOut,
-				Route * route,
-				const wxChar * title = _T( "My Route printout"));
-
-		virtual bool OnPrintPage(int page);
-		virtual void OnPreparePrinting();
-		void DrawPage(wxDC * dc);
-
-		virtual bool HasPage(int num) const
-		{
-			return num > 0 || num <= 1;
-		}
-
-		virtual void GetPageInfo( // FIXME: bad interface of method
-				int * minPage,
-				int * maxPage,
-				int * selPageFrom,
-				int * selPageTo);
+		typedef std::vector<wxString> Row;
+		typedef std::vector<Row> Data;
 
 	protected:
-		static const int pN = 5;     // number of fields sofar
+		int nrows;
+		int ncols;
 
-		wxDC * myDC;
-		PrintTable table;
-		Route * myRoute;
-		std::vector<bool> toPrintOut; // list of fields of bool, if certain element should be print out.
-		int pageToPrint;
-		int numberOfPages;
-		int marginX;
-		int marginY;
-		int textOffsetX;
-		int textOffsetY;
+		bool create_next_row;
+
+		Data data;
+		std::vector<double> widths;
+		Row header;
+		TableState state;
+
+		void Start();
+		void NewRow();
+
+	public:
+		Table();
+		~Table();
+
+		Table & operator<<(const std::string &);
+		Table & operator<<(const int &);
+		Table & operator<<(const double &);
+
+		const Data & GetData() const;
+		void StartFillData();
+		void StartFillHeader();
+		void StartFillWidths();
+		int GetRowHeight(int i) const;
+
+		friend std::ostream & operator<<(std::ostream &, const Table &);
 };
 
 #endif

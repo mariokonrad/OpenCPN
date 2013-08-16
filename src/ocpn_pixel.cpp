@@ -25,11 +25,6 @@
  *
  */
 
-
-//      Original comment header for xshm test code
-//      imported from xshm.c
-/* xshm.c */
-
 /*
  * Example of how to use the X Shared Memory extension: MIT_SHM.
  * This code was lifted from my Mesa library.  It hasn't been tested
@@ -49,36 +44,36 @@
 #endif
 
 
-#include "dychart.h"
 #include "ocpn_pixel.h"
+#include "dychart.h"
+#include "OCPNMemDC.h"
 
 #ifndef WX_PRECOMP
 #include <stdio.h>
-
-#include "wx/list.h"
-#include "wx/utils.h"
-#include "wx/app.h"
-#include "wx/palette.h"
-#include "wx/dcmemory.h"
-#include "wx/bitmap.h"
-#include "wx/icon.h"
+#include <wx/list.h>
+#include <wx/utils.h>
+#include <wx/app.h>
+#include <wx/palette.h>
+#include <wx/dcmemory.h>
+#include <wx/bitmap.h>
+#include <wx/icon.h>
 #endif
 
 
 #ifdef __WXMSW__
-#include "wx/msw/private.h"
-#include "wx/log.h"
-#include "wx/msw/dib.h"
+#include <wx/msw/private.h>
+#include <wx/log.h>
+#include <wx/msw/dib.h>
 #endif
 
-#include "wx/bitmap.h"
-#include "wx/icon.h"
-#include "wx/log.h"
-#include "wx/image.h"
-#include "wx/app.h"
-#include "wx/math.h"
-#include "wx/gdicmn.h"
-#include "wx/palette.h"
+#include <wx/bitmap.h>
+#include <wx/icon.h>
+#include <wx/log.h>
+#include <wx/image.h>
+#include <wx/app.h>
+#include <wx/math.h>
+#include <wx/gdicmn.h>
+#include <wx/palette.h>
 
 
 // missing from mingw32 header
@@ -401,7 +396,7 @@ void PixelCache::SelectIntoDC(wxMemoryDC &dc)
 {
 
 #ifdef __PIX_CACHE_DIBSECTION__
-	ocpnMemDC *pmdc = dynamic_cast<ocpnMemDC*>(&dc);
+	OCPNMemDC *pmdc = dynamic_cast<OCPNMemDC*>(&dc);
 	pmdc->SelectObject (*m_pDS);
 
 #endif      //__PIX_CACHE_DIBSECTION__

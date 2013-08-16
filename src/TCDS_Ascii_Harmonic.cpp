@@ -28,6 +28,10 @@
 #include <wx/filename.h>
 #include <wx/tokenzr.h>
 
+#if !defined(M_PI)
+	#define M_PI 3.14159265365
+#endif
+
 #define IFF_OPEN  0
 #define IFF_CLOSE 1
 #define IFF_SEEK  2

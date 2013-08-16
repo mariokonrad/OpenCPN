@@ -40,6 +40,7 @@
 #include "chartimg.h"
 #include "ocpn_pixel.h"
 #include "OCPNRegionIterator.h"
+#include "OCPNBitmap.h"
 
 #ifndef __WXMSW__
 	#include <signal.h>
@@ -1069,7 +1070,7 @@ wxBitmap *ChartBaseBSB::CreateThumbnail(int tnx, int tny, ColorScheme cs)
       wxBitmap *retBMP;
 
 #ifdef ocpnUSE_ocpnBitmap
-      wxBitmap* bmx2 = new ocpnBitmap(pPixTN, des_width, des_height, -1);
+      wxBitmap* bmx2 = new OCPNBitmap(pPixTN, des_width, des_height, -1);
       wxImage imgx2 = bmx2->ConvertToImage();
       imgx2.Rescale( des_width/4, des_height/4, wxIMAGE_QUALITY_HIGH );
       retBMP = new wxBitmap( imgx2 );

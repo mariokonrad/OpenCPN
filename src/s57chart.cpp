@@ -49,6 +49,7 @@
 #include "ocpndc.h"
 #include "OCPNRegionIterator.h"
 #include "OCPNMemDC.h"
+#include "OCPNBitmap.h"
 
 #include "cpl_csv.h"
 #include "setjmp.h"
@@ -1166,7 +1167,7 @@ void s57chart::SetColorScheme( ColorScheme cs, bool bApplyImmediate )
 #endif
 
 //#ifdef ocpnUSE_ocpnBitmap
-//                      ocpnBitmap *pBMP =  new ocpnBitmap(gimg, m_pDIBThumbDay->GetDepth());
+//                      OCPNBitmap *pBMP =  new OCPNBitmap(gimg, m_pDIBThumbDay->GetDepth());
 //#else
                     wxBitmap *pBMP = new wxBitmap( gimg );
 //#endif
@@ -2328,7 +2329,7 @@ int s57chart::DCRenderRect( wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rec
 
 //      Convert the Private render canvas into a bitmap
 #ifdef ocpnUSE_ocpnBitmap
-    ocpnBitmap *pREN = new ocpnBitmap( pb_spec.pix_buff, pb_spec.width, pb_spec.height,
+    OCPNBitmap *pREN = new OCPNBitmap( pb_spec.pix_buff, pb_spec.width, pb_spec.height,
             pb_spec.depth );
 #else
     wxImage *prender_image = new wxImage(pb_spec.width, pb_spec.height, false);
@@ -2728,7 +2729,7 @@ InitReturn s57chart::PostInit( ChartInitFlag flags, ColorScheme cs )
     if( ThumbFileName.FileExists() ) {
         wxBitmap *pBMP_NEW;
 #ifdef ocpnUSE_ocpnBitmap
-        pBMP_NEW = new ocpnBitmap;
+        pBMP_NEW = new OCPNBitmap;
 #else
         pBMP_NEW = new wxBitmap;
 #endif

@@ -30,6 +30,10 @@
 #include "ocpn_pixel.h"
 #include "OCPNRegionIterator.h"
 
+#ifdef ocpnUSE_DIBSECTION
+	#include "OCPNMemDC.h"
+#endif
+
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(PatchList);
 
@@ -1617,7 +1621,7 @@ void Quilt::ComputeRenderRegion(ViewPort & vp, OCPNRegion & chart_region)
 bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC & dc, ViewPort & vp, OCPNRegion & chart_region)
 {
 #ifdef ocpnUSE_DIBSECTION
-	ocpnMemDC tmp_dc;
+	OCPNMemDC tmp_dc;
 #else
 	wxMemoryDC tmp_dc;
 #endif

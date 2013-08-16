@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include "OCPNBitmap.h"
+#include <wx/image.h>
 
 #ifdef ocpnUSE_OCPNBitmap
 
@@ -67,7 +68,6 @@ bool OCPNBitmap::CreateFromData( void *pPix, int width, int height, int depth )
 	return true;
 
 }
-
 #endif
 #endif
 
@@ -161,14 +161,10 @@ bool OCPNBitmap::CreateFromData( void *pPix, int width, int height, int depth )
 
 	return TRUE;
 }
-
-#endif            //__WXX11__
+#endif //__WXX11__
 
 
 #ifdef __WXMSW__
-// ----------------------------------------------------------------------------
-// Create from Data
-// ----------------------------------------------------------------------------
 bool OCPNBitmap::CreateFromData( void *pPix, int width, int height, int depth )
 {
 	m_refData = CreateData();                 // found in wxBitmap
@@ -545,7 +541,6 @@ bool OCPNBitmap::CreateFromImage( const wxImage& image, int depth )
 
 	return TRUE;
 }
-
 #endif // __WXMSW__
 
 #endif

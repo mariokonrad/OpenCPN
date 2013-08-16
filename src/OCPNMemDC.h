@@ -25,6 +25,7 @@
 #define __OCPNMEMDC__H__
 
 #include <wx/dcmemory.h>
+#include "ocpn_pixel.h"
 
 class OCPNMemDC : public wxMemoryDC
 {

@@ -29,6 +29,7 @@
 #include <wx/gdicmn.h>
 #include <wx/tokenzr.h>
 #include <wx/font.h>
+#include <wx/utils.h>
 
 
 extern wxString g_locale;

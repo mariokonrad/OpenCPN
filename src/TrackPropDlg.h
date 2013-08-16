@@ -49,6 +49,7 @@
 #include <wx/button.h>
 #include <wx/tglbtn.h>
 #include <wx/notebook.h>
+#include <wx/listctrl.h>
 
 #if wxCHECK_VERSION(2, 9, 0)
 #include <wx/dialog.h>

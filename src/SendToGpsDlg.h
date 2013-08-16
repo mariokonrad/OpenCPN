@@ -25,6 +25,7 @@
 #define __SENDTOGPSDLG_H__
 
 #include <wx/dialog.h>
+#include <wx/gauge.h>
 
 #define ID_STGDIALOG 10005
 
@@ -35,7 +36,6 @@ enum {
 };
 
 class wxComboBox;
-class wxGauge;
 class wxButton;
 class Route;
 class RoutePoint;

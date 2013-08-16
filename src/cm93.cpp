@@ -48,6 +48,7 @@
 #include "ocpn_pixel.h"                         // for ocpnUSE_DIBSECTION
 #include "ocpndc.h"
 #include "OCPNRegionIterator.h"
+#include "OCPNMemDC.h"
 
 #include <stdio.h>
 
@@ -5496,7 +5497,7 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
                   {
                         //    Render the target scale chart on a temp dc for safekeeping
 #ifdef ocpnUSE_DIBSECTION
-                        ocpnMemDC temp_dc;
+                        OCPNMemDC temp_dc;
 #else
                         wxMemoryDC temp_dc;
 #endif
@@ -5520,7 +5521,7 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
 
                         //    Clear the quilt
 #ifdef ocpnUSE_DIBSECTION
-                        ocpnMemDC dumm_dc;
+                        OCPNMemDC dumm_dc;
 #else
                         wxMemoryDC dumm_dc;
 #endif
@@ -5537,7 +5538,7 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
                               cmscale_next--;
                               m_cmscale = PrepareChartScale ( vp_positive, cmscale_next );
 #ifdef ocpnUSE_DIBSECTION
-                              ocpnMemDC build_dc;
+                              OCPNMemDC build_dc;
 #else
                               wxMemoryDC build_dc;
 #endif

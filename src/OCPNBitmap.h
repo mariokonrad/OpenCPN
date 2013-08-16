@@ -25,6 +25,7 @@
 #define __OCPNBITMAP__H__
 
 #include <wx/bitmap.h>
+#include "ocpn_pixel.h"
 
 class wxImage;
 

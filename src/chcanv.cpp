@@ -77,6 +77,7 @@
 #include "OCPNRegion.h"
 #include "S57QueryDialog.h"
 #include "OCPNFloatingToolbarDialog.h"
+#include "OCPNMemDC.h"
 
 // AIS
 #include "ais/ais.h"
@@ -112,9 +113,6 @@ extern sigjmp_buf           env;                    // the context saved by sigs
 #endif
 
 #include <vector>
-
-//    Profiling support
-//#include "/usr/include/valgrind/callgrind.h"
 
 // ----------------------------------------------------------------------------
 // Useful Prototypes
@@ -722,7 +720,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect( const OCPNRegion &Region, size_t n, f
 
     else
     {
-        
+
         OCPNRegion r = OCPNRegion(n, pp);
         if(NULL == ppoints)
             delete[] pp;
@@ -1667,7 +1665,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 
         SetFocus();             // just in case the external program steals it....
         gFrame->Raise();        // And reactivate the application main
-        
+
         break;
     }
 
@@ -2108,50 +2106,50 @@ wxBitmap ChartCanvas::CreateDimBitmap( wxBitmap &Bitmap, double factor )
 void ChartCanvas::ShowBrightnessLevelTimedPopup( int brightness, int min, int max )
 {
     wxFont *pfont = wxTheFontList->FindOrCreateFont( 40, wxDEFAULT, wxNORMAL, wxBOLD );
-    
+
     if( !m_pBrightPopup ) {
         //    Calculate size
         int x, y;
         GetTextExtent( _T("MAX"), &x, &y, NULL, NULL, pfont );
-        
+
         m_pBrightPopup = new TimedPopupWin( this, 3);
-        
+
         m_pBrightPopup->SetSize(x, y);
         m_pBrightPopup->Move(120,120);
     }
-    
+
     int bmpsx = m_pBrightPopup->GetSize().x;
     int bmpsy = m_pBrightPopup->GetSize().y;
-    
+
     wxBitmap bmp( bmpsx, bmpsx );
     wxMemoryDC mdc( bmp );
-    
+
     mdc.SetTextForeground( GetGlobalColor( _T("GREEN4") ) );
     mdc.SetBackground( wxBrush( GetGlobalColor( _T("UINFD") ) ) );
     mdc.SetPen( wxPen( wxColour( 0, 0, 0 ) ) );
     mdc.SetBrush( wxBrush( GetGlobalColor( _T("UINFD") ) ) );
     mdc.Clear();
-    
+
     mdc.DrawRectangle( 0, 0, bmpsx, bmpsy );
-    
+
     mdc.SetFont( *pfont );
     wxString val;
-    
+
     if( brightness == max ) val = _T("MAX");
     else
         if( brightness == min ) val = _T("MIN");
         else
             val.Printf( _T("%3d"), brightness );
-        
+
     mdc.DrawText( val, 0, 0 );
-    
+
     mdc.SelectObject( wxNullBitmap );
-    
+
     m_pBrightPopup->SetBitmap( bmp );
     m_pBrightPopup->Show();
  //   m_pBrightPopup->Refresh();
-    
-    
+
+
 }
 
 
@@ -2164,7 +2162,7 @@ void ChartCanvas::RotateTimerEvent( wxTimerEvent& event )
 void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 {
     bool b_need_refresh = false;
-    
+
     //  Handle the AIS Rollover Window first
     bool showAISRollover = false;
     if( g_pAIS && g_pAIS->GetNumTargets() && g_bShowAIS ) {
@@ -2173,25 +2171,25 @@ void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         if( pFind ) {
             int FoundAIS_MMSI = (long) pFind->m_pData1; // cast to long avoids problems with 64bit compilers
             AIS_Target_Data *ptarget = g_pAIS->Get_Target_Data_From_MMSI( FoundAIS_MMSI );
-            
+
             if( ptarget ) {
                 showAISRollover = true;
-                
+
                 if( NULL == m_pAISRolloverWin ) {
                     m_pAISRolloverWin = new RolloverWin( this, 10 );
                     m_pAISRolloverWin->IsActive( false );
                     b_need_refresh = true;
                 }
-                
+
                 if( !m_pAISRolloverWin->IsActive() ) {
-                    
+
                     wxString s = ptarget->GetRolloverString();
                     m_pAISRolloverWin->SetString( s );
-                    
+
                     wxSize win_size = GetSize();
                     if( console->IsShown() ) win_size.x -= console->GetSize().x;
                     m_pAISRolloverWin->SetBestPosition( mouse_x, mouse_y, 16, 16, RolloverWin::AIS_ROLLOVER, win_size );
-                    
+
                     m_pAISRolloverWin->SetBitmap( RolloverWin::AIS_ROLLOVER );
                     m_pAISRolloverWin->IsActive( true );
                     b_need_refresh = true;
@@ -2208,7 +2206,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         m_pAISRolloverWin->IsActive( false );
         b_need_refresh = true;
     }
-    
+
     // Now the Route info rollover
     // Show the route segment info
     bool showRollover = false;
@@ -2315,7 +2313,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         m_pRouteRolloverWin->IsActive( true );
         b_need_refresh = true;
     }
-    
+
     if( b_need_refresh )
         Refresh();
 }
@@ -4159,7 +4157,7 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
             wxPoint oShipPoint;
             GetCanvasPointPix ( gLat, gLon, &oShipPoint );
             oCPAPoint = oCPAPoint_unclipped;    // recover the unclipped point
-            
+
             ClipResult ownres = cohen_sutherland_line_clip_i ( &oShipPoint.x, &oShipPoint.y,
                                                                &oCPAPoint.x, &oCPAPoint.y,
                                                                0, GetVP().pix_width, 0, GetVP().pix_height );
@@ -5328,7 +5326,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                 //  Capture current cursor position, as the zooms below may change it.
                 double zlat = m_cursor_lat;
                 double zlon = m_cursor_lon;
-                
+
                 bool b_zoom_moved = false;
                 if( wheel_dir > 0 ) b_zoom_moved = ZoomCanvasIn( factor );
                 else if( wheel_dir < 0 ) b_zoom_moved = ZoomCanvasOut( factor );
@@ -5463,7 +5461,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                     int answer = OCPNMessageBox( this, msg, _("OpenCPN Route Create"), wxYES_NO | wxNO_DEFAULT );
 #else
                     int answer = wxID_NO;
-#endif                    
+#endif
 
                     if( answer == wxID_YES ) {
                         RoutePoint* gcPoint;
@@ -8082,7 +8080,7 @@ void ChartCanvas::OnPaint( wxPaintEvent& event )
     wxBoundingBox BltBBox;
 
 #ifdef ocpnUSE_DIBSECTION
-    ocpnMemDC temp_dc;
+    OCPNMemDC temp_dc;
 #else
     wxMemoryDC temp_dc;
 #endif
@@ -8405,46 +8403,10 @@ void ChartCanvas::OnPaint( wxPaintEvent& event )
 
     if( m_bShowCurrent ) DrawAllCurrentsInBBox( scratch_dc, GetVP().GetBBox(), true, true );
 
-#if 0
-//  Using yet another bitmap and DC, draw semi-static overlay objects if necessary
-
-    /*    Why go to all this trouble?
-     Answer:  Calculating and rendering tides and currents is expensive,
-     and the data only change every 15 minutes or so.  So, keep a "mask blit-able"
-     copy in persistent storage, and use as necessary.
-     */
-    if ( m_bShowTide || m_bShowCurrent )         // Showing T/C?
-    {
-        if ( 1/*b_newview*/|| m_bTCupdate )         // need to update the overlay
-        {
-            delete pss_overlay_bmp;
-            pss_overlay_bmp = DrawTCCBitmap(&mscratch_dc);
-        }
-
-        //    blit the semi-static overlay onto the scratch DC if it is needed
-        if ( NULL != pss_overlay_bmp )
-        {
-            wxMemoryDC ssdc_r;
-            ssdc_r.SelectObject ( *pss_overlay_bmp );
-
-            OCPNRegionIterator upd_final ( rgn_blit );
-            while ( upd_final )
-            {
-                wxRect rect = upd_final.GetRect();
-                mscratch_dc.Blit ( rect.x, rect.y, rect.width, rect.height,
-                                   &ssdc_r, rect.x, rect.y, wxCOPY, true );      // Blit with mask
-                upd_final ++;
-            }
-
-            ssdc_r.SelectObject ( wxNullBitmap );
-        }
-    }
-#endif
-
     //quiting?
     if( g_bquiting ) {
 #ifdef ocpnUSE_DIBSECTION
-        ocpnMemDC q_dc;
+        OCPNMemDC q_dc;
 #else
         wxMemoryDC q_dc;
 #endif
@@ -8474,19 +8436,6 @@ void ChartCanvas::OnPaint( wxPaintEvent& event )
         upd_final++;
     }
 
-    //  Test code to validate the dc drawing rectangle....
-    /*
-     OCPNRegionIterator upd_ru ( ru ); // get the update rect list
-     while ( upd_ru )
-     {
-     wxRect rect = upd_ru.GetRect();
-
-     dc.SetPen(wxPen(*wxRED));
-     dc.SetBrush(wxBrush(*wxRED, wxTRANSPARENT));
-     dc.DrawRectangle(rect);
-     upd_ru ++ ;
-     }
-     */
 
 //    Deselect the chart bitmap from the temp_dc, so that it will not be destroyed in the temp_dc dtor
     temp_dc.SelectObject( wxNullBitmap );
@@ -8522,121 +8471,6 @@ void ChartCanvas::PaintCleanup()
     }
 }
 
-#if 0
-wxColour GetErrorGraphicColor(double val)
-{
-    /*
-     double valm = wxMin(val_max, val);
-
-     unsigned char green = (unsigned char)(255 * (1 - (valm/val_max)));
-     unsigned char red   = (unsigned char)(255 * (valm/val_max));
-
-     wxImage::HSVValue hv = wxImage::RGBtoHSV(wxImage::RGBValue(red, green, 0));
-
-     hv.saturation = 1.0;
-     hv.value = 1.0;
-
-     wxImage::RGBValue rv = wxImage::HSVtoRGB(hv);
-     return wxColour(rv.red, rv.green, rv.blue);
-     */
-
-    //    HTML colors taken from NOAA WW3 Web representation
-    wxColour c;
-    if((val > 0) && (val < 1)) c.Set(_T("#002ad9"));
-    else if((val >= 1) && (val < 2)) c.Set(_T("#006ed9"));
-    else if((val >= 2) && (val < 3)) c.Set(_T("#00b2d9"));
-    else if((val >= 3) && (val < 4)) c.Set(_T("#00d4d4"));
-    else if((val >= 4) && (val < 5)) c.Set(_T("#00d9a6"));
-    else if((val >= 5) && (val < 7)) c.Set(_T("#00d900"));
-    else if((val >= 7) && (val < 9)) c.Set(_T("#95d900"));
-    else if((val >= 9) && (val < 12)) c.Set(_T("#d9d900"));
-    else if((val >= 12) && (val < 15)) c.Set(_T("#d9ae00"));
-    else if((val >= 15) && (val < 18)) c.Set(_T("#d98300"));
-    else if((val >= 18) && (val < 21)) c.Set(_T("#d95700"));
-    else if((val >= 21) && (val < 24)) c.Set(_T("#d90000"));
-    else if((val >= 24) && (val < 27)) c.Set(_T("#ae0000"));
-    else if((val >= 27) && (val < 30)) c.Set(_T("#8c0000"));
-    else if((val >= 30) && (val < 36)) c.Set(_T("#870000"));
-    else if((val >= 36) && (val < 42)) c.Set(_T("#690000"));
-    else if((val >= 42) && (val < 48)) c.Set(_T("#550000"));
-    else if( val >= 48) c.Set(_T("#410000"));
-
-    return c;
-}
-
-void ChartCanvas::RenderGeorefErrorMap( wxMemoryDC *pmdc, ViewPort *vp)
-{
-    wxImage gr_image(vp->pix_width, vp->pix_height);
-    gr_image.InitAlpha();
-
-    double maxval = -10000;
-    double minval = 10000;
-
-    double rlat, rlon;
-    double glat, glon;
-
-    GetCanvasPixPoint(0, 0, rlat, rlon);
-
-    for(int i=1; i < vp->pix_height-1; i++)
-    {
-        for(int j=0; j < vp->pix_width; j++)
-        {
-            // Reference mercator value
-//                  vp->GetMercatorLLFromPix(wxPoint(j, i), &rlat, &rlon);
-
-            // Georef value
-            GetCanvasPixPoint(j, i, glat, glon);
-
-            maxval = wxMax(maxval, (glat - rlat));
-            minval = wxMin(minval, (glat - rlat));
-
-        }
-        rlat = glat;
-    }
-
-    GetCanvasPixPoint(0, 0, rlat, rlon);
-    for(int i=1; i < vp->pix_height-1; i++)
-    {
-        for(int j=0; j < vp->pix_width; j++)
-        {
-            // Reference mercator value
-//                  vp->GetMercatorLLFromPix(wxPoint(j, i), &rlat, &rlon);
-
-            // Georef value
-            GetCanvasPixPoint(j, i, glat, glon);
-
-            double f = ((glat - rlat)-minval)/(maxval - minval);
-
-            double dy = (f * 40);
-
-            wxColour c = GetErrorGraphicColor(dy);
-            unsigned char r = c.Red();
-            unsigned char g = c.Green();
-            unsigned char b = c.Blue();
-
-            gr_image.SetRGB(j, i, r,g,b);
-            if((glat - rlat )!= 0)
-                gr_image.SetAlpha(j, i, 128);
-            else
-                gr_image.SetAlpha(j, i, 255);
-
-        }
-        rlat = glat;
-    }
-
-    //    Create a Bitmap
-    wxBitmap *pbm = new wxBitmap(gr_image);
-    wxMask *gr_mask = new wxMask(*pbm, wxColour(0,0,0));
-    pbm->SetMask(gr_mask);
-
-    pmdc->DrawBitmap(*pbm, 0,0);
-
-    delete pbm;
-
-}
-
-#endif
-
 void ChartCanvas::CancelMouseRoute()
 {
     parent_frame->nRoute_State = 0;
@@ -8659,13 +8493,13 @@ void ChartCanvas::Refresh( bool eraseBackground, const wxRect *rect )
 {
     //  Keep the mouse position members up to date
     GetCanvasPixPoint( mouse_x, mouse_y, m_cursor_lat, m_cursor_lon );
-    
+
     //      Retrigger the route leg popup timer
     //      This handles the case when the chart is moving in auto-follow mode, but no user mouse input is made.
     //      The timer handler may Hide() the popup if the chart moved enough
     if( (m_pRouteRolloverWin && m_pRouteRolloverWin->IsActive()) || (m_pAISRolloverWin && m_pAISRolloverWin->IsActive()) )
-        m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT ); 
-         
+        m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );
+
 
     if( g_bopengl ) {
 
@@ -8716,7 +8550,7 @@ void ChartCanvas::EmbossCanvas( ocpnDC &dc, emboss_data *pemboss, int x, int y )
 
         snip_dc.Blit( 0, 0, pemboss->width, pemboss->height, pmdc, x, y );
         snip_dc.SelectObject( wxNullBitmap );
-        
+
         wxImage snip_img = snip_bmp.ConvertToImage();
 
         //  Apply Emboss map to the snip image
@@ -9923,39 +9757,6 @@ int CreateSimpleICCProfileFile(const char *file_name, double co_red, double co_g
 wxString temp_file_name;
 #endif
 
-#if 0
-class ocpnCurtain: public wxDialog
-{
-    DECLARE_CLASS( ocpnCurtain )
-    DECLARE_EVENT_TABLE()
-
-public:
-    ocpnCurtain( wxWindow *parent, wxPoint position, wxSize size, long wstyle );
-    ~ocpnCurtain( );
-    bool ProcessEvent(wxEvent& event);
-
-};
-
-IMPLEMENT_CLASS ( ocpnCurtain, wxDialog )
-
-BEGIN_EVENT_TABLE(ocpnCurtain, wxDialog)
-END_EVENT_TABLE()
-
-ocpnCurtain::ocpnCurtain( wxWindow *parent, wxPoint position, wxSize size, long wstyle )
-{
-    wxDialog::Create( parent, -1, _T("ocpnCurtain"), position, size, wxNO_BORDER | wxSTAY_ON_TOP );
-}
-
-ocpnCurtain::~ocpnCurtain()
-{
-}
-
-bool ocpnCurtain::ProcessEvent(wxEvent& event)
-{
-    GetParent()->GetEventHandler()->SetEvtHandlerEnabled(true);
-    return GetParent()->GetEventHandler()->ProcessEvent(event);
-}
-#endif
 
 #ifdef __WIN32__
 #include <windows.h>

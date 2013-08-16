@@ -362,7 +362,7 @@ SET(HDRS
 		include/timers.h
 		include/emboss_data.h
 		${HDR_AIS}
-		include/OCPNListCtrl.h
+		src/OCPNListCtrl.h
 		include/CM93DSlide.h
 		src/GoToPositionDialog.h
 		include/RolloverWin.h

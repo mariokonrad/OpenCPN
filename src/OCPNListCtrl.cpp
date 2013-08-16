@@ -23,166 +23,183 @@
 
 #include "OCPNListCtrl.h"
 #include "ais/AIS_Target_Data.h"
+#include "ais/AISTargetListDialog.h"
+#include "ais/ais.h"
 
 extern wxString g_AisTargetList_column_spec;
 extern bool bGPSValid;
 
-OCPNListCtrl::OCPNListCtrl( AISTargetListDialog* parent, wxWindowID id, const wxPoint& pos,
-        const wxSize& size, long style ) :
-        wxListCtrl( parent, id, pos, size, style )
+OCPNListCtrl::OCPNListCtrl(
+		AISTargetListDialog * parent,
+		wxWindowID id,
+		const wxPoint & pos,
+		const wxSize & size,
+		long style)
+	: wxListCtrl(parent, id, pos, size, style)
 {
-    m_parent = parent;
+	m_parent = parent;
 }
 
 OCPNListCtrl::~OCPNListCtrl()
 {
-    g_AisTargetList_column_spec.Clear();
-    for( int i = 0; i < tlSOG + 1; i++ ) {
-        wxListItem item;
-        GetColumn( i, item );
-        wxString sitem;
-        sitem.Printf( _T("%d;"), item.m_width );
-        g_AisTargetList_column_spec += sitem;
-    }
+	g_AisTargetList_column_spec.Clear();
+	for( int i = 0; i < tlSOG + 1; i++ ) {
+		wxListItem item;
+		GetColumn( i, item );
+		wxString sitem;
+		sitem.Printf( _T("%d;"), item.m_width );
+		g_AisTargetList_column_spec += sitem;
+	}
 }
 
-wxString OCPNListCtrl::OnGetItemText( long item, long column ) const
+wxString OCPNListCtrl::OnGetItemText(long item, long column) const
 {
-    wxString ret;
+	wxString ret;
 
-    if( m_parent->m_pListCtrlAISTargets ) {
-        AIS_Target_Data *pAISTarget = m_parent->GetpTarget( item );
-        if( pAISTarget ) ret = GetTargetColumnData( pAISTarget, column );
-    }
+	if( m_parent->m_pListCtrlAISTargets ) {
+		AIS_Target_Data *pAISTarget = m_parent->GetpTarget( item );
+		if( pAISTarget ) ret = GetTargetColumnData( pAISTarget, column );
+	}
 
-    return ret;
+	return ret;
 }
 
-int OCPNListCtrl::OnGetItemColumnImage( long item, long column ) const
+int OCPNListCtrl::OnGetItemColumnImage(long item, long column) const
 {
-    return -1;
+	return -1;
 }
 
-wxString OCPNListCtrl::GetTargetColumnData( AIS_Target_Data *pAISTarget, long column ) const
+wxString OCPNListCtrl::GetTargetColumnData(AIS_Target_Data *pAISTarget, long column) const
 {
-    wxString ret;
+	wxString ret;
 
-    if( pAISTarget ) {
-        switch( column ){
-            case tlNAME:
-                if( ( pAISTarget->Class == AIS_BASE ) || ( pAISTarget->Class == AIS_SART ) ) ret =
-                        _("-");
-                else {
-                    wxString uret = trimAISField( pAISTarget->ShipName );
-                    if( uret == _T("Unknown") ) ret = wxGetTranslation( uret );
-                    else
-                        ret = uret;
+	if (!pAISTarget)
+		return ret;
 
-                    if( strlen( pAISTarget->ShipNameExtension ) ) ret.Append(
-                            wxString( pAISTarget->ShipNameExtension, wxConvUTF8 ) );
-                }
-                break;
+	switch (column) {
+		case tlNAME:
+			if ((pAISTarget->Class == AIS_BASE) || (pAISTarget->Class == AIS_SART))
+				ret = _("-");
+			else {
+				wxString uret = trimAISField( pAISTarget->ShipName );
+				if( uret == _T("Unknown") )
+					ret = wxGetTranslation(uret);
+				else
+					ret = uret;
 
-            case tlCALL:
-                ret = trimAISField( pAISTarget->CallSign );
-                break;
+				if (strlen(pAISTarget->ShipNameExtension))
+					ret.Append(wxString(pAISTarget->ShipNameExtension, wxConvUTF8));
+			}
+			break;
 
-            case tlMMSI:
-                if( pAISTarget->Class != AIS_GPSG_BUDDY ) ret.Printf( _T("%09d"),
-                        abs( pAISTarget->MMSI ) );
-                else
-                    ret.Printf( _T("   nil   ") );
-                break;
+		case tlCALL:
+			ret = trimAISField( pAISTarget->CallSign );
+			break;
 
-            case tlCLASS:
-                ret = wxGetTranslation( pAISTarget->Get_class_string( true ) );
-                break;
+		case tlMMSI:
+			if (pAISTarget->Class != AIS_GPSG_BUDDY)
+				ret.Printf(_T("%09d"), abs( pAISTarget->MMSI));
+			else
+				ret.Printf(_T("   nil   "));
+			break;
 
-            case tlTYPE:
-                if( ( pAISTarget->Class == AIS_BASE ) || ( pAISTarget->Class == AIS_SART ) ) ret =
-                        _("-");
-                else
-                    ret = wxGetTranslation( pAISTarget->Get_vessel_type_string( false ) );
-                break;
+		case tlCLASS:
+			ret = wxGetTranslation(pAISTarget->Get_class_string(true));
+			break;
 
-            case tlNAVSTATUS: {
-                if( pAISTarget->Class == AIS_SART ) {
-                    if( pAISTarget->NavStatus == RESERVED_14 ) ret = _("Active");
-                    else if( pAISTarget->NavStatus == UNDEFINED ) ret = _("Testing");
-                } else {
+		case tlTYPE:
+			if ((pAISTarget->Class == AIS_BASE) || (pAISTarget->Class == AIS_SART))
+				ret = _("-");
+			else
+				ret = wxGetTranslation(pAISTarget->Get_vessel_type_string(false));
+			break;
 
-                    if( ( pAISTarget->NavStatus <= 20 ) && ( pAISTarget->NavStatus >= 0 ) ) ret =
-                            wxGetTranslation(ais_get_status(pAISTarget->NavStatus));
-                    else
-                        ret = _("-");
-                }
+		case tlNAVSTATUS:
+			if( pAISTarget->Class == AIS_SART ) {
+				if (pAISTarget->NavStatus == RESERVED_14)
+					ret = _("Active");
+				else
+					if (pAISTarget->NavStatus == UNDEFINED)
+						ret = _("Testing");
+			} else {
 
-                if( ( pAISTarget->Class == AIS_ATON ) || ( pAISTarget->Class == AIS_BASE )
-                        || ( pAISTarget->Class == AIS_CLASS_B ) ) ret = _("-");
-                break;
-            }
+				if ((pAISTarget->NavStatus <= 20)
+						&& (pAISTarget->NavStatus >= 0))
+					ret = wxGetTranslation(ais_get_status(pAISTarget->NavStatus));
+				else
+					ret = _("-");
+			}
 
-            case tlBRG: {
-                if( pAISTarget->b_positionOnceValid && bGPSValid && ( pAISTarget->Brg >= 0. )
-                        && ( fabs( pAISTarget->Lat ) < 85. ) ) {
-                    int brg = (int) wxRound( pAISTarget->Brg );
-                    if( pAISTarget->Brg > 359.5 ) brg = 0;
+			if ((pAISTarget->Class == AIS_ATON)
+					|| (pAISTarget->Class == AIS_BASE)
+					|| ( pAISTarget->Class == AIS_CLASS_B))
+				ret = _("-");
+			break;
 
-                    ret.Printf( _T("%03d"), brg );
-                } else
-                    ret = _("-");
-                break;
-            }
+		case tlBRG:
+			if (pAISTarget->b_positionOnceValid
+					&& bGPSValid
+					&& (pAISTarget->Brg >= 0.0)
+					&& (fabs(pAISTarget->Lat) < 85.0)) {
+				int brg = (int) wxRound(pAISTarget->Brg);
+				if (pAISTarget->Brg > 359.5)
+					brg = 0;
+				ret.Printf( _T("%03d"), brg );
+			} else
+				ret = _("-");
+			break;
 
-            case tlCOG: {
-                if( ( pAISTarget->COG >= 360.0 ) || ( pAISTarget->Class == AIS_ATON )
-                        || ( pAISTarget->Class == AIS_BASE ) ) ret = _("-");
-                else {
-                    int crs = wxRound( pAISTarget->COG );
-                    if( crs == 360 ) ret.Printf( _T("  000") );
-                    else
-                        ret.Printf( _T("  %03d"), crs );
-                }
-                break;
-            }
+		case tlCOG:
+			if ((pAISTarget->COG >= 360.0)
+					|| (pAISTarget->Class == AIS_ATON)
+					|| (pAISTarget->Class == AIS_BASE))
+				ret = _("-");
+			else {
+				int crs = wxRound(pAISTarget->COG);
+				if (crs == 360)
+					ret.Printf(_T("  000"));
+				else
+					ret.Printf(_T("  %03d"), crs);
+			}
+			break;
 
-            case tlSOG: {
-                if( ( pAISTarget->SOG > 100. ) || ( pAISTarget->Class == AIS_ATON )
-                        || ( pAISTarget->Class == AIS_BASE ) ) ret = _("-");
-                else
-                    ret.Printf( _T("%5.1f"), toUsrSpeed( pAISTarget->SOG ) );
-                break;
-            }
-            case tlCPA:
-            {
-                if( ( !pAISTarget->bCPA_Valid ) || ( pAISTarget->Class == AIS_ATON )
-                        || ( pAISTarget->Class == AIS_BASE ) ) ret = _("-");
-                else
-                    ret.Printf( _T("%5.2f"), toUsrDistance( pAISTarget->CPA ) );
-                break;
-            }
-            case tlTCPA:
-            {
-                if( ( !pAISTarget->bCPA_Valid ) || ( pAISTarget->Class == AIS_ATON )
-                        || ( pAISTarget->Class == AIS_BASE ) ) ret = _("-");
-                else
-                    ret.Printf( _T("%5.0f"), pAISTarget->TCPA );
-                break;
-            }
-            case tlRNG: {
-                if( pAISTarget->b_positionOnceValid && bGPSValid && ( pAISTarget->Range_NM >= 0. ) ) ret.Printf(
-                        _T("%5.2f"), toUsrDistance( pAISTarget->Range_NM ) );
-                else
-                    ret = _("-");
-                break;
-            }
+		case tlSOG:
+			if ((pAISTarget->SOG > 100.0)
+					|| (pAISTarget->Class == AIS_ATON)
+					|| (pAISTarget->Class == AIS_BASE))
+				ret = _("-");
+			else
+				ret.Printf(_T("%5.1f"), toUsrSpeed(pAISTarget->SOG));
+			break;
 
-            default:
-                break;
-        }
+		case tlCPA:
+			if ((!pAISTarget->bCPA_Valid)
+					|| (pAISTarget->Class == AIS_ATON)
+					|| (pAISTarget->Class == AIS_BASE))
+				ret = _("-");
+			else
+				ret.Printf( _T("%5.2f"), toUsrDistance( pAISTarget->CPA ) );
+			break;
 
-    }
+		case tlTCPA:
+			if ((!pAISTarget->bCPA_Valid)
+					|| (pAISTarget->Class == AIS_ATON)
+					|| (pAISTarget->Class == AIS_BASE))
+				ret = _("-");
+			else
+				ret.Printf(_T("%5.0f"), pAISTarget->TCPA);
+			break;
 
-    return ret;
+		case tlRNG:
+			if( pAISTarget->b_positionOnceValid && bGPSValid && ( pAISTarget->Range_NM >= 0. ) )
+				ret.Printf(_T("%5.2f"), toUsrDistance( pAISTarget->Range_NM));
+			else
+				ret = _("-");
+			break;
+
+		default:
+			break;
+	}
+	return ret;
 }
 

@@ -26,23 +26,26 @@
 
 #include <wx/listctrl.h>
 
-#include "ais/AISTargetListDialog.h"
-#include "ais/ais.h"
+class AIS_Target_Data;
+class AISTargetListDialog;
 
 class OCPNListCtrl : public wxListCtrl
 {
-public:
-    OCPNListCtrl( AISTargetListDialog* parent, wxWindowID id, const wxPoint& pos,
-            const wxSize& size, long style );
-    ~OCPNListCtrl();
+	public:
+		OCPNListCtrl(
+				AISTargetListDialog * parent,
+				wxWindowID id,
+				const wxPoint & pos,
+				const wxSize & size,
+				long style);
+		virtual ~OCPNListCtrl();
 
-    wxString OnGetItemText( long item, long column ) const;
-    int OnGetItemColumnImage( long item, long column ) const;
+		wxString OnGetItemText(long item, long column) const;
+		int OnGetItemColumnImage(long item, long column) const;
+		wxString GetTargetColumnData(AIS_Target_Data * pAISTarget, long column) const;
 
-    wxString GetTargetColumnData( AIS_Target_Data *pAISTarget, long column ) const;
-
-    AISTargetListDialog *m_parent;
-
+	private:
+		AISTargetListDialog * m_parent;
 };
 
 #endif

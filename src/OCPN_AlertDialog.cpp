@@ -34,7 +34,7 @@ END_EVENT_TABLE()
 
 OCPN_AlertDialog::OCPN_AlertDialog()
 {
-    Init();
+	Init();
 }
 
 OCPN_AlertDialog::~OCPN_AlertDialog()
@@ -43,7 +43,7 @@ OCPN_AlertDialog::~OCPN_AlertDialog()
 
 void OCPN_AlertDialog::Init(void)
 {
-    m_pparent = NULL;
+	m_pparent = NULL;
 }
 
 bool OCPN_AlertDialog::Create(
@@ -54,24 +54,27 @@ bool OCPN_AlertDialog::Create(
 		const wxSize & size,
 		long style)
 {
-    //    As a display optimization....
-    //    if current color scheme is other than DAY,
-    //    Then create the dialog ..WITHOUT.. borders and title bar.
-    //    This way, any window decorations set by external themes, etc
-    //    will not detract from night-vision
+	// As a display optimization....
+	// if current color scheme is other than DAY,
+	// Then create the dialog ..WITHOUT.. borders and title bar.
+	// This way, any window decorations set by external themes, etc
+	// will not detract from night-vision
 
-    long wstyle = wxDEFAULT_FRAME_STYLE;
-    if( ( global_color_scheme != GLOBAL_COLOR_SCHEME_DAY )
-        && ( global_color_scheme != GLOBAL_COLOR_SCHEME_RGB ) ) wstyle |= ( wxNO_BORDER );
+	long wstyle = wxDEFAULT_FRAME_STYLE;
+	if ((global_color_scheme != GLOBAL_COLOR_SCHEME_DAY)
+			&& (global_color_scheme != GLOBAL_COLOR_SCHEME_RGB))
+		wstyle |= wxNO_BORDER;
 
-    wxSize size_min = size;
-    size_min.IncTo( wxSize( 500, 600 ) );
-    if( !wxDialog::Create( parent, id, caption, pos, size_min, wstyle ) ) return false;
+	wxSize size_min = size;
+	size_min.IncTo(wxSize(500, 600));
+	if (!wxDialog::Create(parent, id, caption, pos, size_min, wstyle))
+		return false;
 
-    m_pparent = parent;
+	m_pparent = parent;
 
-    if( !g_bopengl && CanSetTransparent() ) SetTransparent( 192 );
+	if (!g_bopengl && CanSetTransparent())
+		SetTransparent(192);
 
-    return true;
+	return true;
 }
 

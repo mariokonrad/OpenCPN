@@ -453,7 +453,7 @@ SET(HDRS
 		include/TrackPropDlg.h
 		src/OCPNTrackListCtrl.h
 		include/LinkPropDlg.h
-		include/OCPN_AlertDialog.h
+		src/OCPN_AlertDialog.h
 )
 
 SET(SRC_AIS

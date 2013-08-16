@@ -73,8 +73,8 @@
 #include "Select.h"
 #include "FontMgr.h"
 #include "SendToGpsDlg.h"
-#include "compasswin.h"
 #include "OCPNRegion.h"
+#include "FloatingCompassWindow.h"
 #include "S57QueryDialog.h"
 #include "OCPNFloatingToolbarDialog.h"
 #include "OCPNMemDC.h"
@@ -134,6 +134,7 @@ extern int              g_nbrightness;
 
 extern ConsoleCanvas    *console;
 
+extern FloatingCompassWindow * g_FloatingCompassDialog;
 extern RouteList        *pRouteList;
 extern MyConfig         *pConfig;
 extern Select           *pSelect;
@@ -183,7 +184,6 @@ extern AIS_Decoder      *g_pAIS;
 
 extern MyFrame          *gFrame;
 extern StatWin          *stats;
-extern ocpnFloatingCompassWindow *g_FloatingCompassDialog;
 
 //    AIS Global configuration
 extern bool             g_bShowAIS;

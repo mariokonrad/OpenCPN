@@ -450,7 +450,7 @@ SET(HDRS
 		src/ToolbarMOBDialog.h
 		src/GrabberWin.h
 		src/OCPNFloatingToolbarDialog.h
-		include/compasswin.h
+		src/FloatingCompassWindow.h
 		include/geodesic.h
 		include/datastream.h
 		include/OCPN_DataStreamEvent.h
@@ -572,7 +572,7 @@ SET(SRCS
 		src/ToolbarMOBDialog.cpp
 		src/GrabberWin.cpp
 		src/OCPNFloatingToolbarDialog.cpp
-		src/compasswin.cpp
+		src/FloatingCompassWindow.cpp
 		src/geodesic.cpp
 		src/datastream.cpp
 		src/OCPN_DataStreamEvent.cpp

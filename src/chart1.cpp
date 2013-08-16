@@ -90,7 +90,7 @@
 #include "RouteProp.h"
 #include "MarkInfo.h"
 #include "ToolBarSimple.h"
-#include "compasswin.h"
+#include "FloatingCompassWindow.h"
 #include "datastream.h"
 #include "OCPN_DataStreamEvent.h"
 #include "multiplexer.h"
@@ -583,7 +583,7 @@ bool                      g_blocale_changed;
 wxMenu                    *g_FloatingToolbarConfigMenu;
 wxString                  g_toolbarConfig = _T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 OCPNFloatingToolbarDialog *g_FloatingToolbarDialog;
-ocpnFloatingCompassWindow *g_FloatingCompassDialog;
+FloatingCompassWindow * g_FloatingCompassDialog;
 
 int                       g_toolbar_x;
 int                       g_toolbar_y;
@@ -2006,34 +2006,6 @@ if( 0 == g_memCacheLimit )
     appendOSDirSlash( &layerdir );
     layerdir.Append( _T("layers") );
 
-#if 0
-    wxArrayString file_array;
-    g_LayerIdx = 0;
-
-    if( wxDir::Exists( layerdir ) ) {
-        wxString laymsg;
-        laymsg.Printf( wxT("Getting .gpx layer files from: %s"), layerdir.c_str() );
-        wxLogMessage( laymsg );
-
-        wxDir dir;
-        dir.Open( layerdir );
-        if( dir.IsOpened() ) {
-            wxString filename;
-            layerdir.Append( wxFileName::GetPathSeparator() );
-            bool cont = dir.GetFirst( &filename );
-            while( cont ) {
-                filename.Prepend( layerdir );
-                wxFileName f( filename );
-                if( f.GetExt().IsSameAs( wxT("gpx") ) ) pConfig->ImportGPX( gFrame, true, filename,
-                        false ); // preload a single-gpx-file layer
-                else
-                    pConfig->ImportGPX( gFrame, true, filename, true ); // preload a layer from subdirectory
-                cont = dir.GetNext( &filename );
-            }
-        }
-    }
-#endif
-
     if( wxDir::Exists( layerdir ) ) {
         wxString laymsg;
         laymsg.Printf( wxT("Getting .gpx layer files from: %s"), layerdir.c_str() );
@@ -2044,8 +2016,9 @@ if( 0 == g_memCacheLimit )
 
     cc1->ReloadVP();                  // once more, and good to go
 
-    g_FloatingCompassDialog = new ocpnFloatingCompassWindow( cc1 );
-    if( g_FloatingCompassDialog ) g_FloatingCompassDialog->UpdateStatus( true );
+    g_FloatingCompassDialog = new FloatingCompassWindow(cc1);
+    if( g_FloatingCompassDialog )
+		g_FloatingCompassDialog->UpdateStatus( true );
 
     g_FloatingToolbarDialog->Raise();
     g_FloatingToolbarDialog->Show();

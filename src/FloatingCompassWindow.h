@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  OpenCPN Main wxWidgets Program
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -23,38 +21,44 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-class ocpnFloatingCompassWindow : public wxDialog
+#ifndef __FLOATINGCOMPASSWINDOW__H__
+#define __FLOATINGCOMPASSWINDOW__H__
+
+#include <wx/dialog.h>
+#include "navutil.h"
+
+class FloatingCompassWindow : public wxDialog
 {
-public:
-      ocpnFloatingCompassWindow( wxWindow *parent );
-      ~ocpnFloatingCompassWindow();
-      void OnPaint( wxPaintEvent& event );
-      wxBitmap CreateBmp( bool bnew = false );
-      void UpdateStatus( bool newColorScheme = false );
+		DECLARE_EVENT_TABLE()
 
-      void OnClose( wxCloseEvent& event );
-      void OnToolLeftClick( wxCommandEvent& event );
-      void MouseEvent( wxMouseEvent& event );
-      void SetColorScheme( ColorScheme cs );
-      int GetXOffset(void) const { return m_xoffset; }
-      int GetYOffset(void) const { return m_yoffset; }
+	public:
+		FloatingCompassWindow(wxWindow * parent);
+		virtual ~FloatingCompassWindow();
+		void OnPaint(wxPaintEvent & event);
+		wxBitmap CreateBmp(bool bnew = false);
+		void UpdateStatus(bool newColorScheme = false);
 
-private:
-      wxBitmap m_StatBmp;
-      wxBitmap m_MaskBmp;
-      wxStaticBitmap *m_pStatBoxToolStaticBmp;
+		void OnClose(wxCloseEvent & event);
+		void OnToolLeftClick(wxCommandEvent & event);
+		void MouseEvent(wxMouseEvent & event);
+		void SetColorScheme(ColorScheme cs);
+		int GetXOffset(void) const;
+		int GetYOffset(void) const;
 
-      wxWindow *m_pparent;
-      wxBoxSizer *m_topSizer;
-      wxString m_lastgpsIconName;
-      double m_rose_angle;
+	private:
+		wxBitmap m_StatBmp;
+		wxBitmap m_MaskBmp;
+		wxStaticBitmap * m_pStatBoxToolStaticBmp;
 
-      wxBitmap _img_compass;
-      wxBitmap _img_gpsRed;
-      int m_xoffset;
-      int m_yoffset;
+		wxWindow * m_pparent;
+		wxBoxSizer * m_topSizer;
+		wxString m_lastgpsIconName;
+		double m_rose_angle;
 
-      DECLARE_EVENT_TABLE()
+		wxBitmap _img_compass;
+		wxBitmap _img_gpsRed;
+		int m_xoffset;
+		int m_yoffset;
 };
 
-
+#endif

@@ -51,9 +51,9 @@
 #include <wx/notebook.h>
 
 #if wxCHECK_VERSION(2, 9, 0)
-	#include <wx/dialog.h>
+#include <wx/dialog.h>
 #else
-	#include "scrollingdialog.h"
+#include "scrollingdialog.h"
 #endif
 
 #include "Route.h"

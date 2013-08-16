@@ -23,7 +23,7 @@
  **************************************************************************/
 
 #include "KmlFormatDialog.h"
-#include "kml.h"
+#include "Kml.h"
 #include <wx/sizer.h>
 #include <wx/radiobut.h>
 

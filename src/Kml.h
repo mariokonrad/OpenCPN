@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Read and write KML Format (http://en.wikipedia.org/wiki/Keyhole_Markup_Language)
- * Author:   Jesper Weissglas
  *
  ***************************************************************************
  *   Copyright (C) 2012 by David S. Register                               *
@@ -28,8 +26,9 @@
 
 #include <vector>
 #include "tinyxml/tinyxml.h"
+#include <wx/string.h>
 
-#define KML_INSERT_EXTRADATA true // For QtVlm Routing.
+#define KML_INSERT_EXTRADATA true
 
 class Route;
 class RoutePoint;
@@ -45,6 +44,9 @@ enum KmlPastebufferType {
 	KML_COPY_EXTRADATA
 };
 
+/// Kml parsing
+///
+/// see http://en.wikipedia.org/wiki/Keyhole_Markup_Language
 class Kml
 {
 	private:

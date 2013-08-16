@@ -426,7 +426,7 @@ SET(HDRS
 		src/ThumbWin.h
 		include/options.h
 		include/gshhs.h
-		include/kml.h
+		src/Kml.h
 		src/KmlFormatDialog.h
 		src/Undo.h
 		src/UndoAction.h
@@ -539,7 +539,7 @@ SET(SRCS
 		src/ThumbWin.cpp
 		src/options.cpp
 		src/gshhs.cpp
-		src/kml.cpp
+		src/Kml.cpp
 		src/KmlFormatDialog.cpp
 		src/Undo.cpp
 		src/UndoAction.cpp

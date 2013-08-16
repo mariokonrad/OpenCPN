@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Read and write KML Format (http://en.wikipedia.org/wiki/Keyhole_Markup_Language)
- * Author:   Jesper Weissglas
  *
  ***************************************************************************
  *   Copyright (C) 2012 by David S. Register                               *
@@ -23,15 +21,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <wx/file.h>
-#include <wx/datetime.h>
-#include <wx/clipbrd.h>
-
+#include "Kml.h"
 #include "ocpn_types.h"
 #include "KmlFormatDialog.h"
 #include "navutil.h"
 #include "Track.h"
-#include "kml.h"
+
+#include <wx/file.h>
+#include <wx/datetime.h>
+#include <wx/clipbrd.h>
 
 extern MyFrame * gFrame;
 extern double gLat;
@@ -607,16 +605,19 @@ Kml::~Kml()
 {
 	if( parsedTrack ) {
 		for( int i=1; i<=parsedTrack->GetnPoints(); i++ ) {
-			if( parsedTrack->GetPoint(i) ) delete parsedTrack->GetPoint(i);
+			if( parsedTrack->GetPoint(i) )
+				delete parsedTrack->GetPoint(i);
 		}
 		delete parsedTrack;
 	}
 	if( parsedRoute ) {
 		for( int i=1; i<=parsedRoute->GetnPoints(); i++ ) {
-			if( parsedRoute->GetPoint(i) ) delete parsedRoute->GetPoint(i);
+			if( parsedRoute->GetPoint(i) )
+				delete parsedRoute->GetPoint(i);
 		}
 		delete parsedRoute;
 	}
-	if( parsedRoutePoint ) delete parsedRoutePoint;
+	if( parsedRoutePoint )
+		delete parsedRoutePoint;
 }
 

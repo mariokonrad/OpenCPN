@@ -374,7 +374,7 @@ SET(HDRS
 		include/s57RegistrarMgr.h
 		include/S57ClassRegistrar.h
 		include/MarkIcon.h
-		include/SendToGpsDlg.h
+		src/SendToGpsDlg.h
 		include/TCWin.h
 		include/glTextureDescriptor.h
 		include/tide_time.h

@@ -392,7 +392,7 @@ SET(HDRS
 		src/FontMgr.h
 		src/FontDesc.h
 		include/vector2D.h
-		include/OCPNSoundData.h
+		src/OCPNSoundData.h
 		src/OCPN_Sound.h
 		src/NMEALogWindow.h
 		src/WindowDestroyListener.h
@@ -453,7 +453,7 @@ SET(HDRS
 		src/FloatingCompassWindow.h
 		include/geodesic.h
 		include/datastream.h
-		include/OCPN_DataStreamEvent.h
+		src/OCPN_DataStreamEvent.h
 		include/ConnectionParams.h
 		include/OCP_DataStreamInput_Thread.h
 		include/dsPortType.h

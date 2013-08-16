@@ -19,26 +19,45 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include "OCPN_DataStreamEvent.h"
 
 OCPN_DataStreamEvent::OCPN_DataStreamEvent(wxEventType commandType, int id)
-      :wxEvent(id, commandType)
+	:wxEvent(id, commandType)
 {
-    m_pDataStream = NULL;
+	m_pDataStream = NULL;
 }
 
 OCPN_DataStreamEvent::~OCPN_DataStreamEvent()
 {
 }
 
-wxEvent* OCPN_DataStreamEvent::Clone() const
+wxEvent * OCPN_DataStreamEvent::Clone() const
 {
-    OCPN_DataStreamEvent *newevent=new OCPN_DataStreamEvent(*this);
-    newevent->m_NMEAstring=this->m_NMEAstring;
-    newevent->m_pDataStream = this->m_pDataStream;
-    return newevent;
+	OCPN_DataStreamEvent * newevent=new OCPN_DataStreamEvent(*this);
+	newevent->m_NMEAstring = this->m_NMEAstring;
+	newevent->m_pDataStream = this->m_pDataStream;
+	return newevent;
+}
+
+void OCPN_DataStreamEvent::SetNMEAString(std::string string)
+{
+	m_NMEAstring = string;
+}
+
+void OCPN_DataStreamEvent::SetStream(DataStream * pDS)
+{
+	m_pDataStream = pDS;
+}
+
+std::string OCPN_DataStreamEvent::GetNMEAString()
+{
+	return m_NMEAstring;
+}
+
+DataStream * OCPN_DataStreamEvent::GetStream()
+{
+	return m_pDataStream;
 }
 

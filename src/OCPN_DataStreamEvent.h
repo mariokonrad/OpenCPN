@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __OCPN_DATASTREAMEVENT_H__
 #define __OCPN_DATASTREAMEVENT_H__
@@ -30,24 +29,24 @@
 
 class DataStream;
 
-class OCPN_DataStreamEvent: public wxEvent
+class OCPN_DataStreamEvent : public wxEvent
 {
-public:
-    OCPN_DataStreamEvent( wxEventType commandType = wxEVT_NULL, int id = 0 );
-    ~OCPN_DataStreamEvent( );
+	public:
+		OCPN_DataStreamEvent(wxEventType commandType = wxEVT_NULL, int id = 0);
+		virtual ~OCPN_DataStreamEvent();
 
-    // accessors
-    void SetNMEAString(std::string string) { m_NMEAstring = string; }
-    void SetStream( DataStream *pDS ) { m_pDataStream = pDS; }
-    std::string GetNMEAString() { return m_NMEAstring; }
-    DataStream *GetStream() { return m_pDataStream; }
-    
-    // required for sending with wxPostEvent()
-    wxEvent *Clone() const;
+		// accessors
+		void SetNMEAString(std::string string);
+		void SetStream(DataStream *pDS);
+		std::string GetNMEAString();
+		DataStream * GetStream();
 
-private:
-    std::string m_NMEAstring;
-    DataStream *m_pDataStream;
+		// required for sending with wxPostEvent()
+		wxEvent * Clone() const;
+
+	private:
+		std::string m_NMEAstring;
+		DataStream * m_pDataStream;
 };
 
 #endif

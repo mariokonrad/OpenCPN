@@ -22,20 +22,19 @@
  **************************************************************************/
 
 #include "Undo.h"
-
-#include <wx/file.h>
-#include <wx/datetime.h>
-#include <wx/clipbrd.h>
-
 #include "ocpn_types.h"
 #include "navutil.h"
 #include "styles.h"
 #include "Routeman.h"
 #include "WayPointman.h"
-#include "routemanagerdialog.h"
+#include "RouteManagerDialog.h"
 #include "tinyxml/tinyxml.h"
 #include "chcanv.h"
 #include "Select.h"
+
+#include <wx/file.h>
+#include <wx/datetime.h>
+#include <wx/clipbrd.h>
 
 extern Routeman * g_pRouteMan;
 extern MyConfig * pConfig;

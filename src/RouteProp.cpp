@@ -36,11 +36,11 @@
 #include "chart1.h"
 #include "Routeman.h"
 #include "WayPointman.h"
-#include "routemanagerdialog.h"
+#include "RouteManagerDialog.h"
 #include "RoutePrintout.h"
 #include "RoutePrintSelection.h"
 #include "chcanv.h"
-#include "tcmgr.h"        // pjotrc 2011.03.02
+#include "tcmgr.h"
 #include "PositionParser.h"
 #include "pluginmanager.h"
 

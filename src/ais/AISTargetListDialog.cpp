@@ -32,7 +32,7 @@
 #include "OCPNListCtrl.h"
 #include "styles.h"
 #include "Select.h"
-#include "routemanagerdialog.h"
+#include "RouteManagerDialog.h"
 #include "Undo.h"
 
 static AIS_Decoder * s_p_sort_decoder;

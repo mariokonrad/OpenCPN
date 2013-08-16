@@ -49,7 +49,7 @@
 #include "navutil.h"
 #include "georef.h"
 #include "RouteProp.h"
-#include "routemanagerdialog.h"
+#include "RouteManagerDialog.h"
 #include "pluginmanager.h"
 #include "multiplexer.h"
 #include "Select.h"

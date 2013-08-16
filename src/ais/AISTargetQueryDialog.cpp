@@ -34,19 +34,19 @@
 #include "AIS_Target_Data.h"
 #include "AIS_Decoder.h"
 #include "Select.h"
-#include "routemanagerdialog.h"
+#include "RouteManagerDialog.h"
 #include "Undo.h"
 
-extern AISTargetQueryDialog *g_pais_query_dialog_active;
+extern AISTargetQueryDialog * g_pais_query_dialog_active;
 extern int g_ais_query_dialog_x;
 extern int g_ais_query_dialog_y;
 extern ColorScheme global_color_scheme;
-extern AIS_Decoder *g_pAIS;
+extern AIS_Decoder * g_pAIS;
 extern wxString g_default_wp_icon;
-extern Select *pSelect;
-extern MyConfig *pConfig;
-extern RouteManagerDialog *pRouteManagerDialog;
-extern ChartCanvas *cc1;
+extern Select * pSelect;
+extern MyConfig * pConfig;
+extern RouteManagerDialog * pRouteManagerDialog;
+extern ChartCanvas * cc1;
 
 #define xID_OK 10009
 #define xID_WPT_CREATE 10010

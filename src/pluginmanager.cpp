@@ -21,18 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <wx/wx.h>
-#include <wx/dir.h>
-#include <wx/filename.h>
-#include <wx/aui/aui.h>
-#include <wx/statline.h>
-
-#include "ais/ais.h"
-#include "ais/AIS_Decoder.h"
-#include "ais/AIS_Target_Data.h"
-
-#include "dychart.h"
 #include "pluginmanager.h"
+#include "dychart.h"
 #include "navutil.h"
 #include "Track.h"
 #include "chartbase.h"
@@ -49,8 +39,18 @@
 #include "OCPN_DataStreamEvent.h"
 #include "georef.h"
 #include "WayPointman.h"
-#include "routemanagerdialog.h"
+#include "RouteManagerDialog.h"
 #include "NavObjectCollection.h"
+
+#include "ais/ais.h"
+#include "ais/AIS_Decoder.h"
+#include "ais/AIS_Target_Data.h"
+
+#include <wx/wx.h>
+#include <wx/dir.h>
+#include <wx/filename.h>
+#include <wx/aui/aui.h>
+#include <wx/statline.h>
 
 extern MyConfig        *pConfig;
 extern wxString        g_SData_Locn;

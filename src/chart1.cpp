@@ -102,7 +102,7 @@
 #include "OCP_DataStreamInput_Thread.h"
 #include "TrackPropDlg.h"
 #include "cutil.h"
-#include "routemanagerdialog.h"
+#include "RouteManagerDialog.h"
 #include "pluginmanager.h"
 #include "MyPrintout.h"
 #include "OCPNFloatingToolbarDialog.h"

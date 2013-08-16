@@ -28,7 +28,7 @@
 #include "georef.h"
 #include "Routeman.h"
 #include "Select.h"
-#include "routemanagerdialog.h"
+#include "RouteManagerDialog.h"
 #include "RoutePrintSelection.h"
 #include "pluginmanager.h"
 

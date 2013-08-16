@@ -36,6 +36,7 @@
 #include <wx/listimpl.cpp>
 
 #include "chcanv.h"
+#include "RouteManagerDialog.h"
 #include "GoToPositionDialog.h"
 #include "TimedPopupWin.h"
 #include "dychart.h"
@@ -58,7 +59,6 @@
 #include "MarkInfo.h"
 #include "TrackPropDlg.h"
 #include "tcmgr.h"
-#include "routemanagerdialog.h"
 #include "pluginmanager.h"
 #include "ocpn_pixel.h"
 #include "ocpndc.h"

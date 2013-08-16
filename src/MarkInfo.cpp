@@ -30,7 +30,7 @@
 #include "PositionParser.h"
 #include "navutil.h"
 #include "chcanv.h"
-#include "routemanagerdialog.h"
+#include "RouteManagerDialog.h"
 #include <wx/notebook.h>
 #include <wx/sizer.h>
 #include <wx/bmpcbox.h>

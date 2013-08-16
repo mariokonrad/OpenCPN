@@ -1,9 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  S52 Presentation Library
- * Authors:   David Register
- *            Jesper Weissglas
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -24,29 +21,21 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-// For compilers that support precompilation, includes "wx.h".
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-#include "wx/wx.h"
-#endif //precompiled headers
-
-#include <math.h>
-#include <stdlib.h>
-
-#include "dychart.h"
-#include "georef.h"
-
 #include "s52plib.h"
-#include "s57chart.h"                   // for back function references
+#include "s57chart.h"
 #include "mygeom.h"
 #include "cutil.h"
 #include "s52utils.h"
-#include "navutil.h"                    // for LogMessageOnce()
+#include "navutil.h"
 #include "ocpn_pixel.h"
 #include "chartsymbols.h"
-#include "razdsparser.h"
+#include "RazdsParser.h"
 #include "FontMgr.h"
+#include "georef.h"
+#include "dychart.h"
+
+#include <math.h>
+#include <stdlib.h>
 
 #include <wx/image.h>
 #include <wx/tokenzr.h>
@@ -58,15 +47,15 @@
 #define new DEBUG_NEW
 #endif
 
-extern s52plib *ps52plib;
+extern s52plib * ps52plib;
 extern bool g_b_useStencil;
 extern wxString g_csv_locn;
 extern double g_GLMinLineWidth;
 
-void DrawAALine( wxDC *pDC, int x0, int y0, int x1, int y1, wxColour clrLine, int dash, int space );
-extern bool GetDoubleAttr( S57Obj *obj, const char *AttrName, double &val );
+void DrawAALine(wxDC *pDC, int x0, int y0, int x1, int y1, wxColour clrLine, int dash, int space);
+extern bool GetDoubleAttr(S57Obj * obj, const char * AttrName, double & val);
 
-//    Implement the Bounding Box list
+// Implement the Bounding Box list
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST( ObjList );
 

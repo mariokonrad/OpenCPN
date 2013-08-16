@@ -381,7 +381,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
 
 		num_IDX++; // Keep counting entries for harmonic file stuff
 		IDX_entry *pIDX = new IDX_entry;
-		pIDX->source_data_type = SOURCE_TYPE_BINARY_HARMONIC;
+		pIDX->source_data_type = IDX_entry::SOURCE_TYPE_BINARY_HARMONIC;
 		pIDX->pDataSource = NULL;
 
 		pIDX->Valid15 = 0;
@@ -399,7 +399,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
 			pIDX->IDX_time_zone = -tz_info->tzi.Bias;
 
 
-		strncpy(pIDX->IDX_station_name, ptiderec->header.name, MAXNAMELEN);
+		strncpy(pIDX->IDX_station_name, ptiderec->header.name, IDX_entry::MAXNAMELEN);
 
 		pIDX->IDX_flood_dir = ptiderec->max_direction;
 		pIDX->IDX_ebb_dir = ptiderec->min_direction;
@@ -430,7 +430,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
 			psd->epoch     = (double *)malloc(num_csts * sizeof(double));
 			psd->station_name = (char *)malloc(ONELINER_LENGTH);
 
-			strncpy(psd->station_name, ptiderec->header.name, MAXNAMELEN);
+			strncpy(psd->station_name, ptiderec->header.name, IDX_entry::MAXNAMELEN);
 			psd->station_type = pIDX->IDX_type;
 
 
@@ -539,7 +539,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadHarmonicData(IDX_entry *pIDX)
 {
 	// Find the indicated Master station
 	if(!strlen(pIDX->IDX_reference_name)) {
-		strncpy(pIDX->IDX_reference_name, get_station (pIDX->IDX_ref_dbIndex), MAXNAMELEN );
+		strncpy(pIDX->IDX_reference_name, get_station (pIDX->IDX_ref_dbIndex), IDX_entry::MAXNAMELEN );
 		IDX_entry *pIDX_Ref = &m_IDX_array.Item(pIDX->IDX_ref_dbIndex);
 		Station_Data *pRefSta = pIDX_Ref->pref_sta_data;
 		pIDX->pref_sta_data = pRefSta;

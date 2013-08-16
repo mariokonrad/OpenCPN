@@ -173,7 +173,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 				// Load index file data .
 				num_IDX++; // Keep counting entries for harmonic file stuff
 				IDX_entry *pIDX = new IDX_entry;
-				pIDX->source_data_type = SOURCE_TYPE_ASCII_HARMONIC;
+				pIDX->source_data_type = IDX_entry::SOURCE_TYPE_ASCII_HARMONIC;
 				pIDX->pDataSource = NULL;
 
 				index_in_memory   = TRUE;

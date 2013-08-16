@@ -419,7 +419,7 @@ SET(HDRS
 		src/PianoWin.h
 		include/tcmgr.h
 		src/Station_Data.h
-		include/IDX_entry.h
+		src/IDX_entry.h
 		src/TC_Error_Code.h
 		src/TCDataFactory.h
 		src/TCDS_Ascii_Harmonic.h

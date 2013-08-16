@@ -365,7 +365,7 @@ SET(HDRS
 		include/emboss_data.h
 		${HDR_AIS}
 		src/OCPNListCtrl.h
-		include/CM93DSlide.h
+		src/CM93DSlide.h
 		src/GoToPositionDialog.h
 		include/RolloverWin.h
 		include/S57QueryDialog.h

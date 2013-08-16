@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __CM93DSLIDE_H__
 #define __CM93DSLIDE_H__
@@ -29,26 +28,42 @@
 
 class CM93DSlide: public wxDialog
 {
-public:
-    CM93DSlide( wxWindow *parent, wxWindowID id, int value, int minValue, int maxValue,
-            const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize,
-            long style = 0, const wxString& title = _T("") );
+		DECLARE_EVENT_TABLE()
 
-    ~CM93DSlide( void );
+	public:
+		CM93DSlide(
+			wxWindow * parent,
+			wxWindowID id,
+			int value,
+			int minValue,
+			int maxValue,
+			const wxPoint & pos = wxDefaultPosition,
+			const wxSize & size = wxDefaultSize,
+			long style = 0,
+			const wxString& title = _T(""));
 
-    void Init( void );
-    bool Create( wxWindow *parent, wxWindowID id, int value, int minValue, int maxValue,
-            const wxPoint& pos, const wxSize& size, long style, const wxString& title );
+		virtual ~CM93DSlide(void);
 
-    void OnCancelClick( wxCommandEvent& event );
-    void OnMove( wxMoveEvent& event );
-    void OnChangeValue( wxScrollEvent& event );
-    void OnClose( wxCloseEvent& event );
+		void Init(void);
 
-    wxSlider *m_pCM93DetailSlider;
-    wxWindow *m_pparent;
+		bool Create(
+				wxWindow * parent,
+				wxWindowID id,
+				int value,
+				int minValue,
+				int maxValue,
+				const wxPoint & pos,
+				const wxSize & size,
+				long style,
+				const wxString & title);
 
-DECLARE_EVENT_TABLE()
+		void OnCancelClick(wxCommandEvent& event);
+		void OnMove(wxMoveEvent& event);
+		void OnChangeValue(wxScrollEvent& event);
+		void OnClose(wxCloseEvent& event);
+
+		wxSlider * m_pCM93DetailSlider;
+		wxWindow * m_pparent;
 };
 
 #endif

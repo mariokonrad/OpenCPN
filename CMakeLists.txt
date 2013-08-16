@@ -396,7 +396,7 @@ SET(HDRS
 		src/WindowDestroyListener.h
 		include/TTYWindow.h
 		include/TTYScroll.h
-		include/Layer.h
+		src/Layer.h
 		include/concanv.h
 		include/cutil.h
 		include/georef.h

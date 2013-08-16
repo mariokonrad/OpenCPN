@@ -2190,9 +2190,9 @@ void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     
                     wxSize win_size = GetSize();
                     if( console->IsShown() ) win_size.x -= console->GetSize().x;
-                    m_pAISRolloverWin->SetBestPosition( mouse_x, mouse_y, 16, 16, AIS_ROLLOVER, win_size );
+                    m_pAISRolloverWin->SetBestPosition( mouse_x, mouse_y, 16, 16, RolloverWin::AIS_ROLLOVER, win_size );
                     
-                    m_pAISRolloverWin->SetBitmap( AIS_ROLLOVER );
+                    m_pAISRolloverWin->SetBitmap( RolloverWin::AIS_ROLLOVER );
                     m_pAISRolloverWin->IsActive( true );
                     b_need_refresh = true;
                 }
@@ -2279,9 +2279,8 @@ void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 
                     wxSize win_size = GetSize();
                     if( console->IsShown() ) win_size.x -= console->GetSize().x;
-                    m_pRouteRolloverWin->SetBestPosition( mouse_x, mouse_y, 16, 16, LEG_ROLLOVER,
-                                                     win_size );
-                    m_pRouteRolloverWin->SetBitmap( LEG_ROLLOVER );
+                    m_pRouteRolloverWin->SetBestPosition( mouse_x, mouse_y, 16, 16, RolloverWin::LEG_ROLLOVER, win_size);
+                    m_pRouteRolloverWin->SetBitmap( RolloverWin::LEG_ROLLOVER );
                     m_pRouteRolloverWin->IsActive( true );
                     b_need_refresh = true;
                     showRollover = true;

@@ -367,7 +367,7 @@ SET(HDRS
 		src/OCPNListCtrl.h
 		src/CM93DSlide.h
 		src/GoToPositionDialog.h
-		include/RolloverWin.h
+		src/RolloverWin.h
 		include/S57QueryDialog.h
 		include/S57ObjectDesc.h
 		include/S57Light.h

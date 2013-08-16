@@ -692,8 +692,8 @@ void TCWin::OnTCWinPopupTimerEvent( wxTimerEvent& event )
         win_size.Set( x * 90 / 100, y * 80 / 100 );
 
         m_pTCRolloverWin->SetString( p );
-        m_pTCRolloverWin->SetBestPosition( curs_x, curs_y, 1, 1, TC_ROLLOVER, win_size );
-        m_pTCRolloverWin->SetBitmap( TC_ROLLOVER );
+        m_pTCRolloverWin->SetBestPosition( curs_x, curs_y, 1, 1, RolloverWin::TC_ROLLOVER, win_size );
+        m_pTCRolloverWin->SetBitmap( RolloverWin::TC_ROLLOVER );
         m_pTCRolloverWin->Refresh();
         m_pTCRolloverWin->Show();
     } else {

@@ -30,13 +30,13 @@ class PositionParser
 {
 	public:
 		PositionParser(const wxString & src);
-		const wxString & GetSeparator() const { return separator; }
-		const wxString & GetLatitudeString() const { return latitudeString; }
-		const wxString & GetLongitudeString() const { return longitudeString; }
-		double GetLatitude() const { return latitude; }
-		double GetLongitude() const { return longitude; }
+		const wxString & GetSeparator() const;
+		const wxString & GetLatitudeString() const;
+		const wxString & GetLongitudeString() const;
+		double GetLatitude() const;
+		double GetLongitude() const;
 		bool FindSeparator(const wxString & src);
-		bool IsOk() const { return parsedOk; }
+		bool IsOk() const;
 
 	private:
 		wxString source;

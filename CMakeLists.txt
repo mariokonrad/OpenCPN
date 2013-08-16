@@ -411,7 +411,7 @@ SET(HDRS
 		src/MarkInfo.h
 		src/LatLonTextCtrl.h
 		src/RoutePrintout.h
-		include/PositionParser.h
+		src/PositionParser.h
 		include/printtable.h
 		src/RoutePrintSelection.h
 		src/StatWin.h

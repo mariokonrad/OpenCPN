@@ -362,7 +362,7 @@ SET(HDRS
 		include/chartimg.h
 		include/chcanv.h
 		include/timers.h
-		include/emboss_data.h
+		src/EmbossData.h
 		${HDR_AIS}
 		src/OCPNListCtrl.h
 		src/CM93DSlide.h
@@ -506,6 +506,7 @@ SET(SRCS
 		${SRC_AIS}
 		src/OCPNListCtrl.cpp
 		src/Quilt.cpp
+		src/EmbossData.cpp
 		src/QuiltPatch.cpp
 		src/QuiltCandidate.cpp
 		src/Hyperlink.cpp

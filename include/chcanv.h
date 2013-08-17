@@ -41,9 +41,7 @@
 #include "RolloverWin.h"
 #include "ais/AISTargetQueryDialog.h"
 #include "glChartCanvas.h"
-#include "TCWin.h"
 #include "timers.h"
-#include "emboss_data.h"
 
 //    Useful static routines
 void ShowAISTargetQueryDialog(wxWindow *parent, int mmsi);
@@ -64,9 +62,11 @@ void DimeControl(wxWindow* ctrl, wxColour col, wxColour col1, wxColour back_colo
 //    Set up the preferred quilt type
 #define QUILT_TYPE_2
 
+class EmbossData;
 class Undo;
 class Route;
 class TCWin;
+class IDX_entry;
 class RoutePoint;
 class SelectItem;
 class wxBoundingBox;
@@ -373,7 +373,7 @@ class ChartCanvas: public wxWindow
 	void DrawOverlayObjects ( ocpnDC &dc, const wxRegion& ru );
 
 	void EmbossDepthScale(ocpnDC &dc );
-	emboss_data *CreateEmbossMapData(wxFont &font, int width, int height, const wxChar *str, ColorScheme cs);
+	EmbossData *CreateEmbossMapData(wxFont &font, int width, int height, const wxChar *str, ColorScheme cs);
 	void CreateDepthUnitEmbossMaps(ColorScheme cs);
 	wxBitmap CreateDimBitmap(wxBitmap &Bitmap, double factor);
 
@@ -383,7 +383,7 @@ class ChartCanvas: public wxWindow
 	//      void CreateCM93OffsetEmbossMapData(ColorScheme cs);
 	//      void EmbossCM93Offset ( wxMemoryDC *pdc);
 
-	void EmbossCanvas ( ocpnDC &dc, emboss_data *pemboss, int x, int y);
+	void EmbossCanvas ( ocpnDC &dc, EmbossData *pemboss, int x, int y);
 
 	void JaggyCircle(ocpnDC &dc, wxPen pen, int x, int y, int radius);
 	void ShowObjectQueryWindow( int x, int y, float zlat, float zlon);
@@ -444,13 +444,11 @@ class ChartCanvas: public wxWindow
 	wxMemoryDC  m_dc_route;         // seen in mouse->edit->route
 
 
-	emboss_data *m_pEM_Feet;                // maps for depth unit emboss pattern
-	emboss_data *m_pEM_Meters;
-	emboss_data *m_pEM_Fathoms;
+	EmbossData *m_pEM_Feet;                // maps for depth unit emboss pattern
+	EmbossData *m_pEM_Meters;
+	EmbossData *m_pEM_Fathoms;
 
-	emboss_data *m_pEM_OverZoom;
-	//      emboss_data *m_pEM_CM93Offset;	// Flav
-
+	EmbossData *m_pEM_OverZoom;
 
 	double      m_pix_per_mm;     // pixels per millimeter on the screen
 

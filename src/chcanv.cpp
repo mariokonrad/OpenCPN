@@ -78,6 +78,8 @@
 #include "S57QueryDialog.h"
 #include "OCPNFloatingToolbarDialog.h"
 #include "OCPNMemDC.h"
+#include "EmbossData.h"
+#include "TCWin.h"
 
 // AIS
 #include "ais/ais.h"
@@ -8535,7 +8537,7 @@ void ChartCanvas::Update()
         wxWindow::Update();
 }
 
-void ChartCanvas::EmbossCanvas( ocpnDC &dc, emboss_data *pemboss, int x, int y )
+void ChartCanvas::EmbossCanvas( ocpnDC &dc, EmbossData *pemboss, int x, int y )
 {
     const double factor = 200;
 
@@ -8809,7 +8811,7 @@ void ChartCanvas::EmbossDepthScale( ocpnDC &dc )
         }
     }
 
-    emboss_data *ped = NULL;
+    EmbossData *ped = NULL;
     switch( depth_unit_type ) {
     case DEPTH_UNIT_FEET:
         ped = m_pEM_Feet;
@@ -8871,7 +8873,7 @@ void ChartCanvas::CreateOZEmbossMapData( ColorScheme cs )
     m_pEM_OverZoom = CreateEmbossMapData( font, w + 10, h + 10, _("OverZoom"), cs );
 }
 
-emboss_data *ChartCanvas::CreateEmbossMapData( wxFont &font, int width, int height,
+EmbossData *ChartCanvas::CreateEmbossMapData( wxFont &font, int width, int height,
         const wxChar *str, ColorScheme cs )
 {
     int *pmap;
@@ -8933,7 +8935,7 @@ emboss_data *ChartCanvas::CreateEmbossMapData( wxFont &font, int width, int heig
         }
     }
 
-    emboss_data *pret = new emboss_data;
+    EmbossData *pret = new EmbossData;
     pret->pmap = pmap;
     pret->width = width;
     pret->height = height;

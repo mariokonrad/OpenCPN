@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,25 +19,20 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __EMBOSS_DATA_H__
-#define __EMBOSS_DATA_H__
+#include "EmbossData.h"
 
-#include "dychart.h"
+EmbossData::EmbossData()
+	: pmap(NULL)
+	, gltexind(0)
+{}
 
-class emboss_data
+EmbossData::~EmbossData()
 {
-      public:
-            emboss_data(){ pmap = NULL; gltexind = 0; }
-            ~emboss_data(){ free(pmap); }
+	if (pmap) {
+		free(pmap);
+		pmap = NULL;
+	}
+}
 
-            int         *pmap;
-            int         width;
-            int         height;
-
-            GLuint      gltexind;
-};
-
-#endif

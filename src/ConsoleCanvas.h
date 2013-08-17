@@ -32,7 +32,7 @@
 class AnnunText;
 class CDI;
 
-class ConsoleCanvas: public wxDialog
+class ConsoleCanvas : public wxDialog
 {
 		DECLARE_EVENT_TABLE()
 

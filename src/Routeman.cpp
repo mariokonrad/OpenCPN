@@ -45,7 +45,7 @@
 #include "styles.h"
 #include "CDI.h"
 #include "WayPointman.h"
-#include "concanv.h"
+#include "ConsoleCanvas.h"
 #include "navutil.h"
 #include "georef.h"
 #include "RouteProp.h"

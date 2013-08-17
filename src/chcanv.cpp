@@ -47,7 +47,7 @@
 #include "navutil.h"
 #include "Track.h"
 #include "Kml.h"
-#include "concanv.h"
+#include "ConsoleCanvas.h"
 #include "ThumbWin.h"
 #include "WayPointman.h"
 #include "chart/ChartDB.h"

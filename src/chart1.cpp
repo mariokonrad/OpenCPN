@@ -81,7 +81,7 @@
 #include "Routeman.h"
 #include "StatWin.h"
 #include "PianoWin.h"
-#include "concanv.h"
+#include "ConsoleCanvas.h"
 #include "options.h"
 #include "AboutDialog.h"
 #include "ThumbWin.h"

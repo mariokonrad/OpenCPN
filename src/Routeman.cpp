@@ -51,7 +51,7 @@
 #include "RouteProp.h"
 #include "RouteManagerDialog.h"
 #include "pluginmanager.h"
-#include "multiplexer.h"
+#include "Multiplexer.h"
 #include "Select.h"
 #include "MarkIcon.h"
 

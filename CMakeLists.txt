@@ -457,7 +457,7 @@ SET(HDRS
 		include/ConnectionParams.h
 		include/OCP_DataStreamInput_Thread.h
 		include/dsPortType.h
-		include/multiplexer.h
+		src/Multiplexer.h
 		src/OCPNRegion.h
 		src/OCPNRegionIterator.h
 		src/TrackPropDlg.h
@@ -578,7 +578,7 @@ SET(SRCS
 		src/OCPN_DataStreamEvent.cpp
 		src/ConnectionParams.cpp
 		src/OCP_DataStreamInput_Thread.cpp
-		src/multiplexer.cpp
+		src/Multiplexer.cpp
 		src/pugixml.cpp
 		src/OCPNRegion.cpp
 		src/OCPNRegionIterator.cpp

@@ -93,7 +93,7 @@
 #include "FloatingCompassWindow.h"
 #include "datastream.h"
 #include "OCPN_DataStreamEvent.h"
-#include "multiplexer.h"
+#include "Multiplexer.h"
 #include "Select.h"
 #include "FontMgr.h"
 #include "NMEALogWindow.h"

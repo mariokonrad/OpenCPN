@@ -61,7 +61,7 @@
 #include "ocpndc.h"
 #include "geodesic.h"
 #include "datastream.h"
-#include "multiplexer.h"
+#include "Multiplexer.h"
 #include "Route.h"
 #include "Select.h"
 #include "FontMgr.h"

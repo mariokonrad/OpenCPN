@@ -32,7 +32,7 @@
 #include "styles.h"
 #include "Select.h"
 #include "options.h"
-#include "multiplexer.h"
+#include "Multiplexer.h"
 #include "StatWin.h"
 #include "Routeman.h"
 #include "FontMgr.h"

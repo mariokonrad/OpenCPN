@@ -51,7 +51,7 @@
 #include "options.h"
 #include "styles.h"
 #include "datastream.h"
-#include "multiplexer.h"
+#include "Multiplexer.h"
 #include "FontMgr.h"
 #include "OCPN_Sound.h"
 #include "NMEALogWindow.h"

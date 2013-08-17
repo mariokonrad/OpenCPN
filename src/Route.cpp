@@ -28,7 +28,7 @@
 #include "ocpndc.h"
 #include "cutil.h"
 #include "navutil.h"
-#include "multiplexer.h"
+#include "Multiplexer.h"
 #include "Select.h"
 
 #include <wx/listimpl.cpp>

@@ -63,7 +63,7 @@
 #include "ocpn_pixel.h"
 #include "ocpndc.h"
 #include "Undo.h"
-#include "multiplexer.h"
+#include "Multiplexer.h"
 #include "timers.h"
 #include "tide_time.h"
 #include "glTextureDescriptor.h"

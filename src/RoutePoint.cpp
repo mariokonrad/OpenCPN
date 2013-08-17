@@ -25,7 +25,7 @@
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "chcanv.h"
-#include "multiplexer.h"
+#include "Multiplexer.h"
 #include "navutil.h"
 #include "FontMgr.h"
 

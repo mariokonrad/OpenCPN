@@ -28,7 +28,7 @@
 #include "s52utils.h"
 #include "navutil.h"
 #include "ocpn_pixel.h"
-#include "chartsymbols.h"
+#include "chart/ChartSymbols.h"
 #include "RazdsParser.h"
 #include "FontMgr.h"
 #include "georef.h"

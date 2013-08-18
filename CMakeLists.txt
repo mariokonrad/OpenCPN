@@ -441,7 +441,12 @@ SET(HDRS
 		include/wx/json_defs.h
 		include/wx/jsonwriter.h
 		include/wx/jsonreader.h
-		include/chartsymbols.h
+		src/chart/ChartSymbols.h
+		src/chart/SymbolSizeInfo.h
+		src/chart/ChartSymbol.h
+		src/chart/LineStyle.h
+		src/chart/OCPNPattern.h
+		src/chart/Lookup.h
 		src/RazdsParser.h
 		include/styles.h
 		src/ToolBarSimple.h
@@ -564,7 +569,7 @@ SET(SRCS
 		src/wxJSON/jsonwriter.cpp
 		src/wxJSON/jsonreader.cpp
 		src/wxJSON/jsonval.cpp
-		src/chartsymbols.cpp
+		src/chart/ChartSymbols.cpp
 		src/RazdsParser.cpp
 		src/styles.cpp
 		src/ToolBarSimple.cpp

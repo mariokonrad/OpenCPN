@@ -23,7 +23,7 @@
 
 #include "RazdsParser.h"
 #include "s52plib.h"
-#include "chartsymbols.h"
+#include "chart/ChartSymbols.h"
 #include <wx/tokenzr.h>
 #include <stdio.h>
 #include <math.h>

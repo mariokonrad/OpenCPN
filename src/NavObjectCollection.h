@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,19 +19,18 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __NAVOBJECTCOLLECTION_H__
 #define __NAVOBJECTCOLLECTION_H__
 
 #include "pugixml.hpp"
+#include <wx/string.h>
 #include "Route.h"
 #include "RoutePoint.h"
 
-class Track;
 
-//      Bitfield definition controlling the GPX nodes output for point objects
+// FIXME: do not use defines: Bitfield definition controlling the GPX nodes output for point objects
 #define         OUT_TYPE        1 << 1          //  Output point type
 #define         OUT_TIME        1 << 2          //  Output time as ISO string
 #define         OUT_NAME        1 << 3          //  Output point name if defined
@@ -61,55 +60,72 @@ class Track;
                         (OUT_SHARED) +\
                         (OUT_AUTO_NAME) +\
                         (OUT_HYPERLINKS)
-#define OPT_ROUTEPT     OPT_WPT                        
+#define OPT_ROUTEPT     OPT_WPT
 
-//      Bitfield definitions controlling the GPX nodes output for Route.Track objects
-#define         RT_OUT_ACTION_ADD         1 << 1          //  opencpn:action node support
-#define         RT_OUT_ACTION_DEL         1 << 2
-#define         RT_OUT_ACTION_UPD         1 << 3
+class Track;
 
-
-class NavObjectCollection1 : public pugi::xml_document
+class NavObjectCollection : public pugi::xml_document
 {
-public:
-    NavObjectCollection1();
-    ~NavObjectCollection1();
-    
-    bool CreateNavObjGPXPoints(void);
-    bool CreateNavObjGPXRoutes(void);
-    bool CreateNavObjGPXTracks(void);
- 
-    bool AddGPXRoutesList( RouteList *pRoutes );
-    bool AddGPXPointsList( RoutePointList *pRoutePoints );
-    bool AddGPXRoute(Route *pRoute);
-    bool AddGPXTrack(Track *pTrk);
-    bool AddGPXWaypoint(RoutePoint *pWP );
-    
-    bool CreateAllGPXObjects();
-    bool LoadAllGPXObjects(void);
-    int LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
-    
-    bool SaveFile( const wxString filename );
+	public:
+		NavObjectCollection();
+		~NavObjectCollection();
 
-    void SetRootGPXNode(void);
-    
-    pugi::xml_node      m_gpx_root;
+		bool CreateNavObjGPXPoints(void);
+		bool CreateNavObjGPXRoutes(void);
+		bool CreateNavObjGPXTracks(void);
+		bool AddGPXRoutesList(RouteList * pRoutes);
+		bool AddGPXPointsList(RoutePointList * pRoutePoints);
+		bool AddGPXRoute(Route * pRoute);
+		bool AddGPXTrack(Track * pTrk);
+		bool AddGPXWaypoint(RoutePoint * pWP);
+		bool CreateAllGPXObjects();
+		bool LoadAllGPXObjects(void);
+		int LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
+		bool SaveFile(const wxString filename);
+		void SetRootGPXNode(void);
+
+		pugi::xml_node m_gpx_root;
+
+	protected:
+		RoutePoint * GPXLoadWaypoint1(
+				pugi::xml_node & wpt_node,
+				wxString def_symbol_name,
+				wxString GUID,
+				bool b_fullviz,
+				bool b_layer,
+				bool b_layerviz,
+				int layer_id);
+
+		Track * GPXLoadTrack1(
+				pugi::xml_node & trk_node,
+				bool b_fullviz,
+				bool b_layer,
+				bool b_layerviz,
+				int layer_id);
+
+		Route * GPXLoadRoute1(
+				pugi::xml_node & wpt_node,
+				bool b_fullviz,
+				bool b_layer,
+				bool b_layerviz,
+				int layer_id);
+
+		bool GPXCreateWpt(
+				pugi::xml_node node,
+				RoutePoint * pr,
+				unsigned int flags);
+
+		bool GPXCreateTrk(
+				pugi::xml_node node,
+				Route *pRoute);
+
+		bool GPXCreateRoute(
+				pugi::xml_node node,
+				Route *pRoute);
+
+		void InsertRouteA(Route * pTentRoute);
+		void InsertTrack(Route * pTentTrack);
+		void UpdateRouteA(Route * pTentRoute);
 };
-
-
-class NavObjectChanges : public NavObjectCollection1
-{
-public:
-    NavObjectChanges();
-    ~NavObjectChanges();
-    
-    bool AddRoute( Route *pr, const char *action );           // support "changes" file set
-    bool AddTrack( Track *pr, const char *action );
-    bool AddWP( RoutePoint *pr, const char *action );
-    
-    bool ApplyChanges(void);
-    
-};
-
 
 #endif

@@ -66,7 +66,7 @@
 #include "FontMgr.h"
 #include "OCPN_Sound.h"
 #include "Layer.h"
-#include "NavObjectCollection.h"
+#include "NavObjectChanges.h"
 #include "NMEALogWindow.h"
 
 #ifdef USE_S57
@@ -335,7 +335,7 @@ MyConfig::MyConfig( const wxString &appName, const wxString &vendorName,
         const wxString &LocalFileName ) :
         wxFileConfig( appName, vendorName, LocalFileName, wxString( _T ( "" ) ) )
 {
-    //    Create the default NavObjectCollection FileName
+    //    Create the default nav object collection FileName
     wxFileName config_file( LocalFileName );
     m_sNavObjSetFile = config_file.GetPath( wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR );
     m_sNavObjSetFile += _T ( "navobj.xml" );
@@ -1106,7 +1106,7 @@ int MyConfig::LoadMyConfig( int iteration )
         CreateRotatingNavObjBackup();
 
         if( NULL == m_pNavObjectInputSet )
-            m_pNavObjectInputSet = new NavObjectCollection1();
+            m_pNavObjectInputSet = new NavObjectCollection();
 
         if( ::wxFileExists( m_sNavObjSetFile ) ) {
             if( m_pNavObjectInputSet->load_file( m_sNavObjSetFile.fn_str() ) )
@@ -1243,7 +1243,7 @@ bool MyConfig::LoadLayers(wxString &path)
                     wxString file_path = file_array[i];
 
                     if( ::wxFileExists( file_path ) ) {
-                        NavObjectCollection1 *pSet = new NavObjectCollection1;
+                        NavObjectCollection *pSet = new NavObjectCollection;
                         pSet->load_file(file_path.fn_str());
                         l->m_NoOfItems = pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, bLayerViz);
 
@@ -1857,8 +1857,8 @@ void MyConfig::UpdateSettings()
 void MyConfig::UpdateNavObj( void )
 {
 
-//   Create the NavObjectCollection, and save to specified file
-    NavObjectCollection1 *pNavObjectSet = new NavObjectCollection1();
+//   Create the nav object collection, and save to specified file
+    NavObjectCollection *pNavObjectSet = new NavObjectCollection();
 
     pNavObjectSet->CreateAllGPXObjects();
     pNavObjectSet->SaveFile( m_sNavObjSetFile );
@@ -1896,7 +1896,7 @@ bool MyConfig::ExportGPXRoutes( wxWindow* parent, RouteList *pRoutes, const wxSt
             if( answer != wxID_YES ) return false;
         }
 
-        NavObjectCollection1 *pgpx = new NavObjectCollection1;
+        NavObjectCollection *pgpx = new NavObjectCollection;
         pgpx->AddGPXRoutesList( pRoutes );
         pgpx->SaveFile(fn.GetFullPath());
         delete pgpx;
@@ -1926,7 +1926,7 @@ bool MyConfig::ExportGPXWaypoints( wxWindow* parent, RoutePointList *pRoutePoint
             if( answer != wxID_YES ) return false;
         }
 
-        NavObjectCollection1 *pgpx = new NavObjectCollection1;
+        NavObjectCollection *pgpx = new NavObjectCollection;
         pgpx->AddGPXPointsList( pRoutePoints );
         pgpx->SaveFile(fn.GetFullPath());
         delete pgpx;
@@ -1958,7 +1958,7 @@ void MyConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 
         ::wxBeginBusyCursor();
 
-        NavObjectCollection1 *pgpx = new NavObjectCollection1;
+        NavObjectCollection *pgpx = new NavObjectCollection;
 
         wxProgressDialog *pprog = NULL;
         int count = pWayPointMan->m_pWayPointList->GetCount();
@@ -2096,7 +2096,7 @@ void MyConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
 
             if( ::wxFileExists( path ) ) {
 
-                NavObjectCollection1 *pSet = new NavObjectCollection1;
+                NavObjectCollection *pSet = new NavObjectCollection;
                 pSet->load_file(path.fn_str());
 
                 if(islayer){

@@ -84,10 +84,9 @@ extern double fromDMM(wxString sdms);
 extern double parseLatLon(wxString latlon);
 
 class Route;
-class NavObjectCollection;
 class wxProgressDialog;
 class ocpnDC;
-class NavObjectCollection1;
+class NavObjectCollection;
 class NavObjectChanges;
 class GpxWptElement;
 class GpxRteElement;
@@ -157,7 +156,7 @@ class MyConfig : public wxFileConfig
 		wxString m_sNavObjSetChangesFile;
 
 		NavObjectChanges * m_pNavObjectChangesSet;
-		NavObjectCollection1 * m_pNavObjectInputSet;
+		NavObjectCollection * m_pNavObjectInputSet;
 
 		bool  m_bShowDebugWindows;
 		bool  m_bIsImporting;

@@ -1695,7 +1695,7 @@ bool GetRoutepointGPX( RoutePoint *pRoutePoint, char *buffer, unsigned int buffe
 {
     bool ret = false;
 
-    NavObjectCollection1 *pgpx = new NavObjectCollection1;
+    NavObjectCollection *pgpx = new NavObjectCollection;
     pgpx->AddGPXWaypoint( pRoutePoint);
     wxString gpxfilename = wxFileName::CreateTempFileName(wxT("gpx"));
     pgpx->SaveFile(gpxfilename);

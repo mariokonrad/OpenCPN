@@ -423,7 +423,8 @@ SET(HDRS
 		src/QuiltPatch.h
 		src/QuiltCandidate.h
 		src/Hyperlink.h
-		include/NavObjectCollection.h
+		src/NavObjectCollection.h
+		src/NavObjectChanges.h
 		src/RoutePoint.h
 		src/Route.h
 		src/SelectItem.h
@@ -546,6 +547,7 @@ SET(SRCS
 		src/QuiltCandidate.cpp
 		src/Hyperlink.cpp
 		src/NavObjectCollection.cpp
+		src/NavObjectChanges.cpp
 		src/RoutePoint.cpp
 		src/Route.cpp
 		src/SelectItem.cpp

@@ -106,6 +106,7 @@
 #include "pluginmanager.h"
 #include "MyPrintout.h"
 #include "OCPNFloatingToolbarDialog.h"
+#include "NavObjectChanges.h"
 
 #ifdef __WXOSX__
 	#include "macutils.h"

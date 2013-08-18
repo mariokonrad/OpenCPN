@@ -376,9 +376,9 @@ SET(HDRS
 		src/MarkIcon.h
 		src/SendToGpsDlg.h
 		src/TCWin.h
-		include/glTextureDescriptor.h
+		src/glTextureDescriptor.h
 		include/tide_time.h
-		include/glChartCanvas.h
+		src/glChartCanvas.h
 		src/ChInfoWin.h
 		src/Quilt.h
 		src/QuiltPatch.h

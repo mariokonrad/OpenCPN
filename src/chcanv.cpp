@@ -66,7 +66,6 @@
 #include "Multiplexer.h"
 #include "timers.h"
 #include "tide_time.h"
-#include "glTextureDescriptor.h"
 #include "ChInfoWin.h"
 #include "Quilt.h"
 #include "SelectItem.h"

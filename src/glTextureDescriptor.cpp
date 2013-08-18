@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,27 +19,26 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include "glTextureDescriptor.h"
 
 glTextureDescriptor::glTextureDescriptor()
 {
-    for( int i = 0; i < 10; i++ )
-        map_array[i] = NULL;
+	for (int i = 0; i < 10; i++)
+		map_array[i] = NULL;
 
-    tex_mult = -1;
-    level_min = -1;
-    level_max = -1;
-    base_size = -1;
-    tex_name = 0;
-    GPU_base = -1;
+	tex_mult = -1;
+	level_min = -1;
+	level_max = -1;
+	base_size = -1;
+	tex_name = 0;
+	GPU_base = -1;
 }
 
 glTextureDescriptor::~glTextureDescriptor()
 {
-    for( int i = 0; i < 10; i++ )
-        free( map_array[i] );
+	for (int i = 0; i < 10; ++i)
+		::free(map_array[i]);
 }
 

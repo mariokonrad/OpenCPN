@@ -3021,9 +3021,9 @@ void X11FontPicker::DoFontChange ( void )
 //---------------------------------------------------------------------------------
 //          Vector Stuff for Hit Test Algorithm
 //---------------------------------------------------------------------------------
-double vGetLengthOfNormal( pVector2D a, pVector2D b, pVector2D n )
+extern "C" double vGetLengthOfNormal(Vector2D * a, Vector2D * b, Vector2D * n)
 {
-    vector2D c, vNormal;
+    Vector2D c, vNormal;
     vNormal.x = 0;
     vNormal.y = 0;
     //
@@ -3045,7 +3045,7 @@ double vGetLengthOfNormal( pVector2D a, pVector2D b, pVector2D n )
     return ( vVectorMagnitude( &vNormal ) );
 }
 
-double vDotProduct( pVector2D v0, pVector2D v1 ) // FIXME: move to vector2D
+double vDotProduct(Vector2D * v0, Vector2D * v1) // FIXME: move to Vector2D
 {
     double dotprod;
 
@@ -3054,44 +3054,48 @@ double vDotProduct( pVector2D v0, pVector2D v1 ) // FIXME: move to vector2D
     return dotprod;
 }
 
-pVector2D vAddVectors(pVector2D v0, pVector2D v1, pVector2D v)
+Vector2D * vAddVectors(Vector2D * v0, Vector2D * v1, Vector2D * v)
 {
-    if( v0 == NULL || v1 == NULL ) v = (pVector2D) NULL;
+    if( v0 == NULL || v1 == NULL )
+		v = NULL;
     else {
         v->x = v0->x + v1->x;
         v->y = v0->y + v1->y;
     }
-    return ( v );
+    return v;
 }
 
-pVector2D vSubtractVectors(pVector2D v0, pVector2D v1, pVector2D v)
+Vector2D * vSubtractVectors(Vector2D * v0, Vector2D * v1, Vector2D * v)
 {
-    if( v0 == NULL || v1 == NULL ) v = (pVector2D) NULL;
+    if( v0 == NULL || v1 == NULL )
+		v = NULL;
     else {
         v->x = v0->x - v1->x;
         v->y = v0->y - v1->y;
     }
-    return ( v );
+    return v;
 }
 
-double vVectorSquared(pVector2D v0)
+double vVectorSquared(Vector2D * v0)
 {
     double dS;
 
-    if( v0 == NULL ) dS = 0.0;
+    if( v0 == NULL )
+		dS = 0.0;
     else
         dS = ( ( v0->x * v0->x ) + ( v0->y * v0->y ) );
-    return ( dS );
+    return dS;
 }
 
-double vVectorMagnitude( pVector2D v0 )
+double vVectorMagnitude(Vector2D * v0)
 {
     double dMagnitude;
 
-    if( v0 == NULL ) dMagnitude = 0.0;
+    if( v0 == NULL )
+		dMagnitude = 0.0;
     else
         dMagnitude = sqrt( vVectorSquared( v0 ) );
-    return ( dMagnitude );
+    return dMagnitude;
 }
 
 /**************************************************************************/

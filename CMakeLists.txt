@@ -430,7 +430,7 @@ SET(HDRS
 		src/Select.h
 		src/FontMgr.h
 		src/FontDesc.h
-		include/vector2D.h
+		src/Vector2D.h
 		src/OCPNSoundData.h
 		src/OCPN_Sound.h
 		src/NMEALogWindow.h
@@ -623,6 +623,7 @@ SET(SRCS
 		src/OCPNTrackListCtrl.cpp
 		src/LinkPropDlg.cpp
 		src/OCPN_AlertDialog.cpp
+		src/Vector2D.cpp
     )
 
 IF(wx_Version MATCHES "2.9")

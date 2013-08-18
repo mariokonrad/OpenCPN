@@ -46,12 +46,12 @@ extern double g_TrackDeltaDistance;
 extern RouteProp * pRoutePropDialog;
 extern double g_PlanSpeed;
 
-double _distance2(vector2D& a, vector2D& b)
+double _distance2(Vector2D & a, Vector2D & b) // FIXME: vector operator -
 {
 	return (a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y);
 }
 
-double _distance(vector2D& a, vector2D& b)
+double _distance(Vector2D & a, Vector2D & b) // FIXME: vector operator -
 {
 	return sqrt(_distance2( a, b ));
 }
@@ -221,7 +221,7 @@ void Track::OnTimerTrack( wxTimerEvent& event )
 	m_TimerTrack.Start( 1000, wxTIMER_CONTINUOUS );
 }
 
-RoutePoint* Track::AddNewPoint( vector2D point, wxDateTime time )
+RoutePoint* Track::AddNewPoint(Vector2D point, wxDateTime time )
 {
 	RoutePoint *rPoint = new RoutePoint(point.lat, point.lon, _T( "empty"), _T(""));
 	rPoint->m_bShowName = false;
@@ -248,7 +248,7 @@ void Track::AddPointNow( bool do_add_point )
 	if( m_prev_time.IsValid() ) if( m_prev_time == now )                    // avoid zero time segs
 		if( !do_add_point ) return;
 
-	vector2D gpsPoint( gLon, gLat );
+	Vector2D gpsPoint( gLon, gLat );
 
 	// The dynamic interval algorithm will gather all track points in a queue,
 	// and analyze the cross track errors for each point before actually adding
@@ -263,7 +263,7 @@ void Track::AddPointNow( bool do_add_point )
 			 break;
 			 }
 		case secondPoint: {
-			  vector2D pPoint( gLon, gLat );
+			  Vector2D pPoint( gLon, gLat );
 			  skipPoints.push_back( pPoint );
 			  skipTimes.push_back( now.ToUTC() );
 			  trackPointState = potentialPoint;
@@ -646,7 +646,7 @@ int Track::Simplify( double maxDelta )
 
 double Track::GetXTE( double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon, double toLat, double toLon  )
 {
-	vector2D v, w, p;
+	Vector2D v, w, p;
 
 	// First we get the cartesian coordinates to the line endpoints, using
 	// the current position as origo.
@@ -672,14 +672,14 @@ double Track::GetXTE( double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon
 	// We find projection of origo onto the line.
 	// It falls where t = [(p-v) . (w-v)] / |w-v|^2
 
-	vector2D a = p - v;
-	vector2D b = w - v;
+	Vector2D a = p - v;
+	Vector2D b = w - v;
 
 	double t = vDotProduct( &a, &b ) / lengthSquared;
 
 	if (t < 0.0) return _distance(p, v);       // Beyond the 'v' end of the segment
 	else if (t > 1.0) return _distance(p, w);  // Beyond the 'w' end of the segment
-	vector2D projection = v + t * (w - v);     // Projection falls on the segment
+	Vector2D projection = v + t * (w - v);     // Projection falls on the segment
 	return _distance(p, projection);
 }
 

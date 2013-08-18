@@ -44,7 +44,7 @@
 #include "tinyxml/tinyxml.h"
 #include "chart/ChartDatabase.h"
 #include "RoutePoint.h"
-#include "vector2D.h"
+#include "Vector2D.h"
 #include "Route.h"
 #include "SelectItem.h"
 
@@ -221,11 +221,13 @@ class WXDLLEXPORT X11FontPicker : public wxFontDialogBase
 		wxFont * pPreviewFont;
 };
 
-extern "C" double vGetLengthOfNormal(pVector2D a, pVector2D b, pVector2D n);
-extern "C" double vDotProduct(pVector2D v0, pVector2D v1);
-extern "C" pVector2D vAddVectors(pVector2D v0, pVector2D v1, pVector2D v);
-extern "C" pVector2D vSubtractVectors(pVector2D v0, pVector2D v1, pVector2D v);
-extern "C" double vVectorMagnitude(pVector2D v0);
-extern "C" double vVectorSquared(pVector2D v0);
+class Vector2D;
+
+extern "C" double vGetLengthOfNormal(Vector2D * a, Vector2D * b, Vector2D * n);
+extern "C" double vDotProduct(Vector2D * v0, Vector2D * v1);
+extern "C" Vector2D * vAddVectors(Vector2D * v0, Vector2D * v1, Vector2D * v);
+extern "C" Vector2D * vSubtractVectors(Vector2D * v0, Vector2D * v1, Vector2D * v);
+extern "C" double vVectorMagnitude(Vector2D * v0);
+extern "C" double vVectorSquared(Vector2D * v0);
 
 #endif

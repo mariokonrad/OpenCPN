@@ -31,7 +31,7 @@
 #include <deque>
 
 #include "Route.h"
-#include "vector2D.h"
+#include "Vector2D.h"
 
 class Track
 	: public wxEvtHandler
@@ -41,7 +41,7 @@ class Track
 
 	public:
 		Track(void);
-		~Track(void);
+		virtual ~Track(void);
 
 		void SetPrecision(int precision);
 
@@ -51,7 +51,7 @@ class Track
 		bool IsRunning(){ return m_bRunning; }
 		void Draw(ocpnDC& dc, ViewPort &VP);
 
-		RoutePoint* AddNewPoint(vector2D point, wxDateTime time);
+		RoutePoint* AddNewPoint(Vector2D point, wxDateTime time);
 		Route *RouteFromTrack(wxProgressDialog * pprog);
 
 		void DouglasPeuckerReducer(std::vector<RoutePoint*> & list, int from, int to, double delta);
@@ -73,7 +73,7 @@ class Track
 		double m_allowedMaxXTE;
 		double m_allowedMaxAngle;
 
-		vector2D m_lastAddedPoint;
+		Vector2D m_lastAddedPoint;
 		double m_prev_dist;
 		wxDateTime m_prev_time;
 
@@ -90,7 +90,7 @@ class Track
 			potentialPoint
 		} trackPointState;
 
-		std::deque<vector2D> skipPoints;
+		std::deque<Vector2D> skipPoints;
 		std::deque<wxDateTime> skipTimes;
 };
 

@@ -23,7 +23,7 @@
 
 #include "Select.h"
 #include "georef.h"
-#include "vector2D.h"
+#include "Vector2D.h"
 #include "navutil.h"
 #include "chcanv.h"
 
@@ -439,7 +439,9 @@ bool Select::IsSegmentSelected( float a, float b, float c, float d, float slat, 
 			&& ( ( slon + adder ) >= ( fmin ( c,d ) - selectRadius ) )
 			&& ( ( slon + adder ) <= ( fmax ( c,d ) + selectRadius ) ) ) {
 		//    Use vectors to do hit test....
-		vector2D va, vb, vn;
+		Vector2D va;
+		Vector2D vb;
+		Vector2D vn;
 
 		//    Assuming a Mercator projection
 		double ap, cp;

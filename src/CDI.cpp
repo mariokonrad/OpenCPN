@@ -23,6 +23,7 @@
 
 #include "CDI.h"
 #include "Routeman.h"
+#include <wx/dcmemory.h>
 #include <math.h>
 
 extern Routeman * g_pRouteMan;

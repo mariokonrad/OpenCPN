@@ -1,8 +1,6 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Layer to use wxDC or opengl
- * Author:   Sean D'Epagnier
  *
  ***************************************************************************
  *   Copyright (C) 2011 by Sean D'Epagnier                                 *
@@ -21,21 +19,21 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
- ***************************************************************************
- *
- *f
- */
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
 
 
 #ifndef __OCPNDC_H__
 #define __OCPNDC_H__
 
 #include <vector>
+#include <wx/pen.h>
+#include <wx/brush.h>
+#include <wx/font.h>
 
 #ifndef DECL_EXP
 #ifdef __WXMSW__
-#  define DECL_EXP     __declspec(dllexport)
+#  define DECL_EXP __declspec(dllexport)
 #else
 #  define DECL_EXP
 #endif
@@ -44,14 +42,15 @@
 
 #ifdef __GNUC__
 #undef  DECL_EXP
-#define DECL_EXP       __attribute__((visibility("default")))
+#define DECL_EXP  __attribute__((visibility("default")))
 #endif
 
-//----------------------------------------------------------------------------
-// ocpnDC
-//----------------------------------------------------------------------------
+#if  wxUSE_GRAPHICS_CONTEXT
+class wxGraphicsContext;
+#endif
 
 class wxGLCanvas;
+class wxDC;
 
 class DECL_EXP ocpnDC
 {
@@ -106,7 +105,7 @@ public:
 
      void DestroyClippingRegion() {}
 
-     wxDC *GetDC() const { return dc; }
+     wxDC * GetDC() const { return dc; }
 
 protected:
      bool ConfigurePen();

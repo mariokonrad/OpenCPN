@@ -24,8 +24,11 @@
 #ifndef __CHART1_H__
 #define __CHART1_H__
 
-#include "wx/print.h"
-#include "wx/datetime.h"
+#include <wx/wx.h>
+#include <wx/toolbar.h>
+#include <wx/timer.h>
+#include <wx/print.h>
+#include <wx/datetime.h>
 #include <wx/cmdline.h>
 #include <wx/snglinst.h>
 
@@ -34,7 +37,6 @@
 #endif
 
 #include "ocpn_types.h"
-
 #include "nmea0183.h"
 
 WX_DEFINE_ARRAY_INT(int, ArrayOfInts);
@@ -64,6 +66,7 @@ class ocpnFloatingToolbarDialog;
 class OCPN_MsgEvent;
 class options;
 class Track;
+class ViewPort;
 
 //----------------------------------------------------------------------------
 //   constants

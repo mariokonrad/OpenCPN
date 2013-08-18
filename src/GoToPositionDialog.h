@@ -29,6 +29,9 @@
 
 #define ID_GOTOPOS 8100
 
+class wxTextCtrl;
+class wxButton;
+
 class GoToPositionDialog : public wxDialog
 {
 		DECLARE_DYNAMIC_CLASS(GoToPositionDialog)

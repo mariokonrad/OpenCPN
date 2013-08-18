@@ -1872,3 +1872,112 @@ void Quilt::SubstituteClearDC(wxMemoryDC & dc, ViewPort & vp)
 	m_covered_region.Clear();
 }
 
+
+ViewPort & Quilt::GetQuiltVP()
+{
+	return m_vp_quilt;
+}
+
+wxString Quilt::GetQuiltDepthUnit() const
+{
+	return m_quilt_depth_unit;
+}
+
+void Quilt::SetRenderedVP(ViewPort & vp)
+{
+	m_vp_rendered = vp;
+}
+
+bool Quilt::HasOverlays(void) const
+{
+	return m_bquilt_has_overlays;
+}
+
+int Quilt::GetExtendedStackCount(void) const
+{
+	return m_extended_stack_array.GetCount();
+}
+
+int Quilt::GetnCharts() const
+{
+	return m_PatchList.GetCount();
+}
+
+bool Quilt::IsComposed() const
+{
+	return m_bcomposed;
+}
+
+void Quilt::Invalidate(void)
+{
+	m_bcomposed = false;
+	m_vp_quilt.Invalidate();
+	m_zout_dbindex = -1;
+}
+
+OCPNRegion & Quilt::GetFullQuiltRegion(void)
+{
+	return m_covered_region;
+}
+
+OCPNRegion & Quilt::GetFullQuiltRenderedRegion(void)
+{
+	return m_rendered_region;
+}
+
+void Quilt::SetHiliteIndex(int index)
+{
+	m_nHiLiteIndex = index;
+}
+
+void Quilt::SetReferenceChart(int dbIndex)
+{
+	m_refchart_dbIndex = dbIndex;
+}
+
+int Quilt::GetRefChartdbIndex(void) const
+{
+	return m_refchart_dbIndex;
+}
+
+int Quilt::GetQuiltProj(void) const
+{
+	return m_quilt_proj;
+}
+
+double Quilt::GetMaxErrorFactor() const
+{
+	return m_max_error_factor;
+}
+
+double Quilt::GetRefScale() const
+{
+	return m_reference_scale;
+}
+
+ArrayOfInts Quilt::GetExtendedStackIndexArray()
+{
+	return m_extended_stack_array;
+}
+
+ArrayOfInts Quilt::GetEclipsedStackIndexArray()
+{
+	return m_eclipsed_stack_array;
+}
+
+unsigned long Quilt::GetXStackHash() const
+{
+	return m_xa_hash;
+}
+
+bool Quilt::IsBusy() const
+{
+	return m_bbusy;
+}
+
+void Quilt::SetQuiltParameters(double CanvasScaleFactor, int CanvasWidth)
+{
+	m_canvas_scale_factor = CanvasScaleFactor;
+	m_canvas_width = CanvasWidth;
+}
+

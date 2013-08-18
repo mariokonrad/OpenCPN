@@ -29,6 +29,7 @@
 #include "OCPNRegion.h"
 #include "QuiltPatch.h"
 #include "QuiltCandidate.h"
+#include "ViewPort.h"
 
 struct ChartTableEntry;
 
@@ -41,18 +42,10 @@ class Quilt
 		Quilt();
 		~Quilt();
 
-		void SetQuiltParameters(double CanvasScaleFactor, int CanvasWidth)
-		{
-			m_canvas_scale_factor = CanvasScaleFactor;
-			m_canvas_width = CanvasWidth;
-		}
-
+		void SetQuiltParameters(double CanvasScaleFactor, int CanvasWidth);
 		bool BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_db_index, ViewPort & vp_in);
 		bool Compose(const ViewPort & vp);
-		bool IsComposed() const
-		{
-			return m_bcomposed;
-		}
+		bool IsComposed() const;
 
 		ChartBase * GetFirstChart();
 		ChartBase * GetNextChart();
@@ -61,35 +54,12 @@ class Quilt
 		bool IsQuiltDelta(ViewPort & vp);
 		bool IsChartQuiltableRef(int db_index);
 
-		ViewPort & GetQuiltVP()
-		{
-			return m_vp_quilt;
-		}
-
-		wxString GetQuiltDepthUnit() const
-		{
-			return m_quilt_depth_unit;
-		}
-
-		void SetRenderedVP(ViewPort & vp)
-		{
-			m_vp_rendered = vp;
-		}
-
-		bool HasOverlays(void) const
-		{
-			return m_bquilt_has_overlays;
-		}
-
-		int GetExtendedStackCount(void) const
-		{
-			return m_extended_stack_array.GetCount();
-		}
-
-		int GetnCharts() const
-		{
-			return m_PatchList.GetCount();
-		}
+		ViewPort & GetQuiltVP();
+		wxString GetQuiltDepthUnit() const;
+		void SetRenderedVP(ViewPort & vp);
+		bool HasOverlays(void) const;
+		int GetExtendedStackCount(void) const;
+		int GetnCharts() const;
 
 		void ComputeRenderRegion(ViewPort & vp, OCPNRegion & chart_region);
 		bool RenderQuiltRegionViewOnDC(wxMemoryDC & dc, ViewPort & vp, OCPNRegion & chart_region);
@@ -99,83 +69,30 @@ class Quilt
 		int GetChartdbIndexAtPix(wxPoint p);
 		void InvalidateAllQuiltPatchs(void);
 
-		void Invalidate(void)
-		{
-			m_bcomposed = false;
-			m_vp_quilt.Invalidate();
-			m_zout_dbindex = -1;
-		}
-
+		void Invalidate(void);
 		void AdjustQuiltVP(ViewPort & vp_last, ViewPort & vp_proposed);
 
-		OCPNRegion & GetFullQuiltRegion(void)
-		{
-			return m_covered_region;
-		}
-
-		OCPNRegion & GetFullQuiltRenderedRegion(void)
-		{
-			return m_rendered_region;
-		}
-
+		OCPNRegion & GetFullQuiltRegion(void);
+		OCPNRegion & GetFullQuiltRenderedRegion(void);
 		bool IsChartSmallestScale(int dbIndex);
 
 		int AdjustRefOnZoomOut(double proposed_scale_onscreen);
 		int AdjustRefOnZoomIn(double proposed_scale_onscreen);
 
-		void SetHiliteIndex(int index)
-		{
-			m_nHiLiteIndex = index;
-		}
-
-		void SetReferenceChart(int dbIndex)
-		{
-			m_refchart_dbIndex = dbIndex;
-		}
-
-		int GetRefChartdbIndex(void) const
-		{
-			return m_refchart_dbIndex;
-		}
-
-		int GetQuiltProj(void) const
-		{
-			return m_quilt_proj;
-		}
-
-		double GetMaxErrorFactor() const
-		{
-			return m_max_error_factor;
-		}
-
-		double GetRefScale() const
-		{
-			return m_reference_scale;
-		}
-
+		void SetHiliteIndex(int index);
+		void SetReferenceChart(int dbIndex);
+		int GetRefChartdbIndex(void) const;
+		int GetQuiltProj(void) const;
+		double GetMaxErrorFactor() const;
+		double GetRefScale() const;
 		double GetRefNativeScale();
 
 		ArrayOfInts GetCandidatedbIndexArray(bool from_ref_chart, bool exclude_user_hidden);
 
-		ArrayOfInts GetExtendedStackIndexArray()
-		{
-			return m_extended_stack_array;
-		}
-
-		ArrayOfInts GetEclipsedStackIndexArray()
-		{
-			return m_eclipsed_stack_array;
-		}
-
-		unsigned long GetXStackHash() const
-		{
-			return m_xa_hash;
-		}
-
-		bool IsBusy() const
-		{
-			return m_bbusy;
-		}
+		ArrayOfInts GetExtendedStackIndexArray();
+		ArrayOfInts GetEclipsedStackIndexArray();
+		unsigned long GetXStackHash() const;
+		bool IsBusy() const;
 
 		QuiltPatch *GetCurrentPatch();
 		bool IsChartInQuilt(ChartBase * pc);

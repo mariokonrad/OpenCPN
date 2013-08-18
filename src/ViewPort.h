@@ -21,66 +21,62 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __AISTARGETQUERYDIALOG_H__
-#define __AISTARGETQUERYDIALOG_H__
+#ifndef __VIEWPORT__H__
+#define __VIEWPORT__H__
 
-#include <wx/dialog.h>
+#include <wx/gdicmn.h>
+#include <wx/geometry.h>
+#include "bbox.h"
 
-#include "ocpn_types.h"
+class OCPNRegion;
+class LLBBox;
 
-class wxHtmlWindow;
-class wxBoxSizer;
-class wxButton;
-
-class AISTargetQueryDialog: public wxDialog
+class ViewPort
 {
-		DECLARE_CLASS(AISTargetQueryDialog)
-		DECLARE_EVENT_TABLE()
-
 	public:
-		AISTargetQueryDialog();
-		AISTargetQueryDialog(
-				wxWindow * parent,
-				wxWindowID id = wxID_ANY,
-				const wxString& caption = _("Object Query"),
-				const wxPoint& pos = wxDefaultPosition,
-				const wxSize& size = wxDefaultSize,
-				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
+		ViewPort();
 
-		virtual ~AISTargetQueryDialog();
+		wxPoint GetPixFromLL(double lat, double lon) const;
+		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
+		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
 
-		// Initialise our variables
-		void Init();
+		OCPNRegion GetVPRegionIntersect(
+				const OCPNRegion & Region,
+				size_t n,
+				float * llpoints,
+				int chart_native_scale,
+				wxPoint * ppoints = NULL);
 
-		// Creation
-		bool Create( wxWindow* parent,
-				wxWindowID id = wxID_ANY,
-				const wxString& caption = _("Object Query"),
-				const wxPoint& pos = wxDefaultPosition,
-				const wxSize& size = wxDefaultSize,
-				long style = wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU );
+		void SetBoxes(void);
+		void Invalidate();
+		void Validate();
+		bool IsValid() const;
+		void SetRotationAngle(double angle_rad);
+		void SetProjectionType(int type);
+		LLBBox & GetBBox();
 
-		void OnClose(wxCloseEvent & event);
-		void OnIdOKClick(wxCommandEvent & event);
-		void OnIdWptCreateClick(wxCommandEvent & event);
-		void OnMove(wxMoveEvent & event);
+		//  Generic
+		double clat; // center point
+		double clon;
+		double view_scale_ppm;
+		double skew;
+		double rotation;
 
-		void CreateControls();
+		double chart_scale; // conventional chart displayed scale
 
-		void SetText(const wxString & text_string);
-		void SetColorScheme(ColorScheme cs);
+		int pix_width;
+		int pix_height;
 
-		void UpdateText(void);
-		void SetMMSI(int mmsi);
-		int GetMMSI(void) const;
+		bool b_quilt;
+		bool b_FullScreenQuilt;
 
-		// Data
-		int m_MMSI;
-		wxHtmlWindow * m_pQueryTextCtl;
-		ColorScheme m_colorscheme;
-		wxBoxSizer * m_pboxSizer;
-		int m_nl;
-		wxButton * m_okButton;
+		int m_projection_type;
+		bool b_MercatorProjectionOverride;
+		wxRect rv_rect;
+
+	private:
+		LLBBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
+		bool bValid; // This VP is valid
 };
 
 #endif

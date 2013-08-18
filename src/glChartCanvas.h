@@ -19,7 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ************************************************************************* */
+ **************************************************************************/
 
 #ifndef __GLCHARTCANVAS_H__
 #define __GLCHARTCANVAS_H__
@@ -27,8 +27,10 @@
 #include <wx/glcanvas.h>
 #include "ocpn_types.h"
 #include "OCPNRegion.h"
+#include "ViewPort.h"
 
 class glTextureDescriptor;
+class ChartBase;
 
 WX_DECLARE_OBJARRAY(glTextureDescriptor, ArrayOfTexDescriptors);
 
@@ -41,37 +43,24 @@ class glChartCanvas : public wxGLCanvas
 
 	public:
 		glChartCanvas(wxWindow * parent);
-		~glChartCanvas();
+		virtual ~glChartCanvas();
 
-		void SetContext(wxGLContext *pcontext)
-		{
-			m_pcontext = pcontext;
-		}
-
+		void SetContext(wxGLContext *pcontext);
 		void OnPaint(wxPaintEvent& event);
 		void OnEraseBG(wxEraseEvent& evt);
 		void render();
 		void OnActivate(wxActivateEvent & event);
 		void OnSize(wxSizeEvent & event);
 		void MouseEvent(wxMouseEvent& event);
-
-		wxString GetRendererString() const
-		{
-			return m_renderer;
-		}
-
-		void Invalidate()
-		{
-			m_gl_cache_vp.Invalidate();
-		}
-
-		void RenderRasterChartRegionGL(ChartBase *chart, ViewPort &vp, OCPNRegion &region);
+		wxString GetRendererString() const;
+		void Invalidate();
+		void RenderRasterChartRegionGL(ChartBase *chart, ViewPort & vp, OCPNRegion &region);
 		bool PurgeChartTextures(ChartBase *pc);
 		void ClearAllRasterTextures(void);
 		void DrawGLOverLayObjects(void);
 
 	protected:
-		void RenderQuiltViewGL(ViewPort &vp, OCPNRegion Region, bool b_clear = true);
+		void RenderQuiltViewGL(ViewPort & vp, OCPNRegion Region, bool b_clear = true);
 		void BuildFBO(void);
 		void SetClipRegion(ViewPort & vp, OCPNRegion &region, bool b_clear);
 		void ComputeRenderQuiltViewGLRegion(ViewPort & vp, OCPNRegion Region);

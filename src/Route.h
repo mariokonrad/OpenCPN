@@ -29,6 +29,7 @@
 
 #include "RoutePoint.h"
 #include "ocpn_types.h"
+#include "bbox.h"
 
 #define STYLE_UNDEFINED -1
 
@@ -39,12 +40,13 @@
 #define RTE_UNDEF_DEPARTURE wxInvalidDateTime
 
 class ocpnDC;
+class ViewPort;
 
 class Route : public wxObject
 {
 	public:
 		Route(void);
-		~Route(void);
+		virtual ~Route(void);
 
 		void AddPoint(RoutePoint *pNewPoint,
 				bool b_rename_in_sequence = true,

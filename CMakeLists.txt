@@ -400,6 +400,7 @@ SET(HDRS
 		src/TTYScroll.h
 		src/Layer.h
 		src/ConsoleCanvas.h
+		src/ViewPort.h
 		include/cutil.h
 		include/georef.h
 		include/navutil.h
@@ -530,6 +531,7 @@ SET(SRCS
 		src/SendToGpsDlg.cpp
 		src/Layer.cpp
 		src/ConsoleCanvas.cpp
+		src/ViewPort.cpp
 		src/cutil.cpp
 		src/georef.cpp
 		src/navutil.cpp

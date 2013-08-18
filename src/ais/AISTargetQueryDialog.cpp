@@ -74,7 +74,7 @@ AISTargetQueryDialog::AISTargetQueryDialog(
 		long style)
 {
 	Init();
-	Create( parent, id, caption, pos, size, style );
+	Create(parent, id, caption, pos, size, style);
 }
 
 AISTargetQueryDialog::~AISTargetQueryDialog()
@@ -91,18 +91,18 @@ void AISTargetQueryDialog::Init()
 	m_okButton = NULL;
 
 }
-void AISTargetQueryDialog::OnClose( wxCloseEvent& event )
+void AISTargetQueryDialog::OnClose(wxCloseEvent & event)
 {
 	Destroy();
 	g_pais_query_dialog_active = NULL;
 }
 
-void AISTargetQueryDialog::OnIdOKClick( wxCommandEvent& event )
+void AISTargetQueryDialog::OnIdOKClick(wxCommandEvent & event)
 {
 	Close();
 }
 
-void AISTargetQueryDialog::OnIdWptCreateClick( wxCommandEvent& event )
+void AISTargetQueryDialog::OnIdWptCreateClick(wxCommandEvent & event)
 {
 	if( m_MMSI != 0 ) { //  Faulty MMSI could be reported as 0
 		AIS_Target_Data *td = g_pAIS->Get_Target_Data_From_MMSI( m_MMSI );
@@ -121,8 +121,13 @@ void AISTargetQueryDialog::OnIdWptCreateClick( wxCommandEvent& event )
 	}
 }
 
-bool AISTargetQueryDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
-		const wxPoint& pos, const wxSize& size, long style )
+bool AISTargetQueryDialog::Create(
+		wxWindow * parent,
+		wxWindowID id,
+		const wxString & caption,
+		const wxPoint & pos,
+		const wxSize & size,
+		long style)
 {
 	//    As a display optimization....
 	//    if current color scheme is other than DAY,
@@ -158,7 +163,7 @@ bool AISTargetQueryDialog::Create( wxWindow* parent, wxWindowID id, const wxStri
 	return true;
 }
 
-void AISTargetQueryDialog::SetColorScheme( ColorScheme cs )
+void AISTargetQueryDialog::SetColorScheme(ColorScheme cs)
 {
 	if( cs != m_colorscheme ) {
 		DimeControl( this );
@@ -232,12 +237,22 @@ void AISTargetQueryDialog::UpdateText()
 	}
 }
 
-void AISTargetQueryDialog::OnMove( wxMoveEvent& event )
+void AISTargetQueryDialog::OnMove(wxMoveEvent & event)
 {
 	//    Record the dialog position
 	wxPoint p = event.GetPosition();
 	g_ais_query_dialog_x = p.x;
 	g_ais_query_dialog_y = p.y;
 	event.Skip();
+}
+
+void AISTargetQueryDialog::SetMMSI(int mmsi)
+{
+	m_MMSI = mmsi;
+}
+
+int AISTargetQueryDialog::GetMMSI(void) const
+{
+	return m_MMSI;
 }
 

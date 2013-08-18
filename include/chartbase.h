@@ -27,22 +27,15 @@
 #define _CHARTBASE_H_
 
 #include "dychart.h"
-
 #include "bbox.h"
 #include "ocpn_types.h"
 
 #include <wx/glcanvas.h>
 
-//----------------------------------------------------------------------------
-//  Forward Declarations
-//----------------------------------------------------------------------------
 class ViewPort;
+class OCPNRegion;
 
-//----------------------------------------------------------------------------
-// Constants. etc
-//----------------------------------------------------------------------------
-
-//    ChartBase::Init()  init_flags constants
+// ChartBase::Init()  init_flags constants
 typedef enum ChartInitFlag
 {
       FULL_INIT = 0,

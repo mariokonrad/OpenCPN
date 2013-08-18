@@ -29,6 +29,7 @@
 #include "chartbase.h"
 #include "georef.h"                 // for GeoRef type
 #include "OCPNRegion.h"
+#include "ViewPort.h"
 
 typedef enum ScaleTypeEnum
 {
@@ -68,9 +69,7 @@ typedef enum BSB_Color_Capability
 //    Fwd Refs
 //-----------------------------------------------------------------------------
 
-class ViewPort;
 class PixelCache;
-
 class wxFileInputStream;
 
 //-----------------------------------------------------------------------------

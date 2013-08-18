@@ -1894,3 +1894,18 @@ void glChartCanvas::render()
 
 }
 
+wxString glChartCanvas::GetRendererString() const
+{
+	return m_renderer;
+}
+
+void glChartCanvas::Invalidate()
+{
+	m_gl_cache_vp.Invalidate();
+}
+
+void glChartCanvas::SetContext(wxGLContext *pcontext)
+{
+	m_pcontext = pcontext;
+}
+

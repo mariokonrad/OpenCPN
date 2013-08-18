@@ -1,8 +1,6 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  NMEA Data Object
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -21,115 +19,98 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- *
- *
- *
- *
- */
-
+ **************************************************************************/
 
 #ifndef __DATASTREAM_H__
 #define __DATASTREAM_H__
 
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled header
-
+#undef HAVE_ROUND // FIXME: if defined wxMath thinks round_msvc must be defined, silly on Linux
+#include <wx/timer.h>
 
 #include <wx/datetime.h>
 
-
 #ifdef __WXGTK__
-// newer versions of glib define its own GSocket but we unfortunately use this
-// name in our own (semi-)public header and so can't change it -- rename glib
-// one instead
-//#include <gtk/gtk.h>
-#define GSocket GlibGSocket
-#include "wx/socket.h"
-#undef GSocket
+	// newer versions of glib define its own GSocket but we unfortunately use this
+	// name in our own (semi-)public header and so can't change it -- rename glib
+	// one instead
+	//#include <gtk/gtk.h>
+	#define GSocket GlibGSocket
+	#include <wx/socket.h>
+	#undef GSocket
 #else
-#include "wx/socket.h"
+	#include <wx/socket.h>
 #endif
 
 #ifndef __WXMSW__
-#include <sys/socket.h>                 // needed for (some) Mac builds
+	#include <sys/socket.h>                 // needed for (some) Mac builds
 #endif
 
 #ifdef __WXMSW__
-#include <windows.h>
-#include <dbt.h>
-#include <windows.h>
-#include <winioctl.h>
-#include <initguid.h>
+	#include <windows.h>
+	#include <dbt.h>
+	#include <windows.h>
+	#include <winioctl.h>
+	#include <initguid.h>
 #endif
 
-#include <string>
 #include "ConnectionParams.h"
 #include "dsPortType.h"
 
 //----------------------------------------------------------------------------
 //   constants
 //----------------------------------------------------------------------------
-#ifndef PI
-#define PI        3.1415926535897931160E0      /* pi */
-#endif
 
-#define TIMER_SOCKET   7006
+#define TIMER_SOCKET 7006
 
 //      Error codes, returned by GetLastError()
 enum {
-    DS_ERROR_PORTNOTFOUND
+	DS_ERROR_PORTNOTFOUND
 };
 
 
 //      End-of-sentence types
 enum {
-    DS_EOS_CRLF,
-    DS_EOS_LF,
-    DS_EOS_CR
+	DS_EOS_CRLF,
+	DS_EOS_LF,
+	DS_EOS_CR
 };
 
 //      Serial port handshake type
 enum {
-    DS_HANDSHAKE_NONE,
-    DS_HANDSHAKE_XON_XOFF
+	DS_HANDSHAKE_NONE,
+	DS_HANDSHAKE_XON_XOFF
 };
 
 #define DS_SOCKET_ID             5001
 #define DS_SERVERSOCKET_ID       5002
 #define DS_ACTIVESERVERSOCKET_ID 5003
 
-#define     MAX_RX_MESSSAGE_SIZE  4096
-#define     RX_BUFFER_SIZE        4096
+#define MAX_RX_MESSSAGE_SIZE  4096
+#define RX_BUFFER_SIZE        4096
 
 
 // Class declarations
 
 //    A generic Position Data structure
 typedef struct {
-    double kLat;
-    double kLon;
-    double kCog;
-    double kSog;
-    double kVar;            // Variation, typically from RMC message
-    double kHdm;            // Magnetic heading
-    double kHdt;            // true heading
-    time_t FixTime;
-    int    nSats;
+	double kLat;
+	double kLon;
+	double kCog;
+	double kSog;
+	double kVar;            // Variation, typically from RMC message
+	double kHdm;            // Magnetic heading
+	double kHdt;            // true heading
+	time_t FixTime;
+	int    nSats;
 } GenericPosDatEx;
 
 
 
-
-// Class declarations
 class OCP_DataStreamInput_Thread;
 class DataStream;
 class GarminProtocolHandler;
 
-extern  const wxEventType wxEVT_OCPN_DATASTREAM;
+extern const wxEventType wxEVT_OCPN_DATASTREAM;
 
 //----------------------------------------------------------------------------
 // DataStream
@@ -145,114 +126,111 @@ extern  const wxEventType wxEVT_OCPN_DATASTREAM;
 
 class DataStream: public wxEvtHandler
 {
-public:
-    DataStream(wxEvtHandler *input_consumer,
-               const wxString& Port,
-               const wxString& BaudRate,
-               dsPortType io_select,
-               int priority = 0,
-               bool bGarmin = false,
-               int EOS_type = DS_EOS_CRLF,
-               int handshake_type = DS_HANDSHAKE_NONE,
-               void *user_data = NULL );
+		DECLARE_EVENT_TABLE()
 
-    ~DataStream();
+	public:
+		DataStream(
+				wxEvtHandler *input_consumer,
+				const wxString& Port,
+				const wxString& BaudRate,
+				dsPortType io_select,
+				int priority = 0,
+				bool bGarmin = false,
+				int EOS_type = DS_EOS_CRLF,
+				int handshake_type = DS_HANDSHAKE_NONE,
+				void *user_data = NULL );
 
-    void Close(void);
+		~DataStream();
 
-    bool IsOk(){ return m_bok; }
-    wxString GetPort(){ return m_portstring; }
-    dsPortType GetIoSelect(){ return m_io_select; }
-    int GetPriority(){ return m_priority; }
-    void *GetUserData(){ return m_user_data; }
-    
-    bool SendSentence( const wxString &sentence );
+		void Close(void);
 
-    int GetLastError(){ return m_last_error; }
+		bool IsOk() const;
+		wxString GetPort() const;
+		dsPortType GetIoSelect() const;
+		int GetPriority() const;
+		void *GetUserData();
+		bool SendSentence( const wxString &sentence );
+		int GetLastError();
 
- //    Secondary thread life toggle
- //    Used to inform launching object (this) to determine if the thread can
- //    be safely called or polled, e.g. wxThread->Destroy();
-    void SetSecThreadActive(void){m_bsec_thread_active = true;}
-    void SetSecThreadInActive(void){m_bsec_thread_active = false;}
-    bool IsSecThreadActive(){ return m_bsec_thread_active; }
+		//    Secondary thread life toggle
+		//    Used to inform launching object (this) to determine if the thread can
+		//    be safely called or polled, e.g. wxThread->Destroy();
+		void SetSecThreadActive(void);
+		void SetSecThreadInActive(void);
+		bool IsSecThreadActive() const;
+		void SetChecksumCheck(bool check);
+		void SetInputFilter(wxArrayString filter);
+		void SetInputFilterType(ConnectionParams::ListType filter_type);
+		void SetOutputFilter(wxArrayString filter);
+		void SetOutputFilterType(ConnectionParams::ListType filter_type);
+		bool SentencePassesFilter(
+				const wxString& sentence,
+				ConnectionParams::FilterDirection direction);
+		bool ChecksumOK(const wxString & sentence);
 
-    void SetChecksumCheck(bool check) { m_bchecksumCheck = check; }
+		bool GetGarminMode() const;
+		wxString GetBaudRate() const;
+		dsPortType GetPortType() const;
+		wxArrayString GetInputSentenceList();
+		wxArrayString GetOutputSentenceList();
+		ConnectionParams::ListType GetInputSentenceListType() const;
+		ConnectionParams::ListType GetOutputSentenceListType() const;
+		bool GetChecksumCheck() const;
+		ConnectionParams::ConnectionType GetConnectionType() const;
+		int m_Thread_run_flag;
 
-    void SetInputFilter(wxArrayString filter) { m_input_filter = filter; }
-    void SetInputFilterType(ListType filter_type) { m_input_filter_type = filter_type; }
-    void SetOutputFilter(wxArrayString filter) { m_output_filter = filter; }
-    void SetOutputFilterType(ListType filter_type) { m_output_filter_type = filter_type; }
-    bool SentencePassesFilter(const wxString& sentence, FilterDirection direction);
-    bool ChecksumOK(const wxString& sentence);
-    bool GetGarminMode(){ return m_bGarmin_GRMN_mode; }
+	private:
+		void Init(void);
+		void Open(void);
 
+		void OnSocketEvent(wxSocketEvent & event);
+		void OnTimerSocket(wxTimerEvent & event);
+		void OnSocketReadWatchdogTimer(wxTimerEvent & event);
 
-    wxString GetBaudRate(){ return m_BaudRate; }
-    dsPortType GetPortType(){ return m_io_select; }
-    wxArrayString GetInputSentenceList(){ return m_input_filter; }
-    wxArrayString GetOutputSentenceList(){ return m_output_filter; }
-    ListType GetInputSentenceListType(){ return m_input_filter_type; }
-    ListType GetOutputSentenceListType(){ return m_output_filter_type; }
-    bool GetChecksumCheck(){ return m_bchecksumCheck; }
-    ConnectionType GetConnectionType(){ return m_connection_type; }
+		wxMutex m_output_mutex;
+		bool m_bok;
+		wxEvtHandler * m_consumer;
+		wxString m_portstring;
+		wxString m_BaudRate;
+		dsPortType m_io_select;
+		int m_priority;
+		int m_handshake;
+		void * m_user_data;
 
-    int                 m_Thread_run_flag;
-private:
-    void Init(void);
-    void Open(void);
+		OCP_DataStreamInput_Thread * m_pSecondary_Thread;
+		bool m_bsec_thread_active;
+		int m_last_error;
 
-    void OnSocketEvent(wxSocketEvent& event);
-    void OnTimerSocket(wxTimerEvent& event);
-    void OnSocketReadWatchdogTimer(wxTimerEvent& event);
-    
-    wxMutex             m_output_mutex;
-    bool                m_bok;
-    wxEvtHandler        *m_consumer;
-    wxString            m_portstring;
-    wxString            m_BaudRate;
-    dsPortType          m_io_select;
-    int                 m_priority;
-    int                 m_handshake;
-    void                *m_user_data;
+		wxIPV4address m_addr;
+		wxSocketBase * m_sock;
+		wxSocketBase * m_tsock;
 
+		//  TCP Server support
+		void OnServerSocketEvent(wxSocketEvent& event); // The listener
+		void OnActiveServerEvent(wxSocketEvent& event); // The open connection
+		wxSocketServer * m_socket_server; //  The listening server
+		wxSocketBase * m_socket_server_active; //  The active connection
 
-    OCP_DataStreamInput_Thread *m_pSecondary_Thread;
-    bool                m_bsec_thread_active;
-    int                 m_last_error;
+		wxString m_sock_buffer;
+		wxString m_net_addr;
+		wxString m_net_port;
+		ConnectionParams::NetworkProtocol m_net_protocol;
+		ConnectionParams::ConnectionType m_connection_type;
 
-    wxIPV4address       m_addr;
-    wxSocketBase        *m_sock;
-    wxSocketBase        *m_tsock;
+		bool m_bchecksumCheck;
+		wxArrayString m_input_filter;
+		ConnectionParams::ListType m_input_filter_type;
+		wxArrayString m_output_filter;
+		ConnectionParams::ListType m_output_filter_type;
 
-    //  TCP Server support
-    void OnServerSocketEvent(wxSocketEvent& event);             // The listener
-    void OnActiveServerEvent(wxSocketEvent& event);             // The open connection
-    wxSocketServer      *m_socket_server;                       //  The listening server
-    wxSocketBase        *m_socket_server_active;                //  The active connection
-    
-    wxString            m_sock_buffer;
-    wxString            m_net_addr;
-    wxString            m_net_port;
-    NetworkProtocol     m_net_protocol;
-    ConnectionType      m_connection_type;
-
-    bool                m_bchecksumCheck;
-    wxArrayString       m_input_filter;
-    ListType            m_input_filter_type;
-    wxArrayString       m_output_filter;
-    ListType            m_output_filter_type;
-
-    bool                m_bGarmin_GRMN_mode;
-    GarminProtocolHandler *m_GarminHandler;
-    wxDateTime          m_connect_time;
-    bool                m_brx_connect_event;
-    wxTimer             m_socket_timer;
-    int                 m_txenter;
-    wxTimer             m_socketread_watchdog_timer;
-    int                 m_dog_value;
-
-DECLARE_EVENT_TABLE()
+		bool m_bGarmin_GRMN_mode;
+		GarminProtocolHandler * m_GarminHandler;
+		wxDateTime m_connect_time;
+		bool m_brx_connect_event;
+		wxTimer m_socket_timer;
+		int m_txenter;
+		wxTimer m_socketread_watchdog_timer;
+		int m_dog_value;
 };
 
 
@@ -272,11 +250,11 @@ extern const wxEventType EVT_THREADMSG;
 #define GARMIN_USB_INTERRUPT_DATA_SIZE 64
 
 #define IOCTL_GARMIN_USB_API_VERSION CTL_CODE \
-(FILE_DEVICE_UNKNOWN, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
+	(FILE_DEVICE_UNKNOWN, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
 #define IOCTL_GARMIN_USB_INTERRUPT_IN CTL_CODE \
-(FILE_DEVICE_UNKNOWN, 0x850, METHOD_BUFFERED, FILE_ANY_ACCESS)
+	(FILE_DEVICE_UNKNOWN, 0x850, METHOD_BUFFERED, FILE_ANY_ACCESS)
 #define IOCTL_GARMIN_USB_BULK_OUT_PACKET_SIZE CTL_CODE \
-(FILE_DEVICE_UNKNOWN, 0x851, METHOD_BUFFERED, FILE_ANY_ACCESS)
+	(FILE_DEVICE_UNKNOWN, 0x851, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 #ifdef __WXMSW__
 // {2C9C45C2-8E7D-4C08-A12D-816BBAE722C0}
@@ -296,27 +274,27 @@ DEFINE_GUID(GARMIN_GUID, 0x2c9c45c2L, 0x8e7d, 0x4c08, 0xa1, 0x2d, 0x81, 0x6b, 0x
 
 typedef
 union {
-    struct {
-        unsigned char type;
-        unsigned char reserved1;
-        unsigned char reserved2;
-        unsigned char reserved3;
-        unsigned char pkt_id[2];
-        unsigned char reserved6;
-        unsigned char reserved7;
-        unsigned char datasz[4];
-        unsigned char databuf[5]; /* actually a variable length array... */
-    } gusb_pkt;
-    unsigned char dbuf[1024];
+	struct {
+		unsigned char type;
+		unsigned char reserved1;
+		unsigned char reserved2;
+		unsigned char reserved3;
+		unsigned char pkt_id[2];
+		unsigned char reserved6;
+		unsigned char reserved7;
+		unsigned char datasz[4];
+		unsigned char databuf[5]; /* actually a variable length array... */
+	} gusb_pkt;
+	unsigned char dbuf[1024];
 } garmin_usb_packet;
 
 
 typedef struct garmin_unit_info {
-    unsigned long serial_number;
-    unsigned long unit_id;
-    unsigned long unit_version;
-    char *os_identifier; /* In case the OS has another name for it. */
-    char *product_identifier; /* From the hardware itself. */
+	unsigned long serial_number;
+	unsigned long unit_id;
+	unsigned long unit_version;
+	char *os_identifier; /* In case the OS has another name for it. */
+	char *product_identifier; /* From the hardware itself. */
 } unit_info_type;
 
 
@@ -326,40 +304,40 @@ typedef struct garmin_unit_info {
 #pragma pack(push,1) /* push current alignment to stack, set alignment to 1 byte boundary */
 
 typedef struct {
-    float   alt;
-    float   epe;
-    float   eph;
-    float   epv;
-    short   fix;
-    double  tow;
-    double  lat;
-    double  lon;
-    float   east;
-    float   north;
-    float   up;
-    float   msl_hght;
-    short   leap_scnds;
-    long    wn_days;
+	float   alt;
+	float   epe;
+	float   eph;
+	float   epv;
+	short   fix;
+	double  tow;
+	double  lat;
+	double  lon;
+	float   east;
+	float   north;
+	float   up;
+	float   msl_hght;
+	short   leap_scnds;
+	long    wn_days;
 } D800_Pvt_Data_Type;
 
 #pragma pack(pop)   /* restore original alignment from stack */
 
 
 typedef struct {
-    float   alt;
-    float   epe;
-    float   eph;
-    float   epv;
-    short   fix;
-    double  tow;
-    double  lat;
-    double  lon;
-    float   east;
-    float   north;
-    float   up;
-    float   msl_hght;
-    short   leap_scnds;
-    long    wn_days;
+	float   alt;
+	float   epe;
+	float   eph;
+	float   epv;
+	short   fix;
+	double  tow;
+	double  lat;
+	double  lon;
+	float   east;
+	float   north;
+	float   up;
+	float   msl_hght;
+	short   leap_scnds;
+	long    wn_days;
 } D800_Pvt_Data_Type_Aligned;
 
 
@@ -367,11 +345,11 @@ typedef struct {
 /*              Packet structure for Pkt_ID = 114 (Satellite Data Record)   */
 typedef    struct
 {
-    unsigned char         svid;          //space vehicle identification (1-32 and 33-64 for WAAS)
-    short                 snr;           //signal-to-noise ratio
-    unsigned char         elev;          //satellite elevation in degrees
-    short                 azmth;         //satellite azimuth in degrees
-    unsigned char         status;        //status bit-field
+	unsigned char         svid;          //space vehicle identification (1-32 and 33-64 for WAAS)
+	short                 snr;           //signal-to-noise ratio
+	unsigned char         elev;          //satellite elevation in degrees
+	short                 azmth;         //satellite azimuth in degrees
+	unsigned char         status;        //status bit-field
 } cpo_sat_data;
 
 /*
@@ -384,8 +362,8 @@ typedef    struct
 
 
 enum {
-    rs_fromintr,
-    rs_frombulk
+	rs_fromintr,
+	rs_frombulk
 };
 
 #define TIMER_GARMIN1   7005
@@ -395,62 +373,62 @@ class GARMIN_USB_Thread;
 
 class GarminProtocolHandler: public wxEvtHandler
 {
-public:
-    GarminProtocolHandler(DataStream *parent, wxEvtHandler *MessageTarget,  bool bsel_usb);
-    ~GarminProtocolHandler();
+	public:
+		GarminProtocolHandler(DataStream *parent, wxEvtHandler *MessageTarget,  bool bsel_usb);
+		~GarminProtocolHandler();
 
-    void Close(void);
-
-
-    void StopIOThread(bool b_pause);
-    void RestartIOThread(void);
-
-    void StopSerialThread(void);
-
-    void OnTimerGarmin1(wxTimerEvent& event);
-
-    bool FindGarminDeviceInterface();
+		void Close(void);
 
 
+		void StopIOThread(bool b_pause);
+		void RestartIOThread(void);
 
-    wxEvtHandler            *m_pMainEventHandler;
-    DataStream              *m_pparent;
+		void StopSerialThread(void);
 
-    int                     m_max_tx_size;
-    int                     m_receive_state;
-    cpo_sat_data            m_sat_data[12];
-    unit_info_type          grmin_unit_info[2];
-    int                     m_nSats;
-    wxTimer                 TimerGarmin1;
+		void OnTimerGarmin1(wxTimerEvent & event);
 
-    int                     m_Thread_run_flag;
-    GARMIN_Serial_Thread    *m_garmin_serial_thread;
-    GARMIN_USB_Thread       *m_garmin_usb_thread;
-    bool                    m_bneed_int_reset;
-    int                     m_ndelay;
-    bool                    m_bOK;
-    bool                    m_busb;
-    wxString                m_port;
+		bool FindGarminDeviceInterface();
+
+
+
+		wxEvtHandler            *m_pMainEventHandler;
+		DataStream              *m_pparent;
+
+		int                     m_max_tx_size;
+		int                     m_receive_state;
+		cpo_sat_data            m_sat_data[12];
+		unit_info_type          grmin_unit_info[2];
+		int                     m_nSats;
+		wxTimer                 TimerGarmin1;
+
+		int                     m_Thread_run_flag;
+		GARMIN_Serial_Thread    *m_garmin_serial_thread;
+		GARMIN_USB_Thread       *m_garmin_usb_thread;
+		bool                    m_bneed_int_reset;
+		int                     m_ndelay;
+		bool                    m_bOK;
+		bool                    m_busb;
+		wxString                m_port;
 
 #ifdef __WXMSW__
-    HANDLE garmin_usb_start();
-    bool ResetGarminUSBDriver();
-    bool IsGarminPlugged();
-    bool gusb_syncup(void);
+		HANDLE garmin_usb_start();
+		bool ResetGarminUSBDriver();
+		bool IsGarminPlugged();
+		bool gusb_syncup(void);
 
-    int gusb_win_get(garmin_usb_packet *ibuf, size_t sz);
-    int gusb_win_get_bulk(garmin_usb_packet *ibuf, size_t sz);
-    int gusb_win_send(const garmin_usb_packet *opkt, size_t sz);
+		int gusb_win_get(garmin_usb_packet *ibuf, size_t sz);
+		int gusb_win_get_bulk(garmin_usb_packet *ibuf, size_t sz);
+		int gusb_win_send(const garmin_usb_packet *opkt, size_t sz);
 
-    int gusb_cmd_send(const garmin_usb_packet *opkt, size_t sz);
-    int gusb_cmd_get(garmin_usb_packet *ibuf, size_t sz);
+		int gusb_cmd_send(const garmin_usb_packet *opkt, size_t sz);
+		int gusb_cmd_get(garmin_usb_packet *ibuf, size_t sz);
 
-    HANDLE                  m_usb_handle;
+		HANDLE                  m_usb_handle;
 
-    WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam);
+		WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam);
 #endif
 
-    DECLARE_EVENT_TABLE()
+		DECLARE_EVENT_TABLE()
 };
 
 
@@ -464,26 +442,26 @@ public:
 class GARMIN_Serial_Thread: public wxThread
 {
 
-public:
+	public:
 
-    GARMIN_Serial_Thread(GarminProtocolHandler *parent,
-                         DataStream *GParentStream,
-                         wxEvtHandler *MessageTarget,
-                         wxString port);
-    ~GARMIN_Serial_Thread(void);
-    void *Entry();
-    void string(wxCharBuffer mb_str);
-
-
-private:
-    wxEvtHandler            *m_pMessageTarget;
-    GarminProtocolHandler   *m_parent;
-    DataStream              *m_parent_stream;
+		GARMIN_Serial_Thread(GarminProtocolHandler *parent,
+				DataStream *GParentStream,
+				wxEvtHandler *MessageTarget,
+				wxString port);
+		~GARMIN_Serial_Thread(void);
+		void *Entry();
+		void string(wxCharBuffer mb_str);
 
 
-    wxString                m_port;
-    bool                    m_bconnected;
-    bool                    m_bdetected;
+	private:
+		wxEvtHandler            *m_pMessageTarget;
+		GarminProtocolHandler   *m_parent;
+		DataStream              *m_parent_stream;
+
+
+		wxString                m_port;
+		bool                    m_bconnected;
+		bool                    m_bdetected;
 
 };
 
@@ -499,41 +477,37 @@ private:
 class GARMIN_USB_Thread: public wxThread
 {
 
-public:
+	public:
 
-    GARMIN_USB_Thread(GarminProtocolHandler *parent,
-                      DataStream *GParentStream,
-                      wxEvtHandler *MessageTarget,
-                      unsigned int device_handle,
-                      size_t max_tx_size);
-    ~GARMIN_USB_Thread(void);
-    void *Entry();
-
-
-private:
-    DataStream *m_parent_stream;
-
-    int gusb_win_get(garmin_usb_packet *ibuf, size_t sz);
-    int gusb_win_get_bulk(garmin_usb_packet *ibuf, size_t sz);
-    int gusb_cmd_get(garmin_usb_packet *ibuf, size_t sz);
-
-    wxEvtHandler            *m_pMessageTarget;
-    GarminProtocolHandler   *m_parent;
+		GARMIN_USB_Thread(GarminProtocolHandler *parent,
+				DataStream *GParentStream,
+				wxEvtHandler *MessageTarget,
+				unsigned int device_handle,
+				size_t max_tx_size);
+		~GARMIN_USB_Thread(void);
+		void *Entry();
 
 
-    int                     m_receive_state;
-    cpo_sat_data            m_sat_data[12];
-    unit_info_type          grmin_unit_info[2];
-    int                     m_nSats;
-    int                     m_max_tx_size;
+	private:
+		DataStream *m_parent_stream;
+
+		int gusb_win_get(garmin_usb_packet *ibuf, size_t sz);
+		int gusb_win_get_bulk(garmin_usb_packet *ibuf, size_t sz);
+		int gusb_cmd_get(garmin_usb_packet *ibuf, size_t sz);
+
+		wxEvtHandler            *m_pMessageTarget;
+		GarminProtocolHandler   *m_parent;
+
+
+		int                     m_receive_state;
+		cpo_sat_data            m_sat_data[12];
+		unit_info_type          grmin_unit_info[2];
+		int                     m_nSats;
+		int                     m_max_tx_size;
 #ifdef __WXMSW__
-    HANDLE                  m_usb_handle;
+		HANDLE                  m_usb_handle;
 #endif
 
 };
 
-
-
 #endif
-
-

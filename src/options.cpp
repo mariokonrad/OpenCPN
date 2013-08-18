@@ -842,8 +842,8 @@ void options::CreatePanel_NMEA( size_t parent, int border_size, int group_item_s
 
     m_lcSources->Refresh();
 
-    m_stcdialog_in = new SentenceListDlg(FILTER_INPUT, this);
-    m_stcdialog_out = new SentenceListDlg(FILTER_OUTPUT, this);
+    m_stcdialog_in = new SentenceListDlg(ConnectionParams::FILTER_INPUT, this);
+    m_stcdialog_out = new SentenceListDlg(ConnectionParams::FILTER_OUTPUT, this);
 
     FillSourceList();
 
@@ -2350,17 +2350,17 @@ ConnectionParams * options::SaveConnectionParams()
 
     m_pConnectionParams->Valid = true;
     if ( m_rbTypeSerial->GetValue() )
-        m_pConnectionParams->Type = SERIAL;
+        m_pConnectionParams->Type = ConnectionParams::SERIAL;
     else
-        m_pConnectionParams->Type = NETWORK;
+        m_pConnectionParams->Type = ConnectionParams::NETWORK;
     m_pConnectionParams->NetworkAddress = m_tNetAddress->GetValue();
     m_pConnectionParams->NetworkPort = wxAtoi(m_tNetPort->GetValue());
     if ( m_rbNetProtoTCP->GetValue() )
-        m_pConnectionParams->NetProtocol = TCP;
+        m_pConnectionParams->NetProtocol = ConnectionParams::TCP;
     else if ( m_rbNetProtoUDP->GetValue() )
-        m_pConnectionParams->NetProtocol = UDP;
+        m_pConnectionParams->NetProtocol = ConnectionParams::UDP;
     else
-        m_pConnectionParams->NetProtocol = GPSD;
+        m_pConnectionParams->NetProtocol = ConnectionParams::GPSD;
 
     m_pConnectionParams->Baudrate = wxAtoi( m_choiceBaudRate->GetStringSelection() );
     m_pConnectionParams->Priority = wxAtoi( m_choicePriority->GetStringSelection() );
@@ -2368,17 +2368,17 @@ ConnectionParams * options::SaveConnectionParams()
     m_pConnectionParams->Garmin = m_cbGarminHost->GetValue();
     m_pConnectionParams->InputSentenceList = wxStringTokenize( m_tcInputStc->GetValue(), _T(",") );
     if ( m_rbIAccept->GetValue() )
-        m_pConnectionParams->InputSentenceListType = WHITELIST;
+        m_pConnectionParams->InputSentenceListType = ConnectionParams::WHITELIST;
     else
-        m_pConnectionParams->InputSentenceListType = BLACKLIST;
+        m_pConnectionParams->InputSentenceListType = ConnectionParams::BLACKLIST;
     m_pConnectionParams->Output = m_cbOutput->GetValue();
     m_pConnectionParams->OutputSentenceList = wxStringTokenize( m_tcOutputStc->GetValue(), _T(",") );
     if ( m_rbOAccept->GetValue() )
-        m_pConnectionParams->OutputSentenceListType = WHITELIST;
+        m_pConnectionParams->OutputSentenceListType = ConnectionParams::WHITELIST;
     else
-        m_pConnectionParams->OutputSentenceListType = BLACKLIST;
+        m_pConnectionParams->OutputSentenceListType = ConnectionParams::BLACKLIST;
     m_pConnectionParams->Port = m_comboPort->GetValue();
-    m_pConnectionParams->Protocol = PROTO_NMEA0183;
+    m_pConnectionParams->Protocol = ConnectionParams::PROTO_NMEA0183;
 
     m_pConnectionParams->bEnabled = m_connection_enabled;
     return m_pConnectionParams;
@@ -3941,11 +3941,11 @@ void options::SetConnectionParams(ConnectionParams *cp)
     m_cbCheckCRC->SetValue(cp->ChecksumCheck);
     m_cbGarminHost->SetValue(cp->Garmin);
     m_cbOutput->SetValue(cp->Output);
-    if(cp->InputSentenceListType == WHITELIST)
+    if(cp->InputSentenceListType == ConnectionParams::WHITELIST)
         m_rbIAccept->SetValue(true);
     else
         m_rbIIgnore->SetValue(true);
-    if(cp->OutputSentenceListType == WHITELIST)
+    if(cp->OutputSentenceListType == ConnectionParams::WHITELIST)
         m_rbOAccept->SetValue(true);
     else
         m_rbOIgnore->SetValue(true);
@@ -3962,14 +3962,14 @@ void options::SetConnectionParams(ConnectionParams *cp)
     else
         m_tNetPort->SetValue(wxString::Format(wxT("%i"), cp->NetworkPort));
 
-    if(cp->NetProtocol == TCP)
+    if(cp->NetProtocol == ConnectionParams::TCP)
         m_rbNetProtoTCP->SetValue(true);
-    else if (cp->NetProtocol == UDP)
+    else if (cp->NetProtocol == ConnectionParams::UDP)
         m_rbNetProtoUDP->SetValue(true);
     else
         m_rbNetProtoGPSD->SetValue(true);
 
-    if ( cp->Type == SERIAL )
+    if ( cp->Type == ConnectionParams::SERIAL )
     {
         m_rbTypeSerial->SetValue( true );
         SetNMEAFormToSerial();
@@ -4082,7 +4082,7 @@ void options::OnSelectDatasource( wxListEvent& event )
 void options::OnBtnIStcs( wxCommandEvent& event )
 {
     m_stcdialog_in->SetSentenceList(wxStringTokenize(m_tcInputStc->GetValue(), _T(",")));
-    m_stcdialog_in->SetType(0, (m_rbIAccept->GetValue() == true) ? WHITELIST:BLACKLIST);
+    m_stcdialog_in->SetType(0, (m_rbIAccept->GetValue() == true) ? ConnectionParams::WHITELIST : ConnectionParams::BLACKLIST);
 
     if (m_stcdialog_in->ShowModal() == wxID_OK)
         m_tcInputStc->SetValue(m_stcdialog_in->GetSentencesAsText());
@@ -4091,7 +4091,7 @@ void options::OnBtnIStcs( wxCommandEvent& event )
 void options::OnBtnOStcs( wxCommandEvent& event )
 {
     m_stcdialog_out->SetSentenceList(wxStringTokenize(m_tcOutputStc->GetValue(), _T(",")));
-    m_stcdialog_out->SetType(1, (m_rbOAccept->GetValue() == true) ? WHITELIST:BLACKLIST);
+    m_stcdialog_out->SetType(1, (m_rbOAccept->GetValue() == true) ? ConnectionParams::WHITELIST : ConnectionParams::BLACKLIST);
 
     if (m_stcdialog_out->ShowModal() == wxID_OK)
         m_tcOutputStc->SetValue(m_stcdialog_out->GetSentencesAsText());
@@ -4130,7 +4130,8 @@ void options::OnRbOutput( wxCommandEvent& event )
 
 //SentenceListDlg
 
-SentenceListDlg::SentenceListDlg( FilterDirection dir, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+SentenceListDlg::SentenceListDlg( ConnectionParams::FilterDirection dir, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+	: wxDialog( parent, id, title, pos, size, style )
 {
     m_dir = dir;
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
@@ -4143,7 +4144,7 @@ SentenceListDlg::SentenceListDlg( FilterDirection dir, wxWindow* parent, wxWindo
 
     NMEA0183 nmea;
     standard_sentences = nmea.GetRecognizedArray();
-    if(m_dir == FILTER_OUTPUT) {
+    if(m_dir == ConnectionParams::FILTER_OUTPUT) {
         standard_sentences.Add(_T("ECRMB"));
         standard_sentences.Add(_T("ECRMC"));
         standard_sentences.Add(_T("ECAPB"));
@@ -4234,11 +4235,11 @@ void SentenceListDlg::SetSentenceList(wxArrayString sentences)
 {
     m_sentences = sentences;
 
-    if( (m_sentences.Count() == 0) && (m_type == WHITELIST) ){
+    if( (m_sentences.Count() == 0) && (m_type == ConnectionParams::WHITELIST) ){
         for (size_t i = 0; i < m_clbSentences->GetCount(); i++)
             m_clbSentences->Check(i, true);
     }
-    if( (m_sentences.Count() == 0) && (m_type == BLACKLIST) ){
+    if( (m_sentences.Count() == 0) && (m_type == ConnectionParams::BLACKLIST) ){
         for (size_t i = 0; i < m_clbSentences->GetCount(); i++)
             m_clbSentences->Check(i, false);
     }
@@ -4367,7 +4368,7 @@ void SentenceListDlg::OnCheckAllClick( wxCommandEvent& event )
     BuildSentenceArray();
 }
 
-void SentenceListDlg::SetType(int io, ListType type)
+void SentenceListDlg::SetType(int io, ConnectionParams::ListType type)
 {
     m_type = type;
 
@@ -4375,13 +4376,13 @@ void SentenceListDlg::SetType(int io, ListType type)
     {
         case 0:                 // input
         default:
-            if(type == WHITELIST)
+            if(type == ConnectionParams::WHITELIST)
                 m_pclbBox->SetLabel(_("Accept Sentences"));
             else
                 m_pclbBox->SetLabel(_("Ignore Sentences"));
             break;
         case 1:                 // output
-            if(type == WHITELIST)
+            if(type == ConnectionParams::WHITELIST)
                 m_pclbBox->SetLabel(_("Transmit Sentences"));
             else
                 m_pclbBox->SetLabel(_("Drop Sentences"));

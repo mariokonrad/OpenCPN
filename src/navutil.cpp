@@ -900,16 +900,16 @@ int MyConfig::LoadMyConfig( int iteration )
             if(!bfound) {
                 ConnectionParams * prm = new ConnectionParams();
                 prm->Port = port;
-                prm->OutputSentenceListType = WHITELIST;
-                prm->OutputSentenceList.Add( _T("RMB") );
+                prm->OutputSentenceListType = ConnectionParams::WHITELIST;
+                prm->OutputSentenceList.Add(_T("RMB"));
                 prm->Output = true;
 
                 g_pConnectionParams->Add(prm);
             }
             else {                                  // port was found, so make sure it is set for output
                 cp->Output = true;
-                cp->OutputSentenceListType = WHITELIST;
-                cp->OutputSentenceList.Add( _T("RMB") );
+                cp->OutputSentenceListType = ConnectionParams::WHITELIST;
+                cp->OutputSentenceList.Add(_T("RMB"));
             }
         }
 

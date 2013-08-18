@@ -153,7 +153,7 @@ void Multiplexer::SendNMEAMessage(const wxString &msg)
 			bool bout_filter = true;
 
 			bool bxmit_ok = true;
-			if(s->SentencePassesFilter( msg, FILTER_OUTPUT ) ) {
+			if(s->SentencePassesFilter( msg, ConnectionParams::FILTER_OUTPUT ) ) {
 				bxmit_ok = s->SendSentence(msg);
 				bout_filter = false;
 			}
@@ -199,7 +199,7 @@ void Multiplexer::OnEvtStream(OCPN_DataStreamEvent& event)
 		//  If there is no datastream, as for PlugIns, then pass everything
 		bool bpass = true;
 		if( stream )
-			bpass = stream->SentencePassesFilter( message, FILTER_INPUT );
+			bpass = stream->SentencePassesFilter( message, ConnectionParams::FILTER_INPUT );
 
 		if( bpass ) {
 			if( message.Mid(3,3).IsSameAs(_T("VDM")) ||
@@ -231,25 +231,24 @@ void Multiplexer::OnEvtStream(OCPN_DataStreamEvent& event)
 		for (size_t i = 0; i < m_pdatastreams->Count(); i++)
 		{
 			DataStream* s = m_pdatastreams->Item(i);
-			if ( s->IsOk() ) {
-				if((s->GetConnectionType() == SERIAL)  || (s->GetPort() != port)) {
-					if ( s->GetIoSelect() == DS_TYPE_INPUT_OUTPUT || s->GetIoSelect() == DS_TYPE_OUTPUT ) {
+			if (s->IsOk()) {
+				if ((s->GetConnectionType() == ConnectionParams::SERIAL) || (s->GetPort() != port)) {
+					if (s->GetIoSelect() == DS_TYPE_INPUT_OUTPUT || s->GetIoSelect() == DS_TYPE_OUTPUT) {
 						bool bout_filter = true;
 
 						bool bxmit_ok = true;
-						if(s->SentencePassesFilter( message, FILTER_OUTPUT ) ) {
+						if(s->SentencePassesFilter(message, ConnectionParams::FILTER_OUTPUT)) {
 							bxmit_ok = s->SendSentence(message);
 							bout_filter = false;
 						}
 
 						//Send to the Debug Window, if open
-						if( !bout_filter ) {
-							if( bxmit_ok )
-								LogOutputMessageColor( message, s->GetPort(), _T("<BLUE>") );
+						if (!bout_filter) {
+							if(bxmit_ok)
+								LogOutputMessageColor(message, s->GetPort(), _T("<BLUE>"));
 							else
-								LogOutputMessageColor( message, s->GetPort(), _T("<RED>") );
-						}
-						else
+								LogOutputMessageColor(message, s->GetPort(), _T("<RED>"));
+						} else
 							LogOutputMessageColor( message, s->GetPort(), _T("<AMBER>") );
 					}
 				}
@@ -276,7 +275,8 @@ void Multiplexer::SaveStreamProperties( DataStream *stream )
 
 bool Multiplexer::CreateAndRestoreSavedStreamProperties()
 {
-	DataStream *dstr = new DataStream( this,
+	DataStream *dstr = new DataStream(
+			this,
 			port_save,
 			baud_rate_save,
 			port_type_save,

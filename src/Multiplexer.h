@@ -66,9 +66,9 @@ class Multiplexer : public wxEvtHandler
 		dsPortType port_type_save;
 		int priority_save;
 		wxArrayString input_sentence_list_save;
-		ListType input_sentence_list_type_save;
+		ConnectionParams::ListType input_sentence_list_type_save;
 		wxArrayString output_sentence_list_save;
-		ListType output_sentence_list_type_save;
+		ConnectionParams::ListType output_sentence_list_type_save;
 		bool bchecksum_check_save;
 		bool bGarmin_GRMN_mode_save;
 

@@ -28,77 +28,79 @@
 #include <wx/dynarray.h>
 #include <wx/arrstr.h>
 
-typedef enum
-{
-    SERIAL = 0,
-    NETWORK = 1
-} ConnectionType;
-
-typedef enum
-{
-    TCP = 0,
-    UDP = 1,
-    GPSD = 2
-} NetworkProtocol;
-
-typedef enum
-{
-    WHITELIST = 0,
-    BLACKLIST = 1
-} ListType;
-
-typedef enum
-{
-    FILTER_INPUT = 0,
-    FILTER_OUTPUT = 1
-} FilterDirection;
-
-typedef enum
-{
-    PROTO_NMEA0183 = 0,
-    PROTO_SEATALK = 1,
-    PROTO_NMEA2000 = 2
-} DataProtocol;
-
 class ConnectionParams
 {
-public:
-    ConnectionParams();
-    ConnectionParams(const wxString &configStr);
+	public:
+		enum ConnectionType
+		{
+			SERIAL = 0,
+			NETWORK = 1
+		};
 
-    ConnectionType  Type;
-    NetworkProtocol NetProtocol;
-    wxString        NetworkAddress;
-    int             NetworkPort;
+		enum NetworkProtocol
+		{
+			TCP = 0,
+			UDP = 1,
+			GPSD = 2
+		};
 
-    DataProtocol    Protocol;
-    wxString        Port;
-    int             Baudrate;
-    bool            ChecksumCheck;
-    bool            Garmin;
-    bool            GarminUpload;
-    bool            FurunoGP3X;
-    bool            Output;
-    ListType        InputSentenceListType;
-    wxArrayString   InputSentenceList;
-    ListType        OutputSentenceListType;
-    wxArrayString   OutputSentenceList;
-    int             Priority;
-    bool            bEnabled;
+		enum ListType
+		{
+			WHITELIST = 0,
+			BLACKLIST = 1
+		};
 
-    wxString        Serialize();
-    void            Deserialize(const wxString &configStr);
+		enum FilterDirection
+		{
+			FILTER_INPUT = 0,
+			FILTER_OUTPUT = 1
+		};
 
-    wxString GetSourceTypeStr();
-    wxString GetAddressStr();
-    wxString GetParametersStr();
-    wxString GetOutputValueStr();
-    wxString GetFiltersStr();
-    wxString GetDSPort();
+		enum DataProtocol
+		{
+			PROTO_NMEA0183 = 0,
+			PROTO_SEATALK = 1,
+			PROTO_NMEA2000 = 2
+		};
 
-    bool            Valid;
-private:
-    wxString FilterTypeToStr(ListType type, FilterDirection dir);
+	public:
+		ConnectionParams();
+		ConnectionParams(const wxString & configStr);
+
+		ConnectionType Type;
+		NetworkProtocol NetProtocol;
+		wxString NetworkAddress;
+		int NetworkPort;
+
+		DataProtocol Protocol;
+		wxString Port;
+		int Baudrate;
+		bool ChecksumCheck;
+		bool Garmin;
+		bool GarminUpload;
+		bool FurunoGP3X;
+		bool Output;
+		ListType InputSentenceListType;
+		wxArrayString InputSentenceList;
+		ListType OutputSentenceListType;
+		wxArrayString OutputSentenceList;
+		int Priority;
+		bool bEnabled;
+
+		wxString Serialize();
+		void Deserialize(const wxString &configStr);
+
+		wxString GetSourceTypeStr();
+		wxString GetAddressStr();
+		wxString GetParametersStr();
+		wxString GetOutputValueStr();
+		wxString GetFiltersStr();
+		wxString GetDSPort();
+
+		bool Valid;
+
+	private:
+		wxString FilterTypeToStr(ListType type, FilterDirection dir);
 };
 
 WX_DEFINE_ARRAY(ConnectionParams *, wxArrayOfConnPrm);

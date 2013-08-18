@@ -24,7 +24,7 @@
 #ifndef __NAVOBJECTCOLLECTION_H__
 #define __NAVOBJECTCOLLECTION_H__
 
-#include "pugixml.hpp"
+#include "pugixml/pugixml.hpp"
 #include <wx/string.h>
 #include "Route.h"
 #include "RoutePoint.h"

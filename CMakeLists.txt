@@ -379,9 +379,42 @@ SET(SRC_GPX
 	src/gpx/GpxRootElement.cpp
 	)
 
+SET(HDR_PUGIXML
+	src/pugixml/pugiconfig.hpp
+	src/pugixml/pugixml.hpp
+	)
+
+SET(SRC_PUGIXML
+	src/pugixml/pugixml.cpp
+	)
+
+SET(HDR_TINYXML
+	src/tinyxml/tinyxml.h
+	)
+
+SET(SRC_TINYXML
+	src/tinyxml/tinyxml.cpp
+	src/tinyxml/tinyxmlerror.cpp
+	src/tinyxml/tinyxmlparser.cpp
+	)
+
+SET(HDR_WXJSON
+	include/wx/json_defs.h
+	include/wx/jsonwriter.h
+	include/wx/jsonreader.h
+	)
+
+SET(SRC_WXJSON
+	src/wxJSON/jsonwriter.cpp
+	src/wxJSON/jsonreader.cpp
+	src/wxJSON/jsonval.cpp
+	)
+
 SET(HDRS
 		${HDR_AIS}
 		${HDR_GPX}
+		${HDR_PUGIXML}
+		${HDR_WXJSON}
 		include/ocpn_types.h
 		include/ocpndc.h
 		include/chart1.h
@@ -478,9 +511,6 @@ SET(HDRS
 		src/AboutDialog.h
 		include/pluginmanager.h
 		include/ocpn_plugin.h
-		include/wx/json_defs.h
-		include/wx/jsonwriter.h
-		include/wx/jsonreader.h
 		src/chart/ChartSymbols.h
 		src/chart/SymbolSizeInfo.h
 		src/chart/ChartSymbol.h
@@ -514,6 +544,8 @@ SET(HDRS
 SET(SRCS
 		${SRC_AIS}
 		${SRC_GPX}
+		${SRC_PUGIXML}
+		${SRC_WXJSON}
 		src/chart1.cpp
 		src/TimedPopupWin.cpp
 		src/AnnunText.cpp
@@ -599,9 +631,6 @@ SET(SRCS
 		src/AboutDialog.cpp
 		src/pluginmanager.cpp
 		src/gpx/GpxDocument.cpp
-		src/wxJSON/jsonwriter.cpp
-		src/wxJSON/jsonreader.cpp
-		src/wxJSON/jsonval.cpp
 		src/chart/ChartSymbols.cpp
 		src/RazdsParser.cpp
 		src/styles.cpp
@@ -618,7 +647,6 @@ SET(SRCS
 		src/ConnectionParams.cpp
 		src/OCP_DataStreamInput_Thread.cpp
 		src/Multiplexer.cpp
-		src/pugixml.cpp
 		src/OCPNRegion.cpp
 		src/OCPNRegionIterator.cpp
 		src/TrackPropDlg.cpp
@@ -636,19 +664,13 @@ ENDIF(wx_Version MATCHES "2.9")
 
 SET( PACKAGE_HEADERS "" )
 
-SET(SRC_TINYXML
-            src/tinyxml/tinyxml.cpp
-            src/tinyxml/tinyxmlerror.cpp
-            src/tinyxml/tinyxmlparser.cpp
-            src/tinyxml/tinyxml.h
-      )
-
 IF(TINYXML_FOUND)
     message (STATUS "Building with tinyxml includes")
     INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
     ADD_DEFINITIONS(-DTIXML_USE_STL)
 ELSE(TINYXML_FOUND)
     message (STATUS "tinyxml library not found")
+    SET(HDRS ${HDRW} ${HDR_TINYXML})
     SET(SRCS ${SRCS} ${SRC_TINYXML})
     ADD_DEFINITIONS(-DTIXML_USE_STL)
 ENDIF(TINYXML_FOUND)

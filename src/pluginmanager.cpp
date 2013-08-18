@@ -46,6 +46,8 @@
 #include "ais/AIS_Decoder.h"
 #include "ais/AIS_Target_Data.h"
 
+#include "gpx/GpxDocument.h"
+
 #include <wx/wx.h>
 #include <wx/dir.h>
 #include <wx/filename.h>

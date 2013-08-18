@@ -30,6 +30,7 @@
 #include "navutil.h"
 #include "Multiplexer.h"
 #include "Select.h"
+#include "gpx/gpx.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(RouteList);
@@ -109,7 +110,7 @@ void Route::CloneRoute( Route *psourceroute, int start_nPoint, int end_nPoint, c
 		else {
 			RoutePoint *psourcepoint = psourceroute->GetPoint( i );
 			RoutePoint *ptargetpoint = new RoutePoint( psourcepoint->m_lat, psourcepoint->m_lon,
-					psourcepoint->m_IconName, psourcepoint->GetName(), GPX_EMPTY_STRING, false );
+					psourcepoint->m_IconName, psourcepoint->GetName(), _T(""), false);
 
 			AddPoint( ptargetpoint, false );
 
@@ -142,7 +143,7 @@ void Route::CloneTrack( Route *psourceroute, int start_nPoint, int end_nPoint, c
 
 		RoutePoint *psourcepoint = psourceroute->GetPoint( i );
 		RoutePoint *ptargetpoint = new RoutePoint( psourcepoint->m_lat, psourcepoint->m_lon,
-				psourcepoint->m_IconName, psourcepoint->GetName(), GPX_EMPTY_STRING, false );
+				psourcepoint->m_IconName, psourcepoint->GetName(), _T(""), false );
 
 		AddPoint( ptargetpoint, false );
 
@@ -311,7 +312,7 @@ void Route::Draw( ocpnDC& dc, ViewPort &VP )
 		if( m_Colour == wxEmptyString ) {
 			col = g_pRouteMan->GetRoutePen()->GetColour();
 		} else {
-			for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
+			for( unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(wxString); i++ ) {
 				if( m_Colour == ::GpxxColorNames[i] ) {
 					col = ::GpxxColors[i];
 					break;
@@ -515,8 +516,7 @@ void Route::ClearHighlights( void )
 RoutePoint *Route::InsertPointBefore( RoutePoint *pRP, double rlat, double rlon,
 		bool bRenamePoints )
 {
-	RoutePoint *newpoint = new RoutePoint( rlat, rlon, wxString( _T ( "diamond" ) ),
-			GetNewMarkSequenced(), GPX_EMPTY_STRING );
+	RoutePoint *newpoint = new RoutePoint(rlat, rlon, wxString(_T("diamond")), GetNewMarkSequenced());
 	newpoint->m_bIsInRoute = true;
 	newpoint->m_bDynamicName = true;
 	newpoint->SetNameShown( false );

@@ -32,6 +32,7 @@
 #include "RoutePrintSelection.h"
 #include "LinkPropDlg.h"
 #include "pluginmanager.h"
+#include "gpx/gpx.h"
 
 extern RouteList * pRouteList;
 extern Track * g_pActiveTrack;

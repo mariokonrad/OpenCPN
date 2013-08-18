@@ -43,6 +43,7 @@
 #include "tcmgr.h"
 #include "PositionParser.h"
 #include "pluginmanager.h"
+#include "gpx/gpx.h"
 
 extern double gLat;
 extern double gLon;
@@ -1489,10 +1490,10 @@ bool RouteProp::SaveChanges( void )
 		m_pRoute->m_PlannedDeparture = g_StartTime;
 		m_pRoute->m_PlannedSpeed = m_planspeed;
 		switch( g_StartTimeTZ ) {
-			case 1 : 
+			case 1 :
 				m_pRoute->m_TimeDisplayFormat = RTE_TIME_DISP_PC;
 				break;
-			case 2 : 
+			case 2 :
 				m_pRoute->m_TimeDisplayFormat = RTE_TIME_DISP_LOCAL;
 				break;
 			default:

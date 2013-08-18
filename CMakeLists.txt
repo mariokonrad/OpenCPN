@@ -331,17 +331,57 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/nmea0183)
 
 
 SET(HDR_AIS
-		src/ais/ais.h
-		src/ais/AISTargetQueryDialog.h
-		src/ais/AIS_Bitstring.h
-		src/ais/AISTargetListDialog.h
-		src/ais/AISTargetAlertDialog.h
-		src/ais/AIS_Decoder.h
-		src/ais/AIS_Target_Data.h
+	src/ais/ais.h
+	src/ais/AISTargetQueryDialog.h
+	src/ais/AIS_Bitstring.h
+	src/ais/AISTargetListDialog.h
+	src/ais/AISTargetAlertDialog.h
+	src/ais/AIS_Decoder.h
+	src/ais/AIS_Target_Data.h
 	)
 
+SET(SRC_AIS
+	src/ais/ais.cpp
+	src/ais/AISTargetQueryDialog.cpp
+	src/ais/AIS_Bitstring.cpp
+	src/ais/AISTargetListDialog.cpp
+	src/ais/AISTargetAlertDialog.cpp
+	src/ais/AIS_Decoder.cpp
+	src/ais/AIS_Target_Data.cpp
+	)
+
+SET(HDR_GPX
+	src/gpx/gpx.h
+	src/gpx/GpxDocument.h
+	src/gpx/GpxSimpleElement.h
+	src/gpx/GpxLinkElement.h
+	src/gpx/GpxPersonElement.h
+	src/gpx/GpxCopyrightElement.h
+	src/gpx/GpxExtensionsElement.h
+	src/gpx/GpxBoundsElement.h
+	src/gpx/GpxMetadataElement.h
+	src/gpx/GpxxExtensionsElement.h
+	src/gpx/GpxTrkElement.h
+	src/gpx/GpxWptElement.h
+	src/gpx/GpxRteElement.h
+	)
+
+SET(SRC_GPX
+	src/gpx/gpx.cpp
+	src/gpx/GpxSimpleElement.cpp
+	src/gpx/GpxTrksegElement.cpp
+	src/gpx/GpxTrkElement.cpp
+	src/gpx/GpxRteElement.cpp
+	src/gpx/GpxLinkElement.cpp
+	src/gpx/GpxWptElement.cpp
+	src/gpx/GpxxExtensionsElement.cpp
+	src/gpx/GpxExtensionsElement.cpp
+	src/gpx/GpxRootElement.cpp
+	)
 
 SET(HDRS
+		${HDR_AIS}
+		${HDR_GPX}
 		include/ocpn_types.h
 		include/ocpndc.h
 		include/chart1.h
@@ -363,7 +403,6 @@ SET(HDRS
 		include/chcanv.h
 		include/timers.h
 		src/EmbossData.h
-		${HDR_AIS}
 		src/OCPNListCtrl.h
 		src/CM93DSlide.h
 		src/GoToPositionDialog.h
@@ -438,7 +477,6 @@ SET(HDRS
 		src/AboutDialog.h
 		include/pluginmanager.h
 		include/ocpn_plugin.h
-		include/gpxdocument.h
 		include/wx/json_defs.h
 		include/wx/jsonwriter.h
 		include/wx/jsonreader.h
@@ -472,17 +510,9 @@ SET(HDRS
 		src/OCPN_AlertDialog.h
 )
 
-SET(SRC_AIS
-		src/ais/ais.cpp
-		src/ais/AISTargetQueryDialog.cpp
-		src/ais/AIS_Bitstring.cpp
-		src/ais/AISTargetListDialog.cpp
-		src/ais/AISTargetAlertDialog.cpp
-		src/ais/AIS_Decoder.cpp
-		src/ais/AIS_Target_Data.cpp
-	)
-
 SET(SRCS
+		${SRC_AIS}
+		${SRC_GPX}
 		src/chart1.cpp
 		src/TimedPopupWin.cpp
 		src/AnnunText.cpp
@@ -509,7 +539,6 @@ SET(SRCS
 		src/glChartCanvas.cpp
 		src/glTextureDescriptor.cpp
 		src/ChInfoWin.cpp
-		${SRC_AIS}
 		src/OCPNListCtrl.cpp
 		src/Quilt.cpp
 		src/EmbossData.cpp
@@ -567,7 +596,7 @@ SET(SRCS
 		src/UndoAction.cpp
 		src/AboutDialog.cpp
 		src/pluginmanager.cpp
-		src/gpxdocument.cpp
+		src/gpx/GpxDocument.cpp
 		src/wxJSON/jsonwriter.cpp
 		src/wxJSON/jsonreader.cpp
 		src/wxJSON/jsonval.cpp

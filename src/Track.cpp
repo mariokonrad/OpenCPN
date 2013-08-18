@@ -29,6 +29,7 @@
 #include "chcanv.h"
 #include "RouteProp.h"
 #include "navutil.h"
+#include "gpx/gpx.h"
 
 #define TIMER_TRACK1 778
 
@@ -222,8 +223,7 @@ void Track::OnTimerTrack( wxTimerEvent& event )
 
 RoutePoint* Track::AddNewPoint( vector2D point, wxDateTime time )
 {
-	RoutePoint *rPoint = new RoutePoint( point.lat, point.lon, wxString( _T ( "empty" ) ),
-			wxString( _T ( "" ) ), GPX_EMPTY_STRING );
+	RoutePoint *rPoint = new RoutePoint(point.lat, point.lon, _T( "empty"), _T(""));
 	rPoint->m_bShowName = false;
 	rPoint->m_bIsVisible = true;
 	rPoint->m_GPXTrkSegNo = 1;
@@ -463,7 +463,7 @@ Route *Track::RouteFromTrack(wxProgressDialog *pprog)
 
 	// add first point
 
-	pWP_dst = new RoutePoint( pWP_src->m_lat, pWP_src->m_lon, icon, _T ( "" ), GPX_EMPTY_STRING );
+	pWP_dst = new RoutePoint(pWP_src->m_lat, pWP_src->m_lon, icon, _T ( "" ));
 	route->AddPoint( pWP_dst );
 
 	pWP_dst->m_bShowName = false;
@@ -494,7 +494,7 @@ Route *Track::RouteFromTrack(wxProgressDialog *pprog)
 
 			while( delta_inserts-- ) {
 				ll_gc_ll( pWP_src->m_lat, pWP_src->m_lon, delta_hdg, delta_dist, &tlat, &tlon );
-				pWP_dst = new RoutePoint( tlat, tlon, icon, _T ( "" ), GPX_EMPTY_STRING );
+				pWP_dst = new RoutePoint(tlat, tlon, icon, _T (""));
 				route->AddPoint( pWP_dst );
 				pWP_dst->m_bShowName = false;
 				pSelect->AddSelectableRoutePoint( pWP_dst->m_lat, pWP_dst->m_lon, pWP_dst );
@@ -523,8 +523,7 @@ Route *Track::RouteFromTrack(wxProgressDialog *pprog)
 			xte = GetXTE( pWP_src, prpX, prp );
 			if( isProminent || ( xte > g_TrackDeltaDistance ) ) {
 
-				pWP_dst = new RoutePoint( prp_OK->m_lat, prp_OK->m_lon, icon, _T ( "" ),
-						GPX_EMPTY_STRING );
+				pWP_dst = new RoutePoint(prp_OK->m_lat, prp_OK->m_lon, icon, _T ( "" ));
 
 				route->AddPoint( pWP_dst );
 				pWP_dst->m_bShowName = false;
@@ -563,8 +562,8 @@ Route *Track::RouteFromTrack(wxProgressDialog *pprog)
 
 	// add last point, if needed
 	if( delta_dist >= g_TrackDeltaDistance ) {
-		pWP_dst = new RoutePoint( pRoutePointList->GetLast()->GetData()->m_lat,
-				pRoutePointList->GetLast()->GetData()->m_lon, icon, _T ( "" ), GPX_EMPTY_STRING );
+		pWP_dst = new RoutePoint(pRoutePointList->GetLast()->GetData()->m_lat,
+				pRoutePointList->GetLast()->GetData()->m_lon, icon, _T ( "" ));
 		route->AddPoint( pWP_dst );
 
 		pWP_dst->m_bShowName = false;

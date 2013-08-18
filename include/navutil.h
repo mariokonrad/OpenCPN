@@ -89,6 +89,9 @@ class wxProgressDialog;
 class ocpnDC;
 class NavObjectCollection1;
 class NavObjectChanges;
+class GpxWptElement;
+class GpxRteElement;
+class GpxTrkElement;
 
 GpxWptElement * CreateGPXWpt(RoutePoint * pr, char * waypoint_type, bool b_props_explicit = false, bool b_props_minimal = false);
 GpxRteElement * CreateGPXRte(Route * pRoute);

@@ -120,8 +120,13 @@ RoutePoint::RoutePoint( RoutePoint* orig )
 	m_GUID = pWayPointMan->CreateGUID( this );
 }
 
-RoutePoint::RoutePoint( double lat, double lon, const wxString& icon_ident, const wxString& name,
-		const wxString &pGUID, bool bAddToList )
+RoutePoint::RoutePoint(
+		double lat,
+		double lon,
+		const wxString & icon_ident,
+		const wxString & name,
+		const wxString & pGUID,
+		bool bAddToList)
 {
 	//  Establish points
 	m_lat = lat;
@@ -367,5 +372,75 @@ bool RoutePoint::SendToGPS(const wxString & com_name, wxGauge *pProgress)
 	OCPNMessageBox( NULL, msg, _("OpenCPN Info"), wxOK | wxICON_INFORMATION );
 
 	return result;
+}
+
+double RoutePoint::GetLatitude() const
+{
+	return m_lat;
+}
+
+double RoutePoint::GetLongitude() const
+{
+	return m_lon;
+}
+
+bool RoutePoint::IsVisible() const
+{
+	return m_bIsVisible;
+}
+
+bool RoutePoint::IsListed() const
+{
+	return m_bIsListed;
+}
+
+bool RoutePoint::IsNameShown() const
+{
+	return m_bShowName;
+}
+
+void RoutePoint::SetVisible(bool viz)
+{
+	m_bIsVisible = viz;
+}
+
+void RoutePoint::SetListed(bool viz)
+{
+	m_bIsListed = viz;
+}
+
+void RoutePoint::SetNameShown(bool viz)
+{
+	m_bShowName = viz;
+}
+
+wxString RoutePoint::GetName(void) const
+{
+	return m_MarkName;
+}
+
+wxString RoutePoint::GetDescription(void) const
+{
+	return m_MarkDescription;
+}
+
+void RoutePoint::SetCourse(double course)
+{
+	m_routeprop_course = course;
+}
+
+double RoutePoint::GetCourse() const
+{
+	return m_routeprop_course;
+}
+
+void RoutePoint::SetDistance( double distance)
+{
+	m_routeprop_distance = distance;
+}
+
+double RoutePoint::GetDistance() const
+{
+	return m_routeprop_distance;
 }
 

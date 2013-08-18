@@ -29,7 +29,6 @@
 #include <wx/gdicmn.h>
 #include <wx/gauge.h>
 #include "Hyperlink.h"
-#include "gpxdocument.h"
 
 class ocpnDC;
 class wxDC;
@@ -42,7 +41,7 @@ class RoutePoint
 				double lon,
 				const wxString & icon_ident,
 				const wxString & name,
-				const wxString & pGUID = GPX_EMPTY_STRING,
+				const wxString & pGUID = _T(""),
 				bool bAddToList = true);
 		RoutePoint( RoutePoint* orig );
 		RoutePoint();
@@ -54,84 +53,82 @@ class RoutePoint
 		void SetCreateTime( wxDateTime dt );
 
 		void SetPosition(double lat, double lon);
-		double GetLatitude()  { return m_lat; };
-		double GetLongitude() { return m_lon; };
+		double GetLatitude() const;
+		double GetLongitude() const;
 		void CalculateDCRect(wxDC& dc, wxRect *prect);
 
 		bool IsSame(RoutePoint *pOtherRP);        // toh, 2009.02.11
-		bool IsVisible() { return m_bIsVisible; }
-		bool IsListed() { return m_bIsListed; }
-		bool IsNameShown() { return m_bShowName; }
-		void SetVisible(bool viz = true){ m_bIsVisible = viz; }
-		void SetListed(bool viz = true){ m_bIsListed = viz; }
-		void SetNameShown(bool viz = true) { m_bShowName = viz; }
-		wxString GetName(void){ return m_MarkName; }
-		wxString GetDescription(void) { return m_MarkDescription; }
+		bool IsVisible() const;
+		bool IsListed() const;
+		bool IsNameShown() const;
+		void SetVisible(bool viz = true);
+		void SetListed(bool viz = true);
+		void SetNameShown(bool viz = true);
+		wxString GetName(void) const;
+		wxString GetDescription(void) const;
 
 		void SetName(const wxString & name);
 		void CalculateNameExtents(void);
 
-		void SetCourse( double course) { m_routeprop_course = course; };
-		double GetCourse() { return m_routeprop_course; };
-		void SetDistance( double distance) { m_routeprop_distance = distance; };
-		double GetDistance() { return m_routeprop_distance; };
-
+		void SetCourse(double course);
+		double GetCourse() const;
+		void SetDistance(double distance);
+		double GetDistance() const;
 
 		bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
 
-
-		double             m_lat;
-		double             m_lon;
-		double             m_seg_len;              // length in NMI to this point
+		double m_lat;
+		double m_lon;
+		double m_seg_len;              // length in NMI to this point
 		// undefined for starting point
-		double            m_seg_vmg;
-		wxDateTime        m_seg_etd;
+		double m_seg_vmg;
+		wxDateTime m_seg_etd;
 
-		bool              m_bPtIsSelected;
-		bool              m_bIsBeingEdited;
+		bool m_bPtIsSelected;
+		bool m_bIsBeingEdited;
 
-		bool              m_bIsInRoute;
-		bool              m_bIsInTrack;
+		bool m_bIsInRoute;
+		bool m_bIsInTrack;
 
-		bool              m_bIsolatedMark;        // This is an isolated mark
+		bool m_bIsolatedMark;        // This is an isolated mark
 
-		bool              m_bKeepXRoute;          // This is a mark which is part of a route/track
+		bool m_bKeepXRoute;          // This is a mark which is part of a route/track
 		//  and is also an isolated mark, so should not be deleted with
 		//  route
 
-		bool              m_bIsVisible;           // true if should be drawn, false if invisible
-		bool              m_bIsListed;
-		bool              m_bIsActive;
-		wxString          m_MarkDescription;
-		wxString          m_GUID;
-		wxString          m_IconName;
+		bool m_bIsVisible;           // true if should be drawn, false if invisible
+		bool m_bIsListed;
+		bool m_bIsActive;
+		wxString m_MarkDescription;
+		wxString m_GUID;
+		wxString m_IconName;
 
-		wxFont            *m_pMarkFont;
-		wxColour          m_FontColor;
+		wxFont * m_pMarkFont;
+		wxColour m_FontColor;
 
-		wxSize            m_NameExtents;
+		wxSize m_NameExtents;
 
-		wxBitmap          *m_pbmIcon;
-		bool              m_bBlink;
-		bool              m_bDynamicName;
-		bool              m_bShowName;
-		wxRect            CurrentRect_in_DC;
-		int               m_NameLocationOffsetX;
-		int               m_NameLocationOffsetY;
-		wxString          m_timestring;
-		int               m_GPXTrkSegNo;
-		bool              m_bIsInLayer;
-		int               m_LayerID;
+		wxBitmap * m_pbmIcon;
+		bool m_bBlink;
+		bool m_bDynamicName;
+		bool m_bShowName;
+		wxRect CurrentRect_in_DC;
+		int m_NameLocationOffsetX;
+		int m_NameLocationOffsetY;
+		wxString m_timestring;
+		int m_GPXTrkSegNo;
+		bool m_bIsInLayer;
+		int m_LayerID;
 
-		double            m_routeprop_course;         // course from this waypoint to the next waypoint if in a route.
-		double            m_routeprop_distance;       // distance from this waypoint to the next waypoint if in a route.
+		double m_routeprop_course;         // course from this waypoint to the next waypoint if in a route.
+		double m_routeprop_distance;       // distance from this waypoint to the next waypoint if in a route.
 
-		HyperlinkList     *m_HyperlinkList;
-		bool              m_btemp;
+		HyperlinkList * m_HyperlinkList;
+		bool m_btemp;
 
 	private:
-		wxString          m_MarkName;
-		wxDateTime        m_CreateTimeX;
+		wxString m_MarkName;
+		wxDateTime m_CreateTimeX;
 };
 
 WX_DECLARE_LIST(RoutePoint, RoutePointList);

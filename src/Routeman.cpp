@@ -256,8 +256,7 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 	if( pRP_target == prp_first ) {
 		if( pRouteActivatePoint ) delete pRouteActivatePoint;
 
-		pRouteActivatePoint = new RoutePoint( gLat, gLon, wxString( _T("") ), wxString( _T("") ),
-				GPX_EMPTY_STRING, false ); // Current location
+		pRouteActivatePoint = new RoutePoint(gLat, gLon, _T(""), _T(""), _T(""), false); // Current location
 		pRouteActivatePoint->m_bShowName = false;
 
 		pActiveRouteSegmentBeginPoint = pRouteActivatePoint;
@@ -289,8 +288,8 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 	//    Update the RouteProperties Dialog, if currently shown
 	if( ( NULL != pRoutePropDialog ) && ( pRoutePropDialog->IsShown() ) ) {
 		if( pRoutePropDialog->m_pRoute == pA ) {
-			if( pRoutePropDialog->m_pEnroutePoint ) pRoutePropDialog->m_pEnroutePoint =
-				pActivePoint;
+			if( pRoutePropDialog->m_pEnroutePoint )
+				pRoutePropDialog->m_pEnroutePoint = pActivePoint;
 			pRoutePropDialog->SetRouteAndUpdate( pA );
 			pRoutePropDialog->UpdateProperties();
 		}

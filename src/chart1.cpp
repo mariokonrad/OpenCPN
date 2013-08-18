@@ -2962,7 +2962,7 @@ void MyFrame::OnCloseWindow( wxCloseEvent& event )
 
             wxString name = now.Format();
             name.Prepend( _("Anchorage created ") );
-            RoutePoint *pWP = new RoutePoint( gLat, gLon, _T("anchorage"), name, GPX_EMPTY_STRING );
+            RoutePoint *pWP = new RoutePoint( gLat, gLon, _T("anchorage"), name);
             pWP->m_bShowName = false;
             pWP->m_bIsolatedMark = true;
 
@@ -3521,7 +3521,7 @@ void MyFrame::ActivateMOB( void )
     mob_label += _T(" at ");
     mob_label += mob_time.FormatTime();
 
-    RoutePoint *pWP_MOB = new RoutePoint( gLat, gLon, _T ( "mob" ), mob_label, GPX_EMPTY_STRING );
+    RoutePoint *pWP_MOB = new RoutePoint( gLat, gLon, _T ( "mob" ), mob_label);
     pWP_MOB->m_bKeepXRoute = true;
     pWP_MOB->m_bIsolatedMark = true;
     pSelect->AddSelectableRoutePoint( gLat, gLon, pWP_MOB );
@@ -3533,8 +3533,7 @@ void MyFrame::ActivateMOB( void )
         double zlat, zlon;
         ll_gc_ll( gLat, gLon, gCog, 1.0, &zlat, &zlon );
 
-        RoutePoint *pWP_src = new RoutePoint( zlat, zlon, g_default_wp_icon,
-                wxString( _( "1.0 NM along COG" ) ), GPX_EMPTY_STRING );
+        RoutePoint *pWP_src = new RoutePoint( zlat, zlon, g_default_wp_icon, wxString( _( "1.0 NM along COG" )));
         pSelect->AddSelectableRoutePoint( zlat, zlon, pWP_src );
 
         Route *temp_route = new Route();

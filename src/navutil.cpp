@@ -33,6 +33,8 @@
 #include <wx/filename.h>
 #include <wx/graphics.h>
 #include <wx/dir.h>
+#include <wx/listimpl.cpp>
+#include <wx/progdlg.h>
 
 #include <stdlib.h>
 #include <math.h>
@@ -40,8 +42,7 @@
 #include <locale>
 #include <deque>
 
-#include <wx/listimpl.cpp>
-#include <wx/progdlg.h>
+#include "ais/ais.h"
 
 #include "dychart.h"
 #include "chart1.h"
@@ -56,8 +57,6 @@
 #include "RouteProp.h"
 #include "s52utils.h"
 #include "chartbase.h"
-#include "tinyxml/tinyxml.h"
-#include "gpxdocument.h"
 #include "ocpndc.h"
 #include "geodesic.h"
 #include "datastream.h"
@@ -69,8 +68,6 @@
 #include "Layer.h"
 #include "NavObjectCollection.h"
 #include "NMEALogWindow.h"
-
-#include "ais/ais.h"
 
 #ifdef USE_S57
 	#include "s52plib.h"

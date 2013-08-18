@@ -35,6 +35,7 @@
 
 #include "styles.h"
 #include "chart1.h"
+#include "tinyxml/tinyxml.h"
 
 extern wxString *pHome_Locn;
 extern wxString g_SData_Locn;
@@ -50,7 +51,7 @@ void bmdump(wxBitmap bm, wxString name)
 // This function can be used to create custom bitmap blending for platforms
 // where 32 bit bitmap ops are broken. Can hopefully be removed for wxWidgets 3.0...
 
-wxBitmap MergeBitmaps( wxBitmap back, wxBitmap front, wxSize offset )
+wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset)
 {
     wxBitmap merged( back.GetWidth(), back.GetHeight(), back.GetDepth() );
 #if (!wxCHECK_VERSION(2,9,4) && (defined(__WXGTK__) || defined(__WXMAC__)))

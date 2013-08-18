@@ -27,7 +27,6 @@
 #ifndef __STYLES__H__
 #define __STYLES__H__
 
-#include <tinyxml/tinyxml.h>
 #include "ocpn_types.h"
 
 enum StyleToolIconTypes

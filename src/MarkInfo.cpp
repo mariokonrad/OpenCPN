@@ -400,7 +400,7 @@ MarkInfoImpl::MarkInfoImpl(
 		long style)
 	: MarkInfoDef(parent, id, title, pos, size, style)
 {
-	m_pLinkProp = new LinkPropImpl( this );
+	m_pLinkProp = new LinkPropDialog( this );
 	m_pMyLinkList = NULL;
 	m_staticTextGpx->Show( false );
 	m_textCtrlGpx->Show( false );

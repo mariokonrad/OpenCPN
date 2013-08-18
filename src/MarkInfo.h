@@ -47,7 +47,7 @@ class wxPanel;
 class wxStaticBitmap;
 class wxScrolledWindow;
 
-class LinkPropImpl;
+class LinkPropDialog;
 
 class MarkInfoDef : public wxDialog
 {
@@ -155,7 +155,7 @@ class MarkInfoImpl : public MarkInfoDef
 		RoutePoint  *m_pRoutePoint;
 		HyperlinkList *m_pMyLinkList;
 		void OnHyperLinkClick(wxHyperlinkEvent &event);
-		LinkPropImpl* m_pLinkProp;
+		LinkPropDialog * m_pLinkProp;
 		bool SaveChanges();
 		wxHyperlinkCtrl* m_pEditedLink;
 

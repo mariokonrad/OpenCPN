@@ -58,13 +58,13 @@
 #endif
 
 #include "Route.h"
-#include "LinkPropDlg.h"
 
 #define ID_RCLK_MENU_COPY_TEXT 7014
 
 class OCPNTrackListCtrl;
 class RoutePoint;
 class HyperlinkList;
+class LinkPropDialog;
 
 class TrackPropDlg : public wxDialog
 {
@@ -86,7 +86,7 @@ class TrackPropDlg : public wxDialog
 		void OnHyperLinkClick(wxHyperlinkEvent &event);
 
 		HyperlinkList * m_pMyLinkList;
-		LinkPropImpl * m_pLinkProp;
+		LinkPropDialog * m_pLinkProp;
 		wxHyperlinkCtrl * m_pEditedLink;
 
 	protected:

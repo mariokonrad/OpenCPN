@@ -11,8 +11,8 @@
 #ifndef _WX_SCROLLINGDIALOG_H_
 #define _WX_SCROLLINGDIALOG_H_
 
-#include "wx/dialog.h"
-#include "wx/propdlg.h"
+#include <wx/dialog.h>
+#include <wx/propdlg.h>
 
 /*!
  * Base class for layout adapters - code that, for example, turns a dialog into a
@@ -23,6 +23,9 @@
 
 class wxScrollingDialog;
 class wxDialogHelper;
+class wxBoxSizer;
+class wxButton;
+class wxScrolledWindow;
 
 class wxDialogLayoutAdapter: public wxObject
 {

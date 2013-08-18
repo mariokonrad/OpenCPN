@@ -30,6 +30,7 @@
 #include "Select.h"
 #include "RouteManagerDialog.h"
 #include "RoutePrintSelection.h"
+#include "LinkPropDlg.h"
 #include "pluginmanager.h"
 
 extern RouteList * pRouteList;
@@ -41,8 +42,6 @@ extern MyConfig * pConfig;
 extern MyFrame * gFrame;
 extern ChartCanvas * cc1;
 extern PlugInManager * g_pi_manager;
-
-///////////////////////////////////////////////////////////////////////////
 
 TrackPropDlg::TrackPropDlg(
 		wxWindow * parent,
@@ -319,7 +318,7 @@ TrackPropDlg::TrackPropDlg(
 	m_toggleBtnEdit->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,
 			wxCommandEventHandler( TrackPropDlg::OnEditLinkToggle ), NULL, this );
 
-	m_pLinkProp = new LinkPropImpl( this );
+	m_pLinkProp = new LinkPropDialog(this);
 	m_pMyLinkList = NULL;
 }
 

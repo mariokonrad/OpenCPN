@@ -462,7 +462,7 @@ SET(HDRS
 		src/OCPNRegionIterator.h
 		src/TrackPropDlg.h
 		src/OCPNTrackListCtrl.h
-		include/LinkPropDlg.h
+		src/LinkPropDlg.h
 		src/OCPN_AlertDialog.h
 )
 

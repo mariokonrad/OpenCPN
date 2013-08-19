@@ -503,6 +503,7 @@ SET(HDRS
 		src/TCDataSource.h
 		src/ThumbWin.h
 		include/options.h
+		src/SentenceListDlg.h
 		include/gshhs.h
 		src/Kml.h
 		src/KmlFormatDialog.h
@@ -626,6 +627,7 @@ SET(SRCS
 		src/TCDataSource.cpp
 		src/ThumbWin.cpp
 		src/options.cpp
+		src/SentenceListDlg.cpp
 		src/gshhs.cpp
 		src/Kml.cpp
 		src/KmlFormatDialog.cpp

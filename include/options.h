@@ -34,17 +34,15 @@
 #include <wx/choice.h>
 #include <wx/collpane.h>
 
-#include "pluginmanager.h"
-
 #if wxCHECK_VERSION(2, 9, 0)
-#include <wx/dialog.h>
+	#include <wx/dialog.h>
 #else
-#include "scrollingdialog.h"
+	#include "scrollingdialog.h"
 #endif
 
+#include "pluginmanager.h"
 #include "datastream.h"
 
-//      Forward Declarations
 class wxGenericDirCtrl;
 class MyConfig;
 class ChartGroupsUI;
@@ -357,8 +355,8 @@ class options: public wxDialog
 		wxStaticBoxSizer* sbSizerInFilter;
 		wxStaticBoxSizer* sbSizerOutFilter;
 
-		SentenceListDlg* m_stcdialog_in;
-		SentenceListDlg* m_stcdialog_out;
+		SentenceListDlg * m_stcdialog_in;
+		SentenceListDlg * m_stcdialog_out;
 
 		// Virtual event handlers, overide them in your derived class
 		void OnSelectDatasource( wxListEvent& event );
@@ -851,57 +849,6 @@ static int lang_list[] = {
 	wxLANGUAGE_YORUBA,
 	wxLANGUAGE_ZHUANG,
 	wxLANGUAGE_ZULU
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class SentenceListDlg
-///////////////////////////////////////////////////////////////////////////////
-class SentenceListDlg : public wxDialog
-{
-	private:
-		wxArrayString m_sentences;
-		void FillSentences();
-		ConnectionParams::ListType m_type;
-		ConnectionParams::FilterDirection m_dir;
-
-	protected:
-		wxCheckListBox* m_clbSentences;
-		wxButton* m_btnAdd;
-		wxButton* m_btnDel;
-		wxButton* m_btnCheckAll;
-		wxButton* m_btnClearAll;
-		wxStdDialogButtonSizer* m_sdbSizer4;
-		wxButton* m_sdbSizer4OK;
-		wxButton* m_sdbSizer4Cancel;
-		wxArrayString standard_sentences;
-		wxStaticBox *m_pclbBox;
-
-		// Virtual event handlers, overide them in your derived class
-		void OnStcSelect( wxCommandEvent& event );
-		void OnAddClick( wxCommandEvent& event );
-		void OnDeleteClick( wxCommandEvent& event );
-		void OnCancelClick( wxCommandEvent& event );
-		void OnOkClick( wxCommandEvent& event );
-		void OnCLBSelect( wxCommandEvent& event );
-		void OnCLBToggle( wxCommandEvent& event );
-		void OnCheckAllClick( wxCommandEvent& event );
-		void OnClearAllClick( wxCommandEvent& event );
-
-	public:
-
-		SentenceListDlg(
-				ConnectionParams::FilterDirection dir,
-				wxWindow * parent,
-				wxWindowID id = wxID_ANY,
-				const wxString& title = _("Sentence Filter"),
-				const wxPoint& pos = wxDefaultPosition,
-				const wxSize& size = wxSize( 280,420 ),
-				long style = wxDEFAULT_DIALOG_STYLE );
-		~SentenceListDlg();
-		void SetSentenceList(wxArrayString sentences);
-		wxString GetSentencesAsText();
-		void BuildSentenceArray();
-		void SetType(int io, ConnectionParams::ListType type);
 };
 
 #endif

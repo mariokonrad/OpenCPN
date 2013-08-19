@@ -77,7 +77,8 @@
 #include "chart/CacheEntry.h"
 #include "navutil.h"
 #include "Track.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 #include "Routeman.h"
 #include "StatWin.h"
 #include "PianoWin.h"
@@ -259,7 +260,7 @@ bool                      g_bCruising;
 ChartDummy                *pDummyChart;
 
 ToolBarSimple*        g_toolbar;
-ocpnStyle::StyleManager*  g_StyleManager;
+ocpnStyle::StyleManager *  g_StyleManager;
 
 // Global print data, to remember settings during the session
 wxPrintData               *g_printData = (wxPrintData*) NULL ;
@@ -1764,7 +1765,7 @@ if( 0 == g_memCacheLimit )
     stats = new StatWin( cc1 );
     stats->SetColorScheme( global_color_scheme );
 
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+    ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 
     if( cc1->GetQuiltMode() ) {
         stats->pPiano->SetVizIcon( new wxBitmap( style->GetIcon( _T("viz") ) ) );
@@ -2545,7 +2546,7 @@ ToolBarSimple *MyFrame::CreateAToolbar()
     if( g_FloatingToolbarDialog ) tb = g_FloatingToolbarDialog->GetToolbar();
     if( !tb ) return 0;
 
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+    ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 
     wxString tipString;
 
@@ -2553,13 +2554,13 @@ ToolBarSimple *MyFrame::CreateAToolbar()
     tipString = wxString( _("Zoom In") ) << _T(" (+)");
     if( _toolbarConfigMenuUtil( ID_ZOOMIN, tipString ) )
         tb->AddTool( ID_ZOOMIN, _T("zoomin"),
-            style->GetToolIcon( _T("zoomin"), TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+            style->GetToolIcon( _T("zoomin"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
 
     CheckAndAddPlugInTool( tb );
     tipString = wxString( _("Zoom Out") ) << _T(" (-)");
     if( _toolbarConfigMenuUtil( ID_ZOOMOUT, tipString ) )
         tb->AddTool( ID_ZOOMOUT, _T("zoomout"),
-            style->GetToolIcon( _T("zoomout"), TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+            style->GetToolIcon( _T("zoomout"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
 
     m_toolbar_scale_tools_shown = pCurrentStack && pCurrentStack->b_valid
             && ( pCurrentStack->nEntry > 1 );
@@ -2568,7 +2569,7 @@ ToolBarSimple *MyFrame::CreateAToolbar()
     tipString = wxString( _("Shift to Larger Scale Chart") ) << _T(" (F7)");
     if( _toolbarConfigMenuUtil( ID_STKDN, tipString ) ) {
         newtool = tb->AddTool( ID_STKDN, _T("scin"),
-                style->GetToolIcon( _T("scin"), TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+                style->GetToolIcon( _T("scin"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
         newtool->Enable( m_toolbar_scale_tools_shown );
     }
 
@@ -2576,7 +2577,7 @@ ToolBarSimple *MyFrame::CreateAToolbar()
     tipString = wxString( _("Shift to Smaller Scale Chart") ) << _T(" (F8)");
     if( _toolbarConfigMenuUtil( ID_STKUP, tipString ) ) {
         newtool = tb->AddTool( ID_STKUP, _T("scout"),
-                style->GetToolIcon( _T("scout"), TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+                style->GetToolIcon( _T("scout"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
         newtool->Enable( m_toolbar_scale_tools_shown );
     }
 
@@ -2584,81 +2585,81 @@ ToolBarSimple *MyFrame::CreateAToolbar()
     tipString = wxString( _("Create Route") ) << _T(" (Ctrl-R)");
     if( _toolbarConfigMenuUtil( ID_ROUTE, tipString ) )
         tb->AddTool( ID_ROUTE, _T("route"),
-            style->GetToolIcon( _T("route"), TOOLICON_NORMAL ),
-            style->GetToolIcon( _T("route"), TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
+            style->GetToolIcon( _T("route"), ocpnStyle::TOOLICON_NORMAL ),
+            style->GetToolIcon( _T("route"), ocpnStyle::TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
 
     CheckAndAddPlugInTool( tb );
     tipString = wxString( _("Auto Follow") ) << _T(" (F2)");
     if( _toolbarConfigMenuUtil( ID_FOLLOW, tipString ) )
         tb->AddTool( ID_FOLLOW, _T("follow"),
-            style->GetToolIcon( _T("follow"), TOOLICON_NORMAL ),
-            style->GetToolIcon( _T("follow"), TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
+            style->GetToolIcon( _T("follow"), ocpnStyle::TOOLICON_NORMAL ),
+            style->GetToolIcon( _T("follow"), ocpnStyle::TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
 
     CheckAndAddPlugInTool( tb );
     tipString = _("Options");
     if( _toolbarConfigMenuUtil( ID_SETTINGS, tipString ) )
         tb->AddTool( ID_SETTINGS, _T("settings"),
-            style->GetToolIcon( _T("settings"), TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+            style->GetToolIcon( _T("settings"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
 
     CheckAndAddPlugInTool( tb );
     tipString = wxString( _("Show ENC Text") ) << _T(" (T)");
     if( _toolbarConfigMenuUtil( ID_TEXT, tipString ) )
         tb->AddTool( ID_TEXT, _T("text"),
-            style->GetToolIcon( _T("text"), TOOLICON_NORMAL ),
-            style->GetToolIcon( _T("text"), TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
+            style->GetToolIcon( _T("text"), ocpnStyle::TOOLICON_NORMAL ),
+            style->GetToolIcon( _T("text"), ocpnStyle::TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
 
     m_pAISTool = NULL;
     CheckAndAddPlugInTool( tb );
     tipString = _("Hide AIS Targets");          // inital state is on
     if( _toolbarConfigMenuUtil( ID_AIS, tipString ) )
-        m_pAISTool = tb->AddTool( ID_AIS, _T("AIS"), style->GetToolIcon( _T("AIS"), TOOLICON_NORMAL ),
-                                  style->GetToolIcon( _T("AIS"), TOOLICON_DISABLED ),
+        m_pAISTool = tb->AddTool( ID_AIS, _T("AIS"), style->GetToolIcon( _T("AIS"), ocpnStyle::TOOLICON_NORMAL ),
+                                  style->GetToolIcon( _T("AIS"), ocpnStyle::TOOLICON_DISABLED ),
                                   wxITEM_NORMAL, tipString );
 
     CheckAndAddPlugInTool( tb );
     tipString = _("Show Currents");
     if( _toolbarConfigMenuUtil( ID_CURRENT, tipString ) )
         tb->AddTool( ID_CURRENT, _T("current"),
-            style->GetToolIcon( _T("current"), TOOLICON_NORMAL ), tipString, wxITEM_CHECK );
+            style->GetToolIcon( _T("current"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_CHECK );
 
     CheckAndAddPlugInTool( tb );
     tipString = _("Show Tides");
     if( _toolbarConfigMenuUtil( ID_TIDE, tipString ) )
         tb->AddTool( ID_TIDE, _T("tide"),
-            style->GetToolIcon( _T("tide"), TOOLICON_NORMAL ), tipString, wxITEM_CHECK );
+            style->GetToolIcon( _T("tide"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_CHECK );
 
     CheckAndAddPlugInTool( tb );
     tipString = _("Print Chart");
     if( _toolbarConfigMenuUtil( ID_PRINT, tipString ) )
         tb->AddTool( ID_PRINT, _T("print"),
-            style->GetToolIcon( _T("print"), TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+            style->GetToolIcon( _T("print"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
 
     CheckAndAddPlugInTool( tb );
     tipString = _("Route Manager");
     if( _toolbarConfigMenuUtil( ID_ROUTEMANAGER, tipString ) )
         tb->AddTool( ID_ROUTEMANAGER,
-            _T("route_manager"), style->GetToolIcon( _T("route_manager"), TOOLICON_NORMAL ),
+            _T("route_manager"), style->GetToolIcon( _T("route_manager"), ocpnStyle::TOOLICON_NORMAL ),
             tipString, wxITEM_NORMAL );
 
     CheckAndAddPlugInTool( tb );
     tipString = _("Toggle Tracking");
     if( _toolbarConfigMenuUtil( ID_TRACK, tipString ) )
         tb->AddTool( ID_TRACK, _T("track"),
-            style->GetToolIcon( _T("track"), TOOLICON_NORMAL ),
-            style->GetToolIcon( _T("track"), TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
+            style->GetToolIcon( _T("track"), ocpnStyle::TOOLICON_NORMAL ),
+            style->GetToolIcon( _T("track"), ocpnStyle::TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
 
     CheckAndAddPlugInTool( tb );
     tipString = wxString( _("Change Color Scheme") ) << _T(" (F5)");
     if( _toolbarConfigMenuUtil( ID_COLSCHEME, tipString ) )
         tb->AddTool( ID_COLSCHEME,
-            _T("colorscheme"), style->GetToolIcon( _T("colorscheme"), TOOLICON_NORMAL ),
+            _T("colorscheme"), style->GetToolIcon( _T("colorscheme"), ocpnStyle::TOOLICON_NORMAL ),
             tipString, wxITEM_NORMAL );
 
     CheckAndAddPlugInTool( tb );
     tipString = _("About OpenCPN");
     if( _toolbarConfigMenuUtil( ID_HELP, tipString ) )
         tb->AddTool( ID_HELP, _T("help"),
-            style->GetToolIcon( _T("help"), TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+            style->GetToolIcon( _T("help"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
 
     //      Add any PlugIn toolbar tools that request default positioning
     AddDefaultPositionPlugInTools( tb );
@@ -2667,9 +2668,8 @@ ToolBarSimple *MyFrame::CreateAToolbar()
     tipString = wxString( _("Drop MOB Marker") ) << _(" (Ctrl-Space)");
     if( _toolbarConfigMenuUtil( ID_MOB, tipString ) )
         tb->AddTool( ID_MOB, _T("mob_btn"),
-                     style->GetToolIcon( _T("mob_btn"), TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
-                     
-                     
+                     style->GetToolIcon( _T("mob_btn"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+
 // Realize() the toolbar
     g_FloatingToolbarDialog->Realize();
 
@@ -4381,7 +4381,7 @@ void MyFrame::SetupQuiltMode( void )
 
         stats->pPiano->SetNoshowIndexArray( g_quilt_noshow_index_array );
 
-        ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+        ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 
         stats->pPiano->SetVizIcon( new wxBitmap( style->GetIcon( _T("viz") ) ) );
         stats->pPiano->SetInVizIcon( new wxBitmap( style->GetIcon( _T("redX") ) ) );

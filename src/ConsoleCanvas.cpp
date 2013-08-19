@@ -26,7 +26,6 @@
 #include "AnnunText.h"
 #include "CDI.h"
 #include "chart1.h"
-#include "styles.h"
 #include "Routeman.h"
 #include "navutil.h"
 #include "FontMgr.h"

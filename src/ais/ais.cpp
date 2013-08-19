@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  AIS Decoder Object
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -21,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include "wx/wx.h"
 #include "wx/tokenzr.h"
@@ -41,7 +38,7 @@
 #include "navutil.h"        // for Select
 #include "georef.h"
 #include "pluginmanager.h"  // for PlugInManager
-#include "styles.h"
+#include "StyleManager.h"
 #include "datastream.h"
 #include "Select.h"
 
@@ -99,7 +96,7 @@ extern double           g_AckTimeout_Mins;
 extern bool             bGPSValid;
 
 extern PlugInManager    *g_pi_manager;
-extern ocpnStyle::StyleManager* g_StyleManager;
+extern ocpnStyle::StyleManager * g_StyleManager;
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;

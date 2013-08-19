@@ -24,7 +24,8 @@
 #include "FloatingCompassWindow.h"
 #include "ocpn_types.h"
 #include "chcanv.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 
 BEGIN_EVENT_TABLE(FloatingCompassWindow, wxWindow)
 	EVT_PAINT(FloatingCompassWindow::OnPaint)
@@ -38,7 +39,7 @@ extern int g_SatsInView;
 extern bool g_bCourseUp;
 extern bool g_bskew_comp;
 
-FloatingCompassWindow::FloatingCompassWindow( wxWindow *parent )
+FloatingCompassWindow::FloatingCompassWindow(wxWindow * parent)
 {
 	m_pparent = parent;
 	long wstyle = wxNO_BORDER | wxFRAME_NO_TASKBAR;
@@ -164,7 +165,8 @@ wxBitmap FloatingCompassWindow::CreateBmp( bool newColorScheme )
 	} else
 		rose_angle = 0.;
 
-	if( fabs( m_rose_angle - rose_angle ) > .001 ) b_need_refresh = true;
+	if( fabs( m_rose_angle - rose_angle ) > .001 )
+		b_need_refresh = true;
 
 	if( b_need_refresh ) {
 		wxBitmap StatBmp;
@@ -207,7 +209,7 @@ wxBitmap FloatingCompassWindow::CreateBmp( bool newColorScheme )
 			wxBitmap iconBm;
 
 			if( style->HasBackground() ) {
-				iconBm = MergeBitmaps( compassBg, BMPRose, wxSize( 0, 0 ) );
+				iconBm = ocpnStyle::MergeBitmaps( compassBg, BMPRose, wxSize( 0, 0 ) );
 			} else {
 				iconBm = BMPRose;
 			}
@@ -218,7 +220,7 @@ wxBitmap FloatingCompassWindow::CreateBmp( bool newColorScheme )
 			m_rose_angle = rose_angle;
 
 			if( style->HasBackground() ) {
-				iconBm = MergeBitmaps( gpsBg, style->GetIcon( gpsIconName ), wxSize( 0, 0 ) );
+				iconBm = ocpnStyle::MergeBitmaps( gpsBg, style->GetIcon( gpsIconName ), wxSize( 0, 0 ) );
 			} else {
 				iconBm = style->GetIcon( gpsIconName );
 			}
@@ -238,8 +240,7 @@ wxBitmap FloatingCompassWindow::CreateBmp( bool newColorScheme )
 			sdc.DrawRoundedRectangle( wxPoint( leftmargin, topmargin ), toolsize, radius );
 			sdc.SelectObject( wxNullBitmap );
 			SetShape( wxRegion( m_MaskBmp, *wxWHITE, 0 ) );
-		}
-		else if(radius) {
+		} else if(radius) {
 			m_MaskBmp = wxBitmap( GetSize().x, GetSize().y );
 			wxMemoryDC sdc( m_MaskBmp );
 			sdc.SetBackground( *wxWHITE_BRUSH );
@@ -253,9 +254,7 @@ wxBitmap FloatingCompassWindow::CreateBmp( bool newColorScheme )
 #endif
 
 		return StatBmp;
-	}
-
-	else
+	} else
 		return wxNullBitmap;
 }
 

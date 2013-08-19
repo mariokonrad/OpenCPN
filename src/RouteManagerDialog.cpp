@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "RouteManagerDialog.h"
-#include "styles.h"
 #include "dychart.h"
 #include "navutil.h"
 #include "Select.h"

@@ -27,7 +27,6 @@
 #include <wx/printdlg.h>
 #include <wx/stattext.h>
 
-#include "styles.h"
 #include "Select.h"
 #include "RouteProp.h"
 #include "navutil.h"

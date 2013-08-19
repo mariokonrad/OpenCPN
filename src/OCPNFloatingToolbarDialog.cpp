@@ -25,6 +25,8 @@
 #include "GrabberWin.h"
 #include "ToolbarMOBDialog.h"
 #include "ToolBarSimple.h"
+#include "StyleManager.h"
+#include "Style.h"
 
 extern bool g_bTransparentToolbar;
 extern ocpnStyle::StyleManager * g_StyleManager;

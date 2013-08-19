@@ -27,10 +27,10 @@
 #include <wx/dialog.h>
 #include <wx/timer.h>
 #include "navutil.h"
-#include "styles.h"
 
 #define FADE_TIMER 2
 
+namespace ocpnStyle { class Style; }
 class ToolBarSimple;
 class GrabberWin;
 

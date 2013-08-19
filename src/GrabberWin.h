@@ -27,7 +27,8 @@
 #include <wx/panel.h>
 #include <wx/bitmap.h>
 #include "navutil.h"
-#include "styles.h"
+
+namespace ocpnStyle { class Style; }
 
 class GrabberWin : public wxPanel
 {

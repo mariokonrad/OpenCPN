@@ -4,7 +4,6 @@
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
- *   bdbcat@yahoo.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,7 +22,9 @@
  **************************************************************************/
 
 #include "StyleManager.h"
-#include "styles.h"
+#include "Style.h"
+#include "Icon.h"
+#include "Tool.h"
 #include "tinyxml/tinyxml.h"
 #include <wx/filename.h>
 #include <wx/dir.h>
@@ -59,10 +60,10 @@ StyleManager::StyleManager(void)
 {
 	isOK = false;
 	currentStyle = NULL;
-	Init( g_SData_Locn + _T("uidata") + wxFileName::GetPathSeparator() );
-	Init( *pHome_Locn );
-	Init( *pHome_Locn + _T(".opencpn") + wxFileName::GetPathSeparator() );
-	SetStyle( _T("") );
+	Init(g_SData_Locn + _T("uidata") + wxFileName::GetPathSeparator());
+	Init(*pHome_Locn);
+	Init(*pHome_Locn + _T(".opencpn") + wxFileName::GetPathSeparator());
+	SetStyle(_T(""));
 }
 
 StyleManager::StyleManager(const wxString & configDir)
@@ -76,7 +77,7 @@ StyleManager::StyleManager(const wxString & configDir)
 StyleManager::~StyleManager(void)
 {
 	for( unsigned int i = 0; i < styles.Count(); i++ ) {
-		delete (Style*) ( styles.Item( i ) );
+		delete (Style*) ( styles.Item( i ) ); // FIXME: do not use void* arrays to store objects
 	}
 	styles.Clear();
 }
@@ -88,12 +89,13 @@ void StyleManager::Init(const wxString & fromPath)
 	if( !wxDir::Exists( fromPath ) ) {
 		wxString msg = _T("No styles found at: ");
 		msg << fromPath;
-		wxLogMessage( msg );
+		wxLogMessage(msg);
 		return;
 	}
 
-	wxDir dir( fromPath );
-	if( !dir.IsOpened() ) return;
+	wxDir dir(fromPath);
+	if (!dir.IsOpened())
+		return;
 
 	wxString filename;
 
@@ -101,7 +103,7 @@ void StyleManager::Init(const wxString & fromPath)
 
 	bool more = dir.GetFirst( &filename, _T("style*.xml"), wxDIR_FILES );
 
-	if( !more ) {
+	if (!more) {
 		wxString msg = _T("No styles found at: ");
 		msg << fromPath;
 		wxLogMessage( msg );
@@ -342,14 +344,10 @@ void StyleManager::Init(const wxString & fromPath)
 								for( ; attrNode; attrNode = attrNode->NextSiblingElement() ) {
 									wxString nodeType( attrNode->Value(), wxConvUTF8 );
 									if( nodeType == _T("margin") ) {
-										attrNode->QueryIntAttribute( "top",
-												&style->compassMarginTop );
-										attrNode->QueryIntAttribute( "right",
-												&style->compassMarginRight );
-										attrNode->QueryIntAttribute( "bottom",
-												&style->compassMarginBottom );
-										attrNode->QueryIntAttribute( "left",
-												&style->compassMarginLeft );
+										attrNode->QueryIntAttribute("top", &style->compassMarginTop);
+										attrNode->QueryIntAttribute("right", &style->compassMarginRight);
+										attrNode->QueryIntAttribute("bottom", &style->compassMarginBottom);
+										attrNode->QueryIntAttribute("left", &style->compassMarginLeft);
 										continue;
 									}
 									if( nodeType == _T("compass-corners") ) {
@@ -359,10 +357,8 @@ void StyleManager::Init(const wxString & fromPath)
 										continue;
 									}
 									if( nodeType == _T("offset") ) {
-										attrNode->QueryIntAttribute( "x",
-												&style->compassXoffset );
-										attrNode->QueryIntAttribute( "y",
-												&style->compassYoffset );
+										attrNode->QueryIntAttribute("x", &style->compassXoffset);
+										attrNode->QueryIntAttribute("y", &style->compassYoffset);
 										continue;
 									}
 								}
@@ -374,8 +370,7 @@ void StyleManager::Init(const wxString & fromPath)
 								tool->name = wxString( toolNode->Attribute( "name" ), wxConvUTF8 );
 								style->toolIndex[tool->name] = style->tools.Count() - 1;
 								TiXmlHandle toolHandle( toolNode );
-								TiXmlElement* toolTag =
-									toolHandle.Child( "icon-location", 0 ).ToElement();
+								TiXmlElement* toolTag = toolHandle.Child( "icon-location", 0 ).ToElement();
 								if( toolTag ) {
 									int x, y;
 									toolTag->QueryIntAttribute( "x", &x );
@@ -488,5 +483,4 @@ Style * StyleManager::GetCurrentStyle()
 }
 
 }
-
 

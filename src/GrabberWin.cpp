@@ -23,6 +23,8 @@
 
 #include "GrabberWin.h"
 #include "OCPNFloatingToolbarDialog.h"
+#include "StyleManager.h"
+#include "Style.h"
 
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern MyFrame * gFrame;
@@ -34,17 +36,16 @@ END_EVENT_TABLE()
 
 
 GrabberWin::GrabberWin(wxWindow * parent)
+	: m_bLeftDown(false)
+	, m_bRightDown(false)
 {
 	m_style = g_StyleManager->GetCurrentStyle();
-	m_pbitmap = m_style->GetIcon( _T("grabber") );
+	m_pbitmap = m_style->GetIcon(_T("grabber"));
 
 	Create( parent, -1 );
 
-	SetSize( wxSize( m_pbitmap.GetWidth(), m_pbitmap.GetHeight() ) );
-	SetMinSize( wxSize( m_pbitmap.GetWidth(), m_pbitmap.GetHeight() ) );
-
-	m_bLeftDown = false;
-	m_bRightDown = false;
+	SetSize(wxSize(m_pbitmap.GetWidth(), m_pbitmap.GetHeight()));
+	SetMinSize(wxSize(m_pbitmap.GetWidth(), m_pbitmap.GetHeight()));
 }
 
 void GrabberWin::OnPaint(wxPaintEvent & event)
@@ -58,9 +59,9 @@ void GrabberWin::SetColorScheme(ColorScheme cs)
 {
 	wxColour back_color = GetGlobalColor( _T("GREY2") );
 
-	SetBackgroundColour( back_color );
+	SetBackgroundColour(back_color);
 	ClearBackground();
-	m_pbitmap = m_style->GetIcon( _T("grabber") );
+	m_pbitmap = m_style->GetIcon(_T("grabber"));
 }
 
 void GrabberWin::MouseEvent( wxMouseEvent& event )
@@ -79,8 +80,7 @@ void GrabberWin::MouseEvent( wxMouseEvent& event )
 		s_gspt = spt;
 		if (!HasCapture())
 			CaptureMouse();
-	}
-	else if (m_bLeftDown && !event.LeftIsDown())
+	} else if (m_bLeftDown && !event.LeftIsDown())
 	{
 		m_bLeftDown = false;
 		if (HasCapture())
@@ -94,8 +94,7 @@ void GrabberWin::MouseEvent( wxMouseEvent& event )
 			OCPNFloatingToolbarDialog *pp = wxDynamicCast(GetParent(), OCPNFloatingToolbarDialog);
 			pp->ToggleOrientation();
 		}
-	}
-	else if (m_bRightDown && !event.RightIsDown()) {
+	} else if (m_bRightDown && !event.RightIsDown()) {
 		m_bRightDown = false;
 		if (HasCapture())
 			ReleaseMouse();

@@ -23,7 +23,8 @@
 
 #include "AnnunText.h"
 #include "FontMgr.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 #include "Routeman.h"
 
 extern Routeman * g_pRouteMan;

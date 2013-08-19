@@ -24,7 +24,8 @@
 #include "ToolBarSimple.h"
 #include "ocpn_types.h"
 #include "navutil.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 #include "chart1.h"
 #include "pluginmanager.h"
 #include "FontMgr.h"
@@ -273,10 +274,10 @@ void ToolBarSimple::KillTooltip()
 	if( m_last_ro_tool ) {
 		if( m_last_ro_tool->IsEnabled() ) {
 			if( m_last_ro_tool->IsToggled() ) {
-				m_last_ro_tool->SetNormalBitmap( m_style->GetToolIcon( m_last_ro_tool->GetToolname(), TOOLICON_TOGGLED ) );
+				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon( m_last_ro_tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED));
 			}
 			else {
-				m_last_ro_tool->SetNormalBitmap( m_style->GetToolIcon( m_last_ro_tool->GetToolname(), TOOLICON_NORMAL ) );
+				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon( m_last_ro_tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL));
 			}
 		}
 	}
@@ -651,10 +652,10 @@ void ToolBarSimple::DrawTool( wxDC& dc, wxToolBarToolBase *toolBase )
 		if( tool->IsEnabled() ) {
 			bmp = tool->GetNormalBitmap();
 			if( !bmp.IsOk() )
-				bmp = m_style->GetToolIcon( tool->GetToolname(), TOOLICON_NORMAL, tool->rollover );
+				bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL, tool->rollover );
 		} else {
 			bmp = tool->GetDisabledBitmap();
-			if( !bmp.IsOk() ) bmp = m_style->GetToolIcon( tool->GetToolname(), TOOLICON_DISABLED );
+			if( !bmp.IsOk() ) bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED );
 		}
 	} else {
 		if ( tool->isPluginTool ) {
@@ -663,24 +664,24 @@ void ToolBarSimple::DrawTool( wxDC& dc, wxToolBarToolBase *toolBase )
 			// If it is not in the style we build a new icon from the style BG and the plugin icon.
 
 			if( tool->IsToggled() ) {
-				bmp = m_style->GetToolIcon( tool->GetToolname(), TOOLICON_TOGGLED, tool->rollover );
+				bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED, tool->rollover );
 				if( bmp.GetDepth() == 1 ) {
 					if( tool->rollover ) {
-						bmp = m_style->BuildPluginIcon( tool->pluginRolloverIcon, TOOLICON_TOGGLED );
-						if( ! bmp.IsOk() ) bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, TOOLICON_TOGGLED );
+						bmp = m_style->BuildPluginIcon( tool->pluginRolloverIcon, ocpnStyle::TOOLICON_TOGGLED );
+						if( ! bmp.IsOk() ) bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, ocpnStyle::TOOLICON_TOGGLED );
 					}
 					else
-						bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, TOOLICON_TOGGLED );
+						bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, ocpnStyle::TOOLICON_TOGGLED );
 				}
 			} else {
-				bmp = m_style->GetToolIcon( tool->GetToolname(), TOOLICON_NORMAL, tool->rollover );
+				bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL, tool->rollover );
 				if( bmp.GetDepth() == 1 ) {
 					if( tool->rollover ) {
-						bmp = m_style->BuildPluginIcon( tool->pluginRolloverIcon, TOOLICON_NORMAL );
-						if( ! bmp.IsOk() ) bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, TOOLICON_NORMAL );
+						bmp = m_style->BuildPluginIcon( tool->pluginRolloverIcon, ocpnStyle::TOOLICON_NORMAL );
+						if( ! bmp.IsOk() ) bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, ocpnStyle::TOOLICON_NORMAL );
 					}
 					else
-						bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, TOOLICON_NORMAL );
+						bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, ocpnStyle::TOOLICON_NORMAL );
 				}
 			}
 			tool->SetNormalBitmap( bmp );
@@ -688,14 +689,14 @@ void ToolBarSimple::DrawTool( wxDC& dc, wxToolBarToolBase *toolBase )
 		} else {
 			if( tool->IsEnabled() ) {
 				if( tool->IsToggled() )
-					bmp = m_style->GetToolIcon( tool->GetToolname(), TOOLICON_TOGGLED, tool->rollover );
+					bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED, tool->rollover );
 				else
-					bmp = m_style->GetToolIcon( tool->GetIconName(), TOOLICON_NORMAL, tool->rollover );
+					bmp = m_style->GetToolIcon( tool->GetIconName(), ocpnStyle::TOOLICON_NORMAL, tool->rollover );
 
 				tool->SetNormalBitmap( bmp );
 				tool->bitmapOK = true;
 			} else {
-				bmp = m_style->GetToolIcon( tool->GetToolname(), TOOLICON_DISABLED );
+				bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED );
 				tool->SetDisabledBitmap( bmp );
 				tool->bitmapOK = true;
 			}
@@ -1118,7 +1119,7 @@ void ToolBarSimple::SetToolNormalBitmapEx(wxToolBarToolBase *tool, const wxStrin
 	if( tool ) {
 		ocpnStyle::Style *style = g_StyleManager->GetCurrentStyle();
 
-		wxBitmap bmp = style->GetToolIcon( iconName, TOOLICON_NORMAL );
+		wxBitmap bmp = style->GetToolIcon( iconName, ocpnStyle::TOOLICON_NORMAL );
 		tool->SetNormalBitmap( bmp );
 		ToolBarTool *otool = (ToolBarTool *)tool;
 		if(otool)

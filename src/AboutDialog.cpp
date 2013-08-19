@@ -32,7 +32,8 @@
 
 #include "chart1.h"
 #include "chcanv.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 #include "version.h"
 
 wxString str_version_start = wxT("\n      Version ");
@@ -44,7 +45,7 @@ wxString OpenCPNVersion = str_version_start + str_version_major + wxT(".") + str
 
 extern wxString         glog_file;
 extern wxString         gConfig_File;
-extern ocpnStyle::StyleManager* g_StyleManager;
+extern ocpnStyle::StyleManager * g_StyleManager;
 
 static char AboutText[] =
 {
@@ -270,7 +271,7 @@ void AboutDialog::CreateControls()
 	wxButton* copyLog = new wxButton( itemDialog1, ID_COPYLOG, _("Copy Log File to Clipboard") );
 	buttonSizer->Add( copyLog, 1, wxALL | wxEXPAND, 3 );
 
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 
 	wxBitmap donate_bmp = style->GetIcon( _T("donate") );
 

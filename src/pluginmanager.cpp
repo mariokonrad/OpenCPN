@@ -29,7 +29,8 @@
 #include "chart/ChartDB.h"
 #include "chart/ChartDatabase.h"
 #include "ocpndc.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 #include "Select.h"
 #include "options.h"
 #include "Multiplexer.h"
@@ -61,7 +62,7 @@ extern wxAuiManager    *g_pauimgr;
 extern wxLocale        *plocale_def_lang;
 extern ChartDB         *ChartData;
 extern MyFrame         *gFrame;
-extern ocpnStyle::StyleManager* g_StyleManager;
+extern ocpnStyle::StyleManager * g_StyleManager;
 extern options         *g_pOptions;
 extern Multiplexer     *g_pMUX;
 extern StatWin         *stats;

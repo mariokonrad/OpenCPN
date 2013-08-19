@@ -24,8 +24,9 @@
 #ifndef __WAYPOINTMAN__H__
 #define __WAYPOINTMAN__H__
 
-#include "styles.h"
 #include "chart1.h"
+
+namespace ocpnStyle { class Style; }
 
 class RoutePoint;
 class RoutePointList;

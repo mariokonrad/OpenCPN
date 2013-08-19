@@ -28,10 +28,11 @@
 #include "chart/ChartDB.h"
 #include "chart1.h"
 #include "chartbase.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 
 extern ChartDB *ChartData;
-extern ocpnStyle::StyleManager* g_StyleManager;
+extern ocpnStyle::StyleManager * g_StyleManager;
 extern MyFrame *gFrame;
 
 BEGIN_EVENT_TABLE(StatWin, wxDialog)
@@ -98,7 +99,7 @@ void StatWin::ReSize()
 
 void StatWin::OnPaint( wxPaintEvent& event )
 {
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 
 	wxPaintDC dc( this );
 	if( style->chartStatusWindowTransparent ) return;

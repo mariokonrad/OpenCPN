@@ -42,7 +42,7 @@
 
 #include "Routeman.h"
 #include "dychart.h"
-#include "styles.h"
+#include "StyleManager.h"
 #include "CDI.h"
 #include "WayPointman.h"
 #include "ConsoleCanvas.h"

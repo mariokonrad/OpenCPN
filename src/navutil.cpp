@@ -51,7 +51,7 @@
 #include "chcanv.h"
 #include "georef.h"
 #include "cutil.h"
-#include "styles.h"
+#include "StyleManager.h"
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "RouteProp.h"
@@ -306,7 +306,7 @@ extern wxString         g_GPS_Ident;
 extern bool             g_bGarminHostUpload;
 extern wxString         g_uploadConnection;
 
-extern ocpnStyle::StyleManager* g_StyleManager;
+extern ocpnStyle::StyleManager * g_StyleManager;
 extern wxArrayString    TideCurrentDataSet;
 extern wxString         g_TCData_Dir;
 extern Multiplexer      *g_pMUX;

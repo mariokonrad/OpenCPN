@@ -27,6 +27,8 @@
 #include "Routeman.h"
 #include "Select.h"
 #include "navutil.h"
+#include "StyleManager.h"
+#include "Style.h"
 #include "gpx/GpxDocument.h"
 
 #include <wx/imaglist.h>

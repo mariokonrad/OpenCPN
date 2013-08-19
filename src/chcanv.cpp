@@ -41,7 +41,8 @@
 #include "TimedPopupWin.h"
 #include "dychart.h"
 #include "geodesic.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 #include "Routeman.h"
 #include "StatWin.h"
 #include "navutil.h"
@@ -288,7 +289,7 @@ extern wxString         g_default_wp_icon;
 extern int              g_current_arrow_scale;
 
 S57QueryDialog            *g_pObjectQueryDialog = NULL;
-extern ocpnStyle::StyleManager* g_StyleManager;
+extern ocpnStyle::StyleManager * g_StyleManager;
 extern Multiplexer      *g_pMUX;
 extern wxArrayOfConnPrm *g_pConnectionParams;
 
@@ -566,7 +567,7 @@ ChartCanvas::ChartCanvas ( wxFrame *frame ) :
 
 //    Build the cursors
 
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+    ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 
 #if defined( __WXGTK__) || defined(__WXOSX__)
 

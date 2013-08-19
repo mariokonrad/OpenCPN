@@ -24,7 +24,6 @@
 #include "Undo.h"
 #include "ocpn_types.h"
 #include "navutil.h"
-#include "styles.h"
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"

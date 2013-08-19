@@ -518,7 +518,7 @@ SET(HDRS
 		src/chart/OCPNPattern.h
 		src/chart/Lookup.h
 		src/RazdsParser.h
-		include/styles.h
+		src/Style.h
 		src/Tool.h
 		src/Icon.h
 		src/StyleManager.h
@@ -636,7 +636,7 @@ SET(SRCS
 		src/gpx/GpxDocument.cpp
 		src/chart/ChartSymbols.cpp
 		src/RazdsParser.cpp
-		src/styles.cpp
+		src/Style.cpp
 		src/Tool.cpp
 		src/Icon.cpp
 		src/StyleManager.cpp

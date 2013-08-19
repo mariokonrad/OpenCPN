@@ -30,7 +30,8 @@
 #include "AIS_Decoder.h"
 #include "AIS_Target_Data.h"
 #include "OCPNListCtrl.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 #include "Select.h"
 #include "RouteManagerDialog.h"
 #include "Undo.h"
@@ -299,7 +300,7 @@ AISTargetListDialog::AISTargetListDialog( wxWindow *parent, wxAuiManager *auimgr
 			| wxLC_VIRTUAL );
 	wxImageList *imglist = new wxImageList( 16, 16, true, 2 );
 
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 	imglist->Add( style->GetIcon( _T("sort_asc") ) );
 	imglist->Add( style->GetIcon( _T("sort_desc") ) );
 

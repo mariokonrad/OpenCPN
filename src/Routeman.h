@@ -27,7 +27,6 @@
 #include <math.h>
 
 #include "chart1.h"
-#include "styles.h"
 #include "nmea0183.h"
 
 class Route;

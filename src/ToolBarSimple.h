@@ -23,10 +23,10 @@
 
 #include <wx/toolbar.h>
 #include "navutil.h"
-#include "styles.h"
 
 #define TOOLTIPON_TIMER 10000
 
+namespace ocpnStyle { class Style; }
 class ToolTipWin;
 class GrabberWin;
 class ToolBarTool;

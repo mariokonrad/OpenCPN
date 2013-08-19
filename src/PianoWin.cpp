@@ -22,7 +22,8 @@
  **************************************************************************/
 
 #include "PianoWin.h"
-#include "styles.h"
+#include "StyleManager.h"
+#include "Style.h"
 #include "chart/ChartDB.h"
 
 #include <wx/arrimpl.cpp>
@@ -196,7 +197,7 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 			for( unsigned int ino = 0; ino < m_noshow_index_array.GetCount(); ino++ ) {
 				if( m_noshow_index_array.Item( ino ) == key_db_index ) { // chart is in the noshow list
 					if( m_pInVizIconBmp && m_pInVizIconBmp->IsOk() ) dc.DrawBitmap(
-							ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pInVizIconBmp ), box.x + 4,
+							ocpnStyle::ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pInVizIconBmp ), box.x + 4,
 							box.y + 3, false );
 					break;
 				}
@@ -206,7 +207,7 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 			for( unsigned int ino = 0; ino < m_skew_index_array.GetCount(); ino++ ) {
 				if( m_skew_index_array.Item( ino ) == key_db_index ) {       // chart is in the list
 					if( m_pSkewIconBmp && m_pSkewIconBmp->IsOk() ) dc.DrawBitmap(
-							ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pSkewIconBmp ),
+							ocpnStyle::ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pSkewIconBmp ),
 							box.x + box.width - m_pSkewIconBmp->GetWidth() - 4, box.y + 2, false );
 					break;
 				}
@@ -216,7 +217,7 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 			for( unsigned int ino = 0; ino < m_tmerc_index_array.GetCount(); ino++ ) {
 				if( m_tmerc_index_array.Item( ino ) == key_db_index ) {      // chart is in the list
 					if( m_pTmercIconBmp && m_pTmercIconBmp->IsOk() ) dc.DrawBitmap(
-							ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pTmercIconBmp ),
+							ocpnStyle::ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pTmercIconBmp ),
 							box.x + box.width - m_pTmercIconBmp->GetWidth() - 4, box.y + 2, false );
 					break;
 				}
@@ -226,7 +227,7 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 			for( unsigned int ino = 0; ino < m_poly_index_array.GetCount(); ino++ ) {
 				if( m_poly_index_array.Item( ino ) == key_db_index ) {       // chart is in the list
 					if( m_pPolyIconBmp && m_pPolyIconBmp->IsOk() ) dc.DrawBitmap(
-							ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pPolyIconBmp ),
+							ocpnStyle::ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pPolyIconBmp ),
 							box.x + box.width - m_pPolyIconBmp->GetWidth() - 4, box.y + 2, false );
 					break;
 				}

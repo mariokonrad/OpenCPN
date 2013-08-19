@@ -519,6 +519,9 @@ SET(HDRS
 		src/chart/Lookup.h
 		src/RazdsParser.h
 		include/styles.h
+		src/Tool.h
+		src/Icon.h
+		src/StyleManager.h
 		src/ToolBarSimple.h
 		src/ToolTipWin.h
 		src/ToolBarTool.h
@@ -634,6 +637,9 @@ SET(SRCS
 		src/chart/ChartSymbols.cpp
 		src/RazdsParser.cpp
 		src/styles.cpp
+		src/Tool.cpp
+		src/Icon.cpp
+		src/StyleManager.cpp
 		src/ToolBarSimple.cpp
 		src/ToolTipWin.cpp
 		src/ToolBarTool.cpp

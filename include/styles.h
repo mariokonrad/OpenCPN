@@ -30,6 +30,9 @@
 #include <wx/bitmap.h>
 #include <wx/string.h>
 #include "ocpn_types.h"
+#include "Tool.h"
+#include "Icon.h"
+#include "StyleManager.h"
 
 enum StyleToolIconTypes
 {
@@ -39,71 +42,12 @@ enum StyleToolIconTypes
 	TOOLICON_ACTIVE
 };
 
-void bmdump(wxBitmap bm, wxString name);
 wxBitmap MergeBitmaps( wxBitmap back, wxBitmap front, wxSize offset );
 wxBitmap ConvertTo24Bit( wxColor bgColor, wxBitmap front );
 
 namespace ocpnStyle {
 
 	WX_DECLARE_STRING_HASH_MAP(int, intHash);
-
-	class Tool
-	{
-		public:
-			wxString name;
-			wxPoint iconLoc;
-			wxPoint rolloverLoc;
-			wxPoint disabledLoc;
-			wxPoint activeLoc;
-			wxBitmap icon;
-			wxBitmap rollover;
-			wxBitmap rolloverToggled;
-			wxBitmap disabled;
-			wxBitmap active;
-			wxBitmap toggled;
-			bool iconLoaded;
-			bool rolloverLoaded;
-			bool rolloverToggledLoaded;
-			bool disabledLoaded;
-			bool activeLoaded;
-			bool toggledLoaded;
-			wxSize customSize;
-
-			void Unload(void)
-			{
-				iconLoaded= false;
-				rolloverLoaded = false;
-				rolloverToggledLoaded = false;
-				disabledLoaded = false;
-				activeLoaded =false;
-				toggledLoaded =false;
-			}
-
-			Tool(void)
-			{
-				Unload();
-			}
-	};
-
-	class Icon
-	{
-		public:
-			wxString name;
-			wxPoint iconLoc;
-			wxSize size;
-			wxBitmap icon;
-			bool loaded;
-
-			void Unload(void)
-			{
-				loaded = false;
-			}
-
-			Icon(void)
-			{
-				Unload();
-			}
-	};
 
 	class Style
 	{
@@ -207,28 +151,6 @@ namespace ocpnStyle {
 			int currentOrientation;
 			ColorScheme colorscheme;
 			bool hasBackground;
-	};
-
-	class StyleManager
-	{
-		public:
-			StyleManager(void);
-			~StyleManager(void);
-			StyleManager(const wxString & configDir);
-
-			bool IsOK() const { return isOK; }
-			void Init(const wxString & fromPath);
-			void SetStyle(wxString name);
-			void SetStyleNextInvocation(const wxString & name) { nextInvocationStyle = name; }
-			const wxString & GetStyleNextInvocation() const { return nextInvocationStyle; }
-			Style* GetCurrentStyle();
-			wxArrayPtrVoid GetArrayOfStyles() { return styles; };
-
-		private:
-			bool isOK;
-			wxArrayPtrVoid styles;
-			Style* currentStyle;
-			wxString nextInvocationStyle;
 	};
 }
 

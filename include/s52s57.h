@@ -305,8 +305,8 @@ public:
       S57Obj(char *first_line, wxInputStream *fpx, double ref_lat, double ref_lon);
 
       wxString GetAttrValueAsString ( char *attr );
-
-
+      int GetAttributeIndex( const char *AttrSeek );
+          
       // Private Methods
 private:
       bool IsUsefulAttribute(char *buf);
@@ -318,8 +318,9 @@ public:
       char                    FeatureName[8];
       GeoPrim_t               Primitive_type;
 
-      wxString                *attList;
+      char                    *att_array;
       wxArrayOfS57attVal      *attVal;
+      int                     n_attr;
 
       int                     iOBJL;
       int                     Index;

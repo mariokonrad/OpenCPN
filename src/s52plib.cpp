@@ -219,7 +219,7 @@ extern Cond condTable[];
 
 // get LUP with "best" Object attribute match
 LUPrec *s52plib::FindBestLUP( wxArrayPtrVoid *nameMatch, char *objAtt,
-        wxArrayOfS57attVal *objAttVal, bool bStrict )
+        wxArrayOfS57attVal *objAttVal, int n_objattr, bool bStrict )
 {
     LUPrec *LUP = NULL;
     int nATTMatch = 0;
@@ -249,7 +249,7 @@ LUPrec *s52plib::FindBestLUP( wxArrayPtrVoid *nameMatch, char *objAtt,
             wxString LATTC = LUPCandidate->ATTCArray->Item( iLUPAtt );
             wxString LATTValue( LATTC.Mid( 6 ) );
 
-            //  Verify that attribute names and values will convert with UTF8
+            //  Verify that attribute names and values in the LUP will convert with UTF8
             char *slatv = NULL;
             wxCharBuffer vbuffer=LATTValue.ToUTF8();
             if(vbuffer.data())
@@ -261,7 +261,7 @@ LUPrec *s52plib::FindBestLUP( wxArrayPtrVoid *nameMatch, char *objAtt,
                 slatc = buffer.data();
 
             if( slatv && slatc ){
-                while( *currATT != '\0' ) {
+                while( attIdx < n_objattr ) {
                     if( 0 == strncmp( slatc, currATT, 6 ) ) {
                         //OK we have an attribute match
                         //checking attribute value
@@ -357,10 +357,8 @@ LUPrec *s52plib::FindBestLUP( wxArrayPtrVoid *nameMatch, char *objAtt,
                         goto next_LUP_Attr;
                     } // if attribute match
 
-                    while( *currATT != '\037' )
-                        currATT++;
-                    currATT++;
-
+                    //  Advance to the next S57obj attribute
+                    currATT += 6;
                     ++attIdx;
 
                 } //while
@@ -1021,11 +1019,8 @@ LUPrec *s52plib::S52_LUPLookup( LUPname LUP_Name, const char * objectName, S57Ob
         index++;
     }
 
-    if( ocnt ){
-        wxCharBuffer buffer=pObj->attList->ToUTF8();
-        if(buffer.data())
-            LUP = FindBestLUP( nameMatch, buffer.data(), pObj->attVal, bStrict );
-    }
+    if( ocnt )
+        LUP = FindBestLUP( nameMatch, pObj->att_array, pObj->attVal, pObj->n_attr, bStrict );
 
     nameMatch->Clear();
     delete nameMatch;

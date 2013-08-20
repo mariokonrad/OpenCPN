@@ -2029,7 +2029,6 @@ S57Obj * cm93chart::CreateS57Obj(
 	if ( geomtype == 4 )                    // convert cm93 area(4) to GDAL area(3)...
 		geomtype_sub = 3;
 
-	pobj->attList = new wxString();
 	pobj->attVal =  new wxArrayOfS57attVal();
 
 
@@ -2215,10 +2214,18 @@ S57Obj * cm93chart::CreateS57Obj(
 
 		if ( sattr.Len() )
 		{
-			pobj->attList->Append ( sattr );
-			pobj->attList->Append ( '\037' );
+			wxASSERT( sattr.Len() == 6);
+			wxCharBuffer dbuffer=sattr.ToUTF8();
+			if(dbuffer.data()) {
+				pobj->att_array = (char *)realloc(pobj->att_array, 6*(pobj->n_attr + 1));
 
-			pobj->attVal->Add ( pattValTmp );
+				strncpy(pobj->att_array + (6 * sizeof(char) * pobj->n_attr), dbuffer.data(), 6);
+				pobj->n_attr++;
+
+				pobj->attVal->Add ( pattValTmp );
+			}
+			else
+				delete pattValTmp;
 		}
 		else
 			delete pattValTmp;
@@ -2231,7 +2238,7 @@ S57Obj * cm93chart::CreateS57Obj(
 	//    ATON label optimization:
 	//    Some CM93 ATON objects do not contain OBJNAM attribute, which means that no label is shown
 	//    for these objects when ATON labals are requested
-	//    Look for these cases, and change the OBJNAM attribute label to INFORM, if present.
+	//    Look for these cases, and change the INFORM attribute label to OBJNAM, if present.
 
 
 	if ( 1 == geomtype )
@@ -2246,62 +2253,24 @@ S57Obj * cm93chart::CreateS57Obj(
 				( !strncmp ( pobj->FeatureName, "TOWERS", 6 ) ) ||
 				( !strncmp ( pobj->FeatureName, "BOY",    3 ) ) )
 		{
-			// Walk the attribute list  looking for OBJNAM and INFORM
-			char *curr_att0 = ( char * ) calloc ( pobj->attList->Len() +1, 1 );
-			strncpy ( curr_att0, pobj->attList->mb_str(), pobj->attList->Len() );
-			char *curr_att = curr_att0;
 
-			int iatt = 0;
-			int iOBJNAM, iINFORM;
-			bool bfound_OBJNAM = false;
-			bool bfound_INFORM = false;
+			bool bfound_OBJNAM =  ( pobj->GetAttributeIndex("OBJNAM") != -1 );
+			bool bfound_INFORM =  ( pobj->GetAttributeIndex("INFORM") != -1 );
 
-			char *pszatt_name = NULL;
-			char *psz_INFORM = NULL;
-			wxString att;
-
-			while ( *curr_att )
-			{
-				pszatt_name = curr_att;       //Pointer to current attribute name
-
-				att.Clear();
-				while ( ( *curr_att ) && ( *curr_att != '\037' ) )
-				{
-					char t = *curr_att++;
-					att.Append ( t );
-				}
-
-				if ( *curr_att == '\037' )
-					curr_att++;
-
-
-				if ( att.IsSameAs ( _T ( "OBJNAM" ) ) )
-				{
-					iOBJNAM = iatt;
-					bfound_OBJNAM = true;
-				}
-
-
-				if ( att.IsSameAs ( _T ( "INFORM" ) ) )
-				{
-					iINFORM = iatt;
-					bfound_INFORM = true;
-					psz_INFORM = pszatt_name;
-				}
-
-
-				iatt++;
-			}
 
 			if ( ( !bfound_OBJNAM ) && ( bfound_INFORM ) )        // can make substitution
 			{
-				memcpy ( psz_INFORM, "OBJNAM", 6 );            // make it
-				pobj->attList->Clear();
-				pobj->attList->Append ( wxString ( curr_att0, wxConvUTF8 ) );
+				char *patl = pobj->att_array;
+				for(int i=0 ; i < pobj->n_attr ; i++) {           // find "INFORM"
+					if(!strncmp(patl, "INFORM", 6)){
+						memcpy ( patl, "OBJNAM", 6 );            // change to "OBJNAM"
+						break;
+					}
+
+					patl += 6;
+				}
+
 			}
-
-			free ( curr_att0 );
-
 		}
 	}
 

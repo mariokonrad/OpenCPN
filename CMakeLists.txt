@@ -503,6 +503,8 @@ SET(HDRS
 		src/TCDataSource.h
 		src/ThumbWin.h
 		include/options.h
+		src/OptionIDs.h
+		src/ChartGroupsUI.h
 		src/SentenceListDlg.h
 		include/gshhs.h
 		src/Kml.h
@@ -627,6 +629,7 @@ SET(SRCS
 		src/TCDataSource.cpp
 		src/ThumbWin.cpp
 		src/options.cpp
+		src/ChartGroupsUI.cpp
 		src/SentenceListDlg.cpp
 		src/gshhs.cpp
 		src/Kml.cpp

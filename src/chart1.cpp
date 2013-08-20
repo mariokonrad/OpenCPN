@@ -1284,17 +1284,13 @@ bool MyApp::OnInit()
     pConfig->LoadMyConfig( 0 );
 
     //        Is this the first run after a clean install?
-    if( !n_NavMessageShown ) g_bFirstRun = true;
+    if( !n_NavMessageShown )
+		g_bFirstRun = true;
 
     //  Now we can set the locale
 
     //    Manage internationalization of embedded messages
     //    using wxWidgets/gettext methodology....
-
-//        wxLog::SetVerbose(true);            // log all messages for debugging
-
-    if( lang_list[0] ) {
-    };                 // silly way to avoid compiler warnings
 
     // Add a new prefix for search order.
 #ifdef __WXMSW__

@@ -23,7 +23,11 @@
 
 #include "s52plib.h"
 #include "s57chart.h"
-#include "mygeom.h"
+#include "geo/TriPrim.h"
+#include "geo/PolyTessGeo.h"
+#include "geo/PolyTessGeoTrap.h"
+#include "geo/PolyTriGroup.h"
+#include "geo/PolyTrapGroup.h"
 #include "cutil.h"
 #include "s52utils.h"
 #include "navutil.h"
@@ -1705,7 +1709,7 @@ int s52plib::RenderT_All( ObjRazRules *rzRules, Rules *rules, ViewPort *vp, bool
 
 //            if ( rzRules->obj->Primitive_type == GEO_POINT )
         {
-            wxBoundingBox bbtext;
+            BoundingBox bbtext;
             double plat, plon;
 
             rzRules->chart->GetPixPoint( rect.GetX(), rect.GetY() + rect.GetHeight(), &plat, &plon,
@@ -1853,7 +1857,7 @@ bool s52plib::RenderHPGL( ObjRazRules *rzRules, Rule *prule, wxPoint &r, ViewPor
         //  Update the object Bounding box
         //  so that subsequent drawing operations will redraw the item fully
 
-        wxBoundingBox symbox;
+        BoundingBox symbox;
         double plat, plon;
 
         rzRules->chart->GetPixPoint( r.x + prule->parm2, r.y + prule->parm3 + bm_height, &plat,
@@ -2069,7 +2073,7 @@ bool s52plib::RenderRasterSymbol( ObjRazRules *rzRules, Rule *prule, wxPoint &r,
     b_width = prule->parm2;
     b_height = prule->parm3;
 
-    wxBoundingBox symbox;
+    BoundingBox symbox;
     double plat, plon;
 
     rzRules->chart->GetPixPoint( r.x - pivot_x, r.y - pivot_y + b_height, &plat, &plon, vp );
@@ -2296,7 +2300,6 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
             glLineStipple( 1, 0x3333 );
             glEnable( GL_LINE_STIPPLE );
         }
-        
     }
 
     //    Get a true pixel clipping/bounding box from the vp
@@ -2433,9 +2436,9 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
     else
         if( rzRules->obj->pPolyTessGeo ) {
             if( !rzRules->obj->pPolyTessGeo->IsOk() ) // perform deferred tesselation
-            rzRules->obj->pPolyTessGeo->BuildTessGL();
+				rzRules->obj->pPolyTessGeo->BuildTessGL();
 
-            PolyTriGroup *pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+            geo::PolyTriGroup *pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
 
             float *ppolygeo = pptg->pgroup_geom;
 
@@ -2491,7 +2494,7 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
             if( rzRules->obj->pPolyTrapGeo ) {
                 if( !rzRules->obj->pPolyTrapGeo->IsOk() ) rzRules->obj->pPolyTrapGeo->BuildTess();
 
-                PolyTrapGroup *pptg = rzRules->obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
+                geo::PolyTrapGroup *pptg = rzRules->obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
                 wxPoint2DDouble *ppolygeo = pptg->ptrapgroup_geom;
 
@@ -2688,19 +2691,16 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
             if( ( inode >= 0 ) && ( jnode >= 0 ) ) draw_lc_poly( m_pdc, color, w, ptp, nls + 2,
                     sym_len, sym_factor, rules->razRule, vp );
             else
-                draw_lc_poly( m_pdc, color, w, &ptp[1], nls, sym_len, sym_factor, rules->razRule,
-                        vp );
+                draw_lc_poly(m_pdc, color, w, &ptp[1], nls, sym_len, sym_factor, rules->razRule, vp);
 
         }
         free( ptp );
-    }
-
-    else
+    } else
         if( rzRules->obj->pPolyTessGeo ) {
             if( !rzRules->obj->pPolyTessGeo->IsOk() ) // perform deferred tesselation
             rzRules->obj->pPolyTessGeo->BuildTessGL();
 
-            PolyTriGroup *pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+            geo::PolyTriGroup *pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
             float *ppolygeo = pptg->pgroup_geom;
 
             int ctr_offset = 0;
@@ -2720,20 +2720,17 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
                 float plat = ppolygeo[ctr_offset + 1];
                 rzRules->chart->GetPointPix( rzRules, plat, plon, pr );
 
-                draw_lc_poly( m_pdc, color, w, ptp, npt + 1, sym_len, sym_factor, rules->razRule,
-                        vp );
+                draw_lc_poly(m_pdc, color, w, ptp, npt + 1, sym_len, sym_factor, rules->razRule, vp);
 
                 free( ptp );
 
                 ctr_offset += npt * 2;
             }
-        }
-
-        else
+        } else
             if( rzRules->obj->pPolyTrapGeo ) {
                 if( !rzRules->obj->pPolyTrapGeo->IsOk() ) rzRules->obj->pPolyTrapGeo->BuildTess();
 
-                PolyTrapGroup *pptg = rzRules->obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
+                geo::PolyTrapGroup *pptg = rzRules->obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
                 wxPoint2DDouble *ppolygeo = pptg->ptrapgroup_geom;
 
@@ -3470,7 +3467,7 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
     //  so that subsequent drawing operations will redraw the item fully
 
     double plat, plon;
-    wxBoundingBox symbox;
+    BoundingBox symbox;
 
     rzRules->chart->GetPixPoint( r.x + rules->razRule->parm2,
             r.y + rules->razRule->parm3 + b_height, &plat, &plon, vp );
@@ -3951,7 +3948,7 @@ bool s52plib::inter_tri_rect( wxPoint *ptp, render_canvas_parms *pb_spec )
     //    First stage
     //    Check all three points of triangle to see it any are within the render rectangle
 
-    wxBoundingBox rect( pb_spec->lclip, pb_spec->y, pb_spec->rclip, pb_spec->y + pb_spec->height );
+    BoundingBox rect( pb_spec->lclip, pb_spec->y, pb_spec->rclip, pb_spec->y + pb_spec->height );
 
     for( int i = 0; i < 3; i++ ) {
         if( rect.PointInBox( ptp[i].x, ptp[i].y ) ) return true;
@@ -4879,7 +4876,7 @@ inline int s52plib::dda_trap( wxPoint *segs, int lseg, int rseg, int ytop, int y
 }
 
 void s52plib::RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj, S52color *c,
-        wxBoundingBox &BBView, render_canvas_parms *pb_spec, render_canvas_parms *pPatt_spec )
+        BoundingBox &BBView, render_canvas_parms *pb_spec, render_canvas_parms *pPatt_spec )
 {
     S52color cp;
     if( NULL != c ) {
@@ -4900,13 +4897,12 @@ void s52plib::RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj, S5
         //  is within the requested Viewport
         double margin = BBView.GetWidth() * .05;
 
-        PolyTriGroup *ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
-
-        TriPrim *p_tp = ppg->tri_prim_head;
+        geo::PolyTriGroup *ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
+        geo::TriPrim *p_tp = ppg->tri_prim_head;
         while( p_tp ) {
             bool b_greenwich = false;
             if( BBView.GetMaxX() > 360. ) {
-                wxBoundingBox bbRight( 0., BBView.GetMinY(), BBView.GetMaxX() - 360.,
+                BoundingBox bbRight( 0., BBView.GetMinY(), BBView.GetMaxX() - 360.,
                         BBView.GetMaxY() );
                 if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) b_greenwich = true;
             }
@@ -4926,7 +4922,7 @@ void s52plib::RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj, S5
                 }
 
                 switch( p_tp->type ){
-                    case PTG_TRIANGLE_FAN: {
+                    case geo::TriPrim::PTG_TRIANGLE_FAN:
                         for( int it = 0; it < p_tp->nVert - 2; it++ ) {
                             pp3[0].x = ptp[0].x;
                             pp3[0].y = ptp[0].y;
@@ -4940,8 +4936,8 @@ void s52plib::RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj, S5
                             dda_tri( pp3, &cp, pb_spec, pPatt_spec );
                         }
                         break;
-                    }
-                    case PTG_TRIANGLE_STRIP: {
+
+                    case geo::TriPrim::PTG_TRIANGLE_STRIP:
                         for( int it = 0; it < p_tp->nVert - 2; it++ ) {
                             pp3[0].x = ptp[it].x;
                             pp3[0].y = ptp[it].y;
@@ -4955,9 +4951,8 @@ void s52plib::RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj, S5
                             dda_tri( pp3, &cp, pb_spec, pPatt_spec );
                         }
                         break;
-                    }
-                    case PTG_TRIANGLES: {
 
+                    case geo::TriPrim::PTG_TRIANGLES:
                         for( int it = 0; it < p_tp->nVert; it += 3 ) {
                             pp3[0].x = ptp[it].x;
                             pp3[0].y = ptp[it].y;
@@ -4971,8 +4966,6 @@ void s52plib::RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj, S5
                             dda_tri( pp3, &cp, pb_spec, pPatt_spec );
                         }
                         break;
-
-                    }
                 }
             } // if bbox
             p_tp = p_tp->p_next; // pick up the next in chain
@@ -4991,7 +4984,7 @@ void s52plib::RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj, S5
             cs.B = 0;
 
             if( obj->pPolyTrapGeo->IsOk() /*&& (obj->Index == 7) && ( obj->pPolyTrapGeo->GetnVertexMax() < 1000)*/) {
-                PolyTrapGroup *ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
+                geo::PolyTrapGroup *ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
                 //  Convert the segment array to screen coordinates
                 int nVertex = obj->pPolyTrapGeo->GetnVertexMax();
@@ -5003,7 +4996,7 @@ void s52plib::RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj, S5
 
                 //  Render the trapezoids
                 int ntraps = ptg->ntrap_count;
-                trapz_t *ptraps = ptg->trap_array;
+                geo::trapz_t * ptraps = ptg->trap_array;
 
                 for( int i = 0; i < ntraps; i++ ) {
                     cs.R = 0;
@@ -5063,7 +5056,7 @@ int s52plib::RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
     glColor3ub( c->R, c->G, c->B );
 
-    wxBoundingBox BBView = vp->GetBBox();
+    BoundingBox BBView = vp->GetBBox();
     if( rzRules->obj->pPolyTessGeo ) {
         if( !rzRules->obj->pPolyTessGeo->IsOk() ) // perform deferred tesselation
         rzRules->obj->pPolyTessGeo->BuildTessGL();
@@ -5075,52 +5068,36 @@ int s52plib::RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
         //  is within the requested Viewport
         double margin = BBView.GetWidth() * .05;
 
-        PolyTriGroup *ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
-
-        TriPrim *p_tp = ppg->tri_prim_head;
+        geo::PolyTriGroup *ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+        geo::TriPrim *p_tp = ppg->tri_prim_head;
         while( p_tp ) {
             bool b_greenwich = false;
             if( BBView.GetMaxX() > 360. ) {
-                wxBoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
+                BoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
                         vp->GetBBox().GetMaxY() );
                 if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) b_greenwich = true;
             }
 
             if( b_greenwich || ( BBView.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) ) {
                 //      Get and convert the points
-                /*
-                 wxPoint *pr = ptp;
-                 double *pvert_list = p_tp->p_vertex;
-
-                 for ( int iv =0 ; iv < p_tp->nVert ; iv++ )
-                 {
-                 double lon = *pvert_list++;
-                 double lat = *pvert_list++;
-                 rzRules->chart->GetPointPix ( rzRules, lat, lon, pr );
-
-                 pr++;
-                 }
-                 */
-                rzRules->chart->GetPointPix( rzRules, (wxPoint2DDouble*) p_tp->p_vertex, ptp,
-                        p_tp->nVert );
+                rzRules->chart->GetPointPix( rzRules, (wxPoint2DDouble*) p_tp->p_vertex, ptp, p_tp->nVert );
 
                 switch( p_tp->type ){
-                    case PTG_TRIANGLE_FAN: {
+                    case geo::TriPrim::PTG_TRIANGLE_FAN:
                         glBegin( GL_TRIANGLE_FAN );
                         for( int it = 0; it < p_tp->nVert; it++ )
                             glVertex2f( ptp[it].x, ptp[it].y );
                         glEnd();
                         break;
-                    }
 
-                    case PTG_TRIANGLE_STRIP: {
+                    case geo::TriPrim::PTG_TRIANGLE_STRIP:
                         glBegin( GL_TRIANGLE_STRIP );
                         for( int it = 0; it < p_tp->nVert; it++ )
                             glVertex2f( ptp[it].x, ptp[it].y );
                         glEnd();
                         break;
-                    }
-                    case PTG_TRIANGLES: {
+
+                    case geo::TriPrim::PTG_TRIANGLES:
                         for( int it = 0; it < p_tp->nVert; it += 3 ) {
                             int xmin = wxMin(ptp[it].x, wxMin(ptp[it+1].x, ptp[it+2].x));
                             int xmax = wxMax(ptp[it].x, wxMax(ptp[it+1].x, ptp[it+2].x));
@@ -5137,35 +5114,12 @@ int s52plib::RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
                             }
                         }
                         break;
-                    }
                 }
             } // if bbox
             p_tp = p_tp->p_next; // pick up the next in chain
         } // while
         free( ptp );
     } // if pPolyTessGeo
-
-#if 0
-    //    At very small scales, the object could be visible on both the left and right sides of the screen.
-    //    Identify this case......
-    if(vp->chart_scale > 5e7)
-    {
-        //    Does the object hang out over the left side of the VP?
-        if((rzRules->obj->BBObj.GetMaxX() > vp->GetBBox().GetMinX()) && (rzRules->obj->BBObj.GetMinX() < vp->GetBBox().GetMinX()))
-        {
-            //    If we add 360 to the objects lons, does it intersect the the right side of the VP?
-            if(((rzRules->obj->BBObj.GetMaxX() + 360.) > vp->GetBBox().GetMaxX()) && ((rzRules->obj->BBObj.GetMinX() + 360.) < vp->GetBBox().GetMaxX()))
-            {
-                //  If so, this area oject should be drawn again, this time for the left side
-                //    Do this by temporarily adjusting the objects rendering offset
-                rzRules->obj->x_origin -= mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * PI;
-                RenderToBufferFilledPolygon ( rzRules, rzRules->obj, c, vp->GetBBox(), pb_spec, NULL );
-                rzRules->obj->x_origin += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * PI;
-
-            }
-        }
-    }
-#endif
 
     return 1;
 }
@@ -5185,7 +5139,7 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
     GLuint clip_list = 0;
 
-    wxBoundingBox BBView = vp->GetBBox();
+    BoundingBox BBView = vp->GetBBox();
     //  Allow a little slop in calculating whether a triangle
     //  is within the requested Viewport
     double margin = BBView.GetWidth() * .05;
@@ -5243,13 +5197,12 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
             glNewList( clip_list, GL_COMPILE );
         }
 
-        PolyTriGroup *ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
-
-        TriPrim *p_tp = ppg->tri_prim_head;
+        geo::PolyTriGroup *ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+        geo::TriPrim *p_tp = ppg->tri_prim_head;
         while( p_tp ) {
             bool b_greenwich = false;
             if( BBView.GetMaxX() > 360. ) {
-                wxBoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
+                BoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
                         vp->GetBBox().GetMaxY() );
                 if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) b_greenwich = true;
             }
@@ -5274,25 +5227,22 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
                     pr++;
                 }
 
-//                        rzRules->chart->GetPointPix (  rzRules, (wxPoint2DDouble*)p_tp->p_vertex, ptp, p_tp->nVert );
-
                 switch( p_tp->type ){
-                    case PTG_TRIANGLE_FAN: {
+                    case geo::TriPrim::PTG_TRIANGLE_FAN:
                         glBegin( GL_TRIANGLE_FAN );
                         for( int it = 0; it < p_tp->nVert; it++ )
                             glVertex3f( ptp[it].x, ptp[it].y, z_clip_geom );
                         glEnd();
                         break;
-                    }
 
-                    case PTG_TRIANGLE_STRIP: {
+                    case geo::TriPrim::PTG_TRIANGLE_STRIP:
                         glBegin( GL_TRIANGLE_STRIP );
                         for( int it = 0; it < p_tp->nVert; it++ )
                             glVertex3f( ptp[it].x, ptp[it].y, z_clip_geom );
                         glEnd();
                         break;
-                    }
-                    case PTG_TRIANGLES: {
+
+                    case geo::TriPrim::PTG_TRIANGLES:
                         for( int it = 0; it < p_tp->nVert; it += 3 ) {
                             int xmin = wxMin(ptp[it].x, wxMin(ptp[it+1].x, ptp[it+2].x));
                             int xmax = wxMax(ptp[it].x, wxMax(ptp[it+1].x, ptp[it+2].x));
@@ -5309,7 +5259,6 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
                             }
                         }
                         break;
-                    }
                 }
             } // if bbox
             p_tp = p_tp->p_next; // pick up the next in chain
@@ -5546,7 +5495,7 @@ render_canvas_parms* s52plib::CreatePatternBufferSpec( ObjRazRules *rzRules, Rul
         float fsf = 100 / canvas_pix_per_mm;
 
         // Base bounding box
-        wxBoundingBox box( prule->pos.patt.bnbox_x.PBXC, prule->pos.patt.bnbox_y.PBXR,
+        BoundingBox box( prule->pos.patt.bnbox_x.PBXC, prule->pos.patt.bnbox_y.PBXR,
                 prule->pos.patt.bnbox_x.PBXC + prule->pos.patt.bnbox_w.PAHL,
                 prule->pos.patt.bnbox_y.PBXR + prule->pos.patt.bnbox_h.PAVL );
 
@@ -5957,14 +5906,14 @@ bool s52plib::ObjectRenderCheckPos( ObjRazRules *rzRules, ViewPort *vp )
 //        return false;
 
     // Of course, the object must be at least partly visible in the viewport
-    wxBoundingBox BBView = vp->GetBBox();
+    BoundingBox BBView = vp->GetBBox();
     if( BBView.Intersect( rzRules->obj->BBObj, 0 ) == _OUT ) // Object is wholly outside window
             {
 
         //  Do a secondary test if the viewport crosses Greenwich
         //  This will pick up objects east of Greenwich
         if( vp->GetBBox().GetMaxX() > 360. ) {
-            wxBoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
+            BoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
                     vp->GetBBox().GetMaxY() );
             if( bbRight.Intersect( rzRules->obj->BBObj, 0 ) == _OUT ) return false;
         }

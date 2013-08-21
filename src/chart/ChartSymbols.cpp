@@ -25,6 +25,8 @@
 
 #include "ChartSymbols.h"
 #include <wx/filename.h>
+#include <wx/log.h>
+#include <wx/image.h>
 #include <stdlib.h>
 
 //--------------------------------------------------------------------------------------

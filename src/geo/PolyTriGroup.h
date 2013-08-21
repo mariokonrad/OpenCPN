@@ -21,4 +21,33 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#ifndef __GEO__POLYTRIGROUP__H__
+#define __GEO__POLYTRIGROUP__H__
 
+namespace geo {
+
+class ExtendedGeometry;
+class TriPrim;
+
+/// Used for describing/rendering tesselated polygons
+class PolyTriGroup
+{
+	public:
+		PolyTriGroup();
+		PolyTriGroup(ExtendedGeometry * pxGeom);
+		~PolyTriGroup();
+
+		int nContours;
+		int * pn_vertex;             // pointer to array of poly vertex counts
+		float * pgroup_geom;           // pointer to Raw geometry, used for contour line drawing
+
+		TriPrim * tri_prim_head;         // head of linked list of TriPrims
+		bool m_bSMSENC;
+
+	private:
+		int my_bufgets( char *buf, int buf_len_max );
+};
+
+}
+
+#endif

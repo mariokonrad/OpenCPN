@@ -21,4 +21,21 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include "TriPrim.h"
+#include "bbox.h"
+#include <cstdlib>
+
+namespace geo {
+
+TriPrim::TriPrim()
+{
+}
+
+TriPrim::~TriPrim()
+{
+	free(p_vertex); // FIXME: replace traditional memory allocations
+	delete p_bbox;
+}
+
+}
 

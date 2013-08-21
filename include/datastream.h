@@ -24,9 +24,7 @@
 #ifndef __DATASTREAM_H__
 #define __DATASTREAM_H__
 
-#undef HAVE_ROUND // FIXME: if defined wxMath thinks round_msvc must be defined, silly on Linux
 #include <wx/timer.h>
-
 #include <wx/datetime.h>
 
 #ifdef __WXGTK__

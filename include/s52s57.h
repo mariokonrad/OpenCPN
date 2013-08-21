@@ -31,13 +31,16 @@
 
 #include "bbox.h"
 
+#include <wx/colour.h>
+#include <wx/stream.h>
+#include <wx/dc.h>
+
 #define CURRENT_SENC_FORMAT_VERSION  122
 
 //    Fwd Defns
 class wxArrayOfS57attVal;
 class OGREnvelope;
 class OGRGeometry;
-class wxBoundingBox;
 
 // name of the addressed look up table set (fifth letter)
 typedef enum _LUPname{
@@ -280,15 +283,18 @@ typedef enum _geoPrim_t{
 typedef struct _pt{
    double x;
    double y;
-}pt;
+}pt; // FIXME: who the hell names types like this?
 
 
-//      Fwd References
+// Fwd References
 class s57chart;
 class S57Obj;
 class OGRFeature;
-class PolyTessGeo;
-class PolyTessGeoTrap;
+
+namespace geo {
+	class PolyTessGeo;
+	class PolyTessGeoTrap;
+}
 
 
 class S57Obj
@@ -328,10 +334,10 @@ public:
       double                  *geoPtz;                // an array[3] for MultiPoint, SM with Z, i.e. depth
       double                  *geoPtMulti;            // an array[2] for MultiPoint, lat/lon to make bbox
                                                       // of decomposed points
-      PolyTessGeo             *pPolyTessGeo;
-      PolyTessGeoTrap         *pPolyTrapGeo;
+      geo::PolyTessGeo             *pPolyTessGeo;
+      geo::PolyTessGeoTrap         *pPolyTrapGeo;
 
-      wxBoundingBox           BBObj;                  // lat/lon BBox of the rendered object
+      BoundingBox           BBObj;                  // lat/lon BBox of the rendered object
       double                  m_lat;                  // The lat/lon of the object's "reference" point
       double                  m_lon;
       bool                    bBBObj_valid;           // set after the BBObj has been calculated once.

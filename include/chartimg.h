@@ -31,6 +31,9 @@
 #include "OCPNRegion.h"
 #include "ViewPort.h"
 
+class wxInputStream;
+class wxBufferedInputStream;
+
 typedef enum ScaleTypeEnum
 {
       RENDER_LODEF = 0,

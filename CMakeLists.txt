@@ -697,13 +697,22 @@ IF (USE_S57)
 		include/s52plib.h
 		include/s52utils.h
 		include/s57chart.h
-		include/mygeom.h
+		src/geo/ExtendedGeometry.h
+		src/geo/TriPrim.h
+		src/geo/PolyTriGroup.h
+		src/geo/PolyTrapGroup.h
+		src/geo/PolyTessGeo.h
 		src/s52cnsy.cpp
 		src/s52plib.cpp
 		src/s52utils.cpp
 		src/s57chart.cpp
 		src/cm93.cpp
-		src/mygeom.cpp
+		src/geo/TriPrim.cpp
+		src/geo/ExtendedGeometry.cpp
+		src/geo/PolyTriGroup.cpp
+		src/geo/PolyTrapGroup.cpp
+		src/geo/PolyTessGeoTrap.cpp
+		src/geo/PolyTessGeo.cpp
 		include/cm93.h
 		src/tri.c
 		src/myiso8211/ddffielddefn.cpp

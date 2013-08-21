@@ -26,6 +26,7 @@
 
 #include <wx/datetime.h>
 #include <wx/progdlg.h>
+#include <wx/timer.h>
 
 #include <vector>
 #include <deque>
@@ -62,7 +63,7 @@ class Track
 		void AdjustCurrentTrackPoint(RoutePoint * prototype);
 
 	private:
-		void OnTimerTrack(wxTimerEvent& event);
+		void OnTimerTrack(wxTimerEvent & event);
 		void AddPointNow(bool do_add_point = false);
 
 		bool m_bRunning;

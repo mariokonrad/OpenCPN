@@ -25,6 +25,7 @@
 #include "s52plib.h"
 #include "chart/ChartSymbols.h"
 #include <wx/tokenzr.h>
+#include <wx/log.h>
 #include <stdio.h>
 #include <math.h>
 

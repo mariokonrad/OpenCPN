@@ -21,4 +21,40 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#ifndef __GEO__POLYTRAPGROUP__H__
+#define __GEO__POLYTRAPGROUP__H__
 
+class wxPoint2DDouble;
+
+namespace geo {
+
+class ExtendedGeometry;
+
+typedef struct
+{
+	int ilseg;
+	int irseg;
+	double loy;
+	double hiy;
+} trapz_t;
+
+/// Used for describing/rendering tesselated polygons
+class PolyTrapGroup
+{
+	public:
+		PolyTrapGroup();
+		PolyTrapGroup(ExtendedGeometry * pxGeom);
+		~PolyTrapGroup();
+
+		int nContours;
+		int * pn_vertex;             // pointer to array of poly vertex counts
+		wxPoint2DDouble * ptrapgroup_geom;       // pointer to Raw geometry, used for contour line drawing
+
+		int ntrap_count;
+		trapz_t * trap_array;
+		int m_trap_error;
+};
+
+}
+
+#endif

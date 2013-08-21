@@ -21,4 +21,21 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include "ExtendedGeometry.h"
+
+namespace geo {
+
+ExtendedGeometry::ExtendedGeometry()
+{
+	vertex_array = NULL;
+	contour_array = NULL;
+}
+
+ExtendedGeometry::~ExtendedGeometry()
+{
+	free(vertex_array);
+	free(contour_array);
+}
+
+}
 

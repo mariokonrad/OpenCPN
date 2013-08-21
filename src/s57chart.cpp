@@ -41,7 +41,11 @@
 
 #include "s57chart.h"
 
-#include "mygeom.h"
+#include "geo/PolyTessGeo.h"
+#include "geo/PolyTessGeoTrap.h"
+#include "geo/TriPrim.h"
+#include "geo/PolyTriGroup.h"
+#include "geo/PolyTrapGroup.h"
 #include "cutil.h"
 #include "georef.h"
 #include "navutil.h"                            // for LogMessageOnce
@@ -658,7 +662,7 @@ S57Obj::S57Obj( char *first_line, wxInputStream *pfpx, double dummy, double dumm
                             unsigned char *polybuf = (unsigned char *) malloc( nrecl + 1 );
                             pfpx->Read( polybuf, nrecl );
                             polybuf[nrecl] = 0;                     // endit
-                            PolyTessGeo *ppg = new PolyTessGeo( polybuf, nrecl, FEIndex );
+                            geo::PolyTessGeo * ppg = new geo::PolyTessGeo( polybuf, nrecl, FEIndex );
                             free( polybuf );
 
                             pPolyTessGeo = ppg;
@@ -5199,11 +5203,11 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                 //      Special case, polygons are handled separately
             case wkbPolygon: {
                 int error_code;
-                PolyTessGeo *ppg = NULL;
+                geo::PolyTessGeo *ppg = NULL;
 
                 OGRPolygon *poly = (OGRPolygon *) ( pGeo );
 
-                ppg = new PolyTessGeo( poly, true, ref_lat, ref_lon, 0 );   //try to use glu library
+                ppg = new geo::PolyTessGeo( poly, true, ref_lat, ref_lon, 0 );   //try to use glu library
 
                 error_code = ppg->ErrorCode;
                 if( error_code == ERROR_NO_DLL ) {
@@ -5214,7 +5218,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
 
                     delete ppg;
                     //  Try with internal tesselator
-                    ppg = new PolyTessGeo( poly, true, ref_lat, ref_lon, 1 );
+                    ppg = new geo::PolyTessGeo( poly, true, ref_lat, ref_lon, 1 );
                     error_code = ppg->ErrorCode;
                 }
 
@@ -5520,7 +5524,7 @@ bool s57chart::DoesLatLonSelectObject( float lat, float lon, float select_radius
                     // Double the select radius to adjust for the fact that LIGHTS has
                     // a 0x0 BBox to start with, which makes it smaller than all other
                     // rendered objects.
-                    wxBoundingBox sbox( olon - 2*select_radius, olat - 2*select_radius,
+                    BoundingBox sbox( olon - 2*select_radius, olat - 2*select_radius,
                             olon + 2*select_radius, olat + 2*select_radius );
 
                     if( sbox.PointInBox( lon, lat, 0 ) ) return true;
@@ -5541,7 +5545,7 @@ bool s57chart::DoesLatLonSelectObject( float lat, float lon, float select_radius
                 for( int ip = 0; ip < obj->npt; ip++ ) {
                     double lon_point = *pdl++;
                     double lat_point = *pdl++;
-                    wxBoundingBox BB_point( lon_point, lat_point, lon_point, lat_point );
+                    BoundingBox BB_point( lon_point, lat_point, lon_point, lat_point );
                     if( BB_point.PointInBox( lon, lat, select_radius ) ) {
 //                                  index = ip;
                         return true;
@@ -5696,17 +5700,17 @@ bool s57chart::IsPointInObjArea( float lat, float lon, float select_radius, S57O
     bool ret = false;
 
     if( obj->pPolyTessGeo ) {
-        if( !obj->pPolyTessGeo->IsOk() ) obj->pPolyTessGeo->BuildTessGL();
+        if( !obj->pPolyTessGeo->IsOk() )
+			obj->pPolyTessGeo->BuildTessGL();
 
-        PolyTriGroup *ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
-
-        TriPrim *pTP = ppg->tri_prim_head;
-
+        geo::PolyTriGroup *ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
+        geo::TriPrim * pTP = ppg->tri_prim_head;
         MyPoint pvert_list[3];
 
         //  Polygon geometry is carried in SM coordinates, so...
         //  make the hit test thus.
-        double easting, northing;
+        double easting;
+        double northing;
         toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
 
         //  On some chart types (e.g. cm93), the tesseleated coordinates are stored differently.
@@ -5729,7 +5733,7 @@ bool s57chart::IsPointInObjArea( float lat, float lon, float select_radius, S57O
                 double *p_vertex = pTP->p_vertex;
 
                 switch( pTP->type ){
-                    case PTG_TRIANGLE_FAN: {
+                    case geo::TriPrim::PTG_TRIANGLE_FAN:
                         for( int it = 0; it < pTP->nVert - 2; it++ ) {
                             pvert_list[0].x = p_vertex[0];
                             pvert_list[0].y = p_vertex[1];
@@ -5746,8 +5750,8 @@ bool s57chart::IsPointInObjArea( float lat, float lon, float select_radius, S57O
                             }
                         }
                         break;
-                    }
-                    case PTG_TRIANGLE_STRIP: {
+
+                    case geo::TriPrim::PTG_TRIANGLE_STRIP:
                         for( int it = 0; it < pTP->nVert - 2; it++ ) {
                             pvert_list[0].x = p_vertex[( it * 2 )];
                             pvert_list[0].y = p_vertex[( it * 2 ) + 1];
@@ -5764,8 +5768,8 @@ bool s57chart::IsPointInObjArea( float lat, float lon, float select_radius, S57O
                             }
                         }
                         break;
-                    }
-                    case PTG_TRIANGLES: {
+
+                    case geo::TriPrim::PTG_TRIANGLES:
                         for( int it = 0; it < pTP->nVert; it += 3 ) {
                             pvert_list[0].x = p_vertex[( it * 2 )];
                             pvert_list[0].y = p_vertex[( it * 2 ) + 1];
@@ -5782,7 +5786,6 @@ bool s57chart::IsPointInObjArea( float lat, float lon, float select_radius, S57O
                             }
                         }
                         break;
-                    }
                 }
 
             }
@@ -5794,7 +5797,7 @@ bool s57chart::IsPointInObjArea( float lat, float lon, float select_radius, S57O
     else if( obj->pPolyTrapGeo ) {
         if( !obj->pPolyTrapGeo->IsOk() ) obj->pPolyTrapGeo->BuildTess();
 
-        PolyTrapGroup *ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
+        geo::PolyTrapGroup *ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
         //  Polygon geometry is carried in SM coordinates, so...
         //  make the hit test thus.
@@ -5803,7 +5806,7 @@ bool s57chart::IsPointInObjArea( float lat, float lon, float select_radius, S57O
         toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
 
         int ntraps = ptg->ntrap_count;
-        trapz_t *ptraps = ptg->trap_array;
+        geo::trapz_t * ptraps = ptg->trap_array;
         MyPoint *segs = (MyPoint *) ptg->ptrapgroup_geom; //TODO convert MyPoint to wxPoint2DDouble globally
 
         MyPoint pvert_list[4];

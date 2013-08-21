@@ -846,7 +846,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 
 			if( ( g_GroupIndex > 0 ) && ( !ChartData->IsChartInGroup( i, g_GroupIndex ) ) ) continue;
 
-			wxBoundingBox chart_box;
+			BoundingBox chart_box;
 			ChartData->GetDBBoundingBox( i, &chart_box );
 			if( ( viewbox.Intersect( chart_box ) == _OUT ) ) continue;
 

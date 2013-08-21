@@ -34,6 +34,7 @@
 
 class ViewPort;
 class OCPNRegion;
+class wxMemoryDC;
 
 // ChartBase::Init()  init_flags constants
 typedef enum ChartInitFlag

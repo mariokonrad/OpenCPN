@@ -279,7 +279,7 @@ class ChartDatabase
 		int GetDBChartProj(int dbIndex);
 		int GetDBChartScale(int dbIndex);
 
-		bool GetDBBoundingBox(int dbindex, wxBoundingBox *box);
+		bool GetDBBoundingBox(int dbindex, BoundingBox *box);
 		int  GetnAuxPlyEntries(int dbIndex);
 		int  GetDBPlyPoint(int dbIndex, int plyindex, float *lat, float *lon);
 		int  GetDBAuxPlyPoint(int dbIndex, int plyindex, int iAuxPly, float *lat, float *lon);

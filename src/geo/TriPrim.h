@@ -21,4 +21,36 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#ifndef __GEO__TRIPRIM__H__
+#define __GEO__TRIPRIM__H__
 
+class BoundingBox;
+
+namespace geo {
+
+/// Used for describing/rendering tesselated polygons
+class TriPrim
+{
+	public:
+		//  nota bene  These definitions are identical to OpenGL prototypes
+		enum Type
+		{
+			PTG_TRIANGLES      = 0x0004,
+			PTG_TRIANGLE_STRIP = 0x0005,
+			PTG_TRIANGLE_FAN   = 0x0006
+		};
+
+	public:
+		TriPrim();
+		~TriPrim();
+
+		Type type;
+		int nVert;
+		double * p_vertex; //  Pointer to vertex array, x,y,x,y.....
+		BoundingBox * p_bbox;
+		TriPrim * p_next; // chain link
+};
+
+}
+
+#endif

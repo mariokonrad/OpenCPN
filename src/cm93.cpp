@@ -43,7 +43,9 @@
 #include "cm93.h"
 #include "s52plib.h"
 #include "georef.h"
-#include "mygeom.h"
+#include "geo/PolyTessGeo.h"
+#include "geo/PolyTessGeoTrap.h"
+#include "geo/ExtendedGeometry.h"
 #include "cutil.h"
 #include "navutil.h"                            // for LogMessageOnce
 #include "ocpn_pixel.h"                         // for ocpnUSE_DIBSECTION
@@ -62,25 +64,25 @@
 #define new DEBUG_NEW
 #endif
 
-extern wxString         g_SENCPrefix;
-extern s52plib          *ps52plib;
-extern MyConfig         *pConfig;
-extern bool             g_bDebugCM93;
-extern int              g_cm93_zoom_factor;
-extern CM93DSlide       *pCM93DetailSlider;
-extern int              g_cm93detail_dialog_x, g_cm93detail_dialog_y;
-extern bool             g_bShowCM93DetailSlider;
-extern wxString         g_PrivateDataDir;
+extern wxString g_SENCPrefix;
+extern s52plib * ps52plib;
+extern MyConfig * pConfig;
+extern bool g_bDebugCM93;
+extern int g_cm93_zoom_factor;
+extern CM93DSlide * pCM93DetailSlider;
+extern int g_cm93detail_dialog_x, g_cm93detail_dialog_y;
+extern bool g_bShowCM93DetailSlider;
+extern wxString g_PrivateDataDir;
 
 // Flav add for CM93Offset manual setup
-extern double           g_CM93Maps_Offset_x;
-extern double           g_CM93Maps_Offset_y;
-extern bool             g_CM93Maps_Offset_on;
+extern double g_CM93Maps_Offset_x;
+extern double g_CM93Maps_Offset_y;
+extern bool g_CM93Maps_Offset_on;
 
 
 
 // TODO  These should be gotten from the ctor
-extern MyFrame          *gFrame;
+extern MyFrame * gFrame;
 
 
 #include <wx/arrimpl.cpp>
@@ -207,7 +209,7 @@ int M_COVR_Desc:: ReadWKB ( wxFFileInputStream &ifs )
             else
                   m_buser_offsets = false;
 
-            m_covr_bbox = wxBoundingBox ( m_covr_lon_min, m_covr_lat_min, m_covr_lon_max, m_covr_lat_max );
+            m_covr_bbox = BoundingBox ( m_covr_lon_min, m_covr_lat_min, m_covr_lon_max, m_covr_lat_max );
 
       }
       return length;
@@ -1991,7 +1993,7 @@ void cm93chart::GetPointPix ( ObjRazRules *rzRules, float north, float east, wxP
       //    Crossing Greenwich right
       if ( m_vp_current.GetBBox().GetMaxX() > 360. )
       {
-            wxBoundingBox bbRight ( 0., m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360., m_vp_current.GetBBox().GetMaxY() );
+            BoundingBox bbRight ( 0., m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360., m_vp_current.GetBBox().GetMaxY() );
             if ( bbRight.Intersect ( rzRules->obj->BBObj, 0 ) != _OUT )
             {
                   valx += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * PI;      //6375586.0;
@@ -2016,7 +2018,7 @@ void cm93chart::GetPointPix ( ObjRazRules *rzRules, wxPoint2DDouble *en, wxPoint
       //    Crossing Greenwich right
       if ( m_vp_current.GetBBox().GetMaxX() > 360. )
       {
-            wxBoundingBox bbRight ( 0., m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360., m_vp_current.GetBBox().GetMaxY() );
+            BoundingBox bbRight ( 0., m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360., m_vp_current.GetBBox().GetMaxY() );
             if ( bbRight.Intersect ( rzRules->obj->BBObj, 0 ) != _OUT )
             {
                   xo += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * PI;
@@ -2328,7 +2330,7 @@ int cm93chart::CreateObjChain ( int cell_index, int subcell )
       {
             if ( ( pobjectDef != NULL ) )
             {
-                  Extended_Geometry *xgeom = BuildGeom ( pobjectDef, NULL, iObj );
+                  geo::ExtendedGeometry *xgeom = BuildGeom ( pobjectDef, NULL, iObj );
 
                   obj = NULL;
                   if ( NULL != xgeom )
@@ -2581,7 +2583,7 @@ InitReturn cm93chart::Init ( const wxString& name, ChartInitFlag flags )
 
 }
 
-Extended_Geometry *cm93chart::BuildGeom ( Object *pobject, wxFileOutputStream *postream, int iobject )
+geo::ExtendedGeometry *cm93chart::BuildGeom ( Object *pobject, wxFileOutputStream *postream, int iobject )
 
 {
       wxString s;
@@ -2607,7 +2609,7 @@ Extended_Geometry *cm93chart::BuildGeom ( Object *pobject, wxFileOutputStream *p
 
       int iseg;
 
-      Extended_Geometry *ret_ptr = new Extended_Geometry;
+      geo::ExtendedGeometry *ret_ptr = new geo::ExtendedGeometry;
 
       int lon_max, lat_max, lon_min, lat_min;
       lon_max = 0; lon_min = 65536; lat_max = 0; lat_min = 65536;
@@ -3203,8 +3205,16 @@ void cm93chart::translate_colmar(const wxString &sclass, S57attVal *pattValTmp)
 }
 
 
-S57Obj *cm93chart::CreateS57Obj ( int cell_index, int iobject, int subcell, Object *pobject, cm93_dictionary *pDict, Extended_Geometry *xgeom,
-                                  double ref_lat, double ref_lon, double scale )
+S57Obj * cm93chart::CreateS57Obj(
+		int cell_index,
+		int iobject,
+		int subcell,
+		Object * pobject,
+		cm93_dictionary * pDict,
+		geo::ExtendedGeometry * xgeom,
+		double ref_lat,
+		double ref_lon,
+		double scale)
 {
 
 #define MAX_HDR_LINE    4000
@@ -3612,7 +3622,7 @@ S57Obj *cm93chart::CreateS57Obj ( int cell_index, int iobject, int subcell, Obje
                               pmcd->m_nvertices = npta;
                               pmcd->pvertices = geoPt;
 
-                              pmcd->m_covr_bbox = wxBoundingBox ( pmcd->m_covr_lon_min, pmcd->m_covr_lat_min, pmcd->m_covr_lon_max, pmcd->m_covr_lat_max );
+                              pmcd->m_covr_bbox = BoundingBox ( pmcd->m_covr_lon_min, pmcd->m_covr_lat_min, pmcd->m_covr_lon_max, pmcd->m_covr_lat_max );
 
 
                               //    Capture and store the potential WGS transform offsets grabbed during attribute decode
@@ -3712,7 +3722,7 @@ S57Obj *cm93chart::CreateS57Obj ( int cell_index, int iobject, int subcell, Obje
                         xgeom->y_offset = m_CIB.transform_y_origin - trans_WGS84_offset_y;
 
                         //    Set up a deferred tesselation
-                        pobj->pPolyTessGeo = new PolyTessGeo ( xgeom );
+                        pobj->pPolyTessGeo = new geo::PolyTessGeo(xgeom);
                   }
 
                   break;
@@ -4150,7 +4160,7 @@ void cm93chart::ProcessMCOVRObjects ( int cell_index, char subcell )
                         M_COVR_Desc *pmcd = m_pcovr_set->Find_MCD ( cell_index, iObj, ( int ) subcell );
                         if ( NULL == pmcd )
                         {
-                              Extended_Geometry *xgeom = BuildGeom ( pobject, NULL, iObj );
+                              geo::ExtendedGeometry *xgeom = BuildGeom ( pobject, NULL, iObj );
 
                               //    Decode the attributes, specifically looking for _wgsox, _wgsoy
 
@@ -4233,7 +4243,7 @@ void cm93chart::ProcessMCOVRObjects ( int cell_index, char subcell )
                                     pmcd->m_nvertices = npta;
                                     pmcd->pvertices = geoPt;
 
-                                    pmcd->m_covr_bbox = wxBoundingBox ( pmcd->m_covr_lon_min, pmcd->m_covr_lat_min,
+                                    pmcd->m_covr_bbox = BoundingBox ( pmcd->m_covr_lon_min, pmcd->m_covr_lat_min,
                                                 pmcd->m_covr_lon_max, pmcd->m_covr_lat_max );
 
 
@@ -5145,7 +5155,7 @@ OCPNRegion cm93compchart::GetValidScreenCanvasRegion ( const ViewPort& VPoint, c
                   M_COVR_Desc *pmcd = ( m_pcm93chart_current->m_pcovr_array_loaded.Item ( im ) );
 
                   //    We can make a quick test based on the bbox of the M_COVR and the bbox of the ViewPort
-                  wxBoundingBox rtwbb = pmcd->m_covr_bbox;
+                  BoundingBox rtwbb = pmcd->m_covr_bbox;
                   wxPoint2DDouble rtw ( 360., 0. );
                   rtwbb.Translate ( rtw );
 

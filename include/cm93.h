@@ -73,7 +73,7 @@ class M_COVR_Desc
       double      user_xoff;
       double      user_yoff;
 
-      wxBoundingBox m_covr_bbox;
+      BoundingBox m_covr_bbox;
       bool        m_buser_offsets;
 
 };
@@ -95,7 +95,7 @@ static const double CM93_semimajor_axis_meters        = 6378388.0;            //
 
 //    CM93 Data structures
 
-class Extended_Geometry;
+namespace geo { class ExtendedGeometry; }
 
 //#pragma pack(push,1)
 
@@ -343,10 +343,10 @@ class cm93chart : public s57chart
       private:
             InitReturn CreateHeaderDataFromCM93Cell(void);
             int read_header_and_populate_cib(header_struct *ph, Cell_Info_Block *pCIB);
-            Extended_Geometry *BuildGeom(Object *pobject, wxFileOutputStream *postream, int iobject);
+            geo::ExtendedGeometry * BuildGeom(Object *pobject, wxFileOutputStream *postream, int iobject);
 
             S57Obj *CreateS57Obj( int cell_index, int iobject, int subcell, Object *pobject, cm93_dictionary *pDict,
-                                  Extended_Geometry *xgeom, double ref_lat, double ref_lon, double scale);
+                                  geo::ExtendedGeometry *xgeom, double ref_lat, double ref_lon, double scale);
 
             void ProcessMCOVRObjects(int cell_index, char subcell);
 

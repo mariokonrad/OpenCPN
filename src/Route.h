@@ -127,7 +127,7 @@ class Route : public wxObject
 		wxArrayString      RoutePointGUIDList;
 		RoutePointList     *pRoutePointList;
 
-		wxBoundingBox     RBBox;
+		BoundingBox     RBBox;
 		wxRect      active_pt_rect;
 		wxString    m_Colour;
 		bool        m_btemp;

@@ -29,12 +29,11 @@
 #include "Route.h"
 
 #define ID_ROUTEPRINTSELECTION 9000
-#define SYMBOL_ROUTEPRINT_SELECTION_TITLE _("Print Route Selection")
-#define SYMBOL_ROUTEPRINT_SELECTION_SIZE wxSize(750, 300)
-
 #define ID_ROUTEPRINT_SELECTION_OK 9001
 #define ID_ROUTEPRINT_SELECTION_CANCEL 9002
 
+class wxButton;
+class wxCheckBox;
 
 class RoutePrintSelection : public wxDialog
 {
@@ -48,19 +47,19 @@ class RoutePrintSelection : public wxDialog
 				wxWindow * parent,
 				Route * route,
 				wxWindowID id = ID_ROUTEPRINTSELECTION,
-				const wxString & caption = SYMBOL_ROUTEPRINT_SELECTION_TITLE,
+				const wxString & caption = _("Print Route Selection"),
 				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = SYMBOL_ROUTEPRINT_SELECTION_SIZE,
+				const wxSize & size = wxSize(750, 300),
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
-		~RoutePrintSelection();
+		virtual ~RoutePrintSelection();
 
 		bool Create(
 				wxWindow * parent,
 				wxWindowID id = ID_ROUTEPRINTSELECTION,
-				const wxString & caption = SYMBOL_ROUTEPRINT_SELECTION_TITLE,
+				const wxString & caption = _("Print Route Selection"),
 				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = SYMBOL_ROUTEPRINT_SELECTION_SIZE,
+				const wxSize & size = wxSize(750, 300),
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
 		void CreateControls();

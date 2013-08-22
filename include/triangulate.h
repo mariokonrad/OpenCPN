@@ -27,8 +27,6 @@
 #endif
 
 
-//
-
 typedef struct {
   double x, y;
 } point_t, vector_t;
@@ -207,9 +205,6 @@ extern int is_point_inside_polygon(double *);
 #define TRI_RHS 2
 
 
-//#define MAX(a, b) (((a) > (b)) ? (a) : (b))
-//#define MIN(a, b) (((a) < (b)) ? (a) : (b))
-
 #define CROSS(v0, v1, v2) (((v1).x - (v0).x)*((v2).y - (v0).y) - \
                      ((v1).y - (v0).y)*((v2).x - (v0).x))
 
@@ -217,15 +212,6 @@ extern int is_point_inside_polygon(double *);
 
 #define FP_EQUAL(s, t) (fabs(s - t) <= C_EPS)
 
-
-/* Global variables */
-
-//extern node_t qs[QSIZE];            /* Query structure */
-//extern trap_t tr[TRSIZE];           /* Trapezoid structure */
-//extern segment_t seg[SEGSIZE];            /* Segment table */
-
-
-/* Functions */
 
 extern int monotonate_trapezoids(int);
 extern int triangulate_monotone_polygons(int, int, int (*)[3]);
@@ -243,4 +229,4 @@ extern int read_segments(char *, int *);
 extern int math_logstar_n(int);
 extern int math_N(int, int);
 
-#endif /* triangulate_h */
+#endif

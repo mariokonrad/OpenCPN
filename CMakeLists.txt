@@ -441,7 +441,7 @@ SET(HDRS
 		src/CM93DSlide.h
 		src/GoToPositionDialog.h
 		src/RolloverWin.h
-		include/S57QueryDialog.h
+		src/S57QueryDialog.h
 		src/S57ObjectDesc.h
 		src/S57Light.h
 		src/S57RegistrarMgr.h
@@ -478,6 +478,7 @@ SET(HDRS
 		include/cutil.h
 		include/georef.h
 		include/navutil.h
+		src/MicrosoftCompatibility.h
 		src/Track.h
 		src/Routeman.h
 		src/WayPointman.h
@@ -604,6 +605,7 @@ SET(SRCS
 		src/ConsoleCanvas.cpp
 		src/ViewPort.cpp
 		src/cutil.cpp
+		src/MicrosoftCompatibility.cpp
 		src/georef.cpp
 		src/navutil.cpp
 		src/Track.cpp

@@ -21,18 +21,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.
 */
 
-
 #ifndef __S52UTILS_H__
 #define __S52UTILS_H__
-
-//#include <stdio.h>  // printf()
-
-#ifdef SOLARIS
-// well should be cc
-#define PRINTF    printf(__FILE__":%i: : ", __LINE__),printf
-#else
-#define PRINTF    printf(__FILE__":%i: %s(): ", __LINE__, __FUNCTION__),printf
-#endif
 
 // valid label in .conf file
 #define CONF_CATALOG  "CATALOG"
@@ -66,5 +56,6 @@ typedef enum _S52_MAR_param_t {
 } S52_MAR_param_t;
 
 extern double S52_getMarinerParam(S52_MAR_param_t param);
-extern int    S52_setMarinerParam(S52_MAR_param_t param, double val);
+extern int S52_setMarinerParam(S52_MAR_param_t param, double val);
+
 #endif

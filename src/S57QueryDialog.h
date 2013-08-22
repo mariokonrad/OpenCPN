@@ -3,7 +3,7 @@
  * Project:  OpenCPN
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register                               *
+ *   Copyright (C) 2013 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,56 +21,47 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CUTIL_H__
-#define __CUTIL_H__
+#ifndef __S57QUERYDIALOG_H__
+#define __S57QUERYDIALOG_H__
 
-struct MyPoint {
-	double x;
-	double y;
+#include <wx/dialog.h>
+
+class wxHtmlWindow;
+
+class S57QueryDialog : public wxDialog
+{
+	DECLARE_CLASS(S57QueryDialog)
+		DECLARE_EVENT_TABLE()
+	public:
+
+		S57QueryDialog();
+		S57QueryDialog(
+				wxWindow * parent,
+				wxWindowID id = wxID_ANY,
+				const wxString & caption = _("Object Query"),
+				const wxPoint & pos = wxDefaultPosition,
+				const wxSize & size = wxDefaultSize,
+				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
+
+		virtual ~S57QueryDialog();
+
+		void Init();
+		bool Create(
+				wxWindow * parent,
+				wxWindowID id = wxID_ANY,
+				const wxString & caption = _("Object Query"),
+				const wxPoint & pos = wxDefaultPosition,
+				const wxSize & size = wxDefaultSize,
+				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
+
+		void SetColorScheme(void);
+		void CreateControls();
+		void OnSize(wxSizeEvent & event);
+		void OnClose(wxCloseEvent & event);
+		void OnPaint(wxPaintEvent & event);
+		void SetHTMLPage(wxString & page);
+
+		wxHtmlWindow * m_phtml;
 };
-
-struct float_2Dpt {
-	float y;
-	float x;
-};
-
-int G_PtInPolygon(MyPoint *, int, float, float) ;
-int G_PtInPolygon_FL(float_2Dpt *, int, float, float) ;
-
-
-//-------------------------------------------------------------------------------------------------------
-//  Cohen & Sutherland Line clipping algorithms
-//-------------------------------------------------------------------------------------------------------
-/*
- *
- * Copyright (C) 1999,2000,2001,2002,2003 Percy Zahl
- *
- * Authors: Percy Zahl <zahl@users.sf.net>
- * additional features: Andreas Klust <klust@users.sf.net>
- * WWW Home: http://gxsm.sf.net
- *
- */
-
-enum ClipResult { Visible, Invisible };
-
-ClipResult cohen_sutherland_line_clip_d(
-		double * x0,
-		double * y0,
-		double * x1,
-		double * y1,
-		double xmin_,
-		double xmax_,
-		double ymin_,
-		double ymax_);
-
-ClipResult cohen_sutherland_line_clip_i(
-		int * x0,
-		int * y0,
-		int * x1,
-		int * y1,
-		int xmin_,
-		int xmax_,
-		int ymin_,
-		int ymax_);
 
 #endif

@@ -21,64 +21,44 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
-
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
 #include "LatLonBoundingBox.h"
 
-class OCPNRegion;
-class LatLonBoundingBox;
-
-class ViewPort
+// Is the given LL point in the boundingbox ??
+bool LatLonBoundingBox::PointInBox(double Lon, double Lat, double Marge)
 {
-	public:
-		ViewPort();
+	double x = Lon;
+	double y = Lat;
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
+	//    Box is centered in East lon, crossing IDL
+	if(m_maxx > 180.)
+	{
+		if( x < m_maxx - 360.)
+			x +=  360.;
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
+		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
+				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
+			return TRUE;
+		return FALSE;
+	}
 
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
+	//    Box is centered in Wlon, crossing IDL
+	else if(m_minx < -180.)
+	{
+		if(x > m_minx + 360.)
+			x -= 360.;
 
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
+		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
+				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
+			return TRUE;
+		return FALSE;
+	}
 
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
+	else
+	{
+		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
+				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
+			return TRUE;
+		return FALSE;
+	}
+}
 
-		double chart_scale; // conventional chart displayed scale
-
-		int pix_width;
-		int pix_height;
-
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
-
-	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
-};
-
-#endif

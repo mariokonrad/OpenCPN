@@ -510,7 +510,12 @@ void ViewPort::SetProjectionType(int type)
 	m_projection_type = type;
 }
 
-LLBBox & ViewPort::GetBBox()
+const LatLonBoundingBox & ViewPort::GetBBox() const
+{
+	return vpBBox;
+}
+
+LatLonBoundingBox & ViewPort::GetBBox()
 {
 	return vpBBox;
 }

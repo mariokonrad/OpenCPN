@@ -784,7 +784,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 
 	bool b_need_resort = false;
 
-	ViewPort vp_local = vp_in;          // non-const copy
+	ViewPort vp_local = vp_in; // FIXME: non-const copy
 
 	if( !pCurrentStack ) {
 		pCurrentStack = new ChartStack;
@@ -832,7 +832,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 		//    Again, skipping cm93 for now
 		int n_all_charts = ChartData->GetChartTableEntries();
 
-		LLBBox viewbox = vp_local.GetBBox();
+		const LatLonBoundingBox & viewbox = vp_local.GetBBox();
 		int sure_index = -1;
 		int sure_index_scale = 0;
 
@@ -1011,7 +1011,7 @@ bool Quilt::Compose(const ViewPort & vp_in)
 
 	ChartData->UnLockCache();
 
-	ViewPort vp_local = vp_in;                   // need a non-const copy
+	ViewPort vp_local = vp_in; // FIXME: need a non-const copy
 
 	//    Get Reference Chart parameters
 	if( m_refchart_dbIndex >= 0 ) {

@@ -41,4 +41,11 @@ class Vector2D
 		union { double y; double lat; };
 };
 
+double vGetLengthOfNormal(Vector2D * a, Vector2D * b, Vector2D * n);
+double vDotProduct(Vector2D * v0, Vector2D * v1);
+Vector2D * vAddVectors(Vector2D * v0, Vector2D * v1, Vector2D * v);
+Vector2D * vSubtractVectors(Vector2D * v0, Vector2D * v1, Vector2D * v);
+double vVectorMagnitude(Vector2D * v0);
+double vVectorSquared(Vector2D * v0);
+
 #endif

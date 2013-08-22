@@ -25,7 +25,7 @@
 #include "dychart.h"
 #include "georef.h"
 #include "triangulate.h"
-#include "bbox.h"
+#include "BoundingBox.h"
 #include "s52s57.h"
 #include "geo/TriPrim.h"
 #include "geo/PolyTriGroup.h"

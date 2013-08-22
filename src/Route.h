@@ -29,7 +29,7 @@
 
 #include "RoutePoint.h"
 #include "ocpn_types.h"
-#include "bbox.h"
+#include "BoundingBox.h"
 
 #define STYLE_UNDEFINED -1
 

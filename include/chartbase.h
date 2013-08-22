@@ -27,7 +27,6 @@
 #define _CHARTBASE_H_
 
 #include "dychart.h"
-#include "bbox.h"
 #include "ocpn_types.h"
 
 #include <wx/glcanvas.h>

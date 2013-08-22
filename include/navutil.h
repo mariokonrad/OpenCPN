@@ -38,7 +38,6 @@
 	#include "portaudio.h"
 #endif
 
-#include "bbox.h"
 #include "s52s57.h"
 #include "chcanv.h"
 #include "tinyxml/tinyxml.h"
@@ -219,14 +218,5 @@ class WXDLLEXPORT X11FontPicker : public wxFontDialogBase
 		wxArrayString * pFaceNameArray;
 		wxFont * pPreviewFont;
 };
-
-class Vector2D;
-
-extern "C" double vGetLengthOfNormal(Vector2D * a, Vector2D * b, Vector2D * n);
-extern "C" double vDotProduct(Vector2D * v0, Vector2D * v1);
-extern "C" Vector2D * vAddVectors(Vector2D * v0, Vector2D * v1, Vector2D * v);
-extern "C" Vector2D * vSubtractVectors(Vector2D * v0, Vector2D * v1, Vector2D * v);
-extern "C" double vVectorMagnitude(Vector2D * v0);
-extern "C" double vVectorSquared(Vector2D * v0);
 
 #endif

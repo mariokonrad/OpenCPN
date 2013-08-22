@@ -418,7 +418,8 @@ SET(HDRS
 		include/ocpn_types.h
 		include/ocpndc.h
 		include/chart1.h
-		include/bbox.h
+		src/BoundingBox.h
+		src/LatLonBoundingBox.h
 		include/ocpn_pixel.h
 		src/OCPNMemDC.h
 		src/OCPNBitmap.h
@@ -557,7 +558,8 @@ SET(SRCS
 		src/AnnunText.cpp
 		src/CDI.cpp
 		src/MyPrintout.cpp
-		src/bbox.cpp
+		src/BoundingBox.cpp
+		src/LatLonBoundingBox.cpp
 		src/ocpn_pixel.cpp
 		src/OCPNMemDC.cpp
 		src/OCPNBitmap.cpp

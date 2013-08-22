@@ -2197,7 +2197,7 @@ bool ChartCanvas::DoZoomCanvasOut( double zoom_factor )
         proposed_scale_onscreen = GetCanvasScaleFactor() / new_scale_ppm;
 
         //      If Current_Ch is not on the screen, unbound the zoomout
-        LLBBox viewbox = VPoint.GetBBox();
+        const LatLonBoundingBox & viewbox = VPoint.GetBBox();
         BoundingBox chart_box;
         int current_index = ChartData->FinddbIndex( pc->GetFullPath() );
         ChartData->GetDBBoundingBox( current_index, &chart_box );
@@ -8580,7 +8580,7 @@ wxBitmap *ChartCanvas::DrawTCCBitmap( wxDC *pbackground_dc, bool bAddNewSelpoint
 
 extern bool g_bTrackActive;
 
-void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LLBBox& BltBBox, const wxRegion& clipregion )
+void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, const wxRegion& clipregion )
 {
     Route *active_route = NULL;
     Route *active_track = NULL;
@@ -8666,7 +8666,7 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LLBBox& BltBBox, const wxRegi
     if( active_track ) active_track->Draw( dc, GetVP() );
 }
 
-void ChartCanvas::DrawAllWaypointsInBBox( ocpnDC& dc, LLBBox& BltBBox, const wxRegion& clipregion,
+void ChartCanvas::DrawAllWaypointsInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, const wxRegion& clipregion,
         bool bDrawMarksOnly )
 {
 //        BoundingBox bbx;
@@ -8771,7 +8771,7 @@ double ChartCanvas::GetAnchorWatchRadiusPixels( RoutePoint *pAnchorWatchPoint )
 //    Tides Support
 //------------------------------------------------------------------------------------------
 
-void ChartCanvas::DrawAllTidesInBBox( ocpnDC& dc, LLBBox& BBox, bool bRebuildSelList,
+void ChartCanvas::DrawAllTidesInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, bool bRebuildSelList,
                                       bool bforce_redraw_tides, bool bdraw_mono_for_mask )
 {
     wxPen *pblack_pen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T ( "UINFD" ) ), 1,
@@ -9018,7 +9018,7 @@ void ChartCanvas::DrawAllTidesInBBox( ocpnDC& dc, LLBBox& BBox, bool bRebuildSel
 //    Currents Support
 //------------------------------------------------------------------------------------------
 
-void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LLBBox& BBox, bool bRebuildSelList,
+void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, bool bRebuildSelList,
         bool bforce_redraw_currents, bool bdraw_mono_for_mask )
 {
     float tcvalue, dir;

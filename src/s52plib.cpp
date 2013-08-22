@@ -4875,8 +4875,13 @@ inline int s52plib::dda_trap( wxPoint *segs, int lseg, int rseg, int ytop, int y
     return ret_val;
 }
 
-void s52plib::RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj, S52color *c,
-        BoundingBox &BBView, render_canvas_parms *pb_spec, render_canvas_parms *pPatt_spec )
+void s52plib::RenderToBufferFilledPolygon(
+		ObjRazRules * rzRules,
+		S57Obj * obj,
+		S52color * c,
+        const BoundingBox & BBView,
+		render_canvas_parms * pb_spec,
+		render_canvas_parms * pPatt_spec)
 {
     S52color cp;
     if( NULL != c ) {
@@ -5056,7 +5061,7 @@ int s52plib::RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
     glColor3ub( c->R, c->G, c->B );
 
-    BoundingBox BBView = vp->GetBBox();
+    const BoundingBox & BBView = vp->GetBBox();
     if( rzRules->obj->pPolyTessGeo ) {
         if( !rzRules->obj->pPolyTessGeo->IsOk() ) // perform deferred tesselation
         rzRules->obj->pPolyTessGeo->BuildTessGL();
@@ -5139,7 +5144,7 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
     GLuint clip_list = 0;
 
-    BoundingBox BBView = vp->GetBBox();
+    const BoundingBox & BBView = vp->GetBBox();
     //  Allow a little slop in calculating whether a triangle
     //  is within the requested Viewport
     double margin = BBView.GetWidth() * .05;
@@ -5475,8 +5480,13 @@ int s52plib::RenderAreaToGL( const wxGLContext &glcc, ObjRazRules *rzRules, View
     return 1;
 
 }
-render_canvas_parms* s52plib::CreatePatternBufferSpec( ObjRazRules *rzRules, Rules *rules,
-        ViewPort *vp, bool b_revrgb, bool b_pot )
+
+render_canvas_parms* s52plib::CreatePatternBufferSpec(
+		ObjRazRules * rzRules,
+		Rules * rules,
+        ViewPort * vp,
+		bool b_revrgb,
+		bool b_pot)
 {
     wxImage Image;
 
@@ -5662,8 +5672,11 @@ render_canvas_parms* s52plib::CreatePatternBufferSpec( ObjRazRules *rzRules, Rul
 
 }
 
-int s52plib::RenderToBufferAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp,
-        render_canvas_parms *pb_spec )
+int s52plib::RenderToBufferAP(
+		ObjRazRules * rzRules,
+		Rules * rules,
+		ViewPort *vp,
+        render_canvas_parms * pb_spec)
 {
     wxImage Image;
 
@@ -5698,8 +5711,11 @@ int s52plib::RenderToBufferAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp,
     return 1;
 }
 
-int s52plib::RenderToBufferAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp,
-        render_canvas_parms *pb_spec )
+int s52plib::RenderToBufferAC(
+		ObjRazRules * rzRules,
+		Rules * rules,
+		ViewPort * vp,
+        render_canvas_parms * pb_spec)
 {
     S52color *c;
     char *str = (char*) rules->INSTstr;

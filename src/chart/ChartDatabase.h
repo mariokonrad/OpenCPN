@@ -1,7 +1,6 @@
 /**************************************************************************
  *
  * Project:  ChartManager
- * Author:   David S Register, Mark A Sikes
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register *
@@ -37,12 +36,12 @@
 #include "chart1.h"
 
 class wxProgressDialog;
+class ChartDatabase;
+class ChartGroupArray;
+class BoundingBox;
 
 static const int DB_VERSION_PREVIOUS = 16;
 static const int DB_VERSION_CURRENT = 17;
-
-class ChartDatabase;
-class ChartGroupArray;
 
 struct ChartTableEntry_onDisk_17
 {

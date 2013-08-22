@@ -2123,8 +2123,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
       if ( g_bDebugCM93 )
       {
             //    Fetch the lat/lon of the screen corner points
-            ViewPort vptl = vpt;
-            LLBBox box = vptl.GetBBox();
+            const LatLonBoundingBox & box = vpt.GetBBox();
             double ll_lon = box.GetMinX();
             double ll_lat = box.GetMinY();
 
@@ -2202,8 +2201,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 ArrayOfInts cm93chart::GetVPCellArray ( const ViewPort &vpt )
 {
       //    Fetch the lat/lon of the screen corner points
-      ViewPort vptl = vpt;
-      LLBBox box = vptl.GetBBox();
+      const LatLonBoundingBox & box = vpt.GetBBox();
       double ll_lon = box.GetMinX();
       double ll_lat = box.GetMinY();
 

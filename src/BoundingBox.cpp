@@ -21,7 +21,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "bbox.h"
+#include "BoundingBox.h"
 #include <wx/matrix.h>
 
 BoundingBox::BoundingBox()
@@ -174,7 +174,7 @@ void BoundingBox::EnLarge(const double marge)
 // If they do not intersect, two scenario's are possible:
 // other is outside this -> return _OUT
 // other is inside this -> return _IN
-OVERLAP BoundingBox::Intersect(BoundingBox &other, double Marge)
+OVERLAP BoundingBox::Intersect(BoundingBox &other, double Marge) const
 {
 	assert (m_validbbox == TRUE);
 
@@ -376,46 +376,33 @@ void BoundingBox::MapBbox( const wxTransformMatrix& matrix)
 	m_maxy = ymax;
 }
 
-//----------------------------------------------------------------
-//    LLBBox Implementation
-//----------------------------------------------------------------
-
-
-// Is the given LL point in the boundingbox ??
-bool LLBBox::PointInBox(double Lon, double Lat, double Marge)
+double BoundingBox::GetMinX() const
 {
-	double x = Lon;
-	double y = Lat;
-
-	//    Box is centered in East lon, crossing IDL
-	if(m_maxx > 180.)
-	{
-		if( x < m_maxx - 360.)
-			x +=  360.;
-
-		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
-				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
-			return TRUE;
-		return FALSE;
-	}
-
-	//    Box is centered in Wlon, crossing IDL
-	else if(m_minx < -180.)
-	{
-		if(x > m_minx + 360.)
-			x -= 360.;
-
-		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
-				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
-			return TRUE;
-		return FALSE;
-	}
-
-	else
-	{
-		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
-				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
-			return TRUE;
-		return FALSE;
-	}
+	return m_minx;
 }
+
+double BoundingBox::GetMinY() const
+{
+	return m_miny;
+}
+
+double BoundingBox::GetMaxX() const
+{
+	return m_maxx;
+}
+
+double BoundingBox::GetMaxY() const
+{
+	return m_maxy;
+}
+
+double BoundingBox::GetWidth() const
+{
+	return m_maxx-m_minx;
+}
+
+double BoundingBox::GetHeight() const
+{
+	return m_maxy-m_miny;
+}
+

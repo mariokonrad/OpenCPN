@@ -24,8 +24,6 @@
 #ifndef __CHCANV_H__
 #define __CHCANV_H__
 
-#include "bbox.h"
-
 #include <wx/datetime.h>
 #include <wx/treectrl.h>
 #include "wx/dirctrl.h"
@@ -36,12 +34,13 @@
 #include "chart1.h"                 // for enum types
 #include "ocpndc.h"
 #include "gshhs.h"
-
 #include "CM93DSlide.h"
 #include "RolloverWin.h"
 #include "ais/AISTargetQueryDialog.h"
 #include "glChartCanvas.h"
 #include "timers.h"
+
+class LatLonBoundingBox;
 
 //    Useful static routines
 void ShowAISTargetQueryDialog(wxWindow *parent, int mmsi);
@@ -338,13 +337,13 @@ class ChartCanvas: public wxWindow
 	void OnCursorTrackTimerEvent(wxTimerEvent& event);
 	void OnZoomTimerEvent(wxTimerEvent& event);
 
-	void DrawAllRoutesInBBox(ocpnDC& dc, LLBBox& BltBBox, const wxRegion& clipregion);
-	void DrawAllWaypointsInBBox(ocpnDC& dc, LLBBox& BltBBox, const wxRegion& clipregion, bool bDrawMarksOnly);
+	void DrawAllRoutesInBBox(ocpnDC& dc, LatLonBoundingBox & BltBBox, const wxRegion& clipregion);
+	void DrawAllWaypointsInBBox(ocpnDC& dc, LatLonBoundingBox & BltBBox, const wxRegion& clipregion, bool bDrawMarksOnly);
 	double GetAnchorWatchRadiusPixels(RoutePoint *pAnchorWatchPoint);
 
-	void DrawAllTidesInBBox(ocpnDC& dc, LLBBox& BBox, bool bRebuildSelList, bool bforce_redraw_tides,
+	void DrawAllTidesInBBox(ocpnDC& dc, LatLonBoundingBox & BBox, bool bRebuildSelList, bool bforce_redraw_tides,
 			bool bdraw_mono = false);
-	void DrawAllCurrentsInBBox(ocpnDC& dc, LLBBox& BBox,
+	void DrawAllCurrentsInBBox(ocpnDC& dc, LatLonBoundingBox & BBox,
 			bool bRebuildSelList, bool bforce_redraw_currents, bool bdraw_mono = false);
 	void DrawTCWindow(int x, int y, void *pIDX);
 

@@ -3018,86 +3018,6 @@ void X11FontPicker::DoFontChange ( void )
 
 #endif            //__WXX11__
 
-//---------------------------------------------------------------------------------
-//          Vector Stuff for Hit Test Algorithm
-//---------------------------------------------------------------------------------
-extern "C" double vGetLengthOfNormal(Vector2D * a, Vector2D * b, Vector2D * n)
-{
-    Vector2D c, vNormal;
-    vNormal.x = 0;
-    vNormal.y = 0;
-    //
-    //Obtain projection vector.
-    //
-    //c = ((a * b)/(|b|^2))*b
-    //
-    c.x = b->x * ( vDotProduct( a, b ) / vDotProduct( b, b ) );
-    c.y = b->y * ( vDotProduct( a, b ) / vDotProduct( b, b ) );
-//
-    //Obtain perpendicular projection : e = a - c
-    //
-    vSubtractVectors( a, &c, &vNormal );
-    //
-    //Fill PROJECTION structure with appropriate values.
-    //
-    *n = vNormal;
-
-    return ( vVectorMagnitude( &vNormal ) );
-}
-
-double vDotProduct(Vector2D * v0, Vector2D * v1) // FIXME: move to Vector2D
-{
-    double dotprod;
-
-    dotprod = ( v0 == NULL || v1 == NULL ) ? 0.0 : ( v0->x * v1->x ) + ( v0->y * v1->y );
-
-    return dotprod;
-}
-
-Vector2D * vAddVectors(Vector2D * v0, Vector2D * v1, Vector2D * v)
-{
-    if( v0 == NULL || v1 == NULL )
-		v = NULL;
-    else {
-        v->x = v0->x + v1->x;
-        v->y = v0->y + v1->y;
-    }
-    return v;
-}
-
-Vector2D * vSubtractVectors(Vector2D * v0, Vector2D * v1, Vector2D * v)
-{
-    if( v0 == NULL || v1 == NULL )
-		v = NULL;
-    else {
-        v->x = v0->x - v1->x;
-        v->y = v0->y - v1->y;
-    }
-    return v;
-}
-
-double vVectorSquared(Vector2D * v0)
-{
-    double dS;
-
-    if( v0 == NULL )
-		dS = 0.0;
-    else
-        dS = ( ( v0->x * v0->x ) + ( v0->y * v0->y ) );
-    return dS;
-}
-
-double vVectorMagnitude(Vector2D * v0)
-{
-    double dMagnitude;
-
-    if( v0 == NULL )
-		dMagnitude = 0.0;
-    else
-        dMagnitude = sqrt( vVectorSquared( v0 ) );
-    return dMagnitude;
-}
-
 /**************************************************************************/
 /*          LogMessageOnce                                                */
 /**************************************************************************/
@@ -3117,10 +3037,6 @@ bool LogMessageOnce(const wxString &msg)
     wxLogMessage( msg );
     return true;
 }
-
-/**************************************************************************/
-/*          Some assorted utilities                                       */
-/**************************************************************************/
 
 /**************************************************************************/
 /*          Converts the distance to the units selected by user           */

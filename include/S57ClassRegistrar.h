@@ -19,72 +19,71 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __S57CLASSREGISTRAR_H__
 #define __S57CLASSREGISTRAR_H__
 
 class S57ClassRegistrar
 {
-    // Class information:
-    int         nClasses;
+	private:
+		int nClasses;
+		int iCurrentClass;
+		char ** papszCurrentFields;
+		char ** papszTempResult;
+		int * pnClassesOBJL;
+		char *** papapszClassesTokenized;
 
-    int         iCurrentClass;
+		// Attribute Information:
+		int nAttrMax;
+		int nAttrCount;
+		char ** papszAttrNames;
+		char ** papszAttrAcronym;
+		char *** papapszAttrValues;
+		char * pachAttrType;
+		char * pachAttrClass;
+		int * panAttrIndex; // sorted by acronym.
 
-    char      **papszCurrentFields;
+		int FindFile(
+				const char * pszTarget,
+				const char * pszDirectory,
+				int bReportErr,
+				FILE ** fp);
 
-    char      **papszTempResult;
+		const char * ReadLine(FILE * fp);
+		char ** papszNextLine;
+		void DestroySparseStringlist(char ** papszStrList);
 
-    int        *pnClassesOBJL;
-    char     ***papapszClassesTokenized;
+	public:
+		S57ClassRegistrar();
+		~S57ClassRegistrar();
 
-    // Attribute Information:
-    int         nAttrMax;
-    int         nAttrCount;
-    char      **papszAttrNames;
-    char      **papszAttrAcronym;
-    char     ***papapszAttrValues;
-    char       *pachAttrType;
-    char       *pachAttrClass;
-    int        *panAttrIndex; // sorted by acronym.
+		int LoadInfo(const char *, int);
 
-    int         FindFile( const char *pszTarget, const char *pszDirectory,
-                          int bReportErr, FILE **fp );
+		// class table methods.
+		int SelectClassByIndex(int);
+		int SelectClass(int);
+		int SelectClass(const char *);
 
-    const char *ReadLine( FILE * fp );
-    char      **papszNextLine;
-    void        DestroySparseStringlist(char **papszStrList);
+		int Rewind() { return SelectClassByIndex(0); }
+		int NextClass() { return SelectClassByIndex(iCurrentClass+1); }
 
-public:
-                S57ClassRegistrar();
-               ~S57ClassRegistrar();
+		int GetOBJL();
+		const char * GetDescription();
+		const char * GetAcronym();
 
-    int         LoadInfo( const char *, int );
+		char * *GetAttributeList(const char * = NULL);
 
-    // class table methods.
-    int         SelectClassByIndex( int );
-    int         SelectClass( int );
-    int         SelectClass( const char * );
+		char GetClassCode();
+		char ** GetPrimitives();
 
-    int         Rewind() { return SelectClassByIndex(0); }
-    int         NextClass() { return SelectClassByIndex(iCurrentClass+1); }
+		// attribute table methods.
+		int GetMaxAttrIndex() { return nAttrMax; }
+		const char * GetAttrName(int i) { return papszAttrNames[i]; }
+		const char * GetAttrAcronym(int i) { return papszAttrAcronym[i]; }
+		char ** GetAttrValues(int i) { return papapszAttrValues[i]; }
+		char GetAttrType(int i) { return pachAttrType[i]; }
 
-    int         GetOBJL();
-    const char *GetDescription();
-    const char *GetAcronym();
-
-    char      **GetAttributeList( const char * = NULL );
-
-    char        GetClassCode();
-    char      **GetPrimitives();
-
-    // attribute table methods.
-    int         GetMaxAttrIndex() { return nAttrMax; }
-    const char *GetAttrName( int i ) { return papszAttrNames[i]; }
-    const char *GetAttrAcronym( int i ) { return papszAttrAcronym[i]; }
-    char      **GetAttrValues( int i ) { return papapszAttrValues[i]; }
-    char        GetAttrType( int i ) { return pachAttrType[i]; }
 #define SAT_ENUM        'E'
 #define SAT_LIST        'L'
 #define SAT_FLOAT       'F'
@@ -92,9 +91,8 @@ public:
 #define SAT_CODE_STRING 'A'
 #define SAT_FREE_TEXT   'S'
 
-    char        GetAttrClass( int i ) { return pachAttrClass[i]; }
-    int         FindAttrByAcronym( const char * );
-
+		char GetAttrClass(int i) { return pachAttrClass[i]; }
+		int FindAttrByAcronym(const char *);
 };
 
 #endif

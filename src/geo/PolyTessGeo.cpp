@@ -27,6 +27,7 @@
 #include "triangulate.h"
 #include "BoundingBox.h"
 #include "s52s57.h"
+#include "MicrosoftCompatibility.h"
 #include "geo/TriPrim.h"
 #include "geo/PolyTriGroup.h"
 #include "geo/ExtendedGeometry.h"

@@ -23,6 +23,7 @@
 
 #include "RoutePrintSelection.h"
 #include "RoutePrintout.h"
+#include "MessageBox.h"
 
 // Global print data, to remember settings during the session
 extern wxPrintData * g_printData;

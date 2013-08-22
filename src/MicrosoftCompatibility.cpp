@@ -3,8 +3,10 @@
 #ifdef __MSVC__
 
 #include <float.h>
+#include <math.h>
+#include <stdio.h>
 
-extern long __stdcall MyUnhandledExceptionFilter( struct _EXCEPTION_POINTERS *ExceptionInfo )
+long __stdcall MyUnhandledExceptionFilter( struct _EXCEPTION_POINTERS *ExceptionInfo )
 {
 	//    return EXCEPTION_EXECUTE_HANDLER ;        // terminates the app
 
@@ -26,7 +28,7 @@ extern long __stdcall MyUnhandledExceptionFilter( struct _EXCEPTION_POINTERS *Ex
 }
 
 /* Replacement for __MSVC__ in absence of snprintf or _snprintf  */
-extern int mysnprintf( char *buffer, int count, const char *format, ...)
+int mysnprintf( char *buffer, int count, const char *format, ...)
 {
 	int ret;
 
@@ -42,6 +44,20 @@ double round_msvc(double x)
 {
 	return(floor(x + 0.5));
 }
+
+#ifndef fmin
+double fmin(double a, double b)
+{
+	return a < b ? a : b;
+}
+#endif
+
+#ifndef fmax
+double fmax(double a, double b)
+{
+	return a > b ? a : b;
+}
+#endif
 
 #endif
 

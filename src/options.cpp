@@ -44,6 +44,7 @@
 #include "options.h"
 #include "StyleManager.h"
 #include "Style.h"
+#include "MessageBox.h"
 #include "datastream.h"
 #include "Multiplexer.h"
 #include "FontMgr.h"

@@ -36,6 +36,7 @@
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"
+#include "MessageBox.h"
 #include "RoutePrintout.h"
 #include "RoutePrintSelection.h"
 #include "chcanv.h"

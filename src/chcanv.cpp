@@ -39,6 +39,7 @@
 #include "RouteManagerDialog.h"
 #include "GoToPositionDialog.h"
 #include "TimedPopupWin.h"
+#include "MessageBox.h"
 #include "dychart.h"
 #include "Geodesic.h"
 #include "StyleManager.h"
@@ -80,6 +81,7 @@
 #include "OCPNMemDC.h"
 #include "EmbossData.h"
 #include "TCWin.h"
+#include "MicrosoftCompatibility.h"
 
 // AIS
 #include "ais/ais.h"

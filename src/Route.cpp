@@ -30,6 +30,7 @@
 #include "navutil.h"
 #include "Multiplexer.h"
 #include "Select.h"
+#include "MessageBox.h"
 #include "gpx/gpx.h"
 
 #include <wx/listimpl.cpp>

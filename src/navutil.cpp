@@ -46,6 +46,7 @@
 
 #include "dychart.h"
 #include "chart1.h"
+#include "MessageBox.h"
 #include "navutil.h"
 #include "Track.h"
 #include "chcanv.h"

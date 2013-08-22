@@ -96,7 +96,7 @@ WX_DEFINE_LIST(markicon_key_list_type);
 WX_DEFINE_LIST(markicon_description_list_type);
 
 
-Routeman::Routeman( MyApp *parent )
+Routeman::Routeman(App *parent)
 {
 	m_pparent_app = parent;
 	pActiveRoute = NULL;

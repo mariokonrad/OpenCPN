@@ -52,6 +52,7 @@
 #include "ocpndc.h"
 #include "OCPNRegionIterator.h"
 #include "OCPNMemDC.h"
+#include "MicrosoftCompatibility.h"
 
 #include <stdio.h>
 

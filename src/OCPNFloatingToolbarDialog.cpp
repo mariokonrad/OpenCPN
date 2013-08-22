@@ -27,6 +27,7 @@
 #include "ToolBarSimple.h"
 #include "StyleManager.h"
 #include "Style.h"
+#include "MessageBox.h"
 
 extern bool g_bTransparentToolbar;
 extern ocpnStyle::StyleManager * g_StyleManager;

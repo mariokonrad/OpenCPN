@@ -38,6 +38,8 @@
 
 #include "ocpn_types.h"
 #include "nmea0183.h"
+#include "ChartDirInfo.h"
+#include "NMEA_Msg_Container.h"
 
 WX_DEFINE_ARRAY_INT(int, ArrayOfInts);
 
@@ -56,8 +58,6 @@ int GetApplicationMemoryUse(void);
 // The point for anchor watch should really be a class...
 double AnchorDistFix(double const d, double const AnchorPointMinDist, double const AnchorPointMaxDist);   //  pjotrc 2010.02.22
 
-class NMEA_Msg_Container;
-WX_DECLARE_STRING_HASH_MAP( NMEA_Msg_Container*, MsgPriorityHash );
 
 //    Fwd definitions
 class OCPN_NMEAEvent;
@@ -68,16 +68,11 @@ class options;
 class Track;
 class ViewPort;
 
-//----------------------------------------------------------------------------
-//   constants
-//----------------------------------------------------------------------------
-
 #define TIMER_GFRAME_1 999
 
 #define ID_QUIT         101
 #define ID_CM93ZOOMG    102
 
-//    ToolBar Constants
 const int ID_TOOLBAR = 500;
 
 enum
@@ -106,8 +101,6 @@ enum
 
 };
 
-
-static const long TOOLBAR_STYLE = wxTB_FLAT | wxTB_DOCKABLE | wxTB_TEXT ;
 
 enum
 {
@@ -148,6 +141,7 @@ enum
 
 #define MAX_COG_AVERAGE_SECONDS        60
 #define MAX_COGSOG_FILTER_SECONDS      60
+
 //----------------------------------------------------------------------------
 // fwd class declarations
 //----------------------------------------------------------------------------
@@ -157,42 +151,7 @@ class ToolBarSimple;
 class OCPN_DataStreamEvent;
 class DataStream;
 
-//      A class to contain NMEA messages, their receipt time, and their source priority
-class NMEA_Msg_Container
-{
-	public:
-		wxDateTime receipt_time;
-		int current_priority;
-		wxString stream_name;
-};
-
-//    A small class used in an array to describe chart directories
-class ChartDirInfo
-{
-	public:
-		wxString fullpath;
-		wxString magic_number;
-};
-
-WX_DECLARE_OBJARRAY(ChartDirInfo, ArrayOfCDI);
 WX_DECLARE_OBJARRAY(wxRect, ArrayOfRect);
-
-
-class MyApp: public wxApp
-{
-		DECLARE_EVENT_TABLE()
-
-	public:
-		bool OnInit();
-		int OnExit();
-		void OnInitCmdLine(wxCmdLineParser& parser);
-		bool OnCmdLineParsed(wxCmdLineParser& parser);
-		void OnActivateApp(wxActivateEvent& event);
-
-		void TrackOff(void);
-
-		wxSingleInstanceChecker * m_checker;
-};
 
 class MyFrame: public wxFrame
 {
@@ -408,28 +367,5 @@ enum {
 	ID_NMEA_THREADMSG
 
 };
-
-//-----------------------------------------------------------------------
-//          Dummy Text Control for global key events
-//-----------------------------------------------------------------------
-class DummyTextCtrl: public wxTextCtrl
-{
-	public:
-		DummyTextCtrl(wxWindow *parent, wxWindowID id);
-		void OnChar(wxKeyEvent &event);
-		void OnMouseEvent(wxMouseEvent& event);
-
-		wxTimer m_MouseWheelTimer;
-		int m_mouse_wheel_oneshot;
-		int m_last_wheel_dir;
-
-		DECLARE_EVENT_TABLE()
-};
-
-
-extern int OCPNMessageBox(wxWindow *parent,
-		const wxString& message,
-		const wxString& caption = _T("Message"),
-		int style = wxOK, int x = -1, int y = -1);
 
 #endif

@@ -418,6 +418,7 @@ SET(HDRS
 		include/ocpn_types.h
 		include/ocpndc.h
 		include/chart1.h
+		src/App.h
 		src/BoundingBox.h
 		src/LatLonBoundingBox.h
 		include/ocpn_pixel.h
@@ -547,6 +548,9 @@ SET(HDRS
 		src/OCPNTrackListCtrl.h
 		src/LinkPropDlg.h
 		src/OCPN_AlertDialog.h
+		src/NMEA_Msg_Container.h
+		src/MessageBox.h
+		src/ChartDirInfo.h
 )
 
 SET(SRCS
@@ -555,6 +559,7 @@ SET(SRCS
 		${SRC_PUGIXML}
 		${SRC_WXJSON}
 		src/chart1.cpp
+		src/MessageBox.cpp
 		src/TimedPopupWin.cpp
 		src/AnnunText.cpp
 		src/CDI.cpp
@@ -572,6 +577,7 @@ SET(SRCS
 		src/chart/ChartStack.cpp
 		src/chartimg.cpp
 		src/chcanv.cpp
+		src/App.cpp
 		src/TCWin.cpp
 		src/S57QueryDialog.cpp
 		src/S57RegistrarMgr.cpp

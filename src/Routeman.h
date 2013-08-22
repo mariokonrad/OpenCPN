@@ -26,6 +26,7 @@
 
 #include <math.h>
 
+#include "App.h"
 #include "chart1.h"
 #include "nmea0183.h"
 
@@ -35,7 +36,7 @@ class RoutePoint;
 class Routeman
 {
 	public:
-		Routeman(MyApp *parent);
+		Routeman(App * parent);
 		~Routeman();
 
 		void DeleteRoute(Route *pRoute);
@@ -87,7 +88,7 @@ class Routeman
 		bool m_bDataValid;
 
 	private:
-		MyApp * m_pparent_app;
+		App * m_pparent_app;
 		Route * pActiveRoute;
 		RoutePoint * pActivePoint;
 		double RouteBrgToActivePoint;        //TODO all these need to be doubles

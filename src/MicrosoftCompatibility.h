@@ -5,18 +5,24 @@
 
 #include <windows.h>
 
-#ifdef __cplusplus
+long  __stdcall MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS * ExceptionInfo);
 
-extern "C" long  __stdcall MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS * ExceptionInfo);
-extern "C" int mysnprintf( char *buffer, int count, const char *format, ... );
-extern "C" double round_msvc(double flt);
+// __MSVC__ randomly does not link snprintf, or _snprintf
+// Replace it with a local version, code is in cutil.c
+#define snprintf mysnprintf
+int mysnprintf( char *buffer, int count, const char *format, ... );
 
-#else
+#define round round_msvc
+double round_msvc(double flt);
 
-extern long __stdcall MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS * ExceptionInfo);
-extern int mysnprintf( char *buffer, int count, const char *format, ... );
-
+#ifndef fmin
+double fmin(double, double);
 #endif
+
+#ifndef fmax
+double fmax(double, double);
+#endif
+
 
 #endif
 

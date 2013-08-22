@@ -72,18 +72,10 @@
 #ifdef __MSVC__
 #pragma warning(disable:4114)
 #pragma warning(disable:4284)             // This one is to do with "reverse iterator UDT..." Huh?
-
-
 #endif
 
-//    Following definition required by GDAL
+// Following definition required by GDAL
 #define notdef 1
-
-#ifdef __MSVC__
-//    __MSVC__ randomly does not link snprintf, or _snprintf
-//    Replace it with a local version, code is in cutil.c
-#define snprintf mysnprintf
-#endif
 
 //------------------------------------------------------------------------------
 // Some Portable math definitions

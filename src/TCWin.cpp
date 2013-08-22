@@ -30,6 +30,7 @@
 #include "tcmgr.h"
 #include "dychart.h"
 #include "cutil.h"
+#include "MicrosoftCompatibility.h"
 
 extern ColorScheme global_color_scheme;
 extern IDX_entry * gpIDX;

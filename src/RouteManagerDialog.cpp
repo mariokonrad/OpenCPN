@@ -24,6 +24,7 @@
 #include "RouteManagerDialog.h"
 #include "dychart.h"
 #include "navutil.h"
+#include "MessageBox.h"
 #include "Select.h"
 #include "WayPointman.h"
 #include "Track.h"

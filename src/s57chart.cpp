@@ -54,6 +54,8 @@
 #include "OCPNRegionIterator.h"
 #include "OCPNMemDC.h"
 #include "OCPNBitmap.h"
+#include "MessageBox.h"
+#include "MicrosoftCompatibility.h"
 
 #include "cpl_csv.h"
 #include "setjmp.h"

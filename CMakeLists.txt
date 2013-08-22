@@ -435,7 +435,7 @@ SET(HDRS
 		src/chart/ChartStack.h
 		include/chartimg.h
 		include/chcanv.h
-		include/timers.h
+		src/timers.h
 		src/EmbossData.h
 		src/OCPNListCtrl.h
 		src/CM93DSlide.h

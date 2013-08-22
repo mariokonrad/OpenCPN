@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,22 +19,24 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __TIMERS_H__
 #define __TIMERS_H__
 
-#define RESCALE_TIMER     1
-#define PAN_TIMER         2
-#define CURTRACK_TIMER    3
-#define ROT_TIMER         4
-#define ROPOPUP_TIMER     5
-#define TCWININF_TIMER    6
-#define ROLLOVER_TIMER    7
-#define ZOOM_TIMER        8
-#define PANKEY_TIMER      9
-#define DBLCLICK_TIMER   10
-#define POPUP_TIMER      11
+enum
+{
+	 RESCALE_TIMER  =  1
+	,PAN_TIMER      =  2
+	,CURTRACK_TIMER =  3
+	,ROT_TIMER      =  4
+	,ROPOPUP_TIMER  =  5
+	,TCWININF_TIMER =  6
+	,ROLLOVER_TIMER =  7
+	,ZOOM_TIMER     =  8
+	,PANKEY_TIMER   =  9
+	,DBLCLICK_TIMER = 10
+	,POPUP_TIMER    = 11
+};
 
 #endif

@@ -40,7 +40,7 @@
 #include "GoToPositionDialog.h"
 #include "TimedPopupWin.h"
 #include "dychart.h"
-#include "geodesic.h"
+#include "Geodesic.h"
 #include "StyleManager.h"
 #include "Style.h"
 #include "Routeman.h"

@@ -533,7 +533,7 @@ SET(HDRS
 		src/GrabberWin.h
 		src/OCPNFloatingToolbarDialog.h
 		src/FloatingCompassWindow.h
-		include/geodesic.h
+		src/Geodesic.h
 		include/datastream.h
 		src/OCPN_DataStreamEvent.h
 		src/ConnectionParams.h
@@ -654,7 +654,7 @@ SET(SRCS
 		src/GrabberWin.cpp
 		src/OCPNFloatingToolbarDialog.cpp
 		src/FloatingCompassWindow.cpp
-		src/geodesic.cpp
+		src/Geodesic.cpp
 		src/datastream.cpp
 		src/OCPN_DataStreamEvent.cpp
 		src/ConnectionParams.cpp

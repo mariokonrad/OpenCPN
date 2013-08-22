@@ -58,7 +58,7 @@
 #include "s52utils.h"
 #include "chartbase.h"
 #include "ocpndc.h"
-#include "geodesic.h"
+#include "Geodesic.h"
 #include "datastream.h"
 #include "Multiplexer.h"
 #include "Route.h"

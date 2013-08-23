@@ -30,6 +30,7 @@
 #include "georef.h"                 // for GeoRef type
 #include "OCPNRegion.h"
 #include "ViewPort.h"
+#include <vector>
 
 class wxInputStream;
 class wxBufferedInputStream;
@@ -82,17 +83,16 @@ class wxFileInputStream;
 class Refpoint
 {
 public:
-      int         bXValid;
-      int         bYValid;
-      float       xr;
-      float       yr;
-      float       latr;
-      float       lonr;
-      float       xpl_error;
-      float       xlp_error;
-      float       ypl_error;
-      float       ylp_error;
-
+      int bXValid;
+      int bYValid;
+      float xr;
+      float yr;
+      float latr;
+      float lonr;
+      float xpl_error;
+      float xlp_error;
+      float ypl_error;
+      float ylp_error;
 };
 
 
@@ -102,11 +102,11 @@ public:
 class CachedLine
 {
 public:
-      int               xstart;
-      int               xlength;
-      unsigned char     *pPix;
-      unsigned char     *pRGB;
-      bool              bValid;
+      int xstart;
+      int xlength;
+      unsigned char * pPix;
+      unsigned char * pRGB;
+      bool bValid;
 };
 
 class opncpnPalette
@@ -114,9 +114,9 @@ class opncpnPalette
     public:
         opncpnPalette();
         ~opncpnPalette();
-
-        int *FwdPalette;
-        int *RevPalette;
+	public:
+        int * FwdPalette;
+        int * RevPalette;
         int nFwd;
         int nRev;
 };
@@ -246,8 +246,7 @@ protected:
       wxRect      Rsrc;                   // Current chart source rectangle
 
 
-      int         nRefpoint;
-      Refpoint    *pRefTable;
+      std::vector<Refpoint> reference_points;
 
 
       int         nColorSize;

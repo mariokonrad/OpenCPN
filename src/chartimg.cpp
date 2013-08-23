@@ -179,8 +179,6 @@ ChartBaseBSB::ChartBaseBSB()
 
       cached_image_ok = 0;
 
-      pRefTable = (Refpoint *)malloc(sizeof(Refpoint));
-      nRefpoint = 0;
       cPoints.status = 0;
       bHaveEmbeddedGeoref = false;
       n_wpx = 0;
@@ -247,9 +245,6 @@ ChartBaseBSB::~ChartBaseBSB()
 
       if(ifs_buf)
             free(ifs_buf);
-
-      free(pRefTable);
-//      free(pPlyTable);
 
       delete ifs_bitmap;
       delete ifs_hdr;
@@ -735,16 +730,16 @@ bool ChartBaseBSB::SetMinMax(void)
       {
             //    Georeferencing is not yet available, so find the reference points closest to min/max ply points
 
-            if(0 == nRefpoint)
+            if(reference_points.empty())
                   return false;        // have to bail here
 
                   //    for m_LonMax
             double min_dist_x = 360;
             int imaxclose = 0;
-            for(int ic=0 ; ic<nRefpoint ; ic++)
+            for(int ic=0 ; ic < reference_points.size(); ic++)
             {
-                  double dist = sqrt(((m_LatMax - pRefTable[ic].latr) * (m_LatMax - pRefTable[ic].latr))
-                                    + ((m_LonMax - pRefTable[ic].lonr) * (m_LonMax - pRefTable[ic].lonr)));
+                  double dist = sqrt(((m_LatMax - reference_points[ic].latr) * (m_LatMax - reference_points[ic].latr))
+                                    + ((m_LonMax - reference_points[ic].lonr) * (m_LonMax - reference_points[ic].lonr)));
 
                   if(dist < min_dist_x)
                   {
@@ -756,10 +751,10 @@ bool ChartBaseBSB::SetMinMax(void)
                   //    for m_LonMin
             double min_dist_n = 360;
             int iminclose = 0;
-            for(int id=0 ; id<nRefpoint ; id++)
+            for(int id=0 ; id < reference_points.size(); id++)
             {
-                  double dist = sqrt(((m_LatMin - pRefTable[id].latr) * (m_LatMin - pRefTable[id].latr))
-                                    + ((m_LonMin - pRefTable[id].lonr) * (m_LonMin - pRefTable[id].lonr)));
+                  double dist = sqrt(((m_LatMin - reference_points[id].latr) * (m_LatMin - reference_points[id].latr))
+                                    + ((m_LonMin - reference_points[id].lonr) * (m_LonMin - reference_points[id].lonr)));
 
                   if(dist < min_dist_n)
                   {
@@ -770,7 +765,7 @@ bool ChartBaseBSB::SetMinMax(void)
 
             //    Is this chart crossing IDL or Greenwich?
             // Make the check
-            if(pRefTable[imaxclose].xr < pRefTable[iminclose].xr)
+            if(reference_points[imaxclose].xr < reference_points[iminclose].xr)
             {
                   //    This chart crosses IDL and needs a flip, meaning that all negative longitudes need to be normalized
                   //    and the min/max relcalculated
@@ -2950,36 +2945,36 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
       int nlonmin, nlonmax, nlatmax, nlatmin;
       nlonmin =0; nlonmax=0; nlatmax=0; nlatmin=0;
 
-      if(0 == nRefpoint)                  // bad chart georef...
-            return (1);
+      if (reference_points.empty())                  // bad chart georef...
+            return 1;
 
-      for(n=0 ; n<nRefpoint ; n++)
+      for(n=0 ; n < reference_points.size(); n++)
       {
             //    Longitude
-            if(pRefTable[n].lonr > lonmax)
+            if(reference_points[n].lonr > lonmax)
             {
-                  lonmax = pRefTable[n].lonr;
-                  plonmax = (int)pRefTable[n].xr;
+                  lonmax = reference_points[n].lonr;
+                  plonmax = (int)reference_points[n].xr;
                   nlonmax = n;
             }
-            if(pRefTable[n].lonr < lonmin)
+            if(reference_points[n].lonr < lonmin)
             {
-                  lonmin = pRefTable[n].lonr;
-                  plonmin = (int)pRefTable[n].xr;
+                  lonmin = reference_points[n].lonr;
+                  plonmin = (int)reference_points[n].xr;
                   nlonmin = n;
             }
 
             //    Latitude
-            if(pRefTable[n].latr < latmin)
+            if(reference_points[n].latr < latmin)
             {
-                  latmin = pRefTable[n].latr;
-                  platmin = (int)pRefTable[n].yr;
+                  latmin = reference_points[n].latr;
+                  platmin = (int)reference_points[n].yr;
                   nlatmin = n;
             }
-            if(pRefTable[n].latr > latmax)
+            if(reference_points[n].latr > latmax)
             {
-                  latmax = pRefTable[n].latr;
-                  platmax = (int)pRefTable[n].yr;
+                  latmax = reference_points[n].latr;
+                  platmax = (int)reference_points[n].yr;
                   nlatmax = n;
             }
       }
@@ -2987,46 +2982,46 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
       //    Special case for charts which cross the IDL
       if((lonmin * lonmax) < 0)
       {
-            if(pRefTable[nlonmin].xr > pRefTable[nlonmax].xr)
+            if(reference_points[nlonmin].xr > reference_points[nlonmax].xr)
             {
                   //    walk the reference table and add 360 to any longitude which is < 0
-                  for(n=0 ; n<nRefpoint ; n++)
+                  for(n=0 ; n < reference_points.size(); n++)
                   {
-                        if(pRefTable[n].lonr < 0.0)
-                              pRefTable[n].lonr += 360.;
+                        if(reference_points[n].lonr < 0.0)
+                              reference_points[n].lonr += 360.;
                   }
 
                   //    And recalculate the  min/max
                   lonmin = 1000;
                   lonmax = -1000;
 
-                  for(n=0 ; n<nRefpoint ; n++)
+                  for(n=0 ; n < reference_points.size(); n++)
                   {
             //    Longitude
-                        if(pRefTable[n].lonr > lonmax)
+                        if(reference_points[n].lonr > lonmax)
                         {
-                              lonmax = pRefTable[n].lonr;
-                              plonmax = (int)pRefTable[n].xr;
+                              lonmax = reference_points[n].lonr;
+                              plonmax = (int)reference_points[n].xr;
                               nlonmax = n;
                         }
-                        if(pRefTable[n].lonr < lonmin)
+                        if(reference_points[n].lonr < lonmin)
                         {
-                              lonmin = pRefTable[n].lonr;
-                              plonmin = (int)pRefTable[n].xr;
+                              lonmin = reference_points[n].lonr;
+                              plonmin = (int)reference_points[n].xr;
                               nlonmin = n;
                         }
 
             //    Latitude
-                        if(pRefTable[n].latr < latmin)
+                        if(reference_points[n].latr < latmin)
                         {
-                              latmin = pRefTable[n].latr;
-                              platmin = (int)pRefTable[n].yr;
+                              latmin = reference_points[n].latr;
+                              platmin = (int)reference_points[n].yr;
                               nlatmin = n;
                         }
-                        if(pRefTable[n].latr > latmax)
+                        if(reference_points[n].latr > latmax)
                         {
-                              latmax = pRefTable[n].latr;
-                              platmax = (int)pRefTable[n].yr;
+                              latmax = reference_points[n].latr;
+                              platmax = (int)reference_points[n].yr;
                               nlatmax = n;
                         }
                   }
@@ -3036,12 +3031,12 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
 
 
 //          Build the Control Point Structure, etc
-        cPoints.count = nRefpoint;
+        cPoints.count = reference_points.size();
 
-        cPoints.tx  = (double *)malloc(nRefpoint * sizeof(double));
-        cPoints.ty  = (double *)malloc(nRefpoint * sizeof(double));
-        cPoints.lon = (double *)malloc(nRefpoint * sizeof(double));
-        cPoints.lat = (double *)malloc(nRefpoint * sizeof(double));
+        cPoints.tx  = (double *)malloc(reference_points.size() * sizeof(double));
+        cPoints.ty  = (double *)malloc(reference_points.size() * sizeof(double));
+        cPoints.lon = (double *)malloc(reference_points.size() * sizeof(double));
+        cPoints.lat = (double *)malloc(reference_points.size() * sizeof(double));
 
         cPoints.pwx = (double *)malloc(12 * sizeof(double));
         cPoints.wpx = (double *)malloc(12 * sizeof(double));
@@ -3054,12 +3049,12 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
         int imax = 0;
         int jmax = 0;
 
-        for(i=0 ; i<nRefpoint ; i++)
+        for(i=0 ; i < reference_points.size(); i++)
         {
-              for(int j=i+1 ; j < nRefpoint ; j++)
+              for(int j=i+1 ; j < reference_points.size(); j++)
               {
-                    double dx = pRefTable[i].xr - pRefTable[j].xr;
-                    double dy = pRefTable[i].yr - pRefTable[j].yr;
+                    double dx = reference_points[i].xr - reference_points[j].xr;
+                    double dy = reference_points[i].yr - reference_points[j].yr;
                     double dist = (dx * dx) + (dy * dy);
                     if(dist > dist_max)
                     {
@@ -3076,12 +3071,12 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
         {
               double easting0, easting1, northing0, northing1;
               //  Get the TMerc projection of the two REF points
-              toTM(pRefTable[imax].latr, pRefTable[imax].lonr, m_proj_lat, m_proj_lon, &easting0, &northing0);
-              toTM(pRefTable[jmax].latr, pRefTable[jmax].lonr, m_proj_lat, m_proj_lon, &easting1, &northing1);
+              toTM(reference_points[imax].latr, reference_points[imax].lonr, m_proj_lat, m_proj_lon, &easting0, &northing0);
+              toTM(reference_points[jmax].latr, reference_points[jmax].lonr, m_proj_lat, m_proj_lon, &easting1, &northing1);
 
               //  Calculate the scale factor using exact REF point math
-              double dx2 =  (pRefTable[jmax].xr - pRefTable[imax].xr) *  (pRefTable[jmax].xr - pRefTable[imax].xr);
-              double dy2 =  (pRefTable[jmax].yr - pRefTable[imax].yr) *  (pRefTable[jmax].yr - pRefTable[imax].yr);
+              double dx2 =  (reference_points[jmax].xr - reference_points[imax].xr) *  (reference_points[jmax].xr - reference_points[imax].xr);
+              double dy2 =  (reference_points[jmax].yr - reference_points[imax].yr) *  (reference_points[jmax].yr - reference_points[imax].yr);
               double dn2 =  (northing1 - northing0) * (northing1 - northing0);
               double de2 =  (easting1 - easting0) * (easting1 - easting0);
 
@@ -3090,13 +3085,13 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
               //  Set up and solve polynomial solution for pix<->east/north as projected
               // Fill the cpoints structure with pixel points and transformed lat/lon
 
-              for(int n=0 ; n<nRefpoint ; n++)
+              for(int n=0 ; n < reference_points.size(); n++)
               {
                     double easting, northing;
-                    toTM(pRefTable[n].latr, pRefTable[n].lonr, m_proj_lat, m_proj_lon, &easting, &northing);
+                    toTM(reference_points[n].latr, reference_points[n].lonr, m_proj_lat, m_proj_lon, &easting, &northing);
 
-                    cPoints.tx[n] = pRefTable[n].xr;
-                    cPoints.ty[n] = pRefTable[n].yr;
+                    cPoints.tx[n] = reference_points[n].xr;
+                    cPoints.ty[n] = reference_points[n].yr;
                     cPoints.lon[n] = easting;
                     cPoints.lat[n] = northing;
               }
@@ -3122,16 +3117,11 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
 
              double easting0, easting1, northing0, northing1;
               //  Get the Merc projection of the two REF points
-             toSM_ECC(pRefTable[imax].latr, pRefTable[imax].lonr, m_proj_lat, m_proj_lon, &easting0, &northing0);
-             toSM_ECC(pRefTable[jmax].latr, pRefTable[jmax].lonr, m_proj_lat, m_proj_lon, &easting1, &northing1);
+             toSM_ECC(reference_points[imax].latr, reference_points[imax].lonr, m_proj_lat, m_proj_lon, &easting0, &northing0);
+             toSM_ECC(reference_points[jmax].latr, reference_points[jmax].lonr, m_proj_lat, m_proj_lon, &easting1, &northing1);
 
-              //  Calculate the scale factor using exact REF point math
-//             double dx =  (pRefTable[jmax].xr - pRefTable[imax].xr);
-//             double de =  (easting1 - easting0);
-//             m_ppm_avg = fabs(dx / de);
-
-             double dx2 =  (pRefTable[jmax].xr - pRefTable[imax].xr) *  (pRefTable[jmax].xr - pRefTable[imax].xr);
-             double dy2 =  (pRefTable[jmax].yr - pRefTable[imax].yr) *  (pRefTable[jmax].yr - pRefTable[imax].yr);
+             double dx2 =  (reference_points[jmax].xr - reference_points[imax].xr) *  (reference_points[jmax].xr - reference_points[imax].xr);
+             double dy2 =  (reference_points[jmax].yr - reference_points[imax].yr) *  (reference_points[jmax].yr - reference_points[imax].yr);
              double dn2 =  (northing1 - northing0) * (northing1 - northing0);
              double de2 =  (easting1 - easting0) * (easting1 - easting0);
 
@@ -3141,16 +3131,16 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
               //  Set up and solve polynomial solution for pix<->east/north as projected
               // Fill the cpoints structure with pixel points and transformed lat/lon
 
-             for(int n=0 ; n<nRefpoint ; n++)
+             for(int n=0 ; n < reference_points.size(); n++)
              {
                    double easting, northing;
-                   toSM_ECC(pRefTable[n].latr, pRefTable[n].lonr, m_proj_lat, m_proj_lon, &easting, &northing);
+                   toSM_ECC(reference_points[n].latr, reference_points[n].lonr, m_proj_lat, m_proj_lon, &easting, &northing);
 
-                   cPoints.tx[n] = pRefTable[n].xr;
-                   cPoints.ty[n] = pRefTable[n].yr;
+                   cPoints.tx[n] = reference_points[n].xr;
+                   cPoints.ty[n] = reference_points[n].yr;
                    cPoints.lon[n] = easting;
                    cPoints.lat[n] = northing;
-//                   printf(" x: %g  y: %g  east: %g  north: %g\n",pRefTable[n].xr, pRefTable[n].yr, easting, northing);
+//                   printf(" x: %g  y: %g  east: %g  north: %g\n",reference_points[n].xr, reference_points[n].yr, easting, northing);
              }
 
         //      Helper parameters
@@ -3192,25 +3182,25 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
              //   Obviously, the projection meridian should be on the chart, i.e. between the min and max longitudes....
              double proj_meridian = m_proj_lon;
 
-             if((pRefTable[nlonmax].lonr >= -proj_meridian) && (-proj_meridian >= pRefTable[nlonmin].lonr))
+             if((reference_points[nlonmax].lonr >= -proj_meridian) && (-proj_meridian >= reference_points[nlonmin].lonr))
                    m_proj_lon = -m_proj_lon;
 
 
              double easting0, easting1, northing0, northing1;
              //  Get the Poly projection of the two REF points
-             toPOLY(pRefTable[imax].latr, pRefTable[imax].lonr, m_proj_lat, m_proj_lon, &easting0, &northing0);
-             toPOLY(pRefTable[jmax].latr, pRefTable[jmax].lonr, m_proj_lat, m_proj_lon, &easting1, &northing1);
+             toPOLY(reference_points[imax].latr, reference_points[imax].lonr, m_proj_lat, m_proj_lon, &easting0, &northing0);
+             toPOLY(reference_points[jmax].latr, reference_points[jmax].lonr, m_proj_lat, m_proj_lon, &easting1, &northing1);
 
               //  Calculate the scale factor using exact REF point math
-             double dx2 =  (pRefTable[jmax].xr - pRefTable[imax].xr) *  (pRefTable[jmax].xr - pRefTable[imax].xr);
-             double dy2 =  (pRefTable[jmax].yr - pRefTable[imax].yr) *  (pRefTable[jmax].yr - pRefTable[imax].yr);
+             double dx2 =  (reference_points[jmax].xr - reference_points[imax].xr) *  (reference_points[jmax].xr - reference_points[imax].xr);
+             double dy2 =  (reference_points[jmax].yr - reference_points[imax].yr) *  (reference_points[jmax].yr - reference_points[imax].yr);
              double dn2 =  (northing1 - northing0) * (northing1 - northing0);
              double de2 =  (easting1 - easting0) * (easting1 - easting0);
 
              m_ppm_avg = sqrt(dx2 + dy2) / sqrt(dn2 + de2);
 
              // Sanity check
-//             double ref_dist = DistGreatCircle(pRefTable[imax].latr, pRefTable[imax].lonr, pRefTable[jmax].latr, pRefTable[jmax].lonr);
+//             double ref_dist = DistGreatCircle(reference_points[imax].latr, reference_points[imax].lonr, reference_points[jmax].latr, reference_points[jmax].lonr);
 //             ref_dist *= 1852;                                    //To Meters
 //             double ref_dist_transform = sqrt(dn2 + de2);         //Also meters
 //             double error = (ref_dist - ref_dist_transform)/ref_dist;
@@ -3218,24 +3208,24 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
               //  Set up and solve polynomial solution for pix<->cartesian east/north as projected
               // Fill the cpoints structure with pixel points and transformed lat/lon
 
-             for(int n=0 ; n<nRefpoint ; n++)
+             for(int n=0 ; n < reference_points.size(); n++)
              {
                    double lata, lona;
-                   lata = pRefTable[n].latr;
-                   lona = pRefTable[n].lonr;
+                   lata = reference_points[n].latr;
+                   lona = reference_points[n].lonr;
 
                    double easting, northing;
-                   toPOLY(pRefTable[n].latr, pRefTable[n].lonr, m_proj_lat, m_proj_lon, &easting, &northing);
+                   toPOLY(reference_points[n].latr, reference_points[n].lonr, m_proj_lat, m_proj_lon, &easting, &northing);
 
                    //   Round trip check for debugging....
 //                   double lat, lon;
 //                   fromPOLY(easting, northing, m_proj_lat, m_proj_lon, &lat, &lon);
 
-                   cPoints.tx[n] = pRefTable[n].xr;
-                   cPoints.ty[n] = pRefTable[n].yr;
+                   cPoints.tx[n] = reference_points[n].xr;
+                   cPoints.ty[n] = reference_points[n].yr;
                    cPoints.lon[n] = easting;
                    cPoints.lat[n] = northing;
-//                   printf(" x: %g  y: %g  east: %g  north: %g\n",pRefTable[n].xr, pRefTable[n].yr, easting, northing);
+//                   printf(" x: %g  y: %g  east: %g  north: %g\n",reference_points[n].xr, reference_points[n].yr, easting, northing);
              }
 
                      //      Helper parameters
@@ -3263,12 +3253,12 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
              //   Use a Mercator Projection to get a rough ppm.
              double easting0, easting1, northing0, northing1;
               //  Get the Merc projection of the two REF points
-             toSM_ECC(pRefTable[imax].latr, pRefTable[imax].lonr, m_proj_lat, m_proj_lon, &easting0, &northing0);
-             toSM_ECC(pRefTable[jmax].latr, pRefTable[jmax].lonr, m_proj_lat, m_proj_lon, &easting1, &northing1);
+             toSM_ECC(reference_points[imax].latr, reference_points[imax].lonr, m_proj_lat, m_proj_lon, &easting0, &northing0);
+             toSM_ECC(reference_points[jmax].latr, reference_points[jmax].lonr, m_proj_lat, m_proj_lon, &easting1, &northing1);
 
               //  Calculate the scale factor using exact REF point math in x(longitude) direction
 
-             double dx =  (pRefTable[jmax].xr - pRefTable[imax].xr);
+             double dx =  (reference_points[jmax].xr - reference_points[imax].xr);
              double de =  (easting1 - easting0);
 
              m_ppm_avg = fabs(dx / de);
@@ -3283,8 +3273,8 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
 
         // Do a last little test using a synthetic ViewPort of nominal size.....
         ViewPort vp;
-        vp.clat = pRefTable[0].latr;
-        vp.clon = pRefTable[0].lonr;
+        vp.clat = reference_points[0].latr;
+        vp.clon = reference_points[0].lonr;
         vp.view_scale_ppm = m_ppm_avg;
         vp.skew = 0.;
         vp.pix_width = 1000;
@@ -3299,20 +3289,20 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
         int px, py;
 
         int pxref, pyref;
-        pxref = (int)pRefTable[0].xr;
-        pyref = (int)pRefTable[0].yr;
+        pxref = (int)reference_points[0].xr;
+        pyref = (int)reference_points[0].yr;
 
-        for(i=0 ; i<nRefpoint ; i++)
+        for(i=0 ; i < reference_points.size(); i++)
         {
-              px = (int)(vp.pix_width/2 + pRefTable[i].xr) - pxref;
-              py = (int)(vp.pix_height/2 + pRefTable[i].yr) - pyref;
+              px = (int)(vp.pix_width/2 + reference_points[i].xr) - pxref;
+              py = (int)(vp.pix_height/2 + reference_points[i].yr) - pyref;
 
               vp_pix_to_latlong(vp, px, py, &elt, &elg);
 
-              double lat_error  = elt - pRefTable[i].latr;
-              pRefTable[i].ypl_error = lat_error;
+              double lat_error  = elt - reference_points[i].latr;
+              reference_points[i].ypl_error = lat_error;
 
-              double lon_error = elg - pRefTable[i].lonr;
+              double lon_error = elg - reference_points[i].lonr;
 
                     //  Longitude errors could be compounded by prior adjustment to ref points
               if(fabs(lon_error) > 180.)
@@ -3322,12 +3312,12 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
                     else if(lon_error < 0.)
                           lon_error += 360.;
               }
-              pRefTable[i].xpl_error = lon_error;
+              reference_points[i].xpl_error = lon_error;
 
-              if(fabs(pRefTable[i].ypl_error) > fabs(ypl_err_max))
-                    ypl_err_max = pRefTable[i].ypl_error;
-              if(fabs(pRefTable[i].xpl_error) > fabs(xpl_err_max))
-                    xpl_err_max = pRefTable[i].xpl_error;
+              if(fabs(reference_points[i].ypl_error) > fabs(ypl_err_max))
+                    ypl_err_max = reference_points[i].ypl_error;
+              if(fabs(reference_points[i].xpl_error) > fabs(xpl_err_max))
+                    xpl_err_max = reference_points[i].xpl_error;
 
               xpl_err_max_meters = fabs(xpl_err_max * 60 * 1852.0);
               ypl_err_max_meters = fabs(ypl_err_max * 60 * 1852.0);
@@ -3363,20 +3353,20 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
               xpl_err_max = 0;
               ypl_err_max = 0;
 
-              pxref = (int)pRefTable[0].xr;
-              pyref = (int)pRefTable[0].yr;
+              pxref = (int)reference_points[0].xr;
+              pyref = (int)reference_points[0].yr;
 
-              for(i=0 ; i<nRefpoint ; i++)
+              for(i=0 ; i < reference_points.size(); i++)
               {
-                    px = (int)(vp.pix_width/2 + pRefTable[i].xr) - pxref;
-                    py = (int)(vp.pix_height/2 + pRefTable[i].yr) - pyref;
+                    px = (int)(vp.pix_width/2 + reference_points[i].xr) - pxref;
+                    py = (int)(vp.pix_height/2 + reference_points[i].yr) - pyref;
 
                     vp_pix_to_latlong(vp, px, py, &elt, &elg);
 
-                    double lat_error  = elt - pRefTable[i].latr;
-                    pRefTable[i].ypl_error = lat_error;
+                    double lat_error  = elt - reference_points[i].latr;
+                    reference_points[i].ypl_error = lat_error;
 
-                    double lon_error = elg - pRefTable[i].lonr;
+                    double lon_error = elg - reference_points[i].lonr;
 
                     //  Longitude errors could be compounded by prior adjustment to ref points
                     if(fabs(lon_error) > 180.)
@@ -3386,12 +3376,12 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
                           else if(lon_error < 0.)
                                 lon_error += 360.;
                     }
-                    pRefTable[i].xpl_error = lon_error;
+                    reference_points[i].xpl_error = lon_error;
 
-                    if(fabs(pRefTable[i].ypl_error) > fabs(ypl_err_max))
-                          ypl_err_max = pRefTable[i].ypl_error;
-                    if(fabs(pRefTable[i].xpl_error) > fabs(xpl_err_max))
-                          xpl_err_max = pRefTable[i].xpl_error;
+                    if(fabs(reference_points[i].ypl_error) > fabs(ypl_err_max))
+                          ypl_err_max = reference_points[i].ypl_error;
+                    if(fabs(reference_points[i].xpl_error) > fabs(xpl_err_max))
+                          xpl_err_max = reference_points[i].xpl_error;
 
                     xpl_err_max_meters = fabs(xpl_err_max * 60 * 1852.0);
                     ypl_err_max_meters = fabs(ypl_err_max * 60 * 1852.0);

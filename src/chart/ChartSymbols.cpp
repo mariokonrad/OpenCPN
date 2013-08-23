@@ -389,9 +389,11 @@ void ChartSymbols::BuildLineStyle( LineStyle &lineStyle )
 
 	lnstmp = ( *plib->_line_sym )[lineStyle.name];
 
-	if( NULL == lnstmp ) ( *plib->_line_sym )[lineStyle.name] = lnst;
+	if( NULL == lnstmp )
+		( *plib->_line_sym )[lineStyle.name] = lnst;
 	else
-		if( lnst->name.LINM != lnstmp->name.LINM ) ( *plib->_line_sym )[lineStyle.name] = lnst;
+		if (lnst->name.LINM != lnstmp->name.LINM)
+			(*plib->_line_sym)[lineStyle.name] = lnst;
 }
 
 void ChartSymbols::ProcessPatterns( TiXmlElement* patternNodes )

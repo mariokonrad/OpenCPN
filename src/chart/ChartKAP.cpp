@@ -346,19 +346,18 @@ InitReturn ChartKAP::Init( const wxString& name, ChartInitFlag init_flags )
 
 		else if (!strncmp(buffer, "REF", 3))
 		{
+			// FIXME: why not read Refpoint directly, DUPLICATE CODE
 			int i, xr, yr;
 			float ltr,lnr;
 			sscanf(&buffer[4], "%d,%d,%d,%f,%f", &i, &xr, &yr, &ltr, &lnr);
-			pRefTable = (Refpoint *)realloc(pRefTable, sizeof(Refpoint) * (nRefpoint+1));
-			pRefTable[nRefpoint].xr = xr;
-			pRefTable[nRefpoint].yr = yr;
-			pRefTable[nRefpoint].latr = ltr;
-			pRefTable[nRefpoint].lonr = lnr;
-			pRefTable[nRefpoint].bXValid = 1;
-			pRefTable[nRefpoint].bYValid = 1;
-
-			nRefpoint++;
-
+			Refpoint p;
+			p.xr = xr;
+			p.yr = yr;
+			p.latr = ltr;
+			p.lonr = lnr;
+			p.bXValid = 1;
+			p.bYValid = 1;
+			reference_points.push_back(p);
 		}
 
 		else if (!strncmp(buffer, "WPX", 3))

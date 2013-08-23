@@ -119,19 +119,18 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 
 		else if (!strncmp(buffer, "Point", 5))                // Extract RefPoints
 		{
+			// FIXME: why not read Refpoint directly, DUPLICATE CODE
 			int i, xr, yr;
 			float ltr,lnr;
 			sscanf(&buffer[0], "Point%d=%f %f %d %d", &i, &lnr, &ltr, &yr, &xr);
-			pRefTable = (Refpoint *)realloc(pRefTable, sizeof(Refpoint) * (nRefpoint+1));
-			pRefTable[nRefpoint].xr = xr;
-			pRefTable[nRefpoint].yr = yr;
-			pRefTable[nRefpoint].latr = ltr;
-			pRefTable[nRefpoint].lonr = lnr;
-			pRefTable[nRefpoint].bXValid = 1;
-			pRefTable[nRefpoint].bYValid = 1;
-
-			nRefpoint++;
-
+			Refpoint p;
+			p.xr = xr;
+			p.yr = yr;
+			p.latr = ltr;
+			p.lonr = lnr;
+			p.bXValid = 1;
+			p.bYValid = 1;
+			reference_points.push_back(p);
 		}
 
 		else if (!strncmp(buffer, "Vertex", 6))

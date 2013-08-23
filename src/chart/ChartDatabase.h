@@ -36,6 +36,7 @@
 
 #include "chartbase.h"
 #include "chart/ChartTableHeader.h"
+#include "chart/ChartTableEntry.h"
 #include "chart/ChartClassDescriptor.h"
 #include "chart1.h"
 
@@ -44,75 +45,6 @@ class ChartDatabase;
 class ChartGroupArray;
 class BoundingBox;
 
-
-struct ChartTableEntry
-{
-	ChartTableEntry();
-	ChartTableEntry(ChartBase &theChart);
-	~ChartTableEntry();
-
-	bool IsEqualTo(const ChartTableEntry &cte) const;
-	bool IsEarlierThan(const ChartTableEntry &cte) const;
-	bool Read(const ChartDatabase *pDb, wxInputStream &is);
-	bool Write(const ChartDatabase *pDb, wxOutputStream &os);
-	void Clear();
-	void Disable();
-	void SetValid(bool valid);
-	time_t GetFileTime() const;
-
-	int GetnPlyEntries() const;
-	float *GetpPlyTable() const;
-
-	int GetnAuxPlyEntries() const;
-	float *GetpAuxPlyTableEntry(int index) const;
-	int GetAuxCntTableEntry(int index) const;
-
-	int GetnNoCovrPlyEntries() const;
-	float *GetpNoCovrPlyTableEntry(int index) const;
-	int GetNoCovrCntTableEntry(int index) const;
-
-	char *GetpFullPath() const;
-	float GetLonMax() const;
-	float GetLonMin() const;
-	float GetLatMax() const;
-	float GetLatMin() const;
-	int GetScale() const;
-	int GetChartType() const;
-	int GetChartFamily() const;
-	int GetChartProjectionType() const;
-	float GetChartSkew() const;
-
-	bool GetbValid();
-	void SetEntryOffset(int n);
-	std::vector<int> &GetGroupArray(void);
-	wxString *GetpFileName(void);
-
-	private:
-	int         EntryOffset;
-	int         ChartType;
-	float       LatMax;
-	float       LatMin;
-	float       LonMax;
-	float       LonMin;
-	char        *pFullPath;
-	int         Scale;
-	time_t      edition_date;
-	time_t      file_date;
-	float       *pPlyTable;
-	int         nPlyEntries;
-	int         nAuxPlyEntries;
-	float       **pAuxPlyTable;
-	int         *pAuxCntTable;
-	float       Skew;
-	int         ProjectionType;
-	bool        bValid;
-	int         nNoCovrPlyEntries;
-	int         *pNoCovrCntTable;
-	float       **pNoCovrPlyTable;
-
-	std::vector<int> m_GroupArray;
-	wxString    *m_pfilename;             // a helper member, not on disk
-};
 
 enum
 {

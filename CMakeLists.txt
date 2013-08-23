@@ -429,6 +429,7 @@ SET(HDRS
 		src/MyPrintout.h
 		src/chart/Refpoint.h
 		src/chart/ChartTableHeader.h
+		src/chart/ChartTableEntry.h
 		src/chart/ChartClassDescriptor.h
 		src/chart/ChartDB.h
 		src/chart/CacheEntry.h
@@ -582,6 +583,7 @@ SET(SRCS
 		src/chart/ChartDB.cpp
 		src/chart/ChartDatabase.cpp
 		src/chart/ChartTableHeader.cpp
+		src/chart/ChartTableEntry.cpp
 		src/chart/ChartClassDescriptor.cpp
 		src/chart/ChartGEO.cpp
 		src/chart/ChartKAP.cpp

@@ -139,7 +139,6 @@ WX_DECLARE_OBJARRAY(wxDialog *, MyDialogPtrArray);
 
 #include <wx/arrimpl.cpp>
 WX_DEFINE_OBJARRAY(ArrayOfCDI);
-WX_DEFINE_OBJARRAY(ArrayOfRect);
 WX_DEFINE_OBJARRAY(MyDialogPtrArray);
 
 #ifdef __WXMSW__

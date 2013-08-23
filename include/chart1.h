@@ -151,8 +151,6 @@ class ToolBarSimple;
 class OCPN_DataStreamEvent;
 class DataStream;
 
-WX_DECLARE_OBJARRAY(wxRect, ArrayOfRect);
-
 class MyFrame: public wxFrame
 {
 	public:

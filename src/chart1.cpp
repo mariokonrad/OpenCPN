@@ -135,11 +135,8 @@
 	#include "portaudio.h"
 #endif
 
-WX_DECLARE_OBJARRAY(wxDialog *, MyDialogPtrArray);
-
 #include <wx/arrimpl.cpp>
 WX_DEFINE_OBJARRAY(ArrayOfCDI);
-WX_DEFINE_OBJARRAY(MyDialogPtrArray);
 
 #ifdef __WXMSW__
 void RedirectIOToConsole();
@@ -501,7 +498,6 @@ FloatingCompassWindow * g_FloatingCompassDialog;
 int g_toolbar_x;
 int g_toolbar_y;
 long g_toolbar_orient;
-MyDialogPtrArray g_MacShowDialogArray;
 int g_GPU_MemSize;
 bool g_b_useStencil;
 

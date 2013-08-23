@@ -467,7 +467,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
 
 			psd->DATUM = ptiderec->datum_offset;
 
-			m_msd_array.Add(psd);                     // add it to the member array
+			m_msd_array.push_back(*psd); // add it to the member array, FIXME: why? the container is not used anywhere
 			pIDX->pref_sta_data = psd;
 			pIDX->IDX_ref_dbIndex = i;
 			pIDX->have_offsets = 0;

@@ -47,6 +47,4 @@ class Station_Data
 		int have_BOGUS;
 };
 
-WX_DECLARE_OBJARRAY(Station_Data, ArrayOfStationData);
-
 #endif

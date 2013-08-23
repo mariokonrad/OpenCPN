@@ -26,6 +26,8 @@
 
 #include <wx/string.h>
 
+#include <vector>
+
 #include "TCDataFactory.h"
 #include "Station_Data.h"
 #include "IDX_entry.h"
@@ -47,7 +49,7 @@ class TCDS_Binary_Harmonic : public TCDataFactory
 		TC_Error_Code LoadHarmonicData(IDX_entry *pIDX);
 
 	private:
-		ArrayOfStationData m_msd_array;
+		std::vector<Station_Data> m_msd_array;
 
 		wxString m_last_reference_not_found;
 

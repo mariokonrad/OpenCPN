@@ -26,7 +26,8 @@
 
 #include <wx/string.h>
 
-#include <stdio.h>
+#include <vector>
+#include <cstdio>
 
 #include "TCDataFactory.h"
 #include "Station_Data.h"
@@ -66,7 +67,7 @@ class TCDS_Ascii_Harmonic : public TCDataFactory
 		void free_epochs();
 		void free_data();
 
-		ArrayOfStationData m_msd_array;
+		std::vector<Station_Data> m_msd_array;
 
 		wxString m_indexfile_name;
 		wxString m_harmfile_name;

@@ -172,8 +172,6 @@ ChartBaseBSB::ChartBaseBSB()
       //    Init some private data
       m_ChartFamily = CHART_FAMILY_RASTER;
 
-      pBitmapFilePath = NULL;
-
       ifs_buf = NULL;
 
       cached_image_ok = 0;
@@ -235,10 +233,6 @@ ChartBaseBSB::ChartBaseBSB()
 
 ChartBaseBSB::~ChartBaseBSB()
 {
-
-      if(pBitmapFilePath)
-            delete pBitmapFilePath;
-
       if(ifs_buf)
             free(ifs_buf);
 

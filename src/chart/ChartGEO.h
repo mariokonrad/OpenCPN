@@ -32,6 +32,7 @@ class  ChartGEO : public ChartBaseBSB
 		ChartGEO();
 		~ChartGEO();
 		InitReturn Init(const wxString& name, ChartInitFlag init_flags);
+
 };
 
 #endif

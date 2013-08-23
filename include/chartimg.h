@@ -258,8 +258,6 @@ protected:
       wxFileInputStream     *ifss_bitmap;
       wxBufferedInputStream *ifs_bitmap;
 
-      wxString          *pBitmapFilePath;
-
       unsigned char     *ifs_buf;
       unsigned char     *ifs_bufend;
       int               ifs_bufsize;
@@ -268,7 +266,7 @@ protected:
       int               nFileOffsetDataStart;
       int               m_nLineOffset;
 
-      GeoRef            cPoints;
+      GeoRef cPoints;
 
       double            wpx[12], wpy[12], pwx[12], pwy[12];     // Embedded georef coefficients
       int               wpx_type;
@@ -287,35 +285,36 @@ protected:
 
 //    Integer digital scale value above which bilinear scaling is not allowed,
 //      and subsampled scaling must be performed
-      int         m_bilinear_limit;
+      int m_bilinear_limit;
 
 
-      bool        bUseLineCache;
+      bool bUseLineCache;
 
-      float       m_LonMax;
-      float       m_LonMin;
-      float       m_LatMax;
-      float       m_LatMin;
+      float m_LonMax;
+      float m_LonMin;
+      float m_LatMax;
+      float m_LatMin;
 
-      int         *pPalette;
-      PaletteDir  palette_direction;
+      int * pPalette;
+      PaletteDir palette_direction;
 
-      bool        bGeoErrorSent;
+      bool bGeoErrorSent;
 
-      double      m_ppm_avg;              // Calculated true scale factor of the 1X chart,
+      double m_ppm_avg;              // Calculated true scale factor of the 1X chart,
                                         // pixels per meter
 
-      double      m_raster_scale_factor;        // exact scaling factor for pixel oversampling calcs
+      double m_raster_scale_factor;        // exact scaling factor for pixel oversampling calcs
 
-      bool      m_bIDLcross;
+      bool m_bIDLcross;
 
-      OCPNRegion  m_last_region;
+      OCPNRegion m_last_region;
 
-      int       m_b_cdebug;
+      int m_b_cdebug;
 
-      double    m_proj_lat, m_proj_lon;
+      double m_proj_lat;
+      double m_proj_lon;
 
-      ViewPort  m_vp_render_last;
+      ViewPort m_vp_render_last;
 };
 
 #endif

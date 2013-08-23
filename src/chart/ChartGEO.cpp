@@ -69,6 +69,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 
 	Size_X = Size_Y = 0;
 
+	wxString bitmap_filepath;
 	while( (ReadBSBHdrLine(ifs_hdr, &buffer[0], BUF_LEN_MAX)) != 0 )
 	{
 		wxString str_buf(buffer, wxConvUTF8);
@@ -78,14 +79,11 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 			wxString token = tkz.GetNextToken();
 			if(token.IsSameAs(_T("Bitmap"), TRUE))
 			{
-				pBitmapFilePath = new wxString();
-
 				int i;
 				i = tkz.GetPosition();
-				pBitmapFilePath->Clear();
-				while(buffer[i])
-				{
-					pBitmapFilePath->Append(buffer[i]);
+				bitmap_filepath.Clear();
+				while (buffer[i]) {
+					bitmap_filepath.Append(buffer[i]);
 					i++;
 				}
 			}
@@ -242,29 +240,28 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 
 
 
-	//          Extract the remaining data from .NOS Bitmap file
+	// Extract the remaining data from .NOS Bitmap file
 	ifs_bitmap = NULL;
 
-	//      Something wrong with the .geo file, there is no Bitmap reference
-	//      This is where the arbitrarily bad file is caught, such as
-	//      a file with.GEO extension that is not really a chart
-
-	if(pBitmapFilePath == NULL)
+	// Something wrong with the .geo file, there is no Bitmap reference
+	// This is where the arbitrarily bad file is caught, such as
+	// a file with.GEO extension that is not really a chart
+	if (bitmap_filepath.IsEmpty())
 		return INIT_FAIL_REMOVE;
 
-	wxString NOS_Name(*pBitmapFilePath);            // take a copy
+	wxString NOS_Name(bitmap_filepath);            // take a copy
 
 	wxDir target_dir(Path);
 	wxArrayString file_array;
 	int nfiles = wxDir::GetAllFiles(Path, &file_array);
 	int ifile;
 
-	pBitmapFilePath->Prepend(Path);
+	bitmap_filepath.Prepend(Path);
 
-	wxFileName NOS_filename(*pBitmapFilePath);
+	wxFileName NOS_filename(bitmap_filepath);
 	if(NOS_filename.FileExists())
 	{
-		ifss_bitmap = new wxFileInputStream(*pBitmapFilePath); // open the bitmap file
+		ifss_bitmap = new wxFileInputStream(bitmap_filepath); // open the bitmap file
 		ifs_bitmap = new wxBufferedInputStream(*ifss_bitmap);
 	}
 	//    File as fetched verbatim from the .geo file doesn't exist.
@@ -320,7 +317,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 			wxString file_up = file_array.Item(ifile);
 			file_up.MakeUpper();
 
-			wxString target_up = *pBitmapFilePath;
+			wxString target_up = bitmap_filepath;
 			target_up.MakeUpper();
 
 			if(file_up.IsSameAs( target_up))
@@ -336,12 +333,11 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 
 found_uclc_file:
 
-		delete pBitmapFilePath;                   // fix up the member element
-		pBitmapFilePath = new wxString(NOS_filename.GetFullPath());
-		ifss_bitmap = new wxFileInputStream(*pBitmapFilePath); // open the bitmap file
+		bitmap_filepath = NOS_filename.GetFullPath();
+		ifss_bitmap = new wxFileInputStream(bitmap_filepath); // open the bitmap file
 		ifs_bitmap = new wxBufferedInputStream(*ifss_bitmap);
 
-	}           //else
+	}
 
 
 	if(ifs_bitmap == NULL)

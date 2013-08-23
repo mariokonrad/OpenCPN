@@ -3,7 +3,7 @@
  * Project:  OpenCPN
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register   *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -273,9 +273,9 @@ int ChartDB::BuildChartStack(ChartStack * cstk, float lat, float lon)
             bool b_group_add = false;
             if(g_GroupIndex > 0)
             {
-                  for(unsigned int ig=0 ; ig < pt->GetGroupArray().GetCount(); ig++)
+                  for (unsigned int ig=0 ; ig < pt->GetGroupArray().size(); ig++)
                   {
-                        if(g_GroupIndex == pt->GetGroupArray().Item(ig))
+                        if(g_GroupIndex == pt->GetGroupArray()[ig])
                         {
                               b_group_add = true;
                               break;
@@ -305,7 +305,7 @@ int ChartDB::BuildChartStack(ChartStack * cstk, float lat, float lon)
                         }
                   }
                   //    Western hemisphere, some type of charts
-                  else if( (pt->GetLonMax() > 180.) && (pt->GetLonMin() > 180.) )       
+                  else if( (pt->GetLonMax() > 180.) && (pt->GetLonMin() > 180.) )
                   {
                       if(CheckPositionWithinChart(db_index, lat, lon + 360.)  &&  (j < ChartStack::MAXSTACK) )
                       {
@@ -411,9 +411,9 @@ bool ChartDB::IsChartInGroup(const int db_index, const int group)
       bool b_in_group = false;
       if(group > 0)
       {
-            for(unsigned int ig=0 ; ig < pt->GetGroupArray().GetCount(); ig++)
+            for(unsigned int ig=0 ; ig < pt->GetGroupArray().size(); ig++)
             {
-                  if(group == pt->GetGroupArray().Item(ig))
+                  if(group == pt->GetGroupArray()[ig])
                   {
                         b_in_group = true;
                         break;
@@ -605,15 +605,15 @@ ChartFamilyEnum ChartDB::GetCSChartFamily(ChartStack *ps, int stackindex)
 }
 
 
-ArrayOfInts ChartDB::GetCSArray(ChartStack *ps)
+std::vector<int> ChartDB::GetCSArray(ChartStack *ps)
 {
-      ArrayOfInts ret;
+      std::vector<int> ret;
 
       if(ps)
       {
-            for(int i=0 ; i<ps->nEntry ; i++)
+            for(int i=0 ; i < ps->nEntry ; i++)
             {
-                  ret.Add(ps->GetDBIndex(i));
+                  ret.push_back(ps->GetDBIndex(i));
             }
       }
 

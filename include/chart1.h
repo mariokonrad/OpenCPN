@@ -43,8 +43,6 @@
 #include "chart/ChartFamily.h"
 #include "ColorScheme.h"
 
-WX_DEFINE_ARRAY_INT(int, ArrayOfInts);
-
 #ifdef USE_S57
 #include "cpl_error.h"
 

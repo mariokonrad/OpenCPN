@@ -21,12 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-	#include "wx/wx.h"
-#endif
-
 #ifdef OCPN_USE_CRASHRPT
 	#include "CrashRpt.h"
 #endif
@@ -58,6 +52,8 @@
 	#include <signal.h>
 	#include <setjmp.h>
 #endif
+
+#include <algorithm>
 
 #include <version.h>
 #include "dychart.h"
@@ -484,7 +480,7 @@ bool g_bUseCM93;
 int g_click_stop;
 int g_MemFootSec;
 int g_MemFootMB;
-ArrayOfInts g_quilt_noshow_index_array;
+std::vector<int> g_quilt_noshow_index_array;
 wxStaticBitmap *g_pStatBoxTool;
 bool g_bquiting;
 int g_BSBImgDebug;
@@ -2705,9 +2701,9 @@ void MyFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
 
         //          Refresh the Piano Bar
         if( stats ) {
-            ArrayOfInts piano_active_chart_index_array;
-            piano_active_chart_index_array.Add( pCurrentStack->GetCurrentEntrydbIndex() );
-            stats->pPiano->SetActiveKeyArray( piano_active_chart_index_array );
+            std::vector<int> piano_active_chart_index_array;
+            piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
+            stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 
             stats->Refresh( true );
         }
@@ -2826,7 +2822,7 @@ void MyFrame::SetupQuiltMode( void )
     {
         ChartData->LockCache();
 
-        stats->pPiano->SetNoshowIndexArray( g_quilt_noshow_index_array );
+        stats->pPiano->SetNoshowIndexArray(g_quilt_noshow_index_array);
 
         ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 
@@ -2883,10 +2879,9 @@ void MyFrame::SetupQuiltMode( void )
 
     } else                                                  // going to SC Mode
     {
-        ArrayOfInts empty_array;
-        stats->pPiano->SetActiveKeyArray( empty_array );
-        stats->pPiano->SetNoshowIndexArray( empty_array );
-        stats->pPiano->SetSubliteIndexArray( empty_array );
+        stats->pPiano->SetActiveKeyArray(std::vector<int>());
+        stats->pPiano->SetNoshowIndexArray(std::vector<int>());
+        stats->pPiano->SetSubliteIndexArray(std::vector<int>());
         stats->pPiano->SetVizIcon( NULL );
         stats->pPiano->SetInVizIcon( NULL );
 
@@ -2955,9 +2950,9 @@ void MyFrame::SetupQuiltMode( void )
 
             if( Current_Ch ) {
                 int dbi = ChartData->FinddbIndex( Current_Ch->GetFullPath() );
-                ArrayOfInts one_array;
-                one_array.Add( dbi );
-                stats->pPiano->SetActiveKeyArray( one_array );
+                std::vector<int> one_array;
+                one_array.push_back(dbi);
+                stats->pPiano->SetActiveKeyArray(one_array);
             }
 
         }
@@ -3799,9 +3794,9 @@ void MyFrame::HandlePianoRollover( int selected_index, int selected_dbIndex )
         SetChartThumbnail( selected_index );
         cc1->ShowChartInfoWindow( key_location.x, sy + key_location.y, selected_dbIndex );
     } else {
-        ArrayOfInts piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
+        std::vector<int> piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
 
-        if( ( pCurrentStack->nEntry > 1 ) || ( piano_chart_index_array.GetCount() > 1 ) ) {
+        if( ( pCurrentStack->nEntry > 1 ) || ( piano_chart_index_array.size() > 1 ) ) {
             cc1->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
             cc1->SetQuiltChartHiLiteIndex( selected_dbIndex );
 
@@ -3859,8 +3854,8 @@ double MyFrame::GetBestVPScale( ChartBase *pchart )
 
 void MyFrame::SelectQuiltRefChart( int selected_index )
 {
-    ArrayOfInts piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
-    int current_db_index = piano_chart_index_array.Item( selected_index );
+    std::vector<int> piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
+    int current_db_index = piano_chart_index_array[selected_index];
 
     SelectQuiltRefdbChart( current_db_index );
 }
@@ -3922,9 +3917,9 @@ void MyFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Type
 
     //          Refresh the Piano Bar
     if( stats ) {
-        ArrayOfInts piano_active_chart_index_array;
-        piano_active_chart_index_array.Add( pCurrentStack->GetCurrentEntrydbIndex() );
-        stats->pPiano->SetActiveKeyArray( piano_active_chart_index_array );
+        std::vector<int> piano_active_chart_index_array;
+        piano_active_chart_index_array.push_back( pCurrentStack->GetCurrentEntrydbIndex());
+        stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 
         stats->Refresh( true );
     }
@@ -3971,9 +3966,9 @@ void MyFrame::SelectdbChart( int dbindex )
 
     //          Refresh the Piano Bar
     if( stats ) {
-        ArrayOfInts piano_active_chart_index_array;
-        piano_active_chart_index_array.Add( pCurrentStack->GetCurrentEntrydbIndex() );
-        stats->pPiano->SetActiveKeyArray( piano_active_chart_index_array );
+        std::vector<int> piano_active_chart_index_array;
+        piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
+        stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 
         stats->Refresh( true );
     }
@@ -4084,64 +4079,60 @@ void MyFrame::UpdateControlBar( void )
 
     if( !pCurrentStack ) return;
 
-    ArrayOfInts piano_chart_index_array;
-    ArrayOfInts empty_piano_chart_index_array;
+    std::vector<int> piano_chart_index_array;
+    std::vector<int> empty_piano_chart_index_array;
 
     if( cc1->GetQuiltMode() ) {
         piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
-        stats->pPiano->SetKeyArray( piano_chart_index_array );
+        stats->pPiano->SetKeyArray(piano_chart_index_array);
 
-        ArrayOfInts piano_active_chart_index_array = cc1->GetQuiltCandidatedbIndexArray();
-        stats->pPiano->SetActiveKeyArray( piano_active_chart_index_array );
+        std::vector<int> piano_active_chart_index_array = cc1->GetQuiltCandidatedbIndexArray();
+        stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 
-        ArrayOfInts piano_eclipsed_chart_index_array = cc1->GetQuiltEclipsedStackdbIndexArray();
-        stats->pPiano->SetSubliteIndexArray( piano_eclipsed_chart_index_array );
+        std::vector<int> piano_eclipsed_chart_index_array = cc1->GetQuiltEclipsedStackdbIndexArray();
+        stats->pPiano->SetSubliteIndexArray(piano_eclipsed_chart_index_array);
 
-        stats->pPiano->SetNoshowIndexArray( g_quilt_noshow_index_array );
+        stats->pPiano->SetNoshowIndexArray(g_quilt_noshow_index_array);
 
     } else {
         piano_chart_index_array = ChartData->GetCSArray( pCurrentStack );
-        stats->pPiano->SetKeyArray( piano_chart_index_array );
+        stats->pPiano->SetKeyArray(piano_chart_index_array);
 
-        ArrayOfInts piano_active_chart_index_array;
-        piano_active_chart_index_array.Add( pCurrentStack->GetCurrentEntrydbIndex() );
+        std::vector<int> piano_active_chart_index_array;
+        piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex() );
         stats->pPiano->SetActiveKeyArray( piano_active_chart_index_array );
-
     }
 
     //    Set up the TMerc and Skew arrays
-    ArrayOfInts piano_skew_chart_index_array;
-    ArrayOfInts piano_tmerc_chart_index_array;
-    ArrayOfInts piano_poly_chart_index_array;
+    std::vector<int> piano_skew_chart_index_array;
+    std::vector<int> piano_tmerc_chart_index_array;
+    std::vector<int> piano_poly_chart_index_array;
 
-    for( unsigned int ino = 0; ino < piano_chart_index_array.GetCount(); ino++ ) {
-        const ChartTableEntry &ctei = ChartData->GetChartTableEntry(
-                piano_chart_index_array.Item( ino ) );
+    for( unsigned int ino = 0; ino < piano_chart_index_array.size(); ino++ ) {
+        const ChartTableEntry &ctei = ChartData->GetChartTableEntry(piano_chart_index_array[ino]);
         double skew_norm = ctei.GetChartSkew();
-        if( skew_norm > 180. ) skew_norm -= 360.;
+        if (skew_norm > 180.0)
+			skew_norm -= 360.0;
 
-        if( ctei.GetChartProjectionType() == PROJECTION_TRANSVERSE_MERCATOR ) piano_tmerc_chart_index_array.Add(
-                piano_chart_index_array.Item( ino ) );
-
-        //    Polyconic skewed charts should show as skewed
-        else
+        if( ctei.GetChartProjectionType() == PROJECTION_TRANSVERSE_MERCATOR )
+			piano_tmerc_chart_index_array.push_back(piano_chart_index_array[ino]);
+        else // Polyconic skewed charts should show as skewed
             if( ctei.GetChartProjectionType() == PROJECTION_POLYCONIC ) {
-                if( fabs( skew_norm ) > 1. ) piano_skew_chart_index_array.Add(
-                        piano_chart_index_array.Item( ino ) );
+                if( fabs( skew_norm ) > 1. )
+					piano_skew_chart_index_array.push_back(piano_chart_index_array[ino]);
                 else
-                    piano_poly_chart_index_array.Add( piano_chart_index_array.Item( ino ) );
+                    piano_poly_chart_index_array.push_back(piano_chart_index_array[ino]);
             } else
-                if( fabs( skew_norm ) > 1. ) piano_skew_chart_index_array.Add(
-                        piano_chart_index_array.Item( ino ) );
+                if( fabs( skew_norm ) > 1. )
+					piano_skew_chart_index_array.push_back(piano_chart_index_array[ino]);
 
     }
-    stats->pPiano->SetSkewIndexArray( piano_skew_chart_index_array );
-    stats->pPiano->SetTmercIndexArray( piano_tmerc_chart_index_array );
-    stats->pPiano->SetPolyIndexArray( piano_poly_chart_index_array );
+    stats->pPiano->SetSkewIndexArray(piano_skew_chart_index_array);
+    stats->pPiano->SetTmercIndexArray(piano_tmerc_chart_index_array);
+    stats->pPiano->SetPolyIndexArray(piano_poly_chart_index_array);
 
     stats->FormatStat();
     stats->Refresh( true );
-
 }
 
 //----------------------------------------------------------------------------------
@@ -4531,19 +4522,20 @@ void MyFrame::MouseEvent( wxMouseEvent& event )
 
 }
 
-void MyFrame::RemoveChartFromQuilt( int dbIndex )
+void MyFrame::RemoveChartFromQuilt(int dbIndex)
 {
-    //    Remove the item from the list (if it appears) to avoid multiple addition
-    for( unsigned int i = 0; i < g_quilt_noshow_index_array.GetCount(); i++ ) {
-        if( g_quilt_noshow_index_array.Item( i ) == dbIndex ) // chart is already in the noshow list
-                {
-            g_quilt_noshow_index_array.RemoveAt( i );
-            break;
-        }
-    }
+	// Remove the item from the list (if it appears) to avoid multiple addition
+	// FIXME: why remove if the same index will be added to the list anyway? order of insertion?
 
-    g_quilt_noshow_index_array.Add( dbIndex );
+	std::vector<int>::iterator i = find(
+			g_quilt_noshow_index_array.begin(),
+			g_quilt_noshow_index_array.end(),
+			dbIndex);
 
+	if (i != g_quilt_noshow_index_array.end())
+		g_quilt_noshow_index_array.erase(i);
+
+	g_quilt_noshow_index_array.push_back(dbIndex);
 }
 
 //          Piano window Popup Menu Handlers and friends
@@ -4562,14 +4554,10 @@ void MyFrame::PianoPopupMenu( int x, int y, int selected_index, int selected_dbI
     wxMenu *pctx_menu = new wxMenu();
 
     //    Search the no-show array
-    bool b_is_in_noshow = false;
-    for( unsigned int i = 0; i < g_quilt_noshow_index_array.GetCount(); i++ ) {
-        if( g_quilt_noshow_index_array.Item( i ) == selected_dbIndex ) // chart is in the noshow list
-                {
-            b_is_in_noshow = true;
-            break;
-        }
-    }
+    bool b_is_in_noshow = g_quilt_noshow_index_array.end() != find(
+			g_quilt_noshow_index_array.begin(),
+			g_quilt_noshow_index_array.end(),
+			selected_dbIndex);
 
     if( b_is_in_noshow ) {
         pctx_menu->Append( ID_PIANO_ENABLE_QUILT_CHART, _("Show This Chart") );
@@ -4589,8 +4577,9 @@ void MyFrame::PianoPopupMenu( int x, int y, int selected_index, int selected_dbI
     pos.x += key_location.x;
     pos.y -= 30;
 
-//        Invoke the drop-down menu
-    if( pctx_menu->GetMenuItems().GetCount() ) PopupMenu( pctx_menu, pos );
+	// Invoke the drop-down menu
+    if( pctx_menu->GetMenuItems().GetCount() )
+		PopupMenu( pctx_menu, pos );
 
     cc1->HideChartInfoWindow();
     stats->pPiano->ResetRollover();
@@ -4604,13 +4593,13 @@ void MyFrame::PianoPopupMenu( int x, int y, int selected_index, int selected_dbI
 
 void MyFrame::OnPianoMenuEnableChart( wxCommandEvent& event )
 {
-    for( unsigned int i = 0; i < g_quilt_noshow_index_array.GetCount(); i++ ) {
-        if( g_quilt_noshow_index_array.Item( i ) == menu_selected_dbIndex ) // chart is in the noshow list
-                {
-            g_quilt_noshow_index_array.RemoveAt( i );
-            break;
-        }
-    }
+	std::vector<int>::iterator i = find(
+			g_quilt_noshow_index_array.begin(),
+			g_quilt_noshow_index_array.end(),
+			menu_selected_dbIndex);
+
+	if (i != g_quilt_noshow_index_array.end())
+		g_quilt_noshow_index_array.erase(i);
 }
 
 void MyFrame::OnPianoMenuDisableChart( wxCommandEvent& event )

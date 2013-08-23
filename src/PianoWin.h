@@ -25,6 +25,7 @@
 #define __PIANOWIN__H__
 
 #include <wx/window.h>
+#include <vector>
 
 #include "chart1.h"
 
@@ -36,21 +37,21 @@ class PianoWin : public wxWindow
 
 	public:
 		PianoWin(wxFrame *frame);
-		~PianoWin();
+		virtual ~PianoWin();
 
 		void OnSize(wxSizeEvent& event);
 		void OnPaint(wxPaintEvent& event);
 		void FormatKeys(void);
 		void MouseEvent(wxMouseEvent& event);
 		void SetColorScheme(ColorScheme cs);
-		void SetKeyArray(ArrayOfInts piano_chart_index_array);
+		void SetKeyArray(std::vector<int> piano_chart_index_array);
 		void SetActiveKey(int iactive);
-		void SetActiveKeyArray(ArrayOfInts array);
-		void SetNoshowIndexArray(ArrayOfInts array);
-		void SetSubliteIndexArray(ArrayOfInts array);
-		void SetSkewIndexArray(ArrayOfInts array);
-		void SetTmercIndexArray(ArrayOfInts array);
-		void SetPolyIndexArray(ArrayOfInts array);
+		void SetActiveKeyArray(std::vector<int> array);
+		void SetNoshowIndexArray(std::vector<int> array);
+		void SetSubliteIndexArray(std::vector<int> array);
+		void SetSkewIndexArray(std::vector<int> array);
+		void SetTmercIndexArray(std::vector<int> array);
+		void SetPolyIndexArray(std::vector<int> array);
 
 		void SetVizIcon(wxBitmap *picon_bmp);
 		void SetInVizIcon(wxBitmap *picon_bmp);
@@ -82,13 +83,13 @@ class PianoWin : public wxWindow
 		wxBrush m_cBrush;
 		wxBrush m_scBrush;
 
-		ArrayOfInts m_key_array;
-		ArrayOfInts m_noshow_index_array;
-		ArrayOfInts m_active_index_array;
-		ArrayOfInts m_sublite_index_array;
-		ArrayOfInts m_skew_index_array;
-		ArrayOfInts m_tmerc_index_array;
-		ArrayOfInts m_poly_index_array;
+		std::vector<int> m_key_array;
+		std::vector<int> m_noshow_index_array;
+		std::vector<int> m_active_index_array;
+		std::vector<int> m_sublite_index_array;
+		std::vector<int> m_skew_index_array;
+		std::vector<int> m_tmerc_index_array;
+		std::vector<int> m_poly_index_array;
 
 		RegionArray KeyRegion;
 

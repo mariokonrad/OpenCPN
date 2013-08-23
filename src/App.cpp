@@ -296,7 +296,6 @@ extern bool g_bUseCM93;
 extern int g_click_stop;
 extern int g_MemFootSec;
 extern int g_MemFootMB;
-extern ArrayOfInts g_quilt_noshow_index_array;
 extern wxStaticBitmap *g_pStatBoxTool;
 extern bool g_bquiting;
 extern int g_BSBImgDebug;

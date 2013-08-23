@@ -111,8 +111,7 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 
 	//    Create the Piano Keys
 
-	int nKeys = m_key_array.GetCount();
-
+	int nKeys = m_key_array.size();
 
 	if( nKeys ) {
 		wxPen ppPen( GetGlobalColor( _T("CHBLK") ), 1, wxSOLID );
@@ -121,36 +120,36 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 		dc.SetBrush( m_tBrush );
 
 		for( int i = 0; i < nKeys; i++ ) {
-			int key_db_index = m_key_array.Item( i );
+			int key_db_index = m_key_array.at(i);
 
 			if( -1 == key_db_index ) continue;
 
-			if( ChartData->GetDBChartType( m_key_array.Item( i ) ) == CHART_TYPE_S57 ) {
+			if( ChartData->GetDBChartType(m_key_array.at(i)) == CHART_TYPE_S57 ) {
 				dc.SetBrush( m_vBrush );
 
-				for( unsigned int ino = 0; ino < m_active_index_array.GetCount(); ino++ ) {
-					if( m_active_index_array.Item( ino ) == key_db_index ) // chart is in the active list
+				for( unsigned int ino = 0; ino < m_active_index_array.size(); ino++ ) {
+					if( m_active_index_array.at(ino) == key_db_index ) // chart is in the active list
 						dc.SetBrush( m_svBrush );
 				}
 			}
 
 			else
-				if( ChartData->GetDBChartType( m_key_array.Item( i ) ) == CHART_TYPE_CM93 ) {
+				if( ChartData->GetDBChartType(m_key_array.at(i)) == CHART_TYPE_CM93 ) {
 					dc.SetBrush( m_cBrush );
 
-					for( unsigned int ino = 0; ino < m_active_index_array.GetCount(); ino++ ) {
-						if( m_active_index_array.Item( ino ) == key_db_index ) // chart is in the active list
-							dc.SetBrush( m_scBrush );
+					for( unsigned int ino = 0; ino < m_active_index_array.size(); ino++ ) {
+						if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
+							dc.SetBrush(m_scBrush);
 					}
 				}
 
 				else
-					if( ChartData->GetDBChartType( m_key_array.Item( i ) )
+					if( ChartData->GetDBChartType(m_key_array.at(i))
 							== CHART_TYPE_CM93COMP ) {
 						dc.SetBrush( m_cBrush );
 
-						for( unsigned int ino = 0; ino < m_active_index_array.GetCount(); ino++ ) {
-							if( m_active_index_array.Item( ino ) == key_db_index ) // chart is in the active list
+						for( unsigned int ino = 0; ino < m_active_index_array.size(); ino++ ) {
+							if( m_active_index_array.at(ino) == key_db_index ) // chart is in the active list
 								dc.SetBrush( m_scBrush );
 						}
 					}
@@ -158,16 +157,16 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 					else {
 						dc.SetBrush( m_tBrush );
 
-						for( unsigned int ino = 0; ino < m_active_index_array.GetCount(); ino++ ) {
-							if( m_active_index_array.Item( ino ) == key_db_index ) // chart is in the active list
+						for( unsigned int ino = 0; ino < m_active_index_array.size(); ino++ ) {
+							if( m_active_index_array.at(ino) == key_db_index ) // chart is in the active list
 								dc.SetBrush( m_slBrush );
 						}
 					}
 
 			// Check to see if this box appears in the sub_light array
 			// If so, add a crosshatch pattern to the brush
-			for( unsigned int ino = 0; ino < m_sublite_index_array.GetCount(); ino++ ) {
-				if( m_sublite_index_array.Item( ino ) == key_db_index ) // chart is in the sublite list
+			for( unsigned int ino = 0; ino < m_sublite_index_array.size(); ino++ ) {
+				if( m_sublite_index_array.at(ino) == key_db_index ) // chart is in the sublite list
 				{
 					wxBrush ebrush( dc.GetBrush().GetColour(), wxCROSSDIAG_HATCH );
 					//                              dc.SetBrush(ebrush);
@@ -184,8 +183,8 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 				shapeDc.DrawRectangle( box );
 			}
 
-			for( unsigned int ino = 0; ino < m_sublite_index_array.GetCount(); ino++ ) {
-				if( m_sublite_index_array.Item( ino ) == key_db_index ) { // chart is in the sublite list
+			for( unsigned int ino = 0; ino < m_sublite_index_array.size(); ino++ ) {
+				if( m_sublite_index_array.at(ino) == key_db_index ) { // chart is in the sublite list
 					dc.SetBrush( dc.GetBackground() );
 					int w = 3;
 					dc.DrawRoundedRectangle( box.x + w, box.y + w, box.width - ( 2 * w ),
@@ -194,8 +193,8 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 			}
 
 			//    Look in the current noshow array for this index
-			for( unsigned int ino = 0; ino < m_noshow_index_array.GetCount(); ino++ ) {
-				if( m_noshow_index_array.Item( ino ) == key_db_index ) { // chart is in the noshow list
+			for( unsigned int ino = 0; ino < m_noshow_index_array.size(); ino++ ) {
+				if( m_noshow_index_array[ino] == key_db_index ) { // chart is in the noshow list
 					if( m_pInVizIconBmp && m_pInVizIconBmp->IsOk() ) dc.DrawBitmap(
 							ocpnStyle::ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pInVizIconBmp ), box.x + 4,
 							box.y + 3, false );
@@ -204,8 +203,8 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 			}
 
 			//    Look in the current skew array for this index
-			for( unsigned int ino = 0; ino < m_skew_index_array.GetCount(); ino++ ) {
-				if( m_skew_index_array.Item( ino ) == key_db_index ) {       // chart is in the list
+			for( unsigned int ino = 0; ino < m_skew_index_array.size(); ino++ ) {
+				if( m_skew_index_array.at(ino) == key_db_index ) {       // chart is in the list
 					if( m_pSkewIconBmp && m_pSkewIconBmp->IsOk() ) dc.DrawBitmap(
 							ocpnStyle::ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pSkewIconBmp ),
 							box.x + box.width - m_pSkewIconBmp->GetWidth() - 4, box.y + 2, false );
@@ -214,8 +213,8 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 			}
 
 			//    Look in the current tmerc array for this index
-			for( unsigned int ino = 0; ino < m_tmerc_index_array.GetCount(); ino++ ) {
-				if( m_tmerc_index_array.Item( ino ) == key_db_index ) {      // chart is in the list
+			for( unsigned int ino = 0; ino < m_tmerc_index_array.size(); ino++ ) {
+				if( m_tmerc_index_array.at(ino) == key_db_index ) {      // chart is in the list
 					if( m_pTmercIconBmp && m_pTmercIconBmp->IsOk() ) dc.DrawBitmap(
 							ocpnStyle::ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pTmercIconBmp ),
 							box.x + box.width - m_pTmercIconBmp->GetWidth() - 4, box.y + 2, false );
@@ -224,8 +223,8 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 			}
 
 			//    Look in the current poly array for this index
-			for( unsigned int ino = 0; ino < m_poly_index_array.GetCount(); ino++ ) {
-				if( m_poly_index_array.Item( ino ) == key_db_index ) {       // chart is in the list
+			for( unsigned int ino = 0; ino < m_poly_index_array.size(); ino++ ) {
+				if( m_poly_index_array.at(ino) == key_db_index ) {       // chart is in the list
 					if( m_pPolyIconBmp && m_pPolyIconBmp->IsOk() ) dc.DrawBitmap(
 							ocpnStyle::ConvertTo24Bit( dc.GetBrush().GetColour(), *m_pPolyIconBmp ),
 							box.x + box.width - m_pPolyIconBmp->GetWidth() - 4, box.y + 2, false );
@@ -250,38 +249,38 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 #endif
 }
 
-void PianoWin::SetKeyArray( ArrayOfInts array )
+void PianoWin::SetKeyArray( std::vector<int> array )
 {
 	m_key_array = array;
 	FormatKeys();
 }
 
-void PianoWin::SetNoshowIndexArray( ArrayOfInts array )
+void PianoWin::SetNoshowIndexArray(std::vector<int> array)
 {
 	m_noshow_index_array = array;
 }
 
-void PianoWin::SetActiveKeyArray( ArrayOfInts array )
+void PianoWin::SetActiveKeyArray( std::vector<int> array )
 {
 	m_active_index_array = array;
 }
 
-void PianoWin::SetSubliteIndexArray( ArrayOfInts array )
+void PianoWin::SetSubliteIndexArray( std::vector<int> array )
 {
 	m_sublite_index_array = array;
 }
 
-void PianoWin::SetSkewIndexArray( ArrayOfInts array )
+void PianoWin::SetSkewIndexArray( std::vector<int> array )
 {
 	m_skew_index_array = array;
 }
 
-void PianoWin::SetTmercIndexArray( ArrayOfInts array )
+void PianoWin::SetTmercIndexArray( std::vector<int> array )
 {
 	m_tmerc_index_array = array;
 }
 
-void PianoWin::SetPolyIndexArray( ArrayOfInts array )
+void PianoWin::SetPolyIndexArray( std::vector<int> array )
 {
 	m_poly_index_array = array;
 }
@@ -292,7 +291,7 @@ void PianoWin::FormatKeys( void )
 	int width, height;
 	GetClientSize( &width, &height );
 
-	int nKeys = m_key_array.GetCount();
+	int nKeys = m_key_array.size();
 	if( nKeys ) {
 		int kw = style->chartStatusIconWidth;
 		if( !kw ) kw = width / nKeys;
@@ -311,7 +310,7 @@ void PianoWin::FormatKeys( void )
 }
 wxPoint PianoWin::GetKeyOrigin( int key_index )
 {
-	if( ( key_index >= 0 ) && ( key_index <= (int) m_key_array.GetCount() - 1 ) ) {
+	if( ( key_index >= 0 ) && ( key_index <= (int) m_key_array.size() - 1 ) ) {
 		wxRect box = KeyRegion.Item( key_index ).GetBox();
 		return wxPoint( box.x, box.y );
 	} else
@@ -332,7 +331,7 @@ void PianoWin::MouseEvent( wxMouseEvent& event )
 	for( int i = 0; i < m_nRegions; i++ ) {
 		if( KeyRegion.Item( i ).Contains( x, y ) == wxInRegion ) {
 			sel_index = i;
-			sel_dbindex = m_key_array.Item( i );
+			sel_dbindex = m_key_array.at(i);
 			break;
 		}
 	}

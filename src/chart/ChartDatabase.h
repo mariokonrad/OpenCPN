@@ -1,9 +1,9 @@
-/**************************************************************************
+/***************************************************************************
  *
  * Project:  ChartManager
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,6 +31,8 @@
 #include <wx/tokenzr.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
+
+#include <vector>
 
 #include "chartbase.h"
 #include "chart1.h"
@@ -189,7 +191,7 @@ struct ChartTableEntry
 
 	bool GetbValid(){ return bValid;}
 	void SetEntryOffset(int n) { EntryOffset = n;}
-	ArrayOfInts &GetGroupArray(void){ return m_GroupArray; }
+	std::vector<int> &GetGroupArray(void){ return m_GroupArray; }
 	wxString *GetpFileName(void){ return m_pfilename; }
 
 	private:
@@ -215,7 +217,7 @@ struct ChartTableEntry
 	int         *pNoCovrCntTable;
 	float       **pNoCovrPlyTable;
 
-	ArrayOfInts m_GroupArray;
+	std::vector<int> m_GroupArray;
 	wxString    *m_pfilename;             // a helper member, not on disk
 };
 

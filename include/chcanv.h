@@ -163,7 +163,7 @@ class ChartCanvas: public wxWindow
 
 	void SetQuiltMode(bool b_quilt);
 	bool GetQuiltMode(void);
-	ArrayOfInts GetQuiltIndexArray(void);
+	std::vector<int> GetQuiltIndexArray(void);
 	bool IsQuiltDelta(void);
 	void SetQuiltChartHiLiteIndex(int dbIndex);
 	int GetQuiltReferenceChartIndex(void);
@@ -219,9 +219,9 @@ class ChartCanvas: public wxWindow
 	int GetQuiltChartCount();
 	void InvalidateAllQuiltPatchs(void);
 	void SetQuiltRefChart(int dbIndex);
-	ArrayOfInts GetQuiltCandidatedbIndexArray(bool flag1 = true, bool flag2 = true);
-	ArrayOfInts GetQuiltExtendedStackdbIndexArray();
-	ArrayOfInts GetQuiltEclipsedStackdbIndexArray();
+	std::vector<int> GetQuiltCandidatedbIndexArray(bool flag1 = true, bool flag2 = true);
+	std::vector<int> GetQuiltExtendedStackdbIndexArray();
+	std::vector<int> GetQuiltEclipsedStackdbIndexArray();
 	int GetQuiltRefChartdbIndex(void);
 	void InvalidateQuilt(void);
 	double GetQuiltMaxErrorFactor();

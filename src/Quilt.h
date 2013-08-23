@@ -29,6 +29,7 @@
 #include "QuiltPatch.h"
 #include "QuiltCandidate.h"
 #include "ViewPort.h"
+#include <vector>
 
 struct ChartTableEntry;
 
@@ -49,7 +50,7 @@ class Quilt
 		ChartBase * GetFirstChart();
 		ChartBase * GetNextChart();
 		ChartBase * GetLargestScaleChart();
-		ArrayOfInts GetQuiltIndexArray(void);
+		std::vector<int> GetQuiltIndexArray(void);
 		bool IsQuiltDelta(ViewPort & vp);
 		bool IsChartQuiltableRef(int db_index);
 
@@ -86,10 +87,10 @@ class Quilt
 		double GetRefScale() const;
 		double GetRefNativeScale();
 
-		ArrayOfInts GetCandidatedbIndexArray(bool from_ref_chart, bool exclude_user_hidden);
+		std::vector<int> GetCandidatedbIndexArray(bool from_ref_chart, bool exclude_user_hidden);
 
-		ArrayOfInts GetExtendedStackIndexArray();
-		ArrayOfInts GetEclipsedStackIndexArray();
+		std::vector<int> GetExtendedStackIndexArray();
+		std::vector<int> GetEclipsedStackIndexArray();
 		unsigned long GetXStackHash() const;
 		bool IsBusy() const;
 
@@ -103,6 +104,7 @@ class Quilt
 		void EmptyCandidateArray(void);
 		void SubstituteClearDC(wxMemoryDC & dc, ViewPort & vp);
 		int GetNewRefChart(void);
+		unsigned int get_target_stack_index(int current_db_index) const;
 
 		OCPNRegion m_covered_region;
 		OCPNRegion m_rendered_region;
@@ -116,10 +118,10 @@ class Quilt
 		int m_quilt_proj;
 
 		ArrayOfSortedQuiltCandidates *m_pcandidate_array;
-		ArrayOfInts m_last_index_array;
-		ArrayOfInts m_index_array;
-		ArrayOfInts m_extended_stack_array;
-		ArrayOfInts m_eclipsed_stack_array;
+		std::vector<int> m_last_index_array;
+		std::vector<int> m_index_array;
+		std::vector<int> m_extended_stack_array;
+		std::vector<int> m_eclipsed_stack_array;
 
 		ViewPort m_vp_quilt;
 		ViewPort m_vp_rendered; // last VP rendered

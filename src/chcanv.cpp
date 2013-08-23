@@ -257,7 +257,6 @@ extern double           g_COGAvg;               // only needed for debug....
 extern int              g_click_stop;
 extern double           g_ownship_predictor_minutes;
 
-extern ArrayOfInts      g_quilt_noshow_index_array;
 extern ChartStack       *pCurrentStack;
 extern bool              g_bquiting;
 extern AISTargetListDialog *g_pAISTargetList;
@@ -1018,13 +1017,13 @@ int ChartCanvas::FindClosestCanvasChartdbIndex( int scale )
         //    Using the current quilt, select a useable reference chart
         //    Said chart will be in the extended (possibly full-screen) stack,
         //    And will have a scale equal to or just greater than the stipulated value
-        unsigned int im = m_pQuilt->GetExtendedStackIndexArray().GetCount();
+        unsigned int im = m_pQuilt->GetExtendedStackIndexArray().size();
         if( im > 0 ) {
             for( unsigned int is = 0; is < im; is++ ) {
                 const ChartTableEntry &m = ChartData->GetChartTableEntry(
-                                               m_pQuilt->GetExtendedStackIndexArray().Item( is ) );
+                                               m_pQuilt->GetExtendedStackIndexArray().at(is));
                 if( ( m.GetScale() >= scale )/* && (m_reference_family == m.GetChartFamily())*/) {
-                    new_dbIndex = m_pQuilt->GetExtendedStackIndexArray().Item( is );
+                    new_dbIndex = m_pQuilt->GetExtendedStackIndexArray().at(is);
                     break;
                 }
             }
@@ -1039,7 +1038,7 @@ bool ChartCanvas::IsQuiltDelta()
     return m_pQuilt->IsQuiltDelta( VPoint );
 }
 
-ArrayOfInts ChartCanvas::GetQuiltIndexArray( void )
+std::vector<int> ChartCanvas::GetQuiltIndexArray( void )
 {
     return m_pQuilt->GetQuiltIndexArray();;
 }
@@ -1090,7 +1089,7 @@ void ChartCanvas::SetQuiltChartHiLiteIndex( int dbIndex )
     m_pQuilt->SetHiliteIndex( dbIndex );
 }
 
-ArrayOfInts ChartCanvas::GetQuiltCandidatedbIndexArray( bool flag1, bool flag2 )
+std::vector<int> ChartCanvas::GetQuiltCandidatedbIndexArray( bool flag1, bool flag2 )
 {
     return m_pQuilt->GetCandidatedbIndexArray( flag1, flag2 );
 }
@@ -1100,12 +1099,12 @@ int ChartCanvas::GetQuiltRefChartdbIndex( void )
     return m_pQuilt->GetRefChartdbIndex();
 }
 
-ArrayOfInts ChartCanvas::GetQuiltExtendedStackdbIndexArray()
+std::vector<int> ChartCanvas::GetQuiltExtendedStackdbIndexArray()
 {
     return m_pQuilt->GetExtendedStackIndexArray();
 }
 
-ArrayOfInts ChartCanvas::GetQuiltEclipsedStackdbIndexArray()
+std::vector<int> ChartCanvas::GetQuiltEclipsedStackdbIndexArray()
 {
     return m_pQuilt->GetEclipsedStackIndexArray();
 }
@@ -7240,8 +7239,8 @@ void ChartCanvas::RenderAllChartOutlines( ocpnDC &dc, ViewPort& vp )
         //    Check to see if the candidate chart is in the currently active group
         bool b_group_draw = false;
         if( g_GroupIndex > 0 ) {
-            for( unsigned int ig = 0; ig < pt->GetGroupArray().GetCount(); ig++ ) {
-                int index = pt->GetGroupArray().Item( ig );
+            for( unsigned int ig = 0; ig < pt->GetGroupArray().size(); ig++ ) {
+                int index = pt->GetGroupArray().at(ig);
                 if( g_GroupIndex == index ) {
                     b_group_draw = true;
                     break;

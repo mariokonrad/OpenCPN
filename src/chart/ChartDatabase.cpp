@@ -1995,7 +1995,7 @@ void ChartDatabase::ApplyGroupArray(ChartGroupArray *pGroupArray)
 	for(unsigned int ic=0 ; ic < chartTable.GetCount(); ic++)
 	{
 		ChartTableEntry *pcte = &chartTable[ic];
-		pcte->GetGroupArray().Clear();
+		pcte->GetGroupArray().clear();
 
 		wxString chart_full_path(pcte->GetpFullPath(), wxConvUTF8);
 
@@ -2030,7 +2030,7 @@ void ChartDatabase::ApplyGroupArray(ChartGroupArray *pGroupArray)
 					}
 
 					if(b_add)
-						pcte->GetGroupArray().Add(igroup+1);
+						pcte->GetGroupArray().push_back(igroup+1);
 				}
 			}
 		}

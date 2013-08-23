@@ -45,6 +45,8 @@
 #include "ais/AISTargetAlertDialog.h"
 #include "navutil.h"
 #include "MicrosoftCompatibility.h"
+#include "chart/ChartDummy.h"
+
 #include <wx/cmdline.h>
 #include <wx/datetime.h>
 #include <wx/progdlg.h>

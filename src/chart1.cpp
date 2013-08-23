@@ -107,6 +107,7 @@
 #include "OCPNFloatingToolbarDialog.h"
 #include "NavObjectChanges.h"
 #include "MicrosoftCompatibility.h"
+#include "chart/ChartDummy.h"
 
 #ifdef __WXOSX__
 	#include "macutils.h"

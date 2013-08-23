@@ -30,6 +30,7 @@
 #include "chart/ChartType.h"
 #include "chart/ChartFamily.h"
 #include "ColorScheme.h"
+#include "ThumbData.h"
 
 #include <wx/glcanvas.h>
 
@@ -38,70 +39,54 @@ class OCPNRegion;
 class wxMemoryDC;
 
 // ChartBase::Init()  init_flags constants
-typedef enum ChartInitFlag
+enum ChartInitFlag
 {
       FULL_INIT = 0,
       HEADER_ONLY,
       THUMB_ONLY
-}_ChartInitFlag;
+};
 
 
-typedef enum RenderTypeEnum
+enum RenderTypeEnum
 {
       DC_RENDER_ONLY = 0,
       DC_RENDER_RETURN_DIB,
       DC_RENDER_RETURN_IMAGE
-}_RenderTypeEnum;
+};
 
-typedef enum InitReturn
+enum InitReturn
 {
       INIT_OK = 0,
       INIT_FAIL_RETRY,        // Init failed, retry suggested
       INIT_FAIL_REMOVE,       // Init failed, suggest remove from further use
       INIT_FAIL_NOERROR       // Init failed, request no explicit error message
-}_InitReturn;
-
-
-
-class ThumbData
-{
-public:
-    ThumbData();
-    virtual ~ThumbData();
-
-      wxBitmap    *pDIBThumb;
-      int         ShipX;
-      int         ShipY;
-      int         Thumb_Size_X;
-      int         Thumb_Size_Y;
 };
 
-
-
-typedef struct _Extent{
+struct Extent
+{
   double SLAT;
   double WLON;
   double NLAT;
   double ELON;
-}Extent;
+};
 
-//          Depth unit type enum
-typedef enum ChartDepthUnitType
+// Depth unit type enum
+enum ChartDepthUnitType
 {
     DEPTH_UNIT_UNKNOWN,
     DEPTH_UNIT_FEET,
     DEPTH_UNIT_METERS,
     DEPTH_UNIT_FATHOMS
-}_ChartDepthUnitType;
+};
 
-//          Projection type enum
-typedef enum OcpnProjType
+// Projection type enum
+enum OcpnProjType
 {
       PROJECTION_UNKNOWN,
       PROJECTION_MERCATOR,
       PROJECTION_TRANSVERSE_MERCATOR,
       PROJECTION_POLYCONIC
-}_OcpnProjType;
+};
 
 
 
@@ -243,50 +228,6 @@ protected:
 
 
 // ----------------------------------------------------------------------------
-// ChartDummy
-// ----------------------------------------------------------------------------
-
-class ChartDummy : public ChartBase
-{
-
-public:
-      ChartDummy();
-      virtual ~ChartDummy();
-
-      virtual InitReturn Init( const wxString& name, ChartInitFlag init_flags );
-
-//    Accessors
-      virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
-      virtual ThumbData *GetThumbData() {return pThumbData;}
-      virtual bool UpdateThumbData(double lat, double lon);
-
-      double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom){return 1.0;}
-      double GetNormalScaleMax(double canvas_scale_factor, int canvas_width){ return 2.0e7;}
-
-      virtual bool GetChartExtent(Extent *pext);
-
-      virtual bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
-                                        const OCPNRegion &Region);
-
-      virtual bool RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint,
-                                        const OCPNRegion &Region);
-
-      virtual bool AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed);
-
-      virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion);
-
-      virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
-
-      virtual double GetNearestPreferredScalePPM(double target_scale_ppm){ return target_scale_ppm; }
-
-private:
-      bool RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint);
-
-      wxBitmap    *m_pBM;
-};
-
-
-// ----------------------------------------------------------------------------
 // ChartPlugInWrapper
 //    This class is a wrapper/interface to PlugIn charts(PlugInChartBase) as defined in ocpn_plugin.h
 // ----------------------------------------------------------------------------
@@ -302,7 +243,7 @@ class ChartPlugInWrapper : public ChartBase
 
             virtual wxString GetFileSearchMask(void);
 
-            virtual InitReturn Init( const wxString& name, ChartInitFlag init_flags );
+            virtual InitReturn Init(const wxString& name, ChartInitFlag init_flags);
 
 //    Accessors
             virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
@@ -340,17 +281,17 @@ class ChartPlugInWrapper : public ChartBase
             
             //    The following set of methods apply to BSB (i.e. Raster) type PlugIn charts only
             //    and need not be implemented if the ChartFamily is not CHART_FAMILY_RASTER
-            virtual void ComputeSourceRectangle(const ViewPort &vp, wxRect *pSourceRect);
+            virtual void ComputeSourceRectangle(const ViewPort & vp, wxRect * pSourceRect);
             virtual double GetRasterScaleFactor();
-            virtual bool GetChartBits( wxRect& source, unsigned char *pPix, int sub_samp );
+            virtual bool GetChartBits(wxRect & source, unsigned char *pPix, int sub_samp);
             virtual int GetSize_X();
             virtual int GetSize_Y();
-            virtual void latlong_to_chartpix(double lat, double lon, double &pixx, double &pixy);
+            virtual void latlong_to_chartpix(double lat, double lon, double & pixx, double & pixy);
 
 
       private:
-            PlugInChartBase *m_ppicb;
-            wxObject          *m_ppo;
+            PlugInChartBase * m_ppicb;
+            wxObject * m_ppo;
 };
 
 

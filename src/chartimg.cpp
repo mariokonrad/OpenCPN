@@ -88,20 +88,6 @@ bool G_FloatPtInPolygon(MyFlPoint *rgpts, int wnumpts, float x, float y) ;
 
 
 // ============================================================================
-// ThumbData implementation
-// ============================================================================
-
-ThumbData::ThumbData()
-{
-    pDIBThumb = NULL;
-}
-
-ThumbData::~ThumbData()
-{
-    delete pDIBThumb;
-}
-
-// ============================================================================
 // Palette implementation
 // ============================================================================
 opncpnPalette::opncpnPalette()
@@ -174,110 +160,6 @@ ChartBase::~ChartBase()
       free( m_pCOVRTable );
       free( m_pCOVRTablePoints );
 
-}
-
-// ============================================================================
-// ChartDummy implementation
-// ============================================================================
-
-ChartDummy::ChartDummy()
-{
-      m_pBM = NULL;
-      m_ChartType = CHART_TYPE_DUMMY;
-      m_ChartFamily = CHART_FAMILY_UNKNOWN;
-      m_Chart_Scale = 22000000;
-
-      m_FullPath = _("No Chart Available");
-      m_Description = m_FullPath;
-
-}
-
-ChartDummy::~ChartDummy()
-{
-      delete m_pBM;
-}
-
-
-InitReturn ChartDummy::Init( const wxString& name, ChartInitFlag init_flags )
-{
-      return INIT_OK;
-}
-
-void ChartDummy::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
-{
-}
-
-
-ThumbData *ChartDummy::GetThumbData(int tnx, int tny, float lat, float lon)
-{
-      return (ThumbData *)NULL;
-}
-
-bool ChartDummy::UpdateThumbData(double lat, double lon)
-{
-      return FALSE;
-}
-
-
-bool ChartDummy::GetChartExtent(Extent *pext)
-{
-    pext->NLAT = 80;
-    pext->SLAT = -80;
-    pext->ELON = 179;
-    pext->WLON = -179;
-
-    return true;
-}
-
-bool ChartDummy::RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint, const OCPNRegion &Region)
-{
-      return true;
-}
-
-bool ChartDummy::RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion &Region)
-{
-      return RenderViewOnDC(dc, VPoint);
-}
-
-bool ChartDummy::RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint)
-{
-      if( m_pBM  && m_pBM->IsOk() )
-      {
-            if((m_pBM->GetWidth() != VPoint.pix_width) || (m_pBM->GetHeight() != VPoint.pix_height))
-            {
-                  delete m_pBM;
-                  m_pBM = NULL;
-            }
-      }
-      else {
-          delete m_pBM;
-          m_pBM =NULL;
-      }
-
-      if( VPoint.pix_width && VPoint.pix_height ) {
-        if(NULL == m_pBM)
-            m_pBM = new wxBitmap(VPoint.pix_width, VPoint.pix_height,-1);
-
-        dc.SelectObject(*m_pBM);
-
-        dc.SetBackground(*wxBLACK_BRUSH);
-        dc.Clear();
-      }
-
-      return true;
-}
-
-
-bool ChartDummy::AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed)
-{
-      return false;
-}
-
-
-void ChartDummy::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion)
-{
-      pValidRegion->Clear();
-      pValidRegion->Union(0, 0, 1, 1);
 }
 
 // ============================================================================

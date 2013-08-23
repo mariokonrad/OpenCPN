@@ -162,10 +162,10 @@ class  ChartBaseBSB     :public ChartBase
       void SetVPRasterParms(const ViewPort &vpt);
 
       void ComputeSourceRectangle(const ViewPort &vp, wxRect *pSourceRect);
-      double GetRasterScaleFactor() { return m_raster_scale_factor; }
+      double GetRasterScaleFactor() const { return m_raster_scale_factor; }
       virtual bool GetChartBits( wxRect& source, unsigned char *pPix, int sub_samp );
-      int GetSize_X(){ return Size_X;}
-      int GetSize_Y(){ return Size_Y;}
+      int GetSize_X() const { return Size_X;}
+      int GetSize_Y() const { return Size_Y;}
 
       void latlong_to_chartpix(double lat, double lon, double &pixx, double &pixy);
       void chartpix_to_latlong(double pixx, double pixy, double *plat, double *plon);
@@ -173,14 +173,14 @@ class  ChartBaseBSB     :public ChartBase
 protected:
 //    Methods
 
-      wxRect GetSourceRect(){ return Rsrc; }
+      wxRect GetSourceRect() const { return Rsrc; }
 
       virtual bool GetAndScaleData(unsigned char *ppn,
                                    wxRect& source, int source_stride, wxRect& dest, int dest_stride,
                                    double scale_factor, ScaleTypeEnum scale_type);
       bool RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint);
 
-      bool IsCacheValid(){ return cached_image_ok; }
+      bool IsCacheValid() const { return cached_image_ok; }
       void InvalidateCache(){cached_image_ok = 0;}
       bool IsRenderCacheable( wxRect& source, wxRect& dest );
 
@@ -190,7 +190,7 @@ protected:
 
       double GetClosestValidNaturalScalePPM(double target_scale, double scale_factor_min, double scale_factor_max);
 
-      double GetPPM(){ return m_ppm_avg;}
+      double GetPPM() const { return m_ppm_avg;}
 
       virtual void InvalidateLineCache();
       virtual bool CreateLineIndex(void);
@@ -213,8 +213,6 @@ protected:
       InitReturn PostInit(void);
 
 
-
-//    Protected Data
       PixelCache        *pPixCache;
 
       int         Size_X;                 // Chart native pixel dimensions

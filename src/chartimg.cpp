@@ -174,7 +174,6 @@ ChartBaseBSB::ChartBaseBSB()
 
       pBitmapFilePath = NULL;
 
-      pline_table = NULL;
       ifs_buf = NULL;
 
       cached_image_ok = 0;
@@ -239,9 +238,6 @@ ChartBaseBSB::~ChartBaseBSB()
 
       if(pBitmapFilePath)
             delete pBitmapFilePath;
-
-      if(pline_table)
-            free(pline_table);
 
       if(ifs_buf)
             free(ifs_buf);
@@ -449,13 +445,11 @@ InitReturn ChartBaseBSB::PostInit(void)
 
 
       //    Create and load the line offset index table
-      pline_table = NULL;
-      pline_table = (int *)malloc((Size_Y+1) * sizeof(int) );               //Ugly....
-      if(!pline_table)
-            return INIT_FAIL_REMOVE;
+		line_offset_table.clear();
+		line_offset_table.resize(Size_Y + 1);
 
       ifs_bitmap->SeekI((Size_Y+1) * -4, wxFromEnd);                 // go to Beginning of offset table
-      pline_table[Size_Y] = ifs_bitmap->TellI();                     // fill in useful last table entry
+      line_offset_table[Size_Y] = ifs_bitmap->TellI();                     // fill in useful last table entry
 
       int offset;
       for(int ifplt=0 ; ifplt<Size_Y ; ifplt++)
@@ -466,7 +460,7 @@ InitReturn ChartBaseBSB::PostInit(void)
           offset += (unsigned char)ifs_bitmap->GetC() * 256 ;
           offset += (unsigned char)ifs_bitmap->GetC();
 
-          pline_table[ifplt] = offset;
+          line_offset_table[ifplt] = offset;
       }
 
       //    Try to validate the line index
@@ -476,7 +470,7 @@ InitReturn ChartBaseBSB::PostInit(void)
 
       for(int iplt=0 ; iplt<Size_Y - 1 ; iplt++)
       {
-            if( wxInvalidOffset == ifs_bitmap->SeekI(pline_table[iplt], wxFromStart))
+            if( wxInvalidOffset == ifs_bitmap->SeekI(line_offset_table[iplt], wxFromStart))
             {
                   wxString msg(_("   Chart File corrupt in PostInit() on chart "));
                   msg.Append(m_FullPath);
@@ -485,7 +479,7 @@ InitReturn ChartBaseBSB::PostInit(void)
                   return INIT_FAIL_REMOVE;
             }
 
-            int thisline_size = pline_table[iplt+1] - pline_table[iplt] ;
+            int thisline_size = line_offset_table[iplt+1] - line_offset_table[iplt] ;
 
             if(thisline_size < 0)
             {
@@ -635,27 +629,7 @@ bool ChartBaseBSB::CreateLineIndex()
         iscan = BSBScanScanline(ifs_bitmap);
 
         //  There is no sense reporting an error here, since we are recreating after an error
-/*
-        if(iscan > Size_Y)
-        {
-
-            wxString msg(_("CreateLineIndex() failed on chart "));
-            msg.Append(m_FullPath);
-            wxLogMessage(msg);
-           return false;
-        }
-
-        //  Skipped lines?
-        if(iscan != iplt)
-        {
-            while((iplt < iscan) && (iplt < Size_Y))
-            {
-                pline_table[iplt] = 0;
-                iplt++;
-            }
-        }
-*/
-        pline_table[iplt] = offset;
+        line_offset_table[iplt] = offset;
 
     }
 
@@ -2733,19 +2707,19 @@ int   ChartBaseBSB::BSBGetScanline( unsigned char *pLineBuf, int y, int xs, int 
 
       if((bUseLineCache && !pt->bValid) || (!bUseLineCache))
       {
-          if(pline_table[y] == 0)
+          if(line_offset_table[y] == 0)
+          {
+              free(xtemp_line);
+              return 0;
+          }
+
+          if(line_offset_table[y+1] == 0)
           {
               free (xtemp_line);
               return 0;
           }
 
-          if(pline_table[y+1] == 0)
-          {
-              free (xtemp_line);
-              return 0;
-          }
-
-            int thisline_size = pline_table[y+1] - pline_table[y] ;
+            int thisline_size = line_offset_table[y+1] - line_offset_table[y] ;
 
             if(thisline_size > ifs_bufsize)
             {
@@ -2760,7 +2734,7 @@ int   ChartBaseBSB::BSBGetScanline( unsigned char *pLineBuf, int y, int xs, int 
                 }
             }
 
-            if( wxInvalidOffset == ifs_bitmap->SeekI(pline_table[y], wxFromStart))
+            if( wxInvalidOffset == ifs_bitmap->SeekI(line_offset_table[y], wxFromStart))
             {
                 free (xtemp_line);
                 return 0;

@@ -249,8 +249,8 @@ protected:
       std::vector<Refpoint> reference_points;
 
 
-      int         nColorSize;
-      int         *pline_table;           // pointer to Line offset table
+      int nColorSize;
+      std::vector<int> line_offset_table;
 
       CachedLine  *pLineCache;
 
@@ -271,8 +271,14 @@ protected:
       GeoRef            cPoints;
 
       double            wpx[12], wpy[12], pwx[12], pwy[12];     // Embedded georef coefficients
-      int               wpx_type, wpy_type, pwx_type, pwy_type;
-      int               n_wpx, n_wpy, n_pwx, n_pwy;
+      int               wpx_type;
+      int               wpy_type;
+      int               pwx_type;
+      int               pwy_type;
+      int               n_wpx;
+      int               n_wpy;
+      int               n_pwx;
+      int               n_pwy;
       bool              bHaveEmbeddedGeoref;
 
       opncpnPalette     *pPalettes[N_BSB_COLORS];

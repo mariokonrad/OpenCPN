@@ -29,8 +29,6 @@
 
 #include "chart1.h"
 
-WX_DECLARE_OBJARRAY(wxRegion, RegionArray);
-
 class PianoWin : public wxWindow
 {
 		DECLARE_EVENT_TABLE()
@@ -91,7 +89,7 @@ class PianoWin : public wxWindow
 		std::vector<int> m_tmerc_index_array;
 		std::vector<int> m_poly_index_array;
 
-		RegionArray KeyRegion;
+		std::vector<wxRegion> KeyRegion;
 
 		wxBitmap * m_pVizIconBmp;
 		wxBitmap * m_pInVizIconBmp;

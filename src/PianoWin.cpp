@@ -26,9 +26,6 @@
 #include "Style.h"
 #include "chart/ChartDB.h"
 
-#include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(RegionArray);
-
 BEGIN_EVENT_TABLE(PianoWin, wxWindow)
 	EVT_PAINT(PianoWin::OnPaint)
 	EVT_SIZE(PianoWin::OnSize)
@@ -173,7 +170,7 @@ void PianoWin::OnPaint( wxPaintEvent& event )
 				}
 			}
 
-			wxRect box = KeyRegion.Item( i ).GetBox();
+			wxRect box = KeyRegion.at(i).GetBox();
 
 			if( m_brounded ) {
 				dc.DrawRoundedRectangle( box.x, box.y, box.width, box.height, 4 );
@@ -298,11 +295,11 @@ void PianoWin::FormatKeys( void )
 
 		//    Build the Key Regions
 
-		KeyRegion.Empty();
-		KeyRegion.Alloc( nKeys );
+		KeyRegion.clear();
+		KeyRegion.reserve(nKeys);
 		for( int i = 0; i < nKeys; i++ ) {
 			wxRegion r( ( i * kw ) + 3, 2, kw - 6, height - 4 );
-			KeyRegion.Add( r );
+			KeyRegion.push_back(r);
 		}
 	}
 	m_nRegions = nKeys;
@@ -311,7 +308,7 @@ void PianoWin::FormatKeys( void )
 wxPoint PianoWin::GetKeyOrigin( int key_index )
 {
 	if( ( key_index >= 0 ) && ( key_index <= (int) m_key_array.size() - 1 ) ) {
-		wxRect box = KeyRegion.Item( key_index ).GetBox();
+		wxRect box = KeyRegion.at(key_index).GetBox();
 		return wxPoint( box.x, box.y );
 	} else
 		return wxPoint( -1, -1 );
@@ -329,7 +326,7 @@ void PianoWin::MouseEvent( wxMouseEvent& event )
 	int sel_dbindex = -1;
 
 	for( int i = 0; i < m_nRegions; i++ ) {
-		if( KeyRegion.Item( i ).Contains( x, y ) == wxInRegion ) {
+		if( KeyRegion.at(i).Contains(x, y) == wxInRegion ) {
 			sel_index = i;
 			sel_dbindex = m_key_array.at(i);
 			break;

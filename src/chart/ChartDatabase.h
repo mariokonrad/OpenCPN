@@ -35,6 +35,8 @@
 #include <vector>
 
 #include "chartbase.h"
+#include "chart/ChartTableHeader.h"
+#include "chart/ChartClassDescriptor.h"
 #include "chart1.h"
 
 class wxProgressDialog;
@@ -42,117 +44,10 @@ class ChartDatabase;
 class ChartGroupArray;
 class BoundingBox;
 
-static const int DB_VERSION_PREVIOUS = 16;
-static const int DB_VERSION_CURRENT = 17;
-
-struct ChartTableEntry_onDisk_17
-{
-	int         EntryOffset;
-	int         ChartType;
-	float       LatMax;
-	float       LatMin;
-	float       LonMax;
-	float       LonMin;
-
-	int         Scale;
-	int         edition_date;
-	int         file_date;
-
-	int         nPlyEntries;
-	int         nAuxPlyEntries;
-
-	float       skew;
-	int         ProjectionType;
-	bool        bValid;
-
-	int         nNoCovrPlyEntries;
-};
-
-
-struct ChartTableEntry_onDisk_16
-{
-	int         EntryOffset;
-	int         ChartType;
-	float       LatMax;
-	float       LatMin;
-	float       LonMax;
-	float       LonMin;
-
-	int         Scale;
-	int         edition_date;
-	int         file_date;
-
-	int         nPlyEntries;
-	int         nAuxPlyEntries;
-
-	float       skew;
-	int         ProjectionType;
-	bool        bValid;
-};
-
-
-struct ChartTableEntry_onDisk_15
-{
-	int         EntryOffset;
-	int         ChartType;
-	float       LatMax;
-	float       LatMin;
-	float       LonMax;
-	float       LonMin;
-
-	int         Scale;
-	time_t      edition_date;
-	time_t      file_date;
-
-	int         nPlyEntries;
-	int         nAuxPlyEntries;
-
-	bool        bValid;
-};
-
-struct ChartTableEntry_onDisk_14
-{
-	int         EntryOffset;
-	int         ChartType;
-	char        ChartID[16];
-	float       LatMax;
-	float       LatMin;
-	float       LonMax;
-	float       LonMin;
-	char        *pFullPath;
-	int         Scale;
-	time_t      edition_date;
-	float       *pPlyTable;
-	int         nPlyEntries;
-	int         nAuxPlyEntries;
-	float       **pAuxPlyTable;
-	int         *pAuxCntTable;
-	bool        bValid;
-};
-
-struct ChartTableHeader
-{
-	ChartTableHeader() {}
-	ChartTableHeader(int dirEntries, int tableEntries) :
-		nTableEntries(tableEntries), nDirEntries(dirEntries) {}
-
-	void Read(wxInputStream &is);
-	void Write(wxOutputStream &os);
-	bool CheckValid();
-	int GetDirEntries() const { return nDirEntries; }
-	int GetTableEntries() const { return nTableEntries; }
-	char *GetDBVersionString(){ return dbVersion; }
-
-	private:
-	// NOTE: on-disk structure - cannot add, remove, or reorder!
-	char dbVersion[4];
-	int nTableEntries;
-	int nDirEntries;
-};
 
 struct ChartTableEntry
 {
-	ChartTableEntry() { Clear(); }
+	ChartTableEntry();
 	ChartTableEntry(ChartBase &theChart);
 	~ChartTableEntry();
 
@@ -162,37 +57,35 @@ struct ChartTableEntry
 	bool Write(const ChartDatabase *pDb, wxOutputStream &os);
 	void Clear();
 	void Disable();
-	void SetValid(bool valid) { bValid = valid; }
-	time_t GetFileTime() const { return file_date; }
+	void SetValid(bool valid);
+	time_t GetFileTime() const;
 
-	int GetnPlyEntries() const { return nPlyEntries; }
-	float *GetpPlyTable() const { return pPlyTable; }
+	int GetnPlyEntries() const;
+	float *GetpPlyTable() const;
 
-	int GetnAuxPlyEntries() const { return nAuxPlyEntries; }
-	float *GetpAuxPlyTableEntry(int index) const { return pAuxPlyTable[index];}
-	int GetAuxCntTableEntry(int index) const { return pAuxCntTable[index];}
+	int GetnAuxPlyEntries() const;
+	float *GetpAuxPlyTableEntry(int index) const;
+	int GetAuxCntTableEntry(int index) const;
 
-	int GetnNoCovrPlyEntries() const { return nNoCovrPlyEntries; }
-	float *GetpNoCovrPlyTableEntry(int index) const { return pNoCovrPlyTable[index];}
-	int GetNoCovrCntTableEntry(int index) const { return pNoCovrCntTable[index];}
+	int GetnNoCovrPlyEntries() const;
+	float *GetpNoCovrPlyTableEntry(int index) const;
+	int GetNoCovrCntTableEntry(int index) const;
 
-
-
-	char *GetpFullPath() const { return pFullPath; }
-	float GetLonMax() const { return LonMax; }
-	float GetLonMin() const { return LonMin; }
-	float GetLatMax() const { return LatMax; }
-	float GetLatMin() const { return LatMin; }
-	int GetScale() const { return Scale; }
+	char *GetpFullPath() const;
+	float GetLonMax() const;
+	float GetLonMin() const;
+	float GetLatMax() const;
+	float GetLatMin() const;
+	int GetScale() const;
 	int GetChartType() const;
 	int GetChartFamily() const;
-	int GetChartProjectionType() const { return ProjectionType; }
-	float GetChartSkew() const { return Skew; }
+	int GetChartProjectionType() const;
+	float GetChartSkew() const;
 
-	bool GetbValid(){ return bValid;}
-	void SetEntryOffset(int n) { EntryOffset = n;}
-	std::vector<int> &GetGroupArray(void){ return m_GroupArray; }
-	wxString *GetpFileName(void){ return m_pfilename; }
+	bool GetbValid();
+	void SetEntryOffset(int n);
+	std::vector<int> &GetGroupArray(void);
+	wxString *GetpFileName(void);
 
 	private:
 	int         EntryOffset;
@@ -225,20 +118,6 @@ enum
 {
 	BUILTIN_DESCRIPTOR = 0,
 	PLUGIN_DESCRIPTOR
-};
-
-class ChartClassDescriptor
-{
-	public:
-		ChartClassDescriptor();
-		virtual ~ChartClassDescriptor(){}
-
-		ChartClassDescriptor(wxString classn, wxString mask, int type)
-			: m_class_name(classn), m_search_mask(mask), m_descriptor_type(type) {};
-
-		wxString    m_class_name;
-		wxString    m_search_mask;
-		int         m_descriptor_type;
 };
 
 
@@ -331,17 +210,15 @@ WX_DECLARE_OBJARRAY(ChartGroup*, ChartGroupArray);
 class ChartGroupElement
 {
 	public:
-		wxString          m_element_name;
-
-		//      ChartGroupElementArray m_missing_name_array;
+		wxString m_element_name;
 		wxArrayString m_missing_name_array;
 };
 
 class ChartGroup
 {
 	public:
-		wxString                m_group_name;
-		ChartGroupElementArray  m_element_array;
+		wxString m_group_name;
+		ChartGroupElementArray m_element_array;
 };
 
 

@@ -36,12 +36,101 @@
 #define UINT32 unsigned int
 #endif
 
+static const int DB_VERSION_CURRENT = 17; // FIXME: duplicate
+
 extern PlugInManager    *g_pi_manager;
 
 int s_dbVersion;                                //    Database version currently in use at runtime
 //  Needed for ChartTableEntry::GetChartType() only
 //  TODO This can go away at opencpn Version 1.3.8 and above....
 ///////////////////////////////////////////////////////////////////////
+
+
+struct ChartTableEntry_onDisk_17
+{
+	int         EntryOffset;
+	int         ChartType;
+	float       LatMax;
+	float       LatMin;
+	float       LonMax;
+	float       LonMin;
+
+	int         Scale;
+	int         edition_date;
+	int         file_date;
+
+	int         nPlyEntries;
+	int         nAuxPlyEntries;
+
+	float       skew;
+	int         ProjectionType;
+	bool        bValid;
+
+	int         nNoCovrPlyEntries;
+};
+
+struct ChartTableEntry_onDisk_16
+{
+	int         EntryOffset;
+	int         ChartType;
+	float       LatMax;
+	float       LatMin;
+	float       LonMax;
+	float       LonMin;
+
+	int         Scale;
+	int         edition_date;
+	int         file_date;
+
+	int         nPlyEntries;
+	int         nAuxPlyEntries;
+
+	float       skew;
+	int         ProjectionType;
+	bool        bValid;
+};
+
+
+struct ChartTableEntry_onDisk_15
+{
+	int         EntryOffset;
+	int         ChartType;
+	float       LatMax;
+	float       LatMin;
+	float       LonMax;
+	float       LonMin;
+
+	int         Scale;
+	time_t      edition_date;
+	time_t      file_date;
+
+	int         nPlyEntries;
+	int         nAuxPlyEntries;
+
+	bool        bValid;
+};
+
+struct ChartTableEntry_onDisk_14
+{
+	int         EntryOffset;
+	int         ChartType;
+	char        ChartID[16];
+	float       LatMax;
+	float       LatMin;
+	float       LonMax;
+	float       LonMin;
+	char        *pFullPath;
+	int         Scale;
+	time_t      edition_date;
+	float       *pPlyTable;
+	int         nPlyEntries;
+	int         nAuxPlyEntries;
+	float       **pAuxPlyTable;
+	int         *pAuxCntTable;
+	bool        bValid;
+};
+
+
 
 bool FindMatchingFile(const wxString &theDir, const wxChar *theRegEx, int nameLength, wxString &theMatch)
 {
@@ -72,69 +161,77 @@ ChartFamilyEnum GetChartFamily(int charttype)
 
 
 ///////////////////////////////////////////////////////////////////////
-// ChartTableHeader
-///////////////////////////////////////////////////////////////////////
-
-void ChartTableHeader::Read(wxInputStream &is)
-{
-	is.Read(this, sizeof(ChartTableHeader));
-}
-
-void ChartTableHeader::Write(wxOutputStream &os)
-{
-	char vb[5];
-	sprintf(vb, "V%03d", DB_VERSION_CURRENT);
-
-	memcpy(dbVersion, vb, 4);
-	os.Write(this, sizeof(ChartTableHeader));
-}
-
-bool ChartTableHeader::CheckValid()
-{
-	char vb[5];
-	sprintf(vb, "V%03d", DB_VERSION_CURRENT);
-	if (strncmp(vb, dbVersion, sizeof(dbVersion)))
-	{
-		wxString msg;
-		char vbo[5];
-		memcpy(vbo, dbVersion, 4);
-		vbo[4] = 0;
-		msg.Append(wxString(vbo, wxConvUTF8));
-		msg.Prepend(wxT("   Warning: found incorrect chart db version: "));
-		wxLogMessage(msg);
-
-		return false;       // no match....
-
-		/*
-		// Try previous version....
-		sprintf(vb, "V%03d", DB_VERSION_PREVIOUS);
-		if (strncmp(vb, dbVersion, sizeof(dbVersion)))
-		return false;
-		else
-		{
-		wxLogMessage(_T("   Scheduling db upgrade to current db version on Options->Charts page visit..."));
-		return true;
-		}
-		 */
-
-	}
-	else
-	{
-		wxString msg;
-		char vbo[5];
-		memcpy(vbo, dbVersion, 4);
-		vbo[4] = 0;
-		msg.Append(wxString(vbo, wxConvUTF8));
-		msg.Prepend(wxT("Loading chart db version: "));
-		wxLogMessage(msg);
-	}
-
-	return true;
-}
-
-///////////////////////////////////////////////////////////////////////
 // ChartTableEntry
 ///////////////////////////////////////////////////////////////////////
+
+ChartTableEntry::ChartTableEntry()
+{ Clear(); }
+
+void ChartTableEntry::SetValid(bool valid)
+{ bValid = valid; }
+
+time_t ChartTableEntry::GetFileTime() const
+{ return file_date; }
+
+int ChartTableEntry::GetnPlyEntries() const
+{ return nPlyEntries; }
+
+float *ChartTableEntry::GetpPlyTable() const
+{ return pPlyTable; }
+
+int ChartTableEntry::GetnAuxPlyEntries() const
+{ return nAuxPlyEntries; }
+
+float *ChartTableEntry::GetpAuxPlyTableEntry(int index) const
+{ return pAuxPlyTable[index];}
+
+int ChartTableEntry::GetAuxCntTableEntry(int index) const
+{ return pAuxCntTable[index];}
+
+int ChartTableEntry::GetnNoCovrPlyEntries() const
+{ return nNoCovrPlyEntries; }
+
+float *ChartTableEntry::GetpNoCovrPlyTableEntry(int index) const
+{ return pNoCovrPlyTable[index];}
+
+int ChartTableEntry::GetNoCovrCntTableEntry(int index) const
+{ return pNoCovrCntTable[index];}
+
+char *ChartTableEntry::GetpFullPath() const
+{ return pFullPath; }
+
+float ChartTableEntry::GetLonMax() const
+{ return LonMax; }
+
+float ChartTableEntry::GetLonMin() const
+{ return LonMin; }
+
+float ChartTableEntry::GetLatMax() const
+{ return LatMax; }
+
+float ChartTableEntry::GetLatMin() const
+{ return LatMin; }
+
+int ChartTableEntry::GetScale() const
+{ return Scale; }
+
+int ChartTableEntry::GetChartProjectionType() const
+{ return ProjectionType; }
+
+float ChartTableEntry::GetChartSkew() const
+{ return Skew; }
+
+bool ChartTableEntry::GetbValid()
+{ return bValid;}
+
+void ChartTableEntry::SetEntryOffset(int n)
+{ EntryOffset = n;}
+
+std::vector<int> &ChartTableEntry::GetGroupArray(void)
+{ return m_GroupArray; }
+
+wxString *ChartTableEntry::GetpFileName(void)
+{ return m_pfilename; }
 
 ChartTableEntry::ChartTableEntry(ChartBase &theChart)
 {
@@ -2037,3 +2134,4 @@ void ChartDatabase::ApplyGroupArray(ChartGroupArray *pGroupArray)
 	}
 
 }
+

@@ -427,6 +427,7 @@ SET(HDRS
 		src/AnnunText.h
 		src/CDI.h
 		src/MyPrintout.h
+		src/chart/Refpoint.h
 		src/chart/ChartDB.h
 		src/chart/CacheEntry.h
 		src/chart/ChartDatabase.h

@@ -21,13 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-// For compilers that support precompilation, includes "wx.h".
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-	#include "wx/wx.h"
-#endif
-
 #include <wx/dir.h>
 #include <wx/stream.h>
 #include <wx/wfstream.h>
@@ -35,6 +28,8 @@
 #include <wx/filename.h>
 #include <wx/image.h>
 #include <wx/fileconf.h>
+#include <wx/log.h>
+
 #include <sys/stat.h>
 
 #include "chartimg.h"

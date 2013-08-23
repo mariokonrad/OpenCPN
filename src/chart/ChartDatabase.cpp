@@ -21,20 +21,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-	#include "wx/wx.h"
-#endif
-
 #include <wx/arrimpl.cpp>
 #include <wx/encconv.h>
 #include <wx/regex.h>
 #include <wx/progdlg.h>
+#include <wx/arrimpl.cpp>
 
 #include "ChartDatabase.h"
 #include "chartbase.h"
 #include "pluginmanager.h"
+#include "ChartPlugInWrapper.h"
 
 #ifndef UINT32
 #define UINT32 unsigned int
@@ -47,7 +43,8 @@ int s_dbVersion;                                //    Database version currently
 //  TODO This can go away at opencpn Version 1.3.8 and above....
 ///////////////////////////////////////////////////////////////////////
 
-bool FindMatchingFile(const wxString &theDir, const wxChar *theRegEx, int nameLength, wxString &theMatch) {
+bool FindMatchingFile(const wxString &theDir, const wxChar *theRegEx, int nameLength, wxString &theMatch)
+{
 	wxDir dir(theDir);
 	wxRegEx rePattern(theRegEx);
 	for (bool fileFound = dir.GetFirst(&theMatch); fileFound; fileFound = dir.GetNext(&theMatch))
@@ -59,20 +56,18 @@ bool FindMatchingFile(const wxString &theDir, const wxChar *theRegEx, int nameLe
 
 ChartFamilyEnum GetChartFamily(int charttype)
 {
-	ChartFamilyEnum cf;
-
 	switch( charttype)
 	{
-		case        CHART_TYPE_KAP:      cf = CHART_FAMILY_RASTER; break;
-		case        CHART_TYPE_GEO:      cf = CHART_FAMILY_RASTER; break;
-		case        CHART_TYPE_S57:      cf = CHART_FAMILY_VECTOR; break;
-		case        CHART_TYPE_CM93:     cf = CHART_FAMILY_VECTOR; break;
-		case        CHART_TYPE_CM93COMP: cf = CHART_FAMILY_VECTOR; break;
-		case        CHART_TYPE_DUMMY:    cf = CHART_FAMILY_RASTER; break;
-		case        CHART_TYPE_UNKNOWN:  cf = CHART_FAMILY_UNKNOWN; break;
-		default:                         cf = CHART_FAMILY_UNKNOWN; break;
+		case CHART_TYPE_KAP:      return CHART_FAMILY_RASTER;
+		case CHART_TYPE_GEO:      return CHART_FAMILY_RASTER;
+		case CHART_TYPE_S57:      return CHART_FAMILY_VECTOR;
+		case CHART_TYPE_CM93:     return CHART_FAMILY_VECTOR;
+		case CHART_TYPE_CM93COMP: return CHART_FAMILY_VECTOR;
+		case CHART_TYPE_DUMMY:    return CHART_FAMILY_RASTER;
+		case CHART_TYPE_UNKNOWN:  return CHART_FAMILY_UNKNOWN;
+		default: break;
 	}
-	return cf;
+	return CHART_FAMILY_UNKNOWN;
 }
 
 

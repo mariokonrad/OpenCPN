@@ -442,6 +442,7 @@ SET(HDRS
 		src/timers.h
 		src/ThumbData.h
 		src/chart/ChartDummy.h
+		src/ChartPlugInWrapper.h
 		src/EmbossData.h
 		src/OCPNListCtrl.h
 		src/CM93DSlide.h
@@ -597,6 +598,7 @@ SET(SRCS
 		src/EmbossData.cpp
 		src/ThumbData.cpp
 		src/chart/ChartDummy.cpp
+		src/ChartPlugInWrapper.cpp
 		src/QuiltPatch.cpp
 		src/QuiltCandidate.cpp
 		src/Hyperlink.cpp

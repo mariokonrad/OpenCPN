@@ -35,6 +35,7 @@
 #include "ThumbWin.h"
 #include "OCPNRegionIterator.h"
 #include "chart/ChartDummy.h"
+#include "ChartPlugInWrapper.h"
 
 #include <wx/tokenzr.h>
 

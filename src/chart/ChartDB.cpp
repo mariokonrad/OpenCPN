@@ -21,14 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-
-// For compilers that support precompilation, includes "wx.h".
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-      #include "wx/wx.h"
-#endif
-
 #include <wx/stopwatch.h>
 #include <wx/regex.h>
 #include <wx/progdlg.h>
@@ -42,6 +34,7 @@
 #include "chart/ChartKAP.h"
 #include "chart/ChartStack.h"
 
+#include "ChartPlugInWrapper.h"
 #include "chartimg.h"
 #include "chart1.h"
 #include "ThumbWin.h"
@@ -53,14 +46,14 @@
 
 class s52plib;
 
-extern ChartBase    *Current_Ch;
-extern ThumbWin     *pthumbwin;
-extern int          g_nCacheLimit;
-extern int          g_memCacheLimit;
-extern bool         g_bopengl;
+extern ChartBase * Current_Ch;
+extern ThumbWin * pthumbwin;
+extern int g_nCacheLimit;
+extern int g_memCacheLimit;
+extern bool g_bopengl;
 extern ChartCanvas  *cc1;
-extern int          g_GroupIndex;
-extern s52plib      *ps52plib;
+extern int g_GroupIndex;
+extern s52plib * ps52plib;
 
 
 bool G_FloatPtInPolygon(MyFlPoint *rgpts, int wnumpts, float x, float y);

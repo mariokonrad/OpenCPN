@@ -1,11 +1,9 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  ChartBase Definition
- * Author:   David Register
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register   *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef _CHARTBASE_H_
-#define _CHARTBASE_H_
+#ifndef __CHARTBASE__H__
+#define __CHARTBASE__H__
 
 #include "dychart.h"
 #include "chart/ChartType.h"
@@ -41,259 +39,184 @@ class wxMemoryDC;
 // ChartBase::Init()  init_flags constants
 enum ChartInitFlag
 {
-      FULL_INIT = 0,
-      HEADER_ONLY,
-      THUMB_ONLY
+	FULL_INIT = 0,
+	HEADER_ONLY,
+	THUMB_ONLY
 };
 
 
 enum RenderTypeEnum
 {
-      DC_RENDER_ONLY = 0,
-      DC_RENDER_RETURN_DIB,
-      DC_RENDER_RETURN_IMAGE
+	DC_RENDER_ONLY = 0,
+	DC_RENDER_RETURN_DIB,
+	DC_RENDER_RETURN_IMAGE
 };
 
 enum InitReturn
 {
-      INIT_OK = 0,
-      INIT_FAIL_RETRY,        // Init failed, retry suggested
-      INIT_FAIL_REMOVE,       // Init failed, suggest remove from further use
-      INIT_FAIL_NOERROR       // Init failed, request no explicit error message
+	INIT_OK = 0,
+	INIT_FAIL_RETRY,        // Init failed, retry suggested
+	INIT_FAIL_REMOVE,       // Init failed, suggest remove from further use
+	INIT_FAIL_NOERROR       // Init failed, request no explicit error message
 };
 
 struct Extent
 {
-  double SLAT;
-  double WLON;
-  double NLAT;
-  double ELON;
+	double SLAT;
+	double WLON;
+	double NLAT;
+	double ELON;
 };
 
 // Depth unit type enum
 enum ChartDepthUnitType
 {
-    DEPTH_UNIT_UNKNOWN,
-    DEPTH_UNIT_FEET,
-    DEPTH_UNIT_METERS,
-    DEPTH_UNIT_FATHOMS
+	DEPTH_UNIT_UNKNOWN,
+	DEPTH_UNIT_FEET,
+	DEPTH_UNIT_METERS,
+	DEPTH_UNIT_FATHOMS
 };
 
 // Projection type enum
 enum OcpnProjType
 {
-      PROJECTION_UNKNOWN,
-      PROJECTION_MERCATOR,
-      PROJECTION_TRANSVERSE_MERCATOR,
-      PROJECTION_POLYCONIC
+	PROJECTION_UNKNOWN,
+	PROJECTION_MERCATOR,
+	PROJECTION_TRANSVERSE_MERCATOR,
+	PROJECTION_POLYCONIC
 };
 
 
 
 class Plypoint
 {
-      public:
-            float ltp;
-            float lnp;
+	public:
+		float ltp;
+		float lnp;
 };
-
-
-// ----------------------------------------------------------------------------
-// ChartBase
-// ----------------------------------------------------------------------------
 
 class ChartBase
 {
 
-public:
-      ChartBase();
-      virtual ~ChartBase() = 0;
+	public:
+		ChartBase();
+		virtual ~ChartBase() = 0;
 
-      virtual InitReturn Init( const wxString& name, ChartInitFlag init_flags) = 0;
+		virtual InitReturn Init( const wxString& name, ChartInitFlag init_flags) = 0;
 
-      virtual void Activate(void) {};
-      virtual void Deactivate(void) {};
+		virtual void Activate(void) {};
+		virtual void Deactivate(void) {};
 
-//    Accessors
-      virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon) = 0;
-      virtual ThumbData *GetThumbData() = 0;
-      virtual bool UpdateThumbData(double lat, double lon) = 0;
+		//    Accessors
+		virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon) = 0;
+		virtual ThumbData *GetThumbData() = 0;
+		virtual bool UpdateThumbData(double lat, double lon) = 0;
 
-      virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) = 0;
-      virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) = 0;
+		virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) = 0;
+		virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) = 0;
 
-      virtual bool GetChartExtent(Extent *pext) = 0;
-
-
-      virtual OcpnProjType GetChartProjectionType(){ return m_projection;}
-      virtual wxDateTime GetEditionDate(void){ return m_EdDate;}
-
-      virtual wxString GetPubDate(){ return m_PubYear;}
-      virtual int GetNativeScale(){ return m_Chart_Scale;}
-      wxString GetFullPath() const { return m_FullPath;}
-      wxString GetName(){ return m_Name;}
-      wxString GetDescription() { return m_Description;}
-      wxString GetID(){ return m_ID;}
-      wxString GetSE(){ return m_SE;}
-      wxString GetDepthUnits(){ return m_DepthUnits;}
-      wxString GetSoundingsDatum(){ return m_SoundingsDatum;}
-      wxString GetDatumString(){ return m_datum_str;}
-      wxString GetExtraInfo(){ return m_ExtraInfo; }
-      double GetChart_Error_Factor(){ return Chart_Error_Factor; }
-      ChartTypeEnum GetChartType(){ return m_ChartType;}
-      ChartFamilyEnum GetChartFamily(){ return m_ChartFamily;}
-      double GetChartSkew(){ return m_Chart_Skew; }
+		virtual bool GetChartExtent(Extent *pext) = 0;
 
 
-      virtual ChartDepthUnitType GetDepthUnitType(void) { return m_depth_unit_id;}
+		virtual OcpnProjType GetChartProjectionType(){ return m_projection;}
+		virtual wxDateTime GetEditionDate(void){ return m_EdDate;}
 
-      virtual bool IsReadyToRender(){ return bReadyToRender;}
-      virtual bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
-                                        const OCPNRegion &Region) = 0;
-
-      virtual bool RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint,
-                                        const OCPNRegion &Region) = 0;
-
-      virtual bool AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed) = 0;
-
-      virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion) = 0;
-
-      virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate = true ) = 0;
-
-      virtual double GetNearestPreferredScalePPM(double target_scale_ppm) = 0;
-
-      virtual int GetCOVREntries(){ return  m_nCOVREntries; }
-      virtual int GetCOVRTablePoints(int iTable) { return m_pCOVRTablePoints[iTable]; }
-      virtual int  GetCOVRTablenPoints(int iTable){ return m_pCOVRTablePoints[iTable]; }
-      virtual float *GetCOVRTableHead(int iTable){ return m_pCOVRTable[iTable]; }
-
-      virtual int GetNoCOVREntries(){ return  m_nNoCOVREntries; }
-      virtual int GetNoCOVRTablePoints(int iTable) { return m_pNoCOVRTablePoints[iTable]; }
-      virtual int  GetNoCOVRTablenPoints(int iTable){ return m_pNoCOVRTablePoints[iTable]; }
-      virtual float *GetNoCOVRTableHead(int iTable){ return m_pNoCOVRTable[iTable]; }
-      
-protected:
-
-      int               m_Chart_Scale;
-      ChartTypeEnum     m_ChartType;
-      ChartFamilyEnum   m_ChartFamily;
-
-      wxString          m_FullPath;
-      wxString          m_Name;
-      wxString          m_Description;
-      wxString          m_ID;
-      wxString          m_SE;
-      wxString          m_SoundingsDatum;
-      wxString          m_datum_str;
-      wxString          m_ExtraInfo;
-      wxString          m_PubYear;
-      wxString          m_DepthUnits;
-
-      OcpnProjType      m_projection;
-      ChartDepthUnitType m_depth_unit_id;
-
-      wxDateTime        m_EdDate;
-
-      wxBitmap          *pcached_bitmap;
-
-      ThumbData         *pThumbData;
-
-      ColorScheme       m_global_color_scheme;
-      bool              bReadyToRender;
-
-      double            Chart_Error_Factor;
-
-      double            m_lon_datum_adjust;             // Add these numbers to WGS84 position to obtain internal chart position
-      double            m_lat_datum_adjust;
-
-      double            m_Chart_Skew;
+		virtual wxString GetPubDate(){ return m_PubYear;}
+		virtual int GetNativeScale(){ return m_Chart_Scale;}
+		wxString GetFullPath() const { return m_FullPath;}
+		wxString GetName(){ return m_Name;}
+		wxString GetDescription() { return m_Description;}
+		wxString GetID(){ return m_ID;}
+		wxString GetSE(){ return m_SE;}
+		wxString GetDepthUnits(){ return m_DepthUnits;}
+		wxString GetSoundingsDatum(){ return m_SoundingsDatum;}
+		wxString GetDatumString(){ return m_datum_str;}
+		wxString GetExtraInfo(){ return m_ExtraInfo; }
+		double GetChart_Error_Factor(){ return Chart_Error_Factor; }
+		ChartTypeEnum GetChartType(){ return m_ChartType;}
+		ChartFamilyEnum GetChartFamily(){ return m_ChartFamily;}
+		double GetChartSkew(){ return m_Chart_Skew; }
 
 
-      //    Chart region coverage information
-      //    Charts may have multiple valid regions within the lat/lon box described by the chart extent
-      //    The following table structure contains this embedded information
+		virtual ChartDepthUnitType GetDepthUnitType(void) { return m_depth_unit_id;}
 
-      //    Typically, BSB charts will contain only one entry, corresponding to the PLY information in the chart header
-      //    ENC charts often contain multiple entries
+		virtual bool IsReadyToRender(){ return bReadyToRender;}
+		virtual bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
+				const OCPNRegion &Region) = 0;
 
-      int         m_nCOVREntries;                       // number of coverage table entries
-      int         *m_pCOVRTablePoints;                  // int table of number of points in each coverage table entry
-      float       **m_pCOVRTable;                       // table of pointers to list of floats describing valid COVR
+		virtual bool RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint,
+				const OCPNRegion &Region) = 0;
 
-      int         m_nNoCOVREntries;                       // number of NoCoverage table entries
-      int         *m_pNoCOVRTablePoints;                  // int table of number of points in each NoCoverage table entry
-      float       **m_pNoCOVRTable;                       // table of pointers to list of floats describing valid NOCOVR
+		virtual bool AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed) = 0;
+
+		virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion) = 0;
+
+		virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate = true ) = 0;
+
+		virtual double GetNearestPreferredScalePPM(double target_scale_ppm) = 0;
+
+		virtual int GetCOVREntries(){ return  m_nCOVREntries; }
+		virtual int GetCOVRTablePoints(int iTable) { return m_pCOVRTablePoints[iTable]; }
+		virtual int  GetCOVRTablenPoints(int iTable){ return m_pCOVRTablePoints[iTable]; }
+		virtual float *GetCOVRTableHead(int iTable){ return m_pCOVRTable[iTable]; }
+
+		virtual int GetNoCOVREntries(){ return  m_nNoCOVREntries; }
+		virtual int GetNoCOVRTablePoints(int iTable) { return m_pNoCOVRTablePoints[iTable]; }
+		virtual int  GetNoCOVRTablenPoints(int iTable){ return m_pNoCOVRTablePoints[iTable]; }
+		virtual float *GetNoCOVRTableHead(int iTable){ return m_pNoCOVRTable[iTable]; }
+
+	protected:
+
+		int               m_Chart_Scale;
+		ChartTypeEnum     m_ChartType;
+		ChartFamilyEnum   m_ChartFamily;
+
+		wxString          m_FullPath;
+		wxString          m_Name;
+		wxString          m_Description;
+		wxString          m_ID;
+		wxString          m_SE;
+		wxString          m_SoundingsDatum;
+		wxString          m_datum_str;
+		wxString          m_ExtraInfo;
+		wxString          m_PubYear;
+		wxString          m_DepthUnits;
+
+		OcpnProjType      m_projection;
+		ChartDepthUnitType m_depth_unit_id;
+
+		wxDateTime        m_EdDate;
+
+		wxBitmap          *pcached_bitmap;
+
+		ThumbData         *pThumbData;
+
+		ColorScheme       m_global_color_scheme;
+		bool              bReadyToRender;
+
+		double            Chart_Error_Factor;
+
+		double            m_lon_datum_adjust;             // Add these numbers to WGS84 position to obtain internal chart position
+		double            m_lat_datum_adjust;
+
+		double            m_Chart_Skew;
+
+
+		//    Chart region coverage information
+		//    Charts may have multiple valid regions within the lat/lon box described by the chart extent
+		//    The following table structure contains this embedded information
+
+		//    Typically, BSB charts will contain only one entry, corresponding to the PLY information in the chart header
+		//    ENC charts often contain multiple entries
+
+		int m_nCOVREntries;       // number of coverage table entries
+		int * m_pCOVRTablePoints;  // int table of number of points in each coverage table entry
+		float ** m_pCOVRTable;       // table of pointers to list of floats describing valid COVR
+
+		int m_nNoCOVREntries;     // number of NoCoverage table entries
+		int * m_pNoCOVRTablePoints;// int table of number of points in each NoCoverage table entry
+		float ** m_pNoCOVRTable;     // table of pointers to list of floats describing valid NOCOVR
 
 };
-
-
-// ----------------------------------------------------------------------------
-// ChartPlugInWrapper
-//    This class is a wrapper/interface to PlugIn charts(PlugInChartBase) as defined in ocpn_plugin.h
-// ----------------------------------------------------------------------------
-
-class PlugInChartBase;                  // found in ocpn_plugin.h
-
-class ChartPlugInWrapper : public ChartBase
-{
-      public:
-            ChartPlugInWrapper();
-            ChartPlugInWrapper(const wxString &chart_class);
-            virtual ~ChartPlugInWrapper();
-
-            virtual wxString GetFileSearchMask(void);
-
-            virtual InitReturn Init(const wxString& name, ChartInitFlag init_flags);
-
-//    Accessors
-            virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
-            virtual ThumbData *GetThumbData();
-            virtual bool UpdateThumbData(double lat, double lon);
-
-            double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
-            double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
-
-            virtual bool GetChartExtent(Extent *pext);
-
-            virtual bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
-                                              const OCPNRegion &Region);
-
-            virtual bool RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint,
-                                              const OCPNRegion &Region);
-
-            virtual bool AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed);
-
-            virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion);
-
-            virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
-
-            virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
-
-            virtual int GetCOVREntries();
-            virtual int GetCOVRTablePoints(int iTable);
-            virtual int GetCOVRTablenPoints(int iTable);
-            virtual float *GetCOVRTableHead(int iTable);
-
-            virtual int GetNoCOVREntries();
-            virtual int GetNoCOVRTablePoints(int iTable);
-            virtual int  GetNoCOVRTablenPoints(int iTable);
-            virtual float *GetNoCOVRTableHead(int iTable);
-            
-            //    The following set of methods apply to BSB (i.e. Raster) type PlugIn charts only
-            //    and need not be implemented if the ChartFamily is not CHART_FAMILY_RASTER
-            virtual void ComputeSourceRectangle(const ViewPort & vp, wxRect * pSourceRect);
-            virtual double GetRasterScaleFactor();
-            virtual bool GetChartBits(wxRect & source, unsigned char *pPix, int sub_samp);
-            virtual int GetSize_X();
-            virtual int GetSize_Y();
-            virtual void latlong_to_chartpix(double lat, double lon, double & pixx, double & pixy);
-
-
-      private:
-            PlugInChartBase * m_ppicb;
-            wxObject * m_ppo;
-};
-
-
 
 #endif

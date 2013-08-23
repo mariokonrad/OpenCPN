@@ -1,0 +1,87 @@
+/***************************************************************************
+ *
+ * Project:  OpenCPN
+ *
+ ***************************************************************************
+ *   Copyright (C) 2010 by David S. Register                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
+
+#ifndef __CHARTPLUGINWRAPPER__H__
+#define __CHARTPLUGINWRAPPER__H__
+
+#include "chartbase.h"
+
+class PlugInChartBase;
+
+class ChartPlugInWrapper : public ChartBase
+{
+	public:
+		ChartPlugInWrapper();
+		ChartPlugInWrapper(const wxString &chart_class);
+		virtual ~ChartPlugInWrapper();
+
+		virtual wxString GetFileSearchMask(void);
+
+		virtual InitReturn Init(const wxString& name, ChartInitFlag init_flags);
+
+		virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
+		virtual ThumbData *GetThumbData();
+		virtual bool UpdateThumbData(double lat, double lon);
+
+		double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
+		double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
+		virtual bool GetChartExtent(Extent *pext);
+
+		virtual bool RenderRegionViewOnDC(
+				wxMemoryDC & dc,
+				const ViewPort & VPoint,
+				const OCPNRegion & Region);
+
+		virtual bool RenderRegionViewOnGL(
+				const wxGLContext & glc,
+				const ViewPort & VPoint,
+				const OCPNRegion & Region);
+
+		virtual bool AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed);
+		virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion);
+		virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
+		virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
+		virtual int GetCOVREntries();
+		virtual int GetCOVRTablePoints(int iTable);
+		virtual int GetCOVRTablenPoints(int iTable);
+		virtual float *GetCOVRTableHead(int iTable);
+		virtual int GetNoCOVREntries();
+		virtual int GetNoCOVRTablePoints(int iTable);
+		virtual int  GetNoCOVRTablenPoints(int iTable);
+		virtual float *GetNoCOVRTableHead(int iTable);
+
+		//    The following set of methods apply to BSB (i.e. Raster) type PlugIn charts only
+		//    and need not be implemented if the ChartFamily is not CHART_FAMILY_RASTER
+		virtual void ComputeSourceRectangle(const ViewPort & vp, wxRect * pSourceRect);
+		virtual double GetRasterScaleFactor();
+		virtual bool GetChartBits(wxRect & source, unsigned char *pPix, int sub_samp);
+		virtual int GetSize_X();
+		virtual int GetSize_Y();
+		virtual void latlong_to_chartpix(double lat, double lon, double & pixx, double & pixy);
+
+	private:
+		PlugInChartBase * m_ppicb;
+		wxObject * m_ppo;
+};
+
+#endif

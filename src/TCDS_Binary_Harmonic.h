@@ -53,7 +53,6 @@ class TCDS_Binary_Harmonic : public TCDataFactory
 
 		wxString m_last_reference_not_found;
 
-		ArrayOfAbbrEntry m_abbreviation_array;
 		ArrayOfIDXEntry m_IDX_array;
 
 		int num_IDX;

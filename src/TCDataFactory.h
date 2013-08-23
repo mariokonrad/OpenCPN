@@ -25,7 +25,6 @@
 #define __TCDATAFACTORY_H__
 
 #include <wx/string.h>
-#include <wx/dynarray.h>
 
 #include "TC_Error_Code.h"
 
@@ -69,7 +68,5 @@ class TCDataFactory
 
 		wxString source_ident;
 };
-
-WX_DECLARE_OBJARRAY(TCDataFactory::AbbrEntry, ArrayOfAbbrEntry);
 
 #endif

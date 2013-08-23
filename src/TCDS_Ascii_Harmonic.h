@@ -75,7 +75,7 @@ class TCDS_Ascii_Harmonic : public TCDataFactory
 
 		char index_line_buffer[1024];
 		FILE * m_IndexFile;
-		ArrayOfAbbrEntry m_abbreviation_array;
+		std::vector<TCDataFactory::AbbrEntry> m_abbreviation_array; // FIXME: what for? the container is filled and cleared, but not used
 		ArrayOfIDXEntry m_IDX_array;
 
 		int num_IDX;

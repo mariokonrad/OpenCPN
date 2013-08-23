@@ -424,7 +424,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
 
 			//  build a Station_Data class, and add to member array
 
-			Station_Data *psd = new Station_Data;
+			Station_Data * psd = new Station_Data;
 
 			psd->amplitude = (double *)malloc(num_csts * sizeof(double));
 			psd->epoch     = (double *)malloc(num_csts * sizeof(double));
@@ -467,7 +467,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
 
 			psd->DATUM = ptiderec->datum_offset;
 
-			m_msd_array.push_back(*psd); // add it to the member array, FIXME: why? the container is not used anywhere
+			m_msd_array.push_back(*psd); // add it to the member array, FIXME: why? the container is not used anywhere, auto cleanup?
 			pIDX->pref_sta_data = psd;
 			pIDX->IDX_ref_dbIndex = i;
 			pIDX->have_offsets = 0;

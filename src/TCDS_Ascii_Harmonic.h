@@ -62,7 +62,6 @@ class TCDS_Ascii_Harmonic : public TCDataFactory
 		char *nojunk (char * line);
 		int slackcmp (char * a, char * b);
 
-		void free_cst();
 		void free_nodes();
 		void free_epochs();
 		void free_data();
@@ -82,7 +81,7 @@ class TCDS_Ascii_Harmonic : public TCDataFactory
 		int num_nodes;
 		int num_csts;
 		int num_epochs;
-		double * m_cst_speeds;
+		std::vector<double> m_cst_speeds;
 		double ** m_cst_nodes;
 		double ** m_cst_epochs;
 		double * m_work_buffer;

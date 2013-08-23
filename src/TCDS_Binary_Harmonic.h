@@ -59,7 +59,7 @@ class TCDS_Binary_Harmonic : public TCDataFactory
 		int num_nodes;
 		int num_csts;
 		int num_epochs;
-		double * m_cst_speeds;
+		std::vector<double> m_cst_speeds;
 		double ** m_cst_nodes;
 		double ** m_cst_epochs;
 		double * m_work_buffer;

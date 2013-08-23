@@ -24,6 +24,7 @@
 #ifndef __IDX_ENTRY_H__
 #define __IDX_ENTRY_H__
 
+#include <vector>
 #include <wx/dynarray.h>
 
 class TCDataSource;
@@ -86,7 +87,7 @@ class IDX_entry
 		int num_nodes;                   // These are copies of relevant data pointers
 		int num_csts;                    // allocated during invariant harmonic loading
 		int num_epochs;                  // and owned by the DataSource
-		double * m_cst_speeds;
+		std::vector<double> m_cst_speeds;
 		double ** m_cst_nodes;
 		double ** m_cst_epochs;
 		double * m_work_buffer;

@@ -306,7 +306,6 @@ static void change_time_zone(const char *tz)
 
 TCDS_Binary_Harmonic::TCDS_Binary_Harmonic()
 {
-	m_cst_speeds = NULL;
 	m_cst_nodes = NULL;
 	m_cst_epochs = NULL;
 
@@ -336,11 +335,10 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
 	m_work_buffer = (double *) malloc (num_csts * sizeof (double));
 
 	//  Constituent speeds
-	m_cst_speeds = (double *) malloc (num_csts * sizeof (double));
-
+	m_cst_speeds.clear();
+	m_cst_speeds.reserve(num_csts);
 	for (int a=0; a<num_csts; a++) {
-		m_cst_speeds[a] = get_speed (a);
-		m_cst_speeds[a] *= M_PI / 648000; /* Convert to radians per second */
+		m_cst_speeds.push_back(get_speed(a) * M_PI / 648000); /* Convert to radians per second */
 	}
 
 	//  Equilibrium tables by year

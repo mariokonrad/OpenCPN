@@ -63,7 +63,6 @@ TCDS_Ascii_Harmonic::TCDS_Ascii_Harmonic()
 	//  Initialize member variables
 	m_IndexFile = NULL;
 
-	m_cst_speeds = NULL;
 	m_cst_nodes = NULL;
 	m_cst_epochs = NULL;
 
@@ -303,14 +302,16 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString &data_fi
 	read_next_line (fp, linrec, 0);
 	sscanf (linrec, "%d", &num_csts);
 
-	m_cst_speeds = (double *) malloc (num_csts * sizeof (double));
-	m_work_buffer = (double *) malloc (num_csts * sizeof (double));
+	m_cst_speeds.clear();
+	m_cst_speeds.reserve(num_csts);
+	m_work_buffer = (double *) malloc (num_csts * sizeof (double)); // FIXME: this data is never freed
 
 	/* Load constituent speeds */
 	for (a=0; a<num_csts; a++) {
 		read_next_line (fp, linrec, 0);
-		sscanf (linrec, "%s %lf", junk, &(m_cst_speeds[a]));
-		m_cst_speeds[a] *= M_PI / 648000; /* Convert to radians per second */
+		double value = 0.0;
+		sscanf(linrec, "%s %lf", junk, &value);
+		m_cst_speeds.push_back(value * M_PI / 648000); /* Convert to radians per second */
 	}
 
 	/* Get first year for nodes and epochs */
@@ -609,11 +610,6 @@ int TCDS_Ascii_Harmonic::slackcmp (char *a, char *b)
 	return 0;
 }
 
-void TCDS_Ascii_Harmonic::free_cst()
-{
-	free(m_cst_speeds);
-	m_cst_speeds = NULL;
-}
 void TCDS_Ascii_Harmonic::free_nodes()
 {
 	int a;
@@ -641,6 +637,5 @@ void TCDS_Ascii_Harmonic::free_data ()
 {
 	free_nodes();
 	free_epochs();
-	free_cst();
 }
 

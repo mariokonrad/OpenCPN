@@ -23,13 +23,13 @@
 
 #include "TCWin.h"
 #include "timers.h"
-#include "ocpn_types.h"
 #include "RolloverWin.h"
 #include "chcanv.h"
 #include "tide_time.h"
 #include "tcmgr.h"
 #include "dychart.h"
 #include "cutil.h"
+#include "ColorScheme.h"
 #include "MicrosoftCompatibility.h"
 
 extern ColorScheme global_color_scheme;

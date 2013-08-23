@@ -25,7 +25,7 @@
 #define __GOTOPOSITIONDIALOG_H__
 
 #include <wx/dialog.h>
-#include "ocpn_types.h"
+#include "ColorScheme.h"
 
 #define ID_GOTOPOS 8100
 

@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "OCPN_AlertDialog.h"
-#include "ocpn_types.h"
+#include "ColorScheme.h"
 
 extern ColorScheme global_color_scheme;
 extern bool g_bopengl;

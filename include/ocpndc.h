@@ -30,6 +30,7 @@
 #include <wx/pen.h>
 #include <wx/brush.h>
 #include <wx/font.h>
+#include <wx/colour.h>
 
 #ifndef DECL_EXP
 #ifdef __WXMSW__

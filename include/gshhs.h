@@ -39,8 +39,8 @@
 
 #include <wx/geometry.h>
 
-#include "ocpn_types.h"
 #include "ocpndc.h"
+#include "ColorScheme.h"
 
 #ifdef __WXMSW__
 #pragma warning(disable: 4251)   // relates to std::string fpath

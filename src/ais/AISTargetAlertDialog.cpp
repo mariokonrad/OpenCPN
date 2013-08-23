@@ -27,7 +27,6 @@
 #include "AIS_Decoder.h"
 #include "AIS_Target_Data.h"
 #include "FontMgr.h"
-#include "ocpn_types.h"
 
 extern bool g_bopengl;
 extern AISTargetAlertDialog *g_pais_alert_dialog_active;

@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "ToolBarSimple.h"
-#include "ocpn_types.h"
 #include "navutil.h"
 #include "StyleManager.h"
 #include "Style.h"

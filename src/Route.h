@@ -28,7 +28,6 @@
 #include <wx/list.h>
 
 #include "RoutePoint.h"
-#include "ocpn_types.h"
 #include "BoundingBox.h"
 
 #define STYLE_UNDEFINED -1

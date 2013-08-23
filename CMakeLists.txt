@@ -415,7 +415,6 @@ SET(HDRS
 		${HDR_GPX}
 		${HDR_PUGIXML}
 		${HDR_WXJSON}
-		include/ocpn_types.h
 		include/ocpndc.h
 		include/chart1.h
 		src/App.h
@@ -434,6 +433,10 @@ SET(HDRS
 		src/chart/ChartGEO.h
 		src/chart/ChartKAP.h
 		src/chart/ChartStack.h
+		src/chart/ChartType.h
+		src/chart/ChartFamily.h
+		src/chart/S57Sector.h
+		src/ColorScheme.h
 		include/chartimg.h
 		include/chcanv.h
 		src/timers.h

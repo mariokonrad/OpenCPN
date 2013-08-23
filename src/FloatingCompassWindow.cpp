@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "FloatingCompassWindow.h"
-#include "ocpn_types.h"
 #include "chcanv.h"
 #include "StyleManager.h"
 #include "Style.h"

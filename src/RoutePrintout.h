@@ -32,7 +32,6 @@
 	#include <wx/msw/private.h>
 #endif
 
-#include "ocpn_types.h"
 #include "navutil.h"
 #include "PrintTable.h"
 #include "MyPrintout.h"

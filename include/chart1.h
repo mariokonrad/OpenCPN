@@ -36,10 +36,12 @@
 #include "wx/msw/private.h"
 #endif
 
-#include "ocpn_types.h"
 #include "nmea0183.h"
 #include "ChartDirInfo.h"
 #include "NMEA_Msg_Container.h"
+#include "chart/ChartType.h"
+#include "chart/ChartFamily.h"
+#include "ColorScheme.h"
 
 WX_DEFINE_ARRAY_INT(int, ArrayOfInts);
 
@@ -184,7 +186,11 @@ class MyFrame: public wxFrame
 		void DoStackDown(void);
 
 		void MouseEvent(wxMouseEvent& event);
-		void SelectChartFromStack(int index,  bool bDir = false,  ChartTypeEnum New_Type = CHART_TYPE_DONTCARE, ChartFamilyEnum New_Family = CHART_FAMILY_DONTCARE);
+		void SelectChartFromStack(
+				int index,
+				bool bDir = false,
+				ChartTypeEnum New_Type = CHART_TYPE_DONTCARE,
+				ChartFamilyEnum New_Family = CHART_FAMILY_DONTCARE);
 		void SelectdbChart(int dbindex);
 		void SelectQuiltRefChart(int selected_index);
 		void SelectQuiltRefdbChart(int db_index);

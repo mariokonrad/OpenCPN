@@ -25,8 +25,7 @@
 #define __AISTARGETQUERYDIALOG_H__
 
 #include <wx/dialog.h>
-
-#include "ocpn_types.h"
+#include "ColorScheme.h"
 
 class wxHtmlWindow;
 class wxBoxSizer;

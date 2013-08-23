@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "Kml.h"
-#include "ocpn_types.h"
 #include "KmlFormatDialog.h"
 #include "navutil.h"
 #include "Track.h"

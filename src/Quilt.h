@@ -24,7 +24,6 @@
 #ifndef __QUIT_H__
 #define __QUIT_H__
 
-#include "ocpn_types.h"
 #include "chart1.h"
 #include "OCPNRegion.h"
 #include "QuiltPatch.h"

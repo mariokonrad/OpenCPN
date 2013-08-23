@@ -27,6 +27,7 @@
 #include <wx/dialog.h>
 
 #include "Route.h"
+#include "ColorScheme.h"
 
 #define ID_ROUTEPRINTSELECTION 9000
 #define ID_ROUTEPRINT_SELECTION_OK 9001

@@ -26,7 +26,7 @@
 
 #include <wx/bitmap.h>
 #include <wx/string.h>
-#include "ocpn_types.h"
+#include "ColorScheme.h"
 
 namespace ocpnStyle {
 

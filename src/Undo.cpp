@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "Undo.h"
-#include "ocpn_types.h"
 #include "navutil.h"
 #include "Routeman.h"
 #include "WayPointman.h"

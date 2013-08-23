@@ -27,7 +27,9 @@
 #define _CHARTBASE_H_
 
 #include "dychart.h"
-#include "ocpn_types.h"
+#include "chart/ChartType.h"
+#include "chart/ChartFamily.h"
+#include "ColorScheme.h"
 
 #include <wx/glcanvas.h>
 

@@ -21,52 +21,21 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPNTYPES_H__
-#define __OCPNTYPES_H__
+#ifndef __CHART__S57SECTOR__H__
+#define __CHART__S57SECTOR__H__
 
-#include <wx/geometry.h>
 #include <wx/colour.h>
+#include <wx/geometry.h>
 
-// ChartType constants
-typedef enum ChartTypeEnum
+struct s57Sector_t
 {
-      CHART_TYPE_UNKNOWN = 0,
-      CHART_TYPE_DUMMY,
-      CHART_TYPE_DONTCARE,
-      CHART_TYPE_KAP,
-      CHART_TYPE_GEO,
-      CHART_TYPE_S57,
-      CHART_TYPE_CM93,
-      CHART_TYPE_CM93COMP,
-      CHART_TYPE_PLUGIN
-} _ChartTypeEnum;
-
-// ChartFamily constants
-typedef enum ChartFamilyEnum
-{
-      CHART_FAMILY_UNKNOWN = 0,
-      CHART_FAMILY_RASTER,
-      CHART_FAMILY_VECTOR,
-      CHART_FAMILY_DONTCARE
-} _ChartFamilyEnum;
-
-typedef enum ColorScheme
-{
-      GLOBAL_COLOR_SCHEME_RGB,
-      GLOBAL_COLOR_SCHEME_DAY,
-      GLOBAL_COLOR_SCHEME_DUSK,
-      GLOBAL_COLOR_SCHEME_NIGHT,
-      N_COLOR_SCHEMES
-} _ColorScheme;
-
-typedef struct
-{
-    wxPoint2DDouble pos;
-    double sector1, sector2;
-    double range;
-    wxColor color;
-    bool iswhite;
-    bool isleading;
-} s57Sector_t;
+	wxPoint2DDouble pos;
+	double sector1;
+	double sector2;
+	double range;
+	wxColor color;
+	bool iswhite;
+	bool isleading;
+};
 
 #endif

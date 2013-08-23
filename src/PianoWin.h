@@ -26,7 +26,6 @@
 
 #include <wx/window.h>
 
-#include "ocpn_types.h"
 #include "chart1.h"
 
 WX_DECLARE_OBJARRAY(wxRegion, RegionArray);

@@ -25,7 +25,6 @@
 #define __GLCHARTCANVAS_H__
 
 #include <wx/glcanvas.h>
-#include "ocpn_types.h"
 #include "OCPNRegion.h"
 #include "ViewPort.h"
 

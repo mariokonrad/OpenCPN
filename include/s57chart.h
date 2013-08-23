@@ -41,11 +41,13 @@
 #include "S57Light.h"
 #include "s52s57.h"
 #include "chcanv.h"
+#include "chart/S57Sector.h"
 
 // ----------------------------------------------------------------------------
 // S57 Utility Prototypes
 // ----------------------------------------------------------------------------
 extern "C" bool s57_GetChartExtent(const wxString& FullPath, Extent *pext);
+
 
 void s57_DrawExtendedLightSectors( ocpnDC& temp_dc, ViewPort& VPoint, std::vector<s57Sector_t>& sectorlegs );
 bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& VPoint, std::vector<s57Sector_t>& sectorlegs );

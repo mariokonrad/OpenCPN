@@ -415,6 +415,9 @@ SET(HDRS
 		${HDR_GPX}
 		${HDR_PUGIXML}
 		${HDR_WXJSON}
+		src/GUI.h
+		src/OCPN.h
+		src/OCPN_GUI.h
 		include/ocpndc.h
 		include/chart1.h
 		src/App.h
@@ -573,6 +576,8 @@ SET(SRCS
 		${SRC_GPX}
 		${SRC_PUGIXML}
 		${SRC_WXJSON}
+		src/OCPN.cpp
+		src/OCPN_GUI.cpp
 		src/chart1.cpp
 		src/MessageBox.cpp
 		src/TimedPopupWin.cpp

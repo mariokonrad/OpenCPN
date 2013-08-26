@@ -21,33 +21,41 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __APP__H__
-#define __APP__H__
+#include "OCPN.h"
+#include "OCPN_GUI.h"
 
-#include <wx/app.h>
+OCPN * OCPN::instance = NULL;
 
-class wxCmdLineParser;
-class wxActivateEvent;
-class wxSingleInstanceChecker;
+OCPN::OCPN()
+	: gui_instance(NULL)
+{}
 
-class OCPN_GUI;
+OCPN::OCPN(const OCPN &)
+{}
 
-class App : public wxApp
+OCPN::~OCPN()
+{}
+
+OCPN & OCPN::operator=(const OCPN &)
 {
-		DECLARE_EVENT_TABLE()
+	return *this;
+}
 
-	public:
-		bool OnInit();
-		int OnExit();
-		void OnInitCmdLine(wxCmdLineParser & parser);
-		bool OnCmdLineParsed(wxCmdLineParser & parser);
-		void OnActivateApp(wxActivateEvent & event);
-		void TrackOff(void);
+OCPN & OCPN::get()
+{
+	if (!instance) {
+		instance = new OCPN;
+	}
+	return *instance;
+}
 
-		wxSingleInstanceChecker * m_checker;
+void OCPN::inject_gui(GUI * gui)
+{
+	gui_instance = gui;
+}
 
-	private:
-		OCPN_GUI * gui_instance;
-};
+GUI & OCPN::gui()
+{
+	return *gui_instance;
+}
 
-#endif

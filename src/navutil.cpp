@@ -69,6 +69,8 @@
 #include "Layer.h"
 #include "NavObjectChanges.h"
 #include "NMEALogWindow.h"
+#include "OCPN.h"
+#include "GUI.h"
 
 #ifdef USE_S57
 	#include "s52plib.h"
@@ -170,8 +172,6 @@ extern bool             g_bShowMoored;
 extern double           g_ShowMoored_Kts;
 extern bool             g_bAIS_CPA_Alert;
 extern bool             g_bAIS_CPA_Alert_Audio;
-extern int              g_ais_alert_dialog_x, g_ais_alert_dialog_y;
-extern int              g_ais_alert_dialog_sx, g_ais_alert_dialog_sy;
 extern int              g_ais_query_dialog_x, g_ais_query_dialog_y;
 extern wxString         g_sAIS_Alert_Sound_File;
 extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
@@ -279,10 +279,6 @@ extern bool             g_bQuiltStart;
 
 extern int              g_SkewCompUpdatePeriod;
 
-extern int              g_toolbar_x;
-extern int              g_toolbar_y;
-extern long             g_toolbar_orient;
-
 extern int              g_GPU_MemSize;
 
 extern int              g_lastClientRectx;
@@ -370,22 +366,52 @@ void MyConfig::CreateRotatingNavObjBackup()
             break;
 }
 
-int MyConfig::LoadMyConfig( int iteration )
+void MyConfig::load_toolbar()
 {
+	int x = 0;
+	int y = 0;
+	long orientation;
 
+    Read(_T("ToolbarX"), &x, 0);
+    Read(_T("ToolbarY"), &y, 0);
+    Read(_T("ToolbarOrient"), &orientation, wxTB_HORIZONTAL);
+
+	OCPN::get().gui().set_toolbar_position(wxPoint(x, y));
+	OCPN::get().gui().set_toolbar_orientation(orientation);
+}
+
+void MyConfig::load_ais_alert_dialog()
+{
+	long size_x = 200;
+	long size_y = 200;
+	long pos_x = 0;
+	long pos_y = 0;
+
+    Read(_T("AlertDialogSizeX"), &size_x);
+    Read(_T("AlertDialogSizeY"), &size_y);
+    Read(_T("AlertDialogPosX"), &pos_x);
+    Read(_T("AlertDialogPosY"), &pos_y);
+
+	OCPN::get().gui().set_ais_alert_dialog_position(wxPoint(pos_x, pos_y));
+	OCPN::get().gui().set_ais_alert_dialog_size(wxSize(size_x, size_y));
+}
+
+int MyConfig::LoadMyConfig(int iteration)
+{
     int read_int;
     wxString val;
 
-    int display_width, display_height;
-    wxDisplaySize( &display_width, &display_height );
+    int display_width;
+    int display_height;
+    wxDisplaySize(&display_width, &display_height);
 
 //    Global options and settings
     SetPath( _T ( "/Settings" ) );
 
     // Some undocumented values
     if( iteration == 0 ) {
-        Read( _T ( "ConfigVersionString" ), &g_config_version_string, _T("") );
-        Read( _T ( "NavMessageShown" ), &n_NavMessageShown, 0 );
+        Read(_T("ConfigVersionString"), &g_config_version_string, _T(""));
+        Read(_T("NavMessageShown"), &n_NavMessageShown, 0);
     }
 
     wxString uiStyle;
@@ -460,9 +486,7 @@ int MyConfig::LoadMyConfig( int iteration )
 
     Read( _T ( "SmoothPanZoom" ), &g_bsmoothpanzoom, 0 );
 
-    Read( _T ( "ToolbarX"), &g_toolbar_x, 0 );
-    Read( _T ( "ToolbarY" ), &g_toolbar_y, 0 );
-    Read( _T ( "ToolbarOrient" ), &g_toolbar_orient, wxTB_HORIZONTAL );
+	load_toolbar();
     Read( _T ( "ToolbarConfig" ), &g_toolbarConfig );
 
     Read( _T ( "AnchorWatch1GUID" ), &g_AW1GUID, _T("") );
@@ -626,18 +650,10 @@ int MyConfig::LoadMyConfig( int iteration )
     Read( _T ( "AlertAckTimeoutMinutes" ), &s );
     s.ToDouble( &g_AckTimeout_Mins );
 
-    g_ais_alert_dialog_sx = Read( _T ( "AlertDialogSizeX" ), 200L );
-    g_ais_alert_dialog_sy = Read( _T ( "AlertDialogSizeY" ), 200L );
-    g_ais_alert_dialog_x = Read( _T ( "AlertDialogPosX" ), 200L );
-    g_ais_alert_dialog_y = Read( _T ( "AlertDialogPosY" ), 200L );
-    g_ais_query_dialog_x = Read( _T ( "QueryDialogPosX" ), 200L );
-    g_ais_query_dialog_y = Read( _T ( "QueryDialogPosY" ), 200L );
+	load_ais_alert_dialog();
 
-    if( ( g_ais_alert_dialog_x < 0 ) || ( g_ais_alert_dialog_x > display_width ) ) g_ais_alert_dialog_x =
-            5;
-    if( ( g_ais_alert_dialog_y < 0 ) || ( g_ais_alert_dialog_y > display_height ) ) g_ais_alert_dialog_y =
-            5;
-
+    g_ais_query_dialog_x  = Read(_T("QueryDialogPosX"), 200L);
+    g_ais_query_dialog_y  = Read(_T("QueryDialogPosY"), 200L);
     if( ( g_ais_query_dialog_x < 0 ) || ( g_ais_query_dialog_x > display_width ) ) g_ais_query_dialog_x =
             5;
     if( ( g_ais_query_dialog_y < 0 ) || ( g_ais_query_dialog_y > display_height ) ) g_ais_query_dialog_y =
@@ -725,7 +741,8 @@ int MyConfig::LoadMyConfig( int iteration )
     wxString valpres;
     SetPath( _T ( "/Directories" ) );
     Read( strpres, &valpres );              // Get the File name
-    if( iteration == 0 ) g_UserPresLibData = valpres;
+    if( iteration == 0 )
+		g_UserPresLibData = valpres;
 
     /*
      wxString strd ( _T ( "S57DataLocation" ) );
@@ -748,7 +765,8 @@ int MyConfig::LoadMyConfig( int iteration )
     wxString vals;
     Read( strs, &vals );              // Get the Directory name
 
-    if( iteration == 0 ) g_SENCPrefix = vals;
+    if( iteration == 0 )
+		g_SENCPrefix = vals;
 
 #endif
 
@@ -1529,6 +1547,25 @@ void MyConfig::LoadConfigGroups( ChartGroupArray *pGroupArray )
 
 }
 
+void MyConfig::write_toolbar()
+{
+	const GUI::Toolbar & config = OCPN::get().gui().get_toolbar();
+
+	Write(_T("ToolbarX"), config.position.x);
+	Write(_T("ToolbarY"), config.position.y);
+	Write(_T("ToolbarOrient"), config.orientation);
+}
+
+void MyConfig::write_ais_alert_dialog()
+{
+	const GUI::AISAlertDialog & config = OCPN::get().gui().get_ais_alert_dialog();
+
+	Write(_T("AlertDialogSizeX"), config.size.GetWidth());
+	Write(_T("AlertDialogSizeY"), config.size.GetHeight());
+	Write(_T("AlertDialogPosX"),  config.position.x);
+	Write(_T("AlertDialogPosY"),  config.position.y);
+}
+
 void MyConfig::UpdateSettings()
 {
 //    Global options and settings
@@ -1610,10 +1647,8 @@ void MyConfig::UpdateSettings()
     Write( _T ( "AnchorWatch1GUID" ), g_AW1GUID );
     Write( _T ( "AnchorWatch2GUID" ), g_AW2GUID );
 
-    Write( _T ( "ToolbarX" ), g_toolbar_x );
-    Write( _T ( "ToolbarY" ), g_toolbar_y );
-    Write( _T ( "ToolbarOrient" ), g_toolbar_orient );
-    Write( _T ( "ToolbarConfig" ), g_toolbarConfig );
+	write_toolbar();
+    Write(_T("ToolbarConfig"), g_toolbarConfig);
 
     Write( _T ( "GPSIdent" ), g_GPS_Ident );
     Write( _T ( "UseGarminHostUpload" ), g_bGarminHostUpload );
@@ -1723,10 +1758,8 @@ void MyConfig::UpdateSettings()
     Write( _T ( "bWplIsAprsPositionReport" ), g_bWplIsAprsPosition );
     Write( _T ( "AISCOGPredictorWidth" ), g_ais_cog_predictor_width );
 
-    Write( _T ( "AlertDialogSizeX" ), g_ais_alert_dialog_sx );
-    Write( _T ( "AlertDialogSizeY" ), g_ais_alert_dialog_sy );
-    Write( _T ( "AlertDialogPosX" ), g_ais_alert_dialog_x );
-    Write( _T ( "AlertDialogPosY" ), g_ais_alert_dialog_y );
+	write_ais_alert_dialog();
+
     Write( _T ( "QueryDialogPosX" ), g_ais_query_dialog_x );
     Write( _T ( "QueryDialogPosY" ), g_ais_query_dialog_y );
     Write( _T ( "AISTargetListPerspective" ), g_AisTargetList_perspective );

@@ -21,33 +21,30 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __APP__H__
-#define __APP__H__
+#ifndef __OCPN_GUI__H__
+#define __OCPN_GUI__H__
 
-#include <wx/app.h>
+#include <GUI.h>
 
-class wxCmdLineParser;
-class wxActivateEvent;
-class wxSingleInstanceChecker;
-
-class OCPN_GUI;
-
-class App : public wxApp
+class OCPN_GUI : public GUI
 {
-		DECLARE_EVENT_TABLE()
-
-	public:
-		bool OnInit();
-		int OnExit();
-		void OnInitCmdLine(wxCmdLineParser & parser);
-		bool OnCmdLineParsed(wxCmdLineParser & parser);
-		void OnActivateApp(wxActivateEvent & event);
-		void TrackOff(void);
-
-		wxSingleInstanceChecker * m_checker;
-
 	private:
-		OCPN_GUI * gui_instance;
+		Toolbar toolbar;
+		AISAlertDialog ais_alert_dialog;
+
+	public: // toolbar
+		virtual const Toolbar & get_toolbar() const;
+		virtual void set_toolbar_position(const wxPoint &);
+		virtual void set_toolbar_orientation(long);
+		void ensure_toolbar_position_range(wxPoint, wxPoint);
+
+	public: // ais alert dialog
+		virtual const AISAlertDialog & get_ais_alert_dialog() const;
+		virtual void set_ais_alert_dialog_position(const wxPoint &);
+		virtual void set_ais_alert_dialog_size(const wxSize &);
+		void ensure_ais_alert_dialog_position_range(wxPoint, wxPoint);
+		void ensure_ais_alert_dialog_position_range(wxPoint, wxSize);
 };
 
 #endif
+

@@ -105,6 +105,8 @@
 #include "MicrosoftCompatibility.h"
 #include "chart/ChartDummy.h"
 #include "plugin/OCPN_MsgEvent.h"
+#include "OCPN.h"
+#include "GUI.h"
 
 #ifdef __WXOSX__
 	#include "macutils.h"
@@ -318,10 +320,6 @@ bool g_bAIS_CPA_Alert;
 bool g_bAIS_CPA_Alert_Audio;
 AISTargetAlertDialog *g_pais_alert_dialog_active;
 AISTargetQueryDialog *g_pais_query_dialog_active;
-int g_ais_alert_dialog_x;
-int g_ais_alert_dialog_y;
-int g_ais_alert_dialog_sx;
-int g_ais_alert_dialog_sy;
 int g_ais_query_dialog_x;
 int g_ais_query_dialog_y;
 int g_S57_dialog_sx;
@@ -496,9 +494,6 @@ wxMenu *g_FloatingToolbarConfigMenu;
 wxString g_toolbarConfig = _T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 OCPNFloatingToolbarDialog *g_FloatingToolbarDialog;
 FloatingCompassWindow * g_FloatingCompassDialog;
-int g_toolbar_x;
-int g_toolbar_y;
-long g_toolbar_orient;
 int g_GPU_MemSize;
 bool g_b_useStencil;
 
@@ -1424,12 +1419,10 @@ void MyFrame::OnCloseWindow( wxCloseEvent& event )
         g_restore_dbindex = pCurrentStack->GetCurrentEntrydbIndex();
     }
 
-    if( g_FloatingToolbarDialog ) {
+    if (g_FloatingToolbarDialog) {
         wxPoint tbp = g_FloatingToolbarDialog->GetPosition();
-        wxPoint tbp_incanvas = cc1->ScreenToClient( tbp );
-        g_toolbar_x = tbp_incanvas.x;
-        g_toolbar_y = tbp_incanvas.y;
-        g_toolbar_orient = g_FloatingToolbarDialog->GetOrient();
+		OCPN::get().gui().set_toolbar_position(cc1->ScreenToClient(tbp));
+		OCPN::get().gui().set_toolbar_orientation(g_FloatingToolbarDialog->GetOrient());
     }
 
     pConfig->UpdateSettings();

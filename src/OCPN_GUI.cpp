@@ -21,33 +21,57 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __APP__H__
-#define __APP__H__
+#include "OCPN_GUI.h"
+#include <algorithm>
 
-#include <wx/app.h>
-
-class wxCmdLineParser;
-class wxActivateEvent;
-class wxSingleInstanceChecker;
-
-class OCPN_GUI;
-
-class App : public wxApp
+const GUI::Toolbar & OCPN_GUI::get_toolbar() const
 {
-		DECLARE_EVENT_TABLE()
+	return toolbar;
+}
 
-	public:
-		bool OnInit();
-		int OnExit();
-		void OnInitCmdLine(wxCmdLineParser & parser);
-		bool OnCmdLineParsed(wxCmdLineParser & parser);
-		void OnActivateApp(wxActivateEvent & event);
-		void TrackOff(void);
+void OCPN_GUI::set_toolbar_position(const wxPoint & position)
+{
+	toolbar.position = position;
+}
 
-		wxSingleInstanceChecker * m_checker;
+void OCPN_GUI::set_toolbar_orientation(long orientation)
+{
+	toolbar.orientation = orientation;
+}
 
-	private:
-		OCPN_GUI * gui_instance;
-};
+void OCPN_GUI::ensure_toolbar_position_range(wxPoint p0, wxPoint p1)
+{
+	toolbar.position.x = std::max(toolbar.position.x, p0.x);
+	toolbar.position.y = std::max(toolbar.position.y, p0.y);
+	toolbar.position.x = std::min(toolbar.position.x, p1.x);
+	toolbar.position.y = std::min(toolbar.position.y, p1.y);
+}
 
-#endif
+const GUI::AISAlertDialog & OCPN_GUI::get_ais_alert_dialog() const
+{
+	return ais_alert_dialog;
+}
+
+void OCPN_GUI::set_ais_alert_dialog_position(const wxPoint & position)
+{
+	ais_alert_dialog.position = position;
+}
+
+void OCPN_GUI::set_ais_alert_dialog_size(const wxSize & size)
+{
+	ais_alert_dialog.size = size;
+}
+
+void OCPN_GUI::ensure_ais_alert_dialog_position_range(wxPoint p0, wxPoint p1)
+{
+	ais_alert_dialog.position.x = std::max(ais_alert_dialog.position.x, p0.x);
+	ais_alert_dialog.position.y = std::max(ais_alert_dialog.position.y, p0.y);
+	ais_alert_dialog.position.x = std::min(ais_alert_dialog.position.x, p1.x);
+	ais_alert_dialog.position.y = std::min(ais_alert_dialog.position.y, p1.y);
+}
+
+void OCPN_GUI::ensure_ais_alert_dialog_position_range(wxPoint p0, wxSize p1)
+{
+	ensure_ais_alert_dialog_position_range(p0, wxPoint(0, 0) + p1);
+}
+

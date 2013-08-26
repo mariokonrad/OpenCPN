@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include "App.h"
+#include "OCPN.h"
 #include "dychart.h"
 #include "Select.h"
 #include "OCPNFloatingToolbarDialog.h"
@@ -47,6 +48,7 @@
 #include "MicrosoftCompatibility.h"
 #include "chart/ChartDummy.h"
 #include "plugin/PlugInManager.h"
+#include "OCPN_GUI.h"
 
 #include <wx/cmdline.h>
 #include <wx/datetime.h>
@@ -96,7 +98,7 @@ extern ConsoleCanvas *console;
 extern double initial_scale_ppm;
 extern double vLat;
 extern double vLon;
-extern ChartCanvas *cc1;
+extern ChartCanvas * cc1;
 extern wxString str_version_start;
 extern wxString str_version_major;
 extern wxString str_version_minor;
@@ -116,8 +118,8 @@ extern wxDateTime g_start_time;
 extern wxDateTime g_loglast_time;
 extern OCPN_Sound bells_sound[8];
 extern OCPN_Sound g_anchorwatch_sound;
-extern RoutePoint *pAnchorWatchPoint1;
-extern RoutePoint *pAnchorWatchPoint2;
+extern RoutePoint * pAnchorWatchPoint1;
+extern RoutePoint * pAnchorWatchPoint2;
 extern double AnchorPointMinDist;
 extern bool AnchorAlertOn1;
 extern bool AnchorAlertOn2;
@@ -125,7 +127,7 @@ extern bool g_bCruising;
 extern ChartDummy *pDummyChart;
 extern ToolBarSimple* g_toolbar;
 extern ocpnStyle::StyleManager * g_StyleManager;
-extern wxPrintData *g_printData;
+extern wxPrintData * g_printData;
 extern wxPageSetupData* g_pageSetupData;
 extern int portaudio_initialized;
 extern int g_sticky_chart;
@@ -134,8 +136,8 @@ extern int n_NavMessageShown;
 extern wxString g_config_version_string;
 extern int g_nbrightness;
 extern bool bDBUpdateInProgress;
-extern ThumbWin *pthumbwin;
-extern TCMgr *ptcmgr;
+extern ThumbWin * pthumbwin;
+extern TCMgr * ptcmgr;
 extern bool bDrawCurrentValues;
 extern wxString g_PrivateDataDir;
 extern wxString g_SData_Locn;
@@ -159,12 +161,6 @@ extern Multiplexer *g_pMUX;
 extern AIS_Decoder *g_pAIS;
 extern bool g_bAIS_CPA_Alert;
 extern bool g_bAIS_CPA_Alert_Audio;
-extern AISTargetAlertDialog *g_pais_alert_dialog_active;
-extern AISTargetQueryDialog *g_pais_query_dialog_active;
-extern int g_ais_alert_dialog_x;
-extern int g_ais_alert_dialog_y;
-extern int g_ais_alert_dialog_sx;
-extern int g_ais_alert_dialog_sy;
 extern int g_ais_query_dialog_x;
 extern int g_ais_query_dialog_y;
 extern int g_S57_dialog_sx;
@@ -178,36 +174,12 @@ extern bool g_bAutoAnchorMark;
 extern wxRect g_blink_rect;
 extern double g_PlanSpeed;
 extern wxDateTime g_StartTime;
-extern double g_ownship_predictor_minutes;
-extern int g_current_arrow_scale;
-extern Multiplexer *g_pMUX;
-extern AIS_Decoder *g_pAIS;
-extern bool g_bAIS_CPA_Alert;
-extern bool g_bAIS_CPA_Alert_Audio;
-extern AISTargetAlertDialog *g_pais_alert_dialog_active;
-extern AISTargetQueryDialog *g_pais_query_dialog_active;
-extern int g_ais_alert_dialog_x;
-extern int g_ais_alert_dialog_y;
-extern int g_ais_alert_dialog_sx;
-extern int g_ais_alert_dialog_sy;
-extern int g_ais_query_dialog_x;
-extern int g_ais_query_dialog_y;
-extern int g_S57_dialog_sx;
-extern int g_S57_dialog_sy;
-extern int g_nframewin_x;
-extern int g_nframewin_y;
-extern int g_nframewin_posx;
-extern int g_nframewin_posy;
-extern bool g_bframemax;
-extern bool g_bAutoAnchorMark;
-extern wxRect g_blink_rect;
-extern double g_PlanSpeed;
-extern wxDateTime g_StartTime;
+extern AISTargetAlertDialog * g_pais_alert_dialog_active;
+extern AISTargetQueryDialog * g_pais_query_dialog_active;
 extern int g_StartTimeTZ;
-extern IDX_entry *gpIDX;
+extern IDX_entry * gpIDX;
 extern int gpIDXn;
-extern long gStart_LMT_Offset;
-extern wxArrayString *pMessageOnceArray;
+extern wxArrayString * pMessageOnceArray;
 extern FILE *s_fpdebug;
 extern bool bAutoOpen;
 extern bool bFirstAuto;
@@ -368,10 +340,6 @@ extern wxLog *logger;
 extern bool g_bTrackCarryOver;
 extern RoutePoint *pAnchorWatchPoint1;
 extern RoutePoint *pAnchorWatchPoint2;
-extern int g_nframewin_x;
-extern int g_nframewin_y;
-extern int g_nframewin_posx;
-extern int g_nframewin_posy;
 extern int g_lastClientRectx;
 extern int g_lastClientRecty;
 extern int g_lastClientRectw;
@@ -421,9 +389,6 @@ extern wxPlatformInfo * g_pPlatform;
 extern wxAuiManager * g_pauimgr;
 extern wxLocale * plocale_def_lang;
 extern MyFrame * gFrame;
-extern int g_toolbar_x;
-extern int g_toolbar_y;
-extern long g_toolbar_orient;
 
 
 IMPLEMENT_APP(App)
@@ -524,7 +489,11 @@ void App::OnActivateApp( wxActivateEvent& event )
 
 bool App::OnInit()
 {
-	if( !wxApp::OnInit() ) return false;
+	if( !wxApp::OnInit() )
+		return false;
+
+	gui_instance = new OCPN_GUI;
+	OCPN::get().inject_gui(gui_instance);
 
 	//  On Windows
 	//  We allow only one instance unless the portable option is used
@@ -965,7 +934,7 @@ bool App::OnInit()
 	//      Open/Create the Config Object (Must be after UI Style init).
 	MyConfig *pCF = new MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
 	pConfig = (MyConfig *) pCF;
-	pConfig->LoadMyConfig( 0 );
+	pConfig->LoadMyConfig(0);
 
 	//        Is this the first run after a clean install?
 	if( !n_NavMessageShown )
@@ -1221,7 +1190,7 @@ bool App::OnInit()
 	//      Reload the config data, to pick up any missing data class configuration info
 	//      e.g. s52plib, which could not be created until first config load completes
 	//      Think catch-22
-	pConfig->LoadMyConfig( 1 );
+	pConfig->LoadMyConfig(1);
 
 	//  Override some config options for initial user startup with empty config file
 	if( b_novicemode ) {
@@ -1405,14 +1374,13 @@ bool App::OnInit()
 
 	gFrame->ApplyGlobalSettings( 1, false );               // done once on init with resize
 
-	g_toolbar_x = wxMax(g_toolbar_x, 0);
-	g_toolbar_y = wxMax(g_toolbar_y, 0);
+	gui_instance->ensure_toolbar_position_range(wxPoint(0, 0), wxPoint(cw, ch));
+	gui_instance->ensure_ais_alert_dialog_position_range(wxPoint(0, 0), wxGetDisplaySize());
 
-	g_toolbar_x = wxMin(g_toolbar_x, cw);
-	g_toolbar_y = wxMin(g_toolbar_y, ch);
-
-	g_FloatingToolbarDialog = new OCPNFloatingToolbarDialog( cc1,
-			wxPoint( g_toolbar_x, g_toolbar_y ), g_toolbar_orient );
+	g_FloatingToolbarDialog = new OCPNFloatingToolbarDialog(
+		cc1,
+		gui_instance->get_toolbar().position,
+		gui_instance->get_toolbar().orientation);
 	g_FloatingToolbarDialog->LockPosition(true);
 
 	gFrame->SetAndApplyColorScheme( global_color_scheme );
@@ -1422,12 +1390,12 @@ bool App::OnInit()
 	//  It is important to have set the chartcanvas and status bar sizes before this point,
 	//  so that the pane.BestSize values are correctly captured by the AuiManager.
 
-	g_pauimgr->AddPane( cc1 );
-	g_pauimgr->GetPane( cc1 ).Name( _T("ChartCanvas") );
-	g_pauimgr->GetPane( cc1 ).Fixed();
-	g_pauimgr->GetPane( cc1 ).CaptionVisible( false );
-	g_pauimgr->GetPane( cc1 ).CenterPane();
-	g_pauimgr->GetPane( cc1 ).BestSize( cc1->GetSize() );
+	g_pauimgr->AddPane(cc1);
+	g_pauimgr->GetPane(cc1).Name( _T("ChartCanvas") );
+	g_pauimgr->GetPane(cc1).Fixed();
+	g_pauimgr->GetPane(cc1).CaptionVisible( false );
+	g_pauimgr->GetPane(cc1).CenterPane();
+	g_pauimgr->GetPane(cc1).BestSize( cc1->GetSize() );
 
 	//      Load and initialize any PlugIns
 	g_pi_manager = new PlugInManager( gFrame );

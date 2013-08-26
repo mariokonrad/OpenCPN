@@ -27,15 +27,13 @@
 #include "AIS_Decoder.h"
 #include "AIS_Target_Data.h"
 #include "FontMgr.h"
+#include "OCPN.h"
+#include "GUI.h"
 
 extern bool g_bopengl;
 extern AISTargetAlertDialog *g_pais_alert_dialog_active;
 extern MyFrame *gFrame;
 extern ChartCanvas *cc1;
-extern int g_ais_alert_dialog_x;
-extern int g_ais_alert_dialog_y;
-extern int g_ais_alert_dialog_sx;
-extern int g_ais_alert_dialog_sy;
 
 IMPLEMENT_CLASS(AISTargetAlertDialog, wxDialog)
 
@@ -242,23 +240,15 @@ void AISTargetAlertDialog::OnIdJumptoClick( wxCommandEvent& event )
     }
 }
 
-void AISTargetAlertDialog::OnMove( wxMoveEvent& event )
+void AISTargetAlertDialog::OnMove(wxMoveEvent & event)
 {
-    //    Record the dialog position
-    wxPoint p = event.GetPosition();
-    g_ais_alert_dialog_x = p.x;
-    g_ais_alert_dialog_y = p.y;
-
+	OCPN::get().gui().set_ais_alert_dialog_position(event.GetPosition());
     event.Skip();
 }
 
-void AISTargetAlertDialog::OnSize( wxSizeEvent& event )
+void AISTargetAlertDialog::OnSize(wxSizeEvent & event)
 {
-    //    Record the dialog size
-    wxSize p = event.GetSize();
-    g_ais_alert_dialog_sx = p.x;
-    g_ais_alert_dialog_sy = p.y;
-
+	OCPN::get().gui().set_ais_alert_dialog_size(event.GetSize());
     event.Skip();
 }
 

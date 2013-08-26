@@ -28,6 +28,8 @@
 #include "Select.h"
 #include "georef.h"
 #include "OCPN_DataStreamEvent.h"
+#include "OCPN.h"
+#include "GUI.h"
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;
@@ -37,10 +39,6 @@ static const long long lNaN = 0xfff8000000000000;
 extern AISTargetAlertDialog *g_pais_alert_dialog_active;
 extern Select *pSelectAIS;
 extern MyFrame *gFrame;
-extern int g_ais_alert_dialog_x;
-extern int g_ais_alert_dialog_y;
-extern int g_ais_alert_dialog_sx;
-extern int g_ais_alert_dialog_sy;
 extern bool bGPSValid;
 extern bool     g_bShowAIS;
 extern bool     g_bCPAMax;
@@ -1957,9 +1955,15 @@ void AIS_Decoder::OnTimerAIS( wxTimerEvent& event )
 #endif                
             {
                 AISTargetAlertDialog *pAISAlertDialog = new AISTargetAlertDialog();
-                pAISAlertDialog->Create( palarm_target->MMSI, m_parent_frame, this, b_jumpto, -1,
-                    _("AIS Alert"), wxPoint( g_ais_alert_dialog_x, g_ais_alert_dialog_y ),
-                    wxSize( g_ais_alert_dialog_sx, g_ais_alert_dialog_sy ) );
+                pAISAlertDialog->Create(
+					palarm_target->MMSI,
+					m_parent_frame,
+					this,
+					b_jumpto,
+					-1,
+					_("AIS Alert"),
+					OCPN::get().gui().get_ais_alert_dialog().position,
+					OCPN::get().gui().get_ais_alert_dialog().size);
 
                 g_pais_alert_dialog_active = pAISAlertDialog;
                 pAISAlertDialog->Show();                     // Show modeless, so it stays on the screen

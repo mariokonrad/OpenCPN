@@ -73,8 +73,6 @@ extern bool             g_bAIS_CPA_Alert;
 extern bool             g_bAIS_CPA_Alert_Audio;
 extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
 
-extern int              g_ais_alert_dialog_x, g_ais_alert_dialog_y;
-extern int              g_ais_alert_dialog_sx, g_ais_alert_dialog_sy;
 extern wxString         g_sAIS_Alert_Sound_File;
 
 extern AISTargetListDialog    *g_pAISTargetList;

@@ -31,7 +31,7 @@
 
 static const char *tz_names[][2] = {
 
-	#include "tzdata.h" // FIXME: include inside array
+	#include "tide/tzdata.h" // FIXME: include inside array
 
 	/* Terminator */
 	{NULL, NULL}

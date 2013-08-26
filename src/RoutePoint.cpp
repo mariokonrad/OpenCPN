@@ -160,7 +160,6 @@ RoutePoint::RoutePoint(
 	m_NameLocationOffsetX = -10;
 	m_NameLocationOffsetY = 8;
 	m_pMarkFont = NULL;
-	m_btemp = false;
 
 	m_HyperlinkList = new HyperlinkList;
 

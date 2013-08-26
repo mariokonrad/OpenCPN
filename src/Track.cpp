@@ -87,6 +87,11 @@ Track::~Track()
 	Stop();
 }
 
+bool Track::IsRunning()
+{
+	return m_bRunning;
+}
+
 void Track::SetPrecision( int prec )
 {
 	m_nPrecision = prec;

@@ -320,7 +320,6 @@ TrackPropDlg::TrackPropDlg(
 			wxCommandEventHandler( TrackPropDlg::OnEditLinkToggle ), NULL, this );
 
 	m_pLinkProp = new LinkPropDialog(this);
-	m_pMyLinkList = NULL;
 }
 
 TrackPropDlg::~TrackPropDlg()
@@ -351,32 +350,10 @@ TrackPropDlg::~TrackPropDlg()
 	delete m_menuLink;
 }
 
-void TrackPropDlg::SetTrackAndUpdate( Route *pR )
+void TrackPropDlg::SetTrackAndUpdate(Route * pR)
 {
 	m_pRoute = pR;
-
 	m_lcPoints->DeleteAllItems();
-
-	if( m_pMyLinkList )
-		delete m_pMyLinkList;
-	m_pMyLinkList = new HyperlinkList();
-	int NbrOfLinks = m_pRoute->m_HyperlinkList->GetCount();
-	if( NbrOfLinks > 0 ) {
-		wxHyperlinkListNode *linknode = m_pRoute->m_HyperlinkList->GetFirst();
-		while( linknode ) {
-			Hyperlink *link = linknode->GetData();
-
-			Hyperlink* h = new Hyperlink();
-			h->DescrText = link->DescrText;
-			h->Link = link->Link;
-			h->LType = link->LType;
-
-			m_pMyLinkList->Append( h );
-
-			linknode = linknode->GetNext();
-		}
-	}
-
 	InitializeList();
 	UpdateProperties();
 }
@@ -387,8 +364,7 @@ void TrackPropDlg::InitializeList()
 		return;
 
 	m_lcPoints->m_pRoute = m_pRoute;
-
-	m_lcPoints->SetItemCount( m_pRoute->GetnPoints() );
+	m_lcPoints->SetItemCount(m_pRoute->GetnPoints());
 }
 
 bool TrackPropDlg::UpdateProperties()
@@ -772,36 +748,34 @@ void TrackPropDlg::m_hyperlinkContextMenu( wxMouseEvent &event )
 
 void TrackPropDlg::OnDeleteLink( wxCommandEvent& event )
 {
-	wxHyperlinkListNode* nodeToDelete = NULL;
+	wxHyperlinkListNode * nodeToDelete = NULL;
 	wxString findurl = m_pEditedLink->GetURL();
 	wxString findlabel = m_pEditedLink->GetLabel();
 	m_scrolledWindowLinks->DestroyChildren();
 	int NbrOfLinks = m_pRoute->m_HyperlinkList->GetCount();
 	HyperlinkList *hyperlinklist = m_pRoute->m_HyperlinkList;
-	//      int len = 0;
 	if( NbrOfLinks > 0 ) {
 		wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
-		while( linknode ) {
-			Hyperlink *link = linknode->GetData();
+		while (linknode) {
+			Hyperlink * link = linknode->GetData();
 			wxString Link = link->Link;
 			wxString Descr = link->DescrText;
-			if( Link == findurl
-					&& ( Descr == findlabel || ( Link == findlabel && Descr == wxEmptyString ) ) ) nodeToDelete =
-				linknode;
+			if (Link == findurl && (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString)))
+				nodeToDelete = linknode;
 			else {
-				wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, Descr,
-						Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
-				ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
-						wxHyperlinkEventHandler( TrackPropDlg::OnHyperLinkClick ), NULL, this );
-				ctrl->Connect( wxEVT_RIGHT_DOWN,
-						wxMouseEventHandler( TrackPropDlg::m_hyperlinkContextMenu ), NULL, this );
-
-				bSizerLinks->Add( ctrl, 0, wxALL, 5 );
+				wxHyperlinkCtrl * ctrl = new wxHyperlinkCtrl(m_scrolledWindowLinks, wxID_ANY, Descr,
+						Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
+				ctrl->Connect(wxEVT_COMMAND_HYPERLINK,
+						wxHyperlinkEventHandler(TrackPropDlg::OnHyperLinkClick), NULL, this);
+				ctrl->Connect(wxEVT_RIGHT_DOWN,
+						wxMouseEventHandler(TrackPropDlg::m_hyperlinkContextMenu), NULL, this);
+				bSizerLinks->Add(ctrl, 0, wxALL, 5);
 			}
 			linknode = linknode->GetNext();
 		}
 	}
-	if( nodeToDelete ) hyperlinklist->DeleteNode( nodeToDelete );
+	if (nodeToDelete)
+		hyperlinklist->DeleteNode(nodeToDelete);
 	m_scrolledWindowLinks->InvalidateBestSize();
 	m_scrolledWindowLinks->Layout();
 	sbSizerLinks->Layout();
@@ -812,28 +786,24 @@ void TrackPropDlg::OnEditLink( wxCommandEvent& event )
 {
 	wxString findurl = m_pEditedLink->GetURL();
 	wxString findlabel = m_pEditedLink->GetLabel();
-	m_pLinkProp->m_textCtrlLinkDescription->SetValue( findlabel );
-	m_pLinkProp->m_textCtrlLinkUrl->SetValue( findurl );
-	if( m_pLinkProp->ShowModal() == wxID_OK ) {
+	m_pLinkProp->m_textCtrlLinkDescription->SetValue(findlabel);
+	m_pLinkProp->m_textCtrlLinkUrl->SetValue(findurl);
+	if (m_pLinkProp->ShowModal() == wxID_OK) {
 		int NbrOfLinks = m_pRoute->m_HyperlinkList->GetCount();
 		HyperlinkList *hyperlinklist = m_pRoute->m_HyperlinkList;
-		//            int len = 0;
 		if( NbrOfLinks > 0 ) {
 			wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
 			while( linknode ) {
-				Hyperlink *link = linknode->GetData();
+				Hyperlink * link = linknode->GetData();
 				wxString Link = link->Link;
 				wxString Descr = link->DescrText;
-				if( Link == findurl
-						&& ( Descr == findlabel || ( Link == findlabel && Descr == wxEmptyString ) ) ) {
+				if (Link == findurl && (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
 					link->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
 					link->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
-					wxHyperlinkCtrl* h =
-						(wxHyperlinkCtrl*) m_scrolledWindowLinks->FindWindowByLabel(
-								findlabel );
-					if( h ) {
-						h->SetLabel( m_pLinkProp->m_textCtrlLinkDescription->GetValue() );
-						h->SetURL( m_pLinkProp->m_textCtrlLinkUrl->GetValue() );
+					wxHyperlinkCtrl * h = (wxHyperlinkCtrl*)m_scrolledWindowLinks->FindWindowByLabel(findlabel);
+					if (h) {
+						h->SetLabel(m_pLinkProp->m_textCtrlLinkDescription->GetValue());
+						h->SetURL(m_pLinkProp->m_textCtrlLinkUrl->GetValue());
 					}
 				}
 				linknode = linknode->GetNext();
@@ -1026,5 +996,10 @@ void TrackPropDlg::OnCancelBtnClick( wxCommandEvent& event )
 	cc1->Refresh( false );
 
 	event.Skip();
+}
+
+void TrackPropDlg::m_hyperlink1OnContextMenu(wxMouseEvent &event)
+{
+	m_hyperlink1->PopupMenu(m_menuLink, event.GetPosition());
 }
 

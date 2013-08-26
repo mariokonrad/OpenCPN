@@ -121,24 +121,24 @@ class Route : public wxObject
 		double      m_PlannedSpeed;
 		wxDateTime  m_PlannedDeparture;
 		wxString    m_TimeDisplayFormat;
-		HyperlinkList     *m_HyperlinkList;
+		HyperlinkList * m_HyperlinkList;
 
-		wxArrayString      RoutePointGUIDList;
-		RoutePointList     *pRoutePointList;
+		wxArrayString RoutePointGUIDList;
+		RoutePointList * pRoutePointList;
 
-		BoundingBox     RBBox;
-		wxRect      active_pt_rect;
-		wxString    m_Colour;
-		bool        m_btemp;
+		BoundingBox RBBox;
+		wxRect active_pt_rect;
+		wxString m_Colour;
+		bool m_btemp;
 
 	private:
-		bool        CalculateCrossesIDL();
-		int         m_nPoints;
-		int         m_nm_sequence;
-		bool        m_bVisible; // should this route be drawn?
-		bool        m_bListed;
-		double      m_ArrivalRadius;
-		bool        m_bcrosses_idl;
+		bool CalculateCrossesIDL();
+		int m_nPoints;
+		int m_nm_sequence;
+		bool m_bVisible; // should this route be drawn?
+		bool m_bListed;
+		double m_ArrivalRadius;
+		bool m_bcrosses_idl;
 };
 
 WX_DECLARE_LIST(Route, RouteList);

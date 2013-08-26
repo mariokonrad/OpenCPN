@@ -63,7 +63,6 @@
 
 class OCPNTrackListCtrl;
 class RoutePoint;
-class HyperlinkList;
 class LinkPropDialog;
 
 class TrackPropDlg : public wxDialog
@@ -85,7 +84,6 @@ class TrackPropDlg : public wxDialog
 		bool SaveChanges(void);
 		void OnHyperLinkClick(wxHyperlinkEvent &event);
 
-		HyperlinkList * m_pMyLinkList;
 		LinkPropDialog * m_pLinkProp;
 		wxHyperlinkCtrl * m_pEditedLink;
 
@@ -156,14 +154,9 @@ class TrackPropDlg : public wxDialog
 				wxWindowID id = wxID_ANY,
 				const wxString & title = _("Track Properties"),
 				const wxPoint & pos = wxDefaultPosition,
-				const wxSize& size = wxSize( 680,440 ),
+				const wxSize& size = wxSize(680, 440),
 				long style = wxCAPTION | wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxRESIZE_BORDER | wxSTAY_ON_TOP);
 		virtual ~TrackPropDlg();
-
-		void m_hyperlink1OnContextMenu(wxMouseEvent &event)
-		{
-			m_hyperlink1->PopupMenu(m_menuLink, event.GetPosition());
-		}
 
 		void SetTrackAndUpdate( Route *pR );
 		bool UpdateProperties();
@@ -171,6 +164,7 @@ class TrackPropDlg : public wxDialog
 
 		Route * m_pRoute;
 
+		void m_hyperlink1OnContextMenu(wxMouseEvent &event);
 		void m_hyperlinkContextMenu(wxMouseEvent &event);
 };
 

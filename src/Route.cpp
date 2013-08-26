@@ -204,11 +204,6 @@ void Route::CloneAddedTrackPoint( RoutePoint *ptargetpoint, RoutePoint *psourcep
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetY;
 	ptargetpoint->SetCreateTime(psourcepoint->GetCreateTime());
 	ptargetpoint->m_HyperlinkList = new HyperlinkList;
-	// Hyperlinks not implemented currently in GPX for trackpoints
-	//if (!psourcepoint->m_HyperlinkList->IsEmpty()) {
-	//      HyperlinkList::iterator iter = psourcepoint->m_HyperlinkList->begin();
-	//      psourcepoint->m_HyperlinkList->splice(iter, *(ptargetpoint->m_HyperlinkList));
-	//}
 }
 
 void Route::AddPoint( RoutePoint *pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc )

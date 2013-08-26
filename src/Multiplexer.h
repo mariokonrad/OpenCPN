@@ -25,10 +25,10 @@
 #define __MULTIPLEXER_H__
 
 #include "datastream.h"
+#include "Route.h"
+#include "RoutePoint.h"
 
 class wxGauge;
-class Route;
-class RoutePoint;
 class OCPN_DataStreamEvent;
 
 WX_DEFINE_ARRAY(DataStream *, wxArrayOfDataStreams);

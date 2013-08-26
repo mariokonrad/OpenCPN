@@ -157,12 +157,12 @@ class ChartBase
 
 		virtual int GetCOVREntries(){ return  m_nCOVREntries; }
 		virtual int GetCOVRTablePoints(int iTable) { return m_pCOVRTablePoints[iTable]; }
-		virtual int  GetCOVRTablenPoints(int iTable){ return m_pCOVRTablePoints[iTable]; }
+		virtual int GetCOVRTablenPoints(int iTable){ return m_pCOVRTablePoints[iTable]; }
 		virtual float *GetCOVRTableHead(int iTable){ return m_pCOVRTable[iTable]; }
 
 		virtual int GetNoCOVREntries(){ return  m_nNoCOVREntries; }
 		virtual int GetNoCOVRTablePoints(int iTable) { return m_pNoCOVRTablePoints[iTable]; }
-		virtual int  GetNoCOVRTablenPoints(int iTable){ return m_pNoCOVRTablePoints[iTable]; }
+		virtual int GetNoCOVRTablenPoints(int iTable){ return m_pNoCOVRTablePoints[iTable]; }
 		virtual float *GetNoCOVRTableHead(int iTable){ return m_pNoCOVRTable[iTable]; }
 
 	protected:

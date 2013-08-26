@@ -541,7 +541,6 @@ void MarkInfoImpl::SetRoutePoint( RoutePoint *pRP )
 			delete m_pMyLinkList;
 		m_pMyLinkList = new HyperlinkList();
 		int NbrOfLinks = m_pRoutePoint->m_HyperlinkList->GetCount();
-		//            int len = 0;
 		if( NbrOfLinks > 0 ) {
 			wxHyperlinkListNode *linknode = m_pRoutePoint->m_HyperlinkList->GetFirst();
 			while( linknode ) {
@@ -577,7 +576,6 @@ void MarkInfoImpl::OnDeleteLink( wxCommandEvent& event )
 	m_scrolledWindowLinks->DestroyChildren();
 	int NbrOfLinks = m_pRoutePoint->m_HyperlinkList->GetCount();
 	HyperlinkList *hyperlinklist = m_pRoutePoint->m_HyperlinkList;
-	//      int len = 0;
 	if( NbrOfLinks > 0 ) {
 		wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
 		while( linknode ) {
@@ -616,7 +614,6 @@ void MarkInfoImpl::OnEditLink( wxCommandEvent& event )
 	if( m_pLinkProp->ShowModal() == wxID_OK ) {
 		int NbrOfLinks = m_pRoutePoint->m_HyperlinkList->GetCount();
 		HyperlinkList *hyperlinklist = m_pRoutePoint->m_HyperlinkList;
-		//            int len = 0;
 		if( NbrOfLinks > 0 ) {
 			wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
 			while( linknode ) {

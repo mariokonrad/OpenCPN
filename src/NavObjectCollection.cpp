@@ -80,32 +80,23 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 	double rlon = wpt_node.attribute( "lon" ).as_double();;
 
 	for( pugi::xml_node child = wpt_node.first_child(); child != 0; child = child.next_sibling() ) {
-		const char *pcn = child.name();
-
-		if( !strcmp( pcn, "sym" ) ) {
+		const char * pcn = child.name();
+		if (!strcmp(pcn, "sym")) {
 			SymString = wxString::FromUTF8( child.first_child().value() );
-		}
-		else
-			if( !strcmp( pcn, "time") )
+		} else {
+			if (!strcmp(pcn, "time")) {
 				TimeString = wxString::FromUTF8( child.first_child().value() );
-
-			else
-				if( !strcmp( pcn, "name") ) {
+			} else {
+				if (!strcmp(pcn, "name")) {
 					NameString = wxString::FromUTF8( child.first_child().value() );
-				}
-
-				else
-					if( !strcmp( pcn, "desc") ) {
-						DescString = wxString::FromUTF8( child.first_child().value() );
-					}
-
-					else
-						if( !strcmp( pcn, "type") ) {
-							TypeString = wxString::FromUTF8( child.first_child().value() );
-						}
-
-						else              // Read hyperlink
-							if( !strcmp( pcn, "link") ) {
+				} else {
+					if (!strcmp(pcn, "desc")) {
+						DescString = wxString::FromUTF8(child.first_child().value());
+					} else {
+						if (!strcmp(pcn, "type")) {
+							TypeString = wxString::FromUTF8(child.first_child().value());
+						} else { // Read hyperlink
+							if (!strcmp(pcn, "link")) {
 								wxString HrefString;
 								wxString HrefTextString;
 								wxString HrefTypeString;
@@ -113,13 +104,13 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 									linklist = new HyperlinkList;
 								HrefString = wxString::FromUTF8( child.first_attribute().value() );
 
-								for( pugi::xml_node child1 = child.first_child(); child1; child1 = child1.next_sibling() ) {
+								for (pugi::xml_node child1 = child.first_child(); child1; child1 = child1.next_sibling()) {
 									wxString LinkString = wxString::FromUTF8( child1.name() );
 
-									if( LinkString == _T ( "text" ) )
-										HrefTextString = wxString::FromUTF8( child1.first_child().value() );
-									if( LinkString == _T ( "type" ) )
-										HrefTypeString = wxString::FromUTF8( child1.first_child().value() );
+									if (LinkString == _T("text"))
+										HrefTextString = wxString::FromUTF8(child1.first_child().value());
+									if (LinkString == _T("type"))
+										HrefTypeString = wxString::FromUTF8(child1.first_child().value());
 								}
 
 								Hyperlink *link = new Hyperlink;
@@ -127,49 +118,52 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 								link->DescrText = HrefTextString;
 								link->LType = HrefTypeString;
 								linklist->Append( link );
-							}
-
-		//    OpenCPN Extensions....
-							else
+							} else { // OpenCPN Extensions....
 								if( !strcmp( pcn, "extensions") ) {
-									for( pugi::xml_node ext_child = child.first_child(); ext_child; ext_child = ext_child.next_sibling() ) {
+									for (pugi::xml_node ext_child = child.first_child(); ext_child; ext_child = ext_child.next_sibling()) {
 										wxString ext_name = wxString::FromUTF8( ext_child.name() );
-										if( ext_name == _T ( "opencpn:guid" ) ) {
+										if (ext_name == _T("opencpn:guid")) {
 											GuidString = wxString::FromUTF8( ext_child.first_child().value() );
-										}
-										else
-											if( ext_name == _T ( "opencpn:viz" ) ) {
+										} else {
+											if (ext_name == _T("opencpn:viz")) {
 												b_propviz = true;
 												wxString s = wxString::FromUTF8( ext_child.first_child().value() );
 												long v = 0;
 												if( s.ToLong( &v ) )
 													bviz = ( v != 0 );
-											}
-											else
-												if( ext_name == _T ( "opencpn:viz_name" ) ) {
+											} else {
+												if (ext_name == _T("opencpn:viz_name")) {
 													b_propvizname = true;
 													wxString s = wxString::FromUTF8( ext_child.first_child().value() );
 													long v = 0;
 													if( s.ToLong( &v ) )
 														bviz_name = ( v != 0 );
-												}
-												else
-													if( ext_name == _T ( "opencpn:auto_name" ) ) {
+												} else {
+													if (ext_name == _T("opencpn:auto_name")) {
 														wxString s = wxString::FromUTF8( ext_child.first_child().value() );
 														long v = 0;
 														if( s.ToLong( &v ) )
 															bauto_name = ( v != 0 );
-													}
-													else
-														if( ext_name  == _T ( "opencpn:shared" ) ) {
-															wxString s = wxString::FromUTF8( ext_child.first_child().value() );
+													} else {
+														if (ext_name  == _T ("opencpn:shared")) {
+															wxString s = wxString::FromUTF8(ext_child.first_child().value());
 															long v = 0;
-															if( s.ToLong( &v ) )
-																bshared = ( v != 0 );
+															if (s.ToLong(&v))
+																bshared = (v != 0);
 														}
-									}// for
-								} //extensions
-	}   // for
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 	// Create waypoint
 
@@ -218,7 +212,7 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 		pWP->m_HyperlinkList = linklist;
 	}
 
-	return ( pWP );
+	return pWP;
 }
 
 Track * NavObjectCollection::GPXLoadTrack1(
@@ -261,25 +255,20 @@ Track * NavObjectCollection::GPXLoadTrack1(
 						pWayPointMan->m_pWayPointList->Append( pWp );
 					}
 				}
-			}
-			else
-				if( ChildName == _T ( "name" ) )
+			} else {
+				if( ChildName == _T ( "name" ) ) {
 					RouteName = wxString::FromUTF8( tschild.first_child().value() );
-				else
-					if( ChildName == _T ( "desc" ) )
+				} else {
+					if( ChildName == _T ( "desc" ) ) {
 						DescString = wxString::FromUTF8( tschild.first_child().value() );
-					else
-						if( ChildName.EndsWith( _T ( "TrackExtension" ) ) ) //Parse GPXX color
-						{
+					} else {
+						if (ChildName.EndsWith(_T("TrackExtension"))) { //Parse GPXX color
 							for( pugi::xml_node gpxx_child = tschild.first_child(); gpxx_child; gpxx_child = gpxx_child.next_sibling() ) {
 								wxString gpxx_name = wxString::FromUTF8( gpxx_child.name() );
 								if( gpxx_name.EndsWith( _T ( "DisplayColor" ) ) )
 									pTentTrack->m_Colour = wxString::FromUTF8(gpxx_child.first_child().value() );
 							}
-						}
-
-						else
-
+						} else {
 							if( ChildName == _T ( "link") ) {
 								wxString HrefString;
 								wxString HrefTextString;
@@ -302,54 +291,53 @@ Track * NavObjectCollection::GPXLoadTrack1(
 								link->DescrText = HrefTextString;
 								link->LType = HrefTypeString;
 								linklist->Append( link );
-							}
-
-							else
+							} else {
 								if( ChildName == _T ( "extensions" ) ) {
 									TiXmlNode *ext_child;
 									for( pugi::xml_node ext_child = tschild.first_child(); ext_child; ext_child = ext_child.next_sibling() ) {
 										wxString ext_name = wxString::FromUTF8( ext_child.name() );
 										if( ext_name == _T ( "opencpn:start" ) ) {
 											pTentTrack->m_RouteStartString = wxString::FromUTF8(ext_child.first_child().value());
-										}
-										else
+										} else {
 											if( ext_name == _T ( "opencpn:end" ) ) {
 												pTentTrack->m_RouteEndString = wxString::FromUTF8(ext_child.first_child().value());
-											}
-
-											else
+											} else {
 												if( ext_name == _T ( "opencpn:viz" ) ) {
 													wxString viz = wxString::FromUTF8(ext_child.first_child().value());
 													b_propviz = true;
 													b_viz = ( viz == _T("1") );
-												}
-												else
+												} else {
 													if( ext_name == _T ( "opencpn:style" ) ) {
-														for (pugi::xml_attribute attr = ext_child.first_attribute(); attr; attr = attr.next_attribute())
-														{
-															if( !strcmp( attr.name(), "style" ) )
+														for (pugi::xml_attribute attr = ext_child.first_attribute(); attr; attr = attr.next_attribute()) {
+															if( !strcmp( attr.name(), "style" ) ) {
 																pTentTrack->m_style = attr.as_int();
-															else if( !strcmp( attr.name(), "width" ) )
+															} else if( !strcmp( attr.name(), "width" ) ) {
 																pTentTrack->m_width = attr.as_int();
+															}
 														}
-													}
-
-													else
-														if( ext_name == _T ( "opencpn:guid" ) ) {
+													} else {
+														if( ext_name == _T("opencpn:guid")) {
 															pTentTrack->m_GUID =  wxString::FromUTF8(ext_child.first_child().value());
-														}
-
-														else
-															if( ext_name.EndsWith( _T ( "TrackExtension" ) ) ) //Parse GPXX color
-															{
+														} else {
+															if( ext_name.EndsWith(_T("TrackExtension"))) { //Parse GPXX color
 																for( pugi::xml_node gpxx_child = ext_child.first_child(); gpxx_child; gpxx_child = gpxx_child.next_sibling() ) {
 																	wxString gpxx_name = wxString::FromUTF8( gpxx_child.name() );
 																	if( gpxx_name.EndsWith( _T ( "DisplayColor" ) ) )
 																		pTentTrack->m_Colour = wxString::FromUTF8(gpxx_child.first_child().value() );
 																}
 															}
+														}
+													}
+												}
+											}
+										}
 									} //extensions
 								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 		pTentTrack->m_RouteNameString = RouteName;
@@ -368,8 +356,6 @@ Track * NavObjectCollection::GPXLoadTrack1(
 			pTentTrack->m_LayerID = layer_id;
 			pTentTrack->SetListed( false );
 		}
-
-
 	}
 
 	if( linklist ) {
@@ -413,27 +399,20 @@ Route * NavObjectCollection::GPXLoadRoute1(
 				pWp->m_bIsInTrack = false;
 				if( erp == NULL )
 					pWayPointMan->m_pWayPointList->Append( pWp );
-			}
-			else
+			} else {
 				if( ChildName == _T ( "name" ) ) {
 					RouteName = wxString::FromUTF8( tschild.first_child().value() );
-				}
-				else
-					if( ChildName == _T ( "desc" ) ) {
+				} else {
+					if (ChildName == _T("desc")) {
 						DescString = wxString::FromUTF8( tschild.first_child().value() );
-					}
-
-					else
-						if( ChildName.EndsWith( _T ( "RouteExtension" ) ) ) //Parse GPXX color
-						{
+					} else {
+						if (ChildName.EndsWith(_T("RouteExtension"))) { //Parse GPXX color
 							for( pugi::xml_node gpxx_child = tschild.first_child(); gpxx_child; gpxx_child = gpxx_child.next_sibling() ) {
 								wxString gpxx_name = wxString::FromUTF8( gpxx_child.name() );
 								if( gpxx_name.EndsWith( _T ( "DisplayColor" ) ) )
 									pTentRoute->m_Colour = wxString::FromUTF8(gpxx_child.first_child().value() );
 							}
-						}
-
-						else
+						} else {
 							if( ChildName == _T ( "link") ) {
 								wxString HrefString;
 								wxString HrefTextString;
@@ -456,9 +435,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 								link->DescrText = HrefTextString;
 								link->LType = HrefTypeString;
 								linklist->Append( link );
-							}
-
-							else
+							} else {
 								if( ChildName == _T ( "extensions" ) ) {
 									TiXmlNode *ext_child;
 									for( pugi::xml_node ext_child = tschild.first_child(); ext_child; ext_child = ext_child.next_sibling() ) {
@@ -466,20 +443,15 @@ Route * NavObjectCollection::GPXLoadRoute1(
 
 										if( ext_name == _T ( "opencpn:start" ) ) {
 											pTentRoute->m_RouteStartString = wxString::FromUTF8(ext_child.first_child().value());
-										}
-										else
+										} else {
 											if( ext_name == _T ( "opencpn:end" ) ) {
 												pTentRoute->m_RouteEndString = wxString::FromUTF8(ext_child.first_child().value());
-											}
-
-											else
+											} else {
 												if( ext_name == _T ( "opencpn:viz" ) ) {
 													wxString viz = wxString::FromUTF8(ext_child.first_child().value());
 													b_propviz = true;
 													b_viz = ( viz == _T("1") );
-												}
-
-												else
+												} else {
 													if( ext_name == _T ( "opencpn:style" ) ) {
 														for (pugi::xml_attribute attr = ext_child.first_attribute(); attr; attr = attr.next_attribute())
 														{
@@ -489,30 +461,34 @@ Route * NavObjectCollection::GPXLoadRoute1(
 																if( !strcmp( attr.name(), "width" ) )
 																	pTentRoute->m_width = attr.as_int();
 														}
-													}
-
-													else
+													} else {
 														if( ext_name == _T ( "opencpn:guid" ) ) {
 															//if ( !g_bIsNewLayer ) )
 															pTentRoute->m_GUID =  wxString::FromUTF8(ext_child.first_child().value());
-														}
-
-														else
+														} else {
 															if( ext_name == _T ( "opencpn:planned_speed" ) ) {
 																pTentRoute->m_PlannedSpeed = atof( ext_child.first_child().value() );
-															}
-
-															else
+															} else {
 																if( ext_name == _T ( "opencpn:planned_departure" ) ) {
 																	ParseGPXDateTime( pTentRoute->m_PlannedDeparture, wxString::FromUTF8(ext_child.first_child().value()) );
-																}
-
-																else
+																} else {
 																	if( ext_name == _T ( "opencpn:time_display" ) ) {
 																		pTentRoute->m_TimeDisplayFormat, wxString::FromUTF8(ext_child.first_child().value());
 																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
 									} //extensions
 								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 		pTentRoute->m_RouteNameString = RouteName;
@@ -1257,8 +1233,7 @@ int NavObjectCollection::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
 	int n_obj = 0;
 	pugi::xml_node objects = this->child("gpx");
 
-	for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling())
-	{
+	for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling()) {
 		if( !strcmp(object.name(), "wpt") ) {
 			RoutePoint *pWp = GPXLoadWaypoint1( object, _T("circle"), _T(""), true, true, b_layerviz, layer_id );
 			pWp->m_bIsolatedMark = true;      // This is an isolated mark
@@ -1270,19 +1245,18 @@ int NavObjectCollection::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
 			}
 			else
 				delete pWp;
-		}
-		else{
+		} else {
 			if( !strcmp(object.name(), "trk") ) {
 				Track *pTrack = GPXLoadTrack1( object, false, true, b_layerviz, layer_id);
 				n_obj++;
 				InsertTrack( pTrack );
-			}
-			else
+			} else {
 				if( !strcmp(object.name(), "rte") ) {
 					Route *pRoute = GPXLoadRoute1( object, true, true, b_layerviz, layer_id );
 					n_obj++;
 					InsertRouteA( pRoute );
 				}
+			}
 		}
 	}
 

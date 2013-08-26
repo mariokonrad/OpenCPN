@@ -29,14 +29,10 @@
 
 #include <wx/arrstr.h>
 
-#include "Station_Data.h"
-#include "IDX_entry.h"
-#include "TC_Error_Code.h"
-#include "TCDataSource.h"
-
-// ----------------------------------------------------------------------------
-// external C linkages
-// ----------------------------------------------------------------------------
+#include "tide/Station_Data.h"
+#include "tide/IDX_entry.h"
+#include "tide/TC_Error_Code.h"
+#include "tide/TCDataSource.h"
 
 //----------------------------------------------------------------------------
 //   constants

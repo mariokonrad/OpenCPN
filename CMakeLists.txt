@@ -507,13 +507,13 @@ SET(HDRS
 		src/TextStatWin.h
 		src/PianoWin.h
 		include/tcmgr.h
-		src/Station_Data.h
-		src/IDX_entry.h
-		src/TC_Error_Code.h
-		src/TCDataFactory.h
-		src/TCDS_Ascii_Harmonic.h
-		src/TCDS_Binary_Harmonic.h
-		src/TCDataSource.h
+		src/tide/Station_Data.h
+		src/tide/IDX_entry.h
+		src/tide/TC_Error_Code.h
+		src/tide/TCDataFactory.h
+		src/tide/TCDS_Ascii_Harmonic.h
+		src/tide/TCDS_Binary_Harmonic.h
+		src/tide/TCDataSource.h
 		src/ThumbWin.h
 		include/options.h
 		src/OptionIDs.h
@@ -647,12 +647,12 @@ SET(SRCS
 		src/TextStatWin.cpp
 		src/PianoWin.cpp
 		src/tcmgr.cpp
-		src/Station_Data.cpp
-		src/IDX_entry.cpp
-		src/TCDataFactory.cpp
-		src/TCDS_Ascii_Harmonic.cpp
-		src/TCDS_Binary_Harmonic.cpp
-		src/TCDataSource.cpp
+		src/tide/Station_Data.cpp
+		src/tide/IDX_entry.cpp
+		src/tide/TCDataFactory.cpp
+		src/tide/TCDS_Ascii_Harmonic.cpp
+		src/tide/TCDS_Binary_Harmonic.cpp
+		src/tide/TCDataSource.cpp
 		src/ThumbWin.cpp
 		src/options.cpp
 		src/ChartGroupsUI.cpp

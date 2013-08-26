@@ -26,7 +26,6 @@
 
 #include <wx/defs.h>
 #include <wx/wxchar.h>
-#include <wx/dynarray.h>
 
 class Station_Data
 {

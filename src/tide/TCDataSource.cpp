@@ -28,8 +28,6 @@
 
 #include <wx/log.h>
 #include <wx/filename.h>
-#include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(ArrayOfTCDSources);
 
 TCDataSource::TCDataSource()
 {

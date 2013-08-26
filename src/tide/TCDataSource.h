@@ -25,7 +25,6 @@
 #define __TCDATASOURCE_H__
 
 #include <wx/string.h>
-#include <wx/dynarray.h>
 
 #include "TC_Error_Code.h"
 
@@ -54,7 +53,5 @@ class TCDataSource
 		TCDS_Binary_Harmonic * pTCDS_Binary_Harmonic;
 
 };
-
-WX_DECLARE_OBJARRAY(TCDataSource, ArrayOfTCDSources);
 
 #endif

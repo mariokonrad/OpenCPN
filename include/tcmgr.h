@@ -102,7 +102,7 @@ class TCMgr
 		bool bTCMReady;
 		wxString pmru_file_name;
 
-		ArrayOfTCDSources m_source_array;
+		std::vector<TCDataSource *> m_source_array;
 		wxArrayString m_sourcefile_array;
 		std::vector<IDX_entry *> m_Combined_IDX_array;
 };

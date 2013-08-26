@@ -709,7 +709,13 @@ void TCMgr::PurgeData()
     }
 
     //  Delete all the data sources
-    m_source_array.Clear();
+	std::vector<TCDataSource *>::iterator i = m_source_array.begin();
+	std::vector<TCDataSource *>::iterator end = m_source_array.end();
+	for (; i != end; ++i) {
+		if (*i)
+			delete *i;
+	}
+    m_source_array.clear();
 }
 
 
@@ -736,7 +742,7 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString &sources)
     m_sourcefile_array.Clear();
     m_sourcefile_array = sources;
 
-    //  Arrange for the index array to begin counting at "one"
+    //  Arrange for the index array to begin counting at "one", FIXME: why?
     m_Combined_IDX_array.push_back((IDX_entry *)(NULL));
     int num_IDX = 1;
 
@@ -755,9 +761,8 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString &sources)
             }
             wxLogMessage(msg);
             delete s;
-        }
-        else {
-            m_source_array.Add(s);
+        } else {
+            m_source_array.push_back(s);
 
             for( int k=0 ; k < s->GetMaxIndex() ; k++ ) {
                 IDX_entry *pIDX = s->GetIndexEntry(k);
@@ -770,7 +775,7 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString &sources)
 
     bTCMReady = true;
 
-    return  TC_NO_ERROR ;
+    return  TC_NO_ERROR;
 }
 
 const IDX_entry * TCMgr::GetIDX_entry(int index) const

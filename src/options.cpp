@@ -55,6 +55,7 @@
 #include "ChartGroupsUI.h"
 #include "OptionIDs.h"
 #include "LanguageList.h"
+#include "plugin/PluginListPanel.h"
 
 #ifdef USE_S57
 	#include "s52plib.h"

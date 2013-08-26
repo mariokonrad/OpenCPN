@@ -21,7 +21,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "pluginmanager.h"
+#include "PlugInManager.h"
 #include "dychart.h"
 #include "navutil.h"
 #include "Track.h"
@@ -42,6 +42,7 @@
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"
 #include "NavObjectCollection.h"
+#include "plugin/OCPN_MsgEvent.h"
 
 #include "ais/ais.h"
 #include "ais/AIS_Decoder.h"
@@ -109,51 +110,7 @@ PlugIn_ViewPort CreatePlugInViewport( const ViewPort &vp)
 }
 
 
-//------------------------------------------------------------------------------
-//    NMEA Event Implementation
-//    PlugIn Messaging scheme Event
-//------------------------------------------------------------------------------
-
 const wxEventType wxEVT_OCPN_MSG = wxNewEventType();
-
-OCPN_MsgEvent::OCPN_MsgEvent( wxEventType commandType, int id )
-	: wxEvent(id, commandType)
-{
-}
-
-OCPN_MsgEvent::~OCPN_MsgEvent( )
-{
-}
-
-wxEvent* OCPN_MsgEvent::Clone() const
-{
-    OCPN_MsgEvent *newevent=new OCPN_MsgEvent(*this);
-    newevent->m_MessageID=this->m_MessageID.c_str();  // this enforces a deep copy of the string data
-    newevent->m_MessageText=this->m_MessageText.c_str();
-    return newevent;
-}
-
-//------------------------------------------------------------------------------------------------
-//
-//          The PlugInToolbarToolContainer Implementation
-//
-//------------------------------------------------------------------------------------------------
-PlugInToolbarToolContainer::PlugInToolbarToolContainer()
-{
-    bitmap_dusk = NULL;
-    bitmap_night = NULL;
-    bitmap_day = NULL;
-    bitmap_Rollover = NULL;;
-}
-
-PlugInToolbarToolContainer::~PlugInToolbarToolContainer()
-{
-    delete bitmap_dusk;
-    delete bitmap_night;
-    delete bitmap_day;
-    delete bitmap_Rollover;
-}
-
 
 //-----------------------------------------------------------------------------------------------------
 //
@@ -2485,206 +2442,6 @@ PlugIn_AIS_Target *Create_PI_AIS_Target(AIS_Target_Data *ptarget)
 
     return pret;
 }
-
-//-------------------------------------------------------------------------------
-//    PluginListPanel & PluginPanel Implementation
-//-------------------------------------------------------------------------------
-
-PluginListPanel::PluginListPanel( wxWindow *parent, wxWindowID id, const wxPoint &pos, const wxSize &size, ArrayOfPlugIns *pPluginArray )
-//      :wxPanel( parent, id, pos, size, wxSUNKEN_BORDER|wxTAB_TRAVERSAL )
-    :wxScrolledWindow( parent, id, pos, size, wxTAB_TRAVERSAL|wxVSCROLL )
-
-{
-    m_pPluginArray = pPluginArray;
-    m_PluginSelected = NULL;
-
-    wxBoxSizer* itemBoxSizer01 = new wxBoxSizer( wxVERTICAL );
-    SetSizer( itemBoxSizer01 );
-
-    int max_dy = 0;
-
-    for( unsigned int i=0 ; i < pPluginArray->GetCount() ; i++ )
-    {
-        PluginPanel *pPluginPanel = new PluginPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, pPluginArray->Item(i) );
-        itemBoxSizer01->Add( pPluginPanel, 0, wxEXPAND|wxALL, 0 );
-        m_PluginItems.Add( pPluginPanel );
-
-        wxStaticLine* itemStaticLine = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-        itemBoxSizer01->Add( itemStaticLine, 0, wxEXPAND|wxALL, 0 );
-
-        //    When a child Panel is selected, its size grows to include "Preferences" and Enable" buttons.
-        //    As a consequence, the vertical size of the ListPanel grows as well.
-        //    Calculate and add a spacer to bottom of ListPanel so that initial ListPanel
-        //    minimum size calculations account for selected Panel size growth.
-
-        pPluginPanel->SetSelected( false );       // start unselected
-        itemBoxSizer01->Layout();
-        wxSize nsel_size = pPluginPanel->GetSize();
-
-        pPluginPanel->SetSelected( true );        // switch to selected, a bit bigger
-        itemBoxSizer01->Layout();
-        wxSize sel_size = pPluginPanel->GetSize();
-
-        pPluginPanel->SetSelected( false );       // reset to unselected
-        itemBoxSizer01->Layout();
-
-        int dy = sel_size.y - nsel_size.y;
-        dy += 10;                                 // fluff
-        max_dy = wxMax(dy, max_dy);
-    }
-
-    itemBoxSizer01->AddSpacer(max_dy);
-}
-
-PluginListPanel::~PluginListPanel()
-{
-}
-
-void PluginListPanel::UpdateSelections()
-{
-    for(unsigned int i=0 ; i < m_PluginItems.GetCount() ; i++) {
-        PluginPanel *pPluginPanel = m_PluginItems.Item(i);
-        if( pPluginPanel ){
-            pPluginPanel->SetSelected( pPluginPanel->GetSelected() );
-        }
-    }
-}
-
-void PluginListPanel::SelectPlugin( PluginPanel *pi )
-{
-    if (m_PluginSelected == pi)
-        return;
-
-    if (m_PluginSelected)
-        m_PluginSelected->SetSelected(false);
-
-    m_PluginSelected = pi;
-    Layout();
-    Refresh(false);
-}
-
-PluginPanel::PluginPanel(PluginListPanel *parent, wxWindowID id, const wxPoint &pos, const wxSize &size, PlugInContainer *p_plugin)
-    :wxPanel(parent, id, pos, size, wxBORDER_NONE)
-{
-    m_PluginListPanel = parent;
-    m_pPlugin = p_plugin;
-    m_bSelected = false;
-
-    wxBoxSizer* itemBoxSizer01 = new wxBoxSizer(wxHORIZONTAL);
-    SetSizer(itemBoxSizer01);
-    Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(PluginPanel::OnPluginSelected), NULL, this);
-
-    wxStaticBitmap *itemStaticBitmap = new wxStaticBitmap( this, wxID_ANY, *m_pPlugin->m_bitmap);
-    itemBoxSizer01->Add(itemStaticBitmap, 0, wxEXPAND|wxALL, 5);
-    itemStaticBitmap->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler( PluginPanel::OnPluginSelected ), NULL, this);
-    wxBoxSizer* itemBoxSizer02 = new wxBoxSizer(wxVERTICAL);
-    itemBoxSizer01->Add(itemBoxSizer02, 1, wxEXPAND|wxALL, 0);
-    wxBoxSizer* itemBoxSizer03 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer02->Add(itemBoxSizer03);
-    m_pName = new wxStaticText( this, wxID_ANY, m_pPlugin->m_common_name );
-    m_pName->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler( PluginPanel::OnPluginSelected ), NULL, this);
-    wxFont font = *wxNORMAL_FONT;
-    font.SetWeight(wxFONTWEIGHT_BOLD);
-    m_pName->SetFont(font);
-    itemBoxSizer03->Add(m_pName, 0, wxEXPAND|wxALL, 5);
-    m_pVersion = new wxStaticText( this, wxID_ANY,
-                                   wxString::Format(_T("%d.%d"), m_pPlugin->m_version_major, m_pPlugin->m_version_minor) );
-    itemBoxSizer03->Add(m_pVersion, 0, wxEXPAND|wxALL, 5);
-    m_pVersion->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler( PluginPanel::OnPluginSelected ), NULL, this);
-    m_pDescription = new wxStaticText( this, wxID_ANY, m_pPlugin->m_short_description );
-    itemBoxSizer02->Add( m_pDescription, 0, wxEXPAND|wxALL, 5 );
-    m_pDescription->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler( PluginPanel::OnPluginSelected ), NULL, this);
-
-    m_pButtons = new wxFlexGridSizer(2);
-    m_pButtons->AddGrowableCol(1);
-
-//      m_pButtons = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer02->Add( m_pButtons, 1, wxEXPAND|wxALL, 0 );
-    m_pButtonPreferences = new wxButton( this, wxID_ANY, _("Preferences"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_pButtons->Add( m_pButtonPreferences, 0, wxALIGN_LEFT|wxALL, 2);
-    m_pButtonEnable = new wxButton( this, wxID_ANY, _T(""), wxDefaultPosition, wxDefaultSize, 0 );
-    m_pButtons->Add(m_pButtonEnable, 0, wxALIGN_RIGHT|wxALL, 2);
-    m_pButtonPreferences->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PluginPanel::OnPluginPreferences), NULL, this);
-    m_pButtonEnable->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PluginPanel::OnPluginEnable), NULL, this);
-
-    SetSelected( m_bSelected );
-}
-
-PluginPanel::~PluginPanel()
-{
-}
-
-void PluginPanel::OnPluginSelected( wxMouseEvent &event )
-{
-    SetSelected( true );
-    m_PluginListPanel->SelectPlugin( this );
-}
-
-void PluginPanel::SetSelected( bool selected )
-{
-    m_bSelected = selected;
-    if (selected)
-    {
-        SetBackgroundColour(GetGlobalColor(_T("DILG1")));
-        m_pDescription->SetLabel( m_pPlugin->m_long_description );
-        m_pButtons->Show(true);
-        Layout();
-        //FitInside();
-    }
-    else
-    {
-        SetBackgroundColour(GetGlobalColor(_T("DILG0")));
-        m_pDescription->SetLabel( m_pPlugin->m_short_description );
-        m_pButtons->Show(false);
-        Layout();
-        //FitInside();
-    }
-    // StaticText color change upon selection
-    SetEnabled( m_pPlugin->m_bEnabled );
-}
-
-void PluginPanel::OnPluginPreferences( wxCommandEvent& event )
-{
-    if (m_pPlugin->m_bEnabled && m_pPlugin->m_bInitState && (m_pPlugin->m_cap_flag & WANTS_PREFERENCES) )
-    {
-        m_pPlugin->m_pplugin->ShowPreferencesDialog( this );
-    }
-}
-
-void PluginPanel::OnPluginEnable( wxCommandEvent& event )
-{
-    SetEnabled(!m_pPlugin->m_bEnabled);
-}
-
-void PluginPanel::SetEnabled( bool enabled )
-{
-    if (m_pPlugin->m_bEnabled != enabled)
-    {
-        m_pPlugin->m_bEnabled = enabled;
-        if(s_ppim)
-            s_ppim->UpdatePlugIns();
-        NotifySetupOptionsPlugin( m_pPlugin );
-    }
-    if (!enabled && !m_bSelected)
-    {
-        m_pName->SetForegroundColour(*wxLIGHT_GREY);
-        m_pVersion->SetForegroundColour(*wxLIGHT_GREY);
-        m_pDescription->SetForegroundColour(*wxLIGHT_GREY);
-        m_pButtonEnable->SetLabel(_("Enable"));
-    }
-    else
-    {
-        m_pName->SetForegroundColour(*wxBLACK);
-        m_pVersion->SetForegroundColour(*wxBLACK);
-        m_pDescription->SetForegroundColour(*wxBLACK);
-        if ( enabled )
-            m_pButtonEnable->SetLabel(_("Disable"));
-        else
-            m_pButtonEnable->SetLabel(_("Enable"));
-    }
-    m_pButtonPreferences->Enable( enabled && (m_pPlugin->m_cap_flag & WANTS_PREFERENCES) );
-}
-
 
 
 // ----------------------------------------------------------------------------

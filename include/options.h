@@ -39,7 +39,7 @@
 	#include "scrollingdialog.h"
 #endif
 
-#include "pluginmanager.h"
+#include "plugin/PlugInManager.h"
 #include "datastream.h"
 
 class wxGenericDirCtrl;

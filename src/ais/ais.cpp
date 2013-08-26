@@ -37,7 +37,6 @@
 #include "chart1.h"
 #include "navutil.h"        // for Select
 #include "georef.h"
-#include "pluginmanager.h"  // for PlugInManager
 #include "StyleManager.h"
 #include "datastream.h"
 #include "Select.h"
@@ -95,7 +94,6 @@ extern double           g_AckTimeout_Mins;
 
 extern bool             bGPSValid;
 
-extern PlugInManager    *g_pi_manager;
 extern ocpnStyle::StyleManager * g_StyleManager;
 
 #if !defined(NAN)

@@ -21,68 +21,37 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "ToolBarTool.h"
-#include "plugin/PlugInManager.h"
+#ifndef __PLUGIN__PLUGINTOOLBARTOOLCONTAINER__H__
+#define __PLUGIN__PLUGINTOOLBARTOOLCONTAINER__H__
 
-extern PlugInManager * g_pi_manager;
+#include <wx/string.h>
 
-ToolBarTool::ToolBarTool(
-		ToolBarSimple * tbar,
-		int id,
-		const wxString & label,
-		const wxBitmap & bmpNormal,
-		const wxBitmap & bmpRollover,
-		wxItemKind kind,
-		wxObject * clientData,
-		const wxString & shortHelp,
-		const wxString & longHelp)
-	: wxToolBarToolBase((wxToolBarBase*)tbar, id, label, bmpNormal, bmpRollover, kind, clientData, shortHelp, longHelp)
+class wxBitmap;
+class wxObject;
+class opencpn_plugin;
+
+class PlugInToolbarToolContainer
 {
-	m_enabled = true;
-	m_toggled = false;
-	rollover = false;
-	bitmapOK = false;
+	public:
+		PlugInToolbarToolContainer();
+		~PlugInToolbarToolContainer();
 
-	toolname = g_pi_manager->GetToolOwnerCommonName( id );
-	if( toolname == _T("") ) {
-		isPluginTool = false;
-		toolname = label;
-		iconName = label;
-	} else {
-		isPluginTool = true;
-		pluginNormalIcon = &bmpNormal;
-		pluginRolloverIcon = &bmpRollover;
-	}
-}
+		opencpn_plugin * m_pplugin;
+		int id;
+		wxString label;
+		wxBitmap * bitmap_day;
+		wxBitmap * bitmap_dusk;
+		wxBitmap * bitmap_night;
+		wxBitmap * bitmap_Rollover;
 
-void ToolBarTool::SetSize(const wxSize& size)
-{
-	m_width = size.x;
-	m_height = size.y;
-}
+		wxItemKind kind;
+		wxString shortHelp;
+		wxString longHelp;
+		wxObject * clientData;
+		int position;
+		bool b_viz;
+		bool b_toggle;
+		int tool_sel;
+};
 
-wxCoord ToolBarTool::GetWidth() const
-{
-	return m_width;
-}
-
-wxCoord ToolBarTool::GetHeight() const
-{
-	return m_height;
-}
-
-wxString ToolBarTool::GetToolname() const
-{
-	return toolname;
-}
-
-void ToolBarTool::SetIconName(const wxString &  name)
-{
-	iconName = name;
-}
-
-wxString ToolBarTool::GetIconName() const
-{
-	return iconName;
-}
-
+#endif

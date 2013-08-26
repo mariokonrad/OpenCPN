@@ -46,6 +46,7 @@
 #include "navutil.h"
 #include "MicrosoftCompatibility.h"
 #include "chart/ChartDummy.h"
+#include "plugin/PlugInManager.h"
 
 #include <wx/cmdline.h>
 #include <wx/datetime.h>

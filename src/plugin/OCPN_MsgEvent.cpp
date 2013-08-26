@@ -21,68 +21,48 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "ToolBarTool.h"
-#include "plugin/PlugInManager.h"
+#include "OCPN_MsgEvent.h"
 
-extern PlugInManager * g_pi_manager;
+OCPN_MsgEvent::OCPN_MsgEvent(const OCPN_MsgEvent & event)
+	: wxEvent(event)
+	, m_MessageID(event.m_MessageID)
+	, m_MessageText(event.m_MessageText)
+{ }
 
-ToolBarTool::ToolBarTool(
-		ToolBarSimple * tbar,
-		int id,
-		const wxString & label,
-		const wxBitmap & bmpNormal,
-		const wxBitmap & bmpRollover,
-		wxItemKind kind,
-		wxObject * clientData,
-		const wxString & shortHelp,
-		const wxString & longHelp)
-	: wxToolBarToolBase((wxToolBarBase*)tbar, id, label, bmpNormal, bmpRollover, kind, clientData, shortHelp, longHelp)
+OCPN_MsgEvent::OCPN_MsgEvent(wxEventType commandType, int id)
+	: wxEvent(id, commandType)
 {
-	m_enabled = true;
-	m_toggled = false;
-	rollover = false;
-	bitmapOK = false;
-
-	toolname = g_pi_manager->GetToolOwnerCommonName( id );
-	if( toolname == _T("") ) {
-		isPluginTool = false;
-		toolname = label;
-		iconName = label;
-	} else {
-		isPluginTool = true;
-		pluginNormalIcon = &bmpNormal;
-		pluginRolloverIcon = &bmpRollover;
-	}
 }
 
-void ToolBarTool::SetSize(const wxSize& size)
+OCPN_MsgEvent::~OCPN_MsgEvent()
 {
-	m_width = size.x;
-	m_height = size.y;
 }
 
-wxCoord ToolBarTool::GetWidth() const
+wxEvent * OCPN_MsgEvent::Clone() const
 {
-	return m_width;
+	OCPN_MsgEvent *newevent = new OCPN_MsgEvent(*this);
+	newevent->m_MessageID=this->m_MessageID.c_str();  // this enforces a deep copy of the string data
+	newevent->m_MessageText=this->m_MessageText.c_str();
+	return newevent;
 }
 
-wxCoord ToolBarTool::GetHeight() const
+wxString OCPN_MsgEvent::GetID()
 {
-	return m_height;
+	return m_MessageID;
 }
 
-wxString ToolBarTool::GetToolname() const
+wxString OCPN_MsgEvent::GetJSONText()
 {
-	return toolname;
+	return m_MessageText;
 }
 
-void ToolBarTool::SetIconName(const wxString &  name)
+void OCPN_MsgEvent::SetID(const wxString &string)
 {
-	iconName = name;
+	m_MessageID = string;
 }
 
-wxString ToolBarTool::GetIconName() const
+void OCPN_MsgEvent::SetJSONText(const wxString & string)
 {
-	return iconName;
+	m_MessageText = string;
 }
 

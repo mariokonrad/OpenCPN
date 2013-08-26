@@ -26,7 +26,7 @@
 #include "StyleManager.h"
 #include "Style.h"
 #include "chart1.h"
-#include "pluginmanager.h"
+#include "plugin/PlugInManager.h"
 #include "FontMgr.h"
 #include "GrabberWin.h"
 #include "ToolbarMOBDialog.h"

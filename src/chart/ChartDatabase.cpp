@@ -29,7 +29,7 @@
 
 #include "ChartDatabase.h"
 #include "chartbase.h"
-#include "pluginmanager.h"
+#include "plugin/PlugInManager.h"
 #include "ChartPlugInWrapper.h"
 
 #ifndef UINT32

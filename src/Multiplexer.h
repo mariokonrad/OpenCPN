@@ -24,8 +24,12 @@
 #ifndef __MULTIPLEXER_H__
 #define __MULTIPLEXER_H__
 
-#include "pluginmanager.h"
 #include "datastream.h"
+
+class wxGauge;
+class Route;
+class RoutePoint;
+class OCPN_DataStreamEvent;
 
 WX_DEFINE_ARRAY(DataStream *, wxArrayOfDataStreams);
 
@@ -33,7 +37,7 @@ class Multiplexer : public wxEvtHandler
 {
 	public:
 		Multiplexer();
-		~Multiplexer();
+		virtual ~Multiplexer();
 		void AddStream(DataStream *stream);
 		void StopAllStreams();
 		void ClearStreams();

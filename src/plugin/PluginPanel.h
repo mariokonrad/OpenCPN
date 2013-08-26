@@ -21,68 +21,45 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "ToolBarTool.h"
-#include "plugin/PlugInManager.h"
+#ifndef __PLUGIN__PLUGINPANEL__H__
+#define __PLUGIN__PLUGINPANEL__H__
 
-extern PlugInManager * g_pi_manager;
+#include <wx/panel.h>
 
-ToolBarTool::ToolBarTool(
-		ToolBarSimple * tbar,
-		int id,
-		const wxString & label,
-		const wxBitmap & bmpNormal,
-		const wxBitmap & bmpRollover,
-		wxItemKind kind,
-		wxObject * clientData,
-		const wxString & shortHelp,
-		const wxString & longHelp)
-	: wxToolBarToolBase((wxToolBarBase*)tbar, id, label, bmpNormal, bmpRollover, kind, clientData, shortHelp, longHelp)
+class wxButton;
+class wxStaticText;
+class wxFlexGridSizer;
+class PluginListPanel;
+class PlugInContainer;
+
+class PluginPanel : public wxPanel
 {
-	m_enabled = true;
-	m_toggled = false;
-	rollover = false;
-	bitmapOK = false;
+	public:
+		PluginPanel(
+				PluginListPanel * parent,
+				wxWindowID id,
+				const wxPoint & pos,
+				const wxSize & size,
+				PlugInContainer * p_plugin);
+		virtual ~PluginPanel();
 
-	toolname = g_pi_manager->GetToolOwnerCommonName( id );
-	if( toolname == _T("") ) {
-		isPluginTool = false;
-		toolname = label;
-		iconName = label;
-	} else {
-		isPluginTool = true;
-		pluginNormalIcon = &bmpNormal;
-		pluginRolloverIcon = &bmpRollover;
-	}
-}
+		void OnPluginSelected(wxMouseEvent & event);
+		void SetSelected(bool selected);
+		void OnPluginPreferences(wxCommandEvent & event);
+		void OnPluginEnable(wxCommandEvent & event);
+		void SetEnabled(bool enabled);
+		bool GetSelected();
 
-void ToolBarTool::SetSize(const wxSize& size)
-{
-	m_width = size.x;
-	m_height = size.y;
-}
+	private:
+		PluginListPanel * m_PluginListPanel;
+		bool m_bSelected;
+		PlugInContainer * m_pPlugin;
+		wxStaticText * m_pName;
+		wxStaticText * m_pVersion;
+		wxStaticText * m_pDescription;
+		wxFlexGridSizer * m_pButtons;
+		wxButton * m_pButtonEnable;
+		wxButton * m_pButtonPreferences;
+};
 
-wxCoord ToolBarTool::GetWidth() const
-{
-	return m_width;
-}
-
-wxCoord ToolBarTool::GetHeight() const
-{
-	return m_height;
-}
-
-wxString ToolBarTool::GetToolname() const
-{
-	return toolname;
-}
-
-void ToolBarTool::SetIconName(const wxString &  name)
-{
-	iconName = name;
-}
-
-wxString ToolBarTool::GetIconName() const
-{
-	return iconName;
-}
-
+#endif

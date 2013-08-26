@@ -61,7 +61,7 @@
 #include "MarkInfo.h"
 #include "TrackPropDlg.h"
 #include "tcmgr.h"
-#include "pluginmanager.h"
+#include "plugin/PlugInManager.h"
 #include "ocpn_pixel.h"
 #include "ocpndc.h"
 #include "Undo.h"

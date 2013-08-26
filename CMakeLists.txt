@@ -525,8 +525,13 @@ SET(HDRS
 		src/Undo.h
 		src/UndoAction.h
 		src/AboutDialog.h
-		include/pluginmanager.h
+		src/plugin/PlugInManager.h
 		include/ocpn_plugin.h
+		src/plugin/PlugInContainer.h
+		src/plugin/PlugInToolbarToolContainer.h
+		src/plugin/PluginPanel.h
+		src/plugin/PluginListPanel.h
+		src/plugin/OCPN_MsgEvent.h
 		src/chart/ChartSymbols.h
 		src/chart/SymbolSizeInfo.h
 		src/chart/ChartSymbol.h
@@ -663,7 +668,12 @@ SET(SRCS
 		src/Undo.cpp
 		src/UndoAction.cpp
 		src/AboutDialog.cpp
-		src/pluginmanager.cpp
+		src/plugin/PlugInManager.cpp
+		src/plugin/PlugInContainer.cpp
+		src/plugin/PlugInToolbarToolContainer.cpp
+		src/plugin/PluginPanel.cpp
+		src/plugin/PluginListPanel.cpp
+		src/plugin/OCPN_MsgEvent.cpp
 		src/gpx/GpxDocument.cpp
 		src/chart/ChartSymbols.cpp
 		src/RazdsParser.cpp

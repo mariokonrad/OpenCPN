@@ -98,12 +98,13 @@
 #include "TrackPropDlg.h"
 #include "cutil.h"
 #include "RouteManagerDialog.h"
-#include "pluginmanager.h"
+#include "plugin/PlugInManager.h"
 #include "MyPrintout.h"
 #include "OCPNFloatingToolbarDialog.h"
 #include "NavObjectChanges.h"
 #include "MicrosoftCompatibility.h"
 #include "chart/ChartDummy.h"
+#include "plugin/OCPN_MsgEvent.h"
 
 #ifdef __WXOSX__
 	#include "macutils.h"

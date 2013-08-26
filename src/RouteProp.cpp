@@ -42,7 +42,7 @@
 #include "chcanv.h"
 #include "tcmgr.h"
 #include "PositionParser.h"
-#include "pluginmanager.h"
+#include "plugin/PlugInManager.h"
 #include "tide/IDX_entry.h"
 #include "gpx/gpx.h"
 

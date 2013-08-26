@@ -21,68 +21,33 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "ToolBarTool.h"
-#include "plugin/PlugInManager.h"
+#include "PlugInToolbarToolContainer.h"
+#include <wx/bitmap.h>
 
-extern PlugInManager * g_pi_manager;
+PlugInToolbarToolContainer::PlugInToolbarToolContainer()
+	: bitmap_day(NULL)
+	, bitmap_dusk(NULL)
+	, bitmap_night(NULL)
+	, bitmap_Rollover(NULL)
+{}
 
-ToolBarTool::ToolBarTool(
-		ToolBarSimple * tbar,
-		int id,
-		const wxString & label,
-		const wxBitmap & bmpNormal,
-		const wxBitmap & bmpRollover,
-		wxItemKind kind,
-		wxObject * clientData,
-		const wxString & shortHelp,
-		const wxString & longHelp)
-	: wxToolBarToolBase((wxToolBarBase*)tbar, id, label, bmpNormal, bmpRollover, kind, clientData, shortHelp, longHelp)
+PlugInToolbarToolContainer::~PlugInToolbarToolContainer()
 {
-	m_enabled = true;
-	m_toggled = false;
-	rollover = false;
-	bitmapOK = false;
-
-	toolname = g_pi_manager->GetToolOwnerCommonName( id );
-	if( toolname == _T("") ) {
-		isPluginTool = false;
-		toolname = label;
-		iconName = label;
-	} else {
-		isPluginTool = true;
-		pluginNormalIcon = &bmpNormal;
-		pluginRolloverIcon = &bmpRollover;
+	if (bitmap_dusk) {
+		delete bitmap_dusk;
+		bitmap_dusk = NULL;
 	}
-}
-
-void ToolBarTool::SetSize(const wxSize& size)
-{
-	m_width = size.x;
-	m_height = size.y;
-}
-
-wxCoord ToolBarTool::GetWidth() const
-{
-	return m_width;
-}
-
-wxCoord ToolBarTool::GetHeight() const
-{
-	return m_height;
-}
-
-wxString ToolBarTool::GetToolname() const
-{
-	return toolname;
-}
-
-void ToolBarTool::SetIconName(const wxString &  name)
-{
-	iconName = name;
-}
-
-wxString ToolBarTool::GetIconName() const
-{
-	return iconName;
+	if (bitmap_night) {
+		delete bitmap_night;
+		bitmap_night = NULL;
+	}
+	if (bitmap_day) {
+		delete bitmap_day;
+		bitmap_day = NULL;
+	}
+	if (bitmap_Rollover) {
+		delete bitmap_Rollover;
+		bitmap_Rollover = NULL;
+	}
 }
 

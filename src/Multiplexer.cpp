@@ -24,9 +24,10 @@
 #include "Multiplexer.h"
 #include "navutil.h"
 #include "NMEALogWindow.h"
+#include "plugin/PlugInManager.h"
 #include "garmin/jeeps/garmin_wrapper.h"
 #include "OCPN_DataStreamEvent.h"
-#include <wx/wx.h>
+#include <wx/gauge.h>
 
 extern PlugInManager * g_pi_manager;
 extern wxString g_GPS_Ident;

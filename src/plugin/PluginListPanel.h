@@ -21,68 +21,33 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "ToolBarTool.h"
-#include "plugin/PlugInManager.h"
+#ifndef __PLUGIN__PLUGINLISTPANEL__H__
+#define __PLUGIN__PLUGINLISTPANEL__H__
 
-extern PlugInManager * g_pi_manager;
+#include <wx/scrolwin.h>
+#include "plugin/PlugInContainer.h"
+#include "plugin/PluginPanel.h"
 
-ToolBarTool::ToolBarTool(
-		ToolBarSimple * tbar,
-		int id,
-		const wxString & label,
-		const wxBitmap & bmpNormal,
-		const wxBitmap & bmpRollover,
-		wxItemKind kind,
-		wxObject * clientData,
-		const wxString & shortHelp,
-		const wxString & longHelp)
-	: wxToolBarToolBase((wxToolBarBase*)tbar, id, label, bmpNormal, bmpRollover, kind, clientData, shortHelp, longHelp)
+WX_DEFINE_ARRAY_PTR(PluginPanel *, ArrayOfPluginPanel);
+
+class PluginListPanel : public wxScrolledWindow
 {
-	m_enabled = true;
-	m_toggled = false;
-	rollover = false;
-	bitmapOK = false;
+	public:
+		PluginListPanel(
+				wxWindow * parent,
+				wxWindowID id,
+				const wxPoint & pos,
+				const wxSize & size,
+				ArrayOfPlugIns * pPluginArray);
+		virtual ~PluginListPanel();
 
-	toolname = g_pi_manager->GetToolOwnerCommonName( id );
-	if( toolname == _T("") ) {
-		isPluginTool = false;
-		toolname = label;
-		iconName = label;
-	} else {
-		isPluginTool = true;
-		pluginNormalIcon = &bmpNormal;
-		pluginRolloverIcon = &bmpRollover;
-	}
-}
+		void SelectPlugin(PluginPanel *pi);
+		void UpdateSelections();
 
-void ToolBarTool::SetSize(const wxSize& size)
-{
-	m_width = size.x;
-	m_height = size.y;
-}
+	private:
+		ArrayOfPlugIns * m_pPluginArray;
+		ArrayOfPluginPanel m_PluginItems;
+		PluginPanel * m_PluginSelected;
+};
 
-wxCoord ToolBarTool::GetWidth() const
-{
-	return m_width;
-}
-
-wxCoord ToolBarTool::GetHeight() const
-{
-	return m_height;
-}
-
-wxString ToolBarTool::GetToolname() const
-{
-	return toolname;
-}
-
-void ToolBarTool::SetIconName(const wxString &  name)
-{
-	iconName = name;
-}
-
-wxString ToolBarTool::GetIconName() const
-{
-	return iconName;
-}
-
+#endif

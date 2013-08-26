@@ -27,7 +27,7 @@
 #include "dychart.h"
 #include "s52plib.h"
 #include "Quilt.h"
-#include "pluginmanager.h"
+#include "plugin/PlugInManager.h"
 #include "chartbase.h"
 #include "chartimg.h"
 #include "s57chart.h"
@@ -678,7 +678,8 @@ bool glChartCanvas::PurgeChartTextures( ChartBase *pc )
 
 void glChartCanvas::DrawGLOverLayObjects( void )
 {
-	if( g_pi_manager ) g_pi_manager->RenderAllGLCanvasOverlayPlugIns( m_pcontext, cc1->GetVP() );
+	if( g_pi_manager )
+		g_pi_manager->RenderAllGLCanvasOverlayPlugIns( m_pcontext, cc1->GetVP() );
 }
 
 void glChartCanvas::GrowData( int size )

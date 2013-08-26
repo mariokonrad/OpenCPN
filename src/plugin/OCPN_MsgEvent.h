@@ -21,68 +21,29 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "ToolBarTool.h"
-#include "plugin/PlugInManager.h"
+#ifndef __PLUGIN__OCPN_MSGEVENT__H__
+#define __PLUGIN__OCPN_MSGEVENT__H__
 
-extern PlugInManager * g_pi_manager;
+#include <wx/event.h>
 
-ToolBarTool::ToolBarTool(
-		ToolBarSimple * tbar,
-		int id,
-		const wxString & label,
-		const wxBitmap & bmpNormal,
-		const wxBitmap & bmpRollover,
-		wxItemKind kind,
-		wxObject * clientData,
-		const wxString & shortHelp,
-		const wxString & longHelp)
-	: wxToolBarToolBase((wxToolBarBase*)tbar, id, label, bmpNormal, bmpRollover, kind, clientData, shortHelp, longHelp)
+class OCPN_MsgEvent : public wxEvent
 {
-	m_enabled = true;
-	m_toggled = false;
-	rollover = false;
-	bitmapOK = false;
+	public:
+		OCPN_MsgEvent(wxEventType commandType = wxEVT_NULL, int id = 0);
+		OCPN_MsgEvent(const OCPN_MsgEvent & event);
+		virtual ~OCPN_MsgEvent();
 
-	toolname = g_pi_manager->GetToolOwnerCommonName( id );
-	if( toolname == _T("") ) {
-		isPluginTool = false;
-		toolname = label;
-		iconName = label;
-	} else {
-		isPluginTool = true;
-		pluginNormalIcon = &bmpNormal;
-		pluginRolloverIcon = &bmpRollover;
-	}
-}
+		wxString GetID();
+		wxString GetJSONText();
+		void SetID(const wxString &string);
+		void SetJSONText(const wxString &string);
 
-void ToolBarTool::SetSize(const wxSize& size)
-{
-	m_width = size.x;
-	m_height = size.y;
-}
+		// required for sending with wxPostEvent()
+		wxEvent *Clone() const;
 
-wxCoord ToolBarTool::GetWidth() const
-{
-	return m_width;
-}
+	private:
+		wxString m_MessageID;
+		wxString m_MessageText;
+};
 
-wxCoord ToolBarTool::GetHeight() const
-{
-	return m_height;
-}
-
-wxString ToolBarTool::GetToolname() const
-{
-	return toolname;
-}
-
-void ToolBarTool::SetIconName(const wxString &  name)
-{
-	iconName = name;
-}
-
-wxString ToolBarTool::GetIconName() const
-{
-	return iconName;
-}
-
+#endif

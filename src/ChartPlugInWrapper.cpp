@@ -23,7 +23,7 @@
 
 #include "ChartPlugInWrapper.h"
 #include "ocpn_plugin.h"
-#include "pluginmanager.h"
+#include "OCPNRegion.h"
 #include <wx/image.h>
 #include <wx/bitmap.h>
 

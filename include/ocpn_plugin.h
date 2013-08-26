@@ -43,6 +43,7 @@
 
 #include <wx/xml/xml.h>
 #include <wx/glcanvas.h>
+#include <wx/dcmemory.h>
 
 //    This is the most modern API Version number
 //    It is expected that the API will remain downward compatible, meaning that

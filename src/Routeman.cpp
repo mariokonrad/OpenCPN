@@ -50,7 +50,7 @@
 #include "georef.h"
 #include "RouteProp.h"
 #include "RouteManagerDialog.h"
-#include "pluginmanager.h"
+#include "plugin/PlugInManager.h"
 #include "Multiplexer.h"
 #include "Select.h"
 #include "MarkIcon.h"

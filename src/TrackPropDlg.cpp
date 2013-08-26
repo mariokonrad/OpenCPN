@@ -31,7 +31,7 @@
 #include "RouteManagerDialog.h"
 #include "RoutePrintSelection.h"
 #include "LinkPropDlg.h"
-#include "pluginmanager.h"
+#include "plugin/PlugInManager.h"
 #include "gpx/gpx.h"
 
 extern RouteList * pRouteList;

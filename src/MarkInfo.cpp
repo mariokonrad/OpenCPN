@@ -486,7 +486,6 @@ bool MarkInfoImpl::UpdateProperties( bool positionOnly )
 
 		int NbrOfLinks = m_pRoutePoint->m_HyperlinkList->GetCount();
 		HyperlinkList *hyperlinklist = m_pRoutePoint->m_HyperlinkList;
-		//            int len = 0;
 		if( NbrOfLinks > 0 ) {
 			wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
 			while( linknode ) {
@@ -498,8 +497,8 @@ bool MarkInfoImpl::UpdateProperties( bool positionOnly )
 						Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
 				ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
 						wxHyperlinkEventHandler( MarkInfoImpl::OnHyperLinkClick ), NULL, this );
-				if( !m_pRoutePoint->m_bIsInLayer ) ctrl->Connect( wxEVT_RIGHT_DOWN,
-						wxMouseEventHandler( MarkInfoImpl::hyperlinkContextMenu ), NULL, this );
+				if( !m_pRoutePoint->m_bIsInLayer )
+					ctrl->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( MarkInfoImpl::hyperlinkContextMenu ), NULL, this );
 
 				bSizerLinks->Add( ctrl, 0, wxALL, 5 );
 
@@ -515,9 +514,10 @@ bool MarkInfoImpl::UpdateProperties( bool positionOnly )
 		if( fillCombo ) icons = pWayPointMan->Getpmarkicon_image_list();
 		for( int i = 0; i < pWayPointMan->GetNumIcons(); i++ ) {
 			wxString *ps = pWayPointMan->GetIconDescription( i );
-			if( *pWayPointMan->GetIconKey( i ) == m_pRoutePoint->m_IconName ) iconToSelect = i;
-
-			if( fillCombo && icons ) m_bcomboBoxIcon->Append( *ps, icons->GetBitmap( i ) );
+			if( *pWayPointMan->GetIconKey( i ) == m_pRoutePoint->m_IconName )
+				iconToSelect = i;
+			if( fillCombo && icons )
+				m_bcomboBoxIcon->Append( *ps, icons->GetBitmap( i ) );
 		}
 		m_bcomboBoxIcon->Select( iconToSelect );
 		this->Fit();
@@ -584,8 +584,8 @@ void MarkInfoImpl::OnDeleteLink( wxCommandEvent& event )
 			Hyperlink *link = linknode->GetData();
 			wxString Link = link->Link;
 			wxString Descr = link->DescrText;
-			if( Link == findurl
-					&& ( Descr == findlabel || ( Link == findlabel && Descr == wxEmptyString ) ) ) nodeToDelete =
+			if(Link == findurl && (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString)))
+				nodeToDelete =
 				linknode;
 			else {
 				wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, Descr,
@@ -623,8 +623,7 @@ void MarkInfoImpl::OnEditLink( wxCommandEvent& event )
 				Hyperlink *link = linknode->GetData();
 				wxString Link = link->Link;
 				wxString Descr = link->DescrText;
-				if( Link == findurl
-						&& ( Descr == findlabel || ( Link == findlabel && Descr == wxEmptyString ) ) ) {
+				if (Link == findurl && (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
 					link->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
 					link->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
 					wxHyperlinkCtrl* h =
@@ -653,7 +652,8 @@ void MarkInfoImpl::OnAddLink( wxCommandEvent& event )
 	m_pLinkProp->m_textCtrlLinkUrl->SetValue( wxEmptyString );
 	if( m_pLinkProp->ShowModal() == wxID_OK ) {
 		wxString desc = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
-		if( desc == wxEmptyString ) desc = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
+		if( desc == wxEmptyString )
+			desc = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
 		wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, desc,
 				m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxDefaultPosition, wxDefaultSize,
 				wxHL_DEFAULT_STYLE );
@@ -672,18 +672,16 @@ void MarkInfoImpl::OnAddLink( wxCommandEvent& event )
 		h->LType = wxEmptyString;
 		m_pRoutePoint->m_HyperlinkList->Append( h );
 	}
-
 	sbSizerLinks->Layout();
-
 	event.Skip();
 }
 
 void MarkInfoImpl::OnEditLinkToggle( wxCommandEvent& event )
 {
-	if( m_toggleBtnEdit->GetValue() ) m_staticTextEditEnabled->SetLabel(
-			_("Links are opened for editing.") );
+	if (m_toggleBtnEdit->GetValue())
+		m_staticTextEditEnabled->SetLabel(_("Links are opened for editing."));
 	else
-		m_staticTextEditEnabled->SetLabel( _("Links are opened in the default browser.") );
+		m_staticTextEditEnabled->SetLabel( _("Links are opened in the default browser."));
 	event.Skip();
 }
 
@@ -709,8 +707,9 @@ void MarkInfoImpl::OnExtDescriptionClick( wxCommandEvent& event )
 
 bool MarkInfoImpl::SaveChanges()
 {
-	if( m_pRoutePoint ) {
-		if( m_pRoutePoint->m_bIsInLayer ) return true;
+	if (m_pRoutePoint) {
+		if( m_pRoutePoint->m_bIsInLayer )
+			return true;
 
 		// Get User input Text Fields
 		m_pRoutePoint->SetName( m_textName->GetValue() );

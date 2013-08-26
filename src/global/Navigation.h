@@ -21,38 +21,30 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __APP__H__
-#define __APP__H__
-
-#include <wx/app.h>
-
-class wxCmdLineParser;
-class wxActivateEvent;
-class wxSingleInstanceChecker;
+#ifndef __GLOBAL__NAVIGATION__H__
+#define __GLOBAL__NAVIGATION__H__
 
 namespace global {
-class OCPN_GUI;
-class OCPN_Navigation;
-}
 
-class App : public wxApp
+class Navigation
 {
-		DECLARE_EVENT_TABLE()
-
 	public:
-		App();
-		bool OnInit();
-		int OnExit();
-		void OnInitCmdLine(wxCmdLineParser & parser);
-		bool OnCmdLineParsed(wxCmdLineParser & parser);
-		void OnActivateApp(wxActivateEvent & event);
-		void TrackOff(void);
 
-		wxSingleInstanceChecker * m_checker;
+		struct Data
+		{
+			double lat; // latitude
+			double lon; // longitude
+			double cog; // course over ground in degrees
+			double sog; // speed over ground in knots
+			double hdt; // heading degrees true
+			double hdm; // heading degrees magnetic
+			double var; // magnetic variationn in degrees
+		};
 
-	private:
-		global::OCPN_GUI * gui_instance;
-		global::OCPN_Navigation * nav_instance;
+		virtual const Data & get_data() const = 0;
+		virtual void set_magn_var(double) = 0;
 };
+
+}
 
 #endif

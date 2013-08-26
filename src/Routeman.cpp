@@ -54,6 +54,8 @@
 #include "Multiplexer.h"
 #include "Select.h"
 #include "MarkIcon.h"
+#include <global/OCPN.h>
+#include <global/Navigation.h>
 
 extern ConsoleCanvas * console;
 extern RouteList * pRouteList;
@@ -68,7 +70,6 @@ extern double gLat;
 extern double gLon;
 extern double gSog;
 extern double gCog;
-extern double gVar;
 
 extern Track * g_pActiveTrack;
 extern RouteProp * pRoutePropDialog;
@@ -565,12 +566,14 @@ bool Routeman::UpdateAutopilot()
 		m_NMEA0183.Rmc.SpeedOverGroundKnots = gSog;
 		m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue = gCog;
 
-		if( !wxIsNaN(gVar) ) {
-			if( gVar < 0. ) {
-				m_NMEA0183.Rmc.MagneticVariation = -gVar;
+		const double magn_var = global::OCPN::get().nav().get_data().var;
+
+		if (!wxIsNaN(magn_var)) {
+			if (magn_var < 0.0) {
+				m_NMEA0183.Rmc.MagneticVariation = -magn_var;
 				m_NMEA0183.Rmc.MagneticVariationDirection = West;
 			} else {
-				m_NMEA0183.Rmc.MagneticVariation = gVar;
+				m_NMEA0183.Rmc.MagneticVariation = magn_var;
 				m_NMEA0183.Rmc.MagneticVariationDirection = East;
 			}
 		} else

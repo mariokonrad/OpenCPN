@@ -21,28 +21,38 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPN__H__
-#define __OCPN__H__
+#ifndef __GLOBAL__OCPN_GUI__H__
+#define __GLOBAL__OCPN_GUI__H__
 
-class GUI;
+#include <global/GUI.h>
 
-class OCPN
+namespace global {
+
+class OCPN_GUI : public GUI
 {
 	private:
-		static OCPN * instance;
-		GUI * gui_instance;
+		Toolbar toolbar;
+		AISAlertDialog ais_alert_dialog;
+		AISQueryDialog ais_query_dialog;
 
-	private:
-		OCPN();
-		OCPN(const OCPN &);
-		~OCPN();
-		OCPN & operator=(const OCPN &);
+	public: // toolbar
+		virtual const Toolbar & get_toolbar() const;
+		virtual void set_toolbar_position(const wxPoint &);
+		virtual void set_toolbar_orientation(long);
+		void ensure_toolbar_position_range(wxPoint, wxPoint);
 
-	public:
-		static OCPN & get();
-		GUI & gui();
+	public: // ais alert dialog
+		virtual const AISAlertDialog & get_ais_alert_dialog() const;
+		virtual void set_ais_alert_dialog_position(const wxPoint &);
+		virtual void set_ais_alert_dialog_size(const wxSize &);
+		void ensure_ais_alert_dialog_position_range(wxPoint, wxPoint);
+		void ensure_ais_alert_dialog_position_range(wxPoint, wxSize);
 
-		void inject_gui(GUI *);
+	public: // ais query dialog
+		virtual const AISQueryDialog & get_ais_query_dialog() const;
+		virtual void set_ais_query_dialog_position(const wxPoint &);
 };
+
+}
 
 #endif

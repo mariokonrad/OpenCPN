@@ -21,38 +21,23 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __APP__H__
-#define __APP__H__
+#ifndef __GLOBAL__OCPN_NAVIGATION__H__
+#define __GLOBAL__OCPN_NAVIGATION__H__
 
-#include <wx/app.h>
-
-class wxCmdLineParser;
-class wxActivateEvent;
-class wxSingleInstanceChecker;
+#include <global/Navigation.h>
 
 namespace global {
-class OCPN_GUI;
-class OCPN_Navigation;
-}
 
-class App : public wxApp
+class OCPN_Navigation : public Navigation
 {
-		DECLARE_EVENT_TABLE()
-
-	public:
-		App();
-		bool OnInit();
-		int OnExit();
-		void OnInitCmdLine(wxCmdLineParser & parser);
-		bool OnCmdLineParsed(wxCmdLineParser & parser);
-		void OnActivateApp(wxActivateEvent & event);
-		void TrackOff(void);
-
-		wxSingleInstanceChecker * m_checker;
-
 	private:
-		global::OCPN_GUI * gui_instance;
-		global::OCPN_Navigation * nav_instance;
+		Data data;
+
+	public: // data
+		virtual const Data & get_data() const;
+		virtual void set_magn_var(double);
 };
+
+}
 
 #endif

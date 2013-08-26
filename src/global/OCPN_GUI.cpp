@@ -24,6 +24,8 @@
 #include "OCPN_GUI.h"
 #include <algorithm>
 
+namespace global {
+
 const GUI::Toolbar & OCPN_GUI::get_toolbar() const
 {
 	return toolbar;
@@ -83,5 +85,7 @@ const GUI::AISQueryDialog & OCPN_GUI::get_ais_query_dialog() const
 void OCPN_GUI::set_ais_query_dialog_position(const wxPoint & position)
 {
 	ais_query_dialog.position = position;
+}
+
 }
 

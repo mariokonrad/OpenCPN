@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include "wx/wxprec.h"
 
@@ -36,8 +35,8 @@
 #include "Select.h"
 #include "RouteManagerDialog.h"
 #include "Undo.h"
-#include "OCPN.h"
-#include "GUI.h"
+#include <global/OCPN.h>
+#include <global/GUI.h>
 
 extern AISTargetQueryDialog * g_pais_query_dialog_active;
 extern ColorScheme global_color_scheme;
@@ -239,7 +238,7 @@ void AISTargetQueryDialog::UpdateText()
 
 void AISTargetQueryDialog::OnMove(wxMoveEvent & event)
 {
-	OCPN::get().gui().set_ais_query_dialog_position(event.GetPosition());
+	global::OCPN::get().gui().set_ais_query_dialog_position(event.GetPosition());
 	event.Skip();
 }
 

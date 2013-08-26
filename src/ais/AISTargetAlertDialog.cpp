@@ -27,8 +27,8 @@
 #include "AIS_Decoder.h"
 #include "AIS_Target_Data.h"
 #include "FontMgr.h"
-#include "OCPN.h"
-#include "GUI.h"
+#include <global/OCPN.h>
+#include <global/GUI.h>
 
 extern bool g_bopengl;
 extern AISTargetAlertDialog *g_pais_alert_dialog_active;
@@ -242,13 +242,13 @@ void AISTargetAlertDialog::OnIdJumptoClick( wxCommandEvent& event )
 
 void AISTargetAlertDialog::OnMove(wxMoveEvent & event)
 {
-	OCPN::get().gui().set_ais_alert_dialog_position(event.GetPosition());
+	global::OCPN::get().gui().set_ais_alert_dialog_position(event.GetPosition());
     event.Skip();
 }
 
 void AISTargetAlertDialog::OnSize(wxSizeEvent & event)
 {
-	OCPN::get().gui().set_ais_alert_dialog_size(event.GetSize());
+	global::OCPN::get().gui().set_ais_alert_dialog_size(event.GetSize());
     event.Skip();
 }
 

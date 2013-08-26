@@ -105,8 +105,9 @@
 #include "MicrosoftCompatibility.h"
 #include "chart/ChartDummy.h"
 #include "plugin/OCPN_MsgEvent.h"
-#include "OCPN.h"
-#include "GUI.h"
+#include <global/OCPN.h>
+#include <global/GUI.h>
+#include <global/Navigation.h>
 
 #ifdef __WXOSX__
 	#include "macutils.h"
@@ -195,7 +196,6 @@ double gCog;
 double gSog;
 double gHdt;
 double gHdm;
-double gVar;
 double vLat;
 double vLon;
 double initial_scale_ppm;
@@ -682,9 +682,11 @@ MyFrame::MyFrame( wxFrame *frame, const wxString& title, const wxPoint& pos, con
     m_COGFilterLast = 0.;
     m_last_bGPSValid = false;
 
+	global::Navigation & nav = global::OCPN::get().nav();
+
     gHdt = NAN;
     gHdm = NAN;
-    gVar = NAN;
+    nav.set_magn_var(NAN);
     gSog = NAN;
     gCog = NAN;
     m_fixtime = 0;
@@ -910,7 +912,7 @@ void MyFrame::SetAndApplyColorScheme( ColorScheme cs )
 			this,
 			-1,
 			_( "AIS Target Query" ),
-			OCPN::get().gui().get_ais_query_dialog().position);
+			global::OCPN::get().gui().get_ais_query_dialog().position);
         g_pais_query_dialog_active->SetMMSI( n_mmsi );
         g_pais_query_dialog_active->UpdateText();
         if( b_isshown ) g_pais_query_dialog_active->Show();
@@ -1422,8 +1424,8 @@ void MyFrame::OnCloseWindow( wxCloseEvent& event )
 
     if (g_FloatingToolbarDialog) {
         wxPoint tbp = g_FloatingToolbarDialog->GetPosition();
-		OCPN::get().gui().set_toolbar_position(cc1->ScreenToClient(tbp));
-		OCPN::get().gui().set_toolbar_orientation(g_FloatingToolbarDialog->GetOrient());
+		global::OCPN::get().gui().set_toolbar_position(cc1->ScreenToClient(tbp));
+		global::OCPN::get().gui().set_toolbar_orientation(g_FloatingToolbarDialog->GetOrient());
     }
 
     pConfig->UpdateSettings();
@@ -3198,12 +3200,14 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
 
     //    Build and send a Position Fix event to PlugIns
     if( g_pi_manager ) {
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
             GenericPosDatEx GPSData;
             GPSData.kLat = gLat;
             GPSData.kLon = gLon;
             GPSData.kCog = gCog;
             GPSData.kSog = gSog;
-            GPSData.kVar = gVar;
+            GPSData.kVar = nav.var;
             GPSData.kHdm = gHdm;
             GPSData.kHdt = gHdt;
             GPSData.nSats = g_SatsInView;
@@ -4863,7 +4867,7 @@ void MyFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
             double decl_val;
             decl.ToDouble(&decl_val);
 
-            gVar = decl_val;
+			global::OCPN::get().nav().set_magn_var(decl_val);
         }
     }
 
@@ -5220,10 +5224,10 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                         if( !wxIsNaN(m_NMEA0183.Rmc.MagneticVariation) )
                         {
                             if( m_NMEA0183.Rmc.MagneticVariationDirection == East )
-                                gVar = m_NMEA0183.Rmc.MagneticVariation;
+                                global::OCPN::get().nav().set_magn_var(m_NMEA0183.Rmc.MagneticVariation);
                             else
                                 if( m_NMEA0183.Rmc.MagneticVariationDirection == West )
-                                    gVar = -m_NMEA0183.Rmc.MagneticVariation;
+									global::OCPN::get().nav().set_magn_var(-m_NMEA0183.Rmc.MagneticVariation);
 
                             g_bVAR_Rx = true;
                             gVAR_Watchdog = gps_watchdog_timeout_ticks;
@@ -5283,9 +5287,9 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                                 gHDx_Watchdog = gps_watchdog_timeout_ticks;
 
                             if( m_NMEA0183.Hdg.MagneticVariationDirection == East )
-                                gVar = m_NMEA0183.Hdg.MagneticVariationDegrees;
+								global::OCPN::get().nav().set_magn_var(m_NMEA0183.Hdg.MagneticVariationDegrees);
                             else if( m_NMEA0183.Hdg.MagneticVariationDirection == West )
-                                gVar = -m_NMEA0183.Hdg.MagneticVariationDegrees;
+								global::OCPN::get().nav().set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
 
                             if( !wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees) )
                             {
@@ -5543,12 +5547,14 @@ void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
     //    If gSog is greater than some threshold, we determine that we are "cruising"
     if( gSog > 3.0 ) g_bCruising = true;
 
-    //    Here is the one place we try to create gHdt from gHdm and gVar,
+    //    Here is the one place we try to create Hdt from Hdm and Var,
     //    but only if NMEA HDT sentence is not being received
 
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
     if( !g_bHDT_Rx ) {
-        if( !wxIsNaN(gVar) && !wxIsNaN(gHdm)) {
-            gHdt = gHdm + gVar;
+        if( !wxIsNaN(nav.var) && !wxIsNaN(gHdm)) {
+            gHdt = gHdm + nav.var;
             gHDT_Watchdog = gps_watchdog_timeout_ticks;
         }
     }

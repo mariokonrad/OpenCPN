@@ -21,46 +21,56 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GUI__H__
-#define __GUI__H__
+#include "OCPN.h"
+#include <cstdlib>
 
-#include <wx/gdicmn.h>
+namespace global {
 
-class GUI
+OCPN * OCPN::instance = NULL;
+
+OCPN::OCPN()
+	: gui_instance(NULL)
+	, nav_instance(NULL)
+{}
+
+OCPN::OCPN(const OCPN &)
+{}
+
+OCPN::~OCPN()
+{}
+
+OCPN & OCPN::operator=(const OCPN &)
 {
-	public:
+	return *this;
+}
 
-		struct Toolbar
-		{
-			wxPoint position;
-			long orientation;
-		};
+OCPN & OCPN::get()
+{
+	if (!instance) {
+		instance = new OCPN;
+	}
+	return *instance;
+}
 
-		virtual const Toolbar & get_toolbar() const = 0;
-		virtual void set_toolbar_position(const wxPoint &) = 0;
-		virtual void set_toolbar_orientation(long) = 0;
+void OCPN::inject(GUI * gui)
+{
+	gui_instance = gui;
+}
 
-	public:
+GUI & OCPN::gui()
+{
+	return *gui_instance;
+}
 
-		struct AISAlertDialog
-		{
-			wxPoint position;
-			wxSize size;
-		};
+void OCPN::inject(Navigation * nav)
+{
+	nav_instance = nav;
+}
 
-		virtual const AISAlertDialog & get_ais_alert_dialog() const = 0;
-		virtual void set_ais_alert_dialog_position(const wxPoint &) = 0;
-		virtual void set_ais_alert_dialog_size(const wxSize &) = 0;
+Navigation & OCPN::nav()
+{
+	return *nav_instance;
+}
 
-	public:
+}
 
-		struct AISQueryDialog
-		{
-			wxPoint position;
-		};
-
-		virtual const AISQueryDialog & get_ais_query_dialog() const = 0;
-		virtual void set_ais_query_dialog_position(const wxPoint &) = 0;
-};
-
-#endif

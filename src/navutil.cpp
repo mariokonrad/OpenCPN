@@ -69,8 +69,8 @@
 #include "Layer.h"
 #include "NavObjectChanges.h"
 #include "NMEALogWindow.h"
-#include "OCPN.h"
-#include "GUI.h"
+#include <global/OCPN.h>
+#include <global/GUI.h>
 
 #ifdef USE_S57
 	#include "s52plib.h"
@@ -367,6 +367,8 @@ void MyConfig::CreateRotatingNavObjBackup()
 
 void MyConfig::load_toolbar()
 {
+	using global::OCPN;
+
 	int x = 0;
 	int y = 0;
 	long orientation;
@@ -381,6 +383,8 @@ void MyConfig::load_toolbar()
 
 void MyConfig::load_ais_alert_dialog()
 {
+	using global::OCPN;
+
 	long size_x = 200;
 	long size_y = 200;
 	long pos_x = 0;
@@ -397,6 +401,8 @@ void MyConfig::load_ais_alert_dialog()
 
 void MyConfig::load_ais_query_dialog()
 {
+	using global::OCPN;
+
 	long x = 200;
 	long y = 200;
 
@@ -1553,7 +1559,7 @@ void MyConfig::LoadConfigGroups( ChartGroupArray *pGroupArray )
 
 void MyConfig::write_toolbar()
 {
-	const GUI::Toolbar & config = OCPN::get().gui().get_toolbar();
+	const global::GUI::Toolbar & config = global::OCPN::get().gui().get_toolbar();
 
 	Write(_T("ToolbarX"), config.position.x);
 	Write(_T("ToolbarY"), config.position.y);
@@ -1562,7 +1568,7 @@ void MyConfig::write_toolbar()
 
 void MyConfig::write_ais_alert_dialog()
 {
-	const GUI::AISAlertDialog & config = OCPN::get().gui().get_ais_alert_dialog();
+	const global::GUI::AISAlertDialog & config = global::OCPN::get().gui().get_ais_alert_dialog();
 
 	Write(_T("AlertDialogSizeX"), config.size.GetWidth());
 	Write(_T("AlertDialogSizeY"), config.size.GetHeight());
@@ -1572,7 +1578,7 @@ void MyConfig::write_ais_alert_dialog()
 
 void MyConfig::write_ais_query_dialog()
 {
-	const GUI::AISQueryDialog & config = OCPN::get().gui().get_ais_query_dialog();
+	const global::GUI::AISQueryDialog & config = global::OCPN::get().gui().get_ais_query_dialog();
 
 	Write(_T("QueryDialogPosX"), config.position.x);
 	Write(_T("QueryDialogPosY"), config.position.y);

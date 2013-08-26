@@ -22,7 +22,9 @@
  **************************************************************************/
 
 #include "App.h"
-#include "OCPN.h"
+#include <global/OCPN.h>
+#include <global/OCPN_GUI.h>
+#include <global/OCPN_Navigation.h>
 #include "dychart.h"
 #include "Select.h"
 #include "OCPNFloatingToolbarDialog.h"
@@ -48,7 +50,6 @@
 #include "MicrosoftCompatibility.h"
 #include "chart/ChartDummy.h"
 #include "plugin/PlugInManager.h"
-#include "OCPN_GUI.h"
 
 #include <wx/cmdline.h>
 #include <wx/datetime.h>
@@ -375,7 +376,6 @@ extern double gCog;
 extern double gSog;
 extern double gHdt;
 extern double gHdm;
-extern double gVar;
 extern wxString glog_file;
 extern int gGPS_Watchdog;
 extern int gHDx_Watchdog;
@@ -396,6 +396,11 @@ BEGIN_EVENT_TABLE(App, wxApp)
 END_EVENT_TABLE()
 
 #include "wx/dynlib.h"
+
+App::App()
+	: gui_instance(NULL)
+	, nav_instance(NULL)
+{}
 
 void App::OnInitCmdLine( wxCmdLineParser& parser )
 {
@@ -490,8 +495,11 @@ bool App::OnInit()
 	if( !wxApp::OnInit() )
 		return false;
 
-	gui_instance = new OCPN_GUI;
-	OCPN::get().inject_gui(gui_instance);
+	gui_instance = new global::OCPN_GUI;
+	global::OCPN::get().inject(gui_instance);
+
+	nav_instance = new global::OCPN_Navigation;
+	global::OCPN::get().inject(nav_instance);
 
 	//  On Windows
 	//  We allow only one instance unless the portable option is used

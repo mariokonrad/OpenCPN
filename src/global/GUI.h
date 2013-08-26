@@ -21,35 +21,50 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPN_GUI__H__
-#define __OCPN_GUI__H__
+#ifndef __GLOBAL__GUI__H__
+#define __GLOBAL__GUI__H__
 
-#include <GUI.h>
+#include <wx/gdicmn.h>
 
-class OCPN_GUI : public GUI
+namespace global {
+
+class GUI
 {
-	private:
-		Toolbar toolbar;
-		AISAlertDialog ais_alert_dialog;
-		AISQueryDialog ais_query_dialog;
+	public:
 
-	public: // toolbar
-		virtual const Toolbar & get_toolbar() const;
-		virtual void set_toolbar_position(const wxPoint &);
-		virtual void set_toolbar_orientation(long);
-		void ensure_toolbar_position_range(wxPoint, wxPoint);
+		struct Toolbar
+		{
+			wxPoint position;
+			long orientation;
+		};
 
-	public: // ais alert dialog
-		virtual const AISAlertDialog & get_ais_alert_dialog() const;
-		virtual void set_ais_alert_dialog_position(const wxPoint &);
-		virtual void set_ais_alert_dialog_size(const wxSize &);
-		void ensure_ais_alert_dialog_position_range(wxPoint, wxPoint);
-		void ensure_ais_alert_dialog_position_range(wxPoint, wxSize);
+		virtual const Toolbar & get_toolbar() const = 0;
+		virtual void set_toolbar_position(const wxPoint &) = 0;
+		virtual void set_toolbar_orientation(long) = 0;
 
-	public: // ais query dialog
-		virtual const AISQueryDialog & get_ais_query_dialog() const;
-		virtual void set_ais_query_dialog_position(const wxPoint &);
+	public:
+
+		struct AISAlertDialog
+		{
+			wxPoint position;
+			wxSize size;
+		};
+
+		virtual const AISAlertDialog & get_ais_alert_dialog() const = 0;
+		virtual void set_ais_alert_dialog_position(const wxPoint &) = 0;
+		virtual void set_ais_alert_dialog_size(const wxSize &) = 0;
+
+	public:
+
+		struct AISQueryDialog
+		{
+			wxPoint position;
+		};
+
+		virtual const AISQueryDialog & get_ais_query_dialog() const = 0;
+		virtual void set_ais_query_dialog_position(const wxPoint &) = 0;
 };
 
-#endif
+}
 
+#endif

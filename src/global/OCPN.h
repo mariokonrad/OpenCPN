@@ -21,41 +21,38 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "OCPN.h"
-#include "OCPN_GUI.h"
+#ifndef __GLOBAL__OCPN__H__
+#define __GLOBAL__OCPN__H__
 
-OCPN * OCPN::instance = NULL;
+namespace global {
 
-OCPN::OCPN()
-	: gui_instance(NULL)
-{}
+class GUI;
+class Navigation;
 
-OCPN::OCPN(const OCPN &)
-{}
-
-OCPN::~OCPN()
-{}
-
-OCPN & OCPN::operator=(const OCPN &)
+class OCPN
 {
-	return *this;
+	private:
+		static OCPN * instance;
+
+		GUI * gui_instance;
+		Navigation * nav_instance;
+
+	private:
+		OCPN();
+		OCPN(const OCPN &);
+		~OCPN();
+		OCPN & operator=(const OCPN &);
+
+	public:
+		static OCPN & get();
+
+		void inject(GUI *);
+		GUI & gui();
+
+		void inject(Navigation *);
+		Navigation & nav();
+};
+
 }
 
-OCPN & OCPN::get()
-{
-	if (!instance) {
-		instance = new OCPN;
-	}
-	return *instance;
-}
-
-void OCPN::inject_gui(GUI * gui)
-{
-	gui_instance = gui;
-}
-
-GUI & OCPN::gui()
-{
-	return *gui_instance;
-}
-
+#endif

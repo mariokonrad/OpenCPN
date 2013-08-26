@@ -83,8 +83,8 @@
 #include "TCWin.h"
 #include "MicrosoftCompatibility.h"
 #include "tide/IDX_entry.h"
-#include "OCPN.h"
-#include "GUI.h"
+#include <global/OCPN.h>
+#include <global/GUI.h>
 
 // AIS
 #include "ais/ais.h"
@@ -9240,7 +9240,7 @@ void ShowAISTargetQueryDialog( wxWindow *win, int mmsi )
     if( !win ) return;
 
     if( NULL == g_pais_query_dialog_active ) {
-		wxPoint pos = OCPN::get().gui().get_ais_query_dialog().position;
+		wxPoint pos = global::OCPN::get().gui().get_ais_query_dialog().position;
 
         if( g_pais_query_dialog_active ) {
             delete g_pais_query_dialog_active;

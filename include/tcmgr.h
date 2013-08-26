@@ -30,7 +30,6 @@
 #include <wx/arrstr.h>
 
 #include "tide/Station_Data.h"
-#include "tide/IDX_entry.h"
 #include "tide/TC_Error_Code.h"
 #include "tide/TCDataSource.h"
 
@@ -66,69 +65,46 @@
 #define TIDE_BAD_TIME   ((time_t) -1)
 
 
-//----------------------------------------------------------------------------
-//   Reference Station Data
-//----------------------------------------------------------------------------
-
-typedef struct {
-    Station_Data      *sta_data;
-    void        *next;
-} mru_entry;
-
-
-//----------------------------------------------------------------------------
-//   TCMgr
-//----------------------------------------------------------------------------
+class IDX_entry;
 
 class TCMgr
 {
-public:
-    TCMgr();
-    ~TCMgr();
+	public:
+		TCMgr();
+		~TCMgr();
 
-    TC_Error_Code LoadDataSources(wxArrayString &sources);
-    wxArrayString GetDataSet( void ) {
-        return m_sourcefile_array;
-    }
+		TC_Error_Code LoadDataSources(wxArrayString &sources);
 
-    bool IsReady(void) {
-        return bTCMReady;
-    }
+		wxArrayString GetDataSet(void);
+		bool IsReady(void) const;
 
-    bool GetTideOrCurrent(time_t t, int idx, float &value, float& dir);
-    bool GetTideOrCurrent15(time_t t, int idx, float &tcvalue, float& dir, bool &bnew_val);
-    bool GetTideFlowSens(time_t t, int sch_step, int idx, float &tcvalue_now, float &tcvalue_prev, bool &w_t);
-    void GetHightOrLowTide(time_t t, int sch_step_1, int sch_step_2, float tide_val ,bool w_t , int idx, float &tcvalue, time_t &tctime);
+		bool GetTideOrCurrent(time_t t, int idx, float &value, float& dir);
+		bool GetTideOrCurrent15(time_t t, int idx, float &tcvalue, float& dir, bool &bnew_val);
+		bool GetTideFlowSens(time_t t, int sch_step, int idx, float &tcvalue_now, float &tcvalue_prev, bool &w_t);
+		void GetHightOrLowTide(time_t t, int sch_step_1, int sch_step_2, float tide_val ,bool w_t , int idx, float &tcvalue, time_t &tctime);
 
-    int GetStationTimeOffset(IDX_entry *pIDX);
-    int GetNextBigEvent(time_t *tm, int idx);
+		int GetStationTimeOffset(IDX_entry *pIDX);
+		int GetNextBigEvent(time_t *tm, int idx);
 
-    const IDX_entry *GetIDX_entry(int index) const;
+		const IDX_entry *GetIDX_entry(int index) const;
+		int Get_max_IDX() const;
+		int GetStationIDXbyName(const wxString & prefix, double xlat, double xlon) const;
+		int GetStationIDXbyNameType(const wxString & prefix, double xlat, double xlon, char type) const;
 
-    int Get_max_IDX() const
-	{
-        return m_Combined_IDX_array.GetCount()-1;
-    }
+	private:
+		void PurgeData();
 
-    int GetStationIDXbyName(const wxString & prefix, double xlat, double xlon) const;
-    int GetStationIDXbyNameType(const wxString & prefix, double xlat, double xlon, char type) const;
+		void LoadMRU(void);
+		void SaveMRU(void);
+		void AddMRU(Station_Data *psd);
+		void FreeMRU(void);
 
-private:
-    void PurgeData();
+		bool bTCMReady;
+		wxString pmru_file_name;
 
-    void LoadMRU(void);
-    void SaveMRU(void);
-    void AddMRU(Station_Data *psd);
-    void FreeMRU(void);
-
-    bool bTCMReady;
-    wxString pmru_file_name;
-
-    ArrayOfTCDSources   m_source_array;
-    wxArrayString       m_sourcefile_array;
-
-    ArrayOfIDXEntry     m_Combined_IDX_array;
-
+		ArrayOfTCDSources m_source_array;
+		wxArrayString m_sourcefile_array;
+		std::vector<IDX_entry *> m_Combined_IDX_array;
 };
 
 /* $Id: tcd.h.in 3744 2010-08-17 22:34:46Z flaterco $ */

@@ -82,6 +82,7 @@
 #include "EmbossData.h"
 #include "TCWin.h"
 #include "MicrosoftCompatibility.h"
+#include "tide/IDX_entry.h"
 
 // AIS
 #include "ais/ais.h"

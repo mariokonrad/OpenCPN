@@ -43,6 +43,7 @@
 #include "tcmgr.h"
 #include "PositionParser.h"
 #include "pluginmanager.h"
+#include "tide/IDX_entry.h"
 #include "gpx/gpx.h"
 
 extern double gLat;
@@ -1042,7 +1043,8 @@ void RouteProp::InitializeList()
 
 bool RouteProp::UpdateProperties()
 {
-	if( NULL == m_pRoute ) return false;
+	if( NULL == m_pRoute )
+		return false;
 
 	::wxBeginBusyCursor();
 
@@ -1106,8 +1108,8 @@ bool RouteProp::UpdateProperties()
 				c = _T("@~~");
 				c.Append( wxString( gpIDX->IDX_station_name, wxConvUTF8 ) );
 				int i = c.Find( ',' );
-				if( i != wxNOT_FOUND ) c.Remove( i );
-
+				if( i != wxNOT_FOUND )
+					c.Remove( i );
 			}
 			column_info.SetText( c );
 			m_wpList->SetColumn( 8, column_info );
@@ -1155,13 +1157,15 @@ bool RouteProp::UpdateProperties()
 		} else
 			m_StartTimeCtl->Clear();
 
-		if( IsThisRouteExtendable() ) m_ExtendButton->Enable( true );
+		if( IsThisRouteExtendable() )
+			m_ExtendButton->Enable( true );
 
 		//  Total length
 		wxString slen;
 		slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance( m_pRoute->m_route_length ) );
 
-		if( !m_pEnroutePoint ) m_TotalDistCtl->SetValue( slen );
+		if( !m_pEnroutePoint )
+			m_TotalDistCtl->SetValue( slen );
 		else
 			m_TotalDistCtl->Clear();
 
@@ -1176,7 +1180,8 @@ bool RouteProp::UpdateProperties()
 		else
 			time_form = time.Format( _(" %H Hours  %M Minutes") );
 
-		if( !m_pEnroutePoint ) m_TimeEnrouteCtl->SetValue( time_form );
+		if( !m_pEnroutePoint )
+			m_TimeEnrouteCtl->SetValue( time_form );
 		else
 			m_TimeEnrouteCtl->Clear();
 

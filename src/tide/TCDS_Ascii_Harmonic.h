@@ -31,9 +31,10 @@
 
 #include "TCDataFactory.h"
 #include "Station_Data.h"
-#include "IDX_entry.h"
 
 #define linelen 300
+
+class IDX_entry;
 
 class TCDS_Ascii_Harmonic : public TCDataFactory
 {
@@ -42,14 +43,10 @@ class TCDS_Ascii_Harmonic : public TCDataFactory
 		virtual ~TCDS_Ascii_Harmonic();
 
 		TC_Error_Code LoadData(const wxString & data_file_path);
-
-		virtual int GetMaxIndex(void) const
-		{
-			return num_IDX;
-		}
-
+		virtual int GetMaxIndex(void) const;
 		IDX_entry *GetIndexEntry(int n_index);
 		TC_Error_Code LoadHarmonicData(IDX_entry *pIDX);
+
 		int pIDX_Ref;
 
 	private:
@@ -75,7 +72,7 @@ class TCDS_Ascii_Harmonic : public TCDataFactory
 		char index_line_buffer[1024];
 		FILE * m_IndexFile;
 		std::vector<TCDataFactory::AbbrEntry> m_abbreviation_array; // FIXME: what for? the container is filled and cleared, but not used
-		ArrayOfIDXEntry m_IDX_array;
+		std::vector<IDX_entry *> m_IDX_array;
 
 		int num_IDX;
 		int num_nodes;

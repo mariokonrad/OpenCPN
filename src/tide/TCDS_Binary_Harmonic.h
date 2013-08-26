@@ -30,7 +30,8 @@
 
 #include "TCDataFactory.h"
 #include "Station_Data.h"
-#include "IDX_entry.h"
+
+class IDX_entry;
 
 class TCDS_Binary_Harmonic : public TCDataFactory
 {
@@ -39,12 +40,7 @@ class TCDS_Binary_Harmonic : public TCDataFactory
 		virtual ~TCDS_Binary_Harmonic();
 
 		TC_Error_Code LoadData(const wxString &data_file_path);
-
-		virtual int GetMaxIndex(void) const
-		{
-			return num_IDX;
-		}
-
+		virtual int GetMaxIndex(void) const;
 		IDX_entry *GetIndexEntry(int n_index);
 		TC_Error_Code LoadHarmonicData(IDX_entry *pIDX);
 
@@ -53,7 +49,7 @@ class TCDS_Binary_Harmonic : public TCDataFactory
 
 		wxString m_last_reference_not_found;
 
-		ArrayOfIDXEntry m_IDX_array;
+		std::vector<IDX_entry *> m_IDX_array;
 
 		int num_IDX;
 		int num_nodes;

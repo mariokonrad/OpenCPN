@@ -23,9 +23,7 @@
 
 #include "IDX_entry.h"
 
-#include <string.h>
-#include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(ArrayOfIDXEntry);
+#include <cstring>
 
 IDX_entry::IDX_entry()
 {

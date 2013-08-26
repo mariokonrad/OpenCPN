@@ -31,6 +31,7 @@
 #include <time.h>
 
 #include "dychart.h"
+#include "tide/IDX_entry.h"
 #include "tcmgr.h"
 #include "georef.h"
 
@@ -703,12 +704,28 @@ void TCMgr::PurgeData()
     //  Index entries are owned by the data sources
     //  so we need to clear them from the combined list without
     //  deleting them
-    while(m_Combined_IDX_array.GetCount()) {
-        m_Combined_IDX_array.Detach(0);
+    while(m_Combined_IDX_array.size()) {
+        m_Combined_IDX_array.erase(m_Combined_IDX_array.begin());
     }
 
     //  Delete all the data sources
     m_source_array.Clear();
+}
+
+
+int TCMgr::Get_max_IDX() const
+{
+	return m_Combined_IDX_array.size()-1;
+}
+
+bool TCMgr::IsReady(void) const
+{
+	return bTCMReady;
+}
+
+wxArrayString TCMgr::GetDataSet(void)
+{
+	return m_sourcefile_array;
 }
 
 TC_Error_Code TCMgr::LoadDataSources(wxArrayString &sources)
@@ -720,7 +737,7 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString &sources)
     m_sourcefile_array = sources;
 
     //  Arrange for the index array to begin counting at "one"
-    m_Combined_IDX_array.Add((IDX_entry *)(NULL));
+    m_Combined_IDX_array.push_back((IDX_entry *)(NULL));
     int num_IDX = 1;
 
     for(unsigned int i=0 ; i < sources.GetCount() ; i++) {
@@ -746,7 +763,7 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString &sources)
                 IDX_entry *pIDX = s->GetIndexEntry(k);
                 pIDX->IDX_rec_num = num_IDX;
                 num_IDX++;
-                m_Combined_IDX_array.Add(pIDX);
+                m_Combined_IDX_array.push_back(pIDX);
             }
         }
     }
@@ -756,10 +773,10 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString &sources)
     return  TC_NO_ERROR ;
 }
 
-const IDX_entry *TCMgr::GetIDX_entry(int index) const
+const IDX_entry * TCMgr::GetIDX_entry(int index) const
 {
-    if((unsigned int)index < m_Combined_IDX_array.GetCount())
-        return &m_Combined_IDX_array.Item(index);
+    if ((unsigned int)index < m_Combined_IDX_array.size())
+        return m_Combined_IDX_array.at(index);
     else
         return NULL;
 }
@@ -772,7 +789,7 @@ bool TCMgr::GetTideOrCurrent(time_t t, int idx, float &tcvalue, float& dir)
     tcvalue = 0;
 
     //    Load up this location data
-    IDX_entry *pIDX = &m_Combined_IDX_array.Item( idx );    // point to the index entry
+    IDX_entry * pIDX = m_Combined_IDX_array.at(idx); // point to the index entry
 
     if( !pIDX ) {
         dir = 0;
@@ -812,7 +829,7 @@ bool TCMgr::GetTideOrCurrent(time_t t, int idx, float &tcvalue, float& dir)
 bool TCMgr::GetTideOrCurrent15(time_t t, int idx, float &tcvalue, float& dir, bool &bnew_val)
 {
     int ret;
-    IDX_entry *pIDX = &m_Combined_IDX_array.Item( idx );             // point to the index entry
+    IDX_entry * pIDX = m_Combined_IDX_array.at(idx);             // point to the index entry
 
     if( !pIDX ) {
         dir = 0;
@@ -890,7 +907,7 @@ bool TCMgr::GetTideFlowSens(time_t t, int sch_step, int idx, float &tcvalue_now,
 
 
     //    Load up this location data
-    IDX_entry *pIDX = &m_Combined_IDX_array.Item( idx );             // point to the index entry
+    IDX_entry * pIDX = m_Combined_IDX_array.at(idx);             // point to the index entry
 
     if( !pIDX )
         return false;
@@ -924,7 +941,7 @@ void TCMgr::GetHightOrLowTide(time_t t, int sch_step_1, int sch_step_2, float ti
     tctime = t;
 
     //    Load up this location data
-    IDX_entry *pIDX = &m_Combined_IDX_array.Item( idx );             // point to the index entry
+    IDX_entry * pIDX = m_Combined_IDX_array.at(idx);             // point to the index entry
 
     if( !pIDX )
         return;

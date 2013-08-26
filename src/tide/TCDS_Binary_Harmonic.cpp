@@ -23,6 +23,7 @@
 
 #include "TCDS_Binary_Harmonic.h"
 #include "tcmgr.h"
+#include "IDX_entry.h"
 
 /* Declarations for zoneinfo compatibility */
 
@@ -317,6 +318,10 @@ TCDS_Binary_Harmonic::TCDS_Binary_Harmonic()
 
 TCDS_Binary_Harmonic::~TCDS_Binary_Harmonic()
 {
+	for (std::vector<IDX_entry *>::iterator i = m_IDX_array.begin(); i != m_IDX_array.end(); ++i) {
+		delete *i;
+	}
+	m_IDX_array.clear();
 }
 
 TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
@@ -503,7 +508,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
 				pIDX->have_offsets = 1;
 		}
 
-		m_IDX_array.Add(pIDX);
+		m_IDX_array.push_back(pIDX);
 	}
 
 
@@ -527,10 +532,14 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString &data_file_path)
 	return TC_NO_ERROR;
 }
 
+int TCDS_Binary_Harmonic::GetMaxIndex(void) const
+{
+	return num_IDX;
+}
 
 IDX_entry *TCDS_Binary_Harmonic::GetIndexEntry(int n_index)
 {
-	return &m_IDX_array.Item(n_index);
+	return m_IDX_array.at(n_index);
 }
 
 TC_Error_Code TCDS_Binary_Harmonic::LoadHarmonicData(IDX_entry *pIDX)
@@ -538,7 +547,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadHarmonicData(IDX_entry *pIDX)
 	// Find the indicated Master station
 	if(!strlen(pIDX->IDX_reference_name)) {
 		strncpy(pIDX->IDX_reference_name, get_station (pIDX->IDX_ref_dbIndex), IDX_entry::MAXNAMELEN );
-		IDX_entry *pIDX_Ref = &m_IDX_array.Item(pIDX->IDX_ref_dbIndex);
+		IDX_entry *pIDX_Ref = m_IDX_array.at(pIDX->IDX_ref_dbIndex);
 		Station_Data *pRefSta = pIDX_Ref->pref_sta_data;
 		pIDX->pref_sta_data = pRefSta;
 		pIDX->station_tz_offset = -pRefSta->meridian + (pRefSta->zone_offset * 3600);

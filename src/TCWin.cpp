@@ -31,6 +31,7 @@
 #include "cutil.h"
 #include "ColorScheme.h"
 #include "MicrosoftCompatibility.h"
+#include "tide/IDX_entry.h"
 
 extern ColorScheme global_color_scheme;
 extern IDX_entry * gpIDX;

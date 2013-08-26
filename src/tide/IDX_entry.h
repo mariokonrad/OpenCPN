@@ -25,7 +25,7 @@
 #define __IDX_ENTRY_H__
 
 #include <vector>
-#include <wx/dynarray.h>
+#include <ctime>
 
 class TCDataSource;
 class Station_Data;
@@ -95,7 +95,5 @@ class IDX_entry
 		time_t epoch;
 		int epoch_year;
 };
-
-WX_DECLARE_OBJARRAY(IDX_entry, ArrayOfIDXEntry);
 
 #endif

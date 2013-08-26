@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include "TCDS_Ascii_Harmonic.h"
+#include "IDX_entry.h"
 
 #include <math.h>
 
@@ -112,9 +113,9 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadData(const wxString &data_file_path)
 }
 
 
-IDX_entry *TCDS_Ascii_Harmonic::GetIndexEntry(int n_index)
+IDX_entry * TCDS_Ascii_Harmonic::GetIndexEntry(int n_index)
 {
-	return &m_IDX_array.Item(n_index);
+	return m_IDX_array.at(n_index);
 }
 
 
@@ -126,8 +127,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 	num_IDX=0;
 
 	m_abbreviation_array.clear();
-	m_IDX_array.Clear();
-	//   free_harmonic_file_list();
+	m_IDX_array.clear();
 	int have_index = 0;
 	int index_in_memory = 0;
 
@@ -137,17 +137,14 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 			else if (!have_index && !xref_start) {
 				if (!strncmp(index_line_buffer, "XREF", 4))
 					xref_start = IndexFileIO(IFF_TELL, 0);
-			}
-			else if (!have_index && !strncmp(index_line_buffer, "*END*", 5)) {
+			} else if (!have_index && !strncmp(index_line_buffer, "*END*", 5)) {
 				if (m_abbreviation_array.empty()) {
 					IndexFileIO(IFF_CLOSE, 0);
 					return(TC_INDEX_FILE_CORRUPT); // missing at least some data so no valid index
 				}
 				// We're done with abbreviation list (and no errors)
 				else have_index = 1;
-			} // found *END* of cross reference
-
-			else if (!have_index && xref_start) {
+			} else if (!have_index && xref_start) {
 				wxString line( index_line_buffer, wxConvUTF8 );
 
 				AbbrEntry entry;
@@ -168,9 +165,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 
 				m_abbreviation_array.push_back(entry);
 
-			}
-
-			else if (have_index && (strchr("TtCcIUu", index_line_buffer[0]))) {
+			} else if (have_index && (strchr("TtCcIUu", index_line_buffer[0]))) {
 				// Load index file data .
 				num_IDX++; // Keep counting entries for harmonic file stuff
 				IDX_entry *pIDX = new IDX_entry;
@@ -180,14 +175,12 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 				index_in_memory   = TRUE;
 				pIDX->Valid15 = 0;
 
-				if(TC_NO_ERROR != build_IDX_entry(pIDX ) ) {
-				}
-
-				m_IDX_array.Add(pIDX);
+				m_IDX_array.push_back(pIDX);
 			}
 
 		}
-		if (index_in_memory) IndexFileIO(IFF_CLOSE, 0); // All done with file
+		if (index_in_memory)
+			IndexFileIO(IFF_CLOSE, 0); // All done with file
 	}
 
 	return TC_NO_ERROR;
@@ -632,10 +625,20 @@ void TCDS_Ascii_Harmonic::free_epochs()
 	m_cst_epochs = NULL;
 }
 
+int TCDS_Ascii_Harmonic::GetMaxIndex(void) const
+{
+	return num_IDX;
+}
+
 /* free harmonics data */
-void TCDS_Ascii_Harmonic::free_data ()
+void TCDS_Ascii_Harmonic::free_data()
 {
 	free_nodes();
 	free_epochs();
+
+	for (std::vector<IDX_entry *>::iterator i = m_IDX_array.begin(); i != m_IDX_array.end(); ++i) {
+		delete *i;
+	}
+	m_IDX_array.clear();
 }
 

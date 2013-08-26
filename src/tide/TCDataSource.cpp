@@ -24,6 +24,7 @@
 #include "TCDataSource.h"
 #include "TCDS_Ascii_Harmonic.h"
 #include "TCDS_Binary_Harmonic.h"
+#include "IDX_entry.h"
 
 #include <wx/log.h>
 #include <wx/filename.h>
@@ -52,14 +53,14 @@ TC_Error_Code TCDataSource::LoadData(const wxString &data_file_path)
 
 	wxFileName fname(data_file_path);
 
-	if(!fname.FileExists()) return TC_FILE_NOT_FOUND;
+	if(!fname.FileExists())
+		return TC_FILE_NOT_FOUND;
 
 	if(fname.GetExt() == _T("IDX")) {
 		TCDS_Ascii_Harmonic *pdata = new TCDS_Ascii_Harmonic;
 		m_pfactory = dynamic_cast<TCDataFactory*>(pdata);
 		pTCDS_Ascii_Harmonic = pdata;
-	}
-	else if(fname.GetExt() == _T("tcd") || fname.GetExt() == _T("TCD")) {
+	} else if(fname.GetExt() == _T("tcd") || fname.GetExt() == _T("TCD")) {
 		TCDS_Binary_Harmonic *pdata = new TCDS_Binary_Harmonic;
 		m_pfactory = dynamic_cast<TCDataFactory*>(pdata);
 		pTCDS_Binary_Harmonic = pdata;

@@ -96,27 +96,26 @@ void Track::SetPrecision( int prec )
 {
 	m_nPrecision = prec;
 	switch( m_nPrecision ) {
-		case 0: { // Low
-					m_allowedMaxAngle = 10;
-					m_allowedMaxXTE = 0.008;
-					m_TrackTimerSec = 8;
-					m_minTrackpoint_delta = .004;
-					break;
-				}
-		case 1: { // Medium
-					m_allowedMaxAngle = 10;
-					m_allowedMaxXTE = 0.004;
-					m_TrackTimerSec = 4;
-					m_minTrackpoint_delta = .002;
-					break;
-				}
-		case 2: { // High
-					m_allowedMaxAngle = 10;
-					m_allowedMaxXTE = 0.0015;
-					m_TrackTimerSec = 2;
-					m_minTrackpoint_delta = .001;
-					break;
-				}
+		case 0: // Low
+			m_allowedMaxAngle = 10;
+			m_allowedMaxXTE = 0.008;
+			m_TrackTimerSec = 8;
+			m_minTrackpoint_delta = .004;
+			break;
+
+		case 1: // Medium
+			m_allowedMaxAngle = 10;
+			m_allowedMaxXTE = 0.004;
+			m_TrackTimerSec = 4;
+			m_minTrackpoint_delta = .002;
+			break;
+
+		case 2: // High
+			m_allowedMaxAngle = 10;
+			m_allowedMaxXTE = 0.0015;
+			m_TrackTimerSec = 2;
+			m_minTrackpoint_delta = .001;
+			break;
 	}
 }
 

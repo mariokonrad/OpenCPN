@@ -47,6 +47,16 @@ Select::~Select()
 
 }
 
+void Select::SetSelectPixelRadius(int radius)
+{
+	pixelRadius = radius;
+}
+
+SelectableItemList * Select::GetSelectList()
+{
+	return pSelectList;
+}
+
 bool Select::AddSelectableRoutePoint( float slat, float slon, RoutePoint *pRoutePointAdd )
 {
 	SelectItem *pSelItem = new SelectItem;

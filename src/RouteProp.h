@@ -44,7 +44,6 @@
 class wxListCtrl;
 class Route;
 class RoutePoint;
-class HyperlinkList;
 
 // FIXME: there seem to exist two definitions of (some) constants:
 

@@ -48,7 +48,7 @@ class Select
 		Select();
 		~Select();
 
-		void SetSelectPixelRadius(int radius){ pixelRadius = radius; }
+		void SetSelectPixelRadius(int radius);
 
 		bool AddSelectableRoutePoint( float slat, float slon, RoutePoint *pRoutePointAdd );
 		bool AddSelectableRouteSegment( float slat1, float slon1, float slat2, float slon2,
@@ -81,12 +81,7 @@ class Select
 		//    Delete all selectable points in list by type
 		bool DeleteAllSelectableTypePoints( int SeltypeToDelete );
 
-		//  Accessors
-
-		SelectableItemList * GetSelectList()
-		{
-			return pSelectList;
-		}
+		SelectableItemList * GetSelectList();
 
 	private:
 		void CalcSelectRadius();

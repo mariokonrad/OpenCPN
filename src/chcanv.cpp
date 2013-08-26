@@ -83,6 +83,8 @@
 #include "TCWin.h"
 #include "MicrosoftCompatibility.h"
 #include "tide/IDX_entry.h"
+#include "OCPN.h"
+#include "GUI.h"
 
 // AIS
 #include "ais/ais.h"
@@ -222,7 +224,6 @@ extern bool             g_bEnableZoomToCursor;
 
 extern AISTargetAlertDialog    *g_pais_alert_dialog_active;
 extern AISTargetQueryDialog    *g_pais_query_dialog_active;
-extern int              g_ais_query_dialog_x, g_ais_query_dialog_y;
 
 extern int              g_S57_dialog_sx, g_S57_dialog_sy;
 
@@ -9239,8 +9240,7 @@ void ShowAISTargetQueryDialog( wxWindow *win, int mmsi )
     if( !win ) return;
 
     if( NULL == g_pais_query_dialog_active ) {
-        int pos_x = g_ais_query_dialog_x;
-        int pos_y = g_ais_query_dialog_y;
+		wxPoint pos = OCPN::get().gui().get_ais_query_dialog().position;
 
         if( g_pais_query_dialog_active ) {
             delete g_pais_query_dialog_active;
@@ -9250,8 +9250,7 @@ void ShowAISTargetQueryDialog( wxWindow *win, int mmsi )
             g_pais_query_dialog_active = new AISTargetQueryDialog();
         }
 
-        g_pais_query_dialog_active->Create( win, -1, _( "AIS Target Query" ),
-                                            wxPoint( pos_x, pos_y ) );
+        g_pais_query_dialog_active->Create(win, -1, _("AIS Target Query"), pos);
 
         g_pais_query_dialog_active->SetMMSI( mmsi );
         g_pais_query_dialog_active->UpdateText();
@@ -9263,18 +9262,18 @@ void ShowAISTargetQueryDialog( wxWindow *win, int mmsi )
         //  If the requested window title bar does not intersect any installed monitor,
         //  then default to simple primary monitor positioning.
         RECT frame_title_rect;
-        frame_title_rect.left = pos_x;
-        frame_title_rect.top = pos_y;
-        frame_title_rect.right = pos_x + sz.x;
-        frame_title_rect.bottom = pos_y + 30;
+        frame_title_rect.left = pos.x;
+        frame_title_rect.top = pos.y;
+        frame_title_rect.right = pos.x + sz.x;
+        frame_title_rect.bottom = pos.y + 30;
 
         if( NULL == MonitorFromRect( &frame_title_rect, MONITOR_DEFAULTTONULL ) ) b_reset_pos = true;
 #else
 
         //    Make sure drag bar (title bar) of window intersects wxClient Area of screen, with a little slop...
         wxRect window_title_rect;// conservative estimate
-        window_title_rect.x = pos_x;
-        window_title_rect.y = pos_y;
+        window_title_rect.x = pos.x;
+        window_title_rect.y = pos.y;
         window_title_rect.width = sz.x;
         window_title_rect.height = 30;
 

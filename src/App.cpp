@@ -161,8 +161,6 @@ extern Multiplexer *g_pMUX;
 extern AIS_Decoder *g_pAIS;
 extern bool g_bAIS_CPA_Alert;
 extern bool g_bAIS_CPA_Alert_Audio;
-extern int g_ais_query_dialog_x;
-extern int g_ais_query_dialog_y;
 extern int g_S57_dialog_sx;
 extern int g_S57_dialog_sy;
 extern int g_nframewin_x;

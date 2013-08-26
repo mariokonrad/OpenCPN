@@ -172,7 +172,6 @@ extern bool             g_bShowMoored;
 extern double           g_ShowMoored_Kts;
 extern bool             g_bAIS_CPA_Alert;
 extern bool             g_bAIS_CPA_Alert_Audio;
-extern int              g_ais_query_dialog_x, g_ais_query_dialog_y;
 extern wxString         g_sAIS_Alert_Sound_File;
 extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool             g_bAIS_ACK_Timeout;
@@ -394,6 +393,17 @@ void MyConfig::load_ais_alert_dialog()
 
 	OCPN::get().gui().set_ais_alert_dialog_position(wxPoint(pos_x, pos_y));
 	OCPN::get().gui().set_ais_alert_dialog_size(wxSize(size_x, size_y));
+}
+
+void MyConfig::load_ais_query_dialog()
+{
+	long x = 200;
+	long y = 200;
+
+	Read(_T("QueryDialogPosX"), &x);
+	Read(_T("QueryDialogPosY"), &y);
+
+	OCPN::get().gui().set_ais_query_dialog_position(wxPoint(x, y));
 }
 
 int MyConfig::LoadMyConfig(int iteration)
@@ -651,13 +661,7 @@ int MyConfig::LoadMyConfig(int iteration)
     s.ToDouble( &g_AckTimeout_Mins );
 
 	load_ais_alert_dialog();
-
-    g_ais_query_dialog_x  = Read(_T("QueryDialogPosX"), 200L);
-    g_ais_query_dialog_y  = Read(_T("QueryDialogPosY"), 200L);
-    if( ( g_ais_query_dialog_x < 0 ) || ( g_ais_query_dialog_x > display_width ) ) g_ais_query_dialog_x =
-            5;
-    if( ( g_ais_query_dialog_y < 0 ) || ( g_ais_query_dialog_y > display_height ) ) g_ais_query_dialog_y =
-            5;
+	load_ais_query_dialog();
 
     Read( _T ( "AISTargetListPerspective" ), &g_AisTargetList_perspective );
     g_AisTargetList_range = Read( _T ( "AISTargetListRange" ), 40L );
@@ -1566,6 +1570,14 @@ void MyConfig::write_ais_alert_dialog()
 	Write(_T("AlertDialogPosY"),  config.position.y);
 }
 
+void MyConfig::write_ais_query_dialog()
+{
+	const GUI::AISQueryDialog & config = OCPN::get().gui().get_ais_query_dialog();
+
+	Write(_T("QueryDialogPosX"), config.position.x);
+	Write(_T("QueryDialogPosY"), config.position.y);
+}
+
 void MyConfig::UpdateSettings()
 {
 //    Global options and settings
@@ -1759,9 +1771,8 @@ void MyConfig::UpdateSettings()
     Write( _T ( "AISCOGPredictorWidth" ), g_ais_cog_predictor_width );
 
 	write_ais_alert_dialog();
+	write_ais_query_dialog();
 
-    Write( _T ( "QueryDialogPosX" ), g_ais_query_dialog_x );
-    Write( _T ( "QueryDialogPosY" ), g_ais_query_dialog_y );
     Write( _T ( "AISTargetListPerspective" ), g_AisTargetList_perspective );
     Write( _T ( "AISTargetListRange" ), g_AisTargetList_range );
     Write( _T ( "AISTargetListSortColumn" ), g_AisTargetList_sortColumn );

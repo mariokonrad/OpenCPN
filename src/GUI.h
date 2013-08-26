@@ -51,6 +51,16 @@ class GUI
 		virtual const AISAlertDialog & get_ais_alert_dialog() const = 0;
 		virtual void set_ais_alert_dialog_position(const wxPoint &) = 0;
 		virtual void set_ais_alert_dialog_size(const wxSize &) = 0;
+
+	public:
+
+		struct AISQueryDialog
+		{
+			wxPoint position;
+		};
+
+		virtual const AISQueryDialog & get_ais_query_dialog() const = 0;
+		virtual void set_ais_query_dialog_position(const wxPoint &) = 0;
 };
 
 #endif

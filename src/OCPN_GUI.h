@@ -31,6 +31,7 @@ class OCPN_GUI : public GUI
 	private:
 		Toolbar toolbar;
 		AISAlertDialog ais_alert_dialog;
+		AISQueryDialog ais_query_dialog;
 
 	public: // toolbar
 		virtual const Toolbar & get_toolbar() const;
@@ -44,6 +45,10 @@ class OCPN_GUI : public GUI
 		virtual void set_ais_alert_dialog_size(const wxSize &);
 		void ensure_ais_alert_dialog_position_range(wxPoint, wxPoint);
 		void ensure_ais_alert_dialog_position_range(wxPoint, wxSize);
+
+	public: // ais query dialog
+		virtual const AISQueryDialog & get_ais_query_dialog() const;
+		virtual void set_ais_query_dialog_position(const wxPoint &);
 };
 
 #endif

@@ -75,3 +75,13 @@ void OCPN_GUI::ensure_ais_alert_dialog_position_range(wxPoint p0, wxSize p1)
 	ensure_ais_alert_dialog_position_range(p0, wxPoint(0, 0) + p1);
 }
 
+const GUI::AISQueryDialog & OCPN_GUI::get_ais_query_dialog() const
+{
+	return ais_query_dialog;
+}
+
+void OCPN_GUI::set_ais_query_dialog_position(const wxPoint & position)
+{
+	ais_query_dialog.position = position;
+}
+

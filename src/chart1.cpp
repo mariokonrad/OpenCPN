@@ -320,8 +320,6 @@ bool g_bAIS_CPA_Alert;
 bool g_bAIS_CPA_Alert_Audio;
 AISTargetAlertDialog *g_pais_alert_dialog_active;
 AISTargetQueryDialog *g_pais_query_dialog_active;
-int g_ais_query_dialog_x;
-int g_ais_query_dialog_y;
 int g_S57_dialog_sx;
 int g_S57_dialog_sy;
 int g_nframewin_x;
@@ -908,8 +906,11 @@ void MyFrame::SetAndApplyColorScheme( ColorScheme cs )
         g_pais_query_dialog_active->Close();
 
         g_pais_query_dialog_active = new AISTargetQueryDialog();
-        g_pais_query_dialog_active->Create( this, -1, _( "AIS Target Query" ),
-                wxPoint( g_ais_query_dialog_x, g_ais_query_dialog_y ) );
+        g_pais_query_dialog_active->Create(
+			this,
+			-1,
+			_( "AIS Target Query" ),
+			OCPN::get().gui().get_ais_query_dialog().position);
         g_pais_query_dialog_active->SetMMSI( n_mmsi );
         g_pais_query_dialog_active->UpdateText();
         if( b_isshown ) g_pais_query_dialog_active->Show();

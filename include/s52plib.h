@@ -28,17 +28,17 @@
 
 #include <vector>
 
-#include "s52s57.h"                 //types
+#include "s52s57.h"
 
 //    Dynamic arrays of pointers need explicit macros in wx261
 #ifdef __WX261
 WX_DEFINE_ARRAY_PTR(S57attVal *, wxArrayOfS57attVal);
 #else
-WX_DEFINE_ARRAY( S57attVal *, wxArrayOfS57attVal );
+WX_DEFINE_ARRAY(S57attVal *, wxArrayOfS57attVal);
 #endif
 
 #include <wx/glcanvas.h>
-#include <wx/dcgraph.h>         // supplemental, for Mac
+#include <wx/dcgraph.h>
 
 //    wxWindows Hash Map Declarations
 #include <wx/hashmap.h>
@@ -55,6 +55,8 @@ WX_DECLARE_STRING_HASH_MAP( int, CARC_Hash );
 class ViewPort;
 class PixelCache;
 
+// FIXME: copied code, separate
+
 /* Copyright (c) Mark J. Kilgard, 1997. */
 
 /* This program is freely distributable without licensing fees  and is
@@ -65,8 +67,6 @@ class PixelCache;
 
 #ifndef __TEXFONT_H__
 #define __TEXFONT_H__
-
-//#include <GL/gl.h>
 
 #define TXF_FORMAT_BYTE       0
 #define TXF_FORMAT_BITMAP     1
@@ -109,26 +109,6 @@ typedef struct {
 	TexGlyphVertexInfo *tgvi;
 	TexGlyphVertexInfo **lut;
 } TexFont;
-
-extern char *txfErrorString( void );
-
-extern TexFont *txfLoadFont( char *filename );
-
-extern void txfUnloadFont( TexFont * txf );
-
-extern GLuint txfEstablishTexture( TexFont * txf, GLuint texobj,
-		GLboolean setupMipmaps );
-
-extern void txfBindFontTexture( TexFont * txf );
-
-extern void txfGetStringMetrics( TexFont * txf, char *string, int len,
-		int *width, int *max_ascent, int *max_descent );
-
-extern void txfRenderGlyph( TexFont * txf, int c );
-
-extern void txfRenderString( TexFont * txf, char *string, int len );
-
-extern void txfRenderFancyString( TexFont * txf, char *string, int len );
 
 #endif /* __TEXFONT_H__ */
 
@@ -407,50 +387,7 @@ private:
 	int m_txf_avg_char_width;
 	int m_txf_avg_char_height;
 	CARC_Hash m_CARC_hashmap;
-	RenderFromHPGL* HPGL;
-
+	RenderFromHPGL * HPGL;
 };
 
-
-#define HPGL_FILLED true
-
-class RenderFromHPGL {
-public:
-	RenderFromHPGL( s52plib* plibarg );
-
-	void SetTargetDC( wxDC* pdc );
-	void SetTargetOpenGl();
-	void SetTargetGCDC( wxGCDC* gdc );
-	bool Render(char *str, char *col, wxPoint &r, wxPoint &pivot, double rot_angle = 0);
-
-private:
-	const char* findColorNameInRef( char colorCode, char* col );
-	void RotatePoint( wxPoint& point, double angle );
-	wxPoint ParsePoint( wxString& argument );
-	void SetPen();
-	void Line( wxPoint from, wxPoint to );
-	void Circle( wxPoint center, int radius, bool filled = false );
-	void Polygon();
-
-	s52plib* plib;
-	int scaleFactor;
-
-	wxDC* targetDC;
-	wxGCDC* targetGCDC;
-
-	wxColor penColor;
-	wxPen* pen;
-	wxColor brushColor;
-	wxBrush* brush;
-	long penWidth;
-
-	int noPoints;
-	wxPoint polygon[100];
-
-	bool renderToDC;
-	bool renderToOpenGl;
-	bool renderToGCDC;
-	bool havePushedOpenGlAttrib;
-};
-
-#endif //_S52PLIB_H_
+#endif

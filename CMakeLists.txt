@@ -747,6 +747,7 @@ IF (USE_S57)
 
 	SET(SRC_S57ENC
 		include/s52plib.h
+		src/RenderFromHPGL.h
 		include/s52utils.h
 		include/s57chart.h
 		src/geo/ExtendedGeometry.h
@@ -758,6 +759,7 @@ IF (USE_S57)
 		src/s52plib.cpp
 		src/s52utils.cpp
 		src/s57chart.cpp
+		src/RenderFromHPGL.cpp
 		src/cm93.cpp
 		src/geo/TriPrim.cpp
 		src/geo/ExtendedGeometry.cpp

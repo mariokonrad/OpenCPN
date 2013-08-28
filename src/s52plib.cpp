@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include "s52plib.h"
+#include "RenderFromHPGL.h"
 #include "s57chart.h"
 #include "geo/TriPrim.h"
 #include "geo/PolyTessGeo.h"
@@ -62,6 +63,19 @@ extern bool GetDoubleAttr(S57Obj * obj, const char * AttrName, double & val);
 // Implement the Bounding Box list
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST( ObjList );
+
+#if defined(__TEXFONT_H__)
+static void txfRenderGlyph(TexFont * txf, int c);
+static void txfRenderString(TexFont * txf, char *string, int len);
+static void txfRenderFancyString(TexFont * txf, char *string, int len);
+static void txfBindFontTexture(TexFont * txf);
+static char *txfErrorString(void);
+static TexFont * txfLoadFont(char *filename);
+static void txfUnloadFont(TexFont * txf);
+static void txfGetStringMetrics(TexFont * txf, char *string, int len, int *width, int *max_ascent, int *max_descent);
+static GLuint txfEstablishTexture(TexFont * txf, GLuint texobj, GLboolean setupMipmaps);
+#endif
+
 
 //-----------------------------------------------------------------------------
 //      s52plib implementation
@@ -1690,8 +1704,7 @@ int s52plib::RenderT_All( ObjRazRules *rzRules, Rules *rules, ViewPort *vp, bool
         if( m_bDeClutterText ) {
             if( bwas_drawn ) {
                 bool b_found = false;
-                for( ObjList::Node *node = m_textObjList.GetFirst(); node; node =
-                        node->GetNext() ) {
+                for( ObjList::Node *node = m_textObjList.GetFirst(); node; node = node->GetNext() ) {
                     S57Obj *oc = node->GetData();
 
                     if( oc == rzRules->obj ) {
@@ -1699,7 +1712,8 @@ int s52plib::RenderT_All( ObjRazRules *rzRules, Rules *rules, ViewPort *vp, bool
                         break;
                     }
                 }
-                if( !b_found ) m_textObjList.Append( rzRules->obj );
+                if( !b_found )
+					m_textObjList.Append( rzRules->obj );
             }
         }
 
@@ -6076,6 +6090,9 @@ void DrawAALine( wxDC *pDC, int x0, int y0, int x1, int y1, wxColour clrLine, in
     return;
 }
 
+
+// FIXME: copied code, separate
+
 /* OpenGL Text Rendering Support   */
 
 /* Copyright (c) Mark J. Kilgard, 1997. */
@@ -6113,8 +6130,7 @@ int useLuminanceAlpha = 1;
          ((char *) (x))[0] = ((char *) (x))[1];\
          ((char *) (x))[1] = n; }
 
-static TexGlyphVertexInfo *
-getTCVI( TexFont * txf, int c )
+static TexGlyphVertexInfo * getTCVI( TexFont * txf, int c )
 {
     TexGlyphVertexInfo *tgvi;
 
@@ -6145,14 +6161,14 @@ getTCVI( TexFont * txf, int c )
     /* NOTREACHED */
 }
 
-static char *lastError;
+static char * lastError;
 
-char *txfErrorString( void )
+static char * txfErrorString(void)
 {
     return lastError;
 }
 
-TexFont *txfLoadFont( char *filename )
+static TexFont *txfLoadFont( char *filename )
 {
     TexFont *txf;
     FILE *file;
@@ -6404,37 +6420,6 @@ GLuint txfEstablishTexture( TexFont * txf, GLuint texobj, GLboolean setupMipmaps
     glNewList(txf->texobj, GL_COMPILE);
 #endif
 
-#if 0
-    /* XXX Indigo2 IMPACT in IRIX 5.3 and 6.2 does not support the GL_INTENSITY
-     internal texture format. Sigh. Win32 non-GLX users should disable this
-     code. */
-    if (useLuminanceAlpha == 0) {
-        char *vendor, *renderer, *version;
-
-        renderer = (char *) glGetString(GL_RENDERER);
-        vendor = (char *) glGetString(GL_VENDOR);
-        if (!strcmp(vendor, "SGI") && !strncmp(renderer, "IMPACT", 6)) {
-            version = (char *) glGetString(GL_VERSION);
-            if (!strcmp(version, "1.0 Irix 6.2") ||
-                    !strcmp(version, "1.0 Irix 5.3")) {
-                unsigned char *latex;
-                int width = txf->tex_width;
-                int height = txf->tex_height;
-                int i;
-
-                useLuminanceAlpha = 1;
-                latex = (unsigned char *) calloc(width * height * 2, 1);
-                /* XXX unprotected alloc. */
-                for (i = 0; i < height * width; i++) {
-                    latex[i * 2] = txf->teximage[i];
-                    latex[i * 2 + 1] = txf->teximage[i];
-                }
-                free(txf->teximage);
-                txf->teximage = latex;
-            }
-        }
-    }
-#endif
 
     if( useLuminanceAlpha ) {
         if( setupMipmaps ) {
@@ -6468,7 +6453,7 @@ GLuint txfEstablishTexture( TexFont * txf, GLuint texobj, GLboolean setupMipmaps
     return txf->texobj;
 }
 
-void txfBindFontTexture( TexFont * txf )
+static void txfBindFontTexture( TexFont * txf )
 {
 #if !defined(USE_DISPLAY_LISTS)
     glBindTexture( GL_TEXTURE_2D, txf->texobj );
@@ -6477,7 +6462,7 @@ void txfBindFontTexture( TexFont * txf )
 #endif
 }
 
-void txfUnloadFont( TexFont * txf )
+static void txfUnloadFont( TexFont * txf )
 {
     if( txf->teximage ) {
         free( txf->teximage );
@@ -6488,8 +6473,7 @@ void txfUnloadFont( TexFont * txf )
     free( txf );
 }
 
-void txfGetStringMetrics( TexFont * txf, char *string, int len, int *width, int *max_ascent,
-        int *max_descent )
+static void txfGetStringMetrics( TexFont * txf, char *string, int len, int *width, int *max_ascent, int *max_descent )
 {
     TexGlyphVertexInfo *tgvi;
     int w, i;
@@ -6521,7 +6505,7 @@ void txfGetStringMetrics( TexFont * txf, char *string, int len, int *width, int 
     *max_descent = txf->max_descent;
 }
 
-void txfRenderGlyph( TexFont * txf, int c )
+static void txfRenderGlyph( TexFont * txf, int c )
 {
     if( c > 0 ) {
         TexGlyphVertexInfo *tgvi;
@@ -6543,7 +6527,7 @@ void txfRenderGlyph( TexFont * txf, int c )
     }
 }
 
-void txfRenderString( TexFont * txf, char *string, int len )
+static void txfRenderString( TexFont * txf, char *string, int len )
 {
     int i;
 
@@ -6556,7 +6540,7 @@ enum {
     MONO, TOP_BOTTOM, LEFT_RIGHT, FOUR
 };
 
-void txfRenderFancyString( TexFont * txf, char *string, int len )
+static void txfRenderFancyString( TexFont * txf, char *string, int len )
 {
     TexGlyphVertexInfo *tgvi;
     GLubyte c[4][3];
@@ -6662,276 +6646,3 @@ int txfInFont( TexFont * txf, int c )
     return 0;
 }
 
-RenderFromHPGL::RenderFromHPGL( s52plib* plibarg )
-{
-    plib = plibarg;
-    renderToDC = false;
-    renderToOpenGl = false;
-    renderToGCDC = false;
-    havePushedOpenGlAttrib = false;
-}
-
-void RenderFromHPGL::SetTargetDC( wxDC* pdc )
-{
-    targetDC = pdc;
-    renderToDC = true;
-    renderToOpenGl = false;
-    renderToGCDC = false;
-}
-
-void RenderFromHPGL::SetTargetOpenGl()
-{
-    renderToOpenGl = true;
-    renderToDC = false;
-    renderToGCDC = false;
-}
-
-void RenderFromHPGL::SetTargetGCDC( wxGCDC* gdc )
-{
-    targetGCDC = gdc;
-    renderToGCDC = true;
-    renderToDC = false;
-    renderToOpenGl = false;
-}
-
-const char* RenderFromHPGL::findColorNameInRef( char colorCode, char* col )
-{
-    int noColors = strlen( col ) / 6;
-    for( int i = 0; i < noColors; i++ ) {
-        if( *col + i == colorCode ) return col + i + 1;
-    }
-    return col + 1; // Default to first color if not found.
-}
-
-wxPoint RenderFromHPGL::ParsePoint( wxString& argument )
-{
-    long x, y;
-    int colon = argument.Index( ',' );
-    argument.Left( colon ).ToLong( &x );
-    argument.Mid( colon + 1 ).ToLong( &y );
-    return wxPoint( x, y );
-}
-
-void RenderFromHPGL::SetPen()
-{
-    // plib->canvas_pix_per_mm;
-    scaleFactor = 100.0 / plib->GetPPMM();
-
-    if( renderToDC ) {
-        pen = wxThePenList->FindOrCreatePen( penColor, penWidth, wxSOLID );
-        brush = wxTheBrushList->FindOrCreateBrush( penColor, wxSOLID );
-        targetDC->SetPen( *pen );
-        targetDC->SetBrush( *brush );
-    }
-    if( renderToOpenGl ) {
-        if( !havePushedOpenGlAttrib ) {
-            glPushAttrib( GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT );
-            glColor4ub( penColor.Red(), penColor.Green(), penColor.Blue(), penColor.Alpha() );
-            glLineWidth( wxMax(g_GLMinLineWidth, (float) penWidth * 0.7) );
-            glEnable( GL_LINE_SMOOTH );
-            glEnable( GL_BLEND );
-            glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-            glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
-            havePushedOpenGlAttrib = true;
-        }
-    }
-    if( renderToGCDC ) {
-        pen = wxThePenList->FindOrCreatePen( penColor, penWidth, wxSOLID );
-        brush = wxTheBrushList->FindOrCreateBrush( penColor, wxSOLID );
-        targetGCDC->SetPen( *pen );
-        targetGCDC->SetBrush( *brush );
-    }
-}
-
-void RenderFromHPGL::Line( wxPoint from, wxPoint to )
-{
-    if( renderToDC ) {
-        targetDC->DrawLine( from, to );
-    }
-    if( renderToOpenGl ) {
-        glBegin( GL_LINES );
-        glVertex2i( from.x, from.y );
-        glVertex2i( to.x, to.y );
-        glEnd();
-    }
-    if( renderToGCDC ) {
-        targetGCDC->DrawLine( from, to );
-    }
-}
-
-void RenderFromHPGL::Circle( wxPoint center, int radius, bool filled )
-{
-    if( renderToDC ) {
-        if( filled ) targetDC->SetBrush( *brush );
-        else
-            targetDC->SetBrush( *wxTRANSPARENT_BRUSH );
-        targetDC->DrawCircle( center, radius );
-    }
-    if( renderToOpenGl ) {
-        int noSegments = 2 + ( radius * 4 );
-        if( noSegments > 200 ) noSegments = 200;
-        glBegin( GL_LINE_STRIP );
-        for( double a = 0; a <= 2 * M_PI; a += 2 * M_PI / noSegments )
-            glVertex2d( center.x + radius * sin( a ), center.y + radius * cos( a ) );
-        glEnd();
-    }
-    if( renderToGCDC ) {
-        if( filled ) targetGCDC->SetBrush( *brush );
-        else
-            targetGCDC->SetBrush( *wxTRANSPARENT_BRUSH );
-
-        targetGCDC->DrawCircle( center, radius );
-
-        // wxGCDC doesn't update min/max X/Y properly for DrawCircle.
-        targetGCDC->SetPen( *wxTRANSPARENT_PEN );
-        targetGCDC->DrawPoint( center.x - radius, center.y );
-        targetGCDC->DrawPoint( center.x + radius, center.y );
-        targetGCDC->DrawPoint( center.x, center.y - radius );
-        targetGCDC->DrawPoint( center.x, center.y + radius );
-        targetGCDC->SetPen( *pen );
-    }
-
-}
-
-void RenderFromHPGL::Polygon()
-{
-    if( renderToDC ) {
-        targetDC->DrawPolygon( noPoints, polygon );
-    }
-    if( renderToOpenGl ) {
-        glBegin( GL_POLYGON );
-        for( int ip = 1; ip < noPoints; ip++ )
-            glVertex2i( polygon[ip].x, polygon[ip].y );
-        glEnd();
-    }
-    if( renderToGCDC ) {
-        targetGCDC->DrawPolygon( noPoints, polygon );
-    }
-}
-
-void RenderFromHPGL::RotatePoint( wxPoint& point, double angle )
-{
-    if( angle == 0. ) return;
-    double sin_rot = sin( angle * PI / 180. );
-    double cos_rot = cos( angle * PI / 180. );
-
-    double xp = ( point.x * cos_rot ) - ( point.y * sin_rot );
-    double yp = ( point.x * sin_rot ) + ( point.y * cos_rot );
-
-    point.x = (int) xp;
-    point.y = (int) yp;
-}
-
-bool RenderFromHPGL::Render( char *str, char *col, wxPoint &r, wxPoint &pivot, double rot_angle )
-{
-//      int width = 1;
-//      double radius = 0.0;
-    wxPoint lineStart;
-    wxPoint lineEnd;
-
-    wxStringTokenizer commands( wxString( str, wxConvUTF8 ), _T(";") );
-    while( commands.HasMoreTokens() ) {
-        wxString command = commands.GetNextToken();
-        wxString arguments = command.Mid( 2 );
-        command = command.Left( 2 );
-
-        if( command == _T("SP") ) {
-            S52color* color = plib->getColor( findColorNameInRef( arguments.GetChar( 0 ), col ) );
-            penColor = wxColor( color->R, color->G, color->B );
-            brushColor = penColor;
-            continue;
-        }
-        if( command == _T("SW") ) {
-            arguments.ToLong( &penWidth );
-            continue;
-        }
-        if( command == _T("ST") ) {
-            // Transparency is ignored for now.
-            continue;
-        }
-        if( command == _T("PU") ) {
-            SetPen();
-            lineStart = ParsePoint( arguments );
-            lineStart -= pivot;
-            RotatePoint( lineStart, rot_angle );
-            lineStart.x /= scaleFactor;
-            lineStart.y /= scaleFactor;
-            lineStart += r;
-            continue;
-        }
-        if( command == _T("PD") ) {
-            if( arguments.Length() == 0 ) {
-                lineEnd = lineStart;
-                lineEnd.x++;
-            } else {
-                lineEnd = ParsePoint( arguments );
-                lineEnd -= pivot;
-                RotatePoint( lineEnd, rot_angle );
-                lineEnd.x /= scaleFactor;
-                lineEnd.y /= scaleFactor;
-                lineEnd += r;
-            }
-            Line( lineStart, lineEnd );
-            lineStart = lineEnd; // For next line.
-            continue;
-        }
-        if( command == _T("CI") ) {
-            long radius;
-            arguments.ToLong( &radius );
-            radius = (int) radius / scaleFactor;
-            Circle( lineStart, radius );
-            continue;
-        }
-        if( command == _T("PM") ) {
-            noPoints = 1;
-            polygon[0] = lineStart;
-
-            if( arguments == _T("0") ) {
-                do {
-                    command = commands.GetNextToken();
-                    arguments = command.Mid( 2 );
-                    command = command.Left( 2 );
-
-                    if( command == _T("AA") ) {
-                        wxLogWarning( _T("RenderHPGL: AA instruction not implemented.") );
-                    }
-                    if( command == _T("CI") ) {
-                        long radius;
-                        arguments.ToLong( &radius );
-                        radius = (int) radius / scaleFactor;
-                        Circle( lineStart, radius, HPGL_FILLED );
-                    }
-                    if( command == _T("PD") ) {
-                        wxStringTokenizer points( arguments, _T(",") );
-                        while( points.HasMoreTokens() ) {
-                            long x, y;
-                            points.GetNextToken().ToLong( &x );
-                            points.GetNextToken().ToLong( &y );
-                            lineEnd = wxPoint( x, y );
-                            lineEnd -= pivot;
-                            RotatePoint( lineEnd, rot_angle );
-                            lineEnd.x /= scaleFactor;
-                            lineEnd.y /= scaleFactor;
-                            lineEnd += r;
-                            polygon[noPoints++] = lineEnd;
-                        }
-                    }
-                } while( command != _T("PM") );
-            }
-            continue;
-        }
-        if( command == _T("FP") ) {
-            SetPen();
-            Polygon();
-            continue;
-        }
-
-        // Only get here if non of the other cases did a continue.
-        wxString msg( _T("RenderHPGL: The '%s' instruction is not implemented.") );
-        msg += wxString( command );
-        wxLogWarning( msg );
-    }
-    if( havePushedOpenGlAttrib ) glPopAttrib();
-    havePushedOpenGlAttrib = false;
-    return true;
-}

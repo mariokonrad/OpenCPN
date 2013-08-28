@@ -66,7 +66,7 @@
 #include "cpl_csv.h"
 #endif
 
-static unsigned int malloc_max;
+unsigned int malloc_max;
 
 // FIXME: this global data CLUSTERFUCK, people... seriously... this was bad even in the 60ties
 // this list of 'extern's has doubles, will sort them out later

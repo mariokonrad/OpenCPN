@@ -118,7 +118,8 @@ class RenderFromHPGL;
 //    s52plib definition
 //-----------------------------------------------------------------------------
 
-class s52plib {
+class s52plib
+{
 public:
       s52plib( const wxString& PLib, bool b_forceLegacy = false );
 	~s52plib();

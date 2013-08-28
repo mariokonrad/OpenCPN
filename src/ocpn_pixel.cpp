@@ -90,6 +90,7 @@
 #endif
 #endif
 
+extern unsigned int malloc_max;
 
 #ifdef  __WXX11__
 
@@ -145,7 +146,6 @@ static void *x_malloc(size_t t)
 	else {
 		if( t > malloc_max ) {
 			malloc_max = t;
-			//                      wxLogMessage(_T("New malloc_max: %d", malloc_max));
 		}
 
 		return pr;                                      // good return

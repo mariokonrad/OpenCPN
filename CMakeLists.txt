@@ -746,7 +746,7 @@ IF (USE_S57)
 	ADD_DEFINITIONS(-DUSE_S57)
 
 	SET(SRC_S57ENC
-		include/s52plib.h
+		src/s52plib.h
 		src/RenderFromHPGL.h
 		include/s52utils.h
 		include/s57chart.h

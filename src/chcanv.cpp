@@ -2154,7 +2154,8 @@ bool ChartCanvas::DoZoomCanvasIn( double factor )
         int new_db_index = m_pQuilt->AdjustRefOnZoomIn( proposed_scale_onscreen );
         if( new_db_index >= 0 ) pc = ChartData->OpenChartFromDB( new_db_index, FULL_INIT );
 
-        pCurrentStack->SetCurrentEntryFromdbIndex( new_db_index ); // highlite the correct bar entry
+        if(pCurrentStack)
+            pCurrentStack->SetCurrentEntryFromdbIndex( new_db_index ); // highlite the correct bar entry
     }
 
     if( pc ) {
@@ -2199,101 +2200,105 @@ bool ChartCanvas::DoZoomCanvasOut( double zoom_factor )
         pc = Current_Ch;
         double target_scale_ppm = GetVPScale() / zoom_factor;
         double new_scale_ppm = target_scale_ppm;
-        proposed_scale_onscreen = GetCanvasScaleFactor() / new_scale_ppm;
+		proposed_scale_onscreen = GetCanvasScaleFactor() / new_scale_ppm;
 
-        //      If Current_Ch is not on the screen, unbound the zoomout
-        const LatLonBoundingBox & viewbox = VPoint.GetBBox();
-        BoundingBox chart_box;
-        int current_index = ChartData->FinddbIndex( pc->GetFullPath() );
-        ChartData->GetDBBoundingBox( current_index, &chart_box );
-        if( ( viewbox.Intersect( chart_box ) == _OUT ) ) {
-            proposed_scale_onscreen = wxMin(proposed_scale_onscreen,
-                                            GetCanvasScaleFactor() / m_absolute_min_scale_ppm);
-        }
-        else {
-        //  Clamp the minimum scale zoom-out to the value specified by the chart
-            double max_allowed_scale = 4.0 * ( pc->GetNormalScaleMax( GetCanvasScaleFactor(), GetCanvasWidth() ) );
-            proposed_scale_onscreen = wxMin( proposed_scale_onscreen, max_allowed_scale );
-        }
+		if( ChartData && pc ) {
+			//      If Current_Ch is not on the screen, unbound the zoomout
+			const LatLonBoundingBox & viewbox = VPoint.GetBBox();
+			BoundingBox chart_box;
+			int current_index = ChartData->FinddbIndex( pc->GetFullPath() );
+			ChartData->GetDBBoundingBox( current_index, &chart_box );
+			if( ( viewbox.Intersect( chart_box ) == _OUT ) ) {
+				proposed_scale_onscreen = wxMin(proposed_scale_onscreen,
+						GetCanvasScaleFactor() / m_absolute_min_scale_ppm);
+			}
+			else {
+				//  Clamp the minimum scale zoom-out to the value specified by the chart
+				double max_allowed_scale = 4.0 * ( pc->GetNormalScaleMax( GetCanvasScaleFactor(), GetCanvasWidth() ) );
+				proposed_scale_onscreen = wxMin( proposed_scale_onscreen, max_allowed_scale );
+			}
+		}
 
-     } else {
-        int new_db_index = m_pQuilt->AdjustRefOnZoomOut( proposed_scale_onscreen );
-        if( new_db_index >= 0 ) pc = ChartData->OpenChartFromDB( new_db_index, FULL_INIT );
+	} else {
+		int new_db_index = m_pQuilt->AdjustRefOnZoomOut( proposed_scale_onscreen );
+		if( new_db_index >= 0 ) pc = ChartData->OpenChartFromDB( new_db_index, FULL_INIT );
 
-        pCurrentStack->SetCurrentEntryFromdbIndex( new_db_index ); // highlite the correct bar entry
-        b_smallest = m_pQuilt->IsChartSmallestScale( new_db_index );
+		if(pCurrentStack)
+			pCurrentStack->SetCurrentEntryFromdbIndex( new_db_index ); // highlite the correct bar entry
 
-        double target_scale_ppm = GetVPScale() / zoom_factor;
-        proposed_scale_onscreen = GetCanvasScaleFactor() / target_scale_ppm;
+		b_smallest = m_pQuilt->IsChartSmallestScale( new_db_index );
 
-        if( b_smallest || (0 == m_pQuilt->GetExtendedStackCount()))
-            proposed_scale_onscreen = wxMin(proposed_scale_onscreen,
-                                            GetCanvasScaleFactor() / m_absolute_min_scale_ppm);
-    }
+		double target_scale_ppm = GetVPScale() / zoom_factor;
+		proposed_scale_onscreen = GetCanvasScaleFactor() / target_scale_ppm;
 
-    if( !pc ) {                         // no chart, so set a minimum scale
-        if( ( GetCanvasScaleFactor() / proposed_scale_onscreen ) < m_absolute_min_scale_ppm ) b_do_zoom = false;
-    }
+		if( b_smallest || (0 == m_pQuilt->GetExtendedStackCount()))
+			proposed_scale_onscreen = wxMin(proposed_scale_onscreen,
+					GetCanvasScaleFactor() / m_absolute_min_scale_ppm);
+	}
 
-    if( b_do_zoom ) {
-        SetVPScale( GetCanvasScaleFactor() / proposed_scale_onscreen );
-        Refresh( false );
-    }
+	if( !pc ) {                         // no chart, so set a minimum scale
+		if( ( GetCanvasScaleFactor() / proposed_scale_onscreen ) < m_absolute_min_scale_ppm ) b_do_zoom = false;
+	}
 
-    m_bzooming = false;
+	if( b_do_zoom ) {
+		SetVPScale( GetCanvasScaleFactor() / proposed_scale_onscreen );
+		Refresh( false );
+	}
 
-    return true;
+	m_bzooming = false;
+
+	return true;
 }
 
 void ChartCanvas::ClearbFollow( void )
 {
-    m_bFollow = false;      // update the follow flag
-    parent_frame->SetToolbarItemState( ID_FOLLOW, false );
+	m_bFollow = false;      // update the follow flag
+	parent_frame->SetToolbarItemState( ID_FOLLOW, false );
 }
 
 bool ChartCanvas::PanCanvas( int dx, int dy )
 {
-    double dlat, dlon;
-    wxPoint p;
-//      CALLGRIND_START_INSTRUMENTATION
+	double dlat, dlon;
+	wxPoint p;
+	//      CALLGRIND_START_INSTRUMENTATION
 
-    extendedSectorLegs.clear();
+	extendedSectorLegs.clear();
 
-    GetCanvasPointPix( GetVP().clat, GetVP().clon, &p );
-    GetCanvasPixPoint( p.x + dx, p.y + dy, dlat, dlon );
+	GetCanvasPointPix( GetVP().clat, GetVP().clon, &p );
+	GetCanvasPixPoint( p.x + dx, p.y + dy, dlat, dlon );
 
-    if( dlon > 360. ) dlon -= 360.;
-    if( dlon < -360. ) dlon += 360.;
+	if( dlon > 360. ) dlon -= 360.;
+	if( dlon < -360. ) dlon += 360.;
 
-    //    This should not really be necessary, but round-trip georef on some charts is not perfect,
-    //    So we can get creep on repeated unidimensional pans, and corrupt chart cacheing.......
+	//    This should not really be necessary, but round-trip georef on some charts is not perfect,
+	//    So we can get creep on repeated unidimensional pans, and corrupt chart cacheing.......
 
-    //    But this only works on north-up projections
-    if( ( ( fabs( GetVP().skew ) < .001 ) ) && ( fabs( GetVP().rotation ) < .001 ) ) {
+	//    But this only works on north-up projections
+	if( ( ( fabs( GetVP().skew ) < .001 ) ) && ( fabs( GetVP().rotation ) < .001 ) ) {
 
-        if( dx == 0 ) dlon = GetVP().clon;
-        if( dy == 0 ) dlat = GetVP().clat;
-    }
+		if( dx == 0 ) dlon = GetVP().clon;
+		if( dy == 0 ) dlat = GetVP().clat;
+	}
 
-    int cur_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
-    SetViewPoint( dlat, dlon, VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation );
+	int cur_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
+	SetViewPoint( dlat, dlon, VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation );
 
-//      vLat = dlat;
-//      vLon = dlon;
+	//      vLat = dlat;
+	//      vLon = dlon;
 
-    if( VPoint.b_quilt ) {
-        int new_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
-        if( ( new_ref_dbIndex != cur_ref_dbIndex ) && ( new_ref_dbIndex != -1 ) ) {
-            //Tweak the scale slightly for a new ref chart
-            ChartBase *pc = ChartData->OpenChartFromDB( new_ref_dbIndex, FULL_INIT );
-            if( pc ) {
-                double tweak_scale_ppm = pc->GetNearestPreferredScalePPM( VPoint.view_scale_ppm );
-                SetVPScale( tweak_scale_ppm );
-            }
-        }
-    }
+	if( VPoint.b_quilt ) {
+		int new_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
+		if( ( new_ref_dbIndex != cur_ref_dbIndex ) && ( new_ref_dbIndex != -1 ) ) {
+			//Tweak the scale slightly for a new ref chart
+			ChartBase *pc = ChartData->OpenChartFromDB( new_ref_dbIndex, FULL_INIT );
+			if( pc ) {
+				double tweak_scale_ppm = pc->GetNearestPreferredScalePPM( VPoint.view_scale_ppm );
+				SetVPScale( tweak_scale_ppm );
+			}
+		}
+	}
 
-    ClearbFollow();      // update the follow flag
+	ClearbFollow();      // update the follow flag
 
     Refresh( false );
 

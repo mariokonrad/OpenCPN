@@ -32,6 +32,7 @@
 #include <OCPNRegionIterator.h>
 #include <cutil.h>
 #include <georef.h>
+#include <MicrosoftCompatibility.h>
 #include <wx/regex.h>
 
 extern bool g_bDebugCM93; // FIXME

@@ -32,6 +32,7 @@
 #include <georef.h>
 #include <navutil.h>
 #include <cutil.h>
+#include <MicrosoftCompatibility.h>
 
 #include <algorithm>
 
@@ -43,7 +44,7 @@ extern bool g_bDebugCM93; // FIXME
 static bool s_b_busy_shown; // FIXME
 
 #ifdef USE_S57
-extern s52plib * ps52plib;
+extern s52plib * ps52plib; // FIXME
 #endif
 
 struct header_struct
@@ -903,28 +904,29 @@ cm93chart::cm93chart()
 
 cm93chart::~cm93chart()
 {
-	free ( m_pcontour_array );
-
+	free(m_pcontour_array);
 	delete m_pcovr_set;
-
-	free ( m_pDrawBuffer );
-
+	free(m_pDrawBuffer);
+	if (m_CIB) {
+		delete m_CIB;
+		m_CIB = NULL;
+	}
 }
 
-void  cm93chart::Unload_CM93_Cell ( void )
+void cm93chart::Unload_CM93_Cell(void)
 {
-	free(m_CIB->pobject_block );
-	free(m_CIB->p2dpoint_array );
-	free(m_CIB->pprelated_object_block );
-	free(m_CIB->object_vector_record_descriptor_block );
-	free(m_CIB->attribute_block_top );
-	free(m_CIB->edge_vector_descriptor_block );
-	free(m_CIB->pvector_record_block_top );
-	free(m_CIB->point3d_descriptor_block );
-	free(m_CIB->p3dpoint_array );
+	free(m_CIB->pobject_block);
+	free(m_CIB->p2dpoint_array);
+	free(m_CIB->pprelated_object_block);
+	free(m_CIB->object_vector_record_descriptor_block);
+	free(m_CIB->attribute_block_top);
+	free(m_CIB->edge_vector_descriptor_block);
+	free(m_CIB->pvector_record_block_top);
+	free(m_CIB->point3d_descriptor_block);
+	free(m_CIB->p3dpoint_array);
 
 	delete m_CIB;
-	m_CIB = NULL;
+	m_CIB = new Cell_Info_Block;
 }
 
 
@@ -933,42 +935,42 @@ void  cm93chart::Unload_CM93_Cell ( void )
 //    If the min is too small, then the chart rendereding will be over-scaled, and accuracy suffers.
 //    In some ways, this is subjective.....
 
-double cm93chart::GetNormalScaleMin ( double canvas_scale_factor, bool b_allow_overzoom )
+double cm93chart::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom)
 {
 	switch ( GetNativeScale() )
 	{
-		case 20000000: return 3000000.;           // Z
-		case  3000000: return 1000000.;           // A
-		case  1000000: return 200000.;            // B
-		case   200000: return 40000.;             // C
-		case   100000: return 20000.;             // D
-		case    50000: return 10000.;             // E
-		case    20000: return 5000.;              // F
-		case     7500: return 3500.;              // G
+		case 20000000: return 3000000.0; // Z
+		case  3000000: return 1000000.0; // A
+		case  1000000: return 200000.0;  // B
+		case   200000: return 40000.0;   // C
+		case   100000: return 20000.0;   // D
+		case    50000: return 10000.0;   // E
+		case    20000: return 5000.0;    // F
+		case     7500: return 3500.0;    // G
 	}
 
 	return 1.0;
 }
 
-double cm93chart::GetNormalScaleMax ( double canvas_scale_factor )
+double cm93chart::GetNormalScaleMax(double canvas_scale_factor)
 {
 	switch ( GetNativeScale() )
 	{
-		case 20000000: return 50000000.;          // Z
-		case  3000000: return 6000000.;           // A
-		case  1000000: return 2000000.;           // B
-		case   200000: return 400000.;            // C
-		case   100000: return 200000.;            // D
-		case    50000: return 100000.;            // E
-		case    20000: return 40000.;             // F
-		case     7500: return 15000.;             // G
+		case 20000000: return 50000000.0; // Z
+		case  3000000: return 6000000.0;  // A
+		case  1000000: return 2000000.0;  // B
+		case   200000: return 400000.0;   // C
+		case   100000: return 200000.0;   // D
+		case    50000: return 100000.0;   // E
+		case    20000: return 40000.0;    // F
+		case     7500: return 15000.0;    // G
 	}
 
 	return 1.0e7;
 }
 
 
-void cm93chart::GetPointPix ( ObjRazRules *rzRules, float north, float east, wxPoint *r )
+void cm93chart::GetPointPix(ObjRazRules *rzRules, float north, float east, wxPoint *r)
 {
 	S57Obj *obj = rzRules->obj;
 
@@ -978,7 +980,7 @@ void cm93chart::GetPointPix ( ObjRazRules *rzRules, float north, float east, wxP
 	//    Crossing Greenwich right
 	if ( m_vp_current.GetBBox().GetMaxX() > 360. )
 	{
-		BoundingBox bbRight ( 0., m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360., m_vp_current.GetBBox().GetMaxY() );
+		BoundingBox bbRight(0.0, m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360., m_vp_current.GetBBox().GetMaxY() );
 		if ( bbRight.Intersect ( rzRules->obj->BBObj, 0 ) != _OUT )
 		{
 			valx += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * M_PI;      //6375586.0;
@@ -987,8 +989,6 @@ void cm93chart::GetPointPix ( ObjRazRules *rzRules, float north, float east, wxP
 
 	r->x = ( int ) wxRound ( ( ( valx - m_easting_vp_center ) * m_view_scale_ppm ) + m_pixx_vp_center );
 	r->y = ( int ) wxRound ( m_pixy_vp_center - ( ( valy - m_northing_vp_center ) * m_view_scale_ppm ) );
-
-
 }
 
 void cm93chart::GetPointPix ( ObjRazRules *rzRules, wxPoint2DDouble *en, wxPoint *r, int nPoints )
@@ -1062,11 +1062,11 @@ bool cm93chart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
 			//  adjusting clat/clat and SM accordingly
 
 			double delta_pix_x = ( easting_c - prev_easting_c ) * vp_proposed.view_scale_ppm;
-			int dpix_x = ( int ) round ( delta_pix_x );
+			int dpix_x = ( int ) round(delta_pix_x);
 			double dpx = dpix_x;
 
 			double delta_pix_y = ( northing_c - prev_northing_c ) * vp_proposed.view_scale_ppm;
-			int dpix_y = ( int ) round ( delta_pix_y );
+			int dpix_y = ( int ) round(delta_pix_y);
 			double dpy = dpix_y;
 
 			double c_east_d = ( dpx / vp_proposed.view_scale_ppm ) + prev_easting_c;
@@ -1084,10 +1084,6 @@ bool cm93chart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
 
 	return false;
 }
-
-//-----------------------------------------------------------------------
-//              Calculate and Set ViewPoint Constants
-//-----------------------------------------------------------------------
 
 void cm93chart::SetVPParms ( const ViewPort &vpt )
 {
@@ -1484,14 +1480,14 @@ InitReturn cm93chart::Init ( const wxString& name, ChartInitFlag flags )
 
 	switch ( GetNativeScale() )
 	{
-		case 20000000: m_dval = 120; break;         // Z
-		case  3000000: m_dval =  60; break;         // A
-		case  1000000: m_dval =  30; break;         // B
-		case   200000: m_dval =  12; break;         // C
-		case   100000: m_dval =   3; break;         // D
-		case    50000: m_dval =   1; break;         // E
-		case    20000: m_dval =   1; break;         // F
-		case     7500: m_dval =   1; break;         // G
+		case 20000000: m_dval = 120; break; // Z
+		case  3000000: m_dval =  60; break; // A
+		case  1000000: m_dval =  30; break; // B
+		case   200000: m_dval =  12; break; // C
+		case   100000: m_dval =   3; break; // D
+		case    50000: m_dval =   1; break; // E
+		case    20000: m_dval =   1; break; // F
+		case     7500: m_dval =   1; break; // G
 		default: m_dval =   1; break;
 	}
 

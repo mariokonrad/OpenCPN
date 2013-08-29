@@ -25,15 +25,17 @@
 #include "ViewPort.h"
 #include "cutil.h"
 #include "georef.h"
+#include <MicrosoftCompatibility.h>
 #include <cmath>
 #include <wx/wfstream.h>
 
 #include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY ( Array_Of_M_COVR_Desc );
-WX_DEFINE_OBJARRAY ( Array_Of_M_COVR_Desc_Ptr );
+WX_DEFINE_OBJARRAY ( Array_Of_M_COVR_Desc ); // FIXME
+WX_DEFINE_OBJARRAY ( Array_Of_M_COVR_Desc_Ptr ); // FIXME
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST ( List_Of_M_COVR_Desc );
+WX_DEFINE_LIST ( List_Of_M_COVR_Desc ); // FIXME
+
 
 M_COVR_Desc::M_COVR_Desc()
 {

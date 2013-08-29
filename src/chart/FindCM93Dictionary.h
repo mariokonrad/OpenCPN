@@ -21,65 +21,37 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#ifndef __CHART__FINDCM93DICTIONARY__H__
+#define __CHART__FINDCM93DICTIONARY__H__
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include "LatLonBoundingBox.h"
-
-class OCPNRegion;
-class LatLonBoundingBox;
-
-class ViewPort
+// Case-insensitive cm93 directory tree depth-first traversal to find the dictionary...
+// This could be made simpler, but matches the old code better as is
+class FindCM93Dictionary : public wxDirTraverser
 {
 	public:
-		ViewPort();
+		FindCM93Dictionary(wxString& path)
+			: m_path (path)
+		{}
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
+		virtual wxDirTraverseResult OnFile ( const wxString& filename )
+		{
+			wxString name = filename.AfterLast ( wxFileName::GetPathSeparator() ).Lower();
+			if ( name == wxT ( "cm93obj.dic" ) )
+			{
+				m_path = filename;
+				return wxDIR_STOP;
+			}
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
+			return wxDIR_CONTINUE;
+		}
 
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
-
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
-		void set_positive();
-
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
-
-		double chart_scale; // conventional chart displayed scale
-
-		int pix_width;
-		int pix_height;
-
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
+		virtual wxDirTraverseResult OnDir ( const wxString& WXUNUSED ( dirname ) )
+		{
+			return wxDIR_CONTINUE;
+		}
 
 	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+		wxString & m_path;
 };
 
 #endif

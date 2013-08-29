@@ -1190,6 +1190,7 @@ void options::CreatePanel_VectorCharts( size_t parent, int border_size, int grou
 	vectorPanel->Add( pDepthUnitSelect, 1, wxALL | wxEXPAND, border_size );
 
 #ifdef USE_S57
+#define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
 	wxStaticBox *cm93DetailBox = new wxStaticBox( ps57Ctl, wxID_ANY, _("CM93 Detail Level") );
 	wxStaticBoxSizer* cm93Sizer = new wxStaticBoxSizer( cm93DetailBox, wxVERTICAL );
 	m_pSlider_CM93_Zoom = new wxSlider( ps57Ctl, ID_CM93ZOOM, 0, -CM93_ZOOM_FACTOR_MAX_RANGE,

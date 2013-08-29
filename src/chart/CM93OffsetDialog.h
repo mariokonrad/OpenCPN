@@ -21,65 +21,60 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#ifndef __CHART__CM93OFFSETLISTCTRL__H__
+#define __CHART__CM93OFFSETLISTCTRL__H__
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include "LatLonBoundingBox.h"
+#include <wx/dialog.h>
+#include <wx/string.h>
+#include <wx/listctrl.h>
+#include <wx/spinctrl.h>
+#include <chart/M_COVR_Desc.h>
 
-class OCPNRegion;
-class LatLonBoundingBox;
+class wxButton;
+class wxSpinCtrl;
+class OCPNOffsetListCtrl;
+class ViewPort;
+class cm93compchart;
 
-class ViewPort
+class CM93OffsetDialog : public wxDialog
 {
+		DECLARE_CLASS( CM93OffsetDialog )
+		DECLARE_EVENT_TABLE()
+
 	public:
-		ViewPort();
+		CM93OffsetDialog( wxWindow * parent, cm93compchart * pchart);
+		virtual ~CM93OffsetDialog();
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
+		void OnClose(wxCloseEvent & event);
+		void OnOK(wxCommandEvent & event);
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
+		void SetColorScheme();
+		void UpdateMCOVRList(const ViewPort & vpt);     // Rebuild MCOVR list
 
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
+		OCPNOffsetListCtrl * m_pListCtrlMCOVRs;
+		Array_Of_M_COVR_Desc_Ptr m_pcovr_array;
 
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
-		void set_positive();
-
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
-
-		double chart_scale; // conventional chart displayed scale
-
-		int pix_width;
-		int pix_height;
-
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
+		wxString m_selected_chart_scale_char;
 
 	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+		void OnCellSelected(wxListEvent & event);
+		void OnOffSetSet(wxCommandEvent & event);
+
+		void UpdateOffsets(void);
+
+		wxSpinCtrl * m_pSpinCtrlXoff;
+		wxSpinCtrl * m_pSpinCtrlYoff;
+		wxButton * m_OKButton;
+
+		wxWindow * m_pparent; // FIXME: redundant?
+		cm93compchart * m_pcompchart;
+
+		int m_xoff;
+		int m_yoff;
+		int m_selected_cell_index;
+		int m_selected_object_id;
+		int m_selected_subcell;
+		int m_selected_list_index;
 };
 
 #endif

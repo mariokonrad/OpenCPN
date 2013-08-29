@@ -21,65 +21,51 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#ifndef __CHART__COVR_SET__H__
+#define __CHART__COVR_SET__H__
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include "LatLonBoundingBox.h"
+#include <chart/M_COVR_Desc.h>
 
-class OCPNRegion;
-class LatLonBoundingBox;
+WX_DECLARE_HASH_MAP(int, int, wxIntegerHash, wxIntegerEqual, cm93cell_hash);
 
-class ViewPort
+class cm93chart;
+
+/// This is a helper class which holds all the known information
+/// relating to cm93 cell MCOVR objects of a particular scale
+class covr_set
 {
 	public:
-		ViewPort();
+		covr_set(cm93chart * parent);
+		~covr_set();
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
+		bool Init(wxChar scale_char, wxString & prefix);
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
+		unsigned int GetCoverCount()
+		{
+			return m_covr_array_outlines.GetCount();
+		}
 
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
+		M_COVR_Desc * GetCover(unsigned int im)
+		{
+			return &m_covr_array_outlines.Item(im);
+		}
 
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
-		void set_positive();
+		void Add_MCD ( M_COVR_Desc *pmcd );
+		bool Add_Update_MCD ( M_COVR_Desc *pmcd );
+		bool IsCovrLoaded ( int cell_index );
+		int Find_MCD ( M_COVR_Desc *pmcd );
+		M_COVR_Desc *Find_MCD ( int cell_index, int object_id, int sbcell );
 
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
+		cm93chart * m_pParent;
+		wxChar m_scale_char;
+		int m_scale;
 
-		double chart_scale; // conventional chart displayed scale
+		wxString m_cachefile;
 
-		int pix_width;
-		int pix_height;
+		Array_Of_M_COVR_Desc m_covr_array_outlines; // array, for chart outline rendering
 
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
-
-	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+		cm93cell_hash m_cell_hash; // This is a hash, indexed by cell index, elements contain the number of M_COVRs
+		// found on this particular cell
 };
 
 #endif

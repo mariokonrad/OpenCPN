@@ -116,7 +116,7 @@
 #ifdef USE_S57
 	#include "S57RegistrarMgr.h"
 	#include "S57QueryDialog.h"
-	#include "cm93.h"
+	#include <chart/CM93OffsetDialog.h>
 	#include "s52plib.h"
 	#include "s57chart.h"
 	#include "cpl_csv.h"

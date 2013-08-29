@@ -21,65 +21,40 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#ifndef __CHART__OCPNOFFSETLISTCTRL__H__
+#define __CHART__OCPNOFFSETLISTCTRL__H__
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include "LatLonBoundingBox.h"
+#include <wx/listctrl.h>
 
-class OCPNRegion;
-class LatLonBoundingBox;
+class CM93OffsetDialog;
 
-class ViewPort
+class OCPNOffsetListCtrl : public wxListCtrl
 {
 	public:
-		ViewPort();
+		enum
+		{
+			tlCELL = 0,
+			tlMCOVR,
+			tlSCALE,
+			tlXOFF,
+			tlYOFF,
+			tlUXOFF,
+			tlUYOFF,
+		};
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
+	public:
+		OCPNOffsetListCtrl(
+				CM93OffsetDialog * parent,
+				wxWindowID id,
+				const wxPoint & pos,
+				const wxSize & size,
+				long style);
+		virtual ~OCPNOffsetListCtrl();
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
+		wxString OnGetItemText(long item, long column) const;
+		int OnGetItemColumnImage(long item, long column) const;
 
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
-
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
-		void set_positive();
-
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
-
-		double chart_scale; // conventional chart displayed scale
-
-		int pix_width;
-		int pix_height;
-
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
-
-	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+		CM93OffsetDialog * m_parent;
 };
 
 #endif

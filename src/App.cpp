@@ -58,12 +58,12 @@
 #include <wx/apptrait.h>
 
 #ifdef USE_S57
-#include "s52plib.h"
-#include "S57ClassRegistrar.h"
-#include "S57QueryDialog.h"
-#include "S57RegistrarMgr.h"
-#include "cm93.h"
-#include "cpl_csv.h"
+	#include "s52plib.h"
+	#include "S57ClassRegistrar.h"
+	#include "S57QueryDialog.h"
+	#include "S57RegistrarMgr.h"
+	#include "cpl_csv.h"
+	#include <chart/CM93OffsetDialog.h>
 #endif
 
 unsigned int malloc_max;

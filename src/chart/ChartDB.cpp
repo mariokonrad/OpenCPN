@@ -25,14 +25,16 @@
 #include <wx/regex.h>
 #include <wx/progdlg.h>
 
-#include <stdio.h>
-#include <math.h>
+#include <cstdio>
+#include <cmath>
 
 #include "ChartDB.h"
-#include "chart/CacheEntry.h"
-#include "chart/ChartGEO.h"
-#include "chart/ChartKAP.h"
-#include "chart/ChartStack.h"
+#include <chart/CacheEntry.h>
+#include <chart/ChartGEO.h>
+#include <chart/ChartKAP.h>
+#include <chart/ChartStack.h>
+#include <chart/CM93compchart.h>
+#include <chart/CM93Chart.h>
 
 #include "ChartPlugInWrapper.h"
 #include "chartimg.h"
@@ -41,7 +43,6 @@
 
 #ifdef USE_S57
 	#include "s57chart.h"
-	#include "cm93.h"
 #endif
 
 class s52plib;

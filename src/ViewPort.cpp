@@ -520,3 +520,12 @@ LatLonBoundingBox & ViewPort::GetBBox()
 	return vpBBox;
 }
 
+void ViewPort::set_positive()
+{
+	wxPoint2DDouble t(360.0, 0.0);
+	while (GetBBox().GetMinX() < 0) {
+		clon += 360.;
+		GetBBox().Translate(t);
+	}
+}
+

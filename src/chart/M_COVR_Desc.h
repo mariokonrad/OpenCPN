@@ -21,65 +21,51 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#ifndef __CHART__M_COVR_DESC__H__
+#define __CHART__M_COVR_DESC__H__
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include "LatLonBoundingBox.h"
+#include "BoundingBox.h"
+#include "OCPNRegion.h"
+#include <wx/dynarray.h>
 
-class OCPNRegion;
-class LatLonBoundingBox;
+class wxFFileInputStream;
+class ViewPort;
+struct float_2Dpt;
 
-class ViewPort
+class M_COVR_Desc
 {
 	public:
-		ViewPort();
+		M_COVR_Desc();
+		~M_COVR_Desc();
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
+		int GetWKBSize();
+		bool WriteWKB(void *p);
+		int ReadWKB(wxFFileInputStream & ifs);
+		void Update(M_COVR_Desc *pmcd);
+		OCPNRegion GetRegion(const ViewPort & vp, wxPoint * pwp);
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
+		int m_cell_index;
+		int m_object_id;
+		int m_subcell;
 
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
+		int m_nvertices;
+		float_2Dpt * pvertices;
+		int m_npub_year;
+		double transform_WGS84_offset_x;
+		double transform_WGS84_offset_y;
+		double m_covr_lat_min;
+		double m_covr_lat_max;
+		double m_covr_lon_min;
+		double m_covr_lon_max;
+		double user_xoff;
+		double user_yoff;
 
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
-		void set_positive();
-
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
-
-		double chart_scale; // conventional chart displayed scale
-
-		int pix_width;
-		int pix_height;
-
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
-
-	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+		BoundingBox m_covr_bbox;
+		bool m_buser_offsets;
 };
+
+WX_DECLARE_OBJARRAY(M_COVR_Desc, Array_Of_M_COVR_Desc);
+WX_DECLARE_OBJARRAY(M_COVR_Desc *, Array_Of_M_COVR_Desc_Ptr);
+WX_DECLARE_LIST(M_COVR_Desc, List_Of_M_COVR_Desc);
 
 #endif

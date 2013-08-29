@@ -514,6 +514,7 @@ int MyConfig::LoadMyConfig(int iteration)
     Read( _T ( "ChartNotRenderScaleFactor" ), &g_ChartNotRenderScaleFactor, 1.5 );
 
 #ifdef USE_S57
+#define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
     Read( _T ( "CM93DetailFactor" ), &g_cm93_zoom_factor, 0 );
     g_cm93_zoom_factor = wxMin(g_cm93_zoom_factor,CM93_ZOOM_FACTOR_MAX_RANGE);
     g_cm93_zoom_factor = wxMax(g_cm93_zoom_factor,(-CM93_ZOOM_FACTOR_MAX_RANGE));

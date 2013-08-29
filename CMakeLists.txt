@@ -760,6 +760,15 @@ IF (USE_S57)
 		src/s52utils.cpp
 		src/s57chart.cpp
 		src/RenderFromHPGL.cpp
+		src/chart/M_COVR_Desc.cpp
+		src/chart/OCPNOffsetListCtrl.cpp
+		src/chart/COVR_Set.cpp
+		src/chart/CM93_attr_block.cpp
+		src/chart/CM93OffsetDialog.cpp
+		src/chart/CM93Dictionary.cpp
+		src/chart/CM93Chart.cpp
+		src/chart/CM93Manager.cpp
+		src/chart/CM93compchart.cpp
 		src/cm93.cpp
 		src/geo/TriPrim.cpp
 		src/geo/ExtendedGeometry.cpp
@@ -767,6 +776,17 @@ IF (USE_S57)
 		src/geo/PolyTrapGroup.cpp
 		src/geo/PolyTessGeoTrap.cpp
 		src/geo/PolyTessGeo.cpp
+		src/chart/OCPNOffsetListCtrl.h
+		src/chart/CM93OffsetDialog.h
+		src/chart/M_COVR_Desc.h
+		src/chart/COVR_Set.h
+		src/chart/CM93compchart.h
+		src/chart/FindCM93Dictionary.h
+		src/chart/CM93Dictionary.h
+		src/chart/CM93_attr_block.h
+		src/chart/CM93Manager.h
+		src/chart/CM93Chart.h
+		src/chart/CM93Geometry.h
 		include/cm93.h
 		src/tri.c
 		src/myiso8211/ddffielddefn.cpp

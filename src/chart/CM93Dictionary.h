@@ -21,65 +21,36 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#ifndef __CHART__CM93DICTIONARY__H__
+#define __CHART__CM93DICTIONARY__H__
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include "LatLonBoundingBox.h"
+#include <wx/string.h>
+#include <wx/arrstr.h>
 
-class OCPNRegion;
-class LatLonBoundingBox;
-
-class ViewPort
+/// Encapsulating the conversion between binary cm_93 object class, attributes, etc
+/// to standard S57 text conventions
+class cm93_dictionary
 {
 	public:
-		ViewPort();
+		cm93_dictionary();
+		~cm93_dictionary();
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
-
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
-
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
-
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
-		void set_positive();
-
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
-
-		double chart_scale; // conventional chart displayed scale
-
-		int pix_width;
-		int pix_height;
-
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
+		bool LoadDictionary(const wxString & dictionary_dir);
+		bool IsOk(void) const;
+		wxString GetDictDir(void) const;
+		wxString GetClassName(int iclass);
+		wxString GetAttrName(int iattr);
+		char GetAttrType(int iattr);
 
 	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+		int m_max_class;
+		int m_max_attr;
+		wxArrayString * m_S57ClassArray; // FIXME: replace wxArrayString with std containers
+		wxArrayString * m_AttrArray; // FIXME: replace wxArrayString with std containers
+		int * m_GeomTypeArray;
+		char * m_ValTypeArray;
+		bool m_ok;
+		wxString m_dict_dir;
 };
 
 #endif

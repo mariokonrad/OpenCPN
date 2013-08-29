@@ -21,65 +21,36 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#ifndef __CHART__CM93MANAGER__H__
+#define __CHART__CM93MANAGER__H__
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include "LatLonBoundingBox.h"
+#include <wx/string.h>
 
-class OCPNRegion;
-class LatLonBoundingBox;
+class cm93_dictionary;
 
-class ViewPort
+class cm93manager
 {
 	public:
-		ViewPort();
+		cm93manager();
+		~cm93manager();
+		bool Loadcm93Dictionary(const wxString & name);
+		cm93_dictionary * FindAndLoadDict(const wxString &file);
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
+		cm93_dictionary * m_pcm93Dict;
 
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
+		//  Member variables used to record the calling of cm93chart::CreateHeaderDataFromCM93Cell()
+		//  for each available scale value.  This allows that routine to return quickly with no error
+		//  for all cells other than the first, at each scale....
 
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
-		void set_positive();
-
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
-
-		double chart_scale; // conventional chart displayed scale
-
-		int pix_width;
-		int pix_height;
-
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
-
-	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+		bool m_bfoundA;
+		bool m_bfoundB;
+		bool m_bfoundC;
+		bool m_bfoundD;
+		bool m_bfoundE;
+		bool m_bfoundF;
+		bool m_bfoundG;
+		bool m_bfoundZ;
 };
 
 #endif

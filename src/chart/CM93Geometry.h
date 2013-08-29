@@ -21,65 +21,38 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#ifndef __CHART_CM93GEOMETRY__H__
+#define __CHART_CM93GEOMETRY__H__
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include "LatLonBoundingBox.h"
+// This constant was developed empirically by looking at a
+// representative cell, comparing the cm93 point transform coefficients
+// to the stated lat/lon bounding box.
+// This value corresponds to the semi-major axis for the "International 1924" geo-standard
+// For WGS84, it should be 6378137.0......
+static const double CM93_semimajor_axis_meters = 6378388.0; // CM93 semimajor axis
 
-class OCPNRegion;
-class LatLonBoundingBox;
-
-class ViewPort
+struct cm93_point
 {
-	public:
-		ViewPort();
+	unsigned short x;
+	unsigned short y;
+};
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
+struct cm93_point_3d
+{
+	unsigned short x;
+	unsigned short y;
+	unsigned short z;
+};
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
-
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
-
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
-		void set_positive();
-
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
-
-		double chart_scale; // conventional chart displayed scale
-
-		int pix_width;
-		int pix_height;
-
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
-
-	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+struct geometry_descriptor
+{
+	unsigned short n_points;
+	unsigned short x_min;
+	unsigned short y_min;
+	unsigned short x_max;
+	unsigned short y_max;
+	int index;
+	cm93_point * p_points;
 };
 
 #endif

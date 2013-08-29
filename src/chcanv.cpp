@@ -94,9 +94,10 @@
 
 // S57
 #ifdef USE_S57
-	#include "cm93.h"                   // for chart outline draw
 	#include "s57chart.h"               // for ArrayOfS57Obj
 	#include "s52plib.h"
+	#include <chart/CM93compchart.h>
+	#include <chart/CM93OffsetDialog.h>
 #endif
 
 
@@ -1345,6 +1346,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 
                 if( cm93IsAvailable ) {
                     if( !pCM93DetailSlider ) {
+#define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
                         pCM93DetailSlider = new CM93DSlide( this, -1, 0,
                                 -CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
                                 wxPoint( g_cm93detail_dialog_x, g_cm93detail_dialog_y ),

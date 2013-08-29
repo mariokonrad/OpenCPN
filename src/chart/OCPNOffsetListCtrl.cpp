@@ -21,65 +21,80 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#include "OCPNOffsetListCtrl.h"
+#include <chart/CM93OffsetDialog.h>
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include "LatLonBoundingBox.h"
-
-class OCPNRegion;
-class LatLonBoundingBox;
-
-class ViewPort
+OCPNOffsetListCtrl::OCPNOffsetListCtrl(
+		CM93OffsetDialog * parent,
+		wxWindowID id,
+		const wxPoint & pos,
+		const wxSize & size,
+		long style)
+	: wxListCtrl(parent, id, pos, size, style)
 {
-	public:
-		ViewPort();
+	m_parent = parent;
+}
 
-		wxPoint GetPixFromLL(double lat, double lon) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(double lat, double lon);
+OCPNOffsetListCtrl::~OCPNOffsetListCtrl()
+{
+}
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
+wxString OCPNOffsetListCtrl::OnGetItemText ( long item, long column ) const
+{
 
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
+	wxString ret;
+	M_COVR_Desc *pmcd = m_parent->m_pcovr_array.Item ( item );
 
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
-		void set_positive();
+	switch ( column )
+	{
+		case tlCELL:
+			{
+				ret.Printf ( _T ( "%d" ), pmcd->m_cell_index );
+				if ( ( ( int ) '0' ) == pmcd->m_subcell )
+					ret.Prepend ( _T ( "0" ) );
+				else
+				{
+					char t = ( char ) pmcd->m_subcell;
+					wxString p;
+					p.Printf ( _T ( "%c" ), t );
+					ret.Prepend ( p );
+				}
 
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
+				break;
+			}
+		case tlMCOVR:
+			ret.Printf ( _T ( "%d" ), pmcd->m_object_id );
+			break;
 
-		double chart_scale; // conventional chart displayed scale
+		case tlSCALE:
+			ret = m_parent->m_selected_chart_scale_char;
+			break;
 
-		int pix_width;
-		int pix_height;
+		case tlXOFF:
+			ret.Printf ( _T ( "%g" ), pmcd->transform_WGS84_offset_x );
+			break;
 
-		bool b_quilt;
-		bool b_FullScreenQuilt;
+		case tlYOFF:
+			ret.Printf ( _T ( "%g" ), pmcd->transform_WGS84_offset_y );
+			break;
 
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
+		case tlUXOFF:
+			ret.Printf ( _T ( "%g" ), pmcd->user_xoff );
+			break;
 
-	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
-};
+		case tlUYOFF:
+			ret.Printf ( _T ( "%g" ), pmcd->user_yoff );
+			break;
 
-#endif
+		default:
+			break;
+	}
+	return ret;
+}
+
+
+int OCPNOffsetListCtrl::OnGetItemColumnImage ( long item, long column ) const
+{
+	return -1;
+}
+

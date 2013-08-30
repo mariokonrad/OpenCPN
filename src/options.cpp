@@ -60,7 +60,6 @@
 #ifdef USE_S57
 	#include "s52plib.h"
 	#include "s52utils.h"
-	#include "cm93.h"
 #endif
 
 wxString GetOCPNKnownLanguage(wxString lang_canonical, wxString *lang_dir);

@@ -74,7 +74,6 @@
 
 #ifdef USE_S57
 	#include "s52plib.h"
-	#include "cm93.h"
 #endif
 
 //    Statics

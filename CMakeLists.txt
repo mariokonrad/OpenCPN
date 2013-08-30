@@ -769,7 +769,6 @@ IF (USE_S57)
 		src/chart/CM93Chart.cpp
 		src/chart/CM93Manager.cpp
 		src/chart/CM93compchart.cpp
-		src/cm93.cpp
 		src/geo/TriPrim.cpp
 		src/geo/ExtendedGeometry.cpp
 		src/geo/PolyTriGroup.cpp
@@ -787,7 +786,6 @@ IF (USE_S57)
 		src/chart/CM93Manager.h
 		src/chart/CM93Chart.h
 		src/chart/CM93Geometry.h
-		include/cm93.h
 		src/tri.c
 		src/myiso8211/ddffielddefn.cpp
 		src/myiso8211/ddfmodule.cpp

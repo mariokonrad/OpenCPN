@@ -348,6 +348,7 @@ class options
 		wxStaticBoxSizer * dispOptions;
 		wxScrolledWindow * itemPanelShip;
 		wxBoxSizer * ownShip;
+		wxTextCtrl * m_pText_ACRadius;
 
 		//    For Fonts page
 		wxBoxSizer * m_itemBoxSizerFontPanel;

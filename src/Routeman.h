@@ -88,6 +88,8 @@ class Routeman
 		bool m_bDataValid;
 
 	private:
+		void DoAdvance(void);
+
 		App * m_pparent_app;
 		Route * pActiveRoute;
 		RoutePoint * pActivePoint;
@@ -116,6 +118,9 @@ class Routeman
 		wxBrush * m_pRoutePointBrush;
 
 		NMEA0183    m_NMEA0183; // For autopilot output
+
+		double m_arrival_min;
+		int m_arrival_test;
 };
 
 #endif

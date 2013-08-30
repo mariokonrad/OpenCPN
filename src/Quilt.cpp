@@ -542,9 +542,9 @@ int Quilt::GetNewRefChart(void)
 unsigned int Quilt::get_target_stack_index(int current_db_index) const
 {
 	std::vector<int>::const_iterator i = find(
-		m_extended_stack_array.begin(),
-		m_extended_stack_array.end(),
-		current_db_index);
+			m_extended_stack_array.begin(),
+			m_extended_stack_array.end(),
+			current_db_index);
 
 	return (i != m_extended_stack_array.end())
 		? i - m_extended_stack_array.begin()
@@ -996,7 +996,7 @@ bool Quilt::Compose(const ViewPort & vp_in)
 
 	ChartData->UnLockCache();
 
-	ViewPort vp_local = vp_in; // FIXME: need a non-const copy
+	ViewPort vp_local = vp_in;  // need a non-const copy, FIXME
 
 	//    Get Reference Chart parameters
 	if( m_refchart_dbIndex >= 0 ) {
@@ -1028,7 +1028,7 @@ bool Quilt::Compose(const ViewPort & vp_in)
 	//    This case is indicated if the candidate count is zero.
 	//    If so, do not invalidate the ref chart
 	bool bf = false;
-	for( unsigned int i = 0; i < m_pcandidate_array->size(); i++ ) {
+	for( unsigned int i = 0; i < m_pcandidate_array->GetCount(); i++ ) {
 		QuiltCandidate *qc = m_pcandidate_array->Item( i );
 		if( qc->dbIndex == m_refchart_dbIndex ) {
 			bf = true;
@@ -1036,7 +1036,7 @@ bool Quilt::Compose(const ViewPort & vp_in)
 		}
 	}
 
-	if( !bf && m_pcandidate_array->size() ) {
+	if( !bf && m_pcandidate_array->GetCount() ) {
 		m_refchart_dbIndex = GetNewRefChart();
 		BuildExtendedChartStackAndCandidateArray(bfull, m_refchart_dbIndex, vp_local);
 	}
@@ -1050,7 +1050,7 @@ bool Quilt::Compose(const ViewPort & vp_in)
 
 	//    "Draw" the reference chart first, since it is special in that it controls the fine vpscale setting
 	QuiltCandidate *pqc_ref = NULL;
-	for( ir = 0; ir < m_pcandidate_array->size(); ir++ )       // find ref chart entry
+	for( ir = 0; ir < m_pcandidate_array->GetCount(); ir++ )       // find ref chart entry
 	{
 		QuiltCandidate *pqc = m_pcandidate_array->Item( ir );
 		if( pqc->dbIndex == m_refchart_dbIndex ) {
@@ -1076,14 +1076,24 @@ bool Quilt::Compose(const ViewPort & vp_in)
 	}
 
 	//    Now the rest of the candidates
-	//    We always walk the entire list for s57 quilts, to pick up eclipsed overlays
-	if( !vp_region.IsEmpty() || ( CHART_TYPE_S57 == m_reference_type ) ) {
-		for( ir = 0; ir < m_pcandidate_array->size(); ir++ ) {
+	bool b_has_overlays = false;
+	if( !vp_region.IsEmpty() ) {
+		for( ir = 0; ir < m_pcandidate_array->GetCount(); ir++ ) {
 			QuiltCandidate *pqc = m_pcandidate_array->Item( ir );
 
 			if( pqc->dbIndex == m_refchart_dbIndex ) continue;               // already did this one
 
 			const ChartTableEntry &cte = ChartData->GetChartTableEntry( pqc->dbIndex );
+
+			//  Skip overlays on this pass, so that they do not subtract from quilt and thus displace
+			//  a geographical cell with the same extents.
+			//  Overlays will be picked up in the next pass, if any are found
+			if(  CHART_TYPE_S57 == m_reference_type ) {
+				if(s57chart::IsCellOverlayType(cte.GetpFullPath() )){
+					b_has_overlays = true;
+					continue;
+				}
+			}
 
 
 			if( cte.GetScale() >= m_reference_scale ) {
@@ -1091,7 +1101,7 @@ bool Quilt::Compose(const ViewPort & vp_in)
 				//  don't subtract its region when determining the smaller scale charts to include.....
 				bool b_in_noshow = false;
 				for( unsigned int ins = 0; ins < g_quilt_noshow_index_array.size(); ins++ ) {
-					if( g_quilt_noshow_index_array[ins] == pqc->dbIndex ) // chart is in the noshow list
+					if( g_quilt_noshow_index_array.at(ins) == pqc->dbIndex ) // chart is in the noshow list
 					{
 						b_in_noshow = true;
 						break;
@@ -1120,14 +1130,58 @@ bool Quilt::Compose(const ViewPort & vp_in)
 				pqc->b_include = false;                       // skip this chart, scale is too large
 			}
 
-			/// Don't break early if the quilt is S57 ENC
-			/// This will allow the overlay cells found in Euro(Austrian) IENC to be included
-			if( CHART_TYPE_S57 != m_reference_type ) {
-				if( vp_region.IsEmpty() )                   // normal stop condition, quilt is full
-					break;
+			if( vp_region.IsEmpty() )                   // normal stop condition, quilt is full
+				break;
+		}
+	}
+
+
+	//  For S57 quilts, walk the list again to identify overlay cells found previously,
+	//  and make sure they are always included and not eclipsed
+	if( b_has_overlays && (CHART_TYPE_S57 == m_reference_type) ) {
+		for( ir = 0; ir < m_pcandidate_array->GetCount(); ir++ ) {
+			QuiltCandidate *pqc = m_pcandidate_array->Item( ir );
+
+			if( pqc->dbIndex == m_refchart_dbIndex ) continue;               // already did this one
+
+			const ChartTableEntry &cte = ChartData->GetChartTableEntry( pqc->dbIndex );
+
+			if( cte.GetScale() >= m_reference_scale ) {
+				bool b_in_noshow = false;
+				for( unsigned int ins = 0; ins < g_quilt_noshow_index_array.size(); ins++ ) {
+					if( g_quilt_noshow_index_array.at(ins) == pqc->dbIndex ) // chart is in the noshow list
+					{
+						b_in_noshow = true;
+						break;
+					}
+				}
+
+				if( !b_in_noshow ) {
+					//    Check intersection
+					OCPNRegion vpu_region( vp_local.rv_rect );
+
+					OCPNRegion chart_region = pqc->quilt_region;
+					if( !chart_region.Empty() )
+						vpu_region.Intersect( chart_region );
+
+					if( vpu_region.IsEmpty() )
+						pqc->b_include = false; // skip this chart, no true overlap
+					else {
+						if( ChartData->IsChartInCache( pqc->dbIndex ) ){
+							ChartBase *pc = ChartData->OpenChartFromDB( pqc->dbIndex, FULL_INIT );
+							s57chart *ps57 = dynamic_cast<s57chart *>( pc );
+							bool b_overlay = ( ps57->GetUsageChar() == 'L' || ps57->GetUsageChar() == 'A' );
+							if( b_overlay )
+								pqc->b_include = true;
+						}
+					}
+				}
 			}
 		}
 	}
+
+
+
 
 	//    Walk the candidate list again, marking "eclipsed" charts
 	//    which at this point are the ones with b_include == false .AND. whose scale is strictly smaller than the ref scale
@@ -1135,13 +1189,13 @@ bool Quilt::Compose(const ViewPort & vp_in)
 
 	m_eclipsed_stack_array.clear();
 
-	for( ir = 0; ir < m_pcandidate_array->size(); ir++ ) {
+	for( ir = 0; ir < m_pcandidate_array->GetCount(); ir++ ) {
 		QuiltCandidate *pqc = m_pcandidate_array->Item( ir );
 
 		if( !pqc->b_include ) {
 			const ChartTableEntry &cte = ChartData->GetChartTableEntry( pqc->dbIndex );
 			if( cte.GetScale() >= m_reference_scale ) {
-				m_eclipsed_stack_array.push_back(pqc->dbIndex);
+				m_eclipsed_stack_array.push_back( pqc->dbIndex );
 				pqc->b_eclipsed = true;
 			}
 		}
@@ -1186,7 +1240,7 @@ bool Quilt::Compose(const ViewPort & vp_in)
 	//    then make sure the smallest scale chart which has any true region intersection is visible anyway
 	//    Also enable any other charts which are the same scale as the first one added
 	bool b_vis = false;
-	for( unsigned int i = 0; i < m_pcandidate_array->size(); i++ ) {
+	for( unsigned int i = 0; i < m_pcandidate_array->GetCount(); i++ ) {
 		QuiltCandidate *pqc = m_pcandidate_array->Item( i );
 		if( pqc->b_include ) {
 			b_vis = true;
@@ -1194,10 +1248,10 @@ bool Quilt::Compose(const ViewPort & vp_in)
 		}
 	}
 
-	if( !b_vis && m_pcandidate_array->size() ) {
+	if( !b_vis && m_pcandidate_array->GetCount() ) {
 		int add_scale = 0;
 
-		for( int i = m_pcandidate_array->size() - 1; i >= 0; i-- ) {
+		for( int i = m_pcandidate_array->GetCount() - 1; i >= 0; i-- ) {
 			QuiltCandidate *pqc = m_pcandidate_array->Item( i );
 			const ChartTableEntry &cte = ChartData->GetChartTableEntry( pqc->dbIndex );
 
@@ -1229,8 +1283,8 @@ bool Quilt::Compose(const ViewPort & vp_in)
 	m_PatchList.DeleteContents( true );
 	m_PatchList.Clear();
 
-	if( m_pcandidate_array->size() ) {
-		for( int i = m_pcandidate_array->size() - 1; i >= 0; i-- ) {
+	if( m_pcandidate_array->GetCount() ) {
+		for( int i = m_pcandidate_array->GetCount() - 1; i >= 0; i-- ) {
 			QuiltCandidate *pqc = m_pcandidate_array->Item( i );
 
 			//    cm93 add has been deferred until here

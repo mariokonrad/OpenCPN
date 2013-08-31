@@ -25,13 +25,13 @@
 #include "timers.h"
 #include "RolloverWin.h"
 #include "chcanv.h"
-#include "tide_time.h"
 #include "tcmgr.h"
 #include "dychart.h"
 #include "cutil.h"
 #include "ColorScheme.h"
 #include "MicrosoftCompatibility.h"
-#include "tide/IDX_entry.h"
+#include <tide/tide_time.h>
+#include <tide/IDX_entry.h>
 
 extern ColorScheme global_color_scheme;
 extern IDX_entry * gpIDX;

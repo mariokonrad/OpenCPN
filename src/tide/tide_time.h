@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  *
@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __TIDE_TIME_H__
 #define __TIDE_TIME_H__
@@ -28,12 +27,12 @@
 //constants for hight and low tide search
 enum
 {
-    FORWARD_ONE_HOUR_STEP    =3600,
-    FORWARD_TEN_MINUTES_STEP =600,
-    FORWARD_ONE_MINUTES_STEP =60,
-    BACKWARD_ONE_HOUR_STEP    =-3600,
-    BACKWARD_TEN_MINUTES_STEP =-600,
-    BACKWARD_ONE_MINUTES_STEP =-60
+	FORWARD_ONE_HOUR_STEP     =  3600,
+	FORWARD_TEN_MINUTES_STEP  =   600,
+	FORWARD_ONE_MINUTES_STEP  =    60,
+	BACKWARD_ONE_HOUR_STEP    = -3600,
+	BACKWARD_TEN_MINUTES_STEP =  -600,
+	BACKWARD_ONE_MINUTES_STEP =   -60
 };
 
 #endif

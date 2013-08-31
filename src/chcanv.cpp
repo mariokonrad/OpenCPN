@@ -67,7 +67,7 @@
 #include "Undo.h"
 #include "Multiplexer.h"
 #include "timers.h"
-#include "tide_time.h"
+#include <tide/tide_time.h>
 #include "ChInfoWin.h"
 #include "Quilt.h"
 #include "SelectItem.h"

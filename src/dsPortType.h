@@ -19,17 +19,17 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __DSPORTTYPE_H__
 #define __DSPORTTYPE_H__
 
-//      Port I/O type
-typedef enum {
-    DS_TYPE_INPUT,
-    DS_TYPE_OUTPUT,
-    DS_TYPE_INPUT_OUTPUT
-} dsPortType;
+// Port I/O type
+enum dsPortType
+{
+	DS_TYPE_INPUT,
+	DS_TYPE_OUTPUT,
+	DS_TYPE_INPUT_OUTPUT
+};
 
 #endif

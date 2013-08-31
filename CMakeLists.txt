@@ -570,7 +570,7 @@ SET(HDRS
 	src/OCPN_DataStreamEvent.h
 	src/ConnectionParams.h
 	include/OCP_DataStreamInput_Thread.h
-	include/dsPortType.h
+	src/dsPortType.h
 	src/Multiplexer.h
 	src/OCPNRegion.h
 	src/OCPNRegionIterator.h

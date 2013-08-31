@@ -46,6 +46,16 @@ void OCPN_GUI::set_frame_maximized(bool flag)
 	frame.maximized = flag;
 }
 
+void OCPN_GUI::set_frame_last_position(const wxPoint & position)
+{
+	frame.last_position = position;
+}
+
+void OCPN_GUI::set_frame_last_size(const wxSize & size)
+{
+	frame.last_size = size;
+}
+
 const GUI::Toolbar & OCPN_GUI::get_toolbar() const
 {
 	return toolbar;

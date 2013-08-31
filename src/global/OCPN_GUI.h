@@ -41,6 +41,8 @@ class OCPN_GUI : public GUI
 		virtual void set_frame_position(const wxPoint &);
 		virtual void set_frame_size(const wxSize &);
 		virtual void set_frame_maximized(bool);
+		virtual void set_frame_last_position(const wxPoint &);
+		virtual void set_frame_last_size(const wxSize &);
 
 	public: // toolbar
 		virtual const Toolbar & get_toolbar() const;

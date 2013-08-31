@@ -279,10 +279,6 @@ int g_COGFilterSec;
 int g_SOGFilterSec;
 int g_ChartUpdatePeriod;
 int g_SkewCompUpdatePeriod;
-int g_lastClientRectx;
-int g_lastClientRecty;
-int g_lastClientRectw;
-int g_lastClientRecth;
 
 #ifdef USE_S57
 s52plib                   *ps52plib;

@@ -274,11 +274,6 @@ extern int              g_SkewCompUpdatePeriod;
 
 extern int              g_GPU_MemSize;
 
-extern int              g_lastClientRectx;
-extern int              g_lastClientRecty;
-extern int              g_lastClientRectw;
-extern int              g_lastClientRecth;
-
 extern bool             g_bHighliteTracks;
 extern int              g_cog_predictor_width;
 extern int              g_ais_cog_predictor_width;
@@ -420,11 +415,18 @@ void MyConfig::load_frame()
     Read(_T("FrameWinY"), &size_y);
     Read(_T("FrameWinPosX"), &pos_x, 0);
     Read(_T("FrameWinPosY"), &pos_y, 0);
-    Read(_T("FrameMax"), &maximized);
-
 	OCPN::get().gui().set_frame_position(wxPoint(pos_x, pos_y));
 	OCPN::get().gui().set_frame_size(wxSize(size_x, size_y));
+
+    Read(_T("FrameMax"), &maximized);
 	OCPN::get().gui().set_frame_maximized(maximized);
+
+    Read(_T("ClientPosX"), &pos_x, 0);
+    Read(_T("ClientPosY"), &pos_y, 0);
+    Read(_T("ClientSzX"), &size_x, 0);
+    Read(_T("ClientSzY"), &size_y, 0);
+	OCPN::get().gui().set_frame_last_position(wxPoint(pos_x, pos_y));
+	OCPN::get().gui().set_frame_last_size(wxSize(size_x, size_y));
 }
 
 int MyConfig::LoadMyConfig(int iteration)
@@ -614,11 +616,6 @@ int MyConfig::LoadMyConfig(int iteration)
     Read( _T ( "bFollow" ), &st_bFollow );
 
 	load_frame();
-
-    Read( _T ( "ClientPosX" ), &g_lastClientRectx, 0 );
-    Read( _T ( "ClientPosY" ), &g_lastClientRecty, 0 );
-    Read( _T ( "ClientSzX" ), &g_lastClientRectw, 0 );
-    Read( _T ( "ClientSzY" ), &g_lastClientRecth, 0 );
 
     //    AIS
     wxString s;
@@ -1612,6 +1609,10 @@ void MyConfig::write_frame()
     Write(_T("FrameWinPosX"), config.position.x);
     Write(_T("FrameWinPosY"), config.position.y);
     Write(_T("FrameMax"), config.maximized);
+    Write(_T("ClientPosX"), config.last_position.x);
+    Write(_T("ClientPosY"), config.last_position.y);
+    Write(_T("ClientSzX"), config.last_size.GetWidth());
+    Write(_T("ClientSzY"), config.last_size.GetHeight());
 }
 
 void MyConfig::UpdateSettings()
@@ -1768,11 +1769,6 @@ void MyConfig::UpdateSettings()
     Write( _T ( "nColorScheme" ), (int) gFrame->GetColorScheme() );
 
 	write_frame();
-
-    Write( _T ( "ClientPosX" ), g_lastClientRectx );
-    Write( _T ( "ClientPosY" ), g_lastClientRecty );
-    Write( _T ( "ClientSzX" ), g_lastClientRectw );
-    Write( _T ( "ClientSzY" ), g_lastClientRecth );
 
     //    AIS
     SetPath( _T ( "/Settings/AIS" ) );

@@ -332,10 +332,6 @@ extern wxLog *logger;
 extern bool g_bTrackCarryOver;
 extern RoutePoint *pAnchorWatchPoint1;
 extern RoutePoint *pAnchorWatchPoint2;
-extern int g_lastClientRectx;
-extern int g_lastClientRecty;
-extern int g_lastClientRectw;
-extern int g_lastClientRecth;
 extern WayPointman *pWayPointMan;
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
@@ -1294,21 +1290,19 @@ bool App::OnInit()
 	//  and can confuse the WUI layout perspective stored in the config file.
 	//  If detected, force a nominal window size and position....
 	if (false
-			|| (g_lastClientRectx != cx)
-			|| (g_lastClientRecty != cy)
-			|| (g_lastClientRectw != cw)
-			|| (g_lastClientRecth != ch)) {
+			|| (frame_config.last_position.x != cx)
+			|| (frame_config.last_position.y != cy)
+			|| (frame_config.last_size.GetWidth() != cw)
+			|| (frame_config.last_size.GetHeight() != ch)) {
 		new_frame_size.Set( cw * 7 / 10, ch * 7 / 10 );
 		global::OCPN::get().gui().set_frame_maximized(false);
 	}
 
-	g_lastClientRectx = cx;
-	g_lastClientRecty = cy;
-	g_lastClientRectw = cw;
-	g_lastClientRecth = ch;
+	global::OCPN::get().gui().set_frame_last_position(wxPoint(cx, cy));
+	global::OCPN::get().gui().set_frame_last_size(wxSize(cw, ch));
 
 	//  Validate config file position
-	wxPoint position( 0, 0 );
+	wxPoint position(0, 0);
 	wxSize dsize = wxGetDisplaySize();
 
 #ifdef __WXMAC__

@@ -37,12 +37,16 @@ class GUI
 			wxPoint position;
 			wxSize size;
 			bool maximized;
+			wxPoint last_position;
+			wxSize last_size;
 		};
 
 		virtual const Frame & get_frame() const = 0;
 		virtual void set_frame_position(const wxPoint &) = 0;
 		virtual void set_frame_size(const wxSize &) = 0;
 		virtual void set_frame_maximized(bool) = 0;
+		virtual void set_frame_last_position(const wxPoint &) = 0;
+		virtual void set_frame_last_size(const wxSize &) = 0;
 
 	public:
 

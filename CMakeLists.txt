@@ -748,7 +748,7 @@ IF (USE_S57)
 	SET(SRC_S57ENC
 		src/s52plib.h
 		src/RenderFromHPGL.h
-		include/s52utils.h
+		src/chart/s52utils.h
 		include/s57chart.h
 		src/geo/ExtendedGeometry.h
 		src/geo/TriPrim.h
@@ -757,7 +757,7 @@ IF (USE_S57)
 		src/geo/PolyTessGeo.h
 		src/s52cnsy.cpp
 		src/s52plib.cpp
-		src/s52utils.cpp
+		src/chart/s52utils.cpp
 		src/s57chart.cpp
 		src/RenderFromHPGL.cpp
 		src/chart/M_COVR_Desc.cpp

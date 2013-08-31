@@ -30,7 +30,7 @@
 #include "geo/PolyTriGroup.h"
 #include "geo/PolyTrapGroup.h"
 #include "cutil.h"
-#include "s52utils.h"
+#include <chart/s52utils.h>
 #include "navutil.h"
 #include "ocpn_pixel.h"
 #include "chart/ChartSymbols.h"

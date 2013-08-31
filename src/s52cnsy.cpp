@@ -1,14 +1,12 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  S52 Conditional Symbology Library
- * Author:   David Register, Sylvain Duclos
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register   *
- *
- *   Copyright (C) 2000-2001  Sylvain Duclos
- *   sylvain_duclos@yahoo.com
+ *   Copyright (C) 2010 by David S. Register                               *
+ *                                                                         *
+ *   Copyright (C) 2000-2001  Sylvain Duclos                               *
+ *   sylvain_duclos@yahoo.com                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,23 +21,15 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
- ***************************************************************************
- *
- */
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
 
-#include "wx/wxprec.h"
+#include <wx/tokenzr.h>
 
-#ifndef  WX_PRECOMP
-#include "wx/wx.h"
-#endif //precompiled headers
-
-#include "wx/tokenzr.h"
-
-#include "s57chart.h"
-#include "s52plib.h"
-#include "s52utils.h"
-#include "dychart.h"
+#include <s57chart.h>
+#include <s52plib.h>
+#include <chart/s52utils.h>
+#include <dychart.h>
 
 bool GetDoubleAttr(S57Obj *obj, const char *AttrName, double &val);
 

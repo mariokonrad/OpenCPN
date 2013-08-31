@@ -58,8 +58,8 @@
 #include "plugin/PluginListPanel.h"
 
 #ifdef USE_S57
-	#include "s52plib.h"
-	#include "s52utils.h"
+	#include <s52plib.h>
+	#include <chart/s52utils.h>
 #endif
 
 wxString GetOCPNKnownLanguage(wxString lang_canonical, wxString *lang_dir);

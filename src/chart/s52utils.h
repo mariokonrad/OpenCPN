@@ -24,14 +24,8 @@
 #ifndef __S52UTILS_H__
 #define __S52UTILS_H__
 
-// valid label in .conf file
-#define CONF_CATALOG  "CATALOG"
-#define CONF_PLIB     "PLIB"
-#define CONF_CHART    "CHART"
-#define CONF_RGB      "DUMMY_RGB_BRIGHT"
-
 // global parameter for mariners' selection
-typedef enum _S52_MAR_param_t {
+enum S52_MAR_param_t {
     S52_MAR_NONE            = 0,    // default
     S52_MAR_SHOW_TEXT       = 1,    // view group 23
     S52_MAR_TWO_SHADES      = 2,    // flag indicating selection of two depth shades (on/off) [default ON]
@@ -53,7 +47,7 @@ typedef enum _S52_MAR_param_t {
     S52_MAR_COLOR_PALETTE   = 15,   // color palette
 
     S52_MAR_NUM             = 16    // number of parameters
-} S52_MAR_param_t;
+};
 
 extern double S52_getMarinerParam(S52_MAR_param_t param);
 extern int S52_setMarinerParam(S52_MAR_param_t param, double val);

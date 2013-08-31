@@ -110,8 +110,6 @@ extern bool g_bFirstRun;
 extern wxString gConfig_File;
 extern wxString OpenCPNVersion;
 extern FILE *flog;
-extern int g_mem_used;
-extern int g_mem_initial;
 extern bool s_bSetSystemTime;
 extern wxString *phost_name;
 extern wxArrayOfConnPrm *g_pConnectionParams;
@@ -359,9 +357,6 @@ extern bool g_bportable;
 extern bool g_bdisable_opengl;
 extern OCPNFloatingToolbarDialog * g_FloatingToolbarDialog;
 extern wxDateTime g_start_time;
-extern int g_mem_total;
-extern int g_mem_used;
-extern int g_mem_initial;
 extern MyConfig * pConfig;
 extern Select * pSelect;
 extern Select * pSelectTC;
@@ -498,6 +493,9 @@ bool App::OnInit()
 
 	nav_instance = new global::OCPN_Navigation;
 	global::OCPN::get().inject(nav_instance);
+
+	int mem_total = 0;
+	int mem_initial = 0;
 
 	//  On Windows
 	//  We allow only one instance unless the portable option is used
@@ -669,7 +667,7 @@ bool App::OnInit()
 	malloc_max = 0;
 
 	//      Record initial memory status
-	GetMemoryStatus( &g_mem_total, &g_mem_initial );
+	GetMemoryStatus(&mem_total, &mem_initial);
 
 	// Set up default FONT encoding, which should have been done by wxWidgets some time before this......
 	wxFont temp_font( 10, wxDEFAULT, wxNORMAL, wxNORMAL, FALSE, wxString( _T("") ),
@@ -782,8 +780,7 @@ bool App::OnInit()
 	wxver.Prepend( _T("wxWidgets version: ") );
 	wxLogMessage( wxver );
 
-	wxLogMessage( _T("MemoryStatus:  mem_total: %d mb,  mem_initial: %d mb"), g_mem_total / 1024,
-			g_mem_initial / 1024 );
+	wxLogMessage(_T("MemoryStatus:  mem_total: %d mb,  mem_initial: %d mb"), mem_total / 1024, mem_initial / 1024);
 
 	//    Initialize embedded PNG icon graphics
 	::wxInitAllImageHandlers();
@@ -1154,7 +1151,7 @@ bool App::OnInit()
 	// the memCacheLimit policy, and never use the fallback nCacheLimit policy
 #ifdef __WXMSW__
 	if( 0 == g_memCacheLimit )
-		g_memCacheLimit = (int) ( g_mem_total * 0.5 );
+		g_memCacheLimit = (int) (mem_total * 0.5);
 	g_memCacheLimit = wxMin(g_memCacheLimit, 1024 * 1024); // math in kBytes
 #endif
 

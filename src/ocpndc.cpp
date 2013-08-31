@@ -175,15 +175,17 @@ const wxBrush& ocpnDC::GetBrush() const
 
 const wxFont& ocpnDC::GetFont() const
 {
-    if( dc ) return dc->GetFont();
+    if (dc)
+		return dc->GetFont();
     return m_font;
 }
 
-void ocpnDC::GetSize( wxCoord *width, wxCoord *height ) const
+void ocpnDC::GetSize(wxCoord * width, wxCoord * height) const
 {
-    if( dc ) dc->GetSize( width, height );
+    if (dc)
+		dc->GetSize(width, height);
     else
-        glcanvas->GetSize( width, height );
+        glcanvas->GetSize(width, height);
 }
 
 void ocpnDC::SetGLStipple() const

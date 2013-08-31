@@ -315,11 +315,6 @@ AISTargetAlertDialog *g_pais_alert_dialog_active;
 AISTargetQueryDialog *g_pais_query_dialog_active;
 int g_S57_dialog_sx;
 int g_S57_dialog_sy;
-int g_nframewin_x;
-int g_nframewin_y;
-int g_nframewin_posx;
-int g_nframewin_posy;
-bool g_bframemax;
 bool g_bAutoAnchorMark;
 wxRect g_blink_rect;
 double g_PlanSpeed;
@@ -1406,7 +1401,7 @@ void MyFrame::OnCloseWindow( wxCloseEvent& event )
 
     FrameTimer1.Stop();
 
-    g_bframemax = IsMaximized();
+	global::OCPN::get().gui().set_frame_maximized(IsMaximized());
 
     //    Record the current state of tracking
     g_bTrackCarryOver = g_bTrackActive;
@@ -1497,43 +1492,40 @@ void MyFrame::OnCloseWindow( wxCloseEvent& event )
 
 }
 
-void MyFrame::OnMove( wxMoveEvent& event )
+void MyFrame::OnMove(wxMoveEvent & event)
 {
-    if( g_FloatingToolbarDialog ) g_FloatingToolbarDialog->RePosition();
+    if (g_FloatingToolbarDialog)
+		g_FloatingToolbarDialog->RePosition();
 
-    if( stats ) stats->RePosition();
+    if (stats)
+		stats->RePosition();
 
     UpdateGPSCompassStatusBox( true );
 
-    if( console && console->IsShown() ) PositionConsole();
+    if (console && console->IsShown())
+		PositionConsole();
 
-//    Somehow, this method does not work right on Windows....
-//      g_nframewin_posx = event.GetPosition().x;
-//      g_nframewin_posy = event.GetPosition().y;
-
-    g_nframewin_posx = GetPosition().x;
-    g_nframewin_posy = GetPosition().y;
+	global::OCPN::get().gui().set_frame_position(GetPosition());
 }
 
-void MyFrame::ProcessCanvasResize( void )
+void MyFrame::ProcessCanvasResize(void)
 {
-    if( stats ) {
+    if (stats) {
         stats->ReSize();
         stats->RePosition();
     }
 
-    if( g_FloatingToolbarDialog ) {
+    if (g_FloatingToolbarDialog) {
         g_FloatingToolbarDialog->RePosition();
         g_FloatingToolbarDialog->SetGeometry();
         g_FloatingToolbarDialog->Realize();
         g_FloatingToolbarDialog->RePosition();
-
     }
 
     UpdateGPSCompassStatusBox( true );
 
-    if( console->IsShown() ) PositionConsole();
-
+    if (console->IsShown())
+		PositionConsole();
 }
 
 void MyFrame::OnSize( wxSizeEvent& event )
@@ -1614,21 +1606,23 @@ void MyFrame::ODoSetSize( void )
     }
 
 //  Update the stored window size
-    GetSize( &x, &y );
-    g_nframewin_x = x;
-    g_nframewin_y = y;
+    GetSize(&x, &y);
+	global::OCPN::get().gui().set_frame_size(wxSize(x, y));
 
 //  Inform the PlugIns
-    if( g_pi_manager ) g_pi_manager->SendResizeEventToAllPlugIns( x, y );
+    if (g_pi_manager)
+		g_pi_manager->SendResizeEventToAllPlugIns(x, y);
 
 //  Force redraw if in lookahead mode
-    if( g_bLookAhead ) {
-        if( g_bCourseUp ) DoCOGSet();
+    if (g_bLookAhead) {
+        if (g_bCourseUp)
+			DoCOGSet();
         else
             DoChartUpdate();
     }
 
-    if( pthumbwin ) pthumbwin->SetMaxSize( cc1->GetParent()->GetSize() );
+    if (pthumbwin)
+		pthumbwin->SetMaxSize(cc1->GetParent()->GetSize());
 }
 
 void MyFrame::PositionConsole( void )

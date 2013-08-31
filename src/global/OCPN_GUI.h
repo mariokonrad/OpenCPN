@@ -31,9 +31,16 @@ namespace global {
 class OCPN_GUI : public GUI
 {
 	private:
+		Frame frame;
 		Toolbar toolbar;
 		AISAlertDialog ais_alert_dialog;
 		AISQueryDialog ais_query_dialog;
+
+	public: // frame
+		virtual const Frame & get_frame() const;
+		virtual void set_frame_position(const wxPoint &);
+		virtual void set_frame_size(const wxSize &);
+		virtual void set_frame_maximized(bool);
 
 	public: // toolbar
 		virtual const Toolbar & get_toolbar() const;

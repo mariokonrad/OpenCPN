@@ -32,6 +32,20 @@ class GUI
 {
 	public:
 
+		struct Frame
+		{
+			wxPoint position;
+			wxSize size;
+			bool maximized;
+		};
+
+		virtual const Frame & get_frame() const = 0;
+		virtual void set_frame_position(const wxPoint &) = 0;
+		virtual void set_frame_size(const wxSize &) = 0;
+		virtual void set_frame_maximized(bool) = 0;
+
+	public:
+
 		struct Toolbar
 		{
 			wxPoint position;

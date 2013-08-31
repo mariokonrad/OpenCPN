@@ -137,12 +137,6 @@ extern int              g_iSDMMFormat;
 extern int              g_iDistanceFormat;
 extern int              g_iSpeedFormat;
 
-extern int              g_nframewin_x;
-extern int              g_nframewin_y;
-extern int              g_nframewin_posx;
-extern int              g_nframewin_posy;
-extern bool             g_bframemax;
-
 extern double           g_PlanSpeed;
 extern wxString         g_VisibleLayers;
 extern wxString         g_InvisibleLayers;
@@ -412,6 +406,27 @@ void MyConfig::load_ais_query_dialog()
 	OCPN::get().gui().set_ais_query_dialog_position(wxPoint(x, y));
 }
 
+void MyConfig::load_frame()
+{
+	using global::OCPN;
+
+	long size_x = 0;
+	long size_y = 0;
+	long pos_x = 0;
+	long pos_y = 0;
+	bool maximized = false;
+
+    Read(_T("FrameWinX"), &size_x);
+    Read(_T("FrameWinY"), &size_y);
+    Read(_T("FrameWinPosX"), &pos_x, 0);
+    Read(_T("FrameWinPosY"), &pos_y, 0);
+    Read(_T("FrameMax"), &maximized);
+
+	OCPN::get().gui().set_frame_position(wxPoint(pos_x, pos_y));
+	OCPN::get().gui().set_frame_size(wxSize(size_x, size_y));
+	OCPN::get().gui().set_frame_maximized(maximized);
+}
+
 int MyConfig::LoadMyConfig(int iteration)
 {
     int read_int;
@@ -598,11 +613,7 @@ int MyConfig::LoadMyConfig(int iteration)
     SetPath( _T ( "/Settings/GlobalState" ) );
     Read( _T ( "bFollow" ), &st_bFollow );
 
-    Read( _T ( "FrameWinX" ), &g_nframewin_x );
-    Read( _T ( "FrameWinY" ), &g_nframewin_y );
-    Read( _T ( "FrameWinPosX" ), &g_nframewin_posx, 0 );
-    Read( _T ( "FrameWinPosY" ), &g_nframewin_posy, 0 );
-    Read( _T ( "FrameMax" ), &g_bframemax );
+	load_frame();
 
     Read( _T ( "ClientPosX" ), &g_lastClientRectx, 0 );
     Read( _T ( "ClientPosY" ), &g_lastClientRecty, 0 );
@@ -1592,6 +1603,17 @@ void MyConfig::write_ais_query_dialog()
 	Write(_T("QueryDialogPosY"), config.position.y);
 }
 
+void MyConfig::write_frame()
+{
+	const global::GUI::Frame & config = global::OCPN::get().gui().get_frame();
+
+    Write(_T("FrameWinX"), config.size.GetWidth());
+    Write(_T("FrameWinY"), config.size.GetHeight());
+    Write(_T("FrameWinPosX"), config.position.x);
+    Write(_T("FrameWinPosY"), config.position.y);
+    Write(_T("FrameMax"), config.maximized);
+}
+
 void MyConfig::UpdateSettings()
 {
 //    Global options and settings
@@ -1745,11 +1767,7 @@ void MyConfig::UpdateSettings()
     if( cc1 ) Write( _T ( "bFollow" ), cc1->m_bFollow );
     Write( _T ( "nColorScheme" ), (int) gFrame->GetColorScheme() );
 
-    Write( _T ( "FrameWinX" ), g_nframewin_x );
-    Write( _T ( "FrameWinY" ), g_nframewin_y );
-    Write( _T ( "FrameWinPosX" ), g_nframewin_posx );
-    Write( _T ( "FrameWinPosY" ), g_nframewin_posy );
-    Write( _T ( "FrameMax" ), g_bframemax );
+	write_frame();
 
     Write( _T ( "ClientPosX" ), g_lastClientRectx );
     Write( _T ( "ClientPosY" ), g_lastClientRecty );

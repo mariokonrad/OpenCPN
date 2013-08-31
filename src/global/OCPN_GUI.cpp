@@ -26,6 +26,26 @@
 
 namespace global {
 
+const GUI::Frame & OCPN_GUI::get_frame() const
+{
+	return frame;
+}
+
+void OCPN_GUI::set_frame_position(const wxPoint & position)
+{
+	frame.position = position;
+}
+
+void OCPN_GUI::set_frame_size(const wxSize & size)
+{
+	frame.size = size;
+}
+
+void OCPN_GUI::set_frame_maximized(bool flag)
+{
+	frame.maximized = flag;
+}
+
 const GUI::Toolbar & OCPN_GUI::get_toolbar() const
 {
 	return toolbar;

@@ -162,11 +162,6 @@ extern bool g_bAIS_CPA_Alert;
 extern bool g_bAIS_CPA_Alert_Audio;
 extern int g_S57_dialog_sx;
 extern int g_S57_dialog_sy;
-extern int g_nframewin_x;
-extern int g_nframewin_y;
-extern int g_nframewin_posx;
-extern int g_nframewin_posy;
-extern bool g_bframemax;
 extern bool g_bAutoAnchorMark;
 extern wxRect g_blink_rect;
 extern double g_PlanSpeed;
@@ -1279,23 +1274,32 @@ bool App::OnInit()
 	//      Default size, resized later
 	wxSize new_frame_size( -1, -1 );
 	int cx, cy, cw, ch;
-	::wxClientDisplayRect( &cx, &cy, &cw, &ch );
+	::wxClientDisplayRect(&cx, &cy, &cw, &ch);
 
 	InitializeUserColors();
 
-	if( ( g_nframewin_x > 100 ) && ( g_nframewin_y > 100 ) && ( g_nframewin_x <= cw )
-			&& ( g_nframewin_y <= ch ) ) new_frame_size.Set( g_nframewin_x, g_nframewin_y );
+	const global::GUI::Frame & frame_config = global::OCPN::get().gui().get_frame();
+
+	if (true
+			&& (frame_config.size.GetWidth() > 100)
+			&& (frame_config.size.GetHeight() > 100)
+			&& (frame_config.size.GetWidth() <= cw)
+			&& (frame_config.size.GetHeight() <= ch))
+		new_frame_size = frame_config.size;
 	else
-		new_frame_size.Set( cw * 7 / 10, ch * 7 / 10 );
+		new_frame_size.Set(cw * 7 / 10, ch * 7 / 10);
 
 	//  Try to detect any change in physical screen configuration
 	//  This can happen when drivers are changed, for instance....
 	//  and can confuse the WUI layout perspective stored in the config file.
 	//  If detected, force a nominal window size and position....
-	if( ( g_lastClientRectx != cx ) || ( g_lastClientRecty != cy ) || ( g_lastClientRectw != cw )
-			|| ( g_lastClientRecth != ch ) ) {
+	if (false
+			|| (g_lastClientRectx != cx)
+			|| (g_lastClientRecty != cy)
+			|| (g_lastClientRectw != cw)
+			|| (g_lastClientRecth != ch)) {
 		new_frame_size.Set( cw * 7 / 10, ch * 7 / 10 );
-		g_bframemax = false;
+		global::OCPN::get().gui().set_frame_maximized(false);
 	}
 
 	g_lastClientRectx = cx;
@@ -1308,11 +1312,12 @@ bool App::OnInit()
 	wxSize dsize = wxGetDisplaySize();
 
 #ifdef __WXMAC__
-	g_nframewin_posy = wxMax(g_nframewin_posy, 22);
+	global::OCPN::get().gui().set_frame_position(
+		wxPoint(frame_config.position.x, wxMax(frame_config.position.y, 22)));
 #endif
 
-	if( ( g_nframewin_posx < dsize.x ) && ( g_nframewin_posy < dsize.y ) ) position = wxPoint(
-			g_nframewin_posx, g_nframewin_posy );
+	if ((frame_config.position.x < dsize.x) && (frame_config.position.y < dsize.y))
+		position = frame_config.position;
 
 #ifdef __WXMSW__
 	//  Support MultiMonitor setups which an allow negative window positions.
@@ -1324,8 +1329,8 @@ bool App::OnInit()
 
 	//  If the requested frame window does not intersect any installed monitor,
 	//  then default to simple primary monitor positioning.
-	if( NULL == MonitorFromRect( &frame_rect, MONITOR_DEFAULTTONULL ) ) position = wxPoint( 10,
-			10 );
+	if (NULL == MonitorFromRect(&frame_rect, MONITOR_DEFAULTTONULL))
+		position = wxPoint(10, 10);
 #endif
 
 	//  For Windows and GTK, provide the expected application Minimize/Close bar
@@ -1405,7 +1410,8 @@ bool App::OnInit()
 	gFrame->ClearBackground();
 	gFrame->Show( TRUE );
 
-	if( g_bframemax ) gFrame->Maximize( true );
+	if (frame_config.maximized)
+		gFrame->Maximize(true);
 
 	stats = new StatWin( cc1 );
 	stats->SetColorScheme( global_color_scheme );

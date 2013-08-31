@@ -50,7 +50,6 @@
 
 extern double gLat;
 extern double gLon;
-extern double gCog;
 extern double g_PlanSpeed;
 extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;

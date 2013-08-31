@@ -43,7 +43,7 @@
 
 extern  int             s_dns_test_flag;
 extern  Select          *pSelectAIS;
-extern  double          gLat, gLon, gCog;
+extern  double          gLat, gLon;
 extern ChartCanvas      *cc1;
 extern MyFrame          *gFrame;
 extern MyConfig         *pConfig;

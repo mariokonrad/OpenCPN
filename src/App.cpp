@@ -367,7 +367,6 @@ extern wxString g_SData_Locn;
 extern bool bGPSValid;
 extern double gLat;
 extern double gLon;
-extern double gCog;
 extern wxString glog_file;
 extern int gGPS_Watchdog;
 extern int gHDx_Watchdog;

@@ -126,7 +126,7 @@ extern bool GetMemoryStatus(int *mem_total, int *mem_used);
 extern ChartBase        *Current_Vector_Ch;
 extern ChartBase        *Current_Ch;
 extern double           g_ChartNotRenderScaleFactor;
-extern double           gLat, gLon, gCog;
+extern double           gLat, gLon;
 extern double           vLat, vLon;
 extern ChartDB          *ChartData;
 extern bool             bDBUpdateInProgress;
@@ -2656,7 +2656,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
     //  COG/SOG may be undefined in NMEA data stream
-    double pCog = gCog;
+    double pCog = nav.cog;
     if( wxIsNaN(pCog) )
         pCog = 0.0;
     double pSog = nav.sog;
@@ -2943,7 +2943,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
         }         // ownship draw
 
         // draw course over ground if they are longer than the ship
-        if( !wxIsNaN(gCog) && !wxIsNaN(nav.sog) ) {
+        if( !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog) ) {
             if( lpp >= img_height / 2 ) {
                 const double png_pred_icon_scale_factor = .4;
                 wxPoint icon[4];
@@ -2967,10 +2967,6 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
                 wxDash dash_long[2];
                 dash_long[0] = (int) ( 3.0 * m_pix_per_mm );  //8// Long dash  <---------+
                 dash_long[1] = (int) ( 1.5 * m_pix_per_mm );  //2// Short gap            |
-
-                //       If COG is unknown, render the predictor in grey
-        //            if( wxIsNaN(gCog) )
-        //                pred_colour = GetGlobalColor( _T ( "GREY1" ) );
 
                 wxPen ppPen2( pred_colour, g_cog_predictor_width, wxUSER_DASH );
                 ppPen2.SetDashes( 2, dash_long );
@@ -3681,11 +3677,11 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
 
             //  Detect and handle the case where ownship COG is undefined....
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-            if (wxIsNaN(gCog) || wxIsNaN(nav.sog)) {
+            if (wxIsNaN(nav.cog) || wxIsNaN(nav.sog)) {
                 ocpa_lat = gLat;
                 ocpa_lon = gLon;
             } else {
-                ll_gc_ll( gLat, gLon, gCog, nav.sog * td->TCPA / 60.0, &ocpa_lat, &ocpa_lon );
+                ll_gc_ll( gLat, gLon, nav.cog, nav.sog * td->TCPA / 60.0, &ocpa_lat, &ocpa_lon );
             }
 
             wxPoint oCPAPoint;
@@ -6922,7 +6918,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 			g_pRouteMan->DeactivateRoute();
 
         RoutePoint *best_point = g_pRouteMan->FindBestActivatePoint(
-			m_pSelectedRoute, gLat, gLon, gCog, nav.sog);
+			m_pSelectedRoute, gLat, gLon, nav.cog, nav.sog);
 
         g_pRouteMan->ActivateRoute( m_pSelectedRoute, best_point );
         m_pSelectedRoute->m_bRtIsSelected = false;

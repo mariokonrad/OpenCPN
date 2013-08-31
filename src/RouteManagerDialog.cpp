@@ -131,7 +131,6 @@ extern MarkInfoImpl * pMarkPropDialog;
 extern MyFrame * gFrame;
 extern Select * pSelect;
 extern double gLat, gLon;
-extern double gCog;
 extern bool g_bShowLayers;
 extern wxString g_default_wp_icon;
 
@@ -1181,8 +1180,9 @@ void RouteManagerDialog::OnRteActivateClick( wxCommandEvent &event )
 
 		ZoomtoRoute( route );
 
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 		RoutePoint *best_point = g_pRouteMan->FindBestActivatePoint(
-			route, gLat, gLon, gCog, global::OCPN::get().nav().get_data().sog);
+			route, gLat, gLon, nav.cog, nav.sog);
 		g_pRouteMan->ActivateRoute( route, best_point );
 		//            g_pRouteMan->ActivateRoute(route);
 	} else

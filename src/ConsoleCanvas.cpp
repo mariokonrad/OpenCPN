@@ -39,7 +39,6 @@
 extern Routeman * g_pRouteMan;
 extern MyFrame * gFrame;
 extern bool g_bShowActiveRouteHighway;
-extern double gCog;
 
 enum eMenuItems
 {
@@ -273,11 +272,11 @@ void ConsoleCanvas::UpdateRouteData()
 			// VMG is SOG x cosine (difference between COG and BRG to Waypoint)
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			double VMG = 0.;
-			if (!wxIsNaN(gCog) && !wxIsNaN(nav.sog)) {
+			if (!wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
 				double BRG;
 				BRG = g_pRouteMan->GetCurrentBrgToActivePoint();
-				VMG = nav.sog * cos( ( BRG - gCog ) * M_PI / 180.0);
-				str_buf.Printf( _T("%6.2f"), VMG );
+				VMG = nav.sog * cos((BRG - nav.cog) * M_PI / 180.0);
+				str_buf.Printf(_T("%6.2f"), VMG);
 			} else
 				str_buf = _T("---");
 
@@ -288,7 +287,7 @@ void ConsoleCanvas::UpdateRouteData()
 
 			// If showing only "this leg", use VMG for calculation of ttg
 			wxString ttg_s;
-			if ((VMG > 0.0) && !wxIsNaN(gCog) && !wxIsNaN(nav.sog)) {
+			if ((VMG > 0.0) && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
 				float ttg_sec = ( rng / VMG ) * 3600.;
 				wxTimeSpan ttg_span( 0, 0, long( ttg_sec ), 0 );
 				ttg_s = ttg_span.Format();

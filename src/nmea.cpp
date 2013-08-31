@@ -1037,7 +1037,7 @@ void NMEAHandler::OnSocketEvent(wxSocketEvent& event)
 #endif
 }
 
-extern double gCog, gLat, gLon;
+extern double gLat, gLon;
 
 void NMEAHandler::OnTimerNMEA(wxTimerEvent& event)
 {
@@ -1080,8 +1080,8 @@ void NMEAHandler::OnTimerNMEA(wxTimerEvent& event)
       {
             if(m_pShareMutex)
                   wxMutexLocker stateLocker(*m_pShareMutex) ;
-            float kSog = 1.;//8.5;
-            float kCog = 40.;//170.;//NAN;//41.;//gCog;  // 28.0;                // gCog to simulate, see hotkey arrows
+            float kSog = 1.0;//8.5;
+            float kCog = 40.0;  // gCog to simulate, see hotkey arrows
 
             //    Kludge the startup case
             if(ThreadPositionData.kLat < 1.0)

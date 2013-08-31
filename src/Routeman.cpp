@@ -68,7 +68,6 @@ extern wxString g_PrivateDataDir;
 
 extern double gLat;
 extern double gLon;
-extern double gCog;
 
 extern Track * g_pActiveTrack;
 extern RouteProp * pRoutePropDialog;
@@ -570,7 +569,8 @@ bool Routeman::UpdateAutopilot()
 		m_NMEA0183.Rmb.BearingToDestinationDegreesTrue = CurrentBrgToActivePoint;
 		m_NMEA0183.Rmb.DestinationClosingVelocityKnots = global::OCPN::get().nav().get_data().sog;
 
-		if( m_bArrival ) m_NMEA0183.Rmb.IsArrivalCircleEntered = NTrue;
+		if (m_bArrival)
+			m_NMEA0183.Rmb.IsArrivalCircleEntered = NTrue;
 		else
 			m_NMEA0183.Rmb.IsArrivalCircleEntered = NFalse;
 
@@ -587,25 +587,27 @@ bool Routeman::UpdateAutopilot()
 		SENTENCE snt;
 		m_NMEA0183.Rmc.IsDataValid = NTrue;
 
-		if( gLat < 0. ) m_NMEA0183.Rmc.Position.Latitude.Set( -gLat, _T("S") );
+		if (gLat < 0.0)
+			m_NMEA0183.Rmc.Position.Latitude.Set( -gLat, _T("S") );
 		else
 			m_NMEA0183.Rmc.Position.Latitude.Set( gLat, _T("N") );
 
-		if( gLon < 0. ) m_NMEA0183.Rmc.Position.Longitude.Set( -gLon, _T("W") );
+		if (gLon < 0.0)
+			m_NMEA0183.Rmc.Position.Longitude.Set( -gLon, _T("W") );
 		else
 			m_NMEA0183.Rmc.Position.Longitude.Set( gLon, _T("E") );
 
-		m_NMEA0183.Rmc.SpeedOverGroundKnots = global::OCPN::get().nav().get_data().sog;
-		m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue = gCog;
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
-		const double magn_var = global::OCPN::get().nav().get_data().var;
+		m_NMEA0183.Rmc.SpeedOverGroundKnots = nav.sog;
+		m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue = nav.cog;
 
-		if (!wxIsNaN(magn_var)) {
-			if (magn_var < 0.0) {
-				m_NMEA0183.Rmc.MagneticVariation = -magn_var;
+		if (!wxIsNaN(nav.var)) {
+			if (nav.var < 0.0) {
+				m_NMEA0183.Rmc.MagneticVariation = -nav.var;
 				m_NMEA0183.Rmc.MagneticVariationDirection = West;
 			} else {
-				m_NMEA0183.Rmc.MagneticVariation = magn_var;
+				m_NMEA0183.Rmc.MagneticVariation = nav.var;
 				m_NMEA0183.Rmc.MagneticVariationDirection = East;
 			}
 		} else

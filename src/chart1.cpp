@@ -192,7 +192,6 @@ MarkInfoImpl *pMarkInfoDialog;
 RouteManagerDialog *pRouteManagerDialog;
 double gLat;
 double gLon;
-double gCog;
 double vLat;
 double vLon;
 double initial_scale_ppm;
@@ -683,7 +682,7 @@ MyFrame::MyFrame( wxFrame *frame, const wxString& title, const wxPoint& pos, con
     nav.set_heading_magn(NAN);
     nav.set_magn_var(NAN);
 	nav.set_speed_over_ground(NAN);
-    gCog = NAN;
+    nav.set_course_over_ground(NAN);
     m_fixtime = 0;
 
     m_bpersistent_quilt = false;
@@ -1962,10 +1961,10 @@ void MyFrame::ActivateMOB( void )
 
 
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-    if( bGPSValid && !wxIsNaN(gCog) && !wxIsNaN(nav.sog) ) {
+    if( bGPSValid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog) ) {
         //    Create a point that is one mile along the present course
         double zlat, zlon;
-        ll_gc_ll( gLat, gLon, gCog, 1.0, &zlat, &zlon );
+        ll_gc_ll( gLat, gLon, nav.cog, 1.0, &zlat, &zlon );
 
         RoutePoint *pWP_src = new RoutePoint( zlat, zlon, g_default_wp_icon, wxString( _( "1.0 NM along COG" )));
         pSelect->AddSelectableRoutePoint( zlat, zlon, pWP_src );
@@ -2116,14 +2115,17 @@ void MyFrame::TrackMidnightRestart( void )
     }
 }
 
-void MyFrame::ToggleCourseUp( void )
+void MyFrame::ToggleCourseUp(void)
 {
     g_bCourseUp = !g_bCourseUp;
 
     if( g_bCourseUp ) {
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
         //    Stuff the COGAvg table in case COGUp is selected
         double stuff = 0.;
-        if( !wxIsNaN(gCog) ) stuff = gCog;
+        if (!wxIsNaN(nav.cog))
+			stuff = nav.cog;
 
         if( g_COGAvgSec > 0) {
             for( int i = 0; i < g_COGAvgSec; i++ )
@@ -2527,11 +2529,14 @@ int MyFrame::ProcessOptionsDialog( int rr, options* dialog )
         SetupQuiltMode();
     }
 
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
     if( g_bCourseUp ) {
         //    Stuff the COGAvg table in case COGUp is selected
         double stuff = 0.;
-        if( !wxIsNaN(gCog) ) stuff = gCog;
-        if( g_COGAvgSec > 0 ) {
+        if (!wxIsNaN(nav.cog))
+			stuff = nav.cog;
+        if (g_COGAvgSec > 0) {
             for( int i = 0; i < g_COGAvgSec; i++ )
                 COGTable[i] = stuff;
         }
@@ -2544,11 +2549,10 @@ int MyFrame::ProcessOptionsDialog( int rr, options* dialog )
     }
 
     //    Stuff the Filter tables
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
     double stuffcog = 0.;
     double stuffsog = 0.;
-    if (!wxIsNaN(gCog))
-		stuffcog = gCog;
+    if (!wxIsNaN(nav.cog))
+		stuffcog = nav.cog;
     if (!wxIsNaN(nav.sog))
 		stuffsog = nav.sog;
 
@@ -3190,7 +3194,7 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
         if( g_nNMEADebug && ( gGPS_Watchdog == 0 ) ) wxLogMessage(
                 _T("   ***GPS Watchdog timeout...") );
         nav.set_speed_over_ground(NAN);
-        gCog = NAN;
+		nav.set_course_over_ground(NAN);
     }
 
 //  Update and check watchdog timer for Mag Heading data source
@@ -3233,7 +3237,7 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
             GenericPosDatEx GPSData;
             GPSData.kLat = gLat;
             GPSData.kLon = gLon;
-            GPSData.kCog = gCog;
+            GPSData.kCog = nav_data.cog;
             GPSData.kSog = nav_data.sog;
             GPSData.kVar = nav_data.var;
             GPSData.kHdm = nav_data.hdm;
@@ -3330,9 +3334,10 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
 //      Update the Toolbar Status windows and lower status bar the first time watchdog times out
     if( ( gGPS_Watchdog == 0 ) || ( gSAT_Watchdog == 0 ) ) {
         wxString sogcog( _T("SOG --- ") + getUsrSpeedUnit() + _T(" COG ---\u00B0") );
-        if( GetStatusBar() ) SetStatusText( sogcog, STAT_FIELD_SOGCOG );
+        if (GetStatusBar())
+			SetStatusText(sogcog, STAT_FIELD_SOGCOG);
 
-        gCog = 0.0;                                 // say speed is zero to kill ownship predictor
+		global::OCPN::get().nav().set_course_over_ground(0.0); // say speed is zero to kill ownship predictor
     }
 
     if( cc1 ) {
@@ -5190,7 +5195,7 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
 
 						global::Navigation & nav = global::OCPN::get().nav();
 						nav.set_speed_over_ground(m_NMEA0183.Rmc.SpeedOverGroundKnots);
-                        gCog = m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue;
+						nav.set_course_over_ground(m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue);
 
                         if( !wxIsNaN(m_NMEA0183.Rmc.MagneticVariation) )
                         {
@@ -5297,7 +5302,7 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                                 if( m_NMEA0183.Parse() ) {
 									global::Navigation & nav = global::OCPN::get().nav();
                                     nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
-                                    gCog = m_NMEA0183.Vtg.TrackDegreesTrue;
+									nav.set_course_over_ground(m_NMEA0183.Vtg.TrackDegreesTrue);
                                     if( !wxIsNaN(m_NMEA0183.Vtg.SpeedKnots) && !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue) )
                                         gGPS_Watchdog = gps_watchdog_timeout_ticks;
                                 }
@@ -5457,7 +5462,7 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
 
 				global::Navigation & nav = global::OCPN::get().nav();
                 nav.set_speed_over_ground(gpd.kSog);
-                gCog = gpd.kCog;
+                nav.set_course_over_ground(gpd.kCog);
 
 				global::OCPN::get().nav().set_heading_true(gpd.kHdt);
                 if( !wxIsNaN(gpd.kHdt) ) {
@@ -5560,22 +5565,22 @@ void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
         else
 			over_ground += wxString::Format(_T("SOG %2.2f ") + getUsrSpeedUnit() + _T("  "), toUsrSpeed(nav.sog));
 
-        if (wxIsNaN(gCog))
+        if (wxIsNaN(nav.cog))
 			over_ground += wxString("COG ---\u00B0", wxConvUTF8);
         else
-			over_ground += wxString::Format(wxString("COG %2.0f°", wxConvUTF8), gCog);
+			over_ground += wxString::Format(wxString("COG %2.0f°", wxConvUTF8), nav.cog);
 
         SetStatusText(over_ground, STAT_FIELD_SOGCOG);
     }
 
 //    Maintain average COG for Course Up Mode
 
-    if( !wxIsNaN(gCog) ) {
+    if( !wxIsNaN(nav.cog) ) {
         if( g_COGAvgSec > 0 ) {
             //    Make a hole
             for( int i = g_COGAvgSec - 1; i > 0; i-- )
                 COGTable[i] = COGTable[i - 1];
-            COGTable[0] = gCog;
+            COGTable[0] = nav.cog;
 
             double sum = 0.;
             for( int i = 0; i < g_COGAvgSec; i++ ) {
@@ -5598,7 +5603,7 @@ void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
             g_COGAvg = sum;
         }
         else
-            g_COGAvg = gCog;
+            g_COGAvg = nav.cog;
     }
 
 #ifdef ocpnUPDATE_SYSTEM_TIME
@@ -5695,11 +5700,13 @@ void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 
 void MyFrame::FilterCogSog( void )
 {
+	global::Navigation & nav = global::OCPN::get().nav();
+
     if( g_bfilter_cogsog ) {
         //    If the data are undefined, leave the array intact
-        if( !wxIsNaN(gCog) ) {
+        if( !wxIsNaN(nav.get_data().cog) ) {
             //    Simple averaging filter for COG
-            double cog_last = gCog;       // most recent reported value
+            double cog_last = nav.get_data().cog;       // most recent reported value
 
             //    Make a hole in array
             for( int i = g_COGFilterSec - 1; i > 0; i-- )
@@ -5728,7 +5735,7 @@ void MyFrame::FilterCogSog( void )
                 if (sum >= 360.0)
 					sum -= 360.0;
 
-            gCog = sum;
+            nav.set_course_over_ground(sum);
             m_COGFilterLast = sum;
         }
 

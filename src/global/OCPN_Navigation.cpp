@@ -50,5 +50,10 @@ void OCPN_Navigation::set_speed_over_ground(double value)
 	data.sog = value;
 }
 
+void OCPN_Navigation::set_course_over_ground(double value)
+{
+	data.cog = value;
+}
+
 }
 

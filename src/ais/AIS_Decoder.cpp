@@ -68,7 +68,6 @@ extern int      g_Show_Target_Name_Scale;
 extern bool     g_bWplIsAprsPosition;
 extern double gLat;
 extern double gLon;
-extern double gCog;
 extern bool g_bAIS_CPA_Alert;
 extern bool g_bAIS_CPA_Alert_Audio;
 
@@ -488,6 +487,8 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 			mmsi = (int) dse_mmsi;
 		}
 	} else if( str.Mid( 3, 3 ).IsSameAs( _T("TTM") ) ) {
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
 		//$--TTM,xx,x.x,x.x,a,x.x,x.x,a,x.x,x.x,a,c--c,a,a*hh <CR><LF>
 		//or
 		//$--TTM,xx,x.x,x.x,a,x.x,x.x,a,x.x,x.x,a,c--c,a,a,hhmmss.ss,a*hh<CR><LF>
@@ -507,10 +508,10 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 		{
 			if ( wxIsNaN(arpa_ref_hdg) )
 			{
-				if (!wxIsNaN(global::OCPN::get().nav().get_data().hdt))
-					arpa_brg += global::OCPN::get().nav().get_data().hdt;
+				if (!wxIsNaN(nav.hdt))
+					arpa_brg += nav.hdt;
 				else
-					arpa_brg += gCog;
+					arpa_brg += nav.cog;
 			}
 			else
 				arpa_brg += arpa_ref_hdg;
@@ -526,10 +527,10 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 		{
 			if ( wxIsNaN(arpa_ref_hdg) )
 			{
-				if (!wxIsNaN(global::OCPN::get().nav().get_data().hdt))
-					arpa_cog += global::OCPN::get().nav().get_data().hdt;
+				if (!wxIsNaN(nav.hdt))
+					arpa_cog += nav.hdt;
 				else
-					arpa_cog += gCog;
+					arpa_cog += nav.cog;
 			}
 			else
 				arpa_cog += arpa_ref_hdg;
@@ -1683,10 +1684,10 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 		return;
 	}
 
-	double cpa_calc_ownship_cog = gCog;
-	double cpa_calc_target_cog = ptarget->COG;
-
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+	double cpa_calc_ownship_cog = nav.cog;
+	double cpa_calc_target_cog = ptarget->COG;
 
 	// Ownship is not reporting valid SOG, so no way to calculate CPA
 	if (wxIsNaN(nav.sog) || (nav.sog > 102.2)) {
@@ -1695,7 +1696,7 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 	}
 
 	//    Ownship is maybe anchored and not reporting COG
-	if (wxIsNaN(gCog) || gCog == 360.0) {
+	if (wxIsNaN(nav.cog) || nav.cog == 360.0) {
 		if (nav.sog < 0.01)
 			cpa_calc_ownship_cog = 0.0;          // substitute value
 		// for the case where SOG ~= 0, and COG is unknown.

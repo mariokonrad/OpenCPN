@@ -38,6 +38,7 @@ class OCPN_Navigation : public Navigation
 		virtual void set_magn_var(double);
 		virtual void set_heading_true(double);
 		virtual void set_heading_magn(double);
+		virtual void set_speed_over_ground(double);
 };
 
 }

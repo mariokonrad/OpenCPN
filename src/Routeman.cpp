@@ -68,7 +68,6 @@ extern wxString g_PrivateDataDir;
 
 extern double gLat;
 extern double gLon;
-extern double gSog;
 extern double gCog;
 
 extern Track * g_pActiveTrack;
@@ -569,7 +568,7 @@ bool Routeman::UpdateAutopilot()
 
 		m_NMEA0183.Rmb.RangeToDestinationNauticalMiles = CurrentRngToActivePoint;
 		m_NMEA0183.Rmb.BearingToDestinationDegreesTrue = CurrentBrgToActivePoint;
-		m_NMEA0183.Rmb.DestinationClosingVelocityKnots = gSog;
+		m_NMEA0183.Rmb.DestinationClosingVelocityKnots = global::OCPN::get().nav().get_data().sog;
 
 		if( m_bArrival ) m_NMEA0183.Rmb.IsArrivalCircleEntered = NTrue;
 		else
@@ -596,7 +595,7 @@ bool Routeman::UpdateAutopilot()
 		else
 			m_NMEA0183.Rmc.Position.Longitude.Set( gLon, _T("E") );
 
-		m_NMEA0183.Rmc.SpeedOverGroundKnots = gSog;
+		m_NMEA0183.Rmc.SpeedOverGroundKnots = global::OCPN::get().nav().get_data().sog;
 		m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue = gCog;
 
 		const double magn_var = global::OCPN::get().nav().get_data().var;

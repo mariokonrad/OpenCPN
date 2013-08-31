@@ -193,7 +193,6 @@ RouteManagerDialog *pRouteManagerDialog;
 double gLat;
 double gLon;
 double gCog;
-double gSog;
 double vLat;
 double vLon;
 double initial_scale_ppm;
@@ -683,7 +682,7 @@ MyFrame::MyFrame( wxFrame *frame, const wxString& title, const wxPoint& pos, con
     nav.set_heading_true(NAN);
     nav.set_heading_magn(NAN);
     nav.set_magn_var(NAN);
-    gSog = NAN;
+	nav.set_speed_over_ground(NAN);
     gCog = NAN;
     m_fixtime = 0;
 
@@ -1368,8 +1367,10 @@ void MyFrame::OnCloseWindow( wxCloseEvent& event )
         wxDateTime now = wxDateTime::Now();
         wxTimeSpan uptime = now.Subtract( g_start_time );
 
-        if( !watching_anchor && ( g_bCruising ) && ( gSog < 0.5 )
-                && ( uptime.IsLongerThan( wxTimeSpan( 0, 30, 0, 0 ) ) ) )     // pjotrc 2010.02.15
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+        if (!watching_anchor && ( g_bCruising ) && (nav.sog < 0.5)
+                && uptime.IsLongerThan(wxTimeSpan(0, 30, 0, 0)))     // pjotrc 2010.02.15
                 {
             //    First, delete any single anchorage waypoint closer than 0.25 NM from this point
             //    This will prevent clutter and database congestion....
@@ -1960,7 +1961,8 @@ void MyFrame::ActivateMOB( void )
     pConfig->AddNewWayPoint( pWP_MOB, -1 );       // use auto next num
 
 
-    if( bGPSValid && !wxIsNaN(gCog) && !wxIsNaN(gSog) ) {
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+    if( bGPSValid && !wxIsNaN(gCog) && !wxIsNaN(nav.sog) ) {
         //    Create a point that is one mile along the present course
         double zlat, zlon;
         ll_gc_ll( gLat, gLon, gCog, 1.0, &zlat, &zlon );
@@ -2542,10 +2544,13 @@ int MyFrame::ProcessOptionsDialog( int rr, options* dialog )
     }
 
     //    Stuff the Filter tables
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
     double stuffcog = 0.;
     double stuffsog = 0.;
-    if( !wxIsNaN(gCog) ) stuffcog = gCog;
-    if( !wxIsNaN(gSog) ) stuffsog = gSog;
+    if (!wxIsNaN(gCog))
+		stuffcog = gCog;
+    if (!wxIsNaN(nav.sog))
+		stuffsog = nav.sog;
 
     for( int i = 0; i < MAX_COGSOG_FILTER_SECONDS; i++ ) {
         COGFilterTable[i] = stuffcog;
@@ -2555,19 +2560,6 @@ int MyFrame::ProcessOptionsDialog( int rr, options* dialog )
 
     SetChartUpdatePeriod( cc1->GetVP() );              // Pick up changes to skew compensator
 
-#if 0
-    bDBUpdateInProgress = false;
-
-    if( g_FloatingToolbarDialog ) {
-        if( IsFullScreen() && !g_bFullscreenToolbar ) g_FloatingToolbarDialog->Submerge();
-    }
-
-#ifdef __WXMAC__
-    if(stats) stats->Show();
-#endif
-
-    Refresh( false );
-#endif
     return 0;
 }
 
@@ -3016,7 +3008,7 @@ void MyFrame::OnMemFootTimer( wxTimerEvent& event )
             //    Get a local copy of the cache info
             wxArrayPtrVoid *pCache = ChartData->GetChartCache();
             unsigned int nCache = pCache->GetCount();
-            CacheEntry *pcea = new CacheEntry[nCache];
+            CacheEntry *pcea = new CacheEntry[nCache]; // FIXME: use std::vector
 
             for( unsigned int i = 0; i < nCache; i++ ) {
                 CacheEntry *pce = (CacheEntry *) ( pCache->Item( i ) );
@@ -3065,8 +3057,45 @@ void MyFrame::OnMemFootTimer( wxTimerEvent& event )
 
     }
 
-//      MemFootTimer.Start(wxMax(g_MemFootSec * 1000, 60 * 1000), wxTIMER_CONTINUOUS);
     MemFootTimer.Start( 9000, wxTIMER_CONTINUOUS );
+}
+
+wxString MyFrame::get_cog()
+{
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+	if (wxIsNaN(nav.cog))
+		return _T("COG ----- ");
+
+	return wxString::Format(_T("COG %10.5f "), nav.cog);
+}
+
+wxString MyFrame::get_sog()
+{
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+	if (wxIsNaN(nav.sog))
+		return _T("SOG -----  ");
+
+	return wxString::Format(_T("SOG %6.2f ") + getUsrSpeedUnit(), toUsrSpeed(nav.sog));
+}
+
+wxString MyFrame::prepare_logbook_message(const wxDateTime & lognow)
+{
+	wxString navmsg = _T("LOGBOOK:  ");
+	navmsg += lognow.FormatISODate();
+	navmsg += _T(" ");
+	navmsg += lognow.FormatISOTime();
+	navmsg += _T(" UTC ");
+
+	if( bGPSValid ) {
+		navmsg += wxString::Format( _T(" GPS Lat %10.5f Lon %10.5f "), gLat, gLon);
+		navmsg += get_cog();
+		navmsg += get_sog();
+	} else {
+		navmsg += wxString::Format( _T(" DR Lat %10.5f Lon %10.5f"), gLat, gLon );
+	}
+	return navmsg;
 }
 
 int ut_index;
@@ -3160,7 +3189,7 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
         bGPSValid = false;
         if( g_nNMEADebug && ( gGPS_Watchdog == 0 ) ) wxLogMessage(
                 _T("   ***GPS Watchdog timeout...") );
-        gSog = NAN;
+        nav.set_speed_over_ground(NAN);
         gCog = NAN;
     }
 
@@ -3199,16 +3228,16 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
 
     //    Build and send a Position Fix event to PlugIns
     if( g_pi_manager ) {
-			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			const global::Navigation::Data & nav_data = global::OCPN::get().nav().get_data();
 
             GenericPosDatEx GPSData;
             GPSData.kLat = gLat;
             GPSData.kLon = gLon;
             GPSData.kCog = gCog;
-            GPSData.kSog = gSog;
-            GPSData.kVar = nav.var;
-            GPSData.kHdm = nav.hdm;
-            GPSData.kHdt = nav.hdt;
+            GPSData.kSog = nav_data.sog;
+            GPSData.kVar = nav_data.var;
+            GPSData.kHdm = nav_data.hdm;
+            GPSData.kHdt = nav_data.hdt;
             GPSData.nSats = g_SatsInView;
 
             GPSData.FixTime = m_fixtime;
@@ -3229,10 +3258,13 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
         d = AnchorDistFix( d, AnchorPointMinDist, g_nAWMax );
         bool toofar = false;
         bool tooclose = false;
-        if( d >= 0.0 ) toofar = ( dist * 1852. > d );
-        if( d < 0.0 ) tooclose = ( dist * 1852 < -d );
+        if (d >= 0.0)
+			toofar = (dist * 1852. > d);
+        if (d < 0.0)
+			tooclose = (dist * 1852 < -d);
 
-        if( tooclose || toofar ) AnchorAlertOn1 = true;
+        if (tooclose || toofar)
+			AnchorAlertOn1 = true;
         else
             AnchorAlertOn1 = false;
     } else
@@ -3241,18 +3273,20 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
     if( pAnchorWatchPoint2 ) {
         double dist;
         double brg;
-        DistanceBearingMercator( pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, gLat, gLon,
-                &brg, &dist );
+        DistanceBearingMercator(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, gLat, gLon, &brg, &dist);
 
         double d = g_nAWMax;
-        ( pAnchorWatchPoint2->GetName() ).ToDouble( &d );
+        pAnchorWatchPoint2->GetName().ToDouble( &d );
         d = AnchorDistFix( d, AnchorPointMinDist, g_nAWMax );
         bool toofar = false;
         bool tooclose = false;
-        if( d >= 0 ) toofar = ( dist * 1852. > d );
-        if( d < 0 ) tooclose = ( dist * 1852 < -d );
+        if (d >= 0)
+			toofar = (dist * 1852. > d);
+        if (d < 0)
+			tooclose = (dist * 1852 < -d);
 
-        if( tooclose || toofar ) AnchorAlertOn2 = true;
+        if (tooclose || toofar)
+			AnchorAlertOn2 = true;
         else
             AnchorAlertOn2 = false;
     } else
@@ -3260,59 +3294,24 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
 
 //  Send current nav status data to log file on every half hour   // pjotrc 2010.02.09
 
-    wxDateTime lognow = wxDateTime::Now();   // pjotrc 2010.02.09
-    int hour = lognow.GetHour();
-    lognow.MakeGMT();
-    int minute = lognow.GetMinute();
-    int second = lognow.GetSecond();
-
-    wxTimeSpan logspan = lognow.Subtract( g_loglast_time );
-    if( ( logspan.IsLongerThan( wxTimeSpan( 0, 30, 0, 0 ) ) ) || ( minute == 0 )
-            || ( minute == 30 ) ) {
-        if( logspan.IsLongerThan( wxTimeSpan( 0, 1, 0, 0 ) ) ) {
-            wxString day = lognow.FormatISODate();
-            wxString utc = lognow.FormatISOTime();
-            wxString navmsg = _T("LOGBOOK:  ");
-            navmsg += day;
-            navmsg += _T(" ");
-            navmsg += utc;
-            navmsg += _T(" UTC ");
-
-            if( bGPSValid ) {
-                wxString data;
-                data.Printf( _T(" GPS Lat %10.5f Lon %10.5f "), gLat, gLon );
-                navmsg += data;
-
-                wxString cog;
-                if( wxIsNaN(gCog) ) cog.Printf( _T("COG ----- ") );
-                else
-                    cog.Printf( _T("COG %10.5f "), gCog );
-
-                wxString sog;
-                if( wxIsNaN(gSog) ) sog.Printf( _T("SOG -----  ") );
-                else
-                    sog.Printf( _T("SOG %6.2f ") + getUsrSpeedUnit(), toUsrSpeed( gSog ) );
-
-                navmsg += cog;
-                navmsg += sog;
-            } else {
-                wxString data;
-                data.Printf( _T(" DR Lat %10.5f Lon %10.5f"), gLat, gLon );
-                navmsg += data;
-            }
-            wxLogMessage( navmsg );
+    wxDateTime lognow = wxDateTime::Now().MakeGMT();   // pjotrc 2010.02.09
+    wxTimeSpan logspan = lognow.Subtract(g_loglast_time);
+    if ((logspan.IsLongerThan(wxTimeSpan(0, 30, 0, 0))) || (lognow.GetMinute() == 0) || (lognow.GetMinute() == 30)) {
+        if (logspan.IsLongerThan(wxTimeSpan(0, 1, 0, 0))) {
+            wxLogMessage(prepare_logbook_message(lognow));
             g_loglast_time = lognow;
 
-            if( hour == 0 && minute == 0 && g_bTrackDaily )
+            if (lognow.GetHour() == 0 && lognow.GetMinute() == 0 && g_bTrackDaily)
                 TrackMidnightRestart();
 
-            int bells = ( hour % 4 ) * 2;     // 2 bells each hour
-            if( minute != 0 ) bells++;       // + 1 bell on 30 minutes
-            if( !bells ) bells = 8;     // 0 is 8 bells
+            int bells = (lognow.GetHour() % 4) * 2; // 2 bells each hour
+            if (lognow.GetMinute() != 0)
+				bells++; // + 1 bell on 30 minutes, FIXME
+            if (!bells)
+				bells = 8; // 0 is 8 bells, FIXME
 
-            if( g_bPlayShipsBells && ( ( minute == 0 ) || ( minute == 30 ) ) ) {
-                if( !bells_sound[bells - 1].IsOk() )            // load the bells sound
-                {
+            if (g_bPlayShipsBells && ((lognow.GetMinute() == 0) || (lognow.GetMinute() == 30))) {
+                if (!bells_sound[bells - 1].IsOk()) { // load the bells sound
                     wxString soundfile = _T("sounds");
                     appendOSDirSlash( &soundfile );
                     soundfile += wxString( bells_sound_file_name[bells - 1], wxConvUTF8 );
@@ -3322,7 +3321,8 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
 
                 }
 
-                if( bells_sound[bells - 1].IsOk() ) bells_sound[bells - 1].Play();
+                if (bells_sound[bells - 1].IsOk())
+					bells_sound[bells - 1].Play();
             }
         }
     }
@@ -3568,7 +3568,7 @@ void MyFrame::DoCOGSet( void )
 {
     double old_VPRotate = g_VPRotate;
 
-    if( g_bCourseUp ) g_VPRotate = -g_COGAvg * PI / 180.;
+    if( g_bCourseUp ) g_VPRotate = -g_COGAvg * M_PI / 180.;
     else
         g_VPRotate = 0.;
 
@@ -3697,23 +3697,6 @@ int MyFrame::GetApplicationMemoryUse( void )
     if( NULL == hProcess ) return 0;
 
     if( GetProcessMemoryInfo( hProcess, &pmc, sizeof( pmc ) ) ) {
-        /*
-         printf( "\tPageFaultCount: 0x%08X\n", pmc.PageFaultCount );
-         printf( "\tPeakWorkingSetSize: 0x%08X\n",
-         pmc.PeakWorkingSetSize );
-         printf( "\tWorkingSetSize: 0x%08X\n", pmc.WorkingSetSize );
-         printf( "\tQuotaPeakPagedPoolUsage: 0x%08X\n",
-         pmc.QuotaPeakPagedPoolUsage );
-         printf( "\tQuotaPagedPoolUsage: 0x%08X\n",
-         pmc.QuotaPagedPoolUsage );
-         printf( "\tQuotaPeakNonPagedPoolUsage: 0x%08X\n",
-         pmc.QuotaPeakNonPagedPoolUsage );
-         printf( "\tQuotaNonPagedPoolUsage: 0x%08X\n",
-         pmc.QuotaNonPagedPoolUsage );
-         printf( "\tPagefileUsage: 0x%08X\n", pmc.PagefileUsage );
-         printf( "\tPeakPagefileUsage: 0x%08X\n",
-         pmc.PeakPagefileUsage );
-         */
         memsize = pmc.WorkingSetSize / 1024;
     }
 
@@ -3899,7 +3882,7 @@ void MyFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Type
 
         double best_scale = GetBestVPScale( Current_Ch );
 
-        cc1->SetViewPoint( zLat, zLon, best_scale, Current_Ch->GetChartSkew() * PI / 180.,
+        cc1->SetViewPoint( zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.,
                 cc1->GetVPRotation() );
 
         SetChartUpdatePeriod( cc1->GetVP() );
@@ -3948,7 +3931,7 @@ void MyFrame::SelectdbChart( int dbindex )
 
         double best_scale = GetBestVPScale( Current_Ch );
 
-        cc1->SetViewPoint( zLat, zLon, best_scale, Current_Ch->GetChartSkew() * PI / 180.,
+        cc1->SetViewPoint( zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.,
                 cc1->GetVPRotation() );
 
         SetChartUpdatePeriod( cc1->GetVP() );
@@ -3969,134 +3952,127 @@ void MyFrame::SelectdbChart( int dbindex )
 
 void MyFrame::SetChartUpdatePeriod( ViewPort &vp )
 {
-    //    Set the chart update period based upon chart skew and skew compensator
+	//    Set the chart update period based upon chart skew and skew compensator
 
-    g_ChartUpdatePeriod = 1;            // General default
+	g_ChartUpdatePeriod = 1;            // General default
 
-    if( !vp.b_quilt ) {
-        if( g_bskew_comp && ( fabs( vp.skew ) ) > 0.01 ) g_ChartUpdatePeriod =
-                g_SkewCompUpdatePeriod;
-    }
+	if (!vp.b_quilt) {
+		if (g_bskew_comp && (fabs(vp.skew)) > 0.01)
+			g_ChartUpdatePeriod = g_SkewCompUpdatePeriod;
+	}
 
     m_ChartUpdatePeriod = g_ChartUpdatePeriod;
 }
 
-void MyFrame::SetChartThumbnail( int index )
+void MyFrame::SetChartThumbnail(int index)
 {
-    if( bDBUpdateInProgress ) return;
+	if (bDBUpdateInProgress)
+		return;
+	if (NULL == pCurrentStack)
+		return;
+	if (NULL == pthumbwin)
+		return;
+	if (NULL == cc1)
+		return;
 
-    if( NULL == pCurrentStack ) return;
+	if (index == -1) {
+		wxRect thumb_rect_in_parent = pthumbwin->GetRect();
+		pthumbwin->pThumbChart = NULL;
+		pthumbwin->Show( false );
+		cc1->RefreshRect( thumb_rect_in_parent, FALSE );
+		return;
+	}
 
-    if( NULL == pthumbwin ) return;
+	if (index >= pCurrentStack->nEntry)
+		return;
 
-    if( NULL == cc1 ) return;
+	if ((ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_KAP)
+			|| (ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_GEO)
+			|| (ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_PLUGIN)) {
+		ChartBase *new_pThumbChart = ChartData->OpenChartFromStack( pCurrentStack, index );
+		if (new_pThumbChart) { // chart opened ok
+			ThumbData *pTD = new_pThumbChart->GetThumbData( 150, 150, gLat, gLon );
+			if (pTD) {
+				pthumbwin->pThumbChart = new_pThumbChart;
 
-    if( index == -1 ) {
-        wxRect thumb_rect_in_parent = pthumbwin->GetRect();
+				pthumbwin->Resize();
+				pthumbwin->Show(true);
+				pthumbwin->Refresh(false);
+				pthumbwin->Move(wxPoint(4, 4));
 
-        pthumbwin->pThumbChart = NULL;
-        pthumbwin->Show( false );
-        cc1->RefreshRect( thumb_rect_in_parent, FALSE );
-    }
-
-    else
-        if( index < pCurrentStack->nEntry ) {
-            if( ( ChartData->GetCSChartType( pCurrentStack, index ) == CHART_TYPE_KAP )
-                    || ( ChartData->GetCSChartType( pCurrentStack, index ) == CHART_TYPE_GEO )
-                    || ( ChartData->GetCSChartType( pCurrentStack, index ) == CHART_TYPE_PLUGIN ) ) {
-                ChartBase *new_pThumbChart = ChartData->OpenChartFromStack( pCurrentStack, index );
-                if( new_pThumbChart )         // chart opened ok
-                {
-
-                    ThumbData *pTD = new_pThumbChart->GetThumbData( 150, 150, gLat, gLon );
-                    if( pTD ) {
-                        pthumbwin->pThumbChart = new_pThumbChart;
-
-                        pthumbwin->Resize();
-                        pthumbwin->Show( true );
-                        pthumbwin->Refresh( FALSE );
-                        pthumbwin->Move( wxPoint( 4, 4 ) );
-
-                        // Simplistic overlap avoidance works only when toolbar is at top of screen.
-                        if( g_FloatingToolbarDialog )
-                            if( g_FloatingToolbarDialog->GetScreenRect().Intersects( pthumbwin->GetScreenRect() ) ) {
-                                pthumbwin->Move( wxPoint( 4, g_FloatingToolbarDialog->GetSize().y + 4 ) );
-                        }
-                    }
-
-                    else {
-                        wxLogMessage(
-                                _T("    chart1.cpp:SetChartThumbnail...Could not create thumbnail") );
-                        pthumbwin->pThumbChart = NULL;
-                        pthumbwin->Show( false );
-                        cc1->Refresh( FALSE );
-                    }
-
-                } else                            // some problem opening chart
-                {
-                    wxString fp = ChartData->GetFullPath( pCurrentStack, index );
-                    fp.Prepend( _T("    chart1.cpp:SetChartThumbnail...Could not open chart ") );
-                    wxLogMessage( fp );
-                    pthumbwin->pThumbChart = NULL;
-                    pthumbwin->Show( false );
-                    cc1->Refresh( FALSE );
-                }
-
-            } else {
-                ChartBase *new_pThumbChart = ChartData->OpenChartFromStack( pCurrentStack, index,
-                        THUMB_ONLY );
-
-                pthumbwin->pThumbChart = new_pThumbChart;
-
-                if( new_pThumbChart ) {
-                    ThumbData *pTD = new_pThumbChart->GetThumbData( 200, 200, gLat, gLon );
-                    if( pTD ) {
-                        pthumbwin->Resize();
-                        pthumbwin->Show( true );
-                        pthumbwin->Refresh( true );
-                    } else
-                        pthumbwin->Show( false );
-
-                    cc1->Refresh( FALSE );
-                }
-            }
-        }
-
+				// Simplistic overlap avoidance works only when toolbar is at top of screen.
+				if (g_FloatingToolbarDialog) {
+					if (g_FloatingToolbarDialog->GetScreenRect().Intersects( pthumbwin->GetScreenRect())) {
+						pthumbwin->Move( wxPoint( 4, g_FloatingToolbarDialog->GetSize().y + 4 ) );
+					}
+				}
+			} else {
+				wxLogMessage(_T("    chart1.cpp:SetChartThumbnail...Could not create thumbnail"));
+				pthumbwin->pThumbChart = NULL;
+				pthumbwin->Show( false );
+				cc1->Refresh( FALSE );
+			}
+		} else {                          // some problem opening chart
+			wxString fp = ChartData->GetFullPath( pCurrentStack, index );
+			fp.Prepend(_T("    chart1.cpp:SetChartThumbnail...Could not open chart "));
+			wxLogMessage(fp);
+			pthumbwin->pThumbChart = NULL;
+			pthumbwin->Show(false);
+			cc1->Refresh(false);
+		}
+	} else {
+		ChartBase * new_pThumbChart = ChartData->OpenChartFromStack(pCurrentStack, index, THUMB_ONLY);
+		pthumbwin->pThumbChart = new_pThumbChart;
+		if (new_pThumbChart) {
+			ThumbData * pTD = new_pThumbChart->GetThumbData(200, 200, gLat, gLon);
+			if (pTD) {
+				pthumbwin->Resize();
+				pthumbwin->Show(true);
+				pthumbwin->Refresh(true);
+			} else {
+				pthumbwin->Show(false);
+			}
+			cc1->Refresh(false);
+		}
+	}
 }
 
 void MyFrame::UpdateControlBar( void )
 {
-    if( !cc1 ) return;
+	if (!cc1)
+		return;
 
-    if( !stats ) return;
+	if (!stats)
+		return;
 
-    if( !pCurrentStack ) return;
+	if (!pCurrentStack)
+		return;
 
-    std::vector<int> piano_chart_index_array;
-    std::vector<int> empty_piano_chart_index_array;
+	std::vector<int> piano_chart_index_array;
+	std::vector<int> empty_piano_chart_index_array;
 
-    if( cc1->GetQuiltMode() ) {
-        piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
-        stats->pPiano->SetKeyArray(piano_chart_index_array);
+	if( cc1->GetQuiltMode() ) {
+		piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
+		stats->pPiano->SetKeyArray(piano_chart_index_array);
 
-        std::vector<int> piano_active_chart_index_array = cc1->GetQuiltCandidatedbIndexArray();
-        stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
+		std::vector<int> piano_active_chart_index_array = cc1->GetQuiltCandidatedbIndexArray();
+		stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 
-        std::vector<int> piano_eclipsed_chart_index_array = cc1->GetQuiltEclipsedStackdbIndexArray();
-        stats->pPiano->SetSubliteIndexArray(piano_eclipsed_chart_index_array);
+		std::vector<int> piano_eclipsed_chart_index_array = cc1->GetQuiltEclipsedStackdbIndexArray();
+		stats->pPiano->SetSubliteIndexArray(piano_eclipsed_chart_index_array);
 
-        stats->pPiano->SetNoshowIndexArray(g_quilt_noshow_index_array);
+		stats->pPiano->SetNoshowIndexArray(g_quilt_noshow_index_array);
 
-    } else {
-        piano_chart_index_array = ChartData->GetCSArray( pCurrentStack );
-        stats->pPiano->SetKeyArray(piano_chart_index_array);
+	} else {
+		piano_chart_index_array = ChartData->GetCSArray( pCurrentStack );
+		stats->pPiano->SetKeyArray(piano_chart_index_array);
 
-        std::vector<int> piano_active_chart_index_array;
-        piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex() );
-        stats->pPiano->SetActiveKeyArray( piano_active_chart_index_array );
-    }
+		std::vector<int> piano_active_chart_index_array;
+		piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex() );
+		stats->pPiano->SetActiveKeyArray( piano_active_chart_index_array );
+	}
 
-    //    Set up the TMerc and Skew arrays
+	//    Set up the TMerc and Skew arrays
     std::vector<int> piano_skew_chart_index_array;
     std::vector<int> piano_tmerc_chart_index_array;
     std::vector<int> piano_poly_chart_index_array;
@@ -4107,16 +4083,16 @@ void MyFrame::UpdateControlBar( void )
         if (skew_norm > 180.0)
 			skew_norm -= 360.0;
 
-        if( ctei.GetChartProjectionType() == PROJECTION_TRANSVERSE_MERCATOR )
+        if (ctei.GetChartProjectionType() == PROJECTION_TRANSVERSE_MERCATOR)
 			piano_tmerc_chart_index_array.push_back(piano_chart_index_array[ino]);
         else // Polyconic skewed charts should show as skewed
             if( ctei.GetChartProjectionType() == PROJECTION_POLYCONIC ) {
-                if( fabs( skew_norm ) > 1. )
+                if( fabs( skew_norm ) > 1.0)
 					piano_skew_chart_index_array.push_back(piano_chart_index_array[ino]);
                 else
                     piano_poly_chart_index_array.push_back(piano_chart_index_array[ino]);
             } else
-                if( fabs( skew_norm ) > 1. )
+                if( fabs( skew_norm ) > 1.0)
 					piano_skew_chart_index_array.push_back(piano_chart_index_array[ino]);
 
     }
@@ -4183,39 +4159,34 @@ bool MyFrame::DoChartUpdate( void )
 
         // on lookahead mode, adjust the vp center point
         if( cc1 && g_bLookAhead ) {
-            double angle = g_COGAvg + ( cc1->GetVPRotation() * 180. / PI );
-
-            double pixel_deltay = fabs( cos( angle * PI / 180. ) ) * cc1->GetCanvasHeight() / 4;
-            double pixel_deltax = fabs( sin( angle * PI / 180. ) ) * cc1->GetCanvasWidth() / 4;
-
-            double pixel_delta_tent = sqrt(
-                    ( pixel_deltay * pixel_deltay ) + ( pixel_deltax * pixel_deltax ) );
-
+            double angle = g_COGAvg + ( cc1->GetVPRotation() * 180.0  / M_PI);
+            double pixel_deltay = fabs(cos(angle * M_PI / 180.0)) * cc1->GetCanvasHeight() / 4;
+            double pixel_deltax = fabs(sin(angle * M_PI / 180.0)) * cc1->GetCanvasWidth() / 4;
+            double pixel_delta_tent = sqrt((pixel_deltay * pixel_deltay) + (pixel_deltax * pixel_deltax));
             double pixel_delta = 0;
 
-            //    The idea here is to cancel the effect of LookAhead for slow gSog, to avoid
+            //    The idea here is to cancel the effect of LookAhead for slow speed ove ground, to avoid
             //    jumping of the vp center point during slow maneuvering, or at anchor....
-            if( !wxIsNaN(gSog) ) {
-                if( gSog < 1.0 ) pixel_delta = 0.;
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+            if (!wxIsNaN(nav.sog)) {
+                if (nav.sog < 1.0)
+					pixel_delta = 0.0;
                 else
-                    if( gSog >= 3.0 ) pixel_delta = pixel_delta_tent;
+                    if (nav.sog >= 3.0)
+						pixel_delta = pixel_delta_tent;
                     else
-                        pixel_delta = pixel_delta_tent * ( gSog - 1.0 ) / 2.0;
+                        pixel_delta = pixel_delta_tent * (nav.sog - 1.0) / 2.0;
             }
 
-            double meters_to_shift = cos( gLat * PI / 180. ) * pixel_delta / cc1->GetVPScale();
-
+            double meters_to_shift = cos(gLat * M_PI / 180.0) * pixel_delta / cc1->GetVPScale();
             double dir_to_shift = g_COGAvg;
-
-            ll_gc_ll( gLat, gLon, dir_to_shift, meters_to_shift / 1852., &vpLat, &vpLon );
+            ll_gc_ll( gLat, gLon, dir_to_shift, meters_to_shift / 1852.0, &vpLat, &vpLon );
         }
-
     } else {
         tLat = vLat;
         tLon = vLon;
         vpLat = vLat;
         vpLon = vLon;
-
     }
 
     if( cc1->GetQuiltMode() ) {
@@ -4473,7 +4444,7 @@ bool MyFrame::DoChartUpdate( void )
             }
 
             bNewView |= cc1->SetViewPoint( vpLat, vpLon, set_scale,
-                    Current_Ch->GetChartSkew() * PI / 180., cc1->GetVPRotation() );
+                    Current_Ch->GetChartSkew() * M_PI / 180., cc1->GetVPRotation() );
 
         }
     }         // new stack
@@ -4481,7 +4452,7 @@ bool MyFrame::DoChartUpdate( void )
     else                                                                 // No change in Chart Stack
     {
         if( ( cc1->m_bFollow ) && Current_Ch ) bNewView |= cc1->SetViewPoint( vpLat, vpLon,
-                cc1->GetVPScale(), Current_Ch->GetChartSkew() * PI / 180., cc1->GetVPRotation() );
+                cc1->GetVPScale(), Current_Ch->GetChartSkew() * M_PI / 180., cc1->GetVPRotation() );
     }
 
     update_finish:
@@ -5217,7 +5188,8 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                         else
                             ll_valid = false;
 
-                        gSog = m_NMEA0183.Rmc.SpeedOverGroundKnots;
+						global::Navigation & nav = global::OCPN::get().nav();
+						nav.set_speed_over_ground(m_NMEA0183.Rmc.SpeedOverGroundKnots);
                         gCog = m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue;
 
                         if( !wxIsNaN(m_NMEA0183.Rmc.MagneticVariation) )
@@ -5277,36 +5249,32 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                         }
                 }
                 else
-                    if( m_NMEA0183.LastSentenceIDReceived == _T("HDG") )
-                    {
-                        if( m_NMEA0183.Parse() )
-                        {
-							global::OCPN::get().nav().set_heading_magn(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees);
+                    if( m_NMEA0183.LastSentenceIDReceived == _T("HDG") ) {
+                        if (m_NMEA0183.Parse()) {
+							global::Navigation & nav = global::OCPN::get().nav();
+							nav.set_heading_magn(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees);
                             if( !wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees) )
                                 gHDx_Watchdog = gps_watchdog_timeout_ticks;
 
                             if( m_NMEA0183.Hdg.MagneticVariationDirection == East )
-								global::OCPN::get().nav().set_magn_var(m_NMEA0183.Hdg.MagneticVariationDegrees);
+								nav.set_magn_var(m_NMEA0183.Hdg.MagneticVariationDegrees);
                             else if( m_NMEA0183.Hdg.MagneticVariationDirection == West )
-								global::OCPN::get().nav().set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
+								nav.set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
 
-                            if( !wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees) )
-                            {
+                            if (!wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees)) {
                                 g_bVAR_Rx = true;
                                 gVAR_Watchdog = gps_watchdog_timeout_ticks;
                             }
 
 
                         } else
-                            if( g_nNMEADebug )
-                            {
+                            if (g_nNMEADebug) {
                                 wxString msg( _T("   ") );
                                 msg.Append( m_NMEA0183.ErrorMessage );
                                 msg.Append( _T(" : ") );
                                 msg.Append( str_buf );
                                 wxLogMessage( msg );
                             }
-
                     }
                     else
                         if( m_NMEA0183.LastSentenceIDReceived == _T("HDM") ) {
@@ -5315,7 +5283,7 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                                 if( !wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic) )
                                     gHDx_Watchdog = gps_watchdog_timeout_ticks;
                             } else
-                                if( g_nNMEADebug ) {
+                                if (g_nNMEADebug) {
                                     wxString msg( _T("   ") );
                                     msg.Append( m_NMEA0183.ErrorMessage );
                                     msg.Append( _T(" : ") );
@@ -5327,7 +5295,8 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                             if( m_NMEA0183.LastSentenceIDReceived == _T("VTG") )
                             {
                                 if( m_NMEA0183.Parse() ) {
-                                    gSog = m_NMEA0183.Vtg.SpeedKnots;
+									global::Navigation & nav = global::OCPN::get().nav();
+                                    nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
                                     gCog = m_NMEA0183.Vtg.TrackDegreesTrue;
                                     if( !wxIsNaN(m_NMEA0183.Vtg.SpeedKnots) && !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue) )
                                         gGPS_Watchdog = gps_watchdog_timeout_ticks;
@@ -5486,8 +5455,9 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                 if( !wxIsNaN(gpd.kLon) )
                     gLon = gpd.kLon;
 
+				global::Navigation & nav = global::OCPN::get().nav();
+                nav.set_speed_over_ground(gpd.kSog);
                 gCog = gpd.kCog;
-                gSog = gpd.kSog;
 
 				global::OCPN::get().nav().set_heading_true(gpd.kHdt);
                 if( !wxIsNaN(gpd.kHdt) ) {
@@ -5528,18 +5498,18 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
 
 void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 {
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
     FilterCogSog();
 
-    //    If gSog is greater than some threshold, we determine that we are "cruising"
-    if( gSog > 3.0 )
+    //    If speed over ground is greater than some threshold, we determine that we are "cruising"
+    if (nav.sog > 3.0)
 		g_bCruising = true;
 
     //    Here is the one place we try to create Hdt from Hdm and Var,
     //    but only if NMEA HDT sentence is not being received
 
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-
-    if( !g_bHDT_Rx ) {
+    if (!g_bHDT_Rx) {
         if( !wxIsNaN(nav.var) && !wxIsNaN(nav.hdm)) {
 			global::OCPN::get().nav().set_heading_true(nav.hdm + nav.var);
             gHDT_Watchdog = gps_watchdog_timeout_ticks;
@@ -5584,18 +5554,18 @@ void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
         s1 += toSDMM( 2, gLon );
         SetStatusText( s1, STAT_FIELD_TICK );
 
-        wxString sogcog;
-        if( wxIsNaN(gSog) ) sogcog.Printf( _T("SOG --- ") + getUsrSpeedUnit() + _T("  ") );
+        wxString over_ground;
+        if (wxIsNaN(nav.sog))
+			over_ground += wxString::Format(_T("SOG --- ") + getUsrSpeedUnit() + _T("  "));
         else
-            sogcog.Printf( _T("SOG %2.2f ") + getUsrSpeedUnit() + _T("  "), toUsrSpeed( gSog ) );
+			over_ground += wxString::Format(_T("SOG %2.2f ") + getUsrSpeedUnit() + _T("  "), toUsrSpeed(nav.sog));
 
-        wxString cogs;
-        if( wxIsNaN(gCog) ) cogs.Printf( wxString( "COG ---\u00B0", wxConvUTF8 ) );
+        if (wxIsNaN(gCog))
+			over_ground += wxString("COG ---\u00B0", wxConvUTF8);
         else
-            cogs.Printf( wxString("COG %2.0f°", wxConvUTF8 ), gCog );
+			over_ground += wxString::Format(wxString("COG %2.0f°", wxConvUTF8), gCog);
 
-        sogcog.Append( cogs );
-        SetStatusText( sogcog, STAT_FIELD_SOGCOG );
+        SetStatusText(over_ground, STAT_FIELD_SOGCOG);
     }
 
 //    Maintain average COG for Course Up Mode
@@ -5742,7 +5712,8 @@ void MyFrame::FilterCogSog( void )
                 double adder = COGFilterTable[i];
 
                 if( fabs( adder - m_COGFilterLast ) > 180. ) {
-                    if( ( adder - m_COGFilterLast ) > 0. ) adder -= 360.;
+                    if( ( adder - m_COGFilterLast ) > 0. )
+						adder -= 360.;
                     else
                         adder += 360.;
                 }
@@ -5751,31 +5722,36 @@ void MyFrame::FilterCogSog( void )
             }
             sum /= g_COGFilterSec;
 
-            if( sum < 0. ) sum += 360.;
+            if (sum < 0.0)
+				sum += 360.0;
             else
-                if( sum >= 360. ) sum -= 360.;
+                if (sum >= 360.0)
+					sum -= 360.0;
 
             gCog = sum;
             m_COGFilterLast = sum;
         }
 
+		global::Navigation & nav = global::OCPN::get().nav();
+
         //    If the data are undefined, leave the array intact
-        if( !wxIsNaN(gSog) ) {
+		// FIXME: perfect opportunity to move such a filter to a separate class, dare I mention "unit test"
+        if (!wxIsNaN(nav.get_data().sog)) {
             //    Simple averaging filter for SOG
-            double sog_last = gSog;       // most recent reported value
+            double sog_last = nav.get_data().sog; // most recent reported value
 
             //    Make a hole in array
             for( int i = g_SOGFilterSec - 1; i > 0; i-- )
                 SOGFilterTable[i] = SOGFilterTable[i - 1];
             SOGFilterTable[0] = sog_last;
 
-            double sum = 0.;
-            for( int i = 0; i < g_SOGFilterSec; i++ ) {
+            double sum = 0.0;
+            for (int i = 0; i < g_SOGFilterSec; ++i) {
                 sum += SOGFilterTable[i];
             }
             sum /= g_SOGFilterSec;
 
-            gSog = sum;
+			nav.set_speed_over_ground(sum);
         }
     }
 }
@@ -5792,47 +5768,47 @@ void MyFrame::ResumeSockets( void )
 
 void MyFrame::LoadHarmonics()
 {
-    if(!ptcmgr) {
-        ptcmgr = new TCMgr;
-        ptcmgr->LoadDataSources(TideCurrentDataSet);
-    }
-    else {
-        bool b_newdataset = false;
+	if(!ptcmgr) {
+		ptcmgr = new TCMgr;
+		ptcmgr->LoadDataSources(TideCurrentDataSet);
+		return ;
+	}
 
-        //      Test both ways
-        wxArrayString test = ptcmgr->GetDataSet();
-        for(unsigned int i=0 ; i < test.GetCount() ; i++) {
-            bool b_foundi = false;
-            for(unsigned int j=0 ; j < TideCurrentDataSet.GetCount() ; j++) {
-                if(TideCurrentDataSet.Item(j) == test.Item(i)) {
-                    b_foundi = true;
-                    break;              // j loop
-                }
-            }
-            if(!b_foundi) {
-                b_newdataset = true;
-                break;                  //  i loop
-            }
-        }
+	bool b_newdataset = false;
 
-        test = TideCurrentDataSet;
-        for(unsigned int i=0 ; i < test.GetCount() ; i++) {
-            bool b_foundi = false;
-            for(unsigned int j=0 ; j < ptcmgr->GetDataSet().GetCount() ; j++) {
-                if(ptcmgr->GetDataSet().Item(j) == test.Item(i)) {
-                    b_foundi = true;
-                    break;              // j loop
-                }
-            }
-            if(!b_foundi) {
-                b_newdataset = true;
-                break;                  //  i loop
-            }
-        }
+	//      Test both ways
+	wxArrayString test = ptcmgr->GetDataSet();
+	for(unsigned int i=0 ; i < test.GetCount() ; i++) {
+		bool b_foundi = false;
+		for(unsigned int j=0 ; j < TideCurrentDataSet.GetCount() ; j++) {
+			if(TideCurrentDataSet.Item(j) == test.Item(i)) {
+				b_foundi = true;
+				break;              // j loop
+			}
+		}
+		if(!b_foundi) {
+			b_newdataset = true;
+			break;                  //  i loop
+		}
+	}
 
-        if(b_newdataset)
-            ptcmgr->LoadDataSources(TideCurrentDataSet);
-    }
+	test = TideCurrentDataSet;
+	for(unsigned int i=0 ; i < test.GetCount() ; i++) {
+		bool b_foundi = false;
+		for(unsigned int j=0 ; j < ptcmgr->GetDataSet().GetCount() ; j++) {
+			if(ptcmgr->GetDataSet().Item(j) == test.Item(i)) {
+				b_foundi = true;
+				break;              // j loop
+			}
+		}
+		if(!b_foundi) {
+			b_newdataset = true;
+			break;                  //  i loop
+		}
+	}
+
+	if(b_newdataset)
+		ptcmgr->LoadDataSources(TideCurrentDataSet);
 }
 
 //----------------------------------------------------------------------------------------------------------
@@ -5842,18 +5818,18 @@ void MyFrame::LoadHarmonics()
 void MyCPLErrorHandler( CPLErr eErrClass, int nError, const char * pszErrorMsg )
 
 {
-    char msg[256];
+	char msg[256];
 
-    if( eErrClass == CE_Debug )
-    snprintf( msg, 255, "CPL: %s", pszErrorMsg );
-    else
-        if( eErrClass == CE_Warning )
-        snprintf( msg, 255, "CPL Warning %d: %s", nError, pszErrorMsg );
-        else
-            snprintf( msg, 255, "CPL ERROR %d: %s", nError, pszErrorMsg );
+	if( eErrClass == CE_Debug )
+		snprintf( msg, 255, "CPL: %s", pszErrorMsg );
+	else
+		if( eErrClass == CE_Warning )
+			snprintf( msg, 255, "CPL Warning %d: %s", nError, pszErrorMsg );
+		else
+			snprintf( msg, 255, "CPL ERROR %d: %s", nError, pszErrorMsg );
 
-    wxString str( msg, wxConvUTF8 );
-    wxLogMessage( str );
+	wxString str( msg, wxConvUTF8 );
+	wxLogMessage( str );
 }
 #endif
 
@@ -5886,8 +5862,8 @@ extern "C" int wait(int *);                     // POSIX wait() for process
 
 // reserve 4 pattern for plugins
 char* devPatern[] = {
-  NULL,NULL,NULL,NULL,
-  NULL,NULL,NULL,NULL, (char*)-1};
+	NULL,NULL,NULL,NULL,
+	NULL,NULL,NULL,NULL, (char*)-1};
 
 
 // This function allow external plugin to search for a special device name

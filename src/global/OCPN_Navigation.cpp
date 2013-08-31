@@ -30,19 +30,24 @@ const Navigation::Data & OCPN_Navigation::get_data() const
 	return data;
 }
 
-void OCPN_Navigation::set_magn_var(double var)
+void OCPN_Navigation::set_magn_var(double value)
 {
-	data.var = var;
+	data.var = value;
 }
 
-void OCPN_Navigation::set_heading_true(double hdt)
+void OCPN_Navigation::set_heading_true(double value)
 {
-	data.hdt = hdt;
+	data.hdt = value;
 }
 
-void OCPN_Navigation::set_heading_magn(double hdm)
+void OCPN_Navigation::set_heading_magn(double value)
 {
-	data.hdm = hdm;
+	data.hdm = value;
+}
+
+void OCPN_Navigation::set_speed_over_ground(double value)
+{
+	data.sog = value;
 }
 
 }

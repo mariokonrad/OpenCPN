@@ -37,6 +37,8 @@
 #include "SendToGpsDlg.h"
 #include "TrackPropDlg.h"
 #include "Undo.h"
+#include <global/OCPN.h>
+#include <global/Navigation.h>
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include <wx/progdlg.h>
@@ -129,7 +131,7 @@ extern MarkInfoImpl * pMarkPropDialog;
 extern MyFrame * gFrame;
 extern Select * pSelect;
 extern double gLat, gLon;
-extern double gCog, gSog;
+extern double gCog;
 extern bool g_bShowLayers;
 extern wxString g_default_wp_icon;
 
@@ -1179,8 +1181,8 @@ void RouteManagerDialog::OnRteActivateClick( wxCommandEvent &event )
 
 		ZoomtoRoute( route );
 
-		RoutePoint *best_point = g_pRouteMan->FindBestActivatePoint( route, gLat, gLon, gCog,
-				gSog );
+		RoutePoint *best_point = g_pRouteMan->FindBestActivatePoint(
+			route, gLat, gLon, gCog, global::OCPN::get().nav().get_data().sog);
 		g_pRouteMan->ActivateRoute( route, best_point );
 		//            g_pRouteMan->ActivateRoute(route);
 	} else

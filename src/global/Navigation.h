@@ -45,6 +45,7 @@ class Navigation
 		virtual void set_magn_var(double) = 0;
 		virtual void set_heading_true(double) = 0;
 		virtual void set_heading_magn(double) = 0;
+		virtual void set_speed_over_ground(double) = 0;
 };
 
 }

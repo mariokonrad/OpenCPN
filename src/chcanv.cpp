@@ -126,7 +126,7 @@ extern bool GetMemoryStatus(int *mem_total, int *mem_used);
 extern ChartBase        *Current_Vector_Ch;
 extern ChartBase        *Current_Ch;
 extern double           g_ChartNotRenderScaleFactor;
-extern double           gLat, gLon, gCog, gSog;
+extern double           gLat, gLon, gCog;
 extern double           vLat, vLon;
 extern ChartDB          *ChartData;
 extern bool             bDBUpdateInProgress;
@@ -2640,7 +2640,8 @@ wxPoint transrot( wxPoint pt, double theta, wxPoint offset )
 
 void ChartCanvas::ShipDraw( ocpnDC& dc )
 {
-    if( !GetVP().IsValid() ) return;
+    if (!GetVP().IsValid())
+		return;
     int drawit = 0;
     wxPoint lGPSPoint, lShipMidPoint, lPredPoint, lHeadPoint, GPSOffsetPixels(0,0);
 
@@ -2649,13 +2650,16 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 
 //    Calculate ownship Position Predictor
 
-    double pred_lat, pred_lon;
+    double pred_lat;
+    double pred_lon;
+
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
     //  COG/SOG may be undefined in NMEA data stream
     double pCog = gCog;
     if( wxIsNaN(pCog) )
         pCog = 0.0;
-    double pSog = gSog;
+    double pSog = nav.sog;
     if( wxIsNaN(pSog) )
         pSog = 0.0;
 
@@ -2719,7 +2723,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
         double dist = sqrt(
                           pow( (double) ( lHeadPoint.x - lPredPoint.x ), 2 )
                           + pow( (double) ( lHeadPoint.y - lPredPoint.y ), 2 ) );
-        if( dist > ndelta_pix && !wxIsNaN(gSog) )
+        if( dist > ndelta_pix && !wxIsNaN(nav.sog) )
             b_render_hdt = true;
     }
 
@@ -2939,7 +2943,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
         }         // ownship draw
 
         // draw course over ground if they are longer than the ship
-        if( !wxIsNaN(gCog) && !wxIsNaN(gSog) ) {
+        if( !wxIsNaN(gCog) && !wxIsNaN(nav.sog) ) {
             if( lpp >= img_height / 2 ) {
                 const double png_pred_icon_scale_factor = .4;
                 wxPoint icon[4];
@@ -3676,12 +3680,12 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
             double ocpa_lat, ocpa_lon;
 
             //  Detect and handle the case where ownship COG is undefined....
-            if( wxIsNaN(gCog) || wxIsNaN( gSog ) ) {
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+            if (wxIsNaN(gCog) || wxIsNaN(nav.sog)) {
                 ocpa_lat = gLat;
                 ocpa_lon = gLon;
-            }
-            else {
-                ll_gc_ll( gLat, gLon, gCog, gSog * td->TCPA / 60., &ocpa_lat, &ocpa_lon );
+            } else {
+                ll_gc_ll( gLat, gLon, gCog, nav.sog * td->TCPA / 60.0, &ocpa_lat, &ocpa_lon );
             }
 
             wxPoint oCPAPoint;
@@ -6512,7 +6516,8 @@ void pupHandler_PasteRoute() {
     ::wxEndBusyCursor();
 }
 
-void pupHandler_PasteTrack() {
+void pupHandler_PasteTrack()
+{
     Kml* kml = new Kml();
     ::wxBeginBusyCursor();
 
@@ -6912,10 +6917,12 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
     }
 
     case ID_RT_MENU_ACTIVATE: {
-        if( g_pRouteMan->GetpActiveRoute() ) g_pRouteMan->DeactivateRoute();
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+        if( g_pRouteMan->GetpActiveRoute() )
+			g_pRouteMan->DeactivateRoute();
 
-        RoutePoint *best_point = g_pRouteMan->FindBestActivatePoint( m_pSelectedRoute, gLat,
-                                 gLon, gCog, gSog );
+        RoutePoint *best_point = g_pRouteMan->FindBestActivatePoint(
+			m_pSelectedRoute, gLat, gLon, gCog, nav.sog);
 
         g_pRouteMan->ActivateRoute( m_pSelectedRoute, best_point );
         m_pSelectedRoute->m_bRtIsSelected = false;

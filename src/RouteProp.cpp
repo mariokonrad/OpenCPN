@@ -45,10 +45,11 @@
 #include "plugin/PlugInManager.h"
 #include "tide/IDX_entry.h"
 #include "gpx/gpx.h"
+#include <global/OCPN.h>
+#include <global/Navigation.h>
 
 extern double gLat;
 extern double gLon;
-extern double gSog;
 extern double gCog;
 extern double g_PlanSpeed;
 extern wxDateTime g_StartTime;
@@ -1234,9 +1235,12 @@ bool RouteProp::UpdateProperties()
 					== m_pEnroutePoint->m_GUID );
 
 			if( starting_point ) {
+				const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
 				slat = gLat;
 				slon = gLon;
-				if( gSog > 0.0 ) leg_speed = gSog; // should be VMG
+				if (nav.sog > 0.0)
+					leg_speed = nav.sog; // should be VMG
 				else
 					leg_speed = m_planspeed;
 				if( m_bStartNow ) {

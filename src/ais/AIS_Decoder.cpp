@@ -69,7 +69,6 @@ extern bool     g_bWplIsAprsPosition;
 extern double gLat;
 extern double gLon;
 extern double gCog;
-extern double gSog;
 extern bool g_bAIS_CPA_Alert;
 extern bool g_bAIS_CPA_Alert_Audio;
 
@@ -1687,15 +1686,18 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 	double cpa_calc_ownship_cog = gCog;
 	double cpa_calc_target_cog = ptarget->COG;
 
-	//    Ownship is not reporting valid SOG, so no way to calculate CPA
-	if( wxIsNaN(gSog) || ( gSog > 102.2 ) ) {
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+	// Ownship is not reporting valid SOG, so no way to calculate CPA
+	if (wxIsNaN(nav.sog) || (nav.sog > 102.2)) {
 		ptarget->bCPA_Valid = false;
 		return;
 	}
 
 	//    Ownship is maybe anchored and not reporting COG
-	if( wxIsNaN(gCog) || gCog == 360.0 ) {
-		if( gSog < .01 ) cpa_calc_ownship_cog = 0.;          // substitute value
+	if (wxIsNaN(gCog) || gCog == 360.0) {
+		if (nav.sog < 0.01)
+			cpa_calc_ownship_cog = 0.0;          // substitute value
 		// for the case where SOG ~= 0, and COG is unknown.
 		else {
 			ptarget->bCPA_Valid = false;
@@ -1717,7 +1719,7 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 	}
 
 	//    Express the SOGs as meters per hour
-	double v0 = gSog * 1852.;
+	double v0 = nav.sog * 1852.;
 	double v1 = ptarget->SOG * 1852.;
 
 	if( ( v0 < 1e-6 ) && ( v1 < 1e-6 ) ) {
@@ -1765,7 +1767,7 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 
 		double OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA;
 
-		ll_gc_ll( gLat, gLon, cpa_calc_ownship_cog, gSog * tcpa, &OwnshipLatCPA, &OwnshipLonCPA );
+		ll_gc_ll( gLat, gLon, cpa_calc_ownship_cog, nav.sog * tcpa, &OwnshipLatCPA, &OwnshipLonCPA );
 		ll_gc_ll( ptarget->Lat, ptarget->Lon, cpa_calc_target_cog, ptarget->SOG * tcpa,
 				&TargetLatCPA, &TargetLonCPA );
 

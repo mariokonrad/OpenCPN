@@ -260,6 +260,10 @@ class MyFrame: public wxFrame
 		void TouchAISActive(void);
 		void UpdateAISTool(void);
 
+		static wxString prepare_logbook_message(const wxDateTime &);
+		static wxString get_cog();
+		static wxString get_sog();
+
 		wxStatusBar         *m_pStatusBar;
 		int                 nRoute_State;
 		int                 nBlinkerTick;

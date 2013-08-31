@@ -29,16 +29,17 @@
 #include "Routeman.h"
 #include "navutil.h"
 #include "FontMgr.h"
+#include <global/OCPN.h>
+#include <global/Navigation.h>
 #include <wx/datetime.h>
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
 
 extern Routeman * g_pRouteMan;
 extern MyFrame * gFrame;
 extern bool g_bShowActiveRouteHighway;
 extern double gCog;
-extern double gSog;
 
 enum eMenuItems
 {
@@ -238,38 +239,44 @@ void ConsoleCanvas::UpdateRouteData()
 			double deltarng = fabs( rng - nrng );
 			if( ( deltarng > .01 ) && ( ( deltarng / rng ) > .10 ) && ( rng < 10.0 ) ) // show if there is more than 10% difference in ranges, etc...
 			{
-				if( nrng < 10.0 ) srng.Printf( _T("%5.2f/%5.2f"), rng, nrng );
+				if( nrng < 10.0 )
+				srng.Printf( _T("%5.2f/%5.2f"), rng, nrng );
 				else
 					srng.Printf( _T("%5.1f/%5.1f"), rng, nrng );
 			} else {
-				if( rng < 10.0 ) srng.Printf( _T("%6.2f"), rng );
+				if( rng < 10.0 )
+					srng.Printf( _T("%6.2f"), rng );
 				else
 					srng.Printf( _T("%6.1f"), rng );
 			}
 
-			if( !m_bShowRouteTotal ) pRNG->SetAValue( srng );
+			if (!m_bShowRouteTotal)
+				pRNG->SetAValue(srng);
 
 			//    Brg
 			float dcog = g_pRouteMan->GetCurrentBrgToActivePoint();
-			if( dcog >= 359.5 ) dcog = 0;
+			if (dcog >= 359.5)
+				dcog = 0;
 			str_buf.Printf( _T("%6.0f"), dcog );
 			pBRG->SetAValue( str_buf );
 
 			//    XTE
 			str_buf.Printf( _T("%6.2f"), g_pRouteMan->GetCurrentXTEToActivePoint() );
 			pXTE->SetAValue( str_buf );
-			if( g_pRouteMan->GetXTEDir() < 0 ) pXTE->SetALabel( wxString( _("XTE         L") ) );
+			if( g_pRouteMan->GetXTEDir() < 0 )
+				pXTE->SetALabel(wxString(_("XTE         L")));
 			else
-				pXTE->SetALabel( wxString( _("XTE         R") ) );
+				pXTE->SetALabel(wxString(_("XTE         R")));
 
 			//    VMG
 			// VMG is always to next waypoint, not to end of route
 			// VMG is SOG x cosine (difference between COG and BRG to Waypoint)
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			double VMG = 0.;
-			if( !wxIsNaN(gCog) && !wxIsNaN(gSog) ) {
+			if (!wxIsNaN(gCog) && !wxIsNaN(nav.sog)) {
 				double BRG;
 				BRG = g_pRouteMan->GetCurrentBrgToActivePoint();
-				VMG = gSog * cos( ( BRG - gCog ) * M_PI / 180. );
+				VMG = nav.sog * cos( ( BRG - gCog ) * M_PI / 180.0);
 				str_buf.Printf( _T("%6.2f"), VMG );
 			} else
 				str_buf = _T("---");
@@ -281,16 +288,16 @@ void ConsoleCanvas::UpdateRouteData()
 
 			// If showing only "this leg", use VMG for calculation of ttg
 			wxString ttg_s;
-			if( ( VMG > 0. ) && !wxIsNaN(gCog) && !wxIsNaN(gSog) )
-
-			{
+			if ((VMG > 0.0) && !wxIsNaN(gCog) && !wxIsNaN(nav.sog)) {
 				float ttg_sec = ( rng / VMG ) * 3600.;
 				wxTimeSpan ttg_span( 0, 0, long( ttg_sec ), 0 );
 				ttg_s = ttg_span.Format();
-			} else
+			} else {
 				ttg_s = _T("---");
+			}
 
-			if( !m_bShowRouteTotal ) pTTG->SetAValue( ttg_s );
+			if (!m_bShowRouteTotal)
+				pTTG->SetAValue(ttg_s);
 
 			//    Remainder of route
 			float trng = rng;
@@ -318,12 +325,12 @@ void ConsoleCanvas::UpdateRouteData()
 			if( m_bShowRouteTotal ) pRNG->SetAValue( strng );
 
 			//                total ttg
-			// If showing total route ttg/ETA, use gSog for calculation
+			// If showing total route ttg/ETA, use speed over ground for calculation
 
 			wxString tttg_s;
 			wxTimeSpan tttg_span;
 			if( VMG > 0. ) {
-				float tttg_sec = ( trng / gSog ) * 3600.;
+				float tttg_sec = (trng / nav.sog) * 3600.0;
 				tttg_span = wxTimeSpan::Seconds( (long) tttg_sec );
 				tttg_s = tttg_span.Format();
 			} else {

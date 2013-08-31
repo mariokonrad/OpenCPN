@@ -368,7 +368,6 @@ extern bool bGPSValid;
 extern double gLat;
 extern double gLon;
 extern double gCog;
-extern double gSog;
 extern wxString glog_file;
 extern int gGPS_Watchdog;
 extern int gHDx_Watchdog;
@@ -1707,43 +1706,12 @@ int App::OnExit()
 {
 	//  Send current nav status data to log file   // pjotrc 2010.02.09
 
-	wxDateTime lognow = wxDateTime::Now();
-	lognow.MakeGMT();
-	wxString day = lognow.FormatISODate();
-	wxString utc = lognow.FormatISOTime();
-	wxString navmsg = _T("LOGBOOK:  ");
-	navmsg += day;
-	navmsg += _T(" ");
-	navmsg += utc;
-	navmsg += _T(" UTC ");
-
-	if( bGPSValid ) {
-		wxString data;
-		data.Printf( _T("OFF: Lat %10.5f Lon %10.5f "), gLat, gLon );
-		navmsg += data;
-
-		wxString cog;
-		if( wxIsNaN(gCog) ) cog.Printf( _T("COG ----- ") );
-		else
-			cog.Printf( _T("COG %10.5f "), gCog );
-
-		wxString sog;
-		if( wxIsNaN(gSog) ) sog.Printf( _T("SOG -----  ") );
-		else
-			sog.Printf( _T("SOG %6.2f ") + getUsrSpeedUnit(), toUsrSpeed( gSog ) );
-
-		navmsg += cog;
-		navmsg += sog;
-
-	} else {
-		wxString data;
-		data.Printf( _T("OFF: Lat %10.5f Lon %10.5f"), gLat, gLon );
-		navmsg += data;
-	}
-	wxLogMessage( navmsg );
+	wxDateTime lognow = wxDateTime::Now().MakeGMT();
+	wxLogMessage(MyFrame::prepare_logbook_message(lognow));
 	g_loglast_time = lognow;
 
-	if( ptcmgr ) delete ptcmgr;
+	if (ptcmgr)
+		delete ptcmgr;
 
 	wxLogMessage( _T("opencpn::App exiting cleanly...\n") );
 	delete pConfig;

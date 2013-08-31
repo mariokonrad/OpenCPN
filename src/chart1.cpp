@@ -2995,63 +2995,54 @@ void MyFrame::OnMemFootTimer( wxTimerEvent& event )
     int memsize = GetApplicationMemoryUse();
 
     g_MemFootMB = 100;
-    printf( "Memsize: %d  \n", memsize );
     // The application memory usage has exceeded the target, so try to manage it down....
-    if( memsize > ( g_MemFootMB * 1000 ) ) {
-        if( ChartData && cc1 ) {
-            //    Get a local copy of the cache info
-            wxArrayPtrVoid *pCache = ChartData->GetChartCache();
-            unsigned int nCache = pCache->GetCount();
-            CacheEntry *pcea = new CacheEntry[nCache]; // FIXME: use std::vector
-
-            for( unsigned int i = 0; i < nCache; i++ ) {
-                CacheEntry *pce = (CacheEntry *) ( pCache->Item( i ) );
-                pcea[i] = *pce;                  //ChartBase *Ch = (ChartBase *)pce->pChart;
+    if (memsize > (g_MemFootMB * 1000)) {
+        if (ChartData && cc1) {
+            // Get a local copy of the cache info
+            wxArrayPtrVoid * pCache = ChartData->GetChartCache();
+            const unsigned int nCache = pCache->GetCount();
+			std::vector<CacheEntry> cache;
+			cache.reserve(nCache);
+            for (unsigned int i = 0; i < nCache; ++i) {
+                cache.push_back(*static_cast<CacheEntry *>(pCache->Item(i)));
             }
 
-            if( nCache > 1 ) {
-                //    Bubble Sort the local cache entry array
+            if (nCache > 1) {
+                // Bubble Sort the local cache entry array
                 bool b_cont = true;
-                while( b_cont ) {
+                while (b_cont) {
                     b_cont = false;
-                    for( unsigned int i = 0; i < nCache - 1; i++ ) {
-                        if( pcea[i].RecentTime > pcea[i + 1].RecentTime ) {
-                            CacheEntry tmp = pcea[i];
-                            pcea[i] = pcea[i + 1];
-                            pcea[i + 1] = tmp;
+                    for (unsigned int i = 0; i < nCache - 1; ++i) {
+                        if (cache[i].RecentTime > cache[i + 1].RecentTime) {
+							std::swap(cache[i], cache[i+1]);
                             b_cont = true;
                             break;
                         }
                     }
                 }
 
-                //    Free up some chart cache entries until the memory footprint target is realized
+                // Free up some chart cache entries until the memory footprint target is realized
 
-                unsigned int idelete = 0;                 // starting at top. which is oldest
+                unsigned int idelete = 0; // starting at top. which is oldest
                 unsigned int idelete_max = pCache->GetCount();
 
-                //    How many can be deleted?
+                // How many can be deleted?
                 unsigned int minimum_cache = 1;
-                if( cc1->GetQuiltMode() ) minimum_cache = cc1->GetQuiltChartCount();
+                if (cc1->GetQuiltMode())
+					minimum_cache = cc1->GetQuiltChartCount();
 
-                while( ( memsize > ( g_MemFootMB * 1000 ) )
-                        && ( pCache->GetCount() > minimum_cache ) && ( idelete < idelete_max ) ) {
+                while ((memsize > (g_MemFootMB * 1000)) && (pCache->GetCount() > minimum_cache) && (idelete < idelete_max)) {
                     int memsizeb = memsize;
 
-                    ChartData->DeleteCacheChart( (ChartBase *) pcea[idelete].pChart );
+                    ChartData->DeleteCacheChart(static_cast<ChartBase *>(cache[idelete].pChart));
                     idelete++;
                     memsize = GetApplicationMemoryUse();
-                    printf( "delete, before: %d  after: %d\n", memsizeb, memsize );
                 }
-
             }
-
-            delete[] pcea;
         }
-
     }
 
-    MemFootTimer.Start( 9000, wxTIMER_CONTINUOUS );
+    MemFootTimer.Start(9000, wxTIMER_CONTINUOUS);
 }
 
 wxString MyFrame::get_cog()

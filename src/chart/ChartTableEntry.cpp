@@ -374,7 +374,7 @@ int ChartTableEntry::GetChartFamily() const
 
 bool ChartTableEntry::Read(const ChartDatabase *pDb, wxInputStream &is)
 {
-	char path[4096], *cp;
+	char path[4096], *cp; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
 
 	Clear();
 

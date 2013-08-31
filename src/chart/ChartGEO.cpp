@@ -52,7 +52,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 		return INIT_FAIL_REMOVE;
 
 	int nPlypoint = 0;
-	Plypoint *pPlyTable = (Plypoint *)malloc(sizeof(Plypoint));
+	Plypoint *pPlyTable = (Plypoint *)malloc(sizeof(Plypoint)); // FIXME: use std::vector instead of dynamic memory allocation
 
 	m_FullPath = name;
 	m_Description = m_FullPath;

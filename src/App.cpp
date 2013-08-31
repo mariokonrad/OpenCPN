@@ -374,8 +374,6 @@ extern double gLat;
 extern double gLon;
 extern double gCog;
 extern double gSog;
-extern double gHdt;
-extern double gHdm;
 extern wxString glog_file;
 extern int gGPS_Watchdog;
 extern int gHDx_Watchdog;

@@ -194,8 +194,6 @@ double gLat;
 double gLon;
 double gCog;
 double gSog;
-double gHdt;
-double gHdm;
 double vLat;
 double vLon;
 double initial_scale_ppm;
@@ -685,8 +683,8 @@ MyFrame::MyFrame( wxFrame *frame, const wxString& title, const wxPoint& pos, con
 
 	global::Navigation & nav = global::OCPN::get().nav();
 
-    gHdt = NAN;
-    gHdm = NAN;
+    nav.set_heading_true(NAN);
+    nav.set_heading_magn(NAN);
     nav.set_magn_var(NAN);
     gSog = NAN;
     gCog = NAN;
@@ -3152,7 +3150,10 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
         return;
     }
 
-    if( bDBUpdateInProgress ) return;
+    if( bDBUpdateInProgress )
+		return;
+
+	global::Navigation & nav = global::OCPN::get().nav();
 
     FrameTimer1.Stop();
 
@@ -3169,7 +3170,7 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
 //  Update and check watchdog timer for Mag Heading data source
     gHDx_Watchdog--;
     if( gHDx_Watchdog <= 0 ) {
-        gHdm = NAN;
+		nav.set_heading_magn(NAN);
         if( g_nNMEADebug && ( gHDx_Watchdog == 0 ) ) wxLogMessage(
                 _T("   ***HDx Watchdog timeout...") );
     }
@@ -3178,7 +3179,7 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
     gHDT_Watchdog--;
     if( gHDT_Watchdog <= 0 ) {
         g_bHDT_Rx = false;
-        gHdt = NAN;
+		nav.set_heading_true(NAN);
         if( g_nNMEADebug && ( gHDT_Watchdog == 0 ) ) wxLogMessage(
                 _T("   ***HDT Watchdog timeout...") );
     }
@@ -3209,8 +3210,8 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
             GPSData.kCog = gCog;
             GPSData.kSog = gSog;
             GPSData.kVar = nav.var;
-            GPSData.kHdm = gHdm;
-            GPSData.kHdt = gHdt;
+            GPSData.kHdm = nav.hdm;
+            GPSData.kHdt = nav.hdt;
             GPSData.nSats = g_SatsInView;
 
             GPSData.FixTime = m_fixtime;
@@ -5261,7 +5262,7 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                 {
                     if( m_NMEA0183.Parse() )
                     {
-                        gHdt = m_NMEA0183.Hdt.DegreesTrue;
+						global::OCPN::get().nav().set_heading_true(m_NMEA0183.Hdt.DegreesTrue);
                         if( !wxIsNaN(m_NMEA0183.Hdt.DegreesTrue) )
                         {
                             g_bHDT_Rx = true;
@@ -5283,7 +5284,7 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                     {
                         if( m_NMEA0183.Parse() )
                         {
-                            gHdm = m_NMEA0183.Hdg.MagneticSensorHeadingDegrees;
+							global::OCPN::get().nav().set_heading_magn(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees);
                             if( !wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees) )
                                 gHDx_Watchdog = gps_watchdog_timeout_ticks;
 
@@ -5311,17 +5312,13 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
 
                     }
                     else
-                        if( m_NMEA0183.LastSentenceIDReceived == _T("HDM") )
-                        {
-                            if( m_NMEA0183.Parse() )
-                            {
-                                gHdm = m_NMEA0183.Hdm.DegreesMagnetic;
+                        if( m_NMEA0183.LastSentenceIDReceived == _T("HDM") ) {
+                            if( m_NMEA0183.Parse() ) {
+								global::OCPN::get().nav().set_heading_magn(m_NMEA0183.Hdm.DegreesMagnetic);
                                 if( !wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic) )
                                     gHDx_Watchdog = gps_watchdog_timeout_ticks;
-                            }
-                            else
-                                if( g_nNMEADebug )
-                                {
+                            } else
+                                if( g_nNMEADebug ) {
                                     wxString msg( _T("   ") );
                                     msg.Append( m_NMEA0183.ErrorMessage );
                                     msg.Append( _T(" : ") );
@@ -5332,16 +5329,14 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                         else
                             if( m_NMEA0183.LastSentenceIDReceived == _T("VTG") )
                             {
-                                if( m_NMEA0183.Parse() )
-                                {
+                                if( m_NMEA0183.Parse() ) {
                                     gSog = m_NMEA0183.Vtg.SpeedKnots;
                                     gCog = m_NMEA0183.Vtg.TrackDegreesTrue;
                                     if( !wxIsNaN(m_NMEA0183.Vtg.SpeedKnots) && !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue) )
                                         gGPS_Watchdog = gps_watchdog_timeout_ticks;
                                 }
                                 else
-                                    if( g_nNMEADebug )
-                                    {
+                                    if( g_nNMEADebug ) {
                                         wxString msg( _T("   ") );
                                         msg.Append( m_NMEA0183.ErrorMessage );
                                         msg.Append( _T(" : ") );
@@ -5488,8 +5483,7 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
             if(g_pAIS)
                 nerr = g_pAIS->DecodeSingleVDO(str_buf, &gpd, &m_VDO_accumulator);
 
-            if(nerr == AIS_NoError)
-            {
+            if(nerr == AIS_NoError) {
                 if( !wxIsNaN(gpd.kLat) )
                     gLat = gpd.kLat;
                 if( !wxIsNaN(gpd.kLon) )
@@ -5498,24 +5492,20 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                 gCog = gpd.kCog;
                 gSog = gpd.kSog;
 
-                gHdt = gpd.kHdt;
-                if( !wxIsNaN(gpd.kHdt) )
-                {
+				global::OCPN::get().nav().set_heading_true(gpd.kHdt);
+                if( !wxIsNaN(gpd.kHdt) ) {
                     g_bHDT_Rx = true;
                     gHDT_Watchdog = gps_watchdog_timeout_ticks;
                 }
 
-                if( !wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon) )
-                {
+                if( !wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon) ) {
                     gGPS_Watchdog = gps_watchdog_timeout_ticks;
                     wxDateTime now = wxDateTime::Now();
                     m_fixtime = now.GetTicks();
 
                     pos_valid = true;
                 }
-            }
-            else
-            {
+            } else {
                 if( g_nNMEADebug && ( g_total_NMEAerror_messages < g_nNMEADebug ) )
                 {
                     g_total_NMEAerror_messages++;
@@ -5524,9 +5514,7 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
                     wxLogMessage( msg );
                 }
             }
-        }
-        else
-        {
+        } else {
             bis_recognized_sentence = false;
             if( g_nNMEADebug && ( g_total_NMEAerror_messages < g_nNMEADebug ) )
             {
@@ -5546,7 +5534,8 @@ void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
     FilterCogSog();
 
     //    If gSog is greater than some threshold, we determine that we are "cruising"
-    if( gSog > 3.0 ) g_bCruising = true;
+    if( gSog > 3.0 )
+		g_bCruising = true;
 
     //    Here is the one place we try to create Hdt from Hdm and Var,
     //    but only if NMEA HDT sentence is not being received
@@ -5554,8 +5543,8 @@ void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
     if( !g_bHDT_Rx ) {
-        if( !wxIsNaN(nav.var) && !wxIsNaN(gHdm)) {
-            gHdt = gHdm + nav.var;
+        if( !wxIsNaN(nav.var) && !wxIsNaN(nav.hdm)) {
+			global::OCPN::get().nav().set_heading_true(nav.hdm + nav.var);
             gHDT_Watchdog = gps_watchdog_timeout_ticks;
         }
     }

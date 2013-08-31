@@ -35,5 +35,15 @@ void OCPN_Navigation::set_magn_var(double var)
 	data.var = var;
 }
 
+void OCPN_Navigation::set_heading_true(double hdt)
+{
+	data.hdt = hdt;
+}
+
+void OCPN_Navigation::set_heading_magn(double hdm)
+{
+	data.hdm = hdm;
+}
+
 }
 

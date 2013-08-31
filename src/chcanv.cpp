@@ -21,13 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-// For compilers that support precompilation, includes "wx.h".
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-	#include "wx/wx.h"
-#endif
-
 #include <wx/image.h>
 #include <wx/graphics.h>
 #include <wx/listbook.h>
@@ -85,6 +78,7 @@
 #include "tide/IDX_entry.h"
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/Navigation.h>
 
 // AIS
 #include "ais/ais.h"
@@ -132,7 +126,7 @@ extern bool GetMemoryStatus(int *mem_total, int *mem_used);
 extern ChartBase        *Current_Vector_Ch;
 extern ChartBase        *Current_Ch;
 extern double           g_ChartNotRenderScaleFactor;
-extern double           gLat, gLon, gCog, gSog, gHdt;
+extern double           gLat, gLon, gCog, gSog;
 extern double           vLat, vLon;
 extern ChartDB          *ChartData;
 extern bool             bDBUpdateInProgress;
@@ -2685,7 +2679,8 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
     //  Draw the icon rotated to the COG
     //  or to the Hdt if available
     double icon_hdt = pCog;
-    if( !wxIsNaN( gHdt ) ) icon_hdt = gHdt;
+    if (!wxIsNaN(global::OCPN::get().nav().get_data().hdt))
+		icon_hdt = global::OCPN::get().nav().get_data().hdt;
 
     //  COG may be undefined in NMEA data stream
     if( wxIsNaN(icon_hdt) ) icon_hdt = 0.0;
@@ -2720,7 +2715,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 
     double ndelta_pix = 10.;
     bool b_render_hdt = false;
-    if( !wxIsNaN( gHdt ) ) {
+    if (!wxIsNaN(global::OCPN::get().nav().get_data().hdt)) {
         double dist = sqrt(
                           pow( (double) ( lHeadPoint.x - lPredPoint.x ), 2 )
                           + pow( (double) ( lHeadPoint.y - lPredPoint.y ), 2 ) );

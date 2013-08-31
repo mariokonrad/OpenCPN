@@ -29,6 +29,7 @@
 #include "OCPN_DataStreamEvent.h"
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/Navigation.h>
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;
@@ -69,12 +70,10 @@ extern double gLat;
 extern double gLon;
 extern double gCog;
 extern double gSog;
-extern double gHdt;
-extern double gHdm;
 extern bool g_bAIS_CPA_Alert;
 extern bool g_bAIS_CPA_Alert_Audio;
 
-	BEGIN_EVENT_TABLE(AIS_Decoder, wxEvtHandler)
+BEGIN_EVENT_TABLE(AIS_Decoder, wxEvtHandler)
 	EVT_TIMER(TIMER_AIS1, AIS_Decoder::OnTimerAIS)
 	EVT_TIMER(TIMER_AISAUDIO, AIS_Decoder::OnTimerAISAudio)
 END_EVENT_TABLE()
@@ -509,8 +508,8 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 		{
 			if ( wxIsNaN(arpa_ref_hdg) )
 			{
-				if ( !wxIsNaN(gHdt) )
-					arpa_brg += gHdt;
+				if (!wxIsNaN(global::OCPN::get().nav().get_data().hdt))
+					arpa_brg += global::OCPN::get().nav().get_data().hdt;
 				else
 					arpa_brg += gCog;
 			}
@@ -528,8 +527,8 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 		{
 			if ( wxIsNaN(arpa_ref_hdg) )
 			{
-				if ( !wxIsNaN(gHdt) )
-					arpa_cog += gHdt;
+				if (!wxIsNaN(global::OCPN::get().nav().get_data().hdt))
+					arpa_cog += global::OCPN::get().nav().get_data().hdt;
 				else
 					arpa_cog += gCog;
 			}

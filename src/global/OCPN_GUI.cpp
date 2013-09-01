@@ -26,80 +26,90 @@
 
 namespace global {
 
-const GUI::Frame & OCPN_GUI::get_frame() const
+const GUI::View & OCPN_GUI::view() const
 {
-	return frame;
+	return data_view;
+}
+
+void OCPN_GUI::set_view_screen_brightness(int value)
+{
+	data_view.screen_brightness = value;
+}
+
+const GUI::Frame & OCPN_GUI::frame() const
+{
+	return data_frame;
 }
 
 void OCPN_GUI::set_frame_position(const wxPoint & position)
 {
-	frame.position = position;
+	data_frame.position = position;
 }
 
 void OCPN_GUI::set_frame_size(const wxSize & size)
 {
-	frame.size = size;
+	data_frame.size = size;
 }
 
 void OCPN_GUI::set_frame_maximized(bool flag)
 {
-	frame.maximized = flag;
+	data_frame.maximized = flag;
 }
 
 void OCPN_GUI::set_frame_last_position(const wxPoint & position)
 {
-	frame.last_position = position;
+	data_frame.last_position = position;
 }
 
 void OCPN_GUI::set_frame_last_size(const wxSize & size)
 {
-	frame.last_size = size;
+	data_frame.last_size = size;
 }
 
-const GUI::Toolbar & OCPN_GUI::get_toolbar() const
+const GUI::Toolbar & OCPN_GUI::toolbar() const
 {
-	return toolbar;
+	return data_toolbar;
 }
 
 void OCPN_GUI::set_toolbar_position(const wxPoint & position)
 {
-	toolbar.position = position;
+	data_toolbar.position = position;
 }
 
 void OCPN_GUI::set_toolbar_orientation(long orientation)
 {
-	toolbar.orientation = orientation;
+	data_toolbar.orientation = orientation;
 }
 
 void OCPN_GUI::ensure_toolbar_position_range(wxPoint p0, wxPoint p1)
 {
-	toolbar.position.x = std::max(toolbar.position.x, p0.x);
-	toolbar.position.y = std::max(toolbar.position.y, p0.y);
-	toolbar.position.x = std::min(toolbar.position.x, p1.x);
-	toolbar.position.y = std::min(toolbar.position.y, p1.y);
+	data_toolbar.position.x = std::max(data_toolbar.position.x, p0.x);
+	data_toolbar.position.y = std::max(data_toolbar.position.y, p0.y);
+	data_toolbar.position.x = std::min(data_toolbar.position.x, p1.x);
+	data_toolbar.position.y = std::min(data_toolbar.position.y, p1.y);
 }
 
-const GUI::AISAlertDialog & OCPN_GUI::get_ais_alert_dialog() const
+const GUI::AISAlertDialog & OCPN_GUI::ais_alert_dialog() const
 {
-	return ais_alert_dialog;
+	return data_ais_alert_dialog;
 }
 
 void OCPN_GUI::set_ais_alert_dialog_position(const wxPoint & position)
 {
-	ais_alert_dialog.position = position;
+	data_ais_alert_dialog.position = position;
 }
 
 void OCPN_GUI::set_ais_alert_dialog_size(const wxSize & size)
 {
-	ais_alert_dialog.size = size;
+	data_ais_alert_dialog.size = size;
 }
 
 void OCPN_GUI::ensure_ais_alert_dialog_position_range(wxPoint p0, wxPoint p1)
 {
-	ais_alert_dialog.position.x = std::max(ais_alert_dialog.position.x, p0.x);
-	ais_alert_dialog.position.y = std::max(ais_alert_dialog.position.y, p0.y);
-	ais_alert_dialog.position.x = std::min(ais_alert_dialog.position.x, p1.x);
-	ais_alert_dialog.position.y = std::min(ais_alert_dialog.position.y, p1.y);
+	data_ais_alert_dialog.position.x = std::max(data_ais_alert_dialog.position.x, p0.x);
+	data_ais_alert_dialog.position.y = std::max(data_ais_alert_dialog.position.y, p0.y);
+	data_ais_alert_dialog.position.x = std::min(data_ais_alert_dialog.position.x, p1.x);
+	data_ais_alert_dialog.position.y = std::min(data_ais_alert_dialog.position.y, p1.y);
 }
 
 void OCPN_GUI::ensure_ais_alert_dialog_position_range(wxPoint p0, wxSize p1)
@@ -107,14 +117,14 @@ void OCPN_GUI::ensure_ais_alert_dialog_position_range(wxPoint p0, wxSize p1)
 	ensure_ais_alert_dialog_position_range(p0, wxPoint(0, 0) + p1);
 }
 
-const GUI::AISQueryDialog & OCPN_GUI::get_ais_query_dialog() const
+const GUI::AISQueryDialog & OCPN_GUI::ais_query_dialog() const
 {
-	return ais_query_dialog;
+	return data_ais_query_dialog;
 }
 
 void OCPN_GUI::set_ais_query_dialog_position(const wxPoint & position)
 {
-	ais_query_dialog.position = position;
+	data_ais_query_dialog.position = position;
 }
 
 }

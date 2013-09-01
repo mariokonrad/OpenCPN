@@ -132,7 +132,6 @@ extern ChartDB          *ChartData;
 extern bool             bDBUpdateInProgress;
 extern ColorScheme      global_color_scheme;
 extern bool             g_bHDTValid;
-extern int              g_nbrightness;
 
 extern ConsoleCanvas    *console;
 
@@ -1200,27 +1199,31 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 
     case WXK_F6: {
         int mod = m_modkeys & wxMOD_SHIFT;
-        if( mod != m_brightmod ) {
+        if (mod != m_brightmod) {
             m_brightmod = mod;
             m_bbrightdir = !m_bbrightdir;
         }
 
-        if( !m_bbrightdir ) {
-            g_nbrightness -= 10;
-            if( g_nbrightness <= MIN_BRIGHT ) {
-                g_nbrightness = MIN_BRIGHT;
+		global::GUI & gui = global::OCPN::get().gui();
+		int brightness = gui.view().screen_brightness;
+
+        if (!m_bbrightdir) {
+            brightness -= 10;
+            if (brightness <= MIN_BRIGHT) {
+                brightness = MIN_BRIGHT;
                 m_bbrightdir = true;
             }
         } else {
-            g_nbrightness += 10;
-            if( g_nbrightness >= MAX_BRIGHT ) {
-                g_nbrightness = MAX_BRIGHT;
+            brightness += 10;
+            if (brightness >= MAX_BRIGHT) {
+                brightness = MAX_BRIGHT;
                 m_bbrightdir = false;
             }
         }
+		gui.set_view_screen_brightness(brightness);
 
-        SetScreenBrightness( g_nbrightness );
-        ShowBrightnessLevelTimedPopup( g_nbrightness / 10, 1, 10 );
+        SetScreenBrightness(brightness);
+        ShowBrightnessLevelTimedPopup(brightness / 10, 1, 10);
 
         SetFocus();             // just in case the external program steals it....
         gFrame->Raise();        // And reactivate the application main
@@ -1515,7 +1518,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
                 gamma_state = 0;
                 break;
             }
-            SetScreenBrightness( g_nbrightness );
+            SetScreenBrightness(global::OCPN::get().gui().view().screen_brightness);
 
             break;
 
@@ -2303,11 +2306,12 @@ bool ChartCanvas::PanCanvas( int dx, int dy )
     return true;
 }
 
-void ChartCanvas::ReloadVP( bool b_adjust )
+void ChartCanvas::ReloadVP(bool b_adjust)
 {
-    if( g_brightness_init ) SetScreenBrightness( g_nbrightness );
+	if (g_brightness_init)
+		SetScreenBrightness(global::OCPN::get().gui().view().screen_brightness);
 
-    LoadVP( VPoint, b_adjust );
+	LoadVP(VPoint, b_adjust);
 }
 
 void ChartCanvas::LoadVP( ViewPort &vp, bool b_adjust )
@@ -9258,7 +9262,7 @@ void ShowAISTargetQueryDialog( wxWindow *win, int mmsi )
     if( !win ) return;
 
     if( NULL == g_pais_query_dialog_active ) {
-		wxPoint pos = global::OCPN::get().gui().get_ais_query_dialog().position;
+		wxPoint pos = global::OCPN::get().gui().ais_query_dialog().position;
 
         if( g_pais_query_dialog_active ) {
             delete g_pais_query_dialog_active;

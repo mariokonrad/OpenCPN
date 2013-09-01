@@ -94,7 +94,6 @@ extern double           vLat, vLon, gLat, gLon;
 extern double           kLat, kLon;
 extern double           initial_scale_ppm;
 extern ColorScheme      global_color_scheme;
-extern int              g_nbrightness;
 
 extern wxToolBarBase    *toolBar;
 
@@ -356,7 +355,7 @@ void MyConfig::CreateRotatingNavObjBackup()
 
 void MyConfig::load_toolbar()
 {
-	using global::OCPN;
+	global::GUI & gui = global::OCPN::get().gui();
 
 	int x = 0;
 	int y = 0;
@@ -366,13 +365,13 @@ void MyConfig::load_toolbar()
     Read(_T("ToolbarY"), &y, 0);
     Read(_T("ToolbarOrient"), &orientation, wxTB_HORIZONTAL);
 
-	OCPN::get().gui().set_toolbar_position(wxPoint(x, y));
-	OCPN::get().gui().set_toolbar_orientation(orientation);
+	gui.set_toolbar_position(wxPoint(x, y));
+	gui.set_toolbar_orientation(orientation);
 }
 
 void MyConfig::load_ais_alert_dialog()
 {
-	using global::OCPN;
+	global::GUI & gui = global::OCPN::get().gui();
 
 	long size_x = 200;
 	long size_y = 200;
@@ -384,13 +383,13 @@ void MyConfig::load_ais_alert_dialog()
     Read(_T("AlertDialogPosX"), &pos_x);
     Read(_T("AlertDialogPosY"), &pos_y);
 
-	OCPN::get().gui().set_ais_alert_dialog_position(wxPoint(pos_x, pos_y));
-	OCPN::get().gui().set_ais_alert_dialog_size(wxSize(size_x, size_y));
+	gui.set_ais_alert_dialog_position(wxPoint(pos_x, pos_y));
+	gui.set_ais_alert_dialog_size(wxSize(size_x, size_y));
 }
 
 void MyConfig::load_ais_query_dialog()
 {
-	using global::OCPN;
+	global::GUI & gui = global::OCPN::get().gui();
 
 	long x = 200;
 	long y = 200;
@@ -398,12 +397,12 @@ void MyConfig::load_ais_query_dialog()
 	Read(_T("QueryDialogPosX"), &x);
 	Read(_T("QueryDialogPosY"), &y);
 
-	OCPN::get().gui().set_ais_query_dialog_position(wxPoint(x, y));
+	gui.set_ais_query_dialog_position(wxPoint(x, y));
 }
 
 void MyConfig::load_frame()
 {
-	using global::OCPN;
+	global::GUI & gui = global::OCPN::get().gui();
 
 	long size_x = 0;
 	long size_y = 0;
@@ -415,18 +414,29 @@ void MyConfig::load_frame()
     Read(_T("FrameWinY"), &size_y);
     Read(_T("FrameWinPosX"), &pos_x, 0);
     Read(_T("FrameWinPosY"), &pos_y, 0);
-	OCPN::get().gui().set_frame_position(wxPoint(pos_x, pos_y));
-	OCPN::get().gui().set_frame_size(wxSize(size_x, size_y));
+	gui.set_frame_position(wxPoint(pos_x, pos_y));
+	gui.set_frame_size(wxSize(size_x, size_y));
 
     Read(_T("FrameMax"), &maximized);
-	OCPN::get().gui().set_frame_maximized(maximized);
+	gui.set_frame_maximized(maximized);
 
     Read(_T("ClientPosX"), &pos_x, 0);
     Read(_T("ClientPosY"), &pos_y, 0);
     Read(_T("ClientSzX"), &size_x, 0);
     Read(_T("ClientSzY"), &size_y, 0);
-	OCPN::get().gui().set_frame_last_position(wxPoint(pos_x, pos_y));
-	OCPN::get().gui().set_frame_last_size(wxSize(size_x, size_y));
+	gui.set_frame_last_position(wxPoint(pos_x, pos_y));
+	gui.set_frame_last_size(wxSize(size_x, size_y));
+}
+
+void MyConfig::load_view()
+{
+	global::GUI & gui = global::OCPN::get().gui();
+
+	long brightness = 100;
+
+	Read(_T("ScreenBrightness"), &brightness, 100);
+
+	gui.set_view_screen_brightness(brightness);
 }
 
 int MyConfig::LoadMyConfig(int iteration)
@@ -490,7 +500,7 @@ int MyConfig::LoadMyConfig(int iteration)
     g_COGFilterSec = wxMax(g_COGFilterSec, 1);
     g_SOGFilterSec = g_COGFilterSec;
 
-    Read( _T ( "ScreenBrightness" ), &g_nbrightness, 100 );
+	load_view();
 
     Read( _T ( "MemFootprintMgrTimeSec" ), &g_MemFootSec, 60 );
     Read( _T ( "MemFootprintTargetMB" ), &g_MemFootMB, 200 );
@@ -1575,7 +1585,7 @@ void MyConfig::LoadConfigGroups( ChartGroupArray *pGroupArray )
 
 void MyConfig::write_toolbar()
 {
-	const global::GUI::Toolbar & config = global::OCPN::get().gui().get_toolbar();
+	const global::GUI::Toolbar & config = global::OCPN::get().gui().toolbar();
 
 	Write(_T("ToolbarX"), config.position.x);
 	Write(_T("ToolbarY"), config.position.y);
@@ -1584,7 +1594,7 @@ void MyConfig::write_toolbar()
 
 void MyConfig::write_ais_alert_dialog()
 {
-	const global::GUI::AISAlertDialog & config = global::OCPN::get().gui().get_ais_alert_dialog();
+	const global::GUI::AISAlertDialog & config = global::OCPN::get().gui().ais_alert_dialog();
 
 	Write(_T("AlertDialogSizeX"), config.size.GetWidth());
 	Write(_T("AlertDialogSizeY"), config.size.GetHeight());
@@ -1594,7 +1604,7 @@ void MyConfig::write_ais_alert_dialog()
 
 void MyConfig::write_ais_query_dialog()
 {
-	const global::GUI::AISQueryDialog & config = global::OCPN::get().gui().get_ais_query_dialog();
+	const global::GUI::AISQueryDialog & config = global::OCPN::get().gui().ais_query_dialog();
 
 	Write(_T("QueryDialogPosX"), config.position.x);
 	Write(_T("QueryDialogPosY"), config.position.y);
@@ -1602,7 +1612,7 @@ void MyConfig::write_ais_query_dialog()
 
 void MyConfig::write_frame()
 {
-	const global::GUI::Frame & config = global::OCPN::get().gui().get_frame();
+	const global::GUI::Frame & config = global::OCPN::get().gui().frame();
 
     Write(_T("FrameWinX"), config.size.GetWidth());
     Write(_T("FrameWinY"), config.size.GetHeight());

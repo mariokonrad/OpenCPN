@@ -32,6 +32,16 @@ class GUI
 {
 	public:
 
+		struct View
+		{
+			int screen_brightness;
+		};
+
+		virtual const View & view() const = 0;
+		virtual void set_view_screen_brightness(int) = 0;
+
+	public:
+
 		struct Frame
 		{
 			wxPoint position;
@@ -41,7 +51,7 @@ class GUI
 			wxSize last_size;
 		};
 
-		virtual const Frame & get_frame() const = 0;
+		virtual const Frame & frame() const = 0;
 		virtual void set_frame_position(const wxPoint &) = 0;
 		virtual void set_frame_size(const wxSize &) = 0;
 		virtual void set_frame_maximized(bool) = 0;
@@ -56,7 +66,7 @@ class GUI
 			long orientation;
 		};
 
-		virtual const Toolbar & get_toolbar() const = 0;
+		virtual const Toolbar & toolbar() const = 0;
 		virtual void set_toolbar_position(const wxPoint &) = 0;
 		virtual void set_toolbar_orientation(long) = 0;
 
@@ -68,7 +78,7 @@ class GUI
 			wxSize size;
 		};
 
-		virtual const AISAlertDialog & get_ais_alert_dialog() const = 0;
+		virtual const AISAlertDialog & ais_alert_dialog() const = 0;
 		virtual void set_ais_alert_dialog_position(const wxPoint &) = 0;
 		virtual void set_ais_alert_dialog_size(const wxSize &) = 0;
 
@@ -79,7 +89,7 @@ class GUI
 			wxPoint position;
 		};
 
-		virtual const AISQueryDialog & get_ais_query_dialog() const = 0;
+		virtual const AISQueryDialog & ais_query_dialog() const = 0;
 		virtual void set_ais_query_dialog_position(const wxPoint &) = 0;
 };
 

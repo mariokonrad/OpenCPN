@@ -195,7 +195,6 @@ double gLon;
 double vLat;
 double vLon;
 double initial_scale_ppm;
-int g_nbrightness;
 bool bDBUpdateInProgress;
 ThumbWin *pthumbwin;
 TCMgr *ptcmgr;
@@ -897,7 +896,7 @@ void MyFrame::SetAndApplyColorScheme( ColorScheme cs )
 			this,
 			-1,
 			_( "AIS Target Query" ),
-			global::OCPN::get().gui().get_ais_query_dialog().position);
+			global::OCPN::get().gui().ais_query_dialog().position);
         g_pais_query_dialog_active->SetMMSI( n_mmsi );
         g_pais_query_dialog_active->UpdateText();
         if( b_isshown ) g_pais_query_dialog_active->Show();

@@ -31,13 +31,18 @@ namespace global {
 class OCPN_GUI : public GUI
 {
 	private:
-		Frame frame;
-		Toolbar toolbar;
-		AISAlertDialog ais_alert_dialog;
-		AISQueryDialog ais_query_dialog;
+		View data_view;
+		Frame data_frame;
+		Toolbar data_toolbar;
+		AISAlertDialog data_ais_alert_dialog;
+		AISQueryDialog data_ais_query_dialog;
+
+	public: // view
+		virtual const View & view() const;
+		virtual void set_view_screen_brightness(int);
 
 	public: // frame
-		virtual const Frame & get_frame() const;
+		virtual const Frame & frame() const;
 		virtual void set_frame_position(const wxPoint &);
 		virtual void set_frame_size(const wxSize &);
 		virtual void set_frame_maximized(bool);
@@ -45,20 +50,20 @@ class OCPN_GUI : public GUI
 		virtual void set_frame_last_size(const wxSize &);
 
 	public: // toolbar
-		virtual const Toolbar & get_toolbar() const;
+		virtual const Toolbar & toolbar() const;
 		virtual void set_toolbar_position(const wxPoint &);
 		virtual void set_toolbar_orientation(long);
 		void ensure_toolbar_position_range(wxPoint, wxPoint);
 
 	public: // ais alert dialog
-		virtual const AISAlertDialog & get_ais_alert_dialog() const;
+		virtual const AISAlertDialog & ais_alert_dialog() const;
 		virtual void set_ais_alert_dialog_position(const wxPoint &);
 		virtual void set_ais_alert_dialog_size(const wxSize &);
 		void ensure_ais_alert_dialog_position_range(wxPoint, wxPoint);
 		void ensure_ais_alert_dialog_position_range(wxPoint, wxSize);
 
 	public: // ais query dialog
-		virtual const AISQueryDialog & get_ais_query_dialog() const;
+		virtual const AISQueryDialog & ais_query_dialog() const;
 		virtual void set_ais_query_dialog_position(const wxPoint &);
 };
 

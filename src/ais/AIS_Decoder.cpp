@@ -1950,9 +1950,9 @@ void AIS_Decoder::OnTimerAIS( wxTimerEvent& event )
 			//      This is an OS specific behavior, not seen on linux or Mac.
 			//      This patch will allow the audio alert to occur, and the visual alert will pop up soon
 			//      after the user selects the OCPN icon from the taskbar. (on the next timer tick, probably)
-#ifdef __WXMSW__            
+#ifdef __WXMSW__
 			if( !gFrame->IsIconized() )
-#endif                
+#endif
 			{
 				AISTargetAlertDialog *pAISAlertDialog = new AISTargetAlertDialog();
 				pAISAlertDialog->Create(
@@ -1962,8 +1962,8 @@ void AIS_Decoder::OnTimerAIS( wxTimerEvent& event )
 						b_jumpto,
 						-1,
 						_("AIS Alert"),
-						global::OCPN::get().gui().get_ais_alert_dialog().position,
-						global::OCPN::get().gui().get_ais_alert_dialog().size);
+						global::OCPN::get().gui().ais_alert_dialog().position,
+						global::OCPN::get().gui().ais_alert_dialog().size);
 
 				g_pais_alert_dialog_active = pAISAlertDialog;
 				pAISAlertDialog->Show();                     // Show modeless, so it stays on the screen

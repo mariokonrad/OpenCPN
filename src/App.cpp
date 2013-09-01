@@ -133,7 +133,6 @@ extern int g_sticky_chart;
 extern double g_GLMinLineWidth;
 extern int n_NavMessageShown;
 extern wxString g_config_version_string;
-extern int g_nbrightness;
 extern bool bDBUpdateInProgress;
 extern ThumbWin * pthumbwin;
 extern TCMgr * ptcmgr;
@@ -1274,7 +1273,7 @@ bool App::OnInit()
 
 	InitializeUserColors();
 
-	const global::GUI::Frame & frame_config = global::OCPN::get().gui().get_frame();
+	const global::GUI::Frame & frame_config = global::OCPN::get().gui().frame();
 
 	if (true
 			&& (frame_config.size.GetWidth() > 100)
@@ -1377,8 +1376,8 @@ bool App::OnInit()
 
 	g_FloatingToolbarDialog = new OCPNFloatingToolbarDialog(
 		cc1,
-		gui_instance->get_toolbar().position,
-		gui_instance->get_toolbar().orientation);
+		gui_instance->toolbar().position,
+		gui_instance->toolbar().orientation);
 	g_FloatingToolbarDialog->LockPosition(true);
 
 	gFrame->SetAndApplyColorScheme( global_color_scheme );

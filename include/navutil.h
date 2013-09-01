@@ -108,6 +108,7 @@ const wxChar * ParseGPXDateTime(wxDateTime & dt, const wxChar * datetime);
 class MyConfig : public wxFileConfig
 {
 	private:
+		void load_view();
 		void load_frame();
 		void load_toolbar();
 		void load_ais_alert_dialog();

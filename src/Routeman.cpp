@@ -64,7 +64,6 @@ extern MyConfig * pConfig;
 
 extern wxRect g_blink_rect;
 extern wxString g_SData_Locn;
-extern wxString g_PrivateDataDir;
 
 extern double gLat;
 extern double gLon;

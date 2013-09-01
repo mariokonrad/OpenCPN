@@ -36,6 +36,7 @@ class OCPN_System : public System
 	public: // data
 		virtual const Data & data() const;
 		virtual void set_home_location(const wxString &);
+		virtual void set_private_data_dir(const wxString &);
 };
 
 }

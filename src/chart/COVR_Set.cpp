@@ -22,22 +22,21 @@
  **************************************************************************/
 
 #include "COVR_Set.h"
+#include <global/OCPN.h> // FIXME: this class should not have the need to access global data
+#include <global/System.h>
 #include <wx/wfstream.h>
 #include <wx/filename.h>
 
-extern wxString g_PrivateDataDir; // FIXME: move to global infrastructure
-
 static const char sig_version[] = "COVR1002";
 
-static void appendOSDirSep(wxString * pString)
+static void appendOSDirSep(wxString & s) // FIXME: code duplication
 {
 	wxChar sep = wxFileName::GetPathSeparator();
-	if (pString->Last() != sep)
-		pString->Append(sep);
+	if (s.Last() != sep)
+		s.Append(sep);
 }
 
-
-covr_set::covr_set ( cm93chart *parent )
+covr_set::covr_set(cm93chart * parent)
 {
 	m_pParent = parent;
 }
@@ -72,12 +71,11 @@ covr_set::~covr_set()
 	}
 }
 
-bool covr_set::Init ( wxChar scale_char, wxString &prefix )
+bool covr_set::Init(wxChar scale_char, wxString & prefix)
 {
 	m_scale_char = scale_char;
 
-	switch ( m_scale_char )
-	{
+	switch (m_scale_char) {
 		case 'Z': m_scale = 20000000;  break;
 		case 'A': m_scale =  3000000;  break;
 		case 'B': m_scale =  1000000;  break;
@@ -95,11 +93,11 @@ bool covr_set::Init ( wxChar scale_char, wxString &prefix )
 	prefix_string.Replace ( sep, _T ( "_" ) );
 	prefix_string.Replace ( _T ( ":" ), _T ( "_" ) );       // for Windows
 
-	m_cachefile = g_PrivateDataDir;
-	appendOSDirSep ( &m_cachefile );
+	m_cachefile = global::OCPN::get().sys().data().private_data_dir;;
+	appendOSDirSep(m_cachefile);
 
 	m_cachefile += _T ( "cm93" );
-	appendOSDirSep ( &m_cachefile );
+	appendOSDirSep(m_cachefile);
 
 	m_cachefile += prefix_string;          // include the cm93 prefix string in the cache file name
 	m_cachefile += _T ( "_" );             // to support multiple cm93 data sets
@@ -168,6 +166,16 @@ bool covr_set::Init ( wxChar scale_char, wxString &prefix )
 	}
 
 	return true;
+}
+
+unsigned int covr_set::GetCoverCount() const
+{
+	return m_covr_array_outlines.GetCount();
+}
+
+M_COVR_Desc * covr_set::GetCover(unsigned int im)
+{
+	return &m_covr_array_outlines.Item(im);
 }
 
 void covr_set::Add_MCD ( M_COVR_Desc *pmcd )

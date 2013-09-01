@@ -199,7 +199,6 @@ bool bDBUpdateInProgress;
 ThumbWin *pthumbwin;
 TCMgr *ptcmgr;
 bool bDrawCurrentValues;
-wxString g_PrivateDataDir;
 wxString g_SData_Locn;
 wxString *pChartListFileName;
 wxString *pWorldMapLocation;

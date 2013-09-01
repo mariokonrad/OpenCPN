@@ -38,10 +38,12 @@ class System
 		struct Data
 		{
 			wxString home_location;
+			wxString private_data_dir;
 		};
 
 		virtual const Data & data() const = 0;
 		virtual void set_home_location(const wxString &) = 0;
+		virtual void set_private_data_dir(const wxString &) = 0;
 };
 
 }

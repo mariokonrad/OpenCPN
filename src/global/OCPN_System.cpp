@@ -35,5 +35,10 @@ void OCPN_System::set_home_location(const wxString & home_location)
 	data_data.home_location = home_location;
 }
 
+void OCPN_System::set_private_data_dir(const wxString & directory)
+{
+	data_data.private_data_dir = directory;
+}
+
 }
 

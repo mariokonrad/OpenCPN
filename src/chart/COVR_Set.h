@@ -40,16 +40,8 @@ class covr_set
 
 		bool Init(wxChar scale_char, wxString & prefix);
 
-		unsigned int GetCoverCount()
-		{
-			return m_covr_array_outlines.GetCount();
-		}
-
-		M_COVR_Desc * GetCover(unsigned int im)
-		{
-			return &m_covr_array_outlines.Item(im);
-		}
-
+		unsigned int GetCoverCount() const;
+		M_COVR_Desc * GetCover(unsigned int im);
 		void Add_MCD ( M_COVR_Desc *pmcd );
 		bool Add_Update_MCD ( M_COVR_Desc *pmcd );
 		bool IsCovrLoaded ( int cell_index );

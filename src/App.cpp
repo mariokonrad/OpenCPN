@@ -136,7 +136,6 @@ extern bool bDBUpdateInProgress;
 extern ThumbWin * pthumbwin;
 extern TCMgr * ptcmgr;
 extern bool bDrawCurrentValues;
-extern wxString g_PrivateDataDir;
 extern wxString g_SData_Locn;
 extern wxString *pChartListFileName;
 extern wxString *pWorldMapLocation;
@@ -809,17 +808,18 @@ bool App::OnInit()
 	//  Establish an empty ChartCroupArray
 	g_pGroupArray = new ChartGroupArray;
 
-	//      Establish the prefix of the location of user specific data files
+	// Establish the prefix of the location of user specific data files
+	global::System & sys = global::OCPN::get().sys();
 #ifdef __WXMSW__
-	g_PrivateDataDir = global::OCPN::get().sys().data().home_location; // should be {Documents and Settings}\......
+	sys.set_private_data_dir(global::OCPN::get().sys().data().home_location); // should be {Documents and Settings}\......
 #elif defined __WXOSX__
-	g_PrivateDataDir = std_path.GetUserConfigDir(); // should be ~/Library/Preferences
+	sys.set_private_data_dir(std_path.GetUserConfigDir()); // should be ~/Library/Preferences
 #else
-	g_PrivateDataDir = std_path.GetUserDataDir(); // should be ~/.opencpn
+	sys.set_private_data_dir(std_path.GetUserDataDir()); // should be ~/.opencpn
 #endif
 
 	if (g_bportable)
-		g_PrivateDataDir = global::OCPN::get().sys().data().home_location;
+		sys.set_private_data_dir(global::OCPN::get().sys().data().home_location);
 
 	//  Get the PlugIns directory location
 	g_Plugin_Dir = std_path.GetPluginsDir();   // linux:   {prefix}/lib/opencpn
@@ -1042,14 +1042,15 @@ bool App::OnInit()
 	//      If the config file contains an entry for SENC file prefix, use it.
 	//      Otherwise, default to PrivateDataDir
 	if( g_SENCPrefix.IsEmpty() ) {
-		g_SENCPrefix = g_PrivateDataDir;
+		g_SENCPrefix = global::OCPN::get().sys().data().private_data_dir;
 		appendOSDirSlash(g_SENCPrefix);
 		g_SENCPrefix.Append( _T("SENC") );
 	}
 
-	if( g_bportable ) {
-		wxFileName f( g_SENCPrefix );
-		if( f.MakeRelativeTo( g_PrivateDataDir ) ) g_SENCPrefix = f.GetFullPath();
+	if (g_bportable) {
+		wxFileName f(g_SENCPrefix);
+		if (f.MakeRelativeTo(global::OCPN::get().sys().data().private_data_dir))
+			g_SENCPrefix = f.GetFullPath();
 		else
 			g_SENCPrefix = _T("SENC");
 	}
@@ -1242,9 +1243,9 @@ bool App::OnInit()
 				wxFileName::GetPathSeparator() +
 				_T("HARMONIC.IDX"));
 
-		if( g_bportable ) {
-			wxFileName f( default_tcdata );
-			f.MakeRelativeTo( g_PrivateDataDir );
+		if (g_bportable) {
+			wxFileName f(default_tcdata);
+			f.MakeRelativeTo(global::OCPN::get().sys().data().private_data_dir);
 			TideCurrentDataSet.Add( f.GetFullPath() );
 		}
 		else
@@ -1260,8 +1261,8 @@ bool App::OnInit()
 				_T("2bells.wav"));
 
 		if( g_bportable ) {
-			wxFileName f( default_sound );
-			f.MakeRelativeTo( g_PrivateDataDir );
+			wxFileName f(default_sound);
+			f.MakeRelativeTo(global::OCPN::get().sys().data().private_data_dir);
 			g_sAIS_Alert_Sound_File = f.GetFullPath();
 		}
 		else
@@ -1661,7 +1662,7 @@ bool App::OnInit()
 	//        gFrame->MemFootTimer.Start(1000, wxTIMER_CONTINUOUS);
 
 	// Import Layer-wise any .gpx files from /Layers directory
-	wxString layerdir = g_PrivateDataDir;
+	wxString layerdir = global::OCPN::get().sys().data().private_data_dir;
 	appendOSDirSlash(layerdir);
 	layerdir.Append( _T("layers") );
 

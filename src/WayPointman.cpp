@@ -30,6 +30,8 @@
 #include "StyleManager.h"
 #include "Style.h"
 #include "gpx/GpxDocument.h"
+#include <global/OCPN.h>
+#include <global/System.h>
 
 #include <wx/imaglist.h>
 #include <wx/dir.h>
@@ -38,7 +40,6 @@
 WX_DEFINE_LIST(RoutePointList);
 
 extern ocpnStyle::StyleManager * g_StyleManager;
-extern wxString g_PrivateDataDir;
 extern WayPointman * pWayPointMan;
 extern RoutePoint * pAnchorWatchPoint1;
 extern RoutePoint * pAnchorWatchPoint2;
@@ -58,7 +59,7 @@ WayPointman::WayPointman()
 
 	// Load user defined icons.
 
-	wxString UserIconPath = g_PrivateDataDir;
+	wxString UserIconPath = global::OCPN::get().sys().data().private_data_dir;
 	wxChar sep = wxFileName::GetPathSeparator();
 	if( UserIconPath.Last() != sep ) UserIconPath.Append( sep );
 	UserIconPath.Append( _T("UserIcons") );

@@ -113,7 +113,6 @@ extern RouteProp        *pRoutePropDialog;
 extern bool             s_bSetSystemTime;
 extern bool             g_bDisplayGrid;         //Flag indicating if grid is to be displayed
 extern bool             g_bPlayShipsBells;
-extern bool             g_bFullscreenToolbar;
 extern bool             g_bShowLayers;
 extern bool             g_bPermanentMOBIcon;
 
@@ -360,15 +359,18 @@ void MyConfig::load_toolbar()
 	int y = 0;
 	long orientation;
 	long transparent = 1;
+	long full_screen = 1;
 
     Read(_T("ToolbarX"), &x, 0);
     Read(_T("ToolbarY"), &y, 0);
     Read(_T("ToolbarOrient"), &orientation, wxTB_HORIZONTAL);
     Read(_T("TransparentToolbar"), &transparent, 1);
+    Read(_T("FullscreenToolbar"), &full_screen, 1);
 
 	gui.set_toolbar_position(wxPoint(x, y));
 	gui.set_toolbar_orientation(orientation);
 	gui.set_toolbar_transparent(transparent);
+	gui.set_toolbar_full_screen(full_screen);
 }
 
 void MyConfig::load_ais_alert_dialog()
@@ -564,7 +566,6 @@ int MyConfig::LoadMyConfig(int iteration)
     Read( _T ( "ShowDebugWindows" ), &m_bShowDebugWindows, 1 );
     Read( _T ( "ShowGrid" ), &g_bDisplayGrid, 0 );
     Read( _T ( "PlayShipsBells" ), &g_bPlayShipsBells, 0 );
-    Read( _T ( "FullscreenToolbar" ), &g_bFullscreenToolbar, 1 );
     Read( _T ( "PermanentMOBIcon" ), &g_bPermanentMOBIcon, 0 );
     Read( _T ( "ShowLayers" ), &g_bShowLayers, 1 );
     Read( _T ( "ShowDepthUnits" ), &g_bShowDepthUnits, 1 );
@@ -1592,6 +1593,7 @@ void MyConfig::write_toolbar()
 	Write(_T("ToolbarY"), config.position.y);
 	Write(_T("ToolbarOrient"), config.orientation);
     Write(_T("TransparentToolbar"), config.transparent);
+    Write(_T("FullscreenToolbar"), config.full_screen);
 }
 
 void MyConfig::write_ais_alert_dialog()
@@ -1642,7 +1644,6 @@ void MyConfig::UpdateSettings()
     Write( _T ( "SetSystemTime" ), s_bSetSystemTime );
     Write( _T ( "ShowGrid" ), g_bDisplayGrid );
     Write( _T ( "PlayShipsBells" ), g_bPlayShipsBells );
-    Write( _T ( "FullscreenToolbar" ), g_bFullscreenToolbar );
     Write( _T ( "PermanentMOBIcon" ), g_bPermanentMOBIcon );
     Write( _T ( "ShowLayers" ), g_bShowLayers );
     Write( _T ( "ShowDepthUnits" ), g_bShowDepthUnits );

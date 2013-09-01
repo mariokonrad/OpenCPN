@@ -309,7 +309,6 @@ extern int g_nNMEADebug;
 extern int g_nAWDefault;
 extern int g_nAWMax;
 extern bool g_bPlayShipsBells;
-extern bool g_bFullscreenToolbar;
 extern bool g_bShowLayers;
 extern bool g_bPermanentMOBIcon;
 extern int g_iSDMMFormat;

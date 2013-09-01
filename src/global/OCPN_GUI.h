@@ -54,6 +54,7 @@ class OCPN_GUI : public GUI
 		virtual void set_toolbar_position(const wxPoint &);
 		virtual void set_toolbar_orientation(long);
 		virtual void set_toolbar_transparent(bool);
+		virtual void set_toolbar_full_screen(bool);
 		void ensure_toolbar_position_range(wxPoint, wxPoint);
 
 	public: // ais alert dialog

@@ -123,7 +123,6 @@ extern bool g_bWayPointPreventDragging;
 
 extern bool g_bPreserveScaleOnX;
 extern bool g_bPlayShipsBells;
-extern bool g_bFullscreenToolbar;
 
 extern int g_OwnShipIconType;
 extern double g_n_ownship_length_meters;
@@ -1910,10 +1909,12 @@ void options::SetInitialSettings()
 		pSmoothPanZoom->Enable();
 	}
 
+	const global::GUI & gui = global::OCPN::get().gui();
+
 	pPreserveScale->SetValue( g_bPreserveScaleOnX );
 	pPlayShipsBells->SetValue( g_bPlayShipsBells );
-	pFullScreenToolbar->SetValue( g_bFullscreenToolbar );
-	pTransparentToolbar->SetValue(global::OCPN::get().gui().toolbar().transparent);
+	pFullScreenToolbar->SetValue(gui.toolbar().full_screen);
+	pTransparentToolbar->SetValue(gui.toolbar().transparent);
 	pSDMMFormat->Select( g_iSDMMFormat );
 	pDistanceFormat->Select( g_iDistanceFormat );
 	pSpeedFormat->Select( g_iSpeedFormat );
@@ -2466,9 +2467,11 @@ void options::OnApplyClick( wxCommandEvent& event )
 
 	g_bPreserveScaleOnX = pPreserveScale->GetValue();
 
+	global::GUI & gui = global::OCPN::get().gui();
+
 	g_bPlayShipsBells = pPlayShipsBells->GetValue();
-	g_bFullscreenToolbar = pFullScreenToolbar->GetValue();
-	global::OCPN::get().gui().set_toolbar_transparent(pTransparentToolbar->GetValue());
+	gui.set_toolbar_full_screen(pFullScreenToolbar->GetValue());
+	gui.set_toolbar_transparent(pTransparentToolbar->GetValue());
 	g_iSDMMFormat = pSDMMFormat->GetSelection();
 	g_iDistanceFormat = pDistanceFormat->GetSelection();
 	g_iSpeedFormat = pSpeedFormat->GetSelection();

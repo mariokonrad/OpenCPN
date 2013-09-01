@@ -242,7 +242,6 @@ int g_nNMEADebug;
 int g_nAWDefault;
 int g_nAWMax;
 bool g_bPlayShipsBells;
-bool g_bFullscreenToolbar;
 bool g_bShowLayers;
 bool g_bTransparentToolbar;
 bool g_bPermanentMOBIcon;
@@ -1924,13 +1923,14 @@ void MyFrame::ToggleColorScheme()
 
 void MyFrame::ToggleFullScreen()
 {
-    bool to = !IsFullScreen();
-    long style = wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION | wxFULLSCREEN_NOMENUBAR;
+	bool to = !IsFullScreen();
+	long style = wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION | wxFULLSCREEN_NOMENUBAR;
 
-    if( g_FloatingToolbarDialog ) g_FloatingToolbarDialog->Show( g_bFullscreenToolbar | !to );
+	if (g_FloatingToolbarDialog)
+		g_FloatingToolbarDialog->Show(global::OCPN::get().gui().toolbar().full_screen | !to);
 
-    ShowFullScreen( to, style );
-    UpdateToolbar( global_color_scheme );
+	ShowFullScreen(to, style);
+	UpdateToolbar(global_color_scheme);
     Layout();
 }
 
@@ -2337,17 +2337,17 @@ void MyFrame::SubmergeToolbar( void )
     if( g_FloatingToolbarDialog ) g_FloatingToolbarDialog->Submerge();
 }
 
-void MyFrame::SurfaceToolbar( void )
+void MyFrame::SurfaceToolbar(void)
 {
-    if( g_FloatingToolbarDialog && g_FloatingToolbarDialog->IsToolbarShown() ) {
-        if( IsFullScreen() ) {
-            if( g_bFullscreenToolbar ) {
-                g_FloatingToolbarDialog->Surface();
-            }
-        } else
-            g_FloatingToolbarDialog->Surface();
-    }
-    gFrame->Raise();
+	if (g_FloatingToolbarDialog && g_FloatingToolbarDialog->IsToolbarShown()) {
+		if (IsFullScreen()) {
+			if (global::OCPN::get().gui().toolbar().full_screen) {
+				g_FloatingToolbarDialog->Surface();
+			}
+		} else
+			g_FloatingToolbarDialog->Surface();
+	}
+	gFrame->Raise();
 }
 
 void MyFrame::JumpToPosition( double lat, double lon, double scale )
@@ -2448,8 +2448,9 @@ int MyFrame::DoOptionsDialog()
     delete pWorkDirArray;
 
     bDBUpdateInProgress = false;
-    if( g_FloatingToolbarDialog ) {
-        if( IsFullScreen() && !g_bFullscreenToolbar ) g_FloatingToolbarDialog->Submerge();
+    if (g_FloatingToolbarDialog) {
+        if (IsFullScreen() && !global::OCPN::get().gui().toolbar().full_screen)
+			g_FloatingToolbarDialog->Submerge();
     }
 
 #ifdef __WXMAC__

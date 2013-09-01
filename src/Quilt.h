@@ -110,11 +110,11 @@ class Quilt
 		OCPNRegion m_rendered_region;
 
 		PatchList m_PatchList;
-		wxBitmap *m_pBM;
+		wxBitmap * m_pBM;
 
 		bool m_bcomposed;
-		wxPatchListNode *cnode;
-		bool m_bbusy;
+		wxPatchListNode * current_node;
+		bool m_bbusy; // FIXME: poor man's mutex
 		int m_quilt_proj;
 
 		ArrayOfSortedQuiltCandidates *m_pcandidate_array;

@@ -179,8 +179,6 @@ extern CM93OffsetDialog  *g_pCM93OffsetDialog;
 #endif
 
 extern bool             bGPSValid;
-extern bool             g_bShowOutlines;
-extern bool             g_bShowDepthUnits;
 extern AIS_Decoder      *g_pAIS;
 
 extern MyFrame          *gFrame;
@@ -7245,7 +7243,8 @@ void ChartCanvas::ShowAISTargetList( void )
 
 void ChartCanvas::RenderAllChartOutlines( ocpnDC &dc, ViewPort& vp )
 {
-    if( !g_bShowOutlines ) return;
+    if (!global::OCPN::get().gui().view().show_outlines)
+		return;
 
     int nEntry = ChartData->GetChartTableEntries();
 
@@ -7267,10 +7266,6 @@ void ChartCanvas::RenderAllChartOutlines( ocpnDC &dc, ViewPort& vp )
 
         if( b_group_draw ) RenderChartOutline( dc, i, vp );
     }
-
-//      Could render in different color/width if thumbnail is selected
-//    if(NULL !=  pthumbwin->pThumbChart)
-//        int ggl = 4;
 
 #ifdef USE_S57
     //        On CM93 Composite Charts, draw the outlines of the next smaller scale cell
@@ -8354,55 +8349,56 @@ void ChartCanvas::DrawOverlayObjects( ocpnDC &dc, const wxRegion& ru )
     }
 }
 
-void ChartCanvas::EmbossDepthScale( ocpnDC &dc )
+void ChartCanvas::EmbossDepthScale(ocpnDC & dc)
 {
-    if( !g_bShowDepthUnits ) return;
+	if (!global::OCPN::get().gui().view().show_depth_units)
+		return;
 
-    int depth_unit_type = DEPTH_UNIT_UNKNOWN;
+	int depth_unit_type = DEPTH_UNIT_UNKNOWN;
 
-    if( GetQuiltMode() ) {
-        wxString s = m_pQuilt->GetQuiltDepthUnit();
-        s.MakeUpper();
-        if( s == _T("FEET") ) depth_unit_type = DEPTH_UNIT_FEET;
-        else if( s.StartsWith( _T("FATHOMS") ) ) depth_unit_type = DEPTH_UNIT_FATHOMS;
-        else if( s.StartsWith( _T("METERS") ) ) depth_unit_type = DEPTH_UNIT_METERS;
-        else if( s.StartsWith( _T("METRES") ) ) depth_unit_type = DEPTH_UNIT_METERS;
-        else if( s.StartsWith( _T("METRIC") ) ) depth_unit_type = DEPTH_UNIT_METERS;
-        else if( s.StartsWith( _T("METER") ) ) depth_unit_type = DEPTH_UNIT_METERS;
-        
-    } else {
-        if( Current_Ch ) {
-            depth_unit_type = Current_Ch->GetDepthUnitType();
+	if( GetQuiltMode() ) {
+		wxString s = m_pQuilt->GetQuiltDepthUnit();
+		s.MakeUpper();
+		if( s == _T("FEET") ) depth_unit_type = DEPTH_UNIT_FEET;
+		else if( s.StartsWith( _T("FATHOMS") ) ) depth_unit_type = DEPTH_UNIT_FATHOMS;
+		else if( s.StartsWith( _T("METERS") ) ) depth_unit_type = DEPTH_UNIT_METERS;
+		else if( s.StartsWith( _T("METRES") ) ) depth_unit_type = DEPTH_UNIT_METERS;
+		else if( s.StartsWith( _T("METRIC") ) ) depth_unit_type = DEPTH_UNIT_METERS;
+		else if( s.StartsWith( _T("METER") ) ) depth_unit_type = DEPTH_UNIT_METERS;
+
+	} else {
+		if( Current_Ch ) {
+			depth_unit_type = Current_Ch->GetDepthUnitType();
 #ifdef USE_S57
-            if( Current_Ch->GetChartFamily() == CHART_FAMILY_VECTOR ) depth_unit_type =
-                    ps52plib->m_nDepthUnitDisplay + 1;
+			if( Current_Ch->GetChartFamily() == CHART_FAMILY_VECTOR ) depth_unit_type =
+				ps52plib->m_nDepthUnitDisplay + 1;
 #endif
-        }
-    }
+		}
+	}
 
-    EmbossData *ped = NULL;
-    switch( depth_unit_type ) {
-    case DEPTH_UNIT_FEET:
-        ped = m_pEM_Feet;
-        break;
-    case DEPTH_UNIT_METERS:
-        ped = m_pEM_Meters;
-        break;
-    case DEPTH_UNIT_FATHOMS:
-        ped = m_pEM_Fathoms;
-        break;
-    default:
-        ped = NULL;
-        break;
-    }
+	EmbossData *ped = NULL;
+	switch( depth_unit_type ) {
+		case DEPTH_UNIT_FEET:
+			ped = m_pEM_Feet;
+			break;
+		case DEPTH_UNIT_METERS:
+			ped = m_pEM_Meters;
+			break;
+		case DEPTH_UNIT_FATHOMS:
+			ped = m_pEM_Fathoms;
+			break;
+		default:
+			ped = NULL;
+			break;
+	}
 
-    if( ped ) EmbossCanvas( dc, ped, ( GetVP().pix_width - ped->width ), 40 );
+	if( ped ) EmbossCanvas( dc, ped, ( GetVP().pix_width - ped->width ), 40 );
 }
 
 void ChartCanvas::CreateDepthUnitEmbossMaps( ColorScheme cs )
 {
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-    wxFont font;
+	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	wxFont font;
     if( style->embossFont == wxEmptyString )
         font = wxFont( 60, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD );
     else

@@ -231,8 +231,6 @@ ToolBarSimple* g_toolbar;
 ocpnStyle::StyleManager * g_StyleManager;
 wxPrintData *g_printData = (wxPrintData*) NULL ;
 wxPageSetupData* g_pageSetupData = (wxPageSetupData*) NULL;
-bool g_bShowOutlines;
-bool g_bShowDepthUnits;
 bool g_bDisplayGrid; // Flag indicating weather the lat/lon grid should be displayed
 bool g_bShowActiveRouteHighway;
 int g_nNMEADebug;
@@ -326,7 +324,6 @@ double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode
 bool g_bCourseUp;
 int g_COGAvgSec; // COG average period (sec.) for Course Up Mode
 double g_COGAvg;
-bool g_bLookAhead;
 bool g_bskew_comp;
 bool g_bopengl;
 bool g_bsmoothpanzoom;
@@ -1604,7 +1601,7 @@ void MyFrame::ODoSetSize( void )
 		g_pi_manager->SendResizeEventToAllPlugIns(x, y);
 
 //  Force redraw if in lookahead mode
-    if (g_bLookAhead) {
+    if (global::OCPN::get().gui().view().lookahead_mode) {
         if (g_bCourseUp)
 			DoCOGSet();
         else
@@ -2242,44 +2239,40 @@ void MyFrame::TogglebFollow( void )
         ClearbFollow();
 }
 
-void MyFrame::SetbFollow( void )
+void MyFrame::SetbFollow(void)
 {
     cc1->m_bFollow = true;
-    if( g_toolbar ) g_toolbar->ToggleTool( ID_FOLLOW, cc1->m_bFollow );
-
+	SetToolbarItemState(ID_FOLLOW, cc1->m_bFollow);
     DoChartUpdate();
     cc1->ReloadVP();
-
 }
 
-void MyFrame::ClearbFollow( void )
+void MyFrame::ClearbFollow(void)
 {
     //    Center the screen on the GPS position, for lack of a better place
     vLat = gLat;
     vLon = gLon;
     cc1->m_bFollow = false;
-    if( g_toolbar ) g_toolbar->ToggleTool( ID_FOLLOW, cc1->m_bFollow );
+	SetToolbarItemState(ID_FOLLOW, cc1->m_bFollow);
     DoChartUpdate();
     cc1->ReloadVP();
-
 }
 
-void MyFrame::ToggleChartOutlines( void )
+void MyFrame::ToggleChartOutlines(void)
 {
-    if( !g_bShowOutlines ) g_bShowOutlines = true;
-    else
-        g_bShowOutlines = false;
+	global::GUI & gui = global::OCPN::get().gui();
 
-    cc1->Refresh( false );
-
+	gui.set_view_show_outlines(!gui.view().show_outlines);
+	cc1->Refresh(false);
 }
 
-void MyFrame::SetToolbarItemState( int tool_id, bool state )
+void MyFrame::SetToolbarItemState(int tool_id, bool state)
 {
-    if( g_toolbar ) g_toolbar->ToggleTool( tool_id, state );
+	if (g_toolbar)
+		g_toolbar->ToggleTool(tool_id, state);
 }
 
-void MyFrame::SetToolbarItemBitmaps( int tool_id, wxBitmap *bmp, wxBitmap *bmpRollover )
+void MyFrame::SetToolbarItemBitmaps(int tool_id, wxBitmap *bmp, wxBitmap *bmpRollover)
 {
     if( g_toolbar ) {
         g_toolbar->SetToolBitmaps( tool_id, bmp, bmpRollover );
@@ -2288,7 +2281,7 @@ void MyFrame::SetToolbarItemBitmaps( int tool_id, wxBitmap *bmp, wxBitmap *bmpRo
     }
 }
 
-void MyFrame::ApplyGlobalSettings( bool bFlyingUpdate, bool bnewtoolbar )
+void MyFrame::ApplyGlobalSettings(bool bFlyingUpdate, bool bnewtoolbar)
 {
     //             ShowDebugWindow as a wxStatusBar
     m_StatusBarFieldCount = 5;
@@ -2315,22 +2308,24 @@ void MyFrame::ApplyGlobalSettings( bool bFlyingUpdate, bool bnewtoolbar )
         }
     }
 
-    if( bnewtoolbar ) UpdateToolbar( global_color_scheme );
-
+    if (bnewtoolbar)
+		UpdateToolbar(global_color_scheme);
 }
 
 void MyFrame::SubmergeToolbarIfOverlap( int x, int y, int margin )
 {
-    if( g_FloatingToolbarDialog ) {
+    if (g_FloatingToolbarDialog) {
         wxRect rect = g_FloatingToolbarDialog->GetScreenRect();
-        rect.Inflate( margin );
-        if( rect.Contains( x, y ) ) g_FloatingToolbarDialog->Submerge();
+        rect.Inflate(margin);
+        if (rect.Contains(x, y))
+			g_FloatingToolbarDialog->Submerge();
     }
 }
 
 void MyFrame::SubmergeToolbar( void )
 {
-    if( g_FloatingToolbarDialog ) g_FloatingToolbarDialog->Submerge();
+    if (g_FloatingToolbarDialog)
+		g_FloatingToolbarDialog->Submerge();
 }
 
 void MyFrame::SurfaceToolbar(void)
@@ -4140,7 +4135,7 @@ bool MyFrame::DoChartUpdate( void )
         vpLon = gLon;
 
         // on lookahead mode, adjust the vp center point
-        if( cc1 && g_bLookAhead ) {
+        if (cc1 && global::OCPN::get().gui().view().lookahead_mode) {
             double angle = g_COGAvg + ( cc1->GetVPRotation() * 180.0  / M_PI);
             double pixel_deltay = fabs(cos(angle * M_PI / 180.0)) * cc1->GetCanvasHeight() / 4;
             double pixel_deltax = fabs(sin(angle * M_PI / 180.0)) * cc1->GetCanvasWidth() / 4;

@@ -38,10 +38,16 @@ class GUI
 		struct View
 		{
 			int screen_brightness;
+			bool show_outlines;
+			bool show_depth_units;
+			bool lookahead_mode;
 		};
 
 		virtual const View & view() const = 0;
 		virtual void set_view_screen_brightness(int) = 0;
+		virtual void set_view_show_outlines(bool) = 0;
+		virtual void set_view_show_depth_units(bool) = 0;
+		virtual void set_view_lookahead_mode(bool) = 0;
 
 	public:
 

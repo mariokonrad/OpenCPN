@@ -40,6 +40,9 @@ class OCPN_GUI : public GUI
 	public: // view
 		virtual const View & view() const;
 		virtual void set_view_screen_brightness(int);
+		virtual void set_view_show_outlines(bool);
+		virtual void set_view_show_depth_units(bool);
+		virtual void set_view_lookahead_mode(bool);
 
 	public: // frame
 		virtual const Frame & frame() const;

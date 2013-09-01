@@ -70,8 +70,6 @@ wxString GetOCPNKnownLanguage(wxString lang_canonical, wxString *lang_dir);
 extern MyFrame * gFrame;
 extern ChartCanvas * cc1;
 
-extern bool g_bShowOutlines;
-extern bool g_bShowDepthUnits;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bsmoothpanzoom;
@@ -150,7 +148,6 @@ extern int g_cm93_zoom_factor;
 extern int g_COGAvgSec;
 
 extern bool g_bCourseUp;
-extern bool g_bLookAhead;
 
 extern double g_ownship_predictor_minutes;
 
@@ -1818,6 +1815,8 @@ void options::SetInitialSettings()
 
 	// ChartsLoad
 
+	const global::GUI & gui = global::OCPN::get().gui();
+
 	int nDir = m_CurrentDirList.GetCount();
 
 	for( int i = 0; i < nDir; i++ ) {
@@ -1851,16 +1850,14 @@ void options::SetInitialSettings()
 	 */
 	m_cbFilterSogCog->SetValue( g_bfilter_cogsog );
 
-	s.Printf( _T("%d"), g_COGFilterSec );
-	m_tFilterSec->SetValue( s );
+	m_tFilterSec->SetValue(wxString::Format(_T("%d"), g_COGFilterSec));
 
-	s.Printf( _T("%d"), g_COGAvgSec );
-	pCOGUPUpdateSecs->SetValue( s );
+	pCOGUPUpdateSecs->SetValue(wxString::Format(_T("%d"), g_COGAvgSec));
 
-	pCDOOutlines->SetValue( g_bShowOutlines );
+	pCDOOutlines->SetValue(gui.view().show_outlines);
 	pCDOQuilting->SetValue( g_bQuiltEnable );
 	pFullScreenQuilt->SetValue( !g_bFullScreenQuilt );
-	pSDepthUnits->SetValue( g_bShowDepthUnits );
+	pSDepthUnits->SetValue(gui.view().show_depth_units);
 	pSkewComp->SetValue( g_bskew_comp );
 	pOpenGL->SetValue( g_bopengl );
 	pSmoothPanZoom->SetValue( g_bsmoothpanzoom );
@@ -1872,13 +1869,13 @@ void options::SetInitialSettings()
 	pSDisplayGrid->SetValue( g_bDisplayGrid );
 
 	pCBCourseUp->SetValue( g_bCourseUp );
-	pCBLookAhead->SetValue( g_bLookAhead );
+	pCBLookAhead->SetValue(gui.view().lookahead_mode);
 
-	if( fabs( wxRound( g_ownship_predictor_minutes ) - g_ownship_predictor_minutes ) > 1e-4 ) s.Printf(
-			_T("%6.2f"), g_ownship_predictor_minutes );
+	if (fabs(wxRound(g_ownship_predictor_minutes) - g_ownship_predictor_minutes) > 1e-4)
+		s.Printf(_T("%6.2f"), g_ownship_predictor_minutes);
 	else
-		s.Printf( _T("%4.0f"), g_ownship_predictor_minutes );
-	m_pText_OSCOG_Predictor->SetValue( s );
+		s.Printf(_T("%4.0f"), g_ownship_predictor_minutes);
+	m_pText_OSCOG_Predictor->SetValue(s);
 
 	m_pShipIconType->SetSelection( g_OwnShipIconType );
 	wxCommandEvent eDummy;
@@ -1909,8 +1906,6 @@ void options::SetInitialSettings()
 		pSmoothPanZoom->Enable();
 	}
 
-	const global::GUI & gui = global::OCPN::get().gui();
-
 	pPreserveScale->SetValue( g_bPreserveScaleOnX );
 	pPlayShipsBells->SetValue( g_bPlayShipsBells );
 	pFullScreenToolbar->SetValue(gui.toolbar().full_screen);
@@ -1924,24 +1919,17 @@ void options::SetInitialSettings()
 
 	pTrackPrecision->SetSelection( g_nTrackPrecision );
 
-	//    AIS Parameters
-	//      CPA Box
+	// AIS Parameters
+	// CPA Box
 	m_pCheck_CPA_Max->SetValue( g_bCPAMax );
 
-	s.Printf( _T("%4.1f"), g_CPAMax_NM );
-	m_pText_CPA_Max->SetValue( s );
-
-	m_pCheck_CPA_Warn->SetValue( g_bCPAWarn );
-
-	s.Printf( _T("%4.1f"), g_CPAWarn_NM );
-	m_pText_CPA_Warn->SetValue( s );
-
+	m_pText_CPA_Max->SetValue(wxString::Format(_T("%4.1f"), g_CPAMax_NM));
+	m_pCheck_CPA_Warn->SetValue(g_bCPAWarn);
+	m_pText_CPA_Warn->SetValue(wxString::Format(_T("%4.1f"), g_CPAWarn_NM));
 	m_pCheck_CPA_WarnT->SetValue( g_bTCPA_Max );
+	m_pText_CPA_WarnT->SetValue(wxString::Format(_T("%4.0f"), g_TCPA_Max));
 
-	s.Printf( _T("%4.0f"), g_TCPA_Max );
-	m_pText_CPA_WarnT->SetValue( s );
-
-	//      Lost Targets
+	// Lost Targets
 	m_pCheck_Mark_Lost->SetValue( g_bMarkLost );
 
 	s.Printf( _T("%4.0f"), g_MarkLost_Mins );
@@ -2180,9 +2168,10 @@ bool options::ShowToolTips()
 	return TRUE;
 }
 
-void options::OnCharHook( wxKeyEvent& event ) {
-	if( event.GetKeyCode() == WXK_RETURN ) {
-		if( event.GetModifiers() == wxMOD_CONTROL ) {
+void options::OnCharHook(wxKeyEvent & event)
+{
+	if (event.GetKeyCode() == WXK_RETURN) {
+		if (event.GetModifiers() == wxMOD_CONTROL) {
 			wxCommandEvent okEvent;
 			okEvent.SetId( xID_OK );
 			okEvent.SetEventType( wxEVT_COMMAND_BUTTON_CLICKED );
@@ -2194,32 +2183,32 @@ void options::OnCharHook( wxKeyEvent& event ) {
 
 void options::OnButtonaddClick( wxCommandEvent& event )
 {
-	wxString selDir;
-	wxFileName dirname;
-	wxDirDialog *dirSelector = new wxDirDialog( this, _("Add a directory containing chart files"),
-			*pInit_Chart_Dir, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST );
+	wxDirDialog * dirSelector = new wxDirDialog(
+		this,
+		_("Add a directory containing chart files"),
+		*pInit_Chart_Dir,
+		wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
 
-	if( dirSelector->ShowModal() == wxID_CANCEL ) goto done;
+	if (dirSelector->ShowModal() != wxID_CANCEL) {
+		wxString selDir = dirSelector->GetPath();
+		wxFileName dirname = wxFileName(selDir);
 
-	selDir = dirSelector->GetPath();
-	dirname = wxFileName( selDir );
+		pInit_Chart_Dir->Empty();
+		if( !g_bportable )
+			pInit_Chart_Dir->Append( dirname.GetPath() );
 
-	pInit_Chart_Dir->Empty();
-	if( !g_bportable )
-		pInit_Chart_Dir->Append( dirname.GetPath() );
+		if( g_bportable ) {
+			wxFileName f(selDir);
+			f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
+			pActiveChartsList->Append( f.GetFullPath() );
+		} else
+			pActiveChartsList->Append(selDir);
 
-	if( g_bportable ) {
-		wxFileName f( selDir );
-		f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
-		pActiveChartsList->Append( f.GetFullPath() );
-	} else
-		pActiveChartsList->Append( selDir );
+		k_charts |= CHANGE_CHARTS;
 
-	k_charts |= CHANGE_CHARTS;
+		pScanCheckBox->Disable();
+	}
 
-	pScanCheckBox->Disable();
-
-done:
 	delete dirSelector;
 	event.Skip();
 }
@@ -2418,9 +2407,9 @@ void options::OnApplyClick( wxCommandEvent& event )
 	// Chart Groups
 
 	if( groupsPanel->modified ) {
-		groupsPanel->EmptyChartGroupArray( g_pGroupArray );
+		groupsPanel->EmptyChartGroupArray(g_pGroupArray);
 		delete g_pGroupArray;
-		g_pGroupArray = groupsPanel->CloneChartGroupArray( m_pGroupArray );
+		g_pGroupArray = groupsPanel->CloneChartGroupArray(m_pGroupArray);
 		m_returnChanges |= GROUPS_CHANGED;
 	}
 
@@ -2429,15 +2418,15 @@ void options::OnApplyClick( wxCommandEvent& event )
 	if( m_pConfig )
 		m_pConfig->m_bShowDebugWindows = pSettingsCB1->GetValue();
 
-	//TODO    g_bGarminHost = pGarminHost->GetValue();
+	global::GUI & gui = global::OCPN::get().gui();
 
-	g_bShowOutlines = pCDOOutlines->GetValue();
+	gui.set_view_show_outlines(pCDOOutlines->GetValue());
 	g_bDisplayGrid = pSDisplayGrid->GetValue();
 
 	g_bQuiltEnable = pCDOQuilting->GetValue();
 	g_bFullScreenQuilt = !pFullScreenQuilt->GetValue();
 
-	g_bShowDepthUnits = pSDepthUnits->GetValue();
+	gui.set_view_show_depth_units(pSDepthUnits->GetValue());
 	g_bskew_comp = pSkewComp->GetValue();
 	bool temp_bopengl = pOpenGL->GetValue();
 	g_bsmoothpanzoom = pSmoothPanZoom->GetValue();
@@ -2455,7 +2444,7 @@ void options::OnApplyClick( wxCommandEvent& event )
 	g_COGAvgSec = wxMin((int)update_val, MAX_COG_AVERAGE_SECONDS);
 
 	g_bCourseUp = pCBCourseUp->GetValue();
-	g_bLookAhead = pCBLookAhead->GetValue();
+	gui.set_view_lookahead_mode(pCBLookAhead->GetValue());
 
 	m_pText_OSCOG_Predictor->GetValue().ToDouble( &g_ownship_predictor_minutes );
 
@@ -2466,8 +2455,6 @@ void options::OnApplyClick( wxCommandEvent& event )
 	g_bConfirmObjectDelete = pConfirmObjectDeletion->GetValue();
 
 	g_bPreserveScaleOnX = pPreserveScale->GetValue();
-
-	global::GUI & gui = global::OCPN::get().gui();
 
 	g_bPlayShipsBells = pPlayShipsBells->GetValue();
 	gui.set_toolbar_full_screen(pFullScreenToolbar->GetValue());

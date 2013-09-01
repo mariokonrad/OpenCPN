@@ -114,6 +114,7 @@ class MyConfig : public wxFileConfig
 		void load_ais_alert_dialog();
 		void load_ais_query_dialog();
 
+		void write_view();
 		void write_frame();
 		void write_toolbar();
 		void write_ais_alert_dialog();

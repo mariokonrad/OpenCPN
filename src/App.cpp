@@ -178,7 +178,6 @@ extern double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode
 extern bool g_bCourseUp;
 extern int g_COGAvgSec; // COG average period (sec.) for Course Up Mode
 extern double g_COGAvg;
-extern bool g_bLookAhead;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bsmoothpanzoom;
@@ -296,8 +295,6 @@ extern bool g_bDrawAISSize;
 extern bool g_bShowAISName;
 extern int g_Show_Target_Name_Scale;
 extern bool g_bWplIsAprsPosition;
-extern bool g_bShowOutlines;
-extern bool g_bShowDepthUnits;
 extern bool g_bDisplayGrid;
 extern bool g_bShowActiveRouteHighway;
 extern int g_nNMEADebug;
@@ -1191,7 +1188,7 @@ bool App::OnInit()
 
 	//  Override some config options for initial user startup with empty config file
 	if( b_novicemode ) {
-		g_bShowOutlines = true;
+		global::OCPN::get().gui().set_view_show_outlines(true);
 		g_CPAMax_NM = 20.;
 		g_CPAWarn_NM = 2.;
 		g_TCPA_Max = 30.;

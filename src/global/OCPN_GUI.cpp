@@ -36,6 +36,21 @@ void OCPN_GUI::set_view_screen_brightness(int value)
 	data_view.screen_brightness = value;
 }
 
+void OCPN_GUI::set_view_show_outlines(bool flag)
+{
+	data_view.show_outlines = flag;
+}
+
+void OCPN_GUI::set_view_show_depth_units(bool flag)
+{
+	data_view.show_depth_units = flag;
+}
+
+void OCPN_GUI::set_view_lookahead_mode(bool flag)
+{
+	data_view.lookahead_mode = flag;
+}
+
 const GUI::Frame & OCPN_GUI::frame() const
 {
 	return data_frame;

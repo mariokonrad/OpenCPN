@@ -116,14 +116,12 @@ extern bool             g_bPlayShipsBells;
 extern bool             g_bShowLayers;
 extern bool             g_bPermanentMOBIcon;
 
-extern bool             g_bShowDepthUnits;
 extern bool             g_bAutoAnchorMark;
 extern bool             g_bskew_comp;
 extern bool             g_bopengl;
 extern bool             g_bdisable_opengl;
 extern bool             g_bsmoothpanzoom;
 
-extern bool             g_bShowOutlines;
 extern bool             g_bShowActiveRouteHighway;
 extern int              g_nNMEADebug;
 extern int              g_nAWDefault;
@@ -232,7 +230,6 @@ extern bool             g_bUseVector;
 extern bool             g_bUseCM93;
 
 extern bool             g_bCourseUp;
-extern bool             g_bLookAhead;
 extern int              g_COGAvgSec;
 
 extern int              g_MemFootSec;
@@ -436,10 +433,19 @@ void MyConfig::load_view()
 	global::GUI & gui = global::OCPN::get().gui();
 
 	long brightness = 100;
+	long show_outlines = 0;
+	long show_depth_units = 1;
+	long lookahead_mode = 0;
 
 	Read(_T("ScreenBrightness"), &brightness, 100);
+    Read(_T("ShowChartOutlines"), &show_outlines, 0);
+    Read(_T("ShowDepthUnits"), &show_depth_units, 1);
+    Read(_T("LookAheadMode"), &lookahead_mode, 0);
 
 	gui.set_view_screen_brightness(brightness);
+	gui.set_view_show_outlines(show_outlines);
+	gui.set_view_show_depth_units(show_depth_units);
+	gui.set_view_lookahead_mode(lookahead_mode);
 }
 
 int MyConfig::LoadMyConfig(int iteration)
@@ -519,7 +525,6 @@ int MyConfig::LoadMyConfig(int iteration)
     Read( _T ( "CourseUpMode" ), &g_bCourseUp, 0 );
     Read( _T ( "COGUPAvgSeconds" ), &g_COGAvgSec, 15 );
     g_COGAvgSec = wxMin(g_COGAvgSec, MAX_COG_AVERAGE_SECONDS);        // Bound the array size
-    Read( _T ( "LookAheadMode" ), &g_bLookAhead, 0 );
     Read( _T ( "SkewToNorthUp" ), &g_bskew_comp, 0 );
     Read( _T ( "OpenGL" ), &g_bopengl, 0 );
     if ( g_bdisable_opengl )
@@ -566,9 +571,7 @@ int MyConfig::LoadMyConfig(int iteration)
     Read( _T ( "PlayShipsBells" ), &g_bPlayShipsBells, 0 );
     Read( _T ( "PermanentMOBIcon" ), &g_bPermanentMOBIcon, 0 );
     Read( _T ( "ShowLayers" ), &g_bShowLayers, 1 );
-    Read( _T ( "ShowDepthUnits" ), &g_bShowDepthUnits, 1 );
     Read( _T ( "AutoAnchorDrop" ), &g_bAutoAnchorMark, 0 );
-    Read( _T ( "ShowChartOutlines" ), &g_bShowOutlines, 0 );
     Read( _T ( "ShowActiveRouteHighway" ), &g_bShowActiveRouteHighway, 1 );
     Read( _T ( "MostRecentGPSUploadConnection" ), &g_uploadConnection, _T("") );
 
@@ -1627,10 +1630,21 @@ void MyConfig::write_frame()
     Write(_T("ClientSzY"), config.last_size.GetHeight());
 }
 
+void MyConfig::write_view()
+{
+	const global::GUI::View & config = global::OCPN::get().gui().view();
+
+    Write(_T("ShowChartOutlines"), config.show_outlines);
+    Write(_T("ShowDepthUnits"), config.show_depth_units);
+    Write(_T("LookAheadMode"), config.lookahead_mode);
+}
+
 void MyConfig::UpdateSettings()
 {
 //    Global options and settings
     SetPath( _T ( "/Settings" ) );
+
+	write_view();
 
     Write( _T ( "ConfigVersionString" ), g_config_version_string );
     Write( _T ( "NavMessageShown" ), n_NavMessageShown );
@@ -1644,9 +1658,7 @@ void MyConfig::UpdateSettings()
     Write( _T ( "PlayShipsBells" ), g_bPlayShipsBells );
     Write( _T ( "PermanentMOBIcon" ), g_bPermanentMOBIcon );
     Write( _T ( "ShowLayers" ), g_bShowLayers );
-    Write( _T ( "ShowDepthUnits" ), g_bShowDepthUnits );
     Write( _T ( "AutoAnchorDrop" ), g_bAutoAnchorMark );
-    Write( _T ( "ShowChartOutlines" ), g_bShowOutlines );
     Write( _T ( "ShowActiveRouteHighway" ), g_bShowActiveRouteHighway );
     Write( _T ( "SDMMFormat" ), g_iSDMMFormat );
     Write( _T ( "DistanceFormat" ), g_iDistanceFormat );
@@ -1671,7 +1683,6 @@ void MyConfig::UpdateSettings()
     Write( _T ( "UseCM93Charts" ), g_bUseCM93 );
 
     Write( _T ( "CourseUpMode" ), g_bCourseUp );
-    Write( _T ( "LookAheadMode" ), g_bLookAhead );
     Write( _T ( "COGUPAvgSeconds" ), g_COGAvgSec );
 
     Write( _T ( "OwnshipCOGPredictorMinutes" ), g_ownship_predictor_minutes );

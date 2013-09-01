@@ -3009,7 +3009,7 @@ HandleASuccessfulRead:
                               tak_ptr = tptr;
 
       // parse and send the message
-                              if(g_bShowOutlines)
+                              if(global::OCPN::get().gui().view().show_outlines)
                               {
                                     wxString str_temp_buf(temp_buf, wxConvUTF8);
                                     Parse_And_Send_Posn(str_temp_buf);

@@ -171,8 +171,6 @@ extern wxArrayString * pMessageOnceArray;
 extern FILE *s_fpdebug;
 extern bool bAutoOpen;
 extern bool bFirstAuto;
-extern bool g_bUseRMC;
-extern bool g_bUseGLL;
 extern int g_nCacheLimit;
 extern int g_memCacheLimit;
 extern bool g_bGDAL_Debug;

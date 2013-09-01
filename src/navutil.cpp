@@ -223,7 +223,6 @@ extern double           g_n_arrival_circle_radius;
 
 extern bool             g_bPreserveScaleOnX;
 
-extern bool             g_bUseRMC;
 extern bool             g_bUseGLL;
 
 extern wxString         g_locale;
@@ -494,7 +493,6 @@ int MyConfig::LoadMyConfig(int iteration)
     Read( _T ( "GPSIdent" ), &g_GPS_Ident, wxT("Generic") );
     Read( _T ( "UseGarminHostUpload" ),  &g_bGarminHostUpload, 0 );
 
-    Read( _T ( "UseNMEA_RMC" ), &g_bUseRMC, 1 );
     Read( _T ( "UseNMEA_GLL" ), &g_bUseGLL, 1 );
     Read( _T ( "UseBigRedX" ), &g_bbigred, 0 );
 

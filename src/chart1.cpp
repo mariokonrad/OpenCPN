@@ -318,7 +318,6 @@ wxArrayString *pMessageOnceArray;
 FILE *s_fpdebug;
 bool bAutoOpen;
 bool bFirstAuto;
-bool g_bUseRMC;
 bool g_bUseGLL;
 int g_nCacheLimit;
 int g_memCacheLimit;

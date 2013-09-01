@@ -26,13 +26,14 @@
 #include "Icon.h"
 #include "Tool.h"
 #include "tinyxml/tinyxml.h"
+#include <global/OCPN.h>
+#include <global/System.h>
 #include <wx/filename.h>
 #include <wx/dir.h>
 #include <wx/log.h>
 #include <wx/image.h>
 
 extern wxString g_SData_Locn;
-extern wxString * pHome_Locn;
 
 namespace ocpnStyle {
 
@@ -61,8 +62,8 @@ StyleManager::StyleManager(void)
 	isOK = false;
 	currentStyle = NULL;
 	Init(g_SData_Locn + _T("uidata") + wxFileName::GetPathSeparator());
-	Init(*pHome_Locn);
-	Init(*pHome_Locn + _T(".opencpn") + wxFileName::GetPathSeparator());
+	Init(global::OCPN::get().sys().data().home_location);
+	Init(global::OCPN::get().sys().data().home_location + _T(".opencpn") + wxFileName::GetPathSeparator());
 	SetStyle(_T(""));
 }
 

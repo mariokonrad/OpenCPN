@@ -21,67 +21,23 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "OCPN.h"
-#include <cstdlib>
+#ifndef __GLOBAL__OCPN_SYSTEM__H__
+#define __GLOBAL__OCPN_SYSTEM__H__
+
+#include <global/System.h>
 
 namespace global {
 
-OCPN * OCPN::instance = NULL;
-
-OCPN::OCPN()
-	: gui_instance(NULL)
-	, nav_instance(NULL)
-	, sys_instance(NULL)
-{}
-
-OCPN::OCPN(const OCPN &)
-{}
-
-OCPN::~OCPN()
-{}
-
-OCPN & OCPN::operator=(const OCPN &)
+class OCPN_System : public System
 {
-	return *this;
-}
+	private:
+		Data data_data;
 
-OCPN & OCPN::get()
-{
-	if (!instance) {
-		instance = new OCPN;
-	}
-	return *instance;
-}
-
-void OCPN::inject(GUI * gui)
-{
-	gui_instance = gui;
-}
-
-GUI & OCPN::gui()
-{
-	return *gui_instance;
-}
-
-void OCPN::inject(Navigation * nav)
-{
-	nav_instance = nav;
-}
-
-Navigation & OCPN::nav()
-{
-	return *nav_instance;
-}
-
-void OCPN::inject(System * sys)
-{
-	sys_instance = sys;
-}
-
-System & OCPN::sys()
-{
-	return *sys_instance;
-}
+	public: // data
+		virtual const Data & data() const;
+		virtual void set_home_location(const wxString &);
+};
 
 }
 
+#endif

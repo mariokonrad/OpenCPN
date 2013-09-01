@@ -202,7 +202,6 @@ bool bDrawCurrentValues;
 wxString g_PrivateDataDir;
 wxString g_SData_Locn;
 wxString *pChartListFileName;
-wxString *pHome_Locn;
 wxString *pWorldMapLocation;
 wxString *pInit_Chart_Dir;
 wxString g_csv_locn;
@@ -217,7 +216,6 @@ int file_user_id;
 int quitflag;
 int g_tick;
 bool s_bSetSystemTime;
-wxString *phost_name;
 wxArrayOfConnPrm *g_pConnectionParams;
 wxDateTime g_start_time;
 wxDateTime g_loglast_time;
@@ -520,7 +518,7 @@ static const long long lNaN = 0xfff8000000000000;
 #endif
 
 //    Some static helpers
-void appendOSDirSlash( wxString* pString );
+void appendOSDirSlash(wxString &);
 void InitializeUserColors( void );
 void DeInitializeUserColors( void );
 void SetSystemColors( ColorScheme cs );
@@ -3298,7 +3296,7 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
             if (g_bPlayShipsBells && ((lognow.GetMinute() == 0) || (lognow.GetMinute() == 30))) {
                 if (!bells_sound[bells - 1].IsOk()) { // load the bells sound
                     wxString soundfile = _T("sounds");
-                    appendOSDirSlash( &soundfile );
+                    appendOSDirSlash(soundfile);
                     soundfile += wxString( bells_sound_file_name[bells - 1], wxConvUTF8 );
                     soundfile.Prepend( g_SData_Locn );
                     bells_sound[bells - 1].Create( soundfile );
@@ -6337,10 +6335,11 @@ wxArrayString *EnumerateSerialPorts( void )
     return preturn;
 }
 
-void appendOSDirSlash( wxString* pString )
+void appendOSDirSlash(wxString & s)
 {
     wxChar sep = wxFileName::GetPathSeparator();
-    if( pString->Last() != sep ) pString->Append( sep );
+    if (s.Last() != sep)
+		s.Append(sep);
 }
 
 /*************************************************************************

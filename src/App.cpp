@@ -25,6 +25,7 @@
 #include <global/OCPN.h>
 #include <global/OCPN_GUI.h>
 #include <global/OCPN_Navigation.h>
+#include <global/OCPN_System.h>
 #include "dychart.h"
 #include "Select.h"
 #include "OCPNFloatingToolbarDialog.h"
@@ -72,7 +73,7 @@ unsigned int malloc_max;
 // this list of 'extern's has doubles, will sort them out later
 
 bool GetMemoryStatus(int *mem_total, int *mem_used);
-void appendOSDirSlash(wxString * pString);
+void appendOSDirSlash(wxString &);
 int ShowNavWarning();
 void InitializeUserColors(void);
 void DeInitializeUserColors(void);
@@ -111,7 +112,6 @@ extern wxString gConfig_File;
 extern wxString OpenCPNVersion;
 extern FILE *flog;
 extern bool s_bSetSystemTime;
-extern wxString *phost_name;
 extern wxArrayOfConnPrm *g_pConnectionParams;
 extern wxDateTime g_start_time;
 extern wxDateTime g_loglast_time;
@@ -122,7 +122,6 @@ extern RoutePoint * pAnchorWatchPoint2;
 extern double AnchorPointMinDist;
 extern bool AnchorAlertOn1;
 extern bool AnchorAlertOn2;
-extern bool g_bCruising;
 extern ChartDummy *pDummyChart;
 extern ToolBarSimple* g_toolbar;
 extern ocpnStyle::StyleManager * g_StyleManager;
@@ -140,7 +139,6 @@ extern bool bDrawCurrentValues;
 extern wxString g_PrivateDataDir;
 extern wxString g_SData_Locn;
 extern wxString *pChartListFileName;
-extern wxString *pHome_Locn;
 extern wxString *pWorldMapLocation;
 extern wxString *pInit_Chart_Dir;
 extern wxString g_csv_locn;
@@ -333,7 +331,6 @@ extern WayPointman *pWayPointMan;
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
 extern wxString *pChartListFileName;
-extern wxString *pHome_Locn;
 extern wxString *pWorldMapLocation;
 extern wxString *pInit_Chart_Dir;
 extern bool g_bHDT_Rx;
@@ -379,6 +376,7 @@ END_EVENT_TABLE()
 App::App()
 	: gui_instance(NULL)
 	, nav_instance(NULL)
+	, sys_instance(NULL)
 {}
 
 void App::OnInitCmdLine( wxCmdLineParser& parser )
@@ -469,6 +467,35 @@ void App::OnActivateApp( wxActivateEvent& event )
 	event.Skip();
 }
 
+void App::establish_home_location()
+{
+	wxStandardPathsBase & std_path = wxApp::GetTraits()->GetStandardPaths();
+
+	global::System & sys = global::OCPN::get().sys();
+	wxString home_location;
+
+#ifdef __WXMSW__
+	home_location.Append(std_path.GetConfigDir()); // on w98, produces "/windows/Application Data"
+#else
+	home_location.Append(std_path.GetUserConfigDir());
+#endif
+
+	if (g_bportable) {
+		home_location.Clear();
+		wxFileName f(std_path.GetExecutablePath());
+		home_location.Append(f.GetPath());
+	}
+
+	appendOSDirSlash(home_location);
+
+#ifdef  __WXOSX__
+	home_location.Append(_T("opencpn"));
+	appendOSDirSlash(home_location);
+#endif
+
+	sys.set_home_location(home_location);
+}
+
 bool App::OnInit()
 {
 	if( !wxApp::OnInit() )
@@ -479,6 +506,9 @@ bool App::OnInit()
 
 	nav_instance = new global::OCPN_Navigation;
 	global::OCPN::get().inject(nav_instance);
+
+	sys_instance = new global::OCPN_System;
+	global::OCPN::get().inject(sys_instance);
 
 	int mem_total = 0;
 	int mem_initial = 0;
@@ -548,7 +578,7 @@ bool App::OnInit()
 		wxFileName f( std_path_crash.GetExecutablePath() );
 		home_data_crash = f.GetPath();
 	}
-	appendOSDirSlash( &home_data_crash );
+	appendOSDirSlash(home_data_crash);
 
 	wxString config_crash = _T("opencpn.ini");
 	config_crash.Prepend( home_data_crash );
@@ -660,44 +690,24 @@ bool App::OnInit()
 			wxFONTENCODING_SYSTEM );
 	temp_font.SetDefaultEncoding( wxFONTENCODING_SYSTEM );
 
-	//      Establish a "home" location
-	wxStandardPathsBase& std_path = wxApp::GetTraits()->GetStandardPaths();
-	std_path.Get();
+	establish_home_location();
 
-	pHome_Locn = new wxString;
-#ifdef __WXMSW__
-	pHome_Locn->Append( std_path.GetConfigDir() );   // on w98, produces "/windows/Application Data"
-#else
-	pHome_Locn->Append(std_path.GetUserConfigDir());
-#endif
-
-	if( g_bportable ) {
-		pHome_Locn->Clear();
-		wxFileName f( std_path.GetExecutablePath() );
-		pHome_Locn->Append( f.GetPath() );
-	}
-
-	appendOSDirSlash( pHome_Locn );
-
-	//      Establish Log File location
-	glog_file = *pHome_Locn;
+	// Establish Log File location
+	glog_file = global::OCPN::get().sys().data().home_location;
 
 #ifdef  __WXOSX__
-	pHome_Locn->Append(_T("opencpn"));
-	appendOSDirSlash(pHome_Locn);
-
 	wxFileName LibPref(glog_file);          // starts like "~/Library/Preferences"
 	LibPref.RemoveLastDir();// takes off "Preferences"
 
 	glog_file = LibPref.GetFullPath();
-	appendOSDirSlash(&glog_file);
+	appendOSDirSlash(glog_file);
 
 	glog_file.Append(_T("Logs/"));// so, on OS X, opencpn.log ends up in ~/Library/Logs
 	// which makes it accessible to Applications/Utilities/Console....
 #endif
 
 	// create the opencpn "home" directory if we need to
-	wxFileName wxHomeFiledir( *pHome_Locn );
+	wxFileName wxHomeFiledir(global::OCPN::get().sys().data().home_location);
 	if( true != wxHomeFiledir.DirExists( wxHomeFiledir.GetPath() ) ) if( !wxHomeFiledir.Mkdir(
 				wxHomeFiledir.GetPath() ) ) {
 		wxASSERT_MSG(false,_T("Cannot create opencpn home directory"));
@@ -781,10 +791,13 @@ bool App::OnInit()
 	 * Windows: the directory where the executable file is located
 	 * Mac: appname.app/Contents/SharedSupport bundle subdirectory
 	 */
+	wxStandardPathsBase & std_path = wxApp::GetTraits()->GetStandardPaths();
+	std_path.Get();
 	g_SData_Locn = std_path.GetDataDir();
-	appendOSDirSlash( &g_SData_Locn );
+	appendOSDirSlash(g_SData_Locn);
 
-	if( g_bportable ) g_SData_Locn = *pHome_Locn;
+	if (g_bportable)
+		g_SData_Locn = global::OCPN::get().sys().data().home_location;
 
 	imsg = _T("SData_Locn is ");
 	imsg += g_SData_Locn;
@@ -798,14 +811,15 @@ bool App::OnInit()
 
 	//      Establish the prefix of the location of user specific data files
 #ifdef __WXMSW__
-	g_PrivateDataDir = *pHome_Locn;                     // should be {Documents and Settings}\......
+	g_PrivateDataDir = global::OCPN::get().sys().data().home_location; // should be {Documents and Settings}\......
 #elif defined __WXOSX__
-	g_PrivateDataDir = std_path.GetUserConfigDir();     // should be ~/Library/Preferences
+	g_PrivateDataDir = std_path.GetUserConfigDir(); // should be ~/Library/Preferences
 #else
-	g_PrivateDataDir = std_path.GetUserDataDir();       // should be ~/.opencpn
+	g_PrivateDataDir = std_path.GetUserDataDir(); // should be ~/.opencpn
 #endif
 
-	if( g_bportable ) g_PrivateDataDir = *pHome_Locn;
+	if (g_bportable)
+		g_PrivateDataDir = global::OCPN::get().sys().data().home_location;
 
 	//  Get the PlugIns directory location
 	g_Plugin_Dir = std_path.GetPluginsDir();   // linux:   {prefix}/lib/opencpn
@@ -814,8 +828,8 @@ bool App::OnInit()
 	g_Plugin_Dir += _T("\\plugins");             // Windows: {exe dir}/plugins
 #endif
 
-	if( g_bportable ) {
-		g_Plugin_Dir = *pHome_Locn;
+	if (g_bportable) {
+		g_Plugin_Dir = global::OCPN::get().sys().data().home_location;
 		g_Plugin_Dir += _T("plugins");
 	}
 
@@ -841,9 +855,6 @@ bool App::OnInit()
 	g_bShowAIS = true;
 	g_pais_query_dialog_active = NULL;
 
-	//      Who am I?
-	phost_name = new wxString( ::wxGetHostName() );
-
 	//      (Optionally) Capture the user and file(effective) ids
 	//  Some build environments may need root privileges for hardware
 	//  port I/O, as in the NMEA data input class.  Set that up here.
@@ -858,20 +869,20 @@ bool App::OnInit()
 	//      Establish the location of the config file
 #ifdef __WXMSW__
 	gConfig_File = _T("opencpn.ini");
-	gConfig_File.Prepend( *pHome_Locn );
+	gConfig_File.Prepend(global::OCPN::get().sys().data().home_location);
 
 #elif defined __WXOSX__
 	gConfig_File = std_path.GetUserConfigDir(); // should be ~/Library/Preferences
-	appendOSDirSlash(&gConfig_File);
+	appendOSDirSlash(gConfig_File);
 	gConfig_File.Append(_T("opencpn.ini"));
 #else
 	gConfig_File = std_path.GetUserDataDir(); // should be ~/.opencpn
-	appendOSDirSlash(&gConfig_File);
+	appendOSDirSlash(gConfig_File);
 	gConfig_File.Append(_T("opencpn.conf"));
 #endif
 
 	if( g_bportable ) {
-		gConfig_File = *pHome_Locn;
+		gConfig_File = global::OCPN::get().sys().data().home_location;
 #ifdef __WXMSW__
 		gConfig_File += _T("opencpn.ini");
 #elif defined __WXOSX__
@@ -1024,7 +1035,7 @@ bool App::OnInit()
 
 	if( g_bportable ) {
 		g_csv_locn = _T(".");
-		appendOSDirSlash( &g_csv_locn );
+		appendOSDirSlash(g_csv_locn);
 		g_csv_locn.Append( _T("s57data") );
 	}
 
@@ -1032,7 +1043,7 @@ bool App::OnInit()
 	//      Otherwise, default to PrivateDataDir
 	if( g_SENCPrefix.IsEmpty() ) {
 		g_SENCPrefix = g_PrivateDataDir;
-		appendOSDirSlash( &g_SENCPrefix );
+		appendOSDirSlash(g_SENCPrefix);
 		g_SENCPrefix.Append( _T("SENC") );
 	}
 
@@ -1050,7 +1061,7 @@ bool App::OnInit()
 
 	if( g_UserPresLibData.IsEmpty() ) {
 		plib_data = g_csv_locn;
-		appendOSDirSlash( &plib_data );
+		appendOSDirSlash(plib_data);
 		plib_data.Append( _T("S52RAZDS.RLE") );
 	} else {
 		plib_data = g_UserPresLibData;
@@ -1077,12 +1088,12 @@ bool App::OnInit()
 
 		wxString look_data_dir;
 		look_data_dir.Append( std_path.GetUserDataDir() );
-		appendOSDirSlash( &look_data_dir );
+		appendOSDirSlash(look_data_dir);
 		wxString tentative_SData_Locn = look_data_dir;
 		look_data_dir.Append( _T("s57data") );
 
 		plib_data = look_data_dir;
-		appendOSDirSlash( &plib_data );
+		appendOSDirSlash(plib_data);
 		plib_data.Append( _T("S52RAZDS.RLE") );
 
 		wxLogMessage( _T("Looking for s57data in ") + look_data_dir );
@@ -1105,7 +1116,7 @@ bool App::OnInit()
 		look_data_dir.Append( _T("s57data") );
 
 		plib_data = look_data_dir;
-		appendOSDirSlash( &plib_data );
+		appendOSDirSlash(plib_data);
 		plib_data.Append( _T("S52RAZDS.RLE") );
 
 		wxLogMessage( _T("Looking for s57data in ") + look_data_dir );
@@ -1144,12 +1155,12 @@ bool App::OnInit()
 	//      Establish location and name of chart database
 #ifdef __WXMSW__
 	pChartListFileName = new wxString( _T("CHRTLIST.DAT") );
-	pChartListFileName->Prepend( *pHome_Locn );
+	pChartListFileName->Prepend(global::OCPN::get().sys().data().home_location);
 
 #else
 	pChartListFileName = new wxString(_T(""));
 	pChartListFileName->Append(std_path.GetUserDataDir());
-	appendOSDirSlash(pChartListFileName);
+	appendOSDirSlash(*pChartListFileName);
 	pChartListFileName->Append(_T("chartlist.dat"));
 #endif
 
@@ -1160,7 +1171,7 @@ bool App::OnInit()
 #else
 		pChartListFileName->Append(_T("chartlist.dat"));
 #endif
-		pChartListFileName->Prepend( *pHome_Locn );
+		pChartListFileName->Prepend(global::OCPN::get().sys().data().home_location);
 	}
 
 	//      Establish guessed location of chart tree
@@ -1334,7 +1345,7 @@ bool App::OnInit()
 
 	if( g_bportable ) {
 		myframe_window_title += _(" -- [Portable(-p) executing from ");
-		myframe_window_title += *pHome_Locn;
+		myframe_window_title += global::OCPN::get().sys().data().home_location;
 		myframe_window_title += _T("]");
 	}
 
@@ -1651,7 +1662,7 @@ bool App::OnInit()
 
 	// Import Layer-wise any .gpx files from /Layers directory
 	wxString layerdir = g_PrivateDataDir;
-	appendOSDirSlash( &layerdir );
+	appendOSDirSlash(layerdir);
 	layerdir.Append( _T("layers") );
 
 	if( wxDir::Exists( layerdir ) ) {
@@ -1728,8 +1739,6 @@ int App::OnExit()
 	}
 
 	delete pChartListFileName;
-	delete pHome_Locn;
-	delete phost_name;
 	delete pInit_Chart_Dir;
 	delete pWorldMapLocation;
 
@@ -1790,6 +1799,13 @@ int App::OnExit()
 	crUninstall();
 #endif
 #endif
+
+	if (gui_instance)
+		delete gui_instance;
+	if (nav_instance)
+		delete nav_instance;
+	if (sys_instance)
+		delete sys_instance;
 
 	return TRUE;
 }

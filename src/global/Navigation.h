@@ -29,6 +29,9 @@ namespace global {
 class Navigation
 {
 	public:
+		virtual ~Navigation() {}
+
+	public:
 
 		struct Data
 		{

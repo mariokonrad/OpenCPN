@@ -30,7 +30,6 @@
 #include <wx/dir.h>
 #include <stdlib.h>
 
-extern wxString * pHome_Locn;
 extern wxString g_SData_Locn;
 
 namespace ocpnStyle {

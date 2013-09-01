@@ -413,15 +413,18 @@ SET(SRC_WXJSON
 SET(HDR_GLOBAL
 	src/global/GUI.h
 	src/global/Navigation.h
+	src/global/System.h
 	src/global/OCPN.h
 	src/global/OCPN_GUI.h
 	src/global/OCPN_Navigation.h
+	src/global/OCPN_System.h
 	)
 
 SET(SRC_GLOBAL
 	src/global/OCPN.cpp
 	src/global/OCPN_GUI.cpp
 	src/global/OCPN_Navigation.cpp
+	src/global/OCPN_System.cpp
 	)
 
 SET(HDRS

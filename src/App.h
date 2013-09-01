@@ -33,6 +33,7 @@ class wxSingleInstanceChecker;
 namespace global {
 class OCPN_GUI;
 class OCPN_Navigation;
+class OCPN_System;
 }
 
 class App : public wxApp
@@ -51,8 +52,11 @@ class App : public wxApp
 		wxSingleInstanceChecker * m_checker;
 
 	private:
+		void establish_home_location();
+
 		global::OCPN_GUI * gui_instance;
 		global::OCPN_Navigation * nav_instance;
+		global::OCPN_System * sys_instance;
 };
 
 #endif

@@ -58,6 +58,7 @@
 #include "plugin/PluginListPanel.h"
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/System.h>
 
 #ifdef USE_S57
 	#include <s52plib.h>
@@ -177,7 +178,6 @@ extern s52plib *ps52plib;
 extern wxString g_locale;
 extern bool g_bportable;
 extern bool g_bdisable_opengl;
-extern wxString *pHome_Locn;
 
 extern ChartGroupArray * g_pGroupArray;
 extern ocpnStyle::StyleManager * g_StyleManager;
@@ -2210,7 +2210,7 @@ void options::OnButtonaddClick( wxCommandEvent& event )
 
 	if( g_bportable ) {
 		wxFileName f( selDir );
-		f.MakeRelativeTo( *pHome_Locn );
+		f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
 		pActiveChartsList->Append( f.GetFullPath() );
 	} else
 		pActiveChartsList->Append( selDir );
@@ -3049,7 +3049,7 @@ void options::OnButtonSelectSound( wxCommandEvent& event )
 	if( response == wxID_OK ) {
 		if( g_bportable ) {
 			wxFileName f( openDialog->GetPath() );
-			f.MakeRelativeTo( *pHome_Locn );
+			f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
 			g_sAIS_Alert_Sound_File = f.GetFullPath();
 		} else
 			g_sAIS_Alert_Sound_File = openDialog->GetPath();
@@ -3181,7 +3181,7 @@ void options::OnInsertTideDataLocation( wxCommandEvent &event )
 
 		if( g_bportable ) {
 			wxFileName f( sel_file );
-			f.MakeRelativeTo( *pHome_Locn );
+			f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
 			tcDataSelected->Append( f.GetFullPath() );
 		} else
 			tcDataSelected->Append( sel_file );
@@ -3191,7 +3191,7 @@ void options::OnInsertTideDataLocation( wxCommandEvent &event )
 		wxString data_dir = fn.GetPath();
 		if( g_bportable ) {
 			wxFileName f( data_dir );
-			f.MakeRelativeTo( *pHome_Locn );
+			f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
 			g_TCData_Dir = f.GetFullPath();
 		}
 		else

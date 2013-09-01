@@ -28,6 +28,7 @@ namespace global {
 
 class GUI;
 class Navigation;
+class System;
 
 class OCPN
 {
@@ -36,6 +37,7 @@ class OCPN
 
 		GUI * gui_instance;
 		Navigation * nav_instance;
+		System * sys_instance;
 
 	private:
 		OCPN();
@@ -51,6 +53,9 @@ class OCPN
 
 		void inject(Navigation *);
 		Navigation & nav();
+
+		void inject(System *);
+		System & sys();
 };
 
 }

@@ -21,83 +21,27 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GLOBAL__GUI__H__
-#define __GLOBAL__GUI__H__
+#ifndef __GLOBAL__SYSTEM__H__
+#define __GLOBAL__SYSTEM__H__
 
-#include <wx/gdicmn.h>
+#include <wx/string.h>
 
 namespace global {
 
-class GUI
+class System
 {
 	public:
-		virtual ~GUI() {}
+		virtual ~System() {}
 
 	public:
 
-		struct View
+		struct Data
 		{
-			int screen_brightness;
+			wxString home_location;
 		};
 
-		virtual const View & view() const = 0;
-		virtual void set_view_screen_brightness(int) = 0;
-
-	public:
-
-		struct Frame
-		{
-			wxPoint position;
-			wxSize size;
-			bool maximized;
-			wxPoint last_position;
-			wxSize last_size;
-		};
-
-		virtual const Frame & frame() const = 0;
-		virtual void set_frame_position(const wxPoint &) = 0;
-		virtual void set_frame_size(const wxSize &) = 0;
-		virtual void set_frame_maximized(bool) = 0;
-		virtual void set_frame_last_position(const wxPoint &) = 0;
-		virtual void set_frame_last_size(const wxSize &) = 0;
-
-	public:
-
-		struct Toolbar
-		{
-			wxPoint position;
-			long orientation;
-			bool transparent;
-			bool full_screen;
-		};
-
-		virtual const Toolbar & toolbar() const = 0;
-		virtual void set_toolbar_position(const wxPoint &) = 0;
-		virtual void set_toolbar_orientation(long) = 0;
-		virtual void set_toolbar_transparent(bool) = 0;
-		virtual void set_toolbar_full_screen(bool) = 0;
-
-	public:
-
-		struct AISAlertDialog
-		{
-			wxPoint position;
-			wxSize size;
-		};
-
-		virtual const AISAlertDialog & ais_alert_dialog() const = 0;
-		virtual void set_ais_alert_dialog_position(const wxPoint &) = 0;
-		virtual void set_ais_alert_dialog_size(const wxSize &) = 0;
-
-	public:
-
-		struct AISQueryDialog
-		{
-			wxPoint position;
-		};
-
-		virtual const AISQueryDialog & ais_query_dialog() const = 0;
-		virtual void set_ais_query_dialog_position(const wxPoint &) = 0;
+		virtual const Data & data() const = 0;
+		virtual void set_home_location(const wxString &) = 0;
 };
 
 }

@@ -188,20 +188,21 @@ RoutePoint::RoutePoint(
 
 RoutePoint::~RoutePoint( void )
 {
-	//  Remove this point from the global waypoint list
-	if( NULL != pWayPointMan ) pWayPointMan->m_pWayPointList->DeleteObject( this );
+	// FIXME: what a mess: Remove this point from the global waypoint list
+	if (NULL != pWayPointMan)
+		pWayPointMan->m_pWayPointList->DeleteObject(this);
 
-	if( m_HyperlinkList ) {
-		m_HyperlinkList->DeleteContents( true );
+	if (m_HyperlinkList) {
+		m_HyperlinkList->DeleteContents(true);
 		delete m_HyperlinkList;
 	}
 }
 
-wxDateTime RoutePoint::GetCreateTime()
+wxDateTime RoutePoint::GetCreateTime() // FIXME: fix this brain-dead interface
 {
-	if(!m_CreateTimeX.IsValid()) {
-		if(m_timestring.Len())
-			ParseGPXDateTime( m_CreateTimeX, m_timestring );
+	if (!m_CreateTimeX.IsValid()) {
+		if (m_timestring.Len())
+			ParseGPXDateTime(m_CreateTimeX, m_timestring);
 	}
 	return m_CreateTimeX;
 }

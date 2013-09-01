@@ -95,28 +95,21 @@ WayPointman::WayPointman()
 
 WayPointman::~WayPointman()
 {
-	//    Two step here, since the RoutePoint dtor also touches the
-	//    RoutePoint list.
-	//    Copy the master RoutePoint list to a temporary list,
-	//    then clear and delete objects from the temp list
-
+	// FIXME: resource handling mess:
+	// Two step here, since the RoutePoint dtor also touches the
+	// RoutePoint list.
+	// Copy the master RoutePoint list to a temporary list,
+	// then clear and delete objects from the temp list
 	RoutePointList temp_list;
-
-	wxRoutePointListNode *node = m_pWayPointList->GetFirst();
-	while( node ) {
-		RoutePoint *pr = node->GetData();
-
-		temp_list.Append( pr );
-		node = node->GetNext();
+	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+		temp_list.push_back(*i);
 	}
+	temp_list.DeleteContents(true);
+	temp_list.clear();
 
-	temp_list.DeleteContents( true );
-	temp_list.Clear();
-
-	m_pWayPointList->Clear();
 	delete m_pWayPointList;
 
-	for( unsigned int i = 0; i < m_pIconArray->GetCount(); i++ ) {
+	for (unsigned int i = 0; i < m_pIconArray->GetCount(); ++i) {
 		MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( i );
 		delete pmi->picon_bitmap;
 		delete pmi;

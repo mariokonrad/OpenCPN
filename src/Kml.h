@@ -77,7 +77,7 @@ class Kml
 		KmlPastebufferType ParseTrack(TiXmlNode* node, wxString& name);
 		int ParseCoordinates(TiXmlNode* node, dPointList& points);
 		static TiXmlElement * StandardHead(TiXmlDocument& xmlDoc, wxString name);
-		static std::string PointPlacemark(TiXmlElement* document, RoutePoint* routepoint);
+		static std::string PointPlacemark(TiXmlElement* document, const RoutePoint * routepoint);
 
 		wxString kmlText;
 		RoutePoint * parsedRoutePoint;

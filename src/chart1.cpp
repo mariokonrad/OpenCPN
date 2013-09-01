@@ -4837,38 +4837,22 @@ void MyFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
         if(root.HasMember(_T("Track_ID")))
             trk_id = root[_T("Track_ID")].AsString();
 
-        for(RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); it++)
-        {
-            wxString name = wxEmptyString;
-            if((*it)->IsTrack() && (*it)->m_GUID == trk_id)
-            {
+        for(RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); it++) {
+            wxString name = wxEmptyString; // FIXME: why? 'name' is never used
+            if ((*it)->IsTrack() && (*it)->m_GUID == trk_id) {
                 name = (*it)->m_RouteNameString;
-                if(name.IsEmpty())
-                {
+                if (name.IsEmpty()) {
                     RoutePoint *rp = (*it)->GetPoint( 1 );
-                    if( rp && rp->GetCreateTime().IsValid() )
+                    if (rp && rp->GetCreateTime().IsValid())
                         name = rp->GetCreateTime().FormatISODate() + _T(" ") + rp->GetCreateTime().FormatISOTime();
                     else
                         name = _("(Unnamed Track)");
                 }
 
-/*                Tracks can be huge e.g merged tracks. On Compüters with small memory this can produce a crash by insufficient memory !!
-
-                wxJSONValue v; unsigned long i = 0;
-                for(RoutePointList::iterator itp = (*it)->pRoutePointList->begin(); itp != (*it)->pRoutePointList->end(); itp++)
-                {
-                    v[i][0] = (*itp)->m_lat;
-                    v[i][1] = (*itp)->m_lon;
-                    i++;
-                }
-                    wxString msg_id( _T("OCPN_TRACKPOINTS_COORDS") );
-                    g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
-            }
-*/
-/*                To avoid memory problems send a single trackpoint. It's up to the plugin to collect the data. */
-                int i = 1;     wxJSONValue v;
-                for(RoutePointList::iterator itp = (*it)->pRoutePointList->begin(); itp != (*it)->pRoutePointList->end(); itp++)
-                {
+				// To avoid memory problems send a single trackpoint. It's up to the plugin to collect the data.
+                int i = 1;
+				wxJSONValue v;
+                for(RoutePointList::iterator itp = (*it)->pRoutePointList->begin(); itp != (*it)->pRoutePointList->end(); itp++) {
                     v[_T("lat")] = (*itp)->m_lat;
                     v[_T("lon")] = (*itp)->m_lon;
                     v[_T("TotalNodes")] = (*it)->pRoutePointList->GetCount();
@@ -4878,9 +4862,7 @@ void MyFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
                     wxString msg_id( _T("OCPN_TRACKPOINTS_COORDS") );
                     g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
                 }
-            }
-            else
-            {
+            } else {
                 wxJSONValue v;
                 v[_T("error")] = true;
 
@@ -4888,9 +4870,7 @@ void MyFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
                 g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
             }
         }
-    }
-    else if(message_ID == _T("OCPN_ROUTE_REQUEST"))
-    {
+    } else if(message_ID == _T("OCPN_ROUTE_REQUEST")) {
         wxJSONValue  root;
         wxJSONReader reader;
         wxString route_id = wxEmptyString;

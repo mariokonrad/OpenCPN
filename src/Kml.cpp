@@ -319,7 +319,7 @@ TiXmlElement* Kml::StandardHead( TiXmlDocument& xmlDoc, wxString name )
 	return document;
 }
 
-std::string Kml::PointPlacemark(  TiXmlElement* document, RoutePoint* routepoint )
+std::string Kml::PointPlacemark(  TiXmlElement* document, const RoutePoint * routepoint )
 {
 	TiXmlElement* pmPoint = new TiXmlElement( "Placemark" );
 	document->LinkEndChild( pmPoint );
@@ -434,22 +434,18 @@ wxString Kml::MakeKmlFromRoute( Route* route, bool insertSeq )
 	seqCounter = 0;
 	TiXmlDocument xmlDoc;
 	wxString name = _("OpenCPN Route");
-	if( route->m_RouteNameString.Length() ) name = route->m_RouteNameString;
+	if (route->m_RouteNameString.Length())
+		name = route->m_RouteNameString;
 	TiXmlElement* document = StandardHead( xmlDoc, name );
 
 	std::stringstream lineStringCoords;
 
-	RoutePointList *pointList = route->pRoutePointList;
-	wxRoutePointListNode *pointnode = pointList->GetFirst();
-	RoutePoint *routepoint;
-
-	while( pointnode ) {
-		routepoint = pointnode->GetData();
-
-		if( !routepoint->m_bIsInTrack ) {
-			lineStringCoords << PointPlacemark( document, routepoint );
+	RoutePointList * pointList = route->pRoutePointList;
+	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
+		const RoutePoint * routepoint = *node;
+		if (!routepoint->m_bIsInTrack) {
+			lineStringCoords << PointPlacemark(document, routepoint);
 			seqCounter++;
-			pointnode = pointnode->GetNext();
 		}
 	}
 
@@ -474,60 +470,51 @@ wxString Kml::MakeKmlFromRoute( Route* route, bool insertSeq )
 	printer.SetIndent( "  " );
 	xmlDoc.Accept( &printer );
 
-	return wxString( printer.CStr(), wxConvUTF8 );
+	return wxString(printer.CStr(), wxConvUTF8);
 }
 
 
-wxString Kml::MakeKmlFromTrack( Track* track )
+wxString Kml::MakeKmlFromTrack(Track * track)
 {
 	TiXmlDocument xmlDoc;
 	wxString name = _("OpenCPN Track");
-	if( track->m_RouteNameString.Length() ) name = track->m_RouteNameString;
-	TiXmlElement* document = StandardHead( xmlDoc, name );
+	if (track->m_RouteNameString.Length())
+		name = track->m_RouteNameString;
+	TiXmlElement * document = StandardHead(xmlDoc, name);
 
-	TiXmlElement* pmTrack = new TiXmlElement( "Placemark" );
-	document->LinkEndChild( pmTrack );
+	TiXmlElement * pmTrack = new TiXmlElement("Placemark");
+	document->LinkEndChild(pmTrack);
 
-	TiXmlElement* pmName = new TiXmlElement( "name" );
-	pmTrack->LinkEndChild( pmName );
-	TiXmlText* pmNameVal = new TiXmlText( track->m_RouteNameString.mb_str( wxConvUTF8 ) );
-	pmName->LinkEndChild( pmNameVal );
+	TiXmlElement * pmName = new TiXmlElement("name");
+	pmTrack->LinkEndChild(pmName);
+	TiXmlText * pmNameVal = new TiXmlText(track->m_RouteNameString.mb_str(wxConvUTF8));
+	pmName->LinkEndChild(pmNameVal);
 
-	TiXmlElement* gxTrack = new TiXmlElement( "gx:Track" );
-	pmTrack->LinkEndChild( gxTrack );
+	TiXmlElement * gxTrack = new TiXmlElement( "gx:Track" );
+	pmTrack->LinkEndChild(gxTrack);
 
-	std::stringstream lineStringCoords;
+	RoutePointList * pointList = track->pRoutePointList;
+	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
+		RoutePoint * routepoint = *node;
+		if (routepoint->m_bIsInTrack) {
+			TiXmlElement * when = new TiXmlElement( "when" );
+			gxTrack->LinkEndChild(when);
 
-	RoutePointList *pointList = track->pRoutePointList;
-	wxRoutePointListNode *pointnode = pointList->GetFirst();
-	RoutePoint *routepoint;
-
-	while( pointnode ) {
-		routepoint = pointnode->GetData();
-		if( routepoint->m_bIsInTrack ) {
-			TiXmlElement* when = new TiXmlElement( "when" );
-			gxTrack->LinkEndChild( when );
-
-			wxDateTime whenTime( routepoint->GetCreateTime() );
-			TiXmlText* whenVal = new TiXmlText( whenTime.Format( _T("%Y-%m-%dT%H:%M:%SZ") ).mb_str( wxConvUTF8 ) );
-			when->LinkEndChild( whenVal );
+			wxDateTime whenTime(routepoint->GetCreateTime());
+			TiXmlText* whenVal = new TiXmlText(whenTime.Format(_T("%Y-%m-%dT%H:%M:%SZ")).mb_str(wxConvUTF8));
+			when->LinkEndChild(whenVal);
 		}
-		pointnode = pointnode->GetNext();
 	}
-
-	pointnode = pointList->GetFirst();
-	while( pointnode ) {
-		routepoint = pointnode->GetData();
-		if( routepoint->m_bIsInTrack ) {
-			TiXmlElement* coord = new TiXmlElement( "gx:coord" );
-			gxTrack->LinkEndChild( coord );
-			wxString coordStr = wxString::Format( _T("%f %f 0.0"), routepoint->m_lon, routepoint->m_lat );
-			TiXmlText* coordVal = new TiXmlText( coordStr.mb_str( wxConvUTF8 ) );
-			coord->LinkEndChild( coordVal );
+	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
+		const RoutePoint * routepoint = *node;
+		if (routepoint->m_bIsInTrack) {
+			TiXmlElement * coord = new TiXmlElement("gx:coord");
+			gxTrack->LinkEndChild(coord);
+			wxString coordStr = wxString::Format(_T("%f %f 0.0"), routepoint->m_lon, routepoint->m_lat);
+			TiXmlText* coordVal = new TiXmlText(coordStr.mb_str(wxConvUTF8));
+			coord->LinkEndChild(coordVal);
 		}
-		pointnode = pointnode->GetNext();
 	}
-
 
 	TiXmlPrinter printer;
 	printer.SetIndent( "  " );
@@ -536,7 +523,7 @@ wxString Kml::MakeKmlFromTrack( Track* track )
 	return wxString( printer.CStr(), wxConvUTF8 );
 }
 
-wxString Kml::MakeKmlFromWaypoint( RoutePoint* routepoint )
+wxString Kml::MakeKmlFromWaypoint(RoutePoint * routepoint)
 {
 	TiXmlDocument xmlDoc;
 	wxString name = _("OpenCPN Waypoint");

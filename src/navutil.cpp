@@ -1993,7 +1993,7 @@ bool MyConfig::ExportGPXRoutes( wxWindow* parent, RouteList *pRoutes, const wxSt
         return false;
 }
 
-bool MyConfig::ExportGPXWaypoints( wxWindow* parent, RoutePointList *pRoutePoints, const wxString suggestedName )
+bool MyConfig::ExportGPXWaypoints( wxWindow* parent, RoutePointList * pRoutePoints, const wxString suggestedName )
 {
     wxFileDialog saveDialog( parent, _( "Export GPX file" ), m_gpx_path, suggestedName,
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
@@ -2013,8 +2013,8 @@ bool MyConfig::ExportGPXWaypoints( wxWindow* parent, RoutePointList *pRoutePoint
             if( answer != wxID_YES ) return false;
         }
 
-        NavObjectCollection *pgpx = new NavObjectCollection;
-        pgpx->AddGPXPointsList( pRoutePoints );
+        NavObjectCollection * pgpx = new NavObjectCollection;
+        pgpx->AddGPXPointsList(pRoutePoints);
         pgpx->SaveFile(fn.GetFullPath());
         delete pgpx;
 
@@ -2244,29 +2244,18 @@ RoutePoint *WaypointExists( const wxString& guid )
     return NULL;
 }
 
-bool WptIsInRouteList( RoutePoint *pr )
+bool WptIsInRouteList(RoutePoint * pr)
 {
     bool IsInList = false;
 
-    wxRouteListNode *node1 = pRouteList->GetFirst();
-    while( node1 ) {
-        Route *pRoute = node1->GetData();
-        RoutePointList *pRoutePointList = pRoute->pRoutePointList;
-
-        wxRoutePointListNode *node2 = pRoutePointList->GetFirst();
-        RoutePoint *prp;
-
-        while( node2 ) {
-            prp = node2->GetData();
-
-            if( pr->IsSame( prp ) ) {
+	for (RouteList::iterator j = pRouteList->begin(); j != pRouteList->end(); ++j) {
+        RoutePointList * pRoutePointList = (*j)->pRoutePointList;
+		for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+            if (pr->IsSame(*i)) {
                 IsInList = true;
                 break;
             }
-
-            node2 = node2->GetNext();
         }
-        node1 = node1->GetNext();
     }
     return IsInList;
 }

@@ -720,9 +720,8 @@ bool NavObjectCollection::GPXCreateTrk(
 	}
 
 
-	RoutePointList *pRoutePointList = pRoute->pRoutePointList;
-	wxRoutePointListNode *node2 = pRoutePointList->GetFirst();
-	RoutePoint *prp;
+	RoutePointList * pRoutePointList = pRoute->pRoutePointList;
+	wxRoutePointListNode * node2 = pRoutePointList->GetFirst();
 
 	unsigned short int GPXTrkSegNo1 = 1;
 
@@ -731,19 +730,19 @@ bool NavObjectCollection::GPXCreateTrk(
 
 		pugi::xml_node seg = node.append_child("trkseg");
 
-		while( node2 && ( GPXTrkSegNo2 == GPXTrkSegNo1 ) ) {
-			prp = node2->GetData();
+		while (node2 && (GPXTrkSegNo2 == GPXTrkSegNo1)) {
+			RoutePoint * prp = node2->GetData();
 
 			GPXCreateWpt(seg.append_child("trkpt"), prp, OPT_TRACKPT);
 
 			node2 = node2->GetNext();
-			if( node2 ) {
+			if (node2) {
 				prp = node2->GetData();
 				GPXTrkSegNo2 = prp->m_GPXTrkSegNo;
 			}
 		}
 		GPXTrkSegNo1 = GPXTrkSegNo2;
-	} while( node2 );
+	} while(node2);
 
 
 	return true;
@@ -853,18 +852,9 @@ bool NavObjectCollection::GPXCreateRoute(
 		child.append_child(pugi::node_pcdata).set_value(pRoute->m_Colour.mb_str());
 	}
 
-	RoutePointList *pRoutePointList = pRoute->pRoutePointList;
-	wxRoutePointListNode *node2 = pRoutePointList->GetFirst();
-	RoutePoint *prp;
-
-	unsigned short int GPXTrkSegNo1 = 1;
-
-	while( node2  ) {
-		prp = node2->GetData();
-
-		GPXCreateWpt(node.append_child("rtept"), prp, OPT_ROUTEPT);
-
-		node2 = node2->GetNext();
+	RoutePointList * list = pRoute->pRoutePointList;
+	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
+		GPXCreateWpt(node.append_child("rtept"), *i, OPT_ROUTEPT);
 	}
 
 	return true;
@@ -1083,14 +1073,12 @@ bool NavObjectCollection::CreateNavObjGPXRoutes( void )
 bool NavObjectCollection::CreateNavObjGPXTracks( void )
 {
 	// Tracks
-	wxRouteListNode *node1 = pRouteList->GetFirst();
-	while( node1 ) {
-		Route *pTrack = node1->GetData();
-		RoutePointList *pRoutePointList = pTrack->pRoutePointList;
-
-		if( pRoutePointList->GetCount() ) {
-			if( pTrack->m_bIsTrack && (!pTrack->m_bIsInLayer ) && (!pTrack->m_btemp) )
-				GPXCreateTrk(m_gpx_root.append_child("trk"), pTrack);
+	wxRouteListNode * node1 = pRouteList->GetFirst();
+	while (node1) {
+		Route * track = node1->GetData();
+		if (track->pRoutePointList->GetCount()) {
+			if (track->m_bIsTrack && (!track->m_bIsInLayer) && (!track->m_btemp))
+				GPXCreateTrk(m_gpx_root.append_child("trk"), track);
 		}
 		node1 = node1->GetNext();
 	}
@@ -1150,17 +1138,12 @@ bool NavObjectCollection::AddGPXRoutesList( RouteList *pRoutes )
 	return true;
 }
 
-bool NavObjectCollection::AddGPXPointsList( RoutePointList *pRoutePoints )
+bool NavObjectCollection::AddGPXPointsList(RoutePointList * pRoutePoints)
 {
 	SetRootGPXNode();
-
-	wxRoutePointListNode* pRoutePointNode = pRoutePoints->GetFirst();
-	while (pRoutePointNode) {
-		RoutePoint* pRP = pRoutePointNode->GetData();
-		AddGPXWaypoint( pRP);
-		pRoutePointNode = pRoutePointNode->GetNext();
+	for (RoutePointList::iterator i = pRoutePoints->begin(); i != pRoutePoints->end(); ++i) {
+		AddGPXWaypoint(*i);
 	}
-
 	return true;
 }
 

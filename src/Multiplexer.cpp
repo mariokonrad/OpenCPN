@@ -844,9 +844,8 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 
 			wxLogMessage(_T("Sending Waypoint..."));
 
-			// Create a RoutePointList with one item
 			RoutePointList rplist;
-			rplist.Append(prp);
+			rplist.push_back(prp);
 
 			int ret1 = Garmin_GPS_SendWaypoints(wxString(_T("usb:")), &rplist);
 
@@ -872,11 +871,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 #endif
 
 	// Are we using Garmin Host mode for uploads?
-	if(g_bGarminHostUpload)
-	{
-		RoutePointList rplist;
-		int ret_val;
-
+	if(g_bGarminHostUpload) {
 		wxString short_com = com_name.Mid(7);
 		// Initialize the Garmin receiver, build required Jeeps internal data structures
 		int v_init = Garmin_GPS_Init(short_com);
@@ -895,9 +890,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 
 			ret_bool = false;
 			goto ret_point;
-		}
-		else
-		{
+		} else {
 			wxString msg(_T("Sent waypoint(s) to Garmin GPS on port: "));
 			msg +=com_name;
 			msg += _T("\n Unit identifies as: ");
@@ -906,12 +899,11 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 			wxLogMessage(msg);
 		}
 
-		// Create a RoutePointList with one item
-		rplist.Append(prp);
+		RoutePointList rplist;
+		rplist.push_back(prp);
 
-		ret_val = Garmin_GPS_SendWaypoints(short_com, &rplist);
-		if(ret_val != 1)
-		{
+		int ret_val = Garmin_GPS_SendWaypoints(short_com, &rplist);
+		if(ret_val != 1) {
 			wxString msg(_T("Error Sending Waypoint(s) to Garmin GPS on port: "));
 			msg +=com_name;
 			wxString err;

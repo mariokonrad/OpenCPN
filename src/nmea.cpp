@@ -1705,14 +1705,11 @@ bool NMEAHandler::SendWaypointToGPS(RoutePoint *prp, wxString &com_name,  wxGaug
 
                   wxLogMessage(_T("Sending Waypoint..."));
 
-                  //    Create a RoutePointList with one item
                   RoutePointList rplist;
-                  rplist.Append(prp);
+                  rplist.push_back(prp);
 
                   int ret1 = Garmin_GPS_SendWaypoints(NULL, wxString(_T("usb:")), &rplist);
-
-                  if(ret1 != 1)
-                  {
+                  if(ret1 != 1) {
                         wxLogMessage(_T("   Error Sending Waypoint to Garmin USB"));
                         wxString msg;
                         msg = _T("   LastGarminError is: ");
@@ -1736,9 +1733,6 @@ bool NMEAHandler::SendWaypointToGPS(RoutePoint *prp, wxString &com_name,  wxGaug
       //    Are we using Garmin Host mode for uploads?
       if(m_bGarmin_host)
       {
-            RoutePointList rplist;
-            int ret_val;
-
             //    Request that the thread should pause
             m_brequest_thread_pause = true;
 
@@ -1792,10 +1786,10 @@ bool NMEAHandler::SendWaypointToGPS(RoutePoint *prp, wxString &com_name,  wxGaug
                   wxLogMessage(msg);
             }
 
-            //    Create a RoutePointList with one item
-            rplist.Append(prp);
+            RoutePointList rplist;
+            rplist.push_back(prp);
 
-            ret_val = Garmin_GPS_SendWaypoints(g_pCommMan, com_name, &rplist);
+            int ret_val = Garmin_GPS_SendWaypoints(g_pCommMan, com_name, &rplist);
             if(ret_val != 1)
             {
                   wxString msg(_T("Error Sending Waypoint(s) to Garmin GPS on port: "));

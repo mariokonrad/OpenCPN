@@ -104,7 +104,7 @@ int Garmin_GPS_SendWaypoints( wxString &port_name, RoutePointList *wplist)
 {
       int ret_val = 0;
 
-      int nPoints = wplist->GetCount();
+      int nPoints = wplist->size();
 
       // Create the array of GPS_PWays
 
@@ -119,7 +119,7 @@ int Garmin_GPS_SendWaypoints( wxString &port_name, RoutePointList *wplist)
       for(int i=0 ; i < nPoints ; i++)
       {
             GPS_PWay pway = ppway[i];
-            wxRoutePointListNode *node = wplist->Item(i);
+            wxRoutePointListNode * node = wplist->Item(i); // FIXME: access to list suboptimal at best
             RoutePoint *prp = node->GetData();
 
             pway->lat = prp->m_lat;
@@ -157,8 +157,8 @@ int Garmin_GPS_SendWaypoints( wxString &port_name, RoutePointList *wplist)
 
 GPS_SWay **Garmin_GPS_Create_A200_Route(Route *pr, int route_number, int *size)
 {
-      RoutePointList *wplist = pr->pRoutePointList;
-      int nPoints = wplist->GetCount();
+      RoutePointList * wplist = pr->pRoutePointList;
+      int nPoints = wplist->size();
 
       // Create the array of GPS_PWays
       // There will be one extra for the route header
@@ -216,7 +216,7 @@ GPS_SWay **Garmin_GPS_Create_A200_Route(Route *pr, int route_number, int *size)
 GPS_SWay **Garmin_GPS_Create_A201_Route(Route *pr, int route_number, int *size)
 {
       RoutePointList *wplist = pr->pRoutePointList;
-      int nPoints = wplist->GetCount();
+      int nPoints = wplist->size();
 
       // Create the array of GPS_PWays
       // There will be one for the route header, n for each way point

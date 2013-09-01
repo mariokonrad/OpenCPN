@@ -4622,64 +4622,57 @@ bool ChartCanvas::CheckEdgePan( int x, int y, bool bdragging )
 // Look for waypoints at the current position.
 // Used to determine what a mouse event should act on.
 
-void ChartCanvas::FindRoutePointsAtCursor( float selectRadius, bool setBeingEdited ) {
+void ChartCanvas::FindRoutePointsAtCursor(float selectRadius, bool setBeingEdited)
+{
+	m_pRoutePointEditTarget = NULL;
+	m_pFoundPoint = NULL;
 
-    m_pRoutePointEditTarget = NULL;
-    m_pFoundPoint = NULL;
+	SelectableItemList SelList = pSelect->FindSelectionList(m_cursor_lat, m_cursor_lon, Select::TYPE_ROUTEPOINT);
+	for (SelectableItemList::iterator i = SelList.begin(); i != SelList.end(); ++i) {
+		SelectItem * pFind = *i;
+		RoutePoint * frp = (RoutePoint *)pFind->m_pData1;
 
-    SelectItem *pFind = NULL;
-    SelectableItemList SelList = pSelect->FindSelectionList( m_cursor_lat, m_cursor_lon,
-                                 Select::TYPE_ROUTEPOINT );
-    wxSelectableItemListNode *node = SelList.GetFirst();
-    while( node ) {
-        pFind = node->GetData();
+		// Get an array of all routes using this point
+		m_pEditRouteArray = g_pRouteMan->GetRouteArrayContaining(frp);
 
-        RoutePoint *frp = (RoutePoint *) pFind->m_pData1;
+		// Use route array to determine actual visibility for the point
+		bool brp_viz = false;
+		if (m_pEditRouteArray) {
+			for (unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ++ir) {
+				Route * pr = static_cast<Route *>(m_pEditRouteArray->Item(ir));
+				if( pr->IsVisible() ) {
+					brp_viz = true;
+					break;
+				}
+			}
+		} else {
+			brp_viz = frp->IsVisible(); // isolated point
+		}
 
-        //    Get an array of all routes using this point
-        m_pEditRouteArray = g_pRouteMan->GetRouteArrayContaining( frp );
+		if (brp_viz) {
+			// Use route array to rubberband all affected routes
+			if (m_pEditRouteArray) { // Editing Waypoint as part of route
+				for (unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ++ir) {
+					Route *pr = static_cast<Route *>(m_pEditRouteArray->Item(ir));
+					pr->m_bIsBeingEdited = setBeingEdited;
+				}
+				m_bRouteEditing = setBeingEdited;
 
-        // Use route array to determine actual visibility for the point
-        bool brp_viz = false;
-        if( m_pEditRouteArray ) {
-            for( unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ir++ ) {
-                Route *pr = (Route *) m_pEditRouteArray->Item( ir );
-                if( pr->IsVisible() ) {
-                    brp_viz = true;
-                    break;
-                }
-            }
-        } else
-            brp_viz = frp->IsVisible();               // isolated point
+			} else { // editing Mark
+				frp->m_bIsBeingEdited = setBeingEdited;
+				m_bMarkEditing = setBeingEdited;
+			}
 
-        if( brp_viz ) {
-            //    Use route array to rubberband all affected routes
-            if( m_pEditRouteArray )                 // Editing Waypoint as part of route
-            {
-                for( unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ir++ ) {
-                    Route *pr = (Route *) m_pEditRouteArray->Item( ir );
-                    pr->m_bIsBeingEdited = setBeingEdited;
-                }
-                m_bRouteEditing = setBeingEdited;
-
-            } else                                      // editing Mark
-            {
-                frp->m_bIsBeingEdited = setBeingEdited;
-                m_bMarkEditing = setBeingEdited;
-            }
-
-            m_pRoutePointEditTarget = frp;
-            m_pFoundPoint = pFind;
-            break;            // out of the while(node)
-        }
-
-        node = node->GetNext();
-    }       // while (node)
+			m_pRoutePointEditTarget = frp;
+			m_pFoundPoint = pFind;
+			break;
+		}
+	}
 }
 
 void ChartCanvas::MouseTimedEvent( wxTimerEvent& event )
 {
-    if( singleClickEventIsValid ) MouseEvent( singleClickEvent );
+	if( singleClickEventIsValid ) MouseEvent( singleClickEvent );
     singleClickEventIsValid = false;
     m_DoubleClickTimer->Stop();
 }

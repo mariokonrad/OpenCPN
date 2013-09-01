@@ -41,10 +41,11 @@ class SelectItem
 		float m_slon2;
 		int m_seltype;
 		bool m_bIsSelected;
-		const void * m_pData1;
-		void * m_pData2;
-		void * m_pData3;
-		int m_Data4;
+
+		const void * m_pData1; // FIXME: void*
+		void * m_pData2; // FIXME: void*
+		void * m_pData3; // FIXME: void*
+		int m_Data4; // FIXME: Data4??
 };
 
 WX_DECLARE_LIST(SelectItem, SelectableItemList);

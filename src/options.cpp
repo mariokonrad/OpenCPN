@@ -56,6 +56,8 @@
 #include "OptionIDs.h"
 #include "LanguageList.h"
 #include "plugin/PluginListPanel.h"
+#include <global/OCPN.h>
+#include <global/GUI.h>
 
 #ifdef USE_S57
 	#include <s52plib.h>
@@ -122,7 +124,6 @@ extern bool g_bWayPointPreventDragging;
 extern bool g_bPreserveScaleOnX;
 extern bool g_bPlayShipsBells;
 extern bool g_bFullscreenToolbar;
-extern bool g_bTransparentToolbar;
 
 extern int g_OwnShipIconType;
 extern double g_n_ownship_length_meters;
@@ -1912,7 +1913,7 @@ void options::SetInitialSettings()
 	pPreserveScale->SetValue( g_bPreserveScaleOnX );
 	pPlayShipsBells->SetValue( g_bPlayShipsBells );
 	pFullScreenToolbar->SetValue( g_bFullscreenToolbar );
-	pTransparentToolbar->SetValue( g_bTransparentToolbar );
+	pTransparentToolbar->SetValue(global::OCPN::get().gui().toolbar().transparent);
 	pSDMMFormat->Select( g_iSDMMFormat );
 	pDistanceFormat->Select( g_iDistanceFormat );
 	pSpeedFormat->Select( g_iSpeedFormat );
@@ -2467,7 +2468,7 @@ void options::OnApplyClick( wxCommandEvent& event )
 
 	g_bPlayShipsBells = pPlayShipsBells->GetValue();
 	g_bFullscreenToolbar = pFullScreenToolbar->GetValue();
-	g_bTransparentToolbar = pTransparentToolbar->GetValue();
+	global::OCPN::get().gui().set_toolbar_transparent(pTransparentToolbar->GetValue());
 	g_iSDMMFormat = pSDMMFormat->GetSelection();
 	g_iDistanceFormat = pDistanceFormat->GetSelection();
 	g_iSpeedFormat = pSpeedFormat->GetSelection();

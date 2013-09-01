@@ -64,11 +64,13 @@ class GUI
 		{
 			wxPoint position;
 			long orientation;
+			bool transparent;
 		};
 
 		virtual const Toolbar & toolbar() const = 0;
 		virtual void set_toolbar_position(const wxPoint &) = 0;
 		virtual void set_toolbar_orientation(long) = 0;
+		virtual void set_toolbar_transparent(bool) = 0;
 
 	public:
 

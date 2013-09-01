@@ -81,6 +81,11 @@ void OCPN_GUI::set_toolbar_orientation(long orientation)
 	data_toolbar.orientation = orientation;
 }
 
+void OCPN_GUI::set_toolbar_transparent(bool flag)
+{
+	data_toolbar.transparent = flag;
+}
+
 void OCPN_GUI::ensure_toolbar_position_range(wxPoint p0, wxPoint p1)
 {
 	data_toolbar.position.x = std::max(data_toolbar.position.x, p0.x);

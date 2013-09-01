@@ -28,8 +28,9 @@
 #include "StyleManager.h"
 #include "Style.h"
 #include "MessageBox.h"
+#include <global/OCPN.h>
+#include <global/GUI.h>
 
-extern bool g_bTransparentToolbar;
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern ChartCanvas * cc1;
 extern bool g_bopengl;
@@ -66,9 +67,8 @@ OCPNFloatingToolbarDialog::OCPNFloatingToolbarDialog(
 
 	m_opacity = 255;
 	m_fade_timer.SetOwner( this, FADE_TIMER );
-	if( g_bTransparentToolbar ) {
-		//            DoFade(128);
-		m_fade_timer.Start( 5000 );
+	if (global::OCPN::get().gui().toolbar().transparent) {
+		m_fade_timer.Start(5000);
 	}
 
 	m_pGrabberwin = new GrabberWin( this );
@@ -233,26 +233,29 @@ void OCPNFloatingToolbarDialog::ToggleOrientation()
 
 void OCPNFloatingToolbarDialog::MouseEvent( wxMouseEvent& event )
 {
-	if( g_bTransparentToolbar ) {
-		if( event.Entering() && ( m_opacity < 255 ) ) {
-			SetTransparent( 255 );
+	if (global::OCPN::get().gui().toolbar().transparent) {
+		if (event.Entering() && (m_opacity < 255 )) {
+			SetTransparent(255);
 			m_opacity = 255;
 		}
-
-		m_fade_timer.Start( 5000 );           // retrigger the continuous timer
+		m_fade_timer.Start(5000); // retrigger the continuous timer
 	}
 }
 
 void OCPNFloatingToolbarDialog::FadeTimerEvent( wxTimerEvent& event )
 {
-	if( g_bTransparentToolbar && !g_bopengl ) DoFade( 128 );
+	if (global::OCPN::get().gui().toolbar().transparent) {
+		if (!g_bopengl)
+			DoFade(128);
+	}
 
-	m_fade_timer.Start( 5000 );           // retrigger the continuous timer
+	m_fade_timer.Start(5000); // retrigger the continuous timer
 }
 
-void OCPNFloatingToolbarDialog::DoFade( int value )
+void OCPNFloatingToolbarDialog::DoFade(int value)
 {
-	if( value != m_opacity ) SetTransparent( value );
+	if (value != m_opacity)
+		SetTransparent(value);
 	m_opacity = value;
 }
 

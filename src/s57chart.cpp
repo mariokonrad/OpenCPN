@@ -1159,11 +1159,7 @@ void s57chart::SetColorScheme( ColorScheme cs, bool bApplyImmediate )
                             wxImage gimg = img;
 #endif
 
-//#ifdef ocpnUSE_ocpnBitmap
-//                      OCPNBitmap *pBMP =  new OCPNBitmap(gimg, m_pDIBThumbDay->GetDepth());
-//#else
                     wxBitmap *pBMP = new wxBitmap( gimg );
-//#endif
                     m_pDIBThumbDim = pBMP;
                     m_pDIBThumbOrphan = m_pDIBThumbDay;
                 }

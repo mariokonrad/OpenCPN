@@ -36,9 +36,9 @@ wxImage Image_Rotate(
 		wxPoint * offset_after_rotation);
 
 
-//          Specify the Pixel Cache type
-//          Only one of the following must be selected
-//          with due regard for the system type
+// Specify the Pixel Cache type
+// Only one of the following must be selected
+// with due regard for the system type
 
 //#define __PIX_CACHE_WXIMAGE__       // a safe default
 //#define __PIX_CACHE_DIBSECTION__    // for MSW
@@ -47,12 +47,12 @@ wxImage Image_Rotate(
 //  I use these shortcuts....
 #ifdef __WXX11__
 #define __PIX_CACHE_WXIMAGE__
-//#define     __PIX_CACHE_X11IMAGE__
+//#define __PIX_CACHE_X11IMAGE__
 #endif
 
 #ifdef __WXGTK__
 #define __PIX_CACHE_WXIMAGE__
-//#define     __PIX_CACHE_X11IMAGE__
+//#define __PIX_CACHE_X11IMAGE__
 //#define __PIX_CACHE_PIXBUF__
 #endif
 
@@ -67,71 +67,73 @@ wxImage Image_Rotate(
 #define __PIX_CACHE_WXIMAGE__
 #endif
 
-//    Some configuration sanity checks
+// Some configuration sanity checks
 
-//          Use OCPNBitmap (Optimized wxBitmap)
-//          Required for X11 native systems, optional on MSW
-//          Also required for GTK PixBuf optimized configuration
+// Use OCPNBitmap (Optimized wxBitmap)
+// Required for X11 native systems, optional on MSW
+// Also required for GTK PixBuf optimized configuration
 
-#ifdef      __PIX_CACHE_X11IMAGE__
-#define     ocpnUSE_ocpnBitmap
+#ifdef __PIX_CACHE_X11IMAGE__
+#define ocpnUSE_ocpnBitmap
 #endif
 
-#ifdef      __PIX_CACHE_PIXBUF__
-#define     ocpnUSE_ocpnBitmap
-#define     opcnUSE_GTK_OPTIMIZE
+#ifdef __PIX_CACHE_PIXBUF__
+#define ocpnUSE_ocpnBitmap
+#define opcnUSE_GTK_OPTIMIZE
 #endif
 
 
-//          For Optimized X11 systems, use MIT shared memory XImage, requires ocpnUSE_ocpnBitmap
+// For Optimized X11 systems, use MIT shared memory XImage, requires ocpnUSE_ocpnBitmap
 #ifdef __PIX_CACHE_X11IMAGE__
 #define ocpUSE_MITSHM
 #endif
 
 
-//          The BitsPerPixel value for chart data storage
-//          Todo get this during pixcache ctor
-#ifdef __PIX_CACHE_WXIMAGE__                               // a safe default
+// The BitsPerPixel value for chart data storage
+// Todo get this during pixcache ctor
+#ifdef __PIX_CACHE_WXIMAGE__     // a safe default
 #define BPP 24
 #endif
-#ifdef __PIX_CACHE_DIBSECTION__                            // for MSW
+#ifdef __PIX_CACHE_DIBSECTION__  // for MSW
 #define BPP 24
 #endif
-#ifdef __PIX_CACHE_X11IMAGE__                              // for X11/Universal
+#ifdef __PIX_CACHE_X11IMAGE__    // for X11/Universal
 #define BPP 32
 #endif
-#ifdef __PIX_CACHE_PIXBUF__                                // for GTK Optimized
+#ifdef __PIX_CACHE_PIXBUF__      // for GTK Optimized
 #define BPP 32
 #endif
 
-//    A fall back position is smart....
+// A fall back position is smart....
 #ifndef BPP
 #define BPP 24
 #endif
 
-//      Extended includes
+// Extended includes
 #ifdef __PIX_CACHE_X11IMAGE__
 #include "wx/x11/private.h"
 
-//    For MIT-SHM Extensions
+// For MIT-SHM Extensions
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include <X11/extensions/XShm.h>
 #endif
 
 #ifdef __WXMSW__
-#include "wx/msw/dib.h"                     // for ocpnMemDC
+#include "wx/msw/dib.h"   // for ocpnMemDC
 #endif
 
 #include <wx/dcmemory.h>
 
-typedef enum RGBO
+enum RGBO
 {
 	RGB = 0,
 	BGR
-}_RGBO;
+};
 
 class OCPNBitmap;
+
+
 
 #ifdef __PIX_CACHE_X11IMAGE__
 class ocpnXImage
@@ -141,14 +143,15 @@ class ocpnXImage
 		~ocpnXImage();
 		bool PutImage(Pixmap pixmap, GC gc);
 
-		bool            buse_mit;
+		bool buse_mit;
 		XShmSegmentInfo shminfo;
-		XImage          *m_img;
-		Display         *xdisplay;
-		int             xscreen;
-		Visual          *xvisual;
-		int             bpp;
-		int             m_width, m_height;
+		XImage * m_img;
+		Display * xdisplay;
+		int xscreen;
+		Visual * xvisual;
+		int bpp;
+		int m_width;
+		int m_height;
 };
 #endif
 
@@ -157,9 +160,6 @@ class ocpnXImage
 class PixelCache
 {
 	public:
-
-		//    Constructors
-
 		PixelCache(int width, int height, int depth);
 		~PixelCache();
 

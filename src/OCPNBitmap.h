@@ -43,7 +43,7 @@ class wxImage;
 /// such as GTK or MAC
 ///
 /// The included methods are very different for MSW and X11 See the Code
-class OCPNBitmap : public wxBitmap
+class OCPNBitmap : public wxBitmap // TODO: right now, this class is never used (always disabled by preprocessor), why keep it?
 {
 		DECLARE_DYNAMIC_CLASS(OCPNBitmap)
 

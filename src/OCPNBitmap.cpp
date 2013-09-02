@@ -35,8 +35,7 @@ OCPNBitmap::OCPNBitmap()
 {
 }
 
-#ifdef  __WXGTK__
-#ifdef opcnUSE_GTK_OPTIMIZE
+#if defined(__WXGTK__) && defined(opcnUSE_GTK_OPTIMIZE)
 bool OCPNBitmap::CreateFromData( void *pPix, int width, int height, int depth )
 {
 	Create(width, height, 32);
@@ -69,11 +68,10 @@ bool OCPNBitmap::CreateFromData( void *pPix, int width, int height, int depth )
 
 }
 #endif
-#endif
 
 
 #ifdef __WXX11__
-bool OCPNBitmap::CreateFromocpnXImage( ocpnXImage *poXI, int width, int height, int depth )
+bool OCPNBitmap::CreateFromocpnXImage(ocpnXImage * poXI, int width, int height, int depth)
 {
 	//    Do some basic setup in the parent  wxBitmap class
 	Create(width, height, -1);
@@ -161,7 +159,7 @@ bool OCPNBitmap::CreateFromData( void *pPix, int width, int height, int depth )
 
 	return TRUE;
 }
-#endif //__WXX11__
+#endif
 
 
 #ifdef __WXMSW__
@@ -418,17 +416,8 @@ bool OCPNBitmap::CreateFromImage( const wxImage& image, int depth )
 			memcpy(ptbits, ptdata, width * 3);
 			ptbits += width * 3;
 			ptdata += width * 3;
-
-			/*
-			   for( i=0; i<width; i++ )
-			   {
-			 *(ptbits++) = *(ptdata+2);
-			 *(ptbits++) = *(ptdata+1);
-			 *(ptbits++) = *(ptdata  );
-			 ptdata += 3;
-			 }
-			 */
-			for( i=0; i< padding; i++ )   *(ptbits++) = 0;
+			for( i=0; i< padding; i++ )
+				*(ptbits++) = 0;
 		}
 		//        ::StretchDIBits( memdc, 0, origin, width, height,
 		//            0, 0, width, height, lpBits, lpDIBh, DIB_RGB_COLORS, SRCCOPY);

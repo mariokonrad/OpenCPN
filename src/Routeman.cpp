@@ -771,7 +771,6 @@ void Routeman::DeleteRoute( Route *pRoute )
 		delete pRoute;
 
 		::wxEndBusyCursor();
-
 	}
 }
 
@@ -779,35 +778,32 @@ void Routeman::DeleteAllRoutes( void )
 {
 	::wxBeginBusyCursor();
 
-	//    Iterate on the RouteList
 	wxRouteListNode *node = pRouteList->GetFirst();
-	while( node ) {
-		Route *proute = node->GetData();
+	while (node) {
+		Route * proute = node->GetData();
 
 		if( proute->m_bIsInLayer ) {
 			node = node->GetNext();
 			continue;
 		}
 
-		if( !proute->m_bIsTrack ) {
+		if (!proute->m_bIsTrack) {
 			pConfig->m_bIsImporting = true;
 			pConfig->DeleteConfigRoute( proute );
 			DeleteRoute( proute );
-			node = pRouteList->GetFirst();                   // Route
+			node = pRouteList->GetFirst();
 			pConfig->m_bIsImporting = false;
 		} else
 			node = node->GetNext();
 	}
 
 	::wxEndBusyCursor();
-
 }
 
 void Routeman::DeleteAllTracks( void )
 {
 	::wxBeginBusyCursor();
 
-	//    Iterate on the RouteList
 	wxRouteListNode *node = pRouteList->GetFirst();
 	while( node ) {
 		Route *proute = node->GetData();
@@ -821,14 +817,13 @@ void Routeman::DeleteAllTracks( void )
 			pConfig->m_bIsImporting = true;
 			pConfig->DeleteConfigRoute( proute );
 			DeleteTrack( proute );
-			node = pRouteList->GetFirst();                   // Route
+			node = pRouteList->GetFirst();
 			pConfig->m_bIsImporting = false;
 		} else
 			node = node->GetNext();
 	}
 
 	::wxEndBusyCursor();
-
 }
 
 void Routeman::DeleteTrack( Route *pRoute )

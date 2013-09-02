@@ -119,6 +119,7 @@ class MyConfig : public wxFileConfig
 				const wxString & LocalFileName);
 
 		int LoadMyConfig(int iteration);
+
 		virtual bool AddNewRoute(Route * pr, int ConfigRouteNum = -1);
 		virtual bool UpdateRoute(Route * pr);
 		virtual bool DeleteConfigRoute(Route * pr);
@@ -140,11 +141,26 @@ class MyConfig : public wxFileConfig
 
 		bool LoadLayers(wxString &path);
 
-		void ExportGPX(wxWindow * parent, bool bviz_only = false, bool blayer = false);
-		void UI_ImportGPX(wxWindow * parent, bool islayer = false, wxString dirpath = _T(""), bool isdirectory = true);
+		void ExportGPX(
+				wxWindow * parent,
+				bool bviz_only = false,
+				bool blayer = false);
 
-		bool ExportGPXRoutes(wxWindow * parent, RouteList * pRoutes, const wxString suggestedName = _T("routes"));
-		bool ExportGPXWaypoints(wxWindow * parent, RoutePointList * pRoutePoints, const wxString suggestedName = _T("waypoints"));
+		void UI_ImportGPX(
+				wxWindow * parent,
+				bool islayer = false,
+				wxString dirpath = _T(""),
+				bool isdirectory = true);
+
+		bool ExportGPXRoutes(
+				wxWindow * parent,
+				RouteList * pRoutes,
+				const wxString suggestedName = _T("routes"));
+
+		bool ExportGPXWaypoints(
+				wxWindow * parent,
+				RoutePointList * pRoutePoints,
+				const wxString suggestedName = _T("waypoints"));
 
 		void CreateRotatingNavObjBackup();
 

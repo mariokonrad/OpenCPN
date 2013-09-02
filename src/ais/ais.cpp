@@ -46,7 +46,6 @@ extern  Select          *pSelectAIS;
 extern  double          gLat, gLon;
 extern ChartCanvas      *cc1;
 extern MyFrame          *gFrame;
-extern MyConfig         *pConfig;
 extern bool             g_bopengl;
 
 //    AIS Global configuration

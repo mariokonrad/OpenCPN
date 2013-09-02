@@ -43,24 +43,12 @@
 class LatLonBoundingBox;
 class ocpnDC;
 
-//    Useful static routines
 void ShowAISTargetQueryDialog(wxWindow *parent, int mmsi);
-
-//--------------------------------------------------------
-//    Screen Brightness Control Support Routines
-//
-//--------------------------------------------------------
-
-int InitScreenBrightness(void);
 int RestoreScreenBrightness(void);
-int SetScreenBrightness(int brightness);
 
 //Central dimmer...
-void DimeControl(wxWindow* ctrl);
-void DimeControl(wxWindow* ctrl, wxColour col, wxColour col1, wxColour back_color,wxColour text_color,wxColour uitext, wxColour udkrd, wxColour gridline);
-
-//    Set up the preferred quilt type
-#define QUILT_TYPE_2
+void DimeControl(wxWindow * ctrl);
+void DimeControl(wxWindow * ctrl, wxColour col, wxColour col1, wxColour back_color,wxColour text_color,wxColour uitext, wxColour udkrd, wxColour gridline);
 
 class EmbossData;
 class Undo;
@@ -84,13 +72,13 @@ class ChInfoWin;
 class glChartCanvas;
 class TimedPopupWin;
 
-enum                                //  specify the render behaviour of SetViewPoint()
+enum //  specify the render behaviour of SetViewPoint()
 {
-	CURRENT_RENDER,                 // use the current render type
-	FORCE_SUBSAMPLE                 // force sub-sampled render, with re-render timer
+	CURRENT_RENDER,  // use the current render type
+	FORCE_SUBSAMPLE  // force sub-sampled render, with re-render timer
 };
 
-//          Cursor region enumerator
+// Cursor region enumerator
 enum
 {
 	CENTER,
@@ -100,15 +88,16 @@ enum
 	MID_BOT,
 };
 
-typedef enum ownship_state_t
+enum ownship_state_t
 {
-	SHIP_NORMAL        = 0,
+	SHIP_NORMAL = 0,
 	SHIP_LOWACCURACY,
 	SHIP_INVALID
-}_ownship_state_t;
+};
 
-enum {
-	ID_S57QUERYTREECTRL =            10000,
+enum
+{
+	ID_S57QUERYTREECTRL = 10000,
 	ID_AISDIALOGOK
 };
 
@@ -147,12 +136,12 @@ class ChartCanvas : public wxWindow
 
 		bool SetViewPoint(double lat, double lon, double scale_ppm, double skew, double rotation, bool b_adjust = true);
 		bool SetVPScale(double sc);
-		bool SetViewPoint ( double lat, double lon);
-		void ReloadVP ( bool b_adjust = true );
-		void LoadVP ( ViewPort &vp, bool b_adjust = true );
-		void SetVPRotation(double angle){ VPoint.rotation = angle; }
-		double GetVPRotation(void) { return GetVP().rotation; }
-		double GetVPSkew(void) { return GetVP().skew; }
+		bool SetViewPoint(double lat, double lon);
+		void ReloadVP(bool b_adjust = true);
+		void LoadVP(ViewPort &vp, bool b_adjust = true );
+		void SetVPRotation(double angle);
+		double GetVPRotation(void);
+		double GetVPSkew(void);
 		void ClearbFollow(void);
 
 		void GetCanvasPointPix(double rlat, double rlon, wxPoint *r);

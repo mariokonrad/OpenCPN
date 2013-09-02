@@ -1457,9 +1457,6 @@ bool App::OnInit()
 	//   Notify all the AUI PlugIns so that they may syncronize with the Perspective
 	g_pi_manager->NotifyAuiPlugIns();
 
-	//   Initialize and Save the existing Screen Brightness
-	//       InitScreenBrightness();
-
 	bool b_SetInitialPoint = false;
 
 	//   Build the initial chart dir array

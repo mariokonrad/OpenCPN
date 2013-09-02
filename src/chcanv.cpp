@@ -116,6 +116,9 @@ extern sigjmp_buf           env;                    // the context saved by sigs
 
 #include <vector>
 
+static int SetScreenBrightness(int brightness);
+static int InitScreenBrightness(void);
+
 // ----------------------------------------------------------------------------
 // Useful Prototypes
 // ----------------------------------------------------------------------------
@@ -1026,6 +1029,16 @@ int ChartCanvas::FindClosestCanvasChartdbIndex( int scale )
 
     return new_dbIndex;
 }
+
+
+void ChartCanvas::SetVPRotation(double angle)
+{ VPoint.rotation = angle; }
+
+double ChartCanvas::GetVPRotation(void)
+{ return GetVP().rotation; }
+
+double ChartCanvas::GetVPSkew(void)
+{ return GetVP().skew; }
 
 bool ChartCanvas::IsQuiltDelta()
 {
@@ -9335,7 +9348,7 @@ WORD *g_pSavedGammaMap;
 
 #endif
 
-int InitScreenBrightness( void )
+static int InitScreenBrightness(void)
 {
 #ifdef __WIN32__
     if( g_bopengl ) {
@@ -9432,7 +9445,7 @@ int InitScreenBrightness( void )
 #endif
 }
 
-int RestoreScreenBrightness( void )
+int RestoreScreenBrightness(void)
 {
 #ifdef __WIN32__
 
@@ -9472,7 +9485,7 @@ int RestoreScreenBrightness( void )
 }
 
 //    Set brightness. [0..100]
-int SetScreenBrightness( int brightness )
+static int SetScreenBrightness(int brightness)
 {
 #ifdef __WIN32__
 

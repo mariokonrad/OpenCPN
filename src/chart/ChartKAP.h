@@ -21,17 +21,17 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHARTKAP__H__
-#define __CHARTKAP__H__
+#ifndef __CHART__CHARTKAP__H__
+#define __CHART__CHARTKAP__H__
 
-#include "chartimg.h"
+#include <chart/ChartBaseBSB.h>
 
-class  ChartKAP : public ChartBaseBSB
+class ChartKAP : public ChartBaseBSB
 {
 	public:
 		ChartKAP();
-		~ChartKAP();
-		InitReturn Init( const wxString& name, ChartInitFlag init_flags );
+		virtual ~ChartKAP();
+		InitReturn Init(const wxString & name, ChartInitFlag init_flags);
 };
 
 #endif

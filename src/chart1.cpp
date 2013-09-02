@@ -66,9 +66,10 @@
 #include "TimedPopupWin.h"
 #include "MessageBox.h"
 #include "WayPointman.h"
-#include "chart/ChartDB.h"
-#include "chart/ChartStack.h"
-#include "chart/CacheEntry.h"
+#include <chart/ChartDB.h>
+#include <chart/ChartStack.h>
+#include <chart/CacheEntry.h>
+#include <chart/ChartBaseBSB.h>
 #include "navutil.h"
 #include "Track.h"
 #include "StyleManager.h"
@@ -81,7 +82,6 @@
 #include "AboutDialog.h"
 #include "ThumbWin.h"
 #include "tcmgr.h"
-#include "chartimg.h"
 #include "RouteProp.h"
 #include "MarkInfo.h"
 #include "ToolBarSimple.h"

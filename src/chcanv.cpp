@@ -45,9 +45,9 @@
 #include "ConsoleCanvas.h"
 #include "ThumbWin.h"
 #include "WayPointman.h"
-#include "chart/ChartDB.h"
-#include "chart/ChartStack.h"
-#include "chartimg.h"
+#include <chart/ChartDB.h>
+#include <chart/ChartStack.h>
+#include <chart/ChartBaseBSB.h>
 #include "chart1.h"
 #include "cutil.h"
 #include "RouteProp.h"

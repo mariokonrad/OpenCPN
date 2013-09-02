@@ -461,7 +461,7 @@ SET(HDRS
 	src/chart/ChartBase.h
 	src/chart/PlyPoint.h
 	src/ColorScheme.h
-	include/chartimg.h
+	src/chart/ChartBaseBSB.h
 	include/chcanv.h
 	src/timers.h
 	src/ThumbData.h
@@ -616,7 +616,7 @@ SET(SRCS
 	src/chart/ChartKAP.cpp
 	src/chart/ChartStack.cpp
 	src/chart/ChartBase.cpp
-	src/chartimg.cpp
+	src/chart/ChartBaseBSB.cpp
 	src/chcanv.cpp
 	src/App.cpp
 	src/TCWin.cpp

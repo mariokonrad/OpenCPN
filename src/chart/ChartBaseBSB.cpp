@@ -21,6 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include "ChartBaseBSB.h"
+
 #include <wx/dir.h>
 #include <wx/stream.h>
 #include <wx/wfstream.h>
@@ -32,7 +34,6 @@
 
 #include <sys/stat.h>
 
-#include "chartimg.h"
 #include "ocpn_pixel.h"
 #include "OCPNRegionIterator.h"
 #include "OCPNBitmap.h"

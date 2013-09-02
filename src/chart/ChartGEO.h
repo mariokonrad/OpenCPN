@@ -21,18 +21,17 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHARTGEO__H__
-#define __CHARTGEO__H__
+#ifndef __CHART__CHARTGEO__H__
+#define __CHART__CHARTGEO__H__
 
-#include "chartimg.h"
+#include <chart/ChartBaseBSB.h>
 
-class  ChartGEO : public ChartBaseBSB
+class ChartGEO : public ChartBaseBSB
 {
 	public:
 		ChartGEO();
-		~ChartGEO();
-		InitReturn Init(const wxString& name, ChartInitFlag init_flags);
-
+		virtual ~ChartGEO();
+		InitReturn Init(const wxString & name, ChartInitFlag init_flags);
 };
 
 #endif

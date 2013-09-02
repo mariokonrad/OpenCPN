@@ -36,9 +36,9 @@
 #include <chart/CM93compchart.h>
 #include <chart/CM93Chart.h>
 #include <chart/ChartBase.h>
+#include <chart/ChartBaseBSB.h>
 
 #include "ChartPlugInWrapper.h"
-#include "chartimg.h"
 #include "chart1.h"
 #include "ThumbWin.h"
 

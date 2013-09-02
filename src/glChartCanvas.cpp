@@ -28,12 +28,12 @@
 #include "s52plib.h"
 #include "Quilt.h"
 #include "plugin/PlugInManager.h"
-#include "chartimg.h"
 #include "s57chart.h"
 #include "ChInfoWin.h"
 #include "ThumbWin.h"
 #include "OCPNRegionIterator.h"
 #include "ChartPlugInWrapper.h"
+#include <chart/ChartBaseBSB.h>
 #include <chart/ChartBase.h>
 #include <chart/ChartDummy.h>
 

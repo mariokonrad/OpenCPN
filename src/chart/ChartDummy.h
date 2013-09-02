@@ -24,7 +24,7 @@
 #ifndef __CHART__CHARTDUMMY__H__
 #define __CHART__CHARTDUMMY__H__
 
-#include "chartbase.h"
+#include <chart/ChartBase.h>
 
 class ChartDummy : public ChartBase
 {

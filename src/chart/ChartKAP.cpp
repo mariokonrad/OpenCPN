@@ -22,7 +22,9 @@
  **************************************************************************/
 
 #include "ChartKAP.h"
+#include <chart/PlyPoint.h>
 
+#include <wx/string.h>
 #include <wx/wfstream.h>
 #include <wx/tokenzr.h>
 #include <wx/log.h>
@@ -81,7 +83,7 @@ InitReturn ChartKAP::Init( const wxString& name, ChartInitFlag init_flags )
 	if(ifs_hdr->LastRead() != TestBlockSize)
 	{
 		wxString msg;
-		msg.Printf(_("   Could not read first %d bytes of header for chart file: "), TestBlockSize);
+		msg.Printf(_T("   Could not read first %d bytes of header for chart file: "), TestBlockSize);
 		msg.Append(name);
 		wxLogMessage(msg);
 		free(pPlyTable);
@@ -104,7 +106,7 @@ InitReturn ChartKAP::Init( const wxString& name, ChartInitFlag init_flags )
 	}
 	if( i == TestBlockSize - 4 )
 	{
-		wxString msg(_("   Chart file has no BSB header, cannot Init."));
+		wxString msg(_T("   Chart file has no BSB header, cannot Init."));
 		msg.Append(name);
 		wxLogMessage(msg);
 		free(pPlyTable);
@@ -587,7 +589,7 @@ InitReturn ChartKAP::Init( const wxString& name, ChartInitFlag init_flags )
 
 	if(nPlypoint < 3)
 	{
-		wxString msg(_("   Chart File contains less than 3 PLY points: "));
+		wxString msg(_T("   Chart File contains less than 3 PLY points: "));
 		msg.Append(m_FullPath);
 		wxLogMessage(msg);
 		free(pPlyTable);
@@ -643,7 +645,7 @@ InitReturn ChartKAP::Init( const wxString& name, ChartInitFlag init_flags )
 
 	if(bcorrupt)
 	{
-		wxString msg(_("   Chart File RLL data corrupt on chart "));
+		wxString msg(_T("   Chart File RLL data corrupt on chart "));
 		msg.Append(m_FullPath);
 		wxLogMessage(msg);
 

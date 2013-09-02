@@ -28,14 +28,14 @@
 #include "s52plib.h"
 #include "Quilt.h"
 #include "plugin/PlugInManager.h"
-#include "chartbase.h"
 #include "chartimg.h"
 #include "s57chart.h"
 #include "ChInfoWin.h"
 #include "ThumbWin.h"
 #include "OCPNRegionIterator.h"
-#include "chart/ChartDummy.h"
 #include "ChartPlugInWrapper.h"
+#include <chart/ChartBase.h>
+#include <chart/ChartDummy.h>
 
 #include <wx/tokenzr.h>
 
@@ -48,20 +48,20 @@ extern bool GetMemoryStatus(int *mem_total, int *mem_used);
 #define GL_DEPTH_STENCIL_ATTACHMENT       0x821A
 #endif
 
-extern ChartCanvas *cc1;
-extern s52plib *ps52plib;
+extern ChartCanvas * cc1;
+extern s52plib * ps52plib;
 extern bool g_bopengl;
 extern bool g_b_useStencil;
 extern int g_GPU_MemSize;
 extern bool g_bDebugOGL;
-extern PlugInManager* g_pi_manager;
+extern PlugInManager * g_pi_manager;
 extern bool g_bskew_comp;
 extern int g_memCacheLimit;
 extern bool g_bCourseUp;
-extern ChartBase *Current_Ch;
+extern ChartBase * Current_Ch;
 extern ColorScheme global_color_scheme;
 extern bool g_bquiting;
-extern ThumbWin         *pthumbwin;
+extern ThumbWin * pthumbwin;
 
 extern PFNGLGENFRAMEBUFFERSEXTPROC         s_glGenFramebuffersEXT;
 extern PFNGLGENRENDERBUFFERSEXTPROC        s_glGenRenderbuffersEXT;

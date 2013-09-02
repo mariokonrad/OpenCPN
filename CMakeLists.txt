@@ -458,6 +458,8 @@ SET(HDRS
 	src/chart/ChartType.h
 	src/chart/ChartFamily.h
 	src/chart/S57Sector.h
+	src/chart/ChartBase.h
+	src/chart/PlyPoint.h
 	src/ColorScheme.h
 	include/chartimg.h
 	include/chcanv.h
@@ -557,6 +559,7 @@ SET(HDRS
 	src/chart/OCPNPattern.h
 	src/chart/Lookup.h
 	src/RazdsParser.h
+	src/ProjectionType.h
 	src/Style.h
 	src/Tool.h
 	src/Icon.h
@@ -612,6 +615,7 @@ SET(SRCS
 	src/chart/ChartGEO.cpp
 	src/chart/ChartKAP.cpp
 	src/chart/ChartStack.cpp
+	src/chart/ChartBase.cpp
 	src/chartimg.cpp
 	src/chcanv.cpp
 	src/App.cpp

@@ -22,8 +22,9 @@
  **************************************************************************/
 
 #include "ChartTableEntry.h"
-#include "chartbase.h"
+#include <chart/ChartBase.h>
 #include <chart/ChartDatabase.h>
+#include <chart/PlyPoint.h>
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/stream.h>

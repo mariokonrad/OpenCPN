@@ -36,6 +36,7 @@
 #include "ocpn_pixel.h"
 #include "OCPNRegionIterator.h"
 #include "OCPNBitmap.h"
+#include <chart/PlyPoint.h>
 
 #ifndef __WXMSW__
 	#include <signal.h>
@@ -102,59 +103,6 @@ opncpnPalette::~opncpnPalette()
         free( FwdPalette );
     if(NULL != RevPalette)
         free( RevPalette ) ;
-}
-
-// ============================================================================
-// ChartBase implementation
-// ============================================================================
-ChartBase::ChartBase()
-{
-      pcached_bitmap = NULL;
-
-      m_depth_unit_id = DEPTH_UNIT_UNKNOWN;
-
-      pThumbData = new ThumbData;
-
-      m_global_color_scheme = GLOBAL_COLOR_SCHEME_RGB;
-
-      bReadyToRender = false;
-
-      Chart_Error_Factor = 0;
-
-      m_Chart_Scale = 10000;              // a benign value
-      m_Chart_Skew = 0.0;
-
-      m_nCOVREntries = 0;
-      m_pCOVRTable = NULL;
-      m_pCOVRTablePoints = NULL;
-
-      m_nNoCOVREntries = 0;
-      m_pNoCOVRTable = NULL;
-      m_pNoCOVRTablePoints = NULL;
-      
-      m_EdDate.Set(1, wxDateTime::Jan, 2000);
-
-      m_lon_datum_adjust = 0.;
-      m_lat_datum_adjust = 0.;
-
-      m_projection = PROJECTION_MERCATOR;             // default
-}
-
-ChartBase::~ChartBase()
-{
-      if(pcached_bitmap)
-             delete pcached_bitmap;
-
-      delete pThumbData;
-
-      //    Free the COVR tables
-
-      for(unsigned int j=0 ; j<(unsigned int)m_nCOVREntries ; j++)
-            free( m_pCOVRTable[j] );
-
-      free( m_pCOVRTable );
-      free( m_pCOVRTablePoints );
-
 }
 
 // ============================================================================

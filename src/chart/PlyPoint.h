@@ -21,43 +21,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "TextStatWin.h"
-#include "PianoWin.h"
-#include "dychart.h"
-#include "chart/ChartDB.h"
-#include "chart1.h"
+#ifndef __CHART__PLYPOINT__H__
+#define __CHART__PLYPOINT__H__
 
-BEGIN_EVENT_TABLE(TextStatWin, wxWindow)
-	EVT_PAINT(TextStatWin::OnPaint)
-	EVT_SIZE(TextStatWin::OnSize)
-END_EVENT_TABLE()
-
-TextStatWin::TextStatWin(wxFrame * frame)
-	: wxWindow(frame, wxID_ANY, wxPoint( 20, 20 ), wxSize( 5, 5 ), wxSIMPLE_BORDER)
+class Plypoint
 {
-	SetBackgroundColour(GetGlobalColor(_T("UIBDR")));
-	pText = new wxString();
-	bTextSet = false;
-}
+	public:
+		float ltp;
+		float lnp;
+};
 
-TextStatWin::~TextStatWin( void )
-{
-	delete pText;
-}
-
-void TextStatWin::OnSize(wxSizeEvent & event)
-{}
-
-void TextStatWin::OnPaint(wxPaintEvent & event)
-{
-	wxPaintDC dc( this );
-	dc.DrawText( *pText, 0, 0 );
-}
-
-void TextStatWin::TextDraw(const wxString & text)
-{
-	*pText = text;
-	bTextSet = true;
-	Refresh( true );
-}
-
+#endif

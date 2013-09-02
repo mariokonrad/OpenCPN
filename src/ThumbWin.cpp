@@ -22,8 +22,8 @@
  **************************************************************************/
 
 #include "ThumbWin.h"
-#include "chartbase.h"
 #include "chart1.h"
+#include <chart/ChartBase.h>
 
 #include <stdlib.h>
 #include <math.h>

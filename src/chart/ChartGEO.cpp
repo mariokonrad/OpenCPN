@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include "ChartGEO.h"
+#include <chart/PlyPoint.h>
 
 #include <wx/filename.h>
 #include <wx/wfstream.h>

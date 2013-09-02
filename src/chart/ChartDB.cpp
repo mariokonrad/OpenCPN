@@ -35,6 +35,7 @@
 #include <chart/ChartStack.h>
 #include <chart/CM93compchart.h>
 #include <chart/CM93Chart.h>
+#include <chart/ChartBase.h>
 
 #include "ChartPlugInWrapper.h"
 #include "chartimg.h"
@@ -70,31 +71,23 @@ ChartDB::ChartDB(MyFrame *parent)
       pParent = parent;
       pChartCache = new wxArrayPtrVoid;
 
-      SetValid(false);                           // until loaded or created
+      SetValid(false); // until loaded or created
       UnLockCache();
 
-      //    Report cache policy
-      if(g_memCacheLimit)
-      {
-            wxString msg;
-            msg.Printf(_T("ChartDB Cache policy:  Application target is %d MBytes"), g_memCacheLimit / 1024);
-            wxLogMessage(msg);
+      // Report cache policy
+      if (g_memCacheLimit) {
+            wxLogMessage(wxString::Format(
+				_T("ChartDB Cache policy:  Application target is %d MBytes"), g_memCacheLimit / 1024));
+      } else {
+            wxLogMessage(wxString::Format(
+				_T("ChartDB Cache policy:  Max open chart limit is %d."), g_nCacheLimit));
       }
-      else
-      {
-            wxString msg;
-            msg.Printf(_T("ChartDB Cache policy:  Max open chart limit is %d."), g_nCacheLimit);
-            wxLogMessage(msg);
-      }
-
 }
 
 
 ChartDB::~ChartDB()
 {
-//    Empty the cache
       PurgeCache();
-
       delete pChartCache;
 }
 
@@ -102,8 +95,36 @@ bool ChartDB::LoadBinary(const wxString & filename, ArrayOfCDI& dir_array_check)
 {
       m_dir_array = dir_array_check;
       return ChartDatabase::Read(filename);
+}
 
-      // Check chartDirs against dir_array_check
+bool ChartDB::SaveBinary(const wxString & filename)
+{
+	return ChartDatabase::Write(filename);
+}
+
+wxArrayPtrVoid * ChartDB::GetChartCache(void)
+{
+	return pChartCache;
+}
+
+void ChartDB::LockCache(bool bl)
+{
+	m_b_locked = bl;
+}
+
+void ChartDB::LockCache()
+{
+	m_b_locked = true;
+}
+
+void ChartDB::UnLockCache()
+{
+	m_b_locked = false;
+}
+
+bool ChartDB::IsCacheLocked() const
+{
+	return m_b_locked;
 }
 
 void ChartDB::PurgeCache()
@@ -149,7 +170,6 @@ void ChartDB::PurgeCacheUnusedCharts(bool b_force)
 
             if(((mem_used > mem_limit) || b_force) && !m_b_locked)
             {
-//                  printf(" ChartdB::PurgeCacheUnusedCharts Before--- Mem_total: %d  mem_used: %d\n", mem_total, mem_used);
                   unsigned int i = 0;
                   while( i<pChartCache->GetCount())
                   {
@@ -174,13 +194,9 @@ void ChartDB::PurgeCacheUnusedCharts(bool b_force)
                         else
                               i++;
                   }
-//                  GetMemoryStatus(&mem_total, &mem_used);
-//                  printf(" ChartdB::PurgeCacheUnusedCharts After--- Mem_total: %d  mem_used: %d\n", mem_total, mem_used);
             }
       }
 }
-
-
 
 
 //-------------------------------------------------------------------------------------------------------
@@ -809,16 +825,6 @@ ChartBase *ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
                               }
                         }
 
-/*
-                        for(unsigned int i=0 ; i<nCache ; i++)
-                        {
-                              pce = (CacheEntry *)(pChartCache->Item(i));
-                              if((ChartBase *)(pce->pChart) != Current_Ch)
-                              {
-                                    printf("  Cache %d\n", pce->dbIndex);
-                              }
-                        }
-*/
                         pce = (CacheEntry *)(pChartCache->Item(iOldest));
                         ChartBase *pDeleteCandidate =  (ChartBase *)(pce->pChart);
 
@@ -1094,13 +1100,10 @@ bool ChartDB::DeleteCacheChart(ChartBase *pDeleteCandidate)
       return false;
 }
 
-/*
-*/
 void ChartDB::ApplyColorSchemeToCachedCharts(ColorScheme cs)
 {
       ChartBase *Ch;
       CacheEntry *pce;
-     //    Search the cache
 
       unsigned int nCache = pChartCache->GetCount();
       for(unsigned int i=0 ; i<nCache ; i++)
@@ -1109,7 +1112,6 @@ void ChartDB::ApplyColorSchemeToCachedCharts(ColorScheme cs)
             Ch = (ChartBase *)pce->pChart;
             if(Ch)
                   Ch->SetColorScheme(cs, true);
-
       }
 }
 
@@ -1250,22 +1252,7 @@ wxXmlDocument ChartDB::GetXMLDescription(int dbIndex, bool b_getGeom)
                   node->AddChild ( tnode );
 
             }
-
-/*
-            if (s == _T("number"))
-///            if (s == _T("source_edition"))
-            if (s == _T("raster_edition"))
-            if (s == _T("ntm_edition"))
-///            if (s == _T("source_date"))
-            if (s == _T("ntm_date"))
-            if (s == _T("source_edition_last_correction"))
-            if (s == _T("raster_edition_last_correction"))
-            if (s == _T("ntm_edition_last_correction"))
-*/
-      }
-
-      else if( CHART_FAMILY_VECTOR ==  (ChartFamilyEnum)cte.GetChartFamily() )
-      {
+      } else if( CHART_FAMILY_VECTOR ==  (ChartFamilyEnum)cte.GetChartFamily() ) {
             pcell_node = new wxXmlNode ( wxXML_ELEMENT_NODE, _T ( "cell" ) );
 
             wxString path = GetDBChartFileName(dbIndex);
@@ -1434,6 +1421,7 @@ wxXmlDocument ChartDB::GetXMLDescription(int dbIndex, bool b_getGeom)
 bool Intersect(MyFlPoint p1, MyFlPoint p2, MyFlPoint p3, MyFlPoint p4) ;
 int CCW(MyFlPoint p0, MyFlPoint p1, MyFlPoint p2) ;
 
+
 /*************************************************************************
 
 
@@ -1451,10 +1439,7 @@ int CCW(MyFlPoint p0, MyFlPoint p1, MyFlPoint p2) ;
  * RETURN VALUE
  * (bool) TRUE if the point is inside the polygon, FALSE if not.
  *************************************************************************/
-
-
 bool G_FloatPtInPolygon(MyFlPoint *rgpts, int wnumpts, float x, float y)
-
 {
 
    MyFlPoint  *ppt, *ppt1 ;
@@ -1511,16 +1496,14 @@ bool G_FloatPtInPolygon(MyFlPoint *rgpts, int wnumpts, float x, float y)
  * RETURN VALUE
  * TRUE if they intersect, FALSE if not.
  *************************************************************************/
-
-
-inline bool Intersect(MyFlPoint p1, MyFlPoint p2, MyFlPoint p3, MyFlPoint p4) {
+inline bool Intersect(MyFlPoint p1, MyFlPoint p2, MyFlPoint p3, MyFlPoint p4)
+{
    return ((( CCW(p1, p2, p3) * CCW(p1, p2, p4)) <= 0)
         && (( CCW(p3, p4, p1) * CCW(p3, p4, p2)  <= 0) )) ;
 
 }
+
 /*************************************************************************
-
-
  * FUNCTION:   CCW (CounterClockWise)
  *
  * PURPOSE
@@ -1531,9 +1514,8 @@ inline bool Intersect(MyFlPoint p1, MyFlPoint p2, MyFlPoint p3, MyFlPoint p4) {
  * (int) 1 if the movement is in a counterclockwise direction, -1 if
  * not.
  *************************************************************************/
-
-
-inline int CCW(MyFlPoint p0, MyFlPoint p1, MyFlPoint p2) {
+inline int CCW(MyFlPoint p0, MyFlPoint p1, MyFlPoint p2)
+{
    float dx1, dx2 ;
    float dy1, dy2 ;
 
@@ -1546,6 +1528,5 @@ inline int CCW(MyFlPoint p0, MyFlPoint p1, MyFlPoint p2) {
     * vertical lines.
     */
    return ((dx1 * dy2 > dy1 * dx2) ? 1 : -1) ;
-
 }
 

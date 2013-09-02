@@ -28,8 +28,8 @@
 #include <wx/arrimpl.cpp>
 
 #include "ChartDatabase.h"
-#include "chartbase.h"
-#include "plugin/PlugInManager.h"
+#include <chart/ChartBase.h>
+#include <plugin/PlugInManager.h>
 #include "ChartPlugInWrapper.h"
 
 #ifndef UINT32

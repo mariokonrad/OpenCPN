@@ -32,8 +32,7 @@
 #include <wx/filename.h>
 #include <wx/xml/xml.h>
 
-#include "chartbase.h"
-#include "chart/ChartDatabase.h"
+#include <chart/ChartDatabase.h>
 #include "s52s57.h"
 
 typedef struct  {
@@ -51,9 +50,8 @@ class ChartDB : public ChartDatabase
 		ChartDB(MyFrame *parent);
 		virtual ~ChartDB();
 
-
 		bool LoadBinary(const wxString & filename, ArrayOfCDI& dir_array_check);
-		bool SaveBinary(const wxString & filename) { return ChartDatabase::Write(filename); }
+		bool SaveBinary(const wxString & filename);
 
 		int  BuildChartStack(ChartStack * cstk, float lat, float lon);
 		int  BuildChartStack(ChartStack * cstk, float lat, float lon, int db_add );
@@ -65,26 +63,35 @@ class ChartDB : public ChartDatabase
 		ChartTypeEnum GetCSChartType(ChartStack *ps, int stackindex);
 		ChartFamilyEnum GetCSChartFamily(ChartStack *ps, int stackindex);
 		bool SearchForChartDir(const wxString &dir);
-		ChartBase *OpenStackChartConditional(ChartStack *ps, int start_index, bool bLargest, ChartTypeEnum New_Type, ChartFamilyEnum New_Family_Fallback);
+		ChartBase *OpenStackChartConditional(
+				ChartStack * ps,
+				int start_index,
+				bool bLargest,
+				ChartTypeEnum New_Type,
+				ChartFamilyEnum New_Family_Fallback);
 
-		wxArrayPtrVoid *GetChartCache(void) { return pChartCache; }
+		wxArrayPtrVoid *GetChartCache(void);
 		std::vector<int> GetCSArray(ChartStack *ps);
 
 		int GetStackEntry(ChartStack *ps, wxString fp);
 		bool IsChartInCache(int dbindex);
 		bool IsChartInGroup(const int db_index, const int group);
 
-		ChartBase *OpenChartFromStack(ChartStack *pStack, int StackEntry, ChartInitFlag iflag = FULL_INIT);
+		ChartBase *OpenChartFromStack(
+				ChartStack * pStack,
+				int StackEntry,
+				ChartInitFlag iflag = FULL_INIT);
+
 		ChartBase *OpenChartFromDB(int index, ChartInitFlag init_flag);
 
 		void ApplyColorSchemeToCachedCharts(ColorScheme cs);
 		void PurgeCache();
 		bool DeleteCacheChart(ChartBase *pChart);
 
-		void LockCache(bool bl){m_b_locked = bl;}
-		void LockCache(){m_b_locked = true;}
-		void UnLockCache(){m_b_locked = false;}
-		bool IsCacheLocked(){ return m_b_locked; }
+		void LockCache(bool bl);
+		void LockCache();
+		void UnLockCache();
+		bool IsCacheLocked() const;
 		wxXmlDocument GetXMLDescription(int dbIndex, bool b_getGeom);
 
 		void ClearCacheInUseFlags(void);
@@ -101,7 +108,7 @@ class ChartDB : public ChartDatabase
 		bool CheckPositionWithinChart(int index, float lat, float lon);
 		ChartBase *OpenChartUsingCache(int dbindex, ChartInitFlag init_flag);
 
-		wxArrayPtrVoid * pChartCache;
+		wxArrayPtrVoid * pChartCache; // FIXME: use std::vector instead of array to void*
 
 		MyFrame *pParent;
 		bool m_b_locked;

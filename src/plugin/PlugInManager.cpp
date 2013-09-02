@@ -25,9 +25,8 @@
 #include "dychart.h"
 #include "navutil.h"
 #include "Track.h"
-#include "chartbase.h"
-#include "chart/ChartDB.h"
-#include "chart/ChartDatabase.h"
+#include <chart/ChartDB.h>
+#include <chart/ChartDatabase.h>
 #include "ocpndc.h"
 #include "StyleManager.h"
 #include "Style.h"

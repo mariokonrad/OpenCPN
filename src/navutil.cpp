@@ -57,7 +57,6 @@
 #include "WayPointman.h"
 #include "RouteProp.h"
 #include <chart/s52utils.h>
-#include "chartbase.h"
 #include "ocpndc.h"
 #include "Geodesic.h"
 #include "datastream.h"

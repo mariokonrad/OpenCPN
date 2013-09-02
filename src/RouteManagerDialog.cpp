@@ -32,7 +32,6 @@
 #include "MarkInfo.h"
 #include "Routeman.h"
 #include "georef.h"
-#include "chartbase.h"
 #include "Layer.h"
 #include "SendToGpsDlg.h"
 #include "TrackPropDlg.h"

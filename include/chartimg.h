@@ -26,16 +26,17 @@
 #define _CHARTIMG_H_
 
 
-#include "chartbase.h"
-#include "georef.h"                 // for GeoRef type
+#include <chart/ChartBase.h>
+#include <chart/Refpoint.h>
+#include "georef.h"
 #include "OCPNRegion.h"
 #include "ViewPort.h"
-#include "chart/Refpoint.h"
 #include <vector>
 
 class wxInputStream;
 class wxBufferedInputStream;
 class wxFileInputStream;
+class wxImage;
 
 enum ScaleTypeEnum
 {
@@ -96,7 +97,7 @@ class opncpnPalette
 		int nRev;
 };
 
-class  ChartBaseBSB     :public ChartBase
+class  ChartBaseBSB : public ChartBase
 {
 	public:
 		//    Public methods

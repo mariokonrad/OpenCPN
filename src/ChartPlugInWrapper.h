@@ -24,9 +24,11 @@
 #ifndef __CHARTPLUGINWRAPPER__H__
 #define __CHARTPLUGINWRAPPER__H__
 
-#include "chartbase.h"
+#include <chart/ChartBase.h>
 
 class PlugInChartBase;
+class wxRect;
+class wxObject;
 
 class ChartPlugInWrapper : public ChartBase
 {
@@ -61,22 +63,22 @@ class ChartPlugInWrapper : public ChartBase
 		virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion);
 		virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
 		virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
-		virtual int GetCOVREntries();
-		virtual int GetCOVRTablePoints(int iTable);
-		virtual int GetCOVRTablenPoints(int iTable);
+		virtual int GetCOVREntries() const;
+		virtual int GetCOVRTablePoints(int iTable) const;
+		virtual int GetCOVRTablenPoints(int iTable) const;
 		virtual float *GetCOVRTableHead(int iTable);
-		virtual int GetNoCOVREntries();
-		virtual int GetNoCOVRTablePoints(int iTable);
-		virtual int  GetNoCOVRTablenPoints(int iTable);
+		virtual int GetNoCOVREntries() const;
+		virtual int GetNoCOVRTablePoints(int iTable) const;
+		virtual int  GetNoCOVRTablenPoints(int iTable) const;
 		virtual float *GetNoCOVRTableHead(int iTable);
 
 		//    The following set of methods apply to BSB (i.e. Raster) type PlugIn charts only
 		//    and need not be implemented if the ChartFamily is not CHART_FAMILY_RASTER
 		virtual void ComputeSourceRectangle(const ViewPort & vp, wxRect * pSourceRect);
-		virtual double GetRasterScaleFactor();
+		virtual double GetRasterScaleFactor() const;
 		virtual bool GetChartBits(wxRect & source, unsigned char *pPix, int sub_samp);
-		virtual int GetSize_X();
-		virtual int GetSize_Y();
+		virtual int GetSize_X() const;
+		virtual int GetSize_Y() const;
 		virtual void latlong_to_chartpix(double lat, double lon, double & pixx, double & pixy);
 
 	private:

@@ -22,9 +22,9 @@
  **************************************************************************/
 
 #include "ViewPort.h"
-#include "chartbase.h"
 #include "georef.h"
 #include "OCPNRegion.h"
+#include "ProjectionType.h"
 
 #ifndef __WXMSW__
 	#include <signal.h>

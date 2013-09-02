@@ -91,7 +91,7 @@ InitReturn ChartPlugInWrapper::Init( const wxString& name, ChartInitFlag init_fl
 
 
 //    Accessors
-int ChartPlugInWrapper::GetCOVREntries()
+int ChartPlugInWrapper::GetCOVREntries() const
 {
 	if(m_ppicb)
 		return m_ppicb->GetCOVREntries();
@@ -99,7 +99,7 @@ int ChartPlugInWrapper::GetCOVREntries()
 		return 0;
 }
 
-int ChartPlugInWrapper::GetCOVRTablePoints(int iTable)
+int ChartPlugInWrapper::GetCOVRTablePoints(int iTable) const
 {
 	if(m_ppicb)
 		return m_ppicb->GetCOVRTablePoints(iTable);
@@ -107,7 +107,7 @@ int ChartPlugInWrapper::GetCOVRTablePoints(int iTable)
 		return 0;
 }
 
-int  ChartPlugInWrapper::GetCOVRTablenPoints(int iTable)
+int  ChartPlugInWrapper::GetCOVRTablenPoints(int iTable) const
 {
 	if(m_ppicb)
 		return m_ppicb->GetCOVRTablenPoints(iTable);
@@ -123,22 +123,22 @@ float *ChartPlugInWrapper::GetCOVRTableHead(int iTable)
 		return 0;
 }
 
-//      TODO
-//      PlugIn chart types do not properly support NoCovr Regions
-//      Proper fix is to update PlugIn Chart Type API
-//      Derive an extended PlugIn chart class from existing class,
-//      and use some kind of RTTI to figure out which class to call.
-int ChartPlugInWrapper::GetNoCOVREntries()
+// TODO
+// PlugIn chart types do not properly support NoCovr Regions
+// Proper fix is to update PlugIn Chart Type API
+// Derive an extended PlugIn chart class from existing class,
+// and use some kind of RTTI to figure out which class to call.
+int ChartPlugInWrapper::GetNoCOVREntries() const
 {
 	return 0;
 }
 
-int ChartPlugInWrapper::GetNoCOVRTablePoints(int iTable)
+int ChartPlugInWrapper::GetNoCOVRTablePoints(int iTable) const
 {
 	return 0;
 }
 
-int  ChartPlugInWrapper::GetNoCOVRTablenPoints(int iTable)
+int  ChartPlugInWrapper::GetNoCOVRTablenPoints(int iTable) const
 {
 	return 0;
 }
@@ -315,7 +315,7 @@ void ChartPlugInWrapper::ComputeSourceRectangle(const ViewPort &VPoint, wxRect *
 	}
 }
 
-double ChartPlugInWrapper::GetRasterScaleFactor()
+double ChartPlugInWrapper::GetRasterScaleFactor() const
 {
 	if(m_ppicb)
 		return m_ppicb->GetRasterScaleFactor();
@@ -332,7 +332,7 @@ bool ChartPlugInWrapper::GetChartBits( wxRect& source, unsigned char *pPix, int 
 		return false;
 }
 
-int ChartPlugInWrapper::GetSize_X()
+int ChartPlugInWrapper::GetSize_X() const
 {
 	if(m_ppicb)
 		return m_ppicb->GetSize_X();
@@ -340,7 +340,7 @@ int ChartPlugInWrapper::GetSize_X()
 		return 1;
 }
 
-int ChartPlugInWrapper::GetSize_Y()
+int ChartPlugInWrapper::GetSize_Y() const
 {
 	if(m_ppicb)
 		return m_ppicb->GetSize_Y();

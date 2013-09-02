@@ -27,7 +27,6 @@
 #include "dychart.h"
 #include "chart/ChartDB.h"
 #include "chart1.h"
-#include "chartbase.h"
 #include "StyleManager.h"
 #include "Style.h"
 

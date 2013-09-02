@@ -26,7 +26,6 @@
 
 #include <wx/wx.h>
 #include <wx/progdlg.h>
-#include <chartbase.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
 #include <wx/file.h>
@@ -41,7 +40,8 @@
 #include "S57Light.h"
 #include "s52s57.h"
 #include "chcanv.h"
-#include "chart/S57Sector.h"
+#include <chart/S57Sector.h>
+#include <chart/ChartBase.h>
 
 // ----------------------------------------------------------------------------
 // S57 Utility Prototypes

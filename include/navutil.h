@@ -102,9 +102,6 @@ Route * RouteExists(const wxString & guid);
 Route * RouteExists(Route * pTentRoute);
 const wxChar * ParseGPXDateTime(wxDateTime & dt, const wxChar * datetime);
 
-//----------------------------------------------------------------------------
-//    Config
-//----------------------------------------------------------------------------
 class MyConfig : public wxFileConfig
 {
 	private:
@@ -172,64 +169,6 @@ class MyConfig : public wxFileConfig
 
 		bool  m_bShowDebugWindows;
 		bool  m_bIsImporting;
-};
-
-/*
- * X11FontPicker DIALOG
- */
-#include <wx/fontdlg.h>
-
-class wxChoice;
-class WXDLLEXPORT wxText;
-class wxCheckBox;
-class WXDLLEXPORT MyFontPreviewer;
-
-class WXDLLEXPORT X11FontPicker : public wxFontDialogBase
-{
-		DECLARE_EVENT_TABLE()
-		DECLARE_DYNAMIC_CLASS(X11FontPicker)
-
-	public:
-		X11FontPicker()
-		{
-			Init();
-		}
-
-		X11FontPicker(wxWindow * parent, const wxFontData & data)
-			: wxFontDialogBase(parent, data)
-		{
-			Init();
-		}
-
-		virtual ~X11FontPicker();
-		virtual int ShowModal();
-		void OnCloseWindow(wxCloseEvent& event);
-
-		virtual void CreateWidgets();
-		virtual void InitializeFont();
-
-		void OnChangeFont(wxCommandEvent & event);
-		void OnChangeFace(wxCommandEvent & event);
-
-	protected:
-		void Init();
-
-		virtual bool DoCreate(wxWindow * parent);
-		void InitializeAllAvailableFonts();
-		void SetChoiceOptionsFromFacename(const wxString & facename);
-		void DoFontChange(void);
-
-		wxFont dialogFont;
-		wxChoice * familyChoice;
-		wxChoice * styleChoice;
-		wxChoice * weightChoice;
-		wxChoice * colourChoice;
-		wxCheckBox * underLineCheckBox;
-		wxChoice * pointSizeChoice;
-		MyFontPreviewer * m_previewer;
-		bool m_useEvents;
-		wxArrayString * pFaceNameArray;
-		wxFont * pPreviewFont;
 };
 
 #endif

@@ -25,6 +25,7 @@
 #include "georef.h"
 #include "OCPNRegion.h"
 #include "ProjectionType.h"
+#include "MicrosoftCompatibility.h"
 
 #ifndef __WXMSW__
 	#include <signal.h>
@@ -80,9 +81,6 @@ wxPoint ViewPort::GetPixFromLL(double lat, double lon) const
 		toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
 		toTM( lat, xlon, 0., clon, &tmeasting, &tmnorthing );
 
-		//            tmeasting -= tmceasting;
-		//            tmnorthing -= tmcnorthing;
-
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
 	} else if( PROJECTION_POLYCONIC == m_projection_type ) {
@@ -97,12 +95,11 @@ wxPoint ViewPort::GetPixFromLL(double lat, double lon) const
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
-	}
-
-	else
+	} else
 		toSM( lat, xlon, clat, clon, &easting, &northing );
 
-	if( !wxFinite(easting) || !wxFinite(northing) ) return wxPoint( 0, 0 );
+	if (!wxFinite(easting) || !wxFinite(northing))
+		return wxPoint( 0, 0 );
 
 	double epix = easting * view_scale_ppm;
 	double npix = northing * view_scale_ppm;
@@ -403,19 +400,16 @@ void ViewPort::SetBoxes( void )
 		double rotator = rotation;
 		rotator -= skew;
 
-		int dy = wxRound(
-				fabs( pix_height * cos( rotator ) ) + fabs( pix_width * sin( rotator ) ) );
-		int dx = wxRound(
-				fabs( pix_width * cos( rotator ) ) + fabs( pix_height * sin( rotator ) ) );
+		int dy = wxRound(fabs( pix_height * cos( rotator ) ) + fabs( pix_width * sin(rotator)));
+		int dx = wxRound(fabs( pix_width * cos( rotator ) ) + fabs( pix_height * sin(rotator)));
 
 		//  It is important for MSW build that viewport pixel dimensions be multiples of 4.....
 		if( dy % 4 ) dy += 4 - ( dy % 4 );
 		if( dx % 4 ) dx += 4 - ( dx % 4 );
 
 		//  Grow the source rectangle appropriately
-		if( fabs( rotator ) > .001 ) rv_rect.Inflate( ( dx - pix_width ) / 2,
-				( dy - pix_height ) / 2 );
-
+		if( fabs( rotator ) > .001 )
+			rv_rect.Inflate( ( dx - pix_width ) / 2, ( dy - pix_height ) / 2 );
 	}
 
 	//  Compute Viewport lat/lon reference points for co-ordinate hit testing
@@ -433,28 +427,28 @@ void ViewPort::SetBoxes( void )
 			&lon_lr );
 	GetLLFromPix( wxPoint( rv_rect.x, rv_rect.y + rv_rect.height ), &lat_ll, &lon_ll );
 
-	if( clon < 0. ) {
-		if( ( lon_ul > 0. ) && ( lon_ur < 0. ) ) {
-			lon_ul -= 360.;
-			lon_ll -= 360.;
+	if( clon < 0.0) {
+		if( ( lon_ul > 0.0) && ( lon_ur < 0.0) ) {
+			lon_ul -= 360.0;
+			lon_ll -= 360.0;
 		}
 	} else {
-		if( ( lon_ul > 0. ) && ( lon_ur < 0. ) ) {
-			lon_ur += 360.;
-			lon_lr += 360.;
+		if( ( lon_ul > 0.0) && ( lon_ur < 0.0) ) {
+			lon_ur += 360.0;
+			lon_lr += 360.0;
 		}
 	}
 
 	if( lon_ur < lon_ul ) {
-		lon_ur += 360.;
-		lon_lr += 360.;
+		lon_ur += 360.0;
+		lon_lr += 360.0;
 	}
 
-	if( lon_ur > 360. ) {
-		lon_ur -= 360.;
-		lon_lr -= 360.;
-		lon_ul -= 360.;
-		lon_ll -= 360.;
+	if( lon_ur > 360.0) {
+		lon_ur -= 360.0;
+		lon_lr -= 360.0;
+		lon_ul -= 360.0;
+		lon_ll -= 360.0;
 	}
 
 	double dlat_min = lat_ul;
@@ -524,7 +518,7 @@ void ViewPort::set_positive()
 {
 	wxPoint2DDouble t(360.0, 0.0);
 	while (GetBBox().GetMinX() < 0) {
-		clon += 360.;
+		clon += 360.0;
 		GetBBox().Translate(t);
 	}
 }

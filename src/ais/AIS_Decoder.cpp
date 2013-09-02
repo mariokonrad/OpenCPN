@@ -27,6 +27,7 @@
 #include "Select.h"
 #include "georef.h"
 #include "OCPN_DataStreamEvent.h"
+#include "MicrosoftCompatibility.h"
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/Navigation.h>

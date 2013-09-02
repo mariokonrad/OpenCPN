@@ -31,6 +31,7 @@
 #include "Multiplexer.h"
 #include "Select.h"
 #include "MessageBox.h"
+#include "MicrosoftCompatibility.h"
 #include "gpx/gpx.h"
 
 #include <wx/listimpl.cpp>
@@ -44,7 +45,7 @@ extern int g_route_line_width;
 extern Select *pSelect;
 extern MyConfig *pConfig;
 extern Multiplexer *g_pMUX;
-extern double           g_n_arrival_circle_radius;
+extern double g_n_arrival_circle_radius;
 
 Route::Route(void)
 {

@@ -37,8 +37,11 @@
 #include "ocpn_pixel.h"
 #include "OCPNRegionIterator.h"
 #include "OCPNBitmap.h"
+#include "MicrosoftCompatibility.h"
 #include <chart/PlyPoint.h>
 #include <algorithm>
+
+using std::min;
 
 #ifndef __WXMSW__
 	#include <signal.h>
@@ -815,13 +818,12 @@ void ChartBaseBSB::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
 
 wxBitmap *ChartBaseBSB::CreateThumbnail(int tnx, int tny, ColorScheme cs)
 {
-
 //    Calculate the size and divisors
 
       int divx = wxMax(1, Size_X / (4 * tnx) );
       int divy = wxMax(1, Size_Y / (4 * tny) );
 
-      int div_factor = std::min(divx, divy);
+      int div_factor = min(divx, divy);
 
       int des_width = Size_X / div_factor;
       int des_height = Size_Y / div_factor;
@@ -932,7 +934,7 @@ ThumbData *ChartBaseBSB::GetThumbData(int tnx, int tny, float lat, float lon)
       int divx = Size_X / tnx;
       int divy = Size_Y / tny;
 
-      int div_factor = std::min(divx, divy);
+      int div_factor = min(divx, divy);
 
       int pixx, pixy;
 
@@ -964,7 +966,7 @@ bool ChartBaseBSB::UpdateThumbData(double lat, double lon)
     int divx = Size_X / pThumbData->Thumb_Size_X;
     int divy = Size_Y / pThumbData->Thumb_Size_Y;
 
-    int div_factor = std::min(divx, divy);
+    int div_factor = min(divx, divy);
 
     int pixx_test, pixy_test;
 

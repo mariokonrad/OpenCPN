@@ -30,6 +30,12 @@
 #include <wx/choice.h>
 #include <wx/dirdlg.h>
 
+#if defined(__WXX11__)
+	#include "X11FontPicker.h"
+#else
+	#include <wx/fontdlg.h>
+#endif
+
 #if wxCHECK_VERSION(2,9,4) /* does this work in 2.8 too.. do we need a test? */
 	#include <wx/renderer.h>
 #endif

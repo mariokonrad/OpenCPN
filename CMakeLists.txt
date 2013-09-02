@@ -182,7 +182,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src)
 #TODO: Should we use  -fno-stack-protector
 #  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
 IF(NOT WIN32 AND NOT APPLE )
-  ADD_DEFINITIONS( "-Wall -Wno-unused -fexceptions -rdynamic" )
+  ADD_DEFINITIONS( "-Wall -Wextra -fexceptions -rdynamic" )
   ADD_DEFINITIONS( " -g -fno-strict-aliasing")
 ENDIF(NOT WIN32 AND NOT APPLE)
 
@@ -439,6 +439,7 @@ SET(HDRS
 	src/App.h
 	src/BoundingBox.h
 	src/LatLonBoundingBox.h
+	src/X11FontPicker.h
 	include/ocpn_pixel.h
 	src/OCPNMemDC.h
 	src/OCPNBitmap.h
@@ -604,6 +605,7 @@ SET(SRCS
 	src/MyPrintout.cpp
 	src/BoundingBox.cpp
 	src/LatLonBoundingBox.cpp
+	src/X11FontPicker.cpp
 	src/ocpn_pixel.cpp
 	src/OCPNMemDC.cpp
 	src/OCPNBitmap.cpp
@@ -1000,6 +1002,23 @@ SET(tcData
    )
 
 
+IF (NOT APPLE AND NOT WIN32)
+  SET(CMAKE_C_FLAGS "-O2 -Wall -Wextra")
+  SET(CMAKE_C_FLAGS_DEBUG "-g -O0 -Wall -Wextra")
+  SET(CMAKE_C_FLAGS_MINSIZEREL "-O2 -Wall -Wextra")
+  SET(CMAKE_C_FLAGS_RELEASE "-O3 -Wall -Wextra")
+  SET(CMAKE_C_FLAGS_RELWITHDEBINFO "-g -O3 -Wall -Wextra")
+
+  SET(CMAKE_CXX_FLAGS "-O2 -Wall -Wextra")
+  SET(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -Wall -Wextra")
+  SET(CMAKE_CXX_FLAGS_MINSIZEREL "-O2 -Wall -Wextra")
+  SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra")
+  SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3 -Wall -Wextra")
+
+  SET(CMAKE_EXE_LINKER_FLAGS "-O2 -Wall -Wextra")
+  SET(CMAKE_SHARED_LINKER_FLAGS "-O2 -Wall -Wextra")
+  SET(CMAKE_MODULE_LINKER_FLAGS "-O2 -Wall -Wextra")
+ENDIF()
 
 IF(APPLE)
   INCLUDE_DIRECTORIES(/usr/X11/include /usr/X11/include/GL)

@@ -104,12 +104,14 @@ class MyConfig : public wxFileConfig
 		void load_toolbar();
 		void load_ais_alert_dialog();
 		void load_ais_query_dialog();
+		void load_system_config(int);
 
 		void write_view();
 		void write_frame();
 		void write_toolbar();
 		void write_ais_alert_dialog();
 		void write_ais_query_dialog();
+		void write_system_config();
 
 	public:
 

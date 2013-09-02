@@ -474,8 +474,6 @@ bool g_b_useStencil;
 int portaudio_initialized;
 int g_sticky_chart;
 double g_GLMinLineWidth;
-int n_NavMessageShown;
-wxString g_config_version_string;
 
 char bells_sound_file_name[8][12] =    // pjotrc 2010.02.09
 {

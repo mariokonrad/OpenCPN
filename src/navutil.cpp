@@ -65,6 +65,7 @@
 #include "MicrosoftCompatibility.h"
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/System.h>
 
 #ifdef USE_S57
 #include "s52plib.h"
@@ -227,9 +228,6 @@ extern bool             g_bbigred;
 extern wxString         g_AW1GUID;
 extern wxString         g_AW2GUID;
 extern int              g_BSBImgDebug;
-
-extern int             n_NavMessageShown;
-extern wxString        g_config_version_string;
 
 extern bool             g_bAISRolloverShowClass;
 extern bool             g_bAISRolloverShowCOG;
@@ -434,10 +432,25 @@ void MyConfig::load_view()
 	gui.set_view_lookahead_mode(lookahead_mode);
 }
 
-int MyConfig::LoadMyConfig(int iteration)
+void MyConfig::load_system_config(int iteration) // FIXME: get rid of this 'iteration'
+{
+	global::System & sys = global::OCPN::get().sys();
+
+	if (iteration == 0) {
+		wxString version_string = _T("");
+		long nav_message_shown = 0;
+
+		Read(_T("ConfigVersionString"), &version_string, _T(""));
+		Read(_T("NavMessageShown"), &nav_message_shown, 0);
+
+		sys.set_config_version_string(version_string);
+		sys.set_config_nav_message_shown(nav_message_shown);
+	}
+}
+
+int MyConfig::LoadMyConfig(int iteration) // FIXME: get rid of this 'iteration'
 {
 	int read_int;
-	wxString val;
 
 	int display_width;
 	int display_height;
@@ -446,11 +459,7 @@ int MyConfig::LoadMyConfig(int iteration)
 	//    Global options and settings
 	SetPath(_T("/Settings"));
 
-	// Some undocumented values
-	if (iteration == 0) {
-		Read(_T("ConfigVersionString"), &g_config_version_string, _T(""));
-		Read(_T("NavMessageShown"), &n_NavMessageShown, 0);
-	}
+	load_system_config(iteration);
 
 	wxString uiStyle;
 	Read( _T ( "UIStyle" ), &uiStyle, wxT("") );
@@ -1106,7 +1115,6 @@ int MyConfig::LoadMyConfig(int iteration)
 	if( GetNumberOfEntries() ) {
 		wxString str, val;
 		long dummy;
-		int iDir = 0;
 		bool bCont = GetFirstEntry( str, dummy );
 		while( bCont ) {
 			Read( str, &val );              // Get a file name
@@ -1168,6 +1176,7 @@ int MyConfig::LoadMyConfig(int iteration)
 	SetPath( _T ( "/Settings/Others" ) );
 
 	// Radar rings
+	wxString val;
 	g_iNavAidRadarRingsNumberVisible = 0;
 	Read( _T ( "RadarRingsNumberVisible" ), &val );
 	if( val.Length() > 0 ) g_iNavAidRadarRingsNumberVisible = atoi( val.mb_str() );
@@ -1297,7 +1306,6 @@ bool MyConfig::LoadChartDirArray( ArrayOfCDI &ChartDirArray )
 		wxString str, val;
 		long dummy;
 		int nAdjustChartDirs = 0;
-		int iDir = 0;
 		bool bCont = pConfig->GetFirstEntry( str, dummy );
 		while( bCont ) {
 			pConfig->Read( str, &val );              // Get a Directory name
@@ -1333,7 +1341,6 @@ bool MyConfig::LoadChartDirArray( ArrayOfCDI &ChartDirArray )
 				cdi.magic_number = dirname.AfterFirst( '^' );
 
 				ChartDirArray.Add( cdi );
-				iDir++;
 			}
 
 			bCont = pConfig->GetNextEntry( str, dummy );
@@ -1345,7 +1352,7 @@ bool MyConfig::LoadChartDirArray( ArrayOfCDI &ChartDirArray )
 	return true;
 }
 
-bool MyConfig::AddNewRoute( Route *pr, int crm ) // FIXME: does this really belong to config?
+bool MyConfig::AddNewRoute(Route *pr, int) // FIXME: does this really belong to config?
 {
 	if( pr->m_bIsInLayer )
 		return true;
@@ -1358,7 +1365,7 @@ bool MyConfig::AddNewRoute( Route *pr, int crm ) // FIXME: does this really belo
 	return true;
 }
 
-bool MyConfig::UpdateRoute( Route *pr ) // FIXME: does this really belong to config?
+bool MyConfig::UpdateRoute(Route * pr) // FIXME: does this really belong to config?
 {
 	if( pr->m_bIsInLayer )
 		return true;
@@ -1391,7 +1398,7 @@ bool MyConfig::DeleteConfigRoute( Route *pr ) // FIXME: does this really belong 
 	return true;
 }
 
-bool MyConfig::AddNewWayPoint(RoutePoint * pWP, int crm) // FIXME: does this really belong to config?
+bool MyConfig::AddNewWayPoint(RoutePoint * pWP, int) // FIXME: does this really belong to config?
 {
 	if( pWP->m_bIsInLayer )
 		return true;
@@ -1608,15 +1615,21 @@ void MyConfig::write_view()
 	Write(_T("LookAheadMode"), config.lookahead_mode);
 }
 
+void MyConfig::write_system_config()
+{
+	const global::System::Config & config = global::OCPN::get().sys().config();
+
+	Write(_T("ConfigVersionString"), config.version_string);
+	Write(_T("NavMessageShown"), config.nav_message_shown);
+}
+
 void MyConfig::UpdateSettings()
 {
 	//    Global options and settings
 	SetPath( _T ( "/Settings" ) );
 
 	write_view();
-
-	Write( _T ( "ConfigVersionString" ), g_config_version_string );
-	Write( _T ( "NavMessageShown" ), n_NavMessageShown );
+	write_system_config();
 
 	Write( _T ( "UIStyle" ), g_StyleManager->GetStyleNextInvocation() );
 	Write( _T ( "ChartNotRenderScaleFactor" ), g_ChartNotRenderScaleFactor );
@@ -2179,37 +2192,29 @@ void MyConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
 //          Static GPX Support Routines
 //
 //-------------------------------------------------------------------------
-RoutePoint *WaypointExists( const wxString& name, double lat, double lon )
+RoutePoint *WaypointExists(const wxString & name, double lat, double lon)
 {
-	RoutePoint *pret = NULL;
-	wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
-	bool Exists = false;
-	while( node ) {
-		RoutePoint *pr = node->GetData();
-		if( name == pr->GetName() ) {
-			if( fabs( lat - pr->m_lat ) < 1.e-6 && fabs( lon - pr->m_lon ) < 1.e-6 ) {
-				Exists = true;
-				pret = pr;
-				break;
+	RoutePointList * list = pWayPointMan->m_pWayPointList;
+	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
+		RoutePoint * pr = *i;
+		if (name == pr->GetName()) {
+			if (fabs(lat - pr->m_lat) < 1.e-6 && fabs(lon - pr->m_lon) < 1.e-6) {
+				return pr;
 			}
 		}
-		node = node->GetNext();
 	}
-
-	return pret;
+	return NULL;
 }
 
 RoutePoint * WaypointExists(const wxString & guid)
 {
-	wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
-	while( node ) {
-		RoutePoint *pr = node->GetData();
-		if( guid == pr->m_GUID ) {
+	RoutePointList * list = pWayPointMan->m_pWayPointList;
+	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
+		RoutePoint * pr = *i;
+		if (guid == pr->m_GUID) {
 			return pr;
 		}
-		node = node->GetNext();
 	}
-
 	return NULL;
 }
 
@@ -2226,7 +2231,7 @@ static bool WptIsInRouteList(RoutePoint * pr)
 	return false;
 }
 
-Route *RouteExists( const wxString& guid )
+Route *RouteExists(const wxString & guid)
 {
 	wxRouteListNode * route_node = pRouteList->GetFirst();
 
@@ -2240,7 +2245,7 @@ Route *RouteExists( const wxString& guid )
 	return NULL;
 }
 
-Route *RouteExists( Route * pTentRoute )
+Route *RouteExists(Route * pTentRoute)
 {
 	wxRouteListNode *route_node = pRouteList->GetFirst();
 	while( route_node ) {
@@ -2259,7 +2264,7 @@ Route *RouteExists( Route * pTentRoute )
 // This function formats the input date/time into a valid GPX ISO 8601
 // time string specified in the UTC time zone.
 
-wxString FormatGPXDateTime( wxDateTime dt )
+wxString FormatGPXDateTime(wxDateTime dt)
 {
 	//      return dt.Format(wxT("%Y-%m-%dT%TZ"), wxDateTime::GMT0);
 	return dt.Format( wxT("%Y-%m-%dT%H:%M:%SZ") );
@@ -2278,9 +2283,11 @@ wxString FormatGPXDateTime( wxDateTime dt )
 // For example, 2010-10-30T14:34:56Z and 2010-10-30T14:34:56-04:00
 // are the same time. The first is UTC and the second is EDT.
 
-const wxChar *ParseGPXDateTime( wxDateTime &dt, const wxChar *datetime )
+const wxChar *ParseGPXDateTime(wxDateTime & dt, const wxChar * datetime)
 {
-	long sign, hrs_west, mins_west;
+	long sign;
+	long hrs_west;
+	long mins_west;
 	const wxChar *end;
 
 	// Skip any leading whitespace
@@ -2358,7 +2365,7 @@ const wxChar *ParseGPXDateTime( wxDateTime &dt, const wxChar *datetime )
 /*          LogMessageOnce                                                */
 /**************************************************************************/
 
-bool LogMessageOnce(const wxString &msg)
+bool LogMessageOnce(const wxString & msg)
 {
 	for (unsigned int i = 0; i < pMessageOnceArray->GetCount(); ++i) {
 		if (msg.IsSameAs(pMessageOnceArray->Item(i)))

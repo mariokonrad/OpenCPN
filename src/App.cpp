@@ -130,8 +130,6 @@ extern wxPageSetupData* g_pageSetupData;
 extern int portaudio_initialized;
 extern int g_sticky_chart;
 extern double g_GLMinLineWidth;
-extern int n_NavMessageShown;
-extern wxString g_config_version_string;
 extern bool bDBUpdateInProgress;
 extern ThumbWin * pthumbwin;
 extern TCMgr * ptcmgr;
@@ -762,9 +760,9 @@ bool App::OnInit()
 	wxLogMessage( imsg );
 
 	wxString version = OpenCPNVersion;
-	wxString vs = version.Trim( true );
-	vs = vs.Trim( false );
-	wxLogMessage( vs );
+	wxString vs = version.Trim(true);
+	vs = vs.Trim(false);
+	wxLogMessage(vs);
 
 	wxString wxver(wxVERSION_STRING);
 	wxver.Prepend( _T("wxWidgets version: ") );
@@ -930,7 +928,7 @@ bool App::OnInit()
 	pConfig->LoadMyConfig(0);
 
 	//        Is this the first run after a clean install?
-	if( !n_NavMessageShown )
+	if (!global::OCPN::get().sys().config().nav_message_shown)
 		g_bFirstRun = true;
 
 	//  Now we can set the locale
@@ -1012,12 +1010,13 @@ bool App::OnInit()
 	//  Send the Welcome/warning message if it has never been sent before,
 	//  or if the version string has changed at all
 	//  We defer until here to allow for localization of the message
-	if( !n_NavMessageShown || ( vs != g_config_version_string ) ) {
-		if( wxID_CANCEL == ShowNavWarning() ) return false;
-		n_NavMessageShown = 1;
+	if (!global::OCPN::get().sys().config().nav_message_shown || (vs != global::OCPN::get().sys().config().version_string)) {
+		if (wxID_CANCEL == ShowNavWarning())
+			return false;
+		global::OCPN::get().sys().set_config_nav_message_shown(true);
 	}
 
-	g_config_version_string = vs;
+	global::OCPN::get().sys().set_config_version_string(vs);
 
 #ifdef USE_S57
 

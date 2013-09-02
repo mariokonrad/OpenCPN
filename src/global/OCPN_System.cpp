@@ -40,5 +40,20 @@ void OCPN_System::set_private_data_dir(const wxString & directory)
 	data_data.private_data_dir = directory;
 }
 
+const System::Config & OCPN_System::config() const
+{
+	return data_config;
+}
+
+void OCPN_System::set_config_version_string(const wxString & version_string)
+{
+	data_config.version_string = version_string;
+}
+
+void OCPN_System::set_config_nav_message_shown(bool flag)
+{
+	data_config.nav_message_shown = flag;
+}
+
 }
 

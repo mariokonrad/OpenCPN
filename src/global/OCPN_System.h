@@ -32,11 +32,17 @@ class OCPN_System : public System
 {
 	private:
 		Data data_data;
+		Config data_config;
 
 	public: // data
 		virtual const Data & data() const;
 		virtual void set_home_location(const wxString &);
 		virtual void set_private_data_dir(const wxString &);
+
+	public: // config
+		virtual const Config & config() const;
+		virtual void set_config_version_string(const wxString &);
+		virtual void set_config_nav_message_shown(bool);
 };
 
 }

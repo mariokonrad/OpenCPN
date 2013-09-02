@@ -44,6 +44,18 @@ class System
 		virtual const Data & data() const = 0;
 		virtual void set_home_location(const wxString &) = 0;
 		virtual void set_private_data_dir(const wxString &) = 0;
+
+	public:
+
+		struct Config
+		{
+			wxString version_string;
+			bool nav_message_shown;
+		};
+
+		virtual const Config & config() const = 0;
+		virtual void set_config_version_string(const wxString &) = 0;
+		virtual void set_config_nav_message_shown(bool) = 0;
 };
 
 }

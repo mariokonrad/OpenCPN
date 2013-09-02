@@ -44,9 +44,6 @@ enum ScaleTypeEnum
 	RENDER_HIDEF,
 };
 
-
-class WXDLLEXPORT ChartImg;
-
 //-----------------------------------------------------------------------------
 //    Constants, etc.
 //-----------------------------------------------------------------------------
@@ -91,8 +88,8 @@ class opncpnPalette
 		opncpnPalette();
 		~opncpnPalette();
 	public:
-		int * FwdPalette;
-		int * RevPalette;
+		int * FwdPalette; // FIXME: use std container, not this realloc clusterfuck
+		int * RevPalette; // FIXME: use std container, not this realloc clusterfuck
 		int nFwd;
 		int nRev;
 };
@@ -107,10 +104,10 @@ class  ChartBaseBSB : public ChartBase
 
 		//    Accessors
 		virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
-		virtual ThumbData *GetThumbData() {return pThumbData;}
+		virtual ThumbData *GetThumbData();
 		virtual bool UpdateThumbData(double lat, double lon);
 
-		int GetNativeScale(){return m_Chart_Scale;}
+		int GetNativeScale();
 		double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
 		double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
 
@@ -119,10 +116,15 @@ class  ChartBaseBSB : public ChartBase
 		virtual int latlong_to_pix_vp(double lat, double lon, int &pixx, int &pixy, ViewPort& vp);
 		virtual int vp_pix_to_latlong(ViewPort& vp, int pixx, int pixy, double *lat, double *lon);
 
-		bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion &Region);
+		bool RenderRegionViewOnDC(
+				wxMemoryDC & dc,
+				const ViewPort & VPoint,
+				const OCPNRegion & Region);
 
-		virtual bool RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint,
-				const OCPNRegion &Region);
+		virtual bool RenderRegionViewOnGL(
+				const wxGLContext & glc,
+				const ViewPort & VPoint,
+				const OCPNRegion & Region);
 
 		virtual bool AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed);
 		virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
@@ -138,35 +140,42 @@ class  ChartBaseBSB : public ChartBase
 		void SetVPRasterParms(const ViewPort &vpt);
 
 		void ComputeSourceRectangle(const ViewPort &vp, wxRect *pSourceRect);
-		double GetRasterScaleFactor() const { return m_raster_scale_factor; }
-		virtual bool GetChartBits( wxRect& source, unsigned char *pPix, int sub_samp );
-		int GetSize_X() const { return Size_X;}
-		int GetSize_Y() const { return Size_Y;}
+		double GetRasterScaleFactor() const;
+		virtual bool GetChartBits(wxRect& source, unsigned char *pPix, int sub_samp);
+		int GetSize_X() const;
+		int GetSize_Y() const;
 
 		void latlong_to_chartpix(double lat, double lon, double &pixx, double &pixy);
 		void chartpix_to_latlong(double pixx, double pixy, double *plat, double *plon);
 
 	protected:
-		//    Methods
+		wxRect GetSourceRect() const;
 
-		wxRect GetSourceRect() const { return Rsrc; }
+		virtual bool GetAndScaleData(
+				unsigned char * ppn,
+				wxRect & source,
+				int source_stride,
+				wxRect & dest,
+				int dest_stride,
+				double scale_factor,
+				ScaleTypeEnum scale_type);
 
-		virtual bool GetAndScaleData(unsigned char *ppn,
-				wxRect& source, int source_stride, wxRect& dest, int dest_stride,
-				double scale_factor, ScaleTypeEnum scale_type);
 		bool RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint);
 
-		bool IsCacheValid() const { return cached_image_ok; }
-		void InvalidateCache(){cached_image_ok = 0;}
-		bool IsRenderCacheable( wxRect& source, wxRect& dest );
+		bool IsCacheValid() const;
+		void InvalidateCache();
+		bool IsRenderCacheable(wxRect& source, wxRect& dest);
 
 		void CreatePaletteEntry(char *buffer, int palette_index);
 		PaletteDir GetPaletteDir(void);
 		int  *GetPalettePtr(BSB_Color_Capability);
 
-		double GetClosestValidNaturalScalePPM(double target_scale, double scale_factor_min, double scale_factor_max);
+		double GetClosestValidNaturalScalePPM(
+				double target_scale,
+				double scale_factor_min,
+				double scale_factor_max);
 
-		double GetPPM() const { return m_ppm_avg;}
+		double GetPPM() const;
 
 		virtual void InvalidateLineCache();
 		virtual bool CreateLineIndex(void);
@@ -176,9 +185,15 @@ class  ChartBaseBSB : public ChartBase
 		virtual int BSBGetScanline( unsigned char *pLineBuf, int y, int xs, int xl, int sub_samp);
 
 
-		bool GetViewUsingCache( wxRect& source, wxRect& dest, const OCPNRegion& Region, ScaleTypeEnum scale_type );
-		bool GetView( wxRect& source, wxRect& dest, ScaleTypeEnum scale_type );
-
+		bool GetViewUsingCache(
+				wxRect & source,
+				wxRect & dest,
+				const OCPNRegion & Region,
+				ScaleTypeEnum scale_type);
+		bool GetView(
+				wxRect & source,
+				wxRect & dest,
+				ScaleTypeEnum scale_type);
 
 		virtual int BSBScanScanline(wxInputStream *pinStream);
 		virtual int ReadBSBHdrLine( wxFileInputStream*, char *, int );
@@ -188,16 +203,14 @@ class  ChartBaseBSB : public ChartBase
 		InitReturn PreInit( const wxString& name, ChartInitFlag init_flags, ColorScheme cs );
 		InitReturn PostInit(void);
 
-
 		PixelCache * pPixCache;
 
-		int         Size_X;                 // Chart native pixel dimensions
+		int         Size_X; // Chart native pixel dimensions
 		int         Size_Y;
 		int         m_Chart_DU;
 		double      m_cph;
-		double      m_proj_parameter;                     // Mercator:               Projection Latitude
-		// Transverse Mercator:    Central Meridian
-		double      m_dx;                                 // Pixel scale factors, from KAP header
+		double      m_proj_parameter; // Mercator:Projection Latitude, Transverse Mercator: Central Meridian
+		double      m_dx; // Pixel scale factors, from KAP header
 		double      m_dy;
 
 		wxString    m_bsb_ver;

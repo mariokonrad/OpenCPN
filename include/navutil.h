@@ -80,7 +80,6 @@ extern void AlphaBlending(
 		unsigned char transparency);
 
 extern double fromDMM(wxString sdms);
-extern double parseLatLon(wxString latlon);
 
 class Route;
 class wxProgressDialog;
@@ -91,11 +90,6 @@ class GpxWptElement;
 class GpxRteElement;
 class GpxTrkElement;
 
-GpxWptElement * CreateGPXWpt(RoutePoint * pr, char * waypoint_type, bool b_props_explicit = false, bool b_props_minimal = false);
-GpxRteElement * CreateGPXRte(Route * pRoute);
-GpxTrkElement * CreateGPXTrk(Route * pRoute);
-
-bool WptIsInRouteList(RoutePoint *pr);
 RoutePoint * WaypointExists(const wxString & name, double lat, double lon);
 RoutePoint * WaypointExists(const wxString & guid);
 Route * RouteExists(const wxString & guid);

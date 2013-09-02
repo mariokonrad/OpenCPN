@@ -70,6 +70,8 @@
 	#include "s52plib.h"
 #endif
 
+static bool WptIsInRouteList(RoutePoint *pr);
+
 extern ChartCanvas      *cc1;
 extern MyFrame          *gFrame;
 
@@ -79,28 +81,19 @@ extern int              g_restore_dbindex;
 extern RouteList        *pRouteList;
 extern LayerList        *pLayerList;
 extern int              g_LayerIdx;
-extern Select           *pSelect;
 extern MyConfig         *pConfig;
-extern ArrayOfCDI       g_ChartDirArray;
 extern double           vLat, vLon, gLat, gLon;
-extern double           kLat, kLon;
 extern double           initial_scale_ppm;
 extern ColorScheme      global_color_scheme;
 
-extern wxToolBarBase    *toolBar;
-
 extern wxArrayOfConnPrm *g_pConnectionParams;
 
-extern wxString         g_csv_locn;
 extern wxString         g_SENCPrefix;
 extern wxString         g_UserPresLibData;
 
-extern AIS_Decoder      *g_pAIS;
 extern wxString         g_SData_Locn;
 extern wxString         *pInit_Chart_Dir;
 extern WayPointman      *pWayPointMan;
-extern Routeman         *g_pRouteMan;
-extern RouteProp        *pRoutePropDialog;
 
 extern bool             s_bSetSystemTime;
 extern bool             g_bDisplayGrid;         //Flag indicating if grid is to be displayed
@@ -279,8 +272,6 @@ extern wxString         g_uploadConnection;
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern wxArrayString    TideCurrentDataSet;
 extern wxString         g_TCData_Dir;
-extern Multiplexer      *g_pMUX;
-extern bool             portaudio_initialized;
 
 // Layer helper function
 
@@ -776,22 +767,6 @@ int MyConfig::LoadMyConfig(int iteration)
     if( iteration == 0 )
 		g_UserPresLibData = valpres;
 
-    /*
-     wxString strd ( _T ( "S57DataLocation" ) );
-     SetPath ( _T ( "/Directories" ) );
-     Read ( strd, &val );              // Get the Directory name
-
-
-     wxString dirname ( val );
-     if ( !dirname.IsEmpty() )
-     {
-     if ( g_pcsv_locn->IsEmpty() )   // on second pass, don't overwrite
-     {
-     g_pcsv_locn->Clear();
-     g_pcsv_locn->Append ( val );
-     }
-     }
-     */
     wxString strs( _T ( "SENCFileLocation" ) );
     SetPath( _T ( "/Directories" ) );
     wxString vals;
@@ -2103,7 +2078,7 @@ void MyConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 
             if( b_add ) {
                 if( !pRoute->m_bIsTrack )
-                    pgpx->AddGPXRoute( pRoute ); //gpxroot->AddRoute( CreateGPXRte( pRoute ) );
+                    pgpx->AddGPXRoute( pRoute );
                 else
                     pgpx->AddGPXTrack( (Track *)pRoute  );
                 }
@@ -2208,14 +2183,10 @@ void MyConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
 RoutePoint *WaypointExists( const wxString& name, double lat, double lon )
 {
     RoutePoint *pret = NULL;
-//    if( g_bIsNewLayer ) return NULL;
     wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
     bool Exists = false;
     while( node ) {
         RoutePoint *pr = node->GetData();
-
-//        if( pr->m_bIsInLayer ) return NULL;
-
         if( name == pr->GetName() ) {
             if( fabs( lat - pr->m_lat ) < 1.e-6 && fabs( lon - pr->m_lon ) < 1.e-6 ) {
                 Exists = true;
@@ -2243,20 +2214,17 @@ RoutePoint * WaypointExists(const wxString & guid)
     return NULL;
 }
 
-bool WptIsInRouteList(RoutePoint * pr)
+static bool WptIsInRouteList(RoutePoint * pr)
 {
-    bool IsInList = false;
-
 	for (RouteList::iterator j = pRouteList->begin(); j != pRouteList->end(); ++j) {
         RoutePointList * pRoutePointList = (*j)->pRoutePointList;
 		for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
             if (pr->IsSame(*i)) {
-                IsInList = true;
-                break;
+                return true;
             }
         }
     }
-    return IsInList;
+    return false;
 }
 
 Route *RouteExists( const wxString& guid )
@@ -2393,170 +2361,110 @@ const wxChar *ParseGPXDateTime( wxDateTime &dt, const wxChar *datetime )
 
 bool LogMessageOnce(const wxString &msg)
 {
-    //    Search the array for a match
+	for (unsigned int i = 0; i < pMessageOnceArray->GetCount(); ++i) {
+		if (msg.IsSameAs(pMessageOnceArray->Item(i)))
+			return false;
+	}
 
-    for( unsigned int i = 0; i < pMessageOnceArray->GetCount(); i++ ) {
-        if( msg.IsSameAs( pMessageOnceArray->Item( i ) ) ) return false;
-    }
-
-    // Not found, so add to the array
-    pMessageOnceArray->Add( msg );
-
-    //    And print it
-    wxLogMessage( msg );
-    return true;
+	pMessageOnceArray->Add( msg );
+	wxLogMessage(msg);
+	return true;
 }
 
 /**************************************************************************/
 /*          Converts the distance to the units selected by user           */
 /**************************************************************************/
-double toUsrDistance( double nm_distance, int unit  )
+double toUsrDistance(double nm_distance, int unit)
 {
-    double ret;
-    if ( unit == -1 )
+    if (unit == -1)
         unit = g_iDistanceFormat;
-    switch( unit ){
-        case DISTANCE_NMI: //Nautical miles
-            ret = nm_distance;
-            break;
-        case DISTANCE_MI: //Statute miles
-            ret = nm_distance * 1.15078;
-            break;
-        case DISTANCE_KM:
-            ret = nm_distance * 1.852;
-            break;
-        case DISTANCE_M:
-            ret = nm_distance * 1852;
-            break;
+    switch (unit) {
+        case DISTANCE_NMI: return nm_distance; // Nautical miles
+        case DISTANCE_MI:  return nm_distance * 1.15078; // statute miles
+        case DISTANCE_KM:  return nm_distance * 1.852;
+        case DISTANCE_M:   return nm_distance * 1852;
     }
-    return ret;
+    return 0.0;
 }
 
 /**************************************************************************/
 /*          Converts the distance from the units selected by user to NMi  */
 /**************************************************************************/
-double fromUsrDistance( double usr_distance, int unit )
+double fromUsrDistance(double usr_distance, int unit)
 {
-    double ret;
-    if ( unit == -1 )
+    if (unit == -1)
         unit = g_iDistanceFormat;
-    switch( unit ){
-        case DISTANCE_NMI: //Nautical miles
-            ret = usr_distance;
-            break;
-        case DISTANCE_MI: //Statute miles
-            ret = usr_distance / 1.15078;
-            break;
-        case DISTANCE_KM:
-            ret = usr_distance / 1.852;
-            break;
-        case DISTANCE_M:
-            ret = usr_distance / 1852;
-            break;
+    switch (unit) {
+        case DISTANCE_NMI: return usr_distance; // nautical miles
+        case DISTANCE_MI:  return usr_distance / 1.15078; // statute miles
+        case DISTANCE_KM:  return usr_distance / 1.852;
+        case DISTANCE_M:   return usr_distance / 1852;
     }
-    return ret;
+    return 0.0;
 }
 
 /**************************************************************************/
 /*          Returns the abbreviation of user selected distance unit       */
 /**************************************************************************/
-wxString getUsrDistanceUnit( int unit )
+wxString getUsrDistanceUnit(int unit)
 {
-    wxString ret;
-    if ( unit == -1 )
+    if (unit == -1)
         unit = g_iDistanceFormat;
-    switch( unit ){
-        case DISTANCE_NMI: //Nautical miles
-            ret = _("NMi");
-            break;
-        case DISTANCE_MI: //Statute miles
-            ret = _("mi");
-            break;
-        case DISTANCE_KM:
-            ret = _("km");
-            break;
-        case DISTANCE_M:
-            ret = _("m");
-            break;
+    switch (unit) {
+        case DISTANCE_NMI: return _T("NMi"); // nautical miles
+        case DISTANCE_MI:  return _T("mi");  // statute miles
+        case DISTANCE_KM:  return _T("km");
+        case DISTANCE_M:   return _T("m");
     }
-    return ret;
+    return wxString();;
 }
 
 /**************************************************************************/
 /*          Converts the speed to the units selected by user              */
 /**************************************************************************/
-double toUsrSpeed( double kts_speed, int unit )
+double toUsrSpeed(double kts_speed, int unit)
 {
-    double ret;
-    if ( unit == -1 )
+    if (unit == -1)
         unit = g_iSpeedFormat;
-    switch( unit )
-    {
-        case SPEED_KTS: //kts
-            ret = kts_speed;
-            break;
-        case SPEED_MPH: //mph
-            ret = kts_speed * 1.15078;
-            break;
-        case SPEED_KMH: //km/h
-            ret = kts_speed * 1.852;
-            break;
-        case SPEED_MS: //m/s
-            ret = kts_speed * 0.514444444;
-            break;
+    switch (unit) {
+        case SPEED_KTS: return kts_speed; //kts
+        case SPEED_MPH: return kts_speed * 1.15078; //mph
+        case SPEED_KMH: return kts_speed * 1.852; //km/h
+        case SPEED_MS:  return kts_speed * 0.514444444; //m/s
     }
-    return ret;
+    return 0.0;
 }
 
 /**************************************************************************/
 /*          Converts the speed from the units selected by user to knots   */
 /**************************************************************************/
-double fromUsrSpeed( double usr_speed, int unit )
+double fromUsrSpeed(double usr_speed, int unit)
 {
-    double ret;
-    if ( unit == -1 )
+    if (unit == -1)
         unit = g_iSpeedFormat;
-    switch( unit )
-    {
-        case SPEED_KTS: //kts
-            ret = usr_speed;
-            break;
-        case SPEED_MPH: //mph
-            ret = usr_speed / 1.15078;
-            break;
-        case SPEED_KMH: //km/h
-            ret = usr_speed / 1.852;
-            break;
-        case SPEED_MS: //m/s
-            ret = usr_speed / 0.514444444;
-            break;
+    switch (unit) {
+        case SPEED_KTS: return usr_speed; //kts
+        case SPEED_MPH: return usr_speed / 1.15078; //mph
+        case SPEED_KMH: return usr_speed / 1.852; //km/h
+        case SPEED_MS:  return usr_speed / 0.514444444; //m/s
     }
-    return ret;
+    return 0.0;
 }
 
 /**************************************************************************/
 /*          Returns the abbreviation of user selected speed unit          */
 /**************************************************************************/
-wxString getUsrSpeedUnit( int unit )
+wxString getUsrSpeedUnit(int unit)
 {
-    wxString ret;
-    if ( unit == -1 )
+    if (unit == -1)
         unit = g_iSpeedFormat;
-    switch( unit ){
-        case SPEED_KTS: //kts
-            ret = _("kts");
-            break;
-        case SPEED_MPH: //mph
-            ret = _("mph");
-            break;
-        case SPEED_KMH:
-            ret = _("km/h");
-            break;
-        case SPEED_MS:
-            ret = _("m/s");
-            break;
+    switch (unit) {
+        case SPEED_KTS: return _T("kts"); //kts
+        case SPEED_MPH: return _T("mph"); //mph
+        case SPEED_KMH: return _T("km/h");
+        case SPEED_MS:  return _T("m/s");
     }
-    return ret;
+    return wxString();
 }
 
 /**************************************************************************/

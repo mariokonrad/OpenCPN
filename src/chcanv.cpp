@@ -29,6 +29,7 @@
 #include <wx/listimpl.cpp>
 
 #include "chcanv.h"
+#include "ocpnDC.h"
 #include "RouteManagerDialog.h"
 #include "GoToPositionDialog.h"
 #include "TimedPopupWin.h"
@@ -56,7 +57,6 @@
 #include "tcmgr.h"
 #include "plugin/PlugInManager.h"
 #include "ocpn_pixel.h"
-#include "ocpndc.h"
 #include "Undo.h"
 #include "Multiplexer.h"
 #include "timers.h"

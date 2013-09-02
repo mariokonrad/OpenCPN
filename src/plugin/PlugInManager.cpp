@@ -27,7 +27,7 @@
 #include "Track.h"
 #include <chart/ChartDB.h>
 #include <chart/ChartDatabase.h>
-#include "ocpndc.h"
+#include "ocpnDC.h"
 #include "StyleManager.h"
 #include "Style.h"
 #include "Select.h"

@@ -3037,15 +3037,11 @@ next_seg_dc:
 					glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 					glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
 
-					// if(m_pen.GetWidth() > 1)
-					//   DrawThickLine(x1, y1, x2, y2, m_pen.GetWidth());
-					//  else
-					{
-						glBegin( GL_LINES );
-						glVertex2i( xst1, yst1 );
-						glVertex2i( (wxCoord) floor( xst2 ), (wxCoord) floor( yst2 ) );
-						glEnd();
-					}
+					glBegin( GL_LINES );
+					glVertex2i( xst1, yst1 );
+					glVertex2i( (wxCoord) floor( xst2 ), (wxCoord) floor( yst2 ) );
+					glEnd();
+
 					glPopAttrib();
 				} else {
 					float s = 0;
@@ -3077,15 +3073,11 @@ next_seg_dc:
 					glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 					glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
 
-					// if(m_pen.GetWidth() > 1)
-					//   DrawThickLine(x1, y1, x2, y2, m_pen.GetWidth());
-					//  else
-					{
-						glBegin( GL_LINES );
-						glVertex2i( xs, ys );
-						glVertex2i( ptp[iseg + inc].x, ptp[iseg + inc].y );
-						glEnd();
-					}
+					glBegin( GL_LINES );
+					glVertex2i( xs, ys );
+					glVertex2i( ptp[iseg + inc].x, ptp[iseg + inc].y );
+					glEnd();
+
 					glPopAttrib();
 				}
 			}

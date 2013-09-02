@@ -25,7 +25,7 @@
 #include "georef.h"
 #include "Routeman.h"
 #include "WayPointman.h"
-#include "ocpndc.h"
+#include "ocpnDC.h"
 #include "cutil.h"
 #include "navutil.h"
 #include "Multiplexer.h"
@@ -275,18 +275,19 @@ RoutePoint *Route::GetPoint( const wxString &guid )
 	return ( NULL );
 }
 
-void Route::DrawPointWhich( ocpnDC& dc, int iPoint, wxPoint *rpn )
+void Route::DrawPointWhich(ocpnDC & dc, int iPoint, wxPoint * rpn)
 {
-	GetPoint( iPoint )->Draw( dc, rpn );
+	GetPoint(iPoint)->Draw(dc, rpn);
 }
 
-void Route::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, ViewPort &VP, bool bdraw_arrow )
+void Route::DrawSegment(ocpnDC & dc, wxPoint * rp1, wxPoint * rp2, ViewPort & VP, bool bdraw_arrow)
 {
-	if( m_bRtIsSelected ) dc.SetPen( *g_pRouteMan->GetSelectedRoutePen() );
+	if (m_bRtIsSelected)
+		dc.SetPen(*g_pRouteMan->GetSelectedRoutePen());
+	else if (m_bRtIsActive)
+		dc.SetPen(*g_pRouteMan->GetActiveRoutePen());
 	else
-		if( m_bRtIsActive ) dc.SetPen( *g_pRouteMan->GetActiveRoutePen() );
-		else
-			dc.SetPen( *g_pRouteMan->GetRoutePen() );
+		dc.SetPen(*g_pRouteMan->GetRoutePen());
 
 	RenderSegment( dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow );
 }

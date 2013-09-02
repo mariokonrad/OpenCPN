@@ -33,6 +33,7 @@
 #include "ThumbWin.h"
 #include "OCPNRegionIterator.h"
 #include "ChartPlugInWrapper.h"
+#include "ocpnDC.h"
 #include <chart/ChartBaseBSB.h>
 #include <chart/ChartBase.h>
 #include <chart/ChartDummy.h>

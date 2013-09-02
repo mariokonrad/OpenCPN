@@ -29,6 +29,7 @@
 #include "navutil.h"
 #include "FontMgr.h"
 #include "MessageBox.h"
+#include "ocpnDC.h"
 
 #include <wx/dcscreen.h>
 #include <wx/tokenzr.h>

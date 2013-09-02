@@ -31,32 +31,26 @@
 #ifndef GSHHS_H
 #define GSHHS_H
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
-#include <math.h>
+#include <cmath>
 #include <assert.h>
 #include <vector>
+#include "decl_exp.h"
+#include "ColorScheme.h"
 
 #include <wx/geometry.h>
-
-#include "ocpndc.h"
-#include "ColorScheme.h"
+#include <wx/colour.h>
 
 #ifdef __WXMSW__
 #pragma warning(disable: 4251)   // relates to std::string fpath
 #endif
 
 class ViewPort;
+class ocpnDC;
 
 //-------------------------------------------------------------------------
 // Subset of original Projection, only whats needed for GSHHS.
-
-#ifndef M_PI_2
-#define M_PI_2     1.57079632679489661923
-#endif
-#ifndef M_PI_4
-#define M_PI_4     0.785398163397448309616
-#endif
 
 class Projection
 {

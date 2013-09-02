@@ -25,7 +25,7 @@
 #include "georef.h"
 #include "Select.h"
 #include "chart1.h"
-#include "ocpndc.h"
+#include "ocpnDC.h"
 #include "chcanv.h"
 #include "RouteProp.h"
 #include "navutil.h"
@@ -343,21 +343,12 @@ void Track::AddPointNow( bool do_add_point )
 
 void Track::Draw(ocpnDC& dc, ViewPort &VP)
 {
-	if( !IsVisible() || GetnPoints() == 0 ) return;
-	/*
-	   if( m_bRunning ) {                                       // pjotrc 2010.02.26
-	   dc.SetBrush( wxBrush( GetGlobalColor( _T ( "URED" ) ) ) );
-	   wxPen dPen( GetGlobalColor( _T ( "URED" ) ), g_track_line_width );
-	   dc.SetPen( dPen );
-	   } else {
-	   dc.SetBrush( wxBrush( GetGlobalColor( _T ( "CHMGD" ) ) ) );
-	   wxPen dPen( GetGlobalColor( _T ( "CHMGD" ) ), g_track_line_width );
-	   dc.SetPen( dPen );
-	   }
-	 */
+	if (!IsVisible() || GetnPoints() == 0)
+		return;
+
 	double radius = 0.;
 	if (g_bHighliteTracks) {
-		double radius_meters = 20; //Current_Ch->GetNativeScale() * .0015;         // 1.5 mm at original scale
+		double radius_meters = 20;
 		radius = radius_meters * VP.view_scale_ppm;
 	}
 

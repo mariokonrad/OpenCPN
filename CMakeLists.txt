@@ -433,7 +433,8 @@ SET(HDRS
 	${HDR_PUGIXML}
 	${HDR_WXJSON}
 	${HDR_GLOBAL}
-	include/ocpndc.h
+	src/decl_exp.h
+	src/ocpnDC.h
 	include/chart1.h
 	src/App.h
 	src/BoundingBox.h
@@ -606,7 +607,7 @@ SET(SRCS
 	src/ocpn_pixel.cpp
 	src/OCPNMemDC.cpp
 	src/OCPNBitmap.cpp
-	src/ocpndc.cpp
+	src/ocpnDC.cpp
 	src/chart/ChartDB.cpp
 	src/chart/ChartDatabase.cpp
 	src/chart/ChartTableHeader.cpp

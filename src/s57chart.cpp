@@ -23,15 +23,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-// For compilers that support precompilation, includes "wx.h".
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
-
-#include "wx/image.h"                           // for some reason, needed for msvc???
-#include "wx/tokenzr.h"
+#include <wx/image.h>
+#include <wx/tokenzr.h>
 #include <wx/textfile.h>
 
 #include "dychart.h"
@@ -48,9 +41,9 @@
 #include "geo/PolyTrapGroup.h"
 #include "cutil.h"
 #include "georef.h"
-#include "navutil.h"                            // for LogMessageOnce
+#include "navutil.h"
 #include "ocpn_pixel.h"
-#include "ocpndc.h"
+#include "ocpnDC.h"
 #include "OCPNRegionIterator.h"
 #include "OCPNMemDC.h"
 #include "OCPNBitmap.h"
@@ -70,7 +63,7 @@
 #define new DEBUG_NEW
 #endif
 
-#include <algorithm>          // for std::sort
+#include <algorithm>
 
 extern bool GetDoubleAttr(S57Obj *obj, const char *AttrName, double &val);      // found in s52cnsy
 
@@ -6658,7 +6651,8 @@ bool s57_GetChartExtent( const wxString& FullPath, Extent *pext )
     return false;
 }
 
-void s57_DrawExtendedLightSectors( ocpnDC& dc, ViewPort& viewport, std::vector<s57Sector_t>& sectorlegs ) {
+void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport, std::vector<s57Sector_t>& sectorlegs)
+{
     double rangeScale = 0.0;
 
     if( sectorlegs.size() > 0 ) {

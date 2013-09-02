@@ -30,6 +30,7 @@
 #include <chart/FindCM93Dictionary.h>
 #include <CM93DSlide.h>
 #include <OCPNRegionIterator.h>
+#include <ocpnDC.h>
 #include <cutil.h>
 #include <georef.h>
 #include <MicrosoftCompatibility.h>

@@ -26,12 +26,11 @@
 
 #include <wx/datetime.h>
 #include <wx/treectrl.h>
-#include "wx/dirctrl.h"
+#include <wx/dirctrl.h>
 #include <wx/sound.h>
 #include <wx/grid.h>
 #include <wx/wxhtml.h>
 
-#include "ocpndc.h"
 #include "gshhs.h"
 #include "chart1.h"
 #include "CM93DSlide.h"
@@ -42,6 +41,7 @@
 #include "chart/S57Sector.h"
 
 class LatLonBoundingBox;
+class ocpnDC;
 
 //    Useful static routines
 void ShowAISTargetQueryDialog(wxWindow *parent, int mmsi);

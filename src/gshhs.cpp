@@ -30,12 +30,21 @@
 
 #include "gshhs.h"
 #include "ViewPort.h"
+#include "ocpnDC.h"
 
+#include <cmath>
 #include <wx/file.h>
 #include <wx/log.h>
 #include <wx/stopwatch.h>
 
 extern wxString * pWorldMapLocation;
+
+#ifndef M_PI_2
+#define M_PI_2  (M_PI / 2.0)
+#endif
+#ifndef M_PI_4
+#define M_PI_4  (M_PI / 4.0)
+#endif
 
 //-------------------------------------------------------------------------
 

@@ -21,12 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-	#include "wx/wx.h"
-#endif //precompiled headers
-
 #include <wx/tokenzr.h>
 #include <wx/sstream.h>
 #include <wx/image.h>
@@ -57,7 +51,7 @@
 #include "WayPointman.h"
 #include "RouteProp.h"
 #include <chart/s52utils.h>
-#include "ocpndc.h"
+#include "ocpnDC.h"
 #include "Geodesic.h"
 #include "datastream.h"
 #include "Multiplexer.h"

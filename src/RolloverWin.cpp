@@ -28,7 +28,7 @@
 #include <wx/dcscreen.h>
 
 #include "RolloverWin.h"
-#include "ocpndc.h"
+#include "ocpnDC.h"
 #include "timers.h"
 #include "chart1.h"
 #include "navutil.h"

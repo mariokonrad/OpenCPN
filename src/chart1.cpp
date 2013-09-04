@@ -78,7 +78,7 @@
 #include "StatWin.h"
 #include "PianoWin.h"
 #include "ConsoleCanvas.h"
-#include "options.h"
+#include "OptionDialog.h"
 #include "AboutDialog.h"
 #include "ThumbWin.h"
 #include "tcmgr.h"

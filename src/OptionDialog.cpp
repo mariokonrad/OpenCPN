@@ -44,10 +44,10 @@
 	#include <wx/colordlg.h>
 #endif
 
+#include "OptionDialog.h"
 #include "dychart.h"
 #include "chart1.h"
 #include "chart/ChartDB.h"
-#include "options.h"
 #include "StyleManager.h"
 #include "Style.h"
 #include "MessageBox.h"

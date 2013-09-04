@@ -31,7 +31,7 @@
 #include "StyleManager.h"
 #include "Style.h"
 #include "Select.h"
-#include "options.h"
+#include "OptionDialog.h"
 #include "Multiplexer.h"
 #include "StatWin.h"
 #include "Routeman.h"

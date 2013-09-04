@@ -45,6 +45,7 @@
 class wxGenericDirCtrl;
 class MyConfig;
 class ChartGroupsUI;
+class ChartGroupArray;
 class ConnectionParams;
 class SentenceListDlg;
 

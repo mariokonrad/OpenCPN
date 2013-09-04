@@ -2388,8 +2388,8 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	int priority_current = rzRules->LUP->DPRI - '0'; //TODO fix this hack by putting priority into object during _insertRules
 
 	if( rzRules->obj->m_n_lsindex ) {
-		VE_Hash &ve_hash = rzRules->chart->Get_ve_hash();
-		VC_Hash &vc_hash = rzRules->chart->Get_vc_hash();
+		VE_Hash & ve_hash = rzRules->chart->Get_ve_hash();
+		VC_Hash & vc_hash = rzRules->chart->Get_vc_hash();
 
 		int nls_max;
 		if( rzRules->obj->m_n_edge_max_points > 0 ) // size has been precalculated on SENC load
@@ -2417,7 +2417,7 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 		double easting, northing;
 
 		wxPoint pra( 0, 0 );
-		VC_Element *pnode;
+		VC_Element * pnode;
 
 		for( int iseg = 0; iseg < rzRules->obj->m_n_lsindex; iseg++ ) {
 			int seg_index = iseg * 3;
@@ -2427,11 +2427,8 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			int inode = *index_run++;
 			if( ( inode >= 0 ) ) {
 				pnode = vc_hash[inode];
-				if( pnode ) {
-					ppt = pnode->pPoint;
-					easting = *ppt++;
-					northing = *ppt;
-					rzRules->chart->GetPointPix( rzRules, (float) northing, (float) easting, &pra );
+				if (pnode) {
+					rzRules->chart->GetPointPix(rzRules, (float)pnode->northing, (float)pnode->easting, &pra);
 				}
 				ptp[0] = pra; // insert beginning node
 			}
@@ -2459,11 +2456,8 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			int jnode = *index_run++;
 			if( ( jnode >= 0 ) ) {
 				pnode = vc_hash[jnode];
-				if( pnode ) {
-					ppt = pnode->pPoint;
-					easting = *ppt++;
-					northing = *ppt;
-					rzRules->chart->GetPointPix( rzRules, (float) northing, (float) easting, &pra );
+				if (pnode) {
+					rzRules->chart->GetPointPix(rzRules, (float)pnode->northing, (float)pnode->easting, &pra);
 				}
 				ptp[nls + 1] = pra; // insert ending node
 			}
@@ -2682,8 +2676,8 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	int priority_current = rzRules->LUP->DPRI - '0'; //TODO fix this hack by putting priority into object during _insertRules
 
 	if( rzRules->obj->m_n_lsindex ) {
-		VE_Hash &ve_hash = rzRules->chart->Get_ve_hash();
-		VC_Hash &vc_hash = rzRules->chart->Get_vc_hash();
+		VE_Hash & ve_hash = rzRules->chart->Get_ve_hash();
+		VC_Hash & vc_hash = rzRules->chart->Get_vc_hash();
 
 		int nls_max;
 		if( rzRules->obj->m_n_edge_max_points > 0 ) // size has been precalculated on SENC load
@@ -2708,7 +2702,8 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
 		int *index_run;
 		double *ppt;
-		double easting, northing;
+		double easting;
+		double northing;
 		wxPoint pra( 0, 0 );
 		VC_Element *pnode;
 
@@ -2720,11 +2715,8 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			int inode = *index_run++;
 			if( inode >= 0 ) {
 				pnode = vc_hash[inode];
-				if( pnode ) {
-					ppt = pnode->pPoint;
-					easting = *ppt++;
-					northing = *ppt;
-					rzRules->chart->GetPointPix( rzRules, (float) northing, (float) easting, &pra );
+				if (pnode) {
+					rzRules->chart->GetPointPix(rzRules, (float)pnode->northing, (float)pnode->easting, &pra );
 				}
 				ptp[0] = pra; // insert beginning node
 			}
@@ -2752,11 +2744,8 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			int jnode = *index_run++;
 			if( jnode >= 0 ) {
 				pnode = vc_hash[jnode];
-				if( pnode ) {
-					ppt = pnode->pPoint;
-					easting = *ppt++;
-					northing = *ppt;
-					rzRules->chart->GetPointPix( rzRules, (float) northing, (float) easting, &pra );
+				if (pnode) {
+					rzRules->chart->GetPointPix(rzRules, (float)pnode->northing, (float)pnode->easting, &pra);
 				}
 				ptp[nls + 1] = pra; // insert ending node
 			}

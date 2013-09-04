@@ -77,7 +77,6 @@ WX_DECLARE_LIST(S57Obj, ListOfS57Obj);
 WX_DECLARE_LIST(ObjRazRules, ListOfObjRazRules);
 
 WX_DECLARE_OBJARRAY(VE_Element, ArrayOfVE_Elements);
-WX_DECLARE_OBJARRAY(VC_Element, ArrayOfVC_Elements);
 
 WX_DECLARE_HASH_MAP( int, wxString, wxIntegerHash, wxIntegerEqual, MyNatsurHash );
 WX_DECLARE_HASH_MAP( int, int, wxIntegerHash, wxIntegerEqual, VectorHelperHash );
@@ -157,8 +156,8 @@ class s57chart : public ChartBase
 
 		virtual ListOfS57Obj *GetAssociatedObjects(S57Obj *obj);
 
-		virtual VE_Hash&  Get_ve_hash(void){ return m_ve_hash; }
-		virtual VC_Hash&  Get_vc_hash(void){ return m_vc_hash; }
+		virtual VE_Hash & Get_ve_hash(void){ return m_ve_hash; }
+		virtual VC_Hash & Get_vc_hash(void) { return m_vc_hash; }
 
 		virtual void ForceEdgePriorityEvaluate(void);
 
@@ -284,8 +283,8 @@ class s57chart : public ChartBase
 
 		VectorHelperHash        m_vector_helper_hash;
 
-		VE_Hash     m_ve_hash;
-		VC_Hash     m_vc_hash;
+		VE_Hash m_ve_hash;
+		VC_Hash m_vc_hash;
 
 		MyNatsurHash m_natsur_hash;               // hash table for cacheing NATSUR string values from int attributes
 

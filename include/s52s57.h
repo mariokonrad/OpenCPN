@@ -428,9 +428,23 @@ public:
 
 class VC_Element
 {
-public:
-      int         index;
-      double      *pPoint;
+	public:
+		VC_Element(const VC_Element & other)
+			: index(other.index)
+			, easting(other.easting)
+			, northing(other.northing)
+		{}
+
+		VC_Element(int index, double easting, double northing)
+			: index(index)
+			, easting(easting)
+			, northing(northing)
+		{}
+
+	public:
+		int index;
+		double easting;
+		double northing;
 };
 
 

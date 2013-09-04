@@ -545,7 +545,7 @@ int cm93compchart::GetNativeScale()
 		return ( int ) 1e8;
 }
 
-double cm93compchart::GetNormalScaleMin ( double canvas_scale_factor, bool b_allow_overzoom )
+double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 {
 	//Adjust overzoom factor based on  b_allow_overzoom option setting
 	double oz_factor;
@@ -1540,7 +1540,7 @@ VE_Hash& cm93compchart::Get_ve_hash ( void )
 	return m_pcm93chart_current->Get_ve_hash();
 }
 
-VC_Hash& cm93compchart::Get_vc_hash ( void )
+VC_Hash & cm93compchart::Get_vc_hash(void)
 {
 	return m_pcm93chart_current->Get_vc_hash();
 }
@@ -1582,7 +1582,7 @@ bool cm93compchart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
 	return single_adjust;
 }
 
-ThumbData *cm93compchart::GetThumbData ( int tnx, int tny, float lat, float lon )
+ThumbData * cm93compchart::GetThumbData(int, int, float, float)
 {
 	return ( ThumbData * ) NULL;
 }

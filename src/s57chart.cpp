@@ -104,7 +104,6 @@ WX_DEFINE_LIST(ListOfObjRazRules);   // Implement a list ofObjRazRules
 
 //    Arrays to temporarily hold SENC geometry
 WX_DEFINE_OBJARRAY(ArrayOfVE_Elements);
-WX_DEFINE_OBJARRAY(ArrayOfVC_Elements);
 
 #define S57_THUMB_SIZE  200
 
@@ -198,12 +197,12 @@ S57Obj::~S57Obj()
 //      S57Obj CTOR from SENC file
 //----------------------------------------------------------------------------------
 
-S57Obj::S57Obj( char *first_line, wxInputStream *pfpx, double dummy, double dummy2 )
+S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 {
     att_array = NULL;
     attVal = NULL;
     n_attr = 0;
-    
+
     pPolyTessGeo = NULL;
     pPolyTrapGeo = NULL;
     bCS_Added = 0;
@@ -872,22 +871,19 @@ int S57Obj::my_bufgetl( char *ib_read, char *ib_end, char *buf, int buf_len_max 
     return nLineLen;
 }
 
-int S57Obj::GetAttributeIndex( const char *AttrSeek ) {
-    char *patl = att_array;
-    
-    for(int i=0 ; i < n_attr ; i++) {
-        if(!strncmp(patl, AttrSeek, 6)){
-            return i;
-            break;
-        }
-        
-        patl += 6;
+int S57Obj::GetAttributeIndex(const char * AttrSeek)
+{
+	char *patl = att_array;
+
+	for (int i = 0 ; i < n_attr ; ++i) {
+		if (!strncmp(patl, AttrSeek, 6)) {
+			return i;
+		}
+		patl += 6;
     }
-    
     return -1;
 }
-    
-    
+
 wxString S57Obj::GetAttrValueAsString( char *AttrName )
 {
     wxString str;
@@ -1071,12 +1067,9 @@ s57chart::~s57chart()
     }
     m_ve_hash.clear();
 
-    VC_Hash::iterator itc;
-    for( itc = m_vc_hash.begin(); itc != m_vc_hash.end(); ++itc ) {
-        VC_Element *value = itc->second;
-        if( value ) {
-            free( value->pPoint );
-            delete value;
+    for (VC_Hash::iterator i = m_vc_hash.begin(); i != m_vc_hash.end(); ++i) {
+        if (i->second) {
+            delete i->second;
         }
     }
     m_vc_hash.clear();
@@ -1265,7 +1258,8 @@ double s57chart::GetNormalScaleMin( double canvas_scale_factor, bool b_allow_ove
 
     return canvas_scale_factor / ppm;
 }
-double s57chart::GetNormalScaleMax( double canvas_scale_factor, int canvas_width )
+
+double s57chart::GetNormalScaleMax(double, int)
 {
     return 1.0e7;
 }
@@ -1274,13 +1268,13 @@ double s57chart::GetNormalScaleMax( double canvas_scale_factor, int canvas_width
 //              Pixel to Lat/Long Conversion helpers
 //-----------------------------------------------------------------------
 
-void s57chart::GetPointPix( ObjRazRules *rzRules, float north, float east, wxPoint *r )
+void s57chart::GetPointPix(ObjRazRules *, float north, float east, wxPoint * r)
 {
     r->x = (int) round(((east - m_easting_vp_center) * m_view_scale_ppm) + m_pixx_vp_center);
     r->y = (int) round(m_pixy_vp_center - ((north - m_northing_vp_center) * m_view_scale_ppm));
 }
 
-void s57chart::GetPointPix( ObjRazRules *rzRules, wxPoint2DDouble *en, wxPoint *r, int nPoints )
+void s57chart::GetPointPix(ObjRazRules *, wxPoint2DDouble *en, wxPoint *r, int nPoints )
 {
     for( int i = 0; i < nPoints; i++ ) {
         r[i].x =
@@ -1364,21 +1358,7 @@ bool s57chart::AdjustVP( ViewPort &vp_last, ViewPort &vp_proposed )
     return false;
 }
 
-/*
- bool s57chart::IsRenderDelta(ViewPort &vp_last, ViewPort &vp_proposed)
- {
- double last_center_easting, last_center_northing, this_center_easting, this_center_northing;
- toSM ( vp_proposed.clat, vp_proposed.clon, ref_lat, ref_lon, &this_center_easting, &this_center_northing );
- toSM ( vp_last.clat,     vp_last.clon,     ref_lat, ref_lon, &last_center_easting, &last_center_northing );
-
- int dx = (int)round((last_center_easting  - this_center_easting)  * vp_proposed.view_scale_ppm);
- int dy = (int)round((last_center_northing - this_center_northing) * vp_proposed.view_scale_ppm);
-
- return((dx !=  0) || (dy != 0) || !(IsCacheValid()) || (vp_proposed.view_scale_ppm != vp_last.view_scale_ppm));
- }
- */
-
-ThumbData *s57chart::GetThumbData( int tnx, int tny, float lat, float lon )
+ThumbData *s57chart::GetThumbData(int, int, float lat, float lon)
 {
     //  Plot the passed lat/lon at the thumbnail bitmap scale
     //  Using simple linear algorithm.
@@ -1551,24 +1531,9 @@ bool s57chart::DoRenderRegionViewOnGL( const wxGLContext &glc, const ViewPort& V
     int n_rect = 0;
     OCPNRegionIterator clipit( Region );
     while( clipit.HaveRects() ) {
-        wxRect rect = clipit.GetRect();
         clipit.NextRect();
         n_rect++;
     }
-    /*
-     if(n_rect > 1)
-     {
-     printf("S57 n_rect: %d\n", n_rect);
-
-     OCPNRegionIterator upd ( Region );
-     while ( upd )
-     {
-     wxRect rect = upd.GetRect();
-     printf ( "   S57 Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height );
-     upd ++ ;
-     }
-     }
-     */
 
     //    Adjust for rotation
     glPushMatrix();
@@ -1669,8 +1634,11 @@ bool s57chart::DoRenderRegionViewOnGL( const wxGLContext &glc, const ViewPort& V
     return true;
 }
 
-void s57chart::SetClipRegionGL( const wxGLContext &glc, const ViewPort& VPoint,
-        const OCPNRegion &Region, bool b_render_nodta )
+void s57chart::SetClipRegionGL(
+		const wxGLContext &,
+		const ViewPort &,
+        const OCPNRegion & Region,
+		bool b_render_nodta)
 {
     if( g_b_useStencil ) {
         //    Create a stencil buffer for clipping to the region
@@ -1758,8 +1726,11 @@ void s57chart::SetClipRegionGL( const wxGLContext &glc, const ViewPort& VPoint,
 
 }
 
-void s57chart::SetClipRegionGL( const wxGLContext &glc, const ViewPort& VPoint, const wxRect &Rect,
-        bool b_render_nodta )
+void s57chart::SetClipRegionGL(
+		const wxGLContext &,
+		const ViewPort &,
+		const wxRect & Rect,
+        bool b_render_nodta)
 {
     if( g_b_useStencil ) {
         //    Create a stencil buffer for clipping to the region
@@ -2043,10 +2014,14 @@ bool s57chart::DoRenderViewOnDC( wxMemoryDC& dc, const ViewPort& VPoint, RenderT
 
     bool bReallyNew = false;
 
-    double easting_ul, northing_ul;
-    double easting_lr, northing_lr;
-    double prev_easting_ul = 0., prev_northing_ul = 0.;
-    double prev_easting_lr, prev_northing_lr;
+    double easting_ul;
+    double northing_ul;
+    double easting_lr;
+    double northing_lr;
+    double prev_easting_ul = 0.0;
+    double prev_northing_ul = 0.0;
+    double prev_easting_lr;
+    double prev_northing_lr;
 
     if( ps52plib->GetPLIBColorScheme() != m_lastColorScheme ) bReallyNew = true;
     m_lastColorScheme = ps52plib->GetPLIBColorScheme();
@@ -2690,7 +2665,7 @@ InitReturn s57chart::FindOrCreateSenc( const wxString& name )
     return INIT_OK;
 }
 
-InitReturn s57chart::PostInit( ChartInitFlag flags, ColorScheme cs )
+InitReturn s57chart::PostInit(ChartInitFlag, ColorScheme cs)
 {
 
 //    SENC file is ready, so build the RAZ structure
@@ -2762,8 +2737,7 @@ void s57chart::BuildDepthContourArray( void )
                     if( GetDoubleAttr( top->obj, "VALDCO", valdco ) ) {
                         m_nvaldco++;
                         if( m_nvaldco > m_nvaldco_alloc ) {
-                            void *tr = realloc( (void *) m_pvaldco_array,
-                                    m_nvaldco_alloc * 2 * sizeof(double) );
+                            void *tr = realloc( (void *) m_pvaldco_array, m_nvaldco_alloc * 2 * sizeof(double) );
                             m_pvaldco_array = (double *) tr;
                             m_nvaldco_alloc *= 2;
                         }
@@ -2776,30 +2750,7 @@ void s57chart::BuildDepthContourArray( void )
         }
     }
 
-    /*
-     //      And bubble sort it
-     bool swap = true;
-     int isort;
-
-     while(swap == true)
-     {
-     swap = false;
-     isort = 0;
-     while(isort < m_nvaldco - 1)
-     {
-     if(m_pvaldco_array[isort+1] < m_pvaldco_array[isort])
-     {
-     double t = m_pvaldco_array[isort];
-     m_pvaldco_array[isort] = m_pvaldco_array[isort+1];
-     m_pvaldco_array[isort+1] = t;
-     swap = true;
-     }
-     isort++;
-     }
-     }
-     */
     std::sort( m_pvaldco_array, m_pvaldco_array + m_nvaldco );
-
 }
 
 void s57chart::InvalidateCache()
@@ -4296,7 +4247,6 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
                 vep->nCount = ve_from_array.nCount;
                 vep->pPoints = ve_from_array.pPoints;
 
-//                        m_pve_array[vep->index] = vep;
                 m_ve_hash[vep->index] = vep;
 
             }
@@ -4304,47 +4254,15 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
         }
 
         else if( !strncmp( buf, "VCTableStart", 12 ) ) {
-            //    Use a wxArray for temp storage
-            //    then transfer to a simple linear array
-            ArrayOfVC_Elements vc_array;
-
             int index = -1;
-            int index_max = -1;
-
-            fpx.Read( &index, sizeof(int) );
-
-            while( -1 != index ) {
-
-                double *pPoint = NULL;
-                pPoint = (double *) malloc( 2 * sizeof(double) );
-                fpx.Read( pPoint, 2 * sizeof(double) );
-
-                VC_Element vce;
-                vce.index = index;
-                vce.pPoint = pPoint;
-
-                vc_array.Add( vce );
-
-                if( index > index_max ) index_max = index;
-
-                //    Next element
-                fpx.Read( &index, sizeof(int) );
+            fpx.Read(&index, sizeof(int));
+            while (-1 != index) {
+                double point[2];
+                fpx.Read(point, sizeof(point));
+                m_vc_hash[index] = new VC_Element(index, point[0], point[1]);
+                fpx.Read(&index, sizeof(int)); // Next element
             }
-
-            //    Create a hash map VC_Element pointers as a chart class member
-            int n_vc_elements = vc_array.GetCount();
-
-            for( int i = 0; i < n_vc_elements; i++ ) {
-                VC_Element vc_from_array = vc_array.Item( i );
-                VC_Element *vcp = new VC_Element;
-                vcp->index = vc_from_array.index;
-                vcp->pPoint = vc_from_array.pPoint;
-
-                m_vc_hash[vcp->index] = vcp;
-            }
-        }
-
-        else if( !strncmp( buf, "SENC", 4 ) ) {
+        } else if( !strncmp( buf, "SENC", 4 ) ) {
             int senc_file_version;
             sscanf( buf, "SENC Version=%i", &senc_file_version );
             if( senc_file_version != CURRENT_SENC_FORMAT_VERSION ) {
@@ -4353,7 +4271,7 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
                 wxLogMessage( msg );
 
                 dun = 1;
-                ret_val = 1;                   // error
+                ret_val = 1; // error
             }
         }
 
@@ -4382,17 +4300,10 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
 
 #ifdef __WXMSW__
             wxBeginBusyCursor();
-            /*
-             SENC_prog = new wxProgressDialog(  _("OpenCPN S57 SENC File Load"), FullPath, nGeo1000, NULL,
-             wxPD_AUTO_HIDE | wxPD_CAN_ABORT | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME | wxPD_SMOOTH);
-             */
             wxEndBusyCursor();
-
 #endif
         }
-    }                       //while(!dun)
-
-//      fclose(fpx);
+    } //while(!dun)
 
     free( buf );
 
@@ -4444,7 +4355,6 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
             while( top != NULL ) {
                 S57Obj *obj = top->obj;
 
-///
                 for( int iseg = 0; iseg < obj->m_n_lsindex; iseg++ ) {
                     int seg_index = iseg * 3;
                     int *index_run = &obj->m_lsindex_array[seg_index];
@@ -4452,7 +4362,7 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
                     //  Get first connected node
                     int inode = *index_run++;
                     if( ( inode >= 0 ) ) {
-                        if( m_vc_hash.find( inode ) == m_vc_hash.end() ) {
+                        if( m_vc_hash.find(inode) == m_vc_hash.end()) {
                             //    Must be a bad index in the SENC file
                             //    Stuff a recognizable flag to indicate invalidity
                             index_run--;
@@ -4462,13 +4372,12 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
                     }
 
                     //  Get the edge
-//                              int enode = *index_run++;
                     index_run++;
 
                     //  Get last connected node
                     int jnode = *index_run++;
                     if( ( jnode >= 0 ) ) {
-                        if( m_vc_hash.find( jnode ) == m_vc_hash.end() ) {
+                        if (m_vc_hash.find(jnode) == m_vc_hash.end()) {
                             //    Must be a bad index in the SENC file
                             //    Stuff a recognizable flag to indicate invalidity
                             index_run--;
@@ -4478,7 +4387,6 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
 
                     }
                 }
-///
                 nxx = top->next;
                 top = nxx;
             }
@@ -5680,7 +5588,7 @@ wxString s57chart::GetAttributeDecode( wxString& att, int ival )
 
 //----------------------------------------------------------------------------------
 
-bool s57chart::IsPointInObjArea( float lat, float lon, float select_radius, S57Obj *obj )
+bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
 {
     bool ret = false;
 
@@ -6623,27 +6531,8 @@ const char *MyCSVGetField( const char * pszFilename, const char * pszKeyFieldNam
 // Get Chart Extents
 //----------------------------------------------------------------------------------
 
-bool s57_GetChartExtent( const wxString& FullPath, Extent *pext )
+bool s57_GetChartExtent(const wxString &, Extent *)
 {
-    //   Fix this  find extents of which?? layer??
-    /*
-     OGRS57DataSource *poDS = new OGRS57DataSource;
-     poDS->Open(pFullPath, TRUE);
-
-     if( poDS == NULL )
-     return false;
-
-     OGREnvelope Env;
-     S57Reader   *poReader = poDS->GetModule(0);
-     poReader->GetExtent(&Env, true);
-
-     pext->NLAT = Env.MaxY;
-     pext->ELON = Env.MaxX;
-     pext->SLAT = Env.MinY;
-     pext->WLON = Env.MinX;
-
-     delete poDS;
-     */
     return false;
 }
 

@@ -47,6 +47,8 @@ class ViewPort
 				int chart_native_scale,
 				wxPoint * ppoints = NULL);
 
+		wxRect GetVPRectIntersect(size_t n, float * llpoints);
+
 		void SetBoxes(void);
 		void Invalidate();
 		void Validate();

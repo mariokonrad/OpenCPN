@@ -2312,7 +2312,6 @@ int s52plib::RenderSY( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 // Line Simple Style
 int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 {
-
 	wxPoint *ptp;
 	int npt;
 	S52color *c;
@@ -2348,8 +2347,6 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 		}
 	} else // OpenGL mode
 	{
-		glPushAttrib( GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT | GL_ENABLE_BIT ); //Save state
-
 		glColor3ub( c->R, c->G, c->B );
 
 		glDisable( GL_LINE_SMOOTH );
@@ -2368,11 +2365,11 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 		if( !strncmp( str, "DASH", 4 ) ) {
 			glLineStipple( 1, 0x3F3F );
 			glEnable( GL_LINE_STIPPLE );
-		}
-		else if( !strncmp( str, "DOTT", 4 ) ) {
+		} else if( !strncmp( str, "DOTT", 4 ) ) {
 			glLineStipple( 1, 0x3333 );
 			glEnable( GL_LINE_STIPPLE );
-		}
+		} else
+			glDisable(GL_LINE_STIPPLE);
 	}
 
 	//    Get a true pixel clipping/bounding box from the vp
@@ -2644,8 +2641,6 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
 					free( ptp );
 				}
-
-	if( !m_pdc ) glPopAttrib();
 
 	if(pdotpen) {
 		pdotpen->SetDashes( 1, NULL );

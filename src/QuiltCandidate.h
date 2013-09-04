@@ -26,16 +26,22 @@
 
 #include "OCPNRegion.h"
 
+class ViewPort;
+
 class QuiltCandidate
 {
 	public:
 		QuiltCandidate();
+		OCPNRegion & GetCandidateVPRegion(ViewPort & vp);
 
 		int dbIndex;
 		int ChartScale;
 		bool b_include;
 		bool b_eclipsed;
 		OCPNRegion quilt_region;
+
+	private:
+		OCPNRegion candidate_region;
 };
 
 #endif

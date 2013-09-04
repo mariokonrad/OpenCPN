@@ -101,6 +101,7 @@ class Quilt
 
 	private:
 		OCPNRegion GetChartQuiltRegion(const ChartTableEntry & cte, ViewPort & vp);
+		wxRect GetChartQuiltBoundingRect(const ChartTableEntry & cte, ViewPort & vp);
 		void EmptyCandidateArray(void);
 		void SubstituteClearDC(wxMemoryDC & dc, ViewPort & vp);
 		int GetNewRefChart(void);

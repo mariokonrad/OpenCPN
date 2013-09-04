@@ -74,7 +74,6 @@ class TCDS_Ascii_Harmonic : public TCDataFactory
 		std::vector<TCDataFactory::AbbrEntry> m_abbreviation_array; // FIXME: what for? the container is filled and cleared, but not used
 		std::vector<IDX_entry *> m_IDX_array;
 
-		int num_IDX;
 		int num_nodes;
 		int num_csts;
 		int num_epochs;

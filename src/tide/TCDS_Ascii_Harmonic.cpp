@@ -67,7 +67,6 @@ TCDS_Ascii_Harmonic::TCDS_Ascii_Harmonic()
 	m_cst_nodes = NULL;
 	m_cst_epochs = NULL;
 
-	num_IDX = 0;
 	num_nodes = 0;
 	num_csts = 0;
 	num_epochs = 0;
@@ -76,6 +75,11 @@ TCDS_Ascii_Harmonic::TCDS_Ascii_Harmonic()
 TCDS_Ascii_Harmonic::~TCDS_Ascii_Harmonic()
 {
 	free_data();
+
+	for (std::vector<IDX_entry *>::iterator i = m_IDX_array.begin(); i != m_IDX_array.end(); ++i) {
+		delete *i;
+	}
+	m_IDX_array.clear();
 }
 
 TC_Error_Code TCDS_Ascii_Harmonic::LoadData(const wxString &data_file_path)
@@ -124,8 +128,6 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 	long int xref_start=0;
 	int doing_xref=0;
 
-	num_IDX=0;
-
 	m_abbreviation_array.clear();
 	m_IDX_array.clear();
 	int have_index = 0;
@@ -167,7 +169,6 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 
 			} else if (have_index && (strchr("TtCcIUu", index_line_buffer[0]))) {
 				// Load index file data .
-				num_IDX++; // Keep counting entries for harmonic file stuff
 				IDX_entry *pIDX = new IDX_entry;
 				pIDX->source_data_type = IDX_entry::SOURCE_TYPE_ASCII_HARMONIC;
 				pIDX->pDataSource = NULL;
@@ -627,7 +628,7 @@ void TCDS_Ascii_Harmonic::free_epochs()
 
 int TCDS_Ascii_Harmonic::GetMaxIndex(void) const
 {
-	return num_IDX;
+	return m_IDX_array.size();
 }
 
 /* free harmonics data */
@@ -635,10 +636,5 @@ void TCDS_Ascii_Harmonic::free_data()
 {
 	free_nodes();
 	free_epochs();
-
-	for (std::vector<IDX_entry *>::iterator i = m_IDX_array.begin(); i != m_IDX_array.end(); ++i) {
-		delete *i;
-	}
-	m_IDX_array.clear();
 }
 

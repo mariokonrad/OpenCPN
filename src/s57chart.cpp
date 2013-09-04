@@ -102,9 +102,6 @@ WX_DEFINE_LIST(ListOfS57Obj);                // Implement a list of S57 Objects
 
 WX_DEFINE_LIST(ListOfObjRazRules);   // Implement a list ofObjRazRules
 
-//    Arrays to temporarily hold SENC geometry
-WX_DEFINE_OBJARRAY(ArrayOfVE_Elements);
-
 #define S57_THUMB_SIZE  200
 
 static int              s_bInS57;         // Exclusion flag to prvent recursion in this class init call.
@@ -4206,14 +4203,14 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
         else if( !strncmp( buf, "VETableStart", 12 ) ) {
             //    Use a wxArray for temp storage
             //    then transfer to a simple linear array
-            ArrayOfVE_Elements ve_array;
+            std::vector<VE_Element> ve_array;
 
             int index = -1;
-            int index_max = -1;
             int count;
 
             fpx.Read( &index, sizeof(int) );
 
+			// FIXME: temporary container is not really necessary, fill directly into the has map
             while( -1 != index ) {
                 fpx.Read( &count, sizeof(int) );
 
@@ -4229,28 +4226,19 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
                 vee.pPoints = pPoints;
                 vee.max_priority = -99;            // Default
 
-                ve_array.Add( vee );
-
-                if( index > index_max ) index_max = index;
+                ve_array.push_back(vee);
 
                 //    Next element
                 fpx.Read( &index, sizeof(int) );
             }
 
-            //    Create a hash map of VE_Element pointers as a chart class member
-            int n_ve_elements = ve_array.GetCount();
-
-            for( int i = 0; i < n_ve_elements; i++ ) {
-                VE_Element ve_from_array = ve_array.Item( i );
+			for (std::vector<VE_Element>::iterator i = ve_array.begin(); i != ve_array.end(); ++i) {
                 VE_Element *vep = new VE_Element;
-                vep->index = ve_from_array.index;
-                vep->nCount = ve_from_array.nCount;
-                vep->pPoints = ve_from_array.pPoints;
-
+                vep->index = i->index;
+                vep->nCount = i->nCount;
+                vep->pPoints = i->pPoints;
                 m_ve_hash[vep->index] = vep;
-
             }
-
         }
 
         else if( !strncmp( buf, "VCTableStart", 12 ) ) {

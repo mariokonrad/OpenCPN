@@ -76,8 +76,6 @@ WX_DECLARE_LIST(S57Obj, ListOfS57Obj);
 
 WX_DECLARE_LIST(ObjRazRules, ListOfObjRazRules);
 
-WX_DECLARE_OBJARRAY(VE_Element, ArrayOfVE_Elements);
-
 WX_DECLARE_HASH_MAP( int, wxString, wxIntegerHash, wxIntegerEqual, MyNatsurHash );
 WX_DECLARE_HASH_MAP( int, int, wxIntegerHash, wxIntegerEqual, VectorHelperHash );
 

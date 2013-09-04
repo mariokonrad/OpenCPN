@@ -554,7 +554,7 @@ bool TrackPropDlg::IsThisTrackExtendable()
 		return false;
 }
 
-void TrackPropDlg::OnExtendBtnClick( wxCommandEvent& event )
+void TrackPropDlg::OnExtendBtnClick(wxCommandEvent &)
 {
 	RoutePoint *pLastPoint = m_pRoute->GetPoint( 1 );
 
@@ -576,7 +576,7 @@ void TrackPropDlg::OnExtendBtnClick( wxCommandEvent& event )
 	}
 }
 
-void TrackPropDlg::OnSplitBtnClick( wxCommandEvent& event )
+void TrackPropDlg::OnSplitBtnClick(wxCommandEvent &)
 {
 	m_sdbBtmBtnsSizerSplit->Enable( false );
 
@@ -614,7 +614,7 @@ void TrackPropDlg::OnSplitBtnClick( wxCommandEvent& event )
 	}
 }
 
-void TrackPropDlg::OnTrackPropCopyTxtClick( wxCommandEvent& event )
+void TrackPropDlg::OnTrackPropCopyTxtClick(wxCommandEvent &)
 {
 	wxString tab("\t", wxConvUTF8);
 	wxString eol("\n", wxConvUTF8);
@@ -660,23 +660,21 @@ void TrackPropDlg::OnTrackPropCopyTxtClick( wxCommandEvent& event )
 	}
 }
 
-void TrackPropDlg::OnPrintBtnClick( wxCommandEvent& event )
+void TrackPropDlg::OnPrintBtnClick(wxCommandEvent &)
 {
 	RoutePrintSelection * pTrackPrintSelection = new RoutePrintSelection(this, m_pRoute);
 	pTrackPrintSelection->ShowModal();
 	delete pTrackPrintSelection;
 }
 
-void TrackPropDlg::OnTrackPropRightClick( wxListEvent &event )
+void TrackPropDlg::OnTrackPropRightClick(wxListEvent &)
 {
 	wxMenu menu;
-
-	wxMenuItem* copyItem = menu.Append( ID_RCLK_MENU_COPY_TEXT, _("&Copy all as text") );
-
-	PopupMenu( &menu );
+	menu.Append(ID_RCLK_MENU_COPY_TEXT, _("&Copy all as text"));
+	PopupMenu(&menu);
 }
 
-void TrackPropDlg::OnTrackPropListClick( wxListEvent& event )
+void TrackPropDlg::OnTrackPropListClick(wxListEvent &)
 {
 	long itemno = -1;
 	m_nSelected = 0;
@@ -720,14 +718,14 @@ void TrackPropDlg::OnTrackPropMenuSelected( wxCommandEvent& event )
 	}
 }
 
-void TrackPropDlg::OnToRouteBtnClick( wxCommandEvent& event )
+void TrackPropDlg::OnToRouteBtnClick(wxCommandEvent &)
 {
 	pRouteManagerDialog->TrackToRoute( (Track*)m_pRoute );
 	if( NULL != pRouteManagerDialog && pRouteManagerDialog->IsVisible() )
 		pRouteManagerDialog->UpdateRouteListCtrl();
 }
 
-void TrackPropDlg::OnExportBtnClick( wxCommandEvent& event )
+void TrackPropDlg::OnExportBtnClick(wxCommandEvent &)
 {
 	wxString suggested_name = _("track");
 	RouteList list;

@@ -248,344 +248,344 @@ ENDIF (NOT WIN32 AND NOT APPLE)
 
 
 FIND_PACKAGE(Gettext REQUIRED)
-	IF(UNIX)
-		FIND_PACKAGE(BZip2 REQUIRED)
-		INCLUDE_DIRECTORIES(${BZIP2_INCLUDE_DIR})
-		FIND_PACKAGE(ZLIB REQUIRED)
-		INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIR})
-		FIND_PACKAGE(TinyXML)
-	ENDIF(UNIX)
+IF(UNIX)
+	FIND_PACKAGE(BZip2 REQUIRED)
+	INCLUDE_DIRECTORIES(${BZIP2_INCLUDE_DIR})
+	FIND_PACKAGE(ZLIB REQUIRED)
+	INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIR})
+	FIND_PACKAGE(TinyXML)
+ENDIF(UNIX)
 
-	# For convenience we define the sources as a variable. You can add
-	# header files and cpp/c files and CMake will sort them out
+# For convenience we define the sources as a variable. You can add
+# header files and cpp/c files and CMake will sort them out
 
-	SET(SRC_NMEA0183
-		src/nmea0183/LatLong.hpp
-		src/nmea0183/latlong.cpp
-		src/nmea0183/long.cpp
-		src/nmea0183/nmea0183.cpp
-		src/nmea0183/nmea0183.hpp
-		src/nmea0183/Response.hpp
-		src/nmea0183/response.cpp
-		src/nmea0183/RMB.hpp
-		src/nmea0183/rmb.cpp
-		src/nmea0183/Sentence.hpp
-		src/nmea0183/sentence.cpp
-		src/nmea0183/talkerid.cpp
-		src/nmea0183/RMC.HPP
-		src/nmea0183/rmc.cpp
-		src/nmea0183/hexvalue.cpp
-		src/nmea0183/lat.cpp
-		src/nmea0183/expid.cpp
-		src/nmea0183/wpl.hpp
-		src/nmea0183/wpl.cpp
-		src/nmea0183/rte.hpp
-		src/nmea0183/rte.cpp
-		src/nmea0183/hdt.hpp
-		src/nmea0183/hdt.cpp
-		src/nmea0183/hdg.hpp
-		src/nmea0183/hdg.cpp
-		src/nmea0183/hdm.hpp
-		src/nmea0183/hdm.cpp
-		src/nmea0183/gll.hpp
-		src/nmea0183/gll.cpp
-		src/nmea0183/vtg.hpp
-		src/nmea0183/vtg.cpp
-		src/nmea0183/gga.hpp
-		src/nmea0183/gga.cpp
-		src/nmea0183/gsv.hpp
-		src/nmea0183/gsv.cpp
-		src/nmea0183/GPwpl.cpp
-		src/nmea0183/GPwpl.hpp
-		src/nmea0183/apb.cpp
-		src/nmea0183/apb.hpp
-		)
+SET(SRC_NMEA0183
+	src/nmea0183/LatLong.hpp
+	src/nmea0183/latlong.cpp
+	src/nmea0183/long.cpp
+	src/nmea0183/nmea0183.cpp
+	src/nmea0183/nmea0183.hpp
+	src/nmea0183/Response.hpp
+	src/nmea0183/response.cpp
+	src/nmea0183/RMB.hpp
+	src/nmea0183/rmb.cpp
+	src/nmea0183/Sentence.hpp
+	src/nmea0183/sentence.cpp
+	src/nmea0183/talkerid.cpp
+	src/nmea0183/RMC.HPP
+	src/nmea0183/rmc.cpp
+	src/nmea0183/hexvalue.cpp
+	src/nmea0183/lat.cpp
+	src/nmea0183/expid.cpp
+	src/nmea0183/wpl.hpp
+	src/nmea0183/wpl.cpp
+	src/nmea0183/rte.hpp
+	src/nmea0183/rte.cpp
+	src/nmea0183/hdt.hpp
+	src/nmea0183/hdt.cpp
+	src/nmea0183/hdg.hpp
+	src/nmea0183/hdg.cpp
+	src/nmea0183/hdm.hpp
+	src/nmea0183/hdm.cpp
+	src/nmea0183/gll.hpp
+	src/nmea0183/gll.cpp
+	src/nmea0183/vtg.hpp
+	src/nmea0183/vtg.cpp
+	src/nmea0183/gga.hpp
+	src/nmea0183/gga.cpp
+	src/nmea0183/gsv.hpp
+	src/nmea0183/gsv.cpp
+	src/nmea0183/GPwpl.cpp
+	src/nmea0183/GPwpl.hpp
+	src/nmea0183/apb.cpp
+	src/nmea0183/apb.hpp
+	)
 
-	ADD_LIBRARY(NMEA0183 ${SRC_NMEA0183})
-	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/nmea0183)
+ADD_LIBRARY(NMEA0183 ${SRC_NMEA0183})
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/nmea0183)
 
-	SET(HDR_AIS
-		src/ais/ais.h
-		src/ais/AISTargetQueryDialog.h
-		src/ais/AIS_Bitstring.h
-		src/ais/AISTargetListDialog.h
-		src/ais/AISTargetAlertDialog.h
-		src/ais/AIS_Decoder.h
-		src/ais/AIS_Target_Data.h
-		)
+SET(HDR_AIS
+	src/ais/ais.h
+	src/ais/AISTargetQueryDialog.h
+	src/ais/AIS_Bitstring.h
+	src/ais/AISTargetListDialog.h
+	src/ais/AISTargetAlertDialog.h
+	src/ais/AIS_Decoder.h
+	src/ais/AIS_Target_Data.h
+	)
 
-	SET(SRC_AIS
-		src/ais/ais.cpp
-		src/ais/AISTargetQueryDialog.cpp
-		src/ais/AIS_Bitstring.cpp
-		src/ais/AISTargetListDialog.cpp
-		src/ais/AISTargetAlertDialog.cpp
-		src/ais/AIS_Decoder.cpp
-		src/ais/AIS_Target_Data.cpp
-		)
+SET(SRC_AIS
+	src/ais/ais.cpp
+	src/ais/AISTargetQueryDialog.cpp
+	src/ais/AIS_Bitstring.cpp
+	src/ais/AISTargetListDialog.cpp
+	src/ais/AISTargetAlertDialog.cpp
+	src/ais/AIS_Decoder.cpp
+	src/ais/AIS_Target_Data.cpp
+	)
 
-	SET(HDR_GPX
-		src/gpx/gpx.h
-		src/gpx/GpxDocument.h
-		src/gpx/GpxSimpleElement.h
-		src/gpx/GpxLinkElement.h
-		src/gpx/GpxPersonElement.h
-		src/gpx/GpxCopyrightElement.h
-		src/gpx/GpxExtensionsElement.h
-		src/gpx/GpxBoundsElement.h
-		src/gpx/GpxMetadataElement.h
-		src/gpx/GpxxExtensionsElement.h
-		src/gpx/GpxTrkElement.h
-		src/gpx/GpxWptElement.h
-		src/gpx/GpxRteElement.h
-		)
+SET(HDR_GPX
+	src/gpx/gpx.h
+	src/gpx/GpxDocument.h
+	src/gpx/GpxSimpleElement.h
+	src/gpx/GpxLinkElement.h
+	src/gpx/GpxPersonElement.h
+	src/gpx/GpxCopyrightElement.h
+	src/gpx/GpxExtensionsElement.h
+	src/gpx/GpxBoundsElement.h
+	src/gpx/GpxMetadataElement.h
+	src/gpx/GpxxExtensionsElement.h
+	src/gpx/GpxTrkElement.h
+	src/gpx/GpxWptElement.h
+	src/gpx/GpxRteElement.h
+	)
 
-	SET(SRC_GPX
-		src/gpx/gpx.cpp
-		src/gpx/GpxSimpleElement.cpp
-		src/gpx/GpxTrksegElement.cpp
-		src/gpx/GpxTrkElement.cpp
-		src/gpx/GpxRteElement.cpp
-		src/gpx/GpxLinkElement.cpp
-		src/gpx/GpxWptElement.cpp
-		src/gpx/GpxxExtensionsElement.cpp
-		src/gpx/GpxExtensionsElement.cpp
-		src/gpx/GpxRootElement.cpp
-		)
+SET(SRC_GPX
+	src/gpx/gpx.cpp
+	src/gpx/GpxSimpleElement.cpp
+	src/gpx/GpxTrksegElement.cpp
+	src/gpx/GpxTrkElement.cpp
+	src/gpx/GpxRteElement.cpp
+	src/gpx/GpxLinkElement.cpp
+	src/gpx/GpxWptElement.cpp
+	src/gpx/GpxxExtensionsElement.cpp
+	src/gpx/GpxExtensionsElement.cpp
+	src/gpx/GpxRootElement.cpp
+	)
 
-	SET(HDR_PUGIXML
-		src/pugixml/pugiconfig.hpp
-		src/pugixml/pugixml.hpp
-		)
+SET(HDR_PUGIXML
+	src/pugixml/pugiconfig.hpp
+	src/pugixml/pugixml.hpp
+	)
 
-	SET(SRC_PUGIXML
-		src/pugixml/pugixml.cpp
-		)
+SET(SRC_PUGIXML
+	src/pugixml/pugixml.cpp
+	)
 
-	SET(HDR_TINYXML
-		src/tinyxml/tinyxml.h
-		)
+SET(HDR_TINYXML
+	src/tinyxml/tinyxml.h
+	)
 
-	SET(SRC_TINYXML
-		src/tinyxml/tinyxml.cpp
-		src/tinyxml/tinyxmlerror.cpp
-		src/tinyxml/tinyxmlparser.cpp
-		)
+SET(SRC_TINYXML
+	src/tinyxml/tinyxml.cpp
+	src/tinyxml/tinyxmlerror.cpp
+	src/tinyxml/tinyxmlparser.cpp
+	)
 
-	SET(HDR_WXJSON
-		include/wx/json_defs.h
-		include/wx/jsonwriter.h
-		include/wx/jsonreader.h
-		)
+SET(HDR_WXJSON
+	include/wx/json_defs.h
+	include/wx/jsonwriter.h
+	include/wx/jsonreader.h
+	)
 
-	SET(SRC_WXJSON
-		src/wxJSON/jsonwriter.cpp
-		src/wxJSON/jsonreader.cpp
-		src/wxJSON/jsonval.cpp
-		)
+SET(SRC_WXJSON
+	src/wxJSON/jsonwriter.cpp
+	src/wxJSON/jsonreader.cpp
+	src/wxJSON/jsonval.cpp
+	)
 
-	SET(HDR_GLOBAL
-		src/global/GUI.h
-		src/global/Navigation.h
-		src/global/System.h
-		src/global/OCPN.h
-		src/global/OCPN_GUI.h
-		src/global/OCPN_Navigation.h
-		src/global/OCPN_System.h
-		)
+SET(HDR_GLOBAL
+	src/global/GUI.h
+	src/global/Navigation.h
+	src/global/System.h
+	src/global/OCPN.h
+	src/global/OCPN_GUI.h
+	src/global/OCPN_Navigation.h
+	src/global/OCPN_System.h
+	)
 
-	SET(SRC_GLOBAL
-		src/global/OCPN.cpp
-		src/global/OCPN_GUI.cpp
-		src/global/OCPN_Navigation.cpp
-		src/global/OCPN_System.cpp
-		)
+SET(SRC_GLOBAL
+	src/global/OCPN.cpp
+	src/global/OCPN_GUI.cpp
+	src/global/OCPN_Navigation.cpp
+	src/global/OCPN_System.cpp
+	)
 
-	SET(HDRS
-		${HDR_AIS}
-		${HDR_GPX}
-		${HDR_PUGIXML}
-		${HDR_WXJSON}
-		${HDR_GLOBAL}
-		src/decl_exp.h
-		src/ocpnDC.h
-		include/chart1.h
-		src/App.h
-		src/BoundingBox.h
-		src/LatLonBoundingBox.h
-		src/X11FontPicker.h
-		include/ocpn_pixel.h
-		src/OCPNMemDC.h
-		src/OCPNBitmap.h
-		src/TimedPopupWin.h
-		src/AnnunText.h
-		src/CDI.h
-		src/MyPrintout.h
-		src/chart/Refpoint.h
-		src/chart/ChartTableHeader.h
-		src/chart/ChartTableEntry.h
-		src/chart/ChartClassDescriptor.h
-		src/chart/ChartDB.h
-		src/chart/CacheEntry.h
-		src/chart/ChartDatabase.h
-		src/chart/ChartGEO.h
-		src/chart/ChartKAP.h
-		src/chart/ChartStack.h
-		src/chart/ChartType.h
-		src/chart/ChartFamily.h
-		src/chart/S57Sector.h
-		src/chart/ChartBase.h
-		src/chart/PlyPoint.h
-		src/ColorScheme.h
-		src/chart/ChartBaseBSB.h
-		include/chcanv.h
-		src/timers.h
-		src/ThumbData.h
-		src/chart/ChartDummy.h
-		src/ChartPlugInWrapper.h
-		src/EmbossData.h
-		src/OCPNListCtrl.h
-		src/CM93DSlide.h
-		src/GoToPositionDialog.h
-		src/RolloverWin.h
-		src/S57QueryDialog.h
-		src/S57ObjectDesc.h
-		src/S57Light.h
-		src/S57RegistrarMgr.h
-		include/S57ClassRegistrar.h
-		src/MarkIcon.h
-		src/SendToGpsDlg.h
-		src/TCWin.h
-		src/glTextureDescriptor.h
-		src/tide/tide_time.h
-		src/glChartCanvas.h
-		src/ChInfoWin.h
-		src/Quilt.h
-		src/QuiltPatch.h
-		src/QuiltCandidate.h
-		src/Hyperlink.h
-		src/NavObjectCollection.h
-		src/NavObjectChanges.h
-		src/RoutePoint.h
-		src/Route.h
-		src/SelectItem.h
-		src/Select.h
-		src/FontMgr.h
-		src/FontDesc.h
-		src/Vector2D.h
-		src/OCPNSoundData.h
-		src/OCPN_Sound.h
-		src/NMEALogWindow.h
-		src/WindowDestroyListener.h
-		src/TTYWindow.h
-		src/TTYScroll.h
-		src/Layer.h
-		src/ConsoleCanvas.h
-		src/ViewPort.h
-		include/cutil.h
-		include/georef.h
-		include/navutil.h
-		src/MicrosoftCompatibility.h
-		src/Track.h
-		src/Routeman.h
-		src/WayPointman.h
-		src/RouteManagerDialog.h
-		src/RouteProp.h
-		src/MarkInfo.h
-		src/LatLonTextCtrl.h
-		src/RoutePrintout.h
-		src/PositionParser.h
-		src/PrintTable.h
-		src/Table.h
-		src/PrintCell.h
-		src/RoutePrintSelection.h
-		src/StatWin.h
-		src/TextStatWin.h
-		src/PianoWin.h
-		include/tcmgr.h
-		src/tide/Station_Data.h
-		src/tide/IDX_entry.h
-		src/tide/TC_Error_Code.h
-		src/tide/TCDataFactory.h
-		src/tide/TCDS_Ascii_Harmonic.h
-		src/tide/TCDS_Binary_Harmonic.h
-		src/tide/TCDataSource.h
-		src/ThumbWin.h
-		src/OptionDialog.h
-		src/OptionIDs.h
-		src/ChartGroupsUI.h
-		src/SentenceListDlg.h
-		include/gshhs.h
-		src/Kml.h
-		src/KmlFormatDialog.h
-		src/Undo.h
-		src/UndoAction.h
-		src/AboutDialog.h
-		src/plugin/PlugInManager.h
-		include/ocpn_plugin.h
-		src/plugin/PlugInContainer.h
-		src/plugin/PlugInToolbarToolContainer.h
-		src/plugin/PluginPanel.h
-		src/plugin/PluginListPanel.h
-		src/plugin/OCPN_MsgEvent.h
-		src/chart/ChartSymbols.h
-		src/chart/SymbolSizeInfo.h
-		src/chart/ChartSymbol.h
-		src/chart/LineStyle.h
-		src/chart/OCPNPattern.h
-		src/chart/Lookup.h
-		src/RazdsParser.h
-		src/ProjectionType.h
-		src/Style.h
-		src/Tool.h
-		src/Icon.h
-		src/StyleManager.h
-		src/ToolBarSimple.h
-		src/ToolTipWin.h
-		src/ToolBarTool.h
-		src/ToolbarMOBDialog.h
-		src/GrabberWin.h
-		src/OCPNFloatingToolbarDialog.h
-		src/FloatingCompassWindow.h
-		src/Geodesic.h
-		include/datastream.h
-		src/OCPN_DataStreamEvent.h
-		src/ConnectionParams.h
-		src/OCP_DataStreamInput_Thread.h
-		src/dsPortType.h
-		src/Multiplexer.h
-		src/OCPNRegion.h
-		src/OCPNRegionIterator.h
-		src/TrackPropDlg.h
-		src/OCPNTrackListCtrl.h
-		src/LinkPropDlg.h
-		src/OCPN_AlertDialog.h
-		src/NMEA_Msg_Container.h
-		src/MessageBox.h
-		src/ChartDirInfo.h
-		)
+SET(HDRS
+	${HDR_AIS}
+	${HDR_GPX}
+	${HDR_PUGIXML}
+	${HDR_WXJSON}
+	${HDR_GLOBAL}
+	src/decl_exp.h
+	src/ocpnDC.h
+	include/chart1.h
+	src/App.h
+	src/BoundingBox.h
+	src/LatLonBoundingBox.h
+	src/X11FontPicker.h
+	include/ocpn_pixel.h
+	src/OCPNMemDC.h
+	src/OCPNBitmap.h
+	src/TimedPopupWin.h
+	src/AnnunText.h
+	src/CDI.h
+	src/MyPrintout.h
+	src/chart/Refpoint.h
+	src/chart/ChartTableHeader.h
+	src/chart/ChartTableEntry.h
+	src/chart/ChartClassDescriptor.h
+	src/chart/ChartDB.h
+	src/chart/CacheEntry.h
+	src/chart/ChartDatabase.h
+	src/chart/ChartGEO.h
+	src/chart/ChartKAP.h
+	src/chart/ChartStack.h
+	src/chart/ChartType.h
+	src/chart/ChartFamily.h
+	src/chart/S57Sector.h
+	src/chart/ChartBase.h
+	src/chart/PlyPoint.h
+	src/ColorScheme.h
+	src/chart/ChartBaseBSB.h
+	include/chcanv.h
+	src/timers.h
+	src/ThumbData.h
+	src/chart/ChartDummy.h
+	src/ChartPlugInWrapper.h
+	src/EmbossData.h
+	src/OCPNListCtrl.h
+	src/CM93DSlide.h
+	src/GoToPositionDialog.h
+	src/RolloverWin.h
+	src/S57QueryDialog.h
+	src/S57ObjectDesc.h
+	src/S57Light.h
+	src/S57RegistrarMgr.h
+	include/S57ClassRegistrar.h
+	src/MarkIcon.h
+	src/SendToGpsDlg.h
+	src/TCWin.h
+	src/glTextureDescriptor.h
+	src/tide/tide_time.h
+	src/glChartCanvas.h
+	src/ChInfoWin.h
+	src/Quilt.h
+	src/QuiltPatch.h
+	src/QuiltCandidate.h
+	src/Hyperlink.h
+	src/NavObjectCollection.h
+	src/NavObjectChanges.h
+	src/RoutePoint.h
+	src/Route.h
+	src/SelectItem.h
+	src/Select.h
+	src/FontMgr.h
+	src/FontDesc.h
+	src/Vector2D.h
+	src/OCPNSoundData.h
+	src/OCPN_Sound.h
+	src/NMEALogWindow.h
+	src/WindowDestroyListener.h
+	src/TTYWindow.h
+	src/TTYScroll.h
+	src/Layer.h
+	src/ConsoleCanvas.h
+	src/ViewPort.h
+	include/cutil.h
+	include/georef.h
+	include/navutil.h
+	src/MicrosoftCompatibility.h
+	src/Track.h
+	src/Routeman.h
+	src/WayPointman.h
+	src/RouteManagerDialog.h
+	src/RouteProp.h
+	src/MarkInfo.h
+	src/LatLonTextCtrl.h
+	src/RoutePrintout.h
+	src/PositionParser.h
+	src/PrintTable.h
+	src/Table.h
+	src/PrintCell.h
+	src/RoutePrintSelection.h
+	src/StatWin.h
+	src/TextStatWin.h
+	src/PianoWin.h
+	include/tcmgr.h
+	src/tide/Station_Data.h
+	src/tide/IDX_entry.h
+	src/tide/TC_Error_Code.h
+	src/tide/TCDataFactory.h
+	src/tide/TCDS_Ascii_Harmonic.h
+	src/tide/TCDS_Binary_Harmonic.h
+	src/tide/TCDataSource.h
+	src/ThumbWin.h
+	src/OptionDialog.h
+	src/OptionIDs.h
+	src/ChartGroupsUI.h
+	src/SentenceListDlg.h
+	include/gshhs.h
+	src/Kml.h
+	src/KmlFormatDialog.h
+	src/Undo.h
+	src/UndoAction.h
+	src/AboutDialog.h
+	src/plugin/PlugInManager.h
+	include/ocpn_plugin.h
+	src/plugin/PlugInContainer.h
+	src/plugin/PlugInToolbarToolContainer.h
+	src/plugin/PluginPanel.h
+	src/plugin/PluginListPanel.h
+	src/plugin/OCPN_MsgEvent.h
+	src/chart/ChartSymbols.h
+	src/chart/SymbolSizeInfo.h
+	src/chart/ChartSymbol.h
+	src/chart/LineStyle.h
+	src/chart/OCPNPattern.h
+	src/chart/Lookup.h
+	src/RazdsParser.h
+	src/ProjectionType.h
+	src/Style.h
+	src/Tool.h
+	src/Icon.h
+	src/StyleManager.h
+	src/ToolBarSimple.h
+	src/ToolTipWin.h
+	src/ToolBarTool.h
+	src/ToolbarMOBDialog.h
+	src/GrabberWin.h
+	src/OCPNFloatingToolbarDialog.h
+	src/FloatingCompassWindow.h
+	src/Geodesic.h
+	include/datastream.h
+	src/OCPN_DataStreamEvent.h
+	src/ConnectionParams.h
+	src/OCP_DataStreamInput_Thread.h
+	src/dsPortType.h
+	src/Multiplexer.h
+	src/OCPNRegion.h
+	src/OCPNRegionIterator.h
+	src/TrackPropDlg.h
+	src/OCPNTrackListCtrl.h
+	src/LinkPropDlg.h
+	src/OCPN_AlertDialog.h
+	src/NMEA_Msg_Container.h
+	src/MessageBox.h
+	src/ChartDirInfo.h
+	)
 
-	SET(SRCS
-			${SRC_AIS}
-			${SRC_GPX}
-			${SRC_PUGIXML}
-			${SRC_WXJSON}
-			${SRC_GLOBAL}
-			src/chart1.cpp
-			src/MessageBox.cpp
-			src/TimedPopupWin.cpp
-			src/AnnunText.cpp
-			src/CDI.cpp
-			src/MyPrintout.cpp
-			src/BoundingBox.cpp
-			src/LatLonBoundingBox.cpp
-			src/X11FontPicker.cpp
-			src/ocpn_pixel.cpp
-			src/OCPNMemDC.cpp
-			src/OCPNBitmap.cpp
-			src/ocpnDC.cpp
-			src/chart/ChartDB.cpp
-			src/chart/ChartDatabase.cpp
+SET(SRCS
+	${SRC_AIS}
+	${SRC_GPX}
+	${SRC_PUGIXML}
+	${SRC_WXJSON}
+	${SRC_GLOBAL}
+	src/chart1.cpp
+	src/MessageBox.cpp
+	src/TimedPopupWin.cpp
+	src/AnnunText.cpp
+	src/CDI.cpp
+	src/MyPrintout.cpp
+	src/BoundingBox.cpp
+	src/LatLonBoundingBox.cpp
+	src/X11FontPicker.cpp
+	src/ocpn_pixel.cpp
+	src/OCPNMemDC.cpp
+	src/OCPNBitmap.cpp
+	src/ocpnDC.cpp
+	src/chart/ChartDB.cpp
+	src/chart/ChartDatabase.cpp
 	src/chart/ChartTableHeader.cpp
 	src/chart/ChartTableEntry.cpp
 	src/chart/ChartClassDescriptor.cpp
@@ -703,277 +703,255 @@ FIND_PACKAGE(Gettext REQUIRED)
 	src/Vector2D.cpp
 	)
 
-	IF(wx_Version MATCHES "2.9")
-	ELSE(wx_Version MATCHES "2.9")
-SET(HDRS ${HDRS} include/scrollingdialog.h )
-SET(SRCS ${SRCS} src/scrollingdialog.cpp)
-	ENDIF(wx_Version MATCHES "2.9")
+IF(wx_Version MATCHES "2.9")
+ELSE(wx_Version MATCHES "2.9")
+	SET(HDRS ${HDRS} include/scrollingdialog.h )
+	SET(SRCS ${SRCS} src/scrollingdialog.cpp)
+ENDIF(wx_Version MATCHES "2.9")
 
-	SET( PACKAGE_HEADERS "" )
+SET( PACKAGE_HEADERS "" )
 
 IF(TINYXML_FOUND)
-	message (STATUS "Building with tinyxml includes")
-INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
+	message(STATUS "Building with tinyxml includes")
+	INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
 	ADD_DEFINITIONS(-DTIXML_USE_STL)
 ELSE(TINYXML_FOUND)
 	message (STATUS "tinyxml library not found")
-SET(HDRS ${HDRW} ${HDR_TINYXML})
-SET(SRCS ${SRCS} ${SRC_TINYXML})
+	SET(HDRS ${HDRW} ${HDR_TINYXML})
+	SET(SRCS ${SRCS} ${SRC_TINYXML})
 	ADD_DEFINITIONS(-DTIXML_USE_STL)
 ENDIF(TINYXML_FOUND)
 
 
-
-	OPTION (USE_S57 "Enable S57 ENC support" ON)
+OPTION (USE_S57 "Enable S57 ENC support" ON)
 IF (USE_S57)
 	message (STATUS "S57 ENC support: enabled")
-ADD_DEFINITIONS(-DUSE_S57)
+	ADD_DEFINITIONS(-DUSE_S57)
 
 	SET(SRC_S57ENC
-			src/s52plib.h
-			src/RenderFromHPGL.h
-			src/chart/s52utils.h
-			include/s57chart.h
-			src/geo/ExtendedGeometry.h
-			src/geo/TriPrim.h
-			src/geo/PolyTriGroup.h
-			src/geo/PolyTrapGroup.h
-			src/geo/PolyTessGeo.h
-			src/s52cnsy.cpp
-			src/s52plib.cpp
-			src/chart/s52utils.cpp
-			src/s57chart.cpp
-			src/RenderFromHPGL.cpp
-			src/chart/M_COVR_Desc.cpp
-			src/chart/OCPNOffsetListCtrl.cpp
-			src/chart/COVR_Set.cpp
-			src/chart/CM93_attr_block.cpp
-			src/chart/CM93OffsetDialog.cpp
-			src/chart/CM93Dictionary.cpp
-	src/chart/CM93Chart.cpp
-	src/chart/CM93Manager.cpp
-	src/chart/CM93compchart.cpp
-	src/geo/TriPrim.cpp
-	src/geo/ExtendedGeometry.cpp
-	src/geo/PolyTriGroup.cpp
-	src/geo/PolyTrapGroup.cpp
-	src/geo/PolyTessGeoTrap.cpp
-	src/geo/PolyTessGeo.cpp
-	src/chart/OCPNOffsetListCtrl.h
-	src/chart/CM93OffsetDialog.h
-	src/chart/M_COVR_Desc.h
-	src/chart/COVR_Set.h
-	src/chart/CM93compchart.h
-	src/chart/FindCM93Dictionary.h
-	src/chart/CM93Dictionary.h
-	src/chart/CM93_attr_block.h
-	src/chart/CM93Manager.h
-	src/chart/CM93Chart.h
-	src/chart/CM93Geometry.h
-	src/tri.c
-	src/myiso8211/ddffielddefn.cpp
-	src/myiso8211/ddfmodule.cpp
-	src/myiso8211/ddfrecord.cpp
-	src/myiso8211/ddfsubfielddefn.cpp
-	src/myiso8211/ddffield.cpp
-	src/myiso8211/ddfutils.cpp
-	src/mygdal/cpl_config.h
-	src/mygdal/gdal_priv.h
-	src/mygdal/cpl_conv.h
-	src/mygdal/iso8211.h
-	src/mygdal/cpl_csv.h
-	src/mygdal/ogr_api.h
-	src/mygdal/cpl_error.h
-	src/mygdal/ogr_attrind.h
-	src/mygdal/cpl_list.h
-	src/mygdal/cpl_minixml.h
-	src/mygdal/ogr_feature.h
-	src/mygdal/cpl_multiproc.h
-	src/mygdal/ogr_geometry.h
-	src/mygdal/cpl_odbc.h
-	src/mygdal/ogr_p.h
-	src/mygdal/ogr_core.h
-	src/mygdal/cpl_port.h
-	src/mygdal/ogr_s57.h
-	src/mygdal/cpl_string.h
-	src/mygdal/ogr_spatialref.h
-	src/mygdal/cpl_vsi.h
-	src/mygdal/ogrsf_frmts.h
-	src/mygdal/gdal.h
-	src/mygdal/s57.h
-	src/mygdal/gdal_frmts.h
-	src/mygdal/ddfrecordindex.cpp
-	src/mygdal/cpl_conv.cpp
-	src/mygdal/cpl_csv.cpp
-	src/mygdal/cpl_error.cpp
-	src/mygdal/cpl_findfile.cpp
-	src/mygdal/cpl_minixml.cpp
-	src/mygdal/cpl_path.cpp
-	src/mygdal/cpl_string.cpp
-	src/mygdal/cpl_vsisimple.cpp
-	src/mygdal/cplgetsymbol.cpp
-	src/mygdal/ograssemblepolygon.cpp
-	src/mygdal/ogrcurve.cpp
-	src/mygdal/ogrfeature.cpp
-	src/mygdal/ogrfeaturedefn.cpp
-	src/mygdal/ogrfielddefn.cpp
-	src/mygdal/ogrgeometry.cpp
-	src/mygdal/ogrgeometrycollection.cpp
-	src/mygdal/ogrgeometryfactory.cpp
-	src/mygdal/ogrlinearring.cpp
-	src/mygdal/ogrlinestring.cpp
-	src/mygdal/ogrmultilinestring.cpp
-	src/mygdal/ogrmultipoint.cpp
-	src/mygdal/ogrmultipolygon.cpp
-	src/mygdal/ogrpoint.cpp
-	src/mygdal/ogrpolygon.cpp
-	src/mygdal/ogrs57datasource.cpp
-	src/mygdal/ogrlayer.cpp
-	src/mygdal/ogrs57layer.cpp
-	src/mygdal/ogrutils.cpp
-	src/mygdal/s57classregistrar.cpp
-	src/mygdal/s57featuredefns.cpp
-	src/mygdal/s57reader.cpp
-	src/mygdal/gdal_misc.cpp
-	)
-ADD_LIBRARY(S57ENC ${SRC_S57ENC})
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal)
-SET(EXTRA_LIBS ${EXTRA_LIBS} S57ENC)
+		src/s52plib.h
+		src/RenderFromHPGL.h
+		src/chart/s52utils.h
+		include/s57chart.h
+		src/geo/ExtendedGeometry.h
+		src/geo/TriPrim.h
+		src/geo/PolyTriGroup.h
+		src/geo/PolyTrapGroup.h
+		src/geo/PolyTessGeo.h
+		src/s52cnsy.cpp
+		src/s52plib.cpp
+		src/chart/s52utils.cpp
+		src/s57chart.cpp
+		src/RenderFromHPGL.cpp
+		src/chart/M_COVR_Desc.cpp
+		src/chart/OCPNOffsetListCtrl.cpp
+		src/chart/COVR_Set.cpp
+		src/chart/CM93_attr_block.cpp
+		src/chart/CM93OffsetDialog.cpp
+		src/chart/CM93Dictionary.cpp
+		src/chart/CM93Chart.cpp
+		src/chart/CM93Manager.cpp
+		src/chart/CM93compchart.cpp
+		src/geo/TriPrim.cpp
+		src/geo/ExtendedGeometry.cpp
+		src/geo/PolyTriGroup.cpp
+		src/geo/PolyTrapGroup.cpp
+		src/geo/PolyTessGeoTrap.cpp
+		src/geo/PolyTessGeo.cpp
+		src/chart/OCPNOffsetListCtrl.h
+		src/chart/CM93OffsetDialog.h
+		src/chart/M_COVR_Desc.h
+		src/chart/COVR_Set.h
+		src/chart/CM93compchart.h
+		src/chart/FindCM93Dictionary.h
+		src/chart/CM93Dictionary.h
+		src/chart/CM93_attr_block.h
+		src/chart/CM93Manager.h
+		src/chart/CM93Chart.h
+		src/chart/CM93Geometry.h
+		src/tri.c
+		src/myiso8211/ddffielddefn.cpp
+		src/myiso8211/ddfmodule.cpp
+		src/myiso8211/ddfrecord.cpp
+		src/myiso8211/ddfsubfielddefn.cpp
+		src/myiso8211/ddffield.cpp
+		src/myiso8211/ddfutils.cpp
+		src/mygdal/cpl_config.h
+		src/mygdal/gdal_priv.h
+		src/mygdal/cpl_conv.h
+		src/mygdal/iso8211.h
+		src/mygdal/cpl_csv.h
+		src/mygdal/ogr_api.h
+		src/mygdal/cpl_error.h
+		src/mygdal/ogr_attrind.h
+		src/mygdal/cpl_list.h
+		src/mygdal/cpl_minixml.h
+		src/mygdal/ogr_feature.h
+		src/mygdal/cpl_multiproc.h
+		src/mygdal/ogr_geometry.h
+		src/mygdal/cpl_odbc.h
+		src/mygdal/ogr_p.h
+		src/mygdal/ogr_core.h
+		src/mygdal/cpl_port.h
+		src/mygdal/ogr_s57.h
+		src/mygdal/cpl_string.h
+		src/mygdal/ogr_spatialref.h
+		src/mygdal/cpl_vsi.h
+		src/mygdal/ogrsf_frmts.h
+		src/mygdal/gdal.h
+		src/mygdal/s57.h
+		src/mygdal/gdal_frmts.h
+		src/mygdal/ddfrecordindex.cpp
+		src/mygdal/cpl_conv.cpp
+		src/mygdal/cpl_csv.cpp
+		src/mygdal/cpl_error.cpp
+		src/mygdal/cpl_findfile.cpp
+		src/mygdal/cpl_minixml.cpp
+		src/mygdal/cpl_path.cpp
+		src/mygdal/cpl_string.cpp
+		src/mygdal/cpl_vsisimple.cpp
+		src/mygdal/cplgetsymbol.cpp
+		src/mygdal/ograssemblepolygon.cpp
+		src/mygdal/ogrcurve.cpp
+		src/mygdal/ogrfeature.cpp
+		src/mygdal/ogrfeaturedefn.cpp
+		src/mygdal/ogrfielddefn.cpp
+		src/mygdal/ogrgeometry.cpp
+		src/mygdal/ogrgeometrycollection.cpp
+		src/mygdal/ogrgeometryfactory.cpp
+		src/mygdal/ogrlinearring.cpp
+		src/mygdal/ogrlinestring.cpp
+		src/mygdal/ogrmultilinestring.cpp
+		src/mygdal/ogrmultipoint.cpp
+		src/mygdal/ogrmultipolygon.cpp
+		src/mygdal/ogrpoint.cpp
+		src/mygdal/ogrpolygon.cpp
+		src/mygdal/ogrs57datasource.cpp
+		src/mygdal/ogrlayer.cpp
+		src/mygdal/ogrs57layer.cpp
+		src/mygdal/ogrutils.cpp
+		src/mygdal/s57classregistrar.cpp
+		src/mygdal/s57featuredefns.cpp
+		src/mygdal/s57reader.cpp
+		src/mygdal/gdal_misc.cpp
+		)
+
+	ADD_LIBRARY(S57ENC ${SRC_S57ENC})
+	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal)
+	SET(EXTRA_LIBS ${EXTRA_LIBS} S57ENC)
 ELSE (USE_S57)
 	message (STATUS "S57 ENC support: disabled")
 ENDIF (USE_S57)
 
-	OPTION (USE_GARMINHOST "Enable Garmin Host Mode support" ON)
+OPTION (USE_GARMINHOST "Enable Garmin Host Mode support" ON)
 IF (USE_GARMINHOST)
 	message (STATUS "Garmin Host Mode support: enabled")
-ADD_DEFINITIONS(-DUSE_GARMINHOST)
+	ADD_DEFINITIONS(-DUSE_GARMINHOST)
 
 	SET(SRC_GARMINHOST
-			src/garmin/jeeps/gpsapp.c
-			src/garmin/jeeps/gpscom.c
-			src/garmin/jeeps/gpsmath.c
-			src/garmin/jeeps/gpsmem.c
-			src/garmin/jeeps/gpsprot.c
-			src/garmin/jeeps/gpsread.c
-			src/garmin/jeeps/gpsdevice.c
-			src/garmin/jeeps/gpsdevice_ser.c
-			src/garmin/jeeps/gpsdevice_usb.c
-			src/garmin/jeeps/gpsrqst.c
-			src/garmin/jeeps/gpssend.c
-			src/garmin/jeeps/gpsserial.c
-			src/garmin/jeeps/gpsutil.c
-			src/garmin/jeeps/gpsusbread.c
-			src/garmin/jeeps/gpsusbsend.c
-			src/garmin/jeeps/gpsusbcommon.c
-			src/garmin/jeeps/garmin_wrapper_utils.c
-			src/garmin/jeeps/garmin_wrapper.cpp
-			src/garmin/jeeps/garmin_gps.h
-			src/garmin/jeeps/garmin_wrapper.h
-	src/garmin/jeeps/gpsapp.h
-	src/garmin/jeeps/gpsdatum.h
-	src/garmin/jeeps/gpsfmt.h
-	src/garmin/jeeps/gpsmath.h
-	src/garmin/jeeps/gpsport.h
-	src/garmin/jeeps/gpsprot.h
-	src/garmin/jeeps/gpsrqst.h
-	src/garmin/jeeps/gpsserial.h
-	src/garmin/jeeps/gpsusbint.h
-	src/garmin/jeeps/garminusb.h
-	src/garmin/jeeps/garmin_wrapper_utils.h
-	src/garmin/jeeps/gpscom.h
-	src/garmin/jeeps/gpsdevice.h
-	src/garmin/jeeps/gpsinput.h
-	src/garmin/jeeps/gpsmem.h
-	src/garmin/jeeps/gpsproj.h
-	src/garmin/jeeps/gpsread.h
-	src/garmin/jeeps/gpssend.h
-	src/garmin/jeeps/gpsusbcommon.h
-	src/garmin/jeeps/gpsutil.h
-	)
-	IF(WIN32)
-SET(SRC_GARMINHOST ${SRC_GARMINHOST} src/garmin/jeeps/gpsusbwin.c)
-ENDIF(WIN32)
+		src/garmin/jeeps/gpsapp.c
+		src/garmin/jeeps/gpscom.c
+		src/garmin/jeeps/gpsmath.c
+		src/garmin/jeeps/gpsmem.c
+		src/garmin/jeeps/gpsprot.c
+		src/garmin/jeeps/gpsread.c
+		src/garmin/jeeps/gpsdevice.c
+		src/garmin/jeeps/gpsdevice_ser.c
+		src/garmin/jeeps/gpsdevice_usb.c
+		src/garmin/jeeps/gpsrqst.c
+		src/garmin/jeeps/gpssend.c
+		src/garmin/jeeps/gpsserial.c
+		src/garmin/jeeps/gpsutil.c
+		src/garmin/jeeps/gpsusbread.c
+		src/garmin/jeeps/gpsusbsend.c
+		src/garmin/jeeps/gpsusbcommon.c
+		src/garmin/jeeps/garmin_wrapper_utils.c
+		src/garmin/jeeps/garmin_wrapper.cpp
+		src/garmin/jeeps/garmin_gps.h
+		src/garmin/jeeps/garmin_wrapper.h
+		src/garmin/jeeps/gpsapp.h
+		src/garmin/jeeps/gpsdatum.h
+		src/garmin/jeeps/gpsfmt.h
+		src/garmin/jeeps/gpsmath.h
+		src/garmin/jeeps/gpsport.h
+		src/garmin/jeeps/gpsprot.h
+		src/garmin/jeeps/gpsrqst.h
+		src/garmin/jeeps/gpsserial.h
+		src/garmin/jeeps/gpsusbint.h
+		src/garmin/jeeps/garminusb.h
+		src/garmin/jeeps/garmin_wrapper_utils.h
+		src/garmin/jeeps/gpscom.h
+		src/garmin/jeeps/gpsdevice.h
+		src/garmin/jeeps/gpsinput.h
+		src/garmin/jeeps/gpsmem.h
+		src/garmin/jeeps/gpsproj.h
+		src/garmin/jeeps/gpsread.h
+		src/garmin/jeeps/gpssend.h
+		src/garmin/jeeps/gpsusbcommon.h
+		src/garmin/jeeps/gpsutil.h
+		)
 
-ADD_LIBRARY(GARMINHOST ${SRC_GARMINHOST})
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/garmin/jeeps)
-SET(EXTRA_LIBS ${EXTRA_LIBS} GARMINHOST)
 	IF(WIN32)
-	ADD_DEFINITIONS(-D__WIN32__)
+		SET(SRC_GARMINHOST ${SRC_GARMINHOST} src/garmin/jeeps/gpsusbwin.c)
+	ENDIF(WIN32)
+
+	ADD_LIBRARY(GARMINHOST ${SRC_GARMINHOST})
+	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/garmin/jeeps)
+	SET(EXTRA_LIBS ${EXTRA_LIBS} GARMINHOST)
+
+	IF(WIN32)
+		ADD_DEFINITIONS(-D__WIN32__)
 	ENDIF(WIN32)
 ELSE (USE_GARMINHOST)
 	message (STATUS "Garmin Host Mode support: disabled")
 ENDIF (USE_GARMINHOST)
 
-#TODO
-#dnl
-#dnl Use OpenGL tesselator or Internal tesselator
-#dnl
-#tess_internal=false
-#tess_glu=true
-#AC_ARG_WITH(tess_internal,
-#          [[  --with-tess-internal    use Internal Polygon Tesselator]],
-#          [tess_internal=true]
-#           )
-#
-#if [[ "$tess_internal" = "false" ]] ; then
-#        dnl  Look for and qualify an external GLU library
-#        echo "checking for useable OpenGLU Library"
-#        AC_CHECK_LIB(GLU, gluNewTess, true, dnl here true is just a nop
-#           AC_MSG_ERROR([*** libGLU not found.  Run configure using --with-tess-internal.]))
-#
-#        GL_LIBS="-lGL -lGLU"
-#        AC_SUBST(GL_LIBS)
-#
-#        GL_CFLAGS="-DUSE_GLU_TESS"
-#        AC_SUBST(GL_CFLAGS)
-#fi
-
 
 # If we build for windows systems, we also include the resource file
 # containing the manifest, icon and other resources
-	IF(WIN32)
-SET(SRCS ${SRCS} src/opencpn.rc)
+IF(WIN32)
+	SET(SRCS ${SRCS} src/opencpn.rc)
 ENDIF(WIN32)
 
 # Various data files
-	SET(gshhs
-			data/gshhs/poly-c-1.dat
-			data/gshhs/poly-i-1.dat
-			data/gshhs/poly-l-1.dat
-			data/gshhs/wdb_borders_c.b
-			data/gshhs/wdb_borders_i.b
-			data/gshhs/wdb_borders_l.b
-			data/gshhs/wdb_rivers_c.b
-			data/gshhs/wdb_rivers_i.b
-			data/gshhs/wdb_rivers_l.b
-	   )
+SET(gshhs
+	data/gshhs/poly-c-1.dat
+	data/gshhs/poly-i-1.dat
+	data/gshhs/poly-l-1.dat
+	data/gshhs/wdb_borders_c.b
+	data/gshhs/wdb_borders_i.b
+	data/gshhs/wdb_borders_l.b
+	data/gshhs/wdb_rivers_c.b
+	data/gshhs/wdb_rivers_i.b
+	data/gshhs/wdb_rivers_l.b
+	)
 
-	SET(uiData
-			src/bitmaps/styles.xml
-			src/bitmaps/toolicons_journeyman.png
-			src/bitmaps/toolicons_journeyman_flat.png
-			src/bitmaps/toolicons_traditional.png
-	   )
+SET(uiData
+	src/bitmaps/styles.xml
+	src/bitmaps/toolicons_journeyman.png
+	src/bitmaps/toolicons_journeyman_flat.png
+	src/bitmaps/toolicons_traditional.png
+	)
 
 IF (USE_S57)
 	SET(s57data
-			data/s57data/attdecode.csv
-			data/s57data/S52RAZDS.RLE
-			data/s57data/s57attributes.csv
-			data/s57data/s57expectedinput.csv
-			data/s57data/s57objectclasses.csv
-			data/s57data/rastersymbols-dark.png
-			data/s57data/rastersymbols-day.png
-			data/s57data/rastersymbols-dusk.png
-			data/s57data/chartsymbols.xml
-	   )
+		data/s57data/attdecode.csv
+		data/s57data/S52RAZDS.RLE
+		data/s57data/s57attributes.csv
+		data/s57data/s57expectedinput.csv
+		data/s57data/s57objectclasses.csv
+		data/s57data/rastersymbols-dark.png
+		data/s57data/rastersymbols-day.png
+		data/s57data/rastersymbols-dusk.png
+		data/s57data/chartsymbols.xml
+		)
 ENDIF (USE_S57)
 
-	SET(tcData
-			data/tcdata/HARMONIC
-			data/tcdata/HARMONIC.IDX
-			data/tcdata/README.harmonics
-	   )
+SET(tcData
+	data/tcdata/HARMONIC
+	data/tcdata/HARMONIC.IDX
+	data/tcdata/README.harmonics
+	)
 
 
 IF (NOT APPLE AND NOT WIN32)
@@ -994,8 +972,8 @@ IF (NOT APPLE AND NOT WIN32)
 	SET(CMAKE_MODULE_LINKER_FLAGS "-O2 -Wall -Wextra")
 ENDIF()
 
-	IF(APPLE)
-INCLUDE_DIRECTORIES(/usr/X11/include /usr/X11/include/GL)
+IF(APPLE)
+	INCLUDE_DIRECTORIES(/usr/X11/include /usr/X11/include/GL)
 
 	SET(CMAKE_C_FLAGS "-O2 -arch ${ARCH}")
 	SET(CMAKE_C_FLAGS_DEBUG "-g -O0 -arch ${ARCH}")
@@ -1014,445 +992,359 @@ INCLUDE_DIRECTORIES(/usr/X11/include /usr/X11/include/GL)
 	SET(CMAKE_MODULE_LINKER_FLAGS "-O2 -arch ${ARCH}")
 
 	SET(SRCS ${SRCS}
-			include/macutils.h
-			src/macutils.c
-	   )
+		include/macutils.h
+		src/macutils.c
+		)
 ENDIF(APPLE)
 
 #  Mac has trouble finding libgobject-2.0.dylib
 #  We look for it explicitely
 IF(xAPPLE)
-#       Assume pkg-config is available.
+	# Assume pkg-config is available.
 	INCLUDE( FindPkgConfig )
-PKG_SEARCH_MODULE( GOBJECT REQUIRED gobject-2.0 )
-#    MESSAGE (STATUS "    GOBJECT: " ${GOBJECT_LDFLAGS})
-
-SET(EXTRA_LIBS ${EXTRA_LIBS} ${GOBJECT_LDFLAGS})
+	PKG_SEARCH_MODULE( GOBJECT REQUIRED gobject-2.0 )
+	#MESSAGE (STATUS "    GOBJECT: " ${GOBJECT_LDFLAGS})
+	SET(EXTRA_LIBS ${EXTRA_LIBS} ${GOBJECT_LDFLAGS})
 	SET(EXTRA_LIBS ${EXTRA_LIBS} "iconv")
 ENDIF(xAPPLE)
 
-	IF(WIN32)
-IF(MSVC)
-	SET(CMAKE_C_FLAGS_DEBUG               "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1" )
-	SET(CMAKE_C_FLAGS_MINSIZEREL          "/MD  /O1  /Ob1 /D NDEBUG")
-	SET(CMAKE_C_FLAGS_RELEASE             "/MD  /O2  /Ob2 /D NDEBUG")
-	SET(CMAKE_C_FLAGS_RELWITHDEBINFO      "/MD  /O2  /Ob1 /D NDEBUG /Zi")
-	SET(CMAKE_CXX_FLAGS_DEBUG             "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1")
-	SET(CMAKE_CXX_FLAGS_MINSIZEREL        "/MD  /O1  /Ob1 /D NDEBUG")
-	SET(CMAKE_CXX_FLAGS_RELEASE           "/MD  /O2  /Ob2 /D NDEBUG")
-	SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/MD  /O2  /Ob1 /D NDEBUG" /Zi )
+IF(WIN32)
+	IF(MSVC)
+		SET(CMAKE_C_FLAGS_DEBUG               "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1" )
+		SET(CMAKE_C_FLAGS_MINSIZEREL          "/MD  /O1  /Ob1 /D NDEBUG")
+		SET(CMAKE_C_FLAGS_RELEASE             "/MD  /O2  /Ob2 /D NDEBUG")
+		SET(CMAKE_C_FLAGS_RELWITHDEBINFO      "/MD  /O2  /Ob1 /D NDEBUG /Zi")
+		SET(CMAKE_CXX_FLAGS_DEBUG             "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1")
+		SET(CMAKE_CXX_FLAGS_MINSIZEREL        "/MD  /O1  /Ob1 /D NDEBUG")
+		SET(CMAKE_CXX_FLAGS_RELEASE           "/MD  /O2  /Ob2 /D NDEBUG")
+		SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/MD  /O2  /Ob1 /D NDEBUG" /Zi )
 	ENDIF(MSVC)
-ADD_EXECUTABLE(${PACKAGE_NAME} WIN32 ${HDRS} ${SRCS})
+	ADD_EXECUTABLE(${PACKAGE_NAME} WIN32 ${HDRS} ${SRCS})
 ENDIF(WIN32)
 
 
 IF(APPLE)
-
-SET_SOURCE_FILES_PROPERTIES(
-		${gshhs} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/gshhs  )
-SET_SOURCE_FILES_PROPERTIES(
-		${uiData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/uidata  )
-SET_SOURCE_FILES_PROPERTIES(
-		${s57data} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/s57data  )
-SET_SOURCE_FILES_PROPERTIES(
-		${tcData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/tcdata  )
-SET_SOURCE_FILES_PROPERTIES(
-		data/license.txt PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport )
+	SET_SOURCE_FILES_PROPERTIES(${gshhs} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/gshhs )
+	SET_SOURCE_FILES_PROPERTIES(${uiData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/uidata  )
+	SET_SOURCE_FILES_PROPERTIES(${s57data} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/s57data  )
+	SET_SOURCE_FILES_PROPERTIES(${tcData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/tcdata  )
+	SET_SOURCE_FILES_PROPERTIES(data/license.txt PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport )
 
 	FILE(GLOB SOUND_FILES ${CMAKE_SOURCE_DIR}/data/sounds/*)
-														   FOREACH (_currentSoundFile ${SOUND_FILES})
-														   SET_SOURCE_FILES_PROPERTIES(
-														   ${_currentSoundFile} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/sounds )
-														   ENDFOREACH (_currentSoundFile )
+	FOREACH (_currentSoundFile ${SOUND_FILES})
+		SET_SOURCE_FILES_PROPERTIES(
+			${_currentSoundFile} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/sounds )
+	ENDFOREACH (_currentSoundFile )
 
-														   SET_SOURCE_FILES_PROPERTIES(
-														   data/doc/help_web.html PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/doc )
+	SET_SOURCE_FILES_PROPERTIES(data/doc/help_web.html PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/doc )
+	SET_SOURCE_FILES_PROPERTIES(data/doc/help_en_US.html PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/doc )
 
-														   SET_SOURCE_FILES_PROPERTIES(
-														   data/doc/help_en_US.html PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/doc )
+	FILE(GLOB DOC_FILES "${CMAKE_SOURCE_DIR}/data/doc/images/*")
+	FOREACH (_currentDocFile ${DOC_FILES})
+		SET_SOURCE_FILES_PROPERTIES(
+		${_currentDocFile}
+		PROPERTIES MACOSX_PACKAGE_LOCATION "SharedSupport/doc/images" )
+	ENDFOREACH (_currentDocFile )
 
-														   FILE(GLOB DOC_FILES "${CMAKE_SOURCE_DIR}/data/doc/images/*")
-														   FOREACH (_currentDocFile ${DOC_FILES})
-														   SET_SOURCE_FILES_PROPERTIES(
-														   ${_currentDocFile}
-														   PROPERTIES MACOSX_PACKAGE_LOCATION "SharedSupport/doc/images" )
-														   ENDFOREACH (_currentDocFile )
+	SET_SOURCE_FILES_PROPERTIES(buildosx/opencpn.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+	SET_SOURCE_FILES_PROPERTIES(buildosx/MainMenu.xib PROPERTIES MACOSX_PACKAGE_LOCATION Resources/English.lproj )
+	SET(MACOSX_BUNDLE_ICON_FILE opencpn.icns)
 
-														   SET_SOURCE_FILES_PROPERTIES(
-														   buildosx/opencpn.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+	ADD_EXECUTABLE(${PACKAGE_NAME} MACOSX_BUNDLE
+		${HDRS}
+		${SRCS}
+		${gshhs}
+		${uiData}
+		${s57data}
+		${tcData}
+		data/license.txt
+		${SOUND_FILES}
+		data/doc/help_web.html
+		data/doc/help_en_US.html
+		${DOC_FILES}
+		buildosx/opencpn.icns
+		buildosx/MainMenu.xib
+		)
 
-														   SET_SOURCE_FILES_PROPERTIES(
-														   buildosx/MainMenu.xib PROPERTIES MACOSX_PACKAGE_LOCATION Resources/English.lproj )
+	INSTALL(TARGETS
+		${PACKAGE_NAME}
+		BUNDLE DESTINATION ${PREFIX_BIN}
+		PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 
-														   SET(MACOSX_BUNDLE_ICON_FILE opencpn.icns)
+	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
+		${wxWidgets_LIBRARIES}
+		NMEA0183
+		${EXTRA_LIBS}
+		)
+ENDIF(APPLE)
 
-														   ADD_EXECUTABLE(${PACKAGE_NAME} MACOSX_BUNDLE
-														   ${HDRS}
-														   ${SRCS}
-														   ${gshhs}
-														   ${uiData}
-														   ${s57data}
-														   ${tcData}
-														   data/license.txt
-														   ${SOUND_FILES}
-														   data/doc/help_web.html
-														   data/doc/help_en_US.html
-														   ${DOC_FILES}
-														   buildosx/opencpn.icns
-														   buildosx/MainMenu.xib
-														   )
-
-
-														   INSTALL(TARGETS
-														   ${PACKAGE_NAME}
-														   BUNDLE DESTINATION ${PREFIX_BIN} PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-
-
-														   TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
-														   ${wxWidgets_LIBRARIES}
-														   NMEA0183
-														   ${EXTRA_LIBS}
-														   )
+IF(UNIX AND NOT APPLE)
+	ADD_EXECUTABLE(${PACKAGE_NAME} ${HDRS} ${SRCS})
+ENDIF(UNIX AND NOT APPLE)
 
 
-														   ENDIF(APPLE)
-
-														   IF(UNIX AND NOT APPLE)
-														   ADD_EXECUTABLE(${PACKAGE_NAME} ${HDRS} ${SRCS})
-														   ENDIF(UNIX AND NOT APPLE)
-
-
-
-
-
-
-														   If(NOT APPLE)
-														   TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
-														   ${wxWidgets_LIBRARIES}
-														   NMEA0183
-	${EXTRA_LIBS}
-	)
+If(NOT APPLE)
+	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
+		${wxWidgets_LIBRARIES}
+		NMEA0183
+		${EXTRA_LIBS}
+		)
 ENDIF(NOT APPLE)
 
 IF(WIN32)
 	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
-			setupapi.lib
-			gdiplus.lib
-			glu32.lib
-			Psapi.lib
-			)
+		setupapi.lib
+		gdiplus.lib
+		glu32.lib
+		Psapi.lib
+		)
 ENDIF(WIN32)
 
 IF(UNIX)
 	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
-			${OPENGL_LIBRARIES}
-			${GETTEXT_LIBRARY}
-			${BZIP2_LIBRARIES}
-			${ZLIB_LIBRARY}
-			)
+		${OPENGL_LIBRARIES}
+		${GETTEXT_LIBRARY}
+		${BZIP2_LIBRARIES}
+		${ZLIB_LIBRARY}
+		)
 
 	IF(TINYXML_FOUND)
-TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES} )
+		TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
 	ENDIF(TINYXML_FOUND)
 ENDIF(UNIX)
 
 #   Certain older Cmake FindGTK2 modules ( e.g. cmake-2.8.0-2) do not yield all of the required link libraries
 #   So, add them manually.  These declarations may be redundant in some architectures, but do no harm.
-	IF(UNIX)
-TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} dl )
+IF(UNIX)
+	TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} dl )
 ENDIF(UNIX)
 
-	IF(GTK2_FOUND)
-TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} gobject-2.0 )
+IF(GTK2_FOUND)
+	TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} gobject-2.0 )
 ENDIF(GTK2_FOUND)
 
 
 IF(NOT APPLE)
-
-IF(WIN32)
-	INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME DESTINATION ".")
-ENDIF(WIN32)
+	IF(WIN32)
+		INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME DESTINATION ".")
+	ENDIF(WIN32)
 
 	IF(UNIX AND NOT APPLE)
-INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME DESTINATION ${PREFIX_BIN} PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-ENDIF(UNIX AND NOT APPLE)
+		INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME DESTINATION ${PREFIX_BIN} PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+	ENDIF(UNIX AND NOT APPLE)
 
+	IF(WIN32)
+		SET(PREFIX_PKGDATA ".")
+	ENDIF(WIN32)
 
-IF(WIN32)
-	SET(PREFIX_PKGDATA ".")
-ENDIF(WIN32)
-
-INSTALL(FILES ${gshhs} DESTINATION ${PREFIX_PKGDATA}/gshhs PERMISSIONS OWNER_READ  OWNER_WRITE GROUP_READ WORLD_READ)
-
-INSTALL(FILES ${uiData} DESTINATION ${PREFIX_PKGDATA}/uidata PERMISSIONS OWNER_READ  OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES ${gshhs} DESTINATION ${PREFIX_PKGDATA}/gshhs PERMISSIONS OWNER_READ  OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES ${uiData} DESTINATION ${PREFIX_PKGDATA}/uidata PERMISSIONS OWNER_READ  OWNER_WRITE GROUP_READ WORLD_READ)
 
 	IF (USE_S57)
-INSTALL(FILES ${s57data} DESTINATION ${PREFIX_PKGDATA}/s57data PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-ENDIF (USE_S57)
+		INSTALL(FILES ${s57data} DESTINATION ${PREFIX_PKGDATA}/s57data PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	ENDIF (USE_S57)
 
-INSTALL(FILES ${tcData} DESTINATION ${PREFIX_PKGDATA}/tcdata PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-
-INSTALL(FILES data/license.txt DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-INSTALL(FILES data/copyright DESTINATION ${PREFIX_DATA}/doc/${PACKAGE_NAME} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-INSTALL(FILES data/changelog.Debian.gz DESTINATION ${PREFIX_DATA}/doc/${PACKAGE_NAME} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-
-INSTALL(DIRECTORY data/sounds/ DESTINATION ${PREFIX_PKGDATA}/sounds )
-
-INSTALL(DIRECTORY data/doc/ DESTINATION ${PREFIX_PKGDATA}/doc )
+	INSTALL(FILES ${tcData} DESTINATION ${PREFIX_PKGDATA}/tcdata PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES data/license.txt DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES data/copyright DESTINATION ${PREFIX_DATA}/doc/${PACKAGE_NAME} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES data/changelog.Debian.gz DESTINATION ${PREFIX_DATA}/doc/${PACKAGE_NAME} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(DIRECTORY data/sounds/ DESTINATION ${PREFIX_PKGDATA}/sounds )
+	INSTALL(DIRECTORY data/doc/ DESTINATION ${PREFIX_PKGDATA}/doc )
 
 	IF(UNIX)
-INSTALL(FILES data/opencpn.png DESTINATION ${PREFIX_DATA}/icons/hicolor/48x48/apps PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-INSTALL(FILES src/bitmaps/other_svg_src/opencpn.svg DESTINATION ${PREFIX_DATA}/icons/hicolor/scalable/apps PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-INSTALL(FILES data/opencpn.desktop DESTINATION ${PREFIX_DATA}/applications PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ )
-ENDIF(UNIX)
-
+		INSTALL(FILES data/opencpn.png DESTINATION ${PREFIX_DATA}/icons/hicolor/48x48/apps PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+		INSTALL(FILES src/bitmaps/other_svg_src/opencpn.svg DESTINATION ${PREFIX_DATA}/icons/hicolor/scalable/apps PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+		INSTALL(FILES data/opencpn.desktop DESTINATION ${PREFIX_DATA}/applications PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ )
+	ENDIF(UNIX)
 ENDIF(NOT APPLE)
-#  Fix up time_t definition
-# Checks for 32-bit version. And always use 32-bit time_t for compatibility
 
-
-#uninstall-local:
-#        rm -fr $(DESTDIR)$(pkgdatadir)/wvsdata/*
-#        rm -fr $(DESTDIR)$(pkgdatadir)/gshhs/*
-#        rm -fr $(DESTDIR) $(pkgdatadir)/s57data/*
-#        rm -fr $(DESTDIR)$(pkgdatadir)/tcdata/*
-#        rmdir $(DESTDIR)$(pkgdatadir)/wvsdata
-#        rmdir $(DESTDIR)$(pkgdatadir)/gshhs
-#        rmdir $(DESTDIR)$(pkgdatadir)/s57data
-#        rmdir $(DESTDIR)$(pkgdatadir)/tcdata
-#        rmdir $(DESTDIR)$(pkgdatadir)
-#
 
 FIND_PROGRAM(GETTEXT_XGETTEXT_EXECUTABLE xgettext)
 IF (GETTEXT_XGETTEXT_EXECUTABLE)
-
-ADD_CUSTOM_COMMAND(
-OUTPUT ${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot.dummy
-COMMAND ${GETTEXT_XGETTEXT_EXECUTABLE} --force-po --package-name=${PACKAGE_NAME} --package-version="${PACKAGE_VERSION}" --output=${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot  --keyword=_ --width=80 --files-from=${CMAKE_SOURCE_DIR}/po/POTFILES.in
-DEPENDS ${CMAKE_SOURCE_DIR}/po/POTFILES.in ${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot
-WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-COMMENT "pot-update [${PACKAGE_NAME}]: Generated pot file."
-)
-ADD_CUSTOM_TARGET(pot-update COMMENT "pot-update: Done." DEPENDS ${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot.dummy)
-
-ENDIF(GETTEXT_XGETTEXT_EXECUTABLE )
+	ADD_CUSTOM_COMMAND(
+		OUTPUT ${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot.dummy
+		COMMAND ${GETTEXT_XGETTEXT_EXECUTABLE} --force-po --package-name=${PACKAGE_NAME} --package-version="${PACKAGE_VERSION}" --output=${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot  --keyword=_ --width=80 --files-from=${CMAKE_SOURCE_DIR}/po/POTFILES.in
+		DEPENDS ${CMAKE_SOURCE_DIR}/po/POTFILES.in ${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		COMMENT "pot-update [${PACKAGE_NAME}]: Generated pot file."
+		)
+	ADD_CUSTOM_TARGET(pot-update COMMENT "pot-update: Done." DEPENDS ${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot.dummy)
+ENDIF(GETTEXT_XGETTEXT_EXECUTABLE)
 
 MACRO(GETTEXT_UPDATE_PO _potFile)
-SET(_poFiles ${_potFile})
-GET_FILENAME_COMPONENT(_absPotFile ${_potFile} ABSOLUTE)
-
-FOREACH (_currentPoFile ${ARGN})
-GET_FILENAME_COMPONENT(_absFile ${_currentPoFile} ABSOLUTE)
-GET_FILENAME_COMPONENT(_poBasename ${_absFile} NAME_WE)
-
-ADD_CUSTOM_COMMAND(
-OUTPUT ${_absFile}.dummy
-COMMAND ${GETTEXT_MSGMERGE_EXECUTABLE} --width=80 --strict --quiet --update --backup=none --no-location -s ${_absFile} ${_absPotFile}
-DEPENDS ${_absPotFile} ${_absFile}
-COMMENT "po-update [${_poBasename}]: Updated po file."
-)
-
-SET(_poFiles ${_poFiles} ${_absFile}.dummy)
-
-ENDFOREACH (_currentPoFile )
-
-ADD_CUSTOM_TARGET(po-update COMMENT "po-update: Done." DEPENDS ${_poFiles})
+	SET(_poFiles ${_potFile})
+	GET_FILENAME_COMPONENT(_absPotFile ${_potFile} ABSOLUTE)
+	FOREACH (_currentPoFile ${ARGN})
+		GET_FILENAME_COMPONENT(_absFile ${_currentPoFile} ABSOLUTE)
+		GET_FILENAME_COMPONENT(_poBasename ${_absFile} NAME_WE)
+		ADD_CUSTOM_COMMAND(
+			OUTPUT ${_absFile}.dummy
+			COMMAND ${GETTEXT_MSGMERGE_EXECUTABLE} --width=80 --strict --quiet --update --backup=none --no-location -s ${_absFile} ${_absPotFile}
+			DEPENDS ${_absPotFile} ${_absFile}
+			COMMENT "po-update [${_poBasename}]: Updated po file."
+			)
+		SET(_poFiles ${_poFiles} ${_absFile}.dummy)
+	ENDFOREACH (_currentPoFile )
+	ADD_CUSTOM_TARGET(po-update COMMENT "po-update: Done." DEPENDS ${_poFiles})
 ENDMACRO(GETTEXT_UPDATE_PO)
 
 IF (GETTEXT_MSGMERGE_EXECUTABLE)
-FILE(GLOB PACKAGE_PO_FILES ${CMAKE_SOURCE_DIR}/po/*.po)
-GETTEXT_UPDATE_PO(${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot ${PACKAGE_PO_FILES})
+	FILE(GLOB PACKAGE_PO_FILES ${CMAKE_SOURCE_DIR}/po/*.po)
+	GETTEXT_UPDATE_PO(${CMAKE_SOURCE_DIR}/po/${PACKAGE_NAME}.pot ${PACKAGE_PO_FILES})
 ENDIF(GETTEXT_MSGMERGE_EXECUTABLE)
 
 SET(_gmoFiles)
+
 MACRO(GETTEXT_BUILD_MO _poFile _lang)
+	GET_FILENAME_COMPONENT(_absFile ${_poFile} ABSOLUTE)
+	GET_FILENAME_COMPONENT(_poBasename ${_absFile} NAME_WE)
+	SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_poBasename}.mo)
 
-GET_FILENAME_COMPONENT(_absFile ${_poFile} ABSOLUTE)
-GET_FILENAME_COMPONENT(_poBasename ${_absFile} NAME_WE)
-SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_poBasename}.mo)
+	ADD_CUSTOM_COMMAND(
+		OUTPUT ${_gmoFile}
+		COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} --check -o ${_gmoFile} ${_absFile}
+		DEPENDS ${_absFile}
+		COMMENT "i18n [${_poBasename}]: Created mo file."
+	)
 
-ADD_CUSTOM_COMMAND(
-OUTPUT ${_gmoFile}
-COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} --check -o ${_gmoFile} ${_absFile}
-DEPENDS ${_absFile}
-COMMENT "i18n [${_poBasename}]: Created mo file."
-)
-IF(APPLE)
-INSTALL(FILES ${_gmoFile} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/Resources/${_lang}.lproj RENAME ${PACKAGE_NAME}.mo )
-ELSE(APPLE)
-INSTALL(FILES ${_gmoFile} DESTINATION ${PREFIX_DATA}/locale/${_lang}/LC_MESSAGES RENAME ${PACKAGE_NAME}.mo PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-ENDIF(APPLE)
+	IF(APPLE)
+		INSTALL(FILES ${_gmoFile} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/Resources/${_lang}.lproj RENAME ${PACKAGE_NAME}.mo )
+	ELSE(APPLE)
+		INSTALL(FILES ${_gmoFile} DESTINATION ${PREFIX_DATA}/locale/${_lang}/LC_MESSAGES RENAME ${PACKAGE_NAME}.mo PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	ENDIF(APPLE)
 
-SET(_gmoFiles ${_gmoFiles} ${_gmoFile})
+	SET(_gmoFiles ${_gmoFiles} ${_gmoFile})
 ENDMACRO(GETTEXT_BUILD_MO)
 
 if(GETTEXT_MSGFMT_EXECUTABLE)
-GETTEXT_BUILD_MO(po/opencpn_cs_CZ.po cs)
-GETTEXT_BUILD_MO(po/opencpn_da_DK.po da)
-GETTEXT_BUILD_MO(po/opencpn_de_DE.po de)
-GETTEXT_BUILD_MO(po/opencpn_es_ES.po es)
-GETTEXT_BUILD_MO(po/opencpn_fr_FR.po fr)
-GETTEXT_BUILD_MO(po/opencpn_it_IT.po it)
-GETTEXT_BUILD_MO(po/opencpn_nl_NL.po nl)
-GETTEXT_BUILD_MO(po/opencpn_pl_PL.po pl)
-GETTEXT_BUILD_MO(po/opencpn_ru_RU.po ru)
-GETTEXT_BUILD_MO(po/opencpn_sv_SE.po sv)
-GETTEXT_BUILD_MO(po/opencpn_et_ET.po et)
-GETTEXT_BUILD_MO(po/opencpn_pt_PT.po pt_PT)
-GETTEXT_BUILD_MO(po/opencpn_pt_BR.po pt_BR)
-GETTEXT_BUILD_MO(po/opencpn_nb_NO.po nb_NO)
-GETTEXT_BUILD_MO(po/opencpn_tr_TR.po tr_TR)
-GETTEXT_BUILD_MO(po/opencpn_fi_FI.po fi_FI)
-GETTEXT_BUILD_MO(po/opencpn_el_GR.po el_GR)
-GETTEXT_BUILD_MO(po/opencpn_zh_TW.po zh_TW)
-GETTEXT_BUILD_MO(po/opencpn_hu_HU.po hu_HU)
-GETTEXT_BUILD_MO(po/opencpn_gl_ES.po gl_ES)
-GETTEXT_BUILD_MO(po/opencpn_ca_ES.po ca_ES)
-ADD_CUSTOM_TARGET(i18n COMMENT "i18n: Done." DEPENDS ${_gmoFiles})
-#ADD_DEPENDENCIES(i18n ${PACKAGE_PO_FILES})
-ADD_DEPENDENCIES(${PACKAGE_NAME} i18n)
+	GETTEXT_BUILD_MO(po/opencpn_cs_CZ.po cs)
+	GETTEXT_BUILD_MO(po/opencpn_da_DK.po da)
+	GETTEXT_BUILD_MO(po/opencpn_de_DE.po de)
+	GETTEXT_BUILD_MO(po/opencpn_es_ES.po es)
+	GETTEXT_BUILD_MO(po/opencpn_fr_FR.po fr)
+	GETTEXT_BUILD_MO(po/opencpn_it_IT.po it)
+	GETTEXT_BUILD_MO(po/opencpn_nl_NL.po nl)
+	GETTEXT_BUILD_MO(po/opencpn_pl_PL.po pl)
+	GETTEXT_BUILD_MO(po/opencpn_ru_RU.po ru)
+	GETTEXT_BUILD_MO(po/opencpn_sv_SE.po sv)
+	GETTEXT_BUILD_MO(po/opencpn_et_ET.po et)
+	GETTEXT_BUILD_MO(po/opencpn_pt_PT.po pt_PT)
+	GETTEXT_BUILD_MO(po/opencpn_pt_BR.po pt_BR)
+	GETTEXT_BUILD_MO(po/opencpn_nb_NO.po nb_NO)
+	GETTEXT_BUILD_MO(po/opencpn_tr_TR.po tr_TR)
+	GETTEXT_BUILD_MO(po/opencpn_fi_FI.po fi_FI)
+	GETTEXT_BUILD_MO(po/opencpn_el_GR.po el_GR)
+	GETTEXT_BUILD_MO(po/opencpn_zh_TW.po zh_TW)
+	GETTEXT_BUILD_MO(po/opencpn_hu_HU.po hu_HU)
+	GETTEXT_BUILD_MO(po/opencpn_gl_ES.po gl_ES)
+	GETTEXT_BUILD_MO(po/opencpn_ca_ES.po ca_ES)
+	ADD_CUSTOM_TARGET(i18n COMMENT "i18n: Done." DEPENDS ${_gmoFiles})
+	#ADD_DEPENDENCIES(i18n ${PACKAGE_PO_FILES})
+	ADD_DEPENDENCIES(${PACKAGE_NAME} i18n)
 ENDIF(GETTEXT_MSGFMT_EXECUTABLE)
-
-
 
 
 # On Windows builds, copy the wxWidgets dlls and  to the executable directory
 IF(WIN32 AND NOT UNIX)
-INSTALL(DIRECTORY wxWidgets/ DESTINATION "." )
-INSTALL(DIRECTORY buildwin/vc10/ DESTINATION ".\\\\vc10" )
-#INSTALL(DIRECTORY buildwin/NSIS_Unicode/Bitmaps/ DESTINATION ".\\\\NSISBmps" ) #Gunther
-
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.dll DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashSender1401.exe DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/crashrpt_lang.ini DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/dbghelp.dll DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/PrivacyPolicy.txt DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-
+	INSTALL(DIRECTORY wxWidgets/ DESTINATION "." )
+	INSTALL(DIRECTORY buildwin/vc10/ DESTINATION ".\\\\vc10" )
+	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.dll DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashSender1401.exe DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/crashrpt_lang.ini DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/dbghelp.dll DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/PrivacyPolicy.txt DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
 ENDIF(WIN32 AND NOT UNIX)
 
+MESSAGE (STATUS "")
 
-	MESSAGE (STATUS "")
-
-	IF(NOT SKIP_PLUGINS)
+IF(NOT SKIP_PLUGINS)
 	add_subdirectory (plugins)
 ENDIF(NOT SKIP_PLUGINS)
 
 # build a CPack driven installer package
-#include (InstallRequiredSystemLibraries)
-	SET(CPACK_PACKAGE_NAME "OpenCPN")
-	SET(CPACK_PACKAGE_VENDOR "opencpn.org")
-	SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "OpenCPN ${PACKAGE_VERSION}")
+SET(CPACK_PACKAGE_NAME "OpenCPN")
+SET(CPACK_PACKAGE_VENDOR "opencpn.org")
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "OpenCPN ${PACKAGE_VERSION}")
 SET(CPACK_PACKAGE_VERSION ${PACKAGE_VERSION})
 SET(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
 SET(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
 SET(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
-	SET(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_CURRENT_BINARY_DIR};${PACKAGE_NAME};ALL;/")
-	SET(CPACK_PACKAGE_EXECUTABLES ${PACKAGE_NAME} "OpenCPN")
-
+SET(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_CURRENT_BINARY_DIR};${PACKAGE_NAME};ALL;/")
+SET(CPACK_PACKAGE_EXECUTABLES ${PACKAGE_NAME} "OpenCPN")
 
 
 IF(WIN32 AND NOT UNIX)
-# There is a bug in NSI that does not handle full unix paths properly. Make
-# sure there is at least one set of four (4) backlasshes.
+	# There is a bug in NSI that does not handle full unix paths properly. Make
+	# sure there is at least one set of four (4) backlasshes.
 
 	SET(CPACK_NSIS_INSTALLED_ICON_NAME "opencpn.exe")
 	SET(CPACK_NSIS_PACKAGE_NAME_LC "opencpn")
 
-#  These lines set the name of the Windows Start Menu shortcut and the icon that goes with it
+	#  These lines set the name of the Windows Start Menu shortcut and the icon that goes with it
 	SET(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${PACKAGE_VERSION}")
 	SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/src/bitmaps\\\\opencpn.ico")
-
 	SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}_setup" )
-
 	SET(CPACK_NSIS_DIR "${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode")  #Gunther
 	SET(CPACK_BUILDWIN_DIR "${CMAKE_SOURCE_DIR}/buildwin")  #Gunther
 
-# Install the VC100 Redistributable
+	# Install the VC100 Redistributable
 	SET(vc10_redist "vcredist_x86.exe")
 
 	STRING( REPLACE "/" "\\\\" Temp_vc10_redist ${vc10_redist} )
-GET_FILENAME_COMPONENT( VC10_FILE_NAME ${vc10_redist} NAME )
-	SET( CPACK_NSIS_EXTRA_INSTALL_COMMANDS ${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}
+	GET_FILENAME_COMPONENT( VC10_FILE_NAME ${vc10_redist} NAME )
+	SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS ${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}
 			"ExecWait '\\\"$INSTDIR\\\\vc10\\\\${VC10_FILE_NAME}\\\" /q /norestart' $0\\n"
 			" Remove folder\\n  RMDir /r \\\"$INSTDIR\\\\vc10\\\"\\n\\n" )
 
-
-	ELSE(WIN32 AND NOT UNIX)
-SET(CPACK_PACKAGE_INSTALL_DIRECTORY ${PACKAGE_NAME})
+ELSE(WIN32 AND NOT UNIX)
+	SET(CPACK_PACKAGE_INSTALL_DIRECTORY ${PACKAGE_NAME})
 	SET(CPACK_STRIP_FILES "bin/opencpn.exe")
 	SET(CPACK_SOURCE_STRIP_FILES "")
 	SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${PACKAGE_VERSION}-${PACKAGE_RELEASE}_${ARCH}" )
-
 ENDIF(WIN32 AND NOT UNIX)
 
-#SET(CPACK_PACKAGE_EXECUTABLES ${PACKAGE_NAME})
-#SET(CPACK_PACKAGE_INSTALL_REGISTRY_KEY "${PACKAGE_NAME} ${PACKAGE_VERSION}")
-	SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/data/license.txt")
-#SET(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/data/README")
-#SET(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/data/Welcome.txt")
-	IF (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/README")
-#    MESSAGE(STATUS "Using generic cpack package description file.")
+SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/data/license.txt")
+IF (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/README")
 	SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
 	SET(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README")
 ENDIF ()
-	SET(CPACK_SOURCE_GENERATOR "TGZ")
+
+SET(CPACK_SOURCE_GENERATOR "TGZ")
 
 # The following components are regex's to match anywhere (unless anchored)
 # in absolute path + filename to find files or directories to be excluded
 # from source tarball.
-	set(CPACK_SOURCE_IGNORE_FILES
-			"\\\\.cvsignore$"
-			"^${CMAKE_CURRENT_SOURCE_DIR}.*/CVS/"
-			"^${CMAKE_CURRENT_SOURCE_DIR}/build*"
-			"^${CPACK_PACKAGE_INSTALL_DIRECTORY}/*"
-	   )
-
-IF(APPLE)
-#  SET(CPACK_GENERATOR "Bundle")
-#  SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
-#  SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/buildosx/opencpn.icns")
-#  SET(CPACK_BUNDLE_NAME "${PACKAGE_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
-#  SET(CPACK_BUNDLE_ICON "${CMAKE_SOURCE_DIR}/buildosx/opencpn.icns")
-#  SET(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/buildosx/Info.plist")
-
-#  SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/buildosx/README.txt")
-#  SET(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/buildosx/README.txt")
-
-#  SET(CPACK_PACKAGING_INSTALL_PREFIX "/")
-
-ENDIF(APPLE)
+set(CPACK_SOURCE_IGNORE_FILES
+	"\\\\.cvsignore$"
+	"^${CMAKE_CURRENT_SOURCE_DIR}.*/CVS/"
+	"^${CMAKE_CURRENT_SOURCE_DIR}/build*"
+	"^${CPACK_PACKAGE_INSTALL_DIRECTORY}/*"
+	)
 
 
 IF(UNIX AND NOT APPLE)
-#    INCLUDE(UseRPMTools)
-#    IF(RPMTools_FOUND)
-#        RPMTools_ADD_RPM_TARGETS(packagename ${CMAKE_SOURCE_DIR}/package.spec)
-#    ENDIF(RPMTools_FOUND)
-
-
-SET(CPACK_GENERATOR ${PACKAGE_FORMAT})
+	SET(CPACK_GENERATOR ${PACKAGE_FORMAT})
 	SET(CPACK_PACKAGE_CONTACT "David S. Register ")
-SET(CPACK_DEBIAN_PACKAGE_DEPENDS ${PACKAGE_DEPS})
-SET(CPACK_DEBIAN_PACKAGE_RECOMMENDS ${PACKAGE_RECS})
-SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${ARCH})
+	SET(CPACK_DEBIAN_PACKAGE_DEPENDS ${PACKAGE_DEPS})
+	SET(CPACK_DEBIAN_PACKAGE_RECOMMENDS ${PACKAGE_RECS})
+	SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${ARCH})
 	SET(CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION}")
 	SET(CPACK_DEBIAN_PACKAGE_SECTION "misc")
 	SET(CPACK_RPM_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION}")
-SET(CPACK_RPM_PACKAGE_ARCHITECTURE  ${ARCH})
-SET(CPACK_RPM_PACKAGE_REQUIRES  ${PACKAGE_DEPS})
+	SET(CPACK_RPM_PACKAGE_ARCHITECTURE  ${ARCH})
+	SET(CPACK_RPM_PACKAGE_REQUIRES  ${PACKAGE_DEPS})
 	SET(CPACK_RPM_USER_BINARY_SPECFILE "${CMAKE_SOURCE_DIR}/opencpn.spec.in")
 	SET(CPACK_OPENCPN_RPM_BINDIR "${CMAKE_INSTALL_PREFIX}/${PREFIX_BIN}")
 	SET(CPACK_OPENCPN_RPM_LIBDIR "${PREFIX_LIB}")
 	SET(CPACK_OPENCPN_RPM_DATADIR "${CMAKE_INSTALL_PREFIX}/${PREFIX_DATA}")
 	SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "OpenSource Chart Plotter/Navigator")
 	SET(CPACK_PACKAGE_DESCRIPTION "OpenCPN is a concise ChartPlotter/Navigator. The application supports: GPS/GPDS Position Input, BSB Raster Chart Display, S57 Vector ENChart Display, AIS Input Decoding, Waypoint Autopilot Navigation .")
-SET(CPACK_SET_DESTDIR ON)
+	SET(CPACK_SET_DESTDIR ON)
 	SET(CPACK_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
-
 ENDIF(UNIX AND NOT APPLE)
 
-	IF(WIN32 AND NOT UNIX)
-configure_file(${CMAKE_SOURCE_DIR}/src/opencpn.rc.in ${CMAKE_SOURCE_DIR}/src/opencpn.rc)
+IF(WIN32 AND NOT UNIX)
+	configure_file(${CMAKE_SOURCE_DIR}/src/opencpn.rc.in ${CMAKE_SOURCE_DIR}/src/opencpn.rc)
 	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Language files/Langstrings_GERMAN.nsh.in" "${CMAKE_SOURCE_DIR}//buildwin/NSIS_Unicode/Include/Langstrings_GERMAN.nsh" @ONLY)
 	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Language files/Langstrings_FRENCH.nsh.in" "${CMAKE_SOURCE_DIR}//buildwin/NSIS_Unicode/Include/Langstrings_FRENCH.nsh" @ONLY)
 	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Language files/Langstrings_CZECH.nsh.in" "${CMAKE_SOURCE_DIR}//buildwin/NSIS_Unicode/Include/Langstrings_CZECH.nsh" @ONLY)
@@ -1471,18 +1363,18 @@ configure_file(${CMAKE_SOURCE_DIR}/src/opencpn.rc.in ${CMAKE_SOURCE_DIR}/src/ope
 	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Language files/Langstrings_TURKISH.nsh.in" "${CMAKE_SOURCE_DIR}//buildwin/NSIS_Unicode/Include/Langstrings_TURKISH.nsh" @ONLY)
 ENDIF(WIN32 AND NOT UNIX)
 
-	configure_file(version.h.in ${CMAKE_SOURCE_DIR}/include/version.h) #Gunther
+configure_file(version.h.in ${CMAKE_SOURCE_DIR}/include/version.h) #Gunther
 
 # this dummy target is necessary to make sure the ADDITIONAL_MAKE_CLEAN_FILES directive is executed.
 # apparently, the base CMakeLists.txt file must have "some" target to activate all the clean steps.
-	ADD_CUSTOM_TARGET(dummy COMMENT "dummy: Done." DEPENDS ${PACKAGE_NAME})
+ADD_CUSTOM_TARGET(dummy COMMENT "dummy: Done." DEPENDS ${PACKAGE_NAME})
 
 SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/include/version.h)
 
 INCLUDE(CPack)
 
 IF(APPLE)
-# -- Run the BundleUtilities cmake code
+	# -- Run the BundleUtilities cmake code
 	SET(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/buildosx/Info.plist")
 	SET(MACOSX_BUNDLE_BUNDLE_NAME "OpenCPN")
 
@@ -1508,9 +1400,7 @@ IF(APPLE)
 
 	ADD_CUSTOM_TARGET(create-dmg COMMENT "create-dmg: Done." DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.dmg)
 
-
 ENDIF(APPLE)
 
-	MESSAGE(STATUS "Writing spec file...")
-
+MESSAGE(STATUS "Writing spec file...")
 

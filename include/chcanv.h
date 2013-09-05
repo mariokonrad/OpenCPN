@@ -42,6 +42,7 @@
 
 class LatLonBoundingBox;
 class ocpnDC;
+class GSHHSChart;
 
 void ShowAISTargetQueryDialog(wxWindow *parent, int mmsi);
 int RestoreScreenBrightness(void);

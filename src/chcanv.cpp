@@ -75,6 +75,7 @@
 #include "EmbossData.h"
 #include "TCWin.h"
 #include "MicrosoftCompatibility.h"
+#include <chart/gshhs/GSHHSChart.h>
 #include "tide/IDX_entry.h"
 #include <global/OCPN.h>
 #include <global/GUI.h>

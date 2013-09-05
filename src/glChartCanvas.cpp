@@ -37,6 +37,7 @@
 #include <chart/ChartBaseBSB.h>
 #include <chart/ChartBase.h>
 #include <chart/ChartDummy.h>
+#include <chart/gshhs/GSHHSChart.h>
 
 #include <wx/tokenzr.h>
 

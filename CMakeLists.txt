@@ -516,6 +516,7 @@ SET(HDRS
 	src/ChartGroupsUI.h
 	src/SentenceListDlg.h
 	include/gshhs.h
+	src/chart/gshhs/GSHHSChart.h
 	src/Kml.h
 	src/KmlFormatDialog.h
 	src/Undo.h
@@ -663,6 +664,7 @@ SET(SRCS
 	src/ChartGroupsUI.cpp
 	src/SentenceListDlg.cpp
 	src/gshhs.cpp
+	src/chart/gshhs/GSHHSChart.cpp
 	src/Kml.cpp
 	src/KmlFormatDialog.cpp
 	src/Undo.cpp

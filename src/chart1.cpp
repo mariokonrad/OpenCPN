@@ -108,6 +108,7 @@
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/Navigation.h>
+#include <chart/gshhs/GSHHSChart.h>
 
 #ifdef __WXOSX__
 	#include "macutils.h"
@@ -764,11 +765,11 @@ MyFrame::~MyFrame()
     delete g_FloatingToolbarConfigMenu;
 }
 
-void MyFrame::OnEraseBackground( wxEraseEvent& event )
+void MyFrame::OnEraseBackground(wxEraseEvent &)
 {
 }
 
-void MyFrame::OnMaximize( wxMaximizeEvent& event )
+void MyFrame::OnMaximize(wxMaximizeEvent &)
 {
     g_click_stop = 0;
 }
@@ -1269,7 +1270,7 @@ void MyFrame::EnableToolbar( bool newstate )
 }
 
 // Intercept menu commands
-void MyFrame::OnExit( wxCommandEvent& event )
+void MyFrame::OnExit(wxCommandEvent &)
 {
     quitflag++;                             // signal to the timer loop
 
@@ -1277,7 +1278,7 @@ void MyFrame::OnExit( wxCommandEvent& event )
 
 static bool b_inCloseWindow;
 
-void MyFrame::OnCloseWindow( wxCloseEvent& event )
+void MyFrame::OnCloseWindow(wxCloseEvent &)
 {
     //    It is possible that double clicks on application exit box could cause re-entrance here
     //    Not good, and don't need it anyway, so simply return.
@@ -1478,7 +1479,7 @@ void MyFrame::OnCloseWindow( wxCloseEvent& event )
 
 }
 
-void MyFrame::OnMove(wxMoveEvent & event)
+void MyFrame::OnMove(wxMoveEvent &)
 {
     if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->RePosition();
@@ -1514,7 +1515,7 @@ void MyFrame::ProcessCanvasResize(void)
 		PositionConsole();
 }
 
-void MyFrame::OnSize( wxSizeEvent& event )
+void MyFrame::OnSize(wxSizeEvent &)
 {
     ODoSetSize();
 }
@@ -2280,7 +2281,7 @@ void MyFrame::SetToolbarItemBitmaps(int tool_id, wxBitmap *bmp, wxBitmap *bmpRol
     }
 }
 
-void MyFrame::ApplyGlobalSettings(bool bFlyingUpdate, bool bnewtoolbar)
+void MyFrame::ApplyGlobalSettings(bool, bool bnewtoolbar)
 {
     //             ShowDebugWindow as a wxStatusBar
     m_StatusBarFieldCount = 5;
@@ -2978,7 +2979,7 @@ void MyFrame::DoStackUp( void )
 }
 
 //    Manage the application memory footprint on a periodic schedule
-void MyFrame::OnMemFootTimer( wxTimerEvent& event )
+void MyFrame::OnMemFootTimer(wxTimerEvent &)
 {
     MemFootTimer.Stop();
 
@@ -3022,8 +3023,6 @@ void MyFrame::OnMemFootTimer( wxTimerEvent& event )
 					minimum_cache = cc1->GetQuiltChartCount();
 
                 while ((memsize > (g_MemFootMB * 1000)) && (pCache->GetCount() > minimum_cache) && (idelete < idelete_max)) {
-                    int memsizeb = memsize;
-
                     ChartData->DeleteCacheChart(static_cast<ChartBase *>(cache[idelete].pChart));
                     idelete++;
                     memsize = GetApplicationMemoryUse();
@@ -3075,7 +3074,7 @@ wxString MyFrame::prepare_logbook_message(const wxDateTime & lognow)
 
 int ut_index;
 
-void MyFrame::OnFrameTimer1( wxTimerEvent& event )
+void MyFrame::OnFrameTimer1(wxTimerEvent &)
 {
 
     if( s_ProgDialog ) {
@@ -3446,8 +3445,6 @@ void MyFrame::OnFrameTimer1( wxTimerEvent& event )
 
 void MyFrame::TouchAISActive( void )
 {
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-
     if( m_pAISTool ) {
         if( ( !g_pAIS->IsAISSuppressed() ) && ( !g_pAIS->IsAISAlertGeneral() ) ) {
             g_nAIS_activity_timer = 5;                // seconds
@@ -3473,7 +3470,6 @@ void MyFrame::UpdateAISTool( void )
     if(!g_pAIS) return;
 
     bool b_need_refresh = false;
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 
     wxString iconName;
 
@@ -3516,7 +3512,7 @@ void MyFrame::UpdateAISTool( void )
 }
 
 //    Cause refresh of active Tide/Current data, if displayed
-void MyFrame::OnFrameTCTimer( wxTimerEvent& event )
+void MyFrame::OnFrameTCTimer(wxTimerEvent &)
 {
     if( cc1 ) {
         cc1->SetbTCUpdate( true );
@@ -3525,7 +3521,7 @@ void MyFrame::OnFrameTCTimer( wxTimerEvent& event )
 }
 
 //    Keep and update the Viewport rotation angle according to average COG for COGUP mode
-void MyFrame::OnFrameCOGTimer( wxTimerEvent& event )
+void MyFrame::OnFrameCOGTimer(wxTimerEvent &)
 {
 //      return;
     FrameCOGTimer.Stop();
@@ -4471,9 +4467,10 @@ bool MyFrame::DoChartUpdate( void )
 
 void MyFrame::MouseEvent( wxMouseEvent& event )
 {
-    int x, y;
+	// FIXME: has no effect?
+    int x;
+    int y;
     event.GetPosition( &x, &y );
-
 }
 
 void MyFrame::RemoveChartFromQuilt(int dbIndex)
@@ -4497,7 +4494,7 @@ void MyFrame::RemoveChartFromQuilt(int dbIndex)
 static int menu_selected_dbIndex;
 static int menu_selected_index;
 
-void MyFrame::PianoPopupMenu( int x, int y, int selected_index, int selected_dbIndex )
+void MyFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbIndex)
 {
     //    No context menu if quilting is disabled
     if( !cc1->GetQuiltMode() ) return;
@@ -4545,7 +4542,7 @@ void MyFrame::PianoPopupMenu( int x, int y, int selected_index, int selected_dbI
     delete pctx_menu;
 }
 
-void MyFrame::OnPianoMenuEnableChart( wxCommandEvent& event )
+void MyFrame::OnPianoMenuEnableChart(wxCommandEvent &)
 {
 	std::vector<int>::iterator i = find(
 			g_quilt_noshow_index_array.begin(),
@@ -4556,7 +4553,7 @@ void MyFrame::OnPianoMenuEnableChart( wxCommandEvent& event )
 		g_quilt_noshow_index_array.erase(i);
 }
 
-void MyFrame::OnPianoMenuDisableChart( wxCommandEvent& event )
+void MyFrame::OnPianoMenuDisableChart(wxCommandEvent &)
 {
     RemoveChartFromQuilt( menu_selected_dbIndex );
 
@@ -4698,23 +4695,6 @@ bool GetMemoryStatus( int *mem_total, int *mem_used )
         hProcess = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID );
 
         if( hProcess && GetProcessMemoryInfo( hProcess, &pmc, sizeof( pmc ) ) ) {
-            /*
-             printf( "\tPageFaultCount: 0x%08X\n", pmc.PageFaultCount );
-             printf( "\tPeakWorkingSetSize: 0x%08X\n",
-             pmc.PeakWorkingSetSize );
-             printf( "\tWorkingSetSize: 0x%08X\n", pmc.WorkingSetSize );
-             printf( "\tQuotaPeakPagedPoolUsage: 0x%08X\n",
-             pmc.QuotaPeakPagedPoolUsage );
-             printf( "\tQuotaPagedPoolUsage: 0x%08X\n",
-             pmc.QuotaPagedPoolUsage );
-             printf( "\tQuotaPeakNonPagedPoolUsage: 0x%08X\n",
-             pmc.QuotaPeakNonPagedPoolUsage );
-             printf( "\tQuotaNonPagedPoolUsage: 0x%08X\n",
-             pmc.QuotaNonPagedPoolUsage );
-             printf( "\tPagefileUsage: 0x%08X\n", pmc.PagefileUsage );
-             printf( "\tPeakPagefileUsage: 0x%08X\n",
-             pmc.PeakPagefileUsage );
-             */
             *mem_used = pmc.WorkingSetSize / 1024;
         }
 
@@ -4725,25 +4705,7 @@ bool GetMemoryStatus( int *mem_total, int *mem_used )
         MEMORYSTATUSEX statex;
 
         statex.dwLength = sizeof( statex );
-
         GlobalMemoryStatusEx( &statex );
-        /*
-         _tprintf (TEXT("There is  %*ld percent of memory in use.\n"),
-         WIDTH, statex.dwMemoryLoad);
-         _tprintf (TEXT("There are %*I64d total Kbytes of physical memory.\n"),
-         WIDTH, statex.ullTotalPhys/DIV);
-         _tprintf (TEXT("There are %*I64d free Kbytes of physical memory.\n"),
-         WIDTH, statex.ullAvailPhys/DIV);
-         _tprintf (TEXT("There are %*I64d total Kbytes of paging file.\n"),
-         WIDTH, statex.ullTotalPageFile/DIV);
-         _tprintf (TEXT("There are %*I64d free Kbytes of paging file.\n"),
-         WIDTH, statex.ullAvailPageFile/DIV);
-         _tprintf (TEXT("There are %*I64d total Kbytes of virtual memory.\n"),
-         WIDTH, statex.ullTotalVirtual/DIV);
-         _tprintf (TEXT("There are %*I64d free Kbytes of virtual memory.\n"),
-         WIDTH, statex.ullAvailVirtual/DIV);
-         */
-
         *mem_total = statex.ullTotalPhys / 1024;
     }
 #endif
@@ -4770,28 +4732,9 @@ void MyFrame::DoPrint( void )
         if( wxPrinter::GetLastError() == wxPRINTER_ERROR ) OCPNMessageBox(NULL,
                 _("There was a problem printing.\nPerhaps your current printer is not set correctly?"),
                 _T("OpenCPN"), wxOK );
-//        else
-//            OCPNMessageBox(_T("Print Cancelled"), _T("OpenCPN"), wxOK);
     } else {
         ( *g_printData ) = printer.GetPrintDialogData().GetPrintData();
     }
-
-// Pass two printout objects: for preview, and possible printing.
-    /*
-     wxPrintDialogData printDialogData(* g_printData);
-     wxPrintPreview *preview = new wxPrintPreview(new MyPrintout, new MyPrintout, & printDialogData);
-     if (!preview->Ok())
-     {
-     delete preview;
-     OCPNMessageBox(_T("There was a problem previewing.\nPerhaps your current printer is not set correctly?"), _T("Previewing"), wxOK);
-     return;
-     }
-
-     wxPreviewFrame *frame = new wxPreviewFrame(preview, this, _T("Demo Print Preview"), wxPoint(100, 100), wxSize(600, 650));
-     frame->Centre(wxBOTH);
-     frame->Initialize();
-     frame->Show();
-     */
 
 }
 

@@ -383,21 +383,6 @@ inline bool GshhsReader::crossing1(QLineF trajectWorld )
 
 //-------------------------------------------------------------------------------
 
-class GSHHSChart
-{
-	public:
-		GSHHSChart();
-		~GSHHSChart();
-		void SetColorScheme( ColorScheme scheme );
-		void RenderViewOnDC( ocpnDC& dc, ViewPort& VPoint );
-
-	private:
-		Projection* proj;
-		GshhsReader* reader;
-		wxColor land;
-		wxColor water;
-};
-
 bool gshhsCrossesLand(double lat1, double lon1, double lat2, double lon2);
 
 #endif

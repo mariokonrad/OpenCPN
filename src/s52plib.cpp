@@ -1293,7 +1293,7 @@ char *_parseTEXT( ObjRazRules *rzRules, S52_TextC *text, char *str0 )
 	return str;
 }
 
-S52_TextC *S52_PL_parseTX( ObjRazRules *rzRules, Rules *rules, char *cmd )
+S52_TextC *S52_PL_parseTX( ObjRazRules *rzRules, Rules *rules, char *)
 {
 	S52_TextC *text = NULL;
 	char *str = NULL;
@@ -1331,7 +1331,7 @@ S52_TextC *S52_PL_parseTX( ObjRazRules *rzRules, Rules *rules, char *cmd )
 	return text;
 }
 
-S52_TextC *S52_PL_parseTE( ObjRazRules *rzRules, Rules *rules, char *cmd )
+S52_TextC *S52_PL_parseTE( ObjRazRules *rzRules, Rules *rules, char *)
 	// same as S52_PL_parseTX put parse 'C' format first
 {
 	char arg[MAXL] = { '\0' }; // ATTRIB list
@@ -2013,8 +2013,7 @@ wxImage s52plib::RuleXBMToImage( Rule *prule )
 //      Symbol is instantiated as a bitmap the first time it is needed
 //      and re-built on color scheme change
 //
-bool s52plib::RenderRasterSymbol( ObjRazRules *rzRules, Rule *prule, wxPoint &r, ViewPort *vp,
-		float rot_angle )
+bool s52plib::RenderRasterSymbol(ObjRazRules *rzRules, Rule *prule, wxPoint &r, ViewPort *vp, float)
 {
 
 	//    Check to see if any cached data is valid
@@ -2400,7 +2399,8 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 				//  Get the edge
 				int enode = *index_run_x;
 				VE_Element *pedge = ve_hash[enode];
-				if( pedge->nCount > nls_max ) nls_max = pedge->nCount;
+				if( pedge->nCount > nls_max )
+					nls_max = pedge->nCount;
 				index_run_x += 2;
 			}
 			rzRules->obj->m_n_edge_max_points = nls_max; // Got it, cache for next time
@@ -2414,7 +2414,6 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 		double easting, northing;
 
 		wxPoint pra( 0, 0 );
-		VC_Element * pnode;
 
 		for( int iseg = 0; iseg < rzRules->obj->m_n_lsindex; iseg++ ) {
 			int seg_index = iseg * 3;
@@ -2423,7 +2422,7 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			//  Get first connected node
 			int inode = *index_run++;
 			if( ( inode >= 0 ) ) {
-				pnode = vc_hash[inode];
+				VC_Element * pnode = vc_hash[inode];
 				if (pnode) {
 					rzRules->chart->GetPointPix(rzRules, (float)pnode->northing, (float)pnode->easting, &pra);
 				}
@@ -2432,12 +2431,12 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
 			//  Get the edge
 			int enode = *index_run++;
-			VE_Element *pedge;
-			pedge = ve_hash[enode];
+			VE_Element * pedge = ve_hash[enode];
 
 			//  Here we decide to draw or not based on the highest priority seen for this segment
 			//  That is, if this segment is going to be drawn at a higher priority later, then "continue", and don't draw it here.
-			if( pedge->max_priority != priority_current ) continue;
+			if (pedge->max_priority != priority_current)
+				continue;
 
 			int nls = pedge->nCount;
 
@@ -2445,14 +2444,13 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			for( int ip = 0; ip < nls; ip++ ) {
 				easting = *ppt++;
 				northing = *ppt++;
-				rzRules->chart->GetPointPix( rzRules, (float) northing, (float) easting,
-						&ptp[ip + 1] );
+				rzRules->chart->GetPointPix(rzRules, (float) northing, (float) easting, &ptp[ip + 1]);
 			}
 
 			//  Get last connected node
 			int jnode = *index_run++;
 			if( ( jnode >= 0 ) ) {
-				pnode = vc_hash[jnode];
+				VC_Element * pnode = vc_hash[jnode];
 				if (pnode) {
 					rzRules->chart->GetPointPix(rzRules, (float)pnode->northing, (float)pnode->easting, &pra);
 				}
@@ -2700,7 +2698,6 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 		double easting;
 		double northing;
 		wxPoint pra( 0, 0 );
-		VC_Element *pnode;
 
 		for( int iseg = 0; iseg < rzRules->obj->m_n_lsindex; iseg++ ) {
 			int seg_index = iseg * 3;
@@ -2709,7 +2706,7 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			//  Get first connected node
 			int inode = *index_run++;
 			if( inode >= 0 ) {
-				pnode = vc_hash[inode];
+				VC_Element * pnode = vc_hash[inode];
 				if (pnode) {
 					rzRules->chart->GetPointPix(rzRules, (float)pnode->northing, (float)pnode->easting, &pra );
 				}
@@ -2718,12 +2715,12 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
 			//  Get the edge
 			int enode = *index_run++;
-			VE_Element *pedge;
-			pedge = ve_hash[enode];
+			VE_Element * pedge = ve_hash[enode];
 
 			//  Here we decide to draw or not based on the highest priority seen for this segment
 			//  That is, if this segment is going to be drawn at a higher priority later, then don't draw it here.
-			if( pedge->max_priority != priority_current ) continue;
+			if (pedge->max_priority != priority_current)
+				continue;
 
 			int nls = pedge->nCount;
 
@@ -2731,22 +2728,21 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			for( int ip = 0; ip < nls; ip++ ) {
 				easting = *ppt++;
 				northing = *ppt++;
-				rzRules->chart->GetPointPix( rzRules, (float) northing, (float) easting,
-						&ptp[ip + 1] );
+				rzRules->chart->GetPointPix(rzRules, (float) northing, (float) easting, &ptp[ip + 1]);
 			}
 
 			//  Get last connected node
 			int jnode = *index_run++;
 			if( jnode >= 0 ) {
-				pnode = vc_hash[jnode];
+				VC_Element * pnode = vc_hash[jnode];
 				if (pnode) {
 					rzRules->chart->GetPointPix(rzRules, (float)pnode->northing, (float)pnode->easting, &pra);
 				}
 				ptp[nls + 1] = pra; // insert ending node
 			}
 
-			if( ( inode >= 0 ) && ( jnode >= 0 ) ) draw_lc_poly( m_pdc, color, w, ptp, nls + 2,
-					sym_len, sym_factor, rules->razRule, vp );
+			if ((inode >= 0) && (jnode >= 0))
+				draw_lc_poly(m_pdc, color, w, ptp, nls + 2, sym_len, sym_factor, rules->razRule, vp);
 			else
 				draw_lc_poly(m_pdc, color, w, &ptp[1], nls, sym_len, sym_factor, rules->razRule, vp);
 
@@ -3075,7 +3071,7 @@ next_seg:
 }
 
 // Multipoint Sounding
-int s52plib::RenderMPS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
+int s52plib::RenderMPS(ObjRazRules *rzRules, Rules *, ViewPort *vp )
 {
 	if( !m_bShowSoundg ) return 0;
 
@@ -3575,8 +3571,7 @@ int s52plib::RenderObjectToDC( wxDC *pdcin, ObjRazRules *rzRules, ViewPort *vp )
 	return DoRenderObject( pdcin, rzRules, vp );
 }
 
-int s52plib::RenderObjectToGL( const wxGLContext &glcc, ObjRazRules *rzRules, ViewPort *vp,
-		wxRect &render_rect )
+int s52plib::RenderObjectToGL(const wxGLContext &glcc, ObjRazRules *rzRules, ViewPort *vp, wxRect &)
 {
 	m_glcc = (wxGLContext *) &glcc;
 	return DoRenderObject( NULL, rzRules, vp );
@@ -3893,14 +3888,13 @@ int s52plib::SetLineFeaturePriority( ObjRazRules *rzRules, int npriority )
 
 int s52plib::PrioritizeLineFeature( ObjRazRules *rzRules, int npriority )
 {
-
 	if( rzRules->obj->m_n_lsindex ) {
 		VE_Hash &edge_hash = rzRules->chart->Get_ve_hash();
 		int *index_run = rzRules->obj->m_lsindex_array;
 
 		for( int iseg = 0; iseg < rzRules->obj->m_n_lsindex; iseg++ ) {
 			//  Get first connected node
-			int inode = *index_run++;
+			index_run++;
 
 			//  Get the edge
 			int enode = *index_run++;
@@ -3911,22 +3905,24 @@ int s52plib::PrioritizeLineFeature( ObjRazRules *rzRules, int npriority )
 			pedge->max_priority = npriority;
 
 			//  Get last connected node
-			inode = *index_run++;
-
+			index_run++;
 		}
 	}
 
 	return 1;
 }
 
-class XPOINT {
+class XPOINT
+{
 	public:
-		float x, y;
+		float x;
+		float y;
 };
 
 class XLINE {
 	public:
-		XPOINT o, p;
+		XPOINT o;
+		XPOINT p;
 		float m;
 		float c;
 };

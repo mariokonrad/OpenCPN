@@ -1,16 +1,9 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  GSHHS Chart Object (Global Self-consistent, Hierarchical, High-resolution Shoreline)
- * Author:   Jesper Weissglas for the OpenCPN port.
- *
- *           Derived from http://www.zygrib.org/ and http://sourceforge.net/projects/qtvlm/
- *           which has the original copyright:
- *   zUGrib: meteorologic GRIB file data viewer
- *   Copyright (C) 2008 - Jacques Zaninetti - http://www.zygrib.org
  *
  ***************************************************************************
- *   Copyright (C) 2012 by David S. Register                               *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,9 +21,23 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef GSHHS_H
-#define GSHHS_H
+#ifndef __CHART__GSHHS__POLYGONFILEHEADER__H__
+#define __CHART__GSHHS__POLYGONFILEHEADER__H__
 
-bool gshhsCrossesLand(double lat1, double lon1, double lat2, double lon2);
+struct PolygonFileHeader
+{
+	int version;
+	int pasx;
+	int pasy;
+	int xmin;
+	int ymin;
+	int xmax;
+	int ymax;
+	int p1;
+	int p2;
+	int p3;
+	int p4;
+	int p5;
+};
 
 #endif

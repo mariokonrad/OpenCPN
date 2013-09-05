@@ -25,6 +25,8 @@
 #include <ViewPort.h>
 #include <ocpnDC.h>
 #include "gshhs.h"
+#include <chart/gshhs/Projection.h>
+#include <chart/gshhs/GshhsReader.h>
 
 #include <wx/log.h>
 

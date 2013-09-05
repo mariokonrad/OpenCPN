@@ -1,16 +1,9 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  GSHHS Chart Object (Global Self-consistent, Hierarchical, High-resolution Shoreline)
- * Author:   Jesper Weissglas for the OpenCPN port.
- *
- *           Derived from http://www.zygrib.org/ and http://sourceforge.net/projects/qtvlm/
- *           which has the original copyright:
- *   zUGrib: meteorologic GRIB file data viewer
- *   Copyright (C) 2008 - Jacques Zaninetti - http://www.zygrib.org
  *
  ***************************************************************************
- *   Copyright (C) 2012 by David S. Register                               *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,9 +21,42 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef GSHHS_H
-#define GSHHS_H
+#ifndef __CHART__GSHHS__GSHHSPOLYGON__H__
+#define __CHART__GSHHS__GSHHSPOLYGON__H__
 
-bool gshhsCrossesLand(double lat1, double lon1, double lat2, double lon2);
+#include <cstdio>
+#include <vector>
+
+class GshhsPoint;
+
+class GshhsPolygon
+{
+	public:
+		GshhsPolygon( FILE *file );
+
+		virtual ~GshhsPolygon();
+
+		int getLevel() { return flag & 255; }
+		int isGreenwich() { return greenwich; }
+		int isAntarctic() { return antarctic; }
+		bool isOk() { return ok; }
+		int readInt4();
+		int readInt2();
+
+		int id; /* Unique polygon id number, starting at 0 */
+		int n; /* Number of points in this polygon */
+		int flag; /* level + version << 8 + greenwich << 16 + source << 24 */
+		double west, east, south, north; /* min/max extent in DEGREES */
+		int area; /* Area of polygon in 1/10 km^2 */
+		int areaFull, container, ancestor;
+
+		std::vector<GshhsPoint *> lsPoints;
+
+	protected:
+		FILE *file;
+		bool ok;
+		bool greenwich;
+		bool antarctic;
+};
 
 #endif

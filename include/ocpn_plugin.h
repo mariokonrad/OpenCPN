@@ -266,9 +266,9 @@ class DECL_EXP PlugInChartBase : public wxObject
             virtual void GetValidCanvasRegion(const PlugIn_ViewPort& VPoint, wxRegion *pValidRegion);
 
             virtual int GetCOVREntries(){ return  0; }
-            virtual int GetCOVRTablePoints(int iTable) { return 0; }
-            virtual int  GetCOVRTablenPoints(int iTable){ return 0; }
-            virtual float *GetCOVRTableHead(int iTable){ return (float *)NULL; }
+            virtual int GetCOVRTablePoints(int) { return 0; }
+            virtual int  GetCOVRTablenPoints(int){ return 0; }
+            virtual float *GetCOVRTableHead(int){ return (float *)NULL; }
 
             virtual wxBitmap *GetThumbnail(int tnx, int tny, int cs);
 

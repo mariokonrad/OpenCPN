@@ -1,16 +1,9 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  GSHHS Chart Object (Global Self-consistent, Hierarchical, High-resolution Shoreline)
- * Author:   Jesper Weissglas for the OpenCPN port.
- *
- *           Derived from http://www.zygrib.org/ and http://sourceforge.net/projects/qtvlm/
- *           which has the original copyright:
- *   zUGrib: meteorologic GRIB file data viewer
- *   Copyright (C) 2008 - Jacques Zaninetti - http://www.zygrib.org
  *
  ***************************************************************************
- *   Copyright (C) 2012 by David S. Register                               *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,9 +21,49 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef GSHHS_H
-#define GSHHS_H
+#ifndef __CHART__GSHHS__GSHHSPOLYREADER__H__
+#define __CHART__GSHHS__GSHHSPOLYREADER__H__
 
-bool gshhsCrossesLand(double lat1, double lon1, double lat2, double lon2);
+#include <wx/colour.h>
+#include <chart/gshhs/QLineF.h>
+#include <chart/gshhs/PolygonFileHeader.h>
+
+class ocpnDC;
+class Projection;
+class GshhsPolyCell;
+
+class GshhsPolyReader
+{
+	public:
+		GshhsPolyReader( int quality );
+		~GshhsPolyReader();
+
+		void drawGshhsPolyMapPlain( ocpnDC &pnt, Projection *proj, wxColor seaColor,
+				wxColor landColor );
+
+		void drawGshhsPolyMapSeaBorders( ocpnDC &pnt, Projection *proj );
+
+		void InitializeLoadQuality( int quality ); // 5 levels: 0=low ... 4=full
+		bool crossing( QLineF traject, QLineF trajectWorld ) const;
+		bool crossing1( QLineF trajectWorld );
+		int currentQuality;
+		void setProj( Projection * p )
+		{
+			this->proj = p;
+		}
+		int ReadPolyVersion();
+		int GetPolyVersion() { return polyHeader.version; }
+
+	private:
+		FILE *fpoly;
+		GshhsPolyCell * allCells[360][180];
+
+		PolygonFileHeader polyHeader;
+
+		bool my_intersects( QLineF line1, QLineF line2 ) const;
+		void readPolygonFileHeader( FILE *polyfile, PolygonFileHeader *header );
+		bool abortRequested;
+		Projection * proj;
+};
 
 #endif

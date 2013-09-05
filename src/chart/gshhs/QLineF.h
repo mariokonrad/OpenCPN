@@ -1,16 +1,9 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  GSHHS Chart Object (Global Self-consistent, Hierarchical, High-resolution Shoreline)
- * Author:   Jesper Weissglas for the OpenCPN port.
- *
- *           Derived from http://www.zygrib.org/ and http://sourceforge.net/projects/qtvlm/
- *           which has the original copyright:
- *   zUGrib: meteorologic GRIB file data viewer
- *   Copyright (C) 2008 - Jacques Zaninetti - http://www.zygrib.org
  *
  ***************************************************************************
- *   Copyright (C) 2012 by David S. Register                               *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,9 +21,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef GSHHS_H
-#define GSHHS_H
+#ifndef __CHART__GSHHS__QLINEF__H__
+#define __CHART__GSHHS__QLINEF__H__
 
-bool gshhsCrossesLand(double lat1, double lon1, double lat2, double lon2);
+#include <wx/geometry.h>
+
+class QLineF
+{
+	public:
+		QLineF( double x1, double y1, double x2, double y2 )
+			: m_p1(x1, y1)
+			, m_p2(x2, y2)
+		{}
+
+		wxRealPoint & p1() { return m_p1; }
+		wxRealPoint & p2() { return m_p2; }
+
+	public:
+		wxRealPoint m_p1;
+		wxRealPoint m_p2;
+};
 
 #endif

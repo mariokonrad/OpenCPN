@@ -516,7 +516,15 @@ SET(HDRS
 	src/ChartGroupsUI.h
 	src/SentenceListDlg.h
 	include/gshhs.h
+	src/chart/gshhs/QLineF.h
+	src/chart/gshhs/Projection.h
+	src/chart/gshhs/PolygonFileHeader.h
+	src/chart/gshhs/GshhsPoint.h
+	src/chart/gshhs/GshhsPolygon.h
 	src/chart/gshhs/GSHHSChart.h
+	src/chart/gshhs/GshhsPolyCell.h
+	src/chart/gshhs/GshhsPolyReader.h
+	src/chart/gshhs/GshhsReader.h
 	src/Kml.h
 	src/KmlFormatDialog.h
 	src/Undo.h
@@ -664,7 +672,12 @@ SET(SRCS
 	src/ChartGroupsUI.cpp
 	src/SentenceListDlg.cpp
 	src/gshhs.cpp
+	src/chart/gshhs/Projection.cpp
+	src/chart/gshhs/GshhsPolygon.cpp
 	src/chart/gshhs/GSHHSChart.cpp
+	src/chart/gshhs/GshhsPolyCell.cpp
+	src/chart/gshhs/GshhsPolyReader.cpp
+	src/chart/gshhs/GshhsReader.cpp
 	src/Kml.cpp
 	src/KmlFormatDialog.cpp
 	src/Undo.cpp

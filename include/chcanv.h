@@ -31,6 +31,8 @@
 #include <wx/grid.h>
 #include <wx/wxhtml.h>
 
+#include <vector>
+
 #include "gshhs.h"
 #include "chart1.h"
 #include "CM93DSlide.h"

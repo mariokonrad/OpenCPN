@@ -1,16 +1,9 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  GSHHS Chart Object (Global Self-consistent, Hierarchical, High-resolution Shoreline)
- * Author:   Jesper Weissglas for the OpenCPN port.
- *
- *           Derived from http://www.zygrib.org/ and http://sourceforge.net/projects/qtvlm/
- *           which has the original copyright:
- *   zUGrib: meteorologic GRIB file data viewer
- *   Copyright (C) 2008 - Jacques Zaninetti - http://www.zygrib.org
  *
  ***************************************************************************
- *   Copyright (C) 2012 by David S. Register                               *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,9 +21,53 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef GSHHS_H
-#define GSHHS_H
+#ifndef __CHART__GSHHS__GSHHSPOLYCELL__H__
+#define __CHART__GSHHS__GSHHSPOLYCELL__H__
 
-bool gshhsCrossesLand(double lat1, double lon1, double lat2, double lon2);
+#include <chart/gshhs/QLineF.h>
+#include <vector>
+#include <cstdio>
+#include <wx/colour.h>
+
+class Projection;
+class ocpnDC;
+struct PolygonFileHeader;
+
+typedef std::vector<wxRealPoint> contour;
+typedef std::vector<contour> contour_list;
+
+class GshhsPolyCell
+{
+	public:
+
+		GshhsPolyCell( FILE *fpoly, int x0, int y0, Projection *proj, PolygonFileHeader *header );
+		~GshhsPolyCell();
+
+		void drawMapPlain( ocpnDC &pnt, double dx, Projection *proj, wxColor seaColor,
+				wxColor landColor );
+
+		void drawSeaBorderLines( ocpnDC &pnt, double dx, Projection *proj );
+		std::vector<QLineF> * getCoasts() { return &coasts; }
+		contour_list &getPoly1() { return poly1; }
+
+	private:
+		int nbpoints;
+		int x0cell, y0cell;
+
+		FILE *fpoly;
+
+		std::vector<QLineF> coasts;
+		Projection *proj;
+		PolygonFileHeader *header;
+		contour_list poly1, poly2, poly3, poly4, poly5;
+
+		void DrawPolygonFilled( ocpnDC &pnt, contour_list * poly, double dx, Projection *proj,
+				wxColor color );
+		void DrawPolygonContour( ocpnDC &pnt, contour_list * poly, double dx, Projection *proj );
+
+		void ReadPolygonFile( FILE *polyfile, int x, int y, int pas_x, int pas_y, contour_list *p1,
+				contour_list *p2, contour_list *p3, contour_list *p4, contour_list *p5 );
+
+};
 
 #endif

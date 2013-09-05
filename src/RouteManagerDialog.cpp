@@ -267,8 +267,6 @@ int wxCALLBACK SortWaypointsOnName(long item1, long item2, long list)
 #endif
 
 {
-	wxListCtrl *lc = (wxListCtrl*)list;
-
 	RoutePoint *pRP1 = (RoutePoint *)item1;
 	RoutePoint *pRP2 = (RoutePoint *)item2;
 
@@ -963,7 +961,7 @@ void RouteManagerDialog::ZoomtoRoute( Route *route )
 }
 
 //BEGIN Event handlers
-void RouteManagerDialog::OnRteDeleteClick( wxCommandEvent &event )
+void RouteManagerDialog::OnRteDeleteClick(wxCommandEvent &)
 {
 	RouteList list;
 
@@ -1013,7 +1011,7 @@ void RouteManagerDialog::OnRteDeleteClick( wxCommandEvent &event )
 
 }
 
-void RouteManagerDialog::OnRteDeleteAllClick( wxCommandEvent &event )
+void RouteManagerDialog::OnRteDeleteAllClick(wxCommandEvent &)
 {
 	int dialog_ret = OCPNMessageBox( this, _("Are you sure you want to delete <ALL> routes?"),
 			wxString( _("OpenCPN Alert") ), wxYES_NO );
@@ -1043,7 +1041,7 @@ void RouteManagerDialog::OnRteDeleteAllClick( wxCommandEvent &event )
 	}
 }
 
-void RouteManagerDialog::OnRtePropertiesClick( wxCommandEvent &event )
+void RouteManagerDialog::OnRtePropertiesClick(wxCommandEvent &)
 {
 	// Show routeproperties dialog for selected route
 	long item = -1;
@@ -1074,11 +1072,8 @@ void RouteManagerDialog::OnRtePropertiesClick( wxCommandEvent &event )
 	m_bNeedConfigFlush = true;
 }
 
-void RouteManagerDialog::OnRteZoomtoClick( wxCommandEvent &event )
+void RouteManagerDialog::OnRteZoomtoClick(wxCommandEvent &)
 {
-	//      if (cc1->m_bFollow)
-	//            return;
-
 	// Zoom into the bounding box of the selected route
 	long item = -1;
 	item = m_pRouteListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -1101,7 +1096,7 @@ void RouteManagerDialog::OnRteZoomtoClick( wxCommandEvent &event )
 	ZoomtoRoute( route );
 }
 
-void RouteManagerDialog::OnRteReverseClick( wxCommandEvent &event )
+void RouteManagerDialog::OnRteReverseClick(wxCommandEvent &)
 {
 	// Reverse selected route
 	long item = -1;
@@ -1133,7 +1128,7 @@ void RouteManagerDialog::OnRteReverseClick( wxCommandEvent &event )
 	m_bNeedConfigFlush = true;
 }
 
-void RouteManagerDialog::OnRteExportClick( wxCommandEvent &event )
+void RouteManagerDialog::OnRteExportClick(wxCommandEvent &)
 {
 	RouteList list;
 
@@ -1158,7 +1153,7 @@ void RouteManagerDialog::OnRteExportClick( wxCommandEvent &event )
 	pConfig->ExportGPXRoutes( this, &list, suggested_name );
 }
 
-void RouteManagerDialog::OnRteActivateClick( wxCommandEvent &event )
+void RouteManagerDialog::OnRteActivateClick(wxCommandEvent &)
 {
 	// Activate the selected route, unless it already is
 	long item = -1;
@@ -1198,7 +1193,7 @@ void RouteManagerDialog::OnRteActivateClick( wxCommandEvent &event )
 	m_bNeedConfigFlush = true;
 }
 
-void RouteManagerDialog::OnRteToggleVisibility( wxMouseEvent &event )
+void RouteManagerDialog::OnRteToggleVisibility(wxMouseEvent & event)
 {
 	wxPoint pos = event.GetPosition();
 	int flags = 0;
@@ -1276,7 +1271,6 @@ void RouteManagerDialog::OnRteSelected( wxListEvent &event )
 		cc1->Refresh();
 
 	UpdateRteButtons();
-
 }
 
 void RouteManagerDialog::OnRteColumnClicked( wxListEvent &event )
@@ -1291,7 +1285,7 @@ void RouteManagerDialog::OnRteColumnClicked( wxListEvent &event )
 		}
 }
 
-void RouteManagerDialog::OnRteSendToGPSClick( wxCommandEvent &event )
+void RouteManagerDialog::OnRteSendToGPSClick(wxCommandEvent &)
 {
 	long item = -1;
 	item = m_pRouteListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -1311,19 +1305,19 @@ void RouteManagerDialog::OnRteSendToGPSClick( wxCommandEvent &event )
 	delete pdlg;
 }
 
-void RouteManagerDialog::OnRteDefaultAction( wxListEvent &event )
+void RouteManagerDialog::OnRteDefaultAction(wxListEvent &)
 {
 	wxCommandEvent evt;
 	OnRtePropertiesClick( evt );
 }
 
-void RouteManagerDialog::OnTrkDefaultAction( wxListEvent &event )
+void RouteManagerDialog::OnTrkDefaultAction(wxListEvent &)
 {
 	wxCommandEvent evt;
 	OnTrkPropertiesClick( evt );
 }
 
-void RouteManagerDialog::OnTrkRightClick( wxListEvent &event )
+void RouteManagerDialog::OnTrkRightClick(wxListEvent &)
 {
 	wxMenu menu;
 	wxMenuItem* mergeItem = menu.Append( TRACK_MERGE, _("&Merge Selected Tracks") );
@@ -1561,7 +1555,7 @@ void RouteManagerDialog::UpdateTrkListCtrl()
 	UpdateTrkButtons();
 }
 
-void RouteManagerDialog::OnTrkSelected( wxListEvent &event )
+void RouteManagerDialog::OnTrkSelected(wxListEvent &)
 {
 	UpdateTrkButtons();
 }
@@ -1613,7 +1607,7 @@ void RouteManagerDialog::OnTrkToggleVisibility( wxMouseEvent &event )
 	event.Skip();
 }
 
-void RouteManagerDialog::OnTrkNewClick( wxCommandEvent &event )
+void RouteManagerDialog::OnTrkNewClick(wxCommandEvent &)
 {
 	gFrame->TrackOff();
 	gFrame->TrackOn();
@@ -1621,7 +1615,7 @@ void RouteManagerDialog::OnTrkNewClick( wxCommandEvent &event )
 	UpdateTrkListCtrl();
 }
 
-void RouteManagerDialog::OnTrkPropertiesClick( wxCommandEvent &event )
+void RouteManagerDialog::OnTrkPropertiesClick(wxCommandEvent &)
 {
 	// Show routeproperties dialog for selected route
 	long item = -1;
@@ -1643,7 +1637,7 @@ void RouteManagerDialog::OnTrkPropertiesClick( wxCommandEvent &event )
 	m_bNeedConfigFlush = true;
 }
 
-void RouteManagerDialog::OnTrkDeleteClick( wxCommandEvent &event )
+void RouteManagerDialog::OnTrkDeleteClick(wxCommandEvent &)
 {
 	RouteList list;
 
@@ -1690,7 +1684,7 @@ void RouteManagerDialog::OnTrkDeleteClick( wxCommandEvent &event )
 	}
 }
 
-void RouteManagerDialog::OnTrkExportClick( wxCommandEvent &event )
+void RouteManagerDialog::OnTrkExportClick(wxCommandEvent &)
 {
 	RouteList list;
 	wxString suggested_name = _T("tracks");
@@ -1738,7 +1732,7 @@ void RouteManagerDialog::TrackToRoute( Track *track )
 	::wxEndBusyCursor();
 }
 
-void RouteManagerDialog::OnTrkRouteFromTrackClick( wxCommandEvent &event )
+void RouteManagerDialog::OnTrkRouteFromTrackClick(wxCommandEvent &)
 {
 	long item = -1;
 	item = m_pTrkListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -1751,7 +1745,7 @@ void RouteManagerDialog::OnTrkRouteFromTrackClick( wxCommandEvent &event )
 	UpdateRouteListCtrl();
 }
 
-void RouteManagerDialog::OnTrkDeleteAllClick( wxCommandEvent &event )
+void RouteManagerDialog::OnTrkDeleteAllClick(wxCommandEvent &)
 {
 	int dialog_ret = OCPNMessageBox( this, _("Are you sure you want to delete <ALL> tracks?"),
 			wxString( _("OpenCPN Alert") ), wxYES_NO );
@@ -1872,18 +1866,18 @@ void RouteManagerDialog::UpdateWptListCtrlViz( )
 }
 
 
-void RouteManagerDialog::OnWptDefaultAction( wxListEvent &event )
+void RouteManagerDialog::OnWptDefaultAction(wxListEvent &)
 {
 	wxCommandEvent evt;
 	OnWptPropertiesClick( evt );
 }
 
-void RouteManagerDialog::OnWptSelected( wxListEvent &event )
+void RouteManagerDialog::OnWptSelected(wxListEvent &)
 {
 	UpdateWptButtons();
 }
 
-void RouteManagerDialog::OnWptColumnClicked( wxListEvent &event )
+void RouteManagerDialog::OnWptColumnClicked(wxListEvent & event)
 {
 	if( event.m_col == 1 ) {
 		sort_wp_name_dir++;
@@ -1962,7 +1956,7 @@ void RouteManagerDialog::OnWptToggleVisibility( wxMouseEvent &event )
 	event.Skip();
 }
 
-void RouteManagerDialog::OnWptNewClick( wxCommandEvent &event )
+void RouteManagerDialog::OnWptNewClick(wxCommandEvent &)
 {
 	RoutePoint *pWP = new RoutePoint(gLat, gLon, g_default_wp_icon, wxEmptyString);
 	pWP->m_bIsolatedMark = true;                      // This is an isolated mark
@@ -1983,7 +1977,7 @@ void RouteManagerDialog::OnWptNewClick( wxCommandEvent &event )
 	UpdateWptListCtrl();
 }
 
-void RouteManagerDialog::OnWptPropertiesClick( wxCommandEvent &event )
+void RouteManagerDialog::OnWptPropertiesClick(wxCommandEvent &)
 {
 	long item = -1;
 	item = m_pWptListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -2019,7 +2013,7 @@ void RouteManagerDialog::WptShowPropertiesDialog( RoutePoint* wp, wxWindow* pare
 
 }
 
-void RouteManagerDialog::OnWptZoomtoClick( wxCommandEvent &event )
+void RouteManagerDialog::OnWptZoomtoClick(wxCommandEvent &)
 {
 	long item = -1;
 	item = m_pWptListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -2036,7 +2030,7 @@ void RouteManagerDialog::OnWptZoomtoClick( wxCommandEvent &event )
 
 }
 
-void RouteManagerDialog::OnWptDeleteClick( wxCommandEvent &event )
+void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent &)
 {
 	RoutePointList list;
 
@@ -2105,7 +2099,7 @@ void RouteManagerDialog::OnWptDeleteClick( wxCommandEvent &event )
 
 }
 
-void RouteManagerDialog::OnWptGoToClick( wxCommandEvent &event )
+void RouteManagerDialog::OnWptGoToClick(wxCommandEvent &)
 {
 	long item = -1;
 	item = m_pWptListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -2143,7 +2137,7 @@ void RouteManagerDialog::OnWptGoToClick( wxCommandEvent &event )
 	UpdateRouteListCtrl();
 }
 
-void RouteManagerDialog::OnWptExportClick( wxCommandEvent &event )
+void RouteManagerDialog::OnWptExportClick(wxCommandEvent &)
 {
 	RoutePointList list;
 
@@ -2168,7 +2162,7 @@ void RouteManagerDialog::OnWptExportClick( wxCommandEvent &event )
 	pConfig->ExportGPXWaypoints( this, &list, suggested_name );
 }
 
-void RouteManagerDialog::OnWptSendToGPSClick( wxCommandEvent &event )
+void RouteManagerDialog::OnWptSendToGPSClick(wxCommandEvent &)
 {
 	long item = -1;
 	item = m_pWptListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -2188,7 +2182,7 @@ void RouteManagerDialog::OnWptSendToGPSClick( wxCommandEvent &event )
 	delete pdlg;
 }
 
-void RouteManagerDialog::OnWptDeleteAllClick( wxCommandEvent &event )
+void RouteManagerDialog::OnWptDeleteAllClick(wxCommandEvent &)
 {
 	wxString prompt;
 	int buttons, type;
@@ -2222,7 +2216,7 @@ void RouteManagerDialog::OnWptDeleteAllClick( wxCommandEvent &event )
 	cc1->Refresh();
 }
 
-void RouteManagerDialog::OnLaySelected( wxListEvent &event )
+void RouteManagerDialog::OnLaySelected(wxListEvent &)
 {
 	UpdateLayButtons();
 }
@@ -2294,7 +2288,7 @@ void RouteManagerDialog::OnLayToggleVisibility( wxMouseEvent &event )
 	event.Skip();
 }
 
-void RouteManagerDialog::OnLayNewClick( wxCommandEvent &event )
+void RouteManagerDialog::OnLayNewClick(wxCommandEvent &)
 {
 	bool show_flag = g_bShowLayers;
 	g_bShowLayers = true;
@@ -2308,7 +2302,7 @@ void RouteManagerDialog::OnLayNewClick( wxCommandEvent &event )
 	cc1->Refresh();
 }
 
-void RouteManagerDialog::OnLayPropertiesClick( wxCommandEvent &event )
+void RouteManagerDialog::OnLayPropertiesClick(wxCommandEvent &)
 {
 	// Show layer properties dialog for selected layer - todo
 	long item = -1;
@@ -2316,7 +2310,7 @@ void RouteManagerDialog::OnLayPropertiesClick( wxCommandEvent &event )
 	if( item == -1 ) return;
 }
 
-void RouteManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
+void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent &)
 {
 	long item = -1;
 	item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -2381,7 +2375,7 @@ void RouteManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
 	m_bNeedConfigFlush = false;
 }
 
-void RouteManagerDialog::OnLayToggleChartClick( wxCommandEvent &event )
+void RouteManagerDialog::OnLayToggleChartClick(wxCommandEvent &)
 {
 	// Toggle  visibility on chart for selected layer
 	long item = -1;
@@ -2436,7 +2430,7 @@ void RouteManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
 	cc1->Refresh();
 }
 
-void RouteManagerDialog::OnLayToggleNamesClick( wxCommandEvent &event )
+void RouteManagerDialog::OnLayToggleNamesClick(wxCommandEvent &)
 {
 	// Toggle WPT names visibility on chart for selected layer
 	long item = -1;
@@ -2486,7 +2480,7 @@ void RouteManagerDialog::ToggleLayerContentsNames( Layer *layer )
 	cc1->Refresh();
 }
 
-void RouteManagerDialog::OnLayToggleListingClick( wxCommandEvent &event )
+void RouteManagerDialog::OnLayToggleListingClick(wxCommandEvent &)
 {
 	// Toggle  visibility on listing for selected layer
 	long item = -1;
@@ -2546,7 +2540,7 @@ void RouteManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
 	cc1->Refresh();
 }
 
-void RouteManagerDialog::OnLayDefaultAction( wxListEvent &event )
+void RouteManagerDialog::OnLayDefaultAction(wxListEvent &)
 {
 	wxCommandEvent evt;
 	OnLayPropertiesClick( evt );
@@ -2605,7 +2599,7 @@ void RouteManagerDialog::UpdateLayListCtrl()
 	UpdateLayButtons();
 }
 
-void RouteManagerDialog::OnImportClick( wxCommandEvent &event )
+void RouteManagerDialog::OnImportClick(wxCommandEvent &)
 {
 	// Import routes
 	// FIXME there is no way to instruct this function about what to import.
@@ -2620,12 +2614,12 @@ void RouteManagerDialog::OnImportClick( wxCommandEvent &event )
 	cc1->Refresh();
 }
 
-void RouteManagerDialog::OnExportClick( wxCommandEvent &event )
+void RouteManagerDialog::OnExportClick(wxCommandEvent &)
 {
 	pConfig->ExportGPX( this );
 }
 
-void RouteManagerDialog::OnExportVizClick( wxCommandEvent &event )
+void RouteManagerDialog::OnExportVizClick(wxCommandEvent &)
 {
 	pConfig->ExportGPX( this, true, true );     // only visible objects, layers included
 }

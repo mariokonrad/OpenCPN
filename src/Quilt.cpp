@@ -22,11 +22,11 @@
  **************************************************************************/
 
 #include "Quilt.h"
-#include "chart/ChartDB.h"
-#include "chart/ChartStack.h"
+#include <chart/ChartDB.h>
+#include <chart/ChartStack.h>
+#include <chart/S57Chart.h>
 #include "s52plib.h"
 #include "chcanv.h"
-#include "s57chart.h"
 #include "ocpn_pixel.h"
 #include "OCPNRegionIterator.h"
 

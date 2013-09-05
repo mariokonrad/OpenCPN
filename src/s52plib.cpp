@@ -23,7 +23,7 @@
 
 #include "s52plib.h"
 #include "RenderFromHPGL.h"
-#include "s57chart.h"
+#include <chart/S57Chart.h>
 #include "geo/TriPrim.h"
 #include "geo/PolyTessGeo.h"
 #include "geo/PolyTessGeoTrap.h"

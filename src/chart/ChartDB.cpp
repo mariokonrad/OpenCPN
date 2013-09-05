@@ -43,7 +43,7 @@
 #include "ThumbWin.h"
 
 #ifdef USE_S57
-	#include "s57chart.h"
+	#include <chart/S57Chart.h>
 #endif
 
 class s52plib;

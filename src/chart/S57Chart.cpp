@@ -32,7 +32,7 @@
 #include "s52s57.h"
 #include "s52plib.h"
 
-#include "s57chart.h"
+#include "S57Chart.h"
 
 #include "geo/PolyTessGeo.h"
 #include "geo/PolyTessGeoTrap.h"
@@ -67,6 +67,7 @@
 
 extern bool GetDoubleAttr(S57Obj *obj, const char *AttrName, double &val);      // found in s52cnsy
 
+static bool s57_GetChartExtent(const wxString& FullPath, Extent *pext);
 
 void OpenCPN_OGRErrorHandler( CPLErr eErrClass, int nError,
                               const char * pszErrorMsg );               // installed GDAL OGR library error handler
@@ -715,6 +716,56 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
     free( buf );
     free( hdr_buf );
 
+}
+
+ThumbData * s57chart::GetThumbData()
+{
+	return pThumbData;
+}
+
+int s57chart::GetNativeScale()
+{
+	return m_Chart_Scale;
+}
+
+void s57chart::SetNativeScale(int s)
+{
+	m_Chart_Scale = s;
+}
+
+double s57chart::GetNearestPreferredScalePPM(double target_scale_ppm)
+{
+	return target_scale_ppm;
+}
+
+wxFileName s57chart::GetSENCFileName()
+{
+	return m_SENCFileName;
+}
+
+void s57chart::SetSENCFileName(wxFileName fn)
+{
+	m_SENCFileName = fn;
+}
+
+VE_Hash & s57chart::Get_ve_hash(void)
+{
+	return m_ve_hash;
+}
+
+VC_Hash & s57chart::Get_vc_hash(void)
+{
+	return m_vc_hash;
+}
+
+bool s57chart::IsCacheValid()
+{
+	return (pDIB != NULL);
+}
+
+char s57chart::GetUsageChar(void)
+{
+	return m_usage_char;
 }
 
 //-------------------------------------------------------------------------------------------
@@ -6517,7 +6568,7 @@ const char *MyCSVGetField( const char * pszFilename, const char * pszKeyFieldNam
 // Get Chart Extents
 //----------------------------------------------------------------------------------
 
-bool s57_GetChartExtent(const wxString &, Extent *)
+static bool s57_GetChartExtent(const wxString &, Extent *)
 {
     return false;
 }
@@ -6640,7 +6691,8 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport, std::vector<s5
     }
 }
 
-bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vector<s57Sector_t>& sectorlegs ) {
+bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vector<s57Sector_t>& sectorlegs )
+{
     double cursor_lat, cursor_lon;
     static double lastLat, lastLon;
 

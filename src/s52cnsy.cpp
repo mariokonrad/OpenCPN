@@ -26,7 +26,7 @@
 
 #include <wx/tokenzr.h>
 
-#include <s57chart.h>
+#include <chart/S57Chart.h>
 #include <s52plib.h>
 #include <chart/s52utils.h>
 #include <dychart.h>

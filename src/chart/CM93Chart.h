@@ -24,7 +24,7 @@
 #ifndef __CHART__CM93CHART__H__
 #define __CHART__CM93CHART__H__
 
-#include "s57chart.h"
+#include <chart/S57Chart.h>
 #include <chart/M_COVR_Desc.h>
 
 class cm93_dictionary;

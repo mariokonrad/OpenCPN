@@ -732,7 +732,7 @@ IF (USE_S57)
 		src/s52plib.h
 		src/RenderFromHPGL.h
 		src/chart/s52utils.h
-		include/s57chart.h
+		src/chart/S57Chart.h
 		src/geo/ExtendedGeometry.h
 		src/geo/TriPrim.h
 		src/geo/PolyTriGroup.h
@@ -741,7 +741,7 @@ IF (USE_S57)
 		src/s52cnsy.cpp
 		src/s52plib.cpp
 		src/chart/s52utils.cpp
-		src/s57chart.cpp
+		src/chart/S57Chart.cpp
 		src/RenderFromHPGL.cpp
 		src/chart/M_COVR_Desc.cpp
 		src/chart/OCPNOffsetListCtrl.cpp

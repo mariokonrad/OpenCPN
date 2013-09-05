@@ -28,7 +28,7 @@
 #include "s52plib.h"
 #include "Quilt.h"
 #include "plugin/PlugInManager.h"
-#include "s57chart.h"
+#include <chart/S57Chart.h>
 #include "ChInfoWin.h"
 #include "ThumbWin.h"
 #include "OCPNRegionIterator.h"

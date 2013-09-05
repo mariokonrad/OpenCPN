@@ -24,7 +24,7 @@
 #ifndef __CHART__CM93COMPCHART__H__
 #define __CHART__CM93COMPCHART__H__
 
-#include "s57chart.h"
+#include <chart/S57Chart.h>
 #include "s52s57.h"
 #include <wx/string.h>
 

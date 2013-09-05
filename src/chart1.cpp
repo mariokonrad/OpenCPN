@@ -118,7 +118,7 @@
 	#include "S57QueryDialog.h"
 	#include <chart/CM93OffsetDialog.h>
 	#include "s52plib.h"
-	#include "s57chart.h"
+	#include <chart/S57Chart.h>
 	#include "cpl_csv.h"
 #endif
 

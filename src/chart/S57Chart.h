@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __S57CHART_H__
-#define __S57CHART_H__
+#ifndef __CHART__S57CHART_H__
+#define __CHART__S57CHART_H__
 
 #include <wx/wx.h>
 #include <wx/progdlg.h>
@@ -43,21 +43,10 @@
 #include <chart/S57Sector.h>
 #include <chart/ChartBase.h>
 
-// ----------------------------------------------------------------------------
-// S57 Utility Prototypes
-// ----------------------------------------------------------------------------
-extern "C" bool s57_GetChartExtent(const wxString& FullPath, Extent *pext);
 
 
 void s57_DrawExtendedLightSectors( ocpnDC& temp_dc, ViewPort& VPoint, std::vector<s57Sector_t>& sectorlegs );
 bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& VPoint, std::vector<s57Sector_t>& sectorlegs );
-
-enum
-{
-	BUILD_SENC_OK,
-	BUILD_SENC_NOK_RETRY,
-	BUILD_SENC_NOK_PERMANENT
-};
 
 class ChartBase;
 class ViewPort;
@@ -68,9 +57,7 @@ class S57Reader;
 class OGRS57DataSource;
 class S57ClassRegistrar;
 
-// Declare the Array of S57Obj
 WX_DECLARE_OBJARRAY(S57Obj, ArrayOfS57Obj);
-// And also a list
 WX_DECLARE_LIST(S57Obj, ListOfS57Obj);
 
 
@@ -87,6 +74,14 @@ WX_DECLARE_HASH_MAP( int, VC_Element *, wxIntegerHash, wxIntegerEqual, VC_Hash )
 //----------------------------------------------------------------------------
 class s57chart : public ChartBase
 {
+	private:
+		enum
+		{
+			BUILD_SENC_OK,
+			BUILD_SENC_NOK_RETRY,
+			BUILD_SENC_NOK_PERMANENT
+		};
+
 	public:
 		s57chart();
 		~s57chart();
@@ -96,14 +91,14 @@ class s57chart : public ChartBase
 		//    Accessors
 
 		virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
-		virtual ThumbData *GetThumbData() {return pThumbData;}
+		virtual ThumbData *GetThumbData();
 		bool UpdateThumbData(double lat, double lon);
 
-		virtual int GetNativeScale(){return m_Chart_Scale;}
+		virtual int GetNativeScale();
 		virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
 		virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
 
-		void SetNativeScale(int s){m_Chart_Scale = s;}
+		void SetNativeScale(int s);
 
 		virtual bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion &Region);
 		virtual bool RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint, const OCPNRegion &Region);
@@ -121,7 +116,7 @@ class s57chart : public ChartBase
 		virtual bool AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed);
 		//      virtual bool IsRenderDelta(ViewPort &vp_last, ViewPort &vp_proposed);
 
-		virtual double GetNearestPreferredScalePPM(double target_scale_ppm){ return target_scale_ppm; }
+		virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
 
 		void SetFullExtent(Extent& ext);
 		bool GetChartExtent(Extent *pext);
@@ -139,8 +134,8 @@ class s57chart : public ChartBase
 		wxString CreateObjDescriptions( ListOfObjRazRules* rule);
 		wxString GetAttributeDecode(wxString& att, int ival);
 
-		wxFileName GetSENCFileName(){ return m_SENCFileName; }
-		void SetSENCFileName(wxFileName fn){ m_SENCFileName = fn;}
+		wxFileName GetSENCFileName();
+		void SetSENCFileName(wxFileName fn);
 
 		int BuildRAZFromSENCFile(const wxString& SENCPath);
 
@@ -154,8 +149,8 @@ class s57chart : public ChartBase
 
 		virtual ListOfS57Obj *GetAssociatedObjects(S57Obj *obj);
 
-		virtual VE_Hash & Get_ve_hash(void){ return m_ve_hash; }
-		virtual VC_Hash & Get_vc_hash(void) { return m_vc_hash; }
+		virtual VE_Hash & Get_ve_hash(void);
+		virtual VC_Hash & Get_vc_hash(void);
 
 		virtual void ForceEdgePriorityEvaluate(void);
 
@@ -181,7 +176,7 @@ class s57chart : public ChartBase
 		ViewPort    m_last_vp;
 		OCPNRegion    m_last_Region;
 
-		virtual bool IsCacheValid(){ return (pDIB != NULL); }
+		virtual bool IsCacheValid();
 		virtual void InvalidateCache();
 		virtual bool RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint);
 
@@ -190,11 +185,11 @@ class s57chart : public ChartBase
 				wxString &LastUpdateDate, bool b_copyfiles);
 		wxString GetISDT(void);
 
-		char GetUsageChar(void){ return m_usage_char; }
+		char GetUsageChar(void);
 		static bool IsCellOverlayType(char *pFullPath);
 
-		bool        m_b2pointLUPS;
-		bool        m_b2lineLUPS;
+		bool m_b2pointLUPS;
+		bool m_b2lineLUPS;
 
 	private:
 

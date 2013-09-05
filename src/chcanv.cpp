@@ -88,7 +88,7 @@
 
 // S57
 #ifdef USE_S57
-	#include "s57chart.h"               // for ArrayOfS57Obj
+	#include <chart/S57Chart.h>
 	#include "s52plib.h"
 	#include <chart/CM93compchart.h>
 	#include <chart/CM93OffsetDialog.h>

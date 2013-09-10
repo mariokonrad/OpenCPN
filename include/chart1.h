@@ -123,8 +123,6 @@ enum
 
 
 
-#define N_STATUS_BAR_FIELDS_MAX     20
-
 #define STAT_FIELD_TICK             0
 #define STAT_FIELD_SOGCOG           1
 #define STAT_FIELD_CURSOR_LL        2

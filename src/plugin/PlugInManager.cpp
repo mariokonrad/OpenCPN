@@ -25,8 +25,6 @@
 #include "dychart.h"
 #include "navutil.h"
 #include "Track.h"
-#include <chart/ChartDB.h>
-#include <chart/ChartDatabase.h>
 #include "ocpnDC.h"
 #include "StyleManager.h"
 #include "Style.h"
@@ -43,9 +41,15 @@
 #include "NavObjectCollection.h"
 #include "plugin/OCPN_MsgEvent.h"
 
-#include "ais/ais.h"
-#include "ais/AIS_Decoder.h"
-#include "ais/AIS_Target_Data.h"
+#include <chart/ChartDB.h>
+#include <chart/ChartDatabase.h>
+#include <chart/gshhs/QLineF.h>
+#include <chart/gshhs/GshhsReader.h>
+#include <chart/gshhs/Projection.h>
+
+#include <ais/ais.h>
+#include <ais/AIS_Decoder.h>
+#include <ais/AIS_Target_Data.h>
 
 #include "gpx/GpxDocument.h"
 
@@ -367,10 +371,6 @@ bool PlugInManager::DeactivatePlugIn(PlugInContainer *pic)
     return bret;
 }
 
-
-
-
-
 bool PlugInManager::UpdateConfig()
 {
     pConfig->SetPath(_T("/"));
@@ -456,7 +456,6 @@ bool PlugInManager::CheckPluginCompatibility(wxString plugin_file)
 
     return b_compat;
 }
-
 
 PlugInContainer *PlugInManager::LoadPlugIn(wxString plugin_file)
 {
@@ -829,9 +828,6 @@ int PlugInManager::AddCanvasContextMenuItem(wxMenuItem *pitem, opencpn_plugin *p
 
     return pmic->id;
 }
-
-
-
 
 void PlugInManager::RemoveCanvasContextMenuItem(int item)
 {
@@ -1474,13 +1470,6 @@ ArrayOfPlugIn_AIS_Targets *GetAISTargetArray(void)
         pret->Add(ptarget);
     }
 
-//  Test one alarm target
-#if 0
-    AIS_Target_Data td;
-    td.n_alarm_state = AIS_ALARM_SET;
-    PlugIn_AIS_Target *ptarget = Create_PI_AIS_Target(&td);
-    pret->Add(ptarget);
-#endif
     return pret;
 }
 
@@ -1763,7 +1752,18 @@ wxString getUsrSpeedUnit_Plugin( int unit )
 
 bool PlugIn_GSHHS_CrossesLand(double lat1, double lon1, double lat2, double lon2)
 {
-    return gshhsCrossesLand(lat1, lon1, lat2, lon2);
+	static GshhsReader * reader = NULL;
+	static Projection proj;
+
+	if(reader == NULL)
+		reader = new GshhsReader(&proj);
+
+	while (lon1 < 0)
+		lon1 += 360;
+	while (lon2 < 0)
+		lon2 += 360;
+
+	return reader->crossing1(QLineF(lon1, lat1, lon2, lat2));
 }
 
 
@@ -2538,7 +2538,4 @@ int PlugInChartBase::GetSize_Y()
 
 void PlugInChartBase::latlong_to_chartpix(double lat, double lon, double &pixx, double &pixy)
 {}
-
-
-
 

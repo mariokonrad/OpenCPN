@@ -33,14 +33,13 @@
 
 #include <vector>
 
-#include "gshhs.h"
 #include "chart1.h"
 #include "CM93DSlide.h"
 #include "RolloverWin.h"
-#include "ais/AISTargetQueryDialog.h"
+#include <ais/AISTargetQueryDialog.h>
 #include "glChartCanvas.h"
 #include "timers.h"
-#include "chart/S57Sector.h"
+#include <chart/S57Sector.h>
 
 class LatLonBoundingBox;
 class ocpnDC;

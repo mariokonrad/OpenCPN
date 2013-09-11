@@ -515,7 +515,6 @@ SET(HDRS
 	src/OptionIDs.h
 	src/ChartGroupsUI.h
 	src/SentenceListDlg.h
-	include/gshhs.h
 	src/chart/gshhs/QLineF.h
 	src/chart/gshhs/Projection.h
 	src/chart/gshhs/PolygonFileHeader.h
@@ -671,7 +670,6 @@ SET(SRCS
 	src/OptionDialog.cpp
 	src/ChartGroupsUI.cpp
 	src/SentenceListDlg.cpp
-	src/gshhs.cpp
 	src/chart/gshhs/Projection.cpp
 	src/chart/gshhs/GshhsPolygon.cpp
 	src/chart/gshhs/GSHHSChart.cpp

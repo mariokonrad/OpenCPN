@@ -25,7 +25,6 @@
 #include <chart/gshhs/Projection.h>
 #include <chart/gshhs/PolygonFileHeader.h>
 #include <ocpnDC.h>
-#include "gshhs.h"
 
 #define GSHHS_SCL    1.0e-6    /* Convert micro-degrees to degrees */
 

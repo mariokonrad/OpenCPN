@@ -1539,6 +1539,12 @@ bool Quilt::Compose(const ViewPort & vp_in)
 
 	//    Finally, iterate thru the quilt and preload all of the required charts.
 	//    For dynamic S57 SENC creation, this is where SENC creation happens first.....
+
+	//  Stop (temporarily) canvas paint events, since some chart loads mught Yield(),
+	//  thus causing performance loss on recursion
+	//  We will (always??) get a refresh on the new Quilt anyway...
+	cc1->EnablePaint(false);
+
 	bool b_stop_ap = false;
 	for( ir = 0; ir < m_pcandidate_array->size(); ir++ ) {
 		QuiltCandidate *pqc = m_pcandidate_array->Item( ir );
@@ -1554,6 +1560,8 @@ bool Quilt::Compose(const ViewPort & vp_in)
 		cc1->EnableAutoPan(false);
 		cc1->EnableAutoPan(true);
 	}
+
+	cc1->EnablePaint(true);
 
 	// Build and maintain the array of indexes in this quilt
 

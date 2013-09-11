@@ -301,7 +301,7 @@ MyConfig::MyConfig(
 	m_pNavObjectInputSet = NULL;
 	m_pNavObjectChangesSet = new NavObjectChanges();
 
-	m_bIsImporting = false;
+	m_bSkipChangeSetUpdate = false;
 
 	g_pConnectionParams = new wxArrayOfConnPrm();
 }
@@ -522,7 +522,7 @@ int MyConfig::LoadMyConfig(int iteration) // FIXME: get rid of this 'iteration'
 	g_COGAvgSec = wxMin(g_COGAvgSec, MAX_COG_AVERAGE_SECONDS);        // Bound the array size
 	Read( _T ( "SkewToNorthUp" ), &g_bskew_comp, 0 );
 	Read( _T ( "OpenGL" ), &g_bopengl, 0 );
-	if ( g_bdisable_opengl )
+	if (g_bdisable_opengl)
 		g_bopengl = false;
 
 	Read( _T ( "ActiveChartGroup" ), &g_GroupIndex, 0 );
@@ -1335,7 +1335,6 @@ bool MyConfig::LoadChartDirArray( ArrayOfCDI &ChartDirArray )
 					new_dir.Prepend( g_SData_Locn );
 					dirname = new_dir;
 				}
-
 				ChartDirInfo cdi;
 				cdi.fullpath = dirname.BeforeFirst( '^' );
 				cdi.magic_number = dirname.AfterFirst( '^' );
@@ -1354,10 +1353,10 @@ bool MyConfig::LoadChartDirArray( ArrayOfCDI &ChartDirArray )
 
 bool MyConfig::AddNewRoute(Route *pr, int) // FIXME: does this really belong to config?
 {
-	if( pr->m_bIsInLayer )
+	if (pr->m_bIsInLayer)
 		return true;
 
-	if( !m_bIsImporting ) {
+	if (!m_bSkipChangeSetUpdate) {
 		m_pNavObjectChangesSet->AddRoute( pr, "add" );
 		StoreNavObjChanges();
 	}
@@ -1370,7 +1369,7 @@ bool MyConfig::UpdateRoute(Route * pr) // FIXME: does this really belong to conf
 	if( pr->m_bIsInLayer )
 		return true;
 
-	if( !m_bIsImporting ) {
+	if( !m_bSkipChangeSetUpdate ) {
 		if( pr->m_bIsTrack )
 			m_pNavObjectChangesSet->AddTrack( (Track *)pr, "update" );
 		else
@@ -1387,7 +1386,7 @@ bool MyConfig::DeleteConfigRoute( Route *pr ) // FIXME: does this really belong 
 	if( pr->m_bIsInLayer )
 		return true;
 
-	if( !m_bIsImporting ) {
+	if( !m_bSkipChangeSetUpdate ) {
 		if( !pr->m_bIsTrack )
 			m_pNavObjectChangesSet->AddRoute( (Track *)pr, "delete" );
 		else
@@ -1403,7 +1402,7 @@ bool MyConfig::AddNewWayPoint(RoutePoint * pWP, int) // FIXME: does this really 
 	if( pWP->m_bIsInLayer )
 		return true;
 
-	if( !m_bIsImporting ) {
+	if( !m_bSkipChangeSetUpdate ) {
 		m_pNavObjectChangesSet->AddWP( pWP, "add" );
 		StoreNavObjChanges();
 	}
@@ -1416,7 +1415,7 @@ bool MyConfig::UpdateWayPoint( RoutePoint *pWP ) // FIXME: does this really belo
 	if( pWP->m_bIsInLayer )
 		return true;
 
-	if( !m_bIsImporting ) {
+	if( !m_bSkipChangeSetUpdate ) {
 		m_pNavObjectChangesSet->AddWP( pWP, "update" );
 		StoreNavObjChanges();
 	}
@@ -1429,7 +1428,7 @@ bool MyConfig::DeleteWayPoint( RoutePoint *pWP ) // FIXME: does this really belo
 	if( pWP->m_bIsInLayer )
 		return true;
 
-	if( !m_bIsImporting ) {
+	if( !m_bSkipChangeSetUpdate ) {
 		m_pNavObjectChangesSet->AddWP( pWP, "delete" );
 		StoreNavObjChanges();
 	}

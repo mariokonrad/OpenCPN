@@ -546,7 +546,7 @@ void WayPointman::DeleteAllWaypoints( bool b_delete_used )
 
 }
 
-void WayPointman::DestroyWaypoint( RoutePoint *pRp )
+void WayPointman::DestroyWaypoint(RoutePoint * pRp, bool b_update_changeset)
 {
 	if( pRp ) {
 		// Get a list of all routes containing this point
@@ -568,10 +568,10 @@ void WayPointman::DestroyWaypoint( RoutePoint *pRp )
 			for( unsigned int ir = 0; ir < proute_array->GetCount(); ir++ ) {
 				Route *pr = (Route *) proute_array->Item( ir );
 				if( pr->GetnPoints() < 2 ) {
-					pConfig->m_bIsImporting = true;
+					pConfig->m_bSkipChangeSetUpdate = true;
 					pConfig->DeleteConfigRoute( pr );
 					g_pRouteMan->DeleteRoute( pr );
-					pConfig->m_bIsImporting = false;
+					pConfig->m_bSkipChangeSetUpdate = false;
 				}
 			}
 
@@ -579,7 +579,13 @@ void WayPointman::DestroyWaypoint( RoutePoint *pRp )
 		}
 
 		// Now it is safe to delete the point
-		pConfig->DeleteWayPoint( pRp );
+		if (!b_update_changeset)
+			pConfig->m_bSkipChangeSetUpdate = true; // turn OFF change-set updating if requested
+
+		pConfig->DeleteWayPoint(pRp);
+
+		pConfig->m_bSkipChangeSetUpdate = false;
+
 		pSelect->DeleteSelectablePoint(pRp, Select::TYPE_ROUTEPOINT);
 
 		//TODO  FIXME

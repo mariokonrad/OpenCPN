@@ -108,6 +108,7 @@ enum
 //----------------------------------------------------------------------------
 class ChartCanvas : public wxWindow
 {
+		DECLARE_EVENT_TABLE()
 		friend class glChartCanvas;
 
 	public:
@@ -124,6 +125,7 @@ class ChartCanvas : public wxWindow
 
 		void PopupMenuHandler(wxCommandEvent& event);
 
+		void EnablePaint(bool b_enable);
 		virtual bool SetCursor(const wxCursor &c);
 		virtual void Refresh( bool eraseBackground = true,
 				const wxRect *rect = (const wxRect *) NULL );
@@ -371,9 +373,6 @@ class ChartCanvas : public wxWindow
 		void CreateOZEmbossMapData(ColorScheme cs);
 		void EmbossOverzoomIndicator ( ocpnDC &dc);
 
-		//      void CreateCM93OffsetEmbossMapData(ColorScheme cs);
-		//      void EmbossCM93Offset ( wxMemoryDC *pdc);
-
 		void EmbossCanvas ( ocpnDC &dc, EmbossData *pemboss, int x, int y);
 
 		void JaggyCircle(ocpnDC &dc, wxPen pen, int x, int y, int radius);
@@ -524,8 +523,7 @@ class ChartCanvas : public wxWindow
 		double      m_zoom_current_factor;
 
 		bool        m_benable_autopan;
-
-		DECLARE_EVENT_TABLE()
+		bool        m_b_paint_enable;
 };
 
 /*!

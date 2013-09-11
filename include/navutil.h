@@ -178,9 +178,8 @@ class MyConfig : public wxFileConfig
 
 		NavObjectChanges * m_pNavObjectChangesSet;
 		NavObjectCollection * m_pNavObjectInputSet;
-
+		bool m_bSkipChangeSetUpdate;
 		bool  m_bShowDebugWindows;
-		bool  m_bIsImporting;
 };
 
 #endif

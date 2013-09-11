@@ -457,14 +457,14 @@ bool Routeman::UpdateProgress()
 
 		}
 
-		if( !bDidArrival )                                        
+		if (!bDidArrival)
 			m_arrival_min = wxMin( m_arrival_min, CurrentRangeToActiveNormalCrossing );
 
 
-		if( !bDidArrival )                                        // Only once on arrival
+		if (!bDidArrival)  // Only once on arrival
 			UpdateAutopilot();
 
-		bret_val = true;                                        // a route is active
+		bret_val = true; // a route is active
 	}
 
 	m_bDataValid = true;
@@ -490,10 +490,8 @@ void Routeman::DoAdvance(void)
 
 		if( pRouteManagerDialog )
 			pRouteManagerDialog->UpdateRouteListCtrl();
-
 	}
 }
-
 
 bool Routeman::DeactivateRoute( bool b_arrival )
 {
@@ -788,11 +786,11 @@ void Routeman::DeleteAllRoutes( void )
 		}
 
 		if (!proute->m_bIsTrack) {
-			pConfig->m_bIsImporting = true;
+			pConfig->m_bSkipChangeSetUpdate = true;
 			pConfig->DeleteConfigRoute( proute );
 			DeleteRoute( proute );
 			node = pRouteList->GetFirst();
-			pConfig->m_bIsImporting = false;
+			pConfig->m_bSkipChangeSetUpdate = false;
 		} else
 			node = node->GetNext();
 	}
@@ -814,11 +812,11 @@ void Routeman::DeleteAllTracks( void )
 		}
 
 		if( proute->m_bIsTrack ) {
-			pConfig->m_bIsImporting = true;
+			pConfig->m_bSkipChangeSetUpdate = true;
 			pConfig->DeleteConfigRoute( proute );
 			DeleteTrack( proute );
 			node = pRouteList->GetFirst();
-			pConfig->m_bIsImporting = false;
+			pConfig->m_bSkipChangeSetUpdate = false;
 		} else
 			node = node->GetNext();
 	}
@@ -868,10 +866,10 @@ void Routeman::DeleteTrack( Route *pRoute )
 			if( pcontainer_route == NULL ) {
 				prp->m_bIsInRoute = false;          // Take this point out of this (and only) route
 				if( !prp->m_bKeepXRoute ) {
-					pConfig->m_bIsImporting = true;
-					pConfig->DeleteWayPoint( prp );
+					pConfig->m_bSkipChangeSetUpdate = true;
+					pConfig->DeleteWayPoint(prp);
 					pSelect->DeleteSelectablePoint( prp, Select::TYPE_ROUTEPOINT );
-					pConfig->m_bIsImporting = false;
+					pConfig->m_bSkipChangeSetUpdate = false;
 
 					pRoute->pRoutePointList->DeleteNode( pnode );
 					/*

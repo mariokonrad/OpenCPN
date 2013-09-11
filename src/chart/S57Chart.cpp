@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  S57 Chart Object
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -4747,38 +4745,44 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                 const char *pAttrName = poFDefn->GetNameRef();
                 const char *pAttrVal = pFeature->GetFieldAsString( iField );
 
-                snprintf( line, MAX_HDR_LINE - 2, "  %s (%c) = ", pAttrName, *pType);
-                wxString AttrStringPrefix = wxString( line, wxConvUTF8 );
+                if(strlen( pAttrVal ) ) {
+                    snprintf( line, MAX_HDR_LINE - 2, "  %s (%c) = ", pAttrName, *pType);
+                    wxString AttrStringPrefix = wxString( line, wxConvUTF8 );
 
-                wxString wxAttrValue;
+                    wxString wxAttrValue;
 
-                if( (0 == strncmp("NOBJNM",pAttrName, 6) ) ||
-                    (0 == strncmp("NINFOM",pAttrName, 6) ) ||
-                    (0 == strncmp("NTXTDS",pAttrName, 6) ) )
-                {
-                    if( poReader->GetNall() == 2) {     // ENC is using UCS-2 / UTF-16 encoding
-                        wxMBConvUTF16 conv;
-                        wxString att_conv(pAttrVal, conv);
-                        wxAttrValue = att_conv;
+                    if( (0 == strncmp("NOBJNM",pAttrName, 6) ) ||
+                        (0 == strncmp("NINFOM",pAttrName, 6) ) ||
+                        (0 == strncmp("NTXTDS",pAttrName, 6) ) )
+                    {
+                        if( poReader->GetNall() == 2) {     // ENC is using UCS-2 / UTF-16 encoding
+                            wxMBConvUTF16 conv;
+                            wxString att_conv(pAttrVal, conv);
+                            wxAttrValue = att_conv;
+                        }
                     }
+
+                    if( wxAttrValue.IsEmpty()) {
+        // Attempt different conversions to accomodate different language encodings in
+        // the original ENC files.
+
+                        wxAttrValue = wxString( pAttrVal, wxConvUTF8 );
+
+                        if (0 == wxAttrValue.Length()) {
+                            wxMBConvUTF16 conv;
+                            wxString att_conv(pAttrVal, conv);
+                            wxAttrValue = att_conv;
+
+                            if (0 == wxAttrValue.Length()) {
+                                wxLogError( _T("Warning: CreateSENCRecord(): Failed to convert string value to wxString.") );
+                            }
+                        }
+                    }
+
+                    sheader += AttrStringPrefix;
+                    sheader += wxAttrValue;
+                    sheader += '\n';
                 }
-
-                if( wxAttrValue.IsEmpty()) {
-    // Attempt different conversions to accomodate different language encodings in
-    // the original ENC files.
-
-                    wxAttrValue = wxString( pAttrVal, wxConvUTF8 );
-
-                    if( wxAttrValue.Length() < strlen(pAttrVal) )
-                        wxAttrValue = wxString( pAttrVal, wxConvISO8859_1 );
-
-                    if( wxAttrValue.Length() < strlen(pAttrVal) )
-                        wxLogError( _T("Warning: CreateSENCRecord(): Failed to convert string value to wxString.") );
-                }
-
-                sheader += AttrStringPrefix;
-                sheader += wxAttrValue;
-                sheader += '\n';
             }
         }
     }

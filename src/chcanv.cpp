@@ -486,13 +486,13 @@ BEGIN_EVENT_TABLE ( ChartCanvas, wxWindow )
 END_EVENT_TABLE()
 
 // Define a constructor for my canvas
-ChartCanvas::ChartCanvas ( wxFrame *frame ) :
-    wxWindow ( frame, wxID_ANY,    wxPoint ( 20,20 ), wxSize ( 5,5 ), wxSIMPLE_BORDER )
+ChartCanvas::ChartCanvas(wxFrame * frame)
+	: wxWindow(frame, wxID_ANY, wxPoint(20, 20), wxSize(5, 5), wxSIMPLE_BORDER)
 {
-    parent_frame = ( MyFrame * ) frame;       // save a pointer to parent
+    parent_frame = (MyFrame *)frame;       // save a pointer to parent
 
-    SetBackgroundColour ( GetGlobalColor ( _T ( "NODTA" ) ) );
-    SetBackgroundStyle ( wxBG_STYLE_CUSTOM );  // on WXMSW, this prevents flashing on color scheme change
+    SetBackgroundColour(GetGlobalColor(_T("NODTA")));
+    SetBackgroundStyle(wxBG_STYLE_CUSTOM);  // on WXMSW, this prevents flashing on color scheme change
 
     m_bDrawingRoute = false;
     m_bRouteEditing = false;
@@ -507,7 +507,8 @@ ChartCanvas::ChartCanvas ( wxFrame *frame ) :
     pCwin = NULL;
     warp_flag = false;
     m_bzooming = false;
-    m_bmouse_key_mod = false;
+	m_bmouse_key_mod = false;
+	m_b_paint_enable = true;
 
     pss_overlay_bmp = NULL;
     pss_overlay_mask = NULL;
@@ -1035,7 +1036,6 @@ int ChartCanvas::FindClosestCanvasChartdbIndex( int scale )
     return new_dbIndex;
 }
 
-
 void ChartCanvas::SetVPRotation(double angle)
 { VPoint.rotation = angle; }
 
@@ -1045,23 +1045,30 @@ double ChartCanvas::GetVPRotation(void)
 double ChartCanvas::GetVPSkew(void)
 { return GetVP().skew; }
 
+void ChartCanvas::EnablePaint(bool b_enable)
+{
+	m_b_paint_enable = b_enable;
+	if (m_glcc)
+		m_glcc->EnablePaint(b_enable);
+}
+
 bool ChartCanvas::IsQuiltDelta()
 {
-    return m_pQuilt->IsQuiltDelta( VPoint );
+    return m_pQuilt->IsQuiltDelta(VPoint);
 }
 
-std::vector<int> ChartCanvas::GetQuiltIndexArray( void )
+std::vector<int> ChartCanvas::GetQuiltIndexArray(void)
 {
-    return m_pQuilt->GetQuiltIndexArray();;
+    return m_pQuilt->GetQuiltIndexArray();
 }
 
-void ChartCanvas::SetQuiltMode( bool b_quilt )
+void ChartCanvas::SetQuiltMode(bool b_quilt)
 {
     VPoint.b_quilt = b_quilt;
     VPoint.b_FullScreenQuilt = g_bFullScreenQuilt;
 }
 
-bool ChartCanvas::GetQuiltMode( void )
+bool ChartCanvas::GetQuiltMode(void)
 {
     return VPoint.b_quilt;
 }
@@ -7618,7 +7625,9 @@ int s_in_update;
 
 void ChartCanvas::OnPaint(wxPaintEvent &)
 {
-//      CALLGRIND_START_INSTRUMENTATION
+    //  Paint updates may have been externally disabled (temporarily, to avoid Yield() recursion performance loss)
+    if (!m_b_paint_enable)
+        return;
 
     wxPaintDC dc( this );
 
@@ -7689,9 +7698,6 @@ void ChartCanvas::OnPaint(wxPaintEvent &)
     svp.pix_width = svp.rv_rect.width;
     svp.pix_height = svp.rv_rect.height;
 
-//        printf("Onpaint pix %d %d\n", VPoint.pix_width, VPoint.pix_height);
-//        printf("OnPaint rv_rect %d %d\n", VPoint.rv_rect.width, VPoint.rv_rect.height);
-
     OCPNRegion chart_get_region( wxRect( 0, 0, svp.pix_width, svp.pix_height ) );
 
     //  If we are going to use the cached rotated image, there is no need to fetch any chart data
@@ -7717,9 +7723,6 @@ void ChartCanvas::OnPaint(wxPaintEvent &)
             //  So, in small scale bFollow mode, force the full screen render.
             //  This seems a hack....There may be better logic here.....
 
-//                  if(m_bFollow)
-//                        b_save = false;
-
             if( m_bm_cache_vp.IsValid() && m_cache_vp.IsValid() /*&& !m_bFollow*/) {
                 if( b_newview ) {
                     wxPoint c_old = VPoint.GetPixFromLL( VPoint.clat, VPoint.clon );
@@ -7727,8 +7730,6 @@ void ChartCanvas::OnPaint(wxPaintEvent &)
 
                     int dy = c_new.y - c_old.y;
                     int dx = c_new.x - c_old.x;
-
-//                              printf("In OnPaint Trying Blit dx: %d  dy:%d\n\n", dx, dy);
 
                     if( m_pQuilt->IsVPBlittable( VPoint, dx, dy, true ) ) {
                         if( dx || dy ) {

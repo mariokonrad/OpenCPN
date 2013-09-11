@@ -2351,7 +2351,7 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent &)
 		if( rp && ( rp->m_LayerID == layer->m_LayerID ) ) {
 			rp->m_bIsInLayer = false;
 			rp->m_LayerID = 0;
-			pWayPointMan->DestroyWaypoint( rp );
+			pWayPointMan->DestroyWaypoint(rp, false);
 		}
 
 		node = node3;

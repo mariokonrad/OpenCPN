@@ -361,24 +361,24 @@ int attribs[] = { WX_GL_RGBA, WX_GL_DOUBLEBUFFER, WX_GL_DEPTH_SIZE, 16, WX_GL_ST
 	EVT_ERASE_BACKGROUND(glChartCanvas::OnEraseBG)
 END_EVENT_TABLE()
 
-	glChartCanvas::glChartCanvas( wxWindow *parent ) :
-		wxGLCanvas( parent, wxID_ANY, wxDefaultPosition, wxSize( 256, 256 ),
-				wxFULL_REPAINT_ON_RESIZE | wxBG_STYLE_CUSTOM, _T(""), attribs ), m_cacheinvalid(
-				1 ), m_data( NULL ), m_datasize( 0 ), m_bsetup( false )
-{
-	m_ntex = 0;
-}
+glChartCanvas::glChartCanvas(wxWindow * parent)
+	: wxGLCanvas(parent, wxID_ANY, wxDefaultPosition, wxSize(256, 256), wxFULL_REPAINT_ON_RESIZE | wxBG_STYLE_CUSTOM, _T(""), attribs)
+	, m_cacheinvalid(1)
+	, m_data(NULL)
+	, m_datasize(0)
+	, m_bsetup(false)
+	, m_ntex(0)
+    , m_b_paint_enable(true)
+{}
 
 glChartCanvas::~glChartCanvas()
 {
-	free( m_data );
-
+	free(m_data);
 	ClearAllRasterTextures();
 }
 
-void glChartCanvas::OnEraseBG( wxEraseEvent& evt )
-{
-}
+void glChartCanvas::OnEraseBG(wxEraseEvent &)
+{}
 
 void glChartCanvas::ClearAllRasterTextures( void )
 {
@@ -630,14 +630,17 @@ void glChartCanvas::OnPaint( wxPaintEvent &event )
 		//          g_bDebugOGL = true;
 	}
 
+	// Paint updates may have been externally disabled (temporarily, to avoid Yield() recursion performance loss)
+	if (!m_b_paint_enable)
+		return;
 	//      Recursion test, sometimes seen on GTK systems when wxBusyCursor is activated
-	if( s_in_glpaint ) return;
+	if (s_in_glpaint)
+		return;
 	s_in_glpaint++;
 
 	render();
 
 	s_in_glpaint--;
-
 }
 
 bool glChartCanvas::PurgeChartTextures( ChartBase *pc )

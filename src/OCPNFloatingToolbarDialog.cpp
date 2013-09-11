@@ -28,6 +28,7 @@
 #include "StyleManager.h"
 #include "Style.h"
 #include "MessageBox.h"
+#include "GUI_IDs.h"
 #include <global/OCPN.h>
 #include <global/GUI.h>
 
@@ -95,7 +96,7 @@ OCPNFloatingToolbarDialog::~OCPNFloatingToolbarDialog()
 	DestroyToolBar();
 }
 
-void OCPNFloatingToolbarDialog::OnWindowCreate( wxWindowCreateEvent& event )
+void OCPNFloatingToolbarDialog::OnWindowCreate(wxWindowCreateEvent &)
 {
 	Realize();
 }
@@ -242,7 +243,7 @@ void OCPNFloatingToolbarDialog::MouseEvent( wxMouseEvent& event )
 	}
 }
 
-void OCPNFloatingToolbarDialog::FadeTimerEvent( wxTimerEvent& event )
+void OCPNFloatingToolbarDialog::FadeTimerEvent(wxTimerEvent &)
 {
 	if (global::OCPN::get().gui().toolbar().transparent) {
 		if (!g_bopengl)

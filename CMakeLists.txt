@@ -407,6 +407,7 @@ SET(HDRS
 	${HDR_PUGIXML}
 	${HDR_WXJSON}
 	${HDR_GLOBAL}
+	src/GUI_IDs.h
 	include/chart1.h
 	include/ocpn_pixel.h
 	include/S57ClassRegistrar.h

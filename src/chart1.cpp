@@ -57,10 +57,10 @@
 
 #include <version.h>
 #include "dychart.h"
-#include "ais/ais.h"
-#include "ais/AISTargetListDialog.h"
-#include "ais/AISTargetAlertDialog.h"
-#include "ais/AIS_Decoder.h"
+#include <ais/ais.h>
+#include <ais/AISTargetListDialog.h>
+#include <ais/AISTargetAlertDialog.h>
+#include <ais/AIS_Decoder.h>
 #include "chart1.h"
 #include "chcanv.h"
 #include "TimedPopupWin.h"
@@ -110,6 +110,7 @@
 #include <global/GUI.h>
 #include <global/Navigation.h>
 #include <chart/gshhs/GSHHSChart.h>
+#include <GUI_IDs.h>
 
 #ifdef __WXOSX__
 	#include "macutils.h"

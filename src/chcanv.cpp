@@ -46,9 +46,6 @@
 #include "ConsoleCanvas.h"
 #include "ThumbWin.h"
 #include "WayPointman.h"
-#include <chart/ChartDB.h>
-#include <chart/ChartStack.h>
-#include <chart/ChartBaseBSB.h>
 #include "chart1.h"
 #include "cutil.h"
 #include "RouteProp.h"
@@ -60,7 +57,6 @@
 #include "Undo.h"
 #include "Multiplexer.h"
 #include "timers.h"
-#include <tide/tide_time.h>
 #include "ChInfoWin.h"
 #include "Quilt.h"
 #include "SelectItem.h"
@@ -76,17 +72,24 @@
 #include "TCWin.h"
 #include "MicrosoftCompatibility.h"
 #include "StatusBar.h"
+#include "GUI_IDs.h"
+
 #include <chart/gshhs/GSHHSChart.h>
-#include "tide/IDX_entry.h"
+#include <chart/ChartDB.h>
+#include <chart/ChartStack.h>
+#include <chart/ChartBaseBSB.h>
+
+#include <tide/IDX_entry.h>
+#include <tide/tide_time.h>
+
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/Navigation.h>
 
-// AIS
-#include "ais/ais.h"
-#include "ais/AIS_Decoder.h"
-#include "ais/AIS_Target_Data.h"
-#include "ais/AISTargetAlertDialog.h"
+#include <ais/ais.h>
+#include <ais/AIS_Decoder.h>
+#include <ais/AIS_Target_Data.h>
+#include <ais/AISTargetAlertDialog.h>
 
 // S57
 #ifdef USE_S57
@@ -1586,7 +1589,7 @@ void ChartCanvas::OnKeyUp( wxKeyEvent &event )
     event.Skip();
 }
 
-void ChartCanvas::Do_Pankeys( wxTimerEvent& event )
+void ChartCanvas::Do_Pankeys(wxTimerEvent &)
 {
     if( !( m_panx || m_pany ) )
         return;
@@ -1727,13 +1730,13 @@ void ChartCanvas::ShowBrightnessLevelTimedPopup( int brightness, int min, int ma
 }
 
 
-void ChartCanvas::RotateTimerEvent( wxTimerEvent& event )
+void ChartCanvas::RotateTimerEvent(wxTimerEvent &)
 {
     m_b_rot_hidef = true;
     ReloadVP();
 }
 
-void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
+void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent &)
 {
     bool b_need_refresh = false;
 
@@ -1892,10 +1895,11 @@ void ChartCanvas::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         Refresh();
 }
 
-void ChartCanvas::OnCursorTrackTimerEvent( wxTimerEvent& event )
+void ChartCanvas::OnCursorTrackTimerEvent(wxTimerEvent &)
 {
 #ifdef USE_S57
-    if( s57_CheckExtendedLightSectors( mouse_x, mouse_y, VPoint, extendedSectorLegs ) ) ReloadVP( false );
+    if( s57_CheckExtendedLightSectors( mouse_x, mouse_y, VPoint, extendedSectorLegs ) )
+		ReloadVP( false );
 #endif
 
 //      This is here because GTK status window update is expensive.. Why??
@@ -2116,7 +2120,7 @@ bool ChartCanvas::ZoomCanvasOut( double factor )
     return true;
 }
 
-void ChartCanvas::OnZoomTimerEvent( wxTimerEvent &event )
+void ChartCanvas::OnZoomTimerEvent(wxTimerEvent &)
 {
     if( m_bzooming_in && !m_bzooming_out ) {
         if( m_zoom_current_factor < m_zoom_target_factor ) {
@@ -2687,7 +2691,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 
     double cog_rad = atan2( (double) ( lPredPoint.y - lShipMidPoint.y ),
                             (double) ( lPredPoint.x - lShipMidPoint.x ) );
-    cog_rad += PI;
+    cog_rad += M_PI;
 
     double lpp = sqrt(
                      pow( (double) ( lPredPoint.x - lShipMidPoint.x ), 2 )
@@ -2716,9 +2720,9 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 
     double icon_rad = atan2( (double) ( osd_head_point.y - lShipMidPoint.y ),
                              (double) ( osd_head_point.x - lShipMidPoint.x ) );
-    icon_rad += PI;
+    icon_rad += M_PI;
 
-    if( pSog < 0.2 ) icon_rad = ( ( icon_hdt + 90. ) * PI / 180. ) + GetVP().rotation;
+    if( pSog < 0.2 ) icon_rad = ( ( icon_hdt + 90. ) * M_PI / 180. ) + GetVP().rotation;
 
 //    Calculate ownship Heading pointer as a predictor
     double hdg_pred_lat, hdg_pred_lon;
@@ -2867,7 +2871,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
                     pos_image.Rescale( ownShipWidth * scale_factor_x, ownShipLength * scale_factor_y,
                             wxIMAGE_QUALITY_HIGH );
                     wxPoint rot_ctr( pos_image.GetWidth() / 2, pos_image.GetHeight() / 2 );
-                    wxImage rot_image = pos_image.Rotate( -( icon_rad - ( PI / 2. ) ), rot_ctr, true );
+                    wxImage rot_image = pos_image.Rotate( -( icon_rad - ( M_PI / 2. ) ), rot_ctr, true );
 
                     // Simple sharpening algorithm.....
                     for( int ip = 0; ip < rot_image.GetWidth(); ip++ )
@@ -2929,7 +2933,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
             }
             else { // Fixed bitmap icon.
                 wxPoint rot_ctr( pos_image.GetWidth() / 2, pos_image.GetHeight() / 2 );
-                wxImage rot_image = pos_image.Rotate( -( icon_rad - ( PI / 2. ) ), rot_ctr, true );
+                wxImage rot_image = pos_image.Rotate( -( icon_rad - ( M_PI / 2. ) ), rot_ctr, true );
 
                 // Simple sharpening algorithm.....
                 for( int ip = 0; ip < rot_image.GetWidth(); ip++ )
@@ -3530,16 +3534,16 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
                             (double) ( AnglePoint.y - TargetPoint.y ),
                             (double) ( AnglePoint.x - TargetPoint.x ) );
             else
-                theta = -PI / 2;
+                theta = -M_PI / 2;
         } else {
-            if( AnglePoint.y > TargetPoint.y ) theta = PI / 2.;             // valid COG 180
+            if( AnglePoint.y > TargetPoint.y ) theta = M_PI / 2.;             // valid COG 180
             else
-                theta = -PI / 2.;            //  valid COG 000 or speed is too low to resolve course
+                theta = -M_PI / 2.;            //  valid COG 000 or speed is too low to resolve course
         }
 
         //    Of course, if the target reported a valid HDG, then use it for icon
         if( (int) ( td->HDG ) != 511 ) {
-            theta = ( ( td->HDG - 90 ) * PI / 180. ) + GetVP().rotation;
+            theta = ( ( td->HDG - 90 ) * M_PI / 180. ) + GetVP().rotation;
             if( !g_bskew_comp && !g_bCourseUp )
                 theta += GetVP().skew;
         }
@@ -3805,9 +3809,9 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
                 if( ( td->ROTAIS != 0 ) && ( td->ROTAIS != -128 ) && td->b_active ) {
                     double nv = 10;
                     double theta2 = theta;
-                    if( td->ROTAIS > 0 ) theta2 += PI / 2.;
+                    if( td->ROTAIS > 0 ) theta2 += M_PI / 2.;
                     else
-                        theta2 -= PI / 2.;
+                        theta2 -= M_PI / 2.;
 
                     int xrot = (int) round ( pixx1 + ( nv * cos ( theta2 ) ) );
                     int yrot = (int) round ( pixy1 + ( nv * sin ( theta2 ) ) );
@@ -4086,8 +4090,6 @@ void ChartCanvas::JaggyCircle( ocpnDC &dc, wxPen pen, int x, int y, int radius )
 
     wxPen pen_save = dc.GetPen();
 
-    wxDateTime now = wxDateTime::Now();
-
     dc.SetPen( pen );
 
     int x0, y0, x1, y1;
@@ -4110,8 +4112,8 @@ void ChartCanvas::JaggyCircle( ocpnDC &dc, wxPen pen, int x, int y, int radius )
         else
             r = radius - ra;
 
-        x1 = (int) ( x + cos( angle * PI / 180. ) * r );
-        y1 = (int) ( y + sin( angle * PI / 180. ) * r );
+        x1 = (int) ( x + cos( angle * M_PI / 180. ) * r );
+        y1 = (int) ( y + sin( angle * M_PI / 180. ) * r );
 
         dc.DrawLine( x0, y0, x1, y1 );
 
@@ -4436,7 +4438,7 @@ void ChartCanvas::UpdateAIS()
 
 }
 
-void ChartCanvas::OnActivate( wxActivateEvent& event )
+void ChartCanvas::OnActivate(wxActivateEvent &)
 {
     ReloadVP();
 }
@@ -4461,7 +4463,7 @@ void ChartCanvas::OnSize( wxSizeEvent& event )
 //        m_canvas_scale_factor = m_canvas_width / display_size_meters;
     m_canvas_scale_factor = wxGetDisplaySize().GetWidth() / display_size_meters;
 
-    m_absolute_min_scale_ppm = m_canvas_width / ( .95 * WGS84_semimajor_axis_meters * PI ); // something like 180 degrees
+    m_absolute_min_scale_ppm = m_canvas_width / ( .95 * WGS84_semimajor_axis_meters * M_PI ); // something like 180 degrees
 
 #ifdef USE_S57
     if( ps52plib ) ps52plib->SetPPMM( m_canvas_scale_factor / 1000. );
@@ -4509,7 +4511,7 @@ void ChartCanvas::OnSize( wxSizeEvent& event )
     ReloadVP();
 }
 
-void ChartCanvas::ShowChartInfoWindow( int x, int y, int dbIndex )
+void ChartCanvas::ShowChartInfoWindow(int x, int, int dbIndex)
 {
     if( dbIndex >= 0 ) {
         if( NULL == m_pCIWin ) {
@@ -4553,7 +4555,7 @@ void ChartCanvas::HideChartInfoWindow( void )
     if( m_pCIWin && m_pCIWin->IsShown() ) m_pCIWin->Hide();
 }
 
-void ChartCanvas::PanTimerEvent( wxTimerEvent& event )
+void ChartCanvas::PanTimerEvent(wxTimerEvent &)
 {
     wxMouseEvent ev( wxEVT_MOTION );
     ev.m_x = mouse_x;
@@ -4563,7 +4565,6 @@ void ChartCanvas::PanTimerEvent( wxTimerEvent& event )
     wxEvtHandler *evthp = GetEventHandler();
 
     ::wxPostEvent( evthp, ev );
-
 }
 
 void ChartCanvas::EnableAutoPan(bool b_enable )
@@ -4634,7 +4635,7 @@ bool ChartCanvas::CheckEdgePan( int x, int y, bool bdragging )
 // Look for waypoints at the current position.
 // Used to determine what a mouse event should act on.
 
-void ChartCanvas::FindRoutePointsAtCursor(float selectRadius, bool setBeingEdited)
+void ChartCanvas::FindRoutePointsAtCursor(float, bool setBeingEdited)
 {
 	m_pRoutePointEditTarget = NULL;
 	m_pFoundPoint = NULL;
@@ -4682,14 +4683,15 @@ void ChartCanvas::FindRoutePointsAtCursor(float selectRadius, bool setBeingEdite
 	}
 }
 
-void ChartCanvas::MouseTimedEvent( wxTimerEvent& event )
+void ChartCanvas::MouseTimedEvent(wxTimerEvent &)
 {
-	if( singleClickEventIsValid ) MouseEvent( singleClickEvent );
+	if (singleClickEventIsValid)
+		MouseEvent(singleClickEvent);
     singleClickEventIsValid = false;
     m_DoubleClickTimer->Stop();
 }
 
-void ChartCanvas::MouseEvent( wxMouseEvent& event )
+void ChartCanvas::MouseEvent(wxMouseEvent & event)
 {
     int x, y;
     int mx, my;
@@ -4884,7 +4886,8 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
     int wheel_dir = event.GetWheelRotation();
 
     if( m_MouseWheelTimer.IsRunning() ) {
-        if( wheel_dir != m_last_wheel_dir ) m_MouseWheelTimer.Stop();
+        if ( wheel_dir != m_last_wheel_dir )
+			m_MouseWheelTimer.Stop();
         else
             m_MouseWheelTimer.Start( m_mouse_wheel_oneshot, true );           // restart timer
     }
@@ -4900,17 +4903,20 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                 double zlat = m_cursor_lat;
                 double zlon = m_cursor_lon;
 
-                bool b_zoom_moved = false;
-                if( wheel_dir > 0 ) b_zoom_moved = ZoomCanvasIn( factor );
-                else if( wheel_dir < 0 ) b_zoom_moved = ZoomCanvasOut( factor );
+                if (wheel_dir > 0)
+					ZoomCanvasIn(factor);
+                else if( wheel_dir < 0 )
+					ZoomCanvasOut(factor);
 
                 wxPoint r;
                 GetCanvasPointPix( zlat, zlon, &r );
                 PanCanvas( r.x - x, r.y - y );
                 ClearbFollow();      // update the follow flag
             } else {
-                if( wheel_dir > 0 ) ZoomCanvasIn( factor );
-                else if( wheel_dir < 0 ) ZoomCanvasOut( factor );
+                if (wheel_dir > 0)
+					ZoomCanvasIn(factor);
+                else if (wheel_dir < 0)
+					ZoomCanvasOut(factor);
             }
 
             m_MouseWheelTimer.Start( m_mouse_wheel_oneshot, true );           // start timer
@@ -5089,12 +5095,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
 
         else if( m_bMeasure_Active && m_nMeasureState )   // measure tool?
         {
-            double rlat, rlon;
-
             SetCursor( *pCursorPencil );
-            rlat = m_cursor_lat;
-            rlon = m_cursor_lon;
-
             if( m_nMeasureState == 1 ) {
                 m_pMeasureRoute = new Route();
                 pRouteList->Append( m_pMeasureRoute );
@@ -5102,8 +5103,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
                 r_rband.y = y;
             }
 
-            RoutePoint *pMousePoint = new RoutePoint( m_cursor_lat, m_cursor_lon,
-                    wxString( _T ( "circle" ) ), wxEmptyString);
+            RoutePoint *pMousePoint = new RoutePoint(m_cursor_lat, m_cursor_lon, wxString(_T("circle")), wxEmptyString);
             pMousePoint->m_bShowName = false;
 
             m_pMeasureRoute->AddPoint( pMousePoint );
@@ -5686,7 +5686,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
 
 }
 
-void ChartCanvas::LostMouseCapture( wxMouseCaptureLostEvent& event )
+void ChartCanvas::LostMouseCapture(wxMouseCaptureLostEvent &)
 {
     SetCursor( *pCursorArrow );
 }
@@ -5715,20 +5715,6 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
 
     popx = x;
     popy = y;
-
-#ifdef __WXGTK__
-#ifdef ocpnUSE_GTK_OPTIMIZE
-    //  This code changes the background color on the popup context menu
-    wxColour back_color = GetGlobalColor(_T("UIBCK"));
-    GdkColor color;
-
-    color.red = back_color.Red() << 8;
-    color.green = back_color.Green() << 8;
-    color.blue = back_color.Blue() << 8;
-
-//    gtk_widget_modify_bg (GTK_WIDGET(contextMenu->m_menu), GTK_STATE_NORMAL, &color);
-#endif
-#endif
 
     if( seltype == Select::TYPE_ROUTECREATE ) {
 #ifndef __WXOSX__
@@ -6540,7 +6526,8 @@ void pupHandler_PasteTrack()
 
     int pasteBuffer = kml->ParsePasteBuffer();
     Track* pasted = kml->GetParsedTrack();
-    if( ! pasted ) return;
+    if (!pasted)
+		return;
 
     RoutePoint* curPoint;
 
@@ -6558,7 +6545,6 @@ void pupHandler_PasteTrack()
         newPoint->m_bIsVisible = false;
         newPoint->m_GPXTrkSegNo = 1;
 
-        wxDateTime now = wxDateTime::Now();
         newPoint->SetCreateTime(curPoint->GetCreateTime());
 
         newTrack->AddPoint( newPoint );
@@ -7629,7 +7615,8 @@ void ChartCanvas::WarpPointerDeferred( int x, int y )
 
 int spaint;
 int s_in_update;
-void ChartCanvas::OnPaint( wxPaintEvent& event )
+
+void ChartCanvas::OnPaint(wxPaintEvent &)
 {
 //      CALLGRIND_START_INSTRUMENTATION
 
@@ -9056,20 +9043,16 @@ void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, b
     double lon_last = 0.;
     double lat_last = 0.;
 
-    wxPen *pblack_pen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T ( "UINFD" ) ), 1,
-                        wxSOLID );
-    wxPen *porange_pen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T ( "UINFO" ) ), 1,
-                         wxSOLID );
-    wxBrush *porange_brush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T ( "UINFO" ) ),
-                             wxSOLID );
-    wxBrush *pgray_brush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T ( "UIBDR" ) ),
-                           wxSOLID );
-    wxBrush *pblack_brush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T ( "UINFD" ) ),
-                            wxSOLID );
+    wxPen *pblack_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFD")), 1, wxSOLID);
+    wxPen *porange_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFO")), 1, wxSOLID);
+    wxBrush *porange_brush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFO")), wxSOLID);
+    wxBrush *pgray_brush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UIBDR" )), wxSOLID);
+    wxBrush *pblack_brush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFD" )), wxSOLID);
 
     double skew_angle = GetVPRotation();
 
-    if( !g_bCourseUp && !g_bskew_comp ) skew_angle = GetVPRotation() + GetVPSkew();
+    if( !g_bCourseUp && !g_bskew_comp )
+		skew_angle = GetVPRotation() + GetVPSkew();
 
     if( bdraw_mono_for_mask ) {
 #ifdef __WXX11__
@@ -9086,11 +9069,11 @@ void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, b
         pgray_brush = (wxBrush *) pmono_brush;
     }
 
-    pTCFont = wxTheFontList->FindOrCreateFont( 12, wxDEFAULT, wxNORMAL, wxBOLD, FALSE,
-              wxString( _T ( "Eurostile Extended" ) ) );
+    pTCFont = wxTheFontList->FindOrCreateFont(12, wxDEFAULT, wxNORMAL, wxBOLD, FALSE, wxString(_T("Eurostile Extended")));
     int now = time( NULL );
 
-    if( bRebuildSelList ) pSelectTC->DeleteAllSelectableTypePoints( Select::TYPE_CURRENTPOINT );
+    if( bRebuildSelList )
+		pSelectTC->DeleteAllSelectableTypePoints( Select::TYPE_CURRENTPOINT );
 
 //     if(1/*BBox.GetValid()*/)
     {
@@ -9163,7 +9146,7 @@ void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, b
                                 porange_pen->SetWidth( 2 );
                                 dc.SetPen( *porange_pen );
                                 DrawArrow( dc, pixxc, pixyc,
-                                           dir - 90 + ( skew_angle * 180. / PI ), scale / 100 );
+                                           dir - 90 + ( skew_angle * 180. / M_PI ), scale / 100 );
 // Draw text, if enabled
 
                                 if( bDrawCurrentValues ) {
@@ -9195,21 +9178,28 @@ void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, b
 void ChartCanvas::DrawTCWindow( int x, int y, void *pvIDX )
 {
     pCwin = new TCWin( this, x, y, pvIDX );
-
 }
 
 #define NUM_CURRENT_ARROW_POINTS 9
-static wxPoint CurrentArrowArray[NUM_CURRENT_ARROW_POINTS] = { wxPoint( 0, 0 ), wxPoint( 0, -10 ),
-        wxPoint( 55, -10 ), wxPoint( 55, -25 ), wxPoint( 100, 0 ), wxPoint( 55, 25 ), wxPoint( 55,
-                10 ), wxPoint( 0, 10 ), wxPoint( 0, 0 )
-                                                             };
+static wxPoint CurrentArrowArray[NUM_CURRENT_ARROW_POINTS] =
+{
+	wxPoint(  0,   0),
+	wxPoint(  0, -10),
+	wxPoint( 55, -10),
+	wxPoint( 55, -25),
+	wxPoint(100,   0),
+	wxPoint( 55,  25),
+	wxPoint( 55,  10),
+	wxPoint(  0,  10),
+	wxPoint(  0,   0)
+};
 
 void ChartCanvas::DrawArrow( ocpnDC& dc, int x, int y, double rot_angle, double scale )
 {
     if( scale > 1e-2 ) {
 
-        float sin_rot = sin( rot_angle * PI / 180. );
-        float cos_rot = cos( rot_angle * PI / 180. );
+        float sin_rot = sin( rot_angle * M_PI / 180.0);
+        float cos_rot = cos( rot_angle * M_PI / 180.0);
 
         // Move to the first point
 

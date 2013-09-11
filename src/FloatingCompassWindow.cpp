@@ -72,7 +72,7 @@ FloatingCompassWindow::~FloatingCompassWindow()
 	delete m_pStatBoxToolStaticBmp;
 }
 
-void FloatingCompassWindow::OnPaint( wxPaintEvent& event )
+void FloatingCompassWindow::OnPaint(wxPaintEvent &)
 {
 	int width, height;
 	GetClientSize( &width, &height );
@@ -81,7 +81,7 @@ void FloatingCompassWindow::OnPaint( wxPaintEvent& event )
 	dc.DrawBitmap( m_StatBmp, 0, 0, false );
 }
 
-void FloatingCompassWindow::SetColorScheme( ColorScheme cs )
+void FloatingCompassWindow::SetColorScheme(ColorScheme)
 {
 	wxColour back_color = GetGlobalColor( _T("GREY2") );
 
@@ -90,10 +90,9 @@ void FloatingCompassWindow::SetColorScheme( ColorScheme cs )
 	ClearBackground();
 
 	UpdateStatus( true );
-
 }
 
-void FloatingCompassWindow::UpdateStatus( bool bnew )
+void FloatingCompassWindow::UpdateStatus(bool bnew)
 {
 	if( bnew ) m_lastgpsIconName.Clear();        // force an update to occur
 

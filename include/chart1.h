@@ -47,7 +47,10 @@
 #include "cpl_error.h"
 
 // Global Static error reporting function
-extern "C" void MyCPLErrorHandler(CPLErr eErrClass, int nError, const char * pszErrorMsg);
+extern "C" void MyCPLErrorHandler(
+		CPLErr eErrClass,
+		int nError,
+		const char * pszErrorMsg);
 #endif
 
 wxArrayString * EnumerateSerialPorts(void);
@@ -56,7 +59,10 @@ wxColour GetGlobalColor(wxString colorName);
 int GetApplicationMemoryUse(void);
 
 // The point for anchor watch should really be a class...
-double AnchorDistFix(double const d, double const AnchorPointMinDist, double const AnchorPointMaxDist);   //  pjotrc 2010.02.22
+double AnchorDistFix(
+		double const d,
+		double const AnchorPointMinDist,
+		double const AnchorPointMaxDist);
 
 class OCPN_NMEAEvent;
 class ChartCanvas;
@@ -65,35 +71,6 @@ class OCPN_MsgEvent;
 class options;
 class Track;
 class ViewPort;
-
-#define TIMER_GFRAME_1 999
-
-enum
-{
-	ID_ZOOMIN = 1550,
-	ID_ZOOMOUT,
-	ID_STKUP,
-	ID_STKDN,
-	ID_ROUTE,
-	ID_FOLLOW,
-	ID_SETTINGS,
-	ID_AIS,           // pjotrc 2010.02.09
-	ID_TEXT,
-	ID_CURRENT,
-	ID_TIDE,
-	ID_HELP,
-	ID_TBEXIT,
-	ID_TBSTAT,
-	ID_PRINT,
-	ID_COLSCHEME,
-	ID_ROUTEMANAGER,
-	ID_TRACK,
-	ID_TBSTATBOX,
-	ID_MOB,
-	ID_PLUGIN_BASE
-
-};
-
 
 // Define a constant GPS signal watchdog timeout value
 #define GPS_TIMEOUT_SECONDS  6
@@ -321,23 +298,6 @@ class MyFrame : public wxFrame
 		bool m_bTimeIsSet;
 		wxTimer FrameTCTimer;
 		wxTimer MemFootTimer;
-};
-
-// A global definition for window, timer and other ID's as needed.
-enum
-{
-	ID_NMEA_WINDOW = wxID_HIGHEST,
-	ID_AIS_WINDOW,
-	FRAME_TIMER_1,
-	FRAME_TIMER_2,
-	TIMER_AIS1,
-	TIMER_AISAUDIO,
-	AIS_SOCKET_ID,
-	FRAME_TIMER_DOG,
-	FRAME_TC_TIMER,
-	FRAME_COG_TIMER,
-	MEMORY_FOOTPRINT_TIMER,
-	ID_NMEA_THREADMSG
 };
 
 #endif

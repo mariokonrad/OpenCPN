@@ -22,10 +22,6 @@
  **************************************************************************/
 
 #include "App.h"
-#include <global/OCPN.h>
-#include <global/OCPN_GUI.h>
-#include <global/OCPN_Navigation.h>
-#include <global/OCPN_System.h>
 #include "dychart.h"
 #include "Select.h"
 #include "OCPNFloatingToolbarDialog.h"
@@ -49,8 +45,14 @@
 #include "ais/AISTargetAlertDialog.h"
 #include "navutil.h"
 #include "MicrosoftCompatibility.h"
+#include "GUI_IDs.h"
 #include "chart/ChartDummy.h"
 #include "plugin/PlugInManager.h"
+
+#include <global/OCPN.h>
+#include <global/OCPN_GUI.h>
+#include <global/OCPN_Navigation.h>
+#include <global/OCPN_System.h>
 
 #include <wx/cmdline.h>
 #include <wx/datetime.h>

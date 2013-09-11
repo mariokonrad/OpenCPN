@@ -27,6 +27,9 @@
  **************************************************************************/
 
 
+#include "georef.h"
+#include "cutil.h"
+#include "MicrosoftCompatibility.h"
 
 #include <vector>
 #include <utility>
@@ -34,10 +37,6 @@
 #include <cstring>
 #include <cmath>
 #include <ctype.h>
-
-#include "georef.h"
-#include "cutil.h"
-#include "MicrosoftCompatibility.h"
 
 
 

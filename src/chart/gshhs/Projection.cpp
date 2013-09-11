@@ -22,9 +22,8 @@
  **************************************************************************/
 
 #include "Projection.h"
-
-#include <cmath>
 #include <MicrosoftCompatibility.h>
+#include <cmath>
 
 #ifndef M_PI_2
 #define M_PI_2  (M_PI / 2.0)
@@ -42,7 +41,7 @@ Projection::Projection()
 	useTempo = true;
 }
 
-	Projection::Projection( int w, int h, double cx, double cy )
+Projection::Projection( int w, int h, double cx, double cy )
 : W( 0 ), H( 0 ), CX( 0 ), CY( 0 ), xW( -90 ), xE( 90 ), yN( 90 ), yS( -90 ), PX( 0 ), PY( 0 )
 {
 	frozen = false;

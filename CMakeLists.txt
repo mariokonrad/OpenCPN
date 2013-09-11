@@ -407,14 +407,20 @@ SET(HDRS
 	${HDR_PUGIXML}
 	${HDR_WXJSON}
 	${HDR_GLOBAL}
+	include/chart1.h
+	include/ocpn_pixel.h
+	include/S57ClassRegistrar.h
+	include/cutil.h
+	include/georef.h
+	include/navutil.h
+	include/tcmgr.h
 	src/decl_exp.h
 	src/ocpnDC.h
-	include/chart1.h
 	src/App.h
 	src/BoundingBox.h
 	src/LatLonBoundingBox.h
 	src/X11FontPicker.h
-	include/ocpn_pixel.h
+	src/StatusBar.h
 	src/OCPNMemDC.h
 	src/OCPNBitmap.h
 	src/TimedPopupWin.h
@@ -452,7 +458,6 @@ SET(HDRS
 	src/S57ObjectDesc.h
 	src/S57Light.h
 	src/S57RegistrarMgr.h
-	include/S57ClassRegistrar.h
 	src/MarkIcon.h
 	src/SendToGpsDlg.h
 	src/TCWin.h
@@ -482,9 +487,6 @@ SET(HDRS
 	src/Layer.h
 	src/ConsoleCanvas.h
 	src/ViewPort.h
-	include/cutil.h
-	include/georef.h
-	include/navutil.h
 	src/MicrosoftCompatibility.h
 	src/Track.h
 	src/Routeman.h
@@ -502,7 +504,6 @@ SET(HDRS
 	src/StatWin.h
 	src/TextStatWin.h
 	src/PianoWin.h
-	include/tcmgr.h
 	src/tide/Station_Data.h
 	src/tide/IDX_entry.h
 	src/tide/TC_Error_Code.h

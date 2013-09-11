@@ -27,6 +27,8 @@
 #include "chart1.h"
 #include "chcanv.h"
 
+#define ID_CM93ZOOMG    102
+
 extern bool g_bShowCM93DetailSlider;
 extern CM93DSlide * pCM93DetailSlider;
 extern int g_cm93_zoom_factor;

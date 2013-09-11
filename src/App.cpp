@@ -1347,8 +1347,6 @@ bool App::OnInit()
 	gFrame = new MyFrame( NULL, myframe_window_title, position, new_frame_size, app_style ); //Gunther
 
 	g_pauimgr = new wxAuiManager;
-	//        g_pauidockart= new wxAuiDefaultDockArt;
-	//        g_pauimgr->SetArtProvider(g_pauidockart);
 
 	// tell wxAuiManager to manage the frame
 	g_pauimgr->SetManagedWindow( gFrame );
@@ -1649,9 +1647,6 @@ bool App::OnInit()
 	//      Start up the ViewPort Rotation angle Averaging Timer....
 	gFrame->FrameCOGTimer.Start( 10, wxTIMER_CONTINUOUS );
 
-	//        gFrame->MemFootTimer.Start(wxMax(g_MemFootSec * 1000, 60 * 1000), wxTIMER_CONTINUOUS);
-	//        gFrame->MemFootTimer.Start(1000, wxTIMER_CONTINUOUS);
-
 	// Import Layer-wise any .gpx files from /Layers directory
 	wxString layerdir = global::OCPN::get().sys().data().private_data_dir;
 	appendOSDirSlash(layerdir);
@@ -1680,24 +1675,9 @@ bool App::OnInit()
 	cc1->Enable();
 	cc1->SetFocus();
 
-	//  This little hack fixes a problem seen with some UniChrome OpenGL drivers
-	//  We need a deferred resize to get glDrawPixels() to work right.
-	//  So we set a trigger to generate a resize after 5 seconds....
-	//  See the "UniChrome" hack elsewhere
-	if ( !g_bdisable_opengl )
-	{
-		glChartCanvas *pgl = (glChartCanvas *) cc1->GetglCanvas();
-		if( pgl && ( pgl->GetRendererString().Find( _T("UniChrome") ) != wxNOT_FOUND ) )
-		{
-			gFrame->m_defer_size = gFrame->GetSize();
-			gFrame->SetSize( gFrame->m_defer_size.x - 10, gFrame->m_defer_size.y );
-			g_pauimgr->Update();
-			gFrame->m_bdefer_resize = true;
-		}
-	}
+	gFrame->performUniChromeOpenGLResizeHack();
 
 	g_pi_manager->CallLateInit();
-
 	return TRUE;
 }
 

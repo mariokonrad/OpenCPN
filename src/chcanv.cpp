@@ -75,6 +75,7 @@
 #include "EmbossData.h"
 #include "TCWin.h"
 #include "MicrosoftCompatibility.h"
+#include "StatusBar.h"
 #include <chart/gshhs/GSHHSChart.h>
 #include "tide/IDX_entry.h"
 #include <global/OCPN.h>
@@ -1914,8 +1915,7 @@ void ChartCanvas::OnCursorTrackTimerEvent( wxTimerEvent& event )
             while(cursor_lon > 180.)
                 cursor_lon -= 360.;
 
-            if ( parent_frame->m_pStatusBar )
-            {
+            if (parent_frame->hasStatusBar()) {
                 wxString s1;
                 s1 += _T(" ");
                 s1 += toSDMM(1, cursor_lat);
@@ -2597,26 +2597,26 @@ bool ChartCanvas::SetViewPoint( double lat, double lon, double scale_ppm, double
         //        same algorithm used to calculate the chart zoom-out limit for ChartDummy.
         if( scale_ppm < 1e-4 ) m_true_scale_ppm = scale_ppm;
 
-        if( m_true_scale_ppm ) VPoint.chart_scale = m_canvas_scale_factor / ( m_true_scale_ppm );
+        if( m_true_scale_ppm )
+			VPoint.chart_scale = m_canvas_scale_factor / ( m_true_scale_ppm );
         else
             VPoint.chart_scale = 1.0;
 
-        if( parent_frame->m_pStatusBar ) {
+        if (parent_frame->hasStatusBar()) {
             double true_scale_display = floor( VPoint.chart_scale / 100. ) * 100.;
             wxString text;
 
             if( Current_Ch ) {
                 double chart_native_ppm = m_canvas_scale_factor / Current_Ch->GetNativeScale();
                 double scale_factor = scale_ppm / chart_native_ppm;
-                if( scale_factor > 1.0 ) text.Printf( _("Scale %4.0f (%1.1fx)"),
-                                                          true_scale_display, scale_factor );
+                if( scale_factor > 1.0 )
+					text.Printf(_("Scale %4.0f (%1.1fx)"), true_scale_display, scale_factor);
                 else
-                    text.Printf( _("Scale %4.0f (%1.2fx)"), true_scale_display,
-                                 scale_factor );
+                    text.Printf(_("Scale %4.0f (%1.2fx)"), true_scale_display, scale_factor);
             } else
-                text.Printf( _("Scale %4.0f"), true_scale_display );
+                text.Printf(_("Scale %4.0f"), true_scale_display);
 
-            parent_frame->SetStatusText( text, STAT_FIELD_SCALE );
+            parent_frame->SetStatusText(text, STAT_FIELD_SCALE);
         }
     }
 
@@ -4844,7 +4844,7 @@ void ChartCanvas::MouseEvent( wxMouseEvent& event )
 //      whenever the mouse has stopped moving for specified interval.
 //      See the method OnCursorTrackTimerEvent()
 #ifndef __WXGTK__
-    if( parent_frame->m_pStatusBar ) {
+    if (parent_frame->hasStatusBar()) {
         double show_cursor_lon = m_cursor_lon;
         double show_cursor_lat = m_cursor_lat;
 

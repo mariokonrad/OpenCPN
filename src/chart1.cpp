@@ -103,6 +103,7 @@
 #include "OCPNFloatingToolbarDialog.h"
 #include "NavObjectChanges.h"
 #include "MicrosoftCompatibility.h"
+#include "StatusBar.h"
 #include "chart/ChartDummy.h"
 #include "plugin/OCPN_MsgEvent.h"
 #include <global/OCPN.h>
@@ -147,6 +148,11 @@ WX_DEFINE_OBJARRAY(ArrayOfCDI);
 void RedirectIOToConsole();
 #endif
 
+
+// Define a timer value for Tide/Current updates
+// Note that the underlying data algorithms produce fresh data only every 15 minutes
+// So maybe 5 minute updates should provide sufficient oversampling
+static const unsigned int TIMER_TC_VALUE_SECONDS = 300;
 
 static char nmea_tick_chars[] = { '|', '/', '-', '\\', '|', '/', '-', '\\' };
 static int tick_idx;
@@ -765,6 +771,45 @@ MyFrame::~MyFrame()
     delete g_FloatingToolbarConfigMenu;
 }
 
+void MyFrame::performUniChromeOpenGLResizeHack()
+{
+	//  This little hack fixes a problem seen with some UniChrome OpenGL drivers
+	//  We need a deferred resize to get glDrawPixels() to work right.
+	//  So we set a trigger to generate a resize after 5 seconds....
+	//  See the "UniChrome" hack elsewhere
+	if ( !g_bdisable_opengl )
+	{
+		glChartCanvas *pgl = (glChartCanvas *) cc1->GetglCanvas();
+		if( pgl && ( pgl->GetRendererString().Find( _T("UniChrome") ) != wxNOT_FOUND ) )
+		{
+			m_defer_size = gFrame->GetSize();
+			SetSize(m_defer_size.x - 10, m_defer_size.y);
+			g_pauimgr->Update();
+			m_bdefer_resize = true;
+		}
+	}
+}
+
+ChartCanvas * MyFrame::GetCanvasWindow()
+{
+	return m_pchart_canvas;
+}
+
+void  MyFrame::SetCanvasWindow(ChartCanvas * pcanv)
+{
+	m_pchart_canvas = pcanv;
+}
+
+int MyFrame::GetNextToolbarToolId()
+{
+	return m_next_available_plugin_tool_id;
+}
+
+void MyFrame::RequestNewToolbarArgEvent(wxCommandEvent &)
+{
+	return RequestNewToolbar();
+}
+
 void MyFrame::OnEraseBackground(wxEraseEvent &)
 {
 }
@@ -772,6 +817,11 @@ void MyFrame::OnEraseBackground(wxEraseEvent &)
 void MyFrame::OnMaximize(wxMaximizeEvent &)
 {
     g_click_stop = 0;
+}
+
+bool MyFrame::hasStatusBar() const
+{
+	return m_pStatusBar != NULL;
 }
 
 void MyFrame::OnActivate( wxActivateEvent& event )

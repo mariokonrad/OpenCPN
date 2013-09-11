@@ -39,18 +39,18 @@
 #include "nmea0183.h"
 #include "ChartDirInfo.h"
 #include "NMEA_Msg_Container.h"
-#include "chart/ChartType.h"
-#include "chart/ChartFamily.h"
+#include <chart/ChartType.h>
+#include <chart/ChartFamily.h>
 #include "ColorScheme.h"
 
 #ifdef USE_S57
 #include "cpl_error.h"
 
-//    Global Static error reporting function
+// Global Static error reporting function
 extern "C" void MyCPLErrorHandler(CPLErr eErrClass, int nError, const char * pszErrorMsg);
 #endif
 
-wxArrayString *EnumerateSerialPorts(void);
+wxArrayString * EnumerateSerialPorts(void);
 wxColour GetGlobalColor(wxString colorName);
 
 int GetApplicationMemoryUse(void);
@@ -58,8 +58,6 @@ int GetApplicationMemoryUse(void);
 // The point for anchor watch should really be a class...
 double AnchorDistFix(double const d, double const AnchorPointMinDist, double const AnchorPointMaxDist);   //  pjotrc 2010.02.22
 
-
-//    Fwd definitions
 class OCPN_NMEAEvent;
 class ChartCanvas;
 class ocpnFloatingToolbarDialog;
@@ -69,11 +67,6 @@ class Track;
 class ViewPort;
 
 #define TIMER_GFRAME_1 999
-
-#define ID_QUIT         101
-#define ID_CM93ZOOMG    102
-
-const int ID_TOOLBAR = 500;
 
 enum
 {
@@ -102,59 +95,31 @@ enum
 };
 
 
-enum
-{
-	IDM_TOOLBAR_TOGGLETOOLBARSIZE = 200,
-	IDM_TOOLBAR_TOGGLETOOLBARORIENT,
-	IDM_TOOLBAR_TOGGLETOOLBARROWS,
-	IDM_TOOLBAR_ENABLEPRINT,
-	IDM_TOOLBAR_DELETEPRINT,
-	IDM_TOOLBAR_INSERTPRINT,
-	IDM_TOOLBAR_TOGGLEHELP,
-	IDM_TOOLBAR_TOGGLE_TOOLBAR,
-	IDM_TOOLBAR_TOGGLE_ANOTHER_TOOLBAR,
-	IDM_TOOLBAR_CHANGE_TOOLTIP,
-	IDM_TOOLBAR_SHOW_TEXT,
-	IDM_TOOLBAR_SHOW_ICONS,
-	IDM_TOOLBAR_SHOW_BOTH,
-
-	ID_COMBO = 1000
-};
-
-
-
-#define STAT_FIELD_TICK             0
-#define STAT_FIELD_SOGCOG           1
-#define STAT_FIELD_CURSOR_LL        2
-#define STAT_FIELD_CURSOR_BRGRNG    3
-#define STAT_FIELD_SCALE            4
-
-//      Define a constant GPS signal watchdog timeout value
+// Define a constant GPS signal watchdog timeout value
 #define GPS_TIMEOUT_SECONDS  6
-
-//    Define a timer value for Tide/Current updates
-//    Note that the underlying data algorithms produce fresh data only every 15 minutes
-//    So maybe 5 minute updates should provide sufficient oversampling
-#define TIMER_TC_VALUE_SECONDS      300
 
 #define MAX_COG_AVERAGE_SECONDS        60
 #define MAX_COGSOG_FILTER_SECONDS      60
 
-//----------------------------------------------------------------------------
-// fwd class declarations
-//----------------------------------------------------------------------------
 class ChartBase;
 class wxSocketEvent;
 class ToolBarSimple;
 class OCPN_DataStreamEvent;
 class DataStream;
 
-class MyFrame: public wxFrame
+class MyFrame : public wxFrame
 {
-	public:
-		MyFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size, long style);
+		DECLARE_EVENT_TABLE()
 
-		~MyFrame();
+	public:
+		MyFrame(
+				wxFrame * frame,
+				const wxString & title,
+				const wxPoint & pos,
+				const wxSize & size,
+				long style);
+
+		virtual ~MyFrame();
 
 		int GetApplicationMemoryUse(void);
 
@@ -169,7 +134,7 @@ class MyFrame: public wxFrame
 		bool DoChartUpdate(void);
 		void OnEvtTHREADMSG(wxCommandEvent& event);
 		void OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event);
-		void OnEvtPlugInMessage( OCPN_MsgEvent & event );
+		void OnEvtPlugInMessage(OCPN_MsgEvent & event);
 		void OnMemFootTimer(wxTimerEvent& event);
 
 		void UpdateAllFonts(void);
@@ -195,8 +160,8 @@ class MyFrame: public wxFrame
 
 		void ApplyGlobalSettings(bool bFlyingUpdate, bool bnewtoolbar);
 		void SetChartThumbnail(int index);
-		int  DoOptionsDialog();
-		int  ProcessOptionsDialog(int resultFlags , options* dialog );
+		int DoOptionsDialog();
+		int ProcessOptionsDialog(int resultFlags , options* dialog);
 		void DoPrint(void);
 		void StopSockets(void);
 		void ResumeSockets(void);
@@ -208,15 +173,15 @@ class MyFrame: public wxFrame
 		void ToggleENCText(void);
 		void ToggleSoundings(void);
 		void ToggleRocks(void);
-		bool ToggleLights( bool doToggle = true, bool temporary = false );
+		bool ToggleLights(bool doToggle = true, bool temporary = false);
 		void ToggleAnchor(void);
 		void TrackOn(void);
 		Track *TrackOff(bool do_add_point = false);
 		void TrackMidnightRestart(void);
 		void ToggleColorScheme();
 		int GetnChartStack(void);
-		void SetToolbarItemState ( int tool_id, bool state );
-		void SetToolbarItemBitmaps ( int tool_id, wxBitmap *bitmap, wxBitmap *bmpDisabled );
+		void SetToolbarItemState(int tool_id, bool state);
+		void SetToolbarItemBitmaps(int tool_id, wxBitmap *bitmap, wxBitmap *bmpDisabled);
 		void ToggleQuiltMode(void);
 		void ToggleCourseUp(void);
 		void SetQuiltMode(bool bquilt);
@@ -233,7 +198,7 @@ class MyFrame: public wxFrame
 		void HandlePianoRollover(int selected_index, int selected_dbIndex);
 		void HandlePianoRolloverIcon(int selected_index, int selected_dbIndex);
 
-		void PianoPopupMenu ( int x, int y, int selected_index, int selected_dbIndex );
+		void PianoPopupMenu(int x, int y, int selected_index, int selected_dbIndex);
 		void OnPianoMenuDisableChart(wxCommandEvent& event);
 		void OnPianoMenuEnableChart(wxCommandEvent& event);
 
@@ -241,8 +206,8 @@ class MyFrame: public wxFrame
 
 		double GetBestVPScale(ChartBase *pchart);
 
-		ChartCanvas *GetCanvasWindow(){ return m_pchart_canvas; }
-		void SetCanvasWindow(ChartCanvas *pcanv){ m_pchart_canvas = pcanv; }
+		ChartCanvas *GetCanvasWindow();
+		void SetCanvasWindow(ChartCanvas *pcanv);
 
 		ColorScheme GetColorScheme();
 		void SetAndApplyColorScheme(ColorScheme cs);
@@ -262,35 +227,36 @@ class MyFrame: public wxFrame
 		static wxString get_cog();
 		static wxString get_sog();
 
-		wxStatusBar         *m_pStatusBar;
-		int                 nRoute_State;
-		int                 nBlinkerTick;
-		bool                m_bTimeIsSet;
+		bool hasStatusBar() const;
+		int nRoute_State;
+		int nBlinkerTick;
 
-		wxTimer             FrameTCTimer;
-		wxTimer             FrameTimer1;
-		wxTimer             FrameCOGTimer;
-		wxTimer             MemFootTimer;
+		wxTimer FrameTimer1; // FIXME: attribute must be private
+		wxTimer FrameCOGTimer; // FIXME: attribute must be private
 
-		//      PlugIn support
-		int GetNextToolbarToolId(){return m_next_available_plugin_tool_id;}
-		void RequestNewToolbarArgEvent( wxCommandEvent & event ){ return RequestNewToolbar(); }
+		// PlugIn support
+		int GetNextToolbarToolId();
+		void RequestNewToolbarArgEvent(wxCommandEvent &);
 		void RequestNewToolbar();
 
 		void ActivateMOB(void);
 		void UpdateGPSCompassStatusBox(bool b_force_new = false);
-		bool UpdateChartDatabaseInplace(ArrayOfCDI &DirArray,
-				bool b_force, bool b_prog,
-				const wxString &ChartListFileName);
+		bool UpdateChartDatabaseInplace(
+				ArrayOfCDI &DirArray,
+				bool b_force,
+				bool b_prog,
+				const wxString & ChartListFileName);
 
-		bool                m_bdefer_resize;
-		wxSize              m_defer_size;
+		bool m_bdefer_resize;
+		wxSize m_defer_size;
+
+		void performUniChromeOpenGLResizeHack();
 
 	private:
 		void ODoSetSize(void);
 		void DoCOGSet(void);
 
-		//      Toolbar support
+		// Toolbar support
 		ToolBarSimple *CreateAToolbar();
 		void DestroyMyToolbar();
 		void UpdateToolbar(ColorScheme cs);
@@ -309,55 +275,58 @@ class MyFrame: public wxFrame
 		wxString GetGroupName(int igroup);
 		void LoadHarmonics();
 
-		bool EvalPriority(const wxString & message, DataStream *pDS );
+		bool EvalPriority(const wxString & message, DataStream * pDS);
 
-		int                 m_StatusBarFieldCount;
+		int m_StatusBarFieldCount;
 
-		ChartCanvas         *m_pchart_canvas;
+		ChartCanvas * m_pchart_canvas;
 
-		NMEA0183        m_NMEA0183;                 // Used to parse messages from NMEA threads
+		NMEA0183 m_NMEA0183; // Used to parse messages from NMEA threads
 
-		wxDateTime       m_MMEAeventTime;
-		unsigned long    m_ulLastNEMATicktime;
+		wxDateTime m_MMEAeventTime;
+		unsigned long m_ulLastNEMATicktime;
 
-		wxMutex          m_mutexNMEAEvent;         // Mutex to handle static data from NMEA threads
+		wxMutex m_mutexNMEAEvent;         // Mutex to handle static data from NMEA threads
 
-		wxString         m_last_reported_chart_name;
-		wxString         m_last_reported_chart_pubdate;
+		wxString m_last_reported_chart_name;
+		wxString m_last_reported_chart_pubdate;
 
-		double           COGTable[MAX_COG_AVERAGE_SECONDS];
+		double COGTable[MAX_COG_AVERAGE_SECONDS];
 
-		wxString         m_lastAISiconName;
+		wxString m_lastAISiconName;
 
-		bool             m_toolbar_scale_tools_shown;
+		bool m_toolbar_scale_tools_shown;
 
-		//      Plugin Support
-		int                 m_next_available_plugin_tool_id;
+		// Plugin Support
+		int m_next_available_plugin_tool_id;
 
-		double              m_COGFilterLast;
-		double              COGFilterTable[MAX_COGSOG_FILTER_SECONDS];
-		double              SOGFilterTable[MAX_COGSOG_FILTER_SECONDS];
+		double m_COGFilterLast;
+		double COGFilterTable[MAX_COGSOG_FILTER_SECONDS];
+		double SOGFilterTable[MAX_COGSOG_FILTER_SECONDS];
 
-		bool                m_bpersistent_quilt;
-		int                 m_ChartUpdatePeriod;
-		bool                m_last_bGPSValid;
+		bool m_bpersistent_quilt;
+		int m_ChartUpdatePeriod;
+		bool m_last_bGPSValid;
 
-		wxString            prev_locale;
-		bool                bPrevQuilt;
-		bool                bPrevFullScreenQuilt;
-		bool                bPrevOGL;
+		wxString prev_locale;
+		bool bPrevQuilt;
+		bool bPrevFullScreenQuilt;
+		bool bPrevOGL;
 
-		MsgPriorityHash     NMEA_Msg_Hash;
-		wxString            m_VDO_accumulator;
+		MsgPriorityHash NMEA_Msg_Hash;
+		wxString m_VDO_accumulator;
 
-		time_t              m_fixtime;
-
-		DECLARE_EVENT_TABLE()
+		time_t m_fixtime;
+		wxStatusBar * m_pStatusBar;
+		bool m_bTimeIsSet;
+		wxTimer FrameTCTimer;
+		wxTimer MemFootTimer;
 };
 
-//      A global definition for window, timer and other ID's as needed.
-enum {
-	ID_NMEA_WINDOW      = wxID_HIGHEST,
+// A global definition for window, timer and other ID's as needed.
+enum
+{
+	ID_NMEA_WINDOW = wxID_HIGHEST,
 	ID_AIS_WINDOW,
 	FRAME_TIMER_1,
 	FRAME_TIMER_2,
@@ -369,7 +338,6 @@ enum {
 	FRAME_COG_TIMER,
 	MEMORY_FOOTPRINT_TIMER,
 	ID_NMEA_THREADMSG
-
 };
 
 #endif

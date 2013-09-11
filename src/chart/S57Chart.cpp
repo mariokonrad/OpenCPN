@@ -1594,7 +1594,7 @@ bool s57chart::DoRenderRegionViewOnGL( const wxGLContext &glc, const ViewPort& V
         double ddx = ( w * cos( -angle ) - h * sin( -angle ) - w ) / 2;
         double ddy = ( h * cos( -angle ) + w * sin( -angle ) - h ) / 2;
 
-        glRotatef( angle * 180. / PI, 0, 0, 1 );
+        glRotatef( angle * 180.0 / M_PI, 0, 0, 1 );
 
         glTranslatef( ddx, ddy, 0 );                 // post rotate translation
     }
@@ -6620,8 +6620,8 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport, std::vector<s5
             dc.SetPen( *arcpen );
 
             double angle1, angle2;
-            angle1 = -(sectorlegs[i].sector2 + 90.0) - viewport.rotation * 180.0 / PI;
-            angle2 = -(sectorlegs[i].sector1 + 90.0) - viewport.rotation * 180.0 / PI;
+            angle1 = -(sectorlegs[i].sector2 + 90.0) - viewport.rotation * 180.0 / M_PI;
+            angle2 = -(sectorlegs[i].sector1 + 90.0) - viewport.rotation * 180.0 / M_PI;
             if( angle1 > angle2 ) {
                 angle2 += 360.0;
             }
@@ -6630,10 +6630,10 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport, std::vector<s5
             int npoints = 1;
             wxPoint arcpoints[150]; // Size relates to "step" below.
 
-            arcpoints[0].x = lpx + (int) ( rangePx * cos( angle1 * PI / 180. ) );
-            arcpoints[0].y = lpy - (int) ( rangePx * sin( angle1 * PI / 180. ) );
+            arcpoints[0].x = lpx + (int) ( rangePx * cos( angle1 * M_PI / 180. ) );
+            arcpoints[0].y = lpy - (int) ( rangePx * sin( angle1 * M_PI / 180. ) );
             double step = 3.0;
-            while( (step < 15) && ((rangePx * sin(step * PI / 180.)) < 10) ) step += 2.0; // less points on small arcs
+            while( (step < 15) && ((rangePx * sin(step * M_PI / 180.)) < 10) ) step += 2.0; // less points on small arcs
 
             // Make sure we start and stop exactly on the leg lines.
             int narc = ( angle2 - angle1 ) / step;
@@ -6654,8 +6654,8 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport, std::vector<s5
                 legOpacity = 50;
             } else {
                 for( double a = angle1; a <= angle2 + 0.1; a += step ) {
-                    int x = lpx + (int) ( rangePx * cos( a * PI / 180. ) );
-                    int y = lpy - (int) ( rangePx * sin( a * PI / 180. ) );
+                    int x = lpx + (int) ( rangePx * cos( a * M_PI / 180. ) );
+                    int y = lpy - (int) ( rangePx * sin( a * M_PI / 180. ) );
                     arcpoints[npoints].x = x;
                     arcpoints[npoints].y = y;
                     npoints++;

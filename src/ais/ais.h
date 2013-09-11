@@ -1,8 +1,6 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  AIS Decoder Object
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -21,18 +19,10 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- *
- */
+ **************************************************************************/
 
 #ifndef __AIS_H__
 #define __AIS_H__
-
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-	#include "wx/wx.h"
-#endif
 
 #include <wx/datetime.h>
 #include <wx/listctrl.h>
@@ -52,11 +42,6 @@
 #include "AIS_Bitstring.h"
 #include "AISTargetListDialog.h"
 
-#ifndef PI
-	#define PI 3.1415926535897931160E0
-#endif
-
-
 #define TIMER_AIS_MSEC      998
 #define TIMER_AIS_AUDIO_MSEC 2000
 
@@ -65,99 +50,95 @@
 #define ID_AIS_TARGET_LIST    10003
 #define ID_JUMPTO             10004
 
-enum {
-    tlNAME = 0,
-    tlCALL,
-    tlMMSI,
-    tlCLASS,
-    tlTYPE,
-    tlNAVSTATUS,
-    tlBRG,
-    tlRNG,
-    tlCOG,
-    tlSOG,
-    tlCPA,
-    tlTCPA
-};// AISTargetListCtrl Columns;
-
-typedef enum AIS_Error
+// AISTargetListCtrl Columns
+enum
 {
-    AIS_NoError = 0,
-    AIS_Partial,
-    AIS_NMEAVDX_TOO_LONG,
-    AIS_NMEAVDX_CHECKSUM_BAD,
-    AIS_NMEAVDX_BAD,
-    AIS_NO_SERIAL,
-    AIS_NO_TCP,
-    AIS_GENERIC_ERROR,
-    AIS_INCOMPLETE_MULTIPART
-}_AIS_Error;
+	tlNAME = 0,
+	tlCALL,
+	tlMMSI,
+	tlCLASS,
+	tlTYPE,
+	tlNAVSTATUS,
+	tlBRG,
+	tlRNG,
+	tlCOG,
+	tlSOG,
+	tlCPA,
+	tlTCPA
+};
 
-
-//      Describe NavStatus variable
-typedef enum ais_nav_status
+enum AIS_Error
 {
-    UNDERWAY_USING_ENGINE = 0,
-    AT_ANCHOR,
-    NOT_UNDER_COMMAND,
-    RESTRICTED_MANOEUVRABILITY,
-    CONSTRAINED_BY_DRAFT,
-    MOORED,
-    AGROUND,
-    FISHING,
-    UNDERWAY_SAILING,
-    HSC,
-    WIG,
-    RESERVED_11,
-    RESERVED_12,
-    RESERVED_13,
-    RESERVED_14,
-    UNDEFINED,
-    ATON_VIRTUAL,
-    ATON_VIRTUAL_ONPOSITION,
-    ATON_VIRTUAL_OFFPOSITION,
-    ATON_REAL,
-    ATON_REAL_ONPOSITION,
-    ATON_REAL_OFFPOSITION
+	AIS_NoError = 0,
+	AIS_Partial,
+	AIS_NMEAVDX_TOO_LONG,
+	AIS_NMEAVDX_CHECKSUM_BAD,
+	AIS_NMEAVDX_BAD,
+	AIS_NO_SERIAL,
+	AIS_NO_TCP,
+	AIS_GENERIC_ERROR,
+	AIS_INCOMPLETE_MULTIPART
+};
 
-}_ais_nav_status;
-
-
-//      Describe Transponder Class
-typedef enum ais_transponder_class
+// Describe NavStatus variable
+enum ais_nav_status
 {
-    AIS_CLASS_A = 0,
-    AIS_CLASS_B,
-    AIS_ATON,    // Aid to Navigation   pjotrc 2010/02/01
-    AIS_BASE,     // Base station
-    AIS_GPSG_BUDDY, // GpsGate Buddy object
-    AIS_DSC,	// DSC target
-    AIS_SART,   // SART
-    AIS_ARPA,    // ARPA radar target
-    AIS_APRS    // APRS position report
-}_ais_transponder_class;
+	UNDERWAY_USING_ENGINE = 0,
+	AT_ANCHOR,
+	NOT_UNDER_COMMAND,
+	RESTRICTED_MANOEUVRABILITY,
+	CONSTRAINED_BY_DRAFT,
+	MOORED,
+	AGROUND,
+	FISHING,
+	UNDERWAY_SAILING,
+	HSC,
+	WIG,
+	RESERVED_11,
+	RESERVED_12,
+	RESERVED_13,
+	RESERVED_14,
+	UNDEFINED,
+	ATON_VIRTUAL,
+	ATON_VIRTUAL_ONPOSITION,
+	ATON_VIRTUAL_OFFPOSITION,
+	ATON_REAL,
+	ATON_REAL_ONPOSITION,
+	ATON_REAL_OFFPOSITION
 
-//    Describe AIS Alarm state
-typedef enum ais_alarm_type
+};
+
+// Describe Transponder Class
+enum ais_transponder_class
 {
-      AIS_NO_ALARM = 0,
-      AIS_ALARM_SET,
-//      AIS_ALARM_ACKNOWLEDGED
+	AIS_CLASS_A = 0,
+	AIS_CLASS_B,
+	AIS_ATON,    // Aid to Navigation   pjotrc 2010/02/01
+	AIS_BASE,     // Base station
+	AIS_GPSG_BUDDY, // GpsGate Buddy object
+	AIS_DSC,	// DSC target
+	AIS_SART,   // SART
+	AIS_ARPA,    // ARPA radar target
+	AIS_APRS    // APRS position report
+};
 
-}_ais_alarm_type;
+// Describe AIS Alarm state
+enum ais_alarm_type
+{
+	AIS_NO_ALARM = 0,
+	AIS_ALARM_SET,
+};
 
 class AISTargetTrackPoint
 {
-      public:
-            double      m_lat;
-            double      m_lon;
-            time_t      m_time;
+	public:
+		double m_lat;
+		double m_lon;
+		time_t m_time;
 };
 
 
 WX_DECLARE_LIST(AISTargetTrackPoint, AISTargetTrackList);
-
-
 
 // IMO Circ. 289 Area Notices, based on libais
 const size_t AIS8_001_22_NUM_NAMES=128;
@@ -167,65 +148,52 @@ extern wxString ais8_001_22_notice_names[];
 
 enum Ais8_001_22_AreaShapeEnum
 {
-    AIS8_001_22_SHAPE_ERROR = -1,
-    AIS8_001_22_SHAPE_CIRCLE = 0, // OR Point
-    AIS8_001_22_SHAPE_RECT = 1,
-    AIS8_001_22_SHAPE_SECTOR = 2,
-    AIS8_001_22_SHAPE_POLYLINE = 3,
-    AIS8_001_22_SHAPE_POLYGON = 4,
-    AIS8_001_22_SHAPE_TEXT = 5,
-    AIS8_001_22_SHAPE_RESERVED_6 = 6,
-    AIS8_001_22_SHAPE_RESERVED_7 = 7
+	AIS8_001_22_SHAPE_ERROR = -1,
+	AIS8_001_22_SHAPE_CIRCLE = 0, // OR Point
+	AIS8_001_22_SHAPE_RECT = 1,
+	AIS8_001_22_SHAPE_SECTOR = 2,
+	AIS8_001_22_SHAPE_POLYLINE = 3,
+	AIS8_001_22_SHAPE_POLYGON = 4,
+	AIS8_001_22_SHAPE_TEXT = 5,
+	AIS8_001_22_SHAPE_RESERVED_6 = 6,
+	AIS8_001_22_SHAPE_RESERVED_7 = 7
 };
 
 struct Ais8_001_22_SubArea
 {
-    int shape;
-    float longitude, latitude;
-    int radius_m;
-    int e_dim_m; // East dimension in meters
-    int n_dim_m;
-    int orient_deg; // Orientation in degrees from true north
-    int left_bound_deg;
-    int right_bound_deg;
-    float angles[4];
-    float dists_m[4];
-    wxString text;
+	int shape;
+	float longitude, latitude;
+	int radius_m;
+	int e_dim_m; // East dimension in meters
+	int n_dim_m;
+	int orient_deg; // Orientation in degrees from true north
+	int left_bound_deg;
+	int right_bound_deg;
+	float angles[4];
+	float dists_m[4];
+	wxString text;
 };
 
-//WX_DECLARE_LIST(Ais8_001_22_SubArea, Ais8_001_22_SubAreaList);
 typedef std::vector<Ais8_001_22_SubArea> Ais8_001_22_SubAreaList;
 
 struct Ais8_001_22
 {
-    int link_id; // 10 bit id to match up text blocks
-    int notice_type; // area_type / Notice Description
-    int month; // These are in UTC
-    int day;   // UTC!
-    int hour;  // UTC!
-    int minute;
-    int duration_minutes; // Time from the start until the notice expires
-    wxDateTime start_time;
-    wxDateTime expiry_time;
-    Ais8_001_22_SubAreaList sub_areas;
+	int link_id; // 10 bit id to match up text blocks
+	int notice_type; // area_type / Notice Description
+	int month; // These are in UTC
+	int day;   // UTC!
+	int hour;  // UTC!
+	int minute;
+	int duration_minutes; // Time from the start until the notice expires
+	wxDateTime start_time;
+	wxDateTime expiry_time;
+	Ais8_001_22_SubAreaList sub_areas;
 };
 
-
 // key is link_id, which should be unique for a given mmsi
-WX_DECLARE_HASH_MAP( int, Ais8_001_22, wxIntegerHash, wxIntegerEqual, AIS_Area_Notice_Hash );
-
-
-//---------------------------------------------------------------------------------
-//
-//  AIS_Decoder Helpers
-//
-//---------------------------------------------------------------------------------
+WX_DECLARE_HASH_MAP(int, Ais8_001_22, wxIntegerHash, wxIntegerEqual, AIS_Area_Notice_Hash);
 WX_DEFINE_SORTED_ARRAY(AIS_Target_Data *, ArrayOfAISTarget);
-
-
-//      Implement the AISTargetList as a wxHashMap
-
-WX_DECLARE_HASH_MAP( int, AIS_Target_Data*, wxIntegerHash, wxIntegerEqual, AIS_Target_Hash );
+WX_DECLARE_HASH_MAP(int, AIS_Target_Data*, wxIntegerHash, wxIntegerEqual, AIS_Target_Hash);
 
 wxString trimAISField( char *data );
 wxString ais_get_status(int index);

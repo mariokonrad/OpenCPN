@@ -589,7 +589,7 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 
 double cm93compchart::GetNormalScaleMax ( double canvas_scale_factor, int canvas_width )
 {
-	return ( 180. / 360. ) * PI  * 2 * ( WGS84_semimajor_axis_meters / ( canvas_width / canvas_scale_factor ) );
+	return ( 180.0 / 360.0 ) * M_PI  * 2 * ( WGS84_semimajor_axis_meters / ( canvas_width / canvas_scale_factor ) );
 	//return 1.0e8;
 }
 

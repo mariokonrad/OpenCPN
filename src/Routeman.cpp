@@ -182,7 +182,7 @@ RoutePoint *Routeman::FindBestActivatePoint( Route *pR, double lat, double lon, 
 		DistanceBearingMercator( pn->m_lat, pn->m_lon, lat, lon, &brg, &dist );
 
 		double angle = brg - cog;
-		double soa = cos( angle * PI / 180. );
+		double soa = cos( angle * M_PI / 180. );
 
 		double time_to_wp = dist / soa;
 
@@ -361,13 +361,13 @@ bool Routeman::UpdateProgress()
 		toSM( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &east, &north );
 		double a = atan( north / east );
 		if( fabs( pActivePoint->m_lon - gLon ) < 180. ) {
-			if( pActivePoint->m_lon > gLon ) CurrentBrgToActivePoint = 90. - ( a * 180 / PI );
+			if( pActivePoint->m_lon > gLon ) CurrentBrgToActivePoint = 90. - ( a * 180 / M_PI );
 			else
-				CurrentBrgToActivePoint = 270. - ( a * 180 / PI );
+				CurrentBrgToActivePoint = 270. - ( a * 180 / M_PI );
 		} else {
-			if( pActivePoint->m_lon > gLon ) CurrentBrgToActivePoint = 270. - ( a * 180 / PI );
+			if( pActivePoint->m_lon > gLon ) CurrentBrgToActivePoint = 270. - ( a * 180 / M_PI );
 			else
-				CurrentBrgToActivePoint = 90. - ( a * 180 / PI );
+				CurrentBrgToActivePoint = 90. - ( a * 180 / M_PI );
 		}
 
 		//      Calculate range using Great Circle Formula
@@ -382,13 +382,13 @@ bool Routeman::UpdateProgress()
 		DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon,
 				pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon, &brg1,
 				&dist1 );
-		vb.x = dist1 * sin( brg1 * PI / 180. );
-		vb.y = dist1 * cos( brg1 * PI / 180. );
+		vb.x = dist1 * sin( brg1 * M_PI / 180. );
+		vb.y = dist1 * cos( brg1 * M_PI / 180. );
 
 		DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &brg2,
 				&dist2 );
-		va.x = dist2 * sin( brg2 * PI / 180. );
-		va.y = dist2 * cos( brg2 * PI / 180. );
+		va.x = dist2 * sin( brg2 * M_PI / 180. );
+		va.y = dist2 * cos( brg2 * M_PI / 180. );
 
 		double sdelta = vGetLengthOfNormal( &va, &vb, &vn );             // NM
 		CurrentXTEToActivePoint = sdelta;
@@ -411,14 +411,14 @@ bool Routeman::UpdateProgress()
 				pActiveRouteSegmentBeginPoint->m_lon, &x2, &y2 );
 
 		double e1 = atan2( ( x2 - x1 ), ( y2 - y1 ) );
-		CurrentSegmentCourse = e1 * 180 / PI;
+		CurrentSegmentCourse = e1 * 180 / M_PI;
 		if( CurrentSegmentCourse < 0 ) CurrentSegmentCourse += 360;
 
 		//      Compute XTE direction
 		double h = atan( vn.y / vn.x );
-		if( vn.x > 0 ) CourseToRouteSegment = 90. - ( h * 180 / PI );
+		if( vn.x > 0 ) CourseToRouteSegment = 90. - ( h * 180 / M_PI );
 		else
-			CourseToRouteSegment = 270. - ( h * 180 / PI );
+			CourseToRouteSegment = 270. - ( h * 180 / M_PI );
 
 		h = CurrentBrgToActivePoint - CourseToRouteSegment;
 		if( h < 0 ) h = h + 360;

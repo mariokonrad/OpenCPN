@@ -719,7 +719,7 @@ void glChartCanvas::SetClipRegion( ViewPort &vp, OCPNRegion &region, bool b_clea
 			double ddx = ( w * cos( -angle ) - h * sin( -angle ) - w ) / 2;
 			double ddy = ( h * cos( -angle ) + w * sin( -angle ) - h ) / 2;
 
-			glRotatef( angle * 180. / PI, 0, 0, 1 );
+			glRotatef( angle * 180. / M_PI, 0, 0, 1 );
 
 			glTranslatef( ddx, ddy, 0 );                 // post rotate translation
 		}
@@ -787,7 +787,7 @@ void glChartCanvas::SetClipRegion( ViewPort &vp, OCPNRegion &region, bool b_clea
 			double ddx = ( w * cos( -angle ) - h * sin( -angle ) - w ) / 2;
 			double ddy = ( h * cos( -angle ) + w * sin( -angle ) - h ) / 2;
 
-			glRotatef( angle * 180. / PI, 0, 0, 1 );
+			glRotatef( angle * 180. / M_PI, 0, 0, 1 );
 
 			glTranslatef( ddx, ddy, 0 );                 // post rotate translation
 		}
@@ -1037,7 +1037,7 @@ void glChartCanvas::RenderRasterChartRegionGL( ChartBase *chart, ViewPort &vp, O
 		double ddy = ( scalefactor / n_basemult ) * ( h * cos( -angle ) + w * sin( -angle ) - h )
 			/ 2;
 
-		glRotatef( angle * 180. / PI, 0, 0, 1 );
+		glRotatef( angle * 180. / M_PI, 0, 0, 1 );
 
 		glTranslatef( ddx, ddy, 0 );                 // post rotate translation
 	}
@@ -1793,7 +1793,7 @@ void glChartCanvas::render()
 			//    Rotations occur around 0,0, so calculate a post-rotate translation factor
 			double ddx = ( w2 * cos( -angle ) - h2 * sin( -angle ) - w2 ) ;
 			double ddy = ( h2 * cos( -angle ) + w2 * sin( -angle ) - h2 ) ;
-			glRotatef( angle * 180. / PI, 0, 0, 1 );
+			glRotatef( angle * 180. / M_PI, 0, 0, 1 );
 			glTranslatef( ddx, ddy, 0 );                 // post rotate translation
 
 			// WorldBackgroundChart renders in an offset rectangle,

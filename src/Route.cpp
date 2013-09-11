@@ -361,7 +361,7 @@ void Route::Draw( ocpnDC& dc, ViewPort &VP )
 			//    we must decide which way to go in longitude
 			//     Arbitrarily, we will go the shortest way
 
-			double pix_full_circle = WGS84_semimajor_axis_meters * mercator_k0 * 2 * PI
+			double pix_full_circle = WGS84_semimajor_axis_meters * mercator_k0 * 2 * M_PI
 				* VP.view_scale_ppm;
 			double dp = pow( (double) ( rpt1.x - rpt2.x ), 2 ) + pow( (double) ( rpt1.y - rpt2.y ), 2 );
 			double dtest;
@@ -462,7 +462,7 @@ void Route::RenderSegment( ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort 
 		//    Draw a direction arrow
 
 		double theta = atan2( (double) ( yb - ya ), (double) ( xb - xa ) );
-		theta -= PI / 2;
+		theta -= M_PI / 2;
 
 		wxPoint icon[10];
 		double icon_scale_factor = 100 * VP.view_scale_ppm;

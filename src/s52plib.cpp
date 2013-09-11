@@ -2905,7 +2905,7 @@ void s52plib::draw_lc_poly( wxDC *pdc, wxColor &color, int width, wxPoint *ptp, 
 			theta = atan2( dy, dx );
 			cth = cos( theta );
 			sth = sin( theta );
-			tdeg = theta * 180. / PI;
+			tdeg = theta * 180. / M_PI;
 
 			if( seg_len >= 1.0 ) {
 				if( seg_len <= sym_len * sym_factor ) {
@@ -2994,7 +2994,7 @@ next_seg_dc:
 			theta = atan2( dy, dx );
 			cth = cos( theta );
 			sth = sin( theta );
-			tdeg = theta * 180. / PI;
+			tdeg = theta * 180. / M_PI;
 
 			if( seg_len >= 1.0 ) {
 				if( seg_len <= sym_len * sym_factor ) {
@@ -3284,11 +3284,11 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 				end_angle = se;
 			}
 
-			int x0 = ( width / 2 ) + (int) ( rad * cos( start_angle * PI / 180. ) );
-			int y0 = ( height / 2 ) - (int) ( rad * sin( start_angle * PI / 180. ) );
+			int x0 = ( width / 2 ) + (int) ( rad * cos( start_angle * M_PI / 180. ) );
+			int y0 = ( height / 2 ) - (int) ( rad * sin( start_angle * M_PI / 180. ) );
 			for( double a = start_angle + .1; a <= end_angle; a += 2.0 ) {
-				int x = ( width / 2 ) + (int) ( rad * cos( a * PI / 180. ) );
-				int y = ( height / 2 ) - (int) ( rad * sin( a * PI / 180. ) );
+				int x = ( width / 2 ) + (int) ( rad * cos( a * M_PI / 180. ) );
+				int y = ( height / 2 ) - (int) ( rad * sin( a * M_PI / 180. ) );
 				mdc.DrawLine( x0, y0, x, y );
 				x0 = x;
 				y0 = y;
@@ -3417,7 +3417,7 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 				glLineStipple( 1, 0x3F3F );
 				glEnable( GL_LINE_STIPPLE );
 
-				double a = ( sectr1 - 90 ) * PI / 180;
+				double a = ( sectr1 - 90 ) * M_PI / 180;
 				int x = (int) ( leg_len * cos( a ) );
 				int y = (int) ( leg_len * sin( a ) );
 				glBegin( GL_LINES );
@@ -3425,7 +3425,7 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 				glVertex2i( x, y );
 				glEnd();
 
-				a = ( sectr2 - 90 ) * PI / 180;
+				a = ( sectr2 - 90 ) * M_PI / 180;
 				x = (int) ( leg_len * cos( a ) );
 				y = (int) ( leg_len * sin( a ) );
 				glBegin( GL_LINES );
@@ -3496,12 +3496,12 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			pdc->SetPen ( *pthispen );
 			 */
 			wxColour c = GetGlobalColor( _T ( "CHBLK" ) );
-			double a = ( sectr1 - 90 ) * PI / 180;
+			double a = ( sectr1 - 90 ) * M_PI / 180;
 			int x = r.x + (int) ( leg_len * cos( a ) );
 			int y = r.y + (int) ( leg_len * sin( a ) );
 			DrawAALine( m_pdc, r.x, r.y, x, y, c, dash1[0], dash1[1] );
 
-			a = ( sectr2 - 90 ) * PI / 180;
+			a = ( sectr2 - 90 ) * M_PI / 180;
 			x = r.x + (int) ( leg_len * cos( a ) );
 			y = r.y + (int) ( leg_len * sin( a ) );
 			DrawAALine( m_pdc, r.x, r.y, x, y, c, dash1[0], dash1[1] );
@@ -5780,10 +5780,10 @@ int s52plib::RenderToBufferAC(
 					&& ( ( rzRules->obj->BBObj.GetMinX() + 360. ) < vp->GetBBox().GetMaxX() ) ) {
 				//  If so, this area oject should be drawn again, this time for the left side
 				//    Do this by temporarily adjusting the objects rendering offset
-				rzRules->obj->x_origin -= mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * PI;
+				rzRules->obj->x_origin -= mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * M_PI;
 				RenderToBufferFilledPolygon( rzRules, rzRules->obj, c, vp->GetBBox(), pb_spec,
 						NULL );
-				rzRules->obj->x_origin += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * PI;
+				rzRules->obj->x_origin += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * M_PI;
 
 			}
 		}

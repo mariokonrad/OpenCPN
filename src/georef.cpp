@@ -352,7 +352,7 @@ fromSM(double x, double y, double lat0, double lon0, double *lat, double *lon)
       const double s0 = sin(lat0 * DEGREE);
       const double y0 = (.5 * log((1 + s0) / (1 - s0))) * z;
 
-      *lat = (2.0 * atan(exp((y0+y)/z)) - PI/2.) / DEGREE;
+      *lat = (2.0 * atan(exp((y0+y)/z)) - M_PI/2.) / DEGREE;
 
       // lon = x + lon0
       *lon = lon0 + (x / (DEGREE * z));
@@ -378,8 +378,8 @@ void toSM_ECC(double lat, double lon, double lat0, double lon0, double *x, doubl
 
     //Add eccentricity terms
 
-      const double falsen =  z *log(tan(PI/4 + lat0 * DEGREE / 2)*pow((1. - e * s0)/(1. + e * s0), e/2.));
-      const double test =    z *log(tan(PI/4 + lat  * DEGREE / 2)*pow((1. - e * s )/(1. + e * s ), e/2.));
+      const double falsen =  z *log(tan(M_PI/4 + lat0 * DEGREE / 2)*pow((1. - e * s0)/(1. + e * s0), e/2.));
+      const double test =    z *log(tan(M_PI/4 + lat  * DEGREE / 2)*pow((1. - e * s )/(1. + e * s ), e/2.));
       *y = test - falsen;
 }
 
@@ -395,9 +395,9 @@ void fromSM_ECC(double x, double y, double lat0, double lon0, double *lat, doubl
 
       const double s0 = sin(lat0 * DEGREE);
 
-      const double falsen = z *log(tan(PI/4 + lat0 * DEGREE / 2)*pow((1. - e * s0)/(1. + e * s0), e/2.));
+      const double falsen = z *log(tan(M_PI/4 + lat0 * DEGREE / 2)*pow((1. - e * s0)/(1. + e * s0), e/2.));
       const double t = exp((y + falsen) / (z));
-      const double xi = (PI / 2.) - 2.0 * atan(t);
+      const double xi = (M_PI / 2.) - 2.0 * atan(t);
 
       //    Add eccentricity terms
 
@@ -740,7 +740,7 @@ void ll_gc_ll(double lat, double lon, double brg, double dist, double *dlat, dou
         f4 = geod_f/4;
         f64 = geod_f*geod_f/64;
         
-        al12 = adjlon(al12); /* reduce to  +- 0-PI */
+        al12 = adjlon(al12); /* reduce to  +- 0-pi */
         signS = fabs(al12) > HALFPI ? 1 : 0;
         th1 = ellipse ? atan(onef * tan(phi1)) : phi1;
         costh1 = cos(th1);
@@ -802,9 +802,9 @@ void ll_gc_ll(double lat, double lon, double brg, double dist, double *dlat, dou
         if (merid) {
             phi2 = atan( tan(HALFPI + s1 - ds) / onef);
             if (al21 > 0.) {
-                al21 = PI;
+                al21 = M_PI;
                 if (signS)
-                    de = PI;
+                    de = M_PI;
                 else {
                     phi2 = - phi2;
                     de = 0.;
@@ -815,14 +815,14 @@ void ll_gc_ll(double lat, double lon, double brg, double dist, double *dlat, dou
                     phi2 = - phi2;
                     de = 0;
                 } else
-                    de = PI;
+                    de = M_PI;
             }
         } else {
             al21 = atan(M / al21);
             if (al21 > 0)
-                al21 += PI;
+                al21 += M_PI;
             if (al12 < 0.)
-                al21 -= PI;
+                al21 -= M_PI;
             al21 = adjlon(al21);
             phi2 = atan(-(sinth1 * cosds + N * sinds) * sin(al21) /
             (ellipse ? onef * M : M));
@@ -944,7 +944,7 @@ void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2,
     }
     
     if(al12 < 0)
-        al12 += 2*PI;
+        al12 += 2*M_PI;
     
     if(bearing)
         *bearing = al12 / DEGREE;
@@ -1119,7 +1119,7 @@ void DistanceBearingMercator(double lat0, double lon0, double lat1, double lon1,
           toSM_ECC(lat1, lon1x, lat0, lon0x, &east, &north);
 
           const double C = atan2(east, north);
-          const double brgt = 180. + (C * 180. / PI);
+          const double brgt = 180. + (C * 180. / M_PI);
           if (brgt < 0)
               *brg = brgt + 360.;
           else if (brgt > 360.)

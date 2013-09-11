@@ -3243,8 +3243,8 @@ void *GARMIN_IO_Thread::Entry()
                         pStateLocker = new wxMutexLocker(*m_pShareMutex) ;
 
                   /*  Lat/Lon   */
-                  ThreadPositionData.kLat = ppvt->lat * 180./PI;
-                  ThreadPositionData.kLon = ppvt->lon * 180. / PI;
+                  ThreadPositionData.kLat = ppvt->lat * 180./M_PI;
+                  ThreadPositionData.kLon = ppvt->lon * 180. / M_PI;
 
                   /* speed over ground */
                   ThreadPositionData.kSog = sqrt(ppvt->east*ppvt->east + ppvt->north*ppvt->north) * 3.6 / 1.852;
@@ -3252,8 +3252,8 @@ void *GARMIN_IO_Thread::Entry()
                   /* course over ground */
                   double course = atan2(ppvt->east, ppvt->north);
                   if (course < 0)
-                        course += 2*PI;
-                  ThreadPositionData.kCog = course * 180 / PI;
+                        course += 2*M_PI;
+                  ThreadPositionData.kCog = course * 180 / M_PI;
 
                   ThreadPositionData.kHdm = NAN;
                   ThreadPositionData.kHdt = NAN;

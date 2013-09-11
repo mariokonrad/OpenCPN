@@ -389,7 +389,7 @@ static bool read_header_and_populate_cib ( FILE *stream, Cell_Info_Block *pCIB )
 
 	double delta_x = header.easting_max - header.easting_min;
 	if ( delta_x < 0 )
-		delta_x += CM93_semimajor_axis_meters * 2.0 * PI;              // add one trip around
+		delta_x += CM93_semimajor_axis_meters * 2.0 * M_PI;              // add one trip around
 
 	pCIB->transform_x_rate = delta_x / 65535;
 	pCIB->transform_y_rate = ( header.northing_max - header.northing_min ) / 65535;
@@ -397,7 +397,7 @@ static bool read_header_and_populate_cib ( FILE *stream, Cell_Info_Block *pCIB )
 	//    Force all transforms to produce positive longitude only
 	pCIB->transform_x_origin = header.easting_min;
 	if ( pCIB->transform_x_origin < 0 )
-		pCIB->transform_x_origin += CM93_semimajor_axis_meters * 2.0 * PI;              // add one trip around
+		pCIB->transform_x_origin += CM93_semimajor_axis_meters * 2.0 * M_PI;              // add one trip around
 	pCIB->transform_y_origin = header.northing_min;
 
 	//      pCIB->m_cell_mcovr_array.Empty();

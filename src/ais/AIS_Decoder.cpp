@@ -1739,15 +1739,15 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 		double east1 = ( ptarget->Lon - gLon ) * 60 * 1852;
 		double north1 = ( ptarget->Lat - gLat ) * 60 * 1852;
 
-		double east = east1 * ( cos( gLat * PI / 180 ) );
+		double east = east1 * ( cos( gLat * M_PI / 180 ) );
 		;
 		double north = north1;
 
 		//    Convert COGs trigonometry to standard unit circle
-		double cosa = cos( ( 90. - cpa_calc_ownship_cog ) * PI / 180. );
-		double sina = sin( ( 90. - cpa_calc_ownship_cog ) * PI / 180. );
-		double cosb = cos( ( 90. - cpa_calc_target_cog ) * PI / 180. );
-		double sinb = sin( ( 90. - cpa_calc_target_cog ) * PI / 180. );
+		double cosa = cos( ( 90. - cpa_calc_ownship_cog ) * M_PI / 180. );
+		double sina = sin( ( 90. - cpa_calc_ownship_cog ) * M_PI / 180. );
+		double cosb = cos( ( 90. - cpa_calc_target_cog ) * M_PI / 180. );
+		double sinb = sin( ( 90. - cpa_calc_target_cog ) * M_PI / 180. );
 
 		//    These will be useful
 		double fc = ( v0 * cosa ) - ( v1 * cosb );

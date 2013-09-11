@@ -648,12 +648,12 @@ double Track::GetXTE( double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon
 
 	double brg1, dist1, brg2, dist2;
 	DistanceBearingMercator( toLat, toLon, fm1Lat, fm1Lon, &brg1, &dist1 );
-	w.x = dist1 * sin( brg1 * PI / 180. );
-	w.y = dist1 * cos( brg1 * PI / 180. );
+	w.x = dist1 * sin( brg1 * M_PI / 180. );
+	w.y = dist1 * cos( brg1 * M_PI / 180. );
 
 	DistanceBearingMercator( toLat, toLon, fm2Lat, fm2Lon, &brg2, &dist2 );
-	v.x = dist2 * sin( brg2 * PI / 180. );
-	v.y = dist2 * cos( brg2 * PI / 180. );
+	v.x = dist2 * sin( brg2 * M_PI / 180. );
+	v.y = dist2 * cos( brg2 * M_PI / 180. );
 
 	p.x = 0.0; p.y = 0.0;
 

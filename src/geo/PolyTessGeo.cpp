@@ -1866,7 +1866,7 @@ void __CALL_CONVENTION endCallback(void)
 						double valy = ( yd * s_transform_y_rate ) + s_transform_y_origin;
 
 						//    Convert to lat/lon
-						double lat = ( 2.0 * atan ( exp ( valy/CM93_semimajor_axis_meters ) ) - PI/2. ) / DEGREE;
+						double lat = ( 2.0 * atan ( exp ( valy/CM93_semimajor_axis_meters ) ) - M_PI/2.0) / DEGREE;
 						double lon = ( valx / ( DEGREE * CM93_semimajor_axis_meters ) );
 
 						sxmax = fmax(lon, sxmax);

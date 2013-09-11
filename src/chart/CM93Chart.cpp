@@ -1906,8 +1906,8 @@ void cm93chart::Transform ( cm93_point *s, double trans_x, double trans_y, doubl
 	valy -= trans_y;
 
 	//    Convert to lat/lon
-	*lat = ( 2.0 * atan ( exp ( valy/CM93_semimajor_axis_meters ) ) - M_PI/2.0) / DEGREE;
-	*lon = ( valx / ( DEGREE * CM93_semimajor_axis_meters ) );
+	*lat = ( 2.0 * atan ( exp ( valy/CM93_semimajor_axis_meters ) ) - M_PI/2.0) / (M_PI / 180.0);
+	*lon = ( valx / ( (M_PI / 180.0)* CM93_semimajor_axis_meters ) );
 
 }
 

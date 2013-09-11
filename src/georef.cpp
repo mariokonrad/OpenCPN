@@ -30,8 +30,9 @@
 
 #include <vector>
 #include <utility>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
+#include <cmath>
 #include <ctype.h>
 
 #include "georef.h"
@@ -322,13 +323,13 @@ void toSM(double lat, double lon, double lat0, double lon0, double *x, double *y
 
     const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-    *x = (xlon - lon0) * DEGREE * z;
+    *x = (xlon - lon0) * (M_PI / 180.0) * z;
 
      // y =.5 ln( (1 + sin t) / (1 - sin t) )
-    const double s = sin(lat * DEGREE);
+    const double s = sin(lat * (M_PI / 180.0));
     const double y3 = (.5 * log((1 + s) / (1 - s))) * z;
 
-    const double s0 = sin(lat0 * DEGREE);
+    const double s0 = sin(lat0 * (M_PI / 180.0));
     const double y30 = (.5 * log((1 + s0) / (1 - s0))) * z;
     *y = y3 - y30;
 }
@@ -340,22 +341,22 @@ fromSM(double x, double y, double lat0, double lon0, double *lat, double *lon)
 
 // lat = arcsin((e^2(y+y0) - 1)/(e^2(y+y0) + 1))
 /*
-      double s0 = sin(lat0 * DEGREE);
+      double s0 = sin(lat0 * (M_PI / 180.0));
       double y0 = (.5 * log((1 + s0) / (1 - s0))) * z;
 
       double e = exp(2 * (y0 + y) / z);
       double e11 = (e - 1)/(e + 1);
-      double lat2 =(atan2(e11, sqrt(1 - e11 * e11))) / DEGREE;
+      double lat2 =(atan2(e11, sqrt(1 - e11 * e11))) / (M_PI / 180.0);
 */
 //    which is the same as....
 
-      const double s0 = sin(lat0 * DEGREE);
+      const double s0 = sin(lat0 * (M_PI / 180.0));
       const double y0 = (.5 * log((1 + s0) / (1 - s0))) * z;
 
-      *lat = (2.0 * atan(exp((y0+y)/z)) - M_PI/2.) / DEGREE;
+      *lat = (2.0 * atan(exp((y0+y)/z)) - M_PI/2.) / (M_PI / 180.0);
 
       // lon = x + lon0
-      *lon = lon0 + (x / (DEGREE * z));
+      *lon = lon0 + (x / ((M_PI / 180.0) * z));
 }
 
 void toSM_ECC(double lat, double lon, double lat0, double lon0, double *x, double *y)
@@ -366,20 +367,20 @@ void toSM_ECC(double lat, double lon, double lat0, double lon0, double *x, doubl
 
       const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-      *x = (lon - lon0) * DEGREE * z;
+      *x = (lon - lon0) * (M_PI / 180.0) * z;
 
 // y =.5 ln( (1 + sin t) / (1 - sin t) )
-      const double s = sin(lat * DEGREE);
+      const double s = sin(lat * (M_PI / 180.0));
       const double y3 = (.5 * log((1 + s) / (1 - s))) * z;
 
-      const double s0 = sin(lat0 * DEGREE);
+      const double s0 = sin(lat0 * (M_PI / 180.0));
       const double y30 = (.5 * log((1 + s0) / (1 - s0))) * z;
       const double y4 = y3 - y30;
 
     //Add eccentricity terms
 
-      const double falsen =  z *log(tan(M_PI/4 + lat0 * DEGREE / 2)*pow((1. - e * s0)/(1. + e * s0), e/2.));
-      const double test =    z *log(tan(M_PI/4 + lat  * DEGREE / 2)*pow((1. - e * s )/(1. + e * s ), e/2.));
+      const double falsen =  z *log(tan(M_PI/4 + lat0 * (M_PI / 180.0) / 2)*pow((1. - e * s0)/(1. + e * s0), e/2.));
+      const double test =    z *log(tan(M_PI/4 + lat  * (M_PI / 180.0) / 2)*pow((1. - e * s )/(1. + e * s ), e/2.));
       *y = test - falsen;
 }
 
@@ -391,11 +392,11 @@ void fromSM_ECC(double x, double y, double lat0, double lon0, double *lat, doubl
 
       const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-      *lon = lon0 + (x / (DEGREE * z));
+      *lon = lon0 + (x / ((M_PI / 180.0) * z));
 
-      const double s0 = sin(lat0 * DEGREE);
+      const double s0 = sin(lat0 * (M_PI / 180.0));
 
-      const double falsen = z *log(tan(M_PI/4 + lat0 * DEGREE / 2)*pow((1. - e * s0)/(1. + e * s0), e/2.));
+      const double falsen = z *log(tan(M_PI/4 + lat0 * (M_PI / 180.0) / 2)*pow((1. - e * s0)/(1. + e * s0), e/2.));
       const double t = exp((y + falsen) / (z));
       const double xi = (M_PI / 2.) - 2.0 * atan(t);
 
@@ -406,7 +407,7 @@ void fromSM_ECC(double x, double y, double lat0, double lon0, double *lat, doubl
       esf += ((7.*es*es*es/120.) + (81*es*es*es*es/1120.) + (4279.*es*es*es*es/161280.)) * sin(8. * xi);
 
 
-     *lat = -(xi + esf) / DEGREE;
+     *lat = -(xi + esf) / (M_PI / 180.0);
 
 }
 
@@ -421,18 +422,18 @@ toPOLY(double lat, double lon, double lat0, double lon0, double *x, double *y)
 {
       const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-      if (fabs((lat - lat0) * DEGREE) <= TOL)
+      if (fabs((lat - lat0) * (M_PI / 180.0)) <= TOL)
       {
-            *x = (lon - lon0) * DEGREE * z;
+            *x = (lon - lon0) * (M_PI / 180.0) * z;
             *y = 0.;
 
       }
       else
       {
-          const double E = (lon - lon0) * DEGREE;
-          const double cot = 1. / tan(lat * DEGREE);
-          *x = sin(E * sin((lat * DEGREE))) * cot;
-          *y = (lat * DEGREE) - (lat0 * DEGREE) + cot * (1. - cos(E));
+          const double E = (lon - lon0) * (M_PI / 180.0);
+          const double cot = 1. / tan(lat * (M_PI / 180.0));
+          *x = sin(E * sin((lat * (M_PI / 180.0)))) * cot;
+          *y = (lat * (M_PI / 180.0)) - (lat0 * (M_PI / 180.0)) + cot * (1. - cos(E));
 
           *x *= z;
           *y *= z;
@@ -456,10 +457,10 @@ fromPOLY(double x, double y, double lat0, double lon0, double *lat, double *lon)
 {
       const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-      double yp = y - (lat0 * DEGREE * z);
+      double yp = y - (lat0 * (M_PI / 180.0) * z);
       if(fabs(yp) <= TOL)
       {
-            *lon = lon0 + (x / (DEGREE * z));
+            *lon = lon0 + (x / ((M_PI / 180.0) * z));
             *lat = lat0;
       }
       else
@@ -484,10 +485,10 @@ fromPOLY(double x, double y, double lat0, double lon0, double *lat, double *lon)
             else
             {
                   *lon = asin(xp * tan(lat3)) / sin(lat3);
-                  *lon /= DEGREE;
+                  *lon /= (M_PI / 180.0);
                   *lon += lon0;
 
-                  *lat = lat3 / DEGREE;
+                  *lat = lat3 / (M_PI / 180.0);
             }
       }
 }
@@ -515,9 +516,9 @@ void  toTM(float lat, float lon, float lat0, float lon0, double *x, double *y)
 
       const double eccSquared = 2 * f - f * f;
       const double eccPrimeSquared = (eccSquared)/(1-eccSquared);
-      const double LatRad = lat*DEGREE;
-      const double LongOriginRad = lon0 * DEGREE;
-      const double LongRad = lon*DEGREE;
+      const double LatRad = lat*(M_PI / 180.0);
+      const double LongOriginRad = lon0 * (M_PI / 180.0);
+      const double LongRad = lon*(M_PI / 180.0);
 
       const double N = a/sqrt(1-eccSquared*sin(LatRad)*sin(LatRad));
       const double T = tan(LatRad)*tan(LatRad);
@@ -547,7 +548,7 @@ void  toTM(float lat, float lon, float lat0, float lon0, double *x, double *y)
 
 void fromTM (double x, double y, double lat0, double lon0, double *lat, double *lon)
 {
-      const double rad2deg = 1./DEGREE;
+      const double rad2deg = 1./(M_PI / 180.0);
 // constants for WGS-84
 
       const double f = 1.0 / WGSinvf;       /* WGS84 ellipsoid flattening parameter */
@@ -600,8 +601,8 @@ void fromTM (double x, double y, double lat0, double lon0, double *lat, double *
 
 void MolodenskyTransform (double lat, double lon, double *to_lat, double *to_lon, int from_datum_index, int to_datum_index)
 {
-      const double from_lat = lat * DEGREE;
-      const double from_lon = lon * DEGREE;
+      const double from_lat = lat * (M_PI / 180.0);
+      const double from_lon = lon * (M_PI / 180.0);
       const double from_f = 1.0 / gEllipsoid[gDatum[from_datum_index].ellipsoid].invf;    // flattening
       const double from_esq = 2 * from_f - from_f * from_f;                               // eccentricity^2
       const double from_a = gEllipsoid[gDatum[from_datum_index].ellipsoid].a;             // semimajor axis
@@ -635,8 +636,8 @@ void MolodenskyTransform (double lat, double lon, double *to_lat, double *to_lon
       const double dh = (dx * clat * clon) + (dy * clat * slon) + (dz * slat)
                   - (da * (from_a / rn)) + ((df * rn * ssqlat) / adb);
 
-      *to_lon = lon + dlon/DEGREE;
-      *to_lat = lat + dlat/DEGREE;
+      *to_lon = lon + dlon/(M_PI / 180.0);
+      *to_lat = lat + dlat/(M_PI / 180.0);
 //
       return;
 }
@@ -717,9 +718,9 @@ void ll_gc_ll(double lat, double lon, double brg, double dist, double *dlat, dou
     double es, onef, f, f64, f2, f4;
     
     /*      Setup the static parameters  */
-    phi1 = lat * DEGREE;            /* Initial Position  */
-    lam1 = lon * DEGREE;
-    al12 = brg * DEGREE;            /* Forward azimuth */
+    phi1 = lat * (M_PI / 180.0);            /* Initial Position  */
+    lam1 = lon * (M_PI / 180.0);
+    al12 = brg * (M_PI / 180.0);            /* Forward azimuth */
     geod_S = dist * 1852.0;         /* Distance        */
     
     
@@ -841,8 +842,8 @@ void ll_gc_ll(double lat, double lon, double brg, double dist, double *dlat, dou
     }
     
     
-    *dlat = phi2 / DEGREE;
-    *dlon = lam2 / DEGREE;
+    *dlat = phi2 / (M_PI / 180.0);
+    *dlon = lam2 / (M_PI / 180.0);
 }
 
 void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2,
@@ -863,10 +864,10 @@ void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2,
     double es, onef, f, f64, f2, f4;
     
     /*      Setup the static parameters  */
-    phi1 = lat1 * DEGREE;            /* Initial Position  */
-    lam1 = lon1 * DEGREE;
-    phi2 = lat2 * DEGREE;
-    lam2 = lon2 * DEGREE;
+    phi1 = lat1 * (M_PI / 180.0);            /* Initial Position  */
+    lam1 = lon1 * (M_PI / 180.0);
+    phi2 = lat2 * (M_PI / 180.0);
+    lam2 = lon2 * (M_PI / 180.0);
     
     //void geod_inv(struct georef_state *state)
     {
@@ -947,7 +948,7 @@ void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2,
         al12 += 2*M_PI;
     
     if(bearing)
-        *bearing = al12 / DEGREE;
+        *bearing = al12 / (M_PI / 180.0);
     if(dist)
         *dist = geod_S / 1852.0;
 }
@@ -982,10 +983,10 @@ double DistGreatCircle(double slat, double slon, double dlat, double dlon)
     double es, onef, f, f64, f2, f4;
     
     double d5;
-    phi1 = slat * DEGREE;
-    lam1 = slon * DEGREE;
-    phi2 = dlat * DEGREE;
-    lam2 = dlon * DEGREE;
+    phi1 = slat * (M_PI / 180.0);
+    lam1 = slon * (M_PI / 180.0);
+    phi2 = dlat * (M_PI / 180.0);
+    lam2 = dlon * (M_PI / 180.0);
     
     //void geod_inv(struct georef_state *state)
     {

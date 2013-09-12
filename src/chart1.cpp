@@ -111,6 +111,7 @@
 #include <global/Navigation.h>
 #include <chart/gshhs/GSHHSChart.h>
 #include <GUI_IDs.h>
+#include <AnchorDist.h>
 
 #ifdef __WXOSX__
 	#include "macutils.h"
@@ -6688,26 +6689,6 @@ void SetSystemColors( ColorScheme cs )
         RestoreSystemColors();
     }
 #endif
-}
-
-//               A helper function to check for proper parameters of anchor watch
-//
-double AnchorDistFix( double const d, double const AnchorPointMinDist,
-        double const AnchorPointMaxDist )   //  pjotrc 2010.02.22
-{
-    if( d >= 0.0 ) if( d < AnchorPointMinDist ) return AnchorPointMinDist;
-    else
-        if( d > AnchorPointMaxDist ) return AnchorPointMaxDist;
-        else
-            return d;
-
-    else
-        //if ( d < 0.0 )
-        if( d > -AnchorPointMinDist ) return -AnchorPointMinDist;
-        else
-            if( d < -AnchorPointMaxDist ) return -AnchorPointMaxDist;
-            else
-                return d;
 }
 
 //      Auto timed popup Window implementation

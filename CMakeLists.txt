@@ -407,7 +407,6 @@ SET(HDRS
 	${HDR_PUGIXML}
 	${HDR_WXJSON}
 	${HDR_GLOBAL}
-	src/GUI_IDs.h
 	include/chart1.h
 	include/ocpn_pixel.h
 	include/S57ClassRegistrar.h
@@ -415,6 +414,8 @@ SET(HDRS
 	include/georef.h
 	include/navutil.h
 	include/tcmgr.h
+	src/GUI_IDs.h
+	src/AnchorDist.h
 	src/decl_exp.h
 	src/ocpnDC.h
 	src/App.h
@@ -581,6 +582,7 @@ SET(SRCS
 	${SRC_PUGIXML}
 	${SRC_WXJSON}
 	${SRC_GLOBAL}
+	src/AnchorDist.cpp
 	src/chart1.cpp
 	src/MessageBox.cpp
 	src/TimedPopupWin.cpp

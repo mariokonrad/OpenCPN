@@ -58,12 +58,6 @@ wxColour GetGlobalColor(wxString colorName);
 
 int GetApplicationMemoryUse(void);
 
-// The point for anchor watch should really be a class...
-double AnchorDistFix(
-		double const d,
-		double const AnchorPointMinDist,
-		double const AnchorPointMaxDist);
-
 class OCPN_NMEAEvent;
 class ChartCanvas;
 class ocpnFloatingToolbarDialog;

@@ -73,6 +73,7 @@
 #include "MicrosoftCompatibility.h"
 #include "StatusBar.h"
 #include "GUI_IDs.h"
+#include <AnchorDist.h>
 
 #include <chart/gshhs/GSHHSChart.h>
 #include <chart/ChartDB.h>
@@ -116,7 +117,7 @@
 extern struct sigaction sa_all;
 extern struct sigaction sa_all_old;
 
-extern sigjmp_buf           env;                    // the context saved by sigsetjmp();
+extern sigjmp_buf env; // the context saved by sigsetjmp();
 #endif
 
 #include <vector>

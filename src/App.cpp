@@ -181,7 +181,6 @@ extern double g_COGAvg;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bsmoothpanzoom;
-extern int g_nCOMPortCheck;
 extern bool g_bbigred;
 extern PlugInManager *g_pi_manager;
 extern bool g_bAISRolloverShowClass;

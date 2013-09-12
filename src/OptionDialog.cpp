@@ -45,6 +45,7 @@
 #endif
 
 #include "OptionDialog.h"
+#include <SerialPorts.h>
 #include "dychart.h"
 #include "chart1.h"
 #include "chart/ChartDB.h"
@@ -187,8 +188,6 @@ extern ocpnStyle::StyleManager * g_StyleManager;
 
 //    Some constants
 #define ID_CHOICE_NMEA  wxID_HIGHEST + 1
-
-extern wxArrayString * EnumerateSerialPorts(void);           // in chart1.cpp
 
 extern wxArrayString TideCurrentDataSet;
 extern wxString g_TCData_Dir;

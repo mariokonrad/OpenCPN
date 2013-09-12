@@ -53,7 +53,6 @@ extern "C" void MyCPLErrorHandler(
 		const char * pszErrorMsg);
 #endif
 
-wxArrayString * EnumerateSerialPorts(void);
 wxColour GetGlobalColor(wxString colorName);
 
 int GetApplicationMemoryUse(void);

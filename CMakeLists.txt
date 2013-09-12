@@ -416,6 +416,7 @@ SET(HDRS
 	include/tcmgr.h
 	src/GUI_IDs.h
 	src/AnchorDist.h
+	src/SerialPorts.h
 	src/decl_exp.h
 	src/ocpnDC.h
 	src/App.h
@@ -583,6 +584,7 @@ SET(SRCS
 	${SRC_WXJSON}
 	${SRC_GLOBAL}
 	src/AnchorDist.cpp
+	src/SerialPorts.cpp
 	src/chart1.cpp
 	src/MessageBox.cpp
 	src/TimedPopupWin.cpp
@@ -1009,7 +1011,7 @@ IF(APPLE)
 	SET(CMAKE_MODULE_LINKER_FLAGS "-O2 -arch ${ARCH}")
 
 	SET(SRCS ${SRCS}
-		include/macutils.h
+		src/macutils.h
 		src/macutils.c
 		)
 ENDIF(APPLE)

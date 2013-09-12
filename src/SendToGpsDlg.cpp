@@ -25,6 +25,7 @@
 #include "Route.h"
 #include "RoutePoint.h"
 #include "chart1.h"
+#include <SerialPorts.h>
 
 #include <wx/combobox.h>
 

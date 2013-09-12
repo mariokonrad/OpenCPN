@@ -35,24 +35,30 @@
 #include "WayPointman.h"
 #include "ThumbWin.h"
 #include "tcmgr.h"
-#include "chart/ChartStack.h"
-#include "chart/ChartDB.h"
 #include "Layer.h"
 #include "StatWin.h"
 #include "PianoWin.h"
 #include "ConsoleCanvas.h"
-#include "ais/AIS_Decoder.h"
-#include "ais/AISTargetAlertDialog.h"
 #include "navutil.h"
 #include "MicrosoftCompatibility.h"
 #include "GUI_IDs.h"
-#include "chart/ChartDummy.h"
 #include "plugin/PlugInManager.h"
+
+#include <chart/ChartStack.h>
+#include <chart/ChartDB.h>
+#include <chart/ChartDummy.h>
+
+#include <ais/AIS_Decoder.h>
+#include <ais/AISTargetAlertDialog.h>
 
 #include <global/OCPN.h>
 #include <global/OCPN_GUI.h>
 #include <global/OCPN_Navigation.h>
 #include <global/OCPN_System.h>
+
+#ifdef __WXMSW__
+	#include <WinConsole.h>
+#endif
 
 #include <wx/cmdline.h>
 #include <wx/datetime.h>

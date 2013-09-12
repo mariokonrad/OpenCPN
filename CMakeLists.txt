@@ -401,12 +401,86 @@ SET(SRC_GLOBAL
 	src/global/OCPN_System.cpp
 	)
 
+SET(SRC_TIDE
+	src/tide/Station_Data.cpp
+	src/tide/IDX_entry.cpp
+	src/tide/TCDataFactory.cpp
+	src/tide/TCDS_Ascii_Harmonic.cpp
+	src/tide/TCDS_Binary_Harmonic.cpp
+	src/tide/TCDataSource.cpp
+	)
+
+SET(HDR_TIDE
+	src/tide/tide_time.h
+	src/tide/Station_Data.h
+	src/tide/IDX_entry.h
+	src/tide/TC_Error_Code.h
+	src/tide/TCDataFactory.h
+	src/tide/TCDS_Ascii_Harmonic.h
+	src/tide/TCDS_Binary_Harmonic.h
+	src/tide/TCDataSource.h
+	)
+
+SET(SRC_PLUGIN
+	src/plugin/PlugInManager.cpp
+	src/plugin/PlugInContainer.cpp
+	src/plugin/PlugInToolbarToolContainer.cpp
+	src/plugin/PluginPanel.cpp
+	src/plugin/PluginListPanel.cpp
+	src/plugin/OCPN_MsgEvent.cpp
+	)
+
+SET(HDR_PLUGIN
+	src/plugin/PlugInManager.h
+	src/plugin/PlugInContainer.h
+	src/plugin/PlugInToolbarToolContainer.h
+	src/plugin/PluginPanel.h
+	src/plugin/PluginListPanel.h
+	src/plugin/OCPN_MsgEvent.h
+	)
+
 SET(HDRS
 	${HDR_AIS}
 	${HDR_GPX}
 	${HDR_PUGIXML}
 	${HDR_WXJSON}
 	${HDR_GLOBAL}
+	${HDR_TIDE}
+	${HDR_PLUGIN}
+
+	src/chart/gshhs/QLineF.h
+	src/chart/gshhs/Projection.h
+	src/chart/gshhs/PolygonFileHeader.h
+	src/chart/gshhs/GshhsPoint.h
+	src/chart/gshhs/GshhsPolygon.h
+	src/chart/gshhs/GSHHSChart.h
+	src/chart/gshhs/GshhsPolyCell.h
+	src/chart/gshhs/GshhsPolyReader.h
+	src/chart/gshhs/GshhsReader.h
+	src/chart/Refpoint.h
+	src/chart/ChartTableHeader.h
+	src/chart/ChartTableEntry.h
+	src/chart/ChartClassDescriptor.h
+	src/chart/ChartDB.h
+	src/chart/CacheEntry.h
+	src/chart/ChartDatabase.h
+	src/chart/ChartGEO.h
+	src/chart/ChartKAP.h
+	src/chart/ChartStack.h
+	src/chart/ChartType.h
+	src/chart/ChartFamily.h
+	src/chart/S57Sector.h
+	src/chart/ChartBase.h
+	src/chart/PlyPoint.h
+	src/chart/ChartDummy.h
+	src/chart/ChartBaseBSB.h
+	src/chart/ChartSymbols.h
+	src/chart/SymbolSizeInfo.h
+	src/chart/ChartSymbol.h
+	src/chart/LineStyle.h
+	src/chart/OCPNPattern.h
+	src/chart/Lookup.h
+
 	include/chart1.h
 	include/ocpn_pixel.h
 	include/S57ClassRegistrar.h
@@ -414,6 +488,10 @@ SET(HDRS
 	include/georef.h
 	include/navutil.h
 	include/tcmgr.h
+	include/chcanv.h
+	include/ocpn_plugin.h
+	include/datastream.h
+	src/ChartPlugInWrapper.h
 	src/GUI_IDs.h
 	src/AnchorDist.h
 	src/SerialPorts.h
@@ -430,28 +508,9 @@ SET(HDRS
 	src/AnnunText.h
 	src/CDI.h
 	src/MyPrintout.h
-	src/chart/Refpoint.h
-	src/chart/ChartTableHeader.h
-	src/chart/ChartTableEntry.h
-	src/chart/ChartClassDescriptor.h
-	src/chart/ChartDB.h
-	src/chart/CacheEntry.h
-	src/chart/ChartDatabase.h
-	src/chart/ChartGEO.h
-	src/chart/ChartKAP.h
-	src/chart/ChartStack.h
-	src/chart/ChartType.h
-	src/chart/ChartFamily.h
-	src/chart/S57Sector.h
-	src/chart/ChartBase.h
-	src/chart/PlyPoint.h
 	src/ColorScheme.h
-	src/chart/ChartBaseBSB.h
-	include/chcanv.h
 	src/timers.h
 	src/ThumbData.h
-	src/chart/ChartDummy.h
-	src/ChartPlugInWrapper.h
 	src/EmbossData.h
 	src/OCPNListCtrl.h
 	src/CM93DSlide.h
@@ -465,7 +524,6 @@ SET(HDRS
 	src/SendToGpsDlg.h
 	src/TCWin.h
 	src/glTextureDescriptor.h
-	src/tide/tide_time.h
 	src/glChartCanvas.h
 	src/ChInfoWin.h
 	src/Quilt.h
@@ -507,45 +565,16 @@ SET(HDRS
 	src/StatWin.h
 	src/TextStatWin.h
 	src/PianoWin.h
-	src/tide/Station_Data.h
-	src/tide/IDX_entry.h
-	src/tide/TC_Error_Code.h
-	src/tide/TCDataFactory.h
-	src/tide/TCDS_Ascii_Harmonic.h
-	src/tide/TCDS_Binary_Harmonic.h
-	src/tide/TCDataSource.h
 	src/ThumbWin.h
 	src/OptionDialog.h
 	src/OptionIDs.h
 	src/ChartGroupsUI.h
 	src/SentenceListDlg.h
-	src/chart/gshhs/QLineF.h
-	src/chart/gshhs/Projection.h
-	src/chart/gshhs/PolygonFileHeader.h
-	src/chart/gshhs/GshhsPoint.h
-	src/chart/gshhs/GshhsPolygon.h
-	src/chart/gshhs/GSHHSChart.h
-	src/chart/gshhs/GshhsPolyCell.h
-	src/chart/gshhs/GshhsPolyReader.h
-	src/chart/gshhs/GshhsReader.h
 	src/Kml.h
 	src/KmlFormatDialog.h
 	src/Undo.h
 	src/UndoAction.h
 	src/AboutDialog.h
-	src/plugin/PlugInManager.h
-	include/ocpn_plugin.h
-	src/plugin/PlugInContainer.h
-	src/plugin/PlugInToolbarToolContainer.h
-	src/plugin/PluginPanel.h
-	src/plugin/PluginListPanel.h
-	src/plugin/OCPN_MsgEvent.h
-	src/chart/ChartSymbols.h
-	src/chart/SymbolSizeInfo.h
-	src/chart/ChartSymbol.h
-	src/chart/LineStyle.h
-	src/chart/OCPNPattern.h
-	src/chart/Lookup.h
 	src/RazdsParser.h
 	src/ProjectionType.h
 	src/Style.h
@@ -560,7 +589,6 @@ SET(HDRS
 	src/OCPNFloatingToolbarDialog.h
 	src/FloatingCompassWindow.h
 	src/Geodesic.h
-	include/datastream.h
 	src/OCPN_DataStreamEvent.h
 	src/ConnectionParams.h
 	src/OCP_DataStreamInput_Thread.h
@@ -583,6 +611,28 @@ SET(SRCS
 	${SRC_PUGIXML}
 	${SRC_WXJSON}
 	${SRC_GLOBAL}
+	${SRC_TIDE}
+	${SRC_PLUGIN}
+
+	src/chart/gshhs/Projection.cpp
+	src/chart/gshhs/GshhsPolygon.cpp
+	src/chart/gshhs/GSHHSChart.cpp
+	src/chart/gshhs/GshhsPolyCell.cpp
+	src/chart/gshhs/GshhsPolyReader.cpp
+	src/chart/gshhs/GshhsReader.cpp
+	src/chart/ChartDummy.cpp
+	src/chart/ChartDB.cpp
+	src/chart/ChartDatabase.cpp
+	src/chart/ChartTableHeader.cpp
+	src/chart/ChartTableEntry.cpp
+	src/chart/ChartClassDescriptor.cpp
+	src/chart/ChartGEO.cpp
+	src/chart/ChartKAP.cpp
+	src/chart/ChartStack.cpp
+	src/chart/ChartBase.cpp
+	src/chart/ChartBaseBSB.cpp
+	src/chart/ChartSymbols.cpp
+
 	src/AnchorDist.cpp
 	src/SerialPorts.cpp
 	src/chart1.cpp
@@ -598,16 +648,6 @@ SET(SRCS
 	src/OCPNMemDC.cpp
 	src/OCPNBitmap.cpp
 	src/ocpnDC.cpp
-	src/chart/ChartDB.cpp
-	src/chart/ChartDatabase.cpp
-	src/chart/ChartTableHeader.cpp
-	src/chart/ChartTableEntry.cpp
-	src/chart/ChartClassDescriptor.cpp
-	src/chart/ChartGEO.cpp
-	src/chart/ChartKAP.cpp
-	src/chart/ChartStack.cpp
-	src/chart/ChartBase.cpp
-	src/chart/ChartBaseBSB.cpp
 	src/chcanv.cpp
 	src/App.cpp
 	src/TCWin.cpp
@@ -623,7 +663,6 @@ SET(SRCS
 	src/Quilt.cpp
 	src/EmbossData.cpp
 	src/ThumbData.cpp
-	src/chart/ChartDummy.cpp
 	src/ChartPlugInWrapper.cpp
 	src/QuiltPatch.cpp
 	src/QuiltCandidate.cpp
@@ -666,35 +705,16 @@ SET(SRCS
 	src/TextStatWin.cpp
 	src/PianoWin.cpp
 	src/tcmgr.cpp
-	src/tide/Station_Data.cpp
-	src/tide/IDX_entry.cpp
-	src/tide/TCDataFactory.cpp
-	src/tide/TCDS_Ascii_Harmonic.cpp
-	src/tide/TCDS_Binary_Harmonic.cpp
-	src/tide/TCDataSource.cpp
 	src/ThumbWin.cpp
 	src/OptionDialog.cpp
 	src/ChartGroupsUI.cpp
 	src/SentenceListDlg.cpp
-	src/chart/gshhs/Projection.cpp
-	src/chart/gshhs/GshhsPolygon.cpp
-	src/chart/gshhs/GSHHSChart.cpp
-	src/chart/gshhs/GshhsPolyCell.cpp
-	src/chart/gshhs/GshhsPolyReader.cpp
-	src/chart/gshhs/GshhsReader.cpp
 	src/Kml.cpp
 	src/KmlFormatDialog.cpp
 	src/Undo.cpp
 	src/UndoAction.cpp
 	src/AboutDialog.cpp
-	src/plugin/PlugInManager.cpp
-	src/plugin/PlugInContainer.cpp
-	src/plugin/PlugInToolbarToolContainer.cpp
-	src/plugin/PluginPanel.cpp
-	src/plugin/PluginListPanel.cpp
-	src/plugin/OCPN_MsgEvent.cpp
 	src/gpx/GpxDocument.cpp
-	src/chart/ChartSymbols.cpp
 	src/RazdsParser.cpp
 	src/Style.cpp
 	src/Tool.cpp
@@ -929,7 +949,9 @@ ENDIF (USE_GARMINHOST)
 # If we build for windows systems, we also include the resource file
 # containing the manifest, icon and other resources
 IF(WIN32)
-	SET(SRCS ${SRCS} src/opencpn.rc)
+	SET(SRCS ${SRCS}
+		src/opencpn.rc
+		)
 ENDIF(WIN32)
 
 # Various data files
@@ -1022,7 +1044,6 @@ IF(xAPPLE)
 	# Assume pkg-config is available.
 	INCLUDE( FindPkgConfig )
 	PKG_SEARCH_MODULE( GOBJECT REQUIRED gobject-2.0 )
-	#MESSAGE (STATUS "    GOBJECT: " ${GOBJECT_LDFLAGS})
 	SET(EXTRA_LIBS ${EXTRA_LIBS} ${GOBJECT_LDFLAGS})
 	SET(EXTRA_LIBS ${EXTRA_LIBS} "iconv")
 ENDIF(xAPPLE)
@@ -1039,6 +1060,10 @@ IF(WIN32)
 		SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/MD  /O2  /Ob1 /D NDEBUG" /Zi )
 	ENDIF(MSVC)
 	ADD_EXECUTABLE(${PACKAGE_NAME} WIN32 ${HDRS} ${SRCS})
+	SET(SRCS ${SRCS}
+		src/WinConsole.h
+		src/WinConsole.cpp
+		)
 ENDIF(WIN32)
 
 

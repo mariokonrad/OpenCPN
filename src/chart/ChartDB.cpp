@@ -41,6 +41,7 @@
 #include "ChartPlugInWrapper.h"
 #include "chart1.h"
 #include "ThumbWin.h"
+#include <MemoryStatus.h>
 
 #ifdef USE_S57
 	#include <chart/S57Chart.h>
@@ -59,7 +60,6 @@ extern s52plib * ps52plib;
 
 
 bool G_FloatPtInPolygon(MyFlPoint *rgpts, int wnumpts, float x, float y);
-bool GetMemoryStatus(int *mem_total, int *mem_used);
 
 
 // ============================================================================
@@ -165,7 +165,7 @@ void ChartDB::PurgeCacheUnusedCharts(bool b_force)
       {
           //    Check memory status to see if above limit
             int mem_total, mem_used;
-            GetMemoryStatus(&mem_total, &mem_used);
+            GetMemoryStatus(mem_total, mem_used);
             int mem_limit = g_memCacheLimit * 8 / 10;
 
             if(((mem_used > mem_limit) || b_force) && !m_b_locked)
@@ -741,8 +741,7 @@ ChartBase *ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 
           //    Check memory status to see if enough room to open another chart
                   int mem_total, mem_used;
-                  GetMemoryStatus(&mem_total, &mem_used);
-//                  printf(" ChartdB Mem_total: %d  mem_used: %d  lock: %d\n", mem_total, mem_used, m_b_locked);
+                  GetMemoryStatus(mem_total, mem_used);
                   while((mem_used > g_memCacheLimit * 8 / 10) && !m_b_locked && (pChartCache->GetCount() > 2))
                   {
                         // Search the cache for oldest entry that is not Current_Ch

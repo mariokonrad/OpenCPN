@@ -491,6 +491,7 @@ SET(HDRS
 	include/chcanv.h
 	include/ocpn_plugin.h
 	include/datastream.h
+	src/MemoryStatus.h
 	src/ChartPlugInWrapper.h
 	src/GUI_IDs.h
 	src/AnchorDist.h
@@ -633,6 +634,7 @@ SET(SRCS
 	src/chart/ChartBaseBSB.cpp
 	src/chart/ChartSymbols.cpp
 
+	src/MemoryStatus.cpp
 	src/AnchorDist.cpp
 	src/SerialPorts.cpp
 	src/chart1.cpp

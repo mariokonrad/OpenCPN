@@ -34,6 +34,7 @@
 #include "OCPNRegionIterator.h"
 #include "ChartPlugInWrapper.h"
 #include "ocpnDC.h"
+#include <MemoryStatus.h>
 #include <chart/ChartBaseBSB.h>
 #include <chart/ChartBase.h>
 #include <chart/ChartDummy.h>
@@ -42,9 +43,6 @@
 #include <wx/tokenzr.h>
 
 #include "GL/gl.h"
-
-
-extern bool GetMemoryStatus(int *mem_total, int *mem_used);
 
 #ifndef GL_DEPTH_STENCIL_ATTACHMENT
 #define GL_DEPTH_STENCIL_ATTACHMENT       0x821A
@@ -1393,15 +1391,18 @@ void glChartCanvas::ComputeRenderQuiltViewGLRegion( ViewPort &vp, OCPNRegion Reg
 
 void glChartCanvas::render()
 {
-	if( !m_bsetup ) return;
+	if (!m_bsetup)
+		return;
 
-	if( ( !cc1->VPoint.b_quilt ) && ( !Current_Ch ) ) return;
+	if ((!cc1->VPoint.b_quilt) && (!Current_Ch))
+		return;
 
 	//    Take a look and see if memory is getting close to exceeding the user specified max
 	m_b_mem_crunch = false;
 	int mem_total, mem_used;
-	GetMemoryStatus( &mem_total, &mem_used );
-	if(mem_used > g_memCacheLimit * 8 / 10) m_b_mem_crunch = true;
+	GetMemoryStatus(mem_total, mem_used);
+	if(mem_used > g_memCacheLimit * 8 / 10)
+		m_b_mem_crunch = true;
 
 	wxPaintDC( this );
 
@@ -1414,20 +1415,23 @@ void glChartCanvas::render()
 
 	//  Is this viewpoint the same as the previously painted one?
 	bool b_newview = true;
-	;
-	if( ( m_gl_cache_vp.view_scale_ppm == VPoint.view_scale_ppm )
-			&& ( m_gl_cache_vp.rotation == VPoint.rotation ) && ( m_gl_cache_vp.clat == VPoint.clat )
-			&& ( m_gl_cache_vp.clon == VPoint.clon ) && m_gl_cache_vp.IsValid() ) {
+	if (false
+			&& (m_gl_cache_vp.view_scale_ppm == VPoint.view_scale_ppm)
+			&& (m_gl_cache_vp.rotation == VPoint.rotation)
+			&& (m_gl_cache_vp.clat == VPoint.clat)
+			&& (m_gl_cache_vp.clon == VPoint.clon)
+			&& m_gl_cache_vp.IsValid()
+		) {
 		b_newview = false;
 	}
 
 	OCPNRegion chart_get_region( 0, 0, cc1->VPoint.rv_rect.width, cc1->VPoint.rv_rect.height );
 
-	ocpnDC gldc( *this );
+	ocpnDC gldc(*this);
 
 	int w, h;
-	GetClientSize( &w, &h );
-	glViewport( 0, 0, (GLint) w, (GLint) h );
+	GetClientSize(&w, &h);
+	glViewport(0, 0, (GLint)w, (GLint)h);
 
 	glLoadIdentity();
 	gluOrtho2D( 0, (GLint) w, (GLint) h, 0 );

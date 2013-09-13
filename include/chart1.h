@@ -43,19 +43,7 @@
 #include <chart/ChartFamily.h>
 #include "ColorScheme.h"
 
-#ifdef USE_S57
-#include "cpl_error.h"
-
-// Global Static error reporting function
-extern "C" void MyCPLErrorHandler(
-		CPLErr eErrClass,
-		int nError,
-		const char * pszErrorMsg);
-#endif
-
 wxColour GetGlobalColor(wxString colorName);
-
-int GetApplicationMemoryUse(void);
 
 class OCPN_NMEAEvent;
 class ChartCanvas;

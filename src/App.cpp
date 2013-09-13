@@ -364,6 +364,30 @@ extern wxLocale * plocale_def_lang;
 extern MyFrame * gFrame;
 
 
+#ifdef USE_S57
+#include "cpl_error.h"
+// Global Static error reporting function
+
+static void OCPN_CPLErrorHandler(
+		CPLErr eErrClass,
+		int nError,
+		const char * pszErrorMsg)
+{
+	char msg[256];
+
+	if (eErrClass == CE_Debug)
+		snprintf(msg, sizeof(msg), "CPL: %s", pszErrorMsg);
+	else if (eErrClass == CE_Warning)
+		snprintf(msg, sizeof(msg), "CPL Warning %d: %s", nError, pszErrorMsg);
+	else
+		snprintf(msg, sizeof(msg), "CPL ERROR %d: %s", nError, pszErrorMsg);
+
+	wxString str(msg, wxConvUTF8);
+	wxLogMessage(str);
+}
+#endif
+
+
 IMPLEMENT_APP(App)
 
 BEGIN_EVENT_TABLE(App, wxApp)
@@ -1028,7 +1052,7 @@ bool App::OnInit()
 #ifdef USE_S57
 
 	//      Set up a useable CPL library error handler for S57 stuff
-	CPLSetErrorHandler( MyCPLErrorHandler );
+	CPLSetErrorHandler(OCPN_CPLErrorHandler);
 
 	//      Init the s57 chart object, specifying the location of the required csv files
 	g_csv_locn = g_SData_Locn;

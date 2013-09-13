@@ -5764,28 +5764,6 @@ void MyFrame::LoadHarmonics()
 		ptcmgr->LoadDataSources(TideCurrentDataSet);
 }
 
-//----------------------------------------------------------------------------------------------------------
-//      Application-wide CPL Error handler
-//----------------------------------------------------------------------------------------------------------
-#ifdef USE_S57
-void MyCPLErrorHandler( CPLErr eErrClass, int nError, const char * pszErrorMsg )
-
-{
-	char msg[256];
-
-	if( eErrClass == CE_Debug )
-		snprintf( msg, 255, "CPL: %s", pszErrorMsg );
-	else
-		if( eErrClass == CE_Warning )
-			snprintf( msg, 255, "CPL Warning %d: %s", nError, pszErrorMsg );
-		else
-			snprintf( msg, 255, "CPL ERROR %d: %s", nError, pszErrorMsg );
-
-	wxString str( msg, wxConvUTF8 );
-	wxLogMessage( str );
-}
-#endif
-
 void appendOSDirSlash(wxString & s)
 {
     wxChar sep = wxFileName::GetPathSeparator();

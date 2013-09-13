@@ -1,12 +1,10 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  NMEA Data Object
- * Author:   David Register
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register   *
- *
+ *   Copyright (C) 2010 by David S. Register                               *
+ *                                                                         *
  *   Garmin JEEPS Code Copyright (C) 2006 Robert Lipe                      *
  *   GPSBabel and JEEPS code are released under GPL V2                     *
  *                                                                         *
@@ -23,22 +21,15 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  ***************************************************************************
 
  ***************************************************************************
  *  Parts of this file were adapted from source code found in              *
  *  John F. Waers (jfwaers@csn.net) public domain program MacGPS45         *
- ***************************************************************************
- *
- */
-#include "wx/wxprec.h"
+ **************************************************************************/
 
-#ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
-
-#include "wx/tokenzr.h"
+#include <wx/tokenzr.h>
 #include <wx/datetime.h>
 
 #include <stdlib.h>
@@ -46,19 +37,18 @@
 #include <time.h>
 
 #include "dychart.h"
-
 #include "nmea.h"
 #include "georef.h"
 #include "garmin/jeeps/garmin_wrapper.h"
 
 #ifdef BUILD_WITH_LIBGPS
-      #ifdef __WXOSX__ // begin rdm
+      #ifdef __WXOSX__
             #define policy_t gps_policy_t
             #include <gps.h>
             #undef policy_t
       #else
-      #include <gps.h>
-      #endif // end rdm
+	      #include <gps.h>
+      #endif
 
       #include <dlfcn.h>
 #endif
@@ -78,7 +68,6 @@ int                      s_dns_test_flag;
 static      GenericPosDatEx     ThreadPositionData;
 
 extern bool             g_bDebugGPSD;
-extern MyFrame          *gFrame;
 extern wxString         g_GPS_Ident;
 
 #ifdef BUILD_WITH_LIBGPS

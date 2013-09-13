@@ -41,7 +41,7 @@ extern ChartCanvas * cc1;
 extern Routeman * g_pRouteMan;
 extern wxRect g_blink_rect;
 extern Multiplexer * g_pMUX;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 
 RoutePoint::RoutePoint()
 {
@@ -297,7 +297,8 @@ void RoutePoint::Draw( ocpnDC& dc, wxPoint *rpn )
 
 	bool bDrawHL = false;
 
-	if( m_bBlink && ( gFrame->nBlinkerTick & 1 ) ) bDrawHL = true;
+	if (m_bBlink && (gFrame->nBlinkerTick & 1))
+		bDrawHL = true;
 
 	if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
 		dc.DrawBitmap( *pbm, r.x - sx2, r.y - sy2, true );
@@ -323,8 +324,8 @@ void RoutePoint::Draw( ocpnDC& dc, wxPoint *rpn )
 	CurrentRect_in_DC.width = hilitebox.width;
 	CurrentRect_in_DC.height = hilitebox.height;
 
-	if( m_bBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
-
+	if (m_bBlink)
+		g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
 }
 
 void RoutePoint::SetPosition( double lat, double lon )

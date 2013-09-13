@@ -24,18 +24,21 @@
 #include "SendToGpsDlg.h"
 #include "Route.h"
 #include "RoutePoint.h"
-#include "chart1.h"
 #include <SerialPorts.h>
 
 #include <wx/combobox.h>
+#include <wx/button.h>
+#include <wx/sizer.h>
+#include <wx/statbox.h>
+#include <wx/stattext.h>
 
 extern wxString g_uploadConnection;
 
 IMPLEMENT_DYNAMIC_CLASS(SendToGpsDlg, wxDialog)
 
-BEGIN_EVENT_TABLE( SendToGpsDlg, wxDialog )
-	EVT_BUTTON( ID_STG_CANCEL, SendToGpsDlg::OnCancelClick )
-	EVT_BUTTON( ID_STG_OK, SendToGpsDlg::OnSendClick )
+BEGIN_EVENT_TABLE(SendToGpsDlg, wxDialog)
+	EVT_BUTTON(ID_STG_CANCEL, SendToGpsDlg::OnCancelClick)
+	EVT_BUTTON(ID_STG_OK, SendToGpsDlg::OnSendClick)
 END_EVENT_TABLE()
 
 SendToGpsDlg::SendToGpsDlg()

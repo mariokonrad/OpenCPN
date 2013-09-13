@@ -25,7 +25,6 @@
 #include "PianoWin.h"
 #include "dychart.h"
 #include "chart/ChartDB.h"
-#include "chart1.h"
 
 BEGIN_EVENT_TABLE(TextStatWin, wxWindow)
 	EVT_PAINT(TextStatWin::OnPaint)

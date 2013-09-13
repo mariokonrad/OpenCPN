@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "ChInfoWin.h"
-#include "chart1.h"
+#include <MainFrame.h>
 #include <wx/dcclient.h>
 
 BEGIN_EVENT_TABLE(ChInfoWin, wxWindow)
@@ -31,8 +31,8 @@ BEGIN_EVENT_TABLE(ChInfoWin, wxWindow)
 END_EVENT_TABLE()
 
 
-ChInfoWin::ChInfoWin( wxWindow *parent )
-	: wxWindow( parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER )
+ChInfoWin::ChInfoWin(wxWindow * parent)
+	: wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER)
 {
 	int ststyle = wxALIGN_LEFT | wxST_NO_AUTORESIZE;
 	m_pInfoTextCtl = new wxStaticText( this, -1, _T ( "" ), wxDefaultPosition, wxDefaultSize, ststyle );
@@ -44,11 +44,11 @@ ChInfoWin::~ChInfoWin()
 	delete m_pInfoTextCtl;
 }
 
-void ChInfoWin::OnEraseBackground( wxEraseEvent& event )
+void ChInfoWin::OnEraseBackground(wxEraseEvent &)
 {
 }
 
-void ChInfoWin::OnPaint( wxPaintEvent& event )
+void ChInfoWin::OnPaint(wxPaintEvent &)
 {
 	int width, height;
 	GetClientSize( &width, &height );
@@ -72,7 +72,7 @@ void ChInfoWin::SetBitmap()
 	SetSize( m_position.x, m_position.y, m_size.x, m_size.y );
 }
 
-void ChInfoWin::FitToChars( int char_width, int char_height )
+void ChInfoWin::FitToChars(int char_width, int char_height)
 {
 	wxSize size;
 

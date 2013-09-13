@@ -47,7 +47,7 @@
 #include "OptionDialog.h"
 #include <SerialPorts.h>
 #include "dychart.h"
-#include "chart1.h"
+#include "MainFrame.h"
 #include "chart/ChartDB.h"
 #include "StyleManager.h"
 #include "Style.h"
@@ -74,7 +74,7 @@
 
 wxString GetOCPNKnownLanguage(wxString lang_canonical, wxString *lang_dir);
 
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 extern ChartCanvas * cc1;
 
 extern bool g_bskew_comp;
@@ -258,7 +258,7 @@ options::options()
 }
 
 options::options(
-		MyFrame * parent,
+		MainFrame * parent,
 		wxWindowID id,
 		const wxString & caption,
 		const wxPoint & pos,
@@ -364,7 +364,7 @@ void options::Init()
 }
 
 bool options::Create(
-		MyFrame * parent,
+		MainFrame * parent,
 		wxWindowID id,
 		const wxString & caption,
 		const wxPoint & pos,

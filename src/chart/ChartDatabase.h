@@ -34,17 +34,17 @@
 
 #include <vector>
 
+#include <MainFrame.h>
+
 #include <chart/ChartBase.h>
 #include <chart/ChartTableHeader.h>
 #include <chart/ChartTableEntry.h>
 #include <chart/ChartClassDescriptor.h>
-#include <chart1.h>
 
 class wxProgressDialog;
 class ChartDatabase;
 class ChartGroupArray;
 class BoundingBox;
-
 
 enum
 {

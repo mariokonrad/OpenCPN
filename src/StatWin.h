@@ -24,9 +24,9 @@
 #ifndef __STATWIN_H__
 #define __STATWIN_H__
 
-#include <wx/window.h>
-
-#include "chart1.h"
+#include <wx/dialog.h>
+#include <wx/brush.h>
+#include <ColorScheme.h>
 
 class PianoWin;
 class TextStatWin;
@@ -36,13 +36,13 @@ class StatWin : public wxDialog
 		DECLARE_EVENT_TABLE()
 
 	public:
-		StatWin(wxWindow *win);
-		~StatWin();
-		void OnSize(wxSizeEvent& event);
-		void OnPaint(wxPaintEvent& event);
-		void MouseEvent(wxMouseEvent& event);
-		int  GetFontHeight();
-		int  GetRows() const { return m_rows;}
+		StatWin(wxWindow * win);
+		virtual ~StatWin();
+		void OnSize(wxSizeEvent & event);
+		void OnPaint(wxPaintEvent & event);
+		void MouseEvent(wxMouseEvent & event);
+		int GetFontHeight();
+		int GetRows() const;
 		void SetColorScheme(ColorScheme cs);
 		void RePosition();
 		void ReSize();

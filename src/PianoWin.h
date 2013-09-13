@@ -25,9 +25,11 @@
 #define __PIANOWIN__H__
 
 #include <wx/window.h>
+#include <wx/brush.h>
 #include <vector>
+#include <ColorScheme.h>
 
-#include "chart1.h"
+class wxBitmap;
 
 class PianoWin : public wxWindow
 {

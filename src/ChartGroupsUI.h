@@ -27,6 +27,7 @@
 #include <wx/scrolwin.h>
 #include <wx/treebase.h>
 #include "CDI.h"
+#include <MainFrame.h>
 
 class wxTreeCtrl;
 class wxButton;

@@ -24,7 +24,6 @@
 #include "Track.h"
 #include "georef.h"
 #include "Select.h"
-#include "chart1.h"
 #include "ocpnDC.h"
 #include "chcanv.h"
 #include "RouteProp.h"

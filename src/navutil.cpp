@@ -39,7 +39,7 @@
 #include "ais/ais.h"
 
 #include "dychart.h"
-#include "chart1.h"
+#include "MainFrame.h"
 #include "MessageBox.h"
 #include "navutil.h"
 #include "Track.h"
@@ -74,7 +74,7 @@
 static bool WptIsInRouteList(RoutePoint *pr);
 
 extern ChartCanvas      *cc1;
-extern MyFrame          *gFrame;
+extern MainFrame          *gFrame;
 
 extern double           g_ChartNotRenderScaleFactor;
 extern int              g_restore_stackindex;

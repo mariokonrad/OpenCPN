@@ -34,7 +34,7 @@
 #include <wx/clipbrd.h>
 
 extern ChartCanvas * cc1;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 
 #define ID_GOTOPOS_CANCEL 8101
 #define ID_GOTOPOS_OK 8102

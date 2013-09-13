@@ -52,32 +52,32 @@ class OCPN_MsgEvent;
 class options;
 class Track;
 class ViewPort;
-
-// Define a constant GPS signal watchdog timeout value
-#define GPS_TIMEOUT_SECONDS  6
-
-#define MAX_COG_AVERAGE_SECONDS        60
-#define MAX_COGSOG_FILTER_SECONDS      60
-
 class ChartBase;
-class wxSocketEvent;
 class ToolBarSimple;
 class OCPN_DataStreamEvent;
 class DataStream;
 
-class MyFrame : public wxFrame
+class wxSocketEvent;
+
+// Define a constant GPS signal watchdog timeout value
+#define GPS_TIMEOUT_SECONDS  6
+
+#define MAX_COG_AVERAGE_SECONDS 60
+#define MAX_COGSOG_FILTER_SECONDS 60
+
+class MainFrame : public wxFrame
 {
 		DECLARE_EVENT_TABLE()
 
 	public:
-		MyFrame(
+		MainFrame(
 				wxFrame * frame,
 				const wxString & title,
 				const wxPoint & pos,
 				const wxSize & size,
 				long style);
 
-		virtual ~MyFrame();
+		virtual ~MainFrame();
 
 		int GetApplicationMemoryUse(void);
 

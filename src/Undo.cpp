@@ -26,9 +26,10 @@
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"
-#include "tinyxml/tinyxml.h"
 #include "chcanv.h"
 #include "Select.h"
+
+#include "tinyxml/tinyxml.h"
 
 #include <wx/file.h>
 #include <wx/datetime.h>
@@ -40,7 +41,7 @@ extern Select * pSelect;
 extern RouteManagerDialog * pRouteManagerDialog;
 extern WayPointman * pWayPointMan;
 extern ChartCanvas * cc1;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 
 Undo::Undo()
 {

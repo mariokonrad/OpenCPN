@@ -360,7 +360,7 @@ extern ocpnStyle::StyleManager * g_StyleManager;
 extern wxPlatformInfo * g_pPlatform;
 extern wxAuiManager * g_pauimgr;
 extern wxLocale * plocale_def_lang;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 extern wxArrayPtrVoid * UserColorTableArray;
 extern wxArrayPtrVoid * UserColourHashTableArray;
 extern wxColorHashMap * pcurrent_user_color_hash;
@@ -1629,20 +1629,20 @@ bool App::OnInit()
 		myframe_window_title += _T("]");
 	}
 
-	gFrame = new MyFrame( NULL, myframe_window_title, position, new_frame_size, app_style ); //Gunther
+	gFrame = new MainFrame( NULL, myframe_window_title, position, new_frame_size, app_style ); //Gunther
 
 	g_pauimgr = new wxAuiManager;
 
 	// tell wxAuiManager to manage the frame
-	g_pauimgr->SetManagedWindow( gFrame );
+	g_pauimgr->SetManagedWindow(gFrame);
 
 	//      Create Children of Frame
 	//              n.b.  if only one child exists, wxWindows expands the child
 	//                        to the parent client area automatically, (as a favor?)
 	//                        Here, we'll do explicit sizing on SIZE events
 
-	cc1 = new ChartCanvas( gFrame );                         // the chart display canvas
-	gFrame->SetCanvasWindow( cc1 );
+	cc1 = new ChartCanvas(gFrame);                         // the chart display canvas
+	gFrame->SetCanvasWindow(cc1);
 
 	cc1->SetQuiltMode( g_bQuiltEnable );                     // set initial quilt mode
 	cc1->m_bFollow = pConfig->st_bFollow;               // set initial state
@@ -1652,11 +1652,11 @@ bool App::OnInit()
 
 	cc1->SetFocus();
 
-	console = new ConsoleCanvas( gFrame );                    // the console
+	console = new ConsoleCanvas(gFrame);                    // the console
 
 	pthumbwin = new ThumbWin( cc1 );
 
-	gFrame->ApplyGlobalSettings( 1, false );               // done once on init with resize
+	gFrame->ApplyGlobalSettings(1, false);               // done once on init with resize
 
 	gui_instance->ensure_toolbar_position_range(wxPoint(0, 0), wxPoint(cw, ch));
 	gui_instance->ensure_ais_alert_dialog_position_range(wxPoint(0, 0), wxGetDisplaySize());
@@ -1667,7 +1667,7 @@ bool App::OnInit()
 		gui_instance->toolbar().orientation);
 	g_FloatingToolbarDialog->LockPosition(true);
 
-	gFrame->SetAndApplyColorScheme( global_color_scheme );
+	gFrame->SetAndApplyColorScheme(global_color_scheme);
 
 	//  The position and size of the static frame children (i.e. the canvas, and the status bar) are now set
 	//  So now we can establish the AUI panes for them.
@@ -1971,7 +1971,7 @@ int App::OnExit()
 	//  Send current nav status data to log file   // pjotrc 2010.02.09
 
 	wxDateTime lognow = wxDateTime::Now().MakeGMT();
-	wxLogMessage(MyFrame::prepare_logbook_message(lognow));
+	wxLogMessage(MainFrame::prepare_logbook_message(lognow));
 	g_loglast_time = lognow;
 
 	if (ptcmgr)

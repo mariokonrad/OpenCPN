@@ -27,7 +27,7 @@
 #include "Style.h"
 
 extern ocpnStyle::StyleManager * g_StyleManager;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 
 BEGIN_EVENT_TABLE(GrabberWin, wxPanel)
 	EVT_MOUSE_EVENTS(GrabberWin::MouseEvent)

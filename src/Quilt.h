@@ -24,14 +24,16 @@
 #ifndef __QUIT_H__
 #define __QUIT_H__
 
-#include "chart1.h"
 #include "OCPNRegion.h"
 #include "QuiltPatch.h"
 #include "QuiltCandidate.h"
 #include "ViewPort.h"
 #include <vector>
+#include <wx/dynarray.h>
 
 struct ChartTableEntry;
+class ChartBase;
+class wxMemoryDC;
 
 WX_DECLARE_LIST(QuiltPatch, PatchList);
 WX_DEFINE_SORTED_ARRAY(QuiltCandidate *, ArrayOfSortedQuiltCandidates);

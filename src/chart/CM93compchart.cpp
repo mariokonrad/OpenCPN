@@ -33,7 +33,9 @@
 #include <ocpnDC.h>
 #include <cutil.h>
 #include <georef.h>
+#include <MainFrame.h>
 #include <MicrosoftCompatibility.h>
+
 #include <wx/regex.h>
 
 extern bool g_bDebugCM93; // FIXME
@@ -42,7 +44,7 @@ extern int g_cm93_zoom_factor; // FIXME
 extern int g_cm93detail_dialog_x; // FIXME
 extern int g_cm93detail_dialog_y; // FIXME
 extern CM93DSlide * pCM93DetailSlider; // FIXME
-extern MyFrame * gFrame; // FIXME: through constructor?
+extern MainFrame * gFrame; // FIXME: through constructor?
 
 // Answer the query: "Is there a cm93 cell at the specified scale which contains a given lat/lon?"
 static bool Is_CM93Cell_Present ( wxString &fileprefix, double lat, double lon, int scale_index ) // FIXME: should be part of the class
@@ -255,8 +257,6 @@ InitReturn cm93compchart::Init ( const wxString& name, ChartInitFlag flags )
 	bReadyToRender = true;
 
 	return INIT_OK;
-
-
 }
 
 void cm93compchart::Activate ( void )
@@ -267,9 +267,10 @@ void cm93compchart::Activate ( void )
 	{
 		if ( !pCM93DetailSlider )
 		{
-			pCM93DetailSlider = new CM93DSlide(gFrame, -1 , 0, -CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
-					wxPoint ( g_cm93detail_dialog_x, g_cm93detail_dialog_y ), wxDefaultSize,
-					wxSIMPLE_BORDER , _T ( "cm93 Detail" ) );
+			pCM93DetailSlider = new CM93DSlide(
+					gFrame, -1 , 0, -CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
+					wxPoint(g_cm93detail_dialog_x, g_cm93detail_dialog_y), wxDefaultSize,
+					wxSIMPLE_BORDER , _T("cm93 Detail"));
 		}
 
 		//    Here is an ugly piece of code which prevents the slider from taking the keyboard focus

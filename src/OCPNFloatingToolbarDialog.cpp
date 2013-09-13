@@ -38,7 +38,7 @@ extern bool g_bopengl;
 extern wxMenu * g_FloatingToolbarConfigMenu;
 extern wxString g_toolbarConfig;
 extern bool g_bPermanentMOBIcon;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 
 BEGIN_EVENT_TABLE(OCPNFloatingToolbarDialog, wxDialog)
 	EVT_MOUSE_EVENTS(OCPNFloatingToolbarDialog::MouseEvent)

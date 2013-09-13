@@ -33,7 +33,6 @@
 #include <wx/filesys.h>
 
 #include "LinkPropDlg.h"
-#include "chart1.h"                 // for ColorScheme
 
 #if wxCHECK_VERSION(2, 9, 0)
 	#include <wx/dialog.h>

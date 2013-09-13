@@ -87,7 +87,6 @@ extern bool              g_bDebugS57;
 extern bool              g_b_useStencil;
 extern ChartCanvas       *cc1;
 extern ChartBase         *Current_Ch;
-extern MyFrame*          gFrame;
 
 extern wxProgressDialog *s_ProgDialog;
 

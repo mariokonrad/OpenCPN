@@ -24,11 +24,14 @@
 #include "Style.h"
 #include "Icon.h"
 #include "Tool.h"
-#include "chart1.h"
+#include <MainFrame.h>
 #include "tinyxml/tinyxml.h"
 #include <wx/filename.h>
 #include <wx/dir.h>
-#include <stdlib.h>
+#include <wx/image.h>
+#include <wx/log.h>
+#include <wx/dcmemory.h>
+#include <cstdlib>
 
 extern wxString g_SData_Locn;
 

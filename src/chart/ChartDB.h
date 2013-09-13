@@ -35,19 +35,20 @@
 #include <chart/ChartDatabase.h>
 #include "s52s57.h"
 
-typedef struct  {
+struct MyFlPoint
+{
 	float y;
 	float x;
-} MyFlPoint;
-
+};
 
 class ChartBase;
 class ChartStack;
+class MainFrame;
 
 class ChartDB : public ChartDatabase
 {
 	public:
-		ChartDB(MyFrame *parent);
+		ChartDB(MainFrame *parent);
 		virtual ~ChartDB();
 
 		bool LoadBinary(const wxString & filename, ArrayOfCDI& dir_array_check);
@@ -110,7 +111,7 @@ class ChartDB : public ChartDatabase
 
 		wxArrayPtrVoid * pChartCache; // FIXME: use std::vector instead of array to void*
 
-		MyFrame *pParent;
+		MainFrame * pParent;
 		bool m_b_locked;
 };
 

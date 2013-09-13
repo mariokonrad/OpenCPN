@@ -26,6 +26,8 @@
 
 #include <wx/dialog.h>
 
+class wxSlider;
+
 class CM93DSlide: public wxDialog
 {
 		DECLARE_EVENT_TABLE()

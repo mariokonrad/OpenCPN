@@ -36,12 +36,15 @@
 #include "SendToGpsDlg.h"
 #include "TrackPropDlg.h"
 #include "Undo.h"
+
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include <wx/progdlg.h>
 #include <wx/clipbrd.h>
+
 #include <iostream>
 
 #define DIALOG_MARGIN 3
@@ -127,7 +130,7 @@ extern ChartBase * Current_Ch;
 extern Track * g_pActiveTrack;
 extern WayPointman * pWayPointMan;
 extern MarkInfoImpl * pMarkPropDialog;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 extern Select * pSelect;
 extern double gLat, gLon;
 extern bool g_bShowLayers;

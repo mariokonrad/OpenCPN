@@ -55,13 +55,13 @@
 
 #include <algorithm>
 
+#include "MainFrame.h"
 #include <version.h>
 #include "dychart.h"
 #include <ais/ais.h>
 #include <ais/AISTargetListDialog.h>
 #include <ais/AISTargetAlertDialog.h>
 #include <ais/AIS_Decoder.h>
-#include "chart1.h"
 #include "chcanv.h"
 #include "TimedPopupWin.h"
 #include "MessageBox.h"
@@ -164,7 +164,7 @@ bool g_bFirstRun;
 wxString glog_file;
 wxString gConfig_File;
 int g_unit_test_1;
-MyFrame * gFrame;
+MainFrame * gFrame;
 ChartCanvas *cc1;
 ConsoleCanvas *console;
 StatWin *stats;
@@ -571,26 +571,26 @@ int CALLBACK CrashCallback(CR_CRASH_CALLBACK_INFO* pInfo)
 
 
 //------------------------------------------------------------------------------
-// MyFrame
+// MainFrame
 //------------------------------------------------------------------------------
 //      Frame implementation
-BEGIN_EVENT_TABLE(MyFrame, wxFrame) EVT_CLOSE(MyFrame::OnCloseWindow)
-EVT_MENU(wxID_EXIT, MyFrame::OnExit)
-EVT_SIZE(MyFrame::OnSize)
-EVT_MOVE(MyFrame::OnMove)
-EVT_MENU(-1, MyFrame::OnToolLeftClick)
-EVT_TIMER(FRAME_TIMER_1, MyFrame::OnFrameTimer1)
-EVT_TIMER(FRAME_TC_TIMER, MyFrame::OnFrameTCTimer)
-EVT_TIMER(FRAME_COG_TIMER, MyFrame::OnFrameCOGTimer)
-EVT_TIMER(MEMORY_FOOTPRINT_TIMER, MyFrame::OnMemFootTimer)
-EVT_ACTIVATE(MyFrame::OnActivate)
-EVT_MAXIMIZE(MyFrame::OnMaximize)
-EVT_COMMAND(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, MyFrame::RequestNewToolbarArgEvent)
-EVT_ERASE_BACKGROUND(MyFrame::OnEraseBackground)
+BEGIN_EVENT_TABLE(MainFrame, wxFrame) EVT_CLOSE(MainFrame::OnCloseWindow)
+EVT_MENU(wxID_EXIT, MainFrame::OnExit)
+EVT_SIZE(MainFrame::OnSize)
+EVT_MOVE(MainFrame::OnMove)
+EVT_MENU(-1, MainFrame::OnToolLeftClick)
+EVT_TIMER(FRAME_TIMER_1, MainFrame::OnFrameTimer1)
+EVT_TIMER(FRAME_TC_TIMER, MainFrame::OnFrameTCTimer)
+EVT_TIMER(FRAME_COG_TIMER, MainFrame::OnFrameCOGTimer)
+EVT_TIMER(MEMORY_FOOTPRINT_TIMER, MainFrame::OnMemFootTimer)
+EVT_ACTIVATE(MainFrame::OnActivate)
+EVT_MAXIMIZE(MainFrame::OnMaximize)
+EVT_COMMAND(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, MainFrame::RequestNewToolbarArgEvent)
+EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
 END_EVENT_TABLE()
 
 // My frame constructor
-MyFrame::MyFrame( wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size,
+MainFrame::MainFrame( wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size,
         long style ) :
         wxFrame( frame, -1, title, pos, size, style ) //wxSIMPLE_BORDER | wxCLIP_CHILDREN | wxRESIZE_BORDER)
 //wxCAPTION | wxSYSTEM_MENU | wxRESIZE_BORDER
@@ -673,14 +673,14 @@ MyFrame::MyFrame( wxFrame *frame, const wxString& title, const wxPoint& pos, con
     g_pMUX->SetAISHandler(g_pAIS);
     g_pMUX->SetGPSHandler(this);
     //  Create/connect a dynamic event handler slot
-    Connect( wxEVT_OCPN_DATASTREAM, (wxObjectEventFunction) (wxEventFunction) &MyFrame::OnEvtOCPN_NMEA );
+    Connect( wxEVT_OCPN_DATASTREAM, (wxObjectEventFunction) (wxEventFunction) &MainFrame::OnEvtOCPN_NMEA );
 
     bFirstAuto = true;
 
     //  Create/connect a dynamic event handler slot for OCPN_MsgEvent(s) coming from PlugIn system
-    Connect( wxEVT_OCPN_MSG, (wxObjectEventFunction) (wxEventFunction) &MyFrame::OnEvtPlugInMessage );
+    Connect( wxEVT_OCPN_MSG, (wxObjectEventFunction) (wxEventFunction) &MainFrame::OnEvtPlugInMessage );
 
-    Connect( EVT_THREADMSG, (wxObjectEventFunction) (wxEventFunction) &MyFrame::OnEvtTHREADMSG );
+    Connect( EVT_THREADMSG, (wxObjectEventFunction) (wxEventFunction) &MainFrame::OnEvtTHREADMSG );
 
     //        Establish the system icons for the frame.
 
@@ -714,7 +714,7 @@ MyFrame::MyFrame( wxFrame *frame, const wxString& title, const wxPoint& pos, con
     g_sticky_chart = -1;
 }
 
-MyFrame::~MyFrame()
+MainFrame::~MainFrame()
 {
     FrameTimer1.Stop();
     delete ChartData;
@@ -733,7 +733,7 @@ MyFrame::~MyFrame()
     delete g_FloatingToolbarConfigMenu;
 }
 
-void MyFrame::performUniChromeOpenGLResizeHack()
+void MainFrame::performUniChromeOpenGLResizeHack()
 {
 	//  This little hack fixes a problem seen with some UniChrome OpenGL drivers
 	//  We need a deferred resize to get glDrawPixels() to work right.
@@ -752,41 +752,41 @@ void MyFrame::performUniChromeOpenGLResizeHack()
 	}
 }
 
-ChartCanvas * MyFrame::GetCanvasWindow()
+ChartCanvas * MainFrame::GetCanvasWindow()
 {
 	return m_pchart_canvas;
 }
 
-void  MyFrame::SetCanvasWindow(ChartCanvas * pcanv)
+void  MainFrame::SetCanvasWindow(ChartCanvas * pcanv)
 {
 	m_pchart_canvas = pcanv;
 }
 
-int MyFrame::GetNextToolbarToolId()
+int MainFrame::GetNextToolbarToolId()
 {
 	return m_next_available_plugin_tool_id;
 }
 
-void MyFrame::RequestNewToolbarArgEvent(wxCommandEvent &)
+void MainFrame::RequestNewToolbarArgEvent(wxCommandEvent &)
 {
 	return RequestNewToolbar();
 }
 
-void MyFrame::OnEraseBackground(wxEraseEvent &)
+void MainFrame::OnEraseBackground(wxEraseEvent &)
 {
 }
 
-void MyFrame::OnMaximize(wxMaximizeEvent &)
+void MainFrame::OnMaximize(wxMaximizeEvent &)
 {
     g_click_stop = 0;
 }
 
-bool MyFrame::hasStatusBar() const
+bool MainFrame::hasStatusBar() const
 {
 	return m_pStatusBar != NULL;
 }
 
-void MyFrame::OnActivate( wxActivateEvent& event )
+void MainFrame::OnActivate( wxActivateEvent& event )
 {
 //    Code carefully in this method.
 //    It is called in some unexpected places,
@@ -823,12 +823,12 @@ void MyFrame::OnActivate( wxActivateEvent& event )
     event.Skip();
 }
 
-ColorScheme MyFrame::GetColorScheme()
+ColorScheme MainFrame::GetColorScheme()
 {
     return global_color_scheme;
 }
 
-void MyFrame::SetAndApplyColorScheme( ColorScheme cs )
+void MainFrame::SetAndApplyColorScheme( ColorScheme cs )
 {
     global_color_scheme = cs;
 
@@ -919,7 +919,7 @@ void MyFrame::SetAndApplyColorScheme( ColorScheme cs )
     if( g_pi_manager ) g_pi_manager->SetColorSchemeForAllPlugIns( cs );
 }
 
-void MyFrame::ApplyGlobalColorSchemetoStatusBar( void )
+void MainFrame::ApplyGlobalColorSchemetoStatusBar( void )
 {
     if( m_pStatusBar != NULL ) {
         m_pStatusBar->SetBackgroundColour(GetGlobalColor(_T("UIBDR")));    //UINFF
@@ -932,7 +932,7 @@ void MyFrame::ApplyGlobalColorSchemetoStatusBar( void )
     }
 }
 
-void MyFrame::DestroyMyToolbar()
+void MainFrame::DestroyMyToolbar()
 {
     if( g_FloatingToolbarDialog ) {
         g_FloatingToolbarDialog->DestroyToolBar();
@@ -963,7 +963,7 @@ bool _toolbarConfigMenuUtil( int toolid, wxString tipString )
     return menuitem->IsChecked();
 }
 
-ToolBarSimple *MyFrame::CreateAToolbar()
+ToolBarSimple *MainFrame::CreateAToolbar()
 {
     ToolBarSimple *tb = NULL;
     wxToolBarToolBase* newtool;
@@ -1132,7 +1132,7 @@ ToolBarSimple *MyFrame::CreateAToolbar()
     return tb;
 }
 
-bool MyFrame::CheckAndAddPlugInTool( ToolBarSimple *tb )
+bool MainFrame::CheckAndAddPlugInTool( ToolBarSimple *tb )
 {
     if( !g_pi_manager ) return false;
 
@@ -1179,7 +1179,7 @@ bool MyFrame::CheckAndAddPlugInTool( ToolBarSimple *tb )
     return bret;
 }
 
-bool MyFrame::AddDefaultPositionPlugInTools( ToolBarSimple *tb )
+bool MainFrame::AddDefaultPositionPlugInTools( ToolBarSimple *tb )
 {
     if( !g_pi_manager ) return false;
 
@@ -1221,7 +1221,7 @@ bool MyFrame::AddDefaultPositionPlugInTools( ToolBarSimple *tb )
     return bret;
 }
 
-void MyFrame::RequestNewToolbar()
+void MainFrame::RequestNewToolbar()
 {
     if( g_FloatingToolbarDialog ) {
         bool b_reshow = g_FloatingToolbarDialog->IsShown();
@@ -1234,7 +1234,7 @@ void MyFrame::RequestNewToolbar()
 }
 
 //      Update inplace the current toolbar with bitmaps corresponding to the current color scheme
-void MyFrame::UpdateToolbar( ColorScheme cs )
+void MainFrame::UpdateToolbar( ColorScheme cs )
 {
     if( g_FloatingToolbarDialog ) {
         g_FloatingToolbarDialog->SetColorScheme( cs );
@@ -1257,7 +1257,7 @@ void MyFrame::UpdateToolbar( ColorScheme cs )
     return;
 }
 
-void MyFrame::EnableToolbar( bool newstate )
+void MainFrame::EnableToolbar( bool newstate )
 {
     if( g_toolbar ) {
         g_toolbar->EnableTool( ID_ZOOMIN, newstate );
@@ -1282,7 +1282,7 @@ void MyFrame::EnableToolbar( bool newstate )
 }
 
 // Intercept menu commands
-void MyFrame::OnExit(wxCommandEvent &)
+void MainFrame::OnExit(wxCommandEvent &)
 {
     quitflag++;                             // signal to the timer loop
 
@@ -1290,12 +1290,12 @@ void MyFrame::OnExit(wxCommandEvent &)
 
 static bool b_inCloseWindow;
 
-void MyFrame::OnCloseWindow(wxCloseEvent &)
+void MainFrame::OnCloseWindow(wxCloseEvent &)
 {
     //    It is possible that double clicks on application exit box could cause re-entrance here
     //    Not good, and don't need it anyway, so simply return.
     if( b_inCloseWindow ) {
-//            wxLogMessage(_T("opencpn::MyFrame re-entering OnCloseWindow"));
+//            wxLogMessage(_T("opencpn::MainFrame re-entering OnCloseWindow"));
         return;
     }
 
@@ -1333,7 +1333,7 @@ void MyFrame::OnCloseWindow(wxCloseEvent &)
         g_pi_manager->DeactivateAllPlugIns();
     }
 
-    wxLogMessage( _T("opencpn::MyFrame exiting cleanly.") );
+    wxLogMessage( _T("opencpn::MainFrame exiting cleanly.") );
 
     quitflag++;
 
@@ -1491,7 +1491,7 @@ void MyFrame::OnCloseWindow(wxCloseEvent &)
 
 }
 
-void MyFrame::OnMove(wxMoveEvent &)
+void MainFrame::OnMove(wxMoveEvent &)
 {
     if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->RePosition();
@@ -1507,7 +1507,7 @@ void MyFrame::OnMove(wxMoveEvent &)
 	global::OCPN::get().gui().set_frame_position(GetPosition());
 }
 
-void MyFrame::ProcessCanvasResize(void)
+void MainFrame::ProcessCanvasResize(void)
 {
     if (stats) {
         stats->ReSize();
@@ -1527,12 +1527,12 @@ void MyFrame::ProcessCanvasResize(void)
 		PositionConsole();
 }
 
-void MyFrame::OnSize(wxSizeEvent &)
+void MainFrame::OnSize(wxSizeEvent &)
 {
     ODoSetSize();
 }
 
-void MyFrame::ODoSetSize( void )
+void MainFrame::ODoSetSize( void )
 {
     int x, y;
     GetClientSize( &x, &y );
@@ -1624,7 +1624,7 @@ void MyFrame::ODoSetSize( void )
 		pthumbwin->SetMaxSize(cc1->GetParent()->GetSize());
 }
 
-void MyFrame::PositionConsole( void )
+void MainFrame::PositionConsole( void )
 {
     if( NULL == cc1 ) return;
     //    Reposition console based on its size and chartcanvas size
@@ -1638,7 +1638,7 @@ void MyFrame::PositionConsole( void )
     console->Move( screen_pos );
 }
 
-void MyFrame::UpdateAllFonts()
+void MainFrame::UpdateAllFonts()
 {
     if( console ) {
         console->UpdateFonts();
@@ -1656,7 +1656,7 @@ void MyFrame::UpdateAllFonts()
     cc1->Refresh();
 }
 
-void MyFrame::SetGroupIndex( int index )
+void MainFrame::SetGroupIndex( int index )
 {
     int new_index = index;
     if( index > (int) g_pGroupArray->GetCount() ) new_index = 0;
@@ -1697,7 +1697,7 @@ void MyFrame::SetGroupIndex( int index )
     }
 }
 
-void MyFrame::OnToolLeftClick( wxCommandEvent& event )
+void MainFrame::OnToolLeftClick( wxCommandEvent& event )
 {
     if( s_ProgDialog ) return;
 
@@ -1915,7 +1915,7 @@ void MyFrame::OnToolLeftClick( wxCommandEvent& event )
     }         // switch
 }
 
-void MyFrame::ToggleColorScheme()
+void MainFrame::ToggleColorScheme()
 {
     ColorScheme s = GetColorScheme();
     int is = (int) s;
@@ -1926,7 +1926,7 @@ void MyFrame::ToggleColorScheme()
     SetAndApplyColorScheme( s );
 }
 
-void MyFrame::ToggleFullScreen()
+void MainFrame::ToggleFullScreen()
 {
 	bool to = !IsFullScreen();
 	long style = wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION | wxFULLSCREEN_NOMENUBAR;
@@ -1939,7 +1939,7 @@ void MyFrame::ToggleFullScreen()
     Layout();
 }
 
-void MyFrame::ActivateMOB( void )
+void MainFrame::ActivateMOB( void )
 {
     //    The MOB point
     wxDateTime mob_time = wxDateTime::Now();
@@ -2008,7 +2008,7 @@ void MyFrame::ActivateMOB( void )
     wxLogMessage( mob_message );
 
 }
-void MyFrame::TrackOn( void )
+void MainFrame::TrackOn( void )
 {
     g_bTrackActive = true;
     g_pActiveTrack = new Track();
@@ -2043,7 +2043,7 @@ void MyFrame::TrackOn( void )
     g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
 }
 
-Track *MyFrame::TrackOff( bool do_add_point )
+Track *MainFrame::TrackOff( bool do_add_point )
 {
     Track *return_val = g_pActiveTrack;
 
@@ -2087,7 +2087,7 @@ Track *MyFrame::TrackOff( bool do_add_point )
     return return_val;
 }
 
-void MyFrame::TrackMidnightRestart( void )
+void MainFrame::TrackMidnightRestart( void )
 {
     if( !g_pActiveTrack )
         return;
@@ -2109,7 +2109,7 @@ void MyFrame::TrackMidnightRestart( void )
     }
 }
 
-void MyFrame::ToggleCourseUp(void)
+void MainFrame::ToggleCourseUp(void)
 {
     g_bCourseUp = !g_bCourseUp;
 
@@ -2134,7 +2134,7 @@ void MyFrame::ToggleCourseUp(void)
     cc1->ReloadVP();
 }
 
-void MyFrame::ToggleENCText( void )
+void MainFrame::ToggleENCText( void )
 {
 #ifdef USE_S57
     if( ps52plib ) {
@@ -2146,7 +2146,7 @@ void MyFrame::ToggleENCText( void )
 #endif
 }
 
-void MyFrame::ToggleSoundings( void )
+void MainFrame::ToggleSoundings( void )
 {
 #ifdef USE_S57
     if( ps52plib ) {
@@ -2156,7 +2156,7 @@ void MyFrame::ToggleSoundings( void )
 #endif
 }
 
-bool MyFrame::ToggleLights( bool doToggle, bool temporary )
+bool MainFrame::ToggleLights( bool doToggle, bool temporary )
 {
     bool oldstate = true;
 #ifdef USE_S57
@@ -2180,7 +2180,7 @@ bool MyFrame::ToggleLights( bool doToggle, bool temporary )
     return oldstate;
 }
 
-void MyFrame::ToggleRocks( void )
+void MainFrame::ToggleRocks( void )
 {
 #ifdef USE_S57
     if( ps52plib ) {
@@ -2209,7 +2209,7 @@ void MyFrame::ToggleRocks( void )
 #endif
 }
 
-void MyFrame::ToggleAnchor( void )
+void MainFrame::ToggleAnchor( void )
 {
 #ifdef USE_S57
     if( ps52plib ) {
@@ -2244,14 +2244,14 @@ void MyFrame::ToggleAnchor( void )
 #endif
 }
 
-void MyFrame::TogglebFollow( void )
+void MainFrame::TogglebFollow( void )
 {
     if( !cc1->m_bFollow ) SetbFollow();
     else
         ClearbFollow();
 }
 
-void MyFrame::SetbFollow(void)
+void MainFrame::SetbFollow(void)
 {
     cc1->m_bFollow = true;
 	SetToolbarItemState(ID_FOLLOW, cc1->m_bFollow);
@@ -2259,7 +2259,7 @@ void MyFrame::SetbFollow(void)
     cc1->ReloadVP();
 }
 
-void MyFrame::ClearbFollow(void)
+void MainFrame::ClearbFollow(void)
 {
     //    Center the screen on the GPS position, for lack of a better place
     vLat = gLat;
@@ -2270,7 +2270,7 @@ void MyFrame::ClearbFollow(void)
     cc1->ReloadVP();
 }
 
-void MyFrame::ToggleChartOutlines(void)
+void MainFrame::ToggleChartOutlines(void)
 {
 	global::GUI & gui = global::OCPN::get().gui();
 
@@ -2278,13 +2278,13 @@ void MyFrame::ToggleChartOutlines(void)
 	cc1->Refresh(false);
 }
 
-void MyFrame::SetToolbarItemState(int tool_id, bool state)
+void MainFrame::SetToolbarItemState(int tool_id, bool state)
 {
 	if (g_toolbar)
 		g_toolbar->ToggleTool(tool_id, state);
 }
 
-void MyFrame::SetToolbarItemBitmaps(int tool_id, wxBitmap *bmp, wxBitmap *bmpRollover)
+void MainFrame::SetToolbarItemBitmaps(int tool_id, wxBitmap *bmp, wxBitmap *bmpRollover)
 {
     if( g_toolbar ) {
         g_toolbar->SetToolBitmaps( tool_id, bmp, bmpRollover );
@@ -2293,7 +2293,7 @@ void MyFrame::SetToolbarItemBitmaps(int tool_id, wxBitmap *bmp, wxBitmap *bmpRol
     }
 }
 
-void MyFrame::ApplyGlobalSettings(bool, bool bnewtoolbar)
+void MainFrame::ApplyGlobalSettings(bool, bool bnewtoolbar)
 {
     //             ShowDebugWindow as a wxStatusBar
     m_StatusBarFieldCount = 5;
@@ -2324,7 +2324,7 @@ void MyFrame::ApplyGlobalSettings(bool, bool bnewtoolbar)
 		UpdateToolbar(global_color_scheme);
 }
 
-void MyFrame::SubmergeToolbarIfOverlap( int x, int y, int margin )
+void MainFrame::SubmergeToolbarIfOverlap( int x, int y, int margin )
 {
     if (g_FloatingToolbarDialog) {
         wxRect rect = g_FloatingToolbarDialog->GetScreenRect();
@@ -2334,13 +2334,13 @@ void MyFrame::SubmergeToolbarIfOverlap( int x, int y, int margin )
     }
 }
 
-void MyFrame::SubmergeToolbar( void )
+void MainFrame::SubmergeToolbar( void )
 {
     if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->Submerge();
 }
 
-void MyFrame::SurfaceToolbar(void)
+void MainFrame::SurfaceToolbar(void)
 {
 	if (g_FloatingToolbarDialog && g_FloatingToolbarDialog->IsToolbarShown()) {
 		if (IsFullScreen()) {
@@ -2353,7 +2353,7 @@ void MyFrame::SurfaceToolbar(void)
 	gFrame->Raise();
 }
 
-void MyFrame::JumpToPosition( double lat, double lon, double scale )
+void MainFrame::JumpToPosition( double lat, double lon, double scale )
 {
     vLat = lat;
     vLon = lon;
@@ -2370,7 +2370,7 @@ void MyFrame::JumpToPosition( double lat, double lon, double scale )
     }
 }
 
-int MyFrame::DoOptionsDialog()
+int MainFrame::DoOptionsDialog()
 {
     static int lastPage = -1;
     static wxPoint lastWindowPos( 0,0 );
@@ -2464,7 +2464,7 @@ int MyFrame::DoOptionsDialog()
     return ret_val;
 }
 
-int MyFrame::ProcessOptionsDialog( int rr, options* dialog )
+int MainFrame::ProcessOptionsDialog( int rr, options* dialog )
 {
     ArrayOfCDI *pWorkDirArray = dialog->GetWorkDirListPtr();
     if( ( rr & VISIT_CHARTS )
@@ -2560,13 +2560,13 @@ int MyFrame::ProcessOptionsDialog( int rr, options* dialog )
     return 0;
 }
 
-wxString MyFrame::GetGroupName( int igroup )
+wxString MainFrame::GetGroupName( int igroup )
 {
     ChartGroup *pGroup = g_pGroupArray->Item( igroup - 1 );
     return pGroup->m_group_name;
 }
 
-bool MyFrame::CheckGroup( int igroup )
+bool MainFrame::CheckGroup( int igroup )
 {
     if( igroup == 0 ) return true;              // "all charts" is always OK
 
@@ -2593,7 +2593,7 @@ bool MyFrame::CheckGroup( int igroup )
 
 }
 
-void MyFrame::ScrubGroupArray()
+void MainFrame::ScrubGroupArray()
 {
     //    For each group,
     //    make sure that each group element (dir or chart) references at least oneitem in the database.
@@ -2631,7 +2631,7 @@ void MyFrame::ScrubGroupArray()
 }
 
 // Flav: This method reloads all charts for convenience
-void MyFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
+void MainFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
 {
     if( !ChartData ) return;
 
@@ -2712,7 +2712,7 @@ void MyFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
 
 }
 
-bool MyFrame::UpdateChartDatabaseInplace( ArrayOfCDI &DirArray, bool b_force, bool b_prog,
+bool MainFrame::UpdateChartDatabaseInplace( ArrayOfCDI &DirArray, bool b_force, bool b_prog,
         const wxString &ChartListFileName )
 {
     bool b_run = FrameTimer1.IsRunning();
@@ -2763,7 +2763,7 @@ bool MyFrame::UpdateChartDatabaseInplace( ArrayOfCDI &DirArray, bool b_force, bo
     return true;
 }
 
-void MyFrame::ToggleQuiltMode( void )
+void MainFrame::ToggleQuiltMode( void )
 {
     if( cc1 ) {
         bool cur_mode = cc1->GetQuiltMode();
@@ -2780,19 +2780,19 @@ void MyFrame::ToggleQuiltMode( void )
     }
 }
 
-void MyFrame::SetQuiltMode( bool bquilt )
+void MainFrame::SetQuiltMode( bool bquilt )
 {
     if( cc1 ) cc1->SetQuiltMode( bquilt );
 }
 
-bool MyFrame::GetQuiltMode( void )
+bool MainFrame::GetQuiltMode( void )
 {
     if( cc1 ) return cc1->GetQuiltMode();
     else
         return false;
 }
 
-void MyFrame::SetupQuiltMode( void )
+void MainFrame::SetupQuiltMode( void )
 {
 
     if( cc1->GetQuiltMode() )                               // going to quilt mode
@@ -2939,12 +2939,12 @@ void MyFrame::SetupQuiltMode( void )
 
 }
 
-void MyFrame::ClearRouteTool()
+void MainFrame::ClearRouteTool()
 {
     if( g_toolbar ) g_toolbar->ToggleTool( ID_ROUTE, false );
 }
 
-void MyFrame::DoStackDown( void )
+void MainFrame::DoStackDown( void )
 {
     int current_stack_index = pCurrentStack->CurrentStackEntry;
 
@@ -2967,7 +2967,7 @@ void MyFrame::DoStackDown( void )
     cc1->ReloadVP();
 }
 
-void MyFrame::DoStackUp( void )
+void MainFrame::DoStackUp( void )
 {
     int current_stack_index = pCurrentStack->CurrentStackEntry;
 
@@ -2991,7 +2991,7 @@ void MyFrame::DoStackUp( void )
 }
 
 //    Manage the application memory footprint on a periodic schedule
-void MyFrame::OnMemFootTimer(wxTimerEvent &)
+void MainFrame::OnMemFootTimer(wxTimerEvent &)
 {
     MemFootTimer.Stop();
 
@@ -3046,7 +3046,7 @@ void MyFrame::OnMemFootTimer(wxTimerEvent &)
     MemFootTimer.Start(9000, wxTIMER_CONTINUOUS);
 }
 
-wxString MyFrame::get_cog()
+wxString MainFrame::get_cog()
 {
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
@@ -3056,7 +3056,7 @@ wxString MyFrame::get_cog()
 	return wxString::Format(_T("COG %10.5f "), nav.cog);
 }
 
-wxString MyFrame::get_sog()
+wxString MainFrame::get_sog()
 {
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
@@ -3066,7 +3066,7 @@ wxString MyFrame::get_sog()
 	return wxString::Format(_T("SOG %6.2f ") + getUsrSpeedUnit(), toUsrSpeed(nav.sog));
 }
 
-wxString MyFrame::prepare_logbook_message(const wxDateTime & lognow)
+wxString MainFrame::prepare_logbook_message(const wxDateTime & lognow)
 {
 	wxString navmsg = _T("LOGBOOK:  ");
 	navmsg += lognow.FormatISODate();
@@ -3086,7 +3086,7 @@ wxString MyFrame::prepare_logbook_message(const wxDateTime & lognow)
 
 int ut_index;
 
-void MyFrame::OnFrameTimer1(wxTimerEvent &)
+void MainFrame::OnFrameTimer1(wxTimerEvent &)
 {
 
     if( s_ProgDialog ) {
@@ -3132,7 +3132,7 @@ void MyFrame::OnFrameTimer1(wxTimerEvent &)
     //    To fix an ugly bug ?? in wxWidgets for Carbon.....
     //    Or, maybe this is the way Macs work....
     //    Hide some non-UI Dialogs if the application is minimized....
-    //    They will be re-Show()-n in MyFrame::OnActivate()
+    //    They will be re-Show()-n in MainFrame::OnActivate()
     if(IsIconized())
     {
         if(g_FloatingToolbarDialog) {
@@ -3455,7 +3455,7 @@ void MyFrame::OnFrameTimer1(wxTimerEvent &)
     }
 }
 
-void MyFrame::TouchAISActive( void )
+void MainFrame::TouchAISActive( void )
 {
     if( m_pAISTool ) {
         if( ( !g_pAIS->IsAISSuppressed() ) && ( !g_pAIS->IsAISAlertGeneral() ) ) {
@@ -3477,7 +3477,7 @@ void MyFrame::TouchAISActive( void )
     }
 }
 
-void MyFrame::UpdateAISTool( void )
+void MainFrame::UpdateAISTool( void )
 {
     if(!g_pAIS) return;
 
@@ -3524,7 +3524,7 @@ void MyFrame::UpdateAISTool( void )
 }
 
 //    Cause refresh of active Tide/Current data, if displayed
-void MyFrame::OnFrameTCTimer(wxTimerEvent &)
+void MainFrame::OnFrameTCTimer(wxTimerEvent &)
 {
     if( cc1 ) {
         cc1->SetbTCUpdate( true );
@@ -3533,7 +3533,7 @@ void MyFrame::OnFrameTCTimer(wxTimerEvent &)
 }
 
 //    Keep and update the Viewport rotation angle according to average COG for COGUP mode
-void MyFrame::OnFrameCOGTimer(wxTimerEvent &)
+void MainFrame::OnFrameCOGTimer(wxTimerEvent &)
 {
 //      return;
     FrameCOGTimer.Stop();
@@ -3548,7 +3548,7 @@ void MyFrame::OnFrameCOGTimer(wxTimerEvent &)
 
 }
 
-void MyFrame::DoCOGSet( void )
+void MainFrame::DoCOGSet( void )
 {
     double old_VPRotate = g_VPRotate;
 
@@ -3592,7 +3592,7 @@ void RenderShadowText( wxDC *pdc, wxFont *pFont, wxString& str, int x, int y )
 }
 
 
-void MyFrame::UpdateGPSCompassStatusBox( bool b_force_new )
+void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
 {
     if( !g_FloatingCompassDialog ) return;
 
@@ -3649,14 +3649,14 @@ void MyFrame::UpdateGPSCompassStatusBox( bool b_force_new )
     }
 }
 
-int MyFrame::GetnChartStack( void )
+int MainFrame::GetnChartStack( void )
 {
     return pCurrentStack->nEntry;
 }
 
 //    Application memory footprint management
 
-int MyFrame::GetApplicationMemoryUse( void )
+int MainFrame::GetApplicationMemoryUse( void )
 {
     int memsize = -1;
 #ifdef __LINUX__
@@ -3705,7 +3705,7 @@ int MyFrame::GetApplicationMemoryUse( void )
     return memsize;
 }
 
-void MyFrame::HandlePianoClick( int selected_index, int selected_dbIndex )
+void MainFrame::HandlePianoClick( int selected_index, int selected_dbIndex )
 {
     if( !pCurrentStack ) return;
     if( s_ProgDialog ) return;
@@ -3739,7 +3739,7 @@ void MyFrame::HandlePianoClick( int selected_index, int selected_dbIndex )
     cc1->ReloadVP();                  // Pick up the new selections
 }
 
-void MyFrame::HandlePianoRClick( int x, int y, int selected_index, int selected_dbIndex )
+void MainFrame::HandlePianoRClick( int x, int y, int selected_index, int selected_dbIndex )
 {
     if( !pCurrentStack ) return;
     if( s_ProgDialog ) return;
@@ -3751,7 +3751,7 @@ void MyFrame::HandlePianoRClick( int x, int y, int selected_index, int selected_
 
 }
 
-void MyFrame::HandlePianoRollover( int selected_index, int selected_dbIndex )
+void MainFrame::HandlePianoRollover( int selected_index, int selected_dbIndex )
 {
     if( !cc1 ) return;
     if( !pCurrentStack ) return;
@@ -3789,7 +3789,7 @@ void MyFrame::HandlePianoRollover( int selected_index, int selected_dbIndex )
     }
 }
 
-void MyFrame::HandlePianoRolloverIcon( int selected_index, int selected_dbIndex )
+void MainFrame::HandlePianoRolloverIcon( int selected_index, int selected_dbIndex )
 {
     if( !cc1 ) return;
 
@@ -3800,7 +3800,7 @@ void MyFrame::HandlePianoRolloverIcon( int selected_index, int selected_dbIndex 
     }
 }
 
-double MyFrame::GetBestVPScale( ChartBase *pchart )
+double MainFrame::GetBestVPScale( ChartBase *pchart )
 {
     if( pchart ) {
         double proposed_scale_onscreen = cc1->GetCanvasScaleFactor() / cc1->GetVPScale();
@@ -3826,7 +3826,7 @@ double MyFrame::GetBestVPScale( ChartBase *pchart )
         return 1.0;
 }
 
-void MyFrame::SelectQuiltRefChart( int selected_index )
+void MainFrame::SelectQuiltRefChart( int selected_index )
 {
     std::vector<int> piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
     int current_db_index = piano_chart_index_array[selected_index];
@@ -3834,7 +3834,7 @@ void MyFrame::SelectQuiltRefChart( int selected_index )
     SelectQuiltRefdbChart( current_db_index );
 }
 
-void MyFrame::SelectQuiltRefdbChart( int db_index )
+void MainFrame::SelectQuiltRefdbChart( int db_index )
 {
     if( pCurrentStack ) pCurrentStack->SetCurrentEntryFromdbIndex( db_index );
 
@@ -3848,7 +3848,7 @@ void MyFrame::SelectQuiltRefdbChart( int db_index )
 
 }
 
-void MyFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Type,
+void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Type,
         ChartFamilyEnum New_Family )
 {
     if( index < pCurrentStack->nEntry ) {
@@ -3899,7 +3899,7 @@ void MyFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Type
     }
 }
 
-void MyFrame::SelectdbChart( int dbindex )
+void MainFrame::SelectdbChart( int dbindex )
 {
     if( dbindex >= 0 ) {
 //      Open the new chart
@@ -3948,7 +3948,7 @@ void MyFrame::SelectdbChart( int dbindex )
     }
 }
 
-void MyFrame::SetChartUpdatePeriod( ViewPort &vp )
+void MainFrame::SetChartUpdatePeriod( ViewPort &vp )
 {
 	//    Set the chart update period based upon chart skew and skew compensator
 
@@ -3962,7 +3962,7 @@ void MyFrame::SetChartUpdatePeriod( ViewPort &vp )
     m_ChartUpdatePeriod = g_ChartUpdatePeriod;
 }
 
-void MyFrame::SetChartThumbnail(int index)
+void MainFrame::SetChartThumbnail(int index)
 {
 	if (bDBUpdateInProgress)
 		return;
@@ -4035,7 +4035,7 @@ void MyFrame::SetChartThumbnail(int index)
 	}
 }
 
-void MyFrame::UpdateControlBar( void )
+void MainFrame::UpdateControlBar( void )
 {
 	if (!cc1)
 		return;
@@ -4109,7 +4109,7 @@ void MyFrame::UpdateControlBar( void )
 //      smallest scale new chart in stack if not.
 //      Return true if a Refresh(false) was called within.
 //----------------------------------------------------------------------------------
-bool MyFrame::DoChartUpdate( void )
+bool MainFrame::DoChartUpdate( void )
 {
 
     double tLat, tLon;           // Chart Stack location
@@ -4477,7 +4477,7 @@ bool MyFrame::DoChartUpdate( void )
     return bNewChart | bNewView;
 }
 
-void MyFrame::MouseEvent( wxMouseEvent& event )
+void MainFrame::MouseEvent( wxMouseEvent& event )
 {
 	// FIXME: has no effect?
     int x;
@@ -4485,7 +4485,7 @@ void MyFrame::MouseEvent( wxMouseEvent& event )
     event.GetPosition( &x, &y );
 }
 
-void MyFrame::RemoveChartFromQuilt(int dbIndex)
+void MainFrame::RemoveChartFromQuilt(int dbIndex)
 {
 	// Remove the item from the list (if it appears) to avoid multiple addition
 	// FIXME: why remove if the same index will be added to the list anyway? order of insertion?
@@ -4506,7 +4506,7 @@ void MyFrame::RemoveChartFromQuilt(int dbIndex)
 static int menu_selected_dbIndex;
 static int menu_selected_index;
 
-void MyFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbIndex)
+void MainFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbIndex)
 {
     //    No context menu if quilting is disabled
     if( !cc1->GetQuiltMode() ) return;
@@ -4525,12 +4525,12 @@ void MyFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbIndex)
     if( b_is_in_noshow ) {
         pctx_menu->Append( ID_PIANO_ENABLE_QUILT_CHART, _("Show This Chart") );
         Connect( ID_PIANO_ENABLE_QUILT_CHART, wxEVT_COMMAND_MENU_SELECTED,
-                wxCommandEventHandler(MyFrame::OnPianoMenuEnableChart) );
+                wxCommandEventHandler(MainFrame::OnPianoMenuEnableChart) );
     } else
         if( pCurrentStack->nEntry > 1 ) {
             pctx_menu->Append( ID_PIANO_DISABLE_QUILT_CHART, _("Hide This Chart") );
             Connect( ID_PIANO_DISABLE_QUILT_CHART, wxEVT_COMMAND_MENU_SELECTED,
-                    wxCommandEventHandler(MyFrame::OnPianoMenuDisableChart) );
+                    wxCommandEventHandler(MainFrame::OnPianoMenuDisableChart) );
         }
 
     int sx, sy;
@@ -4554,7 +4554,7 @@ void MyFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbIndex)
     delete pctx_menu;
 }
 
-void MyFrame::OnPianoMenuEnableChart(wxCommandEvent &)
+void MainFrame::OnPianoMenuEnableChart(wxCommandEvent &)
 {
 	std::vector<int>::iterator i = find(
 			g_quilt_noshow_index_array.begin(),
@@ -4565,7 +4565,7 @@ void MyFrame::OnPianoMenuEnableChart(wxCommandEvent &)
 		g_quilt_noshow_index_array.erase(i);
 }
 
-void MyFrame::OnPianoMenuDisableChart(wxCommandEvent &)
+void MainFrame::OnPianoMenuDisableChart(wxCommandEvent &)
 {
     RemoveChartFromQuilt( menu_selected_dbIndex );
 
@@ -4601,7 +4601,7 @@ void MyFrame::OnPianoMenuDisableChart(wxCommandEvent &)
     }
 }
 
-void MyFrame::DoPrint( void )
+void MainFrame::DoPrint( void )
 {
     if( NULL == g_printData ) {
         g_printData = new wxPrintData;
@@ -4625,7 +4625,7 @@ void MyFrame::DoPrint( void )
 
 }
 
-void MyFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
+void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
 {
     wxString message_ID = event.GetID();
     wxString message_JSONText = event.GetJSONText();
@@ -4828,13 +4828,13 @@ void MyFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
     }
 }
 
-void MyFrame::OnEvtTHREADMSG( wxCommandEvent & event )
+void MainFrame::OnEvtTHREADMSG( wxCommandEvent & event )
 {
     wxLogMessage( event.GetString() );
 }
 
 
-bool MyFrame::EvalPriority(const wxString & message, DataStream *pDS )
+bool MainFrame::EvalPriority(const wxString & message, DataStream *pDS )
 {
     bool bret = true;
     wxString msg_type = message.Mid(1, 5);
@@ -4916,7 +4916,7 @@ bool MyFrame::EvalPriority(const wxString & message, DataStream *pDS )
     return bret;
 }
 
-void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
+void MainFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
 {
     wxString sfixtime;
     bool pos_valid = false;
@@ -5296,7 +5296,7 @@ void MyFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
     }
 }
 
-void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
+void MainFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 {
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
@@ -5493,7 +5493,7 @@ void MyFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 #endif            //ocpnUPDATE_SYSTEM_TIME
 }
 
-void MyFrame::FilterCogSog( void )
+void MainFrame::FilterCogSog( void )
 {
 	global::Navigation & nav = global::OCPN::get().nav();
 
@@ -5558,17 +5558,17 @@ void MyFrame::FilterCogSog( void )
     }
 }
 
-void MyFrame::StopSockets( void )
+void MainFrame::StopSockets( void )
 {
 //TODO: Can be removed?
 }
 
-void MyFrame::ResumeSockets( void )
+void MainFrame::ResumeSockets( void )
 {
 //TODO: Can be removed?
 }
 
-void MyFrame::LoadHarmonics()
+void MainFrame::LoadHarmonics()
 {
 	if(!ptcmgr) {
 		ptcmgr = new TCMgr;

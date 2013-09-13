@@ -23,6 +23,7 @@
 
 #include "PlugInManager.h"
 #include "dychart.h"
+#include "MainFrame.h"
 #include "navutil.h"
 #include "Track.h"
 #include "ocpnDC.h"
@@ -65,7 +66,7 @@ extern AIS_Decoder     *g_pAIS;
 extern wxAuiManager    *g_pauimgr;
 extern wxLocale        *plocale_def_lang;
 extern ChartDB         *ChartData;
-extern MyFrame         *gFrame;
+extern MainFrame         *gFrame;
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern options         *g_pOptions;
 extern Multiplexer     *g_pMUX;
@@ -122,12 +123,12 @@ const wxEventType wxEVT_OCPN_MSG = wxNewEventType();
 //-----------------------------------------------------------------------------------------------------
 PlugInManager *s_ppim;
 
-PlugInManager::PlugInManager(MyFrame *parent)
+PlugInManager::PlugInManager(MainFrame *parent)
 {
     pParent = parent;
     s_ppim = this;
 
-    MyFrame *pFrame = GetParentFrame();
+    MainFrame *pFrame = GetParentFrame();
     if(pFrame)
     {
         m_plugin_menu_item_id_next = pFrame->GetCanvasWindow()->GetNextContextMenuId();
@@ -1362,15 +1363,11 @@ void SetCanvasContextMenuItemGrey(int item, bool grey)
         s_ppim->SetCanvasContextMenuItemGrey(item, grey);
 }
 
-
 void RemoveCanvasContextMenuItem(int item)
 {
     if(s_ppim)
         s_ppim->RemoveCanvasContextMenuItem(item);
 }
-
-
-
 
 wxFileConfig *GetOCPNConfigObject(void)
 {
@@ -1383,9 +1380,8 @@ wxFileConfig *GetOCPNConfigObject(void)
 wxWindow *GetOCPNCanvasWindow()
 {
     wxWindow *pret = NULL;
-    if(s_ppim)
-    {
-        MyFrame *pFrame = s_ppim->GetParentFrame();
+    if (s_ppim) {
+        MainFrame * pFrame = s_ppim->GetParentFrame();
         pret = (wxWindow *)pFrame->GetCanvasWindow();
     }
     return pret;
@@ -1520,7 +1516,7 @@ bool UpdateChartDBInplace(wxArrayString dir_array,
         ChartDirArray.Add ( cdi );
     }
 
-    bool b_ret =gFrame->UpdateChartDatabaseInplace(ChartDirArray,
+    bool b_ret = gFrame->UpdateChartDatabaseInplace(ChartDirArray,
                 b_force_update, b_ProgressDialog,
                 ChartData->GetDBFileName());
 
@@ -1548,7 +1544,6 @@ void SendPluginMessage( wxString message_id, wxString message_body )
     Nevent.SetID(message_id);
     Nevent.SetJSONText(message_body);
     gFrame->GetEventHandler()->AddPendingEvent( Nevent );
-
 }
 
 void DimeWindow(wxWindow *win)

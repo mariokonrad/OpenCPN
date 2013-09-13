@@ -21,8 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
 #include <wx/bitmap.h>
 #include <wx/dcmemory.h>
 #include <wx/dcscreen.h>
@@ -30,7 +28,6 @@
 #include "RolloverWin.h"
 #include "ocpnDC.h"
 #include "timers.h"
-#include "chart1.h"
 #include "navutil.h"
 #include "FontMgr.h"
 
@@ -58,12 +55,14 @@ RolloverWin::~RolloverWin()
 {
 	delete m_pbm;
 }
-void RolloverWin::OnTimer( wxTimerEvent& event )
+
+void RolloverWin::OnTimer(wxTimerEvent &)
 {
-	if( IsShown() ) Hide();
+	if (IsShown())
+		Hide();
 }
 
-void RolloverWin::OnMouseEvent( wxMouseEvent& event )
+void RolloverWin::OnMouseEvent(wxMouseEvent & event)
 {
 	//    If directed, send mouse events up the window family tree,
 	//    until some parent window does NOT call event.Skip()
@@ -73,7 +72,7 @@ void RolloverWin::OnMouseEvent( wxMouseEvent& event )
 	}
 }
 
-void RolloverWin::SetBitmap( int rollover )
+void RolloverWin::SetBitmap(int rollover)
 {
 	wxDC* cdc = new wxScreenDC();
 	wxPoint canvasPos = GetParent()->GetScreenPosition();
@@ -121,7 +120,7 @@ void RolloverWin::SetBitmap( int rollover )
 	if( m_timeout_sec > 0 ) m_timer_timeout.Start( m_timeout_sec * 1000, wxTIMER_ONE_SHOT );
 }
 
-void RolloverWin::OnPaint( wxPaintEvent& event )
+void RolloverWin::OnPaint(wxPaintEvent &)
 {
 	int width, height;
 	GetClientSize( &width, &height );

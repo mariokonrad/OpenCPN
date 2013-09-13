@@ -34,7 +34,6 @@
 #include <wx/bmpcbox.h>
 
 #include "ocpn_plugin.h"
-#include "chart1.h"
 #include "chcanv.h"
 #include "datastream.h"
 #include "OCPN_Sound.h"
@@ -61,6 +60,7 @@ PlugIn_AIS_Target *Create_PI_AIS_Target(AIS_Target_Data *ptarget);
 
 class PluginListPanel;
 class PluginPanel;
+class MainFrame;
 
 extern const wxEventType wxEVT_OCPN_MSG;
 
@@ -70,9 +70,8 @@ WX_DEFINE_ARRAY_PTR(PlugInToolbarToolContainer *, ArrayOfPlugInToolbarTools);
 
 class PlugInManager
 {
-
 	public:
-		PlugInManager(MyFrame *parent);
+		PlugInManager(MainFrame *parent);
 		virtual ~PlugInManager();
 
 		bool LoadAllPlugIns(const wxString &plugin_dir);
@@ -126,7 +125,7 @@ class PlugInManager
 		wxArrayString GetPlugInChartClassNameArray(void);
 
 		wxString GetLastError();
-		MyFrame *GetParentFrame(){ return pParent; }
+		MainFrame *GetParentFrame(){ return pParent; }
 
 		void DimeWindow(wxWindow *win);
 		OCPN_Sound m_plugin_sound;
@@ -137,7 +136,7 @@ class PlugInManager
 		bool UpDateChartDataTypes(void);
 		bool CheckPluginCompatibility(wxString plugin_file);
 
-		MyFrame * pParent;
+		MainFrame * pParent;
 
 		ArrayOfPlugIns plugin_array;
 		wxString m_last_error_string;

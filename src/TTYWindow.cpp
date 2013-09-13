@@ -24,7 +24,7 @@
 #include "TTYWindow.h"
 #include "TTYScroll.h"
 #include "WindowDestroyListener.h"
-#include "chart1.h"
+#include <MainFrame.h>
 
 #include <wx/sizer.h>
 #include <wx/statbox.h>
@@ -92,7 +92,7 @@ void TTYWindow::CreateLegendBitmap()
 	dc.SelectObject( m_bm_legend );
 	if( m_bm_legend.IsOk()) {
 
-		dc.SetBackground( wxBrush(GetGlobalColor(_T("DILG1"))) );
+		dc.SetBackground(wxBrush(GetGlobalColor(_T("DILG1"))) );
 		dc.Clear();
 
 		wxFont f(8, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);

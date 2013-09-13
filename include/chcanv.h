@@ -30,10 +30,11 @@
 #include <wx/sound.h>
 #include <wx/grid.h>
 #include <wx/wxhtml.h>
+#include <wx/dcmemory.h>
+#include <wx/image.h>
 
 #include <vector>
 
-#include "chart1.h"
 #include "CM93DSlide.h"
 #include "RolloverWin.h"
 #include <ais/AISTargetQueryDialog.h>
@@ -50,7 +51,15 @@ int RestoreScreenBrightness(void);
 
 //Central dimmer...
 void DimeControl(wxWindow * ctrl);
-void DimeControl(wxWindow * ctrl, wxColour col, wxColour col1, wxColour back_color,wxColour text_color,wxColour uitext, wxColour udkrd, wxColour gridline);
+void DimeControl(
+		wxWindow * ctrl,
+		wxColour col,
+		wxColour col1,
+		wxColour back_color,
+		wxColour text_color,
+		wxColour uitext,
+		wxColour udkrd,
+		wxColour gridline);
 
 class EmbossData;
 class Undo;
@@ -61,7 +70,7 @@ class RoutePoint;
 class SelectItem;
 class ocpnBitmap;
 class WVSChart;
-class MyFrame;
+class MainFrame;
 class ChartBaseBSB;
 class ChartBase;
 class AIS_Target_Data;
@@ -391,7 +400,7 @@ class ChartCanvas : public wxWindow
 		int         yt_margin;
 		int         yb_margin;
 
-		MyFrame     *parent_frame;
+		MainFrame *parent_frame;
 
 		wxPoint     last_drag;
 

@@ -40,7 +40,7 @@ extern Routeman * g_pRouteMan;
 extern Select * pSelect;
 extern RouteManagerDialog * pRouteManagerDialog;
 extern MyConfig * pConfig;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 extern ChartCanvas * cc1;
 extern PlugInManager * g_pi_manager;
 
@@ -702,26 +702,26 @@ void TrackPropDlg::OnTrackPropListClick(wxListEvent &)
 				m_nSelected = selected_no + 1;
 				m_sdbBtmBtnsSizerSplit->Enable( true );
 			}
-			gFrame->JumpToPosition( prp->m_lat, prp->m_lon, cc1->GetVPScale() );
+			gFrame->JumpToPosition(prp->m_lat, prp->m_lon, cc1->GetVPScale());
 		}
 	}
 	if( selected_no == 0 || selected_no == m_pRoute->GetnPoints() - 1)
 		m_sdbBtmBtnsSizerSplit->Enable( false );
 }
 
-void TrackPropDlg::OnTrackPropMenuSelected( wxCommandEvent& event )
+void TrackPropDlg::OnTrackPropMenuSelected(wxCommandEvent & event)
 {
-	switch( event.GetId() ) {
+	switch (event.GetId()) {
 		case ID_RCLK_MENU_COPY_TEXT:
-			OnTrackPropCopyTxtClick( event );
+			OnTrackPropCopyTxtClick(event);
 			break;
 	}
 }
 
 void TrackPropDlg::OnToRouteBtnClick(wxCommandEvent &)
 {
-	pRouteManagerDialog->TrackToRoute( (Track*)m_pRoute );
-	if( NULL != pRouteManagerDialog && pRouteManagerDialog->IsVisible() )
+	pRouteManagerDialog->TrackToRoute((Track*)m_pRoute);
+	if (NULL != pRouteManagerDialog && pRouteManagerDialog->IsVisible())
 		pRouteManagerDialog->UpdateRouteListCtrl();
 }
 

@@ -22,8 +22,8 @@
  **************************************************************************/
 
 #include "AIS_Decoder.h"
-#include "AIS_Target_Data.h"
-#include "AISTargetAlertDialog.h"
+#include <ais/AIS_Target_Data.h>
+#include <ais/AISTargetAlertDialog.h>
 #include "Select.h"
 #include "georef.h"
 #include "OCPN_DataStreamEvent.h"
@@ -40,7 +40,7 @@ static const long long lNaN = 0xfff8000000000000;
 
 extern AISTargetAlertDialog *g_pais_alert_dialog_active;
 extern Select *pSelectAIS;
-extern MyFrame *gFrame;
+extern MainFrame * gFrame;
 extern bool bGPSValid;
 extern bool     g_bShowAIS;
 extern bool     g_bCPAMax;

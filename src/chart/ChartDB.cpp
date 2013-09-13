@@ -39,7 +39,7 @@
 #include <chart/ChartBaseBSB.h>
 
 #include "ChartPlugInWrapper.h"
-#include "chart1.h"
+#include "MainFrame.h"
 #include "ThumbWin.h"
 #include <MemoryStatus.h>
 
@@ -54,7 +54,7 @@ extern ThumbWin * pthumbwin;
 extern int g_nCacheLimit;
 extern int g_memCacheLimit;
 extern bool g_bopengl;
-extern ChartCanvas  *cc1;
+extern ChartCanvas * cc1;
 extern int g_GroupIndex;
 extern s52plib * ps52plib;
 
@@ -66,7 +66,7 @@ bool G_FloatPtInPolygon(MyFlPoint *rgpts, int wnumpts, float x, float y);
 // ChartDB implementation
 // ============================================================================
 
-ChartDB::ChartDB(MyFrame *parent)
+ChartDB::ChartDB(MainFrame * parent)
 {
       pParent = parent;
       pChartCache = new wxArrayPtrVoid;

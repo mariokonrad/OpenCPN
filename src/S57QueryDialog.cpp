@@ -24,6 +24,8 @@
 #include "S57QueryDialog.h"
 #include "chcanv.h"
 
+#include <wx/sizer.h>
+
 extern ColorScheme global_color_scheme;
 extern S57QueryDialog * g_pObjectQueryDialog;
 extern int g_S57_dialog_sx;

@@ -25,7 +25,7 @@
 #define __CDI__H__
 
 #include <wx/window.h>
-#include "chart1.h"
+#include <ColorScheme.h>
 
 class CDI : public wxWindow
 {

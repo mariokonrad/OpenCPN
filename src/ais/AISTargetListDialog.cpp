@@ -26,9 +26,9 @@
 #include <wx/tokenzr.h>
 
 #include "AISTargetListDialog.h"
-#include "ais/ais.h"
-#include "AIS_Decoder.h"
-#include "AIS_Target_Data.h"
+#include <ais/ais.h>
+#include <ais/AIS_Decoder.h>
+#include <ais/AIS_Target_Data.h>
 #include "OCPNListCtrl.h"
 #include "StyleManager.h"
 #include "Style.h"
@@ -47,7 +47,7 @@ extern int g_AisTargetList_range;
 extern wxString g_AisTargetList_perspective;
 extern MyConfig *pConfig;
 extern AISTargetListDialog *g_pAISTargetList;
-extern MyFrame *gFrame;
+extern MainFrame *gFrame;
 extern ChartCanvas *cc1;
 extern wxString g_default_wp_icon;
 extern Select *pSelect;
@@ -629,27 +629,28 @@ void AISTargetListDialog::OnTargetListColumnClicked( wxListEvent &event )
 void AISTargetListDialog::OnTargetScrollTo( wxCommandEvent& event )
 {
 	long selItemID = -1;
-	selItemID = m_pListCtrlAISTargets->GetNextItem( selItemID, wxLIST_NEXT_ALL,
-			wxLIST_STATE_SELECTED );
-	if( selItemID == -1 ) return;
+	selItemID = m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (selItemID == -1)
+		return;
 
 	AIS_Target_Data *pAISTarget = NULL;
-	if( m_pdecoder ) pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(
-			m_pMMSI_array->Item( selItemID ) );
+	if (m_pdecoder)
+		pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(selItemID));
 
-	if( pAISTarget ) gFrame->JumpToPosition( pAISTarget->Lat, pAISTarget->Lon, cc1->GetVPScale() );
+	if (pAISTarget)
+		gFrame->JumpToPosition(pAISTarget->Lat, pAISTarget->Lon, cc1->GetVPScale());
 }
 
 void AISTargetListDialog::OnTargetCreateWpt( wxCommandEvent& event )
 {
 	long selItemID = -1;
-	selItemID = m_pListCtrlAISTargets->GetNextItem( selItemID, wxLIST_NEXT_ALL,
-			wxLIST_STATE_SELECTED );
-	if( selItemID == -1 ) return;
+	selItemID = m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (selItemID == -1)
+		return;
 
 	AIS_Target_Data *pAISTarget = NULL;
-	if( m_pdecoder ) pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(
-			m_pMMSI_array->Item( selItemID ) );
+	if (m_pdecoder)
+		pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(selItemID));
 
 	if( pAISTarget ) {
 		RoutePoint * pWP = new RoutePoint(pAISTarget->Lat, pAISTarget->Lon, g_default_wp_icon, wxEmptyString);

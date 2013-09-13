@@ -25,7 +25,7 @@
 #include "dychart.h"
 #include "AnnunText.h"
 #include "CDI.h"
-#include "chart1.h"
+#include "MainFrame.h"
 #include "Routeman.h"
 #include "navutil.h"
 #include "FontMgr.h"
@@ -37,7 +37,7 @@
 #include <ctime>
 
 extern Routeman * g_pRouteMan;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 extern bool g_bShowActiveRouteHighway;
 
 enum eMenuItems
@@ -383,7 +383,6 @@ void ConsoleCanvas::ShowWithFreshFonts(void)
 	UpdateFonts();
 	gFrame->PositionConsole();
 	Show();
-
 }
 
 void ConsoleCanvas::UpdateFonts(void)

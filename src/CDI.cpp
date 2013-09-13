@@ -23,6 +23,7 @@
 
 #include "CDI.h"
 #include "Routeman.h"
+#include <MainFrame.h>
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 #include <wx/dcmemory.h>
@@ -44,14 +45,14 @@ CDI::CDI(
 	SetMinSize( wxSize( 10, 150 ) );
 }
 
-void CDI::SetColorScheme(ColorScheme cs)
+void CDI::SetColorScheme(ColorScheme)
 {
 	m_pbackBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("DILG2") ), wxSOLID );
 	m_proadBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("DILG1") ), wxSOLID );
 	m_proadPen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T("CHBLK") ), 1, wxSOLID );
 }
 
-void CDI::OnPaint(wxPaintEvent & event)
+void CDI::OnPaint(wxPaintEvent &)
 {
 	int sx, sy;
 	GetClientSize( &sx, &sy );

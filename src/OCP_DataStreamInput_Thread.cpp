@@ -35,19 +35,19 @@
 
 extern const wxEventType wxEVT_OCPN_DATASTREAM;
 
-#include "chart1.h"
-extern MyFrame *gFrame;
+#include "MainFrame.h"
+extern MainFrame * gFrame;
 
 #ifdef __WXMSW__
 extern int g_total_NMEAerror_messages;
 extern int g_nNMEADebug;
 #endif
 
-typedef enum DS_ENUM_BUFFER_STATE
+enum DS_ENUM_BUFFER_STATE
 {
 	DS_RX_BUFFER_EMPTY,
 	DS_RX_BUFFER_FULL
-}_DS_ENUM_BUFFER_STATE;
+};
 
 
 OCP_DataStreamInput_Thread::OCP_DataStreamInput_Thread(
@@ -639,7 +639,7 @@ void OCP_DataStreamInput_Thread::ThreadMessage(const wxString &msg)
 	wxCommandEvent event( EVT_THREADMSG,  GetId());
 	event.SetEventObject( (wxObject *)this );
 	event.SetString(msg);
-	if( gFrame )
+	if (gFrame)
 		gFrame->GetEventHandler()->AddPendingEvent(event);
 }
 

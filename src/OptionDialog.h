@@ -41,6 +41,7 @@
 
 #include "plugin/PlugInManager.h"
 #include "datastream.h"
+#include <MainFrame.h>
 
 class wxGenericDirCtrl;
 class MyConfig;
@@ -48,6 +49,7 @@ class ChartGroupsUI;
 class ChartGroupArray;
 class ConnectionParams;
 class SentenceListDlg;
+class MainFrame;
 
 #define ID_DIALOG 10001
 
@@ -88,7 +90,7 @@ class options
 	public:
 		options();
 		options(
-				MyFrame * parent,
+				MainFrame * parent,
 				wxWindowID id = ID_DIALOG,
 				const wxString & caption = _T("Options"),
 				const wxPoint & pos = wxDefaultPosition,
@@ -98,7 +100,7 @@ class options
 		~options();
 
 		bool Create(
-				MyFrame * parent,
+				MainFrame * parent,
 				wxWindowID id = ID_DIALOG,
 				const wxString & caption = _T("Options"),
 				const wxPoint & pos = wxDefaultPosition,
@@ -396,7 +398,7 @@ class options
 
 		wxArrayPtrVoid OBJLBoxArray;
 		wxString m_init_chart_dir;
-		MyFrame * pParent;
+		MainFrame * pParent;
 
 		wxArrayString * m_pSerialArray;
 

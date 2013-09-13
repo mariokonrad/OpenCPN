@@ -26,6 +26,7 @@
 #include "StyleManager.h"
 #include "Style.h"
 #include "Routeman.h"
+#include "MainFrame.h"
 
 extern Routeman * g_pRouteMan;
 extern ocpnStyle::StyleManager * g_StyleManager;

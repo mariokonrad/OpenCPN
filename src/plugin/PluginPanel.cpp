@@ -22,10 +22,13 @@
  **************************************************************************/
 
 #include "PluginPanel.h"
-#include "plugin/PlugInManager.h"
-#include "plugin/PluginListPanel.h"
-#include "plugin/PluginListPanel.h"
-#include "chart1.h"
+
+#include <plugin/PlugInManager.h>
+#include <plugin/PluginListPanel.h>
+#include <plugin/PluginListPanel.h>
+
+#include <MainFrame.h>
+
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/statbmp.h>

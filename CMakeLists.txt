@@ -481,7 +481,6 @@ SET(HDRS
 	src/chart/OCPNPattern.h
 	src/chart/Lookup.h
 
-	include/chart1.h
 	include/ocpn_pixel.h
 	include/S57ClassRegistrar.h
 	include/cutil.h
@@ -492,6 +491,7 @@ SET(HDRS
 	include/ocpn_plugin.h
 	include/datastream.h
 	src/MemoryStatus.h
+	src/MainFrame.h
 	src/ChartPlugInWrapper.h
 	src/GUI_IDs.h
 	src/AnchorDist.h
@@ -637,7 +637,7 @@ SET(SRCS
 	src/MemoryStatus.cpp
 	src/AnchorDist.cpp
 	src/SerialPorts.cpp
-	src/chart1.cpp
+	src/MainFrame.cpp
 	src/MessageBox.cpp
 	src/TimedPopupWin.cpp
 	src/AnnunText.cpp

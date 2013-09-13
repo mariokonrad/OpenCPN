@@ -46,7 +46,7 @@
 #include "ConsoleCanvas.h"
 #include "ThumbWin.h"
 #include "WayPointman.h"
-#include "chart1.h"
+#include "MainFrame.h"
 #include "cutil.h"
 #include "RouteProp.h"
 #include "MarkInfo.h"
@@ -189,7 +189,7 @@ extern CM93OffsetDialog  *g_pCM93OffsetDialog;
 extern bool             bGPSValid;
 extern AIS_Decoder      *g_pAIS;
 
-extern MyFrame          *gFrame;
+extern MainFrame          *gFrame;
 extern StatWin          *stats;
 
 //    AIS Global configuration
@@ -489,7 +489,7 @@ END_EVENT_TABLE()
 ChartCanvas::ChartCanvas(wxFrame * frame)
 	: wxWindow(frame, wxID_ANY, wxPoint(20, 20), wxSize(5, 5), wxSIMPLE_BORDER)
 {
-    parent_frame = (MyFrame *)frame;       // save a pointer to parent
+    parent_frame = (MainFrame *)frame;       // save a pointer to parent
 
     SetBackgroundColour(GetGlobalColor(_T("NODTA")));
     SetBackgroundStyle(wxBG_STYLE_CUSTOM);  // on WXMSW, this prevents flashing on color scheme change

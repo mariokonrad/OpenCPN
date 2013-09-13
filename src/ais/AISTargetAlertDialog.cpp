@@ -24,16 +24,16 @@
 #include <wx/html/htmlwin.h>
 
 #include "AISTargetAlertDialog.h"
-#include "AIS_Decoder.h"
-#include "AIS_Target_Data.h"
+#include <ais/AIS_Decoder.h>
+#include <ais/AIS_Target_Data.h>
 #include "FontMgr.h"
 #include <global/OCPN.h>
 #include <global/GUI.h>
 
 extern bool g_bopengl;
-extern AISTargetAlertDialog *g_pais_alert_dialog_active;
-extern MyFrame *gFrame;
-extern ChartCanvas *cc1;
+extern AISTargetAlertDialog * g_pais_alert_dialog_active;
+extern MainFrame * gFrame;
+extern ChartCanvas * cc1;
 
 IMPLEMENT_CLASS(AISTargetAlertDialog, wxDialog)
 
@@ -228,7 +228,8 @@ void AISTargetAlertDialog::OnIdSilenceClick( wxCommandEvent& event )
     //    Set the suppress audio flag
     if( m_pdecoder ) {
         AIS_Target_Data *td = m_pdecoder->Get_Target_Data_From_MMSI( Get_Dialog_MMSI() );
-        if( td ) td->b_suppress_audio = true;
+        if (td)
+			td->b_suppress_audio = true;
     }
 }
 
@@ -236,7 +237,8 @@ void AISTargetAlertDialog::OnIdJumptoClick( wxCommandEvent& event )
 {
     if( m_pdecoder ) {
         AIS_Target_Data *td = m_pdecoder->Get_Target_Data_From_MMSI( Get_Dialog_MMSI() );
-        if( td ) gFrame->JumpToPosition( td->Lat, td->Lon, cc1->GetVPScale() );
+        if (td)
+			gFrame->JumpToPosition( td->Lat, td->Lon, cc1->GetVPScale() );
     }
 }
 

@@ -24,11 +24,11 @@
 #ifndef __ROUTEMAN_H__
 #define __ROUTEMAN_H__
 
-#include <math.h>
+#include <cmath>
 
 #include "App.h"
-#include "chart1.h"
 #include "nmea0183.h"
+#include "ColorScheme.h"
 
 class Route;
 class RoutePoint;
@@ -117,7 +117,7 @@ class Routeman
 		wxBrush * m_pActiveRoutePointBrush;
 		wxBrush * m_pRoutePointBrush;
 
-		NMEA0183    m_NMEA0183; // For autopilot output
+		NMEA0183 m_NMEA0183; // For autopilot output
 
 		double m_arrival_min;
 		int m_arrival_test;

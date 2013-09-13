@@ -25,14 +25,12 @@
 #include "PianoWin.h"
 #include "TextStatWin.h"
 #include "dychart.h"
-#include "chart/ChartDB.h"
-#include "chart1.h"
 #include "StyleManager.h"
 #include "Style.h"
+#include <chart/ChartDB.h>
 
 extern ChartDB *ChartData;
 extern ocpnStyle::StyleManager * g_StyleManager;
-extern MyFrame *gFrame;
 
 BEGIN_EVENT_TABLE(StatWin, wxDialog)
 	EVT_PAINT(StatWin::OnPaint)
@@ -149,5 +147,10 @@ void StatWin::SetColorScheme( ColorScheme cs )
 	pPiano->SetColorScheme( cs );
 
 	Refresh();
+}
+
+int StatWin::GetRows() const
+{
+	return m_rows;
 }
 

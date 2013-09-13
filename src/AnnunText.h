@@ -25,11 +25,12 @@
 #define __ANNUNTEXT__H__
 
 #include <wx/window.h>
-#include "chart1.h"
+#include <ColorScheme.h>
 
 class AnnunText : public wxWindow
 {
-	DECLARE_EVENT_TABLE()
+		DECLARE_EVENT_TABLE()
+
 	public:
 		AnnunText(
 				wxWindow * parent,

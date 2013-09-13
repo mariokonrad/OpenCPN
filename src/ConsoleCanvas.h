@@ -25,12 +25,14 @@
 #define __CONCANV_H__
 
 #include <wx/dialog.h>
-#include "chart1.h"
+#include <ColorScheme.h>
 
 #define ID_LEGROUTE 1000
 
 class AnnunText;
 class CDI;
+class wxBoxSizer;
+class wxStaticText;
 
 class ConsoleCanvas : public wxDialog
 {

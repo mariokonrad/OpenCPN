@@ -24,12 +24,16 @@
 #ifndef __WAYPOINTMAN__H__
 #define __WAYPOINTMAN__H__
 
-#include "chart1.h"
+#include <wx/string.h>
+#include <wx/dynarray.h>
+#include <ColorScheme.h>
 
 namespace ocpnStyle { class Style; }
 
 class RoutePoint;
 class RoutePointList;
+class wxImageList;
+class wxBitmap;
 
 class WayPointman
 {

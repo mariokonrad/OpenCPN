@@ -22,13 +22,15 @@
  **************************************************************************/
 
 #include "ThumbWin.h"
-#include "chart1.h"
 #include <chart/ChartBase.h>
+#include <MainFrame.h>
 
 #include <cstdlib>
 #include <cmath>
 #include <ctime>
 #include <algorithm>
+
+#include <wx/dcclient.h>
 
 
 BEGIN_EVENT_TABLE(ThumbWin, wxWindow)

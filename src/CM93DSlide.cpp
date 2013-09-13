@@ -24,7 +24,6 @@
 #include <wx/slider.h>
 
 #include "CM93DSlide.h"
-#include "chart1.h"
 #include "chcanv.h"
 
 #define ID_CM93ZOOMG    102

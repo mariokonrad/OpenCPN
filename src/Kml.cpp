@@ -30,7 +30,7 @@
 #include <wx/datetime.h>
 #include <wx/clipbrd.h>
 
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 extern double gLat;
 extern double gLon;
 
@@ -542,7 +542,7 @@ wxString Kml::MakeKmlFromWaypoint(RoutePoint * routepoint)
 
 void Kml::CopyRouteToClipboard( Route* route )
 {
-	KmlFormatDialog* formatDlg = new KmlFormatDialog( gFrame );
+	KmlFormatDialog* formatDlg = new KmlFormatDialog(gFrame);
 	int format = formatDlg->ShowModal();
 
 	if( format != wxID_CANCEL ) {

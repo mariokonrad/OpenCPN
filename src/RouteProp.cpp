@@ -32,7 +32,6 @@
 #include "navutil.h"
 #include "Track.h"
 #include "georef.h"
-#include "chart1.h"
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"
@@ -66,7 +65,7 @@ extern Track * g_pActiveTrack;
 extern RouteList * pRouteList;
 extern PlugInManager * g_pi_manager;
 
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 
 // Global print data, to remember settings during the session
 extern wxPrintData * g_printData;
@@ -229,12 +228,6 @@ int getDaylightStatus( double lat, double lon, wxDateTime utcDateTime )
 		if( sunrise < 0. ) return ( 0 );
 		else
 			sunrise = getLMT( sunrise, lon );
-
-		//            msg.Printf(_T("getDaylightEvent lat=%f lon=%f\n riset=%d rsalt=%f\n y=%d m=%d d=%d\n sun=%f lt=%f\n ut=%f\n"),
-		// lat, lon, +1, rsalt, y, m, d, sunrise, lt, ut);
-		//msg.Append(utcDateTime.Format());
-		//            OCPNMessageDialog md1(gFrame, msg, _("Sunrise Message"), wxICON_ERROR );
-		//            md1.ShowModal();
 
 		if( fabs( lt - sunrise ) < 0.15 ) return ( SUNRISE );
 		if( lt > sunrise ) return ( DAY );
@@ -852,7 +845,6 @@ void RouteProp::OnRoutepropListClick( wxListEvent& event )
 			}
 
 			gFrame->JumpToPosition( prp->m_lat, prp->m_lon, cc1->GetVPScale() );
-
 		}
 	}
 }

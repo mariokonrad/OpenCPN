@@ -24,7 +24,7 @@
 #include "PianoWin.h"
 #include "StyleManager.h"
 #include "Style.h"
-#include "chart/ChartDB.h"
+#include <chart/ChartDB.h>
 
 BEGIN_EVENT_TABLE(PianoWin, wxWindow)
 	EVT_PAINT(PianoWin::OnPaint)
@@ -34,7 +34,7 @@ END_EVENT_TABLE()
 
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern ChartDB * ChartData;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 
 PianoWin::PianoWin(wxFrame *frame)
 	: wxWindow(frame, wxID_ANY, wxPoint( 20, 20 ), wxSize( 5, 5 ), wxNO_BORDER)
@@ -336,28 +336,28 @@ void PianoWin::MouseEvent( wxMouseEvent& event )
 	if( event.LeftDown() ) {
 
 		if( -1 != sel_index ) {
-			gFrame->HandlePianoClick( sel_index, sel_dbindex );
+			gFrame->HandlePianoClick(sel_index, sel_dbindex);
 			gFrame->Raise();
 		}
 	}
 
 	else if( event.RightDown() ) {
 		if( -1 != sel_index ) {
-			gFrame->HandlePianoRClick( x, y, sel_index, sel_dbindex );
+			gFrame->HandlePianoRClick(x, y, sel_index, sel_dbindex);
 			gFrame->Raise();
 		}
 	}
 
 	else if(!event.ButtonUp()){
 		if( sel_index != m_hover_last ) {
-			gFrame->HandlePianoRollover( sel_index, sel_dbindex );
+			gFrame->HandlePianoRollover(sel_index, sel_dbindex);
 			m_hover_last = sel_index;
 		}
 	}
 
 	if( event.Leaving() ) {
-		gFrame->HandlePianoRollover( -1, -1 );
-		gFrame->HandlePianoRolloverIcon( -1, -1 );
+		gFrame->HandlePianoRollover(-1, -1);
+		gFrame->HandlePianoRolloverIcon(-1, -1);
 
 		m_index_last = -1;
 		m_hover_icon_last = -1;

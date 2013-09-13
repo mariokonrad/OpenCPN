@@ -27,7 +27,7 @@
 #define __MARKINFO__H__
 
 #include "RoutePoint.h"
-#include "chart1.h"
+#include <ColorScheme.h>
 
 #include <wx/dialog.h>
 

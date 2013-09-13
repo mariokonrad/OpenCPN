@@ -26,11 +26,15 @@
 #include <wx/textfile.h>
 #include <wx/ffile.h>
 #include <wx/clipbrd.h>
+#include <wx/sizer.h>
+#include <wx/log.h>
+#include <wx/button.h>
+#include <wx/bmpbuttn.h>
+#include <wx/dataobj.h>
 #include <wx/html/htmlwin.h>
 
 #include <version.h>
 
-#include "chart1.h"
 #include "chcanv.h"
 #include "StyleManager.h"
 #include "Style.h"
@@ -43,8 +47,8 @@ wxString str_version_patch = wxString::Format(wxT("%i"),VERSION_PATCH);
 wxString str_version_date(VERSION_DATE, wxConvUTF8);
 wxString OpenCPNVersion = str_version_start + str_version_major + wxT(".") + str_version_minor + wxT(".") + str_version_patch + wxT(" Build ") + str_version_date;
 
-extern wxString         glog_file;
-extern wxString         gConfig_File;
+extern wxString glog_file;
+extern wxString gConfig_File;
 extern ocpnStyle::StyleManager * g_StyleManager;
 
 static char AboutText[] =
@@ -362,12 +366,12 @@ void AboutDialog::CreateControls()
 }
 
 
-void AboutDialog::OnXidOkClick( wxCommandEvent& event )
+void AboutDialog::OnXidOkClick(wxCommandEvent &)
 {
 	Close();
 }
 
-void AboutDialog::OnDonateClick( wxCommandEvent& event )
+void AboutDialog::OnDonateClick(wxCommandEvent &)
 {
 	wxLaunchDefaultBrowser(_T("https://sourceforge.net/donate/index.php?group_id=180842"));
 }

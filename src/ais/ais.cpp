@@ -34,18 +34,16 @@
 
 #include "ais/ais.h"
 #include "dychart.h"
-#include "chart1.h"
-#include "navutil.h"        // for Select
+#include "navutil.h"
 #include "georef.h"
 #include "StyleManager.h"
 #include "datastream.h"
 #include "Select.h"
 
-extern  int             s_dns_test_flag;
-extern  Select          *pSelectAIS;
-extern  double          gLat, gLon;
+extern int             s_dns_test_flag;
+extern Select          *pSelectAIS;
+extern double          gLat, gLon;
 extern ChartCanvas      *cc1;
-extern MyFrame          *gFrame;
 extern bool             g_bopengl;
 
 //    AIS Global configuration

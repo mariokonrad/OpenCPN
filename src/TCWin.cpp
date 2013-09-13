@@ -30,9 +30,12 @@
 #include "cutil.h"
 #include "ColorScheme.h"
 #include "MicrosoftCompatibility.h"
+#include <MainFrame.h>
 #include <tide/tide_time.h>
 #include <tide/IDX_entry.h>
 #include <algorithm>
+
+#include <wx/button.h>
 
 extern ColorScheme global_color_scheme;
 extern IDX_entry * gpIDX;

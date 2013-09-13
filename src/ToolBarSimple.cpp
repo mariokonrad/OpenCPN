@@ -25,7 +25,7 @@
 #include "navutil.h"
 #include "StyleManager.h"
 #include "Style.h"
-#include "chart1.h"
+#include "MainFrame.h"
 #include "plugin/PlugInManager.h"
 #include "FontMgr.h"
 #include "GrabberWin.h"
@@ -38,7 +38,7 @@
 extern OCPNFloatingToolbarDialog * g_FloatingToolbarDialog;
 extern ToolBarSimple * g_toolbar;
 extern ocpnStyle::StyleManager * g_StyleManager;
-extern MyFrame * gFrame;
+extern MainFrame * gFrame;
 extern wxMenu * g_FloatingToolbarConfigMenu;
 
 BEGIN_EVENT_TABLE(ToolBarSimple, wxControl)
@@ -465,10 +465,11 @@ void ToolBarSimple::OnKillFocus( wxFocusEvent& WXUNUSED(event) )
 
 void ToolBarSimple::OnToolTipTimerEvent( wxTimerEvent& event )
 {
-	if( !gFrame->IsActive() ) return;
+	if (!gFrame->IsActive())
+		return;
 
-	if( m_btooltip_show && IsShown() && m_pToolTipWin && ( !m_pToolTipWin->IsShown() ) ) {
-		if( m_last_ro_tool ) {
+	if (m_btooltip_show && IsShown() && m_pToolTipWin && (!m_pToolTipWin->IsShown())) {
+		if (m_last_ro_tool) {
 			wxString s = m_last_ro_tool->GetShortHelp();
 
 			if( s.Len() ) {

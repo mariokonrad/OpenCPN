@@ -45,7 +45,6 @@
 #endif
 
 #include "OptionDialog.h"
-#include <SerialPorts.h>
 #include "dychart.h"
 #include "MainFrame.h"
 #include "StyleManager.h"
@@ -62,7 +61,9 @@
 #include "OptionIDs.h"
 #include "LanguageList.h"
 
+#include <SerialPorts.h>
 #include <ChartCanvas.h>
+#include <DimeControl.h>
 
 #include <chart/ChartDB.h>
 
@@ -2089,7 +2090,7 @@ void options::SetInitialSettings()
 
 }
 
-void options::OnShowGpsWindowCheckboxClick( wxCommandEvent& event )
+void options::OnShowGpsWindowCheckboxClick(wxCommandEvent &)
 {
 	if( !m_cbNMEADebug->GetValue() ) {
 		NMEALogWindow::Get().DestroyWindow();
@@ -2099,7 +2100,7 @@ void options::OnShowGpsWindowCheckboxClick( wxCommandEvent& event )
 	}
 }
 
-void options::OnZTCCheckboxClick( wxCommandEvent& event )
+void options::OnZTCCheckboxClick(wxCommandEvent &)
 {
 	if( pEnableZoomToCursor->GetValue() ) {
 		pSmoothPanZoom->Disable();
@@ -2108,7 +2109,7 @@ void options::OnZTCCheckboxClick( wxCommandEvent& event )
 	}
 }
 
-void options::OnShipTypeSelect( wxCommandEvent& event )
+void options::OnShipTypeSelect(wxCommandEvent & event)
 {
 	if( m_pShipIconType->GetSelection() == 0 ) {
 		realSizes->ShowItems( false );
@@ -2122,7 +2123,7 @@ void options::OnShipTypeSelect( wxCommandEvent& event )
 	event.Skip();
 }
 
-void options::OnRadarringSelect( wxCommandEvent& event )
+void options::OnRadarringSelect(wxCommandEvent & event)
 {
 	if( pNavAidRadarRingsNumberVisible->GetSelection() == 0 ) {
 		radarGrid->ShowItems( false );
@@ -2136,7 +2137,7 @@ void options::OnRadarringSelect( wxCommandEvent& event )
 	event.Skip();
 }
 
-void options::OnDisplayCategoryRadioButton( wxCommandEvent& event )
+void options::OnDisplayCategoryRadioButton(wxCommandEvent & event)
 {
 	int select = pDispCat->GetSelection();
 
@@ -2155,7 +2156,7 @@ void options::OnDisplayCategoryRadioButton( wxCommandEvent& event )
 	event.Skip();
 }
 
-void options::OnButtonClearClick( wxCommandEvent& event )
+void options::OnButtonClearClick(wxCommandEvent & event)
 {
 	int nOBJL = ps57CtlListBox->GetCount();
 	for( int iPtr = 0; iPtr < nOBJL; iPtr++ )
@@ -2816,7 +2817,7 @@ void options::OnDebugcheckbox1Click( wxCommandEvent& event )
 	event.Skip();
 }
 
-void options::OnCancelClick( wxCommandEvent& event )
+void options::OnCancelClick(wxCommandEvent &)
 {
 	//  Required to avoid intermittent crash on wxGTK
 	m_pListbook->ChangeSelection(0);
@@ -3035,7 +3036,7 @@ void options::OnPageChange( wxListbookEvent& event )
 	}
 }
 
-void options::OnButtonSelectSound( wxCommandEvent& event )
+void options::OnButtonSelectSound(wxCommandEvent &)
 {
 	wxString sound_dir = g_SData_Locn;
 	sound_dir.Append( _T("sounds") );
@@ -3055,7 +3056,7 @@ void options::OnButtonSelectSound( wxCommandEvent& event )
 	}
 }
 
-void options::OnButtonTestSound( wxCommandEvent& event )
+void options::OnButtonTestSound(wxCommandEvent &)
 {
 
 	OCPN_Sound AIS_Sound;
@@ -3164,7 +3165,7 @@ wxString GetOCPNKnownLanguage( wxString lang_canonical, wxString *lang_dir )
 
 }
 
-void options::OnInsertTideDataLocation( wxCommandEvent &event )
+void options::OnInsertTideDataLocation(wxCommandEvent &)
 {
 	wxString sel_file;
 	int response = wxID_CANCEL;
@@ -3196,7 +3197,7 @@ void options::OnInsertTideDataLocation( wxCommandEvent &event )
 	}
 }
 
-void options::OnRemoveTideDataLocation( wxCommandEvent &event )
+void options::OnRemoveTideDataLocation(wxCommandEvent &)
 {
 	wxArrayInt sels;
 	int nSel = tcDataSelected->GetSelections(sels);
@@ -3446,7 +3447,7 @@ void options::SetConnectionParams(ConnectionParams *cp)
 	m_connection_enabled = cp->bEnabled;
 }
 
-void options::OnAddDatasourceClick( wxCommandEvent& event )
+void options::OnAddDatasourceClick(wxCommandEvent &)
 {
 	connectionsaved = false;
 	ConnectionParams *cp = new ConnectionParams();
@@ -3508,7 +3509,7 @@ void options::FillSourceList()
 	m_lcSources->SortItems( SortConnectionOnPriority, (long) m_lcSources );
 }
 
-void options::OnRemoveDatasourceClick( wxCommandEvent& event )
+void options::OnRemoveDatasourceClick(wxCommandEvent &)
 {
 	long itemIndex = -1;
 	for ( ;; ) {

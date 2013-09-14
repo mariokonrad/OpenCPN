@@ -26,7 +26,9 @@
 #include "RouteProp.h"
 #include "LatLonTextCtrl.h"
 #include "navutil.h"
+
 #include <ChartCanvas.h>
+#include <DimeControl.h>
 
 #include <wx/sizer.h>
 #include <wx/stattext.h>

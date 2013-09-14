@@ -40,7 +40,9 @@
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"
 #include "NavObjectCollection.h"
+
 #include <ViewPort.h>
+#include <DimeControl.h>
 #include <ChartCanvas.h>
 
 #include <plugin/OCPN_MsgEvent.h>
@@ -134,7 +136,7 @@ PlugInManager::PlugInManager(MainFrame *parent)
     MainFrame *pFrame = GetParentFrame();
     if(pFrame)
     {
-        m_plugin_menu_item_id_next = pFrame->GetCanvasWindow()->GetNextContextMenuId();
+        m_plugin_menu_item_id_next = pFrame->GetCanvasWindow()->GetNextContextMenuId(); // FIXME: interface transition
         m_plugin_tool_id_next = pFrame->GetNextToolbarToolId();
     }
 

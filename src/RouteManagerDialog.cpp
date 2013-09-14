@@ -38,6 +38,7 @@
 #include "Undo.h"
 
 #include <ChartCanvas.h>
+#include <DimeControl.h>
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
@@ -128,7 +129,7 @@ extern RouteProp * pRoutePropDialog;
 extern TrackPropDlg * pTrackPropDialog;
 extern Routeman * g_pRouteMan;
 extern MyConfig * pConfig;
-extern ChartCanvas *cc1;
+extern ChartCanvas * cc1;
 extern ChartBase * Current_Ch;
 extern Track * g_pActiveTrack;
 extern WayPointman * pWayPointMan;
@@ -898,7 +899,7 @@ void RouteManagerDialog::UpdateRteButtons()
 	m_lastRteItem = selected_index_index;
 
 	btnRteDelete->Enable( m_pRouteListCtrl->GetSelectedItemCount() > 0 );
-	btnRteZoomto->Enable( enable1 ); // && !cc1->m_bFollow);
+	btnRteZoomto->Enable( enable1 );
 	btnRteProperties->Enable( enable1 );
 	btnRteReverse->Enable( enable1 );
 	btnRteExport->Enable( enablemultiple );

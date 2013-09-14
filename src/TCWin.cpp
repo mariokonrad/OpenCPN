@@ -29,8 +29,10 @@
 #include "cutil.h"
 #include "ColorScheme.h"
 #include "MicrosoftCompatibility.h"
+
 #include <MainFrame.h>
 #include <ChartCanvas.h>
+#include <DimeControl.h>
 
 #include <tide/tide_time.h>
 #include <tide/IDX_entry.h>
@@ -278,7 +280,7 @@ TCWin::~TCWin()
 	pParent->Refresh( false );
 }
 
-void TCWin::OKEvent( wxCommandEvent& event )
+void TCWin::OKEvent(wxCommandEvent & WXUNUSED(event))
 {
 	Hide();
 	pParent->pCwin = NULL;
@@ -289,7 +291,7 @@ void TCWin::OKEvent( wxCommandEvent& event )
 	Destroy();                          // that hurts
 }
 
-void TCWin::OnCloseWindow( wxCloseEvent& event )
+void TCWin::OnCloseWindow(wxCloseEvent & WXUNUSED(event))
 {
 	Hide();
 	pParent->pCwin = NULL;
@@ -300,7 +302,7 @@ void TCWin::OnCloseWindow( wxCloseEvent& event )
 	Destroy();                          // that hurts
 }
 
-void TCWin::NXEvent( wxCommandEvent& event )
+void TCWin::NXEvent(wxCommandEvent & WXUNUSED(event))
 {
 	wxTimeSpan dt( 24, 0, 0, 0 );
 	m_graphday.Add( dt );
@@ -320,7 +322,7 @@ void TCWin::NXEvent( wxCommandEvent& event )
 
 }
 
-void TCWin::PREvent( wxCommandEvent& event )
+void TCWin::PREvent(wxCommandEvent & WXUNUSED(event))
 {
 	wxTimeSpan dt( -24, 0, 0, 0 );
 	m_graphday.Add( dt );
@@ -354,7 +356,7 @@ void TCWin::RePosition( void )
 	Move( r );
 }
 
-void TCWin::OnPaint( wxPaintEvent& event )
+void TCWin::OnPaint(wxPaintEvent & WXUNUSED(event))
 {
 	int x, y;
 	int i;
@@ -655,7 +657,7 @@ void TCWin::OnPaint( wxPaintEvent& event )
 	}
 }
 
-void TCWin::OnSize( wxSizeEvent& event )
+void TCWin::OnSize(wxSizeEvent & WXUNUSED(event))
 {
 	int width, height;
 	GetClientSize( &width, &height );
@@ -663,17 +665,17 @@ void TCWin::OnSize( wxSizeEvent& event )
 	GetPosition( &x, &y );
 }
 
-void TCWin::MouseEvent( wxMouseEvent& event )
+void TCWin::MouseEvent(wxMouseEvent & event)
 {
-	event.GetPosition( &curs_x, &curs_y );
-
-	if( !m_TCWinPopupTimer.IsRunning() ) m_TCWinPopupTimer.Start( 20, wxTIMER_ONE_SHOT );
+	event.GetPosition(&curs_x, &curs_y);
+	if (!m_TCWinPopupTimer.IsRunning())
+		m_TCWinPopupTimer.Start( 20, wxTIMER_ONE_SHOT );
 }
 
-void TCWin::OnTCWinPopupTimerEvent( wxTimerEvent& event )
+void TCWin::OnTCWinPopupTimerEvent(wxTimerEvent & WXUNUSED(event))
 {
-
-	int x, y;
+	int x;
+	int y;
 	bool ShowRollover;
 
 	GetClientSize( &x, &y );

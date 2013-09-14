@@ -22,9 +22,11 @@
  **************************************************************************/
 
 #include "S57QueryDialog.h"
-#include <ChartCanvas.h>
+#include <DimeControl.h>
+#include <ColorScheme.h>
 
 #include <wx/sizer.h>
+#include <wx/html/htmlwin.h>
 
 extern ColorScheme global_color_scheme;
 extern S57QueryDialog * g_pObjectQueryDialog;

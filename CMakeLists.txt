@@ -489,6 +489,7 @@ SET(HDRS
 	include/tcmgr.h
 	include/ocpn_plugin.h
 	include/datastream.h
+	src/DimeControl.h
 	src/ChartCanvas.h
 	src/MemoryStatus.h
 	src/MainFrame.h
@@ -650,6 +651,7 @@ SET(SRCS
 	src/OCPNMemDC.cpp
 	src/OCPNBitmap.cpp
 	src/ocpnDC.cpp
+	src/DimeControl.cpp
 	src/ChartCanvas.cpp
 	src/App.cpp
 	src/TCWin.cpp

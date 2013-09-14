@@ -26,7 +26,7 @@
 #include <chart/CM93Chart.h>
 #include <chart/OCPNOffsetListCtrl.h>
 #include <chart/COVR_Set.h>
-#include <ChartCanvas.h>
+#include <DimeControl.h>
 #include <wx/sizer.h>
 #include <wx/button.h>
 

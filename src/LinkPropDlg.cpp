@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "LinkPropDlg.h"
-#include <ChartCanvas.h>
+#include <DimeControl.h>
 
 LinkPropDialog::LinkPropDialog(
 		wxWindow * parent,

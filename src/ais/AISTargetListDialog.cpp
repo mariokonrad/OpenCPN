@@ -21,21 +21,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <wx/textctrl.h>
-#include <wx/sizer.h>
-#include <wx/tokenzr.h>
-
 #include "AISTargetListDialog.h"
-#include <ais/ais.h>
-#include <ais/AIS_Decoder.h>
-#include <ais/AIS_Target_Data.h>
-#include <ChartCanvas.h>
 #include "OCPNListCtrl.h"
 #include "StyleManager.h"
 #include "Style.h"
 #include "Select.h"
 #include "RouteManagerDialog.h"
 #include "Undo.h"
+
+#include <ChartCanvas.h>
+#include <DimeControl.h>
+
+#include <ais/ais.h>
+#include <ais/AIS_Decoder.h>
+#include <ais/AIS_Target_Data.h>
+
+#include <wx/textctrl.h>
+#include <wx/sizer.h>
+#include <wx/tokenzr.h>
 
 static AIS_Decoder * s_p_sort_decoder;
 
@@ -73,19 +76,19 @@ static int ItemCompare(AIS_Target_Data *pAISTarget1, AIS_Target_Data *pAISTarget
 	AIS_Target_Data *t1 = pAISTarget1;
 	AIS_Target_Data *t2 = pAISTarget2;
 
-    if( t1->Class == AIS_SART ) {
-        if( t2->Class == AIS_DSC )
-            return 0;
-        else
-            return -1;
-    }
-    
-    if( t2->Class == AIS_SART ) {
-        if( t1->Class == AIS_DSC )
-            return 0;
-        else
-            return 1;
-    }
+	if( t1->Class == AIS_SART ) {
+		if( t2->Class == AIS_DSC )
+			return 0;
+		else
+			return -1;
+	}
+
+	if( t2->Class == AIS_SART ) {
+		if( t1->Class == AIS_DSC )
+			return 0;
+		else
+			return 1;
+	}
 
 	switch( g_AisTargetList_sortColumn ){
 		case tlNAME:
@@ -231,14 +234,14 @@ static int ItemCompare(AIS_Target_Data *pAISTarget1, AIS_Target_Data *pAISTarget
 						break;
 					}
 		case tlRNG: {
-			n1 = t1->Range_NM;
-			n2 = t2->Range_NM;
-			b_cmptype_num = true;
-			break;
-			}
+						n1 = t1->Range_NM;
+						n2 = t2->Range_NM;
+						b_cmptype_num = true;
+						break;
+					}
 
 		default:
-			break;
+					break;
 	}
 
 	if( !b_cmptype_num ) {

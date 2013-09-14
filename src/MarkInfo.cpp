@@ -32,6 +32,7 @@
 #include "RouteManagerDialog.h"
 
 #include <ChartCanvas.h>
+#include <DimeControl.h>
 
 #include <wx/notebook.h>
 #include <wx/sizer.h>

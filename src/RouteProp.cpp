@@ -43,6 +43,7 @@
 #include "gpx/gpx.h"
 
 #include <ChartCanvas.h>
+#include <DimeControl.h>
 
 #include <tide/IDX_entry.h>
 
@@ -342,7 +343,7 @@ RouteProp::RouteProp( wxWindow* parent, wxWindowID id, const wxString& caption, 
 	Centre();
 }
 
-void RouteProp::OnRoutePropRightClick( wxListEvent &event )
+void RouteProp::OnRoutePropRightClick(wxListEvent &)
 {
 	wxMenu menu;
 
@@ -363,7 +364,7 @@ void RouteProp::OnRoutePropRightClick( wxListEvent &event )
 	PopupMenu( &menu );
 }
 
-void RouteProp::OnRoutepropSplitClick( wxCommandEvent& event )
+void RouteProp::OnRoutepropSplitClick(wxCommandEvent &)
 {
 	m_SplitButton->Enable( false );
 
@@ -420,7 +421,7 @@ void RouteProp::OnRoutepropSplitClick( wxCommandEvent& event )
 
 
 // slot on pressed button "Print Route" with selection of the route properties to print
-void RouteProp::OnRoutepropPrintClick( wxCommandEvent& event )
+void RouteProp::OnRoutepropPrintClick(wxCommandEvent &)
 {
 
 	if (pRoutePrintSelection == NULL)
@@ -431,7 +432,7 @@ void RouteProp::OnRoutepropPrintClick( wxCommandEvent& event )
 	pRoutePrintSelection=NULL;
 }
 
-void RouteProp::OnRoutepropExtendClick( wxCommandEvent& event )
+void RouteProp::OnRoutepropExtendClick(wxCommandEvent &)
 {
 	m_ExtendButton->Enable( false );
 
@@ -450,7 +451,7 @@ void RouteProp::OnRoutepropExtendClick( wxCommandEvent& event )
 	} // end route extend
 }
 
-void RouteProp::OnRoutepropCopyTxtClick( wxCommandEvent& event )
+void RouteProp::OnRoutepropCopyTxtClick(wxCommandEvent &)
 {
 	wxString tab("\t", wxConvUTF8);
 	wxString eol("\n", wxConvUTF8);
@@ -818,7 +819,7 @@ void RouteProp::CreateControls()
 }
 
 
-void RouteProp::OnRoutepropListClick( wxListEvent& event )
+void RouteProp::OnRoutepropListClick(wxListEvent & event)
 {
 	long itemno = 0;
 	m_nSelected = 0;
@@ -890,9 +891,9 @@ void RouteProp::OnRoutePropMenuSelected( wxCommandEvent& event )
 	}
 }
 
-void RouteProp::SetColorScheme( ColorScheme cs )
+void RouteProp::SetColorScheme(ColorScheme)
 {
-	DimeControl( this );
+	DimeControl(this);
 }
 
 /*
@@ -1519,7 +1520,7 @@ bool RouteProp::SaveChanges( void )
 	return true;
 }
 
-void RouteProp::OnPlanSpeedCtlUpdated( wxCommandEvent& event )
+void RouteProp::OnPlanSpeedCtlUpdated(wxCommandEvent & event)
 {
 	//  Fetch the value, and see if it is a "reasonable" speed
 	wxString spd = m_PlanSpeedCtl->GetValue();
@@ -1534,7 +1535,7 @@ void RouteProp::OnPlanSpeedCtlUpdated( wxCommandEvent& event )
 	event.Skip();
 }
 
-void RouteProp::OnStartTimeCtlUpdated( wxCommandEvent& event )
+void RouteProp::OnStartTimeCtlUpdated(wxCommandEvent & event)
 {
 	//  Fetch the value, and see if it is a "reasonable" time
 	wxString stime = m_StartTimeCtl->GetValue();
@@ -1568,18 +1569,16 @@ void RouteProp::OnStartTimeCtlUpdated( wxCommandEvent& event )
 	}
 
 	UpdateProperties();
-
-	//    event.Skip();
 }
 
-void RouteProp::OnTimeZoneSelected( wxCommandEvent& event )
+void RouteProp::OnTimeZoneSelected(wxCommandEvent & event)
 {
 	UpdateProperties();
 
 	event.Skip();
 }
 
-void RouteProp::OnRoutepropCancelClick( wxCommandEvent& event )
+void RouteProp::OnRoutepropCancelClick(wxCommandEvent & event)
 {
 	//    Look in the route list to be sure the raoute is still available
 	//    (May have been deleted by RouteMangerDialog...)
@@ -1643,7 +1642,7 @@ void RouteProp::OnRoutepropOkClick( wxCommandEvent& event )
 
 }
 
-void RouteProp::OnEvtColDragEnd( wxListEvent& event )
+void RouteProp::OnEvtColDragEnd(wxListEvent &)
 {
 	m_wpList->Refresh();
 }

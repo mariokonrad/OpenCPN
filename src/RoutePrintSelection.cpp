@@ -24,7 +24,8 @@
 #include "RoutePrintSelection.h"
 #include "RoutePrintout.h"
 #include "MessageBox.h"
-#include <ChartCanvas.h>
+
+#include <DimeControl.h>
 
 // Global print data, to remember settings during the session
 extern wxPrintData * g_printData;
@@ -149,9 +150,9 @@ void RoutePrintSelection::CreateControls()
 	SetColorScheme( ( ColorScheme )0 );
 }
 
-void RoutePrintSelection::SetColorScheme( ColorScheme cs )
+void RoutePrintSelection::SetColorScheme(ColorScheme)
 {
-	DimeControl( this );
+	DimeControl(this);
 }
 
 bool RoutePrintSelection::ShowToolTips()
@@ -161,7 +162,7 @@ bool RoutePrintSelection::ShowToolTips()
 
 void RoutePrintSelection::SetDialogTitle(const wxString & title)
 {
-	SetTitle( title );
+	SetTitle(title);
 }
 
 void RoutePrintSelection::OnRoutepropCancelClick( wxCommandEvent& event )

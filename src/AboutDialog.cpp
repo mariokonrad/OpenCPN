@@ -22,6 +22,12 @@
  **************************************************************************/
 
 #include "AboutDialog.h"
+#include "StyleManager.h"
+#include "Style.h"
+
+#include <ChartCanvas.h>
+#include <DimeControl.h>
+#include <version.h>
 
 #include <wx/textfile.h>
 #include <wx/textctrl.h>
@@ -33,13 +39,6 @@
 #include <wx/bmpbuttn.h>
 #include <wx/dataobj.h>
 #include <wx/html/htmlwin.h>
-
-#include <ChartCanvas.h>
-#include <version.h>
-
-#include "StyleManager.h"
-#include "Style.h"
-#include "version.h"
 
 wxString str_version_start = wxT("\n      Version ");
 wxString str_version_major = wxString::Format(wxT("%i"),VERSION_MAJOR);
@@ -397,7 +396,6 @@ void AboutDialog::OnCopyClick( wxCommandEvent& event )
 	}
 
 	file.Close();
-	int length = fileContent.Length();
 
 	if( event.GetId() == ID_COPYLOG ) {
 		wxString lastLogs = fileContent;

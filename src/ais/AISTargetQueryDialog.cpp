@@ -21,22 +21,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
-#include <wx/html/htmlwin.h>
-
 #include "AISTargetQueryDialog.h"
-#include "ChartCanvas.h"
 #include "navutil.h"
-#include "ais.h"
 #include "FontMgr.h"
-#include "AIS_Target_Data.h"
-#include "AIS_Decoder.h"
 #include "Select.h"
 #include "RouteManagerDialog.h"
 #include "Undo.h"
+
+#include <ChartCanvas.h>
+#include <DimeControl.h>
+
+#include <ais/ais.h>
+#include <ais/AIS_Target_Data.h>
+#include <ais/AIS_Decoder.h>
+
 #include <global/OCPN.h>
 #include <global/GUI.h>
+
+#include <wx/html/htmlwin.h>
 
 extern AISTargetQueryDialog * g_pais_query_dialog_active;
 extern ColorScheme global_color_scheme;
@@ -90,18 +92,19 @@ void AISTargetQueryDialog::Init()
 	m_okButton = NULL;
 
 }
-void AISTargetQueryDialog::OnClose(wxCloseEvent & event)
+
+void AISTargetQueryDialog::OnClose(wxCloseEvent &)
 {
 	Destroy();
 	g_pais_query_dialog_active = NULL;
 }
 
-void AISTargetQueryDialog::OnIdOKClick(wxCommandEvent & event)
+void AISTargetQueryDialog::OnIdOKClick(wxCommandEvent &)
 {
 	Close();
 }
 
-void AISTargetQueryDialog::OnIdWptCreateClick(wxCommandEvent & event)
+void AISTargetQueryDialog::OnIdWptCreateClick(wxCommandEvent &)
 {
 	if( m_MMSI != 0 ) { //  Faulty MMSI could be reported as 0
 		AIS_Target_Data *td = g_pAIS->Get_Target_Data_From_MMSI( m_MMSI );
@@ -126,7 +129,7 @@ bool AISTargetQueryDialog::Create(
 		const wxString & caption,
 		const wxPoint & pos,
 		const wxSize & size,
-		long style)
+		long WXUNUSED(style))
 {
 	//    As a display optimization....
 	//    if current color scheme is other than DAY,
@@ -191,9 +194,10 @@ void AISTargetQueryDialog::UpdateText()
 {
 	wxString html;
 
-	if( !m_pQueryTextCtl ) return;
+	if (!m_pQueryTextCtl)
+		return;
 
-	DimeControl( this );
+	DimeControl(this);
 	wxColor bg = GetBackgroundColour();
 	m_pQueryTextCtl->SetBackgroundColour( bg );
 

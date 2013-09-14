@@ -202,11 +202,10 @@ void AIS_Decoder::BuildERIShipTypeHash(void)
 //----------------------------------------------------------------------------------
 //     Handle events from AIS DataStream
 //----------------------------------------------------------------------------------
-void AIS_Decoder::OnEvtAIS( OCPN_DataStreamEvent& event )
+void AIS_Decoder::OnEvtAIS(OCPN_DataStreamEvent & event)
 {
 	wxString message = wxString(event.GetNMEAString().c_str(), wxConvUTF8);
 
-	int nr = 0;
 	if( !message.IsEmpty() )
 	{
 		if( message.Mid( 3, 3 ).IsSameAs( _T("VDM") ) ||
@@ -218,7 +217,7 @@ void AIS_Decoder::OnEvtAIS( OCPN_DataStreamEvent& event )
 				message.Mid( 3, 3 ).IsSameAs( _T("OSD") ) ||
 				( g_bWplIsAprsPosition && message.Mid( 3, 3 ).IsSameAs( _T("WPL") ) ) )
 		{
-			nr = Decode( message );
+			Decode(message);
 			gFrame->TouchAISActive();
 		}
 	}
@@ -1783,7 +1782,7 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 	}
 }
 
-void AIS_Decoder::OnTimerAISAudio( wxTimerEvent& event )
+void AIS_Decoder::OnTimerAISAudio(wxTimerEvent &)
 {
 	if( g_bAIS_CPA_Alert_Audio && m_bAIS_Audio_Alert_On ) {
 		if(!m_AIS_Sound.IsOk() )
@@ -1801,7 +1800,7 @@ void AIS_Decoder::OnTimerAISAudio( wxTimerEvent& event )
 	m_AIS_Audio_Alert_Timer.Start( TIMER_AIS_AUDIO_MSEC, wxTIMER_CONTINUOUS );
 }
 
-void AIS_Decoder::OnTimerAIS( wxTimerEvent& event )
+void AIS_Decoder::OnTimerAIS(wxTimerEvent & WXUNUSED(event))
 {
 	TimerAIS.Stop();
 

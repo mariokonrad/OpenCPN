@@ -26,8 +26,9 @@
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"
-#include "chcanv.h"
 #include "Select.h"
+
+#include <ChartCanvas.h>
 
 #include "tinyxml/tinyxml.h"
 

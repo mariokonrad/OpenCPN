@@ -41,7 +41,6 @@
 #include <wx/filesys.h>
 #include <wx/filedlg.h>
 #include <wx/msgdlg.h>
-#include "chcanv.h"
 
 class LinkPropDialog : public wxDialog
 {

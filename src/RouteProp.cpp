@@ -38,12 +38,16 @@
 #include "MessageBox.h"
 #include "RoutePrintout.h"
 #include "RoutePrintSelection.h"
-#include "chcanv.h"
 #include "tcmgr.h"
 #include "PositionParser.h"
-#include "plugin/PlugInManager.h"
-#include "tide/IDX_entry.h"
 #include "gpx/gpx.h"
+
+#include <ChartCanvas.h>
+
+#include <tide/IDX_entry.h>
+
+#include <plugin/PlugInManager.h>
+
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 
@@ -516,7 +520,6 @@ bool RouteProp::IsThisRouteExtendable()
 		else
 			if( pEditRouteArray->GetCount() == 0 ) {
 
-				//int nearby_radius_meters = 8./cc1->GetCanvasScaleFactor(); // "nearby" means 8 pixels away
 				int nearby_radius_meters = (int) ( 8. / cc1->GetCanvasTrueScale() );
 				double rlat = pLastPoint->m_lat;
 				double rlon = pLastPoint->m_lon;

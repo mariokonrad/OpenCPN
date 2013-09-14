@@ -43,7 +43,10 @@
 #include "MicrosoftCompatibility.h"
 #include "GUI_IDs.h"
 #include <MemoryStatus.h>
-#include "plugin/PlugInManager.h"
+#include <CM93DSlide.h>
+#include <ChartCanvas.h>
+
+#include <plugin/PlugInManager.h>
 
 #include <chart/ChartStack.h>
 #include <chart/ChartDB.h>
@@ -51,6 +54,7 @@
 
 #include <ais/AIS_Decoder.h>
 #include <ais/AISTargetAlertDialog.h>
+#include <ais/AISTargetQueryDialog.h>
 
 #include <global/OCPN.h>
 #include <global/OCPN_GUI.h>

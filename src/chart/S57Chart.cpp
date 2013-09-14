@@ -32,11 +32,11 @@
 
 #include "S57Chart.h"
 
-#include "geo/PolyTessGeo.h"
-#include "geo/PolyTessGeoTrap.h"
-#include "geo/TriPrim.h"
-#include "geo/PolyTriGroup.h"
-#include "geo/PolyTrapGroup.h"
+#include <geo/PolyTessGeo.h>
+#include <geo/PolyTessGeoTrap.h>
+#include <geo/TriPrim.h>
+#include <geo/PolyTriGroup.h>
+#include <geo/PolyTrapGroup.h>
 #include "cutil.h"
 #include "georef.h"
 #include "navutil.h"
@@ -47,6 +47,7 @@
 #include "OCPNBitmap.h"
 #include "MessageBox.h"
 #include "MicrosoftCompatibility.h"
+#include <ChartCanvas.h>
 
 #include "cpl_csv.h"
 #include "setjmp.h"
@@ -1545,10 +1546,6 @@ bool s57chart::DoRenderRegionViewOnGL( const wxGLContext &glc, const ViewPort& V
 
     SetVPParms( VPoint );
 
-    bool force_new_view = false;
-
-    if( Region != m_last_Region ) force_new_view = true;
-
     ps52plib->PrepareForRender();
 
     if( m_plib_state_hash != ps52plib->GetStateHash() ) {
@@ -2172,7 +2169,6 @@ bool s57chart::DoRenderViewOnDC( wxMemoryDC& dc, const ViewPort& VPoint, RenderT
         PixelCache *pDIBNew = new PixelCache( VPoint.pix_width, VPoint.pix_height, BPP );
         pDIBNew->SelectIntoDC( dc_new );
 
-//        printf("reuse blit %d %d %d %d %d %d\n",desx, desy, wu, hu,  srcx, srcy);
         dc_new.Blit( desx, desy, wu, hu, (wxDC *) &dc_last, srcx, srcy, wxCOPY );
 
         //        Ask the plib to adjust the persistent text rectangle list for this canvas shift
@@ -2225,7 +2221,6 @@ bool s57chart::DoRenderViewOnDC( wxMemoryDC& dc, const ViewPort& VPoint, RenderT
             temp_vp.GetBBox().EnLarge( margin );
 
 //      And Render it new piece on the target dc
-//     printf("New Render, rendering %d %d %d %d \n", rect.x, rect.y, rect.width, rect.height);
 
             DCRenderRect( dc, temp_vp, &rect );
 
@@ -2380,12 +2375,9 @@ bool s57chart::DCRenderLPB( wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rec
     for( i = 0; i < PRIO_NUM; ++i ) {
 //      Set up a Clipper for Lines
         wxDCClipper *pdcc = NULL;
-        if( rect ) {
-            wxRect nr = *rect;
-//         pdcc = new wxDCClipper(dcinput, nr);
-        }
 
-        if( ps52plib->m_nBoundaryStyle == SYMBOLIZED_BOUNDARIES ) top = razRules[i][4]; // Area Symbolized Boundaries
+        if (ps52plib->m_nBoundaryStyle == SYMBOLIZED_BOUNDARIES)
+			top = razRules[i][4]; // Area Symbolized Boundaries
         else
             top = razRules[i][3];           // Area Plain Boundaries
         while( top != NULL ) {
@@ -2401,7 +2393,7 @@ bool s57chart::DCRenderLPB( wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rec
             ps52plib->RenderObjectToDC( &dcinput, crnt, &tvp );
         }
 
-        if( ps52plib->m_nSymbolStyle == SIMPLIFIED ) top = razRules[i][0];       //SIMPLIFIED Points
+        if (ps52plib->m_nSymbolStyle == SIMPLIFIED ) top = razRules[i][0];       //SIMPLIFIED Points
         else
             top = razRules[i][1];           //Paper Chart Points Points
 
@@ -2415,13 +2407,6 @@ bool s57chart::DCRenderLPB( wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rec
         if( pdcc ) delete pdcc;
     }
 
-    /*
-     printf("Render Lines                  %ldms\n", stlines.Time());
-     printf("Render Simple Points          %ldms\n", stsim_pt.Time());
-     printf("Render Paper Points           %ldms\n", stpap_pt.Time());
-     printf("Render Symbolized Boundaries  %ldms\n", stasb.Time());
-     printf("Render Plain Boundaries       %ldms\n\n", stapb.Time());
-     */
     return true;
 }
 
@@ -2437,8 +2422,6 @@ InitReturn s57chart::Init( const wxString& name, ChartInitFlag flags )
 {
     //    Use a static semaphore flag to prevent recursion
     if( s_bInS57 ) {
-//          printf("s57chart::Init() recursion..., retry\n");
-//          wxLogMessage(_T("Recursion"));
         return INIT_FAIL_NOERROR;
     }
 
@@ -6197,7 +6180,7 @@ wxString s57chart::CreateObjDescriptions( ListOfObjRazRules* rule_list )
                 //    Attribute name
                 curAttrName = wxString(curr_att, wxConvUTF8, 6);
                 noAttr++;
-                
+
                 // Sort out how some kinds of attibutes are displayed to get a more readable look.
                 // DEPARE gets just its range. Lights are grouped.
 
@@ -6699,9 +6682,10 @@ bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vec
     double cursor_lat, cursor_lon;
     static double lastLat, lastLon;
 
-    if( !ps52plib || !ps52plib->m_bExtendLightSectors ) return false;
+    if (!ps52plib || !ps52plib->m_bExtendLightSectors)
+		return false;
 
-    cc1->GetCanvasPixPoint ( mx, my, cursor_lat, cursor_lon );
+    cc1->GetCanvasPixPoint(mx, my, cursor_lat, cursor_lon);
 
     if( lastLat == cursor_lat && lastLon == cursor_lon ) return false;
 
@@ -6753,7 +6737,6 @@ bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vec
 
                         attrCounter = 0;
                         int noAttr = 0;
-                        bool inDepthRange = false;
                         s57Sector_t sector;
 
                         bleading_attribute = false;

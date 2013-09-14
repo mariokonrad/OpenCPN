@@ -42,6 +42,7 @@
 #include "plugin/PlugInManager.h"
 #include "datastream.h"
 #include <MainFrame.h>
+#include <GUI_IDs.h>
 
 class wxGenericDirCtrl;
 class MyConfig;
@@ -67,15 +68,6 @@ class MainFrame;
 #define GROUPS_CHANGED   512
 #define STYLE_CHANGED   1024
 #define TIDES_CHANGED   2048
-
-#ifndef wxCLOSE_BOX
-	#define wxCLOSE_BOX 0x1000
-#endif
-
-#ifndef wxFIXED_MINSIZE
-	#define wxFIXED_MINSIZE 0
-#endif
-
 
 class options
 #ifndef bert// wxCHECK_VERSION(2, 9, 0)

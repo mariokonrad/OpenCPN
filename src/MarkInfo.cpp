@@ -29,8 +29,10 @@
 #include "Routeman.h"
 #include "PositionParser.h"
 #include "navutil.h"
-#include "chcanv.h"
 #include "RouteManagerDialog.h"
+
+#include <ChartCanvas.h>
+
 #include <wx/notebook.h>
 #include <wx/sizer.h>
 #include <wx/bmpcbox.h>
@@ -418,11 +420,10 @@ void MarkInfoImpl::InitialFocus( void )
 	m_textName->SetInsertionPointEnd();
 }
 
-void MarkInfoImpl::SetColorScheme( ColorScheme cs )
+void MarkInfoImpl::SetColorScheme(ColorScheme)
 {
-	DimeControl( this );
-
-	DimeControl( m_pLinkProp );
+	DimeControl(this);
+	DimeControl(m_pLinkProp);
 }
 
 bool MarkInfoImpl::UpdateProperties( bool positionOnly )
@@ -814,7 +815,7 @@ void MarkInfoImpl::OnMarkInfoCancelClick( wxCommandEvent& event )
 	event.Skip();
 }
 
-void MarkInfoImpl::OnPositionCtlUpdated( wxCommandEvent& event )
+void MarkInfoImpl::OnPositionCtlUpdated(wxCommandEvent &)
 {
 	// Fetch the control values, convert to degrees
 	double lat = fromDMM( m_textLatitude->GetValue() );

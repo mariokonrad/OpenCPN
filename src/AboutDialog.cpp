@@ -24,6 +24,7 @@
 #include "AboutDialog.h"
 
 #include <wx/textfile.h>
+#include <wx/textctrl.h>
 #include <wx/ffile.h>
 #include <wx/clipbrd.h>
 #include <wx/sizer.h>
@@ -33,9 +34,9 @@
 #include <wx/dataobj.h>
 #include <wx/html/htmlwin.h>
 
+#include <ChartCanvas.h>
 #include <version.h>
 
-#include "chcanv.h"
 #include "StyleManager.h"
 #include "Style.h"
 #include "version.h"

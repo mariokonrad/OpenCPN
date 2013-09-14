@@ -22,13 +22,15 @@
  **************************************************************************/
 
 #include "Quilt.h"
+#include "s52plib.h"
+#include "ocpn_pixel.h"
+#include "OCPNRegionIterator.h"
+
+#include <ChartCanvas.h>
+
 #include <chart/ChartDB.h>
 #include <chart/ChartStack.h>
 #include <chart/S57Chart.h>
-#include "s52plib.h"
-#include "chcanv.h"
-#include "ocpn_pixel.h"
-#include "OCPNRegionIterator.h"
 
 #include <algorithm>
 

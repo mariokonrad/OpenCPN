@@ -38,9 +38,10 @@
 #include <chart/ChartBase.h>
 #include <chart/ChartBaseBSB.h>
 
-#include "ChartPlugInWrapper.h"
-#include "MainFrame.h"
-#include "ThumbWin.h"
+#include <ChartPlugInWrapper.h>
+#include <MainFrame.h>
+#include <ThumbWin.h>
+#include <ChartCanvas.h>
 #include <MemoryStatus.h>
 
 #ifdef USE_S57

@@ -24,15 +24,17 @@
 #include "TCWin.h"
 #include "timers.h"
 #include "RolloverWin.h"
-#include "chcanv.h"
 #include "tcmgr.h"
 #include "dychart.h"
 #include "cutil.h"
 #include "ColorScheme.h"
 #include "MicrosoftCompatibility.h"
 #include <MainFrame.h>
+#include <ChartCanvas.h>
+
 #include <tide/tide_time.h>
 #include <tide/IDX_entry.h>
+
 #include <algorithm>
 
 #include <wx/button.h>
@@ -55,7 +57,7 @@ enum
 };
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST( SplineList );
+WX_DEFINE_LIST(SplineList);
 
 BEGIN_EVENT_TABLE(TCWin, wxWindow ) EVT_PAINT ( TCWin::OnPaint)
 	EVT_SIZE(TCWin::OnSize)

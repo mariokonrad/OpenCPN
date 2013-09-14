@@ -48,7 +48,6 @@
 #include <SerialPorts.h>
 #include "dychart.h"
 #include "MainFrame.h"
-#include "chart/ChartDB.h"
 #include "StyleManager.h"
 #include "Style.h"
 #include "MessageBox.h"
@@ -62,7 +61,13 @@
 #include "ChartGroupsUI.h"
 #include "OptionIDs.h"
 #include "LanguageList.h"
-#include "plugin/PluginListPanel.h"
+
+#include <ChartCanvas.h>
+
+#include <chart/ChartDB.h>
+
+#include <plugin/PluginListPanel.h>
+
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/System.h>

@@ -29,9 +29,12 @@
 
 #include <wx/arrstr.h>
 
-#include "tide/Station_Data.h"
-#include "tide/TC_Error_Code.h"
-#include "tide/TCDataSource.h"
+#include <tide/Station_Data.h>
+#include <tide/TC_Error_Code.h>
+#include <tide/TCDataSource.h>
+
+#include <vector>
+#include <cmath>
 
 //----------------------------------------------------------------------------
 //   constants
@@ -41,9 +44,6 @@
 #define USF_UPDATE 2
 #define USF_WRITE  3
 
-#ifndef M_PI
-#define M_PI 3.141592654
-#endif
 
 #define TIDE_MAX_DERIV (2)      // Maximum derivative supported
 /* TIDE_TIME_PREC

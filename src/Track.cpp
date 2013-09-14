@@ -25,10 +25,11 @@
 #include "georef.h"
 #include "Select.h"
 #include "ocpnDC.h"
-#include "chcanv.h"
 #include "RouteProp.h"
 #include "navutil.h"
 #include "gpx/gpx.h"
+
+#include <ChartCanvas.h>
 
 #define TIMER_TRACK1 778
 

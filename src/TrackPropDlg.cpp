@@ -31,8 +31,11 @@
 #include "RouteManagerDialog.h"
 #include "RoutePrintSelection.h"
 #include "LinkPropDlg.h"
-#include "plugin/PlugInManager.h"
 #include "gpx/gpx.h"
+
+#include <ChartCanvas.h>
+
+#include <plugin/PlugInManager.h>
 
 extern RouteList * pRouteList;
 extern Track * g_pActiveTrack;

@@ -19,18 +19,18 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #include "AIS_Target_Data.h"
+#include <ChartCanvas.h>
 
 extern bool bGPSValid;
-extern ChartCanvas *cc1;
+extern ChartCanvas * cc1;
 extern bool g_bAISRolloverShowClass;
 extern bool g_bAISRolloverShowCOG;
 extern bool g_bAISRolloverShowCPA;
 
-//    Define and declare a hasmap for ERI Ship type strings, keyed by their UN Codes.
+// Define and declare a hasmap for ERI Ship type strings, keyed by their UN Codes.
 WX_DECLARE_HASH_MAP(int, wxString, wxIntegerHash, wxIntegerEqual, ERIShipTypeHash);
 
 static ERIShipTypeHash s_ERI_hash;
@@ -42,7 +42,6 @@ void make_hash_ERI(int key, const wxString & description)
 
 static wxString FormatTimeAdaptive( int seconds )
 {
-    int s = seconds % 60;
     int m = seconds / 60;
     if( seconds < 100 )
         return wxString::Format( _T("%3ds"), seconds );

@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "OCPN_AlertDialog.h"
-#include "ColorScheme.h"
+#include <ColorScheme.h>
 
 extern ColorScheme global_color_scheme;
 extern bool g_bopengl;
@@ -52,7 +52,7 @@ bool OCPN_AlertDialog::Create(
 		const wxString & caption,
 		const wxPoint & pos,
 		const wxSize & size,
-		long style)
+		long)
 {
 	// As a display optimization....
 	// if current color scheme is other than DAY,

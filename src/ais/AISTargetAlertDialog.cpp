@@ -27,6 +27,7 @@
 #include <ais/AIS_Decoder.h>
 #include <ais/AIS_Target_Data.h>
 #include "FontMgr.h"
+#include <ChartCanvas.h>
 #include <global/OCPN.h>
 #include <global/GUI.h>
 
@@ -190,7 +191,7 @@ void AISTargetAlertDialog::UpdateText()
     if( !g_bopengl && CanSetTransparent() ) SetTransparent( 192 );
 }
 
-void AISTargetAlertDialog::OnClose( wxCloseEvent& event )
+void AISTargetAlertDialog::OnClose(wxCloseEvent &)
 {
     //    Acknowledge any existing Alert, and dismiss the dialog
     if( m_pdecoder ) {
@@ -207,7 +208,7 @@ void AISTargetAlertDialog::OnClose( wxCloseEvent& event )
     g_pais_alert_dialog_active = NULL;
 }
 
-void AISTargetAlertDialog::OnIdAckClick( wxCommandEvent& event )
+void AISTargetAlertDialog::OnIdAckClick(wxCommandEvent &)
 {
     //    Acknowledge the Alert, and dismiss the dialog
     if( m_pdecoder ) {
@@ -223,7 +224,7 @@ void AISTargetAlertDialog::OnIdAckClick( wxCommandEvent& event )
     g_pais_alert_dialog_active = NULL;
 }
 
-void AISTargetAlertDialog::OnIdSilenceClick( wxCommandEvent& event )
+void AISTargetAlertDialog::OnIdSilenceClick(wxCommandEvent &)
 {
     //    Set the suppress audio flag
     if( m_pdecoder ) {
@@ -233,7 +234,7 @@ void AISTargetAlertDialog::OnIdSilenceClick( wxCommandEvent& event )
     }
 }
 
-void AISTargetAlertDialog::OnIdJumptoClick( wxCommandEvent& event )
+void AISTargetAlertDialog::OnIdJumptoClick(wxCommandEvent &)
 {
     if( m_pdecoder ) {
         AIS_Target_Data *td = m_pdecoder->Get_Target_Data_From_MMSI( Get_Dialog_MMSI() );

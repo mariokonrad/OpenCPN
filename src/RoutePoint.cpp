@@ -24,12 +24,13 @@
 #include "RoutePoint.h"
 #include "Routeman.h"
 #include "WayPointman.h"
-#include "chcanv.h"
 #include "Multiplexer.h"
 #include "navutil.h"
 #include "FontMgr.h"
 #include "MessageBox.h"
 #include "ocpnDC.h"
+
+#include <ChartCanvas.h>
 
 #include <wx/dcscreen.h>
 #include <wx/tokenzr.h>

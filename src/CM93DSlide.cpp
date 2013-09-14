@@ -21,10 +21,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <wx/slider.h>
-
 #include "CM93DSlide.h"
-#include "chcanv.h"
+#include <ChartCanvas.h>
+
+#include <wx/slider.h>
 
 #define ID_CM93ZOOMG    102
 
@@ -80,7 +80,7 @@ bool CM93DSlide::Create(
 		int maxValue,
 		const wxPoint & pos,
 		const wxSize & size,
-		long style,
+		long,
 		const wxString & title)
 {
 	long wstyle = wxDEFAULT_DIALOG_STYLE;
@@ -111,13 +111,13 @@ bool CM93DSlide::Create(
 	return true;
 }
 
-void CM93DSlide::OnCancelClick(wxCommandEvent & event)
+void CM93DSlide::OnCancelClick(wxCommandEvent &)
 {
 	g_bShowCM93DetailSlider = false;
 	Close();
 }
 
-void CM93DSlide::OnClose(wxCloseEvent & event)
+void CM93DSlide::OnClose(wxCloseEvent &)
 {
 	g_bShowCM93DetailSlider = false;
 
@@ -135,7 +135,7 @@ void CM93DSlide::OnMove(wxMoveEvent & event)
 	event.Skip();
 }
 
-void CM93DSlide::OnChangeValue(wxScrollEvent & event)
+void CM93DSlide::OnChangeValue(wxScrollEvent &)
 {
 	g_cm93_zoom_factor = m_pCM93DetailSlider->GetValue();
 

@@ -36,21 +36,17 @@
 #include <locale>
 #include <deque>
 
-#include "ais/ais.h"
-
 #include "dychart.h"
 #include "MainFrame.h"
 #include "MessageBox.h"
 #include "navutil.h"
 #include "Track.h"
-#include "chcanv.h"
 #include "georef.h"
 #include "cutil.h"
 #include "StyleManager.h"
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "RouteProp.h"
-#include <chart/s52utils.h>
 #include "ocpnDC.h"
 #include "Geodesic.h"
 #include "datastream.h"
@@ -63,6 +59,13 @@
 #include "NavObjectChanges.h"
 #include "NMEALogWindow.h"
 #include "MicrosoftCompatibility.h"
+
+#include <ChartCanvas.h>
+
+#include <chart/s52utils.h>
+
+#include <ais/ais.h>
+
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/System.h>

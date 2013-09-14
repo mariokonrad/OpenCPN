@@ -34,12 +34,14 @@
 #include <wx/bmpcbox.h>
 
 #include "ocpn_plugin.h"
-#include "chcanv.h"
 #include "datastream.h"
 #include "OCPN_Sound.h"
-#include "plugin/PlugInContainer.h"
-#include "plugin/PlugInMenuItemContainer.h"
-#include "plugin/PlugInToolbarToolContainer.h"
+
+#include <ais/AIS_Target_Data.h>
+
+#include <plugin/PlugInContainer.h>
+#include <plugin/PlugInMenuItemContainer.h>
+#include <plugin/PlugInToolbarToolContainer.h>
 
 // Include wxJSON headers
 // We undefine MIN/MAX so avoid warning of redefinition coming from
@@ -56,7 +58,7 @@
 #include "wx/json_defs.h"
 #include "wx/jsonwriter.h"
 
-PlugIn_AIS_Target *Create_PI_AIS_Target(AIS_Target_Data *ptarget);
+PlugIn_AIS_Target * Create_PI_AIS_Target(AIS_Target_Data *ptarget);
 
 class PluginListPanel;
 class PluginPanel;

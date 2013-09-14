@@ -22,16 +22,17 @@
  **************************************************************************/
 
 #include "FloatingCompassWindow.h"
-#include "chcanv.h"
 #include "StyleManager.h"
 #include "Style.h"
+
+#include <ChartCanvas.h>
 
 BEGIN_EVENT_TABLE(FloatingCompassWindow, wxWindow)
 	EVT_PAINT(FloatingCompassWindow::OnPaint)
 END_EVENT_TABLE()
 
 extern ocpnStyle::StyleManager * g_StyleManager;
-extern ChartCanvas *cc1;
+extern ChartCanvas * cc1;
 extern bool bGPSValid;
 extern bool g_bSatValid;
 extern int g_SatsInView;

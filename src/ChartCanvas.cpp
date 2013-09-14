@@ -28,7 +28,7 @@
 #include <wx/aui/aui.h>
 #include <wx/listimpl.cpp>
 
-#include "chcanv.h"
+#include "ChartCanvas.h"
 #include "ocpnDC.h"
 #include "RouteManagerDialog.h"
 #include "GoToPositionDialog.h"
@@ -1037,13 +1037,110 @@ int ChartCanvas::FindClosestCanvasChartdbIndex( int scale )
 }
 
 void ChartCanvas::SetVPRotation(double angle)
-{ VPoint.rotation = angle; }
+{
+	VPoint.rotation = angle;
+}
 
-double ChartCanvas::GetVPRotation(void)
-{ return GetVP().rotation; }
+double ChartCanvas::GetVPRotation(void) const
+{
+	return GetVP().rotation;
+}
 
-double ChartCanvas::GetVPSkew(void)
-{ return GetVP().skew; }
+double ChartCanvas::GetVPSkew(void) const
+{
+	return GetVP().skew;
+}
+
+glChartCanvas * ChartCanvas::GetglCanvas()
+{
+	return m_glcc;
+}
+
+GSHHSChart * ChartCanvas::GetWorldBackgroundChart()
+{
+	return pWorldBackgroundChart;
+}
+
+void ChartCanvas::SetbTCUpdate(bool f)
+{
+	m_bTCupdate = f;
+}
+
+bool ChartCanvas::GetbTCUpdate() const
+{
+	return m_bTCupdate;
+}
+
+void ChartCanvas::SetbShowCurrent(bool f)
+{
+	m_bShowCurrent = f;
+}
+
+bool ChartCanvas::GetbShowCurrent() const
+{
+	return m_bShowCurrent;
+}
+
+void ChartCanvas::SetbShowTide(bool f)
+{
+	m_bShowTide = f;
+}
+
+bool ChartCanvas::GetbShowTide() const
+{
+	return m_bShowTide;
+}
+
+double ChartCanvas::GetPixPerMM() const
+{
+	return m_pix_per_mm;
+}
+
+void ChartCanvas::SetOwnShipState(ownship_state_t state)
+{
+	m_ownship_state = state;
+}
+
+ColorScheme ChartCanvas::GetColorScheme() const
+{
+	return m_cs;
+}
+
+int ChartCanvas::GetCanvasWidth() const
+{
+	return m_canvas_width;
+}
+
+int ChartCanvas::GetCanvasHeight() const
+{
+	return m_canvas_height;
+}
+
+float ChartCanvas::GetVPScale() const
+{
+	return GetVP().view_scale_ppm;
+}
+
+float ChartCanvas::GetVPChartScale() const
+{
+	return GetVP().chart_scale;
+}
+
+double ChartCanvas::GetCanvasScaleFactor() const
+{
+	return m_canvas_scale_factor;
+}
+
+double ChartCanvas::GetCanvasTrueScale() const
+{
+	return m_true_scale_ppm;
+}
+
+double ChartCanvas::GetAbsoluteMinScalePpm() const
+{
+	return m_absolute_min_scale_ppm;
+}
+
 
 void ChartCanvas::EnablePaint(bool b_enable)
 {
@@ -1157,7 +1254,12 @@ void ChartCanvas::CancelMeasureRoute()
     m_pMeasureRoute = NULL;
 }
 
-ViewPort &ChartCanvas::GetVP()
+const ViewPort & ChartCanvas::GetVP() const
+{
+    return VPoint;
+}
+
+ViewPort & ChartCanvas::GetVP()
 {
     return VPoint;
 }

@@ -24,6 +24,7 @@
 #include "RoutePrintSelection.h"
 #include "RoutePrintout.h"
 #include "MessageBox.h"
+#include <ChartCanvas.h>
 
 // Global print data, to remember settings during the session
 extern wxPrintData * g_printData;
@@ -67,7 +68,7 @@ RoutePrintSelection::~RoutePrintSelection()
 bool RoutePrintSelection::Create(
 		wxWindow * parent,
 		wxWindowID id,
-		const wxString & caption,
+		const wxString &,
 		const wxPoint & pos,
 		const wxSize & size,
 		long style)
@@ -79,9 +80,7 @@ bool RoutePrintSelection::Create(
 #endif
 
 	wxDialog::Create( parent, id, _("Print Route Selection"), pos, size, style );
-
 	CreateControls();
-
 	return TRUE;
 }
 
@@ -89,11 +88,10 @@ void RoutePrintSelection::CreateControls()
 {
 	RoutePrintSelection* itemDialog1 = this;
 
-	wxStaticBox*         itemStaticBoxSizer3Static = new wxStaticBox( itemDialog1, wxID_ANY,
-			_( "Elements to print..." ) );
+	wxStaticBox * itemStaticBoxSizer3Static = new wxStaticBox(itemDialog1, wxID_ANY, _("Elements to print..."));
 
-	wxStaticBoxSizer* itemBoxSizer1 = new wxStaticBoxSizer( itemStaticBoxSizer3Static,  wxVERTICAL );
-	itemDialog1->SetSizer( itemBoxSizer1 );
+	wxStaticBoxSizer* itemBoxSizer1 = new wxStaticBoxSizer(itemStaticBoxSizer3Static, wxVERTICAL);
+	itemDialog1->SetSizer(itemBoxSizer1);
 
 	wxFlexGridSizer* fgSizer2;
 	fgSizer2 = new wxFlexGridSizer( 5, 2, 0, 0 );

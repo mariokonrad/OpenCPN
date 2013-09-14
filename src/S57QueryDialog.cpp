@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "S57QueryDialog.h"
-#include "chcanv.h"
+#include <ChartCanvas.h>
 
 #include <wx/sizer.h>
 
@@ -71,7 +71,7 @@ bool S57QueryDialog::Create(
 		const wxString & caption,
 		const wxPoint & pos,
 		const wxSize & size,
-		long style)
+		long)
 {
 	//    As a display optimization....
 	//    if current color scheme is other than DAY,
@@ -150,7 +150,7 @@ void S57QueryDialog::OnSize( wxSizeEvent& event )
 	wxDialog::OnSize( event );
 }
 
-void S57QueryDialog::OnClose( wxCloseEvent& event )
+void S57QueryDialog::OnClose(wxCloseEvent &)
 {
 	g_S57_dialog_sx = GetSize().x;
 	g_S57_dialog_sy = GetSize().y;

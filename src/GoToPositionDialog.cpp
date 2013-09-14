@@ -26,6 +26,7 @@
 #include "RouteProp.h"
 #include "LatLonTextCtrl.h"
 #include "navutil.h"
+#include <ChartCanvas.h>
 
 #include <wx/sizer.h>
 #include <wx/stattext.h>
@@ -58,7 +59,7 @@ GoToPositionDialog::GoToPositionDialog(
 		const wxString & caption,
 		const wxPoint & pos,
 		const wxSize & size,
-		long style)
+		long)
 {
 	wxDialog::Create(parent, id, caption, pos, size, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
@@ -126,7 +127,7 @@ void GoToPositionDialog::CreateControls()
 	SetColorScheme((ColorScheme)0);
 }
 
-void GoToPositionDialog::SetColorScheme(ColorScheme cs)
+void GoToPositionDialog::SetColorScheme(ColorScheme)
 {
 	DimeControl(this);
 }
@@ -187,7 +188,7 @@ void GoToPositionDialog::CheckPasteBufferForPosition()
 	}
 }
 
-void GoToPositionDialog::OnPositionCtlUpdated(wxCommandEvent & event)
+void GoToPositionDialog::OnPositionCtlUpdated(wxCommandEvent &)
 {
 	// We do not want to change the position on lat/lon now
 }

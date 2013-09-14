@@ -33,20 +33,18 @@
 #include <wx/wfstream.h>
 #include <wx/dynarray.h>
 
+#include <vector>
+
 #include <ogrsf_frmts.h>
 #include "iso8211.h"
 #include "gdal.h"
 #include "S57ClassRegistrar.h"
 #include "S57Light.h"
 #include "s52s57.h"
-#include "chcanv.h"
+#include <ViewPort.h>
+#include <OCPNRegion.h>
 #include <chart/S57Sector.h>
 #include <chart/ChartBase.h>
-
-
-
-void s57_DrawExtendedLightSectors( ocpnDC& temp_dc, ViewPort& VPoint, std::vector<s57Sector_t>& sectorlegs );
-bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& VPoint, std::vector<s57Sector_t>& sectorlegs );
 
 class ChartBase;
 class ViewPort;
@@ -56,6 +54,10 @@ class S57ObjectDesc;
 class S57Reader;
 class OGRS57DataSource;
 class S57ClassRegistrar;
+class ocpnDC;
+
+void s57_DrawExtendedLightSectors(ocpnDC & temp_dc, ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
+bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
 
 WX_DECLARE_OBJARRAY(S57Obj, ArrayOfS57Obj);
 WX_DECLARE_LIST(S57Obj, ListOfS57Obj);
@@ -173,8 +175,8 @@ class s57chart : public ChartBase
 		double    m_view_scale_ppm;
 
 		//    Last ViewPort succesfully rendered, stored as an aid to calculating pixel cache address offsets and regions
-		ViewPort    m_last_vp;
-		OCPNRegion    m_last_Region;
+		ViewPort m_last_vp;
+		OCPNRegion m_last_Region;
 
 		virtual bool IsCacheValid();
 		virtual void InvalidateCache();

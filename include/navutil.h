@@ -39,7 +39,6 @@
 #endif
 
 #include "s52s57.h"
-#include "chcanv.h"
 #include "tinyxml/tinyxml.h"
 #include "chart/ChartDatabase.h"
 #include "RoutePoint.h"

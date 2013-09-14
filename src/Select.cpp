@@ -25,8 +25,9 @@
 #include "georef.h"
 #include "Vector2D.h"
 #include "navutil.h"
-#include "chcanv.h"
 #include "MicrosoftCompatibility.h"
+
+#include <ChartCanvas.h>
 
 extern ChartCanvas * cc1;
 

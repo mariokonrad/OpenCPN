@@ -32,7 +32,9 @@
 #include <wx/notebook.h>
 #include <wx/filesys.h>
 
-#include "LinkPropDlg.h"
+#include <LinkPropDlg.h>
+#include <GUI_IDs.h>
+#include <ColorScheme.h>
 
 #if wxCHECK_VERSION(2, 9, 0)
 	#include <wx/dialog.h>
@@ -77,11 +79,6 @@ class RoutePoint;
 #define ID_RCLK_MENU_PASTE_LL  7020
 
 #define ID_MARKPROP 8000
-#define SYMBOL_MARKPROP_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_MARKPROP_TITLE _("Waypoint Properties")
-#define SYMBOL_MARKPROP_IDNAME ID_MARKPROP
-#define SYMBOL_MARKPROP_SIZE wxSize(200, 300)
-#define SYMBOL_MARKPROP_POSITION wxDefaultPosition
 #define ID_MARKPROP_CANCEL 8001
 #define ID_MARKPROP_OK 8002
 #define ID_ICONCTRL 8003
@@ -89,15 +86,6 @@ class RoutePoint;
 #define ID_LONCTRL 8005
 #define ID_SHOWNAMECHECKBOX1 8006
 ////@end control identifiers
-
-#ifndef wxCLOSE_BOX
-	#define wxCLOSE_BOX 0x1000
-#endif
-
-#ifndef wxFIXED_MINSIZE
-	#define wxFIXED_MINSIZE 0
-#endif
-
 
 class RouteProp: public wxDialog
 {

@@ -34,6 +34,8 @@
 #include "MicrosoftCompatibility.h"
 #include "gpx/gpx.h"
 
+#include <ViewPort.h>
+
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(RouteList);
 
@@ -739,7 +741,7 @@ bool Route::CalculateCrossesIDL( void )
 	return idl_cross;
 }
 
-void Route::CalculateDCRect( wxDC& dc_route, wxRect *prect, ViewPort &VP )
+void Route::CalculateDCRect(wxDC & dc_route, wxRect * prect, ViewPort &)
 {
 	dc_route.ResetBoundingBox();
 	dc_route.DestroyClippingRegion();

@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include "LinkPropDlg.h"
+#include <ChartCanvas.h>
 
 LinkPropDialog::LinkPropDialog(
 		wxWindow * parent,
@@ -99,7 +100,7 @@ LinkPropDialog::~LinkPropDialog()
 			wxCommandEventHandler(LinkPropDialog::OnOkClick), NULL, this);
 }
 
-void LinkPropDialog::OnLocalFileClick(wxCommandEvent & event)
+void LinkPropDialog::OnLocalFileClick(wxCommandEvent &)
 {
 	wxString filename = wxFileSelector(_("Choose a file"));
 	if (!filename.empty()) {

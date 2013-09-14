@@ -29,6 +29,9 @@
 #include "Style.h"
 #include "MessageBox.h"
 #include "GUI_IDs.h"
+
+#include <ChartCanvas.h>
+
 #include <global/OCPN.h>
 #include <global/GUI.h>
 

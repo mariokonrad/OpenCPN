@@ -23,18 +23,20 @@
 
 #include "glChartCanvas.h"
 #include "glTextureDescriptor.h"
-#include "chcanv.h"
 #include "dychart.h"
 #include "s52plib.h"
 #include "Quilt.h"
-#include "plugin/PlugInManager.h"
-#include <chart/S57Chart.h>
 #include "ChInfoWin.h"
 #include "ThumbWin.h"
 #include "OCPNRegionIterator.h"
 #include "ChartPlugInWrapper.h"
 #include "ocpnDC.h"
 #include <MemoryStatus.h>
+#include <ChartCanvas.h>
+
+#include <plugin/PlugInManager.h>
+
+#include <chart/S57Chart.h>
 #include <chart/ChartBaseBSB.h>
 #include <chart/ChartBase.h>
 #include <chart/ChartDummy.h>
@@ -193,25 +195,6 @@ static void OCPNPopulateTD( glTextureDescriptor *ptd, int n_basemult, wxRect &re
 	//    So, save some memory by limiting GL_TEXTURE_MAX_LEVEL
 
 	int n_level_max = 3;
-	//    Calculate the effective base level
-	int base_level = 0;
-	switch( n_basemult ) {
-		case 1:
-			base_level = 0;
-			break;
-		case 2:
-			base_level = 1;
-			break;
-		case 4:
-			base_level = 2;
-			break;
-		case 8:
-			base_level = 3;
-			break;
-		default:
-			base_level = 0;
-			break;
-	}
 
 	//    Adjust the chart source rectangle to account for base multiplier
 	wxRect rbits = rect;

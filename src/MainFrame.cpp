@@ -62,7 +62,7 @@
 #include <ais/AISTargetListDialog.h>
 #include <ais/AISTargetAlertDialog.h>
 #include <ais/AIS_Decoder.h>
-#include "chcanv.h"
+#include "ChartCanvas.h"
 #include "TimedPopupWin.h"
 #include "MessageBox.h"
 #include "WayPointman.h"

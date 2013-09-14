@@ -487,9 +487,9 @@ SET(HDRS
 	include/georef.h
 	include/navutil.h
 	include/tcmgr.h
-	include/chcanv.h
 	include/ocpn_plugin.h
 	include/datastream.h
+	src/ChartCanvas.h
 	src/MemoryStatus.h
 	src/MainFrame.h
 	src/ChartPlugInWrapper.h
@@ -650,7 +650,7 @@ SET(SRCS
 	src/OCPNMemDC.cpp
 	src/OCPNBitmap.cpp
 	src/ocpnDC.cpp
-	src/chcanv.cpp
+	src/ChartCanvas.cpp
 	src/App.cpp
 	src/TCWin.cpp
 	src/S57QueryDialog.cpp

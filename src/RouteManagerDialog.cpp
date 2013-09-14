@@ -37,6 +37,8 @@
 #include "TrackPropDlg.h"
 #include "Undo.h"
 
+#include <ChartCanvas.h>
+
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 
@@ -44,6 +46,7 @@
 #include <wx/stdpaths.h>
 #include <wx/progdlg.h>
 #include <wx/clipbrd.h>
+#include <wx/imaglist.h>
 
 #include <iostream>
 
@@ -750,7 +753,7 @@ void RouteManagerDialog::Create()
 	SetMinSize( GetBestSize() );
 
 	// create a image list for the list with just the eye icon
-	wxImageList *imglist = new wxImageList( 20, 20, true, 1 );
+	wxImageList * imglist = new wxImageList( 20, 20, true, 1 );
 	imglist->Add( wxBitmap( eye ) );
 	imglist->Add( wxBitmap( eyex ) );
 	m_pRouteListCtrl->AssignImageList( imglist, wxIMAGE_LIST_SMALL );

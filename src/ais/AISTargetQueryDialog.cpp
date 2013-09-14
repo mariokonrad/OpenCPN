@@ -26,7 +26,7 @@
 #include <wx/html/htmlwin.h>
 
 #include "AISTargetQueryDialog.h"
-#include "chcanv.h"
+#include "ChartCanvas.h"
 #include "navutil.h"
 #include "ais.h"
 #include "FontMgr.h"

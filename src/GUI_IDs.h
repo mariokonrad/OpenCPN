@@ -62,4 +62,12 @@ enum
 	MEMORY_FOOTPRINT_TIMER,
 };
 
+#ifndef wxCLOSE_BOX
+	#define wxCLOSE_BOX 0x1000
+#endif
+
+#ifndef wxFIXED_MINSIZE
+	#define wxFIXED_MINSIZE 0
+#endif
+
 #endif

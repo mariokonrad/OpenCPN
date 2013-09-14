@@ -25,6 +25,8 @@
 #include "tcmgr.h"
 #include "IDX_entry.h"
 
+#include <MicrosoftCompatibility.h>
+
 /* Declarations for zoneinfo compatibility */
 
 /* Most of these entries are loaded from the tzdata.h include file. That

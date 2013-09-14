@@ -40,7 +40,10 @@
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"
 #include "NavObjectCollection.h"
-#include "plugin/OCPN_MsgEvent.h"
+#include <ViewPort.h>
+#include <ChartCanvas.h>
+
+#include <plugin/OCPN_MsgEvent.h>
 
 #include <chart/ChartDB.h>
 #include <chart/ChartDatabase.h>

@@ -29,6 +29,7 @@
 #include <ais/ais.h>
 #include <ais/AIS_Decoder.h>
 #include <ais/AIS_Target_Data.h>
+#include <ChartCanvas.h>
 #include "OCPNListCtrl.h"
 #include "StyleManager.h"
 #include "Style.h"
@@ -533,7 +534,7 @@ AISTargetListDialog::~AISTargetListDialog()
 	g_pAISTargetList = NULL;
 }
 
-void AISTargetListDialog::OnClose( wxCloseEvent &event )
+void AISTargetListDialog::OnClose(wxCloseEvent &)
 {
 	Disconnect_decoder();
 }
@@ -573,26 +574,27 @@ void AISTargetListDialog::UpdateButtons()
 	m_pButtonJumpTo->Enable( enable );
 }
 
-void AISTargetListDialog::OnTargetSelected( wxListEvent &event )
+void AISTargetListDialog::OnTargetSelected(wxListEvent &)
 {
 	UpdateButtons();
 }
 
-void AISTargetListDialog::DoTargetQuery( int mmsi )
+void AISTargetListDialog::DoTargetQuery(int mmsi)
 {
-	ShowAISTargetQueryDialog( m_pparent, mmsi );
+	ShowAISTargetQueryDialog(m_pparent, mmsi);
 }
 
 /*
  ** When an item is activated in AIS TArget List then opens the AIS Target Query Dialog
  */
-void AISTargetListDialog::OnTargetDefaultAction( wxListEvent& event )
+void AISTargetListDialog::OnTargetDefaultAction(wxListEvent & event)
 {
 	long mmsi_no;
-	if( ( mmsi_no = event.GetData() ) ) DoTargetQuery( mmsi_no );
+	if ((mmsi_no = event.GetData()))
+		DoTargetQuery(mmsi_no);
 }
 
-void AISTargetListDialog::OnTargetQuery( wxCommandEvent& event )
+void AISTargetListDialog::OnTargetQuery(wxCommandEvent &)
 {
 	long selItemID = -1;
 	selItemID = m_pListCtrlAISTargets->GetNextItem( selItemID, wxLIST_NEXT_ALL,
@@ -626,7 +628,7 @@ void AISTargetListDialog::OnTargetListColumnClicked( wxListEvent &event )
 	}
 }
 
-void AISTargetListDialog::OnTargetScrollTo( wxCommandEvent& event )
+void AISTargetListDialog::OnTargetScrollTo(wxCommandEvent &)
 {
 	long selItemID = -1;
 	selItemID = m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
@@ -641,7 +643,7 @@ void AISTargetListDialog::OnTargetScrollTo( wxCommandEvent& event )
 		gFrame->JumpToPosition(pAISTarget->Lat, pAISTarget->Lon, cc1->GetVPScale());
 }
 
-void AISTargetListDialog::OnTargetCreateWpt( wxCommandEvent& event )
+void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent &)
 {
 	long selItemID = -1;
 	selItemID = m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
@@ -666,7 +668,7 @@ void AISTargetListDialog::OnTargetCreateWpt( wxCommandEvent& event )
 	}
 }
 
-void AISTargetListDialog::OnLimitRange( wxCommandEvent& event )
+void AISTargetListDialog::OnLimitRange(wxCommandEvent &)
 {
 	g_AisTargetList_range = m_pSpinCtrlRange->GetValue();
 	UpdateAISTargetList();

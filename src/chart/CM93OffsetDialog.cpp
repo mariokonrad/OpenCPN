@@ -26,6 +26,7 @@
 #include <chart/CM93Chart.h>
 #include <chart/OCPNOffsetListCtrl.h>
 #include <chart/COVR_Set.h>
+#include <ChartCanvas.h>
 #include <wx/sizer.h>
 #include <wx/button.h>
 
@@ -128,7 +129,7 @@ CM93OffsetDialog::~CM93OffsetDialog( )
 {
 }
 
-void CM93OffsetDialog::OnClose ( wxCloseEvent& event )
+void CM93OffsetDialog::OnClose(wxCloseEvent &)
 {
 	if ( m_pcompchart )
 	{
@@ -147,13 +148,13 @@ void CM93OffsetDialog::OnClose ( wxCloseEvent& event )
 }
 
 
-void CM93OffsetDialog::OnOK ( wxCommandEvent& event )
+void CM93OffsetDialog::OnOK(wxCommandEvent &)
 {
 	Close();
 }
 
 
-void CM93OffsetDialog::OnOffSetSet ( wxCommandEvent& event )
+void CM93OffsetDialog::OnOffSetSet(wxCommandEvent &)
 {
 	m_xoff = m_pSpinCtrlXoff->GetValue();
 	m_yoff = m_pSpinCtrlYoff->GetValue();

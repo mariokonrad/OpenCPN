@@ -143,7 +143,7 @@ void ConsoleCanvas::SetColorScheme(ColorScheme cs)
 	pCDI->SetColorScheme( cs );
 }
 
-void ConsoleCanvas::OnPaint(wxPaintEvent & event)
+void ConsoleCanvas::OnPaint(wxPaintEvent &)
 {
 	wxPaintDC dc( this );
 
@@ -159,7 +159,7 @@ void ConsoleCanvas::OnPaint(wxPaintEvent & event)
 	if( ! g_bShowActiveRouteHighway ) pCDI->Hide();
 }
 
-void ConsoleCanvas::OnShow(wxShowEvent & event)
+void ConsoleCanvas::OnShow(wxShowEvent &)
 {
 	pCDI->Show( g_bShowActiveRouteHighway );
 	m_pitemBoxSizerLeg->SetSizeHints( this );
@@ -176,7 +176,7 @@ void ConsoleCanvas::LegRoute()
 	RefreshConsoleData();
 }
 
-void ConsoleCanvas::OnContextMenu(wxContextMenuEvent& event)
+void ConsoleCanvas::OnContextMenu(wxContextMenuEvent &)
 {
 	wxMenu* contextMenu = new wxMenu();
 	wxMenuItem* btnLeg = new wxMenuItem(contextMenu, ID_NAVLEG, _("This Leg"), _T(""), wxITEM_RADIO );

@@ -34,6 +34,7 @@
 #include "gpx/gpx.h"
 
 #include <ChartCanvas.h>
+#include <Config.h>
 
 #include <plugin/PlugInManager.h>
 
@@ -42,7 +43,7 @@ extern Track * g_pActiveTrack;
 extern Routeman * g_pRouteMan;
 extern Select * pSelect;
 extern RouteManagerDialog * pRouteManagerDialog;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 extern MainFrame * gFrame;
 extern ChartCanvas * cc1;
 extern PlugInManager * g_pi_manager;

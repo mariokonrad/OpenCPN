@@ -42,6 +42,7 @@
 #include "PositionParser.h"
 #include "gpx/gpx.h"
 
+#include <Config.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 
@@ -60,7 +61,7 @@ extern int g_StartTimeTZ;
 extern IDX_entry * gpIDX;
 extern TCMgr * ptcmgr;
 extern long gStart_LMT_Offset;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 extern WayPointman * pWayPointMan;
 extern ChartCanvas * cc1;
 extern Select * pSelect;

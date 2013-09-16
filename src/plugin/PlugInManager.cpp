@@ -44,6 +44,7 @@
 #include <ViewPort.h>
 #include <DimeControl.h>
 #include <ChartCanvas.h>
+#include <Config.h>
 
 #include <plugin/OCPN_MsgEvent.h>
 
@@ -65,7 +66,7 @@
 #include <wx/aui/aui.h>
 #include <wx/statline.h>
 
-extern MyConfig        *pConfig;
+extern Config        *pConfig;
 extern wxString        g_SData_Locn;
 extern AIS_Decoder     *g_pAIS;
 extern wxAuiManager    *g_pauimgr;
@@ -210,8 +211,8 @@ bool PlugInManager::LoadAllPlugIns(const wxString &plugin_dir)
                     //    Check the config file to see if this PlugIn is user-enabled
                     wxString config_section = ( _T ( "/PlugIns/" ) );
                     config_section += pic->m_common_name;
-                    pConfig->SetPath ( config_section );
-                    pConfig->Read ( _T ( "bEnabled" ), &pic->m_bEnabled );
+                    pConfig->SetPath(config_section );
+                    pConfig->Read(_T("bEnabled"), &pic->m_bEnabled );
 
                     if(pic->m_bEnabled)
                     {
@@ -2462,19 +2463,17 @@ wxString PlugInChartBase::GetFileSearchMask(void)
     return _T("");
 }
 
-int PlugInChartBase::Init( const wxString& name, int init_flags )
+int PlugInChartBase::Init(const wxString &, int)
 {
     return 0;
 }
 
-//    Accessors
-
-double PlugInChartBase::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom)
+double PlugInChartBase::GetNormalScaleMin(double, bool)
 {
     return 1.0;
 }
 
-double PlugInChartBase::GetNormalScaleMax(double canvas_scale_factor, int canvas_width)
+double PlugInChartBase::GetNormalScaleMax(double, int)
 {
     return 2.0e7;
 }
@@ -2484,36 +2483,33 @@ bool PlugInChartBase::GetChartExtent(ExtentPI *pext)
     return false;
 }
 
-
-wxBitmap& PlugInChartBase::RenderRegionView(const PlugIn_ViewPort& VPoint,
-        const wxRegion &Region)
+wxBitmap& PlugInChartBase::RenderRegionView(const PlugIn_ViewPort &, const wxRegion &)
 {
     return wxNullBitmap;
 }
 
-
-bool PlugInChartBase::AdjustVP(PlugIn_ViewPort &vp_last, PlugIn_ViewPort &vp_proposed)
+bool PlugInChartBase::AdjustVP(PlugIn_ViewPort &, PlugIn_ViewPort &)
 {
     return false;
 }
 
-void PlugInChartBase::GetValidCanvasRegion(const PlugIn_ViewPort& VPoint, wxRegion *pValidRegion)
+void PlugInChartBase::GetValidCanvasRegion(const PlugIn_ViewPort &, wxRegion *)
 {}
 
-void PlugInChartBase::SetColorScheme(int cs, bool bApplyImmediate)
+void PlugInChartBase::SetColorScheme(int, bool)
 {}
 
-double PlugInChartBase::GetNearestPreferredScalePPM(double target_scale_ppm)
+double PlugInChartBase::GetNearestPreferredScalePPM(double)
 {
     return 1.0;
 }
 
-wxBitmap *PlugInChartBase::GetThumbnail(int tnx, int tny, int cs)
+wxBitmap *PlugInChartBase::GetThumbnail(int, int, int)
 {
     return NULL;
 }
 
-void PlugInChartBase::ComputeSourceRectangle(const PlugIn_ViewPort &vp, wxRect *pSourceRect)
+void PlugInChartBase::ComputeSourceRectangle(const PlugIn_ViewPort &, wxRect *)
 {}
 
 double PlugInChartBase::GetRasterScaleFactor()
@@ -2521,7 +2517,7 @@ double PlugInChartBase::GetRasterScaleFactor()
     return 1.0;
 }
 
-bool PlugInChartBase::GetChartBits( wxRect& source, unsigned char *pPix, int sub_samp )
+bool PlugInChartBase::GetChartBits(wxRect &, unsigned char *, int)
 {
     return false;
 }
@@ -2536,6 +2532,6 @@ int PlugInChartBase::GetSize_Y()
     return 1;
 }
 
-void PlugInChartBase::latlong_to_chartpix(double lat, double lon, double &pixx, double &pixy)
+void PlugInChartBase::latlong_to_chartpix(double, double, double &, double &)
 {}
 

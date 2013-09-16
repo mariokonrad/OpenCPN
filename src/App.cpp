@@ -42,9 +42,11 @@
 #include "navutil.h"
 #include "MicrosoftCompatibility.h"
 #include "GUI_IDs.h"
+
 #include <MemoryStatus.h>
 #include <CM93DSlide.h>
 #include <ChartCanvas.h>
+#include <Config.h>
 
 #include <plugin/PlugInManager.h>
 
@@ -344,7 +346,7 @@ extern bool g_bportable;
 extern bool g_bdisable_opengl;
 extern OCPNFloatingToolbarDialog * g_FloatingToolbarDialog;
 extern wxDateTime g_start_time;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 extern Select * pSelect;
 extern Select * pSelectTC;
 extern Select * pSelectAIS;
@@ -1212,9 +1214,8 @@ bool App::OnInit()
 	pWayPointMan->ProcessIcons( g_StyleManager->GetCurrentStyle() );
 
 	//      Open/Create the Config Object (Must be after UI Style init).
-	MyConfig *pCF = new MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
-	pConfig = (MyConfig *) pCF;
-	pConfig->LoadMyConfig(0);
+	pConfig = new Config( wxString( _T("") ), wxString( _T("") ), gConfig_File );
+	pConfig->LoadConfig(0);
 
 	//        Is this the first run after a clean install?
 	if (!global::OCPN::get().sys().config().nav_message_shown)
@@ -1469,10 +1470,10 @@ bool App::OnInit()
 	pWorldMapLocation->Prepend( g_SData_Locn );
 	pWorldMapLocation->Append( wxFileName::GetPathSeparator() );
 
-	//      Reload the config data, to pick up any missing data class configuration info
-	//      e.g. s52plib, which could not be created until first config load completes
-	//      Think catch-22
-	pConfig->LoadMyConfig(1);
+	// Reload the config data, to pick up any missing data class configuration info
+	// e.g. s52plib, which could not be created until first config load completes
+	// Think catch-22
+	pConfig->LoadConfig(1);
 
 	//  Override some config options for initial user startup with empty config file
 	if( b_novicemode ) {

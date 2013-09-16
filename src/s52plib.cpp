@@ -39,11 +39,12 @@
 #include "georef.h"
 #include "dychart.h"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
 #include <wx/image.h>
 #include <wx/tokenzr.h>
+#include <wx/textfile.h>
 
 #ifdef __MSVC__
 #define _CRTDBG_MAP_ALLOC
@@ -745,7 +746,7 @@ while( r ) {
 return top;
 }
 
-int s52plib::_LUP2rules( LUPrec *LUP, S57Obj *pObj )
+int s52plib::_LUP2rules(LUPrec * LUP, S57Obj *)
 {
 	if( NULL == LUP ) return -1;
 	// check if already parsed
@@ -1077,20 +1078,14 @@ bool s52plib::S52_flush_Plib()
 
 LUPrec *s52plib::S52_LUPLookup( LUPname LUP_Name, const char * objectName, S57Obj *pObj, bool bStrict )
 {
-	LUPrec *LUP = NULL;
-	LUPrec *LUPCandidate;
-
 	LUPArrayContainer *plac = SelectLUPArrayContainer( LUP_Name );
 
 	LUPHashIndex *hip = plac->GetArrayIndexHelper( objectName );
 	int nLUPs = hip->count;
 	int nStartIndex = hip->n_start;
 
-	LUP = FindBestLUP( plac->GetLUPArray(), nStartIndex, nLUPs, pObj, bStrict );
-
-	return LUP;
+	return FindBestLUP( plac->GetLUPArray(), nStartIndex, nLUPs, pObj, bStrict );
 }
-
 
 void s52plib::SetPLIBColorScheme( wxString scheme )
 {
@@ -4138,14 +4133,12 @@ int s52plib::dda_tri( wxPoint *ptp, S52color *c, render_canvas_parms *pb_spec,
 
 	//      Create edge arrays using fast integer DDA
 	int m, x, dy, count;
-	bool dda8 = false;
 	bool cw;
 
 	if( ( abs( xmax - xmin ) > 32768 ) || ( abs( xmid - xmin ) > 32768 )
 			|| ( abs( xmax - xmid ) > 32768 ) || ( abs( ymax - ymin ) > 32768 )
 			|| ( abs( ymid - ymin ) > 32768 ) || ( abs( ymax - ymid ) > 32768 ) || ( xmin > 32768 )
 			|| ( xmid > 32768 ) ) {
-		dda8 = true;
 
 		dy = ( ymax - ymin );
 		if( dy ) {
@@ -5451,10 +5444,8 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	return 1;
 }
 
-int s52plib::RenderAreaToGL( const wxGLContext &glcc, ObjRazRules *rzRules, ViewPort *vp,
-		wxRect &render_rect )
+int s52plib::RenderAreaToGL(const wxGLContext &, ObjRazRules * rzRules, ViewPort * vp, wxRect &render_rect)
 {
-
 	if( !ObjectRenderCheckPos( rzRules, vp ) ) return 0;
 
 	if( !ObjectRenderCheckCat( rzRules, vp ) ) {
@@ -5527,10 +5518,10 @@ int s52plib::RenderAreaToGL( const wxGLContext &glcc, ObjRazRules *rzRules, View
 }
 
 render_canvas_parms* s52plib::CreatePatternBufferSpec(
-		ObjRazRules * rzRules,
+		ObjRazRules *,
 		Rules * rules,
-		ViewPort * vp,
-		bool b_revrgb,
+		ViewPort *,
+		bool WXUNUSED(b_revrgb),
 		bool b_pot)
 {
 	wxImage Image;
@@ -5543,10 +5534,7 @@ render_canvas_parms* s52plib::CreatePatternBufferSpec(
 	if( prule->definition.SYDF == 'R' ) {
 		Image = useLegacyRaster ?
 			RuleXBMToImage( prule ) : ChartSymbols::GetImage( prule->name.PANM );
-	}
-
-	else          // Vector
-	{
+	} else {
 		float fsf = 100 / canvas_pix_per_mm;
 
 		// Base bounding box
@@ -5714,7 +5702,6 @@ render_canvas_parms* s52plib::CreatePatternBufferSpec(
 	}
 
 	return patt_spec;
-
 }
 
 int s52plib::RenderToBufferAP(
@@ -5941,7 +5928,7 @@ bool s52plib::ObjectRenderCheck( ObjRazRules *rzRules, ViewPort *vp )
 	return true;
 }
 
-bool s52plib::ObjectRenderCheckCS( ObjRazRules *rzRules, ViewPort *vp )
+bool s52plib::ObjectRenderCheckCS(ObjRazRules * rzRules, ViewPort *)
 {
 	//  We need to do this test since some CS procedures change the display category
 	//  So we need to tentatively process all objects with CS LUPs

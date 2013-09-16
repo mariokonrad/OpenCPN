@@ -37,6 +37,7 @@
 #include "TrackPropDlg.h"
 #include "Undo.h"
 
+#include <Config.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 
@@ -128,7 +129,7 @@ extern LayerList * pLayerList;
 extern RouteProp * pRoutePropDialog;
 extern TrackPropDlg * pTrackPropDialog;
 extern Routeman * g_pRouteMan;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 extern ChartCanvas * cc1;
 extern ChartBase * Current_Ch;
 extern Track * g_pActiveTrack;

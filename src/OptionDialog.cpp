@@ -61,6 +61,7 @@
 #include "OptionIDs.h"
 #include "LanguageList.h"
 
+#include <Config.h>
 #include <SerialPorts.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
@@ -1814,9 +1815,9 @@ void options::CreateControls()
 	m_pListbook->Connect( wxEVT_COMMAND_LISTBOOK_PAGE_CHANGED, wxListbookEventHandler( options::OnPageChange ), NULL, this );
 }
 
-void options::SetColorScheme( ColorScheme cs )
+void options::SetColorScheme(ColorScheme)
 {
-	DimeControl( this );
+	DimeControl(this);
 }
 
 void options::SetInitialSettings()
@@ -3540,7 +3541,7 @@ void options::OnSelectDatasource( wxListEvent& event )
 	event.Skip();
 }
 
-void options::OnBtnIStcs( wxCommandEvent& event )
+void options::OnBtnIStcs(wxCommandEvent &)
 {
 	m_stcdialog_in->SetSentenceList(wxStringTokenize(m_tcInputStc->GetValue(), _T(",")));
 	m_stcdialog_in->SetType(0, (m_rbIAccept->GetValue() == true) ? ConnectionParams::WHITELIST : ConnectionParams::BLACKLIST);
@@ -3549,7 +3550,7 @@ void options::OnBtnIStcs( wxCommandEvent& event )
 		m_tcInputStc->SetValue(m_stcdialog_in->GetSentencesAsText());
 }
 
-void options::OnBtnOStcs( wxCommandEvent& event )
+void options::OnBtnOStcs(wxCommandEvent &)
 {
 	m_stcdialog_out->SetSentenceList(wxStringTokenize(m_tcOutputStc->GetValue(), _T(",")));
 	m_stcdialog_out->SetType(1, (m_rbOAccept->GetValue() == true) ? ConnectionParams::WHITELIST : ConnectionParams::BLACKLIST);
@@ -3607,7 +3608,7 @@ ArrayOfCDI * options::GetWorkDirListPtr()
 	return m_pWorkDirList;
 }
 
-void options::SetConfigPtr( MyConfig *p )
+void options::SetConfigPtr(Config * p)
 {
 	m_pConfig = p;
 }

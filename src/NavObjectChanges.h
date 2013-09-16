@@ -25,6 +25,8 @@
 #define __NAVOBJECTCHANGES__H__
 
 #include "NavObjectCollection.h"
+#include <Route.h>
+#include <Track.h>
 
 class NavObjectChanges : public NavObjectCollection
 {

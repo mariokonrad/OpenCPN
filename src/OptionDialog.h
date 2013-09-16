@@ -45,7 +45,7 @@
 #include <GUI_IDs.h>
 
 class wxGenericDirCtrl;
-class MyConfig;
+class Config;
 class ChartGroupsUI;
 class ChartGroupArray;
 class ConnectionParams;
@@ -115,7 +115,7 @@ class options
 		void SetCurrentDirList( ArrayOfCDI p );
 		void SetWorkDirListPtr( ArrayOfCDI *p );
 		ArrayOfCDI* GetWorkDirListPtr();
-		void SetConfigPtr( MyConfig *p );
+		void SetConfigPtr(Config * p);
 		void OnDebugcheckbox1Click( wxCommandEvent& event );
 		void OnDirctrlSelChanged( wxTreeEvent& event );
 		void OnButtonaddClick( wxCommandEvent& event );
@@ -386,7 +386,7 @@ class options
 		ArrayOfCDI m_CurrentDirList;
 		ArrayOfCDI * m_pWorkDirList;
 
-		MyConfig * m_pConfig;
+		Config * m_pConfig;
 
 		wxArrayPtrVoid OBJLBoxArray;
 		wxString m_init_chart_dir;

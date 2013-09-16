@@ -37,15 +37,15 @@ LatLonTextCtrl::LatLonTextCtrl(
 		const wxSize & size,
 		long style,
 		const wxValidator& validator,
-		const wxString& name)
+		const wxString & name)
 	: wxTextCtrl(parent, id, value, pos, size, style, validator, name)
 {
 	m_pParentEventHandler = parent->GetEventHandler();
 }
 
-void LatLonTextCtrl::OnKillFocus(wxFocusEvent& event)
+void LatLonTextCtrl::OnKillFocus(wxFocusEvent &)
 {
-	//    Send an event to the Parent Dialog
+	// Send an event to the Parent Dialog
 	wxCommandEvent up_event( EVT_LLCHANGE, GetId() );
 	up_event.SetEventObject( (wxObject *) this );
 	m_pParentEventHandler->AddPendingEvent( up_event );

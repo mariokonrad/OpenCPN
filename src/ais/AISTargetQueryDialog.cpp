@@ -30,6 +30,7 @@
 
 #include <ChartCanvas.h>
 #include <DimeControl.h>
+#include <Config.h>
 
 #include <ais/ais.h>
 #include <ais/AIS_Target_Data.h>
@@ -45,7 +46,7 @@ extern ColorScheme global_color_scheme;
 extern AIS_Decoder * g_pAIS;
 extern wxString g_default_wp_icon;
 extern Select * pSelect;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 extern RouteManagerDialog * pRouteManagerDialog;
 extern ChartCanvas * cc1;
 

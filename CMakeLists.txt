@@ -342,6 +342,7 @@ SET(HDR_GPX
 
 SET(SRC_GPX
 	src/gpx/gpx.cpp
+	src/gpx/GpxDocument.cpp
 	src/gpx/GpxSimpleElement.cpp
 	src/gpx/GpxTrksegElement.cpp
 	src/gpx/GpxTrkElement.cpp
@@ -489,6 +490,7 @@ SET(HDRS
 	include/tcmgr.h
 	include/ocpn_plugin.h
 	include/datastream.h
+	src/Config.h
 	src/DimeControl.h
 	src/ChartCanvas.h
 	src/MemoryStatus.h
@@ -692,6 +694,7 @@ SET(SRCS
 	src/MicrosoftCompatibility.cpp
 	src/georef.cpp
 	src/navutil.cpp
+	src/Config.cpp
 	src/Track.cpp
 	src/Routeman.cpp
 	src/WayPointman.cpp
@@ -718,8 +721,6 @@ SET(SRCS
 	src/Undo.cpp
 	src/UndoAction.cpp
 	src/AboutDialog.cpp
-	src/gpx/GpxDocument.cpp
-	src/RazdsParser.cpp
 	src/Style.cpp
 	src/Tool.cpp
 	src/Icon.cpp
@@ -744,6 +745,7 @@ SET(SRCS
 	src/LinkPropDlg.cpp
 	src/OCPN_AlertDialog.cpp
 	src/Vector2D.cpp
+	src/RazdsParser.cpp
 	)
 
 IF(wx_Version MATCHES "2.9")

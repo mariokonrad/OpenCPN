@@ -35,6 +35,7 @@
 #include "gpx/gpx.h"
 
 #include <ViewPort.h>
+#include <Config.h>
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(RouteList);
@@ -45,7 +46,7 @@ extern int g_LayerIdx;
 extern Routeman *g_pRouteMan;
 extern int g_route_line_width;
 extern Select *pSelect;
-extern MyConfig *pConfig;
+extern Config *pConfig;
 extern Multiplexer *g_pMUX;
 extern double g_n_arrival_circle_radius;
 
@@ -918,7 +919,6 @@ void Route::SetVisible( bool visible, bool includeWpts )
 		if ( rp->m_bKeepXRoute )
 		{
 			rp->SetVisible( visible );
-			//pConfig->UpdateWayPoint( rp );
 		}
 		node = node->GetNext();
 	}

@@ -30,6 +30,9 @@
 #include "StyleManager.h"
 #include "Style.h"
 #include "gpx/GpxDocument.h"
+
+#include <Config.h>
+
 #include <global/OCPN.h>
 #include <global/System.h>
 
@@ -44,7 +47,7 @@ extern WayPointman * pWayPointMan;
 extern RoutePoint * pAnchorWatchPoint1;
 extern RoutePoint * pAnchorWatchPoint2;
 extern Routeman * g_pRouteMan;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 extern Select * pSelect;
 
 WayPointman::WayPointman()
@@ -315,7 +318,7 @@ wxBitmap *WayPointman::CreateDimBitmap( wxBitmap *pBitmap, double factor )
 
 }
 
-void WayPointman::SetColorScheme( ColorScheme cs )
+void WayPointman::SetColorScheme(ColorScheme)
 {
 	ProcessIcons( g_StyleManager->GetCurrentStyle() );
 
@@ -430,7 +433,7 @@ int WayPointman::GetXIconIndex( const wxBitmap *pbm )
 
 //  Create the unique identifier
 
-wxString WayPointman::CreateGUID( RoutePoint *pRP )
+wxString WayPointman::CreateGUID(RoutePoint *)
 {
 	//FIXME: this method is not needed at all (if GetUUID works...)
 	/*wxDateTime now = wxDateTime::Now();
@@ -553,13 +556,7 @@ void WayPointman::DestroyWaypoint(RoutePoint * pRp, bool b_update_changeset)
 		if( proute_array ) {
 			for( unsigned int ir = 0; ir < proute_array->GetCount(); ir++ ) {
 				Route *pr = (Route *) proute_array->Item( ir );
-
-				/*  FS#348
-					if ( g_pRouteMan->GetpActiveRoute() == pr )            // Deactivate any route containing this point
-					g_pRouteMan->DeactivateRoute();
-				 */
 				pr->RemovePoint( pRp );
-
 			}
 
 			//    Scrub the routes, looking for one-point routes

@@ -31,6 +31,7 @@
 
 #include <ChartCanvas.h>
 #include <DimeControl.h>
+#include <Config.h>
 
 #include <ais/ais.h>
 #include <ais/AIS_Decoder.h>
@@ -49,7 +50,7 @@ extern wxString g_AisTargetList_column_spec;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern int g_AisTargetList_range;
 extern wxString g_AisTargetList_perspective;
-extern MyConfig *pConfig;
+extern Config *pConfig;
 extern AISTargetListDialog *g_pAISTargetList;
 extern MainFrame *gFrame;
 extern ChartCanvas *cc1;

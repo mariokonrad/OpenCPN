@@ -31,6 +31,7 @@
 #include "navutil.h"
 #include "RouteManagerDialog.h"
 
+#include <Config.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 
@@ -43,7 +44,7 @@
 
 extern WayPointman * pWayPointMan;
 extern Select * pSelect;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 extern ChartCanvas * cc1;
 extern RouteManagerDialog * pRouteManagerDialog;
 extern Routeman * g_pRouteMan;

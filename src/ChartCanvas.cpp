@@ -72,8 +72,10 @@
 #include "TCWin.h"
 #include "MicrosoftCompatibility.h"
 #include "StatusBar.h"
-#include "GUI_IDs.h"
+
+#include <GUI_IDs.h>
 #include <AnchorDist.h>
+#include <Config.h>
 
 #include <chart/gshhs/GSHHSChart.h>
 #include <chart/ChartDB.h>
@@ -145,7 +147,7 @@ extern ConsoleCanvas    *console;
 
 extern FloatingCompassWindow * g_FloatingCompassDialog;
 extern RouteList        *pRouteList;
-extern MyConfig         *pConfig;
+extern Config         *pConfig;
 extern Select           *pSelect;
 extern Routeman         *g_pRouteMan;
 extern ThumbWin         *pthumbwin;

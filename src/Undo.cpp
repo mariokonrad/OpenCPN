@@ -29,6 +29,7 @@
 #include "Select.h"
 
 #include <ChartCanvas.h>
+#include <Config.h>
 
 #include "tinyxml/tinyxml.h"
 
@@ -37,7 +38,7 @@
 #include <wx/clipbrd.h>
 
 extern Routeman * g_pRouteMan;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 extern Select * pSelect;
 extern RouteManagerDialog * pRouteManagerDialog;
 extern WayPointman * pWayPointMan;

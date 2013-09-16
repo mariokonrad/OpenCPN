@@ -21,12 +21,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wxprec.h"
-
-#ifndef  WX_PRECOMP
-	#include "wx/wx.h"
-#endif //precompiled headers
-
 #include <wx/image.h>
 #include <wx/tokenzr.h>
 #include <wx/progdlg.h>
@@ -50,17 +44,21 @@
 #include "georef.h"
 #include "RouteProp.h"
 #include "RouteManagerDialog.h"
-#include "plugin/PlugInManager.h"
 #include "Multiplexer.h"
 #include "Select.h"
 #include "MarkIcon.h"
+
+#include <Config.h>
+
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+
+#include <plugin/PlugInManager.h>
 
 extern ConsoleCanvas * console;
 extern RouteList * pRouteList;
 extern Select * pSelect;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 
 extern wxRect g_blink_rect;
 extern wxString g_SData_Locn;
@@ -165,8 +163,7 @@ wxArrayPtrVoid *Routeman::GetRouteArrayContaining( RoutePoint *pWP )
 	}
 }
 
-RoutePoint *Routeman::FindBestActivatePoint( Route *pR, double lat, double lon, double cog,
-		double sog )
+RoutePoint *Routeman::FindBestActivatePoint( Route *pR, double lat, double lon, double cog, double WXUNUSED(sog))
 {
 	if( !pR ) return NULL;
 
@@ -905,7 +902,7 @@ void Routeman::DeleteTrack( Route *pRoute )
 	}
 }
 
-void Routeman::SetColorScheme( ColorScheme cs )
+void Routeman::SetColorScheme(ColorScheme)
 {
 	m_pActiveRoutePointPen = wxThePenList->FindOrCreatePen( wxColour( 0, 0, 255 ), g_route_line_width, wxSOLID );
 	m_pRoutePointPen = wxThePenList->FindOrCreatePen( wxColour( 0, 0, 255 ), g_route_line_width, wxSOLID );

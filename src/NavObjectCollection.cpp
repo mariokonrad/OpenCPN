@@ -25,21 +25,25 @@
 #include "RoutePoint.h"
 #include "Routeman.h"
 #include "WayPointman.h"
-#include "navutil.h"
 #include "Track.h"
 #include "Select.h"
+#include "navutil.h"
+
+#include <Config.h>
+
+#include "tinyxml/tinyxml.h"
 
 extern WayPointman * pWayPointMan;
 extern Routeman * g_pRouteMan;
-extern MyConfig * pConfig;
+extern Config * pConfig;
 
 extern RouteList * pRouteList;
 extern Select * pSelect;
 
-//      Bitfield definitions controlling the GPX nodes output for Route.Track objects
-#define         RT_OUT_ACTION_ADD         1 << 1          //  opencpn:action node support
-#define         RT_OUT_ACTION_DEL         1 << 2
-#define         RT_OUT_ACTION_UPD         1 << 3
+// Bitfield definitions controlling the GPX nodes output for Route.Track objects
+#define RT_OUT_ACTION_ADD 1 << 1          //  opencpn:action node support
+#define RT_OUT_ACTION_DEL 1 << 2
+#define RT_OUT_ACTION_UPD 1 << 3
 
 NavObjectCollection::NavObjectCollection()
 	: pugi::xml_document()

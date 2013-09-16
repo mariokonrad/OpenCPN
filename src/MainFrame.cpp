@@ -58,18 +58,10 @@
 #include "MainFrame.h"
 #include <version.h>
 #include "dychart.h"
-#include <ais/ais.h>
-#include <ais/AISTargetListDialog.h>
-#include <ais/AISTargetAlertDialog.h>
-#include <ais/AIS_Decoder.h>
 #include "ChartCanvas.h"
 #include "TimedPopupWin.h"
 #include "MessageBox.h"
 #include "WayPointman.h"
-#include <chart/ChartDB.h>
-#include <chart/ChartStack.h>
-#include <chart/CacheEntry.h>
-#include <chart/ChartBaseBSB.h>
 #include "navutil.h"
 #include "Track.h"
 #include "StyleManager.h"
@@ -98,27 +90,41 @@
 #include "TrackPropDlg.h"
 #include "cutil.h"
 #include "RouteManagerDialog.h"
-#include "plugin/PlugInManager.h"
 #include "MyPrintout.h"
 #include "OCPNFloatingToolbarDialog.h"
 #include "NavObjectChanges.h"
 #include "MicrosoftCompatibility.h"
 #include "StatusBar.h"
-#include "chart/ChartDummy.h"
-#include "plugin/OCPN_MsgEvent.h"
-#include <global/OCPN.h>
-#include <global/GUI.h>
-#include <global/Navigation.h>
-#include <chart/gshhs/GSHHSChart.h>
+
 #include <GUI_IDs.h>
 #include <AnchorDist.h>
 #include <MemoryStatus.h>
+#include <Config.h>
+
+#include <plugin/PlugInManager.h>
+#include <plugin/OCPN_MsgEvent.h>
+
+#include <global/OCPN.h>
+#include <global/GUI.h>
+#include <global/Navigation.h>
+
+#include <ais/ais.h>
+#include <ais/AISTargetListDialog.h>
+#include <ais/AISTargetAlertDialog.h>
+#include <ais/AIS_Decoder.h>
+
+#include <chart/ChartDB.h>
+#include <chart/ChartStack.h>
+#include <chart/CacheEntry.h>
+#include <chart/ChartBaseBSB.h>
+#include <chart/ChartDummy.h>
+#include <chart/gshhs/GSHHSChart.h>
 
 #ifdef USE_S57
 	#include "S57RegistrarMgr.h"
 	#include "S57QueryDialog.h"
-	#include <chart/CM93OffsetDialog.h>
 	#include "s52plib.h"
+	#include <chart/CM93OffsetDialog.h>
 	#include <chart/S57Chart.h>
 	#include "cpl_csv.h"
 #endif
@@ -168,7 +174,7 @@ MainFrame * gFrame;
 ChartCanvas *cc1;
 ConsoleCanvas *console;
 StatWin *stats;
-MyConfig *pConfig;
+Config *pConfig;
 ChartBase *Current_Vector_Ch;
 ChartBase *Current_Ch;
 ChartDB *ChartData;
@@ -2389,7 +2395,7 @@ int MainFrame::DoOptionsDialog()
     optionsDlg.SetWorkDirListPtr( pWorkDirArray );
 
 //      Pass a ptr to MyConfig, for updates
-    optionsDlg.SetConfigPtr( pConfig );
+    optionsDlg.SetConfigPtr(pConfig);
 
     optionsDlg.SetInitialSettings();
 

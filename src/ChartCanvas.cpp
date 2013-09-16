@@ -7625,7 +7625,7 @@ void RenderExtraRouteLegInfo( ocpnDC &dc, wxPoint ref_point, wxString s )
     yp = ref_point.y + h;
     yp += hilite_offset;
 
-    AlphaBlending( dc, xp, yp, w, h, 0.0, GetGlobalColor( _T ( "YELO1" ) ), 172 );
+    dc.AlphaBlending(xp, yp, w, h, 0.0, GetGlobalColor( _T ( "YELO1" ) ), 172);
 
     dc.SetPen( wxPen( GetGlobalColor( _T ( "UBLCK" ) ) ) );
     dc.DrawText( s, xp, yp );
@@ -7701,7 +7701,7 @@ void ChartCanvas::RenderRouteLegs( ocpnDC &dc )
         yp = r_rband.y;
         yp += hilite_offset;
 
-        AlphaBlending( dc, xp, yp, w, h, 0.0, GetGlobalColor( _T ( "YELO1" ) ), 172 );
+        dc.AlphaBlending(xp, yp, w, h, 0.0, GetGlobalColor( _T ( "YELO1" ) ), 172);
 
         dc.SetPen( wxPen( GetGlobalColor( _T ( "UBLCK" ) ) ) );
         dc.DrawText( routeInfo, xp, yp );

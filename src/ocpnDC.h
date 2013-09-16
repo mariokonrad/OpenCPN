@@ -93,6 +93,13 @@ class DECL_EXP ocpnDC // FIXME: redesign: do not support wxGLCanvas or wxDC, use
 
 		void DestroyClippingRegion();
 
+		void AlphaBlending(
+				int x, int y,
+				int size_x, int size_y,
+				float radius,
+				wxColour color,
+				unsigned char transparency);
+
 		wxDC * GetDC() const;
 
 		// this is static public, because it must be accessible by the GLU tesselation

@@ -294,7 +294,7 @@ void RoutePoint::Draw( ocpnDC& dc, wxPoint *rpn )
 
 	//  Highlite any selected point
 	if( m_bPtIsSelected ) {
-		AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, 0.0,
+		dc.AlphaBlending(r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, 0.0,
 				pen->GetColour(), transparency );
 	}
 

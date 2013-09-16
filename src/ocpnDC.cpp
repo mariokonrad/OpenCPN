@@ -990,3 +990,80 @@ void ocpnDC::GLDrawBlendData( wxCoord x, wxCoord y, wxCoord w, wxCoord h, int fo
 	   this way always works */
 }
 
+// render a rectangle at a given color and transparency
+void ocpnDC::AlphaBlending(
+		int x,
+		int y,
+		int size_x,
+		int size_y,
+		float radius, wxColour color,
+		unsigned char transparency)
+{
+	wxDC *pdc = GetDC();
+	if( pdc ) {
+		//    Get wxImage of area of interest
+		wxBitmap obm( size_x, size_y );
+		wxMemoryDC mdc1;
+		mdc1.SelectObject( obm );
+		mdc1.Blit( 0, 0, size_x, size_y, pdc, x, y );
+		mdc1.SelectObject( wxNullBitmap );
+		wxImage oim = obm.ConvertToImage();
+
+		//    Create destination image
+		wxBitmap olbm( size_x, size_y );
+		wxMemoryDC oldc( olbm );
+		oldc.SetBackground( *wxBLACK_BRUSH );
+		oldc.SetBrush( *wxWHITE_BRUSH );
+		oldc.Clear();
+
+		if( radius > 0.0 )
+			oldc.DrawRoundedRectangle( 0, 0, size_x, size_y, radius );
+
+		wxImage dest = olbm.ConvertToImage();
+		unsigned char *dest_data = (unsigned char *) malloc(
+				size_x * size_y * 3 * sizeof(unsigned char) );
+		unsigned char *bg = oim.GetData();
+		unsigned char *box = dest.GetData();
+		unsigned char *d = dest_data;
+
+		float alpha = 1.0 - (float)transparency / 255.0;
+		int sb = size_x * size_y;
+		for( int i = 0; i < sb; i++ ) {
+			float a = alpha;
+			if( *box == 0 && radius > 0.0 ) a = 1.0;
+			int r = ( ( *bg++ ) * a ) + (1.0-a) * color.Red();
+			*d++ = r; box++;
+			int g = ( ( *bg++ ) * a ) + (1.0-a) * color.Green();
+			*d++ = g; box++;
+			int b = ( ( *bg++ ) * a ) + (1.0-a) * color.Blue();
+			*d++ = b; box++;
+		}
+
+		dest.SetData( dest_data );
+
+		//    Convert destination to bitmap and draw it
+		wxBitmap dbm( dest );
+		DrawBitmap( dbm, x, y, false );
+
+		// on MSW, the dc Bounding box is not updated on DrawBitmap() method.
+		// Do it explicitely here for all platforms.
+		CalcBoundingBox( x, y );
+		CalcBoundingBox( x + size_x, y + size_y );
+	} else {
+		/* opengl version */
+		glEnable( GL_BLEND );
+		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
+		glColor4ub( color.Red(), color.Green(), color.Blue(), transparency );
+
+		glBegin( GL_QUADS );
+		glVertex2i( x, y );
+		glVertex2i( x + size_x, y );
+		glVertex2i( x + size_x, y + size_y );
+		glVertex2i( x, y + size_y );
+		glEnd();
+
+		glDisable( GL_BLEND );
+	}
+}
+

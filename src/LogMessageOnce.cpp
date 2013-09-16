@@ -21,63 +21,20 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __NAVUTIL__
-#define __NAVUTIL__
+#include "LogMessageOnce.h"
 
-#include <wx/sound.h>
+#include <wx/log.h>
 
-#ifdef __WXMSW__
-	#include <wx/msw/regconf.h>
-	#include <wx/msw/iniconf.h>
-#endif
+wxArrayString * pMessageOnceArray; // FIXME: this should be encapsulated
 
-#ifdef OCPN_USE_PORTAUDIO
-	#include "portaudio.h"
-#endif
-
-#include "s52s57.h"
-#include "tinyxml/tinyxml.h"
-#include "chart/ChartDatabase.h"
-#include "RoutePoint.h"
-#include "Vector2D.h"
-#include "Route.h"
-#include "SelectItem.h"
-
-enum
+bool LogMessageOnce(const wxString & msg)
 {
-	DISTANCE_NMI = 0,
-	DISTANCE_MI,
-	DISTANCE_KM,
-	DISTANCE_M
-};
+	for (wxArrayString::iterator i = pMessageOnceArray->begin(); i != pMessageOnceArray->end(); ++i) {
+		if (msg.IsSameAs(*i))
+			return false;
+	}
+	pMessageOnceArray->push_back(msg);
+	wxLogMessage(msg);
+	return true;
+}
 
-enum
-{
-	SPEED_KTS = 0,
-	SPEED_MPH,
-	SPEED_KMH,
-	SPEED_MS
-};
-
-extern double toUsrDistance(double nm_distance, int unit = -1);
-extern double fromUsrDistance(double usr_distance, int unit = -1);
-extern double toUsrSpeed(double kts_speed, int unit = -1);
-extern double fromUsrSpeed(double usr_speed, int unit = -1);
-extern wxString getUsrDistanceUnit(int unit = -1);
-extern wxString getUsrSpeedUnit(int unit = -1);
-extern wxString toSDMM(int NEflag, double a, bool hi_precision = true);
-extern double fromDMM(wxString sdms);
-
-class Route;
-class wxProgressDialog;
-class ocpnDC;
-class NavObjectCollection;
-class NavObjectChanges;
-class GpxWptElement;
-class GpxRteElement;
-class GpxTrkElement;
-
-Route * RouteExists(const wxString & guid);
-Route * RouteExists(Route * pTentRoute);
-
-#endif

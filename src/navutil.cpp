@@ -68,7 +68,6 @@
 
 extern LayerList * pLayerList;
 extern RouteList * pRouteList;
-extern wxArrayString * pMessageOnceArray;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
 extern int g_iSDMMFormat;
@@ -97,22 +96,6 @@ Route * RouteExists(const wxString & guid)
 	return NULL;
 }
 
-
-/**************************************************************************/
-/*          LogMessageOnce                                                */
-/**************************************************************************/
-
-bool LogMessageOnce(const wxString & msg)
-{
-	for (unsigned int i = 0; i < pMessageOnceArray->GetCount(); ++i) {
-		if (msg.IsSameAs(pMessageOnceArray->Item(i)))
-			return false;
-	}
-
-	pMessageOnceArray->Add( msg );
-	wxLogMessage(msg);
-	return true;
-}
 
 /**************************************************************************/
 /*          Converts the distance to the units selected by user           */

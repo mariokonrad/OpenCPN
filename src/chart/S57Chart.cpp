@@ -37,6 +37,7 @@
 #include <geo/TriPrim.h>
 #include <geo/PolyTriGroup.h>
 #include <geo/PolyTrapGroup.h>
+
 #include "cutil.h"
 #include "georef.h"
 #include "navutil.h"
@@ -48,6 +49,7 @@
 #include "MessageBox.h"
 #include "MicrosoftCompatibility.h"
 #include <ChartCanvas.h>
+#include <LogMessageOnce.h>
 
 #include "cpl_csv.h"
 #include "setjmp.h"

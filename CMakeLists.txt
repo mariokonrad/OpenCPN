@@ -493,6 +493,7 @@ SET(HDRS
 	include/ocpn_plugin.h
 	include/datastream.h
 	src/Config.h
+	src/LogMessageOnce.h
 	src/DimeControl.h
 	src/ChartCanvas.h
 	src/MemoryStatus.h
@@ -697,6 +698,7 @@ SET(SRCS
 	src/georef.cpp
 	src/navutil.cpp
 	src/Config.cpp
+	src/LogMessageOnce.cpp
 	src/Track.cpp
 	src/Routeman.cpp
 	src/WayPointman.cpp

@@ -33,6 +33,7 @@
 #include <navutil.h>
 #include <cutil.h>
 #include <MicrosoftCompatibility.h>
+#include <LogMessageOnce.h>
 
 #include <algorithm>
 

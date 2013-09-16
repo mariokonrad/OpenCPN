@@ -321,7 +321,6 @@ int g_StartTimeTZ;
 IDX_entry *gpIDX;
 int gpIDXn;
 long gStart_LMT_Offset;
-wxArrayString *pMessageOnceArray;
 FILE *s_fpdebug;
 bool bAutoOpen;
 bool bFirstAuto;

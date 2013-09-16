@@ -2207,35 +2207,15 @@ static bool WptIsInRouteList(RoutePoint * pr)
 	return false;
 }
 
-Route *RouteExists(const wxString & guid)
+Route * RouteExists(const wxString & guid)
 {
-	wxRouteListNode * route_node = pRouteList->GetFirst();
-
-	while (route_node) {
-		Route * proute = route_node->GetData();
-		if (guid == proute->m_GUID)
-			return proute;
-
-		route_node = route_node->GetNext();
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+		Route * route = *i;
+		if (guid == route->m_GUID)
+			return route;
 	}
 	return NULL;
 }
-
-Route *RouteExists(Route * pTentRoute)
-{
-	wxRouteListNode *route_node = pRouteList->GetFirst();
-	while( route_node ) {
-		Route *proute = route_node->GetData();
-
-		if( proute->IsEqualTo( pTentRoute ) ) {
-			if( !proute->m_bIsTrack ) return proute;
-		}
-
-		route_node = route_node->GetNext();       // next route
-	}
-	return NULL;
-}
-
 
 // This function formats the input date/time into a valid GPX ISO 8601
 // time string specified in the UTC time zone.

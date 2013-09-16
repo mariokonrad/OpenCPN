@@ -31,6 +31,8 @@
 
 #include <Config.h>
 
+#include "gpx/ParseGPXDateTime.h"
+
 #include "tinyxml/tinyxml.h"
 
 extern WayPointman * pWayPointMan;

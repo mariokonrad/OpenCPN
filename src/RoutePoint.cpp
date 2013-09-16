@@ -32,6 +32,8 @@
 
 #include <ChartCanvas.h>
 
+#include "gpx/ParseGPXDateTime.h"
+
 #include <wx/dcscreen.h>
 #include <wx/tokenzr.h>
 

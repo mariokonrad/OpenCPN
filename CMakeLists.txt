@@ -338,6 +338,7 @@ SET(HDR_GPX
 	src/gpx/GpxTrkElement.h
 	src/gpx/GpxWptElement.h
 	src/gpx/GpxRteElement.h
+	src/gpx/ParseGPXDateTime.h
 	)
 
 SET(SRC_GPX
@@ -352,6 +353,7 @@ SET(SRC_GPX
 	src/gpx/GpxxExtensionsElement.cpp
 	src/gpx/GpxExtensionsElement.cpp
 	src/gpx/GpxRootElement.cpp
+	src/gpx/ParseGPXDateTime.cpp
 	)
 
 SET(HDR_PUGIXML

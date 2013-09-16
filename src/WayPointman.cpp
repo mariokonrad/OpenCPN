@@ -444,17 +444,15 @@ wxString WayPointman::CreateGUID( RoutePoint *pRP )
 	return GpxDocument::GetUUID();
 }
 
-RoutePoint *WayPointman::FindRoutePointByGUID(const wxString &guid)
+RoutePoint * WayPointman::FindRoutePoint(const wxString & guid)
 {
-	wxRoutePointListNode *prpnode = pWayPointMan->m_pWayPointList->GetFirst();
-	while( prpnode ) {
-		RoutePoint *prp = prpnode->GetData();
-
-		if( prp->m_GUID == guid ) return ( prp );
-
-		prpnode = prpnode->GetNext(); //RoutePoint
+	RoutePointList * list = pWayPointMan->m_pWayPointList;
+	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
+		RoutePoint * pr = *i;
+		if (guid == pr->m_GUID) {
+			return pr;
+		}
 	}
-
 	return NULL;
 }
 
@@ -607,5 +605,19 @@ void WayPointman::DestroyWaypoint(RoutePoint * pRp, bool b_update_changeset)
 int WayPointman::GetNumIcons(void) const
 {
 	return m_pIconArray->Count();
+}
+
+RoutePoint * WayPointman::WaypointExists(const wxString & name, double lat, double lon)
+{
+	RoutePointList * list = pWayPointMan->m_pWayPointList;
+	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
+		RoutePoint * pr = *i;
+		if (name == pr->GetName()) {
+			if (fabs(lat - pr->m_lat) < 1.e-6 && fabs(lon - pr->m_lon) < 1.e-6) {
+				return pr;
+			}
+		}
+	}
+	return NULL;
 }
 

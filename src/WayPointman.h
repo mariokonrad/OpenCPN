@@ -50,7 +50,6 @@ class WayPointman
 		void SetColorScheme(ColorScheme cs);
 		bool SharedWptsExist();
 		void DeleteAllWaypoints(bool b_delete_used);
-		RoutePoint * FindRoutePointByGUID(const wxString & guid);
 		void DestroyWaypoint(RoutePoint * pRp, bool b_update_changeset = true);
 		void ClearRoutePointFonts(void);
 		void ProcessIcons(ocpnStyle::Style * style);
@@ -60,6 +59,9 @@ class WayPointman
 		wxString * GetIconKey(int index);
 		wxImageList * Getpmarkicon_image_list(void);
 		void ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description);
+
+		static RoutePoint * FindRoutePoint(const wxString & guid);
+		static RoutePoint * WaypointExists(const wxString & name, double lat, double lon);
 
 		RoutePointList * m_pWayPointList;
 

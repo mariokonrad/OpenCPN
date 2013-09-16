@@ -99,7 +99,7 @@ bool NavObjectChanges::ApplyChanges(void)
 
 			if(pWp && pWayPointMan) {
 				pWp->m_bIsolatedMark = true;
-				RoutePoint *pExisting = WaypointExists( pWp->GetName(), pWp->m_lat, pWp->m_lon );
+				RoutePoint * pExisting = WayPointman::WaypointExists(pWp->GetName(), pWp->m_lat, pWp->m_lon);
 
 				pugi::xml_node xchild = object.child("extensions");
 				pugi::xml_node child = xchild.child("opencpn:action");

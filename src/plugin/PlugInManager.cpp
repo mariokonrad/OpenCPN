@@ -1914,7 +1914,7 @@ bool DeleteSingleWaypoint( wxString &GUID )
 {
     //  Find the RoutePoint
     bool b_found = false;
-    RoutePoint *prp = pWayPointMan->FindRoutePointByGUID( GUID );
+    RoutePoint *prp = pWayPointMan->FindRoutePoint(GUID);
 
     if(prp)
         b_found = true;
@@ -1933,7 +1933,7 @@ bool UpdateSingleWaypoint( PlugIn_Waypoint *pwaypoint )
 {
     //  Find the RoutePoint
     bool b_found = false;
-    RoutePoint *prp = pWayPointMan->FindRoutePointByGUID( pwaypoint->m_GUID );
+    RoutePoint *prp = pWayPointMan->FindRoutePoint(pwaypoint->m_GUID);
 
     if(prp)
         b_found = true;

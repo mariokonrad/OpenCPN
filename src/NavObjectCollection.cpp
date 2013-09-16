@@ -391,7 +391,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 
 			if( ChildName == _T ( "rtept" ) ) {
 				pWp = GPXLoadWaypoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id);
-				RoutePoint *erp = ::WaypointExists( pWp->m_GUID );
+				RoutePoint *erp = WayPointman::FindRoutePoint(pWp->m_GUID);
 				if( erp != NULL )
 					pWp = erp;
 				pTentRoute->AddPoint( pWp, false, true );          // defer BBox calculation
@@ -1181,7 +1181,7 @@ bool NavObjectCollection::LoadAllGPXObjects()
 			pWp->m_bIsolatedMark = true;      // This is an isolated mark
 
 			if(pWp) {
-				RoutePoint *pExisting = WaypointExists( pWp->GetName(), pWp->m_lat, pWp->m_lon );
+				RoutePoint * pExisting = WayPointman::WaypointExists(pWp->GetName(), pWp->m_lat, pWp->m_lon);
 				if( !pExisting ) {
 					if( NULL != pWayPointMan )
 						pWayPointMan->m_pWayPointList->Append( pWp );
@@ -1201,8 +1201,6 @@ bool NavObjectCollection::LoadAllGPXObjects()
 					Route *pRoute = GPXLoadRoute1( object, false, false, false, 0 );
 					InsertRouteA( pRoute );
 				}
-
-
 	}
 
 	return true;

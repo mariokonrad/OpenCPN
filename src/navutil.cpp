@@ -2194,32 +2194,6 @@ void MyConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
 //          Static GPX Support Routines
 //
 //-------------------------------------------------------------------------
-RoutePoint *WaypointExists(const wxString & name, double lat, double lon)
-{
-	RoutePointList * list = pWayPointMan->m_pWayPointList;
-	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
-		RoutePoint * pr = *i;
-		if (name == pr->GetName()) {
-			if (fabs(lat - pr->m_lat) < 1.e-6 && fabs(lon - pr->m_lon) < 1.e-6) {
-				return pr;
-			}
-		}
-	}
-	return NULL;
-}
-
-RoutePoint * WaypointExists(const wxString & guid)
-{
-	RoutePointList * list = pWayPointMan->m_pWayPointList;
-	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
-		RoutePoint * pr = *i;
-		if (guid == pr->m_GUID) {
-			return pr;
-		}
-	}
-	return NULL;
-}
-
 static bool WptIsInRouteList(RoutePoint * pr)
 {
 	for (RouteList::iterator j = pRouteList->begin(); j != pRouteList->end(); ++j) {

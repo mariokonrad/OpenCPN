@@ -571,18 +571,21 @@ bool NavObjectCollection::GPXCreateWpt(
 			while( linknode ) {
 				Hyperlink *link = linknode->GetData();
 
-				pugi::xml_node child_link = node.append_child("link");
-				child_link.append_attribute("href") = link->Link.mb_str();
+				pugi::xml_node child_link = node.append_child("link");;
+				wxCharBuffer buffer=link->Link.ToUTF8();
+				if(buffer.data())
+					child_link.append_attribute("href") = buffer.data();
 
-				wxCharBuffer buffer=link->DescrText.ToUTF8();
+				buffer=link->DescrText.ToUTF8();
 				if(buffer.data()) {
 					child = child_link.append_child("text");
 					child.append_child(pugi::node_pcdata).set_value(buffer.data());
 				}
 
-				if( link->LType.Len() ) {
+				buffer=link->LType.ToUTF8();
+				if(buffer.data()) {
 					child = child_link.append_child("type");
-					child.append_child(pugi::node_pcdata).set_value(link->LType.mb_str());
+					child.append_child(pugi::node_pcdata).set_value(buffer.data());
 				}
 
 				linknode = linknode->GetNext();
@@ -669,17 +672,20 @@ bool NavObjectCollection::GPXCreateTrk(
 			Hyperlink *link = linknode->GetData();
 
 			pugi::xml_node child_link = node.append_child("link");
-			child_link.append_attribute("href") = link->Link.mb_str();
+			wxCharBuffer buffer = link->Link.ToUTF8();
+			if(buffer.data())
+				child_link.append_attribute("href") = buffer.data();
 
-			wxCharBuffer buffer=link->DescrText.ToUTF8();
+			buffer=link->DescrText.ToUTF8();
 			if(buffer.data()) {
 				child = child_link.append_child("text");
 				child.append_child(pugi::node_pcdata).set_value(buffer.data());
 			}
 
-			if( link->LType.Len() ) {
+			buffer=link->LType.ToUTF8();
+			if(buffer.data()) {
 				child = child_link.append_child("type");
-				child.append_child(pugi::node_pcdata).set_value(link->LType.mb_str());
+				child.append_child(pugi::node_pcdata).set_value(buffer.data());
 			}
 
 			linknode = linknode->GetNext();
@@ -784,17 +790,20 @@ bool NavObjectCollection::GPXCreateRoute(
 			Hyperlink *link = linknode->GetData();
 
 			pugi::xml_node child_link = node.append_child("link");
-			child_link.append_attribute("href") = link->Link.mb_str();
+			wxCharBuffer buffer = link->Link.ToUTF8();
+			if(buffer.data())
+				child_link.append_attribute("href") = buffer.data();
 
-			wxCharBuffer buffer=link->DescrText.ToUTF8();
+			buffer=link->DescrText.ToUTF8();
 			if(buffer.data()) {
 				child = child_link.append_child("text");
 				child.append_child(pugi::node_pcdata).set_value(buffer.data());
 			}
 
-			if( link->LType.Len() ) {
+			buffer=link->LType.ToUTF8();
+			if(buffer.data()) {
 				child = child_link.append_child("type");
-				child.append_child(pugi::node_pcdata).set_value(link->LType.mb_str());
+				child.append_child(pugi::node_pcdata).set_value(buffer.data());
 			}
 
 			linknode = linknode->GetNext();

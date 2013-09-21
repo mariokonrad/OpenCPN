@@ -1841,7 +1841,6 @@ void MainFrame::OnToolLeftClick( wxCommandEvent& event )
             cc1->Refresh( false );
 
             break;
-
         }
 
         case ID_HELP: {
@@ -5730,7 +5729,7 @@ void RestoreSystemColors()
 
 #endif
 
-void SetSystemColors(ColorScheme)
+void SetSystemColors(ColorScheme cs)
 {
 //---------------
 #if 0
@@ -5816,6 +5815,8 @@ void SetSystemColors(ColorScheme)
 
         RestoreSystemColors();
     }
+#else
+	WXUNUSED(cs);
 #endif
 }
 

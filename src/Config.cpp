@@ -38,6 +38,7 @@
 #include <NMEALogWindow.h>
 #include <FontMgr.h>
 #include <MessageBox.h>
+#include <MicrosoftCompatibility.h>
 
 #ifdef USE_S57
 	#include <s52plib.h>
@@ -954,8 +955,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	if( Read( wxString( _T ( "VPScale" ) ), &st ) ) {
 		sscanf( st.mb_str( wxConvUTF8 ), "%lf", &st_view_scale );
 		//    Sanity check the scale
-		st_view_scale = fmax ( st_view_scale, .001/32 );
-		st_view_scale = fmin ( st_view_scale, 4 );
+		st_view_scale = fmax(st_view_scale, .001/32);
+		st_view_scale = fmin(st_view_scale, 4);
 		initial_scale_ppm = st_view_scale;
 	}
 

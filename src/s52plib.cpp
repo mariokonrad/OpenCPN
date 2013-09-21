@@ -5521,7 +5521,7 @@ render_canvas_parms* s52plib::CreatePatternBufferSpec(
 		ObjRazRules *,
 		Rules * rules,
 		ViewPort *,
-		bool WXUNUSED(b_revrgb),
+		bool b_revrgb,
 		bool b_pot)
 {
 	wxImage Image;

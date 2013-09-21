@@ -372,6 +372,28 @@ extern wxArrayPtrVoid * UserColourHashTableArray;
 extern wxColorHashMap * pcurrent_user_color_hash;
 
 
+#ifdef __WXMSW__
+bool TestGLCanvas(wxString & prog_dir)
+{
+	wxString test_app = prog_dir;
+	test_app += _T("cube.exe");
+
+	if(::wxFileExists(test_app)){
+		long proc_return = ::wxExecute(test_app, wxEXEC_SYNC);
+		printf("OpenGL Test Process returned %0X\n", proc_return);
+		if(proc_return == 0)
+			printf("GLCanvas OK\n");
+		else
+			printf("GLCanvas failed to start, disabling OpenGL.\n");
+
+		return (proc_return == 0);
+	}
+	else
+		return true;
+}
+#endif
+
+
 #ifdef USE_S57
 #include "cpl_error.h"
 // Global Static error reporting function
@@ -1307,6 +1329,19 @@ bool App::OnInit()
 	}
 
 	global::OCPN::get().sys().set_config_version_string(vs);
+
+#ifdef __WXMSW__
+	//  Validate OpenGL functionality, if selected
+	if( /*g_bopengl &&*/ !g_bdisable_opengl ) {
+		wxFileName fn(std_path.GetExecutablePath());
+		bool b_test_result = TestGLCanvas(fn.GetPathWithSep() );
+
+		if( !b_test_result )
+			wxLogMessage( _T("OpenGL disabled due to test app failure.") );
+
+		g_bdisable_opengl = !b_test_result;
+	}
+#endif
 
 #ifdef USE_S57
 

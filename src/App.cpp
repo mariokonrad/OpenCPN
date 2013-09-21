@@ -682,21 +682,24 @@ App::App()
 	: gui_instance(NULL)
 	, nav_instance(NULL)
 	, sys_instance(NULL)
+	, start_fullscreen(false)
 {}
 
 void App::OnInitCmdLine( wxCmdLineParser& parser )
 {
 	// Add some OpenCPN specific command line options
-	parser.AddSwitch( _T("unit_test_1") );
-	parser.AddSwitch( _T("p") );
-	parser.AddSwitch( _T("no_opengl") );
+	parser.AddSwitch(_T("unit_test_1"));
+	parser.AddSwitch(_T("p"));
+	parser.AddSwitch(_T("no_opengl"));
+	parser.AddSwitch(_T("fullscreen"));
 }
 
 bool App::OnCmdLineParsed( wxCmdLineParser& parser )
 {
-	g_unit_test_1 = parser.Found( _T("unit_test_1") );
-	g_bportable = parser.Found( _T("p") );
-	g_bdisable_opengl = parser.Found( _T("no_opengl") );
+	g_unit_test_1 = parser.Found(_T("unit_test_1"));
+	g_bportable = parser.Found(_T("p"));
+	g_bdisable_opengl = parser.Found(_T("no_opengl"));
+	start_fullscreen = parser.Found(_T("fullscreen"));
 
 	return true;
 }
@@ -1697,6 +1700,9 @@ bool App::OnInit()
 	pthumbwin = new ThumbWin( cc1 );
 
 	gFrame->ApplyGlobalSettings(1, false);               // done once on init with resize
+
+	if (start_fullscreen)
+		gFrame->ToggleFullScreen();
 
 	gui_instance->ensure_toolbar_position_range(wxPoint(0, 0), wxPoint(cw, ch));
 	gui_instance->ensure_ais_alert_dialog_position_range(wxPoint(0, 0), wxGetDisplaySize());

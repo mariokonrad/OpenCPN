@@ -57,6 +57,8 @@ class App : public wxApp
 		global::OCPN_GUI * gui_instance;
 		global::OCPN_Navigation * nav_instance;
 		global::OCPN_System * sys_instance;
+
+		bool start_fullscreen;
 };
 
 #endif

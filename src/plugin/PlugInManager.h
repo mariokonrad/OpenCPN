@@ -64,6 +64,18 @@ class PluginListPanel;
 class PluginPanel;
 class MainFrame;
 
+struct BlackListedPlugin
+{
+	wxString name;      // name of the plugin
+	int version_major;  // major version
+	int version_minor;  // minor version
+	bool hard;          // hard blacklist - if true, don't load it at all, if false, load it and just warn the user
+	bool all_lower;     // if true, blacklist also all the lower versions of the plugin
+};
+
+const BlackListedPlugin PluginBlacklist[] = { { _T("aisradar_pi"), 0, 95, false, true } };
+
+
 extern const wxEventType wxEVT_OCPN_MSG;
 
 
@@ -133,6 +145,7 @@ class PlugInManager
 		OCPN_Sound m_plugin_sound;
 
 	private:
+		bool CheckBlacklistedPlugin(opencpn_plugin* plugin);
 		bool DeactivatePlugIn(PlugInContainer *pic);
 		wxBitmap *BuildDimmedToolBitmap(wxBitmap *pbmp_normal, unsigned char dim_ratio);
 		bool UpDateChartDataTypes(void);

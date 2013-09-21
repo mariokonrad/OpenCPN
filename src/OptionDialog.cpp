@@ -87,6 +87,8 @@ extern ChartCanvas * cc1;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bsmoothpanzoom;
+extern bool g_bShowMag;
+extern double g_UserVar;
 
 extern wxString * pInit_Chart_Dir;
 extern wxArrayOfConnPrm * g_pConnectionParams;
@@ -1331,32 +1333,44 @@ void options::CreatePanel_Display( size_t parent, int border_size, int group_ite
 			_("Smooth Panning / Zooming") );
 	itemStaticBoxSizerCDO->Add( pSmoothPanZoom, 1, wxALL, border_size );
 
-	pEnableZoomToCursor = new wxCheckBox( itemPanelUI, ID_ZTCCHECKBOX,
-			_("Zoom to Cursor") );
-	pEnableZoomToCursor->SetValue( FALSE );
-	itemStaticBoxSizerCDO->Add( pEnableZoomToCursor, 1, wxALL, border_size );
+	pEnableZoomToCursor = new wxCheckBox(itemPanelUI, ID_ZTCCHECKBOX, _("Zoom to Cursor"));
+	pEnableZoomToCursor->SetValue(FALSE);
+	itemStaticBoxSizerCDO->Add(pEnableZoomToCursor, 1, wxALL, border_size);
 
-	pPreserveScale = new wxCheckBox( itemPanelUI, ID_PRESERVECHECKBOX,
-			_("Preserve Scale when Switching Charts") );
-	itemStaticBoxSizerCDO->Add( pPreserveScale, 1, wxALL, border_size );
+	pPreserveScale = new wxCheckBox(itemPanelUI, ID_PRESERVECHECKBOX, _("Preserve Scale when Switching Charts"));
+	itemStaticBoxSizerCDO->Add(pPreserveScale, 1, wxALL, border_size);
 
 	//  Quilting checkbox
-	pCDOQuilting = new wxCheckBox( itemPanelUI, ID_QUILTCHECKBOX1, _("Enable Chart Quilting") );
-	itemStaticBoxSizerCDO->Add( pCDOQuilting, 1, wxALL, border_size );
+	pCDOQuilting = new wxCheckBox(itemPanelUI, ID_QUILTCHECKBOX1, _("Enable Chart Quilting"));
+	itemStaticBoxSizerCDO->Add(pCDOQuilting, 1, wxALL, border_size);
 
 	//  Full Screen Quilting Disable checkbox
-	pFullScreenQuilt = new wxCheckBox( itemPanelUI, ID_FULLSCREENQUILT,
-			_("Disable Full Screen Quilting") );
+	pFullScreenQuilt = new wxCheckBox(itemPanelUI, ID_FULLSCREENQUILT, _("Disable Full Screen Quilting"));
 	itemStaticBoxSizerCDO->Add( pFullScreenQuilt, 1, wxALL, border_size );
 
 	//  Chart Outlines checkbox
-	pCDOOutlines = new wxCheckBox( itemPanelUI, ID_OUTLINECHECKBOX1, _("Show Chart Outlines") );
-	itemStaticBoxSizerCDO->Add( pCDOOutlines, 1, wxALL, border_size );
+	pCDOOutlines = new wxCheckBox(itemPanelUI, ID_OUTLINECHECKBOX1, _("Show Chart Outlines"));
+	itemStaticBoxSizerCDO->Add(pCDOOutlines, 1, wxALL, border_size);
 
 	//  Skewed Raster compenstation checkbox
-	pSkewComp = new wxCheckBox( itemPanelUI, ID_SKEWCOMPBOX,
-			_("Show Skewed Raster Charts as North-Up") );
-	itemStaticBoxSizerCDO->Add( pSkewComp, 1, wxALL, border_size );
+	pSkewComp = new wxCheckBox(itemPanelUI, ID_SKEWCOMPBOX, _("Show Skewed Raster Charts as North-Up"));
+	itemStaticBoxSizerCDO->Add( pSkewComp, 1, wxALL, border_size);
+
+	//  "Mag Heading" checkbox
+	pCBMagShow = new wxCheckBox(itemPanelUI, ID_MAGSHOWCHECKBOX, _("Show Magnetic bearings and headings"));
+	itemStaticBoxSizerCDO->Add(pCBMagShow, 0, wxALL, border_size);
+
+	//  Mag Heading user variation
+	wxFlexGridSizer *pUserVarGrid = new wxFlexGridSizer(2);
+	pUserVarGrid->AddGrowableCol(1);
+	itemStaticBoxSizerCDO->Add(pUserVarGrid, 0, wxALL | wxEXPAND, border_size);
+
+	wxStaticText* itemStaticTextUserVar = new wxStaticText(itemPanelUI, wxID_STATIC,
+			_("Assumed Magnetic Variation, deg.") );
+	pUserVarGrid->Add(itemStaticTextUserVar, 0, wxADJUST_MINSIZE, border_size);
+
+	pMagVar = new wxTextCtrl(itemPanelUI, ID_TEXTCTRL, _T(""), wxDefaultPosition, wxDefaultSize);
+	pUserVarGrid->Add(pMagVar, 0, wxALIGN_RIGHT | wxALL, border_size);
 }
 
 void options::CreatePanel_AIS( size_t parent, int border_size, int group_item_spacing, wxSize small_button_size )
@@ -1877,6 +1891,11 @@ void options::SetInitialSettings()
 		pSmoothPanZoom->SetValue( false );
 		pSmoothPanZoom->Disable();
 	}
+
+	pCBMagShow->SetValue( g_bShowMag );
+
+	s.Printf( _T("%4.1f"), g_UserVar );
+	pMagVar->SetValue(s);
 
 	pSDisplayGrid->SetValue( g_bDisplayGrid );
 
@@ -2457,6 +2476,9 @@ void options::OnApplyClick( wxCommandEvent& event )
 
 	g_bCourseUp = pCBCourseUp->GetValue();
 	gui.set_view_lookahead_mode(pCBLookAhead->GetValue());
+
+	g_bShowMag = pCBMagShow->GetValue();
+	pMagVar->GetValue().ToDouble( &g_UserVar );
 
 	m_pText_OSCOG_Predictor->GetValue().ToDouble( &g_ownship_predictor_minutes );
 

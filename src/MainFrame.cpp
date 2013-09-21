@@ -477,6 +477,8 @@ FloatingCompassWindow * g_FloatingCompassDialog;
 int g_GPU_MemSize;
 bool g_b_useStencil;
 
+bool g_bShowMag;
+double g_UserVar;
 int portaudio_initialized;
 int g_sticky_chart;
 double g_GLMinLineWidth;
@@ -3093,14 +3095,11 @@ int ut_index;
 
 void MainFrame::OnFrameTimer1(wxTimerEvent &)
 {
-
     if( s_ProgDialog ) {
         return;
     }
 
     if( g_unit_test_1 ) {
-//            if((0 == ut_index) && GetQuiltMode())
-//                  ToggleQuiltMode();
 
         cc1->m_bFollow = false;
         if( g_toolbar ) g_toolbar->ToggleTool( ID_FOLLOW, cc1->m_bFollow );
@@ -3338,10 +3337,14 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
         s1 += toSDMM( 2, cursor_lon );
         if( GetStatusBar() ) SetStatusText( s1, STAT_FIELD_CURSOR_LL );
 
-        double brg, dist;
+        double brg;
+        double dist;
         DistanceBearingMercator( cursor_lat, cursor_lon, gLat, gLon, &brg, &dist );
         wxString s;
-        s.Printf( wxString("%03d°  ", wxConvUTF8 ), (int) brg );
+        if( g_bShowMag )
+            s.Printf( wxString("%03d°(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+        else
+            s.Printf( wxString("%03d°  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
         s << cc1->FormatDistanceAdaptive( dist );
         if( GetStatusBar() ) SetStatusText( s, STAT_FIELD_CURSOR_BRGRNG );
     }
@@ -3460,11 +3463,24 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
     }
 }
 
+double MainFrame::GetTrueOrMag(double a)
+{
+	if( g_bShowMag ){
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		if(!wxIsNaN(nav.var))
+			return ((a + nav.var) >= 0.0) ? (a + nav.var) : (a + nav.var + 360.0);
+		else
+			return ((a + g_UserVar) >= 0.0) ? (a + g_UserVar) : (a + g_UserVar + 360.0);
+	}
+	else
+		return a;
+}
+
 void MainFrame::TouchAISActive( void )
 {
-    if( m_pAISTool ) {
-        if( ( !g_pAIS->IsAISSuppressed() ) && ( !g_pAIS->IsAISAlertGeneral() ) ) {
-            g_nAIS_activity_timer = 5;                // seconds
+	if( m_pAISTool ) {
+		if( ( !g_pAIS->IsAISSuppressed() ) && ( !g_pAIS->IsAISAlertGeneral() ) ) {
+			g_nAIS_activity_timer = 5;                // seconds
 
             wxString iconName = _T("AIS_Normal_Active");
             if( g_pAIS->IsAISAlertGeneral() ) iconName = _T("AIS_AlertGeneral_Active");
@@ -3485,8 +3501,6 @@ void MainFrame::TouchAISActive( void )
 void MainFrame::UpdateAISTool( void )
 {
     if(!g_pAIS) return;
-
-    bool b_need_refresh = false;
 
     wxString iconName;
 
@@ -3609,17 +3623,17 @@ void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
     int y_offset;
     int size_x, size_y;
     int cc1_edge_comp = 2;
-    
+
     if( g_FloatingToolbarDialog ) {
         x_offset = g_FloatingCompassDialog->GetXOffset();
         y_offset = g_FloatingCompassDialog->GetYOffset();
         g_FloatingCompassDialog->GetSize(&size_x, &size_y);
         wxSize parent_size = g_FloatingCompassDialog->GetParent()->GetSize();
-        
+
         // check to see if it would overlap if it was in its home position (upper right)
          tentative_pt_in_screen = g_FloatingCompassDialog->GetParent()->ClientToScreen(
                 wxPoint( parent_size.x - size_x - x_offset - cc1_edge_comp, y_offset ) );
-        
+
         tentative_rect = wxRect( tentative_pt_in_screen.x, tentative_pt_in_screen.y, size_x, size_y );
 
     }
@@ -3627,9 +3641,9 @@ void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
     //  If the toolbar location has changed, or the proposed compassDialog location has changed
     if( (g_FloatingToolbarDialog->GetScreenRect() != g_last_tb_rect) ||
         (tentative_rect != g_FloatingCompassDialog->GetScreenRect()) ) {
-    
+
         wxRect tb_rect = g_FloatingToolbarDialog->GetScreenRect();
-    
+
         //    if they would not intersect, go ahead and move it to the upper right
         //      Else it has to be on lower right
         if( !tb_rect.Intersects( tentative_rect ) ) {
@@ -3643,9 +3657,9 @@ void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
         }
 
         b_update = true;
-        
+
         g_last_tb_rect = tb_rect;
-        
+
     }
 
     if( g_FloatingCompassDialog && g_FloatingCompassDialog->IsShown()) {
@@ -4627,7 +4641,6 @@ void MainFrame::DoPrint( void )
     } else {
         ( *g_printData ) = printer.GetPrintDialogData().GetPrintData();
     }
-
 }
 
 void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
@@ -4653,7 +4666,6 @@ void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
         // check for errors before retreiving values...
             int numErrors = reader.Parse( message_JSONText, &root );
             if ( numErrors > 0 )  {
-//              const wxArrayString& errors = reader.GetErrors();
                 return;
             }
 
@@ -4777,7 +4789,7 @@ void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
     {
         wxJSONValue  root;
         wxJSONReader reader;
-        bool mode = true, error = false;
+        bool mode = true;
 
         int numErrors = reader.Parse( message_JSONText, &root );
         if ( numErrors > 0 )
@@ -4813,7 +4825,6 @@ void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
                 v[i][_T("error")] = false;
                 v[i][_T("name")] = name;
                 v[i][_T("GUID")] = (*it)->m_GUID;
-                bool l = (*it)->IsTrack();
                 if(g_pActiveTrack == (*it) && !mode)
                     v[i][_T("active")] = true;
                 else
@@ -5365,10 +5376,16 @@ void MainFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
         else
 			over_ground += wxString::Format(_T("SOG %2.2f ") + getUsrSpeedUnit() + _T("  "), toUsrSpeed(nav.sog));
 
-        if (wxIsNaN(nav.cog))
+        if (wxIsNaN(nav.cog)) {
 			over_ground += wxString("COG ---\u00B0", wxConvUTF8);
-        else
-			over_ground += wxString::Format(wxString("COG %2.0f°", wxConvUTF8), nav.cog);
+        } else {
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			if (g_bShowMag) {
+                over_ground += wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(nav.cog));
+			} else {
+                over_ground += wxString::Format(wxString("COG %03d°  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(nav.cog));
+			}
+		}
 
         SetStatusText(over_ground, STAT_FIELD_SOGCOG);
     }
@@ -5713,7 +5730,7 @@ void RestoreSystemColors()
 
 #endif
 
-void SetSystemColors( ColorScheme cs )
+void SetSystemColors(ColorScheme)
 {
 //---------------
 #if 0

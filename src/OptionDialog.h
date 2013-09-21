@@ -187,6 +187,9 @@ class options
 		wxCheckBox * pSmoothPanZoom;
 		wxCheckBox * pFullScreenQuilt;
 		wxChoice * m_pcTCDatasets;
+		wxCheckBox * pCBMagShow;
+		wxTextCtrl * pMagVar;
+
 		int k_tides;
 
 		//    For GPS Page

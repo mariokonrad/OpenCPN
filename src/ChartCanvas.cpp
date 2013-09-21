@@ -300,6 +300,8 @@ extern wxArrayOfConnPrm *g_pConnectionParams;
 
 extern OCPN_Sound        g_anchorwatch_sound;
 
+extern bool              g_bShowMag;
+
 //  TODO why are these static?
 static int mouse_x;
 static int mouse_y;
@@ -1940,8 +1942,14 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent &)
                     s << _T("\n") << _("Total Length: ") << FormatDistanceAdaptive( pr->m_route_length)
                     << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
                     << _(" to ") << segShow_point_b->GetName()
-                    << _T("\n") << wxString::Format( wxString( "%03d°  ", wxConvUTF8 ), (int) brg )
-                    << FormatDistanceAdaptive( dist );
+                    << _T("\n");
+
+                    if( g_bShowMag )
+                        s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
+                    else
+                        s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
+                    
+                    s << FormatDistanceAdaptive( dist );
 
                     // Compute and display cumulative distance from route start point to current
                     // leg end point.
@@ -2039,9 +2047,13 @@ void ChartCanvas::OnCursorTrackTimerEvent(wxTimerEvent &)
                 parent_frame->SetStatusText ( s1, STAT_FIELD_CURSOR_LL );
 
                 double brg, dist;
-                DistanceBearingMercator(cursor_lat, cursor_lon, gLat, gLon, &brg, &dist);
                 wxString s;
-                s.Printf( wxString("%03d° ", wxConvUTF8 ), (int)brg );
+                DistanceBearingMercator(cursor_lat, cursor_lon, gLat, gLon, &brg, &dist);
+                if( g_bShowMag )
+                    s.Printf( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
+                else
+                    s.Printf( wxString("%03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
+                
                 s << FormatDistanceAdaptive( dist );
                 parent_frame->SetStatusText ( s, STAT_FIELD_CURSOR_BRGRNG );
             }
@@ -4979,7 +4991,11 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
             double brg, dist;
             DistanceBearingMercator( m_cursor_lat, m_cursor_lon, gLat, gLon, &brg, &dist );
             wxString s;
-            s.Printf( wxString( "%03d°  ", wxConvUTF8 ), (int) brg );
+            if( g_bShowMag )
+                s.Printf( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
+            else
+                s.Printf( wxString("%03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
+            
             s << FormatDistanceAdaptive( dist );
             parent_frame->SetStatusText( s, STAT_FIELD_CURSOR_BRGRNG );
         }
@@ -7682,8 +7698,12 @@ void ChartCanvas::RenderRouteLegs( ocpnDC &dc )
         }
 
         wxString routeInfo;
-        routeInfo << wxString::Format( wxString( "%03d° ", wxConvUTF8 ), (int) brg )
-        << _T(" ") << FormatDistanceAdaptive( dist );
+        if( g_bShowMag )
+            routeInfo << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
+        else
+            routeInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
+        
+        routeInfo << _T(" ") << FormatDistanceAdaptive( dist );
 
         wxFont *dFont = FontMgr::Get().GetFont( _("RouteLegInfoRollover"), 12 );
         dc.SetFont( *dFont );

@@ -68,6 +68,8 @@ extern int              g_LayerIdx;
 extern double           vLat, vLon, gLat, gLon;
 extern double           initial_scale_ppm;
 extern ColorScheme      global_color_scheme;
+extern bool             g_bShowMag;
+extern double           g_UserVar;
 extern wxArrayOfConnPrm *g_pConnectionParams;
 extern wxString         g_SENCPrefix;
 extern wxString         g_UserPresLibData;
@@ -459,6 +461,13 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	g_COGFilterSec = wxMin(g_COGFilterSec, MAX_COGSOG_FILTER_SECONDS);
 	g_COGFilterSec = wxMax(g_COGFilterSec, 1);
 	g_SOGFilterSec = g_COGFilterSec;
+
+	Read( _T ( "ShowMag" ), &g_bShowMag, 0 );
+	g_UserVar = 0.0;
+	wxString umv;
+	Read( _T ( "UserMagVariation" ), &umv );
+	if(umv.Len())
+		umv.ToDouble( &g_UserVar );
 
 	load_view();
 
@@ -1605,6 +1614,9 @@ void Config::UpdateSettings()
 
 	Write( _T ( "FilterNMEA_Avg" ), g_bfilter_cogsog );
 	Write( _T ( "FilterNMEA_Sec" ), g_COGFilterSec );
+
+	Write( _T ( "ShowMag" ), g_bShowMag );
+	Write( _T ( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
 
 	Write( _T ( "CM93DetailFactor" ), g_cm93_zoom_factor );
 	Write( _T ( "CM93DetailZoomPosX" ), g_cm93detail_dialog_x );

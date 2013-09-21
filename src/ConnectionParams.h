@@ -98,6 +98,7 @@ class ConnectionParams
 		wxString GetDSPort();
 
 		bool Valid;
+		bool b_IsSetup;
 
 	private:
 		wxString FilterTypeToStr(ListType type, FilterDirection dir);

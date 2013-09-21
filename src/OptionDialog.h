@@ -434,9 +434,10 @@ class options
 
 
 		void SetConnectionParams(ConnectionParams * cp);
+		void SetDefaultConnectionParams(void);
 		void SetDSFormRWStates();
 		void FillSourceList();
-		ConnectionParams *SaveConnectionParams();
+		ConnectionParams *CreateConnectionParamsFromSelectedItem();
 };
 
 #endif

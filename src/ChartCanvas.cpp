@@ -369,6 +369,7 @@ enum
     ID_RC_MENU_FINISH,
     ID_DEF_MENU_AIS_QUERY,
     ID_DEF_MENU_AIS_CPA,
+    ID_DEF_MENU_AISSHOWTRACK,
     ID_DEF_MENU_ACTIVATE_MEASURE,
     ID_DEF_MENU_DEACTIVATE_MEASURE,
 
@@ -465,6 +466,7 @@ BEGIN_EVENT_TABLE ( ChartCanvas, wxWindow )
     EVT_MENU ( ID_RC_MENU_FINISH,       ChartCanvas::PopupMenuHandler )
     EVT_MENU ( ID_DEF_MENU_AIS_QUERY,   ChartCanvas::PopupMenuHandler )
     EVT_MENU ( ID_DEF_MENU_AIS_CPA,     ChartCanvas::PopupMenuHandler )
+    EVT_MENU ( ID_DEF_MENU_AISSHOWTRACK, ChartCanvas::PopupMenuHandler )
 
     EVT_MENU ( ID_UNDO,                 ChartCanvas::PopupMenuHandler )
     EVT_MENU ( ID_REDO,                 ChartCanvas::PopupMenuHandler )
@@ -3615,7 +3617,7 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
     if( td->n_alarm_state == AIS_ALARM_SET ) drawit++;
 
     //  If AIS tracks are shown, is the first point of the track on-screen?
-    if( g_bAISShowTracks ) {
+    if( g_bAISShowTracks && td->b_show_track ) {
         wxAISTargetTrackListNode *node = td->m_ptrack->GetFirst();
         if( node ) {
             AISTargetTrackPoint *ptrack_point = node->GetData();
@@ -4175,7 +4177,7 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
         }
 
         //  Draw tracks if enabled
-        if( g_bAISShowTracks ) {
+        if( g_bAISShowTracks && td->b_show_track ) {
             wxPoint TrackPointA;
             wxPoint TrackPointB;
 
@@ -6055,6 +6057,12 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
                     menuAIS->Append( ID_DEF_MENU_AIS_CPA, _( "Show Target CPA" ) );
             }
             menuAIS->Append( ID_DEF_MENU_AISTARGETLIST, _("Target List...") );
+            if ( g_bAISShowTracks ) {
+                if( myptarget && myptarget->b_show_track )
+                    menuAIS->Append( ID_DEF_MENU_AISSHOWTRACK, _("Hide Target Track") );
+                else
+                    menuAIS->Append( ID_DEF_MENU_AISSHOWTRACK, _("Show Target Track") );
+            }
             menuFocus = menuAIS;
         }
     }
@@ -6964,6 +6972,13 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
         if ( myptarget )                    //TR 2012.06.28: Show AIS-CPA
             myptarget->Toggle_AIS_CPA();     //TR 2012.06.28: Show AIS-CPA
         break;                              //TR 2012.06.28: Show AIS-CPA
+    }
+
+    case ID_DEF_MENU_AISSHOWTRACK: {
+        AIS_Target_Data *myptarget = g_pAIS->Get_Target_Data_From_MMSI(m_FoundAIS_MMSI);
+        if ( myptarget )
+            myptarget->ToggleShowTrack();
+        break;
     }
 
     case ID_DEF_MENU_QUILTREMOVE: {

@@ -225,7 +225,7 @@ wxString OCPNTrackListCtrl::OnGetItemText( long item, long column ) const
 	return ret;
 }
 
-int OCPNTrackListCtrl::OnGetItemColumnImage( long item, long column ) const
+int OCPNTrackListCtrl::OnGetItemColumnImage(long, long) const
 {
 	return -1;
 }

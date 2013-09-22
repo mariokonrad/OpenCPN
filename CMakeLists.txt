@@ -491,6 +491,9 @@ SET(HDRS
 	include/tcmgr.h
 	include/ocpn_plugin.h
 	include/datastream.h
+	src/GARMIN_Serial_Thread.h
+	src/GARMIN_USB_Thread.h
+	src/GarminProtocolHandler.h
 	src/geo/lmfit.h
 	src/geo/GeoRef.h
 	src/Config.h
@@ -597,6 +600,9 @@ SET(HDRS
 	src/OCPNFloatingToolbarDialog.h
 	src/FloatingCompassWindow.h
 	src/Geodesic.h
+	src/garmin/cpo_satellite_data.h
+	src/garmin/unit_info.h
+	src/garmin/usb_packet.h
 	src/OCPN_DataStreamEvent.h
 	src/ConnectionParams.h
 	src/OCP_DataStreamInput_Thread.h
@@ -740,6 +746,9 @@ SET(SRCS
 	src/FloatingCompassWindow.cpp
 	src/Geodesic.cpp
 	src/datastream.cpp
+	src/GARMIN_Serial_Thread.cpp
+	src/GARMIN_USB_Thread.cpp
+	src/GarminProtocolHandler.cpp
 	src/OCPN_DataStreamEvent.cpp
 	src/ConnectionParams.cpp
 	src/OCP_DataStreamInput_Thread.cpp

@@ -21,24 +21,26 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "wx/wx.h"
-#include "wx/tokenzr.h"
-#include "wx/datetime.h"
-#include "wx/sound.h"
-#include <wx/wfstream.h>
-#include <wx/imaglist.h>
-
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-
 #include "ais/ais.h"
+
+#include <geo/GeoRef.h>
+
 #include "dychart.h"
 #include "navutil.h"
-#include "georef.h"
 #include "StyleManager.h"
 #include "datastream.h"
 #include "Select.h"
+
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
+
+#include <wx/wx.h>
+#include <wx/tokenzr.h>
+#include <wx/datetime.h>
+#include <wx/sound.h>
+#include <wx/wfstream.h>
+#include <wx/imaglist.h>
 
 extern int             s_dns_test_flag;
 extern Select          *pSelectAIS;

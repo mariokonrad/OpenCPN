@@ -22,15 +22,18 @@
  **************************************************************************/
 
 #include "PolyTessGeo.h"
+
+#include <MicrosoftCompatibility.h>
+
+#include <geo/GeoRef.h>
+#include <geo/TriPrim.h>
+#include <geo/PolyTriGroup.h>
+#include <geo/ExtendedGeometry.h>
+
 #include "dychart.h"
-#include "georef.h"
 #include "triangulate.h"
 #include "BoundingBox.h"
 #include "s52s57.h"
-#include "MicrosoftCompatibility.h"
-#include "geo/TriPrim.h"
-#include "geo/PolyTriGroup.h"
-#include "geo/ExtendedGeometry.h"
 
 #include <wx/mstream.h>
 #include <wx/tokenzr.h>

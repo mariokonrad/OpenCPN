@@ -36,7 +36,6 @@
 #include "Routeman.h"
 #include "FontMgr.h"
 #include "OCPN_DataStreamEvent.h"
-#include "georef.h"
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"
 #include "NavObjectCollection.h"
@@ -45,6 +44,8 @@
 #include <DimeControl.h>
 #include <ChartCanvas.h>
 #include <Config.h>
+
+#include <geo/GeoRef.h>
 
 #include <plugin/OCPN_MsgEvent.h>
 

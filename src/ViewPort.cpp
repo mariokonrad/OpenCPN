@@ -21,11 +21,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include <wx/wx.h>
+
 #include "ViewPort.h"
-#include "georef.h"
+
+#include <MicrosoftCompatibility.h>
+
+#include <geo/GeoRef.h>
+
 #include "OCPNRegion.h"
 #include "ProjectionType.h"
-#include "MicrosoftCompatibility.h"
 
 #ifndef __WXMSW__
 	#include <signal.h>

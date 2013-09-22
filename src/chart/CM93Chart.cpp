@@ -22,14 +22,17 @@
  **************************************************************************/
 
 #include "CM93Chart.h"
+
 #include <chart/CM93Manager.h>
 #include <chart/CM93Dictionary.h>
 #include <chart/COVR_Set.h>
-#include <geo/ExtendedGeometry.h>
-#include <geo/PolyTessGeo.h>
 #include <chart/CM93Geometry.h>
 #include <chart/CM93_attr_block.h>
-#include <georef.h>
+
+#include <geo/ExtendedGeometry.h>
+#include <geo/PolyTessGeo.h>
+#include <geo/GeoRef.h>
+
 #include <navutil.h>
 #include <cutil.h>
 #include <MicrosoftCompatibility.h>

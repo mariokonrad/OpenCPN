@@ -29,17 +29,18 @@
  *  John F. Waers (jfwaers@csn.net) public domain program MacGPS45         *
  **************************************************************************/
 
+#include "nmea.h"
+#include "dychart.h"
+#include "garmin/jeeps/garmin_wrapper.h"
+
+#include <geo/GeoRef.h>
+
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
+
 #include <wx/tokenzr.h>
 #include <wx/datetime.h>
-
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-
-#include "dychart.h"
-#include "nmea.h"
-#include "georef.h"
-#include "garmin/jeeps/garmin_wrapper.h"
 
 #ifdef BUILD_WITH_LIBGPS
       #ifdef __WXOSX__

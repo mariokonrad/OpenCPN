@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "Route.h"
-#include "georef.h"
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "ocpnDC.h"
@@ -31,11 +30,13 @@
 #include "Multiplexer.h"
 #include "Select.h"
 #include "MessageBox.h"
-#include "MicrosoftCompatibility.h"
 #include "gpx/gpx.h"
 
 #include <ViewPort.h>
 #include <Config.h>
+#include <MicrosoftCompatibility.h>
+
+#include <geo/GeoRef.h>
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(RouteList);

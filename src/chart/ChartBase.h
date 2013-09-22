@@ -25,11 +25,12 @@
 #define __CHART__CHARTBASE__H__
 
 #include "dychart.h"
-#include "chart/ChartType.h"
-#include "chart/ChartFamily.h"
 #include "ColorScheme.h"
 #include "ThumbData.h"
 #include "ProjectionType.h"
+
+#include <chart/ChartType.h>
+#include <chart/ChartFamily.h>
 
 #include <wx/datetime.h>
 

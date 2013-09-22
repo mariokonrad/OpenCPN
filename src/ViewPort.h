@@ -27,8 +27,8 @@
 #include <wx/gdicmn.h>
 #include <wx/geometry.h>
 #include "LatLonBoundingBox.h"
+#include "OCPNRegion.h"
 
-class OCPNRegion;
 class LatLonBoundingBox;
 
 class ViewPort

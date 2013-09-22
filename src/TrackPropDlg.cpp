@@ -22,10 +22,10 @@
  **************************************************************************/
 
 #include "TrackPropDlg.h"
+
 #include "OCPNTrackListCtrl.h"
 #include "navutil.h"
 #include "Track.h"
-#include "georef.h"
 #include "Routeman.h"
 #include "Select.h"
 #include "RouteManagerDialog.h"
@@ -35,6 +35,8 @@
 
 #include <ChartCanvas.h>
 #include <Config.h>
+
+#include <geo/GeoRef.h>
 
 #include <plugin/PlugInManager.h>
 

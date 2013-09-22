@@ -24,14 +24,17 @@
 #include "AIS_Decoder.h"
 #include <ais/AIS_Target_Data.h>
 #include <ais/AISTargetAlertDialog.h>
-#include "Select.h"
-#include "georef.h"
-#include "OCPN_DataStreamEvent.h"
-#include "MicrosoftCompatibility.h"
-#include "GUI_IDs.h"
+#include <geo/GeoRef.h>
+
+#include <GUI_IDs.h>
+#include <MicrosoftCompatibility.h>
+
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/Navigation.h>
+
+#include "Select.h"
+#include "OCPN_DataStreamEvent.h"
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;

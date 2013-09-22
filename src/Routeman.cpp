@@ -21,6 +21,31 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include "Routeman.h"
+#include "dychart.h"
+#include "StyleManager.h"
+#include "CDI.h"
+#include "WayPointman.h"
+#include "ConsoleCanvas.h"
+#include "navutil.h"
+#include "RouteProp.h"
+#include "RouteManagerDialog.h"
+#include "Multiplexer.h"
+#include "Select.h"
+#include "MarkIcon.h"
+#include <Config.h>
+
+#include <geo/GeoRef.h>
+
+#include <global/OCPN.h>
+#include <global/Navigation.h>
+
+#include <plugin/PlugInManager.h>
+
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
+
 #include <wx/image.h>
 #include <wx/tokenzr.h>
 #include <wx/progdlg.h>
@@ -29,31 +54,6 @@
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include <wx/apptrait.h>
-
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-
-#include "Routeman.h"
-#include "dychart.h"
-#include "StyleManager.h"
-#include "CDI.h"
-#include "WayPointman.h"
-#include "ConsoleCanvas.h"
-#include "navutil.h"
-#include "georef.h"
-#include "RouteProp.h"
-#include "RouteManagerDialog.h"
-#include "Multiplexer.h"
-#include "Select.h"
-#include "MarkIcon.h"
-
-#include <Config.h>
-
-#include <global/OCPN.h>
-#include <global/Navigation.h>
-
-#include <plugin/PlugInManager.h>
 
 extern ConsoleCanvas * console;
 extern RouteList * pRouteList;

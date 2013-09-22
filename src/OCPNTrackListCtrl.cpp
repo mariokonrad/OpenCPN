@@ -25,7 +25,8 @@
 #include "Route.h"
 #include "RoutePoint.h"
 #include "navutil.h"
-#include "georef.h"
+
+#include <geo/GeoRef.h>
 
 wxRoutePointListNode * g_this_point_node;
 wxRoutePointListNode * g_prev_point_node;

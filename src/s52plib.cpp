@@ -23,21 +23,23 @@
 
 #include "s52plib.h"
 #include "RenderFromHPGL.h"
-#include <chart/S57Chart.h>
-#include "geo/TriPrim.h"
-#include "geo/PolyTessGeo.h"
-#include "geo/PolyTessGeoTrap.h"
-#include "geo/PolyTriGroup.h"
-#include "geo/PolyTrapGroup.h"
 #include "cutil.h"
-#include <chart/s52utils.h>
 #include "navutil.h"
 #include "ocpn_pixel.h"
-#include "chart/ChartSymbols.h"
 #include "RazdsParser.h"
 #include "FontMgr.h"
-#include "georef.h"
 #include "dychart.h"
+
+#include <chart/s52utils.h>
+#include <chart/S57Chart.h>
+#include <chart/ChartSymbols.h>
+
+#include <geo/GeoRef.h>
+#include <geo/TriPrim.h>
+#include <geo/PolyTessGeo.h>
+#include <geo/PolyTessGeoTrap.h>
+#include <geo/PolyTriGroup.h>
+#include <geo/PolyTrapGroup.h>
 
 #include <cmath>
 #include <cstdlib>

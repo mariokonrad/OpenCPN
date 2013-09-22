@@ -21,16 +21,17 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-
 #ifndef _CHARTIMG_H_
 #define _CHARTIMG_H_
 
-
 #include <chart/ChartBase.h>
 #include <chart/Refpoint.h>
-#include "georef.h"
-#include "OCPNRegion.h"
-#include "ViewPort.h"
+
+#include <OCPNRegion.h>
+#include <ViewPort.h>
+
+#include <geo/GeoRef.h>
+
 #include <vector>
 
 class wxInputStream;

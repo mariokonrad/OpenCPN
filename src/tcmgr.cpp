@@ -23,17 +23,18 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <wx/datetime.h>
-#include <wx/log.h>
-
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
+#include "tcmgr.h"
 
 #include "dychart.h"
-#include "tide/IDX_entry.h"
-#include "tcmgr.h"
-#include "georef.h"
+#include <tide/IDX_entry.h>
+#include <geo/GeoRef.h>
+
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
+
+#include <wx/datetime.h>
+#include <wx/log.h>
 
 //-----------------------------------------------------------------------------------
 //    TIDELIB

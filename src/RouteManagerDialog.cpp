@@ -31,7 +31,6 @@
 #include "RouteProp.h"
 #include "MarkInfo.h"
 #include "Routeman.h"
-#include "georef.h"
 #include "Layer.h"
 #include "SendToGpsDlg.h"
 #include "TrackPropDlg.h"
@@ -41,16 +40,18 @@
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 
+#include <geo/GeoRef.h>
+
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+
+#include <iostream>
 
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include <wx/progdlg.h>
 #include <wx/clipbrd.h>
 #include <wx/imaglist.h>
-
-#include <iostream>
 
 #define DIALOG_MARGIN 3
 

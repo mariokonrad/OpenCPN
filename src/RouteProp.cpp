@@ -21,17 +21,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <wx/datetime.h>
-#include <wx/clipbrd.h>
-#include <wx/print.h>
-#include <wx/printdlg.h>
-#include <wx/stattext.h>
-
-#include "Select.h"
 #include "RouteProp.h"
+#include "Select.h"
 #include "navutil.h"
 #include "Track.h"
-#include "georef.h"
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "RouteManagerDialog.h"
@@ -46,12 +39,20 @@
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 
+#include <geo/GeoRef.h>
+
 #include <tide/IDX_entry.h>
 
 #include <plugin/PlugInManager.h>
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+
+#include <wx/datetime.h>
+#include <wx/clipbrd.h>
+#include <wx/print.h>
+#include <wx/printdlg.h>
+#include <wx/stattext.h>
 
 extern double gLat;
 extern double gLon;

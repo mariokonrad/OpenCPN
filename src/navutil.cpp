@@ -21,27 +21,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <wx/tokenzr.h>
-#include <wx/sstream.h>
-#include <wx/image.h>
-#include <wx/filename.h>
-#include <wx/graphics.h>
-#include <wx/dir.h>
-#include <wx/listimpl.cpp>
-#include <wx/progdlg.h>
-
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-#include <locale>
-#include <deque>
-
+#include "navutil.h"
 #include "dychart.h"
 #include "MainFrame.h"
 #include "MessageBox.h"
-#include "navutil.h"
 #include "Track.h"
-#include "georef.h"
 #include "cutil.h"
 #include "StyleManager.h"
 #include "Routeman.h"
@@ -58,13 +42,30 @@
 #include "Layer.h"
 #include "NavObjectChanges.h"
 #include "NMEALogWindow.h"
-#include "MicrosoftCompatibility.h"
 
 #include <ChartCanvas.h>
+#include <MicrosoftCompatibility.h>
+
+#include <geo/GeoRef.h>
 
 #include <chart/s52utils.h>
 
 #include <ais/ais.h>
+
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
+#include <locale>
+#include <deque>
+
+#include <wx/tokenzr.h>
+#include <wx/sstream.h>
+#include <wx/image.h>
+#include <wx/filename.h>
+#include <wx/graphics.h>
+#include <wx/dir.h>
+#include <wx/listimpl.cpp>
+#include <wx/progdlg.h>
 
 extern LayerList * pLayerList;
 extern RouteList * pRouteList;

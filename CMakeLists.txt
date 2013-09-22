@@ -487,11 +487,12 @@ SET(HDRS
 	include/ocpn_pixel.h
 	include/S57ClassRegistrar.h
 	include/cutil.h
-	include/georef.h
 	include/navutil.h
 	include/tcmgr.h
 	include/ocpn_plugin.h
 	include/datastream.h
+	src/geo/lmfit.h
+	src/geo/GeoRef.h
 	src/Config.h
 	src/LogMessageOnce.h
 	src/DimeControl.h
@@ -640,6 +641,7 @@ SET(SRCS
 	src/chart/ChartBaseBSB.cpp
 	src/chart/ChartSymbols.cpp
 
+	src/geo/lmfit.cpp
 	src/MemoryStatus.cpp
 	src/AnchorDist.cpp
 	src/SerialPorts.cpp
@@ -695,7 +697,7 @@ SET(SRCS
 	src/ViewPort.cpp
 	src/cutil.cpp
 	src/MicrosoftCompatibility.cpp
-	src/georef.cpp
+	src/geo/GeoRef.cpp
 	src/navutil.cpp
 	src/Config.cpp
 	src/LogMessageOnce.cpp

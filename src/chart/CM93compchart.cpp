@@ -22,17 +22,21 @@
  **************************************************************************/
 
 #include "CM93compchart.h"
+
 #include <chart/CM93Manager.h>
 #include <chart/CM93Chart.h>
 #include <chart/CM93Dictionary.h>
 #include <chart/COVR_Set.h>
 #include <chart/CM93OffsetDialog.h>
 #include <chart/FindCM93Dictionary.h>
+
+#include <geo/GeoRef.h>
+
 #include <CM93DSlide.h>
 #include <OCPNRegionIterator.h>
 #include <ocpnDC.h>
 #include <cutil.h>
-#include <georef.h>
+
 #include <MainFrame.h>
 #include <MicrosoftCompatibility.h>
 

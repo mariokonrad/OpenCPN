@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "Track.h"
-#include "georef.h"
+
 #include "Select.h"
 #include "ocpnDC.h"
 #include "RouteProp.h"
@@ -30,6 +30,8 @@
 #include "gpx/gpx.h"
 
 #include <ChartCanvas.h>
+
+#include <geo/GeoRef.h>
 
 #define TIMER_TRACK1 778
 

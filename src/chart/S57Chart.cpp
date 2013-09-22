@@ -21,25 +21,19 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <wx/image.h>
-#include <wx/tokenzr.h>
-#include <wx/textfile.h>
-
-#include "dychart.h"
-
-#include "s52s57.h"
-#include "s52plib.h"
-
 #include "S57Chart.h"
 
+#include <geo/GeoRef.h>
 #include <geo/PolyTessGeo.h>
 #include <geo/PolyTessGeoTrap.h>
 #include <geo/TriPrim.h>
 #include <geo/PolyTriGroup.h>
 #include <geo/PolyTrapGroup.h>
 
+#include "s52s57.h"
+#include "s52plib.h"
+#include "dychart.h"
 #include "cutil.h"
-#include "georef.h"
 #include "navutil.h"
 #include "ocpn_pixel.h"
 #include "ocpnDC.h"
@@ -47,7 +41,7 @@
 #include "OCPNMemDC.h"
 #include "OCPNBitmap.h"
 #include "MessageBox.h"
-#include "MicrosoftCompatibility.h"
+#include <MicrosoftCompatibility.h>
 #include <ChartCanvas.h>
 #include <LogMessageOnce.h>
 
@@ -55,6 +49,10 @@
 #include "setjmp.h"
 
 #include "mygdal/ogr_s57.h"
+
+#include <wx/image.h>
+#include <wx/tokenzr.h>
+#include <wx/textfile.h>
 
 #ifdef __MSVC__
 #define _CRTDBG_MAP_ALLOC

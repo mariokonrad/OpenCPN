@@ -24,9 +24,12 @@
 #include "M_COVR_Desc.h"
 #include "ViewPort.h"
 #include "cutil.h"
-#include "georef.h"
 #include <MicrosoftCompatibility.h>
+
+#include <geo/GeoRef.h>
+
 #include <cmath>
+
 #include <wx/wfstream.h>
 
 #include <wx/arrimpl.cpp>

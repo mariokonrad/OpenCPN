@@ -21,13 +21,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "Select.h"
-#include "georef.h"
-#include "Vector2D.h"
-#include "navutil.h"
-#include "MicrosoftCompatibility.h"
+#include <wx/wx.h>
 
+#include "Select.h"
+
+#include <geo/GeoRef.h>
+
+#include <MicrosoftCompatibility.h>
 #include <ChartCanvas.h>
+#include <Vector2D.h>
+#include "navutil.h"
 
 extern ChartCanvas * cc1;
 

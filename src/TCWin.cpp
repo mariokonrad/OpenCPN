@@ -30,7 +30,7 @@
 #include "ColorScheme.h"
 #include "MicrosoftCompatibility.h"
 
-#include <MainFrame.h>
+#include <UserColors.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 

@@ -24,14 +24,17 @@
 #include "Style.h"
 #include "Icon.h"
 #include "Tool.h"
-#include <MainFrame.h>
+#include <UserColors.h>
 #include "tinyxml/tinyxml.h"
+
+#include <cstdlib>
+
 #include <wx/filename.h>
 #include <wx/dir.h>
 #include <wx/image.h>
 #include <wx/log.h>
 #include <wx/dcmemory.h>
-#include <cstdlib>
+#include <wx/toolbar.h>
 
 extern wxString g_SData_Locn;
 
@@ -551,7 +554,7 @@ void Style::DrawToolbarLineEnd( wxBitmap& bmp )
 void Style::SetOrientation( long orient )
 {
 	int newOrient = 0;
-	if( orient == wxTB_VERTICAL )
+	if (orient == wxTB_VERTICAL)
 		newOrient = 1;
 	if( newOrient == currentOrientation )
 		return;

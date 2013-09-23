@@ -32,7 +32,7 @@
 #include "gpx/GpxDocument.h"
 
 #include <Config.h>
-#include <MainFrame.h>
+#include <UserColors.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>

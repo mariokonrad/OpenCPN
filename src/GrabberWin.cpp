@@ -26,6 +26,7 @@
 #include "StyleManager.h"
 #include "Style.h"
 
+#include <UserColors.h>
 #include <MainFrame.h>
 
 #include <wx/dcclient.h>

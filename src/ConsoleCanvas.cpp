@@ -31,12 +31,16 @@
 #include "FontMgr.h"
 #include <RoutePoint.h>
 #include <Route.h>
+#include <UserColors.h>
+
 #include <global/OCPN.h>
 #include <global/Navigation.h>
-#include <wx/datetime.h>
+
 #include <cstdlib>
 #include <cmath>
 #include <ctime>
+
+#include <wx/datetime.h>
 
 extern Routeman * g_pRouteMan;
 extern MainFrame * gFrame;

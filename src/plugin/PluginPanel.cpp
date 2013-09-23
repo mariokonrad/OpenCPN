@@ -27,7 +27,7 @@
 #include <plugin/PluginListPanel.h>
 #include <plugin/PluginListPanel.h>
 
-#include <MainFrame.h>
+#include <UserColors.h>
 
 #include <wx/sizer.h>
 #include <wx/stattext.h>

@@ -27,6 +27,8 @@
 #include "dychart.h"
 #include "StyleManager.h"
 #include "Style.h"
+
+#include <UserColors.h>
 #include <chart/ChartDB.h>
 
 extern ChartDB *ChartData;
@@ -39,9 +41,8 @@ BEGIN_EVENT_TABLE(StatWin, wxDialog)
 END_EVENT_TABLE()
 
 
-StatWin::StatWin(wxWindow *win)
+StatWin::StatWin(wxWindow * win)
 {
-
 	long wstyle = wxSIMPLE_BORDER | wxFRAME_NO_TASKBAR;
 #ifndef __WXMAC__
 	wstyle |= wxFRAME_SHAPED;
@@ -94,44 +95,45 @@ void StatWin::ReSize()
 	SetSize(new_size);
 }
 
-void StatWin::OnPaint( wxPaintEvent& event )
+void StatWin::OnPaint(wxPaintEvent &)
 {
 	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 
-	wxPaintDC dc( this );
-	if( style->chartStatusWindowTransparent ) return;
+	wxPaintDC dc(this);
+	if (style->chartStatusWindowTransparent)
+		return;
 
 	dc.SetBackground( m_backBrush );
 	dc.Clear();
 }
 
-void StatWin::OnSize( wxSizeEvent& event )
+void StatWin::OnSize(wxSizeEvent &)
 {
 	int width, height;
-	GetClientSize( &width, &height );
+	GetClientSize(&width, &height);
 	int x, y;
-	GetPosition( &x, &y );
+	GetPosition(&x, &y);
 
-	if( width ) {
+	if (width) {
 		pPiano->SetSize( 0, 0, width * 6 / 10, height * 1 / m_rows );
 		pPiano->FormatKeys();
 	}
 }
 
-void StatWin::FormatStat( void )
+void StatWin::FormatStat(void)
 {
 	pPiano->FormatKeys();
 }
 
-void StatWin::MouseEvent( wxMouseEvent& event )
+void StatWin::MouseEvent(wxMouseEvent & event)
 {
 	int x, y;
-	event.GetPosition( &x, &y );
+	event.GetPosition(&x, &y);
 }
 
 int StatWin::GetFontHeight()
 {
-	wxClientDC dc( this );
+	wxClientDC dc(this);
 
 	wxCoord w, h;
 	GetTextExtent( _T("TEST"), &w, &h );
@@ -141,7 +143,7 @@ int StatWin::GetFontHeight()
 
 void StatWin::SetColorScheme( ColorScheme cs )
 {
-	m_backBrush = wxBrush( GetGlobalColor( _T("UIBDR") ), wxSOLID );
+	m_backBrush = wxBrush(GetGlobalColor(_T("UIBDR")), wxSOLID);
 
 	//  Also apply color scheme to all known children
 	pPiano->SetColorScheme( cs );

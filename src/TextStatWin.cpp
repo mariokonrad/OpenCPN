@@ -24,7 +24,10 @@
 #include "TextStatWin.h"
 #include "PianoWin.h"
 #include "dychart.h"
-#include "chart/ChartDB.h"
+
+#include <UserColors.h>
+
+#include <chart/ChartDB.h>
 
 BEGIN_EVENT_TABLE(TextStatWin, wxWindow)
 	EVT_PAINT(TextStatWin::OnPaint)
@@ -39,15 +42,15 @@ TextStatWin::TextStatWin(wxFrame * frame)
 	bTextSet = false;
 }
 
-TextStatWin::~TextStatWin( void )
+TextStatWin::~TextStatWin(void)
 {
 	delete pText;
 }
 
-void TextStatWin::OnSize(wxSizeEvent & event)
+void TextStatWin::OnSize(wxSizeEvent &)
 {}
 
-void TextStatWin::OnPaint(wxPaintEvent & event)
+void TextStatWin::OnPaint(wxPaintEvent &)
 {
 	wxPaintDC dc( this );
 	dc.DrawText( *pText, 0, 0 );

@@ -509,6 +509,7 @@ SET(HDRS
 	src/decl_exp.h
 	src/ocpnDC.h
 	src/App.h
+	src/UserColors.h
 	src/BoundingBox.h
 	src/LatLonBoundingBox.h
 	src/X11FontPicker.h
@@ -667,6 +668,7 @@ SET(SRCS
 	src/DimeControl.cpp
 	src/ChartCanvas.cpp
 	src/App.cpp
+	src/UserColors.cpp
 	src/TCWin.cpp
 	src/S57QueryDialog.cpp
 	src/S57RegistrarMgr.cpp

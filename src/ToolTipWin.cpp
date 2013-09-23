@@ -23,7 +23,11 @@
 
 #include "ToolTipWin.h"
 #include "FontMgr.h"
-#include <MainFrame.h>
+
+#include <UserColors.h>
+
+#include <wx/dcclient.h>
+#include <wx/dcmemory.h>
 
 BEGIN_EVENT_TABLE(ToolTipWin, wxDialog)
 	EVT_PAINT(ToolTipWin::OnPaint)

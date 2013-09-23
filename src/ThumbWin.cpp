@@ -23,7 +23,7 @@
 
 #include "ThumbWin.h"
 #include <chart/ChartBase.h>
-#include <MainFrame.h>
+#include <UserColors.h>
 
 #include <cstdlib>
 #include <cmath>
@@ -66,7 +66,7 @@ void ThumbWin::SetMaxSize(wxSize const &max_size)
 	m_max_size = max_size;
 }
 
-void ThumbWin::OnPaint(wxPaintEvent& event)
+void ThumbWin::OnPaint(wxPaintEvent &)
 {
 	wxPaintDC dc( this );
 

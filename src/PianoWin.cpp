@@ -24,6 +24,7 @@
 #include "PianoWin.h"
 #include "StyleManager.h"
 #include "Style.h"
+#include <UserColors.h>
 #include <chart/ChartDB.h>
 
 BEGIN_EVENT_TABLE(PianoWin, wxWindow)
@@ -59,18 +60,23 @@ PianoWin::PianoWin(wxFrame *frame)
 
 PianoWin::~PianoWin()
 {
-	if( m_pInVizIconBmp ) delete m_pInVizIconBmp;
-	if( m_pPolyIconBmp ) delete m_pPolyIconBmp;
-	if( m_pSkewIconBmp ) delete m_pSkewIconBmp;
-	if( m_pTmercIconBmp ) delete m_pTmercIconBmp;
-	if( m_pVizIconBmp ) delete m_pVizIconBmp;
+	if (m_pInVizIconBmp)
+		delete m_pInVizIconBmp;
+	if (m_pPolyIconBmp)
+		delete m_pPolyIconBmp;
+	if (m_pSkewIconBmp)
+		delete m_pSkewIconBmp;
+	if (m_pTmercIconBmp)
+		delete m_pTmercIconBmp;
+	if (m_pVizIconBmp)
+		delete m_pVizIconBmp;
 }
 
-void PianoWin::OnSize( wxSizeEvent& event )
+void PianoWin::OnSize(wxSizeEvent &)
 {
 }
 
-void PianoWin::SetColorScheme( ColorScheme cs )
+void PianoWin::SetColorScheme(ColorScheme)
 {
 	//    Recreate the local brushes
 
@@ -89,7 +95,7 @@ void PianoWin::SetColorScheme( ColorScheme cs )
 
 }
 
-void PianoWin::OnPaint( wxPaintEvent& event )
+void PianoWin::OnPaint(wxPaintEvent &)
 {
 	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 	int width, height;

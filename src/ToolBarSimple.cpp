@@ -25,14 +25,18 @@
 #include "navutil.h"
 #include "StyleManager.h"
 #include "Style.h"
-#include "MainFrame.h"
-#include "plugin/PlugInManager.h"
 #include "FontMgr.h"
 #include "GrabberWin.h"
 #include "ToolbarMOBDialog.h"
 #include "OCPNFloatingToolbarDialog.h"
 #include "ToolTipWin.h"
 #include "ToolBarTool.h"
+
+#include <UserColors.h>
+#include <MainFrame.h>
+
+#include <plugin/PlugInManager.h>
+
 #include <vector>
 
 extern OCPNFloatingToolbarDialog * g_FloatingToolbarDialog;

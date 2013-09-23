@@ -100,6 +100,7 @@
 #include <AnchorDist.h>
 #include <MemoryStatus.h>
 #include <Config.h>
+#include <UserColors.h>
 
 #include <plugin/PlugInManager.h>
 #include <plugin/OCPN_MsgEvent.h>
@@ -257,10 +258,6 @@ int g_pNavAidRadarRingsStepUnits;
 bool g_bWayPointPreventDragging;
 bool g_bConfirmObjectDelete;
 ColorScheme global_color_scheme;
-int Usercolortable_index;
-wxArrayPtrVoid *UserColorTableArray;
-wxArrayPtrVoid *UserColourHashTableArray;
-wxColorHashMap *pcurrent_user_color_hash;
 int gps_watchdog_timeout_ticks;
 int sat_watchdog_timeout_ticks;
 int gGPS_Watchdog;
@@ -855,34 +852,25 @@ void MainFrame::SetAndApplyColorScheme( ColorScheme cs )
             break;
     }
 
-    g_StyleManager->GetCurrentStyle()->SetColorScheme( cs );
-    cc1->GetWorldBackgroundChart()->SetColorScheme( cs );
+    g_StyleManager->GetCurrentStyle()->SetColorScheme(cs);
+    cc1->GetWorldBackgroundChart()->SetColorScheme(cs);
 
 #ifdef USE_S57
-    if( ps52plib ) ps52plib->SetPLIBColorScheme( SchemeName );
+    if (ps52plib)
+		ps52plib->SetPLIBColorScheme(SchemeName);
 #endif
 
-    //Search the user color table array to find the proper hash table
-    Usercolortable_index = 0;
-    for( unsigned int i = 0; i < UserColorTableArray->GetCount(); i++ ) {
-        colTable *ct = (colTable *) UserColorTableArray->Item( i );
-        if( SchemeName.IsSameAs( *ct->tableName ) ) {
-            Usercolortable_index = i;
-            break;
-        }
-    }
+	setup_current_user_color(SchemeName);
+    SetSystemColors(cs);
 
-    //    Set up a pointer to the proper hash table
-    pcurrent_user_color_hash = (wxColorHashMap *) UserColourHashTableArray->Item(
-            Usercolortable_index );
+    if (cc1)
+		cc1->SetColorScheme(cs);
 
-    SetSystemColors( cs );
+    if (pWayPointMan)
+		pWayPointMan->SetColorScheme(cs);
 
-    if( cc1 ) cc1->SetColorScheme( cs );
-
-    if( pWayPointMan ) pWayPointMan->SetColorScheme( cs );
-
-    if( ChartData ) ChartData->ApplyColorSchemeToCachedCharts( cs );
+    if (ChartData)
+		ChartData->ApplyColorSchemeToCachedCharts(cs);
 
     if( stats ) stats->SetColorScheme( cs );
 
@@ -5645,32 +5633,6 @@ void appendOSDirSlash(wxString & s)
  * Global color management routines
  *
  *************************************************************************/
-
-wxColour GetGlobalColor(wxString colorName)
-{
-    wxColour ret_color;
-
-#ifdef USE_S57
-    //    Use the S52 Presentation library if present
-    if( ps52plib ) {
-        ret_color = ps52plib->getwxColour( colorName );
-
-        if( !ret_color.Ok() )           //261 likes Ok(), 283 likes IsOk()...
-        {
-            if( NULL != pcurrent_user_color_hash ) ret_color =
-                    ( *pcurrent_user_color_hash )[colorName];
-        }
-    } else
-#endif
-    {
-        if( NULL != pcurrent_user_color_hash ) ret_color = ( *pcurrent_user_color_hash )[colorName];
-    }
-
-    //    Default
-    if( !ret_color.Ok() ) ret_color.Set( 128, 128, 128 );  // Simple Grey
-
-    return ret_color;
-}
 
 #ifdef __WXMSW__
 

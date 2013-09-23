@@ -23,12 +23,14 @@
 
 #include "DimeControl.h"
 #include <ChartCanvas.h> // FIXME: meh...
-#include <MainFrame.h> // FIXME: meh...
+#include <UserColors.h>
 
 #include <wx/bmpcbox.h>
 #include <wx/listbook.h>
 #include <wx/listctrl.h>
 #include <wx/tglbtn.h>
+#include <wx/radiobut.h>
+#include <wx/button.h>
 
 extern ChartCanvas * cc1;
 

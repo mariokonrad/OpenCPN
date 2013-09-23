@@ -22,7 +22,9 @@
  **************************************************************************/
 
 #include "ChInfoWin.h"
-#include <MainFrame.h>
+
+#include <UserColors.h>
+
 #include <wx/dcclient.h>
 
 BEGIN_EVENT_TABLE(ChInfoWin, wxWindow)

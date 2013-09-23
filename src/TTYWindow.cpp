@@ -24,7 +24,7 @@
 #include "TTYWindow.h"
 #include "TTYScroll.h"
 #include "WindowDestroyListener.h"
-#include <MainFrame.h>
+#include <UserColors.h>
 
 #include <wx/sizer.h>
 #include <wx/statbox.h>

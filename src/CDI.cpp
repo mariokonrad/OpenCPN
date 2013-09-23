@@ -23,11 +23,15 @@
 
 #include "CDI.h"
 #include "Routeman.h"
-#include <MainFrame.h>
+
+#include <UserColors.h>
+
 #include <global/OCPN.h>
 #include <global/Navigation.h>
-#include <wx/dcmemory.h>
+
 #include <cmath>
+
+#include <wx/dcmemory.h>
 
 extern Routeman * g_pRouteMan;
 

@@ -76,6 +76,7 @@
 #include <GUI_IDs.h>
 #include <AnchorDist.h>
 #include <Config.h>
+#include <UserColors.h>
 
 #include <chart/gshhs/GSHHSChart.h>
 #include <chart/ChartDB.h>

@@ -32,6 +32,7 @@
 
 #include <ChartCanvas.h>
 #include <MainFrame.h>
+#include <UserColors.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

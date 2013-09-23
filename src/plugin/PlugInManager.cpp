@@ -44,6 +44,7 @@
 #include <DimeControl.h>
 #include <ChartCanvas.h>
 #include <Config.h>
+#include <UserColors.h>
 
 #include <geo/GeoRef.h>
 
@@ -1463,9 +1464,7 @@ void GetCanvasLLPix( PlugIn_ViewPort *vp, wxPoint p, double *plat, double *plon)
 
 bool GetGlobalColor(wxString colorName, wxColour *pcolour)
 {
-    wxColour c = GetGlobalColor(colorName);
-    *pcolour = c;
-
+    *pcolour = GetGlobalColor(colorName);
     return true;
 }
 

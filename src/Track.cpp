@@ -30,7 +30,7 @@
 #include "gpx/gpx.h"
 
 #include <ChartCanvas.h>
-#include <MainFrame.h>
+#include <UserColors.h>
 
 #include <geo/GeoRef.h>
 

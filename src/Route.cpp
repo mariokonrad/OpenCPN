@@ -34,7 +34,7 @@
 
 #include <ViewPort.h>
 #include <Config.h>
-#include <MainFrame.h>
+#include <UserColors.h>
 #include <MicrosoftCompatibility.h>
 
 #include <geo/GeoRef.h>

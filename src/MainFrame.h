@@ -43,8 +43,6 @@
 #include <chart/ChartFamily.h>
 #include "ColorScheme.h"
 
-wxColour GetGlobalColor(wxString colorName);
-
 class OCPN_NMEAEvent;
 class ChartCanvas;
 class ocpnFloatingToolbarDialog;

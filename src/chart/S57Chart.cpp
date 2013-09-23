@@ -35,13 +35,14 @@
 #include "dychart.h"
 #include "cutil.h"
 #include "navutil.h"
-#include "MainFrame.h"
 #include "ocpn_pixel.h"
 #include "ocpnDC.h"
 #include "OCPNRegionIterator.h"
 #include "OCPNMemDC.h"
 #include "OCPNBitmap.h"
 #include "MessageBox.h"
+
+#include <UserColors.h>
 #include <MicrosoftCompatibility.h>
 #include <ChartCanvas.h>
 #include <LogMessageOnce.h>

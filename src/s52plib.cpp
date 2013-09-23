@@ -29,7 +29,8 @@
 #include "RazdsParser.h"
 #include "FontMgr.h"
 #include "dychart.h"
-#include "MainFrame.h"
+
+#include <UserColors.h>
 
 #include <chart/s52utils.h>
 #include <chart/S57Chart.h>

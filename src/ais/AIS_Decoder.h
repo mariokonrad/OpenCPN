@@ -26,9 +26,10 @@
 
 #include "ais.h"
 
+class OCPN_DataStreamEvent;
+
 class AIS_Decoder : public wxEvtHandler
 {
-
 public:
     AIS_Decoder(wxFrame *parent);
 

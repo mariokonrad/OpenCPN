@@ -26,6 +26,8 @@
 
 #include <wx/panel.h>
 #include <wx/bitmap.h>
+
+#include <ColorScheme.h>
 #include "navutil.h"
 
 namespace ocpnStyle { class Style; }

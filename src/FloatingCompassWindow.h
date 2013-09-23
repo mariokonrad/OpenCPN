@@ -25,7 +25,13 @@
 #define __FLOATINGCOMPASSWINDOW__H__
 
 #include <wx/dialog.h>
+#include <wx/bitmap.h>
+
 #include "navutil.h"
+#include <ColorScheme.h>
+
+class wxStaticBitmap;
+class wxBoxSizer;
 
 class FloatingCompassWindow : public wxDialog
 {

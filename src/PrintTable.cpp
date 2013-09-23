@@ -37,6 +37,7 @@
 #include <wx/brush.h>
 #include <wx/colour.h>
 #include <wx/tokenzr.h>
+#include <wx/dc.h>
 
 #if wxCHECK_VERSION( 2, 9, 0 )
 	#include <wx/dialog.h>

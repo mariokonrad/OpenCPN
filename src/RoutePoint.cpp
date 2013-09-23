@@ -31,6 +31,7 @@
 #include "ocpnDC.h"
 
 #include <ChartCanvas.h>
+#include <MainFrame.h>
 
 #include "gpx/ParseGPXDateTime.h"
 

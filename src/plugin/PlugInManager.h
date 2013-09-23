@@ -36,6 +36,7 @@
 #include "ocpn_plugin.h"
 #include "datastream.h"
 #include "OCPN_Sound.h"
+#include <ColorScheme.h>
 
 #include <ais/AIS_Target_Data.h>
 
@@ -63,6 +64,8 @@ PlugIn_AIS_Target * Create_PI_AIS_Target(AIS_Target_Data *ptarget);
 class PluginListPanel;
 class PluginPanel;
 class MainFrame;
+class ocpnDC;
+class ViewPort;
 
 struct BlackListedPlugin
 {

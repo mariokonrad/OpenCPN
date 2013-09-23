@@ -32,6 +32,7 @@
 #include "gpx/GpxDocument.h"
 
 #include <Config.h>
+#include <MainFrame.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
@@ -39,6 +40,9 @@
 #include <wx/imaglist.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
+#include <wx/image.h>
+#include <wx/dcmemory.h>
+
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(RoutePointList);
 

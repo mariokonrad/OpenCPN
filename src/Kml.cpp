@@ -25,6 +25,7 @@
 #include "KmlFormatDialog.h"
 #include "navutil.h"
 #include "Track.h"
+#include <MainFrame.h>
 
 #include <wx/file.h>
 #include <wx/datetime.h>

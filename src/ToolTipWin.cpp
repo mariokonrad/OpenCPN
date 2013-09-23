@@ -23,6 +23,7 @@
 
 #include "ToolTipWin.h"
 #include "FontMgr.h"
+#include <MainFrame.h>
 
 BEGIN_EVENT_TABLE(ToolTipWin, wxDialog)
 	EVT_PAINT(ToolTipWin::OnPaint)
@@ -47,7 +48,7 @@ ToolTipWin::~ToolTipWin()
 	delete m_pbm;
 }
 
-void ToolTipWin::SetColorScheme( ColorScheme cs )
+void ToolTipWin::SetColorScheme(ColorScheme)
 {
 	m_back_color = GetGlobalColor( _T ( "UIBCK" ) );
 	m_text_color = FontMgr::Get().GetFontColor( _("ToolTips") );
@@ -91,7 +92,7 @@ void ToolTipWin::SetBitmap()
 
 }
 
-void ToolTipWin::OnPaint( wxPaintEvent& event )
+void ToolTipWin::OnPaint(wxPaintEvent &)
 {
 	int width, height;
 	GetClientSize( &width, &height );

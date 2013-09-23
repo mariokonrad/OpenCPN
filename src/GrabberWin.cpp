@@ -26,6 +26,10 @@
 #include "StyleManager.h"
 #include "Style.h"
 
+#include <MainFrame.h>
+
+#include <wx/dcclient.h>
+
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern MainFrame * gFrame;
 
@@ -48,14 +52,14 @@ GrabberWin::GrabberWin(wxWindow * parent)
 	SetMinSize(wxSize(m_pbitmap.GetWidth(), m_pbitmap.GetHeight()));
 }
 
-void GrabberWin::OnPaint(wxPaintEvent & event)
+void GrabberWin::OnPaint(wxPaintEvent &)
 {
 	wxPaintDC dc( this );
 
 	dc.DrawBitmap( m_pbitmap, 0, 0, true );
 }
 
-void GrabberWin::SetColorScheme(ColorScheme cs)
+void GrabberWin::SetColorScheme(ColorScheme)
 {
 	wxColour back_color = GetGlobalColor( _T("GREY2") );
 

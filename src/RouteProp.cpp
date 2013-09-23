@@ -37,6 +37,7 @@
 
 #include <Config.h>
 #include <ChartCanvas.h>
+#include <MainFrame.h>
 #include <DimeControl.h>
 
 #include <geo/GeoRef.h>

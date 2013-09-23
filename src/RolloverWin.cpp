@@ -30,6 +30,7 @@
 #include "timers.h"
 #include "navutil.h"
 #include "FontMgr.h"
+#include <MainFrame.h>
 
 BEGIN_EVENT_TABLE(RolloverWin, wxWindow)
 	EVT_PAINT(RolloverWin::OnPaint)

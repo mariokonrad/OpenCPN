@@ -40,6 +40,7 @@
 #include <global/GUI.h>
 
 #include <wx/html/htmlwin.h>
+#include <wx/button.h>
 
 extern AISTargetQueryDialog * g_pais_query_dialog_active;
 extern ColorScheme global_color_scheme;

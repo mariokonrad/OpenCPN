@@ -31,9 +31,13 @@
 #include "GUI_IDs.h"
 
 #include <ChartCanvas.h>
+#include <MainFrame.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+
+#include <wx/sizer.h>
+#include <wx/menu.h>
 
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern ChartCanvas * cc1;

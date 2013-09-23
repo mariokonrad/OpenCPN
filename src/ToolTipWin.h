@@ -25,6 +25,7 @@
 #define __TOOLTIPWIN__H__
 
 #include <wx/dialog.h>
+#include <ColorScheme.h>
 #include "navutil.h"
 
 class ToolTipWin : public wxDialog

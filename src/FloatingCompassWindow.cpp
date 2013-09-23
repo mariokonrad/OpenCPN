@@ -26,6 +26,7 @@
 #include "Style.h"
 
 #include <ChartCanvas.h>
+#include <MainFrame.h>
 
 BEGIN_EVENT_TABLE(FloatingCompassWindow, wxWindow)
 	EVT_PAINT(FloatingCompassWindow::OnPaint)

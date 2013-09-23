@@ -35,6 +35,7 @@ using namespace std;
 #include <wx/progdlg.h>
 #include <wx/brush.h>
 #include <wx/colour.h>
+#include <wx/dc.h>
 
 
 #if wxCHECK_VERSION( 2, 9, 0 )
@@ -42,6 +43,7 @@ using namespace std;
 #endif
 
 #include "dychart.h"
+#include <Route.h>
 
 #ifdef __WXMSW__
 	#include <stdlib.h>

@@ -35,14 +35,6 @@
 	#include "portaudio.h"
 #endif
 
-#include "s52s57.h"
-#include "tinyxml/tinyxml.h"
-#include "chart/ChartDatabase.h"
-#include "RoutePoint.h"
-#include "Vector2D.h"
-#include "Route.h"
-#include "SelectItem.h"
-
 enum
 {
 	DISTANCE_NMI = 0,
@@ -69,15 +61,7 @@ extern wxString toSDMM(int NEflag, double a, bool hi_precision = true);
 extern double fromDMM(wxString sdms);
 
 class Route;
-class wxProgressDialog;
-class ocpnDC;
-class NavObjectCollection;
-class NavObjectChanges;
-class GpxWptElement;
-class GpxRteElement;
-class GpxTrkElement;
 
 Route * RouteExists(const wxString & guid);
-Route * RouteExists(Route * pTentRoute);
 
 #endif

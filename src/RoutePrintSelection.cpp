@@ -27,6 +27,12 @@
 
 #include <DimeControl.h>
 
+#include <wx/button.h>
+#include <wx/stattext.h>
+#include <wx/statbox.h>
+#include <wx/sizer.h>
+#include <wx/checkbox.h>
+
 // Global print data, to remember settings during the session
 extern wxPrintData * g_printData;
 

@@ -22,6 +22,9 @@
  **************************************************************************/
 
 #include <wx/toolbar.h>
+#include <wx/timer.h>
+
+#include <ColorScheme.h>
 #include "navutil.h"
 
 #define TOOLTIPON_TIMER 10000

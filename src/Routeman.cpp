@@ -34,6 +34,8 @@
 #include "Select.h"
 #include "MarkIcon.h"
 #include <Config.h>
+#include <Vector2D.h>
+#include <MainFrame.h>
 
 #include <geo/GeoRef.h>
 

@@ -29,6 +29,8 @@
 #include "Routeman.h"
 #include "navutil.h"
 #include "FontMgr.h"
+#include <RoutePoint.h>
+#include <Route.h>
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 #include <wx/datetime.h>

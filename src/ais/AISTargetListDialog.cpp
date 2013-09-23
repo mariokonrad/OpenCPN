@@ -32,6 +32,7 @@
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 #include <Config.h>
+#include <MainFrame.h>
 
 #include <ais/ais.h>
 #include <ais/AIS_Decoder.h>
@@ -40,6 +41,7 @@
 #include <wx/textctrl.h>
 #include <wx/sizer.h>
 #include <wx/tokenzr.h>
+#include <wx/button.h>
 
 static AIS_Decoder * s_p_sort_decoder;
 

@@ -27,12 +27,14 @@
 #include <wx/dialog.h>
 #include <wx/timer.h>
 #include "navutil.h"
+#include <ColorScheme.h>
 
 #define FADE_TIMER 2
 
 namespace ocpnStyle { class Style; }
 class ToolBarSimple;
 class GrabberWin;
+class wxBoxSizer;
 
 class OCPNFloatingToolbarDialog: public wxDialog
 {

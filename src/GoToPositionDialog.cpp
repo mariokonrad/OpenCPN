@@ -29,6 +29,7 @@
 
 #include <ChartCanvas.h>
 #include <DimeControl.h>
+#include <MainFrame.h>
 
 #include <wx/sizer.h>
 #include <wx/stattext.h>

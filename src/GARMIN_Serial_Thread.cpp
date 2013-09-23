@@ -26,6 +26,7 @@
 #include <OCPN_DataStreamEvent.h>
 #include <GarminProtocolHandler.h>
 #include <garmin/jeeps/garmin_wrapper.h>
+#include <nmea0183/nmea0183.h>
 
 #include <wx/datetime.h>
 #include <wx/timer.h>

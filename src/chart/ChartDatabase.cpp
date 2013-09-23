@@ -31,6 +31,7 @@
 #include <chart/ChartBase.h>
 #include <plugin/PlugInManager.h>
 #include "ChartPlugInWrapper.h"
+#include <BoundingBox.h>
 
 #ifndef UINT32
 #define UINT32 unsigned int

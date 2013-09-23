@@ -194,12 +194,12 @@ void SentenceListDlg::FillSentences()
 	m_btnDel->Enable(false);
 }
 
-void SentenceListDlg::OnStcSelect( wxCommandEvent& event )
+void SentenceListDlg::OnStcSelect(wxCommandEvent &)
 {
 	m_btnDel->Enable();
 }
 
-void SentenceListDlg::OnCLBSelect( wxCommandEvent& event )
+void SentenceListDlg::OnCLBSelect(wxCommandEvent &)
 {
 	// Only active the "Delete" button if the selection is not in the standard list
 	int isel = m_clbSentences->GetSelection();
@@ -219,12 +219,12 @@ void SentenceListDlg::OnCLBSelect( wxCommandEvent& event )
 
 }
 
-void SentenceListDlg::OnCLBToggle( wxCommandEvent& event )
+void SentenceListDlg::OnCLBToggle(wxCommandEvent &)
 {
 	BuildSentenceArray();
 }
 
-void SentenceListDlg::OnAddClick( wxCommandEvent& event )
+void SentenceListDlg::OnAddClick(wxCommandEvent &)
 {
 	wxString stc = wxGetTextFromUser(_("Enter the NMEA sentence (2, 3 or 5 characters)"), _("Enter the NMEA sentence"));
 	if (stc.Length() == 2 ||stc.Length() == 3 || stc.Length() == 5)
@@ -238,7 +238,7 @@ void SentenceListDlg::OnAddClick( wxCommandEvent& event )
 		wxMessageBox(_("An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can also have a two letter prefix identifying the source, or TALKER, of the message (The whole sentences then looks like GPGGA or AITXT). You may filter out all the sentences with certain TALKER prefix (like GP, AI etc.). The filter accepts just these three formats."), _("Wrong length of the NMEA filter value"));
 }
 
-void SentenceListDlg::OnDeleteClick( wxCommandEvent& event )
+void SentenceListDlg::OnDeleteClick(wxCommandEvent &)
 {
 	BuildSentenceArray();
 
@@ -261,7 +261,7 @@ void SentenceListDlg::OnDeleteClick( wxCommandEvent& event )
 	FillSentences();
 }
 
-void SentenceListDlg::OnClearAllClick( wxCommandEvent& event )
+void SentenceListDlg::OnClearAllClick(wxCommandEvent &)
 {
 	for (size_t i = 0; i < m_clbSentences->GetCount(); i++)
 		m_clbSentences->Check(i, false);
@@ -269,7 +269,7 @@ void SentenceListDlg::OnClearAllClick( wxCommandEvent& event )
 	BuildSentenceArray();
 }
 
-void SentenceListDlg::OnCheckAllClick( wxCommandEvent& event )
+void SentenceListDlg::OnCheckAllClick(wxCommandEvent &)
 {
 	for (size_t i = 0; i < m_clbSentences->GetCount(); i++)
 		m_clbSentences->Check(i, true);

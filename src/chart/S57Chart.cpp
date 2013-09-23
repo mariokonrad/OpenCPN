@@ -35,6 +35,7 @@
 #include "dychart.h"
 #include "cutil.h"
 #include "navutil.h"
+#include "MainFrame.h"
 #include "ocpn_pixel.h"
 #include "ocpnDC.h"
 #include "OCPNRegionIterator.h"

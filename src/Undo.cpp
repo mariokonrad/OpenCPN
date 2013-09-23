@@ -29,6 +29,7 @@
 #include "Select.h"
 
 #include <ChartCanvas.h>
+#include <MainFrame.h>
 #include <Config.h>
 
 #include "tinyxml/tinyxml.h"

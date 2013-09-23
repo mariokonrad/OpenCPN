@@ -23,6 +23,7 @@
 
 #include "AIS_Target_Data.h"
 #include <ChartCanvas.h>
+#include <MainFrame.h>
 
 extern bool bGPSValid;
 extern ChartCanvas * cc1;

@@ -26,6 +26,7 @@
 
 #include <ChartCanvas.h>
 #include <DimeControl.h>
+#include <MainFrame.h>
 
 #include <ais/AIS_Decoder.h>
 #include <ais/AIS_Target_Data.h>
@@ -34,6 +35,7 @@
 #include <global/GUI.h>
 
 #include <wx/html/htmlwin.h>
+#include <wx/button.h>
 
 extern bool g_bopengl;
 extern AISTargetAlertDialog * g_pais_alert_dialog_active;

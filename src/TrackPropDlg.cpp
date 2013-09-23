@@ -34,6 +34,7 @@
 #include "gpx/gpx.h"
 
 #include <ChartCanvas.h>
+#include <MainFrame.h>
 #include <Config.h>
 
 #include <geo/GeoRef.h>

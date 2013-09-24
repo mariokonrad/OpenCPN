@@ -98,106 +98,98 @@ Route * RouteExists(const wxString & guid)
 }
 
 
-/**************************************************************************/
-/*          Converts the distance to the units selected by user           */
-/**************************************************************************/
-double toUsrDistance(double nm_distance, int unit)
+// Converts the distance to the units selected by user
+double toUsrDistance(double nm_distance, DistanceUnit unit)
 {
-	if (unit == -1)
-		unit = g_iDistanceFormat;
+	if (unit == DISTANCE_NONE)
+		unit = static_cast<DistanceUnit>(g_iDistanceFormat);
 	switch (unit) {
-		case DISTANCE_NMI: return nm_distance; // Nautical miles
-		case DISTANCE_MI:  return nm_distance * 1.15078; // statute miles
-		case DISTANCE_KM:  return nm_distance * 1.852;
-		case DISTANCE_M:   return nm_distance * 1852;
+		case DISTANCE_NMI:  return nm_distance; // Nautical miles
+		case DISTANCE_MI:   return nm_distance * 1.15078; // statute miles
+		case DISTANCE_KM:   return nm_distance * 1.852;
+		case DISTANCE_M:    return nm_distance * 1852;
+		case DISTANCE_NONE: break;
 	}
 	return 0.0;
 }
 
-/**************************************************************************/
-/*          Converts the distance from the units selected by user to NMi  */
-/**************************************************************************/
-double fromUsrDistance(double usr_distance, int unit)
+// Converts the distance from the units selected by user to NMi
+double fromUsrDistance(double usr_distance, DistanceUnit unit)
 {
-	if (unit == -1)
-		unit = g_iDistanceFormat;
+	if (unit == DISTANCE_NONE)
+		unit = static_cast<DistanceUnit>(g_iDistanceFormat);
 	switch (unit) {
-		case DISTANCE_NMI: return usr_distance; // nautical miles
-		case DISTANCE_MI:  return usr_distance / 1.15078; // statute miles
-		case DISTANCE_KM:  return usr_distance / 1.852;
-		case DISTANCE_M:   return usr_distance / 1852;
+		case DISTANCE_NMI:  return usr_distance; // nautical miles
+		case DISTANCE_MI:   return usr_distance / 1.15078; // statute miles
+		case DISTANCE_KM:   return usr_distance / 1.852;
+		case DISTANCE_M:    return usr_distance / 1852;
+		case DISTANCE_NONE: break;
 	}
 	return 0.0;
 }
 
-/**************************************************************************/
-/*          Returns the abbreviation of user selected distance unit       */
-/**************************************************************************/
-wxString getUsrDistanceUnit(int unit)
+// Returns the abbreviation of user selected distance unit
+wxString getUsrDistanceUnit(DistanceUnit unit)
 {
-	if (unit == -1)
-		unit = g_iDistanceFormat;
+	if (unit == DISTANCE_NONE)
+		unit = static_cast<DistanceUnit>(g_iDistanceFormat);
 	switch (unit) {
-		case DISTANCE_NMI: return _T("NMi"); // nautical miles
-		case DISTANCE_MI:  return _T("mi");  // statute miles
-		case DISTANCE_KM:  return _T("km");
-		case DISTANCE_M:   return _T("m");
+		case DISTANCE_NMI:  return _T("NMi"); // nautical miles
+		case DISTANCE_MI:   return _T("mi");  // statute miles
+		case DISTANCE_KM:   return _T("km");
+		case DISTANCE_M:    return _T("m");
+		case DISTANCE_NONE: break;
 	}
 	return wxString();;
 }
 
-/**************************************************************************/
-/*          Converts the speed to the units selected by user              */
-/**************************************************************************/
-double toUsrSpeed(double kts_speed, int unit)
+// Converts the speed to the units selected by user
+double toUsrSpeed(double kts_speed, SpeedUnit unit)
 {
-	if (unit == -1)
-		unit = g_iSpeedFormat;
+	if (unit == SPEED_NONE)
+		unit = static_cast<SpeedUnit>(g_iSpeedFormat);
 	switch (unit) {
-		case SPEED_KTS: return kts_speed; //kts
-		case SPEED_MPH: return kts_speed * 1.15078; //mph
-		case SPEED_KMH: return kts_speed * 1.852; //km/h
-		case SPEED_MS:  return kts_speed * 0.514444444; //m/s
+		case SPEED_KTS:  return kts_speed; //kts
+		case SPEED_MPH:  return kts_speed * 1.15078; //mph
+		case SPEED_KMH:  return kts_speed * 1.852; //km/h
+		case SPEED_MS:   return kts_speed * 0.514444444; //m/s
+		case SPEED_NONE: break;
 	}
 	return 0.0;
 }
 
-/**************************************************************************/
-/*          Converts the speed from the units selected by user to knots   */
-/**************************************************************************/
-double fromUsrSpeed(double usr_speed, int unit)
+// Converts the speed from the units selected by user to knots
+double fromUsrSpeed(double usr_speed, SpeedUnit unit)
 {
-	if (unit == -1)
-		unit = g_iSpeedFormat;
+	if (unit == SPEED_NONE)
+		unit = static_cast<SpeedUnit>(g_iSpeedFormat);
 	switch (unit) {
-		case SPEED_KTS: return usr_speed; //kts
-		case SPEED_MPH: return usr_speed / 1.15078; //mph
-		case SPEED_KMH: return usr_speed / 1.852; //km/h
-		case SPEED_MS:  return usr_speed / 0.514444444; //m/s
+		case SPEED_KTS:  return usr_speed; //kts
+		case SPEED_MPH:  return usr_speed / 1.15078; //mph
+		case SPEED_KMH:  return usr_speed / 1.852; //km/h
+		case SPEED_MS:   return usr_speed / 0.514444444; //m/s
+		case SPEED_NONE: break;
 	}
 	return 0.0;
 }
 
-/**************************************************************************/
-/*          Returns the abbreviation of user selected speed unit          */
-/**************************************************************************/
-wxString getUsrSpeedUnit(int unit)
+// Returns the abbreviation of user selected speed unit
+wxString getUsrSpeedUnit(SpeedUnit unit)
 {
-	if (unit == -1)
-		unit = g_iSpeedFormat;
+	if (unit == SPEED_NONE)
+		unit = static_cast<SpeedUnit>(g_iSpeedFormat);
 	switch (unit) {
-		case SPEED_KTS: return _T("kts"); //kts
-		case SPEED_MPH: return _T("mph"); //mph
-		case SPEED_KMH: return _T("km/h");
-		case SPEED_MS:  return _T("m/s");
+		case SPEED_KTS:  return _T("kts"); //kts
+		case SPEED_MPH:  return _T("mph"); //mph
+		case SPEED_KMH:  return _T("km/h");
+		case SPEED_MS:   return _T("m/s");
+		case SPEED_NONE: break;
 	}
 	return wxString();
 }
 
-/**************************************************************************/
-/*          Formats the coordinates to string                             */
-/**************************************************************************/
-wxString toSDMM( int NEflag, double a, bool hi_precision )
+// Formats the coordinates to string
+wxString toSDMM(int NEflag, double a, bool hi_precision)
 {
 	wxString s;
 	double mpy;
@@ -232,7 +224,7 @@ wxString toSDMM( int NEflag, double a, bool hi_precision )
 			}
 	}
 
-	switch( g_iSDMMFormat ){
+	switch (g_iSDMMFormat) {
 		case 0:
 			mpy = 600.0;
 			if( hi_precision ) mpy = mpy * 1000;

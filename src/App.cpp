@@ -313,8 +313,6 @@ extern bool g_bPlayShipsBells;
 extern bool g_bShowLayers;
 extern bool g_bPermanentMOBIcon;
 extern int g_iSDMMFormat;
-extern int g_iDistanceFormat;
-extern int g_iSpeedFormat;
 extern int g_iNavAidRadarRingsNumberVisible;
 extern float g_fNavAidRadarRingsStep;
 extern int g_pNavAidRadarRingsStepUnits;

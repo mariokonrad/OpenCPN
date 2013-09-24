@@ -1748,34 +1748,34 @@ void fromSM_ECC_Plugin(double x, double y, double lat0, double lon0, double *lat
     fromSM_ECC(x, y, lat0, lon0, lat, lon);
 }
 
-double toUsrDistance_Plugin( double nm_distance, int unit )
+double toUsrDistance_Plugin(double nm_distance, int unit)
 {
-    return toUsrDistance( nm_distance, unit );
+    return toUsrDistance(nm_distance, static_cast<DistanceUnit>(unit));
 }
 
-double fromUsrDistance_Plugin( double usr_distance, int unit )
+double fromUsrDistance_Plugin(double usr_distance, int unit)
 {
-    return fromUsrDistance( usr_distance, unit );
+    return fromUsrDistance(usr_distance, static_cast<DistanceUnit>(unit));
 }
 
-double toUsrSpeed_Plugin( double kts_speed, int unit )
+double toUsrSpeed_Plugin(double kts_speed, int unit)
 {
-    return toUsrSpeed( kts_speed, unit );
+    return toUsrSpeed(kts_speed, static_cast<SpeedUnit>(unit));
 }
 
-double fromUsrSpeed_Plugin( double usr_speed, int unit )
+double fromUsrSpeed_Plugin(double usr_speed, int unit)
 {
-    return fromUsrSpeed( usr_speed, unit );
+    return fromUsrSpeed(usr_speed, static_cast<SpeedUnit>(unit));
 }
 
-wxString getUsrDistanceUnit_Plugin( int unit )
+wxString getUsrDistanceUnit_Plugin(int unit)
 {
-    return getUsrDistanceUnit( unit );
+    return getUsrDistanceUnit(static_cast<DistanceUnit>(unit));
 }
 
-wxString getUsrSpeedUnit_Plugin( int unit )
+wxString getUsrSpeedUnit_Plugin(int unit)
 {
-    return getUsrSpeedUnit( unit );
+    return getUsrSpeedUnit(static_cast<SpeedUnit>(unit));
 }
 
 bool PlugIn_GSHHS_CrossesLand(double lat1, double lon1, double lat2, double lon2)

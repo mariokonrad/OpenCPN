@@ -35,28 +35,32 @@
 	#include "portaudio.h"
 #endif
 
-enum
+enum DistanceUnit
 {
+	DISTANCE_NONE = -1,
 	DISTANCE_NMI = 0,
 	DISTANCE_MI,
 	DISTANCE_KM,
 	DISTANCE_M
 };
 
-enum
+enum SpeedUnit
 {
+	SPEED_NONE = -1,
 	SPEED_KTS = 0,
 	SPEED_MPH,
 	SPEED_KMH,
 	SPEED_MS
 };
 
-extern double toUsrDistance(double nm_distance, int unit = -1);
-extern double fromUsrDistance(double usr_distance, int unit = -1);
-extern double toUsrSpeed(double kts_speed, int unit = -1);
-extern double fromUsrSpeed(double usr_speed, int unit = -1);
-extern wxString getUsrDistanceUnit(int unit = -1);
-extern wxString getUsrSpeedUnit(int unit = -1);
+extern double toUsrDistance(double nm_distance, DistanceUnit unit = DISTANCE_NONE);
+extern double fromUsrDistance(double usr_distance, DistanceUnit unit = DISTANCE_NONE);
+extern wxString getUsrDistanceUnit(DistanceUnit unit = DISTANCE_NONE);
+
+extern double toUsrSpeed(double kts_speed, SpeedUnit unit = SPEED_NONE);
+extern double fromUsrSpeed(double usr_speed, SpeedUnit unit = SPEED_NONE);
+extern wxString getUsrSpeedUnit(SpeedUnit unit = SPEED_NONE);
+
 extern wxString toSDMM(int NEflag, double a, bool hi_precision = true);
 extern double fromDMM(wxString sdms);
 

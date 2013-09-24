@@ -60,6 +60,12 @@ TrackPropDlg::TrackPropDlg(
 		long style)
 	: wxDialog(parent, id, title, pos, size, style)
 {
+	long wstyle = style;
+#ifdef __WXOSX__
+	wstyle |= wxSTAY_ON_TOP;
+#endif
+
+	SetWindowStyleFlag( wstyle );
 	this->SetSizeHints( wxSize( 670,440 ), wxDefaultSize );
 
 	wxBoxSizer* bSizerMain;

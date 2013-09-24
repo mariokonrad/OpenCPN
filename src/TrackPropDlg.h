@@ -155,7 +155,8 @@ class TrackPropDlg : public wxDialog
 				const wxString & title = _("Track Properties"),
 				const wxPoint & pos = wxDefaultPosition,
 				const wxSize& size = wxSize(680, 440),
-				long style = wxCAPTION | wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxRESIZE_BORDER | wxSTAY_ON_TOP);
+				long style = wxCAPTION | wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxRESIZE_BORDER);
+
 		virtual ~TrackPropDlg();
 
 		void SetTrackAndUpdate( Route *pR );

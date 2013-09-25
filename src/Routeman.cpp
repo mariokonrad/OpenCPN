@@ -700,60 +700,64 @@ bool Routeman::DoesRouteContainSharedPoints( Route *pRoute )
 	return false;
 }
 
-void Routeman::DeleteRoute( Route *pRoute )
+void Routeman::DeleteRoute(Route * pRoute)
 {
-	if( pRoute ) {
-		::wxBeginBusyCursor();
+	if (!pRoute)
+		return;
 
-		if( GetpActiveRoute() == pRoute ) DeactivateRoute();
+	::wxBeginBusyCursor();
 
-		if( pRoute->m_bIsInLayer ) return;
+	if (GetpActiveRoute() == pRoute)
+		DeactivateRoute();
 
-		//    Remove the route from associated lists
-		pSelect->DeleteAllSelectableRouteSegments( pRoute );
-		pRouteList->DeleteObject( pRoute );
+	if (pRoute->m_bIsInLayer)
+		return;
 
-		// walk the route, tentatively deleting/marking points used only by this route
-		wxRoutePointListNode *pnode = ( pRoute->pRoutePointList )->GetFirst();
-		while( pnode ) {
-			RoutePoint *prp = pnode->GetData();
+	//    Remove the route from associated lists
+	pSelect->DeleteAllSelectableRouteSegments(pRoute);
+	pRouteList->remove(pRoute);
 
-			// check all other routes to see if this point appears in any other route
-			Route *pcontainer_route = FindRouteContainingWaypoint( prp );
+	// walk the route, tentatively deleting/marking points used only by this route
+	wxRoutePointListNode *pnode = (pRoute->pRoutePointList)->GetFirst();
+	while (pnode) {
+		RoutePoint *prp = pnode->GetData();
 
-			if( pcontainer_route == NULL && prp->m_bIsInRoute ) {
-				prp->m_bIsInRoute = false;          // Take this point out of this (and only) route
-				if( !prp->m_bKeepXRoute ) {
-					//    This does not need to be done with navobj.xml storage, since the waypoints are stored with the route
-					//                              pConfig->DeleteWayPoint(prp);
+		// check all other routes to see if this point appears in any other route
+		Route *pcontainer_route = FindRouteContainingWaypoint( prp );
 
-					pSelect->DeleteSelectablePoint( prp, Select::TYPE_ROUTEPOINT );
+		if (pcontainer_route == NULL && prp->m_bIsInRoute) {
+			prp->m_bIsInRoute = false; // Take this point out of this (and only) route
+			if (!prp->m_bKeepXRoute) {
+				// This does not need to be done with navobj.xml storage, since the waypoints are stored with the route
+				// pConfig->DeleteWayPoint(prp);
 
-					// Remove all instances of this point from the list.
-					wxRoutePointListNode *pdnode = pnode;
-					while( pdnode ) {
-						pRoute->pRoutePointList->DeleteNode( pdnode );
-						pdnode = pRoute->pRoutePointList->Find( prp );
-					}
+				pSelect->DeleteSelectablePoint(prp, Select::TYPE_ROUTEPOINT);
 
-					pnode = NULL;
-					delete prp;
-				} else {
-					prp->m_bDynamicName = false;
-					prp->m_bIsolatedMark = true;        // This has become an isolated mark
-					prp->m_bKeepXRoute = false;         // and is no longer part of a route
+				// Remove all instances of this point from the list.
+				wxRoutePointListNode *pdnode = pnode;
+				while (pdnode) {
+					pRoute->pRoutePointList->DeleteNode(pdnode);
+					pdnode = pRoute->pRoutePointList->Find(prp);
 				}
 
+				pnode = NULL;
+				delete prp;
+			} else {
+				prp->m_bDynamicName = false;
+				prp->m_bIsolatedMark = true; // This has become an isolated mark
+				prp->m_bKeepXRoute = false; // and is no longer part of a route
 			}
-			if( pnode ) pnode = pnode->GetNext();
-			else
-				pnode = pRoute->pRoutePointList->GetFirst();                // restart the list
 		}
 
-		delete pRoute;
-
-		::wxEndBusyCursor();
+		if (pnode)
+			pnode = pnode->GetNext();
+		else
+			pnode = pRoute->pRoutePointList->GetFirst(); // restart the list
 	}
+
+	delete pRoute;
+
+	::wxEndBusyCursor();
 }
 
 void Routeman::DeleteAllRoutes(void)
@@ -839,7 +843,7 @@ void Routeman::DeleteTrack(Route * pRoute)
 
 	// Remove the route from associated lists
 	pSelect->DeleteAllSelectableTrackSegments(pRoute);
-	pRouteList->DeleteObject(pRoute);
+	pRouteList->remove(pRoute);
 
 	// walk the route, tentatively deleting/marking points used only by this route
 	int ic = 0;

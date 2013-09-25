@@ -542,27 +542,29 @@ bool TrackPropDlg::IsThisTrackExtendable()
 {
 	m_pExtendRoute = NULL;
 	m_pExtendPoint = NULL;
-	if( m_pRoute == g_pActiveTrack || m_pRoute->m_bIsInLayer ) return false;
+	if (m_pRoute == g_pActiveTrack || m_pRoute->m_bIsInLayer)
+		return false;
 
 	RoutePoint *pLastPoint = m_pRoute->GetPoint( 1 );
-	if( !pLastPoint->GetCreateTime().IsValid() ) return false;
+	if (!pLastPoint->GetCreateTime().IsValid())
+		return false;
 
-	wxRouteListNode *route_node = pRouteList->GetFirst();
-	while( route_node ) {
-		Route *proute = route_node->GetData();
-		if( proute->m_bIsTrack && proute->IsVisible() && ( proute->m_GUID != m_pRoute->m_GUID ) ) {
-			RoutePoint *track_node = proute->GetLastPoint();
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+		Route * route = *i;
+		if (route->m_bIsTrack && route->IsVisible() && (route->m_GUID != m_pRoute->m_GUID)) {
+			RoutePoint *track_node = route->GetLastPoint();
 			if( track_node->GetCreateTime().IsValid() ) {
 				if( track_node->GetCreateTime() <= pLastPoint->GetCreateTime() )
 					if( !m_pExtendPoint || track_node->GetCreateTime() > m_pExtendPoint->GetCreateTime() ) {
 						m_pExtendPoint = track_node;
-						m_pExtendRoute = proute;
+						m_pExtendRoute = route;
 					}
 			}
 		}
-		route_node = route_node->GetNext();                         // next route
 	}
-	if( m_pExtendRoute ) return ( !m_pExtendRoute->m_bIsInLayer );
+
+	if (m_pExtendRoute)
+		return !m_pExtendRoute->m_bIsInLayer;
 	else
 		return false;
 }
@@ -601,11 +603,11 @@ void TrackPropDlg::OnSplitBtnClick(wxCommandEvent &)
 		m_pTail = new Track();
 		m_pHead->CloneTrack( m_pRoute, 1, m_nSelected, _("_A") );
 		m_pTail->CloneTrack( m_pRoute, m_nSelected, m_pRoute->GetnPoints(), _("_B") );
-		pRouteList->Append( m_pHead );
+		pRouteList->push_back(m_pHead);
 		pConfig->AddNewRoute( m_pHead, -1 );
 		m_pHead->RebuildGUIDList();
 
-		pRouteList->Append( m_pTail );
+		pRouteList->push_back(m_pTail);
 		pConfig->AddNewRoute( m_pTail, -1 );
 		m_pTail->RebuildGUIDList();
 
@@ -953,22 +955,10 @@ bool TrackPropDlg::SaveChanges( void )
 
 void TrackPropDlg::OnOKBtnClick( wxCommandEvent& event )
 {
-	//    Look in the route list to be sure the route is still available
-	//    (May have been deleted by RouteManagerDialog...)
+	// Look in the route list to be sure the route is still available
+	// (May have been deleted by RouteManagerDialog...)
 
-	bool b_found_route = false;
-	wxRouteListNode *node = pRouteList->GetFirst();
-	while( node ) {
-		Route *proute = node->GetData();
-
-		if( proute == m_pRoute ) {
-			b_found_route = true;
-			break;
-		}
-		node = node->GetNext();
-	}
-
-	if( b_found_route ) {
+	if (RouteExists(m_pRoute)) {
 		SaveChanges();              // write changes to globals and update config
 		m_pRoute->ClearHighlights();
 	}
@@ -987,24 +977,14 @@ void TrackPropDlg::OnOKBtnClick( wxCommandEvent& event )
 
 void TrackPropDlg::OnCancelBtnClick( wxCommandEvent& event )
 {
-	//    Look in the route list to be sure the raoute is still available
-	//    (May have been deleted by RouteMangerDialog...)
-	bool b_found_route = false;
-	wxRouteListNode *node = pRouteList->GetFirst();
-	while( node ) {
-		Route *proute = node->GetData();
+	// Look in the route list to be sure the raoute is still available
+	// (May have been deleted by RouteMangerDialog...)
 
-		if( proute == m_pRoute ) {
-			b_found_route = true;
-			break;
-		}
-		node = node->GetNext();
-	}
-
-	if( b_found_route ) m_pRoute->ClearHighlights();
+	if (RouteExists(m_pRoute))
+		m_pRoute->ClearHighlights();
 
 	Hide();
-	cc1->Refresh( false );
+	cc1->Refresh(false);
 
 	event.Skip();
 }

@@ -47,7 +47,7 @@ class Routeman
 
 		bool IsRouteValid(Route *pRoute);
 
-		Route *FindRouteByGUID(wxString &guid);
+		Route * FindRouteByGUID(const wxString & guid) const;
 		Route *FindRouteContainingWaypoint(RoutePoint *pWP);
 		wxArrayPtrVoid *GetRouteArrayContaining(RoutePoint *pWP);
 		bool DoesRouteContainSharedPoints( Route *pRoute );

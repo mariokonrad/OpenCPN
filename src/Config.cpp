@@ -2045,25 +2045,23 @@ void Config::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 			node = node->GetNext();
 		}
 		//RTEs and TRKs
-		wxRouteListNode *node1 = pRouteList->GetFirst();
-		while( node1 ) {
-			Route *pRoute = node1->GetData();
+		for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+			Route * route = *i;
 
 			bool b_add = true;
 
-			if( bviz_only && !pRoute->IsVisible() )
+			if (bviz_only && !route->IsVisible())
 				b_add = false;
 
-			if(  pRoute->m_bIsInLayer && !blayer )
+			if (route->m_bIsInLayer && !blayer)
 				b_add = false;
 
-			if( b_add ) {
-				if( !pRoute->m_bIsTrack )
-					pgpx->AddGPXRoute( pRoute );
+			if (b_add) {
+				if (!route->m_bIsTrack)
+					pgpx->AddGPXRoute(route);
 				else
-					pgpx->AddGPXTrack( (Track *)pRoute  );
+					pgpx->AddGPXTrack((Track *)route);
 			}
-			node1 = node1->GetNext();
 		}
 
 		pgpx->SaveFile( fn.GetFullPath() );
@@ -2072,7 +2070,6 @@ void Config::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 
 		if( pprog)
 			delete pprog;
-
 	}
 }
 

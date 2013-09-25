@@ -67,5 +67,6 @@ extern double fromDMM(wxString sdms);
 class Route;
 
 Route * RouteExists(const wxString & guid);
+bool RouteExists(Route * route);
 
 #endif

@@ -899,7 +899,7 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 			}
 		}
 
-		pRouteList->Append( pTentRoute );
+		pRouteList->push_back(pTentRoute);
 		pTentRoute->RebuildGUIDList();                  // ensure the GUID list is intact
 
 
@@ -967,7 +967,7 @@ void NavObjectCollection::InsertTrack(Route *pTentTrack)
 
 	//    TODO  All this trouble for a tentative route.......Should make some Route methods????
 	if( bAddtrack ) {
-		pRouteList->Append( pTentTrack );
+		pRouteList->push_back(pTentTrack);
 
 
 		//    Do the (deferred) calculation of Track BBox
@@ -1072,32 +1072,23 @@ bool NavObjectCollection::CreateNavObjGPXPoints( void )
 
 bool NavObjectCollection::CreateNavObjGPXRoutes( void )
 {
-	// Routes
-	wxRouteListNode *node1 = pRouteList->GetFirst();
-	while( node1 ) {
-		Route *pRoute = node1->GetData();
-
-		if( !pRoute->m_bIsTrack && !( pRoute->m_bIsInLayer ) && (!pRoute->m_btemp) )
-			GPXCreateRoute(m_gpx_root.append_child("rte"), pRoute);
-		node1 = node1->GetNext();
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+		Route * route = *i;
+		if (!route->m_bIsTrack && !(route->m_bIsInLayer) && (!route->m_btemp))
+			GPXCreateRoute(m_gpx_root.append_child("rte"), route);
 	}
-
 	return true;
 }
 
 bool NavObjectCollection::CreateNavObjGPXTracks( void )
 {
-	// Tracks
-	wxRouteListNode * node1 = pRouteList->GetFirst();
-	while (node1) {
-		Route * track = node1->GetData();
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+		Route * track = *i;
 		if (track->pRoutePointList->GetCount()) {
 			if (track->m_bIsTrack && (!track->m_bIsInLayer) && (!track->m_btemp))
 				GPXCreateTrk(m_gpx_root.append_child("trk"), track);
 		}
-		node1 = node1->GetNext();
 	}
-
 	return true;
 }
 

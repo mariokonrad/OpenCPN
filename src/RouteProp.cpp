@@ -389,11 +389,11 @@ void RouteProp::OnRoutepropSplitClick(wxCommandEvent &)
 			m_pHead->CloneRoute( m_pRoute, 1, m_nSelected, _("_A") );
 			m_pTail->CloneRoute( m_pRoute, m_nSelected, m_pRoute->GetnPoints(), _("_B") );
 		}
-		pRouteList->Append( m_pHead );
+		pRouteList->push_back(m_pHead);
 		pConfig->AddNewRoute( m_pHead, -1 );
 		m_pHead->RebuildGUIDList();
 
-		pRouteList->Append( m_pTail );
+		pRouteList->push_back(m_pTail);
 		pConfig->AddNewRoute( m_pTail, -1 );
 		m_pTail->RebuildGUIDList();
 
@@ -1609,22 +1609,11 @@ void RouteProp::OnTimeZoneSelected(wxCommandEvent & event)
 
 void RouteProp::OnRoutepropCancelClick(wxCommandEvent & event)
 {
-	//    Look in the route list to be sure the raoute is still available
-	//    (May have been deleted by RouteMangerDialog...)
+	// Look in the route list to be sure the raoute is still available
+	// (May have been deleted by RouteMangerDialog...)
 
-	bool b_found_route = false;
-	wxRouteListNode *node = pRouteList->GetFirst();
-	while( node ) {
-		Route *proute = node->GetData();
-
-		if( proute == m_pRoute ) {
-			b_found_route = true;
-			break;
-		}
-		node = node->GetNext();
-	}
-
-	if( b_found_route ) m_pRoute->ClearHighlights();
+	if (RouteExists(m_pRoute))
+		m_pRoute->ClearHighlights();
 
 	Hide();
 	cc1->Refresh( false );
@@ -1634,22 +1623,10 @@ void RouteProp::OnRoutepropCancelClick(wxCommandEvent & event)
 
 void RouteProp::OnRoutepropOkClick( wxCommandEvent& event )
 {
-	//    Look in the route list to be sure the route is still available
-	//    (May have been deleted by RouteManagerDialog...)
+	// Look in the route list to be sure the route is still available
+	// (May have been deleted by RouteManagerDialog...)
 
-	bool b_found_route = false;
-	wxRouteListNode *node = pRouteList->GetFirst();
-	while( node ) {
-		Route *proute = node->GetData();
-
-		if( proute == m_pRoute ) {
-			b_found_route = true;
-			break;
-		}
-		node = node->GetNext();
-	}
-
-	if( b_found_route ) {
+	if (RouteExists(m_pRoute)) {
 		SaveChanges();              // write changes to globals and update config
 		m_pRoute->ClearHighlights();
 	}
@@ -1668,7 +1645,6 @@ void RouteProp::OnRoutepropOkClick( wxCommandEvent& event )
 	cc1->Refresh( false );
 
 	event.Skip();
-
 }
 
 void RouteProp::OnEvtColDragEnd(wxListEvent &)

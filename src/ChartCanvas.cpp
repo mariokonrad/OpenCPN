@@ -5098,7 +5098,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
             if( parent_frame->nRoute_State == 1 ) {
                 m_pMouseRoute = new Route();
-                pRouteList->Append( m_pMouseRoute );
+                pRouteList->push_back(m_pMouseRoute);
                 r_rband.x = x;
                 r_rband.y = y;
             }
@@ -5228,7 +5228,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
             SetCursor( *pCursorPencil );
             if( m_nMeasureState == 1 ) {
                 m_pMeasureRoute = new Route();
-                pRouteList->Append( m_pMeasureRoute );
+                pRouteList->push_back(m_pMeasureRoute);
                 r_rband.x = x;
                 r_rband.y = y;
             }
@@ -6582,17 +6582,13 @@ void pupHandler_PasteRoute() {
     }
 
     // If all waypoints exist since before, and a route with the same name, we don't create a new route.
-    if( mergepoints && answer==wxID_YES && existingWaypointCounter==pasted->GetnPoints() ) {
-
-        wxRouteListNode *route_node = pRouteList->GetFirst();
-        while( route_node ) {
-            Route *proute = route_node->GetData();
-
-            if( pasted->m_RouteNameString == proute->m_RouteNameString ) {
+    if ((mergepoints && answer == wxID_YES) && (existingWaypointCounter == pasted->GetnPoints())) {
+		for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+            Route * route = *i;
+            if (pasted->m_RouteNameString == route->m_RouteNameString) {
                 createNewRoute = false;
                 break;
             }
-            route_node = route_node->GetNext();
         }
     }
 
@@ -6635,7 +6631,7 @@ void pupHandler_PasteRoute() {
     }
 
     if( createNewRoute ) {
-        pRouteList->Append( newRoute );
+        pRouteList->push_back(newRoute);
         pConfig->AddNewRoute( newRoute, -1 );    // use auto next num
         newRoute->RebuildGUIDList(); // ensure the GUID list is intact and good
 
@@ -6698,7 +6694,7 @@ void pupHandler_PasteTrack()
         prevPoint = newPoint;
     }
 
-    pRouteList->Append( newTrack );
+    pRouteList->push_back(newTrack);
     pConfig->AddNewRoute( newTrack, -1 );    // use auto next num
     newTrack->RebuildGUIDList(); // ensure the GUID list is intact and good
 
@@ -6759,7 +6755,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
         pSelect->AddSelectableRoutePoint( gLat, gLon, pWP_src );
 
         Route *temp_route = new Route();
-        pRouteList->Append( temp_route );
+        pRouteList->push_back(temp_route);
 
         temp_route->AddPoint( pWP_src );
         temp_route->AddPoint( pWP_dest );
@@ -6803,7 +6799,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
         pSelect->AddSelectableRoutePoint( gLat, gLon, pWP_src );
 
         Route *temp_route = new Route();
-        pRouteList->Append( temp_route );
+        pRouteList->push_back(temp_route);
 
         temp_route->AddPoint( pWP_src );
         temp_route->AddPoint( m_pFoundRoutePoint );
@@ -8747,11 +8743,10 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
         wxDCClipper( *pdc, clipregion );
     }
 
-    wxRouteListNode *node = pRouteList->GetFirst();
-    while( node ) {
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
         bool b_run = false;
         bool b_drawn = false;
-        Route *pRouteDraw = node->GetData();
+        Route *pRouteDraw = *i;
         if( pRouteDraw ) {
             if( pRouteDraw->IsTrack() ) {
                 Track *trk = (Track *) pRouteDraw;
@@ -8813,8 +8808,6 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
                 }
             }
         }
-
-        node = node->GetNext();
     }
 
     //  Draw any active or selected route (or track) last, so that is is always on top

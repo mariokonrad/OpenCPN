@@ -152,20 +152,17 @@ Track *Track::DoExtendDaily()
 
 	RoutePoint *pLastPoint = this->GetPoint( 1 );
 
-	wxRouteListNode * route_node = pRouteList->GetFirst();
-	while( route_node ) {
-		Route *proute = route_node->GetData();
-
-		if( !proute->m_bIsInLayer && proute->m_bIsTrack && proute->m_GUID != this->m_GUID ) {
-			RoutePoint *track_node = proute->GetLastPoint();
-			if( track_node->GetCreateTime() <= pLastPoint->GetCreateTime() ) {
-				if( !pExtendPoint  || track_node->GetCreateTime() > pExtendPoint->GetCreateTime() ) {
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+		Route * route = *i;
+		if (!route->m_bIsInLayer && route->m_bIsTrack && (route->m_GUID != this->m_GUID)) {
+			RoutePoint * track_node = route->GetLastPoint();
+			if (track_node->GetCreateTime() <= pLastPoint->GetCreateTime()) {
+				if (!pExtendPoint || track_node->GetCreateTime() > pExtendPoint->GetCreateTime()) {
 					pExtendPoint = track_node;
-					pExtendRoute = proute;
+					pExtendRoute = route;
 				}
 			}
 		}
-		route_node = route_node->GetNext();                         // next route
 	}
 	if( pExtendRoute
 			&& pExtendRoute->GetPoint( 1 )->GetCreateTime().FromTimezone( wxDateTime::GMT0 ).IsSameDate(
@@ -198,7 +195,7 @@ void Track::AdjustCurrentTrackPoint( RoutePoint *prototype )
 	}
 }
 
-void Track::OnTimerTrack( wxTimerEvent& event )
+void Track::OnTimerTrack(wxTimerEvent &)
 {
 	m_TimerTrack.Stop();
 	m_track_run++;

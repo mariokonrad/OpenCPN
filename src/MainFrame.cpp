@@ -720,21 +720,15 @@ MainFrame::MainFrame( wxFrame *frame, const wxString& title, const wxPoint& pos,
 
 MainFrame::~MainFrame()
 {
-    FrameTimer1.Stop();
-    delete ChartData;
-    delete pCurrentStack;
+	FrameTimer1.Stop();
+	delete ChartData;
+	delete pCurrentStack;
 
-//      Free the Route List
-    wxRouteListNode *node = pRouteList->GetFirst();
-
-    while( node ) {
-        Route *pRouteDelete = node->GetData();
-        delete pRouteDelete;
-
-        node = node->GetNext();
-    }
-    delete pRouteList;
-    delete g_FloatingToolbarConfigMenu;
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+		delete *i;
+	}
+	delete pRouteList;
+	delete g_FloatingToolbarConfigMenu;
 }
 
 void MainFrame::performUniChromeOpenGLResizeHack()
@@ -1958,7 +1952,7 @@ void MainFrame::ActivateMOB( void )
         pSelect->AddSelectableRoutePoint( zlat, zlon, pWP_src );
 
         Route *temp_route = new Route();
-        pRouteList->Append( temp_route );
+        pRouteList->push_back(temp_route);
 
         temp_route->AddPoint( pWP_src );
         temp_route->AddPoint( pWP_MOB );
@@ -2007,7 +2001,7 @@ void MainFrame::TrackOn( void )
     g_bTrackActive = true;
     g_pActiveTrack = new Track();
 
-    pRouteList->Append( g_pActiveTrack );
+    pRouteList->push_back(g_pActiveTrack);
     g_pActiveTrack->Start();
 
     if( g_toolbar )
@@ -4678,7 +4672,7 @@ void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
         if(root.HasMember(_T("Track_ID")))
             trk_id = root[_T("Track_ID")].AsString();
 
-        for(RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); it++) {
+        for (RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); ++it) {
             wxString name = wxEmptyString; // FIXME: why? 'name' is never used
             if ((*it)->IsTrack() && (*it)->m_GUID == trk_id) {
                 name = (*it)->m_RouteNameString;
@@ -4724,8 +4718,7 @@ void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
         if(root.HasMember(_T("Route_ID")))
             route_id = root[_T("Route_ID")].AsString();
 
-        for(RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); it++)
-        {
+        for (RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); ++it) {
             wxString name = wxEmptyString;
             wxJSONValue v;
 
@@ -4788,8 +4781,7 @@ void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
             if( str == _T("Track")) mode = false;
 
             wxJSONValue v; int i = 1;
-            for(RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); it++)
-            {
+            for (RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); ++it) {
                 if((*it)->IsTrack())
                     if(mode == true) continue;
                 if(!(*it)->IsTrack())

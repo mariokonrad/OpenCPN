@@ -85,7 +85,7 @@ extern Routeman        *g_pRouteMan;
 extern WayPointman     *pWayPointMan;
 extern Select          *pSelect;
 extern RouteManagerDialog *pRouteManagerDialog;
-extern RouteList       *pRouteList;
+extern RouteList * pRouteList;
 extern PlugInManager   *g_pi_manager;
 
 #include <wx/listimpl.cpp>
@@ -2073,7 +2073,7 @@ bool AddPlugInRoute( PlugIn_Route *proute, bool b_permanent )
     route->m_GUID = proute->m_GUID;
     route->m_btemp = (b_permanent == false);
 
-    pRouteList->Append( route );
+    pRouteList->push_back(route);
 
     if(b_permanent)
         pConfig->AddNewRoute( route );
@@ -2159,7 +2159,7 @@ bool AddPlugInTrack( PlugIn_Track *ptrack, bool b_permanent )
     track->m_GUID = ptrack->m_GUID;
     track->m_btemp = (b_permanent == false);
 
-    pRouteList->Append( track );
+    pRouteList->push_back(track);
 
     if(b_permanent)
         pConfig->AddNewRoute( track );

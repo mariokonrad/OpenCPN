@@ -2342,7 +2342,7 @@ ConnectionParams *options::CreateConnectionParamsFromSelectedItem()
 		pConnectionParams->OutputSentenceListType = ConnectionParams::WHITELIST;
 	else
 		pConnectionParams->OutputSentenceListType = ConnectionParams::BLACKLIST;
-	pConnectionParams->Port = m_comboPort->GetValue();
+	pConnectionParams->Port = m_comboPort->GetValue().BeforeFirst(' ');
 	pConnectionParams->Protocol = ConnectionParams::PROTO_NMEA0183;
 
 	pConnectionParams->bEnabled = m_connection_enabled;

@@ -3651,7 +3651,10 @@ void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
 
 int MainFrame::GetnChartStack( void )
 {
-    return pCurrentStack->nEntry;
+	if (pCurrentStack)
+		return pCurrentStack->nEntry;
+	else
+		return 0;
 }
 
 //    Application memory footprint management
@@ -3851,6 +3854,9 @@ void MainFrame::SelectQuiltRefdbChart( int db_index )
 void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Type,
         ChartFamilyEnum New_Family )
 {
+    if( !pCurrentStack )
+        return;
+
     if( index < pCurrentStack->nEntry ) {
 //      Open the new chart
         ChartBase *pTentative_Chart;
@@ -3901,6 +3907,9 @@ void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Ty
 
 void MainFrame::SelectdbChart( int dbindex )
 {
+    if( !pCurrentStack )
+        return;
+
     if( dbindex >= 0 ) {
 //      Open the new chart
         ChartBase *pTentative_Chart;
@@ -4463,9 +4472,11 @@ bool MainFrame::DoChartUpdate( void )
     if( bNewPiano ) UpdateControlBar();
 
     //  Update the ownship position on thumbnail chart, if shown
-    if( pthumbwin->IsShown() ) {
-        if( pthumbwin->pThumbChart ) if( pthumbwin->pThumbChart->UpdateThumbData( gLat, gLon ) ) pthumbwin->Refresh(
-                TRUE );
+    if( pthumbwin && pthumbwin->IsShown() ) {
+        if( pthumbwin->pThumbChart ){
+            if( pthumbwin->pThumbChart->UpdateThumbData( gLat, gLon ) )
+                pthumbwin->Refresh( TRUE );
+        }
     }
 
     bFirstAuto = false;                           // Auto open on program start
@@ -4508,6 +4519,9 @@ static int menu_selected_index;
 
 void MainFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbIndex)
 {
+    if( !pCurrentStack )
+        return;
+
     //    No context menu if quilting is disabled
     if( !cc1->GetQuiltMode() ) return;
 
@@ -4567,6 +4581,9 @@ void MainFrame::OnPianoMenuEnableChart(wxCommandEvent &)
 
 void MainFrame::OnPianoMenuDisableChart(wxCommandEvent &)
 {
+    if( !pCurrentStack )
+        return;
+
     RemoveChartFromQuilt( menu_selected_dbIndex );
 
 //      It could happen that the chart being disabled is the reference chart....

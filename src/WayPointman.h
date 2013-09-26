@@ -25,14 +25,17 @@
 #define __WAYPOINTMAN__H__
 
 #include <wx/string.h>
-#include <wx/dynarray.h>
+#include <wx/imaglist.h>
+
 #include <ColorScheme.h>
+
+#include <vector>
 
 namespace ocpnStyle { class Style; }
 
 class RoutePoint;
 class RoutePointList;
-class wxImageList;
+class MarkIcon;
 class wxBitmap;
 
 class WayPointman
@@ -55,23 +58,25 @@ class WayPointman
 		void ProcessIcons(ocpnStyle::Style * style);
 		bool DoesIconExist(const wxString & icon_key) const;
 		wxBitmap * GetIconBitmap(int index);
-		wxString * GetIconDescription(int index);
-		wxString * GetIconKey(int index);
+		wxString GetIconDescription(int index) const;
+		wxString GetIconKey(int index) const;
 		wxImageList * Getpmarkicon_image_list(void);
 		void ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description);
 
 		static RoutePoint * FindRoutePoint(const wxString & guid);
 		static RoutePoint * WaypointExists(const wxString & name, double lat, double lon);
 
-		RoutePointList * m_pWayPointList;
+		RoutePointList * m_pWayPointList; // FIXME: public attribute
 
 	private:
+		typedef std::vector<MarkIcon *> Icons;
+
 		wxBitmap * CreateDimBitmap(wxBitmap * pBitmap, double factor);
 
-		wxImageList * pmarkicon_image_list; // Current wxImageList, updated on colorscheme change
 		int m_markicon_image_list_base_count;
-		wxArrayPtrVoid * m_pIconArray;
 		int m_nGUID;
+		Icons icons;
+		wxImageList icon_image_list;
 };
 
 #endif

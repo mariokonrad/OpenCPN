@@ -513,16 +513,17 @@ bool MarkInfoImpl::UpdateProperties( bool positionOnly )
 		//      Iterate on the Icon Descriptions, filling in the control
 		int iconToSelect = 0;
 		bool fillCombo = m_bcomboBoxIcon->GetCount() == 0;
-		wxImageList *icons = NULL;
-		if( fillCombo ) icons = pWayPointMan->Getpmarkicon_image_list();
-		for( int i = 0; i < pWayPointMan->GetNumIcons(); i++ ) {
-			wxString *ps = pWayPointMan->GetIconDescription( i );
-			if( *pWayPointMan->GetIconKey( i ) == m_pRoutePoint->m_IconName )
+		wxImageList * icons = NULL;
+		if (fillCombo)
+			icons = pWayPointMan->Getpmarkicon_image_list();
+		for (int i = 0; i < pWayPointMan->GetNumIcons(); ++i) {
+			const wxString ps = pWayPointMan->GetIconDescription(i);
+			if (pWayPointMan->GetIconKey(i) == m_pRoutePoint->m_IconName)
 				iconToSelect = i;
-			if( fillCombo && icons )
-				m_bcomboBoxIcon->Append( *ps, icons->GetBitmap( i ) );
+			if (fillCombo && icons)
+				m_bcomboBoxIcon->Append(ps, icons->GetBitmap(i));
 		}
-		m_bcomboBoxIcon->Select( iconToSelect );
+		m_bcomboBoxIcon->Select(iconToSelect);
 		this->Fit();
 		sbSizerLinks->Layout();
 		icons = NULL;
@@ -714,12 +715,10 @@ bool MarkInfoImpl::SaveChanges()
 		// Get User input Text Fields
 		m_pRoutePoint->SetName( m_textName->GetValue() );
 		m_pRoutePoint->m_MarkDescription = m_textDescription->GetValue();
-		m_pRoutePoint->SetVisible( m_checkBoxVisible->GetValue() );
-		m_pRoutePoint->SetNameShown( m_checkBoxShowName->GetValue() );
-		m_pRoutePoint->SetPosition( fromDMM( m_textLatitude->GetValue() ),
-				fromDMM( m_textLongitude->GetValue() ) );
-		m_pRoutePoint->m_IconName =
-			*( pWayPointMan->GetIconKey( m_bcomboBoxIcon->GetSelection() ) );
+		m_pRoutePoint->SetVisible(m_checkBoxVisible->GetValue());
+		m_pRoutePoint->SetNameShown(m_checkBoxShowName->GetValue());
+		m_pRoutePoint->SetPosition(fromDMM(m_textLatitude->GetValue()), fromDMM(m_textLongitude->GetValue()));
+		m_pRoutePoint->m_IconName = pWayPointMan->GetIconKey(m_bcomboBoxIcon->GetSelection());
 		m_pRoutePoint->ReLoadIcon();
 
 		// Here is some logic....

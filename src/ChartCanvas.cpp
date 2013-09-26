@@ -78,6 +78,8 @@
 #include <Config.h>
 #include <UserColors.h>
 
+#include <geo/LineClip.h>
+
 #include <chart/gshhs/GSHHSChart.h>
 #include <chart/ChartDB.h>
 #include <chart/ChartStack.h>

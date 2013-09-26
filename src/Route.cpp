@@ -38,6 +38,7 @@
 #include <MicrosoftCompatibility.h>
 
 #include <geo/GeoRef.h>
+#include <geo/LineClip.h>
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(RouteList);

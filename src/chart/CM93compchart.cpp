@@ -31,6 +31,7 @@
 #include <chart/FindCM93Dictionary.h>
 
 #include <geo/GeoRef.h>
+#include <geo/LineClip.h>
 
 #include <CM93DSlide.h>
 #include <OCPNRegionIterator.h>

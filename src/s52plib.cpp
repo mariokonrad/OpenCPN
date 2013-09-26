@@ -42,6 +42,7 @@
 #include <geo/PolyTessGeoTrap.h>
 #include <geo/PolyTriGroup.h>
 #include <geo/PolyTrapGroup.h>
+#include <geo/LineClip.h>
 
 #include <cmath>
 #include <cstdlib>

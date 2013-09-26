@@ -491,6 +491,7 @@ SET(HDRS
 	include/tcmgr.h
 	include/ocpn_plugin.h
 	include/datastream.h
+	src/geo/LineClip.h
 	src/GARMIN_Serial_Thread.h
 	src/GARMIN_USB_Thread.h
 	src/GarminProtocolHandler.h
@@ -704,6 +705,7 @@ SET(SRCS
 	src/ConsoleCanvas.cpp
 	src/ViewPort.cpp
 	src/cutil.cpp
+	src/geo/LineClip.cpp
 	src/MicrosoftCompatibility.cpp
 	src/geo/GeoRef.cpp
 	src/navutil.cpp

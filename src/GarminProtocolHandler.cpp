@@ -33,7 +33,7 @@
 	#include <initguid.h>
 #endif
 
-#include "datastream.h"
+#include "DataStream.h"
 #include <GARMIN_Serial_Thread.h>
 #include <GARMIN_USB_Thread.h>
 #include <OCPN_DataStreamEvent.h>

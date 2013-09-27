@@ -30,7 +30,7 @@
 #endif
 
 #include "GARMIN_USB_Thread.h"
-#include <datastream.h>
+#include <DataStream.h>
 #include <OCPN_DataStreamEvent.h>
 #include <GarminProtocolHandler.h>
 #include <garmin/jeeps/garmin_wrapper.h>

@@ -27,60 +27,60 @@
 #include "ais.h"
 
 class OCPN_DataStreamEvent;
+struct GenericPosDatEx;
 
 class AIS_Decoder : public wxEvtHandler
 {
-public:
-    AIS_Decoder(wxFrame *parent);
+		DECLARE_EVENT_TABLE()
 
-    ~AIS_Decoder(void);
+	public:
+		AIS_Decoder(wxFrame *parent);
+		virtual ~AIS_Decoder(void);
 
-    void OnEvtAIS(OCPN_DataStreamEvent& event);
-    AIS_Error Decode(const wxString& str);
-    AIS_Target_Hash *GetTargetList(void) {return AISTargetList;}
-    AIS_Target_Hash *GetAreaNoticeSourcesList(void) {return AIS_AreaNotice_Sources;}
-    AIS_Target_Data *Get_Target_Data_From_MMSI(int mmsi);
-    int GetNumTargets(void){ return m_n_targets;}
-    bool IsAISSuppressed(void){ return m_bSuppressed; }
-    bool IsAISAlertGeneral(void) { return m_bGeneralAlert; }
-    AIS_Error DecodeSingleVDO( const wxString& str, GenericPosDatEx *pos, wxString *acc );
+		void OnEvtAIS(OCPN_DataStreamEvent& event);
+		AIS_Error Decode(const wxString& str);
+		AIS_Target_Hash *GetTargetList(void) {return AISTargetList;}
+		AIS_Target_Hash *GetAreaNoticeSourcesList(void) {return AIS_AreaNotice_Sources;}
+		AIS_Target_Data *Get_Target_Data_From_MMSI(int mmsi);
+		int GetNumTargets(void){ return m_n_targets;}
+		bool IsAISSuppressed(void){ return m_bSuppressed; }
+		bool IsAISAlertGeneral(void) { return m_bGeneralAlert; }
+		AIS_Error DecodeSingleVDO(const wxString& str, GenericPosDatEx * pos, wxString *acc );
 
-private:
-    void OnActivate(wxActivateEvent& event);
-    void OnTimerAIS(wxTimerEvent& event);
-    void OnTimerAISAudio(wxTimerEvent& event);
+	private:
+		void OnActivate(wxActivateEvent& event);
+		void OnTimerAIS(wxTimerEvent& event);
+		void OnTimerAISAudio(wxTimerEvent& event);
 
-    bool NMEACheckSumOK(const wxString& str);
-    bool Parse_VDXBitstring(AIS_Bitstring *bstr, AIS_Target_Data *ptd);
-    void UpdateAllCPA(void);
-    void UpdateOneCPA(AIS_Target_Data *ptarget);
-    void UpdateAllAlarms(void);
-    void UpdateAllTracks(void);
-    void UpdateOneTrack(AIS_Target_Data *ptarget);
-    void BuildERIShipTypeHash(void);
+		bool NMEACheckSumOK(const wxString& str);
+		bool Parse_VDXBitstring(AIS_Bitstring *bstr, AIS_Target_Data *ptd);
+		void UpdateAllCPA(void);
+		void UpdateOneCPA(AIS_Target_Data *ptarget);
+		void UpdateAllAlarms(void);
+		void UpdateAllTracks(void);
+		void UpdateOneTrack(AIS_Target_Data *ptarget);
+		void BuildERIShipTypeHash(void);
 
-    AIS_Target_Hash *AISTargetList;
-    AIS_Target_Hash *AIS_AreaNotice_Sources;
+		AIS_Target_Hash *AISTargetList;
+		AIS_Target_Hash *AIS_AreaNotice_Sources;
 
-    bool              m_busy;
-    wxTimer           TimerAIS;
-    wxFrame           *m_parent_frame;
+		bool              m_busy;
+		wxTimer           TimerAIS;
+		wxFrame           *m_parent_frame;
 
-    int               nsentences;
-    int               isentence;
-    wxString          sentence_accumulator;
-    bool              m_OK;
+		int               nsentences;
+		int               isentence;
+		wxString          sentence_accumulator;
+		bool              m_OK;
 
-    AIS_Target_Data   *m_pLatestTargetData;
+		AIS_Target_Data   *m_pLatestTargetData;
 
-    bool             m_bAIS_Audio_Alert_On;
-    wxTimer          m_AIS_Audio_Alert_Timer;
-    OCPN_Sound       m_AIS_Sound;
-    int              m_n_targets;
-    bool             m_bSuppressed;
-    bool             m_bGeneralAlert;
-
-DECLARE_EVENT_TABLE()
+		bool             m_bAIS_Audio_Alert_On;
+		wxTimer          m_AIS_Audio_Alert_Timer;
+		OCPN_Sound       m_AIS_Sound;
+		int              m_n_targets;
+		bool             m_bSuppressed;
+		bool             m_bGeneralAlert;
 };
 
 #endif

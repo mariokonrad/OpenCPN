@@ -490,7 +490,7 @@ SET(HDRS
 	include/navutil.h
 	include/tcmgr.h
 	include/ocpn_plugin.h
-	include/datastream.h
+	src/DataStream.h
 	src/geo/LineClip.h
 	src/GARMIN_Serial_Thread.h
 	src/GARMIN_USB_Thread.h
@@ -749,7 +749,7 @@ SET(SRCS
 	src/OCPNFloatingToolbarDialog.cpp
 	src/FloatingCompassWindow.cpp
 	src/Geodesic.cpp
-	src/datastream.cpp
+	src/DataStream.cpp
 	src/GARMIN_Serial_Thread.cpp
 	src/GARMIN_USB_Thread.cpp
 	src/GarminProtocolHandler.cpp

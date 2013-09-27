@@ -78,7 +78,7 @@
 #include "MarkInfo.h"
 #include "ToolBarSimple.h"
 #include "FloatingCompassWindow.h"
-#include "datastream.h"
+#include "DataStream.h"
 #include "OCPN_DataStreamEvent.h"
 #include "Multiplexer.h"
 #include "Select.h"

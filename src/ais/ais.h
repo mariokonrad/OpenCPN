@@ -34,7 +34,6 @@
 #include <vector>
 
 #include "dychart.h"
-#include "datastream.h"
 #include "navutil.h"
 #include "OCPN_Sound.h"
 

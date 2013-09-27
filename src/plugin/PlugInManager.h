@@ -34,7 +34,7 @@
 #include <wx/bmpcbox.h>
 
 #include "ocpn_plugin.h"
-#include "datastream.h"
+#include "DataStream.h"
 #include "OCPN_Sound.h"
 #include <ColorScheme.h>
 

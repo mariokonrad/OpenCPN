@@ -23,34 +23,10 @@
 
 #include "navutil.h"
 #include "dychart.h"
-#include "MainFrame.h"
-#include "MessageBox.h"
-#include "Track.h"
-#include "cutil.h"
-#include "StyleManager.h"
-#include "Routeman.h"
-#include "WayPointman.h"
-#include "RouteProp.h"
-#include "ocpnDC.h"
-#include "Geodesic.h"
-#include "datastream.h"
-#include "Multiplexer.h"
-#include "Route.h"
-#include "Select.h"
-#include "FontMgr.h"
-#include "OCPN_Sound.h"
-#include "Layer.h"
-#include "NavObjectChanges.h"
-#include "NMEALogWindow.h"
 
-#include <ChartCanvas.h>
 #include <MicrosoftCompatibility.h>
-
-#include <geo/GeoRef.h>
-
-#include <chart/s52utils.h>
-
-#include <ais/ais.h>
+#include <Route.h>
+#include <Layer.h>
 
 #include <cstdlib>
 #include <cmath>

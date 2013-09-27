@@ -26,6 +26,8 @@
  *  John F. Waers (jfwaers@csn.net) public domain program MacGPS45         *
  **************************************************************************/
 
+#include "DataStream.h"
+
 #include <wx/tokenzr.h>
 #include <wx/datetime.h>
 
@@ -36,7 +38,6 @@
 
 #include "dychart.h"
 
-#include "datastream.h"
 #include "OCPN_DataStreamEvent.h"
 #include "OCP_DataStreamInput_Thread.h"
 #include "GarminProtocolHandler.h"

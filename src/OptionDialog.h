@@ -40,7 +40,6 @@
 #endif
 
 #include "plugin/PlugInManager.h"
-#include "datastream.h"
 #include <MainFrame.h>
 #include <GUI_IDs.h>
 

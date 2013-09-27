@@ -33,6 +33,7 @@
 #include <MainFrame.h>
 #include <Select.h>
 #include <OCPN_DataStreamEvent.h>
+#include <DataStream.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

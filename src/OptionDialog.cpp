@@ -50,7 +50,7 @@
 #include "StyleManager.h"
 #include "Style.h"
 #include "MessageBox.h"
-#include "datastream.h"
+#include "DataStream.h"
 #include "Multiplexer.h"
 #include "FontMgr.h"
 #include "OCPN_Sound.h"

@@ -24,7 +24,7 @@
 #ifndef __MULTIPLEXER_H__
 #define __MULTIPLEXER_H__
 
-#include "datastream.h"
+#include "DataStream.h"
 #include "Route.h"
 #include "RoutePoint.h"
 

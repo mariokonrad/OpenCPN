@@ -28,7 +28,7 @@
 #include "dychart.h"
 #include "navutil.h"
 #include "StyleManager.h"
-#include "datastream.h"
+#include "DataStream.h"
 #include "Select.h"
 #include <ChartCanvas.h>
 #include <ColorScheme.h>

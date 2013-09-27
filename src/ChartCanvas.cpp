@@ -6530,7 +6530,7 @@ void pupHandler_PasteWaypoint() {
         newPoint->m_bIsolatedMark = true;
         pSelect->AddSelectableRoutePoint( newPoint->m_lat, newPoint->m_lon, newPoint );
         pConfig->AddNewWayPoint( newPoint, -1 );
-        pWayPointMan->m_pWayPointList->Append( newPoint );
+        pWayPointMan->push_back(newPoint);
         if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
     }
 
@@ -6626,7 +6626,7 @@ void pupHandler_PasteRoute() {
             newRoute->AddPoint( newPoint );
             pSelect->AddSelectableRoutePoint( newPoint->m_lat, newPoint->m_lon, newPoint );
             pConfig->AddNewWayPoint( newPoint, -1 );
-            pWayPointMan->m_pWayPointList->Append( newPoint );
+            pWayPointMan->push_back(newPoint);
         }
         if( i > 1 && createNewRoute ) pSelect->AddSelectableRouteSegment( prevPoint->m_lat,
                 prevPoint->m_lon, curPoint->m_lat, curPoint->m_lon, prevPoint, newPoint, newRoute );
@@ -6867,7 +6867,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
                 pConfig->DeleteWayPoint( m_pFoundRoutePoint );
                 pSelect->DeleteSelectablePoint( m_pFoundRoutePoint, Select::TYPE_ROUTEPOINT );
                 if( NULL != pWayPointMan )
-                    pWayPointMan->m_pWayPointList->DeleteObject( m_pFoundRoutePoint );
+                    pWayPointMan->remove(m_pFoundRoutePoint);
                 m_pFoundRoutePoint = NULL;
                 undo->AfterUndoableAction( NULL );
             }
@@ -8827,20 +8827,20 @@ void ChartCanvas::DrawAllWaypointsInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBo
         wxDCClipper( *pdc, clipregion );
     }
 
-    wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
-
-    while( node ) {
-        RoutePoint *pWP = node->GetData();
-        if( pWP ) {
-            if( ( bDrawMarksOnly ) && ( pWP->m_bIsInRoute || pWP->m_bIsInTrack ) ) {
-                node = node->GetNext();
-                continue;
-            } else {
-                if( BltBBox.GetValid() ) {
-                    if( BltBBox.PointInBox( pWP->m_lon, pWP->m_lat, 0 ) ) pWP->Draw( dc, NULL );
-                }
-            }
-        }
+	wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
+	while (node) {
+		RoutePoint * pWP = node->GetData();
+		if (pWP) {
+			if (bDrawMarksOnly && (pWP->m_bIsInRoute || pWP->m_bIsInTrack)) {
+				node = node->GetNext();
+				continue;
+			} else {
+				if (BltBBox.GetValid()) {
+					if (BltBBox.PointInBox(pWP->m_lon, pWP->m_lat, 0))
+						pWP->Draw(dc, NULL);
+				}
+			}
+		}
 
         node = node->GetNext();
     }

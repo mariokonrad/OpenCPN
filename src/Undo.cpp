@@ -97,8 +97,10 @@ void Undo::doUndoDeleteWaypoint(UndoAction * action)
 	RoutePoint* point = (RoutePoint*) action->before[0];
 	pSelect->AddSelectableRoutePoint( point->m_lat, point->m_lon, point );
 	pConfig->AddNewWayPoint( point, -1 );
-	if( NULL != pWayPointMan ) pWayPointMan->m_pWayPointList->Append( point );
-	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
+	if (NULL != pWayPointMan)
+		pWayPointMan->push_back(point);
+	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
+		pRouteManagerDialog->UpdateWptListCtrl();
 }
 
 void Undo::doRedoDeleteWaypoint(UndoAction * action)
@@ -106,8 +108,10 @@ void Undo::doRedoDeleteWaypoint(UndoAction * action)
 	RoutePoint* point = (RoutePoint*) action->before[0];
 	pConfig->DeleteWayPoint( point );
 	pSelect->DeleteSelectablePoint( point, Select::TYPE_ROUTEPOINT );
-	if( NULL != pWayPointMan ) pWayPointMan->m_pWayPointList->DeleteObject( point );
-	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
+	if (NULL != pWayPointMan)
+		pWayPointMan->remove(point);
+	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
+		pRouteManagerDialog->UpdateWptListCtrl();
 }
 
 void Undo::doUndoAppendWaypoint(UndoAction * action)
@@ -124,14 +128,16 @@ void Undo::doUndoAppendWaypoint(UndoAction * action)
 	if( action->beforeType[0] == UndoAction::Undo_IsOrphanded ) {
 		pConfig->DeleteWayPoint( point );
 		pSelect->DeleteSelectablePoint( point, Select::TYPE_ROUTEPOINT );
-		if( NULL != pWayPointMan ) pWayPointMan->m_pWayPointList->DeleteObject( point );
+		if (NULL != pWayPointMan)
+			pWayPointMan->remove(point);
 	}
 
 	if( noRouteLeftToRedo ) {
 		cc1->undo->InvalidateRedo();
 	}
 
-	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
+	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
+		pRouteManagerDialog->UpdateWptListCtrl();
 
 	if( gFrame->nRoute_State > 1 ) {
 		gFrame->nRoute_State--;

@@ -309,6 +309,40 @@ wxBitmap *WayPointman::CreateDimBitmap( wxBitmap *pBitmap, double factor )
 
 }
 
+void WayPointman::push_back(RoutePoint * route_point)
+{
+	if (!route_point)
+		return;
+
+	m_pWayPointList->push_back(route_point);
+}
+
+void WayPointman::remove(RoutePoint * route_point)
+{
+	if (!route_point)
+		return;
+
+	m_pWayPointList->remove(route_point);
+}
+
+RoutePoint * WayPointman::find(const wxString & guid)
+{
+	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+		if ((*i)->m_GUID == guid)
+			return *i;
+	}
+	return NULL;
+}
+
+bool WayPointman::contains(const RoutePoint * point) const
+{
+	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+		if (*i == point)
+			return true;
+	}
+	return false;
+}
+
 void WayPointman::SetColorScheme(ColorScheme)
 {
 	ProcessIcons(g_StyleManager->GetCurrentStyle());
@@ -551,8 +585,8 @@ void WayPointman::DestroyWaypoint(RoutePoint * pRp, bool b_update_changeset)
 		// This will leak, although called infrequently....
 		//  12/15/10...Seems to occur only on MOB delete....
 
-		if( NULL != pWayPointMan )
-			pWayPointMan->m_pWayPointList->DeleteObject(pRp);
+		if (NULL != pWayPointMan) // FIXME: this is already within the object, no need to reference the global instance
+			pWayPointMan->remove(pRp);
 
 		//    The RoutePoint might be currently in use as an anchor watch point
 		if( pRp == pAnchorWatchPoint1 ) pAnchorWatchPoint1 = NULL;

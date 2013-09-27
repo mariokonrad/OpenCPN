@@ -258,7 +258,7 @@ Track * NavObjectCollection::GPXLoadTrack1(
 						pWp->m_bIsInRoute = false;                      // Hack
 						pWp->m_bIsInTrack = true;
 						pWp->m_GPXTrkSegNo = GPXSeg;
-						pWayPointMan->m_pWayPointList->Append( pWp );
+						pWayPointMan->push_back(pWp);
 					}
 				}
 			} else {
@@ -404,7 +404,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 				pWp->m_bIsInRoute = true;                      // Hack
 				pWp->m_bIsInTrack = false;
 				if( erp == NULL )
-					pWayPointMan->m_pWayPointList->Append( pWp );
+					pWayPointMan->push_back(pWp);
 			} else {
 				if( ChildName == _T ( "name" ) ) {
 					RouteName = wxString::FromUTF8( tschild.first_child().value() );
@@ -1045,23 +1045,16 @@ void NavObjectCollection::UpdateRouteA(Route * pTentRoute)
 	}
 }
 
-
 bool NavObjectCollection::CreateNavObjGPXPoints( void )
 {
-
-	//    Iterate over the Routepoint list, creating Nodes for
-	//    Routepoints that are not in any Route
-	//    as indicated by m_bIsolatedMark == false
+	// Iterate over the Routepoint list, creating Nodes for
+	// Routepoints that are not in any Route
+	// as indicated by m_bIsolatedMark == false
 
 	wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
-
-	RoutePoint *pr;
-
-	while( node ) {
-		pr = node->GetData();
-
-		if( ( pr->m_bIsolatedMark ) && !( pr->m_bIsInLayer ) && !(pr->m_btemp) )
-		{
+	while (node) {
+		RoutePoint * pr = node->GetData();
+		if (pr->m_bIsolatedMark && !pr->m_bIsInLayer && !pr->m_btemp) {
 			GPXCreateWpt(m_gpx_root.append_child("wpt"), pr, OPT_WPT);
 		}
 		node = node->GetNext();
@@ -1190,7 +1183,7 @@ bool NavObjectCollection::LoadAllGPXObjects()
 				RoutePoint * pExisting = WayPointman::WaypointExists(pWp->GetName(), pWp->m_lat, pWp->m_lon);
 				if( !pExisting ) {
 					if( NULL != pWayPointMan )
-						pWayPointMan->m_pWayPointList->Append( pWp );
+						pWayPointMan->push_back(pWp);
 					pSelect->AddSelectableRoutePoint( pWp->m_lat, pWp->m_lon, pWp );
 				}
 				else
@@ -1226,7 +1219,7 @@ int NavObjectCollection::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
 			pWp->m_bIsolatedMark = true;      // This is an isolated mark
 
 			if(pWp) {
-				pWayPointMan->m_pWayPointList->Append( pWp );
+				pWayPointMan->push_back(pWp);
 				pSelect->AddSelectableRoutePoint( pWp->m_lat, pWp->m_lon, pWp );
 				n_obj++;
 			}

@@ -1358,22 +1358,21 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
             //    This will prevent clutter and database congestion....
 
             wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
-            while( node ) {
-                RoutePoint *pr = node->GetData();
-                if( pr->GetName().StartsWith( _T("Anchorage") ) ) {
+            while (node) {
+                RoutePoint * pr = node->GetData();
+                if (pr->GetName().StartsWith(_T("Anchorage"))) {
                     double a = gLat - pr->m_lat;
                     double b = gLon - pr->m_lon;
-                    double l = sqrt( ( a * a ) + ( b * b ) );
+                    double l = sqrt((a * a) + (b * b));
 
                     // caveat: this is accurate only on the Equator
-                    if( ( l * 60. * 1852. ) < ( .25 * 1852. ) ) {
-                        pConfig->DeleteWayPoint( pr );
+                    if ((l * 60.0 * 1852.0) < (0.25 * 1852.0)) {
+                        pConfig->DeleteWayPoint(pr);
                         pSelect->DeleteSelectablePoint(pr, Select::TYPE_ROUTEPOINT);
                         delete pr;
                         break;
                     }
                 }
-
                 node = node->GetNext();
             }
 

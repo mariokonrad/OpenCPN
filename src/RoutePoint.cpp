@@ -181,7 +181,7 @@ RoutePoint::RoutePoint(
 
 	//  Possibly add the waypoint to the global list maintained by the waypoint manager
 
-	if( bAddToList && NULL != pWayPointMan ) pWayPointMan->m_pWayPointList->Append( this );
+	if( bAddToList && NULL != pWayPointMan ) pWayPointMan->push_back(this);
 
 	m_bIsInLayer = g_bIsNewLayer;
 	if( m_bIsInLayer ) {
@@ -195,7 +195,7 @@ RoutePoint::~RoutePoint( void )
 {
 	// FIXME: what a mess: Remove this point from the global waypoint list
 	if (NULL != pWayPointMan)
-		pWayPointMan->m_pWayPointList->DeleteObject(this);
+		pWayPointMan->remove(this);
 
 	if (m_HyperlinkList) {
 		m_HyperlinkList->DeleteContents(true);

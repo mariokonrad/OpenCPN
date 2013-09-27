@@ -1830,8 +1830,9 @@ void RouteManagerDialog::UpdateWptListCtrl( RoutePoint *rp_select, bool b_retain
 
 			wxListItem li;
 			li.SetId( index );
-			li.SetImage( rp->IsVisible() ? pWayPointMan->GetIconIndex( rp->m_pbmIcon )
-					: pWayPointMan->GetXIconIndex( rp->m_pbmIcon ) );
+			li.SetImage(rp->IsVisible()
+				? pWayPointMan->GetIconIndex(rp->m_pbmIcon)
+				: pWayPointMan->GetXIconIndex(rp->m_pbmIcon));
 			li.SetData( rp );
 			li.SetText( _T("") );
 			long idx = m_pWptListCtrl->InsertItem( li );

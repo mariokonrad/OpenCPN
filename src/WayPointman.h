@@ -66,6 +66,11 @@ class WayPointman
 		static RoutePoint * FindRoutePoint(const wxString & guid);
 		static RoutePoint * WaypointExists(const wxString & name, double lat, double lon);
 
+		void push_back(RoutePoint *);
+		void remove(RoutePoint *);
+		RoutePoint * find(const wxString & guid);
+		bool contains(const RoutePoint * point) const;
+
 		RoutePointList * m_pWayPointList; // FIXME: public attribute
 
 	private:

@@ -932,23 +932,12 @@ void Route::SetListed( bool visible )
 	m_bListed = visible;
 }
 
-void Route::AssembleRoute( void )
+void Route::AssembleRoute(void)
 {
-	//    iterate over the RoutePointGUIDs
-	for( unsigned int ip = 0; ip < RoutePointGUIDList.GetCount(); ip++ ) {
-		wxString GUID = RoutePointGUIDList[ip];
-
-		//    And on the RoutePoints themselves
-		wxRoutePointListNode *prpnode = pWayPointMan->m_pWayPointList->GetFirst();
-		while( prpnode ) {
-			RoutePoint *prp = prpnode->GetData();
-
-			if( prp->m_GUID == GUID ) {
-				AddPoint( prp );
-				break;
-			}
-			prpnode = prpnode->GetNext(); //RoutePoint
-		}
+	for (unsigned int ip = 0; ip < RoutePointGUIDList.GetCount(); ++ip) {
+		RoutePoint * point = pWayPointMan->find(RoutePointGUIDList[ip]);
+		if (point)
+			AddPoint(point);
 	}
 }
 

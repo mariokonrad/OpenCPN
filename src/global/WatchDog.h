@@ -21,46 +21,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GLOBAL__OCPN__H__
-#define __GLOBAL__OCPN__H__
+#ifndef __GLOBAL__WATCHDOG__H__
+#define __GLOBAL__WATCHDOG__H__
 
 namespace global {
 
-class GUI;
-class Navigation;
-class WatchDog;
-class System;
-
-class OCPN
+class WatchDog
 {
-	private:
-		static OCPN * instance;
-
-		GUI * gui_instance;
-		Navigation * nav_instance;
-		WatchDog * wdt_instance;
-		System * sys_instance;
-
-	private:
-		OCPN();
-		OCPN(const OCPN &);
-		~OCPN();
-		OCPN & operator=(const OCPN &);
+	public:
+		virtual ~WatchDog() {}
 
 	public:
-		static OCPN & get();
 
-		void inject(GUI *);
-		GUI & gui();
+		struct Data
+		{
+			int gps_watchdog_timeout_ticks;
+		};
 
-		void inject(Navigation *);
-		Navigation & nav();
-
-		void inject(WatchDog *);
-		WatchDog & wdt();
-
-		void inject(System *);
-		System & sys();
+		virtual const Data & get_data() const = 0;
+		virtual void set_gps_timeout_ticks(int) = 0;
 };
 
 }

@@ -31,6 +31,7 @@ OCPN * OCPN::instance = NULL;
 OCPN::OCPN()
 	: gui_instance(NULL)
 	, nav_instance(NULL)
+	, wdt_instance(NULL)
 	, sys_instance(NULL)
 {}
 
@@ -71,6 +72,16 @@ void OCPN::inject(Navigation * nav)
 Navigation & OCPN::nav()
 {
 	return *nav_instance;
+}
+
+void OCPN::inject(WatchDog * wdt)
+{
+	wdt_instance = wdt;
+}
+
+WatchDog & OCPN::wdt()
+{
+	return *wdt_instance;
 }
 
 void OCPN::inject(System * sys)

@@ -62,6 +62,7 @@
 #include <global/OCPN.h>
 #include <global/OCPN_GUI.h>
 #include <global/OCPN_Navigation.h>
+#include <global/OCPN_WatchDog.h>
 #include <global/OCPN_System.h>
 
 #ifdef __WXMSW__
@@ -449,6 +450,7 @@ END_EVENT_TABLE()
 App::App()
 	: gui_instance(NULL)
 	, nav_instance(NULL)
+	, wdt_instance(NULL)
 	, sys_instance(NULL)
 	, start_fullscreen(false)
 {}
@@ -582,6 +584,9 @@ bool App::OnInit()
 
 	nav_instance = new global::OCPN_Navigation;
 	global::OCPN::get().inject(nav_instance);
+
+	wdt_instance = new global::OCPN_WatchDog;
+	global::OCPN::get().inject(wdt_instance);
 
 	sys_instance = new global::OCPN_System;
 	global::OCPN::get().inject(sys_instance);
@@ -1871,12 +1876,10 @@ int App::OnExit()
 #endif
 #endif
 
-	if (gui_instance)
-		delete gui_instance;
-	if (nav_instance)
-		delete nav_instance;
-	if (sys_instance)
-		delete sys_instance;
+	delete gui_instance;
+	delete nav_instance;
+	delete wdt_instance;
+	delete sys_instance;
 
 	return TRUE;
 }

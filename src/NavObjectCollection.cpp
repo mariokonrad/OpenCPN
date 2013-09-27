@@ -469,7 +469,6 @@ Route * NavObjectCollection::GPXLoadRoute1(
 														}
 													} else {
 														if( ext_name == _T ( "opencpn:guid" ) ) {
-															//if ( !g_bIsNewLayer ) )
 															pTentRoute->m_GUID =  wxString::FromUTF8(ext_child.first_child().value());
 														} else {
 															if( ext_name == _T ( "opencpn:planned_speed" ) ) {

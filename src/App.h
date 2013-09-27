@@ -33,6 +33,7 @@ class wxSingleInstanceChecker;
 namespace global {
 class OCPN_GUI;
 class OCPN_Navigation;
+class OCPN_WatchDog;
 class OCPN_System;
 }
 
@@ -56,6 +57,7 @@ class App : public wxApp
 
 		global::OCPN_GUI * gui_instance;
 		global::OCPN_Navigation * nav_instance;
+		global::OCPN_WatchDog * wdt_instance;
 		global::OCPN_System * sys_instance;
 
 		bool start_fullscreen;

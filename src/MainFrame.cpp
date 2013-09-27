@@ -3167,8 +3167,8 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
     gHDx_Watchdog--;
     if( gHDx_Watchdog <= 0 ) {
 		nav.set_heading_magn(NAN);
-        if( g_nNMEADebug && ( gHDx_Watchdog == 0 ) ) wxLogMessage(
-                _T("   ***HDx Watchdog timeout...") );
+        if (g_nNMEADebug && (gHDx_Watchdog == 0))
+			wxLogMessage(_T("   ***HDx Watchdog timeout..."));
     }
 
 //  Update and check watchdog timer for True Heading data source

@@ -50,6 +50,7 @@
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/System.h>
+#include <global/WatchDog.h>
 
 #include <wx/window.h>
 #include <wx/dir.h>
@@ -148,7 +149,6 @@ extern bool             g_bEnableZoomToCursor;
 extern wxString         g_toolbarConfig;
 extern double           g_TrackIntervalSeconds;
 extern double           g_TrackDeltaDistance;
-extern int              gps_watchdog_timeout_ticks;
 
 extern int              g_nCacheLimit;
 extern int              g_memCacheLimit;
@@ -408,6 +408,17 @@ void Config::load_system_config(int iteration) // FIXME: get rid of this 'iterat
 	}
 }
 
+void Config::load_watchdog()
+{
+	global::WatchDog & wdt = global::OCPN::get().wdt();
+
+	long gps_watchdog_timeout_ticks;
+
+	Read(_T("GPSDogTimeout"), &gps_watchdog_timeout_ticks, GPS_TIMEOUT_SECONDS);
+
+	wdt.set_gps_timeout_ticks(gps_watchdog_timeout_ticks);
+}
+
 int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 {
 	int read_int;
@@ -440,11 +451,12 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read( _T ( "DebugOpenGL" ), &g_bDebugOGL, 0 );
 	Read( _T ( "AnchorWatchDefault" ), &g_nAWDefault, 50 );
 	Read( _T ( "AnchorWatchMax" ), &g_nAWMax, 1852 );
-	Read( _T ( "GPSDogTimeout" ), &gps_watchdog_timeout_ticks, GPS_TIMEOUT_SECONDS );
 	Read( _T ( "DebugCM93" ), &g_bDebugCM93, 0 );
 	Read( _T ( "DebugS57" ), &g_bDebugS57, 0 );         // Show LUP and Feature info in object query
 	Read( _T ( "DebugBSBImg" ), &g_BSBImgDebug, 0 );
 	Read( _T ( "DebugGPSD" ), &g_bDebugGPSD, 0 );
+
+	load_watchdog();
 
 	Read( _T ( "UseGreenShipIcon" ), &g_bUseGreenShip, 0 );
 	Read( _T ( "AllowExtremeOverzoom" ), &g_b_overzoom_x, 1 );

@@ -108,6 +108,7 @@
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/Navigation.h>
+#include <global/WatchDog.h>
 
 #include <ais/ais.h>
 #include <ais/AISTargetListDialog.h>
@@ -258,8 +259,6 @@ int g_pNavAidRadarRingsStepUnits;
 bool g_bWayPointPreventDragging;
 bool g_bConfirmObjectDelete;
 ColorScheme global_color_scheme;
-int gps_watchdog_timeout_ticks;
-int sat_watchdog_timeout_ticks;
 int gGPS_Watchdog;
 bool bGPSValid;
 int gHDx_Watchdog;
@@ -4927,500 +4926,410 @@ bool MainFrame::EvalPriority(const wxString & message, DataStream *pDS )
     return bret;
 }
 
-void MainFrame::OnEvtOCPN_NMEA( OCPN_DataStreamEvent & event )
+void MainFrame::gps_debug(const NMEA0183 & nmea, const wxString & str_buf) const
 {
-    wxString sfixtime;
-    bool pos_valid = false;
-    bool bis_recognized_sentence = true;
-    bool ll_valid = true;
+	wxString msg(_T("   "));
+	msg.Append(nmea.ErrorMessage);
+	msg.Append(_T(" : "));
+	msg.Append(str_buf);
+	wxLogMessage(msg);
+}
 
-    wxString str_buf = wxString(event.GetNMEAString().c_str(), wxConvUTF8);
+void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this method is way to long
+{
+	wxString sfixtime;
+	bool pos_valid = false;
+	bool bis_recognized_sentence = true;
+	bool ll_valid = true;
 
-    if( g_nNMEADebug && ( g_total_NMEAerror_messages < g_nNMEADebug ) )
-    {
-        g_total_NMEAerror_messages++;
-        wxString msg( _T("MEH.NMEA Sentence received...") );
-        msg.Append( str_buf );
-        wxLogMessage( msg );
-    }
+	const global::WatchDog::Data & wdt = global::OCPN::get().wdt().get_data();
 
-    //  The message must be at least reasonably formed...
-    if( (str_buf[0] != '$')  &&  (str_buf[0] != '!') )
-        return;
+	wxString str_buf = wxString(event.GetNMEAString().c_str(), wxConvUTF8);
 
-    if( event.GetStream() )
-    {
-        if(!event.GetStream()->ChecksumOK(str_buf) )
-        {
-            if( g_nNMEADebug && ( g_total_NMEAerror_messages < g_nNMEADebug ) )
-            {
-                g_total_NMEAerror_messages++;
-                wxString msg( _T(">>>>>>NMEA Sentence Checksum Bad...") );
-                msg.Append( str_buf );
-                wxLogMessage( msg );
-            }
-            return;
-        }
-    }
+	if( g_nNMEADebug && ( g_total_NMEAerror_messages < g_nNMEADebug ) )
+	{
+		g_total_NMEAerror_messages++;
+		wxString msg( _T("MEH.NMEA Sentence received...") );
+		msg.Append( str_buf );
+		wxLogMessage( msg );
+	}
 
-    bool b_accept = EvalPriority( str_buf, event.GetStream() );
-    if( b_accept ) {
-        m_NMEA0183 << str_buf;
-        if( m_NMEA0183.PreParse() )
-        {
-            if( m_NMEA0183.LastSentenceIDReceived == _T("RMC") )
-            {
-                if( m_NMEA0183.Parse() )
-                {
-                    if( m_NMEA0183.Rmc.IsDataValid == NTrue )
-                    {
-                        if( !wxIsNaN(m_NMEA0183.Rmc.Position.Latitude.Latitude) )
-                        {
-                            double llt = m_NMEA0183.Rmc.Position.Latitude.Latitude;
-                            int lat_deg_int = (int) ( llt / 100 );
-                            double lat_deg = lat_deg_int;
-                            double lat_min = llt - ( lat_deg * 100 );
-                            gLat = lat_deg + ( lat_min / 60. );
-                            if( m_NMEA0183.Rmc.Position.Latitude.Northing == South ) gLat = -gLat;
-                        }
-                        else
-                            ll_valid = false;
+	//  The message must be at least reasonably formed...
+	if( (str_buf[0] != '$')  &&  (str_buf[0] != '!') )
+		return;
 
-                        if( !wxIsNaN(m_NMEA0183.Rmc.Position.Longitude.Longitude) )
-                        {
-                            double lln = m_NMEA0183.Rmc.Position.Longitude.Longitude;
-                            int lon_deg_int = (int) ( lln / 100 );
-                            double lon_deg = lon_deg_int;
-                            double lon_min = lln - ( lon_deg * 100 );
-                            gLon = lon_deg + ( lon_min / 60. );
-                            if( m_NMEA0183.Rmc.Position.Longitude.Easting == West )
-                                gLon = -gLon;
-                        }
-                        else
-                            ll_valid = false;
+	if (event.GetStream()) {
+		if (!event.GetStream()->ChecksumOK(str_buf)) {
+			if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
+				g_total_NMEAerror_messages++;
+				wxString msg(_T(">>>>>>NMEA Sentence Checksum Bad..."));
+				msg.Append(str_buf);
+				wxLogMessage(msg);
+			}
+			return;
+		}
+	}
 
-						global::Navigation & nav = global::OCPN::get().nav();
-						nav.set_speed_over_ground(m_NMEA0183.Rmc.SpeedOverGroundKnots);
-						nav.set_course_over_ground(m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue);
+	bool b_accept = EvalPriority(str_buf, event.GetStream());
+	if (!b_accept)
+		return;
 
-                        if( !wxIsNaN(m_NMEA0183.Rmc.MagneticVariation) )
-                        {
-                            if( m_NMEA0183.Rmc.MagneticVariationDirection == East )
-                                global::OCPN::get().nav().set_magn_var(m_NMEA0183.Rmc.MagneticVariation);
-                            else
-                                if( m_NMEA0183.Rmc.MagneticVariationDirection == West )
-									global::OCPN::get().nav().set_magn_var(-m_NMEA0183.Rmc.MagneticVariation);
+	m_NMEA0183 << str_buf;
+	if (m_NMEA0183.PreParse()) {
+		if (m_NMEA0183.LastSentenceIDReceived == _T("RMC")) {
+			if (m_NMEA0183.Parse()) {
+				if (m_NMEA0183.Rmc.IsDataValid == NTrue) {
+					if (!wxIsNaN(m_NMEA0183.Rmc.Position.Latitude.Latitude)) {
+						double llt = m_NMEA0183.Rmc.Position.Latitude.Latitude;
+						int lat_deg_int = (int) ( llt / 100 );
+						double lat_deg = lat_deg_int;
+						double lat_min = llt - ( lat_deg * 100 );
+						gLat = lat_deg + ( lat_min / 60. );
+						if( m_NMEA0183.Rmc.Position.Latitude.Northing == South ) gLat = -gLat;
+					} else
+						ll_valid = false;
 
-                            g_bVAR_Rx = true;
-                            gVAR_Watchdog = gps_watchdog_timeout_ticks;
-                        }
+					if (!wxIsNaN(m_NMEA0183.Rmc.Position.Longitude.Longitude)) {
+						double lln = m_NMEA0183.Rmc.Position.Longitude.Longitude;
+						int lon_deg_int = (int) ( lln / 100 );
+						double lon_deg = lon_deg_int;
+						double lon_min = lln - ( lon_deg * 100 );
+						gLon = lon_deg + ( lon_min / 60. );
+						if (m_NMEA0183.Rmc.Position.Longitude.Easting == West)
+							gLon = -gLon;
+					} else
+						ll_valid = false;
 
-                        sfixtime = m_NMEA0183.Rmc.UTCTime;
+					global::Navigation & nav = global::OCPN::get().nav();
+					nav.set_speed_over_ground(m_NMEA0183.Rmc.SpeedOverGroundKnots);
+					nav.set_course_over_ground(m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue);
 
-                        if(ll_valid )
-                        {
-                            gGPS_Watchdog = gps_watchdog_timeout_ticks;
-                            wxDateTime now = wxDateTime::Now();
-                            m_fixtime = now.GetTicks();
-                        }
-                        pos_valid = ll_valid;
-                    }
-                }
-                else
-                    if( g_nNMEADebug )
-                    {
-                        wxString msg( _T("   ") );
-                        msg.Append( m_NMEA0183.ErrorMessage );
-                        msg.Append( _T(" : ") );
-                        msg.Append( str_buf );
-                        wxLogMessage( msg );
-                    }
-            }
+					if(!wxIsNaN(m_NMEA0183.Rmc.MagneticVariation)) {
+						if (m_NMEA0183.Rmc.MagneticVariationDirection == East)
+							global::OCPN::get().nav().set_magn_var(m_NMEA0183.Rmc.MagneticVariation);
+						else
+							if (m_NMEA0183.Rmc.MagneticVariationDirection == West)
+								global::OCPN::get().nav().set_magn_var(-m_NMEA0183.Rmc.MagneticVariation);
 
-            else
-                if( m_NMEA0183.LastSentenceIDReceived == _T("HDT") )
-                {
-                    if( m_NMEA0183.Parse() )
-                    {
-						global::OCPN::get().nav().set_heading_true(m_NMEA0183.Hdt.DegreesTrue);
-                        if( !wxIsNaN(m_NMEA0183.Hdt.DegreesTrue) )
-                        {
-                            g_bHDT_Rx = true;
-                            gHDT_Watchdog = gps_watchdog_timeout_ticks;
-                        }
-                    }
-                    else
-                        if( g_nNMEADebug )
-                        {
-                            wxString msg( _T("   ") );
-                            msg.Append( m_NMEA0183.ErrorMessage );
-                            msg.Append( _T(" : ") );
-                            msg.Append( str_buf );
-                            wxLogMessage( msg );
-                        }
-                }
-                else
-                    if( m_NMEA0183.LastSentenceIDReceived == _T("HDG") ) {
-                        if (m_NMEA0183.Parse()) {
-							global::Navigation & nav = global::OCPN::get().nav();
-							nav.set_heading_magn(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees);
-                            if( !wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees) )
-                                gHDx_Watchdog = gps_watchdog_timeout_ticks;
+						g_bVAR_Rx = true;
+						gVAR_Watchdog = wdt.gps_watchdog_timeout_ticks;
+					}
 
-                            if( m_NMEA0183.Hdg.MagneticVariationDirection == East )
-								nav.set_magn_var(m_NMEA0183.Hdg.MagneticVariationDegrees);
-                            else if( m_NMEA0183.Hdg.MagneticVariationDirection == West )
-								nav.set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
+					sfixtime = m_NMEA0183.Rmc.UTCTime;
 
-                            if (!wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees)) {
-                                g_bVAR_Rx = true;
-                                gVAR_Watchdog = gps_watchdog_timeout_ticks;
-                            }
-
-
-                        } else
-                            if (g_nNMEADebug) {
-                                wxString msg( _T("   ") );
-                                msg.Append( m_NMEA0183.ErrorMessage );
-                                msg.Append( _T(" : ") );
-                                msg.Append( str_buf );
-                                wxLogMessage( msg );
-                            }
-                    }
-                    else
-                        if( m_NMEA0183.LastSentenceIDReceived == _T("HDM") ) {
-                            if( m_NMEA0183.Parse() ) {
-								global::OCPN::get().nav().set_heading_magn(m_NMEA0183.Hdm.DegreesMagnetic);
-                                if( !wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic) )
-                                    gHDx_Watchdog = gps_watchdog_timeout_ticks;
-                            } else
-                                if (g_nNMEADebug) {
-                                    wxString msg( _T("   ") );
-                                    msg.Append( m_NMEA0183.ErrorMessage );
-                                    msg.Append( _T(" : ") );
-                                    msg.Append( str_buf );
-                                    wxLogMessage( msg );
-                                }
-                        }
-                        else
-                            if( m_NMEA0183.LastSentenceIDReceived == _T("VTG") )
-                            {
-                                if( m_NMEA0183.Parse() ) {
-									global::Navigation & nav = global::OCPN::get().nav();
-                                    nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
-									nav.set_course_over_ground(m_NMEA0183.Vtg.TrackDegreesTrue);
-                                    if( !wxIsNaN(m_NMEA0183.Vtg.SpeedKnots) && !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue) )
-                                        gGPS_Watchdog = gps_watchdog_timeout_ticks;
-                                }
-                                else
-                                    if( g_nNMEADebug ) {
-                                        wxString msg( _T("   ") );
-                                        msg.Append( m_NMEA0183.ErrorMessage );
-                                        msg.Append( _T(" : ") );
-                                        msg.Append( str_buf );
-                                        wxLogMessage( msg );
-                                    }
-                            }
-                            else
-                                if( m_NMEA0183.LastSentenceIDReceived == _T("GSV") )
-                                {
-                                    if( m_NMEA0183.Parse() )
-                                    {
-                                        g_SatsInView = m_NMEA0183.Gsv.SatsInView;
-                                        gSAT_Watchdog = sat_watchdog_timeout_ticks;
-                                        g_bSatValid = true;
-                                    }
-                                    else
-                                        if( g_nNMEADebug )
-                                        {
-                                            wxString msg( _T("   ") );
-                                            msg.Append( m_NMEA0183.ErrorMessage );
-                                            msg.Append( _T(" : ") );
-                                            msg.Append( str_buf );
-                                            wxLogMessage( msg );
-                                        }
-                                }
-                                else
-                                    if( g_bUseGLL && m_NMEA0183.LastSentenceIDReceived == _T("GLL") )
-                                    {
-                                        if( m_NMEA0183.Parse() )
-                                        {
-                                            if( m_NMEA0183.Gll.IsDataValid == NTrue )
-                                            {
-                                                if( !wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude) )
-                                                {
-                                                    double llt = m_NMEA0183.Gll.Position.Latitude.Latitude;
-                                                    int lat_deg_int = (int) ( llt / 100 );
-                                                    double lat_deg = lat_deg_int;
-                                                    double lat_min = llt - ( lat_deg * 100 );
-                                                    gLat = lat_deg + ( lat_min / 60. );
-                                                    if( m_NMEA0183.Gll.Position.Latitude.Northing
-                                                            == South ) gLat = -gLat;
-                                                }
-                                                else
-                                                    ll_valid = false;
-
-                                                if( !wxIsNaN(m_NMEA0183.Gll.Position.Longitude.Longitude) )
-                                                {
-                                                    double lln = m_NMEA0183.Gll.Position.Longitude.Longitude;
-                                                    int lon_deg_int = (int) ( lln / 100 );
-                                                    double lon_deg = lon_deg_int;
-                                                    double lon_min = lln - ( lon_deg * 100 );
-                                                    gLon = lon_deg + ( lon_min / 60. );
-                                                    if( m_NMEA0183.Gll.Position.Longitude.Easting == West )
-                                                        gLon = -gLon;
-                                                }
-                                                else
-                                                    ll_valid = false;
-
-                                                sfixtime = m_NMEA0183.Gll.UTCTime;
-
-                                                if(ll_valid)
-                                                {
-                                                    gGPS_Watchdog = gps_watchdog_timeout_ticks;
-                                                    wxDateTime now = wxDateTime::Now();
-                                                    m_fixtime = now.GetTicks();
-                                                }
-                                                pos_valid = ll_valid;
-                                            }
-                                        } else
-                                            if( g_nNMEADebug )
-                                            {
-                                                wxString msg( _T("   ") );
-                                                msg.Append( m_NMEA0183.ErrorMessage );
-                                                msg.Append( _T(" : ") );
-                                                msg.Append( str_buf );
-                                                wxLogMessage( msg );
-                                            }
-                                    }
-                                    else
-                                        if( m_NMEA0183.LastSentenceIDReceived == _T("GGA") )
-                                        {
-                                            if( m_NMEA0183.Parse() )
-                                            {
-                                                if( m_NMEA0183.Gga.GPSQuality > 0 )
-                                                {
-                                                    if( !wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude) )
-                                                    {
-                                                        double llt = m_NMEA0183.Gga.Position.Latitude.Latitude;
-                                                        int lat_deg_int = (int) ( llt / 100 );
-                                                        double lat_deg = lat_deg_int;
-                                                        double lat_min = llt - ( lat_deg * 100 );
-                                                        gLat = lat_deg + ( lat_min / 60. );
-                                                        if( m_NMEA0183.Gga.Position.Latitude.Northing == South )
-                                                            gLat = -gLat;
-                                                    }
-                                                    else
-                                                        ll_valid = false;
-
-                                                    if( !wxIsNaN(m_NMEA0183.Gga.Position.Longitude.Longitude) )
-                                                    {
-                                                        double lln = m_NMEA0183.Gga.Position.Longitude.Longitude;
-                                                        int lon_deg_int = (int) ( lln / 100 );
-                                                        double lon_deg = lon_deg_int;
-                                                        double lon_min = lln - ( lon_deg * 100 );
-                                                        gLon = lon_deg + ( lon_min / 60. );
-                                                        if( m_NMEA0183.Gga.Position.Longitude.Easting
-                                                                == West ) gLon = -gLon;
-                                                    }
-                                                    else
-                                                        ll_valid = false;
-
-                                                    sfixtime = m_NMEA0183.Gga.UTCTime;
-
-                                                    if(ll_valid)
-                                                    {
-                                                        gGPS_Watchdog = gps_watchdog_timeout_ticks;
-                                                        wxDateTime now = wxDateTime::Now();
-                                                        m_fixtime = now.GetTicks();
-                                                    }
-                                                    pos_valid = ll_valid;
-
-                                                    g_SatsInView = m_NMEA0183.Gga.NumberOfSatellitesInUse;
-                                                    gSAT_Watchdog = sat_watchdog_timeout_ticks;
-                                                    g_bSatValid = true;
-
-                                                }
-                                            } else
-                                                if( g_nNMEADebug )
-                                                {
-                                                    wxString msg( _T("   ") );
-                                                    msg.Append( m_NMEA0183.ErrorMessage );
-                                                    msg.Append( _T(" : ") );
-                                                    msg.Append( str_buf );
-                                                    wxLogMessage( msg );
-                                                }
-                                        }
-        }
-        //      Process ownship (AIVDO) messages from any source
-        else if(str_buf.Mid( 1, 5 ).IsSameAs( _T("AIVDO") ) )
-        {
-            GenericPosDatEx gpd;
-            AIS_Error nerr = AIS_GENERIC_ERROR;
-            if(g_pAIS)
-                nerr = g_pAIS->DecodeSingleVDO(str_buf, &gpd, &m_VDO_accumulator);
-
-            if(nerr == AIS_NoError) {
-                if( !wxIsNaN(gpd.kLat) )
-                    gLat = gpd.kLat;
-                if( !wxIsNaN(gpd.kLon) )
-                    gLon = gpd.kLon;
-
+					if (ll_valid) {
+						gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+						wxDateTime now = wxDateTime::Now();
+						m_fixtime = now.GetTicks();
+					}
+					pos_valid = ll_valid;
+				}
+			} else if (g_nNMEADebug) {
+				gps_debug(m_NMEA0183, str_buf);
+			}
+		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDT")) {
+			if (m_NMEA0183.Parse()) {
+				global::OCPN::get().nav().set_heading_true(m_NMEA0183.Hdt.DegreesTrue);
+				if (!wxIsNaN(m_NMEA0183.Hdt.DegreesTrue)) {
+					g_bHDT_Rx = true;
+					gHDT_Watchdog = wdt.gps_watchdog_timeout_ticks;
+				}
+			} else if (g_nNMEADebug) {
+				gps_debug(m_NMEA0183, str_buf);
+			}
+		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDG")) {
+			if (m_NMEA0183.Parse()) {
 				global::Navigation & nav = global::OCPN::get().nav();
-                nav.set_speed_over_ground(gpd.kSog);
-                nav.set_course_over_ground(gpd.kCog);
+				nav.set_heading_magn(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees);
+				if( !wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees) )
+					gHDx_Watchdog = wdt.gps_watchdog_timeout_ticks;
 
-				global::OCPN::get().nav().set_heading_true(gpd.kHdt);
-                if( !wxIsNaN(gpd.kHdt) ) {
-                    g_bHDT_Rx = true;
-                    gHDT_Watchdog = gps_watchdog_timeout_ticks;
-                }
+				if( m_NMEA0183.Hdg.MagneticVariationDirection == East )
+					nav.set_magn_var(m_NMEA0183.Hdg.MagneticVariationDegrees);
+				else if( m_NMEA0183.Hdg.MagneticVariationDirection == West )
+					nav.set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
 
-                if( !wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon) ) {
-                    gGPS_Watchdog = gps_watchdog_timeout_ticks;
-                    wxDateTime now = wxDateTime::Now();
-                    m_fixtime = now.GetTicks();
+				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees)) {
+					g_bVAR_Rx = true;
+					gVAR_Watchdog = wdt.gps_watchdog_timeout_ticks;
+				}
+			} else if (g_nNMEADebug) {
+				gps_debug(m_NMEA0183, str_buf);
+			}
+		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDM")) {
+			if (m_NMEA0183.Parse()) {
+				global::OCPN::get().nav().set_heading_magn(m_NMEA0183.Hdm.DegreesMagnetic);
+				if (!wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic))
+					gHDx_Watchdog = wdt.gps_watchdog_timeout_ticks;
+			} else if (g_nNMEADebug) {
+				gps_debug(m_NMEA0183, str_buf);
+			}
+		} else if (m_NMEA0183.LastSentenceIDReceived == _T("VTG")) {
+			if( m_NMEA0183.Parse() ) {
+				global::Navigation & nav = global::OCPN::get().nav();
+				nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
+				nav.set_course_over_ground(m_NMEA0183.Vtg.TrackDegreesTrue);
+				if( !wxIsNaN(m_NMEA0183.Vtg.SpeedKnots) && !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue) )
+					gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+			} else if (g_nNMEADebug) {
+				gps_debug(m_NMEA0183, str_buf);
+			}
+		} else if (m_NMEA0183.LastSentenceIDReceived == _T("GSV")) {
+			if (m_NMEA0183.Parse()) {
+				g_SatsInView = m_NMEA0183.Gsv.SatsInView;
+				gSAT_Watchdog = wdt.sat_watchdog_timeout_ticks;
+				g_bSatValid = true;
+			} else if (g_nNMEADebug) {
+				gps_debug(m_NMEA0183, str_buf);
+			}
+		} else if (g_bUseGLL && m_NMEA0183.LastSentenceIDReceived == _T("GLL")) {
+			if (m_NMEA0183.Parse()) {
+				if( m_NMEA0183.Gll.IsDataValid == NTrue ) {
+					if( !wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude) ) {
+						double llt = m_NMEA0183.Gll.Position.Latitude.Latitude;
+						int lat_deg_int = (int) ( llt / 100 );
+						double lat_deg = lat_deg_int;
+						double lat_min = llt - ( lat_deg * 100 );
+						gLat = lat_deg + ( lat_min / 60. );
+						if (m_NMEA0183.Gll.Position.Latitude.Northing == South)
+							gLat = -gLat;
+					} else
+						ll_valid = false;
 
-                    pos_valid = true;
-                }
-            } else {
-                if( g_nNMEADebug && ( g_total_NMEAerror_messages < g_nNMEADebug ) )
-                {
-                    g_total_NMEAerror_messages++;
-                    wxString msg( _T("   Invalid AIVDO Sentence...") );
-                    msg.Append( str_buf );
-                    wxLogMessage( msg );
-                }
-            }
-        } else {
-            bis_recognized_sentence = false;
-            if( g_nNMEADebug && ( g_total_NMEAerror_messages < g_nNMEADebug ) )
-            {
-                g_total_NMEAerror_messages++;
-                wxString msg( _T("   Unrecognized NMEA Sentence...") );
-                msg.Append( str_buf );
-                wxLogMessage( msg );
-            }
-        }
+					if (!wxIsNaN(m_NMEA0183.Gll.Position.Longitude.Longitude)) {
+						double lln = m_NMEA0183.Gll.Position.Longitude.Longitude;
+						int lon_deg_int = (int) ( lln / 100 );
+						double lon_deg = lon_deg_int;
+						double lon_min = lln - ( lon_deg * 100 );
+						gLon = lon_deg + ( lon_min / 60. );
+						if (m_NMEA0183.Gll.Position.Longitude.Easting == West)
+							gLon = -gLon;
+					} else
+						ll_valid = false;
 
-        if( bis_recognized_sentence ) PostProcessNNEA( pos_valid, sfixtime );
-    }
+					sfixtime = m_NMEA0183.Gll.UTCTime;
+
+					if(ll_valid) {
+						gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+						wxDateTime now = wxDateTime::Now();
+						m_fixtime = now.GetTicks();
+					}
+					pos_valid = ll_valid;
+				}
+			} else if (g_nNMEADebug) {
+				gps_debug(m_NMEA0183, str_buf);
+			}
+		} else if (m_NMEA0183.LastSentenceIDReceived == _T("GGA")) {
+			if (m_NMEA0183.Parse()) {
+				if (m_NMEA0183.Gga.GPSQuality > 0) {
+					if (!wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude)) {
+						double llt = m_NMEA0183.Gga.Position.Latitude.Latitude;
+						int lat_deg_int = (int) ( llt / 100 );
+						double lat_deg = lat_deg_int;
+						double lat_min = llt - ( lat_deg * 100 );
+						gLat = lat_deg + ( lat_min / 60. );
+						if (m_NMEA0183.Gga.Position.Latitude.Northing == South)
+							gLat = -gLat;
+					} else
+						ll_valid = false;
+
+					if (!wxIsNaN(m_NMEA0183.Gga.Position.Longitude.Longitude)) {
+						double lln = m_NMEA0183.Gga.Position.Longitude.Longitude;
+						int lon_deg_int = (int) ( lln / 100 );
+						double lon_deg = lon_deg_int;
+						double lon_min = lln - ( lon_deg * 100 );
+						gLon = lon_deg + ( lon_min / 60. );
+						if (m_NMEA0183.Gga.Position.Longitude.Easting == West)
+							gLon = -gLon;
+					} else
+						ll_valid = false;
+
+					sfixtime = m_NMEA0183.Gga.UTCTime;
+
+					if (ll_valid) {
+						gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+						wxDateTime now = wxDateTime::Now();
+						m_fixtime = now.GetTicks();
+					}
+					pos_valid = ll_valid;
+
+					g_SatsInView = m_NMEA0183.Gga.NumberOfSatellitesInUse;
+					gSAT_Watchdog = wdt.sat_watchdog_timeout_ticks;
+					g_bSatValid = true;
+				}
+			} else if (g_nNMEADebug) {
+				gps_debug(m_NMEA0183, str_buf);
+			}
+		}
+	}
+	// Process ownship (AIVDO) messages from any source
+	else if (str_buf.Mid( 1, 5 ).IsSameAs(_T("AIVDO")))
+	{
+		GenericPosDatEx gpd;
+		AIS_Error nerr = AIS_GENERIC_ERROR;
+		if(g_pAIS)
+			nerr = g_pAIS->DecodeSingleVDO(str_buf, &gpd, &m_VDO_accumulator);
+
+		if (nerr == AIS_NoError) {
+			if (!wxIsNaN(gpd.kLat))
+				gLat = gpd.kLat;
+			if (!wxIsNaN(gpd.kLon))
+				gLon = gpd.kLon;
+
+			global::Navigation & nav = global::OCPN::get().nav();
+			nav.set_speed_over_ground(gpd.kSog);
+			nav.set_course_over_ground(gpd.kCog);
+
+			global::OCPN::get().nav().set_heading_true(gpd.kHdt);
+			if( !wxIsNaN(gpd.kHdt) ) {
+				g_bHDT_Rx = true;
+				gHDT_Watchdog = wdt.gps_watchdog_timeout_ticks;
+			}
+
+			if( !wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon) ) {
+				gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+				wxDateTime now = wxDateTime::Now();
+				m_fixtime = now.GetTicks();
+
+				pos_valid = true;
+			}
+		} else {
+			if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
+				g_total_NMEAerror_messages++;
+				wxString msg( _T("   Invalid AIVDO Sentence...") );
+				msg.Append( str_buf );
+				wxLogMessage( msg );
+			}
+		}
+	} else {
+		bis_recognized_sentence = false;
+		if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
+			g_total_NMEAerror_messages++;
+			wxString msg( _T("   Unrecognized NMEA Sentence...") );
+			msg.Append( str_buf );
+			wxLogMessage( msg );
+		}
+	}
+
+	if (bis_recognized_sentence)
+		PostProcessNNEA(pos_valid, sfixtime);
 }
 
 void MainFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 {
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	const global::WatchDog::Data & wdt = global::OCPN::get().wdt().get_data();
 
-    FilterCogSog();
+	FilterCogSog();
 
-    //    If speed over ground is greater than some threshold, we determine that we are "cruising"
-    if (nav.sog > 3.0)
+	//    If speed over ground is greater than some threshold, we determine that we are "cruising"
+	if (nav.sog > 3.0)
 		g_bCruising = true;
 
-    //    Here is the one place we try to create Hdt from Hdm and Var,
-    //    but only if NMEA HDT sentence is not being received
+	//    Here is the one place we try to create Hdt from Hdm and Var,
+	//    but only if NMEA HDT sentence is not being received
 
-    if (!g_bHDT_Rx) {
-        if( !wxIsNaN(nav.var) && !wxIsNaN(nav.hdm)) {
+	if (!g_bHDT_Rx) {
+		if( !wxIsNaN(nav.var) && !wxIsNaN(nav.hdm)) {
 			global::OCPN::get().nav().set_heading_true(nav.hdm + nav.var);
-            gHDT_Watchdog = gps_watchdog_timeout_ticks;
-        }
-    }
+			gHDT_Watchdog = wdt.gps_watchdog_timeout_ticks;
+		}
+	}
 
-    if( pos_valid ) {
-        if( g_nNMEADebug ) {
-            wxString msg( _T("PostProcess NMEA with valid position") );
-            wxLogMessage( msg );
-        }
+	if( pos_valid ) {
+		if( g_nNMEADebug ) {
+			wxString msg( _T("PostProcess NMEA with valid position") );
+			wxLogMessage( msg );
+		}
 
-        //      Maintain the validity flags
-        bool last_bGPSValid = bGPSValid;
-        bGPSValid = true;
-        if( !last_bGPSValid ) UpdateGPSCompassStatusBox();
+		//      Maintain the validity flags
+		bool last_bGPSValid = bGPSValid;
+		bGPSValid = true;
+		if( !last_bGPSValid ) UpdateGPSCompassStatusBox();
 
-        //      Show a little heartbeat tick in StatusWindow0 on NMEA events
-        //      But no faster than 10 hz.
-        unsigned long uiCurrentTickCount;
-        m_MMEAeventTime.SetToCurrent();
-        uiCurrentTickCount = m_MMEAeventTime.GetMillisecond() / 100;           // tenths of a second
-        uiCurrentTickCount += m_MMEAeventTime.GetTicks() * 10;
-        if( uiCurrentTickCount > m_ulLastNEMATicktime + 1 ) {
-            m_ulLastNEMATicktime = uiCurrentTickCount;
+		//      Show a little heartbeat tick in StatusWindow0 on NMEA events
+		//      But no faster than 10 hz.
+		unsigned long uiCurrentTickCount;
+		m_MMEAeventTime.SetToCurrent();
+		uiCurrentTickCount = m_MMEAeventTime.GetMillisecond() / 100;           // tenths of a second
+		uiCurrentTickCount += m_MMEAeventTime.GetTicks() * 10;
+		if( uiCurrentTickCount > m_ulLastNEMATicktime + 1 ) {
+			m_ulLastNEMATicktime = uiCurrentTickCount;
 
-            if( tick_idx++ > 6 ) tick_idx = 0;
-        }
-    }
+			if( tick_idx++ > 6 ) tick_idx = 0;
+		}
+	}
 
-//    Show gLat/gLon in StatusWindow0
+	//    Show gLat/gLon in StatusWindow0
 
-    if( NULL != GetStatusBar() ) {
-        char tick_buf[2];
-        tick_buf[0] = nmea_tick_chars[tick_idx];
-        tick_buf[1] = 0;
+	if( NULL != GetStatusBar() ) {
+		char tick_buf[2];
+		tick_buf[0] = nmea_tick_chars[tick_idx];
+		tick_buf[1] = 0;
 
-        wxString s1( tick_buf, wxConvUTF8 );
-        s1 += _(" Ship ");
-        s1 += toSDMM( 1, gLat );
-        s1 += _T("   ");
-        s1 += toSDMM( 2, gLon );
-        SetStatusText( s1, STAT_FIELD_TICK );
+		wxString s1( tick_buf, wxConvUTF8 );
+		s1 += _(" Ship ");
+		s1 += toSDMM( 1, gLat );
+		s1 += _T("   ");
+		s1 += toSDMM( 2, gLon );
+		SetStatusText( s1, STAT_FIELD_TICK );
 
-        wxString over_ground;
-        if (wxIsNaN(nav.sog))
+		wxString over_ground;
+		if (wxIsNaN(nav.sog))
 			over_ground += wxString::Format(_T("SOG --- ") + getUsrSpeedUnit() + _T("  "));
-        else
+		else
 			over_ground += wxString::Format(_T("SOG %2.2f ") + getUsrSpeedUnit() + _T("  "), toUsrSpeed(nav.sog));
 
-        if (wxIsNaN(nav.cog)) {
+		if (wxIsNaN(nav.cog)) {
 			over_ground += wxString("COG ---\u00B0", wxConvUTF8);
-        } else {
+		} else {
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			if (g_bShowMag) {
-                over_ground += wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(nav.cog));
+				over_ground += wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(nav.cog));
 			} else {
-                over_ground += wxString::Format(wxString("COG %03d°  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(nav.cog));
+				over_ground += wxString::Format(wxString("COG %03d°  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(nav.cog));
 			}
 		}
 
-        SetStatusText(over_ground, STAT_FIELD_SOGCOG);
-    }
+		SetStatusText(over_ground, STAT_FIELD_SOGCOG);
+	}
 
-//    Maintain average COG for Course Up Mode
+	//    Maintain average COG for Course Up Mode
 
-    if( !wxIsNaN(nav.cog) ) {
-        if( g_COGAvgSec > 0 ) {
-            //    Make a hole
-            for( int i = g_COGAvgSec - 1; i > 0; i-- )
-                COGTable[i] = COGTable[i - 1];
-            COGTable[0] = nav.cog;
+	if( !wxIsNaN(nav.cog) ) {
+		if( g_COGAvgSec > 0 ) {
+			//    Make a hole
+			for( int i = g_COGAvgSec - 1; i > 0; i-- )
+				COGTable[i] = COGTable[i - 1];
+			COGTable[0] = nav.cog;
 
-            double sum = 0.;
-            for( int i = 0; i < g_COGAvgSec; i++ ) {
-                double adder = COGTable[i];
+			double sum = 0.;
+			for( int i = 0; i < g_COGAvgSec; i++ ) {
+				double adder = COGTable[i];
 
-                if( fabs( adder - g_COGAvg ) > 180. ) {
-                    if( ( adder - g_COGAvg ) > 0. ) adder -= 360.;
-                    else
-                        adder += 360.;
-                }
+				if( fabs( adder - g_COGAvg ) > 180. ) {
+					if( ( adder - g_COGAvg ) > 0. ) adder -= 360.;
+					else
+						adder += 360.;
+				}
 
-                sum += adder;
-            }
-            sum /= g_COGAvgSec;
+				sum += adder;
+			}
+			sum /= g_COGAvgSec;
 
-            if( sum < 0. ) sum += 360.;
-            else
-                if( sum >= 360. ) sum -= 360.;
+			if( sum < 0. ) sum += 360.;
+			else
+				if( sum >= 360. ) sum -= 360.;
 
-            g_COGAvg = sum;
-        }
-        else
-            g_COGAvg = nav.cog;
-    }
+			g_COGAvg = sum;
+		}
+		else
+			g_COGAvg = nav.cog;
+	}
 
 #ifdef ocpnUPDATE_SYSTEM_TIME
-//      Use the fix time to update the local system clock, only once per session
-    if( ( sfixtime.Len() ) && s_bSetSystemTime && ( m_bTimeIsSet == false ) ) {
+	//      Use the fix time to update the local system clock, only once per session
+	if( ( sfixtime.Len() ) && s_bSetSystemTime && ( m_bTimeIsSet == false ) ) {
         wxDateTime Fix_Time;
 
         if( 6 == sfixtime.Len() )                   // perfectly recognised format?

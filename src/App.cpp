@@ -106,7 +106,6 @@ extern S57QueryDialog *g_pObjectQueryDialog;
 extern CM93OffsetDialog *g_pCM93OffsetDialog;
 #endif
 
-extern int sat_watchdog_timeout_ticks;
 extern int gSAT_Watchdog;
 extern StatWin *stats;
 extern ConsoleCanvas *console;
@@ -337,7 +336,6 @@ extern wxString *pWorldMapLocation;
 extern wxString *pInit_Chart_Dir;
 extern bool g_bHDT_Rx;
 extern bool g_bVAR_Rx;
-extern int gps_watchdog_timeout_ticks;
 extern ChartStack *pCurrentStack;
 extern int g_unit_test_1;
 extern bool g_bportable;
@@ -1703,16 +1701,15 @@ bool App::OnInit()
 
 	//      All set to go.....
 
-	//      establish GPS timeout value as multiple of frame timer
-	//      This will override any nonsense or unset value from the config file
-	if( ( gps_watchdog_timeout_ticks > 60 ) || ( gps_watchdog_timeout_ticks <= 0 ) )
-		gps_watchdog_timeout_ticks = ( GPS_TIMEOUT_SECONDS * 1000 ) / TIMER_GFRAME_1;
+	// establish GPS timeout value as multiple of frame timer
+	// This will override any nonsense or unset value from the config file
+	global::WatchDog & wdt = global::OCPN::get().wdt();
+	int timeout_ticks = wdt.get_data().gps_watchdog_timeout_ticks;
+	if ((timeout_ticks > 60) || (timeout_ticks <= 0))
+		wdt.set_gps_timeout_ticks((GPS_TIMEOUT_SECONDS * 1000) / TIMER_GFRAME_1);
+	wxLogMessage(wxString::Format(_T("GPS Watchdog Timeout is: %d sec."), wdt.get_data().gps_watchdog_timeout_ticks));
 
-	wxString dogmsg;
-	dogmsg.Printf( _T("GPS Watchdog Timeout is: %d sec."), gps_watchdog_timeout_ticks );
-	wxLogMessage( dogmsg );
-
-	sat_watchdog_timeout_ticks = 12;
+	wdt.set_sat_timeout_ticks(12);
 
 	gGPS_Watchdog = 2;
 	gHDx_Watchdog = 2;

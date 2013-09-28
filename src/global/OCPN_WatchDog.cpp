@@ -35,5 +35,10 @@ void OCPN_WatchDog::set_gps_timeout_ticks(int ticks)
 	data.gps_watchdog_timeout_ticks = ticks;
 }
 
+void OCPN_WatchDog::set_sat_timeout_ticks(int ticks)
+{
+	data.sat_watchdog_timeout_ticks = ticks;
+}
+
 }
 

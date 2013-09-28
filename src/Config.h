@@ -47,6 +47,7 @@ class Config : public wxFileConfig
 		void load_ais_alert_dialog();
 		void load_ais_query_dialog();
 		void load_system_config(int);
+		void load_watchdog();
 
 		void write_view();
 		void write_frame();

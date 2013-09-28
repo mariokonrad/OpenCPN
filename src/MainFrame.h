@@ -213,6 +213,8 @@ class MainFrame : public wxFrame
 		void ODoSetSize(void);
 		void DoCOGSet(void);
 
+		void gps_debug(const NMEA0183 &, const wxString &) const;
+
 		// Toolbar support
 		ToolBarSimple *CreateAToolbar();
 		void DestroyMyToolbar();

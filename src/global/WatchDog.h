@@ -36,10 +36,12 @@ class WatchDog
 		struct Data
 		{
 			int gps_watchdog_timeout_ticks;
+			int sat_watchdog_timeout_ticks;
 		};
 
 		virtual const Data & get_data() const = 0;
 		virtual void set_gps_timeout_ticks(int) = 0;
+		virtual void set_sat_timeout_ticks(int) = 0;
 };
 
 }

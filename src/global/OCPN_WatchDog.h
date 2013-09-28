@@ -36,6 +36,7 @@ class OCPN_WatchDog : public WatchDog
 	public:
 		virtual const Data & get_data() const;
 		virtual void set_gps_timeout_ticks(int);
+		virtual void set_sat_timeout_ticks(int);
 };
 
 }

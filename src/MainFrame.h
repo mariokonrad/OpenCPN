@@ -214,6 +214,14 @@ class MainFrame : public wxFrame
 		void DoCOGSet(void);
 
 		void gps_debug(const NMEA0183 &, const wxString &) const;
+		void update_gps_watchdog();
+		void update_hdx_watchdog();
+		void update_hdt_watchdog();
+		void update_var_watchdog();
+		void update_sat_watchdog();
+		void check_anchorwatch_1();
+		void check_anchorwatch_2();
+		void send_gps_to_plugins() const;
 
 		// Toolbar support
 		ToolBarSimple *CreateAToolbar();

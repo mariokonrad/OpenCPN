@@ -3072,393 +3072,429 @@ wxString MainFrame::prepare_logbook_message(const wxDateTime & lognow)
 
 int ut_index;
 
-void MainFrame::OnFrameTimer1(wxTimerEvent &)
+void MainFrame::update_gps_watchdog()
 {
-    if( s_ProgDialog ) {
-        return;
-    }
+	// Update and check watchdog timer for GPS data source
+	gGPS_Watchdog--;
+	if (gGPS_Watchdog <= 0) {
+		bGPSValid = false;
+		if (g_nNMEADebug && (gGPS_Watchdog == 0))
+			wxLogMessage(_T("   ***GPS Watchdog timeout..."));
 
-    if( g_unit_test_1 ) {
+		global::Navigation & nav = global::OCPN::get().nav();
+		nav.set_speed_over_ground(NAN);
+		nav.set_course_over_ground(NAN);
+	}
+}
 
-        cc1->m_bFollow = false;
-        if( g_toolbar ) g_toolbar->ToggleTool( ID_FOLLOW, cc1->m_bFollow );
+void MainFrame::update_hdx_watchdog()
+{
+	// Update and check watchdog timer for Mag Heading data source
+	gHDx_Watchdog--;
+	if (gHDx_Watchdog <= 0) {
+		global::Navigation & nav = global::OCPN::get().nav();
+		nav.set_heading_magn(NAN);
+		if (g_nNMEADebug && (gHDx_Watchdog == 0))
+			wxLogMessage(_T("   ***HDx Watchdog timeout..."));
+	}
+}
 
-        if( ChartData ) {
-            if( ut_index < ChartData->GetChartTableEntries() ) {
-                const ChartTableEntry *cte = &ChartData->GetChartTableEntry( ut_index );
-                double lat = ( cte->GetLatMax() + cte->GetLatMin() ) / 2;
-                double lon = ( cte->GetLonMax() + cte->GetLonMin() ) / 2;
+void MainFrame::update_hdt_watchdog()
+{
+	// Update and check watchdog timer for True Heading data source
+	gHDT_Watchdog--;
+	if (gHDT_Watchdog <= 0) {
+		g_bHDT_Rx = false;
+		global::Navigation & nav = global::OCPN::get().nav();
+		nav.set_heading_true(NAN);
+		if (g_nNMEADebug && (gHDT_Watchdog == 0))
+			wxLogMessage(_T("   ***HDT Watchdog timeout..."));
+	}
+}
 
-                vLat = lat;
-                vLon = lon;
+void MainFrame::update_var_watchdog()
+{
+	// Update and check watchdog timer for Magnetic Variation data source
+	gVAR_Watchdog--;
+	if (gVAR_Watchdog <= 0) {
+		g_bVAR_Rx = false;
+		if (g_nNMEADebug && (gVAR_Watchdog == 0))
+			wxLogMessage(_T("   ***VAR Watchdog timeout..."));
+	}
+}
 
-                cc1->SetViewPoint( lat, lon );
+void MainFrame::update_sat_watchdog()
+{
+	// Update and check watchdog timer for GSV (Satellite data)
+	gSAT_Watchdog--;
+	if (gSAT_Watchdog <= 0) {
+		g_bSatValid = false;
+		g_SatsInView = 0;
+		if (g_nNMEADebug && (gSAT_Watchdog == 0))
+			wxLogMessage(_T("   ***SAT Watchdog timeout..."));
+	}
+}
 
-                if( cc1->GetQuiltMode() ) {
-                    if( cc1->IsChartQuiltableRef( ut_index ) ) SelectQuiltRefdbChart( ut_index );
-                } else
-                    SelectdbChart( ut_index );
+void MainFrame::check_anchorwatch_1()
+{
+	if (pAnchorWatchPoint1) {
+		double dist;
+		double brg;
+		DistanceBearingMercator(pAnchorWatchPoint1->m_lat, pAnchorWatchPoint1->m_lon, gLat, gLon, &brg, &dist);
+		double d = g_nAWMax;
+		( pAnchorWatchPoint1->GetName() ).ToDouble( &d );
+		d = AnchorDistFix( d, AnchorPointMinDist, g_nAWMax );
+		bool toofar = false;
+		bool tooclose = false;
+		if (d >= 0.0)
+			toofar = (dist * 1852. > d);
+		if (d < 0.0)
+			tooclose = (dist * 1852 < -d);
 
-                double ppm = cc1->GetCanvasScaleFactor() / cte->GetScale();
-                ppm /= 2;
-                cc1->SetVPScale( ppm );
+		if (tooclose || toofar)
+			AnchorAlertOn1 = true;
+		else
+			AnchorAlertOn1 = false;
+	} else
+		AnchorAlertOn1 = false;
+}
 
-                cc1->ReloadVP();
+void MainFrame::check_anchorwatch_2()
+{
+	if (pAnchorWatchPoint2) {
+		double dist;
+		double brg;
+		DistanceBearingMercator(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, gLat, gLon, &brg, &dist);
 
-                ut_index++;
-            }
-        }
-    }
-    g_tick++;
+		double d = g_nAWMax;
+		pAnchorWatchPoint2->GetName().ToDouble(&d);
+		d = AnchorDistFix(d, AnchorPointMinDist, g_nAWMax);
+		bool toofar = false;
+		bool tooclose = false;
+		if (d >= 0)
+			toofar = (dist * 1852. > d);
+		if (d < 0)
+			tooclose = (dist * 1852 < -d);
 
-#ifdef __WXOSX__
-    //    To fix an ugly bug ?? in wxWidgets for Carbon.....
-    //    Or, maybe this is the way Macs work....
-    //    Hide some non-UI Dialogs if the application is minimized....
-    //    They will be re-Show()-n in MainFrame::OnActivate()
-    if(IsIconized())
-    {
-        if(g_FloatingToolbarDialog) {
-            if(g_FloatingToolbarDialog->IsShown())
-            g_FloatingToolbarDialog->Submerge();
-        }
+		if (tooclose || toofar)
+			AnchorAlertOn2 = true;
+		else
+			AnchorAlertOn2 = false;
+	} else
+		AnchorAlertOn2 = false;
+}
 
-        if(console && console->IsShown()) {
-            console->Hide();
-        }
-
-        if(g_FloatingCompassDialog && g_FloatingCompassDialog->IsShown()) {
-            g_FloatingCompassDialog->Hide();
-        }
-
-        if(stats && stats->IsShown()) {
-            stats->Hide();
-        }
-    }
-#endif
-
-//      Listen for quitflag to be set, requesting application close
-    if( quitflag ) {
-        wxLogMessage( _T("Got quitflag from SIGUSR1") );
-        FrameTimer1.Stop();
-        Close();
-        return;
-    }
-
-    if( bDBUpdateInProgress )
+void MainFrame::send_gps_to_plugins() const
+{
+	// Build and send a Position Fix event to PlugIns
+	if (!g_pi_manager)
 		return;
 
-	global::Navigation & nav = global::OCPN::get().nav();
+	const global::Navigation::Data & nav_data = global::OCPN::get().nav().get_data();
 
-    FrameTimer1.Stop();
+	GenericPosDatEx GPSData;
+	GPSData.kLat = gLat;
+	GPSData.kLon = gLon;
+	GPSData.kCog = nav_data.cog;
+	GPSData.kSog = nav_data.sog;
+	GPSData.kVar = nav_data.var;
+	GPSData.kHdm = nav_data.hdm;
+	GPSData.kHdt = nav_data.hdt;
+	GPSData.nSats = g_SatsInView;
 
-//  Update and check watchdog timer for GPS data source
-    gGPS_Watchdog--;
-    if( gGPS_Watchdog <= 0 ) {
-        bGPSValid = false;
-        if( g_nNMEADebug && ( gGPS_Watchdog == 0 ) ) wxLogMessage(
-                _T("   ***GPS Watchdog timeout...") );
-        nav.set_speed_over_ground(NAN);
-		nav.set_course_over_ground(NAN);
-    }
+	GPSData.FixTime = m_fixtime;
 
-//  Update and check watchdog timer for Mag Heading data source
-    gHDx_Watchdog--;
-    if( gHDx_Watchdog <= 0 ) {
-		nav.set_heading_magn(NAN);
-        if (g_nNMEADebug && (gHDx_Watchdog == 0))
-			wxLogMessage(_T("   ***HDx Watchdog timeout..."));
-    }
+	if (g_pi_manager)
+		g_pi_manager->SendPositionFixToAllPlugIns(&GPSData);
+}
 
-//  Update and check watchdog timer for True Heading data source
-    gHDT_Watchdog--;
-    if( gHDT_Watchdog <= 0 ) {
-        g_bHDT_Rx = false;
-		nav.set_heading_true(NAN);
-        if( g_nNMEADebug && ( gHDT_Watchdog == 0 ) ) wxLogMessage(
-                _T("   ***HDT Watchdog timeout...") );
-    }
+void MainFrame::OnFrameTimer1(wxTimerEvent &)
+{
+	if (s_ProgDialog) {
+		return;
+	}
 
-    //  Update and check watchdog timer for Magnetic Variation data source
-    gVAR_Watchdog--;
-    if( gVAR_Watchdog <= 0 ) {
-        g_bVAR_Rx = false;
-        if( g_nNMEADebug && ( gVAR_Watchdog == 0 ) ) wxLogMessage(
-            _T("   ***VAR Watchdog timeout...") );
-    }
-    //  Update and check watchdog timer for GSV (Satellite data)
-    gSAT_Watchdog--;
-    if( gSAT_Watchdog <= 0 ) {
-        g_bSatValid = false;
-        g_SatsInView = 0;
-        if( g_nNMEADebug && ( gSAT_Watchdog == 0 ) ) wxLogMessage(
-                _T("   ***SAT Watchdog timeout...") );
-    }
+	if (g_unit_test_1) {
 
-    //    Build and send a Position Fix event to PlugIns
-    if( g_pi_manager ) {
-			const global::Navigation::Data & nav_data = global::OCPN::get().nav().get_data();
+		cc1->m_bFollow = false;
+		if (g_toolbar)
+			g_toolbar->ToggleTool(ID_FOLLOW, cc1->m_bFollow);
 
-            GenericPosDatEx GPSData;
-            GPSData.kLat = gLat;
-            GPSData.kLon = gLon;
-            GPSData.kCog = nav_data.cog;
-            GPSData.kSog = nav_data.sog;
-            GPSData.kVar = nav_data.var;
-            GPSData.kHdm = nav_data.hdm;
-            GPSData.kHdt = nav_data.hdt;
-            GPSData.nSats = g_SatsInView;
+		if (ChartData) {
+			if (ut_index < ChartData->GetChartTableEntries()) {
+				const ChartTableEntry *cte = &ChartData->GetChartTableEntry(ut_index);
+				double lat = (cte->GetLatMax() + cte->GetLatMin()) / 2;
+				double lon = (cte->GetLonMax() + cte->GetLonMin()) / 2;
 
-            GPSData.FixTime = m_fixtime;
+				vLat = lat;
+				vLon = lon;
 
-            if(g_pi_manager)
-                g_pi_manager->SendPositionFixToAllPlugIns( &GPSData );
+				cc1->SetViewPoint(lat, lon);
 
-    }
+				if (cc1->GetQuiltMode()) {
+					if (cc1->IsChartQuiltableRef(ut_index))
+						SelectQuiltRefdbChart(ut_index);
+				} else
+					SelectdbChart(ut_index);
 
-    //   Check for anchorwatch alarms                                 // pjotrc 2010.02.15
-    if( pAnchorWatchPoint1 ) {
-        double dist;
-        double brg;
-        DistanceBearingMercator( pAnchorWatchPoint1->m_lat, pAnchorWatchPoint1->m_lon, gLat, gLon,
-                &brg, &dist );
-        double d = g_nAWMax;
-        ( pAnchorWatchPoint1->GetName() ).ToDouble( &d );
-        d = AnchorDistFix( d, AnchorPointMinDist, g_nAWMax );
-        bool toofar = false;
-        bool tooclose = false;
-        if (d >= 0.0)
-			toofar = (dist * 1852. > d);
-        if (d < 0.0)
-			tooclose = (dist * 1852 < -d);
+				double ppm = cc1->GetCanvasScaleFactor() / cte->GetScale();
+				ppm /= 2;
+				cc1->SetVPScale(ppm);
+				cc1->ReloadVP();
+				ut_index++;
+			}
+		}
+	}
+	g_tick++;
 
-        if (tooclose || toofar)
-			AnchorAlertOn1 = true;
-        else
-            AnchorAlertOn1 = false;
-    } else
-        AnchorAlertOn1 = false;
+#ifdef __WXOSX__
+	// To fix an ugly bug ?? in wxWidgets for Carbon.....
+	// Or, maybe this is the way Macs work....
+	// Hide some non-UI Dialogs if the application is minimized....
+	// They will be re-Show()-n in MainFrame::OnActivate()
+	if(IsIconized()) {
+		if (g_FloatingToolbarDialog) {
+			if (g_FloatingToolbarDialog->IsShown())
+				g_FloatingToolbarDialog->Submerge();
+		}
 
-    if( pAnchorWatchPoint2 ) {
-        double dist;
-        double brg;
-        DistanceBearingMercator(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, gLat, gLon, &brg, &dist);
+		if (console && console->IsShown()) {
+			console->Hide();
+		}
 
-        double d = g_nAWMax;
-        pAnchorWatchPoint2->GetName().ToDouble( &d );
-        d = AnchorDistFix( d, AnchorPointMinDist, g_nAWMax );
-        bool toofar = false;
-        bool tooclose = false;
-        if (d >= 0)
-			toofar = (dist * 1852. > d);
-        if (d < 0)
-			tooclose = (dist * 1852 < -d);
+		if (g_FloatingCompassDialog && g_FloatingCompassDialog->IsShown()) {
+			g_FloatingCompassDialog->Hide();
+		}
 
-        if (tooclose || toofar)
-			AnchorAlertOn2 = true;
-        else
-            AnchorAlertOn2 = false;
-    } else
-        AnchorAlertOn2 = false;
+		if (stats && stats->IsShown()) {
+			stats->Hide();
+		}
+	}
+#endif
 
-//  Send current nav status data to log file on every half hour   // pjotrc 2010.02.09
+	// Listen for quitflag to be set, requesting application close
+	if (quitflag) {
+		wxLogMessage(_T("Got quitflag from SIGUSR1"));
+		FrameTimer1.Stop();
+		Close();
+		return;
+	}
 
-    wxDateTime lognow = wxDateTime::Now().MakeGMT();   // pjotrc 2010.02.09
-    wxTimeSpan logspan = lognow.Subtract(g_loglast_time);
-    if ((logspan.IsLongerThan(wxTimeSpan(0, 30, 0, 0))) || (lognow.GetMinute() == 0) || (lognow.GetMinute() == 30)) {
-        if (logspan.IsLongerThan(wxTimeSpan(0, 1, 0, 0))) {
-            wxLogMessage(prepare_logbook_message(lognow));
-            g_loglast_time = lognow;
+	if (bDBUpdateInProgress)
+		return;
 
-            if (lognow.GetHour() == 0 && lognow.GetMinute() == 0 && g_bTrackDaily)
-                TrackMidnightRestart();
+	FrameTimer1.Stop();
 
-            int bells = (lognow.GetHour() % 4) * 2; // 2 bells each hour
-            if (lognow.GetMinute() != 0)
+	update_gps_watchdog();
+	update_hdx_watchdog();
+	update_hdt_watchdog();
+	update_var_watchdog();
+	update_sat_watchdog();
+	send_gps_to_plugins();
+	check_anchorwatch_1();
+	check_anchorwatch_2();
+
+	// Send current nav status data to log file on every half hour   // pjotrc 2010.02.09
+
+	wxDateTime lognow = wxDateTime::Now().MakeGMT();   // pjotrc 2010.02.09
+	wxTimeSpan logspan = lognow.Subtract(g_loglast_time);
+	if ((logspan.IsLongerThan(wxTimeSpan(0, 30, 0, 0))) || (lognow.GetMinute() == 0) || (lognow.GetMinute() == 30)) {
+		if (logspan.IsLongerThan(wxTimeSpan(0, 1, 0, 0))) {
+			wxLogMessage(prepare_logbook_message(lognow));
+			g_loglast_time = lognow;
+
+			if (lognow.GetHour() == 0 && lognow.GetMinute() == 0 && g_bTrackDaily)
+				TrackMidnightRestart();
+
+			int bells = (lognow.GetHour() % 4) * 2; // 2 bells each hour
+			if (lognow.GetMinute() != 0)
 				bells++; // + 1 bell on 30 minutes, FIXME
-            if (!bells)
+			if (!bells)
 				bells = 8; // 0 is 8 bells, FIXME
 
-            if (g_bPlayShipsBells && ((lognow.GetMinute() == 0) || (lognow.GetMinute() == 30))) {
-                if (!bells_sound[bells - 1].IsOk()) { // load the bells sound
-                    wxString soundfile = _T("sounds");
-                    appendOSDirSlash(soundfile);
-                    soundfile += wxString( bells_sound_file_name[bells - 1], wxConvUTF8 );
-                    soundfile.Prepend( g_SData_Locn );
-                    bells_sound[bells - 1].Create( soundfile );
-                    wxLogMessage( _T("Using bells sound file: ") + soundfile );
+			if (g_bPlayShipsBells && ((lognow.GetMinute() == 0) || (lognow.GetMinute() == 30))) {
+				if (!bells_sound[bells - 1].IsOk()) { // load the bells sound
+					wxString soundfile = _T("sounds");
+					appendOSDirSlash(soundfile);
+					soundfile += wxString( bells_sound_file_name[bells - 1], wxConvUTF8 );
+					soundfile.Prepend( g_SData_Locn );
+					bells_sound[bells - 1].Create( soundfile );
+					wxLogMessage( _T("Using bells sound file: ") + soundfile );
 
-                }
+				}
 
-                if (bells_sound[bells - 1].IsOk())
+				if (bells_sound[bells - 1].IsOk())
 					bells_sound[bells - 1].Play();
-            }
-        }
-    }
+			}
+		}
+	}
 
-//      Update the Toolbar Status windows and lower status bar the first time watchdog times out
-    if( ( gGPS_Watchdog == 0 ) || ( gSAT_Watchdog == 0 ) ) {
-        wxString sogcog( _T("SOG --- ") + getUsrSpeedUnit() + _T(" COG ---\u00B0") );
-        if (GetStatusBar())
+	// Update the Toolbar Status windows and lower status bar the first time watchdog times out
+	if ((gGPS_Watchdog == 0) || (gSAT_Watchdog == 0)) {
+		wxString sogcog( _T("SOG --- ") + getUsrSpeedUnit() + _T(" COG ---\u00B0") );
+		if (GetStatusBar())
 			SetStatusText(sogcog, STAT_FIELD_SOGCOG);
 
 		global::OCPN::get().nav().set_course_over_ground(0.0); // say speed is zero to kill ownship predictor
-    }
+	}
 
-    if( cc1 ) {
-        double cursor_lat, cursor_lon;
-        cc1->GetCursorLatLon( &cursor_lat, &cursor_lon );
+	if (cc1) {
+		double cursor_lat, cursor_lon;
+		cc1->GetCursorLatLon(&cursor_lat, &cursor_lon);
 
-        wxString s1;
-        s1 += _T(" ");
-        s1 += toSDMM( 1, cursor_lat );
-        s1 += _T("   ");
-        s1 += toSDMM( 2, cursor_lon );
-        if( GetStatusBar() ) SetStatusText( s1, STAT_FIELD_CURSOR_LL );
+		wxString s1;
+		s1 += _T(" ");
+		s1 += toSDMM( 1, cursor_lat );
+		s1 += _T("   ");
+		s1 += toSDMM( 2, cursor_lon );
+		if (GetStatusBar())
+			SetStatusText(s1, STAT_FIELD_CURSOR_LL);
 
-        double brg;
-        double dist;
-        DistanceBearingMercator( cursor_lat, cursor_lon, gLat, gLon, &brg, &dist );
-        wxString s;
-        if( g_bShowMag )
-            s.Printf( wxString("%03d°(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
-        else
-            s.Printf( wxString("%03d°  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
-        s << cc1->FormatDistanceAdaptive( dist );
-        if( GetStatusBar() ) SetStatusText( s, STAT_FIELD_CURSOR_BRGRNG );
-    }
+		double brg;
+		double dist;
+		DistanceBearingMercator(cursor_lat, cursor_lon, gLat, gLon, &brg, &dist);
+		wxString s;
+		if (g_bShowMag)
+			s.Printf( wxString("%03d°(M)  ", wxConvUTF8), (int)GetTrueOrMag(brg));
+		else
+			s.Printf( wxString("%03d°  ", wxConvUTF8), (int)GetTrueOrMag(brg));
+		s << cc1->FormatDistanceAdaptive( dist );
+		if (GetStatusBar())
+			SetStatusText(s, STAT_FIELD_CURSOR_BRGRNG);
+	}
 
-//      Update the chart database and displayed chart
-    bool bnew_view = false;
+	// Update the chart database and displayed chart
+	bool bnew_view = false;
 
-//    Do the chart update based on the global update period currently set
-//    If in COG UP mode, the chart update is handled by COG Update timer
-    if( !g_bCourseUp && ( 0 == m_ChartUpdatePeriod-- ) ) {
-        bnew_view = DoChartUpdate();
-        m_ChartUpdatePeriod = g_ChartUpdatePeriod;
-    }
+	// Do the chart update based on the global update period currently set
+	// If in COG UP mode, the chart update is handled by COG Update timer
+	if (!g_bCourseUp && (0 == m_ChartUpdatePeriod--)) {
+		bnew_view = DoChartUpdate();
+		m_ChartUpdatePeriod = g_ChartUpdatePeriod;
+	}
 
-//      Update the active route, if any
-    if( g_pRouteMan->UpdateProgress() ) {
-        nBlinkerTick++;
-        //    This RefreshRect will cause any active routepoint to blink
-        if( g_pRouteMan->GetpActiveRoute() ) cc1->RefreshRect( g_blink_rect, false );
-    }
+	// Update the active route, if any
+	if (g_pRouteMan->UpdateProgress()) {
+		nBlinkerTick++;
+		//    This RefreshRect will cause any active routepoint to blink
+		if( g_pRouteMan->GetpActiveRoute() ) cc1->RefreshRect( g_blink_rect, false );
+	}
 
-//  Possibly save the current configuration
-    if( 0 == ( g_tick % ( g_nautosave_interval_seconds ) ) ) {
-        pConfig->UpdateSettings();
-        pConfig->UpdateNavObj();
-    }
+	// Possibly save the current configuration
+	if (0 == (g_tick % (g_nautosave_interval_seconds))) {
+		pConfig->UpdateSettings();
+		pConfig->UpdateNavObj();
+	}
 
-//  Force own-ship drawing parameters
-    cc1->SetOwnShipState( SHIP_NORMAL );
+	// Force own-ship drawing parameters
+	cc1->SetOwnShipState(SHIP_NORMAL);
 
-    if( cc1->GetQuiltMode() ) {
-        double erf = cc1->GetQuiltMaxErrorFactor();
-        if( erf > 0.02 ) cc1->SetOwnShipState( SHIP_LOWACCURACY );
-    } else {
-        if( Current_Ch ) {
-            if( Current_Ch->GetChart_Error_Factor() > 0.02 ) cc1->SetOwnShipState(
-                    SHIP_LOWACCURACY );
-        }
-    }
+	if (cc1->GetQuiltMode()) {
+		double erf = cc1->GetQuiltMaxErrorFactor();
+		if (erf > 0.02)
+			cc1->SetOwnShipState(SHIP_LOWACCURACY);
+	} else {
+		if (Current_Ch) {
+			if (Current_Ch->GetChart_Error_Factor() > 0.02)
+				cc1->SetOwnShipState(SHIP_LOWACCURACY);
+		}
+	}
 
-    if( !bGPSValid ) {
-        cc1->SetOwnShipState( SHIP_INVALID );
-        if( cc1->m_bFollow ) cc1->UpdateShips();
-    }
+	if (!bGPSValid) {
+		cc1->SetOwnShipState(SHIP_INVALID);
+		if (cc1->m_bFollow)
+			cc1->UpdateShips();
+	}
 
-    if( bGPSValid != m_last_bGPSValid ) {
-        cc1->UpdateShips();
-        bnew_view = true;                  // force a full Refresh()
-        m_last_bGPSValid = bGPSValid;
-    }
+	if (bGPSValid != m_last_bGPSValid) {
+		cc1->UpdateShips();
+		bnew_view = true;                  // force a full Refresh()
+		m_last_bGPSValid = bGPSValid;
+	}
 
-    //    If any PlugIn requested dynamic overlay callbacks, force a full canvas refresh
-    //    thus, ensuring at least 1 Hz. callback.
-    bool brq_dynamic = false;
-    if( g_pi_manager ) {
-        ArrayOfPlugIns *pplugin_array = g_pi_manager->GetPlugInArray();
-        for( unsigned int i = 0; i < pplugin_array->GetCount(); i++ ) {
-            PlugInContainer *pic = pplugin_array->Item( i );
-            if( pic->m_bEnabled && pic->m_bInitState ) {
-                if( pic->m_cap_flag & WANTS_DYNAMIC_OPENGL_OVERLAY_CALLBACK ) {
-                    brq_dynamic = true;
-                    break;
-                }
-            }
-        }
-    }
+	// If any PlugIn requested dynamic overlay callbacks, force a full canvas refresh
+	// thus, ensuring at least 1 Hz. callback.
+	bool brq_dynamic = false;
+	if (g_pi_manager) {
+		ArrayOfPlugIns *pplugin_array = g_pi_manager->GetPlugInArray();
+		for( unsigned int i = 0; i < pplugin_array->GetCount(); i++ ) {
+			PlugInContainer *pic = pplugin_array->Item( i );
+			if( pic->m_bEnabled && pic->m_bInitState ) {
+				if( pic->m_cap_flag & WANTS_DYNAMIC_OPENGL_OVERLAY_CALLBACK ) {
+					brq_dynamic = true;
+					break;
+				}
+			}
+		}
+	}
 
-    if( brq_dynamic ) {
-        cc1->Refresh();
-        bnew_view = true;
-    }
+	if (brq_dynamic) {
+		cc1->Refresh();
+		bnew_view = true;
+	}
 
-    FrameTimer1.Start( TIMER_GFRAME_1, wxTIMER_CONTINUOUS );
+	FrameTimer1.Start(TIMER_GFRAME_1, wxTIMER_CONTINUOUS);
 
-//  Invalidate the ChartCanvas window appropriately
-//    In non-follow mode, invalidate the rectangles containing the AIS targets and the ownship, etc...
-//    In follow mode, if there has already been a full screen refresh, there is no need to check ownship or AIS,
-//       since they will be always drawn on the full screen paint.
-    if( ( !cc1->m_bFollow ) || g_bCourseUp ) {
-        cc1->UpdateShips();
-        cc1->UpdateAIS();
-        cc1->UpdateAlerts();
-    } else {
-        if( !bnew_view )                    // There has not been a Refresh() yet.....
-        {
-            cc1->UpdateAIS();
-            cc1->UpdateAlerts();
-        }
-    }
+	// Invalidate the ChartCanvas window appropriately
+	// In non-follow mode, invalidate the rectangles containing the AIS targets and the ownship, etc...
+	// In follow mode, if there has already been a full screen refresh, there is no need to check ownship or AIS,
+	// since they will be always drawn on the full screen paint.
+	if ((!cc1->m_bFollow) || g_bCourseUp) {
+		cc1->UpdateShips();
+		cc1->UpdateAIS();
+		cc1->UpdateAlerts();
+	} else {
+		if (!bnew_view) { // There has not been a Refresh() yet.....
+			cc1->UpdateAIS();
+			cc1->UpdateAlerts();
+		}
+	}
 
-    if( g_pais_query_dialog_active && g_pais_query_dialog_active->IsShown() ) g_pais_query_dialog_active->UpdateText();
+	if (g_pais_query_dialog_active && g_pais_query_dialog_active->IsShown())
+		g_pais_query_dialog_active->UpdateText();
 
-    // Refresh AIS target list every 5 seconds to avoid blinking
-    if( g_pAISTargetList && ( 0 == ( g_tick % ( 5 ) ) ) ) g_pAISTargetList->UpdateAISTargetList();
+	// Refresh AIS target list every 5 seconds to avoid blinking
+	if (g_pAISTargetList && (0 == (g_tick % 5)))
+		g_pAISTargetList->UpdateAISTargetList();
 
-    //  Pick up any change Toolbar status displays
-    UpdateGPSCompassStatusBox();
-    UpdateAISTool();
+	//  Pick up any change Toolbar status displays
+	UpdateGPSCompassStatusBox();
+	UpdateAISTool();
 
-    if( console && console->IsShown() ) {
-//            console->Raise();
-        console->RefreshConsoleData();
-    }
+	if (console && console->IsShown()) {
+		console->RefreshConsoleData();
+	}
 
-    //  This little hack fixes a problem seen with some UniChrome OpenGL drivers
-    //  We need a deferred resize to get glDrawPixels() to work right.
-    //  So we set a trigger to generate a resize after 5 seconds....
-    //  See the "UniChrome" hack elsewhere
-    if( m_bdefer_resize ) {
-        if( 0 == ( g_tick % ( 5 ) ) ) {
-            printf( "___RESIZE\n" );
-            SetSize( m_defer_size );
-            g_pauimgr->Update();
-            m_bdefer_resize = false;
-        }
-    }
+	//  This little hack fixes a problem seen with some UniChrome OpenGL drivers
+	//  We need a deferred resize to get glDrawPixels() to work right.
+	//  So we set a trigger to generate a resize after 5 seconds....
+	//  See the "UniChrome" hack elsewhere
+	if (m_bdefer_resize) {
+		if (0 == (g_tick % 5)) {
+			printf("___RESIZE\n");
+			SetSize(m_defer_size);
+			g_pauimgr->Update();
+			m_bdefer_resize = false;
+		}
+	}
 }
 
 double MainFrame::GetTrueOrMag(double a)
 {
-	if( g_bShowMag ){
+	if (g_bShowMag) {
 		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-		if(!wxIsNaN(nav.var))
+		if (!wxIsNaN(nav.var))
 			return ((a + nav.var) >= 0.0) ? (a + nav.var) : (a + nav.var + 360.0);
 		else
 			return ((a + g_UserVar) >= 0.0) ? (a + g_UserVar) : (a + g_UserVar + 360.0);
-	}
-	else
+	} else
 		return a;
 }
 
 void MainFrame::TouchAISActive( void )
 {
-	if( m_pAISTool ) {
-		if( ( !g_pAIS->IsAISSuppressed() ) && ( !g_pAIS->IsAISAlertGeneral() ) ) {
+	if (m_pAISTool) {
+		if ((!g_pAIS->IsAISSuppressed()) && (!g_pAIS->IsAISAlertGeneral())) {
 			g_nAIS_activity_timer = 5;                // seconds
 
             wxString iconName = _T("AIS_Normal_Active");
@@ -3466,9 +3502,9 @@ void MainFrame::TouchAISActive( void )
             if( g_pAIS->IsAISSuppressed() ) iconName = _T("AIS_Suppressed_Active");
             if( !g_bShowAIS ) iconName = _T("AIS_Disabled");
 
-            if( m_lastAISiconName != iconName ) {
-                if( g_toolbar) {
-                    g_toolbar->SetToolNormalBitmapEx( m_pAISTool, iconName );
+            if (m_lastAISiconName != iconName) {
+                if (g_toolbar) {
+                    g_toolbar->SetToolNormalBitmapEx(m_pAISTool, iconName);
                     g_toolbar->Refresh();
                     m_lastAISiconName = iconName;
                 }
@@ -5019,8 +5055,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 
 					if (ll_valid) {
 						gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
-						wxDateTime now = wxDateTime::Now();
-						m_fixtime = now.GetTicks();
+						m_fixtime = wxDateTime::Now().GetTicks();
 					}
 					pos_valid = ll_valid;
 				}
@@ -5111,8 +5146,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 
 					if(ll_valid) {
 						gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
-						wxDateTime now = wxDateTime::Now();
-						m_fixtime = now.GetTicks();
+						m_fixtime = wxDateTime::Now().GetTicks();
 					}
 					pos_valid = ll_valid;
 				}
@@ -5148,8 +5182,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 
 					if (ll_valid) {
 						gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
-						wxDateTime now = wxDateTime::Now();
-						m_fixtime = now.GetTicks();
+						m_fixtime = wxDateTime::Now().GetTicks();
 					}
 					pos_valid = ll_valid;
 
@@ -5188,9 +5221,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 
 			if( !wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon) ) {
 				gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
-				wxDateTime now = wxDateTime::Now();
-				m_fixtime = now.GetTicks();
-
+				m_fixtime = wxDateTime::Now().GetTicks();
 				pos_valid = true;
 			}
 		} else {

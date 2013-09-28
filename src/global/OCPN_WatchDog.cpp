@@ -40,5 +40,55 @@ void OCPN_WatchDog::set_sat_timeout_ticks(int ticks)
 	data.sat_watchdog_timeout_ticks = ticks;
 }
 
+void OCPN_WatchDog::set_gps_watchdog(int value)
+{
+	data.gps_watchdog = value;
+}
+
+void OCPN_WatchDog::decrement_gps_watchdog()
+{
+	data.gps_watchdog--;
+}
+
+void OCPN_WatchDog::set_hdx_watchdog(int value)
+{
+	data.hdx_watchdog = value;
+}
+
+void OCPN_WatchDog::decrement_hdx_watchdog()
+{
+	data.hdx_watchdog--;
+}
+
+void OCPN_WatchDog::set_hdt_watchdog(int value)
+{
+	data.hdt_watchdog = value;
+}
+
+void OCPN_WatchDog::decrement_hdt_watchdog()
+{
+	data.hdt_watchdog--;
+}
+
+void OCPN_WatchDog::set_var_watchdog(int value)
+{
+	data.var_watchdog = value;
+}
+
+void OCPN_WatchDog::decrement_var_watchdog()
+{
+	data.var_watchdog--;
+}
+
+void OCPN_WatchDog::set_sat_watchdog(int value)
+{
+	data.sat_watchdog = value;
+}
+
+void OCPN_WatchDog::decrement_sat_watchdog()
+{
+	data.sat_watchdog--;
+}
+
 }
 

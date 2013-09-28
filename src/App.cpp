@@ -106,7 +106,6 @@ extern S57QueryDialog *g_pObjectQueryDialog;
 extern CM93OffsetDialog *g_pCM93OffsetDialog;
 #endif
 
-extern int gSAT_Watchdog;
 extern StatWin *stats;
 extern ConsoleCanvas *console;
 extern double initial_scale_ppm;
@@ -353,10 +352,6 @@ extern bool bGPSValid;
 extern double gLat;
 extern double gLon;
 extern wxString glog_file;
-extern int gGPS_Watchdog;
-extern int gHDx_Watchdog;
-extern int gHDT_Watchdog;
-extern int gVAR_Watchdog;
 extern int g_GroupIndex;
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern wxPlatformInfo * g_pPlatform;
@@ -1710,12 +1705,11 @@ bool App::OnInit()
 	wxLogMessage(wxString::Format(_T("GPS Watchdog Timeout is: %d sec."), wdt.get_data().gps_watchdog_timeout_ticks));
 
 	wdt.set_sat_timeout_ticks(12);
-
-	gGPS_Watchdog = 2;
-	gHDx_Watchdog = 2;
-	gHDT_Watchdog = 2;
-	gSAT_Watchdog = 2;
-	gVAR_Watchdog = 2;
+	wdt.set_gps_watchdog(2);
+	wdt.set_hdx_watchdog(2);
+	wdt.set_hdt_watchdog(2);
+	wdt.set_sat_watchdog(2);
+	wdt.set_var_watchdog(2);
 
 	//  Most likely installations have no ownship heading information
 	g_bHDT_Rx = false;

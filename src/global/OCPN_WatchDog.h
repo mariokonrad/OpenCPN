@@ -37,6 +37,21 @@ class OCPN_WatchDog : public WatchDog
 		virtual const Data & get_data() const;
 		virtual void set_gps_timeout_ticks(int);
 		virtual void set_sat_timeout_ticks(int);
+
+		virtual void set_gps_watchdog(int);
+		virtual void decrement_gps_watchdog();
+
+		virtual void set_hdx_watchdog(int);
+		virtual void decrement_hdx_watchdog();
+
+		virtual void set_hdt_watchdog(int);
+		virtual void decrement_hdt_watchdog();
+
+		virtual void set_var_watchdog(int);
+		virtual void decrement_var_watchdog();
+
+		virtual void set_sat_watchdog(int);
+		virtual void decrement_sat_watchdog();
 };
 
 }

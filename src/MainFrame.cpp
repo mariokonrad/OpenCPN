@@ -259,14 +259,9 @@ int g_pNavAidRadarRingsStepUnits;
 bool g_bWayPointPreventDragging;
 bool g_bConfirmObjectDelete;
 ColorScheme global_color_scheme;
-int gGPS_Watchdog;
 bool bGPSValid;
-int gHDx_Watchdog;
-int gHDT_Watchdog;
-int gVAR_Watchdog;
 bool g_bHDT_Rx;
 bool g_bVAR_Rx;
-int gSAT_Watchdog;
 int g_SatsInView;
 bool g_bSatValid;
 bool g_bDebugCM93;
@@ -3074,11 +3069,13 @@ int ut_index;
 
 void MainFrame::update_gps_watchdog()
 {
+	global::WatchDog & wdt = global::OCPN::get().wdt();
+
 	// Update and check watchdog timer for GPS data source
-	gGPS_Watchdog--;
-	if (gGPS_Watchdog <= 0) {
+	wdt.decrement_gps_watchdog();
+	if (wdt.get_data().gps_watchdog <= 0) {
 		bGPSValid = false;
-		if (g_nNMEADebug && (gGPS_Watchdog == 0))
+		if (g_nNMEADebug && (wdt.get_data().gps_watchdog == 0))
 			wxLogMessage(_T("   ***GPS Watchdog timeout..."));
 
 		global::Navigation & nav = global::OCPN::get().nav();
@@ -3089,48 +3086,56 @@ void MainFrame::update_gps_watchdog()
 
 void MainFrame::update_hdx_watchdog()
 {
+	global::WatchDog & wdt = global::OCPN::get().wdt();
+
 	// Update and check watchdog timer for Mag Heading data source
-	gHDx_Watchdog--;
-	if (gHDx_Watchdog <= 0) {
+	wdt.decrement_hdx_watchdog();
+	if (wdt.get_data().hdx_watchdog <= 0) {
 		global::Navigation & nav = global::OCPN::get().nav();
 		nav.set_heading_magn(NAN);
-		if (g_nNMEADebug && (gHDx_Watchdog == 0))
+		if (g_nNMEADebug && (wdt.get_data().hdx_watchdog == 0))
 			wxLogMessage(_T("   ***HDx Watchdog timeout..."));
 	}
 }
 
 void MainFrame::update_hdt_watchdog()
 {
+	global::WatchDog & wdt = global::OCPN::get().wdt();
+
 	// Update and check watchdog timer for True Heading data source
-	gHDT_Watchdog--;
-	if (gHDT_Watchdog <= 0) {
+	wdt.decrement_hdt_watchdog();
+	if (wdt.get_data().hdt_watchdog <= 0) {
 		g_bHDT_Rx = false;
 		global::Navigation & nav = global::OCPN::get().nav();
 		nav.set_heading_true(NAN);
-		if (g_nNMEADebug && (gHDT_Watchdog == 0))
+		if (g_nNMEADebug && (wdt.get_data().hdt_watchdog == 0))
 			wxLogMessage(_T("   ***HDT Watchdog timeout..."));
 	}
 }
 
 void MainFrame::update_var_watchdog()
 {
+	global::WatchDog & wdt = global::OCPN::get().wdt();
+
 	// Update and check watchdog timer for Magnetic Variation data source
-	gVAR_Watchdog--;
-	if (gVAR_Watchdog <= 0) {
+	wdt.decrement_var_watchdog();
+	if (wdt.get_data().var_watchdog <= 0) {
 		g_bVAR_Rx = false;
-		if (g_nNMEADebug && (gVAR_Watchdog == 0))
+		if (g_nNMEADebug && (wdt.get_data().var_watchdog == 0))
 			wxLogMessage(_T("   ***VAR Watchdog timeout..."));
 	}
 }
 
 void MainFrame::update_sat_watchdog()
 {
+	global::WatchDog & wdt = global::OCPN::get().wdt();
+
 	// Update and check watchdog timer for GSV (Satellite data)
-	gSAT_Watchdog--;
-	if (gSAT_Watchdog <= 0) {
+	wdt.decrement_sat_watchdog();
+	if (wdt.get_data().sat_watchdog <= 0) {
 		g_bSatValid = false;
 		g_SatsInView = 0;
-		if (g_nNMEADebug && (gSAT_Watchdog == 0))
+		if (g_nNMEADebug && (wdt.get_data().sat_watchdog == 0))
 			wxLogMessage(_T("   ***SAT Watchdog timeout..."));
 	}
 }
@@ -3330,7 +3335,8 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	}
 
 	// Update the Toolbar Status windows and lower status bar the first time watchdog times out
-	if ((gGPS_Watchdog == 0) || (gSAT_Watchdog == 0)) {
+	const global::WatchDog::Data wdt = global::OCPN::get().wdt().get_data();
+	if ((wdt.gps_watchdog == 0) || (wdt.sat_watchdog == 0)) {
 		wxString sogcog( _T("SOG --- ") + getUsrSpeedUnit() + _T(" COG ---\u00B0") );
 		if (GetStatusBar())
 			SetStatusText(sogcog, STAT_FIELD_SOGCOG);
@@ -3654,33 +3660,33 @@ void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
     }
 
     //  If the toolbar location has changed, or the proposed compassDialog location has changed
-    if( (g_FloatingToolbarDialog->GetScreenRect() != g_last_tb_rect) ||
-        (tentative_rect != g_FloatingCompassDialog->GetScreenRect()) ) {
+	if( (g_FloatingToolbarDialog->GetScreenRect() != g_last_tb_rect) ||
+			(tentative_rect != g_FloatingCompassDialog->GetScreenRect()) ) {
 
-        wxRect tb_rect = g_FloatingToolbarDialog->GetScreenRect();
+		wxRect tb_rect = g_FloatingToolbarDialog->GetScreenRect();
 
-        //    if they would not intersect, go ahead and move it to the upper right
-        //      Else it has to be on lower right
-        if( !tb_rect.Intersects( tentative_rect ) ) {
-            g_FloatingCompassDialog->Move( tentative_pt_in_screen );
-        }
-        else {
-            wxPoint posn_in_canvas =
-                wxPoint( cc1->GetSize().x - size_x - x_offset - cc1_edge_comp,
-                    cc1->GetSize().y - ( size_y + y_offset + cc1_edge_comp ) );
-            g_FloatingCompassDialog->Move( cc1->ClientToScreen( posn_in_canvas ) );
-        }
+		//    if they would not intersect, go ahead and move it to the upper right
+		//      Else it has to be on lower right
+		if( !tb_rect.Intersects( tentative_rect ) ) {
+			g_FloatingCompassDialog->Move( tentative_pt_in_screen );
+		}
+		else {
+			wxPoint posn_in_canvas = wxPoint(
+					cc1->GetSize().x - size_x - x_offset - cc1_edge_comp,
+					cc1->GetSize().y - ( size_y + y_offset + cc1_edge_comp));
+			g_FloatingCompassDialog->Move( cc1->ClientToScreen( posn_in_canvas ) );
+		}
 
-        b_update = true;
+		b_update = true;
 
-        g_last_tb_rect = tb_rect;
+		g_last_tb_rect = tb_rect;
 
-    }
+	}
 
-    if( g_FloatingCompassDialog && g_FloatingCompassDialog->IsShown()) {
-        g_FloatingCompassDialog->UpdateStatus( b_force_new | b_update );
-        g_FloatingCompassDialog->Update();
-    }
+	if( g_FloatingCompassDialog && g_FloatingCompassDialog->IsShown()) {
+		g_FloatingCompassDialog->UpdateStatus( b_force_new | b_update );
+		g_FloatingCompassDialog->Update();
+	}
 }
 
 int MainFrame::GetnChartStack( void )
@@ -5048,13 +5054,13 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 								global::OCPN::get().nav().set_magn_var(-m_NMEA0183.Rmc.MagneticVariation);
 
 						g_bVAR_Rx = true;
-						gVAR_Watchdog = wdt.gps_watchdog_timeout_ticks;
+						global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
 					}
 
 					sfixtime = m_NMEA0183.Rmc.UTCTime;
 
 					if (ll_valid) {
-						gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+						global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
 						m_fixtime = wxDateTime::Now().GetTicks();
 					}
 					pos_valid = ll_valid;
@@ -5067,7 +5073,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 				global::OCPN::get().nav().set_heading_true(m_NMEA0183.Hdt.DegreesTrue);
 				if (!wxIsNaN(m_NMEA0183.Hdt.DegreesTrue)) {
 					g_bHDT_Rx = true;
-					gHDT_Watchdog = wdt.gps_watchdog_timeout_ticks;
+					global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
 				}
 			} else if (g_nNMEADebug) {
 				gps_debug(m_NMEA0183, str_buf);
@@ -5076,17 +5082,17 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 			if (m_NMEA0183.Parse()) {
 				global::Navigation & nav = global::OCPN::get().nav();
 				nav.set_heading_magn(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees);
-				if( !wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees) )
-					gHDx_Watchdog = wdt.gps_watchdog_timeout_ticks;
+				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees))
+					global::OCPN::get().wdt().set_hdx_watchdog(wdt.gps_watchdog_timeout_ticks);
 
-				if( m_NMEA0183.Hdg.MagneticVariationDirection == East )
+				if (m_NMEA0183.Hdg.MagneticVariationDirection == East)
 					nav.set_magn_var(m_NMEA0183.Hdg.MagneticVariationDegrees);
 				else if( m_NMEA0183.Hdg.MagneticVariationDirection == West )
 					nav.set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
 
 				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees)) {
 					g_bVAR_Rx = true;
-					gVAR_Watchdog = wdt.gps_watchdog_timeout_ticks;
+					global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
 				}
 			} else if (g_nNMEADebug) {
 				gps_debug(m_NMEA0183, str_buf);
@@ -5095,24 +5101,24 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 			if (m_NMEA0183.Parse()) {
 				global::OCPN::get().nav().set_heading_magn(m_NMEA0183.Hdm.DegreesMagnetic);
 				if (!wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic))
-					gHDx_Watchdog = wdt.gps_watchdog_timeout_ticks;
+					global::OCPN::get().wdt().set_hdx_watchdog(wdt.gps_watchdog_timeout_ticks);
 			} else if (g_nNMEADebug) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("VTG")) {
-			if( m_NMEA0183.Parse() ) {
+			if (m_NMEA0183.Parse()) {
 				global::Navigation & nav = global::OCPN::get().nav();
 				nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
 				nav.set_course_over_ground(m_NMEA0183.Vtg.TrackDegreesTrue);
-				if( !wxIsNaN(m_NMEA0183.Vtg.SpeedKnots) && !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue) )
-					gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+				if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots) && !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
+					global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
 			} else if (g_nNMEADebug) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("GSV")) {
 			if (m_NMEA0183.Parse()) {
 				g_SatsInView = m_NMEA0183.Gsv.SatsInView;
-				gSAT_Watchdog = wdt.sat_watchdog_timeout_ticks;
+				global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
 				g_bSatValid = true;
 			} else if (g_nNMEADebug) {
 				gps_debug(m_NMEA0183, str_buf);
@@ -5145,7 +5151,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 					sfixtime = m_NMEA0183.Gll.UTCTime;
 
 					if(ll_valid) {
-						gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+						global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
 						m_fixtime = wxDateTime::Now().GetTicks();
 					}
 					pos_valid = ll_valid;
@@ -5181,13 +5187,13 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 					sfixtime = m_NMEA0183.Gga.UTCTime;
 
 					if (ll_valid) {
-						gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+						global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
 						m_fixtime = wxDateTime::Now().GetTicks();
 					}
 					pos_valid = ll_valid;
 
 					g_SatsInView = m_NMEA0183.Gga.NumberOfSatellitesInUse;
-					gSAT_Watchdog = wdt.sat_watchdog_timeout_ticks;
+					global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
 					g_bSatValid = true;
 				}
 			} else if (g_nNMEADebug) {
@@ -5216,11 +5222,11 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 			global::OCPN::get().nav().set_heading_true(gpd.kHdt);
 			if( !wxIsNaN(gpd.kHdt) ) {
 				g_bHDT_Rx = true;
-				gHDT_Watchdog = wdt.gps_watchdog_timeout_ticks;
+				global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
 			}
 
-			if( !wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon) ) {
-				gGPS_Watchdog = wdt.gps_watchdog_timeout_ticks;
+			if (!wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon) ) {
+				global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
 				m_fixtime = wxDateTime::Now().GetTicks();
 				pos_valid = true;
 			}
@@ -5246,7 +5252,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 		PostProcessNNEA(pos_valid, sfixtime);
 }
 
-void MainFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
+void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 {
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 	const global::WatchDog::Data & wdt = global::OCPN::get().wdt().get_data();
@@ -5263,7 +5269,7 @@ void MainFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 	if (!g_bHDT_Rx) {
 		if( !wxIsNaN(nav.var) && !wxIsNaN(nav.hdm)) {
 			global::OCPN::get().nav().set_heading_true(nav.hdm + nav.var);
-			gHDT_Watchdog = wdt.gps_watchdog_timeout_ticks;
+			global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
 		}
 	}
 
@@ -5278,8 +5284,8 @@ void MainFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 		bGPSValid = true;
 		if( !last_bGPSValid ) UpdateGPSCompassStatusBox();
 
-		//      Show a little heartbeat tick in StatusWindow0 on NMEA events
-		//      But no faster than 10 hz.
+		// Show a little heartbeat tick in StatusWindow0 on NMEA events
+		// But no faster than 10 hz.
 		unsigned long uiCurrentTickCount;
 		m_MMEAeventTime.SetToCurrent();
 		uiCurrentTickCount = m_MMEAeventTime.GetMillisecond() / 100;           // tenths of a second
@@ -5291,9 +5297,9 @@ void MainFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 		}
 	}
 
-	//    Show gLat/gLon in StatusWindow0
+	// Show gLat/gLon in StatusWindow0
 
-	if( NULL != GetStatusBar() ) {
+	if (NULL != GetStatusBar()) {
 		char tick_buf[2];
 		tick_buf[0] = nmea_tick_chars[tick_idx];
 		tick_buf[1] = 0;
@@ -5338,23 +5344,24 @@ void MainFrame::PostProcessNNEA( bool pos_valid, const wxString &sfixtime )
 			for( int i = 0; i < g_COGAvgSec; i++ ) {
 				double adder = COGTable[i];
 
-				if( fabs( adder - g_COGAvg ) > 180. ) {
-					if( ( adder - g_COGAvg ) > 0. ) adder -= 360.;
+				if (fabs(adder - g_COGAvg) > 180.0) {
+					if ((adder - g_COGAvg) > 0.0)
+						adder -= 360.0;
 					else
-						adder += 360.;
+						adder += 360.0;
 				}
 
 				sum += adder;
 			}
 			sum /= g_COGAvgSec;
 
-			if( sum < 0. ) sum += 360.;
-			else
-				if( sum >= 360. ) sum -= 360.;
+			if (sum < 0.0)
+				sum += 360.0;
+			else if (sum >= 360.0)
+				sum -= 360.0;
 
 			g_COGAvg = sum;
-		}
-		else
+		} else
 			g_COGAvg = nav.cog;
 	}
 

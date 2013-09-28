@@ -37,11 +37,31 @@ class WatchDog
 		{
 			int gps_watchdog_timeout_ticks;
 			int sat_watchdog_timeout_ticks;
+			int gps_watchdog;
+			int hdx_watchdog;
+			int hdt_watchdog;
+			int var_watchdog;
+			int sat_watchdog;
 		};
 
 		virtual const Data & get_data() const = 0;
 		virtual void set_gps_timeout_ticks(int) = 0;
 		virtual void set_sat_timeout_ticks(int) = 0;
+
+		virtual void set_gps_watchdog(int) = 0;
+		virtual void decrement_gps_watchdog() = 0;
+
+		virtual void set_hdx_watchdog(int) = 0;
+		virtual void decrement_hdx_watchdog() = 0;
+
+		virtual void set_hdt_watchdog(int) = 0;
+		virtual void decrement_hdt_watchdog() = 0;
+
+		virtual void set_var_watchdog(int) = 0;
+		virtual void decrement_var_watchdog() = 0;
+
+		virtual void set_sat_watchdog(int) = 0;
+		virtual void decrement_sat_watchdog() = 0;
 };
 
 }

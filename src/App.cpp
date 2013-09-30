@@ -34,7 +34,6 @@
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "ThumbWin.h"
-#include "tcmgr.h"
 #include "Layer.h"
 #include "StatWin.h"
 #include "PianoWin.h"
@@ -48,6 +47,8 @@
 #include <ChartCanvas.h>
 #include <Config.h>
 #include <UserColors.h>
+
+#include <tide/TCMgr.h>
 
 #include <plugin/PlugInManager.h>
 

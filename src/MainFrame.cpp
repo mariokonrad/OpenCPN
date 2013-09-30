@@ -73,7 +73,6 @@
 #include "OptionDialog.h"
 #include "AboutDialog.h"
 #include "ThumbWin.h"
-#include "tcmgr.h"
 #include "RouteProp.h"
 #include "MarkInfo.h"
 #include "ToolBarSimple.h"
@@ -103,6 +102,8 @@
 
 #include <plugin/PlugInManager.h>
 #include <plugin/OCPN_MsgEvent.h>
+
+#include <tide/TCMgr.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

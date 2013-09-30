@@ -31,7 +31,6 @@
 #include "MessageBox.h"
 #include "RoutePrintout.h"
 #include "RoutePrintSelection.h"
-#include "tcmgr.h"
 #include "PositionParser.h"
 #include "gpx/gpx.h"
 
@@ -43,6 +42,7 @@
 #include <geo/GeoRef.h>
 
 #include <tide/IDX_entry.h>
+#include <tide/TCMgr.h>
 
 #include <plugin/PlugInManager.h>
 

@@ -50,8 +50,6 @@
 #include "RouteProp.h"
 #include "MarkInfo.h"
 #include "TrackPropDlg.h"
-#include "tcmgr.h"
-#include "plugin/PlugInManager.h"
 #include "ocpn_pixel.h"
 #include "Undo.h"
 #include "Multiplexer.h"
@@ -77,6 +75,8 @@
 #include <Config.h>
 #include <UserColors.h>
 
+#include <plugin/PlugInManager.h>
+
 #include <geo/LineClip.h>
 
 #include <chart/gshhs/GSHHSChart.h>
@@ -86,6 +86,7 @@
 
 #include <tide/IDX_entry.h>
 #include <tide/tide_time.h>
+#include <tide/TCMgr.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

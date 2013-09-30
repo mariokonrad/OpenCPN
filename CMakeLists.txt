@@ -492,10 +492,17 @@ SET(HDRS
 	src/geo/lmfit.h
 	src/geo/GeoRef.h
 
+	src/libtcd/tcd.h
+
+	src/tide/TCMgr.h
+
+	src/garmin/cpo_satellite_data.h
+	src/garmin/unit_info.h
+	src/garmin/usb_packet.h
+
 	include/ocpn_pixel.h
 	include/S57ClassRegistrar.h
 	include/navutil.h
-	include/tcmgr.h
 	include/ocpn_plugin.h
 	src/DataStream.h
 	src/GARMIN_Serial_Thread.h
@@ -606,9 +613,6 @@ SET(HDRS
 	src/OCPNFloatingToolbarDialog.h
 	src/FloatingCompassWindow.h
 	src/Geodesic.h
-	src/garmin/cpo_satellite_data.h
-	src/garmin/unit_info.h
-	src/garmin/usb_packet.h
 	src/OCPN_DataStreamEvent.h
 	src/ConnectionParams.h
 	src/OCP_DataStreamInput_Thread.h
@@ -657,6 +661,10 @@ SET(SRCS
 	src/geo/Polygon.cpp
 	src/geo/LineClip.cpp
 	src/geo/GeoRef.cpp
+
+	src/libtcd/tcd.cpp
+
+	src/tide/TCMgr.cpp
 
 	src/MemoryStatus.cpp
 	src/AnchorDist.cpp
@@ -732,7 +740,6 @@ SET(SRCS
 	src/StatWin.cpp
 	src/TextStatWin.cpp
 	src/PianoWin.cpp
-	src/tcmgr.cpp
 	src/ThumbWin.cpp
 	src/OptionDialog.cpp
 	src/ChartGroupsUI.cpp
@@ -818,6 +825,7 @@ IF (USE_S57)
 		src/s52cnsy.cpp
 		src/s52plib.cpp
 		src/RenderFromHPGL.cpp
+
 		src/chart/s52utils.cpp
 		src/chart/S57Chart.cpp
 		src/chart/s52utils.h
@@ -842,12 +850,14 @@ IF (USE_S57)
 		src/chart/CM93Manager.h
 		src/chart/CM93Chart.h
 		src/chart/CM93Geometry.h
+
 		src/myiso8211/ddffielddefn.cpp
 		src/myiso8211/ddfmodule.cpp
 		src/myiso8211/ddfrecord.cpp
 		src/myiso8211/ddfsubfielddefn.cpp
 		src/myiso8211/ddffield.cpp
 		src/myiso8211/ddfutils.cpp
+
 		src/mygdal/cpl_config.h
 		src/mygdal/gdal_priv.h
 		src/mygdal/cpl_conv.h

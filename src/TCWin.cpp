@@ -24,7 +24,6 @@
 #include "TCWin.h"
 #include "timers.h"
 #include "RolloverWin.h"
-#include "tcmgr.h"
 #include "dychart.h"
 #include "ColorScheme.h"
 #include "MicrosoftCompatibility.h"
@@ -35,6 +34,7 @@
 
 #include <tide/tide_time.h>
 #include <tide/IDX_entry.h>
+#include <tide/TCMgr.h>
 
 #include <algorithm>
 

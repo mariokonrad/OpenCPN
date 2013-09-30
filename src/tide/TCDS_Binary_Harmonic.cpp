@@ -22,8 +22,10 @@
  **************************************************************************/
 
 #include "TCDS_Binary_Harmonic.h"
-#include "tcmgr.h"
-#include "IDX_entry.h"
+#include <tide/IDX_entry.h>
+#include <tide/TCMgr.h>
+
+#include <libtcd/tcd.h>
 
 #include <MicrosoftCompatibility.h>
 

@@ -803,6 +803,8 @@ IF (USE_S57)
 		src/geo/PolyTriGroup.h
 		src/geo/PolyTrapGroup.h
 		src/geo/PolyTessGeo.h
+		src/geo/triangulate.h
+		src/geo/triangulate.cpp
 
 		src/geo/TriPrim.cpp
 		src/geo/ExtendedGeometry.cpp
@@ -813,13 +815,13 @@ IF (USE_S57)
 
 		src/s52plib.h
 		src/RenderFromHPGL.h
-		src/chart/s52utils.h
-		src/chart/S57Chart.h
 		src/s52cnsy.cpp
 		src/s52plib.cpp
+		src/RenderFromHPGL.cpp
 		src/chart/s52utils.cpp
 		src/chart/S57Chart.cpp
-		src/RenderFromHPGL.cpp
+		src/chart/s52utils.h
+		src/chart/S57Chart.h
 		src/chart/M_COVR_Desc.cpp
 		src/chart/OCPNOffsetListCtrl.cpp
 		src/chart/COVR_Set.cpp
@@ -840,7 +842,6 @@ IF (USE_S57)
 		src/chart/CM93Manager.h
 		src/chart/CM93Chart.h
 		src/chart/CM93Geometry.h
-		src/tri.c
 		src/myiso8211/ddffielddefn.cpp
 		src/myiso8211/ddfmodule.cpp
 		src/myiso8211/ddfrecord.cpp

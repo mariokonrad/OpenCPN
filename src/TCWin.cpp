@@ -26,7 +26,6 @@
 #include "RolloverWin.h"
 #include "tcmgr.h"
 #include "dychart.h"
-#include "cutil.h"
 #include "ColorScheme.h"
 #include "MicrosoftCompatibility.h"
 

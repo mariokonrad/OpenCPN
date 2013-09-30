@@ -958,7 +958,7 @@ void TrackPropDlg::OnOKBtnClick( wxCommandEvent& event )
 	// Look in the route list to be sure the route is still available
 	// (May have been deleted by RouteManagerDialog...)
 
-	if (RouteExists(m_pRoute)) {
+	if (g_pRouteMan->RouteExists(m_pRoute)) {
 		SaveChanges();              // write changes to globals and update config
 		m_pRoute->ClearHighlights();
 	}
@@ -980,7 +980,7 @@ void TrackPropDlg::OnCancelBtnClick( wxCommandEvent& event )
 	// Look in the route list to be sure the raoute is still available
 	// (May have been deleted by RouteMangerDialog...)
 
-	if (RouteExists(m_pRoute))
+	if (g_pRouteMan->RouteExists(m_pRoute))
 		m_pRoute->ClearHighlights();
 
 	Hide();

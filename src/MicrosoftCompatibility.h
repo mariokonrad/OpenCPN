@@ -12,7 +12,7 @@
 long  __stdcall MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS * ExceptionInfo);
 
 // __MSVC__ randomly does not link snprintf, or _snprintf
-// Replace it with a local version, code is in cutil.c
+// Replace it with a local version
 #define snprintf mysnprintf
 int mysnprintf( char *buffer, int count, const char *format, ... );
 

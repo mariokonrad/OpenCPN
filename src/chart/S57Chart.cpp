@@ -34,7 +34,6 @@
 #include "s52s57.h"
 #include "s52plib.h"
 #include "dychart.h"
-#include "cutil.h"
 #include "navutil.h"
 #include "ocpn_pixel.h"
 #include "ocpnDC.h"

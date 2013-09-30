@@ -63,25 +63,6 @@ wxString GetLayerName(int id)
 	return name;
 }
 
-Route * RouteExists(const wxString & guid)
-{
-	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) { // FIXME: use std::find
-		Route * route = *i;
-		if (guid == route->m_GUID)
-			return route;
-	}
-	return NULL;
-}
-
-bool RouteExists(Route * route)
-{
-	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) { // FIXME: use std::find
-		if (*i == route)
-			return true;
-	}
-	return false;
-}
-
 // Converts the distance to the units selected by user
 double toUsrDistance(double nm_distance, DistanceUnit unit)
 {

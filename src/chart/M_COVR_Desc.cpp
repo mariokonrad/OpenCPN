@@ -23,7 +23,6 @@
 
 #include "M_COVR_Desc.h"
 #include "ViewPort.h"
-#include "cutil.h"
 #include <MicrosoftCompatibility.h>
 
 #include <geo/GeoRef.h>

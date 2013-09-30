@@ -88,7 +88,6 @@
 #include "NavObjectCollection.h"
 #include "OCP_DataStreamInput_Thread.h"
 #include "TrackPropDlg.h"
-#include "cutil.h"
 #include "RouteManagerDialog.h"
 #include "MyPrintout.h"
 #include "OCPNFloatingToolbarDialog.h"

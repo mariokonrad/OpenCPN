@@ -723,10 +723,11 @@ bool App::OnInit()
 #ifdef __WXMSW__
 
 	//    Handle any Floating Point Exceptions which may leak thru from other
-	//    processes.  The exception filter is in cutil.c
+	//    processes.
 	//    Seems to only happen for W98
 
-	if( g_pPlatform->GetOperatingSystemId() == wxOS_WINDOWS_9X ) SetUnhandledExceptionFilter (&MyUnhandledExceptionFilter);
+	if (g_pPlatform->GetOperatingSystemId() == wxOS_WINDOWS_9X)
+		SetUnhandledExceptionFilter (&MyUnhandledExceptionFilter);
 #endif
 
 #ifdef __WXMSW__

@@ -25,7 +25,6 @@
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "ocpnDC.h"
-#include "cutil.h"
 #include "navutil.h"
 #include "Multiplexer.h"
 #include "Select.h"

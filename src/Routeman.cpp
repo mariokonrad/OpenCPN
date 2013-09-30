@@ -107,7 +107,26 @@ Routeman::~Routeman()
 	if( pRouteActivatePoint ) delete pRouteActivatePoint;
 }
 
-bool Routeman::IsRouteValid( Route *pRoute )
+Route * Routeman::RouteExists(const wxString & guid) const
+{
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) { // FIXME: use std::find
+		Route * route = *i;
+		if (guid == route->m_GUID)
+			return route;
+	}
+	return NULL;
+}
+
+bool Routeman::RouteExists(Route * route) const
+{
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) { // FIXME: use std::find
+		if (*i == route)
+			return true;
+	}
+	return false;
+}
+
+bool Routeman::IsRouteValid(Route * pRoute) const
 {
 	return RouteExists(pRoute);
 }

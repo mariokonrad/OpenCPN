@@ -64,9 +64,4 @@ extern wxString getUsrSpeedUnit(SpeedUnit unit = SPEED_NONE);
 extern wxString toSDMM(int NEflag, double a, bool hi_precision = true);
 extern double fromDMM(wxString sdms);
 
-class Route;
-
-Route * RouteExists(const wxString & guid);
-bool RouteExists(Route * route);
-
 #endif

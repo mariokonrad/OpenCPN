@@ -45,8 +45,6 @@ class Routeman
 
 		void DeleteTrack(Route *pRoute);
 
-		bool IsRouteValid(Route *pRoute);
-
 		Route * FindRouteByGUID(const wxString & guid) const;
 		Route *FindRouteContainingWaypoint(RoutePoint *pWP);
 		wxArrayPtrVoid *GetRouteArrayContaining(RoutePoint *pWP);
@@ -85,7 +83,11 @@ class Routeman
 
 		wxString GetRouteReverseMessage(void);
 
-		bool m_bDataValid;
+		Route * RouteExists(const wxString & guid) const;
+		bool RouteExists(Route * route) const;
+		bool IsRouteValid(Route *pRoute) const;
+
+		bool m_bDataValid; // FIXME: public attribute
 
 	private:
 		void DoAdvance(void);

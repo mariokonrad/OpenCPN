@@ -47,7 +47,6 @@
 #include "ThumbWin.h"
 #include "WayPointman.h"
 #include "MainFrame.h"
-#include "cutil.h"
 #include "RouteProp.h"
 #include "MarkInfo.h"
 #include "TrackPropDlg.h"

@@ -887,7 +887,7 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 
 	//    TODO  All this trouble for a tentative route.......Should make some Route methods????
 	if( bAddroute ) {
-		if( ::RouteExists( pTentRoute->m_GUID ) ) { //We are importing a different route with the same guid, so let's generate it a new guid
+		if(g_pRouteMan->RouteExists( pTentRoute->m_GUID ) ) { //We are importing a different route with the same guid, so let's generate it a new guid
 			pTentRoute->m_GUID = pWayPointMan->CreateGUID( NULL );
 			//Now also change guids for the routepoints
 			wxRoutePointListNode *pthisnode = ( pTentRoute->pRoutePointList )->GetFirst();
@@ -1022,7 +1022,7 @@ void NavObjectCollection::InsertTrack(Route *pTentTrack)
 
 void NavObjectCollection::UpdateRouteA(Route * pTentRoute)
 {
-	Route * rt = ::RouteExists( pTentRoute->m_GUID );
+	Route * rt = g_pRouteMan->RouteExists( pTentRoute->m_GUID );
 	if( rt ) {
 		wxRoutePointListNode *node = pTentRoute->pRoutePointList->GetFirst();
 		while( node ) {

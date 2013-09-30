@@ -21,52 +21,26 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHART__M_COVR_DESC__H__
-#define __CHART__M_COVR_DESC__H__
+#ifndef __GEO__POLYGON__H__
+#define __GEO__POLYGON__H__
 
-#include "BoundingBox.h"
-#include "OCPNRegion.h"
-#include <wx/dynarray.h>
+namespace geo {
 
-class wxFFileInputStream;
-class ViewPort;
-
-namespace geo { struct float_2Dpt; }
-
-class M_COVR_Desc
+struct MyPoint
 {
-	public:
-		M_COVR_Desc();
-		~M_COVR_Desc();
-
-		int GetWKBSize();
-		bool WriteWKB(void *p);
-		int ReadWKB(wxFFileInputStream & ifs);
-		void Update(M_COVR_Desc *pmcd);
-		OCPNRegion GetRegion(const ViewPort & vp, wxPoint * pwp);
-
-		int m_cell_index;
-		int m_object_id;
-		int m_subcell;
-
-		int m_nvertices;
-		geo::float_2Dpt * pvertices; // FIXME: use std container
-		int m_npub_year;
-		double transform_WGS84_offset_x;
-		double transform_WGS84_offset_y;
-		double m_covr_lat_min;
-		double m_covr_lat_max;
-		double m_covr_lon_min;
-		double m_covr_lon_max;
-		double user_xoff;
-		double user_yoff;
-
-		BoundingBox m_covr_bbox;
-		bool m_buser_offsets;
+	double x;
+	double y;
 };
 
-WX_DECLARE_OBJARRAY(M_COVR_Desc, Array_Of_M_COVR_Desc);
-WX_DECLARE_OBJARRAY(M_COVR_Desc *, Array_Of_M_COVR_Desc_Ptr);
-WX_DECLARE_LIST(M_COVR_Desc, List_Of_M_COVR_Desc);
+struct float_2Dpt
+{
+	float y;
+	float x;
+};
+
+int G_PtInPolygon(MyPoint *, int, float, float);
+int G_PtInPolygon_FL(float_2Dpt *, int, float, float);
+
+}
 
 #endif

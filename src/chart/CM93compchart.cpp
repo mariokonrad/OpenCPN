@@ -32,11 +32,11 @@
 
 #include <geo/GeoRef.h>
 #include <geo/LineClip.h>
+#include <geo/Polygon.h>
 
 #include <CM93DSlide.h>
 #include <OCPNRegionIterator.h>
 #include <ocpnDC.h>
-#include <cutil.h>
 
 #include <MainFrame.h>
 #include <MicrosoftCompatibility.h>
@@ -831,7 +831,7 @@ bool cm93compchart::DoRenderRegionViewOnGL (const wxGLContext &glc, const ViewPo
 				//                        if(!(_OUT == vp_positive.vpBBox.Intersect(pmcd->m_covr_bbox)) || !(_OUT == vp.vpBBox.Intersect(pmcd->m_covr_bbox)))
 				{
 
-					float_2Dpt *p = pmcd->pvertices;
+					geo::float_2Dpt *p = pmcd->pvertices;
 					wxPoint *pwp = m_pcm93chart_current->GetDrawBuffer ( pmcd->m_nvertices );
 
 					for ( int ip = 0 ; ip < pmcd->m_nvertices ; ip++ )
@@ -1134,7 +1134,7 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
 				//                        if(!(_OUT == vp_positive.vpBBox.Intersect(pmcd->m_covr_bbox)) || !(_OUT == vp.vpBBox.Intersect(pmcd->m_covr_bbox)))
 				{
 
-					float_2Dpt *p = pmcd->pvertices;
+					geo::float_2Dpt *p = pmcd->pvertices;
 					wxPoint *pwp = m_pcm93chart_current->GetDrawBuffer ( pmcd->m_nvertices );
 
 					for ( int ip = 0 ; ip < pmcd->m_nvertices ; ip++ )
@@ -1387,7 +1387,7 @@ bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, ViewPort& vp )
 						if ( ! ( _OUT == vp_positive.GetBBox().Intersect ( mcd->m_covr_bbox ) ) || ! ( _OUT == vp.GetBBox().Intersect ( mcd->m_covr_bbox ) ) )
 						{
 
-							float_2Dpt *p = mcd->pvertices;
+							geo::float_2Dpt *p = mcd->pvertices;
 							wxPoint *pwp = psc->GetDrawBuffer ( mcd->m_nvertices );
 
 							for ( int ip = 0 ; ip < mcd->m_nvertices ; ip++ ,  p++)

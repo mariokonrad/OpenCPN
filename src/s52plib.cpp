@@ -23,7 +23,6 @@
 
 #include "s52plib.h"
 #include "RenderFromHPGL.h"
-#include "cutil.h"
 #include "navutil.h"
 #include "ocpn_pixel.h"
 #include "RazdsParser.h"
@@ -43,6 +42,7 @@
 #include <geo/PolyTriGroup.h>
 #include <geo/PolyTrapGroup.h>
 #include <geo/LineClip.h>
+#include <geo/Polygon.h>
 
 #include <cmath>
 #include <cstdlib>
@@ -3996,27 +3996,32 @@ bool s52plib::inter_tri_rect( wxPoint *ptp, render_canvas_parms *pb_spec )
 	BoundingBox rect( pb_spec->lclip, pb_spec->y, pb_spec->rclip, pb_spec->y + pb_spec->height );
 
 	for( int i = 0; i < 3; i++ ) {
-		if( rect.PointInBox( ptp[i].x, ptp[i].y ) ) return true;
+		if (rect.PointInBox(ptp[i].x, ptp[i].y))
+			return true;
 	}
 
 	//    Next stage
 	//    Check all four points of rectangle to see it any are within the render triangle
 
-	double p[6];
-	MyPoint *pmp = (MyPoint *) p;
+	double p[6]; // FIXME: fubar
+	geo::MyPoint *pmp = (geo::MyPoint *) p;
 
 	for( int i = 0; i < 3; i++ ) {
 		pmp[i].x = ptp[i].x;
 		pmp[i].y = ptp[i].y;
 	}
 
-	if( G_PtInPolygon( pmp, 3, pb_spec->lclip, pb_spec->y ) ) return true;
+	if (geo::G_PtInPolygon(pmp, 3, pb_spec->lclip, pb_spec->y))
+		return true;
 
-	if( G_PtInPolygon( pmp, 3, pb_spec->lclip, pb_spec->y + pb_spec->height ) ) return true;
+	if (geo::G_PtInPolygon(pmp, 3, pb_spec->lclip, pb_spec->y + pb_spec->height))
+		return true;
 
-	if( G_PtInPolygon( pmp, 3, pb_spec->rclip, pb_spec->y ) ) return true;
+	if (geo::G_PtInPolygon(pmp, 3, pb_spec->rclip, pb_spec->y))
+		return true;
 
-	if( G_PtInPolygon( pmp, 3, pb_spec->rclip, pb_spec->y + pb_spec->height ) ) return true;
+	if (geo::G_PtInPolygon(pmp, 3, pb_spec->rclip, pb_spec->y + pb_spec->height))
+		return true;
 
 	//    last step
 	//    Check triangle lines against rect lines for line intersect

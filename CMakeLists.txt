@@ -487,19 +487,20 @@ SET(HDRS
 	src/chart/OCPNPattern.h
 	src/chart/Lookup.h
 
+	src/geo/Polygon.h
+	src/geo/LineClip.h
+	src/geo/lmfit.h
+	src/geo/GeoRef.h
+
 	include/ocpn_pixel.h
 	include/S57ClassRegistrar.h
-	include/cutil.h
 	include/navutil.h
 	include/tcmgr.h
 	include/ocpn_plugin.h
 	src/DataStream.h
-	src/geo/LineClip.h
 	src/GARMIN_Serial_Thread.h
 	src/GARMIN_USB_Thread.h
 	src/GarminProtocolHandler.h
-	src/geo/lmfit.h
-	src/geo/GeoRef.h
 	src/Config.h
 	src/LogMessageOnce.h
 	src/DimeControl.h
@@ -653,6 +654,10 @@ SET(SRCS
 	src/chart/ChartSymbols.cpp
 
 	src/geo/lmfit.cpp
+	src/geo/Polygon.cpp
+	src/geo/LineClip.cpp
+	src/geo/GeoRef.cpp
+
 	src/MemoryStatus.cpp
 	src/AnchorDist.cpp
 	src/SerialPorts.cpp
@@ -707,10 +712,7 @@ SET(SRCS
 	src/Layer.cpp
 	src/ConsoleCanvas.cpp
 	src/ViewPort.cpp
-	src/cutil.cpp
-	src/geo/LineClip.cpp
 	src/MicrosoftCompatibility.cpp
-	src/geo/GeoRef.cpp
 	src/navutil.cpp
 	src/Config.cpp
 	src/LogMessageOnce.cpp
@@ -796,15 +798,23 @@ IF (USE_S57)
 	ADD_DEFINITIONS(-DUSE_S57)
 
 	SET(SRC_S57ENC
-		src/s52plib.h
-		src/RenderFromHPGL.h
-		src/chart/s52utils.h
-		src/chart/S57Chart.h
 		src/geo/ExtendedGeometry.h
 		src/geo/TriPrim.h
 		src/geo/PolyTriGroup.h
 		src/geo/PolyTrapGroup.h
 		src/geo/PolyTessGeo.h
+
+		src/geo/TriPrim.cpp
+		src/geo/ExtendedGeometry.cpp
+		src/geo/PolyTriGroup.cpp
+		src/geo/PolyTrapGroup.cpp
+		src/geo/PolyTessGeoTrap.cpp
+		src/geo/PolyTessGeo.cpp
+
+		src/s52plib.h
+		src/RenderFromHPGL.h
+		src/chart/s52utils.h
+		src/chart/S57Chart.h
 		src/s52cnsy.cpp
 		src/s52plib.cpp
 		src/chart/s52utils.cpp
@@ -819,12 +829,6 @@ IF (USE_S57)
 		src/chart/CM93Chart.cpp
 		src/chart/CM93Manager.cpp
 		src/chart/CM93compchart.cpp
-		src/geo/TriPrim.cpp
-		src/geo/ExtendedGeometry.cpp
-		src/geo/PolyTriGroup.cpp
-		src/geo/PolyTrapGroup.cpp
-		src/geo/PolyTessGeoTrap.cpp
-		src/geo/PolyTessGeo.cpp
 		src/chart/OCPNOffsetListCtrl.h
 		src/chart/CM93OffsetDialog.h
 		src/chart/M_COVR_Desc.h

@@ -27,6 +27,7 @@
 #include <MicrosoftCompatibility.h>
 
 #include <geo/GeoRef.h>
+#include <geo/Polygon.h>
 
 #include <cmath>
 
@@ -58,15 +59,15 @@ int M_COVR_Desc::GetWKBSize()
 {
 	int size = 0;
 
-	size = sizeof ( int );                          // size itself
-	size += sizeof ( int );                         // m_cell_index;
-	size += sizeof ( int );                         // m_object_id;
-	size += sizeof ( int );                        // m_subcell
-	size += sizeof ( int );                         // m_nvertices;
-	size += m_nvertices * sizeof ( float_2Dpt );    // pvertices;
+	size = sizeof(int);                          // size itself
+	size += sizeof(int);                         // m_cell_index;
+	size += sizeof(int);                         // m_object_id;
+	size += sizeof(int);                        // m_subcell
+	size += sizeof(int);                         // m_nvertices;
+	size += m_nvertices * sizeof(geo::float_2Dpt);    // pvertices;
 
-	size += sizeof ( int );                         // m_npub_year;
-	size += 8 * sizeof ( double );                  // all the rest
+	size += sizeof(int);                         // m_npub_year;
+	size += 8 * sizeof(double);                  // all the rest
 
 	return size;
 }
@@ -84,8 +85,8 @@ bool M_COVR_Desc:: WriteWKB ( void *p )
 
 		*pr++ = m_nvertices;
 
-		float_2Dpt *pfo = ( float_2Dpt * ) pr;
-		float_2Dpt *pfi = pvertices;
+		geo::float_2Dpt *pfo = ( geo::float_2Dpt * ) pr;
+		geo::float_2Dpt *pfi = pvertices;
 		for ( int i=0 ; i < m_nvertices ; i++ )
 			*pfo++ = *pfi++;
 
@@ -120,9 +121,9 @@ int M_COVR_Desc:: ReadWKB ( wxFFileInputStream &ifs )
 
 		ifs.Read ( &m_nvertices, sizeof ( int ) );
 
-		pvertices = new float_2Dpt[m_nvertices];
+		pvertices = new geo::float_2Dpt[m_nvertices];
 
-		ifs.Read ( pvertices,m_nvertices * sizeof ( float_2Dpt ) );
+		ifs.Read ( pvertices,m_nvertices * sizeof ( geo::float_2Dpt ) );
 
 		ifs.Read ( &m_npub_year, sizeof ( int ) );
 
@@ -149,7 +150,7 @@ int M_COVR_Desc:: ReadWKB ( wxFFileInputStream &ifs )
 
 OCPNRegion M_COVR_Desc::GetRegion ( const ViewPort &vp, wxPoint *pwp )
 {
-	float_2Dpt *p = pvertices;
+	geo::float_2Dpt *p = pvertices;
 
 	for ( int ip = 0 ; ip < m_nvertices ; ip++ )
 	{

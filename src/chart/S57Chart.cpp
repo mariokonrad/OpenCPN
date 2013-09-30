@@ -29,6 +29,7 @@
 #include <geo/TriPrim.h>
 #include <geo/PolyTriGroup.h>
 #include <geo/PolyTrapGroup.h>
+#include <geo/Polygon.h>
 
 #include "s52s57.h"
 #include "s52plib.h"
@@ -1315,6 +1316,13 @@ double s57chart::GetNormalScaleMax(double, int)
 //-----------------------------------------------------------------------
 //              Pixel to Lat/Long Conversion helpers
 //-----------------------------------------------------------------------
+
+static int roundint(double x)
+{
+	int tmp = static_cast<int>(x);
+	tmp += (x - tmp >= 0.5) - (x - tmp <= -0.5);
+	return tmp;
+}
 
 void s57chart::GetPointPix(ObjRazRules *, float north, float east, wxPoint * r)
 {
@@ -5270,10 +5278,10 @@ void s57chart::CreateSENCVectorEdgeTable( FILE * fpOut, S57Reader *poReader )
             double easting, northing;
             toSM( p.getY(), p.getX(), ref_lat, ref_lon, &easting, &northing );
 
-            MyPoint pd;
+            geo::MyPoint pd;
             pd.x = easting;
             pd.y = northing;
-            fwrite( &pd, 1, sizeof(MyPoint), fpOut );
+            fwrite(&pd, 1, sizeof(pd), fpOut);
         }
 
         //    Next vector record
@@ -5323,16 +5331,12 @@ void s57chart::CreateSENCConnNodeTable( FILE * fpOut, S57Reader *poReader )
                 double easting, northing;
                 toSM( pP->getY(), pP->getX(), ref_lat, ref_lon, &easting, &northing );
 
-                MyPoint pd;
+                geo::MyPoint pd;
                 pd.x = easting;
                 pd.y = northing;
-                fwrite( &pd, 1, sizeof(MyPoint), fpOut );
+                fwrite(&pd, 1, sizeof(pd), fpOut);
             }
-//                  else
-//                        int yyp = 5;
         }
-//            else
-//                  int eep = 4;
 
         //    Next vector record
         feid++;
@@ -5623,7 +5627,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
 
         geo::PolyTriGroup *ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
         geo::TriPrim * pTP = ppg->tri_prim_head;
-        MyPoint pvert_list[3];
+        geo::MyPoint pvert_list[3];
 
         //  Polygon geometry is carried in SM coordinates, so...
         //  make the hit test thus.
@@ -5662,7 +5666,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
                             pvert_list[2].x = p_vertex[( it * 2 ) + 4];
                             pvert_list[2].y = p_vertex[( it * 2 ) + 5];
 
-                            if( G_PtInPolygon( (MyPoint *) pvert_list, 3, easting, northing ) ) {
+                            if (geo::G_PtInPolygon(pvert_list, sizeof(pvert_list) / sizeof(pvert_list[0]), easting, northing)) {
                                 ret = true;
                                 break;
                             }
@@ -5680,7 +5684,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
                             pvert_list[2].x = p_vertex[( it * 2 ) + 4];
                             pvert_list[2].y = p_vertex[( it * 2 ) + 5];
 
-                            if( G_PtInPolygon( (MyPoint *) pvert_list, 3, easting, northing ) ) {
+                            if (geo::G_PtInPolygon(pvert_list, sizeof(pvert_list) / sizeof(pvert_list[0]), easting, northing)) {
                                 ret = true;
                                 break;
                             }
@@ -5698,22 +5702,21 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
                             pvert_list[2].x = p_vertex[( it * 2 ) + 4];
                             pvert_list[2].y = p_vertex[( it * 2 ) + 5];
 
-                            if( G_PtInPolygon( (MyPoint *) pvert_list, 3, easting, northing ) ) {
+                            if (geo::G_PtInPolygon(pvert_list, sizeof(pvert_list) / sizeof(pvert_list[0]), easting, northing ) ) {
                                 ret = true;
                                 break;
                             }
                         }
                         break;
                 }
-
             }
             pTP = pTP->p_next;
         }
+    }
 
-    }           // if pPolyTessGeo
-
-    else if( obj->pPolyTrapGeo ) {
-        if( !obj->pPolyTrapGeo->IsOk() ) obj->pPolyTrapGeo->BuildTess();
+    else if (obj->pPolyTrapGeo) {
+        if (!obj->pPolyTrapGeo->IsOk())
+			obj->pPolyTrapGeo->BuildTess();
 
         geo::PolyTrapGroup *ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
@@ -5725,9 +5728,9 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
 
         int ntraps = ptg->ntrap_count;
         geo::trapz_t * ptraps = ptg->trap_array;
-        MyPoint *segs = (MyPoint *) ptg->ptrapgroup_geom; //TODO convert MyPoint to wxPoint2DDouble globally
+        geo::MyPoint *segs = (geo::MyPoint *) ptg->ptrapgroup_geom; //TODO convert MyPoint to wxPoint2DDouble globally
 
-        MyPoint pvert_list[4];
+        geo::MyPoint pvert_list[4];
 
         double y_rate = obj->y_rate;
         double y_origin = obj->y_origin;
@@ -5808,12 +5811,12 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
             pvert_list[3].x = ( xcb * obj->x_rate ) + obj->x_origin;
             pvert_list[3].y = loy;
 
-            if( G_PtInPolygon( (MyPoint *) pvert_list, 4, easting, northing ) ) {
+            if (geo::G_PtInPolygon(pvert_list, sizeof(pvert_list) / sizeof(pvert_list[0]), easting, northing)) {
                 ret = true;
                 break;
             }
         }
-    }           // if pPolyTrapGeo
+    }
 
     return ret;
 }

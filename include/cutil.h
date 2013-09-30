@@ -24,26 +24,4 @@
 #ifndef __CUTIL_H__
 #define __CUTIL_H__
 
-struct MyPoint
-{
-	double x;
-	double y;
-};
-
-struct float_2Dpt
-{
-	float y;
-	float x;
-};
-
-int G_PtInPolygon(MyPoint *, int, float, float);
-int G_PtInPolygon_FL(float_2Dpt *, int, float, float);
-
-inline int roundint(double x)
-{
-	int tmp = static_cast<int>(x);
-	tmp += (x - tmp >= 0.5) - (x - tmp <= -0.5);
-	return tmp;
-}
-
 #endif

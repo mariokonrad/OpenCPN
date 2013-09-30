@@ -32,9 +32,9 @@
 #include <geo/ExtendedGeometry.h>
 #include <geo/PolyTessGeo.h>
 #include <geo/GeoRef.h>
+#include <geo/Polygon.h>
 
 #include <navutil.h>
-#include <cutil.h>
 #include <MicrosoftCompatibility.h>
 #include <LogMessageOnce.h>
 
@@ -2313,8 +2313,8 @@ S57Obj * cm93chart::CreateS57Obj(
 
 						//      Get number of exterior ring points(vertices)
 						int npta  = xgeom->contour_array[0];
-						float_2Dpt *geoPt = new float_2Dpt[npta + 2];     // vertex array
-						float_2Dpt *ppt = geoPt;
+						geo::float_2Dpt *geoPt = new geo::float_2Dpt[npta + 2];     // vertex array
+						geo::float_2Dpt *ppt = geoPt;
 
 						pmcd->m_covr_lon_max = -1000.;
 						pmcd->m_covr_lon_min = 1000.;
@@ -2927,8 +2927,8 @@ void cm93chart::ProcessMCOVRObjects ( int cell_index, char subcell )
 
 						//      Get number of exterior ring points(vertices)
 						int npta  = xgeom->contour_array[0];
-						float_2Dpt *geoPt = new float_2Dpt[npta + 2];     // vertex array
-						float_2Dpt *ppt = geoPt;
+						geo::float_2Dpt *geoPt = new geo::float_2Dpt[npta + 2];     // vertex array
+						geo::float_2Dpt *ppt = geoPt;
 
 						//  Transcribe exterior ring points to vertex array, in Lat/Lon coordinates
 						pmcd->m_covr_lon_max = -1000.;

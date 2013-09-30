@@ -1435,13 +1435,14 @@ IF(WIN32 AND NOT UNIX)
 	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Language files/Langstrings_TURKISH.nsh.in" "${CMAKE_SOURCE_DIR}//buildwin/NSIS_Unicode/Include/Langstrings_TURKISH.nsh" @ONLY)
 ENDIF(WIN32 AND NOT UNIX)
 
-configure_file(version.h.in ${CMAKE_SOURCE_DIR}/include/version.h) #Gunther
+configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 # this dummy target is necessary to make sure the ADDITIONAL_MAKE_CLEAN_FILES directive is executed.
 # apparently, the base CMakeLists.txt file must have "some" target to activate all the clean steps.
 ADD_CUSTOM_TARGET(dummy COMMENT "dummy: Done." DEPENDS ${PACKAGE_NAME})
 
-SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/include/version.h)
+SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES version.h)
 
 INCLUDE(CPack)
 

@@ -26,17 +26,14 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- ******************************************************************************
- *
- *
- */
+ *****************************************************************************/
 
 #ifndef _S57_H_INCLUDED
 #define _S57_H_INCLUDED
 
 #include "ogr_feature.h"
 #include "iso8211.h"
-#include "S57ClassRegistrar.h"
+#include <chart/S57ClassRegistrar.h>
 
 class S57Reader;
 

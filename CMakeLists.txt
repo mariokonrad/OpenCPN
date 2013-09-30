@@ -486,6 +486,7 @@ SET(HDRS
 	src/chart/LineStyle.h
 	src/chart/OCPNPattern.h
 	src/chart/Lookup.h
+	src/chart/S57ClassRegistrar.h
 
 	src/geo/Polygon.h
 	src/geo/LineClip.h
@@ -501,7 +502,6 @@ SET(HDRS
 	src/garmin/usb_packet.h
 
 	include/ocpn_pixel.h
-	include/S57ClassRegistrar.h
 	include/navutil.h
 	include/ocpn_plugin.h
 	src/DataStream.h

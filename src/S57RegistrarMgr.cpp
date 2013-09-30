@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "S57RegistrarMgr.h"
-#include "S57ClassRegistrar.h"
+#include <chart/S57ClassRegistrar.h>
 #include <wx/log.h>
 
 #ifdef USE_S57

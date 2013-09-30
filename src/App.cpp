@@ -78,11 +78,11 @@
 
 #ifdef USE_S57
 	#include "s52plib.h"
-	#include "S57ClassRegistrar.h"
 	#include "S57QueryDialog.h"
 	#include "S57RegistrarMgr.h"
 	#include "cpl_csv.h"
 	#include <chart/CM93OffsetDialog.h>
+	#include <chart/S57ClassRegistrar.h>
 #endif
 
 unsigned int malloc_max;

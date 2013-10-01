@@ -36,6 +36,7 @@
 #include <Config.h>
 #include <Vector2D.h>
 #include <UserColors.h>
+#include <App.h>
 
 #include <geo/GeoRef.h>
 
@@ -149,7 +150,7 @@ Route * Routeman::FindRouteContainingWaypoint( RoutePoint *pWP )
 	return NULL;
 }
 
-wxArrayPtrVoid * Routeman::GetRouteArrayContaining(RoutePoint * pWP)
+wxArrayPtrVoid * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FIXME: return std container
 {
 	wxArrayPtrVoid * pArray = new wxArrayPtrVoid;
 

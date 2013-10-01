@@ -71,7 +71,7 @@ class ChartDB : public ChartDatabase
 				ChartTypeEnum New_Type,
 				ChartFamilyEnum New_Family_Fallback);
 
-		wxArrayPtrVoid *GetChartCache(void);
+		wxArrayPtrVoid *GetChartCache(void); // FIXME: breaks encapsulation
 		std::vector<int> GetCSArray(ChartStack *ps);
 
 		int GetStackEntry(ChartStack *ps, wxString fp);

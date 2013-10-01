@@ -24,14 +24,17 @@
 #ifndef __ROUTEMAN_H__
 #define __ROUTEMAN_H__
 
-#include <cmath>
-
-#include "App.h"
 #include "nmea0183.h"
-#include "ColorScheme.h"
+#include <ColorScheme.h>
+
+#include <wx/dynarray.h>
 
 class Route;
 class RoutePoint;
+class App;
+
+class wxBrush;
+class wxPen;
 
 class Routeman
 {
@@ -47,7 +50,7 @@ class Routeman
 
 		Route * FindRouteByGUID(const wxString & guid) const;
 		Route * FindRouteContainingWaypoint(RoutePoint *pWP);
-		wxArrayPtrVoid * GetRouteArrayContaining(RoutePoint *pWP);
+		wxArrayPtrVoid * GetRouteArrayContaining(RoutePoint *pWP); // FIXME: returns std container
 		bool DoesRouteContainSharedPoints( Route *pRoute );
 
 		bool ActivateRoute(Route *pRouteToActivate, RoutePoint *pStartPoint = NULL);

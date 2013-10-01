@@ -103,7 +103,7 @@ bool ChartDB::SaveBinary(const wxString & filename)
 	return ChartDatabase::Write(filename);
 }
 
-wxArrayPtrVoid * ChartDB::GetChartCache(void)
+wxArrayPtrVoid * ChartDB::GetChartCache(void) // FIXME: breaks ecapsulation
 {
 	return pChartCache;
 }

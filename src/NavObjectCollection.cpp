@@ -257,7 +257,7 @@ Track *GPXLoadTrack1( pugi::xml_node &trk_node, bool b_fullviz,
                         pWp->m_bIsInRoute = false;                      // Hack
                         pWp->m_bIsInTrack = true;
                         pWp->m_GPXTrkSegNo = GPXSeg;
-                        pWayPointMan->AddRoutePoint( pWp );
+                        pWayPointMan->m_pWayPointList->Append( pWp );
                     }
                 }
             }
@@ -409,7 +409,7 @@ Route *GPXLoadRoute1( pugi::xml_node &wpt_node, bool b_fullviz,
                     pWp->m_bIsInRoute = true;                      // Hack
                     pWp->m_bIsInTrack = false;
                     if( erp == NULL )
-                        pWayPointMan->AddRoutePoint( pWp );
+                        pWayPointMan->m_pWayPointList->Append( pWp );
             }
             else
             if( ChildName == _T ( "name" ) ) {
@@ -1072,7 +1072,7 @@ bool NavObjectCollection1::CreateNavObjGPXPoints( void )
     //    Routepoints that are not in any Route
     //    as indicated by m_bIsolatedMark == false
     
-    wxRoutePointListNode *node = pWayPointMan->GetWaypointList()->GetFirst();
+    wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
     
     RoutePoint *pr;
     
@@ -1225,7 +1225,7 @@ bool NavObjectCollection1::LoadAllGPXObjects()
                 RoutePoint *pExisting = WaypointExists( pWp->GetName(), pWp->m_lat, pWp->m_lon );
                 if( !pExisting ) {
                     if( NULL != pWayPointMan )
-                        pWayPointMan->AddRoutePoint( pWp );
+                        pWayPointMan->m_pWayPointList->Append( pWp );
                      pSelect->AddSelectableRoutePoint( pWp->m_lat, pWp->m_lon, pWp );
                 }
                 else
@@ -1264,7 +1264,7 @@ int NavObjectCollection1::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz
             pWp->m_bIsolatedMark = true;      // This is an isolated mark
             
             if(pWp) {
-                pWayPointMan->AddRoutePoint( pWp );
+                pWayPointMan->m_pWayPointList->Append( pWp );
                 pSelect->AddSelectableRoutePoint( pWp->m_lat, pWp->m_lon, pWp );
                 n_obj++;
             }
@@ -1372,20 +1372,20 @@ bool NavObjectChanges::ApplyChanges(void)
                 
                 if(!strcmp(child.first_child().value(), "add") ){
                     if( !pExisting ) 
-                        pWayPointMan->AddRoutePoint( pWp );
+                        pWayPointMan->m_pWayPointList->Append( pWp );
                     pSelect->AddSelectableRoutePoint( pWp->m_lat, pWp->m_lon, pWp );
                 }                    
                 
                 else if(!strcmp(child.first_child().value(), "update") ){
                     if( pExisting )
-                        pWayPointMan->RemoveRoutePoint( pExisting );
-                    pWayPointMan->AddRoutePoint( pWp );
+                        pWayPointMan->m_pWayPointList->DeleteObject( pExisting );
+                    pWayPointMan->m_pWayPointList->Append( pWp );
                     pSelect->AddSelectableRoutePoint( pWp->m_lat, pWp->m_lon, pWp );
                 }
                 
                 else if(!strcmp(child.first_child().value(), "delete") ){
                     if( pExisting )
-                        pWayPointMan->DestroyWaypoint( pExisting, false );
+                        pWayPointMan->DestroyWaypoint( pExisting );
                 }
                  
                 else

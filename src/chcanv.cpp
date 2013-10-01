@@ -6942,7 +6942,7 @@ void pupHandler_PasteWaypoint() {
         newPoint->m_bIsolatedMark = true;
         pSelect->AddSelectableRoutePoint( newPoint->m_lat, newPoint->m_lon, newPoint );
         pConfig->AddNewWayPoint( newPoint, -1 );
-        pWayPointMan->AddRoutePoint( newPoint );
+        pWayPointMan->m_pWayPointList->Append( newPoint );
         if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
     }
 
@@ -7042,7 +7042,7 @@ void pupHandler_PasteRoute() {
             newRoute->AddPoint( newPoint );
             pSelect->AddSelectableRoutePoint( newPoint->m_lat, newPoint->m_lon, newPoint );
             pConfig->AddNewWayPoint( newPoint, -1 );
-            pWayPointMan->AddRoutePoint( newPoint );
+            pWayPointMan->m_pWayPointList->Append( newPoint );
         }
         if( i > 1 && createNewRoute ) pSelect->AddSelectableRouteSegment( prevPoint->m_lat,
                 prevPoint->m_lon, curPoint->m_lat, curPoint->m_lon, prevPoint, newPoint, newRoute );
@@ -7286,7 +7286,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
                 pConfig->DeleteWayPoint( m_pFoundRoutePoint );
                 pSelect->DeleteSelectablePoint( m_pFoundRoutePoint, SELTYPE_ROUTEPOINT );
                 if( NULL != pWayPointMan )
-                    pWayPointMan->RemoveRoutePoint( m_pFoundRoutePoint );
+                    pWayPointMan->m_pWayPointList->DeleteObject( m_pFoundRoutePoint );
                 m_pFoundRoutePoint = NULL;
                 undo->AfterUndoableAction( NULL );
             }
@@ -9424,7 +9424,7 @@ void ChartCanvas::DrawAllWaypointsInBBox( ocpnDC& dc, LLBBox& BltBBox, const wxR
         wxDCClipper( *pdc, clipregion );
     }
 
-    wxRoutePointListNode *node = pWayPointMan->GetWaypointList()->GetFirst();
+    wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
 
     while( node ) {
         RoutePoint *pWP = node->GetData();

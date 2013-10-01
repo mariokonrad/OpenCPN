@@ -57,15 +57,10 @@ bool Select::AddSelectableRoutePoint( float slat, float slon, RoutePoint *pRoute
     pSelItem->m_bIsSelected = false;
     pSelItem->m_pData1 = pRoutePointAdd;
 
-    wxSelectableItemListNode *node;
-    
-    if( pRoutePointAdd->m_bIsInLayer )
-        node = pSelectList->Append( pSelItem );
+    if( pRoutePointAdd->m_bIsInLayer ) pSelectList->Append( pSelItem );
     else
-        node = pSelectList->Insert( pSelItem );
+        pSelectList->Insert( pSelItem );
 
-    pRoutePointAdd->SetSelectNode(node);
-    
     return true;
 }
 
@@ -141,8 +136,6 @@ bool Select::DeleteAllSelectableRoutePoints( Route *pr )
                 if( prp == ps ) {
                     delete pFindSel;
                     pSelectList->DeleteNode( node );   //delete node;
-                    prp->SetSelectNode( NULL );
-                    
                     node = pSelectList->GetFirst();
 
                     goto got_next_outer_node;
@@ -152,7 +145,7 @@ bool Select::DeleteAllSelectableRoutePoints( Route *pr )
         }
 
         node = node->GetNext();
-got_next_outer_node: continue;
+        got_next_outer_node: continue;
     }
     return true;
 }
@@ -283,14 +276,12 @@ SelectItem *Select::AddSelectablePoint( float slat, float slon, const void *pdat
     return pSelItem;
 }
 
-/*
 bool Select::DeleteAllPoints( void )
 {
     pSelectList->DeleteContents( true );
     pSelectList->Clear();
     return true;
 }
-*/
 
 bool Select::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
 {
@@ -306,12 +297,6 @@ bool Select::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
                 if( pdata == pFindSel->m_pData1 ) {
                     delete pFindSel;
                     delete node;
-                    
-                    if( SELTYPE_ROUTEPOINT == SeltypeToDelete ){
-                        RoutePoint *prp = (RoutePoint *)pdata;
-                        prp->SetSelectNode( NULL );
-                    }
-                    
                     return true;
                 }
             }
@@ -333,12 +318,6 @@ bool Select::DeleteAllSelectableTypePoints( int SeltypeToDelete )
         if( pFindSel->m_seltype == SeltypeToDelete ) {
             delete pFindSel;
             delete node;
-            
-            if( SELTYPE_ROUTEPOINT == SeltypeToDelete ){
-                RoutePoint *prp = (RoutePoint *)pFindSel->m_pData1;
-                prp->SetSelectNode( NULL );
-            }
-            
             node = pSelectList->GetFirst();
             goto got_next_node;
         }
@@ -348,28 +327,6 @@ bool Select::DeleteAllSelectableTypePoints( int SeltypeToDelete )
     }
     return true;
 }
-
-bool Select::DeleteSelectableRoutePoint( RoutePoint *prp )
-{
-    
-    if( NULL != prp ) {
-        wxSelectableItemListNode *node = (wxSelectableItemListNode *)prp->GetSelectNode();
-        if(node){
-            SelectItem *pFindSel = node->GetData();
-            if(pFindSel){
-                delete pFindSel;
-                delete node;            // automatically removes from list
-                prp->SetSelectNode( NULL );
-                return true;
-            }
-        }
-        else
-            return DeleteSelectablePoint( prp, SELTYPE_ROUTEPOINT );
-        
-    }
-    return false;
-}
-
 
 bool Select::ModifySelectablePoint( float lat, float lon, void *data, int SeltypeToModify )
 {

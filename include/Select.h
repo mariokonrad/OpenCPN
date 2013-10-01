@@ -77,8 +77,6 @@ public:
     //    Delete all selectable points in list by type
     bool DeleteAllSelectableTypePoints( int SeltypeToDelete );
 
-    bool DeleteSelectableRoutePoint( RoutePoint *prp );
-    
     //  Accessors
 
     SelectableItemList *GetSelectList()

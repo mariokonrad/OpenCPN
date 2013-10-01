@@ -70,7 +70,7 @@ void setup_current_user_color(const wxString & scheme)
 {
 	// Search the user color table array to find the proper hash table
 	for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
-		if (scheme.IsSameAs(*(*i)->tableName)) {
+		if (scheme.IsSameAs((*i)->tableName)) {
 
 			// Set up a pointer to the proper hash table
 			pcurrent_user_color_hash = user_color_hash_table[i - user_color_table.begin()];
@@ -204,17 +204,17 @@ void InitializeUserColors(void)
 
 	// Create 3 color table entries
 	ct = new colTable;
-	ct->tableName = new wxString(_T("DAY"));
+	ct->tableName = wxString(_T("DAY"));
 	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
 	ct = new colTable;
-	ct->tableName = new wxString(_T("DUSK"));
+	ct->tableName = wxString(_T("DUSK"));
 	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
 	ct = new colTable;
-	ct->tableName = new wxString(_T("NIGHT"));
+	ct->tableName = wxString(_T("NIGHT"));
 	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
@@ -226,7 +226,7 @@ void InitializeUserColors(void)
 			sscanf(buf, "Table:%s", TableName);
 
 			for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
-				if (!strcmp(TableName, (*i)->tableName->mb_str())) {
+				if (!strcmp(TableName, (*i)->tableName.mb_str())) {
 					ct = *i;
 					break;
 				}
@@ -286,7 +286,6 @@ void DeInitializeUserColors(void)
 			delete c;
 		}
 
-		delete ct->tableName; // wxString
 		delete ct->color; // wxArrayPtrVoid
 		delete ct; // colTable
 	}

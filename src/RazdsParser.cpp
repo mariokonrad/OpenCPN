@@ -112,7 +112,7 @@ int RazdsParser::ParseCOLS( FILE *fp )
 	// get color table name
 	ChopS52Line( pBuf, '\0' );
 
-	ct->tableName = new wxString( pBuf + 19, wxConvUTF8 );
+	ct->tableName = wxString(pBuf + 19, wxConvUTF8);
 
 	ColorTableArray->Add( (void *) ct );
 

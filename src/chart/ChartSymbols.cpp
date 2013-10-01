@@ -69,7 +69,7 @@ void ChartSymbols::DeleteGlobals(void)
 
 	for( unsigned int i = 0; i < colorTables->GetCount(); i++ ) {
 		colTable * ct = (colTable *) colorTables->Item( i );
-		delete ct->tableName;
+		ct->tableName.clear();
 		ct->colors.clear();
 		ct->wxColors.clear();
 		delete ct;
@@ -94,7 +94,7 @@ void ChartSymbols::ProcessColorTables( TiXmlElement* colortableNodes )
 		colTable *colortable = new colTable;
 
 		const char *pName = child->Attribute( "name" );
-		colortable->tableName = new wxString( pName, wxConvUTF8 );
+		colortable->tableName = wxString(pName, wxConvUTF8);
 
 		TiXmlElement* colorNode = child->FirstChild()->ToElement();
 
@@ -852,7 +852,7 @@ int ChartSymbols::FindColorTable(const wxString & tableName)
 {
 	for( unsigned int i = 0; i < colorTables->GetCount(); i++ ) {
 		colTable *ct = (colTable *) colorTables->Item( i );
-		if( tableName.IsSameAs( *ct->tableName ) ) {
+		if (tableName.IsSameAs(ct->tableName)) {
 			return i;
 		}
 	}

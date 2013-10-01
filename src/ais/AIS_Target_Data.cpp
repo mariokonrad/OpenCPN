@@ -142,6 +142,25 @@ AIS_Target_Data::~AIS_Target_Data()
       delete m_ptrack;
 }
 
+wxString AIS_Target_Data::GetFullName( void )
+{
+    wxString retName;
+    if( b_nameValid ) {
+        wxString shipName = trimAISField( ShipName );
+        if( shipName == _T("Unknown") )
+            retName = wxGetTranslation( shipName );
+        else
+            retName = shipName;
+
+        if( strlen( ShipNameExtension ) ) {
+            wxString shipNameExt = trimAISField( ShipNameExtension );
+            retName += shipNameExt;
+        }
+    }
+
+    return retName;
+}
+
 wxString AIS_Target_Data::BuildQueryResult( void )
 {
     wxString html;
@@ -162,13 +181,7 @@ wxString AIS_Target_Data::BuildQueryResult( void )
     html << tableStart << _T("<tr><td nowrap colspan=2>");
     if( ( Class != AIS_BASE ) && ( Class != AIS_SART ) ) {
         if( b_nameValid ) {
-            wxString shipName = trimAISField( ShipName );
-            wxString intlName;
-            if( shipName == _T("Unknown") ) intlName = wxGetTranslation( shipName );
-            else
-                intlName = shipName;
-            html << _T("<font size=+2><i><b>") << intlName ;
-            if( strlen( ShipNameExtension ) ) html << wxString( ShipNameExtension, wxConvUTF8 );
+            html << _T("<font size=+2><i><b>") << GetFullName() ;
             html << _T("</b></i></font>&nbsp;&nbsp;<b>");
         }
     }
@@ -189,7 +202,7 @@ wxString AIS_Target_Data::BuildQueryResult( void )
         MMSIstr = wxString::Format( _T("%09d"), abs( MMSI ) );
     }
     ClassStr = wxGetTranslation( Get_class_string( false ) );
-    
+
     if( Class == AIS_ATON ) {
         wxString cls(_T("AtoN: ") );
         cls += Get_vessel_type_string(false);
@@ -476,16 +489,7 @@ wxString AIS_Target_Data::GetRolloverString( void )
     wxString t;
     if( b_nameValid ) {
         result.Append( _T("\"") );
-        wxString uret = trimAISField( ShipName );
-        wxString ret;
-        if( uret == _T("Unknown") ) ret = wxGetTranslation( uret );
-        else
-            ret = uret;
-
-        result.Append( ret );
-        if( strlen( ShipNameExtension ) ) result.Append(
-                wxString( ShipNameExtension, wxConvUTF8 ) );
-
+        result.Append( GetFullName() );
         result.Append( _T("\" ") );
     }
     if( Class != AIS_GPSG_BUDDY ) {
@@ -508,7 +512,7 @@ wxString AIS_Target_Data::GetRolloverString( void )
         }
         else
             result.Append( wxGetTranslation( Get_class_string( false ) ) );
-        
+
         result.Append( _T("] ") );
         if( ( Class != AIS_ATON ) && ( Class != AIS_BASE ) ) {
             if( Class == AIS_SART ) {
@@ -551,7 +555,7 @@ wxString AIS_Target_Data::GetRolloverString( void )
     if( g_bAISRolloverShowCOG && ( SOG <= 102.2 )
             && ( ( Class != AIS_ATON ) && ( Class != AIS_BASE ) ) ) {
         if( result.Len() ) result << _T("\n");
-        
+
         double speed_show = toUsrSpeed( SOG );
         if( speed_show < 10.0 )
             result << wxString::Format( _T("SOG %.2f "), speed_show ) << getUsrSpeedUnit() << _T(" ");
@@ -566,7 +570,7 @@ wxString AIS_Target_Data::GetRolloverString( void )
                 else
                     result << wxString::Format( wxString("COG %03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( crs ) );
             }
-                
+
             else if( COG == 360.0 )
                 result << _(" COG Unavailable");
             else if( crs == 360 )

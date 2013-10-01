@@ -543,55 +543,60 @@ void WayPointman::DeleteAllWaypoints( bool b_delete_used )
 
 }
 
-void WayPointman::DestroyWaypoint(RoutePoint * pRp, bool b_update_changeset)
+void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_changeset)
 {
-	if( pRp ) {
-		// Get a list of all routes containing this point
-		// and remove the point from them all
-		wxArrayPtrVoid *proute_array = g_pRouteMan->GetRouteArrayContaining( pRp );
-		if( proute_array ) {
-			for( unsigned int ir = 0; ir < proute_array->GetCount(); ir++ ) {
-				Route *pr = (Route *) proute_array->Item( ir );
-				pr->RemovePoint( pRp );
-			}
+	if (!route_point)
+		return;
 
-			//    Scrub the routes, looking for one-point routes
-			for( unsigned int ir = 0; ir < proute_array->GetCount(); ir++ ) {
-				Route *pr = (Route *) proute_array->Item( ir );
-				if( pr->GetnPoints() < 2 ) {
-					pConfig->m_bSkipChangeSetUpdate = true;
-					pConfig->DeleteConfigRoute( pr );
-					g_pRouteMan->DeleteRoute( pr );
-					pConfig->m_bSkipChangeSetUpdate = false;
-				}
-			}
+	// Get a list of all routes containing this point
+	// and remove the point from them all
+	// FIXME: handling the list of route should be one in the route list manager, not here
+	wxArrayPtrVoid * route_array = g_pRouteMan->GetRouteArrayContaining(route_point); // FIXME: return a std container
+	if (route_array) {
 
-			delete proute_array;
+		for (unsigned int ir = 0; ir < route_array->GetCount(); ++ir) {
+			Route * route = (Route *) route_array->Item(ir);
+			route->RemovePoint(route_point);
 		}
 
-		// Now it is safe to delete the point
-		if (!b_update_changeset)
-			pConfig->m_bSkipChangeSetUpdate = true; // turn OFF change-set updating if requested
+		// Scrub the routes, looking for one-point routes
+		for (unsigned int ir = 0; ir < route_array->GetCount(); ++ir) {
+			Route * route = (Route *) route_array->Item(ir);
+			if (route->GetnPoints() < 2) {
+				pConfig->m_bSkipChangeSetUpdate = true;
+				pConfig->DeleteConfigRoute(route);
+				g_pRouteMan->DeleteRoute(route);
+				pConfig->m_bSkipChangeSetUpdate = false;
+			}
+		}
 
-		pConfig->DeleteWayPoint(pRp);
-
-		pConfig->m_bSkipChangeSetUpdate = false;
-
-		pSelect->DeleteSelectablePoint(pRp, Select::TYPE_ROUTEPOINT);
-
-		//TODO  FIXME
-		// Some memory corruption occurs if the wp is deleted here.
-		// To continue running OK, it is sufficient to simply remove the wp from the global list
-		// This will leak, although called infrequently....
-		//  12/15/10...Seems to occur only on MOB delete....
-
-		if (NULL != pWayPointMan) // FIXME: this is already within the object, no need to reference the global instance
-			pWayPointMan->remove(pRp);
-
-		//    The RoutePoint might be currently in use as an anchor watch point
-		if( pRp == pAnchorWatchPoint1 ) pAnchorWatchPoint1 = NULL;
-		if( pRp == pAnchorWatchPoint2 ) pAnchorWatchPoint2 = NULL;
+		delete route_array;
 	}
+
+	// Now it is safe to delete the point
+	if (!b_update_changeset)
+		pConfig->m_bSkipChangeSetUpdate = true; // turn OFF change-set updating if requested
+
+	pConfig->DeleteWayPoint(route_point);
+
+	pConfig->m_bSkipChangeSetUpdate = false;
+
+	pSelect->DeleteSelectablePoint(route_point, Select::TYPE_ROUTEPOINT);
+
+	//TODO  FIXME
+	// Some memory corruption occurs if the wp is deleted here.
+	// To continue running OK, it is sufficient to simply remove the wp from the global list
+	// This will leak, although called infrequently....
+	//  12/15/10...Seems to occur only on MOB delete....
+
+	if (NULL != pWayPointMan) // FIXME: this is already within the object, no need to reference the global instance
+		pWayPointMan->remove(route_point);
+
+	//    The RoutePoint might be currently in use as an anchor watch point
+	if (route_point == pAnchorWatchPoint1)
+		pAnchorWatchPoint1 = NULL;
+	if (route_point == pAnchorWatchPoint2)
+		pAnchorWatchPoint2 = NULL;
 }
 
 int WayPointman::GetNumIcons(void) const

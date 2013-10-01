@@ -134,26 +134,23 @@ bool Select::DeleteAllSelectableRouteSegments( Route *pr )
 	return true;
 }
 
-bool Select::DeleteAllSelectableRoutePoints( Route *pr )
+bool Select::DeleteAllSelectableRoutePoints(Route * pr)
 {
-	SelectItem *pFindSel;
+	// Iterate on the select list
+	wxSelectableItemListNode * node = pSelectList->GetFirst();
+	while (node) {
+		SelectItem * pFindSel = node->GetData();
+		if (pFindSel->m_seltype == TYPE_ROUTEPOINT) {
+			RoutePoint * ps = (RoutePoint *) pFindSel->m_pData1;
 
-	//    Iterate on the select list
-	wxSelectableItemListNode *node = pSelectList->GetFirst();
+			// inner loop iterates on the route's point list
+			wxRoutePointListNode * pnode = pr->pRoutePointList->GetFirst();
+			while (pnode) {
+				RoutePoint * prp = pnode->GetData();
 
-	while( node ) {
-		pFindSel = node->GetData();
-		if( pFindSel->m_seltype == TYPE_ROUTEPOINT ) {
-			RoutePoint *ps = (RoutePoint *) pFindSel->m_pData1;
-
-			//    inner loop iterates on the route's point list
-			wxRoutePointListNode *pnode = ( pr->pRoutePointList )->GetFirst();
-			while( pnode ) {
-				RoutePoint *prp = pnode->GetData();
-
-				if( prp == ps ) {
+				if (prp == ps) {
 					delete pFindSel;
-					pSelectList->DeleteNode( node );   //delete node;
+					pSelectList->DeleteNode(node);
 					node = pSelectList->GetFirst();
 
 					continue;
@@ -161,7 +158,6 @@ bool Select::DeleteAllSelectableRoutePoints( Route *pr )
 				pnode = pnode->GetNext();
 			}
 		}
-
 		node = node->GetNext();
 	}
 	return true;

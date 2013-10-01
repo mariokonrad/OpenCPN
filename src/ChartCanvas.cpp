@@ -1996,7 +1996,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent &)
                         s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
                     else
                         s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
-                    
+
                     s << FormatDistanceAdaptive( dist );
 
                     // Compute and display cumulative distance from route start point to current
@@ -4209,8 +4209,7 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
             double true_scale_display = floor( VPoint.chart_scale / 100. ) * 100.;
             if( true_scale_display < g_Show_Target_Name_Scale ) { // from which scale to display name
 
-                wxString tgt_name =wxString::FromUTF8( td->ShipName );
-                tgt_name = tgt_name.substr( 0, tgt_name.find( _T ( "@" ), 0 ) );
+                wxString tgt_name = td->GetFullName();
                 tgt_name = tgt_name.substr( 0, tgt_name.find( _T ( "Unknown" ), 0) );
 
                 if ( tgt_name != wxEmptyString ) {
@@ -4999,10 +4998,10 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
     mouse_leftisdown = event.LeftIsDown();
 
 //      Retrigger the route leg popup timer
-    if( m_pRouteRolloverWin && m_pRouteRolloverWin->IsActive() ) m_RolloverPopupTimer.Start( 10,
-                wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
+    if (m_pRouteRolloverWin && m_pRouteRolloverWin->IsActive())
+		m_RolloverPopupTimer.Start(10, wxTIMER_ONE_SHOT); // faster response while the rollover is turned on
     else
-        m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
+        m_RolloverPopupTimer.Start(m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT);
 
 //  Retrigger the cursor tracking timer
     pCurTrackTimer->Start( m_curtrack_timer_msec, wxTIMER_ONE_SHOT );
@@ -6476,7 +6475,8 @@ void ChartCanvas::ShowObjectQueryWindow( int x, int y, float zlat, float zlon )
     }
 }
 
-void ChartCanvas::RemovePointFromRoute( RoutePoint* point, Route* route ) {
+void ChartCanvas::RemovePointFromRoute( RoutePoint* point, Route* route )
+{
     //  Rebuild the route selectables
     pSelect->DeleteAllSelectableRoutePoints( route );
     pSelect->DeleteAllSelectableRouteSegments( route );
@@ -6498,7 +6498,8 @@ void ChartCanvas::RemovePointFromRoute( RoutePoint* point, Route* route ) {
     }
 }
 
-void ChartCanvas::ShowMarkPropertiesDialog( RoutePoint* markPoint ) {
+void ChartCanvas::ShowMarkPropertiesDialog( RoutePoint* markPoint )
+{
     if( NULL == pMarkPropDialog )    // There is one global instance of the MarkProp Dialog
         pMarkPropDialog = new MarkInfoImpl( this );
 
@@ -8237,11 +8238,12 @@ int ChartCanvas::GetNextContextMenuId()
     return ID_DEF_MENU_LAST + 100;  //Allowing for 100 dynamic menu item identifiers
 }
 
-bool ChartCanvas::SetCursor( const wxCursor &c )
+bool ChartCanvas::SetCursor(const wxCursor & c)
 {
-    if( g_bopengl ) return m_glcc->SetCursor( c );
+    if (g_bopengl)
+		return m_glcc->SetCursor(c);
     else
-        return wxWindow::SetCursor( c );
+        return wxWindow::SetCursor(c);
 }
 
 void ChartCanvas::Refresh( bool eraseBackground, const wxRect *rect )
@@ -8252,9 +8254,10 @@ void ChartCanvas::Refresh( bool eraseBackground, const wxRect *rect )
     //      Retrigger the route leg popup timer
     //      This handles the case when the chart is moving in auto-follow mode, but no user mouse input is made.
     //      The timer handler may Hide() the popup if the chart moved enough
-    if( (m_pRouteRolloverWin && m_pRouteRolloverWin->IsActive()) || (m_pAISRolloverWin && m_pAISRolloverWin->IsActive()) )
-        m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );
-
+    //      n.b.  We use slightly longer oneshot value to allow this method's Refresh() to complete before
+    //      ptentially getting another Refresh() in the popup timer handler.
+    if ((m_pRouteRolloverWin && m_pRouteRolloverWin->IsActive()) || (m_pAISRolloverWin && m_pAISRolloverWin->IsActive()))
+        m_RolloverPopupTimer.Start(500, wxTIMER_ONE_SHOT);
 
     if( g_bopengl ) {
 
@@ -8278,14 +8281,12 @@ void ChartCanvas::Refresh( bool eraseBackground, const wxRect *rect )
 
     } else
         wxWindow::Refresh( eraseBackground, rect );
-
 }
 
 void ChartCanvas::Update()
 {
     if( g_bopengl ) {
         m_glcc->Update();
-//          m_glcc->render(); /* for some reason repaint not triggered */
     } else
         wxWindow::Update();
 }

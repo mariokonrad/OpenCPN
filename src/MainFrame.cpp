@@ -3299,6 +3299,9 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	check_anchorwatch_1();
 	check_anchorwatch_2();
 
+	if ((pAnchorWatchPoint1 || pAnchorWatchPoint2) && !bGPSValid)
+		AnchorAlertOn1 = true;
+
 	// Send current nav status data to log file on every half hour   // pjotrc 2010.02.09
 
 	wxDateTime lognow = wxDateTime::Now().MakeGMT();   // pjotrc 2010.02.09

@@ -24,16 +24,19 @@
 #include "UserColors.h"
 #include <s52s57.h>
 #include <cstring>
-#include <wx/dynarray.h>
+#include <vector>
 
 #ifdef USE_S57
-#include <s52plib.h>
-extern s52plib * ps52plib;
+	#include <s52plib.h>
+	extern s52plib * ps52plib;
 #endif
 
-static wxArrayPtrVoid * UserColorTableArray;
-static wxArrayPtrVoid * UserColourHashTableArray;
-static wxColorHashMap * pcurrent_user_color_hash;
+typedef std::vector<colTable *> UserColorTable;
+typedef std::vector<wxColorHashMap *> UserColorHashTable;
+
+static UserColorTable user_color_table;
+static UserColorHashTable user_color_hash_table;
+static wxColorHashMap * pcurrent_user_color_hash = NULL;
 
 
 wxColour GetGlobalColor(wxString colorName)
@@ -46,13 +49,13 @@ wxColour GetGlobalColor(wxString colorName)
 		ret_color = ps52plib->getwxColour(colorName);
 
 		if (!ret_color.Ok()) { //261 likes Ok(), 283 likes IsOk()...
-			if (NULL != pcurrent_user_color_hash)
+			if (pcurrent_user_color_hash)
 				ret_color = (*pcurrent_user_color_hash)[colorName];
 		}
 	} else
 #endif
 	{
-		if (NULL != pcurrent_user_color_hash)
+		if (pcurrent_user_color_hash)
 			ret_color = (*pcurrent_user_color_hash)[colorName];
 	}
 
@@ -65,18 +68,15 @@ wxColour GetGlobalColor(wxString colorName)
 
 void setup_current_user_color(const wxString & scheme)
 {
-	//Search the user color table array to find the proper hash table
-	int Usercolortable_index = 0;
-	for (unsigned int i = 0; i < UserColorTableArray->GetCount(); ++i) {
-		colTable * ct = (colTable *) UserColorTableArray->Item(i);
-		if (scheme.IsSameAs(*ct->tableName)) {
-			Usercolortable_index = i;
-			break;
+	// Search the user color table array to find the proper hash table
+	for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
+		if (scheme.IsSameAs(*(*i)->tableName)) {
+
+			// Set up a pointer to the proper hash table
+			pcurrent_user_color_hash = user_color_hash_table[i - user_color_table.begin()];
+			return;
 		}
 	}
-
-	// Set up a pointer to the proper hash table
-	pcurrent_user_color_hash = (wxColorHashMap *)UserColourHashTableArray->Item(Usercolortable_index);
 }
 
 static int get_static_line(char * d, const char ** p, int index, int n)
@@ -199,24 +199,24 @@ void InitializeUserColors(void)
 	const char ** p = usercolors;
 	colTable * ct;
 
-	UserColorTableArray = new wxArrayPtrVoid;
-	UserColourHashTableArray = new wxArrayPtrVoid;
+	user_color_table.clear();
+	user_color_hash_table.clear();
 
 	// Create 3 color table entries
 	ct = new colTable;
 	ct->tableName = new wxString(_T("DAY"));
 	ct->color = new wxArrayPtrVoid;
-	UserColorTableArray->Add((void *)ct);
+	user_color_table.push_back(ct);
 
 	ct = new colTable;
 	ct->tableName = new wxString(_T("DUSK"));
 	ct->color = new wxArrayPtrVoid;
-	UserColorTableArray->Add((void *)ct);
+	user_color_table.push_back(ct);
 
 	ct = new colTable;
 	ct->tableName = new wxString(_T("NIGHT"));
 	ct->color = new wxArrayPtrVoid;
-	UserColorTableArray->Add((void *)ct);
+	user_color_table.push_back(ct);
 
 	int index = 0;
 	char buf[80];
@@ -225,10 +225,9 @@ void InitializeUserColors(void)
 			char TableName[20];
 			sscanf(buf, "Table:%s", TableName);
 
-			for (unsigned int it = 0; it < UserColorTableArray->GetCount(); it++) {
-				colTable * ctp = (colTable *)(UserColorTableArray->Item(it));
-				if (!strcmp(TableName, ctp->tableName->mb_str())) {
-					ct = ctp;
+			for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
+				if (!strcmp(TableName, (*i)->tableName->mb_str())) {
+					ct = *i;
 					break;
 				}
 			}
@@ -258,15 +257,13 @@ void InitializeUserColors(void)
 	}
 
 	// Now create the Hash tables
+	user_color_hash_table.reserve(user_color_table.size());
+	for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
+		wxColorHashMap * phash = new wxColorHashMap;
+		user_color_hash_table.push_back(phash);
 
-	for (unsigned int its = 0; its < UserColorTableArray->GetCount(); ++its) {
-		wxColorHashMap *phash = new wxColorHashMap;
-		UserColourHashTableArray->Add((void *)phash);
-
-		colTable * ctp = (colTable *)(UserColorTableArray->Item(its));
-
-		for (unsigned int ic = 0; ic < ctp->color->GetCount(); ++ic) {
-			S52color * c2 = (S52color *)(ctp->color->Item(ic));
+		for (unsigned int ic = 0; ic < (*i)->color->GetCount(); ++ic) {
+			S52color * c2 = (S52color *)((*i)->color->Item(ic));
 
 			wxColour c(c2->R, c2->G, c2->B);
 			wxString key(c2->colName, wxConvUTF8);
@@ -276,31 +273,28 @@ void InitializeUserColors(void)
 
 	// Establish a default hash table pointer
 	// in case a color is needed before ColorScheme is set
-	pcurrent_user_color_hash = (wxColorHashMap *)UserColourHashTableArray->Item(0);
+	if (user_color_hash_table.size())
+		pcurrent_user_color_hash = user_color_hash_table[0];
 }
 
 void DeInitializeUserColors(void)
 {
-	for (unsigned int i = 0; i < UserColorTableArray->GetCount(); ++i) {
-		colTable *ct = (colTable *) UserColorTableArray->Item(i);
-
-		for( unsigned int j = 0; j < ct->color->GetCount(); ++j) {
+	for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
+		colTable * ct = *i;
+		for (unsigned int j = 0; j < ct->color->GetCount(); ++j) {
 			S52color * c = (S52color *) ct->color->Item(j);
-			delete c; //color
+			delete c;
 		}
 
 		delete ct->tableName; // wxString
 		delete ct->color; // wxArrayPtrVoid
 		delete ct; // colTable
 	}
+	user_color_table.clear();
 
-	delete UserColorTableArray;
-
-	for (unsigned int i = 0; i < UserColourHashTableArray->GetCount(); ++i) {
-		wxColorHashMap * phash = (wxColorHashMap *) UserColourHashTableArray->Item(i);
-		delete phash;
+	for (UserColorHashTable::iterator i = user_color_hash_table.begin(); i != user_color_hash_table.end(); ++i) {
+		delete *i;
 	}
-
-	delete UserColourHashTableArray;
+	user_color_hash_table.clear();
 }
 

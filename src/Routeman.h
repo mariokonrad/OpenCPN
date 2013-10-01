@@ -43,11 +43,11 @@ class Routeman
 		void DeleteAllRoutes(void);
 		void DeleteAllTracks(void);
 
-		void DeleteTrack(Route *pRoute);
+		void DeleteTrack(Route * pRoute);
 
 		Route * FindRouteByGUID(const wxString & guid) const;
-		Route *FindRouteContainingWaypoint(RoutePoint *pWP);
-		wxArrayPtrVoid *GetRouteArrayContaining(RoutePoint *pWP);
+		Route * FindRouteContainingWaypoint(RoutePoint *pWP);
+		wxArrayPtrVoid * GetRouteArrayContaining(RoutePoint *pWP);
 		bool DoesRouteContainSharedPoints( Route *pRoute );
 
 		bool ActivateRoute(Route *pRouteToActivate, RoutePoint *pStartPoint = NULL);
@@ -57,29 +57,29 @@ class Routeman
 
 		bool UpdateProgress();
 		bool UpdateAutopilot();
-		bool DeactivateRoute( bool b_arrival = false );
-		bool IsAnyRouteActive(void) const { return pActiveRoute != NULL; } // FIXME: move to cpp
+		bool DeactivateRoute(bool b_arrival = false);
+		bool IsAnyRouteActive(void) const;
 		void SetColorScheme(ColorScheme cs);
 
-		Route *GetpActiveRoute(){ return pActiveRoute;}
-		RoutePoint *GetpActivePoint(){ return pActivePoint;}
-		double GetCurrentRngToActivePoint(){ return CurrentRngToActivePoint;}
-		double GetCurrentBrgToActivePoint(){ return CurrentBrgToActivePoint;}
-		double GetCurrentRngToActiveNormalArrival(){ return CurrentRangeToActiveNormalCrossing;}
-		double GetCurrentXTEToActivePoint(){ return CurrentXTEToActivePoint;}
-		double GetCurrentSegmentCourse(){ return CurrentSegmentCourse;}
-		int   GetXTEDir(){ return XTEDir;}
+		Route *GetpActiveRoute();
+		RoutePoint *GetpActivePoint();
+		double GetCurrentRngToActivePoint() const;
+		double GetCurrentBrgToActivePoint() const;
+		double GetCurrentRngToActiveNormalArrival() const;
+		double GetCurrentXTEToActivePoint() const;
+		double GetCurrentSegmentCourse() const;
+		int GetXTEDir() const;
 
-		wxPen   * GetRoutePen(void){return m_pRoutePen;}
-		wxPen   * GetSelectedRoutePen(void){return m_pSelectedRoutePen;}
-		wxPen   * GetActiveRoutePen(void){return m_pActiveRoutePen;}
-		wxPen   * GetActiveRoutePointPen(void){return m_pActiveRoutePointPen;}
-		wxPen   * GetRoutePointPen(void){return m_pRoutePointPen;}
-		wxBrush * GetRouteBrush(void){return m_pRouteBrush;}
-		wxBrush * GetSelectedRouteBrush(void){return m_pSelectedRouteBrush;}
-		wxBrush * GetActiveRouteBrush(void){return m_pActiveRouteBrush;}
-		wxBrush * GetActiveRoutePointBrush(void){return m_pActiveRoutePointBrush;}
-		wxBrush * GetRoutePointBrush(void){return m_pRoutePointBrush;}
+		wxPen * GetRoutePen(void);
+		wxPen * GetSelectedRoutePen(void);
+		wxPen * GetActiveRoutePen(void);
+		wxPen * GetActiveRoutePointPen(void);
+		wxPen * GetRoutePointPen(void);
+		wxBrush * GetRouteBrush(void);
+		wxBrush * GetSelectedRouteBrush(void);
+		wxBrush * GetActiveRouteBrush(void);
+		wxBrush * GetActiveRoutePointBrush(void);
+		wxBrush * GetRoutePointBrush(void);
 
 		wxString GetRouteReverseMessage(void);
 

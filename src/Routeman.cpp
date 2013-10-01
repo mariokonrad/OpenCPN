@@ -131,8 +131,8 @@ bool Routeman::IsRouteValid(Route * pRoute) const
 	return RouteExists(pRoute);
 }
 
-//    Make a 2-D search to find the route containing a given waypoint
-Route *Routeman::FindRouteContainingWaypoint( RoutePoint *pWP )
+// Make a 2-D search to find the route containing a given waypoint
+Route * Routeman::FindRouteContainingWaypoint( RoutePoint *pWP )
 {
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route * route = *i;
@@ -149,7 +149,7 @@ Route *Routeman::FindRouteContainingWaypoint( RoutePoint *pWP )
 	return NULL;
 }
 
-wxArrayPtrVoid *Routeman::GetRouteArrayContaining( RoutePoint *pWP )
+wxArrayPtrVoid * Routeman::GetRouteArrayContaining(RoutePoint * pWP)
 {
 	wxArrayPtrVoid * pArray = new wxArrayPtrVoid;
 
@@ -159,13 +159,13 @@ wxArrayPtrVoid *Routeman::GetRouteArrayContaining( RoutePoint *pWP )
 		while( waypoint_node ) {
 			RoutePoint *prp = waypoint_node->GetData();
 			if (prp == pWP)
-				pArray->Add((void *)route);
+				pArray->push_back((void *)route);
 
 			waypoint_node = waypoint_node->GetNext(); // next waypoint
 		}
 	}
 
-	if (pArray->GetCount()) {
+	if (pArray->size()) {
 		return pArray;
 	} else {
 		delete pArray;
@@ -498,6 +498,62 @@ void Routeman::DoAdvance(void)
 	}
 }
 
+bool Routeman::IsAnyRouteActive(void) const
+{
+	return pActiveRoute != NULL;
+}
+
+Route * Routeman::GetpActiveRoute()
+{
+	return pActiveRoute;
+}
+
+RoutePoint *Routeman::GetpActivePoint()
+{
+	return pActivePoint;
+}
+
+double Routeman::GetCurrentRngToActivePoint() const
+{
+	return CurrentRngToActivePoint;
+}
+
+double Routeman::GetCurrentBrgToActivePoint() const
+{
+	return CurrentBrgToActivePoint;
+}
+
+double Routeman::GetCurrentRngToActiveNormalArrival() const
+{
+	return CurrentRangeToActiveNormalCrossing;
+}
+
+double Routeman::GetCurrentXTEToActivePoint() const
+{
+	return CurrentXTEToActivePoint;
+}
+
+double Routeman::GetCurrentSegmentCourse() const
+{
+	return CurrentSegmentCourse;
+}
+
+int Routeman::GetXTEDir() const
+{
+	return XTEDir;
+}
+
+wxPen * Routeman::GetRoutePen(void){return m_pRoutePen;}
+wxPen * Routeman::GetSelectedRoutePen(void){return m_pSelectedRoutePen;}
+wxPen * Routeman::GetActiveRoutePen(void){return m_pActiveRoutePen;}
+wxPen * Routeman::GetActiveRoutePointPen(void){return m_pActiveRoutePointPen;}
+wxPen * Routeman::GetRoutePointPen(void){return m_pRoutePointPen;}
+wxBrush * Routeman::GetRouteBrush(void){return m_pRouteBrush;}
+wxBrush * Routeman::GetSelectedRouteBrush(void){return m_pSelectedRouteBrush;}
+wxBrush * Routeman::GetActiveRouteBrush(void){return m_pActiveRouteBrush;}
+wxBrush * Routeman::GetActiveRoutePointBrush(void){return m_pActiveRoutePointBrush;}
+wxBrush * Routeman::GetRoutePointBrush(void){return m_pRoutePointBrush;}
+
 bool Routeman::DeactivateRoute( bool b_arrival )
 {
 	if( pActivePoint ) {
@@ -682,38 +738,41 @@ bool Routeman::UpdateAutopilot()
 
 bool Routeman::DoesRouteContainSharedPoints( Route *pRoute )
 {
-	if( pRoute ) {
-		// walk the route, looking at each point to see if it is used by another route
-		// or is isolated
-		wxRoutePointListNode *pnode = ( pRoute->pRoutePointList )->GetFirst();
-		while( pnode ) {
-			RoutePoint *prp = pnode->GetData();
+	if (!pRoute)
+		return false;
 
-			// check all other routes to see if this point appears in any other route
-			wxArrayPtrVoid *pRA = GetRouteArrayContaining( prp );
+	// walk the route, looking at each point to see if it is used by another route
+	// or is isolated
+	wxRoutePointListNode * pnode = pRoute->pRoutePointList->GetFirst();
+	while (pnode) {
+		RoutePoint * prp = pnode->GetData();
 
-			if( pRA ) {
-				for( unsigned int ir = 0; ir < pRA->GetCount(); ir++ ) {
-					Route *pr = (Route *) pRA->Item( ir );
-					if( pr == pRoute)
-						continue;               // self
-					else
-						return true;
-				}
+		// check all other routes to see if this point appears in any other route
+		wxArrayPtrVoid * pRA = GetRouteArrayContaining(prp);
+
+		if (pRA) {
+			for (unsigned int ir = 0; ir < pRA->GetCount(); ++ir) {
+				Route * route = static_cast<Route *>(pRA->Item(ir));
+				if (route == pRoute)
+					continue; // self
+				else
+					return true;
 			}
-
-			if( pnode ) pnode = pnode->GetNext();
 		}
 
-		//      Now walk the route again, looking for isolated type shared waypoints
-		pnode = ( pRoute->pRoutePointList )->GetFirst();
-		while( pnode ) {
-			RoutePoint *prp = pnode->GetData();
-			if( prp->m_bKeepXRoute == true )
-				return true;
+		if (pnode)
+			pnode = pnode->GetNext();
+	}
 
-			if( pnode ) pnode = pnode->GetNext();
-		}
+	// Now walk the route again, looking for isolated type shared waypoints
+	pnode = pRoute->pRoutePointList->GetFirst();
+	while (pnode) {
+		RoutePoint * prp = pnode->GetData();
+		if (prp->m_bKeepXRoute == true)
+			return true;
+
+		if (pnode)
+			pnode = pnode->GetNext();
 	}
 
 	return false;

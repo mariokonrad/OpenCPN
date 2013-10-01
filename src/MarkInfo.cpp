@@ -743,20 +743,18 @@ bool MarkInfoImpl::SaveChanges()
 			pSelect->UpdateSelectableRouteSegments( m_pRoutePoint );
 
 			// Get an array of all routes using this point
-			wxArrayPtrVoid *pEditRouteArray = g_pRouteMan->GetRouteArrayContaining( m_pRoutePoint );
-
-			if( pEditRouteArray ) {
-				for( unsigned int ir = 0; ir < pEditRouteArray->GetCount(); ir++ ) {
-					Route *pr = (Route *) pEditRouteArray->Item( ir );
-					pr->CalculateBBox();
-					pr->UpdateSegmentDistances();
-
-					pConfig->UpdateRoute( pr );
+			wxArrayPtrVoid * pEditRouteArray = g_pRouteMan->GetRouteArrayContaining(m_pRoutePoint);
+			if (pEditRouteArray) {
+				for (unsigned int ir = 0; ir < pEditRouteArray->GetCount(); ++ir) {
+					Route * route = static_cast<Route *>(pEditRouteArray->Item(ir));
+					route->CalculateBBox();
+					route->UpdateSegmentDistances();
+					pConfig->UpdateRoute(route);
 				}
 				delete pEditRouteArray;
 			}
 		} else
-			pConfig->UpdateWayPoint( m_pRoutePoint );
+			pConfig->UpdateWayPoint(m_pRoutePoint);
 
 		// No general settings need be saved pConfig->UpdateSettings();
 	}

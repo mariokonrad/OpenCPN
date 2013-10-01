@@ -555,13 +555,13 @@ void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_change
 	if (route_array) {
 
 		for (unsigned int ir = 0; ir < route_array->GetCount(); ++ir) {
-			Route * route = (Route *) route_array->Item(ir);
+			Route * route = static_cast<Route *>(route_array->Item(ir));
 			route->RemovePoint(route_point);
 		}
 
 		// Scrub the routes, looking for one-point routes
 		for (unsigned int ir = 0; ir < route_array->GetCount(); ++ir) {
-			Route * route = (Route *) route_array->Item(ir);
+			Route * route = static_cast<Route *>(route_array->Item(ir));
 			if (route->GetnPoints() < 2) {
 				pConfig->m_bSkipChangeSetUpdate = true;
 				pConfig->DeleteConfigRoute(route);

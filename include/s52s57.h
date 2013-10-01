@@ -239,7 +239,7 @@ WX_DECLARE_STRING_HASH_MAP( wxColour, wxColorHashMap );
 WX_DECLARE_STRING_HASH_MAP( S52color, colorHashMap );
 
 typedef struct _colTable {
-	wxString *tableName;
+	wxString *tableName; // FIXME: not as pointer, just wxString
 	wxString rasterFileName;
 	wxArrayPtrVoid *color;
 	colorHashMap colors;

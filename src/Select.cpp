@@ -124,11 +124,13 @@ bool Select::DeleteAllSelectableRouteSegments( Route *pr )
 				delete pFindSel;
 				pSelectList->DeleteNode( node );   //delete node;
 				node = pSelectList->GetFirst();     // reset the top node
-				continue;
+				goto got_next_outer_node;
 			}
 		}
 
 		node = node->GetNext();
+got_next_outer_node:
+		continue;
 	}
 
 	return true;
@@ -153,12 +155,14 @@ bool Select::DeleteAllSelectableRoutePoints(Route * pr)
 					pSelectList->DeleteNode(node);
 					node = pSelectList->GetFirst();
 
-					continue;
+					goto got_next_outer_node;
 				}
 				pnode = pnode->GetNext();
 			}
 		}
 		node = node->GetNext();
+got_next_outer_node:
+		continue;
 	}
 	return true;
 }

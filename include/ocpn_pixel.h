@@ -26,7 +26,9 @@
 #ifndef _OCPN_PIXEL_H_
 #define _OCPN_PIXEL_H_
 
-#include "dychart.h"                // for configuration stuff
+#include "dychart.h"
+
+#include <wx/image.h>
 
 wxImage Image_Rotate(
 		wxImage & base_image,

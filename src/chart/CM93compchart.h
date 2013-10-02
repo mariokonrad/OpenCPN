@@ -25,7 +25,8 @@
 #define __CHART__CM93COMPCHART__H__
 
 #include <chart/S57Chart.h>
-#include "s52s57.h"
+#include <chart/s52s57.h>
+
 #include <wx/string.h>
 
 class CM93OffsetDialog;

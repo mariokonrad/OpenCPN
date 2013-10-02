@@ -97,12 +97,11 @@
 #include <ais/AIS_Target_Data.h>
 #include <ais/AISTargetAlertDialog.h>
 
-// S57
 #ifdef USE_S57
-#include <chart/S57Chart.h>
-#include "s52plib.h"
-#include <chart/CM93compchart.h>
-#include <chart/CM93OffsetDialog.h>
+	#include <chart/S57Chart.h>
+	#include <chart/s52plib.h>
+	#include <chart/CM93compchart.h>
+	#include <chart/CM93OffsetDialog.h>
 #endif
 
 

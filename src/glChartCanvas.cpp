@@ -24,7 +24,6 @@
 #include "glChartCanvas.h"
 #include "glTextureDescriptor.h"
 #include "dychart.h"
-#include "s52plib.h"
 #include "Quilt.h"
 #include "ChInfoWin.h"
 #include "ThumbWin.h"
@@ -36,6 +35,7 @@
 
 #include <plugin/PlugInManager.h>
 
+#include <chart/s52plib.h>
 #include <chart/S57Chart.h>
 #include <chart/ChartBaseBSB.h>
 #include <chart/ChartBase.h>
@@ -512,7 +512,8 @@ void glChartCanvas::OnPaint( wxPaintEvent &event )
 		msg += m_renderer;
 		wxLogMessage( msg );
 
-		if( ps52plib ) ps52plib->SetGLRendererString( m_renderer );
+		if (ps52plib)
+			ps52plib->SetGLRendererString(m_renderer);
 
 		//  This little hack fixes a problem seen with some Intel 945 graphics chips
 		//  We need to not do anything that requires (some) complicated stencil operations.

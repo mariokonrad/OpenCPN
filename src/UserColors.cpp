@@ -22,12 +22,12 @@
  **************************************************************************/
 
 #include "UserColors.h"
-#include <s52s57.h>
 #include <cstring>
 #include <vector>
 
 #ifdef USE_S57
-	#include <s52plib.h>
+	#include <chart/s52s57.h>
+	#include <chart/s52plib.h>
 	extern s52plib * ps52plib;
 #endif
 

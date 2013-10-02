@@ -22,12 +22,15 @@
  **************************************************************************/
 
 #include "RazdsParser.h"
-#include "s52plib.h"
-#include "chart/ChartSymbols.h"
+
+#include <chart/s52plib.h>
+#include <chart/ChartSymbols.h>
+
+#include <cstdio>
+#include <cmath>
+
 #include <wx/tokenzr.h>
 #include <wx/log.h>
-#include <stdio.h>
-#include <math.h>
 
 RazdsParser::RazdsParser()
 {
@@ -447,9 +450,8 @@ int RazdsParser::ParseSYMB( FILE *fp, RuleHash *pHash )
 	return ret;
 }
 
-int RazdsParser::LoadFile( s52plib* plibArg, const wxString& PLib )
+int RazdsParser::LoadFile(s52plib* plibArg, const wxString& PLib)
 {
-
 	plib = plibArg;
 
 	FILE *fp = NULL;

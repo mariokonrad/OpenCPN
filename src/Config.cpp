@@ -41,7 +41,7 @@
 #include <MicrosoftCompatibility.h>
 
 #ifdef USE_S57
-	#include <s52plib.h>
+	#include <chart/s52plib.h>
 #endif
 
 #include <chart/ChartDatabase.h>

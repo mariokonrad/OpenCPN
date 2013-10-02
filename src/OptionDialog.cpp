@@ -75,7 +75,7 @@
 #include <global/System.h>
 
 #ifdef USE_S57
-	#include <s52plib.h>
+	#include <chart/s52plib.h>
 	#include <chart/s52utils.h>
 #endif
 

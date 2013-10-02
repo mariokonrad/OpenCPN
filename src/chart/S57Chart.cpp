@@ -31,8 +31,8 @@
 #include <geo/PolyTrapGroup.h>
 #include <geo/Polygon.h>
 
-#include "s52s57.h"
-#include "s52plib.h"
+#include <chart/s52plib.h>
+
 #include "dychart.h"
 #include "navutil.h"
 #include "ocpn_pixel.h"
@@ -40,8 +40,8 @@
 #include "OCPNRegionIterator.h"
 #include "OCPNMemDC.h"
 #include "OCPNBitmap.h"
-#include "MessageBox.h"
 
+#include <MessageBox.h>
 #include <UserColors.h>
 #include <MicrosoftCompatibility.h>
 #include <ChartCanvas.h>

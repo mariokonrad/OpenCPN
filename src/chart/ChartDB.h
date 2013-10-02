@@ -33,7 +33,7 @@
 #include <wx/xml/xml.h>
 
 #include <chart/ChartDatabase.h>
-#include "s52s57.h"
+#include <chart/s52s57.h>
 
 struct MyFlPoint
 {

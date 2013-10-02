@@ -26,10 +26,11 @@
 
 #include <wx/tokenzr.h>
 
-#include <chart/S57Chart.h>
-#include <s52plib.h>
-#include <chart/s52utils.h>
 #include <dychart.h>
+
+#include <chart/S57Chart.h>
+#include <chart/s52plib.h>
+#include <chart/s52utils.h>
 
 bool GetDoubleAttr(S57Obj *obj, const char *AttrName, double &val);
 
@@ -660,8 +661,6 @@ static void *DEPCNT02 (void *param)
            //  Move this object to DisplayBase category
             rzRules->obj->m_DisplayCat = DISPLAYBASE;
             rzRules->LUP->DPRI = PRIO_HAZARDS;
-
-      } else {
       }
 
     // debug
@@ -958,14 +957,14 @@ static void *LIGHTS05 (void *param)
 
 l05_end:
 
-      if( ps52plib->m_bShowLdisText )
-      {
+      if( ps52plib->m_bShowLdisText ) {
             // Only show Light in certain position once. Otherwise there will be clutter.
             static double lastLat, lastLon;
             static wxString lastDescription;
             bool isFirstSector = true;
 
-            if( lastLat == obj->m_lat && lastLon == obj->m_lon ) isFirstSector = false;
+            if( lastLat == obj->m_lat && lastLon == obj->m_lon )
+				isFirstSector = false;
             lastLat = obj->m_lat;
             lastLon = obj->m_lon;
 
@@ -1005,25 +1004,10 @@ l05_end:
 static void *LITDSN01(void *param)
 {
         ObjRazRules *rzRules = (ObjRazRules *)param;
-//      S57Obj *obj = rzRules->obj;
 
         printf("s52csny : LITDSN01 ERROR no conditional symbology for: %s\n",rzRules->LUP->OBCL);
    return NULL;
 }
-
-/*
-static void *OBSTRN04a(void *param)
-{
-        ObjRazRules *rzRules = (ObjRazRules *)param;
-//      S57Obj *obj = rzRules->obj;
-
-        static int f03;
-        if(!f03)
-            printf("s52csny : OBSTRN04 ERROR no conditional symbology for: %s\n",rzRules->LUP->OBCL);
-        f03++;
-   return NULL;
-}
-*/
 
 wxString *SNDFRM02(S57Obj *obj, double depth_value);
 
@@ -1052,18 +1036,14 @@ static void *OBSTRN04 (void *param)
 
       GetDoubleAttr(obj, "VALSOU", valsou);
 
-      if (valsou != UNKNOWN)
-      {
+      if (valsou != UNKNOWN) {
             depth_value = valsou;
             sndfrm02str = SNDFRM02(obj, valsou);
-      }
-      else
-      {
+      } else {
             if (GEO_AREA == obj->Primitive_type)
                   least_depth = _DEPVAL01(obj, least_depth);
 
-            if (UNKNOWN == least_depth)
-            {
+            if (UNKNOWN == least_depth) {
                   char catobsstr[20];
                   catobsstr[0] = 0;
                   GetStringAttr(obj, "CATOBS", catobsstr, 19);
@@ -1085,20 +1065,9 @@ static void *OBSTRN04 (void *param)
                               case 2:
                               default : depth_value = -15.0 ; break;
                         }
-/*
-                        switch (watlevstr[0]){
-                              case '5': depth_value =   0.0 ; break;
-                              case '3': depth_value =   0.01; break;
-                              case '4':
-                              case '1':
-                              case '2':
-                                    default : depth_value = -15.0 ; break;
-                        }
-*/
                   }
-            }
-            else
-                  depth_value = least_depth;
+            } else
+                 depth_value = least_depth;
       }
 
       udwhaz03str = _UDWHAZ03(obj, depth_value, rzRules);

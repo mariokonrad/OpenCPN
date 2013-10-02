@@ -125,7 +125,7 @@
 #ifdef USE_S57
 	#include "S57RegistrarMgr.h"
 	#include "S57QueryDialog.h"
-	#include "s52plib.h"
+	#include <chart/s52plib.h>
 	#include <chart/CM93OffsetDialog.h>
 	#include <chart/S57Chart.h>
 	#include "cpl_csv.h"
@@ -274,11 +274,11 @@ int g_SkewCompUpdatePeriod;
 wxRect g_last_tb_rect;
 
 #ifdef USE_S57
-s52plib                   *ps52plib;
-S57ClassRegistrar         *g_poRegistrar;
-S57RegistrarMgr           *m_pRegistrarMan;
-extern S57QueryDialog     *g_pObjectQueryDialog;
-CM93OffsetDialog          *g_pCM93OffsetDialog;
+	s52plib                   *ps52plib;
+	S57ClassRegistrar         *g_poRegistrar;
+	S57RegistrarMgr           *m_pRegistrarMan;
+	extern S57QueryDialog     *g_pObjectQueryDialog;
+	CM93OffsetDialog          *g_pCM93OffsetDialog;
 #endif
 
 // begin rms
@@ -1089,19 +1089,20 @@ ToolBarSimple *MainFrame::CreateAToolbar()
         tb->ToggleTool( ID_TIDE, cc1->GetbShowTide() );
     }
 
-    if( pConfig ) tb->ToggleTool( ID_FOLLOW, cc1->m_bFollow );
+    if (pConfig)
+		tb->ToggleTool( ID_FOLLOW, cc1->m_bFollow);
 
 #ifdef USE_S57
-    if( ( pConfig ) && ( ps52plib ) ) if( ps52plib->m_bOK ) tb->ToggleTool( ID_TEXT,
-            ps52plib->GetShowS57Text() );
+    if (pConfig && ps52plib)
+		if (ps52plib->m_bOK)
+			tb->ToggleTool(ID_TEXT, ps52plib->GetShowS57Text());
 #endif
 
     wxString initiconName;
-    if( g_bShowAIS ) {
+    if (g_bShowAIS) {
         tb->SetToolShortHelp( ID_AIS, _("Hide AIS Targets") );
         initiconName = _T("AIS");
-    }
-    else {
+    } else {
         tb->SetToolShortHelp( ID_AIS, _("Show AIS Targets") );
         initiconName = _T("AIS_Disabled");
     }
@@ -1110,7 +1111,7 @@ ToolBarSimple *MainFrame::CreateAToolbar()
 
     tb->ToggleTool( ID_TRACK, g_bTrackActive );
 
-    SetStatusBarPane( -1 );                   // don't show help on status bar
+    SetStatusBarPane(-1); // don't show help on status bar
 
     return tb;
 }

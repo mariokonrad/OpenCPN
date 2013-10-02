@@ -40,9 +40,10 @@
 #include "gdal.h"
 #include "S57ClassRegistrar.h"
 #include "S57Light.h"
-#include "s52s57.h"
 #include <ViewPort.h>
 #include <OCPNRegion.h>
+
+#include <chart/s52s57.h>
 #include <chart/S57Sector.h>
 #include <chart/ChartBase.h>
 

@@ -24,16 +24,16 @@
 #include "PolyTessGeo.h"
 
 #include <MicrosoftCompatibility.h>
+#include <dychart.h>
+#include <BoundingBox.h>
 
 #include <geo/GeoRef.h>
 #include <geo/TriPrim.h>
 #include <geo/PolyTriGroup.h>
 #include <geo/ExtendedGeometry.h>
+#include <geo/triangulate.h>
 
-#include "dychart.h"
-#include "triangulate.h"
-#include "BoundingBox.h"
-#include "s52s57.h"
+#include <chart/s52s57.h>
 
 #include <wx/mstream.h>
 #include <wx/tokenzr.h>

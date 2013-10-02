@@ -25,7 +25,8 @@
 #define __RAZDSPARSER__H__
 
 #include <wx/string.h>
-#include "s52s57.h"
+
+#include <chart/s52s57.h>
 
 class s52plib;
 class RuleHash;

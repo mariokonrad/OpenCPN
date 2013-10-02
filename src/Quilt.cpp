@@ -22,12 +22,12 @@
  **************************************************************************/
 
 #include "Quilt.h"
-#include "s52plib.h"
 #include "ocpn_pixel.h"
 #include "OCPNRegionIterator.h"
 
 #include <ChartCanvas.h>
 
+#include <chart/s52plib.h>
 #include <chart/ChartDB.h>
 #include <chart/ChartStack.h>
 #include <chart/S57Chart.h>
@@ -39,7 +39,7 @@
 #endif
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST(PatchList);
+WX_DEFINE_LIST(PatchList); // FIXME: replace with std containers
 
 extern ChartDB * ChartData;
 extern std::vector<int> g_quilt_noshow_index_array;

@@ -24,7 +24,7 @@
 #ifndef __LOOKUP__H__
 #define __LOOKUP__H__
 
-#include "s52plib.h"
+#include <chart/s52plib.h>
 
 class Lookup
 {

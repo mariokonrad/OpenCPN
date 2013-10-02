@@ -22,8 +22,10 @@
  **************************************************************************/
 
 #include "RenderFromHPGL.h"
-#include "s52plib.h"
 #include "dychart.h"
+
+#include <chart/s52plib.h>
+
 #include <wx/dc.h>
 #include <wx/tokenzr.h>
 #include <wx/log.h>

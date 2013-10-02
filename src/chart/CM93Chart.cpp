@@ -41,15 +41,12 @@
 #include <algorithm>
 
 #ifdef USE_S57
-#include "s52plib.h"
+	#include <chart/s52plib.h>
+	extern s52plib * ps52plib; // FIXME
 #endif
 
 extern bool g_bDebugCM93; // FIXME
 static bool s_b_busy_shown; // FIXME
-
-#ifdef USE_S57
-extern s52plib * ps52plib; // FIXME
-#endif
 
 struct header_struct
 {

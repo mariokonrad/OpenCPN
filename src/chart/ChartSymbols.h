@@ -24,12 +24,13 @@
 #ifndef __CHARTSYMBOLS__H__
 #define __CHARTSYMBOLS__H__
 
-#include "s52plib.h"
-#include "chart/Lookup.h"
-#include "chart/SymbolSizeInfo.h"
-#include "chart/ChartSymbol.h"
-#include "chart/OCPNPattern.h"
-#include "chart/LineStyle.h"
+#include <chart/s52plib.h>
+#include <chart/Lookup.h>
+#include <chart/SymbolSizeInfo.h>
+#include <chart/ChartSymbol.h>
+#include <chart/OCPNPattern.h>
+#include <chart/LineStyle.h>
+
 #include <tinyxml/tinyxml.h>
 
 // FIXME: this is essentially a singleton, but not implemented as one...

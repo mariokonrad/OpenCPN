@@ -81,9 +81,8 @@ int RazdsParser::ParsePos( position *pos, char *buf, bool patt )
 
 #define MOD_REC(str)    if(0==strncmp(#str,pBuf,4)) // FIXME: get rid of macros like this
 
-int RazdsParser::ParseLBID( FILE *fp )
+int RazdsParser::ParseLBID(FILE *)
 {
-
 	wxString s( pBuf, wxConvUTF8 );
 	wxStringTokenizer tkz( s, _T ( '\037' ) );
 
@@ -143,8 +142,6 @@ int RazdsParser::ParseCOLS( FILE *fp )
 
 int RazdsParser::ParseLUPT( FILE *fp )
 {
-	int ret;
-
 	bool inserted = FALSE;
 
 	LUPrec *LUP = (LUPrec*) calloc( 1, sizeof(LUPrec) );
@@ -152,17 +149,17 @@ int RazdsParser::ParseLUPT( FILE *fp )
 
 	LUP->nSequence = m_LUPSequenceNumber++;
 
-	LUP->DISC = (enum _DisCat) OTHER; // as a default
+	LUP->DISC = (enum DisCat) OTHER; // as a default
 
 	sscanf( pBuf + 11, "%d", &LUP->RCID );
 	strncpy( LUP->OBCL, pBuf + 19, 6 );
 
-	LUP->FTYP = (enum _Object_t) pBuf[25];
-	LUP->DPRI = (enum _DisPrio) pBuf[30];
-	LUP->RPRI = (enum _RadPrio) pBuf[31];
-	LUP->TNAM = (enum _LUPname) pBuf[36];
+	LUP->FTYP = (enum Object_t) pBuf[25];
+	LUP->DPRI = (enum DisPrio) pBuf[30];
+	LUP->RPRI = (enum RadPrio) pBuf[31];
+	LUP->TNAM = (enum LUPname) pBuf[36];
 
-	ret = ReadS52Line( pBuf, NEWLN, 0, fp );
+	ReadS52Line( pBuf, NEWLN, 0, fp );
 
 	do {
 		MOD_REC ( ATTC ) {
@@ -194,7 +191,7 @@ int RazdsParser::ParseLUPT( FILE *fp )
 		}
 
 		MOD_REC ( INST ) LUP->INST = new wxString( pBuf + 9, wxConvUTF8 );
-		MOD_REC ( DISC ) LUP->DISC = (enum _DisCat) pBuf[9];
+		MOD_REC ( DISC ) LUP->DISC = (enum DisCat) pBuf[9];
 		MOD_REC ( LUCM ) sscanf( pBuf + 9, "%d", &LUP->LUCM );
 
 		MOD_REC ( **** ) {
@@ -224,7 +221,7 @@ int RazdsParser::ParseLUPT( FILE *fp )
 
 		} // MOD_REC
 
-		ret = ReadS52Line( pBuf, NEWLN, 0, fp );
+		ReadS52Line( pBuf, NEWLN, 0, fp );
 
 	} while( inserted == FALSE );
 

@@ -3900,12 +3900,9 @@ int s52plib::PrioritizeLineFeature( ObjRazRules *rzRules, int npriority )
 			int enode = *index_run++;
 
 			VE_Element *pedge = edge_hash[enode];
-
-			//    Set priority
 			pedge->max_priority = npriority;
 
-			//  Get last connected node
-			index_run++;
+			index_run++; // Get last connected node
 		}
 	}
 

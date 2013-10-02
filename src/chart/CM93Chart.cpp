@@ -1242,31 +1242,23 @@ std::vector<int> cm93chart::GetVPCellArray(const ViewPort &vpt)
 
 
 
-void cm93chart::ProcessVectorEdges ( void )
+void cm93chart::ProcessVectorEdges(void)
 {
-	//    Create the vector(edge) map for this cell, appending to the existing member hash map
+	// Create the vector(edge) map for this cell, appending to the existing member hash map
 
-	VE_Hash &vehash = Get_ve_hash();
+	VE_Hash & vehash = Get_ve_hash();
 
-	m_current_cell_vearray_offset = vehash.size();           // keys start at the current size
+	m_current_cell_vearray_offset = vehash.size(); // keys start at the current size
 	geometry_descriptor *pgd = m_CIB->edge_vector_descriptor_block;
 
-	for ( int iedge = 0 ; iedge < m_CIB->m_nvector_records ; iedge++ )
-	{
-		VE_Element *vep = new VE_Element;
-		vep->index = iedge + m_current_cell_vearray_offset;
-		vep->nCount = pgd->n_points;
-		vep->pPoints = NULL;
-		vep->max_priority = -99;            // Default
-
-		if ( pgd->n_points )
-		{
-			double *pPoints = ( double * ) malloc ( pgd->n_points * 2 * sizeof ( double ) );
+	for (int iedge = 0 ; iedge < m_CIB->m_nvector_records ; ++iedge) {
+		VE_Element * vep = new VE_Element(iedge + m_current_cell_vearray_offset, pgd->n_points);
+		if (pgd->n_points) {
+			double * pPoints = new double[pgd->n_points * 2];
 			vep->pPoints = pPoints;
 
 			cm93_point *ppt = pgd->p_points;
-			for ( int ip = 0 ; ip < pgd->n_points ; ip++ )
-			{
+			for (int ip = 0; ip < pgd->n_points; ++ip) {
 				*pPoints++ = ppt->x;
 				*pPoints++ = ppt->y;
 				ppt++;
@@ -1274,8 +1266,7 @@ void cm93chart::ProcessVectorEdges ( void )
 		}
 
 		vehash[vep->index] = vep;
-
-		pgd++;                              // next geometry descriptor
+		pgd++; // next geometry descriptor
 	}
 }
 

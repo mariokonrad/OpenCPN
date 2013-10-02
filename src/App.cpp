@@ -1307,7 +1307,7 @@ bool App::OnInit()
 #ifdef USE_S57
 		if( ps52plib && ps52plib->m_bOK ) {
 			ps52plib->m_bShowSoundg = true;
-			ps52plib->m_nDisplayCategory = (enum _DisCat) STANDARD;
+			ps52plib->m_nDisplayCategory = (enum DisCat) STANDARD;
 			ps52plib->m_nSymbolStyle = (LUPname) PAPER_CHART;
 			ps52plib->m_nBoundaryStyle = (LUPname) PLAIN_BOUNDARIES;
 			ps52plib->m_bUseSCAMIN = true;

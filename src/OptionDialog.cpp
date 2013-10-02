@@ -1697,7 +1697,6 @@ void options::CreatePanel_UI( size_t parent, int border_size, int group_item_spa
 void options::CreateControls()
 {
 	int border_size = 4;
-	int check_spacing = 4;
 	int group_item_spacing = 2;           // use for items within one group, with Add(...wxALL)
 
 	wxFont *qFont = wxTheFontList->FindOrCreateFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL,
@@ -1719,7 +1718,6 @@ void options::CreateControls()
 
 	if( height <= 800 ) {
 		border_size = 2;
-		check_spacing = 2;
 		group_item_spacing = 1;
 
 		wxFont *sFont = wxTheFontList->FindOrCreateFont( 8, wxFONTFAMILY_DEFAULT,
@@ -2123,7 +2121,7 @@ void options::SetInitialSettings()
 
 }
 
-void options::OnCPAWarnClick(wxCommandEvent & event)
+void options::OnCPAWarnClick(wxCommandEvent &)
 {
 	if (m_pCheck_CPA_Warn->GetValue()) {
 		m_pCheck_CPA_WarnT->Enable();
@@ -2671,7 +2669,7 @@ void options::OnApplyClick(wxCommandEvent & event)
 			g_bopengl = temp_bopengl;
 		}
 
-		enum _DisCat nset = OTHER;
+		enum DisCat nset = OTHER;
 		switch( pDispCat->GetSelection() ){
 			case 0:
 				nset = DISPLAYBASE;
@@ -2686,7 +2684,7 @@ void options::OnApplyClick(wxCommandEvent & event)
 				nset = MARINERS_STANDARD;
 				break;
 		}
-		ps52plib->m_nDisplayCategory = nset;
+		ps52plib->m_nDisplayCategory = static_cast<DisCat>(nset);
 
 		ps52plib->m_bShowSoundg = pCheck_SOUNDG->GetValue();
 		ps52plib->m_bShowMeta = pCheck_META->GetValue();

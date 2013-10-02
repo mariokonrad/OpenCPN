@@ -1106,10 +1106,10 @@ s57chart::~s57chart()
     delete m_pDIBThumbOrphan;
 
     VE_Hash::iterator it;
-    for( it = m_ve_hash.begin(); it != m_ve_hash.end(); ++it ) {
-        VE_Element *value = it->second;
-        if( value ) {
-            free( value->pPoints );
+    for (it = m_ve_hash.begin(); it != m_ve_hash.end(); ++it) {
+        VE_Element * value = it->second;
+        if (value) {
+            delete [] value->pPoints;
             delete value;
         }
     }
@@ -3933,29 +3933,6 @@ int s57chart::BuildSENCFile( const wxString& FullPath000, const wxString& SENCFi
 
 //        Prepare Vector Edge Helper table
 
-    /*
-     //        First, find the max RCID field by looking at each element in the index in turn
-
-     pEdgeVectorRecordFeature = poReader->ReadVector( feid, RCNM_VE );
-
-     while(NULL != pEdgeVectorRecordFeature)
-     {
-     //          pEdgeVectorRecordFeature->DumpReadable( stdout );
-
-     //          int record_id = pEdgeVectorRecordFeature-> GetFieldAsInteger( "RCID" );
-     //          if(record_id > rcid_max)
-     //                rcid_max = record_id;
-     feid++;
-     pEdgeVectorRecordFeature = poReader->ReadVector( feid, RCNM_VE );
-
-     }
-
-     //    m_nvector_table_size = feid + 1;
-
-     //        Allocate a table
-     //    m_pVectorEdgeHelperTable = (int *)calloc((m_nvector_table_size) * sizeof(int), 1);
-
-     */
     //        And fill in the table
     feid = 0;
     pEdgeVectorRecordFeature = poReader->ReadVector( feid, RCNM_VE );
@@ -4246,47 +4223,33 @@ int s57chart::BuildRAZFromSENCFile( const wxString& FullPath )
             int index = -1;
             int count;
 
-            fpx.Read( &index, sizeof(int) );
+            fpx.Read( &index, sizeof(int) ); // FIXME: may not be protable
 
-			// FIXME: temporary container is not really necessary, fill directly into the has map
             while( -1 != index ) {
-                fpx.Read( &count, sizeof(int) );
+                fpx.Read( &count, sizeof(int) ); // FIXME: may not be protable
 
-                double *pPoints = NULL;
-                if( count ) {
-                    pPoints = (double *) malloc( count * 2 * sizeof(double) );
+                double * pPoints = NULL;
+                if (count) {
+                    pPoints = new double[count * 2];
                     fpx.Read( pPoints, count * 2 * sizeof(double) );
                 }
-
-                VE_Element vee;
-                vee.index = index;
-                vee.nCount = count;
-                vee.pPoints = pPoints;
-                vee.max_priority = -99;            // Default
-
-                ve_array.push_back(vee);
-
-                //    Next element
-                fpx.Read( &index, sizeof(int) );
+                ve_array.push_back(VE_Element(index, count, pPoints));
+                fpx.Read(&index, sizeof(int)); // Next element // FIXME: may not be protable
             }
 
 			for (std::vector<VE_Element>::iterator i = ve_array.begin(); i != ve_array.end(); ++i) {
-                VE_Element *vep = new VE_Element;
-                vep->index = i->index;
-                vep->nCount = i->nCount;
-                vep->pPoints = i->pPoints;
-                m_ve_hash[vep->index] = vep;
+                m_ve_hash[i->index] = new VE_Element(*i);
             }
         }
 
         else if( !strncmp( buf, "VCTableStart", 12 ) ) {
             int index = -1;
-            fpx.Read(&index, sizeof(int));
+            fpx.Read(&index, sizeof(int)); // FIXME: may not be protable
             while (-1 != index) {
                 double point[2];
                 fpx.Read(point, sizeof(point));
                 m_vc_hash[index] = new VC_Element(index, point[0], point[1]);
-                fpx.Read(&index, sizeof(int)); // Next element
+                fpx.Read(&index, sizeof(int)); // Next element // FIXME: may not be protable
             }
         } else if( !strncmp( buf, "SENC", 4 ) ) {
             int senc_file_version;
@@ -4914,7 +4877,6 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                 pORNT = (int *) pFeature->GetFieldAsIntegerList( "ORNT", NULL );
 
                 fprintf( fpOut, "LSINDEXLIST %d\n", nEdgeVectorRecords );
-//                    fwrite(pNAME_RCID, 1, nEdgeVectorRecords * sizeof(int), fpOut);
 
                 //  Set up the options, adding RETURN_PRIMITIVES
                 char ** papszReaderOptions = NULL;
@@ -4949,14 +4911,14 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
 
                         if( edge_ornt == 1 )                                    // forward
                                 {
-                            fwrite( &start_rcid, 1, sizeof(int), fpOut );
-                            fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut );
-                            fwrite( &end_rcid, 1, sizeof(int), fpOut );
+                            fwrite( &start_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                            fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                            fwrite( &end_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
                         } else                                                  // reverse
                         {
-                            fwrite( &end_rcid, 1, sizeof(int), fpOut );
-                            fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut );
-                            fwrite( &start_rcid, 1, sizeof(int), fpOut );
+                            fwrite( &end_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                            fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                            fwrite( &start_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
                         }
 
                         delete pEdgeVectorRecordFeature;
@@ -4964,9 +4926,9 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                         start_rcid = -1;                                    // error indication
                         end_rcid = -2;
 
-                        fwrite( &start_rcid, 1, sizeof(int), fpOut );
-                        fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut );
-                        fwrite( &end_rcid, 1, sizeof(int), fpOut );
+                        fwrite( &start_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                        fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                        fwrite( &end_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
                     }
                 }
 
@@ -5194,18 +5156,18 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                             start_rcid = pEdgeVectorRecordFeature->GetFieldAsInteger( "NAME_RCID_0" );
                             end_rcid = pEdgeVectorRecordFeature->GetFieldAsInteger( "NAME_RCID_1" );
 
-                            fwrite( &start_rcid, 1, sizeof(int), fpOut );
-                            fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut );
-                            fwrite( &end_rcid, 1, sizeof(int), fpOut );
+                            fwrite( &start_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                            fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                            fwrite( &end_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
 
                             delete pEdgeVectorRecordFeature;
                         } else {
                             start_rcid = -1;                                    // error indication
                             end_rcid = -2;
 
-                            fwrite( &start_rcid, 1, sizeof(int), fpOut );
-                            fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut );
-                            fwrite( &end_rcid, 1, sizeof(int), fpOut );
+                            fwrite( &start_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                            fwrite( &pNAME_RCID[i], 1, sizeof(int), fpOut ); // FIXME: may not be portable
+                            fwrite( &end_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
                         }
                     }
 
@@ -5255,7 +5217,7 @@ void s57chart::CreateSENCVectorEdgeTable( FILE * fpOut, S57Reader *poReader )
 
     while( NULL != pEdgeVectorRecordFeature ) {
         int record_id = pEdgeVectorRecordFeature->GetFieldAsInteger( "RCID" );
-        fwrite( &record_id, 1, sizeof(int), fpOut );
+        fwrite( &record_id, 1, sizeof(int), fpOut ); // FIXME: may not be portable
 
         int nPoints = 0;
         if( pEdgeVectorRecordFeature->GetGeometryRef() != NULL ) {
@@ -5267,7 +5229,7 @@ void s57chart::CreateSENCVectorEdgeTable( FILE * fpOut, S57Reader *poReader )
                 nPoints = 0;
         }
 
-        fwrite( &nPoints, 1, sizeof(int), fpOut );
+        fwrite( &nPoints, 1, sizeof(int), fpOut ); // FIXME: may not be portable
 
         for( int i = 0; i < nPoints; i++ ) {
             OGRPoint p;
@@ -5291,7 +5253,7 @@ void s57chart::CreateSENCVectorEdgeTable( FILE * fpOut, S57Reader *poReader )
 
     //    Write a finishing record
     int last_rcid = -1;
-    fwrite( &last_rcid, 1, sizeof(int), fpOut );
+    fwrite( &last_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
     fprintf( fpOut, "\nVETableEnd\n" );
 
     //  Reset the options
@@ -5324,7 +5286,7 @@ void s57chart::CreateSENCConnNodeTable( FILE * fpOut, S57Reader *poReader )
 
                 int record_id = pConnNodeRecordFeature->GetFieldAsInteger( "RCID" );
 
-                fwrite( &record_id, 1, sizeof(int), fpOut );
+                fwrite( &record_id, 1, sizeof(int), fpOut ); // FIXME: may not be portable
 
                 //  Calculate SM from chart common reference point
                 double easting, northing;
@@ -5345,7 +5307,7 @@ void s57chart::CreateSENCConnNodeTable( FILE * fpOut, S57Reader *poReader )
 
     //    Write a finishing record
     int last_rcid = -1;
-    fwrite( &last_rcid, 1, sizeof(int), fpOut );
+    fwrite( &last_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
     fprintf( fpOut, "\nVCTableEnd\n" );
 
     //  Reset the options

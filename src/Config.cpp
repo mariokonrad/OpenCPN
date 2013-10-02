@@ -702,10 +702,10 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		Read( _T ( "bExtendLightSectors" ), &read_int, 0 );
 		ps52plib->SetExtendLightSectors( !( read_int == 0 ) );
 
-		Read( _T ( "nDisplayCategory" ), &read_int, (enum _DisCat) STANDARD );
-		ps52plib->m_nDisplayCategory = (enum _DisCat) read_int;
+		Read( _T ( "nDisplayCategory" ), &read_int, (enum DisCat) STANDARD );
+		ps52plib->m_nDisplayCategory = (enum DisCat) read_int;
 
-		Read( _T ( "nSymbolStyle" ), &read_int, (enum _LUPname) PAPER_CHART );
+		Read( _T ( "nSymbolStyle" ), &read_int, (enum LUPname) PAPER_CHART );
 		ps52plib->m_nSymbolStyle = (LUPname) read_int;
 
 		Read( _T ( "nBoundaryStyle" ), &read_int, PLAIN_BOUNDARIES );

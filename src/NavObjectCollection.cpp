@@ -546,17 +546,17 @@ bool NavObjectCollection::GPXCreateWpt(
 		}
 	}
 
-	if ( (!pr->GetName().IsEmpty() && (flags & OUT_NAME)) || (flags & OUT_NAME_FORCE) ) {
-		wxCharBuffer buffer=pr->GetName().ToUTF8();
+	if ((!pr->GetName().IsEmpty() && (flags & OUT_NAME)) || (flags & OUT_NAME_FORCE)) {
+		wxCharBuffer buffer = pr->GetName().ToUTF8();
 		if(buffer.data()) {
 			child = node.append_child("name");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
 	}
 
-	if ( (!pr->GetDescription().IsEmpty() && (flags & OUT_DESC)) || (flags & OUT_DESC_FORCE) ) {
-		wxCharBuffer buffer=pr->GetDescription().ToUTF8();
-		if(buffer.data()) {
+	if ((!pr->GetDescription().IsEmpty() && (flags & OUT_DESC)) || (flags & OUT_DESC_FORCE)) {
+		wxCharBuffer buffer = pr->GetDescription().ToUTF8();
+		if (buffer.data()) {
 			child = node.append_child("desc");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
@@ -596,19 +596,22 @@ bool NavObjectCollection::GPXCreateWpt(
 		child = node.append_child("sym");
 		if (!pr->m_IconName.IsEmpty()) {
 			child.append_child(pugi::node_pcdata).set_value(pr->m_IconName.mb_str());
-		}
-		else {
+		} else {
 			child.append_child("empty");
 		}
 	}
 
-	if(flags & OUT_TYPE) {
+	if (flags & OUT_TYPE) {
 		child = node.append_child("type");
 		child.append_child(pugi::node_pcdata).set_value("WPT");
 	}
 
-	if( (flags & OUT_GUID) || (flags & OUT_VIZ) || (flags & OUT_VIZ_NAME) || (flags & OUT_SHARED)
-			|| (flags & OUT_AUTO_NAME) ) {
+	if (false
+			|| (flags & OUT_GUID)
+			|| (flags & OUT_VIZ)
+			|| (flags & OUT_VIZ_NAME)
+			|| (flags & OUT_SHARED)
+			|| (flags & OUT_AUTO_NAME)) {
 
 		pugi::xml_node child_ext = node.append_child("extensions");
 
@@ -617,21 +620,21 @@ bool NavObjectCollection::GPXCreateWpt(
 			child.append_child(pugi::node_pcdata).set_value(pr->m_GUID.mb_str());
 		}
 
-		if((flags & OUT_VIZ) && pr->m_bIsVisible) {
+		if ((flags & OUT_VIZ) && pr->m_bIsVisible) {
 			child = child_ext.append_child("opencpn:viz");
 			child.append_child(pugi::node_pcdata).set_value("1");
 		}
 
-		if((flags & OUT_VIZ_NAME) && pr->m_bShowName) {
+		if ((flags & OUT_VIZ_NAME) && pr->m_bShowName) {
 			child = child_ext.append_child("opencpn:viz_name");
 			child.append_child(pugi::node_pcdata).set_value("1");
 		}
 
-		if((flags & OUT_AUTO_NAME) && pr->m_bDynamicName) {
+		if ((flags & OUT_AUTO_NAME) && pr->m_bDynamicName) {
 			child = child_ext.append_child("opencpn:auto_name");
 			child.append_child(pugi::node_pcdata).set_value("1");
 		}
-		if((flags & OUT_SHARED) && pr->m_bKeepXRoute) {
+		if ((flags & OUT_SHARED) && pr->m_bKeepXRoute) {
 			child = child_ext.append_child("opencpn:shared");
 			child.append_child(pugi::node_pcdata).set_value("1");
 		}
@@ -1050,13 +1053,12 @@ bool NavObjectCollection::CreateNavObjGPXPoints( void )
 	// Routepoints that are not in any Route
 	// as indicated by m_bIsolatedMark == false
 
-	wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
-	while (node) {
-		RoutePoint * pr = node->GetData();
-		if (pr->m_bIsolatedMark && !pr->m_bIsInLayer && !pr->m_btemp) {
-			GPXCreateWpt(m_gpx_root.append_child("wpt"), pr, OPT_WPT);
+	RoutePointList::iterator end = pWayPointMan->m_pWayPointList->end();
+	for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin(); i != end; ++i) {
+		RoutePoint * point = *i;
+		if (point->m_bIsolatedMark && !point->m_bIsInLayer && !point->m_btemp) {
+			GPXCreateWpt(m_gpx_root.append_child("wpt"), point, OPT_WPT);
 		}
-		node = node->GetNext();
 	}
 
 	return true;

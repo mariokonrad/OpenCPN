@@ -1351,9 +1351,8 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
             //    First, delete any single anchorage waypoint closer than 0.25 NM from this point
             //    This will prevent clutter and database congestion....
 
-            wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
-            while (node) {
-                RoutePoint * pr = node->GetData();
+			for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin(); i != pWayPointMan->m_pWayPointList->end(); ++i) {
+                RoutePoint * pr = *i;
                 if (pr->GetName().StartsWith(_T("Anchorage"))) {
                     double a = gLat - pr->m_lat;
                     double b = gLon - pr->m_lon;
@@ -1367,7 +1366,6 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
                         break;
                     }
                 }
-                node = node->GetNext();
             }
 
             wxString name = now.Format();

@@ -8866,31 +8866,29 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
 	if( active_track ) active_track->Draw( dc, GetVP() );
 }
 
-void ChartCanvas::DrawAllWaypointsInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, const wxRegion& clipregion,
-		bool bDrawMarksOnly )
+void ChartCanvas::DrawAllWaypointsInBBox(
+		ocpnDC & dc,
+		LatLonBoundingBox & BltBBox,
+		const wxRegion & clipregion,
+		bool bDrawMarksOnly)
 {
-	//        BoundingBox bbx;
-	wxDC *pdc = dc.GetDC();
-	if( pdc ) {
-		wxDCClipper( *pdc, clipregion );
+	wxDC * pdc = dc.GetDC();
+	if (pdc) {
+		wxDCClipper(*pdc, clipregion);
 	}
 
-	wxRoutePointListNode *node = pWayPointMan->m_pWayPointList->GetFirst();
-	while (node) {
-		RoutePoint * pWP = node->GetData();
-		if (pWP) {
-			if (bDrawMarksOnly && (pWP->m_bIsInRoute || pWP->m_bIsInTrack)) {
-				node = node->GetNext();
+	for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin(); i != pWayPointMan->m_pWayPointList->end(); ++i) {
+		RoutePoint * point = *i;
+		if (point) {
+			if (bDrawMarksOnly && (point->m_bIsInRoute || point->m_bIsInTrack)) {
 				continue;
 			} else {
 				if (BltBBox.GetValid()) {
-					if (BltBBox.PointInBox(pWP->m_lon, pWP->m_lat, 0))
-						pWP->Draw(dc, NULL);
+					if (BltBBox.PointInBox(point->m_lon, point->m_lat, 0))
+						point->Draw(dc, NULL);
 				}
 			}
 		}
-
-		node = node->GetNext();
 	}
 
 	// draw anchor watch rings, if activated

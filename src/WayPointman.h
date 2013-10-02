@@ -66,13 +66,19 @@ class WayPointman
 		static RoutePoint * FindRoutePoint(const wxString & guid);
 		static RoutePoint * WaypointExists(const wxString & name, double lat, double lon);
 
+		void deleteWayPointOnLayer(int layer_id);
+		void setWayPointVisibilityOnLayer(int layer_id, bool visible);
+		void setWayPointNameVisibilityOnLayer(int layer_id, bool visible);
+		void setWayPointListingVisibilityOnLayer(int layer_id, bool visible);
+
 		void push_back(RoutePoint *);
 		void remove(RoutePoint *);
 		RoutePoint * find(const wxString & guid);
 		bool contains(const RoutePoint * point) const;
 
-		RoutePointList * m_pWayPointList; // FIXME: public attribute
+		const RoutePointList & waypoints() const;
 
+		RoutePointList * m_pWayPointList;
 	private:
 		typedef std::vector<MarkIcon *> Icons;
 

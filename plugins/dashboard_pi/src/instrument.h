@@ -35,7 +35,7 @@
 #endif //precompiled headers
 
 // Required GetGlobalColor
-#include "../../../include/ocpn_plugin.h"
+#include "../../../src/plugin/ocpn_plugin.h" // FIXME: no relative paths for includes
 #include <wx/dcbuffer.h>
 #include <wx/dcgraph.h>         // supplemental, for Mac
 

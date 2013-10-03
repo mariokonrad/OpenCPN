@@ -25,11 +25,10 @@
 #define __PLUGIN__PLUGINCONTAINER__H__
 
 #include <wx/string.h>
-#include "ocpn_plugin.h"
+#include <plugin/ocpn_plugin.h>
 
 class wxDynamicLibrary;
 class wxBitmap;
-class opencpn_plugin;
 
 class PlugInContainer
 {

@@ -48,7 +48,7 @@
 #include <wx/aui/aui.h>
 #include <wx/fontpicker.h>
 //wx2.9 #include <wx/wrapsizer.h>
-#include "../../../include/ocpn_plugin.h"
+#include "../../../src/plugin/ocpn_plugin.h" // FIXME: no relative paths for includes
 
 #include "nmea0183/nmea0183.h"
 #include "instrument.h"

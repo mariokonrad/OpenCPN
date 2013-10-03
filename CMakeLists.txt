@@ -443,6 +443,7 @@ SET(HDR_PLUGIN
 	src/plugin/PluginPanel.h
 	src/plugin/PluginListPanel.h
 	src/plugin/OCPN_MsgEvent.h
+	src/plugin/ocpn_plugin.h
 	)
 
 SET(HDRS
@@ -503,7 +504,6 @@ SET(HDRS
 
 	include/ocpn_pixel.h
 	include/navutil.h
-	include/ocpn_plugin.h
 	src/DataStream.h
 	src/GARMIN_Serial_Thread.h
 	src/GARMIN_USB_Thread.h

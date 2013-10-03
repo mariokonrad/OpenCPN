@@ -29,7 +29,7 @@ Dessin des données GRIB (avec QT)
 #include <list>
 #include <set>
 
-#include "../../../include/ocpn_plugin.h"
+#include "../../../src/plugin/ocpn_plugin.h" // FIXME: no relative paths for includes
 
 #include "GribReader.h"
 

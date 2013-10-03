@@ -33,13 +33,13 @@
 #include <wx/tglbtn.h>
 #include <wx/bmpcbox.h>
 
-#include "ocpn_plugin.h"
 #include "DataStream.h"
 #include "OCPN_Sound.h"
 #include <ColorScheme.h>
 
 #include <ais/AIS_Target_Data.h>
 
+#include <plugin/ocpn_plugin.h>
 #include <plugin/PlugInContainer.h>
 #include <plugin/PlugInMenuItemContainer.h>
 #include <plugin/PlugInToolbarToolContainer.h>

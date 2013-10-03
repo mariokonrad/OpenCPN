@@ -22,8 +22,8 @@
  **************************************************************************/
 
 #include "ChartPlugInWrapper.h"
-#include "ocpn_plugin.h"
 #include "OCPNRegion.h"
+#include <plugin/ocpn_plugin.h>
 #include <wx/image.h>
 #include <wx/bitmap.h>
 

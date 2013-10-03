@@ -40,7 +40,7 @@
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    7
 
-#include "../../../include/ocpn_plugin.h"
+#include "../../../src/plugin/ocpn_plugin.h" // FIXME: no relative paths for includes
 
 #include "../../../include/wx/jsonreader.h"
 #include "../../../include/wx/jsonwriter.h"

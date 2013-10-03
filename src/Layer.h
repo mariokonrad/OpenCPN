@@ -28,6 +28,8 @@
 #include <wx/list.h>
 #include <wx/datetime.h>
 
+wxString GetLayerName(int id);
+
 class Layer
 {
 	public:

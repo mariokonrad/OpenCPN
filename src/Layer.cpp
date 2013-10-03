@@ -29,6 +29,20 @@ WX_DEFINE_LIST(LayerList);
 extern bool g_bShowLayers;
 extern LayerList * pLayerList;
 
+wxString GetLayerName(int id)
+{
+	wxString name(_T("unknown layer"));
+	if (id <= 0)
+		return name;
+
+	for (LayerList::iterator it = pLayerList->begin(); it != pLayerList->end(); ++it) {
+		Layer * layer = (Layer *) ( *it );
+		if (layer->m_LayerID == id)
+			return layer->m_LayerName;
+	}
+	return name;
+}
+
 Layer::Layer(void)
 {
     m_bIsVisibleOnChart = g_bShowLayers;

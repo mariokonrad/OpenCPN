@@ -74,6 +74,7 @@
 #include <AnchorDist.h>
 #include <Config.h>
 #include <UserColors.h>
+#include <Layer.h>
 
 #include <plugin/PlugInManager.h>
 
@@ -180,7 +181,6 @@ extern int              g_nAWMax;
 extern OCPNFloatingToolbarDialog *g_FloatingToolbarDialog;
 extern RouteManagerDialog *pRouteManagerDialog;
 GoToPositionDialog * pGoToPositionDialog;
-extern wxString GetLayerName(int id);
 extern wxString         g_uploadConnection;
 
 extern bool             bDrawCurrentValues;

@@ -40,6 +40,7 @@
 #include <ChartCanvas.h>
 #include <MainFrame.h>
 #include <DimeControl.h>
+#include <Layer.h>
 
 #include <geo/GeoRef.h>
 
@@ -123,8 +124,6 @@ enum { rmVISIBLE = 0, rmROUTENAME, rmROUTEDESC };// RMColumns;
 enum { colTRKVISIBLE = 0, colTRKNAME, colTRKLENGTH };
 enum { colLAYVISIBLE = 0, colLAYNAME, colLAYITEMS };
 enum { colWPTICON = 0, colWPTNAME, colWPTDIST };
-
-extern wxString GetLayerName(int id);
 
 extern RouteList * pRouteList;
 extern LayerList * pLayerList;

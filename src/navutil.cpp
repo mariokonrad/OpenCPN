@@ -25,7 +25,6 @@
 #include "dychart.h"
 
 #include <MicrosoftCompatibility.h>
-#include <Route.h>
 #include <Layer.h>
 
 #include <cstdlib>
@@ -43,25 +42,9 @@
 #include <wx/listimpl.cpp>
 #include <wx/progdlg.h>
 
-extern LayerList * pLayerList;
-extern RouteList * pRouteList;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
 extern int g_iSDMMFormat;
-
-wxString GetLayerName(int id)
-{
-	wxString name(_T("unknown layer"));
-	if (id <= 0)
-		return name;
-
-	for (LayerList::iterator it = pLayerList->begin(); it != pLayerList->end(); ++it) {
-		Layer * layer = (Layer *) ( *it );
-		if (layer->m_LayerID == id)
-			return layer->m_LayerName;
-	}
-	return name;
-}
 
 // Converts the distance to the units selected by user
 double toUsrDistance(double nm_distance, DistanceUnit unit)

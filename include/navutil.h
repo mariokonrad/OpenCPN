@@ -24,16 +24,7 @@
 #ifndef __NAVUTIL__
 #define __NAVUTIL__
 
-#include <wx/sound.h>
-
-#ifdef __WXMSW__
-	#include <wx/msw/regconf.h>
-	#include <wx/msw/iniconf.h>
-#endif
-
-#ifdef OCPN_USE_PORTAUDIO
-	#include "portaudio.h"
-#endif
+#include <wx/string.h>
 
 enum DistanceUnit
 {
@@ -53,15 +44,15 @@ enum SpeedUnit
 	SPEED_MS
 };
 
-extern double toUsrDistance(double nm_distance, DistanceUnit unit = DISTANCE_NONE);
-extern double fromUsrDistance(double usr_distance, DistanceUnit unit = DISTANCE_NONE);
-extern wxString getUsrDistanceUnit(DistanceUnit unit = DISTANCE_NONE);
+double toUsrDistance(double nm_distance, DistanceUnit unit = DISTANCE_NONE);
+double fromUsrDistance(double usr_distance, DistanceUnit unit = DISTANCE_NONE);
+wxString getUsrDistanceUnit(DistanceUnit unit = DISTANCE_NONE);
 
-extern double toUsrSpeed(double kts_speed, SpeedUnit unit = SPEED_NONE);
-extern double fromUsrSpeed(double usr_speed, SpeedUnit unit = SPEED_NONE);
-extern wxString getUsrSpeedUnit(SpeedUnit unit = SPEED_NONE);
+double toUsrSpeed(double kts_speed, SpeedUnit unit = SPEED_NONE);
+double fromUsrSpeed(double usr_speed, SpeedUnit unit = SPEED_NONE);
+wxString getUsrSpeedUnit(SpeedUnit unit = SPEED_NONE);
 
-extern wxString toSDMM(int NEflag, double a, bool hi_precision = true);
-extern double fromDMM(wxString sdms);
+wxString toSDMM(int NEflag, double a, bool hi_precision = true);
+double fromDMM(wxString sdms);
 
 #endif

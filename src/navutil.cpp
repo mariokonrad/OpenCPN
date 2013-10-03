@@ -253,7 +253,7 @@ wxString toSDMM(int NEflag, double a, bool hi_precision)
 // 122w 18 37
 // -122.31035
 /****************************************************************************/
-double fromDMM( wxString sdms )
+double fromDMM(wxString sdms)
 {
 	wchar_t buf[64];
 	char narrowbuf[64];

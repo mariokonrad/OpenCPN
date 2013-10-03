@@ -44,7 +44,7 @@
 
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
-extern int g_iSDMMFormat;
+extern int g_iSDMMFormat; // FIXME: use an enumeration
 
 // Converts the distance to the units selected by user
 double toUsrDistance(double nm_distance, DistanceUnit unit)
@@ -136,8 +136,13 @@ wxString getUsrSpeedUnit(SpeedUnit unit)
 	return wxString();
 }
 
-// Formats the coordinates to string
-wxString toSDMM(int NEflag, double a, bool hi_precision)
+/// Formats the coordinates to string.
+///
+/// @param[in] NEflag 1:latitude (N/S), 2:longitude (E/W)
+/// @param[in] a Coordinate (latitude or longitude, depending on NEflag)
+/// @param[in] hi_precision If set to not 0, the position is printed more detailed.
+/// @return The position as string.
+wxString toSDMM(int NEflag, double a, bool hi_precision) // FIXME: this interface is silly
 {
 	wxString s;
 	double mpy;
@@ -152,8 +157,9 @@ wxString toSDMM(int NEflag, double a, bool hi_precision)
 		neg = 1;
 	}
 	d = (int) a;
-	if( neg ) d = -d;
-	if( NEflag ) {
+	if (neg)
+		d = -d;
+	if (NEflag) {
 		if( NEflag == 1 ) {
 			c = 'N';
 
@@ -175,21 +181,23 @@ wxString toSDMM(int NEflag, double a, bool hi_precision)
 	switch (g_iSDMMFormat) {
 		case 0:
 			mpy = 600.0;
-			if( hi_precision ) mpy = mpy * 1000;
+			if (hi_precision)
+				mpy = mpy * 1000;
 
 			m = (long) wxRound( ( a - (double) d ) * mpy );
 
-			if( !NEflag || NEflag < 1 || NEflag > 2 ) //Does it EVER happen?
+			if (!NEflag || NEflag < 1 || NEflag > 2) //Does it EVER happen?
 			{
-				if( hi_precision ) s.Printf( _T ( "%d %02ld.%04ld'" ), d, m / 10000, m % 10000 );
+				if (hi_precision)
+					s.Printf(_T("%d %02ld.%04ld'"), d, m / 10000, m % 10000);
 				else
-					s.Printf( _T ( "%d %02ld.%01ld'" ), d, m / 10, m % 10 );
+					s.Printf(_T("%d %02ld.%01ld'"), d, m / 10, m % 10);
 			} else {
-				if( hi_precision )
+				if (hi_precision)
 					if (NEflag == 1)
-						s.Printf( _T ( "%02d %02ld.%04ld %c" ), d, m / 10000, ( m % 10000 ), c );
+						s.Printf(_T("%02d %02ld.%04ld %c"), d, m / 10000, ( m % 10000 ), c);
 					else
-						s.Printf( _T ( "%03d %02ld.%04ld %c" ), d, m / 10000, ( m % 10000 ), c );
+						s.Printf(_T("%03d %02ld.%04ld %c"), d, m / 10000, ( m % 10000 ), c);
 				else
 					if (NEflag == 1)
 						s.Printf( _T ( "%02d %02ld.%01ld %c" ), d, m / 10, ( m % 10 ), c );
@@ -197,21 +205,25 @@ wxString toSDMM(int NEflag, double a, bool hi_precision)
 						s.Printf( _T ( "%03d %02ld.%01ld %c" ), d, m / 10, ( m % 10 ), c );
 			}
 			break;
+
 		case 1:
-			if( hi_precision ) s.Printf( _T ( "%03.6f" ), ang ); //cca 11 cm - the GPX precision is higher, but as we use hi_precision almost everywhere it would be a little too much....
+			if (hi_precision)
+				s.Printf(_T("%03.6f"), ang); //cca 11 cm - the GPX precision is higher, but as we use hi_precision almost everywhere it would be a little too much....
 			else
-				s.Printf( _T ( "%03.4f" ), ang ); //cca 11m
+				s.Printf(_T("%03.4f"), ang); //cca 11m
 			break;
+
 		case 2:
 			m = (long) ( ( a - (double) d ) * 60 );
 			mpy = 10.0;
-			if( hi_precision ) mpy = mpy * 100;
+			if (hi_precision)
+				mpy = mpy * 100;
 			long sec = (long) ( ( a - (double) d - ( ( (double) m ) / 60 ) ) * 3600 * mpy );
 
 			if( !NEflag || NEflag < 1 || NEflag > 2 ) //Does it EVER happen?
 			{
-				if( hi_precision ) s.Printf( _T ( "%d %ld'%ld.%ld\"" ), d, m, sec / 1000,
-						sec % 1000 );
+				if (hi_precision)
+					s.Printf( _T ( "%d %ld'%ld.%ld\"" ), d, m, sec / 1000, sec % 1000 );
 				else
 					s.Printf( _T ( "%d %ld'%ld.%ld\"" ), d, m, sec / 10, sec % 10 );
 			} else {

@@ -24,6 +24,7 @@
 #include "AIS_Target_Data.h"
 #include <ChartCanvas.h>
 #include <MainFrame.h>
+#include <PositionParser.h>
 
 extern bool bGPSValid;
 extern ChartCanvas * cc1;
@@ -427,16 +428,12 @@ wxString AIS_Target_Data::BuildQueryResult( void )
     else
         rngStr = _("---");
 
-    int brg = (int) wxRound( Brg );
-    if( Brg > 359.5 )
-        brg = 0;
     if( b_positionOnceValid && bGPSValid && ( Brg >= 0. ) && ( Range_NM > 0. ) && ( fabs( Lat ) < 85. ) ){
         if( g_bShowMag )
             brgStr << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( Brg ) );
         else
             brgStr << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( Brg ) );
-    }
-    else
+    } else
         brgStr = _("---");
 
     wxString turnRateHdr; // Blank if ATON or BASE

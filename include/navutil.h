@@ -52,7 +52,4 @@ double toUsrSpeed(double kts_speed, SpeedUnit unit = SPEED_NONE);
 double fromUsrSpeed(double usr_speed, SpeedUnit unit = SPEED_NONE);
 wxString getUsrSpeedUnit(SpeedUnit unit = SPEED_NONE);
 
-wxString toSDMM(int NEflag, double a, bool hi_precision = true);
-double fromDMM(wxString sdms);
-
 #endif

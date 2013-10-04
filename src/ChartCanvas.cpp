@@ -75,6 +75,7 @@
 #include <Config.h>
 #include <UserColors.h>
 #include <Layer.h>
+#include <PositionParser.h>
 
 #include <plugin/PlugInManager.h>
 

@@ -99,6 +99,7 @@
 #include <MemoryStatus.h>
 #include <Config.h>
 #include <UserColors.h>
+#include <PositionParser.h>
 
 #include <plugin/PlugInManager.h>
 #include <plugin/OCPN_MsgEvent.h>

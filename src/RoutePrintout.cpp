@@ -58,6 +58,7 @@ using namespace std;
 #endif
 
 #include "RoutePrintout.h"
+#include <PositionParser.h>
 
 #define PRINT_WP_NAME 0
 #define PRINT_WP_POSITION 1

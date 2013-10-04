@@ -26,6 +26,9 @@
 
 #include <wx/string.h>
 
+wxString toSDMM(int NEflag, double a, bool hi_precision = true);
+double fromDMM(wxString sdms);
+
 class PositionParser
 {
 	public:

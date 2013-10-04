@@ -82,7 +82,7 @@ void AnnunText::CalculateMinSize(void)
 	SetMinSize( min );
 }
 
-void AnnunText::SetColorScheme(ColorScheme cs)
+void AnnunText::SetColorScheme(ColorScheme)
 {
 	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 	m_pbackBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("UBLCK") ), wxSOLID );
@@ -118,7 +118,7 @@ void AnnunText::SetAValue(const wxString & v)
 	m_value = v;
 }
 
-void AnnunText::OnPaint(wxPaintEvent& event)
+void AnnunText::OnPaint(wxPaintEvent &)
 {
 	int sx, sy;
 	GetClientSize( &sx, &sy );
@@ -133,7 +133,8 @@ void AnnunText::OnPaint(wxPaintEvent& event)
 	mdc.SetBackground( *m_pbackBrush );
 	mdc.Clear();
 
-	if( style->consoleTextBackground.IsOk() ) mdc.DrawBitmap( style->consoleTextBackground, 0, 0 );
+	if (style->consoleTextBackground.IsOk())
+		mdc.DrawBitmap( style->consoleTextBackground, 0, 0 );
 
 	mdc.SetTextForeground( m_text_color );
 

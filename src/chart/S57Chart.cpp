@@ -34,7 +34,6 @@
 #include <chart/s52plib.h>
 
 #include "dychart.h"
-#include "navutil.h"
 #include "ocpn_pixel.h"
 #include "ocpnDC.h"
 #include "OCPNRegionIterator.h"
@@ -46,6 +45,7 @@
 #include <MicrosoftCompatibility.h>
 #include <ChartCanvas.h>
 #include <LogMessageOnce.h>
+#include <PositionParser.h>
 
 #include "cpl_csv.h"
 #include "setjmp.h"

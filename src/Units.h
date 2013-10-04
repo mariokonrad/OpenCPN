@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __NAVUTIL__
-#define __NAVUTIL__
+#ifndef __UNITS__H__
+#define __UNITS__H__
 
 #include <wx/string.h>
 

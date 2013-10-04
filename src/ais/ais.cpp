@@ -23,13 +23,13 @@
 
 #include "ais/ais.h"
 
+#include "dychart.h"
+
 #include <geo/GeoRef.h>
 
-#include "dychart.h"
-#include "navutil.h"
-#include "StyleManager.h"
-#include "DataStream.h"
-#include "Select.h"
+#include <StyleManager.h>
+#include <DataStream.h>
+#include <Select.h>
 #include <ChartCanvas.h>
 #include <ColorScheme.h>
 

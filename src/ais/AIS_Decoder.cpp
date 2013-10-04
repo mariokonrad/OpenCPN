@@ -34,6 +34,7 @@
 #include <Select.h>
 #include <OCPN_DataStreamEvent.h>
 #include <DataStream.h>
+#include <Units.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -572,9 +573,8 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 			arpa_utc_sec = wxDateTime::Now().ToUTC().GetSecond();
 		}
 
-		if( arpa_distunit == _T("K") )
-		{
-			arpa_dist = fromUsrDistance( arpa_dist, DISTANCE_KM );
+		if( arpa_distunit == _T("K") ) {
+			arpa_dist = fromUsrDistance(arpa_dist, DISTANCE_KM);
 			arpa_sog = fromUsrSpeed(arpa_sog, SPEED_KMH);
 		} else if( arpa_distunit == _T("S") ) {
 			arpa_dist = fromUsrDistance( arpa_dist, DISTANCE_MI );

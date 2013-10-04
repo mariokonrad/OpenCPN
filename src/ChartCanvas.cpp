@@ -40,7 +40,6 @@
 #include "Style.h"
 #include "Routeman.h"
 #include "StatWin.h"
-#include "navutil.h"
 #include "Track.h"
 #include "Kml.h"
 #include "ConsoleCanvas.h"
@@ -76,6 +75,7 @@
 #include <UserColors.h>
 #include <Layer.h>
 #include <PositionParser.h>
+#include <Units.h>
 
 #include <plugin/PlugInManager.h>
 

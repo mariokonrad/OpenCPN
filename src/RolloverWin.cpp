@@ -21,16 +21,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include "RolloverWin.h"
+#include <timers.h>
+#include <ocpnDC.h>
+#include <FontMgr.h>
+#include <UserColors.h>
+
 #include <wx/bitmap.h>
 #include <wx/dcmemory.h>
 #include <wx/dcscreen.h>
-
-#include "RolloverWin.h"
-#include "ocpnDC.h"
-#include "timers.h"
-#include "navutil.h"
-#include "FontMgr.h"
-#include <UserColors.h>
 
 BEGIN_EVENT_TABLE(RolloverWin, wxWindow)
 	EVT_PAINT(RolloverWin::OnPaint)

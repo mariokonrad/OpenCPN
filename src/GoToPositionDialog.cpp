@@ -22,11 +22,9 @@
  **************************************************************************/
 
 #include "GoToPositionDialog.h"
-#include "PositionParser.h"
-#include "RouteProp.h"
-#include "LatLonTextCtrl.h"
-#include "navutil.h"
-
+#include <PositionParser.h>
+#include <RouteProp.h>
+#include <LatLonTextCtrl.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 #include <MainFrame.h>

@@ -22,12 +22,11 @@
  **************************************************************************/
 
 #include "NavObjectChanges.h"
-#include "RoutePoint.h"
-#include "Routeman.h"
-#include "Track.h"
-#include "WayPointman.h"
-#include "Select.h"
-#include "navutil.h"
+#include <RoutePoint.h>
+#include <Routeman.h>
+#include <Track.h>
+#include <WayPointman.h>
+#include <Select.h>
 
 extern WayPointman * pWayPointMan;
 extern Select * pSelect;

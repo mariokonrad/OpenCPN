@@ -26,7 +26,6 @@
 
 #include <wx/dialog.h>
 #include <wx/timer.h>
-#include "navutil.h"
 #include <ColorScheme.h>
 
 #define FADE_TIMER 2

@@ -23,16 +23,15 @@
 
 #include "Track.h"
 
-#include "Select.h"
-#include "ocpnDC.h"
-#include "RouteProp.h"
-#include "navutil.h"
-#include "gpx/gpx.h"
-
+#include <Select.h>
+#include <ocpnDC.h>
+#include <RouteProp.h>
 #include <ChartCanvas.h>
 #include <UserColors.h>
 
 #include <geo/GeoRef.h>
+
+#include <gpx/gpx.h>
 
 #define TIMER_TRACK1 778
 

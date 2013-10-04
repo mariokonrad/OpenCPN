@@ -23,23 +23,23 @@
 
 #include "TrackPropDlg.h"
 
-#include "OCPNTrackListCtrl.h"
-#include "navutil.h"
-#include "Track.h"
-#include "Routeman.h"
-#include "Select.h"
-#include "RouteManagerDialog.h"
-#include "RoutePrintSelection.h"
-#include "LinkPropDlg.h"
-#include "gpx/gpx.h"
-
+#include <OCPNTrackListCtrl.h>
+#include <Track.h>
+#include <Routeman.h>
+#include <Select.h>
+#include <RouteManagerDialog.h>
+#include <RoutePrintSelection.h>
+#include <LinkPropDlg.h>
 #include <ChartCanvas.h>
 #include <MainFrame.h>
 #include <Config.h>
+#include <Units.h>
 
 #include <geo/GeoRef.h>
 
 #include <plugin/PlugInManager.h>
+
+#include <gpx/gpx.h>
 
 extern RouteList * pRouteList;
 extern Track * g_pActiveTrack;

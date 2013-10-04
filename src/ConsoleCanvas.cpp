@@ -23,12 +23,11 @@
 
 #include "ConsoleCanvas.h"
 #include "dychart.h"
-#include "AnnunText.h"
-#include "CDI.h"
-#include "MainFrame.h"
-#include "Routeman.h"
-#include "navutil.h"
-#include "FontMgr.h"
+#include <AnnunText.h>
+#include <CDI.h>
+#include <MainFrame.h>
+#include <Routeman.h>
+#include <FontMgr.h>
 #include <RoutePoint.h>
 #include <Route.h>
 #include <UserColors.h>

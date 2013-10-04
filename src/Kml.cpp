@@ -22,9 +22,8 @@
  **************************************************************************/
 
 #include "Kml.h"
-#include "KmlFormatDialog.h"
-#include "navutil.h"
-#include "Track.h"
+#include <KmlFormatDialog.h>
+#include <Track.h>
 #include <MainFrame.h>
 
 #include <wx/file.h>

@@ -25,7 +25,6 @@
 #include <wx/timer.h>
 
 #include <ColorScheme.h>
-#include "navutil.h"
 
 #define TOOLTIPON_TIMER 10000
 
@@ -39,7 +38,7 @@ class ToolBarTool;
 //    Adapted from wxToolBarSimple( deprecated )
 // ----------------------------------------------------------------------------
 
-class ToolBarSimple: public wxControl
+class ToolBarSimple : public wxControl
 {
 		DECLARE_EVENT_TABLE()
 

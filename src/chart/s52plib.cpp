@@ -23,7 +23,6 @@
 
 #include "s52plib.h"
 #include "RenderFromHPGL.h"
-#include "navutil.h"
 #include "ocpn_pixel.h"
 #include "RazdsParser.h"
 #include "FontMgr.h"

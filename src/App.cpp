@@ -38,7 +38,6 @@
 #include "StatWin.h"
 #include "PianoWin.h"
 #include "ConsoleCanvas.h"
-#include "navutil.h"
 #include "MicrosoftCompatibility.h"
 #include "GUI_IDs.h"
 

@@ -34,7 +34,6 @@
 #include <geo/GeoRef.h>
 #include <geo/Polygon.h>
 
-#include <navutil.h>
 #include <MicrosoftCompatibility.h>
 #include <LogMessageOnce.h>
 

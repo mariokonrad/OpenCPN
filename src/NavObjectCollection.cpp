@@ -22,18 +22,17 @@
  **************************************************************************/
 
 #include "NavObjectCollection.h"
-#include "RoutePoint.h"
-#include "Routeman.h"
-#include "WayPointman.h"
-#include "Track.h"
-#include "Select.h"
-#include "navutil.h"
 
+#include <RoutePoint.h>
+#include <Routeman.h>
+#include <WayPointman.h>
+#include <Track.h>
+#include <Select.h>
 #include <Config.h>
 
-#include "gpx/ParseGPXDateTime.h"
+#include <gpx/ParseGPXDateTime.h>
 
-#include "tinyxml/tinyxml.h"
+#include <tinyxml/tinyxml.h>
 
 extern WayPointman * pWayPointMan;
 extern Routeman * g_pRouteMan;

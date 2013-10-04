@@ -37,46 +37,44 @@ END_EVENT_TABLE()
 TimedPopupWin::TimedPopupWin(wxWindow *parent, int timeout)
 	: wxWindow(parent, wxID_ANY, wxPoint( 0, 0 ), wxSize( 1, 1 ), wxNO_BORDER)
 {
-    m_pbm = NULL;
+	m_pbm = NULL;
 
-    m_timer_timeout.SetOwner(this, POPUP_TIMER);
-    m_timeout_sec = timeout;
-    isActive = false;
-    Hide();
+	m_timer_timeout.SetOwner(this, POPUP_TIMER);
+	m_timeout_sec = timeout;
+	isActive = false;
+	Hide();
 }
 
 TimedPopupWin::~TimedPopupWin()
 {
-    delete m_pbm;
+	delete m_pbm;
 }
 
-void TimedPopupWin::OnTimer(wxTimerEvent& event)
+void TimedPopupWin::OnTimer(wxTimerEvent &)
 {
-    if( IsShown() )
-        Hide();
+	if( IsShown() )
+		Hide();
 }
-
 
 void TimedPopupWin::SetBitmap(wxBitmap &bmp)
 {
-    delete m_pbm;
-    m_pbm = new wxBitmap( bmp );
+	delete m_pbm;
+	m_pbm = new wxBitmap( bmp );
 
-    // Retrigger the auto timeout
-    if( m_timeout_sec > 0 )
-        m_timer_timeout.Start( m_timeout_sec * 1000, wxTIMER_ONE_SHOT );
+	// Retrigger the auto timeout
+	if( m_timeout_sec > 0 )
+		m_timer_timeout.Start( m_timeout_sec * 1000, wxTIMER_ONE_SHOT );
 }
 
-void TimedPopupWin::OnPaint(wxPaintEvent& event)
+void TimedPopupWin::OnPaint(wxPaintEvent &)
 {
-    int width, height;
-    GetClientSize( &width, &height );
-    wxPaintDC dc( this );
+	int width, height;
+	GetClientSize( &width, &height );
+	wxPaintDC dc( this );
 
-    wxMemoryDC mdc;
-    mdc.SelectObject( *m_pbm );
-    dc.Blit( 0, 0, width, height, &mdc, 0, 0 );
-
+	wxMemoryDC mdc;
+	mdc.SelectObject( *m_pbm );
+	dc.Blit( 0, 0, width, height, &mdc, 0, 0 );
 }
 
 wxBitmap * TimedPopupWin::GetBitmap()

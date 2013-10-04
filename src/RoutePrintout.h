@@ -24,6 +24,9 @@
 #ifndef __ROUTEPRINTOUT_H__
 #define __ROUTEPRINTOUT_H__
 
+#include <PrintTable.h>
+#include <MyPrintout.h>
+
 #include <wx/print.h>
 #include <wx/datetime.h>
 #include <wx/cmdline.h>
@@ -32,9 +35,7 @@
 	#include <wx/msw/private.h>
 #endif
 
-#include "navutil.h"
-#include "PrintTable.h"
-#include "MyPrintout.h"
+class Route;
 
 class RoutePrintout : public MyPrintout
 {
@@ -42,7 +43,7 @@ class RoutePrintout : public MyPrintout
 		RoutePrintout(
 				std::vector<bool> _toPrintOut,
 				Route * route,
-				const wxChar * title = _T( "My Route printout"));
+				const wxChar * title = _T("My Route printout"));
 
 		virtual bool OnPrintPage(int page);
 		virtual void OnPreparePrinting();

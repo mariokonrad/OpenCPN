@@ -26,7 +26,6 @@
 
 #include <wx/dialog.h>
 #include <ColorScheme.h>
-#include "navutil.h"
 
 class ToolTipWin : public wxDialog
 {
@@ -34,21 +33,12 @@ class ToolTipWin : public wxDialog
 
 	public:
 		ToolTipWin(wxWindow *parent);
-		~ToolTipWin();
+		virtual ~ToolTipWin();
 
 		void OnPaint(wxPaintEvent& event);
 		void SetColorScheme(ColorScheme cs);
-
-		void SetString(const wxString & s)
-		{
-			m_string = s;
-		}
-
-		void SetPosition(wxPoint pt)
-		{
-			m_position = pt;
-		}
-
+		void SetString(const wxString & s);
+		void SetPosition(wxPoint pt);
 		void SetBitmap(void);
 
 	private:

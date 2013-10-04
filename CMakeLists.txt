@@ -503,7 +503,7 @@ SET(HDRS
 	src/garmin/usb_packet.h
 
 	include/ocpn_pixel.h
-	include/navutil.h
+	src/Units.h
 	src/DataStream.h
 	src/GARMIN_Serial_Thread.h
 	src/GARMIN_USB_Thread.h
@@ -721,7 +721,7 @@ SET(SRCS
 	src/ConsoleCanvas.cpp
 	src/ViewPort.cpp
 	src/MicrosoftCompatibility.cpp
-	src/navutil.cpp
+	src/Units.cpp
 	src/Config.cpp
 	src/LogMessageOnce.cpp
 	src/Track.cpp

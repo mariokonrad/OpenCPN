@@ -58,6 +58,16 @@ void ToolTipWin::SetColorScheme(ColorScheme)
 	m_text_color = FontMgr::Get().GetFontColor( _("ToolTips") );
 }
 
+void ToolTipWin::SetString(const wxString & s)
+{
+	m_string = s;
+}
+
+void ToolTipWin::SetPosition(wxPoint pt)
+{
+	m_position = pt;
+}
+
 void ToolTipWin::SetBitmap()
 {
 	int h, w;

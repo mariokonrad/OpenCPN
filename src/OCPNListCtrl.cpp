@@ -22,9 +22,12 @@
  **************************************************************************/
 
 #include "OCPNListCtrl.h"
-#include "ais/AIS_Target_Data.h"
-#include "ais/AISTargetListDialog.h"
-#include "ais/ais.h"
+
+#include <Units.h>
+
+#include <ais/AIS_Target_Data.h>
+#include <ais/AISTargetListDialog.h>
+#include <ais/ais.h>
 
 extern wxString g_AisTargetList_column_spec;
 extern bool bGPSValid;
@@ -64,12 +67,12 @@ wxString OCPNListCtrl::OnGetItemText(long item, long column) const
 	return ret;
 }
 
-int OCPNListCtrl::OnGetItemColumnImage(long item, long column) const
+int OCPNListCtrl::OnGetItemColumnImage(long WXUNUSED(item), long WXUNUSED(column)) const
 {
 	return -1;
 }
 
-wxString OCPNListCtrl::GetTargetColumnData(AIS_Target_Data *pAISTarget, long column) const
+wxString OCPNListCtrl::GetTargetColumnData(AIS_Target_Data * pAISTarget, long column) const
 {
 	wxString ret;
 

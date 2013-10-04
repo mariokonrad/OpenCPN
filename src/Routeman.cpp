@@ -23,16 +23,15 @@
 
 #include "Routeman.h"
 #include "dychart.h"
-#include "StyleManager.h"
-#include "CDI.h"
-#include "WayPointman.h"
-#include "ConsoleCanvas.h"
-#include "navutil.h"
-#include "RouteProp.h"
-#include "RouteManagerDialog.h"
-#include "Multiplexer.h"
-#include "Select.h"
-#include "MarkIcon.h"
+#include <StyleManager.h>
+#include <CDI.h>
+#include <WayPointman.h>
+#include <ConsoleCanvas.h>
+#include <RouteProp.h>
+#include <RouteManagerDialog.h>
+#include <Multiplexer.h>
+#include <Select.h>
+#include <MarkIcon.h>
 #include <Config.h>
 #include <Vector2D.h>
 #include <UserColors.h>

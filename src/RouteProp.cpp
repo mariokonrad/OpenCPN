@@ -22,22 +22,20 @@
  **************************************************************************/
 
 #include "RouteProp.h"
-#include "Select.h"
-#include "navutil.h"
-#include "Track.h"
-#include "Routeman.h"
-#include "WayPointman.h"
-#include "RouteManagerDialog.h"
-#include "MessageBox.h"
-#include "RoutePrintout.h"
-#include "RoutePrintSelection.h"
-#include "PositionParser.h"
-#include "gpx/gpx.h"
-
+#include <Select.h>
+#include <Track.h>
+#include <Routeman.h>
+#include <WayPointman.h>
+#include <RouteManagerDialog.h>
+#include <MessageBox.h>
+#include <RoutePrintout.h>
+#include <RoutePrintSelection.h>
+#include <PositionParser.h>
 #include <Config.h>
 #include <ChartCanvas.h>
 #include <MainFrame.h>
 #include <DimeControl.h>
+#include <Units.h>
 
 #include <geo/GeoRef.h>
 
@@ -48,6 +46,8 @@
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+
+#include <gpx/gpx.h>
 
 #include <wx/datetime.h>
 #include <wx/clipbrd.h>

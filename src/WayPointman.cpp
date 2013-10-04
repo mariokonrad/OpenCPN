@@ -22,20 +22,19 @@
  **************************************************************************/
 
 #include "WayPointman.h"
-#include "RoutePoint.h"
-#include "Routeman.h"
-#include "Select.h"
-#include "navutil.h"
-#include "StyleManager.h"
-#include "Style.h"
-#include "gpx/GpxDocument.h"
-
+#include <RoutePoint.h>
+#include <Routeman.h>
+#include <Select.h>
+#include <StyleManager.h>
+#include <Style.h>
 #include <Config.h>
 #include <UserColors.h>
 #include <MarkIcon.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
+
+#include <gpx/GpxDocument.h>
 
 #include <wx/imaglist.h>
 #include <wx/dir.h>

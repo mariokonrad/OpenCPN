@@ -22,12 +22,11 @@
  **************************************************************************/
 
 #include "AISTargetQueryDialog.h"
-#include "navutil.h"
-#include "FontMgr.h"
-#include "Select.h"
-#include "RouteManagerDialog.h"
-#include "Undo.h"
 
+#include <FontMgr.h>
+#include <Select.h>
+#include <RouteManagerDialog.h>
+#include <Undo.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 #include <Config.h>

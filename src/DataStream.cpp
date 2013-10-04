@@ -28,21 +28,21 @@
 
 #include "DataStream.h"
 
-#include <wx/tokenzr.h>
-#include <wx/datetime.h>
+#include "dychart.h"
+#include <OCPN_DataStreamEvent.h>
+#include <OCP_DataStreamInput_Thread.h>
+#include <GarminProtocolHandler.h>
+
+#include <garmin/jeeps/garmin_wrapper.h>
 
 #include <cstdlib>
 #include <cmath>
 #include <ctime>
 #include <vector>
 
-#include "dychart.h"
-
-#include "OCPN_DataStreamEvent.h"
-#include "OCP_DataStreamInput_Thread.h"
-#include "GarminProtocolHandler.h"
-#include "garmin/jeeps/garmin_wrapper.h"
-
+#include <wx/tokenzr.h>
+#include <wx/datetime.h>
+#include <wx/log.h>
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;

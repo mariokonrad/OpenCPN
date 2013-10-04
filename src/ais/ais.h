@@ -34,11 +34,10 @@
 #include <vector>
 
 #include "dychart.h"
-#include "navutil.h"
-#include "OCPN_Sound.h"
+#include <OCPN_Sound.h>
 
-#include "AIS_Bitstring.h"
-#include "AISTargetListDialog.h"
+#include <ais/AIS_Bitstring.h>
+#include <ais/AISTargetListDialog.h>
 
 #define TIMER_AIS_MSEC      998
 #define TIMER_AIS_AUDIO_MSEC 2000

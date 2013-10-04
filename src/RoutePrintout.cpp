@@ -21,13 +21,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <iostream>
-using namespace std;
+#include "RoutePrintout.h"
+#include "dychart.h"
+#include <PositionParser.h>
+#include <Route.h>
+#include <Units.h>
 
-#include "wx/print.h"
-#include "wx/printdlg.h"
-#include "wx/artprov.h"
-#include "wx/stdpaths.h"
+#include <wx/print.h>
+#include <wx/printdlg.h>
+#include <wx/artprov.h>
+#include <wx/stdpaths.h>
 #include <wx/intl.h>
 #include <wx/listctrl.h>
 #include <wx/aui/aui.h>
@@ -37,13 +40,9 @@ using namespace std;
 #include <wx/colour.h>
 #include <wx/dc.h>
 
-
 #if wxCHECK_VERSION( 2, 9, 0 )
 	#include <wx/dialog.h>
 #endif
-
-#include "dychart.h"
-#include <Route.h>
 
 #ifdef __WXMSW__
 	#include <stdlib.h>
@@ -56,9 +55,6 @@ using namespace std;
 	#include <signal.h>
 	#include <setjmp.h>
 #endif
-
-#include "RoutePrintout.h"
-#include <PositionParser.h>
 
 #define PRINT_WP_NAME 0
 #define PRINT_WP_POSITION 1
@@ -124,28 +120,28 @@ RoutePrintout::RoutePrintout(
 		RoutePoint* point = myRoute->GetPoint( n );
 
 		if ( toPrintOut[ PRINT_WP_NAME ] ) {
-			string cell( point->GetName().mb_str() );
+			std::string cell( point->GetName().mb_str() );
 			table << cell;
 		}
 		if ( toPrintOut[ PRINT_WP_POSITION ] ) {
 			wxString point_position = toSDMM( 1, point->m_lat, point->m_bIsInTrack ) + _T( "\n" ) + toSDMM( 2, point->m_lon, point->m_bIsInTrack );
-			string   cell( point_position.mb_str() );
+			std::string   cell( point_position.mb_str() );
 			table << cell;
 		}
 		if ( toPrintOut[ PRINT_WP_COURSE ] ) {
 			wxString point_course;
 			point_course.Printf( _T( "%03.0f Deg" ), point->GetCourse() );
-			string   cell( point_course.mb_str() );
+			std::string   cell( point_course.mb_str() );
 			table << cell;
 		}
 		if ( toPrintOut[ PRINT_WP_DISTANCE ] ) {
 			wxString point_distance;
 			point_distance.Printf( _T( "%6.2f" + getUsrDistanceUnit() ), toUsrDistance( point->GetDistance() ) );
-			string   cell( point_distance.mb_str() );
+			std::string   cell( point_distance.mb_str() );
 			table << cell;
 		}
 		if ( toPrintOut[ PRINT_WP_DESCRIPTION ] ) {
-			string cell( point->GetDescription().mb_str() );
+			std::string cell( point->GetDescription().mb_str() );
 			table << cell;
 		}
 		table << "\n";

@@ -23,14 +23,12 @@
 
 #include <wx/wx.h>
 
-#include "Select.h"
-
-#include <geo/GeoRef.h>
-
+#include <Select.h>
 #include <MicrosoftCompatibility.h>
 #include <ChartCanvas.h>
 #include <Vector2D.h>
-#include "navutil.h"
+
+#include <geo/GeoRef.h>
 
 extern ChartCanvas * cc1;
 

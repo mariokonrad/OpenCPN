@@ -22,15 +22,13 @@
  **************************************************************************/
 
 #include "MarkInfo.h"
-#include "RouteProp.h"
-#include "LinkPropDlg.h"
-#include "WayPointman.h"
-#include "Select.h"
-#include "Routeman.h"
-#include "PositionParser.h"
-#include "navutil.h"
-#include "RouteManagerDialog.h"
-
+#include <RouteProp.h>
+#include <LinkPropDlg.h>
+#include <WayPointman.h>
+#include <Select.h>
+#include <Routeman.h>
+#include <PositionParser.h>
+#include <RouteManagerDialog.h>
 #include <Config.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>

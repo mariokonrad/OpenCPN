@@ -24,8 +24,8 @@
 #include "OCPNTrackListCtrl.h"
 #include <Route.h>
 #include <RoutePoint.h>
-#include <navutil.h>
 #include <PositionParser.h>
+#include <Units.h>
 
 #include <geo/GeoRef.h>
 

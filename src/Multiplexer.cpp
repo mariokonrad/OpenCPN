@@ -22,12 +22,15 @@
  **************************************************************************/
 
 #include "Multiplexer.h"
-#include "navutil.h"
-#include "NMEALogWindow.h"
-#include "plugin/PlugInManager.h"
-#include "garmin/jeeps/garmin_wrapper.h"
-#include "OCPN_DataStreamEvent.h"
+#include <NMEALogWindow.h>
+#include <OCPN_DataStreamEvent.h>
+
+#include <plugin/PlugInManager.h>
+
 #include <nmea0183/nmea0183.h>
+
+#include <garmin/jeeps/garmin_wrapper.h>
+
 #include <wx/gauge.h>
 
 extern PlugInManager * g_pi_manager;

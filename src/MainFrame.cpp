@@ -62,7 +62,6 @@
 #include "TimedPopupWin.h"
 #include "MessageBox.h"
 #include "WayPointman.h"
-#include "navutil.h"
 #include "Track.h"
 #include "StyleManager.h"
 #include "Style.h"
@@ -100,6 +99,7 @@
 #include <Config.h>
 #include <UserColors.h>
 #include <PositionParser.h>
+#include <Units.h>
 
 #include <plugin/PlugInManager.h>
 #include <plugin/OCPN_MsgEvent.h>

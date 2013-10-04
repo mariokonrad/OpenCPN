@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "ToolBarSimple.h"
-#include "navutil.h"
 #include "StyleManager.h"
 #include "Style.h"
 #include "FontMgr.h"

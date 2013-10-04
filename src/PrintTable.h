@@ -24,6 +24,9 @@
 #ifndef __PRINTTABLE_H__
 #define __PRINTTABLE_H__
 
+#include <Table.h>
+#include <PrintCell.h>
+
 #include <iostream>
 #include <vector>
 
@@ -31,9 +34,6 @@
 	#include <wx/msw/private.h>
 #endif
 
-#include "navutil.h"
-#include "Table.h"
-#include "PrintCell.h"
 
 ///\brief Extension of a class Table with printing into dc.
 ///
@@ -64,4 +64,5 @@ class PrintTable : public Table
 		int GetNumberPages() const;
 		int GetHeaderHeight() const;
 };
+
 #endif

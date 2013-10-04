@@ -124,7 +124,7 @@ void TTYWindow::CreateLegendBitmap()
 	dc.SelectObject( wxNullBitmap );
 }
 
-void TTYWindow::OnPauseClick( wxCommandEvent& event )
+void TTYWindow::OnPauseClick(wxCommandEvent &)
 {
 	if(!bpause) {
 		bpause = true;
@@ -138,7 +138,7 @@ void TTYWindow::OnPauseClick( wxCommandEvent& event )
 	}
 }
 
-void TTYWindow::OnCloseWindow( wxCloseEvent& event )
+void TTYWindow::OnCloseWindow(wxCloseEvent &)
 {
 	if (m_window_destroy_listener) {
 		m_window_destroy_listener->DestroyWindow();
@@ -147,9 +147,9 @@ void TTYWindow::OnCloseWindow( wxCloseEvent& event )
 	}
 }
 
-void TTYWindow::Add(const wxString &line)
+void TTYWindow::Add(const wxString & line)
 {
 	if( m_pScroll )
-		m_pScroll->Add( line );
+		m_pScroll->Add(line);
 }
 

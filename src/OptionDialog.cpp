@@ -55,7 +55,6 @@
 #include "FontMgr.h"
 #include "OCPN_Sound.h"
 #include "NMEALogWindow.h"
-#include "navutil.h"
 #include "SentenceListDlg.h"
 #include "ChartGroupsUI.h"
 #include "OptionIDs.h"

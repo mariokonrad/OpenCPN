@@ -25,7 +25,6 @@
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "Multiplexer.h"
-#include "navutil.h"
 #include "FontMgr.h"
 #include "MessageBox.h"
 #include "ocpnDC.h"
@@ -33,7 +32,7 @@
 #include <ChartCanvas.h>
 #include <MainFrame.h>
 
-#include "gpx/ParseGPXDateTime.h"
+#include <gpx/ParseGPXDateTime.h>
 
 #include <wx/dcscreen.h>
 #include <wx/tokenzr.h>

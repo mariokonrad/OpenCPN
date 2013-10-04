@@ -22,17 +22,15 @@
  **************************************************************************/
 
 #include "Undo.h"
-#include "navutil.h"
-#include "Routeman.h"
-#include "WayPointman.h"
-#include "RouteManagerDialog.h"
-#include "Select.h"
-
+#include <Routeman.h>
+#include <WayPointman.h>
+#include <RouteManagerDialog.h>
+#include <Select.h>
 #include <ChartCanvas.h>
 #include <MainFrame.h>
 #include <Config.h>
 
-#include "tinyxml/tinyxml.h"
+#include <tinyxml/tinyxml.h>
 
 #include <wx/file.h>
 #include <wx/datetime.h>

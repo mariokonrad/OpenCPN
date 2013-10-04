@@ -376,9 +376,9 @@ SET(SRC_TINYXML
 	)
 
 SET(HDR_WXJSON
-	include/wx/json_defs.h
-	include/wx/jsonwriter.h
-	include/wx/jsonreader.h
+	src/wxJSON/json_defs.h
+	src/wxJSON/jsonwriter.h
+	src/wxJSON/jsonreader.h
 	)
 
 SET(SRC_WXJSON

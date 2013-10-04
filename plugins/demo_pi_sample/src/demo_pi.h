@@ -38,7 +38,7 @@
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    8
 
-#include "../../../src/plugin/ocpn_plugin.h" // FIXME: no relative paths for includes
+#include "plugin/ocpn_plugin.h" // FIXME: no relative paths for includes
 
 #include "nmea0183/nmea0183.h"
 

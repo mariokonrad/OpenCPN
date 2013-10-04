@@ -56,8 +56,8 @@
 #undef MAX
 #endif
 
-#include "wx/json_defs.h"
-#include "wx/jsonwriter.h"
+#include <wxJSON/json_defs.h>
+#include <wxJSON/jsonwriter.h>
 
 PlugIn_AIS_Target * Create_PI_AIS_Target(AIS_Target_Data *ptarget);
 

@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
  *
  * Project:  OpenCPN
  * Purpose:  GRIB Plugin
@@ -20,9 +20,8 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
- ***************************************************************************
- */
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
 
 #ifndef _GRIBPI_H_
 #define _GRIBPI_H_
@@ -40,10 +39,10 @@
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    7
 
-#include "../../../src/plugin/ocpn_plugin.h" // FIXME: no relative paths for includes
+#include "plugin/ocpn_plugin.h" // FIXME: no relative paths for includes
 
-#include "../../../include/wx/jsonreader.h"
-#include "../../../include/wx/jsonwriter.h"
+#include "wxJSON/jsonreader.h"
+#include "wxJSON/jsonwriter.h"
 
 #include "GribSettingsDialog.h"
 #include "GribOverlayFactory.h"

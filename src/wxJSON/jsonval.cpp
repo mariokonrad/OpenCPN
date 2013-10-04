@@ -13,19 +13,15 @@
 //#endif
 
 
-// For compilers that support precompilation, includes "wx.h".
-#include "wx/wxprec.h"
-
 #ifdef __BORLANDC__
 #pragma hdrstop
 #endif
 
+#include "jsonval.h"
+
 #include <wx/log.h>
 #include <wx/debug.h>
 #include <wx/arrimpl.cpp>
-
-#include <wx/jsonval.h>
-
 
 WX_DEFINE_OBJARRAY( wxJSONInternalArray );
 

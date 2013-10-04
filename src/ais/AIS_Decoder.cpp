@@ -772,32 +772,28 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 
 	//  Simple case first
 	//  First and only part of a one-part sentence
-	if( ( 1 == nsentences ) && ( 1 == isentence ) ) {
+	if ((1 == nsentences) && (1 == isentence)) {
 		string_to_parse = tkz.GetNextToken();         // the encapsulated data
-	}
-
-	else if( nsentences > 1 ) {
-		if( 1 == isentence ) {
+	} else if (nsentences > 1) {
+		if (1 == isentence) {
 			sentence_accumulator = tkz.GetNextToken();         // the encapsulated data
-		}
-
-		else {
+		} else {
 			sentence_accumulator += tkz.GetNextToken();
 		}
 
-		if( isentence == nsentences ) {
+		if (isentence == nsentences) {
 			string_to_parse = sentence_accumulator;
 		}
 	}
 
-	if( mmsi
-			|| ( !string_to_parse.IsEmpty() && ( string_to_parse.Len() < AIS_MAX_MESSAGE_LEN ) ) ) {
+	if (mmsi || (!string_to_parse.IsEmpty() && ( string_to_parse.Len() < AIS_MAX_MESSAGE_LEN))) {
 
 		//  Create the bit accessible string
 		AIS_Bitstring strbit( string_to_parse.mb_str() );
 
 		//  Extract the MMSI
-		if( !mmsi ) mmsi = strbit.GetInt( 9, 30 );
+		if (!mmsi)
+			mmsi = strbit.GetInt(9, 30);
 		long mmsi_long = mmsi;
 
 		AIS_Target_Data *pTargetData;
@@ -806,8 +802,7 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 
 		//  Search the current AISTargetList for an MMSI match
 		AIS_Target_Hash::iterator it = AISTargetList->find( mmsi );
-		if( it == AISTargetList->end() )                  // not found
-		{
+		if (it == AISTargetList->end()) {
 			pTargetData = new AIS_Target_Data;
 			bnewtarget = true;
 			m_n_targets++;
@@ -822,19 +817,22 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 		wxDateTime now = wxDateTime::Now();
 		now.MakeGMT();
 
-		if( pStaleTarget ) last_report_ticks = pStaleTarget->PositionReportTicks;
+		if (pStaleTarget)
+			last_report_ticks = pStaleTarget->PositionReportTicks;
 		else
 			last_report_ticks = now.GetTicks();
 
 		// Delete the stale AIS Target selectable point if not a CDDSE
-		if( pStaleTarget && !dse_mmsi ) pSelectAIS->DeleteSelectablePoint( (void *) mmsi_long,
-				Select::TYPE_AISTARGET );
+		if (pStaleTarget && !dse_mmsi)
+			pSelectAIS->DeleteSelectablePoint(reinterpret_cast<void *>(mmsi_long), Select::TYPE_AISTARGET); // FIXME: void * misuse
 
 		bool bhad_name = false;
-		if( pStaleTarget ) bhad_name = pStaleTarget->b_nameValid;
+		if (pStaleTarget)
+			bhad_name = pStaleTarget->b_nameValid;
 
 		bool bdecode_result = false; // for CDDSE assume target is there
-		if( dse_mmsi ) bdecode_result = true;
+		if (dse_mmsi)
+			bdecode_result = true;
 
 		if( dse_mmsi && !pTargetData->b_nameValid && pTargetData->b_positionOnceValid
 				&& ( ( now.GetTicks() - pTargetData->PositionReportTicks ) ) < 20 ) { // ignore stray CDDSE sentences
@@ -860,8 +858,7 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 			if( dsc_fmt == 12 ) {
 				strncpy( pTargetData->ShipName, "DISTRESS            ", 21 );
 				pTargetData->b_nameValid = true;
-			}
-			else
+			} else
 				strncpy( pTargetData->ShipName, "POSITION REPORT     ", 21 );
 			pTargetData->b_active = true;
 			pTargetData->b_lost = false;
@@ -982,30 +979,31 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 			//  If this is not an ownship message, update the AIS Target in the Selectable list, and update the CPA info
 			if( !pTargetData->b_OwnShip ) {
 				if( pTargetData->b_positionOnceValid ) {
-					SelectItem *pSel = pSelectAIS->AddSelectablePoint( pTargetData->Lat,
-							pTargetData->Lon, (void *) mmsi_long, Select::TYPE_AISTARGET );
-					pSel->SetUserData( mmsi );
+					SelectItem * pSel = pSelectAIS->AddSelectablePoint(pTargetData->Lat,
+						pTargetData->Lon, reinterpret_cast<void *>(mmsi_long), Select::TYPE_AISTARGET); // FIXME: void * misuse
+					pSel->SetUserData(mmsi);
 				}
 
-				//    Calculate CPA info for this target immediately
-				UpdateOneCPA( pTargetData );
+				// Calculate CPA info for this target immediately
+				UpdateOneCPA(pTargetData);
 
-				//    Update this target's track
-				if( g_bAISShowTracks ) UpdateOneTrack( pTargetData );
+				// Update this target's track
+				if (g_bAISShowTracks)
+					UpdateOneTrack(pTargetData);
 			}
 		} else {
-			//             printf("Unrecognised AIS message ID: %d\n", pTargetData->MID);
-			if( bnewtarget ) {
-				delete pTargetData;                           // this target is not going to be used
+			// printf("Unrecognised AIS message ID: %d\n", pTargetData->MID);
+			if (bnewtarget) {
+				delete pTargetData; // this target is not going to be used
 				m_n_targets--;
 			} else {
 				//  If this is not an ownship message, update the AIS Target in the Selectable list
 				//  even if the message type was not recognized
-				if( !pTargetData->b_OwnShip ) {
-					if( pTargetData->b_positionOnceValid ) {
-						SelectItem *pSel = pSelectAIS->AddSelectablePoint( pTargetData->Lat,
-								pTargetData->Lon, (void *) mmsi_long, SELTYPE_AISTARGET );
-						pSel->SetUserData( mmsi );
+				if (!pTargetData->b_OwnShip) {
+					if (pTargetData->b_positionOnceValid) {
+						SelectItem *pSel = pSelectAIS->AddSelectablePoint(pTargetData->Lat,
+							pTargetData->Lon, reinterpret_cast<void *>(mmsi_long), Select::TYPE_AISTARGET); // FIXME: void * misuse
+						pSel->SetUserData(mmsi);
 					}
 				}
 			}

@@ -170,38 +170,43 @@ SET(PREFIX_DATA share)
 SET(PREFIX_PKGDATA ${PREFIX_DATA}/${PACKAGE_NAME})
 SET(PREFIX_LIB "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src)
+
+# platform specific include directories
+if(WIN32)
+	include_directories(${CMAKE_SOURCE_DIR}/src/windows)
+endif(WIN32)
 
 # require proper c++
 #ADD_DEFINITIONS( "-Wall -ansi -pedantic -Wno-variadic-macros" )
 #TODO: Should we use  -fno-stack-protector
 #  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
-IF(NOT WIN32 AND NOT APPLE)
-	ADD_DEFINITIONS( "-Wall -Wextra -fexceptions -rdynamic" )
-	ADD_DEFINITIONS( " -g -fno-strict-aliasing")
-ENDIF(NOT WIN32 AND NOT APPLE)
+if(NOT WIN32 AND NOT APPLE)
+	add_definitions("-Wall -Wextra -fexceptions -rdynamic")
+	add_definitions("-g -fno-strict-aliasing")
+endif(NOT WIN32 AND NOT APPLE)
 
-IF( APPLE )
-	ADD_DEFINITIONS( "-Wall -Wno-unused -fexceptions -Wno-overloaded-virtual" )
-	ADD_DEFINITIONS( " -g -fno-strict-aliasing")
-	ADD_DEFINITIONS( " -Wno-deprecated -Wno-deprecated-declarations" )
-ENDIF(APPLE)
+if(APPLE)
+	add_definitions("-Wall -Wno-unused -fexceptions -Wno-overloaded-virtual")
+	add_definitions("-g -fno-strict-aliasing")
+	add_definitions("-Wno-deprecated -Wno-deprecated-declarations")
+endif(APPLE)
 
 #Enable CrashReporting for Windows
-IF(WIN32)
-	ADD_DEFINITIONS(-DOCPN_USE_CRASHRPT)
-	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/buildwin/crashrpt)
-	SET(EXTRA_LIBS ${EXTRA_LIBS} ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.lib)
-	SET(CMAKE_EXE_LINKER_FLAGS /DEBUG)
-ENDIF(WIN32)
+if(WIN32)
+	add_definitions(-DOCPN_USE_CRASHRPT)
+	include_directories(${CMAKE_SOURCE_DIR}/buildwin/crashrpt)
+	set(EXTRA_LIBS ${EXTRA_LIBS} ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.lib)
+	set(CMAKE_EXE_LINKER_FLAGS /DEBUG)
+endif(WIN32)
 
 # Add some definitions to satisfy MS
-ADD_DEFINITIONS(-DUSE_GLU_TESS)
-IF(WIN32)
-	ADD_DEFINITIONS(-D__MSVC__)
-	ADD_DEFINITIONS(-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE)
-	ADD_DEFINITIONS(-DPSAPI_VERSION=1)
-ENDIF(WIN32)
+add_definitions(-DUSE_GLU_TESS)
+if(WIN32)
+	add_definitions(-D__MSVC__)
+	add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE)
+	add_definitions(-DPSAPI_VERSION=1)
+endif(WIN32)
 
 # Location where cmake first looks for cmake modules.
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/build)
@@ -297,8 +302,8 @@ SET(SRC_NMEA0183
 	src/nmea0183/apb.hpp
 	)
 
-ADD_LIBRARY(NMEA0183 ${SRC_NMEA0183})
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/nmea0183)
+add_library(NMEA0183 ${SRC_NMEA0183})
+include_directories(${CMAKE_SOURCE_DIR}/src/nmea0183)
 
 SET(HDR_AIS
 	src/ais/ais.h
@@ -498,7 +503,7 @@ SET(HDRS
 	src/garmin/unit_info.h
 	src/garmin/usb_packet.h
 
-	include/ocpn_pixel.h
+	src/ocpn_pixel.h
 	src/Units.h
 	src/DataStream.h
 	src/GARMIN_Serial_Thread.h

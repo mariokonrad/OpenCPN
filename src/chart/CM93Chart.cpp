@@ -978,11 +978,9 @@ void cm93chart::GetPointPix(ObjRazRules *rzRules, float north, float east, wxPoi
 	double valy = ( north * obj->y_rate ) + obj->y_origin;
 
 	//    Crossing Greenwich right
-	if ( m_vp_current.GetBBox().GetMaxX() > 360. )
-	{
+	if ( m_vp_current.GetBBox().GetMaxX() > 360.0) {
 		BoundingBox bbRight(0.0, m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360., m_vp_current.GetBBox().GetMaxY() );
-		if ( bbRight.Intersect ( rzRules->obj->BBObj, 0 ) != _OUT )
-		{
+		if (bbRight.Intersect ( rzRules->obj->BBObj, 0 ) != BoundingBox::_OUT) {
 			valx += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * M_PI;      //6375586.0;
 		}
 	}
@@ -1001,18 +999,15 @@ void cm93chart::GetPointPix ( ObjRazRules *rzRules, wxPoint2DDouble *en, wxPoint
 	double yo =  obj->y_origin;
 
 	//    Crossing Greenwich right
-	if ( m_vp_current.GetBBox().GetMaxX() > 360. )
-	{
-		BoundingBox bbRight ( 0., m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360., m_vp_current.GetBBox().GetMaxY() );
-		if ( bbRight.Intersect ( rzRules->obj->BBObj, 0 ) != _OUT )
-		{
+	if (m_vp_current.GetBBox().GetMaxX() > 360.0) {
+		BoundingBox bbRight(0.0, m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360.0, m_vp_current.GetBBox().GetMaxY());
+		if (bbRight.Intersect ( rzRules->obj->BBObj, 0 ) != BoundingBox::_OUT) {
 			xo += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * M_PI;
 		}
 	}
 
 
-	for ( int i=0 ; i < nPoints ; i++ )
-	{
+	for (int i=0 ; i < nPoints ; ++i) {
 		double valx = ( en[i].m_x * xr ) + xo;
 		double valy = ( en[i].m_y * yr ) + yo;
 		r[i].x = ( int ) wxRound ( ( ( valx - m_easting_vp_center ) * m_view_scale_ppm ) + m_pixx_vp_center );
@@ -1040,17 +1035,13 @@ void cm93chart::GetPixPoint ( int pixx, int pixy, double *plat, double *plon, Vi
 
 	*plat = slat;
 	*plon = slon;
-
 }
 
 bool cm93chart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
 {
-	if ( IsCacheValid() )
-	{
-
-		//      If this viewpoint is same scale as last...
-		if ( vp_last.view_scale_ppm == vp_proposed.view_scale_ppm )
-		{
+	if (IsCacheValid()) {
+		// If this viewpoint is same scale as last...
+		if (vp_last.view_scale_ppm == vp_proposed.view_scale_ppm) {
 
 			double prev_easting_c, prev_northing_c;
 			toSM ( vp_last.clat, vp_last.clon, ref_lat, ref_lon, &prev_easting_c, &prev_northing_c );
@@ -1087,11 +1078,9 @@ bool cm93chart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
 
 void cm93chart::SetVPParms ( const ViewPort &vpt )
 {
-	//    Save a copy for later reference
+	// Save a copy for later reference
 
 	m_vp_current = vpt;
-
-
 
 	//  Set up local SM rendering constants
 	m_pixx_vp_center = vpt.pix_width / 2;
@@ -1101,7 +1090,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 	toSM ( vpt.clat, vpt.clon, ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center );
 
 
-	if ( g_bDebugCM93 )
+	if (g_bDebugCM93)
 	{
 		//    Fetch the lat/lon of the screen corner points
 		const LatLonBoundingBox & box = vpt.GetBBox();

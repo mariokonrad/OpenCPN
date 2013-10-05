@@ -275,15 +275,15 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 
 		//    Case:  vpBBox is completely outside the chart box, or vice versa
 		//    Return an empty region
-		if( _OUT == chart_box.Intersect( (BoundingBox&) vp_positive.vpBBox ) ) {
-			if( _OUT == chart_box.Intersect( (BoundingBox&) vpBBox ) ) {
+		if( BoundingBox::_OUT == chart_box.Intersect( (BoundingBox&) vp_positive.vpBBox ) ) {
+			if( BoundingBox::_OUT == chart_box.Intersect( (BoundingBox&) vpBBox ) ) {
 				// try again with the chart translated 360
 				wxPoint2DDouble rtw( 360., 0. );
 				BoundingBox trans_box = chart_box;
 				trans_box.Translate( rtw );
 
-				if( _OUT == trans_box.Intersect( (BoundingBox&) vp_positive.vpBBox ) ) {
-					if( _OUT == trans_box.Intersect( (BoundingBox&) vpBBox ) ) {
+				if( BoundingBox::_OUT == trans_box.Intersect( (BoundingBox&) vp_positive.vpBBox ) ) {
+					if( BoundingBox::_OUT == trans_box.Intersect( (BoundingBox&) vpBBox ) ) {
 						return OCPNRegion();
 					}
 				}
@@ -298,11 +298,11 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		//      How to fix: maybe scrub the chart points and see if it is likely that
 		//      a region may be safely built and intersection tested.
 
-		if( _IN == chart_box.Intersect( (BoundingBox&) vp_positive.vpBBox ) ) {
+		if( BoundingBox::_IN == chart_box.Intersect( (BoundingBox&) vp_positive.vpBBox ) ) {
 			return Region;
 		}
 
-		if(_IN == chart_box.Intersect((BoundingBox&)vpBBox))
+		if(BoundingBox::_IN == chart_box.Intersect((BoundingBox&)vpBBox))
 		{
 			return Region;
 		}

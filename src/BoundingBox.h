@@ -29,13 +29,20 @@
 class wxTransformMatrix;
 class wxPoint2DDouble;
 
-enum OVERLAP {_IN,_ON,_OUT};
 
 //Purpose   The BoundingBox class stores one BoundingBox.
 //The BoundingBox is defined by two coordiates,
 //a upperleft coordinate and a lowerright coordinate.
 class BoundingBox
 {
+	public:
+		enum OVERLAP
+		{
+			_IN,
+			_ON,
+			_OUT
+		};
+
 	public:
 		BoundingBox();
 		BoundingBox(const BoundingBox&);
@@ -72,8 +79,8 @@ class BoundingBox
 
 		void SetMin(double, double);
 		void SetMax(double, double);
-		wxPoint2DDouble GetMin();
-		wxPoint2DDouble GetMax();
+		wxPoint2DDouble GetMin() const;
+		wxPoint2DDouble GetMax() const;
 		double GetMinX() const;
 		double GetMinY() const;
 		double GetMaxX() const;

@@ -1250,12 +1250,11 @@ char *_getParamVal( ObjRazRules *rzRules, char *str, char *buf, int bsz )
 		}
 
 		wxCharBuffer buffer=value.ToUTF8();
-		if(buffer.data()){
+		if (buffer.data()){
 			unsigned int len = wxMin(strlen(buffer.data()), bsz-1);
 			strncpy( buf, buffer.data(), len );
 			buf[len] = 0;
-		}
-		else
+		} else
 			*buf = 0;
 	}
 
@@ -2154,8 +2153,8 @@ bool s52plib::RenderRasterSymbol(ObjRazRules *rzRules, Rule *prule, wxPoint &r, 
 	symbox.SetMax( plon, plat );
 
 	//  Special case for GEO_AREA objects with centred symbols
-	if( rzRules->obj->Primitive_type == GEO_AREA ) {
-		if( rzRules->obj->BBObj.Intersect( symbox, 0 ) != _IN ) // Symbol is wholly outside base object
+	if (rzRules->obj->Primitive_type == GEO_AREA) {
+		if (rzRules->obj->BBObj.Intersect( symbox, 0 ) != BoundingBox::_IN) // Symbol is wholly outside base object
 			return true;
 	}
 
@@ -4953,10 +4952,11 @@ void s52plib::RenderToBufferFilledPolygon(
 			if( BBView.GetMaxX() > 360. ) {
 				BoundingBox bbRight( 0., BBView.GetMinY(), BBView.GetMaxX() - 360.,
 						BBView.GetMaxY() );
-				if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) b_greenwich = true;
+				if (bbRight.Intersect( *( p_tp->p_bbox ), margin) != BoundingBox::_OUT)
+					b_greenwich = true;
 			}
 
-			if( b_greenwich || ( BBView.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) ) {
+			if (b_greenwich || (BBView.Intersect(*( p_tp->p_bbox ), margin) != BoundingBox::_OUT)) {
 				//      Get and convert the points
 				wxPoint *pr = ptp;
 
@@ -5124,10 +5124,10 @@ int s52plib::RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			if( BBView.GetMaxX() > 360. ) {
 				BoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
 						vp->GetBBox().GetMaxY() );
-				if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) b_greenwich = true;
+				if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != BoundingBox::_OUT ) b_greenwich = true;
 			}
 
-			if( b_greenwich || ( BBView.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) ) {
+			if( b_greenwich || ( BBView.Intersect( *( p_tp->p_bbox ), margin ) != BoundingBox::_OUT ) ) {
 				//      Get and convert the points
 				rzRules->chart->GetPointPix( rzRules, (wxPoint2DDouble*) p_tp->p_vertex, ptp, p_tp->nVert );
 
@@ -5253,10 +5253,10 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			if( BBView.GetMaxX() > 360. ) {
 				BoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
 						vp->GetBBox().GetMaxY() );
-				if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) b_greenwich = true;
+				if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != BoundingBox::_OUT ) b_greenwich = true;
 			}
 
-			if( b_greenwich || ( BBView.Intersect( *( p_tp->p_bbox ), margin ) != _OUT ) ) {
+			if( b_greenwich || ( BBView.Intersect( *( p_tp->p_bbox ), margin ) != BoundingBox::_OUT ) ) {
 
 				//      Get and convert the points
 
@@ -5939,8 +5939,9 @@ bool s52plib::ObjectRenderCheckCS(ObjRazRules * rzRules, ViewPort *)
 	//  We need to do this test since some CS procedures change the display category
 	//  So we need to tentatively process all objects with CS LUPs
 	Rules *rules = rzRules->LUP->ruleList;
-	while( rules != NULL ) {
-		if( RUL_CND_SY == rules->ruleType ) return true;
+	while (rules != NULL) {
+		if (RUL_CND_SY == rules->ruleType)
+			return true;
 
 		rules = rules->next;
 	}
@@ -5961,18 +5962,15 @@ bool s52plib::ObjectRenderCheckPos( ObjRazRules *rzRules, ViewPort *vp )
 
 	// Of course, the object must be at least partly visible in the viewport
 	BoundingBox BBView = vp->GetBBox();
-	if( BBView.Intersect( rzRules->obj->BBObj, 0 ) == _OUT ) // Object is wholly outside window
+	if( BBView.Intersect( rzRules->obj->BBObj, 0 ) == BoundingBox::_OUT ) // Object is wholly outside window
 	{
-
 		//  Do a secondary test if the viewport crosses Greenwich
 		//  This will pick up objects east of Greenwich
-		if( vp->GetBBox().GetMaxX() > 360. ) {
-			BoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
-					vp->GetBBox().GetMaxY() );
-			if( bbRight.Intersect( rzRules->obj->BBObj, 0 ) == _OUT ) return false;
-		}
-
-		else
+		if (vp->GetBBox().GetMaxX() > 360.0) {
+			BoundingBox bbRight(0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360., vp->GetBBox().GetMaxY());
+			if (bbRight.Intersect(rzRules->obj->BBObj, 0) == BoundingBox::_OUT)
+				return false;
+		} else
 			return false;
 	}
 

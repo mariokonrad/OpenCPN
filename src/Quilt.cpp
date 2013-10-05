@@ -940,7 +940,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 
 			BoundingBox chart_box;
 			ChartData->GetDBBoundingBox( i, &chart_box );
-			if( ( viewbox.Intersect( chart_box ) == _OUT ) ) continue;
+			if( ( viewbox.Intersect( chart_box ) == BoundingBox::_OUT ) ) continue;
 
 			if( quilt_proj != ChartData->GetDBChartProj( i ) ) continue;
 

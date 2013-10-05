@@ -495,7 +495,7 @@ int cm93compchart::PrepareChartScale ( const ViewPort &vpt, int cmscale )
 					{
 						M_COVR_Desc *mcd = pcover->GetCover ( im );
 
-						if ( ! ( _OUT == vp_positive.GetBBox().Intersect ( mcd->m_covr_bbox ) ) || ! ( _OUT == vpa.GetBBox().Intersect ( mcd->m_covr_bbox ) ) )
+						if (!(BoundingBox::_OUT == vp_positive.GetBBox().Intersect(mcd->m_covr_bbox)) || !(BoundingBox::_OUT == vpa.GetBBox().Intersect(mcd->m_covr_bbox)))
 						{
 							boverlap = true;
 							break;
@@ -617,22 +617,19 @@ OCPNRegion cm93compchart::GetValidScreenCanvasRegion ( const ViewPort& VPoint, c
 
 	vp_positive.rotation = 0.0;
 
-	if ( m_pcm93chart_current )
-	{
+	if (m_pcm93chart_current) {
 		int chart_native_scale = m_pcm93chart_current->GetNativeScale();
 
-
-		for ( unsigned int im=0 ; im < m_pcm93chart_current->m_pcovr_array_loaded.GetCount() ; im++ )
-		{
+		for ( unsigned int im=0 ; im < m_pcm93chart_current->m_pcovr_array_loaded.GetCount() ; im++ ) {
 			M_COVR_Desc *pmcd = ( m_pcm93chart_current->m_pcovr_array_loaded.Item ( im ) );
 
 			//    We can make a quick test based on the bbox of the M_COVR and the bbox of the ViewPort
 			BoundingBox rtwbb = pmcd->m_covr_bbox;
-			wxPoint2DDouble rtw ( 360., 0. );
-			rtwbb.Translate ( rtw );
+			wxPoint2DDouble rtw(360.0, 0.0);
+			rtwbb.Translate(rtw);
 
-			if ( ( vp_positive.GetBBox().Intersect ( pmcd->m_covr_bbox ) == _OUT ) &&
-					( vp_positive.GetBBox().Intersect ( rtwbb ) == _OUT ) )
+			if ((vp_positive.GetBBox().Intersect(pmcd->m_covr_bbox) == BoundingBox::_OUT) &&
+					(vp_positive.GetBBox().Intersect(rtwbb) == BoundingBox::_OUT))
 				continue;
 
 			wxPoint *DrawBuf = m_pcm93chart_current->GetDrawBuffer ( pmcd->m_nvertices );
@@ -640,15 +637,11 @@ OCPNRegion cm93compchart::GetValidScreenCanvasRegion ( const ViewPort& VPoint, c
 			OCPNRegion rgn_covr = vp_positive.GetVPRegionIntersect ( ScreenRegion, pmcd->m_nvertices, ( float * ) pmcd->pvertices, chart_native_scale, DrawBuf );
 
 			ret_region.Union( rgn_covr );
-
 		}
-
-	}
-	else
+	} else
 		ret_region.Union(OCPNRegion( 0, 0, 1,1 ));
 
 	return ret_region;
-
 }
 
 bool cm93compchart::RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint, const OCPNRegion &Region)
@@ -1379,14 +1372,11 @@ bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, ViewPort& vp )
 
 					for ( unsigned int im=0 ; im < pcover->GetCoverCount() ; im++ )
 					{
-						M_COVR_Desc *mcd = pcover->GetCover ( im );
-
-
+						M_COVR_Desc *mcd = pcover->GetCover(im);
 
 						//    Case:  vpBBox is completely inside the mcd box
-						if ( ! ( _OUT == vp_positive.GetBBox().Intersect ( mcd->m_covr_bbox ) ) || ! ( _OUT == vp.GetBBox().Intersect ( mcd->m_covr_bbox ) ) )
+						if (!(BoundingBox::_OUT == vp_positive.GetBBox().Intersect(mcd->m_covr_bbox)) || !(BoundingBox::_OUT == vp.GetBBox().Intersect(mcd->m_covr_bbox)))
 						{
-
 							geo::float_2Dpt *p = mcd->pvertices;
 							wxPoint *pwp = psc->GetDrawBuffer ( mcd->m_nvertices );
 

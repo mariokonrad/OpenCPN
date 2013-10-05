@@ -23,16 +23,13 @@
  **************************************************************************/
 
 #include "ocpnDC.h"
+#include <dychart.h>
 
 #ifdef __MSVC__
 	#include <windows.h>
 #endif
 
-#ifdef __WXMSW__
-	#include "GL/gl.h"            // local copy for Windows
-#else
-	#include <GL/gl.h>
-#endif
+#include <vector>
 
 #include <wx/glcanvas.h>
 #include <wx/graphics.h>
@@ -40,9 +37,6 @@
 #include <wx/dcmemory.h>
 #include <wx/log.h>
 #include <wx/image.h>
-
-#include <GL/glu.h>
-#include <vector>
 
 extern double g_GLMinLineWidth;
 

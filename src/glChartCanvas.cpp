@@ -22,14 +22,14 @@
  **************************************************************************/
 
 #include "glChartCanvas.h"
-#include "glTextureDescriptor.h"
-#include "dychart.h"
-#include "Quilt.h"
-#include "ChInfoWin.h"
-#include "ThumbWin.h"
-#include "OCPNRegionIterator.h"
-#include "ChartPlugInWrapper.h"
-#include "ocpnDC.h"
+#include <glTextureDescriptor.h>
+#include <dychart.h>
+#include <Quilt.h>
+#include <ChInfoWin.h>
+#include <ThumbWin.h>
+#include <OCPNRegionIterator.h>
+#include <ChartPlugInWrapper.h>
+#include <ocpnDC.h>
 #include <MemoryStatus.h>
 #include <ChartCanvas.h>
 
@@ -44,10 +44,8 @@
 
 #include <wx/tokenzr.h>
 
-#include "GL/gl.h"
-
 #ifndef GL_DEPTH_STENCIL_ATTACHMENT
-#define GL_DEPTH_STENCIL_ATTACHMENT       0x821A
+	#define GL_DEPTH_STENCIL_ATTACHMENT  0x821A
 #endif
 
 extern ChartCanvas * cc1;
@@ -81,7 +79,7 @@ HINSTANCE s_hGL_DLL;                   // Handle to DLL
 #endif
 
 #include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY( ArrayOfTexDescriptors );
+WX_DEFINE_OBJARRAY(ArrayOfTexDescriptors);
 
 #ifdef __WXMSW__
 #define FORMAT_INTERNAL       GL_RGB

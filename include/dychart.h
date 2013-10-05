@@ -24,10 +24,7 @@
 #ifndef __DYCHART__H__
 #define __DYCHART__H__
 
-// Chart caching policy defaults
-#define CACHE_N_LIMIT_DEFAULT 20   // Cache no more than n charts
-#define CACHE_MEM_LIMIT_DEFAULT 0  // Application memory useage target, kBytes
-
+#define CACHE_N_LIMIT_DEFAULT 20 // Cache no more than n charts
 
 // If defined, update the system time using GPS receiver data.
 // Time update is applied if the system time and GPS time differ
@@ -126,12 +123,5 @@
 		#include <GL/glext.h>
 	#endif
 #endif
-
-
-
-#ifndef NULL // FIXME: no! use the one provided by the system
-	#define NULL 0
-#endif
-
 
 #endif

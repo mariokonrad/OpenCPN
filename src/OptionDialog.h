@@ -1,8 +1,6 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Options Dialog
- * Author:   David Register
  *
  ***************************************************************************
  *   Copyright (C) 2010 by David S. Register                               *
@@ -32,14 +30,9 @@
 #include <wx/listctrl.h>
 #include <wx/choice.h>
 #include <wx/collpane.h>
+#include <wx/dialog.h>
 
-#if wxCHECK_VERSION(2, 9, 0)
-	#include <wx/dialog.h>
-#else
-	#include "scrollingdialog.h"
-#endif
-
-#include "plugin/PlugInManager.h"
+#include <plugin/PlugInManager.h>
 #include <MainFrame.h>
 #include <GUI_IDs.h>
 
@@ -53,8 +46,8 @@ class MainFrame;
 
 #define ID_DIALOG 10001
 
-//    Define an int bit field for dialog return value
-//    To indicate which types of settings have changed
+// Define an int bit field for dialog return value
+// To indicate which types of settings have changed
 #define GENERIC_CHANGED    1
 #define S52_CHANGED        2
 #define FONT_CHANGED       4
@@ -68,14 +61,9 @@ class MainFrame;
 #define STYLE_CHANGED   1024
 #define TIDES_CHANGED   2048
 
-class options
-#ifndef bert// wxCHECK_VERSION(2, 9, 0)
-	: public wxDialog
-#else
-	: public wxScrollingDialog
-#endif
+class options : public wxDialog
 {
-	DECLARE_DYNAMIC_CLASS( options )
+		DECLARE_DYNAMIC_CLASS(options)
 		DECLARE_EVENT_TABLE()
 
 	public:
@@ -88,7 +76,7 @@ class options
 				const wxSize& size = wxSize(500, 500),
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
-		~options();
+		virtual ~options();
 
 		bool Create(
 				MainFrame * parent,

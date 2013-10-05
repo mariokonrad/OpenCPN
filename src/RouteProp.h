@@ -31,16 +31,11 @@
 #include <wx/bmpcbox.h>
 #include <wx/notebook.h>
 #include <wx/filesys.h>
+#include <wx/dialog.h>
 
 #include <LinkPropDlg.h>
 #include <GUI_IDs.h>
 #include <ColorScheme.h>
-
-#if wxCHECK_VERSION(2, 9, 0)
-	#include <wx/dialog.h>
-#else
-	#include "scrollingdialog.h"
-#endif
 
 class wxListCtrl;
 class Route;
@@ -87,9 +82,9 @@ class RoutePoint;
 #define ID_SHOWNAMECHECKBOX1 8006
 ////@end control identifiers
 
-class RouteProp: public wxDialog
+class RouteProp : public wxDialog
 {
-	DECLARE_DYNAMIC_CLASS( RouteProp )
+		DECLARE_DYNAMIC_CLASS(RouteProp)
 		DECLARE_EVENT_TABLE()
 
 	public:

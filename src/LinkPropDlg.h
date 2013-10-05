@@ -25,12 +25,7 @@
 #define _LINKPROPDLG_H_
 
 #include <wx/wx.h>
-#if wxCHECK_VERSION(2, 9, 0)
-	#include <wx/dialog.h>
-#else
-	#include "scrollingdialog.h"
-#endif
-
+#include <wx/dialog.h>
 #include <wx/string.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>

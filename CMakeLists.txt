@@ -154,10 +154,6 @@ INCLUDE(${wxWidgets_USE_FILE})
 MESSAGE (STATUS "Found wxWidgets..." )
 MESSAGE (STATUS "${wxWidgets_LIBRARIES}")
 
-#  Search for wxWidgets 2.9
-STRING(REGEX MATCHALL "2.9" wx_Version "${wxWidgets_INCLUDE_DIRS}")
-
-
 MESSAGE (STATUS "")
 MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME}  ***")
 
@@ -778,12 +774,6 @@ SET(SRCS
 	src/Vector2D.cpp
 	src/RazdsParser.cpp
 	)
-
-IF(wx_Version MATCHES "2.9")
-ELSE(wx_Version MATCHES "2.9")
-	SET(HDRS ${HDRS} include/scrollingdialog.h )
-	SET(SRCS ${SRCS} src/scrollingdialog.cpp)
-ENDIF(wx_Version MATCHES "2.9")
 
 SET( PACKAGE_HEADERS "" )
 

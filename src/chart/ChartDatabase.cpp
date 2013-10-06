@@ -473,7 +473,7 @@ wxString ChartDatabase::GetFullChartInfo(ChartBase *pc, int dbIndex, int *char_w
 // Create Chart Table Database by directory search
 //    resulting in valid pChartTable in (this)
 // ----------------------------------------------------------------------------
-bool ChartDatabase::Create(ArrayOfCDI &dir_array, wxProgressDialog *pprog)
+bool ChartDatabase::Create(ArrayOfCDI & dir_array, wxProgressDialog *pprog)
 {
 	m_dir_array = dir_array;
 
@@ -499,7 +499,7 @@ bool ChartDatabase::Create(ArrayOfCDI &dir_array, wxProgressDialog *pprog)
 // Update existing ChartTable Database by directory search
 //    resulting in valid pChartTable in (this)
 // ----------------------------------------------------------------------------
-bool ChartDatabase::Update(ArrayOfCDI& dir_array, bool bForce, wxProgressDialog *pprog)
+bool ChartDatabase::Update(ArrayOfCDI & dir_array, bool bForce, wxProgressDialog *pprog)
 {
 	m_dir_array = dir_array;
 
@@ -517,48 +517,33 @@ bool ChartDatabase::Update(ArrayOfCDI& dir_array, bool bForce, wxProgressDialog 
 	bool lbForce = bForce;
 
 	//    Do a dB Version upgrade if the current one is obsolete
-	if(s_dbVersion != DB_VERSION_CURRENT)
-	{
+	if (s_dbVersion != DB_VERSION_CURRENT) {
 
 		chartTable.Clear();
 		lbForce = true;
-		s_dbVersion = DB_VERSION_CURRENT;         // Update the static indicator
-		m_dbversion = DB_VERSION_CURRENT;         // and the member
-
+		s_dbVersion = DB_VERSION_CURRENT; // Update the static indicator
+		m_dbversion = DB_VERSION_CURRENT; // and the member
 	}
 
-	//  Get the new charts
+	// Get the new charts
 
-	for(unsigned int j=0 ; j<dir_array.GetCount() ; j++)
-	{
-		ChartDirInfo dir_info = dir_array.Item(j);
-
+	for (ArrayOfCDI::iterator i = dir_array.begin(); i != dir_array.end(); ++i) {
 		wxString dir_magic;
-		TraverseDirAndAddCharts(dir_info, pprog, dir_magic, lbForce);
+		TraverseDirAndAddCharts(*i, pprog, dir_magic, lbForce);
+		i->magic_number = dir_magic;
+		m_chartDirs.Add(i->fullpath);
+	}
 
-		//  Update the dir_list entry, even if the magic values are the same
-
-		dir_info.magic_number = dir_magic;
-		dir_array.RemoveAt(j);
-		dir_array.Insert(dir_info, j);
-
-		m_chartDirs.Add(dir_info.fullpath);
-	}           //for
-
-
-	for(unsigned int i=0 ; i<chartTable.GetCount() ; i++)
-	{
-		if(!chartTable[i].GetbValid())
-		{
+	for (unsigned int i = 0 ; i < chartTable.GetCount(); ++i) {
+		if (!chartTable[i].GetbValid()) {
 			chartTable.RemoveAt(i);
-			i--;                 // entry is gone, recheck this index for next entry
+			i--; // entry is gone, recheck this index for next entry
 		}
 	}
 
 	//    And once more, setting the Entry index field
 	for(unsigned int i=0 ; i<chartTable.GetCount() ; i++)
 		chartTable[i].SetEntryOffset( i );
-
 
 	bValid = true;
 	return true;
@@ -611,7 +596,11 @@ int ChartDatabase::DisableChart(wxString& PathToDisable)
 //  If target chart is already in database, mark the entry valid and skip additional processing
 // ----------------------------------------------------------------------------
 
-int ChartDatabase::TraverseDirAndAddCharts(ChartDirInfo& dir_info, wxProgressDialog *pprog, wxString &dir_magic, bool bForce)
+int ChartDatabase::TraverseDirAndAddCharts(
+		const ChartDirInfo& dir_info,
+		wxProgressDialog * pprog,
+		wxString & dir_magic,
+		bool bForce)
 {
 	//    Extract the true dir name and magic number from the compound string
 	wxString dir_path = dir_info.fullpath;

@@ -145,9 +145,6 @@
 	#include "portaudio.h"
 #endif
 
-#include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(ArrayOfCDI);
-
 #ifdef __WXMSW__
 void RedirectIOToConsole();
 #endif
@@ -2366,8 +2363,8 @@ int MainFrame::DoOptionsDialog()
 
 //      Pass two working pointers for Chart Dir Dialog
     optionsDlg.SetCurrentDirList( ChartData->GetChartDirArray() );
-    ArrayOfCDI *pWorkDirArray = new ArrayOfCDI;
-    optionsDlg.SetWorkDirListPtr( pWorkDirArray );
+    ArrayOfCDI * pWorkDirArray = new ArrayOfCDI; // FIXME: dynamic allocation, to be used in dialog, deletion later... in this method
+    optionsDlg.SetWorkDirListPtr(pWorkDirArray);
 
 //      Pass a ptr to MyConfig, for updates
     optionsDlg.SetConfigPtr(pConfig);
@@ -2447,7 +2444,7 @@ int MainFrame::DoOptionsDialog()
 
 int MainFrame::ProcessOptionsDialog( int rr, options* dialog )
 {
-    ArrayOfCDI *pWorkDirArray = dialog->GetWorkDirListPtr();
+    ArrayOfCDI * pWorkDirArray = dialog->GetWorkDirListPtr();
     if( ( rr & VISIT_CHARTS )
             && ( ( rr & CHANGE_CHARTS ) || ( rr & FORCE_UPDATE ) || ( rr & SCAN_UPDATE ) ) ) {
 
@@ -2693,8 +2690,11 @@ void MainFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
 
 }
 
-bool MainFrame::UpdateChartDatabaseInplace( ArrayOfCDI &DirArray, bool b_force, bool b_prog,
-        const wxString &ChartListFileName )
+bool MainFrame::UpdateChartDatabaseInplace(
+		ArrayOfCDI & DirArray,
+		bool b_force,
+		bool b_prog,
+        const wxString & ChartListFileName)
 {
     bool b_run = FrameTimer1.IsRunning();
     FrameTimer1.Stop();                  // stop other asynchronous activity
@@ -2726,20 +2726,21 @@ bool MainFrame::UpdateChartDatabaseInplace( ArrayOfCDI &DirArray, bool b_force, 
         pprog->Raise();
     }
 
-    wxLogMessage( _T("   ") );
-    wxLogMessage( _T("Starting chart database Update...") );
-    ChartData->Update( DirArray, b_force, pprog );
+    wxLogMessage(_T("   "));
+    wxLogMessage(_T("Starting chart database Update..."));
+    ChartData->Update(DirArray, b_force, pprog);
     ChartData->SaveBinary(ChartListFileName);
-    wxLogMessage( _T("Finished chart database Update") );
-    wxLogMessage( _T("   ") );
+    wxLogMessage(_T("Finished chart database Update"));
+    wxLogMessage(_T("   "));
 
     delete pprog;
 
     ::wxEndBusyCursor();
 
-    pConfig->UpdateChartDirs( DirArray );
+    pConfig->UpdateChartDirs(DirArray);
 
-    if( b_run ) FrameTimer1.Start( TIMER_GFRAME_1, wxTIMER_CONTINUOUS );
+    if (b_run)
+		FrameTimer1.Start( TIMER_GFRAME_1, wxTIMER_CONTINUOUS );
 
     return true;
 }

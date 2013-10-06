@@ -35,6 +35,7 @@
 #include <vector>
 
 #include <MainFrame.h>
+#include <ChartDirInfo.h>
 
 #include <chart/ChartBase.h>
 #include <chart/ChartTableHeader.h>
@@ -66,15 +67,15 @@ class ChartDatabase
 		ChartDatabase();
 		virtual ~ChartDatabase(){};
 
-		bool Create(ArrayOfCDI& dir_array, wxProgressDialog *pprog);
-		bool Update(ArrayOfCDI& dir_array, bool bForce, wxProgressDialog *pprog);
+		bool Create(ArrayOfCDI & dir_array, wxProgressDialog *pprog);
+		bool Update(ArrayOfCDI & dir_array, bool bForce, wxProgressDialog *pprog);
 
 		bool Read(const wxString &filePath);
 		bool Write(const wxString &filePath);
 
 		const wxString & GetDBFileName() const { return m_DBFileName; }
-		ArrayOfCDI& GetChartDirArray(){ return m_dir_array; }
-		wxArrayString &GetChartDirArrayString(){ return m_chartDirs; }
+		ArrayOfCDI & GetChartDirArray() { return m_dir_array; }
+		wxArrayString &GetChartDirArrayString() { return m_chartDirs; }
 
 		void UpdateChartClassDescriptorArray(void);
 
@@ -115,7 +116,11 @@ class ChartDatabase
 
 		int SearchDirAndAddCharts(wxString& dir_name_base, ChartClassDescriptor &chart_desc, wxProgressDialog *pprog);
 
-		int TraverseDirAndAddCharts(ChartDirInfo& dir_info, wxProgressDialog *pprog, wxString& dir_magic, bool bForce);
+		int TraverseDirAndAddCharts(
+				const ChartDirInfo & dir_info,
+				wxProgressDialog * pprog,
+				wxString & dir_magic,
+				bool bForce);
 		bool DetectDirChange(const wxString & dir_path, const wxString & magic, wxString &new_magic, wxProgressDialog *pprog);
 
 		bool Check_CM93_Structure(wxString dir_name);

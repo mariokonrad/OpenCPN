@@ -1275,14 +1275,15 @@ bool Config::LoadLayers(wxString &path)
 	return true;
 }
 
-bool Config::LoadChartDirArray( ArrayOfCDI &ChartDirArray )
+bool Config::LoadChartDirArray(ArrayOfCDI & ChartDirArray)
 {
 	//    Chart Directories
-	SetPath( _T ( "/ChartDirectories" ) );
+	SetPath(_T("/ChartDirectories"));
 	int iDirMax = GetNumberOfEntries();
 	if( iDirMax ) {
-		ChartDirArray.Empty();
-		wxString str, val;
+		ChartDirArray.clear();
+		wxString str;
+		wxString val;
 		long dummy;
 		int nAdjustChartDirs = 0;
 		bool bCont = pConfig->GetFirstEntry( str, dummy ); // FIXME: this is basically 'this'
@@ -1318,13 +1319,14 @@ bool Config::LoadChartDirArray( ArrayOfCDI &ChartDirArray )
 				cdi.fullpath = dirname.BeforeFirst( '^' );
 				cdi.magic_number = dirname.AfterFirst( '^' );
 
-				ChartDirArray.Add( cdi );
+				ChartDirArray.push_back(cdi);
 			}
 
 			bCont = pConfig->GetNextEntry( str, dummy );
 		}
 
-		if( nAdjustChartDirs ) pConfig->UpdateChartDirs( ChartDirArray );
+		if (nAdjustChartDirs)
+			pConfig->UpdateChartDirs(ChartDirArray);
 	}
 
 	return true;
@@ -1415,45 +1417,40 @@ bool Config::DeleteWayPoint( RoutePoint *pWP ) // FIXME: does this really belong
 	return true;
 }
 
-bool Config::UpdateChartDirs( ArrayOfCDI& dir_array )
+bool Config::UpdateChartDirs(ArrayOfCDI & dir_array)
 {
-	wxString key, dir;
+	wxString key;
+	wxString dir;
 	wxString str_buf;
 
-	SetPath( _T ( "/ChartDirectories" ) );
+	SetPath(_T("/ChartDirectories"));
 	int iDirMax = GetNumberOfEntries();
-	if( iDirMax ) {
-
+	if (iDirMax) {
 		long dummy;
-
-		for( int i = 0; i < iDirMax; i++ ) {
-			GetFirstEntry( key, dummy );
-			DeleteEntry( key, false );
+		for (int i = 0; i < iDirMax; ++i) {
+			GetFirstEntry(key, dummy);
+			DeleteEntry(key, false);
 		}
 	}
 
-	iDirMax = dir_array.GetCount();
-
-	for( int iDir = 0; iDir < iDirMax; iDir++ ) {
-		ChartDirInfo cdi = dir_array.Item( iDir );
+	for (ArrayOfCDI::iterator i = dir_array.begin(); i != dir_array.end(); ++i) {
+		ChartDirInfo cdi = *i;
 
 		wxString dirn = cdi.fullpath;
-		dirn.Append( _T("^") );
-		dirn.Append( cdi.magic_number );
-
-		str_buf.Printf( _T ( "ChartDir%d" ), iDir + 1 );
-
-		Write( str_buf, dirn );
-
+		dirn.Append(_T("^"));
+		dirn.Append(cdi.magic_number);
+		str_buf.Printf(_T("ChartDir%d"), i - dir_array.begin() + 1);
+		Write(str_buf, dirn);
 	}
 
 	Flush();
 	return true;
 }
 
-void Config::CreateConfigGroups( ChartGroupArray *pGroupArray )
+void Config::CreateConfigGroups(ChartGroupArray * pGroupArray)
 {
-	if( !pGroupArray ) return;
+	if (!pGroupArray)
+		return;
 
 	SetPath( _T ( "/Groups" ) );
 	Write( _T ( "GroupCount" ), (int) pGroupArray->GetCount() );

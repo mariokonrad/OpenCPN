@@ -1556,7 +1556,7 @@ bool App::OnInit()
 
 	//   Build the initial chart dir array
 	ArrayOfCDI ChartDirArray;
-	pConfig->LoadChartDirArray( ChartDirArray );
+	pConfig->LoadChartDirArray(ChartDirArray);
 
 	//  Windows installer may have left hints regarding the initial chart dir selection
 #ifdef __WXMSW__
@@ -1577,33 +1577,35 @@ bool App::OnInit()
 				cdi.fullpath = token.Trim();
 				cdi.magic_number = _T("");
 
-				ChartDirArray.Add( cdi );
+				ChartDirArray.push_back(cdi);
 				ndirs++;
 			}
 
 		}
 
-		if( ndirs ) pConfig->UpdateChartDirs( ChartDirArray );
+		if (ndirs)
+			pConfig->UpdateChartDirs(ChartDirArray);
 
-		//    As a favor to new users, poll the database and
-		//    move the initial viewport so that a chart will come up.
-		if( ndirs ) b_SetInitialPoint = true;
-
+		// As a favor to new users, poll the database and
+		// move the initial viewport so that a chart will come up.
+		if (ndirs)
+			b_SetInitialPoint = true;
 	}
 #endif
 
-	//    If the ChartDirArray is empty at this point, any existing chart database file must be declared invalid,
-	//    So it is best to simply delete it if present.
-	//    TODO  There is a possibility of recreating the dir list from the database itself......
+	// If the ChartDirArray is empty at this point, any existing chart database file must be declared invalid,
+	// So it is best to simply delete it if present.
+	// TODO  There is a possibility of recreating the dir list from the database itself......
 
-	if( !ChartDirArray.GetCount() ) ::wxRemoveFile( *pChartListFileName );
+	if (ChartDirArray.empty())
+		::wxRemoveFile(*pChartListFileName);
 
 	//      Try to load the current chart list Data file
 	ChartData = new ChartDB( gFrame );
 	if (!ChartData->LoadBinary(*pChartListFileName, ChartDirArray)) {
 		bDBUpdateInProgress = true;
 
-		if( ChartDirArray.GetCount() ) {
+		if (ChartDirArray.size()) {
 			//              Create and Save a new Chart Database based on the hints given in the config file
 
 			/*
@@ -1626,7 +1628,7 @@ bool App::OnInit()
 					NULL,
 					wxPD_SMOOTH | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME );
 
-			ChartData->Create( ChartDirArray, pprog );
+			ChartData->Create(ChartDirArray, pprog);
 			ChartData->SaveBinary(*pChartListFileName);
 
 			delete pprog;

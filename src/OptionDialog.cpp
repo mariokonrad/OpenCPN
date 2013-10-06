@@ -271,7 +271,7 @@ options::options(
 		const wxString & caption,
 		const wxPoint & pos,
 		const wxSize & size,
-		long style)
+		long WXUNUSED(style))
 {
 	Init();
 
@@ -492,7 +492,7 @@ bool options::DeletePage( wxScrolledWindow *page  )
 
 void options::CreatePanel_NMEA(
 		size_t parent,
-		int border_size,
+		int WXUNUSED(border_size),
 		int group_item_spacing,
 		wxSize small_button_size)
 {
@@ -1031,8 +1031,11 @@ void options::CreatePanel_Ownship(
     DimeControl( itemPanelShip );
 }
 
-void options::CreatePanel_ChartsLoad( size_t parent, int border_size, int group_item_spacing,
-		wxSize small_button_size )
+void options::CreatePanel_ChartsLoad(
+		size_t parent,
+		int border_size,
+		int group_item_spacing,
+		wxSize small_button_size)
 {
 	wxScrolledWindow *chartPanelWin = AddPage( m_pageCharts, _("Loaded Charts") );
 
@@ -1053,13 +1056,11 @@ void options::CreatePanel_ChartsLoad( size_t parent, int border_size, int group_
 	activeSizer->Add( cmdButtonSizer, 0, wxALL, border_size );
 
 	// Currently loaded chart dirs
-	wxString dirname;
-	if( pActiveChartsList ) {
+	if (pActiveChartsList) {
 		pActiveChartsList->Clear();
-		int nDir = m_CurrentDirList.GetCount();
-		for( int i = 0; i < nDir; i++ ) {
-			dirname = m_CurrentDirList.Item( i ).fullpath;
-			if( !dirname.IsEmpty() ) pActiveChartsList->Append( dirname );
+		for (ArrayOfCDI::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end(); ++i) {
+			if (!i->fullpath.IsEmpty())
+				pActiveChartsList->Append(i->fullpath);
 		}
 	}
 
@@ -1840,19 +1841,15 @@ void options::SetColorScheme(ColorScheme)
 void options::SetInitialSettings()
 {
 	wxString s;
-	wxString dirname;
 
 	// ChartsLoad
 
 	const global::GUI & gui = global::OCPN::get().gui();
 
-	int nDir = m_CurrentDirList.GetCount();
-
-	for( int i = 0; i < nDir; i++ ) {
-		dirname = m_CurrentDirList.Item( i ).fullpath;
-		if( !dirname.IsEmpty() ) {
-			if( pActiveChartsList ) {
-				pActiveChartsList->Append( dirname );
+	for (ArrayOfCDI::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end(); ++i) {
+		if (!i->fullpath.IsEmpty()) {
+			if (pActiveChartsList) {
+				pActiveChartsList->Append(i->fullpath);
 			}
 		}
 	}
@@ -2269,39 +2266,37 @@ void options::UpdateWorkArrayFromTextCtl()
 {
 	wxString dirname;
 
+	if (!m_pWorkDirList)
+		return;
+
+	m_pWorkDirList->clear();
 	int n = pActiveChartsList->GetCount();
-	if( m_pWorkDirList ) {
-		m_pWorkDirList->Clear();
-		for( int i = 0; i < n; i++ ) {
-			dirname = pActiveChartsList->GetString( i );
-			if( !dirname.IsEmpty() ) {
-				//    This is a fix for OSX, which appends EOL to results of GetLineText()
-				while( ( dirname.Last() == wxChar( _T('\n') ) )
-						|| ( dirname.Last() == wxChar( _T('\r') ) ) )
-					dirname.RemoveLast();
+	for( int i = 0; i < n; i++ ) {
+		dirname = pActiveChartsList->GetString( i );
+		if( !dirname.IsEmpty() ) {
+			//    This is a fix for OSX, which appends EOL to results of GetLineText()
+			while( ( dirname.Last() == wxChar( _T('\n') ) )
+					|| ( dirname.Last() == wxChar( _T('\r') ) ) )
+				dirname.RemoveLast();
 
-				//    scan the current array to find a match
-				//    if found, add the info to the work list, preserving the magic number
-				//    If not found, make a new ChartDirInfo, and add it
-				bool b_added = false;
-				//                        if(m_pCurrentDirList)
-				{
-					int nDir = m_CurrentDirList.GetCount();
-
-					for( int i = 0; i < nDir; i++ ) {
-						if( m_CurrentDirList.Item( i ).fullpath == dirname ) {
-							ChartDirInfo cdi = m_CurrentDirList.Item( i );
-							m_pWorkDirList->Add( cdi );
-							b_added = true;
-							break;
-						}
+			//    scan the current array to find a match
+			//    if found, add the info to the work list, preserving the magic number
+			//    If not found, make a new ChartDirInfo, and add it
+			bool b_added = false;
+			//                        if(m_pCurrentDirList)
+			{
+				for (ArrayOfCDI::const_iterator dir = m_CurrentDirList.begin(); dir != m_CurrentDirList.end(); ++dir) {
+					if (dir->fullpath == dirname) {
+						m_pWorkDirList->push_back(*dir);
+						b_added = true;
+						break;
 					}
 				}
-				if( !b_added ) {
-					ChartDirInfo cdin;
-					cdin.fullpath = dirname;
-					m_pWorkDirList->Add( cdin );
-				}
+			}
+			if (!b_added) {
+				ChartDirInfo cdin;
+				cdin.fullpath = dirname;
+				m_pWorkDirList->push_back(cdin);
 			}
 		}
 	}
@@ -2425,12 +2420,9 @@ void options::OnApplyClick(wxCommandEvent & event)
 	if( pActiveChartsList ) {
 		UpdateWorkArrayFromTextCtl();
 	} else {
-		m_pWorkDirList->Clear();
-		int nDir = m_CurrentDirList.GetCount();
-
-		for( int i = 0; i < nDir; i++ ) {
-			ChartDirInfo cdi = m_CurrentDirList.Item( i );
-			m_pWorkDirList->Add( cdi );
+		m_pWorkDirList->clear();
+		for (ArrayOfCDI::const_iterator dir = m_CurrentDirList.begin(); dir != m_CurrentDirList.end(); ++dir) { // FIXME: use std::copy
+			m_pWorkDirList->push_back(*dir);
 		}
 	}
 	groupsPanel->SetDBDirs( *m_pWorkDirList );          // update the Groups tab
@@ -2833,9 +2825,6 @@ void options::OnXidOkClick( wxCommandEvent& event )
 
 void options::OnButtondeleteClick( wxCommandEvent& event )
 {
-
-	wxString dirname;
-
 	wxArrayInt pListBoxSelections;
 	pActiveChartsList->GetSelections( pListBoxSelections );
 	int nSelections = pListBoxSelections.GetCount();
@@ -2845,14 +2834,11 @@ void options::OnButtondeleteClick( wxCommandEvent& event )
 
 	UpdateWorkArrayFromTextCtl();
 
-	if( m_pWorkDirList ) {
+	if (m_pWorkDirList) {
 		pActiveChartsList->Clear();
-
-		int nDir = m_pWorkDirList->GetCount();
-		for( int id = 0; id < nDir; id++ ) {
-			dirname = m_pWorkDirList->Item( id ).fullpath;
-			if( !dirname.IsEmpty() ) {
-				pActiveChartsList->Append( dirname );
+		for (ArrayOfCDI::const_iterator dir = m_pWorkDirList->begin(); dir != m_pWorkDirList->end(); ++dir) {
+			if (!dir->fullpath.IsEmpty()) {
+				pActiveChartsList->Append(dir->fullpath);
 			}
 		}
 	}
@@ -3666,12 +3652,12 @@ void options::SetInitChartDir(const wxString &dir)
 	m_init_chart_dir = dir;
 }
 
-void options::SetCurrentDirList( ArrayOfCDI p )
+void options::SetCurrentDirList(ArrayOfCDI p)
 {
 	m_CurrentDirList = p;
 }
 
-void options::SetWorkDirListPtr( ArrayOfCDI *p )
+void options::SetWorkDirListPtr(ArrayOfCDI * p)
 {
 	m_pWorkDirList = p;
 }

@@ -86,31 +86,26 @@ void ChartGroupsUI::SetInitialSettings()
 
 void ChartGroupsUI::PopulateTrees()
 {
-	//    Fill in the "Active chart" tree control
-	//    from the options dialog "Active Chart Directories" list
+	// Fill in the "Active chart" tree control
+	// from the options dialog "Active Chart Directories" list
 	wxArrayString dir_array;
-	int nDir = m_db_dirs.GetCount();
-	for( int i = 0; i < nDir; i++ ) {
-		wxString dirname = m_db_dirs.Item( i ).fullpath;
-		if( !dirname.IsEmpty() ) dir_array.Add( dirname );
+	for (ArrayOfCDI::const_iterator i = m_db_dirs.begin(); i != m_db_dirs.end(); ++i) {
+		if (!i->fullpath.IsEmpty())
+			dir_array.push_back(i->fullpath);
 	}
 
-	PopulateTreeCtrl( allAvailableCtl->GetTreeCtrl(), dir_array, wxColour( 0, 0, 0 ) );
+	PopulateTreeCtrl(allAvailableCtl->GetTreeCtrl(), dir_array, wxColour(0, 0, 0));
 	m_pActiveChartsTree = allAvailableCtl->GetTreeCtrl();
 
-	//    Fill in the Page 0 tree control
-	//    from the options dialog "Active Chart Directories" list
+	// Fill in the Page 0 tree control
+	// from the options dialog "Active Chart Directories" list
 	wxArrayString dir_array0;
-	int nDir0 = m_db_dirs.GetCount();
-	for( int i = 0; i < nDir0; i++ ) {
-		wxString dirname = m_db_dirs.Item( i ).fullpath;
-		if( !dirname.IsEmpty() ) dir_array0.Add( dirname );
+	for (ArrayOfCDI::const_iterator i = m_db_dirs.begin(); i != m_db_dirs.end(); ++i) {
+		if (!i->fullpath.IsEmpty())
+			dir_array0.push_back(i->fullpath);
 	}
-	PopulateTreeCtrl( defaultAllCtl->GetTreeCtrl(), dir_array0, wxColour( 128, 128, 128 ),
-			iFont );
+	PopulateTreeCtrl(defaultAllCtl->GetTreeCtrl(), dir_array0, wxColour(128, 128, 128), iFont);
 }
-
-
 
 void ChartGroupsUI::CompleteInitialSettings()
 {
@@ -124,10 +119,11 @@ void ChartGroupsUI::CompleteInitialSettings()
 	m_treespopulated = true;
 }
 
-
-
-void ChartGroupsUI::PopulateTreeCtrl( wxTreeCtrl *ptc, const wxArrayString &dir_array,
-		const wxColour &col, wxFont *pFont )
+void ChartGroupsUI::PopulateTreeCtrl(
+		wxTreeCtrl * ptc,
+		const wxArrayString & dir_array,
+		const wxColour & col,
+		wxFont * pFont)
 {
 	ptc->DeleteAllItems();
 
@@ -140,14 +136,15 @@ void ChartGroupsUI::PopulateTreeCtrl( wxTreeCtrl *ptc, const wxArrayString &dir_
 	wxString dirname;
 	int nDir = dir_array.GetCount();
 	for( int i = 0; i < nDir; i++ ) {
-		wxString dirname = dir_array.Item( i );
+		wxString dirname = dir_array.Item(i);
 		if( !dirname.IsEmpty() ) {
 			wxDirItemData *dir_item = new wxDirItemData( dirname, dirname, true );
 			wxTreeItemId id = ptc->AppendItem( m_rootId, dirname, 0, -1, dir_item );
 
 			//wxWidgets bug workaraound (Ticket #10085)
 			ptc->SetItemText(id, dirname);
-			if( pFont ) ptc->SetItemFont( id, *pFont );
+			if (pFont)
+				ptc->SetItemFont( id, *pFont );
 			ptc->SetItemTextColour( id, col );
 			ptc->SetItemHasChildren( id );
 		}

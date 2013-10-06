@@ -24,6 +24,7 @@
 #ifndef __CHARTDIRIINFO__H__
 #define __CHARTDIRIINFO__H__
 
+#include <vector>
 #include <wx/string.h>
 
 // A small class used in an array to describe chart directories
@@ -34,6 +35,6 @@ class ChartDirInfo
 		wxString magic_number;
 };
 
-WX_DECLARE_OBJARRAY(ChartDirInfo, ArrayOfCDI);
+typedef std::vector<ChartDirInfo> ArrayOfCDI; // FIXME: choose a more semantically correct name
 
 #endif

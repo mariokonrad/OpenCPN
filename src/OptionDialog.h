@@ -34,6 +34,7 @@
 
 #include <plugin/PlugInManager.h>
 #include <MainFrame.h>
+#include <ChartDirInfo.h>
 #include <GUI_IDs.h>
 
 class wxGenericDirCtrl;
@@ -99,9 +100,9 @@ class options : public wxDialog
 		void SetInitChartDir(const wxString & dir);
 		void SetInitialSettings();
 
-		void SetCurrentDirList( ArrayOfCDI p );
-		void SetWorkDirListPtr( ArrayOfCDI *p );
-		ArrayOfCDI* GetWorkDirListPtr();
+		void SetCurrentDirList(ArrayOfCDI p);
+		void SetWorkDirListPtr(ArrayOfCDI * p);
+		ArrayOfCDI * GetWorkDirListPtr();
 		void SetConfigPtr(Config * p);
 		void OnDebugcheckbox1Click( wxCommandEvent& event );
 		void OnDirctrlSelChanged( wxTreeEvent& event );

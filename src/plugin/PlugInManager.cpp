@@ -1546,12 +1546,14 @@ bool UpdateChartDBInplace(wxArrayString dir_array,
         ChartDirInfo cdi;
         cdi.fullpath = dirname;
         cdi.magic_number = _T("");
-        ChartDirArray.Add ( cdi );
+        ChartDirArray.push_back(cdi);
     }
 
-    bool b_ret = gFrame->UpdateChartDatabaseInplace(ChartDirArray,
-                b_force_update, b_ProgressDialog,
-                ChartData->GetDBFileName());
+    bool b_ret = gFrame->UpdateChartDatabaseInplace(
+			ChartDirArray,
+			b_force_update,
+			b_ProgressDialog,
+			ChartData->GetDBFileName());
 
     ViewPort vp;
     gFrame->ChartsRefresh(-1, vp);

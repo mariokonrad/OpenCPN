@@ -24,6 +24,8 @@
 #ifndef __CONFIG__H__
 #define __CONFIG__H__
 
+#include <ChartDirInfo.h>
+
 #include <wx/config.h>
 #include <wx/confbase.h>
 #include <wx/fileconf.h>
@@ -32,7 +34,6 @@ class Route;
 class RoutePoint;
 class RouteList;
 class RoutePointList;
-class ArrayOfCDI;
 class NavObjectChanges;
 class NavObjectCollection;
 class ChartGroupArray;

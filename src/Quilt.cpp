@@ -1015,13 +1015,13 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 						//    These charts can be in the database due to having the exact same chart in different directories,
 						//    as may be desired for some grouping schemes
 						bool b_noadd = false;
-						ChartTableEntry *pn = ChartData->GetpChartTableEntry( i );
+						const ChartTableEntry & pn = ChartData->GetChartTableEntry(i);
 						for( unsigned int id = 0; id < m_extended_stack_array.size() ; id++ ) {
 							if( m_extended_stack_array.at(id) != -1 ) {
-								ChartTableEntry *pm = ChartData->GetpChartTableEntry( m_extended_stack_array.at(id));
-								if( pm->GetFileTime() && pn->GetFileTime()) {
-									if( abs(pm->GetFileTime() - pn->GetFileTime()) < 60 ) {           // simple test
-										if( pn->GetpFileName()->IsSameAs( *( pm->GetpFileName())))
+								const ChartTableEntry & pm = ChartData->GetChartTableEntry(m_extended_stack_array.at(id));
+								if (pm.GetFileTime() && pn.GetFileTime()) {
+									if( abs(pm.GetFileTime() - pn.GetFileTime()) < 60) {           // simple test
+										if( pn.GetFileName().IsSameAs(pm.GetFileName()))
 											b_noadd = true;
 									}
 								}
@@ -1062,7 +1062,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 				QuiltCandidate *qcnew = new QuiltCandidate;
 				qcnew->dbIndex = sure_index;
 				qcnew->ChartScale = ChartData->GetDBChartScale( sure_index );
-				const ChartTableEntry &cte = ChartData->GetChartTableEntry( sure_index );
+				const ChartTableEntry & cte = ChartData->GetChartTableEntry(sure_index);
 				qcnew->quilt_region = GetChartQuiltRegion( cte, vp_local );
 				m_pcandidate_array->Add( qcnew );               // auto-sorted on scale
 

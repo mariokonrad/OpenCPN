@@ -2555,8 +2555,8 @@ bool MainFrame::CheckGroup( int igroup )
         wxString element_root = pGroup->m_element_array.Item( j )->m_element_name;
 
         for( unsigned int ic = 0; ic < (unsigned int) ChartData->GetChartTableEntries(); ic++ ) {
-            ChartTableEntry *pcte = ChartData->GetpChartTableEntry( ic );
-            wxString chart_full_path( pcte->GetpFullPath(), wxConvUTF8 );
+            const ChartTableEntry & cte = ChartData->GetChartTableEntry(ic);
+            wxString chart_full_path(cte.GetpFullPath(), wxConvUTF8);
 
             if( chart_full_path.StartsWith( element_root ) ) {
                 b_chart_in_group = true;
@@ -2585,12 +2585,11 @@ void MainFrame::ScrubGroupArray()
         for( unsigned int j = 0; j < pGroup->m_element_array.GetCount(); j++ ) {
             wxString element_root = pGroup->m_element_array.Item( j )->m_element_name;
 
-            for( unsigned int ic = 0; ic < (unsigned int) ChartData->GetChartTableEntries();
-                    ic++ ) {
-                ChartTableEntry *pcte = ChartData->GetpChartTableEntry( ic );
-                wxString chart_full_path( pcte->GetpFullPath(), wxConvUTF8 );
+            for (unsigned int ic = 0; ic < (unsigned int) ChartData->GetChartTableEntries(); ic++) {
+                const ChartTableEntry & cte = ChartData->GetChartTableEntry(ic);
+                wxString chart_full_path(cte.GetpFullPath(), wxConvUTF8);
 
-                if( chart_full_path.StartsWith( element_root ) ) {
+                if (chart_full_path.StartsWith(element_root)) {
                     b_chart_in_element = true;
                     break;
                 }

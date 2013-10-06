@@ -79,9 +79,11 @@ bool ChartStack::DoesStackContaindbIndex(int db_index)
 
 void ChartStack::AddChart( int db_add )
 {
-	if( !ChartData ) return;
+	if (!ChartData)
+		return;
 
-	if( !ChartData->IsValid() ) return;
+	if (!ChartData->IsValid())
+		return;
 
 	int db_index = db_add;
 
@@ -98,20 +100,16 @@ void ChartStack::AddChart( int db_add )
 	//    as may be desired for some grouping schemes
 	//    Note that if the target name is actually a directory, then windows fails to produce a valid
 	//    file modification time.  Detect GetFileTime() == 0, and skip the test in this case
-	for(int id = 0 ; id < j-1 ; id++)
-	{
-		if(GetDBIndex(id) != -1)
-		{
-			ChartTableEntry *pm = ChartData->GetpChartTableEntry(GetDBIndex(id));
+	for(int id = 0 ; id < j-1 ; id++) {
+		if(GetDBIndex(id) != -1) {
+			const ChartTableEntry & pm = ChartData->GetChartTableEntry(GetDBIndex(id));
 
-			for(int jd = id+1; jd < j; jd++)
-			{
-				if(GetDBIndex(jd) != -1)
-				{
-					ChartTableEntry *pn = ChartData->GetpChartTableEntry(GetDBIndex(jd));
-					if( pm->GetFileTime() && pn->GetFileTime()) {
-						if( abs(pm->GetFileTime() - pn->GetFileTime()) < 60 ) {           // simple test
-							if(pn->GetpFileName()->IsSameAs(*(pm->GetpFileName())))
+			for(int jd = id+1; jd < j; jd++) {
+				if(GetDBIndex(jd) != -1) {
+					const ChartTableEntry & pn = ChartData->GetChartTableEntry(GetDBIndex(jd));
+					if (pm.GetFileTime() && pn.GetFileTime()) {
+						if( abs(pm.GetFileTime() - pn.GetFileTime()) < 60 ) { // simple test
+							if(pn.GetFileName().IsSameAs(pm.GetFileName()))
 								SetDBIndex(jd, -1);           // mark to remove
 						}
 					}
@@ -121,13 +119,10 @@ void ChartStack::AddChart( int db_add )
 	}
 
 	int id = 0;
-	while( (id < j) )
-	{
-		if(GetDBIndex(id) == -1)
-		{
+	while( (id < j) ) {
+		if(GetDBIndex(id) == -1) {
 			int jd = id+1;
-			while( jd < j )
-			{
+			while (jd < j) {
 				int db_index = GetDBIndex(jd);
 				SetDBIndex(jd-1, db_index);
 				jd++;
@@ -137,25 +132,20 @@ void ChartStack::AddChart( int db_add )
 			nEntry = j;
 
 			id = 0;
-		}
-		else
+		} else
 			id++;
 	}
 
-	//    Sort the stack on scale
+	// Sort the stack on scale (bubble sort)
 	int swap = 1;
 	int ti;
-	while(swap == 1)
-	{
+	while (swap == 1) {
 		swap = 0;
-		for(int i=0 ; i<j-1 ; i++)
-		{
+		for (int i=0 ; i<j-1 ; i++) {
 			const ChartTableEntry &m = ChartData->GetChartTableEntry(GetDBIndex(i));
 			const ChartTableEntry &n = ChartData->GetChartTableEntry(GetDBIndex(i+1));
 
-
-			if(n.GetScale() < m.GetScale())
-			{
+			if (n.GetScale() < m.GetScale()) {
 				ti = GetDBIndex(i);
 				SetDBIndex(i, GetDBIndex(i+1));
 				SetDBIndex(i+1, ti);

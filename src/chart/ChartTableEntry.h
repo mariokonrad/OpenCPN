@@ -41,12 +41,13 @@ struct ChartTableEntry
 
 		bool IsEqualTo(const ChartTableEntry &cte) const;
 		bool IsEarlierThan(const ChartTableEntry &cte) const;
-		bool Read(const ChartDatabase *pDb, wxInputStream &is);
-		bool Write(const ChartDatabase *pDb, wxOutputStream &os);
-		void Clear();
+		bool Read(const ChartDatabase * pDb, wxInputStream & is);
+		bool Write(const ChartDatabase * pDb, wxOutputStream & os);
 		void Disable();
 		void SetValid(bool valid);
 		time_t GetFileTime() const;
+
+		void Clear();
 
 		int GetnPlyEntries() const;
 		float *GetpPlyTable() const;
@@ -59,7 +60,7 @@ struct ChartTableEntry
 		float *GetpNoCovrPlyTableEntry(int index) const;
 		int GetNoCovrCntTableEntry(int index) const;
 
-		char *GetpFullPath() const;
+		char * GetpFullPath() const;
 		float GetLonMax() const;
 		float GetLonMin() const;
 		float GetLatMax() const;
@@ -70,19 +71,25 @@ struct ChartTableEntry
 		int GetChartProjectionType() const;
 		float GetChartSkew() const;
 
-		bool GetbValid();
+		bool GetbValid() const;
 		void SetEntryOffset(int n);
-		std::vector<int> &GetGroupArray(void);
-		wxString *GetpFileName(void);
+		std::vector<int> & GetGroupArray(void);
+		const wxString & GetFileName(void) const;
+
+	private:
+		void read_17(wxInputStream &is);
+		void read_16(wxInputStream &is);
+		void read_15(wxInputStream &is);
+		void read_14(wxInputStream &is);
 
 	private:
 		int         EntryOffset;
-		int         ChartType;
+		int         ChartType; // FIXME: use enum
 		float       LatMax;
 		float       LatMin;
 		float       LonMax;
 		float       LonMin;
-		char        *pFullPath;
+		char        *pFullPath; // FIXME: use string
 		int         Scale;
 		time_t      edition_date;
 		time_t      file_date;
@@ -99,7 +106,7 @@ struct ChartTableEntry
 		float       **pNoCovrPlyTable;
 
 		std::vector<int> m_GroupArray;
-		wxString    *m_pfilename;             // a helper member, not on disk
+		wxString m_filename; // a helper member, not on disk
 };
 
 

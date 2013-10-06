@@ -22,9 +22,11 @@
  **************************************************************************/
 
 #include "ChartTableEntry.h"
+
 #include <chart/ChartBase.h>
 #include <chart/ChartDatabase.h>
 #include <chart/PlyPoint.h>
+
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/stream.h>
@@ -117,83 +119,127 @@ struct ChartTableEntry_onDisk_14
 
 
 ChartTableEntry::ChartTableEntry()
-{ Clear(); }
+{
+	Clear();
+}
 
 void ChartTableEntry::SetValid(bool valid)
-{ bValid = valid; }
+{
+	bValid = valid;
+}
 
 time_t ChartTableEntry::GetFileTime() const
-{ return file_date; }
+{
+	return file_date;
+}
 
 int ChartTableEntry::GetnPlyEntries() const
-{ return nPlyEntries; }
+{
+	return nPlyEntries;
+}
 
 float *ChartTableEntry::GetpPlyTable() const
-{ return pPlyTable; }
+{
+	return pPlyTable;
+}
 
 int ChartTableEntry::GetnAuxPlyEntries() const
-{ return nAuxPlyEntries; }
+{
+	return nAuxPlyEntries;
+}
 
 float *ChartTableEntry::GetpAuxPlyTableEntry(int index) const
-{ return pAuxPlyTable[index];}
+{
+	return pAuxPlyTable[index];
+}
 
 int ChartTableEntry::GetAuxCntTableEntry(int index) const
-{ return pAuxCntTable[index];}
+{
+	return pAuxCntTable[index];
+}
 
 int ChartTableEntry::GetnNoCovrPlyEntries() const
-{ return nNoCovrPlyEntries; }
+{
+	return nNoCovrPlyEntries;
+}
 
 float *ChartTableEntry::GetpNoCovrPlyTableEntry(int index) const
-{ return pNoCovrPlyTable[index];}
+{
+	return pNoCovrPlyTable[index];
+}
 
 int ChartTableEntry::GetNoCovrCntTableEntry(int index) const
-{ return pNoCovrCntTable[index];}
+{
+	return pNoCovrCntTable[index];
+}
 
-char *ChartTableEntry::GetpFullPath() const
-{ return pFullPath; }
+char * ChartTableEntry::GetpFullPath() const
+{
+	return pFullPath;
+}
 
 float ChartTableEntry::GetLonMax() const
-{ return LonMax; }
+{
+	return LonMax;
+}
 
 float ChartTableEntry::GetLonMin() const
-{ return LonMin; }
+{
+	return LonMin;
+}
 
 float ChartTableEntry::GetLatMax() const
-{ return LatMax; }
+{
+	return LatMax;
+}
 
 float ChartTableEntry::GetLatMin() const
-{ return LatMin; }
+{
+	return LatMin;
+}
 
 int ChartTableEntry::GetScale() const
-{ return Scale; }
+{
+	return Scale;
+}
 
 int ChartTableEntry::GetChartProjectionType() const
-{ return ProjectionType; }
+{
+	return ProjectionType;
+}
 
 float ChartTableEntry::GetChartSkew() const
-{ return Skew; }
+{
+	return Skew;
+}
 
-bool ChartTableEntry::GetbValid()
-{ return bValid;}
+bool ChartTableEntry::GetbValid() const
+{
+	return bValid;
+}
 
 void ChartTableEntry::SetEntryOffset(int n)
-{ EntryOffset = n;}
+{
+	EntryOffset = n;
+}
 
 std::vector<int> &ChartTableEntry::GetGroupArray(void)
-{ return m_GroupArray; }
+{
+	return m_GroupArray;
+}
 
-wxString *ChartTableEntry::GetpFileName(void)
-{ return m_pfilename; }
+const wxString & ChartTableEntry::GetFileName(void) const
+{
+	return m_filename;
+}
 
 ChartTableEntry::ChartTableEntry(ChartBase &theChart)
 {
 	Clear();
 
-	char *pt = (char *)malloc(strlen(theChart.GetFullPath().mb_str(wxConvUTF8)) + 1);
+	char *pt = (char *)malloc(strlen(theChart.GetFullPath().mb_str(wxConvUTF8)) + 1); // FIXME: use string
 	strcpy(pt, theChart.GetFullPath().mb_str(wxConvUTF8));
 	pFullPath = pt;
-
-
 
 	ChartType = theChart.GetChartType();
 	Scale = theChart.GetNativeScale();
@@ -202,15 +248,14 @@ ChartTableEntry::ChartTableEntry(ChartBase &theChart)
 	ProjectionType = theChart.GetChartProjectionType();
 
 	wxDateTime ed = theChart.GetEditionDate();
-	if(theChart.GetEditionDate().IsValid())
+	if (theChart.GetEditionDate().IsValid())
 		edition_date = theChart.GetEditionDate().GetTicks();
 
 	wxFileName fn(theChart.GetFullPath());
-	if(fn.GetModificationTime().IsValid())
+	if (fn.GetModificationTime().IsValid())
 		file_date = fn.GetModificationTime().GetTicks();
 
-	m_pfilename = new wxString;           // create and populate helper members
-	*m_pfilename = fn.GetFullName();
+	m_filename = fn.GetFullName();
 
 	Extent ext;
 	theChart.GetChartExtent(&ext);
@@ -308,35 +353,33 @@ ChartTableEntry::~ChartTableEntry()
 	free(pAuxCntTable);
 
 	if (nNoCovrPlyEntries) {
-		for (int i = 0; i < nNoCovrPlyEntries; i++) 
-			free( pNoCovrPlyTable[i] );
-		free( pNoCovrPlyTable );
-		free( pNoCovrCntTable );
+		for (int i = 0; i < nNoCovrPlyEntries; i++)
+			free(pNoCovrPlyTable[i]);
+		free(pNoCovrPlyTable);
+		free(pNoCovrCntTable);
 	}
-
-	delete m_pfilename;
 }
 
-bool ChartTableEntry::IsEarlierThan(const ChartTableEntry &cte) const {
+bool ChartTableEntry::IsEarlierThan(const ChartTableEntry &cte) const
+{
 	wxDateTime mine(edition_date);
 	wxDateTime theirs(cte.edition_date);
-	return ( mine.IsEarlierThan(theirs) );
+	return mine.IsEarlierThan(theirs);
 }
 
-bool ChartTableEntry::IsEqualTo(const ChartTableEntry &cte) const {
+bool ChartTableEntry::IsEqualTo(const ChartTableEntry &cte) const
+{
 	wxDateTime mine(edition_date);
 	wxDateTime theirs(cte.edition_date);
-	return ( mine.IsEqualTo(theirs) );
+	return mine.IsEqualTo(theirs);
 }
 
 int ChartTableEntry::GetChartType() const
 {
 	//    Hackeroo here....
 	//    dB version 14 had different ChartType Enum, patch it here
-	if(s_dbVersion == 14)
-	{
-		switch(ChartType)
-		{
+	if (s_dbVersion == 14) {
+		switch(ChartType) {
 			case 0: return CHART_TYPE_KAP;
 			case 1: return CHART_TYPE_GEO;
 			case 2: return CHART_TYPE_S57;
@@ -347,15 +390,13 @@ int ChartTableEntry::GetChartType() const
 			case 7: return CHART_TYPE_DUMMY;
 			default: return CHART_TYPE_UNKNOWN;
 		}
-	}
-	else
+	} else
 		return ChartType;
 }
 
 int ChartTableEntry::GetChartFamily() const
 {
-	switch(ChartType)
-	{
+	switch (ChartType) {
 		case CHART_TYPE_KAP:
 		case CHART_TYPE_GEO:
 			return CHART_FAMILY_RASTER;
@@ -370,258 +411,266 @@ int ChartTableEntry::GetChartFamily() const
 	}
 }
 
-
-
-
-bool ChartTableEntry::Read(const ChartDatabase *pDb, wxInputStream &is)
+void ChartTableEntry::read_17(wxInputStream & is)
 {
-	char path[4096], *cp; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
+	char path[4096]; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
+	char *cp;
 
-	Clear();
+	// Read the path first
+	for (cp = path; (*cp = (char)is.GetC()) != 0; cp++); // FIXME: potential buffer overflow
+	pFullPath = (char *)malloc(cp - path + 1); // FIXME: use string
+	strncpy(pFullPath, path, cp - path + 1);
+	wxLogVerbose(_T("  Chart %s"), pFullPath);
 
-	//      Allow reading of current db format, and maybe others
-	ChartDatabase *pD = (ChartDatabase *)pDb;
-	int db_version = pD->GetVersion();
+	//  Create and populate the helper members
+	m_filename = wxFileName(wxString(pFullPath, wxConvUTF8)).GetFullName();
 
-	if(db_version == 17)
-	{
-		// Read the path first
-		for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
-		pFullPath = (char *)malloc(cp - path + 1);
-		strncpy(pFullPath, path, cp - path + 1);
-		wxLogVerbose(_T("  Chart %s"), pFullPath);
+	// Read the table entry
+	ChartTableEntry_onDisk_17 cte;
+	is.Read(&cte, sizeof(ChartTableEntry_onDisk_17));
 
-		//  Create and populate the helper members
-		m_pfilename = new wxString;
-		wxString fullfilename(pFullPath, wxConvUTF8);
-		wxFileName fn(fullfilename);
-		*m_pfilename = fn.GetFullName();
+	//    Transcribe the elements....
+	EntryOffset = cte.EntryOffset;
+	ChartType = cte.ChartType;
+	LatMax = cte.LatMax;
+	LatMin = cte.LatMin;
+	LonMax = cte.LonMax;
+	LonMin = cte.LonMin;
 
-		// Read the table entry
-		ChartTableEntry_onDisk_17 cte;
-		is.Read(&cte, sizeof(ChartTableEntry_onDisk_17));
+	Skew = cte.skew;
+	ProjectionType = cte.ProjectionType;
 
-		//    Transcribe the elements....
-		EntryOffset = cte.EntryOffset;
-		ChartType = cte.ChartType;
-		LatMax = cte.LatMax;
-		LatMin = cte.LatMin;
-		LonMax = cte.LonMax;
-		LonMin = cte.LonMin;
+	Scale = cte.Scale;
+	edition_date = cte.edition_date;
+	file_date = cte.file_date;
 
-		Skew = cte.skew;
-		ProjectionType = cte.ProjectionType;
+	nPlyEntries = cte.nPlyEntries;
+	nAuxPlyEntries = cte.nAuxPlyEntries;
 
-		Scale = cte.Scale;
-		edition_date = cte.edition_date;
-		file_date = cte.file_date;
+	nNoCovrPlyEntries = cte.nNoCovrPlyEntries;
 
-		nPlyEntries = cte.nPlyEntries;
-		nAuxPlyEntries = cte.nAuxPlyEntries;
+	bValid = cte.bValid;
 
-		nNoCovrPlyEntries = cte.nNoCovrPlyEntries;
+	if (nPlyEntries) {
+		int npeSize = nPlyEntries * 2 * sizeof(float);
+		pPlyTable = (float *)malloc(npeSize);
+		is.Read(pPlyTable, npeSize);
+	}
 
-		bValid = cte.bValid;
+	if (nAuxPlyEntries) {
+		int napeSize = nAuxPlyEntries * sizeof(int);
+		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
+		pAuxCntTable = (int *)malloc(napeSize);
+		is.Read(pAuxCntTable, napeSize);
 
-		if (nPlyEntries) {
-			int npeSize = nPlyEntries * 2 * sizeof(float);
-			pPlyTable = (float *)malloc(npeSize);
-			is.Read(pPlyTable, npeSize);
-		}
-
-		if (nAuxPlyEntries) {
-			int napeSize = nAuxPlyEntries * sizeof(int);
-			pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-			pAuxCntTable = (int *)malloc(napeSize);
-			is.Read(pAuxCntTable, napeSize);
-
-			for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-				int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
-				pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
-				is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
-			}
-		}
-
-		if (nNoCovrPlyEntries) {
-			int napeSize = nNoCovrPlyEntries * sizeof(int);
-			pNoCovrCntTable = (int *)malloc(napeSize);
-			is.Read(pNoCovrCntTable, napeSize);
-
-			pNoCovrPlyTable = (float **)malloc(nNoCovrPlyEntries * sizeof(float *));
-			for (int i = 0; i < nNoCovrPlyEntries; i++) {
-				int nfSize = pNoCovrCntTable[i] * 2 * sizeof(float);
-				pNoCovrPlyTable[i] = (float *)malloc(nfSize);
-				is.Read(pNoCovrPlyTable[i], nfSize);
-			}
+		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
+			int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
+			is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
 		}
 	}
 
-	else if(db_version == 16)
-	{
-		// Read the path first
-		for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
-		// TODO: optimize prepended dir
-		pFullPath = (char *)malloc(cp - path + 1);
-		strncpy(pFullPath, path, cp - path + 1);
-		wxLogVerbose(_T("  Chart %s"), pFullPath);
+	if (nNoCovrPlyEntries) {
+		int napeSize = nNoCovrPlyEntries * sizeof(int);
+		pNoCovrCntTable = (int *)malloc(napeSize);
+		is.Read(pNoCovrCntTable, napeSize);
 
-		//  Create and populate the helper members
-		m_pfilename = new wxString;
-		wxString fullfilename(pFullPath, wxConvUTF8);
-		wxFileName fn(fullfilename);
-		*m_pfilename = fn.GetFullName();
-
-		// Read the table entry
-		ChartTableEntry_onDisk_16 cte;
-		is.Read(&cte, sizeof(ChartTableEntry_onDisk_16));
-
-		//    Transcribe the elements....
-		EntryOffset = cte.EntryOffset;
-		ChartType = cte.ChartType;
-		LatMax = cte.LatMax;
-		LatMin = cte.LatMin;
-		LonMax = cte.LonMax;
-		LonMin = cte.LonMin;
-
-		Skew = cte.skew;
-		ProjectionType = cte.ProjectionType;
-
-		Scale = cte.Scale;
-		edition_date = cte.edition_date;
-		file_date = cte.file_date;
-
-		nPlyEntries = cte.nPlyEntries;
-		nAuxPlyEntries = cte.nAuxPlyEntries;
-
-		bValid = cte.bValid;
-
-		if (nPlyEntries) {
-			int npeSize = nPlyEntries * 2 * sizeof(float);
-			pPlyTable = (float *)malloc(npeSize);
-			is.Read(pPlyTable, npeSize);
-		}
-
-		if (nAuxPlyEntries) {
-			int napeSize = nAuxPlyEntries * sizeof(int);
-			pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-			pAuxCntTable = (int *)malloc(napeSize);
-			is.Read(pAuxCntTable, napeSize);
-
-			for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-				int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
-				pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
-				is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
-			}
+		pNoCovrPlyTable = (float **)malloc(nNoCovrPlyEntries * sizeof(float *));
+		for (int i = 0; i < nNoCovrPlyEntries; i++) {
+			int nfSize = pNoCovrCntTable[i] * 2 * sizeof(float);
+			pNoCovrPlyTable[i] = (float *)malloc(nfSize);
+			is.Read(pNoCovrPlyTable[i], nfSize);
 		}
 	}
+}
 
-	else if(db_version == 15)
-	{
-		// Read the path first
-		for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
-		// TODO: optimize prepended dir
-		pFullPath = (char *)malloc(cp - path + 1);
-		strncpy(pFullPath, path, cp - path + 1);
-		wxLogVerbose(_T("  Chart %s"), pFullPath);
+void ChartTableEntry::read_16(wxInputStream & is)
+{
+	char path[4096]; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
+	char *cp;
 
-		// Read the table entry
-		ChartTableEntry_onDisk_15 cte;
-		is.Read(&cte, sizeof(ChartTableEntry_onDisk_15));
+	// Read the path first
+	for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
+	// TODO: optimize prepended dir
+	pFullPath = (char *)malloc(cp - path + 1); // FIXME: use string
+	strncpy(pFullPath, path, cp - path + 1);
+	wxLogVerbose(_T("  Chart %s"), pFullPath);
 
-		//    Transcribe the elements....
-		EntryOffset = cte.EntryOffset;
-		ChartType = cte.ChartType;
-		LatMax = cte.LatMax;
-		LatMin = cte.LatMin;
-		LonMax = cte.LonMax;
-		LonMin = cte.LonMin;
+	// Create and populate the helper members
+	m_filename = wxFileName(wxString(pFullPath, wxConvUTF8)).GetFullName();
 
-		Scale = cte.Scale;
-		edition_date = cte.edition_date;
-		file_date = cte.file_date;
+	// Read the table entry
+	ChartTableEntry_onDisk_16 cte;
+	is.Read(&cte, sizeof(ChartTableEntry_onDisk_16));
 
-		nPlyEntries = cte.nPlyEntries;
-		nAuxPlyEntries = cte.nAuxPlyEntries;
+	//    Transcribe the elements....
+	EntryOffset = cte.EntryOffset;
+	ChartType = cte.ChartType;
+	LatMax = cte.LatMax;
+	LatMin = cte.LatMin;
+	LonMax = cte.LonMax;
+	LonMin = cte.LonMin;
 
-		bValid = cte.bValid;
+	Skew = cte.skew;
+	ProjectionType = cte.ProjectionType;
 
-		if (nPlyEntries) {
-			int npeSize = nPlyEntries * 2 * sizeof(float);
-			pPlyTable = (float *)malloc(npeSize);
-			is.Read(pPlyTable, npeSize);
-		}
+	Scale = cte.Scale;
+	edition_date = cte.edition_date;
+	file_date = cte.file_date;
 
-		if (nAuxPlyEntries) {
-			int napeSize = nAuxPlyEntries * sizeof(int);
-			pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-			pAuxCntTable = (int *)malloc(napeSize);
-			is.Read(pAuxCntTable, napeSize);
+	nPlyEntries = cte.nPlyEntries;
+	nAuxPlyEntries = cte.nAuxPlyEntries;
 
-			for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-				int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
-				pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
-				is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
-			}
+	bValid = cte.bValid;
+
+	if (nPlyEntries) {
+		int npeSize = nPlyEntries * 2 * sizeof(float);
+		pPlyTable = (float *)malloc(npeSize);
+		is.Read(pPlyTable, npeSize);
+	}
+
+	if (nAuxPlyEntries) {
+		int napeSize = nAuxPlyEntries * sizeof(int);
+		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
+		pAuxCntTable = (int *)malloc(napeSize);
+		is.Read(pAuxCntTable, napeSize);
+
+		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
+			int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
+			is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
 		}
 	}
-	else if(db_version == 14)
-	{
-		// Read the path first
-		for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
-		pFullPath = (char *)malloc(cp - path + 1);
-		strncpy(pFullPath, path, cp - path + 1);
-		wxLogVerbose(_T("  Chart %s"), pFullPath);
+}
 
-		// Read the table entry
-		ChartTableEntry_onDisk_14 cte;
-		is.Read(&cte, sizeof(ChartTableEntry_onDisk_14));
+void ChartTableEntry::read_15(wxInputStream & is)
+{
+	char path[4096]; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
+	char *cp;
 
-		//    Transcribe the elements....
-		EntryOffset = cte.EntryOffset;
-		ChartType = cte.ChartType;
-		LatMax = cte.LatMax;
-		LatMin = cte.LatMin;
-		LonMax = cte.LonMax;
-		LonMin = cte.LonMin;
-		Scale = cte.Scale;
-		edition_date = cte.edition_date;
-		file_date = 0;                        //  file_date does not exist in V14;
-		nPlyEntries = cte.nPlyEntries;
-		nAuxPlyEntries = cte.nAuxPlyEntries;
-		bValid = cte.bValid;
+	// Read the path first
+	for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
+	// TODO: optimize prepended dir
+	pFullPath = (char *)malloc(cp - path + 1); // FIXME: use string
+	strncpy(pFullPath, path, cp - path + 1);
+	wxLogVerbose(_T("  Chart %s"), pFullPath);
 
-		if (nPlyEntries) {
-			int npeSize = nPlyEntries * 2 * sizeof(float);
-			pPlyTable = (float *)malloc(npeSize);
-			is.Read(pPlyTable, npeSize);
+	// Read the table entry
+	ChartTableEntry_onDisk_15 cte;
+	is.Read(&cte, sizeof(ChartTableEntry_onDisk_15));
+
+	//    Transcribe the elements....
+	EntryOffset = cte.EntryOffset;
+	ChartType = cte.ChartType;
+	LatMax = cte.LatMax;
+	LatMin = cte.LatMin;
+	LonMax = cte.LonMax;
+	LonMin = cte.LonMin;
+
+	Scale = cte.Scale;
+	edition_date = cte.edition_date;
+	file_date = cte.file_date;
+
+	nPlyEntries = cte.nPlyEntries;
+	nAuxPlyEntries = cte.nAuxPlyEntries;
+
+	bValid = cte.bValid;
+
+	if (nPlyEntries) {
+		int npeSize = nPlyEntries * 2 * sizeof(float);
+		pPlyTable = (float *)malloc(npeSize);
+		is.Read(pPlyTable, npeSize);
+	}
+
+	if (nAuxPlyEntries) {
+		int napeSize = nAuxPlyEntries * sizeof(int);
+		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
+		pAuxCntTable = (int *)malloc(napeSize);
+		is.Read(pAuxCntTable, napeSize);
+
+		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
+			int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
+			is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
 		}
+	}
+}
 
-		if (nAuxPlyEntries) {
-			int napeSize = nAuxPlyEntries * sizeof(int);
-			pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-			pAuxCntTable = (int *)malloc(napeSize);
-			is.Read(pAuxCntTable, napeSize);
+void ChartTableEntry::read_14(wxInputStream & is)
+{
+	char path[4096]; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
+	char *cp;
 
-			for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-				int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
-				pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
-				is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
-			}
+	// Read the path first
+	for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
+	pFullPath = (char *)malloc(cp - path + 1); // FIXME: use string
+	strncpy(pFullPath, path, cp - path + 1);
+	wxLogVerbose(_T("  Chart %s"), pFullPath);
+
+	// Read the table entry
+	ChartTableEntry_onDisk_14 cte;
+	is.Read(&cte, sizeof(ChartTableEntry_onDisk_14));
+
+	//    Transcribe the elements....
+	EntryOffset = cte.EntryOffset;
+	ChartType = cte.ChartType;
+	LatMax = cte.LatMax;
+	LatMin = cte.LatMin;
+	LonMax = cte.LonMax;
+	LonMin = cte.LonMin;
+	Scale = cte.Scale;
+	edition_date = cte.edition_date;
+	file_date = 0;                        //  file_date does not exist in V14;
+	nPlyEntries = cte.nPlyEntries;
+	nAuxPlyEntries = cte.nAuxPlyEntries;
+	bValid = cte.bValid;
+
+	if (nPlyEntries) {
+		int npeSize = nPlyEntries * 2 * sizeof(float);
+		pPlyTable = (float *)malloc(npeSize);
+		is.Read(pPlyTable, npeSize);
+	}
+
+	if (nAuxPlyEntries) {
+		int napeSize = nAuxPlyEntries * sizeof(int);
+		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
+		pAuxCntTable = (int *)malloc(napeSize);
+		is.Read(pAuxCntTable, napeSize);
+
+		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
+			int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
+			is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
 		}
+	}
+}
+
+bool ChartTableEntry::Read(const ChartDatabase * pDb, wxInputStream & is)
+{
+	// TODO: exception handling
+
+	Clear(); // FIXME: potential memory leak
+
+	// Allow reading of current db format, and maybe others
+	switch (pDb->GetVersion()) {
+		case 17: read_17(is); break;
+		case 16: read_16(is); break;
+		case 15: read_15(is); break;
+		case 14: read_14(is); break;
 	}
 
 	return true;
 }
 
-bool ChartTableEntry::Write(const ChartDatabase *pDb, wxOutputStream &os)
+bool ChartTableEntry::Write(const ChartDatabase * WXUNUSED(pDb), wxOutputStream &os)
 {
 	os.Write(pFullPath, strlen(pFullPath) + 1);
 
-	//      Write the current version type only
-	//      Create an on_disk table entry
+	// Write the current version type only
+	// Create an on_disk table entry
 	ChartTableEntry_onDisk_17 cte;
 
-	//    Transcribe the elements....
+	// Transcribe the elements....
 	cte.EntryOffset = EntryOffset;
 	cte.ChartType = ChartType;
 	cte.LatMax = LatMax;
@@ -672,13 +721,35 @@ bool ChartTableEntry::Write(const ChartDatabase *pDb, wxOutputStream &os)
 		}
 	}
 
-
 	return true;
 }
 
 void ChartTableEntry::Clear()
 {
-	memset(this, 0, sizeof(ChartTableEntry));
+	EntryOffset = 0;
+	ChartType = 0;
+	LatMax = 0.0f;
+	LatMin = 0.0f;
+	LonMax = 0.0f;
+	LonMin = 0.0f;
+	pFullPath = NULL;// FIXME: memory leak?
+	Scale = 0;
+	edition_date;
+	file_date;
+	pPlyTable = NULL;// FIXME: memory leak?
+	nPlyEntries = 0;
+	nAuxPlyEntries = 0;
+	pAuxPlyTable = NULL; // FIXME: memory leak?
+	pAuxCntTable = NULL; // FIXME: memory leak?
+	Skew = 0.0f;
+	ProjectionType = 0;
+	bValid = false;
+	nNoCovrPlyEntries = 0;
+	pNoCovrCntTable = NULL; // FIXME: memory leak?
+	pNoCovrPlyTable = NULL; // FIXME: memroy leak?
+
+	m_GroupArray.clear();
+	m_filename = wxString();
 }
 
 void ChartTableEntry::Disable()
@@ -686,7 +757,7 @@ void ChartTableEntry::Disable()
 	// Mark this chart in the database, so that it will not be seen during this run
 	// How?  By setting the chart bounding box to an absurd value
 	// TODO... Fix this heinous hack
-	LatMax = (float) 100.;
-	LatMin = (float)91.;
+	LatMax = 100.0f;
+	LatMin = 91.0f;
 }
 

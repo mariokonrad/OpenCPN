@@ -73,17 +73,16 @@ class ChartDatabase
 		bool Read(const wxString &filePath);
 		bool Write(const wxString &filePath);
 
-		const wxString & GetDBFileName() const { return m_DBFileName; }
-		ArrayOfCDI & GetChartDirArray() { return m_dir_array; }
-		wxArrayString &GetChartDirArrayString() { return m_chartDirs; }
+		const wxString & GetDBFileName() const;
+		ArrayOfCDI & GetChartDirArray();
+		wxArrayString &GetChartDirArrayString();
 
 		void UpdateChartClassDescriptorArray(void);
 
-		int GetChartTableEntries() const { return chartTable.size(); }
+		int GetChartTableEntries() const;
 		const ChartTableEntry &GetChartTableEntry(int index) const;
-		ChartTableEntry *GetpChartTableEntry(int index) const;
 
-		bool IsValid() const { return bValid; }
+		bool IsValid() const;
 		int DisableChart(wxString& PathToDisable);
 		bool GetCentroidOfLargestScaleChart(double *clat, double *clon, ChartFamilyEnum family);
 		int GetDBChartType(int dbIndex);
@@ -96,7 +95,7 @@ class ChartDatabase
 		int  GetnAuxPlyEntries(int dbIndex);
 		int  GetDBPlyPoint(int dbIndex, int plyindex, float *lat, float *lon);
 		int  GetDBAuxPlyPoint(int dbIndex, int plyindex, int iAuxPly, float *lat, float *lon);
-		int  GetVersion(){ return m_dbversion; }
+		int  GetVersion() const;
 		wxString GetFullChartInfo(ChartBase *pc, int dbIndex, int *char_width, int *line_count);
 		int FinddbIndex(wxString PathToFind);
 		wxString GetDBChartFileName(int dbIndex);
@@ -130,7 +129,7 @@ class ChartDatabase
 		int m_dbversion;
 		ChartTable chartTable;
 
-		ChartTableEntry m_ChartTableEntryDummy;   // used for return value if database is not valid
+		ChartTableEntry m_ChartTableEntryDummy; // FIXME: used for return value if database is not valid
 		wxString m_DBFileName;
 };
 

@@ -342,22 +342,22 @@ int ChartDB::BuildChartStack(ChartStack * cstk, float lat, float lon)
 //    These charts can be in the database due to having the exact same chart in different directories,
 //    as may be desired for some grouping schemes
 //    Note that if the target name is actually a directory, then windows fails to produce a valid
-//    file modification time.  Detect GetFileTime() == 0, and skip the test in this case     
+//    file modification time.  Detect GetFileTime() == 0, and skip the test in this case
       for(int id = 0 ; id < j-1 ; id++)
       {
             if(cstk->GetDBIndex(id) != -1)
             {
-                  ChartTableEntry *pm = GetpChartTableEntry(cstk->GetDBIndex(id));
+                  const ChartTableEntry & pm = GetChartTableEntry(cstk->GetDBIndex(id));
 
                   for(int jd = id+1; jd < j; jd++)
                   {
                         if(cstk->GetDBIndex(jd) != -1)
                         {
-                              ChartTableEntry *pn = GetpChartTableEntry(cstk->GetDBIndex(jd));
-                              if( pm->GetFileTime() && pn->GetFileTime()) {
-                                    if( abs(pm->GetFileTime() - pn->GetFileTime()) < 60 ) {           // simple test
-                                        if(pn->GetpFileName()->IsSameAs(*(pm->GetpFileName())))
-                                           cstk->SetDBIndex(jd, -1);           // mark to remove
+                              const ChartTableEntry & pn = GetChartTableEntry(cstk->GetDBIndex(jd));
+                              if( pm.GetFileTime() && pn.GetFileTime()) {
+                                    if( abs(pm.GetFileTime() - pn.GetFileTime()) < 60) { // simple test
+                                        if(pn.GetFileName().IsSameAs(pm.GetFileName()))
+                                           cstk->SetDBIndex(jd, -1); // mark to remove
                                     }
                               }
                         }
@@ -563,7 +563,7 @@ int ChartDB::GetCSPlyPoint(ChartStack *ps, int stackindex, int plyindex, float *
 //-------------------------------------------------------------------
 //    Get Chart Scale
 //-------------------------------------------------------------------
-int ChartDB::GetStackChartScale(ChartStack *ps, int stackindex, char *buf, int nbuf)
+int ChartDB::GetStackChartScale(ChartStack *ps, int stackindex, char *buf, int WXUNUSED(nbuf))
 {
       const ChartTableEntry &entry = GetChartTableEntry(ps->GetDBIndex(stackindex));
       int sc = entry.GetScale();

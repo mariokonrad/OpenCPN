@@ -78,9 +78,6 @@ extern PFNGLDELETERENDERBUFFERSEXTPROC     s_glDeleteRenderbuffersEXT;
 HINSTANCE s_hGL_DLL;                   // Handle to DLL
 #endif
 
-#include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(ArrayOfTexDescriptors);
-
 #ifdef __WXMSW__
 #define FORMAT_INTERNAL       GL_RGB
 #define FORMAT_BITS           GL_BGR
@@ -354,6 +351,11 @@ glChartCanvas::~glChartCanvas()
 {
 	free(m_data);
 	ClearAllRasterTextures();
+}
+
+void glChartCanvas::EnablePaint(bool b_enable)
+{
+	m_b_paint_enable = b_enable;
 }
 
 void glChartCanvas::OnEraseBG(wxEraseEvent &)

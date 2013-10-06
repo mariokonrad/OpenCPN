@@ -25,13 +25,11 @@
 #define __GLCHARTCANVAS_H__
 
 #include <wx/glcanvas.h>
-#include "OCPNRegion.h"
-#include "ViewPort.h"
+#include <OCPNRegion.h>
+#include <ViewPort.h>
 
 class glTextureDescriptor;
 class ChartBase;
-
-WX_DECLARE_OBJARRAY(glTextureDescriptor, ArrayOfTexDescriptors);
 
 WX_DECLARE_HASH_MAP(int, glTextureDescriptor*, wxIntegerHash, wxIntegerEqual, ChartTextureHashType);
 WX_DECLARE_HASH_MAP(void *, ChartTextureHashType*, wxPointerHash, wxPointerEqual, ChartPointerHashType);
@@ -52,7 +50,7 @@ class glChartCanvas : public wxGLCanvas
 		void OnSize(wxSizeEvent & event);
 		void MouseEvent(wxMouseEvent& event);
 		wxString GetRendererString() const;
-		void EnablePaint(bool b_enable){ m_b_paint_enable = b_enable; }
+		void EnablePaint(bool b_enable);
 		void Invalidate();
 		void RenderRasterChartRegionGL(ChartBase *chart, ViewPort & vp, OCPNRegion &region);
 		bool PurgeChartTextures(ChartBase *pc);
@@ -78,8 +76,6 @@ class glChartCanvas : public wxGLCanvas
 		wxString m_renderer;
 
 		void GrowData(int size);
-
-		ArrayOfTexDescriptors m_tex_array;
 
 		//    This is a hash table
 		//    key is ChartBaseBSB pointer

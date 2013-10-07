@@ -69,6 +69,15 @@
 	#include <WinConsole.h>
 #endif
 
+#ifdef OCPN_USE_CRASHRPT
+	#include "CrashRpt.h"
+#endif
+
+#ifndef __WXMSW__
+	#include <signal.h>
+	#include <setjmp.h>
+#endif
+
 #include <wx/cmdline.h>
 #include <wx/datetime.h>
 #include <wx/progdlg.h>
@@ -402,6 +411,50 @@ static void OCPN_CPLErrorHandler(
 
 	wxString str(msg, wxConvUTF8);
 	wxLogMessage(str);
+}
+#endif
+
+#ifdef OCPN_USE_CRASHRPT
+// Define the crash callback
+int CALLBACK CrashCallback(CR_CRASH_CALLBACK_INFO* pInfo)
+{
+  //  Flush log file
+    if( logger)
+        logger->Flush();
+    return CR_CB_DODEFAULT;
+}
+#endif
+
+//------------------------------------------------------------------------------
+//      Signal Handlers
+//-----------------------------------------------------------------------
+#ifndef __WXMSW__
+sigjmp_buf env;                    // the context saved by sigsetjmp();
+extern volatile int quitflag;
+
+//These are the signals possibly expected
+//      SIGUSR1
+//      Raised externally to cause orderly termination of application
+//      Intended to act just like pushing the "EXIT" button
+
+//      SIGSEGV
+//      Some undefined segfault......
+void catch_signals(int signo)
+{
+    switch(signo)
+    {
+        case SIGUSR1:
+        quitflag++;                             // signal to the timer loop
+        break;
+
+        case SIGSEGV:
+        siglongjmp(env, 1);// jump back to the setjmp() point
+        break;
+
+        default:
+        break;
+    }
+
 }
 #endif
 

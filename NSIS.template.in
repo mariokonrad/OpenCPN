@@ -160,6 +160,7 @@ CMake variables
 ;--------------------------------
 ;# Includes
 	!addincludedir "@CPACK_NSIS_DIR@/Include"
+	!addincludedir "@CPACK_BUILDWIN_BINARY_DIR@/Include"
 	!addplugindir "@CPACK_NSIS_DIR@/Plugins"
 
 	!include MUI2.nsh

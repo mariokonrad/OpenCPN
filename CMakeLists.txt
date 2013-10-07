@@ -31,27 +31,26 @@
 # set /MT for Release build, and /MTd for debug.
 
 # define minimum cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
+cmake_minimum_required(VERSION 2.6.2)
 # This should be 2.8.0 to have FindGTK2 module
-	IF (COMMAND cmake_policy)
+
+if(COMMAND cmake_policy)
 	CMAKE_POLICY(SET CMP0003 OLD)
 	CMAKE_POLICY(SET CMP0005 OLD)
 	CMAKE_POLICY(SET CMP0011 OLD)
-ENDIF (COMMAND cmake_policy)
+endif(COMMAND cmake_policy)
 
-PROJECT(OpenCPN)
+project(OpenCPN)
 
 #SET(CMAKE_VERBOSE_MAKEFILE ON)
 
-	IF(APPLE)
-	SET(PACKAGE_NAME OpenCPN)
-	ELSE(APPLE)
-	SET(PACKAGE_NAME opencpn)
-ENDIF(APPLE)
+if(APPLE)
+	set(PACKAGE_NAME OpenCPN)
+else(APPLE)
+	set(PACKAGE_NAME opencpn)
+endif(APPLE)
 
 
-INCLUDE( ${CMAKE_SOURCE_DIR}/VERSION.cmake )
-	SET(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
 
 #Red Hat:   /etc/redhat-release
 #Slackware: /etc/slackware-version
@@ -61,6 +60,10 @@ INCLUDE( ${CMAKE_SOURCE_DIR}/VERSION.cmake )
 
 # TODO: Should PREFIX be set as well?
 # Based on code from nohal
+
+################################################################################
+# architecture
+################################################################################
 IF (NOT WIN32)
 	SET (ARCH "i386")
 	SET (LIB_INSTALL_DIR "lib")
@@ -113,92 +116,142 @@ ELSE (NOT WIN32)
 	SET (ARCH "i386")
 ENDIF (NOT WIN32)
 
-IF (CMAKE_SYSTEM_PROCESSOR MATCHES "arm*")
-	SET (ARCH "armhf")
-ENDIF (CMAKE_SYSTEM_PROCESSOR MATCHES "arm*")
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm*")
+	set (ARCH "armhf")
+endif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm*")
 
-IF (ARCH MATCHES "armhf")
-	ADD_DEFINITIONS(-DARMHF)
-ENDIF (ARCH MATCHES "armhf")
+if(ARCH MATCHES "armhf")
+	add_definitions(-DARMHF)
+endif(ARCH MATCHES "armhf")
+
+message(STATUS "*** Build Architecture is ${ARCH}")
+
+################################################################################
+# OpenGL
+################################################################################
+find_package(OpenGL REQUIRED)
+if(OPENGL_GLU_FOUND)
+#	set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl )
+	include_directories(${OPENGL_INCLUDE_DIR})
+	message(STATUS "Found OpenGL..." )
+	message(STATUS "    Lib: " ${OPENGL_LIBRARIES})
+	message(STATUS "    Include: " ${OPENGL_INCLUDE_DIR})
+else(OPENGL_GLU_FOUND)
+	message(STATUS "OpenGL not found..." )
+endif(OPENGL_GLU_FOUND)
 
 
-MESSAGE (STATUS "*** Build Architecture is ${ARCH}")
-SET(PACKAGE_RELEASE "1" CACHE STRING "Package release number")
+################################################################################
+# wxWidgets
+################################################################################
+set(wxWidgets_USE_LIBS base core net xml html adv aui)
 
-MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME} ${PACKAGE_VERSION} ***")
-
-SET(wxWidgets_USE_LIBS base core net xml html adv aui)
-
-
-FIND_PACKAGE(OpenGL REQUIRED)
-IF(OPENGL_GLU_FOUND)
-	SET(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl )
-	INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR})
-	MESSAGE (STATUS "Found OpenGL..." )
-	MESSAGE (STATUS "    Lib: " ${OPENGL_LIBRARIES})
-	MESSAGE (STATUS "    Include: " ${OPENGL_INCLUDE_DIR})
-ELSE(OPENGL_GLU_FOUND)
-	MESSAGE (STATUS "OpenGL not found..." )
-ENDIF(OPENGL_GLU_FOUND)
-
+if(OPENGL_GLU_FOUND)
+	set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
+endif(OPENGL_GLU_FOUND)
 
 # Find wxWidgets here, and the setting get inherited by all plugins.
 # These options can be used to set the linux widgets build type
-SET( wxWidgets_USE_DEBUG OFF)
-SET( wxWidgets_USE_UNICODE ON)
-SET( wxWidgets_USE_UNIVERSAL OFF)
-SET( wxWidgets_USE_STATIC OFF)
+set(wxWidgets_USE_DEBUG OFF)
+set(wxWidgets_USE_UNICODE ON)
+set(wxWidgets_USE_UNIVERSAL OFF)
+set(wxWidgets_USE_STATIC OFF)
 
-FIND_PACKAGE(wxWidgets REQUIRED)
-INCLUDE(${wxWidgets_USE_FILE})
-MESSAGE (STATUS "Found wxWidgets..." )
-MESSAGE (STATUS "${wxWidgets_LIBRARIES}")
+find_package(wxWidgets REQUIRED)
+include(${wxWidgets_USE_FILE})
+message(STATUS "Found wxWidgets..." )
+message(STATUS "wxWidgets Libraries: ${wxWidgets_LIBRARIES}")
 
-MESSAGE (STATUS "")
-MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME}  ***")
+################################################################################
+# package version
+################################################################################
+include(${CMAKE_SOURCE_DIR}/VERSION.cmake)
+set(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
 
+set(PACKAGE_RELEASE "1" CACHE STRING "Package release number")
+message(STATUS "*** Staging to build ${PACKAGE_NAME} ${PACKAGE_VERSION} ***")
+message(STATUS "")
+message(STATUS "*** Staging to build ${PACKAGE_NAME}  ***")
+
+################################################################################
+# build type
+################################################################################
 #SET(CMAKE_BUILD_TYPE Debug)
 
-IF (PREFIX)
-	SET(CMAKE_INSTALL_PREFIX ${PREFIX})
-ENDIF (PREFIX)
+################################################################################
+# installation
+################################################################################
+if(PREFIX)
+	set(CMAKE_INSTALL_PREFIX ${PREFIX})
+endif(PREFIX)
 
-MESSAGE (STATUS "*** Will install to ${CMAKE_INSTALL_PREFIX}  ***")
-SET(PREFIX_BIN bin)
-SET(PREFIX_INCLUDE include)
-SET(PREFIX_DATA share)
-SET(PREFIX_PKGDATA ${PREFIX_DATA}/${PACKAGE_NAME})
-SET(PREFIX_LIB "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
+message(STATUS "*** Will install to ${CMAKE_INSTALL_PREFIX}  ***")
+set(PREFIX_BIN bin)
+set(PREFIX_INCLUDE include)
+set(PREFIX_DATA share)
+set(PREFIX_PKGDATA ${PREFIX_DATA}/${PACKAGE_NAME})
+set(PREFIX_LIB "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
 
+################################################################################
+# include paths
+################################################################################
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
 # platform specific include directories
+
 if(WIN32)
 	include_directories(${CMAKE_SOURCE_DIR}/src/windows)
 endif(WIN32)
 
-# require proper c++
-#ADD_DEFINITIONS( "-Wall -ansi -pedantic -Wno-variadic-macros" )
-#TODO: Should we use  -fno-stack-protector
-#  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
+if(APPLE)
+	include_directories(/usr/X11/include /usr/X11/include/GL)
+endif(APPLE)
+
+################################################################################
+# compiler options
+################################################################################
 if(NOT WIN32 AND NOT APPLE)
 	add_definitions("-Wall -Wextra -fexceptions -rdynamic")
 	add_definitions("-g -fno-strict-aliasing")
-endif(NOT WIN32 AND NOT APPLE)
+
+	set(CMAKE_C_FLAGS "-O2 -Wall -Wextra")
+	set(CMAKE_C_FLAGS_DEBUG "-ggdb -O0 -Wall -Wextra")
+	set(CMAKE_C_FLAGS_MINSIZEREL "-O2 -Wall -Wextra")
+	set(CMAKE_C_FLAGS_RELEASE "-O3 -Wall -Wextra")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -Wextra")
+
+	set(CMAKE_CXX_FLAGS "-O2 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -O0 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_MINSIZEREL "-O2 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -Wextra")
+
+	set(CMAKE_EXE_LINKER_FLAGS "-O2 -Wall -Wextra")
+	set(CMAKE_SHARED_LINKER_FLAGS "-O2 -Wall -Wextra")
+	set(CMAKE_MODULE_LINKER_FLAGS "-O2 -Wall -Wextra")
+endif()
 
 if(APPLE)
 	add_definitions("-Wall -Wno-unused -fexceptions -Wno-overloaded-virtual")
 	add_definitions("-g -fno-strict-aliasing")
 	add_definitions("-Wno-deprecated -Wno-deprecated-declarations")
-endif(APPLE)
 
-#Enable CrashReporting for Windows
-if(WIN32)
-	add_definitions(-DOCPN_USE_CRASHRPT)
-	include_directories(${CMAKE_SOURCE_DIR}/buildwin/crashrpt)
-	set(EXTRA_LIBS ${EXTRA_LIBS} ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.lib)
-	set(CMAKE_EXE_LINKER_FLAGS /DEBUG)
-endif(WIN32)
+	set(CMAKE_C_FLAGS "-O2 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_DEBUG "-g -O0 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_MINSIZEREL "-O2 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_RELEASE "-O3 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO "-g -O3 -arch ${ARCH}")
+
+	set(CMAKE_CXX_FLAGS "-O2 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_MINSIZEREL "-O2 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_RELEASE "-O3 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3 -arch ${ARCH}")
+
+	set(CMAKE_EXE_LINKER_FLAGS "-O2 -arch ${ARCH}")
+	set(CMAKE_SHARED_LINKER_FLAGS "-O2 -arch ${ARCH}")
+	set(CMAKE_MODULE_LINKER_FLAGS "-O2 -arch ${ARCH}")
+ENDIF(APPLE)
 
 # Add some definitions to satisfy MS
 add_definitions(-DUSE_GLU_TESS)
@@ -206,6 +259,20 @@ if(WIN32)
 	add_definitions(-D__MSVC__)
 	add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE)
 	add_definitions(-DPSAPI_VERSION=1)
+endif(WIN32)
+
+
+################################################################################
+# TODO: documentation
+################################################################################
+
+
+#Enable CrashReporting for Windows
+if(WIN32)
+	add_definitions(-DOCPN_USE_CRASHRPT)
+	include_directories(${CMAKE_SOURCE_DIR}/buildwin/crashrpt)
+	set(EXTRA_LIBS ${EXTRA_LIBS} ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.lib)
+	set(CMAKE_EXE_LINKER_FLAGS /DEBUG)
 endif(WIN32)
 
 # Location where cmake first looks for cmake modules.
@@ -1033,44 +1100,7 @@ SET(tcData
 	data/tcdata/README.harmonics
 	)
 
-
-IF (NOT APPLE AND NOT WIN32)
-	SET(CMAKE_C_FLAGS "-O2 -Wall -Wextra")
-	SET(CMAKE_C_FLAGS_DEBUG "-ggdb -O0 -Wall -Wextra")
-	SET(CMAKE_C_FLAGS_MINSIZEREL "-O2 -Wall -Wextra")
-	SET(CMAKE_C_FLAGS_RELEASE "-O3 -Wall -Wextra")
-	SET(CMAKE_C_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -Wextra")
-
-	SET(CMAKE_CXX_FLAGS "-O2 -Wall -Wextra")
-	SET(CMAKE_CXX_FLAGS_DEBUG "-ggdb -O0 -Wall -Wextra")
-	SET(CMAKE_CXX_FLAGS_MINSIZEREL "-O2 -Wall -Wextra")
-	SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra")
-	SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -Wextra")
-
-	SET(CMAKE_EXE_LINKER_FLAGS "-O2 -Wall -Wextra")
-	SET(CMAKE_SHARED_LINKER_FLAGS "-O2 -Wall -Wextra")
-	SET(CMAKE_MODULE_LINKER_FLAGS "-O2 -Wall -Wextra")
-ENDIF()
-
 IF(APPLE)
-	INCLUDE_DIRECTORIES(/usr/X11/include /usr/X11/include/GL)
-
-	SET(CMAKE_C_FLAGS "-O2 -arch ${ARCH}")
-	SET(CMAKE_C_FLAGS_DEBUG "-g -O0 -arch ${ARCH}")
-	SET(CMAKE_C_FLAGS_MINSIZEREL "-O2 -arch ${ARCH}")
-	SET(CMAKE_C_FLAGS_RELEASE "-O3 -arch ${ARCH}")
-	SET(CMAKE_C_FLAGS_RELWITHDEBINFO "-g -O3 -arch ${ARCH}")
-
-	SET(CMAKE_CXX_FLAGS "-O2 -arch ${ARCH}")
-	SET(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -arch ${ARCH}")
-	SET(CMAKE_CXX_FLAGS_MINSIZEREL "-O2 -arch ${ARCH}")
-	SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -arch ${ARCH}")
-	SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3 -arch ${ARCH}")
-
-	SET(CMAKE_EXE_LINKER_FLAGS "-O2 -arch ${ARCH}")
-	SET(CMAKE_SHARED_LINKER_FLAGS "-O2 -arch ${ARCH}")
-	SET(CMAKE_MODULE_LINKER_FLAGS "-O2 -arch ${ARCH}")
-
 	SET(SRCS ${SRCS}
 		src/macutils.h
 		src/macutils.c
@@ -1099,6 +1129,9 @@ IF(WIN32)
 		SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/MD  /O2  /Ob1 /D NDEBUG" /Zi )
 	ENDIF(MSVC)
 	ADD_EXECUTABLE(${PACKAGE_NAME} WIN32 ${HDRS} ${SRCS})
+ENDIF(WIN32)
+
+IF(WIN32)
 	SET(SRCS ${SRCS}
 		src/WinConsole.h
 		src/WinConsole.cpp
@@ -1372,6 +1405,7 @@ IF(WIN32 AND NOT UNIX)
 	SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}_setup" )
 	SET(CPACK_NSIS_DIR "${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode")  #Gunther
 	SET(CPACK_BUILDWIN_DIR "${CMAKE_SOURCE_DIR}/buildwin")  #Gunther
+	set(CPACK_BUILDWIN_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/buildwin")
 
 	# Install the VC100 Redistributable
 	SET(vc10_redist "vcredist_x86.exe")
@@ -1431,22 +1465,22 @@ ENDIF(UNIX AND NOT APPLE)
 
 IF(WIN32 AND NOT UNIX)
 	configure_file(${CMAKE_SOURCE_DIR}/src/opencpn.rc.in ${CMAKE_CURRENT_BINARY_DIR}/src/opencpn.rc)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_GERMAN.nsh.in       ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_GERMAN.nsh       @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_FRENCH.nsh.in       ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_FRENCH.nsh       @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_CZECH.nsh.in        ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_CZECH.nsh        @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_DANISH.nsh.in       ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_DANISH.nsh       @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_SPANISH.nsh.in      ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_SPANISH.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_ITALIAN.nsh.in      ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_ITALIAN.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_DUTCH.nsh.in        ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_DUTCH.nsh        @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_POLISH.nsh.in       ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_POLISH.nsh       @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_PORTUGUESEBR.nsh.in ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_PORTUGUESEBR.nsh @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_PORTUGUESE.nsh.in   ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_PORTUGUESE.nsh   @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_RUSSIAN.nsh.in      ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_RUSSIAN.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_SWEDISH.nsh.in      ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_SWEDISH.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_FINNISH.nsh.in      ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_FINNISH.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_NORWEGIAN.nsh.in    ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_NORWEGIAN.nsh    @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_CHINESETW.nsh.in    ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_CHINESETW.nsh    @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_TURKISH.nsh.in      ${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/Include/Langstrings_TURKISH.nsh      @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_GERMAN.nsh.in       ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_GERMAN.nsh       @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_FRENCH.nsh.in       ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_FRENCH.nsh       @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_CZECH.nsh.in        ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_CZECH.nsh        @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_DANISH.nsh.in       ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_DANISH.nsh       @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_SPANISH.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_SPANISH.nsh      @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_ITALIAN.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_ITALIAN.nsh      @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_DUTCH.nsh.in        ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_DUTCH.nsh        @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_POLISH.nsh.in       ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_POLISH.nsh       @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_PORTUGUESEBR.nsh.in ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_PORTUGUESEBR.nsh @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_PORTUGUESE.nsh.in   ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_PORTUGUESE.nsh   @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_RUSSIAN.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_RUSSIAN.nsh      @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_SWEDISH.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_SWEDISH.nsh      @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_FINNISH.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_FINNISH.nsh      @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_NORWEGIAN.nsh.in    ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_NORWEGIAN.nsh    @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_CHINESETW.nsh.in    ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_CHINESETW.nsh    @ONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_TURKISH.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_TURKISH.nsh      @ONLY)
 ENDIF(WIN32 AND NOT UNIX)
 
 configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/src/version.h)

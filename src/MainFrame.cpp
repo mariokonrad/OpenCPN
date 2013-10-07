@@ -48,11 +48,6 @@
 	#include <psapi.h>
 #endif
 
-#ifndef __WXMSW__
-	#include <signal.h>
-	#include <setjmp.h>
-#endif
-
 #include <algorithm>
 
 #include "MainFrame.h"
@@ -221,7 +216,7 @@ wxString g_InvisibleLayers;
 wxString g_uploadConnection;
 int user_user_id;
 int file_user_id;
-int quitflag;
+volatile int quitflag;
 int g_tick;
 bool s_bSetSystemTime;
 wxArrayOfConnPrm *g_pConnectionParams;
@@ -488,10 +483,6 @@ char bells_sound_file_name[8][12] =    // pjotrc 2010.02.09
 	"8bells.wav"
 };
 
-#ifndef __WXMSW__
-sigjmp_buf env;                    // the context saved by sigsetjmp();
-#endif
-
 #ifdef __MSVC__
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -515,7 +506,7 @@ DEFINE_EVENT_TYPE(EVT_THREADMSG)
 //------------------------------------------------------------------------------
 
 #ifdef __WXGTK__
-#include "bitmaps/opencpn.xpm"
+	#include "bitmaps/opencpn.xpm"
 #endif
 
 enum {
@@ -523,70 +514,24 @@ enum {
 	ID_PIANO_ENABLE_QUILT_CHART
 };
 
-//------------------------------------------------------------------------------
-//      Signal Handlers
-//-----------------------------------------------------------------------
-#ifndef __WXMSW__
-
-//These are the signals possibly expected
-//      SIGUSR1
-//      Raised externally to cause orderly termination of application
-//      Intended to act just like pushing the "EXIT" button
-
-//      SIGSEGV
-//      Some undefined segfault......
-
-void catch_signals(int signo)
-{
-    switch(signo)
-    {
-        case SIGUSR1:
-        quitflag++;                             // signal to the timer loop
-        break;
-
-        case SIGSEGV:
-        siglongjmp(env, 1);// jump back to the setjmp() point
-        break;
-
-        default:
-        break;
-    }
-
-}
-#endif
-
-#ifdef OCPN_USE_CRASHRPT
-
-// Define the crash callback
-int CALLBACK CrashCallback(CR_CRASH_CALLBACK_INFO* pInfo)
-{
-  //  Flush log file
-    if( logger)
-        logger->Flush();
-
-    return CR_CB_DODEFAULT;
-}
-
-#endif
-
 
 //------------------------------------------------------------------------------
 // MainFrame
 //------------------------------------------------------------------------------
 //      Frame implementation
 BEGIN_EVENT_TABLE(MainFrame, wxFrame) EVT_CLOSE(MainFrame::OnCloseWindow)
-EVT_MENU(wxID_EXIT, MainFrame::OnExit)
-EVT_SIZE(MainFrame::OnSize)
-EVT_MOVE(MainFrame::OnMove)
-EVT_MENU(-1, MainFrame::OnToolLeftClick)
-EVT_TIMER(FRAME_TIMER_1, MainFrame::OnFrameTimer1)
-EVT_TIMER(FRAME_TC_TIMER, MainFrame::OnFrameTCTimer)
-EVT_TIMER(FRAME_COG_TIMER, MainFrame::OnFrameCOGTimer)
-EVT_TIMER(MEMORY_FOOTPRINT_TIMER, MainFrame::OnMemFootTimer)
-EVT_ACTIVATE(MainFrame::OnActivate)
-EVT_MAXIMIZE(MainFrame::OnMaximize)
-EVT_COMMAND(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, MainFrame::RequestNewToolbarArgEvent)
-EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
+	EVT_MENU(wxID_EXIT, MainFrame::OnExit)
+	EVT_SIZE(MainFrame::OnSize)
+	EVT_MOVE(MainFrame::OnMove)
+	EVT_MENU(-1, MainFrame::OnToolLeftClick)
+	EVT_TIMER(FRAME_TIMER_1, MainFrame::OnFrameTimer1)
+	EVT_TIMER(FRAME_TC_TIMER, MainFrame::OnFrameTCTimer)
+	EVT_TIMER(FRAME_COG_TIMER, MainFrame::OnFrameCOGTimer)
+	EVT_TIMER(MEMORY_FOOTPRINT_TIMER, MainFrame::OnMemFootTimer)
+	EVT_ACTIVATE(MainFrame::OnActivate)
+	EVT_MAXIMIZE(MainFrame::OnMaximize)
+	EVT_COMMAND(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, MainFrame::RequestNewToolbarArgEvent)
+	EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
 END_EVENT_TABLE()
 
 // My frame constructor
@@ -1263,7 +1208,6 @@ void MainFrame::EnableToolbar( bool newstate )
 void MainFrame::OnExit(wxCommandEvent &)
 {
     quitflag++;                             // signal to the timer loop
-
 }
 
 static bool b_inCloseWindow;

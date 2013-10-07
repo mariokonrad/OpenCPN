@@ -364,7 +364,7 @@ extern MainFrame * gFrame;
 bool TestGLCanvas(wxString & prog_dir)
 {
 	wxString test_app = prog_dir;
-	test_app += _T("cube.exe");
+	test_app += _T("ocpn_gltest1.exe");
 
 	if(::wxFileExists(test_app)){
 		long proc_return = ::wxExecute(test_app, wxEXEC_SYNC);
@@ -488,6 +488,29 @@ void App::OnActivateApp( wxActivateEvent& event )
 				g_FloatingToolbarDialog->Submerge();
 		}
 
+
+		AppActivateList.Clear();
+		if(cc1){
+			for ( wxWindowList::iterator it = cc1->GetChildren().begin(); it != cc1->GetChildren().end(); ++it ) {
+				if( (*it)->IsShown() ) {
+					(*it)->Hide();
+					AppActivateList.Append(*it);
+				}
+			}
+		}
+
+		if(gFrame){
+			for ( wxWindowList::iterator it = gFrame->GetChildren().begin(); it != gFrame->GetChildren().end(); ++it ) {
+				if( (*it)->IsShown() ) {
+					if( !(*it)->IsKindOf( CLASSINFO(ChartCanvas) ) ) {
+						(*it)->Hide();
+						AppActivateList.Append(*it);
+					}
+				}
+			}
+		}
+
+#if 0
 		if(console && console->IsShown()) {
 			console->Hide();
 		}
@@ -499,7 +522,7 @@ void App::OnActivateApp( wxActivateEvent& event )
 		if(stats && stats->IsShown()) {
 			stats->Hide();
 		}
-
+#endif
 	}
 	else
 	{
@@ -508,6 +531,19 @@ void App::OnActivateApp( wxActivateEvent& event )
 		// reportedly not required for wx 2.9
 		gFrame->SurfaceToolbar();
 
+		wxWindow *pOptions = NULL;
+
+		wxWindowListNode *node = AppActivateList.GetFirst();
+		while (node) {
+			wxWindow *win = node->GetData();
+			win->Show();
+			if( win->IsKindOf( CLASSINFO(options) ) )
+				pOptions = win;
+
+			node = node->GetNext();
+		}
+
+#if 0
 		if(g_FloatingCompassDialog){
 			g_FloatingCompassDialog->Hide();
 			g_FloatingCompassDialog->Show();
@@ -524,8 +560,11 @@ void App::OnActivateApp( wxActivateEvent& event )
 				console->Show();
 			}
 		}
-
-		gFrame->Raise();
+#endif
+		if( pOptions )
+			pOptions->Raise();
+		else
+			gFrame->Raise();
 
 	}
 #endif
@@ -609,11 +648,15 @@ bool App::OnInit()
 	wxString version_crash = str_version_major + _T(".") + str_version_minor + _T(".") + str_version_patch;
 	info.pszAppVersion = version_crash.c_str();
 
+	// Include the data sections from all loaded modules.
+	// This results in the inclusion of global variables
+	info.uMiniDumpType = MiniDumpWithDataSegs;
+
 	// URL for sending error reports over HTTP.
 	info.pszEmailTo = _T("opencpn@bigdumboat.com");
 	info.pszSmtpProxy = _T("mail.bigdumboat.com:587");
 	info.pszUrl = _T("http://bigdumboat.com/crashrpt/ocpn_crashrpt.php");
-	info.uPriorities[CR_HTTP] = 3;  // First try send report over HTTP
+	info.uPriorities[CR_HTTP] = 1;  // First try send report over HTTP
 	info.uPriorities[CR_SMTP] = CR_NEGATIVE_PRIORITY;  // Second try send report over SMTP
 	info.uPriorities[CR_SMAPI] = CR_NEGATIVE_PRIORITY; //1; // Third try send report over Simple MAPI
 

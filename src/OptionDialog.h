@@ -226,10 +226,11 @@ class options : public wxDialog
 		wxButton* m_btnOutputStcList;
 		wxStdDialogButtonSizer* m_sdbSizerDlgButtons;
 		wxButton* m_sdbSizerDlgButtonsOK;
-		wxButton* m_sdbSizerDlgButtonsApply;
-		wxButton* m_sdbSizerDlgButtonsCancel;
-		wxStaticBoxSizer* sbSizerInFilter;
-		wxStaticBoxSizer* sbSizerOutFilter;
+		wxButton * m_sdbSizerDlgButtonsApply;
+		wxButton * m_sdbSizerDlgButtonsCancel;
+		wxStaticBoxSizer * sbSizerInFilter;
+		wxStaticBoxSizer * sbSizerOutFilter;
+		wxCheckBox * m_cbAPBMagnetic;
 
 		SentenceListDlg * m_stcdialog_in;
 		SentenceListDlg * m_stcdialog_out;

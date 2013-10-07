@@ -1422,13 +1422,9 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 					 parent_frame->ToggleFullScreen();
 					 break;
 
-		case WXK_F12: {
-						  if( m_modkeys == wxMOD_ALT )
-							  m_nMeasureState = *(int *)(0);          // generate a fault for testing
-
-						  parent_frame->ToggleChartOutlines();
-						  break;
-					  }
+		case WXK_F12:
+					 parent_frame->ToggleChartOutlines();
+					 break;
 
 					  //NUMERIC PAD
 		case WXK_NUMPAD_ADD:              // '+' on NUM PAD
@@ -1566,16 +1562,11 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 					  }
 					  break;
 
-			case 13:             // Ctrl M // Drop Marker at cursor // Enter // Drop Marker at boat;
+			case 13: // Ctrl M // Drop Marker at cursor
 					  {
 						  double lat, lon;
-						  if( m_modkeys == wxMOD_CONTROL ) {
-							  lat = m_cursor_lat;
-							  lon = m_cursor_lon;
-						  } else {
-							  lat = gLat;
-							  lon = gLon;
-						  }
+						  lat = m_cursor_lat;
+						  lon = m_cursor_lon;
 						  RoutePoint *pWP = new RoutePoint(lat, lon, g_default_wp_icon, wxEmptyString);
 						  pWP->m_bIsolatedMark = true;                      // This is an isolated mark
 						  pSelect->AddSelectableRoutePoint( lat, lon, pWP );
@@ -1600,7 +1591,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 						  break;
 					  }
 
-			case 32:             // Space                      //    Drop Marker at boat's position;
+			case 15: // Ctrl O - Drop Marker at boat's position
 					  {
 						  RoutePoint *pWP = new RoutePoint(gLat, gLon, g_default_wp_icon, wxEmptyString);
 						  pWP->m_bIsolatedMark = true;                      // This is an isolated mark
@@ -7250,7 +7241,11 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 										  pRoutePropDialog->UpdateProperties();
 									  }
 
-									  if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
+									  if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) {
+										  pRouteManagerDialog->UpdateWptListCtrl();
+										  pRouteManagerDialog->UpdateRouteListCtrl();
+									  }
+
 								  }
 
 								  break;

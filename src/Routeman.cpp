@@ -67,6 +67,7 @@ extern wxString g_SData_Locn;
 
 extern double gLat;
 extern double gLon;
+extern bool g_bMagneticAPB;
 
 extern Track * g_pActiveTrack;
 extern RouteProp * pRoutePropDialog;
@@ -709,24 +710,43 @@ bool Routeman::UpdateAutopilot()
 		//  We never pass the perpendicular, since we declare arrival before reaching this point
 		m_NMEA0183.Apb.IsPerpendicular = NFalse;
 
+		m_NMEA0183.Apb.To = pActivePoint->GetName().Truncate( 6 );
+
 		double brg1, dist1;
 		DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon,
 				pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon,
 				&brg1,
 				&dist1 );
 
-		m_NMEA0183.Apb.BearingOriginToDestination = brg1;
-		m_NMEA0183.Apb.BearingOriginToDestinationUnits = _("T");
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
-		m_NMEA0183.Apb.To = pActivePoint->GetName().Truncate( 6 );
+		if( g_bMagneticAPB && !wxIsNaN(nav.var) ) {
 
-		m_NMEA0183.Apb.BearingPresentPositionToDestination = CurrentBrgToActivePoint;
-		m_NMEA0183.Apb.BearingPresentPositionToDestinationUnits = _("T");
+			double brg1m = ((brg1 + nav.var) >= 0.0) ? (brg1 + nav.var) : (brg1 + nav.var + 360.0);
+			double bapm = ((CurrentBrgToActivePoint + nav.var) >= 0.0)
+				? (CurrentBrgToActivePoint + nav.var)
+				: (CurrentBrgToActivePoint + nav.var + 360.0);
 
-		m_NMEA0183.Apb.To = pActivePoint->GetName().Truncate( 6 );
+			m_NMEA0183.Apb.BearingOriginToDestination = brg1m;
+			m_NMEA0183.Apb.BearingOriginToDestinationUnits = _T("M");
 
-		m_NMEA0183.Apb.HeadingToSteer = CurrentBrgToActivePoint;
-		m_NMEA0183.Apb.HeadingToSteerUnits = _("T");
+			m_NMEA0183.Apb.BearingPresentPositionToDestination = bapm;
+			m_NMEA0183.Apb.BearingPresentPositionToDestinationUnits = _T("M");
+
+			m_NMEA0183.Apb.HeadingToSteer = bapm;
+			m_NMEA0183.Apb.HeadingToSteerUnits = _T("M");
+		}
+		else {
+			m_NMEA0183.Apb.BearingOriginToDestination = brg1;
+			m_NMEA0183.Apb.BearingOriginToDestinationUnits = _T("T");
+
+			m_NMEA0183.Apb.BearingPresentPositionToDestination = CurrentBrgToActivePoint;
+			m_NMEA0183.Apb.BearingPresentPositionToDestinationUnits = _T("T");
+
+
+			m_NMEA0183.Apb.HeadingToSteer = CurrentBrgToActivePoint;
+			m_NMEA0183.Apb.HeadingToSteerUnits = _T("T");
+		}
 
 		m_NMEA0183.Apb.Write( snt );
 		g_pMUX->SendNMEAMessage( snt.Sentence );

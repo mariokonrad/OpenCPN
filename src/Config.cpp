@@ -192,6 +192,7 @@ extern bool             g_bUseCM93;
 
 extern bool             g_bCourseUp;
 extern int              g_COGAvgSec;
+extern bool             g_bMagneticAPB;
 
 extern int              g_MemFootSec;
 extern int              g_MemFootMB;
@@ -481,6 +482,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read( _T ( "UserMagVariation" ), &umv );
 	if(umv.Len())
 		umv.ToDouble( &g_UserVar );
+
+	Read( _T ( "UseMagAPB" ), &g_bMagneticAPB, 0 );
 
 	load_view();
 
@@ -1644,6 +1647,7 @@ void Config::UpdateSettings()
 
 	Write( _T ( "CourseUpMode" ), g_bCourseUp );
 	Write( _T ( "COGUPAvgSeconds" ), g_COGAvgSec );
+	Write( _T ( "ShowMag" ), g_bMagneticAPB );
 
 	Write( _T ( "OwnshipCOGPredictorMinutes" ), g_ownship_predictor_minutes );
 	Write( _T ( "OwnshipCOGPredictorWidth" ), g_cog_predictor_width );

@@ -575,6 +575,8 @@ END_EVENT_TABLE()
 #else
 		m_pGLcontext = m_glcc->GetContext();
 #endif
+	} else {
+		m_glcc = NULL;
 	}
 
 	singleClickEventIsValid = false;

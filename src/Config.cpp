@@ -1079,7 +1079,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 				str = FontMgr::GetFontConfigKey( oldKey );
 			}
 
-			FontMgr::Get().LoadFontNative( &str, pval );
+			FontMgr::Get().LoadFontNative(str, *pval);
 
 			bCont = GetNextEntry( str, dummy );
 		}

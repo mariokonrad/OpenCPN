@@ -43,12 +43,7 @@ FontMgr & FontMgr::Get()
 }
 
 FontMgr::FontMgr()
-	: pDefFont(NULL)
-{
-	// Get a nice generic font as default
-	pDefFont = wxTheFontList->FindOrCreateFont(
-		12, wxDEFAULT, wxNORMAL, wxBOLD, FALSE, wxString(_T("")), wxFONTENCODING_SYSTEM);
-}
+{}
 
 FontMgr::~FontMgr()
 {
@@ -231,10 +226,10 @@ wxString FontMgr::GetFullConfigDesc(int i) const
 	return ret;
 }
 
-void FontMgr::LoadFontNative(wxString * pConfigString, wxString * pNativeDesc)
+void FontMgr::LoadFontNative(const wxString & ConfigString, const wxString & NativeDesc)
 {
 	// Parse the descriptor string
-	wxStringTokenizer tk(*pNativeDesc, _T(":"));
+	wxStringTokenizer tk(NativeDesc, _T(":"));
 	wxString dialogstring = tk.GetNextToken();
 	wxString nativefont = tk.GetNextToken();
 	wxColour color(tk.GetNextToken()); // from string description
@@ -242,7 +237,7 @@ void FontMgr::LoadFontNative(wxString * pConfigString, wxString * pNativeDesc)
 	// Search for a match in the list
 	for (FontList::iterator i = fontlist.begin(); i != fontlist.end(); ++i) {
 		FontDesc * pmfd = *i;
-		if (pmfd->m_configstring == *pConfigString) {
+		if (pmfd->m_configstring == ConfigString) {
 			pmfd->m_nativeInfo = nativefont;
 			wxFont * nf = pmfd->m_font->New(pmfd->m_nativeInfo);
 			pmfd->m_font = nf;
@@ -266,7 +261,7 @@ void FontMgr::LoadFontNative(wxString * pConfigString, wxString * pNativeDesc)
 #endif
 	delete nf0;
 
-	FontDesc * pnewfd = new FontDesc(dialogstring, *pConfigString, nf, color);
+	FontDesc * pnewfd = new FontDesc(dialogstring, ConfigString, nf, color);
 	fontlist.push_back(pnewfd);
 }
 

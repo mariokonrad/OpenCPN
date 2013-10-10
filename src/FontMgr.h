@@ -51,7 +51,7 @@ class FontMgr
 		wxString GetFullConfigDesc(int i) const;
 		static wxString GetFontConfigKey(const wxString &description);
 
-		void LoadFontNative(wxString * pConfigString, wxString * pNativeDesc);
+		void LoadFontNative(const wxString & ConfigString, const wxString & NativeDesc);
 		bool SetFont(const wxString & TextElement, wxFont * pFont, wxColour color);
 
 	private: // private for singleton
@@ -68,7 +68,6 @@ class FontMgr
 
 		typedef std::vector<FontDesc *> FontList;
 		FontList fontlist;
-		wxFont * pDefFont;
 };
 
 #endif

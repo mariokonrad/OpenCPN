@@ -22,10 +22,7 @@
  **************************************************************************/
 
 #include "FontDesc.h"
-
 #include <wx/font.h>
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(FontList);
 
 FontDesc::FontDesc(
 		wxString DialogString,
@@ -42,9 +39,7 @@ FontDesc::FontDesc(
 
 FontDesc::~FontDesc()
 {
-	if (m_font) {
-		delete m_font;
-		m_font = NULL;
-	}
+	delete m_font;
+	m_font = NULL;
 }
 

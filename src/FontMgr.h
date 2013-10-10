@@ -24,11 +24,14 @@
 #ifndef __FONTMGR_H__
 #define __FONTMGR_H__
 
+#include <FontDesc.h>
+
+#include <vector>
+
 #include <wx/colour.h>
 #include <wx/string.h>
 
 class wxFont;
-class FontList;
 
 /// Manages the font list.
 ///
@@ -58,11 +61,13 @@ class FontMgr
 		FontMgr & operator=(const FontMgr &) { return *this; }
 
 	private:
+		wxFont * find_font(const wxString & text_element);
 		wxString GetSimpleNativeFont(int size);
 
 		static FontMgr * instance;
 
-		FontList * m_fontlist;
+		typedef std::vector<FontDesc *> FontList;
+		FontList fontlist;
 		wxFont * pDefFont;
 };
 

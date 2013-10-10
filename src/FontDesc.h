@@ -26,7 +26,6 @@
 
 #include <wx/string.h>
 #include <wx/colour.h>
-#include <wx/list.h>
 
 class wxFont;
 
@@ -46,7 +45,5 @@ class FontDesc
 		wxColour m_color;
 		wxString m_nativeInfo;
 };
-
-WX_DECLARE_LIST(FontDesc, FontList);
 
 #endif

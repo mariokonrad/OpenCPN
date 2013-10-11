@@ -2264,35 +2264,36 @@ void RouteManagerDialog::OnLayColumnClicked( wxListEvent &event )
 
 void RouteManagerDialog::UpdateLayButtons()
 {
-	long item = -1;
-	item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+	long item = m_pLayListCtrl->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
 	bool enable = ( item != -1 );
 
-	//btnLayProperties->Enable(false);
-	btnLayDelete->Enable( enable );
-	btnLayToggleChart->Enable( enable );
-	btnLayToggleListing->Enable( enable );
-	btnLayToggleNames->Enable( enable );
+	btnLayDelete->Enable(enable);
+	btnLayToggleChart->Enable(enable);
+	btnLayToggleListing->Enable(enable);
+	btnLayToggleNames->Enable(enable);
 
-	if( item >= 0 ) {
-		if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->IsVisibleOnChart() ) btnLayToggleChart->SetLabel(
-				_("Hide from chart") );
-		else
-			btnLayToggleChart->SetLabel( _("Show on chart") );
+	if (item >= 0) {
+		long index = m_pLayListCtrl->GetItemData(item);
+		const Layer * layer = getLayerAtIndex(index);
 
-		if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->HasVisibleNames() ) btnLayToggleNames->SetLabel(
-				_("Hide WPT names") );
+		if (layer->IsVisibleOnChart())
+			btnLayToggleChart->SetLabel(_("Hide from chart"));
 		else
-			btnLayToggleNames->SetLabel( _("Show WPT names") );
+			btnLayToggleChart->SetLabel(_("Show on chart"));
 
-		if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->IsVisibleOnListing() ) btnLayToggleListing->SetLabel(
-				_("Unlist contents") );
+		if (layer->HasVisibleNames())
+			btnLayToggleNames->SetLabel(_("Hide WPT names"));
 		else
-			btnLayToggleListing->SetLabel( _("List contents") );
+			btnLayToggleNames->SetLabel(_("Show WPT names"));
+
+		if (layer->IsVisibleOnListing())
+			btnLayToggleListing->SetLabel(_("Unlist contents"));
+		else
+			btnLayToggleListing->SetLabel(_("List contents"));
 	} else {
-		btnLayToggleChart->SetLabel( _("Show on chart") );
-		btnLayToggleNames->SetLabel( _("Show WPT names") );
-		btnLayToggleListing->SetLabel( _("List contents") );
+		btnLayToggleChart->SetLabel(_("Show on chart"));
+		btnLayToggleNames->SetLabel(_("Show WPT names"));
+		btnLayToggleListing->SetLabel(_("List contents"));
 	}
 }
 
@@ -2303,14 +2304,14 @@ void RouteManagerDialog::OnLayToggleVisibility( wxMouseEvent &event )
 	long clicked_index = m_pLayListCtrl->HitTest( pos, flags );
 
 	//    Clicking Visibility column?
-	if( clicked_index > -1 && event.GetX() < m_pLayListCtrl->GetColumnWidth( colLAYVISIBLE ) ) {
+	if ((clicked_index > -1) && (event.GetX() < m_pLayListCtrl->GetColumnWidth(colLAYVISIBLE))) {
 		// Process the clicked item
-		Layer *layer = pLayerList->Item( m_pLayListCtrl->GetItemData( clicked_index ) )->GetData();
+		long index = m_pLayListCtrl->GetItemData(clicked_index);
+		Layer * layer = getLayerAtIndex(index);
 
-		layer->SetVisibleOnChart( !layer->IsVisibleOnChart() );
-		m_pLayListCtrl->SetItemImage( clicked_index, layer->IsVisibleOnChart() ? 0 : 1 );
-
-		ToggleLayerContentsOnChart( layer );
+		layer->SetVisibleOnChart(!layer->IsVisibleOnChart());
+		m_pLayListCtrl->SetItemImage(clicked_index, layer->IsVisibleOnChart() ? 0 : 1);
+		ToggleLayerContentsOnChart(layer);
 	}
 
 	// Allow wx to process...
@@ -2334,20 +2335,19 @@ void RouteManagerDialog::OnLayNewClick(wxCommandEvent &)
 void RouteManagerDialog::OnLayPropertiesClick(wxCommandEvent &)
 {
 	// Show layer properties dialog for selected layer - todo
-	long item = -1;
-	item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-	if( item == -1 ) return;
+	long item = m_pLayListCtrl->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (item == -1)
+		return;
 }
 
 void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent &)
 {
-	long item = -1;
-	item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+	long item = m_pLayListCtrl->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if (item == -1)
 		return;
 
 	long list_index = m_pLayListCtrl->GetItemData(item);
-	Layer * layer = pLayerList->Item(list_index)->GetData();
+	Layer * layer = getLayerAtIndex(list_index);
 
 	if (!layer)
 		return;
@@ -2374,7 +2374,7 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent &)
 	// Process waypoints in this layer
 	pWayPointMan->deleteWayPointOnLayer(layer->m_LayerID);
 
-	if( pMarkPropDialog ) {
+	if (pMarkPropDialog) {
 		pMarkPropDialog->SetRoutePoint(NULL);
 		pMarkPropDialog->UpdateProperties();
 	}
@@ -2394,18 +2394,19 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent &)
 void RouteManagerDialog::OnLayToggleChartClick(wxCommandEvent &)
 {
 	// Toggle  visibility on chart for selected layer
-	long item = -1;
-	item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-	if( item == -1 ) return;
+	long item = m_pLayListCtrl->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+	if (item == -1)
+		return;
 
-	Layer *layer = pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
+	long index = m_pLayListCtrl->GetItemData(item);
+	Layer * layer = getLayerAtIndex(index);
 
-	if( !layer ) return;
+	if (!layer)
+		return;
 
-	layer->SetVisibleOnChart( !layer->IsVisibleOnChart() );
-	m_pLayListCtrl->SetItemImage( item, layer->IsVisibleOnChart() ? 0 : 1 );
-
-	ToggleLayerContentsOnChart( layer );
+	layer->SetVisibleOnChart(!layer->IsVisibleOnChart());
+	m_pLayListCtrl->SetItemImage(item, layer->IsVisibleOnChart() ? 0 : 1);
+	ToggleLayerContentsOnChart(layer);
 }
 
 void RouteManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
@@ -2438,17 +2439,18 @@ void RouteManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
 void RouteManagerDialog::OnLayToggleNamesClick(wxCommandEvent &)
 {
 	// Toggle WPT names visibility on chart for selected layer
-	long item = -1;
-	item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-	if( item == -1 ) return;
+	long item = m_pLayListCtrl->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (item == -1)
+		return;
 
-	Layer *layer = pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
+	long index = m_pLayListCtrl->GetItemData(item);
+	Layer * layer = getLayerAtIndex(index);
 
-	if( !layer ) return;
+	if (!layer)
+		return;
 
-	layer->SetVisibleNames( !layer->HasVisibleNames() );
-
-	ToggleLayerContentsNames( layer );
+	layer->SetVisibleNames(!layer->HasVisibleNames());
+	ToggleLayerContentsNames(layer);
 }
 
 void RouteManagerDialog::ToggleLayerContentsNames( Layer *layer )
@@ -2477,17 +2479,18 @@ void RouteManagerDialog::ToggleLayerContentsNames( Layer *layer )
 void RouteManagerDialog::OnLayToggleListingClick(wxCommandEvent &)
 {
 	// Toggle  visibility on listing for selected layer
-	long item = -1;
-	item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-	if( item == -1 ) return;
+	long item = m_pLayListCtrl->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (item == -1)
+		return;
 
-	Layer *layer = pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
+	long index = m_pLayListCtrl->GetItemData(item);
+	Layer * layer = getLayerAtIndex(index);
 
-	if( !layer ) return;
+	if (!layer)
+		return;
 
-	layer->SetVisibleOnListing( !layer->IsVisibleOnListing() );
-
-	ToggleLayerContentsOnListing( layer );
+	layer->SetVisibleOnListing(!layer->IsVisibleOnListing());
+	ToggleLayerContentsOnListing(layer);
 }
 
 void RouteManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
@@ -2527,30 +2530,29 @@ void RouteManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
 void RouteManagerDialog::OnLayDefaultAction(wxListEvent &)
 {
 	wxCommandEvent evt;
-	OnLayPropertiesClick( evt );
+	OnLayPropertiesClick(evt);
 }
 
 void RouteManagerDialog::UpdateLayListCtrl()
 {
 	// if an item was selected, make it selected again if it still exist
-	long item = -1;
-	item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+	long item = m_pLayListCtrl->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 
 	long selected_id = -1;
-	if( item != -1 ) selected_id = m_pLayListCtrl->GetItemData( item );
+	if (item != -1)
+		selected_id = m_pLayListCtrl->GetItemData(item);
 
 	// Delete existing items
 	m_pLayListCtrl->DeleteAllItems();
 
 	// then add routes to the listctrl
-	LayerList::iterator it;
 	int index = 0;
-	for( it = ( *pLayerList ).begin(); it != ( *pLayerList ).end(); ++it, ++index ) {
-		Layer *lay = (Layer *) ( *it );
+	for (LayerList::const_iterator it = pLayerList->begin(); it != pLayerList->end(); ++it, ++index) {
+		const Layer * lay = *it;
 
 		wxListItem li;
 		li.SetId( index );
-		li.SetImage( lay->IsVisibleOnChart() ? 0 : 1 );
+		li.SetImage(lay->IsVisibleOnChart() ? 0 : 1 );
 		li.SetData( index );
 		li.SetText( _T("") );
 
@@ -2588,7 +2590,7 @@ void RouteManagerDialog::OnImportClick(wxCommandEvent &)
 	// Import routes
 	// FIXME there is no way to instruct this function about what to import.
 	// Suggest to add that!
-	pConfig->UI_ImportGPX( this );
+	pConfig->UI_ImportGPX(this);
 
 	UpdateRouteListCtrl();
 	UpdateTrkListCtrl();

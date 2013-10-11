@@ -28,8 +28,6 @@
 #include <wx/list.h>
 #include <wx/datetime.h>
 
-wxString GetLayerName(int id);
-
 class Layer
 {
 	public:
@@ -56,5 +54,8 @@ class Layer
 };
 
 WX_DECLARE_LIST(Layer, LayerList);
+
+wxString GetLayerName(int id);
+Layer * getLayerAtIndex(int index);
 
 #endif

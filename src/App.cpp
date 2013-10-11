@@ -34,7 +34,6 @@
 #include "Routeman.h"
 #include "WayPointman.h"
 #include "ThumbWin.h"
-#include "Layer.h"
 #include "StatWin.h"
 #include "PianoWin.h"
 #include "ConsoleCanvas.h"
@@ -46,6 +45,7 @@
 #include <ChartCanvas.h>
 #include <Config.h>
 #include <UserColors.h>
+#include <Layer.h>
 
 #include <tide/TCMgr.h>
 
@@ -328,7 +328,7 @@ extern bool g_bWayPointPreventDragging;
 extern bool g_bConfirmObjectDelete;
 extern wxLog *Oldlogger;
 extern ChartDummy *pDummyChart;
-extern LayerList *pLayerList;
+extern LayerList * pLayerList;
 extern ChartGroupArray *g_pGroupArray;
 extern FloatingCompassWindow * g_FloatingCompassDialog;
 extern Routeman *g_pRouteMan;

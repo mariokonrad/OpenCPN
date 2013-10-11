@@ -1254,7 +1254,7 @@ bool Config::LoadLayers(wxString &path)
 				laymsg.Printf( wxT("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
 				wxLogMessage( laymsg );
 
-				pLayerList->Insert( l );
+				pLayerList->push_back(l);
 
 				//  Load the entire file array as a single layer
 
@@ -1694,13 +1694,13 @@ void Config::UpdateSettings()
 	Write( _T ( "PlanSpeed" ), st0 );
 
 	wxString vis, invis;
-	LayerList::iterator it;
 	int index = 0;
-	for( it = ( *pLayerList ).begin(); it != ( *pLayerList ).end(); ++it, ++index ) {
+	for (LayerList::iterator it = pLayerList->begin(); it != pLayerList->end(); ++it, ++index) {
 		Layer *lay = (Layer *) ( *it );
-		if( lay->IsVisibleOnChart() ) vis += ( lay->m_LayerName ) + _T(";");
+		if (lay->IsVisibleOnChart())
+			vis += lay->m_LayerName + _T(";");
 		else
-			invis += ( lay->m_LayerName ) + _T(";");
+			invis += lay->m_LayerName + _T(";");
 	}
 	Write( _T ( "VisibleLayers" ), vis );
 	Write( _T ( "InvisibleLayers" ), invis );
@@ -2140,7 +2140,7 @@ void Config::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, boo
 			laymsg.Printf( wxT("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
 			wxLogMessage( laymsg );
 
-			pLayerList->Insert( l );
+			pLayerList->push_back(l);
 		}
 
 		for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {

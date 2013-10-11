@@ -34,16 +34,16 @@ class Layer
 		Layer(void);
 		~Layer(void);
 		wxString CreatePropString(void);
+
 		bool IsVisibleOnChart() const;
 		void SetVisibleOnChart(bool viz = true);
+
 		bool IsVisibleOnListing() const;
 		void SetVisibleOnListing(bool viz = true);
+
 		bool HasVisibleNames() const;
 		void SetVisibleNames(bool viz = true);
 
-		bool m_bIsVisibleOnChart;
-		bool m_bIsVisibleOnListing;
-		bool m_bHasVisibleNames;
 		long m_NoOfItems;
 		int m_LayerID;
 
@@ -51,6 +51,11 @@ class Layer
 		wxString m_LayerFileName;
 		wxString m_LayerDescription;
 		wxDateTime m_CreateTime;
+
+	private:
+		bool m_bIsVisibleOnChart;
+		bool m_bHasVisibleNames;
+		bool m_bIsVisibleOnListing;
 };
 
 WX_DECLARE_LIST(Layer, LayerList);

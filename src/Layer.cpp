@@ -49,15 +49,14 @@ Layer * getLayerAtIndex(int index)
 }
 
 Layer::Layer(void)
+	: m_NoOfItems(0)
+	, m_LayerName(_T(""))
+	, m_LayerFileName(_T(""))
+	, m_LayerDescription(_T(""))
+	, m_bHasVisibleNames(true)
+	, m_bIsVisibleOnListing(false)
 {
 	m_bIsVisibleOnChart = g_bShowLayers;
-	m_bIsVisibleOnListing = false;
-	m_bHasVisibleNames = true;
-	m_NoOfItems = 0;
-
-	m_LayerName = _T("");
-	m_LayerFileName = _T("");
-	m_LayerDescription = _T("");
 	m_CreateTime = wxDateTime::Now();
 }
 

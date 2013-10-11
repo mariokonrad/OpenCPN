@@ -1248,7 +1248,7 @@ bool Config::LoadLayers(wxString &path)
 				if( g_InvisibleLayers.Contains( l->m_LayerName ) )
 					bLayerViz = false;
 
-				l->m_bIsVisibleOnChart = bLayerViz;
+				l->SetVisibleOnChart(bLayerViz);
 
 				wxString laymsg;
 				laymsg.Printf( wxT("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
@@ -2083,11 +2083,10 @@ void Config::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 	}
 }
 
-void Config::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, bool isdirectory )
+void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool isdirectory)
 {
 	int response = wxID_CANCEL;
 	wxArrayString file_array;
-	Layer *l = NULL;
 
 	if( !islayer || dirpath.IsSameAs( _T("") ) ) {
 		wxFileDialog openDialog( parent, _( "Import GPX file" ), m_gpx_path, wxT ( "" ),
@@ -2115,47 +2114,46 @@ void Config::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, boo
 	}
 
 	if( response == wxID_OK ) {
+		Layer * layer = NULL;
 
-		if( islayer ) {
-			l = new Layer();
-			l->m_LayerID = ++g_LayerIdx;
-			l->m_LayerFileName = file_array[0];
-			if( file_array.GetCount() <= 1 ) wxFileName::SplitPath( file_array[0], NULL, NULL,
-					&( l->m_LayerName ), NULL, NULL );
-			else {
-				if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_gpx_path, NULL, NULL,
-						&( l->m_LayerName ), NULL, NULL );
+		if (islayer) {
+			layer = new Layer();
+			layer->m_LayerID = ++g_LayerIdx;
+			layer->m_LayerFileName = file_array[0];
+			if (file_array.GetCount() <= 1) {
+					wxFileName::SplitPath(file_array[0], NULL, NULL, &(layer->m_LayerName), NULL, NULL);
+			} else {
+				if (dirpath.IsSameAs(_T("")))
+					wxFileName::SplitPath(m_gpx_path, NULL, NULL, &(layer->m_LayerName), NULL, NULL);
 				else
-					wxFileName::SplitPath( dirpath, NULL, NULL, &( l->m_LayerName ), NULL, NULL );
+					wxFileName::SplitPath(dirpath, NULL, NULL, &(layer->m_LayerName), NULL, NULL);
 			}
 
 			bool bLayerViz = g_bShowLayers;
-			if( g_VisibleLayers.Contains( l->m_LayerName ) )
+			if (g_VisibleLayers.Contains(layer->m_LayerName))
 				bLayerViz = true;
-			if( g_InvisibleLayers.Contains( l->m_LayerName ) )
+			if (g_InvisibleLayers.Contains(layer->m_LayerName))
 				bLayerViz = false;
-			l->m_bIsVisibleOnChart = bLayerViz;
+			layer->SetVisibleOnChart(bLayerViz);
 
 			wxString laymsg;
-			laymsg.Printf( wxT("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
-			wxLogMessage( laymsg );
+			laymsg.Printf( wxT("New layer %d: %s"), layer->m_LayerID, layer->m_LayerName.c_str() );
+			wxLogMessage(laymsg);
 
-			pLayerList->push_back(l);
+			pLayerList->push_back(layer);
 		}
 
-		for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {
+		for (unsigned int i = 0; i < file_array.GetCount(); ++i) {
 			wxString path = file_array[i];
-
-			if( ::wxFileExists( path ) ) {
-
-				NavObjectCollection *pSet = new NavObjectCollection;
+			if (::wxFileExists(path)) {
+				NavObjectCollection * pSet = new NavObjectCollection;
 				pSet->load_file(path.fn_str());
 
-				if(islayer){
-					l->m_NoOfItems = pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, l->m_bIsVisibleOnChart);
-				}
-				else
+				if (islayer) {
+					layer->m_NoOfItems = pSet->LoadAllGPXObjectsAsLayer(layer->m_LayerID, layer->IsVisibleOnChart());
+				} else {
 					pSet->LoadAllGPXObjects();
+				}
 
 				delete pSet;
 			}

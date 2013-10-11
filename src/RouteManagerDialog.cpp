@@ -2379,7 +2379,7 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent &)
 		pMarkPropDialog->UpdateProperties();
 	}
 
-	pLayerList->remove(layer);
+	pLayerList->remove(layer); // FIXME: there is probably a memory leak here
 
 	UpdateRouteListCtrl();
 	UpdateTrkListCtrl();

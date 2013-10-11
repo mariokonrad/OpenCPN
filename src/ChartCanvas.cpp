@@ -7070,7 +7070,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 
 		case ID_RT_MENU_DELETE: {
 									int dlg_return = wxID_YES;
-									if( g_bConfirmObjectDelete ) {
+									if (g_bConfirmObjectDelete) {
 										dlg_return = OCPNMessageBox( this,  _("Are you sure you want to delete this route?"),
 												_("OpenCPN Route Delete"), (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
 									}
@@ -7082,17 +7082,18 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 
 										pConfig->DeleteConfigRoute( m_pSelectedRoute );
 										g_pRouteMan->DeleteRoute( m_pSelectedRoute );
+										if (pRoutePropDialog && (pRoutePropDialog->IsShown()) && (m_pSelectedRoute == pRoutePropDialog->GetRoute())) {
+											pRoutePropDialog->Hide();
+										}
+
 										m_pSelectedRoute = NULL;
 										m_pFoundRoutePoint = NULL;
 										m_pFoundRoutePointSecond = NULL;
-										if( pRoutePropDialog && ( pRoutePropDialog->IsShown() ) ) {
-											pRoutePropDialog->SetRouteAndUpdate( m_pSelectedRoute );
-											pRoutePropDialog->UpdateProperties();
-										}
 
-										if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateRouteListCtrl();
+										if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
+											pRouteManagerDialog->UpdateRouteListCtrl();
 
-										if( pMarkPropDialog && pMarkPropDialog->IsShown() ) {
+										if (pMarkPropDialog && pMarkPropDialog->IsShown()) {
 											pMarkPropDialog->ValidateMark();
 											pMarkPropDialog->UpdateProperties();
 										}
@@ -7103,12 +7104,12 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 								}
 
 		case ID_RT_MENU_ACTIVATE: {
-									  const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-									  if( g_pRouteMan->GetpActiveRoute() )
-										  g_pRouteMan->DeactivateRoute();
+									const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+									if( g_pRouteMan->GetpActiveRoute() )
+										g_pRouteMan->DeactivateRoute();
 
 									  RoutePoint *best_point = g_pRouteMan->FindBestActivatePoint(
-											  m_pSelectedRoute, gLat, gLon, nav.cog, nav.sog);
+											m_pSelectedRoute, gLat, gLon, nav.cog, nav.sog);
 
 									  g_pRouteMan->ActivateRoute( m_pSelectedRoute, best_point );
 									  m_pSelectedRoute->m_bRtIsSelected = false;
@@ -7302,14 +7303,14 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 										pConfig->DeleteConfigRoute( m_pSelectedTrack );
 
 										g_pRouteMan->DeleteTrack( m_pSelectedTrack );
+
+										if( pTrackPropDialog && ( pTrackPropDialog->IsShown()) && (m_pSelectedTrack == pTrackPropDialog->GetTrack()) ) {
+											pRoutePropDialog->Hide();
+										}
+
 										m_pSelectedTrack = NULL;
 										m_pFoundRoutePoint = NULL;
 										m_pFoundRoutePointSecond = NULL;
-
-										if( pRoutePropDialog && ( pRoutePropDialog->IsShown() ) ) {
-											pRoutePropDialog->SetRouteAndUpdate( m_pSelectedTrack );
-											pRoutePropDialog->UpdateProperties();
-										}
 
 										if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) {
 											pRouteManagerDialog->UpdateTrkListCtrl();

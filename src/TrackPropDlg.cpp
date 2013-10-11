@@ -994,3 +994,8 @@ void TrackPropDlg::m_hyperlink1OnContextMenu(wxMouseEvent &event)
 	m_hyperlink1->PopupMenu(m_menuLink, event.GetPosition());
 }
 
+Route * TrackPropDlg::GetTrack(void)
+{
+	return m_pRoute;
+}
+

@@ -157,6 +157,7 @@ class TrackPropDlg : public wxDialog
 		void SetTrackAndUpdate( Route *pR );
 		bool UpdateProperties();
 		void InitializeList();
+		Route * GetTrack(void);
 
 		Route * m_pRoute;
 

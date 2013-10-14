@@ -3441,14 +3441,21 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	}
 }
 
-double MainFrame::GetTrueOrMag(double a)
+double MainFrame::GetTrueOrMag(double a) // FIXME: this method should be const
 {
 	if (g_bShowMag) {
 		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-		if (!wxIsNaN(nav.var))
-			return ((a + nav.var) >= 0.0) ? (a + nav.var) : (a + nav.var + 360.0);
-		else
-			return ((a + g_UserVar) >= 0.0) ? (a + g_UserVar) : (a + g_UserVar + 360.0);
+		if (!wxIsNaN(nav.var)){
+			if ((a + nav.var) >360.0)
+				return (a + nav.var - 360.0);
+			else
+				return ((a + nav.var) >= 0.0) ? (a + nav.var) : (a + nav.var + 360.0);
+		} else {
+			if ((a + g_UserVar) >360.0)
+				return (a + g_UserVar - 360.0);
+			else
+				return ((a + g_UserVar) >= 0.0) ? (a + g_UserVar) : (a + g_UserVar + 360.0);
+		}
 	} else
 		return a;
 }

@@ -76,7 +76,10 @@ struct BlackListedPlugin
 	bool all_lower;     // if true, blacklist also all the lower versions of the plugin
 };
 
-const BlackListedPlugin PluginBlacklist[] = { { _T("aisradar_pi"), 0, 95, false, true } };
+const BlackListedPlugin PluginBlacklist[] = {
+	{ _T("aisradar_pi"), 0, 95, false, true },
+	{ _T("radar_pi"), 0, 95, false, true },             // GCC alias for aisradar_pi
+};
 
 
 extern const wxEventType wxEVT_OCPN_MSG;

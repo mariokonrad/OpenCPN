@@ -1564,9 +1564,6 @@ bool App::OnInit()
 
 	gFrame->ApplyGlobalSettings(1, false);               // done once on init with resize
 
-	if (start_fullscreen)
-		gFrame->ToggleFullScreen();
-
 	gui_instance->ensure_toolbar_position_range(wxPoint(0, 0), wxPoint(cw, ch));
 	gui_instance->ensure_ais_alert_dialog_position_range(wxPoint(0, 0), wxGetDisplaySize());
 
@@ -1872,6 +1869,10 @@ bool App::OnInit()
 	gFrame->performUniChromeOpenGLResizeHack();
 
 	g_pi_manager->CallLateInit();
+
+	if (start_fullscreen)
+		gFrame->ToggleFullScreen();
+
 	return TRUE;
 }
 

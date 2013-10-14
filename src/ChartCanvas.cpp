@@ -2685,7 +2685,7 @@ bool ChartCanvas::SetViewPoint( double lat, double lon, double scale_ppm, double
 			int proj = ChartData->GetDBChartProj( ref_db_index );
 
 			// Always keep the default Mercator projection if the reference chart is
-			// not in the PatchList or the scale is too small for it to render.
+			// not in the patch list or the scale is too small for it to render.
 
 			bool renderable = true;
 			ChartBase* referenceChart = ChartData->OpenChartFromDB( ref_db_index, FULL_INIT );

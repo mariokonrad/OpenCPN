@@ -81,8 +81,7 @@ Quilt::Quilt()
 
 Quilt::~Quilt()
 {
-	m_PatchList.DeleteContents(true);
-	m_PatchList.clear();
+	destroy_patchlist();
 
 	EmptyCandidateArray();
 	delete m_pcandidate_array;
@@ -90,6 +89,15 @@ Quilt::~Quilt()
 	m_extended_stack_array.clear();
 
 	delete m_pBM;
+}
+
+void Quilt::destroy_patchlist()
+{
+	for (PatchList::iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
+		delete *i;
+		*i = NULL;
+	}
+	m_PatchList.clear();
 }
 
 bool Quilt::IsVPBlittable(ViewPort & VPoint, int dx, int dy, bool b_allow_vector)
@@ -199,14 +207,6 @@ std::vector<int> Quilt::GetCandidatedbIndexArray(bool from_ref_chart, bool exclu
 	return ret;
 }
 
-QuiltPatch * Quilt::GetCurrentPatch()
-{
-	if (current_node)
-		return current_node->GetData();
-	else
-		return NULL;
-}
-
 void Quilt::EmptyCandidateArray(void)
 {
 	for( unsigned int i = 0; i < m_pcandidate_array->size(); i++ ) {
@@ -284,6 +284,14 @@ ChartBase * Quilt::GetLargestScaleChart()
 
 	m_bbusy = false;
 	return pret;
+}
+
+QuiltPatch * Quilt::GetCurrentPatch()
+{
+	if (current_node)
+		return current_node->GetData();
+	else
+		return NULL;
 }
 
 OCPNRegion Quilt::GetChartQuiltRegion(const ChartTableEntry & cte, ViewPort & vp)
@@ -477,20 +485,19 @@ bool Quilt::IsQuiltVector(void)
 
 	bool ret = false;
 
-	wxPatchListNode * node = m_PatchList.GetFirst();
-	while (node) {
-		if (node->GetData()) {
-			QuiltPatch * pqp = node->GetData();
+	for (PatchList::const_iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
+		if (!(*i))
+			continue;
 
-			if (pqp->b_Valid && !pqp->b_eclipsed) {
-				const ChartTableEntry & ctei = ChartData->GetChartTableEntry(pqp->dbIndex);
-				if (ctei.GetChartFamily() == CHART_FAMILY_VECTOR) {
-					ret = true;
-					break;
-				}
+		const QuiltPatch * pqp = *i;
+
+		if (pqp->b_Valid && !pqp->b_eclipsed) {
+			const ChartTableEntry & ctei = ChartData->GetChartTableEntry(pqp->dbIndex);
+			if (ctei.GetChartFamily() == CHART_FAMILY_VECTOR) {
+				ret = true;
+				break;
 			}
 		}
-		node = node->GetNext();
 	}
 
 	m_bbusy = false;
@@ -506,13 +513,13 @@ int Quilt::GetChartdbIndexAtPix(wxPoint p)
 
 	int ret = -1;
 
-	wxPatchListNode * node = m_PatchList.GetFirst();
-	while (node) {
-		if (node->GetData()->ActiveRegion.Contains(p) == wxInRegion) {
-			ret = node->GetData()->dbIndex;
+	// FIXME: this is basically std::find_if
+	for (PatchList::const_iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
+		const QuiltPatch * patch = *i;
+		if (patch->ActiveRegion.Contains(p) == wxInRegion) {
+			ret = patch->dbIndex;
 			break;
-		} else
-			node = node->GetNext();
+		}
 	}
 
 	m_bbusy = false;
@@ -526,16 +533,15 @@ ChartBase * Quilt::GetChartAtPix(wxPoint p)
 
 	m_bbusy = true;
 
-	//    The patchlist is organized from small to large scale.
-	//    We generally will want the largest scale chart at this point, so
-	//    walk the whole list.  The result will be the last one found, i.e. the largest scale chart.
-	ChartBase *pret = NULL;
-	wxPatchListNode * node = m_PatchList.GetFirst();
-	while (node) {
-		QuiltPatch * pqp = node->GetData();
+	// The patchlist is organized from small to large scale.
+	// We generally will want the largest scale chart at this point, so
+	// walk the whole list.  The result will be the last one found, i.e. the largest scale chart.
+	// FIXME: this is basically std::find_if
+	ChartBase * pret = NULL;
+	for (PatchList::const_iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
+		const QuiltPatch * pqp = *i;
 		if (!pqp->b_overlay && (pqp->ActiveRegion.Contains(p) == wxInRegion))
 			pret = ChartData->OpenChartFromDB(pqp->dbIndex, FULL_INIT);
-		node = node->GetNext();
 	}
 
 	m_bbusy = false;
@@ -549,16 +555,15 @@ ChartBase * Quilt::GetOverlayChartAtPix(wxPoint p)
 
 	m_bbusy = true;
 
-	//    The patchlist is organized from small to large scale.
-	//    We generally will want the largest scale chart at this point, so
-	//    walk the whole list.  The result will be the last one found, i.e. the largest scale chart.
+	// The patchlist is organized from small to large scale.
+	// We generally will want the largest scale chart at this point, so
+	// walk the whole list.  The result will be the last one found, i.e. the largest scale chart.
+	// FIXME: this is basically std::find_if
 	ChartBase * pret = NULL;
-	wxPatchListNode * node = m_PatchList.GetFirst();
-	while (node) {
-		QuiltPatch *pqp = node->GetData();
+	for (PatchList::const_iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
+		const QuiltPatch *pqp = *i;
 		if (pqp->b_overlay && (pqp->ActiveRegion.Contains(p) == wxInRegion))
 			pret = ChartData->OpenChartFromDB(pqp->dbIndex, FULL_INIT);
-		node = node->GetNext();
 	}
 
 	m_bbusy = false;
@@ -817,19 +822,19 @@ bool Quilt::IsChartSmallestScale(int dbIndex)
 
 OCPNRegion Quilt::GetHiliteRegion(ViewPort & vp)
 {
-	OCPNRegion r;
+	OCPNRegion region;
 	if (m_nHiLiteIndex >= 0) {
 		// Walk the PatchList, looking for the target hilite index
 		for (PatchList::iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
-			QuiltPatch * piqp = *i;
+			const QuiltPatch * piqp = *i;
 			if ((m_nHiLiteIndex == piqp->dbIndex) && (piqp->b_Valid)) {
-				r = piqp->ActiveRegion;
+				region = piqp->ActiveRegion;
 				break;
 			}
 		}
 
 		// If not in the patchlist, look in the full chartbar
-		if( r.IsEmpty() ) {
+		if (region.IsEmpty()) {
 			for( unsigned int ir = 0; ir < m_pcandidate_array->size(); ir++ ) {
 				QuiltCandidate *pqc = m_pcandidate_array->Item( ir );
 				if( m_nHiLiteIndex == pqc->dbIndex ) {
@@ -845,15 +850,15 @@ OCPNRegion Quilt::GetHiliteRegion(ViewPort & vp)
 							}
 						}
 
-						if( !b_eclipsed )
-							r = chart_region;
+						if (!b_eclipsed)
+							region = chart_region;
 						break;
 					}
 				}
 			}
 		}
 	}
-	return r;
+	return region;
 }
 
 bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_db_index, ViewPort & vp_in)
@@ -1164,16 +1169,18 @@ bool Quilt::Compose(const ViewPort & vp_in)
 	if( pqc_ref ) {
 		const ChartTableEntry &cte_ref = ChartData->GetChartTableEntry( m_refchart_dbIndex );
 
-		OCPNRegion vpu_region( vp_local.rv_rect );
+		OCPNRegion vpu_region(vp_local.rv_rect);
 
-		OCPNRegion chart_region = pqc_ref->quilt_region; //GetChartQuiltRegion( cte_ref, vp_local );
+		OCPNRegion chart_region = pqc_ref->quilt_region;
 
-		if( !chart_region.Empty() ) vpu_region.Intersect( chart_region );
+		if (!chart_region.Empty())
+			vpu_region.Intersect(chart_region);
 
-		if( vpu_region.IsEmpty() ) pqc_ref->b_include = false;   // skip this chart, no true overlap
-		else {
+		if (vpu_region.IsEmpty()) {
+			pqc_ref->b_include = false;   // skip this chart, no true overlap
+		} else {
 			pqc_ref->b_include = true;
-			vp_region.Subtract( chart_region );          // adding this chart
+			vp_region.Subtract(chart_region);          // adding this chart
 		}
 	}
 
@@ -1378,11 +1385,10 @@ bool Quilt::Compose(const ViewPort & vp_in)
 	}
 
 
-	//    Finally, build a list of "patches" for the quilt.
-	//    Smallest scale first, as this will be the natural drawing order
+	// Finally, build a list of "patches" for the quilt.
+	// Smallest scale first, as this will be the natural drawing order
 
-	m_PatchList.DeleteContents( true );
-	m_PatchList.clear();
+	destroy_patchlist();
 
 	if( m_pcandidate_array->GetCount() ) {
 		for( int i = m_pcandidate_array->GetCount() - 1; i >= 0; i-- ) {
@@ -1406,13 +1412,14 @@ bool Quilt::Compose(const ViewPort & vp_in)
 			}
 		}
 	}
-	//    From here on out, the PatchList is usable...
+
+	// From here on out, the PatchList is usable...
 
 #ifdef QUILT_TYPE_1
 	//    Establish the quilt projection type
 	m_quilt_proj = PROJECTION_MERCATOR;// default
 	ChartBase *ppc = GetLargestScaleChart();
-	if(ppc)
+	if (ppc)
 		m_quilt_proj = ppc->GetChartProjectionType();
 #endif
 
@@ -1440,7 +1447,7 @@ bool Quilt::Compose(const ViewPort & vp_in)
 	m_covered_region.Clear();
 
 	for (PatchList::iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
-		QuiltPatch *piqp = *i;
+		const QuiltPatch *piqp = *i;
 		if (!piqp->b_Valid) // skip invalid entries
 			continue;
 
@@ -1474,35 +1481,33 @@ bool Quilt::Compose(const ViewPort & vp_in)
 			if( ( CHART_TYPE_S57 != ctei.GetChartType() )/* && (CHART_TYPE_CM93COMP != ctei.GetChartType())*/) {
 
 				if( !vpr_region.Empty() ) {
-					const ChartTableEntry &cte = ChartData->GetChartTableEntry( pqp->dbIndex );
-					OCPNRegion larger_scale_chart_region = pqp->quilt_region; //GetChartQuiltRegion( cte, vp_local );
-
-					vpr_region.Subtract( larger_scale_chart_region );
+					const ChartTableEntry &cte = ChartData->GetChartTableEntry(pqp->dbIndex);
+					OCPNRegion larger_scale_chart_region = pqp->quilt_region;
+					vpr_region.Subtract(larger_scale_chart_region);
 				}
 			}
-
 		}
 #endif
 
-		//    Whatever is left in the vpr region and has not been yet rendered must belong to the current target chart
+		// Whatever is left in the vpr region and has not been yet rendered must belong to the current target chart
 
 		QuiltPatch *pqpi = *i;
 		pqpi->ActiveRegion = vpr_region;
 
-		//    Move the active region so that upper left is 0,0 in final render region
+		// Move the active region so that upper left is 0,0 in final render region
 		pqpi->ActiveRegion.Offset( -vp_local.rv_rect.x, -vp_local.rv_rect.y );
 
-		//    Could happen that a larger scale chart covers completely a smaller scale chart
-		if( pqpi->ActiveRegion.IsEmpty() )
+		// Could happen that a larger scale chart covers completely a smaller scale chart
+		if (pqpi->ActiveRegion.IsEmpty())
 			pqpi->b_eclipsed = true;
 
-		//    Update the next pass full region to remove the region just allocated
-		if( !vpr_region.Empty() )
+		// Update the next pass full region to remove the region just allocated
+		if (!vpr_region.Empty())
 			unrendered_region.Subtract( vpr_region );
 
-		//    Maintain the present full quilt coverage region
-		if( !pqpi->ActiveRegion.IsEmpty() )
-			m_covered_region.Union( pqpi->ActiveRegion );
+		// Maintain the present full quilt coverage region
+		if (!pqpi->ActiveRegion.IsEmpty())
+			m_covered_region.Union(pqpi->ActiveRegion);
 	}
 
 	// Restore temporary VP Rotation
@@ -1529,10 +1534,9 @@ bool Quilt::Compose(const ViewPort & vp_in)
 
 			m_PatchList.DeleteNode(pcinode);
 			il = 0; // restart the list walk
-		}
-
-		else
+		} else {
 			il++;
+		}
 	}
 
 	//    Mark the quilt to indicate need for background clear if the region is not fully covered

@@ -108,6 +108,7 @@ class Quilt
 		void SubstituteClearDC(wxMemoryDC & dc, ViewPort & vp);
 		int GetNewRefChart(void);
 		unsigned int get_target_stack_index(int current_db_index) const;
+		void destroy_patchlist();
 
 		OCPNRegion m_covered_region;
 		OCPNRegion m_rendered_region;
@@ -116,8 +117,8 @@ class Quilt
 		wxBitmap * m_pBM;
 
 		bool m_bcomposed;
-		wxPatchListNode * current_node;
-		bool m_bbusy; // FIXME: poor man's mutex
+		wxPatchListNode * current_node; // FIXME: altered in several methods, points to a member of PatchList
+		bool m_bbusy; // FIXME: poor man's mutex to sync access to current_node, the interface to access current_node is crap...
 		int m_quilt_proj;
 
 		ArrayOfSortedQuiltCandidates *m_pcandidate_array;

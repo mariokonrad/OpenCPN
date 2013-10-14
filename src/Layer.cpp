@@ -26,8 +26,6 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(LayerList);
 
-extern bool g_bShowLayers;
-
 LayerList * pLayerList = NULL;
 
 wxString GetLayerName(int id)
@@ -37,8 +35,8 @@ wxString GetLayerName(int id)
 		return name;
 
 	for (LayerList::const_iterator it = pLayerList->begin(); it != pLayerList->end(); ++it) {
-		if ((*it)->m_LayerID == id)
-			return (*it)->m_LayerName;
+		if ((*it)->getID() == id)
+			return (*it)->getName();
 	}
 	return name;
 }
@@ -48,23 +46,51 @@ Layer * getLayerAtIndex(int index)
 	return pLayerList->Item(index)->GetData();
 }
 
-Layer::Layer(void)
-	: m_NoOfItems(0)
-	, m_LayerName(_T(""))
-	, m_LayerFileName(_T(""))
-	, m_LayerDescription(_T(""))
+Layer::Layer(int id, const wxString & filename, bool visible)
+	: m_LayerID(id)
+	, m_NoOfItems(0)
 	, m_bHasVisibleNames(true)
+	, m_bIsVisibleOnChart(visible)
 	, m_bIsVisibleOnListing(false)
-{
-	m_bIsVisibleOnChart = g_bShowLayers;
-	m_CreateTime = wxDateTime::Now();
-}
+	, m_LayerName(_T(""))
+	, m_LayerFileName(filename)
+{}
 
 Layer::~Layer(void)
 {
 	// Remove this layer from the global layer list
 	if (NULL != pLayerList)
 		pLayerList->remove(this);
+}
+
+int Layer::getID() const
+{
+	return m_LayerID;
+}
+
+void Layer::setID(int id)
+{
+	m_LayerID = id;
+}
+
+const wxString & Layer::getName() const
+{
+	return m_LayerName;
+}
+
+void Layer::setName(const wxString & name)
+{
+	m_LayerName = name;
+}
+
+long Layer::getNoOfItems() const
+{
+	return m_NoOfItems;
+}
+
+void Layer::setNoOfItems(long number)
+{
+	m_NoOfItems = number;
 }
 
 wxString Layer::CreatePropString(void)

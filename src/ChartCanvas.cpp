@@ -6498,12 +6498,13 @@ void ChartCanvas::ShowMarkPropertiesDialog( RoutePoint* markPoint )
 
 	pMarkPropDialog->SetRoutePoint( markPoint );
 	pMarkPropDialog->UpdateProperties();
-	if( markPoint->m_bIsInLayer ) {
-		wxString caption( _("Waypoint Properties, Layer: ") );
-		caption.Append( GetLayerName( markPoint->m_LayerID ) );
-		pMarkPropDialog->SetDialogTitle( caption );
-	} else
-		pMarkPropDialog->SetDialogTitle( _("Waypoint Properties") );
+	if (markPoint->m_bIsInLayer) {
+		wxString caption(_("Waypoint Properties, Layer: "));
+		caption.Append(GetLayerName(markPoint->m_LayerID));
+		pMarkPropDialog->SetDialogTitle(caption);
+	} else {
+		pMarkPropDialog->SetDialogTitle(_("Waypoint Properties"));
+	}
 
 	pMarkPropDialog->Show();
 	pMarkPropDialog->InitialFocus();
@@ -6518,9 +6519,9 @@ void ChartCanvas::ShowRoutePropertiesDialog(wxString title, Route* selected)
 	pRoutePropDialog->UpdateProperties();
 	if( !selected->m_bIsInLayer ) pRoutePropDialog->SetDialogTitle( title );
 	else {
-		wxString caption( title << _T(", Layer: ") );
-		caption.Append( GetLayerName( selected->m_LayerID ) );
-		pRoutePropDialog->SetDialogTitle( caption );
+		wxString caption(title << _T(", Layer: "));
+		caption.Append(GetLayerName(selected->m_LayerID));
+		pRoutePropDialog->SetDialogTitle(caption);
 	}
 
 	pRoutePropDialog->Show();

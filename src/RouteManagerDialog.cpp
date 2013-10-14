@@ -1552,7 +1552,7 @@ void RouteManagerDialog::UpdateTrkListCtrl()
 		if( name.IsEmpty() ) {
 			RoutePoint *rp = trk->GetPoint( 1 );
 			if( rp && rp->GetCreateTime().IsValid() ) name = rp->GetCreateTime().FormatISODate() + _T(" ")
-				+ rp->GetCreateTime().FormatISOTime();   //name = rp->m_CreateTime.Format();
+				+ rp->GetCreateTime().FormatISOTime();
 			else
 				name = _("(Unnamed Track)");
 		}
@@ -2358,7 +2358,7 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent &)
 	while (node1) {
 		Route * pRoute = node1->GetData();
 		wxRouteListNode * node_next = node1->GetNext();
-		if (pRoute->m_bIsInLayer && (pRoute->m_LayerID == layer->m_LayerID)) {
+		if (pRoute->m_bIsInLayer && (pRoute->m_LayerID == layer->getID())) {
 			pRoute->m_bIsInLayer = false;
 			pRoute->m_LayerID = 0;
 			if (!pRoute->m_bIsTrack) {
@@ -2372,7 +2372,7 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent &)
 	}
 
 	// Process waypoints in this layer
-	pWayPointMan->deleteWayPointOnLayer(layer->m_LayerID);
+	pWayPointMan->deleteWayPointOnLayer(layer->getID());
 
 	if (pMarkPropDialog) {
 		pMarkPropDialog->SetRoutePoint(NULL);
@@ -2414,7 +2414,7 @@ void RouteManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
 	// Process Tracks and Routes in this layer
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route * route = *i;
-		if (route->m_bIsInLayer && (route->m_LayerID == layer->m_LayerID)) {
+		if (route->m_bIsInLayer && (route->m_LayerID == layer->getID())) {
 			if (!route->m_bIsTrack) {
 				route->SetVisible(layer->IsVisibleOnChart());
 				pConfig->UpdateRoute(route);
@@ -2425,7 +2425,7 @@ void RouteManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
 	}
 
 	// Process waypoints in this layer
-	pWayPointMan->setWayPointVisibilityOnLayer(layer->m_LayerID, layer->IsVisibleOnChart());
+	pWayPointMan->setWayPointVisibilityOnLayer(layer->getID(), layer->IsVisibleOnChart());
 
 	UpdateRouteListCtrl();
 	UpdateTrkListCtrl();
@@ -2458,7 +2458,7 @@ void RouteManagerDialog::ToggleLayerContentsNames( Layer *layer )
 	// Process Tracks and Routes in this layer
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route * route = *i;
-		if (route->m_bIsInLayer && (route->m_LayerID == layer->m_LayerID)) {
+		if (route->m_bIsInLayer && (route->m_LayerID == layer->getID())) {
 			wxRoutePointListNode *node = route->pRoutePointList->GetFirst();
 			while (node) {
 				RoutePoint * prp1 = node->GetData();
@@ -2469,7 +2469,7 @@ void RouteManagerDialog::ToggleLayerContentsNames( Layer *layer )
 	}
 
 	// Process waypoints in this layer
-	pWayPointMan->setWayPointNameVisibilityOnLayer(layer->m_LayerID, layer->HasVisibleNames());
+	pWayPointMan->setWayPointNameVisibilityOnLayer(layer->getID(), layer->HasVisibleNames());
 
 	UpdateLayButtons();
 
@@ -2500,7 +2500,7 @@ void RouteManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
 	// Process Tracks and Routes in this layer
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route * route = *i;
-		if (route->m_bIsInLayer && (route->m_LayerID == layer->m_LayerID)) {
+		if (route->m_bIsInLayer && (route->m_LayerID == layer->getID())) {
 			// FIXME: both paths of the condition do the same, bug or obsolete?
 			if (!route->m_bIsTrack) {
 				route->SetListed(layer->IsVisibleOnListing());
@@ -2515,7 +2515,7 @@ void RouteManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
 	//  n.b.  If the waypoint belongs to a track, and is not shared, then do not list it.
 	//  This is a performance optimization, allowing large track support.
 
-	pWayPointMan->setWayPointListingVisibilityOnLayer(layer->m_LayerID, layer->IsVisibleOnListing());
+	pWayPointMan->setWayPointListingVisibilityOnLayer(layer->getID(), layer->IsVisibleOnListing());
 
 	UpdateRouteListCtrl();
 	UpdateTrkListCtrl();
@@ -2558,18 +2558,14 @@ void RouteManagerDialog::UpdateLayListCtrl()
 
 		long idx = m_pLayListCtrl->InsertItem( li );
 
-		wxString name = lay->m_LayerName;
-		if( name.IsEmpty() ) {
-			//RoutePoint *rp = trk->GetPoint(1);
-			//if (rp)
-			//      name = rp->m_CreateTime.FormatISODate() + _T(" ") + rp->m_CreateTime.FormatISOTime();   //name = rp->m_CreateTime.Format();
-			//else
+		wxString name = lay->getName();
+		if (name.IsEmpty()) {
 			name = _("(Unnamed Layer)");
 		}
 		m_pLayListCtrl->SetItem( idx, colLAYNAME, name );
 
 		wxString len;
-		len.Printf( wxT("%d"), (int) lay->m_NoOfItems );
+		len.Printf( wxT("%d"), (int) lay->getNoOfItems());
 		m_pLayListCtrl->SetItem( idx, colLAYITEMS, len );
 	}
 

@@ -26,12 +26,11 @@
 
 #include <wx/string.h>
 #include <wx/list.h>
-#include <wx/datetime.h>
 
 class Layer
 {
 	public:
-		Layer(void);
+		Layer(int id = -1, const wxString & filename = _T(""), bool visible = false);
 		~Layer(void);
 		wxString CreatePropString(void);
 
@@ -44,18 +43,23 @@ class Layer
 		bool HasVisibleNames() const;
 		void SetVisibleNames(bool viz = true);
 
-		long m_NoOfItems;
-		int m_LayerID;
+		long getNoOfItems() const;
+		void setNoOfItems(long);
 
-		wxString m_LayerName;
-		wxString m_LayerFileName;
-		wxString m_LayerDescription;
-		wxDateTime m_CreateTime;
+		int getID() const;
+		void setID(int);
+
+		const wxString & getName() const;
+		void setName(const wxString &);
 
 	private:
-		bool m_bIsVisibleOnChart;
+		int m_LayerID;
+		long m_NoOfItems;
 		bool m_bHasVisibleNames;
+		bool m_bIsVisibleOnChart;
 		bool m_bIsVisibleOnListing;
+		wxString m_LayerName;
+		wxString m_LayerFileName;
 };
 
 WX_DECLARE_LIST(Layer, LayerList);

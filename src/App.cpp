@@ -29,7 +29,6 @@
 #include "Multiplexer.h"
 #include "StyleManager.h"
 #include "Style.h"
-#include "AboutDialog.h"
 #include "FloatingCompassWindow.h"
 #include "Routeman.h"
 #include "WayPointman.h"
@@ -258,7 +257,6 @@ extern double g_n_gps_antenna_offset_x;
 extern int g_n_ownship_min_mm;
 extern int g_nautosave_interval_seconds;
 extern bool g_bPreserveScaleOnX;
-extern AboutDialog * g_pAboutDlg;
 extern wxPlatformInfo *g_pPlatform;
 extern wxLocale *plocale_def_lang;
 extern wxString g_locale;

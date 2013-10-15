@@ -1613,11 +1613,122 @@ void MainFrame::SetGroupIndex( int index )
 	}
 }
 
-void MainFrame::OnToolLeftClick( wxCommandEvent& event )
+void MainFrame::toolLeftClick_AIS()
 {
-	if( s_ProgDialog ) return;
+	g_bShowAIS = !g_bShowAIS;
+	if (g_toolbar) {
+		if (g_bShowAIS)
+			g_toolbar->SetToolShortHelp( ID_AIS, _("Hide AIS Targets") );
+		else
+			g_toolbar->SetToolShortHelp( ID_AIS, _("Show AIS Targets") );
+	}
+	if (m_pAISTool && g_toolbar) {
+		wxString iconName;
+		if (g_bShowAIS)
+			iconName = _T("AIS");
+		else
+			iconName = _T("AIS_Disabled");
+		g_toolbar->SetToolNormalBitmapEx(m_pAISTool, iconName);
+		g_toolbar->Refresh();
+		m_lastAISiconName = iconName;
+	}
+	cc1->ReloadVP();
+}
 
-	switch( event.GetId() ){
+void MainFrame::toolLeftClick_SETTINGS()
+{
+	bool bnewtoolbar = !( DoOptionsDialog() == 0 );
+
+	// Apply various system settings
+	ApplyGlobalSettings(true, bnewtoolbar); // flying update
+
+	if (g_FloatingToolbarDialog)
+		g_FloatingToolbarDialog->RefreshFadeTimer();
+
+	if (cc1->GetbShowCurrent() || cc1->GetbShowTide())
+		LoadHarmonics();
+
+	//  The chart display options may have changed, especially on S57 ENC,
+	//  So, flush the cache and redraw
+	cc1->ReloadVP();
+}
+
+void MainFrame::toolLeftClick_CURRENT()
+{
+	LoadHarmonics();
+
+	if( ptcmgr->IsReady() ) {
+		cc1->SetbShowCurrent( !cc1->GetbShowCurrent() );
+		if (g_toolbar)
+			g_toolbar->ToggleTool( ID_CURRENT, cc1->GetbShowCurrent() );
+		cc1->ReloadVP();
+	} else {
+		wxLogMessage( _T("Chart1::Event...TCMgr Not Available") );
+		cc1->SetbShowCurrent( false );
+		if (g_toolbar)
+			g_toolbar->ToggleTool( ID_CURRENT, false );
+	}
+
+	if( cc1->GetbShowCurrent() ) {
+		FrameTCTimer.Start( TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS );
+		cc1->SetbTCUpdate( true );                        // force immediate update
+	} else {
+		FrameTCTimer.Stop();
+	}
+
+	cc1->Refresh( false );
+}
+
+void MainFrame::toolLeftClick_TIDE()
+{
+	LoadHarmonics();
+
+	if( ptcmgr->IsReady() ) {
+		cc1->SetbShowTide( !cc1->GetbShowTide() );
+		if (g_toolbar)
+			g_toolbar->ToggleTool( ID_TIDE, cc1->GetbShowTide() );
+		cc1->ReloadVP();
+	} else {
+		wxLogMessage( _("Chart1::Event...TCMgr Not Available") );
+		cc1->SetbShowTide( false );
+		if (g_toolbar)
+			g_toolbar->ToggleTool( ID_TIDE, false );
+	}
+
+	if( cc1->GetbShowTide() ) {
+		FrameTCTimer.Start( TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS );
+		cc1->SetbTCUpdate( true );                        // force immediate update
+	} else {
+		FrameTCTimer.Stop();
+	}
+
+	cc1->Refresh( false );
+}
+
+void MainFrame::toolLeftClick_ROUTEMANAGER()
+{
+	if (!pRouteManagerDialog) // FIXME: create instance earlier, There is one global instance of the Dialog
+		pRouteManagerDialog = new RouteManagerDialog(cc1);
+
+	pRouteManagerDialog->UpdateRouteListCtrl();
+	pRouteManagerDialog->UpdateTrkListCtrl();
+	pRouteManagerDialog->UpdateWptListCtrl();
+	pRouteManagerDialog->UpdateLayListCtrl();
+	pRouteManagerDialog->Show();
+
+	// Required if RMDialog is not STAY_ON_TOP
+#ifdef __WXOSX__
+	pRouteManagerDialog->Centre();
+	pRouteManagerDialog->Raise();
+#endif
+}
+
+void MainFrame::OnToolLeftClick(wxCommandEvent & event)
+{
+	if (s_ProgDialog)
+		return;
+
+	switch (event.GetId()) {
 		case ID_STKUP:
 			DoStackUp();
 			DoChartUpdate();
@@ -1628,206 +1739,104 @@ void MainFrame::OnToolLeftClick( wxCommandEvent& event )
 			DoChartUpdate();
 			break;
 
-		case ID_ZOOMIN: {
-							cc1->ZoomCanvasIn( 2.0 );
-							DoChartUpdate();
-							break;
-						}
+		case ID_ZOOMIN:
+			cc1->ZoomCanvasIn( 2.0 );
+			DoChartUpdate();
+			break;
 
-		case ID_ZOOMOUT: {
-							 cc1->ZoomCanvasOut( 2.0 );
-							 DoChartUpdate();
-							 break;
-						 }
+		case ID_ZOOMOUT:
+			cc1->ZoomCanvasOut( 2.0 );
+			DoChartUpdate();
+			break;
 
-		case ID_ROUTE: {
-						   nRoute_State = 1;
-						   cc1->SetCursor( *cc1->pCursorPencil );
-						   break;
-					   }
+		case ID_ROUTE:
+			nRoute_State = 1;
+			cc1->SetCursor(*cc1->pCursorPencil);
+			break;
 
-		case ID_FOLLOW: {
-							TogglebFollow();
-							break;
-						}
+		case ID_FOLLOW:
+			TogglebFollow();
+			break;
 
 #ifdef USE_S57
-		case ID_TEXT: {
-						  ps52plib->SetShowS57Text( !ps52plib->GetShowS57Text() );
-						  if( g_toolbar ) g_toolbar->ToggleTool( ID_TEXT, ps52plib->GetShowS57Text() );
-						  cc1->ReloadVP();
-						  break;
-					  }
+		case ID_TEXT:
+			ps52plib->SetShowS57Text(!ps52plib->GetShowS57Text());
+			if (g_toolbar)
+				g_toolbar->ToggleTool(ID_TEXT, ps52plib->GetShowS57Text());
+			cc1->ReloadVP();
+			break;
 #endif
 
-		case ID_AIS: {
-						 g_bShowAIS = !g_bShowAIS;
+		case ID_AIS:
+			toolLeftClick_AIS();
+			break;
 
-						 if( g_toolbar ) {
-							 if( g_bShowAIS )
-								 g_toolbar->SetToolShortHelp( ID_AIS, _("Hide AIS Targets") );
-							 else
-								 g_toolbar->SetToolShortHelp( ID_AIS, _("Show AIS Targets") );
-						 }
+		case ID_SETTINGS:
+			toolLeftClick_SETTINGS();
+			break;
 
-						 wxString iconName;
-						 if( g_bShowAIS )
-							 iconName = _T("AIS");
-						 else
-							 iconName = _T("AIS_Disabled");
+		case ID_CURRENT:
+			toolLeftClick_CURRENT();
+			break;
 
-						 if( m_pAISTool && g_toolbar) {
-							 g_toolbar->SetToolNormalBitmapEx( m_pAISTool, iconName );
-							 g_toolbar->Refresh();
-							 m_lastAISiconName = iconName;
-						 }
+		case ID_TIDE:
+			toolLeftClick_TIDE();
+			break;
 
-						 cc1->ReloadVP();
+		case ID_HELP:
+			if (!g_pAboutDlg)
+				g_pAboutDlg = new AboutDialog(this, &g_SData_Locn);
+			g_pAboutDlg->Update();
+			g_pAboutDlg->Show();
+			break;
 
-						 break;
-					 }
+		case ID_PRINT:
+			DoPrint();
+			break;
 
-		case ID_SETTINGS: {
+		case ID_COLSCHEME:
+			ToggleColorScheme();
+			break;
 
-							  bool bnewtoolbar = !( DoOptionsDialog() == 0 );
+		case ID_TBEXIT:
+			Close();
+			break;
 
-							  //              Apply various system settings
-							  ApplyGlobalSettings( true, bnewtoolbar );                 // flying update
+		case ID_ROUTEMANAGER:
+			toolLeftClick_ROUTEMANAGER();
+			break;
 
-							  if( g_FloatingToolbarDialog ) g_FloatingToolbarDialog->RefreshFadeTimer();
+		case ID_TRACK:
+			if (!g_bTrackActive)
+			    TrackOn();
+			else
+			    TrackOff(true);
+			break;
 
-							  if( cc1->GetbShowCurrent() || cc1->GetbShowTide() ) LoadHarmonics();
-							  //  The chart display options may have changed, especially on S57 ENC,
-							  //  So, flush the cache and redraw
-							  cc1->ReloadVP();
-							  break;
-						  }
+		case ID_TBSTATBOX:
+			ToggleCourseUp();
+			break;
 
-		case ID_CURRENT: {
-							 LoadHarmonics();
+		case ID_MOB:
+			ActivateMOB();
+			break;
 
-							 if( ptcmgr->IsReady() ) {
-								 cc1->SetbShowCurrent( !cc1->GetbShowCurrent() );
-								 if( g_toolbar ) g_toolbar->ToggleTool( ID_CURRENT, cc1->GetbShowCurrent() );
-								 cc1->ReloadVP();
-							 } else {
-								 wxLogMessage( _T("Chart1::Event...TCMgr Not Available") );
-								 cc1->SetbShowCurrent( false );
-								 if( g_toolbar ) g_toolbar->ToggleTool( ID_CURRENT, false );
-							 }
-
-							 if( cc1->GetbShowCurrent() ) {
-								 FrameTCTimer.Start( TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS );
-								 cc1->SetbTCUpdate( true );                        // force immediate update
-							 } else
-								 FrameTCTimer.Stop();
-
-							 cc1->Refresh( false );
-
-							 break;
-
-						 }
-
-		case ID_TIDE: {
-						  LoadHarmonics();
-
-						  if( ptcmgr->IsReady() ) {
-							  cc1->SetbShowTide( !cc1->GetbShowTide() );
-							  if( g_toolbar ) g_toolbar->ToggleTool( ID_TIDE, cc1->GetbShowTide() );
-							  cc1->ReloadVP();
-						  } else {
-							  wxLogMessage( _("Chart1::Event...TCMgr Not Available") );
-							  cc1->SetbShowTide( false );
-							  if( g_toolbar ) g_toolbar->ToggleTool( ID_TIDE, false );
-						  }
-
-						  if( cc1->GetbShowTide() ) {
-							  FrameTCTimer.Start( TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS );
-							  cc1->SetbTCUpdate( true );                        // force immediate update
-						  } else
-							  FrameTCTimer.Stop();
-
-						  cc1->Refresh( false );
-
-						  break;
-					  }
-
-		case ID_HELP: {
-						  if (!g_pAboutDlg)
-							  g_pAboutDlg = new AboutDialog(this, &g_SData_Locn);
-
-						  g_pAboutDlg->Update();
-						  g_pAboutDlg->Show();
-						  break;
-					  }
-
-		case ID_PRINT: {
-						   DoPrint();
-						   break;
-					   }
-
-		case ID_COLSCHEME: {
-							   ToggleColorScheme();
-							   break;
-						   }
-
-		case ID_TBEXIT: {
-							Close();
-							break;
-						}
-
-		case ID_ROUTEMANAGER: {
-								  if( NULL == pRouteManagerDialog )         // There is one global instance of the Dialog
-									  pRouteManagerDialog = new RouteManagerDialog( cc1 );
-
-								  pRouteManagerDialog->UpdateRouteListCtrl();
-								  pRouteManagerDialog->UpdateTrkListCtrl();
-								  pRouteManagerDialog->UpdateWptListCtrl();
-								  pRouteManagerDialog->UpdateLayListCtrl();
-								  pRouteManagerDialog->Show();
-
-								  //    Required if RMDialog is not STAY_ON_TOP
-#ifdef __WXOSX__
-								  pRouteManagerDialog->Centre();
-								  pRouteManagerDialog->Raise();
-#endif
-								  break;
-							  }
-
-		case ID_TRACK: {
-						   if( !g_bTrackActive ) TrackOn();
-						   else
-							   TrackOff( true );
-						   break;
-					   }
-
-		case ID_TBSTATBOX: {
-							   ToggleCourseUp();
-							   break;
-						   }
-
-		case ID_MOB: {
-						 ActivateMOB();
-						 break;
-					 }
-
-		default: {
-					 //        Look for PlugIn tools
-					 //        If found, make the callback.
-					 //        TODO Modify this to allow multiple tools per plugin
-					 if( g_pi_manager ) {
-						 ArrayOfPlugInToolbarTools tool_array = g_pi_manager->GetPluginToolbarToolArray();
-						 for( unsigned int i = 0; i < tool_array.GetCount(); i++ ) {
-							 PlugInToolbarToolContainer *pttc = tool_array.Item( i );
-							 if( event.GetId() == pttc->id ) {
-								 if( pttc->m_pplugin ) pttc->m_pplugin->OnToolbarToolCallback( pttc->id );
-							 }
-						 }
-					 }
-					 break;
-				 }
-
-	}         // switch
+		default:
+			// Look for PlugIn tools
+			// If found, make the callback.
+			// TODO Modify this to allow multiple tools per plugin
+			if (g_pi_manager) {
+				ArrayOfPlugInToolbarTools tool_array = g_pi_manager->GetPluginToolbarToolArray();
+				for (unsigned int i = 0; i < tool_array.GetCount(); ++i) {
+					PlugInToolbarToolContainer *pttc = tool_array.Item(i);
+					if (event.GetId() == pttc->id) {
+						if (pttc->m_pplugin)
+							pttc->m_pplugin->OnToolbarToolCallback( pttc->id );
+					}
+				}
+			}
+			break;
+	}
 }
 
 void MainFrame::ToggleColorScheme()
@@ -1962,8 +1971,7 @@ Track *MainFrame::TrackOff( bool do_add_point )
 {
 	Track *return_val = g_pActiveTrack;
 
-	if( g_pActiveTrack )
-	{
+	if( g_pActiveTrack ) {
 		wxJSONValue v;
 		wxString msg_id( _T("OCPN_TRK_DEACTIVATED") );
 		v[_T("GUID")] = g_pActiveTrack->m_GUID;
@@ -1974,8 +1982,7 @@ Track *MainFrame::TrackOff( bool do_add_point )
 		if( g_pActiveTrack->GetnPoints() < 2 ) {
 			g_pRouteMan->DeleteRoute( g_pActiveTrack );
 			return_val = NULL;
-		}
-		else {
+		} else {
 			if( g_bTrackDaily ) {
 				Track *pExtendTrack = g_pActiveTrack->DoExtendDaily();
 				if(pExtendTrack) {
@@ -1990,8 +1997,7 @@ Track *MainFrame::TrackOff( bool do_add_point )
 
 	g_bTrackActive = false;
 
-	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() )
-	{
+	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) {
 		pRouteManagerDialog->UpdateTrkListCtrl();
 		pRouteManagerDialog->UpdateRouteListCtrl();
 	}

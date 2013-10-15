@@ -223,6 +223,12 @@ class MainFrame : public wxFrame
 		void check_anchorwatch_2();
 		void send_gps_to_plugins() const;
 
+		void toolLeftClick_AIS();
+		void toolLeftClick_SETTINGS();
+		void toolLeftClick_CURRENT();
+		void toolLeftClick_TIDE();
+		void toolLeftClick_ROUTEMANAGER();
+
 		// Toolbar support
 		ToolBarSimple *CreateAToolbar();
 		void DestroyMyToolbar();

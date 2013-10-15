@@ -25,6 +25,7 @@
 #include <Routeman.h>
 #include <WayPointman.h>
 #include <RouteManagerDialog.h>
+#include <MarkInfo.h>
 #include <Select.h>
 #include <ChartCanvas.h>
 #include <MainFrame.h>
@@ -43,6 +44,7 @@ extern RouteManagerDialog * pRouteManagerDialog;
 extern WayPointman * pWayPointMan;
 extern ChartCanvas * cc1;
 extern MainFrame * gFrame;
+extern MarkInfoImpl * pMarkPropDialog;
 
 Undo::Undo()
 {

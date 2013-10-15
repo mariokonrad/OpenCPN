@@ -967,7 +967,7 @@ void TrackPropDlg::OnOKBtnClick( wxCommandEvent& event )
 	m_bStartNow = false;
 
 	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() )
-		pRouteManagerDialog->UpdateRouteListCtrl();
+		pRouteManagerDialog->UpdateTrkListCtrl();
 
 	Hide();
 	cc1->Refresh( false );

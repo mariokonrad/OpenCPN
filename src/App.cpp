@@ -896,15 +896,13 @@ bool App::OnInit()
 	glog_file.Append( _T("opencpn.log") );
 
 	//  Constrain the size of the log file
+	wxString large_log_message;
 	if( ::wxFileExists( glog_file ) ) {
 		if( wxFileName::GetSize( glog_file ) > 1000000 ) {
 			wxString oldlog = glog_file;                      // pjotrc 2010.02.09
-			oldlog.Append( _T(".log") );
-			wxString msg1( _("Old log will be moved to opencpn.log.log") );
-			OCPNMessageBox ( NULL, msg1, wxString( _("OpenCPN Info") ),
-					wxICON_INFORMATION | wxOK );
-			//            int dlg_ret;
-			//            dlg_ret = mdlg.ShowModal();
+			oldlog.Append(_T(".log"));
+			//  Defer the showing of this messagebox until the system locale is established.
+			large_log_message = ( _("Old log will be moved to opencpn.log.log") );
 			::wxRenameFile( glog_file, oldlog );
 		}
 	}
@@ -1195,6 +1193,10 @@ bool App::OnInit()
 	}
 
 	global::OCPN::get().sys().set_config_version_string(vs);
+
+	//  Show deferred log restart message, if it exists.
+	if( !large_log_message.IsEmpty() )
+		OCPNMessageBox ( NULL, large_log_message, wxString( _("OpenCPN Info") ), wxICON_INFORMATION | wxOK );
 
 #ifdef __WXMSW__
 	//  Validate OpenGL functionality, if selected

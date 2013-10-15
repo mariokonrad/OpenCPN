@@ -209,7 +209,6 @@ wxString *pInit_Chart_Dir;
 wxString g_csv_locn;
 wxString g_SENCPrefix;
 wxString g_UserPresLibData;
-wxString g_Plugin_Dir;
 wxString g_VisibleLayers;
 wxString g_InvisibleLayers;
 wxString g_uploadConnection;

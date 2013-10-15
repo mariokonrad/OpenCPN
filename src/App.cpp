@@ -161,7 +161,6 @@ extern wxString *pInit_Chart_Dir;
 extern wxString g_csv_locn;
 extern wxString g_SENCPrefix;
 extern wxString g_UserPresLibData;
-extern wxString g_Plugin_Dir;
 extern wxString g_VisibleLayers;
 extern wxString g_InvisibleLayers;
 extern wxString g_uploadConnection;
@@ -992,15 +991,15 @@ bool App::OnInit()
 		sys.set_private_data_dir(global::OCPN::get().sys().data().home_location);
 
 	//  Get the PlugIns directory location
-	g_Plugin_Dir = std_path.GetPluginsDir();   // linux:   {prefix}/lib/opencpn
+	plugin_dir = std_path.GetPluginsDir();   // linux:   {prefix}/lib/opencpn
 	// Mac:     appname.app/Contents/PlugIns
 #ifdef __WXMSW__
-	g_Plugin_Dir += _T("\\plugins");             // Windows: {exe dir}/plugins
+	plugin_dir += _T("\\plugins");             // Windows: {exe dir}/plugins
 #endif
 
 	if (g_bportable) {
-		g_Plugin_Dir = global::OCPN::get().sys().data().home_location;
-		g_Plugin_Dir += _T("plugins");
+		plugin_dir = global::OCPN::get().sys().data().home_location;
+		plugin_dir += _T("plugins");
 	}
 
 	//      Create an array string to hold repeating messages, so they don't
@@ -1590,8 +1589,8 @@ bool App::OnInit()
 	g_pauimgr->GetPane(cc1).BestSize( cc1->GetSize() );
 
 	//      Load and initialize any PlugIns
-	g_pi_manager = new PlugInManager( gFrame );
-	g_pi_manager->LoadAllPlugIns( g_Plugin_Dir );
+	g_pi_manager = new PlugInManager(gFrame);
+	g_pi_manager->LoadAllPlugIns(plugin_dir);
 
 	// Show the frame
 

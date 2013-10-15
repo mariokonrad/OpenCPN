@@ -61,6 +61,7 @@ class App : public wxApp
 		global::OCPN_System * sys_instance;
 
 		bool start_fullscreen;
+		wxString plugin_dir;
 };
 
 #endif

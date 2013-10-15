@@ -35,7 +35,7 @@
 #pragma warning(disable: 4251)   // relates to std::string fpath
 #endif
 
-extern wxString * pWorldMapLocation;
+extern wxString worldMapLocation;
 
 GshhsReader::GshhsReader( Projection* proj )
 {
@@ -53,7 +53,7 @@ GshhsReader::GshhsReader( Projection* proj )
 
 	if( maxQualityAvailable < 0 ) {
 		wxString msg( _T("Unable to initialize background world map. No GSHHS datafiles found in ") );
-		msg += *pWorldMapLocation;
+		msg += worldMapLocation;
 		wxLogMessage( msg );
 	}
 
@@ -143,21 +143,21 @@ wxString GshhsReader::getNameExtension( int quality )
 wxString GshhsReader::getFileName_Land( int quality )
 {
 	wxString ext = GshhsReader::getNameExtension( quality );
-	wxString fname = *pWorldMapLocation + wxString::Format( _T("poly-%c-1.dat"), ext.GetChar(0) );
+	wxString fname = worldMapLocation + wxString::Format( _T("poly-%c-1.dat"), ext.GetChar(0) );
 	return fname;
 }
 
 wxString GshhsReader::getFileName_boundaries( int quality )
 {
 	wxString ext = GshhsReader::getNameExtension( quality );
-	wxString fname = *pWorldMapLocation + wxString::Format( _T("wdb_borders_%c.b"), ext.GetChar(0) );
+	wxString fname = worldMapLocation + wxString::Format( _T("wdb_borders_%c.b"), ext.GetChar(0) );
 	return fname;
 }
 
 wxString GshhsReader::getFileName_rivers( int quality )
 {
 	wxString ext = GshhsReader::getNameExtension( quality );
-	wxString fname = *pWorldMapLocation + wxString::Format( _T("wdb_rivers_%c.b"), ext.GetChar(0) );
+	wxString fname = worldMapLocation + wxString::Format( _T("wdb_rivers_%c.b"), ext.GetChar(0) );
 	return fname;
 }
 

@@ -76,7 +76,7 @@ extern wxArrayOfConnPrm *g_pConnectionParams;
 extern wxString         g_SENCPrefix;
 extern wxString         g_UserPresLibData;
 extern wxString         g_SData_Locn;
-extern wxString         *pInit_Chart_Dir;
+extern wxString         init_Chart_Dir;
 extern WayPointman      *pWayPointMan;
 extern bool             s_bSetSystemTime;
 extern bool             g_bDisplayGrid;         //Flag indicating if grid is to be displayed
@@ -775,10 +775,10 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	wxString dirnamed( vald );
 	if( !dirnamed.IsEmpty() ) {
-		if( pInit_Chart_Dir->IsEmpty() )   // on second pass, don't overwrite
+		if (init_Chart_Dir.IsEmpty())   // on second pass, don't overwrite
 		{
-			pInit_Chart_Dir->Clear();
-			pInit_Chart_Dir->Append(vald);
+			init_Chart_Dir.Clear();
+			init_Chart_Dir.Append(vald);
 		}
 	}
 
@@ -1836,9 +1836,9 @@ void Config::UpdateSettings()
 
 #endif
 
-	SetPath( _T ( "/Directories" ) );
-	Write( _T ( "InitChartDir" ), *pInit_Chart_Dir );
-	Write( _T ( "GPXIODir" ), m_gpx_path );
+	SetPath(_T("/Directories"));
+	Write(_T("InitChartDir" ), init_Chart_Dir);
+	Write(_T("GPXIODir"), m_gpx_path);
 	Write(_T("TCDataDir"), global::OCPN::get().sys().data().tc_data_dir);
 
 	SetPath( _T ( "/Settings/NMEADataSource" ) );

@@ -29,7 +29,7 @@
 
 #include <wx/log.h>
 
-extern wxString *pWorldMapLocation;
+extern wxString worldMapLocation;
 
 GSHHSChart::GSHHSChart()
 	: proj(NULL)
@@ -112,7 +112,7 @@ void GSHHSChart::RenderViewOnDC( ocpnDC& dc, ViewPort& vp )
 		if( reader->GetPolyVersion() < 210 || reader->GetPolyVersion() > 220 ) {
 			wxLogMessage(_T("GSHHS World chart files have wrong version. Found %ld, expected 210-220."), reader->GetPolyVersion());
 		} else {
-			wxLogMessage(_T("Background world map loaded from GSHHS datafiles found in: ") + *pWorldMapLocation);
+			wxLogMessage(_T("Background world map loaded from GSHHS datafiles found in: ") + worldMapLocation);
 		}
 	}
 

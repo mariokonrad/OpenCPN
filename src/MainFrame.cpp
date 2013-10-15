@@ -203,9 +203,8 @@ ThumbWin *pthumbwin;
 TCMgr *ptcmgr;
 bool bDrawCurrentValues;
 wxString g_SData_Locn;
-wxString *pChartListFileName;
-wxString *pWorldMapLocation;
-wxString *pInit_Chart_Dir;
+wxString chartListFileName;
+wxString init_Chart_Dir;
 wxString g_csv_locn;
 wxString g_SENCPrefix;
 wxString g_UserPresLibData;
@@ -2304,7 +2303,7 @@ int MainFrame::DoOptionsDialog()
 	::wxEndBusyCursor();
 
 	//    Set initial Chart Dir
-	optionsDlg.SetInitChartDir( *pInit_Chart_Dir );
+	optionsDlg.SetInitChartDir(init_Chart_Dir);
 
 	//      Pass two working pointers for Chart Dir Dialog
 	optionsDlg.SetCurrentDirList( ChartData->GetChartDirArray() );
@@ -2404,8 +2403,7 @@ int MainFrame::ProcessOptionsDialog( int rr, options* dialog )
 		} else
 			if( Current_Ch ) chart_file_name = Current_Ch->GetFullPath();
 
-		UpdateChartDatabaseInplace( *pWorkDirArray, ( ( rr & FORCE_UPDATE ) == FORCE_UPDATE ),
-				true, *pChartListFileName );
+		UpdateChartDatabaseInplace(*pWorkDirArray, ((rr & FORCE_UPDATE) == FORCE_UPDATE), true, chartListFileName);
 
 		//    Re-open the last open chart
 		int dbii = ChartData->FinddbIndex( chart_file_name );

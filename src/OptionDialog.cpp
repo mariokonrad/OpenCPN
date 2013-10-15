@@ -89,7 +89,7 @@ extern bool g_bsmoothpanzoom;
 extern bool g_bShowMag;
 extern double g_UserVar;
 
-extern wxString * pInit_Chart_Dir;
+extern wxString init_Chart_Dir;
 extern wxArrayOfConnPrm * g_pConnectionParams;
 extern Multiplexer * g_pMUX;
 extern bool g_bfilter_cogsog;
@@ -2241,16 +2241,16 @@ void options::OnButtonaddClick( wxCommandEvent& event )
 	wxDirDialog * dirSelector = new wxDirDialog(
 		this,
 		_("Add a directory containing chart files"),
-		*pInit_Chart_Dir,
+		init_Chart_Dir,
 		wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
 
 	if (dirSelector->ShowModal() != wxID_CANCEL) {
 		wxString selDir = dirSelector->GetPath();
 		wxFileName dirname = wxFileName(selDir);
 
-		pInit_Chart_Dir->Empty();
-		if( !g_bportable )
-			pInit_Chart_Dir->Append( dirname.GetPath() );
+		init_Chart_Dir.Empty();
+		if (!g_bportable)
+			init_Chart_Dir.Append(dirname.GetPath());
 
 		if( g_bportable ) {
 			wxFileName f(selDir);

@@ -335,7 +335,6 @@ int g_GroupIndex;
 wxString g_GPS_Ident;
 wxProgressDialog *s_ProgDialog;
 wxArrayString TideCurrentDataSet;
-wxString g_TCData_Dir;
 
 #ifndef __WXMSW__
 struct sigaction sa_all;

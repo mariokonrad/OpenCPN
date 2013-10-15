@@ -214,7 +214,6 @@ extern int g_GroupIndex;
 extern wxString g_GPS_Ident;
 extern wxProgressDialog *s_ProgDialog;
 extern wxArrayString TideCurrentDataSet;
-extern wxString g_TCData_Dir;
 extern bool g_bShowMoored;
 extern double g_ShowMoored_Kts;
 extern wxString g_sAIS_Alert_Sound_File;

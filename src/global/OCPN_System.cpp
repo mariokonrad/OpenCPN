@@ -40,6 +40,11 @@ void OCPN_System::set_private_data_dir(const wxString & directory)
 	data_data.private_data_dir = directory;
 }
 
+void OCPN_System::set_tc_data_dir(const wxString & directory)
+{
+	data_data.tc_data_dir = directory;
+}
+
 const System::Config & OCPN_System::config() const
 {
 	return data_config;

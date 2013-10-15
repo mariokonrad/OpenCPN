@@ -199,7 +199,6 @@ extern ocpnStyle::StyleManager * g_StyleManager;
 #define ID_CHOICE_NMEA  wxID_HIGHEST + 1
 
 extern wxArrayString TideCurrentDataSet;
-extern wxString g_TCData_Dir;
 
 options * g_pOptions;
 
@@ -2256,9 +2255,10 @@ void options::OnButtonaddClick( wxCommandEvent& event )
 		if( g_bportable ) {
 			wxFileName f(selDir);
 			f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
-			pActiveChartsList->Append( f.GetFullPath() );
-		} else
+			pActiveChartsList->Append(f.GetFullPath());
+		} else {
 			pActiveChartsList->Append(selDir);
+		}
 
 		k_charts |= CHANGE_CHARTS;
 
@@ -3209,7 +3209,6 @@ wxString GetOCPNKnownLanguage( wxString lang_canonical, wxString *lang_dir )
 		*lang_dir = dir_suffix;
 
 	return return_string;
-
 }
 
 void options::OnInsertTideDataLocation(wxCommandEvent &)
@@ -3217,30 +3216,37 @@ void options::OnInsertTideDataLocation(wxCommandEvent &)
 	wxString sel_file;
 	int response = wxID_CANCEL;
 
-	wxFileDialog openDialog( this, _( "Select Tide/Current Data" ), g_TCData_Dir, wxT ( "" ),
-			wxT ( "Tide/Current Data files (*.IDX; *.TCD)|*.IDX;*.idx;*.TCD;*.tcd|All files (*.*)|*.*" ),
-			wxFD_OPEN  );
+	global::System & sys = global::OCPN::get().sys();
+
+	wxFileDialog openDialog(
+		this,
+		_("Select Tide/Current Data"),
+		sys.data().tc_data_dir,
+		wxT(""),
+		wxT("Tide/Current Data files (*.IDX; *.TCD)|*.IDX;*.idx;*.TCD;*.tcd|All files (*.*)|*.*"),
+		wxFD_OPEN);
 	response = openDialog.ShowModal();
 	if( response == wxID_OK ) {
 		sel_file = openDialog.GetPath();
 
-		if( g_bportable ) {
+		if (g_bportable) {
 			wxFileName f( sel_file );
-			f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
-			tcDataSelected->Append( f.GetFullPath() );
-		} else
-			tcDataSelected->Append( sel_file );
-
-		//    Record the currently selected directory for later use
-		wxFileName fn( sel_file );
-		wxString data_dir = fn.GetPath();
-		if( g_bportable ) {
-			wxFileName f( data_dir );
-			f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
-			g_TCData_Dir = f.GetFullPath();
+			f.MakeRelativeTo(sys.data().home_location);
+			tcDataSelected->Append(f.GetFullPath());
+		} else {
+			tcDataSelected->Append(sel_file);
 		}
-		else
-			g_TCData_Dir = data_dir;
+
+		// Record the currently selected directory for later use
+		wxFileName fn(sel_file);
+		wxString data_dir = fn.GetPath();
+		if (g_bportable) {
+			wxFileName f(data_dir);
+			f.MakeRelativeTo(sys.data().home_location);
+			sys.set_tc_data_dir(f.GetFullPath());
+		} else {
+			sys.set_tc_data_dir(data_dir);
+		}
 	}
 }
 

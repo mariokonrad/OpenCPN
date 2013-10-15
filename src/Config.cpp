@@ -245,7 +245,6 @@ extern wxString         g_uploadConnection;
 
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern wxArrayString    TideCurrentDataSet;
-extern wxString         g_TCData_Dir;
 
 Config::Config(
 		const wxString & appName,
@@ -779,12 +778,15 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		if( pInit_Chart_Dir->IsEmpty() )   // on second pass, don't overwrite
 		{
 			pInit_Chart_Dir->Clear();
-			pInit_Chart_Dir->Append( vald );
+			pInit_Chart_Dir->Append(vald);
 		}
 	}
 
 	Read( _T ( "GPXIODir" ), &m_gpx_path );           // Get the Directory name
-	Read( _T ( "TCDataDir" ), &g_TCData_Dir );           // Get the Directory name
+
+	wxString tc_data_directory;
+	Read(_T("TCDataDir"), &tc_data_directory);
+	global::OCPN::get().sys().set_tc_data_dir(tc_data_directory);
 
 	SetPath( _T ( "/Settings/GlobalState" ) );
 	Read( _T ( "nColorScheme" ), &read_int, 0 );
@@ -1440,8 +1442,8 @@ bool Config::UpdateChartDirs(ArrayOfCDI & dir_array)
 		ChartDirInfo cdi = *i;
 
 		wxString dirn = cdi.fullpath;
-		dirn.Append(_T("^"));
-		dirn.Append(cdi.magic_number);
+		dirn += _T("^");
+		dirn += cdi.magic_number;
 		str_buf.Printf(_T("ChartDir%d"), i - dir_array.begin() + 1);
 		Write(str_buf, dirn);
 	}
@@ -1722,8 +1724,8 @@ void Config::UpdateSettings()
 			char name[7];
 			strncpy( name, pOLE->OBJLName, 6 );
 			name[6] = 0;
-			st1.Append( wxString( name, wxConvUTF8 ) );
-			Write( st1, pOLE->nViz );
+			st1 += wxString(name, wxConvUTF8);
+			Write(st1, pOLE->nViz);
 		}
 	}
 #endif
@@ -1837,15 +1839,14 @@ void Config::UpdateSettings()
 	SetPath( _T ( "/Directories" ) );
 	Write( _T ( "InitChartDir" ), *pInit_Chart_Dir );
 	Write( _T ( "GPXIODir" ), m_gpx_path );
-	Write( _T ( "TCDataDir" ), g_TCData_Dir );
+	Write(_T("TCDataDir"), global::OCPN::get().sys().data().tc_data_dir);
 
 	SetPath( _T ( "/Settings/NMEADataSource" ) );
 	wxString connectionconfigs;
-	for (size_t i = 0; i < g_pConnectionParams->Count(); i++)
-	{
+	for (size_t i = 0; i < g_pConnectionParams->Count(); i++) {
 		if (i > 0)
-			connectionconfigs.Append(_T("|"));
-		connectionconfigs.Append(g_pConnectionParams->Item(i)->Serialize());
+			connectionconfigs += _T("|");
+		connectionconfigs += g_pConnectionParams->Item(i)->Serialize();
 	}
 	Write ( _T ( "DataConnections" ), connectionconfigs );
 

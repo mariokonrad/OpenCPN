@@ -29,6 +29,9 @@
 #include <DimeControl.h>
 #include <version.h>
 
+#include <global/OCPN.h>
+#include <global/System.h>
+
 #include <wx/textfile.h>
 #include <wx/textctrl.h>
 #include <wx/ffile.h>
@@ -47,7 +50,6 @@ wxString str_version_patch = wxString::Format(wxT("%i"),VERSION_PATCH);
 wxString str_version_date(VERSION_DATE, wxConvUTF8);
 wxString OpenCPNVersion = str_version_start + str_version_major + wxT(".") + str_version_minor + wxT(".") + str_version_patch + wxT(" Build ") + str_version_date;
 
-extern wxString glog_file;
 extern wxString gConfig_File;
 extern ocpnStyle::StyleManager * g_StyleManager;
 
@@ -212,7 +214,7 @@ void AboutDialog::Update()
 
 	// Show the user where the log file is going to be
 	wxString log = _T("    Logfile location: ");
-	log.Append( glog_file );
+	log.Append(global::OCPN::get().sys().data().log_file);
 	pAboutTextCtl->WriteText( log );
 
 	// Show the user where the config file is going to be
@@ -379,7 +381,8 @@ void AboutDialog::OnDonateClick(wxCommandEvent &)
 void AboutDialog::OnCopyClick( wxCommandEvent& event )
 {
 	wxString filename = gConfig_File;
-	if( event.GetId() == ID_COPYLOG ) filename = glog_file;
+	if (event.GetId() == ID_COPYLOG)
+		filename = global::OCPN::get().sys().data().log_file;
 
 	wxFFile file( filename );
 

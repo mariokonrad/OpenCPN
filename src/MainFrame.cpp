@@ -162,7 +162,6 @@ FILE *flog;
 wxLog *logger;
 wxLog *Oldlogger;
 bool g_bFirstRun;
-wxString glog_file;
 wxString gConfig_File;
 int g_unit_test_1;
 MainFrame * gFrame;

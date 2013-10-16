@@ -45,6 +45,11 @@ void OCPN_System::set_tc_data_dir(const wxString & directory)
 	data_data.tc_data_dir = directory;
 }
 
+void OCPN_System::set_log_file(const wxString & log_file)
+{
+	data_data.log_file = log_file;
+}
+
 const System::Config & OCPN_System::config() const
 {
 	return data_config;

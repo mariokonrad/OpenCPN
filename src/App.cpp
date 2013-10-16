@@ -351,7 +351,6 @@ extern wxPlatformInfo * g_pPlatform;
 extern wxDateTime g_loglast_time;
 extern wxString g_SData_Locn;
 extern bool bGPSValid;
-extern wxString glog_file;
 extern int g_GroupIndex;
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern wxPlatformInfo * g_pPlatform;
@@ -855,21 +854,21 @@ bool App::OnInit()
 	establish_home_location();
 
 	// Establish Log File location
-	glog_file = global::OCPN::get().sys().data().home_location;
+	global::System & sys = global::OCPN::get().sys();
+	sys.set_log_file(sys.data().home_location);
 
 #ifdef  __WXOSX__
-	wxFileName LibPref(glog_file);          // starts like "~/Library/Preferences"
+	wxFileName LibPref(sys.data().log_file); // starts like "~/Library/Preferences"
 	LibPref.RemoveLastDir();// takes off "Preferences"
-
-	glog_file = LibPref.GetFullPath();
-	appendOSDirSlash(glog_file);
-
-	glog_file.Append(_T("Logs/"));// so, on OS X, opencpn.log ends up in ~/Library/Logs
+	wxString logfile = LibPref.GetFullPath();
+	appendOSDirSlash(logfile);
+	logfile.Append(_T("Logs/"));// so, on OS X, opencpn.log ends up in ~/Library/Logs
 	// which makes it accessible to Applications/Utilities/Console....
+	sys.set_log_file(logfile);
 #endif
 
 	// create the opencpn "home" directory if we need to
-	wxFileName wxHomeFiledir(global::OCPN::get().sys().data().home_location);
+	wxFileName wxHomeFiledir(sys.data().home_location);
 	if( true != wxHomeFiledir.DirExists( wxHomeFiledir.GetPath() ) ) if( !wxHomeFiledir.Mkdir(
 				wxHomeFiledir.GetPath() ) ) {
 		wxASSERT_MSG(false,_T("Cannot create opencpn home directory"));
@@ -877,28 +876,29 @@ bool App::OnInit()
 	}
 
 	// create the opencpn "log" directory if we need to
-	wxFileName wxLogFiledir( glog_file );
+	wxFileName wxLogFiledir(sys.data().log_file);
 	if( true != wxLogFiledir.DirExists( wxLogFiledir.GetPath() ) ) {
 		if( !wxLogFiledir.Mkdir( wxLogFiledir.GetPath() ) ) {
 			wxASSERT_MSG(false,_T("Cannot create opencpn log directory"));
 			return false;
 		}
 	}
-	glog_file.Append( _T("opencpn.log") );
+
+	sys.set_log_file(sys.data().log_file + _T("opencpn.log"));
 
 	//  Constrain the size of the log file
 	wxString large_log_message;
-	if( ::wxFileExists( glog_file ) ) {
-		if( wxFileName::GetSize( glog_file ) > 1000000 ) {
-			wxString oldlog = glog_file;                      // pjotrc 2010.02.09
+	if( ::wxFileExists(sys.data().log_file) ) {
+		if( wxFileName::GetSize(sys.data().log_file) > 1000000 ) {
+			wxString oldlog = sys.data().log_file;
 			oldlog.Append(_T(".log"));
 			//  Defer the showing of this messagebox until the system locale is established.
-			large_log_message = ( _("Old log will be moved to opencpn.log.log") );
-			::wxRenameFile( glog_file, oldlog );
+			large_log_message = _("Old log will be moved to opencpn.log.log");
+			::wxRenameFile(sys.data().log_file, oldlog);
 		}
 	}
 
-	flog = fopen( glog_file.mb_str(), "a" );
+	flog = fopen(sys.data().log_file.mb_str(), "a");
 	logger = new wxLogStderr( flog );
 
 	Oldlogger = wxLog::SetActiveTarget( logger );
@@ -957,7 +957,7 @@ bool App::OnInit()
 	appendOSDirSlash(g_SData_Locn);
 
 	if (g_bportable)
-		g_SData_Locn = global::OCPN::get().sys().data().home_location;
+		g_SData_Locn = sys.data().home_location;
 
 	imsg = _T("SData_Locn is ");
 	imsg += g_SData_Locn;
@@ -970,9 +970,8 @@ bool App::OnInit()
 	g_pGroupArray = new ChartGroupArray;
 
 	// Establish the prefix of the location of user specific data files
-	global::System & sys = global::OCPN::get().sys();
 #ifdef __WXMSW__
-	sys.set_private_data_dir(global::OCPN::get().sys().data().home_location); // should be {Documents and Settings}\......
+	sys.set_private_data_dir(sys.data().home_location); // should be {Documents and Settings}\......
 #elif defined __WXOSX__
 	sys.set_private_data_dir(std_path.GetUserConfigDir()); // should be ~/Library/Preferences
 #else
@@ -980,7 +979,7 @@ bool App::OnInit()
 #endif
 
 	if (g_bportable)
-		sys.set_private_data_dir(global::OCPN::get().sys().data().home_location);
+		sys.set_private_data_dir(sys.data().home_location);
 
 	//  Get the PlugIns directory location
 	plugin_dir = std_path.GetPluginsDir();   // linux:   {prefix}/lib/opencpn
@@ -990,7 +989,7 @@ bool App::OnInit()
 #endif
 
 	if (g_bportable) {
-		plugin_dir = global::OCPN::get().sys().data().home_location;
+		plugin_dir = sys.data().home_location;
 		plugin_dir += _T("plugins");
 	}
 
@@ -1030,7 +1029,7 @@ bool App::OnInit()
 	//      Establish the location of the config file
 #ifdef __WXMSW__
 	gConfig_File = _T("opencpn.ini");
-	gConfig_File.Prepend(global::OCPN::get().sys().data().home_location);
+	gConfig_File.Prepend(sys.data().home_location);
 
 #elif defined __WXOSX__
 	gConfig_File = std_path.GetUserConfigDir(); // should be ~/Library/Preferences
@@ -1043,7 +1042,7 @@ bool App::OnInit()
 #endif
 
 	if( g_bportable ) {
-		gConfig_File = global::OCPN::get().sys().data().home_location;
+		gConfig_File = sys.data().home_location;
 #ifdef __WXMSW__
 		gConfig_File += _T("opencpn.ini");
 #elif defined __WXOSX__
@@ -1079,7 +1078,7 @@ bool App::OnInit()
 		wxString msg = _("Failed to initialize the user interface. ");
 		msg << _("OpenCPN cannot start. ");
 		msg << _("The necessary configuration files were not found. ");
-		msg << _("See the log file at ") << glog_file << _(" for details.");
+		msg << _("See the log file at ") << sys.data().log_file << _(" for details.");
 		wxMessageDialog w( NULL, msg, _("Failed to initialize the user interface. "),
 				wxCANCEL | wxICON_ERROR );
 		w.ShowModal();
@@ -1095,7 +1094,7 @@ bool App::OnInit()
 	pConfig->LoadConfig(0);
 
 	//        Is this the first run after a clean install?
-	if (!global::OCPN::get().sys().config().nav_message_shown)
+	if (!sys.config().nav_message_shown)
 		g_bFirstRun = true;
 
 	//  Now we can set the locale
@@ -1177,13 +1176,13 @@ bool App::OnInit()
 	//  Send the Welcome/warning message if it has never been sent before,
 	//  or if the version string has changed at all
 	//  We defer until here to allow for localization of the message
-	if (!global::OCPN::get().sys().config().nav_message_shown || (vs != global::OCPN::get().sys().config().version_string)) {
+	if (!sys.config().nav_message_shown || (vs != sys.config().version_string)) {
 		if (wxID_CANCEL == ShowNavWarning())
 			return false;
-		global::OCPN::get().sys().set_config_nav_message_shown(true);
+		sys.set_config_nav_message_shown(true);
 	}
 
-	global::OCPN::get().sys().set_config_version_string(vs);
+	sys.set_config_version_string(vs);
 
 	//  Show deferred log restart message, if it exists.
 	if( !large_log_message.IsEmpty() )
@@ -1220,14 +1219,14 @@ bool App::OnInit()
 	//      If the config file contains an entry for SENC file prefix, use it.
 	//      Otherwise, default to PrivateDataDir
 	if( g_SENCPrefix.IsEmpty() ) {
-		g_SENCPrefix = global::OCPN::get().sys().data().private_data_dir;
+		g_SENCPrefix = sys.data().private_data_dir;
 		appendOSDirSlash(g_SENCPrefix);
 		g_SENCPrefix.Append( _T("SENC") );
 	}
 
 	if (g_bportable) {
 		wxFileName f(g_SENCPrefix);
-		if (f.MakeRelativeTo(global::OCPN::get().sys().data().private_data_dir))
+		if (f.MakeRelativeTo(sys.data().private_data_dir))
 			g_SENCPrefix = f.GetFullPath();
 		else
 			g_SENCPrefix = _T("SENC");
@@ -1334,7 +1333,7 @@ bool App::OnInit()
 	//      Establish location and name of chart database
 #ifdef __WXMSW__
 	chartListFileName = _T("CHRTLIST.DAT");
-	chartListFileName.Prepend(global::OCPN::get().sys().data().home_location);
+	chartListFileName.Prepend(sys.data().home_location);
 
 #else
 	chartListFileName = _T("");
@@ -1350,7 +1349,7 @@ bool App::OnInit()
 #else
 		chartListFileName.Append(_T("chartlist.dat"));
 #endif
-		chartListFileName.Prepend(global::OCPN::get().sys().data().home_location);
+		chartListFileName.Prepend(sys.data().home_location);
 	}
 
 	// Establish guessed location of chart tree
@@ -1423,7 +1422,7 @@ bool App::OnInit()
 
 		if (g_bportable) {
 			wxFileName f(default_tcdata);
-			f.MakeRelativeTo(global::OCPN::get().sys().data().private_data_dir);
+			f.MakeRelativeTo(sys.data().private_data_dir);
 			TideCurrentDataSet.Add( f.GetFullPath() );
 		}
 		else
@@ -1440,7 +1439,7 @@ bool App::OnInit()
 
 		if( g_bportable ) {
 			wxFileName f(default_sound);
-			f.MakeRelativeTo(global::OCPN::get().sys().data().private_data_dir);
+			f.MakeRelativeTo(sys.data().private_data_dir);
 			g_sAIS_Alert_Sound_File = f.GetFullPath();
 		}
 		else
@@ -1524,7 +1523,7 @@ bool App::OnInit()
 
 	if( g_bportable ) {
 		myframe_window_title += _(" -- [Portable(-p) executing from ");
-		myframe_window_title += global::OCPN::get().sys().data().home_location;
+		myframe_window_title += sys.data().home_location;
 		myframe_window_title += _T("]");
 	}
 

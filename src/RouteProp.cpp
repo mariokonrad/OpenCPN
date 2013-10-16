@@ -116,7 +116,7 @@ RoutePrintSelection * pRoutePrintSelection = NULL;
 #define    FALLING    4
 #define    RISING    8
 
-char tide_status[][8] = {
+static char tide_status[][8] = {
 	" LW ",
 	" HW ",
 	" ~~v ",
@@ -169,7 +169,7 @@ static double FNrange( double x )
 	return ( a );
 }
 
-double getDaylightEvent( double glat, double glong, int riset, double altitude, int y, int m, int d )
+static double getDaylightEvent( double glat, double glong, int riset, double altitude, int y, int m, int d )
 {
 	double day = FNday( y, m, d, 0 );
 	double days, correction;
@@ -217,7 +217,7 @@ static double getLMT( double ut, double lon )
 		return ( t + 24. );
 }
 
-int getDaylightStatus( double lat, double lon, wxDateTime utcDateTime )
+static int getDaylightStatus( double lat, double lon, wxDateTime utcDateTime )
 {
 	if( fabs( lat ) > 60. ) return ( 0 );
 	int y = utcDateTime.GetYear();

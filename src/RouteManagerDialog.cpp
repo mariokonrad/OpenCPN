@@ -137,7 +137,6 @@ extern WayPointman * pWayPointMan;
 extern MarkInfoImpl * pMarkPropDialog;
 extern MainFrame * gFrame;
 extern Select * pSelect;
-extern double gLat, gLon;
 extern bool g_bShowLayers;
 extern wxString g_default_wp_icon;
 
@@ -1173,41 +1172,38 @@ void RouteManagerDialog::OnRteExportClick(wxCommandEvent &)
 void RouteManagerDialog::OnRteActivateClick(wxCommandEvent &)
 {
 	// Activate the selected route, unless it already is
-	long item = -1;
-	item = m_pRouteListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-	if( item == -1 ) return;
+	long item = m_pRouteListCtrl->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (item == -1)
+		return;
 
-	if( m_bCtrlDown ) MakeAllRoutesInvisible();
+	if (m_bCtrlDown)
+		MakeAllRoutesInvisible();
 
 	long item_index = m_pRouteListCtrl->GetItemData(item);
 	Route * route = pRouteList->Item(item_index)->GetData();
 
-	if( !route ) return;
+	if (!route)
+		return;
 
-	if( !route->m_bRtIsActive ) {
+	if (!route->m_bRtIsActive) {
 		if( !route->IsVisible() ) {
-			route->SetVisible( true );
-			m_pRouteListCtrl->SetItemImage( item, 0, 0 );
+			route->SetVisible(true);
+			m_pRouteListCtrl->SetItemImage(item, 0, 0);
 		}
 
-		ZoomtoRoute( route );
+		ZoomtoRoute(route);
 
 		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 		RoutePoint *best_point = g_pRouteMan->FindBestActivatePoint(
-			route, gLat, gLon, nav.cog, nav.sog);
+			route, nav.lat, nav.lon, nav.cog, nav.sog);
 		g_pRouteMan->ActivateRoute( route, best_point );
-		//            g_pRouteMan->ActivateRoute(route);
-	} else
+	} else {
 		g_pRouteMan->DeactivateRoute();
+	}
 
 	UpdateRouteListCtrl();
-
 	pConfig->UpdateRoute( route );
-
 	cc1->Refresh();
-
-	//      btnRteActivate->SetLabel(route->m_bRtIsActive ? _("Deactivate") : _("Activate"));
-
 	m_bNeedConfigFlush = true;
 }
 
@@ -1816,6 +1812,7 @@ void RouteManagerDialog::UpdateWptListCtrl( RoutePoint *rp_select, bool b_retain
 
 	m_pWptListCtrl->DeleteAllItems();
 
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 	int index = 0;
 	const RoutePointList & waypoints = pWayPointMan->waypoints();
 	for (RoutePointList::const_iterator i = waypoints.begin(); i != waypoints.end(); ++i) {
@@ -1842,7 +1839,7 @@ void RouteManagerDialog::UpdateWptListCtrl( RoutePoint *rp_select, bool b_retain
 			m_pWptListCtrl->SetItem(idx, colWPTNAME, name);
 
 			double dst;
-			geo::DistanceBearingMercator(rp->m_lat, rp->m_lon, gLat, gLon, NULL, &dst);
+			geo::DistanceBearingMercator(rp->m_lat, rp->m_lon, nav.lat, nav.lon, NULL, &dst);
 			wxString dist;
 			dist.Printf(_T("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(dst));
 			m_pWptListCtrl->SetItem(idx, colWPTDIST, dist);
@@ -1988,9 +1985,11 @@ void RouteManagerDialog::OnWptToggleVisibility( wxMouseEvent &event )
 
 void RouteManagerDialog::OnWptNewClick(wxCommandEvent &)
 {
-	RoutePoint *pWP = new RoutePoint(gLat, gLon, g_default_wp_icon, wxEmptyString);
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+	RoutePoint *pWP = new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
 	pWP->m_bIsolatedMark = true;                      // This is an isolated mark
-	pSelect->AddSelectableRoutePoint( gLat, gLon, pWP );
+	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP );
 	pConfig->AddNewWayPoint( pWP, -1 );    // use auto next num
 	cc1->Refresh( false );      // Needed for MSW, why not GTK??
 
@@ -2137,10 +2136,13 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent &)
 
 	RoutePoint *wp = (RoutePoint *) m_pWptListCtrl->GetItemData( item );
 
-	if( !wp ) return;
+	if (!wp)
+		return;
 
-	RoutePoint *pWP_src = new RoutePoint(gLat, gLon, g_default_wp_icon, wxEmptyString);
-	pSelect->AddSelectableRoutePoint( gLat, gLon, pWP_src );
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+	RoutePoint *pWP_src = new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
+	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_src );
 
 	Route *temp_route = new Route();
 	pRouteList->push_back(temp_route);
@@ -2148,7 +2150,7 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent &)
 	temp_route->AddPoint( pWP_src );
 	temp_route->AddPoint( wp );
 
-	pSelect->AddSelectableRouteSegment( gLat, gLon, wp->m_lat, wp->m_lon, pWP_src, wp, temp_route );
+	pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, wp->m_lat, wp->m_lon, pWP_src, wp, temp_route);
 
 	wxString name = wp->GetName();
 	if( name.IsEmpty() ) name = _("(Unnamed Waypoint)");

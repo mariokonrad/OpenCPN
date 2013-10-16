@@ -29,6 +29,9 @@
 #include <ChartCanvas.h>
 #include <UserColors.h>
 
+#include <global/OCPN.h>
+#include <global/Navigation.h>
+
 #include <geo/GeoRef.h>
 
 #include <gpx/gpx.h>
@@ -36,8 +39,6 @@
 #define TIMER_TRACK1 778
 
 extern int g_nTrackPrecision;
-extern double gLat;
-extern double gLon;
 extern RouteList * pRouteList;
 extern Select * pSelect;
 extern bool g_bTrackDaily;
@@ -133,8 +134,10 @@ void Track::Start( void )
 void Track::Stop( bool do_add_point )
 {
 	double delta = 0.0;
-	if( m_lastStoredTP )
-		delta = geo::DistGreatCircle(gLat, gLon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon);
+	if( m_lastStoredTP ) {
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		delta = geo::DistGreatCircle(nav.lat, nav.lon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon);
+	}
 
 	if (m_bRunning && ((delta > m_minTrackpoint_delta) || do_add_point))
 		AddPointNow(true); // Add last point
@@ -199,10 +202,12 @@ void Track::OnTimerTrack(wxTimerEvent &)
 	m_TimerTrack.Stop();
 	m_track_run++;
 
-	if( m_lastStoredTP )
-		m_prev_dist = geo::DistGreatCircle( gLat, gLon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon );
-	else
+	if( m_lastStoredTP ) {
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		m_prev_dist = geo::DistGreatCircle(nav.lat, nav.lon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon);
+	} else {
 		m_prev_dist = 999.0;
+	}
 
 	bool b_addpoint = false;
 
@@ -245,13 +250,17 @@ void Track::AddPointNow( bool do_add_point )
 
 	wxDateTime now = wxDateTime::Now();
 
-	if( m_prev_dist < 0.0005 )              // avoid zero length segs
-		if( !do_add_point ) return;
+	if (m_prev_dist < 0.0005)              // avoid zero length segs
+		if (!do_add_point)
+			return;
 
-	if( m_prev_time.IsValid() ) if( m_prev_time == now )                    // avoid zero time segs
-		if( !do_add_point ) return;
+	if (m_prev_time.IsValid())
+		if (m_prev_time == now) // avoid zero time segs
+			if (!do_add_point)
+				return;
 
-	Vector2D gpsPoint( gLon, gLat );
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	Vector2D gpsPoint(nav.lon, nav.lat);
 
 	// The dynamic interval algorithm will gather all track points in a queue,
 	// and analyze the cross track errors for each point before actually adding
@@ -266,7 +275,7 @@ void Track::AddPointNow( bool do_add_point )
 			 break;
 			 }
 		case secondPoint: {
-			  Vector2D pPoint( gLon, gLat );
+			  Vector2D pPoint(nav.lon, nav.lat);
 			  skipPoints.push_back( pPoint );
 			  skipTimes.push_back( now.ToUTC() );
 			  trackPointState = potentialPoint;
@@ -280,7 +289,7 @@ void Track::AddPointNow( bool do_add_point )
 
 								 // Scan points skipped so far and see if anyone has XTE over the threshold.
 								 for( unsigned int i=0; i<skipPoints.size(); i++ ) {
-									 double xte = GetXTE( m_lastStoredTP->m_lat, m_lastStoredTP->m_lon, gLat, gLon, skipPoints[i].lat, skipPoints[i].lon );
+									 double xte = GetXTE( m_lastStoredTP->m_lat, m_lastStoredTP->m_lon, nav.lat, nav.lon, skipPoints[i].lat, skipPoints[i].lon );
 									 if( xte > xteMax ) {
 										 xteMax = xte;
 										 xteMaxIndex = i;
@@ -424,7 +433,8 @@ void Track::Draw(ocpnDC& dc, ViewPort &VP)
 
 	if( m_bRunning ) {
 		wxPoint r;
-		cc1->GetCanvasPointPix( gLat, gLon, &r );
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		cc1->GetCanvasPointPix(nav.lat, nav.lon, &r);
 		RenderSegment( dc, rpt.x, rpt.y, r.x, r.y, VP, false, (int) radius ); // no arrows, with hilite
 	}
 }

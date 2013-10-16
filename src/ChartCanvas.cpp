@@ -140,7 +140,6 @@ extern void catch_signals(int signo);
 extern ChartBase        *Current_Vector_Ch;
 extern ChartBase        *Current_Ch;
 extern double           g_ChartNotRenderScaleFactor;
-extern double           gLat, gLon;
 extern double           vLat, vLon;
 extern ChartDB          *ChartData;
 extern bool             bDBUpdateInProgress;
@@ -1526,29 +1525,24 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 					  }
 
 			case 'L':
-					  parent_frame->ToggleLights();
-					  break;
+				parent_frame->ToggleLights();
+				break;
 
 			case 'O':
-					  parent_frame->ToggleChartOutlines();
-					  break;
+				parent_frame->ToggleChartOutlines();
+				break;
 
-#if 0
-			case 'R':
-					  parent_frame->ToggleRocks();
-					  break;
-#endif
 			case 'S':
-					  parent_frame->ToggleSoundings();
-					  break;
+				parent_frame->ToggleSoundings();
+				break;
 
 			case 'T':
-					  parent_frame->ToggleENCText();
-					  break;
+				parent_frame->ToggleENCText();
+				break;
 
 			case 1:                      // Ctrl A
-					  parent_frame->TogglebFollow();
-					  break;
+				parent_frame->TogglebFollow();
+				break;
 
 			case 2:                      // Ctrl B
 					  if( stats ) {
@@ -1595,53 +1589,53 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 
 			case 15: // Ctrl O - Drop Marker at boat's position
 					  {
-						  RoutePoint *pWP = new RoutePoint(gLat, gLon, g_default_wp_icon, wxEmptyString);
-						  pWP->m_bIsolatedMark = true;                      // This is an isolated mark
-						  pSelect->AddSelectableRoutePoint( gLat, gLon, pWP );
-						  pConfig->AddNewWayPoint( pWP, -1 );    // use auto next num
+						const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+						  RoutePoint *pWP = new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
+						  pWP->m_bIsolatedMark = true; // This is an isolated mark
+						  pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP);
+						  pConfig->AddNewWayPoint(pWP, -1);    // use auto next num
 
-						  if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
+						  if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
+							pRouteManagerDialog->UpdateWptListCtrl();
 						  undo->BeforeUndoableAction(UndoAction::Undo_CreateWaypoint, pWP, UndoAction::Undo_HasParent, NULL );
 						  undo->AfterUndoableAction( NULL );
 						  Refresh( false );
 						  break;
 					  }
 
-			case -32:                     // Ctrl Space            //    Drop MOB
-					  {
-						  if( m_modkeys == wxMOD_CONTROL ) parent_frame->ActivateMOB();
+			case -32: // Ctrl Space: Drop MOB
+				if (m_modkeys == wxMOD_CONTROL)
+					parent_frame->ActivateMOB();
+				break;
 
-						  break;
-					  }
+			case 17: // Ctrl Q
+				parent_frame->Close();
+				return;
 
-			case 17:                       // Ctrl Q
-					  parent_frame->Close();
-					  return;
+			case 18: // Ctrl R
+				gFrame->nRoute_State = 1;
+				cc1->SetCursor( *cc1->pCursorPencil );
+				return;
 
-			case 18:                       // Ctrl R
-					  gFrame->nRoute_State = 1;
-					  cc1->SetCursor( *cc1->pCursorPencil );
-					  return;
+			case 20: // Ctrl T
+				if( NULL == pGoToPositionDialog ) // There is one global instance of the Go To Position Dialog
+					pGoToPositionDialog = new GoToPositionDialog( this );
+				pGoToPositionDialog->Show();
+				break;
 
-			case 20:                       // Ctrl T
-					  if( NULL == pGoToPositionDialog ) // There is one global instance of the Go To Position Dialog
-						  pGoToPositionDialog = new GoToPositionDialog( this );
-					  pGoToPositionDialog->Show();
-					  break;
+			case 25: // Ctrl Y
+				if( undo->AnythingToRedo() ) {
+					undo->RedoNextAction();
+					Refresh( false );
+				}
+				break;
 
-			case 25:                       // Ctrl Y
-					  if( undo->AnythingToRedo() ) {
-						  undo->RedoNextAction();
-						  Refresh( false );
-					  }
-					  break;
-
-			case 26:                       // Ctrl Z
-					  if( undo->AnythingToUndo() ) {
-						  undo->UndoLastAction();
-						  Refresh( false );
-					  }
-					  break;
+			case 26: // Ctrl Z
+				if( undo->AnythingToUndo() ) {
+					undo->UndoLastAction();
+					Refresh( false );
+				}
+				break;
 
 			case 27:
 					  // Generic break
@@ -2091,7 +2085,8 @@ void ChartCanvas::OnCursorTrackTimerEvent(wxTimerEvent &)
 				double brg;
 				double dist;
 				wxString s;
-				geo::DistanceBearingMercator(cursor_lat, cursor_lon, gLat, gLon, &brg, &dist);
+				const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+				geo::DistanceBearingMercator(cursor_lat, cursor_lon, nav.lat, nav.lon, &brg, &dist);
 				if( g_bShowMag )
 					s.Printf( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
 				else
@@ -2831,15 +2826,15 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 	int drawit = 0;
 	wxPoint lGPSPoint, lShipMidPoint, lPredPoint, lHeadPoint, GPSOffsetPixels(0,0);
 
-	//    Is ship in Vpoint?
-	if( GetVP().GetBBox().PointInBox( gLon, gLat, 0 ) ) drawit++;                             // yep
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
-	//    Calculate ownship Position Predictor
+	// Is ship in Vpoint?
+	if (GetVP().GetBBox().PointInBox(nav.lon, nav.lat, 0))
+		drawit++; // yep
 
+	// Calculate ownship Position Predictor
 	double pred_lat;
 	double pred_lon;
-
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
 	//  COG/SOG may be undefined in NMEA data stream
 	double pCog = nav.cog;
@@ -2849,9 +2844,9 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 	if( wxIsNaN(pSog) )
 		pSog = 0.0;
 
-	geo::ll_gc_ll( gLat, gLon, pCog, pSog * g_ownship_predictor_minutes / 60., &pred_lat, &pred_lon );
+	geo::ll_gc_ll(nav.lat, nav.lon, pCog, pSog * g_ownship_predictor_minutes / 60., &pred_lat, &pred_lon );
 
-	GetCanvasPointPix( gLat, gLon, &lGPSPoint );
+	GetCanvasPointPix(nav.lat, nav.lon, &lGPSPoint);
 	lShipMidPoint = lGPSPoint;
 	GetCanvasPointPix( pred_lat, pred_lon, &lPredPoint );
 
@@ -2879,9 +2874,9 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 	double osd_head_lat, osd_head_lon;
 	wxPoint osd_head_point;
 
-	geo::ll_gc_ll( gLat, gLon, icon_hdt, pSog * 10. / 60., &osd_head_lat, &osd_head_lon );
+	geo::ll_gc_ll(nav.lat, nav.lon, icon_hdt, pSog * 10. / 60., &osd_head_lat, &osd_head_lon);
 
-	GetCanvasPointPix( gLat, gLon, &lShipMidPoint );
+	GetCanvasPointPix(nav.lat, nav.lon, &lShipMidPoint);
 	GetCanvasPointPix( osd_head_lat, osd_head_lon, &osd_head_point );
 
 	double icon_rad = atan2( (double) ( osd_head_point.y - lShipMidPoint.y ),
@@ -2893,9 +2888,9 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 	//    Calculate ownship Heading pointer as a predictor
 	double hdg_pred_lat, hdg_pred_lon;
 
-	geo::ll_gc_ll( gLat, gLon, icon_hdt, pSog * g_ownship_predictor_minutes / 60., &hdg_pred_lat, &hdg_pred_lon );
+	geo::ll_gc_ll(nav.lat, nav.lon, icon_hdt, pSog * g_ownship_predictor_minutes / 60., &hdg_pred_lat, &hdg_pred_lon);
 
-	GetCanvasPointPix( gLat, gLon, &lShipMidPoint );
+	GetCanvasPointPix(nav.lat, nav.lon, &lShipMidPoint);
 	GetCanvasPointPix( hdg_pred_lat, hdg_pred_lon, &lHeadPoint );
 
 	//    Should we draw the Head vector?
@@ -2920,8 +2915,8 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 	// And one more test to catch the case where COG line crosses the screen,
 	// but ownship and pred point are both off
 
-	if( GetVP().GetBBox().LineIntersect( wxPoint2DDouble( gLon, gLat ),
-				wxPoint2DDouble( pred_lon, pred_lat ) ) ) drawit++;
+	if (GetVP().GetBBox().LineIntersect(wxPoint2DDouble(nav.lon, nav.lat), wxPoint2DDouble(pred_lon, pred_lat)))
+		drawit++;
 
 	//    Do the draw if either the ship or prediction is within the current VPoint
 	if( drawit ) {
@@ -2986,10 +2981,10 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 
 				//  Calculate the true ship length in exact pixels
 				double ship_bow_lat, ship_bow_lon;
-				geo::ll_gc_ll( gLat, gLon, icon_hdt, g_n_ownship_length_meters / 1852., &ship_bow_lat, &ship_bow_lon );
+				geo::ll_gc_ll(nav.lat, nav.lon, icon_hdt, g_n_ownship_length_meters / 1852., &ship_bow_lat, &ship_bow_lon );
 				wxPoint lShipBowPoint;
-				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL( ship_bow_lat, ship_bow_lon );
-				wxPoint2DDouble a_point = GetVP().GetDoublePixFromLL( gLat, gLon );
+				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(ship_bow_lat, ship_bow_lon);
+				wxPoint2DDouble a_point = GetVP().GetDoublePixFromLL(nav.lat, nav.lon);
 
 				double shipLength_px = sqrt( pow( (double) ( b_point.m_x - a_point.m_x ), 2 )
 						+ pow( (double) ( b_point.m_y - a_point.m_y ), 2 ) );
@@ -3019,7 +3014,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 
 				double ship_mid_lat, ship_mid_lon, ship_mid_lat1, ship_mid_lon1;
 
-				geo::ll_gc_ll( gLat, gLon, hdt_ant, dy, &ship_mid_lat, &ship_mid_lon );
+				geo::ll_gc_ll(nav.lat, nav.lon, hdt_ant, dy, &ship_mid_lat, &ship_mid_lon);
 				geo::ll_gc_ll( ship_mid_lat, ship_mid_lon, icon_hdt - 90., dx, &ship_mid_lat1, &ship_mid_lon1 );
 
 				GetCanvasPointPix( ship_mid_lat1, ship_mid_lon1, &lShipMidPoint );
@@ -3214,7 +3209,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 
 			double tlat, tlon;
 			wxPoint r;
-			geo::ll_gc_ll( gLat, gLon, 0, factor, &tlat, &tlon );
+			geo::ll_gc_ll(nav.lat, nav.lon, 0, factor, &tlat, &tlon);
 			GetCanvasPointPix( tlat, tlon, &r );
 
 			double lpp = sqrt(
@@ -3869,10 +3864,10 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
 			//  Detect and handle the case where ownship COG is undefined....
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			if (wxIsNaN(nav.cog) || wxIsNaN(nav.sog)) {
-				ocpa_lat = gLat;
-				ocpa_lon = gLon;
+				ocpa_lat = nav.lat;
+				ocpa_lon = nav.lon;
 			} else {
-				geo::ll_gc_ll( gLat, gLon, nav.cog, nav.sog * td->TCPA / 60.0, &ocpa_lat, &ocpa_lon );
+				geo::ll_gc_ll(nav.lat, nav.lon, nav.cog, nav.sog * td->TCPA / 60.0, &ocpa_lat, &ocpa_lon);
 			}
 
 			wxPoint oCPAPoint;
@@ -3910,7 +3905,7 @@ void ChartCanvas::AISDrawTarget( AIS_Target_Data *td, ocpnDC& dc )
 
 			// Draw the intercept line from ownship
 			wxPoint oShipPoint;
-			GetCanvasPointPix ( gLat, gLon, &oShipPoint );
+			GetCanvasPointPix(nav.lat, nav.lon, &oShipPoint);
 			oCPAPoint = oCPAPoint_unclipped;    // recover the unclipped point
 
 			geo::ClipResult ownres = geo::cohen_sutherland_line_clip_i ( &oShipPoint.x, &oShipPoint.y,
@@ -5038,7 +5033,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 			double brg;
 			double dist;
-			geo::DistanceBearingMercator( m_cursor_lat, m_cursor_lon, gLat, gLon, &brg, &dist );
+			geo::DistanceBearingMercator(m_cursor_lat, m_cursor_lon, nav.lat, nav.lon, &brg, &dist);
 			wxString s;
 			if( g_bShowMag )
 				s.Printf( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
@@ -6256,18 +6251,18 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
 			menuWaypoint->Append( ID_WPT_MENU_SENDTOGPS, item );
 
 
-			if( ( m_pFoundRoutePoint == pAnchorWatchPoint1 ) || ( m_pFoundRoutePoint == pAnchorWatchPoint2 ) )
-				menuWaypoint->Append( ID_WP_MENU_CLEAR_ANCHORWATCH, _( "Clear Anchor Watch" ) );
-			else {
-				if( !( m_pFoundRoutePoint->m_bIsInLayer )
-						&& ( ( NULL == pAnchorWatchPoint1 ) || ( NULL == pAnchorWatchPoint2 ) ) ) {
+			if ((m_pFoundRoutePoint == pAnchorWatchPoint1) || (m_pFoundRoutePoint == pAnchorWatchPoint2)) {
+				menuWaypoint->Append( ID_WP_MENU_CLEAR_ANCHORWATCH, _("Clear Anchor Watch"));
+			} else {
+				if (!m_pFoundRoutePoint->m_bIsInLayer && ((NULL == pAnchorWatchPoint1) || (NULL == pAnchorWatchPoint2))) {
+					const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
 					double dist;
 					double brg;
-					geo::DistanceBearingMercator( m_pFoundRoutePoint->m_lat, m_pFoundRoutePoint->m_lon, gLat,
-							gLon, &brg, &dist );
-					if( dist * 1852. <= g_nAWMax )
-						menuWaypoint->Append( ID_WP_MENU_SET_ANCHORWATCH,  _( "Set Anchor Watch" ) );
+					geo::DistanceBearingMercator(m_pFoundRoutePoint->m_lat, m_pFoundRoutePoint->m_lon,
+						nav.lat, nav.lon, &brg, &dist);
+					if (dist * 1852.0 <= g_nAWMax)
+						menuWaypoint->Append(ID_WP_MENU_SET_ANCHORWATCH, _("Set Anchor Watch"));
 				}
 			}
 		}
@@ -6528,7 +6523,8 @@ void ChartCanvas::ShowTrackPropertiesDialog( Route* selected )
 	Refresh( false );
 }
 
-void pupHandler_PasteWaypoint() {
+void pupHandler_PasteWaypoint()
+{
 	Kml* kml = new Kml();
 	::wxBeginBusyCursor();
 
@@ -6569,7 +6565,8 @@ void pupHandler_PasteWaypoint() {
 	::wxEndBusyCursor();
 }
 
-void pupHandler_PasteRoute() {
+void pupHandler_PasteRoute()
+{
 	Kml* kml = new Kml();
 	::wxBeginBusyCursor();
 
@@ -6750,11 +6747,8 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 			vLat = zlat;
 			vLon = zlon;
 			ClearbFollow();
-
 			parent_frame->DoChartUpdate();
-
-			parent_frame->SelectChartFromStack( 0, false, CHART_TYPE_DONTCARE,
-					CHART_FAMILY_RASTER );
+			parent_frame->SelectChartFromStack(0, false, CHART_TYPE_DONTCARE, CHART_FAMILY_RASTER);
 			break;
 
 		case ID_DEF_MENU_SCALE_IN:
@@ -6776,16 +6770,17 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 			break;
 
 		case ID_DEF_MENU_MOVE_BOAT_HERE:
-			gLat = zlat;
-			gLon = zlon;
+			global::OCPN::get().nav().set_latitude(zlat);
+			global::OCPN::get().nav().set_longitude(zlon);
 			break;
 
 		case ID_DEF_MENU_GOTO_HERE: {
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			RoutePoint *pWP_dest = new RoutePoint( zlat, zlon, g_default_wp_icon, wxEmptyString);
 			pSelect->AddSelectableRoutePoint( zlat, zlon, pWP_dest );
 
-			RoutePoint *pWP_src = new RoutePoint( gLat, gLon, g_default_wp_icon, wxEmptyString);
-			pSelect->AddSelectableRoutePoint( gLat, gLon, pWP_src );
+			RoutePoint *pWP_src = new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
+			pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_src);
 
 			Route *temp_route = new Route();
 			pRouteList->push_back(temp_route);
@@ -6793,8 +6788,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 			temp_route->AddPoint( pWP_src );
 			temp_route->AddPoint( pWP_dest );
 
-			pSelect->AddSelectableRouteSegment( gLat, gLon, zlat, zlon, pWP_src, pWP_dest,
-					temp_route );
+			pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, zlat, zlon, pWP_src, pWP_dest, temp_route);
 
 			temp_route->m_RouteNameString = _("Temporary GOTO Route");
 			temp_route->m_RouteStartString = _("Here");
@@ -6803,7 +6797,8 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 
 			temp_route->m_bDeleteOnArrival = true;
 
-			if( g_pRouteMan->GetpActiveRoute() ) g_pRouteMan->DeactivateRoute();
+			if (g_pRouteMan->GetpActiveRoute())
+				g_pRouteMan->DeactivateRoute();
 
 			g_pRouteMan->ActivateRoute( temp_route, pWP_dest );
 			}
@@ -6827,8 +6822,9 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 			break;
 
 		case ID_WP_MENU_GOTO: {
-			RoutePoint *pWP_src = new RoutePoint(gLat, gLon, g_default_wp_icon, wxEmptyString);
-			pSelect->AddSelectableRoutePoint( gLat, gLon, pWP_src );
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			RoutePoint *pWP_src = new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
+			pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_src );
 
 			Route *temp_route = new Route();
 			pRouteList->push_back(temp_route);
@@ -6837,20 +6833,21 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 			temp_route->AddPoint( m_pFoundRoutePoint );
 			m_pFoundRoutePoint->m_bKeepXRoute = true;
 
-			pSelect->AddSelectableRouteSegment( gLat, gLon, m_pFoundRoutePoint->m_lat,
-				m_pFoundRoutePoint->m_lon, pWP_src, m_pFoundRoutePoint, temp_route );
+			pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, m_pFoundRoutePoint->m_lat,
+				m_pFoundRoutePoint->m_lon, pWP_src, m_pFoundRoutePoint, temp_route);
 
 			wxString name = m_pFoundRoutePoint->GetName();
-			if( name.IsEmpty() ) name = _("(Unnamed Waypoint)");
+			if( name.IsEmpty() )
+				name = _("(Unnamed Waypoint)");
 			wxString rteName = _("Go to ");
 			rteName.Append( name );
 			temp_route->m_RouteNameString = rteName;
 			temp_route->m_RouteStartString = _("Here");
-			;
 			temp_route->m_RouteEndString = name;
 			temp_route->m_bDeleteOnArrival = true;
 
-			if( g_pRouteMan->GetpActiveRoute() ) g_pRouteMan->DeactivateRoute();
+			if( g_pRouteMan->GetpActiveRoute() )
+				g_pRouteMan->DeactivateRoute();
 
 			g_pRouteMan->ActivateRoute( temp_route, m_pFoundRoutePoint );
 			}
@@ -7096,7 +7093,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 										g_pRouteMan->DeactivateRoute();
 
 									  RoutePoint *best_point = g_pRouteMan->FindBestActivatePoint(
-											m_pSelectedRoute, gLat, gLon, nav.cog, nav.sog);
+											m_pSelectedRoute, nav.lat, nav.lon, nav.cog, nav.sog);
 
 									  g_pRouteMan->ActivateRoute( m_pSelectedRoute, best_point );
 									  m_pSelectedRoute->m_bRtIsSelected = false;
@@ -8805,9 +8802,10 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
 			}
 
 			BoundingBox test_box = pRouteDraw->RBBox;
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
 			if (b_run)
-				test_box.Expand(gLon, gLat);
+				test_box.Expand(nav.lon, nav.lat);
 
 			if( BltBBox.Intersect( test_box, 0 ) != BoundingBox::_OUT ) // Route is not wholly outside window
 			{
@@ -8819,7 +8817,8 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
 				wxPoint2DDouble xlate( -360., 0. );
 				BoundingBox test_box1 = pRouteDraw->RBBox;
 				test_box1.Translate( xlate );
-				if( b_run ) test_box1.Expand( gLon, gLat );
+				if (b_run)
+					test_box1.Expand(nav.lon, nav.lat);
 
 				if (BltBBox.Intersect(test_box1, 0) != BoundingBox::_OUT) // Route is not wholly outside window
 				{

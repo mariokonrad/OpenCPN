@@ -77,8 +77,6 @@ extern bool     g_bDrawAISSize;
 extern bool     g_bShowAISName;
 extern int      g_Show_Target_Name_Scale;
 extern bool     g_bWplIsAprsPosition;
-extern double gLat;
-extern double gLon;
 extern bool g_bAIS_CPA_Alert;
 extern bool g_bAIS_CPA_Alert_Audio;
 
@@ -87,15 +85,15 @@ BEGIN_EVENT_TABLE(AIS_Decoder, wxEvtHandler)
 	EVT_TIMER(TIMER_AISAUDIO, AIS_Decoder::OnTimerAISAudio)
 END_EVENT_TABLE()
 
-	static int n_msgs;
-	static int n_msg1;
-	static int n_msg5;
-	static int n_msg24;
-	static int n_newname;
-	static bool b_firstrx;
-	static int first_rx_ticks;
-	static int rx_ticks;
-	static double arpa_ref_hdg = NAN;
+static int n_msgs;
+static int n_msg1;
+static int n_msg5;
+static int n_msg24;
+static int n_newname;
+static bool b_firstrx;
+static int first_rx_ticks;
+static int rx_ticks;
+static double arpa_ref_hdg = NAN;
 
 AIS_Decoder::AIS_Decoder( wxFrame *parent )
 {
@@ -900,8 +898,9 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 				pTargetData->Lat = arpa_lat;
 				pTargetData->Lon = arpa_lon;
 			} else if( str.Mid( 3, 3 ).IsSameAs( _T("TTM") ) ) {
+				const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 				if( arpa_dist != 0. ) //Not a new or turned off target
-					geo::ll_gc_ll(gLat, gLon, arpa_brg, arpa_dist, &pTargetData->Lat, &pTargetData->Lon);
+					geo::ll_gc_ll(nav.lat, nav.lon, arpa_brg, arpa_dist, &pTargetData->Lat, &pTargetData->Lon);
 				else
 					arpa_lost = true;
 				pTargetData->COG = arpa_cog;
@@ -1671,36 +1670,36 @@ void AIS_Decoder::UpdateAllAlarms( void )
 	}
 }
 
-void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
+void AIS_Decoder::UpdateOneCPA(AIS_Target_Data * ptarget)
 {
-	ptarget->Range_NM = -1.;            // Defaults
-	ptarget->Brg = -1.;
+	ptarget->Range_NM = -1.0;            // Defaults
+	ptarget->Brg = -1.0;
 
-	if( !ptarget->b_positionOnceValid || !bGPSValid ) {
+	if (!ptarget->b_positionOnceValid || !bGPSValid) {
 		ptarget->bCPA_Valid = false;
 		return;
 	}
 
-	//    Compute the current Range/Brg to the target
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+	// Compute the current Range/Brg to the target
 	double brg, dist;
-	geo::DistanceBearingMercator(ptarget->Lat, ptarget->Lon, gLat, gLon, &brg, &dist);
+	geo::DistanceBearingMercator(ptarget->Lat, ptarget->Lon, nav.lat, nav.lon, &brg, &dist);
 	ptarget->Range_NM = dist;
 	ptarget->Brg = brg;
 
 	if (dist <= 1e-5)
 		ptarget->Brg = -1.0;             // Brg is undefined if Range == 0.
 
-	//    There can be no collision between ownship and itself....
-	//    This can happen if AIVDO messages are received, and there is another source of ownship position, like NMEA GLL
-	//    The two positions are always temporally out of sync, and one will always be exactly in front of the other one.
+	// There can be no collision between ownship and itself....
+	// This can happen if AIVDO messages are received, and there is another source of ownship position, like NMEA GLL
+	// The two positions are always temporally out of sync, and one will always be exactly in front of the other one.
 	if( ptarget->b_OwnShip ) {
 		ptarget->CPA = 100;
 		ptarget->TCPA = -100;
 		ptarget->bCPA_Valid = false;
 		return;
 	}
-
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
 	double cpa_calc_ownship_cog = nav.cog;
 	double cpa_calc_target_cog = ptarget->COG;
@@ -1736,32 +1735,32 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 	}
 
 	//    Express the SOGs as meters per hour
-	double v0 = nav.sog * 1852.;
-	double v1 = ptarget->SOG * 1852.;
+	double v0 = nav.sog * 1852.0;
+	double v1 = ptarget->SOG * 1852.0;
 
-	if( ( v0 < 1e-6 ) && ( v1 < 1e-6 ) ) {
+	if ((v0 < 1e-6) && (v1 < 1e-6)) {
 		ptarget->TCPA = 0.;
 		ptarget->CPA = 0.;
-
 		ptarget->bCPA_Valid = false;
 	} else {
-		//    Calculate the TCPA first
+		// Calculate the TCPA first
 
-		//    Working on a Reduced Lat/Lon orthogonal plotting sheet....
-		//    Get easting/northing to target,  in meters
+		// Working on a Reduced Lat/Lon orthogonal plotting sheet....
+		// Get easting/northing to target,  in meters
 
-		double east1 = ( ptarget->Lon - gLon ) * 60 * 1852;
-		double north1 = ( ptarget->Lat - gLat ) * 60 * 1852;
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
-		double east = east1 * ( cos( gLat * M_PI / 180 ) );
-		;
+		double east1 = ( ptarget->Lon - nav.lon) * 60 * 1852.0;
+		double north1 = ( ptarget->Lat - nav.lat) * 60 * 1852.0;
+
+		double east = east1 * ( cos( nav.lat * M_PI / 180.0 ) );
 		double north = north1;
 
 		//    Convert COGs trigonometry to standard unit circle
-		double cosa = cos( ( 90. - cpa_calc_ownship_cog ) * M_PI / 180. );
-		double sina = sin( ( 90. - cpa_calc_ownship_cog ) * M_PI / 180. );
-		double cosb = cos( ( 90. - cpa_calc_target_cog ) * M_PI / 180. );
-		double sinb = sin( ( 90. - cpa_calc_target_cog ) * M_PI / 180. );
+		double cosa = cos( ( 90.0 - cpa_calc_ownship_cog ) * M_PI / 180.0);
+		double sina = sin( ( 90.0 - cpa_calc_ownship_cog ) * M_PI / 180.0);
+		double cosb = cos( ( 90.0 - cpa_calc_target_cog ) * M_PI / 180.0);
+		double sinb = sin( ( 90.0 - cpa_calc_target_cog ) * M_PI / 180.0);
 
 		//    These will be useful
 		double fc = ( v0 * cosa ) - ( v1 * cosb );
@@ -1771,8 +1770,8 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 		double tcpa;
 
 		// the tracks are almost parallel
-		if ( fabs( d ) < 1e-6 )
-			tcpa = 0.;
+		if (fabs( d ) < 1e-6)
+			tcpa = 0.0;
 		else
 			//    Here is the equation for t, which will be in hours
 			tcpa = ( ( fc * east ) + ( fs * north ) ) / d;
@@ -1785,7 +1784,7 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 
 		double OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA;
 
-		geo::ll_gc_ll(gLat, gLon, cpa_calc_ownship_cog, nav.sog * tcpa, &OwnshipLatCPA, &OwnshipLonCPA);
+		geo::ll_gc_ll(nav.lat, nav.lon, cpa_calc_ownship_cog, nav.sog * tcpa, &OwnshipLatCPA, &OwnshipLonCPA);
 		geo::ll_gc_ll(ptarget->Lat, ptarget->Lon, cpa_calc_target_cog, ptarget->SOG * tcpa, &TargetLatCPA, &TargetLonCPA);
 
 		//   And compute the distance

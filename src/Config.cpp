@@ -50,6 +50,7 @@
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/System.h>
+#include <global/Navigation.h>
 #include <global/WatchDog.h>
 
 #include <wx/window.h>
@@ -67,7 +68,7 @@ extern int              g_restore_dbindex;
 extern RouteList        *pRouteList;
 extern LayerList        *pLayerList;
 extern int              g_LayerIdx;
-extern double           vLat, vLon, gLat, gLon;
+extern double           vLat, vLon;
 extern double           initial_scale_ppm;
 extern ColorScheme      global_color_scheme;
 extern bool             g_bShowMag;
@@ -942,8 +943,11 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	vLat = START_LAT;                   // display viewpoint
 	vLon = START_LON;
 
-	gLat = START_LAT;                   // GPS position, as default
-	gLon = START_LON;
+	global::Navigation & nav = global::OCPN::get().nav();
+
+	// GPS position, as default
+	nav.set_latitude(START_LAT);
+	nav.set_longitude(START_LON);
 
 	initial_scale_ppm = .0003;        // decent initial value
 
@@ -983,20 +987,21 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		sscanf( sll.mb_str( wxConvUTF8 ), "%lf,%lf", &lat, &lon );
 
 		//    Sanity check the lat/lon...both have to be reasonable.
-		if( fabs( lon ) < 360. ) {
-			while( lon < -180. )
-				lon += 360.;
+		if (fabs( lon ) < 360.0) {
+			while (lon < -180.0)
+				lon += 360.0;
 
-			while( lon > 180. )
-				lon -= 360.;
+			while (lon > 180.0)
+				lon -= 360.0;
 
-			gLon = lon;
+			nav.set_longitude(lon);
 		}
 
-		if( fabs( lat ) < 90.0 ) gLat = lat;
+		if (fabs(lat) < 90.0)
+			nav.set_latitude(lat);
 	}
-	s.Printf( _T ( "Setting Ownship Lat/Lon %g, %g" ), gLat, gLon );
-	wxLogMessage( s );
+	s.Printf(_T("Setting Ownship Lat/Lon %g, %g" ), nav.get_data().lat, nav.get_data().lon);
+	wxLogMessage(s);
 
 #ifdef USE_S57
 	//    S57 Object Class Visibility
@@ -1747,7 +1752,8 @@ void Config::UpdateSettings()
 		}
 	}
 
-	st1.Printf( _T ( "%10.4f, %10.4f" ), gLat, gLon );
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	st1.Printf( _T ( "%10.4f, %10.4f" ), nav.lat, nav.lon);
 	Write( _T ( "OwnShipLatLon" ), st1 );
 
 	//    Various Options

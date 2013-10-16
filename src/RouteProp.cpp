@@ -55,8 +55,6 @@
 #include <wx/printdlg.h>
 #include <wx/stattext.h>
 
-extern double gLat;
-extern double gLon;
 extern double g_PlanSpeed;
 extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
@@ -1193,9 +1191,10 @@ bool RouteProp::UpdateProperties()
 		//  Iterate on Route Points
 		wxRoutePointListNode *node = m_pRoute->pRoutePointList->GetFirst();
 
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 		int i = 0;
-		double slat = gLat;
-		double slon = gLon;
+		double slat = nav.lat;
+		double slon = nav.lon;
 		double tdis = 0.;
 		double tsec = 0.;    // total time in seconds
 
@@ -1241,8 +1240,8 @@ bool RouteProp::UpdateProperties()
 			if( starting_point ) {
 				const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
-				slat = gLat;
-				slon = gLon;
+				slat = nav.lat;
+				slon = nav.lon;
 				if (nav.sog > 0.0)
 					leg_speed = nav.sog; // should be VMG
 				else

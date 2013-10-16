@@ -45,6 +45,8 @@ class Navigation
 		};
 
 		virtual const Data & get_data() const = 0;
+		virtual void set_latitude(double) = 0;
+		virtual void set_longitude(double) = 0;
 		virtual void set_magn_var(double) = 0;
 		virtual void set_heading_true(double) = 0;
 		virtual void set_heading_magn(double) = 0;

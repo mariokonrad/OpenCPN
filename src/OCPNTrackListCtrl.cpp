@@ -27,6 +27,9 @@
 #include <PositionParser.h>
 #include <Units.h>
 
+#include <global/OCPN.h>
+#include <global/Navigation.h>
+
 #include <geo/GeoRef.h>
 
 wxRoutePointListNode * g_this_point_node;
@@ -37,9 +40,6 @@ int g_prev_point_index;
 int g_prev_item;
 double gt_brg;
 double gt_leg_dist;
-
-extern double gLat;
-extern double gLon;
 
 #define UTCINPUT         0
 #define LTINPUT          1    // i.e. this PC local time
@@ -76,7 +76,7 @@ static wxString timestamp2s(wxDateTime ts, int tz_selection, long LMT_offset, in
 				s.Append(_T(" LMT"));
 			break;
 	}
-	return(s);
+	return s;
 }
 
 OCPNTrackListCtrl::OCPNTrackListCtrl(
@@ -92,10 +92,9 @@ OCPNTrackListCtrl::OCPNTrackListCtrl(
 }
 
 OCPNTrackListCtrl::~OCPNTrackListCtrl()
-{
-}
+{}
 
-wxString OCPNTrackListCtrl::OnGetItemText( long item, long column ) const
+wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 {
 	wxString ret;
 
@@ -154,8 +153,7 @@ wxString OCPNTrackListCtrl::OnGetItemText( long item, long column ) const
 	if( ! g_this_point )
 		return wxEmptyString;
 
-	switch( column )
-	{
+	switch( column ) {
 		case 0:
 			if( item == 0 )
 				ret = _T("---");
@@ -166,8 +164,9 @@ wxString OCPNTrackListCtrl::OnGetItemText( long item, long column ) const
 		case 1:
 			double slat, slon;
 			if (item == 0) {
-				slat = gLat;
-				slon = gLon;
+				const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+				slat = nav.lat;
+				slon = nav.lon;
 			} else {
 				slat = g_prev_point->m_lat;
 				slon = g_prev_point->m_lon;

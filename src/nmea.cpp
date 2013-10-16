@@ -1027,8 +1027,6 @@ void NMEAHandler::OnSocketEvent(wxSocketEvent& event)
 #endif
 }
 
-extern double gLat, gLon;
-
 void NMEAHandler::OnTimerNMEA(wxTimerEvent& event)
 {
       TimerNMEA.Stop();
@@ -1074,10 +1072,11 @@ void NMEAHandler::OnTimerNMEA(wxTimerEvent& event)
             float kCog = 40.0;  // gCog to simulate, see hotkey arrows
 
             //    Kludge the startup case
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
             if(ThreadPositionData.kLat < 1.0)
-                  ThreadPositionData.kLat = gLat; //START_LAT;
+                  ThreadPositionData.kLat = nav.lat;
             if(fabs(ThreadPositionData.kLon) < 1.0)
-                  ThreadPositionData.kLon = gLon;//START_LON;
+                  ThreadPositionData.kLon = nav.lon;
 
             double pred_lat;
             double pred_lon;

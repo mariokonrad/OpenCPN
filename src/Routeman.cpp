@@ -65,8 +65,6 @@ extern Config * pConfig;
 extern wxRect g_blink_rect;
 extern wxString g_SData_Locn;
 
-extern double gLat;
-extern double gLon;
 extern bool g_bMagneticAPB;
 
 extern Track * g_pActiveTrack;
@@ -250,9 +248,11 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 
 	//  If activating first point in route, create a "virtual" waypoint at present position
 	if (pRP_target == prp_first) {
-		if (pRouteActivatePoint) delete pRouteActivatePoint;
+		if (pRouteActivatePoint)
+			delete pRouteActivatePoint;
 
-		pRouteActivatePoint = new RoutePoint(gLat, gLon, _T(""), _T(""), _T(""), false); // Current location
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		pRouteActivatePoint = new RoutePoint(nav.lat, nav.lon, _T(""), _T(""), _T(""), false); // Current location
 		pRouteActivatePoint->m_bShowName = false;
 
 		pActiveRouteSegmentBeginPoint = pRouteActivatePoint;
@@ -351,17 +351,18 @@ bool Routeman::UpdateProgress()
 		//      Update bearing, range, and crosstrack error
 
 		//  Bearing is calculated as Mercator Sailing, i.e. a  cartographic "bearing"
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 		double north;
 		double east;
-		geo::toSM( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &east, &north );
+		geo::toSM( pActivePoint->m_lat, pActivePoint->m_lon, nav.lat, nav.lon, &east, &north );
 		double a = atan( north / east );
-		if (fabs(pActivePoint->m_lon - gLon) < 180.0) {
-			if (pActivePoint->m_lon > gLon)
+		if (fabs(pActivePoint->m_lon - nav.lon) < 180.0) {
+			if (pActivePoint->m_lon > nav.lon)
 				CurrentBrgToActivePoint = 90.0 - ( a * 180.0 / M_PI );
 			else
 				CurrentBrgToActivePoint = 270.0 - ( a * 180.0 / M_PI );
 		} else {
-			if (pActivePoint->m_lon > gLon)
+			if (pActivePoint->m_lon > nav.lon)
 				CurrentBrgToActivePoint = 270.0 - ( a * 180.0 / M_PI );
 			else
 				CurrentBrgToActivePoint = 90.0 - ( a * 180.0 / M_PI );
@@ -369,7 +370,7 @@ bool Routeman::UpdateProgress()
 
 		//      Calculate range using Great Circle Formula
 
-		double d5 = geo::DistGreatCircle( gLat, gLon, pActivePoint->m_lat, pActivePoint->m_lon );
+		double d5 = geo::DistGreatCircle(nav.lat, nav.lon, pActivePoint->m_lat, pActivePoint->m_lon );
 		CurrentRngToActivePoint = d5;
 
 		//      Get the XTE vector, normal to current segment
@@ -382,7 +383,7 @@ bool Routeman::UpdateProgress()
 		vb.x = dist1 * sin(brg1 * M_PI / 180.0);
 		vb.y = dist1 * cos(brg1 * M_PI / 180.0);
 
-		geo::DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &brg2,
+		geo::DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon, nav.lat, nav.lon, &brg2,
 				&dist2 );
 		va.x = dist2 * sin(brg2 * M_PI / 180.0);
 		va.y = dist2 * cos(brg2 * M_PI / 180.0);
@@ -629,33 +630,35 @@ bool Routeman::DeactivateRoute(bool b_arrival)
 
 bool Routeman::UpdateAutopilot()
 {
+	// FIXME: split up method
+
 	//Send all known Autopilot messages upstream
 
 	//RMB
 	{
-
 		m_NMEA0183.TalkerID = _T("EC");
 
 		SENTENCE snt;
 		m_NMEA0183.Rmb.IsDataValid = NTrue;
 		m_NMEA0183.Rmb.CrossTrackError = CurrentXTEToActivePoint;
 
-		if( XTEDir < 0 ) m_NMEA0183.Rmb.DirectionToSteer = Left;
+		if (XTEDir < 0)
+			m_NMEA0183.Rmb.DirectionToSteer = Left;
 		else
 			m_NMEA0183.Rmb.DirectionToSteer = Right;
 
 		m_NMEA0183.Rmb.To = pActivePoint->GetName().Truncate( 6 );
 		m_NMEA0183.Rmb.From = pActiveRouteSegmentBeginPoint->GetName().Truncate( 6 );
 
-		if( pActivePoint->m_lat < 0. ) m_NMEA0183.Rmb.DestinationPosition.Latitude.Set(
-				-pActivePoint->m_lat, _T("S") );
+		if (pActivePoint->m_lat < 0.0)
+			m_NMEA0183.Rmb.DestinationPosition.Latitude.Set(-pActivePoint->m_lat, _T("S"));
 		else
-			m_NMEA0183.Rmb.DestinationPosition.Latitude.Set( pActivePoint->m_lat, _T("N") );
+			m_NMEA0183.Rmb.DestinationPosition.Latitude.Set(pActivePoint->m_lat, _T("N"));
 
-		if( pActivePoint->m_lon < 0. ) m_NMEA0183.Rmb.DestinationPosition.Longitude.Set(
-				-pActivePoint->m_lon, _T("W") );
+		if (pActivePoint->m_lon < 0.0)
+			m_NMEA0183.Rmb.DestinationPosition.Longitude.Set(-pActivePoint->m_lon, _T("W"));
 		else
-			m_NMEA0183.Rmb.DestinationPosition.Longitude.Set( pActivePoint->m_lon, _T("E") );
+			m_NMEA0183.Rmb.DestinationPosition.Longitude.Set(pActivePoint->m_lon, _T("E"));
 
 		m_NMEA0183.Rmb.RangeToDestinationNauticalMiles = CurrentRngToActivePoint;
 		m_NMEA0183.Rmb.BearingToDestinationDegreesTrue = CurrentBrgToActivePoint;
@@ -673,23 +676,22 @@ bool Routeman::UpdateAutopilot()
 
 	// RMC
 	{
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
 		m_NMEA0183.TalkerID = _T("EC");
 
 		SENTENCE snt;
 		m_NMEA0183.Rmc.IsDataValid = NTrue;
 
-		if (gLat < 0.0)
-			m_NMEA0183.Rmc.Position.Latitude.Set( -gLat, _T("S") );
+		if (nav.lat < 0.0)
+			m_NMEA0183.Rmc.Position.Latitude.Set(-nav.lat, _T("S"));
 		else
-			m_NMEA0183.Rmc.Position.Latitude.Set( gLat, _T("N") );
+			m_NMEA0183.Rmc.Position.Latitude.Set(nav.lat, _T("N"));
 
-		if (gLon < 0.0)
-			m_NMEA0183.Rmc.Position.Longitude.Set( -gLon, _T("W") );
+		if (nav.lon < 0.0)
+			m_NMEA0183.Rmc.Position.Longitude.Set(-nav.lon, _T("W"));
 		else
-			m_NMEA0183.Rmc.Position.Longitude.Set( gLon, _T("E") );
-
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			m_NMEA0183.Rmc.Position.Longitude.Set(nav.lon, _T("E"));
 
 		m_NMEA0183.Rmc.SpeedOverGroundKnots = nav.sog;
 		m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue = nav.cog;

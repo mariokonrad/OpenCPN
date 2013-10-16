@@ -26,13 +26,14 @@
 #include <Track.h>
 #include <MainFrame.h>
 
+#include <global/OCPN.h>
+#include <global/Navigation.h>
+
 #include <wx/file.h>
 #include <wx/datetime.h>
 #include <wx/clipbrd.h>
 
 extern MainFrame * gFrame;
-extern double gLat;
-extern double gLon;
 
 int Kml::seqCounter = 0;
 bool Kml::insertQtVlmExtendedData = false;
@@ -55,10 +56,12 @@ int Kml::ParseCoordinates( TiXmlNode* node, dPointList& points )
 	std::string txtCoord;
 
 	while(1) {
-		if( ! std::getline( ss, txtCoord, ',' ) ) break;;
-		if( txtCoord.length() == 0 ) break;
+		if (! std::getline(ss, txtCoord, ','))
+			break;
+		if (txtCoord.length() == 0)
+			break;
 
-		point.x = atof( txtCoord.c_str() );
+		point.x = atof( txtCoord.c_str() ); // FIXME: already using the standard! use istringstream not atof
 		std::getline( ss, txtCoord, ',' );
 		point.y = atof( txtCoord.c_str() );
 		std::getline( ss, txtCoord, ' ' );
@@ -77,15 +80,14 @@ KmlPastebufferType Kml::ParseTrack( TiXmlNode* node, wxString& name )
 	if( 0 == strncmp( node->ToElement()->Value(), "LineString", 10 ) ) {
 		dPointList coordinates;
 		if( ParseCoordinates( node, coordinates ) > 2 ) {
-			RoutePoint* routepoint = NULL;
-			RoutePoint* prevPoint = NULL;
+			RoutePoint * routepoint = NULL;
 
 			for( unsigned int i=0; i<coordinates.size(); i++ ) {
 				routepoint = new RoutePoint();
 				routepoint->m_lat = coordinates[i].y;
 				routepoint->m_lon = coordinates[i].x;
 				routepoint->m_bIsInTrack = true;
-				parsedTrack->AddPoint( routepoint );
+				parsedTrack->AddPoint(routepoint);
 			}
 		}
 		return KML_PASTE_TRACK;
@@ -258,7 +260,6 @@ KmlPastebufferType Kml::ParsePasteBuffer()
 	if( element )
 		parsedRoute->m_RouteNameString = wxString( element->GetText(), wxConvUTF8 );
 
-	RoutePoint* rp = NULL;
 	placemark = docHandle.FirstChild( "Document" ).FirstChild( "Placemark" ).ToElement();
 	for( ; placemark; placemark=placemark->NextSiblingElement() ) {
 
@@ -377,7 +378,8 @@ std::string Kml::PointPlacemark(  TiXmlElement* document, const RoutePoint * rou
 			}
 		}
 		if( extendedData && seqCounter == 0 ) {
-			const wxCharBuffer ownshipPos = wxString::Format( _T("%f %f"), gLon, gLat ).mb_str( wxConvUTF8 );
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			const wxCharBuffer ownshipPos = wxString::Format( _T("%f %f"), nav.lon, nav.lat).mb_str(wxConvUTF8);
 			TiXmlHandle h( extendedData );
 			TiXmlElement* route = h.FirstChild( "vlm:route" ).ToElement();
 			TiXmlElement* ownship = h.FirstChild( "vlm:route" ).FirstChild( "ownship" ).ToElement();
@@ -571,12 +573,12 @@ void Kml::CopyTrackToClipboard( Track* track )
 	::wxEndBusyCursor();
 }
 
-void Kml::CopyWaypointToClipboard( RoutePoint* rp )
+void Kml::CopyWaypointToClipboard(RoutePoint * rp)
 {
-	if( wxTheClipboard->Open() ) {
-		wxTextDataObject* data = new wxTextDataObject;
-		data->SetText( MakeKmlFromWaypoint( rp ) );
-		wxTheClipboard->SetData( data );
+	if (wxTheClipboard->Open()) {
+		wxTextDataObject * data = new wxTextDataObject;
+		data->SetText(MakeKmlFromWaypoint(rp));
+		wxTheClipboard->SetData(data);
 	}
 }
 

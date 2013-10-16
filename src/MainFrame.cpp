@@ -193,8 +193,6 @@ RouteProp *pRoutePropDialog;
 TrackPropDlg *pTrackPropDialog;
 MarkInfoImpl *pMarkInfoDialog;
 RouteManagerDialog *pRouteManagerDialog;
-double gLat;
-double gLon;
 double vLat;
 double vLon;
 double initial_scale_ppm;
@@ -1289,8 +1287,8 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 			for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin(); i != pWayPointMan->m_pWayPointList->end(); ++i) {
 				RoutePoint * pr = *i;
 				if (pr->GetName().StartsWith(_T("Anchorage"))) {
-					double a = gLat - pr->m_lat;
-					double b = gLon - pr->m_lon;
+					double a = nav.lat - pr->m_lat;
+					double b = nav.lon - pr->m_lon;
 					double l = sqrt((a * a) + (b * b));
 
 					// caveat: this is accurate only on the Equator
@@ -1305,7 +1303,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 
 			wxString name = now.Format();
 			name.Prepend( _("Anchorage created ") );
-			RoutePoint *pWP = new RoutePoint( gLat, gLon, _T("anchorage"), name);
+			RoutePoint *pWP = new RoutePoint(nav.lat, nav.lon, _T("anchorage"), name);
 			pWP->m_bShowName = false;
 			pWP->m_bIsolatedMark = true;
 
@@ -1870,18 +1868,18 @@ void MainFrame::ActivateMOB( void )
 	mob_label += _T(" at ");
 	mob_label += mob_time.FormatTime();
 
-	RoutePoint *pWP_MOB = new RoutePoint( gLat, gLon, _T ( "mob" ), mob_label);
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+	RoutePoint *pWP_MOB = new RoutePoint(nav.lat, nav.lon, _T ( "mob" ), mob_label);
 	pWP_MOB->m_bKeepXRoute = true;
 	pWP_MOB->m_bIsolatedMark = true;
-	pSelect->AddSelectableRoutePoint( gLat, gLon, pWP_MOB );
+	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_MOB );
 	pConfig->AddNewWayPoint( pWP_MOB, -1 );       // use auto next num
 
-
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-	if( bGPSValid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog) ) {
+	if (bGPSValid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
 		//    Create a point that is one mile along the present course
 		double zlat, zlon;
-		geo::ll_gc_ll( gLat, gLon, nav.cog, 1.0, &zlat, &zlon );
+		geo::ll_gc_ll(nav.lat, nav.lon, nav.cog, 1.0, &zlat, &zlon );
 
 		RoutePoint *pWP_src = new RoutePoint( zlat, zlon, g_default_wp_icon, wxString( _( "1.0 NM along COG" )));
 		pSelect->AddSelectableRoutePoint( zlat, zlon, pWP_src );
@@ -1892,7 +1890,7 @@ void MainFrame::ActivateMOB( void )
 		temp_route->AddPoint( pWP_src );
 		temp_route->AddPoint( pWP_MOB );
 
-		pSelect->AddSelectableRouteSegment( gLat, gLon, zlat, zlon, pWP_src, pWP_MOB, temp_route );
+		pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, zlat, zlon, pWP_src, pWP_MOB, temp_route);
 
 		temp_route->m_RouteNameString = _("Temporary MOB Route");
 		temp_route->m_RouteStartString = _("Assumed 1 Mile Point");
@@ -1925,9 +1923,9 @@ void MainFrame::ActivateMOB( void )
 	mob_message += _T(" Time: ");
 	mob_message += mob_time.Format();
 	mob_message += _T("  Position: ");
-	mob_message += toSDMM( 1, gLat );
+	mob_message += toSDMM(1, nav.lat);
 	mob_message += _T("   ");
-	mob_message += toSDMM( 2, gLon );
+	mob_message += toSDMM(2, nav.lon);
 	wxLogMessage( mob_message );
 
 }
@@ -2181,9 +2179,11 @@ void MainFrame::SetbFollow(void)
 
 void MainFrame::ClearbFollow(void)
 {
-	//    Center the screen on the GPS position, for lack of a better place
-	vLat = gLat;
-	vLon = gLon;
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+
+	// Center the screen on the GPS position, for lack of a better place
+	vLat = nav.lat;
+	vLon = nav.lon;
 	cc1->m_bFollow = false;
 	SetToolbarItemState(ID_FOLLOW, cc1->m_bFollow);
 	DoChartUpdate();
@@ -2803,10 +2803,11 @@ void MainFrame::SetupQuiltMode( void )
 		if( ChartData && ChartData->IsValid() ) {
 			ChartData->UnLockCache();
 
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			double tLat, tLon;
 			if( cc1->m_bFollow == true ) {
-				tLat = gLat;
-				tLon = gLon;
+				tLat = nav.lat;
+				tLon = nav.lon;
 			} else {
 				tLat = vLat;
 				tLon = vLon;
@@ -2861,7 +2862,8 @@ void MainFrame::SetupQuiltMode( void )
 
 		}
 		//    Invalidate the current stack so that it will be rebuilt on next tick
-		if( pCurrentStack ) pCurrentStack->b_valid = false;
+		if( pCurrentStack )
+			pCurrentStack->b_valid = false;
 	}
 
 }
@@ -3001,12 +3003,13 @@ wxString MainFrame::prepare_logbook_message(const wxDateTime & lognow)
 	navmsg += lognow.FormatISOTime();
 	navmsg += _T(" UTC ");
 
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 	if( bGPSValid ) {
-		navmsg += wxString::Format( _T(" GPS Lat %10.5f Lon %10.5f "), gLat, gLon);
+		navmsg += wxString::Format(_T(" GPS Lat %10.5f Lon %10.5f "), nav.lat, nav.lon);
 		navmsg += get_cog();
 		navmsg += get_sog();
 	} else {
-		navmsg += wxString::Format( _T(" DR Lat %10.5f Lon %10.5f"), gLat, gLon );
+		navmsg += wxString::Format(_T(" DR Lat %10.5f Lon %10.5f"), nav.lat, nav.lon);
 	}
 	return navmsg;
 }
@@ -3091,7 +3094,8 @@ void MainFrame::check_anchorwatch_1()
 	if (pAnchorWatchPoint1) {
 		double dist;
 		double brg;
-		geo::DistanceBearingMercator(pAnchorWatchPoint1->m_lat, pAnchorWatchPoint1->m_lon, gLat, gLon, &brg, &dist);
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		geo::DistanceBearingMercator(pAnchorWatchPoint1->m_lat, pAnchorWatchPoint1->m_lon, nav.lat, nav.lon, &brg, &dist);
 		double d = g_nAWMax;
 		( pAnchorWatchPoint1->GetName() ).ToDouble( &d );
 		d = AnchorDistFix( d, AnchorPointMinDist, g_nAWMax );
@@ -3115,7 +3119,8 @@ void MainFrame::check_anchorwatch_2()
 	if (pAnchorWatchPoint2) {
 		double dist;
 		double brg;
-		geo::DistanceBearingMercator(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, gLat, gLon, &brg, &dist);
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		geo::DistanceBearingMercator(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, nav.lat, nav.lon, &brg, &dist);
 
 		double d = g_nAWMax;
 		pAnchorWatchPoint2->GetName().ToDouble(&d);
@@ -3141,16 +3146,16 @@ void MainFrame::send_gps_to_plugins() const
 	if (!g_pi_manager)
 		return;
 
-	const global::Navigation::Data & nav_data = global::OCPN::get().nav().get_data();
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
 	GenericPosDatEx GPSData;
-	GPSData.kLat = gLat;
-	GPSData.kLon = gLon;
-	GPSData.kCog = nav_data.cog;
-	GPSData.kSog = nav_data.sog;
-	GPSData.kVar = nav_data.var;
-	GPSData.kHdm = nav_data.hdm;
-	GPSData.kHdt = nav_data.hdt;
+	GPSData.kLat = nav.lat;
+	GPSData.kLon = nav.lon;
+	GPSData.kCog = nav.cog;
+	GPSData.kSog = nav.sog;
+	GPSData.kVar = nav.var;
+	GPSData.kHdm = nav.hdm;
+	GPSData.kHdt = nav.hdt;
 	GPSData.nSats = g_SatsInView;
 
 	GPSData.FixTime = m_fixtime;
@@ -3316,7 +3321,8 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 
 		double brg;
 		double dist;
-		geo::DistanceBearingMercator(cursor_lat, cursor_lon, gLat, gLon, &brg, &dist);
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		geo::DistanceBearingMercator(cursor_lat, cursor_lon, nav.lat, nav.lon, &brg, &dist);
 		wxString s;
 		if (g_bShowMag)
 			s.Printf( wxString("%03d°(M)  ", wxConvUTF8), (int)GetTrueOrMag(brg));
@@ -3882,8 +3888,9 @@ void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Ty
 		//      Setup the view
 		double zLat, zLon;
 		if( cc1->m_bFollow ) {
-			zLat = gLat;
-			zLon = gLon;
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			zLat = nav.lat;
+			zLon = nav.lon;
 		} else {
 			zLat = vLat;
 			zLon = vLon;
@@ -3891,13 +3898,9 @@ void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Ty
 
 		double best_scale = GetBestVPScale( Current_Ch );
 
-		cc1->SetViewPoint( zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.,
-				cc1->GetVPRotation() );
-
+		cc1->SetViewPoint(zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0, cc1->GetVPRotation());
 		SetChartUpdatePeriod( cc1->GetVP() );
-
 		UpdateGPSCompassStatusBox();           // Pick up the rotation
-
 	}
 
 	//          Refresh the Piano Bar
@@ -3934,8 +3937,9 @@ void MainFrame::SelectdbChart( int dbindex )
 		//      Setup the view
 		double zLat, zLon;
 		if( cc1->m_bFollow ) {
-			zLat = gLat;
-			zLon = gLon;
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			zLat = nav.lat;
+			zLon = nav.lon;
 		} else {
 			zLat = vLat;
 			zLon = vLon;
@@ -3943,13 +3947,9 @@ void MainFrame::SelectdbChart( int dbindex )
 
 		double best_scale = GetBestVPScale( Current_Ch );
 
-		cc1->SetViewPoint( zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.,
-				cc1->GetVPRotation() );
-
+		cc1->SetViewPoint( zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0, cc1->GetVPRotation() );
 		SetChartUpdatePeriod( cc1->GetVP() );
-
 		UpdateGPSCompassStatusBox();           // Pick up the rotation
-
 	}
 
 	//          Refresh the Piano Bar
@@ -4003,7 +4003,8 @@ void MainFrame::SetChartThumbnail(int index)
 			|| (ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_PLUGIN)) {
 		ChartBase *new_pThumbChart = ChartData->OpenChartFromStack( pCurrentStack, index );
 		if (new_pThumbChart) { // chart opened ok
-			ThumbData *pTD = new_pThumbChart->GetThumbData( 150, 150, gLat, gLon );
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			ThumbData *pTD = new_pThumbChart->GetThumbData(150, 150, nav.lat, nav.lon);
 			if (pTD) {
 				pthumbwin->pThumbChart = new_pThumbChart;
 
@@ -4036,7 +4037,8 @@ void MainFrame::SetChartThumbnail(int index)
 		ChartBase * new_pThumbChart = ChartData->OpenChartFromStack(pCurrentStack, index, THUMB_ONLY);
 		pthumbwin->pThumbChart = new_pThumbChart;
 		if (new_pThumbChart) {
-			ThumbData * pTD = new_pThumbChart->GetThumbData(200, 200, gLat, gLon);
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			ThumbData * pTD = new_pThumbChart->GetThumbData(200, 200, nav.lat, nav.lon);
 			if (pTD) {
 				pthumbwin->Resize();
 				pthumbwin->Show(true);
@@ -4125,7 +4127,6 @@ void MainFrame::UpdateControlBar( void )
 //----------------------------------------------------------------------------------
 bool MainFrame::DoChartUpdate( void )
 {
-
 	double tLat, tLon;           // Chart Stack location
 	double vpLat, vpLon;         // ViewPort location
 
@@ -4139,9 +4140,12 @@ bool MainFrame::DoChartUpdate( void )
 
 	ChartStack WorkStack;
 
-	if( !cc1 ) return false;
-	if( bDBUpdateInProgress ) return false;
-	if( !ChartData ) return false;
+	if (!cc1)
+		return false;
+	if (bDBUpdateInProgress)
+		return false;
+	if (!ChartData)
+		return false;
 
 	//    Startup case:
 	//    Quilting is enabled, but the last chart seen was not quiltable
@@ -4157,14 +4161,15 @@ bool MainFrame::DoChartUpdate( void )
 		}
 	}
 
-	//      If in auto-follow mode, use the current glat,glon to build chart stack.
-	//      Otherwise, use vLat, vLon gotten from click on chart canvas, or other means
+	// If in auto-follow mode, use the current glat,glon to build chart stack.
+	// Otherwise, use vLat, vLon gotten from click on chart canvas, or other means
+	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
 	if( cc1->m_bFollow == true ) {
-		tLat = gLat;
-		tLon = gLon;
-		vpLat = gLat;
-		vpLon = gLon;
+		tLat = nav.lat;
+		tLon = nav.lon;
+		vpLat = nav.lat;
+		vpLon = nav.lon;
 
 		// on lookahead mode, adjust the vp center point
 		if (cc1 && global::OCPN::get().gui().view().lookahead_mode) {
@@ -4187,9 +4192,9 @@ bool MainFrame::DoChartUpdate( void )
 						pixel_delta = pixel_delta_tent * (nav.sog - 1.0) / 2.0;
 			}
 
-			double meters_to_shift = cos(gLat * M_PI / 180.0) * pixel_delta / cc1->GetVPScale();
+			double meters_to_shift = cos(nav.lat * M_PI / 180.0) * pixel_delta / cc1->GetVPScale();
 			double dir_to_shift = g_COGAvg;
-			geo::ll_gc_ll( gLat, gLon, dir_to_shift, meters_to_shift / 1852.0, &vpLat, &vpLon );
+			geo::ll_gc_ll(nav.lat, nav.lon, dir_to_shift, meters_to_shift / 1852.0, &vpLat, &vpLon );
 		}
 	} else {
 		tLat = vLat;
@@ -4469,14 +4474,16 @@ update_finish:
 	//    Ask for a new tool bar if the stack is going to or coming from only one entry.
 	if( pCurrentStack
 			&& ( ( ( pCurrentStack->nEntry <= 1 ) && m_toolbar_scale_tools_shown )
-				|| ( ( pCurrentStack->nEntry > 1 ) && !m_toolbar_scale_tools_shown ) ) ) if( !bFirstAuto ) RequestNewToolbar();
+				|| ( ( pCurrentStack->nEntry > 1 ) && !m_toolbar_scale_tools_shown ) ) )
+		if( !bFirstAuto )
+			RequestNewToolbar();
 
 	if( bNewPiano ) UpdateControlBar();
 
 	//  Update the ownship position on thumbnail chart, if shown
-	if( pthumbwin && pthumbwin->IsShown() ) {
-		if( pthumbwin->pThumbChart ){
-			if( pthumbwin->pThumbChart->UpdateThumbData( gLat, gLon ) )
+	if (pthumbwin && pthumbwin->IsShown()) {
+		if (pthumbwin->pThumbChart) {
+			if (pthumbwin->pThumbChart->UpdateThumbData(nav.lat, nav.lon))
 				pthumbwin->Refresh( TRUE );
 		}
 	}
@@ -4485,7 +4492,8 @@ update_finish:
 
 	//  If we need a Refresh(), do it here...
 	//  But don't duplicate a Refresh() done by SetViewPoint()
-	if( bNewChart && !bNewView ) cc1->Refresh( false );
+	if (bNewChart && !bNewView)
+		cc1->Refresh(false);
 
 	return bNewChart | bNewView;
 }
@@ -4988,8 +4996,11 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 						int lat_deg_int = (int) ( llt / 100 );
 						double lat_deg = lat_deg_int;
 						double lat_min = llt - ( lat_deg * 100 );
-						gLat = lat_deg + ( lat_min / 60. );
-						if( m_NMEA0183.Rmc.Position.Latitude.Northing == South ) gLat = -gLat;
+
+						double lat = lat_deg + (lat_min / 60.0);
+						if (m_NMEA0183.Rmc.Position.Latitude.Northing == South)
+							lat = -lat;
+						global::OCPN::get().nav().set_latitude(lat);
 					} else
 						ll_valid = false;
 
@@ -4998,9 +5009,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 						int lon_deg_int = (int) ( lln / 100 );
 						double lon_deg = lon_deg_int;
 						double lon_min = lln - ( lon_deg * 100 );
-						gLon = lon_deg + ( lon_min / 60. );
+						double lon = lon_deg + ( lon_min / 60. );
 						if (m_NMEA0183.Rmc.Position.Longitude.Easting == West)
-							gLon = -gLon;
+							lon = -lon;
+						global::OCPN::get().nav().set_longitude(lon);
 					} else
 						ll_valid = false;
 
@@ -5093,9 +5105,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 						int lat_deg_int = (int) ( llt / 100 );
 						double lat_deg = lat_deg_int;
 						double lat_min = llt - ( lat_deg * 100 );
-						gLat = lat_deg + ( lat_min / 60. );
+						double lat = lat_deg + ( lat_min / 60. );
 						if (m_NMEA0183.Gll.Position.Latitude.Northing == South)
-							gLat = -gLat;
+							lat = -lat;
+						global::OCPN::get().nav().set_latitude(lat);
 					} else
 						ll_valid = false;
 
@@ -5104,9 +5117,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 						int lon_deg_int = (int) ( lln / 100 );
 						double lon_deg = lon_deg_int;
 						double lon_min = lln - ( lon_deg * 100 );
-						gLon = lon_deg + ( lon_min / 60. );
+						double lon = lon_deg + ( lon_min / 60. );
 						if (m_NMEA0183.Gll.Position.Longitude.Easting == West)
-							gLon = -gLon;
+							lon = -lon;
+						global::OCPN::get().nav().set_longitude(lon);
 					} else
 						ll_valid = false;
 
@@ -5129,9 +5143,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 						int lat_deg_int = (int) ( llt / 100 );
 						double lat_deg = lat_deg_int;
 						double lat_min = llt - ( lat_deg * 100 );
-						gLat = lat_deg + ( lat_min / 60. );
+						double lat = lat_deg + ( lat_min / 60. );
 						if (m_NMEA0183.Gga.Position.Latitude.Northing == South)
-							gLat = -gLat;
+							lat = -lat;
+						global::OCPN::get().nav().set_latitude(lat);
 					} else
 						ll_valid = false;
 
@@ -5140,9 +5155,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 						int lon_deg_int = (int) ( lln / 100 );
 						double lon_deg = lon_deg_int;
 						double lon_min = lln - ( lon_deg * 100 );
-						gLon = lon_deg + ( lon_min / 60. );
+						double lon = lon_deg + ( lon_min / 60. );
 						if (m_NMEA0183.Gga.Position.Longitude.Easting == West)
-							gLon = -gLon;
+							lon = -lon;
+						global::OCPN::get().nav().set_longitude(lon);
 					} else
 						ll_valid = false;
 
@@ -5173,9 +5189,9 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 
 		if (nerr == AIS_NoError) {
 			if (!wxIsNaN(gpd.kLat))
-				gLat = gpd.kLat;
+				global::OCPN::get().nav().set_latitude(gpd.kLat);
 			if (!wxIsNaN(gpd.kLon))
-				gLon = gpd.kLon;
+				global::OCPN::get().nav().set_longitude(gpd.kLon);
 
 			global::Navigation & nav = global::OCPN::get().nav();
 			nav.set_speed_over_ground(gpd.kSog);
@@ -5237,8 +5253,7 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 
 	if( pos_valid ) {
 		if( g_nNMEADebug ) {
-			wxString msg( _T("PostProcess NMEA with valid position") );
-			wxLogMessage( msg );
+			wxLogMessage(_T("PostProcess NMEA with valid position"));
 		}
 
 		//      Maintain the validity flags
@@ -5259,18 +5274,19 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 		}
 	}
 
-	// Show gLat/gLon in StatusWindow0
+	// Show latitude / longitude in StatusWindow0
 
 	if (NULL != GetStatusBar()) {
+		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 		char tick_buf[2];
 		tick_buf[0] = nmea_tick_chars[tick_idx];
 		tick_buf[1] = 0;
 
 		wxString s1( tick_buf, wxConvUTF8 );
 		s1 += _(" Ship ");
-		s1 += toSDMM( 1, gLat );
+		s1 += toSDMM(1, nav.lat);
 		s1 += _T("   ");
-		s1 += toSDMM( 2, gLon );
+		s1 += toSDMM(2, nav.lon);
 		SetStatusText( s1, STAT_FIELD_TICK );
 
 		wxString over_ground;

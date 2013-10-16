@@ -351,8 +351,6 @@ extern wxPlatformInfo * g_pPlatform;
 extern wxDateTime g_loglast_time;
 extern wxString g_SData_Locn;
 extern bool bGPSValid;
-extern double gLat;
-extern double gLon;
 extern wxString glog_file;
 extern int g_GroupIndex;
 extern ocpnStyle::StyleManager * g_StyleManager;
@@ -1736,16 +1734,17 @@ bool App::OnInit()
 		//    move the initial viewport so that a chart will come up.
 
 		if( b_SetInitialPoint ) {
-			double clat, clon;
-			if( ChartData->GetCentroidOfLargestScaleChart( &clat, &clon, CHART_FAMILY_RASTER ) ) {
-				gLat = clat;
-				gLon = clon;
+			global::Navigation & nav = global::OCPN::get().nav();
+			double clat;
+			double clon;
+			if (ChartData->GetCentroidOfLargestScaleChart(&clat, &clon, CHART_FAMILY_RASTER)) {
+				nav.set_latitude(clat);
+				nav.set_longitude(clon);
 				gFrame->ClearbFollow();
 			} else {
-				if( ChartData->GetCentroidOfLargestScaleChart( &clat, &clon,
-							CHART_FAMILY_VECTOR ) ) {
-					gLat = clat;
-					gLon = clon;
+				if (ChartData->GetCentroidOfLargestScaleChart(&clat, &clon, CHART_FAMILY_VECTOR)) {
+					nav.set_latitude(clat);
+					nav.set_longitude(clon);
 					gFrame->ClearbFollow();
 				}
 			}

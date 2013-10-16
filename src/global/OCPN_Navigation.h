@@ -35,6 +35,8 @@ class OCPN_Navigation : public Navigation
 
 	public: // data
 		virtual const Data & get_data() const;
+		virtual void set_latitude(double);
+		virtual void set_longitude(double);
 		virtual void set_magn_var(double);
 		virtual void set_heading_true(double);
 		virtual void set_heading_magn(double);

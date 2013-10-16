@@ -71,19 +71,19 @@ wxString OCPNOffsetListCtrl::OnGetItemText ( long item, long column ) const
 			break;
 
 		case tlXOFF:
-			ret.Printf ( _T ( "%g" ), pmcd->transform_WGS84_offset_x );
+			ret.Printf(_T("%g"), pmcd->transform_WGS84_offset_x);
 			break;
 
 		case tlYOFF:
-			ret.Printf ( _T ( "%g" ), pmcd->transform_WGS84_offset_y );
+			ret.Printf(_T("%g"), pmcd->transform_WGS84_offset_y);
 			break;
 
 		case tlUXOFF:
-			ret.Printf ( _T ( "%g" ), pmcd->user_xoff );
+			ret.Printf(_T("%6.0f"), pmcd->user_xoff * pmcd->m_centerlat_cos);
 			break;
 
 		case tlUYOFF:
-			ret.Printf ( _T ( "%g" ), pmcd->user_yoff );
+			ret.Printf(_T("%6.0f"), pmcd->user_yoff * pmcd->m_centerlat_cos);
 			break;
 
 		default:

@@ -75,6 +75,7 @@ class CM93OffsetDialog : public wxDialog
 		int m_selected_object_id;
 		int m_selected_subcell;
 		int m_selected_list_index;
+		double m_centerlat_cos;
 };
 
 #endif

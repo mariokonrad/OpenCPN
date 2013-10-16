@@ -156,11 +156,9 @@ void CM93OffsetDialog::OnOK(wxCommandEvent &)
 
 void CM93OffsetDialog::OnOffSetSet(wxCommandEvent &)
 {
-	m_xoff = m_pSpinCtrlXoff->GetValue();
-	m_yoff = m_pSpinCtrlYoff->GetValue();
-
+	m_xoff = m_pSpinCtrlXoff->GetValue() / m_centerlat_cos;
+	m_yoff = m_pSpinCtrlYoff->GetValue() / m_centerlat_cos;
 	UpdateOffsets();
-
 }
 
 void CM93OffsetDialog::UpdateOffsets ( void )
@@ -186,36 +184,35 @@ void CM93OffsetDialog::SetColorScheme()
 	DimeControl(this);
 }
 
-void CM93OffsetDialog::OnCellSelected ( wxListEvent &event )
+void CM93OffsetDialog::OnCellSelected(wxListEvent & event)
 {
 	m_selected_list_index = event.GetIndex();
 
-	M_COVR_Desc *mcd =  m_pcovr_array.Item ( event.GetIndex() );
+	M_COVR_Desc *mcd = m_pcovr_array.Item(event.GetIndex());
 
-	if ( m_selected_list_index > m_pListCtrlMCOVRs->GetItemCount() )
-		return;            // error
+	if (m_selected_list_index > m_pListCtrlMCOVRs->GetItemCount())
+		return; // error
 
 	cm93chart *pchart = m_pcompchart->GetCurrentSingleScaleChart();
-	if ( pchart )
-	{
+	if (pchart) {
 		M_COVR_Desc * cached_mcd = pchart->GetCoverSet()->Find_MCD(mcd->m_cell_index, mcd->m_object_id, mcd->m_subcell);
-		if ( cached_mcd )
-		{
-			m_pSpinCtrlXoff->SetValue ( wxRound ( cached_mcd->user_xoff ) );
-			m_pSpinCtrlYoff->SetValue ( wxRound ( cached_mcd->user_yoff ) );
+		if (cached_mcd) {
+			m_pSpinCtrlXoff->SetValue(wxRound(cached_mcd->user_xoff * cached_mcd->m_centerlat_cos));
+			m_pSpinCtrlYoff->SetValue(wxRound(cached_mcd->user_yoff * cached_mcd->m_centerlat_cos));
 		}
 	}
 
-	m_pcompchart->SetSpecialOutlineCellIndex ( mcd->m_cell_index, mcd->m_object_id, mcd->m_subcell );
+	m_pcompchart->SetSpecialOutlineCellIndex(mcd->m_cell_index, mcd->m_object_id, mcd->m_subcell);
 
 	m_selected_cell_index = mcd->m_cell_index;
 	m_selected_object_id  = mcd->m_object_id;
 	m_selected_subcell = mcd->m_subcell;
+	m_centerlat_cos = mcd->m_centerlat_cos;
 
 	m_pcompchart->InvalidateCache();
 
-	if ( m_pparent )
-		m_pparent->Refresh ( true );
+	if (m_pparent)
+		m_pparent->Refresh(true);
 }
 
 void CM93OffsetDialog::UpdateMCOVRList ( const ViewPort &vpt )

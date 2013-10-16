@@ -46,6 +46,7 @@ M_COVR_Desc::M_COVR_Desc()
 
 	user_xoff = 0.;
 	user_yoff = 0.;
+	m_centerlat_cos = 1.0;
 	m_buser_offsets = false;
 }
 
@@ -101,8 +102,10 @@ bool M_COVR_Desc:: WriteWKB ( void *p )
 		*pd++ = m_covr_lon_min;
 		*pd++ = m_covr_lon_max;
 
-		*pd++ = user_xoff;
-		*pd++ = user_yoff;
+		double centerlat_cos = cos(((m_covr_lat_min + m_covr_lat_max)/2.0) * M_PI/180.0);
+
+		*pd++ = user_xoff * centerlat_cos;
+		*pd++ = user_yoff * centerlat_cos;
 	}
 
 	return true;
@@ -133,8 +136,13 @@ int M_COVR_Desc:: ReadWKB ( wxFFileInputStream &ifs )
 		ifs.Read ( &m_covr_lon_min, sizeof ( double ) );
 		ifs.Read ( &m_covr_lon_max, sizeof ( double ) );
 
+		m_centerlat_cos = cos(((m_covr_lat_min + m_covr_lat_max)/2.0) * M_PI/180.0);
+
 		ifs.Read ( &user_xoff, sizeof ( double ) );
 		ifs.Read ( &user_yoff, sizeof ( double ) );
+
+		user_xoff /= m_centerlat_cos;
+		user_yoff /= m_centerlat_cos;
 
 		if ((fabs(user_xoff) > 1.0) || (fabs(user_yoff) > 1.0))
 			m_buser_offsets = true;

@@ -1947,10 +1947,7 @@ S57Obj * cm93chart::CreateS57Obj(
 
 #define MAX_HDR_LINE    4000
 
-	// printf("%d\n", iobject);
-
-
-	int npub_year = 1993;                     // silly default
+	int npub_year = 1993; // silly default
 
 	int iclass = pobject->otype;
 	int geomtype = pobject->geotype & 0x0f;
@@ -2326,12 +2323,11 @@ S57Obj * cm93chart::CreateS57Obj(
 						pmcd->transform_WGS84_offset_x = tmp_transform_x;
 						pmcd->transform_WGS84_offset_y = tmp_transform_y;
 
-						//    Add this MCD to the persistent class covr_set
-						GetCoverSet()->Add_Update_MCD ( pmcd );
+						pmcd->m_centerlat_cos = cos(((pmcd->m_covr_lat_min + pmcd->m_covr_lat_max)/2.0) * M_PI/180.0);
 
-					}
-					else
-					{
+						// Add this MCD to the persistent class covr_set
+						GetCoverSet()->Add_Update_MCD ( pmcd );
+					} else {
 						// If already in the coverset, are there user offsets applied to this MCD?
 						if ( pmcd_look->m_buser_offsets )
 						{
@@ -2940,6 +2936,8 @@ void cm93chart::ProcessMCOVRObjects ( int cell_index, char subcell )
 						//    Capture and store the potential WGS transform offsets grabbed during attribute decode
 						pmcd->transform_WGS84_offset_x = tmp_transform_x;
 						pmcd->transform_WGS84_offset_y = tmp_transform_y;
+
+						pmcd->m_centerlat_cos = cos(((pmcd->m_covr_lat_min + pmcd->m_covr_lat_max)/2.0) * M_PI/180.0);
 
 						//     Add this object to the covr_set
 						m_pcovr_set->Add_Update_MCD ( pmcd );

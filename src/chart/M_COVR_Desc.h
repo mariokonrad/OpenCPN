@@ -60,6 +60,7 @@ class M_COVR_Desc
 		double m_covr_lon_max;
 		double user_xoff;
 		double user_yoff;
+		double m_centerlat_cos;
 
 		BoundingBox m_covr_bbox;
 		bool m_buser_offsets;

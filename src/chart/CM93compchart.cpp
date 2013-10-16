@@ -595,8 +595,7 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 
 double cm93compchart::GetNormalScaleMax ( double canvas_scale_factor, int canvas_width )
 {
-	return ( 180.0 / 360.0 ) * M_PI  * 2 * ( WGS84_semimajor_axis_meters / ( canvas_width / canvas_scale_factor ) );
-	//return 1.0e8;
+	return (180.0 / 360.0) * M_PI  * 2 * (geo::WGS84_semimajor_axis_meters / (canvas_width / canvas_scale_factor));
 }
 
 void cm93compchart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion)
@@ -605,8 +604,6 @@ void cm93compchart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pVa
 	OCPNRegion ret = GetValidScreenCanvasRegion ( VPoint, screen_region );
 	*pValidRegion = ret;
 }
-
-
 
 OCPNRegion cm93compchart::GetValidScreenCanvasRegion ( const ViewPort& VPoint, const OCPNRegion &ScreenRegion )
 {
@@ -841,12 +838,10 @@ bool cm93compchart::DoRenderRegionViewOnGL (const wxGLContext &glc, const ViewPo
 
 
 						double easting, northing, epix, npix;
-						toSM ( p->y, plon + 360., VPoint.clat, VPoint.clon + 360, &easting, &northing );
+						geo::toSM(p->y, plon + 360., VPoint.clat, VPoint.clon + 360, &easting, &northing);
 
 						//    Outlines stored in MCDs are not adjusted for offsets
-						//                                    easting -= pmcd->transform_WGS84_offset_x;
 						easting -= pmcd->user_xoff;
-						//                                    northing -= pmcd->transform_WGS84_offset_y;
 						northing -= pmcd->user_yoff;
 
 						epix = easting  * VPoint.view_scale_ppm;
@@ -858,9 +853,8 @@ bool cm93compchart::DoRenderRegionViewOnGL (const wxGLContext &glc, const ViewPo
 						p++;
 					}
 
-					bool btest = true;
-					if ( btest )
-					{
+					bool btest = true; // TODO: cleanup
+					if (btest) {
 						wxPen pen ( wxTheColourDatabase->Find ( _T ( "YELLOW" ) ), 3);
 						wxDash dash1[2];
 						dash1[0] = 4; // Long dash
@@ -870,21 +864,18 @@ bool cm93compchart::DoRenderRegionViewOnGL (const wxGLContext &glc, const ViewPo
 
 						dc.SetPen ( pen );
 
-						for ( int iseg=0 ; iseg < pmcd->m_nvertices-1 ; iseg++ )
-						{
-
+						for (int iseg=0 ; iseg < pmcd->m_nvertices-1 ; iseg++) {
 							int x0 = pwp[iseg].x;
 							int y0 = pwp[iseg].y;
 							int x1 = pwp[iseg+1].x;
 							int y1 = pwp[iseg+1].y;
 
-							ClipResult res = cohen_sutherland_line_clip_i ( &x0, &y0, &x1, &y1,
-									0, VPoint.pix_width, 0, VPoint.pix_height );
+							geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, 0, VPoint.pix_width, 0, VPoint.pix_height);
 
-							if ( res == Invisible )                                                 // Do not bother with segments that are invisible
+							if (res == geo::Invisible) // Do not bother with segments that are invisible
 								continue;
 
-							dc.DrawLine ( x0, y0, x1, y1 );
+							dc.DrawLine(x0, y0, x1, y1);
 						}
 					}
 				}
@@ -894,8 +885,6 @@ bool cm93compchart::DoRenderRegionViewOnGL (const wxGLContext &glc, const ViewPo
 
 	return render_return;
 }
-
-
 
 bool cm93compchart::RenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion &Region )
 {
@@ -914,14 +903,11 @@ bool cm93compchart::RenderViewOnDC ( wxMemoryDC& dc, const ViewPort& VPoint )
 	SetVPParms ( VPoint );
 
 	return DoRenderRegionViewOnDC ( dc, VPoint, vpr );
-
 }
 
 int s_dc1;
 bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion &Region )
 {
-	//      g_bDebugCM93 = true;
-
 	//      CALLGRIND_START_INSTRUMENTATION
 	if ( g_bDebugCM93 )
 	{
@@ -1144,12 +1130,10 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
 
 
 						double easting, northing, epix, npix;
-						toSM ( p->y, plon + 360., VPoint.clat, VPoint.clon + 360, &easting, &northing );
+						geo::toSM(p->y, plon + 360., VPoint.clat, VPoint.clon + 360, &easting, &northing);
 
-						//    Outlines stored in MCDs are not adjusted for offsets
-						//                                    easting -= pmcd->transform_WGS84_offset_x;
+						// Outlines stored in MCDs are not adjusted for offsets
 						easting -= pmcd->user_xoff;
-						//                                    northing -= pmcd->transform_WGS84_offset_y;
 						northing -= pmcd->user_yoff;
 
 						epix = easting  * VPoint.view_scale_ppm;
@@ -1161,43 +1145,28 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
 						p++;
 					}
 
-					//    Scrub the points
-					//   looking for segments for which the wrong longitude decision was made
-					//    TODO all this mole needs to be rethought, again
+					// Scrub the points
+					// looking for segments for which the wrong longitude decision was made
+					// TODO all this mole needs to be rethought, again
 					bool btest = true;
-					/*
-					   wxPoint p0 = pwp[0];
-					   for(int ip = 1 ; ip < pmcd->m_nvertices ; ip++)
-					   {
-					//                                   if(((p0.x > VPoint.pix_width) && (pwp[ip].x < 0)) || ((p0.x < 0) && (pwp[ip].x > VPoint.pix_width)))
-					//                                         btest = false;
-
-					p0 = pwp[ip];
-					}
-					 */
-					if ( btest )
-					{
+					if ( btest ) { // TODO: cleanup
 						dc.SetPen ( wxPen ( wxTheColourDatabase->Find ( _T ( "YELLOW" ) ), 4, wxLONG_DASH ) );
 
-						for ( int iseg=0 ; iseg < pmcd->m_nvertices-1 ; iseg++ )
-						{
-
+						for ( int iseg=0 ; iseg < pmcd->m_nvertices-1 ; iseg++) {
 							int x0 = pwp[iseg].x;
 							int y0 = pwp[iseg].y;
 							int x1 = pwp[iseg+1].x;
 							int y1 = pwp[iseg+1].y;
 
-							ClipResult res = cohen_sutherland_line_clip_i ( &x0, &y0, &x1, &y1,
-									0, VPoint.pix_width, 0, VPoint.pix_height );
+							geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, 0, VPoint.pix_width, 0, VPoint.pix_height);
 
-							if ( res == Invisible )                                                 // Do not bother with segments that are invisible
+							if (res == geo::Invisible) // Do not bother with segments that are invisible
 								continue;
 
-							dc.DrawLine ( x0, y0, x1, y1 );
+							dc.DrawLine(x0, y0, x1, y1);
 						}
 					}
 				}
-
 			}
 		}
 	}
@@ -1272,10 +1241,6 @@ void cm93compchart::UpdateRenderRegions ( const ViewPort& VPoint )
 	}
 }
 
-
-
-
-
 void cm93compchart::SetSpecialCellIndexOffset ( int cell_index, int object_id, int subcell, int xoff, int yoff )
 {
 	m_special_offset_x = xoff;
@@ -1301,15 +1266,15 @@ bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, ViewPort& vp )
 			double candidate_cell_scale;
 			switch ( nss_max )
 			{
-				case  0: candidate_cell_scale = 20000000.; break;            // Z
-				case  1: candidate_cell_scale =  3000000.; break;           // A
-				case  2: candidate_cell_scale =  1000000.; break;            // B
-				case  3: candidate_cell_scale =  200000. ; break;            // C
-				case  4: candidate_cell_scale =  100000. ; break;            // D
-				case  5: candidate_cell_scale =  50000.  ; break;            // E
-				case  6: candidate_cell_scale =  20000.  ; break;            // F
-				case  7: candidate_cell_scale =  7500.   ; break;           // G
-				default: candidate_cell_scale =  10.;break;
+				case  0: candidate_cell_scale = 20000000.0; break; // Z
+				case  1: candidate_cell_scale =  3000000.0; break; // A
+				case  2: candidate_cell_scale =  1000000.0; break; // B
+				case  3: candidate_cell_scale =   200000.0; break; // C
+				case  4: candidate_cell_scale =   100000.0; break; // D
+				case  5: candidate_cell_scale =    50000.0; break; // E
+				case  6: candidate_cell_scale =    20000.0; break; // F
+				case  7: candidate_cell_scale =     7500.0; break; // G
+				default: candidate_cell_scale =       10.0; break;
 			}
 
 			if ( candidate_cell_scale < top_scale )

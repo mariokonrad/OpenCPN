@@ -218,7 +218,7 @@ bool TCMgr::GetTideOrCurrent(time_t t, int idx, float &tcvalue, float& dir)
 	return(true); // Got it!
 }
 
-bool TCMgr::GetTideOrCurrent15(time_t t, int idx, float &tcvalue, float& dir, bool &bnew_val)
+bool TCMgr::GetTideOrCurrent15(time_t WXUNUSED(t), int idx, float &tcvalue, float& dir, bool &bnew_val)
 {
 	int ret;
 	IDX_entry * pIDX = m_Combined_IDX_array.at(idx);             // point to the index entry
@@ -432,7 +432,7 @@ int TCMgr::GetStationIDXbyName(const wxString & prefix, double xlat, double xlon
 		if ( (( type == 't' ) ||  ( type == 'T' ) )   // only Tides
 				&& (locnx.StartsWith(prefix))) {
 			double brg, dist;
-			DistanceBearingMercator(xlat, xlon, lpIDX->IDX_lat, lpIDX->IDX_lon, &brg, &dist);
+			geo::DistanceBearingMercator(xlat, xlon, lpIDX->IDX_lat, lpIDX->IDX_lon, &brg, &dist);
 			if (dist < distx) {
 				distx = dist;
 				jx = j;
@@ -462,7 +462,7 @@ int TCMgr::GetStationIDXbyNameType(const wxString & prefix, double xlat, double 
 
 		if ( ( type == typep ) && (locnx.StartsWith(prefix))) {
 			double brg, dist;
-			DistanceBearingMercator(xlat, xlon, lpIDX->IDX_lat, lpIDX->IDX_lon, &brg, &dist);
+			geo::DistanceBearingMercator(xlat, xlon, lpIDX->IDX_lat, lpIDX->IDX_lon, &brg, &dist);
 			if (dist < distx) {
 				distx = dist;
 				jx = j;

@@ -34,6 +34,8 @@
 #include <cmath>
 #include <ctype.h>
 
+namespace geo {
+
 struct GeoRef // FIXME: memory allocation outside GeoRef (using malloc), use std containers instead
 {
 	int status;
@@ -60,8 +62,8 @@ struct GeoRef // FIXME: memory allocation outside GeoRef (using malloc), use std
 #define DATUM_INDEX_WGS84     100
 #define DATUM_INDEX_UNKNOWN   -1
 
-static const double WGS84_semimajor_axis_meters = 6378137.0;     // WGS84 semimajor axis
-static const double mercator_k0                 = 0.9996;
+const double WGS84_semimajor_axis_meters = 6378137.0;     // WGS84 semimajor axis
+const double mercator_k0                 = 0.9996;
 
 void toTM(float lat, float lon, float lat0, float lon0, double *x, double *y);
 void fromTM(double x, double y, double lat0, double lon0, double *lat, double *lon);
@@ -92,5 +94,7 @@ void DistanceBearingMercator(double lat0, double lon0, double lat1, double lon1,
 
 int Georef_Calculate_Coefficients(struct GeoRef *cp, int nlin_lon);
 int Georef_Calculate_Coefficients_Proj(struct GeoRef *cp);
+
+}
 
 #endif

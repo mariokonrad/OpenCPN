@@ -38,6 +38,8 @@
 #include <cmath>
 #include <ctype.h>
 
+namespace geo {
+
 
 //  ellipsoid: index into the gEllipsoid[] array, in which
 //             a is the ellipsoid semimajor axis
@@ -335,8 +337,7 @@ void toSM(double lat, double lon, double lat0, double lon0, double *x, double *y
     *y = y3 - y30;
 }
 
-void
-fromSM(double x, double y, double lat0, double lon0, double *lat, double *lon)
+void fromSM(double x, double y, double lat0, double lon0, double *lat, double *lon)
 {
       const double z = WGS84_semimajor_axis_meters * mercator_k0;
       const double s0 = sin(lat0 * (M_PI / 180.0));
@@ -1327,6 +1328,8 @@ int Georef_Calculate_Coefficients_Proj(struct GeoRef *cp)
             return 0;
       else
             return 1;
+
+}
 
 }
 

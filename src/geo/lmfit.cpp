@@ -26,6 +26,8 @@
 #include <cstdio>
 #include <vector>
 
+namespace geo {
+
 /*
  * This file contains default implementation of the evaluate and printout
  * routines. In most cases, customization of lmfit can be done by modifying
@@ -1293,5 +1295,7 @@ double lm_enorm( int n, double *x )
     }
 
     return x3max*sqrt(s3);
+}
+
 }
 

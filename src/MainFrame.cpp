@@ -1881,7 +1881,7 @@ void MainFrame::ActivateMOB( void )
 	if( bGPSValid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog) ) {
 		//    Create a point that is one mile along the present course
 		double zlat, zlon;
-		ll_gc_ll( gLat, gLon, nav.cog, 1.0, &zlat, &zlon );
+		geo::ll_gc_ll( gLat, gLon, nav.cog, 1.0, &zlat, &zlon );
 
 		RoutePoint *pWP_src = new RoutePoint( zlat, zlon, g_default_wp_icon, wxString( _( "1.0 NM along COG" )));
 		pSelect->AddSelectableRoutePoint( zlat, zlon, pWP_src );
@@ -3091,7 +3091,7 @@ void MainFrame::check_anchorwatch_1()
 	if (pAnchorWatchPoint1) {
 		double dist;
 		double brg;
-		DistanceBearingMercator(pAnchorWatchPoint1->m_lat, pAnchorWatchPoint1->m_lon, gLat, gLon, &brg, &dist);
+		geo::DistanceBearingMercator(pAnchorWatchPoint1->m_lat, pAnchorWatchPoint1->m_lon, gLat, gLon, &brg, &dist);
 		double d = g_nAWMax;
 		( pAnchorWatchPoint1->GetName() ).ToDouble( &d );
 		d = AnchorDistFix( d, AnchorPointMinDist, g_nAWMax );
@@ -3115,7 +3115,7 @@ void MainFrame::check_anchorwatch_2()
 	if (pAnchorWatchPoint2) {
 		double dist;
 		double brg;
-		DistanceBearingMercator(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, gLat, gLon, &brg, &dist);
+		geo::DistanceBearingMercator(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, gLat, gLon, &brg, &dist);
 
 		double d = g_nAWMax;
 		pAnchorWatchPoint2->GetName().ToDouble(&d);
@@ -3316,7 +3316,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 
 		double brg;
 		double dist;
-		DistanceBearingMercator(cursor_lat, cursor_lon, gLat, gLon, &brg, &dist);
+		geo::DistanceBearingMercator(cursor_lat, cursor_lon, gLat, gLon, &brg, &dist);
 		wxString s;
 		if (g_bShowMag)
 			s.Printf( wxString("%03d°(M)  ", wxConvUTF8), (int)GetTrueOrMag(brg));
@@ -4189,7 +4189,7 @@ bool MainFrame::DoChartUpdate( void )
 
 			double meters_to_shift = cos(gLat * M_PI / 180.0) * pixel_delta / cc1->GetVPScale();
 			double dir_to_shift = g_COGAvg;
-			ll_gc_ll( gLat, gLon, dir_to_shift, meters_to_shift / 1852.0, &vpLat, &vpLon );
+			geo::ll_gc_ll( gLat, gLon, dir_to_shift, meters_to_shift / 1852.0, &vpLat, &vpLon );
 		}
 	} else {
 		tLat = vLat;

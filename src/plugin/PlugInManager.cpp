@@ -1714,47 +1714,47 @@ void PositionBearingDistanceMercator_Plugin(double lat, double lon,
                                             double brg, double dist,
                                             double *dlat, double *dlon)
 {
-    PositionBearingDistanceMercator(lat, lon, brg, dist, dlat, dlon);
+    geo::PositionBearingDistanceMercator(lat, lon, brg, dist, dlat, dlon);
 }
 
 void DistanceBearingMercator_Plugin(double lat0, double lon0, double lat1, double lon1, double *brg, double *dist)
 {
-    DistanceBearingMercator( lat0, lon0, lat1, lon1, brg, dist);
+    geo::DistanceBearingMercator( lat0, lon0, lat1, lon1, brg, dist);
 }
 
 double DistGreatCircle_Plugin(double slat, double slon, double dlat, double dlon)
 {
-    return DistGreatCircle(slat, slon, dlat, dlon);
+    return geo::DistGreatCircle(slat, slon, dlat, dlon);
 }
 
 void toTM_Plugin(float lat, float lon, float lat0, float lon0, double *x, double *y)
 {
-    toTM(lat, lon, lat0, lon0, x, y);
+    geo::toTM(lat, lon, lat0, lon0, x, y);
 }
 
 void fromTM_Plugin(double x, double y, double lat0, double lon0, double *lat, double *lon)
 {
-    fromTM(x, y, lat0, lon0, lat, lon);
+    geo::fromTM(x, y, lat0, lon0, lat, lon);
 }
 
 void toSM_Plugin(double lat, double lon, double lat0, double lon0, double *x, double *y)
 {
-    toSM(lat, lon, lat0, lon0, x, y);
+    geo::toSM(lat, lon, lat0, lon0, x, y);
 }
 
 void fromSM_Plugin(double x, double y, double lat0, double lon0, double *lat, double *lon)
 {
-    fromSM(x, y, lat0, lon0, lat, lon);
+    geo::fromSM(x, y, lat0, lon0, lat, lon);
 }
 
 void toSM_ECC_Plugin(double lat, double lon, double lat0, double lon0, double *x, double *y)
 {
-    toSM_ECC(lat, lon, lat0, lon0, x, y);
+    geo::toSM_ECC(lat, lon, lat0, lon0, x, y);
 }
 
 void fromSM_ECC_Plugin(double x, double y, double lat0, double lon0, double *lat, double *lon)
 {
-    fromSM_ECC(x, y, lat0, lon0, lat, lon);
+    geo::fromSM_ECC(x, y, lat0, lon0, lat, lon);
 }
 
 double toUsrDistance_Plugin(double nm_distance, int unit)
@@ -2266,15 +2266,13 @@ wxString opencpn_plugin::GetLongDescription()
 PlugInManager created this base class");
 }
 
-
-
-void opencpn_plugin::SetPositionFix(PlugIn_Position_Fix &pfix)
+void opencpn_plugin::SetPositionFix(PlugIn_Position_Fix & WXUNUSED(pfix))
 {}
 
-void opencpn_plugin::SetNMEASentence(wxString &sentence)
+void opencpn_plugin::SetNMEASentence(wxString & WXUNUSED(sentence))
 {}
 
-void opencpn_plugin::SetAISSentence(wxString &sentence)
+void opencpn_plugin::SetAISSentence(wxString & WXUNUSED(sentence))
 {}
 
 int opencpn_plugin::GetToolbarToolCount(void)
@@ -2287,39 +2285,39 @@ int opencpn_plugin::GetToolboxPanelCount(void)
     return 0;
 }
 
-void opencpn_plugin::SetupToolboxPanel(int page_sel, wxNotebook* pnotebook)
+void opencpn_plugin::SetupToolboxPanel(int WXUNUSED(page_sel), wxNotebook * WXUNUSED(pnotebook))
 {}
 
-void opencpn_plugin::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)
+void opencpn_plugin::OnCloseToolboxPanel(int WXUNUSED(page_sel), int WXUNUSED(ok_apply_cancel))
 {}
 
-void opencpn_plugin::ShowPreferencesDialog( wxWindow* parent )
+void opencpn_plugin::ShowPreferencesDialog(wxWindow * WXUNUSED(parent))
 {}
 
-void opencpn_plugin::OnToolbarToolCallback(int id)
+void opencpn_plugin::OnToolbarToolCallback(int WXUNUSED(id))
 {}
 
-void opencpn_plugin::OnContextMenuItemCallback(int id)
+void opencpn_plugin::OnContextMenuItemCallback(int WXUNUSED(id))
 {}
 
-bool opencpn_plugin::RenderOverlay(wxMemoryDC *dc, PlugIn_ViewPort *vp)
+bool opencpn_plugin::RenderOverlay(wxMemoryDC * WXUNUSED(dc), PlugIn_ViewPort * WXUNUSED(vp))
 {
     return false;
 }
 
-void opencpn_plugin::SetCursorLatLon(double lat, double lon)
+void opencpn_plugin::SetCursorLatLon(double WXUNUSED(lat), double WXUNUSED(lon))
 {}
 
-void opencpn_plugin::SetCurrentViewPort(PlugIn_ViewPort &vp)
+void opencpn_plugin::SetCurrentViewPort(PlugIn_ViewPort & WXUNUSED(vp))
 {}
 
 void opencpn_plugin::SetDefaults(void)
 {}
 
-void opencpn_plugin::ProcessParentResize(int x, int y)
+void opencpn_plugin::ProcessParentResize(int WXUNUSED(x), int WXUNUSED(y))
 {}
 
-void opencpn_plugin::SetColorScheme(PI_ColorScheme cs)
+void opencpn_plugin::SetColorScheme(PI_ColorScheme WXUNUSED(cs))
 {}
 
 void opencpn_plugin::UpdateAuiStatus(void)
@@ -2334,7 +2332,7 @@ wxArrayString opencpn_plugin::GetDynamicChartClassNameArray()
 
 
 //    Opencpn_Plugin_16 Implementation
-opencpn_plugin_16::opencpn_plugin_16(void *pmgr)
+opencpn_plugin_16::opencpn_plugin_16(void * pmgr)
     : opencpn_plugin(pmgr)
 {
 }
@@ -2342,16 +2340,16 @@ opencpn_plugin_16::opencpn_plugin_16(void *pmgr)
 opencpn_plugin_16::~opencpn_plugin_16(void)
 {}
 
-bool opencpn_plugin_16::RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp)
+bool opencpn_plugin_16::RenderOverlay(wxDC & WXUNUSED(dc), PlugIn_ViewPort * WXUNUSED(vp))
 {
     return false;
 }
 
-void opencpn_plugin_16::SetPluginMessage(wxString &message_id, wxString &message_body)
+void opencpn_plugin_16::SetPluginMessage(wxString & WXUNUSED(message_id), wxString & WXUNUSED(message_body))
 {}
 
-//    Opencpn_Plugin_17 Implementation
-opencpn_plugin_17::opencpn_plugin_17(void *pmgr)
+// Opencpn_Plugin_17 Implementation
+opencpn_plugin_17::opencpn_plugin_17(void * pmgr)
     : opencpn_plugin(pmgr)
 {
 }
@@ -2359,23 +2357,22 @@ opencpn_plugin_17::opencpn_plugin_17(void *pmgr)
 opencpn_plugin_17::~opencpn_plugin_17(void)
 {}
 
-
-bool opencpn_plugin_17::RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp)
+bool opencpn_plugin_17::RenderOverlay(wxDC & WXUNUSED(dc), PlugIn_ViewPort * WXUNUSED(vp))
 {
     return false;
 }
 
-bool opencpn_plugin_17::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp)
+bool opencpn_plugin_17::RenderGLOverlay(wxGLContext * WXUNUSED(pcontext), PlugIn_ViewPort * WXUNUSED(vp))
 {
     return false;
 }
 
-void opencpn_plugin_17::SetPluginMessage(wxString &message_id, wxString &message_body)
+void opencpn_plugin_17::SetPluginMessage(wxString & WXUNUSED(message_id), wxString & WXUNUSED(message_body))
 {}
 
 
-//    Opencpn_Plugin_18 Implementation
-opencpn_plugin_18::opencpn_plugin_18(void *pmgr)
+// Opencpn_Plugin_18 Implementation
+opencpn_plugin_18::opencpn_plugin_18(void * pmgr)
     : opencpn_plugin(pmgr)
 {
 }
@@ -2383,51 +2380,44 @@ opencpn_plugin_18::opencpn_plugin_18(void *pmgr)
 opencpn_plugin_18::~opencpn_plugin_18(void)
 {}
 
-
-bool opencpn_plugin_18::RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp)
+bool opencpn_plugin_18::RenderOverlay(wxDC & WXUNUSED(dc), PlugIn_ViewPort * WXUNUSED(vp))
 {
     return false;
 }
 
-bool opencpn_plugin_18::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp)
+bool opencpn_plugin_18::RenderGLOverlay(wxGLContext * WXUNUSED(pcontext), PlugIn_ViewPort * WXUNUSED(vp))
 {
     return false;
 }
 
-void opencpn_plugin_18::SetPluginMessage(wxString &message_id, wxString &message_body)
+void opencpn_plugin_18::SetPluginMessage(wxString & WXUNUSED(message_id), wxString & WXUNUSED(message_body))
 {}
 
-void opencpn_plugin_18::SetPositionFixEx(PlugIn_Position_Fix_Ex &pfix)
+void opencpn_plugin_18::SetPositionFixEx(PlugIn_Position_Fix_Ex & WXUNUSED(pfix))
 {}
 
 
-//    Opencpn_Plugin_19 Implementation
-opencpn_plugin_19::opencpn_plugin_19(void *pmgr)
-    : opencpn_plugin_18(pmgr)
-{
-}
+// Opencpn_Plugin_19 Implementation
+opencpn_plugin_19::opencpn_plugin_19(void * pmgr)
+	: opencpn_plugin_18(pmgr)
+{}
 
 opencpn_plugin_19::~opencpn_plugin_19(void)
-{
-}
+{}
 
 void opencpn_plugin_19::OnSetupOptions(void)
-{
-}
+{}
 
-//    Opencpn_Plugin_110 Implementation
-opencpn_plugin_110::opencpn_plugin_110(void *pmgr)
-: opencpn_plugin_19(pmgr)
-{
-}
+// Opencpn_Plugin_110 Implementation
+opencpn_plugin_110::opencpn_plugin_110(void * pmgr)
+	: opencpn_plugin_19(pmgr)
+{}
 
 opencpn_plugin_110::~opencpn_plugin_110(void)
-{
-}
+{}
 
 void opencpn_plugin_110::LateInit(void)
-{
-}
+{}
 
 
 

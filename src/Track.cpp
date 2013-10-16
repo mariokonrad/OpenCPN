@@ -134,10 +134,10 @@ void Track::Stop( bool do_add_point )
 {
 	double delta = 0.0;
 	if( m_lastStoredTP )
-		delta = DistGreatCircle(gLat, gLon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon);
+		delta = geo::DistGreatCircle(gLat, gLon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon);
 
-	if( ( m_bRunning ) && ( ( delta > m_minTrackpoint_delta ) || do_add_point ) ) AddPointNow(
-			true );                   // Add last point
+	if (m_bRunning && ((delta > m_minTrackpoint_delta) || do_add_point))
+		AddPointNow(true); // Add last point
 
 	m_TimerTrack.Stop();
 	m_bRunning = false;
@@ -200,7 +200,7 @@ void Track::OnTimerTrack(wxTimerEvent &)
 	m_track_run++;
 
 	if( m_lastStoredTP )
-		m_prev_dist = DistGreatCircle( gLat, gLon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon );
+		m_prev_dist = geo::DistGreatCircle( gLat, gLon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon );
 	else
 		m_prev_dist = 999.0;
 
@@ -305,7 +305,7 @@ void Track::AddPointNow( bool do_add_point )
 									 // (the next to last) point can possibly be eliminated. Here we reduce the allowed
 									 // XTE as a function of leg length. (Half the XTE for very short legs).
 									 if( GetnPoints() > 2 ) {
-										 double dist = DistGreatCircle( m_fixedTP->m_lat, m_fixedTP->m_lon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon );
+										 double dist = geo::DistGreatCircle( m_fixedTP->m_lat, m_fixedTP->m_lon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon );
 										 double xte = GetXTE( m_fixedTP, m_lastStoredTP, m_removeTP );
 										 if( xte < m_allowedMaxXTE / wxMax(1.0, 2.0 - dist*2.0) ) {
 											 pRoutePointList->pop_back();
@@ -477,8 +477,7 @@ Route *Track::RouteFromTrack(wxProgressDialog *pprog)
 		delta_hdg = 0.0;
 		back_ic = next_ic;
 
-		DistanceBearingMercator( prp->m_lat, prp->m_lon, pWP_src->m_lat, pWP_src->m_lon, &delta_hdg,
-				&delta_dist );
+		geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, pWP_src->m_lat, pWP_src->m_lon, &delta_hdg, &delta_dist);
 
 		if( ( delta_dist > ( leg_speed * 6.0 ) ) && !prp_OK ) {
 			int delta_inserts = floor( delta_dist / ( leg_speed * 4.0 ) );
@@ -487,7 +486,7 @@ Route *Track::RouteFromTrack(wxProgressDialog *pprog)
 			double tlon = 0.0;
 
 			while( delta_inserts-- ) {
-				ll_gc_ll( pWP_src->m_lat, pWP_src->m_lon, delta_hdg, delta_dist, &tlat, &tlon );
+				geo::ll_gc_ll( pWP_src->m_lat, pWP_src->m_lon, delta_hdg, delta_dist, &tlat, &tlon );
 				pWP_dst = new RoutePoint(tlat, tlon, icon, _T (""));
 				route->AddPoint( pWP_dst );
 				pWP_dst->m_bShowName = false;
@@ -533,25 +532,26 @@ Route *Track::RouteFromTrack(wxProgressDialog *pprog)
 				prp_OK = NULL;
 			}
 
-			if( prpnodeX ) prpnodeX = prpnodeX->GetPrevious();
-			if( back_ic-- <= 0 ) {
+			if (prpnodeX)
+				prpnodeX = prpnodeX->GetPrevious();
+			if (back_ic-- <= 0) {
 				prpnodeX = NULL;
 			}
 		}
 
-		if( prp_OK ) {
+		if (prp_OK) {
 			prp_OK = prp;
 		}
 
-		DistanceBearingMercator( prp->m_lat, prp->m_lon, pWP_src->m_lat, pWP_src->m_lon, NULL,
-				&delta_dist );
+		geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, pWP_src->m_lat, pWP_src->m_lon, NULL, &delta_dist);
 
 		if( !( ( delta_dist > ( g_TrackDeltaDistance ) ) && !prp_OK ) ) {
 			prpnode = prpnode->GetNext(); //RoutePoint
 			next_ic++;
 		}
 		ic++;
-		if( pprog ) pprog->Update( ( ic * 100 ) / nPoints );
+		if (pprog)
+			pprog->Update((ic * 100) / nPoints);
 	}
 
 	// add last point, if needed
@@ -646,11 +646,11 @@ double Track::GetXTE( double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon
 	// the current position as origo.
 
 	double brg1, dist1, brg2, dist2;
-	DistanceBearingMercator( toLat, toLon, fm1Lat, fm1Lon, &brg1, &dist1 );
+	geo::DistanceBearingMercator( toLat, toLon, fm1Lat, fm1Lon, &brg1, &dist1 );
 	w.x = dist1 * sin( brg1 * M_PI / 180. );
 	w.y = dist1 * cos( brg1 * M_PI / 180. );
 
-	DistanceBearingMercator( toLat, toLon, fm2Lat, fm2Lon, &brg2, &dist2 );
+	geo::DistanceBearingMercator( toLat, toLon, fm2Lat, fm2Lon, &brg2, &dist2 );
 	v.x = dist2 * sin( brg2 * M_PI / 180. );
 	v.y = dist2 * cos( brg2 * M_PI / 180. );
 

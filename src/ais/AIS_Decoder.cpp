@@ -413,8 +413,6 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 	bool arpa_lost = true;
 	bool arpa_nottracked = false;
 
-	double aprs_sog = 0.;
-	double aprs_cog = 0.;
 	double aprs_lat = 0.;
 	double aprs_lon = 0.;
 	char aprs_name_str[21];
@@ -895,7 +893,7 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 				if( !bnewtarget ) {
 					int age_of_last = ( now.GetTicks() - pTargetData->PositionReportTicks );
 					if ( age_of_last > 0 ) {
-						ll_gc_ll_reverse( pTargetData->Lat, pTargetData->Lon, arpa_lat, arpa_lon, &pTargetData->COG, &pTargetData->SOG );
+						geo::ll_gc_ll_reverse(pTargetData->Lat, pTargetData->Lon, arpa_lat, arpa_lon, &pTargetData->COG, &pTargetData->SOG);
 						pTargetData->SOG = pTargetData->SOG * 3600 / age_of_last;
 					}
 				}
@@ -903,7 +901,7 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 				pTargetData->Lon = arpa_lon;
 			} else if( str.Mid( 3, 3 ).IsSameAs( _T("TTM") ) ) {
 				if( arpa_dist != 0. ) //Not a new or turned off target
-					ll_gc_ll( gLat, gLon, arpa_brg, arpa_dist, &pTargetData->Lat, &pTargetData->Lon );
+					geo::ll_gc_ll(gLat, gLon, arpa_brg, arpa_dist, &pTargetData->Lat, &pTargetData->Lon);
 				else
 					arpa_lost = true;
 				pTargetData->COG = arpa_cog;
@@ -933,7 +931,7 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 			if( !bnewtarget ) {
 				int age_of_last = (now.GetTicks() - pTargetData->PositionReportTicks);
 				if ( age_of_last > 0 ) {
-					ll_gc_ll_reverse( pTargetData->Lat, pTargetData->Lon, aprs_lat, aprs_lon, &pTargetData->COG, &pTargetData->SOG );
+					geo::ll_gc_ll_reverse(pTargetData->Lat, pTargetData->Lon, aprs_lat, aprs_lon, &pTargetData->COG, &pTargetData->SOG);
 					pTargetData->SOG = pTargetData->SOG * 3600 / age_of_last;
 				}
 			}
@@ -1685,11 +1683,12 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 
 	//    Compute the current Range/Brg to the target
 	double brg, dist;
-	DistanceBearingMercator( ptarget->Lat, ptarget->Lon, gLat, gLon, &brg, &dist );
+	geo::DistanceBearingMercator(ptarget->Lat, ptarget->Lon, gLat, gLon, &brg, &dist);
 	ptarget->Range_NM = dist;
 	ptarget->Brg = brg;
 
-	if( dist <= 1e-5 ) ptarget->Brg = -1.0;             // Brg is undefined if Range == 0.
+	if (dist <= 1e-5)
+		ptarget->Brg = -1.0;             // Brg is undefined if Range == 0.
 
 	//    There can be no collision between ownship and itself....
 	//    This can happen if AIVDO messages are received, and there is another source of ownship position, like NMEA GLL
@@ -1772,7 +1771,8 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 		double tcpa;
 
 		// the tracks are almost parallel
-		if( fabs( d ) < 1e-6 ) tcpa = 0.;
+		if ( fabs( d ) < 1e-6 )
+			tcpa = 0.;
 		else
 			//    Here is the equation for t, which will be in hours
 			tcpa = ( ( fc * east ) + ( fs * north ) ) / d;
@@ -1785,16 +1785,16 @@ void AIS_Decoder::UpdateOneCPA( AIS_Target_Data *ptarget )
 
 		double OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA;
 
-		ll_gc_ll( gLat, gLon, cpa_calc_ownship_cog, nav.sog * tcpa, &OwnshipLatCPA, &OwnshipLonCPA );
-		ll_gc_ll( ptarget->Lat, ptarget->Lon, cpa_calc_target_cog, ptarget->SOG * tcpa,
-				&TargetLatCPA, &TargetLonCPA );
+		geo::ll_gc_ll(gLat, gLon, cpa_calc_ownship_cog, nav.sog * tcpa, &OwnshipLatCPA, &OwnshipLonCPA);
+		geo::ll_gc_ll(ptarget->Lat, ptarget->Lon, cpa_calc_target_cog, ptarget->SOG * tcpa, &TargetLatCPA, &TargetLonCPA);
 
 		//   And compute the distance
-		ptarget->CPA = DistGreatCircle( OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA );
+		ptarget->CPA = geo::DistGreatCircle(OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA);
 
 		ptarget->bCPA_Valid = true;
 
-		if( ptarget->TCPA < 0 ) ptarget->bCPA_Valid = false;
+		if( ptarget->TCPA < 0 )
+			ptarget->bCPA_Valid = false;
 	}
 }
 
@@ -1902,7 +1902,6 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent & WXUNUSED(event))
 	if( NULL == g_pais_alert_dialog_active ) {
 		double tcpa_min = 1e6;             // really long
 		double sart_range = 1e6;
-		double dsc_range = 1e6;
 		AIS_Target_Data *palarm_target_cpa = NULL;
 		AIS_Target_Data *palarm_target_sart = NULL;
 		AIS_Target_Data *palarm_target_dsc = NULL;

@@ -981,7 +981,7 @@ void cm93chart::GetPointPix(ObjRazRules *rzRules, float north, float east, wxPoi
 	if ( m_vp_current.GetBBox().GetMaxX() > 360.0) {
 		BoundingBox bbRight(0.0, m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360., m_vp_current.GetBBox().GetMaxY() );
 		if (bbRight.Intersect ( rzRules->obj->BBObj, 0 ) != BoundingBox::_OUT) {
-			valx += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * M_PI;      //6375586.0;
+			valx += geo::mercator_k0 * geo::WGS84_semimajor_axis_meters * 2.0 * M_PI;      //6375586.0;
 		}
 	}
 
@@ -1002,7 +1002,7 @@ void cm93chart::GetPointPix ( ObjRazRules *rzRules, wxPoint2DDouble *en, wxPoint
 	if (m_vp_current.GetBBox().GetMaxX() > 360.0) {
 		BoundingBox bbRight(0.0, m_vp_current.GetBBox().GetMinY(), m_vp_current.GetBBox().GetMaxX() - 360.0, m_vp_current.GetBBox().GetMaxY());
 		if (bbRight.Intersect ( rzRules->obj->BBObj, 0 ) != BoundingBox::_OUT) {
-			xo += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * M_PI;
+			xo += geo::mercator_k0 * geo::WGS84_semimajor_axis_meters * 2.0 * M_PI;
 		}
 	}
 
@@ -1028,10 +1028,10 @@ void cm93chart::GetPixPoint ( int pixx, int pixy, double *plat, double *plon, Vi
 	double d_north = yp / vpt->view_scale_ppm;
 
 	double slat, slon;
-	fromSM ( d_east, d_north, vpt->clat, vpt->clon, &slat, &slon );
+	geo::fromSM(d_east, d_north, vpt->clat, vpt->clon, &slat, &slon);
 
-	if ( slon > 360. )
-		slon -= 360.;
+	if ( slon > 360.0)
+		slon -= 360.0;
 
 	*plat = slat;
 	*plon = slon;
@@ -1044,10 +1044,10 @@ bool cm93chart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
 		if (vp_last.view_scale_ppm == vp_proposed.view_scale_ppm) {
 
 			double prev_easting_c, prev_northing_c;
-			toSM ( vp_last.clat, vp_last.clon, ref_lat, ref_lon, &prev_easting_c, &prev_northing_c );
+			geo::toSM(vp_last.clat, vp_last.clon, ref_lat, ref_lon, &prev_easting_c, &prev_northing_c);
 
 			double easting_c, northing_c;
-			toSM ( vp_proposed.clat, vp_proposed.clon,  ref_lat, ref_lon, &easting_c, &northing_c );
+			geo::toSM(vp_proposed.clat, vp_proposed.clon,  ref_lat, ref_lon, &easting_c, &northing_c);
 
 			//  then require this viewport to be exact integral pixel difference from last
 			//  adjusting clat/clat and SM accordingly
@@ -1064,7 +1064,7 @@ bool cm93chart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
 			double c_north_d = ( dpy / vp_proposed.view_scale_ppm ) + prev_northing_c;
 
 			double xlat, xlon;
-			fromSM ( c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon );
+			geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon);
 
 			vp_proposed.clon = xlon;
 			vp_proposed.clat = xlat;
@@ -1087,7 +1087,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 	m_pixy_vp_center = vpt.pix_height / 2;
 	m_view_scale_ppm = vpt.view_scale_ppm;
 
-	toSM ( vpt.clat, vpt.clon, ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center );
+	geo::toSM(vpt.clat, vpt.clon, ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center);
 
 
 	if (g_bDebugCM93)
@@ -2649,10 +2649,10 @@ S57Obj * cm93chart::CreateS57Obj(
 		delete xgeom;
 
 	//    Set the per-object transform coefficients
-	pobj->x_rate   = m_CIB->transform_x_rate * ( mercator_k0 * WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
-	pobj->y_rate   = m_CIB->transform_y_rate * ( mercator_k0 * WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
-	pobj->x_origin = m_CIB->transform_x_origin * ( mercator_k0 * WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
-	pobj->y_origin = m_CIB->transform_y_origin * ( mercator_k0 * WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
+	pobj->x_rate   = m_CIB->transform_x_rate * ( geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
+	pobj->y_rate   = m_CIB->transform_y_rate * ( geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
+	pobj->x_origin = m_CIB->transform_x_origin * ( geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
+	pobj->y_origin = m_CIB->transform_y_origin * ( geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
 
 	//    Add in the possible offsets to WGS84 which come from the proper M_COVR containing this feature
 	pobj->x_origin -= trans_WGS84_offset_x;

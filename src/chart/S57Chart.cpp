@@ -470,7 +470,7 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 
                         //  Convert from SM to lat/lon for bbox
                         double xll, yll;
-                        fromSM( easting, northing, point_ref_lat, point_ref_lon, &yll, &xll );
+                        geo::fromSM(easting, northing, point_ref_lat, point_ref_lon, &yll, &xll);
 
                         m_lon = xll;
                         m_lat = yll;
@@ -522,7 +522,7 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 #endif
                             //  Convert point from SM to lat/lon for later use in decomposed bboxes
                             double xll, yll;
-                            fromSM( easting, northing, point_ref_lat, point_ref_lon, &yll, &xll );
+                            geo::fromSM( easting, northing, point_ref_lat, point_ref_lon, &yll, &xll );
 
                             *pdl++ = xll;
                             *pdl++ = yll;
@@ -602,15 +602,15 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 
                         //  and declare x/y of the object to be average east/north of all points
                         double e1, e2, n1, n2;
-                        toSM( ymax, xmax, line_ref_lat, line_ref_lon, &e1, &n1 );
-                        toSM( ymin, xmin, line_ref_lat, line_ref_lon, &e2, &n2 );
+                        geo::toSM( ymax, xmax, line_ref_lat, line_ref_lon, &e1, &n1 );
+                        geo::toSM( ymin, xmin, line_ref_lat, line_ref_lon, &e2, &n2 );
 
                         x = ( e1 + e2 ) / 2.;
                         y = ( n1 + n2 ) / 2.;
 
                         //  Set the object base point
                         double xll, yll;
-                        fromSM( x, y, line_ref_lat, line_ref_lon, &yll, &xll );
+                        geo::fromSM( x, y, line_ref_lat, line_ref_lon, &yll, &xll );
                         m_lon = xll;
                         m_lat = yll;
 
@@ -671,9 +671,9 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 
                             //  and declare x/y of the object to be average east/north of all points
                             double e1, e2, n1, n2;
-                            toSM( ppg->Get_ymax(), ppg->Get_xmax(), area_ref_lat, area_ref_lon, &e1,
+                            geo::toSM( ppg->Get_ymax(), ppg->Get_xmax(), area_ref_lat, area_ref_lon, &e1,
                                     &n1 );
-                            toSM( ppg->Get_ymin(), ppg->Get_xmin(), area_ref_lat, area_ref_lon, &e2,
+                            geo::toSM( ppg->Get_ymin(), ppg->Get_xmin(), area_ref_lat, area_ref_lon, &e2,
                                     &n2 );
 
                             x = ( e1 + e2 ) / 2.;
@@ -681,7 +681,7 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 
                             //  Set the object base point
                             double xll, yll;
-                            fromSM( x, y, area_ref_lat, area_ref_lon, &yll, &xll );
+                            geo::fromSM( x, y, area_ref_lat, area_ref_lon, &yll, &xll );
                             m_lon = xll;
                             m_lat = yll;
 
@@ -1131,14 +1131,14 @@ void s57chart::GetValidCanvasRegion( const ViewPort& VPoint, OCPNRegion *pValidR
     double easting, northing;
     double epix, npix;
 
-    toSM( m_FullExtent.SLAT, m_FullExtent.WLON, VPoint.clat, VPoint.clon, &easting, &northing );
+    geo::toSM( m_FullExtent.SLAT, m_FullExtent.WLON, VPoint.clat, VPoint.clon, &easting, &northing );
     epix = easting * VPoint.view_scale_ppm;
     npix = northing * VPoint.view_scale_ppm;
 
     rxl = (int) round((VPoint.pix_width / 2) + epix);
     ryb = (int) round((VPoint.pix_height / 2) - npix);
 
-    toSM( m_FullExtent.NLAT, m_FullExtent.ELON, VPoint.clat, VPoint.clon, &easting, &northing );
+    geo::toSM( m_FullExtent.NLAT, m_FullExtent.ELON, VPoint.clat, VPoint.clon, &easting, &northing );
     epix = easting * VPoint.view_scale_ppm;
     npix = northing * VPoint.view_scale_ppm;
 
@@ -1350,7 +1350,7 @@ void s57chart::GetPixPoint( int pixx, int pixy, double *plat, double *plon, View
     double d_north = yp / vpt->view_scale_ppm;
 
     double slat, slon;
-    fromSM( d_east, d_north, vpt->clat, vpt->clon, &slat, &slon );
+    geo::fromSM( d_east, d_north, vpt->clat, vpt->clon, &slat, &slon );
 
     *plat = slat;
     *plon = slon;
@@ -1368,7 +1368,7 @@ void s57chart::SetVPParms( const ViewPort &vpt )
     m_pixy_vp_center = vpt.pix_height / 2;
     m_view_scale_ppm = vpt.view_scale_ppm;
 
-    toSM( vpt.clat, vpt.clon, ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center );
+    geo::toSM( vpt.clat, vpt.clon, ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center );
 }
 
 bool s57chart::AdjustVP( ViewPort &vp_last, ViewPort &vp_proposed )
@@ -1379,10 +1379,10 @@ bool s57chart::AdjustVP( ViewPort &vp_last, ViewPort &vp_proposed )
         if( vp_last.view_scale_ppm == vp_proposed.view_scale_ppm ) {
 
             double prev_easting_c, prev_northing_c;
-            toSM( vp_last.clat, vp_last.clon, ref_lat, ref_lon, &prev_easting_c, &prev_northing_c );
+            geo::toSM( vp_last.clat, vp_last.clon, ref_lat, ref_lon, &prev_easting_c, &prev_northing_c );
 
             double easting_c, northing_c;
-            toSM( vp_proposed.clat, vp_proposed.clon, ref_lat, ref_lon, &easting_c, &northing_c );
+            geo::toSM( vp_proposed.clat, vp_proposed.clon, ref_lat, ref_lon, &easting_c, &northing_c );
 
             //  then require this viewport to be exact integral pixel difference from last
             //  adjusting clat/clat and SM accordingly
@@ -1399,7 +1399,7 @@ bool s57chart::AdjustVP( ViewPort &vp_last, ViewPort &vp_proposed )
             double c_north_d = ( dpy / vp_proposed.view_scale_ppm ) + prev_northing_c;
 
             double xlat, xlon;
-            fromSM( c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon );
+            geo::fromSM( c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon );
 
             vp_proposed.clon = xlon;
             vp_proposed.clat = xlat;
@@ -1426,7 +1426,7 @@ ThumbData *s57chart::GetThumbData(int, int, float lat, float lon)
 
         float thumb_view_scale_ppm = ( S57_THUMB_SIZE / ext_max ) / ( 1852 * 60 );
         double east, north;
-        toSM( lat, lon, ( lat_top + lat_bot ) / 2., ( lon_left + lon_right ) / 2., &east, &north );
+        geo::toSM( lat, lon, ( lat_top + lat_bot ) / 2., ( lon_left + lon_right ) / 2., &east, &north );
 
         pThumbData->ShipX = pThumbData->pDIBThumb->GetWidth() / 2
                 + (int) ( east * thumb_view_scale_ppm );
@@ -1457,7 +1457,7 @@ bool s57chart::UpdateThumbData( double lat, double lon )
 
         double thumb_view_scale_ppm = ( S57_THUMB_SIZE / ext_max ) / ( 1852 * 60 );
         double east, north;
-        toSM( lat, lon, ( lat_top + lat_bot ) / 2., ( lon_left + lon_right ) / 2., &east, &north );
+        geo::toSM( lat, lon, ( lat_top + lat_bot ) / 2., ( lon_left + lon_right ) / 2., &east, &north );
 
         test_x = pThumbData->pDIBThumb->GetWidth() / 2 + (int) ( east * thumb_view_scale_ppm );
         test_y = pThumbData->pDIBThumb->GetHeight() / 2 - (int) ( north * thumb_view_scale_ppm );
@@ -2104,7 +2104,7 @@ bool s57chart::DoRenderViewOnDC( wxMemoryDC& dc, const ViewPort& VPoint, RenderT
         northing_lr = northing_ul - ( VPoint.pix_height / m_view_scale_ppm );
 
         double last_easting_vp_center, last_northing_vp_center;
-        toSM( m_last_vp.clat, m_last_vp.clon, ref_lat, ref_lon, &last_easting_vp_center,
+        geo::toSM( m_last_vp.clat, m_last_vp.clon, ref_lat, ref_lon, &last_easting_vp_center,
                 &last_northing_vp_center );
 
         prev_easting_ul = last_easting_vp_center
@@ -2212,12 +2212,12 @@ bool s57chart::DoRenderViewOnDC( wxMemoryDC& dc, const ViewPort& VPoint, RenderT
                     - ( rect.y / m_view_scale_ppm );
             double temp_easting_ul = prev_easting_ul + ( rul.x / m_view_scale_ppm )
                     + ( rect.x / m_view_scale_ppm );
-            fromSM( temp_easting_ul, temp_northing_ul, ref_lat, ref_lon, &temp_lat_top,
+            geo::fromSM( temp_easting_ul, temp_northing_ul, ref_lat, ref_lon, &temp_lat_top,
                     &temp_lon_left );
 
             double temp_northing_lr = temp_northing_ul - ( rect.height / m_view_scale_ppm );
             double temp_easting_lr = temp_easting_ul + ( rect.width / m_view_scale_ppm );
-            fromSM( temp_easting_lr, temp_northing_lr, ref_lat, ref_lon, &temp_lat_bot,
+            geo::fromSM( temp_easting_lr, temp_northing_lr, ref_lat, ref_lon, &temp_lat_bot,
                     &temp_lon_right );
 
             temp_vp.GetBBox().SetMin( temp_lon_left, temp_lat_bot );
@@ -3315,7 +3315,7 @@ ListOfS57Obj *s57chart::GetAssociatedObjects( S57Obj *obj )
     pobj_list->Clear();
 
     double lat, lon;
-    fromSM( ( obj->x * obj->x_rate ) + obj->x_origin, ( obj->y * obj->y_rate ) + obj->y_origin,
+    geo::fromSM( ( obj->x * obj->x_rate ) + obj->x_origin, ( obj->y * obj->y_rate ) + obj->y_origin,
             ref_lat, ref_lon, &lat, &lon );
     //    What is the entry object geometry type?
 
@@ -4823,7 +4823,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                     lat = north_d;
 
                     //  Calculate SM from chart common reference point
-                    toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
+                    geo::toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
                     memcpy(pdf++, &easting, sizeof(float));
                     memcpy(pdf++, &northing, sizeof(float));
 
@@ -4832,7 +4832,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
                     lat = (float) *psd++;
 
                     //  Calculate SM from chart common reference point
-                    toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
+                    geo::toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
 
                     *pdf++ = easting;
                     *pdf++ = northing;
@@ -4988,7 +4988,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
 
                 //  Calculate SM from chart common reference point
                 double easting, northing;
-                toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
+                geo::toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
 
 #ifdef ARMHF
                 float east, north;
@@ -5048,7 +5048,7 @@ void s57chart::CreateSENCRecord( OGRFeature *pFeature, FILE * fpOut, int mode, S
 
                      //  Calculate SM from chart common reference point
                     double easting, northing;
-                    toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
+                    geo::toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
 
 #ifdef ARMHF
                     float east = easting;
@@ -5245,7 +5245,7 @@ void s57chart::CreateSENCVectorEdgeTable( FILE * fpOut, S57Reader *poReader )
 
             //  Calculate SM from chart common reference point
             double easting, northing;
-            toSM( p.getY(), p.getX(), ref_lat, ref_lon, &easting, &northing );
+            geo::toSM( p.getY(), p.getX(), ref_lat, ref_lon, &easting, &northing );
 
             geo::MyPoint pd;
             pd.x = easting;
@@ -5298,7 +5298,7 @@ void s57chart::CreateSENCConnNodeTable( FILE * fpOut, S57Reader *poReader )
 
                 //  Calculate SM from chart common reference point
                 double easting, northing;
-                toSM( pP->getY(), pP->getX(), ref_lat, ref_lon, &easting, &northing );
+                geo::toSM( pP->getY(), pP->getX(), ref_lat, ref_lon, &easting, &northing );
 
                 geo::MyPoint pd;
                 pd.x = easting;
@@ -5408,7 +5408,7 @@ bool s57chart::DoesLatLonSelectObject( float lat, float lon, float select_radius
                 //  So make a temporary box at the light's lat/lon, with select_radius size
                 if( !strncmp( obj->FeatureName, "LIGHTS", 6 ) ) {
                     double olon, olat;
-                    fromSM( ( obj->x * obj->x_rate ) + obj->x_origin,
+                    geo::fromSM( ( obj->x * obj->x_rate ) + obj->x_origin,
                             ( obj->y * obj->y_rate ) + obj->y_origin, ref_lat, ref_lon, &olat,
                             &olon );
 
@@ -5462,7 +5462,7 @@ bool s57chart::DoesLatLonSelectObject( float lat, float lon, float select_radius
                 //  make the hit test using SM coordinates, converting from object points to SM using per-object conversion factors.
 
                 double easting, northing;
-                toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
+                geo::toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
 
                 pt *ppt = obj->geoPt;
                 int npt = obj->npt;
@@ -5602,7 +5602,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
         //  make the hit test thus.
         double easting;
         double northing;
-        toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
+        geo::toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
 
         //  On some chart types (e.g. cm93), the tesseleated coordinates are stored differently.
         //  Adjust the pick point (easting/northing) to correspond.
@@ -5693,7 +5693,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
         //  make the hit test thus.
         //  However, since PolyTrapGeo geometry is (always??) in cm-93 coordinates, convert to sm as necessary
         double easting, northing;
-        toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
+        geo::toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
 
         int ntraps = ptg->ntrap_count;
         geo::trapz_t * ptraps = ptg->trap_array;
@@ -6119,7 +6119,7 @@ wxString s57chart::CreateObjDescriptions( ListOfObjRazRules* rule_list )
 
         if( GEO_POINT == current->obj->Primitive_type ) {
             double lon, lat;
-            fromSM( ( current->obj->x * current->obj->x_rate ) + current->obj->x_origin,
+            geo::fromSM( ( current->obj->x * current->obj->x_rate ) + current->obj->x_origin,
                     ( current->obj->y * current->obj->y_rate ) + current->obj->y_origin, ref_lat,
                     ref_lon, &lat, &lon );
 
@@ -6544,13 +6544,13 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport, std::vector<s5
                 continue;
 
             double endx, endy;
-            ll_gc_ll( sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
+            geo::ll_gc_ll( sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
                     sectorlegs[i].sector1 + 180.0, sectorlegs[i].range,
                     &endy, &endx );
 
             wxPoint end1 = viewport.GetPixFromLL( endy, endx );
 
-            ll_gc_ll( sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
+            geo::ll_gc_ll( sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
                     sectorlegs[i].sector2 + 180.0, sectorlegs[i].range,
                     &endy, &endx );
 

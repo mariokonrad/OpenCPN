@@ -250,7 +250,7 @@ class  ChartBaseBSB : public ChartBase
 		int               nFileOffsetDataStart;
 		int               m_nLineOffset;
 
-		GeoRef cPoints;
+		geo::GeoRef cPoints;
 
 		double wpx[12], wpy[12], pwx[12], pwy[12];     // Embedded georef coefficients
 		int wpx_type;

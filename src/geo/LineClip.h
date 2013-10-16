@@ -9,6 +9,8 @@
 #ifndef __GEO__LINECLIP__H__
 #define __GEO__LINECLIP__H__
 
+namespace geo {
+
 enum ClipResult { Visible, Invisible };
 
 ClipResult cohen_sutherland_line_clip_d(
@@ -30,5 +32,7 @@ ClipResult cohen_sutherland_line_clip_i(
 		int xmax_,
 		int ymin_,
 		int ymax_);
+
+}
 
 #endif

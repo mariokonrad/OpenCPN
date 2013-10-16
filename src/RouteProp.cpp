@@ -116,14 +116,6 @@ RoutePrintSelection * pRoutePrintSelection = NULL;
 #define    FALLING    4
 #define    RISING    8
 
-static char tide_status[][8] = {
-	" LW ",
-	" HW ",
-	" ~~v ",
-	" ~~^ "
-
-};
-
 // Sunrise/twilight calculation for route properties.
 // limitations: latitude below 60, year between 2000 and 2100
 // riset is +1 for rise -1 for set
@@ -132,22 +124,23 @@ static char tide_status[][8] = {
 static wxString GetDaylightString(int index)
 {
 	switch (index) {
-		case 0: return      _T(" - ");
-		case 1: return      _("MoTwilight");
-		case 2: return      _("Sunrise");
-		case 3: return      _("Daytime");
-		case 4: return      _("Sunset");
-		case 5: return      _("EvTwilight");
-		case 6: return      _("Nighttime");
-		default: return      _T("");
+		case 0: return  _T(" - ");
+		case 1: return  _("MoTwilight");
+		case 2: return  _("Sunrise");
+		case 3: return  _("Daytime");
+		case 4: return  _("Sunset");
+		case 5: return  _("EvTwilight");
+		case 6: return  _("Nighttime");
+		default: return _T("");
 	}
 }
 
 static double sign( double x )
 {
-	if( x < 0. ) return -1.;
+	if (x < 0.0)
+		return -1.0;
 	else
-		return 1.;
+		return 1.0;
 }
 
 static double FNipart( double x )
@@ -165,8 +158,9 @@ static double FNrange( double x )
 {
 	double b = x / tpi;
 	double a = tpi * ( b - FNipart( b ) );
-	if( a < 0. ) a = tpi + a;
-	return ( a );
+	if (a < 0.0)
+		a = tpi + a;
+	return a;
 }
 
 static double getDaylightEvent( double glat, double glong, int riset, double altitude, int y, int m, int d )
@@ -1254,9 +1248,9 @@ bool RouteProp::UpdateProperties()
 				else
 					leg_speed = m_planspeed;
 				if( m_bStartNow ) {
-					DistanceBearingMercator( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
-					if( i == 0 ) joining_time = wxTimeSpan::Seconds(
-							(long) wxRound( ( leg_dist * 3600. ) / leg_speed ) );
+					geo::DistanceBearingMercator( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
+					if (i == 0)
+						joining_time = wxTimeSpan::Seconds((long) wxRound( ( leg_dist * 3600. ) / leg_speed ));
 				}
 				enroute = true;
 			} else {
@@ -1265,7 +1259,7 @@ bool RouteProp::UpdateProperties()
 					leg_speed = m_planspeed;
 			}
 
-			DistanceBearingMercator( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
+			geo::DistanceBearingMercator( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
 
 			// calculation of course at current WayPoint.
 			double course=10, tmp_leg_dist=23;
@@ -1273,9 +1267,8 @@ bool RouteProp::UpdateProperties()
 			RoutePoint * _next_prp = (next_node)? next_node->GetData(): NULL;
 			if (_next_prp )
 			{
-				DistanceBearingMercator( _next_prp->m_lat, _next_prp->m_lon, prp->m_lat, prp->m_lon, &course, &tmp_leg_dist );
-			}else
-			{
+				geo::DistanceBearingMercator(_next_prp->m_lat, _next_prp->m_lon, prp->m_lat, prp->m_lon, &course, &tmp_leg_dist);
+			} else {
 				course = 0.0;
 				tmp_leg_dist = 0.0;
 			}
@@ -1564,7 +1557,7 @@ void RouteProp::OnPlanSpeedCtlUpdated(wxCommandEvent & event)
 	event.Skip();
 }
 
-void RouteProp::OnStartTimeCtlUpdated(wxCommandEvent & event)
+void RouteProp::OnStartTimeCtlUpdated(wxCommandEvent &)
 {
 	//  Fetch the value, and see if it is a "reasonable" time
 	wxString stime = m_StartTimeCtl->GetValue();
@@ -1577,7 +1570,8 @@ void RouteProp::OnStartTimeCtlUpdated(wxCommandEvent & event)
 		}
 		m_bStartNow = true;
 		d = wxDateTime::Now();
-		if( tz_selection == 1 ) m_starttime = d.ToUTC();
+		if( tz_selection == 1 )
+			m_starttime = d.ToUTC();
 		else
 			m_starttime = wxInvalidDateTime; // can't get it to work otherwise
 	} else {
@@ -1589,7 +1583,8 @@ void RouteProp::OnStartTimeCtlUpdated(wxCommandEvent & event)
 		m_starttime = d;
 
 		if( m_starttime.IsValid() ) {
-			if( tz_selection == 1 ) m_starttime = d.ToUTC();
+			if( tz_selection == 1 )
+				m_starttime = d.ToUTC();
 			if( tz_selection == 2 ) {
 				wxTimeSpan glmt( 0, 0, (int) gStart_LMT_Offset, 0 );
 				m_starttime -= glmt;

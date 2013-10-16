@@ -2475,14 +2475,15 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 				y1 = ptp[ipc + 1].y;
 
 				// Do not draw null segments
-				if( ( x0 == x1 ) && ( y0 == y1 ) ) continue;
+				if ((x0 == x1) && (y0 == y1))
+					continue;
 
-				ClipResult res = cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, xmin_, xmax_,
-						ymin_, ymax_ );
+				geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, xmin_, xmax_, ymin_, ymax_);
 
-				if( res != Invisible ) {
-					if( m_pdc ) m_pdc->DrawLine( x0, y0, x1, y1 );
-					else {
+				if( res != geo::Invisible ) {
+					if (m_pdc) {
+						m_pdc->DrawLine(x0, y0, x1, y1);
+					} else {
 						glBegin( GL_LINES );
 						glVertex2i( x0, y0 );
 						glVertex2i( x1, y1 );
@@ -2532,12 +2533,12 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 					// Do not draw null segments
 					if( ( x0 == x1 ) && ( y0 == y1 ) ) continue;
 
-					ClipResult res = cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, xmin_, xmax_,
-							ymin_, ymax_ );
+					geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, xmin_, xmax_, ymin_, ymax_);
 
-					if( res != Invisible ) {
-						if( m_pdc ) m_pdc->DrawLine( x0, y0, x1, y1 );
-						else {
+					if (res != geo::Invisible) {
+						if (m_pdc) {
+							m_pdc->DrawLine(x0, y0, x1, y1);
+						} else {
 							glBegin( GL_LINES );
 							glVertex2i( x0, y0 );
 							glVertex2i( x1, y1 );
@@ -2597,11 +2598,10 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 						// Do not draw null segments
 						if( ( x0 == x1 ) && ( y0 == y1 ) ) continue;
 
-						ClipResult res = cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, xmin_,
-								xmax_, ymin_, ymax_ );
+						geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, xmin_, xmax_, ymin_, ymax_);
 
-						if( ( res != Invisible ) ) m_pdc->DrawLine( x0, y0, x1, y1 );
-
+						if ((res != geo::Invisible))
+							m_pdc->DrawLine(x0, y0, x1, y1);
 					}
 
 					free( ptp );
@@ -2895,10 +2895,9 @@ void s52plib::draw_lc_poly( wxDC *pdc, wxColor &color, int width, wxPoint *ptp, 
 			x1 = ptp[iseg + inc].x;
 			y1 = ptp[iseg + inc].y;
 
-			ClipResult res = cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, xmin_, xmax_, ymin_,
-					ymax_ );
+			geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, xmin_, xmax_, ymin_, ymax_);
 
-			if( res == Invisible )
+			if (res == geo::Invisible)
 				goto next_seg_dc;
 
 			dx = ptp[iseg + inc].x - ptp[iseg].x;
@@ -2984,10 +2983,9 @@ next_seg_dc:
 			x1 = ptp[iseg + inc].x;
 			y1 = ptp[iseg + inc].y;
 
-			ClipResult res = cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, xmin_, xmax_, ymin_,
-					ymax_ );
+			geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, xmin_, xmax_, ymin_, ymax_);
 
-			if( res == Invisible )
+			if (res == geo::Invisible)
 				goto next_seg;
 
 			dx = ptp[iseg + inc].x - ptp[iseg].x;
@@ -5759,10 +5757,9 @@ int s52plib::RenderToBufferAC(
 		ViewPort * vp,
 		render_canvas_parms * pb_spec)
 {
-	S52color *c;
 	char *str = (char*) rules->INSTstr;
 
-	c = ps52plib->getColor( str );
+	S52color * c = ps52plib->getColor(str);
 
 	RenderToBufferFilledPolygon( rzRules, rzRules->obj, c, vp->GetBBox(), pb_spec, NULL );
 
@@ -5777,11 +5774,9 @@ int s52plib::RenderToBufferAC(
 					&& ( ( rzRules->obj->BBObj.GetMinX() + 360. ) < vp->GetBBox().GetMaxX() ) ) {
 				//  If so, this area oject should be drawn again, this time for the left side
 				//    Do this by temporarily adjusting the objects rendering offset
-				rzRules->obj->x_origin -= mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * M_PI;
-				RenderToBufferFilledPolygon( rzRules, rzRules->obj, c, vp->GetBBox(), pb_spec,
-						NULL );
-				rzRules->obj->x_origin += mercator_k0 * WGS84_semimajor_axis_meters * 2.0 * M_PI;
-
+				rzRules->obj->x_origin -= geo::mercator_k0 * geo::WGS84_semimajor_axis_meters * 2.0 * M_PI;
+				RenderToBufferFilledPolygon(rzRules, rzRules->obj, c, vp->GetBBox(), pb_spec, NULL);
+				rzRules->obj->x_origin += geo::mercator_k0 * geo::WGS84_semimajor_axis_meters * 2.0 * M_PI;
 			}
 		}
 	}
@@ -5792,11 +5787,12 @@ int s52plib::RenderToBufferAC(
 int s52plib::RenderAreaToDC( wxDC *pdcin, ObjRazRules *rzRules, ViewPort *vp,
 		render_canvas_parms *pb_spec )
 {
+	if (!ObjectRenderCheckPos(rzRules, vp))
+		return 0;
 
-	if( !ObjectRenderCheckPos( rzRules, vp ) ) return 0;
-
-	if( !ObjectRenderCheckCat( rzRules, vp ) ) {
-		if( !ObjectRenderCheckCS( rzRules, vp ) ) return 0;
+	if (!ObjectRenderCheckCat(rzRules, vp)) {
+		if (!ObjectRenderCheckCS(rzRules, vp))
+			return 0;
 	}
 
 	m_pdc = pdcin; // use this DC

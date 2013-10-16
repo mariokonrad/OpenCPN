@@ -224,10 +224,15 @@ void Route::AddPoint( RoutePoint *pNewPoint, bool b_rename_in_sequence, bool b_d
 
 	m_nPoints++;
 
-	if( !b_deferBoxCalc ) CalculateBBox();
+	if (!b_deferBoxCalc)
+		CalculateBBox();
 
-	if( m_pLastAddedPoint ) pNewPoint->m_seg_len = DistGreatCircle( m_pLastAddedPoint->m_lat,
-			m_pLastAddedPoint->m_lon, pNewPoint->m_lat, pNewPoint->m_lon );
+	if (m_pLastAddedPoint)
+		pNewPoint->m_seg_len = geo::DistGreatCircle(
+			m_pLastAddedPoint->m_lat,
+			m_pLastAddedPoint->m_lon,
+			pNewPoint->m_lat,
+			pNewPoint->m_lon);
 
 	m_route_length += pNewPoint->m_seg_len;
 
@@ -365,8 +370,7 @@ void Route::Draw( ocpnDC& dc, ViewPort &VP )
 			//    we must decide which way to go in longitude
 			//     Arbitrarily, we will go the shortest way
 
-			double pix_full_circle = WGS84_semimajor_axis_meters * mercator_k0 * 2 * M_PI
-				* VP.view_scale_ppm;
+			double pix_full_circle = geo::WGS84_semimajor_axis_meters * geo::mercator_k0 * 2 * M_PI * VP.view_scale_ppm;
 			double dp = pow( (double) ( rpt1.x - rpt2.x ), 2 ) + pow( (double) ( rpt1.y - rpt2.y ), 2 );
 			double dtest;
 			int adder;
@@ -443,7 +447,7 @@ void Route::RenderSegment( ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort 
 	//    That is, if wxGraphicsContext is available.....
 
 	if( hilite_width ) {
-		if( Visible == cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, 0, sx, 0, sy ) ) {
+		if( geo::Visible == geo::cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, 0, sx, 0, sy ) ) {
 			wxPen psave = dc.GetPen();
 
 			wxColour y = GetGlobalColor( _T ( "YELO1" ) );
@@ -458,7 +462,7 @@ void Route::RenderSegment( ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort 
 			dc.StrokeLine( x0, y0, x1, y1 );
 		}
 	} else {
-		if( Visible == cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, 0, sx, 0, sy ) )
+		if (geo::Visible == geo::cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, 0, sx, 0, sy ) )
 			dc.StrokeLine( x0, y0, x1, y1 );
 	}
 
@@ -802,8 +806,9 @@ void Route::UpdateSegmentDistances( double planspeed )
 
 			//    Calculate the absolute distance from 1->2
 
-			double brg, dd;
-			DistanceBearingMercator( slat1, slon1, slat2, slon2, &brg, &dd );
+			double brg;
+			double dd;
+			geo::DistanceBearingMercator( slat1, slon1, slat2, slon2, &brg, &dd );
 
 			//    And store in Point 2
 			prp->m_seg_len = dd;

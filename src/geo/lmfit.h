@@ -24,6 +24,8 @@
 #ifndef __GEO__LMFIT__HPP__
 #define __GEO__LMFIT__HPP__
 
+namespace geo {
+
 /*
  * lmfit
  *
@@ -102,5 +104,7 @@ typedef struct
 	int     print_flag;
 	int     n_par;
 } lm_data_type;
+
+}
 
 #endif

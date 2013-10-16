@@ -22,9 +22,11 @@
  **************************************************************************/
 
 #include "PolyTessGeoTrap.h"
-#include "triangulate.h"
-#include "geo/PolyTrapGroup.h"
-#include "geo/ExtendedGeometry.h"
+
+#include <geo/triangulate.h>
+#include <geo/PolyTrapGroup.h>
+#include <geo/ExtendedGeometry.h>
+
 #include <wx/geometry.h>
 
 namespace geo {

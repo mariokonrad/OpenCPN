@@ -165,18 +165,15 @@ wxString OCPNTrackListCtrl::OnGetItemText( long item, long column ) const
 
 		case 1:
 			double slat, slon;
-			if( item == 0 )
-			{
+			if (item == 0) {
 				slat = gLat;
 				slon = gLon;
-			}
-			else
-			{
+			} else {
 				slat = g_prev_point->m_lat;
 				slon = g_prev_point->m_lon;
 			}
 
-			DistanceBearingMercator( g_this_point->m_lat, g_this_point->m_lon, slat, slon, &gt_brg, &gt_leg_dist );
+			geo::DistanceBearingMercator(g_this_point->m_lat, g_this_point->m_lon, slat, slon, &gt_brg, &gt_leg_dist);
 
 			ret.Printf( _T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance( gt_leg_dist ) );
 			break;

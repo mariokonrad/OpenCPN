@@ -412,13 +412,14 @@ bool Select::DeletePointSelectableTrackSegments(RoutePoint * pr)
 
 bool Select::IsSegmentSelected(float a, float b, float c, float d, float slat, float slon)
 {
-	double adder = 0.;
+	double adder = 0.0;
 
-	if( ( c * d ) < 0. ) {
+	if( ( c * d ) < 0.0) {
 		//    Arrange for points to be increasing longitude, c to d
-		double dist, brg;
-		DistanceBearingMercator( a, c, b, d, &brg, &dist );
-		if( brg < 180. )             // swap points?
+		double dist;
+		double brg;
+		geo::DistanceBearingMercator( a, c, b, d, &brg, &dist );
+		if( brg < 180.0)             // swap points?
 		{
 			double tmp;
 			tmp = c;
@@ -428,10 +429,11 @@ bool Select::IsSegmentSelected(float a, float b, float c, float d, float slat, f
 			a = b;
 			b = tmp;
 		}
-		if( d < 0. )     // idl?
+		if( d < 0.0)     // idl?
 		{
-			d += 360.;
-			if( slon < 0. ) adder = 360.;
+			d += 360.0;
+			if( slon < 0.0)
+				adder = 360.0;
 		}
 	}
 
@@ -446,11 +448,11 @@ bool Select::IsSegmentSelected(float a, float b, float c, float d, float slat, f
 
 		//    Assuming a Mercator projection
 		double ap, cp;
-		toSM( a, c, 0., 0., &cp, &ap );
+		geo::toSM( a, c, 0., 0., &cp, &ap );
 		double bp, dp;
-		toSM( b, d, 0., 0., &dp, &bp );
+		geo::toSM( b, d, 0., 0., &dp, &bp );
 		double slatp, slonp;
-		toSM( slat, slon + adder, 0., 0., &slonp, &slatp );
+		geo::toSM( slat, slon + adder, 0., 0., &slonp, &slatp );
 
 		va.x = slonp - cp;
 		va.y = slatp - ap;
@@ -458,7 +460,8 @@ bool Select::IsSegmentSelected(float a, float b, float c, float d, float slat, f
 		vb.y = bp - ap;
 
 		double delta = vGetLengthOfNormal( &va, &vb, &vn );
-		if( fabs( delta ) < ( selectRadius * 1852 * 60 ) ) return true;
+		if (fabs(delta) < (selectRadius * 1852 * 60))
+			return true;
 	}
 	return false;
 }

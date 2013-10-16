@@ -948,22 +948,23 @@ void RouteManagerDialog::ZoomtoRoute( Route *route )
 	double clat = route->RBBox.GetMinY() + ( route->RBBox.GetHeight() / 2 );
 	double clon = route->RBBox.GetMinX() + ( route->RBBox.GetWidth() / 2 );
 
-	if( clon > 180. ) clon -= 360.;
-	else
-		if( clon < -180. ) clon += 360.;
+	if (clon > 180.0)
+		clon -= 360.0;
+	else if (clon < -180.0)
+		clon += 360.0;
 
 	// Calculate ppm
 	double rw, rh, ppm; // route width, height, final ppm scale to use
 	int ww, wh; // chart window width, height
 	// route bbox width in nm
-	DistanceBearingMercator( route->RBBox.GetMinY(), route->RBBox.GetMinX(), route->RBBox.GetMinY(),
+	geo::DistanceBearingMercator(route->RBBox.GetMinY(), route->RBBox.GetMinX(), route->RBBox.GetMinY(),
 			route->RBBox.GetMaxX(), NULL, &rw );
 	// route bbox height in nm
-	DistanceBearingMercator( route->RBBox.GetMinY(), route->RBBox.GetMinX(), route->RBBox.GetMaxY(),
+	geo::DistanceBearingMercator( route->RBBox.GetMinY(), route->RBBox.GetMinX(), route->RBBox.GetMaxY(),
 			route->RBBox.GetMinX(), NULL, &rh );
 
 	cc1->GetSize( &ww, &wh );
-	ppm = wxMin(ww/(rw*1852), wh/(rh*1852)) * ( 100 - fabs( clat ) ) / 90;
+	ppm = wxMin(ww/(rw*1852.0), wh/(rh*1852.0)) * ( 100 - fabs( clat ) ) / 90;
 	ppm = wxMin(ppm, 1.0);
 	gFrame->JumpToPosition( clat, clon, ppm );
 	m_bNeedConfigFlush = true;
@@ -1841,7 +1842,7 @@ void RouteManagerDialog::UpdateWptListCtrl( RoutePoint *rp_select, bool b_retain
 			m_pWptListCtrl->SetItem(idx, colWPTNAME, name);
 
 			double dst;
-			DistanceBearingMercator(rp->m_lat, rp->m_lon, gLat, gLon, NULL, &dst);
+			geo::DistanceBearingMercator(rp->m_lat, rp->m_lon, gLat, gLon, NULL, &dst);
 			wxString dist;
 			dist.Printf(_T("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(dst));
 			m_pWptListCtrl->SetItem(idx, colWPTDIST, dist);

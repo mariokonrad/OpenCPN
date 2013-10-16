@@ -23,10 +23,7 @@
 
 #include "LineClip.h"
 
-enum
-{
-	CTRUE  = -1, CFALSE = 0
-};
+namespace geo {
 
 enum edge
 {
@@ -40,7 +37,7 @@ struct LOC_cohen_sutherland_line_clip
 	double xmax;
 	double ymin;
 	double ymax;
-} ;
+};
 
 static long CompOutCode(
 		double x,
@@ -76,8 +73,8 @@ ClipResult cohen_sutherland_line_clip_d(
 	// and clip rectangle with diagonal from (xmin,ymin) to (xmax,ymax).
 
 	struct LOC_cohen_sutherland_line_clip V;
-	int accept = CFALSE;
-	int done = CFALSE;
+	bool accept = false;
+	bool done = false;
 	ClipResult clip = Visible;
 	long outcode0;
 	long outcode1;
@@ -94,11 +91,11 @@ ClipResult cohen_sutherland_line_clip_d(
 	outcode1 = CompOutCode(*x1, *y1, &V);
 	do {
 		if (outcode0 == 0 && outcode1 == 0) {   /*Trivial accept and exit*/
-			accept = CTRUE;
-			done = CTRUE;
+			accept = true;
+			done = true;
 		} else if ((outcode0 & outcode1) != 0) {
 			clip = Invisible;
-			done = CTRUE;
+			done = true;
 		} else { /*Logical intersection is true, so trivial reject and exit.*/
 			clip = Visible;
 			/*Failed both tests, so calculate the line segment to clip;
@@ -170,5 +167,7 @@ ClipResult cohen_sutherland_line_clip_i(
 	*x1_ = (int)x1;
 	*y1_ = (int)y1;
 	return ret;
+}
+
 }
 

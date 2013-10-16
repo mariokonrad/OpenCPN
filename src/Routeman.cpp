@@ -173,11 +173,12 @@ RoutePoint * Routeman::FindBestActivatePoint(Route *pR, double lat, double lon, 
 	while( node ) {
 		RoutePoint *pn = node->GetData();
 
-		double brg, dist;
-		DistanceBearingMercator( pn->m_lat, pn->m_lon, lat, lon, &brg, &dist );
+		double brg;
+		double dist;
+		geo::DistanceBearingMercator(pn->m_lat, pn->m_lon, lat, lon, &brg, &dist);
 
 		double angle = brg - cog;
-		double soa = cos( angle * M_PI / 180. );
+		double soa = cos(angle * M_PI / 180.0);
 
 		double time_to_wp = dist / soa;
 
@@ -352,7 +353,7 @@ bool Routeman::UpdateProgress()
 		//  Bearing is calculated as Mercator Sailing, i.e. a  cartographic "bearing"
 		double north;
 		double east;
-		toSM( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &east, &north );
+		geo::toSM( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &east, &north );
 		double a = atan( north / east );
 		if (fabs(pActivePoint->m_lon - gLon) < 180.0) {
 			if (pActivePoint->m_lon > gLon)
@@ -368,20 +369,20 @@ bool Routeman::UpdateProgress()
 
 		//      Calculate range using Great Circle Formula
 
-		double d5 = DistGreatCircle( gLat, gLon, pActivePoint->m_lat, pActivePoint->m_lon );
+		double d5 = geo::DistGreatCircle( gLat, gLon, pActivePoint->m_lat, pActivePoint->m_lon );
 		CurrentRngToActivePoint = d5;
 
 		//      Get the XTE vector, normal to current segment
 		Vector2D va, vb, vn;
 
 		double brg1, dist1, brg2, dist2;
-		DistanceBearingMercator(pActivePoint->m_lat, pActivePoint->m_lon,
+		geo::DistanceBearingMercator(pActivePoint->m_lat, pActivePoint->m_lon,
 				pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon, &brg1,
 				&dist1);
 		vb.x = dist1 * sin(brg1 * M_PI / 180.0);
 		vb.y = dist1 * cos(brg1 * M_PI / 180.0);
 
-		DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &brg2,
+		geo::DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &brg2,
 				&dist2 );
 		va.x = dist2 * sin(brg2 * M_PI / 180.0);
 		va.y = dist2 * cos(brg2 * M_PI / 180.0);
@@ -399,11 +400,11 @@ bool Routeman::UpdateProgress()
 		//          Compute current segment course
 		//          Using simple Mercater projection
 		double x1, y1, x2, y2;
-		toSM( pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon,
+		geo::toSM( pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon,
 				pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon, &x1,
 				&y1 );
 
-		toSM( pActivePoint->m_lat, pActivePoint->m_lon, pActiveRouteSegmentBeginPoint->m_lat,
+		geo::toSM( pActivePoint->m_lat, pActivePoint->m_lon, pActiveRouteSegmentBeginPoint->m_lat,
 				pActiveRouteSegmentBeginPoint->m_lon, &x2, &y2 );
 
 		double e1 = atan2( ( x2 - x1 ), ( y2 - y1 ) );
@@ -745,7 +746,7 @@ bool Routeman::UpdateAutopilot()
 		m_NMEA0183.Apb.To = pActivePoint->GetName().Truncate( 6 );
 
 		double brg1, dist1;
-		DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon,
+		geo::DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon,
 				pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon,
 				&brg1,
 				&dist1 );

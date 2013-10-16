@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "M_COVR_Desc.h"
-#include "ViewPort.h"
+#include <ViewPort.h>
 #include <MicrosoftCompatibility.h>
 
 #include <geo/GeoRef.h>
@@ -155,29 +155,24 @@ int M_COVR_Desc:: ReadWKB ( wxFFileInputStream &ifs )
 	return length;
 }
 
-OCPNRegion M_COVR_Desc::GetRegion ( const ViewPort &vp, wxPoint *pwp )
+OCPNRegion M_COVR_Desc::GetRegion(const ViewPort &vp, wxPoint *pwp)
 {
 	geo::float_2Dpt *p = pvertices;
 
-	for ( int ip = 0 ; ip < m_nvertices ; ip++ )
-	{
-
+	for (int ip = 0 ; ip < m_nvertices ; ip++) {
 		double plon = p->x;
-		if ( fabs ( plon - vp.clon ) > 180. )
-		{
+		if ( fabs ( plon - vp.clon ) > 180.0) {
 			if ( plon > vp.clon )
-				plon -= 360.;
+				plon -= 360.0;
 			else
-				plon += 360.;
+				plon += 360.0;
 		}
 
 
 		double easting, northing, epix, npix;
-		toSM ( p->y, plon + 360., vp.clat, vp.clon + 360, &easting, &northing );
+		geo::toSM(p->y, plon + 360.0, vp.clat, vp.clon + 360, &easting, &northing);
 
-		//            easting -= transform_WGS84_offset_x;
 		easting -=  user_xoff;
-		//            northing -= transform_WGS84_offset_y;
 		northing -= user_yoff;
 
 		epix = easting  * vp.view_scale_ppm;

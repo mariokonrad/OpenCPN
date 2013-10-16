@@ -26,11 +26,10 @@
 #include "ViewPort.h"
 
 #include <MicrosoftCompatibility.h>
+#include <OCPNRegion.h>
+#include <ProjectionType.h>
 
 #include <geo/GeoRef.h>
-
-#include "OCPNRegion.h"
-#include "ProjectionType.h"
 
 #ifndef __WXMSW__
 	#include <signal.h>
@@ -83,8 +82,8 @@ wxPoint ViewPort::GetPixFromLL(double lat, double lon) const
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
-		toTM( lat, xlon, 0., clon, &tmeasting, &tmnorthing );
+		geo::toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
+		geo::toTM( lat, xlon, 0., clon, &tmeasting, &tmnorthing );
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
@@ -93,15 +92,15 @@ wxPoint ViewPort::GetPixFromLL(double lat, double lon) const
 		//    We calculate northings as referenced to the equator
 		//    And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		toPOLY( clat, clon, 0., clon, &pceasting, &pcnorthing );
+		geo::toPOLY( clat, clon, 0., clon, &pceasting, &pcnorthing );
 
 		double peasting, pnorthing;
-		toPOLY( lat, xlon, 0., clon, &peasting, &pnorthing );
+		geo::toPOLY( lat, xlon, 0., clon, &peasting, &pnorthing );
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
 	} else
-		toSM( lat, xlon, clat, clon, &easting, &northing );
+		geo::toSM( lat, xlon, clat, clon, &easting, &northing );
 
 	if (!wxFinite(easting) || !wxFinite(northing))
 		return wxPoint( 0, 0 );
@@ -148,8 +147,8 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL( double lat, double lon )
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
-		toTM( lat, xlon, 0., clon, &tmeasting, &tmnorthing );
+		geo::toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
+		geo::toTM( lat, xlon, 0., clon, &tmeasting, &tmnorthing );
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
@@ -158,17 +157,17 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL( double lat, double lon )
 		//    We calculate northings as referenced to the equator
 		//    And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		toPOLY( clat, clon, 0., clon, &pceasting, &pcnorthing );
+		geo::toPOLY( clat, clon, 0., clon, &pceasting, &pcnorthing );
 
 		double peasting, pnorthing;
-		toPOLY( lat, xlon, 0., clon, &peasting, &pnorthing );
+		geo::toPOLY( lat, xlon, 0., clon, &peasting, &pnorthing );
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
 	}
 
 	else
-		toSM( lat, xlon, clat, clon, &easting, &northing );
+		geo::toSM( lat, xlon, clat, clon, &easting, &northing );
 
 	if( !wxFinite(easting) || !wxFinite(northing) ) return wxPoint( 0, 0 );
 
@@ -209,27 +208,29 @@ void ViewPort::GetLLFromPix( const wxPoint &p, double *lat, double *lon )
 
 	double slat, slon;
 	if( PROJECTION_TRANSVERSE_MERCATOR == m_projection_type ) {
-		double tmceasting, tmcnorthing;
-		toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
-
-		fromTM( d_east, d_north + tmcnorthing, 0., clon, &slat, &slon );
+		double tmceasting;
+		double tmcnorthing;
+		geo::toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
+		geo::fromTM( d_east, d_north + tmcnorthing, 0., clon, &slat, &slon );
 	} else if( PROJECTION_POLYCONIC == m_projection_type ) {
-		double polyeasting, polynorthing;
-		toPOLY( clat, clon, 0., clon, &polyeasting, &polynorthing );
-
-		fromPOLY( d_east, d_north + polynorthing, 0., clon, &slat, &slon );
+		double polyeasting;
+		double polynorthing;
+		geo::toPOLY( clat, clon, 0., clon, &polyeasting, &polynorthing );
+		geo::fromPOLY( d_east, d_north + polynorthing, 0., clon, &slat, &slon );
 	}
 
 	//TODO  This could be fromSM_ECC to better match some Raster charts
 	//      However, it seems that cm93 (and S57) prefer no eccentricity correction
 	//      Think about it....
 	else
-		fromSM( d_east, d_north, clat, clon, &slat, &slon );
+		geo::fromSM( d_east, d_north, clat, clon, &slat, &slon );
 
 	*lat = slat;
 
-	if( slon < -180. ) slon += 360.;
-	else if( slon > 180. ) slon -= 360.;
+	if (slon < -180.0)
+		slon += 360.0;
+	else if( slon > 180.0)
+		slon -= 360.0;
 	*lon = slon;
 }
 

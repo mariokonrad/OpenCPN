@@ -84,17 +84,17 @@ class Routeman
 		wxBrush * GetActiveRoutePointBrush(void);
 		wxBrush * GetRoutePointBrush(void);
 
-		wxString GetRouteReverseMessage(void);
+		wxString GetRouteReverseMessage(void) const;
 
 		Route * RouteExists(const wxString & guid) const;
 		bool RouteExists(Route * route) const;
 		bool IsRouteValid(Route *pRoute) const;
-
-		bool m_bDataValid; // FIXME: public attribute
+		bool is_data_valid() const;
 
 	private:
 		void DoAdvance(void);
 
+		bool m_bDataValid;
 		App * m_pparent_app;
 		Route * pActiveRoute;
 		RoutePoint * pActivePoint;

@@ -83,8 +83,6 @@ ConsoleCanvas::ConsoleCanvas(wxWindow * frame)
 	pThisLegText->Fit();
 	m_pitemBoxSizerLeg->Add( pThisLegText, 0, wxALIGN_CENTER_HORIZONTAL, 2 );
 
-	//     pSBoxRgn = new wxRegion(pThisLegBox->GetRect() );
-
 	pThisLegFont = wxTheFontList->FindOrCreateFont( 10, wxDEFAULT, wxNORMAL, wxBOLD );
 
 	pThisLegText->SetFont( *pThisLegFont );
@@ -132,21 +130,21 @@ ConsoleCanvas::~ConsoleCanvas()
 
 void ConsoleCanvas::SetColorScheme(ColorScheme cs)
 {
-	pbackBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("DILG1"/*UIBDR*/) ),
-			wxSOLID );
-	SetBackgroundColour( GetGlobalColor( _T("DILG1"/*"UIBDR"*/) ) );
+	wxColour color = GetGlobalColor(_T("DILG1"/*UIBDR*/));
+
+	pbackBrush = wxTheBrushList->FindOrCreateBrush(color, wxSOLID);
+	SetBackgroundColour(color);
 
 	//  Also apply color scheme to all known children
 
-	pThisLegText->SetBackgroundColour( GetGlobalColor( _T("DILG1"/*"UIBDR"*/) ) );
+	pThisLegText->SetBackgroundColour(color);
 
-	pXTE->SetColorScheme( cs );
-	pBRG->SetColorScheme( cs );
-	pRNG->SetColorScheme( cs );
-	pTTG->SetColorScheme( cs );
-	pVMG->SetColorScheme( cs );
-
-	pCDI->SetColorScheme( cs );
+	pXTE->SetColorScheme(cs);
+	pBRG->SetColorScheme(cs);
+	pRNG->SetColorScheme(cs);
+	pTTG->SetColorScheme(cs);
+	pVMG->SetColorScheme(cs);
+	pCDI->SetColorScheme(cs);
 }
 
 void ConsoleCanvas::OnPaint(wxPaintEvent &)
@@ -231,9 +229,8 @@ void ConsoleCanvas::UpdateRouteData()
 {
 	wxString str_buf;
 
-	if( g_pRouteMan->GetpActiveRoute() ) {
-
-		if( g_pRouteMan->m_bDataValid ) {
+	if (g_pRouteMan->GetpActiveRoute()) {
+		if (g_pRouteMan->is_data_valid()) {
 
 			//    Range
 			wxString srng;
@@ -244,15 +241,15 @@ void ConsoleCanvas::UpdateRouteData()
 			double deltarng = fabs( rng - nrng );
 			if( ( deltarng > .01 ) && ( ( deltarng / rng ) > .10 ) && ( rng < 10.0 ) ) // show if there is more than 10% difference in ranges, etc...
 			{
-				if( nrng < 10.0 )
-				srng.Printf( _T("%5.2f/%5.2f"), rng, nrng );
+				if (nrng < 10.0)
+					srng.Printf(_T("%5.2f/%5.2f"), rng, nrng);
 				else
-					srng.Printf( _T("%5.1f/%5.1f"), rng, nrng );
+					srng.Printf(_T("%5.1f/%5.1f"), rng, nrng);
 			} else {
-				if( rng < 10.0 )
-					srng.Printf( _T("%6.2f"), rng );
+				if (rng < 10.0)
+					srng.Printf(_T("%6.2f"), rng);
 				else
-					srng.Printf( _T("%6.1f"), rng );
+					srng.Printf(_T("%6.1f"), rng);
 			}
 
 			if (!m_bShowRouteTotal)
@@ -320,20 +317,24 @@ void ConsoleCanvas::UpdateRouteData()
 			int n_addflag = 0;
 			while( node ) {
 				prp = node->GetData();
-				if( n_addflag ) trng += prp->m_seg_len;
+				if (n_addflag)
+					trng += prp->m_seg_len;
 
-				if( prp == prt->m_pRouteActivePoint ) n_addflag++;
+				if (prp == prt->m_pRouteActivePoint)
+					n_addflag++;
 
 				node = node->GetNext();
 			}
 
 			//                total rng
 			wxString strng;
-			if( trng < 10.0 ) strng.Printf( _T("%6.2f"), trng );
+			if (trng < 10.0)
+				strng.Printf( _T("%6.2f"), trng );
 			else
 				strng.Printf( _T("%6.1f"), trng );
 
-			if( m_bShowRouteTotal ) pRNG->SetAValue( strng );
+			if (m_bShowRouteTotal)
+				pRNG->SetAValue( strng );
 
 			//                total ttg
 			// If showing total route ttg/ETA, use speed over ground for calculation
@@ -349,7 +350,8 @@ void ConsoleCanvas::UpdateRouteData()
 				tttg_s = _T("---");
 			}
 
-			if( m_bShowRouteTotal ) pTTG->SetAValue( tttg_s );
+			if( m_bShowRouteTotal )
+				pTTG->SetAValue( tttg_s );
 
 			//                total ETA to be shown on XTE panel
 			if( m_bShowRouteTotal ) {
@@ -358,7 +360,8 @@ void ConsoleCanvas::UpdateRouteData()
 				eta = dtnow.Add( tttg_span );
 				wxString seta;
 
-				if( VMG > 0. ) seta = eta.Format( _T("%H:%M") );
+				if( VMG > 0. )
+					seta = eta.Format( _T("%H:%M") );
 				else
 					seta = _T("---");
 

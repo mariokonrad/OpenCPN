@@ -79,21 +79,6 @@ extern PlugInManager * g_pi_manager;
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern wxString g_uploadConnection;
 
-class markicon_bitmap_list_type;
-class markicon_key_list_type;
-class markicon_description_list_type;
-
-//    List definitions for Waypoint Manager Icons
-WX_DECLARE_LIST(wxBitmap, markicon_bitmap_list_type);
-WX_DECLARE_LIST(wxString, markicon_key_list_type);
-WX_DECLARE_LIST(wxString, markicon_description_list_type);
-
-//    List implementation for Waypoint Manager Icons
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(markicon_bitmap_list_type);
-WX_DEFINE_LIST(markicon_key_list_type);
-WX_DEFINE_LIST(markicon_description_list_type);
-
 
 Routeman::Routeman(App *parent)
 {
@@ -105,7 +90,8 @@ Routeman::Routeman(App *parent)
 
 Routeman::~Routeman()
 {
-	if( pRouteActivatePoint ) delete pRouteActivatePoint;
+	if (pRouteActivatePoint)
+		delete pRouteActivatePoint;
 }
 
 Route * Routeman::RouteExists(const wxString & guid) const
@@ -156,9 +142,9 @@ wxArrayPtrVoid * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FIXME: r
 
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route * route = *i;
-		wxRoutePointListNode *waypoint_node = (route->pRoutePointList)->GetFirst();
-		while( waypoint_node ) {
-			RoutePoint *prp = waypoint_node->GetData();
+		wxRoutePointListNode *waypoint_node = route->pRoutePointList->GetFirst();
+		while (waypoint_node) {
+			RoutePoint * prp = waypoint_node->GetData();
 			if (prp == pWP)
 				pArray->push_back((void *)route);
 
@@ -176,7 +162,8 @@ wxArrayPtrVoid * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FIXME: r
 
 RoutePoint * Routeman::FindBestActivatePoint(Route *pR, double lat, double lon, double cog, double WXUNUSED(sog))
 {
-	if( !pR ) return NULL;
+	if (!pR)
+		return NULL;
 
 	// Walk thru all the points to find the "best"
 	RoutePoint *best_point = NULL;
@@ -209,10 +196,10 @@ bool Routeman::ActivateRoute( Route *pRouteToActivate, RoutePoint *pStartPoint )
 {
 	pActiveRoute = pRouteToActivate;
 
-	if( pStartPoint ) {
+	if (pStartPoint) {
 		pActivePoint = pStartPoint;
 	} else {
-		wxRoutePointListNode *node = ( pActiveRoute->pRoutePointList )->GetFirst();
+		wxRoutePointListNode * node = pActiveRoute->pRoutePointList->GetFirst();
 		pActivePoint = node->GetData();               // start at beginning
 	}
 
@@ -257,7 +244,7 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 		node = node->GetNext();
 	}
 
-	node = ( pActiveRoute->pRoutePointList )->GetFirst();
+	node = pActiveRoute->pRoutePointList->GetFirst();
 	RoutePoint *prp_first = node->GetData();
 
 	//  If activating first point in route, create a "virtual" waypoint at present position
@@ -274,7 +261,7 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 		RoutePoint *np_prev = prp_first;
 		while( node ) {
 			RoutePoint *pnext = node->GetData();
-			if( pnext == pRP_target ) {
+			if (pnext == pRP_target) {
 				pActiveRouteSegmentBeginPoint = np_prev;
 				break;
 			}
@@ -363,17 +350,20 @@ bool Routeman::UpdateProgress()
 		//      Update bearing, range, and crosstrack error
 
 		//  Bearing is calculated as Mercator Sailing, i.e. a  cartographic "bearing"
-		double north, east;
+		double north;
+		double east;
 		toSM( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &east, &north );
 		double a = atan( north / east );
-		if( fabs( pActivePoint->m_lon - gLon ) < 180. ) {
-			if( pActivePoint->m_lon > gLon ) CurrentBrgToActivePoint = 90. - ( a * 180 / M_PI );
+		if (fabs(pActivePoint->m_lon - gLon) < 180.0) {
+			if (pActivePoint->m_lon > gLon)
+				CurrentBrgToActivePoint = 90.0 - ( a * 180.0 / M_PI );
 			else
-				CurrentBrgToActivePoint = 270. - ( a * 180 / M_PI );
+				CurrentBrgToActivePoint = 270.0 - ( a * 180.0 / M_PI );
 		} else {
-			if( pActivePoint->m_lon > gLon ) CurrentBrgToActivePoint = 270. - ( a * 180 / M_PI );
+			if (pActivePoint->m_lon > gLon)
+				CurrentBrgToActivePoint = 270.0 - ( a * 180.0 / M_PI );
 			else
-				CurrentBrgToActivePoint = 90. - ( a * 180 / M_PI );
+				CurrentBrgToActivePoint = 90.0 - ( a * 180.0 / M_PI );
 		}
 
 		//      Calculate range using Great Circle Formula
@@ -385,16 +375,16 @@ bool Routeman::UpdateProgress()
 		Vector2D va, vb, vn;
 
 		double brg1, dist1, brg2, dist2;
-		DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon,
+		DistanceBearingMercator(pActivePoint->m_lat, pActivePoint->m_lon,
 				pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon, &brg1,
-				&dist1 );
-		vb.x = dist1 * sin( brg1 * M_PI / 180. );
-		vb.y = dist1 * cos( brg1 * M_PI / 180. );
+				&dist1);
+		vb.x = dist1 * sin(brg1 * M_PI / 180.0);
+		vb.y = dist1 * cos(brg1 * M_PI / 180.0);
 
 		DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon, gLat, gLon, &brg2,
 				&dist2 );
-		va.x = dist2 * sin( brg2 * M_PI / 180. );
-		va.y = dist2 * cos( brg2 * M_PI / 180. );
+		va.x = dist2 * sin(brg2 * M_PI / 180.0);
+		va.y = dist2 * cos(brg2 * M_PI / 180.0);
 
 		double sdelta = vGetLengthOfNormal( &va, &vb, &vn );             // NM
 		CurrentXTEToActivePoint = sdelta;
@@ -417,19 +407,23 @@ bool Routeman::UpdateProgress()
 				pActiveRouteSegmentBeginPoint->m_lon, &x2, &y2 );
 
 		double e1 = atan2( ( x2 - x1 ), ( y2 - y1 ) );
-		CurrentSegmentCourse = e1 * 180 / M_PI;
-		if( CurrentSegmentCourse < 0 ) CurrentSegmentCourse += 360;
+		CurrentSegmentCourse = e1 * 180.0 / M_PI;
+		if (CurrentSegmentCourse < 0)
+			CurrentSegmentCourse += 360;
 
 		//      Compute XTE direction
-		double h = atan( vn.y / vn.x );
-		if( vn.x > 0 ) CourseToRouteSegment = 90. - ( h * 180 / M_PI );
+		double h = atan(vn.y / vn.x);
+		if (vn.x > 0)
+			CourseToRouteSegment = 90.0 - (h * 180.0 / M_PI);
 		else
-			CourseToRouteSegment = 270. - ( h * 180 / M_PI );
+			CourseToRouteSegment = 270. - (h * 180.0 / M_PI);
 
 		h = CurrentBrgToActivePoint - CourseToRouteSegment;
-		if( h < 0 ) h = h + 360;
+		if (h < 0)
+			h = h + 360;
 
-		if( h > 180 ) XTEDir = 1;
+		if (h > 180)
+			XTEDir = 1;
 		else
 			XTEDir = -1;
 
@@ -443,12 +437,10 @@ bool Routeman::UpdateProgress()
 
 			bDidArrival = true;
 			DoAdvance();
-
-		}
-		else {
-			//      Test to see if we are moving away from the arrival point, and
-			//      have been mving away for 2 seconds.  
-			//      If so, we should declare "Arrival"
+		} else {
+			// Test to see if we are moving away from the arrival point, and
+			// have been mving away for 2 seconds.
+			// If so, we should declare "Arrival"
 			if( (CurrentRangeToActiveNormalCrossing - m_arrival_min) >  pActiveRoute->GetRouteArrivalRadius() ){
 				if(++m_arrival_test > 2) {
 					m_bArrival = true;
@@ -544,18 +536,57 @@ int Routeman::GetXTEDir() const
 	return XTEDir;
 }
 
-wxPen * Routeman::GetRoutePen(void){return m_pRoutePen;}
-wxPen * Routeman::GetSelectedRoutePen(void){return m_pSelectedRoutePen;}
-wxPen * Routeman::GetActiveRoutePen(void){return m_pActiveRoutePen;}
-wxPen * Routeman::GetActiveRoutePointPen(void){return m_pActiveRoutePointPen;}
-wxPen * Routeman::GetRoutePointPen(void){return m_pRoutePointPen;}
-wxBrush * Routeman::GetRouteBrush(void){return m_pRouteBrush;}
-wxBrush * Routeman::GetSelectedRouteBrush(void){return m_pSelectedRouteBrush;}
-wxBrush * Routeman::GetActiveRouteBrush(void){return m_pActiveRouteBrush;}
-wxBrush * Routeman::GetActiveRoutePointBrush(void){return m_pActiveRoutePointBrush;}
-wxBrush * Routeman::GetRoutePointBrush(void){return m_pRoutePointBrush;}
+wxPen * Routeman::GetRoutePen(void)
+{
+	return m_pRoutePen;
+}
 
-bool Routeman::DeactivateRoute( bool b_arrival )
+wxPen * Routeman::GetSelectedRoutePen(void)
+{
+	return m_pSelectedRoutePen;
+}
+
+wxPen * Routeman::GetActiveRoutePen(void)
+{
+	return m_pActiveRoutePen;
+}
+
+wxPen * Routeman::GetActiveRoutePointPen(void)
+{
+	return m_pActiveRoutePointPen;
+}
+
+wxPen * Routeman::GetRoutePointPen(void)
+{
+	return m_pRoutePointPen;
+}
+
+wxBrush * Routeman::GetRouteBrush(void)
+{
+	return m_pRouteBrush;
+}
+
+wxBrush * Routeman::GetSelectedRouteBrush(void)
+{
+	return m_pSelectedRouteBrush;
+}
+
+wxBrush * Routeman::GetActiveRouteBrush(void)
+{
+	return m_pActiveRouteBrush;
+}
+
+wxBrush * Routeman::GetActiveRoutePointBrush(void)
+{
+	return m_pActiveRoutePointBrush;
+}
+
+wxBrush * Routeman::GetRoutePointBrush(void)
+{
+	return m_pRoutePointBrush;
+}
+
+bool Routeman::DeactivateRoute(bool b_arrival)
 {
 	if( pActivePoint ) {
 		pActivePoint->m_bBlink = false;
@@ -582,12 +613,13 @@ bool Routeman::DeactivateRoute( bool b_arrival )
 
 	pActiveRoute = NULL;
 
-	if( pRouteActivatePoint ) delete pRouteActivatePoint;
+	if (pRouteActivatePoint)
+		delete pRouteActivatePoint;
 	pRouteActivatePoint = NULL;
 
 	console->pCDI->ClearBackground();
 
-	console->Show( false );
+	console->Show(false);
 
 	m_bDataValid = false;
 
@@ -1008,14 +1040,18 @@ void Routeman::SetColorScheme(ColorScheme)
 	m_pActiveRouteBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("PLRTE") ), wxSOLID );
 }
 
-wxString Routeman::GetRouteReverseMessage(void)
+wxString Routeman::GetRouteReverseMessage(void) const
 {
-	return wxString(
-			_("Waypoints can be renamed to reflect the new order, the names will be '001', '002' etc.\n\nDo you want to rename the waypoints?") );
+	return wxString(_("Waypoints can be renamed to reflect the new order, the names will be '001', '002' etc.\n\nDo you want to rename the waypoints?"));
 }
 
 Route * Routeman::FindRouteByGUID(const wxString & guid) const
 {
 	return RouteExists(guid);
+}
+
+bool Routeman::is_data_valid() const
+{
+	return m_bDataValid;
 }
 

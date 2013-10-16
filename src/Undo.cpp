@@ -80,17 +80,18 @@ void Undo::doUndoMoveWaypoint(UndoAction * action)
 	selectable->m_slat = currentPoint->m_lat;
 	selectable->m_slon = currentPoint->m_lon;
 
-	if( ( NULL != pMarkPropDialog ) && ( pMarkPropDialog->IsShown() ) ){
-		if( currentPoint == pMarkPropDialog->GetRoutePoint() ) pMarkPropDialog->UpdateProperties(true);
+	if ((NULL != pMarkPropDialog) && (pMarkPropDialog->IsShown())) {
+		if (currentPoint == pMarkPropDialog->GetRoutePoint())
+			pMarkPropDialog->UpdateProperties(true);
 	}
 
 	wxArrayPtrVoid* routeArray = g_pRouteMan->GetRouteArrayContaining( currentPoint );
-	if( routeArray ) {
-		for( unsigned int ir = 0; ir < routeArray->GetCount(); ir++ ) {
-			Route *pr = (Route *) routeArray->Item( ir );
-			pr->CalculateBBox();
-			pr->UpdateSegmentDistances();
-			pConfig->UpdateRoute( pr );
+	if (routeArray) {
+		for (unsigned int ir = 0; ir < routeArray->GetCount(); ir++ ) {
+			Route * route = static_cast<Route *>(routeArray->Item(ir));
+			route->CalculateBBox();
+			route->UpdateSegmentDistances();
+			pConfig->UpdateRoute(route);
 		}
 		delete routeArray;
 	}

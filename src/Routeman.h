@@ -39,6 +39,9 @@ class wxPen;
 class Routeman
 {
 	public:
+		typedef wxArrayPtrVoid RouteArray;
+
+	public:
 		Routeman(App * parent);
 		~Routeman();
 
@@ -50,7 +53,7 @@ class Routeman
 
 		Route * FindRouteByGUID(const wxString & guid) const;
 		Route * FindRouteContainingWaypoint(RoutePoint *pWP);
-		wxArrayPtrVoid * GetRouteArrayContaining(RoutePoint *pWP); // FIXME: returns std container
+		RouteArray * GetRouteArrayContaining(RoutePoint *pWP); // FIXME: returns std container
 		bool DoesRouteContainSharedPoints( Route *pRoute );
 
 		bool ActivateRoute(Route *pRouteToActivate, RoutePoint *pStartPoint = NULL);

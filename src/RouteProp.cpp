@@ -516,13 +516,13 @@ bool RouteProp::IsThisRouteExtendable()
 
 	if (!m_pRoute->m_bIsTrack) {
 		RoutePoint * pLastPoint = m_pRoute->GetLastPoint();
-		wxArrayPtrVoid * pEditRouteArray = g_pRouteMan->GetRouteArrayContaining(pLastPoint);
+		Routeman::RouteArray * pEditRouteArray = g_pRouteMan->GetRouteArrayContaining(pLastPoint);
 
 		// remove invisible & own routes from choices
 		for (int i = pEditRouteArray->GetCount(); i > 0; --i) {
 			Route * route = static_cast<Route *>(pEditRouteArray->Item(i - 1));
 			if (!route->IsVisible() || (route->m_GUID == m_pRoute->m_GUID))
-				pEditRouteArray->RemoveAt(i - 1);
+				pEditRouteArray->RemoveAt(i - 1); // FIXME: altering container while iterating
 		}
 
 		if (pEditRouteArray->GetCount() == 1) {
@@ -536,7 +536,7 @@ bool RouteProp::IsThisRouteExtendable()
 
 				m_pExtendPoint = pWayPointMan->GetOtherNearbyWaypoint(rlat, rlon, nearby_radius_meters, pLastPoint->m_GUID);
 				if (m_pExtendPoint && !m_pExtendPoint->m_bIsInTrack) {
-					wxArrayPtrVoid * pCloseWPRouteArray = g_pRouteMan->GetRouteArrayContaining(m_pExtendPoint);
+					Routeman::RouteArray * pCloseWPRouteArray = g_pRouteMan->GetRouteArrayContaining(m_pExtendPoint);
 					if (pCloseWPRouteArray) {
 						pEditRouteArray = pCloseWPRouteArray; // FIXME: the original pEditRouteArray ist lost, MEMORY LEAK
 
@@ -544,7 +544,7 @@ bool RouteProp::IsThisRouteExtendable()
 						for (int i = pEditRouteArray->GetCount(); i > 0; --i) {
 							Route * route = static_cast<Route *>(pEditRouteArray->Item(i - 1));
 							if (!route->IsVisible() || (route->m_GUID == m_pRoute->m_GUID))
-								pEditRouteArray->RemoveAt(i - 1);
+								pEditRouteArray->RemoveAt(i - 1); // FIXME: altering container while iterating
 						}
 					}
 				}

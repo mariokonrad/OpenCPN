@@ -136,9 +136,9 @@ Route * Routeman::FindRouteContainingWaypoint( RoutePoint *pWP )
 	return NULL;
 }
 
-wxArrayPtrVoid * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FIXME: return std container
+Routeman::RouteArray * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FIXME: return std container
 {
-	wxArrayPtrVoid * pArray = new wxArrayPtrVoid;
+	RouteArray * pArray = new RouteArray;
 
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route * route = *i;
@@ -788,7 +788,7 @@ bool Routeman::UpdateAutopilot()
 	return true;
 }
 
-bool Routeman::DoesRouteContainSharedPoints( Route *pRoute )
+bool Routeman::DoesRouteContainSharedPoints(Route * pRoute)
 {
 	if (!pRoute)
 		return false;
@@ -800,13 +800,13 @@ bool Routeman::DoesRouteContainSharedPoints( Route *pRoute )
 		RoutePoint * prp = pnode->GetData();
 
 		// check all other routes to see if this point appears in any other route
-		wxArrayPtrVoid * pRA = GetRouteArrayContaining(prp);
+		RouteArray * pRA = GetRouteArrayContaining(prp); // FIXME: potential memory leak
 
 		if (pRA) {
 			for (unsigned int ir = 0; ir < pRA->GetCount(); ++ir) {
 				Route * route = static_cast<Route *>(pRA->Item(ir));
 				if (route == pRoute)
-					continue; // self
+					continue;
 				else
 					return true;
 			}

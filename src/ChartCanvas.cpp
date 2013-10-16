@@ -5619,14 +5619,14 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					RoutePoint *prp = (RoutePoint *) pFindSel->m_pData1;        //candidate
 
 					// Get an array of all routes using this point
-					wxArrayPtrVoid * proute_array = g_pRouteMan->GetRouteArrayContaining(prp);
+					Routeman::RouteArray * proute_array = g_pRouteMan->GetRouteArrayContaining(prp);
 
 					// Use route array (if any) to determine actual visibility for this point
 					bool brp_viz = false;
 					if (proute_array) {
-						for (unsigned int ir = 0; ir < proute_array->GetCount(); ir++) {
-							Route * pr = static_cast<Route *>(proute_array->Item(ir));
-							if( pr->IsVisible() ) {
+						for (Routeman::RouteArray::iterator i = proute_array->begin(); i != proute_array->end(); ++i) {
+							Route * pr = static_cast<Route *>(*i);
+							if (pr->IsVisible()) {
 								brp_viz = true;
 								break;
 							}
@@ -6881,7 +6881,7 @@ void ChartCanvas::PopupMenuHandler( wxCommandEvent& event )
 
 				// If the WP belongs to an invisible route, we come here instead of to ID_RT_MENU_DELPOINT
 				// Check it, and if so then remove the point from its routes
-				wxArrayPtrVoid * proute_array = g_pRouteMan->GetRouteArrayContaining(m_pFoundRoutePoint);
+				Routeman::RouteArray * proute_array = g_pRouteMan->GetRouteArrayContaining(m_pFoundRoutePoint);
 				if (proute_array) {
 					pWayPointMan->DestroyWaypoint(m_pFoundRoutePoint);
 					m_pFoundRoutePoint = NULL;

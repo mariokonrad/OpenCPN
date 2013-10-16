@@ -85,10 +85,10 @@ void Undo::doUndoMoveWaypoint(UndoAction * action)
 			pMarkPropDialog->UpdateProperties(true);
 	}
 
-	wxArrayPtrVoid* routeArray = g_pRouteMan->GetRouteArrayContaining( currentPoint );
+	Routeman::RouteArray * routeArray = g_pRouteMan->GetRouteArrayContaining( currentPoint );
 	if (routeArray) {
-		for (unsigned int ir = 0; ir < routeArray->GetCount(); ir++ ) {
-			Route * route = static_cast<Route *>(routeArray->Item(ir));
+		for (Routeman::RouteArray::iterator i = routeArray->begin(); i != routeArray->end(); ++i) {
+			Route * route = static_cast<Route *>(*i);
 			route->CalculateBBox();
 			route->UpdateSegmentDistances();
 			pConfig->UpdateRoute(route);

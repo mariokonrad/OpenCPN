@@ -552,17 +552,17 @@ void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_change
 	// Get a list of all routes containing this point
 	// and remove the point from them all
 	// FIXME: handling the list of route should be one in the route list manager, not here
-	wxArrayPtrVoid * route_array = g_pRouteMan->GetRouteArrayContaining(route_point); // FIXME: return a std container
+	Routeman::RouteArray * route_array = g_pRouteMan->GetRouteArrayContaining(route_point); // FIXME: return a std container
 	if (route_array) {
 
-		for (unsigned int ir = 0; ir < route_array->GetCount(); ++ir) {
-			Route * route = static_cast<Route *>(route_array->Item(ir));
+		for (Routeman::RouteArray::iterator i = route_array->begin(); i != route_array->end(); ++i) {
+			Route * route = static_cast<Route *>(*i);
 			route->RemovePoint(route_point);
 		}
 
 		// Scrub the routes, looking for one-point routes
-		for (unsigned int ir = 0; ir < route_array->GetCount(); ++ir) {
-			Route * route = static_cast<Route *>(route_array->Item(ir));
+		for (Routeman::RouteArray::iterator i = route_array->begin(); i != route_array->end(); ++i) {
+			Route * route = static_cast<Route *>(*i);
 			if (route->GetnPoints() < 2) {
 				pConfig->m_bSkipChangeSetUpdate = true;
 				pConfig->DeleteConfigRoute(route);

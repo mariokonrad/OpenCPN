@@ -153,7 +153,6 @@ extern bool bDBUpdateInProgress;
 extern ThumbWin * pthumbwin;
 extern TCMgr * ptcmgr;
 extern bool bDrawCurrentValues;
-extern wxString g_SData_Locn;
 extern wxString chartListFileName;
 extern wxString worldMapLocation = _T("");
 extern wxString init_Chart_Dir;
@@ -349,7 +348,6 @@ extern Select * pSelectTC;
 extern Select * pSelectAIS;
 extern wxPlatformInfo * g_pPlatform;
 extern wxDateTime g_loglast_time;
-extern wxString g_SData_Locn;
 extern bool bGPSValid;
 extern int g_GroupIndex;
 extern ocpnStyle::StyleManager * g_StyleManager;
@@ -953,14 +951,16 @@ bool App::OnInit()
 	 */
 	wxStandardPathsBase & std_path = wxApp::GetTraits()->GetStandardPaths();
 	std_path.Get();
-	g_SData_Locn = std_path.GetDataDir();
-	appendOSDirSlash(g_SData_Locn);
+	wxString sound_data_location = std_path.GetDataDir();
+	appendOSDirSlash(sound_data_location);
 
 	if (g_bportable)
-		g_SData_Locn = sys.data().home_location;
+		sound_data_location = sys.data().home_location;
+
+	sys.set_sound_data_location(sound_data_location);
 
 	imsg = _T("SData_Locn is ");
-	imsg += g_SData_Locn;
+	imsg += sys.data().sound_data_location;
 	wxLogMessage( imsg );
 
 	// Create some static strings
@@ -1104,9 +1104,9 @@ bool App::OnInit()
 
 	// Add a new prefix for search order.
 #ifdef __WXMSW__
-	wxString locale_location = g_SData_Locn;
+	wxString locale_location = sys.data().sound_data_location;
 	locale_location += _T("share/locale");
-	wxLocale::AddCatalogLookupPathPrefix( locale_location );
+	wxLocale::AddCatalogLookupPathPrefix(locale_location);
 #endif
 
 	//  Get the default language info
@@ -1203,12 +1203,11 @@ bool App::OnInit()
 
 #ifdef USE_S57
 
-	//      Set up a useable CPL library error handler for S57 stuff
+	// Set up a useable CPL library error handler for S57 stuff
 	CPLSetErrorHandler(OCPN_CPLErrorHandler);
 
-	//      Init the s57 chart object, specifying the location of the required csv files
-	g_csv_locn = g_SData_Locn;
-	g_csv_locn.Append( _T("s57data") );
+	// Init the s57 chart object, specifying the location of the required csv files
+	g_csv_locn = sys.data().sound_data_location + _T("s57data");
 
 	if( g_bportable ) {
 		g_csv_locn = _T(".");
@@ -1279,7 +1278,7 @@ bool App::OnInit()
 
 		if( ps52plib->m_bOK ) {
 			g_csv_locn = look_data_dir;
-			g_SData_Locn = tentative_SData_Locn;
+			sys.set_sound_data_location(tentative_SData_Locn);
 		}
 	}
 
@@ -1290,17 +1289,18 @@ bool App::OnInit()
 		delete ps52plib;
 
 		wxString look_data_dir;
-		look_data_dir = g_SData_Locn;
+		look_data_dir = sys.data().sound_data_location;
 		look_data_dir.Append( _T("s57data") );
 
 		plib_data = look_data_dir;
 		appendOSDirSlash(plib_data);
-		plib_data.Append( _T("S52RAZDS.RLE") );
+		plib_data.Append(_T("S52RAZDS.RLE"));
 
-		wxLogMessage( _T("Looking for s57data in ") + look_data_dir );
+		wxLogMessage(_T("Looking for s57data in ") + look_data_dir);
 		ps52plib = new s52plib( plib_data );
 
-		if( ps52plib->m_bOK ) g_csv_locn = look_data_dir;
+		if (ps52plib->m_bOK)
+			g_csv_locn = look_data_dir;
 	}
 
 	if( ps52plib->m_bOK ) wxLogMessage( _T("Using s57data in ") + g_csv_locn );
@@ -1358,9 +1358,9 @@ bool App::OnInit()
 			init_Chart_Dir.Append(std_path.GetDocumentsDir());
 	}
 
-	//      Establish the GSHHS Dataset location
+	// Establish the GSHHS Dataset location
 	worldMapLocation = _T("gshhs");
-	worldMapLocation.Prepend(g_SData_Locn);
+	worldMapLocation.Prepend(sys.data().sound_data_location);
 	worldMapLocation.Append(wxFileName::GetPathSeparator());
 
 	// Reload the config data, to pick up any missing data class configuration info
@@ -1416,36 +1416,36 @@ bool App::OnInit()
 	//  Check the global Tide/Current data source array
 	//  If empty, preset one default (US) Ascii data source
 	if(!TideCurrentDataSet.GetCount()) {
-		wxString default_tcdata =  ( g_SData_Locn + _T("tcdata") +
-				wxFileName::GetPathSeparator() +
-				_T("HARMONIC.IDX"));
+		wxString default_tcdata = sys.data().sound_data_location
+			+ _T("tcdata")
+			+ wxFileName::GetPathSeparator()
+			+ _T("HARMONIC.IDX");
 
 		if (g_bportable) {
 			wxFileName f(default_tcdata);
 			f.MakeRelativeTo(sys.data().private_data_dir);
-			TideCurrentDataSet.Add( f.GetFullPath() );
+			TideCurrentDataSet.Add(f.GetFullPath());
+		} else {
+			TideCurrentDataSet.Add(default_tcdata);
 		}
-		else
-			TideCurrentDataSet.Add( default_tcdata );
 	}
-
 
 	//  Check the global AIS alarm sound file
 	//  If empty, preset default
 	if(g_sAIS_Alert_Sound_File.IsEmpty()) {
-		wxString default_sound =  ( g_SData_Locn + _T("sounds") +
-				wxFileName::GetPathSeparator() +
-				_T("2bells.wav"));
+		wxString default_sound =  sys.data().sound_data_location
+			+ _T("sounds")
+			+ wxFileName::GetPathSeparator()
+			+ _T("2bells.wav");
 
 		if( g_bportable ) {
 			wxFileName f(default_sound);
 			f.MakeRelativeTo(sys.data().private_data_dir);
 			g_sAIS_Alert_Sound_File = f.GetFullPath();
+		} else {
+			g_sAIS_Alert_Sound_File = default_sound;
 		}
-		else
-			g_sAIS_Alert_Sound_File = default_sound ;
 	}
-
 
 	g_StartTime = wxInvalidDateTime;
 	g_StartTimeTZ = 1;                // start with local times

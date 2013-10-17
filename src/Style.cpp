@@ -22,10 +22,11 @@
  **************************************************************************/
 
 #include "Style.h"
-#include "Icon.h"
-#include "Tool.h"
+#include <Icon.h>
+#include <Tool.h>
 #include <UserColors.h>
-#include "tinyxml/tinyxml.h"
+
+#include <tinyxml/tinyxml.h>
 
 #include <cstdlib>
 
@@ -35,8 +36,6 @@
 #include <wx/log.h>
 #include <wx/dcmemory.h>
 #include <wx/toolbar.h>
-
-extern wxString g_SData_Locn;
 
 namespace ocpnStyle {
 

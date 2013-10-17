@@ -355,7 +355,7 @@ class DECL_EXP opencpn_plugin
 {
 
 public:
-      opencpn_plugin(void *pmgr) {}
+      opencpn_plugin(void *) {}
       virtual ~opencpn_plugin();
 
       //    Public API to the PlugIn class

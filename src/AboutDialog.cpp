@@ -156,23 +156,24 @@ BEGIN_EVENT_TABLE(AboutDialog, wxDialog)
 END_EVENT_TABLE()
 
 AboutDialog::AboutDialog()
+	: m_parent(NULL)
 {}
 
 AboutDialog::AboutDialog(
 		wxWindow * parent,
-		wxString * pData_Locn,
+		const wxString & license_data_Locn,
 		wxWindowID id,
 		const wxString & caption,
 		const wxPoint & pos,
 		const wxSize & size,
 		long style)
+	: m_parent(parent)
+	, m_dataLocn(license_data_Locn)
 {
-	m_pDataLocn = pData_Locn;
 #ifdef __WXOSX__
 	style |= wxSTAY_ON_TOP;
 #endif
 	Create(parent, id, caption, pos, size, style);
-	m_parent = parent;
 }
 
 
@@ -228,12 +229,12 @@ void AboutDialog::Update()
 	delete pAuthorsString;
 
 	pLicenseTextCtl->Clear();
-	wxString license_loc( *m_pDataLocn );
-	license_loc.Append( _T("license.txt") );
+	wxString license_loc(m_dataLocn);
+	license_loc.Append(_T("license.txt"));
 
-	wxTextFile license_file( license_loc );
+	wxTextFile license_file(license_loc);
 
-	if( license_file.Open() ) {
+	if (license_file.Open()) {
 		wxString str;
 		str = license_file.GetFirstLine();
 		pLicenseTextCtl->WriteText( str );
@@ -434,7 +435,7 @@ void AboutDialog::OnPageChange( wxNotebookEvent& event )
 		wxString def_lang_canonical = wxLocale::GetLanguageInfo( wxLANGUAGE_DEFAULT )->CanonicalName;
 
 		wxString help_locn = _T("doc/help_");
-		help_locn.Prepend( *m_pDataLocn );
+		help_locn.Prepend(m_dataLocn);
 
 		wxString help_try = help_locn;
 		help_try += def_lang_canonical;
@@ -453,8 +454,8 @@ void AboutDialog::OnPageChange( wxNotebookEvent& event )
 				wxLaunchDefaultBrowser( wxString( _T("file:///") ) + help_try );
 			} else {
 				help_try = _T("doc/help_web.html");
-				help_try.Prepend( *m_pDataLocn );
-				if( ::wxFileExists( help_try ) ) {
+				help_try.Prepend(m_dataLocn);
+				if( ::wxFileExists(help_try) ) {
 					pNotebook->ChangeSelection(0);
 					wxLaunchDefaultBrowser(wxString( _T("file:///") ) + help_try );
 				}

@@ -22,18 +22,16 @@
  **************************************************************************/
 
 #include "StyleManager.h"
-#include "Style.h"
-#include "Icon.h"
-#include "Tool.h"
-#include "tinyxml/tinyxml.h"
+#include <Style.h>
+#include <Icon.h>
+#include <Tool.h>
+#include <tinyxml/tinyxml.h>
 #include <global/OCPN.h>
 #include <global/System.h>
 #include <wx/filename.h>
 #include <wx/dir.h>
 #include <wx/log.h>
 #include <wx/image.h>
-
-extern wxString g_SData_Locn;
 
 namespace ocpnStyle {
 
@@ -59,11 +57,13 @@ wxArrayPtrVoid StyleManager::GetArrayOfStyles()
 
 StyleManager::StyleManager(void)
 {
+	const global::System::Data & sys = global::OCPN::get().sys().data();
+
 	isOK = false;
 	currentStyle = NULL;
-	Init(g_SData_Locn + _T("uidata") + wxFileName::GetPathSeparator());
-	Init(global::OCPN::get().sys().data().home_location);
-	Init(global::OCPN::get().sys().data().home_location + _T(".opencpn") + wxFileName::GetPathSeparator());
+	Init(sys.sound_data_location + _T("uidata") + wxFileName::GetPathSeparator());
+	Init(sys.home_location);
+	Init(sys.home_location + _T(".opencpn") + wxFileName::GetPathSeparator());
 	SetStyle(_T(""));
 }
 

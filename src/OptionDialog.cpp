@@ -99,8 +99,6 @@ extern int g_SOGFilterSec;
 extern PlugInManager * g_pi_manager;
 extern ocpnStyle::StyleManager * g_StyleManager;
 
-extern wxString g_SData_Locn;
-
 extern bool g_bDisplayGrid;
 
 //    AIS Global configuration
@@ -2990,7 +2988,7 @@ void options::OnPageChange( wxListbookEvent& event )
 			// always add us english
 			m_itemLangListBox->Append( _T("English (U.S.)") );
 
-			wxString lang_dir = g_SData_Locn + _T("share/locale/");
+			wxString lang_dir = global::OCPN::get().sys().data().sound_data_location + _T("share/locale/");
 			for( int it = 1; it < nLang; it++ ) {
 				if( wxLocale::IsAvailable(LANGUAGE_LIST[it])) {
 					wxLocale ltest(LANGUAGE_LIST[it], 0);
@@ -3085,22 +3083,29 @@ void options::OnPageChange( wxListbookEvent& event )
 
 void options::OnButtonSelectSound(wxCommandEvent &)
 {
-	wxString sound_dir = g_SData_Locn;
-	sound_dir.Append( _T("sounds") );
+	wxString sound_dir = global::OCPN::get().sys().data().sound_data_location;
+	sound_dir.Append(_T("sounds"));
 
-	wxFileDialog *openDialog = new wxFileDialog( this, _("Select Sound File"), sound_dir, wxT(""),
-			_("WAV files (*.wav)|*.wav|All files (*.*)|*.*"), wxFD_OPEN );
-	int response = openDialog->ShowModal();
-	if( response == wxID_OK ) {
-		if( g_bportable ) {
-			wxFileName f( openDialog->GetPath() );
-			f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
-			g_sAIS_Alert_Sound_File = f.GetFullPath();
-		} else
-			g_sAIS_Alert_Sound_File = openDialog->GetPath();
+	wxFileDialog * openDialog = new wxFileDialog( // FIXME: memory leak
+		this,
+		_("Select Sound File"),
+		sound_dir,
+		wxT(""),
+		_("WAV files (*.wav)|*.wav|All files (*.*)|*.*"),
+		wxFD_OPEN);
 
-		g_anchorwatch_sound.UnLoad();
+	if (openDialog->ShowModal() != wxID_OK)
+		return;
+
+	if (g_bportable) {
+		wxFileName f(openDialog->GetPath());
+		f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
+		g_sAIS_Alert_Sound_File = f.GetFullPath();
+	} else {
+		g_sAIS_Alert_Sound_File = openDialog->GetPath();
 	}
+
+	g_anchorwatch_sound.UnLoad();
 }
 
 void options::OnButtonTestSound(wxCommandEvent &)

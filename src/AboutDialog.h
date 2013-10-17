@@ -52,7 +52,7 @@ class AboutDialog : public wxDialog
 		AboutDialog();
 		AboutDialog(
 				wxWindow * parent,
-				wxString * pLicense_Data_Locn,
+				const wxString & license_data_Locn,
 				wxWindowID id = ID_DIALOG,
 				const wxString & caption = SYMBOL_ABOUT_TITLE,
 				const wxPoint & pos = wxDefaultPosition,
@@ -74,8 +74,8 @@ class AboutDialog : public wxDialog
 		void OnCopyClick( wxCommandEvent& event );
 		void Update();
 
-		wxString * m_pDataLocn;
 		wxWindow * m_parent;
+		wxString m_dataLocn;
 		wxHtmlWindow * m_ptips_window;
 		bool m_btips_loaded;
 

@@ -103,6 +103,7 @@
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/System.h>
 #include <global/Navigation.h>
 #include <global/WatchDog.h>
 
@@ -199,7 +200,6 @@ bool bDBUpdateInProgress;
 ThumbWin *pthumbwin;
 TCMgr *ptcmgr;
 bool bDrawCurrentValues;
-wxString g_SData_Locn;
 wxString chartListFileName;
 wxString init_Chart_Dir;
 wxString g_csv_locn;
@@ -1781,7 +1781,7 @@ void MainFrame::OnToolLeftClick(wxCommandEvent & event)
 
 		case ID_HELP:
 			if (!g_pAboutDlg)
-				g_pAboutDlg = new AboutDialog(this, &g_SData_Locn);
+				g_pAboutDlg = new AboutDialog(this, global::OCPN::get().sys().data().sound_data_location);
 			g_pAboutDlg->Update();
 			g_pAboutDlg->Show();
 			break;
@@ -3284,7 +3284,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 					wxString soundfile = _T("sounds");
 					appendOSDirSlash(soundfile);
 					soundfile += wxString( bells_sound_file_name[bells - 1], wxConvUTF8 );
-					soundfile.Prepend( g_SData_Locn );
+					soundfile.Prepend(global::OCPN::get().sys().data().sound_data_location);
 					bells_sound[bells - 1].Create( soundfile );
 					wxLogMessage( _T("Using bells sound file: ") + soundfile );
 

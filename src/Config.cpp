@@ -76,7 +76,6 @@ extern double           g_UserVar;
 extern wxArrayOfConnPrm *g_pConnectionParams;
 extern wxString         g_SENCPrefix;
 extern wxString         g_UserPresLibData;
-extern wxString         g_SData_Locn;
 extern wxString         init_Chart_Dir;
 extern WayPointman      *pWayPointMan;
 extern bool             s_bSetSystemTime;
@@ -1322,7 +1321,7 @@ bool Config::LoadChartDirArray(ArrayOfCDI & ChartDirArray)
 
 					pConfig->DeleteEntry( str );
 					wxString new_dir = dirname.Mid( dirname.Find( _T ( "SampleCharts" ) ) );
-					new_dir.Prepend( g_SData_Locn );
+					new_dir.Prepend( global::OCPN::get().sys().data().sound_data_location);
 					dirname = new_dir;
 				}
 				ChartDirInfo cdi;

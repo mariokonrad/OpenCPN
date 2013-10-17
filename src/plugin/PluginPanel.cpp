@@ -91,69 +91,58 @@ PluginPanel::PluginPanel(
 }
 
 PluginPanel::~PluginPanel()
+{}
+
+void PluginPanel::OnPluginSelected(wxMouseEvent &)
 {
+	SetSelected(true);
+	m_PluginListPanel->SelectPlugin(this);
 }
 
-void PluginPanel::OnPluginSelected( wxMouseEvent &event )
-{
-	SetSelected( true );
-	m_PluginListPanel->SelectPlugin( this );
-}
-
-void PluginPanel::SetSelected( bool selected )
+void PluginPanel::SetSelected(bool selected)
 {
 	m_bSelected = selected;
-	if (selected)
-	{
+	if (selected) {
 		SetBackgroundColour(GetGlobalColor(_T("DILG1")));
 		m_pDescription->SetLabel( m_pPlugin->m_long_description );
 		m_pButtons->Show(true);
 		Layout();
-		//FitInside();
-	}
-	else
-	{
+	} else {
 		SetBackgroundColour(GetGlobalColor(_T("DILG0")));
 		m_pDescription->SetLabel( m_pPlugin->m_short_description );
 		m_pButtons->Show(false);
 		Layout();
-		//FitInside();
 	}
 	// StaticText color change upon selection
 	SetEnabled( m_pPlugin->m_bEnabled );
 }
 
-void PluginPanel::OnPluginPreferences( wxCommandEvent& event )
+void PluginPanel::OnPluginPreferences(wxCommandEvent &)
 {
-	if (m_pPlugin->m_bEnabled && m_pPlugin->m_bInitState && (m_pPlugin->m_cap_flag & WANTS_PREFERENCES) )
-	{
-		m_pPlugin->m_pplugin->ShowPreferencesDialog( this );
+	if (m_pPlugin->m_bEnabled && m_pPlugin->m_bInitState && (m_pPlugin->m_cap_flag & WANTS_PREFERENCES)) {
+		m_pPlugin->m_pplugin->ShowPreferencesDialog(this);
 	}
 }
 
-void PluginPanel::OnPluginEnable( wxCommandEvent& event )
+void PluginPanel::OnPluginEnable(wxCommandEvent &)
 {
 	SetEnabled(!m_pPlugin->m_bEnabled);
 }
 
-void PluginPanel::SetEnabled( bool enabled )
+void PluginPanel::SetEnabled(bool enabled)
 {
-	if (m_pPlugin->m_bEnabled != enabled)
-	{
+	if (m_pPlugin->m_bEnabled != enabled) {
 		m_pPlugin->m_bEnabled = enabled;
 		if(s_ppim)
 			s_ppim->UpdatePlugIns();
 		NotifySetupOptionsPlugin( m_pPlugin );
 	}
-	if (!enabled && !m_bSelected)
-	{
+	if (!enabled && !m_bSelected) {
 		m_pName->SetForegroundColour(*wxLIGHT_GREY);
 		m_pVersion->SetForegroundColour(*wxLIGHT_GREY);
 		m_pDescription->SetForegroundColour(*wxLIGHT_GREY);
 		m_pButtonEnable->SetLabel(_("Enable"));
-	}
-	else
-	{
+	} else {
 		m_pName->SetForegroundColour(*wxBLACK);
 		m_pVersion->SetForegroundColour(*wxBLACK);
 		m_pDescription->SetForegroundColour(*wxBLACK);

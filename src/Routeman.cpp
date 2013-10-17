@@ -63,7 +63,6 @@ extern Select * pSelect;
 extern Config * pConfig;
 
 extern wxRect g_blink_rect;
-extern wxString g_SData_Locn;
 
 extern bool g_bMagneticAPB;
 

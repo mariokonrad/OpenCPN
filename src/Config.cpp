@@ -97,8 +97,6 @@ extern int              g_iSDMMFormat;
 extern int              g_iDistanceFormat;
 extern int              g_iSpeedFormat;
 extern double           g_PlanSpeed;
-extern wxString         g_VisibleLayers;
-extern wxString         g_InvisibleLayers;
 extern wxRect           g_blink_rect;
 
 //    AIS Global configuration
@@ -582,8 +580,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read( _T ( "PlanSpeed" ), &stps );
 	stps.ToDouble( &g_PlanSpeed );
 
-	Read( _T ( "VisibleLayers" ), &g_VisibleLayers );
-	Read( _T ( "InvisibleLayers" ), &g_InvisibleLayers );
+	Read( _T ( "VisibleLayers" ), &visibleLayers );
+	Read( _T ( "InvisibleLayers" ), &invisibleLayers );
 
 	Read( _T ( "PreserveScaleOnX" ), &g_bPreserveScaleOnX, 0 );
 
@@ -1249,9 +1247,9 @@ bool Config::LoadLayers(wxString &path)
 
 				bool bLayerViz = g_bShowLayers;
 
-				if (g_VisibleLayers.Contains(layer->getName()))
+				if (visibleLayers.Contains(layer->getName()))
 					bLayerViz = true;
-				if (g_InvisibleLayers.Contains(layer->getName()))
+				if (invisibleLayers.Contains(layer->getName()))
 					bLayerViz = false;
 
 				layer->SetVisibleOnChart(bLayerViz);
@@ -2137,9 +2135,9 @@ void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool
 			layer->setName(layerName);
 
 			bool bLayerViz = g_bShowLayers;
-			if (g_VisibleLayers.Contains(layer->getName()))
+			if (visibleLayers.Contains(layer->getName()))
 				bLayerViz = true;
-			if (g_InvisibleLayers.Contains(layer->getName()))
+			if (invisibleLayers.Contains(layer->getName()))
 				bLayerViz = false;
 			layer->SetVisibleOnChart(bLayerViz);
 

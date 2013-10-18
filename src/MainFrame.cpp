@@ -204,8 +204,6 @@ wxString init_Chart_Dir;
 wxString g_csv_locn;
 wxString g_SENCPrefix;
 wxString g_UserPresLibData;
-wxString g_VisibleLayers;
-wxString g_InvisibleLayers;
 wxString g_uploadConnection;
 int user_user_id;
 int file_user_id;

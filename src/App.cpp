@@ -158,8 +158,6 @@ extern wxString init_Chart_Dir;
 extern wxString g_csv_locn;
 extern wxString g_SENCPrefix;
 extern wxString g_UserPresLibData;
-extern wxString g_VisibleLayers;
-extern wxString g_InvisibleLayers;
 extern wxString g_uploadConnection;
 extern int user_user_id;
 extern int file_user_id;

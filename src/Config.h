@@ -59,6 +59,9 @@ class Config : public wxFileConfig
 
 		static bool WptIsInRouteList(RoutePoint * pr);
 
+		wxString visibleLayers;
+		wxString invisibleLayers;
+
 	public:
 		Config(
 				const wxString & appName,

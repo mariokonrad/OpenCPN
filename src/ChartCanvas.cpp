@@ -183,8 +183,6 @@ extern RouteManagerDialog *pRouteManagerDialog;
 GoToPositionDialog * pGoToPositionDialog;
 extern wxString         g_uploadConnection;
 
-extern bool             bDrawCurrentValues;
-
 #ifdef USE_S57
 extern s52plib          *ps52plib;
 extern CM93OffsetDialog  *g_pCM93OffsetDialog;
@@ -9314,48 +9312,35 @@ void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, b
 								//    Draw arrow using preset parameters, see mm_per_knot variable
 								//                                                            double scale = fabs ( tcvalue ) * current_draw_scaler;
 								//    Adjust drawing size using logarithmic scale
-								double a1 = fabs( tcvalue ) * 10.;
+								double a1 = fabs( tcvalue ) * 10.0;
 								a1 = wxMax(1.0, a1);      // Current values less than 0.1 knot
 								// will be displayed as 0
 								double a2 = log10( a1 );
 
 								double scale = current_draw_scaler * a2;
 
-								porange_pen->SetWidth( 2 );
-								dc.SetPen( *porange_pen );
-								DrawArrow( dc, pixxc, pixyc,
-										dir - 90 + ( skew_angle * 180. / M_PI ), scale / 100 );
-								// Draw text, if enabled
+								porange_pen->SetWidth(2);
+								dc.SetPen(*porange_pen);
+								DrawArrow(dc, pixxc, pixyc, dir - 90 + ( skew_angle * 180.0 / M_PI ), scale / 100);
 
-								if( bDrawCurrentValues ) {
-									dc.SetFont( *pTCFont );
-									snprintf( sbuf, 19, "%3.1f", fabs( tcvalue ) );
-									dc.DrawText( wxString( sbuf, wxConvUTF8 ), pixxc, pixyc );
-								}
+								// Draw text
+								dc.SetFont( *pTCFont );
+								snprintf( sbuf, 19, "%3.1f", fabs( tcvalue ) );
+								dc.DrawText( wxString( sbuf, wxConvUTF8 ), pixxc, pixyc );
 							}
-						}           // scale
+						}
 					}
-					/*          This is useful for debugging the TC database
-								else
-								{
-								dc.SetPen ( *porange_pen );
-								dc.SetBrush ( *pgray_brush );
-								dc.DrawPolygon ( 4, d );
-								}
-					 */
-
 				}
 				lon_last = lon;
 				lat_last = lat;
-
 			}
 		}
 	}
 }
 
-void ChartCanvas::DrawTCWindow( int x, int y, void *pvIDX )
+void ChartCanvas::DrawTCWindow(int x, int y, void * pvIDX)
 {
-	pCwin = new TCWin( this, x, y, pvIDX );
+	pCwin = new TCWin(this, x, y, pvIDX);
 }
 
 #define NUM_CURRENT_ARROW_POINTS 9

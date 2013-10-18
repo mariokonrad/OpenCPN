@@ -198,7 +198,6 @@ double initial_scale_ppm;
 bool bDBUpdateInProgress;
 ThumbWin *pthumbwin;
 TCMgr *ptcmgr;
-bool bDrawCurrentValues;
 wxString chartListFileName;
 wxString init_Chart_Dir;
 wxString g_csv_locn;

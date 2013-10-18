@@ -151,7 +151,6 @@ extern double g_GLMinLineWidth;
 extern bool bDBUpdateInProgress;
 extern ThumbWin * pthumbwin;
 extern TCMgr * ptcmgr;
-extern bool bDrawCurrentValues;
 extern wxString chartListFileName;
 extern wxString worldMapLocation = _T("");
 extern wxString init_Chart_Dir;

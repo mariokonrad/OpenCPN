@@ -53,7 +53,11 @@ class App : public wxApp
 		wxSingleInstanceChecker * m_checker;
 
 	private:
+		void inject_global_instances();
 		void establish_home_location();
+		void determine_config_file();
+		void install_crash_reporting();
+		void seed_random_generator();
 
 		global::OCPN_GUI * gui_instance;
 		global::OCPN_Navigation * nav_instance;

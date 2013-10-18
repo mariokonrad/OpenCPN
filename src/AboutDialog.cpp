@@ -50,7 +50,6 @@ wxString str_version_patch = wxString::Format(wxT("%i"),VERSION_PATCH);
 wxString str_version_date(VERSION_DATE, wxConvUTF8);
 wxString OpenCPNVersion = str_version_start + str_version_major + wxT(".") + str_version_minor + wxT(".") + str_version_patch + wxT(" Build ") + str_version_date;
 
-extern wxString gConfig_File;
 extern ocpnStyle::StyleManager * g_StyleManager;
 
 static char AboutText[] =
@@ -213,15 +212,17 @@ void AboutDialog::Update()
 	pAboutTextCtl->WriteText( *pAboutString );
 	delete pAboutString;
 
+	const global::System::Data & sys = global::OCPN::get().sys().data();
+
 	// Show the user where the log file is going to be
 	wxString log = _T("    Logfile location: ");
-	log.Append(global::OCPN::get().sys().data().log_file);
+	log.Append(sys.log_file);
 	pAboutTextCtl->WriteText( log );
 
 	// Show the user where the config file is going to be
 	wxString conf = _T("\n    Config file location: ");
-	conf.Append( gConfig_File );
-	pAboutTextCtl->WriteText( conf );
+	conf.Append(sys.config_file);
+	pAboutTextCtl->WriteText(conf);
 
 	pAuthorTextCtl->Clear();
 	wxString *pAuthorsString = new wxString( AuthorText, wxConvUTF8 );
@@ -379,24 +380,27 @@ void AboutDialog::OnDonateClick(wxCommandEvent &)
 	wxLaunchDefaultBrowser(_T("https://sourceforge.net/donate/index.php?group_id=180842"));
 }
 
-void AboutDialog::OnCopyClick( wxCommandEvent& event )
+void AboutDialog::OnCopyClick(wxCommandEvent & event)
 {
-	wxString filename = gConfig_File;
+	const global::System::Data & sys = global::OCPN::get().sys().data();
+
+	wxString filename = sys.config_file;
 	if (event.GetId() == ID_COPYLOG)
-		filename = global::OCPN::get().sys().data().log_file;
+		filename = sys.log_file;
 
-	wxFFile file( filename );
+	wxFFile file(filename);
 
-	if( ! file.IsOpened() ) {
+	if (!file.IsOpened() ) {
 		wxLogMessage( _T("Failed to open file for Copy to Clipboard.") );
 		return;
 	}
 
 	wxString fileContent;
 	char buf[1024];
-	while( ! file.Eof() ) {
-		int c = file.Read( &buf, 1024 );
-		if( c ) fileContent += wxString( buf, wxConvUTF8, c );
+	while (! file.Eof()) {
+		int c = file.Read(&buf, 1024);
+		if (c)
+			fileContent += wxString( buf, wxConvUTF8, c );
 	}
 
 	file.Close();

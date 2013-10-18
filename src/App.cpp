@@ -127,7 +127,6 @@ extern wxString str_version_patch;
 extern wxString str_version_date;
 extern ColorScheme global_color_scheme;
 extern bool g_bFirstRun;
-extern wxString gConfig_File;
 extern wxString OpenCPNVersion;
 extern FILE *flog;
 extern bool s_bSetSystemTime;
@@ -618,6 +617,21 @@ void App::OnActivateApp( wxActivateEvent& event )
 	event.Skip();
 }
 
+void App::inject_global_instances()
+{
+	gui_instance = new global::OCPN_GUI;
+	global::OCPN::get().inject(gui_instance);
+
+	nav_instance = new global::OCPN_Navigation;
+	global::OCPN::get().inject(nav_instance);
+
+	wdt_instance = new global::OCPN_WatchDog;
+	global::OCPN::get().inject(wdt_instance);
+
+	sys_instance = new global::OCPN_System;
+	global::OCPN::get().inject(sys_instance);
+}
+
 void App::establish_home_location()
 {
 	wxStandardPathsBase & std_path = wxApp::GetTraits()->GetStandardPaths();
@@ -647,36 +661,42 @@ void App::establish_home_location()
 	sys.set_home_location(home_location);
 }
 
-bool App::OnInit()
+void App::determine_config_file()
 {
-	if( !wxApp::OnInit() )
-		return false;
+	global::System & sys = global::OCPN::get().sys();
+	wxStandardPathsBase & std_path = wxApp::GetTraits()->GetStandardPaths();
+	wxString config_file;
 
-	gui_instance = new global::OCPN_GUI;
-	global::OCPN::get().inject(gui_instance);
-
-	nav_instance = new global::OCPN_Navigation;
-	global::OCPN::get().inject(nav_instance);
-
-	wdt_instance = new global::OCPN_WatchDog;
-	global::OCPN::get().inject(wdt_instance);
-
-	sys_instance = new global::OCPN_System;
-	global::OCPN::get().inject(sys_instance);
-
-	int mem_total = 0;
-	int mem_initial = 0;
-
-	//  On Windows
-	//  We allow only one instance unless the portable option is used
+	// Establish the location of the config file
 #ifdef __WXMSW__
-	m_checker = new wxSingleInstanceChecker(_T("OpenCPN"));
-	if(!g_bportable) {
-		if ( m_checker->IsAnotherRunning() )
-			return false;               // exit quietly
-	}
+	config_file = _T("opencpn.ini");
+	config_file.Prepend(sys.data().home_location);
+
+#elif defined __WXOSX__
+	config_file = std_path.GetUserConfigDir(); // should be ~/Library/Preferences
+	appendOSDirSlash(config_file);
+	config_file.Append(_T("opencpn.ini"));
+#else
+	config_file = std_path.GetUserDataDir(); // should be ~/.opencpn
+	appendOSDirSlash(config_file);
+	config_file.Append(_T("opencpn.conf"));
 #endif
 
+	if (g_bportable) {
+		config_file = sys.data().home_location;
+#ifdef __WXMSW__
+		config_file += _T("opencpn.ini");
+#elif defined __WXOSX__
+		config_file +=_T("opencpn.ini");
+#else
+		config_file += _T("opencpn.conf");
+#endif
+	}
+	sys.set_config_file(config_file);
+}
+
+void App::install_crash_reporting()
+{
 #ifdef OCPN_USE_CRASHRPT
 #ifndef _DEBUG
 	// Install Windows crash reporting
@@ -748,12 +768,39 @@ bool App::OnInit()
 
 #endif
 #endif
+}
 
+void App::seed_random_generator()
+{
 	//  Seed the random number generator
 	wxDateTime x = wxDateTime::UNow();
 	long seed = x.GetMillisecond();
 	seed *= x.GetTicks();
 	srand(seed);
+}
+
+bool App::OnInit()
+{
+	if (!wxApp::OnInit())
+		return false;
+
+	inject_global_instances();
+
+	int mem_total = 0;
+	int mem_initial = 0;
+
+	// On Windows
+	// We allow only one instance unless the portable option is used
+#ifdef __WXMSW__
+	m_checker = new wxSingleInstanceChecker(_T("OpenCPN"));
+	if(!g_bportable) {
+		if (m_checker->IsAnotherRunning())
+			return false;               // exit quietly
+	}
+#endif
+
+	install_crash_reporting();
+	seed_random_generator();
 
 	g_pPlatform = new wxPlatformInfo;
 
@@ -1026,74 +1073,46 @@ bool App::OnInit()
 #endif
 #endif
 
-	//      Establish the location of the config file
-#ifdef __WXMSW__
-	gConfig_File = _T("opencpn.ini");
-	gConfig_File.Prepend(sys.data().home_location);
-
-#elif defined __WXOSX__
-	gConfig_File = std_path.GetUserConfigDir(); // should be ~/Library/Preferences
-	appendOSDirSlash(gConfig_File);
-	gConfig_File.Append(_T("opencpn.ini"));
-#else
-	gConfig_File = std_path.GetUserDataDir(); // should be ~/.opencpn
-	appendOSDirSlash(gConfig_File);
-	gConfig_File.Append(_T("opencpn.conf"));
-#endif
-
-	if( g_bportable ) {
-		gConfig_File = sys.data().home_location;
-#ifdef __WXMSW__
-		gConfig_File += _T("opencpn.ini");
-#elif defined __WXOSX__
-		gConfig_File +=_T("opencpn.ini");
-#else
-		gConfig_File += _T("opencpn.conf");
-#endif
-
-	}
+	determine_config_file();
 
 	bool b_novicemode = false;
 
-	wxFileName config_test_file_name( gConfig_File );
-	if( config_test_file_name.FileExists() ) wxLogMessage(
-			_T("Using existing Config_File: ") + gConfig_File );
-	else {
-		{
-			wxLogMessage( _T("Creating new Config_File: ") + gConfig_File );
+	wxFileName config_test_file_name(sys.data().config_file);
+	if (config_test_file_name.FileExists()) {
+		wxLogMessage(_T("Using existing Config_File: ") + sys.data().config_file);
+	} else {
+		wxLogMessage(_T("Creating new Config_File: ") + sys.data().config_file);
 
-			//    Flag to preset some options for initial config file creation
-			b_novicemode = true;
+		// Flag to preset some options for initial config file creation
+		b_novicemode = true;
 
-			if( true != config_test_file_name.DirExists( config_test_file_name.GetPath() ) ) if( !config_test_file_name.Mkdir(
-						config_test_file_name.GetPath() ) ) wxLogMessage(
-					_T("Cannot create config file directory for ") + gConfig_File );
-		}
+		if (true != config_test_file_name.DirExists(config_test_file_name.GetPath()))
+			if (!config_test_file_name.Mkdir(config_test_file_name.GetPath()))
+				wxLogMessage(_T("Cannot create config file directory for ") + sys.data().config_file);
 	}
 
 	// Now initialize UI Style.
 	g_StyleManager = new ocpnStyle::StyleManager();
 
-	if( !g_StyleManager->IsOK() ) {
+	if (!g_StyleManager->IsOK()) {
 		wxString msg = _("Failed to initialize the user interface. ");
 		msg << _("OpenCPN cannot start. ");
 		msg << _("The necessary configuration files were not found. ");
 		msg << _("See the log file at ") << sys.data().log_file << _(" for details.");
-		wxMessageDialog w( NULL, msg, _("Failed to initialize the user interface. "),
-				wxCANCEL | wxICON_ERROR );
+		wxMessageDialog w(NULL, msg, _("Failed to initialize the user interface. "), wxCANCEL | wxICON_ERROR);
 		w.ShowModal();
-		exit( EXIT_FAILURE );
+		exit(EXIT_FAILURE);
 	}
 
-	//      Init the WayPoint Manager (Must be after UI Style init).
+	// Init the WayPoint Manager (Must be after UI Style init).
 	pWayPointMan = new WayPointman();
 	pWayPointMan->ProcessIcons( g_StyleManager->GetCurrentStyle() );
 
-	//      Open/Create the Config Object (Must be after UI Style init).
-	pConfig = new Config( wxString( _T("") ), wxString( _T("") ), gConfig_File );
+	// Open/Create the Config Object (Must be after UI Style init).
+	pConfig = new Config(wxString(_T("")), wxString(_T("")), sys.data().config_file);
 	pConfig->LoadConfig(0);
 
-	//        Is this the first run after a clean install?
+	// Is this the first run after a clean install?
 	if (!sys.config().nav_message_shown)
 		g_bFirstRun = true;
 

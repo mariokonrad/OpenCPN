@@ -5033,6 +5033,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 			double brg;
 			double dist;
+			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			geo::DistanceBearingMercator(m_cursor_lat, m_cursor_lon, nav.lat, nav.lon, &brg, &dist);
 			wxString s;
 			if( g_bShowMag )

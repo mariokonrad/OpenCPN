@@ -40,6 +40,7 @@ class System
 			wxString home_location;
 			wxString private_data_dir;
 			wxString tc_data_dir;
+			wxString config_file;
 			wxString log_file;
 			wxString sound_data_location;
 		};
@@ -48,6 +49,7 @@ class System
 		virtual void set_home_location(const wxString &) = 0;
 		virtual void set_private_data_dir(const wxString &) = 0;
 		virtual void set_tc_data_dir(const wxString &) = 0;
+		virtual void set_config_file(const wxString &) = 0;
 		virtual void set_log_file(const wxString &) = 0;
 		virtual void set_sound_data_location(const wxString &) = 0;
 

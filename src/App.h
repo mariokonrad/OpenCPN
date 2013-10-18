@@ -58,6 +58,7 @@ class App : public wxApp
 		void determine_config_file();
 		void install_crash_reporting();
 		void seed_random_generator();
+		void determine_world_map_location();
 
 		global::OCPN_GUI * gui_instance;
 		global::OCPN_Navigation * nav_instance;

@@ -43,6 +43,7 @@ class System
 			wxString config_file;
 			wxString log_file;
 			wxString sound_data_location;
+			wxString world_map_location;
 		};
 
 		virtual const Data & data() const = 0;
@@ -52,6 +53,7 @@ class System
 		virtual void set_config_file(const wxString &) = 0;
 		virtual void set_log_file(const wxString &) = 0;
 		virtual void set_sound_data_location(const wxString &) = 0;
+		virtual void set_world_map_location(const wxString &) = 0;
 
 	public:
 

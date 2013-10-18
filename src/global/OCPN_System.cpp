@@ -60,6 +60,11 @@ void OCPN_System::set_sound_data_location(const wxString & directory)
 	data_data.sound_data_location = directory;
 }
 
+void OCPN_System::set_world_map_location(const wxString & location)
+{
+	data_data.world_map_location = location;
+}
+
 const System::Config & OCPN_System::config() const
 {
 	return data_config;

@@ -42,6 +42,7 @@ class OCPN_System : public System
 		virtual void set_config_file(const wxString &);
 		virtual void set_log_file(const wxString &);
 		virtual void set_sound_data_location(const wxString &);
+		virtual void set_world_map_location(const wxString &);
 
 	public: // config
 		virtual const Config & config() const;

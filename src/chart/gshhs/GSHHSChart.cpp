@@ -27,9 +27,10 @@
 #include <chart/gshhs/Projection.h>
 #include <chart/gshhs/GshhsReader.h>
 
-#include <wx/log.h>
+#include <global/OCPN.h>
+#include <global/System.h>
 
-extern wxString worldMapLocation;
+#include <wx/log.h>
 
 GSHHSChart::GSHHSChart()
 	: proj(NULL)
@@ -68,7 +69,8 @@ void GSHHSChart::SetColorScheme( ColorScheme scheme )
 
 void GSHHSChart::RenderViewOnDC( ocpnDC& dc, ViewPort& vp )
 {
-	if( ! proj ) proj = new Projection();
+	if (!proj)
+		proj = new Projection();
 	proj->SetCenterInMap( vp.clon, vp.clat );
 	proj->SetScreenSize( vp.rv_rect.width, vp.rv_rect.height );
 
@@ -84,23 +86,23 @@ void GSHHSChart::RenderViewOnDC( ocpnDC& dc, ViewPort& vp )
 	nvp.GetLLFromPix( wxPoint( 0, 0 ), &lat_ul, &lon_ul );
 	nvp.GetLLFromPix( wxPoint( nvp.pix_width, nvp.pix_height ), &lat_ur, &lon_ur );
 
-	if( nvp.clon < 0. ) {
-		if( ( lon_ul > 0. ) && ( lon_ur < 0. ) ) {
-			lon_ul -= 360.;
+	if (nvp.clon < 0.0) {
+		if ((lon_ul > 0.0) && (lon_ur < 0.0)) {
+			lon_ul -= 360.0;
 		}
 	} else {
-		if( ( lon_ul > 0. ) && ( lon_ur < 0. ) ) {
-			lon_ur += 360.;
+		if ((lon_ul > 0.0) && (lon_ur < 0.0)) {
+			lon_ur += 360.0;
 		}
 	}
 
-	if( lon_ur < lon_ul ) {
-		lon_ur += 360.;
+	if (lon_ur < lon_ul) {
+		lon_ur += 360.0;
 	}
 
-	if( lon_ur > 360. ) {
-		lon_ur -= 360.;
-		lon_ul -= 360.;
+	if (lon_ur > 360.0) {
+		lon_ur -= 360.0;
+		lon_ul -= 360.0;
 	}
 
 	//  And set the scale for the gshhs renderer
@@ -112,7 +114,7 @@ void GSHHSChart::RenderViewOnDC( ocpnDC& dc, ViewPort& vp )
 		if( reader->GetPolyVersion() < 210 || reader->GetPolyVersion() > 220 ) {
 			wxLogMessage(_T("GSHHS World chart files have wrong version. Found %ld, expected 210-220."), reader->GetPolyVersion());
 		} else {
-			wxLogMessage(_T("Background world map loaded from GSHHS datafiles found in: ") + worldMapLocation);
+			wxLogMessage(_T("Background world map loaded from GSHHS datafiles found in: ") + global::OCPN::get().sys().data().world_map_location);
 		}
 	}
 

@@ -22,10 +22,13 @@
  **************************************************************************/
 
 #include "GshhsReader.h"
-#include "GshhsPoint.h"
-#include "GshhsPolyReader.h"
-#include "GshhsPolygon.h"
-#include "Projection.h"
+#include <chart/gshhs/GshhsPoint.h>
+#include <chart/gshhs/GshhsPolyReader.h>
+#include <chart/gshhs/GshhsPolygon.h>
+#include <chart/gshhs/Projection.h>
+
+#include <global/OCPN.h>
+#include <global/System.h>
 
 #include <wx/log.h>
 #include <wx/file.h>
@@ -34,8 +37,6 @@
 #ifdef __WXMSW__
 #pragma warning(disable: 4251)   // relates to std::string fpath
 #endif
-
-extern wxString worldMapLocation;
 
 GshhsReader::GshhsReader( Projection* proj )
 {
@@ -51,10 +52,8 @@ GshhsReader::GshhsReader( Projection* proj )
 		}
 	}
 
-	if( maxQualityAvailable < 0 ) {
-		wxString msg( _T("Unable to initialize background world map. No GSHHS datafiles found in ") );
-		msg += worldMapLocation;
-		wxLogMessage( msg );
+	if (maxQualityAvailable < 0) {
+		wxLogMessage(_T("Unable to initialize background world map. No GSHHS datafiles found in ") + global::OCPN::get().sys().data().world_map_location);
 	}
 
 	int q = selectBestQuality( proj );
@@ -140,41 +139,44 @@ wxString GshhsReader::getNameExtension( int quality )
 	return ext;
 }
 
-wxString GshhsReader::getFileName_Land( int quality )
+wxString GshhsReader::getFileName_Land(int quality)
 {
-	wxString ext = GshhsReader::getNameExtension( quality );
-	wxString fname = worldMapLocation + wxString::Format( _T("poly-%c-1.dat"), ext.GetChar(0) );
+	wxString ext = GshhsReader::getNameExtension(quality);
+	wxString fname = global::OCPN::get().sys().data().world_map_location + wxString::Format(_T("poly-%c-1.dat"), ext.GetChar(0));
 	return fname;
 }
 
-wxString GshhsReader::getFileName_boundaries( int quality )
+wxString GshhsReader::getFileName_boundaries(int quality)
 {
 	wxString ext = GshhsReader::getNameExtension( quality );
-	wxString fname = worldMapLocation + wxString::Format( _T("wdb_borders_%c.b"), ext.GetChar(0) );
+	wxString fname = global::OCPN::get().sys().data().world_map_location + wxString::Format(_T("wdb_borders_%c.b"), ext.GetChar(0));
 	return fname;
 }
 
-wxString GshhsReader::getFileName_rivers( int quality )
+wxString GshhsReader::getFileName_rivers(int quality)
 {
 	wxString ext = GshhsReader::getNameExtension( quality );
-	wxString fname = worldMapLocation + wxString::Format( _T("wdb_rivers_%c.b"), ext.GetChar(0) );
+	wxString fname = global::OCPN::get().sys().data().world_map_location + wxString::Format(_T("wdb_rivers_%c.b"), ext.GetChar(0));
 	return fname;
 }
 
 //-----------------------------------------------------------------------
-bool GshhsReader::gshhsFilesExists( int quality )
+bool GshhsReader::gshhsFilesExists(int quality)
 {
-	if( ! wxFile::Access( GshhsReader::getFileName_Land( quality ), wxFile::read ) ) return false;
-	if( ! wxFile::Access( GshhsReader::getFileName_boundaries( quality ), wxFile::read ) ) return false;
-	if( ! wxFile::Access( GshhsReader::getFileName_rivers( quality ), wxFile::read ) ) return false;
-
+	if (!wxFile::Access(GshhsReader::getFileName_Land(quality), wxFile::read))
+		return false;
+	if (!wxFile::Access(GshhsReader::getFileName_boundaries(quality), wxFile::read))
+		return false;
+	if (!wxFile::Access(GshhsReader::getFileName_rivers(quality), wxFile::read))
+		return false;
 	return true;
 }
 
 //-----------------------------------------------------------------------
-void GshhsReader::LoadQuality( int newQuality ) // 5 levels: 0=low ... 4=full
+void GshhsReader::LoadQuality(int newQuality) // 5 levels: 0=low ... 4=full
 {
-	if( quality == newQuality ) return;
+	if (quality == newQuality)
+		return;
 
 	wxStopWatch perftimer;
 

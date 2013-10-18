@@ -152,7 +152,6 @@ extern bool bDBUpdateInProgress;
 extern ThumbWin * pthumbwin;
 extern TCMgr * ptcmgr;
 extern wxString chartListFileName;
-extern wxString worldMapLocation = _T("");
 extern wxString init_Chart_Dir;
 extern wxString g_csv_locn;
 extern wxString g_SENCPrefix;
@@ -776,6 +775,18 @@ void App::seed_random_generator()
 	srand(seed);
 }
 
+void App::determine_world_map_location()
+{
+	global::System & sys = global::OCPN::get().sys();
+
+	// Establish the GSHHS Dataset location
+	wxString location = _T("gshhs");
+	location.Prepend(sys.data().sound_data_location);
+	location.Append(wxFileName::GetPathSeparator());
+
+	sys.set_world_map_location(location);
+}
+
 bool App::OnInit()
 {
 	if (!wxApp::OnInit())
@@ -1374,10 +1385,7 @@ bool App::OnInit()
 			init_Chart_Dir.Append(std_path.GetDocumentsDir());
 	}
 
-	// Establish the GSHHS Dataset location
-	worldMapLocation = _T("gshhs");
-	worldMapLocation.Prepend(sys.data().sound_data_location);
-	worldMapLocation.Append(wxFileName::GetPathSeparator());
+	determine_world_map_location();
 
 	// Reload the config data, to pick up any missing data class configuration info
 	// e.g. s52plib, which could not be created until first config load completes

@@ -1989,7 +1989,7 @@ void RouteManagerDialog::OnWptNewClick(wxCommandEvent &)
 
 	RoutePoint *pWP = new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
 	pWP->m_bIsolatedMark = true;                      // This is an isolated mark
-	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP );
+	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP);
 	pConfig->AddNewWayPoint( pWP, -1 );    // use auto next num
 	cc1->Refresh( false );      // Needed for MSW, why not GTK??
 
@@ -1999,11 +1999,7 @@ void RouteManagerDialog::OnWptNewClick(wxCommandEvent &)
 	pMarkPropDialog->SetRoutePoint( pWP );
 	pMarkPropDialog->UpdateProperties();
 
-	if( !pMarkPropDialog->IsShown() )
-		pMarkPropDialog->ShowModal();
-
-	// waypoint might have changed
-	UpdateWptListCtrl();
+	WptShowPropertiesDialog(pWP, GetParent());
 }
 
 void RouteManagerDialog::OnWptPropertiesClick(wxCommandEvent &)

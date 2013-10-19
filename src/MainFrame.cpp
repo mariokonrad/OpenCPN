@@ -165,7 +165,6 @@ wxLog *Oldlogger;
 bool g_bFirstRun;
 int g_unit_test_1;
 MainFrame * gFrame;
-ChartCanvas *cc1;
 ConsoleCanvas *console;
 StatWin *stats;
 wxWindowList AppActivateList;
@@ -490,25 +489,26 @@ void SetSystemColors( ColorScheme cs );
 
 DEFINE_EVENT_TYPE(EVT_THREADMSG)
 
-	//------------------------------------------------------------------------------
-	//    PNG Icon resources
-	//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//    PNG Icon resources
+//------------------------------------------------------------------------------
 
 #ifdef __WXGTK__
 #include "bitmaps/opencpn.xpm"
 #endif
 
-	enum {
-		ID_PIANO_DISABLE_QUILT_CHART = 32000,
-		ID_PIANO_ENABLE_QUILT_CHART
-	};
+enum
+{
+	ID_PIANO_DISABLE_QUILT_CHART = 32000,
+	ID_PIANO_ENABLE_QUILT_CHART
+};
 
 
 //------------------------------------------------------------------------------
 // MainFrame
 //------------------------------------------------------------------------------
 //      Frame implementation
-	BEGIN_EVENT_TABLE(MainFrame, wxFrame) EVT_CLOSE(MainFrame::OnCloseWindow)
+BEGIN_EVENT_TABLE(MainFrame, wxFrame) EVT_CLOSE(MainFrame::OnCloseWindow)
 	EVT_MENU(wxID_EXIT, MainFrame::OnExit)
 	EVT_SIZE(MainFrame::OnSize)
 	EVT_MOVE(MainFrame::OnMove)
@@ -523,11 +523,10 @@ DEFINE_EVENT_TYPE(EVT_THREADMSG)
 	EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
 END_EVENT_TABLE()
 
-	// My frame constructor
-	MainFrame::MainFrame( wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size,
-			long style ) :
-		wxFrame( frame, -1, title, pos, size, style ) //wxSIMPLE_BORDER | wxCLIP_CHILDREN | wxRESIZE_BORDER)
-		//wxCAPTION | wxSYSTEM_MENU | wxRESIZE_BORDER
+// My frame constructor
+MainFrame::MainFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+	: wxFrame(frame, -1, title, pos, size, style)
+	, chart_canvas(NULL)
 {
 	m_ulLastNEMATicktime = 0;
 	m_pStatusBar = NULL;
@@ -667,11 +666,9 @@ void MainFrame::performUniChromeOpenGLResizeHack()
 	//  We need a deferred resize to get glDrawPixels() to work right.
 	//  So we set a trigger to generate a resize after 5 seconds....
 	//  See the "UniChrome" hack elsewhere
-	if ( !g_bdisable_opengl )
-	{
-		glChartCanvas *pgl = (glChartCanvas *) cc1->GetglCanvas();
-		if( pgl && ( pgl->GetRendererString().Find( _T("UniChrome") ) != wxNOT_FOUND ) )
-		{
+	if (!g_bdisable_opengl) {
+		glChartCanvas * pgl = (glChartCanvas *) chart_canvas->GetglCanvas();
+		if (pgl && (pgl->GetRendererString().Find(_T("UniChrome")) != wxNOT_FOUND)) {
 			m_defer_size = gFrame->GetSize();
 			SetSize(m_defer_size.x - 10, m_defer_size.y);
 			g_pauimgr->Update();
@@ -680,14 +677,14 @@ void MainFrame::performUniChromeOpenGLResizeHack()
 	}
 }
 
-ChartCanvas * MainFrame::GetCanvasWindow()
+ChartCanvas * MainFrame::GetCanvas()
 {
-	return m_pchart_canvas;
+	return chart_canvas;
 }
 
-void  MainFrame::SetCanvasWindow(ChartCanvas * pcanv)
+void MainFrame::SetCanvasWindow(ChartCanvas * canvas)
 {
-	m_pchart_canvas = pcanv;
+	chart_canvas = canvas;
 }
 
 int MainFrame::GetNextToolbarToolId()
@@ -716,16 +713,14 @@ bool MainFrame::hasStatusBar() const
 
 void MainFrame::OnActivate( wxActivateEvent& event )
 {
-	//    Code carefully in this method.
-	//    It is called in some unexpected places,
-	//    such as on closure of dialogs, etc.
+	// Code carefully in this method.
+	// It is called in some unexpected places,
+	// such as on closure of dialogs, etc.
 
-	if( cc1 ) cc1->SetFocus();       // This seems to be needed for MSW, to get key and wheel events
-	// after minimize/maximize.
+	if (chart_canvas) chart_canvas->SetFocus(); // This seems to be needed for MSW, to get key and wheel events after minimize/maximize.
 
 #ifdef __WXOSX__
-	if(event.GetActive())
-	{
+	if(event.GetActive()) {
 		SurfaceToolbar();
 
 		wxWindowListNode *node = AppActivateList.GetFirst();
@@ -748,7 +743,7 @@ ColorScheme MainFrame::GetColorScheme()
 	return global_color_scheme;
 }
 
-void MainFrame::SetAndApplyColorScheme( ColorScheme cs )
+void MainFrame::SetAndApplyColorScheme(ColorScheme cs)
 {
 	global_color_scheme = cs;
 
@@ -769,7 +764,7 @@ void MainFrame::SetAndApplyColorScheme( ColorScheme cs )
 	}
 
 	g_StyleManager->GetCurrentStyle()->SetColorScheme(cs);
-	cc1->GetWorldBackgroundChart()->SetColorScheme(cs);
+	chart_canvas->GetWorldBackgroundChart()->SetColorScheme(cs);
 
 #ifdef USE_S57
 	if (ps52plib)
@@ -779,8 +774,8 @@ void MainFrame::SetAndApplyColorScheme( ColorScheme cs )
 	setup_current_user_color(SchemeName);
 	SetSystemColors(cs);
 
-	if (cc1)
-		cc1->SetColorScheme(cs);
+	if (chart_canvas)
+		chart_canvas->SetColorScheme(cs);
 
 	if (pWayPointMan)
 		pWayPointMan->SetColorScheme(cs);
@@ -788,49 +783,59 @@ void MainFrame::SetAndApplyColorScheme( ColorScheme cs )
 	if (ChartData)
 		ChartData->ApplyColorSchemeToCachedCharts(cs);
 
-	if( stats ) stats->SetColorScheme( cs );
+	if (stats)
+		stats->SetColorScheme(cs);
 
-	if( console ) console->SetColorScheme( cs );
+	if (console)
+		console->SetColorScheme(cs);
 
-	if( g_pRouteMan ) g_pRouteMan->SetColorScheme( cs );
+	if (g_pRouteMan)
+		g_pRouteMan->SetColorScheme(cs);
 
-	if( pMarkPropDialog ) pMarkPropDialog->SetColorScheme( cs );
+	if (pMarkPropDialog)
+		pMarkPropDialog->SetColorScheme(cs);
 
-	if( pMarkInfoDialog ) pMarkInfoDialog->SetColorScheme( cs );
+	if (pMarkInfoDialog)
+		pMarkInfoDialog->SetColorScheme(cs);
 
 	//    For the AIS target query dialog, we must rebuild it to incorporate the style desired for the colorscheme selected
-	if( g_pais_query_dialog_active ) {
+	if (g_pais_query_dialog_active) {
 		bool b_isshown = g_pais_query_dialog_active->IsShown();
 		int n_mmsi = g_pais_query_dialog_active->GetMMSI();
-		if( b_isshown ) g_pais_query_dialog_active->Show( false );              // dismiss it
+		if (b_isshown)
+			g_pais_query_dialog_active->Show(false); // dismiss it
 
 		g_pais_query_dialog_active->Close();
 
 		g_pais_query_dialog_active = new AISTargetQueryDialog();
 		g_pais_query_dialog_active->Create(
-				this,
-				-1,
-				_( "AIS Target Query" ),
-				global::OCPN::get().gui().ais_query_dialog().position);
+			this,
+			-1,
+			_( "AIS Target Query" ),
+			global::OCPN::get().gui().ais_query_dialog().position);
 		g_pais_query_dialog_active->SetMMSI( n_mmsi );
 		g_pais_query_dialog_active->UpdateText();
-		if( b_isshown ) g_pais_query_dialog_active->Show();
+		if (b_isshown)
+			g_pais_query_dialog_active->Show();
 	}
 
-	if( pRouteManagerDialog ) pRouteManagerDialog->SetColorScheme();
+	if (pRouteManagerDialog)
+		pRouteManagerDialog->SetColorScheme();
 
-	if( g_pAISTargetList ) g_pAISTargetList->SetColorScheme();
+	if (g_pAISTargetList)
+		g_pAISTargetList->SetColorScheme();
 
-	if( g_pObjectQueryDialog ) g_pObjectQueryDialog->SetColorScheme();
+	if (g_pObjectQueryDialog)
+			g_pObjectQueryDialog->SetColorScheme();
 
 	ApplyGlobalColorSchemetoStatusBar();
+	UpdateToolbar(cs);
 
-	UpdateToolbar( cs );
-
-	if( g_pi_manager ) g_pi_manager->SetColorSchemeForAllPlugIns( cs );
+	if (g_pi_manager)
+		g_pi_manager->SetColorSchemeForAllPlugIns(cs);
 }
 
-void MainFrame::ApplyGlobalColorSchemetoStatusBar( void )
+void MainFrame::ApplyGlobalColorSchemetoStatusBar(void)
 {
 	if( m_pStatusBar != NULL ) {
 		m_pStatusBar->SetBackgroundColour(GetGlobalColor(_T("UIBDR")));    //UINFF
@@ -1011,14 +1016,14 @@ ToolBarSimple *MainFrame::CreateAToolbar()
 
 	//      Set up the toggle states
 
-	if( cc1 ) {
+	if (chart_canvas) {
 		//  Re-establish toggle states
-		tb->ToggleTool( ID_CURRENT, cc1->GetbShowCurrent() );
-		tb->ToggleTool( ID_TIDE, cc1->GetbShowTide() );
+		tb->ToggleTool(ID_CURRENT, chart_canvas->GetbShowCurrent());
+		tb->ToggleTool(ID_TIDE, chart_canvas->GetbShowTide());
 	}
 
 	if (pConfig)
-		tb->ToggleTool( ID_FOLLOW, cc1->m_bFollow);
+		tb->ToggleTool(ID_FOLLOW, chart_canvas->m_bFollow);
 
 #ifdef USE_S57
 	if (pConfig && ps52plib)
@@ -1145,52 +1150,54 @@ void MainFrame::RequestNewToolbar()
 	}
 }
 
-//      Update inplace the current toolbar with bitmaps corresponding to the current color scheme
-void MainFrame::UpdateToolbar( ColorScheme cs )
+// Update inplace the current toolbar with bitmaps corresponding to the current color scheme
+void MainFrame::UpdateToolbar(ColorScheme cs)
 {
-	if( g_FloatingToolbarDialog ) {
-		g_FloatingToolbarDialog->SetColorScheme( cs );
+	if (g_FloatingToolbarDialog) {
+		g_FloatingToolbarDialog->SetColorScheme(cs);
 
-		if( g_FloatingToolbarDialog->IsToolbarShown() ) {
+		if (g_FloatingToolbarDialog->IsToolbarShown()) {
 			DestroyMyToolbar();
 			g_toolbar = CreateAToolbar();
 		}
 	}
 
-	if( g_FloatingCompassDialog ) g_FloatingCompassDialog->SetColorScheme( cs );
+	if (g_FloatingCompassDialog)
+		g_FloatingCompassDialog->SetColorScheme(cs);
 
 	if( g_toolbar ) {
 		//  Re-establish toggle states
-		g_toolbar->ToggleTool( ID_FOLLOW, cc1->m_bFollow );
-		g_toolbar->ToggleTool( ID_CURRENT, cc1->GetbShowCurrent() );
-		g_toolbar->ToggleTool( ID_TIDE, cc1->GetbShowTide() );
+		g_toolbar->ToggleTool(ID_FOLLOW, chart_canvas->m_bFollow);
+		g_toolbar->ToggleTool(ID_CURRENT, chart_canvas->GetbShowCurrent());
+		g_toolbar->ToggleTool(ID_TIDE, chart_canvas->GetbShowTide());
 	}
 
 	return;
 }
 
-void MainFrame::EnableToolbar( bool newstate )
+void MainFrame::EnableToolbar(bool newstate)
 {
-	if( g_toolbar ) {
-		g_toolbar->EnableTool( ID_ZOOMIN, newstate );
-		g_toolbar->EnableTool( ID_ZOOMOUT, newstate );
-		g_toolbar->EnableTool( ID_STKUP, newstate );
-		g_toolbar->EnableTool( ID_STKDN, newstate );
-		g_toolbar->EnableTool( ID_ROUTE, newstate );
-		g_toolbar->EnableTool( ID_FOLLOW, newstate );
-		g_toolbar->EnableTool( ID_SETTINGS, newstate );
-		g_toolbar->EnableTool( ID_TEXT, newstate );
-		g_toolbar->EnableTool( ID_CURRENT, newstate );
-		g_toolbar->EnableTool( ID_TIDE, newstate );
-		g_toolbar->EnableTool( ID_HELP, newstate );
-		g_toolbar->EnableTool( ID_TBEXIT, newstate );
-		g_toolbar->EnableTool( ID_TBSTAT, newstate );
-		g_toolbar->EnableTool( ID_PRINT, newstate );
-		g_toolbar->EnableTool( ID_COLSCHEME, newstate );
-		g_toolbar->EnableTool( ID_ROUTEMANAGER, newstate );
-		g_toolbar->EnableTool( ID_TRACK, newstate );
-		g_toolbar->EnableTool( ID_AIS, newstate );
-	}
+	if (!g_toolbar)
+		return;
+
+	g_toolbar->EnableTool( ID_ZOOMIN, newstate );
+	g_toolbar->EnableTool( ID_ZOOMOUT, newstate );
+	g_toolbar->EnableTool( ID_STKUP, newstate );
+	g_toolbar->EnableTool( ID_STKDN, newstate );
+	g_toolbar->EnableTool( ID_ROUTE, newstate );
+	g_toolbar->EnableTool( ID_FOLLOW, newstate );
+	g_toolbar->EnableTool( ID_SETTINGS, newstate );
+	g_toolbar->EnableTool( ID_TEXT, newstate );
+	g_toolbar->EnableTool( ID_CURRENT, newstate );
+	g_toolbar->EnableTool( ID_TIDE, newstate );
+	g_toolbar->EnableTool( ID_HELP, newstate );
+	g_toolbar->EnableTool( ID_TBEXIT, newstate );
+	g_toolbar->EnableTool( ID_TBSTAT, newstate );
+	g_toolbar->EnableTool( ID_PRINT, newstate );
+	g_toolbar->EnableTool( ID_COLSCHEME, newstate );
+	g_toolbar->EnableTool( ID_ROUTEMANAGER, newstate );
+	g_toolbar->EnableTool( ID_TRACK, newstate );
+	g_toolbar->EnableTool( ID_AIS, newstate );
 }
 
 // Intercept menu commands
@@ -1215,7 +1222,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 	::wxSetCursor( wxCURSOR_WAIT );
 
 	// If we happen to have the measure tool open on Ctrl-Q quit
-	cc1->CancelMeasureRoute();
+	chart_canvas->CancelMeasureRoute();
 
 	// We save perspective before closing to restore position next time
 	// Pane is not closed so the child is not notified (OnPaneClose)
@@ -1229,12 +1236,9 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 	pConfig->Write( _T ( "AUIPerspective" ), g_pauimgr->SavePerspective() );
 
 	g_bquiting = true;
-	if( cc1 ) {
-		cc1->SetCursor( wxCURSOR_WAIT );
-
-		cc1->Refresh( false );
-		cc1->Update();
-	}
+	chart_canvas->SetCursor( wxCURSOR_WAIT );
+	chart_canvas->Refresh( false );
+	chart_canvas->Update();
 
 	//   Save the saved Screen Brightness
 	RestoreScreenBrightness();
@@ -1322,7 +1326,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 
 	if (g_FloatingToolbarDialog) {
 		wxPoint tbp = g_FloatingToolbarDialog->GetPosition();
-		global::OCPN::get().gui().set_toolbar_position(cc1->ScreenToClient(tbp));
+		global::OCPN::get().gui().set_toolbar_position(chart_canvas->ScreenToClient(tbp));
 		global::OCPN::get().gui().set_toolbar_orientation(g_FloatingToolbarDialog->GetOrient());
 	}
 
@@ -1359,20 +1363,21 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 	g_FloatingCompassDialog->Destroy();
 	g_FloatingCompassDialog = NULL;
 
-	//      Delete all open charts in the cache
-	if( ChartData ) ChartData->PurgeCache();
+	// Delete all open charts in the cache
+	if (ChartData)
+		ChartData->PurgeCache();
 
-	SetStatusBar( NULL );
+	SetStatusBar(NULL);
 	stats = NULL;
 
-	cc1->Destroy();
-	cc1 = NULL;
+	chart_canvas->Destroy();
+	chart_canvas = NULL;
+	chart_canvas = NULL;
 
-
-	//    Unload the PlugIns
-	//      Note that we are waiting until after the canvas is destroyed,
-	//      since some PlugIns may have created children of canvas.
-	//      Such a PlugIn must stay intact for the canvas dtor to call DestoryChildren()
+	// Unload the PlugIns
+	// Note that we are waiting until after the canvas is destroyed,
+	// since some PlugIns may have created children of canvas.
+	// Such a PlugIn must stay intact for the canvas dtor to call DestoryChildren()
 	if( g_pi_manager ) {
 		g_pi_manager->UnLoadAllPlugIns();
 		delete g_pi_manager;
@@ -1473,19 +1478,21 @@ void MainFrame::ODoSetSize( void )
 	int cccw = x;
 	int ccch = y;
 
-	if( cc1 ) {
+	if (chart_canvas) {
 		cccw = x * 10 / 10;               // constrain to mod 4
 		int wr = cccw / 4;
 		cccw = wr * 4;
 		cccw += 2;                              // account for simple border
 
-		int cur_width, cur_height;
-		cc1->GetSize( &cur_width, &cur_height );
-		if( ( cur_width != cccw ) || ( cur_height != ccch ) ) {
-			if( g_pauimgr->GetPane( cc1 ).IsOk() )
-				g_pauimgr->GetPane( cc1 ).BestSize( cccw, ccch );
-			else
-				cc1->SetSize( 0, 0, cccw, ccch );
+		int cur_width;
+		int cur_height;
+		chart_canvas->GetSize(&cur_width, &cur_height);
+		if ((cur_width != cccw) || (cur_height != ccch)) {
+			if (g_pauimgr->GetPane(chart_canvas).IsOk()) {
+				g_pauimgr->GetPane(chart_canvas).BestSize(cccw, ccch);
+			} else {
+				chart_canvas->SetSize( 0, 0, cccw, ccch );
+			}
 		}
 	}
 
@@ -1529,16 +1536,18 @@ void MainFrame::ODoSetSize( void )
 	}
 
 	if (pthumbwin)
-		pthumbwin->SetMaxSize(cc1->GetParent()->GetSize());
+		pthumbwin->SetMaxSize(chart_canvas->GetParent()->GetSize());
 }
 
 void MainFrame::PositionConsole( void )
 {
-	if( NULL == cc1 ) return;
-	//    Reposition console based on its size and chartcanvas size
+	if (!chart_canvas)
+		return;
+
+	// Reposition console based on its size and chartcanvas size
 	int ccx, ccy, ccsx, ccsy, consx, consy;
-	cc1->GetSize( &ccsx, &ccsy );
-	cc1->GetPosition( &ccx, &ccy );
+	chart_canvas->GetSize( &ccsx, &ccsy );
+	chart_canvas->GetPosition( &ccx, &ccy );
 
 	console->GetSize( &consx, &consy );
 
@@ -1561,25 +1570,25 @@ void MainFrame::UpdateAllFonts()
 
 	if( pWayPointMan ) pWayPointMan->ClearRoutePointFonts();
 
-	cc1->Refresh();
+	chart_canvas->Refresh();
 }
 
 void MainFrame::SetGroupIndex( int index )
 {
 	int new_index = index;
-	if( index > (int) g_pGroupArray->GetCount() ) new_index = 0;
+	if (index > static_cast<int>(g_pGroupArray->GetCount()))
+		new_index = 0;
 
 	bool bgroup_override = false;
 	int old_group_index = new_index;
 
-	if( !CheckGroup( new_index ) ) {
+	if (!CheckGroup(new_index)) {
 		new_index = 0;
 		bgroup_override = true;
 	}
 
 	//    Get the currently displayed chart native scale, and the current ViewPort
-	int current_chart_native_scale = cc1->GetCanvasChartNativeScale();
-	ViewPort vp = cc1->GetVP();
+	int current_chart_native_scale = chart_canvas->GetCanvasChartNativeScale();
 
 	g_GroupIndex = new_index;
 
@@ -1587,13 +1596,13 @@ void MainFrame::SetGroupIndex( int index )
 	g_sticky_chart = -1;
 
 	//    We need a new chartstack and quilt to figure out which chart to open in the new group
-	cc1->UpdateCanvasOnGroupChange();
+	chart_canvas->UpdateCanvasOnGroupChange();
 
-	int dbi_hint = cc1->FindClosestCanvasChartdbIndex( current_chart_native_scale );
+	int dbi_hint = chart_canvas->FindClosestCanvasChartdbIndex(current_chart_native_scale);
 
 	//    Refresh the canvas, selecting the "best" chart,
 	//    applying the prior ViewPort exactly
-	ChartsRefresh( dbi_hint, vp, false );
+	ChartsRefresh(dbi_hint, chart_canvas->GetVP(), false);
 
 	//    Message box is deferred so that canvas refresh occurs properly before dialog
 	if( bgroup_override ) {
@@ -1624,7 +1633,7 @@ void MainFrame::toolLeftClick_AIS()
 		g_toolbar->Refresh();
 		m_lastAISiconName = iconName;
 	}
-	cc1->ReloadVP();
+	chart_canvas->ReloadVP();
 }
 
 void MainFrame::toolLeftClick_SETTINGS()
@@ -1637,38 +1646,38 @@ void MainFrame::toolLeftClick_SETTINGS()
 	if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->RefreshFadeTimer();
 
-	if (cc1->GetbShowCurrent() || cc1->GetbShowTide())
+	if (chart_canvas->GetbShowCurrent() || chart_canvas->GetbShowTide())
 		LoadHarmonics();
 
-	//  The chart display options may have changed, especially on S57 ENC,
-	//  So, flush the cache and redraw
-	cc1->ReloadVP();
+	// The chart display options may have changed, especially on S57 ENC,
+	// So, flush the cache and redraw
+	chart_canvas->ReloadVP();
 }
 
 void MainFrame::toolLeftClick_CURRENT()
 {
 	LoadHarmonics();
 
-	if( ptcmgr->IsReady() ) {
-		cc1->SetbShowCurrent( !cc1->GetbShowCurrent() );
+	if( ptcmgr->IsReady()) {
+		chart_canvas->SetbShowCurrent(!chart_canvas->GetbShowCurrent());
 		if (g_toolbar)
-			g_toolbar->ToggleTool( ID_CURRENT, cc1->GetbShowCurrent() );
-		cc1->ReloadVP();
+			g_toolbar->ToggleTool( ID_CURRENT, chart_canvas->GetbShowCurrent() );
+		chart_canvas->ReloadVP();
 	} else {
 		wxLogMessage( _T("Chart1::Event...TCMgr Not Available") );
-		cc1->SetbShowCurrent( false );
+		chart_canvas->SetbShowCurrent( false );
 		if (g_toolbar)
 			g_toolbar->ToggleTool( ID_CURRENT, false );
 	}
 
-	if( cc1->GetbShowCurrent() ) {
+	if( chart_canvas->GetbShowCurrent() ) {
 		FrameTCTimer.Start( TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS );
-		cc1->SetbTCUpdate( true );                        // force immediate update
+		chart_canvas->SetbTCUpdate( true );                        // force immediate update
 	} else {
 		FrameTCTimer.Stop();
 	}
 
-	cc1->Refresh( false );
+	chart_canvas->Refresh( false );
 }
 
 void MainFrame::toolLeftClick_TIDE()
@@ -1676,31 +1685,31 @@ void MainFrame::toolLeftClick_TIDE()
 	LoadHarmonics();
 
 	if( ptcmgr->IsReady() ) {
-		cc1->SetbShowTide( !cc1->GetbShowTide() );
+		chart_canvas->SetbShowTide( !chart_canvas->GetbShowTide() );
 		if (g_toolbar)
-			g_toolbar->ToggleTool( ID_TIDE, cc1->GetbShowTide() );
-		cc1->ReloadVP();
+			g_toolbar->ToggleTool( ID_TIDE, chart_canvas->GetbShowTide() );
+		chart_canvas->ReloadVP();
 	} else {
 		wxLogMessage( _("Chart1::Event...TCMgr Not Available") );
-		cc1->SetbShowTide( false );
+		chart_canvas->SetbShowTide( false );
 		if (g_toolbar)
 			g_toolbar->ToggleTool( ID_TIDE, false );
 	}
 
-	if( cc1->GetbShowTide() ) {
+	if( chart_canvas->GetbShowTide() ) {
 		FrameTCTimer.Start( TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS );
-		cc1->SetbTCUpdate( true );                        // force immediate update
+		chart_canvas->SetbTCUpdate( true );                        // force immediate update
 	} else {
 		FrameTCTimer.Stop();
 	}
 
-	cc1->Refresh( false );
+	chart_canvas->Refresh( false );
 }
 
 void MainFrame::toolLeftClick_ROUTEMANAGER()
 {
 	if (!pRouteManagerDialog) // FIXME: create instance earlier, There is one global instance of the Dialog
-		pRouteManagerDialog = new RouteManagerDialog(cc1);
+		pRouteManagerDialog = new RouteManagerDialog(chart_canvas);
 
 	pRouteManagerDialog->UpdateRouteListCtrl();
 	pRouteManagerDialog->UpdateTrkListCtrl();
@@ -1732,18 +1741,18 @@ void MainFrame::OnToolLeftClick(wxCommandEvent & event)
 			break;
 
 		case ID_ZOOMIN:
-			cc1->ZoomCanvasIn( 2.0 );
+			chart_canvas->ZoomCanvasIn( 2.0 );
 			DoChartUpdate();
 			break;
 
 		case ID_ZOOMOUT:
-			cc1->ZoomCanvasOut( 2.0 );
+			chart_canvas->ZoomCanvasOut( 2.0 );
 			DoChartUpdate();
 			break;
 
 		case ID_ROUTE:
 			nRoute_State = 1;
-			cc1->SetCursor(*cc1->pCursorPencil);
+			chart_canvas->SetCursor(*chart_canvas->pCursorPencil);
 			break;
 
 		case ID_FOLLOW:
@@ -1755,7 +1764,7 @@ void MainFrame::OnToolLeftClick(wxCommandEvent & event)
 			ps52plib->SetShowS57Text(!ps52plib->GetShowS57Text());
 			if (g_toolbar)
 				g_toolbar->ToggleTool(ID_TEXT, ps52plib->GetShowS57Text());
-			cc1->ReloadVP();
+			chart_canvas->ReloadVP();
 			break;
 #endif
 
@@ -1912,7 +1921,7 @@ void MainFrame::ActivateMOB( void )
 		pRouteManagerDialog->UpdateWptListCtrl();
 	}
 
-	cc1->Refresh( false );
+	chart_canvas->Refresh( false );
 
 	wxString mob_message( _( "MAN OVERBOARD" ) );
 	mob_message += _T(" Time: ");
@@ -2044,7 +2053,7 @@ void MainFrame::ToggleCourseUp(void)
 	DoCOGSet();
 	UpdateGPSCompassStatusBox( true );
 	DoChartUpdate();
-	cc1->ReloadVP();
+	chart_canvas->ReloadVP();
 }
 
 void MainFrame::ToggleENCText( void )
@@ -2053,7 +2062,7 @@ void MainFrame::ToggleENCText( void )
 	if( ps52plib ) {
 		ps52plib->SetShowS57Text( !ps52plib->GetShowS57Text() );
 		if( g_toolbar ) g_toolbar->ToggleTool( ID_TEXT, ps52plib->GetShowS57Text() );
-		cc1->ReloadVP();
+		chart_canvas->ReloadVP();
 	}
 
 #endif
@@ -2064,7 +2073,7 @@ void MainFrame::ToggleSoundings( void )
 #ifdef USE_S57
 	if( ps52plib ) {
 		ps52plib->SetShowSoundings( !ps52plib->GetShowSoundings() );
-		cc1->ReloadVP();
+		chart_canvas->ReloadVP();
 	}
 #endif
 }
@@ -2085,7 +2094,7 @@ bool MainFrame::ToggleLights( bool doToggle, bool temporary )
 		if( doToggle ) {
 			if( ! temporary ) {
 				ps52plib->GenerateStateHash();
-				cc1->ReloadVP();
+				chart_canvas->ReloadVP();
 			}
 		}
 	}
@@ -2117,7 +2126,7 @@ void MainFrame::ToggleRocks( void )
 			}
 		}
 		ps52plib->GenerateStateHash();
-		cc1->ReloadVP();
+		chart_canvas->ReloadVP();
 	}
 #endif
 }
@@ -2152,24 +2161,25 @@ void MainFrame::ToggleAnchor( void )
 			if( cnt == num ) break;
 		}
 		ps52plib->GenerateStateHash();
-		cc1->ReloadVP();
+		chart_canvas->ReloadVP();
 	}
 #endif
 }
 
 void MainFrame::TogglebFollow( void )
 {
-	if( !cc1->m_bFollow ) SetbFollow();
+	if (!chart_canvas->m_bFollow)
+		SetbFollow();
 	else
 		ClearbFollow();
 }
 
 void MainFrame::SetbFollow(void)
 {
-	cc1->m_bFollow = true;
-	SetToolbarItemState(ID_FOLLOW, cc1->m_bFollow);
+	chart_canvas->m_bFollow = true;
+	SetToolbarItemState(ID_FOLLOW, chart_canvas->m_bFollow);
 	DoChartUpdate();
-	cc1->ReloadVP();
+	chart_canvas->ReloadVP();
 }
 
 void MainFrame::ClearbFollow(void)
@@ -2179,10 +2189,10 @@ void MainFrame::ClearbFollow(void)
 	// Center the screen on the GPS position, for lack of a better place
 	vLat = nav.lat;
 	vLon = nav.lon;
-	cc1->m_bFollow = false;
-	SetToolbarItemState(ID_FOLLOW, cc1->m_bFollow);
+	chart_canvas->m_bFollow = false;
+	SetToolbarItemState(ID_FOLLOW, chart_canvas->m_bFollow);
 	DoChartUpdate();
-	cc1->ReloadVP();
+	chart_canvas->ReloadVP();
 }
 
 void MainFrame::ToggleChartOutlines(void)
@@ -2190,7 +2200,7 @@ void MainFrame::ToggleChartOutlines(void)
 	global::GUI & gui = global::OCPN::get().gui();
 
 	gui.set_view_show_outlines(!gui.view().show_outlines);
-	cc1->Refresh(false);
+	chart_canvas->Refresh(false);
 }
 
 void MainFrame::SetToolbarItemState(int tool_id, bool state)
@@ -2272,16 +2282,16 @@ void MainFrame::JumpToPosition( double lat, double lon, double scale )
 {
 	vLat = lat;
 	vLon = lon;
-	cc1->m_bFollow = false;
+	chart_canvas->m_bFollow = false;
 	DoChartUpdate();
 
-	cc1->SetViewPoint( lat, lon, scale, 0, cc1->GetVPRotation() );
-	cc1->ReloadVP();
+	chart_canvas->SetViewPoint( lat, lon, scale, 0, chart_canvas->GetVPRotation() );
+	chart_canvas->ReloadVP();
 
 	SetToolbarItemState( ID_FOLLOW, false );
 
 	if( g_pi_manager ) {
-		g_pi_manager->SendViewPortToRequestingPlugIns( cc1->GetVP() );
+		g_pi_manager->SendViewPortToRequestingPlugIns( chart_canvas->GetVP() );
 	}
 }
 
@@ -2352,7 +2362,7 @@ int MainFrame::DoOptionsDialog()
 
 	if( b_sub ) {
 		SurfaceToolbar();
-		cc1->SetFocus();
+		chart_canvas->SetFocus();
 	}
 
 #ifdef __WXGTK__
@@ -2392,8 +2402,8 @@ int MainFrame::ProcessOptionsDialog( int rr, options* dialog )
 
 		//    Capture the currently open chart
 		wxString chart_file_name;
-		if( cc1->GetQuiltMode() ) {
-			int dbi = cc1->GetQuiltRefChartdbIndex();
+		if( chart_canvas->GetQuiltMode() ) {
+			int dbi = chart_canvas->GetQuiltRefChartdbIndex();
 			chart_file_name = ChartData->GetDBChartFileName( dbi );
 		} else
 			if( Current_Ch ) chart_file_name = Current_Ch->GetFullPath();
@@ -2402,7 +2412,7 @@ int MainFrame::ProcessOptionsDialog( int rr, options* dialog )
 
 		//    Re-open the last open chart
 		int dbii = ChartData->FinddbIndex( chart_file_name );
-		ChartsRefresh( dbii, cc1->GetVP() );
+		ChartsRefresh( dbii, chart_canvas->GetVP() );
 	}
 
 	if( ( rr & LOCALE_CHANGED ) || ( rr & STYLE_CHANGED ) ) {
@@ -2437,7 +2447,7 @@ int MainFrame::ProcessOptionsDialog( int rr, options* dialog )
 	}
 
 	if( ( bPrevQuilt != g_bQuiltEnable ) || ( bPrevFullScreenQuilt != g_bFullScreenQuilt ) ) {
-		cc1->SetQuiltMode( g_bQuiltEnable );
+		chart_canvas->SetQuiltMode( g_bQuiltEnable );
 		SetupQuiltMode();
 	}
 
@@ -2474,7 +2484,7 @@ int MainFrame::ProcessOptionsDialog( int rr, options* dialog )
 	}
 	m_COGFilterLast = stuffcog;
 
-	SetChartUpdatePeriod( cc1->GetVP() );              // Pick up changes to skew compensator
+	SetChartUpdatePeriod( chart_canvas->GetVP() );              // Pick up changes to skew compensator
 
 	return 0;
 }
@@ -2559,8 +2569,8 @@ void MainFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
 
 	FrameTimer1.Stop();                  // stop other asynchronous activity
 
-	cc1->InvalidateQuilt();
-	cc1->SetQuiltRefChart( -1 );
+	chart_canvas->InvalidateQuilt();
+	chart_canvas->SetQuiltRefChart( -1 );
 
 	Current_Ch = NULL;
 
@@ -2574,9 +2584,9 @@ void MainFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
 	ChartData->BuildChartStack( pCurrentStack, vLat, vLon );
 
 	if( -1 != dbi_hint ) {
-		if( cc1->GetQuiltMode() ) {
+		if( chart_canvas->GetQuiltMode() ) {
 			pCurrentStack->SetCurrentEntryFromdbIndex( dbi_hint );
-			cc1->SetQuiltRefChart( dbi_hint );
+			chart_canvas->SetQuiltRefChart( dbi_hint );
 		} else {
 			//      Open the saved chart
 			ChartBase *pTentative_Chart;
@@ -2608,21 +2618,22 @@ void MainFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
 		//    Make it the smallest scale chart on the stack
 		pCurrentStack->CurrentStackEntry = pCurrentStack->nEntry - 1;
 		int selected_index = pCurrentStack->GetCurrentEntrydbIndex();
-		cc1->SetQuiltRefChart( selected_index );
+		chart_canvas->SetQuiltRefChart( selected_index );
 	}
 
 	//    Validate the correct single chart, or set the quilt mode as appropriate
 	SetupQuiltMode();
 
-	if( vp.IsValid() ) cc1->LoadVP( vp );
+	if( vp.IsValid() )
+		chart_canvas->LoadVP( vp );
 	else
-		cc1->ReloadVP();
+		chart_canvas->ReloadVP();
 
 	UpdateControlBar();
 
 	UpdateGPSCompassStatusBox( true );
 
-	cc1->SetCursor( wxCURSOR_ARROW );
+	chart_canvas->SetCursor( wxCURSOR_ARROW );
 
 	if( b_run ) FrameTimer1.Start( TIMER_GFRAME_1, wxTIMER_CONTINUOUS );
 
@@ -2639,8 +2650,8 @@ bool MainFrame::UpdateChartDatabaseInplace(
 	bool b_run = FrameTimer1.IsRunning();
 	FrameTimer1.Stop();                  // stop other asynchronous activity
 
-	cc1->InvalidateQuilt();
-	cc1->SetQuiltRefChart( -1 );
+	chart_canvas->InvalidateQuilt();
+	chart_canvas->SetQuiltRefChart( -1 );
 
 	Current_Ch = NULL;
 
@@ -2687,29 +2698,33 @@ bool MainFrame::UpdateChartDatabaseInplace(
 
 void MainFrame::ToggleQuiltMode( void )
 {
-	if( cc1 ) {
-		bool cur_mode = cc1->GetQuiltMode();
+	if (chart_canvas) {
+		bool cur_mode = chart_canvas->GetQuiltMode();
 
-		if( !cc1->GetQuiltMode() && g_bQuiltEnable ) cc1->SetQuiltMode( true );
+		if (!chart_canvas->GetQuiltMode() && g_bQuiltEnable)
+			chart_canvas->SetQuiltMode(true);
 		else
-			if( cc1->GetQuiltMode() ) {
-				cc1->SetQuiltMode( false );
-				g_sticky_chart = cc1->GetQuiltReferenceChartIndex();
+			if (chart_canvas->GetQuiltMode()) {
+				chart_canvas->SetQuiltMode(false);
+				g_sticky_chart = chart_canvas->GetQuiltReferenceChartIndex();
 			}
 
 
-		if( cur_mode != cc1->GetQuiltMode() ) SetupQuiltMode();
+		if (cur_mode != chart_canvas->GetQuiltMode())
+			SetupQuiltMode();
 	}
 }
 
 void MainFrame::SetQuiltMode( bool bquilt )
 {
-	if( cc1 ) cc1->SetQuiltMode( bquilt );
+	if(chart_canvas)
+		chart_canvas->SetQuiltMode(bquilt);
 }
 
 bool MainFrame::GetQuiltMode( void )
 {
-	if( cc1 ) return cc1->GetQuiltMode();
+	if (chart_canvas)
+		return chart_canvas->GetQuiltMode();
 	else
 		return false;
 }
@@ -2717,7 +2732,7 @@ bool MainFrame::GetQuiltMode( void )
 void MainFrame::SetupQuiltMode( void )
 {
 
-	if( cc1->GetQuiltMode() )                               // going to quilt mode
+	if( chart_canvas->GetQuiltMode() ) // going to quilt mode
 	{
 		ChartData->LockCache();
 
@@ -2768,16 +2783,15 @@ void MainFrame::SetupQuiltMode( void )
 #endif
 		}
 
-		if( cc1->IsChartQuiltableRef( target_new_dbindex ) ) SelectQuiltRefdbChart(
-				target_new_dbindex );
+		if (chart_canvas->IsChartQuiltableRef( target_new_dbindex ))
+			SelectQuiltRefdbChart(target_new_dbindex);
 		else
-			SelectQuiltRefdbChart( -1 );
+			SelectQuiltRefdbChart(-1);
 
-		Current_Ch = NULL;                  // Bye....
-		cc1->ReloadVP();
+		Current_Ch = NULL; // Bye....
+		chart_canvas->ReloadVP();
 
-	} else                                                  // going to SC Mode
-	{
+	} else { // going to SC Mode
 		stats->pPiano->SetActiveKeyArray(std::vector<int>());
 		stats->pPiano->SetNoshowIndexArray(std::vector<int>());
 		stats->pPiano->SetSubliteIndexArray(std::vector<int>());
@@ -2790,17 +2804,16 @@ void MainFrame::SetupQuiltMode( void )
 		stats->pPiano->SetSkewIcon( new wxBitmap( style->GetIcon( _T("skewprj") ) ) );
 
 		stats->pPiano->SetRoundedRectangles( false );
-
 	}
 
 	//    When shifting from quilt to single chart mode, select the "best" single chart to show
-	if( !cc1->GetQuiltMode() ) {
+	if( !chart_canvas->GetQuiltMode() ) {
 		if( ChartData && ChartData->IsValid() ) {
 			ChartData->UnLockCache();
 
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			double tLat, tLon;
-			if( cc1->m_bFollow == true ) {
+			if( chart_canvas->m_bFollow == true ) {
 				tLat = nav.lat;
 				tLon = nav.lon;
 			} else {
@@ -2820,7 +2833,7 @@ void MainFrame::SetupQuiltMode( void )
 				ChartBase *Candidate_Chart = NULL;
 				int cur_max_scale = (int) 1e8;
 
-				ChartBase *pChart = cc1->GetFirstQuiltChart();
+				ChartBase *pChart = chart_canvas->GetFirstQuiltChart();
 				while( pChart ) {
 					//  Is this pChart in new stack?
 					int tEntry = ChartData->GetStackEntry( &TempStack, pChart->GetFullPath() );
@@ -2830,7 +2843,7 @@ void MainFrame::SetupQuiltMode( void )
 							cur_max_scale = pChart->GetNativeScale();
 						}
 					}
-					pChart = cc1->GetNextQuiltChart();
+					pChart = chart_canvas->GetNextQuiltChart();
 				}
 
 				Current_Ch = Candidate_Chart;
@@ -2846,7 +2859,7 @@ void MainFrame::SetupQuiltMode( void )
 
 			//  Invalidate all the charts in the quilt,
 			// as any cached data may be region based and not have fullscreen coverage
-			cc1->InvalidateAllQuiltPatchs();
+			chart_canvas->InvalidateAllQuiltPatchs();
 
 			if( Current_Ch ) {
 				int dbi = ChartData->FinddbIndex( Current_Ch->GetFullPath() );
@@ -2872,13 +2885,15 @@ void MainFrame::DoStackDown( void )
 {
 	int current_stack_index = pCurrentStack->CurrentStackEntry;
 
-	if( 0 == current_stack_index ) return;
+	if (0 == current_stack_index)
+		return;
 
-	if( !cc1->GetQuiltMode() ) SelectChartFromStack( current_stack_index - 1 );
+	if (!chart_canvas->GetQuiltMode())
+		SelectChartFromStack(current_stack_index - 1);
 	else {
 		int new_dbIndex = pCurrentStack->GetDBIndex( current_stack_index - 1 );
 
-		if( !cc1->IsChartQuiltableRef( new_dbIndex ) ) {
+		if (!chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
 			ToggleQuiltMode();
 			SelectChartFromStack( current_stack_index - 1 );
 		} else
@@ -2886,32 +2901,31 @@ void MainFrame::DoStackDown( void )
 
 	}
 
-	cc1->SetQuiltChartHiLiteIndex( -1 );
-
-	cc1->ReloadVP();
+	chart_canvas->SetQuiltChartHiLiteIndex( -1 );
+	chart_canvas->ReloadVP();
 }
 
 void MainFrame::DoStackUp( void )
 {
 	int current_stack_index = pCurrentStack->CurrentStackEntry;
 
-	if( current_stack_index >= pCurrentStack->nEntry - 1 ) return;
+	if (current_stack_index >= pCurrentStack->nEntry - 1)
+		return;
 
-	if( !cc1->GetQuiltMode() ) {
+	if( !chart_canvas->GetQuiltMode() ) {
 		SelectChartFromStack( current_stack_index + 1 );
 	} else {
 		int new_dbIndex = pCurrentStack->GetDBIndex( current_stack_index + 1 );
 
-		if( !cc1->IsChartQuiltableRef( new_dbIndex ) ) {
+		if( !chart_canvas->IsChartQuiltableRef( new_dbIndex ) ) {
 			ToggleQuiltMode();
 			SelectChartFromStack( current_stack_index + 1 );
 		} else
 			SelectQuiltRefChart( current_stack_index + 1 );
 	}
 
-	cc1->SetQuiltChartHiLiteIndex( -1 );
-
-	cc1->ReloadVP();
+	chart_canvas->SetQuiltChartHiLiteIndex( -1 );
+	chart_canvas->ReloadVP();
 }
 
 //    Manage the application memory footprint on a periodic schedule
@@ -2924,7 +2938,7 @@ void MainFrame::OnMemFootTimer(wxTimerEvent &)
 	g_MemFootMB = 100;
 	// The application memory usage has exceeded the target, so try to manage it down....
 	if (memsize > (g_MemFootMB * 1000)) {
-		if (ChartData && cc1) {
+		if (ChartData && chart_canvas) {
 			// Get a local copy of the cache info
 			wxArrayPtrVoid * pCache = ChartData->GetChartCache();
 			const unsigned int nCache = pCache->GetCount();
@@ -2955,8 +2969,8 @@ void MainFrame::OnMemFootTimer(wxTimerEvent &)
 
 				// How many can be deleted?
 				unsigned int minimum_cache = 1;
-				if (cc1->GetQuiltMode())
-					minimum_cache = cc1->GetQuiltChartCount();
+				if (chart_canvas->GetQuiltMode())
+					minimum_cache = chart_canvas->GetQuiltChartCount();
 
 				while ((memsize > (g_MemFootMB * 1000)) && (pCache->GetCount() > minimum_cache) && (idelete < idelete_max)) {
 					ChartData->DeleteCacheChart(static_cast<ChartBase *>(cache[idelete].pChart));
@@ -3167,9 +3181,9 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 
 	if (g_unit_test_1) {
 
-		cc1->m_bFollow = false;
+		chart_canvas->m_bFollow = false;
 		if (g_toolbar)
-			g_toolbar->ToggleTool(ID_FOLLOW, cc1->m_bFollow);
+			g_toolbar->ToggleTool(ID_FOLLOW, chart_canvas->m_bFollow);
 
 		if (ChartData) {
 			if (ut_index < ChartData->GetChartTableEntries()) {
@@ -3180,18 +3194,18 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 				vLat = lat;
 				vLon = lon;
 
-				cc1->SetViewPoint(lat, lon);
+				chart_canvas->SetViewPoint(lat, lon);
 
-				if (cc1->GetQuiltMode()) {
-					if (cc1->IsChartQuiltableRef(ut_index))
+				if (chart_canvas->GetQuiltMode()) {
+					if (chart_canvas->IsChartQuiltableRef(ut_index))
 						SelectQuiltRefdbChart(ut_index);
 				} else
 					SelectdbChart(ut_index);
 
-				double ppm = cc1->GetCanvasScaleFactor() / cte->GetScale();
+				double ppm = chart_canvas->GetCanvasScaleFactor() / cte->GetScale();
 				ppm /= 2;
-				cc1->SetVPScale(ppm);
-				cc1->ReloadVP();
+				chart_canvas->SetVPScale(ppm);
+				chart_canvas->ReloadVP();
 				ut_index++;
 			}
 		}
@@ -3210,8 +3224,8 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 		}
 
 		AppActivateList.Clear();
-		if(cc1){
-			for ( wxWindowList::iterator it = cc1->GetChildren().begin(); it != cc1->GetChildren().end(); ++it ) {
+		if (chart_canvas){
+			for (wxWindowList::iterator it = chart_canvas->GetChildren().begin(); it != chart_canvas->GetChildren().end(); ++it) {
 				if( (*it)->IsShown() ) {
 					(*it)->Hide();
 					AppActivateList.Append(*it);
@@ -3302,9 +3316,9 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 		global::OCPN::get().nav().set_course_over_ground(0.0); // say speed is zero to kill ownship predictor
 	}
 
-	if (cc1) {
+	if (chart_canvas) {
 		double cursor_lat, cursor_lon;
-		cc1->GetCursorLatLon(&cursor_lat, &cursor_lon);
+		chart_canvas->GetCursorLatLon(&cursor_lat, &cursor_lon);
 
 		wxString s1;
 		s1 += _T(" ");
@@ -3323,7 +3337,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 			s.Printf( wxString("%03d°(M)  ", wxConvUTF8), (int)GetTrueOrMag(brg));
 		else
 			s.Printf( wxString("%03d°  ", wxConvUTF8), (int)GetTrueOrMag(brg));
-		s << cc1->FormatDistanceAdaptive( dist );
+		s << chart_canvas->FormatDistanceAdaptive( dist );
 		if (GetStatusBar())
 			SetStatusText(s, STAT_FIELD_CURSOR_BRGRNG);
 	}
@@ -3342,7 +3356,8 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	if (g_pRouteMan->UpdateProgress()) {
 		nBlinkerTick++;
 		//    This RefreshRect will cause any active routepoint to blink
-		if( g_pRouteMan->GetpActiveRoute() ) cc1->RefreshRect( g_blink_rect, false );
+		if (g_pRouteMan->GetpActiveRoute())
+			chart_canvas->RefreshRect(g_blink_rect, false);
 	}
 
 	// Possibly save the current configuration
@@ -3352,27 +3367,27 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	}
 
 	// Force own-ship drawing parameters
-	cc1->SetOwnShipState(SHIP_NORMAL);
+	chart_canvas->SetOwnShipState(SHIP_NORMAL);
 
-	if (cc1->GetQuiltMode()) {
-		double erf = cc1->GetQuiltMaxErrorFactor();
+	if (chart_canvas->GetQuiltMode()) {
+		double erf = chart_canvas->GetQuiltMaxErrorFactor();
 		if (erf > 0.02)
-			cc1->SetOwnShipState(SHIP_LOWACCURACY);
+			chart_canvas->SetOwnShipState(SHIP_LOWACCURACY);
 	} else {
 		if (Current_Ch) {
 			if (Current_Ch->GetChart_Error_Factor() > 0.02)
-				cc1->SetOwnShipState(SHIP_LOWACCURACY);
+				chart_canvas->SetOwnShipState(SHIP_LOWACCURACY);
 		}
 	}
 
 	if (!bGPSValid) {
-		cc1->SetOwnShipState(SHIP_INVALID);
-		if (cc1->m_bFollow)
-			cc1->UpdateShips();
+		chart_canvas->SetOwnShipState(SHIP_INVALID);
+		if (chart_canvas->m_bFollow)
+			chart_canvas->UpdateShips();
 	}
 
 	if (bGPSValid != m_last_bGPSValid) {
-		cc1->UpdateShips();
+		chart_canvas->UpdateShips();
 		bnew_view = true;                  // force a full Refresh()
 		m_last_bGPSValid = bGPSValid;
 	}
@@ -3394,7 +3409,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	}
 
 	if (brq_dynamic) {
-		cc1->Refresh();
+		chart_canvas->Refresh();
 		bnew_view = true;
 	}
 
@@ -3404,14 +3419,14 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	// In non-follow mode, invalidate the rectangles containing the AIS targets and the ownship, etc...
 	// In follow mode, if there has already been a full screen refresh, there is no need to check ownship or AIS,
 	// since they will be always drawn on the full screen paint.
-	if ((!cc1->m_bFollow) || g_bCourseUp) {
-		cc1->UpdateShips();
-		cc1->UpdateAIS();
-		cc1->UpdateAlerts();
+	if ((!chart_canvas->m_bFollow) || g_bCourseUp) {
+		chart_canvas->UpdateShips();
+		chart_canvas->UpdateAIS();
+		chart_canvas->UpdateAlerts();
 	} else {
 		if (!bnew_view) { // There has not been a Refresh() yet.....
-			cc1->UpdateAIS();
-			cc1->UpdateAlerts();
+			chart_canvas->UpdateAIS();
+			chart_canvas->UpdateAlerts();
 		}
 	}
 
@@ -3532,9 +3547,9 @@ void MainFrame::UpdateAISTool( void )
 //    Cause refresh of active Tide/Current data, if displayed
 void MainFrame::OnFrameTCTimer(wxTimerEvent &)
 {
-	if( cc1 ) {
-		cc1->SetbTCUpdate( true );
-		cc1->Refresh( false );
+	if( chart_canvas ) {
+		chart_canvas->SetbTCUpdate( true );
+		chart_canvas->Refresh( false );
 	}
 }
 
@@ -3562,12 +3577,15 @@ void MainFrame::DoCOGSet( void )
 	else
 		g_VPRotate = 0.;
 
-	if( cc1 ) cc1->SetVPRotation( g_VPRotate );
+	if( chart_canvas )
+		chart_canvas->SetVPRotation( g_VPRotate );
 
 	if( g_bCourseUp ) {
 		bool bnew_chart = DoChartUpdate();
 
-		if( ( bnew_chart ) || ( old_VPRotate != g_VPRotate ) ) if( cc1 ) cc1->ReloadVP();
+		if( ( bnew_chart ) || ( old_VPRotate != g_VPRotate ) )
+			if( chart_canvas )
+				chart_canvas->ReloadVP();
 	}
 }
 
@@ -3594,13 +3612,13 @@ void RenderShadowText( wxDC *pdc, wxFont *pFont, wxString& str, int x, int y )
 	pdc->DrawText( str, x, y );
 
 	pdc->SetFont( oldfont );                  // restore last font
-
 }
 
 
 void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
 {
-	if( !g_FloatingCompassDialog ) return;
+	if( !g_FloatingCompassDialog )
+		return;
 
 	//    Look for change in overlap or positions
 	bool b_update = false;
@@ -3638,9 +3656,9 @@ void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
 		}
 		else {
 			wxPoint posn_in_canvas = wxPoint(
-					cc1->GetSize().x - size_x - x_offset - cc1_edge_comp,
-					cc1->GetSize().y - ( size_y + y_offset + cc1_edge_comp));
-			g_FloatingCompassDialog->Move( cc1->ClientToScreen( posn_in_canvas ) );
+				chart_canvas->GetSize().x - size_x - x_offset - cc1_edge_comp,
+				chart_canvas->GetSize().y - ( size_y + y_offset + cc1_edge_comp));
+			g_FloatingCompassDialog->Move( chart_canvas->ClientToScreen( posn_in_canvas ) );
 		}
 
 		b_update = true;
@@ -3716,12 +3734,14 @@ int MainFrame::GetApplicationMemoryUse( void )
 
 void MainFrame::HandlePianoClick( int selected_index, int selected_dbIndex )
 {
-	if( !pCurrentStack ) return;
-	if( s_ProgDialog ) return;
+	if (!pCurrentStack)
+		return;
+	if (s_ProgDialog)
+		return;
 
-	if( !cc1->GetQuiltMode() ) {
+	if( !chart_canvas->GetQuiltMode() ) {
 		if( m_bpersistent_quilt && g_bQuiltEnable ) {
-			if( cc1->IsChartQuiltableRef( selected_dbIndex ) ) {
+			if( chart_canvas->IsChartQuiltableRef( selected_dbIndex ) ) {
 				ToggleQuiltMode();
 				SelectQuiltRefdbChart( selected_dbIndex );
 				m_bpersistent_quilt = false;
@@ -3733,7 +3753,7 @@ void MainFrame::HandlePianoClick( int selected_index, int selected_dbIndex )
 			g_sticky_chart = selected_dbIndex;
 		}
 	} else {
-		if( cc1->IsChartQuiltableRef( selected_dbIndex ) ) SelectQuiltRefdbChart(
+		if( chart_canvas->IsChartQuiltableRef( selected_dbIndex ) ) SelectQuiltRefdbChart(
 				selected_dbIndex );
 		else {
 			ToggleQuiltMode();
@@ -3742,29 +3762,33 @@ void MainFrame::HandlePianoClick( int selected_index, int selected_dbIndex )
 		}
 	}
 
-	cc1->SetQuiltChartHiLiteIndex( -1 );
-	cc1->HideChartInfoWindow();
+	chart_canvas->SetQuiltChartHiLiteIndex( -1 );
+	chart_canvas->HideChartInfoWindow();
 	DoChartUpdate();
-	cc1->ReloadVP();                  // Pick up the new selections
+	chart_canvas->ReloadVP();                  // Pick up the new selections
 }
 
 void MainFrame::HandlePianoRClick( int x, int y, int selected_index, int selected_dbIndex )
 {
-	if( !pCurrentStack ) return;
-	if( s_ProgDialog ) return;
+	if (!pCurrentStack)
+		return;
+	if (s_ProgDialog)
+		return;
 
 	PianoPopupMenu( x, y, selected_index, selected_dbIndex );
 	UpdateControlBar();
 
-	cc1->SetQuiltChartHiLiteIndex( -1 );
-
+	chart_canvas->SetQuiltChartHiLiteIndex(-1);
 }
 
 void MainFrame::HandlePianoRollover( int selected_index, int selected_dbIndex )
 {
-	if( !cc1 ) return;
-	if( !pCurrentStack ) return;
-	if( s_ProgDialog ) return;
+	if (!chart_canvas)
+		return;
+	if (!pCurrentStack)
+		return;
+	if (s_ProgDialog)
+		return;
 
 	int sx, sy;
 	stats->GetPosition( &sx, &sy );
@@ -3773,25 +3797,24 @@ void MainFrame::HandlePianoRollover( int selected_index, int selected_dbIndex )
 	rolloverPos.y -= 3;
 	rolloverPos.x += key_location.x;
 
-	if( !cc1->GetQuiltMode() ) {
+	if( !chart_canvas->GetQuiltMode() ) {
 		SetChartThumbnail( selected_index );
-		cc1->ShowChartInfoWindow( key_location.x, sy + key_location.y, selected_dbIndex );
+		chart_canvas->ShowChartInfoWindow( key_location.x, sy + key_location.y, selected_dbIndex );
 	} else {
-		std::vector<int> piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
+		std::vector<int> piano_chart_index_array = chart_canvas->GetQuiltExtendedStackdbIndexArray();
 
 		if( ( pCurrentStack->nEntry > 1 ) || ( piano_chart_index_array.size() > 1 ) ) {
-			cc1->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
-			cc1->SetQuiltChartHiLiteIndex( selected_dbIndex );
+			chart_canvas->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
+			chart_canvas->SetQuiltChartHiLiteIndex( selected_dbIndex );
 
-			cc1->ReloadVP( false );         // no VP adjustment allowed
+			chart_canvas->ReloadVP( false );         // no VP adjustment allowed
 		} else if( pCurrentStack->nEntry == 1 ) {
-			const ChartTableEntry &cte = ChartData->GetChartTableEntry(
-					pCurrentStack->GetDBIndex( 0 ) );
+			const ChartTableEntry &cte = ChartData->GetChartTableEntry(pCurrentStack->GetDBIndex(0));
 			if( CHART_TYPE_CM93COMP != cte.GetChartType() ) {
-				cc1->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
-				cc1->ReloadVP( false );
+				chart_canvas->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
+				chart_canvas->ReloadVP( false );
 			} else if( ( -1 == selected_index ) && ( -1 == selected_dbIndex ) ) {
-				cc1->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
+				chart_canvas->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
 			}
 		}
 		SetChartThumbnail( -1 );        // hide all thumbs in quilt mode
@@ -3800,44 +3823,47 @@ void MainFrame::HandlePianoRollover( int selected_index, int selected_dbIndex )
 
 void MainFrame::HandlePianoRolloverIcon( int selected_index, int selected_dbIndex )
 {
-	if( !cc1 ) return;
+	if (!chart_canvas)
+		return;
 
-	if( !cc1->GetQuiltMode() ) {
-		SetChartThumbnail( selected_index );
+	if (!chart_canvas->GetQuiltMode()) {
+		SetChartThumbnail(selected_index);
 	} else {
-		cc1->SetQuiltChartHiLiteIndex( selected_dbIndex );
+		chart_canvas->SetQuiltChartHiLiteIndex(selected_dbIndex);
 	}
 }
 
-double MainFrame::GetBestVPScale( ChartBase *pchart )
+double MainFrame::GetBestVPScale(ChartBase * pchart)
 {
-	if( pchart ) {
-		double proposed_scale_onscreen = cc1->GetCanvasScaleFactor() / cc1->GetVPScale();
-
-		if( ( g_bPreserveScaleOnX ) || ( CHART_TYPE_CM93COMP == pchart->GetChartType() ) ) {
-			double new_scale_ppm = pchart->GetNearestPreferredScalePPM( cc1->GetVPScale() );
-			proposed_scale_onscreen = cc1->GetCanvasScaleFactor() / new_scale_ppm;
-		} else {
-			//  This logic will bring the new chart onscreen at roughly twice the true paper scale equivalent.
-			proposed_scale_onscreen = pchart->GetNativeScale() / 2;
-			double equivalent_vp_scale = cc1->GetCanvasScaleFactor() / proposed_scale_onscreen;
-			double new_scale_ppm = pchart->GetNearestPreferredScalePPM( equivalent_vp_scale );
-			proposed_scale_onscreen = cc1->GetCanvasScaleFactor() / new_scale_ppm;
-		}
-
-		proposed_scale_onscreen =
-			wxMin(proposed_scale_onscreen, pchart->GetNormalScaleMax(cc1->GetCanvasScaleFactor(), cc1->GetCanvasWidth()));
-		proposed_scale_onscreen =
-			wxMax(proposed_scale_onscreen, pchart->GetNormalScaleMin(cc1->GetCanvasScaleFactor(), g_b_overzoom_x));
-
-		return cc1->GetCanvasScaleFactor() / proposed_scale_onscreen;
-	} else
+	if (!pchart)
 		return 1.0;
+
+	double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / chart_canvas->GetVPScale();
+
+	if( ( g_bPreserveScaleOnX ) || ( CHART_TYPE_CM93COMP == pchart->GetChartType() ) ) {
+		double new_scale_ppm = pchart->GetNearestPreferredScalePPM( chart_canvas->GetVPScale() );
+		proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
+	} else {
+		//  This logic will bring the new chart onscreen at roughly twice the true paper scale equivalent.
+		proposed_scale_onscreen = pchart->GetNativeScale() / 2;
+		double equivalent_vp_scale = chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
+		double new_scale_ppm = pchart->GetNearestPreferredScalePPM( equivalent_vp_scale );
+		proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
+	}
+
+	proposed_scale_onscreen = wxMin(
+		proposed_scale_onscreen,
+		pchart->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(), chart_canvas->GetCanvasWidth()));
+	proposed_scale_onscreen = wxMax(
+		proposed_scale_onscreen,
+		pchart->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), g_b_overzoom_x));
+
+	return chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
 }
 
 void MainFrame::SelectQuiltRefChart( int selected_index )
 {
-	std::vector<int> piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
+	std::vector<int> piano_chart_index_array = chart_canvas->GetQuiltExtendedStackdbIndexArray();
 	int current_db_index = piano_chart_index_array[selected_index];
 
 	SelectQuiltRefdbChart( current_db_index );
@@ -3845,16 +3871,16 @@ void MainFrame::SelectQuiltRefChart( int selected_index )
 
 void MainFrame::SelectQuiltRefdbChart( int db_index )
 {
-	if( pCurrentStack ) pCurrentStack->SetCurrentEntryFromdbIndex( db_index );
+	if( pCurrentStack )
+		pCurrentStack->SetCurrentEntryFromdbIndex( db_index );
 
-	cc1->SetQuiltRefChart( db_index );
+	chart_canvas->SetQuiltRefChart( db_index );
 
 	ChartBase *pc = ChartData->OpenChartFromDB( db_index, FULL_INIT );
 	if( pc ) {
 		double best_scale = GetBestVPScale( pc );
-		cc1->SetVPScale( best_scale );
+		chart_canvas->SetVPScale( best_scale );
 	}
-
 }
 
 void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Type,
@@ -3881,8 +3907,9 @@ void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Ty
 			SetChartThumbnail( -1 );   // need to reset thumbnail on failed chart open
 
 		//      Setup the view
-		double zLat, zLon;
-		if( cc1->m_bFollow ) {
+		double zLat;
+		double zLon;
+		if( chart_canvas->m_bFollow ) {
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			zLat = nav.lat;
 			zLon = nav.lon;
@@ -3893,8 +3920,8 @@ void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Ty
 
 		double best_scale = GetBestVPScale( Current_Ch );
 
-		cc1->SetViewPoint(zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0, cc1->GetVPRotation());
-		SetChartUpdatePeriod( cc1->GetVP() );
+		chart_canvas->SetViewPoint(zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0, chart_canvas->GetVPRotation());
+		SetChartUpdatePeriod( chart_canvas->GetVP() );
 		UpdateGPSCompassStatusBox();           // Pick up the rotation
 	}
 
@@ -3931,7 +3958,7 @@ void MainFrame::SelectdbChart( int dbindex )
 
 		//      Setup the view
 		double zLat, zLon;
-		if( cc1->m_bFollow ) {
+		if( chart_canvas->m_bFollow ) {
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			zLat = nav.lat;
 			zLon = nav.lon;
@@ -3942,9 +3969,9 @@ void MainFrame::SelectdbChart( int dbindex )
 
 		double best_scale = GetBestVPScale( Current_Ch );
 
-		cc1->SetViewPoint( zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0, cc1->GetVPRotation() );
-		SetChartUpdatePeriod( cc1->GetVP() );
-		UpdateGPSCompassStatusBox();           // Pick up the rotation
+		chart_canvas->SetViewPoint(zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0, chart_canvas->GetVPRotation());
+		SetChartUpdatePeriod(chart_canvas->GetVP());
+		UpdateGPSCompassStatusBox(); // Pick up the rotation
 	}
 
 	//          Refresh the Piano Bar
@@ -3959,7 +3986,7 @@ void MainFrame::SelectdbChart( int dbindex )
 
 void MainFrame::SetChartUpdatePeriod( ViewPort &vp )
 {
-	//    Set the chart update period based upon chart skew and skew compensator
+	// Set the chart update period based upon chart skew and skew compensator
 
 	g_ChartUpdatePeriod = 1;            // General default
 
@@ -3979,14 +4006,14 @@ void MainFrame::SetChartThumbnail(int index)
 		return;
 	if (NULL == pthumbwin)
 		return;
-	if (NULL == cc1)
+	if (!chart_canvas)
 		return;
 
 	if (index == -1) {
 		wxRect thumb_rect_in_parent = pthumbwin->GetRect();
 		pthumbwin->pThumbChart = NULL;
 		pthumbwin->Show( false );
-		cc1->RefreshRect( thumb_rect_in_parent, FALSE );
+		chart_canvas->RefreshRect( thumb_rect_in_parent, FALSE );
 		return;
 	}
 
@@ -4018,7 +4045,7 @@ void MainFrame::SetChartThumbnail(int index)
 				wxLogMessage(_T("    chart1.cpp:SetChartThumbnail...Could not create thumbnail"));
 				pthumbwin->pThumbChart = NULL;
 				pthumbwin->Show( false );
-				cc1->Refresh( FALSE );
+				chart_canvas->Refresh(false);
 			}
 		} else {                          // some problem opening chart
 			wxString fp = ChartData->GetFullPath( pCurrentStack, index );
@@ -4026,7 +4053,7 @@ void MainFrame::SetChartThumbnail(int index)
 			wxLogMessage(fp);
 			pthumbwin->pThumbChart = NULL;
 			pthumbwin->Show(false);
-			cc1->Refresh(false);
+			chart_canvas->Refresh(false);
 		}
 	} else {
 		ChartBase * new_pThumbChart = ChartData->OpenChartFromStack(pCurrentStack, index, THUMB_ONLY);
@@ -4041,14 +4068,14 @@ void MainFrame::SetChartThumbnail(int index)
 			} else {
 				pthumbwin->Show(false);
 			}
-			cc1->Refresh(false);
+			chart_canvas->Refresh(false);
 		}
 	}
 }
 
 void MainFrame::UpdateControlBar( void )
 {
-	if (!cc1)
+	if (!chart_canvas)
 		return;
 
 	if (!stats)
@@ -4060,14 +4087,14 @@ void MainFrame::UpdateControlBar( void )
 	std::vector<int> piano_chart_index_array;
 	std::vector<int> empty_piano_chart_index_array;
 
-	if( cc1->GetQuiltMode() ) {
-		piano_chart_index_array = cc1->GetQuiltExtendedStackdbIndexArray();
+	if(chart_canvas->GetQuiltMode() ) {
+		piano_chart_index_array = chart_canvas->GetQuiltExtendedStackdbIndexArray();
 		stats->pPiano->SetKeyArray(piano_chart_index_array);
 
-		std::vector<int> piano_active_chart_index_array = cc1->GetQuiltCandidatedbIndexArray();
+		std::vector<int> piano_active_chart_index_array = chart_canvas->GetQuiltCandidatedbIndexArray();
 		stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 
-		std::vector<int> piano_eclipsed_chart_index_array = cc1->GetQuiltEclipsedStackdbIndexArray();
+		std::vector<int> piano_eclipsed_chart_index_array = chart_canvas->GetQuiltEclipsedStackdbIndexArray();
 		stats->pPiano->SetSubliteIndexArray(piano_eclipsed_chart_index_array);
 
 		stats->pPiano->SetNoshowIndexArray(g_quilt_noshow_index_array);
@@ -4135,7 +4162,7 @@ bool MainFrame::DoChartUpdate( void )
 
 	ChartStack WorkStack;
 
-	if (!cc1)
+	if (!chart_canvas)
 		return false;
 	if (bDBUpdateInProgress)
 		return false;
@@ -4147,8 +4174,8 @@ bool MainFrame::DoChartUpdate( void )
 	//    In this case, drop to single chart mode, set persistence flag,
 	//    And open the specified chart
 	if( bFirstAuto && ( g_restore_dbindex >= 0 ) ) {
-		if( cc1->GetQuiltMode() ) {
-			if( !cc1->IsChartQuiltableRef( g_restore_dbindex ) ) {
+		if( chart_canvas->GetQuiltMode() ) {
+			if( !chart_canvas->IsChartQuiltableRef( g_restore_dbindex ) ) {
 				ToggleQuiltMode();
 				m_bpersistent_quilt = true;
 				Current_Ch = NULL;
@@ -4160,17 +4187,17 @@ bool MainFrame::DoChartUpdate( void )
 	// Otherwise, use vLat, vLon gotten from click on chart canvas, or other means
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
-	if( cc1->m_bFollow == true ) {
+	if( chart_canvas->m_bFollow == true ) {
 		tLat = nav.lat;
 		tLon = nav.lon;
 		vpLat = nav.lat;
 		vpLon = nav.lon;
 
 		// on lookahead mode, adjust the vp center point
-		if (cc1 && global::OCPN::get().gui().view().lookahead_mode) {
-			double angle = g_COGAvg + ( cc1->GetVPRotation() * 180.0  / M_PI);
-			double pixel_deltay = fabs(cos(angle * M_PI / 180.0)) * cc1->GetCanvasHeight() / 4;
-			double pixel_deltax = fabs(sin(angle * M_PI / 180.0)) * cc1->GetCanvasWidth() / 4;
+		if (chart_canvas && global::OCPN::get().gui().view().lookahead_mode) {
+			double angle = g_COGAvg + ( chart_canvas->GetVPRotation() * 180.0  / M_PI);
+			double pixel_deltay = fabs(cos(angle * M_PI / 180.0)) * chart_canvas->GetCanvasHeight() / 4;
+			double pixel_deltax = fabs(sin(angle * M_PI / 180.0)) * chart_canvas->GetCanvasWidth() / 4;
 			double pixel_delta_tent = sqrt((pixel_deltay * pixel_deltay) + (pixel_deltax * pixel_deltax));
 			double pixel_delta = 0;
 
@@ -4187,7 +4214,7 @@ bool MainFrame::DoChartUpdate( void )
 						pixel_delta = pixel_delta_tent * (nav.sog - 1.0) / 2.0;
 			}
 
-			double meters_to_shift = cos(nav.lat * M_PI / 180.0) * pixel_delta / cc1->GetVPScale();
+			double meters_to_shift = cos(nav.lat * M_PI / 180.0) * pixel_delta / chart_canvas->GetVPScale();
 			double dir_to_shift = g_COGAvg;
 			geo::ll_gc_ll(nav.lat, nav.lon, dir_to_shift, meters_to_shift / 1852.0, &vpLat, &vpLon );
 		}
@@ -4198,7 +4225,7 @@ bool MainFrame::DoChartUpdate( void )
 		vpLon = vLon;
 	}
 
-	if( cc1->GetQuiltMode() ) {
+	if( chart_canvas->GetQuiltMode() ) {
 		int current_db_index = -1;
 		if( pCurrentStack ) current_db_index = pCurrentStack->GetCurrentEntrydbIndex(); // capture the currently selected Ref chart dbIndex
 		else
@@ -4208,7 +4235,7 @@ bool MainFrame::DoChartUpdate( void )
 		pCurrentStack->SetCurrentEntryFromdbIndex( current_db_index );
 
 		if( bFirstAuto ) {
-			double proposed_scale_onscreen = cc1->GetCanvasScaleFactor() / cc1->GetVPScale(); // as set from config load
+			double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / chart_canvas->GetVPScale(); // as set from config load
 
 			int initial_db_index = g_restore_dbindex;
 			if( initial_db_index < 0 ) {
@@ -4228,14 +4255,14 @@ bool MainFrame::DoChartUpdate( void )
 
 				//    Check to see if the target new chart is quiltable as a reference chart
 
-				if( !cc1->IsChartQuiltableRef( initial_db_index ) ) {
+				if( !chart_canvas->IsChartQuiltableRef( initial_db_index ) ) {
 					// If it is not quiltable, then walk the stack up looking for a satisfactory chart
 					// i.e. one that is quiltable and of the same type
 					int stack_index = g_restore_stackindex;
 
 					while( ( stack_index < pCurrentStack->nEntry - 1 ) && ( stack_index >= 0 ) ) {
 						int test_db_index = pCurrentStack->GetDBIndex( stack_index );
-						if( cc1->IsChartQuiltableRef( test_db_index )
+						if( chart_canvas->IsChartQuiltableRef( test_db_index )
 								&& ( initial_type == ChartData->GetDBChartType( initial_db_index ) ) ) {
 							initial_db_index = test_db_index;
 							break;
@@ -4244,7 +4271,7 @@ bool MainFrame::DoChartUpdate( void )
 					}
 				}
 
-				cc1->SetQuiltRefChart( initial_db_index );
+				chart_canvas->SetQuiltRefChart( initial_db_index );
 				pCurrentStack->SetCurrentEntryFromdbIndex( initial_db_index );
 
 				// Try to bound the inital Viewport scale to something reasonable for the selected reference chart
@@ -4252,21 +4279,21 @@ bool MainFrame::DoChartUpdate( void )
 					ChartBase *pc = ChartData->OpenChartFromDB( initial_db_index, FULL_INIT );
 					if( pc ) {
 						proposed_scale_onscreen =
-							wxMin(proposed_scale_onscreen, pc->GetNormalScaleMax(cc1->GetCanvasScaleFactor(), cc1->GetCanvasWidth()));
+							wxMin(proposed_scale_onscreen, pc->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(), chart_canvas->GetCanvasWidth()));
 						proposed_scale_onscreen =
-							wxMax(proposed_scale_onscreen, pc->GetNormalScaleMin(cc1->GetCanvasScaleFactor(), g_b_overzoom_x));
+							wxMax(proposed_scale_onscreen, pc->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), g_b_overzoom_x));
 					}
 				}
 
 			}
 
-			bNewView |= cc1->SetViewPoint( vpLat, vpLon,
-					cc1->GetCanvasScaleFactor() / proposed_scale_onscreen, 0,
-					cc1->GetVPRotation() );
+			bNewView |= chart_canvas->SetViewPoint( vpLat, vpLon,
+					chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen, 0,
+					chart_canvas->GetVPRotation() );
 
 		}
 
-		bNewView |= cc1->SetViewPoint( vpLat, vpLon, cc1->GetVPScale(), 0, cc1->GetVPRotation() );
+		bNewView |= chart_canvas->SetViewPoint( vpLat, vpLon, chart_canvas->GetVPScale(), 0, chart_canvas->GetVPRotation() );
 
 		goto update_finish;
 
@@ -4303,10 +4330,10 @@ bool MainFrame::DoChartUpdate( void )
 		Current_Ch = pDummyChart;
 
 		//    If the current viewpoint is invalid, set the default scale to something reasonable.
-		double set_scale = cc1->GetVPScale();
-		if( !cc1->GetVP().IsValid() ) set_scale = 1. / 200000.;
+		double set_scale = chart_canvas->GetVPScale();
+		if( !chart_canvas->GetVP().IsValid() ) set_scale = 1. / 200000.;
 
-		bNewView |= cc1->SetViewPoint( tLat, tLon, set_scale, 0, cc1->GetVPRotation() );
+		bNewView |= chart_canvas->SetViewPoint( tLat, tLon, set_scale, 0, chart_canvas->GetVPRotation() );
 
 		//      If the chart stack has just changed, there is new status
 		if( !ChartData->EqualStacks( &WorkStack, pCurrentStack ) ) {
@@ -4415,53 +4442,52 @@ bool MainFrame::DoChartUpdate( void )
 		if( NULL != Current_Ch ) {
 
 			//      Setup the view using the current scale
-			double set_scale = cc1->GetVPScale();
+			double set_scale = chart_canvas->GetVPScale();
 
 			//    If the current viewpoint is invalid, set the default scale to something reasonable.
-			if( !cc1->GetVP().IsValid() )
+			if( !chart_canvas->GetVP().IsValid() )
 				set_scale = 1. / 200000.;
 			else {                                    // otherwise, match scale if elected.
 				double proposed_scale_onscreen;
 
-				if( cc1->m_bFollow ) {          // autoset the scale only if in autofollow
-					double new_scale_ppm = Current_Ch->GetNearestPreferredScalePPM( cc1->GetVPScale() );
-					proposed_scale_onscreen = cc1->GetCanvasScaleFactor() / new_scale_ppm;
+				if( chart_canvas->m_bFollow ) {          // autoset the scale only if in autofollow
+					double new_scale_ppm = Current_Ch->GetNearestPreferredScalePPM( chart_canvas->GetVPScale() );
+					proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
 				}
 				else
-					proposed_scale_onscreen = cc1->GetCanvasScaleFactor() / set_scale;
+					proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / set_scale;
 
 
 				//  This logic will bring a new chart onscreen at roughly twice the true paper scale equivalent.
 				//  Note that first chart opened on application startup (bOpenSpecified = true) will open at the config saved scale
 				if( bNewChart && !g_bPreserveScaleOnX && !bOpenSpecified ) {
 					proposed_scale_onscreen = Current_Ch->GetNativeScale() / 2;
-					double equivalent_vp_scale = cc1->GetCanvasScaleFactor()
+					double equivalent_vp_scale = chart_canvas->GetCanvasScaleFactor()
 						/ proposed_scale_onscreen;
 					double new_scale_ppm = Current_Ch->GetNearestPreferredScalePPM(
 							equivalent_vp_scale );
-					proposed_scale_onscreen = cc1->GetCanvasScaleFactor() / new_scale_ppm;
+					proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
 				}
 
-				if( cc1->m_bFollow ) {     // bounds-check the scale only if in autofollow
+				if( chart_canvas->m_bFollow ) {     // bounds-check the scale only if in autofollow
 					proposed_scale_onscreen =
-						wxMin(proposed_scale_onscreen, Current_Ch->GetNormalScaleMax(cc1->GetCanvasScaleFactor(), cc1->GetCanvasWidth()));
+						wxMin(proposed_scale_onscreen, Current_Ch->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(), chart_canvas->GetCanvasWidth()));
 					proposed_scale_onscreen =
-						wxMax(proposed_scale_onscreen, Current_Ch->GetNormalScaleMin(cc1->GetCanvasScaleFactor(), g_b_overzoom_x));
+						wxMax(proposed_scale_onscreen, Current_Ch->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), g_b_overzoom_x));
 				}
 
-				set_scale = cc1->GetCanvasScaleFactor() / proposed_scale_onscreen;
+				set_scale = chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
 			}
 
-			bNewView |= cc1->SetViewPoint( vpLat, vpLon, set_scale,
-					Current_Ch->GetChartSkew() * M_PI / 180., cc1->GetVPRotation() );
+			bNewView |= chart_canvas->SetViewPoint( vpLat, vpLon, set_scale,
+					Current_Ch->GetChartSkew() * M_PI / 180., chart_canvas->GetVPRotation() );
 
 		}
-	}         // new stack
-
-	else                                                                 // No change in Chart Stack
+	} // new stack
+	else // No change in Chart Stack
 	{
-		if( ( cc1->m_bFollow ) && Current_Ch ) bNewView |= cc1->SetViewPoint( vpLat, vpLon,
-				cc1->GetVPScale(), Current_Ch->GetChartSkew() * M_PI / 180., cc1->GetVPRotation() );
+		if( ( chart_canvas->m_bFollow ) && Current_Ch ) bNewView |= chart_canvas->SetViewPoint( vpLat, vpLon,
+				chart_canvas->GetVPScale(), Current_Ch->GetChartSkew() * M_PI / 180., chart_canvas->GetVPRotation() );
 	}
 
 update_finish:
@@ -4488,7 +4514,7 @@ update_finish:
 	//  If we need a Refresh(), do it here...
 	//  But don't duplicate a Refresh() done by SetViewPoint()
 	if (bNewChart && !bNewView)
-		cc1->Refresh(false);
+		chart_canvas->Refresh(false);
 
 	return bNewChart | bNewView;
 }
@@ -4527,8 +4553,9 @@ void MainFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbInde
 	if( !pCurrentStack )
 		return;
 
-	//    No context menu if quilting is disabled
-	if( !cc1->GetQuiltMode() ) return;
+	// No context menu if quilting is disabled
+	if (!chart_canvas->GetQuiltMode())
+		return;
 
 	menu_selected_dbIndex = selected_dbIndex;
 	menu_selected_index = selected_index;
@@ -4537,22 +4564,24 @@ void MainFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbInde
 
 	//    Search the no-show array
 	bool b_is_in_noshow = g_quilt_noshow_index_array.end() != find(
-			g_quilt_noshow_index_array.begin(),
-			g_quilt_noshow_index_array.end(),
-			selected_dbIndex);
+		g_quilt_noshow_index_array.begin(),
+		g_quilt_noshow_index_array.end(),
+		selected_dbIndex);
 
 	if( b_is_in_noshow ) {
 		pctx_menu->Append( ID_PIANO_ENABLE_QUILT_CHART, _("Show This Chart") );
 		Connect( ID_PIANO_ENABLE_QUILT_CHART, wxEVT_COMMAND_MENU_SELECTED,
 				wxCommandEventHandler(MainFrame::OnPianoMenuEnableChart) );
-	} else
+	} else {
 		if( pCurrentStack->nEntry > 1 ) {
 			pctx_menu->Append( ID_PIANO_DISABLE_QUILT_CHART, _("Hide This Chart") );
 			Connect( ID_PIANO_DISABLE_QUILT_CHART, wxEVT_COMMAND_MENU_SELECTED,
 					wxCommandEventHandler(MainFrame::OnPianoMenuDisableChart) );
 		}
+	}
 
-	int sx, sy;
+	int sx;
+	int sy;
 	stats->GetPosition( &sx, &sy );
 	wxPoint pos = stats->GetParent()->ScreenToClient( wxPoint( sx, sy ) );
 	wxPoint key_location = stats->pPiano->GetKeyOrigin( selected_index );
@@ -4563,12 +4592,12 @@ void MainFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbInde
 	if( pctx_menu->GetMenuItems().GetCount() )
 		PopupMenu( pctx_menu, pos );
 
-	cc1->HideChartInfoWindow();
+	chart_canvas->HideChartInfoWindow();
 	stats->pPiano->ResetRollover();
 
-	cc1->SetQuiltChartHiLiteIndex( -1 );
+	chart_canvas->SetQuiltChartHiLiteIndex( -1 );
 
-	cc1->ReloadVP();
+	chart_canvas->ReloadVP();
 
 	delete pctx_menu;
 }
@@ -4592,7 +4621,7 @@ void MainFrame::OnPianoMenuDisableChart(wxCommandEvent &)
 	RemoveChartFromQuilt( menu_selected_dbIndex );
 
 	//      It could happen that the chart being disabled is the reference chart....
-	if( menu_selected_dbIndex == cc1->GetQuiltRefChartdbIndex() ) {
+	if( menu_selected_dbIndex == chart_canvas->GetQuiltRefChartdbIndex() ) {
 		int type = ChartData->GetDBChartType( menu_selected_dbIndex );
 
 		int i = menu_selected_index + 1;          // select next smaller scale chart

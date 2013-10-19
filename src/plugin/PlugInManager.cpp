@@ -142,10 +142,9 @@ PlugInManager::PlugInManager(MainFrame *parent)
 	MainFrame *pFrame = GetParentFrame();
 	if(pFrame)
 	{
-		m_plugin_menu_item_id_next = pFrame->GetCanvasWindow()->GetNextContextMenuId(); // FIXME: interface transition
+		m_plugin_menu_item_id_next = pFrame->GetCanvas()->GetNextContextMenuId(); // FIXME: interface transition
 		m_plugin_tool_id_next = pFrame->GetNextToolbarToolId();
 	}
-
 }
 
 PlugInManager::~PlugInManager()
@@ -1433,7 +1432,7 @@ wxWindow *GetOCPNCanvasWindow()
 	wxWindow *pret = NULL;
 	if (s_ppim) {
 		MainFrame * pFrame = s_ppim->GetParentFrame();
-		pret = (wxWindow *)pFrame->GetCanvasWindow();
+		pret = (wxWindow *)pFrame->GetCanvas();
 	}
 	return pret;
 }

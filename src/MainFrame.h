@@ -162,8 +162,8 @@ class MainFrame : public wxFrame
 
 		double GetBestVPScale(ChartBase *pchart);
 
-		ChartCanvas *GetCanvasWindow();
-		void SetCanvasWindow(ChartCanvas *pcanv);
+		ChartCanvas * GetCanvas();
+		void SetCanvasWindow(ChartCanvas *);
 
 		ColorScheme GetColorScheme();
 		void SetAndApplyColorScheme(ColorScheme cs);
@@ -252,7 +252,7 @@ class MainFrame : public wxFrame
 
 		int m_StatusBarFieldCount;
 
-		ChartCanvas * m_pchart_canvas;
+		ChartCanvas * chart_canvas;
 
 		NMEA0183 m_NMEA0183; // Used to parse messages from NMEA threads
 

@@ -161,9 +161,9 @@ extern double           g_ownship_predictor_minutes;
 extern s52plib          *ps52plib;
 #endif
 
-extern int              g_cm93_zoom_factor;
 extern bool             g_bShowCM93DetailSlider;
-extern int              g_cm93detail_dialog_x, g_cm93detail_dialog_y;
+extern int              g_cm93detail_dialog_x;
+extern int              g_cm93detail_dialog_y;
 
 extern bool             g_bUseGreenShip;
 
@@ -417,6 +417,32 @@ void Config::load_watchdog()
 	wdt.set_gps_timeout_ticks(gps_watchdog_timeout_ticks);
 }
 
+void Config::load_cm93(int display_width, int display_height)
+{
+#ifdef USE_S57
+	global::GUI & gui = global::OCPN::get().gui();
+
+#define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
+
+	int zoom_factor = 0;
+
+	Read(_T("CM93DetailFactor"), &zoom_factor, 0);
+	zoom_factor = wxMin(zoom_factor, CM93_ZOOM_FACTOR_MAX_RANGE);
+	zoom_factor = wxMax(zoom_factor, -CM93_ZOOM_FACTOR_MAX_RANGE);
+
+	gui.set_cm93_zoom_factor(zoom_factor);
+
+	g_cm93detail_dialog_x = Read(_T("CM93DetailZoomPosX"), 200L);
+	g_cm93detail_dialog_y = Read(_T("CM93DetailZoomPosY"), 200L);
+	if ((g_cm93detail_dialog_x < 0) || (g_cm93detail_dialog_x > display_width))
+		g_cm93detail_dialog_x = 5;
+	if ((g_cm93detail_dialog_y < 0) || (g_cm93detail_dialog_y > display_height))
+		g_cm93detail_dialog_y = 5;
+
+	Read( _T ( "ShowCM93DetailSlider" ), &g_bShowCM93DetailSlider, 0 );
+#endif
+}
+
 int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 {
 	int read_int;
@@ -521,21 +547,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	Read( _T ( "ChartNotRenderScaleFactor" ), &g_ChartNotRenderScaleFactor, 1.5 );
 
-#ifdef USE_S57
-#define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
-	Read( _T ( "CM93DetailFactor" ), &g_cm93_zoom_factor, 0 );
-	g_cm93_zoom_factor = wxMin(g_cm93_zoom_factor,CM93_ZOOM_FACTOR_MAX_RANGE);
-	g_cm93_zoom_factor = wxMax(g_cm93_zoom_factor,(-CM93_ZOOM_FACTOR_MAX_RANGE));
-
-	g_cm93detail_dialog_x = Read( _T ( "CM93DetailZoomPosX" ), 200L );
-	g_cm93detail_dialog_y = Read( _T ( "CM93DetailZoomPosY" ), 200L );
-	if( ( g_cm93detail_dialog_x < 0 ) || ( g_cm93detail_dialog_x > display_width ) ) g_cm93detail_dialog_x =
-		5;
-	if( ( g_cm93detail_dialog_y < 0 ) || ( g_cm93detail_dialog_y > display_height ) ) g_cm93detail_dialog_y =
-		5;
-
-	Read( _T ( "ShowCM93DetailSlider" ), &g_bShowCM93DetailSlider, 0 );
-#endif
+	load_cm93(display_width, display_height);
 
 	Read( _T ( "SkewCompUpdatePeriod" ), &g_SkewCompUpdatePeriod, 10 );
 
@@ -1605,6 +1617,18 @@ void Config::write_system_config()
 	Write(_T("NavMessageShown"), config.nav_message_shown);
 }
 
+void Config::write_cm93()
+{
+	const global::GUI::CM93 & config = global::OCPN::get().gui().cm93();
+
+	Write(_T("CM93DetailFactor"), config.zoom_factor);
+
+	Write(_T("CM93DetailZoomPosX"), g_cm93detail_dialog_x);
+	Write(_T("CM93DetailZoomPosY"), g_cm93detail_dialog_y);
+	Write(_T("ShowCM93DetailSlider"), g_bShowCM93DetailSlider);
+	Write(_T("AllowExtremeOverzoom"), g_b_overzoom_x);
+}
+
 void Config::UpdateSettings()
 {
 	//    Global options and settings
@@ -1635,11 +1659,7 @@ void Config::UpdateSettings()
 	Write( _T ( "ShowMag" ), g_bShowMag );
 	Write( _T ( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
 
-	Write( _T ( "CM93DetailFactor" ), g_cm93_zoom_factor );
-	Write( _T ( "CM93DetailZoomPosX" ), g_cm93detail_dialog_x );
-	Write( _T ( "CM93DetailZoomPosY" ), g_cm93detail_dialog_y );
-	Write( _T ( "ShowCM93DetailSlider" ), g_bShowCM93DetailSlider );
-	Write( _T ( "AllowExtremeOverzoom" ), g_b_overzoom_x );
+	write_cm93();
 
 	Write( _T ( "SkewToNorthUp" ), g_bskew_comp );
 	Write( _T ( "OpenGL" ), g_bopengl );

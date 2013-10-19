@@ -232,7 +232,6 @@ extern double g_TrackIntervalSeconds;
 extern double g_TrackDeltaDistance;
 extern int g_nTrackPrecision;
 extern int g_total_NMEAerror_messages;
-extern int g_cm93_zoom_factor;
 extern CM93DSlide *pCM93DetailSlider;
 extern bool g_bShowCM93DetailSlider;
 extern int g_cm93detail_dialog_x;

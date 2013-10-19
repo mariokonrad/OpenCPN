@@ -104,6 +104,16 @@ class GUI
 
 		virtual const AISQueryDialog & ais_query_dialog() const = 0;
 		virtual void set_ais_query_dialog_position(const wxPoint &) = 0;
+
+	public:
+
+		struct CM93
+		{
+			int zoom_factor;
+		};
+
+		virtual const CM93 & cm93() const = 0;
+		virtual void set_cm93_zoom_factor(int) = 0;
 };
 
 }

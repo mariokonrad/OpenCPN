@@ -24,13 +24,15 @@
 #include "CM93DSlide.h"
 #include <ChartCanvas.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #include <wx/slider.h>
 
-#define ID_CM93ZOOMG    102
+#define ID_CM93ZOOMG 102
 
 extern bool g_bShowCM93DetailSlider;
 extern CM93DSlide * pCM93DetailSlider;
-extern int g_cm93_zoom_factor;
 extern int g_cm93detail_dialog_x;
 extern int g_cm93detail_dialog_y;
 extern ChartCanvas * cc1;
@@ -56,7 +58,7 @@ CM93DSlide::CM93DSlide(
 		const wxPoint& pos,
 		const wxSize & size,
 		long style,
-		const wxString& title)
+		const wxString & title)
 {
 	Init();
 	Create(parent, ID_CM93ZOOMG, value, minValue, maxValue, pos, size, style, title);
@@ -88,23 +90,24 @@ bool CM93DSlide::Create(
 	wstyle |= wxSTAY_ON_TOP;
 #endif
 
-	if( !wxDialog::Create( parent, id, title, pos, size, wstyle ) ) return false;
+	if (!wxDialog::Create( parent, id, title, pos, size, wstyle))
+		return false;
 
 	m_pparent = parent;
 
-	m_pCM93DetailSlider = new wxSlider( this, id, value, minValue, maxValue, wxPoint( 0, 0 ),
-			wxDefaultSize, wxSL_HORIZONTAL | wxSL_AUTOTICKS | wxSL_LABELS, wxDefaultValidator,
-			title );
+	m_pCM93DetailSlider = new wxSlider(this, id, value, minValue, maxValue, wxPoint(0, 0),
+		wxDefaultSize, wxSL_HORIZONTAL | wxSL_AUTOTICKS | wxSL_LABELS, wxDefaultValidator,
+		title);
 
-	m_pCM93DetailSlider->SetSize( wxSize( 200, -1 ) );
+	m_pCM93DetailSlider->SetSize(wxSize(200, -1));
 
 	m_pCM93DetailSlider->InvalidateBestSize();
 	wxSize bs = m_pCM93DetailSlider->GetBestSize();
 
-	m_pCM93DetailSlider->SetSize( wxSize( 200, bs.y ) );
+	m_pCM93DetailSlider->SetSize(wxSize(200, bs.y));
 	Fit();
 
-	m_pCM93DetailSlider->SetValue( g_cm93_zoom_factor );
+	m_pCM93DetailSlider->SetValue(global::OCPN::get().gui().cm93().zoom_factor);
 
 	Hide();
 
@@ -137,12 +140,12 @@ void CM93DSlide::OnMove(wxMoveEvent & event)
 
 void CM93DSlide::OnChangeValue(wxScrollEvent &)
 {
-	g_cm93_zoom_factor = m_pCM93DetailSlider->GetValue();
+	global::OCPN::get().gui().set_cm93_zoom_factor(m_pCM93DetailSlider->GetValue());
 
 	::wxBeginBusyCursor();
 
 	cc1->ReloadVP();
-	cc1->Refresh( false );
+	cc1->Refresh(false);
 
 	::wxEndBusyCursor();
 }

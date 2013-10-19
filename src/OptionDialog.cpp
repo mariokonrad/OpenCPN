@@ -156,8 +156,6 @@ extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
 
-extern int g_cm93_zoom_factor;
-
 extern int g_COGAvgSec;
 
 extern bool g_bCourseUp;
@@ -2024,7 +2022,7 @@ void options::SetInitialSettings()
 	m_pCheck_Rollover_CPA->SetValue( g_bAISRolloverShowCPA );
 
 #ifdef USE_S57
-	m_pSlider_CM93_Zoom->SetValue( g_cm93_zoom_factor );
+	m_pSlider_CM93_Zoom->SetValue(gui.cm93().zoom_factor);
 
 	//    Diplay Category
 	if( ps52plib ) {
@@ -2640,7 +2638,7 @@ void options::OnApplyClick(wxCommandEvent & event)
 #ifdef USE_S57
 	//    Handle Vector Charts Tab
 
-	g_cm93_zoom_factor = m_pSlider_CM93_Zoom->GetValue();
+	global::OCPN::get().gui().set_cm93_zoom_factor(m_pSlider_CM93_Zoom->GetValue());
 
 	int nOBJL = ps57CtlListBox->GetCount();
 

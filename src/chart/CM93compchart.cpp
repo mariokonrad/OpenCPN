@@ -34,6 +34,9 @@
 #include <geo/LineClip.h>
 #include <geo/Polygon.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #include <CM93DSlide.h>
 #include <OCPNRegionIterator.h>
 #include <ocpnDC.h>
@@ -45,7 +48,6 @@
 
 extern bool g_bDebugCM93; // FIXME
 extern bool g_bShowCM93DetailSlider; // FIXME
-extern int g_cm93_zoom_factor; // FIXME
 extern int g_cm93detail_dialog_x; // FIXME
 extern int g_cm93detail_dialog_y; // FIXME
 extern CM93DSlide * pCM93DetailSlider; // FIXME
@@ -288,8 +290,7 @@ void cm93compchart::Activate ( void )
 
 void cm93compchart::Deactivate ( void )
 {
-	if ( pCM93DetailSlider )
-	{
+	if (pCM93DetailSlider) {
 		pCM93DetailSlider-> Destroy();
 		pCM93DetailSlider = NULL;
 	}
@@ -299,37 +300,33 @@ int cm93compchart::GetCMScaleFromVP ( const ViewPort &vpt )
 {
 	static const double scale_breaks[] =
 	{
-		5000.,                  //G
-		15000.,                 //F
-		40000.,                 //E
-		150000.,                //D
-		300000.,                //C
-		1000000.,               //B
-		3000000.                //A
+		   5000.0, // G
+		  15000.0, // F
+		  40000.0, // E
+		 150000.0, // D
+		 300000.0, // C
+		1000000.0, // B
+		3000000.0  // A
 	};
 
-	double scale_mpp = 3000 / vpt.view_scale_ppm;
-
+	double scale_mpp = 3000.0 / vpt.view_scale_ppm;
 	double scale_mpp_adj = scale_mpp;
-
 	double scale_breaks_adj[7];
 
 	for ( int i=0 ; i < 7 ; i++ )
 		scale_breaks_adj[i] = scale_breaks[i];
 
+	const global::GUI::CM93 & cm93 = global::OCPN::get().gui().cm93();
 
-
-	//    Completely intuitive exponential curve adjustment
-	if ( g_cm93_zoom_factor )
-	{
-		double efactor = ( double ) ( g_cm93_zoom_factor ) * ( .176 / 7. );
-		for ( int i=0 ; i < 7 ; i++ )
-		{
-			double efr = efactor * ( 7 - i );
-			scale_breaks_adj[i] = scale_breaks[i] * pow ( 10., efr );
-			if ( g_bDebugCM93 )
-				printf ( "g_cm93_zoom_factor: %2d  efactor: %6g efr:%6g, scale_breaks[i]:%6g  scale_breaks_adj[i]: %6g\n",
-						g_cm93_zoom_factor, efactor, efr, scale_breaks[i], scale_breaks_adj[i] );
+	// Completely intuitive exponential curve adjustment
+	if (cm93.zoom_factor) {
+		double efactor = cm93.zoom_factor * (0.176 / 7.0);
+		for (int i = 0 ; i < 7 ; ++i) {
+			double efr = efactor * (7 - i);
+			scale_breaks_adj[i] = scale_breaks[i] * pow(10.0, efr);
+			if (g_bDebugCM93)
+				printf("cm93.zoom_factor: %2d  efactor: %6g efr:%6g, scale_breaks[i]:%6g  scale_breaks_adj[i]: %6g\n",
+					cm93.zoom_factor, efactor, efr, scale_breaks[i], scale_breaks_adj[i]);
 		}
 	}
 

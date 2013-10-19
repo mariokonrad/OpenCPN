@@ -152,5 +152,15 @@ void OCPN_GUI::set_ais_query_dialog_position(const wxPoint & position)
 	data_ais_query_dialog.position = position;
 }
 
+const GUI::CM93 & OCPN_GUI::cm93() const
+{
+	return data_cm93;
+}
+
+void OCPN_GUI::set_cm93_zoom_factor(int factor)
+{
+	data_cm93.zoom_factor = factor;
+}
+
 }
 

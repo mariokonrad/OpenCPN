@@ -227,12 +227,13 @@ extern bool             g_bEnableZoomToCursor;
 extern AISTargetAlertDialog    *g_pais_alert_dialog_active;
 extern AISTargetQueryDialog    *g_pais_query_dialog_active;
 
-extern int              g_S57_dialog_sx, g_S57_dialog_sy;
+extern int              g_S57_dialog_sx;
+extern int              g_S57_dialog_sy;
 
 extern CM93DSlide       *pCM93DetailSlider;
 extern bool             g_bShowCM93DetailSlider;
-extern int              g_cm93detail_dialog_x, g_cm93detail_dialog_y;
-extern int              g_cm93_zoom_factor;
+extern int              g_cm93detail_dialog_x;
+extern int              g_cm93detail_dialog_y;
 
 extern bool             g_b_overzoom_x;                      // Allow high overzoom
 extern bool             g_bDisplayGrid;

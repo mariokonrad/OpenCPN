@@ -36,6 +36,7 @@ class OCPN_GUI : public GUI
 		Toolbar data_toolbar;
 		AISAlertDialog data_ais_alert_dialog;
 		AISQueryDialog data_ais_query_dialog;
+		CM93 data_cm93;
 
 	public: // view
 		virtual const View & view() const;
@@ -70,6 +71,10 @@ class OCPN_GUI : public GUI
 	public: // ais query dialog
 		virtual const AISQueryDialog & ais_query_dialog() const;
 		virtual void set_ais_query_dialog_position(const wxPoint &);
+
+	public: // cm93
+		virtual const CM93 & cm93() const;
+		virtual void set_cm93_zoom_factor(int);
 };
 
 }

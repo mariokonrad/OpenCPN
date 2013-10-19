@@ -49,6 +49,7 @@ class Config : public wxFileConfig
 		void load_ais_query_dialog();
 		void load_system_config(int);
 		void load_watchdog();
+		void load_cm93(int, int);
 
 		void write_view();
 		void write_frame();
@@ -56,6 +57,7 @@ class Config : public wxFileConfig
 		void write_ais_alert_dialog();
 		void write_ais_query_dialog();
 		void write_system_config();
+		void write_cm93();
 
 		static bool WptIsInRouteList(RoutePoint * pr);
 

@@ -234,8 +234,6 @@ extern int g_nTrackPrecision;
 extern int g_total_NMEAerror_messages;
 extern CM93DSlide *pCM93DetailSlider;
 extern bool g_bShowCM93DetailSlider;
-extern int g_cm93detail_dialog_x;
-extern int g_cm93detail_dialog_y;
 extern bool g_bUseGreenShip;
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;

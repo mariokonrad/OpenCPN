@@ -232,8 +232,6 @@ extern int              g_S57_dialog_sy;
 
 extern CM93DSlide       *pCM93DetailSlider;
 extern bool             g_bShowCM93DetailSlider;
-extern int              g_cm93detail_dialog_x;
-extern int              g_cm93detail_dialog_y;
 
 extern bool             g_b_overzoom_x;                      // Allow high overzoom
 extern bool             g_bDisplayGrid;
@@ -1513,10 +1511,10 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 						  if( cm93IsAvailable ) {
 							  if( !pCM93DetailSlider ) {
 #define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
-								  pCM93DetailSlider = new CM93DSlide( this, -1, 0,
-										  -CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
-										  wxPoint( g_cm93detail_dialog_x, g_cm93detail_dialog_y ),
-										  wxDefaultSize, wxSIMPLE_BORDER, _("CM93 Detail Level") );
+								pCM93DetailSlider = new CM93DSlide(this, -1, 0,
+									-CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
+									global::OCPN::get().gui().cm93().detail_dialog_position,
+									wxDefaultSize, wxSIMPLE_BORDER, _("CM93 Detail Level"));
 							  }
 							  pCM93DetailSlider->Show( !pCM93DetailSlider->IsShown() );
 						  }

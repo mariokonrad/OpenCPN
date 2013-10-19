@@ -75,6 +75,7 @@ class OCPN_GUI : public GUI
 	public: // cm93
 		virtual const CM93 & cm93() const;
 		virtual void set_cm93_zoom_factor(int);
+		virtual void set_cm93_detail_dialog_position(const wxPoint &);
 };
 
 }

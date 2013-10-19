@@ -110,10 +110,12 @@ class GUI
 		struct CM93
 		{
 			int zoom_factor;
+			wxPoint detail_dialog_position;
 		};
 
 		virtual const CM93 & cm93() const = 0;
 		virtual void set_cm93_zoom_factor(int) = 0;
+		virtual void set_cm93_detail_dialog_position(const wxPoint &) = 0;
 };
 
 }

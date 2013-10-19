@@ -33,8 +33,6 @@
 
 extern bool g_bShowCM93DetailSlider;
 extern CM93DSlide * pCM93DetailSlider;
-extern int g_cm93detail_dialog_x;
-extern int g_cm93detail_dialog_y;
 extern ChartCanvas * cc1;
 
 BEGIN_EVENT_TABLE(CM93DSlide, wxDialog)
@@ -123,18 +121,13 @@ void CM93DSlide::OnCancelClick(wxCommandEvent &)
 void CM93DSlide::OnClose(wxCloseEvent &)
 {
 	g_bShowCM93DetailSlider = false;
-
 	Destroy();
 	pCM93DetailSlider = NULL;
 }
 
 void CM93DSlide::OnMove(wxMoveEvent & event)
 {
-	//    Record the dialog position
-	wxPoint p = event.GetPosition();
-	g_cm93detail_dialog_x = p.x;
-	g_cm93detail_dialog_y = p.y;
-
+	global::OCPN::get().gui().set_cm93_detail_dialog_position(event.GetPosition());
 	event.Skip();
 }
 

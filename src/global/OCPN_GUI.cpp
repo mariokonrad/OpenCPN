@@ -162,5 +162,10 @@ void OCPN_GUI::set_cm93_zoom_factor(int factor)
 	data_cm93.zoom_factor = factor;
 }
 
+void OCPN_GUI::set_cm93_detail_dialog_position(const wxPoint & position)
+{
+	data_cm93.detail_dialog_position = position;
+}
+
 }
 

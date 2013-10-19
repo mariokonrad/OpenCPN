@@ -162,8 +162,6 @@ extern s52plib          *ps52plib;
 #endif
 
 extern bool             g_bShowCM93DetailSlider;
-extern int              g_cm93detail_dialog_x;
-extern int              g_cm93detail_dialog_y;
 
 extern bool             g_bUseGreenShip;
 
@@ -425,21 +423,24 @@ void Config::load_cm93(int display_width, int display_height)
 #define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
 
 	int zoom_factor = 0;
+	long pos_x = 200;
+	long pos_y = 200;
 
 	Read(_T("CM93DetailFactor"), &zoom_factor, 0);
 	zoom_factor = wxMin(zoom_factor, CM93_ZOOM_FACTOR_MAX_RANGE);
 	zoom_factor = wxMax(zoom_factor, -CM93_ZOOM_FACTOR_MAX_RANGE);
 
+	Read(_T("CM93DetailZoomPosX"), &pos_x, 200L);
+	Read(_T("CM93DetailZoomPosY"), &pos_y, 200L);
+	if ((pos_x < 0) || (pos_x > display_width))
+		pos_x = 5;
+	if ((pos_y < 0) || (pos_y > display_height))
+		pos_y = 5;
+
 	gui.set_cm93_zoom_factor(zoom_factor);
+	gui.set_cm93_detail_dialog_position(wxPoint(pos_x, pos_y));
 
-	g_cm93detail_dialog_x = Read(_T("CM93DetailZoomPosX"), 200L);
-	g_cm93detail_dialog_y = Read(_T("CM93DetailZoomPosY"), 200L);
-	if ((g_cm93detail_dialog_x < 0) || (g_cm93detail_dialog_x > display_width))
-		g_cm93detail_dialog_x = 5;
-	if ((g_cm93detail_dialog_y < 0) || (g_cm93detail_dialog_y > display_height))
-		g_cm93detail_dialog_y = 5;
-
-	Read( _T ( "ShowCM93DetailSlider" ), &g_bShowCM93DetailSlider, 0 );
+	Read(_T("ShowCM93DetailSlider"), &g_bShowCM93DetailSlider, 0);
 #endif
 }
 
@@ -1622,9 +1623,9 @@ void Config::write_cm93()
 	const global::GUI::CM93 & config = global::OCPN::get().gui().cm93();
 
 	Write(_T("CM93DetailFactor"), config.zoom_factor);
+	Write(_T("CM93DetailZoomPosX"), config.detail_dialog_position.x);
+	Write(_T("CM93DetailZoomPosY"), config.detail_dialog_position.y);
 
-	Write(_T("CM93DetailZoomPosX"), g_cm93detail_dialog_x);
-	Write(_T("CM93DetailZoomPosY"), g_cm93detail_dialog_y);
 	Write(_T("ShowCM93DetailSlider"), g_bShowCM93DetailSlider);
 	Write(_T("AllowExtremeOverzoom"), g_b_overzoom_x);
 }

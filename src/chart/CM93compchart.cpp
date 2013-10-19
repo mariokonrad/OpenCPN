@@ -48,8 +48,6 @@
 
 extern bool g_bDebugCM93; // FIXME
 extern bool g_bShowCM93DetailSlider; // FIXME
-extern int g_cm93detail_dialog_x; // FIXME
-extern int g_cm93detail_dialog_y; // FIXME
 extern CM93DSlide * pCM93DetailSlider; // FIXME
 extern MainFrame * gFrame; // FIXME: through constructor?
 
@@ -266,22 +264,21 @@ InitReturn cm93compchart::Init ( const wxString& name, ChartInitFlag flags )
 	return INIT_OK;
 }
 
-void cm93compchart::Activate ( void )
+void cm93compchart::Activate(void)
 {
 #define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
 
-	if ( g_bShowCM93DetailSlider )
-	{
-		if ( !pCM93DetailSlider )
-		{
+	if (g_bShowCM93DetailSlider) {
+		if (!pCM93DetailSlider) {
 			pCM93DetailSlider = new CM93DSlide(
-					gFrame, -1 , 0, -CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
-					wxPoint(g_cm93detail_dialog_x, g_cm93detail_dialog_y), wxDefaultSize,
-					wxSIMPLE_BORDER , _T("cm93 Detail"));
+				gFrame, -1 , 0, -CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
+				global::OCPN::get().gui().cm93().detail_dialog_position,
+				wxDefaultSize,
+				wxSIMPLE_BORDER , _T("cm93 Detail"));
 		}
 
-		//    Here is an ugly piece of code which prevents the slider from taking the keyboard focus
-		//    Only seems to work for Windows.....
+		// Here is an ugly piece of code which prevents the slider from taking the keyboard focus
+		// Only seems to work for Windows.....
 		pCM93DetailSlider->Disable();
 		pCM93DetailSlider->Show();
 		pCM93DetailSlider->Enable();

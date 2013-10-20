@@ -47,7 +47,6 @@
 #include <wx/regex.h>
 
 extern bool g_bDebugCM93; // FIXME
-extern bool g_bShowCM93DetailSlider; // FIXME
 extern CM93DSlide * pCM93DetailSlider; // FIXME
 extern MainFrame * gFrame; // FIXME: through constructor?
 
@@ -115,13 +114,10 @@ static bool Is_CM93Cell_Present ( wxString &fileprefix, double lat, double lon, 
 		wxArrayString file_array;
 		int n_files = dir.GetAllFiles ( sdir, &file_array, tfile, wxDIR_FILES );
 
-		if ( n_files )
+		if ( n_files ) {
 			return true;
-
-		else
-		{
-
-			//    Try with alternate case of m_scalechar
+		} else {
+			// Try with alternate case of m_scalechar
 			wxString old_scalechar ( scale_char );
 			wxString new_scalechar = old_scalechar.Lower();
 
@@ -267,14 +263,15 @@ InitReturn cm93compchart::Init ( const wxString& name, ChartInitFlag flags )
 void cm93compchart::Activate(void)
 {
 #define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
+	const global::GUI::CM93 & cm93 = global::OCPN::get().gui().cm93();
 
-	if (g_bShowCM93DetailSlider) {
+	if (cm93.show_detail_slider) {
 		if (!pCM93DetailSlider) {
 			pCM93DetailSlider = new CM93DSlide(
 				gFrame, -1 , 0, -CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
-				global::OCPN::get().gui().cm93().detail_dialog_position,
+				cm93.detail_dialog_position,
 				wxDefaultSize,
-				wxSIMPLE_BORDER , _T("cm93 Detail"));
+				wxSIMPLE_BORDER, _T("cm93 Detail"));
 		}
 
 		// Here is an ugly piece of code which prevents the slider from taking the keyboard focus
@@ -572,15 +569,15 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 		//    And return a sensible minimum scale, allowing selected overzoom.
 		switch ( cmscale )
 		{
-			case  0: return 20000000. / oz_factor;            // Z
-			case  1: return 3000000.  / oz_factor;            // A
-			case  2: return 1000000.  / oz_factor;            // B
-			case  3: return 200000.   / oz_factor;            // C
-			case  4: return 100000.   / oz_factor;            // D
-			case  5: return 50000.    / oz_factor;            // E
-			case  6: return 20000.    / oz_factor;            // F
-			case  7: return 500.;                             // G
-			default: return 500.     / oz_factor;
+			case  0: return 20000000.0 / oz_factor; // Z
+			case  1: return  3000000.0 / oz_factor; // A
+			case  2: return  1000000.0 / oz_factor; // B
+			case  3: return   200000.0 / oz_factor; // C
+			case  4: return   100000.0 / oz_factor; // D
+			case  5: return    50000.0 / oz_factor; // E
+			case  6: return    20000.0 / oz_factor; // F
+			case  7: return      500.0;             // G
+			default: return      500.0 / oz_factor;
 		}
 	}
 	else
@@ -1705,13 +1702,10 @@ cm93_dictionary *cm93compchart::FindAndLoadDictFromDir ( const wxString &dir )
 			retval = pdict;
 	}
 
-
 	if ( NULL == retval )
 		delete pdict;
 
 	return retval;
-
-
 }
 
 void cm93compchart::CloseandReopenCurrentSubchart ( void )

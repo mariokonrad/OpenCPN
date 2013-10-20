@@ -111,11 +111,13 @@ class GUI
 		{
 			int zoom_factor;
 			wxPoint detail_dialog_position;
+			bool show_detail_slider;
 		};
 
 		virtual const CM93 & cm93() const = 0;
 		virtual void set_cm93_zoom_factor(int) = 0;
 		virtual void set_cm93_detail_dialog_position(const wxPoint &) = 0;
+		virtual void set_cm93_show_detail_slider(bool) = 0;
 };
 
 }

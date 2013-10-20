@@ -401,7 +401,6 @@ double g_TrackDeltaDistance;
 int g_nTrackPrecision;
 int g_total_NMEAerror_messages;
 CM93DSlide *pCM93DetailSlider;
-bool g_bShowCM93DetailSlider;
 bool g_bUseGreenShip;
 wxString g_AW1GUID;
 wxString g_AW2GUID;

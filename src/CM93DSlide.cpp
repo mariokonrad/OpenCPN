@@ -31,7 +31,6 @@
 
 #define ID_CM93ZOOMG 102
 
-extern bool g_bShowCM93DetailSlider;
 extern CM93DSlide * pCM93DetailSlider;
 extern ChartCanvas * cc1;
 
@@ -114,13 +113,13 @@ bool CM93DSlide::Create(
 
 void CM93DSlide::OnCancelClick(wxCommandEvent &)
 {
-	g_bShowCM93DetailSlider = false;
+	global::OCPN::get().gui().set_cm93_show_detail_slider(false);
 	Close();
 }
 
 void CM93DSlide::OnClose(wxCloseEvent &)
 {
-	g_bShowCM93DetailSlider = false;
+	global::OCPN::get().gui().set_cm93_show_detail_slider(false);
 	Destroy();
 	pCM93DetailSlider = NULL;
 }

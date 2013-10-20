@@ -161,8 +161,6 @@ extern double           g_ownship_predictor_minutes;
 extern s52plib          *ps52plib;
 #endif
 
-extern bool             g_bShowCM93DetailSlider;
-
 extern bool             g_bUseGreenShip;
 
 extern bool             g_b_overzoom_x;                      // Allow high overzoom
@@ -425,6 +423,7 @@ void Config::load_cm93(int display_width, int display_height)
 	int zoom_factor = 0;
 	long pos_x = 200;
 	long pos_y = 200;
+	long show_detail_slider = 0;
 
 	Read(_T("CM93DetailFactor"), &zoom_factor, 0);
 	zoom_factor = wxMin(zoom_factor, CM93_ZOOM_FACTOR_MAX_RANGE);
@@ -437,10 +436,11 @@ void Config::load_cm93(int display_width, int display_height)
 	if ((pos_y < 0) || (pos_y > display_height))
 		pos_y = 5;
 
+	Read(_T("ShowCM93DetailSlider"), &show_detail_slider, 0);
+
 	gui.set_cm93_zoom_factor(zoom_factor);
 	gui.set_cm93_detail_dialog_position(wxPoint(pos_x, pos_y));
-
-	Read(_T("ShowCM93DetailSlider"), &g_bShowCM93DetailSlider, 0);
+	gui.set_cm93_show_detail_slider(show_detail_slider);
 #endif
 }
 
@@ -1626,7 +1626,7 @@ void Config::write_cm93()
 	Write(_T("CM93DetailZoomPosX"), config.detail_dialog_position.x);
 	Write(_T("CM93DetailZoomPosY"), config.detail_dialog_position.y);
 
-	Write(_T("ShowCM93DetailSlider"), g_bShowCM93DetailSlider);
+	Write(_T("ShowCM93DetailSlider"), config.show_detail_slider);
 	Write(_T("AllowExtremeOverzoom"), g_b_overzoom_x);
 }
 

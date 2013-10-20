@@ -167,5 +167,10 @@ void OCPN_GUI::set_cm93_detail_dialog_position(const wxPoint & position)
 	data_cm93.detail_dialog_position = position;
 }
 
+void OCPN_GUI::set_cm93_show_detail_slider(bool flag)
+{
+	data_cm93.show_detail_slider = flag;
+}
+
 }
 

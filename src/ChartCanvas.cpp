@@ -231,7 +231,6 @@ extern int              g_S57_dialog_sx;
 extern int              g_S57_dialog_sy;
 
 extern CM93DSlide       *pCM93DetailSlider;
-extern bool             g_bShowCM93DetailSlider;
 
 extern bool             g_b_overzoom_x;                      // Allow high overzoom
 extern bool             g_bDisplayGrid;

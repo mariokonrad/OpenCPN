@@ -50,17 +50,24 @@ const wxString & StyleManager::GetStyleNextInvocation() const
 	return nextInvocationStyle;
 }
 
-wxArrayPtrVoid StyleManager::GetArrayOfStyles()
+StyleManager::StyleNames StyleManager::GetStyleNames() const
 {
-	return styles;
+	StyleNames names;
+
+	for (unsigned int i = 0; i < styles.Count(); ++i) {
+		const ocpnStyle::Style * style = (ocpnStyle::Style*)styles.Item(i);
+		names.push_back(style->name);
+	}
+
+	return names;
 }
 
 StyleManager::StyleManager(void)
+	: isOK(false)
+	, currentStyle(NULL)
 {
 	const global::System::Data & sys = global::OCPN::get().sys().data();
 
-	isOK = false;
-	currentStyle = NULL;
 	Init(sys.sound_data_location + _T("uidata") + wxFileName::GetPathSeparator());
 	Init(sys.home_location);
 	Init(sys.home_location + _T(".opencpn") + wxFileName::GetPathSeparator());
@@ -68,11 +75,11 @@ StyleManager::StyleManager(void)
 }
 
 StyleManager::StyleManager(const wxString & configDir)
+	: isOK(false)
+	, currentStyle(NULL)
 {
-	isOK = false;
-	currentStyle = NULL;
-	Init( configDir );
-	SetStyle( _T("") );
+	Init(configDir);
+	SetStyle(_T(""));
 }
 
 StyleManager::~StyleManager(void)
@@ -83,14 +90,17 @@ StyleManager::~StyleManager(void)
 	styles.Clear();
 }
 
+Style * StyleManager::GetCurrentStyle()
+{
+	return currentStyle;
+}
+
 void StyleManager::Init(const wxString & fromPath)
 {
 	TiXmlDocument doc;
 
-	if( !wxDir::Exists( fromPath ) ) {
-		wxString msg = _T("No styles found at: ");
-		msg << fromPath;
-		wxLogMessage(msg);
+	if (!wxDir::Exists(fromPath)) {
+		wxLogMessage(_T("No styles found at: ") + fromPath);
 		return;
 	}
 
@@ -102,37 +112,34 @@ void StyleManager::Init(const wxString & fromPath)
 
 	// We allow any number of styles to load from files called style<something>.xml
 
-	bool more = dir.GetFirst( &filename, _T("style*.xml"), wxDIR_FILES );
+	bool more = dir.GetFirst(&filename, _T("style*.xml"), wxDIR_FILES);
 
 	if (!more) {
-		wxString msg = _T("No styles found at: ");
-		msg << fromPath;
-		wxLogMessage( msg );
+		wxLogMessage(_T("No styles found at: ") + fromPath);
 		return;
 	}
 
 	bool firstFile = true;
-	while( more ) {
-		wxString name, extension;
+	while (more) {
+		wxString name;
+		wxString extension;
 
-		if( !firstFile ) more = dir.GetNext( &filename );
-		if( !more ) break;
+		if (!firstFile)
+			more = dir.GetNext(&filename);
+		if (!more)
+			break;
 		firstFile = false;
 
 		wxString fullFilePath = fromPath + filename;
 
-		if( !doc.LoadFile( (const char*) fullFilePath.mb_str() ) ) {
-			wxString msg( _T("Attempt to load styles from this file failed: ") );
-			msg += fullFilePath;
-			wxLogMessage( msg );
+		if (!doc.LoadFile((const char*) fullFilePath.mb_str())) {
+			wxLogMessage(_T("Attempt to load styles from this file failed: ") + fullFilePath);
 			continue;
 		}
 
-		wxString msg( _T("Styles loading from ") );
-		msg += fullFilePath;
-		wxLogMessage( msg );
+		wxLogMessage(_T("Styles loading from ") + fullFilePath);
 
-		TiXmlHandle hRoot( doc.RootElement() );
+		TiXmlHandle hRoot(doc.RootElement());
 
 		wxString root = wxString( doc.RootElement()->Value(), wxConvUTF8 );
 		if( root != _T("styles" ) ) {
@@ -412,14 +419,17 @@ void StyleManager::Init(const wxString & fromPath)
 
 void StyleManager::SetStyle(wxString name)
 {
-	Style* style = NULL;
+	Style * style = NULL;
 	bool ok = true;
-	if( currentStyle ) currentStyle->Unload();
-	else ok = false;
+	if (currentStyle)
+		currentStyle->Unload();
+	else
+		ok = false;
 
 	bool selectFirst = false;
 
-	if( name.Length() == 0 ) selectFirst = true;
+	if (name.Length() == 0)
+		selectFirst = true;
 
 	for( unsigned int i = 0; i < styles.Count(); i++ ) {
 		style = (Style*) ( styles.Item( i ) );
@@ -430,57 +440,46 @@ void StyleManager::SetStyle(wxString name)
 				break;
 			}
 
-			wxString fullFilePath = style->myConfigFileDir + wxFileName::GetPathSeparator()
-				+ style->graphicsFile;
+			wxString fullFilePath = style->myConfigFileDir + wxFileName::GetPathSeparator() + style->graphicsFile;
 
 			if( !wxFileName::FileExists( fullFilePath ) ) {
-				wxString msg( _T("Styles Graphics File not found: ") );
-				msg += fullFilePath;
-				wxLogMessage( msg );
+				wxLogMessage(_T("Styles Graphics File not found: ") + fullFilePath);
 				ok = false;
-				if( selectFirst ) continue;
+				if (selectFirst)
+					continue;
 				break;
 			}
 
 			wxImage img; // Only image does PNG LoadFile properly on GTK.
 
-			if( !img.LoadFile( fullFilePath, wxBITMAP_TYPE_PNG ) ) {
-				wxString msg( _T("Styles Graphics File failed to load: ") );
-				msg += fullFilePath;
-				wxLogMessage( msg );
+			if (!img.LoadFile(fullFilePath, wxBITMAP_TYPE_PNG)) {
+				wxLogMessage(_T("Styles Graphics File failed to load: ") + fullFilePath);
 				ok = false;
 				break;
 			}
-			style->graphics = new wxBitmap( img );
+			style->graphics = new wxBitmap(img);
 			currentStyle = style;
 			ok = true;
 			break;
 		}
 	}
 
-	if( !ok ) {
-		wxString msg( _T("The requested style was not found: ") );
-		msg += name;
-		wxLogMessage( msg );
+	if (!ok) {
+		wxLogMessage(_T("The requested style was not found: ") + name);
 		return;
 	}
 
-	if(style) {
-		if( (style->consoleTextBackgroundSize.x) && (style->consoleTextBackgroundSize.y)) {
+	if (style) {
+		if ((style->consoleTextBackgroundSize.x) && (style->consoleTextBackgroundSize.y)) {
 			style->consoleTextBackground = style->graphics->GetSubBitmap(
-					wxRect( style->consoleTextBackgroundLoc, style->consoleTextBackgroundSize ) );
+					wxRect(style->consoleTextBackgroundLoc, style->consoleTextBackgroundSize));
 		}
 	}
 
-	if(style)
+	if (style)
 		nextInvocationStyle = style->name;
 
 	return;
-}
-
-Style * StyleManager::GetCurrentStyle()
-{
-	return currentStyle;
 }
 
 }

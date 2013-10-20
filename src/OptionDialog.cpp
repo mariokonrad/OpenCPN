@@ -1614,13 +1614,12 @@ void options::CreatePanel_UI( size_t parent, int border_size, int group_item_spa
 
 	m_itemStyleListBox = new wxChoice( itemPanelFont, ID_STYLESCOMBOBOX );
 
-	wxArrayPtrVoid styles = g_StyleManager->GetArrayOfStyles();
-	for( unsigned int i = 0; i < styles.Count(); i++ ) {
-		ocpnStyle::Style* style = (ocpnStyle::Style*) ( styles.Item( i ) );
-		m_itemStyleListBox->Append( style->name );
+	ocpnStyle::StyleManager::StyleNames style_names = g_StyleManager->GetStyleNames();
+	for (ocpnStyle::StyleManager::StyleNames::const_iterator i = style_names.begin(); i != style_names.end(); ++i) {
+		m_itemStyleListBox->Append(*i);
 	}
-	m_itemStyleListBox->SetStringSelection( g_StyleManager->GetCurrentStyle()->name );
-	itemStyleStaticBoxSizer->Add( m_itemStyleListBox, 1, wxEXPAND | wxALL, border_size );
+	m_itemStyleListBox->SetStringSelection(g_StyleManager->GetCurrentStyle()->name);
+	itemStyleStaticBoxSizer->Add(m_itemStyleListBox, 1, wxEXPAND | wxALL, border_size);
 
 	wxStaticBox* miscOptionsBox = new wxStaticBox( itemPanelFont, wxID_ANY, _("Miscellaneous Options") );
 	wxStaticBoxSizer* miscOptions = new wxStaticBoxSizer( miscOptionsBox, wxVERTICAL );

@@ -96,7 +96,7 @@ void ToolBarSimple::Init()
 
 	m_xPos = m_yPos = wxDefaultCoord;
 
-	m_style = g_StyleManager->GetCurrentStyle();
+	m_style = g_StyleManager->GetCurrentStyle(); // FIXME: do not store the style
 
 	m_defaultWidth = 16;
 	m_defaultHeight = 15;
@@ -121,12 +121,9 @@ wxToolBarToolBase * ToolBarSimple::DoAddTool( int id, const wxString& label,
 	InvalidateBestSize();
 	return InsertTool( GetToolsCount(), id, label, bitmap, bmpDisabled, kind, shortHelp, longHelp,
 			clientData );
-
 }
 
-///
-
-wxToolBarToolBase *ToolBarSimple::AddTool( int toolid, const wxString& label,
+wxToolBarToolBase * ToolBarSimple::AddTool( int toolid, const wxString& label,
 		const wxBitmap& bitmap, const wxBitmap& bmpDisabled, wxItemKind kind,
 		const wxString& shortHelp, const wxString& longHelp, wxObject *data )
 {
@@ -184,35 +181,34 @@ bool ToolBarSimple::DoInsertTool( size_t WXUNUSED(pos), wxToolBarToolBase *toolB
 	}
 
 	tool->m_x = m_xPos;
-	if( tool->m_x == wxDefaultCoord ) tool->m_x = m_style->GetLeftMargin();
+	if (tool->m_x == wxDefaultCoord)
+		tool->m_x = m_style->GetLeftMargin();
 
 	tool->m_y = m_yPos;
-	if( tool->m_y == wxDefaultCoord ) tool->m_y = m_style->GetTopMargin();
+	if (tool->m_y == wxDefaultCoord)
+		tool->m_y = m_style->GetTopMargin();
 
-	if( tool->IsButton() ) {
-		tool->SetSize( GetToolSize() );
+	if (tool->IsButton()) {
+		tool->SetSize(GetToolSize());
 
 		// Calculate reasonable max size in case Layout() not called
-		if( ( tool->m_x + tool->GetNormalBitmap().GetWidth() + m_style->GetLeftMargin() )
-				> m_maxWidth ) m_maxWidth = (wxCoord) ( ( tool->m_x + tool->GetWidth()
-						+ m_style->GetLeftMargin() ) );
+		if ((tool->m_x + tool->GetNormalBitmap().GetWidth() + m_style->GetLeftMargin()) > m_maxWidth)
+			m_maxWidth = (wxCoord) ((tool->m_x + tool->GetWidth() + m_style->GetLeftMargin()));
 
-		if( ( tool->m_y + tool->GetNormalBitmap().GetHeight() + m_style->GetTopMargin() )
-				> m_maxHeight ) m_maxHeight = (wxCoord) ( ( tool->m_y + tool->GetHeight()
-						+ m_style->GetTopMargin() ) );
-	}
-
-	else
-		if( tool->IsControl() ) {
-			tool->SetSize( tool->GetControl()->GetSize() );
+		if ((tool->m_y + tool->GetNormalBitmap().GetHeight() + m_style->GetTopMargin()) > m_maxHeight)
+			m_maxHeight = (wxCoord) ((tool->m_y + tool->GetHeight() + m_style->GetTopMargin()));
+	} else {
+		if (tool->IsControl()) {
+			tool->SetSize(tool->GetControl()->GetSize());
 		}
+	}
 
 	tool->b_hilite = false;
 
 	return true;
 }
 
-bool ToolBarSimple::DoDeleteTool( size_t WXUNUSED(pos), wxToolBarToolBase *tool )
+bool ToolBarSimple::DoDeleteTool(size_t WXUNUSED(pos), wxToolBarToolBase * tool)
 {
 	// VZ: didn't test whether it works, but why not...
 	tool->Detach();
@@ -224,10 +220,16 @@ bool ToolBarSimple::DoDeleteTool( size_t WXUNUSED(pos), wxToolBarToolBase *tool 
 	return true;
 }
 
-bool ToolBarSimple::Create( wxWindow *parent, wxWindowID id, const wxPoint& pos,
-		const wxSize& size, long style, const wxString& name )
+bool ToolBarSimple::Create(
+		wxWindow * parent,
+		wxWindowID id,
+		const wxPoint & pos,
+		const wxSize & size,
+		long style,
+		const wxString& name)
 {
-	if( !wxWindow::Create( parent, id, pos, size, style, name ) ) return false;
+	if (!wxWindow::Create(parent, id, pos, size, style, name))
+		return false;
 
 	// Set it to grey (or other 3D face colour)
 	SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_3DFACE ) );
@@ -259,7 +261,6 @@ ToolBarSimple::~ToolBarSimple()
 		m_pToolTipWin->Destroy();
 		m_pToolTipWin = NULL;
 	}
-
 }
 
 void ToolBarSimple::KillTooltip()
@@ -277,8 +278,7 @@ void ToolBarSimple::KillTooltip()
 		if( m_last_ro_tool->IsEnabled() ) {
 			if( m_last_ro_tool->IsToggled() ) {
 				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon( m_last_ro_tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED));
-			}
-			else {
+			} else {
 				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon( m_last_ro_tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL));
 			}
 		}
@@ -299,8 +299,7 @@ void ToolBarSimple::SetColorScheme( ColorScheme cs )
 		m_pToolTipWin = NULL;
 	}
 
-	m_toolOutlineColour = GetGlobalColor( _T("UIBDR") );
-
+	m_toolOutlineColour = GetGlobalColor(_T("UIBDR"));
 	m_currentColorScheme = cs;
 }
 
@@ -313,7 +312,8 @@ bool ToolBarSimple::Realize()
 	m_maxWidth = 0;
 	m_maxHeight = 0;
 
-	if( IsVertical() ) m_style->SetOrientation( wxTB_VERTICAL );
+	if (IsVertical())
+		m_style->SetOrientation(wxTB_VERTICAL);
 	else
 		m_style->SetOrientation( wxTB_HORIZONTAL );
 
@@ -355,8 +355,7 @@ bool ToolBarSimple::Realize()
 					tool->m_y = (wxCoord) m_lastY;
 
 					tool->trect = wxRect( tool->m_x, tool->m_y, toolSize.x, toolSize.y );
-					tool->trect.Inflate( m_style->GetToolSeparation() / 2,
-							m_style->GetTopMargin() );
+					tool->trect.Inflate( m_style->GetToolSeparation() / 2, m_style->GetTopMargin() );
 
 					m_lastX += toolSize.x + m_style->GetToolSeparation();
 				} else {
@@ -372,8 +371,7 @@ bool ToolBarSimple::Realize()
 					tool->m_y = (wxCoord) m_lastY;
 
 					tool->trect = wxRect( tool->m_x, tool->m_y, toolSize.x, toolSize.y );
-					tool->trect.Inflate( m_style->GetToolSeparation() / 2,
-							m_style->GetTopMargin() );
+					tool->trect.Inflate( m_style->GetToolSeparation() / 2, m_style->GetTopMargin() );
 
 					m_lastY += toolSize.y + m_style->GetToolSeparation();
 				}
@@ -400,9 +398,11 @@ bool ToolBarSimple::Realize()
 		lastTool = tool;
 		node = node->GetNext();
 	}
-	if( m_LineCount > 1 || IsVertical() ) lastTool->lastInLine = true;
+	if (m_LineCount > 1 || IsVertical())
+		lastTool->lastInLine = true;
 
-	if( GetWindowStyleFlag() & wxTB_HORIZONTAL ) m_maxHeight += toolSize.y;
+	if (GetWindowStyleFlag() & wxTB_HORIZONTAL)
+		m_maxHeight += toolSize.y;
 	else
 		m_maxWidth += toolSize.x;
 
@@ -415,10 +415,6 @@ bool ToolBarSimple::Realize()
 	return true;
 }
 
-// ----------------------------------------------------------------------------
-// event handlers
-// ----------------------------------------------------------------------------
-
 void ToolBarSimple::OnPaint( wxPaintEvent& WXUNUSED(event) )
 {
 	wxPaintDC dc( this );
@@ -429,7 +425,8 @@ void ToolBarSimple::OnPaint( wxPaintEvent& WXUNUSED(event) )
 
 	static int count = 0;
 	// Prevent reentry of OnPaint which would cause wxMemoryDC errors.
-	if( count > 0 ) return;
+	if (count > 0)
+		return;
 	count++;
 
 	for( wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
@@ -497,8 +494,6 @@ void ToolBarSimple::OnToolTipTimerEvent( wxTimerEvent& event )
 	}
 }
 
-int s_dragx, s_dragy;
-
 void ToolBarSimple::OnMouseEvent( wxMouseEvent & event )
 {
 	wxCoord x, y;
@@ -506,11 +501,10 @@ void ToolBarSimple::OnMouseEvent( wxMouseEvent & event )
 	ToolBarTool *tool = (ToolBarTool *) FindToolForPosition( x, y );
 	if( event.LeftDown() ) {
 		CaptureMouse();
-		s_dragx = x;
-		s_dragy = y;
 	}
-	if( event.LeftUp() ) {
-		if( HasCapture() ) ReleaseMouse();
+	if (event.LeftUp()) {
+		if (HasCapture())
+			ReleaseMouse();
 	}
 
 	if( tool && tool->IsButton() && IsShown() ) {

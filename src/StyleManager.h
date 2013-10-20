@@ -27,12 +27,17 @@
 #include <wx/string.h>
 #include <wx/dynarray.h>
 
+#include <vector>
+
 namespace ocpnStyle {
 
 class Style;
 
 class StyleManager
 {
+	public:
+		typedef std::vector<wxString> StyleNames;
+
 	public:
 		StyleManager(void);
 		~StyleManager(void);
@@ -44,7 +49,8 @@ class StyleManager
 		void SetStyleNextInvocation(const wxString & name);
 		const wxString & GetStyleNextInvocation() const;
 		Style * GetCurrentStyle();
-		wxArrayPtrVoid GetArrayOfStyles();
+
+		StyleNames GetStyleNames() const;
 
 	private:
 		bool isOK;

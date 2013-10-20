@@ -85,7 +85,7 @@ OCPNFloatingToolbarDialog::OCPNFloatingToolbarDialog(
 	m_position = position;
 	m_orient = orient;
 
-	m_style = g_StyleManager->GetCurrentStyle();
+	m_style = g_StyleManager->GetCurrentStyle(); // FIXME: do not store the current style
 
 	// A top-level sizer
 	m_topSizer = new wxBoxSizer( wxHORIZONTAL );

@@ -233,7 +233,7 @@ wxBitmap FloatingCompassWindow::CreateBmp( bool newColorScheme )
 		}
 
 #ifndef __WXMAC__
-		if( style->marginsInvisible ) {
+		if (style->isMarginsInvisible()) {
 			m_MaskBmp = wxBitmap( StatBmp.GetWidth(), StatBmp.GetHeight() );
 			wxMemoryDC sdc( m_MaskBmp );
 			sdc.SetBackground( *wxWHITE_BRUSH );

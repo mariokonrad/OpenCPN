@@ -163,11 +163,6 @@ bool Style::HasBackground() const
 	return hasBackground;
 }
 
-void Style::HasBackground(bool b)
-{
-	hasBackground = b;
-}
-
 int Style::GetTopMargin() const
 {
 	return toolMarginTop[currentOrientation];
@@ -260,7 +255,7 @@ wxBitmap Style::GetIcon(const wxString & name)
 		return wxBitmap( GetToolSize().x, GetToolSize().y ); // Prevents crashing.
 	}
 
-	int index = iconIndex[name]; // FIXME: this operation is not const but should be, use 'find'
+	int index = iconIndex[name]; // FIXME: this operation is not const but should be
 
 	Icon * icon = (Icon*) icons.Item(index); // FIXME: do not use void* array for icons
 
@@ -366,8 +361,7 @@ wxBitmap Style::GetToolIcon(const wxString & toolname, int iconType, bool rollov
 					location.x -= verticalIconOffset.x;
 					location.y -= verticalIconOffset.y;
 				}
-				wxBitmap bm = MergeBitmaps( GetToggledBG(), graphics->GetSubBitmap( location ),
-						offset );
+				wxBitmap bm = MergeBitmaps(GetToggledBG(), graphics->GetSubBitmap(location), offset);
 				if( rollover ) {
 					tool->rolloverToggled = SetBitmapBrightness( bm );
 					tool->rolloverToggledLoaded = true;
@@ -402,13 +396,11 @@ wxBitmap Style::GetToolIcon(const wxString & toolname, int iconType, bool rollov
 			}
 			break;
 	}
-	wxString msg( _T("A requested icon type for this tool was not found in the style: ") );
-	msg += toolname;
-	wxLogMessage( msg );
+	wxLogMessage(_T("A requested icon type for this tool was not found in the style: ") + toolname);
 	return wxBitmap( GetToolSize().x, GetToolSize().y ); // Prevents crashing.
 }
 
-wxBitmap Style::BuildPluginIcon( const wxBitmap* bm, int iconType )
+wxBitmap Style::BuildPluginIcon( const wxBitmap* bm, int iconType ) const
 {
 	if( ! bm || ! bm->IsOk() ) return wxNullBitmap;
 
@@ -441,7 +433,7 @@ wxBitmap Style::BuildPluginIcon( const wxBitmap* bm, int iconType )
 	return iconbm;
 }
 
-wxBitmap Style::SetBitmapBrightness( wxBitmap& bitmap )
+wxBitmap Style::SetBitmapBrightness( wxBitmap& bitmap ) const
 {
 	double dimLevel;
 	switch( colorscheme ){
@@ -460,7 +452,7 @@ wxBitmap Style::SetBitmapBrightness( wxBitmap& bitmap )
 	return SetBitmapBrightnessAbs(bitmap, dimLevel);
 }
 
-wxBitmap Style::SetBitmapBrightnessAbs( wxBitmap& bitmap, double level )
+wxBitmap Style::SetBitmapBrightnessAbs( wxBitmap& bitmap, double level ) const
 {
 	wxImage image = bitmap.ConvertToImage();
 
@@ -482,7 +474,7 @@ wxBitmap Style::SetBitmapBrightnessAbs( wxBitmap& bitmap, double level )
 	return wxBitmap( image );
 }
 
-wxBitmap Style::GetNormalBG()
+wxBitmap Style::GetNormalBG() const
 {
 	wxSize size = toolSize[currentOrientation];
 	return graphics->GetSubBitmap(
@@ -490,14 +482,14 @@ wxBitmap Style::GetNormalBG()
 				size.x, size.y ) );
 }
 
-wxBitmap Style::GetActiveBG()
+wxBitmap Style::GetActiveBG() const
 {
 	return graphics->GetSubBitmap(
 			wxRect( activeBGlocation[currentOrientation].x, activeBGlocation[currentOrientation].y,
 				toolSize[currentOrientation].x, toolSize[currentOrientation].y ) );
 }
 
-wxBitmap Style::GetToggledBG()
+wxBitmap Style::GetToggledBG() const
 {
 	wxSize size = toolSize[currentOrientation];
 	if( toggledBGSize[currentOrientation].x ) {
@@ -506,7 +498,7 @@ wxBitmap Style::GetToggledBG()
 	return graphics->GetSubBitmap( wxRect( toggledBGlocation[currentOrientation], size ) );
 }
 
-wxBitmap Style::GetToolbarStart()
+wxBitmap Style::GetToolbarStart() const
 {
 	wxSize size = toolbarStartSize[currentOrientation];
 	if( toolbarStartSize[currentOrientation].x == 0 ) {
@@ -515,7 +507,7 @@ wxBitmap Style::GetToolbarStart()
 	return graphics->GetSubBitmap( wxRect( toolbarStartLoc[currentOrientation], size ) );
 }
 
-wxBitmap Style::GetToolbarEnd()
+wxBitmap Style::GetToolbarEnd() const
 {
 	wxSize size = toolbarEndSize[currentOrientation];
 	if( toolbarEndSize[currentOrientation].x == 0 ) {
@@ -524,22 +516,23 @@ wxBitmap Style::GetToolbarEnd()
 	return graphics->GetSubBitmap( wxRect( toolbarEndLoc[currentOrientation], size ) );
 }
 
-int Style::GetToolbarCornerRadius()
+int Style::GetToolbarCornerRadius() const
 {
 	return cornerRadius[currentOrientation];
 }
 
-void Style::DrawToolbarLineStart( wxBitmap& bmp )
+void Style::DrawToolbarLineStart(wxBitmap & bmp) const
 {
-	if( !HasToolbarStart() ) return;
+	if (!HasToolbarStart())
+		return;
 	wxMemoryDC dc( bmp );
 	dc.DrawBitmap( GetToolbarStart(), 0, 0, true );
-	dc.SelectObject( wxNullBitmap );
+	dc.SelectObject(wxNullBitmap);
 }
 
-void Style::DrawToolbarLineEnd( wxBitmap& bmp )
+void Style::DrawToolbarLineEnd( wxBitmap& bmp ) const
 {
-	if( !HasToolbarStart() )
+	if (!HasToolbarStart())
 		return;
 	wxMemoryDC dc( bmp );
 	if( currentOrientation ) {
@@ -561,7 +554,7 @@ void Style::SetOrientation( long orient )
 	Unload();
 }
 
-int Style::GetOrientation()
+int Style::GetOrientation() const
 {
 	return currentOrientation;
 }
@@ -596,8 +589,48 @@ void Style::Unload()
 	}
 }
 
-	Style::Style( void )
-: graphics(NULL)
+wxColour Style::getConsoleFontColor() const
+{
+	return consoleFontColor;
+}
+
+const wxBitmap & Style::getConsoleTextBackground() const
+{
+	return consoleTextBackground;
+}
+
+const wxString & Style::getEmbossFont() const
+{
+	return embossFont;
+}
+
+int Style::getEmbossHeight() const
+{
+	return embossHeight;
+}
+
+bool Style::isChartStatusWindowTransparent() const
+{
+	return chartStatusWindowTransparent;
+}
+
+int Style::getChartStatusIconWidth() const
+{
+	return chartStatusIconWidth;
+}
+
+const wxString & Style::getName() const
+{
+	return name;
+}
+
+bool Style::isMarginsInvisible() const
+{
+	return marginsInvisible;
+}
+
+Style::Style(void)
+	: graphics(NULL)
 {
 	currentOrientation = 0;
 	colorscheme = GLOBAL_COLOR_SCHEME_DAY;

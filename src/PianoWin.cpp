@@ -22,8 +22,8 @@
  **************************************************************************/
 
 #include "PianoWin.h"
-#include "StyleManager.h"
-#include "Style.h"
+#include <StyleManager.h>
+#include <Style.h>
 #include <UserColors.h>
 #include <chart/ChartDB.h>
 
@@ -236,16 +236,15 @@ void PianoWin::OnPaint(wxPaintEvent &)
 			}
 		}
 #ifndef __WXMAC__
-		if( style->chartStatusWindowTransparent )
+		if (style->isChartStatusWindowTransparent())
 			((wxDialog*) GetParent())->SetShape( wxRegion( shape, *wxBLACK, 0 ) );
-	}
-	else {
+	} else {
 		// SetShape() with a completely empty shape doesn't work, and leaving the shape
 		// but hiding the window causes artifacts when dragging in GL mode on MSW.
 		// The best solution found so far is to show just a single pixel, this is less
 		// disturbing than flashing piano keys when dragging. (wxWidgets 2.8)
-		if( style->chartStatusWindowTransparent )
-			((wxDialog*) GetParent())->SetShape( wxRegion( wxRect(0,0,1,1) ) );
+		if (style->isChartStatusWindowTransparent())
+			((wxDialog*) GetParent())->SetShape( wxRegion( wxRect(0,0,1,1) ));
 	}
 #else
 }
@@ -296,7 +295,7 @@ void PianoWin::FormatKeys( void )
 
 	int nKeys = m_key_array.size();
 	if( nKeys ) {
-		int kw = style->chartStatusIconWidth;
+		int kw = style->getChartStatusIconWidth();
 		if( !kw ) kw = width / nKeys;
 
 		//    Build the Key Regions
@@ -322,7 +321,6 @@ wxPoint PianoWin::GetKeyOrigin( int key_index )
 
 void PianoWin::MouseEvent( wxMouseEvent& event )
 {
-
 	int x, y;
 	event.GetPosition( &x, &y );
 

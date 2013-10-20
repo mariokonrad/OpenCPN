@@ -1618,7 +1618,7 @@ void options::CreatePanel_UI( size_t parent, int border_size, int group_item_spa
 	for (ocpnStyle::StyleManager::StyleNames::const_iterator i = style_names.begin(); i != style_names.end(); ++i) {
 		m_itemStyleListBox->Append(*i);
 	}
-	m_itemStyleListBox->SetStringSelection(g_StyleManager->GetCurrentStyle()->name);
+	m_itemStyleListBox->SetStringSelection(g_StyleManager->GetCurrentStyle()->getName());
 	itemStyleStaticBoxSizer->Add(m_itemStyleListBox, 1, wxEXPAND | wxALL, border_size);
 
 	wxStaticBox* miscOptionsBox = new wxStaticBox( itemPanelFont, wxID_ANY, _("Miscellaneous Options") );
@@ -2746,7 +2746,7 @@ void options::OnApplyClick(wxCommandEvent & event)
 		if( g_locale != locale_old )
 			m_returnChanges |= LOCALE_CHANGED;
 
-		wxString oldStyle = g_StyleManager->GetCurrentStyle()->name;
+		wxString oldStyle = g_StyleManager->GetCurrentStyle()->getName();
 		g_StyleManager->SetStyleNextInvocation( m_itemStyleListBox->GetStringSelection() );
 		if( g_StyleManager->GetStyleNextInvocation() != oldStyle ) {
 			m_returnChanges |= STYLE_CHANGED;

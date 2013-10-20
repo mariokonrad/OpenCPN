@@ -22,12 +22,11 @@
  **************************************************************************/
 
 #include "StatWin.h"
-#include "PianoWin.h"
-#include "TextStatWin.h"
-#include "dychart.h"
-#include "StyleManager.h"
-#include "Style.h"
-
+#include <dychart.h>
+#include <PianoWin.h>
+#include <TextStatWin.h>
+#include <StyleManager.h>
+#include <Style.h>
 #include <UserColors.h>
 #include <chart/ChartDB.h>
 
@@ -64,10 +63,9 @@ StatWin::StatWin(wxWindow * win)
 
 	m_rows = 1;
 
-	//   Create the Children
+	// Create the Children
 
 	pPiano = new PianoWin( (wxFrame *) this );
-
 }
 
 StatWin::~StatWin()
@@ -100,10 +98,10 @@ void StatWin::OnPaint(wxPaintEvent &)
 	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 
 	wxPaintDC dc(this);
-	if (style->chartStatusWindowTransparent)
+	if (style->isChartStatusWindowTransparent())
 		return;
 
-	dc.SetBackground( m_backBrush );
+	dc.SetBackground(m_backBrush);
 	dc.Clear();
 }
 

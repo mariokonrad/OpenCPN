@@ -87,7 +87,7 @@ void AnnunText::SetColorScheme(ColorScheme)
 	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
 	m_pbackBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("UBLCK") ), wxSOLID );
 
-	m_text_color = style->consoleFontColor;
+	m_text_color = style->getConsoleFontColor();
 }
 
 void AnnunText::RefreshFonts()
@@ -120,12 +120,13 @@ void AnnunText::SetAValue(const wxString & v)
 
 void AnnunText::OnPaint(wxPaintEvent &)
 {
-	int sx, sy;
-	GetClientSize( &sx, &sy );
+	int sx;
+	int sy;
+	GetClientSize(&sx, &sy);
 	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 
-	//    Do the drawing on an off-screen memory DC, and blit into place
-	//    to avoid objectionable flashing
+	// Do the drawing on an off-screen memory DC, and blit into place
+	// to avoid objectionable flashing
 	wxMemoryDC mdc;
 
 	wxBitmap m_bitmap( sx, sy, -1 );
@@ -133,10 +134,11 @@ void AnnunText::OnPaint(wxPaintEvent &)
 	mdc.SetBackground( *m_pbackBrush );
 	mdc.Clear();
 
-	if (style->consoleTextBackground.IsOk())
-		mdc.DrawBitmap( style->consoleTextBackground, 0, 0 );
+	const wxBitmap & background = style->getConsoleTextBackground();
+	if (background.IsOk())
+		mdc.DrawBitmap(background, 0, 0);
 
-	mdc.SetTextForeground( m_text_color );
+	mdc.SetTextForeground(m_text_color);
 
 	if( m_plabelFont ) {
 		mdc.SetFont( *m_plabelFont );

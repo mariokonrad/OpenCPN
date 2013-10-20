@@ -339,17 +339,19 @@ void OCPNFloatingToolbarDialog::Realize()
 		m_topSizer->Fit( this );
 
 		//    Update "Dock" parameters
-		if( m_position.x == 0 ) m_dock_x = -1;
-		else
-			if( m_position.x == m_pparent->GetClientSize().x - GetSize().x ) m_dock_x = 1;
+		if (m_position.x == 0)
+			m_dock_x = -1;
+		else if (m_position.x == m_pparent->GetClientSize().x - GetSize().x)
+			m_dock_x = 1;
 
-		if( m_position.y == 0 ) m_dock_y = -1;
-		else
-			if( m_position.y == m_pparent->GetClientSize().y - GetSize().y ) m_dock_y = 1;
+		if (m_position.y == 0)
+			m_dock_y = -1;
+		else if (m_position.y == m_pparent->GetClientSize().y - GetSize().y)
+			m_dock_y = 1;
 
 		// Now create a bitmap mask forthe frame shape.
 
-		if( m_style->marginsInvisible ) {
+		if (m_style->isMarginsInvisible()) {
 			int toolCount = m_ptoolbar->GetVisibleToolCount();
 			wxBitmap shape( GetSize().x, GetSize().y );
 			wxMemoryDC sdc( shape );

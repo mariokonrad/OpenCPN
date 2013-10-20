@@ -316,7 +316,7 @@ void StyleManager::Init(const wxString & fromPath)
 										attrNode->QueryIntAttribute( "x", &x );
 										attrNode->QueryIntAttribute( "y", &y );
 										style->normalBGlocation[orientation] = wxPoint( x, y );
-										style->HasBackground( true );
+										style->hasBackground = true;
 										continue;
 									}
 									if( nodeType == _T("active-location") ) {

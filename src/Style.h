@@ -45,26 +45,28 @@ wxBitmap ConvertTo24Bit(wxColor bgColor, wxBitmap front);
 
 class Style
 {
+		// because StyleManager is doing the initialization, it has to be friend.
+		friend class StyleManager;
+
 	public:
 		Style(void);
 		~Style(void);
 
-		wxBitmap GetNormalBG();
-		wxBitmap GetActiveBG();
-		wxBitmap GetToggledBG();
-		wxBitmap GetToolbarStart();
-		wxBitmap GetToolbarEnd();
+		wxBitmap GetNormalBG() const;
+		wxBitmap GetActiveBG() const;
+		wxBitmap GetToggledBG() const;
+		wxBitmap GetToolbarStart() const;
+		wxBitmap GetToolbarEnd() const;
 		bool HasBackground() const;
-		void HasBackground(bool b);
 		wxBitmap GetIcon(const wxString & name);
 		wxBitmap GetToolIcon(const wxString & toolname, int iconType = TOOLICON_NORMAL, bool rollover = false);
-		wxBitmap BuildPluginIcon(const wxBitmap * bm, int iconType);
+		wxBitmap BuildPluginIcon(const wxBitmap * bm, int iconType) const;
 
 		int GetTopMargin() const;
 		int GetRightMargin() const;
 		int GetBottomMargin() const;
 		int GetLeftMargin() const;
-		int GetToolbarCornerRadius();
+		int GetToolbarCornerRadius() const;
 
 		int GetCompassTopMargin() const;
 		int GetCompassRightMargin() const;
@@ -80,17 +82,28 @@ class Style
 
 		bool HasToolbarStart() const;
 		bool HasToolbarEnd() const;
-		void DrawToolbarLineStart(wxBitmap& bmp);
-		void DrawToolbarLineEnd(wxBitmap& bmp);
+		void DrawToolbarLineStart(wxBitmap & bmp) const;
+		void DrawToolbarLineEnd(wxBitmap & bmp) const;
 
-		wxBitmap SetBitmapBrightness(wxBitmap& bitmap);
-		wxBitmap SetBitmapBrightnessAbs(wxBitmap& bitmap, double level);
+		wxBitmap SetBitmapBrightness(wxBitmap& bitmap) const;
+		wxBitmap SetBitmapBrightnessAbs(wxBitmap& bitmap, double level) const;
+
+		int GetOrientation() const;
 
 		void SetOrientation(long orient);
-		int GetOrientation();
 		void SetColorScheme(ColorScheme cs);
 		void Unload();
 
+		wxColour getConsoleFontColor() const;
+		const wxBitmap & getConsoleTextBackground() const;
+		const wxString & getEmbossFont() const;
+		int getEmbossHeight() const;
+		bool isChartStatusWindowTransparent() const;
+		int getChartStatusIconWidth() const;
+		const wxString & getName() const;
+		bool isMarginsInvisible() const;
+
+	private:
 		wxString name;
 		wxString description;
 		wxString graphicsFile;
@@ -114,7 +127,6 @@ class Style
 		wxPoint activeBGlocation[2];
 		wxPoint normalBGlocation[2];
 		wxSize verticalIconOffset;
-		wxArrayPtrVoid tools;
 		intHash toolIndex;
 		wxArrayPtrVoid icons;
 		intHash iconIndex;
@@ -141,7 +153,8 @@ class Style
 
 		wxString myConfigFileDir;
 
-	private:
+		wxArrayPtrVoid tools;
+
 		int currentOrientation;
 		ColorScheme colorscheme;
 		bool hasBackground;

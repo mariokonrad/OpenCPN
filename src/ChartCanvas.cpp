@@ -8573,12 +8573,14 @@ void ChartCanvas::EmbossDepthScale(ocpnDC & dc)
 
 void ChartCanvas::CreateDepthUnitEmbossMaps( ColorScheme cs )
 {
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
+	const wxString & embossFont = style->getEmbossFont();
+
 	wxFont font;
-	if( style->embossFont == wxEmptyString )
-		font = wxFont( 60, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD );
+	if (embossFont == wxEmptyString)
+		font = wxFont(60, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
 	else
-		font = wxFont( style->embossHeight, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, style->embossFont );
+		font = wxFont(style->getEmbossHeight(), wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, embossFont);
 
 	int emboss_width = 500;
 	int emboss_height = 100;
@@ -8594,24 +8596,26 @@ void ChartCanvas::CreateDepthUnitEmbossMaps( ColorScheme cs )
 	m_pEM_Fathoms = CreateEmbossMapData( font, emboss_width, emboss_height, _("Fathoms"), cs );
 }
 
-void ChartCanvas::CreateOZEmbossMapData( ColorScheme cs )
+void ChartCanvas::CreateOZEmbossMapData(ColorScheme cs)
 {
 	delete m_pEM_OverZoom;
 
 	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-	int w, h;
+	const wxString & embossFont = style->getEmbossFont();
 
 	wxFont font;
-	if( style->embossFont == wxEmptyString )
-		font = wxFont( 40, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD );
+	if (embossFont == wxEmptyString)
+		font = wxFont(40, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
 	else
-		font = wxFont( style->embossHeight, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, style->embossFont );
+		font = wxFont(style->getEmbossHeight(), wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, embossFont);
 
-	wxClientDC dc( this );
-	dc.SetFont( font );
-	dc.GetTextExtent( _("OverZoom"), &w, &h );
+	wxClientDC dc(this);
+	dc.SetFont(font);
 
-	m_pEM_OverZoom = CreateEmbossMapData( font, w + 10, h + 10, _("OverZoom"), cs );
+	int w;
+	int h;
+	dc.GetTextExtent(_("OverZoom"), &w, &h);
+	m_pEM_OverZoom = CreateEmbossMapData(font, w + 10, h + 10, _("OverZoom"), cs);
 }
 
 EmbossData *ChartCanvas::CreateEmbossMapData( wxFont &font, int width, int height,

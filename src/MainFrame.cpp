@@ -404,7 +404,6 @@ CM93DSlide *pCM93DetailSlider;
 bool g_bUseGreenShip;
 wxString g_AW1GUID;
 wxString g_AW2GUID;
-bool g_b_overzoom_x; // Allow high overzoom
 bool g_bshow_overzoom_emboss;
 int g_OwnShipIconType;
 double g_n_ownship_length_meters;
@@ -3852,7 +3851,7 @@ double MainFrame::GetBestVPScale(ChartBase * pchart)
 		pchart->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(), chart_canvas->GetCanvasWidth()));
 	proposed_scale_onscreen = wxMax(
 		proposed_scale_onscreen,
-		pchart->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), g_b_overzoom_x));
+		pchart->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), global::OCPN::get().gui().view().allow_overzoom_x));
 
 	return chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
 }
@@ -4277,7 +4276,7 @@ bool MainFrame::DoChartUpdate( void )
 						proposed_scale_onscreen =
 							wxMin(proposed_scale_onscreen, pc->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(), chart_canvas->GetCanvasWidth()));
 						proposed_scale_onscreen =
-							wxMax(proposed_scale_onscreen, pc->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), g_b_overzoom_x));
+							wxMax(proposed_scale_onscreen, pc->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), global::OCPN::get().gui().view().allow_overzoom_x));
 					}
 				}
 
@@ -4442,7 +4441,7 @@ bool MainFrame::DoChartUpdate( void )
 
 			//    If the current viewpoint is invalid, set the default scale to something reasonable.
 			if( !chart_canvas->GetVP().IsValid() )
-				set_scale = 1. / 200000.;
+				set_scale = 1.0 / 200000.0;
 			else {                                    // otherwise, match scale if elected.
 				double proposed_scale_onscreen;
 
@@ -4469,7 +4468,7 @@ bool MainFrame::DoChartUpdate( void )
 					proposed_scale_onscreen =
 						wxMin(proposed_scale_onscreen, Current_Ch->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(), chart_canvas->GetCanvasWidth()));
 					proposed_scale_onscreen =
-						wxMax(proposed_scale_onscreen, Current_Ch->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), g_b_overzoom_x));
+						wxMax(proposed_scale_onscreen, Current_Ch->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), global::OCPN::get().gui().view().allow_overzoom_x));
 				}
 
 				set_scale = chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;

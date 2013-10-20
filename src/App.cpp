@@ -236,7 +236,6 @@ extern CM93DSlide *pCM93DetailSlider;
 extern bool g_bUseGreenShip;
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
-extern bool g_b_overzoom_x;
 extern bool g_bshow_overzoom_emboss;
 extern int g_OwnShipIconType;
 extern double g_n_ownship_length_meters;

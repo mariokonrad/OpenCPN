@@ -44,6 +44,7 @@ class OCPN_GUI : public GUI
 		virtual void set_view_show_outlines(bool);
 		virtual void set_view_show_depth_units(bool);
 		virtual void set_view_lookahead_mode(bool);
+		virtual void set_view_allow_overzoom_x(bool);
 
 	public: // frame
 		virtual const Frame & frame() const;

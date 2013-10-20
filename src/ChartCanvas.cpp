@@ -232,7 +232,6 @@ extern int              g_S57_dialog_sy;
 
 extern CM93DSlide       *pCM93DetailSlider;
 
-extern bool             g_b_overzoom_x;                      // Allow high overzoom
 extern bool             g_bDisplayGrid;
 
 extern bool             g_bUseGreenShip;
@@ -2329,10 +2328,10 @@ bool ChartCanvas::DoZoomCanvasIn( double factor )
 	}
 
 	if( pc ) {
-		min_allowed_scale = pc->GetNormalScaleMin( GetCanvasScaleFactor(), g_b_overzoom_x );
+		min_allowed_scale = pc->GetNormalScaleMin( GetCanvasScaleFactor(), global::OCPN::get().gui().view().allow_overzoom_x);
 
 		double target_scale_ppm = GetVPScale() * zoom_factor;
-		double new_scale_ppm = target_scale_ppm; //pc->GetNearestPreferredScalePPM(target_scale_ppm);
+		double new_scale_ppm = target_scale_ppm;
 
 		proposed_scale_onscreen = GetCanvasScaleFactor() / new_scale_ppm;
 

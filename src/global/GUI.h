@@ -41,6 +41,7 @@ class GUI
 			bool show_outlines;
 			bool show_depth_units;
 			bool lookahead_mode;
+			bool allow_overzoom_x; // Allow high overzoom
 		};
 
 		virtual const View & view() const = 0;
@@ -48,6 +49,7 @@ class GUI
 		virtual void set_view_show_outlines(bool) = 0;
 		virtual void set_view_show_depth_units(bool) = 0;
 		virtual void set_view_lookahead_mode(bool) = 0;
+		virtual void set_view_allow_overzoom_x(bool) = 0;
 
 	public:
 

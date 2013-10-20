@@ -51,6 +51,11 @@ void OCPN_GUI::set_view_lookahead_mode(bool flag)
 	data_view.lookahead_mode = flag;
 }
 
+void OCPN_GUI::set_view_allow_overzoom_x(bool flag)
+{
+	data_view.allow_overzoom_x = flag;
+}
+
 const GUI::Frame & OCPN_GUI::frame() const
 {
 	return data_frame;

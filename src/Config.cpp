@@ -163,7 +163,6 @@ extern s52plib          *ps52plib;
 
 extern bool             g_bUseGreenShip;
 
-extern bool             g_b_overzoom_x;                      // Allow high overzoom
 extern bool             g_bshow_overzoom_emboss;
 extern int              g_nautosave_interval_seconds;
 extern int              g_OwnShipIconType;
@@ -484,7 +483,12 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	load_watchdog();
 
 	Read( _T ( "UseGreenShipIcon" ), &g_bUseGreenShip, 0 );
-	Read( _T ( "AllowExtremeOverzoom" ), &g_b_overzoom_x, 1 );
+
+	// overzoom
+	long allow_overzoom_x = 1;
+	Read(_T("AllowExtremeOverzoom"), &allow_overzoom_x, 1);
+	global::OCPN::get().gui().set_view_allow_overzoom_x(allow_overzoom_x);
+
 	Read( _T ( "ShowOverzoomEmbossWarning" ), &g_bshow_overzoom_emboss, 1 );
 	Read( _T ( "AutosaveIntervalSeconds" ), &g_nautosave_interval_seconds, 300 );
 
@@ -1608,6 +1612,7 @@ void Config::write_view()
 	Write(_T("ShowChartOutlines"), config.show_outlines);
 	Write(_T("ShowDepthUnits"), config.show_depth_units);
 	Write(_T("LookAheadMode"), config.lookahead_mode);
+	Write(_T("AllowExtremeOverzoom"), config.allow_overzoom_x);
 }
 
 void Config::write_system_config()
@@ -1627,7 +1632,6 @@ void Config::write_cm93()
 	Write(_T("CM93DetailZoomPosY"), config.detail_dialog_position.y);
 
 	Write(_T("ShowCM93DetailSlider"), config.show_detail_slider);
-	Write(_T("AllowExtremeOverzoom"), g_b_overzoom_x);
 }
 
 void Config::UpdateSettings()

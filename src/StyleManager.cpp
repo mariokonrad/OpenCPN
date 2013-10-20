@@ -54,10 +54,8 @@ StyleManager::StyleNames StyleManager::GetStyleNames() const
 {
 	StyleNames names;
 
-	for (unsigned int i = 0; i < styles.Count(); ++i) {
-		const ocpnStyle::Style * style = (ocpnStyle::Style*)styles.Item(i);
-		names.push_back(style->name);
-	}
+	for (Styles::const_iterator i = styles.begin(); i != styles.end(); ++i)
+		names.push_back((*i)->name);
 
 	return names;
 }
@@ -84,10 +82,9 @@ StyleManager::StyleManager(const wxString & configDir)
 
 StyleManager::~StyleManager(void)
 {
-	for( unsigned int i = 0; i < styles.Count(); i++ ) {
-		delete (Style*) ( styles.Item( i ) ); // FIXME: do not use void* arrays to store objects
-	}
-	styles.Clear();
+	for (Styles::const_iterator i = styles.begin(); i != styles.end(); ++i)
+		delete *i;
+	styles.clear();
 }
 
 Style * StyleManager::GetCurrentStyle()
@@ -143,7 +140,7 @@ void StyleManager::Init(const wxString & fromPath)
 
 		wxString root = wxString( doc.RootElement()->Value(), wxConvUTF8 );
 		if( root != _T("styles" ) ) {
-			wxLogMessage( _T("    StyleManager: Expected XML Root <styles> not found.") );
+			wxLogMessage(_T("    StyleManager: Expected XML Root <styles> not found."));
 			continue;
 		}
 
@@ -153,8 +150,8 @@ void StyleManager::Init(const wxString & fromPath)
 
 			if( wxString( styleElem->Value(), wxConvUTF8 ) == _T("style") ) {
 
-				Style* style = new Style();
-				styles.Add( style );
+				Style * style = new Style();
+				styles.push_back(style);
 
 				style->name = wxString( styleElem->Attribute( "name" ), wxConvUTF8 );
 				style->myConfigFileDir = fromPath;
@@ -421,6 +418,7 @@ void StyleManager::SetStyle(wxString name)
 {
 	Style * style = NULL;
 	bool ok = true;
+
 	if (currentStyle)
 		currentStyle->Unload();
 	else
@@ -431,8 +429,8 @@ void StyleManager::SetStyle(wxString name)
 	if (name.Length() == 0)
 		selectFirst = true;
 
-	for( unsigned int i = 0; i < styles.Count(); i++ ) {
-		style = (Style*) ( styles.Item( i ) );
+	for (Styles::iterator i = styles.begin(); i != styles.end(); ++i) {
+		style = *i;
 		if( style->name == name || selectFirst ) {
 			if( style->graphics ) {
 				currentStyle = style;

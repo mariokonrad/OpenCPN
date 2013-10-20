@@ -25,7 +25,6 @@
 #define __OCPNSTYLE__STYLEMANAGER__H__
 
 #include <wx/string.h>
-#include <wx/dynarray.h>
 
 #include <vector>
 
@@ -53,8 +52,10 @@ class StyleManager
 		StyleNames GetStyleNames() const;
 
 	private:
+		typedef std::vector<Style *> Styles;
+
 		bool isOK;
-		wxArrayPtrVoid styles;
+		Styles styles;
 		Style * currentStyle;
 		wxString nextInvocationStyle;
 };

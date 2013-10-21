@@ -105,7 +105,8 @@ void MyPrintout::DrawPageOne(wxDC *dc)
 
 	//  Get the latest bitmap as rendered by the ChartCanvas
 
-	if(g_bopengl) { // FIXME: bad interface design
+	if(g_bopengl) {
+#ifdef ocpnUSE_GL
 		int gsx = cc1->GetglCanvas()->GetSize().x;
 		int gsy = cc1->GetglCanvas()->GetSize().y;
 
@@ -119,6 +120,7 @@ void MyPrintout::DrawPageOne(wxDC *dc)
 		mdc.SelectObject( bmp );
 		dc->Blit( 0, 0, bmp.GetWidth(), bmp.GetHeight(), &mdc, 0, 0 );
 		mdc.SelectObject( wxNullBitmap );
+#endif
 	}
 	else {
 

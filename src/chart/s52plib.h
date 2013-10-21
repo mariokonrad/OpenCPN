@@ -37,8 +37,13 @@ WX_DEFINE_ARRAY_PTR(S57attVal *, wxArrayOfS57attVal);
 WX_DEFINE_ARRAY(S57attVal *, wxArrayOfS57attVal);
 #endif
 
+class wxGLContext;
+#ifdef ocpnUSE_GL
 #include <wx/glcanvas.h>
-#include <wx/dcgraph.h>
+#endif
+
+
+#include <wx/dcgraph.h>         // supplemental, for Mac
 
 //    wxWindows Hash Map Declarations
 #include <wx/hashmap.h>
@@ -57,6 +62,7 @@ class PixelCache;
 
 // FIXME: copied code, separate
 
+#ifdef ocpnUSE_GL
 /* Copyright (c) Mark J. Kilgard, 1997. */
 
 /* This program is freely distributable without licensing fees  and is
@@ -111,6 +117,11 @@ typedef struct {
 } TexFont;
 
 #endif /* __TEXFONT_H__ */
+
+#else
+typedef struct {} TexFont;
+
+#endif
 
 class RenderFromHPGL;
 
@@ -214,12 +225,6 @@ public:
 	int RenderAreaToDC( wxDC *pdc, ObjRazRules *rzRules, ViewPort *vp,
 			render_canvas_parms *pb_spec );
 
-	//    For OpenGL
-	int RenderObjectToGL( const wxGLContext &glcc, ObjRazRules *rzRules,
-			ViewPort *vp, wxRect &render_rect );
-	int RenderAreaToGL( const wxGLContext &glcc, ObjRazRules *rzRules,
-			ViewPort *vp, wxRect &render_rect );
-
 	// Accessors
     bool GetShowSoundings() const
 	{
@@ -294,6 +299,14 @@ public:
 
     void DestroyPatternRuleNode( Rule *pR );
     void DestroyRuleNode( Rule *pR );
+
+//#ifdef ocpnUSE_GL
+    //    For OpenGL
+    int RenderObjectToGL( const wxGLContext &glcc, ObjRazRules *rzRules,
+                          ViewPort *vp, wxRect &render_rect );
+    int RenderAreaToGL( const wxGLContext &glcc, ObjRazRules *rzRules,
+                        ViewPort *vp, wxRect &render_rect );
+//#endif
 
     //Todo accessors
     DisCat m_nDisplayCategory;
@@ -420,7 +433,10 @@ private:
     bool useLegacyRaster;
 
     wxDC *m_pdc; // The current DC
+
+//#ifdef ocpnUSE_GL
     wxGLContext *m_glcc;
+//#endif
 
     int *ledge;
     int *redge;

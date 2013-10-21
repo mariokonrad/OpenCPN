@@ -1546,6 +1546,8 @@ bool s57chart::RenderOverlayRegionViewOnGL( const wxGLContext &glc, const ViewPo
 bool s57chart::DoRenderRegionViewOnGL( const wxGLContext &glc, const ViewPort& VPoint,
         const OCPNRegion &Region, bool b_overlay )
 {
+#ifdef ocpnUSE_GL
+    
 //     CALLGRIND_START_INSTRUMENTATION
 //      g_bDebugS57 = true;
 
@@ -1679,7 +1681,7 @@ bool s57chart::DoRenderRegionViewOnGL( const wxGLContext &glc, const ViewPort& V
     glPopMatrix();
 
 //      CALLGRIND_STOP_INSTRUMENTATION
-
+#endif
     return true;
 }
 
@@ -1689,6 +1691,8 @@ void s57chart::SetClipRegionGL(
         const OCPNRegion & Region,
 		bool b_render_nodta)
 {
+#ifdef ocpnUSE_GL
+    
     if( g_b_useStencil ) {
         //    Create a stencil buffer for clipping to the region
         glEnable( GL_STENCIL_TEST );
@@ -1772,7 +1776,7 @@ void s57chart::SetClipRegionGL(
     }
 
     glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );  // re-enable color buffer
-
+#endif
 }
 
 void s57chart::SetClipRegionGL(
@@ -1781,6 +1785,8 @@ void s57chart::SetClipRegionGL(
 		const wxRect & Rect,
         bool b_render_nodta)
 {
+#ifdef ocpnUSE_GL
+    
     if( g_b_useStencil ) {
         //    Create a stencil buffer for clipping to the region
         glEnable( GL_STENCIL_TEST );
@@ -1855,11 +1861,13 @@ void s57chart::SetClipRegionGL(
     }
 
     glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );  // re-enable color buffer
-
+#endif
 }
 
 bool s57chart::DoRenderRectOnGL( const wxGLContext &glc, const ViewPort& VPoint, wxRect &rect )
 {
+#ifdef ocpnUSE_GL
+
     int i;
     ObjRazRules *top;
     ObjRazRules *crnt;
@@ -1929,7 +1937,8 @@ bool s57chart::DoRenderRectOnGL( const wxGLContext &glc, const ViewPort& VPoint,
     glDisable( GL_STENCIL_TEST );
     glDisable( GL_DEPTH_TEST );
     glDisable( GL_SCISSOR_TEST );
-
+#endif          //#ifdef ocpnUSE_GL
+    
     return true;
 }
 
@@ -5591,7 +5600,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
 
     if( obj->pPolyTessGeo ) {
         if( !obj->pPolyTessGeo->IsOk() )
-			obj->pPolyTessGeo->BuildTessGL();
+            obj->pPolyTessGeo->BuildDeferredTess();
 
         geo::PolyTriGroup *ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
         geo::TriPrim * pTP = ppg->tri_prim_head;

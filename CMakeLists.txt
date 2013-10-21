@@ -129,15 +129,17 @@ message(STATUS "*** Build Architecture is ${ARCH}")
 ################################################################################
 # OpenGL
 ################################################################################
-find_package(OpenGL REQUIRED)
+find_package(OpenGL)
 if(OPENGL_GLU_FOUND)
-#	set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl )
 	include_directories(${OPENGL_INCLUDE_DIR})
+    add_definitions(-DocpnUSE_GL)
+    add_definitions(-DUSE_GLU_TESS)
 	message(STATUS "Found OpenGL..." )
 	message(STATUS "    Lib: " ${OPENGL_LIBRARIES})
 	message(STATUS "    Include: " ${OPENGL_INCLUDE_DIR})
 else(OPENGL_GLU_FOUND)
 	message(STATUS "OpenGL not found..." )
+	set(SKIP_PLUGINS true) # grib_pi contains OpenGL stuff
 endif(OPENGL_GLU_FOUND)
 
 
@@ -265,7 +267,6 @@ endif(WIN32)
 ################################################################################
 # TODO: documentation
 ################################################################################
-
 
 #Enable CrashReporting for Windows
 if(WIN32)
@@ -615,8 +616,6 @@ SET(HDRS
 	src/MarkIcon.h
 	src/SendToGpsDlg.h
 	src/TCWin.h
-	src/glTextureDescriptor.h
-	src/glChartCanvas.h
 	src/ChInfoWin.h
 	src/Quilt.h
 	src/QuiltPatch.h
@@ -760,8 +759,6 @@ SET(SRCS
 	src/GoToPositionDialog.cpp
 	src/CM93DSlide.cpp
 	src/RolloverWin.cpp
-	src/glChartCanvas.cpp
-	src/glTextureDescriptor.cpp
 	src/ChInfoWin.cpp
 	src/OCPNListCtrl.cpp
 	src/Quilt.cpp
@@ -848,6 +845,18 @@ SET(SRCS
 	)
 
 SET( PACKAGE_HEADERS "" )
+
+if(OPENGL_GLU_FOUND)
+	set(HDRS ${HDRS}
+		src/glChartCanvas.h
+		src/glTextureDescriptor.h
+	   )
+	set(SRCS ${SRCS}
+		src/glChartCanvas.cpp
+		src/glTextureDescriptor.cpp
+	   )
+endif(OPENGL_GLU_FOUND)
+
 
 IF(TINYXML_FOUND)
 	message(STATUS "Building with tinyxml includes")
@@ -1377,7 +1386,7 @@ ENDIF(WIN32 AND NOT UNIX)
 MESSAGE (STATUS "")
 
 IF(NOT SKIP_PLUGINS)
-	add_subdirectory (plugins)
+	add_subdirectory(plugins)
 ENDIF(NOT SKIP_PLUGINS)
 
 # build a CPack driven installer package
@@ -1483,7 +1492,10 @@ IF(WIN32 AND NOT UNIX)
 	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_TURKISH.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_TURKISH.nsh      @ONLY)
 ENDIF(WIN32 AND NOT UNIX)
 
-configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/src/version.h)
+if(NOT SKIP_VERSION_CONFIG)
+	configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/src/version.h)
+endif(NOT SKIP_VERSION_CONFIG)
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/src)
 
 # this dummy target is necessary to make sure the ADDITIONAL_MAKE_CLEAN_FILES directive is executed.

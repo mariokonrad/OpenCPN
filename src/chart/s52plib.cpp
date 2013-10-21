@@ -276,7 +276,11 @@ s52plib::~s52plib()
 	delete[] ledge;
 	delete[] redge;
 
-	if( m_txf ) txfUnloadFont( m_txf );
+#ifdef ocpnUSE_GL
+    if( m_txf )
+        txfUnloadFont( m_txf );
+#endif
+
 	ChartSymbols::DeleteGlobals();
 
 	delete HPGL;
@@ -959,12 +963,14 @@ void s52plib::FlushSymbolCaches( void )
 			if( pR->parm0 && pR->pixelPtr ) {
 				switch( pR->parm0 ){
 					case ID_GL_PATT_SPEC: {
+#ifdef ocpnUSE_GL
 											  render_canvas_parms *pp = (render_canvas_parms *) ( pR->pixelPtr );
 											  free( pp->pix_buff );
 											  glDeleteTextures( 1, (GLuint *) &pp->OGL_tex_name );
 											  delete pp;
 											  pR->pixelPtr = NULL;
 											  pR->parm0 = 0;
+#endif
 											  break;
 										  }
 					case ID_RGB_PATT_SPEC: {
@@ -1048,6 +1054,7 @@ bool s52plib::S52_flush_Plib()
 	if(!m_bOK)
 		return false;
 
+#ifdef ocpnUSE_GL
 	//    OpenGL Hashmaps
 	CARC_Hash::iterator ita;
 	for( ita = m_CARC_hashmap.begin(); ita != m_CARC_hashmap.end(); ++ita ) {
@@ -1055,6 +1062,7 @@ bool s52plib::S52_flush_Plib()
 		glDeleteLists( list, 1 );
 	}
 	m_CARC_hashmap.clear();
+#endif
 
 	DestroyLUPArray( condSymbolLUPArray );
 
@@ -1403,7 +1411,7 @@ S52_TextC *S52_PL_parseTE( ObjRazRules *rzRules, Rules *rules, char *)
 }
 
 bool s52plib::RenderText( wxDC *pdc, S52_TextC *ptext, int x, int y, wxRect *pRectDrawn,
-		S57Obj *pobj, bool bCheckOverlap, ViewPort *vp )
+		S57Obj *pobj, bool bCheckOverlap, ViewPort * vp )
 {
 #ifdef DrawText
 #undef DrawText
@@ -1413,8 +1421,9 @@ bool s52plib::RenderText( wxDC *pdc, S52_TextC *ptext, int x, int y, wxRect *pRe
 
 	if( !pdc ) // OpenGL
 	{
-#if 1
-		if( 1 ) {
+#ifdef ocpnUSE_GL
+//        if( 1 )
+        {
 			if( !ptext->m_pRGBA ) // is RGBA bitmap ready?
 			{
 				wxScreenDC sdc;
@@ -2162,6 +2171,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules *rzRules, Rule *prule, wxPoint &r, 
 
 	if( !m_pdc )          // opengl
 	{
+#ifdef ocpnUSE_GL
 		double cr = cos( vp->rotation );
 		double sr = sin( vp->rotation );
 		double ddx = pivot_x * cr + pivot_y * sr;
@@ -2176,7 +2186,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules *rzRules, Rule *prule, wxPoint &r, 
 		glDrawPixels( b_width, b_height, GL_RGBA, GL_UNSIGNED_BYTE, prule->pixelPtr );
 		glPixelZoom( 1, 1 );
 		glDisable( GL_BLEND );
-
+#endif
 	} else {
 
 		if( !( prule->pixelPtr ) )                // This symbol requires manual alpha blending
@@ -2342,7 +2352,10 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			wxPen *pthispen = wxThePenList->FindOrCreatePen( color, w, style );
 			m_pdc->SetPen( *pthispen );
 		}
-	} else // OpenGL mode
+    }
+
+#ifdef ocpnUSE_GL
+    else // OpenGL mode
 	{
 		glPushAttrib( GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT | GL_ENABLE_BIT ); //Save state
 
@@ -2369,7 +2382,8 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 			glEnable( GL_LINE_STIPPLE );
 		} else
 			glDisable(GL_LINE_STIPPLE);
-	}
+    }
+#endif
 
 	//    Get a true pixel clipping/bounding box from the vp
 	wxPoint pbb = vp->GetPixFromLL( vp->clat, vp->clon );
@@ -2483,13 +2497,15 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 				if( res != geo::Invisible ) {
 					if (m_pdc) {
 						m_pdc->DrawLine(x0, y0, x1, y1);
-					} else {
+					}
+#ifdef ocpnUSE_GL
+					else {
 						glBegin( GL_LINES );
 						glVertex2i( x0, y0 );
 						glVertex2i( x1, y1 );
 						glEnd();
-
 					}
+#endif
 				}
 			}
 		}
@@ -2499,7 +2515,7 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	else
 		if( rzRules->obj->pPolyTessGeo ) {
 			if( !rzRules->obj->pPolyTessGeo->IsOk() ) // perform deferred tesselation
-				rzRules->obj->pPolyTessGeo->BuildTessGL();
+				rzRules->obj->pPolyTessGeo->BuildDeferredTess();
 
 			geo::PolyTriGroup *pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
 
@@ -2536,14 +2552,16 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 					geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, xmin_, xmax_, ymin_, ymax_);
 
 					if (res != geo::Invisible) {
-						if (m_pdc) {
+						if (m_pdc)
 							m_pdc->DrawLine(x0, y0, x1, y1);
-						} else {
+#ifdef ocpnUSE_GL
+						else {
 							glBegin( GL_LINES );
 							glVertex2i( x0, y0 );
 							glVertex2i( x1, y1 );
 							glEnd();
 						}
+#endif
 					}
 				}
 
@@ -2629,18 +2647,20 @@ int s52plib::RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 					}
 
 					if( m_pdc ) m_pdc->DrawLines( npt, ptp );
-
+#ifdef ocpnUSE_GL
 					else {
 						glBegin( GL_LINE_STRIP ); // or GL_LINE_LOOP?????
 						for( int ip = 0; ip < npt; ip++ )
 							glVertex2i( ptp[ip].x, ptp[ip].y );
 						glEnd();
 					}
-
+#endif
 					free( ptp );
 				}
 
+#ifdef ocpnUSE_GL
 	if( !m_pdc ) glPopAttrib();
+#endif
 
 	if(pdotpen) {
 		pdotpen->SetDashes( 1, NULL );
@@ -2753,7 +2773,7 @@ int s52plib::RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	} else
 		if( rzRules->obj->pPolyTessGeo ) {
 			if( !rzRules->obj->pPolyTessGeo->IsOk() ) // perform deferred tesselation
-				rzRules->obj->pPolyTessGeo->BuildTessGL();
+				rzRules->obj->pPolyTessGeo->BuildDeferredTess();
 
 			geo::PolyTriGroup *pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
 			float *ppolygeo = pptg->pgroup_geom;
@@ -2955,6 +2975,8 @@ next_seg_dc:
 
 		} // while
 	} // if pdc
+    
+#ifdef ocpnUSE_GL
 	else // opengl
 	{
 		//    Set up the color
@@ -3068,6 +3090,7 @@ next_seg:
 		} // while
 
 	} //opengl
+#endif
 }
 
 // Multipoint Sounding
@@ -3365,6 +3388,7 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 		prule->parm6 = bm_height;
 	} // instantiation
 
+#ifdef ocpnUSE_GL
 	if( !m_pdc ) // opengl
 	{
 		//    Is there not already an generated display list in the CARC_hashmap for this object?
@@ -3449,6 +3473,7 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 		prule->parm7 = m_CARC_hashmap[carc_hash];
 
 	} // instantiation
+#endif
 
 	int b_width = prule->parm5;
 	int b_height = prule->parm6;
@@ -3460,6 +3485,8 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	//      Now render the symbol
 	if( !m_pdc ) // opengl
 	{
+#ifdef ocpnUSE_GL
+        
 		glPushAttrib( GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT ); //Save state
 
 		glTranslatef( r.x, r.y, 0 );
@@ -3468,6 +3495,7 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
 		glPopAttrib();
 
+#endif        
 	} else {
 		//      Get the bitmap into a memory dc
 		wxMemoryDC mdc;
@@ -4937,7 +4965,7 @@ void s52plib::RenderToBufferFilledPolygon(
 
 	if( obj->pPolyTessGeo ) {
 		if( !rzRules->obj->pPolyTessGeo->IsOk() ) // perform deferred tesselation
-			rzRules->obj->pPolyTessGeo->BuildTessGL();
+			rzRules->obj->pPolyTessGeo->BuildDeferredTess();
 
 		wxPoint *pp3 = (wxPoint *) malloc( 3 * sizeof(wxPoint) );
 		wxPoint *ptp = (wxPoint *) malloc(
@@ -5100,6 +5128,8 @@ void s52plib::RenderToBufferFilledPolygon(
 
 int s52plib::RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 {
+#ifdef ocpnUSE_GL
+
 	S52color *c;
 	char *str = (char*) rules->INSTstr;
 
@@ -5110,7 +5140,7 @@ int s52plib::RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	const BoundingBox & BBView = vp->GetBBox();
 	if( rzRules->obj->pPolyTessGeo ) {
 		if( !rzRules->obj->pPolyTessGeo->IsOk() ) // perform deferred tesselation
-			rzRules->obj->pPolyTessGeo->BuildTessGL();
+			rzRules->obj->pPolyTessGeo->BuildDeferredTess();
 
 		wxPoint *ptp = (wxPoint *) malloc(
 				( rzRules->obj->pPolyTessGeo->GetnVertexMax() + 1 ) * sizeof(wxPoint) );
@@ -5172,11 +5202,15 @@ int s52plib::RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 		free( ptp );
 	} // if pPolyTessGeo
 
+#endif          //#ifdef ocpnUSE_GL
+
 	return 1;
 }
 
 int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 {
+#ifdef ocpnUSE_GL
+
 	if( rules->razRule == NULL )
 		return 0;
 
@@ -5198,7 +5232,7 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	wxPoint *ptp;
 	if( rzRules->obj->pPolyTessGeo ) {
 		if( !rzRules->obj->pPolyTessGeo->IsOk() ) // perform deferred tesselation
-			rzRules->obj->pPolyTessGeo->BuildTessGL();
+			rzRules->obj->pPolyTessGeo->BuildDeferredTess();
 
 		ptp = (wxPoint *) malloc(
 				( rzRules->obj->pPolyTessGeo->GetnVertexMax() + 1 ) * sizeof(wxPoint) );
@@ -5448,9 +5482,12 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	}
 
 	free( ptp );
+#endif                  //#ifdef ocpnUSE_GL
 
 	return 1;
 }
+
+#ifdef ocpnUSE_GL
 
 int s52plib::RenderAreaToGL(const wxGLContext &, ObjRazRules * rzRules, ViewPort * vp, wxRect &render_rect)
 {
@@ -5524,6 +5561,7 @@ int s52plib::RenderAreaToGL(const wxGLContext &, ObjRazRules * rzRules, ViewPort
 	return 1;
 
 }
+#endif
 
 render_canvas_parms* s52plib::CreatePatternBufferSpec(
 		ObjRazRules *,
@@ -6112,6 +6150,7 @@ void DrawAALine( wxDC *pDC, int x0, int y0, int x1, int y1, wxColour clrLine, in
 	return;
 }
 
+#ifdef ocpnUSE_GL
 
 // FIXME: copied code, separate
 
@@ -6667,4 +6706,6 @@ int txfInFont( TexFont * txf, int c )
 	}
 	return 0;
 }
+
+#endif     //#ifdef ocpnUSE_GL
 

@@ -655,23 +655,6 @@ MainFrame::~MainFrame()
 	delete g_FloatingToolbarConfigMenu;
 }
 
-void MainFrame::performUniChromeOpenGLResizeHack()
-{
-	//  This little hack fixes a problem seen with some UniChrome OpenGL drivers
-	//  We need a deferred resize to get glDrawPixels() to work right.
-	//  So we set a trigger to generate a resize after 5 seconds....
-	//  See the "UniChrome" hack elsewhere
-	if (!g_bdisable_opengl) {
-		glChartCanvas * pgl = (glChartCanvas *) chart_canvas->GetglCanvas();
-		if (pgl && (pgl->GetRendererString().Find(_T("UniChrome")) != wxNOT_FOUND)) {
-			m_defer_size = gFrame->GetSize();
-			SetSize(m_defer_size.x - 10, m_defer_size.y);
-			g_pauimgr->Update();
-			m_bdefer_resize = true;
-		}
-	}
-}
-
 ChartCanvas * MainFrame::GetCanvas()
 {
 	return chart_canvas;

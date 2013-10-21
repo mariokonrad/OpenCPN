@@ -31,7 +31,10 @@
 
 #include <vector>
 
+#ifdef ocpnUSE_GL
 #include <wx/glcanvas.h>
+#endif
+
 #include <wx/graphics.h>
 #include <wx/dcclient.h>
 #include <wx/dcmemory.h>
@@ -53,7 +56,9 @@ ocpnDC::ocpnDC(wxGLCanvas & canvas)
 	, m_textforegroundcolour(0, 0, 0)
 	, tex(0)
 {
+#ifdef ocpnUSE_GL
 	glGenTextures(1, &tex);
+#endif
 }
 
 ocpnDC::ocpnDC(wxDC & pdc)
@@ -90,8 +95,10 @@ ocpnDC::~ocpnDC()
 {
 	if (pgc)
 		delete pgc;
+#ifdef ocpnUSE_GL
 	if (glcanvas)
 		glDeleteTextures(1, &tex);
+#endif
 }
 
 wxDC * ocpnDC::GetDC() const
@@ -107,12 +114,14 @@ void ocpnDC::Clear()
 	if (dc) {
 		dc->Clear();
 	} else {
+#ifdef ocpnUSE_GL
 		wxBrush tmpBrush = m_brush;
 		int w, h;
 		SetBrush( wxBrush( glcanvas->GetBackgroundColour() ) );
 		glcanvas->GetSize( &w, &h );
 		DrawRectangle( 0, 0, w, h );
 		SetBrush( tmpBrush );
+#endif
 	}
 }
 
@@ -120,12 +129,16 @@ void ocpnDC::SetBackground(const wxBrush & brush)
 {
 	if (dc)
 		dc->SetBackground(brush);
-	else
+	else {
+#ifdef ocpnUSE_GL
 		glcanvas->SetBackgroundColour( brush.GetColour() );
+#endif
+	}
 }
 
 void ocpnDC::SetGLAttrs(bool highQuality)
 {
+#ifdef ocpnUSE_GL
 	// Enable anti-aliased polys, at best quality
 	if (highQuality) {
 		glEnable(GL_LINE_SMOOTH);
@@ -139,6 +152,7 @@ void ocpnDC::SetGLAttrs(bool highQuality)
 		glDisable(GL_POLYGON_SMOOTH);
 		glDisable(GL_BLEND);
 	}
+#endif
 }
 
 void ocpnDC::SetPen(const wxPen & pen)
@@ -201,12 +215,16 @@ void ocpnDC::GetSize(wxCoord * width, wxCoord * height) const
 {
 	if (dc)
 		dc->GetSize(width, height);
-	else
+	else {
+#ifdef ocpnUSE_GL
 		glcanvas->GetSize(width, height);
+#endif
+	}
 }
 
 void ocpnDC::SetGLStipple() const
 {
+#ifdef ocpnUSE_GL
 	switch (m_pen.GetStyle()) {
 		case wxDOT:
 			glLineStipple(1, 0x3333);
@@ -231,11 +249,14 @@ void ocpnDC::SetGLStipple() const
 		default:
 			break;
 	}
+#endif
 }
 
 // Draws a line between (x1,y1) - (x2,y2) with a start thickness of t1
 void ocpnDC::DrawGLThickLine(double x1, double y1, double x2, double y2, wxPen pen, bool b_hiqual) const
 {
+#ifdef ocpnUSE_GL
+
 	double angle = atan2(y2 - y1, x2 - x1);
 	double t1 = pen.GetWidth();
 	double t2sina1 = t1 / 2 * sin(angle);
@@ -300,12 +321,14 @@ void ocpnDC::DrawGLThickLine(double x1, double y1, double x2, double y2, wxPen p
 		glEnd();
 	}
 	glPopAttrib();
+#endif
 }
 
 void ocpnDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqual )
 {
 	if (dc)
 		dc->DrawLine(x1, y1, x2, y2);
+#ifdef ocpnUSE_GL
 	else {
 		glPushAttrib( GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_ENABLE_BIT | GL_HINT_BIT ); //Save state
 
@@ -402,12 +425,14 @@ void ocpnDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hi
 
 		glPopAttrib();
 	}
+#endif
 }
 
 void ocpnDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, bool b_hiqual )
 {
 	if (dc)
 		dc->DrawLines(n, points, xoffset, yoffset);
+#ifdef ocpnUSE_GL
 	else if( ConfigurePen() ) {
 
 		glPushAttrib( GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT );      //Save state
@@ -454,6 +479,7 @@ void ocpnDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
 		}
 		glPopAttrib();            // restore state
 	}
+#endif
 }
 
 void ocpnDC::StrokeLine(wxPoint a, wxPoint b)
@@ -495,6 +521,7 @@ void ocpnDC::DrawRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h )
 {
 	if (dc)
 		dc->DrawRectangle( x, y, w, h );
+#ifdef ocpnUSE_GL
 	else {
 		if( ConfigureBrush() ) {
 			glBegin( GL_QUADS );
@@ -514,21 +541,25 @@ void ocpnDC::DrawRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h )
 			glEnd();
 		}
 	}
+#endif
 }
 
 /* draw the arc along corners */
 void ocpnDC::drawrrhelper(wxCoord x, wxCoord y, wxCoord r, double st, double et) const
 {
+#ifdef ocpnUSE_GL
 	const int slices = 10;
 	double dt = ( et - st ) / slices;
 	for (double t = st; t <= et; t += dt)
 		glVertex2i(x + r * cos( t ), y + r * sin( t ));
+#endif
 }
 
 void ocpnDC::DrawRoundedRectangle(wxCoord x, wxCoord y, wxCoord w, wxCoord h, wxCoord r)
 {
 	if (dc)
 		dc->DrawRoundedRectangle( x, y, w, h, r );
+#ifdef ocpnUSE_GL
 	else {
 		wxCoord x0 = x, x1 = x + r, x2 = x + w - r, x3 = x + h;
 		wxCoord y0 = y, y1 = y + r, y2 = y + h - r, y3 = y + h;
@@ -580,6 +611,7 @@ void ocpnDC::DrawRoundedRectangle(wxCoord x, wxCoord y, wxCoord w, wxCoord h, wx
 			glEnd();
 		}
 	}
+#endif
 }
 
 void ocpnDC::DrawCircle(const wxPoint & pt, wxCoord radius)
@@ -615,6 +647,7 @@ void ocpnDC::DrawEllipse( wxCoord x, wxCoord y, wxCoord width, wxCoord height )
 {
 	if (dc)
 		dc->DrawEllipse( x, y, width, height );
+#ifdef ocpnUSE_GL
 	else {
 		double r1 = width / 2, r2 = height / 2;
 		double cx = x + r1, cy = y + r2;
@@ -644,12 +677,14 @@ void ocpnDC::DrawEllipse( wxCoord x, wxCoord y, wxCoord width, wxCoord height )
 
 		glPopAttrib();            // restore state
 	}
+#endif
 }
 
 void ocpnDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset )
 {
 	if (dc)
 		dc->DrawPolygon( n, points, xoffset, yoffset );
+#ifdef ocpnUSE_GL
 	else {
 		glPushAttrib( GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT | GL_POLYGON_BIT ); //Save state
 
@@ -670,7 +705,10 @@ void ocpnDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoff
 		}
 		glPopAttrib();
 	}
+#endif
 }
+
+#ifdef ocpnUSE_GL
 
 typedef union {
 	GLdouble data[6];
@@ -726,11 +764,13 @@ void APIENTRY ocpnDCendCallback()
 {
 	glEnd();
 }
+#endif          //#ifdef ocpnUSE_GL
 
 void ocpnDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset )
 {
 	if (dc)
 		dc->DrawPolygon( n, points, xoffset, yoffset );
+#ifdef ocpnUSE_GL
 	else {
 		if( n < 5 ) {
 			DrawPolygon( n, points, xoffset, yoffset );
@@ -778,6 +818,7 @@ void ocpnDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, w
 			delete (GLvertex*)gTesselatorVertices.Item(i);
 		gTesselatorVertices.Clear();
 	}
+#endif
 }
 
 void ocpnDC::StrokePolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset )
@@ -821,6 +862,7 @@ void ocpnDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usem
 
 	if (dc)
 		dc->DrawBitmap( bmp, x, y, usemask );
+#ifdef ocpnUSE_GL
 	else {
 		wxImage image = bmp.ConvertToImage();
 		int w = image.GetWidth();
@@ -864,12 +906,14 @@ void ocpnDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usem
 			glPixelZoom( 1, 1 );
 		}
 	}
+#endif
 }
 
 void ocpnDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
 {
 	if (dc)
 		dc->DrawText( text, x, y );
+#ifdef ocpnUSE_GL
 	else {
 		wxCoord w = 0;
 		wxCoord h = 0;
@@ -911,6 +955,7 @@ void ocpnDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
 			delete[] data;
 		}
 	}
+#endif
 }
 
 void ocpnDC::GetTextExtent( const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent,
@@ -946,10 +991,12 @@ bool ocpnDC::ConfigurePen()
 	if (m_pen == *wxTRANSPARENT_PEN)
 		return false;
 
+#ifdef ocpnUSE_GL
 	wxColour c = m_pen.GetColour();
 	int width = m_pen.GetWidth();
 	glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
 	glLineWidth( wxMax(g_GLMinLineWidth, width) );
+#endif
 	return true;
 }
 
@@ -957,15 +1004,18 @@ bool ocpnDC::ConfigureBrush()
 {
 	if (m_brush == wxNullBrush || m_brush.GetStyle() == wxTRANSPARENT)
 		return false;
-
+#ifdef ocpnUSE_GL
 	wxColour c = m_brush.GetColour();
 	glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
+#endif
 	return true;
 }
 
 void ocpnDC::GLDrawBlendData( wxCoord x, wxCoord y, wxCoord w, wxCoord h, int format,
 		const unsigned char *data )
 {
+#ifdef ocpnUSE_GL
+
 	// Hmmmm.... I find that the texture version below does not work on my dodgy
 	// OpenChrome gl drivers but the glDrawPixels works fine.
 
@@ -982,6 +1032,7 @@ void ocpnDC::GLDrawBlendData( wxCoord x, wxCoord y, wxCoord w, wxCoord h, int fo
 	/* I would prefer to just use glDrawPixels than need a texture,
 	   but sometimes it did not perform alpha blending correctly,
 	   this way always works */
+#endif
 }
 
 // render a rectangle at a given color and transparency
@@ -1044,6 +1095,7 @@ void ocpnDC::AlphaBlending(
 		CalcBoundingBox( x, y );
 		CalcBoundingBox( x + size_x, y + size_y );
 	} else {
+#ifdef ocpnUSE_GL
 		/* opengl version */
 		glEnable( GL_BLEND );
 		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -1058,6 +1110,7 @@ void ocpnDC::AlphaBlending(
 		glEnd();
 
 		glDisable( GL_BLEND );
+#endif
 	}
 }
 

@@ -27,11 +27,14 @@
 #include <wx/wx.h>
 #include <wx/dynarray.h>
 #include <wx/dynlib.h>
-#include <wx/glcanvas.h>
 #include <wx/hyperlink.h>
 #include <wx/choice.h>
 #include <wx/tglbtn.h>
 #include <wx/bmpcbox.h>
+
+#ifdef ocpnUSE_GL
+#include <wx/glcanvas.h>
+#endif
 
 #include "DataStream.h"
 #include "OCPN_Sound.h"

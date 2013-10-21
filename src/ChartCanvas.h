@@ -36,11 +36,16 @@
 #include <vector>
 
 #include "CM93DSlide.h"
-#include "RolloverWin.h"
+#include <RolloverWin.h>
+#include <ViewPort.h>
 #include <ais/AISTargetQueryDialog.h>
-#include "glChartCanvas.h"
 #include "timers.h"
 #include <chart/S57Sector.h>
+
+class wxGLContext;
+#ifdef ocpnUSE_GL
+#include "glChartCanvas.h"
+#endif
 
 class LatLonBoundingBox;
 class ocpnDC;
@@ -180,7 +185,6 @@ class ChartCanvas : public wxWindow
 		ChartBase* GetChartAtCursor();
 		ChartBase* GetOverlayChartAtCursor();
 
-		glChartCanvas *GetglCanvas();
 		GSHHSChart* GetWorldBackgroundChart();
 
 		void SetbTCUpdate(bool f);
@@ -247,6 +251,9 @@ class ChartCanvas : public wxWindow
 
 		void RemovePointFromRoute(RoutePoint * point, Route * route);
 
+#ifdef ocpnUSE_GL
+		glChartCanvas *GetglCanvas();
+#endif
 
 	private:
 		ViewPort VPoint;

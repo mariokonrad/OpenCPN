@@ -1209,8 +1209,10 @@ bool App::OnInit()
 	if( !large_log_message.IsEmpty() )
 		OCPNMessageBox ( NULL, large_log_message, wxString( _("OpenCPN Info") ), wxICON_INFORMATION | wxOK );
 
-#ifdef __WXMSW__
 	//  Validate OpenGL functionality, if selected
+#ifdef ocpnUSE_GL
+
+#ifdef __WXMSW__
 	if( /*g_bopengl &&*/ !g_bdisable_opengl ) {
 		wxFileName fn(std_path.GetExecutablePath());
 		bool b_test_result = TestGLCanvas(fn.GetPathWithSep() );
@@ -1220,6 +1222,10 @@ bool App::OnInit()
 
 		g_bdisable_opengl = !b_test_result;
 	}
+#endif
+
+#else
+    g_bdisable_opengl = true;;
 #endif
 
 #ifdef USE_S57
@@ -1868,8 +1874,23 @@ bool App::OnInit()
 	cc1->Enable();
 	cc1->SetFocus();
 
-	gFrame->performUniChromeOpenGLResizeHack();
-
+    //  This little hack fixes a problem seen with some UniChrome OpenGL drivers
+    //  We need a deferred resize to get glDrawPixels() to work right.
+    //  So we set a trigger to generate a resize after 5 seconds....
+    //  See the "UniChrome" hack elsewhere
+#ifdef ocpnUSE_GL
+    if ( !g_bdisable_opengl )
+    {
+        glChartCanvas *pgl = (glChartCanvas *) cc1->GetglCanvas();
+        if( pgl && ( pgl->GetRendererString().Find( _T("UniChrome") ) != wxNOT_FOUND ) )
+        {
+            gFrame->m_defer_size = gFrame->GetSize();
+            gFrame->SetSize( gFrame->m_defer_size.x - 10, gFrame->m_defer_size.y );
+            g_pauimgr->Update();
+            gFrame->m_bdefer_resize = true;
+        }
+    }
+#endif
 	g_pi_manager->CallLateInit();
 
 	if (start_fullscreen)

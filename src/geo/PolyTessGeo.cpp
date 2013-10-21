@@ -179,15 +179,19 @@ PolyTessGeo::PolyTessGeo(OGRPolygon *poly, bool bSENC_SM, double ref_lat, double
 	m_ref_lat = ref_lat;
 	m_ref_lon = ref_lon;
 
-	if(bUseInternalTess)
+    if(bUseInternalTess){
+        printf("internal tess\n");
 		ErrorCode = PolyTessGeoTri(poly, bSENC_SM, ref_lat, ref_lon);
-	else
+    }
+    else {
 #ifdef USE_GLU_TESS
+		printf("USE_GLU_TESS tess\n");
 		ErrorCode = PolyTessGeoGL(poly, bSENC_SM, ref_lat, ref_lon);
 #else
+		printf("PolyTessGeoTri tess\n");
 		ErrorCode = PolyTessGeoTri(poly, bSENC_SM, ref_lat, ref_lon);
 #endif
-
+    }
 }
 
 
@@ -995,7 +999,6 @@ int PolyTessGeo::my_bufgets( char *buf, int buf_len_max )
 
 PolyTessGeo::~PolyTessGeo()
 {
-
 	delete  m_ppg_head;
 
 	delete  m_pxgeom;
@@ -1007,6 +1010,16 @@ PolyTessGeo::~PolyTessGeo()
 #endif
 
 }
+
+int PolyTessGeo::BuildDeferredTess(void)
+{
+#ifdef USE_GLU_TESS
+    return BuildTessGL();
+#else
+    return 0;
+#endif
+}
+
 
 
 #ifdef USE_GLU_TESS
@@ -1032,6 +1045,8 @@ void __CALL_CONVENTION combineCallback(
 //      Using OpenGL/GLU tesselator
 int PolyTessGeo::PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, double ref_lon)
 {
+#ifdef ocpnUSE_GL
+    
 	int iir, ip;
 	int *cntr;
 	GLdouble *geoPt;
@@ -1424,12 +1439,16 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, 
 
 	m_bOK = true;
 
+#endif          //    #ifdef ocpnUSE_GL
+
 	return 0;
 }
 
 
 int PolyTessGeo::BuildTessGL(void)
 {
+#ifdef ocpnUSE_GL
+
 	int iir, ip;
 	int *cntr;
 	GLdouble *geoPt;
@@ -1803,6 +1822,8 @@ int PolyTessGeo::BuildTessGL(void)
 	m_pxgeom = NULL;
 
 	m_bOK = true;
+
+#endif          //#ifdef ocpnUSE_GL
 
 	return 0;
 }

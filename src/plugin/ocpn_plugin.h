@@ -42,8 +42,15 @@
 #endif
 
 #include <wx/xml/xml.h>
+
+class wxGLContext;
+#ifdef ocpnUSE_GL
 #include <wx/glcanvas.h>
+#endif
+
 #include <wx/dcmemory.h>
+#include <wx/menu.h>
+#include <wx/scrolwin.h>
 
 //    This is the most modern API Version number
 //    It is expected that the API will remain downward compatible, meaning that

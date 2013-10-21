@@ -93,6 +93,7 @@ void RenderFromHPGL::SetPen()
 		targetDC->SetPen( *pen );
 		targetDC->SetBrush( *brush );
 	}
+#ifdef ocpnUSE_GL
 	if( renderToOpenGl ) {
 		if( !havePushedOpenGlAttrib ) {
 			glPushAttrib( GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT );
@@ -105,6 +106,7 @@ void RenderFromHPGL::SetPen()
 			havePushedOpenGlAttrib = true;
 		}
 	}
+#endif    
 	if( renderToGCDC ) {
 		pen = wxThePenList->FindOrCreatePen( penColor, penWidth, wxSOLID );
 		brush = wxTheBrushList->FindOrCreateBrush( penColor, wxSOLID );
@@ -118,12 +120,14 @@ void RenderFromHPGL::Line( wxPoint from, wxPoint to )
 	if( renderToDC ) {
 		targetDC->DrawLine( from, to );
 	}
+#ifdef ocpnUSE_GL
 	if( renderToOpenGl ) {
 		glBegin( GL_LINES );
 		glVertex2i( from.x, from.y );
 		glVertex2i( to.x, to.y );
 		glEnd();
 	}
+#endif    
 	if( renderToGCDC ) {
 		targetGCDC->DrawLine( from, to );
 	}
@@ -137,6 +141,7 @@ void RenderFromHPGL::Circle( wxPoint center, int radius, bool filled )
 			targetDC->SetBrush( *wxTRANSPARENT_BRUSH );
 		targetDC->DrawCircle( center, radius );
 	}
+#ifdef ocpnUSE_GL
 	if( renderToOpenGl ) {
 		int noSegments = 2 + ( radius * 4 );
 		if( noSegments > 200 ) noSegments = 200;
@@ -145,6 +150,7 @@ void RenderFromHPGL::Circle( wxPoint center, int radius, bool filled )
 			glVertex2d( center.x + radius * sin( a ), center.y + radius * cos( a ) );
 		glEnd();
 	}
+#endif    
 	if( renderToGCDC ) {
 		if( filled ) targetGCDC->SetBrush( *brush );
 		else
@@ -168,12 +174,14 @@ void RenderFromHPGL::Polygon()
 	if( renderToDC ) {
 		targetDC->DrawPolygon( noPoints, polygon );
 	}
+#ifdef ocpnUSE_GL
 	if( renderToOpenGl ) {
 		glBegin( GL_POLYGON );
 		for( int ip = 1; ip < noPoints; ip++ )
 			glVertex2i( polygon[ip].x, polygon[ip].y );
 		glEnd();
 	}
+#endif    
 	if( renderToGCDC ) {
 		targetGCDC->DrawPolygon( noPoints, polygon );
 	}
@@ -299,8 +307,11 @@ bool RenderFromHPGL::Render( char *str, char *col, wxPoint &r, wxPoint &pivot, d
 		msg += wxString( command );
 		wxLogWarning( msg );
 	}
-	if( havePushedOpenGlAttrib ) glPopAttrib();
-	havePushedOpenGlAttrib = false;
+#ifdef ocpnUSE_GL
+    if( havePushedOpenGlAttrib )
+        glPopAttrib();
+    havePushedOpenGlAttrib = false;
+#endif
 	return true;
 }
 

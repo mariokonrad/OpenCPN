@@ -382,7 +382,6 @@ class options : public wxDialog
 
 		Config * m_pConfig;
 
-		wxArrayPtrVoid OBJLBoxArray;
 		wxString m_init_chart_dir;
 		MainFrame * pParent;
 

@@ -216,9 +216,9 @@ void StyleManager::Init(const wxString & fromPath)
 							wxString nodeType( iconNode->Value(), wxConvUTF8 );
 							if( nodeType == _T("icon") ) {
 								Icon* icon = new Icon();
-								style->icons.Add( icon );
-								icon->name = wxString( iconNode->Attribute( "name" ), wxConvUTF8 );
-								style->iconIndex[icon->name] = style->icons.Count() - 1;
+								style->icons.push_back(icon);
+								icon->name = wxString(iconNode->Attribute("name"), wxConvUTF8);
+								style->iconIndex[icon->name] = style->icons.size() - 1;
 								TiXmlHandle handle( iconNode );
 								TiXmlElement* tag = handle.Child( "icon-location", 0 ).ToElement();
 								if( tag ) {
@@ -371,9 +371,9 @@ void StyleManager::Init(const wxString & fromPath)
 
 							if( nodeType == _T("tool") ) {
 								Tool* tool = new Tool();
-								style->tools.Add( tool );
+								style->tools.push_back(tool);
 								tool->name = wxString( toolNode->Attribute( "name" ), wxConvUTF8 );
-								style->toolIndex[tool->name] = style->tools.Count() - 1;
+								style->toolIndex[tool->name] = style->tools.size() - 1;
 								TiXmlHandle toolHandle( toolNode );
 								TiXmlElement* toolTag = toolHandle.Child( "icon-location", 0 ).ToElement();
 								if( toolTag ) {

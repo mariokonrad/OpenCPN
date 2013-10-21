@@ -26,9 +26,13 @@
 
 #include <wx/bitmap.h>
 #include <wx/string.h>
-#include "ColorScheme.h"
+#include <ColorScheme.h>
+#include <vector>
 
 namespace ocpnStyle {
+
+class Icon;
+class Tool;
 
 WX_DECLARE_STRING_HASH_MAP(int, intHash);
 
@@ -104,6 +108,9 @@ class Style
 		bool isMarginsInvisible() const;
 
 	private:
+		typedef std::vector<Icon *> Icons;
+		typedef std::vector<Tool *> Tools;
+
 		wxString name;
 		wxString description;
 		wxString graphicsFile;
@@ -128,7 +135,7 @@ class Style
 		wxPoint normalBGlocation[2];
 		wxSize verticalIconOffset;
 		intHash toolIndex;
-		wxArrayPtrVoid icons;
+		Icons icons;
 		intHash iconIndex;
 		wxBitmap * graphics;
 
@@ -153,7 +160,7 @@ class Style
 
 		wxString myConfigFileDir;
 
-		wxArrayPtrVoid tools;
+		Tools tools;
 
 		int currentOrientation;
 		ColorScheme colorscheme;

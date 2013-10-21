@@ -246,21 +246,21 @@ bool Style::HasToolbarEnd() const
 // Tools and Icons perform on-demand loading and dimming of bitmaps.
 // Changing color scheme invalidatres all loaded bitmaps.
 
-wxBitmap Style::GetIcon(const wxString & name)
+wxBitmap Style::GetIcon(const wxString & name) // FIXME: do not use lazy initialization, styles are initialized by StyleManager
 {
-	if( iconIndex.find( name ) == iconIndex.end() ) {
-		wxString msg( _T("The requested icon was not found in the style: ") );
-		msg += name;
-		wxLogMessage( msg );
-		return wxBitmap( GetToolSize().x, GetToolSize().y ); // Prevents crashing.
+	intHash::iterator index = iconIndex.find(name);
+
+	if (index == iconIndex.end()) {
+		wxLogMessage(_T("The requested icon was not found in the style: ") + name);
+		return wxBitmap(GetToolSize().x, GetToolSize().y); // Prevents crashing.
 	}
 
-	int index = iconIndex[name]; // FIXME: this operation is not const but should be
+	Icon * icon = icons[index->second];
 
-	Icon * icon = (Icon*) icons.Item(index); // FIXME: do not use void* array for icons
-
-	if( icon->loaded ) return icon->icon;
-	if( icon->size.x == 0 ) icon->size = toolSize[currentOrientation];
+	if (icon->loaded)
+		return icon->icon;
+	if (icon->size.x == 0)
+		icon->size = toolSize[currentOrientation];
 	wxRect location( icon->iconLoc, icon->size );
 	wxBitmap bm = graphics->GetSubBitmap( location );
 	icon->icon = SetBitmapBrightness( bm );
@@ -268,21 +268,17 @@ wxBitmap Style::GetIcon(const wxString & name)
 	return icon->icon;
 }
 
-wxBitmap Style::GetToolIcon(const wxString & toolname, int iconType, bool rollover)
+wxBitmap Style::GetToolIcon(const wxString & toolname, int iconType, bool rollover) // FIXME: do not use lazy initialization, styles are initialized by StyleManager
 {
+	intHash::iterator index = toolIndex.find(toolname);
 
-	if( toolIndex.find( toolname ) == toolIndex.end() ) {
-		//  This will produce a flood of log messages for some PlugIns, notably WMM_PI, and GRADAR_PI
-		//        wxString msg( _T("The requested tool was not found in the style: ") );
-		//        msg += toolname;
-		//        wxLogMessage( msg );
-		return wxBitmap( GetToolSize().x, GetToolSize().y, 1 );
+	if (index == toolIndex.end()) {
+		return wxBitmap(GetToolSize().x, GetToolSize().y, 1);
 	}
 
-	int index = toolIndex[toolname]; // FIXME: do not use void* arrays for Tools
-	Tool* tool = (Tool*) tools.Item( index );
+	Tool * tool = tools[index->second];
 
-	switch( iconType ){
+	switch (iconType) {
 		case TOOLICON_NORMAL:
 			{
 				if( tool->iconLoaded && !rollover )
@@ -578,15 +574,11 @@ void Style::SetColorScheme( ColorScheme cs )
 
 void Style::Unload()
 {
-	for( unsigned int i = 0; i < tools.Count(); i++ ) {
-		Tool* tool = (Tool*) tools.Item( i );
-		tool->Unload();
-	}
+	for (Tools::iterator tool = tools.begin(); tool != tools.end(); ++tool)
+		(*tool)->Unload();
 
-	for( unsigned int i = 0; i < icons.Count(); i++ ) {
-		Icon* icon = (Icon*) icons.Item( i );
-		icon->Unload();
-	}
+	for (Icons::iterator icon = icons.begin(); icon != icons.end(); ++icon)
+		(*icon)->Unload();
 }
 
 wxColour Style::getConsoleFontColor() const
@@ -659,15 +651,13 @@ Style::Style(void)
 
 Style::~Style(void)
 {
-	for( unsigned int i = 0; i < tools.Count(); i++ ) {
-		delete (Tool*) ( tools.Item( i ) );
-	}
-	tools.Clear();
+	for (Tools::iterator tool = tools.begin(); tool != tools.end(); ++tool)
+		delete *tool;
+	tools.clear();
 
-	for( unsigned int i = 0; i < icons.Count(); i++ ) {
-		delete (Icon*) ( icons.Item( i ) );
-	}
-	icons.Clear();
+	for (Icons::iterator icon = icons.begin(); icon != icons.end(); ++icon)
+		delete *icon;
+	icons.clear();
 
 	if (graphics) {
 		delete graphics;

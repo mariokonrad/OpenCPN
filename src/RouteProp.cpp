@@ -28,7 +28,6 @@
 #include <WayPointman.h>
 #include <RouteManagerDialog.h>
 #include <MessageBox.h>
-#include <RoutePrintout.h>
 #include <RoutePrintSelection.h>
 #include <PositionParser.h>
 #include <Config.h>
@@ -323,15 +322,6 @@ RouteProp::RouteProp( wxWindow* parent, wxWindowID id, const wxString& caption, 
 	m_pEnroutePoint = NULL;
 	m_bStartNow = false;
 
-	/*
-	   wxScrollingDialog::Init();
-
-	   SetLayoutAdaptation(true);
-	   SetLayoutAdaptationLevel(2);
-
-	   long wstyle = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxVSCROLL;
-	   wxScrollingDialog::Create( parent, id, caption, pos, size,wstyle );
-	 */
 	long wstyle = style;
 #ifdef __WXOSX__
 	wstyle |= wxSTAY_ON_TOP;
@@ -358,8 +348,7 @@ void RouteProp::OnRoutePropRightClick(wxListEvent &)
 		}
 	}
 
-	wxMenuItem* copyItem = menu.Append( ID_RCLK_MENU_COPY_TEXT, _("&Copy all as text") );
-
+	menu.Append( ID_RCLK_MENU_COPY_TEXT, _("&Copy all as text") );
 	PopupMenu( &menu );
 }
 
@@ -1209,9 +1198,6 @@ bool RouteProp::UpdateProperties()
 
 		wxString nullify = _T("----");
 
-		int i_prev_point = -1;
-		RoutePoint *prev_route_point = NULL;
-
 		while( node ) {
 			RoutePoint *prp = node->GetData();
 			long item_line_index = i + stopover_count;
@@ -1431,10 +1417,6 @@ bool RouteProp::UpdateProperties()
 				arrival = true;
 				i++;
 				node = node->GetNext();
-
-				//    Record this point info for use as previous point in next iteration.
-				i_prev_point = i - 1;
-				prev_route_point = prp;
 			}
 		}
 	}

@@ -24,11 +24,11 @@
 #include "s52plib.h"
 #include "dychart.h"
 #include <ocpn_pixel.h>
-#include <RenderFromHPGL.h>
 #include <RazdsParser.h>
 #include <FontMgr.h>
 #include <UserColors.h>
 
+#include <chart/RenderFromHPGL.h>
 #include <chart/s52utils.h>
 #include <chart/S57Chart.h>
 #include <chart/ChartSymbols.h>

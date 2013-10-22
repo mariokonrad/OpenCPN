@@ -891,10 +891,9 @@ IF (USE_S57)
 		src/geo/PolyTessGeoTrap.cpp
 		src/geo/PolyTessGeo.cpp
 
-		src/RenderFromHPGL.h
-		src/s52cnsy.cpp
-		src/RenderFromHPGL.cpp
-
+		src/chart/RenderFromHPGL.h
+		src/chart/RenderFromHPGL.cpp
+		src/chart/s52cnsy.cpp
 		src/chart/s52s57.h
 		src/chart/s52plib.h
 		src/chart/s52plib.cpp

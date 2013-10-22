@@ -38,11 +38,10 @@
 #include <ogrsf_frmts.h>
 #include "iso8211.h"
 #include "gdal.h"
-#include "S57ClassRegistrar.h"
-#include "S57Light.h"
 #include <ViewPort.h>
 #include <OCPNRegion.h>
 
+#include <chart/S57ClassRegistrar.h>
 #include <chart/s52s57.h>
 #include <chart/S57Sector.h>
 #include <chart/ChartBase.h>

@@ -557,6 +557,7 @@ SET(HDRS
 	src/chart/OCPNPattern.h
 	src/chart/Lookup.h
 	src/chart/S57ClassRegistrar.h
+	src/chart/S57Light.h
 
 	src/geo/BoundingBox.h
 	src/geo/LatLonBoundingBox.h
@@ -610,7 +611,6 @@ SET(HDRS
 	src/GoToPositionDialog.h
 	src/RolloverWin.h
 	src/S57QueryDialog.h
-	src/S57Light.h
 	src/S57RegistrarMgr.h
 	src/MarkIcon.h
 	src/SendToGpsDlg.h

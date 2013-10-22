@@ -32,6 +32,7 @@
 #include <geo/Polygon.h>
 
 #include <chart/s52plib.h>
+#include <chart/S57Light.h>
 
 #include "dychart.h"
 #include "ocpn_pixel.h"
@@ -6026,8 +6027,8 @@ wxString s57chart::GetObjectAttributeValueAsString( S57Obj *obj, int iatt, wxStr
 
 int s57chart::CompareLights( const void** l1ptr, const void** l2ptr )
 {
-    S57Light l1 = *(S57Light*) *l1ptr;
-    S57Light l2 = *(S57Light*) *l2ptr;
+    chart::S57Light l1 = *(chart::S57Light*) *l1ptr;
+    chart::S57Light l2 = *(chart::S57Light*) *l2ptr;
 
     int positionDiff = l1.position.Cmp( l2.position );
     if( positionDiff != 0 ) return positionDiff;
@@ -6061,8 +6062,8 @@ wxString s57chart::CreateObjDescriptions( ListOfObjRazRules* rule_list )
     wxString objText;
     wxString lightsHtml;
     wxString positionString;
-    wxArrayPtrVoid lights;
-    S57Light* curLight = NULL;
+    wxArrayPtrVoid lights; // FIXME: use std container
+    chart::S57Light* curLight = NULL;
 
     for( ListOfObjRazRules::Node *node = rule_list->GetLast(); node; node = node->GetPrevious() ) {
         ObjRazRules *current = node->GetData();
@@ -6138,7 +6139,7 @@ wxString s57chart::CreateObjDescriptions( ListOfObjRazRules* rule_list )
             positionString += toSDMM( 2, lon );
 
             if( isLight ) {
-                curLight = new S57Light;
+                curLight = new chart::S57Light;
                 curLight->position = positionString;
                 curLight->hasSectors = false;
                 lights.Add( curLight );
@@ -6239,7 +6240,7 @@ wxString s57chart::CreateObjDescriptions( ListOfObjRazRules* rule_list )
         wxString lastPos;
 
         for( unsigned int curLightNo = 0; curLightNo < lights.Count(); curLightNo++ ) {
-            S57Light* thisLight = (S57Light*) lights.Item( curLightNo );
+            chart::S57Light* thisLight = (chart::S57Light*) lights.Item( curLightNo );
             int attrIndex;
 
             if( thisLight->position != lastPos ) {

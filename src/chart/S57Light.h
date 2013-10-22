@@ -21,10 +21,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __S57LIGHT_H__
-#define __S57LIGHT_H__
+#ifndef __CHART__S57LIGHT_H__
+#define __CHART__S57LIGHT_H__
 
 #include <wx/string.h>
+
+namespace chart {
 
 class S57Light
 {
@@ -34,5 +36,7 @@ class S57Light
 		wxString position;
 		bool hasSectors;
 };
+
+}
 
 #endif

@@ -32,16 +32,15 @@
 
 extern double g_GLMinLineWidth;
 
-RenderFromHPGL::RenderFromHPGL( s52plib* plibarg )
-{
-	plib = plibarg;
-	renderToDC = false;
-	renderToOpenGl = false;
-	renderToGCDC = false;
-	havePushedOpenGlAttrib = false;
-}
+RenderFromHPGL::RenderFromHPGL(s52plib * plibarg)
+	: plib(plibarg)
+	, renderToDC(false)
+	, renderToOpenGl(false)
+	, renderToGCDC(false)
+	, havePushedOpenGlAttrib(false)
+{}
 
-void RenderFromHPGL::SetTargetDC( wxDC* pdc )
+void RenderFromHPGL::SetTargetDC(wxDC * pdc)
 {
 	targetDC = pdc;
 	renderToDC = true;
@@ -75,16 +74,16 @@ const char* RenderFromHPGL::findColorNameInRef( char colorCode, char* col )
 
 wxPoint RenderFromHPGL::ParsePoint( wxString& argument )
 {
-	long x, y;
+	long x;
+	long y;
 	int colon = argument.Index( ',' );
 	argument.Left( colon ).ToLong( &x );
 	argument.Mid( colon + 1 ).ToLong( &y );
 	return wxPoint( x, y );
 }
 
-void RenderFromHPGL::SetPen()
+void RenderFromHPGL::SetPen() // FIXME: prime candidate for polymorphism
 {
-	// plib->canvas_pix_per_mm;
 	scaleFactor = 100.0 / plib->GetPPMM();
 
 	if( renderToDC ) {
@@ -115,7 +114,7 @@ void RenderFromHPGL::SetPen()
 	}
 }
 
-void RenderFromHPGL::Line( wxPoint from, wxPoint to )
+void RenderFromHPGL::Line( wxPoint from, wxPoint to ) // FIXME: prime candidate for polymorphism
 {
 	if( renderToDC ) {
 		targetDC->DrawLine( from, to );
@@ -133,10 +132,11 @@ void RenderFromHPGL::Line( wxPoint from, wxPoint to )
 	}
 }
 
-void RenderFromHPGL::Circle( wxPoint center, int radius, bool filled )
+void RenderFromHPGL::Circle( wxPoint center, int radius, bool filled ) // FIXME: prime candidate for polymorphism
 {
 	if( renderToDC ) {
-		if( filled ) targetDC->SetBrush( *brush );
+		if (filled)
+			targetDC->SetBrush( *brush );
 		else
 			targetDC->SetBrush( *wxTRANSPARENT_BRUSH );
 		targetDC->DrawCircle( center, radius );
@@ -152,7 +152,8 @@ void RenderFromHPGL::Circle( wxPoint center, int radius, bool filled )
 	}
 #endif    
 	if( renderToGCDC ) {
-		if( filled ) targetGCDC->SetBrush( *brush );
+		if (filled)
+			targetGCDC->SetBrush( *brush );
 		else
 			targetGCDC->SetBrush( *wxTRANSPARENT_BRUSH );
 
@@ -166,10 +167,9 @@ void RenderFromHPGL::Circle( wxPoint center, int radius, bool filled )
 		targetGCDC->DrawPoint( center.x, center.y + radius );
 		targetGCDC->SetPen( *pen );
 	}
-
 }
 
-void RenderFromHPGL::Polygon()
+void RenderFromHPGL::Polygon() // FIXME: prime candidate for polymorphism
 {
 	if( renderToDC ) {
 		targetDC->DrawPolygon( noPoints, polygon );
@@ -189,7 +189,9 @@ void RenderFromHPGL::Polygon()
 
 void RenderFromHPGL::RotatePoint( wxPoint& point, double angle )
 {
-	if( angle == 0. ) return;
+	if( angle == 0.0)
+		return;
+
 	double sin_rot = sin( angle * M_PI / 180.0);
 	double cos_rot = cos( angle * M_PI / 180.0);
 
@@ -211,21 +213,15 @@ bool RenderFromHPGL::Render( char *str, char *col, wxPoint &r, wxPoint &pivot, d
 		wxString arguments = command.Mid( 2 );
 		command = command.Left( 2 );
 
-		if( command == _T("SP") ) {
+		if (command == _T("SP")) {
 			S52color* color = plib->getColor( findColorNameInRef( arguments.GetChar( 0 ), col ) );
 			penColor = wxColor( color->R, color->G, color->B );
 			brushColor = penColor;
-			continue;
-		}
-		if( command == _T("SW") ) {
+		} else if (command == _T("SW")) {
 			arguments.ToLong( &penWidth );
-			continue;
-		}
-		if( command == _T("ST") ) {
+		} else if (command == _T("ST")) {
 			// Transparency is ignored for now.
-			continue;
-		}
-		if( command == _T("PU") ) {
+		} else if (command == _T("PU")) {
 			SetPen();
 			lineStart = ParsePoint( arguments );
 			lineStart -= pivot;
@@ -233,9 +229,7 @@ bool RenderFromHPGL::Render( char *str, char *col, wxPoint &r, wxPoint &pivot, d
 			lineStart.x /= scaleFactor;
 			lineStart.y /= scaleFactor;
 			lineStart += r;
-			continue;
-		}
-		if( command == _T("PD") ) {
+		} else if(command == _T("PD")) {
 			if( arguments.Length() == 0 ) {
 				lineEnd = lineStart;
 				lineEnd.x++;
@@ -249,35 +243,29 @@ bool RenderFromHPGL::Render( char *str, char *col, wxPoint &r, wxPoint &pivot, d
 			}
 			Line( lineStart, lineEnd );
 			lineStart = lineEnd; // For next line.
-			continue;
-		}
-		if( command == _T("CI") ) {
+		} else if (command == _T("CI")) {
 			long radius;
 			arguments.ToLong( &radius );
 			radius = (int) radius / scaleFactor;
 			Circle( lineStart, radius );
-			continue;
-		}
-		if( command == _T("PM") ) {
+		} else if (command == _T("PM")) {
 			noPoints = 1;
 			polygon[0] = lineStart;
 
-			if( arguments == _T("0") ) {
+			if (arguments == _T("0")) {
 				do {
 					command = commands.GetNextToken();
 					arguments = command.Mid( 2 );
 					command = command.Left( 2 );
 
-					if( command == _T("AA") ) {
+					if (command == _T("AA")) {
 						wxLogWarning( _T("RenderHPGL: AA instruction not implemented.") );
-					}
-					if( command == _T("CI") ) {
+					} else if (command == _T("CI")) {
 						long radius;
 						arguments.ToLong( &radius );
 						radius = (int) radius / scaleFactor;
 						Circle( lineStart, radius, HPGL_FILLED );
-					}
-					if( command == _T("PD") ) {
+					} else if (command == _T("PD")) {
 						wxStringTokenizer points( arguments, _T(",") );
 						while( points.HasMoreTokens() ) {
 							long x, y;
@@ -289,23 +277,20 @@ bool RenderFromHPGL::Render( char *str, char *col, wxPoint &r, wxPoint &pivot, d
 							lineEnd.x /= scaleFactor;
 							lineEnd.y /= scaleFactor;
 							lineEnd += r;
-							polygon[noPoints++] = lineEnd;
+							polygon[noPoints++] = lineEnd; // FIXME: buffer overflow
 						}
 					}
-				} while( command != _T("PM") );
+				} while (command != _T("PM"));
 			}
-			continue;
-		}
-		if( command == _T("FP") ) {
+		} else if (command == _T("FP")) {
 			SetPen();
 			Polygon();
-			continue;
+		} else {
+			// Only get here if non of the other cases did a continue.
+			wxString msg( _T("RenderHPGL: The '%s' instruction is not implemented.") );
+			msg += wxString( command );
+			wxLogWarning( msg );
 		}
-
-		// Only get here if non of the other cases did a continue.
-		wxString msg( _T("RenderHPGL: The '%s' instruction is not implemented.") );
-		msg += wxString( command );
-		wxLogWarning( msg );
 	}
 #ifdef ocpnUSE_GL
     if( havePushedOpenGlAttrib )

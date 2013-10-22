@@ -44,10 +44,16 @@ class RenderFromHPGL
 		void SetTargetDC(wxDC * pdc);
 		void SetTargetOpenGl();
 		void SetTargetGCDC(wxGCDC * gdc);
-		bool Render(char * str, char * col, wxPoint & r, wxPoint & pivot, double rot_angle = 0);
+
+		bool Render(
+				char * str,
+				char * col,
+				wxPoint & r,
+				wxPoint & pivot,
+				double rot_angle = 0);
 
 	private:
-		const char* findColorNameInRef(char colorCode, char * col);
+		const char * findColorNameInRef(char colorCode, char * col);
 		void RotatePoint(wxPoint & point, double angle);
 		wxPoint ParsePoint(wxString & argument);
 		void SetPen();

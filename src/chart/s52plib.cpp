@@ -22,12 +22,11 @@
  **************************************************************************/
 
 #include "s52plib.h"
-#include "RenderFromHPGL.h"
-#include "ocpn_pixel.h"
-#include "RazdsParser.h"
-#include "FontMgr.h"
 #include "dychart.h"
-
+#include <ocpn_pixel.h>
+#include <RenderFromHPGL.h>
+#include <RazdsParser.h>
+#include <FontMgr.h>
 #include <UserColors.h>
 
 #include <chart/s52utils.h>
@@ -198,6 +197,7 @@ LUPHashIndex *LUPArrayContainer::GetArrayIndexHelper( const char *objectName )
 //      s52plib implementation
 //-----------------------------------------------------------------------------
 s52plib::s52plib( const wxString& PLib, bool b_forceLegacy )
+	: HPGL(NULL)
 {
 	m_plib_file = PLib;
 
@@ -1779,7 +1779,7 @@ int s52plib::RenderT_All( ObjRazRules *rzRules, Rules *rules, ViewPort *vp, bool
 					}
 				}
 				if( !b_found )
-					m_textObjList.Append( rzRules->obj );
+					m_textObjList.push_back(rzRules->obj);
 			}
 		}
 
@@ -1857,8 +1857,12 @@ unsigned char *GetRGBA_Array( wxImage &Image )
 	return e;
 }
 
-bool s52plib::RenderHPGL( ObjRazRules *rzRules, Rule *prule, wxPoint &r, ViewPort *vp,
-		float rot_angle )
+bool s52plib::RenderHPGL(
+		ObjRazRules * rzRules,
+		Rule * prule,
+		wxPoint & r,
+		ViewPort * vp,
+		float rot_angle)
 {
 	float fsf = 100 / canvas_pix_per_mm;
 
@@ -1948,12 +1952,11 @@ bool s52plib::RenderHPGL( ObjRazRules *rzRules, Rule *prule, wxPoint &r, ViewPor
 				&plon, vp );
 		symbox.SetMax( plon, plat );
 
-		{
-			if( rzRules->obj->bBBObj_valid ) rzRules->obj->BBObj.Expand( symbox );
-			else {
-				rzRules->obj->BBObj = symbox;
-				rzRules->obj->bBBObj_valid = true;
-			}
+		if (rzRules->obj->bBBObj_valid) {
+			rzRules->obj->BBObj.Expand( symbox );
+		} else {
+			rzRules->obj->BBObj = symbox;
+			rzRules->obj->bBBObj_valid = true;
 		}
 	}
 
@@ -6089,14 +6092,12 @@ bool s52plib::ObjectRenderCheckCat( ObjRazRules *rzRules, ViewPort *vp )
 //    Do all those things necessary to prepare for a new rendering
 void s52plib::PrepareForRender()
 {
-
 }
 
 void s52plib::ClearTextList( void )
 {
 	//      Clear the current text rectangle list
 	m_textObjList.Clear();
-
 }
 
 void s52plib::AdjustTextList( int dx, int dy, int screenw, int screenh )
@@ -6107,7 +6108,7 @@ void s52plib::AdjustTextList( int dx, int dy, int screenw, int screenh )
 	//        2.. Remove any list elements that are off screen after applied offset
 
 	ObjList::Node *node = m_textObjList.GetFirst();
-	while( node ) {
+	while (node) {
 		wxRect *pcurrent = &( node->GetData()->rText );
 		pcurrent->Offset( dx, dy );
 
@@ -6115,8 +6116,9 @@ void s52plib::AdjustTextList( int dx, int dy, int screenw, int screenh )
 			m_textObjList.DeleteNode( node );
 
 			node = m_textObjList.GetFirst();
-		} else
+		} else {
 			node = node->GetNext();
+		}
 	}
 }
 

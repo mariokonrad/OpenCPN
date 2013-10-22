@@ -51,7 +51,6 @@ class ChartBase;
 class ViewPort;
 class ocpnBitmap;
 class PixelCache;
-class S57ObjectDesc;
 class S57Reader;
 class OGRS57DataSource;
 class S57ClassRegistrar;
@@ -115,7 +114,6 @@ class s57chart : public ChartBase
 		virtual void SetVPParms(const ViewPort &vpt);
 
 		virtual bool AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed);
-		//      virtual bool IsRenderDelta(ViewPort &vp_last, ViewPort &vp_proposed);
 
 		virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
 

@@ -69,7 +69,6 @@ class ChartBaseBSB;
 class ChartBase;
 class AIS_Target_Data;
 class S57ObjectTree;
-class S57ObjectDesc;
 class RolloverWin;
 class Quilt;
 class PixelCache;

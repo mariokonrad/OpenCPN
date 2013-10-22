@@ -610,7 +610,6 @@ SET(HDRS
 	src/GoToPositionDialog.h
 	src/RolloverWin.h
 	src/S57QueryDialog.h
-	src/S57ObjectDesc.h
 	src/S57Light.h
 	src/S57RegistrarMgr.h
 	src/MarkIcon.h

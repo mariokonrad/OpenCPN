@@ -149,7 +149,7 @@ int M_COVR_Desc:: ReadWKB ( wxFFileInputStream &ifs )
 		else
 			m_buser_offsets = false;
 
-		m_covr_bbox = BoundingBox ( m_covr_lon_min, m_covr_lat_min, m_covr_lon_max, m_covr_lat_max );
+		m_covr_bbox = geo::BoundingBox ( m_covr_lon_min, m_covr_lat_min, m_covr_lon_max, m_covr_lat_max );
 
 	}
 	return length;

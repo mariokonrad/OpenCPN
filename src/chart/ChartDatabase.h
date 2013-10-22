@@ -45,7 +45,8 @@
 class wxProgressDialog;
 class ChartDatabase;
 class ChartGroupArray;
-class BoundingBox;
+
+namespace geo { class BoundingBox; }
 
 enum
 {
@@ -91,7 +92,7 @@ class ChartDatabase
 		int GetDBChartProj(int dbIndex);
 		int GetDBChartScale(int dbIndex);
 
-		bool GetDBBoundingBox(int dbindex, BoundingBox *box);
+		bool GetDBBoundingBox(int dbindex, geo::BoundingBox *box);
 		int  GetnAuxPlyEntries(int dbIndex);
 		int  GetDBPlyPoint(int dbIndex, int plyindex, float *lat, float *lon);
 		int  GetDBAuxPlyPoint(int dbIndex, int plyindex, int iAuxPly, float *lat, float *lon);

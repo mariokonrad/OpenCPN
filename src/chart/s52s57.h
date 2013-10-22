@@ -344,7 +344,7 @@ class S57Obj
 		geo::PolyTessGeo             *pPolyTessGeo;
 		geo::PolyTessGeoTrap         *pPolyTrapGeo;
 
-		BoundingBox           BBObj;                  // lat/lon BBox of the rendered object
+		geo::BoundingBox           BBObj;                  // lat/lon BBox of the rendered object
 		double                  m_lat;                  // The lat/lon of the object's "reference" point
 		double                  m_lon;
 		bool                    bBBObj_valid;           // set after the BBObj has been calculated once.

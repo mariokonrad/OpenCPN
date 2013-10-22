@@ -929,7 +929,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 		//    Again, skipping cm93 for now
 		int n_all_charts = ChartData->GetChartTableEntries();
 
-		const LatLonBoundingBox & viewbox = vp_local.GetBBox();
+		const geo::LatLonBoundingBox & viewbox = vp_local.GetBBox();
 		int sure_index = -1;
 		int sure_index_scale = 0;
 
@@ -943,9 +943,9 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 
 			if( ( g_GroupIndex > 0 ) && ( !ChartData->IsChartInGroup( i, g_GroupIndex ) ) ) continue;
 
-			BoundingBox chart_box;
+			geo::BoundingBox chart_box;
 			ChartData->GetDBBoundingBox( i, &chart_box );
-			if( ( viewbox.Intersect( chart_box ) == BoundingBox::_OUT ) ) continue;
+			if( ( viewbox.Intersect( chart_box ) == geo::BoundingBox::_OUT ) ) continue;
 
 			if( quilt_proj != ChartData->GetDBChartProj( i ) ) continue;
 

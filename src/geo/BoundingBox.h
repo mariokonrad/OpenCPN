@@ -29,6 +29,7 @@
 class wxTransformMatrix;
 class wxPoint2DDouble;
 
+namespace geo {
 
 //Purpose   The BoundingBox class stores one BoundingBox.
 //The BoundingBox is defined by two coordiates,
@@ -61,9 +62,9 @@ class BoundingBox
 		void Expand(const BoundingBox& bbox);
 
 		OVERLAP Intersect(BoundingBox &, double Marge = 0) const;
-		bool LineIntersect(const wxPoint2DDouble& begin, const wxPoint2DDouble& end );
-		bool PointInBox( const wxPoint2DDouble&, double Marge = 0);
-		virtual bool PointInBox( double, double, double Marge = 0);
+		bool LineIntersect(const wxPoint2DDouble & begin, const wxPoint2DDouble & end) const;
+		bool PointInBox(const wxPoint2DDouble &, double Marge = 0) const;
+		virtual bool PointInBox(double, double, double Marge = 0) const;
 
 		void Reset();
 
@@ -97,5 +98,7 @@ class BoundingBox
 		double m_maxy;
 		bool m_validbbox;
 };
+
+}
 
 #endif

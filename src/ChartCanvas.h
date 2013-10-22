@@ -47,7 +47,8 @@ class wxGLContext;
 #include "glChartCanvas.h"
 #endif
 
-class LatLonBoundingBox;
+namespace geo { class LatLonBoundingBox; }
+
 class ocpnDC;
 class GSHHSChart;
 
@@ -342,12 +343,12 @@ class ChartCanvas : public wxWindow
 
 		void DrawAllRoutesInBBox(
 				ocpnDC & dc,
-				LatLonBoundingBox & BltBBox,
+				geo::LatLonBoundingBox & BltBBox,
 				const wxRegion& clipregion);
 
 		void DrawAllWaypointsInBBox(
 				ocpnDC & dc,
-				LatLonBoundingBox & BltBBox,
+				geo::LatLonBoundingBox & BltBBox,
 				const wxRegion & clipregion,
 				bool bDrawMarksOnly);
 
@@ -355,14 +356,14 @@ class ChartCanvas : public wxWindow
 
 		void DrawAllTidesInBBox(
 				ocpnDC & dc,
-				LatLonBoundingBox & BBox,
+				geo::LatLonBoundingBox & BBox,
 				bool bRebuildSelList,
 				bool bforce_redraw_tides,
 				bool bdraw_mono = false);
 
 		void DrawAllCurrentsInBBox(
 				ocpnDC & dc,
-				LatLonBoundingBox & BBox,
+				geo::LatLonBoundingBox & BBox,
 				bool bRebuildSelList,
 				bool bforce_redraw_currents,
 				bool bdraw_mono = false);

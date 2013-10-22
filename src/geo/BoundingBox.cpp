@@ -24,6 +24,8 @@
 #include "BoundingBox.h"
 #include <wx/matrix.h>
 
+namespace geo {
+
 BoundingBox::BoundingBox()
 	: m_minx(0.0)
 	, m_miny(0.0)
@@ -40,7 +42,6 @@ BoundingBox::BoundingBox(const BoundingBox & other)
 	m_maxy = other.m_maxy;
 	m_validbbox= other.m_validbbox;
 }
-
 
 BoundingBox::BoundingBox(const wxPoint2DDouble & a)
 {
@@ -186,7 +187,7 @@ BoundingBox::OVERLAP BoundingBox::Intersect(BoundingBox & other, double Marge) c
 }
 
 // Checks if a line intersects the boundingbox
-bool BoundingBox::LineIntersect(const wxPoint2DDouble & begin, const wxPoint2DDouble & end)
+bool BoundingBox::LineIntersect(const wxPoint2DDouble & begin, const wxPoint2DDouble & end) const
 {
 	assert (m_validbbox == true);
 
@@ -198,7 +199,7 @@ bool BoundingBox::LineIntersect(const wxPoint2DDouble & begin, const wxPoint2DDo
 }
 
 // Is the given point in the boundingbox ??
-bool BoundingBox::PointInBox(double x, double y, double Marge)
+bool BoundingBox::PointInBox(double x, double y, double Marge) const
 {
 	assert (m_validbbox == true);
 
@@ -211,7 +212,7 @@ bool BoundingBox::PointInBox(double x, double y, double Marge)
 //
 // Is the given point in the boundingbox ??
 //
-bool BoundingBox::PointInBox(const wxPoint2DDouble & a, double Marge)
+bool BoundingBox::PointInBox(const wxPoint2DDouble & a, double Marge) const
 {
 	assert (m_validbbox == true);
 
@@ -380,5 +381,7 @@ double BoundingBox::GetWidth() const
 double BoundingBox::GetHeight() const
 {
 	return m_maxy - m_miny;
+}
+
 }
 

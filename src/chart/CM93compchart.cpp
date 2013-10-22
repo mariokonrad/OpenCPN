@@ -484,6 +484,8 @@ int cm93compchart::PrepareChartScale ( const ViewPort &vpt, int cmscale )
 					bool boverlap = false;
 					for ( unsigned int im=0 ; im < pcover->GetCoverCount() ; im++ )
 					{
+						using geo::BoundingBox;
+
 						M_COVR_Desc *mcd = pcover->GetCover ( im );
 
 						if (!(BoundingBox::_OUT == vp_positive.GetBBox().Intersect(mcd->m_covr_bbox)) || !(BoundingBox::_OUT == vpa.GetBBox().Intersect(mcd->m_covr_bbox)))
@@ -609,6 +611,8 @@ OCPNRegion cm93compchart::GetValidScreenCanvasRegion ( const ViewPort& VPoint, c
 		int chart_native_scale = m_pcm93chart_current->GetNativeScale();
 
 		for ( unsigned int im=0 ; im < m_pcm93chart_current->m_pcovr_array_loaded.GetCount() ; im++ ) {
+			using geo::BoundingBox;
+
 			M_COVR_Desc *pmcd = ( m_pcm93chart_current->m_pcovr_array_loaded.Item ( im ) );
 
 			//    We can make a quick test based on the bbox of the M_COVR and the bbox of the ViewPort
@@ -1328,6 +1332,8 @@ bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, ViewPort& vp )
 
 					for ( unsigned int im=0 ; im < pcover->GetCoverCount() ; im++ )
 					{
+						using geo::BoundingBox;
+
 						M_COVR_Desc *mcd = pcover->GetCover(im);
 
 						//    Case:  vpBBox is completely inside the mcd box

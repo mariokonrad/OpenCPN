@@ -2385,11 +2385,11 @@ bool ChartCanvas::DoZoomCanvasOut( double zoom_factor )
 
 		if( ChartData && pc ) {
 			//      If Current_Ch is not on the screen, unbound the zoomout
-			const LatLonBoundingBox & viewbox = VPoint.GetBBox();
-			BoundingBox chart_box;
+			const geo::LatLonBoundingBox & viewbox = VPoint.GetBBox();
+			geo::BoundingBox chart_box;
 			int current_index = ChartData->FinddbIndex( pc->GetFullPath() );
 			ChartData->GetDBBoundingBox( current_index, &chart_box );
-			if ((viewbox.Intersect(chart_box) == BoundingBox::_OUT)) {
+			if ((viewbox.Intersect(chart_box) == geo::BoundingBox::_OUT)) {
 				proposed_scale_onscreen = wxMin(proposed_scale_onscreen,
 						GetCanvasScaleFactor() / m_absolute_min_scale_ppm);
 			} else {
@@ -2924,7 +2924,7 @@ void ChartCanvas::ShipDraw( ocpnDC& dc )
 
 	//    Another draw test ,based on pixels, assuming the ship icon is a fixed nominal size
 	//    and is just barely outside the viewport        ....
-	BoundingBox bb_screen( 0, 0, GetVP().pix_width, GetVP().pix_height );
+	geo::BoundingBox bb_screen( 0, 0, GetVP().pix_width, GetVP().pix_height );
 	if( bb_screen.PointInBox( lShipMidPoint, 20 ) ) drawit++;
 
 	// And one more test to catch the case where COG line crosses the screen,
@@ -5935,7 +5935,7 @@ void ChartCanvas::CanvasPopupMenu( int x, int y, int seltype )
 				for( AIS_Area_Notice_Hash::iterator ani = target_data->area_notices.begin(); ani != target_data->area_notices.end(); ++ani ) {
 					Ais8_001_22& area_notice = ani->second;
 
-					BoundingBox bbox;
+					geo::BoundingBox bbox;
 					double lat, lon;
 
 					for( Ais8_001_22_SubAreaList::iterator sa = area_notice.sub_areas.begin(); sa != area_notice.sub_areas.end(); ++sa ) {
@@ -6347,7 +6347,7 @@ void ChartCanvas::ShowObjectQueryWindow( int x, int y, float zlat, float zlon )
 				for( AIS_Area_Notice_Hash::iterator ani = target_data->area_notices.begin(); ani != target_data->area_notices.end(); ++ani ) {
 					Ais8_001_22& area_notice = ani->second;
 
-					BoundingBox bbox;
+					geo::BoundingBox bbox;
 					double lat, lon;
 
 					for( Ais8_001_22_SubAreaList::iterator sa = area_notice.sub_areas.begin(); sa != area_notice.sub_areas.end(); ++sa ) {
@@ -7483,10 +7483,10 @@ void ChartCanvas::RenderChartOutline( ocpnDC &dc, int dbIndex, ViewPort& vp )
 	bool b_draw = false;
 	double lon_bias = 0.;
 
-	BoundingBox box;
+	geo::BoundingBox box;
 	ChartData->GetDBBoundingBox( dbIndex, &box );
 
-	if (vp.GetBBox().Intersect( box, 0 ) != BoundingBox::_OUT) // chart is not outside of viewport
+	if (vp.GetBBox().Intersect( box, 0 ) != geo::BoundingBox::_OUT) // chart is not outside of viewport
 		b_draw = true;
 
 	//  Does simple test fail, and current vp cross international dateline?
@@ -7495,7 +7495,7 @@ void ChartCanvas::RenderChartOutline( ocpnDC &dc, int dbIndex, ViewPort& vp )
 		if( vp.GetBBox().GetMinX() < -180.0) {
 			wxPoint2DDouble p( -360.0, 0);
 			box.Translate( p );
-			if (vp.GetBBox().Intersect( box, 0 ) != BoundingBox::_OUT) // chart is not outside of viewport
+			if (vp.GetBBox().Intersect( box, 0 ) != geo::BoundingBox::_OUT) // chart is not outside of viewport
 			{
 				b_draw = true;
 				lon_bias = -360.;
@@ -7503,7 +7503,7 @@ void ChartCanvas::RenderChartOutline( ocpnDC &dc, int dbIndex, ViewPort& vp )
 		} else {
 			wxPoint2DDouble p( 360., 0 );
 			box.Translate( p );
-			if (vp.GetBBox().Intersect( box, 0 ) != BoundingBox::_OUT) // chart is not outside of viewport
+			if (vp.GetBBox().Intersect( box, 0 ) != geo::BoundingBox::_OUT) // chart is not outside of viewport
 			{
 				b_draw = true;
 				lon_bias = 360.;
@@ -7515,7 +7515,7 @@ void ChartCanvas::RenderChartOutline( ocpnDC &dc, int dbIndex, ViewPort& vp )
 	if (!b_draw && (box.GetMinX() < 180.0) && (box.GetMaxX() > 180.0)) {
 		wxPoint2DDouble p( -360., 0 );
 		box.Translate( p );
-		if (vp.GetBBox().Intersect(box, 0) != BoundingBox::_OUT) // chart is not outside of viewport
+		if (vp.GetBBox().Intersect(box, 0) != geo::BoundingBox::_OUT) // chart is not outside of viewport
 		{
 			b_draw = true;
 			lon_bias = -360.;
@@ -7853,7 +7853,7 @@ void ChartCanvas::OnPaint(wxPaintEvent &)
 	int rx, ry, rwidth, rheight;
 	ru.GetBox(rx, ry, rwidth, rheight);
 
-	BoundingBox BltBBox;
+	geo::BoundingBox BltBBox;
 
 #ifdef ocpnUSE_DIBSECTION
 	OCPNMemDC temp_dc;
@@ -8810,7 +8810,7 @@ wxBitmap *ChartCanvas::DrawTCCBitmap( wxDC *pbackground_dc, bool bAddNewSelpoint
 
 extern bool g_bTrackActive;
 
-void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, const wxRegion& clipregion )
+void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, geo::LatLonBoundingBox & BltBBox, const wxRegion& clipregion )
 {
 	Route *active_route = NULL;
 	Route *active_track = NULL;
@@ -8837,13 +8837,13 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
 					active_route = pRouteDraw;
 			}
 
-			BoundingBox test_box = pRouteDraw->RBBox;
+			geo::BoundingBox test_box = pRouteDraw->RBBox;
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
 			if (b_run)
 				test_box.Expand(nav.lon, nav.lat);
 
-			if( BltBBox.Intersect( test_box, 0 ) != BoundingBox::_OUT ) // Route is not wholly outside window
+			if( BltBBox.Intersect( test_box, 0 ) != geo::BoundingBox::_OUT ) // Route is not wholly outside window
 			{
 				b_drawn = true;
 
@@ -8851,12 +8851,12 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
 					pRouteDraw->Draw(dc, GetVP());
 			} else if (pRouteDraw->CrossesIDL()) {
 				wxPoint2DDouble xlate( -360., 0. );
-				BoundingBox test_box1 = pRouteDraw->RBBox;
+				geo::BoundingBox test_box1 = pRouteDraw->RBBox;
 				test_box1.Translate( xlate );
 				if (b_run)
 					test_box1.Expand(nav.lon, nav.lat);
 
-				if (BltBBox.Intersect(test_box1, 0) != BoundingBox::_OUT) // Route is not wholly outside window
+				if (BltBBox.Intersect(test_box1, 0) != geo::BoundingBox::_OUT) // Route is not wholly outside window
 				{
 					b_drawn = true;
 					if ((pRouteDraw != active_route) && (pRouteDraw != active_track))
@@ -8868,9 +8868,9 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
 			if( !b_drawn ) {
 				if( ( BltBBox.GetMinX() < -180. ) && ( BltBBox.GetMaxX() > -180. ) ) {
 					wxPoint2DDouble xlate( -360., 0. );
-					BoundingBox test_box2 = pRouteDraw->RBBox;
+					geo::BoundingBox test_box2 = pRouteDraw->RBBox;
 					test_box2.Translate( xlate );
-					if (BltBBox.Intersect(test_box2, 0) != BoundingBox::_OUT) // Route is not wholly outside window
+					if (BltBBox.Intersect(test_box2, 0) != geo::BoundingBox::_OUT) // Route is not wholly outside window
 					{
 						b_drawn = true;
 						if ((pRouteDraw != active_route) && (pRouteDraw != active_track))
@@ -8878,9 +8878,9 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
 					}
 				} else if( !b_drawn && ( BltBBox.GetMinX() < 180. ) && ( BltBBox.GetMaxX() > 180. ) ) {
 					wxPoint2DDouble xlate( 360., 0. );
-					BoundingBox test_box3 = pRouteDraw->RBBox;
+					geo::BoundingBox test_box3 = pRouteDraw->RBBox;
 					test_box3.Translate( xlate );
-					if (BltBBox.Intersect( test_box3, 0 ) != BoundingBox::_OUT) // Route is not wholly outside window
+					if (BltBBox.Intersect( test_box3, 0 ) != geo::BoundingBox::_OUT) // Route is not wholly outside window
 					{
 						b_drawn = true;
 						if ((pRouteDraw != active_route) && (pRouteDraw != active_track))
@@ -8898,7 +8898,7 @@ void ChartCanvas::DrawAllRoutesInBBox( ocpnDC& dc, LatLonBoundingBox & BltBBox, 
 
 void ChartCanvas::DrawAllWaypointsInBBox(
 		ocpnDC & dc,
-		LatLonBoundingBox & BltBBox,
+		geo::LatLonBoundingBox & BltBBox,
 		const wxRegion & clipregion,
 		bool bDrawMarksOnly)
 {
@@ -8999,7 +8999,7 @@ double ChartCanvas::GetAnchorWatchRadiusPixels( RoutePoint *pAnchorWatchPoint )
 //    Tides Support
 //------------------------------------------------------------------------------------------
 
-void ChartCanvas::DrawAllTidesInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, bool bRebuildSelList,
+void ChartCanvas::DrawAllTidesInBBox( ocpnDC& dc, geo::LatLonBoundingBox & BBox, bool bRebuildSelList,
 		bool bforce_redraw_tides, bool bdraw_mono_for_mask )
 {
 	wxPen *pblack_pen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T ( "UINFD" ) ), 1,
@@ -9246,7 +9246,7 @@ void ChartCanvas::DrawAllTidesInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, bool
 //    Currents Support
 //------------------------------------------------------------------------------------------
 
-void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, LatLonBoundingBox & BBox, bool bRebuildSelList,
+void ChartCanvas::DrawAllCurrentsInBBox( ocpnDC& dc, geo::LatLonBoundingBox & BBox, bool bRebuildSelList,
 		bool bforce_redraw_currents, bool bdraw_mono_for_mask )
 {
 	float tcvalue, dir;

@@ -29,7 +29,7 @@
 #include <geo/LatLonBoundingBox.h>
 #include <OCPNRegion.h>
 
-class LatLonBoundingBox;
+namespace geo { class LatLonBoundingBox; }
 
 class ViewPort
 {
@@ -56,8 +56,8 @@ class ViewPort
 		void SetRotationAngle(double angle_rad);
 		void SetProjectionType(int type);
 
-		const LatLonBoundingBox & GetBBox() const;
-		LatLonBoundingBox & GetBBox();
+		const geo::LatLonBoundingBox & GetBBox() const;
+		geo::LatLonBoundingBox & GetBBox();
 		void set_positive();
 
 		//  Generic
@@ -80,7 +80,7 @@ class ViewPort
 		wxRect rv_rect;
 
 	private:
-		LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
+		geo::LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
 		bool bValid; // This VP is valid
 };
 

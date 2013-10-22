@@ -301,7 +301,7 @@ PolyTessGeo::PolyTessGeo(unsigned char *polybuf, int nrecl, int index)
 			m_buf_ptr += byte_size;
 
 			//  Read the triangle primitive bounding box as lat/lon
-			tp->p_bbox = new BoundingBox;
+			tp->p_bbox = new geo::BoundingBox;
 			double *pbb = (double *)m_buf_ptr;
 
 #ifdef ARMHF
@@ -709,7 +709,7 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon *poly, bool bSENC_SM, double ref_lat,
 			}
 			//  Calculate bounding box as lat/lon
 
-			pTP->p_bbox = new BoundingBox;
+			pTP->p_bbox = new geo::BoundingBox;
 
 			float sxmax = -179;                   // this poly BBox
 			float sxmin = 170;
@@ -1872,7 +1872,7 @@ void __CALL_CONVENTION endCallback(void)
 				pTPG->nVert = s_nvcall;
 
 				//  Calculate bounding box
-				pTPG->p_bbox = new BoundingBox;
+				pTPG->p_bbox = new geo::BoundingBox;
 
 				float sxmax = -1000;                   // this poly BBox
 				float sxmin = 1000;

@@ -26,14 +26,17 @@
 
 #include "BoundingBox.h"
 
+namespace geo {
+
 /// that is assummed to be a geographic area, with coordinates
 /// expressed in Lat/Lon.
 /// This class understands the International Date Line (E/W Longitude)
 class LatLonBoundingBox : public BoundingBox
 {
 	public:
-		bool PointInBox(double Lon, double Lat, double Marge);
+		virtual bool PointInBox(double Lon, double Lat, double Marge) const;
 };
 
+}
 
 #endif

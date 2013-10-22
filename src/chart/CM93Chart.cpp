@@ -972,6 +972,8 @@ double cm93chart::GetNormalScaleMax(double canvas_scale_factor)
 
 void cm93chart::GetPointPix(ObjRazRules *rzRules, float north, float east, wxPoint *r)
 {
+	using geo::BoundingBox;
+
 	S57Obj *obj = rzRules->obj;
 
 	double valx = ( east * obj->x_rate )  + obj->x_origin;
@@ -991,6 +993,8 @@ void cm93chart::GetPointPix(ObjRazRules *rzRules, float north, float east, wxPoi
 
 void cm93chart::GetPointPix ( ObjRazRules *rzRules, wxPoint2DDouble *en, wxPoint *r, int nPoints )
 {
+	using geo::BoundingBox;
+
 	S57Obj *obj = rzRules->obj;
 
 	double xr =  obj->x_rate;
@@ -1093,7 +1097,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 	if (g_bDebugCM93)
 	{
 		//    Fetch the lat/lon of the screen corner points
-		const LatLonBoundingBox & box = vpt.GetBBox();
+		const geo::LatLonBoundingBox & box = vpt.GetBBox();
 		double ll_lon = box.GetMinX();
 		double ll_lat = box.GetMinY();
 
@@ -1165,7 +1169,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 std::vector<int> cm93chart::GetVPCellArray(const ViewPort &vpt)
 {
 	//    Fetch the lat/lon of the screen corner points
-	const LatLonBoundingBox & box = vpt.GetBBox();
+	const geo::LatLonBoundingBox & box = vpt.GetBBox();
 	double ll_lon = box.GetMinX();
 	double ll_lat = box.GetMinY();
 
@@ -2316,7 +2320,7 @@ S57Obj * cm93chart::CreateS57Obj(
 						pmcd->m_nvertices = npta;
 						pmcd->pvertices = geoPt;
 
-						pmcd->m_covr_bbox = BoundingBox ( pmcd->m_covr_lon_min, pmcd->m_covr_lat_min, pmcd->m_covr_lon_max, pmcd->m_covr_lat_max );
+						pmcd->m_covr_bbox = geo::BoundingBox ( pmcd->m_covr_lon_min, pmcd->m_covr_lat_min, pmcd->m_covr_lon_max, pmcd->m_covr_lat_max );
 
 
 						//    Capture and store the potential WGS transform offsets grabbed during attribute decode
@@ -2929,7 +2933,7 @@ void cm93chart::ProcessMCOVRObjects ( int cell_index, char subcell )
 						pmcd->m_nvertices = npta;
 						pmcd->pvertices = geoPt;
 
-						pmcd->m_covr_bbox = BoundingBox ( pmcd->m_covr_lon_min, pmcd->m_covr_lat_min,
+						pmcd->m_covr_bbox = geo::BoundingBox ( pmcd->m_covr_lon_min, pmcd->m_covr_lat_min,
 								pmcd->m_covr_lon_max, pmcd->m_covr_lat_max );
 
 

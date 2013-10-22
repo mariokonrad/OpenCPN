@@ -24,9 +24,9 @@
 #ifndef __GEO__TRIPRIM__H__
 #define __GEO__TRIPRIM__H__
 
-class BoundingBox;
-
 namespace geo {
+
+class BoundingBox;
 
 /// Used for describing/rendering tesselated polygons
 class TriPrim

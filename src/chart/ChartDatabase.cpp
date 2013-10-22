@@ -1226,7 +1226,7 @@ int ChartDatabase::GetDBChartScale(int dbIndex)
 //-------------------------------------------------------------------
 //    Get Lat/Lon Bounding Box from db
 //-------------------------------------------------------------------
-bool ChartDatabase::GetDBBoundingBox(int dbIndex, BoundingBox *box)
+bool ChartDatabase::GetDBBoundingBox(int dbIndex, geo::BoundingBox *box)
 {
 	if((bValid) && (dbIndex >= 0) && (dbIndex < (int)chartTable.size()))
 	{

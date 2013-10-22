@@ -23,42 +23,46 @@
 
 #include "LatLonBoundingBox.h"
 
+namespace geo {
+
 // Is the given LL point in the boundingbox ??
-bool LatLonBoundingBox::PointInBox(double Lon, double Lat, double Marge)
+bool LatLonBoundingBox::PointInBox(double Lon, double Lat, double Marge) const
 {
 	double x = Lon;
 	double y = Lat;
 
 	//    Box is centered in East lon, crossing IDL
-	if(m_maxx > 180.)
+	if(m_maxx > 180.0)
 	{
-		if( x < m_maxx - 360.)
-			x +=  360.;
+		if( x < m_maxx - 360.0)
+			x +=  360.0;
 
 		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
 				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
-			return TRUE;
-		return FALSE;
+			return true;
+		return false;
 	}
 
 	//    Box is centered in Wlon, crossing IDL
-	else if(m_minx < -180.)
+	else if(m_minx < -180.0)
 	{
-		if(x > m_minx + 360.)
-			x -= 360.;
+		if(x > m_minx + 360.0)
+			x -= 360.0;
 
 		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
 				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
-			return TRUE;
-		return FALSE;
+			return true;
+		return false;
 	}
 
 	else
 	{
 		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
 				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
-			return TRUE;
-		return FALSE;
+			return true;
+		return false;
 	}
+}
+
 }
 

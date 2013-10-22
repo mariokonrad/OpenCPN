@@ -62,7 +62,7 @@ class M_COVR_Desc // FIXME: change member data from public to private
 		double user_yoff;
 		double m_centerlat_cos;
 
-		BoundingBox m_covr_bbox;
+		geo::BoundingBox m_covr_bbox;
 		bool m_buser_offsets;
 };
 

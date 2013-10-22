@@ -1789,7 +1789,7 @@ int s52plib::RenderT_All( ObjRazRules *rzRules, Rules *rules, ViewPort *vp, bool
 
 		//            if ( rzRules->obj->Primitive_type == GEO_POINT )
 		{
-			BoundingBox bbtext;
+			geo::BoundingBox bbtext;
 			double plat, plon;
 
 			rzRules->chart->GetPixPoint( rect.GetX(), rect.GetY() + rect.GetHeight(), &plat, &plon,
@@ -1941,7 +1941,7 @@ bool s52plib::RenderHPGL(
 		//  Update the object Bounding box
 		//  so that subsequent drawing operations will redraw the item fully
 
-		BoundingBox symbox;
+		geo::BoundingBox symbox;
 		double plat, plon;
 
 		rzRules->chart->GetPixPoint( r.x + prule->parm2, r.y + prule->parm3 + bm_height, &plat,
@@ -2155,7 +2155,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules *rzRules, Rule *prule, wxPoint &r, 
 	b_width = prule->parm2;
 	b_height = prule->parm3;
 
-	BoundingBox symbox;
+	geo::BoundingBox symbox;
 	double plat, plon;
 
 	rzRules->chart->GetPixPoint( r.x - pivot_x, r.y - pivot_y + b_height, &plat, &plon, vp );
@@ -2166,7 +2166,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules *rzRules, Rule *prule, wxPoint &r, 
 
 	//  Special case for GEO_AREA objects with centred symbols
 	if (rzRules->obj->Primitive_type == GEO_AREA) {
-		if (rzRules->obj->BBObj.Intersect( symbox, 0 ) != BoundingBox::_IN) // Symbol is wholly outside base object
+		if (rzRules->obj->BBObj.Intersect( symbox, 0 ) != geo::BoundingBox::_IN) // Symbol is wholly outside base object
 			return true;
 	}
 
@@ -3543,7 +3543,7 @@ int s52plib::RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 	//  so that subsequent drawing operations will redraw the item fully
 
 	double plat, plon;
-	BoundingBox symbox;
+	geo::BoundingBox symbox;
 
 	rzRules->chart->GetPixPoint( r.x + rules->razRule->parm2,
 			r.y + rules->razRule->parm3 + b_height, &plat, &plon, vp );
@@ -4021,7 +4021,7 @@ bool s52plib::inter_tri_rect( wxPoint *ptp, render_canvas_parms *pb_spec )
 	//    First stage
 	//    Check all three points of triangle to see it any are within the render rectangle
 
-	BoundingBox rect( pb_spec->lclip, pb_spec->y, pb_spec->rclip, pb_spec->y + pb_spec->height );
+	geo::BoundingBox rect( pb_spec->lclip, pb_spec->y, pb_spec->rclip, pb_spec->y + pb_spec->height );
 
 	for( int i = 0; i < 3; i++ ) {
 		if (rect.PointInBox(ptp[i].x, ptp[i].y))
@@ -4955,7 +4955,7 @@ void s52plib::RenderToBufferFilledPolygon(
 		ObjRazRules * rzRules,
 		S57Obj * obj,
 		S52color * c,
-		const BoundingBox & BBView,
+		const geo::BoundingBox & BBView,
 		render_canvas_parms * pb_spec,
 		render_canvas_parms * pPatt_spec)
 {
@@ -4983,13 +4983,13 @@ void s52plib::RenderToBufferFilledPolygon(
 		while( p_tp ) {
 			bool b_greenwich = false;
 			if( BBView.GetMaxX() > 360. ) {
-				BoundingBox bbRight( 0., BBView.GetMinY(), BBView.GetMaxX() - 360.,
+				geo::BoundingBox bbRight( 0., BBView.GetMinY(), BBView.GetMaxX() - 360.,
 						BBView.GetMaxY() );
-				if (bbRight.Intersect( *( p_tp->p_bbox ), margin) != BoundingBox::_OUT)
+				if (bbRight.Intersect( *( p_tp->p_bbox ), margin) != geo::BoundingBox::_OUT)
 					b_greenwich = true;
 			}
 
-			if (b_greenwich || (BBView.Intersect(*( p_tp->p_bbox ), margin) != BoundingBox::_OUT)) {
+			if (b_greenwich || (BBView.Intersect(*( p_tp->p_bbox ), margin) != geo::BoundingBox::_OUT)) {
 				//      Get and convert the points
 				wxPoint *pr = ptp;
 
@@ -5133,6 +5133,8 @@ int s52plib::RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 {
 #ifdef ocpnUSE_GL
 
+	using geo::BoundingBox;
+
 	S52color *c;
 	char *str = (char*) rules->INSTstr;
 
@@ -5227,7 +5229,7 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 
 	GLuint clip_list = 0;
 
-	const BoundingBox & BBView = vp->GetBBox();
+	const geo::BoundingBox & BBView = vp->GetBBox();
 	//  Allow a little slop in calculating whether a triangle
 	//  is within the requested Viewport
 	double margin = BBView.GetWidth() * .05;
@@ -5290,12 +5292,12 @@ int s52plib::RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp )
 		while( p_tp ) {
 			bool b_greenwich = false;
 			if( BBView.GetMaxX() > 360. ) {
-				BoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
+				geo::BoundingBox bbRight( 0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
 						vp->GetBBox().GetMaxY() );
-				if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != BoundingBox::_OUT ) b_greenwich = true;
+				if( bbRight.Intersect( *( p_tp->p_bbox ), margin ) != geo::BoundingBox::_OUT ) b_greenwich = true;
 			}
 
-			if( b_greenwich || ( BBView.Intersect( *( p_tp->p_bbox ), margin ) != BoundingBox::_OUT ) ) {
+			if( b_greenwich || ( BBView.Intersect( *( p_tp->p_bbox ), margin ) != geo::BoundingBox::_OUT ) ) {
 
 				//      Get and convert the points
 
@@ -5587,7 +5589,7 @@ render_canvas_parms* s52plib::CreatePatternBufferSpec(
 		float fsf = 100 / canvas_pix_per_mm;
 
 		// Base bounding box
-		BoundingBox box( prule->pos.patt.bnbox_x.PBXC, prule->pos.patt.bnbox_y.PBXR,
+		geo::BoundingBox box( prule->pos.patt.bnbox_x.PBXC, prule->pos.patt.bnbox_y.PBXR,
 				prule->pos.patt.bnbox_x.PBXC + prule->pos.patt.bnbox_w.PAHL,
 				prule->pos.patt.bnbox_y.PBXR + prule->pos.patt.bnbox_h.PAVL );
 
@@ -5994,12 +5996,7 @@ bool s52plib::ObjectRenderCheckPos( ObjRazRules *rzRules, ViewPort *vp )
 {
 	if( rzRules->obj == NULL ) return false;
 
-	// Debug for testing US5FL51.000 slcons
-	//    if((rzRules->obj->Index == 3868) || (rzRules->obj->Index == 3870))
-	//        return false;
-
-	//    if(rzRules->obj->Index != 3)
-	//        return false;
+	using geo::BoundingBox;
 
 	// Of course, the object must be at least partly visible in the viewport
 	BoundingBox BBView = vp->GetBBox();

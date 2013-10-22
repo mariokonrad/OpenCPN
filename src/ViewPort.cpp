@@ -241,6 +241,8 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		int chart_native_scale,
 		wxPoint * ppoints)
 {
+	using geo::BoundingBox;
+
 	//  Calculate the intersection between a given OCPNRegion (Region) and a polygon specified by lat/lon points.
 
 	//    If the viewpoint is highly overzoomed wrt to chart native scale, the polygon region may be huge.
@@ -400,7 +402,7 @@ wxRect ViewPort::GetVPRectIntersect(size_t n, float * llpoints)
 
 	float *pfp = llpoints;
 
-	BoundingBox point_box;
+	geo::BoundingBox point_box;
 	for( unsigned int ip = 0; ip < n; ip++ ) {
 		point_box.Expand(pfp[1], pfp[0]);
 		pfp += 2;
@@ -534,12 +536,12 @@ void ViewPort::SetProjectionType(int type)
 	m_projection_type = type;
 }
 
-const LatLonBoundingBox & ViewPort::GetBBox() const
+const geo::LatLonBoundingBox & ViewPort::GetBBox() const
 {
 	return vpBBox;
 }
 
-LatLonBoundingBox & ViewPort::GetBBox()
+geo::LatLonBoundingBox & ViewPort::GetBBox()
 {
 	return vpBBox;
 }

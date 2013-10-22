@@ -5423,7 +5423,7 @@ bool s57chart::DoesLatLonSelectObject( float lat, float lon, float select_radius
                     // Double the select radius to adjust for the fact that LIGHTS has
                     // a 0x0 BBox to start with, which makes it smaller than all other
                     // rendered objects.
-                    BoundingBox sbox( olon - 2*select_radius, olat - 2*select_radius,
+                    geo::BoundingBox sbox( olon - 2*select_radius, olat - 2*select_radius,
                             olon + 2*select_radius, olat + 2*select_radius );
 
                     if( sbox.PointInBox( lon, lat, 0 ) ) return true;
@@ -5444,9 +5444,8 @@ bool s57chart::DoesLatLonSelectObject( float lat, float lon, float select_radius
                 for( int ip = 0; ip < obj->npt; ip++ ) {
                     double lon_point = *pdl++;
                     double lat_point = *pdl++;
-                    BoundingBox BB_point( lon_point, lat_point, lon_point, lat_point );
+                    geo::BoundingBox BB_point( lon_point, lat_point, lon_point, lat_point );
                     if( BB_point.PointInBox( lon, lat, select_radius ) ) {
-//                                  index = ip;
                         return true;
                     }
                 }

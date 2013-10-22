@@ -24,8 +24,8 @@
 #ifndef __CHART__M_COVR_DESC__H__
 #define __CHART__M_COVR_DESC__H__
 
-#include "BoundingBox.h"
-#include "OCPNRegion.h"
+#include <geo/BoundingBox.h>
+#include <OCPNRegion.h>
 #include <wx/dynarray.h>
 
 class wxFFileInputStream;
@@ -33,7 +33,7 @@ class ViewPort;
 
 namespace geo { struct float_2Dpt; }
 
-class M_COVR_Desc
+class M_COVR_Desc // FIXME: change member data from public to private
 {
 	public:
 		M_COVR_Desc();
@@ -66,8 +66,8 @@ class M_COVR_Desc
 		bool m_buser_offsets;
 };
 
-WX_DECLARE_OBJARRAY(M_COVR_Desc, Array_Of_M_COVR_Desc);
-WX_DECLARE_OBJARRAY(M_COVR_Desc *, Array_Of_M_COVR_Desc_Ptr);
-WX_DECLARE_LIST(M_COVR_Desc, List_Of_M_COVR_Desc);
+WX_DECLARE_OBJARRAY(M_COVR_Desc, Array_Of_M_COVR_Desc); // FIXME: use std container
+WX_DECLARE_OBJARRAY(M_COVR_Desc *, Array_Of_M_COVR_Desc_Ptr); // FIXME: use std container
+WX_DECLARE_LIST(M_COVR_Desc, List_Of_M_COVR_Desc); // FIXME: use std container
 
 #endif

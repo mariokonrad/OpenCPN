@@ -26,7 +26,7 @@
 #ifndef _S52S57_H_
 #define _S52S57_H_
 
-#include "BoundingBox.h"
+#include <geo/BoundingBox.h>
 
 #include <wx/colour.h>
 #include <wx/string.h>

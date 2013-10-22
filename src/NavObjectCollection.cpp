@@ -835,7 +835,7 @@ bool NavObjectCollection::GPXCreateRoute(
 		}
 	}
 
-	if( pRoute->m_PlannedSpeed != ROUTE_DEFAULT_SPEED ) {
+	if( pRoute->m_PlannedSpeed != Route::DEFAULT_SPEED ) {
 		child = child_ext.append_child("opencpn:planned_speed");
 		wxString s;
 		s.Printf(_T("%.2f"), pRoute->m_PlannedSpeed);

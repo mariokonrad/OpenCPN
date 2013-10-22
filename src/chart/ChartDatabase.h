@@ -58,8 +58,8 @@ enum
 // Chart Database
 ///////////////////////////////////////////////////////////////////////
 
-WX_DECLARE_OBJARRAY(ChartTableEntry, ChartTable);
-WX_DECLARE_OBJARRAY(ChartClassDescriptor, ArrayOfChartClassDescriptor);
+WX_DECLARE_OBJARRAY(ChartTableEntry, ChartTable); // FIXME: use std container
+WX_DECLARE_OBJARRAY(ChartClassDescriptor, ArrayOfChartClassDescriptor); // FIXME: use std container
 
 class ChartDatabase
 {
@@ -140,8 +140,8 @@ class ChartDatabase
 class ChartGroupElement;
 class ChartGroup;
 
-WX_DECLARE_OBJARRAY(ChartGroupElement*, ChartGroupElementArray);
-WX_DECLARE_OBJARRAY(ChartGroup*, ChartGroupArray);
+WX_DECLARE_OBJARRAY(ChartGroupElement*, ChartGroupElementArray); // FIXME: use std container
+WX_DECLARE_OBJARRAY(ChartGroup*, ChartGroupArray); // FIXME: use std container
 
 class ChartGroupElement
 {

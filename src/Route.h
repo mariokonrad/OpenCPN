@@ -28,11 +28,10 @@
 #include <wx/list.h>
 
 #include "RoutePoint.h"
-#include "BoundingBox.h"
+#include <geo/BoundingBox.h>
 
 #define STYLE_UNDEFINED -1
 
-#define ROUTE_DEFAULT_SPEED 5.0
 #define RTE_TIME_DISP_UTC _T("UTC")
 #define RTE_TIME_DISP_PC _T("PC")
 #define RTE_TIME_DISP_LOCAL _T("LOCAL")
@@ -43,6 +42,9 @@ class ViewPort;
 
 class Route : public wxObject
 {
+	public:
+		static const double DEFAULT_SPEED;
+
 	public:
 		Route(void);
 		virtual ~Route(void);
@@ -133,6 +135,7 @@ class Route : public wxObject
 
 	private:
 		bool CalculateCrossesIDL();
+
 		int m_nPoints;
 		int m_nm_sequence;
 		bool m_bVisible; // should this route be drawn?
@@ -141,6 +144,6 @@ class Route : public wxObject
 		bool m_bcrosses_idl;
 };
 
-WX_DECLARE_LIST(Route, RouteList);
+WX_DECLARE_LIST(Route, RouteList); // FIXME: use std container
 
 #endif

@@ -558,6 +558,8 @@ SET(HDRS
 	src/chart/Lookup.h
 	src/chart/S57ClassRegistrar.h
 
+	src/geo/BoundingBox.h
+	src/geo/LatLonBoundingBox.h
 	src/geo/Polygon.h
 	src/geo/LineClip.h
 	src/geo/lmfit.h
@@ -591,8 +593,6 @@ SET(HDRS
 	src/ocpnDC.h
 	src/App.h
 	src/UserColors.h
-	src/BoundingBox.h
-	src/LatLonBoundingBox.h
 	src/X11FontPicker.h
 	src/StatusBar.h
 	src/OCPNMemDC.h
@@ -724,6 +724,8 @@ SET(SRCS
 	src/chart/ChartBaseBSB.cpp
 	src/chart/ChartSymbols.cpp
 
+	src/geo/BoundingBox.cpp
+	src/geo/LatLonBoundingBox.cpp
 	src/geo/lmfit.cpp
 	src/geo/Polygon.cpp
 	src/geo/LineClip.cpp
@@ -742,8 +744,6 @@ SET(SRCS
 	src/AnnunText.cpp
 	src/CDI.cpp
 	src/MyPrintout.cpp
-	src/BoundingBox.cpp
-	src/LatLonBoundingBox.cpp
 	src/X11FontPicker.cpp
 	src/ocpn_pixel.cpp
 	src/OCPNMemDC.cpp

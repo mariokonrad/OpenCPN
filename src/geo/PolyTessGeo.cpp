@@ -25,8 +25,8 @@
 
 #include <MicrosoftCompatibility.h>
 #include <dychart.h>
-#include <BoundingBox.h>
 
+#include <geo/BoundingBox.h>
 #include <geo/GeoRef.h>
 #include <geo/TriPrim.h>
 #include <geo/PolyTriGroup.h>

@@ -51,6 +51,8 @@ extern Config *pConfig;
 extern Multiplexer *g_pMUX;
 extern double g_n_arrival_circle_radius;
 
+const double Route::DEFAULT_SPEED = 5.0;
+
 Route::Route(void)
 {
 	m_bRtIsSelected = false;
@@ -87,7 +89,7 @@ Route::Route(void)
 	m_lastMousePointIndex = 0;
 	m_NextLegGreatCircle = false;
 
-	m_PlannedSpeed = ROUTE_DEFAULT_SPEED;
+	m_PlannedSpeed = DEFAULT_SPEED;
 	m_PlannedDeparture = RTE_UNDEF_DEPARTURE;
 	m_TimeDisplayFormat = RTE_TIME_DISP_UTC;
 

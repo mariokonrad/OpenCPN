@@ -557,6 +557,7 @@ SET(HDRS
 	src/chart/OCPNPattern.h
 	src/chart/Lookup.h
 	src/chart/S57ClassRegistrar.h
+	src/chart/S57RegistrarMgr.h
 	src/chart/S57Light.h
 
 	src/geo/BoundingBox.h
@@ -611,7 +612,6 @@ SET(HDRS
 	src/GoToPositionDialog.h
 	src/RolloverWin.h
 	src/S57QueryDialog.h
-	src/S57RegistrarMgr.h
 	src/MarkIcon.h
 	src/SendToGpsDlg.h
 	src/TCWin.h
@@ -722,6 +722,7 @@ SET(SRCS
 	src/chart/ChartBase.cpp
 	src/chart/ChartBaseBSB.cpp
 	src/chart/ChartSymbols.cpp
+	src/chart/S57RegistrarMgr.cpp
 
 	src/geo/BoundingBox.cpp
 	src/geo/LatLonBoundingBox.cpp
@@ -754,7 +755,6 @@ SET(SRCS
 	src/UserColors.cpp
 	src/TCWin.cpp
 	src/S57QueryDialog.cpp
-	src/S57RegistrarMgr.cpp
 	src/GoToPositionDialog.cpp
 	src/CM93DSlide.cpp
 	src/RolloverWin.cpp

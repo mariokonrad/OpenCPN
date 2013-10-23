@@ -85,8 +85,8 @@
 
 #ifdef USE_S57
 	#include "S57QueryDialog.h"
-	#include "S57RegistrarMgr.h"
 	#include "cpl_csv.h"
+	#include <chart/S57RegistrarMgr.h>
 	#include <chart/s52plib.h>
 	#include <chart/CM93OffsetDialog.h>
 	#include <chart/S57ClassRegistrar.h>

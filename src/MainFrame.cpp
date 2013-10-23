@@ -122,7 +122,6 @@
 #include <wxJSON/jsonreader.h>
 
 #ifdef USE_S57
-	#include "S57RegistrarMgr.h"
 	#include "S57QueryDialog.h"
 	#include <chart/s52plib.h>
 	#include <chart/CM93OffsetDialog.h>
@@ -257,6 +256,8 @@ int g_SkewCompUpdatePeriod;
 wxRect g_last_tb_rect;
 
 #ifdef USE_S57
+class S57RegistrarMgr;
+
 s52plib                   *ps52plib;
 S57ClassRegistrar         *g_poRegistrar;
 S57RegistrarMgr           *m_pRegistrarMan;

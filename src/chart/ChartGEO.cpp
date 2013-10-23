@@ -432,6 +432,8 @@ found_uclc_file:
 	if(!SetMinMax())
 		return INIT_FAIL_REMOVE;          // have to bail here
 
+	AnalyzeSkew();
+
 	if(init_flags == HEADER_ONLY)
 		return INIT_OK;
 

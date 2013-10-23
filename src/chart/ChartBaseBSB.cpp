@@ -2776,9 +2776,107 @@ PaletteDir ChartBaseBSB::GetPaletteDir(void)
              return PaletteRev;
  }
 
+bool ChartBaseBSB::AnalyzeSkew(void)
+{
+    double lonmin = 1000;
+    double lonmax = -1000;
+    double latmin = 90.0;
+    double latmax = -90.0;
+
+    int plonmin = 100000;
+    int plonmax = 0;
+    int platmin = 100000;
+    int platmax = 0;
+
+    if (reference_points.empty()) // bad chart georef...
+            return false;
+
+    for(unsigned int n = 0 ; n < reference_points.size(); ++n)
+    {
+        //    Longitude
+        if(reference_points[n].lonr > lonmax)
+        {
+            lonmax = reference_points[n].lonr;
+            plonmax = (int)reference_points[n].xr;
+        }
+        if(reference_points[n].lonr < lonmin)
+        {
+            lonmin = reference_points[n].lonr;
+            plonmin = (int)reference_points[n].xr;
+        }
+
+        //    Latitude
+        if(reference_points[n].latr < latmin)
+        {
+            latmin = reference_points[n].latr;
+            platmin = (int)reference_points[n].yr;
+        }
+        if(reference_points[n].latr > latmax)
+        {
+            latmax = reference_points[n].latr;
+            platmax = (int)reference_points[n].yr;
+        }
+    }
+
+    //  Find the two REF points that are farthest apart
+    double dist_max = 0.;
+    int imax = 0;
+    int jmax = 0;
+
+    for(unsigned int i=0 ; i<reference_points.size(); i++)
+    {
+        for(unsigned int j=i+1 ; j < reference_points.size(); j++)
+        {
+            double dx = reference_points[i].xr - reference_points[j].xr;
+            double dy = reference_points[i].yr - reference_points[j].yr;
+            double dist = (dx * dx) + (dy * dy);
+            if(dist > dist_max)
+            {
+                dist_max = dist;
+                imax = i;
+                jmax = j;
+            }
+        }
+    }
+
+    if(m_projection == PROJECTION_MERCATOR)
+    {
+        double easting0, easting1, northing0, northing1;
+        //  Get the Merc projection of the two REF points
+        geo::toSM_ECC(reference_points[imax].latr, reference_points[imax].lonr, m_proj_lat, m_proj_lon, &easting0, &northing0);
+        geo::toSM_ECC(reference_points[jmax].latr, reference_points[jmax].lonr, m_proj_lat, m_proj_lon, &easting1, &northing1);
+
+        double skew_proj = atan2( (easting1-easting0), (northing1 - northing0) ) * 180.0/M_PI;
+        double skew_points = atan2( (reference_points[jmax].yr - reference_points[imax].yr), (reference_points[jmax].xr - reference_points[imax].xr) ) * 180.0/M_PI;
+
+        double apparent_skew =  skew_points - skew_proj + 90.0;
+        if(apparent_skew < 0.0)
+            apparent_skew += 360;
+        if(apparent_skew > 360.0)
+            apparent_skew -= 360;
 
 
-int   ChartBaseBSB::AnalyzeRefpoints(void)
+        if(fabs( apparent_skew - m_Chart_Skew ) > 2) {           // measured skew is more than 2 degrees
+           m_Chart_Skew = apparent_skew;                         // different from stated skew
+
+           wxString msg = _T("   Warning: Skew override on chart ");
+           msg.Append(m_FullPath);
+           wxString msg1;
+           msg1.Printf(_T(" is %5g degrees"), apparent_skew);
+           msg.Append(msg1);
+
+           wxLogMessage(msg);
+
+           return false;
+
+        }
+    }
+
+    return true;
+}
+
+
+int ChartBaseBSB::AnalyzeRefpoints(void)
 {
       int i,n;
       double elt, elg;
@@ -2794,8 +2892,10 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
       int plonmax = 0;
       int platmin = 100000;
       int platmax = 0;
-      int nlonmin, nlonmax, nlatmax, nlatmin;
-      nlonmin =0; nlonmax=0; nlatmax=0; nlatmin=0;
+      int nlonmin = 0;
+      int nlonmax = 0;
+      int nlatmax = 0;
+      int nlatmin = 0;
 
       if (reference_points.empty())                  // bad chart georef...
             return 1;
@@ -3089,8 +3189,31 @@ int   ChartBaseBSB::AnalyzeRefpoints(void)
        else
              m_ppm_avg = 1.0;                      // absolute fallback to prevent div-0 errors
 
-
-
+#if 0
+       // Alternate Skew verification
+       ViewPort vps;
+       vps.clat = pRefTable[0].latr;
+       vps.clon = pRefTable[0].lonr;
+       vps.view_scale_ppm = m_ppm_avg;
+       vps.skew = 0.;
+       vps.pix_width = 1000;
+       vps.pix_height = 1000;
+       
+       int x1, y1, x2, y2;
+       latlong_to_pix_vp(latmin, (lonmax + lonmin)/2., x1, y1, vps);
+       latlong_to_pix_vp(latmax, (lonmax + lonmin)/2., x2, y2, vps);
+      
+       double apparent_skew = (atan2( (y2-y1), (x2-x1) ) * 180./PI) + 90.;
+       if(apparent_skew < 0.)
+           apparent_skew += 360;
+       if(apparent_skew > 360.)
+           apparent_skew -= 360;
+       
+       if(fabs( apparent_skew - m_Chart_Skew ) > 2) {           // measured skew is more than 2 degress different
+           m_Chart_Skew = apparent_skew;
+       }
+#endif       
+       
         // Do a last little test using a synthetic ViewPort of nominal size.....
         ViewPort vp;
         vp.clat = reference_points[0].latr;

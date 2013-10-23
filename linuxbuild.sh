@@ -16,6 +16,7 @@ function usage()
 	echo "  --clean      | -c  : just cleanup"
 	echo "  --verbose    | -v  : verbose"
 	echo "  --info             : print just info"
+	echo "  --cppcheck         : runs cppcheck on the entire core"
 	echo ""
 	echo "Options altering the default (prepare, build, install, no packaging, not incremental):"
 	echo "  --increment  | -i  : build incrementally (no prior clean)"
@@ -42,7 +43,7 @@ cores=`grep -i 'processor' /proc/cpuinfo | wc -l`
 
 # parse options
 
-args=`getopt --options "hrcvij:" --longoptions help,release,package,clean,verbose,info,increment,no-install,make,prepare,install -- "$@"`
+args=`getopt --options "hrcvij:" --longoptions help,release,package,clean,verbose,info,increment,no-install,make,prepare,install,cppcheck -- "$@"`
 if [ $? != 0 ] ; then
 	echo "Parameter error. abort." >&2
 	exit 1
@@ -57,6 +58,7 @@ build=1
 install=1
 create_packages=0
 incremental=0
+opt_cppcheck=0
 
 while true ; do
 	case "$1" in
@@ -79,6 +81,9 @@ while true ; do
 		--info)
 			info=1
 			verbose=1
+			;;
+		--cppcheck)
+			opt_cppcheck=1
 			;;
 		--no-build)
 			build=0
@@ -168,6 +173,7 @@ if [ ${verbose} -ne 0 ] ; then
 	echo "  build          : ${build}"
 	echo "  install        : ${install}"
 	echo "  create packages: ${create_packages}"
+	echo "  cppcheck       : ${opt_cppcheck}"
 	echo ""
 fi
 
@@ -175,42 +181,23 @@ if [ ${info} -ne 0 ] ; then
 	exit 0
 fi
 
-# remove all directories
-if [ ${cleanup} -ne 0 ] ; then
-	if [ -d ${INSTALL_DIR} ] ; then
-		rm -fr ${INSTALL_DIR}
-	fi
-	if [ -d ${BUILD_DIR} ] ; then
-		rm -fr ${BUILD_DIR}
-	fi
-	if [ -d ${DEPLOY_DIR} ] ; then
-		rm -fr ${DEPLOY_DIR}
-	fi
-	exit 0
-fi
 
-if [ ${incremental} -eq 0 ] ; then
-	# cleanup previous installation
-	if [ -d "${INSTALL_DIR}" ] ; then
-		rm -fr ${INSTALL_DIR}/*
-	else
-		mkdir -p ${INSTALL_DIR}
+function execute_cppcheck()
+{
+	if [ ! -x `which cppcheck` ] ; then
+		echo "error: cppcheck not found. abort."
+		exit 1
 	fi
 
-	# cleanup previous build
-	if [ -d "${BUILD_DIR}" ] ; then
-		rm -fr ${BUILD_DIR}/*
-	else
-		mkdir -p ${BUILD_DIR}
-	fi
-
-	# cleanup previous deploy
-	if [ -d "${DEPLOY_DIR}" ] ; then
-		rm -fr ${DEPLOY_DIR}/*
-	else
-		mkdir -p ${DEPLOY_DIR}
-	fi
-fi
+	cppcheck \
+		-Isrc \
+		--enable=all \
+		--std=c++03 --std=posix \
+		--platform=unix64 \
+		--language=c++ \
+		--force \
+		$(find src -name "*.cpp" -o -name "*.h" -type f)
+}
 
 function check_build_dir()
 {
@@ -298,6 +285,50 @@ function exec_packaging()
 
 	cd ${CURRENT_DIR}
 }
+
+
+
+if [ ${opt_cppcheck} -ne 0 ] ; then
+	execute_cppcheck
+	exit 0
+fi
+
+# remove all directories
+if [ ${cleanup} -ne 0 ] ; then
+	if [ -d ${INSTALL_DIR} ] ; then
+		rm -fr ${INSTALL_DIR}
+	fi
+	if [ -d ${BUILD_DIR} ] ; then
+		rm -fr ${BUILD_DIR}
+	fi
+	if [ -d ${DEPLOY_DIR} ] ; then
+		rm -fr ${DEPLOY_DIR}
+	fi
+	exit 0
+fi
+
+if [ ${incremental} -eq 0 ] ; then
+	# cleanup previous installation
+	if [ -d "${INSTALL_DIR}" ] ; then
+		rm -fr ${INSTALL_DIR}/*
+	else
+		mkdir -p ${INSTALL_DIR}
+	fi
+
+	# cleanup previous build
+	if [ -d "${BUILD_DIR}" ] ; then
+		rm -fr ${BUILD_DIR}/*
+	else
+		mkdir -p ${BUILD_DIR}
+	fi
+
+	# cleanup previous deploy
+	if [ -d "${DEPLOY_DIR}" ] ; then
+		rm -fr ${DEPLOY_DIR}/*
+	else
+		mkdir -p ${DEPLOY_DIR}
+	fi
+fi
 
 exec_prepare
 exec_build

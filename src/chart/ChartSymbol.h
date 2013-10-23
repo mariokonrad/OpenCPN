@@ -24,7 +24,7 @@
 #ifndef __CHARTSYMBOL__H__
 #define __CHARTSYMBOL__H__
 
-#include "chart/SymbolSizeInfo.h"
+#include <chart/SymbolSizeInfo.h>
 
 class ChartSymbol
 {

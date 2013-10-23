@@ -1732,7 +1732,7 @@ void glChartCanvas::render()
 		}
 
 		if( !b_rendered ) {
-			if( !dynamic_cast<ChartDummy*>( Current_Ch ) ) {
+			if( !dynamic_cast<chart::ChartDummy*>( Current_Ch ) ) {
 				glClear( GL_COLOR_BUFFER_BIT );
 				OCPNRegion full_region( cc1->VPoint.rv_rect );
 				Current_Ch->RenderRegionViewOnGL( *m_pcontext, cc1->VPoint, full_region );

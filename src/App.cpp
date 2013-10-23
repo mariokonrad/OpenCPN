@@ -140,7 +140,6 @@ extern RoutePoint * pAnchorWatchPoint2;
 extern double AnchorPointMinDist;
 extern bool AnchorAlertOn1;
 extern bool AnchorAlertOn2;
-extern ChartDummy *pDummyChart;
 extern ocpnStyle::StyleManager * g_StyleManager;
 extern wxPrintData * g_printData;
 extern wxPageSetupData* g_pageSetupData;
@@ -311,7 +310,6 @@ extern int g_pNavAidRadarRingsStepUnits;
 extern bool g_bWayPointPreventDragging;
 extern bool g_bConfirmObjectDelete;
 extern wxLog *Oldlogger;
-extern ChartDummy *pDummyChart;
 extern LayerList * pLayerList;
 extern ChartGroupArray *g_pGroupArray;
 extern FloatingCompassWindow * g_FloatingCompassDialog;
@@ -1921,7 +1919,6 @@ int App::OnExit()
 #endif
 
 	delete g_pGroupArray;
-	delete pDummyChart;
 
 	if( logger ) {
 		wxLog::SetActiveTarget( Oldlogger );

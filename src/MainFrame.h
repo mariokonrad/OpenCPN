@@ -41,6 +41,7 @@
 #include "NMEA_Msg_Container.h"
 #include <chart/ChartType.h>
 #include <chart/ChartFamily.h>
+#include <chart/ChartDummy.h>
 #include "ColorScheme.h"
 
 class OCPN_NMEAEvent;
@@ -294,6 +295,8 @@ class MainFrame : public wxFrame
 		bool m_bTimeIsSet;
 		wxTimer FrameTCTimer;
 		wxTimer MemFootTimer;
+
+		chart::ChartDummy * pDummyChart;
 };
 
 #endif

@@ -22,10 +22,12 @@
  **************************************************************************/
 
 #include "ChartDummy.h"
-#include "ViewPort.h"
-#include "OCPNRegion.h"
+#include <ViewPort.h>
+#include <OCPNRegion.h>
 #include <wx/bitmap.h>
 #include <wx/dcmemory.h>
+
+namespace chart {
 
 ChartDummy::ChartDummy()
 	: m_pBM(NULL)
@@ -142,5 +144,7 @@ void ChartDummy::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValid
 {
 	pValidRegion->Clear();
 	pValidRegion->Union(0, 0, 1, 1);
+}
+
 }
 

@@ -26,6 +26,8 @@
 
 #include <chart/ChartBase.h>
 
+namespace chart {
+
 class ChartDummy : public ChartBase
 {
 	public:
@@ -59,5 +61,7 @@ class ChartDummy : public ChartBase
 		bool RenderViewOnDC(wxMemoryDC & dc, const ViewPort & VPoint);
 		wxBitmap * m_pBM;
 };
+
+}
 
 #endif

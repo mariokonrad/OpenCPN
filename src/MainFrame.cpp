@@ -218,7 +218,6 @@ double AnchorPointMinDist;
 bool AnchorAlertOn1;
 bool AnchorAlertOn2;
 bool g_bCruising;
-ChartDummy *pDummyChart;
 ToolBarSimple* g_toolbar;
 ocpnStyle::StyleManager * g_StyleManager;
 wxPrintData *g_printData = (wxPrintData*) NULL ;
@@ -523,6 +522,7 @@ END_EVENT_TABLE()
 MainFrame::MainFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
 	: wxFrame(frame, -1, title, pos, size, style)
 	, chart_canvas(NULL)
+	, pDummyChart(NULL)
 {
 	m_ulLastNEMATicktime = 0;
 	m_pStatusBar = NULL;
@@ -654,6 +654,7 @@ MainFrame::~MainFrame()
 	}
 	delete pRouteList;
 	delete g_FloatingToolbarConfigMenu;
+	delete pDummyChart;
 }
 
 ChartCanvas * MainFrame::GetCanvas()
@@ -4300,7 +4301,7 @@ bool MainFrame::DoChartUpdate( void )
 	if( 0 == ChartData->BuildChartStack( &WorkStack, tLat, tLon, g_sticky_chart ) )       // Bogus Lat, Lon?
 	{
 		if( NULL == pDummyChart ) {
-			pDummyChart = new ChartDummy;
+			pDummyChart = new chart::ChartDummy;
 			bNewChart = true;
 		}
 
@@ -4397,7 +4398,7 @@ bool MainFrame::DoChartUpdate( void )
 			//  Open a Dummy Chart
 			if( NULL == pProposed ) {
 				if( NULL == pDummyChart ) {
-					pDummyChart = new ChartDummy;
+					pDummyChart = new chart::ChartDummy;
 					bNewChart = true;
 				}
 

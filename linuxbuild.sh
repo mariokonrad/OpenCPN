@@ -17,6 +17,7 @@ function usage()
 	echo "  --verbose    | -v  : verbose"
 	echo "  --info             : print just info"
 	echo "  --cppcheck         : runs cppcheck on the entire core"
+	echo "  --understand       : creates a database for SciTools Understand"
 	echo ""
 	echo "Options altering the default (prepare, build, install, no packaging, not incremental):"
 	echo "  --increment  | -i  : build incrementally (no prior clean)"
@@ -43,7 +44,7 @@ cores=`grep -i 'processor' /proc/cpuinfo | wc -l`
 
 # parse options
 
-args=`getopt --options "hrcvij:" --longoptions help,release,package,clean,verbose,info,increment,no-install,make,prepare,install,cppcheck -- "$@"`
+args=`getopt --options "hrcvij:" --longoptions help,release,package,clean,verbose,info,increment,no-install,make,prepare,install,cppcheck,understand -- "$@"`
 if [ $? != 0 ] ; then
 	echo "Parameter error. abort." >&2
 	exit 1
@@ -59,6 +60,7 @@ install=1
 create_packages=0
 incremental=0
 opt_cppcheck=0
+opt_understand=0
 
 while true ; do
 	case "$1" in
@@ -84,6 +86,10 @@ while true ; do
 			;;
 		--cppcheck)
 			opt_cppcheck=1
+			;;
+		--understand)
+			prepare=1
+			opt_understand=1
 			;;
 		--no-build)
 			build=0
@@ -174,6 +180,7 @@ if [ ${verbose} -ne 0 ] ; then
 	echo "  install        : ${install}"
 	echo "  create packages: ${create_packages}"
 	echo "  cppcheck       : ${opt_cppcheck}"
+	echo "  understand     : ${opt_understand}"
 	echo ""
 fi
 
@@ -181,23 +188,6 @@ if [ ${info} -ne 0 ] ; then
 	exit 0
 fi
 
-
-function execute_cppcheck()
-{
-	if [ ! -x `which cppcheck` ] ; then
-		echo "error: cppcheck not found. abort."
-		exit 1
-	fi
-
-	cppcheck \
-		-Isrc \
-		--enable=all \
-		--std=c++03 --std=posix \
-		--platform=unix64 \
-		--language=c++ \
-		--force \
-		$(find src -name "*.cpp" -o -name "*.h" -type f)
-}
 
 function check_build_dir()
 {
@@ -232,9 +222,66 @@ function exec_prepare()
 	check_build_dir
 	cd ${BUILD_DIR}
 
-	cmake -DPREFIX=${INSTALL_DIR} -DBUILD_TYPE=${BUILD_TYPE} ${SRC_DIR}
+	cmake \
+		-DPREFIX=${INSTALL_DIR} \
+		-DBUILD_TYPE=${BUILD_TYPE} \
+		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+		${SRC_DIR}
 
 	cd ${CURRENT_DIR}
+}
+
+function exec_cppcheck()
+{
+	if [ ! -x `which cppcheck` ] ; then
+		echo "error: cppcheck not found. abort."
+		exit 1
+	fi
+
+	cppcheck \
+		-Isrc \
+		--enable=all \
+		--std=c++03 --std=posix \
+		--platform=unix64 \
+		--language=c++ \
+		--force \
+		$(find src -name "*.cpp" -o -name "*.h" -type f)
+}
+
+function exec_understand()
+{
+	database=${BUILD_DIR}/opencpn.udb
+	binary=$HOME/bin/scitools/bin/linux64/und
+
+	if [ ! -x "${binary}" ] ; then
+		echo "error: Understand binary (${binary}) not found. abort."
+		exit 1
+	fi
+
+	rm -f ${database}
+
+	${binary} -db ${database} \
+		create -languages C++ \
+		settings -C++AddFoundFilesToProject on \
+		settings -C++MacrosAdd VERSION="1" \
+		settigns -C++IncludesAdd "/usr/include" \
+		settigns -C++IncludesAdd "/usr/include/linux" \
+		settings -C++IncludesAdd "/usr/include/x86_64-linux-gnu" \
+		settings -C++IncludesAdd "/usr/include/x86_64-linux-gnu/c++/4.7" \
+		settings -C++IncludesAdd "/usr/include/c++/4.7" \
+		settings -C++IncludesAdd "/usr/include/c++/4.7/tr1" \
+		settings -MetricAdd "Cyclomatic" \
+		settings -MetricAdd "MaxNesting" \
+		settings -MetricAdd "CountClassCoupled" \
+		settings -MetricAdd "CountLineCode" \
+		settings -MetricAdd "CountLineCodeExe" \
+		settings -MetricAdd "CountDeclClass" \
+		settings -MetricAdd "CountDeclMethodFriend" \
+		settings -MetricAdd "CountDeclMethodPublic" \
+		settings -MetricAdd "CountDeclInstanceMethod" \
+		settings -MetricAdd "CountDeclInstanceVariable" \
+		add ${BUILD_DIR}/compile_commands.json \
+		analyze
 }
 
 function exec_build()
@@ -287,12 +334,6 @@ function exec_packaging()
 }
 
 
-
-if [ ${opt_cppcheck} -ne 0 ] ; then
-	execute_cppcheck
-	exit 0
-fi
-
 # remove all directories
 if [ ${cleanup} -ne 0 ] ; then
 	if [ -d ${INSTALL_DIR} ] ; then
@@ -329,6 +370,21 @@ if [ ${incremental} -eq 0 ] ; then
 		mkdir -p ${DEPLOY_DIR}
 	fi
 fi
+
+# execution of various commands
+
+if [ ${opt_understand} -ne 0 ] ; then
+	exec_prepare
+	exec_understand
+	exit 0
+fi
+
+if [ ${opt_cppcheck} -ne 0 ] ; then
+	exec_cppcheck
+	exit 0
+fi
+
+# default execution
 
 exec_prepare
 exec_build

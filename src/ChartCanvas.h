@@ -555,6 +555,8 @@ class ChartCanvas : public wxWindow
 
 		bool m_benable_autopan;
 		bool m_b_paint_enable;
+
+		int m_AISRollover_MMSI;
 };
 
 #endif

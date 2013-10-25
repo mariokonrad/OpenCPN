@@ -25,10 +25,8 @@
 #define KML_H
 
 #include <vector>
-#include "tinyxml/tinyxml.h"
+#include <tinyxml/tinyxml.h>
 #include <wx/string.h>
-
-#define KML_INSERT_EXTRADATA true
 
 class Route;
 class RoutePoint;
@@ -49,42 +47,46 @@ enum KmlPastebufferType {
 /// see http://en.wikipedia.org/wiki/Keyhole_Markup_Language
 class Kml
 {
-	private:
-		class dPoint
-		{
-			public:
-				double x,y,z;
-		};
-		typedef std::vector<dPoint> dPointList;
+public:
+	Kml();
+	~Kml();
 
+	KmlPastebufferType ParsePasteBuffer();
+	Route* GetParsedRoute();
+	Track* GetParsedTrack();
+	RoutePoint* GetParsedRoutePoint();
+
+	static wxString MakeKmlFromRoute(Route* route, bool insertSeqNames = false);
+	static wxString MakeKmlFromTrack(Track* track);
+	static wxString MakeKmlFromWaypoint(RoutePoint* routepoint);
+	static void CopyWaypointToClipboard(RoutePoint* routepoint);
+	static void CopyRouteToClipboard(Route* route);
+	static void CopyTrackToClipboard(Track* route);
+
+private:
+	class dPoint
+	{
 	public:
-		Kml();
-		~Kml();
-		KmlPastebufferType ParsePasteBuffer();
-		Route* GetParsedRoute() { return parsedRoute; }
-		Track* GetParsedTrack() { return parsedTrack; }
-		RoutePoint* GetParsedRoutePoint() { return parsedRoutePoint; }
+		double x;
+		double y;
+		double z;
+	};
 
-		static wxString MakeKmlFromRoute(Route * route, bool insertSeqNames = false);
-		static wxString MakeKmlFromTrack(Track * track);
-		static wxString MakeKmlFromWaypoint(RoutePoint * routepoint);
-		static void CopyWaypointToClipboard(RoutePoint * routepoint);
-		static void CopyRouteToClipboard(Route * route);
-		static void CopyTrackToClipboard(Track * route);
+	typedef std::vector<dPoint> dPointList;
 
-	private:
-		KmlPastebufferType ParseOnePlacemarkPoint(TiXmlNode* node, wxString& name);
-		KmlPastebufferType ParseTrack(TiXmlNode* node, wxString& name);
-		int ParseCoordinates(TiXmlNode* node, dPointList& points);
-		static TiXmlElement * StandardHead(TiXmlDocument& xmlDoc, wxString name);
-		static std::string PointPlacemark(TiXmlElement* document, const RoutePoint * routepoint);
+	KmlPastebufferType ParseOnePlacemarkPoint(TiXmlNode* node, wxString& name);
+	KmlPastebufferType ParseTrack(TiXmlNode* node, wxString& name);
+	int ParseCoordinates(TiXmlNode* node, dPointList& points);
+	static TiXmlElement* StandardHead(TiXmlDocument& xmlDoc, wxString name);
+	static std::string PointPlacemark(TiXmlElement* document, const RoutePoint* routepoint);
 
-		wxString kmlText;
-		RoutePoint * parsedRoutePoint;
-		Route * parsedRoute;
-		Track * parsedTrack;
-		static bool insertQtVlmExtendedData;
-		static int seqCounter;
+	wxString kmlText;
+	RoutePoint* parsedRoutePoint;
+	Route* parsedRoute;
+	Track* parsedTrack;
+
+	static bool insertQtVlmExtendedData;
+	static int seqCounter;
 };
 
 #endif

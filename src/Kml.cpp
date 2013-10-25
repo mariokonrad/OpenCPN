@@ -33,18 +33,18 @@
 #include <wx/datetime.h>
 #include <wx/clipbrd.h>
 
-extern MainFrame * gFrame;
+extern MainFrame* gFrame;
 
 int Kml::seqCounter = 0;
 bool Kml::insertQtVlmExtendedData = false;
 
-int Kml::ParseCoordinates( TiXmlNode* node, dPointList& points )
+int Kml::ParseCoordinates(TiXmlNode* node, dPointList& points)
 {
-	TiXmlElement* e = node->FirstChildElement( "coordinates" );
-	if( ! e ) {
-		wxString msg( _T("KML Parser found no <coordinates> for the element: ") );
-		msg << wxString( node->ToElement()->Value(), wxConvUTF8 );
-		wxLogMessage( msg );
+	TiXmlElement* e = node->FirstChildElement("coordinates");
+	if (!e) {
+		wxString msg(_T("KML Parser found no <coordinates> for the element: "));
+		msg << wxString(node->ToElement()->Value(), wxConvUTF8);
+		wxLogMessage(msg);
 		return 0;
 	}
 
@@ -52,38 +52,39 @@ int Kml::ParseCoordinates( TiXmlNode* node, dPointList& points )
 
 	dPoint point;
 
-	std::stringstream ss( e->GetText() );
+	std::stringstream ss(e->GetText());
 	std::string txtCoord;
 
-	while(1) {
-		if (! std::getline(ss, txtCoord, ','))
+	while (1) {
+		if (!std::getline(ss, txtCoord, ','))
 			break;
 		if (txtCoord.length() == 0)
 			break;
 
-		point.x = atof( txtCoord.c_str() ); // FIXME: already using the standard! use istringstream not atof
-		std::getline( ss, txtCoord, ',' );
-		point.y = atof( txtCoord.c_str() );
-		std::getline( ss, txtCoord, ' ' );
-		point.z = atof( txtCoord.c_str() );
+		point.x = atof(
+			txtCoord.c_str()); // FIXME: already using the standard! use istringstream not atof
+		std::getline(ss, txtCoord, ',');
+		point.y = atof(txtCoord.c_str());
+		std::getline(ss, txtCoord, ' ');
+		point.z = atof(txtCoord.c_str());
 
-		points.push_back( point );
+		points.push_back(point);
 	}
 	return points.size();
 }
 
-KmlPastebufferType Kml::ParseTrack( TiXmlNode* node, wxString& name )
+KmlPastebufferType Kml::ParseTrack(TiXmlNode* node, wxString& name)
 {
 	parsedTrack = new Track();
 	parsedTrack->m_RouteNameString = name;
 
-	if( 0 == strncmp( node->ToElement()->Value(), "LineString", 10 ) ) {
+	if (0 == strncmp(node->ToElement()->Value(), "LineString", 10)) {
 		dPointList coordinates;
-		if( ParseCoordinates( node, coordinates ) > 2 ) {
-			RoutePoint * routepoint = NULL;
+		if (ParseCoordinates(node, coordinates) > 2) {
+			RoutePoint* routepoint = NULL;
 
-			for( unsigned int i=0; i<coordinates.size(); i++ ) {
-				routepoint = new RoutePoint();
+			for (unsigned int i = 0; i < coordinates.size(); i++) {
+				routepoint = new RoutePoint;
 				routepoint->m_lat = coordinates[i].y;
 				routepoint->m_lon = coordinates[i].x;
 				routepoint->m_bIsInTrack = true;
@@ -93,34 +94,35 @@ KmlPastebufferType Kml::ParseTrack( TiXmlNode* node, wxString& name )
 		return KML_PASTE_TRACK;
 	}
 
-	if( 0 == strncmp( node->ToElement()->Value(), "gx:Track", 8 ) ) {
+	if (0 == strncmp(node->ToElement()->Value(), "gx:Track", 8)) {
 		RoutePoint* routepoint = NULL;
-		TiXmlElement* point = node->FirstChildElement( "gx:coord" );
+		TiXmlElement* point = node->FirstChildElement("gx:coord");
 		int pointCounter = 0;
 
-		for( ; point; point=point->NextSiblingElement( "gx:coord" ) ) {
-			routepoint = new RoutePoint();
+		for (; point; point = point->NextSiblingElement("gx:coord")) {
+			routepoint = new RoutePoint;
 
-			std::stringstream ss( point->GetText() );
+			std::stringstream ss(point->GetText());
 			std::string txtCoord;
-			std::getline( ss, txtCoord, ' ' );
-			routepoint->m_lon = atof( txtCoord.c_str() );
-			std::getline( ss, txtCoord, ' ' );
-			routepoint->m_lat = atof( txtCoord.c_str() );
+			std::getline(ss, txtCoord, ' ');
+			routepoint->m_lon = atof(txtCoord.c_str());
+			std::getline(ss, txtCoord, ' ');
+			routepoint->m_lat = atof(txtCoord.c_str());
 
-			parsedTrack->AddPoint( routepoint );
+			parsedTrack->AddPoint(routepoint);
 			pointCounter++;
 		}
 
 		wxRoutePointListNode* rpNode = parsedTrack->pRoutePointList->GetFirst();
-		TiXmlElement* when = node->FirstChildElement( "when" );
+		TiXmlElement* when = node->FirstChildElement("when");
 
 		wxDateTime whenTime;
 
-		for( ; when; when=when->NextSiblingElement( "when" ) ) {
+		for (; when; when = when->NextSiblingElement("when")) {
 			routepoint = rpNode->GetData();
-			if( ! routepoint ) continue;
-			whenTime.ParseFormat( wxString( when->GetText(), wxConvUTF8 ), _T("%Y-%m-%dT%H:%M:%SZ") );
+			if (!routepoint)
+				continue;
+			whenTime.ParseFormat(wxString(when->GetText(), wxConvUTF8), _T("%Y-%m-%dT%H:%M:%SZ"));
 			routepoint->SetCreateTime(whenTime);
 			rpNode = rpNode->GetNext();
 		}
@@ -130,52 +132,55 @@ KmlPastebufferType Kml::ParseTrack( TiXmlNode* node, wxString& name )
 	return KML_PASTE_INVALID;
 }
 
-KmlPastebufferType Kml::ParseOnePlacemarkPoint( TiXmlNode* node, wxString& name )
+KmlPastebufferType Kml::ParseOnePlacemarkPoint(TiXmlNode* node, wxString& name)
 {
-	double newLat = 0., newLon = 0.;
+	double newLat = 0.0;
+	double newLon = 0.0;
 	dPointList coordinates;
 
-	if( ParseCoordinates( node->ToElement(), coordinates ) ) {
+	if (ParseCoordinates(node->ToElement(), coordinates)) {
 		newLat = coordinates[0].y;
 		newLon = coordinates[0].x;
 	}
 
-	if( newLat == 0.0 && newLon == 0.0 ) {
-		wxString msg( _T("KML Parser failed to convert <Point> coordinates.") );
-		wxLogMessage( msg );
+	if (newLat == 0.0 && newLon == 0.0) {
+		wxString msg(_T("KML Parser failed to convert <Point> coordinates."));
+		wxLogMessage(msg);
 		return KML_PASTE_INVALID;
 	}
 	wxString pointName = wxEmptyString;
-	TiXmlElement* e = node->Parent()->FirstChild( "name" )->ToElement();
-	if( e ) pointName = wxString( e->GetText(), wxConvUTF8 );
+	TiXmlElement* e = node->Parent()->FirstChild("name")->ToElement();
+	if (e)
+		pointName = wxString(e->GetText(), wxConvUTF8);
 
 	wxString pointDescr = wxEmptyString;
-	e = node->Parent()->FirstChildElement( "description" );
+	e = node->Parent()->FirstChildElement("description");
 
 	// If the <description> is an XML element we must convert it to text,
 	// otherwise it gets lost.
-	if( e ) {
+	if (e) {
 		TiXmlNode* n = e->FirstChild();
-		if( n ) switch( n->Type() ){
-			case TiXmlNode::TINYXML_TEXT:
-				pointDescr = wxString( e->GetText(), wxConvUTF8 );
-				break;
-			case TiXmlNode::TINYXML_ELEMENT:
-				TiXmlPrinter printer;
-				printer.SetIndent( "\t" );
-				n->Accept( &printer );
-				pointDescr = wxString( printer.CStr(), wxConvUTF8 );
-				break;
-		}
+		if (n)
+			switch (n->Type()) {
+				case TiXmlNode::TINYXML_TEXT:
+					pointDescr = wxString(e->GetText(), wxConvUTF8);
+					break;
+				case TiXmlNode::TINYXML_ELEMENT:
+					TiXmlPrinter printer;
+					printer.SetIndent("\t");
+					n->Accept(&printer);
+					pointDescr = wxString(printer.CStr(), wxConvUTF8);
+					break;
+			}
 	}
 
 	// Extended data will override description.
-	TiXmlNode* n = node->Parent()->FirstChild( "ExtendedData" );
-	if( n ) {
+	TiXmlNode* n = node->Parent()->FirstChild("ExtendedData");
+	if (n) {
 		TiXmlPrinter printer;
-		printer.SetIndent( "\t" );
-		n->Accept( &printer );
-		pointDescr = wxString( printer.CStr(), wxConvUTF8 );
+		printer.SetIndent("\t");
+		n->Accept(&printer);
+		pointDescr = wxString(printer.CStr(), wxConvUTF8);
 	}
 
 	parsedRoutePoint = new RoutePoint();
@@ -184,70 +189,88 @@ KmlPastebufferType Kml::ParseOnePlacemarkPoint( TiXmlNode* node, wxString& name 
 	parsedRoutePoint->m_bIsolatedMark = true;
 	parsedRoutePoint->m_bPtIsSelected = false;
 	parsedRoutePoint->m_MarkDescription = pointDescr;
-	parsedRoutePoint->SetName( pointName );
+	parsedRoutePoint->SetName(pointName);
 
 	return KML_PASTE_WAYPOINT;
 }
 
 KmlPastebufferType Kml::ParsePasteBuffer()
 {
-	if( !wxTheClipboard->IsOpened() )
-		if( ! wxTheClipboard->Open() ) return KML_PASTE_INVALID;
+	if (!wxTheClipboard->IsOpened())
+		if (!wxTheClipboard->Open())
+			return KML_PASTE_INVALID;
 
 	wxTextDataObject data;
-	wxTheClipboard->GetData( data );
+	wxTheClipboard->GetData(data);
 	kmlText = data.GetText();
 	wxTheClipboard->Close();
 
-	if( kmlText.Find( _T("<kml") ) == wxNOT_FOUND ) return KML_PASTE_INVALID;
+	if (kmlText.Find(_T("<kml")) == wxNOT_FOUND)
+		return KML_PASTE_INVALID;
 
 	TiXmlDocument doc;
-	if( ! doc.Parse( kmlText.mb_str( wxConvUTF8 ), 0, TIXML_ENCODING_UTF8 ) ) {
-		wxLogError( wxString( doc.ErrorDesc(), wxConvUTF8 ) );
+	if (!doc.Parse(kmlText.mb_str(wxConvUTF8), 0, TIXML_ENCODING_UTF8)) {
+		wxLogError(wxString(doc.ErrorDesc(), wxConvUTF8));
 		return KML_PASTE_INVALID;
 	}
-	if( 0 != strncmp( doc.RootElement()->Value(), "kml", 3 ) ) return KML_PASTE_INVALID;
+	if (0 != strncmp(doc.RootElement()->Value(), "kml", 3))
+		return KML_PASTE_INVALID;
 
-	TiXmlHandle docHandle( doc.RootElement() );
+	TiXmlHandle docHandle(doc.RootElement());
 
 	// We may or may not have a <document> depending on what the user copied.
-	TiXmlElement* placemark = docHandle.FirstChild( "Document" ).FirstChild( "Placemark" ).ToElement();
-	if( ! placemark ) {
-		placemark = docHandle.FirstChild( "Placemark" ).ToElement();
+	TiXmlElement* placemark = docHandle.FirstChild("Document").FirstChild("Placemark").ToElement();
+	if (!placemark) {
+		placemark = docHandle.FirstChild("Placemark").ToElement();
 	}
-	if( ! placemark ) {
-		wxString msg( _T("KML Parser found no <Placemark> tag in the KML.") );
-		wxLogMessage( msg );
+	if (!placemark) {
+		wxString msg(_T("KML Parser found no <Placemark> tag in the KML."));
+		wxLogMessage(msg);
 		return KML_PASTE_INVALID;
 	}
 
 	int pointCounter = 0;
 	wxString name;
-	for( ; placemark; placemark=placemark->NextSiblingElement() ) {
-		TiXmlElement* e = placemark->FirstChildElement( "name" );
-		if( e ) name = wxString( e->GetText(),wxConvUTF8 );
+	for (; placemark; placemark = placemark->NextSiblingElement()) {
+		TiXmlElement* e = placemark->FirstChildElement("name");
+		if (e)
+			name = wxString(e->GetText(), wxConvUTF8);
 		pointCounter++;
 	}
 
-	if( pointCounter == 1 ) {
+	if (pointCounter == 1) {
 
 		// Is it a single waypoint?
-		TiXmlNode* element = docHandle.FirstChild( "Document" ).FirstChild( "Placemark" ).FirstChild( "Point" ).ToNode();
-		if( ! element ) element = docHandle.FirstChild( "Placemark" ).FirstChild( "Point" ).ToNode();
-		if( element ) return ParseOnePlacemarkPoint( element, name );
+		TiXmlNode* element
+			= docHandle.FirstChild("Document").FirstChild("Placemark").FirstChild("Point").ToNode();
+		if (!element)
+			element = docHandle.FirstChild("Placemark").FirstChild("Point").ToNode();
+		if (element)
+			return ParseOnePlacemarkPoint(element, name);
 
 		// Is it a dumb <LineString> track?
-		element = docHandle.FirstChild( "Document" ).FirstChild( "Placemark" ).FirstChild( "LineString" ).ToNode();
-		if( ! element ) element = docHandle.FirstChild( "Placemark" ).FirstChild( "LineString" ).ToNode();
-		if( element ) return ParseTrack( element, name );
+		element = docHandle.FirstChild("Document")
+					  .FirstChild("Placemark")
+					  .FirstChild("LineString")
+					  .ToNode();
+		if (!element)
+			element = docHandle.FirstChild("Placemark").FirstChild("LineString").ToNode();
+		if (element)
+			return ParseTrack(element, name);
 
 		// Is it a smart extended <gx:track> track?
-		element = docHandle.FirstChild( "Document" ).FirstChild( "Placemark" ).FirstChild( "gx:Track" ).ToNode();
-		if( ! element ) element = docHandle.FirstChild( "Placemark" ).FirstChild( "gx:Track" ).ToNode();
-		if( element ) return ParseTrack( element, name );
+		element = docHandle.FirstChild("Document")
+					  .FirstChild("Placemark")
+					  .FirstChild("gx:Track")
+					  .ToNode();
+		if (!element)
+			element = docHandle.FirstChild("Placemark").FirstChild("gx:Track").ToNode();
+		if (element)
+			return ParseTrack(element, name);
 
-		wxString msg( _T("KML Parser found a single <Placemark> in the KML, but no useable data in it.") );
-		wxLogMessage( msg );
+		wxString msg(
+			_T("KML Parser found a single <Placemark> in the KML, but no useable data in it."));
+		wxLogMessage(msg);
 		return KML_PASTE_INVALID;
 	}
 
@@ -256,181 +279,184 @@ KmlPastebufferType Kml::ParsePasteBuffer()
 	parsedRoute = new Route();
 	bool foundPoints = false;
 	bool foundTrack = false;
-	TiXmlElement* element = docHandle.FirstChild( "Document" ).FirstChild( "name" ).ToElement();
-	if( element )
-		parsedRoute->m_RouteNameString = wxString( element->GetText(), wxConvUTF8 );
+	TiXmlElement* element = docHandle.FirstChild("Document").FirstChild("name").ToElement();
+	if (element)
+		parsedRoute->m_RouteNameString = wxString(element->GetText(), wxConvUTF8);
 
-	placemark = docHandle.FirstChild( "Document" ).FirstChild( "Placemark" ).ToElement();
-	for( ; placemark; placemark=placemark->NextSiblingElement() ) {
+	placemark = docHandle.FirstChild("Document").FirstChild("Placemark").ToElement();
+	for (; placemark; placemark = placemark->NextSiblingElement()) {
 
-		TiXmlNode* n = placemark->FirstChild( "Point" );
-		if( n ) {
-			if( ParseOnePlacemarkPoint( n->ToElement(), name ) == KML_PASTE_WAYPOINT ) {
-				parsedRoute->AddPoint( new RoutePoint( parsedRoutePoint ) );
+		TiXmlNode* n = placemark->FirstChild("Point");
+		if (n) {
+			if (ParseOnePlacemarkPoint(n->ToElement(), name) == KML_PASTE_WAYPOINT) {
+				parsedRoute->AddPoint(new RoutePoint(parsedRoutePoint));
 				foundPoints = true;
 			}
 		}
 
-		n = placemark->FirstChild( "LineString" );
-		if( n ) {
-			ParseTrack( n->ToElement(), name );
+		n = placemark->FirstChild("LineString");
+		if (n) {
+			ParseTrack(n->ToElement(), name);
 			foundTrack = true;
 		}
-		n = placemark->FirstChild( "gx:Track" );
-		if( n ) {
-			ParseTrack( n->ToElement(), name );
+		n = placemark->FirstChild("gx:Track");
+		if (n) {
+			ParseTrack(n->ToElement(), name);
 			foundTrack = true;
 		}
 	}
 
-	if( foundPoints && parsedRoute->GetnPoints() < 2 ) {
-		wxString msg( _T("KML Parser did not find enough <Point>s to make a route.") );
-		wxLogMessage( msg );
+	if (foundPoints && parsedRoute->GetnPoints() < 2) {
+		wxString msg(_T("KML Parser did not find enough <Point>s to make a route."));
+		wxLogMessage(msg);
 		foundPoints = false;
 	}
 
-	if( foundPoints && ! foundTrack ) return KML_PASTE_ROUTE;
-	if( foundPoints && foundTrack ) return KML_PASTE_ROUTE_TRACK;
-	if( ! foundPoints && foundTrack ) return KML_PASTE_TRACK;
+	if (foundPoints && !foundTrack)
+		return KML_PASTE_ROUTE;
+	if (foundPoints && foundTrack)
+		return KML_PASTE_ROUTE_TRACK;
+	if (!foundPoints && foundTrack)
+		return KML_PASTE_TRACK;
 	return KML_PASTE_INVALID;
 }
 
-TiXmlElement* Kml::StandardHead( TiXmlDocument& xmlDoc, wxString name )
+TiXmlElement* Kml::StandardHead(TiXmlDocument& xmlDoc, wxString name)
 {
-	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
-	xmlDoc.LinkEndChild( decl );
+	TiXmlDeclaration* decl = new TiXmlDeclaration("1.0", "UTF-8", "");
+	xmlDoc.LinkEndChild(decl);
 
-	TiXmlElement* kml = new TiXmlElement( "kml" );
-	kml->SetAttribute( "xmlns:atom", "http://www.w3.org/2005/Atom" );
-	kml->SetAttribute( "xmlns", "http://www.opengis.net/kml/2.2" );
-	kml->SetAttribute( "xmlns:gx", "http://www.google.com/kml/ext/2.2" );
-	kml->SetAttribute( "xmlns:kml", "http://www.opengis.net/kml/2.2" );
+	TiXmlElement* kml = new TiXmlElement("kml");
+	kml->SetAttribute("xmlns:atom", "http://www.w3.org/2005/Atom");
+	kml->SetAttribute("xmlns", "http://www.opengis.net/kml/2.2");
+	kml->SetAttribute("xmlns:gx", "http://www.google.com/kml/ext/2.2");
+	kml->SetAttribute("xmlns:kml", "http://www.opengis.net/kml/2.2");
 
-	if( insertQtVlmExtendedData )
-		kml->SetAttribute( "xmlns:vlm", "http://virtual-loup-de-mer.org" );
+	if (insertQtVlmExtendedData)
+		kml->SetAttribute("xmlns:vlm", "http://virtual-loup-de-mer.org");
 
-	xmlDoc.LinkEndChild( kml );
+	xmlDoc.LinkEndChild(kml);
 
-	TiXmlElement* document = new TiXmlElement( "Document" );
-	kml->LinkEndChild( document );
-	TiXmlElement* docName = new TiXmlElement( "name" );
-	document->LinkEndChild( docName );
-	TiXmlText* docNameVal = new TiXmlText( name.mb_str( wxConvUTF8 ) );
-	docName->LinkEndChild( docNameVal );
+	TiXmlElement* document = new TiXmlElement("Document");
+	kml->LinkEndChild(document);
+	TiXmlElement* docName = new TiXmlElement("name");
+	document->LinkEndChild(docName);
+	TiXmlText* docNameVal = new TiXmlText(name.mb_str(wxConvUTF8));
+	docName->LinkEndChild(docNameVal);
 	return document;
 }
 
-std::string Kml::PointPlacemark(  TiXmlElement* document, const RoutePoint * routepoint )
+std::string Kml::PointPlacemark(TiXmlElement* document, const RoutePoint* routepoint)
 {
-	TiXmlElement* pmPoint = new TiXmlElement( "Placemark" );
-	document->LinkEndChild( pmPoint );
-	TiXmlElement* pmPointName = new TiXmlElement( "name" );
-	pmPoint->LinkEndChild( pmPointName );
-	TiXmlText* pmPointNameVal = new TiXmlText( routepoint->GetName().mb_str( wxConvUTF8 ) );
-	pmPointName->LinkEndChild( pmPointNameVal );
+	TiXmlElement* pmPoint = new TiXmlElement("Placemark");
+	document->LinkEndChild(pmPoint);
+	TiXmlElement* pmPointName = new TiXmlElement("name");
+	pmPoint->LinkEndChild(pmPointName);
+	TiXmlText* pmPointNameVal = new TiXmlText(routepoint->GetName().mb_str(wxConvUTF8));
+	pmPointName->LinkEndChild(pmPointNameVal);
 
-	TiXmlElement* pointDescr = new TiXmlElement( "description" );
-	pmPoint->LinkEndChild( pointDescr );
+	TiXmlElement* pointDescr = new TiXmlElement("description");
+	pmPoint->LinkEndChild(pointDescr);
 
 	bool descrIsPlainText = true;
-	wxCharBuffer descrString = routepoint->m_MarkDescription.mb_str( wxConvUTF8 );
+	wxCharBuffer descrString = routepoint->m_MarkDescription.mb_str(wxConvUTF8);
 
-	if( insertQtVlmExtendedData ) {
+	if (insertQtVlmExtendedData) {
 		// Does the RoutePoint description parse as XML with an <ExtendedData> root tag?
 		TiXmlDocument descrDoc;
 		TiXmlElement* extendedData;
-		if( descrDoc.Parse( descrString, 0, TIXML_ENCODING_UTF8 ) ) {
-			if( 0 == strncmp( descrDoc.RootElement()->Value(), "ExtendedData", 12 ) ) {
+		if (descrDoc.Parse(descrString, 0, TIXML_ENCODING_UTF8)) {
+			if (0 == strncmp(descrDoc.RootElement()->Value(), "ExtendedData", 12)) {
 				descrIsPlainText = false;
 				extendedData = descrDoc.RootElement();
-				TiXmlHandle docHandle( &descrDoc );
-				TiXmlElement* seq = docHandle.FirstChild( "ExtendedData" ).FirstChild( "vlm:sequence" ).ToElement();
-				if( ! seq ) {
-					seq = new TiXmlElement( "vlm:sequence" );
+				TiXmlHandle docHandle(&descrDoc);
+				TiXmlElement* seq
+					= docHandle.FirstChild("ExtendedData").FirstChild("vlm:sequence").ToElement();
+				if (!seq) {
+					seq = new TiXmlElement("vlm:sequence");
 					TiXmlText* snVal = new TiXmlText(
-							wxString::Format( _T("%04d"), seqCounter ).mb_str( wxConvUTF8 ) );
-					seq->LinkEndChild( snVal );
-					descrDoc.RootElement()->LinkEndChild( seq );
+						wxString::Format(_T("%04d"), seqCounter).mb_str(wxConvUTF8));
+					seq->LinkEndChild(snVal);
+					descrDoc.RootElement()->LinkEndChild(seq);
 				}
-				pmPoint->LinkEndChild( descrDoc.RootElement()->Clone() );
+				pmPoint->LinkEndChild(descrDoc.RootElement()->Clone());
 			}
 		}
-		if( descrIsPlainText ) {
+		if (descrIsPlainText) {
 			// We want Sequence names but there was some non-parsing stuff in the description.
 			// Push that into a sub-tag of an XML formatted description.
-			extendedData = new TiXmlElement( "ExtendedData" );
-			pmPoint->LinkEndChild( extendedData );
-			TiXmlElement* seq = new TiXmlElement( "vlm:sequence" );
-			extendedData->LinkEndChild( seq );
-			TiXmlText* snVal = new TiXmlText(
-					wxString::Format( _T("%04d"), seqCounter ).mb_str( wxConvUTF8 ) );
-			seq->LinkEndChild( snVal );
+			extendedData = new TiXmlElement("ExtendedData");
+			pmPoint->LinkEndChild(extendedData);
+			TiXmlElement* seq = new TiXmlElement("vlm:sequence");
+			extendedData->LinkEndChild(seq);
+			TiXmlText* snVal
+				= new TiXmlText(wxString::Format(_T("%04d"), seqCounter).mb_str(wxConvUTF8));
+			seq->LinkEndChild(snVal);
 
-			if( routepoint->m_MarkDescription.Length() ) {
-				TiXmlElement* data = new TiXmlElement( "Data" );
-				data->SetAttribute( "name", "Description" );
-				extendedData->LinkEndChild( data );
+			if (routepoint->m_MarkDescription.Length()) {
+				TiXmlElement* data = new TiXmlElement("Data");
+				data->SetAttribute("name", "Description");
+				extendedData->LinkEndChild(data);
 
-				TiXmlElement* value = new TiXmlElement( "value" );
-				data->LinkEndChild( value );
-				TiXmlText* txtVal = new TiXmlText( descrString );
-				value->LinkEndChild( txtVal );
+				TiXmlElement* value = new TiXmlElement("value");
+				data->LinkEndChild(value);
+				TiXmlText* txtVal = new TiXmlText(descrString);
+				value->LinkEndChild(txtVal);
 			}
 		}
-		if( extendedData && seqCounter == 0 ) {
-			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-			const wxCharBuffer ownshipPos = wxString::Format( _T("%f %f"), nav.lon, nav.lat).mb_str(wxConvUTF8);
-			TiXmlHandle h( extendedData );
-			TiXmlElement* route = h.FirstChild( "vlm:route" ).ToElement();
-			TiXmlElement* ownship = h.FirstChild( "vlm:route" ).FirstChild( "ownship" ).ToElement();
-			if( route ) {
-				if( ownship ) {
+		if (extendedData && seqCounter == 0) {
+			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+			const wxCharBuffer ownshipPos
+				= wxString::Format(_T("%f %f"), nav.lon, nav.lat).mb_str(wxConvUTF8);
+			TiXmlHandle h(extendedData);
+			TiXmlElement* route = h.FirstChild("vlm:route").ToElement();
+			TiXmlElement* ownship = h.FirstChild("vlm:route").FirstChild("ownship").ToElement();
+			if (route) {
+				if (ownship) {
 					TiXmlText* owns = ownship->FirstChild()->ToText();
-					if( owns ) {
-						owns->SetValue( ownshipPos );
+					if (owns) {
+						owns->SetValue(ownshipPos);
 					} else {
-						owns = new TiXmlText( ownshipPos );
-						ownship->LinkEndChild( owns );
+						owns = new TiXmlText(ownshipPos);
+						ownship->LinkEndChild(owns);
 					}
 				} else {
-					ownship = new TiXmlElement( "ownship" );
-					route->LinkEndChild( ownship );
-					TiXmlText* owns = new TiXmlText( ownshipPos );
-					ownship->LinkEndChild( owns );
+					ownship = new TiXmlElement("ownship");
+					route->LinkEndChild(ownship);
+					TiXmlText* owns = new TiXmlText(ownshipPos);
+					ownship->LinkEndChild(owns);
 				}
 			} else {
-				route = new TiXmlElement( "vlm:route" );
-				extendedData->LinkEndChild( route );
-				ownship = new TiXmlElement( "ownship" );
-				route->LinkEndChild( ownship );
-				TiXmlText* owns = new TiXmlText( ownshipPos );
-				ownship->LinkEndChild( owns );
+				route = new TiXmlElement("vlm:route");
+				extendedData->LinkEndChild(route);
+				ownship = new TiXmlElement("ownship");
+				route->LinkEndChild(ownship);
+				TiXmlText* owns = new TiXmlText(ownshipPos);
+				ownship->LinkEndChild(owns);
 			}
 		}
-	}
-
-	else {
+	} else {
 		// Add description as dumb text.
-		TiXmlText* pointDescrVal = new TiXmlText( descrString );
-		pointDescr->LinkEndChild( pointDescrVal );
+		TiXmlText* pointDescrVal = new TiXmlText(descrString);
+		pointDescr->LinkEndChild(pointDescrVal);
 	}
 
-	TiXmlElement* point = new TiXmlElement( "Point" );
-	pmPoint->LinkEndChild( point );
+	TiXmlElement* point = new TiXmlElement("Point");
+	pmPoint->LinkEndChild(point);
 
-	TiXmlElement* pointCoord = new TiXmlElement( "coordinates" );
-	point->LinkEndChild( pointCoord );
+	TiXmlElement* pointCoord = new TiXmlElement("coordinates");
+	point->LinkEndChild(pointCoord);
 
 	std::stringstream pointCoordStr;
 	pointCoordStr << routepoint->m_lon << "," << routepoint->m_lat << ",0. ";
 
-	TiXmlText* pointText = new TiXmlText( pointCoordStr.str() );
-	pointCoord->LinkEndChild( pointText );
+	TiXmlText* pointText = new TiXmlText(pointCoordStr.str());
+	pointCoord->LinkEndChild(pointText);
 
 	return pointCoordStr.str();
 }
 
-wxString Kml::MakeKmlFromRoute( Route* route, bool insertSeq )
+wxString Kml::MakeKmlFromRoute(Route* route, bool insertSeq)
 {
 	insertQtVlmExtendedData = insertSeq;
 	seqCounter = 0;
@@ -438,174 +464,191 @@ wxString Kml::MakeKmlFromRoute( Route* route, bool insertSeq )
 	wxString name = _("OpenCPN Route");
 	if (route->m_RouteNameString.Length())
 		name = route->m_RouteNameString;
-	TiXmlElement* document = StandardHead( xmlDoc, name );
+	TiXmlElement* document = StandardHead(xmlDoc, name);
 
 	std::stringstream lineStringCoords;
 
-	RoutePointList * pointList = route->pRoutePointList;
+	RoutePointList* pointList = route->pRoutePointList;
 	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
-		const RoutePoint * routepoint = *node;
+		const RoutePoint* routepoint = *node;
 		if (!routepoint->m_bIsInTrack) {
 			lineStringCoords << PointPlacemark(document, routepoint);
 			seqCounter++;
 		}
 	}
 
-	TiXmlElement* pmPath = new TiXmlElement( "Placemark" );
-	document->LinkEndChild( pmPath );
+	TiXmlElement* pmPath = new TiXmlElement("Placemark");
+	document->LinkEndChild(pmPath);
 
-	TiXmlElement* pmName = new TiXmlElement( "name" );
-	pmPath->LinkEndChild( pmName );
-	TiXmlText* pmNameVal = new TiXmlText( "Path" );
-	pmName->LinkEndChild( pmNameVal );
+	TiXmlElement* pmName = new TiXmlElement("name");
+	pmPath->LinkEndChild(pmName);
+	TiXmlText* pmNameVal = new TiXmlText("Path");
+	pmName->LinkEndChild(pmNameVal);
 
-	TiXmlElement* linestring = new TiXmlElement( "LineString" );
-	pmPath->LinkEndChild( linestring );
+	TiXmlElement* linestring = new TiXmlElement("LineString");
+	pmPath->LinkEndChild(linestring);
 
-	TiXmlElement* coordinates = new TiXmlElement( "coordinates" );
-	linestring->LinkEndChild( coordinates );
+	TiXmlElement* coordinates = new TiXmlElement("coordinates");
+	linestring->LinkEndChild(coordinates);
 
-	TiXmlText* text = new TiXmlText( lineStringCoords.str() );
-	coordinates->LinkEndChild( text );
+	TiXmlText* text = new TiXmlText(lineStringCoords.str());
+	coordinates->LinkEndChild(text);
 
 	TiXmlPrinter printer;
-	printer.SetIndent( "  " );
-	xmlDoc.Accept( &printer );
+	printer.SetIndent("  ");
+	xmlDoc.Accept(&printer);
 
 	return wxString(printer.CStr(), wxConvUTF8);
 }
 
-
-wxString Kml::MakeKmlFromTrack(Track * track)
+wxString Kml::MakeKmlFromTrack(Track* track)
 {
 	TiXmlDocument xmlDoc;
 	wxString name = _("OpenCPN Track");
 	if (track->m_RouteNameString.Length())
 		name = track->m_RouteNameString;
-	TiXmlElement * document = StandardHead(xmlDoc, name);
+	TiXmlElement* document = StandardHead(xmlDoc, name);
 
-	TiXmlElement * pmTrack = new TiXmlElement("Placemark");
+	TiXmlElement* pmTrack = new TiXmlElement("Placemark");
 	document->LinkEndChild(pmTrack);
 
-	TiXmlElement * pmName = new TiXmlElement("name");
+	TiXmlElement* pmName = new TiXmlElement("name");
 	pmTrack->LinkEndChild(pmName);
-	TiXmlText * pmNameVal = new TiXmlText(track->m_RouteNameString.mb_str(wxConvUTF8));
+	TiXmlText* pmNameVal = new TiXmlText(track->m_RouteNameString.mb_str(wxConvUTF8));
 	pmName->LinkEndChild(pmNameVal);
 
-	TiXmlElement * gxTrack = new TiXmlElement( "gx:Track" );
+	TiXmlElement* gxTrack = new TiXmlElement("gx:Track");
 	pmTrack->LinkEndChild(gxTrack);
 
-	RoutePointList * pointList = track->pRoutePointList;
+	RoutePointList* pointList = track->pRoutePointList;
 	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
-		RoutePoint * routepoint = *node;
+		RoutePoint* routepoint = *node;
 		if (routepoint->m_bIsInTrack) {
-			TiXmlElement * when = new TiXmlElement( "when" );
+			TiXmlElement* when = new TiXmlElement("when");
 			gxTrack->LinkEndChild(when);
 
 			wxDateTime whenTime(routepoint->GetCreateTime());
-			TiXmlText* whenVal = new TiXmlText(whenTime.Format(_T("%Y-%m-%dT%H:%M:%SZ")).mb_str(wxConvUTF8));
+			TiXmlText* whenVal
+				= new TiXmlText(whenTime.Format(_T("%Y-%m-%dT%H:%M:%SZ")).mb_str(wxConvUTF8));
 			when->LinkEndChild(whenVal);
 		}
 	}
 	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
-		const RoutePoint * routepoint = *node;
+		const RoutePoint* routepoint = *node;
 		if (routepoint->m_bIsInTrack) {
-			TiXmlElement * coord = new TiXmlElement("gx:coord");
+			TiXmlElement* coord = new TiXmlElement("gx:coord");
 			gxTrack->LinkEndChild(coord);
-			wxString coordStr = wxString::Format(_T("%f %f 0.0"), routepoint->m_lon, routepoint->m_lat);
+			wxString coordStr
+				= wxString::Format(_T("%f %f 0.0"), routepoint->m_lon, routepoint->m_lat);
 			TiXmlText* coordVal = new TiXmlText(coordStr.mb_str(wxConvUTF8));
 			coord->LinkEndChild(coordVal);
 		}
 	}
 
 	TiXmlPrinter printer;
-	printer.SetIndent( "  " );
-	xmlDoc.Accept( &printer );
+	printer.SetIndent("  ");
+	xmlDoc.Accept(&printer);
 
-	return wxString( printer.CStr(), wxConvUTF8 );
+	return wxString(printer.CStr(), wxConvUTF8);
 }
 
-wxString Kml::MakeKmlFromWaypoint(RoutePoint * routepoint)
+wxString Kml::MakeKmlFromWaypoint(RoutePoint* routepoint)
 {
 	TiXmlDocument xmlDoc;
 	wxString name = _("OpenCPN Waypoint");
-	if( routepoint->GetName().Length() ) name = routepoint->GetName();
-	TiXmlElement* document = StandardHead( xmlDoc, name );
+	if (routepoint->GetName().Length())
+		name = routepoint->GetName();
+	TiXmlElement* document = StandardHead(xmlDoc, name);
 
 	insertQtVlmExtendedData = false;
-	PointPlacemark( document, routepoint );
+	PointPlacemark(document, routepoint);
 
 	TiXmlPrinter printer;
-	printer.SetIndent( "  " );
-	xmlDoc.Accept( &printer );
+	printer.SetIndent("  ");
+	xmlDoc.Accept(&printer);
 
-	return wxString( printer.CStr(), wxConvUTF8 );
+	return wxString(printer.CStr(), wxConvUTF8);
 }
 
-void Kml::CopyRouteToClipboard( Route* route )
+void Kml::CopyRouteToClipboard(Route* route)
 {
 	KmlFormatDialog* formatDlg = new KmlFormatDialog(gFrame);
 	int format = formatDlg->ShowModal();
 
-	if( format != wxID_CANCEL ) {
+	if (format != wxID_CANCEL) {
 		format = formatDlg->GetSelectedFormat();
 		bool extradata = (format == KML_COPY_EXTRADATA);
 
 		::wxBeginBusyCursor();
-		if( wxTheClipboard->Open() ) {
+		if (wxTheClipboard->Open()) {
 			wxTextDataObject* data = new wxTextDataObject;
-			data->SetText( MakeKmlFromRoute( route, extradata ) );
-			wxTheClipboard->SetData( data );
+			data->SetText(MakeKmlFromRoute(route, extradata));
+			wxTheClipboard->SetData(data);
 		}
 		::wxEndBusyCursor();
 	}
 	delete formatDlg;
 }
 
-void Kml::CopyTrackToClipboard( Track* track )
+void Kml::CopyTrackToClipboard(Track* track)
 {
 	::wxBeginBusyCursor();
-	if( wxTheClipboard->Open() ) {
+	if (wxTheClipboard->Open()) {
 		wxTextDataObject* data = new wxTextDataObject;
-		data->SetText( MakeKmlFromTrack( track ) );
-		wxTheClipboard->SetData( data );
+		data->SetText(MakeKmlFromTrack(track));
+		wxTheClipboard->SetData(data);
 	}
 	::wxEndBusyCursor();
 }
 
-void Kml::CopyWaypointToClipboard(RoutePoint * rp)
+void Kml::CopyWaypointToClipboard(RoutePoint* rp)
 {
 	if (wxTheClipboard->Open()) {
-		wxTextDataObject * data = new wxTextDataObject;
+		wxTextDataObject* data = new wxTextDataObject;
 		data->SetText(MakeKmlFromWaypoint(rp));
 		wxTheClipboard->SetData(data);
 	}
 }
 
 Kml::Kml()
+	: parsedRoutePoint(NULL)
+	, parsedRoute(NULL)
+	, parsedTrack(NULL)
 {
-	parsedRoute = NULL;
-	parsedTrack = NULL;
-	parsedRoutePoint = NULL;
 }
 
 Kml::~Kml()
 {
-	if( parsedTrack ) {
-		for( int i=1; i<=parsedTrack->GetnPoints(); i++ ) {
-			if( parsedTrack->GetPoint(i) )
+	if (parsedTrack) {
+		for (int i = 1; i <= parsedTrack->GetnPoints(); i++) {
+			if (parsedTrack->GetPoint(i))
 				delete parsedTrack->GetPoint(i);
 		}
 		delete parsedTrack;
 	}
-	if( parsedRoute ) {
-		for( int i=1; i<=parsedRoute->GetnPoints(); i++ ) {
-			if( parsedRoute->GetPoint(i) )
+	if (parsedRoute) {
+		for (int i = 1; i <= parsedRoute->GetnPoints(); i++) {
+			if (parsedRoute->GetPoint(i))
 				delete parsedRoute->GetPoint(i);
 		}
 		delete parsedRoute;
 	}
-	if( parsedRoutePoint )
+	if (parsedRoutePoint)
 		delete parsedRoutePoint;
+}
+
+Route* Kml::GetParsedRoute()
+{
+	return parsedRoute;
+}
+
+Track* Kml::GetParsedTrack()
+{
+	return parsedTrack;
+}
+
+RoutePoint* Kml::GetParsedRoutePoint()
+{
+	return parsedRoutePoint;
 }
 

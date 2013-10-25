@@ -31,12 +31,12 @@ class wxRadioButton;
 
 class KmlFormatDialog : public wxDialog
 {
-	private:
-		std::vector<wxRadioButton*> choices;
+private:
+	std::vector<wxRadioButton*> choices;
 
-	public:
-		KmlFormatDialog(wxWindow * parent);
-		int GetSelectedFormat();
+public:
+	KmlFormatDialog(wxWindow* parent);
+	int GetSelectedFormat();
 };
 
 #endif

@@ -29,40 +29,40 @@
 
 class Layer
 {
-	public:
-		Layer(int id = -1, const wxString & filename = _T(""), bool visible = false);
-		~Layer(void);
-		wxString CreatePropString(void);
+public:
+	Layer(int id = -1, const wxString& filename = _T(""), bool visible = false);
+	~Layer(void);
+	wxString CreatePropString(void);
 
-		bool IsVisibleOnChart() const;
-		void SetVisibleOnChart(bool viz = true);
+	bool IsVisibleOnChart() const;
+	void SetVisibleOnChart(bool viz = true);
 
-		bool IsVisibleOnListing() const;
-		void SetVisibleOnListing(bool viz = true);
+	bool IsVisibleOnListing() const;
+	void SetVisibleOnListing(bool viz = true);
 
-		bool HasVisibleNames() const;
-		void SetVisibleNames(bool viz = true);
+	bool HasVisibleNames() const;
+	void SetVisibleNames(bool viz = true);
 
-		long getNoOfItems() const;
-		void setNoOfItems(long);
+	long getNoOfItems() const;
+	void setNoOfItems(long);
 
-		int getID() const;
-		void setID(int);
+	int getID() const;
+	void setID(int);
 
-		const wxString & getName() const;
-		void setName(const wxString &);
+	const wxString& getName() const;
+	void setName(const wxString&);
 
-	private:
-		int m_LayerID;
-		long m_NoOfItems;
-		bool m_bHasVisibleNames;
-		bool m_bIsVisibleOnChart;
-		bool m_bIsVisibleOnListing;
-		wxString m_LayerName;
-		wxString m_LayerFileName;
+private:
+	int m_LayerID;
+	long m_NoOfItems;
+	bool m_bHasVisibleNames;
+	bool m_bIsVisibleOnChart;
+	bool m_bIsVisibleOnListing;
+	wxString m_LayerName;
+	wxString m_LayerFileName;
 };
 
-WX_DECLARE_LIST(Layer, LayerList);
+WX_DECLARE_LIST(Layer, LayerList); // FIXME: use std container
 
 wxString GetLayerName(int id);
 Layer * getLayerAtIndex(int index);

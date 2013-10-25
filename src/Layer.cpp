@@ -24,9 +24,9 @@
 #include "Layer.h"
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST(LayerList);
+WX_DEFINE_LIST(LayerList); // FIXME: use std container
 
-LayerList * pLayerList = NULL;
+LayerList* pLayerList = NULL;
 
 wxString GetLayerName(int id)
 {
@@ -41,12 +41,12 @@ wxString GetLayerName(int id)
 	return name;
 }
 
-Layer * getLayerAtIndex(int index)
+Layer* getLayerAtIndex(int index)
 {
 	return pLayerList->Item(index)->GetData();
 }
 
-Layer::Layer(int id, const wxString & filename, bool visible)
+Layer::Layer(int id, const wxString& filename, bool visible)
 	: m_LayerID(id)
 	, m_NoOfItems(0)
 	, m_bHasVisibleNames(true)
@@ -54,7 +54,8 @@ Layer::Layer(int id, const wxString & filename, bool visible)
 	, m_bIsVisibleOnListing(false)
 	, m_LayerName(_T(""))
 	, m_LayerFileName(filename)
-{}
+{
+}
 
 Layer::~Layer(void)
 {
@@ -73,12 +74,12 @@ void Layer::setID(int id)
 	m_LayerID = id;
 }
 
-const wxString & Layer::getName() const
+const wxString& Layer::getName() const
 {
 	return m_LayerName;
 }
 
-void Layer::setName(const wxString & name)
+void Layer::setName(const wxString& name)
 {
 	m_LayerName = name;
 }

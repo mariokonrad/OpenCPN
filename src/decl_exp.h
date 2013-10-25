@@ -32,10 +32,9 @@
 	#endif
 #endif
 
-
 #ifdef __GNUC__
-	#undef  DECL_EXP
-	#define DECL_EXP  __attribute__((visibility("default")))
+	#undef DECL_EXP
+	#define DECL_EXP __attribute__((visibility("default")))
 #endif
 
 #endif

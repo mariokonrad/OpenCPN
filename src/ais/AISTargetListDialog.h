@@ -19,8 +19,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
 #ifndef __AISTARGETLISTDIALOG_H__
 #define __AISTARGETLISTDIALOG_H__
@@ -40,52 +39,51 @@ class wxListEvent;
 class wxAuiManager;
 class wxAuiManagerEvent;
 
-WX_DEFINE_SORTED_ARRAY_INT(int, ArrayOfMMSI);
+WX_DEFINE_SORTED_ARRAY_INT(int, ArrayOfMMSI); // FIXME: use std container
 
-class AISTargetListDialog: public wxPanel
+class AISTargetListDialog : public wxPanel
 {
-      DECLARE_CLASS( AISTargetListDialog )
+	DECLARE_CLASS(AISTargetListDialog)
+	DECLARE_EVENT_TABLE()
 
-      public:
-            AISTargetListDialog( wxWindow *parent, wxAuiManager *auimgr, AIS_Decoder *pdecoder );
-           ~AISTargetListDialog( );
+public:
+	AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr, AIS_Decoder* pdecoder);
+	~AISTargetListDialog();
 
-            void OnClose(wxCloseEvent &event);
-            void Disconnect_decoder();
+	void OnClose(wxCloseEvent& event);
+	void Disconnect_decoder();
 
-            void SetColorScheme( );
-            void UpdateAISTargetList( );     // Rebuild AIS target list
-            AIS_Target_Data   *GetpTarget(unsigned int list_item);
+	void SetColorScheme();
+	void UpdateAISTargetList(); // Rebuild AIS target list
+	AIS_Target_Data* GetpTarget(unsigned int list_item);
 
-            OCPNListCtrl      *m_pListCtrlAISTargets;
-            AIS_Decoder       *m_pdecoder;
+	// FIXME: move public attributes to private
 
-            ArrayOfMMSI       *m_pMMSI_array;
+	OCPNListCtrl* m_pListCtrlAISTargets;
+	AIS_Decoder* m_pdecoder;
+	ArrayOfMMSI* m_pMMSI_array;
 
-      private:
-            void OnPaneClose( wxAuiManagerEvent& event );
-            void UpdateButtons();
-            void OnTargetSelected( wxListEvent &event );
-            void DoTargetQuery( int mmsi );
-            void OnTargetDefaultAction( wxListEvent& event );
-            void OnTargetQuery( wxCommandEvent& event );
-            void OnTargetListColumnClicked( wxListEvent &event );
-            void OnTargetScrollTo( wxCommandEvent& event );
-            void OnTargetCreateWpt( wxCommandEvent& event );
-            void OnLimitRange( wxCommandEvent& event );
+private:
+	void OnPaneClose(wxAuiManagerEvent& event);
+	void UpdateButtons();
+	void OnTargetSelected(wxListEvent& event);
+	void DoTargetQuery(int mmsi);
+	void OnTargetDefaultAction(wxListEvent& event);
+	void OnTargetQuery(wxCommandEvent& event);
+	void OnTargetListColumnClicked(wxListEvent& event);
+	void OnTargetScrollTo(wxCommandEvent& event);
+	void OnTargetCreateWpt(wxCommandEvent& event);
+	void OnLimitRange(wxCommandEvent& event);
 
-            wxWindow          *m_pparent;
-            wxAuiManager      *m_pAuiManager;
-            wxButton          *m_pButtonInfo;
-            wxButton          *m_pButtonJumpTo;
-            wxButton          *m_pButtonCreateWpt;
-            wxStaticText      *m_pStaticTextRange;
-            wxSpinCtrl        *m_pSpinCtrlRange;
-            wxStaticText      *m_pStaticTextCount;
-            wxTextCtrl        *m_pTextTargetCount;
-
-            DECLARE_EVENT_TABLE()
-
+	wxWindow* m_pparent;
+	wxAuiManager* m_pAuiManager;
+	wxButton* m_pButtonInfo;
+	wxButton* m_pButtonJumpTo;
+	wxButton* m_pButtonCreateWpt;
+	wxStaticText* m_pStaticTextRange;
+	wxSpinCtrl* m_pSpinCtrlRange;
+	wxStaticText* m_pStaticTextCount;
+	wxTextCtrl* m_pTextTargetCount;
 };
 
 #endif

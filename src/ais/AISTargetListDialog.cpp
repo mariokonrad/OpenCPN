@@ -22,13 +22,12 @@
  **************************************************************************/
 
 #include "AISTargetListDialog.h"
-#include "OCPNListCtrl.h"
-#include "StyleManager.h"
-#include "Style.h"
-#include "Select.h"
-#include "RouteManagerDialog.h"
-#include "Undo.h"
-
+#include <OCPNListCtrl.h>
+#include <StyleManager.h>
+#include <Style.h>
+#include <Select.h>
+#include <RouteManagerDialog.h>
+#include <Undo.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 #include <Config.h>
@@ -43,7 +42,7 @@
 #include <wx/tokenzr.h>
 #include <wx/button.h>
 
-static AIS_Decoder * s_p_sort_decoder;
+static AIS_Decoder* s_p_sort_decoder;
 
 extern int g_AisTargetList_count;
 extern bool g_bAisTargetList_sortReverse;
@@ -52,13 +51,13 @@ extern wxString g_AisTargetList_column_spec;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern int g_AisTargetList_range;
 extern wxString g_AisTargetList_perspective;
-extern Config *pConfig;
-extern AISTargetListDialog *g_pAISTargetList;
-extern MainFrame *gFrame;
-extern ChartCanvas *cc1;
+extern Config* pConfig;
+extern AISTargetListDialog* g_pAISTargetList;
+extern MainFrame* gFrame;
+extern ChartCanvas* cc1;
 extern wxString g_default_wp_icon;
-extern Select *pSelect;
-extern RouteManagerDialog *pRouteManagerDialog;
+extern Select* pSelect;
+extern RouteManagerDialog* pRouteManagerDialog;
 
 IMPLEMENT_CLASS(AISTargetListDialog, wxPanel)
 

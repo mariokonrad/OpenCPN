@@ -33,74 +33,75 @@ class wxBitmap;
 
 class PianoWin : public wxWindow
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		PianoWin(wxFrame *frame);
-		virtual ~PianoWin();
+public:
+	PianoWin(wxFrame* frame);
+	virtual ~PianoWin();
 
-		void OnSize(wxSizeEvent& event);
-		void OnPaint(wxPaintEvent& event);
-		void FormatKeys(void);
-		void MouseEvent(wxMouseEvent& event);
-		void SetColorScheme(ColorScheme cs);
-		void SetKeyArray(std::vector<int> piano_chart_index_array);
-		void SetActiveKey(int iactive);
-		void SetActiveKeyArray(std::vector<int> array);
-		void SetNoshowIndexArray(std::vector<int> array);
-		void SetSubliteIndexArray(std::vector<int> array);
-		void SetSkewIndexArray(std::vector<int> array);
-		void SetTmercIndexArray(std::vector<int> array);
-		void SetPolyIndexArray(std::vector<int> array);
+	void OnSize(wxSizeEvent& event);
+	void OnPaint(wxPaintEvent& event);
+	void FormatKeys(void);
+	void MouseEvent(wxMouseEvent& event);
+	void SetColorScheme(ColorScheme cs);
+	void SetKeyArray(std::vector<int> piano_chart_index_array);
+	void SetActiveKey(int iactive);
+	void SetActiveKeyArray(std::vector<int> array);
+	void SetNoshowIndexArray(std::vector<int> array);
+	void SetSubliteIndexArray(std::vector<int> array);
+	void SetSkewIndexArray(std::vector<int> array);
+	void SetTmercIndexArray(std::vector<int> array);
+	void SetPolyIndexArray(std::vector<int> array);
 
-		void SetVizIcon(wxBitmap *picon_bmp);
-		void SetInVizIcon(wxBitmap *picon_bmp);
-		void SetSkewIcon(wxBitmap *picon_bmp);
-		void SetTMercIcon(wxBitmap *picon_bmp);
-		void SetPolyIcon(wxBitmap *picon_bmp);
+	void SetVizIcon(wxBitmap* picon_bmp);
+	void SetInVizIcon(wxBitmap* picon_bmp);
+	void SetSkewIcon(wxBitmap* picon_bmp);
+	void SetTMercIcon(wxBitmap* picon_bmp);
+	void SetPolyIcon(wxBitmap* picon_bmp);
 
-		wxPoint GetKeyOrigin(int key_index);
-		void ResetRollover(void);
-		void SetRoundedRectangles(bool val);
+	wxPoint GetKeyOrigin(int key_index);
+	void ResetRollover(void);
+	void SetRoundedRectangles(bool val);
 
-		int Size_X;
-		int Size_Y;
-		int Pos_X;
-		int Pos_Y;
-	private:
-		int m_nRegions;
-		int m_index_last;
-		int m_hover_icon_last;
-		int m_hover_last;
+	int Size_X; // FIXME: move public attributes to private
+	int Size_Y;
+	int Pos_X;
+	int Pos_Y;
 
-		wxBrush m_backBrush;
-		wxBrush m_tBrush;
-		wxBrush m_vBrush;
-		wxBrush m_svBrush;
-		wxBrush m_uvBrush;
-		wxBrush m_slBrush;
+private:
+	int m_nRegions;
+	int m_index_last;
+	int m_hover_icon_last;
+	int m_hover_last;
 
-		wxBrush m_cBrush;
-		wxBrush m_scBrush;
+	wxBrush m_backBrush;
+	wxBrush m_tBrush;
+	wxBrush m_vBrush;
+	wxBrush m_svBrush;
+	wxBrush m_uvBrush;
+	wxBrush m_slBrush;
 
-		std::vector<int> m_key_array;
-		std::vector<int> m_noshow_index_array;
-		std::vector<int> m_active_index_array;
-		std::vector<int> m_sublite_index_array;
-		std::vector<int> m_skew_index_array;
-		std::vector<int> m_tmerc_index_array;
-		std::vector<int> m_poly_index_array;
+	wxBrush m_cBrush;
+	wxBrush m_scBrush;
 
-		std::vector<wxRegion> KeyRegion;
+	std::vector<int> m_key_array;
+	std::vector<int> m_noshow_index_array;
+	std::vector<int> m_active_index_array;
+	std::vector<int> m_sublite_index_array;
+	std::vector<int> m_skew_index_array;
+	std::vector<int> m_tmerc_index_array;
+	std::vector<int> m_poly_index_array;
 
-		wxBitmap * m_pVizIconBmp;
-		wxBitmap * m_pInVizIconBmp;
-		wxBitmap * m_pTmercIconBmp;
-		wxBitmap * m_pSkewIconBmp;
-		wxBitmap * m_pPolyIconBmp;
+	std::vector<wxRegion> KeyRegion;
 
-		int m_iactive;
-		bool m_brounded;
+	wxBitmap* m_pVizIconBmp;
+	wxBitmap* m_pInVizIconBmp;
+	wxBitmap* m_pTmercIconBmp;
+	wxBitmap* m_pSkewIconBmp;
+	wxBitmap* m_pPolyIconBmp;
+
+	int m_iactive;
+	bool m_brounded;
 };
 
 #endif

@@ -45,8 +45,6 @@ class RoutePoint;
 
 ////@begin control identifiers
 #define ID_ROUTEPROP 7000
-#define SYMBOL_ROUTEPROP_TITLE _("Route Properties")
-#define SYMBOL_ROUTEPROP_SIZE wxSize(450, 300)
 
 #define ID_TEXTCTRL            7001
 #define ID_TEXTCTRL2           7002
@@ -84,103 +82,97 @@ class RoutePoint;
 
 class RouteProp : public wxDialog
 {
-		DECLARE_DYNAMIC_CLASS(RouteProp)
-		DECLARE_EVENT_TABLE()
+	DECLARE_DYNAMIC_CLASS(RouteProp)
+	DECLARE_EVENT_TABLE()
 
-	public:
-		/// Constructors
-		RouteProp( );
-		RouteProp(wxWindow* parent, wxWindowID id = ID_ROUTEPROP,
-				const wxString& caption = SYMBOL_ROUTEPROP_TITLE,
-				const wxPoint& pos = wxDefaultPosition,
-				const wxSize& size = SYMBOL_ROUTEPROP_SIZE,
+public:
+	RouteProp();
+	RouteProp(wxWindow* parent, wxWindowID id = ID_ROUTEPROP,
+			  const wxString& caption = _("Route Properties"),
+			  const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(450, 300),
+			  long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+
+	virtual ~RouteProp();
+
+	bool Create(wxWindow* parent, wxWindowID id = ID_ROUTEPROP,
+				const wxString& caption = _("Route Properties"),
+				const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(450, 300),
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
-		virtual ~RouteProp();
+	void CreateControls();
 
-		/// Creation
-		bool Create( wxWindow* parent, wxWindowID id = ID_ROUTEPROP,
-				const wxString& caption = SYMBOL_ROUTEPROP_TITLE,
-				const wxPoint& pos = wxDefaultPosition,
-				const wxSize& size = SYMBOL_ROUTEPROP_SIZE,
-				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	void SetColorScheme(ColorScheme cs);
+	void SetDialogTitle(const wxString& title);
+	void OnRoutepropCancelClick(wxCommandEvent& event);
+	void OnRoutepropOkClick(wxCommandEvent& event);
+	void OnPlanSpeedCtlUpdated(wxCommandEvent& event);
+	void OnStartTimeCtlUpdated(wxCommandEvent& event);
+	void OnTimeZoneSelected(wxCommandEvent& event);
+	void OnRoutepropListClick(wxListEvent& event);
+	void OnRoutepropSplitClick(wxCommandEvent& event);
+	void OnRoutepropExtendClick(wxCommandEvent& event);
+	void OnRoutepropPrintClick(wxCommandEvent& event);
+	void OnRoutepropCopyTxtClick(wxCommandEvent& event);
+	void OnRoutePropRightClick(wxListEvent& event);
+	void OnRoutePropMenuSelected(wxCommandEvent& event);
+	bool IsThisRouteExtendable();
+	void OnEvtColDragEnd(wxListEvent& event);
+	void InitializeList();
 
-		void CreateControls();
+	static bool ShowToolTips();
 
-		void SetColorScheme(ColorScheme cs);
-		void SetDialogTitle(const wxString & title);
-		void OnRoutepropCancelClick( wxCommandEvent& event );
-		void OnRoutepropOkClick( wxCommandEvent& event );
-		void OnPlanSpeedCtlUpdated( wxCommandEvent& event );
-		void OnStartTimeCtlUpdated( wxCommandEvent& event );
-		void OnTimeZoneSelected( wxCommandEvent& event );
-		void OnRoutepropListClick( wxListEvent& event );
-		void OnRoutepropSplitClick( wxCommandEvent& event );
-		void OnRoutepropExtendClick( wxCommandEvent& event );
-		void OnRoutepropPrintClick( wxCommandEvent& event );
-		void OnRoutepropCopyTxtClick( wxCommandEvent& event );
-		void OnRoutePropRightClick( wxListEvent &event );
-		void OnRoutePropMenuSelected( wxCommandEvent &event );
-		bool IsThisRouteExtendable();
-		void OnEvtColDragEnd(wxListEvent& event);
-		void InitializeList();
+	void SetRouteAndUpdate(Route* pR);
+	Route* GetRoute(void);
 
+	bool UpdateProperties(void);
+	wxString MakeTideInfo(int jx, time_t tm, int tz_selection, long LMT_Offset);
+	bool SaveChanges(void);
 
-		/// Should we show tooltips?
-		static bool ShowToolTips();
+	wxTextCtrl* m_TotalDistCtl;
+	wxTextCtrl* m_PlanSpeedCtl;
+	wxTextCtrl* m_StartTimeCtl;
+	wxTextCtrl* m_TimeEnrouteCtl;
 
-		void SetRouteAndUpdate(Route *pR);
-		Route *GetRoute(void){return m_pRoute;}
+	wxStaticText* m_PlanSpeedLabel;
+	wxStaticText* m_StartTimeLabel;
 
-		bool UpdateProperties(void);
-		wxString MakeTideInfo(int jx, time_t tm, int tz_selection, long LMT_Offset);
-		bool SaveChanges(void);
+	wxTextCtrl* m_RouteNameCtl;
+	wxTextCtrl* m_RouteStartCtl;
+	wxTextCtrl* m_RouteDestCtl;
 
-		wxTextCtrl  *m_TotalDistCtl;
-		wxTextCtrl  *m_PlanSpeedCtl;
-		wxTextCtrl	*m_StartTimeCtl;
-		wxTextCtrl  *m_TimeEnrouteCtl;
+	wxListCtrl* m_wpList;
 
-		wxStaticText *m_PlanSpeedLabel;
-		wxStaticText *m_StartTimeLabel;
+	wxButton* m_CancelButton;
+	wxButton* m_OKButton;
+	wxButton* m_CopyTxtButton;
+	wxButton* m_PrintButton;
+	wxButton* m_ExtendButton;
+	wxButton* m_SplitButton;
 
-		wxTextCtrl  *m_RouteNameCtl;
-		wxTextCtrl  *m_RouteStartCtl;
-		wxTextCtrl  *m_RouteDestCtl;
+	Route* m_pRoute;
+	Route* m_pHead; // for route splitting
+	Route* m_pTail;
+	RoutePoint* m_pExtendPoint;
+	Route* m_pExtendRoute;
+	RoutePoint* m_pEnroutePoint;
+	bool m_bStartNow;
 
-		wxListCtrl        *m_wpList;
+	double m_planspeed;
+	double m_avgspeed;
 
-		wxButton*     m_CancelButton;
-		wxButton*     m_OKButton;
-		wxButton*     m_CopyTxtButton;
-		wxButton*     m_PrintButton;
-		wxButton*     m_ExtendButton;
-		wxButton*     m_SplitButton;
+	int m_nSelected; // index of point selected in Properties dialog row
+	int m_tz_selection;
 
-		Route       *m_pRoute;
-		Route       *m_pHead; // for route splitting
-		Route       *m_pTail;
-		RoutePoint *m_pExtendPoint;
-		Route *m_pExtendRoute;
-		RoutePoint    *m_pEnroutePoint;
-		bool          m_bStartNow;
+	wxDateTime m_starttime; // kept as UTC
+	wxRadioBox* pDispTz;
+	wxStaticText* m_staticText1;
+	wxStaticText* m_staticText2;
+	wxStaticText* m_staticText3;
+	wxChoice* m_chColor;
+	wxChoice* m_chStyle;
+	wxChoice* m_chWidth;
 
-		double      m_planspeed;
-		double      m_avgspeed;
-
-		int         m_nSelected; // index of point selected in Properties dialog row
-		int         m_tz_selection;
-
-		wxDateTime	 m_starttime; // kept as UTC
-		wxRadioBox	*pDispTz;
-		wxStaticText  *m_staticText1;
-		wxStaticText  *m_staticText2;
-		wxStaticText  *m_staticText3;
-		wxChoice      *m_chColor;
-		wxChoice      *m_chStyle;
-		wxChoice      *m_chWidth;
-
-		wxStaticBoxSizer* m_pListSizer;
+	wxStaticBoxSizer* m_pListSizer;
 };
 
 #endif

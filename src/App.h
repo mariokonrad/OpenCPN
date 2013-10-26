@@ -30,7 +30,8 @@ class wxCmdLineParser;
 class wxActivateEvent;
 class wxSingleInstanceChecker;
 
-namespace global {
+namespace global
+{
 class OCPN_GUI;
 class OCPN_Navigation;
 class OCPN_WatchDog;
@@ -39,34 +40,47 @@ class OCPN_System;
 
 class App : public wxApp
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		App();
-		bool OnInit();
-		int OnExit();
-		void OnInitCmdLine(wxCmdLineParser & parser);
-		bool OnCmdLineParsed(wxCmdLineParser & parser);
-		void OnActivateApp(wxActivateEvent & event);
-		void TrackOff(void);
+public:
+	App();
+	bool OnInit();
+	int OnExit();
+	void OnInitCmdLine(wxCmdLineParser& parser);
+	bool OnCmdLineParsed(wxCmdLineParser& parser);
+	void OnActivateApp(wxActivateEvent& event);
+	void TrackOff(void);
 
-		wxSingleInstanceChecker * m_checker;
+	wxSingleInstanceChecker* m_checker;
 
-	private:
-		void inject_global_instances();
-		void establish_home_location();
-		void determine_config_file();
-		void install_crash_reporting();
-		void seed_random_generator();
-		void determine_world_map_location();
+private:
+	void inject_global_instances();
+	void establish_home_location();
+	void determine_config_file();
+	void install_crash_reporting();
+	void seed_random_generator();
+	void determine_world_map_location();
 
-		global::OCPN_GUI * gui_instance;
-		global::OCPN_Navigation * nav_instance;
-		global::OCPN_WatchDog * wdt_instance;
-		global::OCPN_System * sys_instance;
+	void install_signal_handler();
+	bool create_opencpn_home();
+	bool create_opencpn_log();
+	wxString constrain_logfile_size();
+	void validate_OpenGL();
+	void setup_s57();
+	void setup_for_empty_config(bool novicemode);
+	void check_tide_current();
+	void check_ais_alarm_sound_file();
+	void setup_frame_size_and_position(wxPoint & position, wxSize & new_frame_size);
+	void setup_gps_watchdog();
+	void setup_layers();
 
-		bool start_fullscreen;
-		wxString plugin_dir;
+	global::OCPN_GUI* gui_instance;
+	global::OCPN_Navigation* nav_instance;
+	global::OCPN_WatchDog* wdt_instance;
+	global::OCPN_System* sys_instance;
+
+	bool start_fullscreen;
+	wxString plugin_dir;
 };
 
 #endif

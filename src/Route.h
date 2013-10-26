@@ -27,7 +27,7 @@
 #include <wx/object.h>
 #include <wx/list.h>
 
-#include "RoutePoint.h"
+#include <RoutePoint.h>
 #include <geo/BoundingBox.h>
 
 #define STYLE_UNDEFINED -1
@@ -99,7 +99,6 @@ public:
 	double GetRouteArrivalRadius(void) const;
 	void SetRouteArrivalRadius(double radius);
 
-	int m_ConfigRouteNum;
 	bool m_bRtIsSelected;
 	bool m_bRtIsActive;
 	RoutePoint* m_pRouteActivePoint;

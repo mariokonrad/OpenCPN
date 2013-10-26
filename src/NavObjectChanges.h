@@ -30,14 +30,14 @@
 
 class NavObjectChanges : public NavObjectCollection
 {
-	public:
-		NavObjectChanges();
-		~NavObjectChanges();
+public:
+	NavObjectChanges();
+	virtual ~NavObjectChanges();
 
-		bool AddRoute(Route * pr, const char * action); // support "changes" file set
-		bool AddTrack(Track * pr, const char * action);
-		bool AddWP(RoutePoint * pr, const char * action);
-		bool ApplyChanges(void);
+	bool AddRoute(Route* pr, const char* action); // support "changes" file set
+	bool AddTrack(Track* pr, const char* action);
+	bool AddWP(RoutePoint* pr, const char* action);
+	bool ApplyChanges(void);
 };
 
 #endif

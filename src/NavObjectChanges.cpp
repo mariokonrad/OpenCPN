@@ -28,9 +28,9 @@
 #include <WayPointman.h>
 #include <Select.h>
 
-extern WayPointman * pWayPointMan;
-extern Select * pSelect;
-extern Routeman * g_pRouteMan;
+extern WayPointman* pWayPointMan;
+extern Select* pSelect;
+extern Routeman* g_pRouteMan;
 
 NavObjectChanges::NavObjectChanges()
 	: NavObjectCollection()
@@ -41,27 +41,27 @@ NavObjectChanges::~NavObjectChanges()
 {
 }
 
-bool NavObjectChanges::AddRoute( Route *pr, const char *action )
+bool NavObjectChanges::AddRoute(Route* pr, const char* action)
 {
 	SetRootGPXNode();
 
 	pugi::xml_node object = m_gpx_root.append_child("rte");
-	GPXCreateRoute(object, pr );
+	GPXCreateRoute(object, pr);
 
 	pugi::xml_node xchild = object.child("extensions");
-	//FIXME  What if extensions do not exist?
+	// FIXME  What if extensions do not exist?
 	pugi::xml_node child = xchild.append_child("opencpn:action");
 	child.append_child(pugi::node_pcdata).set_value(action);
 
 	return true;
 }
 
-bool NavObjectChanges::AddTrack( Track *pr, const char *action )
+bool NavObjectChanges::AddTrack(Track* pr, const char* action)
 {
 	SetRootGPXNode();
 
 	pugi::xml_node object = m_gpx_root.append_child("trk");
-	GPXCreateTrk(object, pr );
+	GPXCreateTrk(object, pr);
 
 	pugi::xml_node xchild = object.child("extensions");
 	pugi::xml_node child = xchild.append_child("opencpn:action");
@@ -70,7 +70,7 @@ bool NavObjectChanges::AddTrack( Track *pr, const char *action )
 	return true;
 }
 
-bool NavObjectChanges::AddWP( RoutePoint *pWP, const char *action )
+bool NavObjectChanges::AddWP(RoutePoint* pWP, const char* action)
 {
 	SetRootGPXNode();
 
@@ -84,77 +84,77 @@ bool NavObjectChanges::AddWP( RoutePoint *pWP, const char *action )
 	return true;
 }
 
-
 bool NavObjectChanges::ApplyChanges(void)
 {
-	//Let's reconstruct the unsaved changes
+	// Let's reconstruct the unsaved changes
 
 	pugi::xml_node objects = this->child("gpx");
 
-	for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling())
-	{
-		if( !strcmp(object.name(), "wpt") ) {
-			RoutePoint *pWp = GPXLoadWaypoint1( object, _T("circle"), _T(""), false, false, false, 0 );
+	for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling()) {
+		if (!strcmp(object.name(), "wpt")) {
+			RoutePoint* pWp
+				= GPXLoadWaypoint1(object, _T("circle"), _T(""), false, false, false, 0);
 
-			if(pWp && pWayPointMan) {
+			if (pWp && pWayPointMan) {
 				pWp->m_bIsolatedMark = true;
-				RoutePoint * pExisting = WayPointman::WaypointExists(pWp->GetName(), pWp->m_lat, pWp->m_lon);
+				RoutePoint* pExisting
+					= WayPointman::WaypointExists(pWp->GetName(), pWp->m_lat, pWp->m_lon);
 
 				pugi::xml_node xchild = object.child("extensions");
 				pugi::xml_node child = xchild.child("opencpn:action");
 
-				if(!strcmp(child.first_child().value(), "add") ){
-					if( !pExisting )
+				if (!strcmp(child.first_child().value(), "add")) {
+					if (!pExisting)
 						pWayPointMan->push_back(pWp);
-					pSelect->AddSelectableRoutePoint( pWp->m_lat, pWp->m_lon, pWp );
-				} else if(!strcmp(child.first_child().value(), "update") ){
-					if( pExisting )
+					pSelect->AddSelectableRoutePoint(pWp->m_lat, pWp->m_lon, pWp);
+				} else if (!strcmp(child.first_child().value(), "update")) {
+					if (pExisting)
 						pWayPointMan->remove(pExisting);
 					pWayPointMan->push_back(pWp);
-					pSelect->AddSelectableRoutePoint( pWp->m_lat, pWp->m_lon, pWp );
-				} else if(!strcmp(child.first_child().value(), "delete") ){
-					if( pExisting )
-						pWayPointMan->DestroyWaypoint( pExisting );
+					pSelect->AddSelectableRoutePoint(pWp->m_lat, pWp->m_lon, pWp);
+				} else if (!strcmp(child.first_child().value(), "delete")) {
+					if (pExisting)
+						pWayPointMan->DestroyWaypoint(pExisting);
 				} else
 					delete pWp;
 			}
 		} else {
-			if( !strcmp(object.name(), "trk") ) {
-				Track * pTrack = GPXLoadTrack1( object, false, false, false, 0);
+			if (!strcmp(object.name(), "trk")) {
+				Track* pTrack = GPXLoadTrack1(object, false, false, false, 0);
 
-				if(pTrack && g_pRouteMan) {
+				if (pTrack && g_pRouteMan) {
 					pugi::xml_node xchild = object.child("extensions");
 					pugi::xml_node child = xchild.child("opencpn:action");
 
-					Route *pExisting = g_pRouteMan->RouteExists( pTrack->m_GUID );
-					if(!strcmp(child.first_child().value(), "update") ){
-						if( pExisting ) {
+					Route* pExisting = g_pRouteMan->RouteExists(pTrack->m_GUID);
+					if (!strcmp(child.first_child().value(), "update")) {
+						if (pExisting) {
 							pExisting->m_RouteNameString = pTrack->m_RouteNameString;
 							pExisting->m_RouteStartString = pTrack->m_RouteStartString;
 							pExisting->m_RouteEndString = pTrack->m_RouteEndString;
 						}
-					} else if(!strcmp(child.first_child().value(), "delete") ){
-						if( pExisting )
-							g_pRouteMan->DeleteTrack( pExisting );
+					} else if (!strcmp(child.first_child().value(), "delete")) {
+						if (pExisting)
+							g_pRouteMan->DeleteTrack(pExisting);
 					} else
 						delete pTrack;
 				}
 			} else {
-				if( !strcmp(object.name(), "rte") ) {
-					Route *pRoute = GPXLoadRoute1( object, true, false, false, 0 );
+				if (!strcmp(object.name(), "rte")) {
+					Route* pRoute = GPXLoadRoute1(object, true, false, false, 0);
 
-					if(pRoute && g_pRouteMan) {
+					if (pRoute && g_pRouteMan) {
 						pugi::xml_node xchild = object.child("extensions");
 						pugi::xml_node child = xchild.child("opencpn:action");
 
-						if(!strcmp(child.first_child().value(), "add") ){
-							InsertRouteA( pRoute );
-						} else if(!strcmp(child.first_child().value(), "update") ){
-							UpdateRouteA( pRoute );
-						} else if(!strcmp(child.first_child().value(), "delete") ){
-							Route *pExisting = g_pRouteMan->RouteExists( pRoute->m_GUID );
-							if(pExisting)
-								g_pRouteMan->DeleteRoute( pExisting );
+						if (!strcmp(child.first_child().value(), "add")) {
+							InsertRouteA(pRoute);
+						} else if (!strcmp(child.first_child().value(), "update")) {
+							UpdateRouteA(pRoute);
+						} else if (!strcmp(child.first_child().value(), "delete")) {
+							Route* pExisting = g_pRouteMan->RouteExists(pRoute->m_GUID);
+							if (pExisting)
+								g_pRouteMan->DeleteRoute(pExisting);
 						} else
 							delete pRoute;
 					}

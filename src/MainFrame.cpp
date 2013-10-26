@@ -78,13 +78,11 @@
 #include "FontMgr.h"
 #include "NMEALogWindow.h"
 #include "Layer.h"
-#include "NavObjectCollection.h"
 #include "OCP_DataStreamInput_Thread.h"
 #include "TrackPropDlg.h"
 #include "RouteManagerDialog.h"
 #include "MyPrintout.h"
 #include "OCPNFloatingToolbarDialog.h"
-#include "NavObjectChanges.h"
 #include "MicrosoftCompatibility.h"
 #include "StatusBar.h"
 

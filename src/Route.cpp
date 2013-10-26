@@ -61,24 +61,24 @@ Route::Route(void)
 	, m_route_length(0.0)
 	, m_route_time(0.0)
 	, m_bIsTrack(false)
-	, m_nPoints(0)
-	, m_nm_sequence(1)
-	, m_bVisible(true)
-	, m_bListed(true)
+	, m_pLastAddedPoint(NULL)
 	, m_bDeleteOnArrival(false)
+	, m_bIsInLayer(false)
+	, m_LayerID(0)
 	, m_width(STYLE_UNDEFINED)
 	, m_style(STYLE_UNDEFINED)
-	, m_pLastAddedPoint(NULL)
-	, m_btemp(false)
-	, m_bcrosses_idl(false)
-	, m_LayerID(0)
-	, m_bIsInLayer(false)
 	, m_lastMousePointIndex(0)
 	, m_NextLegGreatCircle(false)
 	, m_PlannedSpeed(DEFAULT_SPEED)
 	, m_PlannedDeparture(RTE_UNDEF_DEPARTURE)
 	, m_TimeDisplayFormat(RTE_TIME_DISP_UTC)
 	, m_Colour(wxEmptyString)
+	, m_btemp(false)
+	, m_nPoints(0)
+	, m_nm_sequence(1)
+	, m_bVisible(true)
+	, m_bListed(true)
+	, m_bcrosses_idl(false)
 {
 	pRoutePointList = new RoutePointList;
 	m_GUID = pWayPointMan->CreateGUID(NULL);
@@ -289,43 +289,32 @@ void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_de
 		pNewPoint->SetName(name);
 		pNewPoint->m_bDynamicName = true;
 	}
-	return;
 }
 
 void Route::AddTentativePoint(const wxString& GUID)
 {
 	RoutePointGUIDList.Add(GUID);
-	return;
 }
 
 RoutePoint* Route::GetPoint(int nWhichPoint)
 {
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-
-	int i = 1;
-	while (node) {
-		if (i == nWhichPoint)
-			return node->GetData();
-
-		i++;
-		node = node->GetNext();
+	// FIXME: once the container for routepoints is a std::vector, this indexed access will be easier
+	int index = 1;
+	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end();
+		 ++i, ++index) {
+		if (index == nWhichPoint)
+			return *i;
 	}
-
 	return NULL;
 }
 
 RoutePoint* Route::GetPoint(const wxString& guid)
 {
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-
-	while (node) {
-		RoutePoint* prp = node->GetData();
-		if (guid == prp->m_GUID)
-			return prp;
-
-		node = node->GetNext();
+	// FIXME: use find_if
+	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+		if (guid == (*i)->m_GUID)
+			return *i;
 	}
-
 	return NULL;
 }
 
@@ -559,13 +548,9 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort& 
 
 void Route::ClearHighlights(void)
 {
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-
-	while (node) {
-		RoutePoint* prp = node->GetData();
-		if (prp)
-			prp->m_bPtIsSelected = false;
-		node = node->GetNext();
+	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+		if (*i)
+			(*i)->m_bPtIsSelected = false;
 	}
 }
 
@@ -604,14 +589,7 @@ wxString Route::GetNewMarkSequenced(void)
 
 RoutePoint* Route::GetLastPoint()
 {
-	RoutePoint* data_m1 = NULL;
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-
-	while (node) {
-		data_m1 = node->GetData();
-		node = node->GetNext();
-	}
-	return data_m1;
+	return pRoutePointList->back();
 }
 
 int Route::GetIndexOf(RoutePoint* prp)
@@ -694,73 +672,56 @@ void Route::RemovePoint(RoutePoint* rp, bool bRenamePoints)
 
 void Route::DeSelectRoute()
 {
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-
-	while (node) {
-		RoutePoint* rp = node->GetData();
-		rp->m_bPtIsSelected = false;
-		node = node->GetNext();
-	}
+	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i)
+		(*i)->m_bPtIsSelected = false;
 }
 
 void Route::ReloadRoutePointIcons()
 {
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-
-	while (node) {
-		RoutePoint* rp = node->GetData();
-		rp->ReLoadIcon();
-		node = node->GetNext();
-	}
+	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i)
+		(*i)->ReLoadIcon();
 }
 
 void Route::CalculateBBox()
 {
-	double bbox_xmin = 180.; // set defaults
-	double bbox_ymin = 90.;
-	double bbox_xmax = -180;
-	double bbox_ymax = -90.;
+	double bbox_xmin = 180.0;
+	double bbox_ymin = 90.0;
+	double bbox_xmax = -180.0;
+	double bbox_ymax = -90.0;
 
 	RBBox.Reset();
 	m_bcrosses_idl = CalculateCrossesIDL();
 
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-	RoutePoint* data;
-
 	if (!m_bcrosses_idl) {
-		while (node) {
-			data = node->GetData();
+		for (RoutePointList::const_iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+			const RoutePoint* point = *i;
 
-			if (data->m_lon > bbox_xmax)
-				bbox_xmax = data->m_lon;
-			if (data->m_lon < bbox_xmin)
-				bbox_xmin = data->m_lon;
-			if (data->m_lat > bbox_ymax)
-				bbox_ymax = data->m_lat;
-			if (data->m_lat < bbox_ymin)
-				bbox_ymin = data->m_lat;
-
-			node = node->GetNext();
+			if (point->m_lon > bbox_xmax)
+				bbox_xmax = point->m_lon;
+			if (point->m_lon < bbox_xmin)
+				bbox_xmin = point->m_lon;
+			if (point->m_lat > bbox_ymax)
+				bbox_ymax = point->m_lat;
+			if (point->m_lat < bbox_ymin)
+				bbox_ymin = point->m_lat;
 		}
 	} else {
-		//    For Routes that cross the IDL, we compute and store
-		//    the bbox as positive definite
-		while (node) {
-			data = node->GetData();
-			double lon = data->m_lon;
-			if (lon < 0.)
-				lon += 360.;
+		// For Routes that cross the IDL, we compute and store
+		// the bbox as positive definite
+		for (RoutePointList::const_iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+			const RoutePoint* point = *i;
+			double lon = point->m_lon;
+			if (lon < 0.0)
+				lon += 360.0;
 
 			if (lon > bbox_xmax)
 				bbox_xmax = lon;
 			if (lon < bbox_xmin)
 				bbox_xmin = lon;
-			if (data->m_lat > bbox_ymax)
-				bbox_ymax = data->m_lat;
-			if (data->m_lat < bbox_ymin)
-				bbox_ymin = data->m_lat;
-
-			node = node->GetNext();
+			if (point->m_lat > bbox_ymax)
+				bbox_ymax = point->m_lat;
+			if (point->m_lat < bbox_ymin)
+				bbox_ymin = point->m_lat;
 		}
 	}
 
@@ -782,12 +743,12 @@ bool Route::CalculateCrossesIDL(void)
 
 	while (node) {
 		data = node->GetData();
-		if ((lon0 < -150.) && (data->m_lon > 150.)) {
+		if ((lon0 < -150.0) && (data->m_lon > 150.0)) {
 			idl_cross = true;
 			break;
 		}
 
-		if ((lon0 > 150.) && (data->m_lon < -150.)) {
+		if ((lon0 > 150.0) && (data->m_lon < -150.0)) {
 			idl_cross = true;
 			break;
 		}
@@ -809,21 +770,18 @@ void Route::CalculateDCRect(wxDC& dc_route, wxRect* prect, ViewPort&)
 	// always be fully contained within the resulting rectangle.
 	// Can we prove this?
 	if (m_bVisible) {
-		wxRoutePointListNode* node = pRoutePointList->GetFirst();
-		while (node) {
-
-			RoutePoint* prp2 = node->GetData();
+		for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end();
+			 ++i) {
+			RoutePoint* prp2 = *i;
 			bool blink_save = prp2->m_bBlink;
 			prp2->m_bBlink = false;
 			ocpnDC odc_route(dc_route);
 			prp2->Draw(odc_route, NULL);
 			prp2->m_bBlink = blink_save;
-
-			node = node->GetNext();
 		}
 	}
 
-	//  Retrieve the drawing extents
+	// Retrieve the drawing extents
 	prect->x = dc_route.MinX() - 1;
 	prect->y = dc_route.MinY() - 1;
 	prect->width = dc_route.MaxX() - dc_route.MinX() + 2;
@@ -884,9 +842,9 @@ void Route::UpdateSegmentDistances(double planspeed)
 				}
 
 				double legspeed = planspeed;
-				if (vmg > 0.1 && vmg < 1000.)
+				if (vmg > 0.1 && vmg < 1000.0)
 					legspeed = vmg;
-				if (legspeed > 0.1 && legspeed < 1000.) {
+				if (legspeed > 0.1 && legspeed < 1000.0) {
 					route_time += dd / legspeed;
 					prp->m_seg_vmg = legspeed;
 				}
@@ -904,7 +862,7 @@ void Route::UpdateSegmentDistances(double planspeed)
 							prp0->m_seg_etd = etd;
 						else if (tz.Find(_T("LMT")) != wxNOT_FOUND) {
 							prp0->m_seg_etd = etd;
-							long lmt_offset = (long)((prp0->m_lon * 3600.) / 15.);
+							long lmt_offset = (long)((prp0->m_lon * 3600.0) / 15.0);
 							wxTimeSpan lmt(0, 0, (int)lmt_offset, 0);
 							prp0->m_seg_etd -= lmt;
 						} else
@@ -919,7 +877,7 @@ void Route::UpdateSegmentDistances(double planspeed)
 	}
 
 	m_route_length = route_len;
-	m_route_time = route_time * 3600.;
+	m_route_time = route_time * 3600.0;
 }
 
 void Route::Reverse(bool bRenamePoints)
@@ -953,14 +911,10 @@ void Route::Reverse(bool bRenamePoints)
 
 void Route::RebuildGUIDList(void)
 {
-	RoutePointGUIDList.Clear(); // empty the GUID list
-
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-
-	while (node) {
-		RoutePoint* rp = node->GetData();
-		RoutePointGUIDList.Add(rp->m_GUID);
-		node = node->GetNext();
+	RoutePointGUIDList.Clear();
+	for (RoutePointList::const_iterator i = pRoutePointList->begin(); i != pRoutePointList->end();
+		 ++i) {
+		RoutePointGUIDList.Add((*i)->m_GUID);
 	}
 }
 
@@ -971,13 +925,10 @@ void Route::SetVisible(bool visible, bool includeWpts)
 	if (!includeWpts)
 		return;
 
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-	while (node) {
-		RoutePoint* rp = node->GetData();
-		if (rp->m_bKeepXRoute) {
-			rp->SetVisible(visible);
+	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+		if ((*i)->m_bKeepXRoute) {
+			(*i)->SetVisible(visible);
 		}
-		node = node->GetNext();
 	}
 }
 
@@ -1006,9 +957,7 @@ void Route::RenameRoutePoints(void)
 	while (node) {
 		RoutePoint* prp = node->GetData();
 		if (prp->m_bDynamicName) {
-			wxString name;
-			name.Printf(_T ( "%03d" ), i);
-			prp->SetName(name);
+			prp->SetName(wxString::Format(_T("%03d"), i));
 		}
 
 		node = node->GetNext();

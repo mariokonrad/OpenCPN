@@ -77,7 +77,6 @@ Track::Track(void)
 	m_lastStoredTP = NULL;
 
 	wxDateTime now = wxDateTime::Now();
-	m_ConfigRouteNum = now.GetTicks();
 	trackPointState = firstPoint;
 	m_lastStoredTP = NULL;
 	m_removeTP = NULL;

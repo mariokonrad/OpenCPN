@@ -24,11 +24,12 @@
 #ifndef __NAVOBJECTCOLLECTION_H__
 #define __NAVOBJECTCOLLECTION_H__
 
-#include "pugixml/pugixml.hpp"
-#include <wx/string.h>
-#include "Route.h"
-#include "RoutePoint.h"
+#include <pugixml/pugixml.hpp>
 
+#include <Route.h>
+#include <RoutePoint.h>
+
+#include <wx/string.h>
 
 // FIXME: do not use defines: Bitfield definition controlling the GPX nodes output for point objects
 #define         OUT_TYPE        1 << 1          //  Output point type
@@ -66,66 +67,45 @@ class Track;
 
 class NavObjectCollection : public pugi::xml_document
 {
-	public:
-		NavObjectCollection();
-		~NavObjectCollection();
+public:
+	NavObjectCollection();
+	virtual ~NavObjectCollection();
 
-		bool CreateNavObjGPXPoints(void);
-		bool CreateNavObjGPXRoutes(void);
-		bool CreateNavObjGPXTracks(void);
-		bool AddGPXRoutesList(RouteList * pRoutes);
-		bool AddGPXPointsList(RoutePointList * pRoutePoints);
-		bool AddGPXRoute(Route * pRoute);
-		bool AddGPXTrack(Track * pTrk);
-		bool AddGPXWaypoint(RoutePoint * pWP);
-		bool CreateAllGPXObjects();
-		bool LoadAllGPXObjects(void);
-		int LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
-		bool SaveFile(const wxString filename);
-		void SetRootGPXNode(void);
+	bool CreateNavObjGPXPoints(void);
+	bool CreateNavObjGPXRoutes(void);
+	bool CreateNavObjGPXTracks(void);
+	bool AddGPXRoutesList(RouteList* pRoutes);
+	bool AddGPXPointsList(RoutePointList* pRoutePoints);
+	bool AddGPXRoute(Route* pRoute);
+	bool AddGPXTrack(Track* pTrk);
+	bool AddGPXWaypoint(RoutePoint* pWP);
+	bool CreateAllGPXObjects();
+	bool LoadAllGPXObjects(void);
+	int LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
+	bool SaveFile(const wxString filename);
+	void SetRootGPXNode(void);
 
-		pugi::xml_node m_gpx_root;
+	pugi::xml_node m_gpx_root;
 
-	protected:
-		RoutePoint * GPXLoadWaypoint1(
-				pugi::xml_node & wpt_node,
-				wxString def_symbol_name,
-				wxString GUID,
-				bool b_fullviz,
-				bool b_layer,
-				bool b_layerviz,
-				int layer_id);
+protected:
+	RoutePoint* GPXLoadWaypoint1(pugi::xml_node& wpt_node, wxString def_symbol_name, wxString GUID,
+								 bool b_fullviz, bool b_layer, bool b_layerviz, int layer_id);
 
-		Track * GPXLoadTrack1(
-				pugi::xml_node & trk_node,
-				bool b_fullviz,
-				bool b_layer,
-				bool b_layerviz,
-				int layer_id);
+	Track* GPXLoadTrack1(pugi::xml_node& trk_node, bool b_fullviz, bool b_layer, bool b_layerviz,
+						 int layer_id);
 
-		Route * GPXLoadRoute1(
-				pugi::xml_node & wpt_node,
-				bool b_fullviz,
-				bool b_layer,
-				bool b_layerviz,
-				int layer_id);
+	Route* GPXLoadRoute1(pugi::xml_node& wpt_node, bool b_fullviz, bool b_layer, bool b_layerviz,
+						 int layer_id);
 
-		bool GPXCreateWpt(
-				pugi::xml_node node,
-				RoutePoint * pr,
-				unsigned int flags);
+	bool GPXCreateWpt(pugi::xml_node node, RoutePoint* pr, unsigned int flags);
 
-		bool GPXCreateTrk(
-				pugi::xml_node node,
-				Route *pRoute);
+	bool GPXCreateTrk(pugi::xml_node node, Route* pRoute);
 
-		bool GPXCreateRoute(
-				pugi::xml_node node,
-				Route *pRoute);
+	bool GPXCreateRoute(pugi::xml_node node, Route* pRoute);
 
-		void InsertRouteA(Route * pTentRoute);
-		void InsertTrack(Route * pTentTrack);
-		void UpdateRouteA(Route * pTentRoute);
+	void InsertRouteA(Route* pTentRoute);
+	void InsertTrack(Route* pTentTrack);
+	void UpdateRouteA(Route* pTentRoute);
 };
 
 #endif

@@ -26,15 +26,15 @@
 #include <MainFrame.h>
 #include <PositionParser.h>
 #include <Units.h>
+#include <MagneticVariation.h>
 
 extern bool bGPSValid;
-extern ChartCanvas * cc1;
+extern ChartCanvas* cc1;
 extern bool g_bAISRolloverShowClass;
 extern bool g_bAISRolloverShowCOG;
 extern bool g_bAISRolloverShowCPA;
 extern bool g_bShowMag;
-extern MainFrame *gFrame;
-
+extern MainFrame* gFrame;
 
 // Define and declare a hasmap for ERI Ship type strings, keyed by their UN Codes.
 WX_DECLARE_HASH_MAP(int, wxString, wxIntegerHash, wxIntegerEqual, ERIShipTypeHash);
@@ -46,21 +46,20 @@ void make_hash_ERI(int key, const wxString & description)
 	s_ERI_hash[key] = description;
 }
 
-static wxString FormatTimeAdaptive( int seconds )
+static wxString FormatTimeAdaptive(int seconds)
 {
 	int m = seconds / 60;
-	if( seconds < 100 )
-		return wxString::Format( _T("%3ds"), seconds );
-	else if( seconds < 3600 ) {
+	if (seconds < 100)
+		return wxString::Format(_T("%3ds"), seconds);
+	else if (seconds < 3600) {
 		int m = seconds / 60;
 		int s = seconds % 60;
-		return wxString::Format( _T("%2dmin %02ds"), m, s );
+		return wxString::Format(_T("%2dmin %02ds"), m, s);
 	}
 	int h = seconds / 3600;
-	m -= h* 60;
-	return wxString::Format( _T("%2dh %02dmin"), h, m );
+	m -= h * 60;
+	return wxString::Format(_T("%2dh %02dmin"), h, m);
 }
-
 
 AIS_Target_Data::AIS_Target_Data()
 {
@@ -390,9 +389,9 @@ wxString AIS_Target_Data::BuildQueryResult( void )
 			int crs = wxRound( COG );
 			if( crs < 360 ) {
 				if( g_bShowMag )
-					courseStr << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( crs ) );
+					courseStr << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( crs ) );
 				else
-					courseStr << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( crs ) );
+					courseStr << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( crs ) );
 			}
 			else if( COG == 360.0 )
 				courseStr = _T("---");
@@ -431,9 +430,9 @@ wxString AIS_Target_Data::BuildQueryResult( void )
 
 	if( b_positionOnceValid && bGPSValid && ( Brg >= 0. ) && ( Range_NM > 0. ) && ( fabs( Lat ) < 85. ) ){
 		if( g_bShowMag )
-			brgStr << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( Brg ) );
+			brgStr << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( Brg ) );
 		else
-			brgStr << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( Brg ) );
+			brgStr << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( Brg ) );
 	} else
 		brgStr = _("---");
 
@@ -564,9 +563,9 @@ wxString AIS_Target_Data::GetRolloverString( void )
 		if( b_positionOnceValid ) {
 			if( crs < 360 ) {
 				if( g_bShowMag )
-					result << wxString::Format( wxString("COG %03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( crs ) );
+					result << wxString::Format( wxString("COG %03d°(M)  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( crs ) );
 				else
-					result << wxString::Format( wxString("COG %03d°  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( crs ) );
+					result << wxString::Format( wxString("COG %03d°  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( crs ) );
 			}
 
 			else if( COG == 360.0 )

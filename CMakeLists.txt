@@ -588,6 +588,7 @@ SET(HDRS
 	src/MemoryStatus.h
 	src/MainFrame.h
 	src/ChartPlugInWrapper.h
+	src/MagneticVariation.h
 	src/GUI_IDs.h
 	src/AnchorDist.h
 	src/SerialPorts.h
@@ -739,6 +740,7 @@ SET(SRCS
 	src/AnchorDist.cpp
 	src/SerialPorts.cpp
 	src/MainFrame.cpp
+	src/MagneticVariation.cpp
 	src/MessageBox.cpp
 	src/TimedPopupWin.cpp
 	src/AnnunText.cpp

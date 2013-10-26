@@ -35,8 +35,8 @@
 #include <wx/textctrl.h>
 #include <wx/clipbrd.h>
 
-extern ChartCanvas * cc1;
-extern MainFrame * gFrame;
+extern ChartCanvas* cc1;
+extern MainFrame* gFrame;
 
 #define ID_GOTOPOS_CANCEL 8101
 #define ID_GOTOPOS_OK 8102
@@ -50,8 +50,13 @@ BEGIN_EVENT_TABLE(GoToPositionDialog, wxDialog)
 	EVT_COMMAND(ID_LONCTRL, EVT_LLCHANGE, GoToPositionDialog::OnPositionCtlUpdated)
 END_EVENT_TABLE()
 
-
 GoToPositionDialog::GoToPositionDialog()
+	: m_MarkLatCtl(NULL)
+	, m_MarkLonCtl(NULL)
+	, m_CancelButton(NULL)
+	, m_OKButton(NULL)
+	, m_lat_save(0.0)
+	, m_lon_save(0.0)
 {}
 
 GoToPositionDialog::GoToPositionDialog(
@@ -61,9 +66,14 @@ GoToPositionDialog::GoToPositionDialog(
 		const wxPoint & pos,
 		const wxSize & size,
 		long)
+	: m_MarkLatCtl(NULL)
+	, m_MarkLonCtl(NULL)
+	, m_CancelButton(NULL)
+	, m_OKButton(NULL)
+	, m_lat_save(0.0)
+	, m_lon_save(0.0)
 {
 	wxDialog::Create(parent, id, caption, pos, size, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
-
 	CreateControls();
 	GetSizer()->SetSizeHints(this);
 	Centre();
@@ -95,34 +105,39 @@ bool GoToPositionDialog::Create(
 
 void GoToPositionDialog::CreateControls()
 {
-	wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-	this->SetSizer(itemBoxSizer2);
+	wxBoxSizer* sizer1 = new wxBoxSizer(wxVERTICAL);
+	this->SetSizer(sizer1);
 
-	wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(this, wxID_ANY, _("Position"));
+	wxStaticBox* box1 = new wxStaticBox(this, wxID_ANY, _("Position"));
 
-	wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
-	itemBoxSizer2->Add(itemStaticBoxSizer4, 0, wxEXPAND | wxALL, 5);
+	wxStaticBoxSizer* sizer2 = new wxStaticBoxSizer(box1, wxVERTICAL);
+	sizer1->Add(sizer2, 0, wxEXPAND | wxALL, 5);
 
-	wxStaticText* itemStaticText5 = new wxStaticText(this, wxID_STATIC, _("Latitude"), wxDefaultPosition, wxDefaultSize, 0);
-	itemStaticBoxSizer4->Add(itemStaticText5, 0, wxALIGN_LEFT | wxLEFT | wxRIGHT | wxTOP | wxADJUST_MINSIZE, 5);
+	wxStaticText* text1
+		= new wxStaticText(this, wxID_STATIC, _("Latitude"), wxDefaultPosition, wxDefaultSize, 0);
+	sizer2->Add(text1, 0, wxALIGN_LEFT | wxLEFT | wxRIGHT | wxTOP | wxADJUST_MINSIZE, 5);
 
-	m_MarkLatCtl = new LatLonTextCtrl(this, ID_LATCTRL, _T(""), wxDefaultPosition, wxSize( 180, -1 ), 0);
-	itemStaticBoxSizer4->Add(m_MarkLatCtl, 0, wxALIGN_LEFT | wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 5);
+	m_MarkLatCtl
+		= new LatLonTextCtrl(this, ID_LATCTRL, _T(""), wxDefaultPosition, wxSize(180, -1), 0);
+	sizer2->Add(m_MarkLatCtl, 0, wxALIGN_LEFT | wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 5);
 
-	wxStaticText* itemStaticText6 = new wxStaticText(this, wxID_STATIC, _("Longitude"), wxDefaultPosition, wxDefaultSize, 0);
-	itemStaticBoxSizer4->Add(itemStaticText6, 0, wxALIGN_LEFT | wxLEFT | wxRIGHT | wxTOP | wxADJUST_MINSIZE, 5);
+	wxStaticText* text2
+		= new wxStaticText(this, wxID_STATIC, _("Longitude"), wxDefaultPosition, wxDefaultSize, 0);
+	sizer2->Add(text2, 0, wxALIGN_LEFT | wxLEFT | wxRIGHT | wxTOP | wxADJUST_MINSIZE, 5);
 
-	m_MarkLonCtl = new LatLonTextCtrl(this, ID_LONCTRL, _T(""), wxDefaultPosition, wxSize( 180, -1 ), 0);
-	itemStaticBoxSizer4->Add(m_MarkLonCtl, 0, wxALIGN_LEFT | wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 5);
+	m_MarkLonCtl
+		= new LatLonTextCtrl(this, ID_LONCTRL, _T(""), wxDefaultPosition, wxSize(180, -1), 0);
+	sizer2->Add(m_MarkLonCtl, 0, wxALIGN_LEFT | wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 5);
 
-	wxBoxSizer* itemBoxSizer16 = new wxBoxSizer(wxHORIZONTAL);
-	itemBoxSizer2->Add(itemBoxSizer16, 0, wxALIGN_RIGHT | wxALL, 5);
+	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
+	sizer1->Add(sizer3, 0, wxALIGN_RIGHT | wxALL, 5);
 
-	m_CancelButton = new wxButton(this, ID_GOTOPOS_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
-	itemBoxSizer16->Add(m_CancelButton, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+	m_CancelButton
+		= new wxButton(this, ID_GOTOPOS_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
+	sizer3->Add(m_CancelButton, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
 	m_OKButton = new wxButton(this, ID_GOTOPOS_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0);
-	itemBoxSizer16->Add(m_OKButton, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+	sizer3->Add(m_OKButton, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_OKButton->SetDefault();
 
 	SetColorScheme((ColorScheme)0);
@@ -142,24 +157,28 @@ void GoToPositionDialog::OnGoToPosCancelClick(wxCommandEvent & event)
 {
 	Hide();
 	cc1->ReloadVP();
-
 	event.Skip();
 }
 
-void GoToPositionDialog::OnGoToPosOkClick(wxCommandEvent & event)
+void GoToPositionDialog::OnGoToPosOkClick(wxCommandEvent& event)
 {
 	double lat;
 	double lon;
 
-	if (m_MarkLatCtl->GetValue().Length() == 0) goto noGo;
-	if (m_MarkLonCtl->GetValue().Length() == 0) goto noGo;
+	if (m_MarkLatCtl->GetValue().Length() == 0)
+		goto noGo;
+	if (m_MarkLonCtl->GetValue().Length() == 0)
+		goto noGo;
 
 	lat = fromDMM(m_MarkLatCtl->GetValue());
 	lon = fromDMM(m_MarkLonCtl->GetValue());
 
-	if (lat == 0.0 && lon == 0.0) goto noGo;
-	if (lat > 80.0 || lat < -80.0) goto noGo;
-	if (lon > 180.0 || lon < -180.0) goto noGo;
+	if (lat == 0.0 && lon == 0.0)
+		goto noGo;
+	if (lat > 80.0 || lat < -80.0)
+		goto noGo;
+	if (lon > 180.0 || lon < -180.0)
+		goto noGo;
 
 	gFrame->JumpToPosition(lat, lon, cc1->GetVPScale());
 	Hide();
@@ -174,22 +193,22 @@ noGo:
 
 void GoToPositionDialog::CheckPasteBufferForPosition()
 {
-	if( wxTheClipboard->Open() ) {
+	if (wxTheClipboard->Open()) {
 		wxTextDataObject data;
-		wxTheClipboard->GetData( data );
+		wxTheClipboard->GetData(data);
 		wxString pasteBuf = data.GetText();
 
-		PositionParser pparse( pasteBuf );
+		PositionParser pparse(pasteBuf);
 
-		if( pparse.IsOk() ) {
-			m_MarkLatCtl->SetValue( pparse.GetLatitudeString() );
-			m_MarkLonCtl->SetValue( pparse.GetLongitudeString() );
+		if (pparse.IsOk()) {
+			m_MarkLatCtl->SetValue(pparse.GetLatitudeString());
+			m_MarkLonCtl->SetValue(pparse.GetLongitudeString());
 		}
 		wxTheClipboard->Close();
 	}
 }
 
-void GoToPositionDialog::OnPositionCtlUpdated(wxCommandEvent &)
+void GoToPositionDialog::OnPositionCtlUpdated(wxCommandEvent&)
 {
 	// We do not want to change the position on lat/lon now
 }

@@ -35,6 +35,7 @@
 #include <MainFrame.h>
 #include <DimeControl.h>
 #include <Units.h>
+#include <MagneticVariation.h>
 
 #include <geo/GeoRef.h>
 
@@ -304,7 +305,7 @@ wxString ts2s(wxDateTime ts, int tz_selection, long LMT_offset, int format)
 			if (format != INPUT_FORMAT)
 				s.Append(_T(" LMT"));
 	}
-	return (s);
+	return s;
 }
 
 IMPLEMENT_DYNAMIC_CLASS( RouteProp, wxDialog )
@@ -1283,9 +1284,9 @@ bool RouteProp::UpdateProperties()
 
 			//  Bearing
 			if (g_bShowMag)
-				t.Printf(_T("%03.0f Deg. M"), gFrame->GetTrueOrMag(brg));
+				t.Printf(_T("%03.0f Deg. M"), navigation::GetTrueOrMag(brg));
 			else
-				t.Printf(_T("%03.0f Deg. T"), gFrame->GetTrueOrMag(brg));
+				t.Printf(_T("%03.0f Deg. T"), navigation::GetTrueOrMag(brg));
 
 			if (arrival)
 				m_wpList->SetItem(item_line_index, 3, t);
@@ -1295,9 +1296,9 @@ bool RouteProp::UpdateProperties()
 			// Course (bearing of next )
 			if (_next_prp) {
 				if (g_bShowMag)
-					t.Printf(_T("%03.0f Deg. M"), gFrame->GetTrueOrMag(course));
+					t.Printf(_T("%03.0f Deg. M"), navigation::GetTrueOrMag(course));
 				else
-					t.Printf(_T("%03.0f Deg. T"), gFrame->GetTrueOrMag(course));
+					t.Printf(_T("%03.0f Deg. T"), navigation::GetTrueOrMag(course));
 				if (arrival)
 					m_wpList->SetItem(item_line_index, 10, t);
 			} else

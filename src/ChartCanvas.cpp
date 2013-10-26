@@ -29,6 +29,7 @@
 #include <wx/listimpl.cpp>
 
 #include "ChartCanvas.h"
+#include <MagneticVariation.h>
 #include <ocpnDC.h>
 #include <RouteManagerDialog.h>
 #include <GoToPositionDialog.h>
@@ -1970,10 +1971,10 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 
 					if (g_bShowMag)
 						s << wxString::Format(wxString("%03d°(M)  ", wxConvUTF8),
-											  (int)gFrame->GetTrueOrMag(brg));
+											  (int)navigation::GetTrueOrMag(brg));
 					else
 						s << wxString::Format(wxString("%03d°  ", wxConvUTF8),
-											  (int)gFrame->GetTrueOrMag(brg));
+											  (int)navigation::GetTrueOrMag(brg));
 
 					s << FormatDistanceAdaptive(dist);
 
@@ -2081,9 +2082,9 @@ void ChartCanvas::OnCursorTrackTimerEvent(wxTimerEvent&)
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			geo::DistanceBearingMercator(cursor_lat, cursor_lon, nav.lat, nav.lon, &brg, &dist);
 			if (g_bShowMag)
-				s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(brg));
+				s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 			else
-				s.Printf(wxString("%03d°  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(brg));
+				s.Printf(wxString("%03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 
 			s << FormatDistanceAdaptive(dist);
 			parent_frame->SetStatusText(s, STAT_FIELD_CURSOR_BRGRNG);
@@ -5133,9 +5134,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			geo::DistanceBearingMercator(m_cursor_lat, m_cursor_lon, nav.lat, nav.lon, &brg, &dist);
 			wxString s;
 			if (g_bShowMag)
-				s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(brg));
+				s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 			else
-				s.Printf(wxString("%03d°  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(brg));
+				s.Printf(wxString("%03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 
 			s << FormatDistanceAdaptive(dist);
 			parent_frame->SetStatusText(s, STAT_FIELD_CURSOR_BRGRNG);
@@ -7896,10 +7897,10 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 		wxString routeInfo;
 		if (g_bShowMag)
 			routeInfo << wxString::Format(wxString("%03d°(M)  ", wxConvUTF8),
-										  (int)gFrame->GetTrueOrMag(brg));
+										  (int)navigation::GetTrueOrMag(brg));
 		else
 			routeInfo << wxString::Format(wxString("%03d°  ", wxConvUTF8),
-										  (int)gFrame->GetTrueOrMag(brg));
+										  (int)navigation::GetTrueOrMag(brg));
 
 		routeInfo << _T(" ") << FormatDistanceAdaptive(dist);
 

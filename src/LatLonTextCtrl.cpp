@@ -29,25 +29,18 @@ BEGIN_EVENT_TABLE(LatLonTextCtrl, wxWindow)
 	EVT_KILL_FOCUS(LatLonTextCtrl::OnKillFocus)
 END_EVENT_TABLE()
 
-LatLonTextCtrl::LatLonTextCtrl(
-		wxWindow * parent,
-		wxWindowID id,
-		const wxString & value,
-		const wxPoint & pos,
-		const wxSize & size,
-		long style,
-		const wxValidator& validator,
-		const wxString & name)
+LatLonTextCtrl::LatLonTextCtrl(wxWindow* parent, wxWindowID id, const wxString& value,
+							   const wxPoint& pos, const wxSize& size, long style,
+							   const wxValidator& validator, const wxString& name)
 	: wxTextCtrl(parent, id, value, pos, size, style, validator, name)
 {
-	m_pParentEventHandler = parent->GetEventHandler();
 }
 
-void LatLonTextCtrl::OnKillFocus(wxFocusEvent &)
+void LatLonTextCtrl::OnKillFocus(wxFocusEvent&)
 {
 	// Send an event to the Parent Dialog
-	wxCommandEvent up_event( EVT_LLCHANGE, GetId() );
-	up_event.SetEventObject( (wxObject *) this );
-	m_pParentEventHandler->AddPendingEvent( up_event );
+	wxCommandEvent up_event(EVT_LLCHANGE, GetId());
+	up_event.SetEventObject((wxObject*)this);
+	GetParent()->GetEventHandler()->AddPendingEvent(up_event);
 }
 

@@ -25,7 +25,7 @@
 #define __GOTOPOSITIONDIALOG_H__
 
 #include <wx/dialog.h>
-#include "ColorScheme.h"
+#include <ColorScheme.h>
 
 #define ID_GOTOPOS 8100
 
@@ -34,44 +34,40 @@ class wxButton;
 
 class GoToPositionDialog : public wxDialog
 {
-		DECLARE_DYNAMIC_CLASS(GoToPositionDialog)
-		DECLARE_EVENT_TABLE()
+	DECLARE_DYNAMIC_CLASS(GoToPositionDialog)
+	DECLARE_EVENT_TABLE()
 
-	public:
-		GoToPositionDialog();
-		GoToPositionDialog(
-				wxWindow * parent,
-				wxWindowID id = ID_GOTOPOS,
-				const wxString & caption = _("Center View"),
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxSize(200, 300),
+public:
+	GoToPositionDialog();
+	GoToPositionDialog(wxWindow* parent, wxWindowID id = ID_GOTOPOS,
+					   const wxString& caption = _("Center View"),
+					   const wxPoint& pos = wxDefaultPosition,
+					   const wxSize& size = wxSize(200, 300),
+					   long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+
+	virtual ~GoToPositionDialog();
+
+	bool Create(wxWindow* parent, wxWindowID id = ID_GOTOPOS,
+				const wxString& caption = _("Center View"), const wxPoint& pos = wxDefaultPosition,
+				const wxSize& size = wxSize(200, 300),
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
-		virtual ~GoToPositionDialog();
+	void SetColorScheme(ColorScheme cs);
+	void CreateControls();
+	void OnGoToPosCancelClick(wxCommandEvent& event);
+	void OnGoToPosOkClick(wxCommandEvent& event);
+	void OnPositionCtlUpdated(wxCommandEvent& event);
+	void CheckPasteBufferForPosition();
 
-		bool Create(
-				wxWindow * parent,
-				wxWindowID id = ID_GOTOPOS,
-				const wxString & caption = _("Center View"),
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxSize(200, 300),
-				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	static bool ShowToolTips();
 
-		void SetColorScheme(ColorScheme cs);
-		void CreateControls();
-		void OnGoToPosCancelClick(wxCommandEvent& event);
-		void OnGoToPosOkClick(wxCommandEvent& event);
-		void OnPositionCtlUpdated(wxCommandEvent& event);
-		void CheckPasteBufferForPosition();
-
-		static bool ShowToolTips();
-
-		wxTextCtrl * m_MarkLatCtl;
-		wxTextCtrl * m_MarkLonCtl;
-		wxButton * m_CancelButton;
-		wxButton * m_OKButton;
-		double m_lat_save;
-		double m_lon_save;
+private:
+	wxTextCtrl* m_MarkLatCtl;
+	wxTextCtrl* m_MarkLonCtl;
+	wxButton* m_CancelButton;
+	wxButton* m_OKButton;
+	double m_lat_save;
+	double m_lon_save;
 };
 
 #endif

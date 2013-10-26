@@ -52,40 +52,40 @@
 
 #include "MainFrame.h"
 #include <version.h>
-#include "dychart.h"
-#include "ChartCanvas.h"
-#include "TimedPopupWin.h"
-#include "MessageBox.h"
-#include "WayPointman.h"
-#include "Track.h"
-#include "StyleManager.h"
-#include "Style.h"
-#include "Routeman.h"
-#include "StatWin.h"
-#include "PianoWin.h"
-#include "ConsoleCanvas.h"
-#include "OptionDialog.h"
-#include "AboutDialog.h"
-#include "ThumbWin.h"
-#include "RouteProp.h"
-#include "MarkInfo.h"
-#include "ToolBarSimple.h"
-#include "FloatingCompassWindow.h"
-#include "DataStream.h"
-#include "OCPN_DataStreamEvent.h"
-#include "Multiplexer.h"
-#include "Select.h"
-#include "FontMgr.h"
-#include "NMEALogWindow.h"
-#include "Layer.h"
-#include "OCP_DataStreamInput_Thread.h"
-#include "TrackPropDlg.h"
-#include "RouteManagerDialog.h"
-#include "MyPrintout.h"
-#include "OCPNFloatingToolbarDialog.h"
-#include "MicrosoftCompatibility.h"
-#include "StatusBar.h"
-
+#include <dychart.h>
+#include <ChartCanvas.h>
+#include <TimedPopupWin.h>
+#include <MessageBox.h>
+#include <WayPointman.h>
+#include <Track.h>
+#include <StyleManager.h>
+#include <Style.h>
+#include <Routeman.h>
+#include <StatWin.h>
+#include <PianoWin.h>
+#include <ConsoleCanvas.h>
+#include <OptionDialog.h>
+#include <AboutDialog.h>
+#include <ThumbWin.h>
+#include <RouteProp.h>
+#include <MarkInfo.h>
+#include <ToolBarSimple.h>
+#include <FloatingCompassWindow.h>
+#include <DataStream.h>
+#include <OCPN_DataStreamEvent.h>
+#include <Multiplexer.h>
+#include <Select.h>
+#include <FontMgr.h>
+#include <NMEALogWindow.h>
+#include <Layer.h>
+#include <OCP_DataStreamInput_Thread.h>
+#include <TrackPropDlg.h>
+#include <RouteManagerDialog.h>
+#include <MyPrintout.h>
+#include <OCPNFloatingToolbarDialog.h>
+#include <MicrosoftCompatibility.h>
+#include <StatusBar.h>
+#include <MagneticVariation.h>
 #include <GUI_IDs.h>
 #include <AnchorDist.h>
 #include <MemoryStatus.h>
@@ -156,44 +156,44 @@ extern wxString str_version_minor;
 extern wxString str_version_patch;
 extern wxString OpenCPNVersion;
 
-FILE *flog;
-wxLog *logger;
-wxLog *Oldlogger;
+FILE* flog;
+wxLog* logger;
+wxLog* Oldlogger;
 bool g_bFirstRun;
 int g_unit_test_1;
-MainFrame * gFrame;
-ConsoleCanvas *console;
-StatWin *stats;
+MainFrame* gFrame;
+ConsoleCanvas* console;
+StatWin* stats;
 wxWindowList AppActivateList;
-Config *pConfig;
-ChartBase *Current_Vector_Ch;
-ChartBase *Current_Ch;
-ChartDB *ChartData;
-ChartStack *pCurrentStack;
-wxString *pdir_list[20];
+Config* pConfig;
+ChartBase* Current_Vector_Ch;
+ChartBase* Current_Ch;
+ChartDB* ChartData;
+ChartStack* pCurrentStack;
+wxString* pdir_list[20];
 int g_restore_stackindex;
 int g_restore_dbindex;
 double g_ChartNotRenderScaleFactor;
-RouteList *pRouteList;
+RouteList* pRouteList;
 bool g_bIsNewLayer;
 int g_LayerIdx;
 bool g_bLayerViz;
-Select *pSelect;
-Select *pSelectTC;
-Select *pSelectAIS;
-Routeman *g_pRouteMan;
-WayPointman *pWayPointMan;
-MarkInfoImpl *pMarkPropDialog;
-RouteProp *pRoutePropDialog;
-TrackPropDlg *pTrackPropDialog;
-MarkInfoImpl *pMarkInfoDialog;
-RouteManagerDialog *pRouteManagerDialog;
+Select* pSelect;
+Select* pSelectTC;
+Select* pSelectAIS;
+Routeman* g_pRouteMan;
+WayPointman* pWayPointMan;
+MarkInfoImpl* pMarkPropDialog;
+RouteProp* pRoutePropDialog;
+TrackPropDlg* pTrackPropDialog;
+MarkInfoImpl* pMarkInfoDialog;
+RouteManagerDialog* pRouteManagerDialog;
 double vLat;
 double vLon;
 double initial_scale_ppm;
 bool bDBUpdateInProgress;
-ThumbWin *pthumbwin;
-TCMgr *ptcmgr;
+ThumbWin* pthumbwin;
+TCMgr* ptcmgr;
 wxString chartListFileName;
 wxString init_Chart_Dir;
 wxString g_csv_locn;
@@ -205,21 +205,21 @@ int file_user_id;
 volatile int quitflag;
 int g_tick;
 bool s_bSetSystemTime;
-wxArrayOfConnPrm *g_pConnectionParams;
+wxArrayOfConnPrm* g_pConnectionParams;
 wxDateTime g_start_time;
 wxDateTime g_loglast_time;
 OCPN_Sound bells_sound[8];
 OCPN_Sound g_anchorwatch_sound;
-RoutePoint *pAnchorWatchPoint1;
-RoutePoint *pAnchorWatchPoint2;
+RoutePoint* pAnchorWatchPoint1;
+RoutePoint* pAnchorWatchPoint2;
 double AnchorPointMinDist;
 bool AnchorAlertOn1;
 bool AnchorAlertOn2;
 bool g_bCruising;
 ToolBarSimple* g_toolbar;
-ocpnStyle::StyleManager * g_StyleManager;
-wxPrintData *g_printData = (wxPrintData*) NULL ;
-wxPageSetupData* g_pageSetupData = (wxPageSetupData*) NULL;
+ocpnStyle::StyleManager* g_StyleManager;
+wxPrintData* g_printData = (wxPrintData*)NULL;
+wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
 bool g_bDisplayGrid; // Flag indicating weather the lat/lon grid should be displayed
 bool g_bShowActiveRouteHighway;
 int g_nNMEADebug;
@@ -277,12 +277,12 @@ extern HINSTANCE          s_hGLU_DLL; // Handle to DLL
 
 double g_ownship_predictor_minutes;
 int g_current_arrow_scale;
-Multiplexer *g_pMUX;
-AIS_Decoder *g_pAIS;
+Multiplexer* g_pMUX;
+AIS_Decoder* g_pAIS;
 bool g_bAIS_CPA_Alert;
 bool g_bAIS_CPA_Alert_Audio;
-AISTargetAlertDialog *g_pais_alert_dialog_active;
-AISTargetQueryDialog *g_pais_query_dialog_active;
+AISTargetAlertDialog* g_pais_alert_dialog_active;
+AISTargetQueryDialog* g_pais_query_dialog_active;
 int g_S57_dialog_sx;
 int g_S57_dialog_sy;
 bool g_bAutoAnchorMark;
@@ -290,10 +290,10 @@ wxRect g_blink_rect;
 double g_PlanSpeed;
 wxDateTime g_StartTime;
 int g_StartTimeTZ;
-IDX_entry *gpIDX;
+IDX_entry* gpIDX;
 int gpIDXn;
 long gStart_LMT_Offset;
-FILE *s_fpdebug;
+FILE* s_fpdebug;
 bool bAutoOpen;
 bool bFirstAuto;
 bool g_bUseGLL;
@@ -309,7 +309,7 @@ bool g_bopengl;
 bool g_bsmoothpanzoom;
 int g_nCOMPortCheck;
 bool g_bbigred;
-PlugInManager *g_pi_manager;
+PlugInManager* g_pi_manager;
 bool g_bAISRolloverShowClass;
 bool g_bAISRolloverShowCOG;
 bool g_bAISRolloverShowCPA;
@@ -319,10 +319,10 @@ bool g_bQuiltEnable;
 bool g_bQuiltStart;
 bool g_bportable;
 bool g_bdisable_opengl;
-ChartGroupArray *g_pGroupArray;
+ChartGroupArray* g_pGroupArray;
 int g_GroupIndex;
 wxString g_GPS_Ident;
-wxProgressDialog *s_ProgDialog;
+wxProgressDialog* s_ProgDialog;
 wxArrayString TideCurrentDataSet;
 
 #ifndef __WXMSW__
@@ -383,7 +383,7 @@ bool g_bDrawAISSize;
 bool g_bShowAISName;
 int g_Show_Target_Name_Scale;
 bool g_bWplIsAprsPosition;
-wxToolBarToolBase *m_pAISTool;
+wxToolBarToolBase* m_pAISTool;
 int g_nAIS_activity_timer;
 bool g_bEnableZoomToCursor;
 bool g_bTrackActive;
@@ -393,12 +393,12 @@ bool g_bHighliteTracks;
 int g_route_line_width;
 int g_track_line_width;
 wxString g_default_wp_icon;
-Track *g_pActiveTrack;
+Track* g_pActiveTrack;
 double g_TrackIntervalSeconds;
 double g_TrackDeltaDistance;
 int g_nTrackPrecision;
 int g_total_NMEAerror_messages;
-CM93DSlide *pCM93DetailSlider;
+CM93DSlide* pCM93DetailSlider;
 bool g_bUseGreenShip;
 wxString g_AW1GUID;
 wxString g_AW2GUID;
@@ -412,9 +412,9 @@ int g_n_ownship_min_mm;
 double g_n_arrival_circle_radius;
 int g_nautosave_interval_seconds;
 bool g_bPreserveScaleOnX;
-AboutDialog * g_pAboutDlg;
-wxPlatformInfo *g_pPlatform;
-wxLocale *plocale_def_lang;
+AboutDialog* g_pAboutDlg;
+wxPlatformInfo* g_pPlatform;
+wxLocale* plocale_def_lang;
 wxString g_locale;
 bool g_b_assume_azerty;
 bool g_bUseRaster;
@@ -424,10 +424,10 @@ int g_click_stop;
 int g_MemFootSec;
 int g_MemFootMB;
 std::vector<int> g_quilt_noshow_index_array;
-wxStaticBitmap *g_pStatBoxTool;
+wxStaticBitmap* g_pStatBoxTool;
 bool g_bquiting;
 int g_BSBImgDebug;
-AISTargetListDialog *g_pAISTargetList;
+AISTargetListDialog* g_pAISTargetList;
 wxString g_AisTargetList_perspective;
 int g_AisTargetList_range;
 int g_AisTargetList_sortColumn;
@@ -435,13 +435,13 @@ bool g_bAisTargetList_sortReverse;
 wxString g_AisTargetList_column_spec;
 int g_AisTargetList_count;
 bool g_bGarminHostUpload;
-wxAuiManager *g_pauimgr;
-wxAuiDefaultDockArt *g_pauidockart;
+wxAuiManager* g_pauimgr;
+wxAuiDefaultDockArt* g_pauidockart;
 bool g_blocale_changed;
-wxMenu *g_FloatingToolbarConfigMenu;
+wxMenu* g_FloatingToolbarConfigMenu;
 wxString g_toolbarConfig = _T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-OCPNFloatingToolbarDialog *g_FloatingToolbarDialog;
-FloatingCompassWindow * g_FloatingCompassDialog;
+OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
+FloatingCompassWindow* g_FloatingCompassDialog;
 bool g_bMagneticAPB;
 int g_GPU_MemSize;
 bool g_b_useStencil;
@@ -1158,24 +1158,24 @@ void MainFrame::EnableToolbar(bool newstate)
 	if (!g_toolbar)
 		return;
 
-	g_toolbar->EnableTool( ID_ZOOMIN, newstate );
-	g_toolbar->EnableTool( ID_ZOOMOUT, newstate );
-	g_toolbar->EnableTool( ID_STKUP, newstate );
-	g_toolbar->EnableTool( ID_STKDN, newstate );
-	g_toolbar->EnableTool( ID_ROUTE, newstate );
-	g_toolbar->EnableTool( ID_FOLLOW, newstate );
-	g_toolbar->EnableTool( ID_SETTINGS, newstate );
-	g_toolbar->EnableTool( ID_TEXT, newstate );
-	g_toolbar->EnableTool( ID_CURRENT, newstate );
-	g_toolbar->EnableTool( ID_TIDE, newstate );
-	g_toolbar->EnableTool( ID_HELP, newstate );
-	g_toolbar->EnableTool( ID_TBEXIT, newstate );
-	g_toolbar->EnableTool( ID_TBSTAT, newstate );
-	g_toolbar->EnableTool( ID_PRINT, newstate );
-	g_toolbar->EnableTool( ID_COLSCHEME, newstate );
-	g_toolbar->EnableTool( ID_ROUTEMANAGER, newstate );
-	g_toolbar->EnableTool( ID_TRACK, newstate );
-	g_toolbar->EnableTool( ID_AIS, newstate );
+	g_toolbar->EnableTool(ID_ZOOMIN, newstate);
+	g_toolbar->EnableTool(ID_ZOOMOUT, newstate);
+	g_toolbar->EnableTool(ID_STKUP, newstate);
+	g_toolbar->EnableTool(ID_STKDN, newstate);
+	g_toolbar->EnableTool(ID_ROUTE, newstate);
+	g_toolbar->EnableTool(ID_FOLLOW, newstate);
+	g_toolbar->EnableTool(ID_SETTINGS, newstate);
+	g_toolbar->EnableTool(ID_TEXT, newstate);
+	g_toolbar->EnableTool(ID_CURRENT, newstate);
+	g_toolbar->EnableTool(ID_TIDE, newstate);
+	g_toolbar->EnableTool(ID_HELP, newstate);
+	g_toolbar->EnableTool(ID_TBEXIT, newstate);
+	g_toolbar->EnableTool(ID_TBSTAT, newstate);
+	g_toolbar->EnableTool(ID_PRINT, newstate);
+	g_toolbar->EnableTool(ID_COLSCHEME, newstate);
+	g_toolbar->EnableTool(ID_ROUTEMANAGER, newstate);
+	g_toolbar->EnableTool(ID_TRACK, newstate);
+	g_toolbar->EnableTool(ID_AIS, newstate);
 }
 
 // Intercept menu commands
@@ -1517,41 +1517,47 @@ void MainFrame::ODoSetSize( void )
 		pthumbwin->SetMaxSize(chart_canvas->GetParent()->GetSize());
 }
 
-void MainFrame::PositionConsole( void )
+void MainFrame::PositionConsole(void)
 {
 	if (!chart_canvas)
 		return;
 
 	// Reposition console based on its size and chartcanvas size
-	int ccx, ccy, ccsx, ccsy, consx, consy;
-	chart_canvas->GetSize( &ccsx, &ccsy );
-	chart_canvas->GetPosition( &ccx, &ccy );
+	int ccx;
+	int ccy;
+	int ccsx;
+	int ccsy;
+	int consx;
+	int consy;
+	chart_canvas->GetSize(&ccsx, &ccsy);
+	chart_canvas->GetPosition(&ccx, &ccy);
 
-	console->GetSize( &consx, &consy );
+	console->GetSize(&consx, &consy);
 
-	wxPoint screen_pos = ClientToScreen( wxPoint( ccx + ccsx - consx - 2, ccy + 45 ) );
-	console->Move( screen_pos );
+	wxPoint screen_pos = ClientToScreen(wxPoint(ccx + ccsx - consx - 2, ccy + 45));
+	console->Move(screen_pos);
 }
 
 void MainFrame::UpdateAllFonts()
 {
-	if( console ) {
+	if (console) {
 		console->UpdateFonts();
 		//    Reposition console
 		PositionConsole();
 	}
 
-	if( g_pais_query_dialog_active ) {
+	if (g_pais_query_dialog_active) {
 		g_pais_query_dialog_active->Destroy();
 		g_pais_query_dialog_active = NULL;
 	}
 
-	if( pWayPointMan ) pWayPointMan->ClearRoutePointFonts();
+	if (pWayPointMan)
+		pWayPointMan->ClearRoutePointFonts();
 
 	chart_canvas->Refresh();
 }
 
-void MainFrame::SetGroupIndex( int index )
+void MainFrame::SetGroupIndex(int index)
 {
 	int new_index = index;
 	if (index > static_cast<int>(g_pGroupArray->GetCount()))
@@ -1565,30 +1571,30 @@ void MainFrame::SetGroupIndex( int index )
 		bgroup_override = true;
 	}
 
-	//    Get the currently displayed chart native scale, and the current ViewPort
+	// Get the currently displayed chart native scale, and the current ViewPort
 	int current_chart_native_scale = chart_canvas->GetCanvasChartNativeScale();
 
 	g_GroupIndex = new_index;
 
-	//  Invalidate the "sticky" chart on group change, since it might not be in the new group
+	// Invalidate the "sticky" chart on group change, since it might not be in the new group
 	g_sticky_chart = -1;
 
-	//    We need a new chartstack and quilt to figure out which chart to open in the new group
+	// We need a new chartstack and quilt to figure out which chart to open in the new group
 	chart_canvas->UpdateCanvasOnGroupChange();
 
 	int dbi_hint = chart_canvas->FindClosestCanvasChartdbIndex(current_chart_native_scale);
 
-	//    Refresh the canvas, selecting the "best" chart,
-	//    applying the prior ViewPort exactly
+	// Refresh the canvas, selecting the "best" chart,
+	// applying the prior ViewPort exactly
 	ChartsRefresh(dbi_hint, chart_canvas->GetVP(), false);
 
-	//    Message box is deferred so that canvas refresh occurs properly before dialog
-	if( bgroup_override ) {
-		wxString msg( _("Group \"") );
-		msg += GetGroupName( old_group_index );
+	// Message box is deferred so that canvas refresh occurs properly before dialog
+	if (bgroup_override) {
+		wxString msg(_("Group \""));
+		msg += GetGroupName(old_group_index);
 		msg += _("\" is empty, switching to \"All Active Charts\" group.");
 
-		OCPNMessageBox( this, msg, _("OpenCPN Group Notice"), wxOK );
+		OCPNMessageBox(this, msg, _("OpenCPN Group Notice"), wxOK);
 	}
 }
 
@@ -1616,7 +1622,7 @@ void MainFrame::toolLeftClick_AIS()
 
 void MainFrame::toolLeftClick_SETTINGS()
 {
-	bool bnewtoolbar = !( DoOptionsDialog() == 0 );
+	bool bnewtoolbar = !(DoOptionsDialog() == 0);
 
 	// Apply various system settings
 	ApplyGlobalSettings(true, bnewtoolbar); // flying update
@@ -1636,57 +1642,58 @@ void MainFrame::toolLeftClick_CURRENT()
 {
 	LoadHarmonics();
 
-	if( ptcmgr->IsReady()) {
+	if (ptcmgr->IsReady()) {
 		chart_canvas->SetbShowCurrent(!chart_canvas->GetbShowCurrent());
 		if (g_toolbar)
-			g_toolbar->ToggleTool( ID_CURRENT, chart_canvas->GetbShowCurrent() );
+			g_toolbar->ToggleTool(ID_CURRENT, chart_canvas->GetbShowCurrent());
 		chart_canvas->ReloadVP();
 	} else {
-		wxLogMessage( _T("Chart1::Event...TCMgr Not Available") );
-		chart_canvas->SetbShowCurrent( false );
+		wxLogMessage(_T("Chart1::Event...TCMgr Not Available"));
+		chart_canvas->SetbShowCurrent(false);
 		if (g_toolbar)
-			g_toolbar->ToggleTool( ID_CURRENT, false );
+			g_toolbar->ToggleTool(ID_CURRENT, false);
 	}
 
-	if( chart_canvas->GetbShowCurrent() ) {
-		FrameTCTimer.Start( TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS );
-		chart_canvas->SetbTCUpdate( true );                        // force immediate update
+	if (chart_canvas->GetbShowCurrent()) {
+		FrameTCTimer.Start(TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS);
+		chart_canvas->SetbTCUpdate(true); // force immediate update
 	} else {
 		FrameTCTimer.Stop();
 	}
 
-	chart_canvas->Refresh( false );
+	chart_canvas->Refresh(false);
 }
 
 void MainFrame::toolLeftClick_TIDE()
 {
 	LoadHarmonics();
 
-	if( ptcmgr->IsReady() ) {
-		chart_canvas->SetbShowTide( !chart_canvas->GetbShowTide() );
+	if (ptcmgr->IsReady()) {
+		chart_canvas->SetbShowTide(!chart_canvas->GetbShowTide());
 		if (g_toolbar)
-			g_toolbar->ToggleTool( ID_TIDE, chart_canvas->GetbShowTide() );
+			g_toolbar->ToggleTool(ID_TIDE, chart_canvas->GetbShowTide());
 		chart_canvas->ReloadVP();
 	} else {
-		wxLogMessage( _("Chart1::Event...TCMgr Not Available") );
-		chart_canvas->SetbShowTide( false );
+		wxLogMessage(_("Chart1::Event...TCMgr Not Available"));
+		chart_canvas->SetbShowTide(false);
 		if (g_toolbar)
-			g_toolbar->ToggleTool( ID_TIDE, false );
+			g_toolbar->ToggleTool(ID_TIDE, false);
 	}
 
-	if( chart_canvas->GetbShowTide() ) {
-		FrameTCTimer.Start( TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS );
-		chart_canvas->SetbTCUpdate( true );                        // force immediate update
+	if (chart_canvas->GetbShowTide()) {
+		FrameTCTimer.Start(TIMER_TC_VALUE_SECONDS * 1000, wxTIMER_CONTINUOUS);
+		chart_canvas->SetbTCUpdate(true); // force immediate update
 	} else {
 		FrameTCTimer.Stop();
 	}
 
-	chart_canvas->Refresh( false );
+	chart_canvas->Refresh(false);
 }
 
 void MainFrame::toolLeftClick_ROUTEMANAGER()
 {
-	if (!pRouteManagerDialog) // FIXME: create instance earlier, There is one global instance of the Dialog
+	// FIXME: create instance earlier, There is one global instance of the Dialog
+	if (!pRouteManagerDialog)
 		pRouteManagerDialog = new RouteManagerDialog(chart_canvas);
 
 	pRouteManagerDialog->UpdateRouteListCtrl();
@@ -1695,8 +1702,8 @@ void MainFrame::toolLeftClick_ROUTEMANAGER()
 	pRouteManagerDialog->UpdateLayListCtrl();
 	pRouteManagerDialog->Show();
 
-	// Required if RMDialog is not STAY_ON_TOP
 #ifdef __WXOSX__
+	// Required if RMDialog is not STAY_ON_TOP
 	pRouteManagerDialog->Centre();
 	pRouteManagerDialog->Raise();
 #endif
@@ -3312,9 +3319,9 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 		geo::DistanceBearingMercator(cursor_lat, cursor_lon, nav.lat, nav.lon, &brg, &dist);
 		wxString s;
 		if (g_bShowMag)
-			s.Printf( wxString("%03d°(M)  ", wxConvUTF8), (int)GetTrueOrMag(brg));
+			s.Printf( wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 		else
-			s.Printf( wxString("%03d°  ", wxConvUTF8), (int)GetTrueOrMag(brg));
+			s.Printf( wxString("%03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 		s << chart_canvas->FormatDistanceAdaptive( dist );
 		if (GetStatusBar())
 			SetStatusText(s, STAT_FIELD_CURSOR_BRGRNG);
@@ -3435,25 +3442,6 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 			m_bdefer_resize = false;
 		}
 	}
-}
-
-double MainFrame::GetTrueOrMag(double a) // FIXME: this method should be const
-{
-	if (g_bShowMag) {
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-		if (!wxIsNaN(nav.var)){
-			if ((a + nav.var) >360.0)
-				return (a + nav.var - 360.0);
-			else
-				return ((a + nav.var) >= 0.0) ? (a + nav.var) : (a + nav.var + 360.0);
-		} else {
-			if ((a + g_UserVar) >360.0)
-				return (a + g_UserVar - 360.0);
-			else
-				return ((a + g_UserVar) >= 0.0) ? (a + g_UserVar) : (a + g_UserVar + 360.0);
-		}
-	} else
-		return a;
 }
 
 void MainFrame::TouchAISActive( void )
@@ -5302,9 +5290,9 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 		} else {
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			if (g_bShowMag) {
-				over_ground += wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(nav.cog));
+				over_ground += wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(nav.cog));
 			} else {
-				over_ground += wxString::Format(wxString("COG %03d°  ", wxConvUTF8), (int)gFrame->GetTrueOrMag(nav.cog));
+				over_ground += wxString::Format(wxString("COG %03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(nav.cog));
 			}
 		}
 

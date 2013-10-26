@@ -26,31 +26,24 @@
 
 #include <wx/textctrl.h>
 
-//    LatLonTextCtrl Specification
-//    We need a derived wxText control for lat/lon input in the MarkProp dialog
-//    Specifically, we need to catch loss-of-focus events and signal the parent dialog
-//    to update the mark's lat/lon dynamically.
+// LatLonTextCtrl Specification
+// We need a derived wxText control for lat/lon input in the MarkProp dialog
+// Specifically, we need to catch loss-of-focus events and signal the parent dialog
+// to update the mark's lat/lon dynamically.
 
 extern const wxEventType EVT_LLCHANGE;
 
-class LatLonTextCtrl: public wxTextCtrl
+class LatLonTextCtrl : public wxTextCtrl
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		LatLonTextCtrl(
-				wxWindow * parent,
-				wxWindowID id,
-				const wxString & value = _T(""),
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxDefaultSize,
-				long style = 0,
-				const wxValidator & validator = wxDefaultValidator,
-				const wxString & name = wxTextCtrlNameStr);
+public:
+	LatLonTextCtrl(wxWindow* parent, wxWindowID id, const wxString& value = _T(""),
+				   const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize,
+				   long style = 0, const wxValidator& validator = wxDefaultValidator,
+				   const wxString& name = wxTextCtrlNameStr);
 
-		void OnKillFocus(wxFocusEvent &event);
-
-		wxEvtHandler * m_pParentEventHandler;
+	void OnKillFocus(wxFocusEvent& event);
 };
 
 #endif

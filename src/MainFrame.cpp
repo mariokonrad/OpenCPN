@@ -203,7 +203,6 @@ wxString g_uploadConnection;
 int user_user_id;
 int file_user_id;
 volatile int quitflag;
-int g_tick;
 bool s_bSetSystemTime;
 wxArrayOfConnPrm* g_pConnectionParams;
 wxDateTime g_start_time;
@@ -521,6 +520,7 @@ MainFrame::MainFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, 
 	: wxFrame(frame, -1, title, pos, size, style)
 	, chart_canvas(NULL)
 	, pDummyChart(NULL)
+	, timer_tick(0)
 {
 	m_ulLastNEMATicktime = 0;
 	m_pStatusBar = NULL;
@@ -3164,6 +3164,8 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 		return;
 	}
 
+	++timer_tick;
+
 	if (g_unit_test_1) {
 
 		chart_canvas->m_bFollow = false;
@@ -3195,7 +3197,6 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 			}
 		}
 	}
-	g_tick++;
 
 #ifdef __WXOSX__
 	// To fix an ugly bug ?? in wxWidgets for Carbon.....
@@ -3346,7 +3347,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	}
 
 	// Possibly save the current configuration
-	if (0 == (g_tick % (g_nautosave_interval_seconds))) {
+	if (0 == (timer_tick % (g_nautosave_interval_seconds))) {
 		pConfig->UpdateSettings();
 		pConfig->UpdateNavObj();
 	}
@@ -3419,7 +3420,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 		g_pais_query_dialog_active->UpdateText();
 
 	// Refresh AIS target list every 5 seconds to avoid blinking
-	if (g_pAISTargetList && (0 == (g_tick % 5)))
+	if (g_pAISTargetList && (0 == (timer_tick % 5)))
 		g_pAISTargetList->UpdateAISTargetList();
 
 	//  Pick up any change Toolbar status displays
@@ -3435,7 +3436,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	//  So we set a trigger to generate a resize after 5 seconds....
 	//  See the "UniChrome" hack elsewhere
 	if (m_bdefer_resize) {
-		if (0 == (g_tick % 5)) {
+		if (0 == (timer_tick % 5)) {
 			printf("___RESIZE\n");
 			SetSize(m_defer_size);
 			g_pauimgr->Update();

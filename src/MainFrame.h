@@ -296,6 +296,8 @@ class MainFrame : public wxFrame
 		wxTimer MemFootTimer;
 
 		chart::ChartDummy * pDummyChart;
+
+		int timer_tick;
 };
 
 #endif

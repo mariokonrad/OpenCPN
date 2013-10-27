@@ -72,22 +72,22 @@
 #include <wx/aui/aui.h>
 #include <wx/statline.h>
 
-extern Config        *pConfig;
-extern AIS_Decoder     *g_pAIS;
-extern wxAuiManager    *g_pauimgr;
-extern wxLocale        *plocale_def_lang;
-extern ChartDB         *ChartData;
-extern MainFrame         *gFrame;
-extern ocpnStyle::StyleManager * g_StyleManager;
-extern options         *g_pOptions;
-extern Multiplexer     *g_pMUX;
-extern StatWin         *stats;
-extern Routeman        *g_pRouteMan;
-extern WayPointman     *pWayPointMan;
-extern Select          *pSelect;
-extern RouteManagerDialog *pRouteManagerDialog;
-extern RouteList * pRouteList;
-extern PlugInManager   *g_pi_manager;
+extern Config* pConfig;
+extern AIS_Decoder* g_pAIS;
+extern wxAuiManager* g_pauimgr;
+extern wxLocale* plocale_def_lang;
+extern ChartDB* ChartData;
+extern MainFrame* gFrame;
+extern ocpnStyle::StyleManager* g_StyleManager;
+extern options* g_pOptions;
+extern Multiplexer* g_pMUX;
+extern StatWin* stats;
+extern Routeman* g_pRouteMan;
+extern WayPointman* pWayPointMan;
+extern Select* pSelect;
+extern RouteManagerDialog* pRouteManagerDialog;
+extern RouteList* pRouteList;
+extern PlugInManager* g_pi_manager;
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(Plugin_WaypointList); // FIXME: replace wx containers with std containers

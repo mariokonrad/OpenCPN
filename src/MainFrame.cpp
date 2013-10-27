@@ -153,12 +153,12 @@ extern wxString str_version_minor;
 extern wxString str_version_patch;
 extern wxString OpenCPNVersion;
 
+MainFrame* gFrame;
 FILE* flog;
 wxLog* logger;
 wxLog* Oldlogger;
 bool g_bFirstRun;
 int g_unit_test_1;
-MainFrame* gFrame;
 ConsoleCanvas* console;
 StatWin* stats;
 wxWindowList AppActivateList;
@@ -504,6 +504,7 @@ MainFrame::MainFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, 
 	, chart_canvas(NULL)
 	, pDummyChart(NULL)
 	, timer_tick(0)
+	, route_blinker_tick(0)
 {
 	m_ulLastNEMATicktime = 0;
 	m_pStatusBar = NULL;
@@ -683,7 +684,6 @@ void MainFrame::OnActivate( wxActivateEvent& event )
 #ifdef __WXOSX__
 	if(event.GetActive()) {
 		SurfaceToolbar();
-
 		wxWindowListNode *node = AppActivateList.GetFirst();
 		while (node) {
 			wxWindow *win = node->GetData();
@@ -691,8 +691,7 @@ void MainFrame::OnActivate( wxActivateEvent& event )
 
 			node = node->GetNext();
 		}
-
-		gFrame->Raise();
+		Raise();
 	}
 #endif
 
@@ -1524,7 +1523,6 @@ void MainFrame::UpdateAllFonts()
 {
 	if (console) {
 		console->UpdateFonts();
-		//    Reposition console
 		PositionConsole();
 	}
 
@@ -1585,9 +1583,9 @@ void MainFrame::toolLeftClick_AIS()
 	g_bShowAIS = !g_bShowAIS;
 	if (g_toolbar) {
 		if (g_bShowAIS)
-			g_toolbar->SetToolShortHelp( ID_AIS, _("Hide AIS Targets") );
+			g_toolbar->SetToolShortHelp(ID_AIS, _("Hide AIS Targets"));
 		else
-			g_toolbar->SetToolShortHelp( ID_AIS, _("Show AIS Targets") );
+			g_toolbar->SetToolShortHelp(ID_AIS, _("Show AIS Targets"));
 	}
 	if (m_pAISTool && g_toolbar) {
 		wxString iconName;
@@ -1691,7 +1689,7 @@ void MainFrame::toolLeftClick_ROUTEMANAGER()
 #endif
 }
 
-void MainFrame::OnToolLeftClick(wxCommandEvent & event)
+void MainFrame::OnToolLeftClick(wxCommandEvent& event)
 {
 	if (s_ProgDialog)
 		return;
@@ -1708,12 +1706,12 @@ void MainFrame::OnToolLeftClick(wxCommandEvent & event)
 			break;
 
 		case ID_ZOOMIN:
-			chart_canvas->ZoomCanvasIn( 2.0 );
+			chart_canvas->ZoomCanvasIn(2.0);
 			DoChartUpdate();
 			break;
 
 		case ID_ZOOMOUT:
-			chart_canvas->ZoomCanvasOut( 2.0 );
+			chart_canvas->ZoomCanvasOut(2.0);
 			DoChartUpdate();
 			break;
 
@@ -1753,7 +1751,8 @@ void MainFrame::OnToolLeftClick(wxCommandEvent & event)
 
 		case ID_HELP:
 			if (!g_pAboutDlg)
-				g_pAboutDlg = new AboutDialog(this, global::OCPN::get().sys().data().sound_data_location);
+				g_pAboutDlg
+					= new AboutDialog(this, global::OCPN::get().sys().data().sound_data_location);
 			g_pAboutDlg->Update();
 			g_pAboutDlg->Show();
 			break;
@@ -1776,9 +1775,9 @@ void MainFrame::OnToolLeftClick(wxCommandEvent & event)
 
 		case ID_TRACK:
 			if (!g_bTrackActive)
-			    TrackOn();
+				TrackOn();
 			else
-			    TrackOff(true);
+				TrackOff(true);
 			break;
 
 		case ID_TBSTATBOX:
@@ -1796,10 +1795,10 @@ void MainFrame::OnToolLeftClick(wxCommandEvent & event)
 			if (g_pi_manager) {
 				ArrayOfPlugInToolbarTools tool_array = g_pi_manager->GetPluginToolbarToolArray();
 				for (unsigned int i = 0; i < tool_array.GetCount(); ++i) {
-					PlugInToolbarToolContainer *pttc = tool_array.Item(i);
+					PlugInToolbarToolContainer* pttc = tool_array.Item(i);
 					if (event.GetId() == pttc->id) {
 						if (pttc->m_pplugin)
-							pttc->m_pplugin->OnToolbarToolCallback( pttc->id );
+							pttc->m_pplugin->OnToolbarToolCallback(pttc->id);
 					}
 				}
 			}
@@ -1810,12 +1809,13 @@ void MainFrame::OnToolLeftClick(wxCommandEvent & event)
 void MainFrame::ToggleColorScheme()
 {
 	ColorScheme s = GetColorScheme();
-	int is = (int) s;
+	int is = static_cast<int>(s);
 	is++;
-	s = (ColorScheme) is;
-	if( s == N_COLOR_SCHEMES ) s = GLOBAL_COLOR_SCHEME_RGB;
+	s = static_cast<ColorScheme>(is);
+	if (s == N_COLOR_SCHEMES)
+		s = GLOBAL_COLOR_SCHEME_RGB;
 
-	SetAndApplyColorScheme( s );
+	SetAndApplyColorScheme(s);
 }
 
 void MainFrame::ToggleFullScreen()
@@ -1831,76 +1831,75 @@ void MainFrame::ToggleFullScreen()
 	Layout();
 }
 
-void MainFrame::ActivateMOB( void )
+void MainFrame::ActivateMOB(void)
 {
 	//    The MOB point
 	wxDateTime mob_time = wxDateTime::Now();
-	wxString mob_label( _( "MAN OVERBOARD" ) );
+	wxString mob_label(_("MAN OVERBOARD"));
 	mob_label += _T(" at ");
 	mob_label += mob_time.FormatTime();
 
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	RoutePoint *pWP_MOB = new RoutePoint(nav.lat, nav.lon, _T ( "mob" ), mob_label);
+	RoutePoint* pWP_MOB = new RoutePoint(nav.lat, nav.lon, _T("mob"), mob_label);
 	pWP_MOB->m_bKeepXRoute = true;
 	pWP_MOB->m_bIsolatedMark = true;
-	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_MOB );
-	pConfig->AddNewWayPoint( pWP_MOB, -1 );       // use auto next num
+	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_MOB);
+	pConfig->AddNewWayPoint(pWP_MOB, -1); // use auto next num
 
 	if (bGPSValid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
-		//    Create a point that is one mile along the present course
-		double zlat, zlon;
-		geo::ll_gc_ll(nav.lat, nav.lon, nav.cog, 1.0, &zlat, &zlon );
+		// Create a point that is one mile along the present course
+		double zlat;
+		double zlon;
+		geo::ll_gc_ll(nav.lat, nav.lon, nav.cog, 1.0, &zlat, &zlon);
 
-		RoutePoint *pWP_src = new RoutePoint( zlat, zlon, g_default_wp_icon, wxString( _( "1.0 NM along COG" )));
-		pSelect->AddSelectableRoutePoint( zlat, zlon, pWP_src );
+		RoutePoint* pWP_src
+			= new RoutePoint(zlat, zlon, g_default_wp_icon, wxString(_("1.0 NM along COG")));
+		pSelect->AddSelectableRoutePoint(zlat, zlon, pWP_src);
 
-		Route *temp_route = new Route();
+		Route* temp_route = new Route;
 		pRouteList->push_back(temp_route);
 
-		temp_route->AddPoint( pWP_src );
-		temp_route->AddPoint( pWP_MOB );
+		temp_route->AddPoint(pWP_src);
+		temp_route->AddPoint(pWP_MOB);
 
-		pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, zlat, zlon, pWP_src, pWP_MOB, temp_route);
+		pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, zlat, zlon, pWP_src, pWP_MOB,
+										   temp_route);
 
 		temp_route->m_RouteNameString = _("Temporary MOB Route");
 		temp_route->m_RouteStartString = _("Assumed 1 Mile Point");
-		;
 		temp_route->m_RouteEndString = mob_label;
-
 		temp_route->m_bDeleteOnArrival = false;
+		temp_route->SetRouteArrivalRadius(-1.0); // never arrives
+		temp_route->RebuildGUIDList(); // ensure the GUID list is intact and good
 
-		temp_route->SetRouteArrivalRadius( -1.0 );                    // never arrives
-
-		temp_route->RebuildGUIDList();         // ensure the GUID list is intact and good
-
-		if( g_pRouteMan->GetpActiveRoute() ) g_pRouteMan->DeactivateRoute();
-		g_pRouteMan->ActivateRoute( temp_route, pWP_MOB );
+		if (g_pRouteMan->GetpActiveRoute())
+			g_pRouteMan->DeactivateRoute();
+		g_pRouteMan->ActivateRoute(temp_route, pWP_MOB);
 
 		wxJSONValue v;
 		v[_T("GUID")] = temp_route->m_GUID;
-		wxString msg_id( _T("OCPN_MAN_OVERBOARD") );
-		g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+		wxString msg_id(_T("OCPN_MAN_OVERBOARD"));
+		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 	}
 
-	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) {
+	if (pRouteManagerDialog && pRouteManagerDialog->IsShown()) {
 		pRouteManagerDialog->UpdateRouteListCtrl();
 		pRouteManagerDialog->UpdateWptListCtrl();
 	}
 
-	chart_canvas->Refresh( false );
+	chart_canvas->Refresh(false);
 
-	wxString mob_message( _( "MAN OVERBOARD" ) );
+	wxString mob_message(_("MAN OVERBOARD"));
 	mob_message += _T(" Time: ");
 	mob_message += mob_time.Format();
 	mob_message += _T("  Position: ");
 	mob_message += toSDMM(1, nav.lat);
 	mob_message += _T("   ");
 	mob_message += toSDMM(2, nav.lon);
-	wxLogMessage( mob_message );
-
+	wxLogMessage(mob_message);
 }
-void MainFrame::TrackOn( void )
+void MainFrame::TrackOn(void)
 {
 	g_bTrackActive = true;
 	g_pActiveTrack = new Track();
@@ -1908,11 +1907,10 @@ void MainFrame::TrackOn( void )
 	pRouteList->push_back(g_pActiveTrack);
 	g_pActiveTrack->Start();
 
-	if( g_toolbar )
-		g_toolbar->ToggleTool( ID_TRACK, g_bTrackActive );
+	if (g_toolbar)
+		g_toolbar->ToggleTool(ID_TRACK, g_bTrackActive);
 
-	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() )
-	{
+	if (pRouteManagerDialog && pRouteManagerDialog->IsShown()) {
 		pRouteManagerDialog->UpdateTrkListCtrl();
 		pRouteManagerDialog->UpdateRouteListCtrl();
 	}
@@ -1921,40 +1919,40 @@ void MainFrame::TrackOn( void )
 	wxDateTime now;
 	now = now.Now().ToUTC();
 	wxString name = g_pActiveTrack->m_RouteNameString;
-	if(name.IsEmpty())
-	{
-		RoutePoint *rp = g_pActiveTrack->GetPoint( 1 );
-		if( rp && rp->GetCreateTime().IsValid() )
-			name = rp->GetCreateTime().FormatISODate() + _T(" ") + rp->GetCreateTime().FormatISOTime();
+	if (name.IsEmpty()) {
+		RoutePoint* rp = g_pActiveTrack->GetPoint(1);
+		if (rp && rp->GetCreateTime().IsValid())
+			name = rp->GetCreateTime().FormatISODate() + _T(" ")
+				   + rp->GetCreateTime().FormatISOTime();
 		else
 			name = _("(Unnamed Track)");
 	}
 	v[_T("Name")] = name;
 	v[_T("GUID")] = g_pActiveTrack->m_GUID;
-	wxString msg_id( _T("OCPN_TRK_ACTIVATED") );
-	g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+	wxString msg_id(_T("OCPN_TRK_ACTIVATED"));
+	g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 }
 
-Track *MainFrame::TrackOff( bool do_add_point )
+Track* MainFrame::TrackOff(bool do_add_point)
 {
-	Track *return_val = g_pActiveTrack;
+	Track* return_val = g_pActiveTrack;
 
-	if( g_pActiveTrack ) {
+	if (g_pActiveTrack) {
 		wxJSONValue v;
-		wxString msg_id( _T("OCPN_TRK_DEACTIVATED") );
+		wxString msg_id(_T("OCPN_TRK_DEACTIVATED"));
 		v[_T("GUID")] = g_pActiveTrack->m_GUID;
-		g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 
-		g_pActiveTrack->Stop( do_add_point );
+		g_pActiveTrack->Stop(do_add_point);
 
-		if( g_pActiveTrack->GetnPoints() < 2 ) {
-			g_pRouteMan->DeleteRoute( g_pActiveTrack );
+		if (g_pActiveTrack->GetnPoints() < 2) {
+			g_pRouteMan->DeleteRoute(g_pActiveTrack);
 			return_val = NULL;
 		} else {
-			if( g_bTrackDaily ) {
-				Track *pExtendTrack = g_pActiveTrack->DoExtendDaily();
-				if(pExtendTrack) {
-					g_pRouteMan->DeleteRoute( g_pActiveTrack );
+			if (g_bTrackDaily) {
+				Track* pExtendTrack = g_pActiveTrack->DoExtendDaily();
+				if (pExtendTrack) {
+					g_pRouteMan->DeleteRoute(g_pActiveTrack);
 					return_val = pExtendTrack;
 				}
 			}
@@ -1962,37 +1960,36 @@ Track *MainFrame::TrackOff( bool do_add_point )
 	}
 
 	g_pActiveTrack = NULL;
-
 	g_bTrackActive = false;
 
-	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) {
+	if (pRouteManagerDialog && pRouteManagerDialog->IsShown()) {
 		pRouteManagerDialog->UpdateTrkListCtrl();
 		pRouteManagerDialog->UpdateRouteListCtrl();
 	}
 
-	if( g_toolbar )
-		g_toolbar->ToggleTool( ID_TRACK, g_bTrackActive );
+	if (g_toolbar)
+		g_toolbar->ToggleTool(ID_TRACK, g_bTrackActive);
 
 	return return_val;
 }
 
-void MainFrame::TrackMidnightRestart( void )
+void MainFrame::TrackMidnightRestart(void)
 {
-	if( !g_pActiveTrack )
+	if (!g_pActiveTrack)
 		return;
 
-	Track *pPreviousTrack = TrackOff( true );
+	Track* pPreviousTrack = TrackOff(true);
 	TrackOn();
 
-	//  Set the restarted track's current state such that the current track point's attributes match the
-	//  attributes of the last point of the track that was just stopped at midnight.
+	// Set the restarted track's current state such that the current track point's attributes match
+	// the attributes of the last point of the track that was just stopped at midnight.
 
-	if( pPreviousTrack ) {
-		RoutePoint *pMidnightPoint = pPreviousTrack->GetLastPoint();
+	if (pPreviousTrack) {
+		RoutePoint* pMidnightPoint = pPreviousTrack->GetLastPoint();
 		g_pActiveTrack->AdjustCurrentTrackPoint(pMidnightPoint);
 	}
 
-	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) {
+	if (pRouteManagerDialog && pRouteManagerDialog->IsShown()) {
 		pRouteManagerDialog->UpdateTrkListCtrl();
 		pRouteManagerDialog->UpdateRouteListCtrl();
 	}
@@ -2002,64 +1999,66 @@ void MainFrame::ToggleCourseUp(void)
 {
 	g_bCourseUp = !g_bCourseUp;
 
-	if( g_bCourseUp ) {
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	if (g_bCourseUp) {
+		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-		//    Stuff the COGAvg table in case COGUp is selected
+		// Stuff the COGAvg table in case COGUp is selected
 		double stuff = 0.;
 		if (!wxIsNaN(nav.cog))
 			stuff = nav.cog;
 
-		if( g_COGAvgSec > 0) {
-			for( int i = 0; i < g_COGAvgSec; i++ )
+		if (g_COGAvgSec > 0) {
+			for (int i = 0; i < g_COGAvgSec; i++)
 				COGTable[i] = stuff;
 		}
 		g_COGAvg = stuff;
 	}
 
 	DoCOGSet();
-	UpdateGPSCompassStatusBox( true );
+	UpdateGPSCompassStatusBox(true);
 	DoChartUpdate();
 	chart_canvas->ReloadVP();
 }
 
-void MainFrame::ToggleENCText( void )
+void MainFrame::ToggleENCText(void)
 {
 #ifdef USE_S57
-	if( ps52plib ) {
-		ps52plib->SetShowS57Text( !ps52plib->GetShowS57Text() );
-		if( g_toolbar ) g_toolbar->ToggleTool( ID_TEXT, ps52plib->GetShowS57Text() );
+	if (ps52plib) {
+		ps52plib->SetShowS57Text(!ps52plib->GetShowS57Text());
+		if (g_toolbar)
+			g_toolbar->ToggleTool(ID_TEXT, ps52plib->GetShowS57Text());
 		chart_canvas->ReloadVP();
 	}
 
 #endif
 }
 
-void MainFrame::ToggleSoundings( void )
+void MainFrame::ToggleSoundings(void)
 {
 #ifdef USE_S57
-	if( ps52plib ) {
-		ps52plib->SetShowSoundings( !ps52plib->GetShowSoundings() );
+	if (ps52plib) {
+		ps52plib->SetShowSoundings(!ps52plib->GetShowSoundings());
 		chart_canvas->ReloadVP();
 	}
 #endif
 }
 
-bool MainFrame::ToggleLights( bool doToggle, bool temporary )
+bool MainFrame::ToggleLights(bool doToggle, bool temporary)
 {
 	bool oldstate = true;
 #ifdef USE_S57
-	if( ps52plib ) {
-		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++ ) {
-			OBJLElement *pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
-			if( !strncmp( pOLE->OBJLName, "LIGHTS", 6 ) ) {
+	if (ps52plib) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+			if (!strncmp(pOLE->OBJLName, "LIGHTS", 6)) {
 				oldstate = pOLE->nViz != 0;
-				if( doToggle ) pOLE->nViz = !pOLE->nViz;
+				if (doToggle)
+					pOLE->nViz = !pOLE->nViz;
 				break;
 			}
 		}
-		if( doToggle ) {
-			if( ! temporary ) {
+		if (doToggle) {
+			if (!temporary) {
 				ps52plib->GenerateStateHash();
 				chart_canvas->ReloadVP();
 			}
@@ -2069,26 +2068,26 @@ bool MainFrame::ToggleLights( bool doToggle, bool temporary )
 	return oldstate;
 }
 
-void MainFrame::ToggleRocks( void )
+void MainFrame::ToggleRocks(void)
 {
 #ifdef USE_S57
-	if( ps52plib ) {
-		int vis =  0;
+	if (ps52plib) {
+		int vis = 0;
 		// Need to loop once for UWTROC, which is our "master", then for
 		// other categories, since order is unknown?
-		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++ ) {
-			OBJLElement *pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
-			if( !strncmp( pOLE->OBJLName, "UWTROC", 6 ) ) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+			if (!strncmp(pOLE->OBJLName, "UWTROC", 6)) {
 				pOLE->nViz = !pOLE->nViz;
 				vis = pOLE->nViz;
 			}
 		}
-		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++ ) {
-			OBJLElement *pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
-			if( !strncmp( pOLE->OBJLName, "OBSTRN", 6 ) ) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+			if (!strncmp(pOLE->OBJLName, "OBSTRN", 6)) {
 				pOLE->nViz = vis;
 			}
-			if( !strncmp( pOLE->OBJLName, "WRECKS", 6 ) ) {
+			if (!strncmp(pOLE->OBJLName, "WRECKS", 6)) {
 				pOLE->nViz = vis;
 			}
 		}
@@ -2098,34 +2097,35 @@ void MainFrame::ToggleRocks( void )
 #endif
 }
 
-void MainFrame::ToggleAnchor( void )
+void MainFrame::ToggleAnchor(void)
 {
 #ifdef USE_S57
-	if( ps52plib ) {
-		int vis =  0;
+	if (ps52plib) {
+		int vis = 0;
 		// Need to loop once for SBDARE, which is our "master", then for
 		// other categories, since order is unknown?
-		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++ ) {
-			OBJLElement *pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
-			if( !strncmp( pOLE->OBJLName, "SBDARE", 6 ) ) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+			if (!strncmp(pOLE->OBJLName, "SBDARE", 6)) {
 				pOLE->nViz = !pOLE->nViz;
 				vis = pOLE->nViz;
 				break;
 			}
 		}
-		const char * categories[] = { "ACHBRT", "ACHARE", "CBLSUB", "PIPARE", "PIPSOL", "TUNNEL" };
+		static const char* categories[] = { "ACHBRT", "ACHARE", "CBLSUB", "PIPARE", "PIPSOL", "TUNNEL" };
 		unsigned int num = sizeof(categories) / sizeof(categories[0]);
 		unsigned int cnt = 0;
-		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++ ) {
-			OBJLElement *pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
-			for( unsigned int c = 0; c < num; c++ ) {
-				if( !strncmp( pOLE->OBJLName, categories[c], 6 ) ) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+			for (unsigned int c = 0; c < num; c++) {
+				if (!strncmp(pOLE->OBJLName, categories[c], 6)) {
 					pOLE->nViz = vis;
 					cnt++;
 					break;
 				}
 			}
-			if( cnt == num ) break;
+			if (cnt == num)
+				break;
 		}
 		ps52plib->GenerateStateHash();
 		chart_canvas->ReloadVP();
@@ -2133,7 +2133,7 @@ void MainFrame::ToggleAnchor( void )
 #endif
 }
 
-void MainFrame::TogglebFollow( void )
+void MainFrame::TogglebFollow(void)
 {
 	if (!chart_canvas->m_bFollow)
 		SetbFollow();
@@ -2151,7 +2151,7 @@ void MainFrame::SetbFollow(void)
 
 void MainFrame::ClearbFollow(void)
 {
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
 	// Center the screen on the GPS position, for lack of a better place
 	vLat = nav.lat;
@@ -2164,7 +2164,7 @@ void MainFrame::ClearbFollow(void)
 
 void MainFrame::ToggleChartOutlines(void)
 {
-	global::GUI & gui = global::OCPN::get().gui();
+	global::GUI& gui = global::OCPN::get().gui();
 
 	gui.set_view_show_outlines(!gui.view().show_outlines);
 	chart_canvas->Refresh(false);
@@ -2176,39 +2176,39 @@ void MainFrame::SetToolbarItemState(int tool_id, bool state)
 		g_toolbar->ToggleTool(tool_id, state);
 }
 
-void MainFrame::SetToolbarItemBitmaps(int tool_id, wxBitmap *bmp, wxBitmap *bmpRollover)
+void MainFrame::SetToolbarItemBitmaps(int tool_id, wxBitmap* bmp, wxBitmap* bmpRollover)
 {
-	if( g_toolbar ) {
-		g_toolbar->SetToolBitmaps( tool_id, bmp, bmpRollover );
-		wxRect rect = g_toolbar->GetToolRect( tool_id );
-		g_toolbar->RefreshRect( rect );
+	if (g_toolbar) {
+		g_toolbar->SetToolBitmaps(tool_id, bmp, bmpRollover);
+		wxRect rect = g_toolbar->GetToolRect(tool_id);
+		g_toolbar->RefreshRect(rect);
 	}
 }
 
 void MainFrame::ApplyGlobalSettings(bool, bool bnewtoolbar)
 {
-	//             ShowDebugWindow as a wxStatusBar
+	// ShowDebugWindow as a wxStatusBar
 	m_StatusBarFieldCount = 5;
 
 #ifdef __WXMSW__
-	UseNativeStatusBar( false );              // better for MSW, undocumented in frame.cpp
+	UseNativeStatusBar(false); // better for MSW, undocumented in frame.cpp
 #endif
 
-	if( pConfig->m_bShowDebugWindows ) {
-		if( !m_pStatusBar ) {
-			m_pStatusBar = CreateStatusBar( m_StatusBarFieldCount, 0 );   // No wxST_SIZEGRIP needed
+	if (pConfig->m_bShowDebugWindows) {
+		if (!m_pStatusBar) {
+			m_pStatusBar = CreateStatusBar(m_StatusBarFieldCount, 0); // No wxST_SIZEGRIP needed
 			ApplyGlobalColorSchemetoStatusBar();
-			SendSizeEvent();                        // seem only needed for MSW...
+			SendSizeEvent(); // seem only needed for MSW...
 		}
 
 	} else {
-		if( m_pStatusBar ) {
+		if (m_pStatusBar) {
 			m_pStatusBar->Destroy();
 			m_pStatusBar = NULL;
-			SetStatusBar( NULL );
+			SetStatusBar(NULL);
 
-			SendSizeEvent();                        // seem only needed for MSW...
-			Refresh( false );
+			SendSizeEvent(); // seem only needed for MSW...
+			Refresh(false);
 		}
 	}
 
@@ -2216,7 +2216,7 @@ void MainFrame::ApplyGlobalSettings(bool, bool bnewtoolbar)
 		UpdateToolbar(global_color_scheme);
 }
 
-void MainFrame::SubmergeToolbarIfOverlap( int x, int y, int margin )
+void MainFrame::SubmergeToolbarIfOverlap(int x, int y, int margin)
 {
 	if (g_FloatingToolbarDialog) {
 		wxRect rect = g_FloatingToolbarDialog->GetScreenRect();
@@ -2226,7 +2226,7 @@ void MainFrame::SubmergeToolbarIfOverlap( int x, int y, int margin )
 	}
 }
 
-void MainFrame::SubmergeToolbar( void )
+void MainFrame::SubmergeToolbar(void)
 {
 	if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->Submerge();
@@ -2242,44 +2242,45 @@ void MainFrame::SurfaceToolbar(void)
 		} else
 			g_FloatingToolbarDialog->Surface();
 	}
-	gFrame->Raise();
+	Raise();
 }
 
-void MainFrame::JumpToPosition( double lat, double lon, double scale )
+void MainFrame::JumpToPosition(double lat, double lon, double scale)
 {
 	vLat = lat;
 	vLon = lon;
 	chart_canvas->m_bFollow = false;
 	DoChartUpdate();
 
-	chart_canvas->SetViewPoint( lat, lon, scale, 0, chart_canvas->GetVPRotation() );
+	chart_canvas->SetViewPoint(lat, lon, scale, 0, chart_canvas->GetVPRotation());
 	chart_canvas->ReloadVP();
 
-	SetToolbarItemState( ID_FOLLOW, false );
+	SetToolbarItemState(ID_FOLLOW, false);
 
-	if( g_pi_manager ) {
-		g_pi_manager->SendViewPortToRequestingPlugIns( chart_canvas->GetVP() );
+	if (g_pi_manager) {
+		g_pi_manager->SendViewPortToRequestingPlugIns(chart_canvas->GetVP());
 	}
 }
 
 int MainFrame::DoOptionsDialog()
 {
 	static int lastPage = -1;
-	static wxPoint lastWindowPos( 0,0 );
-	static wxSize lastWindowSize( 0,0 );
+	static wxPoint lastWindowPos(0, 0);
+	static wxSize lastWindowSize(0, 0);
 
 	g_boptionsactive = true;
 
 	::wxBeginBusyCursor();
-	options optionsDlg( this, -1, _("Options") );
+	options optionsDlg(this, -1, _("Options"));
 	::wxEndBusyCursor();
 
 	//    Set initial Chart Dir
 	optionsDlg.SetInitChartDir(init_Chart_Dir);
 
 	//      Pass two working pointers for Chart Dir Dialog
-	optionsDlg.SetCurrentDirList( ChartData->GetChartDirArray() );
-	ArrayOfCDI * pWorkDirArray = new ArrayOfCDI; // FIXME: dynamic allocation, to be used in dialog, deletion later... in this method
+	optionsDlg.SetCurrentDirList(ChartData->GetChartDirArray());
+	ArrayOfCDI* pWorkDirArray = new ArrayOfCDI; // FIXME: dynamic allocation, to be used in dialog,
+												// deletion later... in this method
 	optionsDlg.SetWorkDirListPtr(pWorkDirArray);
 
 	//      Pass a ptr to MyConfig, for updates
@@ -2296,49 +2297,55 @@ int MainFrame::DoOptionsDialog()
 	prev_locale = g_locale;
 
 	bool b_sub = false;
-	if( g_FloatingToolbarDialog && g_FloatingToolbarDialog->IsShown() ) {
+	if (g_FloatingToolbarDialog && g_FloatingToolbarDialog->IsShown()) {
 		wxRect bx_rect = optionsDlg.GetScreenRect();
 		wxRect tb_rect = g_FloatingToolbarDialog->GetScreenRect();
-		if( tb_rect.Intersects( bx_rect ) ) b_sub = true;
+		if (tb_rect.Intersects(bx_rect))
+			b_sub = true;
 
-		if( b_sub ) g_FloatingToolbarDialog->Submerge();
+		if (b_sub)
+			g_FloatingToolbarDialog->Submerge();
 	}
 
 #ifdef __WXOSX__
-	if(stats) stats->Hide();
+	if (stats)
+		stats->Hide();
 #endif
 
-	if( lastPage >= 0 ) optionsDlg.m_pListbook->SetSelection( lastPage );
+	if (lastPage >= 0)
+		optionsDlg.m_pListbook->SetSelection(lastPage);
 	optionsDlg.lastWindowPos = lastWindowPos;
-	if( lastWindowPos != wxPoint(0,0) ) {
-		optionsDlg.Move( lastWindowPos );
-		optionsDlg.SetSize( lastWindowSize );
+	if (lastWindowPos != wxPoint(0, 0)) {
+		optionsDlg.Move(lastWindowPos);
+		optionsDlg.SetSize(lastWindowSize);
 	} else {
 		optionsDlg.Center();
 	}
 
-	if( g_FloatingToolbarDialog) g_FloatingToolbarDialog->DisableTooltips();
+	if (g_FloatingToolbarDialog)
+		g_FloatingToolbarDialog->DisableTooltips();
 
 	int rr = optionsDlg.ShowModal();
 
-	if( g_FloatingToolbarDialog) g_FloatingToolbarDialog->EnableTooltips();
+	if (g_FloatingToolbarDialog)
+		g_FloatingToolbarDialog->EnableTooltips();
 
 	lastPage = optionsDlg.lastPage;
 	lastWindowPos = optionsDlg.lastWindowPos;
 	lastWindowSize = optionsDlg.lastWindowSize;
 
-	if( b_sub ) {
+	if (b_sub) {
 		SurfaceToolbar();
 		chart_canvas->SetFocus();
 	}
 
 #ifdef __WXGTK__
-	Raise();                      // I dunno why...
+	Raise(); // I dunno why...
 #endif
 
 	bool ret_val = false;
-	if( rr ) {
-		ProcessOptionsDialog( rr, &optionsDlg );
+	if (rr) {
+		ProcessOptionsDialog(rr, &optionsDlg);
 		ret_val = true;
 	}
 
@@ -2351,149 +2358,154 @@ int MainFrame::DoOptionsDialog()
 	}
 
 #ifdef __WXMAC__
-	if(stats) stats->Show();
+	if (stats)
+		stats->Show();
 #endif
 
-	Refresh( false );
+	Refresh(false);
 
 	g_boptionsactive = false;
 
 	return ret_val;
 }
 
-int MainFrame::ProcessOptionsDialog( int rr, options* dialog )
+int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 {
-	ArrayOfCDI * pWorkDirArray = dialog->GetWorkDirListPtr();
-	if( ( rr & VISIT_CHARTS )
-			&& ( ( rr & CHANGE_CHARTS ) || ( rr & FORCE_UPDATE ) || ( rr & SCAN_UPDATE ) ) ) {
+	ArrayOfCDI* pWorkDirArray = dialog->GetWorkDirListPtr();
+	if ((rr & VISIT_CHARTS)
+		&& ((rr & CHANGE_CHARTS) || (rr & FORCE_UPDATE) || (rr & SCAN_UPDATE))) {
 
 		//    Capture the currently open chart
 		wxString chart_file_name;
-		if( chart_canvas->GetQuiltMode() ) {
+		if (chart_canvas->GetQuiltMode()) {
 			int dbi = chart_canvas->GetQuiltRefChartdbIndex();
-			chart_file_name = ChartData->GetDBChartFileName( dbi );
-		} else
-			if( Current_Ch ) chart_file_name = Current_Ch->GetFullPath();
+			chart_file_name = ChartData->GetDBChartFileName(dbi);
+		} else if (Current_Ch)
+			chart_file_name = Current_Ch->GetFullPath();
 
-		UpdateChartDatabaseInplace(*pWorkDirArray, ((rr & FORCE_UPDATE) == FORCE_UPDATE), true, chartListFileName);
+		UpdateChartDatabaseInplace(*pWorkDirArray, ((rr & FORCE_UPDATE) == FORCE_UPDATE), true,
+								   chartListFileName);
 
 		//    Re-open the last open chart
-		int dbii = ChartData->FinddbIndex( chart_file_name );
-		ChartsRefresh( dbii, chart_canvas->GetVP() );
+		int dbii = ChartData->FinddbIndex(chart_file_name);
+		ChartsRefresh(dbii, chart_canvas->GetVP());
 	}
 
-	if( ( rr & LOCALE_CHANGED ) || ( rr & STYLE_CHANGED ) ) {
-		if( ( prev_locale != g_locale ) || ( rr & STYLE_CHANGED ) ) {
+	if ((rr & LOCALE_CHANGED) || (rr & STYLE_CHANGED)) {
+		if ((prev_locale != g_locale) || (rr & STYLE_CHANGED)) {
 			OCPNMessageBox(NULL, _("Please restart OpenCPN to activate language or style changes."),
-					_("OpenCPN Info"), wxOK | wxICON_INFORMATION );
-			if( rr & LOCALE_CHANGED ) g_blocale_changed = true;;
+						   _("OpenCPN Info"), wxOK | wxICON_INFORMATION);
+			if (rr & LOCALE_CHANGED)
+				g_blocale_changed = true;
+			;
 		}
 	}
 
-	if( ( ( rr & VISIT_CHARTS )
-				&& ( ( rr & CHANGE_CHARTS ) || ( rr & FORCE_UPDATE ) || ( rr & SCAN_UPDATE ) ) )
-			|| ( rr & GROUPS_CHANGED ) ) {
+	if (((rr & VISIT_CHARTS) && ((rr & CHANGE_CHARTS) || (rr & FORCE_UPDATE) || (rr & SCAN_UPDATE)))
+		|| (rr & GROUPS_CHANGED)) {
 		ScrubGroupArray();
-		ChartData->ApplyGroupArray( g_pGroupArray );
-		SetGroupIndex( g_GroupIndex );
+		ChartData->ApplyGroupArray(g_pGroupArray);
+		SetGroupIndex(g_GroupIndex);
 	}
 
-	if( rr & GROUPS_CHANGED ) {
+	if (rr & GROUPS_CHANGED) {
 		pConfig->DestroyConfigGroups();
-		pConfig->CreateConfigGroups( g_pGroupArray );
+		pConfig->CreateConfigGroups(g_pGroupArray);
 	}
 
-	if( rr & TIDES_CHANGED ) {
+	if (rr & TIDES_CHANGED) {
 		LoadHarmonics();
 	}
 
 	pConfig->UpdateSettings();
 
-	if( g_pActiveTrack ) {
-		g_pActiveTrack->SetPrecision( g_nTrackPrecision );
+	if (g_pActiveTrack) {
+		g_pActiveTrack->SetPrecision(g_nTrackPrecision);
 	}
 
-	if( ( bPrevQuilt != g_bQuiltEnable ) || ( bPrevFullScreenQuilt != g_bFullScreenQuilt ) ) {
-		chart_canvas->SetQuiltMode( g_bQuiltEnable );
+	if ((bPrevQuilt != g_bQuiltEnable) || (bPrevFullScreenQuilt != g_bFullScreenQuilt)) {
+		chart_canvas->SetQuiltMode(g_bQuiltEnable);
 		SetupQuiltMode();
 	}
 
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	if( g_bCourseUp ) {
+	if (g_bCourseUp) {
 		//    Stuff the COGAvg table in case COGUp is selected
 		double stuff = 0.;
 		if (!wxIsNaN(nav.cog))
 			stuff = nav.cog;
 		if (g_COGAvgSec > 0) {
-			for( int i = 0; i < g_COGAvgSec; i++ )
+			for (int i = 0; i < g_COGAvgSec; i++)
 				COGTable[i] = stuff;
 		}
 
 		g_COGAvg = stuff;
 
-		//    Short circuit the COG timer to force immediate refresh of canvas in case COGUp is selected
+		//    Short circuit the COG timer to force immediate refresh of canvas in case COGUp is
+		// selected
 		FrameCOGTimer.Stop();
-		FrameCOGTimer.Start( 100, wxTIMER_CONTINUOUS );
+		FrameCOGTimer.Start(100, wxTIMER_CONTINUOUS);
 	}
 
-	//    Stuff the Filter tables
-	double stuffcog = 0.;
-	double stuffsog = 0.;
+	// Stuff the Filter tables
+	double stuffcog = 0.0;
+	double stuffsog = 0.0;
 	if (!wxIsNaN(nav.cog))
 		stuffcog = nav.cog;
 	if (!wxIsNaN(nav.sog))
 		stuffsog = nav.sog;
 
-	for( int i = 0; i < MAX_COGSOG_FILTER_SECONDS; i++ ) {
+	for (int i = 0; i < MAX_COGSOG_FILTER_SECONDS; i++) {
 		COGFilterTable[i] = stuffcog;
 		SOGFilterTable[i] = stuffsog;
 	}
 	m_COGFilterLast = stuffcog;
 
-	SetChartUpdatePeriod( chart_canvas->GetVP() );              // Pick up changes to skew compensator
+	SetChartUpdatePeriod(chart_canvas->GetVP()); // Pick up changes to skew compensator
 
 	return 0;
 }
 
-wxString MainFrame::GetGroupName( int igroup )
+wxString MainFrame::GetGroupName(int igroup)
 {
-	ChartGroup *pGroup = g_pGroupArray->Item( igroup - 1 );
+	ChartGroup* pGroup = g_pGroupArray->Item(igroup - 1);
 	return pGroup->m_group_name;
 }
 
-bool MainFrame::CheckGroup( int igroup )
+bool MainFrame::CheckGroup(int igroup)
 {
-	if( igroup == 0 ) return true;              // "all charts" is always OK
+	if (igroup == 0)
+		return true; // "all charts" is always OK
 
-	ChartGroup *pGroup = g_pGroupArray->Item( igroup - 1 );
+	ChartGroup* pGroup = g_pGroupArray->Item(igroup - 1);
 	bool b_chart_in_group = false;
 
-	for( unsigned int j = 0; j < pGroup->m_element_array.GetCount(); j++ ) {
-		wxString element_root = pGroup->m_element_array.Item( j )->m_element_name;
+	for (unsigned int j = 0; j < pGroup->m_element_array.GetCount(); j++) {
+		wxString element_root = pGroup->m_element_array.Item(j)->m_element_name;
 
-		for( unsigned int ic = 0; ic < (unsigned int) ChartData->GetChartTableEntries(); ic++ ) {
-			const ChartTableEntry & cte = ChartData->GetChartTableEntry(ic);
+		for (unsigned int ic = 0; ic < (unsigned int)ChartData->GetChartTableEntries(); ic++) {
+			const ChartTableEntry& cte = ChartData->GetChartTableEntry(ic);
 			wxString chart_full_path(cte.GetpFullPath(), wxConvUTF8);
 
-			if( chart_full_path.StartsWith( element_root ) ) {
+			if (chart_full_path.StartsWith(element_root)) {
 				b_chart_in_group = true;
 				break;
 			}
 		}
 
-		if( b_chart_in_group ) break;
+		if (b_chart_in_group)
+			break;
 	}
 
-	return b_chart_in_group;                           // this group is empty
-
+	return b_chart_in_group; // this group is empty
 }
 
 void MainFrame::ScrubGroupArray()
 {
-	//    For each group,
-	//    make sure that each group element (dir or chart) references at least oneitem in the database.
-	//    If not, remove the element.
+	// For each group,
+	// make sure that each group element (dir or chart) references at least oneitem in the database.
+	// If not, remove the element.
 
 	unsigned int igroup = 0;
 	while( igroup < g_pGroupArray->GetCount() ) {
@@ -2526,58 +2538,61 @@ void MainFrame::ScrubGroupArray()
 }
 
 // Flav: This method reloads all charts for convenience
-void MainFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
+void MainFrame::ChartsRefresh(int dbi_hint, ViewPort& vp, bool b_purge)
 {
-	if( !ChartData ) return;
+	if (!ChartData)
+		return;
 
 	::wxBeginBusyCursor();
 
 	bool b_run = FrameTimer1.IsRunning();
 
-	FrameTimer1.Stop();                  // stop other asynchronous activity
+	FrameTimer1.Stop(); // stop other asynchronous activity
 
 	chart_canvas->InvalidateQuilt();
-	chart_canvas->SetQuiltRefChart( -1 );
+	chart_canvas->SetQuiltRefChart(-1);
 
 	Current_Ch = NULL;
 
 	delete pCurrentStack;
 	pCurrentStack = NULL;
 
-	if( b_purge ) ChartData->PurgeCache();
+	if (b_purge)
+		ChartData->PurgeCache();
 
 	//    Build a new ChartStack
 	pCurrentStack = new ChartStack;
-	ChartData->BuildChartStack( pCurrentStack, vLat, vLon );
+	ChartData->BuildChartStack(pCurrentStack, vLat, vLon);
 
-	if( -1 != dbi_hint ) {
-		if( chart_canvas->GetQuiltMode() ) {
-			pCurrentStack->SetCurrentEntryFromdbIndex( dbi_hint );
-			chart_canvas->SetQuiltRefChart( dbi_hint );
+	if (-1 != dbi_hint) {
+		if (chart_canvas->GetQuiltMode()) {
+			pCurrentStack->SetCurrentEntryFromdbIndex(dbi_hint);
+			chart_canvas->SetQuiltRefChart(dbi_hint);
 		} else {
 			//      Open the saved chart
-			ChartBase *pTentative_Chart;
-			pTentative_Chart = ChartData->OpenChartFromDB( dbi_hint, FULL_INIT );
+			ChartBase* pTentative_Chart;
+			pTentative_Chart = ChartData->OpenChartFromDB(dbi_hint, FULL_INIT);
 
-			if( pTentative_Chart ) {
-				if( Current_Ch ) Current_Ch->Deactivate();
+			if (pTentative_Chart) {
+				if (Current_Ch)
+					Current_Ch->Deactivate();
 
 				Current_Ch = pTentative_Chart;
 				Current_Ch->Activate();
 
-				pCurrentStack->CurrentStackEntry = ChartData->GetStackEntry( pCurrentStack,
-						Current_Ch->GetFullPath() );
+				pCurrentStack->CurrentStackEntry
+					= ChartData->GetStackEntry(pCurrentStack, Current_Ch->GetFullPath());
 			} else
-				SetChartThumbnail( dbi_hint );       // need to reset thumbnail on failed chart open
+				SetChartThumbnail(dbi_hint); // need to reset thumbnail on failed chart open
 		}
 
 		//          Refresh the Piano Bar
-		if( stats ) {
+		if (stats) {
 			std::vector<int> piano_active_chart_index_array;
 			piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
 			stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 
-			stats->Refresh( true );
+			stats->Refresh(true);
 		}
 
 	} else {
@@ -2585,27 +2600,27 @@ void MainFrame::ChartsRefresh( int dbi_hint, ViewPort &vp, bool b_purge )
 		//    Make it the smallest scale chart on the stack
 		pCurrentStack->CurrentStackEntry = pCurrentStack->nEntry - 1;
 		int selected_index = pCurrentStack->GetCurrentEntrydbIndex();
-		chart_canvas->SetQuiltRefChart( selected_index );
+		chart_canvas->SetQuiltRefChart(selected_index);
 	}
 
 	//    Validate the correct single chart, or set the quilt mode as appropriate
 	SetupQuiltMode();
 
-	if( vp.IsValid() )
-		chart_canvas->LoadVP( vp );
+	if (vp.IsValid())
+		chart_canvas->LoadVP(vp);
 	else
 		chart_canvas->ReloadVP();
 
 	UpdateControlBar();
 
-	UpdateGPSCompassStatusBox( true );
+	UpdateGPSCompassStatusBox(true);
 
-	chart_canvas->SetCursor( wxCURSOR_ARROW );
+	chart_canvas->SetCursor(wxCURSOR_ARROW);
 
-	if( b_run ) FrameTimer1.Start( TIMER_GFRAME_1, wxTIMER_CONTINUOUS );
+	if (b_run)
+		FrameTimer1.Start(TIMER_GFRAME_1, wxTIMER_CONTINUOUS);
 
 	::wxEndBusyCursor();
-
 }
 
 bool MainFrame::UpdateChartDatabaseInplace(
@@ -3140,11 +3155,16 @@ void MainFrame::send_gps_to_plugins() const
 		g_pi_manager->SendPositionFixToAllPlugIns(&GPSData);
 }
 
+bool MainFrame::is_route_blink_odd() const
+{
+	return route_blinker_tick & 1;
+}
+
 void MainFrame::onTimer_update_active_route()
 {
 	// Update the active route, if any
 	if (g_pRouteMan->UpdateProgress()) {
-		nBlinkerTick++;
+		++route_blinker_tick;
 		// This RefreshRect will cause any active routepoint to blink
 		if (g_pRouteMan->GetpActiveRoute())
 			chart_canvas->RefreshRect(g_blink_rect, false);
@@ -3806,7 +3826,8 @@ void MainFrame::HandlePianoRollover(int selected_index, int selected_dbIndex)
 
 	if (!chart_canvas->GetQuiltMode()) {
 		SetChartThumbnail(selected_index);
-		chart_canvas->ShowChartInfoWindow(key_location.x, position.y + key_location.y, selected_dbIndex);
+		chart_canvas->ShowChartInfoWindow(key_location.x, position.y + key_location.y,
+										  selected_dbIndex);
 	} else {
 		std::vector<int> piano_chart_index_array
 			= chart_canvas->GetQuiltExtendedStackdbIndexArray();
@@ -3830,7 +3851,7 @@ void MainFrame::HandlePianoRollover(int selected_index, int selected_dbIndex)
 	}
 }
 
-void MainFrame::HandlePianoRolloverIcon( int selected_index, int selected_dbIndex )
+void MainFrame::HandlePianoRolloverIcon(int selected_index, int selected_dbIndex)
 {
 	if (!chart_canvas)
 		return;
@@ -3842,84 +3863,88 @@ void MainFrame::HandlePianoRolloverIcon( int selected_index, int selected_dbInde
 	}
 }
 
-double MainFrame::GetBestVPScale(ChartBase * pchart)
+double MainFrame::GetBestVPScale(ChartBase* pchart)
 {
 	if (!pchart)
 		return 1.0;
 
-	double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / chart_canvas->GetVPScale();
+	double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor()
+									 / chart_canvas->GetVPScale();
 
-	if( ( g_bPreserveScaleOnX ) || ( CHART_TYPE_CM93COMP == pchart->GetChartType() ) ) {
-		double new_scale_ppm = pchart->GetNearestPreferredScalePPM( chart_canvas->GetVPScale() );
+	if ((g_bPreserveScaleOnX) || (CHART_TYPE_CM93COMP == pchart->GetChartType())) {
+		double new_scale_ppm = pchart->GetNearestPreferredScalePPM(chart_canvas->GetVPScale());
 		proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
 	} else {
-		//  This logic will bring the new chart onscreen at roughly twice the true paper scale equivalent.
+		//  This logic will bring the new chart onscreen at roughly twice the true paper scale
+		// equivalent.
 		proposed_scale_onscreen = pchart->GetNativeScale() / 2;
 		double equivalent_vp_scale = chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
-		double new_scale_ppm = pchart->GetNearestPreferredScalePPM( equivalent_vp_scale );
+		double new_scale_ppm = pchart->GetNearestPreferredScalePPM(equivalent_vp_scale);
 		proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
 	}
 
-	proposed_scale_onscreen = wxMin(
-		proposed_scale_onscreen,
-		pchart->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(), chart_canvas->GetCanvasWidth()));
-	proposed_scale_onscreen = wxMax(
-		proposed_scale_onscreen,
-		pchart->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), global::OCPN::get().gui().view().allow_overzoom_x));
+	proposed_scale_onscreen = wxMin(proposed_scale_onscreen,
+									pchart->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(),
+															  chart_canvas->GetCanvasWidth()));
+	proposed_scale_onscreen
+		= wxMax(proposed_scale_onscreen,
+				pchart->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(),
+										  global::OCPN::get().gui().view().allow_overzoom_x));
 
 	return chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
 }
 
-void MainFrame::SelectQuiltRefChart( int selected_index )
+void MainFrame::SelectQuiltRefChart(int selected_index)
 {
 	std::vector<int> piano_chart_index_array = chart_canvas->GetQuiltExtendedStackdbIndexArray();
 	int current_db_index = piano_chart_index_array[selected_index];
 
-	SelectQuiltRefdbChart( current_db_index );
+	SelectQuiltRefdbChart(current_db_index);
 }
 
-void MainFrame::SelectQuiltRefdbChart( int db_index )
+void MainFrame::SelectQuiltRefdbChart(int db_index)
 {
-	if( pCurrentStack )
-		pCurrentStack->SetCurrentEntryFromdbIndex( db_index );
+	if (pCurrentStack)
+		pCurrentStack->SetCurrentEntryFromdbIndex(db_index);
 
-	chart_canvas->SetQuiltRefChart( db_index );
+	chart_canvas->SetQuiltRefChart(db_index);
 
-	ChartBase *pc = ChartData->OpenChartFromDB( db_index, FULL_INIT );
-	if( pc ) {
-		double best_scale = GetBestVPScale( pc );
-		chart_canvas->SetVPScale( best_scale );
+	ChartBase* pc = ChartData->OpenChartFromDB(db_index, FULL_INIT);
+	if (pc) {
+		double best_scale = GetBestVPScale(pc);
+		chart_canvas->SetVPScale(best_scale);
 	}
 }
 
-void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Type,
-		ChartFamilyEnum New_Family )
+void MainFrame::SelectChartFromStack(int index, bool bDir, ChartTypeEnum New_Type,
+									 ChartFamilyEnum New_Family)
 {
-	if( !pCurrentStack )
+	if (!pCurrentStack)
 		return;
 
-	if( index < pCurrentStack->nEntry ) {
-		//      Open the new chart
-		ChartBase *pTentative_Chart;
-		pTentative_Chart = ChartData->OpenStackChartConditional( pCurrentStack, index, bDir,
-				New_Type, New_Family );
+	if (index < pCurrentStack->nEntry) {
+		// Open the new chart
+		ChartBase* pTentative_Chart;
+		pTentative_Chart = ChartData->OpenStackChartConditional(pCurrentStack, index, bDir,
+																New_Type, New_Family);
 
-		if( pTentative_Chart ) {
-			if( Current_Ch ) Current_Ch->Deactivate();
+		if (pTentative_Chart) {
+			if (Current_Ch)
+				Current_Ch->Deactivate();
 
 			Current_Ch = pTentative_Chart;
 			Current_Ch->Activate();
 
-			pCurrentStack->CurrentStackEntry = ChartData->GetStackEntry( pCurrentStack,
-					Current_Ch->GetFullPath() );
+			pCurrentStack->CurrentStackEntry
+				= ChartData->GetStackEntry(pCurrentStack, Current_Ch->GetFullPath());
 		} else
-			SetChartThumbnail( -1 );   // need to reset thumbnail on failed chart open
+			SetChartThumbnail(-1); // need to reset thumbnail on failed chart open
 
-		//      Setup the view
+		// Setup the view
 		double zLat;
 		double zLon;
-		if( chart_canvas->m_bFollow ) {
-			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		if (chart_canvas->m_bFollow) {
+			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			zLat = nav.lat;
 			zLon = nav.lon;
 		} else {
@@ -3927,77 +3952,82 @@ void MainFrame::SelectChartFromStack( int index, bool bDir, ChartTypeEnum New_Ty
 			zLon = vLon;
 		}
 
-		double best_scale = GetBestVPScale( Current_Ch );
+		double best_scale = GetBestVPScale(Current_Ch);
 
-		chart_canvas->SetViewPoint(zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0, chart_canvas->GetVPRotation());
-		SetChartUpdatePeriod( chart_canvas->GetVP() );
-		UpdateGPSCompassStatusBox();           // Pick up the rotation
-	}
-
-	//          Refresh the Piano Bar
-	if( stats ) {
-		std::vector<int> piano_active_chart_index_array;
-		piano_active_chart_index_array.push_back( pCurrentStack->GetCurrentEntrydbIndex());
-		stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
-
-		stats->Refresh( true );
-	}
-}
-
-void MainFrame::SelectdbChart( int dbindex )
-{
-	if( !pCurrentStack )
-		return;
-
-	if( dbindex >= 0 ) {
-		//      Open the new chart
-		ChartBase *pTentative_Chart;
-		pTentative_Chart = ChartData->OpenChartFromDB( dbindex, FULL_INIT );
-
-		if( pTentative_Chart ) {
-			if( Current_Ch ) Current_Ch->Deactivate();
-
-			Current_Ch = pTentative_Chart;
-			Current_Ch->Activate();
-
-			pCurrentStack->CurrentStackEntry = ChartData->GetStackEntry( pCurrentStack,
-					Current_Ch->GetFullPath() );
-		} else
-			SetChartThumbnail( -1 );       // need to reset thumbnail on failed chart open
-
-		//      Setup the view
-		double zLat, zLon;
-		if( chart_canvas->m_bFollow ) {
-			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-			zLat = nav.lat;
-			zLon = nav.lon;
-		} else {
-			zLat = vLat;
-			zLon = vLon;
-		}
-
-		double best_scale = GetBestVPScale( Current_Ch );
-
-		chart_canvas->SetViewPoint(zLat, zLon, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0, chart_canvas->GetVPRotation());
+		chart_canvas->SetViewPoint(zLat, zLon, best_scale,
+								   Current_Ch->GetChartSkew() * M_PI / 180.0,
+								   chart_canvas->GetVPRotation());
 		SetChartUpdatePeriod(chart_canvas->GetVP());
 		UpdateGPSCompassStatusBox(); // Pick up the rotation
 	}
 
-	//          Refresh the Piano Bar
-	if( stats ) {
+	// Refresh the Piano Bar
+	if (stats) {
 		std::vector<int> piano_active_chart_index_array;
 		piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
 		stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 
-		stats->Refresh( true );
+		stats->Refresh(true);
 	}
 }
 
-void MainFrame::SetChartUpdatePeriod( ViewPort &vp )
+void MainFrame::SelectdbChart(int dbindex)
+{
+	if (!pCurrentStack)
+		return;
+
+	if (dbindex >= 0) {
+		// Open the new chart
+		ChartBase* pTentative_Chart;
+		pTentative_Chart = ChartData->OpenChartFromDB(dbindex, FULL_INIT);
+
+		if (pTentative_Chart) {
+			if (Current_Ch)
+				Current_Ch->Deactivate();
+
+			Current_Ch = pTentative_Chart;
+			Current_Ch->Activate();
+
+			pCurrentStack->CurrentStackEntry
+				= ChartData->GetStackEntry(pCurrentStack, Current_Ch->GetFullPath());
+		} else
+			SetChartThumbnail(-1); // need to reset thumbnail on failed chart open
+
+		// Setup the view
+		double zLat, zLon;
+		if (chart_canvas->m_bFollow) {
+			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+			zLat = nav.lat;
+			zLon = nav.lon;
+		} else {
+			zLat = vLat;
+			zLon = vLon;
+		}
+
+		double best_scale = GetBestVPScale(Current_Ch);
+
+		chart_canvas->SetViewPoint(zLat, zLon, best_scale,
+								   Current_Ch->GetChartSkew() * M_PI / 180.0,
+								   chart_canvas->GetVPRotation());
+		SetChartUpdatePeriod(chart_canvas->GetVP());
+		UpdateGPSCompassStatusBox(); // Pick up the rotation
+	}
+
+	// Refresh the Piano Bar
+	if (stats) {
+		std::vector<int> piano_active_chart_index_array;
+		piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
+		stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
+
+		stats->Refresh(true);
+	}
+}
+
+void MainFrame::SetChartUpdatePeriod(ViewPort& vp)
 {
 	// Set the chart update period based upon chart skew and skew compensator
 
-	g_ChartUpdatePeriod = 1;            // General default
+	g_ChartUpdatePeriod = 1; // General default
 
 	if (!vp.b_quilt) {
 		if (g_bskew_comp && (fabs(vp.skew)) > 0.01)
@@ -4528,12 +4558,12 @@ update_finish:
 	return bNewChart | bNewView;
 }
 
-void MainFrame::MouseEvent( wxMouseEvent& event )
+void MainFrame::MouseEvent(wxMouseEvent& event)
 {
 	// FIXME: has no effect?
 	int x;
 	int y;
-	event.GetPosition( &x, &y );
+	event.GetPosition(&x, &y);
 }
 
 void MainFrame::RemoveChartFromQuilt(int dbIndex)
@@ -4541,10 +4571,8 @@ void MainFrame::RemoveChartFromQuilt(int dbIndex)
 	// Remove the item from the list (if it appears) to avoid multiple addition
 	// FIXME: why remove if the same index will be added to the list anyway? order of insertion?
 
-	std::vector<int>::iterator i = find(
-			g_quilt_noshow_index_array.begin(),
-			g_quilt_noshow_index_array.end(),
-			dbIndex);
+	std::vector<int>::iterator i
+		= find(g_quilt_noshow_index_array.begin(), g_quilt_noshow_index_array.end(), dbIndex);
 
 	if (i != g_quilt_noshow_index_array.end())
 		g_quilt_noshow_index_array.erase(i);
@@ -4552,14 +4580,14 @@ void MainFrame::RemoveChartFromQuilt(int dbIndex)
 	g_quilt_noshow_index_array.push_back(dbIndex);
 }
 
-//          Piano window Popup Menu Handlers and friends
+// Piano window Popup Menu Handlers and friends
 
 static int menu_selected_dbIndex;
 static int menu_selected_index;
 
 void MainFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbIndex)
 {
-	if( !pCurrentStack )
+	if (!pCurrentStack)
 		return;
 
 	// No context menu if quilting is disabled
@@ -4569,89 +4597,84 @@ void MainFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbInde
 	menu_selected_dbIndex = selected_dbIndex;
 	menu_selected_index = selected_index;
 
-	wxMenu *pctx_menu = new wxMenu();
+	wxMenu* pctx_menu = new wxMenu();
 
-	//    Search the no-show array
-	bool b_is_in_noshow = g_quilt_noshow_index_array.end() != find(
-		g_quilt_noshow_index_array.begin(),
-		g_quilt_noshow_index_array.end(),
-		selected_dbIndex);
+	// Search the no-show array
+	bool b_is_in_noshow = g_quilt_noshow_index_array.end()
+						  != find(g_quilt_noshow_index_array.begin(),
+								  g_quilt_noshow_index_array.end(), selected_dbIndex);
 
-	if( b_is_in_noshow ) {
-		pctx_menu->Append( ID_PIANO_ENABLE_QUILT_CHART, _("Show This Chart") );
-		Connect( ID_PIANO_ENABLE_QUILT_CHART, wxEVT_COMMAND_MENU_SELECTED,
-				wxCommandEventHandler(MainFrame::OnPianoMenuEnableChart) );
+	if (b_is_in_noshow) {
+		pctx_menu->Append(ID_PIANO_ENABLE_QUILT_CHART, _("Show This Chart"));
+		Connect(ID_PIANO_ENABLE_QUILT_CHART, wxEVT_COMMAND_MENU_SELECTED,
+				wxCommandEventHandler(MainFrame::OnPianoMenuEnableChart));
 	} else {
-		if( pCurrentStack->nEntry > 1 ) {
-			pctx_menu->Append( ID_PIANO_DISABLE_QUILT_CHART, _("Hide This Chart") );
-			Connect( ID_PIANO_DISABLE_QUILT_CHART, wxEVT_COMMAND_MENU_SELECTED,
-					wxCommandEventHandler(MainFrame::OnPianoMenuDisableChart) );
+		if (pCurrentStack->nEntry > 1) {
+			pctx_menu->Append(ID_PIANO_DISABLE_QUILT_CHART, _("Hide This Chart"));
+			Connect(ID_PIANO_DISABLE_QUILT_CHART, wxEVT_COMMAND_MENU_SELECTED,
+					wxCommandEventHandler(MainFrame::OnPianoMenuDisableChart));
 		}
 	}
 
-	int sx;
-	int sy;
-	stats->GetPosition( &sx, &sy );
-	wxPoint pos = stats->GetParent()->ScreenToClient( wxPoint( sx, sy ) );
-	wxPoint key_location = stats->pPiano->GetKeyOrigin( selected_index );
+	wxPoint position = stats->GetPosition();
+	wxPoint pos = stats->GetParent()->ScreenToClient(position);
+	wxPoint key_location = stats->pPiano->GetKeyOrigin(selected_index);
 	pos.x += key_location.x;
 	pos.y -= 30;
 
 	// Invoke the drop-down menu
-	if( pctx_menu->GetMenuItems().GetCount() )
-		PopupMenu( pctx_menu, pos );
+	if (pctx_menu->GetMenuItems().GetCount())
+		PopupMenu(pctx_menu, pos);
 
 	chart_canvas->HideChartInfoWindow();
 	stats->pPiano->ResetRollover();
 
-	chart_canvas->SetQuiltChartHiLiteIndex( -1 );
+	chart_canvas->SetQuiltChartHiLiteIndex(-1);
 
 	chart_canvas->ReloadVP();
 
 	delete pctx_menu;
 }
 
-void MainFrame::OnPianoMenuEnableChart(wxCommandEvent &)
+void MainFrame::OnPianoMenuEnableChart(wxCommandEvent&)
 {
-	std::vector<int>::iterator i = find(
-			g_quilt_noshow_index_array.begin(),
-			g_quilt_noshow_index_array.end(),
-			menu_selected_dbIndex);
+	std::vector<int>::iterator i = find(g_quilt_noshow_index_array.begin(),
+										g_quilt_noshow_index_array.end(), menu_selected_dbIndex);
 
 	if (i != g_quilt_noshow_index_array.end())
 		g_quilt_noshow_index_array.erase(i);
 }
 
-void MainFrame::OnPianoMenuDisableChart(wxCommandEvent &)
+void MainFrame::OnPianoMenuDisableChart(wxCommandEvent&)
 {
-	if( !pCurrentStack )
+	if (!pCurrentStack)
 		return;
 
-	RemoveChartFromQuilt( menu_selected_dbIndex );
+	RemoveChartFromQuilt(menu_selected_dbIndex);
 
-	//      It could happen that the chart being disabled is the reference chart....
-	if( menu_selected_dbIndex == chart_canvas->GetQuiltRefChartdbIndex() ) {
-		int type = ChartData->GetDBChartType( menu_selected_dbIndex );
+	// It could happen that the chart being disabled is the reference chart....
+	if (menu_selected_dbIndex == chart_canvas->GetQuiltRefChartdbIndex()) {
+		int type = ChartData->GetDBChartType(menu_selected_dbIndex);
 
-		int i = menu_selected_index + 1;          // select next smaller scale chart
+		int i = menu_selected_index + 1; // select next smaller scale chart
 		bool b_success = false;
-		while( i < pCurrentStack->nEntry - 1 ) {
-			int dbIndex = pCurrentStack->GetDBIndex( i );
-			if( type == ChartData->GetDBChartType( dbIndex ) ) {
-				SelectQuiltRefChart( i );
+		while (i < pCurrentStack->nEntry - 1) {
+			int dbIndex = pCurrentStack->GetDBIndex(i);
+			if (type == ChartData->GetDBChartType(dbIndex)) {
+				SelectQuiltRefChart(i);
 				b_success = true;
 				break;
 			}
 			i++;
 		}
 
-		//    If that did not work, try to select the next larger scale compatible chart
-		if( !b_success ) {
+		// If that did not work, try to select the next larger scale compatible chart
+		if (!b_success) {
 			i = menu_selected_index - 1;
-			while( i > 0 ) {
-				int dbIndex = pCurrentStack->GetDBIndex( i );
-				if( type == ChartData->GetDBChartType( dbIndex ) ) {
-					SelectQuiltRefChart( i );
+			while (i > 0) {
+				int dbIndex = pCurrentStack->GetDBIndex(i);
+				if (type == ChartData->GetDBChartType(dbIndex)) {
+					SelectQuiltRefChart(i);
 					b_success = true;
 					break;
 				}
@@ -4661,30 +4684,30 @@ void MainFrame::OnPianoMenuDisableChart(wxCommandEvent &)
 	}
 }
 
-void MainFrame::DoPrint( void )
+void MainFrame::DoPrint(void)
 {
-	if( NULL == g_printData ) {
+	if (NULL == g_printData) {
 		g_printData = new wxPrintData;
-		g_printData->SetOrientation( wxLANDSCAPE );
+		g_printData->SetOrientation(wxLANDSCAPE);
 		g_pageSetupData = new wxPageSetupDialogData;
 	}
 
-	wxPrintDialogData printDialogData( *g_printData );
-	printDialogData.EnablePageNumbers( false );
+	wxPrintDialogData printDialogData(*g_printData);
+	printDialogData.EnablePageNumbers(false);
 
-	wxPrinter printer( &printDialogData );
+	wxPrinter printer(&printDialogData);
 
-	MyPrintout printout( _("Chart Print") );
-	if( !printer.Print( this, &printout, true ) ) {
-		if( wxPrinter::GetLastError() == wxPRINTER_ERROR ) OCPNMessageBox(NULL,
-				_("There was a problem printing.\nPerhaps your current printer is not set correctly?"),
-				_T("OpenCPN"), wxOK );
+	MyPrintout printout(_("Chart Print"));
+	if (!printer.Print(this, &printout, true)) {
+		if (wxPrinter::GetLastError() == wxPRINTER_ERROR)
+			OCPNMessageBox(NULL, _("There was a problem printing.\nPerhaps your current printer is not set correctly?"),
+						   _T("OpenCPN"), wxOK);
 	} else {
-		( *g_printData ) = printer.GetPrintDialogData().GetPrintData();
+		(*g_printData) = printer.GetPrintDialogData().GetPrintData();
 	}
 }
 
-void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
+void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 {
 	wxString message_ID = event.GetID();
 	wxString message_JSONText = event.GetJSONText();
@@ -4693,20 +4716,18 @@ void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
 
 	//  We can possibly use the estimated magnetic variation if WMM_pi is present and active
 	//  and we have no other source of Variation
-	if(!g_bVAR_Rx)
-	{
-		if(message_ID == _T("WMM_VARIATION_BOAT"))
-		{
+	if (!g_bVAR_Rx) {
+		if (message_ID == _T("WMM_VARIATION_BOAT")) {
 
 			// construct the JSON root object
-			wxJSONValue  root;
+			wxJSONValue root;
 			// construct a JSON parser
 			wxJSONReader reader;
 
 			// now read the JSON text and store it in the 'root' structure
 			// check for errors before retreiving values...
-			int numErrors = reader.Parse( message_JSONText, &root );
-			if ( numErrors > 0 )  {
+			int numErrors = reader.Parse(message_JSONText, &root);
+			if (numErrors > 0) {
 				return;
 			}
 
@@ -4719,17 +4740,16 @@ void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
 		}
 	}
 
-	if(message_ID == _T("OCPN_TRACK_REQUEST"))
-	{
-		wxJSONValue  root;
+	if (message_ID == _T("OCPN_TRACK_REQUEST")) {
+		wxJSONValue root;
 		wxJSONReader reader;
 		wxString trk_id = wxEmptyString;
 
-		int numErrors = reader.Parse( message_JSONText, &root );
-		if ( numErrors > 0 )
+		int numErrors = reader.Parse(message_JSONText, &root);
+		if (numErrors > 0)
 			return;
 
-		if(root.HasMember(_T("Track_ID")))
+		if (root.HasMember(_T("Track_ID")))
 			trk_id = root[_T("Track_ID")].AsString();
 
 		for (RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); ++it) {
@@ -4737,232 +4757,223 @@ void MainFrame::OnEvtPlugInMessage( OCPN_MsgEvent & event )
 			if ((*it)->IsTrack() && (*it)->m_GUID == trk_id) {
 				name = (*it)->m_RouteNameString;
 				if (name.IsEmpty()) {
-					RoutePoint *rp = (*it)->GetPoint( 1 );
+					RoutePoint* rp = (*it)->GetPoint(1);
 					if (rp && rp->GetCreateTime().IsValid())
-						name = rp->GetCreateTime().FormatISODate() + _T(" ") + rp->GetCreateTime().FormatISOTime();
+						name = rp->GetCreateTime().FormatISODate() + _T(" ")
+							   + rp->GetCreateTime().FormatISOTime();
 					else
 						name = _("(Unnamed Track)");
 				}
 
-				// To avoid memory problems send a single trackpoint. It's up to the plugin to collect the data.
+				// To avoid memory problems send a single trackpoint. It's up to the plugin to
+				// collect the data.
 				int i = 1;
 				wxJSONValue v;
-				for(RoutePointList::iterator itp = (*it)->pRoutePointList->begin(); itp != (*it)->pRoutePointList->end(); itp++) {
+				for (RoutePointList::iterator itp = (*it)->pRoutePointList->begin();
+					 itp != (*it)->pRoutePointList->end(); itp++) {
 					v[_T("lat")] = (*itp)->m_lat;
 					v[_T("lon")] = (*itp)->m_lon;
 					v[_T("TotalNodes")] = (*it)->pRoutePointList->GetCount();
 					v[_T("NodeNr")] = i;
 					v[_T("error")] = false;
 					i++;
-					wxString msg_id( _T("OCPN_TRACKPOINTS_COORDS") );
-					g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+					wxString msg_id(_T("OCPN_TRACKPOINTS_COORDS"));
+					g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 				}
 			} else {
 				wxJSONValue v;
 				v[_T("error")] = true;
 
-				wxString msg_id( _T("OCPN_TRACKPOINTS_COORDS") );
-				g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+				wxString msg_id(_T("OCPN_TRACKPOINTS_COORDS"));
+				g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 			}
 		}
-	} else if(message_ID == _T("OCPN_ROUTE_REQUEST")) {
-		wxJSONValue  root;
+	} else if (message_ID == _T("OCPN_ROUTE_REQUEST")) {
+		wxJSONValue root;
 		wxJSONReader reader;
 		wxString route_id = wxEmptyString;
 
-		int numErrors = reader.Parse( message_JSONText, &root );
-		if ( numErrors > 0 )  {
+		int numErrors = reader.Parse(message_JSONText, &root);
+		if (numErrors > 0) {
 			return;
 		}
 
-		if(root.HasMember(_T("Route_ID")))
+		if (root.HasMember(_T("Route_ID")))
 			route_id = root[_T("Route_ID")].AsString();
 
 		for (RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); ++it) {
 			wxString name = wxEmptyString;
 			wxJSONValue v;
 
-			if(!(*it)->IsTrack() && (*it)->m_GUID == route_id)
-			{
+			if (!(*it)->IsTrack() && (*it)->m_GUID == route_id) {
 				name = (*it)->m_RouteNameString;
-				if(name.IsEmpty())
+				if (name.IsEmpty())
 					name = _("(Unnamed Route)");
 
 				v[_T("Name")] = name;
 
-				wxJSONValue v; int i = 0;
-				for(RoutePointList::iterator itp = (*it)->pRoutePointList->begin(); itp != (*it)->pRoutePointList->end(); itp++)
-				{
+				wxJSONValue v;
+				int i = 0;
+				for (RoutePointList::iterator itp = (*it)->pRoutePointList->begin();
+					 itp != (*it)->pRoutePointList->end(); itp++) {
 					v[i][_T("error")] = false;
 					v[i][_T("lat")] = (*itp)->m_lat;
 					v[i][_T("lon")] = (*itp)->m_lon;
 					v[i][_T("WPName")] = (*itp)->GetName();
 					v[i][_T("WPDescription")] = (*itp)->GetDescription();
-					wxHyperlinkListNode *node = (*itp)->m_HyperlinkList->GetFirst();
-					if(node)
-					{
+					wxHyperlinkListNode* node = (*itp)->m_HyperlinkList->GetFirst();
+					if (node) {
 						int n = 1;
-						while(node)
-						{
-							Hyperlink *httpLink = node->GetData();
-							v[i][_T("WPLink")+wxString::Format(_T("%d"),n)] = httpLink->Link;
-							v[i][_T("WPLinkDesciption")+wxString::Format(_T("%d"),n++)] = httpLink->DescrText;
+						while (node) {
+							Hyperlink* httpLink = node->GetData();
+							v[i][_T("WPLink") + wxString::Format(_T("%d"), n)] = httpLink->Link;
+							v[i][_T("WPLinkDesciption") + wxString::Format(_T("%d"), n++)]
+								= httpLink->DescrText;
 							node = node->GetNext();
 						}
 					}
 					i++;
 				}
-				wxString msg_id( _T("OCPN_ROUTE_RESPONSE") );
-				g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
-			}
-			else
-			{
+				wxString msg_id(_T("OCPN_ROUTE_RESPONSE"));
+				g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
+			} else {
 				wxJSONValue v;
 				v[0][_T("error")] = true;
 
-				wxString msg_id( _T("OCPN_ROUTE_RESPONSE") );
-				g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+				wxString msg_id(_T("OCPN_ROUTE_RESPONSE"));
+				g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 			}
 		}
-	}
-	else if(message_ID == _T("OCPN_ROUTELIST_REQUEST"))
-	{
-		wxJSONValue  root;
+	} else if (message_ID == _T("OCPN_ROUTELIST_REQUEST")) {
+		wxJSONValue root;
 		wxJSONReader reader;
 		bool mode = true;
 
-		int numErrors = reader.Parse( message_JSONText, &root );
-		if ( numErrors > 0 )
+		int numErrors = reader.Parse(message_JSONText, &root);
+		if (numErrors > 0)
 			return;
 
-		if(root.HasMember(_T("mode")))
-		{
+		if (root.HasMember(_T("mode"))) {
 			wxString str = root[_T("mode")].AsString();
-			if( str == _T("Track")) mode = false;
+			if (str == _T("Track"))
+				mode = false;
 
-			wxJSONValue v; int i = 1;
+			wxJSONValue v;
+			int i = 1;
 			for (RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); ++it) {
-				if((*it)->IsTrack())
-					if(mode == true) continue;
-				if(!(*it)->IsTrack())
-					if(mode == false) continue;
+				if ((*it)->IsTrack())
+					if (mode == true)
+						continue;
+				if (!(*it)->IsTrack())
+					if (mode == false)
+						continue;
 				v[0][_T("isTrack")] = !mode;
 
 				wxString name = (*it)->m_RouteNameString;
-				if(name.IsEmpty() && !mode)
-				{
-					RoutePoint *rp = (*it)->GetPoint( 1 );
-					if( rp && rp->GetCreateTime().IsValid() ) name = rp->GetCreateTime().FormatISODate() + _T(" ")
-						+ rp->GetCreateTime().FormatISOTime();
+				if (name.IsEmpty() && !mode) {
+					RoutePoint* rp = (*it)->GetPoint(1);
+					if (rp && rp->GetCreateTime().IsValid())
+						name = rp->GetCreateTime().FormatISODate() + _T(" ")
+							   + rp->GetCreateTime().FormatISOTime();
 					else
 						name = _("(Unnamed Track)");
-				}
-				else if(name.IsEmpty() && mode)
+				} else if (name.IsEmpty() && mode)
 					name = _("(Unnamed Route)");
-
 
 				v[i][_T("error")] = false;
 				v[i][_T("name")] = name;
 				v[i][_T("GUID")] = (*it)->m_GUID;
-				if(g_pActiveTrack == (*it) && !mode)
+				if (g_pActiveTrack == (*it) && !mode)
 					v[i][_T("active")] = true;
 				else
 					v[i][_T("active")] = (*it)->IsActive();
 				i++;
 			}
-			wxString msg_id( _T("OCPN_ROUTELIST_RESPONSE") );
-			g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
-		}
-		else
-		{
+			wxString msg_id(_T("OCPN_ROUTELIST_RESPONSE"));
+			g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
+		} else {
 			wxJSONValue v;
 			v[0][_T("error")] = true;
-			wxString msg_id( _T("OCPN_ROUTELIST_RESPONSE") );
-			g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+			wxString msg_id(_T("OCPN_ROUTELIST_RESPONSE"));
+			g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 		}
 	}
 }
 
-void MainFrame::OnEvtTHREADMSG( wxCommandEvent & event )
+void MainFrame::OnEvtTHREADMSG(wxCommandEvent& event)
 {
-	wxLogMessage( event.GetString() );
+	wxLogMessage(event.GetString());
 }
 
-
-bool MainFrame::EvalPriority(const wxString & message, DataStream *pDS )
+bool MainFrame::EvalPriority(const wxString& message, DataStream* pDS)
 {
 	bool bret = true;
 	wxString msg_type = message.Mid(1, 5);
 
 	wxString stream_name;
 	int stream_priority = 0;
-	if( pDS ){
+	if (pDS) {
 		stream_priority = pDS->GetPriority();
 		stream_name = pDS->GetPort();
 	}
 
 	//  If the message type has never been seen before...
-	if( NMEA_Msg_Hash.find( msg_type ) == NMEA_Msg_Hash.end() ) {
-		NMEA_Msg_Container *pcontainer = new NMEA_Msg_Container;
-		pcontainer-> current_priority = -1;     //  guarantee to execute the next clause
+	if (NMEA_Msg_Hash.find(msg_type) == NMEA_Msg_Hash.end()) {
+		NMEA_Msg_Container* pcontainer = new NMEA_Msg_Container;
+		pcontainer->current_priority = -1; //  guarantee to execute the next clause
 		pcontainer->stream_name = stream_name;
 		pcontainer->receipt_time = wxDateTime::Now();
 
 		NMEA_Msg_Hash[msg_type] = pcontainer;
 	}
 
-	NMEA_Msg_Container *pcontainer = NMEA_Msg_Hash[msg_type];
+	NMEA_Msg_Container* pcontainer = NMEA_Msg_Hash[msg_type];
 	wxString old_port = pcontainer->stream_name;
 
 	int old_priority = pcontainer->current_priority;
 
-	//  If the message has been seen before, and the priority is greater than or equal to current priority,
+	//  If the message has been seen before, and the priority is greater than or equal to current
+	// priority,
 	//  then simply update the record
-	if( stream_priority >= pcontainer->current_priority )
-	{
+	if (stream_priority >= pcontainer->current_priority) {
 		pcontainer->receipt_time = wxDateTime::Now();
-		pcontainer-> current_priority = stream_priority;
+		pcontainer->current_priority = stream_priority;
 		pcontainer->stream_name = stream_name;
 
 		bret = true;
 	}
 
-	//  If the message has been seen before, and the priority is less than the current priority,
-	//  then if the time since the last recorded message is greater than GPS_TIMEOUT_SECONDS
-	//  then update the record with the new priority and stream.
-	//  Otherwise, ignore the message as too low a priority
-	else
-	{
-		if( (wxDateTime::Now().GetTicks() - pcontainer->receipt_time.GetTicks()) > GPS_TIMEOUT_SECONDS )
-		{
+		//  If the message has been seen before, and the priority is less than the current priority,
+		//  then if the time since the last recorded message is greater than GPS_TIMEOUT_SECONDS
+		//  then update the record with the new priority and stream.
+		//  Otherwise, ignore the message as too low a priority
+		else {
+		if ((wxDateTime::Now().GetTicks() - pcontainer->receipt_time.GetTicks())
+			> GPS_TIMEOUT_SECONDS) {
 			pcontainer->receipt_time = wxDateTime::Now();
-			pcontainer-> current_priority = stream_priority;
+			pcontainer->current_priority = stream_priority;
 			pcontainer->stream_name = stream_name;
 
 			bret = true;
-		}
-		else
+		} else
 			bret = false;
 	}
 
 	wxString new_port = pcontainer->stream_name;
 
 	//  If the data source or priority has changed for this message type, emit a log entry
-	if (pcontainer->current_priority != old_priority || new_port != old_port )
-	{
-		wxString logmsg = wxString::Format(_T("Changing NMEA Datasource for %s to %s (Priority: %i)"),
-				msg_type.c_str(),
-				new_port.c_str(),
-				pcontainer->current_priority);
-		wxLogMessage(logmsg );
+	if (pcontainer->current_priority != old_priority || new_port != old_port) {
+		wxString logmsg
+			= wxString::Format(_T("Changing NMEA Datasource for %s to %s (Priority: %i)"),
+							   msg_type.c_str(), new_port.c_str(), pcontainer->current_priority);
+		wxLogMessage(logmsg);
 
-		if (NMEALogWindow::Get().Active())
-		{
+		if (NMEALogWindow::Get().Active()) {
 			wxDateTime now = wxDateTime::Now();
 			wxString ss = now.FormatISOTime();
-			ss.Append( _T(" ") );
-			ss.Append( logmsg );
-			ss.Prepend( _T("<RED>") );
+			ss.Append(_T(" "));
+			ss.Append(logmsg);
+			ss.Prepend(_T("<RED>"));
 
 			NMEALogWindow::Get().Add(ss);
 			NMEALogWindow::Get().Refresh(false);
@@ -4971,7 +4982,7 @@ bool MainFrame::EvalPriority(const wxString & message, DataStream *pDS )
 	return bret;
 }
 
-void MainFrame::gps_debug(const NMEA0183 & nmea, const wxString & str_buf) const
+void MainFrame::gps_debug(const NMEA0183& nmea, const wxString& str_buf) const
 {
 	wxString msg(_T("   "));
 	msg.Append(nmea.ErrorMessage);
@@ -4980,27 +4991,26 @@ void MainFrame::gps_debug(const NMEA0183 & nmea, const wxString & str_buf) const
 	wxLogMessage(msg);
 }
 
-void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this method is way to long
+void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this method is way to long
 {
 	wxString sfixtime;
 	bool pos_valid = false;
 	bool bis_recognized_sentence = true;
 	bool ll_valid = true;
 
-	const global::WatchDog::Data & wdt = global::OCPN::get().wdt().get_data();
+	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
 
 	wxString str_buf = wxString(event.GetNMEAString().c_str(), wxConvUTF8);
 
-	if( g_nNMEADebug && ( g_total_NMEAerror_messages < g_nNMEADebug ) )
-	{
+	if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
 		g_total_NMEAerror_messages++;
-		wxString msg( _T("MEH.NMEA Sentence received...") );
-		msg.Append( str_buf );
-		wxLogMessage( msg );
+		wxString msg(_T("MEH.NMEA Sentence received..."));
+		msg.Append(str_buf);
+		wxLogMessage(msg);
 	}
 
 	//  The message must be at least reasonably formed...
-	if( (str_buf[0] != '$')  &&  (str_buf[0] != '!') )
+	if ((str_buf[0] != '$') && (str_buf[0] != '!'))
 		return;
 
 	if (event.GetStream()) {
@@ -5026,9 +5036,9 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 				if (m_NMEA0183.Rmc.IsDataValid == NTrue) {
 					if (!wxIsNaN(m_NMEA0183.Rmc.Position.Latitude.Latitude)) {
 						double llt = m_NMEA0183.Rmc.Position.Latitude.Latitude;
-						int lat_deg_int = (int) ( llt / 100 );
+						int lat_deg_int = (int)(llt / 100);
 						double lat_deg = lat_deg_int;
-						double lat_min = llt - ( lat_deg * 100 );
+						double lat_min = llt - (lat_deg * 100);
 
 						double lat = lat_deg + (lat_min / 60.0);
 						if (m_NMEA0183.Rmc.Position.Latitude.Northing == South)
@@ -5039,26 +5049,27 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 
 					if (!wxIsNaN(m_NMEA0183.Rmc.Position.Longitude.Longitude)) {
 						double lln = m_NMEA0183.Rmc.Position.Longitude.Longitude;
-						int lon_deg_int = (int) ( lln / 100 );
+						int lon_deg_int = (int)(lln / 100);
 						double lon_deg = lon_deg_int;
-						double lon_min = lln - ( lon_deg * 100 );
-						double lon = lon_deg + ( lon_min / 60. );
+						double lon_min = lln - (lon_deg * 100);
+						double lon = lon_deg + (lon_min / 60.0);
 						if (m_NMEA0183.Rmc.Position.Longitude.Easting == West)
 							lon = -lon;
 						global::OCPN::get().nav().set_longitude(lon);
 					} else
 						ll_valid = false;
 
-					global::Navigation & nav = global::OCPN::get().nav();
+					global::Navigation& nav = global::OCPN::get().nav();
 					nav.set_speed_over_ground(m_NMEA0183.Rmc.SpeedOverGroundKnots);
 					nav.set_course_over_ground(m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue);
 
-					if(!wxIsNaN(m_NMEA0183.Rmc.MagneticVariation)) {
+					if (!wxIsNaN(m_NMEA0183.Rmc.MagneticVariation)) {
 						if (m_NMEA0183.Rmc.MagneticVariationDirection == East)
-							global::OCPN::get().nav().set_magn_var(m_NMEA0183.Rmc.MagneticVariation);
-						else
-							if (m_NMEA0183.Rmc.MagneticVariationDirection == West)
-								global::OCPN::get().nav().set_magn_var(-m_NMEA0183.Rmc.MagneticVariation);
+							global::OCPN::get().nav().set_magn_var(
+								m_NMEA0183.Rmc.MagneticVariation);
+						else if (m_NMEA0183.Rmc.MagneticVariationDirection == West)
+							global::OCPN::get().nav().set_magn_var(
+								-m_NMEA0183.Rmc.MagneticVariation);
 
 						g_bVAR_Rx = true;
 						global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
@@ -5087,14 +5098,14 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDG")) {
 			if (m_NMEA0183.Parse()) {
-				global::Navigation & nav = global::OCPN::get().nav();
+				global::Navigation& nav = global::OCPN::get().nav();
 				nav.set_heading_magn(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees);
 				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees))
 					global::OCPN::get().wdt().set_hdx_watchdog(wdt.gps_watchdog_timeout_ticks);
 
 				if (m_NMEA0183.Hdg.MagneticVariationDirection == East)
 					nav.set_magn_var(m_NMEA0183.Hdg.MagneticVariationDegrees);
-				else if( m_NMEA0183.Hdg.MagneticVariationDirection == West )
+				else if (m_NMEA0183.Hdg.MagneticVariationDirection == West)
 					nav.set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
 
 				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees)) {
@@ -5114,10 +5125,11 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("VTG")) {
 			if (m_NMEA0183.Parse()) {
-				global::Navigation & nav = global::OCPN::get().nav();
+				global::Navigation& nav = global::OCPN::get().nav();
 				nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
 				nav.set_course_over_ground(m_NMEA0183.Vtg.TrackDegreesTrue);
-				if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots) && !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
+				if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots)
+					&& !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
 					global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
 			} else if (g_nNMEADebug) {
 				gps_debug(m_NMEA0183, str_buf);
@@ -5132,13 +5144,13 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 			}
 		} else if (g_bUseGLL && m_NMEA0183.LastSentenceIDReceived == _T("GLL")) {
 			if (m_NMEA0183.Parse()) {
-				if( m_NMEA0183.Gll.IsDataValid == NTrue ) {
-					if( !wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude) ) {
+				if (m_NMEA0183.Gll.IsDataValid == NTrue) {
+					if (!wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude)) {
 						double llt = m_NMEA0183.Gll.Position.Latitude.Latitude;
-						int lat_deg_int = (int) ( llt / 100 );
+						int lat_deg_int = (int)(llt / 100);
 						double lat_deg = lat_deg_int;
-						double lat_min = llt - ( lat_deg * 100 );
-						double lat = lat_deg + ( lat_min / 60. );
+						double lat_min = llt - (lat_deg * 100);
+						double lat = lat_deg + (lat_min / 60.0);
 						if (m_NMEA0183.Gll.Position.Latitude.Northing == South)
 							lat = -lat;
 						global::OCPN::get().nav().set_latitude(lat);
@@ -5147,10 +5159,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 
 					if (!wxIsNaN(m_NMEA0183.Gll.Position.Longitude.Longitude)) {
 						double lln = m_NMEA0183.Gll.Position.Longitude.Longitude;
-						int lon_deg_int = (int) ( lln / 100 );
+						int lon_deg_int = (int)(lln / 100);
 						double lon_deg = lon_deg_int;
-						double lon_min = lln - ( lon_deg * 100 );
-						double lon = lon_deg + ( lon_min / 60. );
+						double lon_min = lln - (lon_deg * 100);
+						double lon = lon_deg + (lon_min / 60.0);
 						if (m_NMEA0183.Gll.Position.Longitude.Easting == West)
 							lon = -lon;
 						global::OCPN::get().nav().set_longitude(lon);
@@ -5159,7 +5171,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 
 					sfixtime = m_NMEA0183.Gll.UTCTime;
 
-					if(ll_valid) {
+					if (ll_valid) {
 						global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
 						m_fixtime = wxDateTime::Now().GetTicks();
 					}
@@ -5173,10 +5185,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 				if (m_NMEA0183.Gga.GPSQuality > 0) {
 					if (!wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude)) {
 						double llt = m_NMEA0183.Gga.Position.Latitude.Latitude;
-						int lat_deg_int = (int) ( llt / 100 );
+						int lat_deg_int = (int)(llt / 100);
 						double lat_deg = lat_deg_int;
-						double lat_min = llt - ( lat_deg * 100 );
-						double lat = lat_deg + ( lat_min / 60. );
+						double lat_min = llt - (lat_deg * 100);
+						double lat = lat_deg + (lat_min / 60.0);
 						if (m_NMEA0183.Gga.Position.Latitude.Northing == South)
 							lat = -lat;
 						global::OCPN::get().nav().set_latitude(lat);
@@ -5185,10 +5197,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 
 					if (!wxIsNaN(m_NMEA0183.Gga.Position.Longitude.Longitude)) {
 						double lln = m_NMEA0183.Gga.Position.Longitude.Longitude;
-						int lon_deg_int = (int) ( lln / 100 );
+						int lon_deg_int = (int)(lln / 100);
 						double lon_deg = lon_deg_int;
-						double lon_min = lln - ( lon_deg * 100 );
-						double lon = lon_deg + ( lon_min / 60. );
+						double lon_min = lln - (lon_deg * 100);
+						double lon = lon_deg + (lon_min / 60.0);
 						if (m_NMEA0183.Gga.Position.Longitude.Easting == West)
 							lon = -lon;
 						global::OCPN::get().nav().set_longitude(lon);
@@ -5211,13 +5223,11 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		}
-	}
-	// Process ownship (AIVDO) messages from any source
-	else if (str_buf.Mid( 1, 5 ).IsSameAs(_T("AIVDO")))
-	{
+	} else if (str_buf.Mid(1, 5).IsSameAs(_T("AIVDO"))) {
+		// Process ownship (AIVDO) messages from any source
 		GenericPosDatEx gpd;
 		AIS_Error nerr = AIS_GENERIC_ERROR;
-		if(g_pAIS)
+		if (g_pAIS)
 			nerr = g_pAIS->DecodeSingleVDO(str_buf, &gpd, &m_VDO_accumulator);
 
 		if (nerr == AIS_NoError) {
@@ -5226,17 +5236,17 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 			if (!wxIsNaN(gpd.kLon))
 				global::OCPN::get().nav().set_longitude(gpd.kLon);
 
-			global::Navigation & nav = global::OCPN::get().nav();
+			global::Navigation& nav = global::OCPN::get().nav();
 			nav.set_speed_over_ground(gpd.kSog);
 			nav.set_course_over_ground(gpd.kCog);
 
 			global::OCPN::get().nav().set_heading_true(gpd.kHdt);
-			if( !wxIsNaN(gpd.kHdt) ) {
+			if (!wxIsNaN(gpd.kHdt)) {
 				g_bHDT_Rx = true;
 				global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
 			}
 
-			if (!wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon) ) {
+			if (!wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon)) {
 				global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
 				m_fixtime = wxDateTime::Now().GetTicks();
 				pos_valid = true;
@@ -5244,18 +5254,18 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent & event) // FIXME: this meth
 		} else {
 			if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
 				g_total_NMEAerror_messages++;
-				wxString msg( _T("   Invalid AIVDO Sentence...") );
-				msg.Append( str_buf );
-				wxLogMessage( msg );
+				wxString msg(_T("   Invalid AIVDO Sentence..."));
+				msg.Append(str_buf);
+				wxLogMessage(msg);
 			}
 		}
 	} else {
 		bis_recognized_sentence = false;
 		if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
 			g_total_NMEAerror_messages++;
-			wxString msg( _T("   Unrecognized NMEA Sentence...") );
-			msg.Append( str_buf );
-			wxLogMessage( msg );
+			wxString msg(_T("   Unrecognized NMEA Sentence..."));
+			msg.Append(str_buf);
+			wxLogMessage(msg);
 		}
 	}
 
@@ -5468,31 +5478,31 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 #endif            //ocpnUPDATE_SYSTEM_TIME
 }
 
-void MainFrame::FilterCogSog( void )
+void MainFrame::FilterCogSog(void)
 {
-	global::Navigation & nav = global::OCPN::get().nav();
+	global::Navigation& nav = global::OCPN::get().nav();
 
-	if( g_bfilter_cogsog ) {
+	if (g_bfilter_cogsog) {
 		//    If the data are undefined, leave the array intact
-		if( !wxIsNaN(nav.get_data().cog) ) {
+		if (!wxIsNaN(nav.get_data().cog)) {
 			//    Simple averaging filter for COG
-			double cog_last = nav.get_data().cog;       // most recent reported value
+			double cog_last = nav.get_data().cog; // most recent reported value
 
 			//    Make a hole in array
-			for( int i = g_COGFilterSec - 1; i > 0; i-- )
+			for (int i = g_COGFilterSec - 1; i > 0; i--)
 				COGFilterTable[i] = COGFilterTable[i - 1];
 			COGFilterTable[0] = cog_last;
 
 			//
 			double sum = 0.;
-			for( int i = 0; i < g_COGFilterSec; i++ ) {
+			for (int i = 0; i < g_COGFilterSec; i++) {
 				double adder = COGFilterTable[i];
 
-				if( fabs( adder - m_COGFilterLast ) > 180. ) {
-					if( ( adder - m_COGFilterLast ) > 0. )
-						adder -= 360.;
+				if (fabs(adder - m_COGFilterLast) > 180.0) {
+					if ((adder - m_COGFilterLast) > 0.0)
+						adder -= 360.0;
 					else
-						adder += 360.;
+						adder += 360.0;
 				}
 
 				sum += adder;
@@ -5501,24 +5511,24 @@ void MainFrame::FilterCogSog( void )
 
 			if (sum < 0.0)
 				sum += 360.0;
-			else
-				if (sum >= 360.0)
-					sum -= 360.0;
+			else if (sum >= 360.0)
+				sum -= 360.0;
 
 			nav.set_course_over_ground(sum);
 			m_COGFilterLast = sum;
 		}
 
-		global::Navigation & nav = global::OCPN::get().nav();
+		global::Navigation& nav = global::OCPN::get().nav();
 
 		//    If the data are undefined, leave the array intact
-		// FIXME: perfect opportunity to move such a filter to a separate class, dare I mention "unit test"
+		// FIXME: perfect opportunity to move such a filter to a separate class, dare I mention
+		// "unit test"
 		if (!wxIsNaN(nav.get_data().sog)) {
 			//    Simple averaging filter for SOG
 			double sog_last = nav.get_data().sog; // most recent reported value
 
 			//    Make a hole in array
-			for( int i = g_SOGFilterSec - 1; i > 0; i-- )
+			for (int i = g_SOGFilterSec - 1; i > 0; i--)
 				SOGFilterTable[i] = SOGFilterTable[i - 1];
 			SOGFilterTable[0] = sog_last;
 
@@ -5533,14 +5543,14 @@ void MainFrame::FilterCogSog( void )
 	}
 }
 
-void MainFrame::StopSockets( void )
+void MainFrame::StopSockets(void)
 {
-	//TODO: Can be removed?
+	// TODO: Can be removed?
 }
 
-void MainFrame::ResumeSockets( void )
+void MainFrame::ResumeSockets(void)
 {
-	//TODO: Can be removed?
+	// TODO: Can be removed?
 }
 
 void MainFrame::LoadHarmonics()

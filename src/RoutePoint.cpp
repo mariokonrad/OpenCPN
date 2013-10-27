@@ -292,7 +292,7 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 
 	bool bDrawHL = false;
 
-	if (m_bBlink && (gFrame->nBlinkerTick & 1))
+	if (m_bBlink && gFrame->is_route_blink_odd())
 		bDrawHL = true;
 
 	if ((!bDrawHL) && (NULL != m_pbmIcon)) {

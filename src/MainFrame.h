@@ -37,12 +37,13 @@
 #endif
 
 #include "nmea0183.h"
-#include "ChartDirInfo.h"
-#include "NMEA_Msg_Container.h"
+#include <ChartDirInfo.h>
+#include <NMEA_Msg_Container.h>
 #include <chart/ChartType.h>
 #include <chart/ChartFamily.h>
 #include <chart/ChartDummy.h>
-#include "ColorScheme.h"
+#include <ColorScheme.h>
+#include <OCPN_Sound.h>
 
 class OCPN_NMEAEvent;
 class ChartCanvas;
@@ -208,8 +209,20 @@ class MainFrame : public wxFrame
 		wxSize m_defer_size;
 
 		void performUniChromeOpenGLResizeHack();
+		void init_bell_sounds();
 
 	private:
+		void test_unit_test_1();
+		void macosx_hide_dialog_while_minimized();
+
+		void onTimer_update_active_route();
+		void onTimer_save_configuration();
+		void onTimer_play_bells_on_log();
+		void onTimer_log_message();
+		void onTimer_update_status_sogcog();
+		void onTimer_update_status_cursor_position();
+		void onTimer_update_status_cursor_brgrng();
+
 		void ODoSetSize(void);
 		void DoCOGSet(void);
 
@@ -298,6 +311,8 @@ class MainFrame : public wxFrame
 		chart::ChartDummy * pDummyChart;
 
 		int timer_tick;
+
+		OCPN_Sound bells_sound[8]; // FIXME: std container
 };
 
 #endif

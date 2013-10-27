@@ -367,7 +367,7 @@ private:
 	void AISDrawAreaNotices(ocpnDC& dc);
 	void AISDrawTarget(AIS_Target_Data* td, ocpnDC& dc);
 
-	void AlertDraw(ocpnDC& dc);
+	void AnchorWatchDraw(ocpnDC& dc);
 
 	void TargetFrame(ocpnDC& dc, wxPen pen, int x, int y, int radius);
 	void AtoN_Diamond(ocpnDC& dc, wxPen pen, int x, int y, int radius, bool b_virtual);

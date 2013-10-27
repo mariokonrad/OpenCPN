@@ -93,6 +93,7 @@
 #include <UserColors.h>
 #include <PositionParser.h>
 #include <Units.h>
+#include <NavObjectChanges.h>
 
 #include <plugin/PlugInManager.h>
 #include <plugin/OCPN_MsgEvent.h>
@@ -207,7 +208,6 @@ bool s_bSetSystemTime;
 wxArrayOfConnPrm* g_pConnectionParams;
 wxDateTime g_start_time;
 wxDateTime g_loglast_time;
-OCPN_Sound bells_sound[8];
 OCPN_Sound g_anchorwatch_sound;
 RoutePoint* pAnchorWatchPoint1;
 RoutePoint* pAnchorWatchPoint2;
@@ -450,18 +450,6 @@ double g_UserVar;
 int portaudio_initialized;
 int g_sticky_chart;
 double g_GLMinLineWidth;
-
-char bells_sound_file_name[8][12] =    // pjotrc 2010.02.09
-{
-	"1bells.wav",
-	"2bells.wav",
-	"3bells.wav",
-	"4bells.wav",
-	"5bells.wav",
-	"6bells.wav",
-	"7bells.wav",
-	"8bells.wav"
-};
 
 #ifdef __MSVC__
 #define _CRTDBG_MAP_ALLOC
@@ -1241,14 +1229,14 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 	   2.  Current speed is less than 0.5 kts.
 	   3.  Opencpn has been up at least 30 minutes
 	   4.  And, of course, opencpn is going down now.
-	   5.  And if there is no anchor watch set on "anchor..." icon mark           // pjotrc 2010.02.15
+	   5.  And if there is no anchor watch set on "anchor..." icon mark
 	 */
 	if( g_bAutoAnchorMark ) {
-		bool watching_anchor = false;                                           // pjotrc 2010.02.15
-		if( pAnchorWatchPoint1 )                                               // pjotrc 2010.02.15
-			watching_anchor = ( pAnchorWatchPoint1->m_IconName.StartsWith( _T("anchor") ) ); // pjotrc 2010.02.15
-		if( pAnchorWatchPoint2 )                                               // pjotrc 2010.02.15
-			watching_anchor |= ( pAnchorWatchPoint2->m_IconName.StartsWith( _T("anchor") ) ); // pjotrc 2010.02.15
+		bool watching_anchor = false;
+		if( pAnchorWatchPoint1 )
+			watching_anchor = ( pAnchorWatchPoint1->m_IconName.StartsWith( _T("anchor") ) );
+		if( pAnchorWatchPoint2 )
+			watching_anchor |= ( pAnchorWatchPoint2->m_IconName.StartsWith( _T("anchor") ) );
 
 		wxDateTime now = wxDateTime::Now();
 		wxTimeSpan uptime = now.Subtract( g_start_time );
@@ -1256,7 +1244,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
 		if (!watching_anchor && ( g_bCruising ) && (nav.sog < 0.5)
-				&& uptime.IsLongerThan(wxTimeSpan(0, 30, 0, 0)))     // pjotrc 2010.02.15
+				&& uptime.IsLongerThan(wxTimeSpan(0, 30, 0, 0)))
 		{
 			//    First, delete any single anchorage waypoint closer than 0.25 NM from this point
 			//    This will prevent clutter and database congestion....
@@ -1311,12 +1299,11 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 	pConfig->UpdateSettings();
 	pConfig->UpdateNavObj();
 
-	//    pConfig->m_pNavObjectChangesSet->Clear();
 	delete pConfig->m_pNavObjectChangesSet;
 
 	//Remove any leftover Routes and Waypoints from config file as they were saved to navobj before
-	pConfig->DeleteGroup( _T ( "/Routes" ) );
-	pConfig->DeleteGroup( _T ( "/Marks" ) );
+	pConfig->DeleteGroup(_T("/Routes"));
+	pConfig->DeleteGroup(_T("/Marks"));
 	pConfig->Flush();
 
 	delete g_printData;
@@ -3158,6 +3145,209 @@ void MainFrame::send_gps_to_plugins() const
 		g_pi_manager->SendPositionFixToAllPlugIns(&GPSData);
 }
 
+void MainFrame::onTimer_update_active_route()
+{
+	// Update the active route, if any
+	if (g_pRouteMan->UpdateProgress()) {
+		nBlinkerTick++;
+		// This RefreshRect will cause any active routepoint to blink
+		if (g_pRouteMan->GetpActiveRoute())
+			chart_canvas->RefreshRect(g_blink_rect, false);
+	}
+}
+
+void MainFrame::onTimer_save_configuration()
+{
+	// Possibly save the current configuration
+	if (0 == (timer_tick % (g_nautosave_interval_seconds))) {
+		pConfig->UpdateSettings();
+		pConfig->UpdateNavObj();
+	}
+}
+
+void MainFrame::test_unit_test_1()
+{
+	if (!g_unit_test_1)
+		return;
+
+	chart_canvas->m_bFollow = false;
+	if (g_toolbar)
+		g_toolbar->ToggleTool(ID_FOLLOW, chart_canvas->m_bFollow);
+
+	if (ChartData) {
+		if (ut_index < ChartData->GetChartTableEntries()) {
+			const ChartTableEntry* cte = &ChartData->GetChartTableEntry(ut_index);
+			double lat = (cte->GetLatMax() + cte->GetLatMin()) / 2;
+			double lon = (cte->GetLonMax() + cte->GetLonMin()) / 2;
+
+			vLat = lat;
+			vLon = lon;
+
+			chart_canvas->SetViewPoint(lat, lon);
+
+			if (chart_canvas->GetQuiltMode()) {
+				if (chart_canvas->IsChartQuiltableRef(ut_index))
+					SelectQuiltRefdbChart(ut_index);
+			} else
+				SelectdbChart(ut_index);
+
+			double ppm = chart_canvas->GetCanvasScaleFactor() / cte->GetScale();
+			ppm /= 2;
+			chart_canvas->SetVPScale(ppm);
+			chart_canvas->ReloadVP();
+			ut_index++;
+		}
+	}
+}
+
+void MainFrame::macosx_hide_dialog_while_minimized()
+{
+#ifdef __WXOSX__
+	// To fix an ugly bug ?? in wxWidgets for Carbon.....
+	// Or, maybe this is the way Macs work....
+	// Hide some non-UI Dialogs if the application is minimized....
+	// They will be re-Show()-n in MainFrame::OnActivate()
+	if (IsIconized()) {
+		if (g_FloatingToolbarDialog) {
+			if (g_FloatingToolbarDialog->IsShown())
+				g_FloatingToolbarDialog->Submerge();
+		}
+
+		AppActivateList.Clear();
+		if (chart_canvas) {
+			for (wxWindowList::iterator it = chart_canvas->GetChildren().begin();
+				 it != chart_canvas->GetChildren().end(); ++it) {
+				if ((*it)->IsShown()) {
+					(*it)->Hide();
+					AppActivateList.Append(*it);
+				}
+			}
+		}
+
+		for (wxWindowList::iterator it = GetChildren().begin(); it != GetChildren().end(); ++it) {
+			if ((*it)->IsShown()) {
+				if (!(*it)->IsKindOf(CLASSINFO(ChartCanvas))) {
+					(*it)->Hide();
+					AppActivateList.Append(*it);
+				}
+			}
+		}
+	}
+#endif
+}
+
+void MainFrame::init_bell_sounds()
+{
+	static const char bells_sound_file_name[8][12]
+		= { "1bells.wav", "2bells.wav", "3bells.wav", "4bells.wav",
+			"5bells.wav", "6bells.wav", "7bells.wav", "8bells.wav" };
+
+	for (unsigned int i = 0; i < sizeof(bells_sound) / sizeof(bells_sound[0]); ++i) {
+		wxString soundfile = _T("sounds");
+		appendOSDirSlash(soundfile);
+		soundfile += wxString(bells_sound_file_name[i], wxConvUTF8);
+		soundfile.Prepend(global::OCPN::get().sys().data().sound_data_location);
+		if (bells_sound[i].Create(soundfile)) {
+			wxLogMessage(_T("Using bells sound file: ") + soundfile);
+		} else {
+			wxLogMessage(_T("ERROR: cannot load sound file: ") + soundfile);
+		}
+	}
+}
+
+// Assumes minute to be either 0 or 30.
+void MainFrame::onTimer_play_bells_on_log()
+{
+	if (!g_bPlayShipsBells)
+		return;
+
+	wxDateTime lognow = wxDateTime::Now().MakeGMT();
+
+	int bells = (lognow.GetHour() % 4) * 2; // 2 bells each hour
+	if (lognow.GetMinute() != 0)
+		bells++; // + 1 bell on 30 minutes, FIXME
+	if (!bells)
+		bells = 8; // 0 is 8 bells, FIXME
+
+	if (((lognow.GetMinute() == 0) || (lognow.GetMinute() == 30))) {
+		if (bells_sound[bells - 1].IsOk())
+			bells_sound[bells - 1].Play();
+	}
+}
+
+void MainFrame::onTimer_log_message()
+{
+	// Send current nav status data to log file on every half hour
+	wxDateTime lognow = wxDateTime::Now().MakeGMT();
+	wxTimeSpan logspan = lognow.Subtract(g_loglast_time);
+	if ((logspan.IsLongerThan(wxTimeSpan(0, 30, 0, 0))) || (lognow.GetMinute() == 0)
+		|| (lognow.GetMinute() == 30)) {
+		if (logspan.IsLongerThan(wxTimeSpan(0, 1, 0, 0))) {
+			wxLogMessage(prepare_logbook_message(lognow));
+			g_loglast_time = lognow;
+
+			if ((lognow.GetHour() == 0) && (lognow.GetMinute() == 0) && g_bTrackDaily)
+				TrackMidnightRestart();
+
+			onTimer_play_bells_on_log();
+		}
+	}
+}
+
+void MainFrame::onTimer_update_status_sogcog()
+{
+	// Update the Toolbar Status windows and lower status bar the first time watchdog times out
+	const global::WatchDog::Data wdt = global::OCPN::get().wdt().get_data();
+	if ((wdt.gps_watchdog == 0) || (wdt.sat_watchdog == 0)) {
+		wxString sogcog( _T("SOG --- ") + getUsrSpeedUnit() + _T(" COG ---\u00B0") );
+		if (GetStatusBar())
+			SetStatusText(sogcog, STAT_FIELD_SOGCOG);
+
+		global::OCPN::get().nav().set_course_over_ground(0.0); // say speed is zero to kill ownship predictor
+	}
+}
+
+void MainFrame::onTimer_update_status_cursor_position()
+{
+	if (!chart_canvas)
+		return;
+
+	double cursor_lat;
+	double cursor_lon;
+	chart_canvas->GetCursorLatLon(&cursor_lat, &cursor_lon);
+
+	wxString s1;
+	s1 += _T(" ");
+	s1 += toSDMM(1, cursor_lat);
+	s1 += _T("   ");
+	s1 += toSDMM(2, cursor_lon);
+	if (GetStatusBar())
+		SetStatusText(s1, STAT_FIELD_CURSOR_LL);
+}
+
+void MainFrame::onTimer_update_status_cursor_brgrng()
+{
+	if (!chart_canvas)
+		return;
+
+	double cursor_lat;
+	double cursor_lon;
+	chart_canvas->GetCursorLatLon(&cursor_lat, &cursor_lon);
+
+	double brg;
+	double dist;
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	geo::DistanceBearingMercator(cursor_lat, cursor_lon, nav.lat, nav.lon, &brg, &dist);
+	wxString s;
+	if (g_bShowMag)
+		s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
+	else
+		s.Printf(wxString("%03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
+	s << chart_canvas->FormatDistanceAdaptive(dist);
+	if (GetStatusBar())
+		SetStatusText(s, STAT_FIELD_CURSOR_BRGRNG);
+}
+
 void MainFrame::OnFrameTimer1(wxTimerEvent &)
 {
 	if (s_ProgDialog) {
@@ -3166,71 +3356,8 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 
 	++timer_tick;
 
-	if (g_unit_test_1) {
-
-		chart_canvas->m_bFollow = false;
-		if (g_toolbar)
-			g_toolbar->ToggleTool(ID_FOLLOW, chart_canvas->m_bFollow);
-
-		if (ChartData) {
-			if (ut_index < ChartData->GetChartTableEntries()) {
-				const ChartTableEntry *cte = &ChartData->GetChartTableEntry(ut_index);
-				double lat = (cte->GetLatMax() + cte->GetLatMin()) / 2;
-				double lon = (cte->GetLonMax() + cte->GetLonMin()) / 2;
-
-				vLat = lat;
-				vLon = lon;
-
-				chart_canvas->SetViewPoint(lat, lon);
-
-				if (chart_canvas->GetQuiltMode()) {
-					if (chart_canvas->IsChartQuiltableRef(ut_index))
-						SelectQuiltRefdbChart(ut_index);
-				} else
-					SelectdbChart(ut_index);
-
-				double ppm = chart_canvas->GetCanvasScaleFactor() / cte->GetScale();
-				ppm /= 2;
-				chart_canvas->SetVPScale(ppm);
-				chart_canvas->ReloadVP();
-				ut_index++;
-			}
-		}
-	}
-
-#ifdef __WXOSX__
-	// To fix an ugly bug ?? in wxWidgets for Carbon.....
-	// Or, maybe this is the way Macs work....
-	// Hide some non-UI Dialogs if the application is minimized....
-	// They will be re-Show()-n in MainFrame::OnActivate()
-	if(IsIconized()) {
-		if (g_FloatingToolbarDialog) {
-			if (g_FloatingToolbarDialog->IsShown())
-				g_FloatingToolbarDialog->Submerge();
-		}
-
-		AppActivateList.Clear();
-		if (chart_canvas){
-			for (wxWindowList::iterator it = chart_canvas->GetChildren().begin(); it != chart_canvas->GetChildren().end(); ++it) {
-				if( (*it)->IsShown() ) {
-					(*it)->Hide();
-					AppActivateList.Append(*it);
-				}
-			}
-		}
-
-		if(gFrame){
-			for ( wxWindowList::iterator it = gFrame->GetChildren().begin(); it != gFrame->GetChildren().end(); ++it ) {
-				if( (*it)->IsShown() ) {
-					if( !(*it)->IsKindOf( CLASSINFO(ChartCanvas) ) ) {
-						(*it)->Hide();
-						AppActivateList.Append(*it);
-					}
-				}
-			}
-		}
-	}
-#endif
+	test_unit_test_1(); // FIXME
+	macosx_hide_dialog_while_minimized();
 
 	// Listen for quitflag to be set, requesting application close
 	if (quitflag) {
@@ -3257,76 +3384,10 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	if ((pAnchorWatchPoint1 || pAnchorWatchPoint2) && !bGPSValid)
 		AnchorAlertOn1 = true;
 
-	// Send current nav status data to log file on every half hour   // pjotrc 2010.02.09
-
-	wxDateTime lognow = wxDateTime::Now().MakeGMT();   // pjotrc 2010.02.09
-	wxTimeSpan logspan = lognow.Subtract(g_loglast_time);
-	if ((logspan.IsLongerThan(wxTimeSpan(0, 30, 0, 0))) || (lognow.GetMinute() == 0) || (lognow.GetMinute() == 30)) {
-		if (logspan.IsLongerThan(wxTimeSpan(0, 1, 0, 0))) {
-			wxLogMessage(prepare_logbook_message(lognow));
-			g_loglast_time = lognow;
-
-			if (lognow.GetHour() == 0 && lognow.GetMinute() == 0 && g_bTrackDaily)
-				TrackMidnightRestart();
-
-			int bells = (lognow.GetHour() % 4) * 2; // 2 bells each hour
-			if (lognow.GetMinute() != 0)
-				bells++; // + 1 bell on 30 minutes, FIXME
-			if (!bells)
-				bells = 8; // 0 is 8 bells, FIXME
-
-			if (g_bPlayShipsBells && ((lognow.GetMinute() == 0) || (lognow.GetMinute() == 30))) {
-				if (!bells_sound[bells - 1].IsOk()) { // load the bells sound
-					wxString soundfile = _T("sounds");
-					appendOSDirSlash(soundfile);
-					soundfile += wxString( bells_sound_file_name[bells - 1], wxConvUTF8 );
-					soundfile.Prepend(global::OCPN::get().sys().data().sound_data_location);
-					bells_sound[bells - 1].Create( soundfile );
-					wxLogMessage( _T("Using bells sound file: ") + soundfile );
-
-				}
-
-				if (bells_sound[bells - 1].IsOk())
-					bells_sound[bells - 1].Play();
-			}
-		}
-	}
-
-	// Update the Toolbar Status windows and lower status bar the first time watchdog times out
-	const global::WatchDog::Data wdt = global::OCPN::get().wdt().get_data();
-	if ((wdt.gps_watchdog == 0) || (wdt.sat_watchdog == 0)) {
-		wxString sogcog( _T("SOG --- ") + getUsrSpeedUnit() + _T(" COG ---\u00B0") );
-		if (GetStatusBar())
-			SetStatusText(sogcog, STAT_FIELD_SOGCOG);
-
-		global::OCPN::get().nav().set_course_over_ground(0.0); // say speed is zero to kill ownship predictor
-	}
-
-	if (chart_canvas) {
-		double cursor_lat, cursor_lon;
-		chart_canvas->GetCursorLatLon(&cursor_lat, &cursor_lon);
-
-		wxString s1;
-		s1 += _T(" ");
-		s1 += toSDMM( 1, cursor_lat );
-		s1 += _T("   ");
-		s1 += toSDMM( 2, cursor_lon );
-		if (GetStatusBar())
-			SetStatusText(s1, STAT_FIELD_CURSOR_LL);
-
-		double brg;
-		double dist;
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-		geo::DistanceBearingMercator(cursor_lat, cursor_lon, nav.lat, nav.lon, &brg, &dist);
-		wxString s;
-		if (g_bShowMag)
-			s.Printf( wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
-		else
-			s.Printf( wxString("%03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
-		s << chart_canvas->FormatDistanceAdaptive( dist );
-		if (GetStatusBar())
-			SetStatusText(s, STAT_FIELD_CURSOR_BRGRNG);
-	}
+	onTimer_log_message();
+	onTimer_update_status_sogcog();
+	onTimer_update_status_cursor_position();
+	onTimer_update_status_cursor_brgrng();
 
 	// Update the chart database and displayed chart
 	bool bnew_view = false;
@@ -3338,19 +3399,8 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 		m_ChartUpdatePeriod = g_ChartUpdatePeriod;
 	}
 
-	// Update the active route, if any
-	if (g_pRouteMan->UpdateProgress()) {
-		nBlinkerTick++;
-		//    This RefreshRect will cause any active routepoint to blink
-		if (g_pRouteMan->GetpActiveRoute())
-			chart_canvas->RefreshRect(g_blink_rect, false);
-	}
-
-	// Possibly save the current configuration
-	if (0 == (timer_tick % (g_nautosave_interval_seconds))) {
-		pConfig->UpdateSettings();
-		pConfig->UpdateNavObj();
-	}
+	onTimer_update_active_route();
+	onTimer_save_configuration();
 
 	// Force own-ship drawing parameters
 	chart_canvas->SetOwnShipState(SHIP_NORMAL);
@@ -3374,36 +3424,37 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 
 	if (bGPSValid != m_last_bGPSValid) {
 		chart_canvas->UpdateShips();
-		bnew_view = true;                  // force a full Refresh()
+		bnew_view = true; // force a full Refresh()
 		m_last_bGPSValid = bGPSValid;
 	}
 
 	// If any PlugIn requested dynamic overlay callbacks, force a full canvas refresh
 	// thus, ensuring at least 1 Hz. callback.
-	bool brq_dynamic = false;
 	if (g_pi_manager) {
-		ArrayOfPlugIns *pplugin_array = g_pi_manager->GetPlugInArray();
-		for( unsigned int i = 0; i < pplugin_array->GetCount(); i++ ) {
-			PlugInContainer *pic = pplugin_array->Item( i );
-			if( pic->m_bEnabled && pic->m_bInitState ) {
-				if( pic->m_cap_flag & WANTS_DYNAMIC_OPENGL_OVERLAY_CALLBACK ) {
+		bool brq_dynamic = false;
+		ArrayOfPlugIns* pplugin_array = g_pi_manager->GetPlugInArray();
+		for (unsigned int i = 0; i < pplugin_array->GetCount(); i++) {
+			PlugInContainer* pic = pplugin_array->Item(i);
+			if (pic->m_bEnabled && pic->m_bInitState) {
+				if (pic->m_cap_flag & WANTS_DYNAMIC_OPENGL_OVERLAY_CALLBACK) {
 					brq_dynamic = true;
 					break;
 				}
 			}
 		}
-	}
-
-	if (brq_dynamic) {
-		chart_canvas->Refresh();
-		bnew_view = true;
+		if (brq_dynamic) {
+			chart_canvas->Refresh();
+			bnew_view = true;
+		}
 	}
 
 	FrameTimer1.Start(TIMER_GFRAME_1, wxTIMER_CONTINUOUS);
 
 	// Invalidate the ChartCanvas window appropriately
-	// In non-follow mode, invalidate the rectangles containing the AIS targets and the ownship, etc...
-	// In follow mode, if there has already been a full screen refresh, there is no need to check ownship or AIS,
+	// In non-follow mode, invalidate the rectangles containing
+	// the AIS targets and the ownship, etc...
+	// In follow mode, if there has already been a full screen refresh,
+	// there is no need to check ownship or AIS,
 	// since they will be always drawn on the full screen paint.
 	if ((!chart_canvas->m_bFollow) || g_bCourseUp) {
 		chart_canvas->UpdateShips();
@@ -3445,113 +3496,115 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	}
 }
 
-void MainFrame::TouchAISActive( void )
+void MainFrame::TouchAISActive(void)
 {
-	if (m_pAISTool) {
-		if ((!g_pAIS->IsAISSuppressed()) && (!g_pAIS->IsAISAlertGeneral())) {
-			g_nAIS_activity_timer = 5;                // seconds
+	if (!m_pAISTool)
+		return;
 
-			wxString iconName = _T("AIS_Normal_Active");
-			if( g_pAIS->IsAISAlertGeneral() ) iconName = _T("AIS_AlertGeneral_Active");
-			if( g_pAIS->IsAISSuppressed() ) iconName = _T("AIS_Suppressed_Active");
-			if( !g_bShowAIS ) iconName = _T("AIS_Disabled");
+	if ((!g_pAIS->IsAISSuppressed()) && (!g_pAIS->IsAISAlertGeneral())) {
+		g_nAIS_activity_timer = 5; // seconds
 
-			if (m_lastAISiconName != iconName) {
-				if (g_toolbar) {
-					g_toolbar->SetToolNormalBitmapEx(m_pAISTool, iconName);
-					g_toolbar->Refresh();
-					m_lastAISiconName = iconName;
-				}
-			}
-		}
-	}
-}
-
-void MainFrame::UpdateAISTool( void )
-{
-	if(!g_pAIS) return;
-
-	wxString iconName;
-
-	if( m_pAISTool ) {
-		bool b_update = false;
-
-		iconName = _T("AIS");
-		if( g_pAIS->IsAISSuppressed() )
-			iconName = _T("AIS_Suppressed");
-		if( g_pAIS->IsAISAlertGeneral() )
-			iconName = _T("AIS_AlertGeneral");
-		if( !g_bShowAIS )
+		wxString iconName = _T("AIS_Normal_Active");
+		if (g_pAIS->IsAISAlertGeneral())
+			iconName = _T("AIS_AlertGeneral_Active");
+		if (g_pAIS->IsAISSuppressed())
+			iconName = _T("AIS_Suppressed_Active");
+		if (!g_bShowAIS)
 			iconName = _T("AIS_Disabled");
 
-		//  Manage timeout for AIS activity indicator
-		if( g_nAIS_activity_timer ) {
-			g_nAIS_activity_timer--;
-
-			if( 0 == g_nAIS_activity_timer ) b_update = true;
-			else {
-				iconName = _T("AIS_Normal_Active");
-				if( g_pAIS->IsAISSuppressed() )
-					iconName = _T("AIS_Suppressed_Active");
-				if( g_pAIS->IsAISAlertGeneral() )
-					iconName = _T("AIS_AlertGeneral_Active");
-				if( !g_bShowAIS )
-					iconName = _T("AIS_Disabled");
+		if (m_lastAISiconName != iconName) {
+			if (g_toolbar) {
+				g_toolbar->SetToolNormalBitmapEx(m_pAISTool, iconName);
+				g_toolbar->Refresh();
+				m_lastAISiconName = iconName;
 			}
 		}
+	}
+}
 
-		if( ( m_lastAISiconName != iconName ) ) b_update = true;
+void MainFrame::UpdateAISTool(void)
+{
+	if (!g_pAIS)
+		return;
 
-		if( b_update && g_toolbar) {
-			g_toolbar->SetToolNormalBitmapEx( m_pAISTool, iconName );
-			g_toolbar->Refresh();
-			m_lastAISiconName = iconName;
+	if (!m_pAISTool)
+		return;
+
+	bool b_update = false;
+
+	wxString iconName = _T("AIS");
+	if (g_pAIS->IsAISSuppressed())
+		iconName = _T("AIS_Suppressed");
+	if (g_pAIS->IsAISAlertGeneral())
+		iconName = _T("AIS_AlertGeneral");
+	if (!g_bShowAIS)
+		iconName = _T("AIS_Disabled");
+
+	//  Manage timeout for AIS activity indicator
+	if (g_nAIS_activity_timer) {
+		g_nAIS_activity_timer--;
+
+		if (0 == g_nAIS_activity_timer)
+			b_update = true;
+		else {
+			iconName = _T("AIS_Normal_Active");
+			if (g_pAIS->IsAISSuppressed())
+				iconName = _T("AIS_Suppressed_Active");
+			if (g_pAIS->IsAISAlertGeneral())
+				iconName = _T("AIS_AlertGeneral_Active");
+			if (!g_bShowAIS)
+				iconName = _T("AIS_Disabled");
 		}
+	}
 
+	if ((m_lastAISiconName != iconName))
+		b_update = true;
+
+	if (b_update && g_toolbar) {
+		g_toolbar->SetToolNormalBitmapEx(m_pAISTool, iconName);
+		g_toolbar->Refresh();
+		m_lastAISiconName = iconName;
 	}
 }
 
-//    Cause refresh of active Tide/Current data, if displayed
-void MainFrame::OnFrameTCTimer(wxTimerEvent &)
+// Cause refresh of active Tide/Current data, if displayed
+void MainFrame::OnFrameTCTimer(wxTimerEvent&)
 {
-	if( chart_canvas ) {
-		chart_canvas->SetbTCUpdate( true );
-		chart_canvas->Refresh( false );
+	if (chart_canvas) {
+		chart_canvas->SetbTCUpdate(true);
+		chart_canvas->Refresh(false);
 	}
 }
 
-//    Keep and update the Viewport rotation angle according to average COG for COGUP mode
-void MainFrame::OnFrameCOGTimer(wxTimerEvent &)
+// Keep and update the Viewport rotation angle according to average COG for COGUP mode
+void MainFrame::OnFrameCOGTimer(wxTimerEvent&)
 {
-	//      return;
 	FrameCOGTimer.Stop();
-
 	DoCOGSet();
 
-	//    Restart the timer, max frequency is 10 hz.
-	if( g_COGAvgSec > 0 )
-		FrameCOGTimer.Start( g_COGAvgSec * 1000, wxTIMER_CONTINUOUS );
+	// Restart the timer, max frequency is 10 hz.
+	if (g_COGAvgSec > 0)
+		FrameCOGTimer.Start(g_COGAvgSec * 1000, wxTIMER_CONTINUOUS);
 	else
-		FrameCOGTimer.Start( 100, wxTIMER_CONTINUOUS );
-
+		FrameCOGTimer.Start(100, wxTIMER_CONTINUOUS);
 }
 
-void MainFrame::DoCOGSet( void )
+void MainFrame::DoCOGSet(void)
 {
 	double old_VPRotate = g_VPRotate;
 
-	if( g_bCourseUp ) g_VPRotate = -g_COGAvg * M_PI / 180.;
+	if (g_bCourseUp)
+		g_VPRotate = -g_COGAvg * M_PI / 180.0;
 	else
-		g_VPRotate = 0.;
+		g_VPRotate = 0.0;
 
-	if( chart_canvas )
-		chart_canvas->SetVPRotation( g_VPRotate );
+	if (chart_canvas)
+		chart_canvas->SetVPRotation(g_VPRotate);
 
-	if( g_bCourseUp ) {
+	if (g_bCourseUp) {
 		bool bnew_chart = DoChartUpdate();
-
-		if( ( bnew_chart ) || ( old_VPRotate != g_VPRotate ) )
-			if( chart_canvas )
+		if ((bnew_chart) || (old_VPRotate != g_VPRotate))
+			if (chart_canvas)
 				chart_canvas->ReloadVP();
 	}
 }
@@ -3565,38 +3618,38 @@ void RenderShadowText( wxDC *pdc, wxFont *pFont, wxString& str, int x, int y )
 
 	wxFont oldfont = pdc->GetFont(); // save current font
 
-	pdc->SetFont( *pFont );
-	pdc->SetTextForeground( GetGlobalColor( _T("CHGRF") ) );
-	pdc->SetBackgroundMode( wxTRANSPARENT );
+	pdc->SetFont(*pFont);
+	pdc->SetTextForeground(GetGlobalColor(_T("CHGRF")));
+	pdc->SetBackgroundMode(wxTRANSPARENT);
 
-	pdc->DrawText( str, x, y + 1 );
-	pdc->DrawText( str, x, y - 1 );
-	pdc->DrawText( str, x + 1, y );
-	pdc->DrawText( str, x - 1, y );
+	pdc->DrawText(str, x, y + 1);
+	pdc->DrawText(str, x, y - 1);
+	pdc->DrawText(str, x + 1, y);
+	pdc->DrawText(str, x - 1, y);
 
-	pdc->SetTextForeground( GetGlobalColor( _T("CHBLK") ) );
+	pdc->SetTextForeground(GetGlobalColor(_T("CHBLK")));
 
-	pdc->DrawText( str, x, y );
+	pdc->DrawText(str, x, y);
 
-	pdc->SetFont( oldfont );                  // restore last font
+	pdc->SetFont(oldfont); // restore last font
 }
 
-
-void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
+void MainFrame::UpdateGPSCompassStatusBox(bool b_force_new)
 {
-	if( !g_FloatingCompassDialog )
+	if (!g_FloatingCompassDialog)
 		return;
 
-	//    Look for change in overlap or positions
+	// Look for change in overlap or positions
 	bool b_update = false;
 	wxRect tentative_rect;
 	wxPoint tentative_pt_in_screen;
-	int x_offset;
-	int y_offset;
-	int size_x, size_y;
+	int x_offset = 0;
+	int y_offset = 0;
+	int size_x = 0;
+	int size_y = 0;
 	int cc1_edge_comp = 2;
 
-	if( g_FloatingToolbarDialog ) {
+	if (g_FloatingToolbarDialog) {
 		x_offset = g_FloatingCompassDialog->GetXOffset();
 		y_offset = g_FloatingCompassDialog->GetYOffset();
 		g_FloatingCompassDialog->GetSize(&size_x, &size_y);
@@ -3604,43 +3657,39 @@ void MainFrame::UpdateGPSCompassStatusBox( bool b_force_new )
 
 		// check to see if it would overlap if it was in its home position (upper right)
 		tentative_pt_in_screen = g_FloatingCompassDialog->GetParent()->ClientToScreen(
-				wxPoint( parent_size.x - size_x - x_offset - cc1_edge_comp, y_offset ) );
+			wxPoint(parent_size.x - size_x - x_offset - cc1_edge_comp, y_offset));
 
-		tentative_rect = wxRect( tentative_pt_in_screen.x, tentative_pt_in_screen.y, size_x, size_y );
-
+		tentative_rect = wxRect(tentative_pt_in_screen.x, tentative_pt_in_screen.y, size_x, size_y);
 	}
 
-	//  If the toolbar location has changed, or the proposed compassDialog location has changed
-	if( (g_FloatingToolbarDialog->GetScreenRect() != g_last_tb_rect) ||
-			(tentative_rect != g_FloatingCompassDialog->GetScreenRect()) ) {
+	// If the toolbar location has changed, or the proposed compassDialog location has changed
+	if ((g_FloatingToolbarDialog->GetScreenRect() != g_last_tb_rect)
+		|| (tentative_rect != g_FloatingCompassDialog->GetScreenRect())) {
 
 		wxRect tb_rect = g_FloatingToolbarDialog->GetScreenRect();
 
-		//    if they would not intersect, go ahead and move it to the upper right
-		//      Else it has to be on lower right
-		if( !tb_rect.Intersects( tentative_rect ) ) {
-			g_FloatingCompassDialog->Move( tentative_pt_in_screen );
-		}
-		else {
-			wxPoint posn_in_canvas = wxPoint(
-				chart_canvas->GetSize().x - size_x - x_offset - cc1_edge_comp,
-				chart_canvas->GetSize().y - ( size_y + y_offset + cc1_edge_comp));
-			g_FloatingCompassDialog->Move( chart_canvas->ClientToScreen( posn_in_canvas ) );
+		// if they would not intersect, go ahead and move it to the upper right
+		// Else it has to be on lower right
+		if (!tb_rect.Intersects(tentative_rect)) {
+			g_FloatingCompassDialog->Move(tentative_pt_in_screen);
+		} else {
+			wxPoint posn_in_canvas(chart_canvas->GetSize().x - size_x - x_offset - cc1_edge_comp,
+								   chart_canvas->GetSize().y - (size_y + y_offset + cc1_edge_comp));
+			g_FloatingCompassDialog->Move(chart_canvas->ClientToScreen(posn_in_canvas));
 		}
 
 		b_update = true;
 
 		g_last_tb_rect = tb_rect;
-
 	}
 
-	if( g_FloatingCompassDialog && g_FloatingCompassDialog->IsShown()) {
-		g_FloatingCompassDialog->UpdateStatus( b_force_new | b_update );
+	if (g_FloatingCompassDialog && g_FloatingCompassDialog->IsShown()) {
+		g_FloatingCompassDialog->UpdateStatus(b_force_new | b_update);
 		g_FloatingCompassDialog->Update();
 	}
 }
 
-int MainFrame::GetnChartStack( void )
+int MainFrame::GetnChartStack(void)
 {
 	if (pCurrentStack)
 		return pCurrentStack->nEntry;
@@ -3648,15 +3697,14 @@ int MainFrame::GetnChartStack( void )
 		return 0;
 }
 
-//    Application memory footprint management
-
-int MainFrame::GetApplicationMemoryUse( void )
+// Application memory footprint management
+int MainFrame::GetApplicationMemoryUse(void) // FIXME: move this out of MainFrame
 {
 	int memsize = -1;
 #ifdef __LINUX__
 
-	//    Use a contrived ps command to get the virtual memory size associated with this process
-	wxWindow *fWin = wxWindow::FindFocus();
+	// Use a contrived ps command to get the virtual memory size associated with this process
+	wxWindow* fWin = wxWindow::FindFocus();
 
 	wxArrayString outputArray;
 	wxString cmd(_T("ps --no-headers -o vsize "));
@@ -3666,17 +3714,15 @@ int MainFrame::GetApplicationMemoryUse( void )
 	cmd += cmd1;
 	wxExecute(cmd, outputArray);
 
-	if(outputArray.GetCount())
-	{
+	if (outputArray.GetCount()) {
 		wxString s = outputArray.Item(0);
 		long vtmp;
-		if(s.ToLong(&vtmp))
+		if (s.ToLong(&vtmp))
 			memsize = vtmp;
 	}
 
-	if(fWin)
+	if (fWin)
 		fWin->SetFocus();
-
 #endif
 
 #ifdef __WXMSW__
@@ -3685,70 +3731,70 @@ int MainFrame::GetApplicationMemoryUse( void )
 
 	unsigned long processID = wxGetProcessId();
 
-	hProcess = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID );
-	if( NULL == hProcess ) return 0;
+	hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
+	if (NULL == hProcess)
+		return 0;
 
-	if( GetProcessMemoryInfo( hProcess, &pmc, sizeof( pmc ) ) ) {
+	if (GetProcessMemoryInfo(hProcess, &pmc, sizeof(pmc))) {
 		memsize = pmc.WorkingSetSize / 1024;
 	}
 
-	CloseHandle( hProcess );
-
+	CloseHandle(hProcess);
 #endif
 
 	return memsize;
 }
 
-void MainFrame::HandlePianoClick( int selected_index, int selected_dbIndex )
+void MainFrame::HandlePianoClick(int selected_index, int selected_dbIndex)
 {
 	if (!pCurrentStack)
 		return;
 	if (s_ProgDialog)
 		return;
 
-	if( !chart_canvas->GetQuiltMode() ) {
-		if( m_bpersistent_quilt && g_bQuiltEnable ) {
-			if( chart_canvas->IsChartQuiltableRef( selected_dbIndex ) ) {
+	if (!chart_canvas->GetQuiltMode()) {
+		if (m_bpersistent_quilt && g_bQuiltEnable) {
+			if (chart_canvas->IsChartQuiltableRef(selected_dbIndex)) {
 				ToggleQuiltMode();
-				SelectQuiltRefdbChart( selected_dbIndex );
+				SelectQuiltRefdbChart(selected_dbIndex);
 				m_bpersistent_quilt = false;
 			} else {
-				SelectChartFromStack( selected_index );
+				SelectChartFromStack(selected_index);
 			}
 		} else {
-			SelectChartFromStack( selected_index );
+			SelectChartFromStack(selected_index);
 			g_sticky_chart = selected_dbIndex;
 		}
 	} else {
-		if( chart_canvas->IsChartQuiltableRef( selected_dbIndex ) ) SelectQuiltRefdbChart(
-				selected_dbIndex );
+		if (chart_canvas->IsChartQuiltableRef(selected_dbIndex))
+			SelectQuiltRefdbChart(selected_dbIndex);
 		else {
 			ToggleQuiltMode();
-			SelectdbChart( selected_dbIndex );
+			SelectdbChart(selected_dbIndex);
 			m_bpersistent_quilt = true;
 		}
 	}
 
-	chart_canvas->SetQuiltChartHiLiteIndex( -1 );
+	chart_canvas->SetQuiltChartHiLiteIndex(-1);
 	chart_canvas->HideChartInfoWindow();
 	DoChartUpdate();
-	chart_canvas->ReloadVP();                  // Pick up the new selections
+	chart_canvas->ReloadVP(); // Pick up the new selections
 }
 
-void MainFrame::HandlePianoRClick( int x, int y, int selected_index, int selected_dbIndex )
+void MainFrame::HandlePianoRClick(int x, int y, int selected_index, int selected_dbIndex)
 {
 	if (!pCurrentStack)
 		return;
 	if (s_ProgDialog)
 		return;
 
-	PianoPopupMenu( x, y, selected_index, selected_dbIndex );
+	PianoPopupMenu(x, y, selected_index, selected_dbIndex);
 	UpdateControlBar();
 
 	chart_canvas->SetQuiltChartHiLiteIndex(-1);
 }
 
-void MainFrame::HandlePianoRollover( int selected_index, int selected_dbIndex )
+void MainFrame::HandlePianoRollover(int selected_index, int selected_dbIndex)
 {
 	if (!chart_canvas)
 		return;
@@ -3757,34 +3803,35 @@ void MainFrame::HandlePianoRollover( int selected_index, int selected_dbIndex )
 	if (s_ProgDialog)
 		return;
 
-	int sx, sy;
-	stats->GetPosition( &sx, &sy );
-	wxPoint key_location = stats->pPiano->GetKeyOrigin( selected_index );
-	wxPoint rolloverPos = stats->GetParent()->ScreenToClient( wxPoint( sx, sy ) );
+	const wxPoint position = stats->GetPosition();
+	const wxPoint key_location = stats->pPiano->GetKeyOrigin(selected_index);
+	wxPoint rolloverPos = stats->GetParent()->ScreenToClient(position);
 	rolloverPos.y -= 3;
 	rolloverPos.x += key_location.x;
 
-	if( !chart_canvas->GetQuiltMode() ) {
-		SetChartThumbnail( selected_index );
-		chart_canvas->ShowChartInfoWindow( key_location.x, sy + key_location.y, selected_dbIndex );
+	if (!chart_canvas->GetQuiltMode()) {
+		SetChartThumbnail(selected_index);
+		chart_canvas->ShowChartInfoWindow(key_location.x, position.y + key_location.y, selected_dbIndex);
 	} else {
-		std::vector<int> piano_chart_index_array = chart_canvas->GetQuiltExtendedStackdbIndexArray();
+		std::vector<int> piano_chart_index_array
+			= chart_canvas->GetQuiltExtendedStackdbIndexArray();
 
-		if( ( pCurrentStack->nEntry > 1 ) || ( piano_chart_index_array.size() > 1 ) ) {
-			chart_canvas->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
-			chart_canvas->SetQuiltChartHiLiteIndex( selected_dbIndex );
+		if ((pCurrentStack->nEntry > 1) || (piano_chart_index_array.size() > 1)) {
+			chart_canvas->ShowChartInfoWindow(rolloverPos.x, rolloverPos.y, selected_dbIndex);
+			chart_canvas->SetQuiltChartHiLiteIndex(selected_dbIndex);
 
-			chart_canvas->ReloadVP( false );         // no VP adjustment allowed
-		} else if( pCurrentStack->nEntry == 1 ) {
-			const ChartTableEntry &cte = ChartData->GetChartTableEntry(pCurrentStack->GetDBIndex(0));
-			if( CHART_TYPE_CM93COMP != cte.GetChartType() ) {
-				chart_canvas->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
-				chart_canvas->ReloadVP( false );
-			} else if( ( -1 == selected_index ) && ( -1 == selected_dbIndex ) ) {
-				chart_canvas->ShowChartInfoWindow( rolloverPos.x, rolloverPos.y, selected_dbIndex );
+			chart_canvas->ReloadVP(false); // no VP adjustment allowed
+		} else if (pCurrentStack->nEntry == 1) {
+			const ChartTableEntry& cte
+				= ChartData->GetChartTableEntry(pCurrentStack->GetDBIndex(0));
+			if (CHART_TYPE_CM93COMP != cte.GetChartType()) {
+				chart_canvas->ShowChartInfoWindow(rolloverPos.x, rolloverPos.y, selected_dbIndex);
+				chart_canvas->ReloadVP(false);
+			} else if ((-1 == selected_index) && (-1 == selected_dbIndex)) {
+				chart_canvas->ShowChartInfoWindow(rolloverPos.x, rolloverPos.y, selected_dbIndex);
 			}
 		}
-		SetChartThumbnail( -1 );        // hide all thumbs in quilt mode
+		SetChartThumbnail(-1); // hide all thumbs in quilt mode
 	}
 }
 

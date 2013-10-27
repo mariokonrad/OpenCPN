@@ -25,78 +25,71 @@
 #include <wx/file.h>
 
 #ifdef OCPN_USE_PORTAUDIO
+	#include "OCPNSoundData.h"
+#endif
 
-PaStream * stream;
-void * sdata;
-int sindex;
-int smax_samples;
-bool splaying;
+
+#ifdef OCPN_USE_PORTAUDIO
+
+static PaStream * stream; // FIXME: static data crap
+static void * sdata; // FIXME: static data crap
+static int sindex; // FIXME: static data crap
+static int smax_samples; // FIXME: static data crap
+static bool splaying; // FIXME: static data crap
 
 extern bool portaudio_initialized;
 
-/* This routine will be called by the PortAudio engine when audio is needed.
- * It may called at interrupt level on some machines so don't do anything
- * that could mess up the system like calling malloc() or free().
- */
+/// This routine will be called by the PortAudio engine when audio is needed.
+/// It may called at interrupt level on some machines so don't do anything
+/// that could mess up the system like calling malloc() or free().
 static int OCPNSoundCallback(
-		const void * inputBuffer,
+		const void * WXUNUSED(inputBuffer),
 		void * outputBuffer,
 		unsigned long framesPerBuffer,
 		const PaStreamCallbackTimeInfo * timeInfo,
 		PaStreamCallbackFlags statusFlags,
 		void * userData)
 {
-	/* Cast data passed through stream to our structure. */
-	wxUint16 *data = (wxUint16 *)userData;
-	wxUint16 *out = (wxUint16 *)outputBuffer;
+	// Cast data passed through stream to our structure.
+	wxUint16* data = reinterpret_cast<wxUint16*>(userData);
+	wxUint16* out = reinterpret_cast<wxUint16*>(outputBuffer);
 
-	unsigned int i;
-	bool bdone = false;
-
-	(void) inputBuffer; /* Prevent unused variable warning. */
-
-	for( i=0; i<framesPerBuffer; i++ )
-	{
+	for (unsigned int i = 0; i < framesPerBuffer; i++) {
 		*out = data[sindex];
 		out++;
 		sindex++;
 
-		if( sindex >= smax_samples ) {
-			bdone = true;
-			break;
+		if (sindex >= smax_samples) {
+			return paComplete;
 		}
 	}
 
-	if (bdone)
-		return paComplete;
-	else
-		return 0;
+	return 0;
 }
 
-static void OCPNSoundFinishedCallback( void *userData )
+static void OCPNSoundFinishedCallback(void* userData)
 {
 	splaying = false;
 }
 
 OCPN_Sound::OCPN_Sound()
+	: m_OK(false)
+	, m_osdata(NULL)
+	, m_stream(NULL)
 {
-	if(!portaudio_initialized) {
+	if (!portaudio_initialized) {
 		PaError err = Pa_Initialize();
-		if( err != paNoError ) {
-			printf( "PortAudio CTOR error: %s\n", Pa_GetErrorText( err ) );
+		if (err != paNoError) {
+			printf("PortAudio CTOR error: %s\n", Pa_GetErrorText(err));
 		}
 		portaudio_initialized = true;
 	}
-
-	m_osdata = NULL;
-	m_OK = false;
-	m_stream = NULL;
 }
 
 OCPN_Sound::~OCPN_Sound()
 {
-	if( m_stream ) {
-		Pa_CloseStream( m_stream );
+	if (m_stream) {
+		Pa_CloseStream(m_stream);
 	}
 
 	FreeMem();
@@ -114,61 +107,53 @@ bool OCPN_Sound::Create(const wxString& fileName, bool isResource)
 	FreeMem();
 
 	wxFile fileWave;
-	if (!fileWave.Open(fileName, wxFile::read))
-	{
+	if (!fileWave.Open(fileName, wxFile::read)) {
 		return false;
 	}
 
 	wxFileOffset lenOrig = fileWave.Length();
-	if ( lenOrig == wxInvalidOffset )
+	if (lenOrig == wxInvalidOffset)
 		return false;
 
 	size_t len = wx_truncate_cast(size_t, lenOrig);
-	wxUint8 *data = new wxUint8[len];
-	if ( fileWave.Read(data, len) != lenOrig )
-	{
-		delete [] data;
+	wxUint8* data = new wxUint8[len];
+	if (fileWave.Read(data, len) != lenOrig) {
+		delete[] data;
 		wxLogError(_("Couldn't load sound data from '%s'."), fileName.c_str());
 		return false;
 	}
 
-	if (!LoadWAV(data, len, true))
-	{
-		delete [] data;
-		wxLogError(_("Sound file '%s' is in unsupported format."),
-				fileName.c_str());
+	if (!LoadWAV(data, len, true)) {
+		delete[] data;
+		wxLogError(_("Sound file '%s' is in unsupported format."), fileName.c_str());
 		return false;
 	}
 
-	sdata = m_osdata->m_data;           //The raw sound data
+	sdata = m_osdata->m_data; // The raw sound data
 	sindex = 0;
 	smax_samples = m_osdata->m_samples;
 
 	PaError err;
 	m_stream = NULL;
 
-	/* Open an audio I/O stream. */
-	err = Pa_OpenDefaultStream( &m_stream,
-			0, /* no input channels */
-			m_osdata->m_channels,
-			paInt16,
-			m_osdata->m_samplingRate,
-			256, /* frames per buffer, i.e. the number
-					of sample frames that PortAudio will
-					request from the callback. Many apps
-					may want to use
-					paFramesPerBufferUnspecified, which
-					tells PortAudio to pick the best,
-					possibly changing, buffer size.*/
-			OCPNSoundCallback, /* this is your callback function */
-			sdata ); /*This is a pointer that will be passed to
-					   your callback*/
-	if( err != paNoError )
-		printf( "PortAudio Create() error: %s\n", Pa_GetErrorText( err ) );
+	// Open an audio I/O stream.
+	err = Pa_OpenDefaultStream(&m_stream, 0, /* no input channels */
+							   m_osdata->m_channels, paInt16, m_osdata->m_samplingRate,
+							   256, /* frames per buffer, i.e. the number
+									   of sample frames that PortAudio will
+									   request from the callback. Many apps
+									   may want to use
+									   paFramesPerBufferUnspecified, which
+									   tells PortAudio to pick the best,
+									   possibly changing, buffer size.*/
+							   OCPNSoundCallback,
+							   sdata);
+	if (err != paNoError)
+		printf("PortAudio Create() error: %s\n", Pa_GetErrorText(err));
 
-	err = Pa_SetStreamFinishedCallback( m_stream, OCPNSoundFinishedCallback );
-	if( err != paNoError )
-		printf( "PortAudio SetStreamFinishedCallback() error: %s\n", Pa_GetErrorText( err ) );
+	err = Pa_SetStreamFinishedCallback(m_stream, OCPNSoundFinishedCallback);
+	if (err != paNoError)
+		printf("PortAudio SetStreamFinishedCallback() error: %s\n", Pa_GetErrorText(err));
 
 	m_OK = true;
 
@@ -177,29 +162,27 @@ bool OCPN_Sound::Create(const wxString& fileName, bool isResource)
 
 bool OCPN_Sound::Play(unsigned flags) const
 {
-	if(m_stream) {
-		Pa_StopStream( m_stream );
+	if (!m_stream)
+		return false;
 
-		if( !splaying ) {
-			sdata = m_osdata->m_data;           //The raw sound data
-			sindex = 0;
-			smax_samples = m_osdata->m_samples;
-			stream = m_stream;
+	Pa_StopStream(m_stream);
 
-			PaError err = Pa_StartStream( stream );
-			if( err != paNoError ) {
-				printf( "PortAudio Play() error: %s\n", Pa_GetErrorText( err ) );
-				return false;
-			}
-			else {
-				splaying = true;
-				return true;
-			}
-		}
-		else
-			return false;
+	if (splaying)
+		return false;
+
+	sdata = m_osdata->m_data; // The raw sound data
+	sindex = 0;
+	smax_samples = m_osdata->m_samples;
+	stream = m_stream;
+
+	PaError err = Pa_StartStream(stream);
+	if (err != paNoError) {
+		printf("PortAudio Play() error: %s\n", Pa_GetErrorText(err));
+		return false;
+	} else {
+		splaying = true;
+		return true;
 	}
-	return false;
 }
 
 bool OCPN_Sound::IsPlaying() const
@@ -209,24 +192,23 @@ bool OCPN_Sound::IsPlaying() const
 
 void OCPN_Sound::Stop()
 {
-	Pa_StopStream( m_stream );
+	Pa_StopStream(m_stream);
 	splaying = false;
 }
 
 void OCPN_Sound::UnLoad(void)
 {
-	if(m_stream) {
-		Pa_StopStream( m_stream );
-		Pa_CloseStream( m_stream );
+	if (m_stream) {
+		Pa_StopStream(m_stream);
+		Pa_CloseStream(m_stream);
 		m_stream = NULL;
 	}
 
 	FreeMem();
-
 	m_OK = false;
 }
 
-bool OCPN_Sound::LoadWAV(const wxUint8 *data, size_t length, bool copyData)
+bool OCPN_Sound::LoadWAV(const wxUint8* data, size_t length, bool copyData)
 {
 	typedef struct
 	{
@@ -239,9 +221,15 @@ bool OCPN_Sound::LoadWAV(const wxUint8 *data, size_t length, bool copyData)
 		wxUint16 uiBitsPerSample;
 	} WAVEFORMAT;
 
-	enum { WAVE_FORMAT_PCM = 1 };
-	enum { WAVE_INDEX = 8 };
-	enum { FMT_INDEX = 12 };
+	enum {
+		WAVE_FORMAT_PCM = 1
+	};
+	enum {
+		WAVE_INDEX = 8
+	};
+	enum {
+		FMT_INDEX = 12
+	};
 
 	// the simplest wave file header consists of 44 bytes:
 	//
@@ -263,7 +251,7 @@ bool OCPN_Sound::LoadWAV(const wxUint8 *data, size_t length, bool copyData)
 	//      44  (wave signal) data
 	//
 	// so check that we have at least as much
-	if ( length < 44 )
+	if (length < 44)
 		return false;
 
 	WAVEFORMAT waveformat;
@@ -275,7 +263,6 @@ bool OCPN_Sound::LoadWAV(const wxUint8 *data, size_t length, bool copyData)
 	waveformat.ulAvgBytesPerSec = wxUINT32_SWAP_ON_BE(waveformat.ulAvgBytesPerSec);
 	waveformat.uiBlockAlign = wxUINT16_SWAP_ON_BE(waveformat.uiBlockAlign);
 	waveformat.uiBitsPerSample = wxUINT16_SWAP_ON_BE(waveformat.uiBitsPerSample);
-
 
 	//  Sanity checks
 	if (memcmp(data, "RIFF", 4) != 0)
@@ -291,25 +278,22 @@ bool OCPN_Sound::LoadWAV(const wxUint8 *data, size_t length, bool copyData)
 	if (memcmp(&data[FMT_INDEX + waveformat.uiSize + 8], "data", 4) == 0) {
 		memcpy(&ul, &data[FMT_INDEX + waveformat.uiSize + 12], 4);
 		ul = wxUINT32_SWAP_ON_BE(ul);
-	}
-
-	//  There may be a "fact" chunk in the header, which will displace the first "data" chunk
-	//  If so, find the "data" chunk 12 bytes further along
-	else if (memcmp(&data[FMT_INDEX + waveformat.uiSize + 8], "fact", 4) == 0) {
+	} else if (memcmp(&data[FMT_INDEX + waveformat.uiSize + 8], "fact", 4) == 0) {
+		// There may be a "fact" chunk in the header, which will displace the first "data" chunk
+		// If so, find the "data" chunk 12 bytes further along
 		if (memcmp(&data[FMT_INDEX + waveformat.uiSize + 8 + 12], "data", 4) == 0) {
 			memcpy(&ul, &data[FMT_INDEX + waveformat.uiSize + 12 + 12], 4);
 			ul = wxUINT32_SWAP_ON_BE(ul);
 		}
 	}
 
-	if ( length < ul + FMT_INDEX + waveformat.uiSize + 16 )
+	if (length < ul + FMT_INDEX + waveformat.uiSize + 16)
 		return false;
 
 	if (waveformat.uiFormatTag != WAVE_FORMAT_PCM)
 		return false;
 
-	if (waveformat.ulSamplesPerSec !=
-			waveformat.ulAvgBytesPerSec / waveformat.uiBlockAlign)
+	if (waveformat.ulSamplesPerSec != waveformat.ulAvgBytesPerSec / waveformat.uiBlockAlign)
 		return false;
 
 	m_osdata = new OCPNSoundData;
@@ -320,25 +304,22 @@ bool OCPN_Sound::LoadWAV(const wxUint8 *data, size_t length, bool copyData)
 	m_osdata->m_samples = ul / (m_osdata->m_channels * m_osdata->m_bitsPerSample / 8);
 	m_osdata->m_dataBytes = ul;
 
-	if (copyData)
-	{
+	if (copyData) {
 		m_osdata->m_dataWithHeader = new wxUint8[length];
 		memcpy(m_osdata->m_dataWithHeader, data, length);
-	}
-	else
+	} else
 		m_osdata->m_dataWithHeader = (wxUint8*)data;
 
-	m_osdata->m_data =
-		(&m_osdata->m_dataWithHeader[FMT_INDEX + waveformat.uiSize + 8]);
+	m_osdata->m_data = (&m_osdata->m_dataWithHeader[FMT_INDEX + waveformat.uiSize + 8]);
 
 	return true;
 }
 
 void OCPN_Sound::FreeMem(void)
 {
-	if( m_osdata ) {
-		if( m_osdata->m_dataWithHeader )
-			delete [] m_osdata->m_dataWithHeader;
+	if (m_osdata) {
+		if (m_osdata->m_dataWithHeader)
+			delete[] m_osdata->m_dataWithHeader;
 		delete m_osdata;
 
 		m_osdata = NULL;
@@ -348,8 +329,8 @@ void OCPN_Sound::FreeMem(void)
 #else  // OCPN_USE_PORTAUDIO
 
 OCPN_Sound::OCPN_Sound()
+	: m_OK(false)
 {
-	m_OK = false;
 }
 
 OCPN_Sound::~OCPN_Sound()

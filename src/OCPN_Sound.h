@@ -27,34 +27,33 @@
 #include <wx/sound.h>
 
 #ifdef OCPN_USE_PORTAUDIO
-	#include "OCPNSoundData.h"
 	#include "portaudio.h"
+	class OCPNSoundData;
 #endif
 
-class OCPN_Sound: public wxSound
+class OCPN_Sound : public wxSound // FIXME: use polymorphism to handle portaudio/not, get rid of this ifdef crap
 {
-	public:
-		OCPN_Sound();
-		virtual ~OCPN_Sound();
+public:
+	OCPN_Sound();
+	virtual ~OCPN_Sound();
 
-		bool IsOk() const;
-		bool Create(const wxString & fileName, bool isResource = false);
-		bool Play(unsigned flags = wxSOUND_ASYNC) const;
-		bool IsPlaying() const;
-		void Stop();
-		void UnLoad(void);
+	bool IsOk() const;
+	bool Create(const wxString& fileName, bool isResource = false);
+	bool Play(unsigned flags = wxSOUND_ASYNC) const;
+	bool IsPlaying() const;
+	void Stop();
+	void UnLoad(void);
 
-	private:
-		bool m_OK;
+private:
+	bool m_OK;
 
 #ifdef OCPN_USE_PORTAUDIO
-		bool LoadWAV(const wxUint8 * data, size_t length, bool copyData);
-		void FreeMem(void);
+	bool LoadWAV(const wxUint8* data, size_t length, bool copyData);
+	void FreeMem(void);
 
-		OCPNSoundData * m_osdata;
-		PaStream * m_stream;
+	OCPNSoundData* m_osdata;
+	PaStream* m_stream;
 #endif
-
 };
 
 #endif

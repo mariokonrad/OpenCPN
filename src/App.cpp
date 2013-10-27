@@ -133,8 +133,6 @@ extern bool s_bSetSystemTime;
 extern wxArrayOfConnPrm* g_pConnectionParams;
 extern wxDateTime g_start_time;
 extern wxDateTime g_loglast_time;
-extern OCPN_Sound bells_sound[8];
-extern OCPN_Sound g_anchorwatch_sound;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
 extern double AnchorPointMinDist;
@@ -1590,6 +1588,7 @@ bool App::OnInit()
 	}
 
 	gFrame = new MainFrame(NULL, myframe_window_title, position, new_frame_size, app_style);
+	gFrame->init_bell_sounds();
 
 	// AUI manager
 	g_pauimgr = new wxAuiManager;

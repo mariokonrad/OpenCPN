@@ -4461,7 +4461,7 @@ void ChartCanvas::SART_Render(ocpnDC& dc, wxPen pen, int x, int y, int radius)
 	dc.SetPen(pen_save);
 }
 
-void ChartCanvas::AlertDraw(ocpnDC& dc)
+void ChartCanvas::AnchorWatchDraw(ocpnDC& dc)
 {
 	// Just for prototyping, visual alert for anchorwatch goes here
 	bool play_sound = false;
@@ -4576,7 +4576,7 @@ void ChartCanvas::UpdateAlerts()
 
 	// Draw the Alert Targets on the temp_dc
 	ocpnDC ocpndc = ocpnDC(temp_dc);
-	AlertDraw(ocpndc);
+	AnchorWatchDraw(ocpndc);
 
 	//  Retrieve the drawing extents
 	wxRect alert_rect(temp_dc.MinX(), temp_dc.MinY(), temp_dc.MaxX() - temp_dc.MinX(),
@@ -8676,7 +8676,7 @@ void ChartCanvas::DrawOverlayObjects(ocpnDC& dc, const wxRegion& ru)
 
 	AISDraw(dc);
 	ShipDraw(dc);
-	AlertDraw(dc);
+	AnchorWatchDraw(dc);
 
 	RenderAllChartOutlines(dc, GetVP());
 	RenderRouteLegs(dc);

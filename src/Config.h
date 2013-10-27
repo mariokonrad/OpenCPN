@@ -115,6 +115,8 @@ class Config : public wxFileConfig
 
 		void CreateRotatingNavObjBackup();
 
+		// FIXME: move public attributes to private
+
 		double st_lat;
 		double st_lon;
 		double st_view_scale;

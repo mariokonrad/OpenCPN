@@ -291,7 +291,7 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 extern Multiplexer* g_pMUX;
 extern wxArrayOfConnPrm* g_pConnectionParams;
 
-extern OCPN_Sound g_anchorwatch_sound;
+extern sound::OCPN_Sound g_anchorwatch_sound;
 
 extern bool g_bShowMag;
 

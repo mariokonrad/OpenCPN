@@ -516,13 +516,13 @@ SET(HDR_PLUGIN
 	)
 
 SET(SRC_SOUND
-	src/OCPNSoundData.cpp
-	src/OCPN_Sound.cpp
+	src/sound/OCPNSoundData.cpp
+	src/sound/OCPN_Sound.cpp
 	)
 
 SET(HDR_SOUND
-	src/OCPNSoundData.h
-	src/OCPN_Sound.h
+	src/sound/OCPNSoundData.h
+	src/sound/OCPN_Sound.h
 	)
 
 SET(SRC_GEO

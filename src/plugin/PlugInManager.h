@@ -33,12 +33,13 @@
 #include <wx/bmpcbox.h>
 
 #ifdef ocpnUSE_GL
-#include <wx/glcanvas.h>
+	#include <wx/glcanvas.h>
 #endif
 
 #include "DataStream.h"
-#include "OCPN_Sound.h"
 #include <ColorScheme.h>
+
+#include <sound/OCPN_Sound.h>
 
 #include <ais/AIS_Target_Data.h>
 
@@ -81,98 +82,108 @@ struct BlackListedPlugin
 
 const BlackListedPlugin PluginBlacklist[] = {
 	{ _T("aisradar_pi"), 0, 95, false, true },
-	{ _T("radar_pi"), 0, 95, false, true },             // GCC alias for aisradar_pi
+	{ _T("radar_pi"),    0, 95, false, true }, // GCC alias for aisradar_pi
 };
 
 
 extern const wxEventType wxEVT_OCPN_MSG;
-
 
 WX_DEFINE_ARRAY_PTR(PlugInMenuItemContainer *, ArrayOfPlugInMenuItems);
 WX_DEFINE_ARRAY_PTR(PlugInToolbarToolContainer *, ArrayOfPlugInToolbarTools);
 
 class PlugInManager
 {
-	public:
-		PlugInManager(MainFrame *parent);
-		virtual ~PlugInManager();
+public:
+	PlugInManager(MainFrame* parent);
+	virtual ~PlugInManager();
 
-		bool LoadAllPlugIns(const wxString &plugin_dir);
-		bool UnLoadAllPlugIns();
-		bool DeactivateAllPlugIns();
-		bool UpdatePlugIns();
+	bool LoadAllPlugIns(const wxString& plugin_dir);
+	bool UnLoadAllPlugIns();
+	bool DeactivateAllPlugIns();
+	bool UpdatePlugIns();
 
-		bool UpdateConfig();
+	bool UpdateConfig();
 
-		PlugInContainer *LoadPlugIn(wxString plugin_file);
-		ArrayOfPlugIns *GetPlugInArray(){ return &plugin_array; }
+	PlugInContainer* LoadPlugIn(wxString plugin_file);
+	ArrayOfPlugIns* GetPlugInArray()
+	{
+		return &plugin_array;
+	}
 
-		bool RenderAllCanvasOverlayPlugIns( ocpnDC &dc, const ViewPort &vp);
-		bool RenderAllGLCanvasOverlayPlugIns( wxGLContext *pcontext, const ViewPort &vp);
-		void SendCursorLatLonToAllPlugIns( double lat, double lon);
-		void SendViewPortToRequestingPlugIns( ViewPort &vp );
+	bool RenderAllCanvasOverlayPlugIns(ocpnDC& dc, const ViewPort& vp);
+	bool RenderAllGLCanvasOverlayPlugIns(wxGLContext* pcontext, const ViewPort& vp);
+	void SendCursorLatLonToAllPlugIns(double lat, double lon);
+	void SendViewPortToRequestingPlugIns(ViewPort& vp);
 
-		void NotifySetupOptions();
-		void CloseAllPlugInPanels( int );
+	void NotifySetupOptions();
+	void CloseAllPlugInPanels(int);
 
-		ArrayOfPlugInToolbarTools &GetPluginToolbarToolArray(){ return m_PlugInToolbarTools; }
-		int AddToolbarTool(wxString label, wxBitmap *bitmap, wxBitmap *bmpDisabled,
-				wxItemKind kind, wxString shortHelp, wxString longHelp,
-				wxObject *clientData, int position,
-				int tool_sel, opencpn_plugin *pplugin );
+	ArrayOfPlugInToolbarTools& GetPluginToolbarToolArray()
+	{
+		return m_PlugInToolbarTools;
+	}
+	int AddToolbarTool(wxString label, wxBitmap* bitmap, wxBitmap* bmpDisabled, wxItemKind kind,
+					   wxString shortHelp, wxString longHelp, wxObject* clientData, int position,
+					   int tool_sel, opencpn_plugin* pplugin);
 
-		void RemoveToolbarTool(int tool_id);
-		void SetToolbarToolViz(int tool_id, bool viz);
-		void SetToolbarItemState(int tool_id, bool toggle);
-		void SetToolbarItemBitmaps(int item, wxBitmap *bitmap, wxBitmap *bmpDisabled);
-		opencpn_plugin *FindToolOwner(const int id);
-		wxString GetToolOwnerCommonName(const int id);
+	void RemoveToolbarTool(int tool_id);
+	void SetToolbarToolViz(int tool_id, bool viz);
+	void SetToolbarItemState(int tool_id, bool toggle);
+	void SetToolbarItemBitmaps(int item, wxBitmap* bitmap, wxBitmap* bmpDisabled);
+	opencpn_plugin* FindToolOwner(const int id);
+	wxString GetToolOwnerCommonName(const int id);
 
-		ArrayOfPlugInMenuItems &GetPluginContextMenuItemArray(){ return m_PlugInMenuItems; }
-		int AddCanvasContextMenuItem(wxMenuItem *pitem, opencpn_plugin *pplugin );
-		void RemoveCanvasContextMenuItem(int item);
-		void SetCanvasContextMenuItemViz(int item, bool viz);
-		void SetCanvasContextMenuItemGrey(int item, bool grey);
+	ArrayOfPlugInMenuItems& GetPluginContextMenuItemArray()
+	{
+		return m_PlugInMenuItems;
+	}
+	int AddCanvasContextMenuItem(wxMenuItem* pitem, opencpn_plugin* pplugin);
+	void RemoveCanvasContextMenuItem(int item);
+	void SetCanvasContextMenuItemViz(int item, bool viz);
+	void SetCanvasContextMenuItemGrey(int item, bool grey);
 
-		void SendNMEASentenceToAllPlugIns(const wxString &sentence);
-		void SendPositionFixToAllPlugIns(GenericPosDatEx *ppos);
-		void SendAISSentenceToAllPlugIns(const wxString &sentence);
-		void SendJSONMessageToAllPlugins(const wxString &message_id, wxJSONValue v);
-		void SendMessageToAllPlugins(const wxString &message_id, const wxString &message_body);
+	void SendNMEASentenceToAllPlugIns(const wxString& sentence);
+	void SendPositionFixToAllPlugIns(GenericPosDatEx* ppos);
+	void SendAISSentenceToAllPlugIns(const wxString& sentence);
+	void SendJSONMessageToAllPlugins(const wxString& message_id, wxJSONValue v);
+	void SendMessageToAllPlugins(const wxString& message_id, const wxString& message_body);
 
-		void SendResizeEventToAllPlugIns(int x, int y);
-		void SetColorSchemeForAllPlugIns(ColorScheme cs);
-		void NotifyAuiPlugIns(void);
-		bool CallLateInit(void);
+	void SendResizeEventToAllPlugIns(int x, int y);
+	void SetColorSchemeForAllPlugIns(ColorScheme cs);
+	void NotifyAuiPlugIns(void);
+	bool CallLateInit(void);
 
-		wxArrayString GetPlugInChartClassNameArray(void);
+	wxArrayString GetPlugInChartClassNameArray(void);
 
-		wxString GetLastError();
-		MainFrame *GetParentFrame(){ return pParent; }
+	wxString GetLastError();
+	MainFrame* GetParentFrame()
+	{
+		return pParent;
+	}
 
-		void DimeWindow(wxWindow *win);
-		OCPN_Sound m_plugin_sound;
+	void DimeWindow(wxWindow* win);
+	sound::OCPN_Sound m_plugin_sound;
 
-	private:
-		bool CheckBlacklistedPlugin(opencpn_plugin* plugin);
-		bool DeactivatePlugIn(PlugInContainer *pic);
-		wxBitmap *BuildDimmedToolBitmap(wxBitmap *pbmp_normal, unsigned char dim_ratio);
-		bool UpDateChartDataTypes(void);
-		bool CheckPluginCompatibility(wxString plugin_file);
+private:
+	bool CheckBlacklistedPlugin(opencpn_plugin* plugin);
+	bool DeactivatePlugIn(PlugInContainer* pic);
+	wxBitmap* BuildDimmedToolBitmap(wxBitmap* pbmp_normal, unsigned char dim_ratio);
+	bool UpDateChartDataTypes(void);
+	bool CheckPluginCompatibility(wxString plugin_file);
 
-		MainFrame * pParent;
+	MainFrame* pParent;
 
-		ArrayOfPlugIns plugin_array;
-		wxString m_last_error_string;
+	ArrayOfPlugIns plugin_array;
+	wxString m_last_error_string;
 
-		ArrayOfPlugInMenuItems m_PlugInMenuItems;
-		ArrayOfPlugInToolbarTools m_PlugInToolbarTools;
+	ArrayOfPlugInMenuItems m_PlugInMenuItems;
+	ArrayOfPlugInToolbarTools m_PlugInToolbarTools;
 
-		wxString m_plugin_location;
+	wxString m_plugin_location;
 
-		int m_plugin_tool_id_next;
-		int m_plugin_menu_item_id_next;
-		wxBitmap m_cached_overlay_bm;
+	int m_plugin_tool_id_next;
+	int m_plugin_menu_item_id_next;
+	wxBitmap m_cached_overlay_bm;
 };
 
 #endif

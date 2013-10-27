@@ -24,10 +24,8 @@
 #include "OCPN_Sound.h"
 #include <wx/file.h>
 
-#ifdef OCPN_USE_PORTAUDIO
-	#include "OCPNSoundData.h"
-#endif
-
+namespace sound
+{
 
 #ifdef OCPN_USE_PORTAUDIO
 
@@ -375,4 +373,6 @@ void OCPN_Sound::Stop()
 }
 
 #endif
+
+}
 

@@ -204,7 +204,7 @@ bool s_bSetSystemTime;
 wxArrayOfConnPrm* g_pConnectionParams;
 wxDateTime g_start_time;
 wxDateTime g_loglast_time;
-OCPN_Sound g_anchorwatch_sound;
+sound::OCPN_Sound g_anchorwatch_sound;
 RoutePoint* pAnchorWatchPoint1;
 RoutePoint* pAnchorWatchPoint2;
 double AnchorPointMinDist;

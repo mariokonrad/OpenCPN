@@ -21,15 +21,18 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPN_SOUND_H__
-#define __OCPN_SOUND_H__
+#ifndef __SOUND__OCPN_SOUND_H__
+#define __SOUND__OCPN_SOUND_H__
 
 #include <wx/sound.h>
 
 #ifdef OCPN_USE_PORTAUDIO
 	#include "portaudio.h"
-	class OCPNSoundData;
+	#include <sound/SoundData.h>
 #endif
+
+namespace sound
+{
 
 class OCPN_Sound : public wxSound // FIXME: use polymorphism to handle portaudio/not, get rid of this ifdef crap
 {
@@ -55,5 +58,7 @@ private:
 	PaStream* m_stream;
 #endif
 };
+
+}
 
 #endif

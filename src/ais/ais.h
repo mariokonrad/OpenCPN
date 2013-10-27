@@ -34,7 +34,6 @@
 #include <vector>
 
 #include "dychart.h"
-#include <OCPN_Sound.h>
 
 #include <ais/AIS_Bitstring.h>
 #include <ais/AISTargetListDialog.h>
@@ -48,8 +47,7 @@
 #define ID_JUMPTO             10004
 
 // AISTargetListCtrl Columns
-enum
-{
+enum {
 	tlNAME = 0,
 	tlCALL,
 	tlMMSI,
@@ -64,8 +62,7 @@ enum
 	tlTCPA
 };
 
-enum AIS_Error
-{
+enum AIS_Error {
 	AIS_NoError = 0,
 	AIS_Partial,
 	AIS_NMEAVDX_TOO_LONG,
@@ -78,8 +75,7 @@ enum AIS_Error
 };
 
 // Describe NavStatus variable
-enum ais_nav_status
-{
+enum ais_nav_status {
 	UNDERWAY_USING_ENGINE = 0,
 	AT_ANCHOR,
 	NOT_UNDER_COMMAND,
@@ -102,49 +98,44 @@ enum ais_nav_status
 	ATON_REAL,
 	ATON_REAL_ONPOSITION,
 	ATON_REAL_OFFPOSITION
-
 };
 
 // Describe Transponder Class
-enum ais_transponder_class
-{
+enum ais_transponder_class {
 	AIS_CLASS_A = 0,
 	AIS_CLASS_B,
-	AIS_ATON,    // Aid to Navigation   pjotrc 2010/02/01
-	AIS_BASE,     // Base station
+	AIS_ATON, // Aid to Navigation   pjotrc 2010/02/01
+	AIS_BASE, // Base station
 	AIS_GPSG_BUDDY, // GpsGate Buddy object
-	AIS_DSC,	// DSC target
-	AIS_SART,   // SART
-	AIS_ARPA,    // ARPA radar target
-	AIS_APRS    // APRS position report
+	AIS_DSC, // DSC target
+	AIS_SART, // SART
+	AIS_ARPA, // ARPA radar target
+	AIS_APRS // APRS position report
 };
 
 // Describe AIS Alarm state
-enum ais_alarm_type
-{
+enum ais_alarm_type {
 	AIS_NO_ALARM = 0,
 	AIS_ALARM_SET,
 };
 
 class AISTargetTrackPoint
 {
-	public:
-		double m_lat;
-		double m_lon;
-		time_t m_time;
+public:
+	double m_lat;
+	double m_lon;
+	time_t m_time;
 };
-
 
 WX_DECLARE_LIST(AISTargetTrackPoint, AISTargetTrackList);
 
 // IMO Circ. 289 Area Notices, based on libais
-const size_t AIS8_001_22_NUM_NAMES=128;
-const size_t AIS8_001_22_SUBAREA_SIZE=87;
+const size_t AIS8_001_22_NUM_NAMES = 128;
+const size_t AIS8_001_22_SUBAREA_SIZE = 87;
 
 extern wxString ais8_001_22_notice_names[];
 
-enum Ais8_001_22_AreaShapeEnum
-{
+enum Ais8_001_22_AreaShapeEnum {
 	AIS8_001_22_SHAPE_ERROR = -1,
 	AIS8_001_22_SHAPE_CIRCLE = 0, // OR Point
 	AIS8_001_22_SHAPE_RECT = 1,
@@ -178,8 +169,8 @@ struct Ais8_001_22
 	int link_id; // 10 bit id to match up text blocks
 	int notice_type; // area_type / Notice Description
 	int month; // These are in UTC
-	int day;   // UTC!
-	int hour;  // UTC!
+	int day; // UTC!
+	int hour; // UTC!
 	int minute;
 	int duration_minutes; // Time from the start until the notice expires
 	wxDateTime start_time;
@@ -192,7 +183,7 @@ WX_DECLARE_HASH_MAP(int, Ais8_001_22, wxIntegerHash, wxIntegerEqual, AIS_Area_No
 WX_DEFINE_SORTED_ARRAY(AIS_Target_Data *, ArrayOfAISTarget);
 WX_DECLARE_HASH_MAP(int, AIS_Target_Data*, wxIntegerHash, wxIntegerEqual, AIS_Target_Hash);
 
-wxString trimAISField( char *data );
+wxString trimAISField(char* data);
 wxString ais_get_status(int index);
 wxString ais_get_type(int index);
 wxString ais_get_short_type(int index);

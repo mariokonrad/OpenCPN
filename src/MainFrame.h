@@ -39,11 +39,13 @@
 #include "nmea0183.h"
 #include <ChartDirInfo.h>
 #include <NMEA_Msg_Container.h>
+#include <ColorScheme.h>
+
 #include <chart/ChartType.h>
 #include <chart/ChartFamily.h>
 #include <chart/ChartDummy.h>
-#include <ColorScheme.h>
-#include <OCPN_Sound.h>
+
+#include <sound/OCPN_Sound.h>
 
 class OCPN_NMEAEvent;
 class ChartCanvas;
@@ -312,7 +314,7 @@ class MainFrame : public wxFrame
 
 		int timer_tick;
 
-		OCPN_Sound bells_sound[8]; // FIXME: std container
+		sound::OCPN_Sound bells_sound[8]; // FIXME: std container
 };
 
 #endif

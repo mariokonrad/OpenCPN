@@ -25,6 +25,9 @@
 
 #ifdef OCPN_USE_PORTAUDIO
 
+namespace sound
+{
+
 OCPNSoundData::OCPNSoundData()
 	: m_dataWithHeader(NULL)
 {}
@@ -32,5 +35,5 @@ OCPNSoundData::OCPNSoundData()
 OCPNSoundData::~OCPNSoundData()
 {}
 
+}
 #endif
-

@@ -45,20 +45,19 @@
 #endif
 
 #include "OptionDialog.h"
-#include "dychart.h"
-#include "MainFrame.h"
-#include "StyleManager.h"
-#include "Style.h"
-#include "MessageBox.h"
-#include "DataStream.h"
-#include "Multiplexer.h"
-#include "FontMgr.h"
-#include "OCPN_Sound.h"
-#include "NMEALogWindow.h"
-#include "SentenceListDlg.h"
-#include "ChartGroupsUI.h"
-#include "OptionIDs.h"
-#include "LanguageList.h"
+#include <dychart.h>
+#include <MainFrame.h>
+#include <StyleManager.h>
+#include <Style.h>
+#include <MessageBox.h>
+#include <DataStream.h>
+#include <Multiplexer.h>
+#include <FontMgr.h>
+#include <NMEALogWindow.h>
+#include <SentenceListDlg.h>
+#include <ChartGroupsUI.h>
+#include <OptionIDs.h>
+#include <LanguageList.h>
 
 #include <Config.h>
 #include <SerialPorts.h>
@@ -66,6 +65,8 @@
 #include <DimeControl.h>
 
 #include <chart/ChartDB.h>
+
+#include <sound/OCPN_Sound.h>
 
 #include <plugin/PluginListPanel.h>
 
@@ -176,7 +177,7 @@ extern wxString g_GPS_Ident;
 extern bool g_bGarminHostUpload;
 
 extern wxLocale *plocale_def_lang;
-extern OCPN_Sound g_anchorwatch_sound;
+extern sound::OCPN_Sound g_anchorwatch_sound;
 extern bool g_bMagneticAPB;
 
 
@@ -3078,18 +3079,14 @@ void options::OnPageChange( wxListbookEvent& event )
 	}
 }
 
-void options::OnButtonSelectSound(wxCommandEvent &)
+void options::OnButtonSelectSound(wxCommandEvent&)
 {
 	wxString sound_dir = global::OCPN::get().sys().data().sound_data_location;
 	sound_dir.Append(_T("sounds"));
 
-	wxFileDialog * openDialog = new wxFileDialog( // FIXME: memory leak
-		this,
-		_("Select Sound File"),
-		sound_dir,
-		wxT(""),
-		_("WAV files (*.wav)|*.wav|All files (*.*)|*.*"),
-		wxFD_OPEN);
+	wxFileDialog* openDialog = new wxFileDialog( // FIXME: memory leak
+		this, _("Select Sound File"), sound_dir, wxT(""),
+		_("WAV files (*.wav)|*.wav|All files (*.*)|*.*"), wxFD_OPEN);
 
 	if (openDialog->ShowModal() != wxID_OK)
 		return;
@@ -3105,134 +3102,126 @@ void options::OnButtonSelectSound(wxCommandEvent &)
 	g_anchorwatch_sound.UnLoad();
 }
 
-void options::OnButtonTestSound(wxCommandEvent &)
+void options::OnButtonTestSound(wxCommandEvent&)
 {
+	sound::OCPN_Sound AIS_Sound;
+	AIS_Sound.Create(g_sAIS_Alert_Sound_File);
 
-	OCPN_Sound AIS_Sound;
-	AIS_Sound.Create( g_sAIS_Alert_Sound_File );
-
-	if( AIS_Sound.IsOk() ) {
+	if (AIS_Sound.IsOk()) {
 
 #ifndef __WXMSW__
 		AIS_Sound.Play();
 		int t = 0;
-		while( AIS_Sound.IsPlaying() && (t < 10) ) {
+		while (AIS_Sound.IsPlaying() && (t < 10)) {
 			wxSleep(1);
 			t++;
 		}
-		if( AIS_Sound.IsPlaying() )
+		if (AIS_Sound.IsPlaying())
 			AIS_Sound.Stop();
 
 #else
 		AIS_Sound.Play(wxSOUND_SYNC);
 #endif
 	}
-
 }
 
-wxString GetOCPNKnownLanguage( wxString lang_canonical, wxString *lang_dir )
+wxString GetOCPNKnownLanguage(wxString lang_canonical, wxString* lang_dir)
 {
 	wxString return_string;
 	wxString dir_suffix;
 
-	if( lang_canonical == _T("en_US") ) {
+	if (lang_canonical == _T("en_US")) {
 		dir_suffix = _T("en");
-		return_string = wxString( "English (U.S.)", wxConvUTF8 );
-	} else if( lang_canonical == _T("cs_CZ") ) {
+		return_string = wxString("English (U.S.)", wxConvUTF8);
+	} else if (lang_canonical == _T("cs_CZ")) {
 		dir_suffix = _T("cs");
-		return_string = wxString( "Čeština", wxConvUTF8 );
-	} else if( lang_canonical == _T("da_DK") ) {
+		return_string = wxString("Čeština", wxConvUTF8);
+	} else if (lang_canonical == _T("da_DK")) {
 		dir_suffix = _T("da");
-		return_string = wxString( "Dansk", wxConvUTF8 );
-	} else if( lang_canonical == _T("de_DE") ) {
+		return_string = wxString("Dansk", wxConvUTF8);
+	} else if (lang_canonical == _T("de_DE")) {
 		dir_suffix = _T("de");
-		return_string = wxString( "Deutsch", wxConvUTF8 );
-	} else if( lang_canonical == _T("et_EE") ) {
+		return_string = wxString("Deutsch", wxConvUTF8);
+	} else if (lang_canonical == _T("et_EE")) {
 		dir_suffix = _T("et");
-		return_string = wxString( "Eesti", wxConvUTF8 );
-	} else if( lang_canonical == _T("es_ES") ) {
+		return_string = wxString("Eesti", wxConvUTF8);
+	} else if (lang_canonical == _T("es_ES")) {
 		dir_suffix = _T("es");
-		return_string = wxString( "Español", wxConvUTF8 );
-	} else if( lang_canonical == _T("fr_FR") ) {
+		return_string = wxString("Español", wxConvUTF8);
+	} else if (lang_canonical == _T("fr_FR")) {
 		dir_suffix = _T("fr");
-		return_string = wxString( "Français", wxConvUTF8 );
-	} else if( lang_canonical == _T("it_IT") ) {
+		return_string = wxString("Français", wxConvUTF8);
+	} else if (lang_canonical == _T("it_IT")) {
 		dir_suffix = _T("it");
-		return_string = wxString( "Italiano", wxConvUTF8 );
-	} else if( lang_canonical == _T("nl_NL") ) {
+		return_string = wxString("Italiano", wxConvUTF8);
+	} else if (lang_canonical == _T("nl_NL")) {
 		dir_suffix = _T("nl");
-		return_string = wxString( "Nederlands", wxConvUTF8 );
-	} else if( lang_canonical == _T("pl_PL") ) {
+		return_string = wxString("Nederlands", wxConvUTF8);
+	} else if (lang_canonical == _T("pl_PL")) {
 		dir_suffix = _T("pl");
-		return_string = wxString( "Polski", wxConvUTF8 );
-	} else if( lang_canonical == _T("pt_PT") ) {
+		return_string = wxString("Polski", wxConvUTF8);
+	} else if (lang_canonical == _T("pt_PT")) {
 		dir_suffix = _T("pt_PT");
-		return_string = wxString( "Português", wxConvUTF8 );
-	} else if( lang_canonical == _T("pt_BR") ) {
+		return_string = wxString("Português", wxConvUTF8);
+	} else if (lang_canonical == _T("pt_BR")) {
 		dir_suffix = _T("pt_BR");
-		return_string = wxString( "Português Brasileiro", wxConvUTF8 );
-	} else if( lang_canonical == _T("ru_RU") ) {
+		return_string = wxString("Português Brasileiro", wxConvUTF8);
+	} else if (lang_canonical == _T("ru_RU")) {
 		dir_suffix = _T("ru");
-		return_string = wxString( "Русский", wxConvUTF8 );
-	} else if( lang_canonical == _T("sv_SE") ) {
+		return_string = wxString("Русский", wxConvUTF8);
+	} else if (lang_canonical == _T("sv_SE")) {
 		dir_suffix = _T("sv");
-		return_string = wxString( "Svenska", wxConvUTF8 );
-	} else if( lang_canonical == _T("fi_FI") ) {
+		return_string = wxString("Svenska", wxConvUTF8);
+	} else if (lang_canonical == _T("fi_FI")) {
 		dir_suffix = _T("fi_FI");
-		return_string = wxString( "Suomi", wxConvUTF8 );
-	} else if( lang_canonical == _T("nb_NO") ) {
+		return_string = wxString("Suomi", wxConvUTF8);
+	} else if (lang_canonical == _T("nb_NO")) {
 		dir_suffix = _T("nb_NO");
-		return_string = wxString( "Norsk", wxConvUTF8 );
-	} else if( lang_canonical == _T("tr_TR") ) {
+		return_string = wxString("Norsk", wxConvUTF8);
+	} else if (lang_canonical == _T("tr_TR")) {
 		dir_suffix = _T("tr_TR");
-		return_string = wxString( "Türkçe", wxConvUTF8 );
-	} else if( lang_canonical == _T("el_GR") ) {
+		return_string = wxString("Türkçe", wxConvUTF8);
+	} else if (lang_canonical == _T("el_GR")) {
 		dir_suffix = _T("el_GR");
-		return_string = wxString( "Ελληνικά", wxConvUTF8 );
-	} else if( lang_canonical == _T("hu_HU") ) {
+		return_string = wxString("Ελληνικά", wxConvUTF8);
+	} else if (lang_canonical == _T("hu_HU")) {
 		dir_suffix = _T("hu_HU");
-		return_string = wxString( "Magyar", wxConvUTF8 );
-	} else if( lang_canonical == _T("zh_TW") ) {
+		return_string = wxString("Magyar", wxConvUTF8);
+	} else if (lang_canonical == _T("zh_TW")) {
 		dir_suffix = _T("zh_TW");
-		return_string = wxString( "正體字", wxConvUTF8 );
-	} else if( lang_canonical == _T("ca_ES") ) {
+		return_string = wxString("正體字", wxConvUTF8);
+	} else if (lang_canonical == _T("ca_ES")) {
 		dir_suffix = _T("ca_ES");
-		return_string = wxString( "Catalan", wxConvUTF8 );
-	} else if( lang_canonical == _T("gl_ES") ) {
+		return_string = wxString("Catalan", wxConvUTF8);
+	} else if (lang_canonical == _T("gl_ES")) {
 		dir_suffix = _T("gl_ES");
-		return_string = wxString( "Galician", wxConvUTF8 );
+		return_string = wxString("Galician", wxConvUTF8);
 	} else {
 		dir_suffix = lang_canonical;
-		const wxLanguageInfo *info = wxLocale::FindLanguageInfo( lang_canonical );
+		const wxLanguageInfo* info = wxLocale::FindLanguageInfo(lang_canonical);
 		return_string = info->Description;
 	}
 
-	if( NULL != lang_dir )
+	if (NULL != lang_dir)
 		*lang_dir = dir_suffix;
 
 	return return_string;
 }
 
-void options::OnInsertTideDataLocation(wxCommandEvent &)
+void options::OnInsertTideDataLocation(wxCommandEvent&)
 {
-	wxString sel_file;
-	int response = wxID_CANCEL;
-
-	global::System & sys = global::OCPN::get().sys();
+	global::System& sys = global::OCPN::get().sys();
 
 	wxFileDialog openDialog(
-		this,
-		_("Select Tide/Current Data"),
-		sys.data().tc_data_dir,
-		wxT(""),
+		this, _("Select Tide/Current Data"), sys.data().tc_data_dir, wxT(""),
 		wxT("Tide/Current Data files (*.IDX; *.TCD)|*.IDX;*.idx;*.TCD;*.tcd|All files (*.*)|*.*"),
 		wxFD_OPEN);
-	response = openDialog.ShowModal();
-	if( response == wxID_OK ) {
-		sel_file = openDialog.GetPath();
+	int response = openDialog.ShowModal();
+	if (response == wxID_OK) {
+		wxString sel_file = openDialog.GetPath();
 
 		if (g_bportable) {
-			wxFileName f( sel_file );
+			wxFileName f(sel_file);
 			f.MakeRelativeTo(sys.data().home_location);
 			tcDataSelected->Append(f.GetFullPath());
 		} else {
@@ -3252,56 +3241,56 @@ void options::OnInsertTideDataLocation(wxCommandEvent &)
 	}
 }
 
-void options::OnRemoveTideDataLocation(wxCommandEvent &)
+void options::OnRemoveTideDataLocation(wxCommandEvent&)
 {
 	wxArrayInt sels;
 	int nSel = tcDataSelected->GetSelections(sels);
 	wxArrayString a;
-	for( int i=0 ; i < nSel ; i++) {
-		a.Add( tcDataSelected->GetString(sels.Item( i )));
+	for (int i = 0; i < nSel; i++) {
+		a.Add(tcDataSelected->GetString(sels.Item(i)));
 	}
 
-	for (unsigned int i=0 ; i < a.Count() ; i++) {
+	for (unsigned int i = 0; i < a.Count(); i++) {
 		int b = tcDataSelected->FindString(a.Item(i));
-		tcDataSelected->Delete( b );
+		tcDataSelected->Delete(b);
 	}
 }
 
-void options::OnValChange( wxCommandEvent& event )
+void options::OnValChange(wxCommandEvent& event)
 {
 	event.Skip();
 }
 
-void options::OnConnValChange( wxCommandEvent& event )
+void options::OnConnValChange(wxCommandEvent& event)
 {
 	connectionsaved = false;
 	event.Skip();
 }
 
-void options::OnTypeSerialSelected( wxCommandEvent& event )
+void options::OnTypeSerialSelected(wxCommandEvent& event)
 {
 	OnConnValChange(event);
 	SetNMEAFormToSerial();
 }
 
-void options::OnTypeNetSelected( wxCommandEvent& event )
+void options::OnTypeNetSelected(wxCommandEvent& event)
 {
 	OnConnValChange(event);
 	SetNMEAFormToNet();
 }
 
-void options::OnUploadFormatChange( wxCommandEvent& event )
+void options::OnUploadFormatChange(wxCommandEvent& event)
 {
-	if ( event.GetEventObject() == m_cbGarminUploadHost && event.IsChecked() )
+	if (event.GetEventObject() == m_cbGarminUploadHost && event.IsChecked())
 		m_cbFurunoGP3X->SetValue(false);
-	else if ( event.GetEventObject() == m_cbFurunoGP3X && event.IsChecked() )
+	else if (event.GetEventObject() == m_cbFurunoGP3X && event.IsChecked())
 		m_cbGarminUploadHost->SetValue(false);
 	event.Skip();
 }
 
 void options::ShowNMEACommon(bool visible)
 {
-	if ( visible ) {
+	if (visible) {
 		m_rbTypeSerial->Show();
 		m_rbTypeNet->Show();
 		m_rbIAccept->Show();
@@ -3331,9 +3320,9 @@ void options::ShowNMEACommon(bool visible)
 		m_choicePriority->Hide();
 		m_stPriority->Hide();
 		m_cbCheckCRC->Hide();
-		sbSizerOutFilter->SetDimension(0,0,0,0);
-		sbSizerInFilter->SetDimension(0,0,0,0);
-		sbSizerConnectionProps->SetDimension(0,0,0,0);
+		sbSizerOutFilter->SetDimension(0, 0, 0, 0);
+		sbSizerInFilter->SetDimension(0, 0, 0, 0);
+		sbSizerConnectionProps->SetDimension(0, 0, 0, 0);
 	}
 
 	m_bNMEAParams_shown = visible;
@@ -3341,7 +3330,7 @@ void options::ShowNMEACommon(bool visible)
 
 void options::ShowNMEANet(bool visible)
 {
-	if ( visible ) {
+	if (visible) {
 		m_stNetAddr->Show();
 		m_tNetAddress->Show();
 		m_stNetPort->Show();
@@ -3364,7 +3353,7 @@ void options::ShowNMEANet(bool visible)
 
 void options::ShowNMEASerial(bool visible)
 {
-	if ( visible ) {
+	if (visible) {
 		m_stSerBaudrate->Show();
 		m_choiceBaudRate->Show();
 		m_stSerPort->Show();
@@ -3372,7 +3361,7 @@ void options::ShowNMEASerial(bool visible)
 		m_stSerProtocol->Show();
 		m_choiceSerialProtocol->Show();
 		m_cbGarminHost->Show();
-		gSizerNetProps->SetDimension(0,0,0,0);
+		gSizerNetProps->SetDimension(0, 0, 0, 0);
 	} else {
 		m_stSerBaudrate->Hide();
 		m_choiceBaudRate->Hide();
@@ -3381,15 +3370,15 @@ void options::ShowNMEASerial(bool visible)
 		m_stSerProtocol->Hide();
 		m_choiceSerialProtocol->Hide();
 		m_cbGarminHost->Hide();
-		gSizerSerProps->SetDimension(0,0,0,0);
+		gSizerSerProps->SetDimension(0, 0, 0, 0);
 	}
 }
 
 void options::SetNMEAFormToSerial()
 {
-	ShowNMEACommon( true );
-	ShowNMEANet( false );
-	ShowNMEASerial( true );
+	ShowNMEACommon(true);
+	ShowNMEANet(false);
+	ShowNMEASerial(true);
 	m_pNMEAForm->FitInside();
 	m_pNMEAForm->Layout();
 	Fit();
@@ -3399,9 +3388,9 @@ void options::SetNMEAFormToSerial()
 
 void options::SetNMEAFormToNet()
 {
-	ShowNMEACommon( true );
-	ShowNMEANet( true );
-	ShowNMEASerial( false );
+	ShowNMEACommon(true);
+	ShowNMEANet(true);
+	ShowNMEASerial(false);
 	m_pNMEAForm->FitInside();
 	m_pNMEAForm->Layout();
 	Fit();
@@ -3411,9 +3400,9 @@ void options::SetNMEAFormToNet()
 
 void options::ClearNMEAForm()
 {
-	ShowNMEACommon( false );
-	ShowNMEANet( false );
-	ShowNMEASerial( false );
+	ShowNMEACommon(false);
+	ShowNMEANet(false);
+	ShowNMEASerial(false);
 	m_pNMEAForm->FitInside();
 	m_pNMEAForm->Layout();
 	Fit();
@@ -3456,35 +3445,37 @@ void options::SetDSFormRWStates()
 	}
 }
 
-void options::SetConnectionParams(ConnectionParams *cp)
+void options::SetConnectionParams(ConnectionParams* cp)
 {
 	m_comboPort->Select(m_comboPort->FindString(cp->Port));
 	m_comboPort->SetValue(cp->Port);
 	m_cbCheckCRC->SetValue(cp->ChecksumCheck);
 	m_cbGarminHost->SetValue(cp->Garmin);
 	m_cbOutput->SetValue(cp->Output);
-	if(cp->InputSentenceListType == ConnectionParams::WHITELIST)
+	if (cp->InputSentenceListType == ConnectionParams::WHITELIST)
 		m_rbIAccept->SetValue(true);
 	else
 		m_rbIIgnore->SetValue(true);
-	if(cp->OutputSentenceListType == ConnectionParams::WHITELIST)
+	if (cp->OutputSentenceListType == ConnectionParams::WHITELIST)
 		m_rbOAccept->SetValue(true);
 	else
 		m_rbOIgnore->SetValue(true);
 	m_tcInputStc->SetValue(StringArrayToString(cp->InputSentenceList));
 	m_tcOutputStc->SetValue(StringArrayToString(cp->OutputSentenceList));
-	m_choiceBaudRate->Select(m_choiceBaudRate->FindString(wxString::Format(_T("%d"),cp->Baudrate)));
-	m_choiceSerialProtocol->Select(cp->Protocol); //TODO
-	m_choicePriority->Select(m_choicePriority->FindString(wxString::Format(_T("%d"),cp->Priority)));
+	m_choiceBaudRate->Select(
+		m_choiceBaudRate->FindString(wxString::Format(_T("%d"), cp->Baudrate)));
+	m_choiceSerialProtocol->Select(cp->Protocol); // TODO
+	m_choicePriority->Select(
+		m_choicePriority->FindString(wxString::Format(_T("%d"), cp->Priority)));
 
 	m_tNetAddress->SetValue(cp->NetworkAddress);
 
-	if( cp->NetworkPort == 0)
+	if (cp->NetworkPort == 0)
 		m_tNetPort->SetValue(_T(""));
 	else
 		m_tNetPort->SetValue(wxString::Format(wxT("%i"), cp->NetworkPort));
 
-	if(cp->NetProtocol == ConnectionParams::TCP)
+	if (cp->NetProtocol == ConnectionParams::TCP)
 		m_rbNetProtoTCP->SetValue(true);
 	else if (cp->NetProtocol == ConnectionParams::UDP)
 		m_rbNetProtoUDP->SetValue(true);
@@ -3492,10 +3483,10 @@ void options::SetConnectionParams(ConnectionParams *cp)
 		m_rbNetProtoGPSD->SetValue(true);
 
 	if (cp->Type == ConnectionParams::SERIAL) {
-		m_rbTypeSerial->SetValue( true );
+		m_rbTypeSerial->SetValue(true);
 		SetNMEAFormToSerial();
 	} else {
-		m_rbTypeNet->SetValue( true );
+		m_rbTypeNet->SetValue(true);
 		SetNMEAFormToNet();
 	}
 
@@ -3516,24 +3507,24 @@ void options::SetDefaultConnectionParams()
 	m_choiceBaudRate->Select(m_choiceBaudRate->FindString(_T("4800")));
 	m_choicePriority->Select(m_choicePriority->FindString(_T("1")));
 
-	m_rbTypeSerial->SetValue( true );
+	m_rbTypeSerial->SetValue(true);
 	SetNMEAFormToSerial();
 	m_connection_enabled = true;
 }
 
-void options::OnAddDatasourceClick(wxCommandEvent &)
+void options::OnAddDatasourceClick(wxCommandEvent&)
 {
 	connectionsaved = false;
 	SetDefaultConnectionParams();
 
 	long itemIndex = -1;
 	for (;;) {
-		itemIndex = m_lcSources->GetNextItem( itemIndex, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-		if ( itemIndex == -1 )
+		itemIndex = m_lcSources->GetNextItem(itemIndex, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+		if (itemIndex == -1)
 			break;
-		m_lcSources->SetItemState( itemIndex, 0, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED );
+		m_lcSources->SetItemState(itemIndex, 0, wxLIST_STATE_SELECTED | wxLIST_STATE_FOCUSED);
 	}
-	m_buttonRemove->Enable( false );
+	m_buttonRemove->Enable(false);
 }
 
 void options::FillSourceList()

@@ -135,10 +135,6 @@
 #endif
 #endif
 
-#ifdef OCPN_USE_PORTAUDIO
-	#include "portaudio.h"
-#endif
-
 #ifdef __WXMSW__
 void RedirectIOToConsole();
 #endif
@@ -447,7 +443,6 @@ bool g_b_useStencil;
 
 bool g_bShowMag;
 double g_UserVar;
-int portaudio_initialized;
 int g_sticky_chart;
 double g_GLMinLineWidth;
 

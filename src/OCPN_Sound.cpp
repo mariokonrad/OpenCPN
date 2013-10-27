@@ -37,7 +37,7 @@ static int sindex; // FIXME: static data crap
 static int smax_samples; // FIXME: static data crap
 static bool splaying; // FIXME: static data crap
 
-extern bool portaudio_initialized;
+bool portaudio_initialized = false;
 
 /// This routine will be called by the PortAudio engine when audio is needed.
 /// It may called at interrupt level on some machines so don't do anything

@@ -141,7 +141,7 @@ extern bool AnchorAlertOn2;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern wxPrintData* g_printData;
 extern wxPageSetupData* g_pageSetupData;
-extern int portaudio_initialized;
+extern bool portaudio_initialized;
 extern int g_sticky_chart;
 extern double g_GLMinLineWidth;
 extern bool bDBUpdateInProgress;

@@ -515,15 +515,57 @@ SET(HDR_PLUGIN
 	src/plugin/ocpn_plugin.h
 	)
 
-SET(HDRS
-	${HDR_AIS}
-	${HDR_GPX}
-	${HDR_PUGIXML}
-	${HDR_WXJSON}
-	${HDR_GLOBAL}
-	${HDR_TIDE}
-	${HDR_PLUGIN}
+SET(SRC_SOUND
+	src/OCPNSoundData.cpp
+	src/OCPN_Sound.cpp
+	)
 
+SET(HDR_SOUND
+	src/OCPNSoundData.h
+	src/OCPN_Sound.h
+	)
+
+SET(SRC_GEO
+	src/geo/BoundingBox.cpp
+	src/geo/LatLonBoundingBox.cpp
+	src/geo/lmfit.cpp
+	src/geo/Polygon.cpp
+	src/geo/LineClip.cpp
+	src/geo/GeoRef.cpp
+	)
+
+SET(HDR_GEO
+	src/geo/BoundingBox.h
+	src/geo/LatLonBoundingBox.h
+	src/geo/Polygon.h
+	src/geo/LineClip.h
+	src/geo/lmfit.h
+	src/geo/GeoRef.h
+	)
+
+SET(SRC_CHART
+	src/chart/gshhs/Projection.cpp
+	src/chart/gshhs/GshhsPolygon.cpp
+	src/chart/gshhs/GSHHSChart.cpp
+	src/chart/gshhs/GshhsPolyCell.cpp
+	src/chart/gshhs/GshhsPolyReader.cpp
+	src/chart/gshhs/GshhsReader.cpp
+	src/chart/ChartDummy.cpp
+	src/chart/ChartDB.cpp
+	src/chart/ChartDatabase.cpp
+	src/chart/ChartTableHeader.cpp
+	src/chart/ChartTableEntry.cpp
+	src/chart/ChartClassDescriptor.cpp
+	src/chart/ChartGEO.cpp
+	src/chart/ChartKAP.cpp
+	src/chart/ChartStack.cpp
+	src/chart/ChartBase.cpp
+	src/chart/ChartBaseBSB.cpp
+	src/chart/ChartSymbols.cpp
+	src/chart/S57RegistrarMgr.cpp
+	)
+
+SET(HDR_CHART
 	src/chart/gshhs/QLineF.h
 	src/chart/gshhs/Projection.h
 	src/chart/gshhs/PolygonFileHeader.h
@@ -559,13 +601,19 @@ SET(HDRS
 	src/chart/S57ClassRegistrar.h
 	src/chart/S57RegistrarMgr.h
 	src/chart/S57Light.h
+	)
 
-	src/geo/BoundingBox.h
-	src/geo/LatLonBoundingBox.h
-	src/geo/Polygon.h
-	src/geo/LineClip.h
-	src/geo/lmfit.h
-	src/geo/GeoRef.h
+SET(HDRS
+	${HDR_AIS}
+	${HDR_GPX}
+	${HDR_PUGIXML}
+	${HDR_WXJSON}
+	${HDR_GLOBAL}
+	${HDR_TIDE}
+	${HDR_PLUGIN}
+	${HDR_SOUND}
+	${HDR_GEO}
+	${HDR_CHART}
 
 	src/libtcd/tcd.h
 
@@ -630,8 +678,6 @@ SET(HDRS
 	src/FontMgr.h
 	src/FontDesc.h
 	src/Vector2D.h
-	src/OCPNSoundData.h
-	src/OCPN_Sound.h
 	src/NMEALogWindow.h
 	src/WindowDestroyListener.h
 	src/TTYWindow.h
@@ -704,33 +750,9 @@ SET(SRCS
 	${SRC_GLOBAL}
 	${SRC_TIDE}
 	${SRC_PLUGIN}
-
-	src/chart/gshhs/Projection.cpp
-	src/chart/gshhs/GshhsPolygon.cpp
-	src/chart/gshhs/GSHHSChart.cpp
-	src/chart/gshhs/GshhsPolyCell.cpp
-	src/chart/gshhs/GshhsPolyReader.cpp
-	src/chart/gshhs/GshhsReader.cpp
-	src/chart/ChartDummy.cpp
-	src/chart/ChartDB.cpp
-	src/chart/ChartDatabase.cpp
-	src/chart/ChartTableHeader.cpp
-	src/chart/ChartTableEntry.cpp
-	src/chart/ChartClassDescriptor.cpp
-	src/chart/ChartGEO.cpp
-	src/chart/ChartKAP.cpp
-	src/chart/ChartStack.cpp
-	src/chart/ChartBase.cpp
-	src/chart/ChartBaseBSB.cpp
-	src/chart/ChartSymbols.cpp
-	src/chart/S57RegistrarMgr.cpp
-
-	src/geo/BoundingBox.cpp
-	src/geo/LatLonBoundingBox.cpp
-	src/geo/lmfit.cpp
-	src/geo/Polygon.cpp
-	src/geo/LineClip.cpp
-	src/geo/GeoRef.cpp
+	${SRC_SOUND}
+	${SRC_GEO}
+	${SRC_CHART}
 
 	src/libtcd/tcd.cpp
 
@@ -777,8 +799,6 @@ SET(SRCS
 	src/Select.cpp
 	src/FontMgr.cpp
 	src/FontDesc.cpp
-	src/OCPNSoundData.cpp
-	src/OCPN_Sound.cpp
 	src/NMEALogWindow.cpp
 	src/TTYWindow.cpp
 	src/TTYScroll.cpp
@@ -859,24 +879,24 @@ if(OPENGL_GLU_FOUND)
 endif(OPENGL_GLU_FOUND)
 
 
-IF(TINYXML_FOUND)
+if(TINYXML_FOUND)
 	message(STATUS "Building with tinyxml includes")
-	INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
-	ADD_DEFINITIONS(-DTIXML_USE_STL)
-ELSE(TINYXML_FOUND)
+	include_directories(${TINYXML_INCLUDE_DIR})
+	add_definitions(-DTIXML_USE_STL)
+else(TINYXML_FOUND)
 	message (STATUS "tinyxml library not found")
-	SET(HDRS ${HDRW} ${HDR_TINYXML})
-	SET(SRCS ${SRCS} ${SRC_TINYXML})
-	ADD_DEFINITIONS(-DTIXML_USE_STL)
-ENDIF(TINYXML_FOUND)
+	set(HDRS ${HDRW} ${HDR_TINYXML})
+	set(SRCS ${SRCS} ${SRC_TINYXML})
+	add_definitions(-DTIXML_USE_STL)
+endif(TINYXML_FOUND)
 
 
-OPTION (USE_S57 "Enable S57 ENC support" ON)
-IF (USE_S57)
+option (USE_S57 "Enable S57 ENC support" ON)
+if (USE_S57)
 	message (STATUS "S57 ENC support: enabled")
-	ADD_DEFINITIONS(-DUSE_S57)
+	add_definitions(-DUSE_S57)
 
-	SET(SRC_S57ENC
+	set(SRC_S57ENC
 		src/geo/ExtendedGeometry.h
 		src/geo/TriPrim.h
 		src/geo/PolyTriGroup.h
@@ -990,19 +1010,19 @@ IF (USE_S57)
 		src/mygdal/gdal_misc.cpp
 		)
 
-	ADD_LIBRARY(S57ENC ${SRC_S57ENC})
-	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal)
-	SET(EXTRA_LIBS ${EXTRA_LIBS} S57ENC)
-ELSE (USE_S57)
+	add_library(S57ENC ${SRC_S57ENC})
+	include_directories(${CMAKE_SOURCE_DIR}/src/mygdal)
+	set(EXTRA_LIBS ${EXTRA_LIBS} S57ENC)
+else (USE_S57)
 	message (STATUS "S57 ENC support: disabled")
-ENDIF (USE_S57)
+endif (USE_S57)
 
-OPTION (USE_GARMINHOST "Enable Garmin Host Mode support" ON)
-IF (USE_GARMINHOST)
+option (USE_GARMINHOST "Enable Garmin Host Mode support" ON)
+if (USE_GARMINHOST)
 	message (STATUS "Garmin Host Mode support: enabled")
-	ADD_DEFINITIONS(-DUSE_GARMINHOST)
+	add_definitions(-DUSE_GARMINHOST)
 
-	SET(SRC_GARMINHOST
+	set(SRC_GARMINHOST
 		src/garmin/jeeps/gpsapp.c
 		src/garmin/jeeps/gpscom.c
 		src/garmin/jeeps/gpsmath.c
@@ -1045,32 +1065,32 @@ IF (USE_GARMINHOST)
 		src/garmin/jeeps/gpsutil.h
 		)
 
-	IF(WIN32)
+	if(WIN32)
 		SET(SRC_GARMINHOST ${SRC_GARMINHOST} src/garmin/jeeps/gpsusbwin.c)
-	ENDIF(WIN32)
+	endif(WIN32)
 
-	ADD_LIBRARY(GARMINHOST ${SRC_GARMINHOST})
-	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/garmin/jeeps)
-	SET(EXTRA_LIBS ${EXTRA_LIBS} GARMINHOST)
+	add_library(GARMINHOST ${SRC_GARMINHOST})
+	include_directories(${CMAKE_SOURCE_DIR}/src/garmin/jeeps)
+	set(EXTRA_LIBS ${EXTRA_LIBS} GARMINHOST)
 
-	IF(WIN32)
-		ADD_DEFINITIONS(-D__WIN32__)
-	ENDIF(WIN32)
-ELSE (USE_GARMINHOST)
+	if(WIN32)
+		add_definitions(-D__WIN32__)
+	endif(WIN32)
+else (USE_GARMINHOST)
 	message (STATUS "Garmin Host Mode support: disabled")
-ENDIF (USE_GARMINHOST)
+endif (USE_GARMINHOST)
 
 
 # If we build for windows systems, we also include the resource file
 # containing the manifest, icon and other resources
-IF(WIN32)
-	SET(SRCS ${SRCS}
+if(WIN32)
+	set(SRCS ${SRCS}
 		${CMAKE_CURRENT_BINARY_DIR}/src/opencpn.rc
 		)
-ENDIF(WIN32)
+endif(WIN32)
 
 # Various data files
-SET(gshhs
+set(gshhs
 	data/gshhs/poly-c-1.dat
 	data/gshhs/poly-i-1.dat
 	data/gshhs/poly-l-1.dat
@@ -1082,15 +1102,15 @@ SET(gshhs
 	data/gshhs/wdb_rivers_l.b
 	)
 
-SET(uiData
+set(uiData
 	src/bitmaps/styles.xml
 	src/bitmaps/toolicons_journeyman.png
 	src/bitmaps/toolicons_journeyman_flat.png
 	src/bitmaps/toolicons_traditional.png
 	)
 
-IF (USE_S57)
-	SET(s57data
+if (USE_S57)
+	set(s57data
 		data/s57data/attdecode.csv
 		data/s57data/S52RAZDS.RLE
 		data/s57data/s57attributes.csv
@@ -1101,16 +1121,16 @@ IF (USE_S57)
 		data/s57data/rastersymbols-dusk.png
 		data/s57data/chartsymbols.xml
 		)
-ENDIF (USE_S57)
+endif (USE_S57)
 
-SET(tcData
+set(tcData
 	data/tcdata/HARMONIC
 	data/tcdata/HARMONIC.IDX
 	data/tcdata/README.harmonics
 	)
 
-IF(APPLE)
-	SET(SRCS ${SRCS}
+if(APPLE)
+	set(SRCS ${SRCS}
 		src/macutils.h
 		src/macutils.c
 		)
@@ -1118,42 +1138,42 @@ ENDIF(APPLE)
 
 #  Mac has trouble finding libgobject-2.0.dylib
 #  We look for it explicitely
-IF(xAPPLE)
+if(xAPPLE)
 	# Assume pkg-config is available.
-	INCLUDE( FindPkgConfig )
+	include( FindPkgConfig )
 	PKG_SEARCH_MODULE( GOBJECT REQUIRED gobject-2.0 )
-	SET(EXTRA_LIBS ${EXTRA_LIBS} ${GOBJECT_LDFLAGS})
-	SET(EXTRA_LIBS ${EXTRA_LIBS} "iconv")
-ENDIF(xAPPLE)
+	set(EXTRA_LIBS ${EXTRA_LIBS} ${GOBJECT_LDFLAGS})
+	set(EXTRA_LIBS ${EXTRA_LIBS} "iconv")
+endif(xAPPLE)
 
-IF(WIN32)
-	IF(MSVC)
-		SET(CMAKE_C_FLAGS_DEBUG               "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1" )
-		SET(CMAKE_C_FLAGS_MINSIZEREL          "/MD  /O1  /Ob1 /D NDEBUG")
-		SET(CMAKE_C_FLAGS_RELEASE             "/MD  /O2  /Ob2 /D NDEBUG")
-		SET(CMAKE_C_FLAGS_RELWITHDEBINFO      "/MD  /O2  /Ob1 /D NDEBUG /Zi")
-		SET(CMAKE_CXX_FLAGS_DEBUG             "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1")
-		SET(CMAKE_CXX_FLAGS_MINSIZEREL        "/MD  /O1  /Ob1 /D NDEBUG")
-		SET(CMAKE_CXX_FLAGS_RELEASE           "/MD  /O2  /Ob2 /D NDEBUG")
-		SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/MD  /O2  /Ob1 /D NDEBUG" /Zi )
-	ENDIF(MSVC)
-	ADD_EXECUTABLE(${PACKAGE_NAME} WIN32 ${HDRS} ${SRCS})
-ENDIF(WIN32)
+if(WIN32)
+	if(MSVC)
+		set(CMAKE_C_FLAGS_DEBUG               "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1" )
+		set(CMAKE_C_FLAGS_MINSIZEREL          "/MD  /O1  /Ob1 /D NDEBUG")
+		set(CMAKE_C_FLAGS_RELEASE             "/MD  /O2  /Ob2 /D NDEBUG")
+		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "/MD  /O2  /Ob1 /D NDEBUG /Zi")
+		set(CMAKE_CXX_FLAGS_DEBUG             "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1")
+		set(CMAKE_CXX_FLAGS_MINSIZEREL        "/MD  /O1  /Ob1 /D NDEBUG")
+		set(CMAKE_CXX_FLAGS_RELEASE           "/MD  /O2  /Ob2 /D NDEBUG")
+		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/MD  /O2  /Ob1 /D NDEBUG" /Zi )
+	endif(MSVC)
+	add_executable(${PACKAGE_NAME} WIN32 ${HDRS} ${SRCS})
+endif(WIN32)
 
-IF(WIN32)
-	SET(SRCS ${SRCS}
+if(WIN32)
+	set(SRCS ${SRCS}
 		src/WinConsole.h
 		src/WinConsole.cpp
 		)
-ENDIF(WIN32)
+endif(WIN32)
 
 
-IF(APPLE)
-	SET_SOURCE_FILES_PROPERTIES(${gshhs} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/gshhs )
-	SET_SOURCE_FILES_PROPERTIES(${uiData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/uidata  )
-	SET_SOURCE_FILES_PROPERTIES(${s57data} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/s57data  )
-	SET_SOURCE_FILES_PROPERTIES(${tcData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/tcdata  )
-	SET_SOURCE_FILES_PROPERTIES(data/license.txt PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport )
+if(APPLE)
+	set_source_files_properties(${gshhs} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/gshhs )
+	set_source_files_properties(${uiData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/uidata  )
+	set_source_files_properties(${s57data} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/s57data  )
+	set_source_files_properties(${tcData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/tcdata  )
+	set_source_files_properties(data/license.txt PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport )
 
 	FILE(GLOB SOUND_FILES ${CMAKE_SOURCE_DIR}/data/sounds/*)
 	FOREACH (_currentSoundFile ${SOUND_FILES})

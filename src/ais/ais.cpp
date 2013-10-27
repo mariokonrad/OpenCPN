@@ -21,7 +21,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "ais/ais.h"
+#include "ais.h"
 
 #include "dychart.h"
 
@@ -75,7 +75,7 @@ extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
 
 extern wxString         g_sAIS_Alert_Sound_File;
 
-extern AISTargetListDialog    *g_pAISTargetList;
+extern ais::AISTargetListDialog* g_pAISTargetList;
 extern int              g_AisTargetList_range;
 extern wxString         g_AisTargetList_perspective;
 extern int              g_AisTargetList_sortColumn;
@@ -101,6 +101,9 @@ static const long long lNaN = 0xfff8000000000000;
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(AISTargetTrackList);
+
+namespace ais
+{
 
 wxString ais_get_status(int index)
 {
@@ -402,5 +405,7 @@ wxString trimAISField( char *data )
     while( field.Right( 1 ) == '@' || field.Right( 1 ) == ' ' )
         field.RemoveLast();
     return field;
+}
+
 }
 

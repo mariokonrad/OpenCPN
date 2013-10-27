@@ -24,12 +24,15 @@
 #ifndef __AIS_DECODER_H__
 #define __AIS_DECODER_H__
 
-#include "ais.h"
+#include <ais/ais.h>
 
 #include <sound/OCPN_Sound.h>
 
 class OCPN_DataStreamEvent;
 struct GenericPosDatEx;
+
+namespace ais
+{
 
 class AIS_Decoder : public wxEvtHandler
 {
@@ -99,5 +102,7 @@ private:
 	bool m_bSuppressed;
 	bool m_bGeneralAlert;
 };
+
+}
 
 #endif

@@ -37,10 +37,13 @@
 #include <wx/html/htmlwin.h>
 #include <wx/button.h>
 
+extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
+extern MainFrame* gFrame;
+extern ChartCanvas* cc1;
 extern bool g_bopengl;
-extern AISTargetAlertDialog * g_pais_alert_dialog_active;
-extern MainFrame * gFrame;
-extern ChartCanvas * cc1;
+
+namespace ais
+{
 
 IMPLEMENT_CLASS(AISTargetAlertDialog, wxDialog)
 
@@ -264,5 +267,7 @@ void AISTargetAlertDialog::OnSize(wxSizeEvent & event)
 int AISTargetAlertDialog::Get_Dialog_MMSI(void) const
 {
 	return m_target_mmsi;
+}
+
 }
 

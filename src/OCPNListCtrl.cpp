@@ -33,7 +33,7 @@ extern wxString g_AisTargetList_column_spec;
 extern bool bGPSValid;
 
 OCPNListCtrl::OCPNListCtrl(
-		AISTargetListDialog * parent,
+		ais::AISTargetListDialog * parent,
 		wxWindowID id,
 		const wxPoint & pos,
 		const wxSize & size,
@@ -45,12 +45,14 @@ OCPNListCtrl::OCPNListCtrl(
 
 OCPNListCtrl::~OCPNListCtrl()
 {
+	using namespace ais;
+
 	g_AisTargetList_column_spec.Clear();
-	for( int i = 0; i < tlSOG + 1; i++ ) {
+	for (int i = 0; i < tlSOG + 1; i++) {
 		wxListItem item;
-		GetColumn( i, item );
+		GetColumn(i, item);
 		wxString sitem;
-		sitem.Printf( _T("%d;"), item.m_width );
+		sitem.Printf(_T("%d;"), item.m_width);
 		g_AisTargetList_column_spec += sitem;
 	}
 }
@@ -59,9 +61,10 @@ wxString OCPNListCtrl::OnGetItemText(long item, long column) const
 {
 	wxString ret;
 
-	if( m_parent->m_pListCtrlAISTargets ) {
-		AIS_Target_Data *pAISTarget = m_parent->GetpTarget( item );
-		if( pAISTarget ) ret = GetTargetColumnData( pAISTarget, column );
+	if (m_parent->m_pListCtrlAISTargets) {
+		ais::AIS_Target_Data* pAISTarget = m_parent->GetpTarget(item);
+		if (pAISTarget)
+			ret = GetTargetColumnData(pAISTarget, column);
 	}
 
 	return ret;
@@ -72,8 +75,10 @@ int OCPNListCtrl::OnGetItemColumnImage(long WXUNUSED(item), long WXUNUSED(column
 	return -1;
 }
 
-wxString OCPNListCtrl::GetTargetColumnData(AIS_Target_Data * pAISTarget, long column) const
+wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data * pAISTarget, long column) const
 {
+	using namespace ais;
+
 	wxString ret;
 
 	if (!pAISTarget)

@@ -42,7 +42,8 @@
 #include <wx/tokenzr.h>
 #include <wx/button.h>
 
-static AIS_Decoder* s_p_sort_decoder;
+static ais::AIS_Decoder* s_p_sort_decoder;
+extern ais::AISTargetListDialog* g_pAISTargetList;
 
 extern int g_AisTargetList_count;
 extern bool g_bAisTargetList_sortReverse;
@@ -52,12 +53,14 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 extern int g_AisTargetList_range;
 extern wxString g_AisTargetList_perspective;
 extern Config* pConfig;
-extern AISTargetListDialog* g_pAISTargetList;
 extern MainFrame* gFrame;
 extern ChartCanvas* cc1;
 extern wxString g_default_wp_icon;
 extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
+
+namespace ais
+{
 
 IMPLEMENT_CLASS(AISTargetListDialog, wxPanel)
 
@@ -747,5 +750,7 @@ void AISTargetListDialog::UpdateAISTargetList( void )
 		m_pListCtrlAISTargets->Refresh( false );
 #endif
 	}
+}
+
 }
 

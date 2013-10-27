@@ -25,61 +25,61 @@
 #define __AISTARGETQUERYDIALOG_H__
 
 #include <wx/dialog.h>
-#include "ColorScheme.h"
+#include <ColorScheme.h>
 
 class wxHtmlWindow;
 class wxBoxSizer;
 class wxButton;
 
-class AISTargetQueryDialog: public wxDialog
+namespace ais
 {
-		DECLARE_CLASS(AISTargetQueryDialog)
-		DECLARE_EVENT_TABLE()
 
-	public:
-		AISTargetQueryDialog();
-		AISTargetQueryDialog(
-				wxWindow * parent,
-				wxWindowID id = wxID_ANY,
-				const wxString& caption = _("Object Query"),
-				const wxPoint& pos = wxDefaultPosition,
+class AISTargetQueryDialog : public wxDialog
+{
+	DECLARE_CLASS(AISTargetQueryDialog)
+	DECLARE_EVENT_TABLE()
+
+public:
+	AISTargetQueryDialog();
+	AISTargetQueryDialog(wxWindow* parent, wxWindowID id = wxID_ANY,
+						 const wxString& caption = _("Object Query"),
+						 const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize,
+						 long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
+
+	virtual ~AISTargetQueryDialog();
+
+	// Initialise our variables
+	void Init();
+
+	// Creation
+	bool Create(wxWindow* parent, wxWindowID id = wxID_ANY,
+				const wxString& caption = _("Object Query"), const wxPoint& pos = wxDefaultPosition,
 				const wxSize& size = wxDefaultSize,
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
 
-		virtual ~AISTargetQueryDialog();
+	void OnClose(wxCloseEvent& event);
+	void OnIdOKClick(wxCommandEvent& event);
+	void OnIdWptCreateClick(wxCommandEvent& event);
+	void OnMove(wxMoveEvent& event);
 
-		// Initialise our variables
-		void Init();
+	void CreateControls();
 
-		// Creation
-		bool Create( wxWindow* parent,
-				wxWindowID id = wxID_ANY,
-				const wxString& caption = _("Object Query"),
-				const wxPoint& pos = wxDefaultPosition,
-				const wxSize& size = wxDefaultSize,
-				long style = wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU );
+	void SetText(const wxString& text_string);
+	void SetColorScheme(ColorScheme cs);
 
-		void OnClose(wxCloseEvent & event);
-		void OnIdOKClick(wxCommandEvent & event);
-		void OnIdWptCreateClick(wxCommandEvent & event);
-		void OnMove(wxMoveEvent & event);
+	void UpdateText(void);
+	void SetMMSI(int mmsi);
+	int GetMMSI(void) const;
 
-		void CreateControls();
-
-		void SetText(const wxString & text_string);
-		void SetColorScheme(ColorScheme cs);
-
-		void UpdateText(void);
-		void SetMMSI(int mmsi);
-		int GetMMSI(void) const;
-
-		// Data
-		int m_MMSI;
-		wxHtmlWindow * m_pQueryTextCtl;
-		ColorScheme m_colorscheme;
-		wxBoxSizer * m_pboxSizer;
-		int m_nl;
-		wxButton * m_okButton;
+	// Data
+	int m_MMSI;
+	wxHtmlWindow* m_pQueryTextCtl;
+	ColorScheme m_colorscheme;
+	wxBoxSizer* m_pboxSizer;
+	int m_nl;
+	wxButton* m_okButton;
 };
+
+}
 
 #endif

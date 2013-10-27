@@ -27,7 +27,10 @@
 #include <wx/string.h>
 #include <wx/datetime.h>
 
-#include "ais.h"
+#include <ais/ais.h>
+
+namespace ais
+{
 
 void make_hash_ERI(int key, const wxString & description);
 
@@ -125,5 +128,7 @@ public:
 
     AIS_Area_Notice_Hash     area_notices;
 };
+
+}
 
 #endif

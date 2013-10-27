@@ -270,14 +270,15 @@ extern HINSTANCE          s_hGLU_DLL; // Handle to DLL
 #endif
 #endif
 
+ais::AIS_Decoder* g_pAIS;
+ais::AISTargetListDialog* g_pAISTargetList;
+ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
+ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 double g_ownship_predictor_minutes;
 int g_current_arrow_scale;
 Multiplexer* g_pMUX;
-AIS_Decoder* g_pAIS;
 bool g_bAIS_CPA_Alert;
 bool g_bAIS_CPA_Alert_Audio;
-AISTargetAlertDialog* g_pais_alert_dialog_active;
-AISTargetQueryDialog* g_pais_query_dialog_active;
 int g_S57_dialog_sx;
 int g_S57_dialog_sy;
 bool g_bAutoAnchorMark;
@@ -422,7 +423,6 @@ std::vector<int> g_quilt_noshow_index_array;
 wxStaticBitmap* g_pStatBoxTool;
 bool g_bquiting;
 int g_BSBImgDebug;
-AISTargetListDialog* g_pAISTargetList;
 wxString g_AisTargetList_perspective;
 int g_AisTargetList_range;
 int g_AisTargetList_sortColumn;
@@ -553,8 +553,7 @@ MainFrame::MainFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, 
 	//    Establish my children
 	g_pMUX = new Multiplexer();
 
-	g_pAIS = new AIS_Decoder( this );
-
+	g_pAIS = new ais::AIS_Decoder(this);
 
 	for ( size_t i = 0; i < g_pConnectionParams->Count(); i++ )
 	{
@@ -767,7 +766,7 @@ void MainFrame::SetAndApplyColorScheme(ColorScheme cs)
 
 		g_pais_query_dialog_active->Close();
 
-		g_pais_query_dialog_active = new AISTargetQueryDialog();
+		g_pais_query_dialog_active = new ais::AISTargetQueryDialog;
 		g_pais_query_dialog_active->Create(
 			this,
 			-1,
@@ -5226,11 +5225,11 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 	} else if (str_buf.Mid(1, 5).IsSameAs(_T("AIVDO"))) {
 		// Process ownship (AIVDO) messages from any source
 		GenericPosDatEx gpd;
-		AIS_Error nerr = AIS_GENERIC_ERROR;
+		ais::AIS_Error nerr = ais::AIS_GENERIC_ERROR;
 		if (g_pAIS)
 			nerr = g_pAIS->DecodeSingleVDO(str_buf, &gpd, &m_VDO_accumulator);
 
-		if (nerr == AIS_NoError) {
+		if (nerr == ais::AIS_NoError) {
 			if (!wxIsNaN(gpd.kLat))
 				global::OCPN::get().nav().set_latitude(gpd.kLat);
 			if (!wxIsNaN(gpd.kLon))

@@ -47,44 +47,41 @@ static const long long lNaN = 0xfff8000000000000;
 #define NAN (*(double*)&lNaN)
 #endif
 
-extern AISTargetAlertDialog *g_pais_alert_dialog_active;
-extern Select *pSelectAIS;
-extern MainFrame * gFrame;
+extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
+extern Select* pSelectAIS;
+extern MainFrame* gFrame;
 extern bool bGPSValid;
-extern bool     g_bShowAIS;
-extern bool     g_bCPAMax;
-extern double   g_CPAMax_NM;
-extern bool     g_bCPAWarn;
-extern double   g_CPAWarn_NM;
-extern bool     g_bTCPA_Max;
-extern double   g_TCPA_Max;
-extern bool     g_bMarkLost;
-extern double   g_MarkLost_Mins;
-extern bool     g_bRemoveLost;
-extern double   g_RemoveLost_Mins;
-extern bool     g_bShowCOG;
-extern double   g_ShowCOG_Mins;
-extern bool     g_bAISShowTracks;
-extern double   g_AISShowTracks_Mins;
-extern bool     g_bShowMoored;
-extern double   g_ShowMoored_Kts;
+extern bool g_bShowAIS;
+extern bool g_bCPAMax;
+extern double g_CPAMax_NM;
+extern bool g_bCPAWarn;
+extern double g_CPAWarn_NM;
+extern bool g_bTCPA_Max;
+extern double g_TCPA_Max;
+extern bool g_bMarkLost;
+extern double g_MarkLost_Mins;
+extern bool g_bRemoveLost;
+extern double g_RemoveLost_Mins;
+extern bool g_bShowCOG;
+extern double g_ShowCOG_Mins;
+extern bool g_bAISShowTracks;
+extern double g_AISShowTracks_Mins;
+extern bool g_bShowMoored;
+extern double g_ShowMoored_Kts;
 extern wxString g_sAIS_Alert_Sound_File;
-extern bool     g_bAIS_CPA_Alert_Suppress_Moored;
-extern bool     g_bAIS_ACK_Timeout;
-extern double   g_AckTimeout_Mins;
-extern bool     g_bShowAreaNotices;
-extern bool     g_bDrawAISSize;
-extern bool     g_bShowAISName;
-extern int      g_Show_Target_Name_Scale;
-extern bool     g_bWplIsAprsPosition;
+extern bool g_bAIS_CPA_Alert_Suppress_Moored;
+extern bool g_bAIS_ACK_Timeout;
+extern double g_AckTimeout_Mins;
+extern bool g_bShowAreaNotices;
+extern bool g_bDrawAISSize;
+extern bool g_bShowAISName;
+extern int g_Show_Target_Name_Scale;
+extern bool g_bWplIsAprsPosition;
 extern bool g_bAIS_CPA_Alert;
 extern bool g_bAIS_CPA_Alert_Audio;
 
-BEGIN_EVENT_TABLE(AIS_Decoder, wxEvtHandler)
-	EVT_TIMER(TIMER_AIS1, AIS_Decoder::OnTimerAIS)
-	EVT_TIMER(TIMER_AISAUDIO, AIS_Decoder::OnTimerAISAudio)
-END_EVENT_TABLE()
-
+namespace ais
+{
 static int n_msgs;
 static int n_msg1;
 static int n_msg5;
@@ -94,6 +91,12 @@ static bool b_firstrx;
 static int first_rx_ticks;
 static int rx_ticks;
 static double arpa_ref_hdg = NAN;
+
+BEGIN_EVENT_TABLE(AIS_Decoder, wxEvtHandler)
+	EVT_TIMER(TIMER_AIS1, AIS_Decoder::OnTimerAIS)
+	EVT_TIMER(TIMER_AISAUDIO, AIS_Decoder::OnTimerAISAudio)
+END_EVENT_TABLE()
+
 
 AIS_Decoder::AIS_Decoder( wxFrame *parent )
 {
@@ -2049,5 +2052,7 @@ AIS_Target_Data *AIS_Decoder::Get_Target_Data_From_MMSI( int mmsi )
 		return NULL;
 	else
 		return ( *AISTargetList )[mmsi];          // find current entry
+}
+
 }
 

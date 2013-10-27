@@ -26,49 +26,46 @@
 
 #include <OCPN_AlertDialog.h>
 
-class AIS_Decoder;
 class wxHtmlWindow;
+
+namespace ais
+{
+class AIS_Decoder;
 
 class AISTargetAlertDialog : public OCPN_AlertDialog
 {
-		DECLARE_CLASS(AISTargetAlertDialog)
-		DECLARE_EVENT_TABLE()
+	DECLARE_CLASS(AISTargetAlertDialog)
+	DECLARE_EVENT_TABLE()
 
-	public:
-
-		AISTargetAlertDialog();
-		~AISTargetAlertDialog();
-		bool Create(
-				int target_mmsi,
-				wxWindow * parent,
-				AIS_Decoder *pdecoder,
-				bool b_jumpto,
-				wxWindowID id = wxID_ANY,
-				const wxString& caption = _("OpenCPN AIS Alert"),
-				const wxPoint& pos = wxDefaultPosition,
-				const wxSize& size = wxDefaultSize,
+public:
+	AISTargetAlertDialog();
+	~AISTargetAlertDialog();
+	bool Create(int target_mmsi, wxWindow* parent, AIS_Decoder* pdecoder, bool b_jumpto,
+				wxWindowID id = wxID_ANY, const wxString& caption = _("OpenCPN AIS Alert"),
+				const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize,
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
-		void Init();
-		int Get_Dialog_MMSI(void) const;
-		void UpdateText();
+	void Init();
+	int Get_Dialog_MMSI(void) const;
+	void UpdateText();
 
-	private:
-		void CreateControls();
-		bool GetAlertText(void);
-		void OnClose(wxCloseEvent& event);
-		void OnIdAckClick(wxCommandEvent& event);
-		void OnMove(wxMoveEvent& event);
-		void OnSize(wxSizeEvent& event);
-		void OnIdSilenceClick(wxCommandEvent& event);
-		void OnIdJumptoClick(wxCommandEvent& event);
+private:
+	void CreateControls();
+	bool GetAlertText(void);
+	void OnClose(wxCloseEvent& event);
+	void OnIdAckClick(wxCommandEvent& event);
+	void OnMove(wxMoveEvent& event);
+	void OnSize(wxSizeEvent& event);
+	void OnIdSilenceClick(wxCommandEvent& event);
+	void OnIdJumptoClick(wxCommandEvent& event);
 
-		wxHtmlWindow      *m_pAlertTextCtl;
-		int               m_target_mmsi;
-		AIS_Decoder       *m_pdecoder;
-		wxFont            *m_pFont;
-		wxString          m_alert_text;
-		bool              m_bjumpto;
+	wxHtmlWindow* m_pAlertTextCtl;
+	int m_target_mmsi;
+	AIS_Decoder* m_pdecoder;
+	wxFont* m_pFont;
+	wxString m_alert_text;
+	bool m_bjumpto;
 };
 
+}
 
 #endif

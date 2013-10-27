@@ -38,6 +38,9 @@ extern bool g_bShowMag;
 // Define and declare a hasmap for ERI Ship type strings, keyed by their UN Codes.
 WX_DECLARE_HASH_MAP(int, wxString, wxIntegerHash, wxIntegerEqual, ERIShipTypeHash);
 
+namespace ais
+{
+
 static ERIShipTypeHash s_ERI_hash;
 
 void make_hash_ERI(int key, const wxString & description)
@@ -584,13 +587,13 @@ wxString AIS_Target_Data::GetRolloverString( void )
 	return result;
 }
 
-wxString AIS_Target_Data::Get_vessel_type_string( bool b_short )
+wxString AIS_Target_Data::Get_vessel_type_string(bool b_short)
 {
 	int i = 19;
-	if( Class == AIS_ATON ) {
+	if (Class == AIS_ATON) {
 		i = ShipType + 20;
 	} else
-		switch( ShipType ){
+		switch (ShipType) {
 			case 30:
 				i = 0;
 				break;
@@ -641,32 +644,36 @@ wxString AIS_Target_Data::Get_vessel_type_string( bool b_short )
 				break;
 		}
 
-	if( ( Class == AIS_CLASS_B ) || ( Class == AIS_CLASS_A ) ) {
-		if( ( ShipType >= 40 ) && ( ShipType < 50 ) ) i = 8;
+	if ((Class == AIS_CLASS_B) || (Class == AIS_CLASS_A)) {
+		if ((ShipType >= 40) && (ShipType < 50))
+			i = 8;
 
-		if( ( ShipType >= 60 ) && ( ShipType < 70 ) ) i = 16;
+		if ((ShipType >= 60) && (ShipType < 70))
+			i = 16;
 
-		if( ( ShipType >= 70 ) && ( ShipType < 80 ) ) i = 17;
+		if ((ShipType >= 70) && (ShipType < 80))
+			i = 17;
 
-		if( ( ShipType >= 80 ) && ( ShipType < 90 ) ) i = 18;
-	} else if( Class == AIS_GPSG_BUDDY )
+		if ((ShipType >= 80) && (ShipType < 90))
+			i = 18;
+	} else if (Class == AIS_GPSG_BUDDY)
 		i = 52;
-	else if( Class == AIS_ARPA )
+	else if (Class == AIS_ARPA)
 		i = 55;
-	else if( Class == AIS_APRS )
+	else if (Class == AIS_APRS)
 		i = 56;
-	else if( Class == AIS_DSC )
-		i = ( ShipType == 12 ) ? 54 : 53;  // 12 is distress
+	else if (Class == AIS_DSC)
+		i = (ShipType == 12) ? 54 : 53; // 12 is distress
 
-	if( !b_short )
+	if (!b_short)
 		return ais_get_type(i);
 	else
 		return ais_get_short_type(i);
 }
 
-wxString AIS_Target_Data::Get_class_string( bool b_short )
+wxString AIS_Target_Data::Get_class_string(bool b_short)
 {
-	switch( Class ){
+	switch (Class) {
 		case AIS_CLASS_A:
 			return _("A");
 		case AIS_CLASS_B:
@@ -678,7 +685,7 @@ wxString AIS_Target_Data::Get_class_string( bool b_short )
 		case AIS_GPSG_BUDDY:
 			return b_short ? _("Buddy") : _("GPSGate Buddy");
 		case AIS_DSC:
-			if( ShipType == 12 )
+			if (ShipType == 12)
 				return b_short ? _("DSC") : _("DSC Distress");
 			else
 				return b_short ? _("DSC") : _("DSC Position Report");
@@ -702,5 +709,7 @@ void AIS_Target_Data::Toggle_AIS_CPA(void)
 void AIS_Target_Data::ToggleShowTrack(void)
 {
 	b_show_track = !b_show_track ? true : false;
+}
+
 }
 

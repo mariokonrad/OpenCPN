@@ -27,8 +27,6 @@
 #include <wx/panel.h>
 
 class OCPNListCtrl;
-class AIS_Decoder;
-class AIS_Target_Data;
 class wxWindow;
 class wxAuiManager;
 class wxButton;
@@ -40,6 +38,11 @@ class wxAuiManager;
 class wxAuiManagerEvent;
 
 WX_DEFINE_SORTED_ARRAY_INT(int, ArrayOfMMSI); // FIXME: use std container
+
+namespace ais
+{
+class AIS_Decoder;
+class AIS_Target_Data;
 
 class AISTargetListDialog : public wxPanel
 {
@@ -85,5 +88,7 @@ private:
 	wxStaticText* m_pStaticTextCount;
 	wxTextCtrl* m_pTextTargetCount;
 };
+
+}
 
 #endif

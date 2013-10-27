@@ -41,17 +41,20 @@
 #include <wx/html/htmlwin.h>
 #include <wx/button.h>
 
-extern AISTargetQueryDialog * g_pais_query_dialog_active;
+extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
+extern ais::AIS_Decoder* g_pAIS;
 extern ColorScheme global_color_scheme;
-extern AIS_Decoder * g_pAIS;
 extern wxString g_default_wp_icon;
-extern Select * pSelect;
-extern Config * pConfig;
-extern RouteManagerDialog * pRouteManagerDialog;
-extern ChartCanvas * cc1;
+extern Select* pSelect;
+extern Config* pConfig;
+extern RouteManagerDialog* pRouteManagerDialog;
+extern ChartCanvas* cc1;
 
 #define xID_OK 10009
 #define xID_WPT_CREATE 10010
+
+namespace ais
+{
 
 IMPLEMENT_CLASS(AISTargetQueryDialog, wxDialog)
 
@@ -255,5 +258,7 @@ void AISTargetQueryDialog::SetMMSI(int mmsi)
 int AISTargetQueryDialog::GetMMSI(void) const
 {
 	return m_MMSI;
+}
+
 }
 

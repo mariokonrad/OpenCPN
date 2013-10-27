@@ -46,6 +46,9 @@
 #define ID_AIS_TARGET_LIST    10003
 #define ID_JUMPTO             10004
 
+namespace ais
+{
+
 // AISTargetListCtrl Columns
 enum {
 	tlNAME = 0,
@@ -127,8 +130,6 @@ public:
 	time_t m_time;
 };
 
-WX_DECLARE_LIST(AISTargetTrackPoint, AISTargetTrackList);
-
 // IMO Circ. 289 Area Notices, based on libais
 const size_t AIS8_001_22_NUM_NAMES = 128;
 const size_t AIS8_001_22_SUBAREA_SIZE = 87;
@@ -187,5 +188,9 @@ wxString trimAISField(char* data);
 wxString ais_get_status(int index);
 wxString ais_get_type(int index);
 wxString ais_get_short_type(int index);
+
+}
+
+WX_DECLARE_LIST(ais::AISTargetTrackPoint, AISTargetTrackList);
 
 #endif

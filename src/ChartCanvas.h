@@ -50,6 +50,7 @@ class wxGLContext;
 #endif
 
 namespace geo { class LatLonBoundingBox; }
+namespace ais { class AIS_Target_Data; }
 
 class ocpnDC;
 class GSHHSChart;
@@ -69,7 +70,6 @@ class WVSChart;
 class MainFrame;
 class ChartBaseBSB;
 class ChartBase;
-class AIS_Target_Data;
 class S57ObjectTree;
 class RolloverWin;
 class Quilt;
@@ -77,6 +77,7 @@ class PixelCache;
 class ChInfoWin;
 class glChartCanvas;
 class TimedPopupWin;
+
 
 // specify the render behaviour of SetViewPoint()
 enum {
@@ -365,7 +366,7 @@ private:
 
 	void AISDraw(ocpnDC& dc);
 	void AISDrawAreaNotices(ocpnDC& dc);
-	void AISDrawTarget(AIS_Target_Data* td, ocpnDC& dc);
+	void AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc);
 
 	void AnchorWatchDraw(ocpnDC& dc);
 

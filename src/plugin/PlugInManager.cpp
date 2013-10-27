@@ -73,7 +73,7 @@
 #include <wx/statline.h>
 
 extern Config* pConfig;
-extern AIS_Decoder* g_pAIS;
+extern ais::AIS_Decoder* g_pAIS;
 extern wxAuiManager* g_pauimgr;
 extern wxLocale* plocale_def_lang;
 extern ChartDB* ChartData;
@@ -1499,6 +1499,9 @@ wxString * GetpSharedDataLocation(void) // FIXME: stupid interface, really, I me
 
 ArrayOfPlugIn_AIS_Targets *GetAISTargetArray(void)
 {
+	using ais::AIS_Target_Hash;
+	using ais::AIS_Target_Data;
+
 	if ( !g_pAIS )
 		return NULL;
 
@@ -1643,22 +1646,25 @@ wxScrolledWindow *AddOptionsPage( OptionsParentPI parent, wxString title )
 	return g_pOptions->AddPage( parentid, title );
 }
 
-bool DeleteOptionsPage( wxScrolledWindow* page )
+bool DeleteOptionsPage(wxScrolledWindow* page)
 {
-	if (! g_pOptions) return false;
-	return g_pOptions->DeletePage( page );
+	if (!g_pOptions)
+		return false;
+	return g_pOptions->DeletePage(page);
 }
 
-bool DecodeSingleVDOMessage( const wxString& str, PlugIn_Position_Fix_Ex *pos, wxString *accumulator )
+bool DecodeSingleVDOMessage(const wxString& str, PlugIn_Position_Fix_Ex* pos, wxString* accumulator)
 {
-	if(!pos)
+	using namespace ais;
+
+	if (!pos)
 		return false;
 
 	GenericPosDatEx gpd;
 	AIS_Error nerr = AIS_GENERIC_ERROR;
-	if(g_pAIS)
+	if (g_pAIS)
 		nerr = g_pAIS->DecodeSingleVDO(str, &gpd, accumulator);
-	if(nerr == AIS_NoError){
+	if (nerr == AIS_NoError) {
 		pos->Lat = gpd.kLat;
 		pos->Lon = gpd.kLon;
 		pos->Cog = gpd.kCog;
@@ -1677,32 +1683,30 @@ bool DecodeSingleVDOMessage( const wxString& str, PlugIn_Position_Fix_Ex *pos, w
 	return false;
 }
 
-int GetChartbarHeight( void )
+int GetChartbarHeight(void)
 {
-	if( stats && stats->IsShown() ){
+	if (stats && stats->IsShown()) {
 		wxSize s = stats->GetSize();
 		return s.GetHeight();
-	}
-	else
+	} else
 		return 0;
 }
 
-
-bool GetRoutepointGPX( RoutePoint *pRoutePoint, char *buffer, unsigned int buffer_length)
+bool GetRoutepointGPX(RoutePoint* pRoutePoint, char* buffer, unsigned int buffer_length)
 {
 	bool ret = false;
 
-	NavObjectCollection *pgpx = new NavObjectCollection;
-	pgpx->AddGPXWaypoint( pRoutePoint);
+	NavObjectCollection* pgpx = new NavObjectCollection;
+	pgpx->AddGPXWaypoint(pRoutePoint);
 	wxString gpxfilename = wxFileName::CreateTempFileName(wxT("gpx"));
 	pgpx->SaveFile(gpxfilename);
 	delete pgpx;
 
-	wxFFile gpxfile( gpxfilename );
+	wxFFile gpxfile(gpxfilename);
 	wxString s;
-	if( gpxfile.ReadAll( &s ) ) {
-		if(s.Length() < buffer_length) {
-			strncpy(buffer, (const char*)s.mb_str(wxConvUTF8), buffer_length -1);
+	if (gpxfile.ReadAll(&s)) {
+		if (s.Length() < buffer_length) {
+			strncpy(buffer, (const char*)s.mb_str(wxConvUTF8), buffer_length - 1);
 			ret = true;
 		}
 	}
@@ -1713,10 +1717,10 @@ bool GetRoutepointGPX( RoutePoint *pRoutePoint, char *buffer, unsigned int buffe
 	return ret;
 }
 
-bool GetActiveRoutepointGPX( char *buffer, unsigned int buffer_length )
+bool GetActiveRoutepointGPX(char* buffer, unsigned int buffer_length)
 {
-	if( g_pRouteMan->IsAnyRouteActive() )
-		return GetRoutepointGPX( g_pRouteMan->GetpActivePoint(), buffer, buffer_length);
+	if (g_pRouteMan->IsAnyRouteActive())
+		return GetRoutepointGPX(g_pRouteMan->GetpActivePoint(), buffer, buffer_length);
 	else
 		return false;
 }
@@ -2438,7 +2442,7 @@ void opencpn_plugin_110::LateInit(void)
 //    PlugIn_AIS_Target Implementation
 //-------------------------------------------------------------------------------
 
-PlugIn_AIS_Target *Create_PI_AIS_Target(AIS_Target_Data *ptarget)
+PlugIn_AIS_Target *Create_PI_AIS_Target(ais::AIS_Target_Data *ptarget)
 {
 	PlugIn_AIS_Target *pret = new PlugIn_AIS_Target;
 

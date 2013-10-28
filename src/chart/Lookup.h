@@ -21,25 +21,29 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __LOOKUP__H__
-#define __LOOKUP__H__
+#ifndef __CHART__LOOKUP__H__
+#define __CHART__LOOKUP__H__
 
 #include <chart/s52plib.h>
 
+namespace chart {
+
 class Lookup
 {
-	public:
-		int RCID;
-		int id;
-		wxString name;
-		Object_t type;  // 'A' Area, 'L' Line, 'P' Point
-		DisPrio displayPrio; // Display Priority
-		RadPrio radarPrio; // 'O' or 'S', Radar Priority
-		LUPname tableName; // FTYP:  areas, points, lines
-		wxArrayString * attributeCodeArray; // ArrayString of LUP Attributes
-		wxString instruction; // Instruction Field (rules)
-		DisCat displayCat; // Display Categorie: D/S/O, DisplayBase, Standard, Other
-		int comment; // Look-Up Comment (PLib3.x put 'groupes' here,
+public:
+	int RCID;
+	int id;
+	wxString name;
+	Object_t type; // 'A' Area, 'L' Line, 'P' Point
+	DisPrio displayPrio; // Display Priority
+	RadPrio radarPrio; // 'O' or 'S', Radar Priority
+	LUPname tableName; // FTYP:  areas, points, lines
+	wxArrayString* attributeCodeArray; // ArrayString of LUP Attributes
+	wxString instruction; // Instruction Field (rules)
+	DisCat displayCat; // Display Categorie: D/S/O, DisplayBase, Standard, Other
+	int comment; // Look-Up Comment (PLib3.x put 'groupes' here,
 };
+
+}
 
 #endif

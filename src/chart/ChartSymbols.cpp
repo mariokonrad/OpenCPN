@@ -129,7 +129,7 @@ next:
 
 void ChartSymbols::ProcessLookups( TiXmlElement* lookupNodes )
 {
-	Lookup lookup;
+	chart::Lookup lookup;
 	wxString propVal;
 	long numVal;
 
@@ -239,7 +239,7 @@ nextNode:
 	}
 }
 
-void ChartSymbols::BuildLookup( Lookup &lookup )
+void ChartSymbols::BuildLookup( chart::Lookup &lookup )
 {
 
 	LUPrec *LUP = (LUPrec*) calloc( 1, sizeof(LUPrec) );
@@ -316,7 +316,7 @@ nextVector:
 void ChartSymbols::ProcessLinestyles( TiXmlElement* linestyleNodes )
 {
 
-	LineStyle lineStyle;
+	chart::LineStyle lineStyle;
 	wxString propVal;
 	long numVal;
 
@@ -359,7 +359,7 @@ nextNode:
 	}
 }
 
-void ChartSymbols::BuildLineStyle( LineStyle &lineStyle )
+void ChartSymbols::BuildLineStyle( chart::LineStyle &lineStyle )
 {
 	Rule *lnstmp = NULL;
 	Rule *lnst = (Rule*) calloc( 1, sizeof(Rule) );

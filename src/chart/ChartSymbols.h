@@ -59,8 +59,8 @@ class ChartSymbols
 		void ProcessLinestyles(TiXmlElement * linestyleNodes);
 		void ProcessPatterns(TiXmlElement * patternNodes);
 		void ProcessSymbols(TiXmlElement * symbolNodes);
-		void BuildLineStyle(LineStyle & lineStyle);
-		void BuildLookup(Lookup & lookup);
+		void BuildLineStyle(chart::LineStyle & lineStyle);
+		void BuildLookup(chart::Lookup & lookup);
 		void BuildPattern(OCPNPattern & pattern);
 		void BuildSymbol(ChartSymbol & symol);
 

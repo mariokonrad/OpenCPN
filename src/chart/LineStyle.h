@@ -21,22 +21,26 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __LINESTYLE__H__
-#define __LINESTYLE__H__
+#ifndef __CHART__LINESTYLE__H__
+#define __CHART__LINESTYLE__H__
 
-#include "chart/SymbolSizeInfo.h"
+#include <chart/SymbolSizeInfo.h>
 #include <wx/bitmap.h>
+
+namespace chart {
 
 class LineStyle
 {
-	public:
-		int	RCID;
-		wxString name;
-		wxString description;
-		wxString colorRef;
-		SymbolSizeInfo vectorSize;
-		wxBitmap bitmap;
-		wxString HPGL;
+public:
+	int RCID;
+	wxString name;
+	wxString description;
+	wxString colorRef;
+	SymbolSizeInfo vectorSize;
+	wxBitmap bitmap;
+	wxString HPGL;
 };
+
+}
 
 #endif

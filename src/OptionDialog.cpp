@@ -90,7 +90,6 @@ extern bool g_bsmoothpanzoom;
 extern bool g_bShowMag;
 extern double g_UserVar;
 
-extern wxString init_Chart_Dir;
 extern wxArrayOfConnPrm * g_pConnectionParams;
 extern Multiplexer * g_pMUX;
 extern bool g_bfilter_cogsog;
@@ -2232,25 +2231,24 @@ void options::OnCharHook(wxKeyEvent & event)
 	event.Skip();
 }
 
-void options::OnButtonaddClick( wxCommandEvent& event )
+void options::OnButtonaddClick(wxCommandEvent& event)
 {
-	wxDirDialog * dirSelector = new wxDirDialog(
-		this,
-		_("Add a directory containing chart files"),
-		init_Chart_Dir,
-		wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+	const global::System::Data& sys = global::OCPN::get().sys().data();
+
+	wxDirDialog* dirSelector
+		= new wxDirDialog(this, _("Add a directory containing chart files"), sys.init_chart_dir,
+						  wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
 
 	if (dirSelector->ShowModal() != wxID_CANCEL) {
 		wxString selDir = dirSelector->GetPath();
 		wxFileName dirname = wxFileName(selDir);
 
-		init_Chart_Dir.Empty();
 		if (!g_bportable)
-			init_Chart_Dir.Append(dirname.GetPath());
+			global::OCPN::get().sys().set_init_chart_dir(dirname.GetPath());
 
-		if( g_bportable ) {
+		if (g_bportable) {
 			wxFileName f(selDir);
-			f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
+			f.MakeRelativeTo(sys.home_location);
 			pActiveChartsList->Append(f.GetFullPath());
 		} else {
 			pActiveChartsList->Append(selDir);
@@ -2274,26 +2272,23 @@ void options::UpdateWorkArrayFromTextCtl()
 
 	m_pWorkDirList->clear();
 	int n = pActiveChartsList->GetCount();
-	for( int i = 0; i < n; i++ ) {
-		dirname = pActiveChartsList->GetString( i );
-		if( !dirname.IsEmpty() ) {
-			//    This is a fix for OSX, which appends EOL to results of GetLineText()
-			while( ( dirname.Last() == wxChar( _T('\n') ) )
-					|| ( dirname.Last() == wxChar( _T('\r') ) ) )
+	for (int i = 0; i < n; i++) {
+		dirname = pActiveChartsList->GetString(i);
+		if (!dirname.IsEmpty()) {
+			// This is a fix for OSX, which appends EOL to results of GetLineText()
+			while ((dirname.Last() == wxChar(_T('\n'))) || (dirname.Last() == wxChar(_T('\r'))))
 				dirname.RemoveLast();
 
-			//    scan the current array to find a match
-			//    if found, add the info to the work list, preserving the magic number
-			//    If not found, make a new ChartDirInfo, and add it
+			// scan the current array to find a match
+			// if found, add the info to the work list, preserving the magic number
+			// If not found, make a new ChartDirInfo, and add it
 			bool b_added = false;
-			//                        if(m_pCurrentDirList)
-			{
-				for (ArrayOfCDI::const_iterator dir = m_CurrentDirList.begin(); dir != m_CurrentDirList.end(); ++dir) {
-					if (dir->fullpath == dirname) {
-						m_pWorkDirList->push_back(*dir);
-						b_added = true;
-						break;
-					}
+			for (ArrayOfCDI::const_iterator dir = m_CurrentDirList.begin();
+				 dir != m_CurrentDirList.end(); ++dir) {
+				if (dir->fullpath == dirname) {
+					m_pWorkDirList->push_back(*dir);
+					b_added = true;
+					break;
 				}
 			}
 			if (!b_added) {
@@ -2855,14 +2850,14 @@ void options::OnButtondeleteClick( wxCommandEvent& event )
 	event.Skip();
 }
 
-void options::OnDebugcheckbox1Click( wxCommandEvent& event )
+void options::OnDebugcheckbox1Click(wxCommandEvent& event)
 {
 	event.Skip();
 }
 
-void options::OnCancelClick(wxCommandEvent &)
+void options::OnCancelClick(wxCommandEvent&)
 {
-	//  Required to avoid intermittent crash on wxGTK
+	// Required to avoid intermittent crash on wxGTK
 	m_pListbook->ChangeSelection(0);
 	delete pActiveChartsList;
 	delete ps57CtlListBox;
@@ -2872,32 +2867,33 @@ void options::OnCancelClick(wxCommandEvent &)
 	EndModal(0);
 }
 
-void options::OnChooseFont( wxCommandEvent& event )
+void options::OnChooseFont(wxCommandEvent& event)
 {
 	wxString sel_text_element = m_itemFontElementListBox->GetStringSelection();
 
-	wxFont *psfont;
+	wxFont* psfont;
 	wxFontData font_data;
 
-	wxFont *pif = FontMgr::Get().GetFont( sel_text_element );
-	wxColour init_color = FontMgr::Get().GetFontColor( sel_text_element );
+	wxFont* pif = FontMgr::Get().GetFont(sel_text_element);
+	wxColour init_color = FontMgr::Get().GetFontColor(sel_text_element);
 
 	wxFontData init_font_data;
-	if( pif ) init_font_data.SetInitialFont( *pif );
-	init_font_data.SetColour( init_color );
+	if (pif)
+		init_font_data.SetInitialFont(*pif);
+	init_font_data.SetColour(init_color);
 
 #ifdef __WXX11__
 	X11FontPicker dg(pParent, init_font_data);
 #else
-	wxFontDialog dg( pParent, init_font_data );
+	wxFontDialog dg(pParent, init_font_data);
 #endif
 	int retval = dg.ShowModal();
-	if( wxID_CANCEL != retval ) {
+	if (wxID_CANCEL != retval) {
 		font_data = dg.GetFontData();
 		wxFont font = font_data.GetChosenFont();
-		psfont = new wxFont( font );
+		psfont = new wxFont(font);
 		wxColor color = font_data.GetColour();
-		FontMgr::Get().SetFont( sel_text_element, psfont, color );
+		FontMgr::Get().SetFont(sel_text_element, psfont, color);
 
 		pParent->UpdateAllFonts();
 	}
@@ -2906,26 +2902,26 @@ void options::OnChooseFont( wxCommandEvent& event )
 }
 
 #ifdef __WXGTK__
-void options::OnChooseFontColor( wxCommandEvent& event )
+void options::OnChooseFontColor(wxCommandEvent& event)
 {
 	wxString sel_text_element = m_itemFontElementListBox->GetStringSelection();
 
 	wxColourData colour_data;
 
-	wxFont *pif = FontMgr::Get().GetFont( sel_text_element );
-	wxColour init_color = FontMgr::Get().GetFontColor( sel_text_element );
+	wxFont* pif = FontMgr::Get().GetFont(sel_text_element);
+	wxColour init_color = FontMgr::Get().GetFontColor(sel_text_element);
 
 	wxColourData init_colour_data;
-	init_colour_data.SetColour( init_color );
+	init_colour_data.SetColour(init_color);
 
-	wxColourDialog dg( pParent, &init_colour_data );
+	wxColourDialog dg(pParent, &init_colour_data);
 
 	int retval = dg.ShowModal();
-	if( wxID_CANCEL != retval ) {
+	if (wxID_CANCEL != retval) {
 		colour_data = dg.GetColourData();
 
 		wxColor color = colour_data.GetColour();
-		FontMgr::Get().SetFont( sel_text_element, pif, color );
+		FontMgr::Get().SetFont(sel_text_element, pif, color);
 
 		pParent->UpdateAllFonts();
 	}
@@ -2934,30 +2930,28 @@ void options::OnChooseFontColor( wxCommandEvent& event )
 }
 #endif
 
-void options::OnChartsPageChange( wxListbookEvent& event )
+void options::OnChartsPageChange(wxListbookEvent& event)
 {
 	unsigned int i = event.GetSelection();
 
-	//    User selected Chart Groups Page?
-	//    If so, build the remaining UI elements
-	if( 2 == i ) {                       // 2 is the index of "Chart Groups" page
-		if(!groupsPanel->m_UIcomplete)
+	// User selected Chart Groups Page?
+	// If so, build the remaining UI elements
+	if (2 == i) { // 2 is the index of "Chart Groups" page
+		if (!groupsPanel->m_UIcomplete)
 			groupsPanel->CompletePanel();
 
-		if(!groupsPanel->m_settingscomplete) {
+		if (!groupsPanel->m_settingscomplete) {
 			::wxBeginBusyCursor();
 			groupsPanel->CompleteInitialSettings();
 			::wxEndBusyCursor();
-		}
-		else if( !groupsPanel->m_treespopulated ) {
+		} else if (!groupsPanel->m_treespopulated) {
 			groupsPanel->PopulateTrees();
 			groupsPanel->m_treespopulated = true;
 		}
 	}
 
-	event.Skip();               // Allow continued event processing
+	event.Skip(); // Allow continued event processing
 }
-
 
 void options::OnPageChange( wxListbookEvent& event )
 {

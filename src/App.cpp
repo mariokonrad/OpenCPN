@@ -147,8 +147,6 @@ extern double g_GLMinLineWidth;
 extern bool bDBUpdateInProgress;
 extern ThumbWin* pthumbwin;
 extern TCMgr* ptcmgr;
-extern wxString chartListFileName;
-extern wxString init_Chart_Dir;
 extern wxString g_csv_locn;
 extern wxString g_SENCPrefix;
 extern wxString g_UserPresLibData;
@@ -331,12 +329,10 @@ extern Config* pConfig;
 extern Select* pSelect;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
-extern wxPlatformInfo* g_pPlatform;
 extern wxDateTime g_loglast_time;
 extern bool bGPSValid;
 extern int g_GroupIndex;
 extern ocpnStyle::StyleManager* g_StyleManager;
-extern wxPlatformInfo* g_pPlatform;
 extern wxAuiManager* g_pauimgr;
 extern wxLocale* plocale_def_lang;
 extern MainFrame* gFrame;
@@ -1141,6 +1137,47 @@ void App::setup_layers()
 	}
 }
 
+void App::determine_chartlist_filename()
+{
+	wxString filename;
+	const global::System::Data & sys = global::OCPN::get().sys().data();
+
+	// Establish location and name of chart database
+#ifdef __WXMSW__
+	filename = _T("CHRTLIST.DAT");
+	filename.Prepend(sys.home_location);
+#else
+	filename = wxApp::GetTraits()->GetStandardPaths().GetUserDataDir();
+	appendOSDirSlash(filename);
+	filename.Append(_T("chartlist.dat"));
+#endif
+
+	if (g_bportable) {
+		filename.Clear();
+#ifdef __WXMSW__
+		filename.Append(_T("CHRTLIST.DAT"));
+#else
+		filename.Append(_T("chartlist.dat"));
+#endif
+		filename.Prepend(sys.home_location);
+	}
+
+	global::OCPN::get().sys().set_chartlist_fileame(filename);
+}
+
+void App::set_init_chart_dir()
+{
+	wxString path = global::OCPN::get().sys().data().init_chart_dir;
+
+	// Establish guessed location of chart tree
+	if (path.IsEmpty()) {
+		if (!g_bportable) {
+			path.Append( wxApp::GetTraits()->GetStandardPaths().GetDocumentsDir());
+			global::OCPN::get().sys().set_init_chart_dir(path);
+		}
+	}
+}
+
 bool App::OnInit()
 {
 	if (!wxApp::OnInit())
@@ -1305,9 +1342,6 @@ bool App::OnInit()
 	sys.set_sound_data_location(sound_data_location);
 
 	wxLogMessage(_T("SData_Locn is ") + sys.data().sound_data_location);
-
-	// Create some static strings
-	init_Chart_Dir = wxString();
 
 	// Establish an empty ChartCroupArray
 	g_pGroupArray = new ChartGroupArray;
@@ -1527,32 +1561,8 @@ bool App::OnInit()
 	g_memCacheLimit = wxMin(g_memCacheLimit, 1024 * 1024); // math in kBytes
 #endif
 
-	// Establish location and name of chart database
-#ifdef __WXMSW__
-	chartListFileName = _T("CHRTLIST.DAT");
-	chartListFileName.Prepend(sys.data().home_location);
-#else
-	chartListFileName = std_path.GetUserDataDir();
-	appendOSDirSlash(chartListFileName);
-	chartListFileName.Append(_T("chartlist.dat"));
-#endif
-
-	if (g_bportable) {
-		chartListFileName.Clear();
-#ifdef __WXMSW__
-		chartListFileName.Append(_T("CHRTLIST.DAT"));
-#else
-		chartListFileName.Append(_T("chartlist.dat"));
-#endif
-		chartListFileName.Prepend(sys.data().home_location);
-	}
-
-	// Establish guessed location of chart tree
-	if (init_Chart_Dir.IsEmpty()) {
-		if (!g_bportable)
-			init_Chart_Dir.Append(std_path.GetDocumentsDir());
-	}
-
+	determine_chartlist_filename();
+	set_init_chart_dir();
 	determine_world_map_location();
 
 	// Reload the config data, to pick up any missing data class configuration info
@@ -1732,11 +1742,11 @@ bool App::OnInit()
 	// TODO: There is a possibility of recreating the dir list from the database itself......
 
 	if (ChartDirArray.empty())
-		::wxRemoveFile(chartListFileName);
+		::wxRemoveFile(sys.data().chartlist_filename);
 
 	// Try to load the current chart list Data file
 	ChartData = new ChartDB(gFrame);
-	if (!ChartData->LoadBinary(chartListFileName, ChartDirArray)) {
+	if (!ChartData->LoadBinary(sys.data().chartlist_filename, ChartDirArray)) {
 		bDBUpdateInProgress = true;
 
 		if (ChartDirArray.size()) {
@@ -1757,13 +1767,13 @@ bool App::OnInit()
 				wxPD_SMOOTH | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
 
 			ChartData->Create(ChartDirArray, pprog);
-			ChartData->SaveBinary(chartListFileName);
+			ChartData->SaveBinary(sys.data().chartlist_filename);
 
 			delete pprog;
 		} else {
 			// No chart database, no config hints, so bail to Options....
 			wxLogMessage(_T("Chartlist file not found, config chart dir array is empty.  ")
-						 _T("Chartlist target file is:") + chartListFileName);
+						 _T("Chartlist target file is:") + sys.data().chartlist_filename);
 			wxString msg1(
 				_("No Charts Installed.\nPlease select chart folders in Options > Charts."));
 			OCPNMessageBox(gFrame, msg1, wxString(_("OpenCPN Info")), wxICON_INFORMATION | wxOK);

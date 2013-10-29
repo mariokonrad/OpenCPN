@@ -191,8 +191,6 @@ double initial_scale_ppm;
 bool bDBUpdateInProgress;
 ThumbWin* pthumbwin;
 TCMgr* ptcmgr;
-wxString chartListFileName;
-wxString init_Chart_Dir;
 wxString g_csv_locn;
 wxString g_SENCPrefix;
 wxString g_UserPresLibData;
@@ -2273,16 +2271,15 @@ int MainFrame::DoOptionsDialog()
 	options optionsDlg(this, -1, _("Options"));
 	::wxEndBusyCursor();
 
-	//    Set initial Chart Dir
-	optionsDlg.SetInitChartDir(init_Chart_Dir);
+	optionsDlg.SetInitChartDir(global::OCPN::get().sys().data().init_chart_dir);
 
-	//      Pass two working pointers for Chart Dir Dialog
+	// Pass two working pointers for Chart Dir Dialog
 	optionsDlg.SetCurrentDirList(ChartData->GetChartDirArray());
 	ArrayOfCDI* pWorkDirArray = new ArrayOfCDI; // FIXME: dynamic allocation, to be used in dialog,
 												// deletion later... in this method
 	optionsDlg.SetWorkDirListPtr(pWorkDirArray);
 
-	//      Pass a ptr to MyConfig, for updates
+	// Pass a ptr to MyConfig, for updates
 	optionsDlg.SetConfigPtr(pConfig);
 
 	optionsDlg.SetInitialSettings();
@@ -2374,7 +2371,7 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 	if ((rr & VISIT_CHARTS)
 		&& ((rr & CHANGE_CHARTS) || (rr & FORCE_UPDATE) || (rr & SCAN_UPDATE))) {
 
-		//    Capture the currently open chart
+		// Capture the currently open chart
 		wxString chart_file_name;
 		if (chart_canvas->GetQuiltMode()) {
 			int dbi = chart_canvas->GetQuiltRefChartdbIndex();
@@ -2383,9 +2380,9 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 			chart_file_name = Current_Ch->GetFullPath();
 
 		UpdateChartDatabaseInplace(*pWorkDirArray, ((rr & FORCE_UPDATE) == FORCE_UPDATE), true,
-								   chartListFileName);
+								   global::OCPN::get().sys().data().chartlist_filename);
 
-		//    Re-open the last open chart
+		// Re-open the last open chart
 		int dbii = ChartData->FinddbIndex(chart_file_name);
 		ChartsRefresh(dbii, chart_canvas->GetVP());
 	}

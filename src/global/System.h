@@ -44,6 +44,8 @@ class System
 			wxString log_file;
 			wxString sound_data_location;
 			wxString world_map_location;
+			wxString chartlist_filename;
+			wxString init_chart_dir;
 		};
 
 		virtual const Data & data() const = 0;
@@ -54,6 +56,8 @@ class System
 		virtual void set_log_file(const wxString &) = 0;
 		virtual void set_sound_data_location(const wxString &) = 0;
 		virtual void set_world_map_location(const wxString &) = 0;
+		virtual void set_chartlist_fileame(const wxString &) = 0;
+		virtual void set_init_chart_dir(const wxString &) = 0;
 
 	public:
 

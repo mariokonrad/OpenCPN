@@ -23,8 +23,7 @@
 
 #include "Config.h"
 
-#include "dychart.h"
-
+#include <dychart.h>
 #include <ChartCanvas.h>
 #include <MainFrame.h>
 #include <Layer.h>
@@ -58,46 +57,44 @@
 #include <wx/tokenzr.h>
 #include <wx/progdlg.h>
 
-extern Config * pConfig;
-
-extern ChartCanvas      *cc1;
-extern MainFrame          *gFrame;
-extern double           g_ChartNotRenderScaleFactor;
-extern int              g_restore_stackindex;
-extern int              g_restore_dbindex;
-extern RouteList        *pRouteList;
-extern LayerList        *pLayerList;
-extern int              g_LayerIdx;
-extern double           vLat, vLon;
-extern double           initial_scale_ppm;
-extern ColorScheme      global_color_scheme;
-extern bool             g_bShowMag;
-extern double           g_UserVar;
-extern wxArrayOfConnPrm *g_pConnectionParams;
-extern wxString         g_SENCPrefix;
-extern wxString         g_UserPresLibData;
-extern wxString         init_Chart_Dir;
-extern WayPointman      *pWayPointMan;
-extern bool             s_bSetSystemTime;
-extern bool             g_bDisplayGrid;         //Flag indicating if grid is to be displayed
-extern bool             g_bPlayShipsBells;
-extern bool             g_bShowLayers;
-extern bool             g_bPermanentMOBIcon;
-extern bool             g_bAutoAnchorMark;
-extern bool             g_bskew_comp;
-extern bool             g_bopengl;
-extern bool             g_bdisable_opengl;
-extern bool             g_bsmoothpanzoom;
-extern bool             g_bShowActiveRouteHighway;
-extern int              g_nNMEADebug;
-extern int              g_nAWDefault;
-extern int              g_nAWMax;
-extern int              g_nTrackPrecision;
-extern int              g_iSDMMFormat;
-extern int              g_iDistanceFormat;
-extern int              g_iSpeedFormat;
-extern double           g_PlanSpeed;
-extern wxRect           g_blink_rect;
+extern Config* pConfig;
+extern ChartCanvas* cc1;
+extern MainFrame* gFrame;
+extern double g_ChartNotRenderScaleFactor;
+extern int g_restore_stackindex;
+extern int g_restore_dbindex;
+extern RouteList* pRouteList;
+extern LayerList* pLayerList;
+extern int g_LayerIdx;
+extern double vLat, vLon;
+extern double initial_scale_ppm;
+extern ColorScheme global_color_scheme;
+extern bool g_bShowMag;
+extern double g_UserVar;
+extern wxArrayOfConnPrm* g_pConnectionParams;
+extern wxString g_SENCPrefix;
+extern wxString g_UserPresLibData;
+extern WayPointman* pWayPointMan;
+extern bool s_bSetSystemTime;
+extern bool g_bDisplayGrid; // Flag indicating if grid is to be displayed
+extern bool g_bPlayShipsBells;
+extern bool g_bShowLayers;
+extern bool g_bPermanentMOBIcon;
+extern bool g_bAutoAnchorMark;
+extern bool g_bskew_comp;
+extern bool g_bopengl;
+extern bool g_bdisable_opengl;
+extern bool g_bsmoothpanzoom;
+extern bool g_bShowActiveRouteHighway;
+extern int g_nNMEADebug;
+extern int g_nAWDefault;
+extern int g_nAWMax;
+extern int g_nTrackPrecision;
+extern int g_iSDMMFormat;
+extern int g_iDistanceFormat;
+extern int g_iSpeedFormat;
+extern double g_PlanSpeed;
+extern wxRect g_blink_rect;
 
 //    AIS Global configuration
 extern bool             g_bCPAMax;
@@ -784,16 +781,14 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 #endif
 
-	SetPath( _T ( "/Directories" ) );
-	wxString vald;
-	Read( _T ( "InitChartDir" ), &vald );           // Get the Directory name
+	SetPath(_T("/Directories"));
 
-	wxString dirnamed( vald );
-	if( !dirnamed.IsEmpty() ) {
-		if (init_Chart_Dir.IsEmpty())   // on second pass, don't overwrite
-		{
-			init_Chart_Dir.Clear();
-			init_Chart_Dir.Append(vald);
+	wxString init_chart_dir;
+	Read(_T("InitChartDir"), &init_chart_dir); // Get the Directory name
+	if (!init_chart_dir.IsEmpty()) {
+		// don't overwrite on second pass
+		if (global::OCPN::get().sys().data().init_chart_dir.IsEmpty()) {
+			global::OCPN::get().sys().set_init_chart_dir(init_chart_dir);
 		}
 	}
 
@@ -1865,7 +1860,7 @@ void Config::UpdateSettings()
 #endif
 
 	SetPath(_T("/Directories"));
-	Write(_T("InitChartDir" ), init_Chart_Dir);
+	Write(_T("InitChartDir" ), global::OCPN::get().sys().data().init_chart_dir);
 	Write(_T("GPXIODir"), m_gpx_path);
 	Write(_T("TCDataDir"), global::OCPN::get().sys().data().tc_data_dir);
 

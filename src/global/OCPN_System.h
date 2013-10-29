@@ -43,6 +43,8 @@ class OCPN_System : public System
 		virtual void set_log_file(const wxString &);
 		virtual void set_sound_data_location(const wxString &);
 		virtual void set_world_map_location(const wxString &);
+		virtual void set_chartlist_fileame(const wxString &);
+		virtual void set_init_chart_dir(const wxString &);
 
 	public: // config
 		virtual const Config & config() const;

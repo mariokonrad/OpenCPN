@@ -65,6 +65,16 @@ void OCPN_System::set_world_map_location(const wxString & location)
 	data_data.world_map_location = location;
 }
 
+void OCPN_System::set_chartlist_fileame(const wxString & filename)
+{
+	data_data.chartlist_filename = filename;
+}
+
+void OCPN_System::set_init_chart_dir(const wxString & directory)
+{
+	data_data.init_chart_dir = directory;
+}
+
 const System::Config & OCPN_System::config() const
 {
 	return data_config;

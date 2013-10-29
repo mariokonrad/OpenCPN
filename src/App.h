@@ -60,6 +60,8 @@ private:
 	void install_crash_reporting();
 	void seed_random_generator();
 	void determine_world_map_location();
+	void determine_chartlist_filename();
+	void set_init_chart_dir();
 
 	void install_signal_handler();
 	bool create_opencpn_home();

@@ -332,11 +332,12 @@ RouteProp::RouteProp(wxWindow* parent, wxWindowID id, const wxString& caption, c
 					 const wxSize& size, long style)
 	: m_TotalDistCtl(NULL)
 	, m_wpList(NULL)
+	, m_pRoute(NULL)
 	, m_pHead(NULL)
 	, m_pTail(NULL)
-	, m_nSelected(0)
 	, m_pEnroutePoint(NULL)
 	, m_bStartNow(false)
+	, m_nSelected(0)
 {
 	long wstyle = style;
 #ifdef __WXOSX__
@@ -368,9 +369,24 @@ void RouteProp::OnRoutePropRightClick(wxListEvent&)
 	PopupMenu(&menu);
 }
 
-Route* RouteProp::GetRoute(void)
+const Route* RouteProp::getRoute() const
 {
 	return m_pRoute;
+}
+
+const RoutePoint* RouteProp::getEnroutePoint() const
+{
+	return m_pEnroutePoint;
+}
+
+void RouteProp::setEnroutePoint(RoutePoint* point)
+{
+	m_pEnroutePoint = point;
+}
+
+double RouteProp::getPlanSpeed() const
+{
+	return m_planspeed;
 }
 
 void RouteProp::OnRoutepropSplitClick(wxCommandEvent&)
@@ -918,13 +934,11 @@ void RouteProp::SetDialogTitle(const wxString& title)
 
 void RouteProp::SetRouteAndUpdate(Route* pR)
 {
-	//  Fetch any config file values
+	// Fetch any config file values
 
 	m_tz_selection = 1;
 
 	if (pR == m_pRoute) {
-		// m_starttime = g_StartTime;
-		// tz_selection = g_StartTimeTZ;
 		gStart_LMT_Offset = 0;
 	} else {
 		g_StartTime = wxInvalidDateTime;
@@ -973,7 +987,7 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 			m_SplitButton->SetLabel(_("Split Route"));
 		}
 
-		//    Fill in some top pane properties from the Route member elements
+		// Fill in some top pane properties from the Route member elements
 		m_RouteNameCtl->SetValue(m_pRoute->m_RouteNameString);
 		m_RouteStartCtl->SetValue(m_pRoute->m_RouteStartString);
 		m_RouteDestCtl->SetValue(m_pRoute->m_RouteEndString);

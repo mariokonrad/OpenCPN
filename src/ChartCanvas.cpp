@@ -5578,7 +5578,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 						for (unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ir++) {
 							Route* pr = (Route*)m_pEditRouteArray->Item(ir);
 							if (g_pRouteMan->IsRouteValid(pr)) {
-								if (!pr->IsTrack() && pRoutePropDialog->m_pRoute == pr) {
+								if (!pr->IsTrack() && pRoutePropDialog->getRoute() == pr) {
 									pRoutePropDialog->SetRouteAndUpdate(pr);
 									pRoutePropDialog->UpdateProperties();
 								} else if ((NULL != pTrackPropDialog)
@@ -7213,7 +7213,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 				pConfig->DeleteConfigRoute(m_pSelectedRoute);
 				g_pRouteMan->DeleteRoute(m_pSelectedRoute);
 				if (pRoutePropDialog && (pRoutePropDialog->IsShown())
-					&& (m_pSelectedRoute == pRoutePropDialog->GetRoute())) {
+					&& (m_pSelectedRoute == pRoutePropDialog->getRoute())) {
 					pRoutePropDialog->Hide();
 				}
 

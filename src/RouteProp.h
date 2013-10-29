@@ -122,12 +122,18 @@ public:
 	static bool ShowToolTips();
 
 	void SetRouteAndUpdate(Route* pR);
-	Route* GetRoute(void);
 
 	bool UpdateProperties(void);
 	wxString MakeTideInfo(int jx, time_t tm, int tz_selection, long LMT_Offset);
 	bool SaveChanges(void);
 
+	const Route* getRoute() const;
+	double getPlanSpeed() const;
+
+	const RoutePoint* getEnroutePoint() const;
+	void setEnroutePoint(RoutePoint*);
+
+private:
 	wxTextCtrl* m_TotalDistCtl;
 	wxTextCtrl* m_PlanSpeedCtl;
 	wxTextCtrl* m_StartTimeCtl;

@@ -280,18 +280,18 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 	m_arrival_min = 1e6;
 	m_arrival_test = 0;
 
-	//    Update the RouteProperties Dialog, if currently shown
-	if( ( NULL != pRoutePropDialog ) && ( pRoutePropDialog->IsShown() ) ) {
-		if( pRoutePropDialog->m_pRoute == pA ) {
-			if( pRoutePropDialog->m_pEnroutePoint )
-				pRoutePropDialog->m_pEnroutePoint = pActivePoint;
-			pRoutePropDialog->SetRouteAndUpdate( pA );
+	// Update the RouteProperties Dialog, if currently shown
+	if ((NULL != pRoutePropDialog) && (pRoutePropDialog->IsShown())) {
+		if (pRoutePropDialog->getRoute() == pA) {
+			if (pRoutePropDialog->getEnroutePoint())
+				pRoutePropDialog->setEnroutePoint(pActivePoint); // FIXME: weird: if set, overwrite it?
+			pRoutePropDialog->SetRouteAndUpdate(pA);
 			pRoutePropDialog->UpdateProperties();
 		}
 	}
 
-	wxString msg_id( _T("OCPN_WPT_ACTIVATED") );
-	g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+	wxString msg_id(_T("OCPN_WPT_ACTIVATED"));
+	g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 
 	return true;
 }
@@ -323,18 +323,18 @@ bool Routeman::ActivateNextPoint( Route *pr, bool skipped )
 
 		m_bArrival = false;
 
-		//    Update the RouteProperties Dialog, if currently shown
-		if( ( NULL != pRoutePropDialog ) && ( pRoutePropDialog->IsShown() ) ) {
-			if( pRoutePropDialog->m_pRoute == pr ) {
-				if( pRoutePropDialog->m_pEnroutePoint ) pRoutePropDialog->m_pEnroutePoint =
-					pActivePoint;
-				pRoutePropDialog->SetRouteAndUpdate( pr );
+		// Update the RouteProperties Dialog, if currently shown
+		if ((NULL != pRoutePropDialog) && (pRoutePropDialog->IsShown())) {
+			if (pRoutePropDialog->getRoute() == pr) {
+				if (pRoutePropDialog->getEnroutePoint())
+					pRoutePropDialog->setEnroutePoint(pActivePoint); // FIXME: weird: if set, overwrite it?
+				pRoutePropDialog->SetRouteAndUpdate(pr);
 				pRoutePropDialog->UpdateProperties();
 			}
 		}
 
-		wxString msg_id( _T("OCPN_WPT_ARRIVED") );
-		g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+		wxString msg_id(_T("OCPN_WPT_ARRIVED"));
+		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 
 		return true;
 	}

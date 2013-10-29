@@ -76,7 +76,6 @@ Track::Track(void)
 	m_prev_time = wxInvalidDateTime;
 	m_lastStoredTP = NULL;
 
-	wxDateTime now = wxDateTime::Now();
 	trackPointState = firstPoint;
 	m_lastStoredTP = NULL;
 	m_removeTP = NULL;
@@ -449,18 +448,21 @@ Route *Track::RouteFromTrack(wxProgressDialog *pprog)
 	RoutePoint *prp_OK = NULL;  // last routepoint known not to exceed xte limit, if not yet added
 
 	wxString icon = _T("xmblue");
-	if (g_TrackDeltaDistance >= 0.1) icon = _T("diamond");
+	if (g_TrackDeltaDistance >= 0.1)
+		icon = _T("diamond");
 
 	int ic = 0;
 	int next_ic = 0;
 	int back_ic = 0;
 	int nPoints = pRoutePointList->GetCount();
 	bool isProminent = true;
-	double delta_dist, delta_hdg, xte;
+	double delta_dist;
+	double delta_hdg;
+	double xte;
 	double leg_speed = 0.1;
 
 	if (pRoutePropDialog)
-		leg_speed = pRoutePropDialog->m_planspeed;
+		leg_speed = pRoutePropDialog->getPlanSpeed();
 	else
 		leg_speed = g_PlanSpeed;
 

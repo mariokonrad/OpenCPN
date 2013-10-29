@@ -34,8 +34,6 @@
 
 #define CURRENT_SENC_FORMAT_VERSION  122
 
-//    Fwd Defns
-class wxArrayOfS57attVal;
 class wxInputStream;
 class OGREnvelope;
 class OGRGeometry;
@@ -276,6 +274,8 @@ struct S57attVal
 	void * value;
 	OGRatt_t valType;
 };
+
+WX_DEFINE_ARRAY(S57attVal*, wxArrayOfS57attVal);
 
 struct OBJLElement
 {

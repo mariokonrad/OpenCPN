@@ -33,6 +33,7 @@ int OCPNMessageBox(
 		const wxString & message,
 		const wxString & caption = _T("Message"),
 		int style = wxOK,
+		int timeout_sec = -1,
 		int x = -1,
 		int y = -1);
 

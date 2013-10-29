@@ -795,12 +795,12 @@ bool App::create_opencpn_log()
 
 wxString App::constrain_logfile_size()
 {
-	const global::System::Data & sys = global::OCPN::get().sys().data();
+	const global::System::Data& sys = global::OCPN::get().sys().data();
 
 	// Constrain the size of the log file
 	wxString large_log_message;
-	if( ::wxFileExists(sys.log_file) ) {
-		if( wxFileName::GetSize(sys.log_file) > 1000000 ) {
+	if (::wxFileExists(sys.log_file)) {
+		if (wxFileName::GetSize(sys.log_file) > 1000000) {
 			// Defer the showing of this messagebox until the system locale is established.
 			wxString oldlog = sys.log_file + _T(".log");
 			large_log_message = _("Old log will be moved to ") + oldlog;
@@ -1507,7 +1507,7 @@ bool App::OnInit()
 	// Show deferred log restart message, if it exists.
 	if (!large_log_message.IsEmpty())
 		OCPNMessageBox(NULL, large_log_message, wxString(_("OpenCPN Info")),
-					   wxICON_INFORMATION | wxOK);
+					   wxICON_INFORMATION | wxOK, 5);
 
 	validate_OpenGL();
 

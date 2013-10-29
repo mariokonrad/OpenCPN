@@ -45,22 +45,24 @@ ChartDummy::~ChartDummy()
 	delete m_pBM;
 }
 
-ThumbData * ChartDummy::GetThumbData()
+ThumbData* ChartDummy::GetThumbData()
 {
 	return pThumbData;
 }
 
-double ChartDummy::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom)
+double ChartDummy::GetNormalScaleMin(double WXUNUSED(canvas_scale_factor),
+									 bool WXUNUSED(b_allow_overzoom))
 {
 	return 1.0;
 }
 
-double ChartDummy::GetNormalScaleMax(double canvas_scale_factor, int canvas_width)
+double ChartDummy::GetNormalScaleMax(double WXUNUSED(canvas_scale_factor),
+									 int WXUNUSED(canvas_width))
 {
 	return 2.0e7;
 }
 
-InitReturn ChartDummy::Init(const wxString& name, ChartInitFlag init_flags)
+InitReturn ChartDummy::Init(const wxString& WXUNUSED(name), ChartInitFlag WXUNUSED(init_flags))
 {
 	return INIT_OK;
 }
@@ -70,16 +72,17 @@ double ChartDummy::GetNearestPreferredScalePPM(double target_scale_ppm)
 	return target_scale_ppm;
 }
 
-void ChartDummy::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
+void ChartDummy::SetColorScheme(ColorScheme WXUNUSED(cs), bool WXUNUSED(bApplyImmediate))
 {
 }
 
-ThumbData *ChartDummy::GetThumbData(int tnx, int tny, float lat, float lon)
+ThumbData* ChartDummy::GetThumbData(int WXUNUSED(tnx), int WXUNUSED(tny), float WXUNUSED(lat),
+									float WXUNUSED(lon))
 {
-	return (ThumbData *)NULL;
+	return NULL;
 }
 
-bool ChartDummy::UpdateThumbData(double lat, double lon)
+bool ChartDummy::UpdateThumbData(double WXUNUSED(lat), double WXUNUSED(lon))
 {
 	return FALSE;
 }
@@ -95,9 +98,9 @@ bool ChartDummy::GetChartExtent(Extent *pext)
 }
 
 bool ChartDummy::RenderRegionViewOnGL(
-		const wxGLContext & glc,
-		const ViewPort & VPoint,
-		const OCPNRegion & Region)
+		const wxGLContext & WXUNUSED(glc),
+		const ViewPort & WXUNUSED(VPoint),
+		const OCPNRegion & WXUNUSED(Region))
 {
 	return true;
 }
@@ -105,29 +108,28 @@ bool ChartDummy::RenderRegionViewOnGL(
 bool ChartDummy::RenderRegionViewOnDC(
 		wxMemoryDC & dc,
 		const ViewPort & VPoint,
-		const OCPNRegion & Region)
+		const OCPNRegion & WXUNUSED(Region))
 {
 	return RenderViewOnDC(dc, VPoint);
 }
 
 bool ChartDummy::RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint)
 {
-	if( m_pBM  && m_pBM->IsOk() ) {
-		if((m_pBM->GetWidth() != VPoint.pix_width) || (m_pBM->GetHeight() != VPoint.pix_height)) {
+	if (m_pBM && m_pBM->IsOk()) {
+		if ((m_pBM->GetWidth() != VPoint.pix_width) || (m_pBM->GetHeight() != VPoint.pix_height)) {
 			delete m_pBM;
 			m_pBM = NULL;
 		}
 	} else {
 		delete m_pBM;
-		m_pBM =NULL;
+		m_pBM = NULL;
 	}
 
-	if( VPoint.pix_width && VPoint.pix_height ) {
-		if(NULL == m_pBM)
-			m_pBM = new wxBitmap(VPoint.pix_width, VPoint.pix_height,-1);
+	if (VPoint.pix_width && VPoint.pix_height) {
+		if (NULL == m_pBM)
+			m_pBM = new wxBitmap(VPoint.pix_width, VPoint.pix_height, -1);
 
 		dc.SelectObject(*m_pBM);
-
 		dc.SetBackground(*wxBLACK_BRUSH);
 		dc.Clear();
 	}
@@ -135,12 +137,12 @@ bool ChartDummy::RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint)
 	return true;
 }
 
-bool ChartDummy::AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed)
+bool ChartDummy::AdjustVP(ViewPort& WXUNUSED(vp_last), ViewPort& WXUNUSED(vp_proposed))
 {
 	return false;
 }
 
-void ChartDummy::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion)
+void ChartDummy::GetValidCanvasRegion(const ViewPort& WXUNUSED(VPoint), OCPNRegion* pValidRegion)
 {
 	pValidRegion->Clear();
 	pValidRegion->Union(0, 0, 1, 1);

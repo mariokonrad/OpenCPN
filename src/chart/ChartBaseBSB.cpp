@@ -34,13 +34,14 @@
 
 #include <sys/stat.h>
 
-#include "ocpn_pixel.h"
-#include "OCPNRegionIterator.h"
-#include "OCPNBitmap.h"
-#include "MicrosoftCompatibility.h"
+#include <ocpn_pixel.h>
+#include <OCPNRegionIterator.h>
+#include <OCPNBitmap.h>
+#include <MicrosoftCompatibility.h>
 #include <chart/PlyPoint.h>
 #include <algorithm>
 
+using chart::Plypoint;
 using std::min;
 
 #ifndef __WXMSW__
@@ -56,37 +57,31 @@ sigjmp_buf env_chart; // the context saved by sigsetjmp();
 
 void catch_signals_chart(int signo)
 {
-      switch(signo)
-      {
-            case SIGSEGV:
-                  siglongjmp(env_chart, 1);     // jump back to the setjmp() point
-                  break;
+	switch (signo) {
+		case SIGSEGV:
+			siglongjmp(env_chart, 1); // jump back to the setjmp() point
+			break;
 
-            default:
-                  break;
-      }
+		default:
+			break;
+	}
 }
 
 #endif
 
 
-// ----------------------------------------------------------------------------
-// Random Prototypes
-// ----------------------------------------------------------------------------
-
 #ifdef OCPN_USE_CONFIG
 class MyConfig;
-extern MyConfig        *pConfig;
+extern MyConfig* pConfig;
 #endif
 
-typedef struct  {
-      float y;
-      float x;
+typedef struct
+{
+	float y;
+	float x;
 } MyFlPoint;
 
-
-bool G_FloatPtInPolygon(MyFlPoint *rgpts, int wnumpts, float x, float y) ;
-
+bool G_FloatPtInPolygon(MyFlPoint* rgpts, int wnumpts, float x, float y);
 
 // ============================================================================
 // Palette implementation
@@ -95,21 +90,21 @@ opncpnPalette::opncpnPalette()
 	: FwdPalette(NULL)
 	, RevPalette(NULL)
 {
-    // Index into palette is 1-based, so predefine the first entry as null
-    nFwd = 1;
-    nRev = 1;
-    FwdPalette =(int *)malloc( sizeof(int));
-    RevPalette =(int *)malloc( sizeof(int));
-    FwdPalette[0] = 0;
-    RevPalette[0] = 0;
+	// Index into palette is 1-based, so predefine the first entry as null
+	nFwd = 1;
+	nRev = 1;
+	FwdPalette = (int*)malloc(sizeof(int)); // FIXME: use std vector
+	RevPalette = (int*)malloc(sizeof(int)); // FIXME: use std vector
+	FwdPalette[0] = 0;
+	RevPalette[0] = 0;
 }
 
 opncpnPalette::~opncpnPalette()
 {
-    if (FwdPalette)
-        free(FwdPalette);
-    if (RevPalette)
-        free(RevPalette);
+	if (FwdPalette)
+		free(FwdPalette);
+	if (RevPalette)
+		free(RevPalette);
 }
 
 // ============================================================================
@@ -247,7 +242,7 @@ double ChartBaseBSB::GetNormalScaleMax(double canvas_scale_factor, int WXUNUSED(
 
 double ChartBaseBSB::GetNearestPreferredScalePPM(double target_scale_ppm)
 {
-      return GetClosestValidNaturalScalePPM(target_scale_ppm, .01, 64.);            // changed from 32 to 64 to allow super small
+      return GetClosestValidNaturalScalePPM(target_scale_ppm, 0.01, 64.0);            // changed from 32 to 64 to allow super small
                                                                                     // scale BSB charts as quilt base
 }
 
@@ -298,7 +293,7 @@ double ChartBaseBSB::GetClosestValidNaturalScalePPM(double target_scale, double 
                         ibsf *= 2;
             }
 
-            binary_scale_factor = 1. / ibsf;
+            binary_scale_factor = 1.0 / ibsf;
       }
 
       return  chart_1x_scale / binary_scale_factor;
@@ -630,144 +625,137 @@ void ChartBaseBSB::InvalidateLineCache(void)
       }
 }
 
-bool ChartBaseBSB::GetChartExtent(Extent *pext)
+bool ChartBaseBSB::GetChartExtent(Extent* pext)
 {
-      pext->NLAT = m_LatMax;
-      pext->SLAT = m_LatMin;
-      pext->ELON = m_LonMax;
-      pext->WLON = m_LonMin;
+	pext->NLAT = m_LatMax;
+	pext->SLAT = m_LatMin;
+	pext->ELON = m_LonMax;
+	pext->WLON = m_LonMin;
 
-      return true;
+	return true;
 }
-
 
 bool ChartBaseBSB::SetMinMax(void)
 {
-      //    Calculate the Chart Extents(M_LatMin, M_LonMin, etc.)
-      //     from the COVR data, for fast database search
-      m_LonMax = -360.0;
-      m_LonMin = 360.0;
-      m_LatMax = -90.0;
-      m_LatMin = 90.0;
+	// Calculate the Chart Extents(M_LatMin, M_LonMin, etc.)
+	// from the COVR data, for fast database search
+	m_LonMax = -360.0;
+	m_LonMin = 360.0;
+	m_LatMax = -90.0;
+	m_LatMin = 90.0;
 
-      Plypoint *ppp = (Plypoint *)GetCOVRTableHead(0);
-      int cnPlypoint = GetCOVRTablenPoints(0);
+	Plypoint* ppp = reinterpret_cast<Plypoint*>(GetCOVRTableHead(0)); // FIXME
+	int cnPlypoint = GetCOVRTablenPoints(0);
 
-      for(int u=0 ; u<cnPlypoint ; u++)
-      {
-            if(ppp->lnp > m_LonMax)
-                  m_LonMax = ppp->lnp;
-            if(ppp->lnp < m_LonMin)
-                  m_LonMin = ppp->lnp;
+	for (int u = 0; u < cnPlypoint; u++) {
+		if (ppp->lnp > m_LonMax)
+			m_LonMax = ppp->lnp;
+		if (ppp->lnp < m_LonMin)
+			m_LonMin = ppp->lnp;
 
-            if(ppp->ltp > m_LatMax)
-                  m_LatMax = ppp->ltp;
-            if(ppp->ltp < m_LatMin)
-                  m_LatMin = ppp->ltp;
+		if (ppp->ltp > m_LatMax)
+			m_LatMax = ppp->ltp;
+		if (ppp->ltp < m_LatMin)
+			m_LatMin = ppp->ltp;
 
-            ppp++;
-      }
+		ppp++;
+	}
 
-      //    Check for special cases
+	  // Check for special cases
 
-      //    Case 1:  Chart spans International Date Line or Greenwich, Longitude min/max is non-obvious.
-      if((m_LonMax * m_LonMin) < 0)              // min/max are opposite signs
-      {
-            //    Georeferencing is not yet available, so find the reference points closest to min/max ply points
+	// Case 1:  Chart spans International Date Line or Greenwich, Longitude min/max is non-obvious.
+	if ((m_LonMax * m_LonMin) < 0) // min/max are opposite signs
+	{
+		// Georeferencing is not yet available, so find the reference points closest to min/max ply
+		// points
 
-            if(reference_points.empty())
-                  return false;        // have to bail here
+		if (reference_points.empty())
+			return false; // have to bail here
 
-                  //    for m_LonMax
-            double min_dist_x = 360;
-            int imaxclose = 0;
-            for(int ic=0 ; ic < static_cast<int>(reference_points.size()); ic++)
-            {
-                  double dist = sqrt(((m_LatMax - reference_points[ic].latr) * (m_LatMax - reference_points[ic].latr))
-                                    + ((m_LonMax - reference_points[ic].lonr) * (m_LonMax - reference_points[ic].lonr)));
+		// for m_LonMax
+		double min_dist_x = 360;
+		int imaxclose = 0;
+		for (int ic = 0; ic < static_cast<int>(reference_points.size()); ic++) {
+			double dist = sqrt(
+				((m_LatMax - reference_points[ic].latr) * (m_LatMax - reference_points[ic].latr))
+				+ ((m_LonMax - reference_points[ic].lonr)
+				   * (m_LonMax - reference_points[ic].lonr)));
 
-                  if(dist < min_dist_x)
-                  {
-                        min_dist_x = dist;
-                        imaxclose = ic;
-                  }
-            }
+			if (dist < min_dist_x) {
+				min_dist_x = dist;
+				imaxclose = ic;
+			}
+		}
 
-                  //    for m_LonMin
-            double min_dist_n = 360;
-            int iminclose = 0;
-            for(int id=0 ; id < static_cast<int>(reference_points.size()); id++)
-            {
-                  double dist = sqrt(((m_LatMin - reference_points[id].latr) * (m_LatMin - reference_points[id].latr))
-                                    + ((m_LonMin - reference_points[id].lonr) * (m_LonMin - reference_points[id].lonr)));
+		// for m_LonMin
+		double min_dist_n = 360;
+		int iminclose = 0;
+		for (int id = 0; id < static_cast<int>(reference_points.size()); id++) {
+			double dist = sqrt(
+				((m_LatMin - reference_points[id].latr) * (m_LatMin - reference_points[id].latr))
+				+ ((m_LonMin - reference_points[id].lonr)
+				   * (m_LonMin - reference_points[id].lonr)));
 
-                  if(dist < min_dist_n)
-                  {
-                        min_dist_n = dist;
-                        iminclose = id;
-                  }
-            }
+			if (dist < min_dist_n) {
+				min_dist_n = dist;
+				iminclose = id;
+			}
+		}
 
-            //    Is this chart crossing IDL or Greenwich?
-            // Make the check
-            if(reference_points[imaxclose].xr < reference_points[iminclose].xr)
-            {
-                  //    This chart crosses IDL and needs a flip, meaning that all negative longitudes need to be normalized
-                  //    and the min/max relcalculated
-                  //    This code added to correct non-rectangular charts crossing IDL, such as nz14605.kap
+		// Is this chart crossing IDL or Greenwich?
+		// Make the check
+		if (reference_points[imaxclose].xr < reference_points[iminclose].xr) {
+			// This chart crosses IDL and needs a flip, meaning that all negative longitudes need
+			// to be normalized
+			// and the min/max relcalculated
+			// This code added to correct non-rectangular charts crossing IDL, such as
+			// nz14605.kap
 
-                  m_LonMax = -360.0;
-                  m_LonMin = 360.0;
-                  m_LatMax = -90.0;
-                  m_LatMin = 90.0;
+			m_LonMax = -360.0;
+			m_LonMin = 360.0;
+			m_LatMax = -90.0;
+			m_LatMin = 90.0;
 
+			Plypoint* ppp = reinterpret_cast<Plypoint*>(GetCOVRTableHead(0)); // Normalize the plypoints, FIXME
+			int cnPlypoint = GetCOVRTablenPoints(0);
 
-                  Plypoint *ppp = (Plypoint *)GetCOVRTableHead(0);      // Normalize the plypoints
-                  int cnPlypoint = GetCOVRTablenPoints(0);
+			for (int u = 0; u < cnPlypoint; u++) {
+				if (ppp->lnp < 0.0)
+					ppp->lnp += 360.0;
 
+				if (ppp->lnp > m_LonMax)
+					m_LonMax = ppp->lnp;
+				if (ppp->lnp < m_LonMin)
+					m_LonMin = ppp->lnp;
 
-                  for(int u=0 ; u<cnPlypoint ; u++)
-                  {
-                        if( ppp->lnp < 0.)
-                              ppp->lnp += 360.;
+				if (ppp->ltp > m_LatMax)
+					m_LatMax = ppp->ltp;
+				if (ppp->ltp < m_LatMin)
+					m_LatMin = ppp->ltp;
 
-                        if(ppp->lnp > m_LonMax)
-                              m_LonMax = ppp->lnp;
-                        if(ppp->lnp < m_LonMin)
-                              m_LonMin = ppp->lnp;
+				ppp++;
+			}
+		}
+	}
 
-                        if(ppp->ltp > m_LatMax)
-                              m_LatMax = ppp->ltp;
-                        if(ppp->ltp < m_LatMin)
-                              m_LatMin = ppp->ltp;
+	// Case 2 Lons are both < -180, which means the extent will be reported incorrectly
+	// and the plypoint structure will be wrong
+	// This case is seen first on 81004_1.KAP, (Mariannas)
 
-                        ppp++;
-                  }
-            }
+	if ((m_LonMax < -180.0) && (m_LonMin < -180.0)) {
+		m_LonMin += 360.0; // Normalize the extents
+		m_LonMax += 360.0;
 
+		Plypoint* ppp = reinterpret_cast<Plypoint*>(GetCOVRTableHead(0)); // Normalize the plypoints, FIXME
+		int cnPlypoint = GetCOVRTablenPoints(0);
 
-      }
+		for (int u = 0; u < cnPlypoint; u++) {
+			ppp->lnp += 360.0;
+			ppp++;
+		}
+	}
 
-      // Case 2 Lons are both < -180, which means the extent will be reported incorrectly
-      // and the plypoint structure will be wrong
-      // This case is seen first on 81004_1.KAP, (Mariannas)
-
-      if((m_LonMax < -180.) && (m_LonMin < -180.))
-      {
-            m_LonMin += 360.;               // Normalize the extents
-            m_LonMax += 360.;
-
-            Plypoint *ppp = (Plypoint *)GetCOVRTableHead(0);      // Normalize the plypoints
-            int cnPlypoint = GetCOVRTablenPoints(0);
-
-            for(int u=0 ; u<cnPlypoint ; u++)
-            {
-                  ppp->lnp += 360.;
-                  ppp++;
-            }
-      }
-
-      return true;
+	return true;
 }
 
 void ChartBaseBSB::SetColorScheme(ColorScheme cs, bool bApplyImmediate)

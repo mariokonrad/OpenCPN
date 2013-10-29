@@ -30,6 +30,8 @@
 #include <wx/dir.h>
 #include <wx/log.h>
 
+using chart::Plypoint;
+
 ChartGEO::ChartGEO()
 {
 	m_ChartType = CHART_TYPE_GEO;
@@ -53,7 +55,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 		return INIT_FAIL_REMOVE;
 
 	int nPlypoint = 0;
-	Plypoint *pPlyTable = (Plypoint *)malloc(sizeof(Plypoint)); // FIXME: use std::vector instead of dynamic memory allocation
+	Plypoint *pPlyTable = static_cast<Plypoint *>(malloc(sizeof(Plypoint))); // FIXME: use std::vector instead of dynamic memory allocation
 
 	m_FullPath = name;
 	m_Description = m_FullPath;
@@ -64,22 +66,19 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 	Path = GEOFile.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME);
 
 
-	//    Read the GEO file, extracting useful information
+	// Read the GEO file, extracting useful information
 
 	ifs_hdr->SeekI(0, wxFromStart);                 // rewind
 
 	Size_X = Size_Y = 0;
 
 	wxString bitmap_filepath;
-	while( (ReadBSBHdrLine(ifs_hdr, &buffer[0], BUF_LEN_MAX)) != 0 )
-	{
+	while ((ReadBSBHdrLine(ifs_hdr, &buffer[0], BUF_LEN_MAX)) != 0) {
 		wxString str_buf(buffer, wxConvUTF8);
-		if(!strncmp(buffer, "Bitmap", 6))
-		{
+		if (!strncmp(buffer, "Bitmap", 6)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if(token.IsSameAs(_T("Bitmap"), TRUE))
-			{
+			if (token.IsSameAs(_T("Bitmap"), TRUE)) {
 				int i;
 				i = tkz.GetPosition();
 				bitmap_filepath.Clear();
@@ -88,11 +87,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 					i++;
 				}
 			}
-		}
-
-
-		else if(!strncmp(buffer, "Scale", 5))
-		{
+		} else if (!strncmp(buffer, "Scale", 5)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
 			if(token.IsSameAs(_T("Scale"), TRUE))               // extract Scale
@@ -101,26 +96,24 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 				i = tkz.GetPosition();
 				m_Chart_Scale = atoi(&buffer[i]);
 			}
-		}
-
-		else if(!strncmp(buffer, "Depth", 5))
-		{
+		} else if (!strncmp(buffer, "Depth", 5)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if(token.IsSameAs(_T("Depth Units"), FALSE))               // extract Depth Units
+			if (token.IsSameAs(_T("Depth Units"), FALSE)) // extract Depth Units
 			{
 				int i;
 				i = tkz.GetPosition();
-				wxString str(&buffer[i],  wxConvUTF8);
+				wxString str(&buffer[i], wxConvUTF8);
 				m_DepthUnits = str.Trim();
 			}
-		}
-
-		else if (!strncmp(buffer, "Point", 5))                // Extract RefPoints
-		{
+		} else if (!strncmp(buffer, "Point", 5)) {
+			// Extract RefPoints
 			// FIXME: why not read Refpoint directly, DUPLICATE CODE
-			int i, xr, yr;
-			float ltr,lnr;
+			int i;
+			int xr;
+			int yr;
+			float ltr;
+			float lnr;
 			sscanf(&buffer[0], "Point%d=%f %f %d %d", &i, &lnr, &ltr, &yr, &xr);
 			Refpoint p;
 			p.xr = xr;
@@ -130,50 +123,39 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 			p.bXValid = 1;
 			p.bYValid = 1;
 			reference_points.push_back(p);
-		}
-
-		else if (!strncmp(buffer, "Vertex", 6))
-		{
+		} else if (!strncmp(buffer, "Vertex", 6)) {
 			int i;
-			float ltp,lnp;
+			float ltp;
+			float lnp;
 			sscanf(buffer, "Vertex%d=%f %f", &i, &ltp, &lnp);
-			Plypoint *tmp = pPlyTable;
-			pPlyTable = (Plypoint *)realloc(pPlyTable, sizeof(Plypoint) * (nPlypoint+1));
-			if (NULL == pPlyTable)
-			{
+			Plypoint* tmp = pPlyTable;
+			pPlyTable = static_cast
+				<Plypoint*>(realloc(pPlyTable, sizeof(Plypoint) * (nPlypoint + 1)));
+			if (NULL == pPlyTable) {
 				free(tmp);
 				tmp = NULL;
-			} else
-			{
+			} else {
 				pPlyTable[nPlypoint].ltp = ltp;
 				pPlyTable[nPlypoint].lnp = lnp;
 				nPlypoint++;
 			}
-		}
-
-		else if (!strncmp(buffer, "Date Pub", 8))
-		{
+		} else if (!strncmp(buffer, "Date Pub", 8)) {
 			char date_string[40];
 			char date_buf[10];
 			sscanf(buffer, "Date Published=%s\r\n", &date_string[0]);
-			wxString date_wxstr(date_string,  wxConvUTF8);
+			wxString date_wxstr(date_string, wxConvUTF8);
 			wxDateTime dt;
-			if(dt.ParseDate(date_wxstr))       // successful parse?
-			{
+			if (dt.ParseDate(date_wxstr)) {
+				// successful parse?
 				sprintf(date_buf, "%d", dt.GetYear());
-			}
-			else
-			{
+			} else {
 				sscanf(date_string, "%s", date_buf);
 			}
 			m_PubYear = wxString(date_buf, wxConvUTF8);
-		}
-
-		else if (!strncmp(buffer, "Skew", 4))
-		{
+		} else if (!strncmp(buffer, "Skew", 4)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if(token.IsSameAs(_T("Skew Angle"), FALSE))               // extract Skew Angle
+			if (token.IsSameAs(_T("Skew Angle"), FALSE)) // extract Skew Angle
 			{
 				int i;
 				i = tkz.GetPosition();
@@ -181,65 +163,46 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 				sscanf(&buffer[i], "%f,", &fcs);
 				m_Chart_Skew = fcs;
 			}
-		}
-
-		else if (!strncmp(buffer, "Latitude Offset", 15))
-		{
+		} else if (!strncmp(buffer, "Latitude Offset", 15)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if(token.IsSameAs(_T("Latitude Offset"), FALSE))
-			{
+			if (token.IsSameAs(_T("Latitude Offset"), FALSE)) {
 				int i;
 				i = tkz.GetPosition();
 				float lto;
 				sscanf(&buffer[i], "%f,", &lto);
 				m_dtm_lat = lto;
 			}
-		}
-
-
-		else if (!strncmp(buffer, "Longitude Offset", 16))
-		{
+		} else if (!strncmp(buffer, "Longitude Offset", 16)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if(token.IsSameAs(_T("Longitude Offset"), FALSE))
-			{
+			if (token.IsSameAs(_T("Longitude Offset"), FALSE)) {
 				int i;
 				i = tkz.GetPosition();
 				float lno;
 				sscanf(&buffer[i], "%f,", &lno);
 				m_dtm_lon = lno;
 			}
-		}
-
-		else if (!strncmp(buffer, "Datum", 5))
-		{
+		} else if (!strncmp(buffer, "Datum", 5)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if(token.IsSameAs(_T("Datum"), FALSE))
-			{
+			if (token.IsSameAs(_T("Datum"), FALSE)) {
 				token = tkz.GetNextToken();
 				m_datum_str = token;
 			}
-		}
-
-
-		else if (!strncmp(buffer, "Name", 4))
-		{
+		} else if (!strncmp(buffer, "Name", 4)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if(token.IsSameAs(_T("Name"), FALSE))                         // Name
-			{
+			if (token.IsSameAs(_T("Name"), FALSE)) {
+				// Name
 				int i;
 				i = tkz.GetPosition();
 				m_Name.Clear();
-				while(isprint(buffer[i]) && (i < 80))
+				while (isprint(buffer[i]) && (i < 80))
 					m_Name.Append(buffer[i++]);
 			}
 		}
-	}     //while
-
-
+	}
 
 	// Extract the remaining data from .NOS Bitmap file
 	ifs_bitmap = NULL;

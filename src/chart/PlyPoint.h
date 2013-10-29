@@ -24,11 +24,15 @@
 #ifndef __CHART__PLYPOINT__H__
 #define __CHART__PLYPOINT__H__
 
+namespace chart {
+
 class Plypoint
 {
-	public:
-		float ltp;
-		float lnp;
+public:
+	float ltp;
+	float lnp;
 };
+
+}
 
 #endif

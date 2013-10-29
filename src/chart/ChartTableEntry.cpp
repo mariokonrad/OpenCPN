@@ -31,92 +31,92 @@
 #include <wx/log.h>
 #include <wx/stream.h>
 
+using chart::Plypoint;
+
 extern int s_dbVersion;
 
 struct ChartTableEntry_onDisk_17
 {
-	int         EntryOffset;
-	int         ChartType;
-	float       LatMax;
-	float       LatMin;
-	float       LonMax;
-	float       LonMin;
+	int EntryOffset;
+	int ChartType;
+	float LatMax;
+	float LatMin;
+	float LonMax;
+	float LonMin;
 
-	int         Scale;
-	int         edition_date;
-	int         file_date;
+	int Scale;
+	int edition_date;
+	int file_date;
 
-	int         nPlyEntries;
-	int         nAuxPlyEntries;
+	int nPlyEntries;
+	int nAuxPlyEntries;
 
-	float       skew;
-	int         ProjectionType;
-	bool        bValid;
+	float skew;
+	int ProjectionType;
+	bool bValid;
 
-	int         nNoCovrPlyEntries;
+	int nNoCovrPlyEntries;
 };
 
 struct ChartTableEntry_onDisk_16
 {
-	int         EntryOffset;
-	int         ChartType;
-	float       LatMax;
-	float       LatMin;
-	float       LonMax;
-	float       LonMin;
+	int EntryOffset;
+	int ChartType;
+	float LatMax;
+	float LatMin;
+	float LonMax;
+	float LonMin;
 
-	int         Scale;
-	int         edition_date;
-	int         file_date;
+	int Scale;
+	int edition_date;
+	int file_date;
 
-	int         nPlyEntries;
-	int         nAuxPlyEntries;
+	int nPlyEntries;
+	int nAuxPlyEntries;
 
-	float       skew;
-	int         ProjectionType;
-	bool        bValid;
+	float skew;
+	int ProjectionType;
+	bool bValid;
 };
-
 
 struct ChartTableEntry_onDisk_15
 {
-	int         EntryOffset;
-	int         ChartType;
-	float       LatMax;
-	float       LatMin;
-	float       LonMax;
-	float       LonMin;
+	int EntryOffset;
+	int ChartType;
+	float LatMax;
+	float LatMin;
+	float LonMax;
+	float LonMin;
 
-	int         Scale;
-	time_t      edition_date;
-	time_t      file_date;
+	int Scale;
+	time_t edition_date;
+	time_t file_date;
 
-	int         nPlyEntries;
-	int         nAuxPlyEntries;
+	int nPlyEntries;
+	int nAuxPlyEntries;
 
-	bool        bValid;
+	bool bValid;
 };
 
 struct ChartTableEntry_onDisk_14
 {
-	int         EntryOffset;
-	int         ChartType;
-	char        ChartID[16];
-	float       LatMax;
-	float       LatMin;
-	float       LonMax;
-	float       LonMin;
-	char        *pFullPath;
-	int         Scale;
-	time_t      edition_date;
-	float       *pPlyTable;
-	int         nPlyEntries;
-	int         nAuxPlyEntries;
-	float       **pAuxPlyTable;
-	int         *pAuxCntTable;
-	bool        bValid;
+	int EntryOffset;
+	int ChartType;
+	char ChartID[16];
+	float LatMax;
+	float LatMin;
+	float LonMax;
+	float LonMin;
+	char* pFullPath;
+	int Scale;
+	time_t edition_date;
+	float* pPlyTable;
+	int nPlyEntries;
+	int nAuxPlyEntries;
+	float** pAuxPlyTable;
+	int* pAuxCntTable;
+	bool bValid;
 };
-
 
 ChartTableEntry::ChartTableEntry()
 {
@@ -233,11 +233,12 @@ const wxString & ChartTableEntry::GetFileName(void) const
 	return m_filename;
 }
 
-ChartTableEntry::ChartTableEntry(ChartBase &theChart)
+ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 {
 	Clear();
 
-	char *pt = (char *)malloc(strlen(theChart.GetFullPath().mb_str(wxConvUTF8)) + 1); // FIXME: use string
+	// FIXME: use string
+	char* pt = (char*)malloc(strlen(theChart.GetFullPath().mb_str(wxConvUTF8)) + 1);
 	strcpy(pt, theChart.GetFullPath().mb_str(wxConvUTF8));
 	pFullPath = pt;
 
@@ -266,80 +267,79 @@ ChartTableEntry::ChartTableEntry(ChartBase &theChart)
 
 	// Fill in the PLY information
 
-	// If  COVR table has only one entry, us it for the primary Ply Table
+	// If COVR table has only one entry, us it for the primary Ply Table
 	if (theChart.GetCOVREntries() == 1) {
 		nPlyEntries = theChart.GetCOVRTablePoints(0);
-		float *pf = (float *)malloc(2 * nPlyEntries * sizeof(float));
+		float* pf = (float*)malloc(2 * nPlyEntries * sizeof(float));
 		pPlyTable = pf;
-		float *pfe = pf;
-		Plypoint *ppp = (Plypoint *)theChart.GetCOVRTableHead(0);
+		float* pfe = pf;
+		Plypoint* ppp = reinterpret_cast<Plypoint*>(theChart.GetCOVRTableHead(0)); // FIXME
 
 		for (int i = 0; i < nPlyEntries; i++) {
 			*pfe++ = ppp->ltp;
 			*pfe++ = ppp->lnp;
 			ppp++;
 		}
-	}
-	// Else create a rectangular primary Ply Table from the chart extents
-	// and create AuxPly table from the COVR tables
-	else {
+	} else {
+		// Else create a rectangular primary Ply Table from the chart extents
+		// and create AuxPly table from the COVR tables
 		// Create new artificial Ply table from chart extents
 		nPlyEntries = 4;
-		float *pf1 = (float *)malloc(2 * 4 * sizeof(float));
+		float* pf1 = (float*)malloc(2 * 4 * sizeof(float));
 		pPlyTable = pf1;
-		float *pfe = pf1;
+		float* pfe = pf1;
 		Extent fext;
 		theChart.GetChartExtent(&fext);
 
-		*pfe++ = fext.NLAT; //LatMax;
-		*pfe++ = fext.WLON; //LonMin;
+		*pfe++ = fext.NLAT; // LatMax;
+		*pfe++ = fext.WLON; // LonMin;
 
-		*pfe++ = fext.NLAT; //LatMax;
-		*pfe++ = fext.ELON; //LonMax;
+		*pfe++ = fext.NLAT; // LatMax;
+		*pfe++ = fext.ELON; // LonMax;
 
-		*pfe++ = fext.SLAT; //LatMin;
-		*pfe++ = fext.ELON; //LonMax;
+		*pfe++ = fext.SLAT; // LatMin;
+		*pfe++ = fext.ELON; // LonMax;
 
-		*pfe++ = fext.SLAT; //LatMin;
-		*pfe++ = fext.WLON; //LonMin;
+		*pfe++ = fext.SLAT; // LatMin;
+		*pfe++ = fext.WLON; // LonMin;
 
 		// Fill in the structure for pAuxPlyTable
 
 		nAuxPlyEntries = theChart.GetCOVREntries();
 		wxASSERT(nAuxPlyEntries);
-		float **pfp = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-		float **pft0 = pfp;
-		int *pip = (int *)malloc(nAuxPlyEntries * sizeof(int));
+		float** pfp = (float**)malloc(nAuxPlyEntries * sizeof(float*));
+		float** pft0 = pfp;
+		int* pip = (int*)malloc(nAuxPlyEntries * sizeof(int));
 
-		for (int j = 0 ; j < nAuxPlyEntries; j++) {
-			float *pf_entry = (float *)malloc(theChart.GetCOVRTablePoints(j) * 2 * sizeof(float));
-			memcpy(pf_entry, theChart.GetCOVRTableHead(j), theChart.GetCOVRTablePoints(j) * 2 * sizeof(float));
+		for (int j = 0; j < nAuxPlyEntries; j++) {
+			float* pf_entry = (float*)malloc(theChart.GetCOVRTablePoints(j) * 2 * sizeof(float));
+			memcpy(pf_entry, theChart.GetCOVRTableHead(j),
+				   theChart.GetCOVRTablePoints(j) * 2 * sizeof(float));
 			pft0[j] = pf_entry;
 			pip[j] = theChart.GetCOVRTablePoints(j);
 		}
 
 		pAuxPlyTable = pfp;
 		pAuxCntTable = pip;
-
 	}
 
-	//  Get and populate the NoCovr tables
+	// Get and populate the NoCovr tables
 
 	nNoCovrPlyEntries = theChart.GetNoCOVREntries();
-	float **pfpnc = (float **)malloc(nNoCovrPlyEntries * sizeof(float *));
-	float **pft0nc = pfpnc;
-	int *pipnc = (int *)malloc(nNoCovrPlyEntries * sizeof(int));
+	float** pfpnc = (float**)malloc(nNoCovrPlyEntries * sizeof(float*));
+	float** pft0nc = pfpnc;
+	int* pipnc = (int*)malloc(nNoCovrPlyEntries * sizeof(int));
 
-	for (int j = 0 ; j < nNoCovrPlyEntries; j++) {
-		float *pf_entry = (float *)malloc(theChart.GetNoCOVRTablePoints(j) * 2 * sizeof(float));
-		memcpy(pf_entry, theChart.GetNoCOVRTableHead(j), theChart.GetNoCOVRTablePoints(j) * 2 * sizeof(float));
+	for (int j = 0; j < nNoCovrPlyEntries; j++) {
+		float* pf_entry = (float*)malloc(theChart.GetNoCOVRTablePoints(j) * 2 * sizeof(float));
+		memcpy(pf_entry, theChart.GetNoCOVRTableHead(j),
+			   theChart.GetNoCOVRTablePoints(j) * 2 * sizeof(float));
 		pft0nc[j] = pf_entry;
 		pipnc[j] = theChart.GetNoCOVRTablePoints(j);
 	}
 
 	pNoCovrPlyTable = pfpnc;
 	pNoCovrCntTable = pipnc;
-
 }
 
 ChartTableEntry::~ChartTableEntry()
@@ -376,19 +376,29 @@ bool ChartTableEntry::IsEqualTo(const ChartTableEntry &cte) const
 
 int ChartTableEntry::GetChartType() const
 {
-	//    Hackeroo here....
-	//    dB version 14 had different ChartType Enum, patch it here
+	// Hackeroo here....
+	// dB version 14 had different ChartType Enum, patch it here
+	// FIXME: yes this is a hack, plugin adaptations should be done in the plugin stuff, not here
 	if (s_dbVersion == 14) {
-		switch(ChartType) {
-			case 0: return CHART_TYPE_KAP;
-			case 1: return CHART_TYPE_GEO;
-			case 2: return CHART_TYPE_S57;
-			case 3: return CHART_TYPE_CM93;
-			case 4: return CHART_TYPE_CM93COMP;
-			case 5: return CHART_TYPE_UNKNOWN;
-			case 6: return CHART_TYPE_DONTCARE;
-			case 7: return CHART_TYPE_DUMMY;
-			default: return CHART_TYPE_UNKNOWN;
+		switch (ChartType) {
+			case 0:
+				return CHART_TYPE_KAP;
+			case 1:
+				return CHART_TYPE_GEO;
+			case 2:
+				return CHART_TYPE_S57;
+			case 3:
+				return CHART_TYPE_CM93;
+			case 4:
+				return CHART_TYPE_CM93COMP;
+			case 5:
+				return CHART_TYPE_UNKNOWN;
+			case 6:
+				return CHART_TYPE_DONTCARE;
+			case 7:
+				return CHART_TYPE_DUMMY;
+			default:
+				return CHART_TYPE_UNKNOWN;
 		}
 	} else
 		return ChartType;

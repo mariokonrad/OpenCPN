@@ -21,19 +21,21 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <wx/arrimpl.cpp>
 #include <wx/encconv.h>
 #include <wx/regex.h>
 #include <wx/progdlg.h>
-#include <wx/arrimpl.cpp>
 
 #include "ChartDatabase.h"
-#include "ChartPlugInWrapper.h"
+#include <ChartPlugInWrapper.h>
 #include <chart/ChartBase.h>
 
 #include <geo/BoundingBox.h>
 
 #include <plugin/PlugInManager.h>
+
+#include <wx/arrimpl.cpp>
+WX_DEFINE_OBJARRAY(ChartGroupElementArray);
+WX_DEFINE_OBJARRAY(ChartGroupArray);
 
 #ifndef UINT32
 #define UINT32 unsigned int
@@ -158,7 +160,7 @@ int ChartDatabase::GetChartTableEntries() const
 
 const ChartTableEntry & ChartDatabase::GetChartTableEntry(int index) const
 {
-	if (index < chartTable.size())
+	if (index < static_cast<int>(chartTable.size()))
 		return chartTable[index];
 	else
 		return m_ChartTableEntryDummy;
@@ -1082,7 +1084,8 @@ int ChartDatabase::SearchDirAndAddCharts(wxString& dir_name_base,
 // Create a Chart object
 ///////////////////////////////////////////////////////////////////////
 
-ChartBase *ChartDatabase::GetChart(const wxChar *theFilePath, ChartClassDescriptor &chart_desc) const
+ChartBase* ChartDatabase::GetChart(const wxChar* WXUNUSED(theFilePath),
+								   ChartClassDescriptor& WXUNUSED(chart_desc)) const
 {
 	// TODO: support non-UI chart factory
 	return NULL;

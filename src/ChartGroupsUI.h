@@ -26,8 +26,10 @@
 
 #include <wx/scrolwin.h>
 #include <wx/treebase.h>
-#include "CDI.h"
+#include <CDI.h>
 #include <MainFrame.h>
+
+#include <vector>
 
 class wxTreeCtrl;
 class wxButton;
@@ -37,83 +39,73 @@ class wxGenericDirCtrl;
 class ChartGroupArray;
 class ChartGroup;
 
-WX_DECLARE_OBJARRAY(wxGenericDirCtrl *, ArrayOfDirCtrls);
-
 class ChartGroupsUI : public wxScrolledWindow
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		ChartGroupsUI(wxWindow * parent);
-		virtual ~ChartGroupsUI();
+public:
+	ChartGroupsUI(wxWindow* parent);
+	virtual ~ChartGroupsUI();
 
-		void CreatePanel(
-				size_t parent,
-				int border_size,
-				int group_item_spacing,
-				wxSize small_button_size);
+	void CreatePanel(size_t parent, int border_size, int group_item_spacing,
+					 wxSize small_button_size);
 
-		void CompletePanel(void);
-		void SetDBDirs(ArrayOfCDI & array);
-		void SetGroupArray(ChartGroupArray * pGroupArray);
-		void SetInitialSettings();
-		void CompleteInitialSettings();
-		void PopulateTrees();
+	void CompletePanel(void);
+	void SetDBDirs(ArrayOfCDI& array);
+	void SetGroupArray(ChartGroupArray* pGroupArray);
+	void SetInitialSettings();
+	void CompleteInitialSettings();
+	void PopulateTrees();
 
-		void PopulateTreeCtrl(
-				wxTreeCtrl * ptc,
-				const wxArrayString & dir_array,
-				const wxColour & col,
-				wxFont * pFont = NULL);
+	void PopulateTreeCtrl(wxTreeCtrl* ptc, const wxArrayString& dir_array, const wxColour& col,
+						  wxFont* pFont = NULL);
 
-		wxTreeCtrl * AddEmptyGroupPage(const wxString & label);
+	wxTreeCtrl* AddEmptyGroupPage(const wxString& label);
 
-		void BuildNotebookPages(ChartGroupArray * pGroupArray);
-		ChartGroupArray * CloneChartGroupArray(ChartGroupArray * s);
-		void EmptyChartGroupArray(ChartGroupArray * s);
+	void BuildNotebookPages(ChartGroupArray* pGroupArray);
+	ChartGroupArray* CloneChartGroupArray(ChartGroupArray* s);
+	void EmptyChartGroupArray(ChartGroupArray* s);
 
-		void OnNodeExpanded(wxTreeEvent& event );
-		void OnAvailableSelection(wxTreeEvent & event);
-		void OnInsertChartItem(wxCommandEvent & event);
-		void OnRemoveChartItem(wxCommandEvent & event);
-		void OnGroupPageChange(wxNotebookEvent & event);
-		void OnNewGroup(wxCommandEvent & event);
-		void OnDeleteGroup(wxCommandEvent & event);
+	void OnNodeExpanded(wxTreeEvent& event);
+	void OnAvailableSelection(wxTreeEvent& event);
+	void OnInsertChartItem(wxCommandEvent& event);
+	void OnRemoveChartItem(wxCommandEvent& event);
+	void OnGroupPageChange(wxNotebookEvent& event);
+	void OnNewGroup(wxCommandEvent& event);
+	void OnDeleteGroup(wxCommandEvent& event);
 
-		bool modified;
-		bool m_UIcomplete;
-		bool m_settingscomplete;
-		bool m_treespopulated;
+	// FIXME: move attributes from public to private
+	bool modified;
+	bool m_UIcomplete;
+	bool m_settingscomplete;
+	bool m_treespopulated;
 
-	private:
-		int FindGroupBranch(
-				ChartGroup * pGroup,
-				wxTreeCtrl * ptree,
-				wxTreeItemId item,
-				wxString * pbranch_adder);
+private:
+	int FindGroupBranch(ChartGroup* pGroup, wxTreeCtrl* ptree, wxTreeItemId item,
+						wxString* pbranch_adder);
 
-		wxWindow * pParent;
+	wxFlexGridSizer* groupsSizer;
+	wxButton* m_pAddButton;
+	wxButton* m_pRemoveButton;
+	wxButton* m_pNewGroupButton;
+	wxButton* m_pDeleteGroupButton;
+	int m_border_size;
+	int m_group_item_spacing;
 
-		wxFlexGridSizer * groupsSizer;
-		wxButton * m_pAddButton;
-		wxButton * m_pRemoveButton;
-		wxButton * m_pNewGroupButton;
-		wxButton * m_pDeleteGroupButton;
-		int m_border_size;
-		int m_group_item_spacing;
+	wxGenericDirCtrl* allAvailableCtl;
+	wxGenericDirCtrl* defaultAllCtl;
+	wxTreeCtrl* m_pActiveChartsTree;
+	wxTreeCtrl* lastSelectedCtl;
+	wxTreeItemId lastDeletedItem;
+	wxNotebook* m_GroupNB;
+	ArrayOfCDI m_db_dirs;
+	int m_GroupSelectedPage;
+	wxFont* iFont;
 
-		wxGenericDirCtrl * allAvailableCtl;
-		wxGenericDirCtrl * defaultAllCtl;
-		wxTreeCtrl * m_pActiveChartsTree;
-		wxTreeCtrl * lastSelectedCtl;
-		wxTreeItemId lastDeletedItem;
-		wxNotebook * m_GroupNB;
-		ArrayOfCDI m_db_dirs;
-		int m_GroupSelectedPage;
-		wxFont * iFont;
+	typedef std::vector<wxGenericDirCtrl*> DirectoryControls;
 
-		ArrayOfDirCtrls m_DirCtrlArray;
-		ChartGroupArray * m_pGroupArray;
+	DirectoryControls m_DirCtrlArray;
+	ChartGroupArray* m_pGroupArray;
 };
 
 #endif

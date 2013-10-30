@@ -29,6 +29,7 @@
 class wxCmdLineParser;
 class wxActivateEvent;
 class wxSingleInstanceChecker;
+class wxLog;
 
 namespace global
 {
@@ -72,7 +73,7 @@ private:
 	void setup_for_empty_config(bool novicemode);
 	void check_tide_current();
 	void check_ais_alarm_sound_file();
-	void setup_frame_size_and_position(wxPoint & position, wxSize & new_frame_size);
+	void setup_frame_size_and_position(wxPoint& position, wxSize& new_frame_size);
 	void setup_gps_watchdog();
 	void setup_layers();
 
@@ -83,6 +84,10 @@ private:
 
 	bool start_fullscreen;
 	wxString plugin_dir;
+	bool first_run;
+	wxLog* logger;
+	wxLog* old_logger;
+	FILE* file_log;
 };
 
 #endif

@@ -126,9 +126,7 @@ extern wxString str_version_minor;
 extern wxString str_version_patch;
 extern wxString str_version_date;
 extern ColorScheme global_color_scheme;
-extern bool g_bFirstRun;
 extern wxString OpenCPNVersion;
-extern FILE* flog;
 extern bool s_bSetSystemTime;
 extern wxArrayOfConnPrm* g_pConnectionParams;
 extern wxDateTime g_start_time;
@@ -301,12 +299,10 @@ extern float g_fNavAidRadarRingsStep;
 extern int g_pNavAidRadarRingsStepUnits;
 extern bool g_bWayPointPreventDragging;
 extern bool g_bConfirmObjectDelete;
-extern wxLog* Oldlogger;
 extern LayerList* pLayerList;
 extern ChartGroupArray* g_pGroupArray;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern Routeman* g_pRouteMan;
-extern wxLog* logger;
 extern bool g_bTrackCarryOver;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
@@ -378,8 +374,10 @@ static void OCPN_CPLErrorHandler(CPLErr eErrClass, int nError, const char* pszEr
 int CALLBACK CrashCallback(CR_CRASH_CALLBACK_INFO* pInfo)
 {
 	// Flush log file
-	if (logger)
-		logger->Flush();
+	if (pInfo->pUserParam) {
+		wxLog* log = reinterpret_cast<wxLog*>(pInfo->pUserParam);
+		log->Flush();
+	}
 	return CR_CB_DODEFAULT;
 }
 #endif
@@ -456,6 +454,10 @@ App::App()
 	, wdt_instance(NULL)
 	, sys_instance(NULL)
 	, start_fullscreen(false)
+	, first_run(false)
+	, logger(NULL)
+	, old_logger(NULL)
+	, file_log(NULL)
 {}
 
 void App::OnInitCmdLine(wxCmdLineParser& parser)
@@ -681,7 +683,7 @@ void App::install_crash_reporting()
 	}
 
 	// Establish the crash callback function
-	crSetCrashCallback(CrashCallback, NULL);
+	crSetCrashCallback(CrashCallback, logger);
 
 	// Take screenshot of the app window at the moment of crash
 	crAddScreenshot2(CR_AS_PROCESS_WINDOWS | CR_AS_USE_JPEG_FORMAT, 95);
@@ -935,7 +937,7 @@ void App::setup_s57()
 
 	// Todo Maybe initialize only when an s57 chart is actually opened???
 	if (ps52plib->m_bOK)
-		m_pRegistrarMan = new S57RegistrarMgr(g_csv_locn, flog);
+		m_pRegistrarMan = new S57RegistrarMgr(g_csv_locn, file_log);
 
 	if (!ps52plib->m_bOK) {
 		delete ps52plib;
@@ -1290,10 +1292,9 @@ bool App::OnInit()
 
 	wxString large_log_message = constrain_logfile_size();
 
-	flog = fopen(sys.data().log_file.mb_str(), "a");
-	logger = new wxLogStderr(flog);
-
-	Oldlogger = wxLog::SetActiveTarget(logger);
+	file_log = fopen(sys.data().log_file.mb_str(), "a");
+	logger = new wxLogStderr(file_log);
+	old_logger = wxLog::SetActiveTarget(logger);
 
 #ifdef __WXMSW__
 	// Un-comment the following to establish a separate console window as a target for printf() in Windows
@@ -1434,7 +1435,7 @@ bool App::OnInit()
 
 	// Is this the first run after a clean install?
 	if (!sys.config().nav_message_shown)
-		g_bFirstRun = true;
+		first_run = true;
 
 	// Now we can set the locale
 
@@ -1460,7 +1461,7 @@ bool App::OnInit()
 	// For windows, installer may have left information in the registry defining the
 	// user's selected install language.
 	// If so, override the config file value and use this selection for opencpn...
-	if (g_bFirstRun) {
+	if (first_run) {
 		wxRegKey RegKey(wxString(_T("HKEY_LOCAL_MACHINE\\SOFTWARE\\OpenCPN")));
 		if (RegKey.Exists()) {
 			wxLogMessage(_("Retrieving initial language selection from Windows Registry"));
@@ -1690,7 +1691,7 @@ bool App::OnInit()
 
 #ifdef __WXMSW__
 	// Windows installer may have left hints regarding the initial chart dir selection
-	if (g_bFirstRun) {
+	if (first_run) {
 		int ndirs = 0;
 
 		wxRegKey RegKey(wxString(_T("HKEY_LOCAL_MACHINE\\SOFTWARE\\OpenCPN")));
@@ -1907,7 +1908,7 @@ int App::OnExit()
 	delete g_pGroupArray;
 
 	if (logger) {
-		wxLog::SetActiveTarget(Oldlogger);
+		wxLog::SetActiveTarget(old_logger);
 		delete logger;
 	}
 

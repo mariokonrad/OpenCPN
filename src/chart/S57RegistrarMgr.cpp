@@ -29,7 +29,7 @@
 extern S57ClassRegistrar * g_poRegistrar;
 #endif
 
-static int s57_initialize(const wxString & csv_dir, FILE * flog)
+static int s57_initialize(const wxString & csv_dir, FILE* WXUNUSED(file_log))
 {
     // Get one instance of the s57classregistrar,
     // And be prepared to give it to any module that needs it
@@ -51,9 +51,9 @@ static int s57_initialize(const wxString & csv_dir, FILE * flog)
     return 0;
 }
 
-S57RegistrarMgr::S57RegistrarMgr(const wxString & csv_dir, FILE * flog)
+S57RegistrarMgr::S57RegistrarMgr(const wxString& csv_dir, FILE* file_log)
 {
-    s57_initialize(csv_dir, flog);
+    s57_initialize(csv_dir, file_log);
 }
 
 S57RegistrarMgr::~S57RegistrarMgr()

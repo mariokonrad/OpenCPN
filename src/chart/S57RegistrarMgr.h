@@ -30,7 +30,7 @@
 class S57RegistrarMgr
 {
 	public:
-		S57RegistrarMgr(const wxString & csv_dir, FILE * flog);
+		S57RegistrarMgr(const wxString & csv_dir, FILE * file_log);
 		~S57RegistrarMgr();
 };
 

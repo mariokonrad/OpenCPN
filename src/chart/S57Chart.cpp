@@ -6461,8 +6461,6 @@ int s57chart::GetENCScale( void )
         return 1;
 }
 
-extern wxLog *logger;
-
 /************************************************************************/
 /*                       OpenCPN_OGRErrorHandler()                      */
 /*                       Use Global wxLog Class                         */

@@ -158,10 +158,6 @@ wxWindowList AppActivateList;
 #endif
 
 MainFrame* gFrame;
-FILE* flog;
-wxLog* logger;
-wxLog* Oldlogger;
-bool g_bFirstRun;
 int g_unit_test_1;
 ConsoleCanvas* console;
 StatWin* stats;

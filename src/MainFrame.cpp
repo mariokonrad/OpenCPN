@@ -304,7 +304,6 @@ PlugInManager* g_pi_manager;
 bool g_bAISRolloverShowClass;
 bool g_bAISRolloverShowCOG;
 bool g_bAISRolloverShowCPA;
-bool g_bDebugGPSD;
 bool g_bFullScreenQuilt;
 bool g_bQuiltEnable;
 bool g_bQuiltStart;

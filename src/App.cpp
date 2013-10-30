@@ -151,8 +151,6 @@ extern wxString g_csv_locn;
 extern wxString g_SENCPrefix;
 extern wxString g_UserPresLibData;
 extern wxString g_uploadConnection;
-extern int user_user_id;
-extern int file_user_id;
 extern ChartDB* ChartData;
 extern double g_ownship_predictor_minutes;
 extern int g_current_arrow_scale;
@@ -1394,17 +1392,6 @@ bool App::OnInit()
 	// Initially AIS display is always on
 	g_bShowAIS = true;
 	g_pais_query_dialog_active = NULL;
-
-	// (Optionally) Capture the user and file(effective) ids
-	// Some build environments may need root privileges for hardware
-	// port I/O, as in the NMEA data input class.  Set that up here.
-
-#ifndef __WXMSW__
-#ifdef PROBE_PORTS__WITH_HELPER
-	user_user_id = getuid();
-	file_user_id = geteuid();
-#endif
-#endif
 
 	determine_config_file();
 

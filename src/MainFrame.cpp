@@ -195,8 +195,6 @@ wxString g_csv_locn;
 wxString g_SENCPrefix;
 wxString g_UserPresLibData;
 wxString g_uploadConnection;
-int user_user_id;
-int file_user_id;
 volatile int quitflag;
 bool s_bSetSystemTime;
 wxArrayOfConnPrm* g_pConnectionParams;

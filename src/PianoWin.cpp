@@ -33,26 +33,26 @@ BEGIN_EVENT_TABLE(PianoWin, wxWindow)
 	EVT_MOUSE_EVENTS(PianoWin::MouseEvent)
 END_EVENT_TABLE()
 
-extern ocpnStyle::StyleManager * g_StyleManager;
-extern ChartDB * ChartData;
-extern MainFrame * gFrame;
+extern ocpnStyle::StyleManager* g_StyleManager;
+extern ChartDB* ChartData;
+extern MainFrame* gFrame;
 
 PianoWin::PianoWin(wxFrame* frame)
 	: wxWindow(frame, wxID_ANY, wxPoint(20, 20), wxSize(5, 5), wxNO_BORDER)
+	, m_nRegions(0)
 	, m_index_last(-1)
-	, m_iactive(-1)
 	, m_hover_icon_last(-1)
 	, m_hover_last(-1)
-	, m_nRegions(0)
-	, m_brounded(false)
 	, m_pVizIconBmp(NULL)
 	, m_pInVizIconBmp(NULL)
-	, m_pPolyIconBmp(NULL)
-	, m_pSkewIconBmp(NULL)
 	, m_pTmercIconBmp(NULL)
+	, m_pSkewIconBmp(NULL)
+	, m_pPolyIconBmp(NULL)
+	, m_iactive(-1)
+	, m_brounded(false)
 {
-	SetBackgroundStyle(
-		wxBG_STYLE_CUSTOM); // on WXMSW, this prevents flashing on color scheme change
+	// on WXMSW, this prevents flashing on color scheme change
+	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 }
 
 PianoWin::~PianoWin()
@@ -108,7 +108,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 	dc.SetBackground(m_backBrush);
 	dc.Clear();
 
-	//    Create the Piano Keys
+	// Create the Piano Keys
 
 	int nKeys = m_key_array.size();
 
@@ -331,7 +331,6 @@ void PianoWin::MouseEvent(wxMouseEvent& event)
 	}
 
 	if (event.LeftDown()) {
-
 		if (-1 != sel_index) {
 			gFrame->HandlePianoClick(sel_index, sel_dbindex);
 			gFrame->Raise();

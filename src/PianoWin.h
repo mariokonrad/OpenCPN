@@ -63,11 +63,6 @@ public:
 	void ResetRollover(void);
 	void SetRoundedRectangles(bool val);
 
-	int Size_X; // FIXME: move public attributes to private
-	int Size_Y;
-	int Pos_X;
-	int Pos_Y;
-
 private:
 	int m_nRegions;
 	int m_index_last;

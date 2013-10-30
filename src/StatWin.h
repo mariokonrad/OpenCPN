@@ -33,29 +33,29 @@ class TextStatWin;
 
 class StatWin : public wxDialog
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		StatWin(wxWindow * win);
-		virtual ~StatWin();
-		void OnSize(wxSizeEvent & event);
-		void OnPaint(wxPaintEvent & event);
-		void MouseEvent(wxMouseEvent & event);
-		int GetFontHeight();
-		int GetRows() const;
-		void SetColorScheme(ColorScheme cs);
-		void RePosition();
-		void ReSize();
+public:
+	StatWin(wxWindow* win);
+	virtual ~StatWin();
+	void OnSize(wxSizeEvent& event);
+	void OnPaint(wxPaintEvent& event);
+	int GetFontHeight();
+	int GetRows() const;
+	void SetColorScheme(ColorScheme cs);
+	void RePosition();
+	void ReSize();
 
-		void FormatStat(void);
+	void FormatStat(void);
 
-		PianoWin * pPiano;
-		TextStatWin * pTStat1;
-		TextStatWin * pTStat2;
+	PianoWin* pPiano;
 
-	private:
-		wxBrush m_backBrush;
-		int m_rows;
+private:
+	TextStatWin* pTStat1;
+	TextStatWin* pTStat2;
+
+	wxBrush m_backBrush;
+	int m_rows;
 };
 
 #endif

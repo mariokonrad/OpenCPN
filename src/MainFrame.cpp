@@ -153,6 +153,10 @@ extern wxString str_version_minor;
 extern wxString str_version_patch;
 extern wxString OpenCPNVersion;
 
+#ifdef __WXOSX__
+wxWindowList AppActivateList;
+#endif
+
 MainFrame* gFrame;
 FILE* flog;
 wxLog* logger;
@@ -161,7 +165,6 @@ bool g_bFirstRun;
 int g_unit_test_1;
 ConsoleCanvas* console;
 StatWin* stats;
-wxWindowList AppActivateList;
 Config* pConfig;
 ChartBase* Current_Vector_Ch;
 ChartBase* Current_Ch;
@@ -2576,12 +2579,11 @@ void MainFrame::ChartsRefresh(int dbi_hint, ViewPort& vp, bool b_purge)
 				SetChartThumbnail(dbi_hint); // need to reset thumbnail on failed chart open
 		}
 
-		//          Refresh the Piano Bar
+		// Refresh the Piano Bar
 		if (stats) {
 			std::vector<int> piano_active_chart_index_array;
 			piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
 			stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
-
 			stats->Refresh(true);
 		}
 

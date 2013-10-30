@@ -1849,6 +1849,7 @@ void ChartCanvas::ShowBrightnessLevelTimedPopup(int brightness, int min, int max
 
 	m_pBrightPopup->SetBitmap(bmp);
 	m_pBrightPopup->Show();
+	m_pBrightPopup->Refresh();
 }
 
 void ChartCanvas::RotateTimerEvent(wxTimerEvent&)

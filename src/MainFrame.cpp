@@ -1220,26 +1220,26 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 	   4.  And, of course, opencpn is going down now.
 	   5.  And if there is no anchor watch set on "anchor..." icon mark
 	 */
-	if( g_bAutoAnchorMark ) {
+	if (g_bAutoAnchorMark) {
 		bool watching_anchor = false;
-		if( pAnchorWatchPoint1 )
-			watching_anchor = ( pAnchorWatchPoint1->m_IconName.StartsWith( _T("anchor") ) );
-		if( pAnchorWatchPoint2 )
-			watching_anchor |= ( pAnchorWatchPoint2->m_IconName.StartsWith( _T("anchor") ) );
+		if (pAnchorWatchPoint1)
+			watching_anchor = (pAnchorWatchPoint1->m_IconName.StartsWith(_T("anchor")));
+		if (pAnchorWatchPoint2)
+			watching_anchor |= (pAnchorWatchPoint2->m_IconName.StartsWith(_T("anchor")));
 
 		wxDateTime now = wxDateTime::Now();
-		wxTimeSpan uptime = now.Subtract( g_start_time );
+		wxTimeSpan uptime = now.Subtract(g_start_time);
 
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-		if (!watching_anchor && ( g_bCruising ) && (nav.sog < 0.5)
-				&& uptime.IsLongerThan(wxTimeSpan(0, 30, 0, 0)))
-		{
-			//    First, delete any single anchorage waypoint closer than 0.25 NM from this point
-			//    This will prevent clutter and database congestion....
+		if (!watching_anchor && (g_bCruising) && (nav.sog < 0.5)
+			&& uptime.IsLongerThan(wxTimeSpan(0, 30, 0, 0))) {
+			// First, delete any single anchorage waypoint closer than 0.25 NM from this point
+			// This will prevent clutter and database congestion....
 
-			for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin(); i != pWayPointMan->m_pWayPointList->end(); ++i) {
-				RoutePoint * pr = *i;
+			for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin();
+				 i != pWayPointMan->m_pWayPointList->end(); ++i) {
+				RoutePoint* pr = *i;
 				if (pr->GetName().StartsWith(_T("Anchorage"))) {
 					double a = nav.lat - pr->m_lat;
 					double b = nav.lon - pr->m_lon;
@@ -1256,12 +1256,12 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 			}
 
 			wxString name = now.Format();
-			name.Prepend( _("Anchorage created ") );
-			RoutePoint *pWP = new RoutePoint(nav.lat, nav.lon, _T("anchorage"), name);
+			name.Prepend(_("Anchorage created "));
+			RoutePoint* pWP = new RoutePoint(nav.lat, nav.lon, _T("anchorage"), name);
 			pWP->m_bShowName = false;
 			pWP->m_bIsolatedMark = true;
 
-			pConfig->AddNewWayPoint( pWP, -1 );       // use auto next num
+			pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 		}
 	}
 
@@ -1269,12 +1269,12 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 
 	global::OCPN::get().gui().set_frame_maximized(IsMaximized());
 
-	//    Record the current state of tracking
+	// Record the current state of tracking
 	g_bTrackCarryOver = g_bTrackActive;
 
 	TrackOff();
 
-	if( pCurrentStack ) {
+	if (pCurrentStack) {
 		g_restore_stackindex = pCurrentStack->CurrentStackEntry;
 		g_restore_dbindex = pCurrentStack->GetCurrentEntrydbIndex();
 	}
@@ -1290,7 +1290,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 
 	delete pConfig->m_pNavObjectChangesSet;
 
-	//Remove any leftover Routes and Waypoints from config file as they were saved to navobj before
+	// Remove any leftover Routes and Waypoints from config file as they were saved to navobj before
 	pConfig->DeleteGroup(_T("/Routes"));
 	pConfig->DeleteGroup(_T("/Marks"));
 	pConfig->Flush();
@@ -1298,18 +1298,19 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 	delete g_printData;
 	delete g_pageSetupData;
 
-	if( g_pAboutDlg ) g_pAboutDlg->Destroy();
-
-	//      Explicitely Close some children, especially the ones with event handlers
-	//      or that call GUI methods
+	if (g_pAboutDlg)
+		g_pAboutDlg->Destroy();
 
 #ifdef USE_S57
-	if( g_pCM93OffsetDialog ) g_pCM93OffsetDialog->Destroy();
+	// Explicitely Close some children, especially the ones with event handlers
+	// or that call GUI methods
+	if (g_pCM93OffsetDialog)
+		g_pCM93OffsetDialog->Destroy();
 #endif
 
 	g_FloatingToolbarDialog->Destroy();
 
-	if( g_pAISTargetList ) {
+	if (g_pAISTargetList) {
 		g_pAISTargetList->Disconnect_decoder();
 		g_pAISTargetList->Destroy();
 	}
@@ -1332,14 +1333,14 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 	// Note that we are waiting until after the canvas is destroyed,
 	// since some PlugIns may have created children of canvas.
 	// Such a PlugIn must stay intact for the canvas dtor to call DestoryChildren()
-	if( g_pi_manager ) {
+	if (g_pi_manager) {
 		g_pi_manager->UnLoadAllPlugIns();
 		delete g_pi_manager;
 		g_pi_manager = NULL;
 	}
 
-	if( g_pAIS ) {
-		if(g_pMUX)
+	if (g_pAIS) {
+		if (g_pMUX)
 			g_pMUX->SetAISHandler(NULL);
 		delete g_pAIS;
 		g_pAIS = NULL;
@@ -1348,17 +1349,12 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 	delete g_pMUX;
 
 	pthumbwin = NULL;
-
 	g_FloatingToolbarDialog = NULL;
-
 	g_pauimgr->UnInit();
-
-
 	this->Destroy();
-
 }
 
-void MainFrame::OnMove(wxMoveEvent &)
+void MainFrame::OnMove(wxMoveEvent&)
 {
 	if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->RePosition();
@@ -1366,7 +1362,7 @@ void MainFrame::OnMove(wxMoveEvent &)
 	if (stats)
 		stats->RePosition();
 
-	UpdateGPSCompassStatusBox( true );
+	UpdateGPSCompassStatusBox(true);
 
 	if (console && console->IsShown())
 		PositionConsole();
@@ -1388,55 +1384,55 @@ void MainFrame::ProcessCanvasResize(void)
 		g_FloatingToolbarDialog->RePosition();
 	}
 
-	UpdateGPSCompassStatusBox( true );
+	UpdateGPSCompassStatusBox(true);
 
 	if (console->IsShown())
 		PositionConsole();
 }
 
-void MainFrame::OnSize(wxSizeEvent &)
+void MainFrame::OnSize(wxSizeEvent&)
 {
 	ODoSetSize();
 }
 
-void MainFrame::ODoSetSize( void )
+void MainFrame::ODoSetSize(void)
 {
 	int x, y;
-	GetClientSize( &x, &y );
+	GetClientSize(&x, &y);
 
 	//      Resize the children
 
-	if( m_pStatusBar ) {
+	if (m_pStatusBar) {
 		//  Maybe resize the font
 		wxRect stat_box;
-		m_pStatusBar->GetFieldRect( 0, stat_box );
-		int font_size = stat_box.width / 28;                // 30 for linux
+		m_pStatusBar->GetFieldRect(0, stat_box);
+		int font_size = stat_box.width / 28; // 30 for linux
 
 #ifdef __WXMAC__
-		font_size = wxMax(10, font_size);             // beats me...
+		font_size = wxMax(10, font_size); // beats me...
 #endif
 
-		wxFont* templateFont = FontMgr::Get().GetFont( _("StatusBar"), 12 );
+		wxFont* templateFont = FontMgr::Get().GetFont(_("StatusBar"), 12);
 		font_size += templateFont->GetPointSize() - 10;
 
-		font_size = wxMin( font_size, 12 );
-		font_size = wxMax( font_size, 5 );
+		font_size = wxMin(font_size, 12);
+		font_size = wxMax(font_size, 5);
 
-		wxFont *pstat_font = wxTheFontList->FindOrCreateFont( font_size,
-				wxFONTFAMILY_SWISS, templateFont->GetStyle(), templateFont->GetWeight(), false,
-				templateFont->GetFaceName() );
+		wxFont* pstat_font = wxTheFontList->FindOrCreateFont(
+			font_size, wxFONTFAMILY_SWISS, templateFont->GetStyle(), templateFont->GetWeight(),
+			false, templateFont->GetFaceName());
 
-		m_pStatusBar->SetFont( *pstat_font );
+		m_pStatusBar->SetFont(*pstat_font);
 	}
 
 	int cccw = x;
 	int ccch = y;
 
 	if (chart_canvas) {
-		cccw = x * 10 / 10;               // constrain to mod 4
+		cccw = x * 10 / 10; // constrain to mod 4
 		int wr = cccw / 4;
 		cccw = wr * 4;
-		cccw += 2;                              // account for simple border
+		cccw += 2; // account for simple border
 
 		int cur_width;
 		int cur_height;
@@ -1445,29 +1441,29 @@ void MainFrame::ODoSetSize( void )
 			if (g_pauimgr->GetPane(chart_canvas).IsOk()) {
 				g_pauimgr->GetPane(chart_canvas).BestSize(cccw, ccch);
 			} else {
-				chart_canvas->SetSize( 0, 0, cccw, ccch );
+				chart_canvas->SetSize(0, 0, cccw, ccch);
 			}
 		}
 	}
 
-	if( g_FloatingToolbarDialog ) {
+	if (g_FloatingToolbarDialog) {
 		wxSize oldSize = g_FloatingToolbarDialog->GetSize();
 		g_FloatingToolbarDialog->RePosition();
 		g_FloatingToolbarDialog->SetGeometry();
 		g_FloatingToolbarDialog->Realize();
 
-		if( oldSize != g_FloatingToolbarDialog->GetSize() )
-			g_FloatingToolbarDialog->Refresh( false );
+		if (oldSize != g_FloatingToolbarDialog->GetSize())
+			g_FloatingToolbarDialog->Refresh(false);
 
 		g_FloatingToolbarDialog->RePosition();
-
 	}
 
-	UpdateGPSCompassStatusBox( true );
+	UpdateGPSCompassStatusBox(true);
 
-	if( console ) PositionConsole();
+	if (console)
+		PositionConsole();
 
-	if( stats ) {
+	if (stats) {
 		stats->ReSize();
 		stats->FormatStat();
 		stats->RePosition();
@@ -1828,7 +1824,7 @@ void MainFrame::ToggleFullScreen()
 
 void MainFrame::ActivateMOB(void)
 {
-	//    The MOB point
+	// The MOB point
 	wxDateTime mob_time = wxDateTime::Now();
 	wxString mob_label(_("MAN OVERBOARD"));
 	mob_label += _T(" at ");
@@ -4680,7 +4676,7 @@ void MainFrame::OnPianoMenuDisableChart(wxCommandEvent&)
 
 void MainFrame::DoPrint(void)
 {
-	if (NULL == g_printData) {
+	if (!g_printData) {
 		g_printData = new wxPrintData;
 		g_printData->SetOrientation(wxLANDSCAPE);
 		g_pageSetupData = new wxPageSetupDialogData;

@@ -73,12 +73,6 @@ extern PlugInManager* g_pi_manager;
 extern bool g_bShowMag;
 extern MainFrame* gFrame;
 
-// Global print data, to remember settings during the session
-extern wxPrintData* g_printData;
-
-// Global page setup data
-extern wxPageSetupData* g_pageSetupData;
-
 // Global print route selection dialog
 RoutePrintSelection* pRoutePrintSelection = NULL;
 

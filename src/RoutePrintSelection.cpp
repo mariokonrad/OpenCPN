@@ -22,8 +22,8 @@
  **************************************************************************/
 
 #include "RoutePrintSelection.h"
-#include "RoutePrintout.h"
-#include "MessageBox.h"
+#include <RoutePrintout.h>
+#include <MessageBox.h>
 
 #include <DimeControl.h>
 
@@ -34,10 +34,10 @@
 #include <wx/checkbox.h>
 
 // Global print data, to remember settings during the session
-extern wxPrintData * g_printData;
+extern wxPrintData* g_printData;
 
 // Global page setup data
-extern wxPageSetupData * g_pageSetupData;
+extern wxPageSetupData* g_pageSetupData;
 
 IMPLEMENT_DYNAMIC_CLASS(RoutePrintSelection, wxDialog)
 
@@ -60,13 +60,9 @@ RoutePrintSelection::RoutePrintSelection(
 		long style)
 {
 	route = _route;
-
-	long wstyle = style;
-
-	Create( parent, id, caption, pos, size, wstyle );
+	Create(parent, id, caption, pos, size, style);
 	Centre();
 }
-
 
 RoutePrintSelection::~RoutePrintSelection()
 {
@@ -80,13 +76,13 @@ bool RoutePrintSelection::Create(
 		const wxSize & size,
 		long style)
 {
-	SetExtraStyle( GetExtraStyle() | wxWS_EX_BLOCK_EVENTS );
+	SetExtraStyle(GetExtraStyle() | wxWS_EX_BLOCK_EVENTS);
 
 #ifdef __WXOSX__
 	style |= wxSTAY_ON_TOP;
 #endif
 
-	wxDialog::Create( parent, id, _("Print Route Selection"), pos, size, style );
+	wxDialog::Create(parent, id, _("Print Route Selection"), pos, size, style);
 	CreateControls();
 	return TRUE;
 }
@@ -166,44 +162,42 @@ bool RoutePrintSelection::ShowToolTips()
 	return TRUE;
 }
 
-void RoutePrintSelection::SetDialogTitle(const wxString & title)
+void RoutePrintSelection::SetDialogTitle(const wxString& title)
 {
 	SetTitle(title);
 }
 
-void RoutePrintSelection::OnRoutepropCancelClick( wxCommandEvent& event )
+void RoutePrintSelection::OnRoutepropCancelClick(wxCommandEvent& event)
 {
 	Hide();
 	event.Skip();
 }
 
-void RoutePrintSelection::OnRoutepropOkClick( wxCommandEvent& event )
+void RoutePrintSelection::OnRoutepropOkClick(wxCommandEvent& event)
 {
 	std::vector<bool> toPrintOut;
-	toPrintOut.push_back( m_checkBoxWPName->GetValue() );
-	toPrintOut.push_back( m_checkBoxWPPosition->GetValue() );
-	toPrintOut.push_back( m_checkBoxWPCourse->GetValue() );
-	toPrintOut.push_back( m_checkBoxWPDistanceToNext->GetValue() );
-	toPrintOut.push_back( m_checkBoxWPDescription->GetValue() );
+	toPrintOut.push_back(m_checkBoxWPName->GetValue());
+	toPrintOut.push_back(m_checkBoxWPPosition->GetValue());
+	toPrintOut.push_back(m_checkBoxWPCourse->GetValue());
+	toPrintOut.push_back(m_checkBoxWPDistanceToNext->GetValue());
+	toPrintOut.push_back(m_checkBoxWPDescription->GetValue());
 
-	if ( NULL == g_printData ) {
+	if (!g_printData) {
 		g_printData = new wxPrintData;
-		g_printData->SetOrientation( wxLANDSCAPE );
+		g_printData->SetOrientation(wxLANDSCAPE);
 		g_pageSetupData = new wxPageSetupDialogData;
 	}
 
-	RoutePrintout*  myrouteprintout1 = new RoutePrintout( toPrintOut, route,  _( "Route Print" ) );
+	RoutePrintout* myrouteprintout1 = new RoutePrintout(toPrintOut, route, _("Route Print"));
 
-	wxPrintDialogData printDialogData( *g_printData );
-	printDialogData.EnablePageNumbers( true );
+	wxPrintDialogData printDialogData(*g_printData);
+	printDialogData.EnablePageNumbers(true);
 
-	wxPrinter printer( &printDialogData );
-	if ( !printer.Print( this, myrouteprintout1, true ) ) {
-		if ( wxPrinter::GetLastError() == wxPRINTER_ERROR ) {
-			OCPNMessageBox(
-					NULL,
-					_( "There was a problem printing.\nPerhaps your current printer is not set correctly?" ),
-					_T( "OpenCPN" ), wxOK );
+	wxPrinter printer(&printDialogData);
+	if (!printer.Print(this, myrouteprintout1, true)) {
+		if (wxPrinter::GetLastError() == wxPRINTER_ERROR) {
+			OCPNMessageBox(NULL, _("There was a problem printing.\nPerhaps your current printer is not set correctly?"),
+						_T("OpenCPN"), wxOK);
 		}
 	}
 

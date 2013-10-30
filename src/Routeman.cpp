@@ -57,27 +57,25 @@
 #include <wx/stdpaths.h>
 #include <wx/apptrait.h>
 
-extern ConsoleCanvas * console;
-extern RouteList * pRouteList;
-extern Select * pSelect;
-extern Config * pConfig;
+extern ConsoleCanvas* console;
+extern RouteList* pRouteList;
+extern Select* pSelect;
+extern Config* pConfig;
 
 extern wxRect g_blink_rect;
 
 extern bool g_bMagneticAPB;
 
-extern Track * g_pActiveTrack;
-extern RouteProp * pRoutePropDialog;
-extern RouteManagerDialog * pRouteManagerDialog;
+extern Track* g_pActiveTrack;
+extern RouteProp* pRoutePropDialog;
+extern RouteManagerDialog* pRouteManagerDialog;
 extern int g_route_line_width;
-extern Multiplexer * g_pMUX;
+extern Multiplexer* g_pMUX;
 
-extern PlugInManager * g_pi_manager;
-extern ocpnStyle::StyleManager * g_StyleManager;
+extern PlugInManager* g_pi_manager;
 extern wxString g_uploadConnection;
 
-
-Routeman::Routeman(App *parent)
+Routeman::Routeman(App* parent)
 {
 	m_pparent_app = parent;
 	pActiveRoute = NULL;
@@ -91,10 +89,11 @@ Routeman::~Routeman()
 		delete pRouteActivatePoint;
 }
 
-Route * Routeman::RouteExists(const wxString & guid) const
+Route* Routeman::RouteExists(const wxString& guid) const
 {
-	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) { // FIXME: use std::find
-		Route * route = *i;
+	// FIXME: use std::find
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+		Route* route = *i;
 		if (guid == route->m_GUID)
 			return route;
 	}
@@ -103,7 +102,8 @@ Route * Routeman::RouteExists(const wxString & guid) const
 
 bool Routeman::RouteExists(Route * route) const
 {
-	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) { // FIXME: use std::find
+	// FIXME: use std::find
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		if (*i == route)
 			return true;
 	}
@@ -116,14 +116,15 @@ bool Routeman::IsRouteValid(Route * pRoute) const
 }
 
 // Make a 2-D search to find the route containing a given waypoint
-Route * Routeman::FindRouteContainingWaypoint( RoutePoint *pWP )
+Route* Routeman::FindRouteContainingWaypoint(RoutePoint* pWP)
 {
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
-		Route * route = *i;
+		Route* route = *i;
 
-		wxRoutePointListNode * pnode = (route->pRoutePointList)->GetFirst(); // FIXME: use interface of std::vector
+		wxRoutePointListNode* pnode
+			= (route->pRoutePointList)->GetFirst(); // FIXME: use interface of std::vector
 		while (pnode) {
-			RoutePoint * prp = pnode->GetData();
+			RoutePoint* prp = pnode->GetData();
 			if (prp == pWP)
 				return route;
 			pnode = pnode->GetNext();
@@ -135,15 +136,15 @@ Route * Routeman::FindRouteContainingWaypoint( RoutePoint *pWP )
 
 Routeman::RouteArray * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FIXME: return std container
 {
-	RouteArray * pArray = new RouteArray;
+	RouteArray* pArray = new RouteArray;
 
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
-		Route * route = *i;
-		wxRoutePointListNode *waypoint_node = route->pRoutePointList->GetFirst();
+		Route* route = *i;
+		wxRoutePointListNode* waypoint_node = route->pRoutePointList->GetFirst();
 		while (waypoint_node) {
-			RoutePoint * prp = waypoint_node->GetData();
+			RoutePoint* prp = waypoint_node->GetData();
 			if (prp == pWP)
-				pArray->push_back((void *)route);
+				pArray->push_back((void*)route);
 
 			waypoint_node = waypoint_node->GetNext(); // next waypoint
 		}
@@ -157,18 +158,19 @@ Routeman::RouteArray * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FI
 	}
 }
 
-RoutePoint * Routeman::FindBestActivatePoint(Route *pR, double lat, double lon, double cog, double WXUNUSED(sog))
+RoutePoint* Routeman::FindBestActivatePoint(Route* pR, double lat, double lon, double cog,
+											double WXUNUSED(sog))
 {
 	if (!pR)
 		return NULL;
 
 	// Walk thru all the points to find the "best"
-	RoutePoint *best_point = NULL;
+	RoutePoint* best_point = NULL;
 	double min_time_found = 1e6;
 
-	wxRoutePointListNode *node = ( pR->pRoutePointList )->GetFirst();
-	while( node ) {
-		RoutePoint *pn = node->GetData();
+	wxRoutePointListNode* node = (pR->pRoutePointList)->GetFirst();
+	while (node) {
+		RoutePoint* pn = node->GetData();
 
 		double brg;
 		double dist;
@@ -179,8 +181,8 @@ RoutePoint * Routeman::FindBestActivatePoint(Route *pR, double lat, double lon, 
 
 		double time_to_wp = dist / soa;
 
-		if( time_to_wp > 0 ) {
-			if( time_to_wp < min_time_found ) {
+		if (time_to_wp > 0) {
+			if (time_to_wp < min_time_found) {
 				min_time_found = time_to_wp;
 				best_point = pn;
 			}
@@ -190,24 +192,24 @@ RoutePoint * Routeman::FindBestActivatePoint(Route *pR, double lat, double lon, 
 	return best_point;
 }
 
-bool Routeman::ActivateRoute( Route *pRouteToActivate, RoutePoint *pStartPoint )
+bool Routeman::ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint)
 {
 	pActiveRoute = pRouteToActivate;
 
 	if (pStartPoint) {
 		pActivePoint = pStartPoint;
 	} else {
-		wxRoutePointListNode * node = pActiveRoute->pRoutePointList->GetFirst();
-		pActivePoint = node->GetData();               // start at beginning
+		wxRoutePointListNode* node = pActiveRoute->pRoutePointList->GetFirst();
+		pActivePoint = node->GetData(); // start at beginning
 	}
 
 	wxJSONValue v;
 	v[_T("Route_activated")] = pRouteToActivate->m_RouteNameString;
 	v[_T("GUID")] = pRouteToActivate->m_GUID;
-	wxString msg_id( _T("OCPN_RTE_ACTIVATED") );
-	g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+	wxString msg_id(_T("OCPN_RTE_ACTIVATED"));
+	g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 
-	ActivateRoutePoint( pRouteToActivate, pActivePoint );
+	ActivateRoutePoint(pRouteToActivate, pActivePoint);
 
 	m_bArrival = false;
 	m_arrival_min = 1e6;
@@ -222,7 +224,7 @@ bool Routeman::ActivateRoute( Route *pRouteToActivate, RoutePoint *pStartPoint )
 	return true;
 }
 
-bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
+bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 {
 	wxJSONValue v;
 	pActiveRoute = pA;
@@ -233,34 +235,35 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 	v[_T("GUID")] = pRP_target->m_GUID;
 	v[_T("WP_activated")] = pRP_target->GetName();
 
-	wxRoutePointListNode *node = ( pActiveRoute->pRoutePointList )->GetFirst();
-	while( node ) {
-		RoutePoint *pn = node->GetData();
-		pn->m_bBlink = false;                     // turn off all blinking points
+	wxRoutePointListNode* node = (pActiveRoute->pRoutePointList)->GetFirst();
+	while (node) {
+		RoutePoint* pn = node->GetData();
+		pn->m_bBlink = false; // turn off all blinking points
 		pn->m_bIsActive = false;
 
 		node = node->GetNext();
 	}
 
 	node = pActiveRoute->pRoutePointList->GetFirst();
-	RoutePoint *prp_first = node->GetData();
+	RoutePoint* prp_first = node->GetData();
 
 	//  If activating first point in route, create a "virtual" waypoint at present position
 	if (pRP_target == prp_first) {
 		if (pRouteActivatePoint)
 			delete pRouteActivatePoint;
 
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-		pRouteActivatePoint = new RoutePoint(nav.lat, nav.lon, _T(""), _T(""), _T(""), false); // Current location
+		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+		// Current location
+		pRouteActivatePoint = new RoutePoint(nav.lat, nav.lon, _T(""), _T(""), _T(""), false);
 		pRouteActivatePoint->m_bShowName = false;
 
 		pActiveRouteSegmentBeginPoint = pRouteActivatePoint;
 	} else {
 		prp_first->m_bBlink = false;
 		node = node->GetNext();
-		RoutePoint *np_prev = prp_first;
-		while( node ) {
-			RoutePoint *pnext = node->GetData();
+		RoutePoint* np_prev = prp_first;
+		while (node) {
+			RoutePoint* pnext = node->GetData();
 			if (pnext == pRP_target) {
 				pActiveRouteSegmentBeginPoint = np_prev;
 				break;
@@ -271,10 +274,10 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 		}
 	}
 
-	pRP_target->m_bBlink = true;                               // blink the active point
-	pRP_target->m_bIsActive = true;                            // and active
+	pRP_target->m_bBlink = true; // blink the active point
+	pRP_target->m_bIsActive = true; // and active
 
-	g_blink_rect = pRP_target->CurrentRect_in_DC;               // set up global blinker
+	g_blink_rect = pRP_target->CurrentRect_in_DC; // set up global blinker
 
 	m_bArrival = false;
 	m_arrival_min = 1e6;
@@ -284,7 +287,8 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 	if ((NULL != pRoutePropDialog) && (pRoutePropDialog->IsShown())) {
 		if (pRoutePropDialog->getRoute() == pA) {
 			if (pRoutePropDialog->getEnroutePoint())
-				pRoutePropDialog->setEnroutePoint(pActivePoint); // FIXME: weird: if set, overwrite it?
+				pRoutePropDialog->setEnroutePoint(
+					pActivePoint); // FIXME: weird: if set, overwrite it?
 			pRoutePropDialog->SetRouteAndUpdate(pA);
 			pRoutePropDialog->UpdateProperties();
 		}
@@ -296,10 +300,10 @@ bool Routeman::ActivateRoutePoint( Route *pA, RoutePoint *pRP_target )
 	return true;
 }
 
-bool Routeman::ActivateNextPoint( Route *pr, bool skipped )
+bool Routeman::ActivateNextPoint(Route* pr, bool skipped)
 {
 	wxJSONValue v;
-	if( pActivePoint ) {
+	if (pActivePoint) {
 		pActivePoint->m_bBlink = false;
 		pActivePoint->m_bIsActive = false;
 
@@ -307,19 +311,19 @@ bool Routeman::ActivateNextPoint( Route *pr, bool skipped )
 		v[_T("GUID")] = pActivePoint->m_GUID;
 		v[_T("WP_arrived")] = pActivePoint->GetName();
 	}
-	int n_index_active = pActiveRoute->GetIndexOf( pActivePoint );
-	if( ( n_index_active + 1 ) <= pActiveRoute->GetnPoints() ) {
+	int n_index_active = pActiveRoute->GetIndexOf(pActivePoint);
+	if ((n_index_active + 1) <= pActiveRoute->GetnPoints()) {
 		pActiveRouteSegmentBeginPoint = pActivePoint;
 
-		pActiveRoute->m_pRouteActivePoint = pActiveRoute->GetPoint( n_index_active + 1 );
+		pActiveRoute->m_pRouteActivePoint = pActiveRoute->GetPoint(n_index_active + 1);
 
-		pActivePoint = pActiveRoute->GetPoint( n_index_active + 1 );
+		pActivePoint = pActiveRoute->GetPoint(n_index_active + 1);
 		v[_T("Next_WP")] = pActivePoint->GetName();
 		v[_T("GUID")] = pActivePoint->m_GUID;
 
 		pActivePoint->m_bBlink = true;
 		pActivePoint->m_bIsActive = true;
-		g_blink_rect = pActivePoint->CurrentRect_in_DC;               // set up global blinker
+		g_blink_rect = pActivePoint->CurrentRect_in_DC; // set up global blinker
 
 		m_bArrival = false;
 
@@ -327,7 +331,8 @@ bool Routeman::ActivateNextPoint( Route *pr, bool skipped )
 		if ((NULL != pRoutePropDialog) && (pRoutePropDialog->IsShown())) {
 			if (pRoutePropDialog->getRoute() == pr) {
 				if (pRoutePropDialog->getEnroutePoint())
-					pRoutePropDialog->setEnroutePoint(pActivePoint); // FIXME: weird: if set, overwrite it?
+					pRoutePropDialog->setEnroutePoint(
+						pActivePoint); // FIXME: weird: if set, overwrite it?
 				pRoutePropDialog->SetRouteAndUpdate(pr);
 				pRoutePropDialog->UpdateProperties();
 			}
@@ -346,68 +351,73 @@ bool Routeman::UpdateProgress()
 {
 	bool bret_val = false;
 
-	if( pActiveRoute ) {
-		//      Update bearing, range, and crosstrack error
+	if (pActiveRoute) {
+		// Update bearing, range, and crosstrack error
 
-		//  Bearing is calculated as Mercator Sailing, i.e. a  cartographic "bearing"
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		// Bearing is calculated as Mercator Sailing, i.e. a  cartographic "bearing"
+		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		double north;
 		double east;
-		geo::toSM( pActivePoint->m_lat, pActivePoint->m_lon, nav.lat, nav.lon, &east, &north );
-		double a = atan( north / east );
+		geo::toSM(pActivePoint->m_lat, pActivePoint->m_lon, nav.lat, nav.lon, &east, &north);
+		double a = atan(north / east);
 		if (fabs(pActivePoint->m_lon - nav.lon) < 180.0) {
 			if (pActivePoint->m_lon > nav.lon)
-				CurrentBrgToActivePoint = 90.0 - ( a * 180.0 / M_PI );
+				CurrentBrgToActivePoint = 90.0 - (a * 180.0 / M_PI);
 			else
-				CurrentBrgToActivePoint = 270.0 - ( a * 180.0 / M_PI );
+				CurrentBrgToActivePoint = 270.0 - (a * 180.0 / M_PI);
 		} else {
 			if (pActivePoint->m_lon > nav.lon)
-				CurrentBrgToActivePoint = 270.0 - ( a * 180.0 / M_PI );
+				CurrentBrgToActivePoint = 270.0 - (a * 180.0 / M_PI);
 			else
-				CurrentBrgToActivePoint = 90.0 - ( a * 180.0 / M_PI );
+				CurrentBrgToActivePoint = 90.0 - (a * 180.0 / M_PI);
 		}
 
-		//      Calculate range using Great Circle Formula
+		// Calculate range using Great Circle Formula
 
-		double d5 = geo::DistGreatCircle(nav.lat, nav.lon, pActivePoint->m_lat, pActivePoint->m_lon );
+		double d5
+			= geo::DistGreatCircle(nav.lat, nav.lon, pActivePoint->m_lat, pActivePoint->m_lon);
 		CurrentRngToActivePoint = d5;
 
-		//      Get the XTE vector, normal to current segment
+		// Get the XTE vector, normal to current segment
 		Vector2D va, vb, vn;
 
 		double brg1, dist1, brg2, dist2;
 		geo::DistanceBearingMercator(pActivePoint->m_lat, pActivePoint->m_lon,
-				pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon, &brg1,
-				&dist1);
+									 pActiveRouteSegmentBeginPoint->m_lat,
+									 pActiveRouteSegmentBeginPoint->m_lon, &brg1, &dist1);
 		vb.x = dist1 * sin(brg1 * M_PI / 180.0);
 		vb.y = dist1 * cos(brg1 * M_PI / 180.0);
 
-		geo::DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon, nav.lat, nav.lon, &brg2,
-				&dist2 );
+		geo::DistanceBearingMercator(pActivePoint->m_lat, pActivePoint->m_lon, nav.lat, nav.lon,
+									 &brg2, &dist2);
 		va.x = dist2 * sin(brg2 * M_PI / 180.0);
 		va.y = dist2 * cos(brg2 * M_PI / 180.0);
 
-		double sdelta = vGetLengthOfNormal( &va, &vb, &vn );             // NM
+		double sdelta = vGetLengthOfNormal(&va, &vb, &vn); // NM
 		CurrentXTEToActivePoint = sdelta;
 
-		//    Calculate the distance to the arrival line, which is perpendicular to the current route segment
-		//    Taking advantage of the calculated normal from current position to route segment vn
+		// Calculate the distance to the arrival line, which is perpendicular to the current
+		// route segment
+		// Taking advantage of the calculated normal from current position to route segment vn
 		Vector2D vToArriveNormal;
-		vSubtractVectors( &va, &vn, &vToArriveNormal );
+		vSubtractVectors(&va, &vn, &vToArriveNormal);
 
-		CurrentRangeToActiveNormalCrossing = vVectorMagnitude( &vToArriveNormal );
+		CurrentRangeToActiveNormalCrossing = vVectorMagnitude(&vToArriveNormal);
 
-		//          Compute current segment course
-		//          Using simple Mercater projection
-		double x1, y1, x2, y2;
-		geo::toSM( pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon,
-				pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon, &x1,
-				&y1 );
+		// Compute current segment course
+		// Using simple Mercater projection
+		double x1;
+		double y1;
+		double x2;
+		double y2;
+		geo::toSM(pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon,
+				  pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon, &x1,
+				  &y1);
 
-		geo::toSM( pActivePoint->m_lat, pActivePoint->m_lon, pActiveRouteSegmentBeginPoint->m_lat,
-				pActiveRouteSegmentBeginPoint->m_lon, &x2, &y2 );
+		geo::toSM(pActivePoint->m_lat, pActivePoint->m_lon, pActiveRouteSegmentBeginPoint->m_lat,
+				  pActiveRouteSegmentBeginPoint->m_lon, &x2, &y2);
 
-		double e1 = atan2( ( x2 - x1 ), ( y2 - y1 ) );
+		double e1 = atan2((x2 - x1), (y2 - y1));
 		CurrentSegmentCourse = e1 * 180.0 / M_PI;
 		if (CurrentSegmentCourse < 0)
 			CurrentSegmentCourse += 360;
@@ -432,7 +442,7 @@ bool Routeman::UpdateProgress()
 
 		bool bDidArrival = false;
 
-		if( CurrentRangeToActiveNormalCrossing <= pActiveRoute->GetRouteArrivalRadius() ) {
+		if (CurrentRangeToActiveNormalCrossing <= pActiveRoute->GetRouteArrivalRadius()) {
 			m_bArrival = true;
 			UpdateAutopilot();
 
@@ -442,25 +452,23 @@ bool Routeman::UpdateProgress()
 			// Test to see if we are moving away from the arrival point, and
 			// have been mving away for 2 seconds.
 			// If so, we should declare "Arrival"
-			if( (CurrentRangeToActiveNormalCrossing - m_arrival_min) >  pActiveRoute->GetRouteArrivalRadius() ){
-				if(++m_arrival_test > 2) {
+			if ((CurrentRangeToActiveNormalCrossing - m_arrival_min)
+				> pActiveRoute->GetRouteArrivalRadius()) {
+				if (++m_arrival_test > 2) {
 					m_bArrival = true;
 					UpdateAutopilot();
 
 					bDidArrival = true;
 					DoAdvance();
 				}
-			}
-			else
+			} else
 				m_arrival_test = 0;
-
 		}
 
 		if (!bDidArrival)
-			m_arrival_min = wxMin( m_arrival_min, CurrentRangeToActiveNormalCrossing );
+			m_arrival_min = wxMin(m_arrival_min, CurrentRangeToActiveNormalCrossing);
 
-
-		if (!bDidArrival)  // Only once on arrival
+		if (!bDidArrival) // Only once on arrival
 			UpdateAutopilot();
 
 		bret_val = true; // a route is active
@@ -473,21 +481,21 @@ bool Routeman::UpdateProgress()
 
 void Routeman::DoAdvance(void)
 {
-	if( !ActivateNextPoint( pActiveRoute, false ) )            // at the end?
+	if (!ActivateNextPoint(pActiveRoute, false)) // at the end?
 	{
-		Route *pthis_route = pActiveRoute;
-		DeactivateRoute( true );                  // this is an arrival
+		Route* pthis_route = pActiveRoute;
+		DeactivateRoute(true); // this is an arrival
 
-		if( pthis_route->m_bDeleteOnArrival ) {
-			pConfig->DeleteConfigRoute( pthis_route );
-			DeleteRoute( pthis_route );
-			if( pRoutePropDialog ) {
-				pRoutePropDialog->SetRouteAndUpdate( NULL );
+		if (pthis_route->m_bDeleteOnArrival) {
+			pConfig->DeleteConfigRoute(pthis_route);
+			DeleteRoute(pthis_route);
+			if (pRoutePropDialog) {
+				pRoutePropDialog->SetRouteAndUpdate(NULL);
 				pRoutePropDialog->UpdateProperties();
 			}
 		}
 
-		if( pRouteManagerDialog )
+		if (pRouteManagerDialog)
 			pRouteManagerDialog->UpdateRouteListCtrl();
 	}
 }
@@ -497,12 +505,12 @@ bool Routeman::IsAnyRouteActive(void) const
 	return pActiveRoute != NULL;
 }
 
-Route * Routeman::GetpActiveRoute()
+Route* Routeman::GetpActiveRoute()
 {
 	return pActiveRoute;
 }
 
-RoutePoint *Routeman::GetpActivePoint()
+RoutePoint* Routeman::GetpActivePoint()
 {
 	return pActivePoint;
 }
@@ -537,79 +545,79 @@ int Routeman::GetXTEDir() const
 	return XTEDir;
 }
 
-wxPen * Routeman::GetRoutePen(void)
+wxPen* Routeman::GetRoutePen(void)
 {
 	return m_pRoutePen;
 }
 
-wxPen * Routeman::GetSelectedRoutePen(void)
+wxPen* Routeman::GetSelectedRoutePen(void)
 {
 	return m_pSelectedRoutePen;
 }
 
-wxPen * Routeman::GetActiveRoutePen(void)
+wxPen* Routeman::GetActiveRoutePen(void)
 {
 	return m_pActiveRoutePen;
 }
 
-wxPen * Routeman::GetActiveRoutePointPen(void)
+wxPen* Routeman::GetActiveRoutePointPen(void)
 {
 	return m_pActiveRoutePointPen;
 }
 
-wxPen * Routeman::GetRoutePointPen(void)
+wxPen* Routeman::GetRoutePointPen(void)
 {
 	return m_pRoutePointPen;
 }
 
-wxBrush * Routeman::GetRouteBrush(void)
+wxBrush* Routeman::GetRouteBrush(void)
 {
 	return m_pRouteBrush;
 }
 
-wxBrush * Routeman::GetSelectedRouteBrush(void)
+wxBrush* Routeman::GetSelectedRouteBrush(void)
 {
 	return m_pSelectedRouteBrush;
 }
 
-wxBrush * Routeman::GetActiveRouteBrush(void)
+wxBrush* Routeman::GetActiveRouteBrush(void)
 {
 	return m_pActiveRouteBrush;
 }
 
-wxBrush * Routeman::GetActiveRoutePointBrush(void)
+wxBrush* Routeman::GetActiveRoutePointBrush(void)
 {
 	return m_pActiveRoutePointBrush;
 }
 
-wxBrush * Routeman::GetRoutePointBrush(void)
+wxBrush* Routeman::GetRoutePointBrush(void)
 {
 	return m_pRoutePointBrush;
 }
 
 bool Routeman::DeactivateRoute(bool b_arrival)
 {
-	if( pActivePoint ) {
+	if (pActivePoint) {
 		pActivePoint->m_bBlink = false;
 		pActivePoint->m_bIsActive = false;
 	}
 
-	if( pActiveRoute ) {
+	if (pActiveRoute) {
 		pActiveRoute->m_bRtIsActive = false;
 		pActiveRoute->m_pRouteActivePoint = NULL;
 	}
 
 	wxJSONValue v;
-	if( !b_arrival ) {
+	if (!b_arrival) {
 		v[_T("Route_deactivated")] = pActiveRoute->m_RouteNameString;
 		v[_T("GUID")] = pActiveRoute->m_GUID;
-		wxString msg_id( _T("OCPN_RTE_DEACTIVATED") );
-		g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+		wxString msg_id(_T("OCPN_RTE_DEACTIVATED"));
+		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 	} else {
 		v[_T("GUID")] = pActiveRoute->m_GUID;
 		v[_T("Route_ended")] = pActiveRoute->m_RouteNameString;
-		wxString msg_id( _T("OCPN_RTE_ENDED") );
-		g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+		wxString msg_id(_T("OCPN_RTE_ENDED"));
+		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 	}
 
 	pActiveRoute = NULL;
@@ -619,11 +627,8 @@ bool Routeman::DeactivateRoute(bool b_arrival)
 	pRouteActivatePoint = NULL;
 
 	console->pCDI->ClearBackground();
-
 	console->Show(false);
-
 	m_bDataValid = false;
-
 	return true;
 }
 
@@ -790,23 +795,23 @@ bool Routeman::UpdateAutopilot()
 	return true;
 }
 
-bool Routeman::DoesRouteContainSharedPoints(Route * pRoute)
+bool Routeman::DoesRouteContainSharedPoints(Route* pRoute)
 {
 	if (!pRoute)
 		return false;
 
 	// walk the route, looking at each point to see if it is used by another route
 	// or is isolated
-	wxRoutePointListNode * pnode = pRoute->pRoutePointList->GetFirst();
+	wxRoutePointListNode* pnode = pRoute->pRoutePointList->GetFirst();
 	while (pnode) {
-		RoutePoint * prp = pnode->GetData();
+		RoutePoint* prp = pnode->GetData();
 
 		// check all other routes to see if this point appears in any other route
-		RouteArray * pRA = GetRouteArrayContaining(prp); // FIXME: potential memory leak
+		RouteArray* pRA = GetRouteArrayContaining(prp); // FIXME: potential memory leak
 
 		if (pRA) {
 			for (unsigned int ir = 0; ir < pRA->GetCount(); ++ir) {
-				Route * route = static_cast<Route *>(pRA->Item(ir));
+				Route* route = static_cast<Route*>(pRA->Item(ir));
 				if (route == pRoute)
 					continue;
 				else
@@ -821,7 +826,7 @@ bool Routeman::DoesRouteContainSharedPoints(Route * pRoute)
 	// Now walk the route again, looking for isolated type shared waypoints
 	pnode = pRoute->pRoutePointList->GetFirst();
 	while (pnode) {
-		RoutePoint * prp = pnode->GetData();
+		RoutePoint* prp = pnode->GetData();
 		if (prp->m_bKeepXRoute == true)
 			return true;
 
@@ -899,9 +904,9 @@ void Routeman::DeleteAllRoutes(void)
 	// delete routes that are in layer and also not a track
 	// this algorithm alters the container
 
-	wxRouteListNode * node = pRouteList->GetFirst();
+	wxRouteListNode* node = pRouteList->GetFirst();
 	while (node) {
-		Route * proute = node->GetData();
+		Route* proute = node->GetData();
 
 		if (proute->m_bIsInLayer) {
 			node = node->GetNext();
@@ -928,9 +933,9 @@ void Routeman::DeleteAllTracks(void)
 	// delete routes that are in layer and also a track
 	// this algorithm alters the container
 
-	wxRouteListNode *node = pRouteList->GetFirst();
+	wxRouteListNode* node = pRouteList->GetFirst();
 	while (node) {
-		Route * proute = node->GetData();
+		Route* proute = node->GetData();
 
 		if (proute->m_bIsInLayer) {
 			node = node->GetNext();
@@ -979,29 +984,29 @@ void Routeman::DeleteTrack(Route * pRoute)
 
 	// walk the route, tentatively deleting/marking points used only by this route
 	int ic = 0;
-	wxRoutePointListNode *pnode = ( pRoute->pRoutePointList )->GetFirst();
+	wxRoutePointListNode* pnode = (pRoute->pRoutePointList)->GetFirst();
 	while (pnode) {
-		if(pprog) {
+		if (pprog) {
 			wxString msg;
 			msg.Printf(_T("%d/%d"), ic, count);
-			pprog->Update( ic, msg );
+			pprog->Update(ic, msg);
 			ic++;
 		}
 
-		RoutePoint *prp = pnode->GetData();
+		RoutePoint* prp = pnode->GetData();
 
 		// check all other routes to see if this point appears in any other route
-		Route *pcontainer_route = NULL; //FindRouteContainingWaypoint(prp);
+		Route* pcontainer_route = NULL; // FindRouteContainingWaypoint(prp);
 
-		if( pcontainer_route == NULL ) {
-			prp->m_bIsInRoute = false;          // Take this point out of this (and only) route
-			if( !prp->m_bKeepXRoute ) {
+		if (pcontainer_route == NULL) {
+			prp->m_bIsInRoute = false; // Take this point out of this (and only) route
+			if (!prp->m_bKeepXRoute) {
 				pConfig->m_bSkipChangeSetUpdate = true;
 				pConfig->DeleteWayPoint(prp);
-				pSelect->DeleteSelectablePoint( prp, Select::TYPE_ROUTEPOINT );
+				pSelect->DeleteSelectablePoint(prp, Select::TYPE_ROUTEPOINT);
 				pConfig->m_bSkipChangeSetUpdate = false;
 
-				pRoute->pRoutePointList->DeleteNode( pnode );
+				pRoute->pRoutePointList->DeleteNode(pnode);
 				pnode = NULL;
 				delete prp;
 			}
@@ -1012,7 +1017,7 @@ void Routeman::DeleteTrack(Route * pRoute)
 			pnode = pRoute->pRoutePointList->GetFirst(); // restart the list
 	}
 
-	if ((Track *) pRoute == g_pActiveTrack) {
+	if ((Track*)pRoute == g_pActiveTrack) {
 		g_pActiveTrack = NULL;
 		m_pparent_app->TrackOff();
 	}
@@ -1027,19 +1032,23 @@ void Routeman::DeleteTrack(Route * pRoute)
 
 void Routeman::SetColorScheme(ColorScheme)
 {
-	m_pActiveRoutePointPen = wxThePenList->FindOrCreatePen( wxColour( 0, 0, 255 ), g_route_line_width, wxSOLID );
-	m_pRoutePointPen = wxThePenList->FindOrCreatePen( wxColour( 0, 0, 255 ), g_route_line_width, wxSOLID );
+	m_pActiveRoutePointPen
+		= wxThePenList->FindOrCreatePen(wxColour(0, 0, 255), g_route_line_width, wxSOLID);
+	m_pRoutePointPen
+		= wxThePenList->FindOrCreatePen(wxColour(0, 0, 255), g_route_line_width, wxSOLID);
 
 	// Or in something like S-52 compliance
 
-	m_pRoutePen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T("UINFB") ), g_route_line_width,
-			wxSOLID );
-	m_pSelectedRoutePen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T("UINFO") ), g_route_line_width, wxSOLID );
-	m_pActiveRoutePen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T("UARTE") ), g_route_line_width, wxSOLID );
+	m_pRoutePen
+		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFB")), g_route_line_width, wxSOLID);
+	m_pSelectedRoutePen
+		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFO")), g_route_line_width, wxSOLID);
+	m_pActiveRoutePen
+		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UARTE")), g_route_line_width, wxSOLID);
 
-	m_pRouteBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("UINFB") ), wxSOLID );
-	m_pSelectedRouteBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("UINFO") ), wxSOLID );
-	m_pActiveRouteBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("PLRTE") ), wxSOLID );
+	m_pRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFB")), wxSOLID);
+	m_pSelectedRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFO")), wxSOLID);
+	m_pActiveRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("PLRTE")), wxSOLID);
 }
 
 wxString Routeman::GetRouteReverseMessage(void) const
@@ -1047,7 +1056,7 @@ wxString Routeman::GetRouteReverseMessage(void) const
 	return wxString(_("Waypoints can be renamed to reflect the new order, the names will be '001', '002' etc.\n\nDo you want to rename the waypoints?"));
 }
 
-Route * Routeman::FindRouteByGUID(const wxString & guid) const
+Route* Routeman::FindRouteByGUID(const wxString& guid) const
 {
 	return RouteExists(guid);
 }

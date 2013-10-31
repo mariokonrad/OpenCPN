@@ -51,12 +51,12 @@ covr_set::~covr_set()
 		return; // presumably for Z scale charts
 	// for which we create no cache
 
-	if (m_covr_array_outlines.GetCount()) {
+	if (m_covr_array_outlines.size()) {
 		wxFFileOutputStream ofs(m_cachefile);
 		if (ofs.IsOk()) {
 			ofs.Write(sig_version, 8); // write signature
 
-			for (unsigned int i = 0; i < m_covr_array_outlines.GetCount(); i++) {
+			for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
 				int wkbsize = m_covr_array_outlines[i].GetWKBSize();
 				if (wkbsize) {
 					char* p = (char*)malloc(wkbsize * sizeof(char));
@@ -158,7 +158,7 @@ bool covr_set::Init(wxChar scale_char, wxString & prefix)
 
 unsigned int covr_set::GetCoverCount() const
 {
-	return m_covr_array_outlines.GetCount();
+	return m_covr_array_outlines.size();
 }
 
 M_COVR_Desc* covr_set::GetCover(unsigned int im)
@@ -193,7 +193,7 @@ bool covr_set::Add_Update_MCD(M_COVR_Desc* pmcd)
 		// We need to search the entire table to see if any of those MCD's
 		// correspond to this MCD's object identifier and subcell, as well as cell index
 		bool b_found = false;
-		for (unsigned int i = 0; i < m_covr_array_outlines.GetCount(); i++) {
+		for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
 			M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
 			if ((pmcd_candidate->m_cell_index == pmcd->m_cell_index)
 				&& (pmcd_candidate->m_object_id == pmcd->m_object_id)
@@ -221,7 +221,7 @@ int covr_set::Find_MCD(M_COVR_Desc* pmcd)
 		// We need to search the entire table to see if any of those MCD's
 		// correspond to this MCD's object identifier as well as cell index
 
-		for (unsigned int i = 0; i < m_covr_array_outlines.GetCount(); i++) {
+		for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
 			M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
 			if ((pmcd_candidate->m_cell_index == pmcd->m_cell_index)
 				&& (pmcd_candidate->m_object_id == pmcd->m_object_id)
@@ -238,7 +238,7 @@ M_COVR_Desc* covr_set::Find_MCD(int cell_index, int object_id, int subcell)
 	if (m_cell_hash.find(cell_index) == m_cell_hash.end()) // not present?
 		return NULL;
 
-	for (unsigned int i = 0; i < m_covr_array_outlines.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
 		M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
 		if ((pmcd_candidate->m_cell_index == cell_index)
 			&& (pmcd_candidate->m_object_id == object_id) && (pmcd_candidate->m_subcell == subcell))

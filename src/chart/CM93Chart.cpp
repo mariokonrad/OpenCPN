@@ -47,9 +47,6 @@
 
 typedef std::vector<M_COVR_Desc*> List_Of_M_COVR_Desc;
 
-#include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(Array_Of_M_COVR_Desc_Ptr); // FIXME
-
 extern bool g_bDebugCM93; // FIXME
 static bool s_b_busy_shown; // FIXME
 
@@ -150,16 +147,16 @@ static bool cm93_decode_table_created;
 // Returned longitude value is always > 0
 static void Get_CM93_Cell_Origin(int cellindex, int scale, double *lat, double *lon)
 {
-	//    Longitude
+	// Longitude
 	double idx1 = cellindex % 10000;
-	double lont = ( idx1 / 3. );
+	double lont = ( idx1 / 3.0);
 
 	*lon = lont;
 
-	//    Latitude
+	// Latitude
 	int idx2 = cellindex / 10000;
-	double lat1 = idx2 - 270.;
-	*lat = lat1 / 3.;
+	double lat1 = idx2 - 270.0;
+	*lat = lat1 / 3.0;
 }
 
 // Calculate the CM93 CellIndex integer for a given Lat/Lon, at a given scale
@@ -181,9 +178,9 @@ int Get_CM93_CellIndex(double lat, double lon, int scale)
 		default: dval =   1; break;
 	}
 
-	//    Longitude
-	double lon1 = ( lon + 360. ) * 3.;                    // basic cell size is 20 minutes
-	while ( lon1 >= 1080.0 )
+	// Longitude
+	double lon1 = (lon + 360.0) * 3.0;                    // basic cell size is 20 minutes
+	while ( lon1 >= 1080.0)
 		lon1 -= 1080.0;
 	unsigned short lon2 = ( unsigned short ) floor ( lon1 /dval );      // normalize
 	unsigned short lon3 = lon2 * dval;
@@ -191,7 +188,7 @@ int Get_CM93_CellIndex(double lat, double lon, int scale)
 	retval = lon3;
 
 	//    Latitude
-	double lat1 = ( lat * 3. ) + 270. - 30;
+	double lat1 = ( lat * 3.0) + 270.0 - 30;
 	unsigned short lat2 = ( unsigned short ) floor ( lat1 / dval );      // normalize
 	unsigned short lat3 = lat2 * dval;
 
@@ -2345,7 +2342,7 @@ S57Obj * cm93chart::CreateS57Obj(
 					}
 
 					// Add this geometry to the currently loaded class M_COVR array
-					m_pcovr_array_loaded.Add(pmcd);
+					m_pcovr_array_loaded.push_back(pmcd);
 
 					// Add the MCD it to the current (temporary) per cell list
 					// This array is used only to quickly find the M_COVR object parameters which apply to other objects
@@ -2933,73 +2930,55 @@ void cm93chart::ProcessMCOVRObjects ( int cell_index, char subcell )
 	}
 }
 
-bool cm93chart::UpdateCovrSet ( ViewPort *vpt )
+bool cm93chart::UpdateCovrSet(ViewPort* vpt)
 {
-	//    Create an array of CellIndexes covering the current viewport
+	// Create an array of CellIndexes covering the current viewport
 	std::vector<int> vpcells = GetVPCellArray(*vpt);
 
-	//    Check the member covr_set to see if all these viewport cells have had their m_covr loaded
-
-	for ( unsigned int i=0 ; i < vpcells.size() ; i++ )
-	{
-		//    If the cell is not already in the master coverset, go load enough of it to get the offsets and outlines.....
-		if ( !m_pcovr_set->IsCovrLoaded (vpcells[i]))
-		{
-			if ( loadcell_in_sequence(vpcells[i], '0'))
-			{
+	// Check the member covr_set to see if all these viewport cells have had their m_covr loaded
+	for (unsigned int i = 0; i < vpcells.size(); i++) {
+		// If the cell is not already in the master coverset, go load enough of it to get the
+		// offsets and outlines.....
+		if (!m_pcovr_set->IsCovrLoaded(vpcells[i])) {
+			if (loadcell_in_sequence(vpcells[i], '0')) {
 				ProcessMCOVRObjects(vpcells[i], '0');
-				Unload_CM93_Cell();           // all done with this (sub)cell
+				Unload_CM93_Cell(); // all done with this (sub)cell
 			}
 
-			char loadcell_key = 'A';               // starting subcells
+			char loadcell_key = 'A'; // starting subcells
 
-			//    Load the subcells in sequence
-			//    On successful load, add it to the covr set and process the cell
-			while ( loadcell_in_sequence(vpcells[i], loadcell_key))
-			{
-				//Extract the m_covr structures inline
+			// Load the subcells in sequence
+			// On successful load, add it to the covr set and process the cell
+			while (loadcell_in_sequence(vpcells[i], loadcell_key)) {
+				// Extract the m_covr structures inline
 
-				ProcessMCOVRObjects (vpcells[i], loadcell_key);
-
-				Unload_CM93_Cell();           // all done with this (sub)cell
-
+				ProcessMCOVRObjects(vpcells[i], loadcell_key);
+				Unload_CM93_Cell(); // all done with this (sub)cell
 				loadcell_key++;
-
-			}     // while
-		}           // cell is not in
-	}                 // for cellindex array
+			}
+		}
+	}
 
 	return true;
 }
 
-
-
-bool cm93chart::IsPointInLoadedM_COVR ( double xc, double yc )
+bool cm93chart::IsPointInLoadedM_COVR(double xc, double yc)
 {
-
-	for ( unsigned int im=0 ; im < m_pcovr_array_loaded.GetCount() ; im++ )
-	{
-		if ( G_PtInPolygon_FL ( m_pcovr_array_loaded.Item ( im )->pvertices, m_pcovr_array_loaded.Item ( im )->m_nvertices, xc, yc ) )
+	for (CovrDescContainer::iterator i = m_pcovr_array_loaded.begin();
+		 i != m_pcovr_array_loaded.end(); ++i) {
+		if (G_PtInPolygon_FL((*i)->pvertices, (*i)->m_nvertices, xc, yc))
 			return true;
 	}
 	return false;
-
 }
 
-
-
-int cm93chart::loadcell_in_sequence ( int cellindex, char subcell )
+int cm93chart::loadcell_in_sequence(int cellindex, char subcell)
 {
-	int rv = loadsubcell ( cellindex, subcell );
-
-	return rv;
+	return loadsubcell(cellindex, subcell);
 }
-
-
 
 int cm93chart::loadsubcell ( int cellindex, wxChar sub_char )
 {
-
 	//    Create the file name
 
 	int ilat = cellindex / 10000;

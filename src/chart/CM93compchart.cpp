@@ -588,50 +588,53 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 
 double cm93compchart::GetNormalScaleMax ( double canvas_scale_factor, int canvas_width )
 {
-	return (180.0 / 360.0) * M_PI  * 2 * (geo::WGS84_semimajor_axis_meters / (canvas_width / canvas_scale_factor));
+	return (180.0 / 360.0) * M_PI  * 2.0 * (geo::WGS84_semimajor_axis_meters / (canvas_width / canvas_scale_factor));
 }
 
-void cm93compchart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion)
+void cm93compchart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion)
 {
 	OCPNRegion screen_region(0, 0, VPoint.pix_width, VPoint.pix_height);
-	OCPNRegion ret = GetValidScreenCanvasRegion ( VPoint, screen_region );
+	OCPNRegion ret = GetValidScreenCanvasRegion(VPoint, screen_region);
 	*pValidRegion = ret;
 }
 
-OCPNRegion cm93compchart::GetValidScreenCanvasRegion ( const ViewPort& VPoint, const OCPNRegion &ScreenRegion )
+OCPNRegion cm93compchart::GetValidScreenCanvasRegion(const ViewPort& VPoint,
+													 const OCPNRegion& ScreenRegion)
 {
 	OCPNRegion ret_region;
 
 	ViewPort vp_positive = VPoint;
 	vp_positive.set_positive();
-
 	vp_positive.rotation = 0.0;
 
 	if (m_pcm93chart_current) {
 		int chart_native_scale = m_pcm93chart_current->GetNativeScale();
 
-		for ( unsigned int im=0 ; im < m_pcm93chart_current->m_pcovr_array_loaded.GetCount() ; im++ ) {
+		for (unsigned int im = 0; im < m_pcm93chart_current->m_pcovr_array_loaded.size(); im++) {
 			using geo::BoundingBox;
 
-			M_COVR_Desc *pmcd = ( m_pcm93chart_current->m_pcovr_array_loaded.Item ( im ) );
+			M_COVR_Desc* pmcd = m_pcm93chart_current->m_pcovr_array_loaded[im];
 
-			//    We can make a quick test based on the bbox of the M_COVR and the bbox of the ViewPort
+			// We can make a quick test based on the bbox of the M_COVR and the bbox of the
+			// ViewPort
 			BoundingBox rtwbb = pmcd->m_covr_bbox;
 			wxPoint2DDouble rtw(360.0, 0.0);
 			rtwbb.Translate(rtw);
 
-			if ((vp_positive.GetBBox().Intersect(pmcd->m_covr_bbox) == BoundingBox::_OUT) &&
-					(vp_positive.GetBBox().Intersect(rtwbb) == BoundingBox::_OUT))
+			if ((vp_positive.GetBBox().Intersect(pmcd->m_covr_bbox) == BoundingBox::_OUT)
+				&& (vp_positive.GetBBox().Intersect(rtwbb) == BoundingBox::_OUT))
 				continue;
 
-			wxPoint *DrawBuf = m_pcm93chart_current->GetDrawBuffer ( pmcd->m_nvertices );
+			wxPoint* DrawBuf = m_pcm93chart_current->GetDrawBuffer(pmcd->m_nvertices);
 
-			OCPNRegion rgn_covr = vp_positive.GetVPRegionIntersect ( ScreenRegion, pmcd->m_nvertices, ( float * ) pmcd->pvertices, chart_native_scale, DrawBuf );
+			OCPNRegion rgn_covr = vp_positive.GetVPRegionIntersect(ScreenRegion, pmcd->m_nvertices,
+																   (float*)pmcd->pvertices,
+																   chart_native_scale, DrawBuf);
 
-			ret_region.Union( rgn_covr );
+			ret_region.Union(rgn_covr);
 		}
 	} else
-		ret_region.Union(OCPNRegion( 0, 0, 1,1 ));
+		ret_region.Union(OCPNRegion(0, 0, 1, 1));
 
 	return ret_region;
 }

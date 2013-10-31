@@ -26,6 +26,7 @@
 
 #include <chart/S57Chart.h>
 #include <chart/M_COVR_Desc.h>
+#include <vector>
 
 class cm93_dictionary;
 class cm93manager;
@@ -38,8 +39,6 @@ struct vector_record_descriptor;
 struct Object;
 struct Cell_Info_Block;
 struct cm93_point;
-
-WX_DECLARE_OBJARRAY(M_COVR_Desc *, Array_Of_M_COVR_Desc_Ptr); // FIXME: use std container
 
 int Get_CM93_CellIndex(double lat, double lon, int scale);
 
@@ -96,7 +95,8 @@ class cm93chart : public s57chart
 
 		std::vector<int> GetVPCellArray(const ViewPort &vpt);
 
-		Array_Of_M_COVR_Desc_Ptr m_pcovr_array_loaded; // FIXME: use std containers, move to private
+		typedef std::vector<M_COVR_Desc*> CovrDescContainer;
+		CovrDescContainer m_pcovr_array_loaded;
 
 		void SetUserOffsets(int cell_index, int object_id, int subcell, int xoff, int yoff);
 

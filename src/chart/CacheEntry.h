@@ -21,19 +21,23 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CACHE_ENTRY__H__
-#define __CACHE_ENTRY__H__
+#ifndef __CHART__CACHE_ENTRY__H__
+#define __CHART__CACHE_ENTRY__H__
 
 #include <wx/string.h>
 
+namespace chart {
+
 class CacheEntry
 {
-	public:
-		wxString FullPath;
-		void * pChart;
-		int RecentTime;
-		int dbIndex;
-		bool b_in_use;
+public:
+	wxString FullPath;
+	void* pChart;
+	int RecentTime;
+	int dbIndex;
+	bool b_in_use;
 };
+
+}
 
 #endif

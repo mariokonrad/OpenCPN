@@ -2911,10 +2911,10 @@ void MainFrame::OnMemFootTimer(wxTimerEvent &)
 			// Get a local copy of the cache info
 			wxArrayPtrVoid * pCache = ChartData->GetChartCache();
 			const unsigned int nCache = pCache->GetCount();
-			std::vector<CacheEntry> cache;
+			std::vector<chart::CacheEntry> cache;
 			cache.reserve(nCache);
 			for (unsigned int i = 0; i < nCache; ++i) {
-				cache.push_back(*static_cast<CacheEntry *>(pCache->Item(i)));
+				cache.push_back(*static_cast<chart::CacheEntry *>(pCache->Item(i)));
 			}
 
 			if (nCache > 1) {

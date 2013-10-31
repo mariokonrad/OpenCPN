@@ -25,8 +25,10 @@
 #define __CHART__COVR_SET__H__
 
 #include <chart/M_COVR_Desc.h>
+#include <wx/dynarray.h>
 
 WX_DECLARE_HASH_MAP(int, int, wxIntegerHash, wxIntegerEqual, cm93cell_hash);
+WX_DECLARE_OBJARRAY(M_COVR_Desc, Array_Of_M_COVR_Desc); // FIXME: use std container
 
 class cm93chart;
 
@@ -34,30 +36,31 @@ class cm93chart;
 /// relating to cm93 cell MCOVR objects of a particular scale
 class covr_set
 {
-	public:
-		covr_set(cm93chart * parent);
-		~covr_set();
+public:
+	covr_set(cm93chart* parent);
+	~covr_set();
 
-		bool Init(wxChar scale_char, wxString & prefix);
+	bool Init(wxChar scale_char, wxString& prefix);
 
-		unsigned int GetCoverCount() const;
-		M_COVR_Desc * GetCover(unsigned int im);
-		void Add_MCD ( M_COVR_Desc *pmcd );
-		bool Add_Update_MCD ( M_COVR_Desc *pmcd );
-		bool IsCovrLoaded ( int cell_index );
-		int Find_MCD ( M_COVR_Desc *pmcd );
-		M_COVR_Desc *Find_MCD ( int cell_index, int object_id, int sbcell );
+	unsigned int GetCoverCount() const;
+	M_COVR_Desc* GetCover(unsigned int im);
+	void Add_MCD(M_COVR_Desc* pmcd);
+	bool Add_Update_MCD(M_COVR_Desc* pmcd);
+	bool IsCovrLoaded(int cell_index);
+	int Find_MCD(M_COVR_Desc* pmcd);
+	M_COVR_Desc* Find_MCD(int cell_index, int object_id, int sbcell);
 
-		cm93chart * m_pParent;
-		wxChar m_scale_char;
-		int m_scale;
+	cm93chart* m_pParent;
+	wxChar m_scale_char;
+	int m_scale;
 
-		wxString m_cachefile;
+	wxString m_cachefile;
 
-		Array_Of_M_COVR_Desc m_covr_array_outlines; // array, for chart outline rendering
+	Array_Of_M_COVR_Desc m_covr_array_outlines; // array, for chart outline rendering
 
-		cm93cell_hash m_cell_hash; // This is a hash, indexed by cell index, elements contain the number of M_COVRs
-		// found on this particular cell
+	// This is a hash, indexed by cell index, elements contain the number of M_COVRs
+	// found on this particular cell
+	cm93cell_hash m_cell_hash;
 };
 
 #endif

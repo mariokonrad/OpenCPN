@@ -32,8 +32,6 @@
 
 #include <wx/wfstream.h>
 
-#include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(Array_Of_M_COVR_Desc_Ptr); // FIXME
 
 
 M_COVR_Desc::M_COVR_Desc()
@@ -159,11 +157,11 @@ int M_COVR_Desc::ReadWKB(wxFFileInputStream& ifs)
 	return length;
 }
 
-OCPNRegion M_COVR_Desc::GetRegion(const ViewPort& vp, wxPoint* pwp)
+OCPNRegion M_COVR_Desc::GetRegion(const ViewPort& vp, wxPoint* pwp) const
 {
 	geo::float_2Dpt* p = pvertices;
 
-	for (int ip = 0; ip < m_nvertices; ip++) {
+	for (int ip = 0; ip < m_nvertices; ++ip) {
 		double plon = p->x;
 		if (fabs(plon - vp.clon) > 180.0) {
 			if (plon > vp.clon)
@@ -172,7 +170,10 @@ OCPNRegion M_COVR_Desc::GetRegion(const ViewPort& vp, wxPoint* pwp)
 				plon += 360.0;
 		}
 
-		double easting, northing, epix, npix;
+		double easting;
+		double northing;
+		double epix;
+		double npix;
 		geo::toSM(p->y, plon + 360.0, vp.clat, vp.clon + 360, &easting, &northing);
 
 		easting -= user_xoff;

@@ -26,7 +26,6 @@
 
 #include <geo/BoundingBox.h>
 #include <OCPNRegion.h>
-#include <wx/dynarray.h>
 
 class wxFFileInputStream;
 class ViewPort;
@@ -43,7 +42,7 @@ public:
 	bool WriteWKB(void* p);
 	int ReadWKB(wxFFileInputStream& ifs);
 	void Update(M_COVR_Desc* pmcd);
-	OCPNRegion GetRegion(const ViewPort& vp, wxPoint* pwp);
+	OCPNRegion GetRegion(const ViewPort& vp, wxPoint* pwp) const;
 
 	int m_cell_index;
 	int m_object_id;
@@ -65,7 +64,5 @@ public:
 	geo::BoundingBox m_covr_bbox;
 	bool m_buser_offsets;
 };
-
-WX_DECLARE_OBJARRAY(M_COVR_Desc *, Array_Of_M_COVR_Desc_Ptr); // FIXME: use std container
 
 #endif

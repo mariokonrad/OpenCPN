@@ -29,6 +29,7 @@
 #include <wx/listctrl.h>
 #include <wx/spinctrl.h>
 #include <chart/M_COVR_Desc.h>
+#include <vector>
 
 class wxButton;
 class wxSpinCtrl;
@@ -65,7 +66,9 @@ private:
 
 	void UpdateOffsets(void);
 
-	Array_Of_M_COVR_Desc_Ptr m_pcovr_array;
+	typedef std::vector<const M_COVR_Desc*> CovrDescContainer;
+
+	CovrDescContainer m_pcovr_array;
 
 	wxSpinCtrl* m_pSpinCtrlXoff;
 	wxSpinCtrl* m_pSpinCtrlYoff;

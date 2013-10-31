@@ -30,7 +30,6 @@
 class cm93_dictionary;
 class cm93manager;
 class covr_set;
-class M_COVR_Desc;
 
 namespace geo { class ExtendedGeometry; }
 
@@ -39,6 +38,8 @@ struct vector_record_descriptor;
 struct Object;
 struct Cell_Info_Block;
 struct cm93_point;
+
+WX_DECLARE_OBJARRAY(M_COVR_Desc *, Array_Of_M_COVR_Desc_Ptr); // FIXME: use std container
 
 int Get_CM93_CellIndex(double lat, double lon, int scale);
 
@@ -83,7 +84,7 @@ class cm93chart : public s57chart
 		bool UpdateCovrSet(ViewPort *vpt);
 		bool IsPointInLoadedM_COVR(double xc, double yc);
 
-		covr_set * GetCoverSet()
+		covr_set * GetCoverSet() // FIXME: breaks encapsulation
 		{
 			return m_pcovr_set;
 		}
@@ -95,7 +96,7 @@ class cm93chart : public s57chart
 
 		std::vector<int> GetVPCellArray(const ViewPort &vpt);
 
-		Array_Of_M_COVR_Desc_Ptr m_pcovr_array_loaded; // FIXME: use std containers
+		Array_Of_M_COVR_Desc_Ptr m_pcovr_array_loaded; // FIXME: use std containers, move to private
 
 		void SetUserOffsets(int cell_index, int object_id, int subcell, int xoff, int yoff);
 

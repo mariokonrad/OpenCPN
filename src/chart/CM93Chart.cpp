@@ -49,6 +49,9 @@ WX_DECLARE_LIST(M_COVR_Desc, List_Of_M_COVR_Desc); // FIXME: use std container
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(List_Of_M_COVR_Desc); // FIXME
 
+#include <wx/arrimpl.cpp>
+WX_DEFINE_OBJARRAY(Array_Of_M_COVR_Desc_Ptr); // FIXME
+
 extern bool g_bDebugCM93; // FIXME
 static bool s_b_busy_shown; // FIXME
 

@@ -38,16 +38,14 @@
 #include <LogMessageOnce.h>
 
 #include <algorithm>
+#include <vector>
 
 #ifdef USE_S57
 	#include <chart/s52plib.h>
 	extern s52plib * ps52plib; // FIXME
 #endif
 
-WX_DECLARE_LIST(M_COVR_Desc, List_Of_M_COVR_Desc); // FIXME: use std container
-
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(List_Of_M_COVR_Desc); // FIXME
+typedef std::vector<M_COVR_Desc*> List_Of_M_COVR_Desc;
 
 #include <wx/arrimpl.cpp>
 WX_DEFINE_OBJARRAY(Array_Of_M_COVR_Desc_Ptr); // FIXME
@@ -132,7 +130,7 @@ struct Cell_Info_Block
 	int m_n_point3d_records;
 	int m_n_point2d_records;
 
-	List_Of_M_COVR_Desc m_cell_mcovr_list; // FIXME: replace List_Of_... with std containers
+	List_Of_M_COVR_Desc m_cell_mcovr_list;
 	bool b_have_offsets;
 	bool b_have_user_offsets;
 
@@ -1267,17 +1265,12 @@ void cm93chart::ProcessVectorEdges(void)
 	}
 }
 
-
-int cm93chart::CreateObjChain ( int cell_index, int subcell )
+int cm93chart::CreateObjChain(int cell_index, int subcell)
 {
-	LUPrec           *LUP;
-	LUPname          LUP_Name = PAPER_CHART;
+	LUPrec* LUP;
+	LUPname LUP_Name = PAPER_CHART;
 
-
-	m_CIB->m_cell_mcovr_list.Clear();
-
-
-	//     CALLGRIND_START_INSTRUMENTATION
+	m_CIB->m_cell_mcovr_list.clear();
 
 	Object *pobjectDef = m_CIB->pobject_block;           // head of object array
 	m_CIB->b_have_offsets = false;                       // will be set if any M_COVRs in this cell have defined, non-zero WGS84 offsets
@@ -2301,99 +2294,93 @@ S57Obj * cm93chart::CreateS57Obj(
 						geo::float_2Dpt *geoPt = new geo::float_2Dpt[npta + 2];     // vertex array
 						geo::float_2Dpt *ppt = geoPt;
 
-						pmcd->m_covr_lon_max = -1000.;
-						pmcd->m_covr_lon_min = 1000.;
-						pmcd->m_covr_lat_max = -1000.;
-						pmcd->m_covr_lat_min = 1000.;
+						pmcd->m_covr_lon_max = -1000.0;
+						pmcd->m_covr_lon_min = 1000.0;
+						pmcd->m_covr_lat_max = -1000.0;
+						pmcd->m_covr_lat_min = 1000.0;
 
-						//  Transcribe exterior ring points to vertex array, in Lat/Lon coordinates
-						for ( int ip = 0 ; ip < npta ; ip++ )
-						{
+						// Transcribe exterior ring points to vertex array, in Lat/Lon coordinates
+						for (int ip = 0; ip < npta; ip++) {
 							cm93_point p;
-							p.x = ( int ) xgeom->vertex_array[ip + 1].m_x;
-							p.y = ( int ) xgeom->vertex_array[ip + 1].m_y;
+							p.x = (int)xgeom->vertex_array[ip + 1].m_x;
+							p.y = (int)xgeom->vertex_array[ip + 1].m_y;
 
-							Transform ( &p, 0, 0,/*tmp_transform_x, tmp_transform_y,*/ &lat, &lon );
+							Transform(&p, 0, 0, /*tmp_transform_x, tmp_transform_y,*/ &lat, &lon);
 							ppt->x = lon;
 							ppt->y = lat;
 
-							pmcd->m_covr_lon_max = wxMax ( pmcd->m_covr_lon_max, lon );
-							pmcd->m_covr_lon_min = wxMin ( pmcd->m_covr_lon_min, lon );
-							pmcd->m_covr_lat_max = wxMax ( pmcd->m_covr_lat_max, lat );
-							pmcd->m_covr_lat_min = wxMin ( pmcd->m_covr_lat_min, lat );
+							pmcd->m_covr_lon_max = wxMax(pmcd->m_covr_lon_max, lon);
+							pmcd->m_covr_lon_min = wxMin(pmcd->m_covr_lon_min, lon);
+							pmcd->m_covr_lat_max = wxMax(pmcd->m_covr_lat_max, lat);
+							pmcd->m_covr_lat_min = wxMin(pmcd->m_covr_lat_min, lat);
 
 							ppt++;
-
 						}
 						pmcd->m_nvertices = npta;
 						pmcd->pvertices = geoPt;
 
-						pmcd->m_covr_bbox = geo::BoundingBox ( pmcd->m_covr_lon_min, pmcd->m_covr_lat_min, pmcd->m_covr_lon_max, pmcd->m_covr_lat_max );
+						pmcd->m_covr_bbox
+							= geo::BoundingBox(pmcd->m_covr_lon_min, pmcd->m_covr_lat_min,
+											   pmcd->m_covr_lon_max, pmcd->m_covr_lat_max);
 
-
-						//    Capture and store the potential WGS transform offsets grabbed during attribute decode
+						// Capture and store the potential WGS transform offsets grabbed during
+						// attribute decode
 						pmcd->transform_WGS84_offset_x = tmp_transform_x;
 						pmcd->transform_WGS84_offset_y = tmp_transform_y;
 
-						pmcd->m_centerlat_cos = cos(((pmcd->m_covr_lat_min + pmcd->m_covr_lat_max)/2.0) * M_PI/180.0);
+						pmcd->m_centerlat_cos = cos(
+							((pmcd->m_covr_lat_min + pmcd->m_covr_lat_max) / 2.0) * M_PI / 180.0);
 
 						// Add this MCD to the persistent class covr_set
-						GetCoverSet()->Add_Update_MCD ( pmcd );
+						GetCoverSet()->Add_Update_MCD(pmcd);
 					} else {
 						// If already in the coverset, are there user offsets applied to this MCD?
-						if ( pmcd_look->m_buser_offsets )
-						{
+						if (pmcd_look->m_buser_offsets) {
 							m_CIB->b_have_user_offsets = true;
 
 							m_CIB->user_xoff = pmcd_look->user_xoff;
 							m_CIB->user_yoff = pmcd_look->user_yoff;
 						}
-
 						pmcd = pmcd_look;
-
 					}
 
-					//     Add this geometry to the currently loaded class M_COVR array
-					m_pcovr_array_loaded.Add ( pmcd );
+					// Add this geometry to the currently loaded class M_COVR array
+					m_pcovr_array_loaded.Add(pmcd);
 
-					//    Add the MCD it to the current (temporary) per cell list
-					//    This array is used only to quickly find the M_COVR object parameters which apply to other objects
-					//    loaded from this cell.
-					//    We do this so we don't have to search the entire (worldwide) coverset for this chart scale
-					m_CIB->m_cell_mcovr_list.Append ( pmcd );
-
+					// Add the MCD it to the current (temporary) per cell list
+					// This array is used only to quickly find the M_COVR object parameters which apply to other objects
+					// loaded from this cell.
+					// We do this so we don't have to search the entire (worldwide) coverset for this chart scale
+					m_CIB->m_cell_mcovr_list.push_back(pmcd);
 				}
 
-
-
 				//  Declare x/y of the object to be average of all cm93points
-				pobj->x = ( xgeom->xmin + xgeom->xmax ) / 2.;
-				pobj->y = ( xgeom->ymin + xgeom->ymax ) / 2.;
+				pobj->x = (xgeom->xmin + xgeom->xmax) / 2.;
+				pobj->y = (xgeom->ymin + xgeom->ymax) / 2.;
 
 				//    associate the vector(edge) index table
 				pobj->m_n_lsindex = xgeom->n_vector_indices;
-				pobj->m_lsindex_array = xgeom->pvector_index;         // object now owns the array
+				pobj->m_lsindex_array = xgeom->pvector_index; // object now owns the array
 				pobj->m_n_edge_max_points = xgeom->n_max_edge_points;
 
-
-				//    Find the proper WGS offset for this object
-				if ( m_CIB->b_have_offsets || m_CIB->b_have_user_offsets )
-				{
+				// Find the proper WGS offset for this object
+				if (m_CIB->b_have_offsets || m_CIB->b_have_user_offsets) {
 					double latc, lonc;
-					cm93_point pc;   pc.x = ( short unsigned int ) pobj->x;  pc.y = ( short unsigned int ) pobj->y;
-					Transform ( &pc, 0., 0., &latc, &lonc );
+					cm93_point pc;
+					pc.x = (short unsigned int)pobj->x;
+					pc.y = (short unsigned int)pobj->y;
+					Transform(&pc, 0.0, 0.0, &latc, &lonc);
 
-					M_COVR_Desc *pmcd = FindM_COVR_InWorkingSet ( latc, lonc );
-					if ( pmcd )
-					{
+					M_COVR_Desc* pmcd = FindM_COVR_InWorkingSet(latc, lonc);
+					if (pmcd) {
 						trans_WGS84_offset_x = pmcd->user_xoff;
 						trans_WGS84_offset_y = pmcd->user_yoff;
 					}
 				}
 
-
 				//  Set the s57obj bounding box as lat/lon
-				double lat, lon;
+				double lat;
+				double lon;
 				cm93_point p;
 
 				p.x = ( int ) xgeom->xmin;
@@ -2408,27 +2395,21 @@ S57Obj * cm93chart::CreateS57Obj(
 
 				pobj->bBBObj_valid = true;
 
-				//  Set the object base point
+				// Set the object base point
 				p.x = ( int ) pobj->x;
 				p.y = ( int ) pobj->y;
 				Transform ( &p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon );
 				pobj->m_lon = lon;
 				pobj->m_lat = lat;
 
+				// Set up the conversion factors for use in the tesselator
+				xgeom->x_rate = m_CIB->transform_x_rate;
+				xgeom->x_offset = m_CIB->transform_x_origin - trans_WGS84_offset_x;
+				xgeom->y_rate = m_CIB->transform_y_rate;
+				xgeom->y_offset = m_CIB->transform_y_origin - trans_WGS84_offset_y;
 
-				if(1)
-				{
-					//    This will be a deferred tesselation.....
-
-					// Set up the conversion factors for use in the tesselator
-					xgeom->x_rate   = m_CIB->transform_x_rate;
-					xgeom->x_offset = m_CIB->transform_x_origin - trans_WGS84_offset_x;
-					xgeom->y_rate   = m_CIB->transform_y_rate;
-					xgeom->y_offset = m_CIB->transform_y_origin - trans_WGS84_offset_y;
-
-					//    Set up a deferred tesselation
-					pobj->pPolyTessGeo = new geo::PolyTessGeo(xgeom);
-				}
+				// Set up a deferred tesselation
+				pobj->pPolyTessGeo = new geo::PolyTessGeo(xgeom);
 
 				break;
 			}
@@ -2439,7 +2420,6 @@ S57Obj * cm93chart::CreateS57Obj(
 				pobj->Primitive_type = GEO_POINT;
 				pobj->npt = 1;
 
-
 				pobj->x = xgeom->pointx;
 				pobj->y = xgeom->pointy;
 
@@ -2447,7 +2427,7 @@ S57Obj * cm93chart::CreateS57Obj(
 				cm93_point p;
 				p.x = xgeom->pointx;
 				p.y = xgeom->pointy;
-				Transform ( &p, 0., 0., &lat, &lon );
+				Transform ( &p, 0.0, 0.0, &lat, &lon );
 
 				//    Find the proper WGS offset for this object
 				if ( m_CIB->b_have_offsets || m_CIB->b_have_user_offsets )
@@ -2466,8 +2446,8 @@ S57Obj * cm93chart::CreateS57Obj(
 				pobj->m_lat = lat;
 				pobj->m_lon = lon;
 
-				pobj->BBObj.SetMin ( lon-.25, lat-.25 );
-				pobj->BBObj.SetMax ( lon+.25, lat+.25 );
+				pobj->BBObj.SetMin ( lon-0.25, lat-0.25 );
+				pobj->BBObj.SetMax ( lon+0.25, lat+0.25 );
 
 
 				break;
@@ -2487,17 +2467,17 @@ S57Obj * cm93chart::CreateS57Obj(
 
 				p.x = ( int ) xgeom->xmin;
 				p.y = ( int ) xgeom->ymin;
-				Transform ( &p, 0., 0., &lat, &lon );
+				Transform ( &p, 0.0, 0.0, &lat, &lon );
 				pobj->BBObj.SetMin ( lon, lat );
 
 				p.x = ( int ) xgeom->xmax;
 				p.y = ( int ) xgeom->ymax;
-				Transform ( &p, 0., 0., &lat, &lon );
+				Transform ( &p, 0.0, 0.0, &lat, &lon );
 				pobj->BBObj.SetMax ( lon, lat );
 
 				//  and declare x/y of the object to be average of all cm93points
-				pobj->x = ( xgeom->xmin + xgeom->xmax ) / 2.;
-				pobj->y = ( xgeom->ymin + xgeom->ymax ) / 2.;
+				pobj->x = ( xgeom->xmin + xgeom->xmax ) / 2.0;
+				pobj->y = ( xgeom->ymin + xgeom->ymax ) / 2.0;
 
 
 
@@ -2522,14 +2502,14 @@ S57Obj * cm93chart::CreateS57Obj(
 					double east  = p.x;
 					double north = p.y;
 
-					double snd_trans_x = 0.;
-					double snd_trans_y = 0.;
+					double snd_trans_x = 0.0;
+					double snd_trans_y = 0.0;
 
 					//    Find the proper offset for this individual sounding
 					if ( m_CIB->b_have_user_offsets )
 					{
 						double lats, lons;
-						Transform ( &p, 0., 0., &lats, &lons );
+						Transform ( &p, 0.0, 0.0, &lats, &lons );
 
 						M_COVR_Desc *pmcd = FindM_COVR_InWorkingSet ( lats, lons );
 						if ( pmcd )
@@ -2580,8 +2560,8 @@ S57Obj * cm93chart::CreateS57Obj(
 				xgeom->vertex_array = NULL;               // object now owns the array
 
 				//  Declare x/y of the object to be average of all cm93points
-				pobj->x = ( xgeom->xmin + xgeom->xmax ) / 2.;
-				pobj->y = ( xgeom->ymin + xgeom->ymax ) / 2.;
+				pobj->x = ( xgeom->xmin + xgeom->xmax ) / 2.0;
+				pobj->y = ( xgeom->ymin + xgeom->ymax ) / 2.0;
 
 				//    associate the vector(edge) index table
 				pobj->m_n_lsindex = xgeom->n_vector_indices;
@@ -2673,64 +2653,46 @@ S57Obj * cm93chart::CreateS57Obj(
 	return pobj;
 }
 
-
-//    Find the proper M_COVR record within this current cell for this lat/lon
-M_COVR_Desc *cm93chart::FindM_COVR_InWorkingSet ( double lat, double lon )
+// Find the proper M_COVR record within this current cell for this lat/lon
+M_COVR_Desc* cm93chart::FindM_COVR_InWorkingSet(double lat, double lon)
 {
-	M_COVR_Desc *ret = NULL;
-	//    Default is to use the first M_COVR, the usual case
-	if (m_CIB->m_cell_mcovr_list.GetCount() == 1)
-	{
-		wxList_Of_M_COVR_DescNode *node0 = m_CIB->m_cell_mcovr_list.GetFirst();
-		if ( node0 )
-			ret = node0->GetData();
-	} else {
-		wxList_Of_M_COVR_DescNode *node = m_CIB->m_cell_mcovr_list.GetFirst();
-		while (node) {
-			M_COVR_Desc *pmcd = node->GetData();
-
-			if (G_PtInPolygon_FL(pmcd->pvertices, pmcd->m_nvertices, lon, lat)) {
-				ret = pmcd;
-				break;
-			}
-
-			node = node->GetNext();
+	// Default is to use the first M_COVR, the usual case
+	if (m_CIB->m_cell_mcovr_list.size() == 1) {
+		return *m_CIB->m_cell_mcovr_list.begin();
+	}
+	for (List_Of_M_COVR_Desc::iterator i = m_CIB->m_cell_mcovr_list.begin();
+		 i != m_CIB->m_cell_mcovr_list.end(); ++i) {
+		M_COVR_Desc* pmcd = *i;
+		if (G_PtInPolygon_FL(pmcd->pvertices, pmcd->m_nvertices, lon, lat)) {
+			return pmcd;
 		}
 	}
-	return ret;
+	return NULL;
 }
 
-
-
-//    Find the proper M_COVR record within this current cell for this lat/lon
-//    And return the WGS84 offsets contained within
-wxPoint2DDouble cm93chart::FindM_COVROffset ( double lat, double lon )
+// Find the proper M_COVR record within this current cell for this lat/lon
+// And return the WGS84 offsets contained within
+wxPoint2DDouble cm93chart::FindM_COVROffset(double lat, double lon)
 {
 	wxPoint2DDouble ret(0.0, 0.0);
 
-	//    Default is to use the first M_COVR, the usual case
-	wxList_Of_M_COVR_DescNode *node0 = m_CIB->m_cell_mcovr_list.GetFirst();
-	if ( node0 )
-	{
-		M_COVR_Desc *pmcd0 = node0->GetData();
+	// Default is to use the first M_COVR, the usual case
+	if (m_CIB->m_cell_mcovr_list.size() > 0) {
+		M_COVR_Desc* pmcd0 = *m_CIB->m_cell_mcovr_list.begin();
 		ret.m_x = pmcd0->transform_WGS84_offset_x;
 		ret.m_y = pmcd0->transform_WGS84_offset_y;
 	}
 
-	//    If there are more than one M_COVR in this cell, need to search
-	if (m_CIB->m_cell_mcovr_list.GetCount() > 1) {
-		wxList_Of_M_COVR_DescNode *node = m_CIB->m_cell_mcovr_list.GetFirst();
-		while (node) {
-			M_COVR_Desc *pmcd = node->GetData();
-
-			if ( G_PtInPolygon_FL ( pmcd->pvertices, pmcd->m_nvertices, lon, lat ) )
-			{
+	// If there are more than one M_COVR in this cell, need to search
+	if (m_CIB->m_cell_mcovr_list.size() > 1) {
+		for (List_Of_M_COVR_Desc::const_iterator i = m_CIB->m_cell_mcovr_list.begin();
+			 i != m_CIB->m_cell_mcovr_list.end(); ++i) {
+			M_COVR_Desc* pmcd = *i;
+			if (G_PtInPolygon_FL(pmcd->pvertices, pmcd->m_nvertices, lon, lat)) {
 				ret.m_x = pmcd->transform_WGS84_offset_x;
 				ret.m_y = pmcd->transform_WGS84_offset_y;
 				break;
 			}
-
-			node = node->GetNext();
 		}
 	}
 	return ret;

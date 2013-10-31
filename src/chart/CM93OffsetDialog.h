@@ -38,44 +38,49 @@ class cm93compchart;
 
 class CM93OffsetDialog : public wxDialog
 {
-		DECLARE_CLASS( CM93OffsetDialog )
-		DECLARE_EVENT_TABLE()
+	DECLARE_CLASS(CM93OffsetDialog)
+	DECLARE_EVENT_TABLE()
 
-	public:
-		CM93OffsetDialog( wxWindow * parent, cm93compchart * pchart);
-		virtual ~CM93OffsetDialog();
+public:
+	CM93OffsetDialog(wxWindow* parent, cm93compchart* pchart);
+	virtual ~CM93OffsetDialog();
 
-		void OnClose(wxCloseEvent & event);
-		void OnOK(wxCommandEvent & event);
+	void OnClose(wxCloseEvent& event);
+	void OnOK(wxCommandEvent& event);
 
-		void SetColorScheme();
-		void UpdateMCOVRList(const ViewPort & vpt);     // Rebuild MCOVR list
+	void SetColorScheme();
+	void UpdateMCOVRList(const ViewPort& vpt); // Rebuild MCOVR list
 
-		OCPNOffsetListCtrl * m_pListCtrlMCOVRs;
-		Array_Of_M_COVR_Desc_Ptr m_pcovr_array;
+	const M_COVR_Desc& getCovrDesc(int index) const;
 
-		wxString m_selected_chart_scale_char;
+	// FIXME: move public attributes to private
 
-	private:
-		void OnCellSelected(wxListEvent & event);
-		void OnOffSetSet(wxCommandEvent & event);
+	OCPNOffsetListCtrl* m_pListCtrlMCOVRs;
 
-		void UpdateOffsets(void);
+	wxString m_selected_chart_scale_char;
 
-		wxSpinCtrl * m_pSpinCtrlXoff;
-		wxSpinCtrl * m_pSpinCtrlYoff;
-		wxButton * m_OKButton;
+private:
+	void OnCellSelected(wxListEvent& event);
+	void OnOffSetSet(wxCommandEvent& event);
 
-		wxWindow * m_pparent; // FIXME: redundant?
-		cm93compchart * m_pcompchart;
+	void UpdateOffsets(void);
 
-		int m_xoff;
-		int m_yoff;
-		int m_selected_cell_index;
-		int m_selected_object_id;
-		int m_selected_subcell;
-		int m_selected_list_index;
-		double m_centerlat_cos;
+	Array_Of_M_COVR_Desc_Ptr m_pcovr_array;
+
+	wxSpinCtrl* m_pSpinCtrlXoff;
+	wxSpinCtrl* m_pSpinCtrlYoff;
+	wxButton* m_OKButton;
+
+	wxWindow* m_pparent; // FIXME: redundant?
+	cm93compchart* m_pcompchart;
+
+	int m_xoff;
+	int m_yoff;
+	int m_selected_cell_index;
+	int m_selected_object_id;
+	int m_selected_subcell;
+	int m_selected_list_index;
+	double m_centerlat_cos;
 };
 
 #endif

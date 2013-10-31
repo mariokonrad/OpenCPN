@@ -67,6 +67,5 @@ public:
 };
 
 WX_DECLARE_OBJARRAY(M_COVR_Desc *, Array_Of_M_COVR_Desc_Ptr); // FIXME: use std container
-WX_DECLARE_LIST(M_COVR_Desc, List_Of_M_COVR_Desc); // FIXME: use std container
 
 #endif

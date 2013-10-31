@@ -129,6 +129,11 @@ CM93OffsetDialog::~CM93OffsetDialog( )
 {
 }
 
+const M_COVR_Desc& CM93OffsetDialog::getCovrDesc(int index) const
+{
+	return *m_pcovr_array[index];
+}
+
 void CM93OffsetDialog::OnClose(wxCloseEvent &)
 {
 	if ( m_pcompchart )

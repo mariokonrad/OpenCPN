@@ -44,6 +44,11 @@
 	extern s52plib * ps52plib; // FIXME
 #endif
 
+WX_DECLARE_LIST(M_COVR_Desc, List_Of_M_COVR_Desc); // FIXME: use std container
+
+#include <wx/listimpl.cpp>
+WX_DEFINE_LIST(List_Of_M_COVR_Desc); // FIXME
+
 extern bool g_bDebugCM93; // FIXME
 static bool s_b_busy_shown; // FIXME
 

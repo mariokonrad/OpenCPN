@@ -39,31 +39,26 @@ OCPNOffsetListCtrl::~OCPNOffsetListCtrl()
 {
 }
 
-wxString OCPNOffsetListCtrl::OnGetItemText ( long item, long column ) const
+wxString OCPNOffsetListCtrl::OnGetItemText(long item, long column) const
 {
-
 	wxString ret;
-	M_COVR_Desc *pmcd = m_parent->m_pcovr_array.Item ( item );
+	const M_COVR_Desc& pmcd = m_parent->getCovrDesc(item);
 
-	switch ( column )
-	{
+	switch (column) {
 		case tlCELL:
-			{
-				ret.Printf ( _T ( "%d" ), pmcd->m_cell_index );
-				if ( ( ( int ) '0' ) == pmcd->m_subcell )
-					ret.Prepend ( _T ( "0" ) );
-				else
-				{
-					char t = ( char ) pmcd->m_subcell;
-					wxString p;
-					p.Printf ( _T ( "%c" ), t );
-					ret.Prepend ( p );
-				}
-
-				break;
+			ret.Printf(_T("%d"), pmcd.m_cell_index);
+			if (((int)'0') == pmcd.m_subcell)
+				ret.Prepend(_T("0"));
+			else {
+				char t = (char)pmcd.m_subcell;
+				wxString p;
+				p.Printf(_T("%c"), t);
+				ret.Prepend(p);
 			}
+
+			break;
 		case tlMCOVR:
-			ret.Printf ( _T ( "%d" ), pmcd->m_object_id );
+			ret.Printf(_T("%d"), pmcd.m_object_id);
 			break;
 
 		case tlSCALE:
@@ -71,19 +66,19 @@ wxString OCPNOffsetListCtrl::OnGetItemText ( long item, long column ) const
 			break;
 
 		case tlXOFF:
-			ret.Printf(_T("%g"), pmcd->transform_WGS84_offset_x);
+			ret.Printf(_T("%g"), pmcd.transform_WGS84_offset_x);
 			break;
 
 		case tlYOFF:
-			ret.Printf(_T("%g"), pmcd->transform_WGS84_offset_y);
+			ret.Printf(_T("%g"), pmcd.transform_WGS84_offset_y);
 			break;
 
 		case tlUXOFF:
-			ret.Printf(_T("%6.0f"), pmcd->user_xoff * pmcd->m_centerlat_cos);
+			ret.Printf(_T("%6.0f"), pmcd.user_xoff * pmcd.m_centerlat_cos);
 			break;
 
 		case tlUYOFF:
-			ret.Printf(_T("%6.0f"), pmcd->user_yoff * pmcd->m_centerlat_cos);
+			ret.Printf(_T("%6.0f"), pmcd.user_yoff * pmcd.m_centerlat_cos);
 			break;
 
 		default:
@@ -92,8 +87,7 @@ wxString OCPNOffsetListCtrl::OnGetItemText ( long item, long column ) const
 	return ret;
 }
 
-
-int OCPNOffsetListCtrl::OnGetItemColumnImage ( long item, long column ) const
+int OCPNOffsetListCtrl::OnGetItemColumnImage(long item, long column) const
 {
 	return -1;
 }

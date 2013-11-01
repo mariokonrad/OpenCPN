@@ -27,7 +27,7 @@
 #include <wx/hashmap.h>
 #include <vector>
 
-WX_DECLARE_HASH_MAP(int, int, wxIntegerHash, wxIntegerEqual, cm93cell_hash);
+WX_DECLARE_HASH_MAP(int, int, wxIntegerHash, wxIntegerEqual, cm93cell_hash); // FIXME: use std::unordered_map<int,int>
 
 class cm93chart;
 class M_COVR_Desc;

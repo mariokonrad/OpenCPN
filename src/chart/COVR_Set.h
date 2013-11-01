@@ -24,13 +24,13 @@
 #ifndef __CHART__COVR_SET__H__
 #define __CHART__COVR_SET__H__
 
-#include <chart/M_COVR_Desc.h>
-#include <wx/dynarray.h>
+#include <wx/hashmap.h>
+#include <vector>
 
 WX_DECLARE_HASH_MAP(int, int, wxIntegerHash, wxIntegerEqual, cm93cell_hash);
-WX_DECLARE_OBJARRAY(M_COVR_Desc, Array_Of_M_COVR_Desc); // FIXME: use std container
 
 class cm93chart;
+class M_COVR_Desc;
 
 /// This is a helper class which holds all the known information
 /// relating to cm93 cell MCOVR objects of a particular scale
@@ -47,7 +47,6 @@ public:
 	void Add_MCD(M_COVR_Desc* pmcd);
 	bool Add_Update_MCD(M_COVR_Desc* pmcd);
 	bool IsCovrLoaded(int cell_index);
-	int Find_MCD(M_COVR_Desc* pmcd);
 	M_COVR_Desc* Find_MCD(int cell_index, int object_id, int sbcell);
 
 private:
@@ -58,7 +57,8 @@ private:
 	cm93chart* m_pParent;
 	wxString m_cachefile;
 
-	Array_Of_M_COVR_Desc m_covr_array_outlines; // array, for chart outline rendering
+	typedef std::vector<M_COVR_Desc*> Outlines;
+	Outlines outlines; // array, for chart outline rendering
 
 	// This is a hash, indexed by cell index, elements contain the number of M_COVRs
 	// found on this particular cell

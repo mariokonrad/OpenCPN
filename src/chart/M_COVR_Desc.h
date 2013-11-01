@@ -35,6 +35,41 @@ namespace geo { struct float_2Dpt; }
 class M_COVR_Desc // FIXME: change member data from public to private
 {
 public:
+	/// This strucutre help to find a specific outline.
+	/// It is intended to be used as function object in conjunction with
+	/// standard algorithms.
+	class Finder
+	{
+	public:
+		Finder(int cell_index, int object_id, int subcell)
+			: cell_index(cell_index)
+			, object_id(object_id)
+			, subcell(subcell)
+		{
+		}
+
+		Finder(const M_COVR_Desc& desc)
+			: cell_index(desc.m_cell_index)
+			, object_id(desc.m_object_id)
+			, subcell(desc.m_subcell)
+		{
+		}
+
+		bool operator()(const M_COVR_Desc* desc) const
+		{
+			return desc
+				&& (desc->m_cell_index == cell_index)
+				&& (desc->m_object_id == object_id)
+				&& (desc->m_subcell == subcell);
+		}
+
+	private:
+		int cell_index;
+		int object_id;
+		int subcell;
+	};
+
+public:
 	M_COVR_Desc();
 	~M_COVR_Desc();
 

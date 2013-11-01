@@ -30,7 +30,7 @@
 #include <wx/arrimpl.cpp>
 WX_DEFINE_OBJARRAY(Array_Of_M_COVR_Desc); // FIXME
 
-static const char sig_version[] = "COVR1002";
+static const char SIG_VERSION[] = "COVR1002";
 
 static void appendOSDirSep(wxString& s) // FIXME: code duplication
 {
@@ -39,78 +39,75 @@ static void appendOSDirSep(wxString& s) // FIXME: code duplication
 		s.Append(sep);
 }
 
-covr_set::covr_set(cm93chart * parent)
+covr_set::covr_set(cm93chart* parent)
 {
 	m_pParent = parent;
 }
 
 covr_set::~covr_set()
 {
+	write_cachefile();
+}
+
+void covr_set::write_cachefile()
+{
 	// Create/Update the cache
 	if (m_cachefile.IsEmpty())
-		return; // presumably for Z scale charts
-	// for which we create no cache
+		return; // presumably for Z scale charts for which we create no cache
 
-	if (m_covr_array_outlines.size()) {
-		wxFFileOutputStream ofs(m_cachefile);
-		if (ofs.IsOk()) {
-			ofs.Write(sig_version, 8); // write signature
+	if (m_covr_array_outlines.size() == 0)
+		return;
 
-			for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
-				int wkbsize = m_covr_array_outlines[i].GetWKBSize();
-				if (wkbsize) {
-					char* p = (char*)malloc(wkbsize * sizeof(char));
-					m_covr_array_outlines[i].WriteWKB(p);
-					ofs.Write(p, wkbsize);
-					free(p);
-				}
-			}
-			ofs.Close();
+	wxFFileOutputStream ofs(m_cachefile);
+	if (!ofs.IsOk())
+		return;
+
+	ofs.Write(SIG_VERSION, 8); // write signature
+
+	for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
+		int wkbsize = m_covr_array_outlines[i].GetWKBSize();
+		if (wkbsize) {
+			char* p = new char[wkbsize];
+			m_covr_array_outlines[i].WriteWKB(p);
+			ofs.Write(p, wkbsize);
+			delete [] p;
 		}
 	}
+	ofs.Close();
 }
 
-int covr_set::get_scale(wxChar scale_char) const
+wxString covr_set::cache_name(wxString& name, wxString& old_name, wxChar scale_char,
+							  const wxString& prefix) const
 {
-	switch (scale_char) {
-		case 'Z': return 20000000;
-		case 'A': return  3000000;
-		case 'B': return  1000000;
-		case 'C': return   200000;
-		case 'D': return   100000;
-		case 'E': return    50000;
-		case 'F': return    20000;
-		case 'G': return     7500;
-		default:  return 20000000;
-	}
-}
-
-bool covr_set::Init(wxChar scale_char, const wxString& prefix)
-{
-	m_scale_char = scale_char;
-	m_scale = get_scale(scale_char);
-
 	// Create the cache file name
 	wxString prefix_string = prefix;
 	wxString sep(wxFileName::GetPathSeparator());
 	prefix_string.Replace(sep, _T("_"));
 	prefix_string.Replace(_T(":"), _T("_")); // for Windows
 
-	m_cachefile = global::OCPN::get().sys().data().private_data_dir;
-	appendOSDirSep(m_cachefile);
+	name = global::OCPN::get().sys().data().private_data_dir;
+	appendOSDirSep(name);
 
-	m_cachefile += _T("cm93");
-	appendOSDirSep(m_cachefile);
+	name += _T("cm93");
+	appendOSDirSep(name);
 
-	m_cachefile += prefix_string; // include the cm93 prefix string in the cache file name
-	m_cachefile += _T("_"); // to support multiple cm93 data sets
+	name += prefix_string; // include the cm93 prefix string in the cache file name
+	name += _T("_"); // to support multiple cm93 data sets
 
-	wxString cache_old_name = m_cachefile;
-	cache_old_name += _T("coverset.");
-	cache_old_name += m_scale_char;
+	old_name = name;
+	old_name += _T("coverset.");
+	old_name += scale_char;
 
-	m_cachefile += _T("coverset_sig.");
-	m_cachefile += m_scale_char;
+	name += _T("coverset_sig.");
+	name += scale_char;
+
+	return name;
+}
+
+bool covr_set::Init(wxChar scale_char, const wxString& prefix)
+{
+	wxString cache_old_name;
+	cache_name(m_cachefile, cache_old_name, scale_char, prefix);
 
 	wxFileName fn(m_cachefile);
 	if (!fn.DirExists())
@@ -130,14 +127,13 @@ bool covr_set::Init(wxChar scale_char, const wxString& prefix)
 		char sig_bytes[9];
 		// Validate the file signature
 		if (!ifs.Read(&sig_bytes, 8).Eof()) {
-			if (strncmp(sig_bytes, sig_version, 8)) {
+			if (strncmp(sig_bytes, SIG_VERSION, sizeof(SIG_VERSION))) {
 				return false; // bad signature match
 			}
 		} else
 			return false; // short file
 
-		bool b_cont = true;
-		while (b_cont) {
+		while (true) {
 			M_COVR_Desc* pmcd = new M_COVR_Desc;
 			int length = pmcd->ReadWKB(ifs);
 
@@ -151,7 +147,7 @@ bool covr_set::Init(wxChar scale_char, const wxString& prefix)
 
 			} else {
 				delete pmcd;
-				b_cont = false;
+				break;
 			}
 		}
 	}

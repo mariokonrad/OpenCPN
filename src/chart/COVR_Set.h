@@ -51,12 +51,11 @@ public:
 	M_COVR_Desc* Find_MCD(int cell_index, int object_id, int sbcell);
 
 private:
-	int get_scale(wxChar scale_char) const;
+	void write_cachefile();
+	wxString cache_name(wxString& name, wxString& old_name, wxChar scale_char,
+						const wxString& prefix) const;
 
 	cm93chart* m_pParent;
-	wxChar m_scale_char;
-	int m_scale;
-
 	wxString m_cachefile;
 
 	Array_Of_M_COVR_Desc m_covr_array_outlines; // array, for chart outline rendering

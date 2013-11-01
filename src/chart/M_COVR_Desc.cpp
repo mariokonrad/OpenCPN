@@ -69,7 +69,7 @@ int M_COVR_Desc::GetWKBSize()
 	size += sizeof(int); // m_object_id;
 	size += sizeof(int); // m_subcell
 	size += sizeof(int); // m_nvertices;
-	size += m_nvertices * sizeof(geo::float_2Dpt); // pvertices;
+	size += m_nvertices * sizeof(geo::float_2Dpt);
 
 	size += sizeof(int); // m_npub_year;
 	size += 8 * sizeof(double); // all the rest
@@ -90,7 +90,7 @@ bool M_COVR_Desc::WriteWKB(void* p)
 		*pr++ = m_nvertices;
 
 		geo::float_2Dpt* pfo = (geo::float_2Dpt*)pr;
-		geo::float_2Dpt* pfi = pvertices;
+		const geo::float_2Dpt* pfi = pvertices;
 		for (int i = 0; i < m_nvertices; i++)
 			*pfo++ = *pfi++;
 
@@ -159,7 +159,7 @@ int M_COVR_Desc::ReadWKB(wxFFileInputStream& ifs)
 
 OCPNRegion M_COVR_Desc::GetRegion(const ViewPort& vp, wxPoint* pwp) const
 {
-	geo::float_2Dpt* p = pvertices;
+	const geo::float_2Dpt* p = pvertices;
 
 	for (int ip = 0; ip < m_nvertices; ++ip) {
 		double plon = p->x;

@@ -70,21 +70,25 @@ covr_set::~covr_set()
 	}
 }
 
-bool covr_set::Init(wxChar scale_char, wxString & prefix)
+int covr_set::get_scale(wxChar scale_char) const
+{
+	switch (scale_char) {
+		case 'Z': return 20000000;
+		case 'A': return  3000000;
+		case 'B': return  1000000;
+		case 'C': return   200000;
+		case 'D': return   100000;
+		case 'E': return    50000;
+		case 'F': return    20000;
+		case 'G': return     7500;
+		default:  return 20000000;
+	}
+}
+
+bool covr_set::Init(wxChar scale_char, const wxString& prefix)
 {
 	m_scale_char = scale_char;
-
-	switch (m_scale_char) {
-		case 'Z': m_scale = 20000000;  break;
-		case 'A': m_scale =  3000000;  break;
-		case 'B': m_scale =  1000000;  break;
-		case 'C': m_scale =   200000;  break;
-		case 'D': m_scale =   100000;  break;
-		case 'E': m_scale =    50000;  break;
-		case 'F': m_scale =    20000;  break;
-		case 'G': m_scale =     7500;  break;
-		default:  m_scale = 20000000;  break;
-	}
+	m_scale = get_scale(scale_char);
 
 	// Create the cache file name
 	wxString prefix_string = prefix;
@@ -93,7 +97,6 @@ bool covr_set::Init(wxChar scale_char, wxString & prefix)
 	prefix_string.Replace(_T(":"), _T("_")); // for Windows
 
 	m_cachefile = global::OCPN::get().sys().data().private_data_dir;
-	;
 	appendOSDirSep(m_cachefile);
 
 	m_cachefile += _T("cm93");
@@ -183,53 +186,51 @@ bool covr_set::IsCovrLoaded(int cell_index)
 
 bool covr_set::Add_Update_MCD(M_COVR_Desc* pmcd)
 {
-	if (m_cell_hash.find(pmcd->m_cell_index) == m_cell_hash.end()) // not present yet?
-	{
+	if (m_cell_hash.find(pmcd->m_cell_index) == m_cell_hash.end()) {
 		m_covr_array_outlines.Add(pmcd);
 		m_cell_hash[pmcd->m_cell_index] = 1; // initialize
 		return true;
-	} else {
-		// There is at least one MCD already in place for this cell index
-		// We need to search the entire table to see if any of those MCD's
-		// correspond to this MCD's object identifier and subcell, as well as cell index
-		bool b_found = false;
-		for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
-			M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
-			if ((pmcd_candidate->m_cell_index == pmcd->m_cell_index)
-				&& (pmcd_candidate->m_object_id == pmcd->m_object_id)
-				&& (pmcd_candidate->m_subcell == pmcd->m_subcell)) {
-				b_found = true;
-				break;
-			}
-		}
-
-		if (!b_found) {
-			m_covr_array_outlines.Add(pmcd);
-			m_cell_hash[pmcd->m_cell_index]++; // add this M_COVR to the hash map
-			return true;
-		} else
-			return false;
 	}
+
+	// There is at least one MCD already in place for this cell index
+	// We need to search the entire table to see if any of those MCD's
+	// correspond to this MCD's object identifier and subcell, as well as cell index
+	bool b_found = false;
+	for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
+		M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
+		if ((pmcd_candidate->m_cell_index == pmcd->m_cell_index)
+			&& (pmcd_candidate->m_object_id == pmcd->m_object_id)
+			&& (pmcd_candidate->m_subcell == pmcd->m_subcell)) {
+			b_found = true;
+			break;
+		}
+	}
+
+	if (!b_found) {
+		m_covr_array_outlines.Add(pmcd);
+		m_cell_hash[pmcd->m_cell_index]++; // add this M_COVR to the hash map
+		return true;
+	}
+	return false;
 }
 
 int covr_set::Find_MCD(M_COVR_Desc* pmcd)
 {
-	if (m_cell_hash.find(pmcd->m_cell_index) == m_cell_hash.end()) // not present?
+	if (m_cell_hash.find(pmcd->m_cell_index) == m_cell_hash.end())
 		return -1;
-	else {
-		// There is at least one MCD already in place for this cell index
-		// We need to search the entire table to see if any of those MCD's
-		// correspond to this MCD's object identifier as well as cell index
 
-		for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
-			M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
-			if ((pmcd_candidate->m_cell_index == pmcd->m_cell_index)
-				&& (pmcd_candidate->m_object_id == pmcd->m_object_id)
-				&& (pmcd_candidate->m_subcell == pmcd->m_subcell)) {
-				return (int)i;
-			}
+	// There is at least one MCD already in place for this cell index
+	// We need to search the entire table to see if any of those MCD's
+	// correspond to this MCD's object identifier as well as cell index
+	for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
+		M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
+		if ((pmcd_candidate->m_cell_index == pmcd->m_cell_index)
+			&& (pmcd_candidate->m_object_id == pmcd->m_object_id)
+			&& (pmcd_candidate->m_subcell == pmcd->m_subcell)) {
+			return (int)i;
 		}
 	}
+
 	return -1;
 }
 

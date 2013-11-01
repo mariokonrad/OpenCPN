@@ -40,7 +40,7 @@ public:
 	covr_set(cm93chart* parent);
 	~covr_set();
 
-	bool Init(wxChar scale_char, wxString& prefix);
+	bool Init(wxChar scale_char, const wxString& prefix);
 
 	unsigned int GetCoverCount() const;
 	M_COVR_Desc* GetCover(unsigned int im);
@@ -49,6 +49,9 @@ public:
 	bool IsCovrLoaded(int cell_index);
 	int Find_MCD(M_COVR_Desc* pmcd);
 	M_COVR_Desc* Find_MCD(int cell_index, int object_id, int sbcell);
+
+private:
+	int get_scale(wxChar scale_char) const;
 
 	cm93chart* m_pParent;
 	wxChar m_scale_char;

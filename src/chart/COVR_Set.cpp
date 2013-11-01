@@ -62,7 +62,7 @@ void covr_set::write_cachefile()
 	if (!ofs.IsOk())
 		return;
 
-	ofs.Write(SIG_VERSION, 8); // write signature
+	ofs.Write(SIG_VERSION, sizeof(SIG_VERSION)); // write signature
 
 	for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
 		int wkbsize = m_covr_array_outlines[i].GetWKBSize();
@@ -124,9 +124,9 @@ bool covr_set::Init(wxChar scale_char, const wxString& prefix)
 
 	wxFFileInputStream ifs(m_cachefile);
 	if (ifs.IsOk()) {
-		char sig_bytes[9];
+		char sig_bytes[sizeof(SIG_VERSION) + 1];
 		// Validate the file signature
-		if (!ifs.Read(&sig_bytes, 8).Eof()) {
+		if (!ifs.Read(&sig_bytes, sizeof(SIG_VERSION)).Eof()) {
 			if (strncmp(sig_bytes, SIG_VERSION, sizeof(SIG_VERSION))) {
 				return false; // bad signature match
 			}
@@ -193,10 +193,10 @@ bool covr_set::Add_Update_MCD(M_COVR_Desc* pmcd)
 	// correspond to this MCD's object identifier and subcell, as well as cell index
 	bool b_found = false;
 	for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
-		M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
-		if ((pmcd_candidate->m_cell_index == pmcd->m_cell_index)
-			&& (pmcd_candidate->m_object_id == pmcd->m_object_id)
-			&& (pmcd_candidate->m_subcell == pmcd->m_subcell)) {
+		M_COVR_Desc* candidate = &m_covr_array_outlines.Item(i);
+		if ((candidate->m_cell_index == pmcd->m_cell_index)
+			&& (candidate->m_object_id == pmcd->m_object_id)
+			&& (candidate->m_subcell == pmcd->m_subcell)) {
 			b_found = true;
 			break;
 		}
@@ -219,10 +219,10 @@ int covr_set::Find_MCD(M_COVR_Desc* pmcd)
 	// We need to search the entire table to see if any of those MCD's
 	// correspond to this MCD's object identifier as well as cell index
 	for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
-		M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
-		if ((pmcd_candidate->m_cell_index == pmcd->m_cell_index)
-			&& (pmcd_candidate->m_object_id == pmcd->m_object_id)
-			&& (pmcd_candidate->m_subcell == pmcd->m_subcell)) {
+		M_COVR_Desc* candidate = &m_covr_array_outlines.Item(i);
+		if ((candidate->m_cell_index == pmcd->m_cell_index)
+			&& (candidate->m_object_id == pmcd->m_object_id)
+			&& (candidate->m_subcell == pmcd->m_subcell)) {
 			return (int)i;
 		}
 	}
@@ -236,11 +236,11 @@ M_COVR_Desc* covr_set::Find_MCD(int cell_index, int object_id, int subcell)
 		return NULL;
 
 	for (unsigned int i = 0; i < m_covr_array_outlines.size(); i++) {
-		M_COVR_Desc* pmcd_candidate = &m_covr_array_outlines.Item(i);
-		if ((pmcd_candidate->m_cell_index == cell_index)
-			&& (pmcd_candidate->m_object_id == object_id) && (pmcd_candidate->m_subcell == subcell))
+		M_COVR_Desc* candidate = &m_covr_array_outlines.Item(i);
+		if ((candidate->m_cell_index == cell_index) && (candidate->m_object_id == object_id)
+			&& (candidate->m_subcell == subcell))
 
-			return pmcd_candidate;
+			return candidate;
 	}
 
 	return NULL;

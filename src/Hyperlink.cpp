@@ -33,3 +33,10 @@ Hyperlink::Hyperlink(const wxString& desc, const wxString& link, const wxString&
 {
 }
 
+Hyperlink::Hyperlink(const Hyperlink& other)
+	: DescrText(other.DescrText)
+	, Link(other.Link)
+	, LType(other.LType)
+{
+}
+

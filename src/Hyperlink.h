@@ -32,6 +32,7 @@ class Hyperlink
 {
 public:
 	Hyperlink(const wxString& desc, const wxString& link, const wxString& type);
+	Hyperlink(const Hyperlink& other);
 
 	wxString DescrText;
 	wxString Link;

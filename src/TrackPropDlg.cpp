@@ -831,30 +831,29 @@ void TrackPropDlg::OnEditLink( wxCommandEvent& event )
 	event.Skip();
 }
 
-void TrackPropDlg::OnAddLink( wxCommandEvent& event )
+void TrackPropDlg::OnAddLink(wxCommandEvent& event)
 {
-	m_pLinkProp->m_textCtrlLinkDescription->SetValue( wxEmptyString );
-	m_pLinkProp->m_textCtrlLinkUrl->SetValue( wxEmptyString );
-	if( m_pLinkProp->ShowModal() == wxID_OK ) {
+	m_pLinkProp->m_textCtrlLinkDescription->SetValue(wxEmptyString);
+	m_pLinkProp->m_textCtrlLinkUrl->SetValue(wxEmptyString);
+	if (m_pLinkProp->ShowModal() == wxID_OK) {
 		wxString desc = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
-		if( desc == wxEmptyString ) desc = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
-		wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, desc,
-				m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxDefaultPosition, wxDefaultSize,
-				wxHL_DEFAULT_STYLE );
-		ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
-				wxHyperlinkEventHandler( TrackPropDlg::OnHyperLinkClick ), NULL, this );
-		ctrl->Connect( wxEVT_RIGHT_DOWN,
-				wxMouseEventHandler( TrackPropDlg::m_hyperlinkContextMenu ), NULL, this );
+		if (desc == wxEmptyString)
+			desc = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
+		wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl(
+			m_scrolledWindowLinks, wxID_ANY, desc, m_pLinkProp->m_textCtrlLinkUrl->GetValue(),
+			wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
+		ctrl->Connect(wxEVT_COMMAND_HYPERLINK,
+					  wxHyperlinkEventHandler(TrackPropDlg::OnHyperLinkClick), NULL, this);
+		ctrl->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(TrackPropDlg::m_hyperlinkContextMenu),
+					  NULL, this);
 
-		bSizerLinks->Add( ctrl, 0, wxALL, 5 );
-		bSizerLinks->Fit( m_scrolledWindowLinks );
+		bSizerLinks->Add(ctrl, 0, wxALL, 5);
+		bSizerLinks->Fit(m_scrolledWindowLinks);
 		this->Fit();
 
-		Hyperlink* h = new Hyperlink();
-		h->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
-		h->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
-		h->LType = wxEmptyString;
-		m_pRoute->m_HyperlinkList->Append( h );
+		m_pRoute->m_HyperlinkList->push_back(
+			new Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
+						  m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxEmptyString));
 	}
 
 	sbSizerLinks->Layout();
@@ -862,62 +861,66 @@ void TrackPropDlg::OnAddLink( wxCommandEvent& event )
 	event.Skip();
 }
 
-void TrackPropDlg::OnEditLinkToggle( wxCommandEvent& event )
+void TrackPropDlg::OnEditLinkToggle(wxCommandEvent& event)
 {
-	if( m_toggleBtnEdit->GetValue() ) m_staticTextEditEnabled->SetLabel(
-			_("Links are opened for editing.") );
+	if (m_toggleBtnEdit->GetValue())
+		m_staticTextEditEnabled->SetLabel(_("Links are opened for editing."));
 	else
-		m_staticTextEditEnabled->SetLabel( _("Links are opened in the default browser.") );
+		m_staticTextEditEnabled->SetLabel(_("Links are opened in the default browser."));
 	event.Skip();
 }
 
 void TrackPropDlg::OnHyperLinkClick( wxHyperlinkEvent &event )
 {
-	if( m_toggleBtnEdit->GetValue() ) {
-		m_pEditedLink = (wxHyperlinkCtrl*) event.GetEventObject();
-		OnEditLink( event );
-		event.Skip( false );
+	if (m_toggleBtnEdit->GetValue()) {
+		m_pEditedLink = (wxHyperlinkCtrl*)event.GetEventObject();
+		OnEditLink(event);
+		event.Skip(false);
 		return;
 	}
-	//    Windows has trouble handling local file URLs with embedded anchor points, e.g file://testfile.html#point1
-	//    The trouble is with the wxLaunchDefaultBrowser with verb "open"
-	//    Workaround is to probe the registry to get the default browser, and open directly
-	//
-	//    But, we will do this only if the URL contains the anchor point charater '#'
-	//    What a hack......
 
 #ifdef __WXMSW__
+	// FIXME: this smells like code duplication, see MarkInfoImpl::OnHyperLinkClick
+
+	// Windows has trouble handling local file URLs with embedded anchor points, e.g
+	// file://testfile.html#point1
+	// The trouble is with the wxLaunchDefaultBrowser with verb "open"
+	// Workaround is to probe the registry to get the default browser, and open directly
+	//
+	// But, we will do this only if the URL contains the anchor point charater '#'
+	// What a hack......
 
 	wxString cc = event.GetURL();
-	if( cc.Find( _T("#") ) != wxNOT_FOUND ) {
-		wxRegKey RegKey( wxString( _T("HKEY_CLASSES_ROOT\\HTTP\\shell\\open\\command") ) );
-		if( RegKey.Exists() ) {
+	if (cc.Find(_T("#")) != wxNOT_FOUND) {
+		wxRegKey RegKey(wxString(_T("HKEY_CLASSES_ROOT\\HTTP\\shell\\open\\command")));
+		if (RegKey.Exists()) {
 			wxString command_line;
-			RegKey.QueryValue( wxString( _T("") ), command_line );
+			RegKey.QueryValue(wxString(_T("")), command_line);
 
 			//  Remove "
-			command_line.Replace( wxString( _T("\"") ), wxString( _T("") ) );
+			command_line.Replace(wxString(_T("\"")), wxString(_T("")));
 
 			//  Strip arguments
-			int l = command_line.Find( _T(".exe") );
-			if( wxNOT_FOUND == l ) l = command_line.Find( _T(".EXE") );
+			int l = command_line.Find(_T(".exe"));
+			if (wxNOT_FOUND == l)
+				l = command_line.Find(_T(".EXE"));
 
-			if( wxNOT_FOUND != l ) {
-				wxString cl = command_line.Mid( 0, l + 4 );
+			if (wxNOT_FOUND != l) {
+				wxString cl = command_line.Mid(0, l + 4);
 				cl += _T(" ");
-				cc.Prepend( _T("\"") );
-				cc.Append( _T("\"") );
+				cc.Prepend(_T("\""));
+				cc.Append(_T("\""));
 				cl += cc;
-				wxExecute( cl );        // Async, so Fire and Forget...
+				wxExecute(cl); // Async, so Fire and Forget...
 			}
 		}
-	} else
+	} else {
 		event.Skip();
+	}
 #else
 	wxString url = event.GetURL();
-	url.Replace(_T(" "), _T("%20") );
+	url.Replace(_T(" "), _T("%20"));
 	::wxLaunchDefaultBrowser(url);
-	//    event.Skip();
 #endif
 }
 

@@ -113,11 +113,7 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 					HrefTypeString = wxString::FromUTF8(child1.first_child().value());
 			}
 
-			Hyperlink* link = new Hyperlink;
-			link->Link = HrefString;
-			link->DescrText = HrefTextString;
-			link->LType = HrefTypeString;
-			linklist->Append(link);
+			linklist->push_back(new Hyperlink(HrefTextString, HrefString, HrefTypeString));
 		} else if (!strcmp(pcn, "extensions")) {
 			// OpenCPN Extensions....
 			for (pugi::xml_node ext_child = child.first_child(); ext_child;
@@ -268,11 +264,7 @@ Track * NavObjectCollection::GPXLoadTrack1(
 						HrefTypeString = wxString::FromUTF8(child1.first_child().value());
 				}
 
-				Hyperlink* link = new Hyperlink;
-				link->Link = HrefString;
-				link->DescrText = HrefTextString;
-				link->LType = HrefTypeString;
-				linklist->Append(link);
+				linklist->push_back(new Hyperlink(HrefTextString, HrefString, HrefTypeString));
 			} else if (ChildName == _T("extensions")) {
 				for (pugi::xml_node ext_child = tschild.first_child(); ext_child;
 					 ext_child = ext_child.next_sibling()) {
@@ -402,11 +394,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 						HrefTypeString = wxString::FromUTF8(child1.first_child().value());
 				}
 
-				Hyperlink* link = new Hyperlink;
-				link->Link = HrefString;
-				link->DescrText = HrefTextString;
-				link->LType = HrefTypeString;
-				linklist->Append(link);
+				linklist->push_back(new Hyperlink(HrefTextString, HrefString, HrefTypeString));
 			} else if (ChildName == _T("extensions")) {
 				for (pugi::xml_node ext_child = tschild.first_child(); ext_child;
 					 ext_child = ext_child.next_sibling()) {
@@ -517,12 +505,10 @@ bool NavObjectCollection::GPXCreateWpt(
 	if (flags & OUT_HYPERLINKS) {
 		HyperlinkList* linklist = pr->m_HyperlinkList;
 		if (linklist && linklist->GetCount()) {
-			wxHyperlinkListNode* linknode = linklist->GetFirst();
-			while (linknode) {
-				Hyperlink* link = linknode->GetData();
+			for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
+				const Hyperlink* link = *i;
 
 				pugi::xml_node child_link = node.append_child("link");
-				;
 				wxCharBuffer buffer = link->Link.ToUTF8();
 				if (buffer.data())
 					child_link.append_attribute("href") = buffer.data();
@@ -538,8 +524,6 @@ bool NavObjectCollection::GPXCreateWpt(
 					child = child_link.append_child("type");
 					child.append_child(pugi::node_pcdata).set_value(buffer.data());
 				}
-
-				linknode = linknode->GetNext();
 			}
 		}
 	}
@@ -616,9 +600,8 @@ bool NavObjectCollection::GPXCreateTrk(
 	// Hyperlinks
 	HyperlinkList* linklist = pRoute->m_HyperlinkList;
 	if (linklist && linklist->GetCount()) {
-		wxHyperlinkListNode* linknode = linklist->GetFirst();
-		while (linknode) {
-			Hyperlink* link = linknode->GetData();
+		for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
+			const Hyperlink* link = *i;
 
 			pugi::xml_node child_link = node.append_child("link");
 			wxCharBuffer buffer = link->Link.ToUTF8();
@@ -636,8 +619,6 @@ bool NavObjectCollection::GPXCreateTrk(
 				child = child_link.append_child("type");
 				child.append_child(pugi::node_pcdata).set_value(buffer.data());
 			}
-
-			linknode = linknode->GetNext();
 		}
 	}
 
@@ -731,9 +712,8 @@ bool NavObjectCollection::GPXCreateRoute(
 	// Hyperlinks
 	HyperlinkList* linklist = pRoute->m_HyperlinkList;
 	if (linklist && linklist->GetCount()) {
-		wxHyperlinkListNode* linknode = linklist->GetFirst();
-		while (linknode) {
-			Hyperlink* link = linknode->GetData();
+		for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
+			const Hyperlink* link = *i;
 
 			pugi::xml_node child_link = node.append_child("link");
 			wxCharBuffer buffer = link->Link.ToUTF8();
@@ -751,8 +731,6 @@ bool NavObjectCollection::GPXCreateRoute(
 				child = child_link.append_child("type");
 				child.append_child(pugi::node_pcdata).set_value(buffer.data());
 			}
-
-			linknode = linknode->GetNext();
 		}
 	}
 

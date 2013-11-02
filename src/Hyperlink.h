@@ -26,15 +26,19 @@
 
 #include <wx/string.h>
 #include <wx/list.h>
+#include <vector>
 
 class Hyperlink
 {
-	public:
-		wxString DescrText;
-		wxString Link;
-		wxString LType;
+public:
+	Hyperlink(const wxString& desc, const wxString& link, const wxString& type);
+
+	wxString DescrText;
+	wxString Link;
+	wxString LType;
 };
 
-WX_DECLARE_LIST(Hyperlink, HyperlinkList);
+typedef std::vector<Hyperlink> Hyperlinks;
+WX_DECLARE_LIST(Hyperlink, HyperlinkList); // FIXME: replace this with Hyperlinks
 
 #endif

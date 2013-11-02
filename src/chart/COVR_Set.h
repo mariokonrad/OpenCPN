@@ -58,7 +58,7 @@ private:
 	wxString m_cachefile;
 
 	typedef std::vector<M_COVR_Desc*> Outlines;
-	Outlines outlines; // array, for chart outline rendering
+	Outlines outlines; // chart outline rendering, has ownership over stored objects
 
 	// This is a hash, indexed by cell index, elements contain the number of M_COVRs
 	// found on this particular cell

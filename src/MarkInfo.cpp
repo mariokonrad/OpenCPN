@@ -40,12 +40,12 @@
 #include <wx/tglbtn.h>
 #include <wx/clipbrd.h>
 
-extern WayPointman * pWayPointMan;
-extern Select * pSelect;
-extern Config * pConfig;
-extern ChartCanvas * cc1;
-extern RouteManagerDialog * pRouteManagerDialog;
-extern Routeman * g_pRouteMan;
+extern WayPointman* pWayPointMan;
+extern Select* pSelect;
+extern Config* pConfig;
+extern ChartCanvas* cc1;
+extern RouteManagerDialog* pRouteManagerDialog;
+extern Routeman* g_pRouteMan;
 
 MarkInfoDef::MarkInfoDef(
 		wxWindow * parent,
@@ -392,21 +392,15 @@ void MarkInfoDef::hyperlink17OnContextMenu(wxMouseEvent & event)
 	m_hyperlink17->PopupMenu(m_menuLink, event.GetPosition());
 }
 
-
-MarkInfoImpl::MarkInfoImpl(
-		wxWindow * parent,
-		wxWindowID id,
-		const wxString & title,
-		const wxPoint & pos,
-		const wxSize & size,
-		long style)
+MarkInfoImpl::MarkInfoImpl(wxWindow* parent, wxWindowID id, const wxString& title,
+						   const wxPoint& pos, const wxSize& size, long style)
 	: MarkInfoDef(parent, id, title, pos, size, style)
+	, m_pMyLinkList(NULL)
 {
-	m_pLinkProp = new LinkPropDialog( this );
-	m_pMyLinkList = NULL;
-	m_staticTextGpx->Show( false );
-	m_textCtrlGpx->Show( false );
-	SetColorScheme( (ColorScheme) 0 );
+	m_pLinkProp = new LinkPropDialog(this);
+	m_staticTextGpx->Show(false);
+	m_textCtrlGpx->Show(false);
+	SetColorScheme((ColorScheme)0);
 }
 
 MarkInfoImpl::~MarkInfoImpl()
@@ -426,526 +420,508 @@ void MarkInfoImpl::SetColorScheme(ColorScheme)
 	DimeControl(m_pLinkProp);
 }
 
-bool MarkInfoImpl::UpdateProperties( bool positionOnly )
+bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 {
-	if( m_pRoutePoint ) {
+	if (!m_pRoutePoint)
+		return true;
 
-		m_textLatitude->SetValue( ::toSDMM( 1, m_pRoutePoint->m_lat ) );
-		m_textLongitude->SetValue( ::toSDMM( 2, m_pRoutePoint->m_lon ) );
-		m_lat_save = m_pRoutePoint->m_lat;
-		m_lon_save = m_pRoutePoint->m_lon;
+	m_textLatitude->SetValue(::toSDMM(1, m_pRoutePoint->m_lat));
+	m_textLongitude->SetValue(::toSDMM(2, m_pRoutePoint->m_lon));
+	m_lat_save = m_pRoutePoint->m_lat;
+	m_lon_save = m_pRoutePoint->m_lon;
 
-		if( positionOnly ) return true;
+	if (positionOnly)
+		return true;
 
-		//Layer or not?
-		if( m_pRoutePoint->m_bIsInLayer ) {
-			m_staticTextLayer->Enable();
-			m_staticTextLayer->Show( true );
-			m_textName->SetEditable( false );
-			m_textDescription->SetEditable( false );
-			m_textCtrlExtDescription->SetEditable( false );
-			m_textLatitude->SetEditable( false );
-			m_textLongitude->SetEditable( false );
-			m_bcomboBoxIcon->Enable( false );
-			m_buttonAddLink->Enable( false );
-			m_toggleBtnEdit->Enable( false );
-			m_toggleBtnEdit->SetValue( false );
-			m_checkBoxShowName->Enable( false );
-			m_checkBoxVisible->Enable( false );
-		} else {
-			m_staticTextLayer->Enable( false );
-			m_staticTextLayer->Show( false );
-			m_textName->SetEditable( true );
-			m_textDescription->SetEditable( true );
-			m_textCtrlExtDescription->SetEditable( true );
-			m_textLatitude->SetEditable( true );
-			m_textLongitude->SetEditable( true );
-			m_bcomboBoxIcon->Enable( true );
-			m_buttonAddLink->Enable( true );
-			m_toggleBtnEdit->Enable( true );
-			m_checkBoxShowName->Enable( true );
-			m_checkBoxVisible->Enable( true );
-		}
-		m_textName->SetValue( m_pRoutePoint->GetName() );
-		m_textDescription->SetValue( m_pRoutePoint->m_MarkDescription );
-		m_textCtrlExtDescription->SetValue( m_pRoutePoint->m_MarkDescription );
-		m_bitmapIcon->SetBitmap( *m_pRoutePoint->m_pbmIcon );
-		wxWindowList kids = m_scrolledWindowLinks->GetChildren();
-		for( unsigned int i = 0; i < kids.GetCount(); i++ ) {
-			wxWindowListNode *node = kids.Item( i );
-			wxWindow *win = node->GetData();
-
-			if( win->IsKindOf( CLASSINFO(wxHyperlinkCtrl) ) ) {
-				( (wxHyperlinkCtrl*) win )->Disconnect( wxEVT_COMMAND_HYPERLINK,
-						wxHyperlinkEventHandler( MarkInfoImpl::OnHyperLinkClick ) );
-				( (wxHyperlinkCtrl*) win )->Disconnect( wxEVT_RIGHT_DOWN,
-						wxMouseEventHandler( MarkInfoImpl::hyperlinkContextMenu ) );
-			}
-		}
-		m_scrolledWindowLinks->DestroyChildren();
-		m_checkBoxShowName->SetValue( m_pRoutePoint->m_bShowName );
-		m_checkBoxVisible->SetValue( m_pRoutePoint->m_bIsVisible );
-		m_textCtrlGuid->SetValue( m_pRoutePoint->m_GUID );
-
-		int NbrOfLinks = m_pRoutePoint->m_HyperlinkList->GetCount();
-		HyperlinkList *hyperlinklist = m_pRoutePoint->m_HyperlinkList;
-		if( NbrOfLinks > 0 ) {
-			wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
-			while( linknode ) {
-				Hyperlink *link = linknode->GetData();
-				wxString Link = link->Link;
-				wxString Descr = link->DescrText;
-
-				wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, Descr,
-						Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
-				ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
-						wxHyperlinkEventHandler( MarkInfoImpl::OnHyperLinkClick ), NULL, this );
-				if( !m_pRoutePoint->m_bIsInLayer )
-					ctrl->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( MarkInfoImpl::hyperlinkContextMenu ), NULL, this );
-
-				bSizerLinks->Add( ctrl, 0, wxALL, 5 );
-
-				linknode = linknode->GetNext();
-			}
-		}
-		bSizerLinks->Fit( m_scrolledWindowLinks );
-
-		//      Iterate on the Icon Descriptions, filling in the control
-		int iconToSelect = 0;
-		bool fillCombo = m_bcomboBoxIcon->GetCount() == 0;
-		wxImageList * icons = NULL;
-		if (fillCombo)
-			icons = pWayPointMan->Getpmarkicon_image_list();
-		for (int i = 0; i < pWayPointMan->GetNumIcons(); ++i) {
-			const wxString ps = pWayPointMan->GetIconDescription(i);
-			if (pWayPointMan->GetIconKey(i) == m_pRoutePoint->m_IconName)
-				iconToSelect = i;
-			if (fillCombo && icons)
-				m_bcomboBoxIcon->Append(ps, icons->GetBitmap(i));
-		}
-		m_bcomboBoxIcon->Select(iconToSelect);
-		this->Fit();
-		sbSizerLinks->Layout();
-		icons = NULL;
+	// Layer or not?
+	if (m_pRoutePoint->m_bIsInLayer) {
+		m_staticTextLayer->Enable();
+		m_staticTextLayer->Show(true);
+		m_textName->SetEditable(false);
+		m_textDescription->SetEditable(false);
+		m_textCtrlExtDescription->SetEditable(false);
+		m_textLatitude->SetEditable(false);
+		m_textLongitude->SetEditable(false);
+		m_bcomboBoxIcon->Enable(false);
+		m_buttonAddLink->Enable(false);
+		m_toggleBtnEdit->Enable(false);
+		m_toggleBtnEdit->SetValue(false);
+		m_checkBoxShowName->Enable(false);
+		m_checkBoxVisible->Enable(false);
+	} else {
+		m_staticTextLayer->Enable(false);
+		m_staticTextLayer->Show(false);
+		m_textName->SetEditable(true);
+		m_textDescription->SetEditable(true);
+		m_textCtrlExtDescription->SetEditable(true);
+		m_textLatitude->SetEditable(true);
+		m_textLongitude->SetEditable(true);
+		m_bcomboBoxIcon->Enable(true);
+		m_buttonAddLink->Enable(true);
+		m_toggleBtnEdit->Enable(true);
+		m_checkBoxShowName->Enable(true);
+		m_checkBoxVisible->Enable(true);
 	}
+	m_textName->SetValue(m_pRoutePoint->GetName());
+	m_textDescription->SetValue(m_pRoutePoint->m_MarkDescription);
+	m_textCtrlExtDescription->SetValue(m_pRoutePoint->m_MarkDescription);
+	m_bitmapIcon->SetBitmap(*m_pRoutePoint->m_pbmIcon);
+	wxWindowList kids = m_scrolledWindowLinks->GetChildren();
+	for (unsigned int i = 0; i < kids.GetCount(); i++) {
+		wxWindowListNode* node = kids.Item(i);
+		wxWindow* win = node->GetData();
+
+		if (win->IsKindOf(CLASSINFO(wxHyperlinkCtrl))) {
+			((wxHyperlinkCtrl*)win)->Disconnect(
+				wxEVT_COMMAND_HYPERLINK, wxHyperlinkEventHandler(MarkInfoImpl::OnHyperLinkClick));
+			((wxHyperlinkCtrl*)win)->Disconnect(
+				wxEVT_RIGHT_DOWN, wxMouseEventHandler(MarkInfoImpl::hyperlinkContextMenu));
+		}
+	}
+	m_scrolledWindowLinks->DestroyChildren();
+	m_checkBoxShowName->SetValue(m_pRoutePoint->m_bShowName);
+	m_checkBoxVisible->SetValue(m_pRoutePoint->m_bIsVisible);
+	m_textCtrlGuid->SetValue(m_pRoutePoint->m_GUID);
+
+	HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
+	if (linklist && linklist->GetCount() > 0) {
+		for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
+			wxHyperlinkCtrl* ctrl
+				= new wxHyperlinkCtrl(m_scrolledWindowLinks, wxID_ANY, (*i)->DescrText, (*i)->Link,
+									  wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
+			ctrl->Connect(wxEVT_COMMAND_HYPERLINK,
+						  wxHyperlinkEventHandler(MarkInfoImpl::OnHyperLinkClick), NULL, this);
+			if (!m_pRoutePoint->m_bIsInLayer)
+				ctrl->Connect(wxEVT_RIGHT_DOWN,
+							  wxMouseEventHandler(MarkInfoImpl::hyperlinkContextMenu), NULL, this);
+
+			bSizerLinks->Add(ctrl, 0, wxALL, 5);
+		}
+	}
+	bSizerLinks->Fit(m_scrolledWindowLinks);
+
+	// Iterate on the Icon Descriptions, filling in the control
+	int iconToSelect = 0;
+	bool fillCombo = m_bcomboBoxIcon->GetCount() == 0;
+	wxImageList* icons = NULL;
+	if (fillCombo)
+		icons = pWayPointMan->Getpmarkicon_image_list();
+	for (int i = 0; i < pWayPointMan->GetNumIcons(); ++i) {
+		const wxString ps = pWayPointMan->GetIconDescription(i);
+		if (pWayPointMan->GetIconKey(i) == m_pRoutePoint->m_IconName)
+			iconToSelect = i;
+		if (fillCombo && icons)
+			m_bcomboBoxIcon->Append(ps, icons->GetBitmap(i));
+	}
+	m_bcomboBoxIcon->Select(iconToSelect);
+	this->Fit();
+	sbSizerLinks->Layout();
+	icons = NULL;
 
 	return true;
 }
 
-void MarkInfoImpl::SetRoutePoint( RoutePoint *pRP )
+void MarkInfoImpl::SetRoutePoint(RoutePoint* pRP)
 {
 	m_pRoutePoint = pRP;
-	if( m_pRoutePoint ) {
-		m_lat_save = m_pRoutePoint->m_lat;
-		m_lon_save = m_pRoutePoint->m_lon;
-		m_IconName_save = m_pRoutePoint->m_IconName;
-		m_bShowName_save = m_pRoutePoint->m_bShowName;
-		m_bIsVisible_save = m_pRoutePoint->m_bIsVisible;
-		if( m_pMyLinkList )
-			delete m_pMyLinkList;
-		m_pMyLinkList = new HyperlinkList();
-		int NbrOfLinks = m_pRoutePoint->m_HyperlinkList->GetCount();
-		if( NbrOfLinks > 0 ) {
-			wxHyperlinkListNode *linknode = m_pRoutePoint->m_HyperlinkList->GetFirst();
-			while( linknode ) {
-				Hyperlink *link = linknode->GetData();
+	if (!m_pRoutePoint)
+		return;
 
-				Hyperlink* h = new Hyperlink();
-				h->DescrText = link->DescrText;
-				h->Link = link->Link;
-				h->LType = link->LType;
-
-				m_pMyLinkList->Append( h );
-
-				linknode = linknode->GetNext();
-			}
+	m_lat_save = m_pRoutePoint->m_lat;
+	m_lon_save = m_pRoutePoint->m_lon;
+	m_IconName_save = m_pRoutePoint->m_IconName;
+	m_bShowName_save = m_pRoutePoint->m_bShowName;
+	m_bIsVisible_save = m_pRoutePoint->m_bIsVisible;
+	if (m_pMyLinkList)
+		delete m_pMyLinkList;
+	m_pMyLinkList = new HyperlinkList();
+	if (m_pRoutePoint->m_HyperlinkList->GetCount() > 0) {
+		HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
+		for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
+			const Hyperlink* link = *i;
+			m_pMyLinkList->push_back(new Hyperlink(link->DescrText, link->Link, link->LType));
 		}
 	}
 }
 
-void MarkInfoImpl::hyperlinkContextMenu( wxMouseEvent &event )
+void MarkInfoImpl::hyperlinkContextMenu(wxMouseEvent& event)
 {
-	m_pEditedLink = (wxHyperlinkCtrl*) event.GetEventObject();
-	m_scrolledWindowLinks->PopupMenu( m_menuLink,
-			m_pEditedLink->GetPosition().x + event.GetPosition().x,
-			m_pEditedLink->GetPosition().y + event.GetPosition().y );
-
+	m_pEditedLink = (wxHyperlinkCtrl*)event.GetEventObject();
+	m_scrolledWindowLinks->PopupMenu(m_menuLink,
+									 m_pEditedLink->GetPosition().x + event.GetPosition().x,
+									 m_pEditedLink->GetPosition().y + event.GetPosition().y);
 }
 
-void MarkInfoImpl::OnDeleteLink( wxCommandEvent& event )
+void MarkInfoImpl::OnDeleteLink(wxCommandEvent& event)
 {
 	wxHyperlinkListNode* nodeToDelete = NULL;
 	wxString findurl = m_pEditedLink->GetURL();
 	wxString findlabel = m_pEditedLink->GetLabel();
 	m_scrolledWindowLinks->DestroyChildren();
-	int NbrOfLinks = m_pRoutePoint->m_HyperlinkList->GetCount();
-	HyperlinkList *hyperlinklist = m_pRoutePoint->m_HyperlinkList;
-	if( NbrOfLinks > 0 ) {
-		wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
-		while( linknode ) {
-			Hyperlink *link = linknode->GetData();
+	HyperlinkList* hyperlinklist = m_pRoutePoint->m_HyperlinkList;
+	if (hyperlinklist && hyperlinklist->GetCount() > 0) {
+		wxHyperlinkListNode* linknode = hyperlinklist->GetFirst();
+		while (linknode) {
+			Hyperlink* link = linknode->GetData();
 			wxString Link = link->Link;
 			wxString Descr = link->DescrText;
-			if(Link == findurl && (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString)))
-				nodeToDelete =
-				linknode;
+			if (Link == findurl
+				&& (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString)))
+				nodeToDelete = linknode;
 			else {
-				wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, Descr,
-						Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
-				ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
-						wxHyperlinkEventHandler( MarkInfoImpl::OnHyperLinkClick ), NULL, this );
-				ctrl->Connect( wxEVT_RIGHT_DOWN,
-						wxMouseEventHandler( MarkInfoImpl::hyperlinkContextMenu ), NULL, this );
+				wxHyperlinkCtrl* ctrl
+					= new wxHyperlinkCtrl(m_scrolledWindowLinks, wxID_ANY, Descr, Link,
+										  wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
+				ctrl->Connect(wxEVT_COMMAND_HYPERLINK,
+							  wxHyperlinkEventHandler(MarkInfoImpl::OnHyperLinkClick), NULL, this);
+				ctrl->Connect(wxEVT_RIGHT_DOWN,
+							  wxMouseEventHandler(MarkInfoImpl::hyperlinkContextMenu), NULL, this);
 
-				bSizerLinks->Add( ctrl, 0, wxALL, 5 );
+				bSizerLinks->Add(ctrl, 0, wxALL, 5);
 			}
 			linknode = linknode->GetNext();
 		}
 	}
-	if( nodeToDelete ) hyperlinklist->DeleteNode( nodeToDelete );
+	if (nodeToDelete)
+		hyperlinklist->DeleteNode(nodeToDelete);
 	m_scrolledWindowLinks->InvalidateBestSize();
 	m_scrolledWindowLinks->Layout();
 	sbSizerLinks->Layout();
 	event.Skip();
 }
 
-void MarkInfoImpl::OnEditLink( wxCommandEvent& event )
+void MarkInfoImpl::OnEditLink(wxCommandEvent& event)
 {
 	wxString findurl = m_pEditedLink->GetURL();
 	wxString findlabel = m_pEditedLink->GetLabel();
-	m_pLinkProp->m_textCtrlLinkDescription->SetValue( findlabel );
-	m_pLinkProp->m_textCtrlLinkUrl->SetValue( findurl );
-	if( m_pLinkProp->ShowModal() == wxID_OK ) {
-		int NbrOfLinks = m_pRoutePoint->m_HyperlinkList->GetCount();
-		HyperlinkList *hyperlinklist = m_pRoutePoint->m_HyperlinkList;
-		if( NbrOfLinks > 0 ) {
-			wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
-			while( linknode ) {
-				Hyperlink *link = linknode->GetData();
-				wxString Link = link->Link;
-				wxString Descr = link->DescrText;
-				if (Link == findurl && (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
-					link->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
-					link->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
-					wxHyperlinkCtrl* h =
-						(wxHyperlinkCtrl*) m_scrolledWindowLinks->FindWindowByLabel(
-								findlabel );
-					if( h ) {
-						h->SetLabel( m_pLinkProp->m_textCtrlLinkDescription->GetValue() );
-						h->SetURL( m_pLinkProp->m_textCtrlLinkUrl->GetValue() );
-					}
+	m_pLinkProp->m_textCtrlLinkDescription->SetValue(findlabel);
+	m_pLinkProp->m_textCtrlLinkUrl->SetValue(findurl);
+	if (m_pLinkProp->ShowModal() != wxID_OK) {
+		event.Skip();
+		return;
+	}
+
+	HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
+	if (linklist && linklist ->GetCount() > 0) {
+		// FIXME: use find_if
+		for (HyperlinkList::iterator i = linklist->begin(); i != linklist->end(); ++i) {
+			Hyperlink* link = *i;
+			if (link->Link == findurl
+				&& (link->DescrText == findlabel || (link->Link == findlabel && link->DescrText == wxEmptyString))) {
+				link->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
+				link->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
+				wxHyperlinkCtrl* h
+					= (wxHyperlinkCtrl*)m_scrolledWindowLinks->FindWindowByLabel(findlabel);
+				if (h) {
+					h->SetLabel(m_pLinkProp->m_textCtrlLinkDescription->GetValue());
+					h->SetURL(m_pLinkProp->m_textCtrlLinkUrl->GetValue());
 				}
-				linknode = linknode->GetNext();
 			}
 		}
-
-		m_scrolledWindowLinks->InvalidateBestSize();
-		m_scrolledWindowLinks->Layout();
-		sbSizerLinks->Layout();
-		event.Skip();
 	}
+
+	m_scrolledWindowLinks->InvalidateBestSize();
+	m_scrolledWindowLinks->Layout();
+	sbSizerLinks->Layout();
 	event.Skip();
 }
 
-void MarkInfoImpl::OnAddLink( wxCommandEvent& event )
+void MarkInfoImpl::OnAddLink(wxCommandEvent& event)
 {
-	m_pLinkProp->m_textCtrlLinkDescription->SetValue( wxEmptyString );
-	m_pLinkProp->m_textCtrlLinkUrl->SetValue( wxEmptyString );
-	if( m_pLinkProp->ShowModal() == wxID_OK ) {
+	m_pLinkProp->m_textCtrlLinkDescription->SetValue(wxEmptyString);
+	m_pLinkProp->m_textCtrlLinkUrl->SetValue(wxEmptyString);
+	if (m_pLinkProp->ShowModal() == wxID_OK) {
 		wxString desc = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
-		if( desc == wxEmptyString )
+		if (desc == wxEmptyString)
 			desc = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
-		wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, desc,
-				m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxDefaultPosition, wxDefaultSize,
-				wxHL_DEFAULT_STYLE );
-		ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
-				wxHyperlinkEventHandler( MarkInfoImpl::OnHyperLinkClick ), NULL, this );
-		ctrl->Connect( wxEVT_RIGHT_DOWN,
-				wxMouseEventHandler( MarkInfoImpl::hyperlinkContextMenu ), NULL, this );
+		wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl(
+			m_scrolledWindowLinks, wxID_ANY, desc, m_pLinkProp->m_textCtrlLinkUrl->GetValue(),
+			wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
+		ctrl->Connect(wxEVT_COMMAND_HYPERLINK,
+					  wxHyperlinkEventHandler(MarkInfoImpl::OnHyperLinkClick), NULL, this);
+		ctrl->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(MarkInfoImpl::hyperlinkContextMenu),
+					  NULL, this);
 
-		bSizerLinks->Add( ctrl, 0, wxALL, 5 );
-		bSizerLinks->Fit( m_scrolledWindowLinks );
+		bSizerLinks->Add(ctrl, 0, wxALL, 5);
+		bSizerLinks->Fit(m_scrolledWindowLinks);
 		this->Fit();
 
-		Hyperlink* h = new Hyperlink();
-		h->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
-		h->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
-		h->LType = wxEmptyString;
-		m_pRoutePoint->m_HyperlinkList->Append( h );
+		m_pRoutePoint->m_HyperlinkList->push_back(
+			new Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
+						  m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxEmptyString));
 	}
 	sbSizerLinks->Layout();
 	event.Skip();
 }
 
-void MarkInfoImpl::OnEditLinkToggle( wxCommandEvent& event )
+void MarkInfoImpl::OnEditLinkToggle(wxCommandEvent& event)
 {
 	if (m_toggleBtnEdit->GetValue())
 		m_staticTextEditEnabled->SetLabel(_("Links are opened for editing."));
 	else
-		m_staticTextEditEnabled->SetLabel( _("Links are opened in the default browser."));
+		m_staticTextEditEnabled->SetLabel(_("Links are opened in the default browser."));
 	event.Skip();
 }
 
-void MarkInfoImpl::OnDescChangedBasic( wxCommandEvent& event )
+void MarkInfoImpl::OnDescChangedBasic(wxCommandEvent& event)
 {
-	if( m_panelBasicProperties->IsShownOnScreen() ) m_textCtrlExtDescription->ChangeValue(
-			m_textDescription->GetValue() );
+	if (m_panelBasicProperties->IsShownOnScreen())
+		m_textCtrlExtDescription->ChangeValue(m_textDescription->GetValue());
 	event.Skip();
 }
 
-void MarkInfoImpl::OnDescChangedExt( wxCommandEvent& event )
+void MarkInfoImpl::OnDescChangedExt(wxCommandEvent& event)
 {
-	if( m_panelDescription->IsShownOnScreen() ) m_textDescription->ChangeValue(
-			m_textCtrlExtDescription->GetValue() );
+	if (m_panelDescription->IsShownOnScreen())
+		m_textDescription->ChangeValue(m_textCtrlExtDescription->GetValue());
 	event.Skip();
 }
 
-void MarkInfoImpl::OnExtDescriptionClick( wxCommandEvent& event )
+void MarkInfoImpl::OnExtDescriptionClick(wxCommandEvent& event)
 {
-	m_notebookProperties->SetSelection( 1 );
+	m_notebookProperties->SetSelection(1);
 	event.Skip();
 }
 
 bool MarkInfoImpl::SaveChanges()
 {
-	if (m_pRoutePoint) {
-		if( m_pRoutePoint->m_bIsInLayer )
-			return true;
+	if (!m_pRoutePoint)
+		return true;
 
-		// Get User input Text Fields
-		m_pRoutePoint->SetName( m_textName->GetValue() );
-		m_pRoutePoint->m_MarkDescription = m_textDescription->GetValue();
-		m_pRoutePoint->SetVisible(m_checkBoxVisible->GetValue());
-		m_pRoutePoint->SetNameShown(m_checkBoxShowName->GetValue());
-		m_pRoutePoint->SetPosition(fromDMM(m_textLatitude->GetValue()), fromDMM(m_textLongitude->GetValue()));
-		m_pRoutePoint->m_IconName = pWayPointMan->GetIconKey(m_bcomboBoxIcon->GetSelection());
-		m_pRoutePoint->ReLoadIcon();
+	if (m_pRoutePoint->m_bIsInLayer)
+		return true;
 
-		// Here is some logic....
-		// If the Markname is completely numeric, and is part of a route,
-		// Then declare it to be of attribute m_bDynamicName = true
-		// This is later used for re-numbering points on actions like
-		// Insert Point, Delete Point, Append Point, etc
+	// Get User input Text Fields
+	m_pRoutePoint->SetName(m_textName->GetValue());
+	m_pRoutePoint->m_MarkDescription = m_textDescription->GetValue();
+	m_pRoutePoint->SetVisible(m_checkBoxVisible->GetValue());
+	m_pRoutePoint->SetNameShown(m_checkBoxShowName->GetValue());
+	m_pRoutePoint->SetPosition(fromDMM(m_textLatitude->GetValue()),
+							   fromDMM(m_textLongitude->GetValue()));
+	m_pRoutePoint->m_IconName = pWayPointMan->GetIconKey(m_bcomboBoxIcon->GetSelection());
+	m_pRoutePoint->ReLoadIcon();
 
-		if( m_pRoutePoint->m_bIsInRoute ) {
-			bool b_name_is_numeric = true;
-			for( unsigned int i = 0; i < m_pRoutePoint->GetName().Len(); i++ ) {
-				if( wxChar( '0' ) > m_pRoutePoint->GetName()[i] ) b_name_is_numeric = false;
-				if( wxChar( '9' ) < m_pRoutePoint->GetName()[i] ) b_name_is_numeric = false;
+	// Here is some logic....
+	// If the Markname is completely numeric, and is part of a route,
+	// Then declare it to be of attribute m_bDynamicName = true
+	// This is later used for re-numbering points on actions like
+	// Insert Point, Delete Point, Append Point, etc
+
+	if (m_pRoutePoint->m_bIsInRoute) {
+		bool b_name_is_numeric = true;
+		for (unsigned int i = 0; i < m_pRoutePoint->GetName().Len(); i++) {
+			if (wxChar('0') > m_pRoutePoint->GetName()[i])
+				b_name_is_numeric = false;
+			if (wxChar('9') < m_pRoutePoint->GetName()[i])
+				b_name_is_numeric = false;
+		}
+
+		m_pRoutePoint->m_bDynamicName = b_name_is_numeric;
+	} else
+		m_pRoutePoint->m_bDynamicName = false;
+
+	if (m_pRoutePoint->m_bIsInRoute) {
+		// Update the route segment selectables
+		pSelect->UpdateSelectableRouteSegments(m_pRoutePoint);
+
+		// Get an array of all routes using this point
+		Routeman::RouteArray* pEditRouteArray = g_pRouteMan->GetRouteArrayContaining(m_pRoutePoint);
+		if (pEditRouteArray) {
+			for (Routeman::RouteArray::iterator i = pEditRouteArray->begin();
+				 i != pEditRouteArray->end(); ++i) {
+				Route* route = static_cast<Route*>(*i);
+				route->CalculateBBox();
+				route->UpdateSegmentDistances();
+				pConfig->UpdateRoute(route);
 			}
+			delete pEditRouteArray;
+		}
+	} else
+		pConfig->UpdateWayPoint(m_pRoutePoint);
 
-			m_pRoutePoint->m_bDynamicName = b_name_is_numeric;
-		} else
-			m_pRoutePoint->m_bDynamicName = false;
-
-		if( m_pRoutePoint->m_bIsInRoute ) {
-			// Update the route segment selectables
-			pSelect->UpdateSelectableRouteSegments( m_pRoutePoint );
-
-			// Get an array of all routes using this point
-			Routeman::RouteArray * pEditRouteArray = g_pRouteMan->GetRouteArrayContaining(m_pRoutePoint);
-			if (pEditRouteArray) {
-				for (Routeman::RouteArray::iterator i = pEditRouteArray->begin(); i != pEditRouteArray->end(); ++i) {
-					Route * route = static_cast<Route *>(*i);
-					route->CalculateBBox();
-					route->UpdateSegmentDistances();
-					pConfig->UpdateRoute(route);
-				}
-				delete pEditRouteArray;
-			}
-		} else
-			pConfig->UpdateWayPoint(m_pRoutePoint);
-
-		// No general settings need be saved pConfig->UpdateSettings();
-	}
+	// No general settings need be saved pConfig->UpdateSettings();
 	return true;
 }
 
-void MarkInfoImpl::OnMarkInfoOKClick( wxCommandEvent& event )
+void MarkInfoImpl::OnMarkInfoOKClick(wxCommandEvent& event)
 {
-	if( m_pRoutePoint ) {
-		OnPositionCtlUpdated( event );
+	if (m_pRoutePoint) {
+		OnPositionCtlUpdated(event);
 		SaveChanges(); // write changes to globals and update config
-		cc1->RefreshRect( m_pRoutePoint->CurrentRect_in_DC.Inflate( 1000, 100 ), false );
+		cc1->RefreshRect(m_pRoutePoint->CurrentRect_in_DC.Inflate(1000, 100), false);
 	}
-	Show( false );
-	if( m_pMyLinkList ) {
+	Show(false);
+	if (m_pMyLinkList) {
 		delete m_pMyLinkList;
 		m_pMyLinkList = NULL;
 	}
 
-	if( pRouteManagerDialog && pRouteManagerDialog->IsShown() )
+	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 		pRouteManagerDialog->UpdateWptListCtrl();
 
 	event.Skip();
 }
 
-void MarkInfoImpl::OnMarkInfoCancelClick( wxCommandEvent& event )
+void MarkInfoImpl::OnMarkInfoCancelClick(wxCommandEvent& event)
 {
-	if( m_pRoutePoint ) {
-		m_pRoutePoint->SetVisible( m_bIsVisible_save );
-		m_pRoutePoint->SetNameShown( m_bShowName_save );
-		m_pRoutePoint->SetPosition( m_lat_save, m_lon_save );
+	if (m_pRoutePoint) {
+		m_pRoutePoint->SetVisible(m_bIsVisible_save);
+		m_pRoutePoint->SetNameShown(m_bShowName_save);
+		m_pRoutePoint->SetPosition(m_lat_save, m_lon_save);
 		m_pRoutePoint->m_IconName = m_IconName_save;
 		m_pRoutePoint->ReLoadIcon();
 
 		m_pRoutePoint->m_HyperlinkList->Clear();
 
-		int NbrOfLinks = m_pMyLinkList->GetCount();
-		if( NbrOfLinks > 0 ) {
-			wxHyperlinkListNode *linknode = m_pMyLinkList->GetFirst();
-			while( linknode ) {
-				Hyperlink *link = linknode->GetData();
-				Hyperlink* h = new Hyperlink();
-				h->DescrText = link->DescrText;
-				h->Link = link->Link;
-				h->LType = link->LType;
-
-				m_pRoutePoint->m_HyperlinkList->Append( h );
-
-				linknode = linknode->GetNext();
+		if (m_pMyLinkList->GetCount() > 0) {
+			for (HyperlinkList::const_iterator i = m_pMyLinkList->begin();
+				 i != m_pMyLinkList->end(); ++i) {
+				const Hyperlink* link = *i;
+				m_pRoutePoint->m_HyperlinkList->push_back(
+					new Hyperlink(link->DescrText, link->Link, link->LType));
 			}
 		}
 	}
 
-	Show( false );
+	Show(false);
 	delete m_pMyLinkList;
 	m_pMyLinkList = NULL;
 	event.Skip();
 }
 
-void MarkInfoImpl::OnPositionCtlUpdated(wxCommandEvent &)
+void MarkInfoImpl::OnPositionCtlUpdated(wxCommandEvent&)
 {
 	// Fetch the control values, convert to degrees
-	double lat = fromDMM( m_textLatitude->GetValue() );
-	double lon = fromDMM( m_textLongitude->GetValue() );
+	double lat = fromDMM(m_textLatitude->GetValue());
+	double lon = fromDMM(m_textLongitude->GetValue());
 
-	if( !m_pRoutePoint->m_bIsInLayer ) {
-		m_pRoutePoint->SetPosition( lat, lon );
-		pSelect->ModifySelectablePoint( lat, lon, (void *) m_pRoutePoint, Select::TYPE_ROUTEPOINT );
+	if (!m_pRoutePoint->m_bIsInLayer) {
+		m_pRoutePoint->SetPosition(lat, lon);
+		pSelect->ModifySelectablePoint(lat, lon, (void*)m_pRoutePoint, Select::TYPE_ROUTEPOINT);
 	}
 
 	// Update the mark position dynamically
 	cc1->Refresh();
 }
 
-void MarkInfoImpl::OnRightClick( wxCommandEvent& event )
+void MarkInfoImpl::OnRightClick(wxCommandEvent& event)
 {
 	wxMenu* popup = new wxMenu();
-	popup->Append( ID_RCLK_MENU_COPY, _T("Copy") );
-	popup->Append( ID_RCLK_MENU_COPY_LL, _T("Copy lat/long") );
-	popup->Append( ID_RCLK_MENU_PASTE, _T("Paste") );
-	popup->Append( ID_RCLK_MENU_PASTE_LL, _T("Paste lat/long") );
+	popup->Append(ID_RCLK_MENU_COPY, _T("Copy"));
+	popup->Append(ID_RCLK_MENU_COPY_LL, _T("Copy lat/long"));
+	popup->Append(ID_RCLK_MENU_PASTE, _T("Paste"));
+	popup->Append(ID_RCLK_MENU_PASTE_LL, _T("Paste lat/long"));
 	m_contextObject = event.GetEventObject();
-	PopupMenu( popup );
+	PopupMenu(popup);
 	delete popup;
 }
 
-void MarkInfoDef::OnCopyPasteLatLon( wxCommandEvent& event )
+void MarkInfoDef::OnCopyPasteLatLon(wxCommandEvent& event)
 {
 	// Fetch the control values, convert to degrees
-	double lat = fromDMM( m_textLatitude->GetValue() );
-	double lon = fromDMM( m_textLongitude->GetValue() );
+	double lat = fromDMM(m_textLatitude->GetValue());
+	double lon = fromDMM(m_textLongitude->GetValue());
 
 	wxString result;
 
-	switch( event.GetId() ) {
+	switch (event.GetId()) {
 		case ID_RCLK_MENU_PASTE:
-			 if( wxTheClipboard->Open() ) {
-				 wxTextDataObject data;
-				 wxTheClipboard->GetData( data );
-				 result = data.GetText();
-				 ((wxTextCtrl*)m_contextObject)->SetValue( result );
-				 wxTheClipboard->Close();
-			 }
-			 return;
+			if (wxTheClipboard->Open()) {
+				wxTextDataObject data;
+				wxTheClipboard->GetData(data);
+				result = data.GetText();
+				((wxTextCtrl*)m_contextObject)->SetValue(result);
+				wxTheClipboard->Close();
+			}
+			return;
 
 		case ID_RCLK_MENU_PASTE_LL:
-			 if( wxTheClipboard->Open() ) {
-				 wxTextDataObject data;
-				 wxTheClipboard->GetData( data );
-				 result = data.GetText();
+			if (wxTheClipboard->Open()) {
+				wxTextDataObject data;
+				wxTheClipboard->GetData(data);
+				result = data.GetText();
 
-				 PositionParser pparse( result );
+				PositionParser pparse(result);
 
-				 if( pparse.IsOk() ) {
-					 m_textLatitude->SetValue( pparse.GetLatitudeString() );
-					 m_textLongitude->SetValue( pparse.GetLongitudeString() );
-				 }
-				 wxTheClipboard->Close();
-			 }
-			 return;
+				if (pparse.IsOk()) {
+					m_textLatitude->SetValue(pparse.GetLatitudeString());
+					m_textLongitude->SetValue(pparse.GetLongitudeString());
+				}
+				wxTheClipboard->Close();
+			}
+			return;
 
 		case ID_RCLK_MENU_COPY:
-			 result = ((wxTextCtrl*)m_contextObject)->GetValue();
-			 break;
+			result = ((wxTextCtrl*)m_contextObject)->GetValue();
+			break;
 
 		case ID_RCLK_MENU_COPY_LL:
-			 result << toSDMM( 1, lat, true ) <<_T('\t');
-			 result << toSDMM( 2, lon, true );
-			 break;
+			result << toSDMM(1, lat, true) << _T('\t');
+			result << toSDMM(2, lon, true);
+			break;
 	}
 
-	if( wxTheClipboard->Open() ) {
+	if (wxTheClipboard->Open()) {
 		wxTextDataObject* data = new wxTextDataObject;
-		data->SetText( result );
-		wxTheClipboard->SetData( data );
+		data->SetText(result);
+		wxTheClipboard->SetData(data);
 		wxTheClipboard->Close();
 	}
 }
 
-
-void MarkInfoImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
+void MarkInfoImpl::OnHyperLinkClick(wxHyperlinkEvent& event)
 {
-	if( m_toggleBtnEdit->GetValue() ) {
-		m_pEditedLink = (wxHyperlinkCtrl*) event.GetEventObject();
-		OnEditLink( event );
-		event.Skip( false );
+	if (m_toggleBtnEdit->GetValue()) {
+		m_pEditedLink = (wxHyperlinkCtrl*)event.GetEventObject();
+		OnEditLink(event);
+		event.Skip(false);
 		return;
 	}
-	//    Windows has trouble handling local file URLs with embedded anchor points, e.g file://testfile.html#point1
-	//    The trouble is with the wxLaunchDefaultBrowser with verb "open"
-	//    Workaround is to probe the registry to get the default browser, and open directly
-	//
-	//    But, we will do this only if the URL contains the anchor point charater '#'
-	//    What a hack......
 
 #ifdef __WXMSW__
+	// Windows has trouble handling local file URLs with embedded anchor points, e.g
+	// file://testfile.html#point1
+	// The trouble is with the wxLaunchDefaultBrowser with verb "open"
+	// Workaround is to probe the registry to get the default browser, and open directly
+	//
+	// But, we will do this only if the URL contains the anchor point charater '#'
+	// What a hack......
 
 	wxString cc = event.GetURL();
-	if( cc.Find( _T("#") ) != wxNOT_FOUND ) {
-		wxRegKey RegKey( wxString( _T("HKEY_CLASSES_ROOT\\HTTP\\shell\\open\\command") ) );
-		if( RegKey.Exists() ) {
+	if (cc.Find(_T("#")) != wxNOT_FOUND) {
+		wxRegKey RegKey(wxString(_T("HKEY_CLASSES_ROOT\\HTTP\\shell\\open\\command")));
+		if (RegKey.Exists()) {
 			wxString command_line;
-			RegKey.QueryValue( wxString( _T("") ), command_line );
+			RegKey.QueryValue(wxString(_T("")), command_line);
 
 			//  Remove "
-			command_line.Replace( wxString( _T("\"") ), wxString( _T("") ) );
+			command_line.Replace(wxString(_T("\"")), wxString(_T("")));
 
 			//  Strip arguments
-			int l = command_line.Find( _T(".exe") );
-			if( wxNOT_FOUND == l ) l = command_line.Find( _T(".EXE") );
+			int l = command_line.Find(_T(".exe"));
+			if (wxNOT_FOUND == l)
+				l = command_line.Find(_T(".EXE"));
 
-			if( wxNOT_FOUND != l ) {
-				wxString cl = command_line.Mid( 0, l + 4 );
+			if (wxNOT_FOUND != l) {
+				wxString cl = command_line.Mid(0, l + 4);
 				cl += _T(" ");
-				cc.Prepend( _T("\"") );
-				cc.Append( _T("\"") );
+				cc.Prepend(_T("\""));
+				cc.Append(_T("\""));
 				cl += cc;
-				wxExecute( cl );        // Async, so Fire and Forget...
+				wxExecute(cl); // Async, so Fire and Forget...
 			}
 		}
-	} else
+	} else {
 		event.Skip();
+	}
 #else
 	wxString url = event.GetURL();
-	url.Replace(_T(" "), _T("%20") );
+	url.Replace(_T(" "), _T("%20"));
 	::wxLaunchDefaultBrowser(url);
-	//    event.Skip();
 #endif
 }
 
-void MarkInfoImpl::ValidateMark( void )
+void MarkInfoImpl::ValidateMark(void)
 {
 	// Look in the master list of Waypoints to see if the currently selected waypoint is still valid
 	// It may have been deleted as part of a route

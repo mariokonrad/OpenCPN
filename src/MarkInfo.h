@@ -117,54 +117,60 @@ class MarkInfoDef : public wxDialog
 
 class MarkInfoImpl : public MarkInfoDef
 {
-	public :
-		void SetColorScheme( ColorScheme cs );
-		void OnMarkInfoOKClick( wxCommandEvent& event );
-		void OnMarkInfoCancelClick( wxCommandEvent& event );
-		void SetRoutePoint( RoutePoint *pRP );
-		void SetDialogTitle(const wxString & title) { SetTitle(title); }
-		RoutePoint *GetRoutePoint(void) { return m_pRoutePoint; }
-		bool UpdateProperties( bool positionOnly = false );
-		void ValidateMark(void);
-		void InitialFocus(void);
-		void OnRightClick( wxCommandEvent& event );
+public:
+	void SetColorScheme(ColorScheme cs);
+	void OnMarkInfoOKClick(wxCommandEvent& event);
+	void OnMarkInfoCancelClick(wxCommandEvent& event);
+	void SetRoutePoint(RoutePoint* pRP);
 
-		MarkInfoImpl(
-				wxWindow * parent,
-				wxWindowID id = wxID_ANY,
-				const wxString & title = _("Waypoint Information"),
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxSize( 450,550 ),
-				long style = wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER);
+	void SetDialogTitle(const wxString& title)
+	{
+		SetTitle(title);
+	}
 
-		virtual ~MarkInfoImpl();
+	RoutePoint* GetRoutePoint(void)
+	{
+		return m_pRoutePoint;
+	}
 
-		void hyperlinkContextMenu(wxMouseEvent & event);
+	bool UpdateProperties(bool positionOnly = false);
+	void ValidateMark(void);
+	void InitialFocus(void);
+	void OnRightClick(wxCommandEvent& event);
 
-	protected :
-		virtual void OnPositionCtlUpdated( wxCommandEvent& event );
-		void OnDeleteLink( wxCommandEvent& event );
-		void OnEditLink( wxCommandEvent& event );
-		void OnAddLink( wxCommandEvent& event );
-		void OnEditLinkToggle( wxCommandEvent& event );
-		void OnDescChangedBasic( wxCommandEvent& event );
-		void OnDescChangedExt( wxCommandEvent& event );
-		void OnExtDescriptionClick( wxCommandEvent& event );
+	MarkInfoImpl(wxWindow* parent, wxWindowID id = wxID_ANY,
+				 const wxString& title = _("Waypoint Information"),
+				 const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(450, 550),
+				 long style = wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER);
 
-	private :
-		RoutePoint  *m_pRoutePoint;
-		HyperlinkList *m_pMyLinkList;
-		void OnHyperLinkClick(wxHyperlinkEvent &event);
-		LinkPropDialog * m_pLinkProp;
-		bool SaveChanges();
-		wxHyperlinkCtrl* m_pEditedLink;
+	virtual ~MarkInfoImpl();
 
-		int m_current_icon_Index;
-		double m_lat_save;
-		double m_lon_save;
-		wxString m_IconName_save;
-		bool m_bShowName_save;
-		bool m_bIsVisible_save;
+	void hyperlinkContextMenu(wxMouseEvent& event);
+
+protected:
+	virtual void OnPositionCtlUpdated(wxCommandEvent& event);
+	void OnDeleteLink(wxCommandEvent& event);
+	void OnEditLink(wxCommandEvent& event);
+	void OnAddLink(wxCommandEvent& event);
+	void OnEditLinkToggle(wxCommandEvent& event);
+	void OnDescChangedBasic(wxCommandEvent& event);
+	void OnDescChangedExt(wxCommandEvent& event);
+	void OnExtDescriptionClick(wxCommandEvent& event);
+
+private:
+	RoutePoint* m_pRoutePoint;
+	HyperlinkList* m_pMyLinkList;
+	void OnHyperLinkClick(wxHyperlinkEvent& event);
+	LinkPropDialog* m_pLinkProp;
+	bool SaveChanges();
+	wxHyperlinkCtrl* m_pEditedLink;
+
+	int m_current_icon_Index;
+	double m_lat_save;
+	double m_lon_save;
+	wxString m_IconName_save;
+	bool m_bShowName_save;
+	bool m_bIsVisible_save;
 };
 
 #endif

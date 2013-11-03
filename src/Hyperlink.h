@@ -25,7 +25,6 @@
 #define __HYPERLINK_H__
 
 #include <wx/string.h>
-#include <wx/list.h>
 #include <vector>
 
 class Hyperlink
@@ -40,6 +39,5 @@ public:
 };
 
 typedef std::vector<Hyperlink> Hyperlinks;
-WX_DECLARE_LIST(Hyperlink, HyperlinkList); // FIXME: replace this with Hyperlinks
 
 #endif

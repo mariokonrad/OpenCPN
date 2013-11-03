@@ -4808,16 +4808,11 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 					v[i][_T("lon")] = (*itp)->m_lon;
 					v[i][_T("WPName")] = (*itp)->GetName();
 					v[i][_T("WPDescription")] = (*itp)->GetDescription();
-					wxHyperlinkListNode* node = (*itp)->m_HyperlinkList->GetFirst();
-					if (node) {
-						int n = 1;
-						while (node) {
-							Hyperlink* httpLink = node->GetData();
-							v[i][_T("WPLink") + wxString::Format(_T("%d"), n)] = httpLink->Link;
-							v[i][_T("WPLinkDesciption") + wxString::Format(_T("%d"), n++)]
-								= httpLink->DescrText;
-							node = node->GetNext();
-						}
+					const Hyperlinks& hyperlinks = (*itp)->m_HyperlinkList;
+					int n = 1;
+					for (Hyperlinks::const_iterator link = hyperlinks.begin(); link != hyperlinks.end(); ++link) {
+						v[i][_T("WPLink") + wxString::Format(_T("%d"), n)] = link->Link;
+						v[i][_T("WPLinkDesciption") + wxString::Format(_T("%d"), n++)] = link->DescrText;
 					}
 					i++;
 				}

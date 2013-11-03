@@ -1772,7 +1772,7 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 			while (linknode) {
 				Plugin_Hyperlink* link = linknode->GetData();
 
-				pWP->m_HyperlinkList->push_back(new Hyperlink(link->DescrText, link->Link, link->Type));
+				pWP->m_HyperlinkList.push_back(Hyperlink(link->DescrText, link->Link, link->Type));
 
 				linknode = linknode->GetNext();
 			}
@@ -1832,12 +1832,12 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 		//  Transcribe (clone) the html HyperLink List, if present
 
 		if (pwaypoint->m_HyperlinkList) {
-			prp->m_HyperlinkList->Clear();
+			prp->m_HyperlinkList.clear();
 			if (pwaypoint->m_HyperlinkList->GetCount() > 0) {
 				wxPlugin_HyperlinkListNode* linknode = pwaypoint->m_HyperlinkList->GetFirst();
 				while (linknode) {
 					Plugin_Hyperlink* link = linknode->GetData();
-					prp->m_HyperlinkList->push_back(new Hyperlink(link->DescrText, link->Link, link->Type));
+					prp->m_HyperlinkList.push_back(Hyperlink(link->DescrText, link->Link, link->Type));
 					linknode = linknode->GetNext();
 				}
 			}
@@ -1880,7 +1880,7 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 				wxPlugin_HyperlinkListNode* linknode = pwp->m_HyperlinkList->GetFirst();
 				while (linknode) {
 					Plugin_Hyperlink* link = linknode->GetData();
-					pWP->m_HyperlinkList->Append(new Hyperlink(link->DescrText, link->Link, link->Type));
+					pWP->m_HyperlinkList.push_back(Hyperlink(link->DescrText, link->Link, link->Type));
 					linknode = linknode->GetNext();
 				}
 			}

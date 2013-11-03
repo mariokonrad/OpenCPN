@@ -363,7 +363,7 @@ TrackPropDlg::~TrackPropDlg()
 	delete m_menuLink;
 }
 
-void TrackPropDlg::SetTrackAndUpdate(Route * pR)
+void TrackPropDlg::SetTrackAndUpdate(Route* pR)
 {
 	m_pRoute = pR;
 	m_lcPoints->DeleteAllItems();
@@ -373,7 +373,7 @@ void TrackPropDlg::SetTrackAndUpdate(Route * pR)
 
 void TrackPropDlg::InitializeList()
 {
-	if( NULL == m_pRoute )
+	if (NULL == m_pRoute)
 		return;
 
 	m_lcPoints->m_pRoute = m_pRoute;
@@ -382,160 +382,156 @@ void TrackPropDlg::InitializeList()
 
 bool TrackPropDlg::UpdateProperties()
 {
-	if( NULL == m_pRoute )
+	if (NULL == m_pRoute)
 		return false;
 
 	::wxBeginBusyCursor();
 
 	wxWindowList kids = m_scrolledWindowLinks->GetChildren();
-	for( unsigned int i = 0; i < kids.GetCount(); i++ ) {
-		wxWindowListNode *node = kids.Item( i );
-		wxWindow *win = node->GetData();
+	for (unsigned int i = 0; i < kids.GetCount(); i++) {
+		wxWindowListNode* node = kids.Item(i);
+		wxWindow* win = node->GetData();
 
-		if( win->IsKindOf( CLASSINFO(wxHyperlinkCtrl) ) ) {
-			( (wxHyperlinkCtrl*) win )->Disconnect( wxEVT_COMMAND_HYPERLINK,
-					wxHyperlinkEventHandler( TrackPropDlg::OnHyperLinkClick ) );
-			( (wxHyperlinkCtrl*) win )->Disconnect( wxEVT_RIGHT_DOWN,
-					wxMouseEventHandler( TrackPropDlg::m_hyperlinkContextMenu ) );
+		if (win->IsKindOf(CLASSINFO(wxHyperlinkCtrl))) {
+			((wxHyperlinkCtrl*)win)->Disconnect(
+				wxEVT_COMMAND_HYPERLINK, wxHyperlinkEventHandler(TrackPropDlg::OnHyperLinkClick));
+			((wxHyperlinkCtrl*)win)->Disconnect(
+				wxEVT_RIGHT_DOWN, wxMouseEventHandler(TrackPropDlg::m_hyperlinkContextMenu));
 		}
 	}
 	m_scrolledWindowLinks->DestroyChildren();
 
-	int NbrOfLinks = m_pRoute->m_HyperlinkList->GetCount();
-	HyperlinkList *hyperlinklist = m_pRoute->m_HyperlinkList;
-	//            int len = 0;
-	if( NbrOfLinks > 0 ) {
-		wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
-		while( linknode ) {
-			Hyperlink *link = linknode->GetData();
-			wxString Link = link->Link;
-			wxString Descr = link->DescrText;
-
-			wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, Descr,
-					Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
-			ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
-					wxHyperlinkEventHandler( TrackPropDlg::OnHyperLinkClick ), NULL, this );
-			if( !m_pRoute->m_bIsInLayer ) ctrl->Connect( wxEVT_RIGHT_DOWN,
-					wxMouseEventHandler( TrackPropDlg::m_hyperlinkContextMenu ), NULL, this );
-
-			bSizerLinks->Add( ctrl, 0, wxALL, 5 );
-
-			linknode = linknode->GetNext();
-		}
+	// FIXME: code duplication of MarkInfoImpl::add_hyperlink
+	const Hyperlinks& linklist = m_pRoute->m_HyperlinkList;
+	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
+		add_hyperlink(i->DescrText, i->Link, m_pRoute->m_bIsInLayer);
 	}
-	bSizerLinks->Fit( m_scrolledWindowLinks );
+	bSizerLinks->Fit(m_scrolledWindowLinks);
 
-	m_tName->SetValue( m_pRoute->m_RouteNameString );
-	m_tFrom->SetValue( m_pRoute->m_RouteStartString );
-	m_tTo->SetValue( m_pRoute->m_RouteEndString );
-	m_tDescription->SetValue( m_pRoute->m_RouteDescription );
+	m_tName->SetValue(m_pRoute->m_RouteNameString);
+	m_tFrom->SetValue(m_pRoute->m_RouteStartString);
+	m_tTo->SetValue(m_pRoute->m_RouteEndString);
+	m_tDescription->SetValue(m_pRoute->m_RouteDescription);
 
-	m_tTotDistance->SetValue( _T("") );
-	m_tTimeEnroute->SetValue( _T("") );
+	m_tTotDistance->SetValue(_T(""));
+	m_tTimeEnroute->SetValue(_T(""));
 
-	m_sdbBtmBtnsSizerSplit->Enable( false );
-	m_sdbBtmBtnsSizerExtend->Enable( false );
+	m_sdbBtmBtnsSizerSplit->Enable(false);
+	m_sdbBtmBtnsSizerExtend->Enable(false);
 
-	m_pRoute->UpdateSegmentDistances();           // get segment and total distance
+	m_pRoute->UpdateSegmentDistances(); // get segment and total distance
 	// but ignore leg speed calcs
 
 	// Calculate AVG speed if we are showing a track and total time
-	RoutePoint *last_point = m_pRoute->GetLastPoint();
-	RoutePoint *first_point = m_pRoute->GetPoint( 1 );
-	double total_seconds = 0.;
+	RoutePoint* last_point = m_pRoute->GetLastPoint();
+	RoutePoint* first_point = m_pRoute->GetPoint(1);
+	double total_seconds = 0.0;
 
-	if( last_point->GetCreateTime().IsValid() && first_point->GetCreateTime().IsValid() ) {
-		total_seconds =
-			last_point->GetCreateTime().Subtract( first_point->GetCreateTime() ).GetSeconds().ToDouble();
-		if( total_seconds != 0. ) {
+	if (last_point->GetCreateTime().IsValid() && first_point->GetCreateTime().IsValid()) {
+		total_seconds = last_point->GetCreateTime()
+							.Subtract(first_point->GetCreateTime())
+							.GetSeconds()
+							.ToDouble();
+		if (total_seconds != 0.0) {
 			m_avgspeed = m_pRoute->m_route_length / total_seconds * 3600;
 		} else {
 			m_avgspeed = 0;
 		}
 		wxString s;
-		s.Printf( _T("%5.2f"), toUsrSpeed( m_avgspeed ) );
-		m_tAvgSpeed->SetValue( s );
+		s.Printf(_T("%5.2f"), toUsrSpeed(m_avgspeed));
+		m_tAvgSpeed->SetValue(s);
 	} else {
-		wxString s( _T("--") );
-		m_tAvgSpeed->SetValue( s );
+		wxString s(_T("--"));
+		m_tAvgSpeed->SetValue(s);
 	}
 
-	//  Total length
+	// Total length
 	wxString slen;
-	slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance( m_pRoute->m_route_length ) );
+	slen.Printf(wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(m_pRoute->m_route_length));
 
-	m_tTotDistance->SetValue( slen );
+	m_tTotDistance->SetValue(slen);
 
-	//  Time
+	// Time
 	wxString time_form;
-	wxTimeSpan time( 0, 0, (int) total_seconds, 0 );
-	if( total_seconds > 3600. * 24. )
-		time_form = time.Format( _("%D Days, %H:%M") );
+	wxTimeSpan time(0, 0, (int)total_seconds, 0);
+	if (total_seconds > 3600.0 * 24.0)
+		time_form = time.Format(_("%D Days, %H:%M"));
+	else if (total_seconds > 0.)
+		time_form = time.Format(_("%H:%M"));
 	else
-		if( total_seconds > 0. )
-			time_form = time.Format( _("%H:%M") );
-		else
-			time_form = _T("--");
-	m_tTimeEnroute->SetValue( time_form );
+		time_form = _T("--");
+	m_tTimeEnroute->SetValue(time_form);
 
-	m_cbShow->SetValue( m_pRoute->IsVisible() );
+	m_cbShow->SetValue(m_pRoute->IsVisible());
 
-	if( m_pRoute->m_Colour == wxEmptyString )
-		m_cColor->Select( 0 );
-	else {
-		for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-			if( m_pRoute->m_Colour == ::GpxxColorNames[i] ) {
-				m_cColor->Select( i + 1 );
+	if (m_pRoute->m_Colour == wxEmptyString) {
+		m_cColor->Select(0);
+	} else {
+		for (unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(wxString); i++) {
+			if (m_pRoute->m_Colour == ::GpxxColorNames[i]) {
+				m_cColor->Select(i + 1);
 				break;
 			}
 		}
 	}
 
-	for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
-		if( m_pRoute->m_style == ::StyleValues[i] ) {
-			m_cStyle->Select( i );
+	for (unsigned int i = 0; i < sizeof(::StyleValues) / sizeof(int); i++) {
+		if (m_pRoute->m_style == ::StyleValues[i]) {
+			m_cStyle->Select(i);
 			break;
 		}
 	}
 
-	for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
-		if( m_pRoute->m_width == ::WidthValues[i] ) {
-			m_cWidth->Select( i );
+	for (unsigned int i = 0; i < sizeof(::WidthValues) / sizeof(int); i++) {
+		if (m_pRoute->m_width == ::WidthValues[i]) {
+			m_cWidth->Select(i);
 			break;
 		}
 	}
 
-	if( m_pRoute->m_bIsInLayer )
-	{
-		m_tName->SetEditable( false );
-		m_tFrom->SetEditable( false );
-		m_tTo->SetEditable( false );
-		m_tDescription->SetEditable( false );
-		m_cbShow->Enable( false );
-		m_cColor->Enable( false );
-		m_cStyle->Enable( false );
-		m_cWidth->Enable( false );
-		m_sdbBtmBtnsSizerExtend->Enable( false );
-		m_sdbBtmBtnsSizerSplit->Enable( false );
-		SetTitle( wxString::Format( _("Track Properties, Layer: %d"), m_pRoute->m_LayerID ) );
+	if (m_pRoute->m_bIsInLayer) {
+		m_tName->SetEditable(false);
+		m_tFrom->SetEditable(false);
+		m_tTo->SetEditable(false);
+		m_tDescription->SetEditable(false);
+		m_cbShow->Enable(false);
+		m_cColor->Enable(false);
+		m_cStyle->Enable(false);
+		m_cWidth->Enable(false);
+		m_sdbBtmBtnsSizerExtend->Enable(false);
+		m_sdbBtmBtnsSizerSplit->Enable(false);
+		SetTitle(wxString::Format(_("Track Properties, Layer: %d"), m_pRoute->m_LayerID));
 	} else {
-		m_tName->SetEditable( true );
-		m_tFrom->SetEditable( true );
-		m_tTo->SetEditable( true );
-		m_tDescription->SetEditable( true );
-		m_cbShow->Enable( true );
-		m_cColor->Enable( true );
-		m_cStyle->Enable( true );
-		m_cWidth->Enable( true );
+		m_tName->SetEditable(true);
+		m_tFrom->SetEditable(true);
+		m_tTo->SetEditable(true);
+		m_tDescription->SetEditable(true);
+		m_cbShow->Enable(true);
+		m_cColor->Enable(true);
+		m_cStyle->Enable(true);
+		m_cWidth->Enable(true);
 
-		m_sdbBtmBtnsSizerExtend->Enable( IsThisTrackExtendable() );
-		//m_sdbBtmBtnsSizerSplit->Enable( false );
-		SetTitle( _("Track Properties") );
+		m_sdbBtmBtnsSizerExtend->Enable(IsThisTrackExtendable());
+		SetTitle(_("Track Properties"));
 	}
 
 	::wxEndBusyCursor();
 
 	return true;
+}
+
+void TrackPropDlg::add_hyperlink(const wxString& desc, const wxString& link, bool on_layer)
+{
+	wxHyperlinkCtrl* ctrl
+		= new wxHyperlinkCtrl(m_scrolledWindowLinks, wxID_ANY, desc, link, wxDefaultPosition,
+							  wxDefaultSize, wxHL_DEFAULT_STYLE);
+	ctrl->Connect(wxEVT_COMMAND_HYPERLINK, wxHyperlinkEventHandler(TrackPropDlg::OnHyperLinkClick),
+				  NULL, this);
+	if (!on_layer)
+		ctrl->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(TrackPropDlg::m_hyperlinkContextMenu),
+					  NULL, this);
+
+	bSizerLinks->Add(ctrl, 0, wxALL, 5);
 }
 
 bool TrackPropDlg::IsThisTrackExtendable()
@@ -545,17 +541,18 @@ bool TrackPropDlg::IsThisTrackExtendable()
 	if (m_pRoute == g_pActiveTrack || m_pRoute->m_bIsInLayer)
 		return false;
 
-	RoutePoint *pLastPoint = m_pRoute->GetPoint( 1 );
+	RoutePoint* pLastPoint = m_pRoute->GetPoint(1);
 	if (!pLastPoint->GetCreateTime().IsValid())
 		return false;
 
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
-		Route * route = *i;
+		Route* route = *i;
 		if (route->m_bIsTrack && route->IsVisible() && (route->m_GUID != m_pRoute->m_GUID)) {
-			RoutePoint *track_node = route->GetLastPoint();
-			if( track_node->GetCreateTime().IsValid() ) {
-				if( track_node->GetCreateTime() <= pLastPoint->GetCreateTime() )
-					if( !m_pExtendPoint || track_node->GetCreateTime() > m_pExtendPoint->GetCreateTime() ) {
+			RoutePoint* track_node = route->GetLastPoint();
+			if (track_node->GetCreateTime().IsValid()) {
+				if (track_node->GetCreateTime() <= pLastPoint->GetCreateTime())
+					if (!m_pExtendPoint || track_node->GetCreateTime()
+										   > m_pExtendPoint->GetCreateTime()) {
 						m_pExtendPoint = track_node;
 						m_pExtendRoute = route;
 					}
@@ -569,62 +566,63 @@ bool TrackPropDlg::IsThisTrackExtendable()
 		return false;
 }
 
-void TrackPropDlg::OnExtendBtnClick(wxCommandEvent &)
+void TrackPropDlg::OnExtendBtnClick(wxCommandEvent&)
 {
-	RoutePoint *pLastPoint = m_pRoute->GetPoint( 1 );
+	RoutePoint* pLastPoint = m_pRoute->GetPoint(1);
 
-	if( IsThisTrackExtendable() ) {
+	if (IsThisTrackExtendable()) {
 		int begin = 1;
-		if( pLastPoint->GetCreateTime() == m_pExtendPoint->GetCreateTime() ) begin = 2;
-		pSelect->DeleteAllSelectableTrackSegments( m_pExtendRoute );
-		m_pExtendRoute->CloneTrack( m_pRoute, begin, m_pRoute->GetnPoints(), _("_plus") );
-		pSelect->AddAllSelectableTrackSegments( m_pExtendRoute );
-		pSelect->DeleteAllSelectableTrackSegments( m_pRoute );
+		if (pLastPoint->GetCreateTime() == m_pExtendPoint->GetCreateTime())
+			begin = 2;
+		pSelect->DeleteAllSelectableTrackSegments(m_pExtendRoute);
+		m_pExtendRoute->CloneTrack(m_pRoute, begin, m_pRoute->GetnPoints(), _("_plus"));
+		pSelect->AddAllSelectableTrackSegments(m_pExtendRoute);
+		pSelect->DeleteAllSelectableTrackSegments(m_pRoute);
 		m_pRoute->ClearHighlights();
-		g_pRouteMan->DeleteTrack( m_pRoute );
+		g_pRouteMan->DeleteTrack(m_pRoute);
 
-		SetTrackAndUpdate( m_pExtendRoute );
+		SetTrackAndUpdate(m_pExtendRoute);
 		UpdateProperties();
 
-		if( pRouteManagerDialog && pRouteManagerDialog->IsShown() )
+		if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 			pRouteManagerDialog->UpdateTrkListCtrl();
 	}
 }
 
-void TrackPropDlg::OnSplitBtnClick(wxCommandEvent &)
+void TrackPropDlg::OnSplitBtnClick(wxCommandEvent&)
 {
-	m_sdbBtmBtnsSizerSplit->Enable( false );
+	m_sdbBtmBtnsSizerSplit->Enable(false);
 
-	if( m_pRoute->m_bIsInLayer )
+	if (m_pRoute->m_bIsInLayer)
 		return;
 
-	if( ( m_nSelected > 1 ) && ( m_nSelected < m_pRoute->GetnPoints() ) ) {
+	if ((m_nSelected > 1) && (m_nSelected < m_pRoute->GetnPoints())) {
 		m_pHead = new Track();
 		m_pTail = new Track();
-		m_pHead->CloneTrack( m_pRoute, 1, m_nSelected, _("_A") );
-		m_pTail->CloneTrack( m_pRoute, m_nSelected, m_pRoute->GetnPoints(), _("_B") );
+		m_pHead->CloneTrack(m_pRoute, 1, m_nSelected, _("_A"));
+		m_pTail->CloneTrack(m_pRoute, m_nSelected, m_pRoute->GetnPoints(), _("_B"));
 		pRouteList->push_back(m_pHead);
-		pConfig->AddNewRoute( m_pHead, -1 );
+		pConfig->AddNewRoute(m_pHead, -1);
 		m_pHead->RebuildGUIDList();
 
 		pRouteList->push_back(m_pTail);
-		pConfig->AddNewRoute( m_pTail, -1 );
+		pConfig->AddNewRoute(m_pTail, -1);
 		m_pTail->RebuildGUIDList();
 
-		pConfig->DeleteConfigRoute( m_pRoute );
+		pConfig->DeleteConfigRoute(m_pRoute);
 
-		pSelect->DeleteAllSelectableRoutePoints( m_pRoute );
-		pSelect->DeleteAllSelectableRouteSegments( m_pRoute );
-		g_pRouteMan->DeleteRoute( m_pRoute );
-		pSelect->AddAllSelectableRouteSegments( m_pTail );
-		pSelect->AddAllSelectableRoutePoints( m_pTail );
-		pSelect->AddAllSelectableRouteSegments( m_pHead );
-		pSelect->AddAllSelectableRoutePoints( m_pHead );
+		pSelect->DeleteAllSelectableRoutePoints(m_pRoute);
+		pSelect->DeleteAllSelectableRouteSegments(m_pRoute);
+		g_pRouteMan->DeleteRoute(m_pRoute);
+		pSelect->AddAllSelectableRouteSegments(m_pTail);
+		pSelect->AddAllSelectableRoutePoints(m_pTail);
+		pSelect->AddAllSelectableRouteSegments(m_pHead);
+		pSelect->AddAllSelectableRoutePoints(m_pHead);
 
-		SetTrackAndUpdate( m_pTail );
+		SetTrackAndUpdate(m_pTail);
 		UpdateProperties();
 
-		if( pRouteManagerDialog && pRouteManagerDialog->IsShown() )
+		if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 			pRouteManagerDialog->UpdateTrkListCtrl();
 	}
 }
@@ -733,101 +731,103 @@ void TrackPropDlg::OnTrackPropMenuSelected(wxCommandEvent & event)
 	}
 }
 
-void TrackPropDlg::OnToRouteBtnClick(wxCommandEvent &)
+void TrackPropDlg::OnToRouteBtnClick(wxCommandEvent&)
 {
 	pRouteManagerDialog->TrackToRoute((Track*)m_pRoute);
 	if (NULL != pRouteManagerDialog && pRouteManagerDialog->IsVisible())
 		pRouteManagerDialog->UpdateRouteListCtrl();
 }
 
-void TrackPropDlg::OnExportBtnClick(wxCommandEvent &)
+void TrackPropDlg::OnExportBtnClick(wxCommandEvent&)
 {
 	wxString suggested_name = _("track");
 	RouteList list;
-	list.Append( m_pRoute );
-	if( m_pRoute->m_RouteNameString != wxEmptyString )
+	list.Append(m_pRoute);
+	if (m_pRoute->m_RouteNameString != wxEmptyString)
 		suggested_name = m_pRoute->m_RouteNameString;
-	pConfig->ExportGPXRoutes( this, &list, suggested_name );
+	pConfig->ExportGPXRoutes(this, &list, suggested_name);
 }
 
-void TrackPropDlg::m_hyperlinkContextMenu( wxMouseEvent &event )
+void TrackPropDlg::m_hyperlinkContextMenu(wxMouseEvent& event)
 {
-	m_pEditedLink = (wxHyperlinkCtrl*) event.GetEventObject();
-	m_scrolledWindowLinks->PopupMenu( m_menuLink,
-			m_pEditedLink->GetPosition().x + event.GetPosition().x,
-			m_pEditedLink->GetPosition().y + event.GetPosition().y );
-
+	m_pEditedLink = (wxHyperlinkCtrl*)event.GetEventObject();
+	m_scrolledWindowLinks->PopupMenu(m_menuLink,
+									 m_pEditedLink->GetPosition().x + event.GetPosition().x,
+									 m_pEditedLink->GetPosition().y + event.GetPosition().y);
 }
 
-void TrackPropDlg::OnDeleteLink( wxCommandEvent& event )
+void TrackPropDlg::OnDeleteLink(wxCommandEvent& event)
 {
-	wxHyperlinkListNode * nodeToDelete = NULL;
 	wxString findurl = m_pEditedLink->GetURL();
 	wxString findlabel = m_pEditedLink->GetLabel();
+
+	// remove all links, re-insert all non-deleted in the loop below
 	m_scrolledWindowLinks->DestroyChildren();
-	int NbrOfLinks = m_pRoute->m_HyperlinkList->GetCount();
-	HyperlinkList *hyperlinklist = m_pRoute->m_HyperlinkList;
-	if( NbrOfLinks > 0 ) {
-		wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
-		while (linknode) {
-			Hyperlink * link = linknode->GetData();
-			wxString Link = link->Link;
-			wxString Descr = link->DescrText;
-			if (Link == findurl && (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString)))
-				nodeToDelete = linknode;
-			else {
-				wxHyperlinkCtrl * ctrl = new wxHyperlinkCtrl(m_scrolledWindowLinks, wxID_ANY, Descr,
-						Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
-				ctrl->Connect(wxEVT_COMMAND_HYPERLINK,
-						wxHyperlinkEventHandler(TrackPropDlg::OnHyperLinkClick), NULL, this);
-				ctrl->Connect(wxEVT_RIGHT_DOWN,
-						wxMouseEventHandler(TrackPropDlg::m_hyperlinkContextMenu), NULL, this);
-				bSizerLinks->Add(ctrl, 0, wxALL, 5);
+
+	// FIXME: use find_if
+	// FIXME: code duplication of MarkInfoImpl::OnDeleteLink
+	Hyperlinks& linklist = m_pRoute->m_HyperlinkList;
+	for (Hyperlinks::iterator i = linklist.begin(); i != linklist.end(); ++i) {
+		wxString Link = i->Link;
+		wxString Descr = i->DescrText;
+		if (Link == findurl
+			&& (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
+
+			// found hyperlink to delete, repopulate GUI list
+			linklist.erase(i);
+			build_hyperlink_list();
+			break;
 			}
-			linknode = linknode->GetNext();
-		}
 	}
-	if (nodeToDelete)
-		hyperlinklist->DeleteNode(nodeToDelete);
+
 	m_scrolledWindowLinks->InvalidateBestSize();
 	m_scrolledWindowLinks->Layout();
 	sbSizerLinks->Layout();
 	event.Skip();
 }
 
-void TrackPropDlg::OnEditLink( wxCommandEvent& event )
+void TrackPropDlg::build_hyperlink_list()
+{
+	if (!m_pRoute)
+		return;
+
+	const Hyperlinks& linklist = m_pRoute->m_HyperlinkList;
+	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
+		add_hyperlink(i->DescrText, i->Link, m_pRoute->m_bIsInLayer);
+	}
+}
+
+void TrackPropDlg::OnEditLink(wxCommandEvent& event)
 {
 	wxString findurl = m_pEditedLink->GetURL();
 	wxString findlabel = m_pEditedLink->GetLabel();
 	m_pLinkProp->m_textCtrlLinkDescription->SetValue(findlabel);
 	m_pLinkProp->m_textCtrlLinkUrl->SetValue(findurl);
-	if (m_pLinkProp->ShowModal() == wxID_OK) {
-		int NbrOfLinks = m_pRoute->m_HyperlinkList->GetCount();
-		HyperlinkList *hyperlinklist = m_pRoute->m_HyperlinkList;
-		if( NbrOfLinks > 0 ) {
-			wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
-			while( linknode ) {
-				Hyperlink * link = linknode->GetData();
-				wxString Link = link->Link;
-				wxString Descr = link->DescrText;
-				if (Link == findurl && (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
-					link->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
-					link->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
-					wxHyperlinkCtrl * h = (wxHyperlinkCtrl*)m_scrolledWindowLinks->FindWindowByLabel(findlabel);
-					if (h) {
-						h->SetLabel(m_pLinkProp->m_textCtrlLinkDescription->GetValue());
-						h->SetURL(m_pLinkProp->m_textCtrlLinkUrl->GetValue());
-					}
-				}
-				linknode = linknode->GetNext();
+	if (m_pLinkProp->ShowModal() != wxID_OK) {
+		event.Skip();
+		return;
+	}
+
+	Hyperlinks& linklist = m_pRoute->m_HyperlinkList;
+	// FIXME: use find_if
+	for (Hyperlinks::iterator i = linklist.begin(); i != linklist.end(); ++i) {
+		if ((i->Link == findurl)
+			&& (i->DescrText == findlabel
+				|| ((i->Link == findlabel) && (i->DescrText == wxEmptyString)))) {
+			i->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
+			i->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
+			wxHyperlinkCtrl* h
+				= static_cast<wxHyperlinkCtrl*>(m_scrolledWindowLinks->FindWindowByLabel(findlabel));
+			if (h) {
+				h->SetLabel(m_pLinkProp->m_textCtrlLinkDescription->GetValue());
+				h->SetURL(m_pLinkProp->m_textCtrlLinkUrl->GetValue());
 			}
 		}
-
-		m_scrolledWindowLinks->InvalidateBestSize();
-		m_scrolledWindowLinks->Layout();
-		sbSizerLinks->Layout();
-		event.Skip();
 	}
+
+	m_scrolledWindowLinks->InvalidateBestSize();
+	m_scrolledWindowLinks->Layout();
+	sbSizerLinks->Layout();
 	event.Skip();
 }
 
@@ -839,6 +839,8 @@ void TrackPropDlg::OnAddLink(wxCommandEvent& event)
 		wxString desc = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
 		if (desc == wxEmptyString)
 			desc = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
+
+		// FIXME: code duplication
 		wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl(
 			m_scrolledWindowLinks, wxID_ANY, desc, m_pLinkProp->m_textCtrlLinkUrl->GetValue(),
 			wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
@@ -851,13 +853,12 @@ void TrackPropDlg::OnAddLink(wxCommandEvent& event)
 		bSizerLinks->Fit(m_scrolledWindowLinks);
 		this->Fit();
 
-		m_pRoute->m_HyperlinkList->push_back(
-			new Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
-						  m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxEmptyString));
+		m_pRoute->m_HyperlinkList.push_back(
+			Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
+					  m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxEmptyString));
 	}
 
 	sbSizerLinks->Layout();
-
 	event.Skip();
 }
 

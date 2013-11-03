@@ -23,9 +23,6 @@
 
 #include "Hyperlink.h"
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(HyperlinkList); // FIXME: replace this with Hyperlinks
-
 Hyperlink::Hyperlink(const wxString& desc, const wxString& link, const wxString& type)
 	: DescrText(desc)
 	, Link(link)

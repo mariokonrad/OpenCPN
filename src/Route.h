@@ -121,7 +121,7 @@ public:
 	double m_PlannedSpeed;
 	wxDateTime m_PlannedDeparture;
 	wxString m_TimeDisplayFormat;
-	HyperlinkList* m_HyperlinkList;
+	Hyperlinks m_HyperlinkList;
 
 	wxArrayString RoutePointGUIDList;
 	RoutePointList* pRoutePointList;

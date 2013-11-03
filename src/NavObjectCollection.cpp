@@ -77,7 +77,7 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 	wxDateTime dt;
 	RoutePoint* pWP = NULL;
 
-	HyperlinkList* linklist = NULL;
+	Hyperlinks linklist;
 
 	double rlat = wpt_node.attribute("lat").as_double();
 	double rlon = wpt_node.attribute("lon").as_double();
@@ -99,8 +99,6 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 			wxString HrefString;
 			wxString HrefTextString;
 			wxString HrefTypeString;
-			if (linklist == NULL)
-				linklist = new HyperlinkList;
 			HrefString = wxString::FromUTF8(child.first_attribute().value());
 
 			for (pugi::xml_node child1 = child.first_child(); child1;
@@ -113,7 +111,7 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 					HrefTypeString = wxString::FromUTF8(child1.first_child().value());
 			}
 
-			linklist->push_back(new Hyperlink(HrefTextString, HrefString, HrefTypeString));
+			linklist.push_back(Hyperlink(HrefTextString, HrefString, HrefTypeString));
 		} else if (!strcmp(pcn, "extensions")) {
 			// OpenCPN Extensions....
 			for (pugi::xml_node ext_child = child.first_child(); ext_child;
@@ -185,8 +183,7 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 		pWP->SetCreateTime(wxInvalidDateTime); // cause deferred timestamp parsing
 	}
 
-	if (linklist) {
-		delete pWP->m_HyperlinkList; // created in RoutePoint ctor
+	if (linklist.size()) {
 		pWP->m_HyperlinkList = linklist;
 	}
 
@@ -206,7 +203,7 @@ Track * NavObjectCollection::GPXLoadTrack1(
 	bool b_propviz = false;
 	bool b_viz = true;
 	Track* pTentTrack = NULL;
-	HyperlinkList* linklist = NULL;
+	Hyperlinks linklist;
 
 	wxString Name = wxString::FromUTF8(trk_node.name());
 	if (Name == _T ( "trk" )) {
@@ -250,8 +247,6 @@ Track * NavObjectCollection::GPXLoadTrack1(
 				wxString HrefString;
 				wxString HrefTextString;
 				wxString HrefTypeString;
-				if (linklist == NULL)
-					linklist = new HyperlinkList;
 				HrefString = wxString::FromUTF8(tschild.first_attribute().value());
 
 				for (pugi::xml_node child1 = tschild.first_child(); child1;
@@ -264,7 +259,7 @@ Track * NavObjectCollection::GPXLoadTrack1(
 						HrefTypeString = wxString::FromUTF8(child1.first_child().value());
 				}
 
-				linklist->push_back(new Hyperlink(HrefTextString, HrefString, HrefTypeString));
+				linklist.push_back(Hyperlink(HrefTextString, HrefString, HrefTypeString));
 			} else if (ChildName == _T("extensions")) {
 				for (pugi::xml_node ext_child = tschild.first_child(); ext_child;
 					 ext_child = ext_child.next_sibling()) {
@@ -323,8 +318,7 @@ Track * NavObjectCollection::GPXLoadTrack1(
 		}
 	}
 
-	if (linklist) {
-		delete pTentTrack->m_HyperlinkList; // created in RoutePoint ctor
+	if (linklist.size()) {
 		pTentTrack->m_HyperlinkList = linklist;
 	}
 	return pTentTrack;
@@ -343,7 +337,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 	bool b_propviz = false;
 	bool b_viz = true;
 	Route* pTentRoute = NULL;
-	HyperlinkList* linklist = NULL;
+	Hyperlinks linklist;
 
 	wxString Name = wxString::FromUTF8(wpt_node.name());
 	if (Name == _T("rte")) {
@@ -380,8 +374,6 @@ Route * NavObjectCollection::GPXLoadRoute1(
 				wxString HrefString;
 				wxString HrefTextString;
 				wxString HrefTypeString;
-				if (linklist == NULL)
-					linklist = new HyperlinkList;
 				HrefString = wxString::FromUTF8(tschild.first_attribute().value());
 
 				for (pugi::xml_node child1 = tschild.first_child(); child1;
@@ -394,7 +386,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 						HrefTypeString = wxString::FromUTF8(child1.first_child().value());
 				}
 
-				linklist->push_back(new Hyperlink(HrefTextString, HrefString, HrefTypeString));
+				linklist.push_back(Hyperlink(HrefTextString, HrefString, HrefTypeString));
 			} else if (ChildName == _T("extensions")) {
 				for (pugi::xml_node ext_child = tschild.first_child(); ext_child;
 					 ext_child = ext_child.next_sibling()) {
@@ -426,8 +418,8 @@ Route * NavObjectCollection::GPXLoadRoute1(
 						ParseGPXDateTime(pTentRoute->m_PlannedDeparture,
 										 wxString::FromUTF8(ext_child.first_child().value()));
 					} else if (ext_name == _T("opencpn:time_display")) {
-						pTentRoute->m_TimeDisplayFormat,
-							wxString::FromUTF8(ext_child.first_child().value());
+						pTentRoute->m_TimeDisplayFormat
+							= wxString::FromUTF8(ext_child.first_child().value());
 					}
 				} // extensions
 			}
@@ -450,8 +442,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 			pTentRoute->SetListed(false);
 		}
 	}
-	if (linklist) {
-		delete pTentRoute->m_HyperlinkList; // created in RoutePoint ctor
+	if (linklist.size()) {
 		pTentRoute->m_HyperlinkList = linklist;
 	}
 	return pTentRoute;
@@ -503,27 +494,24 @@ bool NavObjectCollection::GPXCreateWpt(
 
 	// Hyperlinks
 	if (flags & OUT_HYPERLINKS) {
-		HyperlinkList* linklist = pr->m_HyperlinkList;
-		if (linklist && linklist->GetCount()) {
-			for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
-				const Hyperlink* link = *i;
+		const Hyperlinks& linklist = pr->m_HyperlinkList;
+		for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
 
-				pugi::xml_node child_link = node.append_child("link");
-				wxCharBuffer buffer = link->Link.ToUTF8();
-				if (buffer.data())
-					child_link.append_attribute("href") = buffer.data();
+			pugi::xml_node child_link = node.append_child("link");
+			wxCharBuffer buffer = i->Link.ToUTF8();
+			if (buffer.data())
+				child_link.append_attribute("href") = buffer.data();
 
-				buffer = link->DescrText.ToUTF8();
-				if (buffer.data()) {
-					child = child_link.append_child("text");
-					child.append_child(pugi::node_pcdata).set_value(buffer.data());
-				}
+			buffer = i->DescrText.ToUTF8();
+			if (buffer.data()) {
+				child = child_link.append_child("text");
+				child.append_child(pugi::node_pcdata).set_value(buffer.data());
+			}
 
-				buffer = link->LType.ToUTF8();
-				if (buffer.data()) {
-					child = child_link.append_child("type");
-					child.append_child(pugi::node_pcdata).set_value(buffer.data());
-				}
+			buffer = i->LType.ToUTF8();
+			if (buffer.data()) {
+				child = child_link.append_child("type");
+				child.append_child(pugi::node_pcdata).set_value(buffer.data());
 			}
 		}
 	}
@@ -598,27 +586,24 @@ bool NavObjectCollection::GPXCreateTrk(
 	}
 
 	// Hyperlinks
-	HyperlinkList* linklist = pRoute->m_HyperlinkList;
-	if (linklist && linklist->GetCount()) {
-		for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
-			const Hyperlink* link = *i;
+	const Hyperlinks& linklist = pRoute->m_HyperlinkList;
+	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
 
-			pugi::xml_node child_link = node.append_child("link");
-			wxCharBuffer buffer = link->Link.ToUTF8();
-			if (buffer.data())
-				child_link.append_attribute("href") = buffer.data();
+		pugi::xml_node child_link = node.append_child("link");
+		wxCharBuffer buffer = i->Link.ToUTF8();
+		if (buffer.data())
+			child_link.append_attribute("href") = buffer.data();
 
-			buffer = link->DescrText.ToUTF8();
-			if (buffer.data()) {
-				child = child_link.append_child("text");
-				child.append_child(pugi::node_pcdata).set_value(buffer.data());
-			}
+		buffer = i->DescrText.ToUTF8();
+		if (buffer.data()) {
+			child = child_link.append_child("text");
+			child.append_child(pugi::node_pcdata).set_value(buffer.data());
+		}
 
-			buffer = link->LType.ToUTF8();
-			if (buffer.data()) {
-				child = child_link.append_child("type");
-				child.append_child(pugi::node_pcdata).set_value(buffer.data());
-			}
+		buffer = i->LType.ToUTF8();
+		if (buffer.data()) {
+			child = child_link.append_child("type");
+			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
 	}
 
@@ -710,27 +695,24 @@ bool NavObjectCollection::GPXCreateRoute(
 	}
 
 	// Hyperlinks
-	HyperlinkList* linklist = pRoute->m_HyperlinkList;
-	if (linklist && linklist->GetCount()) {
-		for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
-			const Hyperlink* link = *i;
+	const Hyperlinks& linklist = pRoute->m_HyperlinkList;
+	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
 
-			pugi::xml_node child_link = node.append_child("link");
-			wxCharBuffer buffer = link->Link.ToUTF8();
-			if (buffer.data())
-				child_link.append_attribute("href") = buffer.data();
+		pugi::xml_node child_link = node.append_child("link");
+		wxCharBuffer buffer = i->Link.ToUTF8();
+		if (buffer.data())
+			child_link.append_attribute("href") = buffer.data();
 
-			buffer = link->DescrText.ToUTF8();
-			if (buffer.data()) {
-				child = child_link.append_child("text");
-				child.append_child(pugi::node_pcdata).set_value(buffer.data());
-			}
+		buffer = i->DescrText.ToUTF8();
+		if (buffer.data()) {
+			child = child_link.append_child("text");
+			child.append_child(pugi::node_pcdata).set_value(buffer.data());
+		}
 
-			buffer = link->LType.ToUTF8();
-			if (buffer.data()) {
-				child = child_link.append_child("type");
-				child.append_child(pugi::node_pcdata).set_value(buffer.data());
-			}
+		buffer = i->LType.ToUTF8();
+		if (buffer.data()) {
+			child = child_link.append_child("type");
+			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
 	}
 

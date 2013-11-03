@@ -407,7 +407,6 @@ void MarkInfoDef::hyperlink17OnContextMenu(wxMouseEvent & event)
 MarkInfoImpl::MarkInfoImpl(wxWindow* parent, wxWindowID id, const wxString& title,
 						   const wxPoint& pos, const wxSize& size, long style)
 	: MarkInfoDef(parent, id, title, pos, size, style)
-	, m_pMyLinkList(NULL)
 {
 	m_pLinkProp = new LinkPropDialog(this);
 	m_staticTextGpx->Show(false);
@@ -523,12 +522,10 @@ void MarkInfoImpl::build_hyperlink_list()
 {
 	if (!m_pRoutePoint)
 		return;
-	if (!m_pRoutePoint->m_HyperlinkList)
-		return;
 
-	const HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
-	for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
-		add_hyperlink((*i)->DescrText, (*i)->Link, m_pRoutePoint->m_bIsInLayer);
+	const Hyperlinks& linklist = m_pRoutePoint->m_HyperlinkList;
+	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
+		add_hyperlink(i->DescrText, i->Link, m_pRoutePoint->m_bIsInLayer);
 	}
 }
 
@@ -559,18 +556,7 @@ void MarkInfoImpl::SetRoutePoint(RoutePoint* pRP)
 	m_bShowName_save = m_pRoutePoint->m_bShowName;
 	m_bIsVisible_save = m_pRoutePoint->m_bIsVisible;
 
-	if (m_pMyLinkList)
-		delete m_pMyLinkList; // FIXME: memory leak
-	m_pMyLinkList = new HyperlinkList();
-
-	// copy hyperlinks
-	if (m_pRoutePoint->m_HyperlinkList->size() > 0) {
-		const HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
-		for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
-			const Hyperlink* link = *i;
-			m_pMyLinkList->push_back(new Hyperlink(*link));
-		}
-	}
+	m_pMyLinkList = m_pRoutePoint->m_HyperlinkList;
 }
 
 void MarkInfoImpl::hyperlinkContextMenu(wxMouseEvent& event)
@@ -590,19 +576,17 @@ void MarkInfoImpl::OnDeleteLink(wxCommandEvent& event)
 	m_scrolledWindowLinks->DestroyChildren();
 
 	// FIXME: use find_if
-	HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
-	if (linklist) {
-		for (HyperlinkList::iterator i = linklist->begin(); i != linklist->end(); ++i) {
-			wxString Link = (*i)->Link;
-			wxString Descr = (*i)->DescrText;
-			if (Link == findurl
-				&& (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
+	Hyperlinks& linklist = m_pRoutePoint->m_HyperlinkList;
+	for (Hyperlinks::iterator i = linklist.begin(); i != linklist.end(); ++i) {
+		wxString Link = i->Link;
+		wxString Descr = i->DescrText;
+		if (Link == findurl
+			&& (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
 
-				// found hyperlink to delete, repopulate GUI list
-				linklist->erase(i);
-				build_hyperlink_list();
-				break;
-			}
+			// found hyperlink to delete, repopulate GUI list
+			linklist.erase(i);
+			build_hyperlink_list();
+			break;
 		}
 	}
 
@@ -623,21 +607,19 @@ void MarkInfoImpl::OnEditLink(wxCommandEvent& event)
 		return;
 	}
 
-	HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
-	if (linklist && linklist->size() > 0) {
-		// FIXME: use find_if
-		for (HyperlinkList::iterator i = linklist->begin(); i != linklist->end(); ++i) {
-			Hyperlink* link = *i;
-			if (link->Link == findurl
-				&& (link->DescrText == findlabel || (link->Link == findlabel && link->DescrText == wxEmptyString))) {
-				link->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
-				link->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
-				wxHyperlinkCtrl* h
-					= (wxHyperlinkCtrl*)m_scrolledWindowLinks->FindWindowByLabel(findlabel);
-				if (h) {
-					h->SetLabel(m_pLinkProp->m_textCtrlLinkDescription->GetValue());
-					h->SetURL(m_pLinkProp->m_textCtrlLinkUrl->GetValue());
-				}
+	Hyperlinks& linklist = m_pRoutePoint->m_HyperlinkList;
+	// FIXME: use find_if
+	for (Hyperlinks::iterator i = linklist.begin(); i != linklist.end(); ++i) {
+		if ((i->Link == findurl)
+			&& ((i->DescrText == findlabel)
+				|| ((i->Link == findlabel) && (i->DescrText == wxEmptyString)))) {
+			i->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
+			i->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
+			wxHyperlinkCtrl* h
+				= static_cast<wxHyperlinkCtrl*>(m_scrolledWindowLinks->FindWindowByLabel(findlabel));
+			if (h) {
+				h->SetLabel(m_pLinkProp->m_textCtrlLinkDescription->GetValue());
+				h->SetURL(m_pLinkProp->m_textCtrlLinkUrl->GetValue());
 			}
 		}
 	}
@@ -661,9 +643,9 @@ void MarkInfoImpl::OnAddLink(wxCommandEvent& event)
 		bSizerLinks->Fit(m_scrolledWindowLinks);
 		this->Fit();
 
-		m_pRoutePoint->m_HyperlinkList->push_back(
-			new Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
-						  m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxEmptyString));
+		m_pRoutePoint->m_HyperlinkList.push_back(
+			Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
+					  m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxEmptyString));
 	}
 	sbSizerLinks->Layout();
 	event.Skip();
@@ -766,10 +748,7 @@ void MarkInfoImpl::OnMarkInfoOKClick(wxCommandEvent& event)
 		cc1->RefreshRect(m_pRoutePoint->CurrentRect_in_DC.Inflate(1000, 100), false);
 	}
 	Show(false);
-	if (m_pMyLinkList) {
-		delete m_pMyLinkList; // FIXME: memory leak
-		m_pMyLinkList = NULL;
-	}
+	m_pMyLinkList.clear();
 
 	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 		pRouteManagerDialog->UpdateWptListCtrl();
@@ -786,21 +765,11 @@ void MarkInfoImpl::OnMarkInfoCancelClick(wxCommandEvent& event)
 		m_pRoutePoint->m_IconName = m_IconName_save;
 		m_pRoutePoint->ReLoadIcon();
 
-		m_pRoutePoint->m_HyperlinkList->Clear(); // FIXME: memory leak
-
-		// copy all hyperlinks
-		if (m_pMyLinkList->size() > 0) {
-			for (HyperlinkList::const_iterator i = m_pMyLinkList->begin();
-				 i != m_pMyLinkList->end(); ++i) {
-				const Hyperlink* link = *i;
-				m_pRoutePoint->m_HyperlinkList->push_back(new Hyperlink(*link));
-			}
-		}
+		m_pRoutePoint->m_HyperlinkList = m_pMyLinkList;
 	}
 
 	Show(false);
-	delete m_pMyLinkList; // FIXME: memory leak
-	m_pMyLinkList = NULL;
+	m_pMyLinkList.clear();
 	event.Skip();
 }
 

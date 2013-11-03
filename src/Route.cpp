@@ -85,7 +85,6 @@ Route::Route(void)
 	m_GUID = pWayPointMan->CreateGUID(NULL);
 	m_ArrivalRadius = g_n_arrival_circle_radius; // nautical miles
 	RBBox.Reset();
-	m_HyperlinkList = new HyperlinkList;
 }
 
 Route::~Route(void)
@@ -234,13 +233,8 @@ void Route::CloneAddedRoutePoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetX;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetY;
 	ptargetpoint->SetCreateTime(psourcepoint->GetCreateTime());
-	ptargetpoint->m_HyperlinkList = new HyperlinkList;
 
-	// move all hyperlinks from source to target point (links are appended to target points hyperlink list)
-	if (!psourcepoint->m_HyperlinkList->IsEmpty()) {
-		HyperlinkList::iterator iter = psourcepoint->m_HyperlinkList->begin();
-		psourcepoint->m_HyperlinkList->splice(iter, *(ptargetpoint->m_HyperlinkList));
-	}
+	ptargetpoint->m_HyperlinkList = psourcepoint->m_HyperlinkList;
 }
 
 void Route::CloneAddedTrackPoint(RoutePoint* ptargetpoint, RoutePoint* psourcepoint)
@@ -260,7 +254,7 @@ void Route::CloneAddedTrackPoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetX;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetY;
 	ptargetpoint->SetCreateTime(psourcepoint->GetCreateTime());
-	ptargetpoint->m_HyperlinkList = new HyperlinkList;
+	ptargetpoint->m_HyperlinkList.clear();
 }
 
 void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc)

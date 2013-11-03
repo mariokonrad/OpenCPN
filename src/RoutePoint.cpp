@@ -74,7 +74,6 @@ RoutePoint::RoutePoint()
 	, m_MarkName(wxEmptyString)
 {
 	m_CreateTimeX = wxDateTime::Now();
-	m_HyperlinkList = new HyperlinkList;
 	m_GUID = pWayPointMan->CreateGUID(this);
 	ReLoadIcon();
 }
@@ -108,7 +107,6 @@ RoutePoint::RoutePoint(RoutePoint* orig)
 	m_MarkDescription = orig->m_MarkDescription;
 	m_btemp = orig->m_btemp;
 
-	m_HyperlinkList = new HyperlinkList;
 	m_IconName = orig->m_IconName;
 	ReLoadIcon();
 
@@ -153,8 +151,6 @@ RoutePoint::RoutePoint(double lat, double lon, const wxString& icon_ident, const
 	else if (m_lon > 180.0)
 		m_lon -= 360.0;
 
-	m_HyperlinkList = new HyperlinkList;
-
 	if (!pGUID.IsEmpty())
 		m_GUID = pGUID;
 	else
@@ -185,12 +181,8 @@ RoutePoint::~RoutePoint(void)
 	if (pWayPointMan)
 		pWayPointMan->remove(this);
 
-	if (m_HyperlinkList) {
-		for (HyperlinkList::iterator i = m_HyperlinkList->begin(); i != m_HyperlinkList->end(); ++i)
-			delete *i;
-		delete m_HyperlinkList;
-		m_HyperlinkList = NULL;
-	}
+
+	m_HyperlinkList.clear();
 }
 
 wxDateTime RoutePoint::GetCreateTime() // FIXME: fix this brain-dead interface

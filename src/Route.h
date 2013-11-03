@@ -24,13 +24,10 @@
 #ifndef __ROUTE_H__
 #define __ROUTE_H__
 
-#include <wx/object.h>
 #include <wx/list.h>
 
 #include <RoutePoint.h>
 #include <geo/BoundingBox.h>
-
-#define STYLE_UNDEFINED -1
 
 #define RTE_TIME_DISP_UTC _T("UTC")
 #define RTE_TIME_DISP_PC _T("PC")
@@ -40,10 +37,11 @@
 class ocpnDC;
 class ViewPort;
 
-class Route : public wxObject
+class Route
 {
 public:
 	static const double DEFAULT_SPEED;
+	static const int STYLE_UNDEFINED;
 
 public:
 	Route(void);

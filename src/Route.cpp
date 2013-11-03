@@ -51,6 +51,7 @@ extern Multiplexer* g_pMUX;
 extern double g_n_arrival_circle_radius;
 
 const double Route::DEFAULT_SPEED = 5.0;
+const int Route::STYLE_UNDEFINED = -1;
 
 Route::Route(void)
 	: m_bRtIsSelected(false)

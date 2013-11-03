@@ -646,12 +646,12 @@ bool NavObjectCollection::GPXCreateTrk(
 		}
 	}
 
-	if (pRoute->m_width != STYLE_UNDEFINED || pRoute->m_style != STYLE_UNDEFINED) {
+	if (pRoute->m_width != Route::STYLE_UNDEFINED || pRoute->m_style != Route::STYLE_UNDEFINED) {
 		child = child_ext.append_child("opencpn:style");
 
-		if (pRoute->m_width != STYLE_UNDEFINED)
+		if (pRoute->m_width != Route::STYLE_UNDEFINED)
 			child.append_attribute("width") = pRoute->m_width;
-		if (pRoute->m_style != STYLE_UNDEFINED)
+		if (pRoute->m_style != Route::STYLE_UNDEFINED)
 			child.append_attribute("style") = pRoute->m_style;
 	}
 
@@ -779,12 +779,12 @@ bool NavObjectCollection::GPXCreateRoute(
 		child.append_child(pugi::node_pcdata).set_value(pRoute->m_TimeDisplayFormat.mb_str());
 	}
 
-	if (pRoute->m_width != STYLE_UNDEFINED || pRoute->m_style != STYLE_UNDEFINED) {
+	if (pRoute->m_width != Route::STYLE_UNDEFINED || pRoute->m_style != Route::STYLE_UNDEFINED) {
 		child = child_ext.append_child("opencpn:style");
 
-		if (pRoute->m_width != STYLE_UNDEFINED)
+		if (pRoute->m_width != Route::STYLE_UNDEFINED)
 			child.append_attribute("width") = pRoute->m_width;
-		if (pRoute->m_style != STYLE_UNDEFINED)
+		if (pRoute->m_style != Route::STYLE_UNDEFINED)
 			child.append_attribute("style") = pRoute->m_style;
 	}
 

@@ -60,329 +60,341 @@ MarkInfoDef::MarkInfoDef(
 	wstyle |= wxSTAY_ON_TOP;
 #endif
 
-	Create( parent, id, title, pos, size, wstyle );
+	Create(parent, id, title, pos, size, wstyle);
 
-	SetSizeHints( wxDefaultSize, wxDefaultSize );
+	SetSizeHints(wxDefaultSize, wxDefaultSize);
 
 	wxBoxSizer* bSizer1;
-	bSizer1 = new wxBoxSizer( wxVERTICAL );
+	bSizer1 = new wxBoxSizer(wxVERTICAL);
 
-	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
-	m_panelBasicProperties = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition,
-			wxDefaultSize, wxTAB_TRAVERSAL );
+	m_notebookProperties = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
+	m_panelBasicProperties = new wxPanel(m_notebookProperties, wxID_ANY, wxDefaultPosition,
+										 wxDefaultSize, wxTAB_TRAVERSAL);
 	wxBoxSizer* bSizerBasicProperties;
-	bSizerBasicProperties = new wxBoxSizer( wxVERTICAL );
+	bSizerBasicProperties = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sbSizerProperties;
 	sbSizerProperties = new wxStaticBoxSizer(
-			new wxStaticBox( m_panelBasicProperties, wxID_ANY, _("Properties") ), wxVERTICAL );
+		new wxStaticBox(m_panelBasicProperties, wxID_ANY, _("Properties")), wxVERTICAL);
 
 	wxBoxSizer* bSizerInnerProperties;
-	bSizerInnerProperties = new wxBoxSizer( wxHORIZONTAL );
+	bSizerInnerProperties = new wxBoxSizer(wxHORIZONTAL);
 
-	m_bitmapIcon = new wxStaticBitmap( m_panelBasicProperties, wxID_ANY, wxNullBitmap,
-			wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerInnerProperties->Add( m_bitmapIcon, 0, wxALL, 5 );
+	m_bitmapIcon = new wxStaticBitmap(m_panelBasicProperties, wxID_ANY, wxNullBitmap,
+									  wxDefaultPosition, wxDefaultSize, 0);
+	bSizerInnerProperties->Add(m_bitmapIcon, 0, wxALL, 5);
 
 	wxBoxSizer* bSizerTextProperties;
-	bSizerTextProperties = new wxBoxSizer( wxVERTICAL );
+	bSizerTextProperties = new wxBoxSizer(wxVERTICAL);
 
-	m_staticTextLayer = new wxStaticText( m_panelBasicProperties, wxID_ANY,
-			_("This waypoint is part of a layer and can't be edited"), wxDefaultPosition,
-			wxDefaultSize, 0 );
-	m_staticTextLayer->Wrap( -1 );
-	m_staticTextLayer->Enable( false );
+	m_staticTextLayer = new wxStaticText(m_panelBasicProperties, wxID_ANY,
+										 _("This waypoint is part of a layer and can't be edited"),
+										 wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextLayer->Wrap(-1);
+	m_staticTextLayer->Enable(false);
 
-	bSizerTextProperties->Add( m_staticTextLayer, 0, wxALL, 5 );
+	bSizerTextProperties->Add(m_staticTextLayer, 0, wxALL, 5);
 
 	wxBoxSizer* bSizerName;
-	bSizerName = new wxBoxSizer( wxHORIZONTAL );
+	bSizerName = new wxBoxSizer(wxHORIZONTAL);
 
-	m_staticTextName = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Name"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextName->Wrap( -1 );
-	bSizerName->Add( m_staticTextName, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
+	m_staticTextName = new wxStaticText(m_panelBasicProperties, wxID_ANY, _("Name"),
+										wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextName->Wrap(-1);
+	bSizerName->Add(m_staticTextName, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
 	wxBoxSizer* bSizerNameValue;
-	bSizerNameValue = new wxBoxSizer( wxVERTICAL );
+	bSizerNameValue = new wxBoxSizer(wxVERTICAL);
 
-	m_textName = new wxTextCtrl( m_panelBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition,
-			wxDefaultSize, 0 );
-	bSizerNameValue->Add( m_textName, 0, wxALL | wxEXPAND, 5 );
+	m_textName = new wxTextCtrl(m_panelBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition,
+								wxDefaultSize, 0);
+	bSizerNameValue->Add(m_textName, 0, wxALL | wxEXPAND, 5);
 
-	bSizerName->Add( bSizerNameValue, 1, wxEXPAND, 5 );
+	bSizerName->Add(bSizerNameValue, 1, wxEXPAND, 5);
 
-	bSizerTextProperties->Add( bSizerName, 0, wxEXPAND, 5 );
+	bSizerTextProperties->Add(bSizerName, 0, wxEXPAND, 5);
 
 	wxBoxSizer* bSizer8;
-	bSizer8 = new wxBoxSizer( wxHORIZONTAL );
+	bSizer8 = new wxBoxSizer(wxHORIZONTAL);
 
-	m_checkBoxShowName = new wxCheckBox( m_panelBasicProperties, wxID_ANY, _("Show name"),
-			wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	bSizer8->Add( m_checkBoxShowName, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
+	m_checkBoxShowName = new wxCheckBox(m_panelBasicProperties, wxID_ANY, _("Show name"),
+										wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT);
+	bSizer8->Add(m_checkBoxShowName, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
-	m_staticTextIcon = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Icon"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextIcon->Wrap( -1 );
-	bSizer8->Add( m_staticTextIcon, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
+	m_staticTextIcon = new wxStaticText(m_panelBasicProperties, wxID_ANY, _("Icon"),
+										wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextIcon->Wrap(-1);
+	bSizer8->Add(m_staticTextIcon, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
-	m_bcomboBoxIcon = new wxBitmapComboBox( m_panelBasicProperties, wxID_ANY, _("Combo!"),
-			wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
-	bSizer8->Add( m_bcomboBoxIcon, 1, wxALL, 5 );
+	m_bcomboBoxIcon
+		= new wxBitmapComboBox(m_panelBasicProperties, wxID_ANY, _("Combo!"), wxDefaultPosition,
+							   wxDefaultSize, 0, NULL, wxCB_READONLY);
+	bSizer8->Add(m_bcomboBoxIcon, 1, wxALL, 5);
 
-	bSizerTextProperties->Add( bSizer8, 0, wxEXPAND, 5 );
+	bSizerTextProperties->Add(bSizer8, 0, wxEXPAND, 5);
 
 	wxBoxSizer* bSizerLatLon;
-	bSizerLatLon = new wxBoxSizer( wxHORIZONTAL );
+	bSizerLatLon = new wxBoxSizer(wxHORIZONTAL);
 
-	m_staticTextLatitude = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Latitude"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextLatitude->Wrap( -1 );
-	bSizerLatLon->Add( m_staticTextLatitude, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
+	m_staticTextLatitude = new wxStaticText(m_panelBasicProperties, wxID_ANY, _("Latitude"),
+											wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextLatitude->Wrap(-1);
+	bSizerLatLon->Add(m_staticTextLatitude, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
-	m_textLatitude = new wxTextCtrl( m_panelBasicProperties, wxID_ANY, wxEmptyString,
-			wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerLatLon->Add( m_textLatitude, 1, wxALL, 5 );
+	m_textLatitude = new wxTextCtrl(m_panelBasicProperties, wxID_ANY, wxEmptyString,
+									wxDefaultPosition, wxDefaultSize, 0);
+	bSizerLatLon->Add(m_textLatitude, 1, wxALL, 5);
 
-	m_staticTextLongitude = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Longitude"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextLongitude->Wrap( -1 );
-	bSizerLatLon->Add( m_staticTextLongitude, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
+	m_staticTextLongitude = new wxStaticText(m_panelBasicProperties, wxID_ANY, _("Longitude"),
+											 wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextLongitude->Wrap(-1);
+	bSizerLatLon->Add(m_staticTextLongitude, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
-	m_textLongitude = new wxTextCtrl( m_panelBasicProperties, wxID_ANY, wxEmptyString,
-			wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerLatLon->Add( m_textLongitude, 1, wxALL, 5 );
+	m_textLongitude = new wxTextCtrl(m_panelBasicProperties, wxID_ANY, wxEmptyString,
+									 wxDefaultPosition, wxDefaultSize, 0);
+	bSizerLatLon->Add(m_textLongitude, 1, wxALL, 5);
 
-	bSizerTextProperties->Add( bSizerLatLon, 0, wxEXPAND, 5 );
+	bSizerTextProperties->Add(bSizerLatLon, 0, wxEXPAND, 5);
 
-	m_staticTextDescription = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Description"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextDescription->Wrap( -1 );
-	bSizerTextProperties->Add( m_staticTextDescription, 0, wxALL, 5 );
+	m_staticTextDescription = new wxStaticText(m_panelBasicProperties, wxID_ANY, _("Description"),
+											   wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextDescription->Wrap(-1);
+	bSizerTextProperties->Add(m_staticTextDescription, 0, wxALL, 5);
 
 	wxBoxSizer* bSizer14;
-	bSizer14 = new wxBoxSizer( wxHORIZONTAL );
+	bSizer14 = new wxBoxSizer(wxHORIZONTAL);
 
-	m_textDescription = new wxTextCtrl( m_panelBasicProperties, wxID_ANY, wxEmptyString,
-			wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
-	m_textDescription->SetMinSize( wxSize( -1, 60 ) );
+	m_textDescription = new wxTextCtrl(m_panelBasicProperties, wxID_ANY, wxEmptyString,
+									   wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+	m_textDescription->SetMinSize(wxSize(-1, 60));
 
-	bSizer14->Add( m_textDescription, 1, wxALL | wxEXPAND, 5 );
+	bSizer14->Add(m_textDescription, 1, wxALL | wxEXPAND, 5);
 
-	m_buttonExtDescription = new wxButton( m_panelBasicProperties, wxID_ANY, _("..."),
-			wxDefaultPosition, wxSize( 20, -1 ), 0 );
-	bSizer14->Add( m_buttonExtDescription, 0, wxALL | wxEXPAND, 5 );
+	m_buttonExtDescription = new wxButton(m_panelBasicProperties, wxID_ANY, _("..."),
+										  wxDefaultPosition, wxSize(20, -1), 0);
+	bSizer14->Add(m_buttonExtDescription, 0, wxALL | wxEXPAND, 5);
 
-	bSizerTextProperties->Add( bSizer14, 1, wxEXPAND, 5 );
+	bSizerTextProperties->Add(bSizer14, 1, wxEXPAND, 5);
 
-	bSizerInnerProperties->Add( bSizerTextProperties, 1, wxEXPAND, 5 );
+	bSizerInnerProperties->Add(bSizerTextProperties, 1, wxEXPAND, 5);
 
-	sbSizerProperties->Add( bSizerInnerProperties, 1, wxEXPAND, 5 );
+	sbSizerProperties->Add(bSizerInnerProperties, 1, wxEXPAND, 5);
 
-	bSizerBasicProperties->Add( sbSizerProperties, 3, wxALL | wxEXPAND, 5 );
+	bSizerBasicProperties->Add(sbSizerProperties, 3, wxALL | wxEXPAND, 5);
 
 	sbSizerLinks = new wxStaticBoxSizer(
-			new wxStaticBox( m_panelBasicProperties, wxID_ANY, _("Links") ), wxVERTICAL );
+		new wxStaticBox(m_panelBasicProperties, wxID_ANY, _("Links")), wxVERTICAL);
 
-	m_scrolledWindowLinks = new wxScrolledWindow( m_panelBasicProperties, wxID_ANY,
-			wxDefaultPosition, wxDefaultSize, wxHSCROLL | wxVSCROLL );
-	m_scrolledWindowLinks->SetScrollRate( 5, 5 );
-	bSizerLinks = new wxBoxSizer( wxVERTICAL );
+	m_scrolledWindowLinks = new wxScrolledWindow(
+		m_panelBasicProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL | wxVSCROLL);
+	m_scrolledWindowLinks->SetScrollRate(5, 5);
+	bSizerLinks = new wxBoxSizer(wxVERTICAL);
 
-	m_hyperlink17 = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, _("wxFB Website"),
-			wxT("file:///C:\\ProgramData\\opencpn\\opencpn.log"), wxDefaultPosition,
-			wxDefaultSize, wxHL_DEFAULT_STYLE );
+	m_hyperlink17 = new wxHyperlinkCtrl(m_scrolledWindowLinks, wxID_ANY, _("wxFB Website"),
+										wxT("file:///C:\\ProgramData\\opencpn\\opencpn.log"),
+										wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
 	m_menuLink = new wxMenu();
 	wxMenuItem* m_menuItemDelete;
-	m_menuItemDelete = new wxMenuItem( m_menuLink, wxID_ANY, wxString( _("Delete") ), wxEmptyString,
-			wxITEM_NORMAL );
-	m_menuLink->Append( m_menuItemDelete );
+	m_menuItemDelete
+		= new wxMenuItem(m_menuLink, wxID_ANY, wxString(_("Delete")), wxEmptyString, wxITEM_NORMAL);
+	m_menuLink->Append(m_menuItemDelete);
 
 	wxMenuItem* m_menuItemEdit;
-	m_menuItemEdit = new wxMenuItem( m_menuLink, wxID_ANY, wxString( _("Edit") ), wxEmptyString,
-			wxITEM_NORMAL );
-	m_menuLink->Append( m_menuItemEdit );
+	m_menuItemEdit
+		= new wxMenuItem(m_menuLink, wxID_ANY, wxString(_("Edit")), wxEmptyString, wxITEM_NORMAL);
+	m_menuLink->Append(m_menuItemEdit);
 
 	wxMenuItem* m_menuItemAdd;
-	m_menuItemAdd = new wxMenuItem( m_menuLink, wxID_ANY, wxString( _("Add new") ), wxEmptyString,
-			wxITEM_NORMAL );
-	m_menuLink->Append( m_menuItemAdd );
+	m_menuItemAdd = new wxMenuItem(m_menuLink, wxID_ANY, wxString(_("Add new")), wxEmptyString,
+								   wxITEM_NORMAL);
+	m_menuLink->Append(m_menuItemAdd);
 
-	m_hyperlink17->Connect( wxEVT_RIGHT_DOWN,
-			wxMouseEventHandler( MarkInfoDef::hyperlink17OnContextMenu), NULL, this );
+	m_hyperlink17->Connect(wxEVT_RIGHT_DOWN,
+						   wxMouseEventHandler(MarkInfoDef::hyperlink17OnContextMenu), NULL, this);
 
-	bSizerLinks->Add( m_hyperlink17, 0, wxALL, 5 );
+	bSizerLinks->Add(m_hyperlink17, 0, wxALL, 5);
 
-	m_scrolledWindowLinks->SetSizer( bSizerLinks );
+	m_scrolledWindowLinks->SetSizer(bSizerLinks);
 	m_scrolledWindowLinks->Layout();
-	bSizerLinks->Fit( m_scrolledWindowLinks );
-	sbSizerLinks->Add( m_scrolledWindowLinks, 1, wxEXPAND | wxALL, 5 );
+	bSizerLinks->Fit(m_scrolledWindowLinks);
+	sbSizerLinks->Add(m_scrolledWindowLinks, 1, wxEXPAND | wxALL, 5);
 
 	wxBoxSizer* bSizer9;
-	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
+	bSizer9 = new wxBoxSizer(wxHORIZONTAL);
 
-	m_buttonAddLink = new wxButton( m_panelBasicProperties, wxID_ANY, _("Add"), wxDefaultPosition,
-			wxDefaultSize, wxBU_EXACTFIT );
-	bSizer9->Add( m_buttonAddLink, 0, wxALL, 5 );
+	m_buttonAddLink = new wxButton(m_panelBasicProperties, wxID_ANY, _("Add"), wxDefaultPosition,
+								   wxDefaultSize, wxBU_EXACTFIT);
+	bSizer9->Add(m_buttonAddLink, 0, wxALL, 5);
 
-	m_toggleBtnEdit = new wxToggleButton( m_panelBasicProperties, wxID_ANY, _("Edit"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer9->Add( m_toggleBtnEdit, 0, wxALL, 5 );
+	m_toggleBtnEdit = new wxToggleButton(m_panelBasicProperties, wxID_ANY, _("Edit"),
+										 wxDefaultPosition, wxDefaultSize, 0);
+	bSizer9->Add(m_toggleBtnEdit, 0, wxALL, 5);
 
-	m_staticTextEditEnabled = new wxStaticText( m_panelBasicProperties, wxID_ANY,
-			_("Links are opened in the default browser."), wxDefaultPosition, wxDefaultSize,
-			0 );
-	m_staticTextEditEnabled->Wrap( -1 );
-	bSizer9->Add( m_staticTextEditEnabled, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
+	m_staticTextEditEnabled = new wxStaticText(m_panelBasicProperties, wxID_ANY,
+											   _("Links are opened in the default browser."),
+											   wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextEditEnabled->Wrap(-1);
+	bSizer9->Add(m_staticTextEditEnabled, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
-	sbSizerLinks->Add( bSizer9, 0, wxEXPAND, 5 );
+	sbSizerLinks->Add(bSizer9, 0, wxEXPAND, 5);
 
-	bSizerBasicProperties->Add( sbSizerLinks, 2, wxALL | wxEXPAND, 5 );
+	bSizerBasicProperties->Add(sbSizerLinks, 2, wxALL | wxEXPAND, 5);
 
-	m_panelBasicProperties->SetSizer( bSizerBasicProperties );
+	m_panelBasicProperties->SetSizer(bSizerBasicProperties);
 	m_panelBasicProperties->Layout();
-	bSizerBasicProperties->Fit( m_panelBasicProperties );
-	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), true );
-	m_panelDescription = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition,
-			wxDefaultSize, wxTAB_TRAVERSAL );
+	bSizerBasicProperties->Fit(m_panelBasicProperties);
+	m_notebookProperties->AddPage(m_panelBasicProperties, _("Basic"), true);
+	m_panelDescription = new wxPanel(m_notebookProperties, wxID_ANY, wxDefaultPosition,
+									 wxDefaultSize, wxTAB_TRAVERSAL);
 	wxBoxSizer* bSizer15;
-	bSizer15 = new wxBoxSizer( wxVERTICAL );
+	bSizer15 = new wxBoxSizer(wxVERTICAL);
 
-	m_textCtrlExtDescription = new wxTextCtrl( m_panelDescription, wxID_ANY, wxEmptyString,
-			wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
-	bSizer15->Add( m_textCtrlExtDescription, 1, wxALL | wxEXPAND, 5 );
+	m_textCtrlExtDescription = new wxTextCtrl(m_panelDescription, wxID_ANY, wxEmptyString,
+											  wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+	bSizer15->Add(m_textCtrlExtDescription, 1, wxALL | wxEXPAND, 5);
 
-	m_panelDescription->SetSizer( bSizer15 );
+	m_panelDescription->SetSizer(bSizer15);
 	m_panelDescription->Layout();
-	bSizer15->Fit( m_panelDescription );
-	m_notebookProperties->AddPage( m_panelDescription, _("Description"), false );
-	m_panelExtendedProperties = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition,
-			wxDefaultSize, wxTAB_TRAVERSAL );
+	bSizer15->Fit(m_panelDescription);
+	m_notebookProperties->AddPage(m_panelDescription, _("Description"), false);
+	m_panelExtendedProperties = new wxPanel(m_notebookProperties, wxID_ANY, wxDefaultPosition,
+											wxDefaultSize, wxTAB_TRAVERSAL);
 	wxBoxSizer* bSizerExtendedProperties;
-	bSizerExtendedProperties = new wxBoxSizer( wxVERTICAL );
+	bSizerExtendedProperties = new wxBoxSizer(wxVERTICAL);
 
-	m_checkBoxVisible = new wxCheckBox( m_panelExtendedProperties, wxID_ANY, _("Show on chart"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerExtendedProperties->Add( m_checkBoxVisible, 0, wxALL, 5 );
+	m_checkBoxVisible = new wxCheckBox(m_panelExtendedProperties, wxID_ANY, _("Show on chart"),
+									   wxDefaultPosition, wxDefaultSize, 0);
+	bSizerExtendedProperties->Add(m_checkBoxVisible, 0, wxALL, 5);
 
 	wxBoxSizer* bSizerGuid;
-	bSizerGuid = new wxBoxSizer( wxHORIZONTAL );
+	bSizerGuid = new wxBoxSizer(wxHORIZONTAL);
 
-	m_staticTextGuid = new wxStaticText( m_panelExtendedProperties, wxID_ANY, _("GUID"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextGuid->Wrap( -1 );
-	bSizerGuid->Add( m_staticTextGuid, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
+	m_staticTextGuid = new wxStaticText(m_panelExtendedProperties, wxID_ANY, _("GUID"),
+										wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextGuid->Wrap(-1);
+	bSizerGuid->Add(m_staticTextGuid, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
-	m_textCtrlGuid = new wxTextCtrl( m_panelExtendedProperties, wxID_ANY, wxEmptyString,
-			wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
-	bSizerGuid->Add( m_textCtrlGuid, 1, wxALL | wxEXPAND, 5 );
+	m_textCtrlGuid = new wxTextCtrl(m_panelExtendedProperties, wxID_ANY, wxEmptyString,
+									wxDefaultPosition, wxDefaultSize, wxTE_READONLY);
+	bSizerGuid->Add(m_textCtrlGuid, 1, wxALL | wxEXPAND, 5);
 
-	bSizerExtendedProperties->Add( bSizerGuid, 0, wxEXPAND, 5 );
+	bSizerExtendedProperties->Add(bSizerGuid, 0, wxEXPAND, 5);
 
-	m_staticTextGpx = new wxStaticText( m_panelExtendedProperties, wxID_ANY, _("GPX"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextGpx->Wrap( -1 );
-	m_staticTextGpx->Enable( false );
+	m_staticTextGpx = new wxStaticText(m_panelExtendedProperties, wxID_ANY, _("GPX"),
+									   wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextGpx->Wrap(-1);
+	m_staticTextGpx->Enable(false);
 
-	bSizerExtendedProperties->Add( m_staticTextGpx, 0, wxALL, 5 );
+	bSizerExtendedProperties->Add(m_staticTextGpx, 0, wxALL, 5);
 
-	m_textCtrlGpx = new wxTextCtrl( m_panelExtendedProperties, wxID_ANY, wxEmptyString,
-			wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY );
-	m_textCtrlGpx->Enable( false );
+	m_textCtrlGpx
+		= new wxTextCtrl(m_panelExtendedProperties, wxID_ANY, wxEmptyString, wxDefaultPosition,
+						 wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY);
+	m_textCtrlGpx->Enable(false);
 
-	bSizerExtendedProperties->Add( m_textCtrlGpx, 1, wxALL | wxEXPAND, 5 );
+	bSizerExtendedProperties->Add(m_textCtrlGpx, 1, wxALL | wxEXPAND, 5);
 
-	m_panelExtendedProperties->SetSizer( bSizerExtendedProperties );
+	m_panelExtendedProperties->SetSizer(bSizerExtendedProperties);
 	m_panelExtendedProperties->Layout();
-	bSizerExtendedProperties->Fit( m_panelExtendedProperties );
-	m_notebookProperties->AddPage( m_panelExtendedProperties, _("Extended"), false );
+	bSizerExtendedProperties->Fit(m_panelExtendedProperties);
+	m_notebookProperties->AddPage(m_panelExtendedProperties, _("Extended"), false);
 
-	bSizer1->Add( m_notebookProperties, 1, wxEXPAND | wxALL, 5 );
+	bSizer1->Add(m_notebookProperties, 1, wxEXPAND | wxALL, 5);
 
 	m_sdbSizerButtons = new wxStdDialogButtonSizer();
-	m_sdbSizerButtonsOK = new wxButton( this, wxID_OK );
-	m_sdbSizerButtons->AddButton( m_sdbSizerButtonsOK );
-	m_sdbSizerButtonsCancel = new wxButton( this, wxID_CANCEL );
-	m_sdbSizerButtons->AddButton( m_sdbSizerButtonsCancel );
+	m_sdbSizerButtonsOK = new wxButton(this, wxID_OK);
+	m_sdbSizerButtons->AddButton(m_sdbSizerButtonsOK);
+	m_sdbSizerButtonsCancel = new wxButton(this, wxID_CANCEL);
+	m_sdbSizerButtons->AddButton(m_sdbSizerButtonsCancel);
 	m_sdbSizerButtons->Realize();
 
-	bSizer1->Add( m_sdbSizerButtons, 0, wxALL | wxEXPAND, 5 );
+	bSizer1->Add(m_sdbSizerButtons, 0, wxALL | wxEXPAND, 5);
 
-	this->SetSizer( bSizer1 );
+	this->SetSizer(bSizer1);
 	this->Layout();
 
-	this->Centre( wxBOTH );
+	this->Centre(wxBOTH);
 
 	// Connect Events
-	m_textLatitude->Connect( wxEVT_COMMAND_TEXT_ENTER,
-			wxCommandEventHandler( MarkInfoDef::OnPositionCtlUpdated ), NULL, this );
-	m_textLongitude->Connect( wxEVT_COMMAND_TEXT_ENTER,
-			wxCommandEventHandler( MarkInfoDef::OnPositionCtlUpdated ), NULL, this );
+	m_textLatitude->Connect(wxEVT_COMMAND_TEXT_ENTER,
+							wxCommandEventHandler(MarkInfoDef::OnPositionCtlUpdated), NULL, this);
+	m_textLongitude->Connect(wxEVT_COMMAND_TEXT_ENTER,
+							 wxCommandEventHandler(MarkInfoDef::OnPositionCtlUpdated), NULL, this);
 
-	m_textLatitude->Connect( wxEVT_CONTEXT_MENU,
-			wxCommandEventHandler( MarkInfoImpl::OnRightClick ), NULL, this );
-	m_textLongitude->Connect( wxEVT_CONTEXT_MENU,
-			wxCommandEventHandler( MarkInfoImpl::OnRightClick ), NULL, this );
+	m_textLatitude->Connect(wxEVT_CONTEXT_MENU, wxCommandEventHandler(MarkInfoImpl::OnRightClick),
+							NULL, this);
+	m_textLongitude->Connect(wxEVT_CONTEXT_MENU, wxCommandEventHandler(MarkInfoImpl::OnRightClick),
+							 NULL, this);
 
-	m_textDescription->Connect( wxEVT_COMMAND_TEXT_UPDATED,
-			wxCommandEventHandler( MarkInfoDef::OnDescChangedBasic ), NULL, this );
-	m_buttonExtDescription->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnExtDescriptionClick ), NULL, this );
+	m_textDescription->Connect(wxEVT_COMMAND_TEXT_UPDATED,
+							   wxCommandEventHandler(MarkInfoDef::OnDescChangedBasic), NULL, this);
+	m_buttonExtDescription->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
+									wxCommandEventHandler(MarkInfoDef::OnExtDescriptionClick), NULL,
+									this);
 
-	this->Connect( m_menuItemDelete->GetId(), wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnDeleteLink ) );
-	this->Connect( m_menuItemEdit->GetId(), wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnEditLink ) );
-	this->Connect( m_menuItemAdd->GetId(), wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnAddLink ) );
-	this->Connect( ID_RCLK_MENU_COPY, wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnCopyPasteLatLon ) );
-	this->Connect( ID_RCLK_MENU_COPY_LL, wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnCopyPasteLatLon ) );
-	this->Connect( ID_RCLK_MENU_PASTE, wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnCopyPasteLatLon ) );
-	this->Connect( ID_RCLK_MENU_PASTE_LL, wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnCopyPasteLatLon ) );
+	this->Connect(m_menuItemDelete->GetId(), wxEVT_COMMAND_MENU_SELECTED,
+				  wxCommandEventHandler(MarkInfoDef::OnDeleteLink));
+	this->Connect(m_menuItemEdit->GetId(), wxEVT_COMMAND_MENU_SELECTED,
+				  wxCommandEventHandler(MarkInfoDef::OnEditLink));
+	this->Connect(m_menuItemAdd->GetId(), wxEVT_COMMAND_MENU_SELECTED,
+				  wxCommandEventHandler(MarkInfoDef::OnAddLink));
+	this->Connect(ID_RCLK_MENU_COPY, wxEVT_COMMAND_MENU_SELECTED,
+				  wxCommandEventHandler(MarkInfoDef::OnCopyPasteLatLon));
+	this->Connect(ID_RCLK_MENU_COPY_LL, wxEVT_COMMAND_MENU_SELECTED,
+				  wxCommandEventHandler(MarkInfoDef::OnCopyPasteLatLon));
+	this->Connect(ID_RCLK_MENU_PASTE, wxEVT_COMMAND_MENU_SELECTED,
+				  wxCommandEventHandler(MarkInfoDef::OnCopyPasteLatLon));
+	this->Connect(ID_RCLK_MENU_PASTE_LL, wxEVT_COMMAND_MENU_SELECTED,
+				  wxCommandEventHandler(MarkInfoDef::OnCopyPasteLatLon));
 
-	m_buttonAddLink->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnAddLink ), NULL, this );
-	m_toggleBtnEdit->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnEditLinkToggle ), NULL, this );
-	m_textCtrlExtDescription->Connect( wxEVT_COMMAND_TEXT_UPDATED,
-			wxCommandEventHandler( MarkInfoDef::OnDescChangedExt ), NULL, this );
-	m_sdbSizerButtonsCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnMarkInfoCancelClick ), NULL, this );
-	m_sdbSizerButtonsOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnMarkInfoOKClick ), NULL, this );
+	m_buttonAddLink->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
+							 wxCommandEventHandler(MarkInfoDef::OnAddLink), NULL, this);
+	m_toggleBtnEdit->Connect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,
+							 wxCommandEventHandler(MarkInfoDef::OnEditLinkToggle), NULL, this);
+	m_textCtrlExtDescription->Connect(wxEVT_COMMAND_TEXT_UPDATED,
+									  wxCommandEventHandler(MarkInfoDef::OnDescChangedExt), NULL,
+									  this);
+	m_sdbSizerButtonsCancel->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
+									 wxCommandEventHandler(MarkInfoDef::OnMarkInfoCancelClick),
+									 NULL, this);
+	m_sdbSizerButtonsOK->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
+								 wxCommandEventHandler(MarkInfoDef::OnMarkInfoOKClick), NULL, this);
 }
 
 MarkInfoDef::~MarkInfoDef()
 {
 	// Disconnect Events
-	m_textLatitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER,
-			wxCommandEventHandler( MarkInfoDef::OnPositionCtlUpdated ), NULL, this );
-	m_textLongitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER,
-			wxCommandEventHandler( MarkInfoDef::OnPositionCtlUpdated ), NULL, this );
-	m_textDescription->Disconnect( wxEVT_COMMAND_TEXT_UPDATED,
-			wxCommandEventHandler( MarkInfoDef::OnDescChangedBasic ), NULL, this );
-	m_buttonExtDescription->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnExtDescriptionClick ), NULL, this );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnDeleteLink ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnEditLink ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED,
-			wxCommandEventHandler( MarkInfoDef::OnAddLink ) );
-	m_buttonAddLink->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnAddLink ), NULL, this );
-	m_toggleBtnEdit->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnEditLinkToggle ), NULL, this );
-	m_textCtrlExtDescription->Disconnect( wxEVT_COMMAND_TEXT_UPDATED,
-			wxCommandEventHandler( MarkInfoDef::OnDescChangedExt ), NULL, this );
-	m_sdbSizerButtonsCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnMarkInfoCancelClick ), NULL, this );
-	m_sdbSizerButtonsOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler( MarkInfoDef::OnMarkInfoOKClick ), NULL, this );
+	m_textLatitude->Disconnect(wxEVT_COMMAND_TEXT_ENTER,
+							   wxCommandEventHandler(MarkInfoDef::OnPositionCtlUpdated), NULL,
+							   this);
+	m_textLongitude->Disconnect(wxEVT_COMMAND_TEXT_ENTER,
+								wxCommandEventHandler(MarkInfoDef::OnPositionCtlUpdated), NULL,
+								this);
+	m_textDescription->Disconnect(wxEVT_COMMAND_TEXT_UPDATED,
+								  wxCommandEventHandler(MarkInfoDef::OnDescChangedBasic), NULL,
+								  this);
+	m_buttonExtDescription->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+									   wxCommandEventHandler(MarkInfoDef::OnExtDescriptionClick),
+									   NULL, this);
+	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED,
+					 wxCommandEventHandler(MarkInfoDef::OnDeleteLink));
+	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED,
+					 wxCommandEventHandler(MarkInfoDef::OnEditLink));
+	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED,
+					 wxCommandEventHandler(MarkInfoDef::OnAddLink));
+	m_buttonAddLink->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+								wxCommandEventHandler(MarkInfoDef::OnAddLink), NULL, this);
+	m_toggleBtnEdit->Disconnect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,
+								wxCommandEventHandler(MarkInfoDef::OnEditLinkToggle), NULL, this);
+	m_textCtrlExtDescription->Disconnect(wxEVT_COMMAND_TEXT_UPDATED,
+										 wxCommandEventHandler(MarkInfoDef::OnDescChangedExt), NULL,
+										 this);
+	m_sdbSizerButtonsCancel->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+										wxCommandEventHandler(MarkInfoDef::OnMarkInfoCancelClick),
+										NULL, this);
+	m_sdbSizerButtonsOK->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+									wxCommandEventHandler(MarkInfoDef::OnMarkInfoOKClick), NULL,
+									this);
 
 	delete m_menuLink;
 }
@@ -408,7 +420,7 @@ MarkInfoImpl::~MarkInfoImpl()
 	m_bcomboBoxIcon->Clear();
 }
 
-void MarkInfoImpl::InitialFocus( void )
+void MarkInfoImpl::InitialFocus(void)
 {
 	m_textName->SetFocus();
 	m_textName->SetInsertionPointEnd();
@@ -484,18 +496,9 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	m_textCtrlGuid->SetValue(m_pRoutePoint->m_GUID);
 
 	const HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
-	if (linklist && linklist->GetCount() > 0) {
+	if (linklist) {
 		for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
-			wxHyperlinkCtrl* ctrl
-				= new wxHyperlinkCtrl(m_scrolledWindowLinks, wxID_ANY, (*i)->DescrText, (*i)->Link,
-									  wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
-			ctrl->Connect(wxEVT_COMMAND_HYPERLINK,
-						  wxHyperlinkEventHandler(MarkInfoImpl::OnHyperLinkClick), NULL, this);
-			if (!m_pRoutePoint->m_bIsInLayer)
-				ctrl->Connect(wxEVT_RIGHT_DOWN,
-							  wxMouseEventHandler(MarkInfoImpl::hyperlinkContextMenu), NULL, this);
-
-			bSizerLinks->Add(ctrl, 0, wxALL, 5);
+			add_hyperlink((*i)->DescrText, (*i)->Link, m_pRoutePoint->m_bIsInLayer);
 		}
 	}
 	bSizerLinks->Fit(m_scrolledWindowLinks);
@@ -519,6 +522,21 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	icons = NULL;
 
 	return true;
+}
+
+void MarkInfoImpl::add_hyperlink(const wxString& desc, const wxString& link, bool on_layer)
+{
+	wxHyperlinkCtrl* ctrl
+		= new wxHyperlinkCtrl(m_scrolledWindowLinks, wxID_ANY, desc, link, wxDefaultPosition,
+							  wxDefaultSize, wxHL_DEFAULT_STYLE);
+	ctrl->Connect(wxEVT_COMMAND_HYPERLINK, wxHyperlinkEventHandler(MarkInfoImpl::OnHyperLinkClick),
+				  NULL, this);
+
+	if (!on_layer)
+		ctrl->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(MarkInfoImpl::hyperlinkContextMenu),
+					  NULL, this);
+
+	bSizerLinks->Add(ctrl, 0, wxALL, 5);
 }
 
 void MarkInfoImpl::SetRoutePoint(RoutePoint* pRP)
@@ -559,9 +577,11 @@ void MarkInfoImpl::OnDeleteLink(wxCommandEvent& event)
 {
 	wxString findurl = m_pEditedLink->GetURL();
 	wxString findlabel = m_pEditedLink->GetLabel();
+
+	// remove all links, re-insert all non-deleted in the loop below
 	m_scrolledWindowLinks->DestroyChildren();
 
-	// FIXME: refactor this code
+	// FIXME: refactor this code: 1. delete node, 2. rebuild GUI list
 	wxHyperlinkListNode* nodeToDelete = NULL;
 	HyperlinkList* hyperlinklist = m_pRoutePoint->m_HyperlinkList;
 	if (hyperlinklist && hyperlinklist->size() > 0) {
@@ -571,24 +591,17 @@ void MarkInfoImpl::OnDeleteLink(wxCommandEvent& event)
 			wxString Link = link->Link;
 			wxString Descr = link->DescrText;
 			if (Link == findurl
-				&& (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString)))
-				nodeToDelete = linknode;
-			else {
-				wxHyperlinkCtrl* ctrl
-					= new wxHyperlinkCtrl(m_scrolledWindowLinks, wxID_ANY, Descr, Link,
-										  wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
-				ctrl->Connect(wxEVT_COMMAND_HYPERLINK,
-							  wxHyperlinkEventHandler(MarkInfoImpl::OnHyperLinkClick), NULL, this);
-				ctrl->Connect(wxEVT_RIGHT_DOWN,
-							  wxMouseEventHandler(MarkInfoImpl::hyperlinkContextMenu), NULL, this);
-
-				bSizerLinks->Add(ctrl, 0, wxALL, 5);
+				&& (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
+				nodeToDelete = linknode; // actual deletion deferred, otherwise it is altering the container while iterating
+			} else {
+				// build list of hyperlinks, except deleted one
+				add_hyperlink(Descr, Link);
 			}
 			linknode = linknode->GetNext();
 		}
 	}
 	if (nodeToDelete)
-		hyperlinklist->DeleteNode(nodeToDelete);
+		hyperlinklist->Erase(nodeToDelete);
 
 	m_scrolledWindowLinks->InvalidateBestSize();
 	m_scrolledWindowLinks->Layout();
@@ -640,15 +653,8 @@ void MarkInfoImpl::OnAddLink(wxCommandEvent& event)
 		wxString desc = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
 		if (desc == wxEmptyString)
 			desc = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
-		wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl(
-			m_scrolledWindowLinks, wxID_ANY, desc, m_pLinkProp->m_textCtrlLinkUrl->GetValue(),
-			wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
-		ctrl->Connect(wxEVT_COMMAND_HYPERLINK,
-					  wxHyperlinkEventHandler(MarkInfoImpl::OnHyperLinkClick), NULL, this);
-		ctrl->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(MarkInfoImpl::hyperlinkContextMenu),
-					  NULL, this);
 
-		bSizerLinks->Add(ctrl, 0, wxALL, 5);
+		add_hyperlink(desc, m_pLinkProp->m_textCtrlLinkUrl->GetValue());
 		bSizerLinks->Fit(m_scrolledWindowLinks);
 		this->Fit();
 

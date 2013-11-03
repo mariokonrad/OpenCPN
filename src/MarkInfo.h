@@ -158,6 +158,7 @@ protected:
 	void OnExtDescriptionClick(wxCommandEvent& event);
 
 private:
+	void build_hyperlink_list();
 	void add_hyperlink(const wxString& desc, const wxString& link, bool on_layer = false);
 
 	RoutePoint* m_pRoutePoint;

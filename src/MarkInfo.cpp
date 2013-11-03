@@ -495,12 +495,7 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	m_checkBoxVisible->SetValue(m_pRoutePoint->m_bIsVisible);
 	m_textCtrlGuid->SetValue(m_pRoutePoint->m_GUID);
 
-	const HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
-	if (linklist) {
-		for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
-			add_hyperlink((*i)->DescrText, (*i)->Link, m_pRoutePoint->m_bIsInLayer);
-		}
-	}
+	build_hyperlink_list();
 	bSizerLinks->Fit(m_scrolledWindowLinks);
 
 	// Iterate on the Icon Descriptions, filling in the control
@@ -522,6 +517,19 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	icons = NULL;
 
 	return true;
+}
+
+void MarkInfoImpl::build_hyperlink_list()
+{
+	if (!m_pRoutePoint)
+		return;
+	if (!m_pRoutePoint->m_HyperlinkList)
+		return;
+
+	const HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
+	for (HyperlinkList::const_iterator i = linklist->begin(); i != linklist->end(); ++i) {
+		add_hyperlink((*i)->DescrText, (*i)->Link, m_pRoutePoint->m_bIsInLayer);
+	}
 }
 
 void MarkInfoImpl::add_hyperlink(const wxString& desc, const wxString& link, bool on_layer)
@@ -575,33 +583,28 @@ void MarkInfoImpl::hyperlinkContextMenu(wxMouseEvent& event)
 
 void MarkInfoImpl::OnDeleteLink(wxCommandEvent& event)
 {
-	wxString findurl = m_pEditedLink->GetURL();
-	wxString findlabel = m_pEditedLink->GetLabel();
+	const wxString findurl = m_pEditedLink->GetURL();
+	const wxString findlabel = m_pEditedLink->GetLabel();
 
 	// remove all links, re-insert all non-deleted in the loop below
 	m_scrolledWindowLinks->DestroyChildren();
 
-	// FIXME: refactor this code: 1. delete node, 2. rebuild GUI list
-	wxHyperlinkListNode* nodeToDelete = NULL;
-	HyperlinkList* hyperlinklist = m_pRoutePoint->m_HyperlinkList;
-	if (hyperlinklist && hyperlinklist->size() > 0) {
-		wxHyperlinkListNode* linknode = hyperlinklist->GetFirst();
-		while (linknode) {
-			Hyperlink* link = linknode->GetData();
-			wxString Link = link->Link;
-			wxString Descr = link->DescrText;
+	// FIXME: use find_if
+	HyperlinkList* linklist = m_pRoutePoint->m_HyperlinkList;
+	if (linklist) {
+		for (HyperlinkList::iterator i = linklist->begin(); i != linklist->end(); ++i) {
+			wxString Link = (*i)->Link;
+			wxString Descr = (*i)->DescrText;
 			if (Link == findurl
 				&& (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
-				nodeToDelete = linknode; // actual deletion deferred, otherwise it is altering the container while iterating
-			} else {
-				// build list of hyperlinks, except deleted one
-				add_hyperlink(Descr, Link);
+
+				// found hyperlink to delete, repopulate GUI list
+				linklist->erase(i);
+				build_hyperlink_list();
+				break;
 			}
-			linknode = linknode->GetNext();
 		}
 	}
-	if (nodeToDelete)
-		hyperlinklist->Erase(nodeToDelete);
 
 	m_scrolledWindowLinks->InvalidateBestSize();
 	m_scrolledWindowLinks->Layout();

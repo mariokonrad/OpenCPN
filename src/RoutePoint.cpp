@@ -186,8 +186,10 @@ RoutePoint::~RoutePoint(void)
 		pWayPointMan->remove(this);
 
 	if (m_HyperlinkList) {
-		m_HyperlinkList->DeleteContents(true);
+		for (HyperlinkList::iterator i = m_HyperlinkList->begin(); i != m_HyperlinkList->end(); ++i)
+			delete *i;
 		delete m_HyperlinkList;
+		m_HyperlinkList = NULL;
 	}
 }
 

@@ -279,61 +279,64 @@ TCWin::~TCWin()
 	pParent->Refresh( false );
 }
 
-void TCWin::OKEvent(wxCommandEvent & WXUNUSED(event))
+void TCWin::OKEvent(wxCommandEvent& WXUNUSED(event))
 {
 	Hide();
 	pParent->pCwin = NULL;
-	if( --gpIDXn == 0 ) gpIDX = NULL;
+	if (--gpIDXn == 0)
+		gpIDX = NULL;
 	delete m_pTCRolloverWin;
 	delete m_tList;
-	pParent->Refresh( false );
-	Destroy();                          // that hurts
+	pParent->Refresh(false);
+	Destroy(); // that hurts
 }
 
-void TCWin::OnCloseWindow(wxCloseEvent & WXUNUSED(event))
+void TCWin::OnCloseWindow(wxCloseEvent& WXUNUSED(event))
 {
 	Hide();
 	pParent->pCwin = NULL;
-	if( --gpIDXn == 0 ) gpIDX = NULL;
+	if (--gpIDXn == 0)
+		gpIDX = NULL;
 	delete m_pTCRolloverWin;
 	delete m_tList;
 
-	Destroy();                          // that hurts
+	Destroy(); // that hurts
 }
 
 void TCWin::NXEvent(wxCommandEvent & WXUNUSED(event))
 {
-	wxTimeSpan dt( 24, 0, 0, 0 );
-	m_graphday.Add( dt );
+	wxTimeSpan dt(24, 0, 0, 0);
+	m_graphday.Add(dt);
 	wxDateTime dm = m_graphday;
 
 	wxDateTime graphday_00 = dm.ResetTime();
-	if(graphday_00.GetYear() == 2013)
-		int yyp = 4;
 
 	time_t t_graphday_00 = graphday_00.GetTicks();
-	if( !graphday_00.IsDST() && m_graphday.IsDST() ) t_graphday_00 -= 3600;
-	if( graphday_00.IsDST() && !m_graphday.IsDST() ) t_graphday_00 += 3600;
-	m_t_graphday_00_at_station = t_graphday_00 - ( m_corr_mins * 60 );
+	if (!graphday_00.IsDST() && m_graphday.IsDST())
+		t_graphday_00 -= 3600;
+	if (graphday_00.IsDST() && !m_graphday.IsDST())
+		t_graphday_00 += 3600;
+	m_t_graphday_00_at_station = t_graphday_00 - (m_corr_mins * 60);
 
 	btc_valid = false;
 	Refresh();
-
 }
 
 void TCWin::PREvent(wxCommandEvent & WXUNUSED(event))
 {
-	wxTimeSpan dt( -24, 0, 0, 0 );
-	m_graphday.Add( dt );
+	wxTimeSpan dt(-24, 0, 0, 0);
+	m_graphday.Add(dt);
 	wxDateTime dm = m_graphday;
 
 	wxDateTime graphday_00 = dm.ResetTime();
 	time_t t_graphday_00 = graphday_00.GetTicks();
 
-	if( !graphday_00.IsDST() && m_graphday.IsDST() ) t_graphday_00 -= 3600;
-	if( graphday_00.IsDST() && !m_graphday.IsDST() ) t_graphday_00 += 3600;
+	if (!graphday_00.IsDST() && m_graphday.IsDST())
+		t_graphday_00 -= 3600;
+	if (graphday_00.IsDST() && !m_graphday.IsDST())
+		t_graphday_00 += 3600;
 
-	m_t_graphday_00_at_station = t_graphday_00 - ( m_corr_mins * 60 );
+	m_t_graphday_00_at_station = t_graphday_00 - (m_corr_mins * 60);
 
 	btc_valid = false;
 	Refresh();
@@ -343,31 +346,33 @@ void TCWin::Resize( void )
 {
 }
 
-void TCWin::RePosition( void )
+void TCWin::RePosition(void)
 {
-	//    Position the window
+	// Position the window
 	double lon = pIDX->IDX_lon;
 	double lat = pIDX->IDX_lat;
 
 	wxPoint r;
-	pParent->GetCanvasPointPix( lat, lon, &r );
-	pParent->ClientToScreen( &r.x, &r.y );
-	Move( r );
+	pParent->GetCanvasPointPix(lat, lon, &r);
+	pParent->ClientToScreen(&r.x, &r.y);
+	Move(r);
 }
 
-void TCWin::OnPaint(wxPaintEvent & WXUNUSED(event))
+void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 {
-	int x, y;
+	int x;
+	int y;
 	int i;
 	char sbuf[100];
 	int w;
-	float tcmax, tcmin;
+	float tcmax;
+	float tcmin;
 
-	GetClientSize( &x, &y );
+	GetClientSize(&x, &y);
 
-	wxPaintDC dc( this );
+	wxPaintDC dc(this);
 
-	wxString tlocn( pIDX->IDX_station_name, wxConvUTF8 );
+	wxString tlocn(pIDX->IDX_station_name, wxConvUTF8);
 
 	//     if(1/*bForceRedraw*/)
 	{
@@ -507,12 +512,13 @@ void TCWin::OnPaint(wxPaintEvent & WXUNUSED(event))
 				val_off = ib;
 			}
 
-			//    Build spline list of points
+			// Build spline list of points
 
-			m_sList.DeleteContents( true );
+			for (SplineList::iterator j = m_sList.begin(); j != m_sList.end(); ++j)
+				delete *j;
 			m_sList.Clear();
 
-			for( i = 0; i < 26; i++ ) {
+			for(i = 0; i < 26; i++ ) {
 				wxPoint *pp = new wxPoint;
 				pp->x = m_graph_rect.x + ( ( i ) * m_graph_rect.width / 25 );
 				pp->y = m_graph_rect.y + ( m_plot_y_offset )

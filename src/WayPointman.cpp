@@ -45,13 +45,13 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(RoutePointList);
 
-extern ocpnStyle::StyleManager * g_StyleManager;
-extern WayPointman * pWayPointMan;
-extern RoutePoint * pAnchorWatchPoint1;
-extern RoutePoint * pAnchorWatchPoint2;
-extern Routeman * g_pRouteMan;
-extern Config * pConfig;
-extern Select * pSelect;
+extern ocpnStyle::StyleManager* g_StyleManager;
+extern WayPointman* pWayPointMan;
+extern RoutePoint* pAnchorWatchPoint1;
+extern RoutePoint* pAnchorWatchPoint2;
+extern Routeman* g_pRouteMan;
+extern Config* pConfig;
+extern Select* pSelect;
 
 WayPointman::WayPointman()
 {
@@ -64,30 +64,31 @@ WayPointman::WayPointman()
 
 	wxString UserIconPath = global::OCPN::get().sys().data().private_data_dir;
 	wxChar sep = wxFileName::GetPathSeparator();
-	if( UserIconPath.Last() != sep ) UserIconPath.Append( sep );
-	UserIconPath.Append( _T("UserIcons") );
+	if (UserIconPath.Last() != sep)
+		UserIconPath.Append(sep);
+	UserIconPath.Append(_T("UserIcons"));
 
-	if( wxDir::Exists( UserIconPath ) ) {
+	if (wxDir::Exists(UserIconPath)) {
 		wxArrayString FileList;
 
-		wxDir dir( UserIconPath );
-		int n_files = dir.GetAllFiles( UserIconPath, &FileList );
+		wxDir dir(UserIconPath);
+		int n_files = dir.GetAllFiles(UserIconPath, &FileList);
 
-		for( int ifile = 0; ifile < n_files; ifile++ ) {
-			wxString name = FileList.Item( ifile );
+		for (int ifile = 0; ifile < n_files; ifile++) {
+			wxString name = FileList.Item(ifile);
 
-			wxFileName fn( name );
+			wxFileName fn(name);
 			wxString iconname = fn.GetName();
 			wxBitmap icon1;
 
-			if( fn.GetExt().Lower() == _T("xpm") ) {
-				if( icon1.LoadFile( name, wxBITMAP_TYPE_XPM ) ) {
-					ProcessIcon( icon1, iconname, iconname );
+			if (fn.GetExt().Lower() == _T("xpm")) {
+				if (icon1.LoadFile(name, wxBITMAP_TYPE_XPM)) {
+					ProcessIcon(icon1, iconname, iconname);
 				}
 			}
-			if( fn.GetExt().Lower() == _T("png") ) {
-				if( icon1.LoadFile( name, wxBITMAP_TYPE_PNG ) ) {
-					ProcessIcon( icon1, iconname, iconname );
+			if (fn.GetExt().Lower() == _T("png")) {
+				if (icon1.LoadFile(name, wxBITMAP_TYPE_PNG)) {
+					ProcessIcon(icon1, iconname, iconname);
 				}
 			}
 		}
@@ -107,14 +108,15 @@ WayPointman::~WayPointman()
 	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
 		temp_list.push_back(*i);
 	}
-	temp_list.DeleteContents(true);
+	for (RoutePointList::iterator i = temp_list.begin(); i != temp_list.end(); ++i)
+		delete *i;
 	temp_list.clear();
 
 	delete m_pWayPointList;
 
 	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
-		MarkIcon * pmi = *i;
-		delete pmi->picon_bitmap;
+		MarkIcon* pmi = *i;
+		delete pmi->picon_bitmap; // FIXME: let MarkIcon handle its own resources
 		delete pmi;
 	}
 	icons.clear();
@@ -169,9 +171,9 @@ void WayPointman::ProcessIcons( ocpnStyle::Style* style )
 	ProcessIcon( style->GetIcon( _T("activepoint") ), _T("activepoint"), _T("Active WP") );
 }
 
-void WayPointman::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description)
+void WayPointman::ProcessIcon(wxBitmap pimage, const wxString& key, const wxString& description)
 {
-	MarkIcon *pmi;
+	MarkIcon* pmi;
 
 	bool newIcon = true;
 
@@ -251,31 +253,33 @@ wxImageList * WayPointman::Getpmarkicon_image_list(void)
 
 	// Create and add "x-ed out" icons,
 	// Being careful to preserve (some) transparency
-	for (unsigned int ii = 0; ii < icons.size(); ii++ ) {
+	for (unsigned int ii = 0; ii < icons.size(); ii++) {
 
 		wxImage img = icon_image_list.GetBitmap(ii).ConvertToImage();
-		img.ConvertAlphaToMask( 128 );
+		img.ConvertAlphaToMask(128);
 
-		unsigned char r,g,b;
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
 		img.GetOrFindMaskColour(&r, &g, &b);
-		wxColour unused_color(r,g,b);
+		wxColour unused_color(r, g, b);
 
-		wxBitmap bmp0( img );
+		wxBitmap bmp0(img);
 
-		wxBitmap bmp(w, h, -1 );
-		wxMemoryDC mdc( bmp );
-		mdc.SetBackground( wxBrush( unused_color) );
+		wxBitmap bmp(w, h, -1);
+		wxMemoryDC mdc(bmp);
+		mdc.SetBackground(wxBrush(unused_color));
 		mdc.Clear();
-		mdc.DrawBitmap( bmp0, 0, 0 );
-		wxPen red(GetGlobalColor(_T( "URED" )), 2 );
-		mdc.SetPen( red );
+		mdc.DrawBitmap(bmp0, 0, 0);
+		wxPen red(GetGlobalColor(_T( "URED" )), 2);
+		mdc.SetPen(red);
 		int xm = bmp.GetWidth();
 		int ym = bmp.GetHeight();
-		mdc.DrawLine( 2, 2, xm-2, ym-2 );
-		mdc.DrawLine( xm-2, 2, 2, ym-2 );
-		mdc.SelectObject( wxNullBitmap );
+		mdc.DrawLine(2, 2, xm - 2, ym - 2);
+		mdc.DrawLine(xm - 2, 2, 2, ym - 2);
+		mdc.SelectObject(wxNullBitmap);
 
-		wxMask *pmask = new wxMask(bmp, unused_color);
+		wxMask* pmask = new wxMask(bmp, unused_color);
 		bmp.SetMask(pmask);
 
 		icon_image_list.Add(bmp);
@@ -284,28 +288,27 @@ wxImageList * WayPointman::Getpmarkicon_image_list(void)
 	return &icon_image_list;
 }
 
-wxBitmap *WayPointman::CreateDimBitmap( wxBitmap *pBitmap, double factor )
+wxBitmap* WayPointman::CreateDimBitmap(wxBitmap* pBitmap, double factor)
 {
 	wxImage img = pBitmap->ConvertToImage();
 	int sx = img.GetWidth();
 	int sy = img.GetHeight();
 
-	wxImage new_img( img );
+	wxImage new_img(img);
 
-	for( int i = 0; i < sx; i++ ) {
-		for( int j = 0; j < sy; j++ ) {
-			if( !img.IsTransparent( i, j ) ) {
-				new_img.SetRGB( i, j, (unsigned char) ( img.GetRed( i, j ) * factor ),
-						(unsigned char) ( img.GetGreen( i, j ) * factor ),
-						(unsigned char) ( img.GetBlue( i, j ) * factor ) );
+	for (int i = 0; i < sx; i++) {
+		for (int j = 0; j < sy; j++) {
+			if (!img.IsTransparent(i, j)) {
+				new_img.SetRGB(i, j, (unsigned char)(img.GetRed(i, j) * factor),
+							   (unsigned char)(img.GetGreen(i, j) * factor),
+							   (unsigned char)(img.GetBlue(i, j) * factor));
 			}
 		}
 	}
 
-	wxBitmap *pret = new wxBitmap( new_img );
+	wxBitmap* pret = new wxBitmap(new_img);
 
 	return pret;
-
 }
 
 void WayPointman::push_back(RoutePoint * route_point)
@@ -479,7 +482,7 @@ RoutePoint * WayPointman::GetOtherNearbyWaypoint(
 		double radius_meters,
 		const wxString & guid)
 {
-	//    Iterate on the RoutePoint list, checking distance
+	// Iterate on the RoutePoint list, checking distance
 
 	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
 		RoutePoint * pr = *i;

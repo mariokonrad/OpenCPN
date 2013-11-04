@@ -1935,9 +1935,9 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 
 		SelectableItemList SelList
 			= pSelect->FindSelectionList(m_cursor_lat, m_cursor_lon, Select::TYPE_ROUTESEGMENT);
-		wxSelectableItemListNode* node = SelList.GetFirst();
-		while (node) {
-			SelectItem* pFindSel = node->GetData();
+		SelectableItemList::iterator index = SelList.begin();
+		while (index != SelList.end()) {
+			SelectItem* pFindSel = *index;
 
 			Route* pr = (Route*)pFindSel->m_pData3; // candidate
 
@@ -1990,12 +1990,9 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 
 					if (segShow_point_a != pr->pRoutePointList->GetFirst()->GetData()) {
 						wxRoutePointListNode* node = (pr->pRoutePointList)->GetFirst()->GetNext();
-						RoutePoint* prp;
 						float dist_to_endleg = 0;
-						wxString t;
-
 						while (node) {
-							prp = node->GetData();
+							RoutePoint* prp = node->GetData();
 							dist_to_endleg += prp->m_seg_len;
 							if (prp->IsSame(segShow_point_a))
 								break;
@@ -2017,8 +2014,9 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 					showRollover = true;
 					break;
 				}
-			} else
-				node = node->GetNext();
+			} else {
+				++index;
+			}
 		}
 	} else {
 		// Is the cursor still in select radius?
@@ -5717,11 +5715,10 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				// There is at least one routepoint, so get the whole list
 				SelectableItemList SelList
 					= pSelect->FindSelectionList(slat, slon, Select::TYPE_ROUTEPOINT);
-				wxSelectableItemListNode* node = SelList.GetFirst();
-				while (node) {
-					SelectItem* pFindSel = node->GetData();
+				for (SelectableItemList::iterator index = SelList.begin(); index != SelList.end(); ++index) {
+					SelectItem* item = *index;
 
-					RoutePoint* prp = (RoutePoint*)pFindSel->m_pData1; // candidate
+					RoutePoint* prp = (RoutePoint*)item->m_pData1; // candidate
 
 					// Get an array of all routes using this point
 					Routeman::RouteArray* proute_array = g_pRouteMan->GetRouteArrayContaining(prp);
@@ -5774,10 +5771,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 						delete proute_array;
 					}
-					node = node->GetNext();
 				}
 
-				//      Now choose the "best" selections
+				// Now choose the "best" selections
 				if (pFoundActiveRoutePoint) {
 					m_pFoundRoutePoint = pFoundActiveRoutePoint;
 					m_pSelectedRoute = pSelectedActiveRoute;
@@ -5799,24 +5795,20 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 			// Note here that we use Select::TYPE_ROUTESEGMENT to select tracks as well as routes
 			// But call the popup handler with identifier appropriate to the type
-			if (pFindRouteSeg) // there is at least one select item
-			{
+			if (pFindRouteSeg) { // there is at least one select item
 				SelectableItemList SelList
 					= pSelect->FindSelectionList(slat, slon, Select::TYPE_ROUTESEGMENT);
 
 				if (NULL == m_pSelectedRoute) {
 					// the case where a segment only is selected
 					// Choose the first visible route containing segment in the list
-					wxSelectableItemListNode* node = SelList.GetFirst();
-					while (node) {
-						SelectItem* pFindSel = node->GetData();
-
-						Route* pr = (Route*)pFindSel->m_pData3;
+					for (SelectableItemList::iterator index = SelList.begin(); index != SelList.end(); ++index) {
+						SelectItem* item = *index;
+						Route* pr = (Route*)item->m_pData3;
 						if (pr->IsVisible()) {
 							m_pSelectedRoute = pr;
 							break;
 						}
-						node = node->GetNext();
 					}
 				}
 
@@ -5837,17 +5829,14 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				SelectableItemList SelList
 					= pSelect->FindSelectionList(slat, slon, Select::TYPE_TRACKSEGMENT);
 
-				//  Choose the first visible track containing segment in the list
-				wxSelectableItemListNode* node = SelList.GetFirst();
-				while (node) {
-					SelectItem* pFindSel = node->GetData();
-
-					Route* pt = (Route*)pFindSel->m_pData3;
+				// Choose the first visible track containing segment in the list
+				for (SelectableItemList::iterator index = SelList.begin(); index != SelList.end(); ++index) {
+					SelectItem* item = *index;
+					Route* pt = (Route*)item->m_pData3;
 					if (pt->IsVisible()) {
 						m_pSelectedTrack = pt;
 						break;
 					}
-					node = node->GetNext();
 				}
 
 				if (m_pSelectedTrack)
@@ -5867,26 +5856,24 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				SelectableItemList SelList = pSelectTC->FindSelectionList(
 					m_cursor_lat, m_cursor_lon, Select::TYPE_CURRENTPOINT);
 
-				//      Default is first entry
-				wxSelectableItemListNode* node = SelList.GetFirst();
-				pFind = node->GetData();
+				// Default is first entry
+				SelectableItemList::iterator index = SelList.begin();
+				pFind = *index;
 				pIDX_best_candidate = (IDX_entry*)(pFind->m_pData1);
 
-				if (SelList.GetCount() > 1) {
-					node = node->GetNext();
-					while (node) {
-						pFind = node->GetData();
+				if (SelList.size() > 1) {
+					++index;
+					while (index != SelList.end()) {
+						pFind = *index;
 						IDX_entry* pIDX_candidate = (IDX_entry*)(pFind->m_pData1);
 						if (pIDX_candidate->IDX_type == 'c') {
 							pIDX_best_candidate = pIDX_candidate;
 							break;
 						}
-
-						node = node->GetNext();
-					} // while (node)
+						++index;
+					}
 				} else {
-					wxSelectableItemListNode* node = SelList.GetFirst();
-					pFind = node->GetData();
+					pFind = SelList.front();
 					pIDX_best_candidate = (IDX_entry*)(pFind->m_pData1);
 				}
 

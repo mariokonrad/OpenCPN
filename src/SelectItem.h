@@ -26,26 +26,51 @@
 
 #include <list>
 
+class Route;
+class RoutePoint;
+
 class SelectItem
 {
+public:
+	enum Type
+	{
+		TYPE_UNKNOWN      = 0x0001,
+		TYPE_ROUTEPOINT   = 0x0002,
+		TYPE_ROUTESEGMENT = 0x0004,
+		TYPE_TIDEPOINT    = 0x0008,
+		TYPE_CURRENTPOINT = 0x0010,
+		TYPE_ROUTECREATE  = 0x0020,
+		TYPE_AISTARGET    = 0x0040,
+		TYPE_MARKPOINT    = 0x0080,
+		TYPE_TRACKSEGMENT = 0x0100
+	};
+
 public:
 	SelectItem();
 	~SelectItem();
 
-	int GetUserData(void);
+	int GetUserData(void) const;
 	void SetUserData(int data);
 
 	float m_slat;
 	float m_slon;
 	float m_slat2;
 	float m_slon2;
-	int m_seltype;
+	unsigned long m_seltype; // bitcombination of Type
 	bool m_bIsSelected;
 
+	// (mis-)used as one of the following:
+	// - RoutePoint
+	// - IDX_entry
+	// - long (AIS: mmsi)
+	// at the moment written only by Select
 	const void* m_pData1; // FIXME: void*
-	void* m_pData2; // FIXME: void*
-	void* m_pData3; // FIXME: void*
-	int m_Data4; // FIXME: Data4??
+
+	RoutePoint* route_point;
+	Route* route;
+
+private:
+	int user_data;
 };
 
 typedef std::list<SelectItem*> SelectableItemList;

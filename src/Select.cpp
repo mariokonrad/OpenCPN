@@ -33,10 +33,8 @@
 extern ChartCanvas* cc1;
 
 Select::Select()
+	: pixelRadius(8)
 {
-	pSelectList = new SelectableItemList;
-	pixelRadius = 8;
-
 	int w;
 	int h;
 	wxDisplaySize(&w, &h);
@@ -49,8 +47,6 @@ Select::Select()
 Select::~Select()
 {
 	DeleteAllPoints();
-	delete pSelectList;
-	pSelectList = NULL;
 }
 
 void Select::SetSelectPixelRadius(int radius)
@@ -63,14 +59,14 @@ bool Select::AddSelectableRoutePoint(float slat, float slon, RoutePoint* pRouteP
 	SelectItem* pSelItem = new SelectItem;
 	pSelItem->m_slat = slat;
 	pSelItem->m_slon = slon;
-	pSelItem->m_seltype = TYPE_ROUTEPOINT;
+	pSelItem->m_seltype = SelectItem::TYPE_ROUTEPOINT;
 	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd;
 
 	if (pRoutePointAdd->m_bIsInLayer)
-		pSelectList->push_back(pSelItem);
+		select_items.push_back(pSelItem);
 	else
-		pSelectList->push_front(pSelItem);
+		select_items.push_front(pSelItem);
 
 	return true;
 }
@@ -89,16 +85,16 @@ bool Select::AddSelectableRouteSegment(
 	pSelItem->m_slon = slon1;
 	pSelItem->m_slat2 = slat2;
 	pSelItem->m_slon2 = slon2;
-	pSelItem->m_seltype = TYPE_ROUTESEGMENT;
+	pSelItem->m_seltype = SelectItem::TYPE_ROUTESEGMENT;
 	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd1;
-	pSelItem->m_pData2 = pRoutePointAdd2;
-	pSelItem->m_pData3 = pRoute;
+	pSelItem->route_point = pRoutePointAdd2;
+	pSelItem->route = pRoute;
 
 	if (pRoute->m_bIsInLayer)
-		pSelectList->push_back(pSelItem);
+		select_items.push_back(pSelItem);
 	else
-		pSelectList->push_front(pSelItem);
+		select_items.push_front(pSelItem);
 
 	return true;
 }
@@ -106,14 +102,14 @@ bool Select::AddSelectableRouteSegment(
 bool Select::DeleteAllSelectableRouteSegments(Route* pr)
 {
 	// FIXME: refactor, use std algorithms
-	SelectableItemList::iterator i = pSelectList->begin();
-	while (i != pSelectList->end()) {
+	SelectableItemList::iterator i = select_items.begin();
+	while (i != select_items.end()) {
 		SelectItem* item = *i;
-		if (item->m_seltype == TYPE_ROUTESEGMENT) {
-			if (reinterpret_cast<Route*>(item->m_pData3) == pr) {
+		if (item->m_seltype == SelectItem::TYPE_ROUTESEGMENT) {
+			if (item->route == pr) {
 				delete item;
-				pSelectList->erase(i);
-				i = pSelectList->begin();
+				select_items.erase(i);
+				i = select_items.begin();
 				continue;
 			}
 		}
@@ -125,10 +121,10 @@ bool Select::DeleteAllSelectableRouteSegments(Route* pr)
 bool Select::DeleteAllSelectableRoutePoints(Route* pr)
 {
 	// FIXME: refactor, use std algorithms
-	SelectableItemList::iterator i = pSelectList->begin();
-	while (i != pSelectList->end()) {
+	SelectableItemList::iterator i = select_items.begin();
+	while (i != select_items.end()) {
 		SelectItem* item = *i;
-		if (item->m_seltype == TYPE_ROUTEPOINT) {
+		if (item->m_seltype == SelectItem::TYPE_ROUTEPOINT) {
 			RoutePoint* ps = (RoutePoint*)item->m_pData1;
 
 			// FIXME: replace with std::find
@@ -140,8 +136,8 @@ bool Select::DeleteAllSelectableRoutePoints(Route* pr)
 
 			if (j != pr->pRoutePointList->end()) {
 				delete item;
-				pSelectList->erase(i);
-				i = pSelectList->begin();
+				select_items.erase(i);
+				i = select_items.begin();
 				continue;
 			}
 		}
@@ -225,14 +221,14 @@ bool Select::UpdateSelectableRouteSegments(RoutePoint* prp)
 {
 	bool ret = false;
 
-	for (SelectableItemList::iterator i = pSelectList->begin(); i != pSelectList->end(); ++i) {
+	for (SelectableItemList::iterator i = select_items.begin(); i != select_items.end(); ++i) {
 		SelectItem* item = *i;
-		if (item->m_seltype == TYPE_ROUTESEGMENT) {
+		if (item->m_seltype == SelectItem::TYPE_ROUTESEGMENT) {
 			if (item->m_pData1 == prp) {
 				item->m_slat = prp->m_lat;
 				item->m_slon = prp->m_lon;
 				ret = true;
-			} else if (item->m_pData2 == prp) {
+			} else if (item->route_point == prp) {
 				item->m_slat2 = prp->m_lat;
 				item->m_slon2 = prp->m_lon;
 				ret = true;
@@ -243,7 +239,8 @@ bool Select::UpdateSelectableRouteSegments(RoutePoint* prp)
 	return ret;
 }
 
-SelectItem* Select::AddSelectablePoint(float slat, float slon, const void* pdata, int fseltype)
+SelectItem* Select::AddSelectablePoint(float slat, float slon, const void* pdata,
+									   SelectItem::Type fseltype)
 {
 	SelectItem* pSelItem = new SelectItem;
 	if (pSelItem) {
@@ -252,16 +249,16 @@ SelectItem* Select::AddSelectablePoint(float slat, float slon, const void* pdata
 		pSelItem->m_seltype = fseltype;
 		pSelItem->m_bIsSelected = false;
 		pSelItem->m_pData1 = pdata;
-		pSelectList->push_back(pSelItem);
+		select_items.push_back(pSelItem);
 	}
 	return pSelItem;
 }
 
 bool Select::DeleteAllPoints(void)
 {
-	for (SelectableItemList::iterator i = pSelectList->begin(); i != pSelectList->end(); ++i)
+	for (SelectableItemList::iterator i = select_items.begin(); i != select_items.end(); ++i)
 		delete *i;
-	pSelectList->clear();
+	select_items.clear();
 	return true;
 }
 
@@ -271,12 +268,12 @@ bool Select::DeleteSelectablePoint(void* pdata, int SeltypeToDelete)
 		return false;
 
 	// FIXME: refactor, use std algorithms
-	for (SelectableItemList::iterator i = pSelectList->begin(); i != pSelectList->end(); ++i) {
+	for (SelectableItemList::iterator i = select_items.begin(); i != select_items.end(); ++i) {
 		SelectItem* item = *i;
 		if (item->m_seltype == SeltypeToDelete) {
 			if (pdata == item->m_pData1) {
 				delete item;
-				pSelectList->erase(i);
+				select_items.erase(i);
 				return true;
 			}
 		}
@@ -287,13 +284,13 @@ bool Select::DeleteSelectablePoint(void* pdata, int SeltypeToDelete)
 bool Select::DeleteAllSelectableTypePoints(int SeltypeToDelete)
 {
 	// FIXME: refactor, use std algorithms
-	SelectableItemList::iterator i = pSelectList->begin();
-	while (i != pSelectList->end()) {
+	SelectableItemList::iterator i = select_items.begin();
+	while (i != select_items.end()) {
 		SelectItem* item = *i;
 		if (item->m_seltype == SeltypeToDelete) {
 			delete item;
-			pSelectList->erase(i);
-			i = pSelectList->begin();
+			select_items.erase(i);
+			i = select_items.begin();
 			continue;
 		}
 		++i;
@@ -304,7 +301,7 @@ bool Select::DeleteAllSelectableTypePoints(int SeltypeToDelete)
 bool Select::ModifySelectablePoint(float lat, float lon, void* data, int SeltypeToModify)
 {
 	// FIXME: refactor, use std algorithms
-	for (SelectableItemList::iterator i = pSelectList->begin(); i != pSelectList->end(); ++i) {
+	for (SelectableItemList::iterator i = select_items.begin(); i != select_items.end(); ++i) {
 		SelectItem* item = *i;
 		if (item->m_seltype == SeltypeToModify) {
 			if (data == item->m_pData1) {
@@ -331,16 +328,16 @@ bool Select::AddSelectableTrackSegment(
 	pSelItem->m_slon = slon1;
 	pSelItem->m_slat2 = slat2;
 	pSelItem->m_slon2 = slon2;
-	pSelItem->m_seltype = TYPE_TRACKSEGMENT;
+	pSelItem->m_seltype = SelectItem::TYPE_TRACKSEGMENT;
 	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd1;
-	pSelItem->m_pData2 = pRoutePointAdd2;
-	pSelItem->m_pData3 = pRoute;
+	pSelItem->route_point = pRoutePointAdd2;
+	pSelItem->route = pRoute;
 
 	if (pRoute->m_bIsInLayer)
-		pSelectList->push_back(pSelItem);
+		select_items.push_back(pSelItem);
 	else
-		pSelectList->push_front(pSelItem);
+		select_items.push_front(pSelItem);
 
 	return true;
 }
@@ -348,14 +345,14 @@ bool Select::AddSelectableTrackSegment(
 bool Select::DeleteAllSelectableTrackSegments(Route* pr)
 {
 	// FIXME: refactor, use std algorithms
-	SelectableItemList::iterator i = pSelectList->begin();
-	while (i != pSelectList->end()) {
+	SelectableItemList::iterator i = select_items.begin();
+	while (i != select_items.end()) {
 		SelectItem* item = *i;
-		if (item->m_seltype == TYPE_TRACKSEGMENT) {
-			if (((Route*)item->m_pData3) == pr) {
+		if (item->m_seltype == SelectItem::TYPE_TRACKSEGMENT) {
+			if (item->route == pr) {
 				delete item;
-				pSelectList->erase(i);
-				i = pSelectList->begin();
+				select_items.erase(i);
+				i = select_items.begin();
 				continue;
 			}
 		}
@@ -366,14 +363,14 @@ bool Select::DeleteAllSelectableTrackSegments(Route* pr)
 
 bool Select::DeletePointSelectableTrackSegments(RoutePoint* pr)
 {
-	SelectableItemList::iterator i = pSelectList->begin();
-	while (i != pSelectList->end()) {
+	SelectableItemList::iterator i = select_items.begin();
+	while (i != select_items.end()) {
 		SelectItem* item = *i;
-		if (item->m_seltype == TYPE_TRACKSEGMENT) {
-			if ((RoutePoint*)item->m_pData1 == pr || (RoutePoint*)item->m_pData2 == pr) {
+		if (item->m_seltype == SelectItem::TYPE_TRACKSEGMENT) {
+			if ((RoutePoint*)item->m_pData1 == pr || item->route_point == pr) {
 				delete item;
-				pSelectList->erase(i);
-				i = pSelectList->begin();
+				select_items.erase(i);
+				i = select_items.begin();
 				continue;
 			}
 		}
@@ -448,21 +445,21 @@ SelectItem* Select::FindSelection(float slat, float slon, int fseltype)
 {
 	CalcSelectRadius();
 
-	for (SelectableItemList::iterator i = pSelectList->begin(); i != pSelectList->end(); ++i) {
+	for (SelectableItemList::iterator i = select_items.begin(); i != select_items.end(); ++i) {
 		SelectItem* item = *i;
 		if (item->m_seltype == fseltype) {
 			switch (fseltype) {
-				case TYPE_ROUTEPOINT:
-				case TYPE_TIDEPOINT:
-				case TYPE_CURRENTPOINT:
-				case TYPE_AISTARGET:
+				case SelectItem::TYPE_ROUTEPOINT:
+				case SelectItem::TYPE_TIDEPOINT:
+				case SelectItem::TYPE_CURRENTPOINT:
+				case SelectItem::TYPE_AISTARGET:
 					if ((fabs(slat - item->m_slat) < selectRadius)
 						&& (fabs(slon - item->m_slon) < selectRadius))
 						return item;
 					break;
 
-				case TYPE_ROUTESEGMENT:
-				case TYPE_TRACKSEGMENT:
+				case SelectItem::TYPE_ROUTESEGMENT:
+				case SelectItem::TYPE_TRACKSEGMENT:
 					if (IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon,
 										  item->m_slon2, slat, slon))
 						return item;
@@ -488,24 +485,24 @@ SelectableItemList Select::FindSelectionList(float slat, float slon, int fseltyp
 	SelectableItemList ret_list;
 
 	CalcSelectRadius();
-	for (SelectableItemList::iterator i = pSelectList->begin(); i != pSelectList->end(); ++i) {
+	for (SelectableItemList::iterator i = select_items.begin(); i != select_items.end(); ++i) {
 		SelectItem* item = *i;
 		if (item->m_seltype != fseltype)
 			continue;
 
 		switch (fseltype) {
-			case TYPE_ROUTEPOINT:
-			case TYPE_TIDEPOINT:
-			case TYPE_CURRENTPOINT:
-			case TYPE_AISTARGET:
+			case SelectItem::TYPE_ROUTEPOINT:
+			case SelectItem::TYPE_TIDEPOINT:
+			case SelectItem::TYPE_CURRENTPOINT:
+			case SelectItem::TYPE_AISTARGET:
 				if ((fabs(slat - item->m_slat) < selectRadius)
 					&& (fabs(slon - item->m_slon) < selectRadius)) {
 					ret_list.push_back(item);
 				}
 				break;
 
-			case TYPE_ROUTESEGMENT:
-			case TYPE_TRACKSEGMENT:
+			case SelectItem::TYPE_ROUTESEGMENT:
+			case SelectItem::TYPE_TRACKSEGMENT:
 				if (IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon, item->m_slon2,
 									  slat, slon))
 					ret_list.push_back(item);

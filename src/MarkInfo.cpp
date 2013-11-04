@@ -781,7 +781,7 @@ void MarkInfoImpl::OnPositionCtlUpdated(wxCommandEvent&)
 
 	if (!m_pRoutePoint->m_bIsInLayer) {
 		m_pRoutePoint->SetPosition(lat, lon);
-		pSelect->ModifySelectablePoint(lat, lon, (void*)m_pRoutePoint, Select::TYPE_ROUTEPOINT);
+		pSelect->ModifySelectablePoint(lat, lon, (void*)m_pRoutePoint, SelectItem::TYPE_ROUTEPOINT);
 	}
 
 	// Update the mark position dynamically

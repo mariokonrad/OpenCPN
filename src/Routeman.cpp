@@ -868,7 +868,7 @@ void Routeman::DeleteRoute(Route * pRoute)
 				// This does not need to be done with navobj.xml storage, since the waypoints are stored with the route
 				// pConfig->DeleteWayPoint(prp);
 
-				pSelect->DeleteSelectablePoint(prp, Select::TYPE_ROUTEPOINT);
+				pSelect->DeleteSelectablePoint(prp, SelectItem::TYPE_ROUTEPOINT);
 
 				// Remove all instances of this point from the list.
 				wxRoutePointListNode *pdnode = pnode;
@@ -1003,7 +1003,7 @@ void Routeman::DeleteTrack(Route * pRoute)
 			if (!prp->m_bKeepXRoute) {
 				pConfig->m_bSkipChangeSetUpdate = true;
 				pConfig->DeleteWayPoint(prp);
-				pSelect->DeleteSelectablePoint(prp, Select::TYPE_ROUTEPOINT);
+				pSelect->DeleteSelectablePoint(prp, SelectItem::TYPE_ROUTEPOINT);
 				pConfig->m_bSkipChangeSetUpdate = false;
 
 				pRoute->pRoutePointList->DeleteNode(pnode);

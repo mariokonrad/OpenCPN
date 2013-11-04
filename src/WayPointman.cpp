@@ -585,7 +585,7 @@ void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_change
 
 	pConfig->m_bSkipChangeSetUpdate = false;
 
-	pSelect->DeleteSelectablePoint(route_point, Select::TYPE_ROUTEPOINT);
+	pSelect->DeleteSelectablePoint(route_point, SelectItem::TYPE_ROUTEPOINT);
 
 	//TODO  FIXME
 	// Some memory corruption occurs if the wp is deleted here.

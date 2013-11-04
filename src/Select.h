@@ -31,20 +31,6 @@
 class Select
 {
 public:
-	enum Type
-	{
-		TYPE_UNKNOWN      = 0x0001,
-		TYPE_ROUTEPOINT   = 0x0002,
-		TYPE_ROUTESEGMENT = 0x0004,
-		TYPE_TIDEPOINT    = 0x0008,
-		TYPE_CURRENTPOINT = 0x0010,
-		TYPE_ROUTECREATE  = 0x0020,
-		TYPE_AISTARGET    = 0x0040,
-		TYPE_MARKPOINT    = 0x0080,
-		TYPE_TRACKSEGMENT = 0x0100
-	};
-
-public:
 	Select();
 	~Select();
 
@@ -75,7 +61,7 @@ public:
 
 	// Generic Point Support
 	// e.g. Tides/Currents and AIS Targets
-	SelectItem* AddSelectablePoint(float slat, float slon, const void* data, int fseltype);
+	SelectItem* AddSelectablePoint(float slat, float slon, const void* data, SelectItem::Type fseltype);
 	bool DeleteAllPoints(void);
 	bool DeleteSelectablePoint(void* data, int SeltypeToDelete);
 	bool ModifySelectablePoint(float slat, float slon, void* data, int fseltype);
@@ -86,7 +72,7 @@ public:
 private:
 	void CalcSelectRadius();
 
-	SelectableItemList* pSelectList;
+	SelectableItemList select_items;
 	int pixelRadius;
 	float selectRadius;
 };

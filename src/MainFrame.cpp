@@ -1246,7 +1246,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 					// caveat: this is accurate only on the Equator
 					if ((l * 60.0 * 1852.0) < (0.25 * 1852.0)) {
 						pConfig->DeleteWayPoint(pr);
-						pSelect->DeleteSelectablePoint(pr, Select::TYPE_ROUTEPOINT);
+						pSelect->DeleteSelectablePoint(pr, SelectItem::TYPE_ROUTEPOINT);
 						delete pr;
 						break;
 					}

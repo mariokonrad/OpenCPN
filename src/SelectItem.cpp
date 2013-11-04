@@ -24,18 +24,22 @@
 #include "SelectItem.h"
 
 SelectItem::SelectItem()
+	: m_pData1(0)
+	, route_point(0)
+	, route(0)
+	, user_data(0)
 {}
 
 SelectItem::~SelectItem()
 {}
 
-int SelectItem::GetUserData(void)
+int SelectItem::GetUserData(void) const
 {
-	return m_Data4;
+	return user_data;
 }
 
 void SelectItem::SetUserData(int data)
 {
-	m_Data4 = data;
+	user_data = data;
 }
 

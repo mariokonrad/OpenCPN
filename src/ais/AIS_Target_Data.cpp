@@ -145,18 +145,18 @@ AIS_Target_Data::~AIS_Target_Data()
 	delete m_ptrack;
 }
 
-wxString AIS_Target_Data::GetFullName( void )
+wxString AIS_Target_Data::GetFullName(void)
 {
 	wxString retName;
-	if( b_nameValid ) {
-		wxString shipName = trimAISField( ShipName );
-		if( shipName == _T("Unknown") )
-			retName = wxGetTranslation( shipName );
+	if (b_nameValid) {
+		wxString shipName = trimAISField(ShipName);
+		if (shipName == _T("Unknown"))
+			retName = wxGetTranslation(shipName);
 		else
 			retName = shipName;
 
-		if( strlen( ShipNameExtension ) ) {
-			wxString shipNameExt = trimAISField( ShipNameExtension );
+		if (strlen(ShipNameExtension)) {
+			wxString shipNameExt = trimAISField(ShipNameExtension);
 			retName += shipNameExt;
 		}
 	}
@@ -164,7 +164,7 @@ wxString AIS_Target_Data::GetFullName( void )
 	return retName;
 }
 
-wxString AIS_Target_Data::BuildQueryResult( void )
+wxString AIS_Target_Data::BuildQueryResult(void)
 {
 	wxString html;
 	wxDateTime now = wxDateTime::Now();

@@ -381,6 +381,7 @@ SET(HDR_AIS
 	src/ais/AISTargetAlertDialog.h
 	src/ais/AIS_Decoder.h
 	src/ais/AIS_Target_Data.h
+	src/ais/AISTargetTrackPoint.h
 	)
 
 SET(SRC_AIS

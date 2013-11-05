@@ -3718,9 +3718,9 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 	// If AIS tracks are shown, is the first point of the track on-screen?
 	if (g_bAISShowTracks && td->b_show_track) {
-		wxAISTargetTrackListNode* node = td->m_ptrack->GetFirst();
-		if (node) {
-			AISTargetTrackPoint* ptrack_point = node->GetData();
+		ais::AISTargetTrackList::const_iterator i = td->m_ptrack->begin();
+		if (i != td->m_ptrack->end()) {
+			const AISTargetTrackPoint* ptrack_point = *i;
 			if (GetVP().GetBBox().PointInBox(ptrack_point->m_lon, ptrack_point->m_lat, 0))
 				drawit++;
 		}
@@ -4290,20 +4290,20 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 			dc.SetPen(wxPen(GetGlobalColor(_T ( "CHMGD" )), 2));
 
-			//    First point
-			wxAISTargetTrackListNode* node = td->m_ptrack->GetFirst();
-			if (node) {
-				AISTargetTrackPoint* ptrack_point = node->GetData();
+			// First point
+			ais::AISTargetTrackList::iterator index = td->m_ptrack->begin();
+			if (index != td->m_ptrack->end()) {
+				AISTargetTrackPoint* ptrack_point = *index;
 				GetCanvasPointPix(ptrack_point->m_lat, ptrack_point->m_lon, &TrackPointA);
-				node = node->GetNext();
+				++index;
 			}
-			while (node) {
-				AISTargetTrackPoint* ptrack_point = node->GetData();
+			while (index != td->m_ptrack->end()) {
+				AISTargetTrackPoint* ptrack_point = *index;
 				GetCanvasPointPix(ptrack_point->m_lat, ptrack_point->m_lon, &TrackPointB);
 
 				dc.StrokeLine(TrackPointA, TrackPointB);
 
-				node = node->GetNext();
+				++index;
 				TrackPointA = TrackPointB;
 			}
 		}

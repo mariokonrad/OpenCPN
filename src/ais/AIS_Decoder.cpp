@@ -1482,200 +1482,206 @@ bool AIS_Decoder::Parse_VDXBitstring( AIS_Bitstring *bstr, AIS_Target_Data *ptd 
 	return parse_result;
 }
 
-bool AIS_Decoder::NMEACheckSumOK( const wxString& str_in )
+bool AIS_Decoder::NMEACheckSumOK(const wxString& str_in)
 {
 
 	unsigned char checksum_value = 0;
 	int sentence_hex_sum;
 
 	char str_ascii[AIS_MAX_MESSAGE_LEN + 1];
-	strncpy( str_ascii, str_in.mb_str(), AIS_MAX_MESSAGE_LEN );
+	strncpy(str_ascii, str_in.mb_str(), AIS_MAX_MESSAGE_LEN);
 	str_ascii[AIS_MAX_MESSAGE_LEN] = '\0';
 
-	int string_length = strlen( str_ascii );
+	int string_length = strlen(str_ascii);
 
 	int payload_length = 0;
-	while( ( payload_length < string_length ) && ( str_ascii[payload_length] != '*' ) ) // look for '*'
+	while ((payload_length < string_length) && (str_ascii[payload_length] != '*')) // look for '*'
 		payload_length++;
 
-	if( payload_length == string_length ) return false; // '*' not found at all, no checksum
+	if (payload_length == string_length)
+		return false; // '*' not found at all, no checksum
 
 	int index = 1; // Skip over the $ at the begining of the sentence
 
-	while( index < payload_length ) {
+	while (index < payload_length) {
 		checksum_value ^= str_ascii[index];
 		index++;
 	}
 
-	if( string_length > 4 ) {
+	if (string_length > 4) {
 		char scanstr[3];
 		scanstr[0] = str_ascii[payload_length + 1];
 		scanstr[1] = str_ascii[payload_length + 2];
 		scanstr[2] = 0;
-		sscanf( scanstr, "%2x", &sentence_hex_sum );
+		sscanf(scanstr, "%2x", &sentence_hex_sum);
 
-		if( sentence_hex_sum == checksum_value ) return true;
+		if (sentence_hex_sum == checksum_value)
+			return true;
 	}
 
 	return false;
 }
 
-void AIS_Decoder::UpdateAllCPA( void )
+void AIS_Decoder::UpdateAllCPA(void)
 {
-	//    Iterate thru all the targets
+	// Iterate thru all the targets
 	AIS_Target_Hash::iterator it;
-	AIS_Target_Hash *current_targets = GetTargetList();
+	AIS_Target_Hash* current_targets = GetTargetList();
 
-	for( it = ( *current_targets ).begin(); it != ( *current_targets ).end(); ++it ) {
-		AIS_Target_Data *td = it->second;
+	for (it = current_targets->begin(); it != current_targets->end(); ++it) {
+		AIS_Target_Data* td = it->second;
 
-		if( NULL != td ) UpdateOneCPA( td );
+		if (NULL != td)
+			UpdateOneCPA(td);
 	}
 }
 
-void AIS_Decoder::UpdateAllTracks( void )
+void AIS_Decoder::UpdateAllTracks(void)
 {
-	//    Iterate thru all the targets
+	// Iterate thru all the targets
 	AIS_Target_Hash::iterator it;
-	AIS_Target_Hash *current_targets = GetTargetList();
+	AIS_Target_Hash* current_targets = GetTargetList();
 
-	for( it = ( *current_targets ).begin(); it != ( *current_targets ).end(); ++it ) {
-		AIS_Target_Data *td = it->second;
+	for (it = current_targets->begin(); it != current_targets->end(); ++it) {
+		AIS_Target_Data* td = it->second;
 
-		if( NULL != td ) UpdateOneTrack( td );
+		if (NULL != td)
+			UpdateOneTrack(td);
 	}
 }
 
-void AIS_Decoder::UpdateOneTrack( AIS_Target_Data *ptarget )
+void AIS_Decoder::UpdateOneTrack(AIS_Target_Data* ptarget)
 {
-	if( !ptarget->b_positionOnceValid ) return;
+	if (!ptarget->b_positionOnceValid)
+		return;
 
-	//    Add the newest point
-	AISTargetTrackPoint *ptrackpoint = new AISTargetTrackPoint;
+	// Add the newest point
+	AISTargetTrackPoint* ptrackpoint = new AISTargetTrackPoint;
 	ptrackpoint->m_lat = ptarget->Lat;
 	ptrackpoint->m_lon = ptarget->Lon;
 	ptrackpoint->m_time = wxDateTime::Now().GetTicks();
 
-	ptarget->m_ptrack->Append( ptrackpoint );
+	ptarget->m_ptrack->push_back(ptrackpoint);
 
-	//    Walk the list, removing any track points that are older than the stipulated time
+	// Walk the list, removing any track points that are older than the stipulated time
 
-	time_t test_time = wxDateTime::Now().GetTicks() - (time_t) ( g_AISShowTracks_Mins * 60 );
+	time_t test_time = wxDateTime::Now().GetTicks() - (time_t)(g_AISShowTracks_Mins * 60);
 
-	wxAISTargetTrackListNode *node = ptarget->m_ptrack->GetFirst();
-	while( node ) {
-		AISTargetTrackPoint *ptrack_point = node->GetData();
+	AISTargetTrackList::iterator i = ptarget->m_ptrack->begin();
+	while (i != ptarget->m_ptrack->end()) {
+		const AISTargetTrackPoint* ptrack_point = *i;
 
-		if( ptrack_point->m_time < test_time ) {
-			if( ptarget->m_ptrack->DeleteObject( ptrack_point ) ) {
-				delete ptrack_point;
-				node = ptarget->m_ptrack->GetFirst();                // restart the list
-			}
-		} else
-			node = node->GetNext();
+		if (ptrack_point->m_time < test_time) {
+			ptarget->m_ptrack->erase(i);
+			delete ptrack_point;
+			i = ptarget->m_ptrack->begin(); // restart the list
+		} else {
+			++i;
+		}
 	}
 }
 
-void AIS_Decoder::UpdateAllAlarms( void )
+void AIS_Decoder::UpdateAllAlarms(void)
 {
-	m_bGeneralAlert = false;                // no alerts yet
+	m_bGeneralAlert = false; // no alerts yet
 
 	//    Iterate thru all the targets
 	AIS_Target_Hash::iterator it;
-	AIS_Target_Hash *current_targets = GetTargetList();
+	AIS_Target_Hash* current_targets = GetTargetList();
 
-	for( it = ( *current_targets ).begin(); it != ( *current_targets ).end(); ++it ) {
-		AIS_Target_Data *td = it->second;
+	for (it = current_targets->begin(); it != current_targets->end(); ++it) {
+		AIS_Target_Data* td = it->second;
 
-		if( NULL != td ) {
+		if (NULL != td) {
 			//  Maintain General Alert
-			if( !m_bGeneralAlert ) {
+			if (!m_bGeneralAlert) {
 				//    Quick check on basic condition
-				if( ( td->CPA < g_CPAWarn_NM ) && ( td->TCPA > 0 ) && ( td->Class != AIS_ATON ) )
+				if ((td->CPA < g_CPAWarn_NM) && (td->TCPA > 0) && (td->Class != AIS_ATON))
 					m_bGeneralAlert = true;
 
 				//    Some options can suppress general alerts
-				if( g_bAIS_CPA_Alert_Suppress_Moored && ( td->SOG <= g_ShowMoored_Kts ) )
+				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= g_ShowMoored_Kts))
 					m_bGeneralAlert = false;
 
 				//    Skip distant targets if requested
-				if( ( g_bCPAMax ) && ( td->Range_NM > g_CPAMax_NM ) )
+				if ((g_bCPAMax) && (td->Range_NM > g_CPAMax_NM))
 					m_bGeneralAlert = false;
 
 				//    Skip if TCPA is too long
-				if( ( g_bTCPA_Max ) && ( td->TCPA > g_TCPA_Max ) )
+				if ((g_bTCPA_Max) && (td->TCPA > g_TCPA_Max))
 					m_bGeneralAlert = false;
 
 				//  SART targets always alert
-				if( td->Class == AIS_SART )
+				if (td->Class == AIS_SART)
 					m_bGeneralAlert = true;
 
 				//  DSC Distress targets always alert
-				if( ( td->Class == AIS_DSC ) && ( td->ShipType == 12 ) )
+				if ((td->Class == AIS_DSC) && (td->ShipType == 12))
 					m_bGeneralAlert = true;
 			}
 
 			ais_alarm_type this_alarm = AIS_NO_ALARM;
 
 			//  SART targets always alert
-			if( td->Class == AIS_SART )
+			if (td->Class == AIS_SART)
 				this_alarm = AIS_ALARM_SET;
 
 			//  DSC Distress targets always alert
-			if( ( td->Class == AIS_DSC ) && ( td->ShipType == 12 ) )
+			if ((td->Class == AIS_DSC) && (td->ShipType == 12))
 				this_alarm = AIS_ALARM_SET;
 
-			if( g_bCPAWarn && td->b_active && td->b_positionOnceValid &&
-					( td->Class != AIS_SART ) && ( td->Class != AIS_DSC ) ) {
+			if (g_bCPAWarn && td->b_active && td->b_positionOnceValid && (td->Class != AIS_SART)
+				&& (td->Class != AIS_DSC)) {
 				//      Skip anchored/moored(interpreted as low speed) targets if requested
-				if( ( !g_bShowMoored ) && ( td->SOG <= g_ShowMoored_Kts ) ) {       // dsr
+				if ((!g_bShowMoored) && (td->SOG <= g_ShowMoored_Kts)) { // dsr
 					td->n_alarm_state = AIS_NO_ALARM;
 					continue;
 				}
 
 				//    No Alert on moored(interpreted as low speed) targets if so requested
-				if( g_bAIS_CPA_Alert_Suppress_Moored && ( td->SOG <= g_ShowMoored_Kts ) ) {    // dsr
+				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= g_ShowMoored_Kts)) { // dsr
 					td->n_alarm_state = AIS_NO_ALARM;
 					continue;
 				}
 
 				//    Skip distant targets if requested
-				if( g_bCPAMax ) {
-					if( td->Range_NM > g_CPAMax_NM ) {
+				if (g_bCPAMax) {
+					if (td->Range_NM > g_CPAMax_NM) {
 						td->n_alarm_state = AIS_NO_ALARM;
 						continue;
 					}
 				}
 
-				if( ( td->CPA < g_CPAWarn_NM ) && ( td->TCPA > 0 ) && ( td->Class != AIS_ATON ) ) {
-					if( g_bTCPA_Max ) {
-						if( td->TCPA < g_TCPA_Max ) this_alarm = AIS_ALARM_SET;
+				if ((td->CPA < g_CPAWarn_NM) && (td->TCPA > 0) && (td->Class != AIS_ATON)) {
+					if (g_bTCPA_Max) {
+						if (td->TCPA < g_TCPA_Max)
+							this_alarm = AIS_ALARM_SET;
 					} else
 						this_alarm = AIS_ALARM_SET;
 				}
 			}
 
+			// Maintain the timer for in_ack flag
+			// SART and DSC targets always maintain ack timeout
 
-			//    Maintain the timer for in_ack flag
-			//  SART and DSC targets always maintain ack timeout
-
-			if( g_bAIS_ACK_Timeout || (td->Class == AIS_SART) || ((td->Class == AIS_DSC) && (td->ShipType == 12))) {
-				if( td->b_in_ack_timeout ) {
+			if (g_bAIS_ACK_Timeout || (td->Class == AIS_SART)
+				|| ((td->Class == AIS_DSC) && (td->ShipType == 12))) {
+				if (td->b_in_ack_timeout) {
 					wxTimeSpan delta = wxDateTime::Now() - td->m_ack_time;
-					if( delta.GetMinutes() > g_AckTimeout_Mins ) td->b_in_ack_timeout = false;
+					if (delta.GetMinutes() > g_AckTimeout_Mins)
+						td->b_in_ack_timeout = false;
 				}
 			} else
 				td->b_in_ack_timeout = false;
 
 			td->n_alarm_state = this_alarm;
-
 		}
 	}
 }
 
-void AIS_Decoder::UpdateOneCPA(AIS_Target_Data * ptarget)
+void AIS_Decoder::UpdateOneCPA(AIS_Target_Data* ptarget)
 {
-	ptarget->Range_NM = -1.0;            // Defaults
+	ptarget->Range_NM = -1.0; // Defaults
 	ptarget->Brg = -1.0;
 
 	if (!ptarget->b_positionOnceValid || !bGPSValid) {
@@ -1683,7 +1689,7 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data * ptarget)
 		return;
 	}
 
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
 	// Compute the current Range/Brg to the target
 	double brg, dist;
@@ -1713,10 +1719,24 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data * ptarget)
 		return;
 	}
 
-	//    Ownship is maybe anchored and not reporting COG
+	// Ownship is maybe anchored and not reporting COG
 	if (wxIsNaN(nav.cog) || nav.cog == 360.0) {
-		if (nav.sog < 0.01)
-			cpa_calc_ownship_cog = 0.0;          // substitute value
+		if (nav.sog < 0.01) {
+			cpa_calc_ownship_cog = 0.0; // substitute value
+		} else {
+			// for the case where SOG ~= 0, and COG is unknown.
+			ptarget->bCPA_Valid = false;
+			return;
+		}
+	}
+
+	// Target is maybe anchored and not reporting COG
+	if (ptarget->COG == 360.0) {
+		if (ptarget->SOG > 102.2) {
+			ptarget->bCPA_Valid = false;
+			return;
+		} else if (ptarget->SOG < 0.01)
+			cpa_calc_target_cog = 0.0; // substitute value
 		// for the case where SOG ~= 0, and COG is unknown.
 		else {
 			ptarget->bCPA_Valid = false;
@@ -1724,20 +1744,7 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data * ptarget)
 		}
 	}
 
-	//    Target is maybe anchored and not reporting COG
-	if( ptarget->COG == 360.0 ) {
-		if( ptarget->SOG > 102.2 ) {
-			ptarget->bCPA_Valid = false;
-			return;
-		} else if( ptarget->SOG < .01 ) cpa_calc_target_cog = 0.;           // substitute value
-		// for the case where SOG ~= 0, and COG is unknown.
-		else {
-			ptarget->bCPA_Valid = false;
-			return;
-		}
-	}
-
-	//    Express the SOGs as meters per hour
+	// Express the SOGs as meters per hour
 	double v0 = nav.sog * 1852.0;
 	double v1 = ptarget->SOG * 1852.0;
 
@@ -1751,51 +1758,55 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data * ptarget)
 		// Working on a Reduced Lat/Lon orthogonal plotting sheet....
 		// Get easting/northing to target,  in meters
 
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-		double east1 = ( ptarget->Lon - nav.lon) * 60 * 1852.0;
-		double north1 = ( ptarget->Lat - nav.lat) * 60 * 1852.0;
+		double east1 = (ptarget->Lon - nav.lon) * 60 * 1852.0;
+		double north1 = (ptarget->Lat - nav.lat) * 60 * 1852.0;
 
-		double east = east1 * ( cos( nav.lat * M_PI / 180.0 ) );
+		double east = east1 * (cos(nav.lat * M_PI / 180.0));
 		double north = north1;
 
 		//    Convert COGs trigonometry to standard unit circle
-		double cosa = cos( ( 90.0 - cpa_calc_ownship_cog ) * M_PI / 180.0);
-		double sina = sin( ( 90.0 - cpa_calc_ownship_cog ) * M_PI / 180.0);
-		double cosb = cos( ( 90.0 - cpa_calc_target_cog ) * M_PI / 180.0);
-		double sinb = sin( ( 90.0 - cpa_calc_target_cog ) * M_PI / 180.0);
+		double cosa = cos((90.0 - cpa_calc_ownship_cog) * M_PI / 180.0);
+		double sina = sin((90.0 - cpa_calc_ownship_cog) * M_PI / 180.0);
+		double cosb = cos((90.0 - cpa_calc_target_cog) * M_PI / 180.0);
+		double sinb = sin((90.0 - cpa_calc_target_cog) * M_PI / 180.0);
 
 		//    These will be useful
-		double fc = ( v0 * cosa ) - ( v1 * cosb );
-		double fs = ( v0 * sina ) - ( v1 * sinb );
+		double fc = (v0 * cosa) - (v1 * cosb);
+		double fs = (v0 * sina) - (v1 * sinb);
 
-		double d = ( fc * fc ) + ( fs * fs );
+		double d = (fc * fc) + (fs * fs);
 		double tcpa;
 
 		// the tracks are almost parallel
-		if (fabs( d ) < 1e-6)
+		if (fabs(d) < 1e-6) {
 			tcpa = 0.0;
-		else
-			//    Here is the equation for t, which will be in hours
-			tcpa = ( ( fc * east ) + ( fs * north ) ) / d;
+		} else {
+			// Here is the equation for t, which will be in hours
+			tcpa = ((fc * east) + (fs * north)) / d;
+		}
 
-		//    Convert to minutes
-		ptarget->TCPA = tcpa * 60.;
+		// Convert to minutes
+		ptarget->TCPA = tcpa * 60.0;
 
-		//    Calculate CPA
-		//    Using TCPA, predict ownship and target positions
+		// Calculate CPA
+		// Using TCPA, predict ownship and target positions
 
 		double OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA;
 
-		geo::ll_gc_ll(nav.lat, nav.lon, cpa_calc_ownship_cog, nav.sog * tcpa, &OwnshipLatCPA, &OwnshipLonCPA);
-		geo::ll_gc_ll(ptarget->Lat, ptarget->Lon, cpa_calc_target_cog, ptarget->SOG * tcpa, &TargetLatCPA, &TargetLonCPA);
+		geo::ll_gc_ll(nav.lat, nav.lon, cpa_calc_ownship_cog, nav.sog * tcpa, &OwnshipLatCPA,
+					  &OwnshipLonCPA);
+		geo::ll_gc_ll(ptarget->Lat, ptarget->Lon, cpa_calc_target_cog, ptarget->SOG * tcpa,
+					  &TargetLatCPA, &TargetLonCPA);
 
 		//   And compute the distance
-		ptarget->CPA = geo::DistGreatCircle(OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA);
+		ptarget->CPA
+			= geo::DistGreatCircle(OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA);
 
 		ptarget->bCPA_Valid = true;
 
-		if( ptarget->TCPA < 0 )
+		if (ptarget->TCPA < 0)
 			ptarget->bCPA_Valid = false;
 	}
 }
@@ -1822,43 +1833,45 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent & WXUNUSED(event))
 {
 	TimerAIS.Stop();
 
-	//    Scrub the target hash list
-	//    removing any targets older than stipulated age
+	// Scrub the target hash list
+	// removing any targets older than stipulated age
 
 	wxDateTime now = wxDateTime::Now();
 	now.MakeGMT();
 
 	AIS_Target_Hash::iterator it;
-	AIS_Target_Hash *current_targets = GetTargetList();
+	AIS_Target_Hash* current_targets = GetTargetList();
 
-	it = ( *current_targets ).begin();
-	while( it != ( *current_targets ).end() ) {
+	it = (*current_targets).begin();
+	while (it != (*current_targets).end()) {
 		bool b_new_it = false;
 
-		AIS_Target_Data *td = it->second;
+		AIS_Target_Data* td = it->second;
 
-		if( NULL == td )                        // This should never happen, but I saw it once....
-		{
-			current_targets->erase( it );
-			break;                          // leave the loop
+		if (NULL == td) { // This should never happen, but I saw it once....
+			current_targets->erase(it);
+			break; // leave the loop
 		}
 
 		int target_posn_age = now.GetTicks() - td->PositionReportTicks;
 		int target_static_age = now.GetTicks() - td->StaticReportTicks;
 
-		//      Mark lost targets if specified
-		if( g_bMarkLost ) {
-			if( ( target_posn_age > g_MarkLost_Mins * 60 ) && ( td->Class != AIS_GPSG_BUDDY ) ) td->b_active = false;
+		// Mark lost targets if specified
+		if (g_bMarkLost) {
+			if ((target_posn_age > g_MarkLost_Mins * 60) && (td->Class != AIS_GPSG_BUDDY))
+				td->b_active = false;
 		}
 
-		//      Remove lost targets if specified
-		double removelost_Mins = fmax(g_RemoveLost_Mins,g_MarkLost_Mins);
+		// Remove lost targets if specified
+		double removelost_Mins = fmax(g_RemoveLost_Mins, g_MarkLost_Mins);
 
-		if( td->Class == AIS_SART ) removelost_Mins = 18.0;
+		if (td->Class == AIS_SART)
+			removelost_Mins = 18.0;
 
-		if( g_bRemoveLost ) {
-			if( ( target_posn_age > removelost_Mins * 60 ) && ( td->Class != AIS_GPSG_BUDDY ) ) {
-				//      So mark the target as lost, with unknown position, and make it not selectable
+		if (g_bRemoveLost) {
+			if ((target_posn_age > removelost_Mins * 60) && (td->Class != AIS_GPSG_BUDDY)) {
+				//      So mark the target as lost, with unknown position, and make it not
+				// selectable
 				td->b_lost = true;
 				td->b_positionOnceValid = false;
 				td->COG = 360.0;
@@ -1867,73 +1880,72 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent & WXUNUSED(event))
 				td->ROTAIS = -128;
 
 				long mmsi_long = td->MMSI;
-				pSelectAIS->DeleteSelectablePoint((void *) mmsi_long, SelectItem::TYPE_AISTARGET);
+				pSelectAIS->DeleteSelectablePoint((void*)mmsi_long, SelectItem::TYPE_AISTARGET);
 
-				//      If we have not seen a static report in 3 times the removal spec,
-				//      then remove the target from all lists.
-				if( target_static_age > removelost_Mins * 60 * 3 ) {
-					current_targets->erase( it );
+				// If we have not seen a static report in 3 times the removal spec,
+				// then remove the target from all lists.
+				if (target_static_age > removelost_Mins * 60 * 3) {
+					current_targets->erase(it);
 					delete td;
 
-					//      Reset the iterator on item erase.
-					it = ( *current_targets ).begin();
+					// Reset the iterator on item erase.
+					it = (*current_targets).begin();
 					b_new_it = true;
 				}
 			}
 		}
 
-		if( !b_new_it ) ++it;
+		if (!b_new_it)
+			++it;
 	}
 
 	UpdateAllCPA();
 	UpdateAllAlarms();
 
-	//    Update the general suppression flag
+	// Update the general suppression flag
 	m_bSuppressed = false;
-	if( g_bAIS_CPA_Alert_Suppress_Moored || !g_bShowMoored ) m_bSuppressed = true;
+	if (g_bAIS_CPA_Alert_Suppress_Moored || !g_bShowMoored)
+		m_bSuppressed = true;
 
-	m_bAIS_Audio_Alert_On = false;            // default, may be set on
+	m_bAIS_Audio_Alert_On = false; // default, may be set on
 
-	//    Process any Alarms
+	// Process any Alarms
 
-	//    If the AIS Alert Dialog is not currently shown....
+	// If the AIS Alert Dialog is not currently shown....
 
-	//    Scan all targets, looking for SART, DSC Distress, and CPA incursions
-	//    In the case of multiple targets of the same type, select the shortest range or shortest TCPA
+	// Scan all targets, looking for SART, DSC Distress, and CPA incursions
+	// In the case of multiple targets of the same type, select the shortest range or shortest TCPA
 
-	if( NULL == g_pais_alert_dialog_active ) {
-		double tcpa_min = 1e6;             // really long
+	if (NULL == g_pais_alert_dialog_active) {
+		double tcpa_min = 1e6; // really long
 		double sart_range = 1e6;
-		AIS_Target_Data *palarm_target_cpa = NULL;
-		AIS_Target_Data *palarm_target_sart = NULL;
-		AIS_Target_Data *palarm_target_dsc = NULL;
+		AIS_Target_Data* palarm_target_cpa = NULL;
+		AIS_Target_Data* palarm_target_sart = NULL;
+		AIS_Target_Data* palarm_target_dsc = NULL;
 
-		for( it = ( *current_targets ).begin(); it != ( *current_targets ).end(); ++it ) {
-			AIS_Target_Data *td = it->second;
-			if( td ) {
-				if( (td->Class != AIS_SART) &&  (td->Class != AIS_DSC) ) {
+		for (it = (*current_targets).begin(); it != (*current_targets).end(); ++it) {
+			AIS_Target_Data* td = it->second;
+			if (td) {
+				if ((td->Class != AIS_SART) && (td->Class != AIS_DSC)) {
 
-					if( g_bAIS_CPA_Alert && td->b_active ) {
-						if( ( AIS_ALARM_SET == td->n_alarm_state ) && !td->b_in_ack_timeout ) {
-							if( td->TCPA < tcpa_min ) {
+					if (g_bAIS_CPA_Alert && td->b_active) {
+						if ((AIS_ALARM_SET == td->n_alarm_state) && !td->b_in_ack_timeout) {
+							if (td->TCPA < tcpa_min) {
 								tcpa_min = td->TCPA;
 								palarm_target_cpa = td;
 							}
 						}
 					}
-				}
-				else if( (td->Class == AIS_DSC ) && ( td->ShipType == 12) ){
-					if( td->b_active ) {
-						if( ( AIS_ALARM_SET == td->n_alarm_state ) && !td->b_in_ack_timeout ) {
+				} else if ((td->Class == AIS_DSC) && (td->ShipType == 12)) {
+					if (td->b_active) {
+						if ((AIS_ALARM_SET == td->n_alarm_state) && !td->b_in_ack_timeout) {
 							palarm_target_dsc = td;
 						}
 					}
-				}
-
-				else if( td->Class == AIS_SART ){
-					if( td->b_active ) {
-						if( ( AIS_ALARM_SET == td->n_alarm_state ) && !td->b_in_ack_timeout ) {
-							if( td->Range_NM < sart_range ) {
+				} else if (td->Class == AIS_SART) {
+					if (td->b_active) {
+						if ((AIS_ALARM_SET == td->n_alarm_state) && !td->b_in_ack_timeout) {
+							if (td->Range_NM < sart_range) {
 								tcpa_min = sart_range;
 								palarm_target_sart = td;
 							}
@@ -1943,115 +1955,108 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent & WXUNUSED(event))
 			}
 		}
 
-		//    Which of multiple targets?
-		//    Give priority to SART targets, then DSC Distress, then CPA incursion
+		// Which of multiple targets?
+		// Give priority to SART targets, then DSC Distress, then CPA incursion
 
-		AIS_Target_Data *palarm_target = palarm_target_cpa;
+		AIS_Target_Data* palarm_target = palarm_target_cpa;
 
-		if( palarm_target_sart )
+		if (palarm_target_sart)
 			palarm_target = palarm_target_sart;
 
-		if( palarm_target_dsc )
+		if (palarm_target_dsc)
 			palarm_target = palarm_target_dsc;
 
-
-		//    Show the alert
-		if( palarm_target ) {
+		// Show the alert
+		if (palarm_target) {
 
 			bool b_jumpto = (palarm_target->Class == AIS_SART) || (palarm_target->Class == AIS_DSC);
 
-			//    Show the Alert dialog
+			// Show the Alert dialog
 
-			//      See FS# 968/998
-			//      If alert occurs while OCPN is iconized to taskbar, then clicking the taskbar icon
-			//      only brings up the Alert dialog, and not the entire application.
-			//      This is an OS specific behavior, not seen on linux or Mac.
-			//      This patch will allow the audio alert to occur, and the visual alert will pop up soon
-			//      after the user selects the OCPN icon from the taskbar. (on the next timer tick, probably)
+			// See FS# 968/998
+			// If alert occurs while OCPN is iconized to taskbar, then clicking the taskbar icon
+			// only brings up the Alert dialog, and not the entire application.
+			// This is an OS specific behavior, not seen on linux or Mac.
+			// This patch will allow the audio alert to occur, and the visual alert will pop up soon
+			// after the user selects the OCPN icon from the taskbar. (on the next timer tick,
+			// probably)
 
-            if (gFrame->IsIconized() || !gFrame->IsActive())
-                gFrame->RequestUserAttention();
-			if (!gFrame->IsIconized())
-			{
-				AISTargetAlertDialog *pAISAlertDialog = new AISTargetAlertDialog();
-				pAISAlertDialog->Create(
-						palarm_target->MMSI,
-						m_parent_frame,
-						this,
-						b_jumpto,
-						-1,
-						_("AIS Alert"),
-						global::OCPN::get().gui().ais_alert_dialog().position,
-						global::OCPN::get().gui().ais_alert_dialog().size);
+			if (gFrame->IsIconized() || !gFrame->IsActive())
+				gFrame->RequestUserAttention();
+			if (!gFrame->IsIconized()) {
+				AISTargetAlertDialog* pAISAlertDialog = new AISTargetAlertDialog();
+				pAISAlertDialog->Create(palarm_target->MMSI, m_parent_frame, this, b_jumpto, -1,
+										_("AIS Alert"),
+										global::OCPN::get().gui().ais_alert_dialog().position,
+										global::OCPN::get().gui().ais_alert_dialog().size);
 
 				g_pais_alert_dialog_active = pAISAlertDialog;
-				pAISAlertDialog->Show();                     // Show modeless, so it stays on the screen
+				pAISAlertDialog->Show(); // Show modeless, so it stays on the screen
 			}
 
 			//    Audio alert if requested
-			m_bAIS_Audio_Alert_On = true;             // always on when alert is first shown
+			m_bAIS_Audio_Alert_On = true; // always on when alert is first shown
 		}
-	}
+	} else {
+		// The AIS Alert dialog is already shown.  If the  dialog MMSI number is still alerted,
+		// update the dialog
+		// otherwise, destroy the dialog
+		AIS_Target_Data* palert_target
+			= Get_Target_Data_From_MMSI(g_pais_alert_dialog_active->Get_Dialog_MMSI());
 
-	//    The AIS Alert dialog is already shown.  If the  dialog MMSI number is still alerted, update the dialog
-	//    otherwise, destroy the dialog
-	else {
-		AIS_Target_Data *palert_target = Get_Target_Data_From_MMSI(
-				g_pais_alert_dialog_active->Get_Dialog_MMSI() );
-
-		if( palert_target ) {
-			if( ( ( AIS_ALARM_SET == palert_target->n_alarm_state )
-						&& !palert_target->b_in_ack_timeout )
-					|| ( palert_target->Class == AIS_SART ) ) {
+		if (palert_target) {
+			if (((AIS_ALARM_SET == palert_target->n_alarm_state)
+				 && !palert_target->b_in_ack_timeout) || (palert_target->Class == AIS_SART)) {
 				g_pais_alert_dialog_active->UpdateText();
 			} else {
 				g_pais_alert_dialog_active->Close();
 				m_bAIS_Audio_Alert_On = false;
 			}
 
-			if( true == palert_target->b_suppress_audio ) m_bAIS_Audio_Alert_On = false;
+			if (true == palert_target->b_suppress_audio)
+				m_bAIS_Audio_Alert_On = false;
 			else
 				m_bAIS_Audio_Alert_On = true;
-		} else {                                               // this should not happen, however...
+		} else { // this should not happen, however...
 			g_pais_alert_dialog_active->Close();
 			m_bAIS_Audio_Alert_On = false;
 		}
-
 	}
 
-	//    At this point, the audio flag is set
-	//    Honor the global flag
-	if( !g_bAIS_CPA_Alert_Audio )
+	// At this point, the audio flag is set
+	// Honor the global flag
+	if (!g_bAIS_CPA_Alert_Audio)
 		m_bAIS_Audio_Alert_On = false;
 
-	if( m_bAIS_Audio_Alert_On ) {
-		if( !m_AIS_Audio_Alert_Timer.IsRunning() ) {
-			m_AIS_Audio_Alert_Timer.SetOwner( this, TIMER_AISAUDIO );
-			m_AIS_Audio_Alert_Timer.Start( TIMER_AIS_AUDIO_MSEC );
+	if (m_bAIS_Audio_Alert_On) {
+		if (!m_AIS_Audio_Alert_Timer.IsRunning()) {
+			m_AIS_Audio_Alert_Timer.SetOwner(this, TIMER_AISAUDIO);
+			m_AIS_Audio_Alert_Timer.Start(TIMER_AIS_AUDIO_MSEC);
 
-			if( !m_AIS_Sound.IsOk() )
-				m_AIS_Sound.Create( g_sAIS_Alert_Sound_File );
+			if (!m_AIS_Sound.IsOk())
+				m_AIS_Sound.Create(g_sAIS_Alert_Sound_File);
 
 #ifndef __WXMSW__
-			if( m_AIS_Sound.IsOk() && !m_AIS_Sound.IsPlaying())
+			if (m_AIS_Sound.IsOk() && !m_AIS_Sound.IsPlaying())
 				m_AIS_Sound.Play();
 #else
-			if( m_AIS_Sound.IsOk() )
+			if (m_AIS_Sound.IsOk())
 				m_AIS_Sound.Play();
 #endif
 		}
-	} else
+	} else {
 		m_AIS_Audio_Alert_Timer.Stop();
+	}
 
-	TimerAIS.Start( TIMER_AIS_MSEC, wxTIMER_CONTINUOUS );
+	TimerAIS.Start(TIMER_AIS_MSEC, wxTIMER_CONTINUOUS);
 }
 
-AIS_Target_Data *AIS_Decoder::Get_Target_Data_From_MMSI( int mmsi )
+AIS_Target_Data* AIS_Decoder::Get_Target_Data_From_MMSI(int mmsi)
 {
-	if( AISTargetList->find( mmsi ) == AISTargetList->end() )     // if entry does not exist....
+	if (AISTargetList->find(mmsi) == AISTargetList->end()) // if entry does not exist....
 		return NULL;
 	else
-		return ( *AISTargetList )[mmsi];          // find current entry
+		return (*AISTargetList)[mmsi]; // find current entry
 }
 
 }

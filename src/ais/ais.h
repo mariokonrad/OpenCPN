@@ -122,14 +122,6 @@ enum ais_alarm_type {
 	AIS_ALARM_SET,
 };
 
-class AISTargetTrackPoint
-{
-public:
-	double m_lat;
-	double m_lon;
-	time_t m_time;
-};
-
 // IMO Circ. 289 Area Notices, based on libais
 const size_t AIS8_001_22_NUM_NAMES = 128;
 const size_t AIS8_001_22_SUBAREA_SIZE = 87;
@@ -190,7 +182,5 @@ wxString ais_get_type(int index);
 wxString ais_get_short_type(int index);
 
 }
-
-WX_DECLARE_LIST(ais::AISTargetTrackPoint, AISTargetTrackList);
 
 #endif

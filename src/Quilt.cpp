@@ -38,9 +38,6 @@
 	#include "OCPNMemDC.h"
 #endif
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(PatchList); // FIXME: replace with std containers
-
 extern ChartDB* ChartData;
 extern std::vector<int> g_quilt_noshow_index_array;
 extern s52plib* ps52plib;
@@ -70,7 +67,7 @@ Quilt::Quilt()
 	m_reference_type = CHART_TYPE_UNKNOWN;
 	m_reference_family = CHART_FAMILY_UNKNOWN;
 
-	current_node = NULL;
+	current_node = m_PatchList.end();
 
 	m_pBM = NULL;
 	m_bcomposed = false;
@@ -94,10 +91,10 @@ Quilt::~Quilt()
 
 void Quilt::destroy_patchlist()
 {
-	current_node = NULL;
 	for (PatchList::iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i)
 		delete *i;
 	m_PatchList.clear();
+	current_node = m_PatchList.end();
 }
 
 bool Quilt::IsVPBlittable(ViewPort& VPoint, int dx, int dy, bool b_allow_vector)
@@ -231,11 +228,11 @@ ChartBase* Quilt::GetFirstChart()
 
 	m_bbusy = true;
 	ChartBase* pret = NULL;
-	current_node = m_PatchList.GetFirst();
-	while (current_node && !current_node->GetData()->b_Valid)
-		current_node = current_node->GetNext();
-	if (current_node && current_node->GetData()->b_Valid)
-		pret = ChartData->OpenChartFromDB(current_node->GetData()->dbIndex, FULL_INIT);
+	current_node = m_PatchList.begin();
+	while (current_node != m_PatchList.end() && !(*current_node)->b_Valid)
+		++current_node;
+	if (current_node != m_PatchList.end() && (*current_node)->b_Valid)
+		pret = ChartData->OpenChartFromDB((*current_node)->dbIndex, FULL_INIT);
 
 	m_bbusy = false;
 	return pret;
@@ -254,12 +251,12 @@ ChartBase* Quilt::GetNextChart()
 
 	m_bbusy = true;
 	ChartBase* pret = NULL;
-	if (current_node) {
-		current_node = current_node->GetNext();
-		while (current_node && !current_node->GetData()->b_Valid)
-			current_node = current_node->GetNext();
-		if (current_node && current_node->GetData()->b_Valid)
-			pret = ChartData->OpenChartFromDB(current_node->GetData()->dbIndex, FULL_INIT);
+	if (current_node != m_PatchList.end()) {
+		++current_node;
+		while (current_node != m_PatchList.end() && !(*current_node)->b_Valid)
+			++current_node;
+		if (current_node != m_PatchList.end() && (*current_node)->b_Valid)
+			pret = ChartData->OpenChartFromDB((*current_node)->dbIndex, FULL_INIT);
 	}
 
 	m_bbusy = false;
@@ -276,9 +273,9 @@ ChartBase* Quilt::GetLargestScaleChart()
 
 	m_bbusy = true;
 	ChartBase* pret = NULL;
-	current_node = m_PatchList.GetLast();
-	if (current_node)
-		pret = ChartData->OpenChartFromDB(current_node->GetData()->dbIndex, FULL_INIT);
+	current_node = m_PatchList.rbegin().base();
+	if (current_node != m_PatchList.end())
+		pret = ChartData->OpenChartFromDB((*current_node)->dbIndex, FULL_INIT);
 
 	m_bbusy = false;
 	return pret;
@@ -286,8 +283,8 @@ ChartBase* Quilt::GetLargestScaleChart()
 
 QuiltPatch* Quilt::GetCurrentPatch()
 {
-	if (current_node)
-		return current_node->GetData();
+	if (current_node != m_PatchList.end())
+		return *current_node;
 	else
 		return NULL;
 }
@@ -1544,8 +1541,9 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	// Walk the list again, removing any entries marked as eclipsed....
 	unsigned int il = 0;
 	while (il < m_PatchList.size()) {
-		wxPatchListNode* pcinode = m_PatchList.Item(il); // FIXME: access a list by index? really?
-		QuiltPatch* piqp = pcinode->GetData();
+		PatchList::iterator i = m_PatchList.begin();
+		std::advance(i, il); // FIXME: indexed access to a list
+		QuiltPatch* piqp = *i;
 
 		if (piqp->b_eclipsed) {
 			// Make sure that this chart appears in the eclipsed list...
@@ -1560,7 +1558,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 			if (!b_noadd)
 				m_eclipsed_stack_array.push_back(piqp->dbIndex);
 
-			m_PatchList.Erase(pcinode);
+			m_PatchList.erase(i);
 			il = 0; // restart the list walk
 		} else {
 			il++;

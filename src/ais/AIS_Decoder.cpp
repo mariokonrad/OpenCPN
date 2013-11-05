@@ -1556,27 +1556,24 @@ void AIS_Decoder::UpdateOneTrack(AIS_Target_Data* ptarget)
 		return;
 
 	// Add the newest point
-	AISTargetTrackPoint* ptrackpoint = new AISTargetTrackPoint;
-	ptrackpoint->m_lat = ptarget->Lat;
-	ptrackpoint->m_lon = ptarget->Lon;
-	ptrackpoint->m_time = wxDateTime::Now().GetTicks();
+	AISTargetTrackPoint trackpoint;
+	trackpoint.m_lat = ptarget->Lat;
+	trackpoint.m_lon = ptarget->Lon;
+	trackpoint.m_time = wxDateTime::Now().GetTicks();
 
-	ptarget->m_ptrack->push_back(ptrackpoint);
+	ptarget->m_ptrack.push_back(trackpoint);
 
 	// Walk the list, removing any track points that are older than the stipulated time
 
 	time_t test_time = wxDateTime::Now().GetTicks() - (time_t)(g_AISShowTracks_Mins * 60);
 
-	AISTargetTrackList::iterator i = ptarget->m_ptrack->begin();
-	while (i != ptarget->m_ptrack->end()) {
-		const AISTargetTrackPoint* ptrack_point = *i;
-
-		if (ptrack_point->m_time < test_time) {
-			ptarget->m_ptrack->erase(i);
-			delete ptrack_point;
-			i = ptarget->m_ptrack->begin(); // restart the list
+	AISTargetTrackList::iterator track_point = ptarget->m_ptrack.begin();
+	while (track_point != ptarget->m_ptrack.end()) {
+		if (track_point->m_time < test_time) {
+			ptarget->m_ptrack.erase(track_point);
+			track_point = ptarget->m_ptrack.begin();
 		} else {
-			++i;
+			++track_point;
 		}
 	}
 }

@@ -132,7 +132,6 @@ AIS_Target_Data::AIS_Target_Data()
 	b_OwnShip = false;
 	b_in_ack_timeout = false;
 
-	m_ptrack = new AISTargetTrackList;
 	b_active = false;
 	blue_paddle = 0;
 	bCPA_Valid = false;
@@ -142,7 +141,6 @@ AIS_Target_Data::AIS_Target_Data()
 
 AIS_Target_Data::~AIS_Target_Data()
 {
-	delete m_ptrack;
 }
 
 wxString AIS_Target_Data::GetFullName(void)

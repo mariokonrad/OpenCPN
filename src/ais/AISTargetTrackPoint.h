@@ -37,7 +37,7 @@ public:
 	time_t m_time;
 };
 
-typedef std::list<AISTargetTrackPoint*> AISTargetTrackList;
+typedef std::list<AISTargetTrackPoint> AISTargetTrackList;
 }
 
 

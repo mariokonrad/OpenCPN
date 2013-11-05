@@ -124,7 +124,7 @@ public:
 
 	bool b_show_track;
 
-	AISTargetTrackList* m_ptrack;
+	AISTargetTrackList m_ptrack;
 	AIS_Area_Notice_Hash area_notices;
 };
 

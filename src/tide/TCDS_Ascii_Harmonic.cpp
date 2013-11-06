@@ -126,7 +126,6 @@ IDX_entry * TCDS_Ascii_Harmonic::GetIndexEntry(int n_index)
 TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 {
 	long int xref_start=0;
-	int doing_xref=0;
 
 	m_abbreviation_array.clear();
 	m_IDX_array.clear();
@@ -347,9 +346,9 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString &data_fi
 		m_cst_nodes[a] = (double *) malloc (num_nodes * sizeof (double));
 
 	for (int a=0; a<num_csts; a++) {
-		int ignore = fscanf (fp, "%s", linrec);
+		fscanf (fp, "%s", linrec);
 		for (b=0; b<num_nodes; b++)
-			ignore = fscanf (fp, "%lf", &(m_cst_nodes[a][b]));
+			fscanf (fp, "%lf", &(m_cst_nodes[a][b]));
 	}
 
 	fclose(fp);

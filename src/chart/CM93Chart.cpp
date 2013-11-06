@@ -145,7 +145,7 @@ static bool cm93_decode_table_created;
 // Calculate the Lat/Lon of the lower left corner of a CM93 cell,
 // given a CM93 CellIndex and scale
 // Returned longitude value is always > 0
-static void Get_CM93_Cell_Origin(int cellindex, int scale, double *lat, double *lon)
+static void Get_CM93_Cell_Origin(int cellindex, int /*scale*/, double* lat, double* lon)
 {
 	// Longitude
 	double idx1 = cellindex % 10000;
@@ -938,7 +938,7 @@ void cm93chart::Unload_CM93_Cell(void)
 //    If the min is too small, then the chart rendereding will be over-scaled, and accuracy suffers.
 //    In some ways, this is subjective.....
 
-double cm93chart::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom)
+double cm93chart::GetNormalScaleMin(double /*canvas_scale_factor*/, bool /*b_allow_overzoom*/)
 {
 	switch ( GetNativeScale() )
 	{
@@ -955,7 +955,7 @@ double cm93chart::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_ove
 	return 1.0;
 }
 
-double cm93chart::GetNormalScaleMax(double canvas_scale_factor)
+double cm93chart::GetNormalScaleMax(double /*canvas_scale_factor*/)
 {
 	switch ( GetNativeScale() )
 	{
@@ -1524,7 +1524,8 @@ InitReturn cm93chart::Init ( const wxString& name, ChartInitFlag flags )
 
 }
 
-geo::ExtendedGeometry *cm93chart::BuildGeom ( Object *pobject, wxFileOutputStream *postream, int iobject )
+geo::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileOutputStream* /*postream*/,
+											int iobject)
 
 {
 	wxString s;
@@ -1893,7 +1894,7 @@ void cm93chart::Transform ( cm93_point *s, double trans_x, double trans_y, doubl
 
 }
 
-void cm93chart::translate_colmar(const wxString &sclass, S57attVal *pattValTmp)
+void cm93chart::translate_colmar(const wxString& WXUNUSED(sclass), S57attVal* pattValTmp)
 {
 	int *pcur_attr = ( int * ) pattValTmp->value;
 	int cur_attr = *pcur_attr;
@@ -1942,9 +1943,9 @@ S57Obj * cm93chart::CreateS57Obj(
 		Object * pobject,
 		cm93_dictionary * pDict,
 		geo::ExtendedGeometry * xgeom,
-		double ref_lat,
-		double ref_lon,
-		double scale)
+		double WXUNUSED(ref_lat),
+		double WXUNUSED(ref_lon),
+		double WXUNUSED(scale))
 {
 
 #define MAX_HDR_LINE    4000
@@ -1999,14 +2000,6 @@ S57Obj * cm93chart::CreateS57Obj(
 	strncpy ( u, sclass_sub.mb_str(), 199 );
 	u[200] = '\0';
 	strncpy ( pobj->FeatureName, u, 7 );
-
-	//  Touch up the geom types
-	int geomtype_sub = geomtype;
-	if ( geomtype == 8 )                    // sounding....
-		geomtype_sub = 1;
-
-	if ( geomtype == 4 )                    // convert cm93 area(4) to GDAL area(3)...
-		geomtype_sub = 3;
 
 	pobj->attVal =  new wxArrayOfS57attVal();
 

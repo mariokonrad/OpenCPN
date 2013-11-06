@@ -847,18 +847,18 @@ void RouteProp::OnRoutepropListClick(wxListEvent& event)
 	// We use different methods to determine the selected point,
 	// depending on whether this is a Route or a Track.
 	int selected_no;
-	const wxListItem& i = event.GetItem();
-	i.GetText().ToLong(&itemno);
+	const wxListItem& item = event.GetItem();
+	item.GetText().ToLong(&itemno);
 	selected_no = itemno;
 
 	m_pRoute->ClearHighlights();
 
-	wxRoutePointListNode* node = m_pRoute->pRoutePointList->GetFirst();
-	while (node && itemno--) {
-		node = node->GetNext();
+	RoutePointList::iterator i = m_pRoute->pRoutePointList->begin();
+	while ((i != m_pRoute->pRoutePointList->end()) && itemno--) { // FIXME: this is basically an indexed access
+		++i;
 	}
-	if (node) {
-		RoutePoint* prp = node->GetData();
+	if (i != m_pRoute->pRoutePointList->end()) {
+		RoutePoint* prp = *i;
 		if (prp) {
 			prp->m_bPtIsSelected = true; // highlight the routepoint
 
@@ -958,12 +958,11 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 	pDispTz->SetSelection(m_tz_selection);
 
 	if (m_pRoute) {
-		//    Calculate  LMT offset from the first point in the route
+		// Calculate  LMT offset from the first point in the route
 		if (m_pEnroutePoint && m_bStartNow)
-			gStart_LMT_Offset = long((m_pEnroutePoint->m_lon) * 3600. / 15.);
+			gStart_LMT_Offset = long((m_pEnroutePoint->m_lon) * 3600.0 / 15.0);
 		else
-			gStart_LMT_Offset
-				= long((m_pRoute->pRoutePointList->GetFirst()->GetData()->m_lon) * 3600. / 15.);
+			gStart_LMT_Offset = long((m_pRoute->pRoutePointList->front()->m_lon) * 3600.0 / 15.0);
 	}
 
 	// Reorganize dialog for route or track display
@@ -973,7 +972,6 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 			m_PlanSpeedCtl->SetEditable(false);
 			m_ExtendButton->SetLabel(_("Extend Track"));
 			m_SplitButton->SetLabel(_("Split Track"));
-
 		} else {
 			m_PlanSpeedLabel->SetLabel(_("Plan speed"));
 			m_PlanSpeedCtl->SetEditable(true);
@@ -985,7 +983,6 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 		m_RouteNameCtl->SetValue(m_pRoute->m_RouteNameString);
 		m_RouteStartCtl->SetValue(m_pRoute->m_RouteStartString);
 		m_RouteDestCtl->SetValue(m_pRoute->m_RouteEndString);
-
 		m_RouteNameCtl->SetFocus();
 	} else {
 		m_RouteNameCtl->Clear();
@@ -1020,18 +1017,17 @@ void RouteProp::InitializeList()
 	if (!m_pRoute->m_bIsTrack) {
 		m_pRoute->UpdateSegmentDistances(m_planspeed); // to fix ETD properties
 
-		//  Iterate on Route Points, inserting blank fields starting with index 0
-		wxRoutePointListNode* pnode = m_pRoute->pRoutePointList->GetFirst();
+		// Iterate on Route Points, inserting blank fields starting with index 0
 		int in = 0;
-		while (pnode) {
+		for (RoutePointList::iterator route_point = m_pRoute->pRoutePointList->begin();
+			 route_point != m_pRoute->pRoutePointList->end(); ++route_point) {
 			m_wpList->InsertItem(in, _T(""), 0);
-			m_wpList->SetItemPtrData(in, (wxUIntPtr)pnode->GetData());
+			m_wpList->SetItemPtrData(in, (wxUIntPtr)(*route_point));
 			in++;
-			if (pnode->GetData()->m_seg_etd.IsValid()) {
+			if ((*route_point)->m_seg_etd.IsValid()) {
 				m_wpList->InsertItem(in, _T(""), 0);
 				in++;
 			}
-			pnode = pnode->GetNext();
 		}
 
 		// Update the plan speed and route start time controls
@@ -1142,10 +1138,10 @@ bool RouteProp::UpdateProperties()
 			total_seconds = m_pRoute->m_route_time;
 			if (m_bStartNow) {
 				if (m_pEnroutePoint)
-					gStart_LMT_Offset = long((m_pEnroutePoint->m_lon) * 3600. / 15.);
+					gStart_LMT_Offset = long((m_pEnroutePoint->m_lon) * 3600.0 / 15.0);
 				else
-					gStart_LMT_Offset = long(
-						(m_pRoute->pRoutePointList->GetFirst()->GetData()->m_lon) * 3600. / 15.);
+					gStart_LMT_Offset
+						= long((m_pRoute->pRoutePointList->front()->m_lon) * 3600.0 / 15.0);
 			}
 		}
 
@@ -1166,7 +1162,7 @@ bool RouteProp::UpdateProperties()
 		if (IsThisRouteExtendable())
 			m_ExtendButton->Enable(true);
 
-		//  Total length
+		// Total length
 		wxString slen;
 		slen.Printf(wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(m_pRoute->m_route_length));
 
@@ -1178,10 +1174,10 @@ bool RouteProp::UpdateProperties()
 		wxString time_form;
 		wxString tide_form;
 
-		//  Time
+		// Time
 
 		wxTimeSpan time(0, 0, (int)total_seconds, 0);
-		if (total_seconds > 3600. * 24.)
+		if (total_seconds > 3600.0 * 24.0)
 			time_form = time.Format(_(" %D Days  %H Hours  %M Minutes"));
 		else
 			time_form = time.Format(_(" %H Hours  %M Minutes"));
@@ -1191,8 +1187,7 @@ bool RouteProp::UpdateProperties()
 		else
 			m_TimeEnrouteCtl->Clear();
 
-		//  Iterate on Route Points
-		wxRoutePointListNode* node = m_pRoute->pRoutePointList->GetFirst();
+		// Iterate on Route Points
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		int i = 0;
@@ -1212,11 +1207,12 @@ bool RouteProp::UpdateProperties()
 
 		wxString nullify = _T("----");
 
+		wxRoutePointListNode* node = m_pRoute->pRoutePointList->GetFirst();
 		while (node) {
 			RoutePoint* prp = node->GetData();
 			long item_line_index = i + stopover_count;
 
-			//  Leg
+			// Leg
 			wxString t;
 			t.Printf(_T("%d"), i);
 			if (i == 0)
@@ -1224,15 +1220,15 @@ bool RouteProp::UpdateProperties()
 			if (arrival)
 				m_wpList->SetItem(item_line_index, 0, t);
 
-			//  Mark Name
+			// Mark Name
 			if (arrival)
 				m_wpList->SetItem(item_line_index, 1, prp->GetName());
 			// Store Dewcription
 			if (arrival)
 				m_wpList->SetItem(item_line_index, 9, prp->GetDescription());
 
-			//  Distance
-			//  Note that Distance/Bearing for Leg 000 is as from current position
+			// Distance
+			// Note that Distance/Bearing for Leg 000 is as from current position
 
 			double brg;
 			double leg_dist;
@@ -1256,7 +1252,7 @@ bool RouteProp::UpdateProperties()
 												 &leg_dist);
 					if (i == 0)
 						joining_time
-							= wxTimeSpan::Seconds((long)wxRound((leg_dist * 3600.) / leg_speed));
+							= wxTimeSpan::Seconds((long)wxRound((leg_dist * 3600.0) / leg_speed));
 				}
 				enroute = true;
 			} else {
@@ -1269,7 +1265,8 @@ bool RouteProp::UpdateProperties()
 			geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist);
 
 			// calculation of course at current WayPoint.
-			double course = 10, tmp_leg_dist = 23;
+			double course = 10;
+			double tmp_leg_dist = 23;
 			wxRoutePointListNode* next_node = node->GetNext();
 			RoutePoint* _next_prp = (next_node) ? next_node->GetData() : NULL;
 			if (_next_prp) {
@@ -1323,7 +1320,7 @@ bool RouteProp::UpdateProperties()
 
 			tide_form = _T("");
 
-			LMT_Offset = long((prp->m_lon) * 3600. / 15.);
+			LMT_Offset = long((prp->m_lon) * 3600.0 / 15.0);
 
 			// Time to each waypoint or creation date for tracks
 			if (i == 0 && enroute) {

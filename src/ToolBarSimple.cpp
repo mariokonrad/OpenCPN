@@ -22,14 +22,14 @@
  **************************************************************************/
 
 #include "ToolBarSimple.h"
-#include "StyleManager.h"
-#include "Style.h"
-#include "FontMgr.h"
-#include "GrabberWin.h"
-#include "ToolbarMOBDialog.h"
-#include "OCPNFloatingToolbarDialog.h"
-#include "ToolTipWin.h"
-#include "ToolBarTool.h"
+#include <StyleManager.h>
+#include <Style.h>
+#include <FontMgr.h>
+#include <GrabberWin.h>
+#include <ToolbarMOBDialog.h>
+#include <OCPNFloatingToolbarDialog.h>
+#include <ToolTipWin.h>
+#include <ToolBarTool.h>
 
 #include <UserColors.h>
 #include <MainFrame.h>
@@ -38,11 +38,11 @@
 
 #include <vector>
 
-extern OCPNFloatingToolbarDialog * g_FloatingToolbarDialog;
-extern ToolBarSimple * g_toolbar;
-extern ocpnStyle::StyleManager * g_StyleManager;
-extern MainFrame * gFrame;
-extern wxMenu * g_FloatingToolbarConfigMenu;
+extern OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
+extern ToolBarSimple* g_toolbar;
+extern ocpnStyle::StyleManager* g_StyleManager;
+extern MainFrame* gFrame;
+extern wxMenu* g_FloatingToolbarConfigMenu;
 
 BEGIN_EVENT_TABLE(ToolBarSimple, wxControl)
 	EVT_SIZE(ToolBarSimple::OnSize)
@@ -81,7 +81,7 @@ ToolBarSimple::ToolBarSimple(
 	: m_one_shot(500)
 {
 	Init();
-	Create( parent, winid, pos, size, style, name);
+	Create(parent, winid, pos, size, style, name);
 }
 
 void ToolBarSimple::Init()
@@ -101,49 +101,51 @@ void ToolBarSimple::Init()
 	m_defaultWidth = 16;
 	m_defaultHeight = 15;
 
-	m_toggle_bg_color = wxSystemSettings::GetColour( wxSYS_COLOUR_3DFACE );
-	m_toolOutlineColour.Set( _T("BLACK") );
+	m_toggle_bg_color = wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE);
+	m_toolOutlineColour.Set(_T("BLACK"));
 	m_pToolTipWin = NULL;
 	m_last_ro_tool = NULL;
 
 	EnableTooltips();
 }
 
-wxToolBarToolBase * ToolBarSimple::DoAddTool( int id, const wxString& label,
-		const wxBitmap& bitmap, const wxBitmap& bmpDisabled, wxItemKind kind,
-		const wxString& shortHelp, const wxString& longHelp, wxObject *clientData, wxCoord xPos,
-		wxCoord yPos )
+wxToolBarToolBase* ToolBarSimple::DoAddTool(int id, const wxString& label, const wxBitmap& bitmap,
+											const wxBitmap& bmpDisabled, wxItemKind kind,
+											const wxString& shortHelp, const wxString& longHelp,
+											wxObject* clientData, wxCoord xPos, wxCoord yPos)
 {
 	// rememeber the position for DoInsertTool()
 	m_xPos = xPos;
 	m_yPos = yPos;
 
 	InvalidateBestSize();
-	return InsertTool( GetToolsCount(), id, label, bitmap, bmpDisabled, kind, shortHelp, longHelp,
-			clientData );
+	return InsertTool(GetToolsCount(), id, label, bitmap, bmpDisabled, kind, shortHelp, longHelp,
+					  clientData);
 }
 
-wxToolBarToolBase * ToolBarSimple::AddTool( int toolid, const wxString& label,
-		const wxBitmap& bitmap, const wxBitmap& bmpDisabled, wxItemKind kind,
-		const wxString& shortHelp, const wxString& longHelp, wxObject *data )
+wxToolBarToolBase* ToolBarSimple::AddTool(int toolid, const wxString& label, const wxBitmap& bitmap,
+										  const wxBitmap& bmpDisabled, wxItemKind kind,
+										  const wxString& shortHelp, const wxString& longHelp,
+										  wxObject* data)
 {
 	InvalidateBestSize();
-	ToolBarTool* tool = (ToolBarTool*)InsertTool( GetToolsCount(), toolid, label, bitmap, bmpDisabled, kind,
-			shortHelp, longHelp, data );
+	ToolBarTool* tool = (ToolBarTool*)InsertTool(GetToolsCount(), toolid, label, bitmap,
+												 bmpDisabled, kind, shortHelp, longHelp, data);
 	return tool;
 }
 
-wxToolBarToolBase *ToolBarSimple::InsertTool( size_t pos, int id, const wxString& label,
-		const wxBitmap& bitmap, const wxBitmap& bmpDisabled, wxItemKind kind,
-		const wxString& shortHelp, const wxString& longHelp, wxObject *clientData )
+wxToolBarToolBase* ToolBarSimple::InsertTool(size_t pos, int id, const wxString& label,
+											 const wxBitmap& bitmap, const wxBitmap& bmpDisabled,
+											 wxItemKind kind, const wxString& shortHelp,
+											 const wxString& longHelp, wxObject* clientData)
 {
-	wxCHECK_MSG( pos <= GetToolsCount(), (wxToolBarToolBase *)NULL,
-			_T("invalid position in wxToolBar::InsertTool()") );
+	wxCHECK_MSG(pos <= GetToolsCount(), (wxToolBarToolBase*)NULL,
+				_T("invalid position in wxToolBar::InsertTool()"));
 
-	wxToolBarToolBase *tool = CreateTool( id, label, bitmap, bmpDisabled, kind, clientData,
-			shortHelp, longHelp );
+	wxToolBarToolBase* tool
+		= CreateTool(id, label, bitmap, bmpDisabled, kind, clientData, shortHelp, longHelp);
 
-	if( !InsertTool( pos, tool ) ) {
+	if (!InsertTool(pos, tool)) {
 		delete tool;
 
 		return NULL;
@@ -152,29 +154,29 @@ wxToolBarToolBase *ToolBarSimple::InsertTool( size_t pos, int id, const wxString
 	return tool;
 }
 
-wxToolBarToolBase *ToolBarSimple::InsertTool( size_t pos, wxToolBarToolBase *tool )
+wxToolBarToolBase* ToolBarSimple::InsertTool(size_t pos, wxToolBarToolBase* tool)
 {
-	wxCHECK_MSG( pos <= GetToolsCount(), (wxToolBarToolBase *)NULL,
-			_T("invalid position in wxToolBar::InsertTool()") );
+	wxCHECK_MSG(pos <= GetToolsCount(), (wxToolBarToolBase*)NULL,
+				_T("invalid position in wxToolBar::InsertTool()"));
 
-	if( !tool || !DoInsertTool( pos, tool ) ) {
+	if (!tool || !DoInsertTool(pos, tool)) {
 		return NULL;
 	}
 
-	m_tools.Insert( pos, tool );
+	m_tools.Insert(pos, tool);
 
 	return tool;
 }
 
-bool ToolBarSimple::DoInsertTool( size_t WXUNUSED(pos), wxToolBarToolBase *toolBase )
+bool ToolBarSimple::DoInsertTool(size_t WXUNUSED(pos), wxToolBarToolBase* toolBase)
 {
-	ToolBarTool *tool = (ToolBarTool *) toolBase;
+	ToolBarTool* tool = (ToolBarTool*)toolBase;
 
 	// Check if the plugin is inserting same-named tools. Make sure they have different names,
 	// otherwise the style manager cannot differentiate between them.
-	if( tool->isPluginTool ) {
-		for( unsigned int i=0; i<GetToolsCount(); i++ ) {
-			if( tool->GetToolname() == ((ToolBarTool *)m_tools.Item(i)->GetData())->GetToolname()) {
+	if (tool->isPluginTool) {
+		for (unsigned int i = 0; i < GetToolsCount(); i++) {
+			if (tool->GetToolname() == ((ToolBarTool*)m_tools.Item(i)->GetData())->GetToolname()) {
 				tool->toolname << _T("1");
 			}
 		}
@@ -192,11 +194,13 @@ bool ToolBarSimple::DoInsertTool( size_t WXUNUSED(pos), wxToolBarToolBase *toolB
 		tool->SetSize(GetToolSize());
 
 		// Calculate reasonable max size in case Layout() not called
-		if ((tool->m_x + tool->GetNormalBitmap().GetWidth() + m_style->GetLeftMargin()) > m_maxWidth)
-			m_maxWidth = (wxCoord) ((tool->m_x + tool->GetWidth() + m_style->GetLeftMargin()));
+		if ((tool->m_x + tool->GetNormalBitmap().GetWidth() + m_style->GetLeftMargin())
+			> m_maxWidth)
+			m_maxWidth = (wxCoord)((tool->m_x + tool->GetWidth() + m_style->GetLeftMargin()));
 
-		if ((tool->m_y + tool->GetNormalBitmap().GetHeight() + m_style->GetTopMargin()) > m_maxHeight)
-			m_maxHeight = (wxCoord) ((tool->m_y + tool->GetHeight() + m_style->GetTopMargin()));
+		if ((tool->m_y + tool->GetNormalBitmap().GetHeight() + m_style->GetTopMargin())
+			> m_maxHeight)
+			m_maxHeight = (wxCoord)((tool->m_y + tool->GetHeight() + m_style->GetTopMargin()));
 	} else {
 		if (tool->IsControl()) {
 			tool->SetSize(tool->GetControl()->GetSize());
@@ -208,14 +212,15 @@ bool ToolBarSimple::DoInsertTool( size_t WXUNUSED(pos), wxToolBarToolBase *toolB
 	return true;
 }
 
-bool ToolBarSimple::DoDeleteTool(size_t WXUNUSED(pos), wxToolBarToolBase * tool)
+bool ToolBarSimple::DoDeleteTool(size_t WXUNUSED(pos), wxToolBarToolBase* tool)
 {
 	// VZ: didn't test whether it works, but why not...
 	tool->Detach();
 
-	if( m_last_ro_tool == tool ) m_last_ro_tool = NULL;
+	if (m_last_ro_tool == tool)
+		m_last_ro_tool = NULL;
 
-	Refresh( false );
+	Refresh(false);
 
 	return true;
 }
@@ -232,32 +237,32 @@ bool ToolBarSimple::Create(
 		return false;
 
 	// Set it to grey (or other 3D face colour)
-	SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_3DFACE ) );
+	SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE));
 
-	if( GetWindowStyleFlag() & wxTB_VERTICAL ) {
+	if (GetWindowStyleFlag() & wxTB_VERTICAL) {
 		m_lastX = 7;
 		m_lastY = 3;
 
-		m_maxRows = 32000;      // a lot
+		m_maxRows = 32000; // a lot
 		m_maxCols = 1;
 	} else {
 		m_lastX = 3;
 		m_lastY = 7;
 
 		m_maxRows = 1;
-		m_maxCols = 32000;      // a lot
+		m_maxCols = 32000; // a lot
 	}
 
-	SetCursor( *wxSTANDARD_CURSOR );
+	SetCursor(*wxSTANDARD_CURSOR);
 
-	m_tooltip_timer.SetOwner( this, TOOLTIPON_TIMER );
+	m_tooltip_timer.SetOwner(this, TOOLTIPON_TIMER);
 
 	return true;
 }
 
 ToolBarSimple::~ToolBarSimple()
 {
-	if( m_pToolTipWin ) {
+	if (m_pToolTipWin) {
 		m_pToolTipWin->Destroy();
 		m_pToolTipWin = NULL;
 	}
@@ -267,19 +272,21 @@ void ToolBarSimple::KillTooltip()
 {
 	m_btooltip_show = false;
 
-	if( m_pToolTipWin ) {
+	if (m_pToolTipWin) {
 		m_pToolTipWin->Hide();
 		m_pToolTipWin->Destroy();
 		m_pToolTipWin = NULL;
 	}
 	m_tooltip_timer.Stop();
 
-	if( m_last_ro_tool ) {
-		if( m_last_ro_tool->IsEnabled() ) {
-			if( m_last_ro_tool->IsToggled() ) {
-				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon( m_last_ro_tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED));
+	if (m_last_ro_tool) {
+		if (m_last_ro_tool->IsEnabled()) {
+			if (m_last_ro_tool->IsToggled()) {
+				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon(m_last_ro_tool->GetToolname(),
+																	 ocpnStyle::TOOLICON_TOGGLED));
 			} else {
-				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon( m_last_ro_tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL));
+				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon(m_last_ro_tool->GetToolname(),
+																	 ocpnStyle::TOOLICON_NORMAL));
 			}
 		}
 	}
@@ -287,14 +294,14 @@ void ToolBarSimple::KillTooltip()
 
 void ToolBarSimple::HideTooltip()
 {
-	if( m_pToolTipWin ) {
+	if (m_pToolTipWin) {
 		m_pToolTipWin->Hide();
 	}
 }
 
-void ToolBarSimple::SetColorScheme( ColorScheme cs )
+void ToolBarSimple::SetColorScheme(ColorScheme cs)
 {
-	if( m_pToolTipWin ) {
+	if (m_pToolTipWin) {
 		m_pToolTipWin->Destroy();
 		m_pToolTipWin = NULL;
 	}
@@ -315,85 +322,86 @@ bool ToolBarSimple::Realize()
 	if (IsVertical())
 		m_style->SetOrientation(wxTB_VERTICAL);
 	else
-		m_style->SetOrientation( wxTB_HORIZONTAL );
+		m_style->SetOrientation(wxTB_HORIZONTAL);
 
 	wxSize toolSize = m_style->GetToolSize();
 	int separatorSize = m_style->GetToolSeparation();
 
-	ToolBarTool *lastTool = NULL;
+	ToolBarTool* lastTool = NULL;
 	bool firstNode = true;
 	wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst();
 
-	while( node ) {
-		ToolBarTool *tool = (ToolBarTool *) node->GetData();
+	while (node) {
+		ToolBarTool* tool = (ToolBarTool*)node->GetData();
 		tool->firstInLine = firstNode;
 		tool->lastInLine = false;
 		firstNode = false;
 
-		if( tool->IsSeparator() ) {
-			if( GetWindowStyleFlag() & wxTB_HORIZONTAL ) {
-				if( m_currentRowsOrColumns >= m_maxCols ) m_lastY += separatorSize;
+		if (tool->IsSeparator()) {
+			if (GetWindowStyleFlag() & wxTB_HORIZONTAL) {
+				if (m_currentRowsOrColumns >= m_maxCols)
+					m_lastY += separatorSize;
 				else
 					m_lastX += separatorSize;
 			} else {
-				if( m_currentRowsOrColumns >= m_maxRows ) m_lastX += separatorSize;
+				if (m_currentRowsOrColumns >= m_maxRows)
+					m_lastX += separatorSize;
 				else
 					m_lastY += separatorSize;
 			}
-		} else
-			if( tool->IsButton() ) {
-				if( !IsVertical() ) {
-					if( m_currentRowsOrColumns >= m_maxCols ) {
-						tool->firstInLine = true;
-						if( lastTool && m_LineCount > 1 ) lastTool->lastInLine = true;
-						m_LineCount++;
-						m_currentRowsOrColumns = 0;
-						m_lastX = m_style->GetLeftMargin();
-						m_lastY += toolSize.y + m_style->GetTopMargin();
-					}
-					tool->m_x = (wxCoord) m_lastX;
-					tool->m_y = (wxCoord) m_lastY;
-
-					tool->trect = wxRect( tool->m_x, tool->m_y, toolSize.x, toolSize.y );
-					tool->trect.Inflate( m_style->GetToolSeparation() / 2, m_style->GetTopMargin() );
-
-					m_lastX += toolSize.x + m_style->GetToolSeparation();
-				} else {
-					if( m_currentRowsOrColumns >= m_maxRows ) {
-						tool->firstInLine = true;
-						if( lastTool ) lastTool->lastInLine = true;
-						m_LineCount++;
-						m_currentRowsOrColumns = 0;
-						m_lastX += toolSize.x + m_style->GetTopMargin();
-						m_lastY = m_style->GetTopMargin();
-					}
-					tool->m_x = (wxCoord) m_lastX;
-					tool->m_y = (wxCoord) m_lastY;
-
-					tool->trect = wxRect( tool->m_x, tool->m_y, toolSize.x, toolSize.y );
-					tool->trect.Inflate( m_style->GetToolSeparation() / 2, m_style->GetTopMargin() );
-
-					m_lastY += toolSize.y + m_style->GetToolSeparation();
+		} else if (tool->IsButton()) {
+			if (!IsVertical()) {
+				if (m_currentRowsOrColumns >= m_maxCols) {
+					tool->firstInLine = true;
+					if (lastTool && m_LineCount > 1)
+						lastTool->lastInLine = true;
+					m_LineCount++;
+					m_currentRowsOrColumns = 0;
+					m_lastX = m_style->GetLeftMargin();
+					m_lastY += toolSize.y + m_style->GetTopMargin();
 				}
-				m_currentRowsOrColumns++;
-			} else
-				if( tool->IsControl() ) {
-					tool->m_x = (wxCoord) ( m_lastX );
-					tool->m_y = (wxCoord) ( m_lastY - ( m_style->GetTopMargin() / 2 ) );
+				tool->m_x = (wxCoord)m_lastX;
+				tool->m_y = (wxCoord)m_lastY;
 
-					tool->trect = wxRect( tool->m_x, tool->m_y, tool->GetWidth(),
-							tool->GetHeight() );
-					tool->trect.Inflate( m_style->GetToolSeparation() / 2,
-							m_style->GetTopMargin() );
-					;
+				tool->trect = wxRect(tool->m_x, tool->m_y, toolSize.x, toolSize.y);
+				tool->trect.Inflate(m_style->GetToolSeparation() / 2, m_style->GetTopMargin());
 
-					wxSize s = tool->GetControl()->GetSize();
-					m_lastX += s.x + m_style->GetToolSeparation();
-
+				m_lastX += toolSize.x + m_style->GetToolSeparation();
+			} else {
+				if (m_currentRowsOrColumns >= m_maxRows) {
+					tool->firstInLine = true;
+					if (lastTool)
+						lastTool->lastInLine = true;
+					m_LineCount++;
+					m_currentRowsOrColumns = 0;
+					m_lastX += toolSize.x + m_style->GetTopMargin();
+					m_lastY = m_style->GetTopMargin();
 				}
+				tool->m_x = (wxCoord)m_lastX;
+				tool->m_y = (wxCoord)m_lastY;
 
-		if( m_lastX > m_maxWidth ) m_maxWidth = m_lastX;
-		if( m_lastY > m_maxHeight ) m_maxHeight = m_lastY;
+				tool->trect = wxRect(tool->m_x, tool->m_y, toolSize.x, toolSize.y);
+				tool->trect.Inflate(m_style->GetToolSeparation() / 2, m_style->GetTopMargin());
+
+				m_lastY += toolSize.y + m_style->GetToolSeparation();
+			}
+			m_currentRowsOrColumns++;
+		} else if (tool->IsControl()) {
+			tool->m_x = (wxCoord)(m_lastX);
+			tool->m_y = (wxCoord)(m_lastY - (m_style->GetTopMargin() / 2));
+
+			tool->trect = wxRect(tool->m_x, tool->m_y, tool->GetWidth(), tool->GetHeight());
+			tool->trect.Inflate(m_style->GetToolSeparation() / 2, m_style->GetTopMargin());
+			;
+
+			wxSize s = tool->GetControl()->GetSize();
+			m_lastX += s.x + m_style->GetToolSeparation();
+		}
+
+		if (m_lastX > m_maxWidth)
+			m_maxWidth = m_lastX;
+		if (m_lastY > m_maxHeight)
+			m_maxHeight = m_lastY;
 
 		lastTool = tool;
 		node = node->GetNext();
@@ -409,16 +417,16 @@ bool ToolBarSimple::Realize()
 	m_maxWidth += m_style->GetRightMargin();
 	m_maxHeight += m_style->GetBottomMargin();
 
-	SetSize( m_maxWidth, m_maxHeight );
-	SetMinSize( wxSize( m_maxWidth, m_maxHeight ) );
+	SetSize(m_maxWidth, m_maxHeight);
+	SetMinSize(wxSize(m_maxWidth, m_maxHeight));
 
 	return true;
 }
 
-void ToolBarSimple::OnPaint( wxPaintEvent& WXUNUSED(event) )
+void ToolBarSimple::OnPaint(wxPaintEvent& WXUNUSED(event))
 {
-	wxPaintDC dc( this );
-	PrepareDC( dc );
+	wxPaintDC dc(this);
+	PrepareDC(dc);
 
 	wxRegion ru = GetUpdateRegion();
 	wxRect upRect = ru.GetBox();
@@ -429,41 +437,41 @@ void ToolBarSimple::OnPaint( wxPaintEvent& WXUNUSED(event) )
 		return;
 	count++;
 
-	for( wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
-			node = node->GetNext() ) {
-		wxToolBarToolBase *tool = node->GetData();
-		ToolBarTool *tools = (ToolBarTool *) tool;
+	for (wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
+		 node = node->GetNext()) {
+		wxToolBarToolBase* tool = node->GetData();
+		ToolBarTool* tools = (ToolBarTool*)tool;
 		wxRect toolRect = tools->trect;
 
-		if( toolRect.Intersects( upRect ) ) {
+		if (toolRect.Intersects(upRect)) {
 
-			if( tool->IsButton() ) {
-				DrawTool( dc, tool );
-			} else
-				if( tool->IsControl() ) {
-					if( tool->GetControl()->IsKindOf( CLASSINFO(wxStaticBitmap) ) ) {
-						wxStaticBitmap *psbm = (wxStaticBitmap *) tool->GetControl();
-						ToolBarTool *toolsimp = (ToolBarTool *) tool;
-						dc.DrawBitmap( psbm->GetBitmap(), toolsimp->m_x, toolsimp->m_y, false );
-					}
+			if (tool->IsButton()) {
+				DrawTool(dc, tool);
+			} else if (tool->IsControl()) {
+				if (tool->GetControl()->IsKindOf(CLASSINFO(wxStaticBitmap))) {
+					wxStaticBitmap* psbm = (wxStaticBitmap*)tool->GetControl();
+					ToolBarTool* toolsimp = (ToolBarTool*)tool;
+					dc.DrawBitmap(psbm->GetBitmap(), toolsimp->m_x, toolsimp->m_y, false);
 				}
+			}
 		}
 	}
 
 	count--;
 }
 
-void ToolBarSimple::OnSize( wxSizeEvent& WXUNUSED(event) )
+void ToolBarSimple::OnSize(wxSizeEvent& WXUNUSED(event))
 {
-	if( GetAutoLayout() ) Layout();
+	if (GetAutoLayout())
+		Layout();
 }
 
-void ToolBarSimple::OnKillFocus( wxFocusEvent& WXUNUSED(event) )
+void ToolBarSimple::OnKillFocus(wxFocusEvent& WXUNUSED(event))
 {
-	OnMouseEnter( m_pressedTool = m_currentTool = -1 );
+	OnMouseEnter(m_pressedTool = m_currentTool = -1);
 }
 
-void ToolBarSimple::OnToolTipTimerEvent( wxTimerEvent& event )
+void ToolBarSimple::OnToolTipTimerEvent(wxTimerEvent&)
 {
 	if (!gFrame->IsActive())
 		return;
@@ -472,20 +480,20 @@ void ToolBarSimple::OnToolTipTimerEvent( wxTimerEvent& event )
 		if (m_last_ro_tool) {
 			wxString s = m_last_ro_tool->GetShortHelp();
 
-			if( s.Len() ) {
-				m_pToolTipWin->SetString( s );
+			if (s.Len()) {
+				m_pToolTipWin->SetString(s);
 
-				wxPoint pos_in_toolbar( m_last_ro_tool->m_x, m_last_ro_tool->m_y );
+				wxPoint pos_in_toolbar(m_last_ro_tool->m_x, m_last_ro_tool->m_y);
 				pos_in_toolbar.x += m_last_ro_tool->m_width + 2;
 
-				//    Quick hack for right docked toolbar, to avoid tooltip interference
-				if( ( g_FloatingToolbarDialog->GetDockX() == 1 )
-						&& ( g_FloatingToolbarDialog->GetOrient() == wxTB_VERTICAL ) ) pos_in_toolbar.y =
-					m_last_ro_tool->m_y - 30;
+				// Quick hack for right docked toolbar, to avoid tooltip interference
+				if ((g_FloatingToolbarDialog->GetDockX() == 1)
+					&& (g_FloatingToolbarDialog->GetOrient() == wxTB_VERTICAL))
+					pos_in_toolbar.y = m_last_ro_tool->m_y - 30;
 
-				m_pToolTipWin->Move(0,0);       // workaround for gtk autocentre dialog behavior
+				m_pToolTipWin->Move(0, 0); // workaround for gtk autocentre dialog behavior
 
-				m_pToolTipWin->SetPosition( ClientToScreen( pos_in_toolbar ) );
+				m_pToolTipWin->SetPosition(ClientToScreen(pos_in_toolbar));
 				m_pToolTipWin->SetBitmap();
 				m_pToolTipWin->Show();
 				gFrame->Raise();
@@ -494,12 +502,12 @@ void ToolBarSimple::OnToolTipTimerEvent( wxTimerEvent& event )
 	}
 }
 
-void ToolBarSimple::OnMouseEvent( wxMouseEvent & event )
+void ToolBarSimple::OnMouseEvent(wxMouseEvent& event)
 {
 	wxCoord x, y;
-	event.GetPosition( &x, &y );
-	ToolBarTool *tool = (ToolBarTool *) FindToolForPosition( x, y );
-	if( event.LeftDown() ) {
+	event.GetPosition(&x, &y);
+	ToolBarTool* tool = (ToolBarTool*)FindToolForPosition(x, y);
+	if (event.LeftDown()) {
 		CaptureMouse();
 	}
 	if (event.LeftUp()) {
@@ -507,119 +515,121 @@ void ToolBarSimple::OnMouseEvent( wxMouseEvent & event )
 			ReleaseMouse();
 	}
 
-	if( tool && tool->IsButton() && IsShown() ) {
+	if (tool && tool->IsButton() && IsShown()) {
 
-		//    ToolTips
-		if( NULL == m_pToolTipWin ) {
-			m_pToolTipWin = new ToolTipWin( GetParent() );
-			m_pToolTipWin->SetColorScheme( m_currentColorScheme );
+		// ToolTips
+		if (NULL == m_pToolTipWin) {
+			m_pToolTipWin = new ToolTipWin(GetParent());
+			m_pToolTipWin->SetColorScheme(m_currentColorScheme);
 			m_pToolTipWin->Hide();
 		}
 
-		if( tool != m_last_ro_tool ) m_pToolTipWin->Hide();
+		if (tool != m_last_ro_tool)
+			m_pToolTipWin->Hide();
 
-		if( !m_pToolTipWin->IsShown() ) {
-			m_tooltip_timer.Start( m_one_shot, wxTIMER_ONE_SHOT );
+		if (!m_pToolTipWin->IsShown()) {
+			m_tooltip_timer.Start(m_one_shot, wxTIMER_ONE_SHOT);
 		}
 
-		//    Tool Rollover highlighting
-		if( tool != m_last_ro_tool ) {
-			if( tool->IsEnabled() ) {
+		// Tool Rollover highlighting
+		if (tool != m_last_ro_tool) {
+			if (tool->IsEnabled()) {
 				tool->rollover = true;
 				tool->bitmapOK = false;
 			}
-			if( m_last_ro_tool ) {
-				if( m_last_ro_tool->IsEnabled() ) {
+			if (m_last_ro_tool) {
+				if (m_last_ro_tool->IsEnabled()) {
 					m_last_ro_tool->rollover = false;
 					m_last_ro_tool->bitmapOK = false;
 				}
 			}
 			m_last_ro_tool = tool;
-			g_toolbar->Refresh( false );
+			g_toolbar->Refresh(false);
 		}
 	} else {
-		//    Tooltips
-		if( m_pToolTipWin && m_pToolTipWin->IsShown() ) m_pToolTipWin->Hide();
+		// Tooltips
+		if (m_pToolTipWin && m_pToolTipWin->IsShown())
+			m_pToolTipWin->Hide();
 
-		//    Remove Highlighting
-		if( m_last_ro_tool ) {
-			if( m_last_ro_tool->IsEnabled() ) {
+		// Remove Highlighting
+		if (m_last_ro_tool) {
+			if (m_last_ro_tool->IsEnabled()) {
 				m_last_ro_tool->rollover = false;
 				m_last_ro_tool->bitmapOK = false;
 			}
-			g_toolbar->Refresh( false );
+			g_toolbar->Refresh(false);
 		}
 	}
 
 	m_last_ro_tool = tool;
 
-	if( !tool ) {
-		if( m_currentTool > -1 ) {
-			if( event.LeftIsDown() ) SpringUpButton( m_currentTool );
+	if (!tool) {
+		if (m_currentTool > -1) {
+			if (event.LeftIsDown())
+				SpringUpButton(m_currentTool);
 			m_currentTool = -1;
-			OnMouseEnter( -1 );
+			OnMouseEnter(-1);
 		}
 
-		wxMouseEvent *pev = (wxMouseEvent *) event.Clone();
-		GetParent()->GetEventHandler()->AddPendingEvent( *pev );
-		wxDELETE( pev );
+		wxMouseEvent* pev = (wxMouseEvent*)event.Clone();
+		GetParent()->GetEventHandler()->AddPendingEvent(*pev);
+		wxDELETE(pev);
 
 		return;
 	}
 
-	if( !event.IsButton() ) {
-		if( tool->GetId() != m_currentTool ) {
+	if (!event.IsButton()) {
+		if (tool->GetId() != m_currentTool) {
 			// If the left button is kept down and moved over buttons,
 			// press those buttons.
-			if( event.LeftIsDown() && tool->IsEnabled() ) {
-				SpringUpButton( m_currentTool );
+			if (event.LeftIsDown() && tool->IsEnabled()) {
+				SpringUpButton(m_currentTool);
 
-				if( tool->CanBeToggled() ) {
+				if (tool->CanBeToggled()) {
 					tool->Toggle();
 				}
 
-				DrawTool( tool );
+				DrawTool(tool);
 			}
 
 			m_currentTool = tool->GetId();
-			OnMouseEnter( m_currentTool );
+			OnMouseEnter(m_currentTool);
 		}
 
-		wxMouseEvent *pev = (wxMouseEvent *) event.Clone();
-		GetParent()->GetEventHandler()->AddPendingEvent( *pev );
-		wxDELETE( pev );
+		wxMouseEvent* pev = (wxMouseEvent*)event.Clone();
+		GetParent()->GetEventHandler()->AddPendingEvent(*pev);
+		wxDELETE(pev);
 
 		return;
 	}
 
 	// Left button pressed.
-	if( event.LeftDown() && tool->IsEnabled() ) {
-		if( tool->CanBeToggled() ) {
+	if (event.LeftDown() && tool->IsEnabled()) {
+		if (tool->CanBeToggled()) {
 			tool->Toggle();
 		}
 
-		DrawTool( tool );
-	} else
-		if( event.RightDown() ) {
-			OnRightClick( tool->GetId(), x, y );
-		}
+		DrawTool(tool);
+	} else if (event.RightDown()) {
+		OnRightClick(tool->GetId(), x, y);
+	}
 
 	// Left Button Released.  Only this action confirms selection.
 	// If the button is enabled and it is not a toggle tool and it is
 	// in the pressed state, then raise the button and call OnLeftClick.
 	//
-	if( event.LeftUp() && tool->IsEnabled() ) {
+	if (event.LeftUp() && tool->IsEnabled()) {
 		// Pass the OnLeftClick event to tool
-		if( !OnLeftClick( tool->GetId(), tool->IsToggled() ) && tool->CanBeToggled() ) {
+		if (!OnLeftClick(tool->GetId(), tool->IsToggled()) && tool->CanBeToggled()) {
 			// If it was a toggle, and OnLeftClick says No Toggle allowed,
 			// then change it back
 			tool->Toggle();
 		}
 	}
 
-	wxMouseEvent *pev = (wxMouseEvent *) event.Clone();
-	GetParent()->GetEventHandler()->AddPendingEvent( *pev );
-	wxDELETE( pev );
+	wxMouseEvent* pev = (wxMouseEvent*)event.Clone();
+	GetParent()->GetEventHandler()->AddPendingEvent(*pev);
+	wxDELETE(pev);
 	event.Skip();
 }
 
@@ -627,132 +637,144 @@ void ToolBarSimple::OnMouseEvent( wxMouseEvent & event )
 // drawing
 // ----------------------------------------------------------------------------
 
-void ToolBarSimple::DrawTool( wxToolBarToolBase *tool )
+void ToolBarSimple::DrawTool(wxToolBarToolBase* tool)
 {
-	wxClientDC dc( this );
-	DrawTool( dc, tool );
+	wxClientDC dc(this);
+	DrawTool(dc, tool);
 }
 
 // NB! The current DrawTool code assumes that plugin tools are never disabled
 // when they are present on the toolbar, since disabled plugins are removed.
 
-void ToolBarSimple::DrawTool( wxDC& dc, wxToolBarToolBase *toolBase )
+void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 {
-	ToolBarTool *tool = (ToolBarTool *) toolBase;
+	ToolBarTool* tool = (ToolBarTool*)toolBase;
 
-	PrepareDC( dc );
+	PrepareDC(dc);
 
-	wxPoint drawAt( tool->m_x, tool->m_y );
+	wxPoint drawAt(tool->m_x, tool->m_y);
 	wxBitmap bmp;
 
-	if( tool->bitmapOK ) {
-		if( tool->IsEnabled() ) {
+	if (tool->bitmapOK) {
+		if (tool->IsEnabled()) {
 			bmp = tool->GetNormalBitmap();
-			if( !bmp.IsOk() )
-				bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL, tool->rollover );
+			if (!bmp.IsOk())
+				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL,
+										   tool->rollover);
 		} else {
 			bmp = tool->GetDisabledBitmap();
-			if( !bmp.IsOk() ) bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED );
+			if (!bmp.IsOk())
+				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED);
 		}
 	} else {
-		if ( tool->isPluginTool ) {
+		if (tool->isPluginTool) {
 
 			// First try getting the icon from the Style.
 			// If it is not in the style we build a new icon from the style BG and the plugin icon.
 
-			if( tool->IsToggled() ) {
-				bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED, tool->rollover );
-				if( bmp.GetDepth() == 1 ) {
-					if( tool->rollover ) {
-						bmp = m_style->BuildPluginIcon( tool->pluginRolloverIcon, ocpnStyle::TOOLICON_TOGGLED );
-						if( ! bmp.IsOk() ) bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, ocpnStyle::TOOLICON_TOGGLED );
-					}
-					else
-						bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, ocpnStyle::TOOLICON_TOGGLED );
+			if (tool->IsToggled()) {
+				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED,
+										   tool->rollover);
+				if (bmp.GetDepth() == 1) {
+					if (tool->rollover) {
+						bmp = m_style->BuildPluginIcon(tool->pluginRolloverIcon,
+													   ocpnStyle::TOOLICON_TOGGLED);
+						if (!bmp.IsOk())
+							bmp = m_style->BuildPluginIcon(tool->pluginNormalIcon,
+														   ocpnStyle::TOOLICON_TOGGLED);
+					} else
+						bmp = m_style->BuildPluginIcon(tool->pluginNormalIcon,
+													   ocpnStyle::TOOLICON_TOGGLED);
 				}
 			} else {
-				bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL, tool->rollover );
-				if( bmp.GetDepth() == 1 ) {
-					if( tool->rollover ) {
-						bmp = m_style->BuildPluginIcon( tool->pluginRolloverIcon, ocpnStyle::TOOLICON_NORMAL );
-						if( ! bmp.IsOk() ) bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, ocpnStyle::TOOLICON_NORMAL );
-					}
-					else
-						bmp = m_style->BuildPluginIcon( tool->pluginNormalIcon, ocpnStyle::TOOLICON_NORMAL );
+				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL,
+										   tool->rollover);
+				if (bmp.GetDepth() == 1) {
+					if (tool->rollover) {
+						bmp = m_style->BuildPluginIcon(tool->pluginRolloverIcon,
+													   ocpnStyle::TOOLICON_NORMAL);
+						if (!bmp.IsOk())
+							bmp = m_style->BuildPluginIcon(tool->pluginNormalIcon,
+														   ocpnStyle::TOOLICON_NORMAL);
+					} else
+						bmp = m_style->BuildPluginIcon(tool->pluginNormalIcon,
+													   ocpnStyle::TOOLICON_NORMAL);
 				}
 			}
-			tool->SetNormalBitmap( bmp );
+			tool->SetNormalBitmap(bmp);
 			tool->bitmapOK = true;
 		} else {
-			if( tool->IsEnabled() ) {
-				if( tool->IsToggled() )
-					bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED, tool->rollover );
+			if (tool->IsEnabled()) {
+				if (tool->IsToggled())
+					bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED,
+											   tool->rollover);
 				else
-					bmp = m_style->GetToolIcon( tool->GetIconName(), ocpnStyle::TOOLICON_NORMAL, tool->rollover );
+					bmp = m_style->GetToolIcon(tool->GetIconName(), ocpnStyle::TOOLICON_NORMAL,
+											   tool->rollover);
 
-				tool->SetNormalBitmap( bmp );
+				tool->SetNormalBitmap(bmp);
 				tool->bitmapOK = true;
 			} else {
-				bmp = m_style->GetToolIcon( tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED );
-				tool->SetDisabledBitmap( bmp );
+				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED);
+				tool->SetDisabledBitmap(bmp);
 				tool->bitmapOK = true;
 			}
 		}
 	}
 
-	if( tool->firstInLine ) {
-		m_style->DrawToolbarLineStart( bmp );
+	if (tool->firstInLine) {
+		m_style->DrawToolbarLineStart(bmp);
 	}
-	if( tool->lastInLine ) {
-		m_style->DrawToolbarLineEnd( bmp );
-	}
-
-	if( bmp.GetWidth() != m_style->GetToolSize().x
-			|| bmp.GetHeight() != m_style->GetToolSize().y ) {
-		drawAt.x -= ( bmp.GetWidth() - m_style->GetToolSize().x ) / 2;
-		drawAt.y -= ( bmp.GetHeight() - m_style->GetToolSize().y ) / 2;
+	if (tool->lastInLine) {
+		m_style->DrawToolbarLineEnd(bmp);
 	}
 
-	dc.DrawBitmap( bmp, drawAt );
+	if (bmp.GetWidth() != m_style->GetToolSize().x || bmp.GetHeight() != m_style->GetToolSize().y) {
+		drawAt.x -= (bmp.GetWidth() - m_style->GetToolSize().x) / 2;
+		drawAt.y -= (bmp.GetHeight() - m_style->GetToolSize().y) / 2;
+	}
+
+	dc.DrawBitmap(bmp, drawAt);
 }
 
 // ----------------------------------------------------------------------------
 // toolbar geometry
 // ----------------------------------------------------------------------------
 
-wxToolBarToolBase *ToolBarSimple::FindToolForPosition( wxCoord x, wxCoord y )
+wxToolBarToolBase* ToolBarSimple::FindToolForPosition(wxCoord x, wxCoord y)
 {
 	wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst();
-	while( node ) {
-		ToolBarTool *tool = (ToolBarTool *) node->GetData();
-		if( ( x >= tool->m_x ) && ( y >= tool->m_y ) && ( x < ( tool->m_x + tool->GetWidth() ) )
-				&& ( y < ( tool->m_y + tool->GetHeight() ) ) ) {
+	while (node) {
+		ToolBarTool* tool = (ToolBarTool*)node->GetData();
+		if ((x >= tool->m_x) && (y >= tool->m_y) && (x < (tool->m_x + tool->GetWidth()))
+			&& (y < (tool->m_y + tool->GetHeight()))) {
 			return tool;
 		}
 
 		node = node->GetNext();
 	}
 
-	return (wxToolBarToolBase *) NULL;
+	return (wxToolBarToolBase*)NULL;
 }
 
 void ToolBarSimple::InvalidateBitmaps()
 {
 	wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst();
-	while( node ) {
-		ToolBarTool *tool = (ToolBarTool *) node->GetData();
+	while (node) {
+		ToolBarTool* tool = (ToolBarTool*)node->GetData();
 		tool->bitmapOK = false;
 		node = node->GetNext();
 	}
 }
 
-wxRect ToolBarSimple::GetToolRect( int tool_id )
+wxRect ToolBarSimple::GetToolRect(int tool_id)
 {
 	wxRect rect;
-	wxToolBarToolBase *tool = FindById( tool_id );
-	if( tool ) {
-		ToolBarTool *otool = (ToolBarTool *) tool;
-		if( otool ) rect = otool->trect;
+	wxToolBarToolBase* tool = FindById(tool_id);
+	if (tool) {
+		ToolBarTool* otool = (ToolBarTool*)tool;
+		if (otool)
+			rect = otool->trect;
 	}
 
 	return rect;
@@ -762,29 +784,30 @@ wxRect ToolBarSimple::GetToolRect( int tool_id )
 // tool state change handlers
 // ----------------------------------------------------------------------------
 
-void ToolBarSimple::DoEnableTool( wxToolBarToolBase *tool, bool WXUNUSED(enable) )
+void ToolBarSimple::DoEnableTool(wxToolBarToolBase* tool, bool WXUNUSED(enable))
 {
-	DrawTool( tool );
+	DrawTool(tool);
 }
 
-void ToolBarSimple::DoToggleTool( wxToolBarToolBase *tool, bool WXUNUSED(toggle) )
+void ToolBarSimple::DoToggleTool(wxToolBarToolBase* tool, bool WXUNUSED(toggle))
 {
-	ToolBarTool *t = (ToolBarTool *) tool;
+	ToolBarTool* t = (ToolBarTool*)tool;
 	t->bitmapOK = false;
-	DrawTool( tool );
+	DrawTool(tool);
 }
 
 // Okay, so we've left the tool we're in ... we must check if the tool we're
 // leaving was a 'sprung push button' and if so, spring it back to the up
 // state.
-void ToolBarSimple::SpringUpButton( int id )
+void ToolBarSimple::SpringUpButton(int id)
 {
-	wxToolBarToolBase *tool = FindById( id );
+	wxToolBarToolBase* tool = FindById(id);
 
-	if( tool && tool->CanBeToggled() ) {
-		if( tool->IsToggled() ) tool->Toggle();
+	if (tool && tool->CanBeToggled()) {
+		if (tool->IsToggled())
+			tool->Toggle();
 
-		DrawTool( tool );
+		DrawTool(tool);
 	}
 }
 
@@ -792,108 +815,111 @@ void ToolBarSimple::SpringUpButton( int id )
 // scrolling implementation
 // ----------------------------------------------------------------------------
 
-wxString ToolBarSimple::GetToolShortHelp( int id ) const
+wxString ToolBarSimple::GetToolShortHelp(int id) const
 {
-	wxToolBarToolBase *tool = FindById( id );
-	wxCHECK_MSG( tool, wxEmptyString, _T("no such tool") );
+	wxToolBarToolBase* tool = FindById(id);
+	wxCHECK_MSG(tool, wxEmptyString, _T("no such tool"));
 
 	return tool->GetShortHelp();
 }
 
-wxString ToolBarSimple::GetToolLongHelp( int id ) const
+wxString ToolBarSimple::GetToolLongHelp(int id) const
 {
-	wxToolBarToolBase *tool = FindById( id );
-	wxCHECK_MSG( tool, wxEmptyString, _T("no such tool") );
+	wxToolBarToolBase* tool = FindById(id);
+	wxCHECK_MSG(tool, wxEmptyString, _T("no such tool"));
 
 	return tool->GetLongHelp();
 }
 
-void ToolBarSimple::SetToolShortHelp( int id, const wxString& help )
+void ToolBarSimple::SetToolShortHelp(int id, const wxString& help)
 {
-	wxToolBarToolBase *tool = FindById( id );
-	if( tool ) {
-		(void) tool->SetShortHelp( help );
+	wxToolBarToolBase* tool = FindById(id);
+	if (tool) {
+		(void)tool->SetShortHelp(help);
 	}
 }
 
-void ToolBarSimple::SetToolLongHelp( int id, const wxString& help )
+void ToolBarSimple::SetToolLongHelp(int id, const wxString& help)
 {
-	wxToolBarToolBase *tool = FindById( id );
-	if( tool ) {
-		(void) tool->SetLongHelp( help );
+	wxToolBarToolBase* tool = FindById(id);
+	if (tool) {
+		(void)tool->SetLongHelp(help);
 	}
 }
 
-int ToolBarSimple::GetToolPos( int id ) const
+int ToolBarSimple::GetToolPos(int id) const
 {
 	size_t pos = 0;
 	wxToolBarToolsList::compatibility_iterator node;
 
-	for( node = m_tools.GetFirst(); node; node = node->GetNext() ) {
-		if( node->GetData()->GetId() == id ) return pos;
+	for (node = m_tools.GetFirst(); node; node = node->GetNext()) {
+		if (node->GetData()->GetId() == id)
+			return pos;
 
 		pos++;
 	}
 
 	return wxNOT_FOUND;
 }
-bool ToolBarSimple::GetToolState( int id ) const
+
+bool ToolBarSimple::GetToolState(int id) const
 {
-	wxToolBarToolBase *tool = FindById( id );
-	wxCHECK_MSG( tool, false, _T("no such tool") );
+	wxToolBarToolBase* tool = FindById(id);
+	wxCHECK_MSG(tool, false, _T("no such tool"));
 
 	return tool->IsToggled();
 }
 
-bool ToolBarSimple::GetToolEnabled( int id ) const
+bool ToolBarSimple::GetToolEnabled(int id) const
 {
-	wxToolBarToolBase *tool = FindById( id );
-	wxCHECK_MSG( tool, false, _T("no such tool") );
+	wxToolBarToolBase* tool = FindById(id);
+	wxCHECK_MSG(tool, false, _T("no such tool"));
 
 	return tool->IsEnabled();
 }
 
-void ToolBarSimple::ToggleTool( int id, bool toggle )
+void ToolBarSimple::ToggleTool(int id, bool toggle)
 {
-	wxToolBarToolBase *tool = FindById( id );
-	if( tool ) {
-		tool->Toggle( toggle );
-		DoToggleTool( tool, toggle );
+	wxToolBarToolBase* tool = FindById(id);
+	if (tool) {
+		tool->Toggle(toggle);
+		DoToggleTool(tool, toggle);
 	}
-	if( g_toolbar ) g_toolbar->Refresh();
+	if (g_toolbar)
+		g_toolbar->Refresh();
 }
 
-wxObject *ToolBarSimple::GetToolClientData( int id ) const
+wxObject* ToolBarSimple::GetToolClientData(int id) const
 {
-	wxToolBarToolBase *tool = FindById( id );
-	return tool ? tool->GetClientData() : (wxObject *) NULL;
+	wxToolBarToolBase* tool = FindById(id);
+	return tool ? tool->GetClientData() : (wxObject*)NULL;
 }
 
-void ToolBarSimple::SetToolClientData( int id, wxObject *clientData )
+void ToolBarSimple::SetToolClientData(int id, wxObject* clientData)
 {
-	wxToolBarToolBase *tool = FindById( id );
+	wxToolBarToolBase* tool = FindById(id);
 
-	wxCHECK_RET( tool, _T("no such tool in wxToolBar::SetToolClientData") );
+	wxCHECK_RET(tool, _T("no such tool in wxToolBar::SetToolClientData"));
 
-	tool->SetClientData( clientData );
+	tool->SetClientData(clientData);
 }
 
-void ToolBarSimple::EnableTool( int id, bool enable )
+void ToolBarSimple::EnableTool(int id, bool enable)
 {
-	wxToolBarToolBase *tool = FindById( id );
-	if( tool ) {
-		if( tool->Enable( enable ) ) {
-			DoEnableTool( tool, enable );
+	wxToolBarToolBase* tool = FindById(id);
+	if (tool) {
+		if (tool->Enable(enable)) {
+			DoEnableTool(tool, enable);
 		}
 	}
-	wxMenuItem* configItem = g_FloatingToolbarConfigMenu->FindItem( id );
-	configItem->Check( true );
+	wxMenuItem* configItem = g_FloatingToolbarConfigMenu->FindItem(id);
+	configItem->Check(true);
 }
 
-void ToolBarSimple::SetToolBitmaps( int id, wxBitmap *bmp, wxBitmap *bmpRollover )
+void ToolBarSimple::SetToolBitmaps(int id, wxBitmap* bmp, wxBitmap* bmpRollover)
 {
-	ToolBarTool *tool = (ToolBarTool*)FindById( id );
-	if( tool ) {
+	ToolBarTool* tool = (ToolBarTool*)FindById(id);
+	if (tool) {
 		tool->pluginNormalIcon = bmp;
 		tool->pluginRolloverIcon = bmpRollover;
 		tool->bitmapOK = false;
@@ -902,63 +928,57 @@ void ToolBarSimple::SetToolBitmaps( int id, wxBitmap *bmp, wxBitmap *bmpRollover
 
 void ToolBarSimple::ClearTools()
 {
-	while( GetToolsCount() ) {
-		DeleteToolByPos( 0 );
+	while (GetToolsCount()) {
+		DeleteToolByPos(0);
 	}
 }
 
 int ToolBarSimple::GetVisibleToolCount()
 {
-	int counter = 0;
-	wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst();
-	while( node ) {
-		ToolBarTool *tool = (ToolBarTool *) node->GetData();
-		counter++;
-		node = node->GetNext();
-	}
-	return counter;
+	return m_tools.size();
 }
 
-bool ToolBarSimple::DeleteToolByPos( size_t pos )
+bool ToolBarSimple::DeleteToolByPos(size_t pos)
 {
-	wxCHECK_MSG( pos < GetToolsCount(), false,
-			_T("invalid position in wxToolBar::DeleteToolByPos()") );
+	wxCHECK_MSG(pos < GetToolsCount(), false,
+				_T("invalid position in wxToolBar::DeleteToolByPos()"));
 
-	wxToolBarToolsList::compatibility_iterator node = m_tools.Item( pos );
+	wxToolBarToolsList::compatibility_iterator node = m_tools.Item(pos);
 
-	if( !DoDeleteTool( pos, node->GetData() ) ) {
+	if (!DoDeleteTool(pos, node->GetData())) {
 		return false;
 	}
 
 	delete node->GetData();
-	m_tools.Erase( node );
+	m_tools.Erase(node);
 
 	return true;
 }
 
-bool ToolBarSimple::DeleteTool( int id )
+bool ToolBarSimple::DeleteTool(int id)
 {
 	size_t pos = 0;
 	wxToolBarToolsList::compatibility_iterator node;
-	for( node = m_tools.GetFirst(); node; node = node->GetNext() ) {
-		if( node->GetData()->GetId() == id ) break;
+	for (node = m_tools.GetFirst(); node; node = node->GetNext()) {
+		if (node->GetData()->GetId() == id)
+			break;
 
 		pos++;
 	}
 
-	if( !node || !DoDeleteTool( pos, node->GetData() ) ) {
+	if (!node || !DoDeleteTool(pos, node->GetData())) {
 		return false;
 	}
 
 	delete node->GetData();
-	m_tools.Erase( node );
+	m_tools.Erase(node);
 
 	return true;
 }
 
-wxToolBarToolBase *ToolBarSimple::AddSeparator()
+wxToolBarToolBase* ToolBarSimple::AddSeparator()
 {
-	return InsertSeparator( GetToolsCount() );
+	return InsertSeparator(GetToolsCount());
 }
 
 wxToolBarToolBase *ToolBarSimple::InsertSeparator( size_t pos )
@@ -980,62 +1000,61 @@ wxToolBarToolBase *ToolBarSimple::InsertSeparator( size_t pos )
 	return tool;
 }
 
-wxToolBarToolBase *ToolBarSimple::RemoveTool( int id )
+wxToolBarToolBase* ToolBarSimple::RemoveTool(int id)
 {
 	size_t pos = 0;
 	wxToolBarToolsList::compatibility_iterator node;
-	for( node = m_tools.GetFirst(); node; node = node->GetNext() ) {
-		if( node->GetData()->GetId() == id ) break;
+	for (node = m_tools.GetFirst(); node; node = node->GetNext()) {
+		if (node->GetData()->GetId() == id)
+			break;
 
 		pos++;
 	}
 
-	if( !node ) {
+	if (!node) {
 		// don't give any error messages - sometimes we might call RemoveTool()
 		// without knowing whether the tool is or not in the toolbar
-		return (wxToolBarToolBase *) NULL;
+		return (wxToolBarToolBase*)NULL;
 	}
 
-	wxToolBarToolBase *tool = node->GetData();
-	if( !DoDeleteTool( pos, tool ) ) {
-		return (wxToolBarToolBase *) NULL;
+	wxToolBarToolBase* tool = node->GetData();
+	if (!DoDeleteTool(pos, tool)) {
+		return (wxToolBarToolBase*)NULL;
 	}
 
-	m_tools.Erase( node );
+	m_tools.Erase(node);
 
 	return tool;
 }
 
-
-wxControl *ToolBarSimple::FindControl( int id )
+wxControl* ToolBarSimple::FindControl(int id)
 {
-	for( wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
-			node = node->GetNext() ) {
-		const wxToolBarToolBase * const tool = node->GetData();
-		if( tool->IsControl() ) {
-			wxControl * const control = tool->GetControl();
+	for (wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
+		 node = node->GetNext()) {
+		const wxToolBarToolBase* const tool = node->GetData();
+		if (tool->IsControl()) {
+			wxControl* const control = tool->GetControl();
 
-			if( !control ) {
-				wxFAIL_MSG( _T("NULL control in toolbar?") );
-			} else
-				if( control->GetId() == id ) {
-					// found
-					return control;
-				}
+			if (!control) {
+				wxFAIL_MSG(_T("NULL control in toolbar?"));
+			} else if (control->GetId() == id) {
+				// found
+				return control;
+			}
 		}
 	}
 
 	return NULL;
 }
 
-wxToolBarToolBase *ToolBarSimple::FindById( int id ) const
+wxToolBarToolBase* ToolBarSimple::FindById(int id) const
 {
-	wxToolBarToolBase *tool = (wxToolBarToolBase *) NULL;
+	wxToolBarToolBase* tool = (wxToolBarToolBase*)NULL;
 
-	for( wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
-			node = node->GetNext() ) {
+	for (wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
+		 node = node->GetNext()) {
 		tool = node->GetData();
-		if( tool->GetId() == id ) {
+		if (tool->GetId() == id) {
 			// found
 			break;
 		}
@@ -1051,42 +1070,43 @@ wxToolBarToolBase *ToolBarSimple::FindById( int id ) const
 // ----------------------------------------------------------------------------
 
 // Only allow toggle if returns true
-bool ToolBarSimple::OnLeftClick( int id, bool toggleDown )
+bool ToolBarSimple::OnLeftClick(int id, bool toggleDown)
 {
-	wxCommandEvent event( wxEVT_COMMAND_TOOL_CLICKED, id );
-	event.SetEventObject( this );
+	wxCommandEvent event(wxEVT_COMMAND_TOOL_CLICKED, id);
+	event.SetEventObject(this);
 
 	// we use SetInt() to make wxCommandEvent::IsChecked() return toggleDown
-	event.SetInt( (int) toggleDown );
+	event.SetInt((int)toggleDown);
 
 	// and SetExtraLong() for backwards compatibility
-	event.SetExtraLong( (long) toggleDown );
+	event.SetExtraLong((long)toggleDown);
 
 	// Send events to this toolbar instead (and thence up the window hierarchy)
-	GetEventHandler()->ProcessEvent( event );
+	GetEventHandler()->ProcessEvent(event);
 
 	return true;
 }
 
 // Call when right button down.
-void ToolBarSimple::OnRightClick( int id, long WXUNUSED(x), long WXUNUSED(y) )
+void ToolBarSimple::OnRightClick(int id, long WXUNUSED(x), long WXUNUSED(y))
 {
-	wxCommandEvent event( wxEVT_COMMAND_TOOL_RCLICKED, id );
-	event.SetEventObject( this );
-	event.SetInt( id );
+	wxCommandEvent event(wxEVT_COMMAND_TOOL_RCLICKED, id);
+	event.SetEventObject(this);
+	event.SetInt(id);
 
 	HideTooltip();
 	((OCPNFloatingToolbarDialog*)GetParent())->toolbarConfigChanged = false;
 	wxMenu* contextMenu = new wxMenu();
-	wxMenuItem* submenu = contextMenu->AppendSubMenu( g_FloatingToolbarConfigMenu, _("Visible buttons") );
+	wxMenuItem* submenu
+		= contextMenu->AppendSubMenu(g_FloatingToolbarConfigMenu, _("Visible buttons"));
 
-	PopupMenu( contextMenu );
+	PopupMenu(contextMenu);
 
-	contextMenu->Remove( submenu );
+	contextMenu->Remove(submenu);
 	delete contextMenu;
 
-	if( ((OCPNFloatingToolbarDialog*)GetParent())->toolbarConfigChanged )
-		gFrame->GetEventHandler()->AddPendingEvent( event );
+	if (((OCPNFloatingToolbarDialog*)GetParent())->toolbarConfigChanged)
+		gFrame->GetEventHandler()->AddPendingEvent(event);
 }
 
 // Called when the mouse cursor enters a tool bitmap (no button pressed).
@@ -1094,33 +1114,34 @@ void ToolBarSimple::OnRightClick( int id, long WXUNUSED(x), long WXUNUSED(y) )
 // Note that for this event, the id of the window is used,
 // and the integer parameter of wxCommandEvent is used to retrieve
 // the tool id.
-void ToolBarSimple::OnMouseEnter( int id )
+void ToolBarSimple::OnMouseEnter(int id)
 {
-	wxCommandEvent event( wxEVT_COMMAND_TOOL_ENTER, GetId() );
-	event.SetEventObject( this );
-	event.SetInt( id );
+	wxCommandEvent event(wxEVT_COMMAND_TOOL_ENTER, GetId());
+	event.SetEventObject(this);
+	event.SetInt(id);
 
-	wxFrame *frame = wxDynamicCast(GetParent(), wxFrame);
-	if( frame ) {
+	wxFrame* frame = wxDynamicCast(GetParent(), wxFrame);
+	if (frame) {
 		wxString help;
-		wxToolBarToolBase* tool = id == wxID_ANY ? (wxToolBarToolBase*) NULL : FindById( id );
-		if( tool ) help = tool->GetLongHelp();
-		frame->DoGiveHelp( help, id != wxID_ANY );
+		wxToolBarToolBase* tool = id == wxID_ANY ? (wxToolBarToolBase*)NULL : FindById(id);
+		if (tool)
+			help = tool->GetLongHelp();
+		frame->DoGiveHelp(help, id != wxID_ANY);
 	}
 
-	(void) GetEventHandler()->ProcessEvent( event );
+	(void)GetEventHandler()->ProcessEvent(event);
 }
 
-void ToolBarSimple::SetToolNormalBitmapEx(wxToolBarToolBase *tool, const wxString & iconName)
+void ToolBarSimple::SetToolNormalBitmapEx(wxToolBarToolBase* tool, const wxString& iconName)
 {
-	if( tool ) {
-		ocpnStyle::Style *style = g_StyleManager->GetCurrentStyle();
+	if (tool) {
+		ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 
-		wxBitmap bmp = style->GetToolIcon( iconName, ocpnStyle::TOOLICON_NORMAL );
-		tool->SetNormalBitmap( bmp );
-		ToolBarTool *otool = (ToolBarTool *)tool;
-		if(otool)
-			otool->SetIconName( iconName );
+		wxBitmap bmp = style->GetToolIcon(iconName, ocpnStyle::TOOLICON_NORMAL);
+		tool->SetNormalBitmap(bmp);
+		ToolBarTool* otool = (ToolBarTool*)tool;
+		if (otool)
+			otool->SetIconName(iconName);
 	}
 }
 

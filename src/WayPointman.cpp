@@ -198,7 +198,7 @@ void WayPointman::ProcessIcon(wxBitmap pimage, const wxString& key, const wxStri
 
 // This method cannot be const nor return a const reference to the image list
 // because the wxWidgets crap is taking a plain pointer for wxListCtrl::SetImageList...
-wxImageList * WayPointman::Getpmarkicon_image_list(void)
+wxImageList* WayPointman::Getpmarkicon_image_list(void)
 {
 	// First find the largest bitmap size
 	int w = 0;
@@ -209,10 +209,13 @@ wxImageList * WayPointman::Getpmarkicon_image_list(void)
 		h = wxMax(h, (*i)->picon_bitmap->GetHeight());
 
 		// toh, 10.09.29
-		// User defined icons won't be displayed in the list if they are larger than 32x32 pixels (why???)
+		// User defined icons won't be displayed in the list if they are larger than 32x32 pixels
+		// (why???)
 		// Work-around: limit size
-		if( w > 32 ) w = 32;
-		if( h > 32 ) h = 32;
+		if (w > 32)
+			w = 32;
+		if (h > 32)
+			h = 32;
 	}
 
 	// Build an image list large enough
@@ -231,19 +234,21 @@ wxImageList * WayPointman::Getpmarkicon_image_list(void)
 		int w0 = icon_image.GetWidth();
 
 		wxImage icon_larger;
-		if( h0 <= h && w0 <= w ) {
+		if (h0 <= h && w0 <= w) {
 			// Resize & Center smaller icons in the bitmap, so menus won't look so weird.
-			icon_larger = icon_image.Resize( wxSize( w, h ), wxPoint( (w-w0)/2, (h-h0)/2 ) );
+			icon_larger = icon_image.Resize(wxSize(w, h), wxPoint((w - w0) / 2, (h - h0) / 2));
 		} else {
 			// rescale in one or two directions to avoid cropping, then resize to fit to cell
 			int h1 = h;
 			int w1 = w;
-			if( h0 > h ) w1 = wxRound( (double) w0 * ( (double) h / (double) h0 ) );
+			if (h0 > h)
+				w1 = wxRound((double)w0 * ((double)h / (double)h0));
 
-			else if( w0 > w ) h1 = wxRound( (double) h0 * ( (double) w / (double) w0 ) );
+			else if (w0 > w)
+				h1 = wxRound((double)h0 * ((double)w / (double)w0));
 
-			icon_larger = icon_image.Rescale( w1, h1 );
-			icon_larger = icon_larger.Resize( wxSize( w, h ), wxPoint( 0, 0 ) );
+			icon_larger = icon_image.Rescale(w1, h1);
+			icon_larger = icon_larger.Resize(wxSize(w, h), wxPoint(0, 0));
 		}
 
 		icon_image_list.Add(icon_larger);
@@ -311,7 +316,7 @@ wxBitmap* WayPointman::CreateDimBitmap(wxBitmap* pBitmap, double factor)
 	return pret;
 }
 
-void WayPointman::push_back(RoutePoint * route_point)
+void WayPointman::push_back(RoutePoint* route_point)
 {
 	if (!route_point)
 		return;
@@ -319,7 +324,7 @@ void WayPointman::push_back(RoutePoint * route_point)
 	m_pWayPointList->push_back(route_point);
 }
 
-void WayPointman::remove(RoutePoint * route_point)
+void WayPointman::remove(RoutePoint* route_point)
 {
 	if (!route_point)
 		return;
@@ -327,7 +332,7 @@ void WayPointman::remove(RoutePoint * route_point)
 	m_pWayPointList->remove(route_point);
 }
 
-RoutePoint * WayPointman::find(const wxString & guid)
+RoutePoint* WayPointman::find(const wxString& guid)
 {
 	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
 		if ((*i)->m_GUID == guid)
@@ -336,7 +341,7 @@ RoutePoint * WayPointman::find(const wxString & guid)
 	return NULL;
 }
 
-bool WayPointman::contains(const RoutePoint * point) const
+bool WayPointman::contains(const RoutePoint* point) const
 {
 	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
 		if (*i == point)
@@ -354,7 +359,7 @@ void WayPointman::SetColorScheme(ColorScheme)
 	}
 }
 
-bool WayPointman::DoesIconExist(const wxString & icon_key) const
+bool WayPointman::DoesIconExist(const wxString& icon_key) const
 {
 	for (Icons::const_iterator i = icons.begin(); i != icons.end(); ++i) {
 		if ((*i)->icon_name.IsSameAs(icon_key))
@@ -364,9 +369,9 @@ bool WayPointman::DoesIconExist(const wxString & icon_key) const
 	return false;
 }
 
-wxBitmap * WayPointman::GetIconBitmap(const wxString& icon_key)
+wxBitmap* WayPointman::GetIconBitmap(const wxString& icon_key)
 {
-	MarkIcon * pmi = NULL;
+	MarkIcon* pmi = NULL;
 	unsigned int i;
 
 	for (i = 0; i < icons.size(); ++i) {
@@ -524,13 +529,13 @@ bool WayPointman::SharedWptsExist()
 	return false;
 }
 
-void WayPointman::DeleteAllWaypoints( bool b_delete_used )
+void WayPointman::DeleteAllWaypoints(bool b_delete_used)
 {
 	// FIXME: altering container which is iterated through
 	// Iterate on the RoutePoint list, deleting all
-	wxRoutePointListNode * node = m_pWayPointList->GetFirst();
-	while (node) {
-		RoutePoint * prp = node->GetData();
+	RoutePointList::iterator i = m_pWayPointList->begin();
+	while (i != m_pWayPointList->end()) {
+		RoutePoint * prp = *i;
 
 		// if argument is false, then only delete non-route waypoints
 		if (!prp->m_bIsInLayer && (prp->m_IconName != _T("mob"))
@@ -539,9 +544,11 @@ void WayPointman::DeleteAllWaypoints( bool b_delete_used )
 						&& !(prp == pAnchorWatchPoint1) && !(prp == pAnchorWatchPoint2)))) {
 			DestroyWaypoint(prp);
 			delete prp;
-			node = m_pWayPointList->GetFirst();
-		} else
-			node = node->GetNext();
+			// TODO: why not remove the entry from list
+			i = m_pWayPointList->begin();
+		} else {
+			++i;
+		}
 	}
 	return;
 
@@ -596,7 +603,7 @@ void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_change
 	if (NULL != pWayPointMan) // FIXME: this is already within the object, no need to reference the global instance
 		pWayPointMan->remove(route_point);
 
-	//    The RoutePoint might be currently in use as an anchor watch point
+	// The RoutePoint might be currently in use as an anchor watch point
 	if (route_point == pAnchorWatchPoint1)
 		pAnchorWatchPoint1 = NULL;
 	if (route_point == pAnchorWatchPoint2)
@@ -608,11 +615,11 @@ int WayPointman::GetNumIcons(void) const
 	return icons.size();
 }
 
-RoutePoint * WayPointman::WaypointExists(const wxString & name, double lat, double lon)
+RoutePoint* WayPointman::WaypointExists(const wxString& name, double lat, double lon)
 {
-	RoutePointList * list = pWayPointMan->m_pWayPointList;
+	RoutePointList* list = pWayPointMan->m_pWayPointList;
 	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
-		RoutePoint * pr = *i;
+		RoutePoint* pr = *i;
 		if (name == pr->GetName()) {
 			if (fabs(lat - pr->m_lat) < 1.e-6 && fabs(lon - pr->m_lon) < 1.e-6) {
 				return pr;
@@ -625,25 +632,24 @@ RoutePoint * WayPointman::WaypointExists(const wxString & name, double lat, doub
 void WayPointman::deleteWayPointOnLayer(int layer_id)
 {
 	// FIXME: container altering iterating, iterate through copy of list, only elements are interesting
-	wxRoutePointListNode * node = m_pWayPointList->GetFirst();
-	while (node) {
-		wxRoutePointListNode * node_next = node->GetNext();
-		RoutePoint *rp = node->GetData();
+	RoutePointList::iterator i = m_pWayPointList->begin();
+	while (i != m_pWayPointList->end()) {
+		RoutePointList::iterator next = i;
+		++next;
+		RoutePoint *rp = *i;
 		if (rp && (rp->m_LayerID == layer_id)) {
 			rp->m_bIsInLayer = false;
 			rp->m_LayerID = 0;
 			pWayPointMan->DestroyWaypoint(rp, false);
 		}
-
-		node = node_next;
-		node_next = NULL;
+		i = next;
 	}
 }
 
 void WayPointman::setWayPointVisibilityOnLayer(int layer_id, bool visible)
 {
 	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
-		RoutePoint * rp = *i;
+		RoutePoint* rp = *i;
 		if (rp && (rp->m_LayerID == layer_id)) {
 			rp->SetVisible(visible);
 		}
@@ -653,7 +659,7 @@ void WayPointman::setWayPointVisibilityOnLayer(int layer_id, bool visible)
 void WayPointman::setWayPointNameVisibilityOnLayer(int layer_id, bool visible)
 {
 	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
-		RoutePoint * rp = *i;
+		RoutePoint* rp = *i;
 		if (rp && (rp->m_LayerID == layer_id)) {
 			rp->SetNameShown(visible);
 		}
@@ -663,14 +669,14 @@ void WayPointman::setWayPointNameVisibilityOnLayer(int layer_id, bool visible)
 void WayPointman::setWayPointListingVisibilityOnLayer(int layer_id, bool visible)
 {
 	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
-		RoutePoint * rp = *i;
+		RoutePoint* rp = *i;
 		if (rp && !rp->m_bIsInTrack && rp->m_bIsolatedMark && (rp->m_LayerID == layer_id)) {
 			rp->SetListed(visible);
 		}
 	}
 }
 
-const RoutePointList & WayPointman::waypoints() const
+const RoutePointList& WayPointman::waypoints() const
 {
 	return *m_pWayPointList;
 }

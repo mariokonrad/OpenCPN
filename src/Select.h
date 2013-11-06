@@ -45,8 +45,8 @@ public:
 								   RoutePoint* pRoutePointAdd1, RoutePoint* pRoutePointAdd2,
 								   Route* pRoute);
 
-	SelectItem* FindSelection(float slat, float slon, int fseltype);
-	SelectableItemList FindSelectionList(float slat, float slon, int fseltype);
+	SelectItem* FindSelection(float slat, float slon, unsigned long fseltype);
+	SelectableItemList FindSelectionList(float slat, float slon, unsigned long fseltype);
 
 	bool DeleteAllSelectableRouteSegments(Route*);
 	bool DeleteAllSelectableTrackSegments(Route*);
@@ -54,7 +54,7 @@ public:
 	bool AddAllSelectableRouteSegments(Route* pr);
 	bool AddAllSelectableTrackSegments(Route* pr);
 	bool AddAllSelectableRoutePoints(Route* pr);
-	bool UpdateSelectableRouteSegments(RoutePoint* prp);
+	bool UpdateSelectableRouteSegments(const RoutePoint* prp);
 	bool DeletePointSelectableTrackSegments(RoutePoint* pr);
 	bool IsSegmentSelected(float a, float b, float c, float d, float slat, float slon);
 	bool IsSelectableSegmentSelected(float slat, float slon, SelectItem* pFindSel);
@@ -63,11 +63,11 @@ public:
 	// e.g. Tides/Currents and AIS Targets
 	SelectItem* AddSelectablePoint(float slat, float slon, const void* data, SelectItem::Type fseltype);
 	bool DeleteAllPoints(void);
-	bool DeleteSelectablePoint(void* data, int SeltypeToDelete);
-	bool ModifySelectablePoint(float slat, float slon, void* data, int fseltype);
+	bool DeleteSelectablePoint(void* data, unsigned long SeltypeToDelete);
+	bool ModifySelectablePoint(float slat, float slon, void* data, unsigned long fseltype);
 
 	// Delete all selectable points in list by type
-	bool DeleteAllSelectableTypePoints(int SeltypeToDelete);
+	bool DeleteAllSelectableTypePoints(unsigned long SeltypeToDelete);
 
 private:
 	void CalcSelectRadius();

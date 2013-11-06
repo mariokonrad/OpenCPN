@@ -627,102 +627,101 @@ void TrackPropDlg::OnSplitBtnClick(wxCommandEvent&)
 	}
 }
 
-void TrackPropDlg::OnTrackPropCopyTxtClick(wxCommandEvent &)
+void TrackPropDlg::OnTrackPropCopyTxtClick(wxCommandEvent&)
 {
 	wxString tab("\t", wxConvUTF8);
 	wxString eol("\n", wxConvUTF8);
 	wxString csvString;
 
-	csvString << this->GetTitle() << eol
-		<< _("Name") << tab << m_pRoute->m_RouteNameString << eol
-		<< _("Depart From") << tab << m_pRoute->m_RouteStartString << eol
-		<< _("Destination") << tab << m_pRoute->m_RouteEndString << eol
-		<< _("Total Distance") << tab << m_tTotDistance->GetValue() << eol
-		<< _("Speed") << tab << m_tAvgSpeed->GetValue() << eol
-		<< _("Departure Time (m/d/y h:m)") << tab << m_pRoute->GetPoint(1)->GetCreateTime().Format() << eol
-		<< _("Time Enroute") << tab << m_tTimeEnroute->GetValue() << eol << eol;
+	csvString << this->GetTitle() << eol << _("Name") << tab << m_pRoute->m_RouteNameString << eol
+			  << _("Depart From") << tab << m_pRoute->m_RouteStartString << eol << _("Destination")
+			  << tab << m_pRoute->m_RouteEndString << eol << _("Total Distance") << tab
+			  << m_tTotDistance->GetValue() << eol << _("Speed") << tab << m_tAvgSpeed->GetValue()
+			  << eol << _("Departure Time (m/d/y h:m)") << tab
+			  << m_pRoute->GetPoint(1)->GetCreateTime().Format() << eol << _("Time Enroute") << tab
+			  << m_tTimeEnroute->GetValue() << eol << eol;
 
 	int noCols;
 	int noRows;
 	noCols = m_lcPoints->GetColumnCount();
 	noRows = m_lcPoints->GetItemCount();
 	wxListItem item;
-	item.SetMask( wxLIST_MASK_TEXT );
+	item.SetMask(wxLIST_MASK_TEXT);
 
-	for( int i = 0; i < noCols; i++ ) {
-		m_lcPoints->GetColumn( i, item );
+	for (int i = 0; i < noCols; i++) {
+		m_lcPoints->GetColumn(i, item);
 		csvString << item.GetText() << tab;
 	}
 	csvString << eol;
 
-	for( int j = 0; j < noRows; j++ ) {
-		item.SetId( j );
-		for( int i = 0; i < noCols; i++ ) {
-			item.SetColumn( i );
-			m_lcPoints->GetItem( item );
+	for (int j = 0; j < noRows; j++) {
+		item.SetId(j);
+		for (int i = 0; i < noCols; i++) {
+			item.SetColumn(i);
+			m_lcPoints->GetItem(item);
 			csvString << item.GetText() << tab;
 		}
 		csvString << eol;
 	}
 
-	if( wxTheClipboard->Open() ) {
+	if (wxTheClipboard->Open()) {
 		wxTextDataObject* data = new wxTextDataObject;
-		data->SetText( csvString );
-		wxTheClipboard->SetData( data );
+		data->SetText(csvString);
+		wxTheClipboard->SetData(data);
 		wxTheClipboard->Close();
 	}
 }
 
-void TrackPropDlg::OnPrintBtnClick(wxCommandEvent &)
+void TrackPropDlg::OnPrintBtnClick(wxCommandEvent&)
 {
-	RoutePrintSelection * pTrackPrintSelection = new RoutePrintSelection(this, m_pRoute);
+	RoutePrintSelection* pTrackPrintSelection = new RoutePrintSelection(this, m_pRoute);
 	pTrackPrintSelection->ShowModal();
 	delete pTrackPrintSelection;
 }
 
-void TrackPropDlg::OnTrackPropRightClick(wxListEvent &)
+void TrackPropDlg::OnTrackPropRightClick(wxListEvent&)
 {
 	wxMenu menu;
 	menu.Append(ID_RCLK_MENU_COPY_TEXT, _("&Copy all as text"));
 	PopupMenu(&menu);
 }
 
-void TrackPropDlg::OnTrackPropListClick(wxListEvent &)
+void TrackPropDlg::OnTrackPropListClick(wxListEvent&)
 {
 	long itemno = -1;
 	m_nSelected = 0;
 
 	int selected_no;
-	itemno = m_lcPoints->GetNextItem( itemno, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-	if( itemno == -1 )
+	itemno = m_lcPoints->GetNextItem(itemno, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (itemno == -1)
 		selected_no = 0;
 	else
 		selected_no = itemno;
 
 	m_pRoute->ClearHighlights();
 
-	wxRoutePointListNode *node = m_pRoute->pRoutePointList->GetFirst();
-	while( node && itemno-- ) {
-		node = node->GetNext();
+	RoutePointList::iterator i = m_pRoute->pRoutePointList->begin();
+	while ((i != m_pRoute->pRoutePointList->end()) && itemno--) { // FIXME: this is basically an indexed access
+		++i;
 	}
-	if( node ) {
-		RoutePoint *prp = node->GetData();
-		if( prp ) {
-			prp->m_bPtIsSelected = true;                // highlight the routepoint
+	if (i != m_pRoute->pRoutePointList->end()) {
+		RoutePoint* prp = *i;
+		if (prp) {
+			prp->m_bPtIsSelected = true; // highlight the routepoint
 
-			if( !( m_pRoute->m_bIsInLayer ) && !( m_pRoute == g_pActiveTrack )
-					&& !( m_pRoute->m_bRtIsActive ) ) {
+			if (!(m_pRoute->m_bIsInLayer) && !(m_pRoute == g_pActiveTrack)
+				&& !(m_pRoute->m_bRtIsActive)) {
 				m_nSelected = selected_no + 1;
-				m_sdbBtmBtnsSizerSplit->Enable( true );
+				m_sdbBtmBtnsSizerSplit->Enable(true);
 			}
 			gFrame->JumpToPosition(prp->m_lat, prp->m_lon, cc1->GetVPScale());
 		}
 	}
-	if( selected_no == 0 || selected_no == m_pRoute->GetnPoints() - 1)
-		m_sdbBtmBtnsSizerSplit->Enable( false );
+	if (selected_no == 0 || selected_no == m_pRoute->GetnPoints() - 1)
+		m_sdbBtmBtnsSizerSplit->Enable(false);
 }
 
-void TrackPropDlg::OnTrackPropMenuSelected(wxCommandEvent & event)
+void TrackPropDlg::OnTrackPropMenuSelected(wxCommandEvent& event)
 {
 	switch (event.GetId()) {
 		case ID_RCLK_MENU_COPY_TEXT:

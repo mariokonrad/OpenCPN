@@ -161,19 +161,20 @@ bool Select::AddAllSelectableRoutePoints(Route* pr)
 
 bool Select::AddAllSelectableRouteSegments(Route* pr)
 {
+	// FIXME: almost code duplication of Select::AddAllSelectableTrackSegments(Route* pr)
+
 	if (pr->pRoutePointList->size() == 0)
 		return false;
 
-	wxRoutePointListNode* node = (pr->pRoutePointList)->GetFirst();
+	RoutePointList::iterator i = pr->pRoutePointList->begin();
 
-	RoutePoint* prp0 = node->GetData();
+	RoutePoint* prp0 = *i;
 	float slat1 = prp0->m_lat;
 	float slon1 = prp0->m_lon;
 
-	node = node->GetNext();
-
-	while (node) {
-		RoutePoint* prp = node->GetData();
+	++i;
+	while (i != pr->pRoutePointList->end()) {
+		RoutePoint* prp = *i;
 		float slat2 = prp->m_lat;
 		float slon2 = prp->m_lon;
 
@@ -183,26 +184,27 @@ bool Select::AddAllSelectableRouteSegments(Route* pr)
 		slon1 = slon2;
 		prp0 = prp;
 
-		node = node->GetNext();
+		++i;
 	}
 	return true;
 }
 
 bool Select::AddAllSelectableTrackSegments(Route* pr)
 {
+	// FIXME: almost code duplication of Select::AddAllSelectableRouteSegments(Route* pr)
+
 	if (pr->pRoutePointList->size() == 0)
 		return false;
 
-	wxRoutePointListNode* node = (pr->pRoutePointList)->GetFirst();
+	RoutePointList::iterator i = pr->pRoutePointList->begin();
 
-	RoutePoint* prp0 = node->GetData();
+	RoutePoint* prp0 = *i;
 	float slat1 = prp0->m_lat;
 	float slon1 = prp0->m_lon;
 
-	node = node->GetNext();
-
-	while (node) {
-		RoutePoint* prp = node->GetData();
+	++i;
+	while (i != pr->pRoutePointList->end()) {
+		RoutePoint* prp = *i;
 		float slat2 = prp->m_lat;
 		float slon2 = prp->m_lon;
 
@@ -212,12 +214,12 @@ bool Select::AddAllSelectableTrackSegments(Route* pr)
 		slon1 = slon2;
 		prp0 = prp;
 
-		node = node->GetNext();
+		++i;
 	}
 	return true;
 }
 
-bool Select::UpdateSelectableRouteSegments(RoutePoint* prp)
+bool Select::UpdateSelectableRouteSegments(const RoutePoint* prp)
 {
 	bool ret = false;
 
@@ -262,7 +264,7 @@ bool Select::DeleteAllPoints(void)
 	return true;
 }
 
-bool Select::DeleteSelectablePoint(void* pdata, int SeltypeToDelete)
+bool Select::DeleteSelectablePoint(void* pdata, unsigned long SeltypeToDelete)
 {
 	if (NULL == pdata)
 		return false;
@@ -281,7 +283,7 @@ bool Select::DeleteSelectablePoint(void* pdata, int SeltypeToDelete)
 	return false;
 }
 
-bool Select::DeleteAllSelectableTypePoints(int SeltypeToDelete)
+bool Select::DeleteAllSelectableTypePoints(unsigned long SeltypeToDelete)
 {
 	// FIXME: refactor, use std algorithms
 	SelectableItemList::iterator i = select_items.begin();
@@ -298,7 +300,7 @@ bool Select::DeleteAllSelectableTypePoints(int SeltypeToDelete)
 	return true;
 }
 
-bool Select::ModifySelectablePoint(float lat, float lon, void* data, int SeltypeToModify)
+bool Select::ModifySelectablePoint(float lat, float lon, void* data, unsigned long SeltypeToModify)
 {
 	// FIXME: refactor, use std algorithms
 	for (SelectableItemList::iterator i = select_items.begin(); i != select_items.end(); ++i) {
@@ -441,7 +443,7 @@ void Select::CalcSelectRadius()
 	selectRadius = pixelRadius / (cc1->GetCanvasTrueScale() * 1852 * 60);
 }
 
-SelectItem* Select::FindSelection(float slat, float slon, int fseltype)
+SelectItem* Select::FindSelection(float slat, float slon, unsigned long fseltype)
 {
 	CalcSelectRadius();
 
@@ -480,7 +482,7 @@ bool Select::IsSelectableSegmentSelected(float slat, float slon, SelectItem* ite
 	return IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon, item->m_slon2, slat, slon);
 }
 
-SelectableItemList Select::FindSelectionList(float slat, float slon, int fseltype)
+SelectableItemList Select::FindSelectionList(float slat, float slon, unsigned long fseltype)
 {
 	SelectableItemList ret_list;
 
@@ -496,9 +498,8 @@ SelectableItemList Select::FindSelectionList(float slat, float slon, int fseltyp
 			case SelectItem::TYPE_CURRENTPOINT:
 			case SelectItem::TYPE_AISTARGET:
 				if ((fabs(slat - item->m_slat) < selectRadius)
-					&& (fabs(slon - item->m_slon) < selectRadius)) {
+					&& (fabs(slon - item->m_slon) < selectRadius))
 					ret_list.push_back(item);
-				}
 				break;
 
 			case SelectItem::TYPE_ROUTESEGMENT:

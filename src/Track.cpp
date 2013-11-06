@@ -224,7 +224,7 @@ void Track::OnTimerTrack(wxTimerEvent&)
 	else // continuously update track beginning point timestamp if no movement.
 		if ((trackPointState == firstPoint) && !g_bTrackDaily) {
 		wxDateTime now = wxDateTime::Now();
-		pRoutePointList->GetFirst()->GetData()->SetCreateTime(now.ToUTC());
+		pRoutePointList->front()->SetCreateTime(now.ToUTC());
 	}
 
 	m_TimerTrack.Start(1000, wxTIMER_CONTINUOUS);
@@ -369,10 +369,10 @@ void Track::Draw(ocpnDC& dc, ViewPort& VP)
 
 	unsigned short int FromSegNo = 1;
 
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-	RoutePoint* prp = node->GetData();
+	RoutePointList::iterator route_point = pRoutePointList->begin();
+	RoutePoint* prp = *route_point;
 
-	//  Establish basic colour
+	// Establish basic colour
 	wxColour basic_colour;
 	if (m_bRunning || prp->m_IconName.StartsWith(_T("xmred"))) {
 		basic_colour = GetGlobalColor(_T ( "URED" ));
@@ -409,9 +409,9 @@ void Track::Draw(ocpnDC& dc, ViewPort& VP)
 	wxPoint rptn;
 	DrawPointWhich(dc, 1, &rpt);
 
-	node = node->GetNext();
-	while (node) {
-		RoutePoint* prp = node->GetData();
+	++route_point;
+	while (route_point != pRoutePointList->end()) {
+		RoutePoint* prp = *route_point;
 		unsigned short int ToSegNo = prp->m_GPXTrkSegNo;
 
 		wxPoint r;
@@ -431,7 +431,7 @@ void Track::Draw(ocpnDC& dc, ViewPort& VP)
 			rpt = rptn;
 		}
 
-		node = node->GetNext();
+		++route_point;
 		FromSegNo = ToSegNo;
 	}
 
@@ -622,17 +622,14 @@ void Track::DouglasPeuckerReducer(std::vector<RoutePoint*>& list, int from, int 
 int Track::Simplify(double maxDelta)
 {
 	int reduction = 0;
-	wxRoutePointListNode* pointnode = pRoutePointList->GetFirst();
-	RoutePoint* routepoint;
 	std::vector<RoutePoint*> pointlist;
 
 	::wxBeginBusyCursor();
 
-	while (pointnode) {
-		routepoint = pointnode->GetData();
+	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+		RoutePoint* routepoint = *i;
 		routepoint->m_bIsActive = false;
 		pointlist.push_back(routepoint);
-		pointnode = pointnode->GetNext();
 	}
 
 	DouglasPeuckerReducer(pointlist, 0, pointlist.size() - 1, maxDelta);
@@ -658,7 +655,8 @@ int Track::Simplify(double maxDelta)
 	return reduction;
 }
 
-double Track::GetXTE( double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon, double toLat, double toLon  )
+double Track::GetXTE(double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon, double toLat,
+					 double toLon)
 {
 	Vector2D v;
 	Vector2D w;

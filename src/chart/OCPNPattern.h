@@ -24,24 +24,28 @@
 #ifndef __OCPNPATTERN__H__
 #define __OCPNPATTERN__H__
 
-#include "chart/SymbolSizeInfo.h"
+#include <chart/SymbolSizeInfo.h>
+
+namespace chart {
 
 class OCPNPattern
 {
-	public:
-		int RCID;
-		wxString name;
-		wxString description;
-		wxString colorRef;
-		bool hasVector;
-		bool hasBitmap;
-		bool preferBitmap;
-		char fillType;
-		char spacing;
-		SymbolSizeInfo bitmapSize;
-		SymbolSizeInfo vectorSize;
-		wxBitmap bitmap;
-		wxString HPGL;
+public:
+	int RCID;
+	wxString name;
+	wxString description;
+	wxString colorRef;
+	bool hasVector;
+	bool hasBitmap;
+	bool preferBitmap;
+	char fillType;
+	char spacing;
+	SymbolSizeInfo bitmapSize;
+	SymbolSizeInfo vectorSize;
+	wxBitmap bitmap;
+	wxString HPGL;
 };
+
+}
 
 #endif

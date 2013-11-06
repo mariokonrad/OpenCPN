@@ -27,6 +27,8 @@
 #include <wx/string.h>
 #include <wx/gdicmn.h>
 
+namespace chart {
+
 struct SymbolSizeInfo
 {
 	wxSize size;
@@ -36,5 +38,7 @@ struct SymbolSizeInfo
 	int minDistance;
 	int maxDistance;
 };
+
+}
 
 #endif

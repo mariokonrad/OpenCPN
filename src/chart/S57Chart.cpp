@@ -69,8 +69,6 @@
 
 extern bool GetDoubleAttr(S57Obj *obj, const char *AttrName, double &val);      // found in s52cnsy
 
-static bool s57_GetChartExtent(const wxString& FullPath, Extent *pext);
-
 void OpenCPN_OGRErrorHandler( CPLErr eErrClass, int nError,
                               const char * pszErrorMsg );               // installed GDAL OGR library error handler
 
@@ -109,16 +107,6 @@ WX_DEFINE_LIST(ListOfObjRazRules);   // Implement a list ofObjRazRules
 static int              s_bInS57;         // Exclusion flag to prvent recursion in this class init call.
                                           // Init() is not reentrant due to static wxProgressDialog callback....
 int s_cnt;
-
-static bool s_ProgressCallBack( void )
-{
-    bool ret = true;
-    s_cnt++;
-    if( ( s_cnt % 100 ) == 0 ) {
-        if( s_ProgDialog ) ret = s_ProgDialog->Pulse();         // return false if cancel is pressed
-    }
-    return ret;
-}
 
 //----------------------------------------------------------------------------------
 //      S57Obj CTOR
@@ -3928,7 +3916,7 @@ int s57chart::BuildSENCFile( const wxString& FullPath000, const wxString& SENCFi
     //      Open the OGRS57DataSource
     //      This will ingest the .000 file from the working dir, and apply updates
 
-    int open_return = poS57DS->Open( m_tmpup_array->Item( 0 ).mb_str(), TRUE, NULL/*&s_ProgressCallBack*/ ); ///172
+    int open_return = poS57DS->Open( m_tmpup_array->Item( 0 ).mb_str(), TRUE, NULL); ///172
     if( open_return == BAD_UPDATE )         ///172
     bbad_update = true;
 
@@ -6527,15 +6515,6 @@ const char *MyCSVGetField( const char * pszFilename, const char * pszKeyFieldNam
 //          Meant to be called "bare", usually with no class instance.
 //
 //------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------------
-// Get Chart Extents
-//----------------------------------------------------------------------------------
-
-static bool s57_GetChartExtent(const wxString &, Extent *)
-{
-    return false;
-}
 
 void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport, std::vector<s57Sector_t>& sectorlegs)
 {

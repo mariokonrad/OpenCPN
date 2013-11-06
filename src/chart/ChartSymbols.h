@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHARTSYMBOLS__H__
-#define __CHARTSYMBOLS__H__
+#ifndef __CHART__CHARTSYMBOLS__H__
+#define __CHART__CHARTSYMBOLS__H__
 
 #include <chart/s52plib.h>
 #include <chart/Lookup.h>
@@ -36,41 +36,41 @@
 // FIXME: this is essentially a singleton, but not implemented as one...
 class ChartSymbols
 {
-	public:
-		ChartSymbols(void);
-		~ChartSymbols(void);
-		bool LoadConfigFile(s52plib * plibArg, const wxString & path);
+public:
+	ChartSymbols(void);
+	~ChartSymbols(void);
+	bool LoadConfigFile(s52plib* plibArg, const wxString& path);
 
-		static void InitializeGlobals(void);
-		static void DeleteGlobals(void);
-		static int LoadRasterFileForColorTable(int tableNo);
-		static wxArrayPtrVoid * GetColorTables();
-		static int FindColorTable(const wxString & tableName);
-		static S52color* GetColor(const char * colorName, int fromTable);
-		static wxColor GetwxColor(const wxString & colorName, int fromTable);
-		static wxColor GetwxColor(const char * colorName, int fromTable);
-		static wxString HashKey(const char * symbolName);
-		static wxImage GetImage(const char * symbolName);
+	static void InitializeGlobals(void);
+	static void DeleteGlobals(void);
+	static int LoadRasterFileForColorTable(int tableNo);
+	static wxArrayPtrVoid* GetColorTables();
+	static int FindColorTable(const wxString& tableName);
+	static S52color* GetColor(const char* colorName, int fromTable);
+	static wxColor GetwxColor(const wxString& colorName, int fromTable);
+	static wxColor GetwxColor(const char* colorName, int fromTable);
+	static wxString HashKey(const char* symbolName);
+	static wxImage GetImage(const char* symbolName);
 
-	private:
-		void ProcessVectorTag(TiXmlElement * subNodes, SymbolSizeInfo & vectorSize);
-		void ProcessColorTables(TiXmlElement * colortableodes);
-		void ProcessLookups(TiXmlElement * lookupNodes);
-		void ProcessLinestyles(TiXmlElement * linestyleNodes);
-		void ProcessPatterns(TiXmlElement * patternNodes);
-		void ProcessSymbols(TiXmlElement * symbolNodes);
-		void BuildLineStyle(chart::LineStyle & lineStyle);
-		void BuildLookup(chart::Lookup & lookup);
-		void BuildPattern(OCPNPattern & pattern);
-		void BuildSymbol(ChartSymbol & symol);
+private:
+	void ProcessVectorTag(TiXmlElement* subNodes, chart::SymbolSizeInfo& vectorSize);
+	void ProcessColorTables(TiXmlElement* colortableodes);
+	void ProcessLookups(TiXmlElement* lookupNodes);
+	void ProcessLinestyles(TiXmlElement* linestyleNodes);
+	void ProcessPatterns(TiXmlElement* patternNodes);
+	void ProcessSymbols(TiXmlElement* symbolNodes);
+	void BuildLineStyle(chart::LineStyle& lineStyle);
+	void BuildLookup(chart::Lookup& lookup);
+	void BuildPattern(chart::OCPNPattern& pattern);
+	void BuildSymbol(chart::ChartSymbol& symol);
 
-	private:
-		static wxBitmap rasterSymbols;
-		static int rasterSymbolsLoadedColorMapNumber;
-		static wxString configFileDirectory;
-		static wxArrayPtrVoid * colorTables;
+private:
+	static wxBitmap rasterSymbols;
+	static int rasterSymbolsLoadedColorMapNumber;
+	static wxString configFileDirectory;
+	static wxArrayPtrVoid* colorTables;
 
-		s52plib * plib;
+	s52plib* plib;
 };
 
 #endif

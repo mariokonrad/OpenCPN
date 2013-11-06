@@ -26,19 +26,23 @@
 
 #include <chart/SymbolSizeInfo.h>
 
+namespace chart {
+
 class ChartSymbol
 {
-	public:
-		wxString name;
-		int	RCID;
-		bool hasVector;
-		bool hasBitmap;
-		bool preferBitmap;
-		wxString description;
-		wxString colorRef;
-		SymbolSizeInfo bitmapSize;
-		SymbolSizeInfo vectorSize;
-		wxString HPGL;
+public:
+	wxString name;
+	int RCID;
+	bool hasVector;
+	bool hasBitmap;
+	bool preferBitmap;
+	wxString description;
+	wxString colorRef;
+	SymbolSizeInfo bitmapSize;
+	SymbolSizeInfo vectorSize;
+	wxString HPGL;
 };
+
+}
 
 #endif

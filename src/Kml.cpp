@@ -113,18 +113,18 @@ KmlPastebufferType Kml::ParseTrack(TiXmlNode* node, wxString& name)
 			pointCounter++;
 		}
 
-		wxRoutePointListNode* rpNode = parsedTrack->pRoutePointList->GetFirst();
-		TiXmlElement* when = node->FirstChildElement("when");
+		RoutePointList::iterator rpnode = parsedTrack->pRoutePointList->begin();
 
 		wxDateTime whenTime;
 
-		for (; when; when = when->NextSiblingElement("when")) {
-			routepoint = rpNode->GetData();
+		for (TiXmlElement* when = node->FirstChildElement("when"); when;
+			 when = when->NextSiblingElement("when")) {
+			routepoint = *rpnode;
 			if (!routepoint)
 				continue;
 			whenTime.ParseFormat(wxString(when->GetText(), wxConvUTF8), _T("%Y-%m-%dT%H:%M:%SZ"));
 			routepoint->SetCreateTime(whenTime);
-			rpNode = rpNode->GetNext();
+			++rpnode;
 		}
 
 		return KML_PASTE_TRACK;
@@ -132,7 +132,7 @@ KmlPastebufferType Kml::ParseTrack(TiXmlNode* node, wxString& name)
 	return KML_PASTE_INVALID;
 }
 
-KmlPastebufferType Kml::ParseOnePlacemarkPoint(TiXmlNode* node, wxString& name)
+KmlPastebufferType Kml::ParseOnePlacemarkPoint(TiXmlNode* node, wxString& WXUNUSED(name))
 {
 	double newLat = 0.0;
 	double newLon = 0.0;

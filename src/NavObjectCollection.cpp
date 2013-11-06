@@ -801,12 +801,10 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 															// it a new guid
 			pTentRoute->m_GUID = pWayPointMan->CreateGUID(NULL);
 			// Now also change guids for the routepoints
-			wxRoutePointListNode* pthisnode = (pTentRoute->pRoutePointList)->GetFirst();
-			while (pthisnode) {
-				pthisnode->GetData()->m_GUID = pWayPointMan->CreateGUID(NULL);
-				pthisnode = pthisnode->GetNext();
-				// FIXME: !!!!!! the shared waypoint gets part of both the routes -> not  goood at
-				// all
+			for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
+				 node != pTentRoute->pRoutePointList->end(); ++node) {
+				(*node)->m_GUID = pWayPointMan->CreateGUID(NULL);
+				// FIXME: !!!! the shared waypoint gets part of both the routes -> not goood at all
 			}
 		}
 
@@ -822,9 +820,9 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 		float prev_rlat = 0., prev_rlon = 0.;
 		RoutePoint* prev_pConfPoint = NULL;
 
-		wxRoutePointListNode* node = pTentRoute->pRoutePointList->GetFirst();
-		while (node) {
-			RoutePoint* prp = node->GetData();
+		for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
+			 node != pTentRoute->pRoutePointList->end(); ++node) {
+			RoutePoint* prp = *node;
 
 			if (ip)
 				pSelect->AddSelectableRouteSegment(prev_rlat, prev_rlon, prp->m_lat, prp->m_lon,
@@ -834,13 +832,12 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 			prev_rlon = prp->m_lon;
 			prev_pConfPoint = prp;
 			ip++;
-			node = node->GetNext();
 		}
 	} else {
 		// walk the route, deleting points used only by this route
-		wxRoutePointListNode* pnode = (pTentRoute->pRoutePointList)->GetFirst();
-		while (pnode) {
-			RoutePoint* prp = pnode->GetData();
+		for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
+			 node != pTentRoute->pRoutePointList->end(); ++node) {
+			RoutePoint* prp = *node;
 
 			// check all other routes to see if this point appears in any other route
 			Route* pcontainer_route = g_pRouteMan->FindRouteContainingWaypoint(prp);
@@ -852,7 +849,6 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 					delete prp;
 				}
 			}
-			pnode = pnode->GetNext();
 		}
 		delete pTentRoute;
 	}
@@ -883,9 +879,9 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 		float prev_rlon = 0.0;
 		RoutePoint* prev_pConfPoint = NULL;
 
-		wxRoutePointListNode* node = pTentTrack->pRoutePointList->GetFirst();
-		while (node) {
-			RoutePoint* prp = node->GetData();
+		for (RoutePointList::iterator node = pTentTrack->pRoutePointList->begin();
+			 node != pTentTrack->pRoutePointList->end(); ++node) {
+			RoutePoint* prp = *node;
 
 			if (ip)
 				pSelect->AddSelectableTrackSegment(prev_rlat, prev_rlon, prp->m_lat, prp->m_lon,
@@ -895,13 +891,12 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 			prev_rlon = prp->m_lon;
 			prev_pConfPoint = prp;
 			ip++;
-			node = node->GetNext();
 		}
 	} else {
 		// walk the route, deleting points used only by this route
-		wxRoutePointListNode* pnode = (pTentTrack->pRoutePointList)->GetFirst();
-		while (pnode) {
-			RoutePoint* prp = pnode->GetData();
+		for (RoutePointList::iterator node = pTentTrack->pRoutePointList->begin();
+			 node != pTentTrack->pRoutePointList->end(); ++node) {
+			RoutePoint* prp = *node;
 
 			// check all other routes to see if this point appears in any other route
 			Route* pcontainer_route = g_pRouteMan->FindRouteContainingWaypoint(prp);
@@ -913,7 +908,6 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 					delete prp;
 				}
 			}
-			pnode = pnode->GetNext();
 		}
 		delete pTentTrack;
 	}
@@ -923,9 +917,9 @@ void NavObjectCollection::UpdateRouteA(Route* pTentRoute)
 {
 	Route* rt = g_pRouteMan->RouteExists(pTentRoute->m_GUID);
 	if (rt) {
-		wxRoutePointListNode* node = pTentRoute->pRoutePointList->GetFirst();
-		while (node) {
-			RoutePoint* prp = node->GetData();
+		for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
+			 node != pTentRoute->pRoutePointList->end(); ++node) {
+			RoutePoint* prp = *node;
 			RoutePoint* ex_rp = rt->GetPoint(prp->m_GUID);
 			if (ex_rp) {
 				ex_rp->m_lat = prp->m_lat;
@@ -936,7 +930,6 @@ void NavObjectCollection::UpdateRouteA(Route* pTentRoute)
 			} else {
 				pSelect->AddSelectableRoutePoint(prp->m_lat, prp->m_lon, prp);
 			}
-			node = node->GetNext();
 		}
 	} else {
 		InsertRouteA(pTentRoute);
@@ -1018,15 +1011,13 @@ bool NavObjectCollection::AddGPXRoutesList(RouteList* pRoutes)
 {
 	SetRootGPXNode();
 
-	wxRouteListNode* pRoute = pRoutes->GetFirst();
-	while (pRoute) {
-		Route* pRData = pRoute->GetData();
+	for (RouteList::iterator route = pRoutes->begin(); route != pRoutes->end(); ++route) {
+		Route* pRData = *route;
 		if (!pRData->m_bIsTrack) {
 			AddGPXRoute(pRData);
 		} else {
 			AddGPXTrack((Track*)pRData);
 		}
-		pRoute = pRoute->GetNext();
 	}
 
 	return true;

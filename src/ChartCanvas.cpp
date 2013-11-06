@@ -1930,7 +1930,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 	bool showRollover = false;
 
 	if (NULL == m_pRolloverRouteSeg) {
-		//    Get a list of all selectable sgements, and search for the first visible segment as the
+		// Get a list of all selectable sgements, and search for the first visible segment as the
 		// rollover target.
 
 		SelectableItemList SelList
@@ -1988,15 +1988,15 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 					// Compute and display cumulative distance from route start point to current
 					// leg end point.
 
-					if (segShow_point_a != pr->pRoutePointList->GetFirst()->GetData()) {
-						wxRoutePointListNode* node = (pr->pRoutePointList)->GetFirst()->GetNext();
+					if (segShow_point_a != pr->pRoutePointList->front()) {
 						float dist_to_endleg = 0;
-						while (node) {
-							RoutePoint* prp = node->GetData();
+						RoutePointList::iterator node = pr->pRoutePointList->begin();
+						++node;
+						for (; node != pr->pRoutePointList->end(); ++node) {
+							RoutePoint* prp = *node;
 							dist_to_endleg += prp->m_seg_len;
 							if (prp->IsSame(segShow_point_a))
 								break;
-							node = node->GetNext();
 						}
 						s << _T(" (+") << FormatDistanceAdaptive(dist_to_endleg) << _T(")");
 					}

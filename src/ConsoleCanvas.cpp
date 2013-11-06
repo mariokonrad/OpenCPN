@@ -242,7 +242,7 @@ void ConsoleCanvas::UpdateRouteData()
 			float nrng = g_pRouteMan->GetCurrentRngToActiveNormalArrival();
 
 			double deltarng = fabs(rng - nrng);
-			if ((deltarng > .01) && ((deltarng / rng) > .10)
+			if ((deltarng > 0.01) && ((deltarng / rng) > 0.10)
 				&& (rng < 10.0)) // show if there is more than 10% difference in ranges, etc...
 			{
 				if (nrng < 10.0)
@@ -259,7 +259,7 @@ void ConsoleCanvas::UpdateRouteData()
 			if (!m_bShowRouteTotal)
 				pRNG->SetAValue(srng);
 
-			//    Brg
+			// Brg
 			float dcog = g_pRouteMan->GetCurrentBrgToActivePoint();
 			if (dcog >= 359.5)
 				dcog = 0;
@@ -274,7 +274,7 @@ void ConsoleCanvas::UpdateRouteData()
 
 			pBRG->SetAValue(cogstr);
 
-			//    XTE
+			// XTE
 			str_buf.Printf(_T("%6.2f"), g_pRouteMan->GetCurrentXTEToActivePoint());
 			pXTE->SetAValue(str_buf);
 			if (g_pRouteMan->GetXTEDir() < 0)
@@ -282,7 +282,7 @@ void ConsoleCanvas::UpdateRouteData()
 			else
 				pXTE->SetALabel(wxString(_("XTE         R")));
 
-			//    VMG
+			// VMG
 			// VMG is always to next waypoint, not to end of route
 			// VMG is SOG x cosine (difference between COG and BRG to Waypoint)
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
@@ -297,13 +297,13 @@ void ConsoleCanvas::UpdateRouteData()
 
 			pVMG->SetAValue(str_buf);
 
-			//    TTG
+			// TTG
 			// In all cases, ttg/eta are declared invalid if VMG <= 0.
 
 			// If showing only "this leg", use VMG for calculation of ttg
 			wxString ttg_s;
 			if ((VMG > 0.0) && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
-				float ttg_sec = (rng / VMG) * 3600.;
+				float ttg_sec = (rng / VMG) * 3600.0;
 				wxTimeSpan ttg_span(0, 0, long(ttg_sec), 0);
 				ttg_s = ttg_span.Format();
 			} else {
@@ -313,26 +313,23 @@ void ConsoleCanvas::UpdateRouteData()
 			if (!m_bShowRouteTotal)
 				pTTG->SetAValue(ttg_s);
 
-			//    Remainder of route
+			// Remainder of route
 			float trng = rng;
 
 			Route* prt = g_pRouteMan->GetpActiveRoute();
-			wxRoutePointListNode* node = (prt->pRoutePointList)->GetFirst();
-			RoutePoint* prp;
 
 			int n_addflag = 0;
-			while (node) {
-				prp = node->GetData();
+			for (RoutePointList::iterator node = prt->pRoutePointList->begin();
+				 node != prt->pRoutePointList->end(); ++node) {
+				RoutePoint* prp = *node;
 				if (n_addflag)
 					trng += prp->m_seg_len;
 
 				if (prp == prt->m_pRouteActivePoint)
 					n_addflag++;
-
-				node = node->GetNext();
 			}
 
-			//                total rng
+			// total rng
 			wxString strng;
 			if (trng < 10.0)
 				strng.Printf(_T("%6.2f"), trng);
@@ -342,7 +339,7 @@ void ConsoleCanvas::UpdateRouteData()
 			if (m_bShowRouteTotal)
 				pRNG->SetAValue(strng);
 
-			//                total ttg
+			// total ttg
 			// If showing total route ttg/ETA, use speed over ground for calculation
 
 			wxString tttg_s;
@@ -359,7 +356,7 @@ void ConsoleCanvas::UpdateRouteData()
 			if (m_bShowRouteTotal)
 				pTTG->SetAValue(tttg_s);
 
-			//                total ETA to be shown on XTE panel
+			// total ETA to be shown on XTE panel
 			if (m_bShowRouteTotal) {
 				wxDateTime dtnow, eta;
 				dtnow.SetToCurrent();

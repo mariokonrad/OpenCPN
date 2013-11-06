@@ -121,13 +121,10 @@ Route* Routeman::FindRouteContainingWaypoint(RoutePoint* pWP)
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
 
-		wxRoutePointListNode* pnode
-			= (route->pRoutePointList)->GetFirst(); // FIXME: use interface of std::vector
-		while (pnode) {
-			RoutePoint* prp = pnode->GetData();
-			if (prp == pWP)
+		for (RoutePointList::const_iterator point = route->pRoutePointList->begin();
+			 point != route->pRoutePointList->end(); ++point) {
+			if (*point == pWP)
 				return route;
-			pnode = pnode->GetNext();
 		}
 	}
 
@@ -140,13 +137,10 @@ Routeman::RouteArray * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FI
 
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
-		wxRoutePointListNode* waypoint_node = route->pRoutePointList->GetFirst();
-		while (waypoint_node) {
-			RoutePoint* prp = waypoint_node->GetData();
-			if (prp == pWP)
+		for (RoutePointList::iterator waypoint = route->pRoutePointList->begin();
+			 waypoint != route->pRoutePointList->end(); ++waypoint) {
+			if (*waypoint == pWP)
 				pArray->push_back((void*)route);
-
-			waypoint_node = waypoint_node->GetNext(); // next waypoint
 		}
 	}
 
@@ -168,9 +162,10 @@ RoutePoint* Routeman::FindBestActivatePoint(Route* pR, double lat, double lon, d
 	RoutePoint* best_point = NULL;
 	double min_time_found = 1e6;
 
-	wxRoutePointListNode* node = (pR->pRoutePointList)->GetFirst();
-	while (node) {
-		RoutePoint* pn = node->GetData();
+	for (RoutePointList::iterator i = pR->pRoutePointList->begin(); i != pR->pRoutePointList->end();
+		 ++i) {
+
+		RoutePoint* pn = *i;
 
 		double brg;
 		double dist;
@@ -187,7 +182,6 @@ RoutePoint* Routeman::FindBestActivatePoint(Route* pR, double lat, double lon, d
 				best_point = pn;
 			}
 		}
-		node = node->GetNext();
 	}
 	return best_point;
 }
@@ -199,8 +193,7 @@ bool Routeman::ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint)
 	if (pStartPoint) {
 		pActivePoint = pStartPoint;
 	} else {
-		wxRoutePointListNode* node = pActiveRoute->pRoutePointList->GetFirst();
-		pActivePoint = node->GetData(); // start at beginning
+		pActivePoint = pActiveRoute->pRoutePointList->front();
 	}
 
 	wxJSONValue v;
@@ -235,17 +228,15 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 	v[_T("GUID")] = pRP_target->m_GUID;
 	v[_T("WP_activated")] = pRP_target->GetName();
 
-	wxRoutePointListNode* node = (pActiveRoute->pRoutePointList)->GetFirst();
-	while (node) {
-		RoutePoint* pn = node->GetData();
+	for (RoutePointList::iterator point = pActiveRoute->pRoutePointList->begin();
+		 point != pActiveRoute->pRoutePointList->end(); ++point) {
+		RoutePoint* pn = *point;
 		pn->m_bBlink = false; // turn off all blinking points
 		pn->m_bIsActive = false;
-
-		node = node->GetNext();
 	}
 
-	node = pActiveRoute->pRoutePointList->GetFirst();
-	RoutePoint* prp_first = node->GetData();
+	RoutePointList::iterator point = pActiveRoute->pRoutePointList->begin();
+	RoutePoint* prp_first = *point;
 
 	//  If activating first point in route, create a "virtual" waypoint at present position
 	if (pRP_target == prp_first) {
@@ -260,17 +251,14 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 		pActiveRouteSegmentBeginPoint = pRouteActivatePoint;
 	} else {
 		prp_first->m_bBlink = false;
-		node = node->GetNext();
+		++point;
 		RoutePoint* np_prev = prp_first;
-		while (node) {
-			RoutePoint* pnext = node->GetData();
-			if (pnext == pRP_target) {
+		for (; point != pActiveRoute->pRoutePointList->end(); ++point) {
+			if (*point == pRP_target) {
 				pActiveRouteSegmentBeginPoint = np_prev;
 				break;
 			}
-
-			np_prev = pnext;
-			node = node->GetNext();
+			np_prev = *point;
 		}
 	}
 
@@ -802,15 +790,13 @@ bool Routeman::DoesRouteContainSharedPoints(Route* pRoute)
 
 	// walk the route, looking at each point to see if it is used by another route
 	// or is isolated
-	wxRoutePointListNode* pnode = pRoute->pRoutePointList->GetFirst();
-	while (pnode) {
-		RoutePoint* prp = pnode->GetData();
+	for (RoutePointList::iterator point = pRoute->pRoutePointList->begin();
+		 point != pRoute->pRoutePointList->end(); ++point) {
 
 		// check all other routes to see if this point appears in any other route
-		RouteArray* pRA = GetRouteArrayContaining(prp); // FIXME: potential memory leak
-
+		RouteArray* pRA = GetRouteArrayContaining(*point);
 		if (pRA) {
-			for (unsigned int ir = 0; ir < pRA->GetCount(); ++ir) {
+			for (unsigned int ir = 0; ir < pRA->size(); ++ir) {
 				Route* route = static_cast<Route*>(pRA->Item(ir));
 				if (route == pRoute)
 					continue;
@@ -818,20 +804,13 @@ bool Routeman::DoesRouteContainSharedPoints(Route* pRoute)
 					return true;
 			}
 		}
-
-		if (pnode)
-			pnode = pnode->GetNext();
 	}
 
 	// Now walk the route again, looking for isolated type shared waypoints
-	pnode = pRoute->pRoutePointList->GetFirst();
-	while (pnode) {
-		RoutePoint* prp = pnode->GetData();
-		if (prp->m_bKeepXRoute == true)
+	for (RoutePointList::const_iterator point = pRoute->pRoutePointList->begin();
+		 point != pRoute->pRoutePointList->end(); ++point) {
+		if ((*point)->m_bKeepXRoute == true)
 			return true;
-
-		if (pnode)
-			pnode = pnode->GetNext();
 	}
 
 	return false;
@@ -855,7 +834,7 @@ void Routeman::DeleteRoute(Route * pRoute)
 	pRouteList->remove(pRoute);
 
 	// walk the route, tentatively deleting/marking points used only by this route
-	wxRoutePointListNode *pnode = (pRoute->pRoutePointList)->GetFirst();
+	wxRoutePointListNode *pnode = pRoute->pRoutePointList->GetFirst();
 	while (pnode) {
 		RoutePoint *prp = pnode->GetData();
 
@@ -899,17 +878,19 @@ void Routeman::DeleteRoute(Route * pRoute)
 
 void Routeman::DeleteAllRoutes(void)
 {
+	// FIXME: almost code duplication of Routeman::DeleteAllTracks(void)
+
 	::wxBeginBusyCursor();
 
 	// delete routes that are in layer and also not a track
 	// this algorithm alters the container
 
-	wxRouteListNode* node = pRouteList->GetFirst();
-	while (node) {
-		Route* proute = node->GetData();
+	RouteList::iterator i = pRouteList->begin();
+	while (i != pRouteList->end()) {
+		Route* proute = *i;
 
 		if (proute->m_bIsInLayer) {
-			node = node->GetNext();
+			++i;
 			continue;
 		}
 
@@ -917,10 +898,11 @@ void Routeman::DeleteAllRoutes(void)
 			pConfig->m_bSkipChangeSetUpdate = true;
 			pConfig->DeleteConfigRoute(proute);
 			DeleteRoute(proute);
-			node = pRouteList->GetFirst();
+			i = pRouteList->begin();
 			pConfig->m_bSkipChangeSetUpdate = false;
-		} else
-			node = node->GetNext();
+		} else {
+			++i;
+		}
 	}
 
 	::wxEndBusyCursor();
@@ -928,17 +910,19 @@ void Routeman::DeleteAllRoutes(void)
 
 void Routeman::DeleteAllTracks(void)
 {
+	// FIXME: almost code duplication of Routeman::DeleteAllRoutes(void)
+
 	::wxBeginBusyCursor();
 
 	// delete routes that are in layer and also a track
 	// this algorithm alters the container
 
-	wxRouteListNode* node = pRouteList->GetFirst();
-	while (node) {
-		Route* proute = node->GetData();
+	RouteList::iterator i = pRouteList->begin();
+	while (i != pRouteList->end()) {
+		Route* proute = *i;
 
 		if (proute->m_bIsInLayer) {
-			node = node->GetNext();
+			++i;
 			continue;
 		}
 
@@ -946,10 +930,11 @@ void Routeman::DeleteAllTracks(void)
 			pConfig->m_bSkipChangeSetUpdate = true;
 			pConfig->DeleteConfigRoute(proute);
 			DeleteTrack(proute);
-			node = pRouteList->GetFirst();
+			i = pRouteList->begin();
 			pConfig->m_bSkipChangeSetUpdate = false;
-		} else
-			node = node->GetNext();
+		} else {
+			++i;
+		}
 	}
 
 	::wxEndBusyCursor();

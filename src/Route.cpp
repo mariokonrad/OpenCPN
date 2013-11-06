@@ -431,10 +431,8 @@ void Route::Draw(ocpnDC& dc, ViewPort& VP)
 					adder = 0;
 
 				RenderSegment(dc, rpt1.x + adder, rpt1.y, rpt2.x, rpt2.y, VP, true);
-			}
-
+			} else if (!b_1_on && !b_2_on) {
 				// Both off, need to check shortest distance
-				else if (!b_1_on && !b_2_on) {
 				if (rpt1.x < rpt2.x)
 					adder = (int)pix_full_circle;
 				else
@@ -460,11 +458,11 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort& 
 						  bool bdraw_arrow, int hilite_width)
 {
 	static int s_arrow_icon[] = { 0, 0, 5, 2, 18, 6, 12, 0, 18, -6, 5, -2, 0, 0 };
-	//    Get the dc boundary
-	int sx, sy;
+	// Get the dc boundary
+	int sx;int sy;
 	dc.GetSize(&sx, &sy);
 
-	//    Try to exit early if the segment is nowhere near the screen
+	// Try to exit early if the segment is nowhere near the screen
 	wxRect r(0, 0, sx, sy);
 	wxRect s(xa, ya, 1, 1);
 	wxRect t(xb, yb, 1, 1);
@@ -472,7 +470,7 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort& 
 	if (!r.Intersects(s))
 		return;
 
-	//    Clip the line segment to the dc boundary
+	// Clip the line segment to the dc boundary
 	int x0 = xa;
 	int y0 = ya;
 	int x1 = xb;
@@ -502,7 +500,7 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort& 
 	}
 
 	if (bdraw_arrow) {
-		//    Draw a direction arrow
+		// Draw a direction arrow
 
 		double theta = atan2((double)(yb - ya), (double)(xb - xa));
 		theta -= M_PI / 2;
@@ -512,8 +510,8 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort& 
 		icon_scale_factor = fmin(icon_scale_factor, 1.5); // Sets the max size
 		icon_scale_factor = fmax(icon_scale_factor, .10);
 
-		//    Get the absolute line length
-		//    and constrain the arrow to be no more than xx% of the line length
+		// Get the absolute line length
+		// and constrain the arrow to be no more than xx% of the line length
 		double nom_arrow_size = 20.;
 		double max_arrow_to_leg = .20;
 		double lpp = sqrt(pow((double)(xa - xb), 2) + pow((double)(ya - yb), 2));
@@ -728,18 +726,18 @@ void Route::CalculateBBox()
 
 bool Route::CalculateCrossesIDL(void)
 {
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-	if (NULL == node)
+	RoutePointList::iterator route_point = pRoutePointList->begin();
+	if (route_point == pRoutePointList->end())
 		return false;
 
 	bool idl_cross = false;
-	RoutePoint* data = node->GetData(); // first node
+	RoutePoint* data = *route_point;
 
 	double lon0 = data->m_lon;
-	node = node->GetNext();
 
-	while (node) {
-		data = node->GetData();
+	++route_point;
+	for(; route_point != pRoutePointList->end(); ++route_point) {
+		data = *route_point;
 		if ((lon0 < -150.0) && (data->m_lon > 150.0)) {
 			idl_cross = true;
 			break;
@@ -751,7 +749,6 @@ bool Route::CalculateCrossesIDL(void)
 		}
 
 		lon0 = data->m_lon;
-		node = node->GetNext();
 	}
 
 	return idl_cross;
@@ -948,17 +945,13 @@ void Route::RenameRoutePoints(void)
 	// iterate on the route points.
 	// If dynamically named, rename according to current list position
 
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-
-	int i = 1;
-	while (node) {
-		RoutePoint* prp = node->GetData();
+	int count = 1;
+	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+		RoutePoint* prp = *i;
 		if (prp->m_bDynamicName) {
-			prp->SetName(wxString::Format(_T("%03d"), i));
+			prp->SetName(wxString::Format(_T("%03d"), count));
 		}
-
-		node = node->GetNext();
-		i++;
+		++count;
 	}
 }
 
@@ -987,10 +980,10 @@ bool Route::SendToGPS(const wxString& com_name, bool bsend_waypoints, wxGauge* p
 // Do all routepoint positions and names match?
 bool Route::IsEqualTo(Route* ptargetroute)
 {
-	wxRoutePointListNode* pthisnode = this->pRoutePointList->GetFirst();
-	wxRoutePointListNode* pthatnode = ptargetroute->pRoutePointList->GetFirst();
+	RoutePointList::const_iterator point_a = this->pRoutePointList->begin();
+	RoutePointList::const_iterator point_b = ptargetroute->pRoutePointList->begin();
 
-	if (NULL == pthisnode)
+	if (point_a == this->pRoutePointList->end())
 		return false;
 
 	if (this->m_bIsInLayer || ptargetroute->m_bIsInLayer)
@@ -999,12 +992,12 @@ bool Route::IsEqualTo(Route* ptargetroute)
 	if (this->GetnPoints() != ptargetroute->GetnPoints())
 		return false;
 
-	while (pthisnode) {
-		if (NULL == pthatnode)
+	while (point_a != this->pRoutePointList->end()) {
+		if (point_b == ptargetroute->pRoutePointList->end())
 			return false;
 
-		RoutePoint* pthisrp = pthisnode->GetData();
-		RoutePoint* pthatrp = pthatnode->GetData();
+		const RoutePoint* pthisrp = *point_a;
+		const RoutePoint* pthatrp = *point_b;
 
 		if ((fabs(pthisrp->m_lat - pthatrp->m_lat) > 1.0e-6)
 			|| (fabs(pthisrp->m_lon - pthatrp->m_lon) > 1.0e-6))
@@ -1013,8 +1006,8 @@ bool Route::IsEqualTo(Route* ptargetroute)
 		if (!pthisrp->GetName().IsSameAs(pthatrp->GetName()))
 			return false;
 
-		pthisnode = pthisnode->GetNext();
-		pthatnode = pthatnode->GetNext();
+		++point_a;
+		++point_b;
 	}
 
 	return true;

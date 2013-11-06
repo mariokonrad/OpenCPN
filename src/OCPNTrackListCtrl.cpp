@@ -32,14 +32,15 @@
 
 #include <geo/GeoRef.h>
 
-wxRoutePointListNode * g_this_point_node;
-wxRoutePointListNode * g_prev_point_node;
-RoutePoint * g_this_point;
-RoutePoint * g_prev_point;
-int g_prev_point_index;
-int g_prev_item;
-double gt_brg;
-double gt_leg_dist;
+// FIXME: fix this crap: it makes the class essentially a singleton
+static wxRoutePointListNode* g_this_point_node = NULL;
+static wxRoutePointListNode* g_prev_point_node = NULL;
+static RoutePoint* g_this_point;
+static RoutePoint* g_prev_point;
+static int g_prev_point_index = -1;
+static int g_prev_item = -1;
+static double gt_brg = 0.0;
+static double gt_leg_dist = 0.0;
 
 #define UTCINPUT         0
 #define LTINPUT          1    // i.e. this PC local time
@@ -70,7 +71,7 @@ static wxString timestamp2s(wxDateTime ts, int tz_selection, long LMT_offset, in
 			s.Append(ts.FromUTC().Format(f));
 			break;
 		case 2:
-			wxTimeSpan lmt(0,0,(int)LMT_offset,0);
+			wxTimeSpan lmt(0, 0, (int)LMT_offset, 0);
 			s.Append(ts.Add(lmt).Format(f));
 			if (format != INPUT_FORMAT)
 				s.Append(_T(" LMT"));
@@ -98,30 +99,32 @@ wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 {
 	wxString ret;
 
-	if( item != g_prev_item ) {
-		if( g_prev_point_index == ( item - 1 ) ) {
-			if( !g_prev_point_node ) return wxEmptyString;
+	if (item != g_prev_item) {
+		if (g_prev_point_index == (item - 1)) {
+			if (!g_prev_point_node)
+				return wxEmptyString;
 			g_prev_point = g_this_point;
 			g_this_point_node = g_prev_point_node->GetNext();
-			if( g_this_point_node )
+			if (g_this_point_node)
 				g_this_point = g_this_point_node->GetData();
 			else
 				g_this_point = NULL;
 		} else {
-			wxRoutePointListNode *node = m_pRoute->pRoutePointList->GetFirst();
-			if( node ) {
-				if( item > 0 ) {
+			wxRoutePointListNode* node = m_pRoute->pRoutePointList->GetFirst();
+			if (node) {
+				if (item > 0) {
 					int i = 0;
-					while( node && ( i < ( item - 1 ) ) ) {
+					while (node && (i < (item - 1))) {
 						node = node->GetNext();
 						i++;
 					}
 					g_prev_point_node = node;
-					if( ! node )  return wxEmptyString;
+					if (!node)
+						return wxEmptyString;
 					g_prev_point = g_prev_point_node->GetData();
 
 					g_this_point_node = g_prev_point_node->GetNext();
-					if( g_this_point_node )
+					if (g_this_point_node)
 						g_this_point = g_this_point_node->GetData();
 					else
 						g_this_point = NULL;
@@ -130,7 +133,7 @@ wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 					g_prev_point = NULL;
 
 					g_this_point_node = node;
-					if( g_this_point_node )
+					if (g_this_point_node)
 						g_this_point = g_this_point_node->GetData();
 					else
 						g_this_point = NULL;
@@ -143,28 +146,29 @@ wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 			}
 		}
 
-		//    Update for next time
+		// Update for next time
 		g_prev_point_node = g_this_point_node;
 		g_prev_point_index = item;
 
 		g_prev_item = item;
 	}
 
-	if( ! g_this_point )
+	if (!g_this_point)
 		return wxEmptyString;
 
-	switch( column ) {
+	switch (column) {
 		case 0:
-			if( item == 0 )
+			if (item == 0)
 				ret = _T("---");
 			else
-				ret.Printf( _T("%ld"), item );
+				ret.Printf(_T("%ld"), item);
 			break;
 
 		case 1:
-			double slat, slon;
+			double slat;
+			double slon;
 			if (item == 0) {
-				const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+				const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 				slat = nav.lat;
 				slon = nav.lon;
 			} else {
@@ -172,45 +176,45 @@ wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 				slon = g_prev_point->m_lon;
 			}
 
-			geo::DistanceBearingMercator(g_this_point->m_lat, g_this_point->m_lon, slat, slon, &gt_brg, &gt_leg_dist);
+			geo::DistanceBearingMercator(g_this_point->m_lat, g_this_point->m_lon, slat, slon,
+										 &gt_brg, &gt_leg_dist);
 
-			ret.Printf( _T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance( gt_leg_dist ) );
+			ret.Printf(_T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance(gt_leg_dist));
 			break;
 
 		case 2:
-			ret.Printf( _T("%03.0f \u00B0T"), gt_brg );
+			ret.Printf(_T("%03.0f \u00B0T"), gt_brg);
 			break;
 
 		case 3:
-			ret = toSDMM( 1, g_this_point->m_lat, 1 );
+			ret = toSDMM(1, g_this_point->m_lat, 1);
 			break;
 
 		case 4:
-			ret = toSDMM( 2, g_this_point->m_lon, 1 );
+			ret = toSDMM(2, g_this_point->m_lon, 1);
 			break;
 
-		case 5:
-			{
-				wxDateTime timestamp = g_this_point->GetCreateTime();
-				if( timestamp.IsValid() )
-					ret = timestamp2s( timestamp, m_tz_selection, m_LMT_Offset, TIMESTAMP_FORMAT );
-				else
-					ret = _T("----");
-			}
-			break;
+		case 5: {
+			wxDateTime timestamp = g_this_point->GetCreateTime();
+			if (timestamp.IsValid())
+				ret = timestamp2s(timestamp, m_tz_selection, m_LMT_Offset, TIMESTAMP_FORMAT);
+			else
+				ret = _T("----");
+		} break;
 
 		case 6:
-			if( ( item > 0 ) && g_this_point->GetCreateTime().IsValid()
-					&& g_prev_point->GetCreateTime().IsValid() )
-			{
+			if ((item > 0) && g_this_point->GetCreateTime().IsValid()
+				&& g_prev_point->GetCreateTime().IsValid()) {
 				double speed = 0.;
-				double seconds =
-					g_this_point->GetCreateTime().Subtract( g_prev_point->GetCreateTime() ).GetSeconds().ToDouble();
+				double seconds = g_this_point->GetCreateTime()
+									 .Subtract(g_prev_point->GetCreateTime())
+									 .GetSeconds()
+									 .ToDouble();
 
-				if( seconds > 0. )
+				if (seconds > 0.0)
 					speed = gt_leg_dist / seconds * 3600;
 
-				ret.Printf( _T("%5.2f"), toUsrSpeed( speed ) );
+				ret.Printf(_T("%5.2f"), toUsrSpeed(speed));
 			} else
 				ret = _("--");
 			break;

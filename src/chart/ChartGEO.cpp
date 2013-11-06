@@ -31,6 +31,7 @@
 #include <wx/log.h>
 
 using chart::Plypoint;
+using chart::Refpoint;
 
 ChartGEO::ChartGEO()
 {

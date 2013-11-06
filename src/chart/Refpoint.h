@@ -24,19 +24,23 @@
 #ifndef __REFPOINT__H__
 #define __REFPOINT__H__
 
+namespace chart {
+
 class Refpoint
 {
-	public:
-		int bXValid;
-		int bYValid;
-		float xr;
-		float yr;
-		float latr;
-		float lonr;
-		float xpl_error;
-		float xlp_error;
-		float ypl_error;
-		float ylp_error;
+public:
+	int bXValid;
+	int bYValid;
+	float xr;
+	float yr;
+	float latr;
+	float lonr;
+	float xpl_error;
+	float xlp_error;
+	float ypl_error;
+	float ylp_error;
 };
+
+}
 
 #endif

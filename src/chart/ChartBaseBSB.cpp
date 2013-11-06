@@ -107,200 +107,171 @@ opncpnPalette::~opncpnPalette()
 		free(RevPalette);
 }
 
-// ============================================================================
-// ChartBaseBSB implementation
-// ============================================================================
-
-
 ChartBaseBSB::ChartBaseBSB()
 {
-      //    Init some private data
-      m_ChartFamily = CHART_FAMILY_RASTER;
+	// Init some private data
+	m_ChartFamily = chart::CHART_FAMILY_RASTER;
 
-      ifs_buf = NULL;
+	ifs_buf = NULL;
 
-      cached_image_ok = 0;
+	cached_image_ok = 0;
 
-      cPoints.status = 0;
-      bHaveEmbeddedGeoref = false;
-      n_wpx = 0;
-      n_wpy = 0;
-      n_pwx = 0;
-      n_pwy = 0;
+	cPoints.status = 0;
+	bHaveEmbeddedGeoref = false;
+	n_wpx = 0;
+	n_wpy = 0;
+	n_pwx = 0;
+	n_pwy = 0;
 
+	bUseLineCache = true;
+	m_Chart_Skew = 0.0;
 
-      bUseLineCache = true;
-      m_Chart_Skew = 0.0;
+	pPixCache = NULL;
 
-      pPixCache = NULL;
+	pLineCache = NULL;
 
-      pLineCache = NULL;
+	m_bilinear_limit = 8; // bilinear scaling only up to n
 
-      m_bilinear_limit = 8;         // bilinear scaling only up to n
+	ifs_bitmap = NULL;
+	ifss_bitmap = NULL;
+	ifs_hdr = NULL;
 
-      ifs_bitmap = NULL;
-      ifss_bitmap = NULL;
-      ifs_hdr = NULL;
+	for (int i = 0; i < N_BSB_COLORS; i++)
+		pPalettes[i] = NULL;
 
-      for(int i = 0 ; i < N_BSB_COLORS ; i++)
-            pPalettes[i] = NULL;
+	bGeoErrorSent = false;
+	m_Chart_DU = 0;
+	m_cph = 0.;
 
-      bGeoErrorSent = false;
-      m_Chart_DU = 0;
-      m_cph = 0.;
+	m_mapped_color_index = COLOR_RGB_DEFAULT;
 
-      m_mapped_color_index = COLOR_RGB_DEFAULT;
+	m_datum_str = _T("WGS84"); // assume until proven otherwise
 
-      m_datum_str = _T("WGS84");                // assume until proven otherwise
+	m_dtm_lat = 0.;
+	m_dtm_lon = 0.;
 
-      m_dtm_lat = 0.;
-      m_dtm_lon = 0.;
+	m_bIDLcross = false;
 
-      m_bIDLcross = false;
+	m_dx = 0.;
+	m_dy = 0.;
+	m_proj_lat = 0.;
+	m_proj_lon = 0.;
+	m_proj_parameter = 0.;
+	m_b_SHOM = false;
+	m_b_apply_dtm = true;
 
-      m_dx = 0.;
-      m_dy = 0.;
-      m_proj_lat = 0.;
-      m_proj_lon = 0.;
-      m_proj_parameter = 0.;
-      m_b_SHOM = false;
-      m_b_apply_dtm = true;
-
-      m_b_cdebug = 0;
+	m_b_cdebug = 0;
 
 #ifdef OCPN_USE_CONFIG
-      wxFileConfig *pfc = (wxFileConfig *)pConfig;
-      pfc->SetPath ( _T ( "/Settings" ) );
-      pfc->Read ( _T ( "DebugBSBImg" ),  &m_b_cdebug, 0 );
+	wxFileConfig* pfc = (wxFileConfig*)pConfig;
+	pfc->SetPath(_T ( "/Settings" ));
+	pfc->Read(_T ( "DebugBSBImg" ), &m_b_cdebug, 0);
 #endif
-
 }
 
 ChartBaseBSB::~ChartBaseBSB()
 {
-      if(ifs_buf)
-            free(ifs_buf);
+	if (ifs_buf)
+		free(ifs_buf);
 
-      delete ifs_bitmap;
-      delete ifs_hdr;
-      delete ifss_bitmap;
+	delete ifs_bitmap;
+	delete ifs_hdr;
+	delete ifss_bitmap;
 
-      if(cPoints.status)
-      {
-          free(cPoints.tx );
-          free(cPoints.ty );
-          free(cPoints.lon );
-          free(cPoints.lat );
+	if (cPoints.status) {
+		free(cPoints.tx);
+		free(cPoints.ty);
+		free(cPoints.lon);
+		free(cPoints.lat);
 
-          free(cPoints.pwx );
-          free(cPoints.wpx );
-          free(cPoints.pwy );
-          free(cPoints.wpy );
-      }
+		free(cPoints.pwx);
+		free(cPoints.wpx);
+		free(cPoints.pwy);
+		free(cPoints.wpy);
+	}
 
-//    Free the line cache
+	// Free the line cache
 
-      if(pLineCache)
-      {
-            CachedLine *pt;
-            for(int ylc = 0 ; ylc < Size_Y ; ylc++)
-            {
-                  pt = &pLineCache[ylc];
-                  if(pt->pPix)
-                        free (pt->pPix);
-                  free( pt->pRGB );
-            }
-            free (pLineCache);
-      }
+	if (pLineCache) {
+		CachedLine* pt;
+		for (int ylc = 0; ylc < Size_Y; ylc++) {
+			pt = &pLineCache[ylc];
+			if (pt->pPix)
+				free(pt->pPix);
+			free(pt->pRGB);
+		}
+		free(pLineCache);
+	}
 
+	delete pPixCache;
 
-
-      delete pPixCache;
-
-
-      for(int i = 0 ; i < N_BSB_COLORS ; i++)
-            delete pPalettes[i];
-
+	for (int i = 0; i < N_BSB_COLORS; i++)
+		delete pPalettes[i];
 }
 
-//    Report recommended minimum and maximum scale values for which use of this chart is valid
-
+// Report recommended minimum and maximum scale values for which use of this chart is valid
 double ChartBaseBSB::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom)
 {
-      if(b_allow_overzoom)
-            return (canvas_scale_factor / m_ppm_avg) / 32;         // allow wide range overzoom overscale
-      else
-            return (canvas_scale_factor / m_ppm_avg) / 2;         // don't suggest too much overscale
-
+	if (b_allow_overzoom)
+		return (canvas_scale_factor / m_ppm_avg) / 32; // allow wide range overzoom overscale
+	else
+		return (canvas_scale_factor / m_ppm_avg) / 2; // don't suggest too much overscale
 }
 
 double ChartBaseBSB::GetNormalScaleMax(double canvas_scale_factor, int WXUNUSED(canvas_width))
 {
-      return (canvas_scale_factor / m_ppm_avg) * 4.0;        // excessive underscale is slow, and unreadable
+	return (canvas_scale_factor / m_ppm_avg) * 4.0; // excessive underscale is slow, and unreadable
 }
-
 
 double ChartBaseBSB::GetNearestPreferredScalePPM(double target_scale_ppm)
 {
-      return GetClosestValidNaturalScalePPM(target_scale_ppm, 0.01, 64.0);            // changed from 32 to 64 to allow super small
-                                                                                    // scale BSB charts as quilt base
+	// changed from 32 to 64 to allow super small
+	// scale BSB charts as quilt base
+	return GetClosestValidNaturalScalePPM(target_scale_ppm, 0.01, 64.0);
 }
 
-
-
-double ChartBaseBSB::GetClosestValidNaturalScalePPM(double target_scale, double scale_factor_min, double scale_factor_max)
+double ChartBaseBSB::GetClosestValidNaturalScalePPM(double target_scale, double scale_factor_min,
+													double scale_factor_max)
 {
-      double chart_1x_scale = GetPPM();
+	double chart_1x_scale = GetPPM();
 
-      double binary_scale_factor = 1.;
+	double binary_scale_factor = 1.0;
 
+	// Overzoom....
+	if (chart_1x_scale > target_scale) {
+		double binary_scale_factor_max = 1 / scale_factor_min;
 
+		while (binary_scale_factor < binary_scale_factor_max) {
+			if (fabs((chart_1x_scale / binary_scale_factor) - target_scale) < (target_scale * 0.05))
+				break;
+			if ((chart_1x_scale / binary_scale_factor) < target_scale)
+				break;
+			else
+				binary_scale_factor *= 2.;
+		}
+	} else {
+		// Underzoom.....
+		int ibsf = 1;
+		int isf_max = (int)scale_factor_max;
+		while (ibsf < isf_max) {
+			if (fabs((chart_1x_scale * ibsf) - target_scale) < (target_scale * 0.05))
+				break;
 
-      //    Overzoom....
-      if(chart_1x_scale > target_scale)
-      {
-            double binary_scale_factor_max = 1 / scale_factor_min;
+			else if ((chart_1x_scale * ibsf) > target_scale) {
+				if (ibsf > 1)
+					ibsf /= 2;
+				break;
+			} else
+				ibsf *= 2;
+		}
 
-            while(binary_scale_factor < binary_scale_factor_max)
-            {
-                  if(fabs((chart_1x_scale / binary_scale_factor ) - target_scale) < (target_scale * 0.05))
-                        break;
-                  if((chart_1x_scale / binary_scale_factor ) < target_scale)
-                        break;
-                  else
-                        binary_scale_factor *= 2.;
-            }
-      }
+		binary_scale_factor = 1.0 / ibsf;
+	}
 
-
-      //    Underzoom.....
-      else
-      {
-            int ibsf = 1;
-            int isf_max = (int)scale_factor_max;
-            while(ibsf < isf_max)
-            {
-                  if(fabs((chart_1x_scale * ibsf ) - target_scale) < (target_scale * 0.05))
-                        break;
-
-                  else if((chart_1x_scale * ibsf ) > target_scale)
-                  {
-                        if(ibsf > 1)
-                              ibsf /= 2;
-                        break;
-                  }
-                  else
-                        ibsf *= 2;
-            }
-
-            binary_scale_factor = 1.0 / ibsf;
-      }
-
-      return  chart_1x_scale / binary_scale_factor;
+	return chart_1x_scale / binary_scale_factor;
 }
 
-
-ThumbData *ChartBaseBSB::GetThumbData()
+ThumbData* ChartBaseBSB::GetThumbData()
 {
 	return pThumbData;
 }
@@ -335,44 +306,44 @@ double ChartBaseBSB::GetPPM() const
 	return m_ppm_avg;
 }
 
-InitReturn ChartBaseBSB::Init(const wxString & WXUNUSED(name), ChartInitFlag init_flags)
+InitReturn ChartBaseBSB::Init(const wxString& WXUNUSED(name), ChartInitFlag init_flags)
 {
-      m_global_color_scheme = GLOBAL_COLOR_SCHEME_RGB;
-      return INIT_OK;
+	m_global_color_scheme = GLOBAL_COLOR_SCHEME_RGB;
+	return INIT_OK;
 }
 
-InitReturn ChartBaseBSB::PreInit(const wxString & WXUNUSED(name), ChartInitFlag WXUNUSED(init_flags), ColorScheme cs)
+InitReturn ChartBaseBSB::PreInit(const wxString& WXUNUSED(name), ChartInitFlag WXUNUSED(init_flags),
+								 ColorScheme cs)
 {
-      m_global_color_scheme = cs;
-      return INIT_OK;
+	m_global_color_scheme = cs;
+	return INIT_OK;
 }
 
-void ChartBaseBSB::CreatePaletteEntry(char *buffer, int palette_index)
+void ChartBaseBSB::CreatePaletteEntry(char* buffer, int palette_index)
 {
-    if(palette_index < N_BSB_COLORS)
-    {
-      if(!pPalettes[palette_index])
-            pPalettes[palette_index] = new opncpnPalette;
-      opncpnPalette *pp = pPalettes[palette_index];
+	if (palette_index < N_BSB_COLORS) {
+		if (!pPalettes[palette_index])
+			pPalettes[palette_index] = new opncpnPalette;
+		opncpnPalette* pp = pPalettes[palette_index];
 
-      pp->FwdPalette = (int *)realloc(pp->FwdPalette, (pp->nFwd + 1) * sizeof(int));
-      pp->RevPalette = (int *)realloc(pp->RevPalette, (pp->nRev + 1) * sizeof(int));
-      pp->nFwd++;
-      pp->nRev++;
+		pp->FwdPalette = (int*)realloc(pp->FwdPalette, (pp->nFwd + 1) * sizeof(int));
+		pp->RevPalette = (int*)realloc(pp->RevPalette, (pp->nRev + 1) * sizeof(int));
+		pp->nFwd++;
+		pp->nRev++;
 
-      int i;
-      int n,r,g,b;
-      sscanf(&buffer[4], "%d,%d,%d,%d", &n, &r, &g, &b);
+		int i;
+		int n, r, g, b;
+		sscanf(&buffer[4], "%d,%d,%d,%d", &n, &r, &g, &b);
 
-      i=n;
+		i = n;
 
-      int fcolor, rcolor;
-      fcolor = (b << 16) + (g << 8) + r;
-      rcolor = (r << 16) + (g << 8) + b;
+		int fcolor, rcolor;
+		fcolor = (b << 16) + (g << 8) + r;
+		rcolor = (r << 16) + (g << 8) + b;
 
-      pp->RevPalette[i] = rcolor;
-      pp->FwdPalette[i] = fcolor;
-    }
+		pp->RevPalette[i] = rcolor;
+		pp->FwdPalette[i] = fcolor;
+	}
 }
 
 int ChartBaseBSB::GetSize_X() const
@@ -385,244 +356,218 @@ int ChartBaseBSB::GetSize_Y() const
 	return Size_Y;
 }
 
-
 InitReturn ChartBaseBSB::PostInit(void)
 {
-     //    Validate the palette array, substituting DEFAULT for missing entries
-      for(int i = 0 ; i < N_BSB_COLORS ; i++)
-      {
-            if(pPalettes[i] == NULL)
-            {
-                opncpnPalette *pNullSubPal = new opncpnPalette;
+	// Validate the palette array, substituting DEFAULT for missing entries
+	for (int i = 0; i < N_BSB_COLORS; i++) {
+		if (pPalettes[i] == NULL) {
+			opncpnPalette* pNullSubPal = new opncpnPalette;
 
-                pNullSubPal->nFwd = pPalettes[COLOR_RGB_DEFAULT]->nFwd;        // copy the palette count
-                pNullSubPal->nRev = pPalettes[COLOR_RGB_DEFAULT]->nRev;        // copy the palette count
-                //  Deep copy the palette rgb tables
-                free( pNullSubPal->FwdPalette );
-                pNullSubPal->FwdPalette = (int *)malloc(pNullSubPal->nFwd * sizeof(int));
-                memcpy(pNullSubPal->FwdPalette, pPalettes[COLOR_RGB_DEFAULT]->FwdPalette, pNullSubPal->nFwd * sizeof(int));
+			pNullSubPal->nFwd = pPalettes[COLOR_RGB_DEFAULT]->nFwd; // copy the palette count
+			pNullSubPal->nRev = pPalettes[COLOR_RGB_DEFAULT]->nRev; // copy the palette count
+			//  Deep copy the palette rgb tables
+			free(pNullSubPal->FwdPalette);
+			pNullSubPal->FwdPalette = (int*)malloc(pNullSubPal->nFwd * sizeof(int));
+			memcpy(pNullSubPal->FwdPalette, pPalettes[COLOR_RGB_DEFAULT]->FwdPalette,
+				   pNullSubPal->nFwd * sizeof(int));
 
-                free( pNullSubPal->RevPalette );
-                pNullSubPal->RevPalette = (int *)malloc(pNullSubPal->nRev * sizeof(int));
-                memcpy(pNullSubPal->RevPalette, pPalettes[COLOR_RGB_DEFAULT]->RevPalette, pNullSubPal->nRev * sizeof(int));
+			free(pNullSubPal->RevPalette);
+			pNullSubPal->RevPalette = (int*)malloc(pNullSubPal->nRev * sizeof(int));
+			memcpy(pNullSubPal->RevPalette, pPalettes[COLOR_RGB_DEFAULT]->RevPalette,
+				   pNullSubPal->nRev * sizeof(int));
 
-                pPalettes[i] = pNullSubPal;
-            }
-      }
+			pPalettes[i] = pNullSubPal;
+		}
+	}
 
-      // Establish the palette type and default palette
-      palette_direction = GetPaletteDir();
+	// Establish the palette type and default palette
+	palette_direction = GetPaletteDir();
 
-      SetColorScheme(m_global_color_scheme, false);
+	SetColorScheme(m_global_color_scheme, false);
 
-      //    Allocate memory for ifs file buffering
-      ifs_bufsize = Size_X * 4;
-      ifs_buf = (unsigned char *)malloc(ifs_bufsize);
-      if(!ifs_buf)
-            return INIT_FAIL_REMOVE;
+	// Allocate memory for ifs file buffering
+	ifs_bufsize = Size_X * 4;
+	ifs_buf = (unsigned char*)malloc(ifs_bufsize);
+	if (!ifs_buf)
+		return INIT_FAIL_REMOVE;
 
-      ifs_bufend = ifs_buf + ifs_bufsize;
-      ifs_lp = ifs_bufend;
-      ifs_file_offset = -ifs_bufsize;
+	ifs_bufend = ifs_buf + ifs_bufsize;
+	ifs_lp = ifs_bufend;
+	ifs_file_offset = -ifs_bufsize;
 
+	// Create and load the line offset index table
+	line_offset_table.clear();
+	line_offset_table.resize(Size_Y + 1);
 
-      //    Create and load the line offset index table
-		line_offset_table.clear();
-		line_offset_table.resize(Size_Y + 1);
+	ifs_bitmap->SeekI((Size_Y + 1) * -4, wxFromEnd); // go to Beginning of offset table
+	line_offset_table[Size_Y] = ifs_bitmap->TellI(); // fill in useful last table entry
 
-      ifs_bitmap->SeekI((Size_Y+1) * -4, wxFromEnd);                 // go to Beginning of offset table
-      line_offset_table[Size_Y] = ifs_bitmap->TellI();                     // fill in useful last table entry
+	int offset;
+	for (int ifplt = 0; ifplt < Size_Y; ifplt++) {
+		offset = 0;
+		offset += (unsigned char)ifs_bitmap->GetC() * 256 * 256 * 256;
+		offset += (unsigned char)ifs_bitmap->GetC() * 256 * 256;
+		offset += (unsigned char)ifs_bitmap->GetC() * 256;
+		offset += (unsigned char)ifs_bitmap->GetC();
 
-      int offset;
-      for(int ifplt=0 ; ifplt<Size_Y ; ifplt++)
-      {
-          offset = 0;
-          offset += (unsigned char)ifs_bitmap->GetC() * 256 * 256 * 256;
-          offset += (unsigned char)ifs_bitmap->GetC() * 256 * 256 ;
-          offset += (unsigned char)ifs_bitmap->GetC() * 256 ;
-          offset += (unsigned char)ifs_bitmap->GetC();
+		line_offset_table[ifplt] = offset;
+	}
 
-          line_offset_table[ifplt] = offset;
-      }
+	// Try to validate the line index
 
-      //    Try to validate the line index
+	bool bline_index_ok = true;
+	m_nLineOffset = 0;
 
-      bool bline_index_ok = true;
-      m_nLineOffset = 0;
+	for (int iplt = 0; iplt < Size_Y - 1; iplt++) {
+		if (wxInvalidOffset == ifs_bitmap->SeekI(line_offset_table[iplt], wxFromStart)) {
+			wxString msg(_("   Chart File corrupt in PostInit() on chart "));
+			msg.Append(m_FullPath);
+			wxLogMessage(msg);
 
-      for(int iplt=0 ; iplt<Size_Y - 1 ; iplt++)
-      {
-            if( wxInvalidOffset == ifs_bitmap->SeekI(line_offset_table[iplt], wxFromStart))
-            {
-                  wxString msg(_("   Chart File corrupt in PostInit() on chart "));
-                  msg.Append(m_FullPath);
-                  wxLogMessage(msg);
+			return INIT_FAIL_REMOVE;
+		}
 
-                  return INIT_FAIL_REMOVE;
-            }
+		int thisline_size = line_offset_table[iplt + 1] - line_offset_table[iplt];
 
-            int thisline_size = line_offset_table[iplt+1] - line_offset_table[iplt] ;
+		if (thisline_size < 0) {
+			wxString msg(_("   Chart File corrupt in PostInit() on chart "));
+			msg.Append(m_FullPath);
+			wxLogMessage(msg);
 
-            if(thisline_size < 0)
-            {
-                  wxString msg(_("   Chart File corrupt in PostInit() on chart "));
-                  msg.Append(m_FullPath);
-                  wxLogMessage(msg);
+			return INIT_FAIL_REMOVE;
+		}
 
-                  return INIT_FAIL_REMOVE;
-            }
+		if (thisline_size > ifs_bufsize) {
+			wxString msg(_T("   ifs_bufsize too small PostInit() on chart "));
+			msg.Append(m_FullPath);
+			wxLogMessage(msg);
 
-            if(thisline_size > ifs_bufsize)
-            {
-                  wxString msg(_T("   ifs_bufsize too small PostInit() on chart "));
-                  msg.Append(m_FullPath);
-                  wxLogMessage(msg);
+			return INIT_FAIL_REMOVE;
+		}
 
-                  return INIT_FAIL_REMOVE;
-            }
+		ifs_bitmap->Read(ifs_buf, thisline_size);
 
-            ifs_bitmap->Read(ifs_buf, thisline_size);
+		unsigned char* lp = ifs_buf;
 
-            unsigned char *lp = ifs_buf;
+		unsigned char byNext;
+		int nLineMarker = 0;
+		do {
+			byNext = *lp++;
+			nLineMarker = nLineMarker * 128 + (byNext & 0x7f);
+		} while ((byNext & 0x80) != 0);
 
-            unsigned char byNext;
-            int nLineMarker = 0;
-            do
-            {
-                  byNext = *lp++;
-                  nLineMarker = nLineMarker * 128 + (byNext & 0x7f);
-            } while( (byNext & 0x80) != 0 );
+		// Linemarker Correction factor needed here
+		// Some charts start with LineMarker = 0, some with LineMarker = 1
+		// Assume the first LineMarker found is the index base, and use
+		// as a correction offset
 
+		if (iplt == 0)
+			m_nLineOffset = nLineMarker;
 
-            //  Linemarker Correction factor needed here
-            //  Some charts start with LineMarker = 0, some with LineMarker = 1
-            //  Assume the first LineMarker found is the index base, and use
-            //  as a correction offset
+		if (nLineMarker != iplt + m_nLineOffset) {
+			bline_index_ok = false;
+			break;
+		}
+	}
+	// Recreate the scan line index if the embedded version seems corrupt
+	if (!bline_index_ok) {
+		wxString msg(_("   Line Index corrupt, recreating Index for chart "));
+		msg.Append(m_FullPath);
+		wxLogMessage(msg);
+		if (!CreateLineIndex()) {
+			wxString msg(_("   Error creating Line Index for chart "));
+			msg.Append(m_FullPath);
+			wxLogMessage(msg);
+			return INIT_FAIL_REMOVE;
+		}
+	}
 
-            if(iplt == 0)
-                m_nLineOffset = nLineMarker;
+	//    Allocate the Line Cache
+	if (bUseLineCache) {
+		pLineCache = (CachedLine*)malloc(Size_Y * sizeof(CachedLine)); // FIXME: use std containers
+		CachedLine* pt;
 
-            if(nLineMarker != iplt + m_nLineOffset)
-            {
-                bline_index_ok = false;
-                break;
-            }
+		for (int ylc = 0; ylc < Size_Y; ylc++) {
+			pt = &pLineCache[ylc];
+			pt->bValid = false;
+			pt->xstart = 0;
+			pt->xlength = 1;
+			pt->pPix = NULL;
+			pt->pRGB = NULL;
+		}
+	} else
+		pLineCache = NULL;
 
-      }
-       // Recreate the scan line index if the embedded version seems corrupt
-      if(!bline_index_ok)
-      {
-          wxString msg(_("   Line Index corrupt, recreating Index for chart "));
-          msg.Append(m_FullPath);
-          wxLogMessage(msg);
-          if(!CreateLineIndex())
-          {
-                wxString msg(_("   Error creating Line Index for chart "));
-                msg.Append(m_FullPath);
-                wxLogMessage(msg);
-                return INIT_FAIL_REMOVE;
-          }
-      }
+	// Validate/Set Depth Unit Type
+	wxString test_str = m_DepthUnits.Upper();
+	if (test_str.IsSameAs(_T("FEET"), FALSE))
+		m_depth_unit_id = DEPTH_UNIT_FEET;
+	else if (test_str.IsSameAs(_T("METERS"), FALSE))
+		m_depth_unit_id = DEPTH_UNIT_METERS;
+	else if (test_str.IsSameAs(_T("METRES"), FALSE)) // Special case for alternate spelling
+		m_depth_unit_id = DEPTH_UNIT_METERS;
+	else if (test_str.IsSameAs(_T("FATHOMS"), FALSE))
+		m_depth_unit_id = DEPTH_UNIT_FATHOMS;
+	else if (test_str.Find(_T("FATHOMS")) != wxNOT_FOUND) // Special case for "Fathoms and Feet"
+		m_depth_unit_id = DEPTH_UNIT_FATHOMS;
+	else if (test_str.Find(_T("METERS")) != wxNOT_FOUND) // Special case for "Meters and decimeters"
+		m_depth_unit_id = DEPTH_UNIT_METERS;
 
+	// Setup the datum transform parameters
+	char d_str[100];
+	strncpy(d_str, m_datum_str.mb_str(), 99);
+	d_str[99] = 0;
 
+	m_datum_index = geo::GetDatumIndex(d_str);
 
-      //    Allocate the Line Cache
-      if(bUseLineCache)
-      {
-            pLineCache = (CachedLine *)malloc(Size_Y * sizeof(CachedLine)); // FIXME: use std containers
-            CachedLine *pt;
+	// Analyze Refpoints
+	int analyze_ret_val = AnalyzeRefpoints();
+	if (0 != analyze_ret_val)
+		return INIT_FAIL_REMOVE;
 
-            for(int ylc = 0 ; ylc < Size_Y ; ylc++)
-            {
-                  pt = &pLineCache[ylc];
-                  pt->bValid = false;
-                  pt->xstart = 0;
-                  pt->xlength = 1;
-                  pt->pPix = NULL;
-                  pt->pRGB = NULL;
-            }
-      }
-      else
-            pLineCache = NULL;
+	// Establish defaults, may be overridden later
+	m_lon_datum_adjust = (-m_dtm_lon) / 3600.0;
+	m_lat_datum_adjust = (-m_dtm_lat) / 3600.0;
 
-
-      //    Validate/Set Depth Unit Type
-      wxString test_str = m_DepthUnits.Upper();
-      if(test_str.IsSameAs(_T("FEET"), FALSE))
-          m_depth_unit_id = DEPTH_UNIT_FEET;
-      else if(test_str.IsSameAs(_T("METERS"), FALSE))
-          m_depth_unit_id = DEPTH_UNIT_METERS;
-      else if(test_str.IsSameAs(_T("METRES"), FALSE))                  // Special case for alternate spelling
-          m_depth_unit_id = DEPTH_UNIT_METERS;
-      else if(test_str.IsSameAs(_T("FATHOMS"), FALSE))
-          m_depth_unit_id = DEPTH_UNIT_FATHOMS;
-      else if(test_str.Find(_T("FATHOMS")) != wxNOT_FOUND)             // Special case for "Fathoms and Feet"
-          m_depth_unit_id = DEPTH_UNIT_FATHOMS;
-      else if(test_str.Find(_T("METERS")) != wxNOT_FOUND)             // Special case for "Meters and decimeters"
-            m_depth_unit_id = DEPTH_UNIT_METERS;
-
-           //    Setup the datum transform parameters
-      char d_str[100];
-      strncpy(d_str, m_datum_str.mb_str(), 99);
-      d_str[99] = 0;
-
-      m_datum_index = geo::GetDatumIndex(d_str);
-
-
-      //   Analyze Refpoints
-      int analyze_ret_val = AnalyzeRefpoints();
-      if(0 != analyze_ret_val)
-            return INIT_FAIL_REMOVE;
-
-      //    Establish defaults, may be overridden later
-      m_lon_datum_adjust = (-m_dtm_lon) / 3600.;
-      m_lat_datum_adjust = (-m_dtm_lat) / 3600.;
-
-      bReadyToRender = true;
-      return INIT_OK;
+	bReadyToRender = true;
+	return INIT_OK;
 }
-
 
 bool ChartBaseBSB::CreateLineIndex()
 {
-    //  Assumes file stream ifs_bitmap is currently open
+	// Assumes file stream ifs_bitmap is currently open
 
-    //  Seek to start of data
-    ifs_bitmap->SeekI(nFileOffsetDataStart);                 // go to Beginning of data
+	// Seek to start of data
+	ifs_bitmap->SeekI(nFileOffsetDataStart); // go to Beginning of data
 
-    for(int iplt=0 ; iplt<Size_Y ; iplt++) {
-        int offset = ifs_bitmap->TellI();
+	for (int iplt = 0; iplt < Size_Y; iplt++) {
+		int offset = ifs_bitmap->TellI();
 
-        BSBScanScanline(ifs_bitmap);
+		BSBScanScanline(ifs_bitmap);
 
-        //  There is no sense reporting an error here, since we are recreating after an error
-        line_offset_table[iplt] = offset;
-    }
+		//  There is no sense reporting an error here, since we are recreating after an error
+		line_offset_table[iplt] = offset;
+	}
 
-    return true;
+	return true;
 }
 
-
-//    Invalidate and Free the line cache contents
+// Invalidate and Free the line cache contents
 void ChartBaseBSB::InvalidateLineCache(void)
 {
-      if(pLineCache)
-      {
-            CachedLine *pt;
-            for(int ylc = 0 ; ylc < Size_Y ; ylc++)
-            {
-                  pt = &pLineCache[ylc];
-                  if(pt)
-                  {
-                        if(pt->pPix)
-                        {
-                              free (pt->pPix);
-                              pt->pPix = NULL;
-                        }
-                        pt->bValid = 0;
-                  }
-            }
-      }
+	if (pLineCache) {
+		CachedLine* pt;
+		for (int ylc = 0; ylc < Size_Y; ylc++) {
+			pt = &pLineCache[ylc];
+			if (pt) {
+				if (pt->pPix) {
+					free(pt->pPix);
+					pt->pPix = NULL;
+				}
+				pt->bValid = 0;
+			}
+		}
+	}
 }
 
 bool ChartBaseBSB::GetChartExtent(Extent* pext)
@@ -661,7 +606,7 @@ bool ChartBaseBSB::SetMinMax(void)
 		ppp++;
 	}
 
-	  // Check for special cases
+	// Check for special cases
 
 	// Case 1:  Chart spans International Date Line or Greenwich, Longitude min/max is non-obvious.
 	if ((m_LonMax * m_LonMin) < 0) // min/max are opposite signs

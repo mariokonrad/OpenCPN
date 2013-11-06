@@ -22,17 +22,18 @@
  **************************************************************************/
 
 #include "ChartPlugInWrapper.h"
-#include "OCPNRegion.h"
+#include <OCPNRegion.h>
 #include <plugin/ocpn_plugin.h>
 #include <wx/image.h>
 #include <wx/bitmap.h>
 
-PlugIn_ViewPort CreatePlugInViewport(const ViewPort & vp);
+PlugIn_ViewPort CreatePlugInViewport(const ViewPort& vp);
 
 ChartPlugInWrapper::ChartPlugInWrapper()
-{}
+{
+}
 
-ChartPlugInWrapper::ChartPlugInWrapper(const wxString &chart_class)
+ChartPlugInWrapper::ChartPlugInWrapper(const wxString& chart_class)
 {
 	m_ppo = ::wxCreateDynamicObject(chart_class);
 	m_ppicb = wxDynamicCast(m_ppo, PlugInChartBase);
@@ -40,30 +41,29 @@ ChartPlugInWrapper::ChartPlugInWrapper(const wxString &chart_class)
 
 ChartPlugInWrapper::~ChartPlugInWrapper()
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		delete m_ppicb;
 }
 
 wxString ChartPlugInWrapper::GetFileSearchMask(void)
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetFileSearchMask();
 	else
 		return _T("");
 }
 
-InitReturn ChartPlugInWrapper::Init( const wxString& name, ChartInitFlag init_flags )
+InitReturn ChartPlugInWrapper::Init(const wxString& name, ChartInitFlag init_flags)
 {
-	if(m_ppicb)
-	{
+	if (m_ppicb) {
 		InitReturn ret_val = (InitReturn)m_ppicb->Init(name, (int)init_flags);
 
-		//    Here we transcribe all the required wrapped member elements up into the chartbase object which is the parent of this class
-		if(ret_val == INIT_OK)
-		{
+		// Here we transcribe all the required wrapped member elements up into the chartbase object
+		// which is the parent of this class
+		if (ret_val == INIT_OK) {
 			m_FullPath = m_ppicb->GetFullPath();
 			m_ChartType = (ChartTypeEnum)m_ppicb->GetChartType();
-			m_ChartFamily = (ChartFamilyEnum)m_ppicb->GetChartFamily();
+			m_ChartFamily = (chart::ChartFamilyEnum)m_ppicb->GetChartFamily();
 			m_projection = (OcpnProjType)m_ppicb->GetChartProjection();
 			m_EdDate = m_ppicb->GetEditionDate();
 			m_Name = m_ppicb->GetName();
@@ -80,20 +80,17 @@ InitReturn ChartPlugInWrapper::Init( const wxString& name, ChartInitFlag init_fl
 			m_Chart_Scale = m_ppicb->GetNativeScale();
 
 			bReadyToRender = m_ppicb->IsReadyToRender();
-
 		}
 
 		return ret_val;
-	}
-	else
+	} else
 		return INIT_FAIL_REMOVE;
 }
-
 
 //    Accessors
 int ChartPlugInWrapper::GetCOVREntries() const
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetCOVREntries();
 	else
 		return 0;
@@ -101,23 +98,23 @@ int ChartPlugInWrapper::GetCOVREntries() const
 
 int ChartPlugInWrapper::GetCOVRTablePoints(int iTable) const
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetCOVRTablePoints(iTable);
 	else
 		return 0;
 }
 
-int  ChartPlugInWrapper::GetCOVRTablenPoints(int iTable) const
+int ChartPlugInWrapper::GetCOVRTablenPoints(int iTable) const
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetCOVRTablenPoints(iTable);
 	else
 		return 0;
 }
 
-float *ChartPlugInWrapper::GetCOVRTableHead(int iTable)
+float* ChartPlugInWrapper::GetCOVRTableHead(int iTable)
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetCOVRTableHead(iTable);
 	else
 		return 0;
@@ -138,46 +135,41 @@ int ChartPlugInWrapper::GetNoCOVRTablePoints(int iTable) const
 	return 0;
 }
 
-int  ChartPlugInWrapper::GetNoCOVRTablenPoints(int iTable) const
+int ChartPlugInWrapper::GetNoCOVRTablenPoints(int iTable) const
 {
 	return 0;
 }
 
-float *ChartPlugInWrapper::GetNoCOVRTableHead(int iTable)
+float* ChartPlugInWrapper::GetNoCOVRTableHead(int iTable)
 {
 	return 0;
 }
 
-bool ChartPlugInWrapper::GetChartExtent(Extent *pext)
+bool ChartPlugInWrapper::GetChartExtent(Extent* pext)
 {
-	if(m_ppicb)
-	{
+	if (m_ppicb) {
 		ExtentPI xpi;
-		if(m_ppicb->GetChartExtent(&xpi))
-		{
+		if (m_ppicb->GetChartExtent(&xpi)) {
 			pext->NLAT = xpi.NLAT;
 			pext->SLAT = xpi.SLAT;
 			pext->ELON = xpi.ELON;
 			pext->WLON = xpi.WLON;
 
 			return true;
-		}
-		else
+		} else
 			return false;
-	}
-	else
+	} else
 		return false;
 }
 
-ThumbData *ChartPlugInWrapper::GetThumbData(int tnx, int tny, float lat, float lon)
+ThumbData* ChartPlugInWrapper::GetThumbData(int tnx, int tny, float lat, float lon)
 {
-	if(m_ppicb)
-	{
+	if (m_ppicb) {
 
-		//    Create the bitmap if needed, doing a deep copy from the Bitmap owned by the PlugIn Chart
-		if(!pThumbData->pDIBThumb)
-		{
-			wxBitmap *pBMPOwnedByChart = m_ppicb->GetThumbnail(tnx, tny, m_global_color_scheme);
+		// Create the bitmap if needed, doing a deep copy from the Bitmap owned by the PlugIn
+		// Chart
+		if (!pThumbData->pDIBThumb) {
+			wxBitmap* pBMPOwnedByChart = m_ppicb->GetThumbnail(tnx, tny, m_global_color_scheme);
 			wxImage img = pBMPOwnedByChart->ConvertToImage();
 			pThumbData->pDIBThumb = new wxBitmap(img);
 		}
@@ -185,41 +177,15 @@ ThumbData *ChartPlugInWrapper::GetThumbData(int tnx, int tny, float lat, float l
 		pThumbData->Thumb_Size_X = tnx;
 		pThumbData->Thumb_Size_Y = tny;
 
-		/*
-		//    Plot the supplied Lat/Lon on the thumbnail
-		int divx = m_ppicb->Size_X / tnx;
-		int divy = m_ppicb->Size_Y / tny;
-
-		int div_factor = __min(divx, divy);
-
-		int pixx, pixy;
-
-
-		//    Using a temporary synthetic ViewPort and source rectangle,
-		//    calculate the ships position on the thumbnail
-		ViewPort tvp;
-		tvp.pix_width = tnx;
-		tvp.pix_height = tny;
-		tvp.view_scale_ppm = GetPPM() / div_factor;
-		wxRect trex = Rsrc;
-		Rsrc.x = 0;
-		Rsrc.y = 0;
-		latlong_to_pix_vp(lat, lon, pixx, pixy, tvp);
-		Rsrc = trex;
-
-		pThumbData->ShipX = pixx;// / div_factor;
-		pThumbData->ShipY = pixy;// / div_factor;
-		 */
 		pThumbData->ShipX = 0;
 		pThumbData->ShipY = 0;
 
 		return pThumbData;
-	}
-	else
+	} else
 		return NULL;
 }
 
-ThumbData *ChartPlugInWrapper::GetThumbData()
+ThumbData* ChartPlugInWrapper::GetThumbData()
 {
 	return pThumbData;
 }
@@ -231,7 +197,7 @@ bool ChartPlugInWrapper::UpdateThumbData(double lat, double lon)
 
 double ChartPlugInWrapper::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom)
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetNormalScaleMin(canvas_scale_factor, b_allow_overzoom);
 	else
 		return 1.0;
@@ -239,102 +205,93 @@ double ChartPlugInWrapper::GetNormalScaleMin(double canvas_scale_factor, bool b_
 
 double ChartPlugInWrapper::GetNormalScaleMax(double canvas_scale_factor, int canvas_width)
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetNormalScaleMax(canvas_scale_factor, canvas_width);
 	else
 		return 2.0e7;
 }
 
-bool ChartPlugInWrapper::RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint, const OCPNRegion &Region)
+bool ChartPlugInWrapper::RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
+											  const OCPNRegion& Region)
 {
 	return true;
 }
 
-
 bool ChartPlugInWrapper::RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
-		const OCPNRegion &Region)
+											  const OCPNRegion& Region)
 {
-	if(m_ppicb)
-	{
-		PlugIn_ViewPort pivp = CreatePlugInViewport( VPoint);
+	if (m_ppicb) {
+		PlugIn_ViewPort pivp = CreatePlugInViewport(VPoint);
 		OCPNRegion rg = Region;
 		wxRegion r = rg.ConvertTowxRegion();
-		dc.SelectObject(m_ppicb->RenderRegionView( pivp, r));
+		dc.SelectObject(m_ppicb->RenderRegionView(pivp, r));
 		return true;
-	}
-	else
+	} else
 		return false;
 }
 
-bool ChartPlugInWrapper::AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed)
+bool ChartPlugInWrapper::AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed)
 {
-	if(m_ppicb)
-	{
-		PlugIn_ViewPort pivp_last = CreatePlugInViewport( vp_last);
-		PlugIn_ViewPort pivp_proposed = CreatePlugInViewport( vp_proposed);
+	if (m_ppicb) {
+		PlugIn_ViewPort pivp_last = CreatePlugInViewport(vp_last);
+		PlugIn_ViewPort pivp_proposed = CreatePlugInViewport(vp_proposed);
 		return m_ppicb->AdjustVP(pivp_last, pivp_proposed);
-	}
-	else
+	} else
 		return false;
 }
 
-void ChartPlugInWrapper::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion)
+void ChartPlugInWrapper::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion)
 {
-	if(m_ppicb)
-	{
-		PlugIn_ViewPort pivp = CreatePlugInViewport( VPoint);
+	if (m_ppicb) {
+		PlugIn_ViewPort pivp = CreatePlugInViewport(VPoint);
 		m_ppicb->GetValidCanvasRegion(pivp, pValidRegion);
 	}
 
 	return;
 }
 
-
 void ChartPlugInWrapper::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		m_ppicb->SetColorScheme(cs, bApplyImmediate);
 }
 
-
 double ChartPlugInWrapper::GetNearestPreferredScalePPM(double target_scale_ppm)
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetNearestPreferredScalePPM(target_scale_ppm);
 	else
 		return 1.0;
 }
 
-
-void ChartPlugInWrapper::ComputeSourceRectangle(const ViewPort &VPoint, wxRect *pSourceRect)
+void ChartPlugInWrapper::ComputeSourceRectangle(const ViewPort& VPoint, wxRect* pSourceRect)
 {
-	if(m_ppicb)
-	{
-		PlugIn_ViewPort pivp = CreatePlugInViewport( VPoint);
+	if (m_ppicb) {
+		PlugIn_ViewPort pivp = CreatePlugInViewport(VPoint);
 		m_ppicb->ComputeSourceRectangle(pivp, pSourceRect);
 	}
 }
 
 double ChartPlugInWrapper::GetRasterScaleFactor() const
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetRasterScaleFactor();
 	else
 		return 1.0;
 }
 
-bool ChartPlugInWrapper::GetChartBits( wxRect& source, unsigned char *pPix, int sub_samp )
+bool ChartPlugInWrapper::GetChartBits(wxRect& source, unsigned char* pPix, int sub_samp)
 {
-	if(m_ppicb)
+	if (m_ppicb)
 
-		return m_ppicb->GetChartBits( source, pPix, sub_samp );
+		return m_ppicb->GetChartBits(source, pPix, sub_samp);
 	else
 		return false;
 }
 
 int ChartPlugInWrapper::GetSize_X() const
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetSize_X();
 	else
 		return 1;
@@ -342,7 +299,7 @@ int ChartPlugInWrapper::GetSize_X() const
 
 int ChartPlugInWrapper::GetSize_Y() const
 {
-	if(m_ppicb)
+	if (m_ppicb)
 		return m_ppicb->GetSize_Y();
 	else
 		return 1;

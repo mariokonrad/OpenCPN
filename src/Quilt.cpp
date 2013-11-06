@@ -65,7 +65,7 @@ Quilt::Quilt()
 	m_reference_scale = 1;
 	m_refchart_dbIndex = -1;
 	m_reference_type = CHART_TYPE_UNKNOWN;
-	m_reference_family = CHART_FAMILY_UNKNOWN;
+	m_reference_family = chart::CHART_FAMILY_UNKNOWN;
 
 	current_node = m_PatchList.end();
 
@@ -110,7 +110,7 @@ bool Quilt::IsVPBlittable(ViewPort& VPoint, int dx, int dy, bool b_allow_vector)
 	bool ret_val = true;
 	ChartBase* pch = GetFirstChart();
 	while (pch) {
-		if (pch->GetChartFamily() == CHART_FAMILY_RASTER) {
+		if (pch->GetChartFamily() == chart::CHART_FAMILY_RASTER) {
 			if ((fabs(deltax - dx) > 1e-2) || (fabs(deltay - dy) > 1e-2)) {
 				ret_val = false;
 				break;
@@ -369,7 +369,7 @@ OCPNRegion Quilt::GetChartQuiltRegion(const ChartTableEntry& cte, ViewPort& vp)
 	// Super small scale raster charts like bluemarble.kap usually cross the prime meridian
 	// and Plypoints georef is problematic......
 	// So, force full screen coverage in the quilt
-	if ((cte.GetScale() > 90000000) && (cte.GetChartFamily() == CHART_FAMILY_RASTER))
+	if ((cte.GetScale() > 90000000) && (cte.GetChartFamily() == chart::CHART_FAMILY_RASTER))
 		chart_region = screen_region;
 
 	// Clip the region to the current viewport
@@ -460,7 +460,7 @@ wxRect Quilt::GetChartQuiltBoundingRect(const ChartTableEntry& cte, ViewPort& vp
 	// Super small scale raster charts like bluemarble.kap usually cross the prime meridian
 	// and Plypoints georef is problematic......
 	// So, force full screen coverage in the quilt
-	if ((cte.GetScale() > 90000000) && (cte.GetChartFamily() == CHART_FAMILY_RASTER))
+	if ((cte.GetScale() > 90000000) && (cte.GetChartFamily() == chart::CHART_FAMILY_RASTER))
 		ret_rect = vp.rv_rect;
 
 	return ret_rect;
@@ -483,7 +483,7 @@ bool Quilt::IsQuiltVector(void)
 
 		if (pqp->b_Valid && !pqp->b_eclipsed) {
 			const ChartTableEntry& ctei = ChartData->GetChartTableEntry(pqp->dbIndex);
-			if (ctei.GetChartFamily() == CHART_FAMILY_VECTOR) {
+			if (ctei.GetChartFamily() == chart::CHART_FAMILY_VECTOR) {
 				ret = true;
 				break;
 			}
@@ -1614,7 +1614,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 		m_quilt_depth_unit = pc->GetDepthUnits();
 
 #ifdef USE_S57
-		if (pc->GetChartFamily() == CHART_FAMILY_VECTOR) {
+		if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR) {
 			int units = ps52plib->m_nDepthUnitDisplay;
 			switch (units) {
 				case 0:
@@ -1641,7 +1641,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 		if (pc) {
 			wxString du = pc->GetDepthUnits();
 #ifdef USE_S57
-			if (pc->GetChartFamily() == CHART_FAMILY_VECTOR) {
+			if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR) {
 				int units = ps52plib->m_nDepthUnitDisplay;
 				switch (units) {
 					case 0:

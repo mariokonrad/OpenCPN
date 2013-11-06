@@ -1772,12 +1772,12 @@ bool App::OnInit()
 			global::Navigation& nav = global::OCPN::get().nav();
 			double clat;
 			double clon;
-			if (ChartData->GetCentroidOfLargestScaleChart(&clat, &clon, CHART_FAMILY_RASTER)) {
+			if (ChartData->GetCentroidOfLargestScaleChart(&clat, &clon, chart::CHART_FAMILY_RASTER)) {
 				nav.set_latitude(clat);
 				nav.set_longitude(clon);
 				gFrame->ClearbFollow();
 			} else {
-				if (ChartData->GetCentroidOfLargestScaleChart(&clat, &clon, CHART_FAMILY_VECTOR)) {
+				if (ChartData->GetCentroidOfLargestScaleChart(&clat, &clon, chart::CHART_FAMILY_VECTOR)) {
 					nav.set_latitude(clat);
 					nav.set_longitude(clon);
 					gFrame->ClearbFollow();
@@ -1789,13 +1789,13 @@ bool App::OnInit()
 	// Apply the inital Group Array structure to the chart data base
 	ChartData->ApplyGroupArray(g_pGroupArray);
 
-	//  Make sure that the Selected Group is sensible...
+	// Make sure that the Selected Group is sensible...
 	if (g_GroupIndex > (int)g_pGroupArray->GetCount())
 		g_GroupIndex = 0;
 	if (!gFrame->CheckGroup(g_GroupIndex))
 		g_GroupIndex = 0;
 
-	//  Delete any stack built by no-chart startup case
+	// Delete any stack built by no-chart startup case
 	if (pCurrentStack)
 		delete pCurrentStack;
 

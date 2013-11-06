@@ -85,7 +85,7 @@ class ChartDatabase
 
 		bool IsValid() const;
 		int DisableChart(wxString& PathToDisable);
-		bool GetCentroidOfLargestScaleChart(double *clat, double *clon, ChartFamilyEnum family);
+		bool GetCentroidOfLargestScaleChart(double *clat, double *clon, chart::ChartFamilyEnum family);
 		int GetDBChartType(int dbIndex);
 		int GetDBChartFamily(int dbIndex);
 		float GetDBChartSkew(int dbIndex);

@@ -62,14 +62,14 @@ class ChartDB : public ChartDatabase
 		int  GetStackChartScale(ChartStack *ps, int stackindex, char *buf, int nbuf);
 		int  GetCSPlyPoint(ChartStack *ps, int stackindex, int plyindex, float *lat, float *lon);
 		ChartTypeEnum GetCSChartType(ChartStack *ps, int stackindex);
-		ChartFamilyEnum GetCSChartFamily(ChartStack *ps, int stackindex);
+		chart::ChartFamilyEnum GetCSChartFamily(ChartStack *ps, int stackindex);
 		bool SearchForChartDir(const wxString &dir);
 		ChartBase *OpenStackChartConditional(
 				ChartStack * ps,
 				int start_index,
 				bool bLargest,
 				ChartTypeEnum New_Type,
-				ChartFamilyEnum New_Family_Fallback);
+				chart::ChartFamilyEnum New_Family_Fallback);
 
 		wxArrayPtrVoid *GetChartCache(void); // FIXME: breaks encapsulation
 		std::vector<int> GetCSArray(ChartStack *ps);

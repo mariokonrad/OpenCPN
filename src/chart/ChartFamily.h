@@ -24,6 +24,8 @@
 #ifndef __CHART__CHARTFAMILY__H__
 #define __CHART__CHARTFAMILY__H__
 
+namespace chart {
+
 // ChartFamily constants
 enum ChartFamilyEnum
 {
@@ -32,5 +34,7 @@ enum ChartFamilyEnum
 	CHART_FAMILY_VECTOR,
 	CHART_FAMILY_DONTCARE
 };
+
+}
 
 #endif

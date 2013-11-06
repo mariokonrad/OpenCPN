@@ -1032,97 +1032,95 @@ render_canvas_parms::~render_canvas_parms( void )
 s57chart::s57chart()
 {
 
-    m_ChartType = CHART_TYPE_S57;
-    m_ChartFamily = CHART_FAMILY_VECTOR;
+	m_ChartType = CHART_TYPE_S57;
+	m_ChartFamily = chart::CHART_FAMILY_VECTOR;
 
-    for( int i = 0; i < PRIO_NUM; i++ )
-        for( int j = 0; j < LUPNAME_NUM; j++ )
-            razRules[i][j] = NULL;
+	for (int i = 0; i < PRIO_NUM; i++)
+		for (int j = 0; j < LUPNAME_NUM; j++)
+			razRules[i][j] = NULL;
 
-    m_Chart_Scale = 1;                              // Will be fetched during Init()
-    m_Chart_Skew = 0.0;
+	m_Chart_Scale = 1; // Will be fetched during Init()
+	m_Chart_Skew = 0.0;
 
-    pDIB = NULL;
-    m_pCloneBM = NULL;
+	pDIB = NULL;
+	m_pCloneBM = NULL;
 
-// Create ATON arrays, needed by S52PLIB
-    pFloatingATONArray = new wxArrayPtrVoid;
-    pRigidATONArray = new wxArrayPtrVoid;
+	// Create ATON arrays, needed by S52PLIB
+	pFloatingATONArray = new wxArrayPtrVoid;
+	pRigidATONArray = new wxArrayPtrVoid;
 
-    m_tmpup_array = NULL;
-    m_pcsv_locn = new wxString( g_csv_locn );
+	m_tmpup_array = NULL;
+	m_pcsv_locn = new wxString(g_csv_locn);
 
-    m_DepthUnits = _T("METERS");
-    m_depth_unit_id = DEPTH_UNIT_METERS;
+	m_DepthUnits = _T("METERS");
+	m_depth_unit_id = DEPTH_UNIT_METERS;
 
-    bGLUWarningSent = false;
+	bGLUWarningSent = false;
 
-    m_pENCDS = NULL;
+	m_pENCDS = NULL;
 
-    m_nvaldco = 0;
-    m_nvaldco_alloc = 0;
-    m_pvaldco_array = NULL;
+	m_nvaldco = 0;
+	m_nvaldco_alloc = 0;
+	m_pvaldco_array = NULL;
 
-    m_bExtentSet = false;
+	m_bExtentSet = false;
 
-    m_pDIBThumbDay = NULL;
-    m_pDIBThumbDim = NULL;
-    m_pDIBThumbOrphan = NULL;
-    m_bbase_file_attr_known = false;
+	m_pDIBThumbDay = NULL;
+	m_pDIBThumbDim = NULL;
+	m_pDIBThumbOrphan = NULL;
+	m_bbase_file_attr_known = false;
 
-    m_bLinePrioritySet = false;
-    if( ps52plib ) m_plib_state_hash = ps52plib->GetStateHash();
-    else
-        m_plib_state_hash = 0;
+	m_bLinePrioritySet = false;
+	if (ps52plib)
+		m_plib_state_hash = ps52plib->GetStateHash();
+	else
+		m_plib_state_hash = 0;
 
-    m_btex_mem = false;
+	m_btex_mem = false;
 
-    ref_lat = 0.0;
-    ref_lon = 0.0;
+	ref_lat = 0.0;
+	ref_lon = 0.0;
 
-    m_b2pointLUPS = false;
-    m_b2lineLUPS = false;
-
+	m_b2pointLUPS = false;
+	m_b2lineLUPS = false;
 }
 
 s57chart::~s57chart()
 {
 
-    FreeObjectsAndRules();
+	FreeObjectsAndRules();
 
-    delete pDIB;
+	delete pDIB;
 
-    delete m_pCloneBM;
-//    delete pFullPath;
+	delete m_pCloneBM;
 
-    delete pFloatingATONArray;
-    delete pRigidATONArray;
+	delete pFloatingATONArray;
+	delete pRigidATONArray;
 
-    delete m_pcsv_locn;
+	delete m_pcsv_locn;
 
-    delete m_pENCDS;
+	delete m_pENCDS;
 
-    free( m_pvaldco_array );
+	free(m_pvaldco_array);
 
-    delete m_pDIBThumbOrphan;
+	delete m_pDIBThumbOrphan;
 
-    VE_Hash::iterator it;
-    for (it = m_ve_hash.begin(); it != m_ve_hash.end(); ++it) {
-        VE_Element * value = it->second;
-        if (value) {
-            delete [] value->pPoints;
-            delete value;
-        }
-    }
-    m_ve_hash.clear();
+	VE_Hash::iterator it;
+	for (it = m_ve_hash.begin(); it != m_ve_hash.end(); ++it) {
+		VE_Element* value = it->second;
+		if (value) {
+			delete[] value->pPoints;
+			delete value;
+		}
+	}
+	m_ve_hash.clear();
 
-    for (VC_Hash::iterator i = m_vc_hash.begin(); i != m_vc_hash.end(); ++i) {
-        if (i->second) {
-            delete i->second;
-        }
-    }
-    m_vc_hash.clear();
-
+	for (VC_Hash::iterator i = m_vc_hash.begin(); i != m_vc_hash.end(); ++i) {
+		if (i->second) {
+			delete i->second;
+		}
+	}
+	m_vc_hash.clear();
 }
 
 void s57chart::GetValidCanvasRegion( const ViewPort& VPoint, OCPNRegion *pValidRegion )

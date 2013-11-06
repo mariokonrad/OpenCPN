@@ -993,7 +993,7 @@ int ChartCanvas::GetCanvasChartNativeScale()
 ChartBase* ChartCanvas::GetChartAtCursor()
 {
 	ChartBase* target_chart;
-	if (Current_Ch && (Current_Ch->GetChartFamily() == CHART_FAMILY_VECTOR))
+	if (Current_Ch && (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_VECTOR))
 		target_chart = Current_Ch;
 	else if (VPoint.b_quilt)
 		target_chart = cc1->m_pQuilt->GetChartAtPix(wxPoint(mouse_x, mouse_y));
@@ -2121,7 +2121,7 @@ void ChartCanvas::GetCanvasPointPix(double rlat, double rlon, wxPoint* r)
 	// then fall back to Viewport Projection estimate from canvas parameters
 	bool bUseVP = true;
 
-	if (Current_Ch && (Current_Ch->GetChartFamily() == CHART_FAMILY_RASTER)
+	if (Current_Ch && (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_RASTER)
 		&& (((fabs(GetVP().rotation) < 0.01) && !g_bskew_comp)
 			|| ((Current_Ch->GetChartProjectionType() != PROJECTION_MERCATOR)
 				&& (Current_Ch->GetChartProjectionType() != PROJECTION_POLYCONIC)))) {
@@ -2161,7 +2161,7 @@ void ChartCanvas::GetCanvasPixPoint(int x, int y, double& lat, double& lon)
 	// then fall back to Viewport Projection  estimate from canvas parameters
 	bool bUseVP = true;
 
-	if (Current_Ch && (Current_Ch->GetChartFamily() == CHART_FAMILY_RASTER)
+	if (Current_Ch && (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_RASTER)
 		&& (((fabs(GetVP().rotation) < 0.01) && !g_bskew_comp)
 			|| ((Current_Ch->GetChartProjectionType() != PROJECTION_MERCATOR)
 				&& (Current_Ch->GetChartProjectionType() != PROJECTION_POLYCONIC)))) {
@@ -2205,7 +2205,7 @@ bool ChartCanvas::ZoomCanvasIn(double factor)
 		ChartBase* pc = Current_Ch;
 		if (!pc)
 			return false;
-		if (pc->GetChartFamily() == CHART_FAMILY_VECTOR)
+		if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
 			b_smooth = false;
 	} else
 		b_smooth = g_bsmoothpanzoom & !m_pQuilt->IsQuiltVector() & !g_bEnableZoomToCursor;
@@ -2245,7 +2245,7 @@ bool ChartCanvas::ZoomCanvasOut(double factor)
 		ChartBase* pc = Current_Ch;
 		if (!pc)
 			return false;
-		if (pc->GetChartFamily() == CHART_FAMILY_VECTOR)
+		if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
 			b_smooth = false;
 	} else
 		b_smooth = g_bsmoothpanzoom & !m_pQuilt->IsQuiltVector() & !g_bEnableZoomToCursor;
@@ -6050,14 +6050,14 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 			contextMenu->Append(ID_DEF_MENU_SCALE_OUT, _menuText(_("Scale Out"), _T("F8")));
 		}
 
-		if ((Current_Ch && (Current_Ch->GetChartFamily() == CHART_FAMILY_VECTOR))
+		if ((Current_Ch && (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_VECTOR))
 			|| ais_areanotice) {
 			contextMenu->Append(ID_DEF_MENU_QUERY, _("Object Query..."));
 		}
 
 	} else {
 		ChartBase* pChartTest = m_pQuilt->GetChartAtPix(wxPoint(x, y));
-		if ((pChartTest && (pChartTest->GetChartFamily() == CHART_FAMILY_VECTOR))
+		if ((pChartTest && (pChartTest->GetChartFamily() == chart::CHART_FAMILY_VECTOR))
 			|| ais_areanotice) {
 			contextMenu->Append(ID_DEF_MENU_QUERY, _("Object Query..."));
 		} else {
@@ -6864,7 +6864,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			vLon = zlon;
 			ClearbFollow();
 			parent_frame->DoChartUpdate();
-			parent_frame->SelectChartFromStack(0, false, CHART_TYPE_DONTCARE, CHART_FAMILY_RASTER);
+			parent_frame->SelectChartFromStack(0, false, CHART_TYPE_DONTCARE, chart::CHART_FAMILY_RASTER);
 			break;
 
 		case ID_DEF_MENU_SCALE_IN:
@@ -8730,7 +8730,7 @@ void ChartCanvas::EmbossDepthScale(ocpnDC& dc)
 		if (Current_Ch) {
 			depth_unit_type = Current_Ch->GetDepthUnitType();
 #ifdef USE_S57
-			if (Current_Ch->GetChartFamily() == CHART_FAMILY_VECTOR)
+			if (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
 				depth_unit_type = ps52plib->m_nDepthUnitDisplay + 1;
 #endif
 		}

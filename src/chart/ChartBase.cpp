@@ -154,7 +154,7 @@ ChartTypeEnum ChartBase::GetChartType() const
 	return m_ChartType;
 }
 
-ChartFamilyEnum ChartBase::GetChartFamily() const
+chart::ChartFamilyEnum ChartBase::GetChartFamily() const
 {
 	return m_ChartFamily;
 }

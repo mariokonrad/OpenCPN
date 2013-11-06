@@ -361,22 +361,22 @@ void glChartCanvas::EnablePaint(bool b_enable)
 void glChartCanvas::OnEraseBG(wxEraseEvent &)
 {}
 
-void glChartCanvas::ClearAllRasterTextures( void )
+void glChartCanvas::ClearAllRasterTextures(void)
 {
-	//     Clear and delete all the GPU textures presently loaded
+	// Clear and delete all the GPU textures presently loaded
 	ChartPointerHashType::iterator it;
-	for( it = m_chart_hash.begin(); it != m_chart_hash.end(); ++it ) {
-		ChartBase *pc = (ChartBase *) it->first;
+	for (it = m_chart_hash.begin(); it != m_chart_hash.end(); ++it) {
+		ChartBase* pc = (ChartBase*)it->first;
 
-		ChartTextureHashType *pTextureHash = m_chart_hash[pc];
+		ChartTextureHashType* pTextureHash = m_chart_hash[pc];
 
 		// iterate over all the textures presently loaded
 		// and delete the OpenGL texture and the private descriptor
 
 		ChartTextureHashType::iterator it;
-		for( it = pTextureHash->begin(); it != pTextureHash->end(); ++it ) {
-			glTextureDescriptor *ptd = it->second;
-			glDeleteTextures( 1, &ptd->tex_name );
+		for (it = pTextureHash->begin(); it != pTextureHash->end(); ++it) {
+			glTextureDescriptor* ptd = it->second;
+			glDeleteTextures(1, &ptd->tex_name);
 			delete ptd;
 		}
 
@@ -384,110 +384,106 @@ void glChartCanvas::ClearAllRasterTextures( void )
 		delete pTextureHash;
 	}
 	m_chart_hash.clear();
-
 }
 
-void glChartCanvas::OnActivate( wxActivateEvent& event )
+void glChartCanvas::OnActivate(wxActivateEvent& event)
 {
-	cc1->OnActivate( event );
+	cc1->OnActivate(event);
 }
 
-void glChartCanvas::OnSize( wxSizeEvent& event )
+void glChartCanvas::OnSize(wxSizeEvent& event)
 {
-	if( !g_bopengl ) {
-		SetSize( cc1->GetVP().pix_width, cc1->GetVP().pix_height );
+	if (!g_bopengl) {
+		SetSize(cc1->GetVP().pix_width, cc1->GetVP().pix_height);
 		event.Skip();
 		return;
 	}
 
 	// this is also necessary to update the context on some platforms
-	wxGLCanvas::OnSize( event );
+	wxGLCanvas::OnSize(event);
 
-	/* expand opengl widget to fill viewport */
-	ViewPort &VP = cc1->GetVP();
-	if( GetSize().x != VP.pix_width || GetSize().y != VP.pix_height ) {
-		SetSize( VP.pix_width, VP.pix_height );
-		if( m_bsetup && m_b_useFBO ) {
+	// expand opengl widget to fill viewport
+	ViewPort& VP = cc1->GetVP();
+	if (GetSize().x != VP.pix_width || GetSize().y != VP.pix_height) {
+		SetSize(VP.pix_width, VP.pix_height);
+		if (m_bsetup && m_b_useFBO) {
 			BuildFBO();
-			( *s_glBindFramebufferEXT )( GL_FRAMEBUFFER_EXT, 0 );
+			(*s_glBindFramebufferEXT)(GL_FRAMEBUFFER_EXT, 0);
 		}
-
 	}
-
 }
 
-void glChartCanvas::MouseEvent( wxMouseEvent& event )
+void glChartCanvas::MouseEvent(wxMouseEvent& event)
 {
-	cc1->MouseEvent( event );
+	cc1->MouseEvent(event);
 }
 
-void glChartCanvas::BuildFBO( void )
+void glChartCanvas::BuildFBO(void)
 {
-	if( m_bsetup && m_b_useFBO ) {
-		glDeleteTextures( 1, &m_cache_tex );
-		( *s_glDeleteFramebuffersEXT )( 1, &m_fb0 );
-		( *s_glDeleteRenderbuffersEXT )( 1, &m_depth_rb );
+	if (m_bsetup && m_b_useFBO) {
+		glDeleteTextures(1, &m_cache_tex);
+		(*s_glDeleteFramebuffersEXT)(1, &m_fb0);
+		(*s_glDeleteRenderbuffersEXT)(1, &m_depth_rb);
 	}
 
-	if( m_b_useFBO ) {
+	if (m_b_useFBO) {
 		m_cache_tex_x = GetSize().x;
 		m_cache_tex_y = GetSize().y;
 
-		( *s_glGenFramebuffersEXT )( 1, &m_fb0 );
-		glGenTextures( 1, &m_cache_tex );
-		( *s_glGenRenderbuffersEXT )( 1, &m_depth_rb );
+		(*s_glGenFramebuffersEXT)(1, &m_fb0);
+		glGenTextures(1, &m_cache_tex);
+		(*s_glGenRenderbuffersEXT)(1, &m_depth_rb);
 
-		( *s_glBindFramebufferEXT )( GL_FRAMEBUFFER_EXT, m_fb0 );
+		(*s_glBindFramebufferEXT)(GL_FRAMEBUFFER_EXT, m_fb0);
 
 		// initialize color texture
 
-		glBindTexture( m_TEX_TYPE, m_cache_tex );
-		glTexParameterf( m_TEX_TYPE, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-		glTexParameteri( m_TEX_TYPE, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-		glTexImage2D( m_TEX_TYPE, 0, GL_RGBA, m_cache_tex_x, m_cache_tex_y, 0, GL_RGBA,
-				GL_UNSIGNED_BYTE, NULL );
-		( *s_glFramebufferTexture2DEXT )( GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, m_TEX_TYPE,
-				m_cache_tex, 0 );
+		glBindTexture(m_TEX_TYPE, m_cache_tex);
+		glTexParameterf(m_TEX_TYPE, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(m_TEX_TYPE, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexImage2D(m_TEX_TYPE, 0, GL_RGBA, m_cache_tex_x, m_cache_tex_y, 0, GL_RGBA,
+					 GL_UNSIGNED_BYTE, NULL);
+		(*s_glFramebufferTexture2DEXT)(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, m_TEX_TYPE,
+									   m_cache_tex, 0);
 
-		if( m_b_useFBOStencil ) {
+		if (m_b_useFBOStencil) {
 			// initialize composite depth/stencil renderbuffer
-			( *s_glBindRenderbufferEXT )( GL_RENDERBUFFER_EXT, m_depth_rb );
-			( *s_glRenderbufferStorageEXT )( GL_RENDERBUFFER_EXT, GL_DEPTH24_STENCIL8_EXT,
-					m_cache_tex_x, m_cache_tex_y );
+			(*s_glBindRenderbufferEXT)(GL_RENDERBUFFER_EXT, m_depth_rb);
+			(*s_glRenderbufferStorageEXT)(GL_RENDERBUFFER_EXT, GL_DEPTH24_STENCIL8_EXT,
+										  m_cache_tex_x, m_cache_tex_y);
 
 			// Can we attach to depth and stencil at once?  Maybe
 			// it would be easier to not check for this extension and
 			// always use 2 calls.
-			if( QueryExtension( "GL_ARB_framebuffer_object" ) ) {
-				( *s_glFramebufferRenderbufferEXT )( GL_FRAMEBUFFER_EXT,
-						GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER_EXT, m_depth_rb );
+			if (QueryExtension("GL_ARB_framebuffer_object")) {
+				(*s_glFramebufferRenderbufferEXT)(GL_FRAMEBUFFER_EXT, GL_DEPTH_STENCIL_ATTACHMENT,
+												  GL_RENDERBUFFER_EXT, m_depth_rb);
 			} else {
-				( *s_glFramebufferRenderbufferEXT )( GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT,
-						GL_RENDERBUFFER_EXT, m_depth_rb );
+				(*s_glFramebufferRenderbufferEXT)(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT,
+												  GL_RENDERBUFFER_EXT, m_depth_rb);
 
-				( *s_glFramebufferRenderbufferEXT )( GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT,
-						GL_RENDERBUFFER_EXT, m_depth_rb );
+				(*s_glFramebufferRenderbufferEXT)(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT,
+												  GL_RENDERBUFFER_EXT, m_depth_rb);
 			}
 
 		} else {
 			// initialize depth renderbuffer
-			( *s_glBindRenderbufferEXT )( GL_RENDERBUFFER_EXT, m_depth_rb );
-			( *s_glRenderbufferStorageEXT )( GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24,
-					m_cache_tex_x, m_cache_tex_y );
-			( *s_glFramebufferRenderbufferEXT )( GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT,
-					GL_RENDERBUFFER_EXT, m_depth_rb );
+			(*s_glBindRenderbufferEXT)(GL_RENDERBUFFER_EXT, m_depth_rb);
+			(*s_glRenderbufferStorageEXT)(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, m_cache_tex_x,
+										  m_cache_tex_y);
+			(*s_glFramebufferRenderbufferEXT)(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT,
+											  GL_RENDERBUFFER_EXT, m_depth_rb);
 		}
 
-		( *s_glBindFramebufferEXT )( GL_FRAMEBUFFER_EXT, 0 );
+		(*s_glBindFramebufferEXT)(GL_FRAMEBUFFER_EXT, 0);
 	}
-
 }
 
 int s_in_glpaint;
 
-void glChartCanvas::OnPaint( wxPaintEvent &event )
+void glChartCanvas::OnPaint(wxPaintEvent& event)
 {
-	wxPaintDC dc( this );
+	wxPaintDC dc(this);
 
 #if wxCHECK_VERSION(2, 9, 0)
 	SetCurrent(*m_pcontext);
@@ -495,127 +491,130 @@ void glChartCanvas::OnPaint( wxPaintEvent &event )
 	SetCurrent();
 #endif
 
-	Show( g_bopengl );
-	if( !g_bopengl ) {
+	Show(g_bopengl);
+	if (!g_bopengl) {
 		event.Skip();
 		return;
 	}
 
-	if( !m_bsetup ) {
+	if (!m_bsetup) {
 
 		char render_string[80];
-		strncpy( render_string, (char *) glGetString( GL_RENDERER ), 79 );
-		m_renderer = wxString( render_string, wxConvUTF8 );
+		strncpy(render_string, (char*)glGetString(GL_RENDERER), 79);
+		m_renderer = wxString(render_string, wxConvUTF8);
 
 		wxString msg;
-		msg.Printf( _T("OpenGL-> Renderer String: ") );
+		msg.Printf(_T("OpenGL-> Renderer String: "));
 		msg += m_renderer;
-		wxLogMessage( msg );
+		wxLogMessage(msg);
 
 		if (ps52plib)
 			ps52plib->SetGLRendererString(m_renderer);
 
-		//  This little hack fixes a problem seen with some Intel 945 graphics chips
-		//  We need to not do anything that requires (some) complicated stencil operations.
+		// This little hack fixes a problem seen with some Intel 945 graphics chips
+		// We need to not do anything that requires (some) complicated stencil operations.
 
 		bool bad_stencil_code = false;
-		if( GetRendererString().Find( _T("Intel") ) != wxNOT_FOUND ) {
-			wxLogMessage( _T("OpenGL-> Detected Intel renderer, disabling stencil buffer") );
+		if (GetRendererString().Find(_T("Intel")) != wxNOT_FOUND) {
+			wxLogMessage(_T("OpenGL-> Detected Intel renderer, disabling stencil buffer"));
 			bad_stencil_code = true;
 		}
 
-		//      And for the lousy Unichrome drivers, too
-		if( GetRendererString().Find( _T("UniChrome") ) != wxNOT_FOUND ) {
+		// And for the lousy Unichrome drivers, too
+		if (GetRendererString().Find(_T("UniChrome")) != wxNOT_FOUND) {
 			bad_stencil_code = true;
 		}
 
-		//      Stencil buffer test
-		glEnable( GL_STENCIL_TEST );
-		GLboolean stencil = glIsEnabled( GL_STENCIL_TEST );
+		// Stencil buffer test
+		glEnable(GL_STENCIL_TEST);
+		GLboolean stencil = glIsEnabled(GL_STENCIL_TEST);
 		int sb;
-		glGetIntegerv( GL_STENCIL_BITS, &sb );
-		//        printf("Stencil Buffer Available: %d\nStencil bits: %d\n", stencil, sb);
-		glDisable( GL_STENCIL_TEST );
+		glGetIntegerv(GL_STENCIL_BITS, &sb);
+		glDisable(GL_STENCIL_TEST);
 
 		g_b_useStencil = false;
-		if( !bad_stencil_code && stencil && ( sb == 8 ) ) g_b_useStencil = true;
+		if (!bad_stencil_code && stencil && (sb == 8))
+			g_b_useStencil = true;
 
-		//          GLenum err = glewInit();
-		//           if (GLEW_OK != err)
+		m_b_useFBO = false; // default is false
 
-		m_b_useFBO = false;              // default is false
-
-		//      We require certain extensions to support FBO rendering
-		if( QueryExtension( "GL_ARB_texture_rectangle" )
-				&& QueryExtension( "GL_EXT_framebuffer_object" ) ) {
+		// We require certain extensions to support FBO rendering
+		if (QueryExtension("GL_ARB_texture_rectangle")
+			&& QueryExtension("GL_EXT_framebuffer_object")) {
 			m_TEX_TYPE = GL_TEXTURE_RECTANGLE_ARB;
 			m_b_useFBO = true;
 		}
 
-		if( GetRendererString().Find( _T("Intel") ) != wxNOT_FOUND ) {
-			wxLogMessage( _T("OpenGL-> Detected Intel renderer, disabling FBO") );
+		if (GetRendererString().Find(_T("Intel")) != wxNOT_FOUND) {
+			wxLogMessage(_T("OpenGL-> Detected Intel renderer, disabling FBO"));
 			m_b_useFBO = false;
 		}
 
-		if( !GetglEntryPoints() ) m_b_useFBO = false;              // default is false
+		if (!GetglEntryPoints())
+			m_b_useFBO = false; // default is false
 
-		//      Can we use the stencil buffer in a FBO?
-		if( QueryExtension( "GL_EXT_packed_depth_stencil" ) ) m_b_useFBOStencil = true;
+		// Can we use the stencil buffer in a FBO?
+		if (QueryExtension("GL_EXT_packed_depth_stencil"))
+			m_b_useFBOStencil = true;
 		else
 			m_b_useFBOStencil = false;
 
-		//      Maybe build FBO(s)
-		if( m_b_useFBO ) {
+		// Maybe build FBO(s)
+		if (m_b_useFBO) {
 			BuildFBO();
 			// Check framebuffer completeness at the end of initialization.
-			( s_glBindFramebufferEXT )( GL_FRAMEBUFFER_EXT, m_fb0 );
-			GLenum fb_status = ( *s_glCheckFramebufferStatusEXT )( GL_FRAMEBUFFER_EXT );
-			( s_glBindFramebufferEXT )( GL_FRAMEBUFFER_EXT, 0 );
+			(s_glBindFramebufferEXT)(GL_FRAMEBUFFER_EXT, m_fb0);
+			GLenum fb_status = (*s_glCheckFramebufferStatusEXT)(GL_FRAMEBUFFER_EXT);
+			(s_glBindFramebufferEXT)(GL_FRAMEBUFFER_EXT, 0);
 
-			if( fb_status != GL_FRAMEBUFFER_COMPLETE_EXT ) {
+			if (fb_status != GL_FRAMEBUFFER_COMPLETE_EXT) {
 				wxString msg;
-				msg.Printf( _T("    OpenGL-> Framebuffer Incomplete:  %08X"), fb_status );
-				wxLogMessage( msg );
+				msg.Printf(_T("    OpenGL-> Framebuffer Incomplete:  %08X"), fb_status);
+				wxLogMessage(msg);
 				m_b_useFBO = false;
 			}
 		}
 
-		if( m_b_useFBO && !m_b_useFBOStencil ) g_b_useStencil = false;
+		if (m_b_useFBO && !m_b_useFBOStencil)
+			g_b_useStencil = false;
 
-		if( m_b_useFBO ) {
-			wxLogMessage( _T("OpenGL-> Using Framebuffer Objects") );
+		if (m_b_useFBO) {
+			wxLogMessage(_T("OpenGL-> Using Framebuffer Objects"));
 
-			if( m_b_useFBOStencil ) wxLogMessage( _T("OpenGL-> Using FBO Stencil buffer") );
+			if (m_b_useFBOStencil)
+				wxLogMessage(_T("OpenGL-> Using FBO Stencil buffer"));
 			else
-				wxLogMessage( _T("OpenGL-> FBO Stencil buffer unavailable") );
+				wxLogMessage(_T("OpenGL-> FBO Stencil buffer unavailable"));
 		} else
-			wxLogMessage( _T("OpenGL-> Framebuffer Objects unavailable") );
+			wxLogMessage(_T("OpenGL-> Framebuffer Objects unavailable"));
 
-		if( g_b_useStencil ) wxLogMessage( _T("OpenGL-> Using Stencil buffer clipping") );
+		if (g_b_useStencil)
+			wxLogMessage(_T("OpenGL-> Using Stencil buffer clipping"));
 		else
-			wxLogMessage( _T("OpenGL-> Using Depth buffer clipping") );
+			wxLogMessage(_T("OpenGL-> Using Depth buffer clipping"));
 
-		/* we upload non-aligned memory */
-		glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+		// we upload non-aligned memory
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		int n_tex_size = 512;
-		double n_GPU_Mem = wxMax(64, g_GPU_MemSize) * ( 1 << 20 );
-		m_tex_max_res = n_GPU_Mem / ( n_tex_size * n_tex_size * 4 * 1.3 ); // 1.3 multiplier allows for full mipmaps
+		double n_GPU_Mem = wxMax(64, g_GPU_MemSize) * (1 << 20);
+		m_tex_max_res = n_GPU_Mem / (n_tex_size * n_tex_size * 4
+									 * 1.3); // 1.3 multiplier allows for full mipmaps
 		m_tex_max_res /= 2;
 		m_tex_max_res_initial = m_tex_max_res;
 
 		wxString str;
-		str.Printf( _T("OpenGL-> Estimated Max Resident Textures: %d"), m_tex_max_res );
-		wxLogMessage( str );
+		str.Printf(_T("OpenGL-> Estimated Max Resident Textures: %d"), m_tex_max_res);
+		wxLogMessage(str);
 
 		m_bsetup = true;
-		//          g_bDebugOGL = true;
 	}
 
-	// Paint updates may have been externally disabled (temporarily, to avoid Yield() recursion performance loss)
+	// Paint updates may have been externally disabled (temporarily, to avoid Yield() recursion
+	// performance loss)
 	if (!m_b_paint_enable)
 		return;
-	//      Recursion test, sometimes seen on GTK systems when wxBusyCursor is activated
+	// Recursion test, sometimes seen on GTK systems when wxBusyCursor is activated
 	if (s_in_glpaint)
 		return;
 	s_in_glpaint++;
@@ -625,27 +624,28 @@ void glChartCanvas::OnPaint( wxPaintEvent &event )
 	s_in_glpaint--;
 }
 
-bool glChartCanvas::PurgeChartTextures( ChartBase *pc )
+bool glChartCanvas::PurgeChartTextures(ChartBase* pc)
 {
-	//    Look for the chart texture hashmap in the member chart hashmap
-	ChartPointerHashType::iterator it0 = m_chart_hash.find( pc );
+	// Look for the chart texture hashmap in the member chart hashmap
+	ChartPointerHashType::iterator it0 = m_chart_hash.find(pc);
 
-	ChartTextureHashType *pTextureHash;
+	ChartTextureHashType* pTextureHash;
 
-	//    Found ?
-	if( it0 != m_chart_hash.end() ) {
+	// Found ?
+	if (it0 != m_chart_hash.end()) {
 		pTextureHash = m_chart_hash[pc];
 
 		// iterate over all the textures presently loaded
 		// and delete the OpenGL texture and the private descriptor
 
 		ChartTextureHashType::iterator it;
-		for( it = pTextureHash->begin(); it != pTextureHash->end(); ++it ) {
-			glTextureDescriptor *ptd = it->second;
+		for (it = pTextureHash->begin(); it != pTextureHash->end(); ++it) {
+			glTextureDescriptor* ptd = it->second;
 
-			if( ptd->tex_name > 0 ) {
-				if( g_bDebugOGL ) printf( "glDeleteTextures in Purge...()\n" );
-				glDeleteTextures( 1, &ptd->tex_name );
+			if (ptd->tex_name > 0) {
+				if (g_bDebugOGL)
+					printf("glDeleteTextures in Purge...()\n");
+				glDeleteTextures(1, &ptd->tex_name);
 				m_ntex--;
 			}
 
@@ -654,7 +654,7 @@ bool glChartCanvas::PurgeChartTextures( ChartBase *pc )
 
 		pTextureHash->clear();
 
-		m_chart_hash.erase( it0 );            // erase the texture hash map for this chart
+		m_chart_hash.erase(it0); // erase the texture hash map for this chart
 
 		delete pTextureHash;
 
@@ -663,18 +663,18 @@ bool glChartCanvas::PurgeChartTextures( ChartBase *pc )
 		return false;
 }
 
-void glChartCanvas::DrawGLOverLayObjects( void )
+void glChartCanvas::DrawGLOverLayObjects(void)
 {
-	if( g_pi_manager )
-		g_pi_manager->RenderAllGLCanvasOverlayPlugIns( m_pcontext, cc1->GetVP() );
+	if (g_pi_manager)
+		g_pi_manager->RenderAllGLCanvasOverlayPlugIns(m_pcontext, cc1->GetVP());
 }
 
-void glChartCanvas::GrowData( int size )
+void glChartCanvas::GrowData(int size)
 {
-	/* grow the temporary ram buffer used to load charts into textures */
-	if( size > m_datasize ) {
-		unsigned char* tmp = (unsigned char*) realloc( m_data, m_datasize );
-		if( tmp != NULL ) {
+	// grow the temporary ram buffer used to load charts into textures
+	if (size > m_datasize) {
+		unsigned char* tmp = (unsigned char*)realloc(m_data, m_datasize);
+		if (tmp != NULL) {
 			m_data = tmp;
 			m_datasize = size;
 			tmp = NULL;
@@ -682,148 +682,148 @@ void glChartCanvas::GrowData( int size )
 	}
 }
 
-void glChartCanvas::SetClipRegion( ViewPort &vp, OCPNRegion &region, bool b_clear )
+void glChartCanvas::SetClipRegion(ViewPort& vp, OCPNRegion& region, bool b_clear)
 {
-	if( g_b_useStencil ) {
+	if (g_b_useStencil) {
 		glPushMatrix();
 
-		if( ( ( fabs( vp.rotation ) > 0.01 ) ) || ( g_bskew_comp && ( fabs( vp.skew ) > 0.01 ) ) ) {
+		if (((fabs(vp.rotation) > 0.01)) || (g_bskew_comp && (fabs(vp.skew) > 0.01))) {
 
-			//    Shift texture drawing positions to account for the larger chart rectangle
-			//    needed to cover the screen on rotated images
+			// Shift texture drawing positions to account for the larger chart rectangle
+			// needed to cover the screen on rotated images
 			double w = vp.pix_width;
 			double h = vp.pix_height;
 
 			double angle = vp.rotation;
 			angle -= vp.skew;
 
-			//    Rotations occur around 0,0, so calculate a post-rotate translation factor
-			double ddx = ( w * cos( -angle ) - h * sin( -angle ) - w ) / 2;
-			double ddy = ( h * cos( -angle ) + w * sin( -angle ) - h ) / 2;
+			// Rotations occur around 0,0, so calculate a post-rotate translation factor
+			double ddx = (w * cos(-angle) - h * sin(-angle) - w) / 2;
+			double ddy = (h * cos(-angle) + w * sin(-angle) - h) / 2;
 
-			glRotatef( angle * 180. / M_PI, 0, 0, 1 );
+			glRotatef(angle * 180.0 / M_PI, 0, 0, 1);
 
-			glTranslatef( ddx, ddy, 0 );                 // post rotate translation
+			glTranslatef(ddx, ddy, 0); // post rotate translation
 		}
 
-		//    Create a stencil buffer for clipping to the region
-		glEnable( GL_STENCIL_TEST );
-		glStencilMask( 0x1 );                 // write only into bit 0 of the stencil buffer
-		glClear( GL_STENCIL_BUFFER_BIT );
+		// Create a stencil buffer for clipping to the region
+		glEnable(GL_STENCIL_TEST);
+		glStencilMask(0x1); // write only into bit 0 of the stencil buffer
+		glClear(GL_STENCIL_BUFFER_BIT);
 
-		//    As a convenience, while we are creating the stencil or depth mask,
-		//    also clear the background if selected
-		if( b_clear ) {
-			glColor3f( 0, 255, 0 );
-			glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );  // enable color buffer
+		// As a convenience, while we are creating the stencil or depth mask,
+		// also clear the background if selected
+		if (b_clear) {
+			glColor3f(0, 255, 0);
+			glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE); // enable color buffer
 		} else
-			glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );   // disable color buffer
+			glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE); // disable color buffer
 
-		//    We are going to write "1" into the stencil buffer wherever the region is valid
-		glStencilFunc( GL_ALWAYS, 1, 1 );
-		glStencilOp( GL_KEEP, GL_KEEP, GL_REPLACE );
+		// We are going to write "1" into the stencil buffer wherever the region is valid
+		glStencilFunc(GL_ALWAYS, 1, 1);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-		//    Decompose the region into rectangles, and draw as quads
-		OCPNRegionIterator clipit( region );
-		while( clipit.HaveRects() ) {
+		// Decompose the region into rectangles, and draw as quads
+		OCPNRegionIterator clipit(region);
+		while (clipit.HaveRects()) {
 			wxRect rect = clipit.GetRect();
 
-			if(vp.b_quilt)
-				rect.Offset(vp.rv_rect.x, vp.rv_rect.y); // undo the adjustment made in quilt composition
-			else if(Current_Ch && Current_Ch->GetChartFamily() != CHART_FAMILY_VECTOR)
+			if (vp.b_quilt)
+				rect.Offset(vp.rv_rect.x,
+							vp.rv_rect.y); // undo the adjustment made in quilt composition
+			else if (Current_Ch && Current_Ch->GetChartFamily() != chart::CHART_FAMILY_VECTOR)
 				rect.Offset(vp.rv_rect.x, vp.rv_rect.y);
 
-			glBegin( GL_QUADS );
+			glBegin(GL_QUADS);
 
-			glVertex2f( rect.x, rect.y );
-			glVertex2f( rect.x + rect.width, rect.y );
-			glVertex2f( rect.x + rect.width, rect.y + rect.height );
-			glVertex2f( rect.x, rect.y + rect.height );
+			glVertex2f(rect.x, rect.y);
+			glVertex2f(rect.x + rect.width, rect.y);
+			glVertex2f(rect.x + rect.width, rect.y + rect.height);
+			glVertex2f(rect.x, rect.y + rect.height);
 			glEnd();
 
 			clipit.NextRect();
 		}
 
-		//    Now set the stencil ops to subsequently render only where the stencil bit is "1"
-		glStencilFunc( GL_EQUAL, 1, 1 );
-		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
-		glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );  // re-enable color buffer
+		// Now set the stencil ops to subsequently render only where the stencil bit is "1"
+		glStencilFunc(GL_EQUAL, 1, 1);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE); // re-enable color buffer
 
 		glPopMatrix();
 
-	} else              //  Use depth buffer for clipping
-	{
+	} else { //  Use depth buffer for clipping
 		glPushMatrix();
 
-		if( ( ( fabs( vp.rotation ) > 0.01 ) ) || ( g_bskew_comp && ( fabs( vp.skew ) > 0.01 ) ) ) {
+		if (((fabs(vp.rotation) > 0.01)) || (g_bskew_comp && (fabs(vp.skew) > 0.01))) {
 
-			//    Shift texture drawing positions to account for the larger chart rectangle
-			//    needed to cover the screen on rotated images
+			// Shift texture drawing positions to account for the larger chart rectangle
+			// needed to cover the screen on rotated images
 			double w = vp.pix_width;
 			double h = vp.pix_height;
 
 			double angle = vp.rotation;
 			angle -= vp.skew;
 
-			//    Rotations occur around 0,0, so calculate a post-rotate translation factor
-			double ddx = ( w * cos( -angle ) - h * sin( -angle ) - w ) / 2;
-			double ddy = ( h * cos( -angle ) + w * sin( -angle ) - h ) / 2;
+			// Rotations occur around 0,0, so calculate a post-rotate translation factor
+			double ddx = (w * cos(-angle) - h * sin(-angle) - w) / 2;
+			double ddy = (h * cos(-angle) + w * sin(-angle) - h) / 2;
 
-			glRotatef( angle * 180. / M_PI, 0, 0, 1 );
+			glRotatef(angle * 180. / M_PI, 0, 0, 1);
 
-			glTranslatef( ddx, ddy, 0 );                 // post rotate translation
+			glTranslatef(ddx, ddy, 0); // post rotate translation
 		}
 
-		glEnable( GL_DEPTH_TEST ); // to enable writing to the depth buffer
-		glDepthFunc( GL_ALWAYS );  // to ensure everything you draw passes
-		glDepthMask( GL_TRUE );    // to allow writes to the depth buffer
+		glEnable(GL_DEPTH_TEST); // to enable writing to the depth buffer
+		glDepthFunc(GL_ALWAYS); // to ensure everything you draw passes
+		glDepthMask(GL_TRUE); // to allow writes to the depth buffer
 
-		glClear( GL_DEPTH_BUFFER_BIT ); // for a fresh start
+		glClear(GL_DEPTH_BUFFER_BIT); // for a fresh start
 
-		//    As a convenience, while we are creating the stencil or depth mask,
-		//    also clear the background if selected
-		if( b_clear ) {
-			glColor3f( 255, 0, 0 );
-			glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );  // enable color buffer
+		// As a convenience, while we are creating the stencil or depth mask,
+		// also clear the background if selected
+		if (b_clear) {
+			glColor3f(255, 0, 0);
+			glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE); // enable color buffer
 		} else
-			glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );   // disable color buffer
+			glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE); // disable color buffer
 
-		//    Decompose the region into rectangles, and draw as quads
-		//    With z = 1
-		OCPNRegionIterator clipit( region );
-		while( clipit.HaveRects() ) {
+		// Decompose the region into rectangles, and draw as quads
+		// With z = 1
+		OCPNRegionIterator clipit(region);
+		while (clipit.HaveRects()) {
 			wxRect rect = clipit.GetRect();
 
-			if(vp.b_quilt)
-				rect.Offset(vp.rv_rect.x, vp.rv_rect.y); // undo the adjustment made in quilt composition
-			else if(Current_Ch && Current_Ch->GetChartFamily() != CHART_FAMILY_VECTOR)
+			if (vp.b_quilt)
+				rect.Offset(vp.rv_rect.x,
+							vp.rv_rect.y); // undo the adjustment made in quilt composition
+			else if (Current_Ch && Current_Ch->GetChartFamily() != chart::CHART_FAMILY_VECTOR)
 				rect.Offset(vp.rv_rect.x, vp.rv_rect.y);
 
-			glBegin( GL_QUADS );
+			glBegin(GL_QUADS);
 
 			// dep buffer clear = 1
 			// 1 makes 0 in dep buffer, works
 			// 0 make .5 in depth buffer
 			// -1 makes 1 in dep buffer
 
-			//    Depth buffer runs from 0 at z = 1 to 1 at z = -1
-			//    Draw the clip geometry at z = 0.5, giving a depth buffer value of 0.25
-			//    Subsequent drawing at z=0 (depth = 0.5) will pass if using glDepthFunc(GL_GREATER);
-			glVertex3f( rect.x, rect.y, 0.5 );
-			glVertex3f( rect.x + rect.width, rect.y, 0.5 );
-			glVertex3f( rect.x + rect.width, rect.y + rect.height, 0.5 );
-			glVertex3f( rect.x, rect.y + rect.height, 0.5 );
+			// Depth buffer runs from 0 at z = 1 to 1 at z = -1
+			// Draw the clip geometry at z = 0.5, giving a depth buffer value of 0.25
+			// Subsequent drawing at z=0 (depth = 0.5) will pass if using
+			glVertex3f(rect.x, rect.y, 0.5);
+			glVertex3f(rect.x + rect.width, rect.y, 0.5);
+			glVertex3f(rect.x + rect.width, rect.y + rect.height, 0.5);
+			glVertex3f(rect.x, rect.y + rect.height, 0.5);
 			glEnd();
 
 			clipit.NextRect();
 		}
 
-		glDepthFunc( GL_GREATER );                          // Set the test value
-		glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );  // re-enable color buffer
-		glDepthMask( GL_FALSE );                            // disable depth buffer
+		glDepthFunc(GL_GREATER); // Set the test value
+		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE); // re-enable color buffer
+		glDepthMask(GL_FALSE); // disable depth buffer
 
 		glPopMatrix();
-
 	}
 }
 
@@ -1239,7 +1239,7 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 							ChartPlugInWrapper *Patch_Ch_Plugin =
 								dynamic_cast<ChartPlugInWrapper*>( chart );
 							if( Patch_Ch_Plugin ) {
-								if( Patch_Ch_Plugin->GetChartFamily() == CHART_FAMILY_RASTER ) {
+								if( Patch_Ch_Plugin->GetChartFamily() == chart::CHART_FAMILY_RASTER ) {
 									RenderRasterChartRegionGL( chart, cc1->VPoint, get_region );
 									b_rendered = true;
 								}
@@ -1247,7 +1247,7 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 						}
 
 						if( !b_rendered ) {
-							if( chart->GetChartFamily() == CHART_FAMILY_VECTOR ) {
+							if( chart->GetChartFamily() == chart::CHART_FAMILY_VECTOR ) {
 								OCPNRegion rr = get_region;
 								rr.Offset( vp.rv_rect.x, vp.rv_rect.y );
 								b_rendered = chart->RenderRegionViewOnGL( *m_pcontext, cc1->VPoint, rr );
@@ -1275,7 +1275,7 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 					get_region.Intersect( Region );
 					if( !get_region.IsEmpty() ) {
 						if( pqp->b_overlay ) {
-							if( pch->GetChartFamily() == CHART_FAMILY_VECTOR ) {
+							if( pch->GetChartFamily() == chart::CHART_FAMILY_VECTOR ) {
 								s57chart *Chs57 = dynamic_cast<s57chart*>( pch );
 								if( pch ) {
 									get_region.Offset( cc1->VPoint.rv_rect.x,
@@ -1381,14 +1381,14 @@ void glChartCanvas::render()
 	if ((!cc1->VPoint.b_quilt) && (!Current_Ch))
 		return;
 
-	//    Take a look and see if memory is getting close to exceeding the user specified max
+	// Take a look and see if memory is getting close to exceeding the user specified max
 	m_b_mem_crunch = false;
 	int mem_total, mem_used;
 	GetMemoryStatus(mem_total, mem_used);
-	if(mem_used > g_memCacheLimit * 8 / 10)
+	if (mem_used > g_memCacheLimit * 8 / 10)
 		m_b_mem_crunch = true;
 
-	wxPaintDC( this );
+	wxPaintDC(this);
 
 	ViewPort VPoint = cc1->VPoint;
 	ViewPort svp = VPoint;
@@ -1399,17 +1399,13 @@ void glChartCanvas::render()
 
 	//  Is this viewpoint the same as the previously painted one?
 	bool b_newview = true;
-	if (false
-			&& (m_gl_cache_vp.view_scale_ppm == VPoint.view_scale_ppm)
-			&& (m_gl_cache_vp.rotation == VPoint.rotation)
-			&& (m_gl_cache_vp.clat == VPoint.clat)
-			&& (m_gl_cache_vp.clon == VPoint.clon)
-			&& m_gl_cache_vp.IsValid()
-		) {
+	if (false && (m_gl_cache_vp.view_scale_ppm == VPoint.view_scale_ppm)
+		&& (m_gl_cache_vp.rotation == VPoint.rotation) && (m_gl_cache_vp.clat == VPoint.clat)
+		&& (m_gl_cache_vp.clon == VPoint.clon) && m_gl_cache_vp.IsValid()) {
 		b_newview = false;
 	}
 
-	OCPNRegion chart_get_region( 0, 0, cc1->VPoint.rv_rect.width, cc1->VPoint.rv_rect.height );
+	OCPNRegion chart_get_region(0, 0, cc1->VPoint.rv_rect.width, cc1->VPoint.rv_rect.height);
 
 	ocpnDC gldc(*this);
 
@@ -1418,13 +1414,13 @@ void glChartCanvas::render()
 	glViewport(0, 0, (GLint)w, (GLint)h);
 
 	glLoadIdentity();
-	gluOrtho2D( 0, (GLint) w, (GLint) h, 0 );
+	gluOrtho2D(0, (GLint)w, (GLint)h, 0);
 
-	if( g_b_useStencil ) {
-		glEnable( GL_STENCIL_TEST );
-		glStencilMask( 0xff );
-		glClear( GL_STENCIL_BUFFER_BIT );
-		glDisable( GL_STENCIL_TEST );
+	if (g_b_useStencil) {
+		glEnable(GL_STENCIL_TEST);
+		glStencilMask(0xff);
+		glClear(GL_STENCIL_BUFFER_BIT);
+		glDisable(GL_STENCIL_TEST);
 	}
 
 	//  Delete any textures known to the GPU that
@@ -1432,23 +1428,23 @@ void glChartCanvas::render()
 	//  This is done chart-by-chart...later we will scrub for unused textures
 	//  that belong to charts which ARE used in this render, if we need to....
 
-	if((m_ntex > m_tex_max_res) || m_b_mem_crunch ) {
+	if ((m_ntex > m_tex_max_res) || m_b_mem_crunch) {
 		ChartPointerHashType::iterator it0;
-		for( it0 = m_chart_hash.begin(); it0 != m_chart_hash.end(); ++it0 ) {
-			ChartBaseBSB *pc = (ChartBaseBSB *) it0->first;
+		for (it0 = m_chart_hash.begin(); it0 != m_chart_hash.end(); ++it0) {
+			ChartBaseBSB* pc = (ChartBaseBSB*)it0->first;
 
-			if( VPoint.b_quilt )          // quilted
+			if (VPoint.b_quilt) // quilted
 			{
-				if( cc1->m_pQuilt && cc1->m_pQuilt->IsComposed() ) {
-					if( !cc1->m_pQuilt->IsChartInQuilt( pc ) ) {
-						ChartTextureHashType *pTextureHash = m_chart_hash[pc];
+				if (cc1->m_pQuilt && cc1->m_pQuilt->IsComposed()) {
+					if (!cc1->m_pQuilt->IsChartInQuilt(pc)) {
+						ChartTextureHashType* pTextureHash = m_chart_hash[pc];
 
 						// iterate over all the textures presently loaded
 						// and delete the OpenGL texture from the GPU
 						// but keep the private texture descriptor for now
 
 						ChartTextureHashType::iterator it = pTextureHash->begin();
-						while( it != pTextureHash->end() ) {
+						while (it != pTextureHash->end()) {
 							glTextureDescriptor *ptd = it->second;
 
 							if( ptd->tex_name > 0 ) {
@@ -1724,7 +1720,7 @@ void glChartCanvas::render()
 			ChartPlugInWrapper *Current_Ch_PlugInWrapper =
 				dynamic_cast<ChartPlugInWrapper*>( Current_Ch );
 			if( Current_Ch_PlugInWrapper ) {
-				if( Current_Ch_PlugInWrapper->GetChartFamily() == CHART_FAMILY_RASTER ) {
+				if( Current_Ch_PlugInWrapper->GetChartFamily() == chart::CHART_FAMILY_RASTER ) {
 					RenderRasterChartRegionGL( Current_Ch, cc1->VPoint, chart_get_region );
 					b_rendered = true;
 				}
@@ -1900,7 +1896,7 @@ void glChartCanvas::Invalidate()
 	m_gl_cache_vp.Invalidate();
 }
 
-void glChartCanvas::SetContext(wxGLContext *pcontext)
+void glChartCanvas::SetContext(wxGLContext* pcontext)
 {
 	m_pcontext = pcontext;
 }

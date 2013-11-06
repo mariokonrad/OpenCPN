@@ -504,7 +504,7 @@ ChartTypeEnum ChartDB::GetCSChartType(ChartStack* ps, int stackindex)
 		return CHART_TYPE_UNKNOWN;
 }
 
-ChartFamilyEnum ChartDB::GetCSChartFamily(ChartStack* ps, int stackindex)
+chart::ChartFamilyEnum ChartDB::GetCSChartFamily(ChartStack* ps, int stackindex)
 {
 	if ((IsValid()) && (stackindex < GetChartTableEntries())) {
 		const ChartTableEntry& entry = GetChartTableEntry(ps->GetDBIndex(stackindex));
@@ -512,22 +512,22 @@ ChartFamilyEnum ChartDB::GetCSChartFamily(ChartStack* ps, int stackindex)
 		ChartTypeEnum type = (ChartTypeEnum)entry.GetChartType();
 		switch (type) {
 			case CHART_TYPE_KAP:
-				return CHART_FAMILY_RASTER;
+				return chart::CHART_FAMILY_RASTER;
 			case CHART_TYPE_GEO:
-				return CHART_FAMILY_RASTER;
+				return chart::CHART_FAMILY_RASTER;
 			case CHART_TYPE_S57:
-				return CHART_FAMILY_VECTOR;
+				return chart::CHART_FAMILY_VECTOR;
 			case CHART_TYPE_CM93:
-				return CHART_FAMILY_VECTOR;
+				return chart::CHART_FAMILY_VECTOR;
 			case CHART_TYPE_CM93COMP:
-				return CHART_FAMILY_VECTOR;
+				return chart::CHART_FAMILY_VECTOR;
 			case CHART_TYPE_DUMMY:
-				return CHART_FAMILY_RASTER;
+				return chart::CHART_FAMILY_RASTER;
 			default:
-				return CHART_FAMILY_UNKNOWN;
+				return chart::CHART_FAMILY_UNKNOWN;
 		}
-	} else
-		return CHART_FAMILY_UNKNOWN;
+	}
+	return chart::CHART_FAMILY_UNKNOWN;
 }
 
 std::vector<int> ChartDB::GetCSArray(ChartStack* ps)
@@ -811,8 +811,8 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 			InitReturn ir;
 
 			// Vector charts need a PLIB for useful display....
-			if ((Ch->GetChartFamily() != CHART_FAMILY_VECTOR)
-				|| ((Ch->GetChartFamily() == CHART_FAMILY_VECTOR) && ps52plib)) {
+			if ((Ch->GetChartFamily() != chart::CHART_FAMILY_VECTOR)
+				|| ((Ch->GetChartFamily() == chart::CHART_FAMILY_VECTOR) && ps52plib)) {
 				wxString msg(_T("Initializing Chart "));
 				msg.Append(ChartFullPath);
 				wxLogMessage(msg);
@@ -924,7 +924,7 @@ void ChartDB::ApplyColorSchemeToCachedCharts(ColorScheme cs)
 
 ChartBase* ChartDB::OpenStackChartConditional(ChartStack* ps, int index_start, bool bSearchDir,
 											  ChartTypeEnum New_Type,
-											  ChartFamilyEnum New_Family_Fallback)
+											  chart::ChartFamilyEnum New_Family_Fallback)
 {
 	int delta_index;
 	ChartBase* ptc = NULL;
@@ -951,7 +951,7 @@ ChartBase* ChartDB::OpenStackChartConditional(ChartStack* ps, int index_start, b
 		index = index_start;
 
 		while ((index >= 0) && (index < ps->nEntry)) {
-			ChartFamilyEnum chart_family = GetCSChartFamily(ps, index);
+			chart::ChartFamilyEnum chart_family = GetCSChartFamily(ps, index);
 			if (chart_family == New_Family_Fallback) {
 				ptc = OpenChartFromStack(ps, index);
 
@@ -982,7 +982,7 @@ wxXmlDocument ChartDB::GetXMLDescription(int dbIndex, bool b_getGeom)
 	b_remove = !IsChartInCache(dbIndex);
 	const ChartTableEntry& cte = GetChartTableEntry(dbIndex);
 
-	if (CHART_FAMILY_RASTER == (ChartFamilyEnum)cte.GetChartFamily()) {
+	if (chart::CHART_FAMILY_RASTER == (chart::ChartFamilyEnum)cte.GetChartFamily()) {
 		pcell_node = new wxXmlNode(wxXML_ELEMENT_NODE, _T ( "chart" ));
 
 		wxString path = GetDBChartFileName(dbIndex);
@@ -1038,7 +1038,7 @@ wxXmlDocument ChartDB::GetXMLDescription(int dbIndex, bool b_getGeom)
 			tnode = new wxXmlNode(wxXML_TEXT_NODE, _T ( "" ), ssdt);
 			node->AddChild(tnode);
 		}
-	} else if (CHART_FAMILY_VECTOR == (ChartFamilyEnum)cte.GetChartFamily()) {
+	} else if (chart::CHART_FAMILY_VECTOR == (chart::ChartFamilyEnum)cte.GetChartFamily()) {
 		pcell_node = new wxXmlNode(wxXML_ELEMENT_NODE, _T ( "cell" ));
 
 		wxString path = GetDBChartFileName(dbIndex);

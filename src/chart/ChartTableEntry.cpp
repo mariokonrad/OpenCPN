@@ -248,7 +248,6 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 	Skew = theChart.GetChartSkew();
 	ProjectionType = theChart.GetChartProjectionType();
 
-	wxDateTime ed = theChart.GetEditionDate();
 	if (theChart.GetEditionDate().IsValid())
 		edition_date = theChart.GetEditionDate().GetTicks();
 
@@ -409,15 +408,15 @@ int ChartTableEntry::GetChartFamily() const
 	switch (ChartType) {
 		case CHART_TYPE_KAP:
 		case CHART_TYPE_GEO:
-			return CHART_FAMILY_RASTER;
+			return chart::CHART_FAMILY_RASTER;
 
 		case CHART_TYPE_S57:
 		case CHART_TYPE_CM93:
 		case CHART_TYPE_CM93COMP:
-			return CHART_FAMILY_VECTOR;
+			return chart::CHART_FAMILY_VECTOR;
 
 		default:
-			return CHART_FAMILY_UNKNOWN;
+			return chart::CHART_FAMILY_UNKNOWN;
 	}
 }
 
@@ -432,14 +431,14 @@ void ChartTableEntry::read_17(wxInputStream & is)
 	strncpy(pFullPath, path, cp - path + 1);
 	wxLogVerbose(_T("  Chart %s"), pFullPath);
 
-	//  Create and populate the helper members
+	// Create and populate the helper members
 	m_filename = wxFileName(wxString(pFullPath, wxConvUTF8)).GetFullName();
 
 	// Read the table entry
 	ChartTableEntry_onDisk_17 cte;
 	is.Read(&cte, sizeof(ChartTableEntry_onDisk_17));
 
-	//    Transcribe the elements....
+	// Transcribe the elements....
 	EntryOffset = cte.EntryOffset;
 	ChartType = cte.ChartType;
 	LatMax = cte.LatMax;
@@ -672,7 +671,7 @@ bool ChartTableEntry::Read(const ChartDatabase * pDb, wxInputStream & is)
 	return true;
 }
 
-bool ChartTableEntry::Write(const ChartDatabase * WXUNUSED(pDb), wxOutputStream &os)
+bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& os)
 {
 	os.Write(pFullPath, strlen(pFullPath) + 1);
 
@@ -705,7 +704,7 @@ bool ChartTableEntry::Write(const ChartDatabase * WXUNUSED(pDb), wxOutputStream 
 	os.Write(&cte, sizeof(ChartTableEntry_onDisk_17));
 	wxLogVerbose(_T("  Wrote Chart %s"), pFullPath);
 
-	//      Write out the tables
+	// Write out the tables
 	if (nPlyEntries) {
 		int npeSize = nPlyEntries * 2 * sizeof(float);
 		os.Write(pPlyTable, npeSize);
@@ -721,7 +720,7 @@ bool ChartTableEntry::Write(const ChartDatabase * WXUNUSED(pDb), wxOutputStream 
 		}
 	}
 
-	if (nNoCovrPlyEntries ) {
+	if (nNoCovrPlyEntries) {
 		int ncSize = nNoCovrPlyEntries * sizeof(int);
 		os.Write(pNoCovrCntTable, ncSize);
 
@@ -744,8 +743,6 @@ void ChartTableEntry::Clear()
 	LonMin = 0.0f;
 	pFullPath = NULL;// FIXME: memory leak?
 	Scale = 0;
-	edition_date;
-	file_date;
 	pPlyTable = NULL;// FIXME: memory leak?
 	nPlyEntries = 0;
 	nAuxPlyEntries = 0;

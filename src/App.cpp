@@ -114,6 +114,10 @@ extern S57QueryDialog* g_pObjectQueryDialog;
 extern CM93OffsetDialog* g_pCM93OffsetDialog;
 #endif
 
+#ifdef OCPN_USE_PORTAUDIO
+namespace sound { extern bool portaudio_initialized; }
+#endif
+
 extern StatWin* stats;
 extern ConsoleCanvas* console;
 extern double initial_scale_ppm;
@@ -137,7 +141,6 @@ extern double AnchorPointMinDist;
 extern bool AnchorAlertOn1;
 extern bool AnchorAlertOn2;
 extern ocpnStyle::StyleManager* g_StyleManager;
-extern bool portaudio_initialized;
 extern int g_sticky_chart;
 extern double g_GLMinLineWidth;
 extern bool bDBUpdateInProgress;
@@ -1933,7 +1936,7 @@ int App::OnExit()
 #endif
 
 #ifdef OCPN_USE_PORTAUDIO
-	if (portaudio_initialized)
+	if (sound::portaudio_initialized)
 		Pa_Terminate();
 #endif
 

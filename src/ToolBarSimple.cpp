@@ -329,10 +329,10 @@ bool ToolBarSimple::Realize()
 
 	ToolBarTool* lastTool = NULL;
 	bool firstNode = true;
-	wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst();
+	wxToolBarToolsList::iterator node = m_tools.begin();
 
-	while (node) {
-		ToolBarTool* tool = (ToolBarTool*)node->GetData();
+	while (node != m_tools.end()) {
+		ToolBarTool* tool = static_cast<ToolBarTool*>(*node);
 		tool->firstInLine = firstNode;
 		tool->lastInLine = false;
 		firstNode = false;
@@ -404,7 +404,7 @@ bool ToolBarSimple::Realize()
 			m_maxHeight = m_lastY;
 
 		lastTool = tool;
-		node = node->GetNext();
+		++node;
 	}
 	if (m_LineCount > 1 || IsVertical())
 		lastTool->lastInLine = true;
@@ -437,9 +437,8 @@ void ToolBarSimple::OnPaint(wxPaintEvent& WXUNUSED(event))
 		return;
 	count++;
 
-	for (wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
-		 node = node->GetNext()) {
-		wxToolBarToolBase* tool = node->GetData();
+	for (wxToolBarToolsList::iterator node = m_tools.begin(); node != m_tools.end(); ++node) {
+		wxToolBarToolBase* tool = *node;
 		ToolBarTool* tools = (ToolBarTool*)tool;
 		wxRect toolRect = tools->trect;
 
@@ -743,27 +742,22 @@ void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 
 wxToolBarToolBase* ToolBarSimple::FindToolForPosition(wxCoord x, wxCoord y)
 {
-	wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst();
-	while (node) {
-		ToolBarTool* tool = (ToolBarTool*)node->GetData();
+	for (wxToolBarToolsList::iterator node = m_tools.begin(); node != m_tools.end(); ++node) {
+		ToolBarTool* tool = static_cast<ToolBarTool*>(*node);
 		if ((x >= tool->m_x) && (y >= tool->m_y) && (x < (tool->m_x + tool->GetWidth()))
 			&& (y < (tool->m_y + tool->GetHeight()))) {
 			return tool;
 		}
-
-		node = node->GetNext();
 	}
 
-	return (wxToolBarToolBase*)NULL;
+	return NULL;
 }
 
 void ToolBarSimple::InvalidateBitmaps()
 {
-	wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst();
-	while (node) {
-		ToolBarTool* tool = (ToolBarTool*)node->GetData();
+	for (wxToolBarToolsList::iterator node = m_tools.begin(); node != m_tools.end(); ++node) {
+		ToolBarTool* tool = static_cast<ToolBarTool*>(*node);
 		tool->bitmapOK = false;
-		node = node->GetNext();
 	}
 }
 
@@ -850,10 +844,9 @@ void ToolBarSimple::SetToolLongHelp(int id, const wxString& help)
 int ToolBarSimple::GetToolPos(int id) const
 {
 	size_t pos = 0;
-	wxToolBarToolsList::compatibility_iterator node;
 
-	for (node = m_tools.GetFirst(); node; node = node->GetNext()) {
-		if (node->GetData()->GetId() == id)
+	for (wxToolBarToolsList::const_iterator i = m_tools.begin(); i != m_tools.end(); ++i) {
+		if ((*i)->GetId() == id)
 			return pos;
 
 		pos++;
@@ -958,20 +951,20 @@ bool ToolBarSimple::DeleteToolByPos(size_t pos)
 bool ToolBarSimple::DeleteTool(int id)
 {
 	size_t pos = 0;
-	wxToolBarToolsList::compatibility_iterator node;
-	for (node = m_tools.GetFirst(); node; node = node->GetNext()) {
-		if (node->GetData()->GetId() == id)
+	wxToolBarToolsList::iterator node;
+	for (node = m_tools.begin(); node != m_tools.end(); ++node) {
+		if ((*node)->GetId() == id)
 			break;
 
 		pos++;
 	}
 
-	if (!node || !DoDeleteTool(pos, node->GetData())) {
+	if ((node == m_tools.end()) || !DoDeleteTool(pos, *node)) {
 		return false;
 	}
 
-	delete node->GetData();
-	m_tools.Erase(node);
+	delete *node;
+	m_tools.erase(node);
 
 	return true;
 }
@@ -981,21 +974,22 @@ wxToolBarToolBase* ToolBarSimple::AddSeparator()
 	return InsertSeparator(GetToolsCount());
 }
 
-wxToolBarToolBase *ToolBarSimple::InsertSeparator( size_t pos )
+wxToolBarToolBase* ToolBarSimple::InsertSeparator(size_t pos)
 {
-	wxCHECK_MSG( pos <= GetToolsCount(), (wxToolBarToolBase *)NULL,
-			_T("invalid position in wxToolBar::InsertSeparator()") );
+	wxCHECK_MSG(pos <= GetToolsCount(), (wxToolBarToolBase*)NULL,
+				_T("invalid position in wxToolBar::InsertSeparator()"));
 
-	wxToolBarToolBase *tool = CreateTool( wxID_SEPARATOR, wxEmptyString, wxNullBitmap, wxNullBitmap,
-			wxITEM_SEPARATOR, (wxObject *) NULL, wxEmptyString, wxEmptyString );
+	wxToolBarToolBase* tool
+		= CreateTool(wxID_SEPARATOR, wxEmptyString, wxNullBitmap, wxNullBitmap, wxITEM_SEPARATOR,
+					 (wxObject*)NULL, wxEmptyString, wxEmptyString);
 
-	if( !tool || !DoInsertTool( pos, tool ) ) {
+	if (!tool || !DoInsertTool(pos, tool)) {
 		delete tool;
 
 		return NULL;
 	}
 
-	m_tools.Insert( pos, tool );
+	m_tools.Insert(pos, tool);
 
 	return tool;
 }
@@ -1003,35 +997,33 @@ wxToolBarToolBase *ToolBarSimple::InsertSeparator( size_t pos )
 wxToolBarToolBase* ToolBarSimple::RemoveTool(int id)
 {
 	size_t pos = 0;
-	wxToolBarToolsList::compatibility_iterator node;
-	for (node = m_tools.GetFirst(); node; node = node->GetNext()) {
-		if (node->GetData()->GetId() == id)
+	wxToolBarToolsList::iterator node;
+	for (node = m_tools.begin(); node != m_tools.end(); ++node) {
+		if ((*node)->GetId() == id)
 			break;
 
 		pos++;
 	}
 
-	if (!node) {
+	if (node == m_tools.end()) {
 		// don't give any error messages - sometimes we might call RemoveTool()
 		// without knowing whether the tool is or not in the toolbar
-		return (wxToolBarToolBase*)NULL;
+		return NULL;
 	}
 
-	wxToolBarToolBase* tool = node->GetData();
-	if (!DoDeleteTool(pos, tool)) {
-		return (wxToolBarToolBase*)NULL;
+	if (!DoDeleteTool(pos, *node)) {
+		return NULL;
 	}
 
-	m_tools.Erase(node);
+	m_tools.erase(node);
 
-	return tool;
+	return *node;
 }
 
 wxControl* ToolBarSimple::FindControl(int id)
 {
-	for (wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
-		 node = node->GetNext()) {
-		const wxToolBarToolBase* const tool = node->GetData();
+	for (wxToolBarToolsList::const_iterator node = m_tools.begin(); node != m_tools.end(); ++node) {
+		const wxToolBarToolBase* const tool = *node;
 		if (tool->IsControl()) {
 			wxControl* const control = tool->GetControl();
 
@@ -1049,20 +1041,12 @@ wxControl* ToolBarSimple::FindControl(int id)
 
 wxToolBarToolBase* ToolBarSimple::FindById(int id) const
 {
-	wxToolBarToolBase* tool = (wxToolBarToolBase*)NULL;
-
-	for (wxToolBarToolsList::compatibility_iterator node = m_tools.GetFirst(); node;
-		 node = node->GetNext()) {
-		tool = node->GetData();
-		if (tool->GetId() == id) {
-			// found
-			break;
+	for (wxToolBarToolsList::const_iterator i = m_tools.begin(); i != m_tools.end(); ++i) {
+		if ((*i)->GetId() == id) {
+			return *i;
 		}
-
-		tool = NULL;
 	}
-
-	return tool;
+	return NULL;
 }
 
 // ----------------------------------------------------------------------------

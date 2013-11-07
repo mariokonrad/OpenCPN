@@ -28,7 +28,7 @@
 
 #ifdef OCPN_USE_PORTAUDIO
 	#include "portaudio.h"
-	#include <sound/SoundData.h>
+	#include <sound/OCPNSoundData.h>
 #endif
 
 namespace sound

@@ -45,7 +45,7 @@ WX_DEFINE_LIST(MRL);
 
 NMEA0183::NMEA0183()
 {
-   initialize();
+	initialize();
 
 /*
    response_table.Add( (RESPONSE *) &Aam );
@@ -74,19 +74,19 @@ NMEA0183::NMEA0183()
    response_table.Add( (RESPONSE *) &Proprietary );
    response_table.Add( (RESPONSE *) &Rma );
 */
-   response_table.Append( (RESPONSE *) &Hdm );
-   response_table.Append( (RESPONSE *) &Hdg );
-   response_table.Append( (RESPONSE *) &Hdt );
-   response_table.Append( (RESPONSE *) &Rmb );
-   response_table.Append( (RESPONSE *) &Rmc );
-   response_table.Append( (RESPONSE *) &Wpl );
-   response_table.Append( (RESPONSE *) &Rte );
-   response_table.Append( (RESPONSE *) &Gll );
-   response_table.Append( (RESPONSE *) &Vtg );
-   response_table.Append( (RESPONSE *) &Gsv );
-   response_table.Append( (RESPONSE *) &Gga );
-   response_table.Append( (RESPONSE *) &GPwpl );
-   response_table.Append( (RESPONSE *) &Apb );
+	response_table.Append((RESPONSE*)&Hdm);
+	response_table.Append((RESPONSE*)&Hdg);
+	response_table.Append((RESPONSE*)&Hdt);
+	response_table.Append((RESPONSE*)&Rmb);
+	response_table.Append((RESPONSE*)&Rmc);
+	response_table.Append((RESPONSE*)&Wpl);
+	response_table.Append((RESPONSE*)&Rte);
+	response_table.Append((RESPONSE*)&Gll);
+	response_table.Append((RESPONSE*)&Vtg);
+	response_table.Append((RESPONSE*)&Gsv);
+	response_table.Append((RESPONSE*)&Gga);
+	response_table.Append((RESPONSE*)&GPwpl);
+	response_table.Append((RESPONSE*)&Apb);
 
 /*
    response_table.Add( (RESPONSE *) &Rot );

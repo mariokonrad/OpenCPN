@@ -2365,10 +2365,10 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent&)
 	// Process Tracks and Routes in this layer
 	// FIXME: container altering iterating, iterate through copy of list, only elements are
 	// interesting
-	wxRouteListNode* node1 = pRouteList->GetFirst();
-	while (node1) {
-		Route* pRoute = node1->GetData();
-		wxRouteListNode* node_next = node1->GetNext();
+	RouteList::iterator node = pRouteList->begin();
+	while (node != pRouteList->end()) {
+		Route* pRoute = *node;
+		RouteList::iterator next = node;
 		if (pRoute->m_bIsInLayer && (pRoute->m_LayerID == layer->getID())) {
 			pRoute->m_bIsInLayer = false;
 			pRoute->m_LayerID = 0;
@@ -2378,8 +2378,7 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent&)
 				g_pRouteMan->DeleteTrack(pRoute);
 			}
 		}
-		node1 = node_next;
-		node_next = NULL;
+		node = next;
 	}
 
 	// Process waypoints in this layer

@@ -647,7 +647,7 @@ bool NavObjectCollection::GPXCreateTrk(
 	}
 
 	RoutePointList* pRoutePointList = pRoute->pRoutePointList;
-	wxRoutePointListNode* node2 = pRoutePointList->GetFirst();
+	RoutePointList::iterator route_point = pRoutePointList->begin();
 
 	unsigned short int GPXTrkSegNo1 = 1;
 	do {
@@ -655,19 +655,15 @@ bool NavObjectCollection::GPXCreateTrk(
 
 		pugi::xml_node seg = node.append_child("trkseg");
 
-		while (node2 && (GPXTrkSegNo2 == GPXTrkSegNo1)) {
-			RoutePoint* prp = node2->GetData();
-
-			GPXCreateWpt(seg.append_child("trkpt"), prp, OPT_TRACKPT);
-
-			node2 = node2->GetNext();
-			if (node2) {
-				prp = node2->GetData();
-				GPXTrkSegNo2 = prp->m_GPXTrkSegNo;
+		while ((route_point != pRoutePointList->end()) && (GPXTrkSegNo2 == GPXTrkSegNo1)) {
+			GPXCreateWpt(seg.append_child("trkpt"), *route_point, OPT_TRACKPT);
+			++route_point;
+			if (route_point != pRoutePointList->end()) {
+				GPXTrkSegNo2 = (*route_point)->m_GPXTrkSegNo;
 			}
 		}
 		GPXTrkSegNo1 = GPXTrkSegNo2;
-	} while (node2);
+	} while (route_point != pRoutePointList->end());
 
 	return true;
 }

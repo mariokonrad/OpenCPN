@@ -1274,7 +1274,7 @@ char* _getParamVal(ObjRazRules* rzRules, char* str, char* buf, int bsz)
 
 		wxCharBuffer buffer = value.ToUTF8();
 		if (buffer.data()) {
-			unsigned int len = wxMin(strlen(buffer.data()), bsz - 1);
+			unsigned int len = wxMin(static_cast<int>(strlen(buffer.data())), bsz - 1);
 			strncpy(buf, buffer.data(), len);
 			buf[len] = 0;
 		} else
@@ -1629,13 +1629,13 @@ bool s52plib::RenderText(wxDC* pdc, S52_TextC* ptext, int x, int y, wxRect* pRec
 // Return true if test_rect overlaps any rect in the current text rectangle list, except itself
 bool s52plib::CheckTextRectList(const wxRect& test_rect, S57Obj* pobj)
 {
-	//    Iterate over the current object list, looking at rText
+	// Iterate over the current object list, looking at rText
 
-	for (ObjList::Node* node = m_textObjList.GetFirst(); node; node = node->GetNext()) {
-		wxRect* pcurrent_rect = &(node->GetData()->rText);
+	for (ObjList::iterator node = m_textObjList.begin(); node != m_textObjList.end(); ++node) {
+		wxRect* pcurrent_rect = &((*node)->rText);
 
 		if (pcurrent_rect->Intersects(test_rect)) {
-			if (node->GetData() != pobj)
+			if (*node != pobj)
 				return true;
 		}
 	}
@@ -1775,7 +1775,7 @@ int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, ViewPort* vp, bool 
 		bool bwas_drawn
 			= RenderText(m_pdc, text, r.x, r.y, &rect, rzRules->obj, m_bDeClutterText, vp);
 
-		//    If this is an un-cached text object render, then do not update the S57Obj in any way
+		// If this is an un-cached text object render, then do not update the S57Obj in any way
 		if (b_free_text) {
 			delete text;
 			return 1;
@@ -1788,8 +1788,9 @@ int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, ViewPort* vp, bool 
 		if (m_bDeClutterText) {
 			if (bwas_drawn) {
 				bool b_found = false;
-				for (ObjList::Node* node = m_textObjList.GetFirst(); node; node = node->GetNext()) {
-					S57Obj* oc = node->GetData();
+				for (ObjList::iterator node = m_textObjList.begin(); node != m_textObjList.end();
+					 ++node) {
+					S57Obj* oc = *node;
 
 					if (oc == rzRules->obj) {
 						b_found = true;
@@ -6092,17 +6093,17 @@ void s52plib::AdjustTextList(int dx, int dy, int screenw, int screenh)
 	//        1.  Apply the specified offset to the list elements
 	//        2.. Remove any list elements that are off screen after applied offset
 
-	ObjList::Node* node = m_textObjList.GetFirst();
-	while (node) {
-		wxRect* pcurrent = &(node->GetData()->rText);
+	ObjList::iterator node = m_textObjList.begin();
+	while (node != m_textObjList.end()) {
+		wxRect* pcurrent = &((*node)->rText);
 		pcurrent->Offset(dx, dy);
 
 		if (!pcurrent->Intersects(rScreen)) {
-			m_textObjList.DeleteNode(node);
+			m_textObjList.erase(node);
 
-			node = m_textObjList.GetFirst();
+			node = m_textObjList.begin();
 		} else {
-			node = node->GetNext();
+			++node;
 		}
 	}
 }

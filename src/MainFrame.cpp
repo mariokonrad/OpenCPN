@@ -677,12 +677,8 @@ void MainFrame::OnActivate( wxActivateEvent& event )
 #ifdef __WXOSX__
 	if(event.GetActive()) {
 		SurfaceToolbar();
-		wxWindowListNode *node = AppActivateList.GetFirst();
-		while (node) {
-			wxWindow *win = node->GetData();
-			win->Show();
-
-			node = node->GetNext();
+		for (WindowList::iterator node = AppActivateList.begin(); node != AppActivateList.end(); ++node) {
+			(*node)->Show();
 		}
 		Raise();
 	}

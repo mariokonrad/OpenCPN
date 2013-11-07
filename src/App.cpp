@@ -524,14 +524,11 @@ void App::OnActivateApp(wxActivateEvent& event)
 
 		wxWindow* pOptions = NULL;
 
-		wxWindowListNode* node = AppActivateList.GetFirst();
-		while (node) {
-			wxWindow* win = node->GetData();
+		for (WindowList::iterator node = AppActivateList.begin(); node != AppActivateList.end(); ++node) {
+			wxWindow* win = *node;
 			win->Show();
 			if (win->IsKindOf(CLASSINFO(options)))
 				pOptions = win;
-
-			node = node->GetNext();
 		}
 
 		if (pOptions)

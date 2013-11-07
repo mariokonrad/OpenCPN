@@ -32,7 +32,7 @@
 #include <chart/s52plib.h>
 #include <chart/s52utils.h>
 
-bool GetDoubleAttr(S57Obj *obj, const char *AttrName, double &val);
+bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val);
 
 #define UNKNOWN 1e6 //HUGE_VAL   // INFINITY/NAN
 
@@ -40,23 +40,19 @@ bool GetDoubleAttr(S57Obj *obj, const char *AttrName, double &val);
 // size of attributes value list buffer
 #define LISTSIZE   16   // list size
 
-extern s52plib  *ps52plib;
+extern s52plib* ps52plib;
 
-wxString *CSQUAPNT01(S57Obj *obj);
-wxString *CSQUALIN01(S57Obj *obj);
+wxString* CSQUAPNT01(S57Obj* obj);
+wxString* CSQUALIN01(S57Obj* obj);
 
-
-
-static void *CLRLIN01(void *param)
+static void* CLRLIN01(void* param)
 {
-        ObjRazRules *rzRules = (ObjRazRules *)param;
-//      S57Obj *obj = rzRules->obj;
-
-        printf("s52csny : CLRLIN01 ERROR no conditional symbology for: %s\n",rzRules->LUP->OBCL);
-   return NULL;
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	printf("s52csny : CLRLIN01 ERROR no conditional symbology for: %s\n", rzRules->LUP->OBCL);
+	return NULL;
 }
 
-static void *DATCVR01(void *param)
+static void* DATCVR01(void* param)
 {
 
 // Remarks: This conditional symbology procedure describes procedures for:
@@ -127,233 +123,200 @@ static void *DATCVR01(void *param)
     // 4.3- Larger scale data available
     // FIXME: display indication of better scale available (?)
 
+	wxString datcvr01;
+	datcvr01.Append(rule_str);
+	datcvr01.Append('\037');
 
+	char* r = (char*)malloc(datcvr01.Len() + 1);
+	strcpy(r, datcvr01.mb_str());
 
-
-   wxString datcvr01;
-   datcvr01.Append(rule_str);
-   datcvr01.Append('\037');
-
-   char *r = (char *)malloc(datcvr01.Len() + 1);
-   strcpy(r, datcvr01.mb_str());
-
-   return r;
-
+	return r;
 }
 
-
-bool GetIntAttr(S57Obj *obj, const char *AttrName, int &val)
+bool GetIntAttr(S57Obj* obj, const char* AttrName, int& val)
 {
-    int idx = obj->GetAttributeIndex(AttrName);
-    
-    if(idx >= 0) {
-        //      using idx to get the attribute value
-         S57attVal *v = obj->attVal->Item(idx);
-        val = *(int*)(v->value);
-        
-        return true;
-    }
-    else
-        return false;
-        
+	int idx = obj->GetAttributeIndex(AttrName);
+
+	if (idx >= 0) {
+		// using idx to get the attribute value
+		S57attVal* v = obj->attVal->Item(idx);
+		val = *(int*)(v->value);
+
+		return true;
+	} else
+		return false;
 }
 
-bool GetDoubleAttr(S57Obj *obj, const char *AttrName, double &val)
+bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val)
 {
-    int idx = obj->GetAttributeIndex(AttrName);
-    
-    if(idx >= 0) {
-//      using idx to get the attribute value
+	int idx = obj->GetAttributeIndex(AttrName);
 
-        S57attVal *v = obj->attVal->Item(idx);
-        val = *(double*)(v->value);
+	if (idx >= 0) {
+		// using idx to get the attribute value
 
-        return true;
-    }
-    else
-        return false;
+		S57attVal* v = obj->attVal->Item(idx);
+		val = *(double*)(v->value);
+
+		return true;
+	} else
+		return false;
 }
 
-
-bool GetStringAttr(S57Obj *obj, const char *AttrName, char *pval, int nc)
+bool GetStringAttr(S57Obj* obj, const char* AttrName, char* pval, int nc)
 {
-    int idx = obj->GetAttributeIndex(AttrName);
-    
-    if(idx >= 0) {
-        //      using idx to get the attribute value
-        S57attVal *v = obj->attVal->Item(idx);
+	int idx = obj->GetAttributeIndex(AttrName);
 
-        char *val = (char *)(v->value);
+	if (idx >= 0) {
+		// using idx to get the attribute value
+		S57attVal* v = obj->attVal->Item(idx);
 
-        strncpy(pval, val, nc);
+		char* val = (char*)(v->value);
 
-        return true;
-    }
-    else
-        return false;
+		strncpy(pval, val, nc);
+
+		return true;
+	} else
+		return false;
 }
 
-wxString *GetStringAttrWXS(S57Obj *obj, const char *AttrName)
+wxString* GetStringAttrWXS(S57Obj* obj, const char* AttrName)
 {
-    int idx = obj->GetAttributeIndex(AttrName);
-    
-    if(idx >= 0) {
-        //      using idx to get the attribute value
-        S57attVal *v = obj->attVal->Item(idx);
-        
-        char *val = (char *)(v->value);
-        
-        return new wxString(val,  wxConvUTF8);
-    }
-    else
-        return NULL;
+	int idx = obj->GetAttributeIndex(AttrName);
+
+	if (idx >= 0) {
+		// using idx to get the attribute value
+		S57attVal* v = obj->attVal->Item(idx);
+
+		char* val = (char*)(v->value);
+
+		return new wxString(val, wxConvUTF8);
+	} else
+		return NULL;
 }
 
-static int      _parseList(const char *str_in, char *buf, int buf_size)
-// Put a string of comma delimited number in an array (buf).
-// Return: the number of value in buf.
-// Assume: - number < 256,
-//         - list size less than buf_size .
-// Note: buf is \0 terminated for strpbrk().
+static int _parseList(const char* str_in, char* buf, int buf_size)
 {
-    char *str = (char *)str_in;
-    int i = 0;
+	// Put a string of comma delimited number in an array (buf).
+	// Return: the number of value in buf.
+	// Assume: - number < 256,
+	//         - list size less than buf_size .
+	// Note: buf is \0 terminated for strpbrk().
+	char* str = (char*)str_in;
+	int i = 0;
 
-    if (NULL != str && *str != '\0') {
-        do {
-            if ( i>= LISTSIZE-1) {
-                printf("OVERFLOW --value in list lost!!\n");
-                break;
-            }
+	if (NULL != str && *str != '\0') {
+		do {
+			if (i >= LISTSIZE - 1) {
+				printf("OVERFLOW --value in list lost!!\n");
+				break;
+			}
 
-            /*
-            if (255 <  (unsigned char) atoi(str)) {
-                PRINTF("value overflow (>255)\n");
-                exit(0);
-            }
-            */
+			buf[i++] = (unsigned char)atoi(str);
 
-            buf[i++] = (unsigned char) atoi(str);
+			while (isdigit(*str))
+				str++; // next
 
-            while(isdigit(*str))
-                  str++;   // next
+		} while (*str++ != '\0'); // skip ',' or exit
+	}
 
-        } while(*str++ != '\0');      // skip ',' or exit
-    }
+	buf[i] = '\0';
 
-    buf[i] = '\0';
-
-    return i;
+	return i;
 }
 
-
-static int      _atPtPos(S57Obj *objNew, wxArrayPtrVoid *curntList, int bSectorCheck)
-// return TRUE if there is a light at this position
-// or if its an extended arc radius else FALSE
+static int _atPtPos(S57Obj* objNew, wxArrayPtrVoid* curntList, int bSectorCheck)
 {
-    unsigned int i;
+	// return TRUE if there is a light at this position
+	// or if its an extended arc radius else FALSE
+	unsigned int i;
 
-    if(NULL == curntList)
-          return false;
+	if (NULL == curntList)
+		return false;
 
-    for (i=0; i<curntList->GetCount(); i++) {
-        S57Obj *objOld = (S57Obj *)curntList->Item(i);
+	for (i = 0; i < curntList->GetCount(); i++) {
+		S57Obj* objOld = (S57Obj*)curntList->Item(i);
 
-        if ((objOld->x == objNew->x) && (objOld->y == objNew->y)) {
+		if ((objOld->x == objNew->x) && (objOld->y == objNew->y)) {
 
-            if (!bSectorCheck)
-                return TRUE;
-        }
-    }
+			if (!bSectorCheck)
+				return TRUE;
+		}
+	}
 
-    return FALSE;
+	return FALSE;
 }
 
-wxString _selSYcol(char *buf, bool bsectr, double valnmr)
+wxString _selSYcol(char* buf, bool bsectr, double valnmr)
 {
-    wxString sym;
+	wxString sym;
 
-    if(!bsectr)
-    {
+	if (!bsectr) {
+		sym = _T(";SY(LITDEF11"); // default
 
-      sym = _T(";SY(LITDEF11");                 // default
+		// max 1 color
+		if ('\0' == buf[1]) {
+			if (strpbrk(buf, "\003"))
+				sym = _T(";SY(LIGHTS11");
+			else if (strpbrk(buf, "\004"))
+				sym = _T(";SY(LIGHTS12");
+			else if (strpbrk(buf, "\001\006\011"))
+				sym = _T(";SY(LIGHTS13");
+		} else {
+			// max 2 color
+			if ('\0' == buf[2]) {
+				if (strpbrk(buf, "\001") && strpbrk(buf, "\003"))
+					sym = _T(";SY(LIGHTS11");
+				else if (strpbrk(buf, "\001") && strpbrk(buf, "\004"))
+					sym = _T(";SY(LIGHTS12");
+			}
+		}
+	} else {
+		// all-round fixed light symbolized as a circle, radius depends on color
+		// This treatment is seen on SeeMyDenc by SevenCs
+		// This may not be S-52 compliant....
+		// Another non-standard extension....
+		// All round light circle diameter is scaled if the light has a reasonable VALNMR attribute
+		int radius = 3;
+		if (valnmr > 0) {
+			if (valnmr < 7.0)
+				radius = 3;
+			else if (valnmr < 15.0)
+				radius = 10;
+			else if (valnmr < 30.0)
+				radius = 15;
+			else
+				radius = 20;
+		}
 
-    // max 1 color
-      if ('\0' == buf[1])
-      {
-        if (strpbrk(buf, "\003"))
-              sym = _T(";SY(LIGHTS11");
-        else if (strpbrk(buf, "\004"))
-              sym = _T(";SY(LIGHTS12");
-        else if (strpbrk(buf, "\001\006\011"))
-              sym = _T(";SY(LIGHTS13");
-      }
-      else
-      {
-        // max 2 color
-        if ('\0' == buf[2]) {
-            if (strpbrk(buf, "\001") && strpbrk(buf, "\003"))
-                  sym = _T(";SY(LIGHTS11");
-            else if (strpbrk(buf, "\001") && strpbrk(buf, "\004"))
-                  sym = _T(";SY(LIGHTS12");
-        }
-      }
-    }
+		// max 1 color
+		if ('\0' == buf[1]) {
+			if (strpbrk(buf, "\003"))
+				sym.Printf(_T(",LITRD, 2,0,360,%d,0"), radius + 1);
+			else if (strpbrk(buf, "\004"))
+				sym.Printf(_T(",LITGN, 2,0,360,%d,0"), radius);
+			else if (strpbrk(buf, "\001\006\011"))
+				sym.Printf(_T(",LITYW, 2,0,360,%d,0"), radius + 2);
+			else if (strpbrk(buf, "\014"))
+				sym.Printf(_T(",CHMGD, 2,0,360,%d,0"), radius + 3);
+			else
+				sym.Printf(_T(",CHMGD, 2,0,360,%d,0"), radius + 5); // default
 
-    else                // all-round fixed light symbolized as a circle, radius depends on color
-                        // This treatment is seen on SeeMyDenc by SevenCs
-                        // This may not be S-52 compliant....
-    {
-          //      Another non-standard extension....
-          //      All round light circle diameter is scaled if the light has a reasonable VALNMR attribute
-          int radius = 3;
-          if(valnmr > 0)
-          {
-                if(valnmr < 7.0)
-                      radius = 3;
-                else if(valnmr < 15.0)
-                      radius = 10;
-                else if(valnmr < 30.0)
-                      radius = 15;
-                else
-                      radius = 20;
-          }
+		} else if ('\0' == buf[2]) { // or 2 color
+			if (strpbrk(buf, "\001") && strpbrk(buf, "\003"))
+				sym.Printf(_T(",LITRD, 2,0,360,%d,0"), radius + 1);
+			else if (strpbrk(buf, "\001") && strpbrk(buf, "\004"))
+				sym.Printf(_T(",LITGN, 2,0,360,%d,0"), radius);
+			else
+				sym.Printf(_T(",CHMGD, 2,0,360,%d,0"), radius + 5); // default
 
-       // max 1 color
-      if ('\0' == buf[1])
-      {
-          if (strpbrk(buf, "\003"))
-                sym.Printf(_T(",LITRD, 2,0,360,%d,0"), radius + 1);
-          else if (strpbrk(buf, "\004"))
-                sym.Printf(_T(",LITGN, 2,0,360,%d,0"), radius);
-          else if (strpbrk(buf, "\001\006\011"))
-                sym.Printf(_T(",LITYW, 2,0,360,%d,0"), radius + 2);
-          else if (strpbrk(buf, "\014"))
-                sym.Printf(_T(",CHMGD, 2,0,360,%d,0"), radius + 3);
-          else
-                sym.Printf(_T(",CHMGD, 2,0,360,%d,0"), radius + 5);           // default
+		} else
+			sym.Printf(_T(",CHMGD, 2,0,360,%d,0"), radius + 5);
 
-      }
-      else  if ('\0' == buf[2])       // or 2 color
-      {
-                if (strpbrk(buf, "\001") && strpbrk(buf, "\003"))
-                      sym.Printf(_T(",LITRD, 2,0,360,%d,0"), radius + 1);
-                else if (strpbrk(buf, "\001") && strpbrk(buf, "\004"))
-                      sym.Printf(_T(",LITGN, 2,0,360,%d,0"), radius);
-                else
-                      sym.Printf(_T(",CHMGD, 2,0,360,%d,0"), radius + 5);           // default
+		if (sym.Len())
+			sym.Prepend(_T(";CA(OUTLW, 4"));
+	}
 
-      }
-      else
-            sym.Printf(_T(",CHMGD, 2,0,360,%d,0"), radius + 5);
-
-
-      if(sym.Len())
-            sym.Prepend(_T(";CA(OUTLW, 4"));
-    }
-
-
-    return sym;
+	return sym;
 }
 
 static double   _DEPVAL01(S57Obj *obj, double least_depth)
@@ -374,92 +337,76 @@ static double   _DEPVAL01(S57Obj *obj, double least_depth)
     return least_depth;
 }
 
-static wxString *_UDWHAZ03(S57Obj *obj, double depth_value, ObjRazRules *rzRules)
-// Remarks: Obstructions or isolated underwater dangers of depths less than the safety
-// contour which lie within the safe waters defined by the safety contour are
-// to be presented by a specific isolated danger symbol as hazardous objects
-// and put in IMO category DISPLAYBASE (see (3), App.2, 1.3). This task
-// is performed by this conditional symbology procedure.
+static wxString* _UDWHAZ03(S57Obj* obj, double depth_value, ObjRazRules* rzRules)
 {
-    wxString udwhaz03str;
-    int      danger         = FALSE;
-    double   safety_contour = S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR);
+	// Remarks: Obstructions or isolated underwater dangers of depths less than the safety
+	// contour which lie within the safe waters defined by the safety contour are
+	// to be presented by a specific isolated danger symbol as hazardous objects
+	// and put in IMO category DISPLAYBASE (see (3), App.2, 1.3). This task
+	// is performed by this conditional symbology procedure.
 
-    if(depth_value == UNKNOWN)
-          danger = TRUE;
+	wxString udwhaz03str;
+	bool danger = false;
+	double safety_contour = S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR);
 
-    else if (depth_value <= safety_contour) {
-        // that intersect this point/line/area for OBSTRN04
-        // that intersect this point/area      for WRECKS02
+	if (depth_value == UNKNOWN)
+		danger = true;
 
-        // get area DEPARE & DRGARE that intersect this point/line/area
+	else if (depth_value <= safety_contour) {
+		// that intersect this point/line/area for OBSTRN04
+		// that intersect this point/area      for WRECKS02
 
-        ListOfS57Obj *pobj_list = rzRules->chart->GetAssociatedObjects(obj);
+		// get area DEPARE & DRGARE that intersect this point/line/area
 
-        wxListOfS57ObjNode *node = pobj_list->GetFirst();
-        while(node)
-        {
-              S57Obj *ptest_obj = node->GetData();
-              if(GEO_LINE == ptest_obj->Primitive_type)
-              {
-                    double drval2 = 0.0;
-                    GetDoubleAttr(ptest_obj, "DRVAL2", drval2);
+		ListOfS57Obj* pobj_list = rzRules->chart->GetAssociatedObjects(obj);
 
-                    if(drval2 < safety_contour)
-                    {
-                          danger = TRUE;
-                          break;
-                    }
-              }
-              else
-              {
-                    double drval1 = 0.0;
-                    GetDoubleAttr(ptest_obj, "DRVAL1", drval1);
+		for (ListOfS57Obj::iterator node = pobj_list->begin(); node != pobj_list->end(); ++node) {
+			S57Obj* ptest_obj = *node;
+			if (GEO_LINE == ptest_obj->Primitive_type) {
+				double drval2 = 0.0;
+				GetDoubleAttr(ptest_obj, "DRVAL2", drval2);
 
-                    if(drval1 >= safety_contour)
-                    {
-                          danger = TRUE;
-                          break;
-                    }
-              }
-              node = node->GetNext();
-        }
+				if (drval2 < safety_contour) {
+					danger = true;
+					break;
+				}
+			} else {
+				double drval1 = 0.0;
+				GetDoubleAttr(ptest_obj, "DRVAL1", drval1);
 
-        delete pobj_list;
-    }
+				if (drval1 >= safety_contour) {
+					danger = true;
+					break;
+				}
+			}
+		}
 
-    if (TRUE == danger)
-    {
-              int watlev;
-              GetIntAttr(obj, "WATLEV", watlev);
+		delete pobj_list;
+	}
 
-              if((1 == watlev) || (2 == watlev))
-              {
-              }
-              else
-              {
-                    udwhaz03str = _T(";SY(ISODGR51)");     //_T(";OP(8OD14010);SY(ISODGR51)");
-              }
+	if (true == danger) {
+		int watlev;
+		GetIntAttr(obj, "WATLEV", watlev);
 
-              //  Move this object to DisplayBase category
-              rzRules->obj->m_DisplayCat = DISPLAYBASE;
+		if ((1 == watlev) || (2 == watlev)) {
+			// TODO
+		} else {
+			udwhaz03str = _T(";SY(ISODGR51)"); //_T(";OP(8OD14010);SY(ISODGR51)");
+		}
 
-    }
-    // This is an enhancement to the original PLIB spec
-    //  It forces all obstructions (rocks/wrecks) to be in category "Standard", at least
-    else{
-        rzRules->obj->m_DisplayCat = STANDARD;
-    }
+		// Move this object to DisplayBase category
+		rzRules->obj->m_DisplayCat = DISPLAYBASE;
 
+	}
+		// This is an enhancement to the original PLIB spec
+		// It forces all obstructions (rocks/wrecks) to be in category "Standard", at least
+		else {
+		rzRules->obj->m_DisplayCat = STANDARD;
+	}
 
-    wxString *ret_str = new wxString(udwhaz03str);
-    return ret_str;
-
+	wxString* ret_str = new wxString(udwhaz03str);
+	return ret_str;
 }
-
-
-
-
 
 // Remarks: An object of the class "depth area" is coloured and covered with fill patterns
 // according to the mariners selections of shallow contour, safety contour and
@@ -468,92 +415,71 @@ static wxString *_UDWHAZ03(S57Obj *obj, double depth_value, ObjRazRules *rzRules
 // ensure a consistent symbolization of areas that represent the surface of the
 // seabed.
 
-static void *DEPARE01(void *param)
+static void* DEPARE01(void* param)
 {
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	S57Obj* obj = rzRules->obj;
 
-   ObjRazRules *rzRules = (ObjRazRules *)param;
-   S57Obj *obj = rzRules->obj;
+	double drval1, drval2;
+	bool drval1_found;
 
+	// Determine the color based on mariner selections
 
-   double drval1, drval2;
-   bool drval1_found;
+	drval1 = -1.0; // default values
+	drval1_found = GetDoubleAttr(obj, "DRVAL1", drval1);
+	drval2 = drval1 + 0.01;
+	GetDoubleAttr(obj, "DRVAL2", drval2);
 
-//      Determine the color based on mariner selections
+	// Create a string of the proper color reference
 
+	bool shallow = TRUE;
+	wxString rule_str = _T("AC(DEPIT)");
 
-   drval1 = -1.0;                                          // default values
-   drval1_found = GetDoubleAttr(obj, "DRVAL1", drval1);
-   drval2 = drval1 + 0.01;
-   GetDoubleAttr(obj, "DRVAL2", drval2);
+	if (drval1 >= 0.0 && drval2 > 0.0)
+		rule_str = _T("AC(DEPVS)");
 
+	if (TRUE == S52_getMarinerParam(S52_MAR_TWO_SHADES)) {
+		if (drval1 >= S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR)
+			&& drval2 > S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR)) {
+			rule_str = _T("AC(DEPDW)");
+			shallow = FALSE;
+		}
+	} else {
+		if (drval1 >= S52_getMarinerParam(S52_MAR_SHALLOW_CONTOUR)
+			&& drval2 > S52_getMarinerParam(S52_MAR_SHALLOW_CONTOUR))
+			rule_str = _T("AC(DEPMS)");
 
+		if (drval1 >= S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR)
+			&& drval2 > S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR)) {
+			rule_str = _T("AC(DEPMD)");
+			shallow = FALSE;
+		}
 
+		if (drval1 >= S52_getMarinerParam(S52_MAR_DEEP_CONTOUR)
+			&& drval2 > S52_getMarinerParam(S52_MAR_DEEP_CONTOUR)) {
+			rule_str = _T("AC(DEPDW)");
+			shallow = FALSE;
+		}
+	}
 
-   //   Create a string of the proper color reference
+	// If object is DRGARE....
 
-    bool shallow  = TRUE;
-    wxString rule_str =_T("AC(DEPIT)");
+	if (!strncmp(rzRules->LUP->OBCL, "DRGARE", 6)) {
+		if (!drval1_found) { // If DRVAL1 was not defined...
+			rule_str = _T("AC(DEPMD)");
+			shallow = FALSE;
+		}
+		rule_str.Append(_T(";AP(DRGARE01)"));
+		rule_str.Append(_T(";LS(DASH,1,CHGRF)"));
+	}
 
+	rule_str.Append('\037');
 
-    if (drval1 >= 0.0 && drval2 > 0.0)
-        rule_str  = _T("AC(DEPVS)");
-
-    if (TRUE == S52_getMarinerParam(S52_MAR_TWO_SHADES))
-    {
-        if (drval1 >= S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR)  &&
-            drval2 >  S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR))
-        {
-            rule_str  = _T("AC(DEPDW)");
-            shallow = FALSE;
-        }
-    }
-    else
-    {
-        if (drval1 >= S52_getMarinerParam(S52_MAR_SHALLOW_CONTOUR) &&
-            drval2 >  S52_getMarinerParam(S52_MAR_SHALLOW_CONTOUR))
-            rule_str  = _T("AC(DEPMS)");
-
-        if (drval1 >= S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR)  &&
-                drval2 >  S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR))
-        {
-            rule_str  = _T("AC(DEPMD)");
-            shallow = FALSE;
-        }
-
-        if (drval1 >= S52_getMarinerParam(S52_MAR_DEEP_CONTOUR)  &&
-                drval2 >  S52_getMarinerParam(S52_MAR_DEEP_CONTOUR))
-        {
-            rule_str  = _T("AC(DEPDW)");
-            shallow = FALSE;
-        }
-
-    }
-
-
-//  If object is DRGARE....
-
-    if(!strncmp(rzRules->LUP->OBCL, "DRGARE", 6))
-    {
-        if (!drval1_found) //If DRVAL1 was not defined...
-        {
-            rule_str  = _T("AC(DEPMD)");
-            shallow = FALSE;
-        }
-        rule_str.Append(_T(";AP(DRGARE01)"));
-        rule_str.Append(_T(";LS(DASH,1,CHGRF)"));
-
-    }
-
-
-    rule_str.Append('\037');
-
-    char *r = (char *)malloc(rule_str.Len() + 1);
-    strcpy(r, rule_str.mb_str());
-    return r;
-
+	char* r = (char*)malloc(rule_str.Len() + 1);
+	strcpy(r, rule_str.mb_str());
+	return r;
 }
 
-static void *DEPCNT02 (void *param)
 // Remarks: An object of the class "depth contour" or "line depth area" is highlighted and must
 // be shown under all circumstances if it matches the safety contour depth value
 // entered by the mariner (see IMO PS 3.6). But, while the mariner is free to enter any
@@ -565,9 +491,10 @@ static void *DEPCNT02 (void *param)
 // DISPLAYBASE. The procedure also identifies any line segment of the spatial
 // component of the object that has a "QUAPOS" value indicating unreliable
 // positioning, and symbolizes it with a double dashed line.
-            //
+//
 // Note: Depth contours are not normally labeled. The ECDIS may provide labels, on demand
 // only as with other text, or provide the depth value on cursor picking
+static void *DEPCNT02 (void *param)
 {
       double   depth_value;
       double drval1, drval2;
@@ -671,30 +598,23 @@ static void *DEPCNT02 (void *param)
             return r;
 }
 
-
-
-
-static void *DEPVAL01(void *param)
+static void* DEPVAL01(void* param)
 {
-        ObjRazRules *rzRules = (ObjRazRules *)param;
-//      S57Obj *obj = rzRules->obj;
-
-        printf("s52csny : DEPVAL01 ERROR no conditional symbology for: %s\n",rzRules->LUP->OBCL);
-   return NULL;
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	printf("s52csny : DEPVAL01 ERROR no conditional symbology for: %s\n", rzRules->LUP->OBCL);
+	return NULL;
 }
 
-static void *LEGLIN02(void *param)
+static void* LEGLIN02(void* param)
 {
-        ObjRazRules *rzRules = (ObjRazRules *)param;
-//      S57Obj *obj = rzRules->obj;
-
-        printf("s52csny : LEGLIN02 ERROR no conditional symbology for: %s\n",rzRules->LUP->OBCL);
-   return NULL;
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	printf("s52csny : LEGLIN02 ERROR no conditional symbology for: %s\n", rzRules->LUP->OBCL);
+	return NULL;
 }
 
-static wxString _LITDSN01(S57Obj *obj);
+static wxString _LITDSN01(S57Obj* obj);
 
-static void *LIGHTS05 (void *param)
+static void* LIGHTS05(void* param)
 // Remarks: A light is one of the most complex S-57 objects. Its presentation depends on
 // whether it is a light on a floating or fixed platform, its range, it's colour and
 // so on. This conditional symbology procedure derives the correct
@@ -712,8 +632,6 @@ static void *LIGHTS05 (void *param)
 // the colour and sector limit lines of the sectors affecting the ship even if the light
 // itself is off the display.
 // [ed. last sentence in bold]
-
-
 {
 #define UNKNOWN_DOUBLE -9;
     wxString lights05;
@@ -997,21 +915,16 @@ l05_end:
       return r;
 }
 
-
-
-
-
-static void *LITDSN01(void *param)
+static void* LITDSN01(void* param)
 {
-        ObjRazRules *rzRules = (ObjRazRules *)param;
-
-        printf("s52csny : LITDSN01 ERROR no conditional symbology for: %s\n",rzRules->LUP->OBCL);
-   return NULL;
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	printf("s52csny : LITDSN01 ERROR no conditional symbology for: %s\n", rzRules->LUP->OBCL);
+	return NULL;
 }
 
-wxString *SNDFRM02(S57Obj *obj, double depth_value);
+wxString* SNDFRM02(S57Obj* obj, double depth_value);
 
-static void *OBSTRN04 (void *param)
+static void* OBSTRN04(void* param)
 // Remarks: Obstructions or isolated underwater dangers of depths less than the safety
 // contour which lie within the safe waters defined by the safety contour are
 // to be presented by a specific isolated danger symbol and put in IMO
@@ -1290,28 +1203,23 @@ end:
     return r;
 }
 
-
-
-static void *OWNSHP02(void *param)
+static void* OWNSHP02(void* param)
 {
-        ObjRazRules *rzRules = (ObjRazRules *)param;
-
-        printf("s52csny : OWNSHP02 ERROR no conditional symbology for: %s\n",rzRules->LUP->OBCL);
-   return NULL;
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	printf("s52csny : OWNSHP02 ERROR no conditional symbology for: %s\n", rzRules->LUP->OBCL);
+	return NULL;
 }
 
-static void *PASTRK01(void *param)
+static void* PASTRK01(void* param)
 {
-        ObjRazRules *rzRules = (ObjRazRules *)param;
-
-        printf("s52csny : PASTRK01 ERROR no conditional symbology for: %s\n",rzRules->LUP->OBCL);
-   return NULL;
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	printf("s52csny : PASTRK01 ERROR no conditional symbology for: %s\n", rzRules->LUP->OBCL);
+	return NULL;
 }
 
 static void *QUALIN01(void *param);
 static void *QUAPNT01(void *param);
 
-static void *QUAPOS01(void *param)
 // Remarks: The attribute QUAPOS, which identifies low positional accuracy, is attached
 // to the spatial object, not the feature object.
 // In OpenCPN implementation, QUAPOS of Point Objects has been converted to
@@ -1320,28 +1228,27 @@ static void *QUAPOS01(void *param)
 // This procedure passes the object to procedure QUALIN01 or QUAPNT01,
 // which traces back to the spatial object, retrieves any QUAPOS attributes,
 // and returns the appropriate symbolization to QUAPOS01.
+static void* QUAPOS01(void* param)
 {
-    ObjRazRules *rzRules = (ObjRazRules *)param;
-    S57Obj *obj = rzRules->obj;
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	S57Obj* obj = rzRules->obj;
 
-    wxString *q = NULL;
+	wxString* q = NULL;
 
-    if (GEO_LINE == obj->Primitive_type)
-          q = CSQUALIN01(obj);
+	if (GEO_LINE == obj->Primitive_type)
+		q = CSQUALIN01(obj);
 
-    else
-          q = CSQUAPNT01(obj);
+	else
+		q = CSQUAPNT01(obj);
 
-    char *r = (char *)malloc(q->Len() + 1);
-    strcpy(r, q->mb_str());
+	char* r = (char*)malloc(q->Len() + 1);
+	strcpy(r, q->mb_str());
 
-    delete q;
+	delete q;
 
-    return r;
-
+	return r;
 }
 
-static void *QUALIN01(void *param)
 // Remarks: The attribute QUAPOS, which identifies low positional accuracy, is attached
 // only to the spatial component(s) of an object.
 //
@@ -1349,16 +1256,17 @@ static void *QUALIN01(void *param)
 //
 // This procedure looks at each of the spatial
 // objects, and symbolizes the line according to the positional accuracy.
+static void* QUALIN01(void* param)
 {
-    ObjRazRules *rzRules = (ObjRazRules *)param;
-    S57Obj *obj = rzRules->obj;
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	S57Obj* obj = rzRules->obj;
 
-    wxString *q = CSQUALIN01(obj);
-    char *r = (char *)malloc(q->Len() + 1);
-    strcpy(r, q->mb_str());
+	wxString* q = CSQUALIN01(obj);
+	char* r = (char*)malloc(q->Len() + 1);
+	strcpy(r, q->mb_str());
 
-    delete q;
-    return r;
+	delete q;
+	return r;
 }
 
 wxString *CSQUALIN01(S57Obj *obj)
@@ -1401,78 +1309,68 @@ wxString *CSQUALIN01(S57Obj *obj)
     qualino1.Append('\037');
 
     wxString *r = new wxString(qualino1);
-
-/*    char *r = (char *)malloc(qualino1.Len() + 1);
-    strcpy(r, qualino1.mb_str());
-*/
     return r;
 }
 
-
-
-static void *QUAPNT01(void *param)
 // Remarks: The attribute QUAPOS, which identifies low positional accuracy, is attached
 // only to the spatial component(s) of an object.
 //
 // This procedure retrieves any QUALTY (ne QUAPOS) attributes, and returns the
 // appropriate symbols to the calling procedure.
-
+static void* QUAPNT01(void* param)
 {
-    ObjRazRules *rzRules = (ObjRazRules *)param;
-    S57Obj *obj = rzRules->obj;
+	ObjRazRules* rzRules = (ObjRazRules*)param;
+	S57Obj* obj = rzRules->obj;
 
-    wxString *q = CSQUAPNT01(obj);
+	wxString* q = CSQUAPNT01(obj);
 
-    char *r = (char *)malloc(q->Len() + 1);
-    strcpy(r, q->mb_str());
+	char* r = (char*)malloc(q->Len() + 1);
+	strcpy(r, q->mb_str());
 
-    return r;
+	return r;
 }
 
-wxString *CSQUAPNT01(S57Obj *obj)
 // Remarks: The attribute QUAPOS, which identifies low positional accuracy, is attached
 // only to the spatial component(s) of an object.
 //
 // This procedure retrieves any QUALTY (ne QUAPOS) attributes, and returns the
 // appropriate symbols to the calling procedure.
-
+wxString* CSQUAPNT01(S57Obj* obj)
 {
-    wxString quapnt01;
-    int accurate  = TRUE;
-    int qualty = 10;
-    bool bquapos = GetIntAttr(obj, "QUALTY", qualty);
+	wxString quapnt01;
+	int accurate = TRUE;
+	int qualty = 10;
+	bool bquapos = GetIntAttr(obj, "QUALTY", qualty);
 
-    if (bquapos) {
-        if ( 2 <= qualty && qualty < 10)
-            accurate = FALSE;
-    }
+	if (bquapos) {
+		if (2 <= qualty && qualty < 10)
+			accurate = FALSE;
+	}
 
-    if (!accurate)
-    {
-          switch(qualty)
-          {
-          case 4:
-                quapnt01.Append(_T(";SY(QUAPOS01)")); break;      // "PA"
-          case 5:
-                quapnt01.Append(_T(";SY(QUAPOS02)")); break;      // "PD"
-          case 7:
-          case 8:
-                quapnt01.Append(_T(";SY(QUAPOS03)")); break;      // "REP"
-          default:
-                quapnt01.Append(_T(";SY(LOWACC03)")); break;      // "?"
-          }
-    }
+	if (!accurate) {
+		switch (qualty) {
+			case 4:
+				quapnt01.Append(_T(";SY(QUAPOS01)"));
+				break; // "PA"
+			case 5:
+				quapnt01.Append(_T(";SY(QUAPOS02)"));
+				break; // "PD"
+			case 7:
+			case 8:
+				quapnt01.Append(_T(";SY(QUAPOS03)"));
+				break; // "REP"
+			default:
+				quapnt01.Append(_T(";SY(LOWACC03)"));
+				break; // "?"
+		}
+	}
 
-    quapnt01.Append('\037');
+	quapnt01.Append('\037');
 
-    wxString *r = new wxString;
+	wxString* r = new wxString;
 
-    *r = quapnt01;
-
-/*    char *r = (char *)malloc(quapnt01.Len() + 1);
-    strcpy(r, quapnt01.mb_str());
-*/
-    return r;
+	*r = quapnt01;
+	return r;
 }
 
 static void *SLCONS03(void *param)

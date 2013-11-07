@@ -372,15 +372,15 @@ void Route::Draw(ocpnDC& dc, ViewPort& VP)
 	if (m_bVisible)
 		DrawPointWhich(dc, 1, &rpt1);
 
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
-	RoutePoint* prp1 = node->GetData();
-	node = node->GetNext();
+	RoutePointList::iterator node = pRoutePointList->begin();
+	RoutePoint* prp1 = *node;
+	++node;
 
 	if (!m_bVisible && prp1->m_bKeepXRoute)
 		prp1->Draw(dc);
 
-	while (node) {
-		RoutePoint* prp2 = node->GetData();
+	while (node != pRoutePointList->end()) {
+		RoutePoint* prp2 = *node;
 		if (!m_bVisible && prp2->m_bKeepXRoute)
 			prp2->Draw(dc);
 		else if (m_bVisible)
@@ -450,7 +450,7 @@ void Route::Draw(ocpnDC& dc, ViewPort& VP)
 		rpt1 = rpt2;
 		prp1 = prp2;
 
-		node = node->GetNext();
+		++node;
 	}
 }
 
@@ -792,17 +792,17 @@ void Route::UpdateSegmentDistances(double planspeed)
 	double route_len = 0.0;
 	double route_time = 0.0;
 
-	wxRoutePointListNode* node = pRoutePointList->GetFirst();
+	RoutePointList::iterator node = pRoutePointList->begin();
 
-	if (node) {
-		RoutePoint* prp0 = node->GetData();
+	if (node != pRoutePointList->end()) {
+		RoutePoint* prp0 = *node;
 		slat1 = prp0->m_lat;
 		slon1 = prp0->m_lon;
 
-		node = node->GetNext();
+		++node;
 
-		while (node) {
-			RoutePoint* prp = node->GetData();
+		while (node != pRoutePointList->end()) {
+			RoutePoint* prp = *node;
 			slat2 = prp->m_lat;
 			slon2 = prp->m_lon;
 
@@ -866,7 +866,7 @@ void Route::UpdateSegmentDistances(double planspeed)
 			}
 
 			prp0 = prp;
-			node = node->GetNext();
+			++node;
 		}
 	}
 

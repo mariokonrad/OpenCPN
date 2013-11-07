@@ -2030,7 +2030,7 @@ void options::SetInitialSettings()
 		ps57CtlListBox->Clear();
 		marinersStdXref.clear();
 
-		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++ ) {
+		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++ ) {
 			OBJLElement *pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
 			wxString item;
 			if( iPtr < ps52plib->OBJLDescriptions.size() ) {

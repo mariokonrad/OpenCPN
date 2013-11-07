@@ -1129,3 +1129,18 @@ void ToolBarSimple::SetToolNormalBitmapEx(wxToolBarToolBase* tool, const wxStrin
 	}
 }
 
+size_t ToolBarSimple::GetToolsCount() const
+{
+	return m_tools.size();
+}
+
+int ToolBarSimple::GetNoRowsOrColumns() const
+{
+	return m_currentRowsOrColumns;
+}
+
+int ToolBarSimple::GetLineCount() const
+{
+	return m_LineCount;
+}
+

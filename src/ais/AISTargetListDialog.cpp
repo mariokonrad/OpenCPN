@@ -68,45 +68,48 @@ BEGIN_EVENT_TABLE(AISTargetListDialog, wxPanel)
 	EVT_CLOSE(AISTargetListDialog::OnClose)
 END_EVENT_TABLE()
 
-static int ItemCompare(AIS_Target_Data *pAISTarget1, AIS_Target_Data *pAISTarget2)
+static int ItemCompare(AIS_Target_Data* pAISTarget1, AIS_Target_Data* pAISTarget2)
 {
 	wxString s1, s2;
 	double n1 = 0.;
 	double n2 = 0.;
 	bool b_cmptype_num = false;
 
-	//    Don't sort if target list count is too large
-	if( g_AisTargetList_count > 1000 ) return 0;
+	// Don't sort if target list count is too large
+	if (g_AisTargetList_count > 1000)
+		return 0;
 
-	AIS_Target_Data *t1 = pAISTarget1;
-	AIS_Target_Data *t2 = pAISTarget2;
+	AIS_Target_Data* t1 = pAISTarget1;
+	AIS_Target_Data* t2 = pAISTarget2;
 
-	if( t1->Class == AIS_SART ) {
-		if( t2->Class == AIS_DSC )
+	if (t1->Class == AIS_SART) {
+		if (t2->Class == AIS_DSC)
 			return 0;
 		else
 			return -1;
 	}
 
-	if( t2->Class == AIS_SART ) {
-		if( t1->Class == AIS_DSC )
+	if (t2->Class == AIS_SART) {
+		if (t1->Class == AIS_DSC)
 			return 0;
 		else
 			return 1;
 	}
 
-	switch( g_AisTargetList_sortColumn ){
+	switch (g_AisTargetList_sortColumn) {
 		case tlNAME:
-			s1 = trimAISField( t1->ShipName );
-			if( ( t1->Class == AIS_BASE ) || ( t1->Class == AIS_SART ) ) s1 = _T("-");
+			s1 = trimAISField(t1->ShipName);
+			if ((t1->Class == AIS_BASE) || (t1->Class == AIS_SART))
+				s1 = _T("-");
 
-			s2 = trimAISField( t2->ShipName );
-			if( ( t2->Class == AIS_BASE ) || ( t2->Class == AIS_SART ) ) s2 = _T("-");
+			s2 = trimAISField(t2->ShipName);
+			if ((t2->Class == AIS_BASE) || (t2->Class == AIS_SART))
+				s2 = _T("-");
 			break;
 
 		case tlCALL:
-			s1 = trimAISField( t1->CallSign );
-			s2 = trimAISField( t2->CallSign );
+			s1 = trimAISField(t1->CallSign);
+			s2 = trimAISField(t2->CallSign);
 			break;
 
 		case tlMMSI:
@@ -116,154 +119,170 @@ static int ItemCompare(AIS_Target_Data *pAISTarget1, AIS_Target_Data *pAISTarget
 			break;
 
 		case tlCLASS:
-			s1 = t1->Get_class_string( true );
-			s2 = t2->Get_class_string( true );
+			s1 = t1->Get_class_string(true);
+			s2 = t2->Get_class_string(true);
 			break;
 
 		case tlTYPE:
-			s1 = t1->Get_vessel_type_string( false );
-			if( ( t1->Class == AIS_BASE ) || ( t1->Class == AIS_SART ) ) s1 = _T("-");
+			s1 = t1->Get_vessel_type_string(false);
+			if ((t1->Class == AIS_BASE) || (t1->Class == AIS_SART))
+				s1 = _T("-");
 
-			s2 = t2->Get_vessel_type_string( false );
-			if( ( t1->Class == AIS_BASE ) || ( t1->Class == AIS_SART ) ) s2 = _T("-");
+			s2 = t2->Get_vessel_type_string(false);
+			if ((t1->Class == AIS_BASE) || (t1->Class == AIS_SART))
+				s2 = _T("-");
 			break;
 
 		case tlNAVSTATUS: {
-							  if( ( t1->NavStatus <= 15 ) && ( t1->NavStatus >= 0 ) ) {
-								  if( t1->Class == AIS_SART ) {
-									  if( t1->NavStatus == RESERVED_14 ) s1 = _("Active");
-									  else if( t1->NavStatus == UNDEFINED ) s1 = _("Testing");
-								  } else
-									  s1 = ais_get_status(t1->NavStatus);
-							  } else
-								  s1 = _("-");
+			if ((t1->NavStatus <= 15) && (t1->NavStatus >= 0)) {
+				if (t1->Class == AIS_SART) {
+					if (t1->NavStatus == RESERVED_14)
+						s1 = _("Active");
+					else if (t1->NavStatus == UNDEFINED)
+						s1 = _("Testing");
+				} else
+					s1 = ais_get_status(t1->NavStatus);
+			} else
+				s1 = _("-");
 
-							  if( ( t1->Class == AIS_ATON ) || ( t1->Class == AIS_BASE )
-									  || ( t1->Class == AIS_CLASS_B ) ) s1 = _T("-");
+			if ((t1->Class == AIS_ATON) || (t1->Class == AIS_BASE) || (t1->Class == AIS_CLASS_B))
+				s1 = _T("-");
 
-							  if( ( t2->NavStatus <= 15 ) && ( t2->NavStatus >= 0 ) ) {
-								  if( t2->Class == AIS_SART ) {
-									  if( t2->NavStatus == RESERVED_14 ) s2 = _("Active");
-									  else if( t2->NavStatus == UNDEFINED ) s2 = _("Testing");
-								  } else
-									  s2 = ais_get_status(t2->NavStatus);
-							  } else
-								  s2 = _("-");
+			if ((t2->NavStatus <= 15) && (t2->NavStatus >= 0)) {
+				if (t2->Class == AIS_SART) {
+					if (t2->NavStatus == RESERVED_14)
+						s2 = _("Active");
+					else if (t2->NavStatus == UNDEFINED)
+						s2 = _("Testing");
+				} else
+					s2 = ais_get_status(t2->NavStatus);
+			} else
+				s2 = _("-");
 
-							  if( ( t2->Class == AIS_ATON ) || ( t2->Class == AIS_BASE )
-									  || ( t2->Class == AIS_CLASS_B ) ) s2 = _T("-");
+			if ((t2->Class == AIS_ATON) || (t2->Class == AIS_BASE) || (t2->Class == AIS_CLASS_B))
+				s2 = _T("-");
 
-							  break;
-						  }
+			break;
+		}
 
 		case tlBRG: {
-						int brg1 = wxRound( t1->Brg );
-						if( brg1 == 360 ) n1 = 0.;
-						else
-							n1 = brg1;
+			int brg1 = wxRound(t1->Brg);
+			if (brg1 == 360)
+				n1 = 0.0;
+			else
+				n1 = brg1;
 
-						int brg2 = wxRound( t2->Brg );
-						if( brg2 == 360 ) n2 = 0.;
-						else
-							n2 = brg2;
+			int brg2 = wxRound(t2->Brg);
+			if (brg2 == 360)
+				n2 = 0.0;
+			else
+				n2 = brg2;
 
-						b_cmptype_num = true;
-						break;
-					}
+			b_cmptype_num = true;
+			break;
+		}
 
 		case tlCOG: {
-						if( ( t1->COG >= 360.0 ) || ( t1->Class == AIS_ATON ) || ( t1->Class == AIS_BASE ) ) n1 =
-							-1.0;
-						else {
-							int crs = wxRound( t1->COG );
-							if( crs == 360 ) n1 = 0.;
-							else
-								n1 = crs;
-						}
+			if ((t1->COG >= 360.0) || (t1->Class == AIS_ATON) || (t1->Class == AIS_BASE))
+				n1 = -1.0;
+			else {
+				int crs = wxRound(t1->COG);
+				if (crs == 360)
+					n1 = 0.;
+				else
+					n1 = crs;
+			}
 
-						if( ( t2->COG >= 360.0 ) || ( t2->Class == AIS_ATON ) || ( t2->Class == AIS_BASE ) ) n2 =
-							-1.0;
-						else {
-							int crs = wxRound( t2->COG );
-							if( crs == 360 ) n2 = 0.;
-							else
-								n2 = crs;
-						}
+			if ((t2->COG >= 360.0) || (t2->Class == AIS_ATON) || (t2->Class == AIS_BASE))
+				n2 = -1.0;
+			else {
+				int crs = wxRound(t2->COG);
+				if (crs == 360)
+					n2 = 0.;
+				else
+					n2 = crs;
+			}
 
-						b_cmptype_num = true;
-						break;
-					}
+			b_cmptype_num = true;
+			break;
+		}
 
 		case tlSOG: {
-						if( ( t1->SOG > 100. ) || ( t1->Class == AIS_ATON ) || ( t1->Class == AIS_BASE ) ) n1 =
-							-1.0;
-						else
-							n1 = t1->SOG;
+			if ((t1->SOG > 100.) || (t1->Class == AIS_ATON) || (t1->Class == AIS_BASE))
+				n1 = -1.0;
+			else
+				n1 = t1->SOG;
 
-						if( ( t2->SOG > 100. ) || ( t2->Class == AIS_ATON ) || ( t2->Class == AIS_BASE ) ) n2 =
-							-1.0;
-						else
-							n2 = t2->SOG;
+			if ((t2->SOG > 100.) || (t2->Class == AIS_ATON) || (t2->Class == AIS_BASE))
+				n2 = -1.0;
+			else
+				n2 = t2->SOG;
 
-						b_cmptype_num = true;
-						break;
-					}
-		case tlCPA:
-					{
-						if( ( !t1->bCPA_Valid ) || ( t1->Class == AIS_ATON ) || ( t1->Class == AIS_BASE ) ) n1 =
-							99999.0;
-						else
-							n1 = t1->CPA;
+			b_cmptype_num = true;
+			break;
+		}
 
-						if( ( !t2->bCPA_Valid ) || ( t2->Class == AIS_ATON ) || ( t2->Class == AIS_BASE ) ) n2 =
-							99999.0;
-						else
-							n2 = t2->CPA;
+		case tlCPA: {
+			if ((!t1->bCPA_Valid) || (t1->Class == AIS_ATON) || (t1->Class == AIS_BASE))
+				n1 = 99999.0;
+			else
+				n1 = t1->CPA;
 
-						b_cmptype_num = true;
-						break;
-					}
-		case tlTCPA:
-					{
-						if( ( !t1->bCPA_Valid ) || ( t1->Class == AIS_ATON ) || ( t1->Class == AIS_BASE ) ) n1 =
-							99999.0;
-						else
-							n1 = t1->TCPA;
+			if ((!t2->bCPA_Valid) || (t2->Class == AIS_ATON) || (t2->Class == AIS_BASE))
+				n2 = 99999.0;
+			else
+				n2 = t2->CPA;
 
-						if( ( !t2->bCPA_Valid ) || ( t2->Class == AIS_ATON ) || ( t2->Class == AIS_BASE ) ) n2 =
-							99999.0;
-						else
-							n2 = t2->TCPA;
+			b_cmptype_num = true;
+			break;
+		}
 
-						b_cmptype_num = true;
-						break;
-					}
+		case tlTCPA: {
+			if ((!t1->bCPA_Valid) || (t1->Class == AIS_ATON) || (t1->Class == AIS_BASE))
+				n1 = 99999.0;
+			else
+				n1 = t1->TCPA;
+
+			if ((!t2->bCPA_Valid) || (t2->Class == AIS_ATON) || (t2->Class == AIS_BASE))
+				n2 = 99999.0;
+			else
+				n2 = t2->TCPA;
+
+			b_cmptype_num = true;
+			break;
+		}
+
 		case tlRNG: {
-						n1 = t1->Range_NM;
-						n2 = t2->Range_NM;
-						b_cmptype_num = true;
-						break;
-					}
+			n1 = t1->Range_NM;
+			n2 = t2->Range_NM;
+			b_cmptype_num = true;
+			break;
+		}
 
 		default:
-					break;
+			break;
 	}
 
-	if( !b_cmptype_num ) {
-		if( g_bAisTargetList_sortReverse ) return s2.Cmp( s1 );
-		return s1.Cmp( s2 );
+	if (!b_cmptype_num) {
+		if (g_bAisTargetList_sortReverse)
+			return s2.Cmp(s1);
+		return s1.Cmp(s2);
 	} else {
 		//    If numeric sort values are equal, secondary sort is on Range_NM
-		if( g_bAisTargetList_sortReverse ) {
-			if( n2 > n1 ) return 1;
-			else if( n2 < n1 ) return -1;
+		if (g_bAisTargetList_sortReverse) {
+			if (n2 > n1)
+				return 1;
+			else if (n2 < n1)
+				return -1;
 			else
-				return ( t1->Range_NM > t2->Range_NM ); //0;
+				return (t1->Range_NM > t2->Range_NM); // 0;
 		} else {
-			if( n2 > n1 ) return -1;
-			else if( n2 < n1 ) return 1;
+			if (n2 > n1)
+				return -1;
+			else if (n2 < n1)
+				return 1;
 			else
-				return ( t1->Range_NM > t2->Range_NM ); //0;
+				return (t1->Range_NM > t2->Range_NM); // 0;
 		}
 	}
 }
@@ -554,14 +573,14 @@ void AISTargetListDialog::Disconnect_decoder()
 
 void AISTargetListDialog::SetColorScheme()
 {
-	DimeControl( this );
+	DimeControl(this);
 }
 
-void AISTargetListDialog::OnPaneClose( wxAuiManagerEvent& event )
+void AISTargetListDialog::OnPaneClose(wxAuiManagerEvent& event)
 {
-	if( event.pane->name == _T("AISTargetList") ) {
-		g_AisTargetList_perspective = m_pAuiManager->SavePaneInfo( *event.pane );
-		//event.Veto();
+	if (event.pane->name == _T("AISTargetList")) {
+		g_AisTargetList_perspective = m_pAuiManager->SavePaneInfo(*event.pane);
+		// event.Veto();
 	}
 	event.Skip();
 }
@@ -569,20 +588,21 @@ void AISTargetListDialog::OnPaneClose( wxAuiManagerEvent& event )
 void AISTargetListDialog::UpdateButtons()
 {
 	long item = -1;
-	item = m_pListCtrlAISTargets->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-	bool enable = ( item != -1 );
+	item = m_pListCtrlAISTargets->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	bool enable = (item != -1);
 
-	m_pButtonInfo->Enable( enable );
+	m_pButtonInfo->Enable(enable);
 
-	if( m_pdecoder && item != -1 ) {
-		AIS_Target_Data *pAISTargetSel = m_pdecoder->Get_Target_Data_From_MMSI(
-				m_pMMSI_array->Item( item ) );
-		if( pAISTargetSel && ( !pAISTargetSel->b_positionOnceValid ) ) enable = false;
+	if (m_pdecoder && item != -1) {
+		AIS_Target_Data* pAISTargetSel
+			= m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(item));
+		if (pAISTargetSel && (!pAISTargetSel->b_positionOnceValid))
+			enable = false;
 	}
-	m_pButtonJumpTo->Enable( enable );
+	m_pButtonJumpTo->Enable(enable);
 }
 
-void AISTargetListDialog::OnTargetSelected(wxListEvent &)
+void AISTargetListDialog::OnTargetSelected(wxListEvent&)
 {
 	UpdateButtons();
 }
@@ -592,58 +612,59 @@ void AISTargetListDialog::DoTargetQuery(int mmsi)
 	ShowAISTargetQueryDialog(m_pparent, mmsi);
 }
 
-/*
- ** When an item is activated in AIS TArget List then opens the AIS Target Query Dialog
- */
-void AISTargetListDialog::OnTargetDefaultAction(wxListEvent & event)
+// When an item is activated in AIS TArget List then opens the AIS Target Query Dialog
+void AISTargetListDialog::OnTargetDefaultAction(wxListEvent& event)
 {
 	long mmsi_no;
 	if ((mmsi_no = event.GetData()))
 		DoTargetQuery(mmsi_no);
 }
 
-void AISTargetListDialog::OnTargetQuery(wxCommandEvent &)
+void AISTargetListDialog::OnTargetQuery(wxCommandEvent&)
 {
 	long selItemID = -1;
-	selItemID = m_pListCtrlAISTargets->GetNextItem( selItemID, wxLIST_NEXT_ALL,
-			wxLIST_STATE_SELECTED );
-	if( selItemID == -1 ) return;
+	selItemID
+		= m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (selItemID == -1)
+		return;
 
-	if( m_pdecoder ) {
-		AIS_Target_Data *pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(
-				m_pMMSI_array->Item( selItemID ) );
-		if( pAISTarget ) DoTargetQuery( pAISTarget->MMSI );
+	if (m_pdecoder) {
+		AIS_Target_Data* pAISTarget
+			= m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(selItemID));
+		if (pAISTarget)
+			DoTargetQuery(pAISTarget->MMSI);
 	}
 }
 
-void AISTargetListDialog::OnTargetListColumnClicked( wxListEvent &event )
+void AISTargetListDialog::OnTargetListColumnClicked(wxListEvent& event)
 {
 	int key = event.GetColumn();
 	wxListItem item;
-	item.SetMask( wxLIST_MASK_IMAGE );
-	if( key == g_AisTargetList_sortColumn ) g_bAisTargetList_sortReverse =
-		!g_bAisTargetList_sortReverse;
+	item.SetMask(wxLIST_MASK_IMAGE);
+	if (key == g_AisTargetList_sortColumn)
+		g_bAisTargetList_sortReverse = !g_bAisTargetList_sortReverse;
 	else {
-		item.SetImage( -1 );
-		m_pListCtrlAISTargets->SetColumn( g_AisTargetList_sortColumn, item );
+		item.SetImage(-1);
+		m_pListCtrlAISTargets->SetColumn(g_AisTargetList_sortColumn, item);
 		g_bAisTargetList_sortReverse = false;
 		g_AisTargetList_sortColumn = key;
 	}
-	item.SetImage( g_bAisTargetList_sortReverse ? 1 : 0 );
-	if( g_AisTargetList_sortColumn >= 0 ) {
-		m_pListCtrlAISTargets->SetColumn( g_AisTargetList_sortColumn, item );
+	item.SetImage(g_bAisTargetList_sortReverse ? 1 : 0);
+	if (g_AisTargetList_sortColumn >= 0) {
+		m_pListCtrlAISTargets->SetColumn(g_AisTargetList_sortColumn, item);
 		UpdateAISTargetList();
 	}
 }
 
-void AISTargetListDialog::OnTargetScrollTo(wxCommandEvent &)
+void AISTargetListDialog::OnTargetScrollTo(wxCommandEvent&)
 {
 	long selItemID = -1;
-	selItemID = m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	selItemID
+		= m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if (selItemID == -1)
 		return;
 
-	AIS_Target_Data *pAISTarget = NULL;
+	AIS_Target_Data* pAISTarget = NULL;
 	if (m_pdecoder)
 		pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(selItemID));
 
@@ -651,106 +672,111 @@ void AISTargetListDialog::OnTargetScrollTo(wxCommandEvent &)
 		gFrame->JumpToPosition(pAISTarget->Lat, pAISTarget->Lon, cc1->GetVPScale());
 }
 
-void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent &)
+void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent&)
 {
 	long selItemID = -1;
-	selItemID = m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	selItemID
+		= m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if (selItemID == -1)
 		return;
 
-	AIS_Target_Data *pAISTarget = NULL;
+	AIS_Target_Data* pAISTarget = NULL;
 	if (m_pdecoder)
 		pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(selItemID));
 
-	if( pAISTarget ) {
-		RoutePoint * pWP = new RoutePoint(pAISTarget->Lat, pAISTarget->Lon, g_default_wp_icon, wxEmptyString);
-		pWP->m_bIsolatedMark = true;                      // This is an isolated mark
-		pSelect->AddSelectableRoutePoint( pAISTarget->Lat, pAISTarget->Lon, pWP );
-		pConfig->AddNewWayPoint( pWP, -1 );    // use auto next num
+	if (pAISTarget) {
+		RoutePoint* pWP
+			= new RoutePoint(pAISTarget->Lat, pAISTarget->Lon, g_default_wp_icon, wxEmptyString);
+		pWP->m_bIsolatedMark = true; // This is an isolated mark
+		pSelect->AddSelectableRoutePoint(pAISTarget->Lat, pAISTarget->Lon, pWP);
+		pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 
-		if( pRouteManagerDialog && pRouteManagerDialog->IsShown() )
+		if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 			pRouteManagerDialog->UpdateWptListCtrl();
-		cc1->undo->BeforeUndoableAction(UndoAction::Undo_CreateWaypoint, pWP,UndoAction::Undo_HasParent, NULL );
-		cc1->undo->AfterUndoableAction( NULL );
-		Refresh( false );
+		cc1->undo->BeforeUndoableAction(UndoAction::Undo_CreateWaypoint, pWP,
+										UndoAction::Undo_HasParent, NULL);
+		cc1->undo->AfterUndoableAction(NULL);
+		Refresh(false);
 	}
 }
 
-void AISTargetListDialog::OnLimitRange(wxCommandEvent &)
+void AISTargetListDialog::OnLimitRange(wxCommandEvent&)
 {
 	g_AisTargetList_range = m_pSpinCtrlRange->GetValue();
 	UpdateAISTargetList();
 }
 
-AIS_Target_Data *AISTargetListDialog::GetpTarget( unsigned int list_item )
+AIS_Target_Data* AISTargetListDialog::GetpTarget(unsigned int list_item)
 {
-	return m_pdecoder->Get_Target_Data_From_MMSI( m_pMMSI_array->Item( list_item ) );
+	return m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(list_item));
 }
 
-void AISTargetListDialog::UpdateAISTargetList( void )
+void AISTargetListDialog::UpdateAISTargetList(void)
 {
-	if( m_pdecoder ) {
-		int sb_position = m_pListCtrlAISTargets->GetScrollPos( wxVERTICAL );
+	if (!m_pdecoder)
+		return;
 
-		//    Capture the MMSI of the curently selected list item
-		long selItemID = -1;
-		selItemID = m_pListCtrlAISTargets->GetNextItem( selItemID, wxLIST_NEXT_ALL,
-				wxLIST_STATE_SELECTED );
+	int sb_position = m_pListCtrlAISTargets->GetScrollPos(wxVERTICAL);
 
-		int selMMSI = -1;
-		if( selItemID != -1 ) selMMSI = m_pMMSI_array->Item( selItemID );
+	// Capture the MMSI of the curently selected list item
+	long selItemID = -1;
+	selItemID
+		= m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 
-		AIS_Target_Hash::iterator it;
-		AIS_Target_Hash *current_targets = m_pdecoder->GetTargetList();
-		wxListItem item;
+	int selMMSI = -1;
+	if (selItemID != -1)
+		selMMSI = m_pMMSI_array->Item(selItemID);
 
-		int index = 0;
-		m_pMMSI_array->Clear();
+	AIS_Target_Hash::iterator it;
+	AIS_Target_Hash* current_targets = m_pdecoder->GetTargetList();
+	wxListItem item;
 
-		for( it = ( *current_targets ).begin(); it != ( *current_targets ).end(); ++it, ++index ) {
-			AIS_Target_Data *pAISTarget = it->second;
-			item.SetId( index );
+	int index = 0;
+	m_pMMSI_array->Clear();
 
-			if( NULL != pAISTarget ) {
-				if( ( pAISTarget->b_positionOnceValid )
-						&& ( pAISTarget->Range_NM <= g_AisTargetList_range ) ) m_pMMSI_array->Add(
-						pAISTarget->MMSI );
-				else if( !pAISTarget->b_positionOnceValid ) m_pMMSI_array->Add( pAISTarget->MMSI );
+	for (it = (*current_targets).begin(); it != (*current_targets).end(); ++it, ++index) {
+		AIS_Target_Data* pAISTarget = it->second;
+		item.SetId(index);
+
+		if (NULL != pAISTarget) {
+			if ((pAISTarget->b_positionOnceValid)
+				&& (pAISTarget->Range_NM <= g_AisTargetList_range))
+				m_pMMSI_array->Add(pAISTarget->MMSI);
+			else if (!pAISTarget->b_positionOnceValid)
+				m_pMMSI_array->Add(pAISTarget->MMSI);
+		}
+	}
+
+	m_pListCtrlAISTargets->SetItemCount(m_pMMSI_array->size());
+
+	g_AisTargetList_count = m_pMMSI_array->size();
+
+	m_pListCtrlAISTargets->SetScrollPos(wxVERTICAL, sb_position, false);
+
+	//    Restore selected item
+	long item_sel = 0;
+	if ((selItemID != -1) && (selMMSI != -1)) {
+		for (unsigned int i = 0; i < m_pMMSI_array->size(); i++) {
+			if (m_pMMSI_array->Item(i) == selMMSI) {
+				item_sel = i;
+				break;
 			}
 		}
+	}
 
-		m_pListCtrlAISTargets->SetItemCount( m_pMMSI_array->GetCount() );
+	if (m_pMMSI_array->size())
+		m_pListCtrlAISTargets->SetItemState(item_sel, wxLIST_STATE_SELECTED | wxLIST_STATE_FOCUSED,
+											wxLIST_STATE_SELECTED | wxLIST_STATE_FOCUSED);
+	else
+		m_pListCtrlAISTargets->DeleteAllItems();
 
-		g_AisTargetList_count = m_pMMSI_array->GetCount();
-
-		m_pListCtrlAISTargets->SetScrollPos( wxVERTICAL, sb_position, false );
-
-		//    Restore selected item
-		long item_sel = 0;
-		if( ( selItemID != -1 ) && ( selMMSI != -1 ) ) {
-			for( unsigned int i = 0; i < m_pMMSI_array->GetCount(); i++ ) {
-				if( m_pMMSI_array->Item( i ) == selMMSI ) {
-					item_sel = i;
-					break;
-				}
-			}
-		}
-
-		if( m_pMMSI_array->GetCount() ) m_pListCtrlAISTargets->SetItemState( item_sel,
-				wxLIST_STATE_SELECTED | wxLIST_STATE_FOCUSED,
-				wxLIST_STATE_SELECTED | wxLIST_STATE_FOCUSED );
-		else
-			m_pListCtrlAISTargets->DeleteAllItems();
-
-		wxString count;
-		count.Printf( _T("%d"), m_pMMSI_array->GetCount() );
-		m_pTextTargetCount->ChangeValue( count );
+	wxString count;
+	count.Printf(_T("%d"), m_pMMSI_array->size());
+	m_pTextTargetCount->ChangeValue(count);
 
 #ifdef __WXMSW__
-		m_pListCtrlAISTargets->Refresh( false );
+	m_pListCtrlAISTargets->Refresh(false);
 #endif
-	}
 }
-
 }
 

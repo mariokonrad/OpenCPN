@@ -51,27 +51,18 @@ GpxRootElement::GpxRootElement(
 	SetAttribute( "xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" );
 	SetMetadata(metadata);
 	if (waypoints) {
-		wxListOfGpxWptsNode *waypoint = waypoints->GetFirst();
-		while (waypoint)
-		{
-			AddWaypoint(waypoint->GetData());
-			waypoint = waypoint->GetNext();
+		for (ListOfGpxWpts::iterator waypoint = waypoints->begin(); waypoint != waypoints->end(); ++waypoint) {
+			AddWaypoint(*waypoint);
 		}
 	}
 	if (routes) {
-		wxListOfGpxRoutesNode *route = routes->GetFirst();
-		while (route)
-		{
-			AddRoute(route->GetData());
-			route = route->GetNext();
+		for (ListOfGpxRoutes::iterator route = routes->begin(); route != routes->end(); ++routes) {
+			AddRoute(*route);
 		}
 	}
 	if (tracks) {
-		wxListOfGpxTracksNode *track = tracks->GetFirst();
-		while (track)
-		{
-			AddTrack(track->GetData());
-			track = track->GetNext();
+		for (ListOfGpxTracks::iterator track = tracks->begin(); track != tracks->end(); ++track) {
+			AddTrack(*track);
 		}
 	}
 	SetExtensions(extensions);

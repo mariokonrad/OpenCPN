@@ -50,11 +50,8 @@ GpxRteElement::GpxRteElement(
 		SetProperty(wxString(_T("src")), src);
 	if (links)
 	{
-		wxListOfGpxLinksNode *link = links->GetFirst();
-		while (link)
-		{
-			LinkEndChild(link->GetData());
-			link = link->GetNext();
+		for (ListOfGpxLinks::iterator link = links->begin(); link != links->end(); ++link) {
+			LinkEndChild(*link);
 		}
 	}
 	if (number != -1)
@@ -64,12 +61,9 @@ GpxRteElement::GpxRteElement(
 	if (extensions)
 		LinkEndChild(extensions);
 	if (waypoints) {
-		wxListOfGpxWptsNode *wpt = waypoints->GetFirst();
-		while (wpt)
-		{
+		for (ListOfGpxWpts::iterator wpt = waypoints->begin(); wpt != waypoints->end(); ++wpt) {
 			//TODO: Here we should check whether the waypoint is a *rtept*
-			AppendRtePoint(wpt->GetData());
-			wpt = wpt->GetNext();
+			AppendRtePoint(*wpt);
 		}
 	}
 }

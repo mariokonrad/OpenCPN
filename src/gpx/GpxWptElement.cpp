@@ -75,11 +75,8 @@ GpxWptElement::GpxWptElement(
 	if (!src.IsEmpty())
 		SetProperty(wxString(_T("src")), src);
 	if (links) {
-		wxListOfGpxLinksNode *link = links->GetFirst();
-		while (link)
-		{
-			LinkEndChild(link->GetData());
-			link = link->GetNext();
+		for (ListOfGpxLinks::iterator link = links->begin(); link != links->end(); ++link) {
+			LinkEndChild(*link);
 		}
 	}
 	if (!sym.IsEmpty() /*&& (sym != _T("empty"))*/) //"empty" is a valid symbol for us, we need to preserve it, otherwise it would be non existent and replaced by a circle on next load...

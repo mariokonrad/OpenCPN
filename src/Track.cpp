@@ -461,7 +461,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog)
 	int ic = 0;
 	int next_ic = 0;
 	int back_ic = 0;
-	int nPoints = pRoutePointList->GetCount();
+	int nPoints = pRoutePointList->size();
 	bool isProminent = true;
 	double delta_dist;
 	double delta_hdg;
@@ -577,8 +577,8 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog)
 
 	// add last point, if needed
 	if (delta_dist >= g_TrackDeltaDistance) {
-		pWP_dst = new RoutePoint(pRoutePointList->GetLast()->GetData()->m_lat,
-								 pRoutePointList->GetLast()->GetData()->m_lon, icon, _T ( "" ));
+		pWP_dst = new RoutePoint(pRoutePointList->back()->m_lat,
+								 pRoutePointList->back()->m_lon, icon, _T ( "" ));
 		route->AddPoint(pWP_dst);
 
 		pWP_dst->m_bShowName = false;

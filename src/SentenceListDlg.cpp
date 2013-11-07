@@ -144,11 +144,11 @@ void SentenceListDlg::SetSentenceList(wxArrayString sentences)
 {
 	m_sentences = sentences;
 
-	if( (m_sentences.Count() == 0) && (m_type == ConnectionParams::WHITELIST) ){
+	if ((m_sentences.Count() == 0) && (m_type == ConnectionParams::WHITELIST)) {
 		for (size_t i = 0; i < m_clbSentences->GetCount(); i++)
 			m_clbSentences->Check(i, true);
 	}
-	if( (m_sentences.Count() == 0) && (m_type == ConnectionParams::BLACKLIST) ){
+	if ((m_sentences.Count() == 0) && (m_type == ConnectionParams::BLACKLIST)) {
 		for (size_t i = 0; i < m_clbSentences->GetCount(); i++)
 			m_clbSentences->Check(i, false);
 	}
@@ -166,14 +166,14 @@ void SentenceListDlg::BuildSentenceArray()
 	m_sentences.Clear();
 	wxString s;
 	for (size_t i = 0; i < m_clbSentences->GetCount(); i++) {
-		if( m_clbSentences->IsChecked(i))
-			m_sentences.Add( m_clbSentences->GetString(i) );
+		if (m_clbSentences->IsChecked(i))
+			m_sentences.Add(m_clbSentences->GetString(i));
 	}
 }
 
 void SentenceListDlg::FillSentences()
 {
-	if(m_sentences.Count() == 0)
+	if (m_sentences.Count() == 0)
 		return;
 
 	for (size_t i = 0; i < m_clbSentences->GetCount(); i++)
@@ -181,64 +181,60 @@ void SentenceListDlg::FillSentences()
 
 	for (size_t i = 0; i < m_sentences.Count(); i++) {
 		int item = m_clbSentences->FindString(m_sentences[i]);
-		if( wxNOT_FOUND != item )
+		if (wxNOT_FOUND != item)
 			m_clbSentences->Check(item);
 		else {
 			m_clbSentences->Append(m_sentences[i]);
 			int item = m_clbSentences->FindString(m_sentences[i]);
 			m_clbSentences->Check(item);
 		}
-
 	}
 
 	m_btnDel->Enable(false);
 }
 
-void SentenceListDlg::OnStcSelect(wxCommandEvent &)
+void SentenceListDlg::OnStcSelect(wxCommandEvent&)
 {
 	m_btnDel->Enable();
 }
 
-void SentenceListDlg::OnCLBSelect(wxCommandEvent &)
+void SentenceListDlg::OnCLBSelect(wxCommandEvent&)
 {
 	// Only active the "Delete" button if the selection is not in the standard list
 	int isel = m_clbSentences->GetSelection();
 	bool bdelete = true;
-	if(isel >= 0) {
+	if (isel >= 0) {
 		wxString s = m_clbSentences->GetString(isel);
 		for (size_t i = 0; i < standard_sentences.Count(); i++) {
-			if(standard_sentences[i] == s){
+			if (standard_sentences[i] == s) {
 				bdelete = false;
 				break;
 			}
 		}
-	}
-	else
+	} else
 		bdelete = false;
-	m_btnDel->Enable( bdelete );
-
+	m_btnDel->Enable(bdelete);
 }
 
-void SentenceListDlg::OnCLBToggle(wxCommandEvent &)
+void SentenceListDlg::OnCLBToggle(wxCommandEvent&)
 {
 	BuildSentenceArray();
 }
 
-void SentenceListDlg::OnAddClick(wxCommandEvent &)
+void SentenceListDlg::OnAddClick(wxCommandEvent&)
 {
-	wxString stc = wxGetTextFromUser(_("Enter the NMEA sentence (2, 3 or 5 characters)"), _("Enter the NMEA sentence"));
-	if (stc.Length() == 2 ||stc.Length() == 3 || stc.Length() == 5)
-	{
+	wxString stc = wxGetTextFromUser(_("Enter the NMEA sentence (2, 3 or 5 characters)"),
+									 _("Enter the NMEA sentence"));
+	if (stc.Length() == 2 || stc.Length() == 3 || stc.Length() == 5) {
 		m_sentences.Add(stc);
 		m_clbSentences->Append(stc);
 		int item = m_clbSentences->FindString(stc);
 		m_clbSentences->Check(item);
-	}
-	else
+	} else
 		wxMessageBox(_("An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can also have a two letter prefix identifying the source, or TALKER, of the message (The whole sentences then looks like GPGGA or AITXT). You may filter out all the sentences with certain TALKER prefix (like GP, AI etc.). The filter accepts just these three formats."), _("Wrong length of the NMEA filter value"));
 }
 
-void SentenceListDlg::OnDeleteClick(wxCommandEvent &)
+void SentenceListDlg::OnDeleteClick(wxCommandEvent&)
 {
 	BuildSentenceArray();
 
@@ -247,21 +243,21 @@ void SentenceListDlg::OnDeleteClick(wxCommandEvent &)
 	wxString s = m_clbSentences->GetString(isel);
 	bool bdelete = true;
 	for (size_t i = 0; i < standard_sentences.Count(); i++) {
-		if(standard_sentences[i] == s){
+		if (standard_sentences[i] == s) {
 			bdelete = false;
 			break;
 		}
 	}
 
-	if(bdelete) {
-		m_sentences.Remove( s );
+	if (bdelete) {
+		m_sentences.Remove(s);
 		m_clbSentences->Delete(isel);
 	}
 
 	FillSentences();
 }
 
-void SentenceListDlg::OnClearAllClick(wxCommandEvent &)
+void SentenceListDlg::OnClearAllClick(wxCommandEvent&)
 {
 	for (size_t i = 0; i < m_clbSentences->GetCount(); i++)
 		m_clbSentences->Check(i, false);
@@ -269,7 +265,7 @@ void SentenceListDlg::OnClearAllClick(wxCommandEvent &)
 	BuildSentenceArray();
 }
 
-void SentenceListDlg::OnCheckAllClick(wxCommandEvent &)
+void SentenceListDlg::OnCheckAllClick(wxCommandEvent&)
 {
 	for (size_t i = 0; i < m_clbSentences->GetCount(); i++)
 		m_clbSentences->Check(i, true);
@@ -281,17 +277,16 @@ void SentenceListDlg::SetType(int io, ConnectionParams::ListType type)
 {
 	m_type = type;
 
-	switch (io)
-	{
-		case 0:                 // input
+	switch (io) {
+		case 0: // input
 		default:
-			if(type == ConnectionParams::WHITELIST)
+			if (type == ConnectionParams::WHITELIST)
 				m_pclbBox->SetLabel(_("Accept Sentences"));
 			else
 				m_pclbBox->SetLabel(_("Ignore Sentences"));
 			break;
-		case 1:                 // output
-			if(type == ConnectionParams::WHITELIST)
+		case 1: // output
+			if (type == ConnectionParams::WHITELIST)
 				m_pclbBox->SetLabel(_("Transmit Sentences"));
 			else
 				m_pclbBox->SetLabel(_("Drop Sentences"));
@@ -300,12 +295,12 @@ void SentenceListDlg::SetType(int io, ConnectionParams::ListType type)
 	Refresh();
 }
 
-void SentenceListDlg::OnCancelClick(wxCommandEvent & event)
+void SentenceListDlg::OnCancelClick(wxCommandEvent& event)
 {
 	event.Skip();
 }
 
-void SentenceListDlg::OnOkClick(wxCommandEvent & event)
+void SentenceListDlg::OnOkClick(wxCommandEvent& event)
 {
 	event.Skip();
 }

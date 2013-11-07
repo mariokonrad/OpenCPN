@@ -208,7 +208,7 @@ int RazdsParser::ParseLUPT( FILE *fp )
 
 			unsigned int index = 0;
 
-			while( index < pLUPARRAYtyped->GetCount() ) {
+			while( index < pLUPARRAYtyped->size() ) {
 				LUPrec *pLUPCandidate = pLUPARRAYtyped->Item( index );
 				if( LUP->RCID == pLUPCandidate->RCID ) {
 					plib->DestroyLUP( pLUPCandidate ); // empties the LUP

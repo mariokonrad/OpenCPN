@@ -440,12 +440,12 @@ ret_point:
 			NMEA0183 oNMEA0183;
 			oNMEA0183.TalkerID = _T("EC");
 
-			int nProg = pr->pRoutePointList->GetCount() + 1;
+			int nProg = pr->pRoutePointList->size() + 1;
 			if (pProgress)
 				pProgress->SetRange(100);
 
 			int progress_stall = 500;
-			if (pr->pRoutePointList->GetCount() > 10)
+			if (pr->pRoutePointList->size() > 10)
 				progress_stall = 200;
 
 			if (!pProgress)
@@ -584,9 +584,9 @@ ret_point:
 				bool bnew_sentence = true;
 				int sent_len = 0;
 
-				wxRoutePointListNode* node = pr->pRoutePointList->GetFirst();
-				while (node) {
-					RoutePoint* prp = node->GetData();
+				RoutePointList::iterator i = pr->pRoutePointList->begin();
+				while (i != pr->pRoutePointList->end()) {
+					RoutePoint* prp = *i;
 					unsigned int name_len = prp->GetName().Truncate(6).Len();
 					if (g_GPS_Ident == _T("FurunoGP3X"))
 						name_len = 7; // six chars, with leading space for "Skip Code"
@@ -595,7 +595,7 @@ ret_point:
 						sent_len = tare_length;
 						sent_len += name_len + 1; // with comma
 						bnew_sentence = false;
-						node = node->GetNext();
+						++i;
 
 					} else {
 						if (sent_len + name_len > max_length) {
@@ -603,7 +603,7 @@ ret_point:
 							bnew_sentence = true;
 						} else {
 							sent_len += name_len + 1; // with comma
-							node = node->GetNext();
+							++i;
 						}
 					}
 				}
@@ -614,16 +614,16 @@ ret_point:
 				int n_run = 1;
 				bnew_sentence = true;
 
-				node = pr->pRoutePointList->GetFirst();
-				while (node) {
-					RoutePoint* prp = node->GetData();
+				RoutePointList::iterator node = pr->pRoutePointList->begin();
+				while (node != pr->pRoutePointList->end()) {
+					RoutePoint* prp = *node;
 					wxString name = prp->GetName().Truncate(6);
 					if (g_GPS_Ident == _T("FurunoGP3X")) {
 						name = prp->GetName();
 						name += _T("000000");
 						name.Truncate(6);
-						name.Prepend(
-							_T(" ")); // What Furuno calls "Skip Code", space means use the WP
+						// What Furuno calls "Skip Code", space means use the WP
+						name.Prepend(_T(" "));
 					}
 
 					unsigned int name_len = name.Len();
@@ -650,7 +650,7 @@ ret_point:
 						snt.Sentence.Clear();
 
 						oNMEA0183.Rte.AddWaypoint(name);
-						node = node->GetNext();
+						++node;
 					} else {
 						if (sent_len + name_len > max_length) {
 							n_run++;
@@ -660,7 +660,7 @@ ret_point:
 						} else {
 							sent_len += name_len + 1; // comma
 							oNMEA0183.Rte.AddWaypoint(name);
-							node = node->GetNext();
+							++node;
 						}
 					}
 				}
@@ -669,7 +669,7 @@ ret_point:
 				if (snt.Sentence.Len() > tare_length)
 					sentence_array.Add(snt.Sentence);
 
-				for (unsigned int ii = 0; ii < sentence_array.GetCount(); ii++) {
+				for (unsigned int ii = 0; ii < sentence_array.size(); ii++) {
 					if (dstr->SendSentence(sentence_array.Item(ii)))
 						LogOutputMessage(sentence_array.Item(ii), dstr->GetPort(), false);
 

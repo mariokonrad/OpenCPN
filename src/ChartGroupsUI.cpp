@@ -131,7 +131,7 @@ void ChartGroupsUI::PopulateTreeCtrl(
 	ptc->SetItemHasChildren(m_rootId);
 
 	wxString dirname;
-	int nDir = dir_array.GetCount();
+	int nDir = dir_array.size();
 	for (int i = 0; i < nDir; i++) {
 		wxString dirname = dir_array.Item(i);
 		if (!dirname.IsEmpty()) {
@@ -206,7 +206,7 @@ void ChartGroupsUI::OnRemoveChartItem(wxCommandEvent& event)
 						ChartGroupElement* pelement
 							= pGroup->m_element_array.Item(group_item_index);
 						bool b_duplicate = false;
-						for (unsigned int k = 0; k < pelement->m_missing_name_array.GetCount();
+						for (unsigned int k = 0; k < pelement->m_missing_name_array.size();
 							 k++) {
 							if (pelement->m_missing_name_array.Item(k) == sel_item) {
 								b_duplicate = true;
@@ -330,7 +330,7 @@ int ChartGroupsUI::FindGroupBranch(ChartGroup* pGroup, wxTreeCtrl* ptree, wxTree
 
 	// Find the index and element pointer of the target branch in the Group
 	unsigned int target_item_index = -1;
-	for (unsigned int i = 0; i < pGroup->m_element_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < pGroup->m_element_array.size(); i++) {
 		wxString target = pGroup->m_element_array.Item(i)->m_element_name;
 		if (branch_name == target) {
 			target_item_index = i;
@@ -362,7 +362,7 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 
 				//    Walk the children of the expanded node, marking any items which appear in
 				//    the "missing" list
-				if ((target_element->m_missing_name_array.GetCount())) {
+				if ((target_element->m_missing_name_array.size())) {
 					wxString full_root = branch_name;
 					full_root += branch_adder;
 					full_root += wxString(wxFILE_SEP_PATH);
@@ -374,7 +374,7 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 						target_string += ptree->GetItemText(child);
 
 						for (unsigned int k = 0;
-							 k < target_element->m_missing_name_array.GetCount(); k++) {
+							 k < target_element->m_missing_name_array.size(); k++) {
 							if (target_element->m_missing_name_array.Item(k) == target_string) {
 								ptree->SetItemTextColour(child, wxColour(128, 128, 128));
 								break;
@@ -390,12 +390,12 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 
 void ChartGroupsUI::BuildNotebookPages(ChartGroupArray* pGroupArray)
 {
-	for (unsigned int i = 0; i < pGroupArray->GetCount(); i++) {
+	for (unsigned int i = 0; i < pGroupArray->size(); i++) {
 		ChartGroup* pGroup = pGroupArray->Item(i);
 		wxTreeCtrl* ptc = AddEmptyGroupPage(pGroup->m_group_name);
 
 		wxString itemname;
-		int nItems = pGroup->m_element_array.GetCount();
+		int nItems = pGroup->m_element_array.size();
 		for (int i = 0; i < nItems; i++) {
 			wxString itemname = pGroup->m_element_array.Item(i)->m_element_name;
 			if (!itemname.IsEmpty()) {
@@ -525,16 +525,16 @@ void ChartGroupsUI::CompletePanel(void)
 ChartGroupArray* ChartGroupsUI::CloneChartGroupArray(ChartGroupArray* s)
 {
 	ChartGroupArray* d = new ChartGroupArray;
-	for (unsigned int i = 0; i < s->GetCount(); i++) {
+	for (unsigned int i = 0; i < s->size(); i++) {
 		ChartGroup* psg = s->Item(i);
 		ChartGroup* pdg = new ChartGroup;
 		pdg->m_group_name = psg->m_group_name;
 
-		for (unsigned int j = 0; j < psg->m_element_array.GetCount(); j++) {
+		for (unsigned int j = 0; j < psg->m_element_array.size(); j++) {
 			ChartGroupElement* pde = new ChartGroupElement;
 			pde->m_element_name = psg->m_element_array.Item(j)->m_element_name;
 			for (unsigned int k = 0;
-				 k < psg->m_element_array.Item(j)->m_missing_name_array.GetCount(); k++) {
+				 k < psg->m_element_array.Item(j)->m_missing_name_array.size(); k++) {
 				wxString missing_name = psg->m_element_array.Item(j)->m_missing_name_array.Item(k);
 				pde->m_missing_name_array.Add(missing_name);
 			}
@@ -549,10 +549,10 @@ void ChartGroupsUI::EmptyChartGroupArray(ChartGroupArray* s)
 {
 	if (!s)
 		return;
-	for (unsigned int i = 0; i < s->GetCount(); i++) {
+	for (unsigned int i = 0; i < s->size(); i++) {
 		ChartGroup* psg = s->Item(i);
 
-		for (unsigned int j = 0; j < psg->m_element_array.GetCount(); j++) {
+		for (unsigned int j = 0; j < psg->m_element_array.size(); j++) {
 			ChartGroupElement* pe = psg->m_element_array.Item(j);
 			pe->m_missing_name_array.Clear();
 			psg->m_element_array.RemoveAt(j);

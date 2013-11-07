@@ -1003,7 +1003,7 @@ void RouteManagerDialog::OnRteDeleteClick(wxCommandEvent&)
 	}
 
 	if (busy) {
-		for (unsigned int i = 0; i < list.GetCount(); ++i) {
+		for (unsigned int i = 0; i < list.size(); ++i) {
 			Route* route = list.Item(i)->GetData();
 			if (route) {
 				pConfig->DeleteConfigRoute(route);
@@ -1703,7 +1703,7 @@ void RouteManagerDialog::OnTrkDeleteClick(wxCommandEvent&)
 	}
 
 	if (busy) {
-		for (unsigned int i = 0; i < list.GetCount(); i++) {
+		for (unsigned int i = 0; i < list.size(); i++) {
 			Track* track = (Track*)(list.Item(i)->GetData());
 			if (track) {
 				pConfig->DeleteConfigRoute(track);
@@ -2065,16 +2065,17 @@ void RouteManagerDialog::OnWptZoomtoClick(wxCommandEvent&)
 	gFrame->JumpToPosition(wp->m_lat, wp->m_lon, cc1->GetVPScale());
 }
 
-void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent &)
+void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent&)
 {
 	RoutePointList list;
 
-	int answer = OCPNMessageBox( this, _("Are you sure you want to delete the selected object(s)"), wxString( _("OpenCPN Alert") ), wxYES_NO );
-	if ( answer != wxID_YES )
+	int answer = OCPNMessageBox(this, _("Are you sure you want to delete the selected object(s)"),
+								wxString(_("OpenCPN Alert")), wxYES_NO);
+	if (answer != wxID_YES)
 		return;
 
 	bool busy = false;
-	if( m_pWptListCtrl->GetSelectedItemCount() ) {
+	if (m_pWptListCtrl->GetSelectedItemCount()) {
 		::wxBeginBusyCursor();
 		m_bNeedConfigFlush = true;
 		busy = true;
@@ -2082,48 +2083,46 @@ void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent &)
 
 	long item = -1;
 	long item_last_selected = -1;
-	for ( ;; )
-	{
+	for (;;) {
 		item = m_pWptListCtrl->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-		if ( item == -1 )
+		if (item == -1)
 			break;
 
 		item_last_selected = item;
-		RoutePoint *wp = (RoutePoint *) m_pWptListCtrl->GetItemData( item );
+		RoutePoint* wp = (RoutePoint*)m_pWptListCtrl->GetItemData(item);
 
-		if( wp && !wp->m_bIsInLayer)
-			list.Append( wp );
+		if (wp && !wp->m_bIsInLayer)
+			list.Append(wp);
 	}
 
-	if( busy ) {
-		for(unsigned int i=0 ; i < list.GetCount() ; i++) {
-			RoutePoint *wp = list.Item(i)->GetData();
-			if( wp ) {
-
-				if ( wp->m_bIsInRoute || wp->m_bIsInTrack )
-				{
-					if ( wxYES == OCPNMessageBox(this,  _( "The waypoint you want to delete is used in a route, do you really want to delete it?" ), _( "OpenCPN Alert" ), wxYES_NO ))
-						pWayPointMan->DestroyWaypoint( wp );
+	if (busy) {
+		for (unsigned int i = 0; i < list.size(); i++) {
+			RoutePoint* wp = list.Item(i)->GetData();
+			if (wp) {
+				if (wp->m_bIsInRoute || wp->m_bIsInTrack) {
+					if (wxYES
+						== OCPNMessageBox(this, _("The waypoint you want to delete is used in a route, do you really want to delete it?"),
+										  _("OpenCPN Alert"), wxYES_NO))
+						pWayPointMan->DestroyWaypoint(wp);
+				} else {
+					pWayPointMan->DestroyWaypoint(wp);
 				}
-				else
-					pWayPointMan->DestroyWaypoint( wp );
-
 			}
 		}
 
-		long item_next = m_pWptListCtrl->GetNextItem( item_last_selected );         // next in list
-		RoutePoint *wp_next = NULL;
-		if( item_next > -1 )
-			wp_next = (RoutePoint *) m_pWptListCtrl->GetItemData( item_next );
+		long item_next = m_pWptListCtrl->GetNextItem(item_last_selected); // next in list
+		RoutePoint* wp_next = NULL;
+		if (item_next > -1)
+			wp_next = (RoutePoint*)m_pWptListCtrl->GetItemData(item_next);
 
 		m_lastWptItem = item_next;
 
 		UpdateRouteListCtrl();
 		UpdateTrkListCtrl();
-		UpdateWptListCtrl( wp_next, true );
+		UpdateWptListCtrl(wp_next, true);
 
-		if( pMarkPropDialog ) {
-			pMarkPropDialog->SetRoutePoint( NULL );
+		if (pMarkPropDialog) {
+			pMarkPropDialog->SetRoutePoint(NULL);
 			pMarkPropDialog->UpdateProperties();
 		}
 
@@ -2131,7 +2130,6 @@ void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent &)
 		cc1->Refresh();
 		::wxEndBusyCursor();
 	}
-
 }
 
 void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)

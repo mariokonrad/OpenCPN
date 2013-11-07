@@ -41,7 +41,7 @@ PluginListPanel::PluginListPanel(
 
 	int max_dy = 0;
 
-	for( unsigned int i=0 ; i < pPluginArray->GetCount() ; i++ )
+	for( unsigned int i=0 ; i < pPluginArray->size() ; i++ )
 	{
 		PluginPanel *pPluginPanel = new PluginPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, pPluginArray->Item(i) );
 		itemBoxSizer01->Add( pPluginPanel, 0, wxEXPAND|wxALL, 0 );
@@ -80,7 +80,7 @@ PluginListPanel::~PluginListPanel()
 
 void PluginListPanel::UpdateSelections()
 {
-	for(unsigned int i=0 ; i < m_PluginItems.GetCount() ; i++) {
+	for(unsigned int i=0 ; i < m_PluginItems.size() ; i++) {
 		PluginPanel *pPluginPanel = m_PluginItems.Item(i);
 		if( pPluginPanel ){
 			pPluginPanel->SetSelected( pPluginPanel->GetSelected() );

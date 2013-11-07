@@ -123,7 +123,7 @@ LUPArrayContainer::LUPArrayContainer()
 LUPArrayContainer::~LUPArrayContainer()
 {
 	if (LUPArray) {
-		for (unsigned int il = 0; il < LUPArray->GetCount(); il++)
+		for (unsigned int il = 0; il < LUPArray->size(); il++)
 			s52plib::DestroyLUP(LUPArray->Item(il));
 
 		LUPArray->Clear();
@@ -151,7 +151,7 @@ LUPHashIndex* LUPArrayContainer::GetArrayIndexHelper(const char* objectName)
 
 		//      Find the first matching entry in the LUP Array
 		int index = 0;
-		int index_max = LUPArray->GetCount();
+		int index_max = LUPArray->size();
 		int first_match = 0;
 		int ocnt = 0;
 		LUPrec* LUPCandidate;
@@ -263,7 +263,7 @@ s52plib::~s52plib()
 	S52_flush_Plib();
 
 	//      Free the OBJL Array Elements
-	for (unsigned int iPtr = 0; iPtr < pOBJLArray->GetCount(); iPtr++)
+	for (unsigned int iPtr = 0; iPtr < pOBJLArray->size(); iPtr++)
 		free(pOBJLArray->Item(iPtr));
 
 	delete pOBJLArray;
@@ -392,7 +392,7 @@ LUPrec* s52plib::FindBestLUP(wxArrayOfLUPrec* LUPArray, unsigned int startIndex,
 	//  Check the parameters
 	if (0 == count)
 		return NULL;
-	if (startIndex >= LUPArray->GetCount())
+	if (startIndex >= LUPArray->size())
 		return NULL;
 
 	// setup default return to the first LUP that matches Feature name.
@@ -415,7 +415,7 @@ LUPrec* s52plib::FindBestLUP(wxArrayOfLUPrec* LUPArray, unsigned int startIndex,
 		char* currATT = pObj->att_array;
 		int attIdx = 0;
 
-		for (unsigned int iLUPAtt = 0; iLUPAtt < LUPCandidate->ATTCArray->GetCount(); iLUPAtt++) {
+		for (unsigned int iLUPAtt = 0; iLUPAtt < LUPCandidate->ATTCArray->size(); iLUPAtt++) {
 
 			// Get the LUP attribute name
 			wxString LATTC = LUPCandidate->ATTCArray->Item(iLUPAtt);
@@ -539,7 +539,7 @@ LUPrec* s52plib::FindBestLUP(wxArrayOfLUPrec* LUPArray, unsigned int startIndex,
 		//      Used later for resolving "ties"
 
 		int nattr_matching_on_candidate = countATT;
-		int nattrs_on_candidate = LUPCandidate->ATTCArray->GetCount();
+		int nattrs_on_candidate = LUPCandidate->ATTCArray->size();
 		double candidate_score = (1. * nattr_matching_on_candidate) / (1. * nattrs_on_candidate);
 
 		//       According to S52 specs, match must be perfect,
@@ -1045,7 +1045,7 @@ void s52plib::DestroyPattRules(RuleHash* rh)
 void s52plib::DestroyLUPArray(wxArrayOfLUPrec* pLUPArray)
 {
 	if (pLUPArray) {
-		for (unsigned int il = 0; il < pLUPArray->GetCount(); il++)
+		for (unsigned int il = 0; il < pLUPArray->size(); il++)
 			DestroyLUP(pLUPArray->Item(il));
 
 		pLUPArray->Clear();
@@ -1056,7 +1056,7 @@ void s52plib::DestroyLUPArray(wxArrayOfLUPrec* pLUPArray)
 void s52plib::ClearCNSYLUPArray(void)
 {
 	if (condSymbolLUPArray) {
-		for (unsigned int i = 0; i < condSymbolLUPArray->GetCount(); i++)
+		for (unsigned int i = 0; i < condSymbolLUPArray->size(); i++)
 			DestroyLUP(condSymbolLUPArray->Item(i));
 		condSymbolLUPArray->Clear();
 	}
@@ -1091,7 +1091,7 @@ bool s52plib::S52_flush_Plib()
 	_cond_sym->clear();
 	delete _cond_sym;
 
-	for (unsigned int ipa = 0; ipa < pAlloc->GetCount(); ipa++) {
+	for (unsigned int ipa = 0; ipa < pAlloc->size(); ipa++) {
 		void* t = pAlloc->Item(ipa);
 		free(t);
 	}
@@ -3762,7 +3762,7 @@ bool s52plib::PreloadOBJLFromCSV(const wxString& csv_file)
 			//    Filter out any duplicates, in a case insensitive way
 			//    i.e. only the first of "DEPARE" and "depare" is added
 			bool bdup = false;
-			for (unsigned int iPtr = 0; iPtr < pOBJLArray->GetCount(); iPtr++) {
+			for (unsigned int iPtr = 0; iPtr < pOBJLArray->size(); iPtr++) {
 				OBJLElement* pOLEt = (OBJLElement*)(pOBJLArray->Item(iPtr));
 				if (!token.CmpNoCase(wxString(pOLEt->OBJLName, wxConvUTF8))) {
 					bdup = true;
@@ -3794,7 +3794,7 @@ void s52plib::UpdateOBJLArray(S57Obj* obj)
 	bool bNeedNew = true;
 	OBJLElement* pOLE;
 
-	for (unsigned int iPtr = 0; iPtr < pOBJLArray->GetCount(); iPtr++) {
+	for (unsigned int iPtr = 0; iPtr < pOBJLArray->size(); iPtr++) {
 		pOLE = (OBJLElement*)(pOBJLArray->Item(iPtr));
 		if (!strncmp(pOLE->OBJLName, obj->FeatureName, 6)) {
 			obj->iOBJL = iPtr;
@@ -3810,7 +3810,7 @@ void s52plib::UpdateOBJLArray(S57Obj* obj)
 		pOLE->nViz = 1;
 
 		pOBJLArray->Add((void*)pOLE);
-		obj->iOBJL = pOBJLArray->GetCount() - 1;
+		obj->iOBJL = pOBJLArray->size() - 1;
 	}
 }
 
@@ -5902,7 +5902,7 @@ void s52plib::GetAndAddCSRules(ObjRazRules* rzRules, Rules* rules)
 
 	wxArrayOfLUPrec* la = condSymbolLUPArray;
 	int index = 0;
-	int index_max = la->GetCount();
+	int index_max = la->size();
 	LUP = NULL;
 
 	while ((index < index_max)) {

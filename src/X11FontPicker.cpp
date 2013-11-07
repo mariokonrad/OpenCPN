@@ -222,11 +222,11 @@ void X11FontPicker::InitializeAllAvailableFonts()
 		st.GetNextToken();
 		st.GetNextToken();
 		wxString facename = st.GetNextToken();
-		for ( jname=0; jname<pFaceNameArray->GetCount(); jname++ ) {
+		for ( jname=0; jname<pFaceNameArray->size(); jname++ ) {
 			if ( facename == pFaceNameArray->Item ( jname ) )
 				break;
 		}
-		if ( jname >= pFaceNameArray->GetCount() ) {
+		if ( jname >= pFaceNameArray->size() ) {
 			pFaceNameArray->Add ( facename );
 		}
 	}
@@ -479,11 +479,11 @@ void X11FontPicker::SetChoiceOptionsFromFacename (const wxString &facename)
 			st.GetNextToken();
 			st.GetNextToken();
 			wxString pointsize = st.GetNextToken();
-			for ( jname=0; jname<PointSizeArray.GetCount(); jname++ ) {
+			for ( jname=0; jname<PointSizeArray.size(); jname++ ) {
 				if ( pointsize == PointSizeArray.Item ( jname ) )
 					break;
 			}
-			if ( jname >= PointSizeArray.GetCount() ) {
+			if ( jname >= PointSizeArray.size() ) {
 				PointSizeArray.Add ( pointsize );
 			}
 		}
@@ -501,12 +501,12 @@ void X11FontPicker::SetChoiceOptionsFromFacename (const wxString &facename)
 		st.GetNextToken();
 		wxString weight = st.GetNextToken();
 		unsigned int jname;
-		for ( jname=0; jname<WeightArray.GetCount(); jname++ )
+		for ( jname=0; jname<WeightArray.size(); jname++ )
 		{
 			if ( weight == WeightArray.Item ( jname ) )
 				break;
 		}
-		if ( jname >= WeightArray.GetCount() ) {
+		if ( jname >= WeightArray.size() ) {
 			WeightArray.Add ( weight );
 		}
 	}

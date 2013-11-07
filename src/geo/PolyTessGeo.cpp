@@ -1433,7 +1433,7 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, 
 	free (geoPt);
 
 	//      Free up any "Combine" vertices created
-	for(unsigned int i = 0; i < s_pCombineVertexArray->GetCount() ; i++)
+	for(unsigned int i = 0; i < s_pCombineVertexArray->size() ; i++)
 		free (s_pCombineVertexArray->Item(i));
 	delete s_pCombineVertexArray;
 
@@ -1814,7 +1814,7 @@ int PolyTessGeo::BuildTessGL(void)
 	delete m_pxgeom;
 
 	//      Free up any "Combine" vertices created
-	for(unsigned int i = 0; i < s_pCombineVertexArray->GetCount() ; i++)
+	for(unsigned int i = 0; i < s_pCombineVertexArray->size() ; i++)
 		free (s_pCombineVertexArray->Item(i));
 	delete s_pCombineVertexArray;
 

@@ -262,7 +262,7 @@ void InitializeUserColors(void)
 		wxColorHashMap * phash = new wxColorHashMap;
 		user_color_hash_table.push_back(phash);
 
-		for (unsigned int ic = 0; ic < (*i)->color->GetCount(); ++ic) {
+		for (unsigned int ic = 0; ic < (*i)->color->size(); ++ic) {
 			S52color * c2 = (S52color *)((*i)->color->Item(ic));
 
 			wxColour c(c2->R, c2->G, c2->B);
@@ -281,7 +281,7 @@ void DeInitializeUserColors(void)
 {
 	for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
 		colTable * ct = *i;
-		for (unsigned int j = 0; j < ct->color->GetCount(); ++j) {
+		for (unsigned int j = 0; j < ct->color->size(); ++j) {
 			S52color * c = (S52color *) ct->color->Item(j);
 			delete c;
 		}

@@ -233,7 +233,7 @@ static int _atPtPos(S57Obj* objNew, wxArrayPtrVoid* curntList, int bSectorCheck)
 	if (NULL == curntList)
 		return false;
 
-	for (i = 0; i < curntList->GetCount(); i++) {
+	for (i = 0; i < curntList->size(); i++) {
 		S57Obj* objOld = (S57Obj*)curntList->Item(i);
 
 		if ((objOld->x == objNew->x) && (objOld->y == objNew->y)) {

@@ -156,7 +156,7 @@ S57Obj::~S57Obj()
     //  Don't delete any allocated records of simple copy clones
     if( !bIsClone ) {
         if( attVal ) {
-            for( unsigned int iv = 0; iv < attVal->GetCount(); iv++ ) {
+            for( unsigned int iv = 0; iv < attVal->size(); iv++ ) {
                 S57attVal *vv = attVal->Item( iv );
                 void *v2 = vv->value;
                 free( v2 );
@@ -2835,7 +2835,7 @@ bool s57chart::BuildThumbnail( const wxString &bmpname )
 //      Borrow the OBJLArray temporarily to set the object type visibility for this render
 //      First, make a copy for the curent OBJLArray viz settings, setting current value to invisible
 
-    unsigned int OBJLCount = ps52plib->pOBJLArray->GetCount();
+    unsigned int OBJLCount = ps52plib->pOBJLArray->size();
 //      int *psave_viz = new int[OBJLCount];
     int *psave_viz = (int *) malloc( OBJLCount * sizeof(int) );
 
@@ -3001,7 +3001,7 @@ bool s57chart::CreateHeaderDataFromENC( void )
 
         //    Allocate the storage
 
-        m_nCOVREntries = pAuxCntArray->GetCount();
+        m_nCOVREntries = pAuxCntArray->size();
 
         //    If only one M_COVR,CATCOV=1 object was found,
         //    assign the geometry to the one and only COVR
@@ -3037,7 +3037,7 @@ bool s57chart::CreateHeaderDataFromENC( void )
 
 
         //      And for the NoCovr regions
-        m_nNoCOVREntries = pNoCovrCntArray->GetCount();
+        m_nNoCOVREntries = pNoCovrCntArray->size();
 
         if( m_nNoCOVREntries ) {
             //    Create new NoCOVR entries
@@ -3392,7 +3392,7 @@ void s57chart::GetChartNameFromTXT( const wxString& FullPath, wxString &Name )
     wxString name;
     name.Clear();
 
-    for( unsigned int j = 0; j < FileList.GetCount(); j++ ) {
+    for( unsigned int j = 0; j < FileList.size(); j++ ) {
         wxFileName file( FileList.Item( j ) );
         if( ( ( file.GetExt() ).MakeUpper() ) == _T("TXT") ) {
             //  Look for the line beginning with the name of the .000 file
@@ -3561,7 +3561,7 @@ int s57chart::GetUpdateFileArray( const wxFileName file000, wxArrayString *UpFil
     dummy_array->Sort( ExtensionCompare );
 
 //      Get the update number of the last in the list
-    if( dummy_array->GetCount() ) {
+    if( dummy_array->size() ) {
         wxString Last = dummy_array->Last();
         wxFileName fnl( Last );
         ext = fnl.GetExt();
@@ -3586,7 +3586,7 @@ int s57chart::ValidateAndCountUpdates( const wxFileName file000, const wxString 
     wxArrayString *UpFiles = new wxArrayString;
     retval = GetUpdateFileArray( file000, UpFiles );
 
-    if( UpFiles->GetCount() ) {
+    if( UpFiles->size() ) {
         //      The s57reader of ogr requires that update set be sequentially complete
         //      to perform all the updates.  However, some NOAA ENC distributions are
         //      not complete, as apparently some interim updates have been  withdrawn.
@@ -4024,7 +4024,7 @@ int s57chart::BuildSENCFile( const wxString& FullPath000, const wxString& SENCFi
     //  Delete any temporary (working) real and dummy update files,
     //  as well as .000 file created by ValidateAndCountUpdates()
     if( m_tmpup_array ) {
-        for( unsigned int iff = 0; iff < m_tmpup_array->GetCount(); iff++ )
+        for( unsigned int iff = 0; iff < m_tmpup_array->size(); iff++ )
             remove( m_tmpup_array->Item( iff ).mb_str() );
         delete m_tmpup_array;
     }

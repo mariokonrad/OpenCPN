@@ -104,7 +104,7 @@ void ChartDatabase::UpdateChartClassDescriptorArray(void)
 	// If the PlugIn Manager exists, get the array of dynamically loadable chart class names
 	if (g_pi_manager) {
 		wxArrayString array = g_pi_manager->GetPlugInChartClassNameArray();
-		for (unsigned int j = 0; j < array.GetCount(); j++) {
+		for (unsigned int j = 0; j < array.size(); j++) {
 			// Instantiate a blank chart to retrieve the directory search mask for this chart type
 			wxString class_name = array.Item(j);
 			ChartPlugInWrapper* cpiw = new ChartPlugInWrapper(class_name);
@@ -243,7 +243,7 @@ bool ChartDatabase::Write(const wxString& filePath)
 	if (!ofs.Ok())
 		return false;
 
-	ChartTableHeader cth(m_chartDirs.GetCount(), chartTable.size());
+	ChartTableHeader cth(m_chartDirs.size(), chartTable.size());
 	cth.Write(ofs);
 
 	for (int iDir = 0; iDir < cth.GetDirEntries(); iDir++) {
@@ -630,7 +630,7 @@ int ChartDatabase::TraverseDirAndAddCharts(
 	dir_magic = new_magic;
 
 	// Look for all possible defined chart classes
-	for (unsigned int i = 0; i < m_ChartClassDescriptorArray.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_ChartClassDescriptorArray.size(); i++) {
 		nAdd += SearchDirAndAddCharts(dir_path, m_ChartClassDescriptorArray.Item(i), pprog);
 	}
 
@@ -827,7 +827,7 @@ int ChartDatabase::SearchDirAndAddCharts(wxString& dir_name_base, ChartClassDesc
 		FileList.Add(dir_plus);
 	}
 
-	int nFile = FileList.GetCount();
+	int nFile = FileList.size();
 
 	if (!nFile)
 		return false;
@@ -1144,14 +1144,14 @@ void ChartDatabase::ApplyGroupArray(ChartGroupArray* pGroupArray)
 
 		wxString chart_full_path(pcte->GetpFullPath(), wxConvUTF8);
 
-		for (unsigned int igroup = 0; igroup < pGroupArray->GetCount(); igroup++) {
+		for (unsigned int igroup = 0; igroup < pGroupArray->size(); igroup++) {
 			ChartGroup* pGroup = pGroupArray->Item(igroup);
-			for (unsigned int j = 0; j < pGroup->m_element_array.GetCount(); j++) {
+			for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
 				wxString element_root = pGroup->m_element_array.Item(j)->m_element_name;
 				if (chart_full_path.StartsWith(element_root)) {
 					bool b_add = true;
 					for (unsigned int k = 0;
-						 k < pGroup->m_element_array.Item(j)->m_missing_name_array.GetCount();
+						 k < pGroup->m_element_array.Item(j)->m_missing_name_array.size();
 						 k++) {
 						wxString missing_item
 							= pGroup->m_element_array.Item(j)->m_missing_name_array.Item(k);

@@ -1150,7 +1150,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	// This case is indicated if the candidate count is zero.
 	// If so, do not invalidate the ref chart
 	bool bf = false;
-	for (unsigned int i = 0; i < m_pcandidate_array->GetCount(); i++) {
+	for (unsigned int i = 0; i < m_pcandidate_array->size(); i++) {
 		QuiltCandidate* qc = m_pcandidate_array->Item(i);
 		if (qc->dbIndex == m_refchart_dbIndex) {
 			bf = true;
@@ -1158,7 +1158,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 		}
 	}
 
-	if (!bf && m_pcandidate_array->GetCount()) {
+	if (!bf && m_pcandidate_array->size()) {
 		m_refchart_dbIndex = GetNewRefChart();
 		BuildExtendedChartStackAndCandidateArray(bfull, m_refchart_dbIndex, vp_local);
 	}
@@ -1172,7 +1172,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	// "Draw" the reference chart first, since it is special in that it controls the fine vpscale
 	// setting
 	QuiltCandidate* pqc_ref = NULL;
-	for (ir = 0; ir < m_pcandidate_array->GetCount(); ir++) // find ref chart entry
+	for (ir = 0; ir < m_pcandidate_array->size(); ir++) // find ref chart entry
 	{
 		QuiltCandidate* pqc = m_pcandidate_array->Item(ir);
 		if (pqc->dbIndex == m_refchart_dbIndex) {
@@ -1201,7 +1201,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	// Now the rest of the candidates
 	bool b_has_overlays = false;
 	if (!vp_region.IsEmpty()) {
-		for (ir = 0; ir < m_pcandidate_array->GetCount(); ir++) {
+		for (ir = 0; ir < m_pcandidate_array->size(); ir++) {
 			QuiltCandidate* pqc = m_pcandidate_array->Item(ir);
 
 			if (pqc->dbIndex == m_refchart_dbIndex)
@@ -1264,7 +1264,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	// For S57 quilts, walk the list again to identify overlay cells found previously,
 	// and make sure they are always included and not eclipsed
 	if (b_has_overlays && (CHART_TYPE_S57 == m_reference_type)) {
-		for (ir = 0; ir < m_pcandidate_array->GetCount(); ir++) {
+		for (ir = 0; ir < m_pcandidate_array->size(); ir++) {
 			QuiltCandidate* pqc = m_pcandidate_array->Item(ir);
 
 			if (pqc->dbIndex == m_refchart_dbIndex)
@@ -1314,7 +1314,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 
 	m_eclipsed_stack_array.clear();
 
-	for (ir = 0; ir < m_pcandidate_array->GetCount(); ir++) {
+	for (ir = 0; ir < m_pcandidate_array->size(); ir++) {
 		QuiltCandidate* pqc = m_pcandidate_array->Item(ir);
 
 		if (!pqc->b_include) {
@@ -1367,7 +1367,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	// anyway
 	// Also enable any other charts which are the same scale as the first one added
 	bool b_vis = false;
-	for (unsigned int i = 0; i < m_pcandidate_array->GetCount(); i++) {
+	for (unsigned int i = 0; i < m_pcandidate_array->size(); i++) {
 		QuiltCandidate* pqc = m_pcandidate_array->Item(i);
 		if (pqc->b_include) {
 			b_vis = true;
@@ -1375,18 +1375,18 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 		}
 	}
 
-	if (!b_vis && m_pcandidate_array->GetCount()) {
+	if (!b_vis && m_pcandidate_array->size()) {
 		int add_scale = 0;
 
-		for (int i = m_pcandidate_array->GetCount() - 1; i >= 0; i--) {
+		for (int i = m_pcandidate_array->size() - 1; i >= 0; i--) {
 			QuiltCandidate* pqc = m_pcandidate_array->Item(i);
 			const ChartTableEntry& cte = ChartData->GetChartTableEntry(pqc->dbIndex);
 
-			//    Don't add cm93 yet, it is always covering the quilt...
+			// Don't add cm93 yet, it is always covering the quilt...
 			if (cte.GetChartType() == CHART_TYPE_CM93COMP)
 				continue;
 
-			//    Check intersection
+			// Check intersection
 			OCPNRegion vpck_region(vp_local.rv_rect);
 
 			OCPNRegion chart_region = pqc->quilt_region; // GetChartQuiltRegion( cte, vp_local );
@@ -1411,8 +1411,8 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 
 	destroy_patchlist();
 
-	if (m_pcandidate_array->GetCount()) {
-		for (int i = m_pcandidate_array->GetCount() - 1; i >= 0; i--) {
+	if (m_pcandidate_array->size()) {
+		for (int i = m_pcandidate_array->size() - 1; i >= 0; i--) {
 			QuiltCandidate* pqc = m_pcandidate_array->Item(i);
 
 			// cm93 add has been deferred until here

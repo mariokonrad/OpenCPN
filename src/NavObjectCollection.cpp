@@ -963,7 +963,7 @@ bool NavObjectCollection::CreateNavObjGPXTracks(void)
 {
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* track = *i;
-		if (track->pRoutePointList->GetCount()) {
+		if (track->pRoutePointList->size()) {
 			if (track->m_bIsTrack && (!track->m_bIsInLayer) && (!track->m_btemp))
 				GPXCreateTrk(m_gpx_root.append_child("trk"), track);
 		}

@@ -4889,7 +4889,7 @@ void ChartCanvas::FindRoutePointsAtCursor(float, bool setBeingEdited)
 		// Use route array to determine actual visibility for the point
 		bool brp_viz = false;
 		if (m_pEditRouteArray) {
-			for (unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ++ir) {
+			for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ++ir) {
 				Route* pr = static_cast<Route*>(m_pEditRouteArray->Item(ir));
 				if (pr->IsVisible()) {
 					brp_viz = true;
@@ -4903,7 +4903,7 @@ void ChartCanvas::FindRoutePointsAtCursor(float, bool setBeingEdited)
 		if (brp_viz) {
 			// Use route array to rubberband all affected routes
 			if (m_pEditRouteArray) { // Editing Waypoint as part of route
-				for (unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ++ir) {
+				for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ++ir) {
 					Route* pr = static_cast<Route*>(m_pEditRouteArray->Item(ir));
 					pr->m_bIsBeingEdited = setBeingEdited;
 				}
@@ -5417,7 +5417,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				wxRect pre_rect;
 
 				if (m_pEditRouteArray) {
-					for (unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ir++) {
+					for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ir++) {
 						Route* pr = (Route*)m_pEditRouteArray->Item(ir);
 						//      Need to validate route pointer
 						//      Route may be gone due to drgging close to ownship with
@@ -5455,7 +5455,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				wxRect post_rect;
 
 				if (m_pEditRouteArray) {
-					for (unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ir++) {
+					for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ir++) {
 						Route* pr = (Route*)m_pEditRouteArray->Item(ir);
 						if (g_pRouteMan->IsRouteValid(pr)) {
 							wxRect route_rect;
@@ -5554,7 +5554,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				pSelect->UpdateSelectableRouteSegments(m_pRoutePointEditTarget);
 
 				if (m_pEditRouteArray) {
-					for (unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ir++) {
+					for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ir++) {
 						Route* pr = (Route*)m_pEditRouteArray->Item(ir);
 						if (g_pRouteMan->IsRouteValid(pr)) {
 							pr->CalculateBBox();
@@ -5569,7 +5569,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				// Update the RouteProperties Dialog, if currently shown
 				if ((NULL != pRoutePropDialog) && (pRoutePropDialog->IsShown())) {
 					if (m_pEditRouteArray) {
-						for (unsigned int ir = 0; ir < m_pEditRouteArray->GetCount(); ir++) {
+						for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ir++) {
 							Route* pr = (Route*)m_pEditRouteArray->Item(ir);
 							if (g_pRouteMan->IsRouteValid(pr)) {
 								if (!pr->IsTrack() && pRoutePropDialog->getRoute() == pr) {
@@ -5744,7 +5744,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					// in the array for this point
 					m_pSelectedRoute = NULL;
 					if (proute_array) {
-						for (unsigned int ir = 0; ir < proute_array->GetCount(); ++ir) {
+						for (unsigned int ir = 0; ir < proute_array->size(); ++ir) {
 							Route* pr = static_cast<Route*>(proute_array->Item(ir));
 							if (pr->m_bRtIsActive) {
 								pSelectedActiveRoute = pr;
@@ -5754,7 +5754,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 						}
 
 						if (NULL == pSelectedVizRoute) {
-							for (unsigned int ir = 0; ir < proute_array->GetCount(); ++ir) {
+							for (unsigned int ir = 0; ir < proute_array->size(); ++ir) {
 								Route* pr = static_cast<Route*>(proute_array->Item(ir));
 								if (pr->IsVisible()) {
 									pSelectedVizRoute = pr;
@@ -6131,10 +6131,10 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 	//  ChartGroup SubMenu
 	wxMenuItem* subItemChart = contextMenu->AppendSubMenu(subMenuChart, _("Chart Groups"));
-	if (g_pGroupArray->GetCount()) {
+	if (g_pGroupArray->size()) {
 		subMenuChart->AppendRadioItem(ID_DEF_MENU_GROUPBASE, _("All Active Charts"));
 
-		for (unsigned int i = 0; i < g_pGroupArray->GetCount(); i++) {
+		for (unsigned int i = 0; i < g_pGroupArray->size(); i++) {
 			subMenuChart->AppendRadioItem(ID_DEF_MENU_GROUPBASE + i + 1,
 										  g_pGroupArray->Item(i)->m_group_name);
 			Connect(ID_DEF_MENU_GROUPBASE + i + 1, wxEVT_COMMAND_MENU_SELECTED,
@@ -6147,7 +6147,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	//  Add PlugIn Context Menu items
 	ArrayOfPlugInMenuItems item_array = g_pi_manager->GetPluginContextMenuItemArray();
 
-	for (unsigned int i = 0; i < item_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < item_array.size(); i++) {
 		PlugInMenuItemContainer* pimis = item_array.Item(i);
 		{
 			if (pimis->b_viz) {
@@ -7479,7 +7479,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			//  If found, make the callback
 			ArrayOfPlugInMenuItems item_array = g_pi_manager->GetPluginContextMenuItemArray();
 
-			for (unsigned int i = 0; i < item_array.GetCount(); i++) {
+			for (unsigned int i = 0; i < item_array.size(); i++) {
 				PlugInMenuItemContainer* pimis = item_array.Item(i);
 				{
 					if (pimis->id == event.GetId()) {
@@ -7495,7 +7495,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 	//  Chart Groups....
 	if ((event.GetId() >= ID_DEF_MENU_GROUPBASE)
-		&& (event.GetId() <= ID_DEF_MENU_GROUPBASE + (int)g_pGroupArray->GetCount())) {
+		&& (event.GetId() <= ID_DEF_MENU_GROUPBASE + (int)g_pGroupArray->size())) {
 		gFrame->SetGroupIndex(event.GetId() - ID_DEF_MENU_GROUPBASE);
 	}
 

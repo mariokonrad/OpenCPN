@@ -33,21 +33,18 @@ GpxTrksegElement::GpxTrksegElement(
 	: TiXmlElement("trkseg")
 {
 	if (waypoints) {
-		wxListOfGpxWptsNode *wpt = waypoints->GetFirst();
-		while (wpt)
-		{
-			//TODO: Here we should check whether the waypoint is a *trkpt*
-			LinkEndChild(wpt->GetData());
-			wpt = wpt->GetNext();
+		for (ListOfGpxWpts::iterator wpt = waypoints->begin(); wpt != waypoints->end(); ++wpt) {
+			// TODO: Here we should check whether the waypoint is a *trkpt*
+			LinkEndChild(*wpt);
 		}
 	}
 	if (extensions)
 		LinkEndChild(extensions);
 }
 
-void GpxTrksegElement::AppendTrkPoint(GpxWptElement * trkpt)
+void GpxTrksegElement::AppendTrkPoint(GpxWptElement* trkpt)
 {
-	//FIXME: can be reused for route and track segment
+	// FIXME: can be reused for route and track segment
 	LinkEndChild(trkpt);
 }
 

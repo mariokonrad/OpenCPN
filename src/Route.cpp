@@ -141,7 +141,7 @@ int Route::GetnPoints(void) const
 
 void Route::SetnPoints(void)
 {
-	m_nPoints = pRoutePointList->GetCount();
+	m_nPoints = pRoutePointList->size();
 }
 
 // The following is used only for route splitting, assumes just created, empty route
@@ -606,7 +606,7 @@ void Route::DeletePoint(RoutePoint* rp, bool bRenamePoints)
 	pSelect->DeleteAllSelectableRouteSegments(this);
 	pConfig->DeleteWayPoint(rp);
 
-	pRoutePointList->DeleteObject(rp);
+	pRoutePointList->remove(rp);
 
 	if ((rp->m_GUID.Len()) && (wxNOT_FOUND != RoutePointGUIDList.Index(rp->m_GUID)))
 		RoutePointGUIDList.Remove(rp->m_GUID);
@@ -638,7 +638,7 @@ void Route::RemovePoint(RoutePoint* rp, bool bRenamePoints)
 	pSelect->DeleteAllSelectableRoutePoints(this);
 	pSelect->DeleteAllSelectableRouteSegments(this);
 
-	pRoutePointList->DeleteObject(rp);
+	pRoutePointList->remove(rp);
 	if (wxNOT_FOUND != RoutePointGUIDList.Index(rp->m_GUID))
 		RoutePointGUIDList.Remove(rp->m_GUID);
 	m_nPoints -= 1;
@@ -881,8 +881,8 @@ void Route::Reverse(bool bRenamePoints)
 	// Reverse the GUID list
 	wxArrayString ArrayTemp;
 
-	int ncount = RoutePointGUIDList.GetCount();
-	for (int i = 0; i < ncount; i++)
+	int ncount = RoutePointGUIDList.size();
+	for (int i = 0; i < ncount; ++i)
 		ArrayTemp.Add(RoutePointGUIDList[ncount - 1 - i]);
 
 	RoutePointGUIDList = ArrayTemp;
@@ -933,7 +933,7 @@ void Route::SetListed(bool visible)
 
 void Route::AssembleRoute(void)
 {
-	for (unsigned int ip = 0; ip < RoutePointGUIDList.GetCount(); ++ip) {
+	for (unsigned int ip = 0; ip < RoutePointGUIDList.size(); ++ip) {
 		RoutePoint* point = pWayPointMan->find(RoutePointGUIDList[ip]);
 		if (point)
 			AddPoint(point);

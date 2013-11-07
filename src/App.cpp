@@ -978,7 +978,7 @@ void App::setup_for_empty_config(bool novicemode)
 			ps52plib->m_bShowAtonText = true;
 
 			// Preset some object class visibilites for "Mariner's Standard" disply category
-			for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+			for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
 				OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
 				if (!strncmp(pOLE->OBJLName, "DEPARE", 6))
 					pOLE->nViz = 1;
@@ -998,7 +998,7 @@ void App::check_tide_current()
 
 	// Check the global Tide/Current data source array
 	// If empty, preset one default (US) Ascii data source
-	if (!TideCurrentDataSet.GetCount()) {
+	if (!TideCurrentDataSet.size()) {
 		wxString default_tcdata = sys.sound_data_location + _T("tcdata")
 								  + wxFileName::GetPathSeparator() + _T("HARMONIC.IDX");
 
@@ -1664,7 +1664,7 @@ bool App::OnInit()
 
 	bool bno_load = false;
 	wxAuiPaneInfoArray pane_array_val = g_pauimgr->GetAllPanes();
-	for (unsigned int i = 0; i < pane_array_val.GetCount(); i++) {
+	for (unsigned int i = 0; i < pane_array_val.size(); i++) {
 		wxAuiPaneInfo pane = pane_array_val.Item(i);
 		if (perspective.Find(pane.name) == wxNOT_FOUND) {
 			bno_load = true;
@@ -1790,7 +1790,7 @@ bool App::OnInit()
 	ChartData->ApplyGroupArray(g_pGroupArray);
 
 	// Make sure that the Selected Group is sensible...
-	if (g_GroupIndex > (int)g_pGroupArray->GetCount())
+	if (g_GroupIndex > (int)g_pGroupArray->size())
 		g_GroupIndex = 0;
 	if (!gFrame->CheckGroup(g_GroupIndex))
 		g_GroupIndex = 0;

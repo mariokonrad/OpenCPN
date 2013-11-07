@@ -388,7 +388,7 @@ bool TrackPropDlg::UpdateProperties()
 	::wxBeginBusyCursor();
 
 	wxWindowList kids = m_scrolledWindowLinks->GetChildren();
-	for (unsigned int i = 0; i < kids.GetCount(); i++) {
+	for (unsigned int i = 0; i < kids.size(); i++) {
 		wxWindowListNode* node = kids.Item(i);
 		wxWindow* win = node->GetData();
 

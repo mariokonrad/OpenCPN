@@ -1034,7 +1034,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 				bool bNeedNew = true;
 
 				if( str.StartsWith( _T ( "viz" ), &sObj ) ) {
-					for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++ ) {
+					for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++ ) {
 						pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
 						if( !strncmp( pOLE->OBJLName, sObj.mb_str(), 6 ) ) {
 							pOLE->nViz = val;
@@ -1245,11 +1245,11 @@ bool Config::LoadLayers(wxString &path)
 			else
 				wxDir::GetAllFiles( filename, &file_array, wxT("*.gpx") );      // layers subdirectory set
 
-			if (file_array.GetCount()){
+			if (file_array.size()){
 				++g_LayerIdx;
 				Layer * layer = new Layer(g_LayerIdx, file_array[0], g_bShowLayers);
 				wxString layerName;
-				if (file_array.GetCount() <= 1)
+				if (file_array.size() <= 1)
 					wxFileName::SplitPath( file_array[0], NULL, NULL, &layerName, NULL, NULL );
 				else
 					wxFileName::SplitPath( filename, NULL, NULL, &layerName, NULL, NULL );
@@ -1272,7 +1272,7 @@ bool Config::LoadLayers(wxString &path)
 
 				//  Load the entire file array as a single layer
 
-				for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {
+				for( unsigned int i = 0; i < file_array.size(); i++ ) {
 					wxString file_path = file_array[i];
 
 					if( ::wxFileExists( file_path ) ) {
@@ -1470,9 +1470,9 @@ void Config::CreateConfigGroups(ChartGroupArray * pGroupArray)
 		return;
 
 	SetPath( _T ( "/Groups" ) );
-	Write( _T ( "GroupCount" ), (int) pGroupArray->GetCount() );
+	Write( _T ( "GroupCount" ), (int) pGroupArray->size() );
 
-	for( unsigned int i = 0; i < pGroupArray->GetCount(); i++ ) {
+	for( unsigned int i = 0; i < pGroupArray->size(); i++ ) {
 		ChartGroup *pGroup = pGroupArray->Item( i );
 		wxString s;
 		s.Printf( _T("Group%d"), i + 1 );
@@ -1480,9 +1480,9 @@ void Config::CreateConfigGroups(ChartGroupArray * pGroupArray)
 		SetPath( s );
 
 		Write( _T ( "GroupName" ), pGroup->m_group_name );
-		Write( _T ( "GroupItemCount" ), (int) pGroup->m_element_array.GetCount() );
+		Write( _T ( "GroupItemCount" ), (int) pGroup->m_element_array.size() );
 
-		for( unsigned int j = 0; j < pGroup->m_element_array.GetCount(); j++ ) {
+		for( unsigned int j = 0; j < pGroup->m_element_array.size(); j++ ) {
 			wxString sg;
 			sg.Printf( _T("Group%d/Item%d"), i + 1, j );
 			sg.Prepend( _T ( "/Groups/" ) );
@@ -1491,8 +1491,8 @@ void Config::CreateConfigGroups(ChartGroupArray * pGroupArray)
 
 			wxString t;
 			wxArrayString u = pGroup->m_element_array.Item( j )->m_missing_name_array;
-			if( u.GetCount() ) {
-				for( unsigned int k = 0; k < u.GetCount(); k++ ) {
+			if( u.size() ) {
+				for( unsigned int k = 0; k < u.size(); k++ ) {
 					t += u.Item( k );
 					t += _T(";");
 				}
@@ -1737,7 +1737,7 @@ void Config::UpdateSettings()
 
 #ifdef USE_S57
 	if( ps52plib ) {
-		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++ ) {
+		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++ ) {
 			OBJLElement *pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
 
 			wxString st1( _T ( "viz" ) );
@@ -2119,7 +2119,7 @@ void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool
 			openDialog.GetPaths( file_array );
 
 			//    Record the currently selected directory for later use
-			if( file_array.GetCount() ) {
+			if( file_array.size() ) {
 				wxFileName fn( file_array[0] );
 				m_gpx_path = fn.GetPath();
 			}
@@ -2142,7 +2142,7 @@ void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool
 			++g_LayerIdx;
 			layer = new Layer(g_LayerIdx, file_array[0], g_bShowLayers);
 			wxString layerName;
-			if (file_array.GetCount() <= 1) {
+			if (file_array.size() <= 1) {
 					wxFileName::SplitPath(file_array[0], NULL, NULL, &layerName, NULL, NULL);
 			} else {
 				if (dirpath.IsSameAs(_T("")))
@@ -2166,7 +2166,7 @@ void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool
 			pLayerList->push_back(layer);
 		}
 
-		for (unsigned int i = 0; i < file_array.GetCount(); ++i) {
+		for (unsigned int i = 0; i < file_array.size(); ++i) {
 			wxString path = file_array[i];
 			if (::wxFileExists(path)) {
 				NavObjectCollection * pSet = new NavObjectCollection;

@@ -1009,7 +1009,7 @@ bool MainFrame::CheckAndAddPlugInTool( ToolBarSimple *tb )
 	//    If a tool has been requested by a plugin at this position, add it
 	ArrayOfPlugInToolbarTools tool_array = g_pi_manager->GetPluginToolbarToolArray();
 
-	for( unsigned int i = 0; i < tool_array.GetCount(); i++ ) {
+	for( unsigned int i = 0; i < tool_array.size(); i++ ) {
 		PlugInToolbarToolContainer *pttc = tool_array.Item( i );
 		if( pttc->position == n_tools ) {
 			wxBitmap *ptool_bmp;
@@ -1055,7 +1055,7 @@ bool MainFrame::AddDefaultPositionPlugInTools( ToolBarSimple *tb )
 	//    If a tool has been requested by a plugin at this position, add it
 	ArrayOfPlugInToolbarTools tool_array = g_pi_manager->GetPluginToolbarToolArray();
 
-	for( unsigned int i = 0; i < tool_array.GetCount(); i++ ) {
+	for( unsigned int i = 0; i < tool_array.size(); i++ ) {
 		PlugInToolbarToolContainer *pttc = tool_array.Item( i );
 		if( pttc->position == -1 )                  // PlugIn has requested default positioning
 		{
@@ -1525,7 +1525,7 @@ void MainFrame::UpdateAllFonts()
 void MainFrame::SetGroupIndex(int index)
 {
 	int new_index = index;
-	if (index > static_cast<int>(g_pGroupArray->GetCount()))
+	if (index > static_cast<int>(g_pGroupArray->size()))
 		new_index = 0;
 
 	bool bgroup_override = false;
@@ -1779,7 +1779,7 @@ void MainFrame::OnToolLeftClick(wxCommandEvent& event)
 			// TODO Modify this to allow multiple tools per plugin
 			if (g_pi_manager) {
 				ArrayOfPlugInToolbarTools tool_array = g_pi_manager->GetPluginToolbarToolArray();
-				for (unsigned int i = 0; i < tool_array.GetCount(); ++i) {
+				for (unsigned int i = 0; i < tool_array.size(); ++i) {
 					PlugInToolbarToolContainer* pttc = tool_array.Item(i);
 					if (event.GetId() == pttc->id) {
 						if (pttc->m_pplugin)
@@ -2033,7 +2033,7 @@ bool MainFrame::ToggleLights(bool doToggle, bool temporary)
 	bool oldstate = true;
 #ifdef USE_S57
 	if (ps52plib) {
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
 			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
 			if (!strncmp(pOLE->OBJLName, "LIGHTS", 6)) {
 				oldstate = pOLE->nViz != 0;
@@ -2060,14 +2060,14 @@ void MainFrame::ToggleRocks(void)
 		int vis = 0;
 		// Need to loop once for UWTROC, which is our "master", then for
 		// other categories, since order is unknown?
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
 			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
 			if (!strncmp(pOLE->OBJLName, "UWTROC", 6)) {
 				pOLE->nViz = !pOLE->nViz;
 				vis = pOLE->nViz;
 			}
 		}
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
 			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
 			if (!strncmp(pOLE->OBJLName, "OBSTRN", 6)) {
 				pOLE->nViz = vis;
@@ -2089,7 +2089,7 @@ void MainFrame::ToggleAnchor(void)
 		int vis = 0;
 		// Need to loop once for SBDARE, which is our "master", then for
 		// other categories, since order is unknown?
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
 			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
 			if (!strncmp(pOLE->OBJLName, "SBDARE", 6)) {
 				pOLE->nViz = !pOLE->nViz;
@@ -2100,7 +2100,7 @@ void MainFrame::ToggleAnchor(void)
 		static const char* categories[] = { "ACHBRT", "ACHARE", "CBLSUB", "PIPARE", "PIPSOL", "TUNNEL" };
 		unsigned int num = sizeof(categories) / sizeof(categories[0]);
 		unsigned int cnt = 0;
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->GetCount(); iPtr++) {
+		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
 			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
 			for (unsigned int c = 0; c < num; c++) {
 				if (!strncmp(pOLE->OBJLName, categories[c], 6)) {
@@ -2465,7 +2465,7 @@ bool MainFrame::CheckGroup(int igroup)
 	ChartGroup* pGroup = g_pGroupArray->Item(igroup - 1);
 	bool b_chart_in_group = false;
 
-	for (unsigned int j = 0; j < pGroup->m_element_array.GetCount(); j++) {
+	for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
 		wxString element_root = pGroup->m_element_array.Item(j)->m_element_name;
 
 		for (unsigned int ic = 0; ic < (unsigned int)ChartData->GetChartTableEntries(); ic++) {
@@ -2492,11 +2492,11 @@ void MainFrame::ScrubGroupArray()
 	// If not, remove the element.
 
 	unsigned int igroup = 0;
-	while( igroup < g_pGroupArray->GetCount() ) {
+	while( igroup < g_pGroupArray->size() ) {
 		bool b_chart_in_element = false;
 		ChartGroup *pGroup = g_pGroupArray->Item( igroup );
 
-		for( unsigned int j = 0; j < pGroup->m_element_array.GetCount(); j++ ) {
+		for( unsigned int j = 0; j < pGroup->m_element_array.size(); j++ ) {
 			wxString element_root = pGroup->m_element_array.Item( j )->m_element_name;
 
 			for (unsigned int ic = 0; ic < (unsigned int) ChartData->GetChartTableEntries(); ic++) {
@@ -2906,7 +2906,7 @@ void MainFrame::OnMemFootTimer(wxTimerEvent &)
 		if (ChartData && chart_canvas) {
 			// Get a local copy of the cache info
 			wxArrayPtrVoid * pCache = ChartData->GetChartCache();
-			const unsigned int nCache = pCache->GetCount();
+			const unsigned int nCache = pCache->size();
 			std::vector<chart::CacheEntry> cache;
 			cache.reserve(nCache);
 			for (unsigned int i = 0; i < nCache; ++i) {
@@ -2930,14 +2930,14 @@ void MainFrame::OnMemFootTimer(wxTimerEvent &)
 				// Free up some chart cache entries until the memory footprint target is realized
 
 				unsigned int idelete = 0; // starting at top. which is oldest
-				unsigned int idelete_max = pCache->GetCount();
+				unsigned int idelete_max = pCache->size();
 
 				// How many can be deleted?
 				unsigned int minimum_cache = 1;
 				if (chart_canvas->GetQuiltMode())
 					minimum_cache = chart_canvas->GetQuiltChartCount();
 
-				while ((memsize > (g_MemFootMB * 1000)) && (pCache->GetCount() > minimum_cache) && (idelete < idelete_max)) {
+				while ((memsize > (g_MemFootMB * 1000)) && (pCache->size() > minimum_cache) && (idelete < idelete_max)) {
 					ChartData->DeleteCacheChart(static_cast<ChartBase *>(cache[idelete].pChart));
 					idelete++;
 					memsize = GetApplicationMemoryUse();
@@ -3431,7 +3431,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	if (g_pi_manager) {
 		bool brq_dynamic = false;
 		ArrayOfPlugIns* pplugin_array = g_pi_manager->GetPlugInArray();
-		for (unsigned int i = 0; i < pplugin_array->GetCount(); i++) {
+		for (unsigned int i = 0; i < pplugin_array->size(); i++) {
 			PlugInContainer* pic = pplugin_array->Item(i);
 			if (pic->m_bEnabled && pic->m_bInitState) {
 				if (pic->m_cap_flag & WANTS_DYNAMIC_OPENGL_OVERLAY_CALLBACK) {
@@ -3712,7 +3712,7 @@ int MainFrame::GetApplicationMemoryUse(void) // FIXME: move this out of MainFram
 	cmd += cmd1;
 	wxExecute(cmd, outputArray);
 
-	if (outputArray.GetCount()) {
+	if (outputArray.size()) {
 		wxString s = outputArray.Item(0);
 		long vtmp;
 		if (s.ToLong(&vtmp))
@@ -4618,7 +4618,7 @@ void MainFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbInde
 	pos.y -= 30;
 
 	// Invoke the drop-down menu
-	if (pctx_menu->GetMenuItems().GetCount())
+	if (pctx_menu->GetMenuItems().size())
 		PopupMenu(pctx_menu, pos);
 
 	chart_canvas->HideChartInfoWindow();
@@ -4768,7 +4768,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 					 itp != (*it)->pRoutePointList->end(); itp++) {
 					v[_T("lat")] = (*itp)->m_lat;
 					v[_T("lon")] = (*itp)->m_lon;
-					v[_T("TotalNodes")] = (*it)->pRoutePointList->GetCount();
+					v[_T("TotalNodes")] = (*it)->pRoutePointList->size();
 					v[_T("NodeNr")] = i;
 					v[_T("error")] = false;
 					i++;
@@ -5555,9 +5555,9 @@ void MainFrame::LoadHarmonics()
 
 	//      Test both ways
 	wxArrayString test = ptcmgr->GetDataSet();
-	for(unsigned int i=0 ; i < test.GetCount() ; i++) {
+	for(unsigned int i=0 ; i < test.size() ; i++) {
 		bool b_foundi = false;
-		for(unsigned int j=0 ; j < TideCurrentDataSet.GetCount() ; j++) {
+		for(unsigned int j=0 ; j < TideCurrentDataSet.size() ; j++) {
 			if(TideCurrentDataSet.Item(j) == test.Item(i)) {
 				b_foundi = true;
 				break;              // j loop
@@ -5570,9 +5570,9 @@ void MainFrame::LoadHarmonics()
 	}
 
 	test = TideCurrentDataSet;
-	for(unsigned int i=0 ; i < test.GetCount() ; i++) {
+	for(unsigned int i=0 ; i < test.size() ; i++) {
 		bool b_foundi = false;
-		for(unsigned int j=0 ; j < ptcmgr->GetDataSet().GetCount() ; j++) {
+		for(unsigned int j=0 ; j < ptcmgr->GetDataSet().size() ; j++) {
 			if(ptcmgr->GetDataSet().Item(j) == test.Item(i)) {
 				b_foundi = true;
 				break;              // j loop

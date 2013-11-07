@@ -250,7 +250,7 @@ bool PlugInManager::CallLateInit(void)
 {
 	bool bret = true;
 
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 
 		switch (pic->m_api_version) {
@@ -274,7 +274,7 @@ bool PlugInManager::UpdatePlugIns()
 {
 	bool bret = false;
 
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 
 		if (pic->m_bEnabled && !pic->m_bInitState) {
@@ -307,7 +307,7 @@ bool PlugInManager::UpDateChartDataTypes(void)
 	if (NULL == ChartData)
 		return bret;
 
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 
 		if (/*pic->m_bEnabled &&*/(pic->m_cap_flag & INSTALLS_PLUGIN_CHART))
@@ -332,7 +332,7 @@ bool PlugInManager::DeactivatePlugIn(PlugInContainer* pic)
 		pic->m_pplugin->DeInit();
 
 		// Deactivate (Remove) any ToolbarTools added by this PlugIn
-		for (unsigned int i = 0; i < m_PlugInToolbarTools.GetCount(); i++) {
+		for (unsigned int i = 0; i < m_PlugInToolbarTools.size(); i++) {
 			PlugInToolbarToolContainer* pttc = m_PlugInToolbarTools.Item(i);
 
 			if (pttc->m_pplugin == pic->m_pplugin) {
@@ -342,7 +342,7 @@ bool PlugInManager::DeactivatePlugIn(PlugInContainer* pic)
 		}
 
 		// Deactivate (Remove) any ContextMenu items addded by this PlugIn
-		for (unsigned int i = 0; i < m_PlugInMenuItems.GetCount(); i++) {
+		for (unsigned int i = 0; i < m_PlugInMenuItems.size(); i++) {
 			PlugInMenuItemContainer* pimis = m_PlugInMenuItems.Item(i);
 			if (pimis->m_pplugin == pic->m_pplugin) {
 				m_PlugInMenuItems.Remove(pimis);
@@ -361,7 +361,7 @@ bool PlugInManager::UpdateConfig()
 {
 	pConfig->SetPath(_T("/"));
 
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 
 		wxString config_section = (_T ( "/PlugIns/" ));
@@ -375,7 +375,7 @@ bool PlugInManager::UpdateConfig()
 
 bool PlugInManager::UnLoadAllPlugIns()
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		wxString msg(_T("PlugInManager: UnLoading PlugIn: "));
 		msg += pic->m_plugin_file;
@@ -391,7 +391,7 @@ bool PlugInManager::UnLoadAllPlugIns()
 
 bool PlugInManager::DeactivateAllPlugIns()
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic && pic->m_bEnabled && pic->m_bInitState)
 			DeactivatePlugIn(pic);
@@ -579,7 +579,7 @@ PlugInContainer* PlugInManager::LoadPlugIn(wxString plugin_file)
 
 bool PlugInManager::RenderAllCanvasOverlayPlugIns(ocpnDC& dc, const ViewPort& vp)
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if (pic->m_cap_flag & WANTS_OVERLAY_CALLBACK) {
@@ -684,7 +684,7 @@ bool PlugInManager::RenderAllCanvasOverlayPlugIns(ocpnDC& dc, const ViewPort& vp
 
 bool PlugInManager::RenderAllGLCanvasOverlayPlugIns( wxGLContext *pcontext, const ViewPort &vp)
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if (pic->m_cap_flag & WANTS_OPENGL_OVERLAY_CALLBACK) {
@@ -718,7 +718,7 @@ bool PlugInManager::RenderAllGLCanvasOverlayPlugIns( wxGLContext *pcontext, cons
 
 void PlugInManager::SendViewPortToRequestingPlugIns(ViewPort& vp)
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if (pic->m_cap_flag & WANTS_ONPAINT_VIEWPORT) {
@@ -731,7 +731,7 @@ void PlugInManager::SendViewPortToRequestingPlugIns(ViewPort& vp)
 
 void PlugInManager::SendCursorLatLonToAllPlugIns(double lat, double lon)
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if (pic->m_cap_flag & WANTS_CURSOR_LATLON)
@@ -763,7 +763,7 @@ void NotifySetupOptionsPlugin(PlugInContainer* pic)
 
 void PlugInManager::NotifySetupOptions()
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		NotifySetupOptionsPlugin(pic);
 	}
@@ -771,7 +771,7 @@ void PlugInManager::NotifySetupOptions()
 
 void PlugInManager::CloseAllPlugInPanels(int ok_apply_cancel)
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if ((pic->m_cap_flag & INSTALLS_TOOLBOX_PAGE) && (pic->m_bToolboxPanel)) {
@@ -800,7 +800,7 @@ int PlugInManager::AddCanvasContextMenuItem(wxMenuItem* pitem, opencpn_plugin* p
 
 void PlugInManager::RemoveCanvasContextMenuItem(int item)
 {
-	for (unsigned int i = 0; i < m_PlugInMenuItems.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_PlugInMenuItems.size(); i++) {
 		PlugInMenuItemContainer* pimis = m_PlugInMenuItems.Item(i);
 		if (pimis->id == item) {
 			m_PlugInMenuItems.Remove(pimis);
@@ -812,7 +812,7 @@ void PlugInManager::RemoveCanvasContextMenuItem(int item)
 
 void PlugInManager::SetCanvasContextMenuItemViz(int item, bool viz)
 {
-	for (unsigned int i = 0; i < m_PlugInMenuItems.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_PlugInMenuItems.size(); i++) {
 		PlugInMenuItemContainer* pimis = m_PlugInMenuItems.Item(i);
 		if (pimis->id == item) {
 			pimis->b_viz = viz;
@@ -823,7 +823,7 @@ void PlugInManager::SetCanvasContextMenuItemViz(int item, bool viz)
 
 void PlugInManager::SetCanvasContextMenuItemGrey(int item, bool grey)
 {
-	for (unsigned int i = 0; i < m_PlugInMenuItems.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_PlugInMenuItems.size(); i++) {
 		PlugInMenuItemContainer* pimis = m_PlugInMenuItems.Item(i);
 		if (pimis->id == item) {
 			pimis->b_grey = grey;
@@ -836,7 +836,7 @@ void PlugInManager::SendNMEASentenceToAllPlugIns(const wxString& sentence)
 {
 	// decouples 'const wxString &' and 'wxString &' to keep bin compat for plugins
 	wxString decouple_sentence(sentence);
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if (pic->m_cap_flag & WANTS_NMEA_SENTENCES)
@@ -860,7 +860,7 @@ void PlugInManager::SendMessageToAllPlugins(const wxString& message_id,
 	wxString decouple_message_id(message_id);
 	wxString decouple_message_body(message_body);
 
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if (pic->m_cap_flag & WANTS_PLUGIN_MESSAGING) {
@@ -897,7 +897,7 @@ void PlugInManager::SendAISSentenceToAllPlugIns(const wxString& sentence)
 {
 	wxString decouple_sentence(
 		sentence); // decouples 'const wxString &' and 'wxString &' to keep bin compat for plugins
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if (pic->m_cap_flag & WANTS_AIS_SENTENCES)
@@ -918,7 +918,7 @@ void PlugInManager::SendPositionFixToAllPlugIns(GenericPosDatEx* ppos)
 	pfix.FixTime = ppos->FixTime;
 	pfix.nSats = ppos->nSats;
 
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if (pic->m_cap_flag & WANTS_NMEA_EVENTS)
@@ -938,7 +938,7 @@ void PlugInManager::SendPositionFixToAllPlugIns(GenericPosDatEx* ppos)
 	pfix_ex.Hdt = ppos->kHdt;
 	pfix_ex.Hdm = ppos->kHdm;
 
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState) {
 			if (pic->m_cap_flag & WANTS_NMEA_EVENTS) {
@@ -962,7 +962,7 @@ void PlugInManager::SendPositionFixToAllPlugIns(GenericPosDatEx* ppos)
 
 void PlugInManager::SendResizeEventToAllPlugIns(int x, int y)
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState)
 			pic->m_pplugin->ProcessParentResize(x, y);
@@ -971,7 +971,7 @@ void PlugInManager::SendResizeEventToAllPlugIns(int x, int y)
 
 void PlugInManager::SetColorSchemeForAllPlugIns(ColorScheme cs)
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState)
 			pic->m_pplugin->SetColorScheme((PI_ColorScheme)cs);
@@ -980,7 +980,7 @@ void PlugInManager::SetColorSchemeForAllPlugIns(ColorScheme cs)
 
 void PlugInManager::NotifyAuiPlugIns(void)
 {
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState && (pic->m_cap_flag & USES_AUI_MANAGER))
 			pic->m_pplugin->UpdateAuiStatus();
@@ -1039,7 +1039,7 @@ int PlugInManager::AddToolbarTool(
 
 void PlugInManager::RemoveToolbarTool(int tool_id)
 {
-	for (unsigned int i = 0; i < m_PlugInToolbarTools.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_PlugInToolbarTools.size(); i++) {
 		PlugInToolbarToolContainer* pttc = m_PlugInToolbarTools.Item(i);
 		if (pttc->id == tool_id) {
 			m_PlugInToolbarTools.Remove(pttc);
@@ -1053,7 +1053,7 @@ void PlugInManager::RemoveToolbarTool(int tool_id)
 
 void PlugInManager::SetToolbarToolViz(int item, bool viz)
 {
-	for (unsigned int i = 0; i < m_PlugInToolbarTools.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_PlugInToolbarTools.size(); i++) {
 		PlugInToolbarToolContainer* pttc = m_PlugInToolbarTools.Item(i);
 		if (pttc->id == item) {
 			pttc->b_viz = viz;
@@ -1064,7 +1064,7 @@ void PlugInManager::SetToolbarToolViz(int item, bool viz)
 
 void PlugInManager::SetToolbarItemState(int item, bool toggle)
 {
-	for (unsigned int i = 0; i < m_PlugInToolbarTools.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_PlugInToolbarTools.size(); i++) {
 		PlugInToolbarToolContainer* pttc = m_PlugInToolbarTools.Item(i);
 		if (pttc->id == item) {
 			pttc->b_toggle = toggle;
@@ -1076,7 +1076,7 @@ void PlugInManager::SetToolbarItemState(int item, bool toggle)
 
 void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap *bitmap, wxBitmap *bmpRollover)
 {
-	for (unsigned int i = 0; i < m_PlugInToolbarTools.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_PlugInToolbarTools.size(); i++) {
 		PlugInToolbarToolContainer* pttc = m_PlugInToolbarTools.Item(i);
 		if (pttc->id == item) {
 			delete pttc->bitmap_day;
@@ -1113,7 +1113,7 @@ void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap *bitmap, wxBitmap *
 
 opencpn_plugin* PlugInManager::FindToolOwner(const int id)
 {
-	for (unsigned int i = 0; i < m_PlugInToolbarTools.GetCount(); i++) {
+	for (unsigned int i = 0; i < m_PlugInToolbarTools.size(); i++) {
 		PlugInToolbarToolContainer* pc = m_PlugInToolbarTools.Item(i);
 		if (id == pc->id)
 			return pc->m_pplugin;
@@ -1126,7 +1126,7 @@ wxString PlugInManager::GetToolOwnerCommonName(const int id)
 {
 	opencpn_plugin* ppi = FindToolOwner(id);
 	if (ppi) {
-		for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+		for (unsigned int i = 0; i < plugin_array.size(); i++) {
 			PlugInContainer* pic = plugin_array.Item(i);
 			if (pic && (pic->m_pplugin == ppi))
 				return pic->m_common_name;
@@ -1189,12 +1189,12 @@ wxBitmap* PlugInManager::BuildDimmedToolBitmap(wxBitmap* pbmp_normal, unsigned c
 wxArrayString PlugInManager::GetPlugInChartClassNameArray(void)
 {
 	wxArrayString array;
-	for (unsigned int i = 0; i < plugin_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 		if (pic->m_bEnabled && pic->m_bInitState && (pic->m_cap_flag & INSTALLS_PLUGIN_CHART)) {
 			wxArrayString carray = pic->m_pplugin->GetDynamicChartClassNameArray();
 
-			for (unsigned int j = 0; j < carray.GetCount(); j++)
+			for (unsigned int j = 0; j < carray.size(); j++)
 				array.Add(carray.Item(j));
 		}
 	}
@@ -1202,10 +1202,10 @@ wxArrayString PlugInManager::GetPlugInChartClassNameArray(void)
 	// Scrub the list for duplicates
 	// Corrects a flaw in BSB4 and NVC PlugIns
 	unsigned int j = 0;
-	while (j < array.GetCount()) {
+	while (j < array.size()) {
 		wxString test = array.Item(j);
 		unsigned int k = j + 1;
-		while (k < array.GetCount()) {
+		while (k < array.size()) {
 			if (test == array.Item(k)) {
 				array.RemoveAt(k);
 				j = -1;
@@ -1420,7 +1420,7 @@ bool UpdateChartDBInplace(wxArrayString dir_array, bool b_force_update, bool b_P
 {
 	// Make an array of CDI
 	ArrayOfCDI ChartDirArray;
-	for (unsigned int i = 0; i < dir_array.GetCount(); i++) {
+	for (unsigned int i = 0; i < dir_array.size(); i++) {
 		wxString dirname = dir_array.Item(i);
 		ChartDirInfo cdi;
 		cdi.fullpath = dirname;
@@ -1767,7 +1767,7 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 
 	//  Transcribe (clone) the html HyperLink List, if present
 	if (pwaypoint->m_HyperlinkList) {
-		if (pwaypoint->m_HyperlinkList->GetCount() > 0) {
+		if (pwaypoint->m_HyperlinkList->size() > 0) {
 			wxPlugin_HyperlinkListNode* linknode = pwaypoint->m_HyperlinkList->GetFirst();
 			while (linknode) {
 				Plugin_Hyperlink* link = linknode->GetData();
@@ -1833,7 +1833,7 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 
 		if (pwaypoint->m_HyperlinkList) {
 			prp->m_HyperlinkList.clear();
-			if (pwaypoint->m_HyperlinkList->GetCount() > 0) {
+			if (pwaypoint->m_HyperlinkList->size() > 0) {
 				wxPlugin_HyperlinkListNode* linknode = pwaypoint->m_HyperlinkList->GetFirst();
 				while (linknode) {
 					Plugin_Hyperlink* link = linknode->GetData();
@@ -1876,7 +1876,7 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 
 		//  Transcribe (clone) the html HyperLink List, if present
 		if (pwp->m_HyperlinkList) {
-			if (pwp->m_HyperlinkList->GetCount() > 0) {
+			if (pwp->m_HyperlinkList->size() > 0) {
 				wxPlugin_HyperlinkListNode* linknode = pwp->m_HyperlinkList->GetFirst();
 				while (linknode) {
 					Plugin_Hyperlink* link = linknode->GetData();

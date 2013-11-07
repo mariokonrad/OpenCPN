@@ -166,7 +166,7 @@ bool RTE::Write( SENTENCE& sentence )
 
    sentence += RouteName;
 
-   for(unsigned int i=0 ; i < Waypoints.GetCount() ; i++)
+   for(unsigned int i=0 ; i < Waypoints.size() ; i++)
          sentence += Waypoints[i];
 
    sentence.Finish();

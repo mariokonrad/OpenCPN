@@ -829,7 +829,7 @@ void Routeman::DeleteRoute(Route * pRoute)
 	if (pRoute->m_bIsInLayer)
 		return;
 
-	//    Remove the route from associated lists
+	// Remove the route from associated lists
 	pSelect->DeleteAllSelectableRouteSegments(pRoute);
 	pRouteList->remove(pRoute);
 
@@ -852,7 +852,7 @@ void Routeman::DeleteRoute(Route * pRoute)
 				// Remove all instances of this point from the list.
 				wxRoutePointListNode *pdnode = pnode;
 				while (pdnode) {
-					pRoute->pRoutePointList->DeleteNode(pdnode);
+					pRoute->pRoutePointList->Erase(pdnode);
 					pdnode = pRoute->pRoutePointList->Find(prp);
 				}
 
@@ -865,10 +865,11 @@ void Routeman::DeleteRoute(Route * pRoute)
 			}
 		}
 
-		if (pnode)
+		if (pnode) {
 			pnode = pnode->GetNext();
-		else
+		} else {
 			pnode = pRoute->pRoutePointList->GetFirst(); // restart the list
+		}
 	}
 
 	delete pRoute;
@@ -951,7 +952,7 @@ void Routeman::DeleteTrack(Route * pRoute)
 	::wxBeginBusyCursor();
 
 	wxProgressDialog *pprog = NULL;
-	int count = pRoute->pRoutePointList->GetCount();
+	int count = pRoute->pRoutePointList->size();
 	if (count > 200) {
 		pprog = new wxProgressDialog(
 			_("OpenCPN Track Delete"),
@@ -969,8 +970,8 @@ void Routeman::DeleteTrack(Route * pRoute)
 
 	// walk the route, tentatively deleting/marking points used only by this route
 	int ic = 0;
-	wxRoutePointListNode* pnode = (pRoute->pRoutePointList)->GetFirst();
-	while (pnode) {
+	RoutePointList::iterator pnode = pRoute->pRoutePointList->begin();
+	while (pnode != pRoute->pRoutePointList->end()) {
 		if (pprog) {
 			wxString msg;
 			msg.Printf(_T("%d/%d"), ic, count);
@@ -978,7 +979,7 @@ void Routeman::DeleteTrack(Route * pRoute)
 			ic++;
 		}
 
-		RoutePoint* prp = pnode->GetData();
+		RoutePoint* prp = *pnode;
 
 		// check all other routes to see if this point appears in any other route
 		Route* pcontainer_route = NULL; // FindRouteContainingWaypoint(prp);
@@ -991,15 +992,16 @@ void Routeman::DeleteTrack(Route * pRoute)
 				pSelect->DeleteSelectablePoint(prp, SelectItem::TYPE_ROUTEPOINT);
 				pConfig->m_bSkipChangeSetUpdate = false;
 
-				pRoute->pRoutePointList->DeleteNode(pnode);
-				pnode = NULL;
+				pRoute->pRoutePointList->erase(pnode);
+				pnode = pRoute->pRoutePointList->end();
 				delete prp;
 			}
 		}
-		if (pnode)
-			pnode = pnode->GetNext();
-		else
-			pnode = pRoute->pRoutePointList->GetFirst(); // restart the list
+		if (pnode != pRoute->pRoutePointList->end()) {
+			++pnode;
+		} else {
+			pnode = pRoute->pRoutePointList->begin();
+		}
 	}
 
 	if ((Track*)pRoute == g_pActiveTrack) {

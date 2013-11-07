@@ -72,7 +72,7 @@ void ChartSymbols::DeleteGlobals(void)
 	delete symbolGraphicLocations;
 	symbolGraphicLocations = NULL;
 
-	for (unsigned int i = 0; i < colorTables->GetCount(); i++) {
+	for (unsigned int i = 0; i < colorTables->size(); i++) {
 		colTable* ct = (colTable*)colorTables->Item(i);
 		ct->tableName.clear();
 		ct->colors.clear();
@@ -279,7 +279,7 @@ void ChartSymbols::BuildLookup(chart::Lookup& lookup)
 	unsigned int index = 0;
 	wxArrayOfLUPrec* pLUPARRAYtyped = plib->SelectLUPARRAY(LUP->TNAM);
 
-	while (index < pLUPARRAYtyped->GetCount()) {
+	while (index < pLUPARRAYtyped->size()) {
 		LUPrec* pLUPCandidate = pLUPARRAYtyped->Item(index);
 		if (LUP->RCID == pLUPCandidate->RCID) {
 			plib->DestroyLUP(pLUPCandidate); // empties the LUP
@@ -865,7 +865,7 @@ wxColor ChartSymbols::GetwxColor( const char *colorName, int fromTable )
 
 int ChartSymbols::FindColorTable(const wxString& tableName)
 {
-	for (unsigned int i = 0; i < colorTables->GetCount(); i++) {
+	for (unsigned int i = 0; i < colorTables->size(); i++) {
 		colTable* ct = (colTable*)colorTables->Item(i);
 		if (tableName.IsSameAs(ct->tableName)) {
 			return i;

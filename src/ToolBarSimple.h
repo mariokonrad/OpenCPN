@@ -106,20 +106,9 @@ class ToolBarSimple : public wxControl
 		// Argument is wxID_ANY if mouse is exiting the toolbar.
 		virtual void OnMouseEnter(int toolid);
 
-		size_t GetToolsCount() const
-		{
-			return m_tools.GetCount();
-		}
-
-		int GetNoRowsOrColumns() const
-		{
-			return m_currentRowsOrColumns;
-		}
-
-		int GetLineCount() const
-		{
-			return m_LineCount;
-		}
+		size_t GetToolsCount() const;
+		int GetNoRowsOrColumns() const;
+		int GetLineCount() const;
 
 		int GetVisibleToolCount();
 

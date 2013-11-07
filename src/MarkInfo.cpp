@@ -478,7 +478,7 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	m_textCtrlExtDescription->SetValue(m_pRoutePoint->m_MarkDescription);
 	m_bitmapIcon->SetBitmap(*m_pRoutePoint->m_pbmIcon);
 	wxWindowList kids = m_scrolledWindowLinks->GetChildren();
-	for (unsigned int i = 0; i < kids.GetCount(); i++) {
+	for (unsigned int i = 0; i < kids.size(); i++) {
 		wxWindowListNode* node = kids.Item(i);
 		wxWindow* win = node->GetData();
 

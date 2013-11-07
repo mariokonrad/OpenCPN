@@ -127,7 +127,7 @@ void ChartDB::PurgeCache()
 {
 	wxLogMessage(_T("Chart cache purge"));
 
-	const unsigned int nCache = pChartCache->GetCount();
+	const unsigned int nCache = pChartCache->size();
 	for (unsigned int i = 0; i < nCache; i++) {
 		CacheEntry* pce = static_cast<CacheEntry*>(pChartCache->Item(i));
 		ChartBase* Ch = static_cast<ChartBase*>(pce->pChart);
@@ -144,7 +144,7 @@ void ChartDB::PurgeCache()
 
 void ChartDB::ClearCacheInUseFlags(void)
 {
-	const unsigned int nCache = pChartCache->GetCount();
+	const unsigned int nCache = pChartCache->size();
 	for (unsigned int i = 0; i < nCache; i++) {
 		CacheEntry* pce = static_cast<CacheEntry*>(pChartCache->Item(i));
 		pce->b_in_use = false;
@@ -162,7 +162,7 @@ void ChartDB::PurgeCacheUnusedCharts(bool b_force)
 
 		if (((mem_used > mem_limit) || b_force) && !m_b_locked) {
 			unsigned int i = 0;
-			while (i < pChartCache->GetCount()) {
+			while (i < pChartCache->size()) {
 				CacheEntry* pce = static_cast<CacheEntry*>(pChartCache->Item(i));
 				if (!pce->b_in_use) {
 					ChartBase* Ch = (ChartBase*)pce->pChart;
@@ -548,7 +548,7 @@ bool ChartDB::IsChartInCache(int dbindex)
 	bool bInCache = false;
 
 	//    Search the cache
-	unsigned int nCache = pChartCache->GetCount();
+	unsigned int nCache = pChartCache->size();
 	for (unsigned int i = 0; i < nCache; i++) {
 		CacheEntry* pce = static_cast<CacheEntry*>(pChartCache->Item(i));
 		if (pce->dbIndex == dbindex) {
@@ -589,7 +589,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 
 	//    Search the cache
 
-	const unsigned int nCache = pChartCache->GetCount();
+	const unsigned int nCache = pChartCache->size();
 	for (unsigned int i = 0; i < nCache; i++) {
 		pce = (CacheEntry*)(pChartCache->Item(i));
 		if (pce->FullPath == ChartFullPath) {
@@ -626,9 +626,9 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 			int mem_total, mem_used;
 			GetMemoryStatus(mem_total, mem_used);
 			while ((mem_used > g_memCacheLimit * 8 / 10) && !m_b_locked
-				   && (pChartCache->GetCount() > 2)) {
+				   && (pChartCache->size() > 2)) {
 				// Search the cache for oldest entry that is not Current_Ch
-				unsigned int nCache = pChartCache->GetCount();
+				unsigned int nCache = pChartCache->size();
 				if (nCache > 2) {
 					wxLogMessage(_T("Searching chart cache for oldest entry"));
 					int LRUTime = now.GetTicks();
@@ -675,7 +675,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 			}
 		} else { // Use n chart cache policy, if memory-limit  policy is not used
 			//      Limit cache to n charts, tossing out the oldest when space is needed
-			unsigned int nCache = pChartCache->GetCount();
+			unsigned int nCache = pChartCache->size();
 			while ((nCache > (unsigned int)g_nCacheLimit) && !m_b_locked) {
 
 				///                  wxLogMessage("Searching chart cache for oldest entry");
@@ -722,7 +722,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 							pthumbwin->pThumbChart = NULL;
 					}
 				}
-				nCache = pChartCache->GetCount();
+				nCache = pChartCache->size();
 			}
 		}
 
@@ -787,7 +787,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 			// Search the array of chart class descriptors to find a match
 			// bewteen the search mask and the the chart file extension
 
-			for (unsigned int i = 0; i < m_ChartClassDescriptorArray.GetCount(); i++) {
+			for (unsigned int i = 0; i < m_ChartClassDescriptorArray.size(); i++) {
 				if (m_ChartClassDescriptorArray.Item(i).m_descriptor_type == PLUGIN_DESCRIPTOR) {
 					if (m_ChartClassDescriptorArray.Item(i).m_search_mask == ext_upper) {
 						chart_class_name = m_ChartClassDescriptorArray.Item(i).m_class_name;
@@ -874,7 +874,7 @@ bool ChartDB::DeleteCacheChart(ChartBase* pDeleteCandidate)
 
 		// Find the chart in the cache
 		CacheEntry* pce = NULL;
-		for (unsigned int i = 0; i < pChartCache->GetCount(); i++) {
+		for (unsigned int i = 0; i < pChartCache->size(); i++) {
 			pce = (CacheEntry*)(pChartCache->Item(i));
 			if ((ChartBase*)(pce->pChart) == pDeleteCandidate) {
 				break;
@@ -907,7 +907,7 @@ bool ChartDB::DeleteCacheChart(ChartBase* pDeleteCandidate)
 
 void ChartDB::ApplyColorSchemeToCachedCharts(ColorScheme cs)
 {
-	unsigned int nCache = pChartCache->GetCount();
+	unsigned int nCache = pChartCache->size();
 	for (unsigned int i = 0; i < nCache; i++) {
 		CacheEntry* pce = static_cast<CacheEntry*>(pChartCache->Item(i));
 		ChartBase* Ch = (ChartBase*)pce->pChart;

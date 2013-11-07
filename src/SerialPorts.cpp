@@ -421,7 +421,7 @@ wxArrayString* EnumerateSerialPorts(void)
 
 						// If the port has already been found, remove the prior entry
 						// in favor of this entry, which will have descriptive information appended
-						for (unsigned int n = 0; n < preturn->GetCount(); n++) {
+						for (unsigned int n = 0; n < preturn->size(); n++) {
 							if ((preturn->Item(n)).IsSameAs(port)) {
 								preturn->RemoveAt(n);
 								break;

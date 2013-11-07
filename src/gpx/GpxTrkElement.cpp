@@ -48,13 +48,9 @@ GpxTrkElement::GpxTrkElement(
 		SetProperty(wxString(_T("desc")), desc);
 	if (!src.IsEmpty())
 		SetProperty(wxString(_T("src")), src);
-	if (links)
-	{
-		wxListOfGpxLinksNode *link = links->GetFirst();
-		while (link)
-		{
-			LinkEndChild(link->GetData());
-			link = link->GetNext();
+	if (links) {
+		for (ListOfGpxLinks::iterator link = links->begin(); link != links->end(); ++link) {
+			LinkEndChild(*link);
 		}
 	}
 	if (number != -1)
@@ -63,35 +59,30 @@ GpxTrkElement::GpxTrkElement(
 		SetProperty(wxString(_T("type")), type);
 	if (extensions)
 		LinkEndChild(extensions);
-	if (segments)
-	{
-		wxListOfGpxTrksegsNode *seg = segments->GetFirst();
-		while (seg)
-		{
-			AppendTrkSegment(seg->GetData());
-			seg = seg->GetNext();
+	if (segments) {
+		for (ListOfGpxTrksegs::iterator seg = segments->begin(); seg != segments->end(); ++seg) {
+			AppendTrkSegment(*seg);
 		}
 	}
 }
 
-void GpxTrkElement::AppendTrkSegment(GpxTrksegElement *trkseg)
+void GpxTrkElement::AppendTrkSegment(GpxTrksegElement* trkseg)
 {
-	//FIXME: can be reused for route and track segment
+	// FIXME: can be reused for route and track segment
 	LinkEndChild(trkseg);
 }
 
-void GpxTrkElement::SetProperty(const wxString &name, const wxString &value)
+void GpxTrkElement::SetProperty(const wxString& name, const wxString& value)
 {
-	//FIXME: doesn't care about order so it can be absolutely wrong, have to redo this code if it has to be used by something else than the constructor
-	//then it can be made public
-	//FIXME: can be reused for route and track
-	GpxSimpleElement *element = new GpxSimpleElement(name, value);
-	TiXmlElement *curelement = FirstChildElement();
+	// FIXME: doesn't care about order so it can be absolutely wrong, have to redo this code if it
+	// has to be used by something else than the constructor
+	// then it can be made public
+	// FIXME: can be reused for route and track
+	GpxSimpleElement* element = new GpxSimpleElement(name, value);
+	TiXmlElement* curelement = FirstChildElement();
 	bool found = false;
-	while(curelement)
-	{
-		if((const char *)curelement->Value() == (const char *)name.ToUTF8())
-		{
+	while (curelement) {
+		if ((const char*)curelement->Value() == (const char*)name.ToUTF8()) {
 			ReplaceChild(curelement, *element);
 			element->Clear();
 			delete element;
@@ -103,12 +94,12 @@ void GpxTrkElement::SetProperty(const wxString &name, const wxString &value)
 		LinkEndChild(element);
 }
 
-void GpxTrkElement::SetSimpleExtension(const wxString &name, const wxString &value)
+void GpxTrkElement::SetSimpleExtension(const wxString& name, const wxString& value)
 {
-	//FIXME: if the extensions don't exist, we should create them
-	TiXmlElement * exts = FirstChildElement("extensions");
+	// FIXME: if the extensions don't exist, we should create them
+	TiXmlElement* exts = FirstChildElement("extensions");
 	if (exts) {
-		TiXmlElement * ext = exts->FirstChildElement(name.ToUTF8());
+		TiXmlElement* ext = exts->FirstChildElement(name.ToUTF8());
 		if (ext)
 			exts->ReplaceChild(ext, GpxSimpleElement(name, value));
 		else

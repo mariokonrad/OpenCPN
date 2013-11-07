@@ -133,7 +133,7 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString &sources)
 	m_Combined_IDX_array.push_back((IDX_entry *)(NULL));
 	int num_IDX = 1;
 
-	for(unsigned int i=0 ; i < sources.GetCount() ; i++) {
+	for(unsigned int i=0 ; i < sources.size() ; i++) {
 		TCDataSource *s = new TCDataSource;
 		TC_Error_Code r = s->LoadData(sources.Item(i));
 		if(r != TC_NO_ERROR) {

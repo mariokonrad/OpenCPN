@@ -99,7 +99,7 @@ WX_DEFINE_LIST(Plugin_WaypointList); // FIXME: replace wx containers with std co
 
 PlugIn_ViewPort CreatePlugInViewport( const ViewPort &vp)
 {
-	//    Create a PlugIn Viewport
+	// Create a PlugIn Viewport
 	ViewPort tvp = vp;
 	PlugIn_ViewPort pivp;
 
@@ -310,7 +310,7 @@ bool PlugInManager::UpDateChartDataTypes(void)
 	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 
-		if (/*pic->m_bEnabled &&*/(pic->m_cap_flag & INSTALLS_PLUGIN_CHART))
+		if (pic->m_cap_flag & INSTALLS_PLUGIN_CHART)
 			bret = true;
 	}
 
@@ -1765,16 +1765,13 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 
 	pWP->m_bIsolatedMark = true; // This is an isolated mark
 
-	//  Transcribe (clone) the html HyperLink List, if present
+	// Transcribe (clone) the html HyperLink List, if present
 	if (pwaypoint->m_HyperlinkList) {
 		if (pwaypoint->m_HyperlinkList->size() > 0) {
-			wxPlugin_HyperlinkListNode* linknode = pwaypoint->m_HyperlinkList->GetFirst();
-			while (linknode) {
-				Plugin_Hyperlink* link = linknode->GetData();
-
+			for (Plugin_HyperlinkList::iterator linknode = pwaypoint->m_HyperlinkList->begin();
+				 linknode != pwaypoint->m_HyperlinkList->end(); ++linknode) {
+				Plugin_Hyperlink* link = *linknode;
 				pWP->m_HyperlinkList.push_back(Hyperlink(link->DescrText, link->Link, link->Type));
-
-				linknode = linknode->GetNext();
 			}
 		}
 	}
@@ -1834,11 +1831,11 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 		if (pwaypoint->m_HyperlinkList) {
 			prp->m_HyperlinkList.clear();
 			if (pwaypoint->m_HyperlinkList->size() > 0) {
-				wxPlugin_HyperlinkListNode* linknode = pwaypoint->m_HyperlinkList->GetFirst();
-				while (linknode) {
-					Plugin_Hyperlink* link = linknode->GetData();
-					prp->m_HyperlinkList.push_back(Hyperlink(link->DescrText, link->Link, link->Type));
-					linknode = linknode->GetNext();
+				for (Plugin_HyperlinkList::iterator linknode = pwaypoint->m_HyperlinkList->begin();
+					 linknode != pwaypoint->m_HyperlinkList->end(); ++linknode) {
+					Plugin_Hyperlink* link = *linknode;
+					prp->m_HyperlinkList.push_back(
+						Hyperlink(link->DescrText, link->Link, link->Type));
 				}
 			}
 		}
@@ -1863,25 +1860,23 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 {
 	Route* route = new Route();
 
-	PlugIn_Waypoint* pwp;
 	RoutePoint* pWP_src;
 	int ip = 0;
 
-	wxPlugin_WaypointListNode* pwpnode = proute->pWaypointList->GetFirst();
-	while (pwpnode) {
-		pwp = pwpnode->GetData();
+	for (Plugin_WaypointList::iterator pwpnode = proute->pWaypointList->begin();
+		 pwpnode != proute->pWaypointList->end(); ++pwpnode) {
+		PlugIn_Waypoint* pwp = *pwpnode;
 
 		RoutePoint* pWP
 			= new RoutePoint(pwp->m_lat, pwp->m_lon, pwp->m_IconName, pwp->m_MarkName, pwp->m_GUID);
 
-		//  Transcribe (clone) the html HyperLink List, if present
+		// Transcribe (clone) the html HyperLink List, if present
 		if (pwp->m_HyperlinkList) {
 			if (pwp->m_HyperlinkList->size() > 0) {
-				wxPlugin_HyperlinkListNode* linknode = pwp->m_HyperlinkList->GetFirst();
-				while (linknode) {
-					Plugin_Hyperlink* link = linknode->GetData();
+				for (Plugin_HyperlinkList::iterator linknode = pwp->m_HyperlinkList->begin();
+					 linknode != pwp->m_HyperlinkList->end(); ++linknode) {
+					Plugin_Hyperlink* link = *linknode;
 					pWP->m_HyperlinkList.push_back(Hyperlink(link->DescrText, link->Link, link->Type));
-					linknode = linknode->GetNext();
 				}
 			}
 		}
@@ -1899,8 +1894,6 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 											   pWP->m_lon, pWP_src, pWP, route);
 		ip++;
 		pWP_src = pWP;
-
-		pwpnode = pwpnode->GetNext(); // PlugInWaypoint
 	}
 
 	route->m_RouteNameString = proute->m_NameString;
@@ -1956,13 +1949,12 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 {
 	Track* track = new Track();
 
-	PlugIn_Waypoint* pwp;
 	RoutePoint* pWP_src;
 	int ip = 0;
 
-	wxPlugin_WaypointListNode* pwpnode = ptrack->pWaypointList->GetFirst();
-	while (pwpnode) {
-		pwp = pwpnode->GetData();
+	for (Plugin_WaypointList::iterator pwpnode = ptrack->pWaypointList->begin();
+		 pwpnode != ptrack->pWaypointList->end(); ++pwpnode) {
+		PlugIn_Waypoint* pwp = *pwpnode;
 
 		RoutePoint* pWP
 			= new RoutePoint(pwp->m_lat, pwp->m_lon, pwp->m_IconName, pwp->m_MarkName, pwp->m_GUID);
@@ -1980,8 +1972,6 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 											   pWP->m_lon, pWP_src, pWP, track);
 		ip++;
 		pWP_src = pWP;
-
-		pwpnode = pwpnode->GetNext(); // PlugInWaypoint
 	}
 
 	track->m_RouteNameString = ptrack->m_NameString;

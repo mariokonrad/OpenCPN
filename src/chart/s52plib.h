@@ -27,28 +27,25 @@
 #define _S52PLIB_H_
 
 #include <vector>
+#include <list>
 
 #include "s52s57.h"
 
 class wxGLContext;
 #ifdef ocpnUSE_GL
-#include <wx/glcanvas.h>
+	#include <wx/glcanvas.h>
 #endif
 
+#include <wx/dcgraph.h>
 
-#include <wx/dcgraph.h>         // supplemental, for Mac
-
-//    wxWindows Hash Map Declarations
 #include <wx/hashmap.h>
 class RuleHash;
 
-WX_DECLARE_HASH_MAP( wxString, Rule*, wxStringHash, wxStringEqual, RuleHash );
+WX_DECLARE_HASH_MAP(wxString, Rule*, wxStringHash, wxStringEqual, RuleHash);
 
-WX_DEFINE_SORTED_ARRAY( LUPrec *, wxArrayOfLUPrec );
+WX_DEFINE_SORTED_ARRAY(LUPrec*, wxArrayOfLUPrec);
 
-WX_DECLARE_LIST( S57Obj, ObjList );
-
-WX_DECLARE_STRING_HASH_MAP( int, CARC_Hash );
+WX_DECLARE_STRING_HASH_MAP(int, CARC_Hash);
 
 class ViewPort;
 class PixelCache;
@@ -437,6 +434,7 @@ private:
     int m_colortable_index;
     int m_colortable_index_save;
 
+	typedef std::list<S57Obj*> ObjList;
     ObjList m_textObjList;
 
     double m_display_pix_per_mm;

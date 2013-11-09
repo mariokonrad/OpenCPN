@@ -64,9 +64,6 @@ extern double g_GLMinLineWidth;
 void DrawAALine(wxDC* pDC, int x0, int y0, int x1, int y1, wxColour clrLine, int dash, int space);
 extern bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val);
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(ObjList); // FIXME
-
 #if defined(__TEXFONT_H__)
 static void txfRenderGlyph(TexFont* txf, int c);
 static void txfRenderString(TexFont* txf, char* string, int len);
@@ -1631,10 +1628,8 @@ bool s52plib::CheckTextRectList(const wxRect& test_rect, S57Obj* pobj)
 {
 	// Iterate over the current object list, looking at rText
 
-	for (ObjList::iterator node = m_textObjList.begin(); node != m_textObjList.end(); ++node) {
-		wxRect* pcurrent_rect = &((*node)->rText);
-
-		if (pcurrent_rect->Intersects(test_rect)) {
+	for (ObjList::const_iterator node = m_textObjList.begin(); node != m_textObjList.end(); ++node) {
+		if ((*node)->rText.Intersects(test_rect)) {
 			if (*node != pobj)
 				return true;
 		}
@@ -1787,12 +1782,11 @@ int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, ViewPort* vp, bool 
 		// it doesn't already exist
 		if (m_bDeClutterText) {
 			if (bwas_drawn) {
+				// FIXME: replace this with std::find
 				bool b_found = false;
-				for (ObjList::iterator node = m_textObjList.begin(); node != m_textObjList.end();
+				for (ObjList::const_iterator node = m_textObjList.begin(); node != m_textObjList.end();
 					 ++node) {
-					S57Obj* oc = *node;
-
-					if (oc == rzRules->obj) {
+					if (*node == rzRules->obj) {
 						b_found = true;
 						break;
 					}
@@ -6083,15 +6077,15 @@ void s52plib::PrepareForRender()
 void s52plib::ClearTextList(void)
 {
 	// Clear the current text rectangle list
-	m_textObjList.Clear();
+	m_textObjList.clear(); // TODO: check for memory leak
 }
 
 void s52plib::AdjustTextList(int dx, int dy, int screenw, int screenh)
 {
 	wxRect rScreen(0, 0, screenw, screenh);
-	//    Iterate over the text rectangle list
-	//        1.  Apply the specified offset to the list elements
-	//        2.. Remove any list elements that are off screen after applied offset
+	// Iterate over the text rectangle list
+	// 1. Apply the specified offset to the list elements
+	// 2. Remove any list elements that are off screen after applied offset
 
 	ObjList::iterator node = m_textObjList.begin();
 	while (node != m_textObjList.end()) {
@@ -6100,7 +6094,6 @@ void s52plib::AdjustTextList(int dx, int dy, int screenw, int screenh)
 
 		if (!pcurrent->Intersects(rScreen)) {
 			m_textObjList.erase(node);
-
 			node = m_textObjList.begin();
 		} else {
 			++node;

@@ -67,7 +67,7 @@
 
 #include <algorithm>
 
-extern bool GetDoubleAttr(S57Obj *obj, const char *AttrName, double &val);      // found in s52cnsy
+extern bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val); // found in s52cnsy
 
 void OpenCPN_OGRErrorHandler( CPLErr eErrClass, int nError,
                               const char * pszErrorMsg );               // installed GDAL OGR library error handler
@@ -97,14 +97,13 @@ static jmp_buf env_ogrf;                    // the context saved by setjmp();
 WX_DEFINE_OBJARRAY(ArrayOfS57Obj);
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST(ListOfS57Obj);                // Implement a list of S57 Objects
-
 WX_DEFINE_LIST(ListOfObjRazRules);   // Implement a list ofObjRazRules
 
 #define S57_THUMB_SIZE  200
 
-static int              s_bInS57;         // Exclusion flag to prvent recursion in this class init call.
-                                          // Init() is not reentrant due to static wxProgressDialog callback....
+static int s_bInS57; // Exclusion flag to prvent recursion in this class init call. Init() is not
+					 // reentrant due to static wxProgressDialog callback....
+
 int s_cnt;
 
 S57Obj::S57Obj()
@@ -616,7 +615,7 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 
 					if (!strncmp(buf, "  POLYTESSGEO", 13)) {
 						float area_ref_lat;
-						double area_ref_lon;
+						float area_ref_lon;
 						int nrecl;
 						char tbuf[40];
 
@@ -2036,220 +2035,220 @@ bool s57chart::RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint)
 	return bnew_view;
 }
 
-bool s57chart::DoRenderViewOnDC( wxMemoryDC& dc, const ViewPort& VPoint, RenderTypeEnum option,
-        bool force_new_view )
+bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, RenderTypeEnum option,
+								bool force_new_view)
 {
-    bool bnewview = false;
-    wxPoint rul, rlr;
-    bool bNewVP = false;
+	bool bnewview = false;
+	wxPoint rul, rlr;
+	bool bNewVP = false;
 
-    bool bReallyNew = false;
+	bool bReallyNew = false;
 
-    double easting_ul;
-    double northing_ul;
-    double easting_lr;
-    double northing_lr;
-    double prev_easting_ul = 0.0;
-    double prev_northing_ul = 0.0;
-    double prev_easting_lr;
-    double prev_northing_lr;
+	double easting_ul;
+	double northing_ul;
+	double easting_lr;
+	double northing_lr;
+	double prev_easting_ul = 0.0;
+	double prev_northing_ul = 0.0;
+	double prev_easting_lr;
+	double prev_northing_lr;
 
-    if( ps52plib->GetPLIBColorScheme() != m_lastColorScheme ) bReallyNew = true;
-    m_lastColorScheme = ps52plib->GetPLIBColorScheme();
+	if (ps52plib->GetPLIBColorScheme() != m_lastColorScheme)
+		bReallyNew = true;
+	m_lastColorScheme = ps52plib->GetPLIBColorScheme();
 
-    if( VPoint.view_scale_ppm != m_last_vp.view_scale_ppm ) bReallyNew = true;
+	if (VPoint.view_scale_ppm != m_last_vp.view_scale_ppm)
+		bReallyNew = true;
 
-    //      If the scale is very small, do not use the cache to avoid harmonic difficulties...
-    if( VPoint.chart_scale > 1e8 ) bReallyNew = true;
+	//      If the scale is very small, do not use the cache to avoid harmonic difficulties...
+	if (VPoint.chart_scale > 1e8)
+		bReallyNew = true;
 
-    wxRect dest( 0, 0, VPoint.pix_width, VPoint.pix_height );
-    if( m_last_vprect != dest ) bReallyNew = true;
-    m_last_vprect = dest;
+	wxRect dest(0, 0, VPoint.pix_width, VPoint.pix_height);
+	if (m_last_vprect != dest)
+		bReallyNew = true;
+	m_last_vprect = dest;
 
-    if( m_plib_state_hash != ps52plib->GetStateHash() ) {
-        bReallyNew = true;
-        m_plib_state_hash = ps52plib->GetStateHash();
-    }
+	if (m_plib_state_hash != ps52plib->GetStateHash()) {
+		bReallyNew = true;
+		m_plib_state_hash = ps52plib->GetStateHash();
+	}
 
-    if( bReallyNew ) {
-        bNewVP = true;
-        delete pDIB;
-        pDIB = NULL;
-        bnewview = true;
-    }
+	if (bReallyNew) {
+		bNewVP = true;
+		delete pDIB;
+		pDIB = NULL;
+		bnewview = true;
+	}
 
-//      Calculate the desired rectangle in the last cached image space
-    if( m_last_vp.IsValid() ) {
-        easting_ul = m_easting_vp_center - ( ( VPoint.pix_width / 2 ) / m_view_scale_ppm );
-        northing_ul = m_northing_vp_center + ( ( VPoint.pix_height / 2 ) / m_view_scale_ppm );
-        easting_lr = easting_ul + ( VPoint.pix_width / m_view_scale_ppm );
-        northing_lr = northing_ul - ( VPoint.pix_height / m_view_scale_ppm );
+	// Calculate the desired rectangle in the last cached image space
+	if (m_last_vp.IsValid()) {
+		easting_ul = m_easting_vp_center - ((VPoint.pix_width / 2) / m_view_scale_ppm);
+		northing_ul = m_northing_vp_center + ((VPoint.pix_height / 2) / m_view_scale_ppm);
+		easting_lr = easting_ul + (VPoint.pix_width / m_view_scale_ppm);
+		northing_lr = northing_ul - (VPoint.pix_height / m_view_scale_ppm);
 
-        double last_easting_vp_center, last_northing_vp_center;
-        geo::toSM( m_last_vp.clat, m_last_vp.clon, ref_lat, ref_lon, &last_easting_vp_center,
-                &last_northing_vp_center );
+		double last_easting_vp_center, last_northing_vp_center;
+		geo::toSM(m_last_vp.clat, m_last_vp.clon, ref_lat, ref_lon, &last_easting_vp_center,
+				  &last_northing_vp_center);
 
-        prev_easting_ul = last_easting_vp_center
-                - ( ( m_last_vp.pix_width / 2 ) / m_view_scale_ppm );
-        prev_northing_ul = last_northing_vp_center
-                + ( ( m_last_vp.pix_height / 2 ) / m_view_scale_ppm );
-        prev_easting_lr = easting_ul + ( m_last_vp.pix_width / m_view_scale_ppm );
-        prev_northing_lr = northing_ul - ( m_last_vp.pix_height / m_view_scale_ppm );
+		prev_easting_ul = last_easting_vp_center - ((m_last_vp.pix_width / 2) / m_view_scale_ppm);
+		prev_northing_ul = last_northing_vp_center
+						   + ((m_last_vp.pix_height / 2) / m_view_scale_ppm);
+		prev_easting_lr = easting_ul + (m_last_vp.pix_width / m_view_scale_ppm);
+		prev_northing_lr = northing_ul - (m_last_vp.pix_height / m_view_scale_ppm);
 
-        double dx = ( easting_ul - prev_easting_ul ) * m_view_scale_ppm;
-        double dy = ( prev_northing_ul - northing_ul ) * m_view_scale_ppm;
+		double dx = (easting_ul - prev_easting_ul) * m_view_scale_ppm;
+		double dy = (prev_northing_ul - northing_ul) * m_view_scale_ppm;
 
-        rul.x = (int) round((easting_ul - prev_easting_ul) * m_view_scale_ppm);
-        rul.y = (int) round((prev_northing_ul - northing_ul) * m_view_scale_ppm);
+		rul.x = (int)round((easting_ul - prev_easting_ul) * m_view_scale_ppm);
+		rul.y = (int)round((prev_northing_ul - northing_ul) * m_view_scale_ppm);
 
-        rlr.x = (int) round((easting_lr - prev_easting_ul) * m_view_scale_ppm);
-        rlr.y = (int) round((prev_northing_ul - northing_lr) * m_view_scale_ppm);
+		rlr.x = (int)round((easting_lr - prev_easting_ul) * m_view_scale_ppm);
+		rlr.y = (int)round((prev_northing_ul - northing_lr) * m_view_scale_ppm);
 
-        if( ( fabs( dx - wxRound( dx ) ) > 1e-5 ) || ( fabs( dy - wxRound( dy ) ) > 1e-5 ) ) {
-            if( g_bDebugS57 ) printf(
-                    "s57chart::DoRender  Cache miss on non-integer pixel delta %g %g\n", dx, dy );
-            rul.x = 0;
-            rul.y = 0;
-            rlr.x = 0;
-            rlr.y = 0;
-            bNewVP = true;
-        }
+		if ((fabs(dx - wxRound(dx)) > 1e-5) || (fabs(dy - wxRound(dy)) > 1e-5)) {
+			if (g_bDebugS57)
+				printf("s57chart::DoRender  Cache miss on non-integer pixel delta %g %g\n", dx, dy);
+			rul.x = 0;
+			rul.y = 0;
+			rlr.x = 0;
+			rlr.y = 0;
+			bNewVP = true;
+		} else if ((rul.x != 0) || (rul.y != 0)) {
+			if (g_bDebugS57)
+				printf("newvp due to rul\n");
+			bNewVP = true;
+		}
+	} else {
+		rul.x = 0;
+		rul.y = 0;
+		rlr.x = 0;
+		rlr.y = 0;
+		bNewVP = true;
+	}
 
-        else if( ( rul.x != 0 ) || ( rul.y != 0 ) ) {
-            if( g_bDebugS57 ) printf( "newvp due to rul\n" );
-            bNewVP = true;
-        }
-    } else {
-        rul.x = 0;
-        rul.y = 0;
-        rlr.x = 0;
-        rlr.y = 0;
-        bNewVP = true;
-    }
+	if (force_new_view)
+		bNewVP = true;
 
-    if( force_new_view ) bNewVP = true;
+	// Using regions, calculate re-usable area of pDIB
 
-    //      Using regions, calculate re-usable area of pDIB
+	OCPNRegion rgn_last(0, 0, VPoint.pix_width, VPoint.pix_height);
+	OCPNRegion rgn_new(rul.x, rul.y, rlr.x - rul.x, rlr.y - rul.y);
+	rgn_last.Intersect(rgn_new); // intersection is reusable portion
 
-    OCPNRegion rgn_last( 0, 0, VPoint.pix_width, VPoint.pix_height );
-    OCPNRegion rgn_new( rul.x, rul.y, rlr.x - rul.x, rlr.y - rul.y );
-    rgn_last.Intersect( rgn_new );            // intersection is reusable portion
+	if (bNewVP && (NULL != pDIB) && !rgn_last.IsEmpty()) {
+		int xu, yu, wu, hu;
+		rgn_last.GetBox(xu, yu, wu, hu);
 
-    if( bNewVP && ( NULL != pDIB ) && !rgn_last.IsEmpty() ) {
-        int xu, yu, wu, hu;
-        rgn_last.GetBox( xu, yu, wu, hu );
+		int desx = 0;
+		int desy = 0;
+		int srcx = xu;
+		int srcy = yu;
 
-        int desx = 0;
-        int desy = 0;
-        int srcx = xu;
-        int srcy = yu;
+		if (rul.x < 0) {
+			srcx = 0;
+			desx = -rul.x;
+		}
+		if (rul.y < 0) {
+			srcy = 0;
+			desy = -rul.y;
+		}
 
-        if( rul.x < 0 ) {
-            srcx = 0;
-            desx = -rul.x;
-        }
-        if( rul.y < 0 ) {
-            srcy = 0;
-            desy = -rul.y;
-        }
+		OCPNMemDC dc_last;
+		pDIB->SelectIntoDC(dc_last);
 
-        OCPNMemDC dc_last;
-        pDIB->SelectIntoDC( dc_last );
+		OCPNMemDC dc_new;
+		PixelCache* pDIBNew = new PixelCache(VPoint.pix_width, VPoint.pix_height, BPP);
+		pDIBNew->SelectIntoDC(dc_new);
 
-        OCPNMemDC dc_new;
-        PixelCache *pDIBNew = new PixelCache( VPoint.pix_width, VPoint.pix_height, BPP );
-        pDIBNew->SelectIntoDC( dc_new );
+		dc_new.Blit(desx, desy, wu, hu, (wxDC*)&dc_last, srcx, srcy, wxCOPY);
 
-        dc_new.Blit( desx, desy, wu, hu, (wxDC *) &dc_last, srcx, srcy, wxCOPY );
+		// Ask the plib to adjust the persistent text rectangle list for this canvas shift
+		// This ensures that, on pans, the list stays in registration with the new text renders to
+		// come
+		ps52plib->AdjustTextList(desx - srcx, desy - srcy, VPoint.pix_width, VPoint.pix_height);
 
-        //        Ask the plib to adjust the persistent text rectangle list for this canvas shift
-        //        This ensures that, on pans, the list stays in registration with the new text renders to come
-        ps52plib->AdjustTextList( desx - srcx, desy - srcy, VPoint.pix_width, VPoint.pix_height );
+		dc_new.SelectObject(wxNullBitmap);
+		dc_last.SelectObject(wxNullBitmap);
 
-        dc_new.SelectObject( wxNullBitmap );
-        dc_last.SelectObject( wxNullBitmap );
+		delete pDIB;
+		pDIB = pDIBNew;
 
-        delete pDIB;
-        pDIB = pDIBNew;
+		// OK, now have the re-useable section in place
+		// Next, build the new sections
 
-//              OK, now have the re-useable section in place
-//              Next, build the new sections
+		pDIB->SelectIntoDC(dc);
 
-        pDIB->SelectIntoDC( dc );
+		OCPNRegion rgn_delta(0, 0, VPoint.pix_width, VPoint.pix_height);
+		OCPNRegion rgn_reused(desx, desy, wu, hu);
+		rgn_delta.Subtract(rgn_reused);
 
-        OCPNRegion rgn_delta( 0, 0, VPoint.pix_width, VPoint.pix_height );
-        OCPNRegion rgn_reused( desx, desy, wu, hu );
-        rgn_delta.Subtract( rgn_reused );
+		OCPNRegionIterator upd(rgn_delta); // get the update rect list
+		while (upd.HaveRects()) {
+			wxRect rect = upd.GetRect();
 
-        OCPNRegionIterator upd( rgn_delta ); // get the update rect list
-        while( upd.HaveRects() ) {
-            wxRect rect = upd.GetRect();
+			// Build temp ViewPort on this region
 
-//      Build temp ViewPort on this region
+			ViewPort temp_vp = VPoint;
+			double temp_lon_left, temp_lat_bot, temp_lon_right, temp_lat_top;
 
-            ViewPort temp_vp = VPoint;
-            double temp_lon_left, temp_lat_bot, temp_lon_right, temp_lat_top;
+			double temp_northing_ul = prev_northing_ul - (rul.y / m_view_scale_ppm)
+									  - (rect.y / m_view_scale_ppm);
+			double temp_easting_ul = prev_easting_ul + (rul.x / m_view_scale_ppm)
+									 + (rect.x / m_view_scale_ppm);
+			geo::fromSM(temp_easting_ul, temp_northing_ul, ref_lat, ref_lon, &temp_lat_top,
+						&temp_lon_left);
 
-            double temp_northing_ul = prev_northing_ul - ( rul.y / m_view_scale_ppm )
-                    - ( rect.y / m_view_scale_ppm );
-            double temp_easting_ul = prev_easting_ul + ( rul.x / m_view_scale_ppm )
-                    + ( rect.x / m_view_scale_ppm );
-            geo::fromSM( temp_easting_ul, temp_northing_ul, ref_lat, ref_lon, &temp_lat_top,
-                    &temp_lon_left );
+			double temp_northing_lr = temp_northing_ul - (rect.height / m_view_scale_ppm);
+			double temp_easting_lr = temp_easting_ul + (rect.width / m_view_scale_ppm);
+			geo::fromSM(temp_easting_lr, temp_northing_lr, ref_lat, ref_lon, &temp_lat_bot,
+						&temp_lon_right);
 
-            double temp_northing_lr = temp_northing_ul - ( rect.height / m_view_scale_ppm );
-            double temp_easting_lr = temp_easting_ul + ( rect.width / m_view_scale_ppm );
-            geo::fromSM( temp_easting_lr, temp_northing_lr, ref_lat, ref_lon, &temp_lat_bot,
-                    &temp_lon_right );
+			temp_vp.GetBBox().SetMin(temp_lon_left, temp_lat_bot);
+			temp_vp.GetBBox().SetMax(temp_lon_right, temp_lat_top);
 
-            temp_vp.GetBBox().SetMin( temp_lon_left, temp_lat_bot );
-            temp_vp.GetBBox().SetMax( temp_lon_right, temp_lat_top );
+			// Allow some slop in the viewport
+			// TODO: Investigate why this fails if greater than 5 percent
+			double margin = wxMin(temp_vp.GetBBox().GetWidth(), temp_vp.GetBBox().GetHeight())
+							* 0.05;
+			temp_vp.GetBBox().EnLarge(margin);
 
-            //      Allow some slop in the viewport
-            //    TODO Investigate why this fails if greater than 5 percent
-            double margin = wxMin(temp_vp.GetBBox().GetWidth(), temp_vp.GetBBox().GetHeight())
-                    * 0.05;
-            temp_vp.GetBBox().EnLarge( margin );
+			// And Render it new piece on the target dc
 
-//      And Render it new piece on the target dc
+			DCRenderRect(dc, temp_vp, &rect);
 
-            DCRenderRect( dc, temp_vp, &rect );
+			upd.NextRect();
+		}
 
-            upd.NextRect();
-        }
+		dc.SelectObject(wxNullBitmap);
 
-        dc.SelectObject( wxNullBitmap );
+		bnewview = true;
 
-        bnewview = true;
+		// Update last_vp to reflect the current cached bitmap
+		m_last_vp = VPoint;
 
-//      Update last_vp to reflect the current cached bitmap
-        m_last_vp = VPoint;
+	} else if (bNewVP || (NULL == pDIB)) {
+		delete pDIB;
+		pDIB = new PixelCache(VPoint.pix_width, VPoint.pix_height, BPP); // destination
 
-    }
+		wxRect full_rect(0, 0, VPoint.pix_width, VPoint.pix_height);
+		pDIB->SelectIntoDC(dc);
 
-    else if( bNewVP || ( NULL == pDIB ) ) {
-        delete pDIB;
-        pDIB = new PixelCache( VPoint.pix_width, VPoint.pix_height, BPP );     // destination
+		// Clear the text declutter list
+		ps52plib->ClearTextList();
 
-        wxRect full_rect( 0, 0, VPoint.pix_width, VPoint.pix_height );
-        pDIB->SelectIntoDC( dc );
+		DCRenderRect(dc, VPoint, &full_rect);
 
-        //        Clear the text declutter list
-        ps52plib->ClearTextList();
+		dc.SelectObject(wxNullBitmap);
 
-        DCRenderRect( dc, VPoint, &full_rect );
+		bnewview = true;
 
-        dc.SelectObject( wxNullBitmap );
+		// Update last_vp to reflect the current cached bitmap
+		m_last_vp = VPoint;
+	}
 
-        bnewview = true;
-
-//      Update last_vp to reflect the current cached bitmap
-        m_last_vp = VPoint;
-
-    }
-
-    return bnewview;
-
+	return bnewview;
 }
 
 int s57chart::DCRenderRect( wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect )
@@ -3291,135 +3290,129 @@ bool s57chart::GetNearestSafeContour( double safe_cnt, double &next_safe_cnt )
  --------------------------------------------------------------------------
  */
 
-ListOfS57Obj *s57chart::GetAssociatedObjects( S57Obj *obj )
+ListOfS57Obj* s57chart::GetAssociatedObjects(S57Obj* obj)
 {
-    int disPrioIdx;
-    bool gotit;
+	int disPrioIdx;
+	bool gotit;
 
-    ListOfS57Obj *pobj_list = new ListOfS57Obj;
-    pobj_list->Clear();
+	ListOfS57Obj* pobj_list = new ListOfS57Obj;
 
-    double lat, lon;
-    geo::fromSM( ( obj->x * obj->x_rate ) + obj->x_origin, ( obj->y * obj->y_rate ) + obj->y_origin,
-            ref_lat, ref_lon, &lat, &lon );
-    //    What is the entry object geometry type?
+	double lat, lon;
+	geo::fromSM((obj->x * obj->x_rate) + obj->x_origin, (obj->y * obj->y_rate) + obj->y_origin,
+				ref_lat, ref_lon, &lat, &lon);
+	// What is the entry object geometry type?
 
-    switch( obj->Primitive_type ){
-        case GEO_POINT:
-            //  n.b.  This logic not perfectly right for LINE and AREA features
-            //  It uses the object reference point for testing, instead of the decomposed
-            //  line or boundary geometry.  Thus, it may fail on some intersecting relationships.
-            //  Judged acceptable, in favor of performance implications.
-            //  DSR
-        case GEO_LINE:
-        case GEO_AREA:
-            ObjRazRules *top;
-            disPrioIdx = 1;         // PRIO_GROUP1:S57 group 1 filled areas
+	switch (obj->Primitive_type) {
+		case GEO_POINT:
+		// n.b.  This logic not perfectly right for LINE and AREA features
+		// It uses the object reference point for testing, instead of the decomposed
+		// line or boundary geometry.  Thus, it may fail on some intersecting relationships.
+		// Judged acceptable, in favor of performance implications.
+		case GEO_LINE:
+		case GEO_AREA:
+			ObjRazRules* top;
+			disPrioIdx = 1; // PRIO_GROUP1:S57 group 1 filled areas
+			gotit = false;
+			top = razRules[disPrioIdx][3]; // PLAIN_BOUNDARIES
+			while (top != NULL) {
+				if (top->obj->bIsAssociable) {
+					if (top->obj->BBObj.PointInBox(lon, lat, 0.0)) {
+						if (IsPointInObjArea(lat, lon, 0.0, top->obj)) {
+							pobj_list->push_back(top->obj);
+							gotit = true;
+							break;
+						}
+					}
+				}
+				ObjRazRules* nxx = top->next;
+				top = nxx;
+			}
 
-            gotit = false;
-            top = razRules[disPrioIdx][3];     // PLAIN_BOUNDARIES
-            while( top != NULL ) {
-                if( top->obj->bIsAssociable ) {
-                    if( top->obj->BBObj.PointInBox( lon, lat, 0.0 ) ) {
-                        if( IsPointInObjArea( lat, lon, 0.0, top->obj ) ) {
-                            pobj_list->Append( top->obj );
-                            gotit = true;
-                            break;
-                        }
-                    }
-                }
+			if (!gotit) {
+				top = razRules[disPrioIdx][4]; // SYMBOLIZED_BOUNDARIES
+				while (top != NULL) {
+					if (top->obj->bIsAssociable) {
+						if (top->obj->BBObj.PointInBox(lon, lat, 0.0)) {
+							if (IsPointInObjArea(lat, lon, 0.0, top->obj)) {
+								pobj_list->push_back(top->obj);
+								break;
+							}
+						}
+					}
+					ObjRazRules* nxx = top->next;
+					top = nxx;
+				}
+			}
+			break;
 
-                ObjRazRules *nxx = top->next;
-                top = nxx;
-            }
+		default:
+			break;
+	}
 
-            if( !gotit ) {
-                top = razRules[disPrioIdx][4];     // SYMBOLIZED_BOUNDARIES
-                while( top != NULL ) {
-                    if( top->obj->bIsAssociable ) {
-                        if( top->obj->BBObj.PointInBox( lon, lat, 0.0 ) ) {
-                            if( IsPointInObjArea( lat, lon, 0.0, top->obj ) ) {
-                                pobj_list->Append( top->obj );
-                                break;
-                            }
-                        }
-                    }
-
-                    ObjRazRules *nxx = top->next;
-                    top = nxx;
-                }
-            }
-
-            break;
-
-        default:
-            break;
-    }
-
-    return pobj_list;
+	return pobj_list;
 }
 
-void s57chart::GetChartNameFromTXT( const wxString& FullPath, wxString &Name )
+void s57chart::GetChartNameFromTXT(const wxString& FullPath, wxString& Name)
 {
+	wxFileName fn(FullPath);
 
-    wxFileName fn( FullPath );
+	wxString target_name = fn.GetName();
+	target_name.RemoveLast();
 
-    wxString target_name = fn.GetName();
-    target_name.RemoveLast();
+	wxString dir_name = fn.GetPath();
 
-    wxString dir_name = fn.GetPath();
+	wxDir dir(dir_name); // The directory containing the file
 
-    wxDir dir( dir_name );                                  // The directory containing the file
+	wxArrayString FileList;
 
-    wxArrayString FileList;
+	dir.GetAllFiles(fn.GetPath(), &FileList); // list all the files
 
-    dir.GetAllFiles( fn.GetPath(), &FileList );             // list all the files
+	// Iterate on the file list...
 
-    //    Iterate on the file list...
+	bool found_name = false;
+	wxString name;
+	name.Clear();
 
-    bool found_name = false;
-    wxString name;
-    name.Clear();
+	for (unsigned int j = 0; j < FileList.size(); j++) {
+		wxFileName file(FileList.Item(j));
+		if (((file.GetExt()).MakeUpper()) == _T("TXT")) {
+			//  Look for the line beginning with the name of the .000 file
+			wxTextFile text_file(file.GetFullPath());
 
-    for( unsigned int j = 0; j < FileList.size(); j++ ) {
-        wxFileName file( FileList.Item( j ) );
-        if( ( ( file.GetExt() ).MakeUpper() ) == _T("TXT") ) {
-            //  Look for the line beginning with the name of the .000 file
-            wxTextFile text_file( file.GetFullPath() );
+			bool file_ok = true;
+			//  Suppress log messages on bad file reads
+			{
+				wxLogNull logNo;
+				if (!text_file.Open())
+					file_ok = false;
+			}
 
-            bool file_ok = true;
-            //  Suppress log messages on bad file reads
-            {
-                wxLogNull logNo;
-                if( !text_file.Open() ) file_ok = false;
-            }
+			if (file_ok) {
+				wxString str = text_file.GetFirstLine();
+				while (!text_file.Eof()) {
+					if (0 == target_name.CmpNoCase(str.Mid(0, target_name.Len()))) { // found it
+						wxString tname = str.AfterFirst('-');
+						name = tname.AfterFirst(' ');
+						found_name = true;
+						break;
+					} else {
+						str = text_file.GetNextLine();
+					}
+				}
+			} else {
+				wxString msg(_T("   Error Reading ENC .TXT file: "));
+				msg.Append(file.GetFullPath());
+				wxLogMessage(msg);
+			}
 
-            if( file_ok ) {
-                wxString str = text_file.GetFirstLine();
-                while( !text_file.Eof() ) {
-                    if( 0 == target_name.CmpNoCase( str.Mid( 0, target_name.Len() ) ) ) { // found it
-                        wxString tname = str.AfterFirst( '-' );
-                        name = tname.AfterFirst( ' ' );
-                        found_name = true;
-                        break;
-                    } else {
-                        str = text_file.GetNextLine();
-                    }
-                }
-            } else {
-                wxString msg( _T("   Error Reading ENC .TXT file: ") );
-                msg.Append( file.GetFullPath() );
-                wxLogMessage( msg );
-            }
+			text_file.Close();
 
-            text_file.Close();
+			if (found_name)
+				break;
+		}
+	}
 
-            if( found_name ) break;
-        }
-    }
-
-    Name = name;
-
+	Name = name;
 }
 
 //---------------------------------------------------------------------------------

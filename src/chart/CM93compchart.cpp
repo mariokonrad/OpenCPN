@@ -1386,54 +1386,49 @@ bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, ViewPort& vp )
 	return true;
 }
 
-
-void cm93compchart::GetPointPix ( ObjRazRules *rzRules, float rlat, float rlon, wxPoint *r )
+void cm93compchart::GetPointPix(ObjRazRules* rzRules, float rlat, float rlon, wxPoint* r)
 {
-	m_pcm93chart_current->GetPointPix ( rzRules, rlat, rlon, r );
+	m_pcm93chart_current->GetPointPix(rzRules, rlat, rlon, r);
 }
 
-void cm93compchart::GetPointPix ( ObjRazRules *rzRules, wxPoint2DDouble *en, wxPoint *r, int nPoints )
+void cm93compchart::GetPointPix(ObjRazRules* rzRules, wxPoint2DDouble* en, wxPoint* r, int nPoints)
 {
-	m_pcm93chart_current->GetPointPix ( rzRules, en, r, nPoints );
+	m_pcm93chart_current->GetPointPix(rzRules, en, r, nPoints);
 }
 
-void cm93compchart::GetPixPoint ( int pixx, int pixy, double *plat, double *plon, ViewPort *vpt )
+void cm93compchart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, ViewPort* vpt)
 {
-	m_pcm93chart_current->GetPixPoint ( pixx, pixy, plat, plon, vpt );
+	m_pcm93chart_current->GetPixPoint(pixx, pixy, plat, plon, vpt);
 }
 
-void cm93compchart::UpdateLUPs ( s57chart *pOwner )
+void cm93compchart::UpdateLUPs(s57chart* pOwner)
 {
-	for ( int i = 0 ; i < 8 ; i++ )
-	{
-		if ( m_pcm93chart_array[i] )
-			m_pcm93chart_array[i]->UpdateLUPs ( pOwner );
+	for (int i = 0; i < 8; i++) {
+		if (m_pcm93chart_array[i])
+			m_pcm93chart_array[i]->UpdateLUPs(pOwner);
 	}
 }
 
-ListOfS57Obj *cm93compchart::GetAssociatedObjects ( S57Obj *obj )
+ListOfS57Obj* cm93compchart::GetAssociatedObjects(S57Obj* obj)
 {
-	if ( m_pcm93chart_current )
-		return  m_pcm93chart_current->GetAssociatedObjects ( obj );
+	if (m_pcm93chart_current)
+		return m_pcm93chart_current->GetAssociatedObjects(obj);
 	else
 		return NULL;
 }
 
-
 void cm93compchart::InvalidateCache()
 {
-	for ( int i = 0 ; i < 8 ; i++ )
-	{
-		if ( m_pcm93chart_array[i] )
+	for (int i = 0; i < 8; i++) {
+		if (m_pcm93chart_array[i])
 			m_pcm93chart_array[i]->InvalidateCache();
 	}
 }
 
-void cm93compchart::ForceEdgePriorityEvaluate ( void )
+void cm93compchart::ForceEdgePriorityEvaluate(void)
 {
-	for ( int i = 0 ; i < 8 ; i++ )
-	{
-		if ( m_pcm93chart_array[i] )
+	for (int i = 0; i < 8; i++) {
+		if (m_pcm93chart_array[i])
 			m_pcm93chart_array[i]->ForceEdgePriorityEvaluate();
 	}
 }
@@ -1442,118 +1437,113 @@ void cm93compchart::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
 {
 	m_global_color_scheme = cs;
 
-	for ( int i = 0 ; i < 8 ; i++ )
-	{
-		if ( m_pcm93chart_array[i] )
+	for (int i = 0; i < 8; i++) {
+		if (m_pcm93chart_array[i])
 			m_pcm93chart_array[i]->SetColorScheme(cs, bApplyImmediate);
 	}
 }
 
-ListOfObjRazRules *cm93compchart::GetObjRuleListAtLatLon ( float lat, float lon, float select_radius, ViewPort *VPoint )
+ListOfObjRazRules* cm93compchart::GetObjRuleListAtLatLon(float lat, float lon, float select_radius,
+														 ViewPort* VPoint)
 {
 	float alon = lon;
 
-	while ( alon < 0 )            // CM93 longitudes are all positive
+	while (alon < 0) // CM93 longitudes are all positive
 		alon += 360;
 
 	ViewPort vp_positive = *VPoint; // needs a new ViewPort also for ObjectRenderCheck()
 	vp_positive.set_positive();
 
-	if ( !VPoint->b_quilt )
-		if( m_pcm93chart_current )
-			return  m_pcm93chart_current->GetObjRuleListAtLatLon ( lat, alon, select_radius, &vp_positive );
+	if (!VPoint->b_quilt)
+		if (m_pcm93chart_current)
+			return m_pcm93chart_current->GetObjRuleListAtLatLon(lat, alon, select_radius,
+																&vp_positive);
 		else {
-			//     As default, return an empty list
-			ListOfObjRazRules *ret_ptr = new ListOfObjRazRules;
+			// As default, return an empty list
+			ListOfObjRazRules* ret_ptr = new ListOfObjRazRules;
 			return ret_ptr;
 		}
-	else
-	{
-		UpdateRenderRegions ( *VPoint );
+	else {
+		UpdateRenderRegions(*VPoint);
 
-		//    Search all of the subcharts, looking for the one whose render region contains the requested point
-		wxPoint p = VPoint->GetPixFromLL ( lat, lon );
+		// Search all of the subcharts, looking for the one whose render region contains the
+		// requested point
+		wxPoint p = VPoint->GetPixFromLL(lat, lon);
 
-		for ( int i = 0 ; i < 8 ; i++ )
-		{
-			if ( m_pcm93chart_array[i] )
-			{
+		for (int i = 0; i < 8; i++) {
+			if (m_pcm93chart_array[i]) {
 
-				if ( !m_pcm93chart_array[i]->m_render_region.IsEmpty() )
-				{
-					if ( wxInRegion == m_pcm93chart_array[i]->m_render_region.Contains ( p ) )
-						return  m_pcm93chart_array[i]->GetObjRuleListAtLatLon ( lat, alon, select_radius, &vp_positive );
+				if (!m_pcm93chart_array[i]->m_render_region.IsEmpty()) {
+					if (wxInRegion == m_pcm93chart_array[i]->m_render_region.Contains(p))
+						return m_pcm93chart_array[i]
+							->GetObjRuleListAtLatLon(lat, alon, select_radius, &vp_positive);
 				}
 			}
 		}
 
 		//     As default, return an empty list
-		ListOfObjRazRules *ret_ptr = new ListOfObjRazRules;
+		ListOfObjRazRules* ret_ptr = new ListOfObjRazRules;
 
 		return ret_ptr;
-
 	}
-
 }
 
-VE_Hash& cm93compchart::Get_ve_hash ( void )
+VE_Hash& cm93compchart::Get_ve_hash(void)
 {
 	return m_pcm93chart_current->Get_ve_hash();
 }
 
-VC_Hash & cm93compchart::Get_vc_hash(void)
+VC_Hash& cm93compchart::Get_vc_hash(void)
 {
 	return m_pcm93chart_current->Get_vc_hash();
 }
 
-
-
-
-bool cm93compchart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
+bool cm93compchart::AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed)
 {
-	//    This may be a partial screen render
-	//    If it is, the cmscale value on this render must match the same parameter
-	//    on the last render.
-	//    If it does not, the partial render will not quilt correctly with the previous data
-	//    Detect this case, and indicate that the entire screen must be rendered.
+	// This may be a partial screen render
+	// If it is, the cmscale value on this render must match the same parameter
+	// on the last render.
+	// If it does not, the partial render will not quilt correctly with the previous data
+	// Detect this case, and indicate that the entire screen must be rendered.
 
+	int cmscale
+		= GetCMScaleFromVP(vp_proposed); // This is the scale that should be used, based on the vp
 
-	int cmscale = GetCMScaleFromVP ( vp_proposed );                   // This is the scale that should be used, based on the vp
+	int cmscale_actual = PrepareChartScale(
+		vp_proposed, cmscale); // this is the scale that will be used, based on cell coverage
 
-	int cmscale_actual = PrepareChartScale ( vp_proposed, cmscale );  // this is the scale that will be used, based on cell coverage
+	if (g_bDebugCM93)
+		printf("  In AdjustVP,  adjustment subchart scale is %c\n",
+			   (char)('A' + cmscale_actual - 1));
 
-	if ( g_bDebugCM93 )
-		printf ( "  In AdjustVP,  adjustment subchart scale is %c\n", ( char ) ( 'A' + cmscale_actual -1 ) );
-
-	//    We always need to do a VP adjustment, independent of this method's return value.
-	//    so, do an AdjustVP() based on the chart scale that WILL BE USED
-	//    And be sure to return false if that adjust method suggests so.
+	// We always need to do a VP adjustment, independent of this method's return value.
+	// so, do an AdjustVP() based on the chart scale that WILL BE USED
+	// And be sure to return false if that adjust method suggests so.
 
 	bool single_adjust = false;
-	if ( m_pcm93chart_array[cmscale_actual] )
-		single_adjust = m_pcm93chart_array[cmscale_actual]->AdjustVP ( vp_last, vp_proposed );
+	if (m_pcm93chart_array[cmscale_actual])
+		single_adjust = m_pcm93chart_array[cmscale_actual]->AdjustVP(vp_last, vp_proposed);
 
-	if ( m_cmscale != cmscale_actual )
+	if (m_cmscale != cmscale_actual)
 		return false;
 
-	//    In quilt mode, always indicate that the adjusted vp requires a full repaint
-	if ( vp_last.b_quilt )
+	// In quilt mode, always indicate that the adjusted vp requires a full repaint
+	if (vp_last.b_quilt)
 		return false;
 
 	return single_adjust;
 }
 
-ThumbData * cm93compchart::GetThumbData(int, int, float, float)
+ThumbData* cm93compchart::GetThumbData(int, int, float, float)
 {
-	return ( ThumbData * ) NULL;
+	return (ThumbData*)NULL;
 }
 
 InitReturn cm93compchart::CreateHeaderData()
 {
-
 	m_Chart_Scale = 20000000;
 
-	//        Read the root directory, getting subdirectories to build a small scale coverage region
+	// Read the root directory, getting subdirectories to build a small scale coverage region
 	wxRect extent_rect;
 
 	wxDir dirt(m_prefixComposite);
@@ -1562,19 +1552,19 @@ InitReturn cm93compchart::CreateHeaderData()
 
 	bool b_cont = dirt.GetFirst(&candidate);
 
-	while(b_cont) {
-		if(test.Matches(candidate)&& (candidate.Len() == 8)) {
+	while (b_cont) {
+		if (test.Matches(candidate) && (candidate.Len() == 8)) {
 			wxString dir = m_prefixComposite;
 			dir += candidate;
-			if( wxDir::Exists(dir) ) {
-				wxFileName name( dir );
+			if (wxDir::Exists(dir)) {
+				wxFileName name(dir);
 				wxString num_name = name.GetName();
 				long number;
-				if( num_name.ToLong( &number ) ) {
+				if (num_name.ToLong(&number)) {
 					int ilat = number / 10000;
 					int ilon = number % 10000;
 
-					int lat_base = ( ilat - 270 ) / 3.;
+					int lat_base = (ilat - 270) / 3.;
 					int lon_base = ilon / 3.;
 					extent_rect.Union(wxRect(lon_base, lat_base, 20, 20));
 				}
@@ -1583,66 +1573,56 @@ InitReturn cm93compchart::CreateHeaderData()
 		b_cont = dirt.GetNext(&candidate);
 	}
 
-	//    Specify the chart coverage
-	m_FullExtent.ELON = ((double)extent_rect.x + (double)extent_rect.width );
+	// Specify the chart coverage
+	m_FullExtent.ELON = ((double)extent_rect.x + (double)extent_rect.width);
 	m_FullExtent.WLON = ((double)extent_rect.x);
-	m_FullExtent.NLAT = ((double)extent_rect.y + (double)extent_rect.height );
+	m_FullExtent.NLAT = ((double)extent_rect.y + (double)extent_rect.height);
 	m_FullExtent.SLAT = ((double)extent_rect.y);
 	m_bExtentSet = true;
 
-
-	//    Populate one M_COVR Entry
+	// Populate one M_COVR Entry
 	m_nCOVREntries = 1;
-	m_pCOVRTablePoints = ( int * ) malloc ( sizeof ( int ) );
+	m_pCOVRTablePoints = (int*)malloc(sizeof(int));
 	*m_pCOVRTablePoints = 4;
-	m_pCOVRTable = ( float ** ) malloc ( sizeof ( float * ) );
-	float *pf = ( float * ) malloc ( 2 * 4 * sizeof ( float ) );
+	m_pCOVRTable = (float**)malloc(sizeof(float*));
+	float* pf = (float*)malloc(2 * 4 * sizeof(float));
 	*m_pCOVRTable = pf;
-	float *pfe = pf;
+	float* pfe = pf;
 
-	*pfe++ = m_FullExtent.NLAT; //LatMax;
-	*pfe++ = m_FullExtent.WLON; //LonMin;
+	*pfe++ = m_FullExtent.NLAT; // LatMax;
+	*pfe++ = m_FullExtent.WLON; // LonMin;
 
-	*pfe++ = m_FullExtent.NLAT; //LatMax;
-	*pfe++ = m_FullExtent.ELON; //LonMax;
+	*pfe++ = m_FullExtent.NLAT; // LatMax;
+	*pfe++ = m_FullExtent.ELON; // LonMax;
 
-	*pfe++ = m_FullExtent.SLAT; //LatMin;
-	*pfe++ = m_FullExtent.ELON; //LonMax;
+	*pfe++ = m_FullExtent.SLAT; // LatMin;
+	*pfe++ = m_FullExtent.ELON; // LonMax;
 
-	*pfe++ = m_FullExtent.SLAT; //LatMin;
-	*pfe++ = m_FullExtent.WLON; //LonMin;
-
+	*pfe++ = m_FullExtent.SLAT; // LatMin;
+	*pfe++ = m_FullExtent.WLON; // LonMin;
 
 	return INIT_OK;
 }
 
-cm93_dictionary *cm93compchart::FindAndLoadDictFromDir ( const wxString &dir )
+cm93_dictionary* cm93compchart::FindAndLoadDictFromDir(const wxString& dir)
 {
-	cm93_dictionary *retval = NULL;
-	cm93_dictionary *pdict = new cm93_dictionary();
+	cm93_dictionary* retval = NULL;
+	cm93_dictionary* pdict = new cm93_dictionary();
 
-	//    Quick look at the supplied directory...
-	if ( pdict->LoadDictionary ( dir ) )
+	// Quick look at the supplied directory...
+	if (pdict->LoadDictionary(dir))
 		return pdict;
 
-
-	//    Otherwise, search for the dictionary files all along the path of the passed parameter
+	// Otherwise, search for the dictionary files all along the path of the passed parameter
 
 	wxString path = dir;
 	wxString target;
 	unsigned int i = 0;
 
-	while ( i < path.Len() )
-	{
-		target.Append ( path[i] );
-		if ( path[i] == wxFileName::GetPathSeparator() )
-		{
-			//                  wxString msg = _T ( " Looking for CM93 dictionary in " );
-			//                  msg.Append ( target );
-			//                  wxLogMessage ( msg );
-
-			if ( pdict->LoadDictionary ( target ) )
-			{
+	while (i < path.Len()) {
+		target.Append(path[i]);
+		if (path[i] == wxFileName::GetPathSeparator()) {
+			if (pdict->LoadDictionary(target)) {
 				retval = pdict;
 				break;
 			}
@@ -1650,80 +1630,71 @@ cm93_dictionary *cm93compchart::FindAndLoadDictFromDir ( const wxString &dir )
 		i++;
 	}
 
-	if ( NULL != retval )                           // Found it....
+	if (NULL != retval) // Found it....
 		return retval;
 
+	// Dictionary was not found in linear path of supplied dir.
+	// Could be on branch, so, look at entire tree the hard way.
 
-
-
-	//    Dictionary was not found in linear path of supplied dir.
-	//    Could be on branch, so, look at entire tree the hard way.
-
-	wxFileName fnc ( dir );
+	wxFileName fnc(dir);
 	wxString found_dict_file_name;
 
 	bool bdone = false;
-	while ( !bdone )
-	{
-		path = fnc.GetPath ( wxPATH_GET_VOLUME );     // get path without sep
+	while (!bdone) {
+		path = fnc.GetPath(wxPATH_GET_VOLUME); // get path without sep
 
 		wxString msg = _T ( " Looking harder for CM93 dictionary in " );
-		msg.Append ( path );
-		wxLogMessage ( msg );
+		msg.Append(path);
+		wxLogMessage(msg);
 
-
-		if ( ( path.Len() == 0 ) || path.IsSameAs ( fnc.GetPathSeparator() ) )
-		{
+		if ((path.Len() == 0) || path.IsSameAs(fnc.GetPathSeparator())) {
 			bdone = true;
-			wxLogMessage ( _T ( "Early break1" ) );
+			wxLogMessage(_T ( "Early break1" ));
 			break;
 		}
 
-		//    Abort the search loop if the directory tree does not contain some indication of CM93
-		if ( ( wxNOT_FOUND == path.Lower().Find ( _T ( "cm93" ) ) ) )
-		{
+		// Abort the search loop if the directory tree does not contain some indication of CM93
+		if ((wxNOT_FOUND == path.Lower().Find(_T ( "cm93" )))) {
 			bdone = true;
-			wxLogMessage ( _T ( "Early break2" ) );
+			wxLogMessage(_T ( "Early break2" ));
 			break;
 		}
 
-		//    Search here
-		//    This takes a while to search a fully populated cm93 tree....
-		wxDir dir ( path );
+		// Search here
+		// This takes a while to search a fully populated cm93 tree....
+		wxDir dir(path);
 
-		if ( dir.IsOpened() )
-		{
+		if (dir.IsOpened()) {
 			// Find the dictionary name, case insensitively
-			FindCM93Dictionary cm93Dictionary ( found_dict_file_name );
-			dir.Traverse ( cm93Dictionary );
+			FindCM93Dictionary cm93Dictionary(found_dict_file_name);
+			dir.Traverse(cm93Dictionary);
 			bdone = found_dict_file_name.Len() != 0;
 		}
 
-		fnc.Assign ( path );                              // convert the path to a filename for next loop
+		fnc.Assign(path); // convert the path to a filename for next loop
 	}
 
-	if ( found_dict_file_name.Len() )
-	{
-		wxFileName fnd ( found_dict_file_name );
-		wxString dpath = fnd.GetPath ( ( int ) ( wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME ) );
+	if (found_dict_file_name.Len()) {
+		wxFileName fnd(found_dict_file_name);
+		wxString dpath = fnd.GetPath((int)(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME));
 
-		if ( pdict->LoadDictionary ( dpath ) )
+		if (pdict->LoadDictionary(dpath))
 			retval = pdict;
 	}
 
-	if ( NULL == retval )
+	if (NULL == retval)
 		delete pdict;
 
 	return retval;
 }
 
-void cm93compchart::CloseandReopenCurrentSubchart ( void )
+void cm93compchart::CloseandReopenCurrentSubchart(void)
 {
-	delete  m_pcm93chart_current;
+	delete m_pcm93chart_current;
 	m_pcm93chart_current = NULL;
 	m_pcm93chart_array[m_cmscale] = NULL;
 
-	SetVPParms ( m_vpt );
+	SetVPParms(m_vpt);
 	InvalidateCache();
 }
 

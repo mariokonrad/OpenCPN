@@ -34,6 +34,7 @@
 #include <wx/dynarray.h>
 
 #include <vector>
+#include <list>
 
 #include <ogrsf_frmts.h>
 #include "iso8211.h"
@@ -59,7 +60,8 @@ void s57_DrawExtendedLightSectors(ocpnDC & temp_dc, ViewPort & VPoint, std::vect
 bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
 
 WX_DECLARE_OBJARRAY(S57Obj, ArrayOfS57Obj);
-WX_DECLARE_LIST(S57Obj, ListOfS57Obj);
+
+typedef std::list<S57Obj*> ListOfS57Obj;
 
 
 WX_DECLARE_LIST(ObjRazRules, ListOfObjRazRules);

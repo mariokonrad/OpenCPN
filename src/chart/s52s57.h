@@ -422,47 +422,47 @@ class render_canvas_parms
 
 class VE_Element
 {
-	public:
-		VE_Element(int index, int count, double * points = NULL, int max_priority = -99)
-			: index(index)
-			, nCount(count)
-			, pPoints(points)
-			, max_priority(max_priority)
-		{}
+public:
+	VE_Element(int index, int count, double* points = NULL, int max_priority = -99)
+		: index(index)
+		, nCount(count)
+		, pPoints(points)
+		, max_priority(max_priority)
+	{}
 
-		VE_Element(const VE_Element & other)
-			: index(other.index)
-			, nCount(other.nCount)
-			, pPoints(other.pPoints)
-			, max_priority(other.max_priority)
-		{}
+	VE_Element(const VE_Element& other)
+		: index(other.index)
+		, nCount(other.nCount)
+		, pPoints(other.pPoints)
+		, max_priority(other.max_priority)
+	{}
 
-	public:
-		int index;
-		int nCount;
-		double * pPoints;
-		int max_priority;
+public:
+	int index;
+	int nCount;
+	double* pPoints;
+	int max_priority;
 };
 
 class VC_Element
 {
-	public:
-		VC_Element(const VC_Element & other)
-			: index(other.index)
-			, easting(other.easting)
-			, northing(other.northing)
-		{}
+public:
+	VC_Element(const VC_Element& other)
+		: index(other.index)
+		, easting(other.easting)
+		, northing(other.northing)
+	{}
 
-		VC_Element(int index, double easting, double northing)
-			: index(index)
-			, easting(easting)
-			, northing(northing)
-		{}
+	VC_Element(int index, double easting, double northing)
+		: index(index)
+		, easting(easting)
+		, northing(northing)
+	{}
 
-	public:
-		int index;
-		double easting;
-		double northing;
+public:
+	int index;
+	double easting;
+	double northing;
 };
 
 #endif

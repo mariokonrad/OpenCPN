@@ -41,7 +41,7 @@ class cm93compchart : public s57chart
 		cm93compchart();
 		virtual ~cm93compchart();
 
-		InitReturn Init(const wxString & name, ChartInitFlag flags);
+		InitReturn Init(const wxString& name, ChartInitFlag flags);
 
 		void Activate(void);
 		void Deactivate(void);
@@ -52,9 +52,8 @@ class cm93compchart : public s57chart
 
 		wxString GetPubDate();
 
-		void SetVPParms(const ViewPort &vpt);
-		void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion);
-
+		void SetVPParms(const ViewPort& vpt);
+		void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);
 
 		ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
 		ThumbData *GetThumbData()
@@ -101,44 +100,45 @@ class cm93compchart : public s57chart
 
 		void InvalidateCache();
 	private:
-		void UpdateRenderRegions ( const ViewPort& VPoint );
-		OCPNRegion GetValidScreenCanvasRegion(const ViewPort& VPoint, const OCPNRegion &ScreenRegion);
+		void UpdateRenderRegions(const ViewPort& VPoint);
+		OCPNRegion GetValidScreenCanvasRegion(const ViewPort& VPoint,
+											  const OCPNRegion& ScreenRegion);
 		bool RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint);
 
 		InitReturn CreateHeaderData();
-		cm93_dictionary *FindAndLoadDictFromDir(const wxString &dir);
+		cm93_dictionary* FindAndLoadDictFromDir(const wxString& dir);
 		void FillScaleArray(double lat, double lon);
-		int PrepareChartScale(const ViewPort &vpt, int cmscale);
-		int GetCMScaleFromVP(const ViewPort &vpt);
-		bool DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion &Region);
+		int PrepareChartScale(const ViewPort& vpt, int cmscale);
+		int GetCMScaleFromVP(const ViewPort& vpt);
+		bool DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
+									const OCPNRegion& Region);
 
-		bool DoRenderRegionViewOnGL (const wxGLContext &glc, const ViewPort& VPoint, const OCPNRegion &Region );
+		bool DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
+									const OCPNRegion& Region);
 
+		// Data members
 
-		//    Data members
+		cm93_dictionary* m_pDictComposite;
+		cm93manager* m_pcm93mgr;
 
-		cm93_dictionary   *m_pDictComposite;
-		cm93manager       *m_pcm93mgr;
+		cm93chart* m_pcm93chart_array[8];
+		bool m_bScale_Array[8];
+		cm93chart* m_pcm93chart_current;
+		int m_cmscale;
 
+		wxString m_prefixComposite;
 
-		cm93chart         * m_pcm93chart_array[8];
-		bool              m_bScale_Array[8];
-		cm93chart         * m_pcm93chart_current;
-		int               m_cmscale;
+		int m_current_cell_pub_date; // the (integer) publish date of the cell at the current VP
 
-		wxString          m_prefixComposite;
+		wxBitmap* m_pDummyBM;
+		int m_cell_index_special_outline;
+		int m_object_id_special_outline;
+		int m_subcell_special_outline;
+		int m_special_offset_x;
+		int m_special_offset_y;
+		ViewPort m_vpt;
 
-		int               m_current_cell_pub_date;      // the (integer) publish date of the cell at the current VP
-
-		wxBitmap          *m_pDummyBM;
-		int               m_cell_index_special_outline;
-		int               m_object_id_special_outline;
-		int               m_subcell_special_outline;
-		int               m_special_offset_x;
-		int               m_special_offset_y;
-		ViewPort          m_vpt;
-
-		CM93OffsetDialog  *m_pOffsetDialog;
+		CM93OffsetDialog* m_pOffsetDialog;
 };
 
 #endif

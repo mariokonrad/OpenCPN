@@ -32,6 +32,8 @@
 #include <wx/tokenzr.h>
 #include <wx/log.h>
 
+namespace chart {
+
 RazdsParser::RazdsParser()
 {
 	ColorTableArray = ChartSymbols::GetColorTables();
@@ -46,43 +48,40 @@ RazdsParser::~RazdsParser()
 static const char * ENDLN = "%1024[^\037]";
 static const char * NEWLN = "%1024[^\n]";
 
-int RazdsParser::ReadS52Line( char *pBuffer, const char *delim, int nCount, FILE *fp )
+int RazdsParser::ReadS52Line(char* pBuffer, const char* delim, int nCount, FILE* fp)
 {
-	int ret;
+	int ret = fscanf(fp, delim, pBuffer);
 
-	ret = fscanf( fp, delim, pBuffer );
+	fgetc(fp);
 
-	fgetc( fp );
-
-	if( nCount ) // skip \n
-		fgetc( fp );
+	if (nCount) // skip \n
+		fgetc(fp);
 
 	return ret;
 }
 
-int RazdsParser::ChopS52Line( char *pBuffer, char c )
+int RazdsParser::ChopS52Line(char* pBuffer, char c)
 {
-	int i;
+	int i = 0;
 
-	for( i = 0; pBuffer[i] != '\0'; ++i )
-		if( pBuffer[i] == '\037' ) pBuffer[i] = c;
+	for (i = 0; pBuffer[i] != '\0'; ++i)
+		if (pBuffer[i] == '\037')
+			pBuffer[i] = c;
 
 	return i;
 }
 
-int RazdsParser::ParsePos( position *pos, char *buf, bool patt )
+int RazdsParser::ParsePos(position* pos, char* buf, bool patt)
 {
-	if( patt ) {
-		sscanf( buf, "%5d%5d", &pos->minDist.PAMI, &pos->maxDist.PAMA );
+	if (patt) {
+		sscanf(buf, "%5d%5d", &pos->minDist.PAMI, &pos->maxDist.PAMA);
 		buf += 10;
 	}
 
-	sscanf( buf, "%5d%5d%5d%5d%5d%5d", &pos->pivot_x.PACL, &pos->pivot_y.PARW, &pos->bnbox_w.PAHL,
-			&pos->bnbox_h.PAVL, &pos->bnbox_x.PBXC, &pos->bnbox_y.PBXR );
+	sscanf(buf, "%5d%5d%5d%5d%5d%5d", &pos->pivot_x.PACL, &pos->pivot_y.PARW, &pos->bnbox_w.PAHL,
+		   &pos->bnbox_h.PAVL, &pos->bnbox_x.PBXC, &pos->bnbox_y.PBXR);
 	return 1;
 }
-
-#define MOD_REC(str)    if(0==strncmp(#str,pBuf,4)) // FIXME: get rid of macros like this
 
 int RazdsParser::ParseLBID(FILE *)
 {
@@ -93,7 +92,7 @@ int RazdsParser::ParseLBID(FILE *)
 	token = tkz.GetNextToken(); // ESID
 	token = tkz.GetNextToken();
 
-	//    Get PLIB version number
+	// Get PLIB version number
 	double version;
 	if( token.ToDouble( &version ) ) {
 		plib->m_VersionMajor = ( (int) ( version * 10 ) ) / 10;
@@ -106,81 +105,79 @@ int RazdsParser::ParseLBID(FILE *)
 	return 1;
 }
 
-int RazdsParser::ParseCOLS( FILE *fp )
+int RazdsParser::ParseCOLS(FILE* fp)
 {
-	int ret;
-	colTable *ct = new colTable;
+	colTable* ct = new colTable;
 
 	// get color table name
-	ChopS52Line( pBuf, '\0' );
+	ChopS52Line(pBuf, '\0');
 
 	ct->tableName = wxString(pBuf + 19, wxConvUTF8);
 
-	ColorTableArray->Add( (void *) ct );
+	ColorTableArray->Add((void*)ct);
 
 	// read color
-	ret = ReadS52Line( pBuf, NEWLN, 0, fp );
-	while( 0 != strncmp( pBuf, "****", 4 ) ) {
+	int ret = ReadS52Line(pBuf, NEWLN, 0, fp);
+	while (0 != strncmp(pBuf, "****", 4)) {
 		double x, y, L;
 
 		S52color c;
 
-		ChopS52Line( pBuf, ' ' );
-		strncpy( c.colName, pBuf + 9, 5 );
+		ChopS52Line(pBuf, ' ');
+		strncpy(c.colName, pBuf + 9, 5);
 		c.colName[5] = 0;
 
-		sscanf( pBuf + 14, "%lf %lf %lf", &x, &y, &L );
+		sscanf(pBuf + 14, "%lf %lf %lf", &x, &y, &L);
 
-		_CIE2RGB( &c, x, y, L );
+		_CIE2RGB(&c, x, y, L);
 
-		wxString colorName( c.colName, wxConvUTF8 );
+		wxString colorName(c.colName, wxConvUTF8);
 		ct->colors[colorName] = c;
-		wxColour wxcolor( c.R, c.G, c.B );
+		wxColour wxcolor(c.R, c.G, c.B);
 		ct->wxColors[colorName] = wxcolor;
 
-		ret = ReadS52Line( pBuf, NEWLN, 0, fp );
+		ret = ReadS52Line(pBuf, NEWLN, 0, fp);
 	}
 	return ret;
 }
 
-int RazdsParser::ParseLUPT( FILE *fp )
+int RazdsParser::ParseLUPT(FILE* fp)
 {
-	bool inserted = FALSE;
+	bool inserted = false;
 
-	LUPrec *LUP = (LUPrec*) calloc( 1, sizeof(LUPrec) );
-	plib->pAlloc->Add( LUP );
+	LUPrec* LUP = (LUPrec*)calloc(1, sizeof(LUPrec));
+	plib->pAlloc->Add(LUP);
 
 	LUP->nSequence = m_LUPSequenceNumber++;
 
-	LUP->DISC = (enum DisCat) OTHER; // as a default
+	LUP->DISC = (enum DisCat)OTHER; // as a default
 
-	sscanf( pBuf + 11, "%d", &LUP->RCID );
-	strncpy( LUP->OBCL, pBuf + 19, 6 );
+	sscanf(pBuf + 11, "%d", &LUP->RCID);
+	strncpy(LUP->OBCL, pBuf + 19, 6);
 
-	LUP->FTYP = (enum Object_t) pBuf[25];
-	LUP->DPRI = (enum DisPrio) pBuf[30];
-	LUP->RPRI = (enum RadPrio) pBuf[31];
-	LUP->TNAM = (enum LUPname) pBuf[36];
+	LUP->FTYP = (enum Object_t)pBuf[25];
+	LUP->DPRI = (enum DisPrio)pBuf[30];
+	LUP->RPRI = (enum RadPrio)pBuf[31];
+	LUP->TNAM = (enum LUPname)pBuf[36];
 
-	ReadS52Line( pBuf, NEWLN, 0, fp );
+	ReadS52Line(pBuf, NEWLN, 0, fp);
 
 	do {
-		MOD_REC ( ATTC ) {
-			if( '\037' != pBuf[9] ) // could be empty!
-			{
+		if (strncmp("ATTC", pBuf, 4) == 0) {
+			if ('\037' != pBuf[9]) { // could be empty!
 
-				wxArrayString *pAS = new wxArrayString();
-				char *p = &pBuf[9];
+				wxArrayString* pAS = new wxArrayString();
+				char* p = &pBuf[9];
 
-				wxString *st1 = new wxString;
+				wxString* st1 = new wxString;
 
-				while( ( *p != '\r' ) && ( *p ) ) {
-					while( *p != 0x1f ) {
-						st1->Append( *p );
+				while ((*p != '\r') && (*p)) {
+					while (*p != 0x1f) {
+						st1->Append(*p);
 						p++;
 					}
 
-					pAS->Add( *st1 );
+					pAS->Add(*st1);
 					st1->Clear();
 					p++;
 				}
@@ -189,18 +186,17 @@ int RazdsParser::ParseLUPT( FILE *fp )
 
 				LUP->ATTCArray = pAS;
 
-				ChopS52Line( pBuf, ' ' );
+				ChopS52Line(pBuf, ' ');
 			}
 		}
 
-		MOD_REC ( INST ) LUP->INST = new wxString( pBuf + 9, wxConvUTF8 );
-		MOD_REC ( DISC ) LUP->DISC = (enum DisCat) pBuf[9];
-		MOD_REC ( LUCM ) sscanf( pBuf + 9, "%d", &LUP->LUCM );
+		if (strncmp("INST", pBuf, 4) == 0) LUP->INST = new wxString(pBuf + 9, wxConvUTF8);
+		if (strncmp("DISC", pBuf, 4) == 0) LUP->DISC = (enum DisCat)pBuf[9];
+		if (strncmp("LUCM", pBuf, 4) == 0) sscanf(pBuf + 9, "%d", &LUP->LUCM);
 
-		MOD_REC ( **** ) {
-
+		if (strncmp("****", pBuf, 4) == 0) {
 			// Add LUP to array
-			wxArrayOfLUPrec *pLUPARRAYtyped = plib->SelectLUPARRAY( LUP->TNAM );
+			wxArrayOfLUPrec* pLUPARRAYtyped = plib->SelectLUPARRAY(LUP->TNAM);
 
 			// Search the LUPArray to see if there is already a LUP with this RCID
 			// If found, replace it with the new LUP
@@ -208,85 +204,85 @@ int RazdsParser::ParseLUPT( FILE *fp )
 
 			unsigned int index = 0;
 
-			while( index < pLUPARRAYtyped->size() ) {
-				LUPrec *pLUPCandidate = pLUPARRAYtyped->Item( index );
-				if( LUP->RCID == pLUPCandidate->RCID ) {
-					plib->DestroyLUP( pLUPCandidate ); // empties the LUP
-					pLUPARRAYtyped->Remove( pLUPCandidate );
+			while (index < pLUPARRAYtyped->size()) {
+				LUPrec* pLUPCandidate = pLUPARRAYtyped->Item(index);
+				if (LUP->RCID == pLUPCandidate->RCID) {
+					plib->DestroyLUP(pLUPCandidate); // empties the LUP
+					pLUPARRAYtyped->Remove(pLUPCandidate);
 					break;
 				}
 				index++;
 			}
 
-			pLUPARRAYtyped->Add( LUP );
+			pLUPARRAYtyped->Add(LUP);
 
-			inserted = TRUE;
+			inserted = true;
+		}
 
-		} // MOD_REC
+		ReadS52Line(pBuf, NEWLN, 0, fp);
 
-		ReadS52Line( pBuf, NEWLN, 0, fp );
-
-	} while( inserted == FALSE );
+	} while (inserted == false);
 
 	return 1;
 }
 
-int RazdsParser::ParseLNST( FILE *fp )
+int RazdsParser::ParseLNST(FILE* fp)
 {
-	int ret;
-
 	char strk[20];
 
-	bool inserted = FALSE;
-	Rule *lnstmp = NULL;
-	Rule *lnst = (Rule*) calloc( 1, sizeof(Rule) );
-	plib->pAlloc->Add( lnst );
+	bool inserted = false;
+	Rule* lnstmp = NULL;
+	Rule* lnst = (Rule*)calloc(1, sizeof(Rule));
+	plib->pAlloc->Add(lnst);
 
 	lnst->exposition.LXPO = new wxString;
 	wxString LVCT;
 	wxString LCRF;
 
-	sscanf( pBuf + 11, "%d", &lnst->RCID );
+	sscanf(pBuf + 11, "%d", &lnst->RCID);
 
-	ret = ReadS52Line( pBuf, NEWLN, 0, fp );
+	int ret = ReadS52Line(pBuf, NEWLN, 0, fp);
 	do {
-		MOD_REC ( LIND ) {
-			strncpy( lnst->name.LINM, pBuf + 9, 8 ); // could be empty!
-			ParsePos( &lnst->pos.line, pBuf + 17, FALSE );
+		if (strncmp("LIND", pBuf, 4) == 0)
+		{
+			strncpy(lnst->name.LINM, pBuf + 9, 8); // could be empty!
+			ParsePos(&lnst->pos.line, pBuf + 17, false);
 		}
 
-		MOD_REC ( LXPO ) lnst->exposition.LXPO->Append( wxString( pBuf + 9, wxConvUTF8 ) );
-		MOD_REC ( LCRF ) LCRF.Append( wxString( pBuf + 9, wxConvUTF8 ) ); // CIDX + CTOK
-		MOD_REC ( LVCT ) LVCT.Append( wxString( pBuf + 9, wxConvUTF8 ) );
-		MOD_REC ( **** ) {
+		if (strncmp("LXPO", pBuf, 4) == 0) lnst->exposition.LXPO->Append(wxString(pBuf + 9, wxConvUTF8));
+		if (strncmp("LCRF", pBuf, 4) == 0) LCRF.Append(wxString(pBuf + 9, wxConvUTF8)); // CIDX + CTOK
+		if (strncmp("LVCT", pBuf, 4) == 0) LVCT.Append(wxString(pBuf + 9, wxConvUTF8));
+		if (strncmp("****", pBuf, 4) == 0)
+		{
 
-			lnst->vector.LVCT = (char *) calloc( LVCT.Len() + 1, 1 );
-			strncpy( lnst->vector.LVCT, LVCT.mb_str(), LVCT.Len() );
+			lnst->vector.LVCT = (char*)calloc(LVCT.Len() + 1, 1);
+			strncpy(lnst->vector.LVCT, LVCT.mb_str(), LVCT.Len());
 
-			lnst->colRef.LCRF = (char *) calloc( LCRF.Len() + 1, 1 );
-			strncpy( lnst->colRef.LCRF, LCRF.mb_str(), LCRF.Len() );
+			lnst->colRef.LCRF = (char*)calloc(LCRF.Len() + 1, 1);
+			strncpy(lnst->colRef.LCRF, LCRF.mb_str(), LCRF.Len());
 
 			// check if key already there
-			strncpy( strk, lnst->name.LINM, 8 );
+			strncpy(strk, lnst->name.LINM, 8);
 			strk[8] = 0;
-			wxString key( strk, wxConvUTF8 );
+			wxString key(strk, wxConvUTF8);
 
-			//wxString key((lnst->name.LINM), 8);
-			lnstmp = ( *plib->_line_sym )[key];
+			// wxString key((lnst->name.LINM), 8);
+			lnstmp = (*plib->_line_sym)[key];
 
 			// insert in Hash Table
-			if( NULL == lnstmp ) ( *plib->_line_sym )[key] = lnst;
+			if (NULL == lnstmp)
+				(*plib->_line_sym)[key] = lnst;
+			else if (lnst->name.LINM != lnstmp->name.LINM)
+				(*plib->_line_sym)[key] = lnst;
 			else
-				if( lnst->name.LINM != lnstmp->name.LINM ) ( *plib->_line_sym )[key] = lnst;
-				else
-					assert( 0 );
+				assert(0);
 			// key must be unique --should not reach this
 
-			inserted = TRUE;
+			inserted = true;
 		}
-		ret = ReadS52Line( pBuf, NEWLN, 0, fp );
-		ChopS52Line( pBuf, '\0' );
-	} while( inserted == FALSE );
+		ret = ReadS52Line(pBuf, NEWLN, 0, fp);
+		ChopS52Line(pBuf, '\0');
+	} while (inserted == false);
 
 	return ret;
 }
@@ -299,7 +295,7 @@ int RazdsParser::ParsePATT( FILE *fp )
 	char pbm_line[200]; // max bitmap width...
 	char strk[20];
 
-	bool inserted = FALSE;
+	bool inserted = false;
 	Rule *pattmp = NULL;
 	Rule *patt = (Rule*) calloc( 1, sizeof(Rule) );
 	plib->pAlloc->Add( patt );
@@ -314,26 +310,26 @@ int RazdsParser::ParsePATT( FILE *fp )
 	ret = ReadS52Line( pBuf, NEWLN, 0, fp );
 
 	do {
-		MOD_REC ( PATD ) {
+		if (strncmp("PATD", pBuf, 4) == 0) {
 			strncpy( patt->name.PANM, pBuf + 9, 8 );
 			patt->definition.PADF = pBuf[17];
 			patt->fillType.PATP = pBuf[18]; // first character 'S' or 'L', for staggered or linear
 			patt->spacing.PASP = pBuf[21];
-			ParsePos( &patt->pos.patt, pBuf + 24, TRUE );
+			ParsePos( &patt->pos.patt, pBuf + 24, true );
 		}
 
-		MOD_REC ( PXPO ) patt->exposition.PXPO->Append( wxString( pBuf + 9, wxConvUTF8 ) );
-		MOD_REC ( PCRF ) PCRF.Append( wxString( pBuf + 9, wxConvUTF8 ) ); // CIDX+CTOK
-		MOD_REC ( PVCT ) PVCT.Append( wxString( pBuf + 9, wxConvUTF8 ) );
+		if (strncmp("PXPO", pBuf, 4) == 0) patt->exposition.PXPO->Append( wxString( pBuf + 9, wxConvUTF8 ) );
+		if (strncmp("PCRF", pBuf, 4) == 0) PCRF.Append( wxString( pBuf + 9, wxConvUTF8 ) ); // CIDX+CTOK
+		if (strncmp("PVCT", pBuf, 4) == 0) PVCT.Append( wxString( pBuf + 9, wxConvUTF8 ) );
 
-		MOD_REC ( PBTM ) {
+		if (strncmp("PBTM", pBuf, 4) == 0) {
 			bitmap_width = patt->pos.patt.bnbox_w.SYHL;
 			strncpy( pbm_line, pBuf + 9, bitmap_width );
 			pbm_line[bitmap_width] = 0;
 			patt->bitmap.SBTM->Append( wxString( pbm_line, wxConvUTF8 ) );
 		}
 
-		MOD_REC ( **** ) {
+		if (strncmp("****", pBuf, 4) == 0) {
 
 			patt->vector.PVCT = (char *) calloc( PVCT.Len() + 1, 1 );
 			strncpy( patt->vector.PVCT, PVCT.mb_str(), PVCT.Len() );
@@ -362,90 +358,90 @@ int RazdsParser::ParsePATT( FILE *fp )
 
 			}
 
-			inserted = TRUE;
+			inserted = true;
 		}
 		ret = ReadS52Line( pBuf, NEWLN, 0, fp );
 		ChopS52Line( pBuf, '\0' );
 
-	} while( inserted == FALSE );
+	} while( inserted == false );
 
 	return ret;
 }
 
-int RazdsParser::ParseSYMB( FILE *fp, RuleHash *pHash )
+int RazdsParser::ParseSYMB(FILE* fp, RuleHash* pHash)
 {
 	int ret;
 
 	int bitmap_width;
 	char pbm_line[200]; // max bitmap width...
-	bool inserted = FALSE;
-	Rule *symb = (Rule*) calloc( 1, sizeof(Rule) );
-	plib->pAlloc->Add( symb );
-	Rule *symbtmp = NULL;
+	bool inserted = false;
+	Rule* symb = (Rule*)calloc(1, sizeof(Rule));
+	plib->pAlloc->Add(symb);
+	Rule* symbtmp = NULL;
 
 	symb->exposition.SXPO = new wxString;
 	symb->bitmap.SBTM = new wxString;
 	wxString SVCT;
 	wxString SCRF;
 
-	sscanf( pBuf + 11, "%d", &symb->RCID );
+	sscanf(pBuf + 11, "%d", &symb->RCID);
 
-	ret = ReadS52Line( pBuf, NEWLN, 0, fp );
+	ret = ReadS52Line(pBuf, NEWLN, 0, fp);
 
 	do {
-		MOD_REC ( SYMD ) {
-			strncpy( symb->name.SYNM, pBuf + 9, 8 );
+		if (strncmp("SYMD", pBuf, 4) == 0)
+		{
+			strncpy(symb->name.SYNM, pBuf + 9, 8);
 			symb->definition.SYDF = pBuf[17];
-			ParsePos( &symb->pos.symb, pBuf + 18, FALSE );
+			ParsePos(&symb->pos.symb, pBuf + 18, false);
 		}
 
-		MOD_REC ( SXPO ) symb->exposition.SXPO->Append( wxString( pBuf + 9, wxConvUTF8 ) );
+		if (strncmp("SXPO", pBuf, 4) == 0) symb->exposition.SXPO->Append(wxString(pBuf + 9, wxConvUTF8));
 
-		MOD_REC ( SBTM ) {
+		if (strncmp("SBTM", pBuf, 4) == 0)
+		{
 			bitmap_width = symb->pos.symb.bnbox_w.SYHL;
-			if( bitmap_width > 200 ) wxLogMessage( _T ( "ParseSymb....bitmap too wide." ) );
-			strncpy( pbm_line, pBuf + 9, bitmap_width );
+			if (bitmap_width > 200)
+				wxLogMessage(_T("ParseSymb....bitmap too wide."));
+			strncpy(pbm_line, pBuf + 9, bitmap_width);
 			pbm_line[bitmap_width] = 0;
-			symb->bitmap.SBTM->Append( wxString( pbm_line, wxConvUTF8 ) );
+			symb->bitmap.SBTM->Append(wxString(pbm_line, wxConvUTF8));
 		}
 
-		MOD_REC ( SCRF ) SCRF.Append( wxString( pBuf + 9, wxConvUTF8 ) ); // CIDX+CTOK
+		if (strncmp("SCRF", pBuf, 4) == 0) SCRF.Append(wxString(pBuf + 9, wxConvUTF8)); // CIDX+CTOK
 
-		MOD_REC ( SVCT ) SVCT.Append( wxString( pBuf + 9, wxConvUTF8 ) );
+		if (strncmp("SVCT", pBuf, 4) == 0) SVCT.Append(wxString(pBuf + 9, wxConvUTF8));
 
-		if( ( 0 == strncmp( "****", pBuf, 4 ) ) || ( ret == -1 ) ) {
-			symb->vector.SVCT = (char *) calloc( SVCT.Len() + 1, 1 );
-			strncpy( symb->vector.SVCT, SVCT.mb_str(), SVCT.Len() );
+		if ((0 == strncmp("****", pBuf, 4)) || (ret == -1)) {
+			symb->vector.SVCT = (char*)calloc(SVCT.Len() + 1, 1);
+			strncpy(symb->vector.SVCT, SVCT.mb_str(), SVCT.Len());
 
-			symb->colRef.SCRF = (char *) calloc( SCRF.Len() + 1, 1 );
-			strncpy( symb->colRef.SCRF, SCRF.mb_str(), SCRF.Len() );
+			symb->colRef.SCRF = (char*)calloc(SCRF.Len() + 1, 1);
+			strncpy(symb->colRef.SCRF, SCRF.mb_str(), SCRF.Len());
 
 			// Create a key
 			char keyt[20];
-			strncpy( keyt, symb->name.SYNM, 8 );
+			strncpy(keyt, symb->name.SYNM, 8);
 			keyt[8] = 0;
-			wxString key( keyt, wxConvUTF8 );
+			wxString key(keyt, wxConvUTF8);
 
-			symbtmp = ( *pHash )[key];
+			symbtmp = (*pHash)[key];
 
-			if( NULL == symbtmp ) // not there, so....
-				( *pHash )[key] = symb; // insert in hash table
-
-			else // already something here with same key...
-			{
-				if( symb->name.SYNM != symbtmp->name.SYNM ) // if the pattern names are not identical
-				{
-					( *pHash )[key] = symb; // replace the pattern
-					plib->DestroyRuleNode( symbtmp ); // remember to free to replaced node
+			if (NULL == symbtmp) { // not there, so....
+				(*pHash)[key] = symb; // insert in hash table
+			} else { // already something here with same key...
+				if (symb->name.SYNM != symbtmp->name.SYNM) { // if the pattern names are not identical
+					(*pHash)[key] = symb; // replace the pattern
+					plib->DestroyRuleNode(symbtmp); // remember to free to replaced node
 					// the node itself is destroyed as part of pAlloc
 				}
 			}
-			inserted = TRUE;
+			inserted = true;
 		}
-		ret = ReadS52Line( pBuf, NEWLN, 0, fp );
-		ChopS52Line( pBuf, '\0' );
+		ret = ReadS52Line(pBuf, NEWLN, 0, fp);
+		ChopS52Line(pBuf, '\0');
 
-	} while( inserted == FALSE );
+	} while (inserted == false);
 
 	return ret;
 }
@@ -454,35 +450,30 @@ int RazdsParser::LoadFile(s52plib* plibArg, const wxString& PLib)
 {
 	plib = plibArg;
 
-	FILE *fp = NULL;
+	FILE* fp = NULL;
 	int nRead;
 
-	fp = fopen( PLib.mb_str(), "r" );
+	fp = fopen(PLib.mb_str(), "r");
 
-	if( fp == NULL ) {
-		wxString msg;
-		msg = _T("   S52PLIB: Cannot open S52 rules file: ");
-		msg += PLib;
-		wxLogMessage( msg );
+	if (fp == NULL) {
+		wxLogMessage(_T("   S52PLIB: Cannot open S52 rules file: ") + PLib);
 		return 0;
 	}
 
 	m_LUPSequenceNumber = 0;
 
-	while( 1 == ( nRead = ReadS52Line( pBuf, NEWLN, 0, fp ) ) ) {
+	while (1 == (nRead = ReadS52Line(pBuf, NEWLN, 0, fp))) {
 		// !!! order important !!!
-		MOD_REC ( LBID ) ParseLBID( fp );
-		MOD_REC ( COLS ) ParseCOLS( fp );
-		MOD_REC ( LUPT ) ParseLUPT( fp );
-		MOD_REC ( LNST ) ParseLNST( fp );
-		MOD_REC ( PATT ) ParsePATT( fp );
-		MOD_REC ( SYMB ) ParseSYMB( fp, plib->_symb_sym );
-
-		MOD_REC ( 0001 ) continue;
-		MOD_REC ( **** ) continue;
-
+		if (strncmp("LBID", pBuf, 4) == 0) ParseLBID(fp);
+		if (strncmp("COLS", pBuf, 4) == 0) ParseCOLS(fp);
+		if (strncmp("LUPT", pBuf, 4) == 0) ParseLUPT(fp);
+		if (strncmp("LNST", pBuf, 4) == 0) ParseLNST(fp);
+		if (strncmp("PATT", pBuf, 4) == 0) ParsePATT(fp);
+		if (strncmp("SYMB", pBuf, 4) == 0) ParseSYMB(fp, plib->_symb_sym);
+		if (strncmp("0001", pBuf, 4) == 0) continue;
+		if (strncmp("****", pBuf, 4) == 0) continue;
 	}
-	fclose( fp );
+	fclose(fp);
 	return 1;
 }
 
@@ -519,7 +510,7 @@ int RazdsParser::LoadFile(s52plib* plibArg, const wxString& PLib)
 #define CIE_gf          (CIE_y_g*CIE_C_gD/CIE_D)
 #define CIE_bf          (CIE_y_b*CIE_C_bD/CIE_D)
 
-static double tmat[3][3] =       //XYZ to RGB
+static const double tmat[3][3] =       //XYZ to RGB
 {
 	{
 		( CIE_y_g - CIE_y_b - CIE_x_b * CIE_y_g + CIE_y_b * CIE_x_g ) / CIE_C_rD,
@@ -538,62 +529,68 @@ static double tmat[3][3] =       //XYZ to RGB
 	}
 };
 
-static double c_gamma = 2.20;
 
 int RazdsParser::_CIE2RGB(S52color* toRGB, double x, double y, double L)
 {
+	static const double c_gamma = 2.20;
+
 	int R, G, B;
 	double dR, dG, dB;
 	double X, Y, Z;
 
-	//    Transform CIE xyL into CIE XYZ
+	// Transform CIE xyL into CIE XYZ
 
-	if( y != 0 ) {
-		X = ( x * L ) / y;
+	if (y != 0) {
+		X = (x * L) / y;
 		Y = L;
-		Z = ( ( ( 1.0 - x ) - y ) * L ) / y;
+		Z = (((1.0 - x) - y) * L) / y;
 	} else {
 		X = 0;
 		Y = 0;
 		Z = 0;
 	}
 
-	//    Transform CIE XYZ into RGB
+	// Transform CIE XYZ into RGB
 
-	dR = ( X * tmat[0][0] ) + ( Y * tmat[0][1] ) + ( Z * tmat[0][2] );
-	dG = ( X * tmat[1][0] ) + ( Y * tmat[1][1] ) + ( Z * tmat[1][2] );
-	dB = ( X * tmat[2][0] ) + ( Y * tmat[2][1] ) + ( Z * tmat[2][2] );
+	dR = (X * tmat[0][0]) + (Y * tmat[0][1]) + (Z * tmat[0][2]);
+	dG = (X * tmat[1][0]) + (Y * tmat[1][1]) + (Z * tmat[1][2]);
+	dB = (X * tmat[2][0]) + (Y * tmat[2][1]) + (Z * tmat[2][2]);
 
-	//       Arbitrarily clip the luminance values to 100
-	if( dR > 100 ) dR = 100;
-	if( dG > 100 ) dB = 100;
-	if( dB > 100 ) dB = 100;
+	// Arbitrarily clip the luminance values to 100
+	if (dR > 100)
+		dR = 100;
+	if (dG > 100)
+		dB = 100;
+	if (dB > 100)
+		dB = 100;
 
-	//       And scale
+	// And scale
 	dR /= 100;
 	dG /= 100;
 	dB /= 100;
 
-	dR = pow( dR, 1.0 / c_gamma );
-	dG = pow( dG, 1.0 / c_gamma );
-	dB = pow( dB, 1.0 / c_gamma );
+	dR = pow(dR, 1.0 / c_gamma);
+	dG = pow(dG, 1.0 / c_gamma);
+	dB = pow(dB, 1.0 / c_gamma);
 
-	R = (int) ( dR * 255 );
-	G = (int) ( dG * 255 );
-	B = (int) ( dB * 255 );
+	R = (int)(dR * 255);
+	G = (int)(dG * 255);
+	B = (int)(dB * 255);
 
 	// A special case:
 	// MSW has trouble blitting with a mask if src color is 0,0,0 ????
-	if( ( R == 0 ) && ( G == 0 ) && ( B == 0 ) ) {
-		R = (unsigned char) 7;
-		G = (unsigned char) 7;
-		B = (unsigned char) 7;
+	if ((R == 0) && (G == 0) && (B == 0)) {
+		R = (unsigned char)7;
+		G = (unsigned char)7;
+		B = (unsigned char)7;
 	}
 
-	toRGB->R = (unsigned char) R;
-	toRGB->G = (unsigned char) G;
-	toRGB->B = (unsigned char) B;
+	toRGB->R = (unsigned char)R;
+	toRGB->G = (unsigned char)G;
+	toRGB->B = (unsigned char)B;
 
 	return true;
+}
+
 }
 

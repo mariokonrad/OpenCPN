@@ -564,6 +564,7 @@ SET(SRC_CHART
 	src/chart/ChartBaseBSB.cpp
 	src/chart/ChartSymbols.cpp
 	src/chart/S57RegistrarMgr.cpp
+	src/chart/RazdsParser.cpp
 	)
 
 SET(HDR_CHART
@@ -602,6 +603,7 @@ SET(HDR_CHART
 	src/chart/S57ClassRegistrar.h
 	src/chart/S57RegistrarMgr.h
 	src/chart/S57Light.h
+	src/chart/RazdsParser.h
 	)
 
 SET(HDRS
@@ -713,7 +715,6 @@ SET(HDRS
 	src/Undo.h
 	src/UndoAction.h
 	src/AboutDialog.h
-	src/RazdsParser.h
 	src/ProjectionType.h
 	src/Style.h
 	src/Tool.h
@@ -863,7 +864,6 @@ SET(SRCS
 	src/LinkPropDlg.cpp
 	src/OCPN_AlertDialog.cpp
 	src/Vector2D.cpp
-	src/RazdsParser.cpp
 	)
 
 SET( PACKAGE_HEADERS "" )

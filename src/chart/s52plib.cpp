@@ -24,10 +24,10 @@
 #include "s52plib.h"
 #include <dychart.h>
 #include <ocpn_pixel.h>
-#include <RazdsParser.h>
 #include <FontMgr.h>
 #include <UserColors.h>
 
+#include <chart/RazdsParser.h>
 #include <chart/RenderFromHPGL.h>
 #include <chart/s52utils.h>
 #include <chart/S57Chart.h>
@@ -813,7 +813,7 @@ int s52plib::S52_load_Plib(const wxString& PLib, bool b_forceLegacy)
 	// If this fails, try Legacy S52RAZDS.RLE file.
 
 	if (b_forceLegacy) {
-		RazdsParser parser;
+		chart::RazdsParser parser;
 		useLegacyRaster = true;
 		if (parser.LoadFile(this, PLib)) {
 			wxString msg(_T("Loaded legacy PLIB data: "));
@@ -825,7 +825,7 @@ int s52plib::S52_load_Plib(const wxString& PLib, bool b_forceLegacy)
 		ChartSymbols chartSymbols;
 		useLegacyRaster = false;
 		if (!chartSymbols.LoadConfigFile(this, PLib)) {
-			RazdsParser parser;
+			chart::RazdsParser parser;
 			useLegacyRaster = true;
 			if (parser.LoadFile(this, PLib)) {
 				wxString msg(_T("Loaded legacy PLIB data: "));

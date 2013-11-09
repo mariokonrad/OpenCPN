@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __RAZDSPARSER__H__
-#define __RAZDSPARSER__H__
+#ifndef __CHART__RAZDSPARSER__H__
+#define __CHART__RAZDSPARSER__H__
 
 #include <wx/string.h>
 
@@ -31,32 +31,38 @@
 class s52plib;
 class RuleHash;
 
+namespace chart {
+
 class RazdsParser
 {
-	public:
-		RazdsParser();
-		virtual ~RazdsParser();
-		int LoadFile(s52plib * plib, const wxString & PLib);
+public:
+	RazdsParser();
+	virtual ~RazdsParser();
+	int LoadFile(s52plib* plib, const wxString& PLib);
 
-	private:
-		int ReadS52Line(char * pBuffer, const char * delim, int nCount, FILE * fp);
-		int ChopS52Line(char * pBuffer, char c);
-		int ParsePos(position * pos, char * buf, bool patt);
-		int ParseLBID(FILE * fp);
-		int ParseCOLS(FILE * fp);
-		int ParseLUPT(FILE * fp);
-		int ParseLNST(FILE * fp);
-		int ParsePATT(FILE * fp);
-		int ParseSYMB(FILE * fp, RuleHash * pHash);
-		int _CIE2RGB(S52color * toRGB, double x, double y, double L);
+private:
+	int ReadS52Line(char* pBuffer, const char* delim, int nCount, FILE* fp);
+	int ChopS52Line(char* pBuffer, char c);
+	int ParsePos(position* pos, char* buf, bool patt);
+	int ParseLBID(FILE* fp);
+	int ParseCOLS(FILE* fp);
+	int ParseLUPT(FILE* fp);
+	int ParseLNST(FILE* fp);
+	int ParsePATT(FILE* fp);
+	int ParseSYMB(FILE* fp, RuleHash* pHash);
+	int _CIE2RGB(S52color* toRGB, double x, double y, double L);
 
-		enum { MAX_BUF = 1024 };
+	enum {
+		MAX_BUF = 1024
+	};
 
-		char buffer[MAX_BUF];
-		char * pBuf;
-		s52plib * plib;
-		wxArrayPtrVoid * ColorTableArray;
-		int m_LUPSequenceNumber;
+	char buffer[MAX_BUF];
+	char* pBuf;
+	s52plib* plib;
+	wxArrayPtrVoid* ColorTableArray;
+	int m_LUPSequenceNumber;
 };
+
+}
 
 #endif

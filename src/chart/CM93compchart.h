@@ -37,108 +37,109 @@ class cm93chart;
 
 class cm93compchart : public s57chart
 {
-	public:
-		cm93compchart();
-		virtual ~cm93compchart();
+public:
+	cm93compchart();
+	virtual ~cm93compchart();
 
-		InitReturn Init(const wxString& name, ChartInitFlag flags);
+	InitReturn Init(const wxString& name, ChartInitFlag flags);
 
-		void Activate(void);
-		void Deactivate(void);
+	void Activate(void);
+	void Deactivate(void);
 
-		double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
-		double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
-		int GetNativeScale(void);
+	double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
+	double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
+	int GetNativeScale(void);
 
-		wxString GetPubDate();
+	wxString GetPubDate();
 
-		void SetVPParms(const ViewPort& vpt);
-		void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);
+	void SetVPParms(const ViewPort& vpt);
+	void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);
 
-		ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
-		ThumbData *GetThumbData()
-		{
-			return (ThumbData *)NULL;
-		}
+	ThumbData* GetThumbData(int tnx, int tny, float lat, float lon);
+	ThumbData* GetThumbData()
+	{
+		return (ThumbData*)NULL;
+	}
 
-		bool AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed);
-		bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion &Region);
-		virtual bool RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint, const OCPNRegion &Region);
-		void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
-		bool RenderNextSmallerCellOutlines( ocpnDC &dc, ViewPort& vp);
-		void GetPointPix(ObjRazRules *rzRules, float rlat, float rlon, wxPoint *r);
-		void GetPixPoint(int pixx, int pixy, double *plat, double *plon, ViewPort *vpt);
-		void GetPointPix(ObjRazRules *rzRules, wxPoint2DDouble *en, wxPoint *r, int nPoints);
-		ListOfObjRazRules *GetObjRuleListAtLatLon(float lat, float lon, float select_radius, ViewPort *VPoint);
+	bool AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed);
+	bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion& Region);
+	virtual bool RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
+									  const OCPNRegion& Region);
+	void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
+	bool RenderNextSmallerCellOutlines(ocpnDC& dc, ViewPort& vp);
+	void GetPointPix(ObjRazRules* rzRules, float rlat, float rlon, wxPoint* r);
+	void GetPixPoint(int pixx, int pixy, double* plat, double* plon, ViewPort* vpt);
+	void GetPointPix(ObjRazRules* rzRules, wxPoint2DDouble* en, wxPoint* r, int nPoints);
+	ListOfObjRazRules* GetObjRuleListAtLatLon(float lat, float lon, float select_radius,
+											  ViewPort* VPoint);
 
-		VE_Hash & Get_ve_hash(void);
-		VC_Hash & Get_vc_hash(void);
+	VE_Hash& Get_ve_hash(void);
+	VC_Hash& Get_vc_hash(void);
 
-		void UpdateLUPs(s57chart *pOwner);
-		void ForceEdgePriorityEvaluate(void);
-		ListOfS57Obj *GetAssociatedObjects(S57Obj *obj);
+	void UpdateLUPs(s57chart* pOwner);
+	void ForceEdgePriorityEvaluate(void);
+	ListOfS57Obj* GetAssociatedObjects(S57Obj* obj);
 
-		cm93chart * GetCurrentSingleScaleChart()
-		{
-			return m_pcm93chart_current;
-		}
+	cm93chart* GetCurrentSingleScaleChart()
+	{
+		return m_pcm93chart_current;
+	}
 
-		void SetSpecialOutlineCellIndex(int cell_index, int object_id, int subcell)
-		{
-			m_cell_index_special_outline = cell_index;
-			m_object_id_special_outline = object_id;
-			m_subcell_special_outline = subcell;
-		}
+	void SetSpecialOutlineCellIndex(int cell_index, int object_id, int subcell)
+	{
+		m_cell_index_special_outline = cell_index;
+		m_object_id_special_outline = object_id;
+		m_subcell_special_outline = subcell;
+	}
 
-		void SetSpecialCellIndexOffset(int cell_index, int object_id, int subcell, int xoff, int yoff);
-		void CloseandReopenCurrentSubchart(void);
+	void SetSpecialCellIndexOffset(int cell_index, int object_id, int subcell, int xoff, int yoff);
+	void CloseandReopenCurrentSubchart(void);
 
-		void SetOffsetDialog(CM93OffsetDialog *dialog)
-		{
-			m_pOffsetDialog = dialog;
-		}
+	void SetOffsetDialog(CM93OffsetDialog* dialog)
+	{
+		m_pOffsetDialog = dialog;
+	}
 
-		void InvalidateCache();
-	private:
-		void UpdateRenderRegions(const ViewPort& VPoint);
-		OCPNRegion GetValidScreenCanvasRegion(const ViewPort& VPoint,
-											  const OCPNRegion& ScreenRegion);
-		bool RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint);
+	void InvalidateCache();
 
-		InitReturn CreateHeaderData();
-		cm93_dictionary* FindAndLoadDictFromDir(const wxString& dir);
-		void FillScaleArray(double lat, double lon);
-		int PrepareChartScale(const ViewPort& vpt, int cmscale);
-		int GetCMScaleFromVP(const ViewPort& vpt);
-		bool DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
-									const OCPNRegion& Region);
+private:
+	void UpdateRenderRegions(const ViewPort& VPoint);
+	OCPNRegion GetValidScreenCanvasRegion(const ViewPort& VPoint, const OCPNRegion& ScreenRegion);
+	bool RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint);
 
-		bool DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
-									const OCPNRegion& Region);
+	InitReturn CreateHeaderData();
+	cm93_dictionary* FindAndLoadDictFromDir(const wxString& dir);
+	void FillScaleArray(double lat, double lon);
+	int PrepareChartScale(const ViewPort& vpt, int cmscale);
+	int GetCMScaleFromVP(const ViewPort& vpt);
+	bool DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion& Region);
 
-		// Data members
+	bool DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
+								const OCPNRegion& Region);
 
-		cm93_dictionary* m_pDictComposite;
-		cm93manager* m_pcm93mgr;
+	// Data members
 
-		cm93chart* m_pcm93chart_array[8];
-		bool m_bScale_Array[8];
-		cm93chart* m_pcm93chart_current;
-		int m_cmscale;
+	cm93_dictionary* m_pDictComposite;
+	cm93manager* m_pcm93mgr;
 
-		wxString m_prefixComposite;
+	cm93chart* m_pcm93chart_array[8];
+	bool m_bScale_Array[8];
+	cm93chart* m_pcm93chart_current;
+	int m_cmscale;
 
-		int m_current_cell_pub_date; // the (integer) publish date of the cell at the current VP
+	wxString m_prefixComposite;
 
-		wxBitmap* m_pDummyBM;
-		int m_cell_index_special_outline;
-		int m_object_id_special_outline;
-		int m_subcell_special_outline;
-		int m_special_offset_x;
-		int m_special_offset_y;
-		ViewPort m_vpt;
+	int m_current_cell_pub_date; // the (integer) publish date of the cell at the current VP
 
-		CM93OffsetDialog* m_pOffsetDialog;
+	wxBitmap* m_pDummyBM;
+	int m_cell_index_special_outline;
+	int m_object_id_special_outline;
+	int m_subcell_special_outline;
+	int m_special_offset_x;
+	int m_special_offset_y;
+	ViewPort m_vpt;
+
+	CM93OffsetDialog* m_pOffsetDialog;
 };
 
 #endif

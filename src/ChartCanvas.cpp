@@ -6483,10 +6483,10 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 		if (Chs57)
 			rule_list = Chs57->GetObjRuleListAtLatLon(zlat, zlon, SelectRadius, &GetVP());
 
-		ListOfObjRazRules* overlay_rule_list = NULL;
 		ChartBase* overlay_chart = GetOverlayChartAtCursor();
 		s57chart* CHs57_Overlay = dynamic_cast<s57chart*>(overlay_chart);
 
+		ListOfObjRazRules* overlay_rule_list = NULL;
 		if (CHs57_Overlay) {
 			overlay_rule_list
 				= CHs57_Overlay->GetObjRuleListAtLatLon(zlat, zlon, SelectRadius, &GetVP());
@@ -6538,17 +6538,10 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 			objText << Chs57->CreateObjDescriptions(rule_list);
 
 		objText << _T("</font></body></html>");
-
 		g_pObjectQueryDialog->SetHTMLPage(objText);
-
 		g_pObjectQueryDialog->Show();
 
-		if (rule_list)
-			rule_list->Clear();
 		delete rule_list;
-
-		if (overlay_rule_list)
-			overlay_rule_list->Clear();
 		delete overlay_rule_list;
 
 		SetCursor(wxCURSOR_ARROW);

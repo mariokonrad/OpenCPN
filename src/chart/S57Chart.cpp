@@ -93,9 +93,6 @@ extern wxProgressDialog *s_ProgDialog;
 
 static jmp_buf env_ogrf;                    // the context saved by setjmp();
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(ListOfObjRazRules);   // Implement a list ofObjRazRules
-
 #define S57_THUMB_SIZE  200
 
 static int s_bInS57; // Exclusion flag to prvent recursion in this class init call. Init() is not
@@ -5244,320 +5241,317 @@ void s57chart::CreateSENCVectorEdgeTable( FILE * fpOut, S57Reader *poReader )
     CSLDestroy( papszReaderOptions );
 }
 
-void s57chart::CreateSENCConnNodeTable( FILE * fpOut, S57Reader *poReader )
+void s57chart::CreateSENCConnNodeTable(FILE* fpOut, S57Reader* poReader)
 {
-    fprintf( fpOut, "VCTableStart\n" );
+	fprintf(fpOut, "VCTableStart\n");
 
-    //  Set up the options, adding RETURN_PRIMITIVES
-    char ** papszReaderOptions = NULL;
-    papszReaderOptions = CSLSetNameValue( papszReaderOptions, S57O_UPDATES, "ON" );
-    papszReaderOptions = CSLSetNameValue( papszReaderOptions, S57O_RETURN_LINKAGES, "ON" );
-    papszReaderOptions = CSLSetNameValue( papszReaderOptions, S57O_RETURN_PRIMITIVES, "ON" );
-    poReader->SetOptions( papszReaderOptions );
+	//  Set up the options, adding RETURN_PRIMITIVES
+	char** papszReaderOptions = NULL;
+	papszReaderOptions = CSLSetNameValue(papszReaderOptions, S57O_UPDATES, "ON");
+	papszReaderOptions = CSLSetNameValue(papszReaderOptions, S57O_RETURN_LINKAGES, "ON");
+	papszReaderOptions = CSLSetNameValue(papszReaderOptions, S57O_RETURN_PRIMITIVES, "ON");
+	poReader->SetOptions(papszReaderOptions);
 
-    int feid = 0;
-    OGRPoint *pP;
-    OGRGeometry *pGeo;
-    OGRFeature *pConnNodeRecordFeature = poReader->ReadVector( feid, RCNM_VC );
+	int feid = 0;
+	OGRPoint* pP;
+	OGRGeometry* pGeo;
+	OGRFeature* pConnNodeRecordFeature = poReader->ReadVector(feid, RCNM_VC);
 
-    while( NULL != pConnNodeRecordFeature ) {
-        if( pConnNodeRecordFeature->GetGeometryRef() != NULL ) {
-            pGeo = pConnNodeRecordFeature->GetGeometryRef();
-            if( pGeo->getGeometryType() == wkbPoint ) {
-                pP = (OGRPoint *) pGeo;
+	while (NULL != pConnNodeRecordFeature) {
+		if (pConnNodeRecordFeature->GetGeometryRef() != NULL) {
+			pGeo = pConnNodeRecordFeature->GetGeometryRef();
+			if (pGeo->getGeometryType() == wkbPoint) {
+				pP = (OGRPoint*)pGeo;
 
-                int record_id = pConnNodeRecordFeature->GetFieldAsInteger( "RCID" );
+				int record_id = pConnNodeRecordFeature->GetFieldAsInteger("RCID");
 
-                fwrite( &record_id, 1, sizeof(int), fpOut ); // FIXME: may not be portable
+				fwrite(&record_id, 1, sizeof(int), fpOut); // FIXME: may not be portable
 
-                //  Calculate SM from chart common reference point
-                double easting, northing;
-                geo::toSM( pP->getY(), pP->getX(), ref_lat, ref_lon, &easting, &northing );
+				//  Calculate SM from chart common reference point
+				double easting, northing;
+				geo::toSM(pP->getY(), pP->getX(), ref_lat, ref_lon, &easting, &northing);
 
-                geo::MyPoint pd;
-                pd.x = easting;
-                pd.y = northing;
-                fwrite(&pd, 1, sizeof(pd), fpOut);
-            }
-        }
+				geo::MyPoint pd;
+				pd.x = easting;
+				pd.y = northing;
+				fwrite(&pd, 1, sizeof(pd), fpOut);
+			}
+		}
 
-        //    Next vector record
-        feid++;
-        delete pConnNodeRecordFeature;
-        pConnNodeRecordFeature = poReader->ReadVector( feid, RCNM_VC );
-    }
+		//    Next vector record
+		feid++;
+		delete pConnNodeRecordFeature;
+		pConnNodeRecordFeature = poReader->ReadVector(feid, RCNM_VC);
+	}
 
-    //    Write a finishing record
-    int last_rcid = -1;
-    fwrite( &last_rcid, 1, sizeof(int), fpOut ); // FIXME: may not be portable
-    fprintf( fpOut, "\nVCTableEnd\n" );
+	//    Write a finishing record
+	int last_rcid = -1;
+	fwrite(&last_rcid, 1, sizeof(int), fpOut); // FIXME: may not be portable
+	fprintf(fpOut, "\nVCTableEnd\n");
 
-    //  Reset the options
-    papszReaderOptions = CSLSetNameValue( papszReaderOptions, S57O_RETURN_PRIMITIVES, "OFF" );
-    poReader->SetOptions( papszReaderOptions );
-    CSLDestroy( papszReaderOptions );
+	//  Reset the options
+	papszReaderOptions = CSLSetNameValue(papszReaderOptions, S57O_RETURN_PRIMITIVES, "OFF");
+	poReader->SetOptions(papszReaderOptions);
+	CSLDestroy(papszReaderOptions);
 }
 
-ListOfObjRazRules *s57chart::GetObjRuleListAtLatLon( float lat, float lon, float select_radius,
-        ViewPort *VPoint )
+ListOfObjRazRules* s57chart::GetObjRuleListAtLatLon(float lat, float lon, float select_radius,
+													ViewPort* VPoint)
 {
+	ListOfObjRazRules* ret_ptr = new ListOfObjRazRules;
 
-    ListOfObjRazRules *ret_ptr = new ListOfObjRazRules;
+	// Iterate thru the razRules array, by object/rule type
 
-//    Iterate thru the razRules array, by object/rule type
+	ObjRazRules* top = NULL;
 
-    ObjRazRules *top;
+	for (int i = 0; i < PRIO_NUM; ++i) {
+		// Points by type, array indices [0..1]
 
-    for( int i = 0; i < PRIO_NUM; ++i ) {
-        // Points by type, array indices [0..1]
+		int point_type = (ps52plib->m_nSymbolStyle == SIMPLIFIED) ? 0 : 1;
+		top = razRules[i][point_type];
 
-        int point_type = ( ps52plib->m_nSymbolStyle == SIMPLIFIED ) ? 0 : 1;
-        top = razRules[i][point_type];
+		while (top != NULL) {
+			if (top->obj->npt == 1) { // Do not select Multipoint objects (SOUNDG) yet.
+				if (ps52plib->ObjectRenderCheck(top, VPoint)) {
+					if (DoesLatLonSelectObject(lat, lon, select_radius, top->obj))
+						ret_ptr->push_back(top);
+				}
+			}
 
-        while( top != NULL ) {
-            if( top->obj->npt == 1 )       // Do not select Multipoint objects (SOUNDG) yet.
-                    {
-                if( ps52plib->ObjectRenderCheck( top, VPoint ) ) {
-                    if( DoesLatLonSelectObject( lat, lon, select_radius, top->obj ) )
-                        ret_ptr->Append( top );
-                }
-            }
+			// Check the child branch, if any.
+			// This is where Multipoint soundings are captured individually
+			if (top->child) {
+				ObjRazRules* child_item = top->child;
+				while (child_item != NULL) {
+					if (ps52plib->ObjectRenderCheck(child_item, VPoint)) {
+						if (DoesLatLonSelectObject(lat, lon, select_radius, child_item->obj))
+							ret_ptr->push_back(child_item);
+					}
+					child_item = child_item->next;
+				}
+			}
+			top = top->next;
+		}
 
-            //    Check the child branch, if any.
-            //    This is where Multipoint soundings are captured individually
-            if( top->child ) {
-                ObjRazRules *child_item = top->child;
-                while( child_item != NULL ) {
-                    if( ps52plib->ObjectRenderCheck( child_item, VPoint ) ) {
-                        if( DoesLatLonSelectObject( lat, lon, select_radius, child_item->obj ) )
-                            ret_ptr->Append( child_item );
-                    }
+		// Areas by boundary type, array indices [3..4]
 
-                    child_item = child_item->next;
-                }
-            }
+		int area_boundary_type = (ps52plib->m_nBoundaryStyle == PLAIN_BOUNDARIES) ? 3 : 4;
+		top = razRules[i][area_boundary_type]; // Area nnn Boundaries
+		while (top != NULL) {
+			if (ps52plib->ObjectRenderCheck(top, VPoint)) {
+				if (DoesLatLonSelectObject(lat, lon, select_radius, top->obj))
+					ret_ptr->push_back(top);
+			}
 
-            top = top->next;
-        }
+			top = top->next;
+		}
 
-        // Areas by boundary type, array indices [3..4]
+		// Finally, lines
+		top = razRules[i][2]; // Lines
 
-        int area_boundary_type = ( ps52plib->m_nBoundaryStyle == PLAIN_BOUNDARIES ) ? 3 : 4;
-        top = razRules[i][area_boundary_type];           // Area nnn Boundaries
-        while( top != NULL ) {
-            if( ps52plib->ObjectRenderCheck( top, VPoint ) ) {
-                if( DoesLatLonSelectObject( lat, lon, select_radius, top->obj ) ) ret_ptr->Append(
-                        top );
-            }
+		while (top != NULL) {
+			if (ps52plib->ObjectRenderCheck(top, VPoint)) {
+				if (DoesLatLonSelectObject(lat, lon, select_radius, top->obj))
+					ret_ptr->push_back(top);
+			}
 
-            top = top->next;
-        }         // while
+			top = top->next;
+		}
+	}
 
-        // Finally, lines
-        top = razRules[i][2];           // Lines
-
-        while( top != NULL ) {
-            if( ps52plib->ObjectRenderCheck( top, VPoint ) ) {
-                if( DoesLatLonSelectObject( lat, lon, select_radius, top->obj ) ) ret_ptr->Append(
-                        top );
-            }
-
-            top = top->next;
-        }
-    }
-
-    return ret_ptr;
+	return ret_ptr;
 }
 
-bool s57chart::DoesLatLonSelectObject( float lat, float lon, float select_radius, S57Obj *obj )
+bool s57chart::DoesLatLonSelectObject(float lat, float lon, float select_radius, S57Obj* obj)
 {
-    switch( obj->Primitive_type ){
-        //  For single Point objects, the integral object bounding box contains the lat/lon of the object,
-        //  possibly expanded by text or symbol rendering
-        case GEO_POINT: {
-            if( 1 == obj->npt ) {
-                //  Special case for LIGHTS
-                //  Sector lights have had their BBObj expanded to include the entire drawn sector
-                //  This is too big for pick area, can be confusing....
-                //  So make a temporary box at the light's lat/lon, with select_radius size
-                if( !strncmp( obj->FeatureName, "LIGHTS", 6 ) ) {
-                    double olon, olat;
-                    geo::fromSM( ( obj->x * obj->x_rate ) + obj->x_origin,
-                            ( obj->y * obj->y_rate ) + obj->y_origin, ref_lat, ref_lon, &olat,
-                            &olon );
+	switch (obj->Primitive_type) {
+		//  For single Point objects, the integral object bounding box contains the lat/lon of the
+		// object,
+		//  possibly expanded by text or symbol rendering
+		case GEO_POINT: {
+			if (1 == obj->npt) {
+				//  Special case for LIGHTS
+				//  Sector lights have had their BBObj expanded to include the entire drawn sector
+				//  This is too big for pick area, can be confusing....
+				//  So make a temporary box at the light's lat/lon, with select_radius size
+				if (!strncmp(obj->FeatureName, "LIGHTS", 6)) {
+					double olon, olat;
+					geo::fromSM((obj->x * obj->x_rate) + obj->x_origin,
+								(obj->y * obj->y_rate) + obj->y_origin, ref_lat, ref_lon, &olat,
+								&olon);
 
-                    // Double the select radius to adjust for the fact that LIGHTS has
-                    // a 0x0 BBox to start with, which makes it smaller than all other
-                    // rendered objects.
-                    geo::BoundingBox sbox( olon - 2*select_radius, olat - 2*select_radius,
-                            olon + 2*select_radius, olat + 2*select_radius );
+					// Double the select radius to adjust for the fact that LIGHTS has
+					// a 0x0 BBox to start with, which makes it smaller than all other
+					// rendered objects.
+					geo::BoundingBox sbox(olon - 2 * select_radius, olat - 2 * select_radius,
+										  olon + 2 * select_radius, olat + 2 * select_radius);
 
-                    if( sbox.PointInBox( lon, lat, 0 ) ) return true;
-                }
+					if (sbox.PointInBox(lon, lat, 0))
+						return true;
+				} else if (obj->BBObj.PointInBox(lon, lat, select_radius))
+					return true;
+			}
 
-                else if( obj->BBObj.PointInBox( lon, lat, select_radius ) ) return true;
-            }
+				//  For MultiPoint objects, make a bounding box from each point's lat/lon
+				//  and check it
+				else {
+				if (!obj->bBBObj_valid)
+					return false;
 
-            //  For MultiPoint objects, make a bounding box from each point's lat/lon
-            //  and check it
-            else {
-                if( !obj->bBBObj_valid ) return false;
+				//  Coarse test first
+				if (!obj->BBObj.PointInBox(lon, lat, select_radius))
+					return false;
+				//  Now decomposed soundings, one by one
+				double* pdl = obj->geoPtMulti;
+				for (int ip = 0; ip < obj->npt; ip++) {
+					double lon_point = *pdl++;
+					double lat_point = *pdl++;
+					geo::BoundingBox BB_point(lon_point, lat_point, lon_point, lat_point);
+					if (BB_point.PointInBox(lon, lat, select_radius)) {
+						return true;
+					}
+				}
+			}
 
-                //  Coarse test first
-                if( !obj->BBObj.PointInBox( lon, lat, select_radius ) ) return false;
-                //  Now decomposed soundings, one by one
-                double *pdl = obj->geoPtMulti;
-                for( int ip = 0; ip < obj->npt; ip++ ) {
-                    double lon_point = *pdl++;
-                    double lat_point = *pdl++;
-                    geo::BoundingBox BB_point( lon_point, lat_point, lon_point, lat_point );
-                    if( BB_point.PointInBox( lon, lat, select_radius ) ) {
-                        return true;
-                    }
-                }
-            }
+			break;
+		}
+		case GEO_AREA: {
+			//  Coarse test first
+			if (!obj->BBObj.PointInBox(lon, lat, select_radius))
+				return false;
+			else
+				return IsPointInObjArea(lat, lon, select_radius, obj);
+		}
 
-            break;
-        }
-        case GEO_AREA: {
-            //  Coarse test first
-            if( !obj->BBObj.PointInBox( lon, lat, select_radius ) ) return false;
-            else
-                return IsPointInObjArea( lat, lon, select_radius, obj );
-        }
+		case GEO_LINE: {
+			if (obj->geoPt) {
+				// Coarse test first
+				if (!obj->BBObj.PointInBox(lon, lat, select_radius))
+					return false;
 
-        case GEO_LINE: {
-            if( obj->geoPt ) {
-                //  Coarse test first
-                if( !obj->BBObj.PointInBox( lon, lat, select_radius ) ) return false;
+				// Line geometry is carried in SM or CM93 coordinates, so...
+				// make the hit test using SM coordinates, converting from object points to SM
+				// using per-object conversion factors.
 
-                //  Line geometry is carried in SM or CM93 coordinates, so...
-                //  make the hit test using SM coordinates, converting from object points to SM using per-object conversion factors.
+				double easting, northing;
+				geo::toSM(lat, lon, ref_lat, ref_lon, &easting, &northing);
 
-                double easting, northing;
-                geo::toSM( lat, lon, ref_lat, ref_lon, &easting, &northing );
+				pt* ppt = obj->geoPt;
+				int npt = obj->npt;
 
-                pt *ppt = obj->geoPt;
-                int npt = obj->npt;
+				double xr = obj->x_rate;
+				double xo = obj->x_origin;
+				double yr = obj->y_rate;
+				double yo = obj->y_origin;
 
-                double xr = obj->x_rate;
-                double xo = obj->x_origin;
-                double yr = obj->y_rate;
-                double yo = obj->y_origin;
+				double north0 = (ppt->y * yr) + yo;
+				double east0 = (ppt->x * xr) + xo;
+				ppt++;
 
-                double north0 = ( ppt->y * yr ) + yo;
-                double east0 = ( ppt->x * xr ) + xo;
-                ppt++;
+				for (int ip = 1; ip < npt; ip++) {
+					double north = (ppt->y * yr) + yo;
+					double east = (ppt->x * xr) + xo;
 
-                for( int ip = 1; ip < npt; ip++ ) {
-                    double north = ( ppt->y * yr ) + yo;
-                    double east = ( ppt->x * xr ) + xo;
+					// A slightly less coarse segment bounding box check
+					if (northing >= (fmin(north, north0) - select_radius))
+						if (northing <= (fmax(north, north0) + select_radius))
+							if (easting >= (fmin(east, east0) - select_radius))
+								if (easting <= (fmax(east, east0) + select_radius)) {
+									return true;
+								}
 
-                    //    A slightly less coarse segment bounding box check
-                    if( northing >= ( fmin(north, north0) - select_radius ) ) if( northing
-                            <= ( fmax(north, north0) + select_radius ) ) if( easting
-                            >= ( fmin(east, east0) - select_radius ) ) if( easting
-                            <= ( fmax(east, east0) + select_radius ) ) {
-                        //                                                    index = ip;
-                        return true;
-                    }
+					north0 = north;
+					east0 = east;
+					ppt++;
+				}
+			}
 
-                    north0 = north;
-                    east0 = east;
-                    ppt++;
-                }
-            }
+			break;
+		}
 
-            break;
-        }
+		case GEO_META:
+		case GEO_PRIM:
 
-        case GEO_META:
-        case GEO_PRIM:
+			break;
+	}
 
-            break;
-    }
-
-    return false;
+	return false;
 }
 
-wxString s57chart::GetAttributeDecode( wxString& att, int ival )
+wxString s57chart::GetAttributeDecode(wxString& att, int ival)
 {
-    wxString ret_val = _T("");
+	wxString ret_val = _T("");
 
-    //    Special case for "NATSUR", cacheing the strings for faster chart rendering
-    if( att.IsSameAs( _T("NATSUR") ) ) {
-        if( !m_natsur_hash[ival].IsEmpty() )            // entry available?
-        {
-            return m_natsur_hash[ival];
-        }
-    }
+	// Special case for "NATSUR", cacheing the strings for faster chart rendering
+	if (att.IsSameAs(_T("NATSUR"))) {
+		if (!m_natsur_hash[ival].IsEmpty()) { // entry available?
+			return m_natsur_hash[ival];
+		}
+	}
 
-    if( NULL == m_pcsv_locn ) return ret_val;
+	if (NULL == m_pcsv_locn)
+		return ret_val;
 
-    //  Get the attribute code from the acronym
-    const char *att_code;
+	// Get the attribute code from the acronym
+	const char* att_code;
 
-    wxString file( *m_pcsv_locn );
-    file.Append( _T("/s57attributes.csv") );
+	wxString file(*m_pcsv_locn);
+	file.Append(_T("/s57attributes.csv"));
 
-    if( !wxFileName::FileExists( file ) ) {
-        wxString msg( _T("   Could not open ") );
-        msg.Append( file );
-        wxLogMessage( msg );
+	if (!wxFileName::FileExists(file)) {
+		wxString msg(_T("   Could not open "));
+		msg.Append(file);
+		wxLogMessage(msg);
 
-        return ret_val;
-    }
+		return ret_val;
+	}
 
-    att_code = MyCSVGetField( file.mb_str(), "Acronym",                  // match field
-            att.mb_str(),               // match value
-            CC_ExactString, "Code" );             // return field
+	att_code = MyCSVGetField(file.mb_str(), "Acronym", // match field
+							 att.mb_str(), // match value
+							 CC_ExactString, "Code"); // return field
 
-    // Now, get a nice description from s57expectedinput.csv
-    //  This will have to be a 2-d search, using ID field and Code field
+	// Now, get a nice description from s57expectedinput.csv
+	// This will have to be a 2-d search, using ID field and Code field
 
-    // Ingest, and get a pointer to the ingested table for "Expected Input" file
-    wxString ei_file( *m_pcsv_locn );
-    ei_file.Append( _T("/s57expectedinput.csv") );
+	// Ingest, and get a pointer to the ingested table for "Expected Input" file
+	wxString ei_file(*m_pcsv_locn);
+	ei_file.Append(_T("/s57expectedinput.csv"));
 
-    if( !wxFileName::FileExists( ei_file ) ) {
-        wxString msg( _T("   Could not open ") );
-        msg.Append( ei_file );
-        wxLogMessage( msg );
+	if (!wxFileName::FileExists(ei_file)) {
+		wxString msg(_T("   Could not open "));
+		msg.Append(ei_file);
+		wxLogMessage(msg);
 
-        return ret_val;
-    }
+		return ret_val;
+	}
 
-    CSVTable *psTable = CSVAccess( ei_file.mb_str() );
-    CSVIngest( ei_file.mb_str() );
+	CSVTable* psTable = CSVAccess(ei_file.mb_str());
+	CSVIngest(ei_file.mb_str());
 
-    char **papszFields = NULL;
-    int bSelected = FALSE;
+	char** papszFields = NULL;
+	int bSelected = FALSE;
 
-    /* -------------------------------------------------------------------- */
-    /*      Scan from in-core lines.                                        */
-    /* -------------------------------------------------------------------- */
-    int iline = 0;
-    while( !bSelected && iline + 1 < psTable->nLineCount ) {
-        iline++;
-        papszFields = CSVSplitLine( psTable->papszLines[iline] );
+    // Scan from in-core lines.
+	int iline = 0;
+	while (!bSelected && iline + 1 < psTable->nLineCount) {
+		iline++;
+		papszFields = CSVSplitLine(psTable->papszLines[iline]);
 
-        if( !strcmp( papszFields[0], att_code ) ) {
-            if( atoi( papszFields[1] ) == ival ) {
-                ret_val = wxString( papszFields[2], wxConvUTF8 );
-                bSelected = TRUE;
-            }
-        }
+		if (!strcmp(papszFields[0], att_code)) {
+			if (atoi(papszFields[1]) == ival) {
+				ret_val = wxString(papszFields[2], wxConvUTF8);
+				bSelected = TRUE;
+			}
+		}
 
-        CSLDestroy( papszFields );
-    }
+		CSLDestroy(papszFields);
+	}
 
-    if( att.IsSameAs( _T("NATSUR") ) ) m_natsur_hash[ival] = ret_val;            // cache the entry
+	if (att.IsSameAs(_T("NATSUR")))
+		m_natsur_hash[ival] = ret_val; // cache the entry
 
-    return ret_val;
-
+	return ret_val;
 }
-
-//----------------------------------------------------------------------------------
 
 bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj *obj)
 {
@@ -6627,168 +6621,180 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport, std::vector<s5
     }
 }
 
-bool s57_CheckExtendedLightSectors( int mx, int my, ViewPort& viewport, std::vector<s57Sector_t>& sectorlegs )
+bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort& viewport,
+								   std::vector<s57Sector_t>& sectorlegs)
 {
-    double cursor_lat, cursor_lon;
-    static double lastLat, lastLon;
+	double cursor_lat, cursor_lon;
+	static double lastLat, lastLon;
 
-    if (!ps52plib || !ps52plib->m_bExtendLightSectors)
+	if (!ps52plib || !ps52plib->m_bExtendLightSectors)
 		return false;
 
-    cc1->GetCanvasPixPoint(mx, my, cursor_lat, cursor_lon);
+	cc1->GetCanvasPixPoint(mx, my, cursor_lat, cursor_lon);
 
-    if( lastLat == cursor_lat && lastLon == cursor_lon ) return false;
+	if (lastLat == cursor_lat && lastLon == cursor_lon)
+		return false;
 
-    lastLat = cursor_lat;
-    lastLon = cursor_lon;
-    bool newSectorsNeedDrawing = false;
+	lastLat = cursor_lat;
+	lastLon = cursor_lon;
+	bool newSectorsNeedDrawing = false;
 
-    ChartBase *targetchart = cc1->GetChartAtCursor();
-    s57chart *chart = dynamic_cast<s57chart*>( targetchart );
+	ChartBase* targetchart = cc1->GetChartAtCursor();
+	s57chart* chart = dynamic_cast<s57chart*>(targetchart);
 
-    bool bhas_red_green = false;
-    bool bleading_attribute = false;
+	bool bhas_red_green = false;
+	bool bleading_attribute = false;
 
-    int opacity = 100;
-    if( cc1->GetColorScheme() == GLOBAL_COLOR_SCHEME_DUSK ) opacity = 50;
-    if( cc1->GetColorScheme() == GLOBAL_COLOR_SCHEME_NIGHT) opacity = 20;
+	int opacity = 100;
+	if (cc1->GetColorScheme() == GLOBAL_COLOR_SCHEME_DUSK)
+		opacity = 50;
+	if (cc1->GetColorScheme() == GLOBAL_COLOR_SCHEME_NIGHT)
+		opacity = 20;
 
-    int yOpacity = (float)opacity*1.3; // Matched perception of white/yellow with red/green
+	int yOpacity = (float)opacity * 1.3; // Matched perception of white/yellow with red/green
 
-    if( chart ) {
-        sectorlegs.clear();
+	if (chart) {
+		sectorlegs.clear();
 
-        float selectRadius = 16 / ( viewport.view_scale_ppm * 1852 * 60 );
+		float selectRadius = 16 / (viewport.view_scale_ppm * 1852 * 60);
 
-        ListOfObjRazRules* rule_list =
-                chart->GetObjRuleListAtLatLon( cursor_lat, cursor_lon, selectRadius, &viewport );
+		ListOfObjRazRules* rule_list
+			= chart->GetObjRuleListAtLatLon(cursor_lat, cursor_lon, selectRadius, &viewport);
 
-        wxPoint2DDouble lightPosD(0,0);
+		wxPoint2DDouble lightPosD(0, 0);
 
-        for( ListOfObjRazRules::Node *node = rule_list->GetLast(); node; node = node->GetPrevious() ) {
-            ObjRazRules *current = node->GetData();
-            S57Obj* light = current->obj;
-            int attrCounter;
-            double sectr1 = -1;
-            double sectr2 = -1;
-            double valnmr = -1;
-            wxString curAttrName;
-            wxColor color;
+		for (ListOfObjRazRules::reverse_iterator node = rule_list->rbegin();
+			 node != rule_list->rend(); ++node) {
+			ObjRazRules* current = *node;
+			S57Obj* light = current->obj;
+			int attrCounter;
+			double sectr1 = -1;
+			double sectr2 = -1;
+			double valnmr = -1;
+			wxString curAttrName;
+			wxColor color;
 
-            if( !strcmp( light->FeatureName, "LIGHTS" ) ) {
-                wxPoint2DDouble objPos( light->m_lat, light->m_lon );
-                if( lightPosD.m_x == 0 && lightPosD.m_y == 0.0 )
-                    lightPosD = objPos;
-                if( lightPosD == objPos ) {
+			if (!strcmp(light->FeatureName, "LIGHTS")) {
+				wxPoint2DDouble objPos(light->m_lat, light->m_lon);
+				if (lightPosD.m_x == 0 && lightPosD.m_y == 0.0)
+					lightPosD = objPos;
+				if (lightPosD == objPos) {
 
-                    if( light->att_array ) {
-                        char *curr_att = light->att_array;
-                        bool bviz = true;
+					if (light->att_array) {
+						char* curr_att = light->att_array;
+						bool bviz = true;
 
-                        attrCounter = 0;
-                        int noAttr = 0;
-                        s57Sector_t sector;
+						attrCounter = 0;
+						int noAttr = 0;
+						s57Sector_t sector;
 
-                        bleading_attribute = false;
+						bleading_attribute = false;
 
-                        while( attrCounter < light->n_attr ) {
-                            curAttrName = wxString(curr_att, wxConvUTF8, 6 );
-                            noAttr++;
+						while (attrCounter < light->n_attr) {
+							curAttrName = wxString(curr_att, wxConvUTF8, 6);
+							noAttr++;
 
-                            wxString value = chart->GetObjectAttributeValueAsString( light, attrCounter, curAttrName );
+							wxString value = chart->GetObjectAttributeValueAsString(
+								light, attrCounter, curAttrName);
 
-                            if( curAttrName == _T("LITVIS") ){
-                                if(value.StartsWith(_T("obsc")) )
-                                    bviz = false;
-                            }
-                            if( curAttrName == _T("SECTR1") ) value.ToDouble( &sectr1 );
-                            if( curAttrName == _T("SECTR2") ) value.ToDouble( &sectr2 );
-                            if( curAttrName == _T("VALNMR") ) value.ToDouble( &valnmr );
-                            if( curAttrName == _T("COLOUR") ) {
-                                if( value == _T("red(3)") ) {
-                                    color = wxColor( 255, 0, 0, opacity );
-                                    sector.iswhite = false;
-                                    bhas_red_green = true;
-                                }
-                                if( value == _T("green(4)") ) {
-                                    color = wxColor( 0, 255, 0, opacity );
-                                    sector.iswhite = false;
-                                    bhas_red_green = true;
-                                }
-                            }
-                            if( curAttrName == _T("EXCLIT") ) {
-                                if( value.Find( _T("(3)") ) ) valnmr = 1.0;  // Fog lights.
-                            }
-                            if( curAttrName == _T("CATLIT") ){
-                                if( value.Upper().StartsWith( _T("DIRECT")) ||
-                                    value.Upper().StartsWith(_T("LEAD")) )
-                                    bleading_attribute = true;
-                            }
+							if (curAttrName == _T("LITVIS")) {
+								if (value.StartsWith(_T("obsc")))
+									bviz = false;
+							}
+							if (curAttrName == _T("SECTR1"))
+								value.ToDouble(&sectr1);
+							if (curAttrName == _T("SECTR2"))
+								value.ToDouble(&sectr2);
+							if (curAttrName == _T("VALNMR"))
+								value.ToDouble(&valnmr);
+							if (curAttrName == _T("COLOUR")) {
+								if (value == _T("red(3)")) {
+									color = wxColor(255, 0, 0, opacity);
+									sector.iswhite = false;
+									bhas_red_green = true;
+								}
+								if (value == _T("green(4)")) {
+									color = wxColor(0, 255, 0, opacity);
+									sector.iswhite = false;
+									bhas_red_green = true;
+								}
+							}
+							if (curAttrName == _T("EXCLIT")) {
+								if (value.Find(_T("(3)")))
+									valnmr = 1.0; // Fog lights.
+							}
+							if (curAttrName == _T("CATLIT")) {
+								if (value.Upper().StartsWith(_T("DIRECT"))
+									|| value.Upper().StartsWith(_T("LEAD")))
+									bleading_attribute = true;
+							}
 
-                            attrCounter++;
-                            curr_att += 6;
-                        }
+							attrCounter++;
+							curr_att += 6;
+						}
 
-                        if( ( sectr1 >= 0 ) && ( sectr2 >= 0 ) ) {
-                            if( sectr1 > sectr2 ) {             // normalize
-                                sectr2 += 360.0;
-                            }
+						if ((sectr1 >= 0) && (sectr2 >= 0)) {
+							if (sectr1 > sectr2) { // normalize
+								sectr2 += 360.0;
+							}
 
-                            sector.pos.m_x = light->m_lon;
-                            sector.pos.m_y = light->m_lat;
+							sector.pos.m_x = light->m_lon;
+							sector.pos.m_y = light->m_lat;
 
-                            sector.range = (valnmr > 0.0) ? valnmr : 2.5; // Short default range.
-                            sector.sector1 = sectr1;
-                            sector.sector2 = sectr2;
+							sector.range = (valnmr > 0.0) ? valnmr : 2.5; // Short default range.
+							sector.sector1 = sectr1;
+							sector.sector2 = sectr2;
 
-                            if(!color.IsOk()){
-                                color = wxColor( 255, 255, 0, yOpacity );
-                                sector.iswhite = true;
-                            }
-                            sector.color = color;
-                            sector.isleading = false;           // tentative judgment, check below
+							if (!color.IsOk()) {
+								color = wxColor(255, 255, 0, yOpacity);
+								sector.iswhite = true;
+							}
+							sector.color = color;
+							sector.isleading = false; // tentative judgment, check below
 
-                            if( bleading_attribute )
-                                sector.isleading = true;
+							if (bleading_attribute)
+								sector.isleading = true;
 
-                            bool newsector = true;
-                            for( unsigned int i=0; i<sectorlegs.size(); i++ ) {
-                                if( sectorlegs[i].pos == sector.pos &&
-                                    sectorlegs[i].sector1 == sector.sector1 &&
-                                    sectorlegs[i].sector2 == sector.sector2 ) {
-                                        newsector = false;
-                                        //  In the case of duplicate sectors, choose the instance with largest range.
-                                        //  This applies to the case where day and night VALNMR are different, and so
-                                        //  makes the vector result independent of the order of day/night light features.
-                                        sectorlegs[i].range = wxMax(sectorlegs[i].range, sector.range);
-                                }
-                            }
-                            if(!bviz)
-                                newsector = false;
+							bool newsector = true;
+							for (unsigned int i = 0; i < sectorlegs.size(); i++) {
+								if (sectorlegs[i].pos == sector.pos
+									&& sectorlegs[i].sector1 == sector.sector1
+									&& sectorlegs[i].sector2 == sector.sector2) {
+									newsector = false;
+									// In the case of duplicate sectors, choose the instance with
+									// largest range.
+									// This applies to the case where day and night VALNMR are
+									// different, and so
+									// makes the vector result independent of the order of
+									// day/night light features.
+									sectorlegs[i].range = wxMax(sectorlegs[i].range, sector.range);
+								}
+							}
+							if (!bviz)
+								newsector = false;
 
-                            if( newsector ) {
-                                sectorlegs.push_back( sector );
-                                newSectorsNeedDrawing = true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+							if (newsector) {
+								sectorlegs.push_back(sector);
+								newSectorsNeedDrawing = true;
+							}
+						}
+					}
+				}
+			}
+		}
 
-        rule_list->Clear();
-        delete rule_list;
-    }
+		delete rule_list;
+	}
 
-//  Work with the sector legs vector to identify  and mark "Leading Lights"
-//  Sectors with CATLIT "Leading" or "Directional" attribute set have already been marked
-    for( unsigned int i=0; i<sectorlegs.size(); i++ ) {
+	// Work with the sector legs vector to identify  and mark "Leading Lights"
+	// Sectors with CATLIT "Leading" or "Directional" attribute set have already been marked
+	for (unsigned int i = 0; i < sectorlegs.size(); i++) {
 
-        if(((sectorlegs[i].sector2 - sectorlegs[i].sector1) < 15) ) {
-            if( sectorlegs[i].iswhite && bhas_red_green )
-                sectorlegs[i].isleading = true;
-        }
-    }
+		if (((sectorlegs[i].sector2 - sectorlegs[i].sector1) < 15)) {
+			if (sectorlegs[i].iswhite && bhas_red_green)
+				sectorlegs[i].isleading = true;
+		}
+	}
 
-    return newSectorsNeedDrawing;
+	return newSectorsNeedDrawing;
 }

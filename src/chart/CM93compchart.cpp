@@ -1454,16 +1454,14 @@ ListOfObjRazRules* cm93compchart::GetObjRuleListAtLatLon(float lat, float lon, f
 	ViewPort vp_positive = *VPoint; // needs a new ViewPort also for ObjectRenderCheck()
 	vp_positive.set_positive();
 
-	if (!VPoint->b_quilt)
-		if (m_pcm93chart_current)
+	if (!VPoint->b_quilt) {
+		if (m_pcm93chart_current) {
 			return m_pcm93chart_current->GetObjRuleListAtLatLon(lat, alon, select_radius,
 																&vp_positive);
-		else {
-			// As default, return an empty list
-			ListOfObjRazRules* ret_ptr = new ListOfObjRazRules;
-			return ret_ptr;
+		} else {
+			return new ListOfObjRazRules; // As default, return an empty list
 		}
-	else {
+	} else {
 		UpdateRenderRegions(*VPoint);
 
 		// Search all of the subcharts, looking for the one whose render region contains the
@@ -1480,11 +1478,7 @@ ListOfObjRazRules* cm93compchart::GetObjRuleListAtLatLon(float lat, float lon, f
 				}
 			}
 		}
-
-		//     As default, return an empty list
-		ListOfObjRazRules* ret_ptr = new ListOfObjRazRules;
-
-		return ret_ptr;
+		return new ListOfObjRazRules; // As default, return an empty list
 	}
 }
 

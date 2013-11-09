@@ -59,8 +59,6 @@ class ocpnDC;
 void s57_DrawExtendedLightSectors(ocpnDC & temp_dc, ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
 bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
 
-WX_DECLARE_OBJARRAY(S57Obj, ArrayOfS57Obj);
-
 typedef std::list<S57Obj*> ListOfS57Obj;
 
 

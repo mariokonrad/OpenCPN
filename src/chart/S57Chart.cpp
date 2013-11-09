@@ -93,9 +93,6 @@ extern wxProgressDialog *s_ProgDialog;
 
 static jmp_buf env_ogrf;                    // the context saved by setjmp();
 
-#include <wx/arrimpl.cpp>                   // Implement an array of S57 Objects
-WX_DEFINE_OBJARRAY(ArrayOfS57Obj);
-
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(ListOfObjRazRules);   // Implement a list ofObjRazRules
 

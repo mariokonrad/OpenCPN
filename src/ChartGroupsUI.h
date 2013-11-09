@@ -28,6 +28,7 @@
 #include <wx/treebase.h>
 #include <CDI.h>
 #include <MainFrame.h>
+#include <chart/ChartDatabase.h>
 
 #include <vector>
 
@@ -36,7 +37,6 @@ class wxButton;
 class wxNotebook;
 class wxNotebookEvent;
 class wxGenericDirCtrl;
-class ChartGroupArray;
 class ChartGroup;
 
 class ChartGroupsUI : public wxScrolledWindow

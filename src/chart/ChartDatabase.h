@@ -44,7 +44,9 @@
 
 class wxProgressDialog;
 class ChartDatabase;
-class ChartGroupArray;
+class ChartGroup;
+
+typedef std::vector<ChartGroup*> ChartGroupArray;
 
 namespace geo { class BoundingBox; }
 
@@ -138,11 +140,6 @@ class ChartDatabase
 //-------------------------------------------------------------------------------------------
 //    Chart Group Structure Definitions
 //-------------------------------------------------------------------------------------------
-class ChartGroupElement;
-class ChartGroup;
-
-WX_DECLARE_OBJARRAY(ChartGroupElement*, ChartGroupElementArray); // FIXME: use std container
-WX_DECLARE_OBJARRAY(ChartGroup*, ChartGroupArray); // FIXME: use std container
 
 class ChartGroupElement
 {
@@ -151,12 +148,13 @@ class ChartGroupElement
 		wxArrayString m_missing_name_array;
 };
 
+WX_DECLARE_OBJARRAY(ChartGroupElement*, ChartGroupElementArray); // FIXME: use std container
+
 class ChartGroup
 {
 	public:
 		wxString m_group_name;
 		ChartGroupElementArray m_element_array;
 };
-
 
 #endif

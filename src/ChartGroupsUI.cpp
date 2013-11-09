@@ -154,7 +154,7 @@ void ChartGroupsUI::OnInsertChartItem(wxCommandEvent&)
 	if (!insert_candidate.IsEmpty()) {
 		if (m_DirCtrlArray.size()) {
 			const wxGenericDirCtrl* pDirCtrl = m_DirCtrlArray.at(m_GroupSelectedPage);
-			ChartGroup* pGroup = m_pGroupArray->Item(m_GroupSelectedPage - 1);
+			ChartGroup* pGroup = m_pGroupArray->at(m_GroupSelectedPage - 1);
 			if (pDirCtrl) {
 				wxTreeCtrl* ptree = pDirCtrl->GetTreeCtrl();
 				if (ptree) {
@@ -190,7 +190,7 @@ void ChartGroupsUI::OnRemoveChartItem(wxCommandEvent& event)
 {
 	if (m_DirCtrlArray.size()) {
 		const wxGenericDirCtrl* pDirCtrl = m_DirCtrlArray.at(m_GroupSelectedPage);
-		ChartGroup* pGroup = m_pGroupArray->Item(m_GroupSelectedPage - 1);
+		ChartGroup* pGroup = m_pGroupArray->at(m_GroupSelectedPage - 1);
 
 		if (pDirCtrl) {
 			wxString sel_item = pDirCtrl->GetPath();
@@ -284,7 +284,7 @@ void ChartGroupsUI::OnNewGroup(wxCommandEvent&)
 		ChartGroup* pGroup = new ChartGroup;
 		pGroup->m_group_name = pd->GetValue();
 		if (m_pGroupArray)
-			m_pGroupArray->Add(pGroup);
+			m_pGroupArray->push_back(pGroup);
 
 		m_GroupSelectedPage = m_GroupNB->GetPageCount() - 1; // select the new page
 		m_GroupNB->ChangeSelection(m_GroupSelectedPage);
@@ -298,7 +298,7 @@ void ChartGroupsUI::OnDeleteGroup(wxCommandEvent&)
 	if (0 != m_GroupSelectedPage) {
 		m_DirCtrlArray.erase(m_DirCtrlArray.begin() + m_GroupSelectedPage);
 		if (m_pGroupArray)
-			m_pGroupArray->RemoveAt(m_GroupSelectedPage - 1);
+			m_pGroupArray->erase(m_pGroupArray->begin() + m_GroupSelectedPage - 1);
 		m_GroupNB->DeletePage(m_GroupSelectedPage);
 		modified = true;
 	}
@@ -350,7 +350,7 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 
 	if (m_GroupSelectedPage > 0) {
 		const wxGenericDirCtrl* pDirCtrl = m_DirCtrlArray.at(m_GroupSelectedPage);
-		ChartGroup* pGroup = m_pGroupArray->Item(m_GroupSelectedPage - 1);
+		ChartGroup* pGroup = m_pGroupArray->at(m_GroupSelectedPage - 1);
 		if (pDirCtrl) {
 			wxTreeCtrl* ptree = pDirCtrl->GetTreeCtrl();
 
@@ -360,8 +360,8 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 				ChartGroupElement* target_element = pGroup->m_element_array.Item(target_item_index);
 				wxString branch_name = target_element->m_element_name;
 
-				//    Walk the children of the expanded node, marking any items which appear in
-				//    the "missing" list
+				// Walk the children of the expanded node, marking any items which appear in
+				// the "missing" list
 				if ((target_element->m_missing_name_array.size())) {
 					wxString full_root = branch_name;
 					full_root += branch_adder;
@@ -391,7 +391,7 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 void ChartGroupsUI::BuildNotebookPages(ChartGroupArray* pGroupArray)
 {
 	for (unsigned int i = 0; i < pGroupArray->size(); i++) {
-		ChartGroup* pGroup = pGroupArray->Item(i);
+		ChartGroup* pGroup = pGroupArray->at(i);
 		wxTreeCtrl* ptc = AddEmptyGroupPage(pGroup->m_group_name);
 
 		wxString itemname;
@@ -526,7 +526,7 @@ ChartGroupArray* ChartGroupsUI::CloneChartGroupArray(ChartGroupArray* s)
 {
 	ChartGroupArray* d = new ChartGroupArray;
 	for (unsigned int i = 0; i < s->size(); i++) {
-		ChartGroup* psg = s->Item(i);
+		ChartGroup* psg = s->at(i);
 		ChartGroup* pdg = new ChartGroup;
 		pdg->m_group_name = psg->m_group_name;
 
@@ -540,7 +540,7 @@ ChartGroupArray* ChartGroupsUI::CloneChartGroupArray(ChartGroupArray* s)
 			}
 			pdg->m_element_array.Add(pde);
 		}
-		d->Add(pdg);
+		d->push_back(pdg);
 	}
 	return d;
 }
@@ -550,7 +550,7 @@ void ChartGroupsUI::EmptyChartGroupArray(ChartGroupArray* s)
 	if (!s)
 		return;
 	for (unsigned int i = 0; i < s->size(); i++) {
-		ChartGroup* psg = s->Item(i);
+		ChartGroup* psg = s->at(i);
 
 		for (unsigned int j = 0; j < psg->m_element_array.size(); j++) {
 			ChartGroupElement* pe = psg->m_element_array.Item(j);
@@ -558,10 +558,10 @@ void ChartGroupsUI::EmptyChartGroupArray(ChartGroupArray* s)
 			psg->m_element_array.RemoveAt(j);
 			delete pe;
 		}
-		s->RemoveAt(i);
+		s->erase(s->begin() + i);
 		delete psg;
 	}
 
-	s->Clear();
+	s->clear();
 }
 

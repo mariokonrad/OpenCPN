@@ -25,6 +25,7 @@
 #define __CONFIG__H__
 
 #include <ChartDirInfo.h>
+#include <chart/ChartDatabase.h>
 
 #include <wx/config.h>
 #include <wx/confbase.h>
@@ -36,7 +37,6 @@ class RouteList;
 class RoutePointList;
 class NavObjectChanges;
 class NavObjectCollection;
-class ChartGroupArray;
 class wxWindow;
 
 class Config : public wxFileConfig

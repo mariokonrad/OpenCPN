@@ -35,7 +35,6 @@
 
 #include <wx/arrimpl.cpp>
 WX_DEFINE_OBJARRAY(ChartGroupElementArray);
-WX_DEFINE_OBJARRAY(ChartGroupArray);
 
 #ifndef UINT32
 #define UINT32 unsigned int // FIXME: use C99 types
@@ -1145,7 +1144,7 @@ void ChartDatabase::ApplyGroupArray(ChartGroupArray* pGroupArray)
 		wxString chart_full_path(pcte->GetpFullPath(), wxConvUTF8);
 
 		for (unsigned int igroup = 0; igroup < pGroupArray->size(); igroup++) {
-			ChartGroup* pGroup = pGroupArray->Item(igroup);
+			ChartGroup* pGroup = pGroupArray->at(igroup);
 			for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
 				wxString element_root = pGroup->m_element_array.Item(j)->m_element_name;
 				if (chart_full_path.StartsWith(element_root)) {

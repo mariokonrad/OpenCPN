@@ -33,6 +33,7 @@
 #include <wx/dialog.h>
 
 #include <plugin/PlugInManager.h>
+#include <chart/ChartDatabase.h>
 #include <MainFrame.h>
 #include <ChartDirInfo.h>
 #include <GUI_IDs.h>
@@ -40,7 +41,6 @@
 class wxGenericDirCtrl;
 class Config;
 class ChartGroupsUI;
-class ChartGroupArray;
 class ConnectionParams;
 class SentenceListDlg;
 class MainFrame;

@@ -1434,7 +1434,7 @@ bool Config::DeleteWayPoint( RoutePoint *pWP ) // FIXME: does this really belong
 	return true;
 }
 
-bool Config::UpdateChartDirs(ArrayOfCDI & dir_array)
+bool Config::UpdateChartDirs(ArrayOfCDI& dir_array)
 {
 	wxString key;
 	wxString dir;
@@ -1464,94 +1464,93 @@ bool Config::UpdateChartDirs(ArrayOfCDI & dir_array)
 	return true;
 }
 
-void Config::CreateConfigGroups(ChartGroupArray * pGroupArray)
+void Config::CreateConfigGroups(ChartGroupArray* pGroupArray)
 {
 	if (!pGroupArray)
 		return;
 
-	SetPath( _T ( "/Groups" ) );
-	Write( _T ( "GroupCount" ), (int) pGroupArray->size() );
+	SetPath(_T ( "/Groups" ));
+	Write(_T ( "GroupCount" ), (int)pGroupArray->size());
 
-	for( unsigned int i = 0; i < pGroupArray->size(); i++ ) {
-		ChartGroup *pGroup = pGroupArray->Item( i );
+	for (unsigned int i = 0; i < pGroupArray->size(); i++) {
+		ChartGroup* pGroup = pGroupArray->at(i);
 		wxString s;
-		s.Printf( _T("Group%d"), i + 1 );
-		s.Prepend( _T ( "/Groups/" ) );
-		SetPath( s );
+		s.Printf(_T("Group%d"), i + 1);
+		s.Prepend(_T ( "/Groups/" ));
+		SetPath(s);
 
-		Write( _T ( "GroupName" ), pGroup->m_group_name );
-		Write( _T ( "GroupItemCount" ), (int) pGroup->m_element_array.size() );
+		Write(_T ( "GroupName" ), pGroup->m_group_name);
+		Write(_T ( "GroupItemCount" ), (int)pGroup->m_element_array.size());
 
-		for( unsigned int j = 0; j < pGroup->m_element_array.size(); j++ ) {
+		for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
 			wxString sg;
-			sg.Printf( _T("Group%d/Item%d"), i + 1, j );
-			sg.Prepend( _T ( "/Groups/" ) );
-			SetPath( sg );
-			Write( _T ( "IncludeItem" ), pGroup->m_element_array.Item( j )->m_element_name );
+			sg.Printf(_T("Group%d/Item%d"), i + 1, j);
+			sg.Prepend(_T ( "/Groups/" ));
+			SetPath(sg);
+			Write(_T ( "IncludeItem" ), pGroup->m_element_array.Item(j)->m_element_name);
 
 			wxString t;
-			wxArrayString u = pGroup->m_element_array.Item( j )->m_missing_name_array;
-			if( u.size() ) {
-				for( unsigned int k = 0; k < u.size(); k++ ) {
-					t += u.Item( k );
+			wxArrayString u = pGroup->m_element_array.Item(j)->m_missing_name_array;
+			if (u.size()) {
+				for (unsigned int k = 0; k < u.size(); k++) {
+					t += u.Item(k);
 					t += _T(";");
 				}
-				Write( _T ( "ExcludeItems" ), t );
+				Write(_T ( "ExcludeItems" ), t);
 			}
 		}
 	}
 }
 
-void Config::DestroyConfigGroups( void )
+void Config::DestroyConfigGroups(void)
 {
-	DeleteGroup( _T ( "/Groups" ) );                //zap
+	DeleteGroup(_T ( "/Groups" )); // zap
 }
 
-void Config::LoadConfigGroups( ChartGroupArray *pGroupArray )
+void Config::LoadConfigGroups(ChartGroupArray* pGroupArray)
 {
-	SetPath( _T ( "/Groups" ) );
+	SetPath(_T ( "/Groups" ));
 	unsigned int group_count;
-	Read( _T ( "GroupCount" ), (int *) &group_count, 0 );
+	Read(_T ( "GroupCount" ), (int*)&group_count, 0);
 
-	for( unsigned int i = 0; i < group_count; i++ ) {
-		ChartGroup *pGroup = new ChartGroup;
+	for (unsigned int i = 0; i < group_count; i++) {
+		ChartGroup* pGroup = new ChartGroup;
 		wxString s;
-		s.Printf( _T("Group%d"), i + 1 );
-		s.Prepend( _T ( "/Groups/" ) );
-		SetPath( s );
+		s.Printf(_T("Group%d"), i + 1);
+		s.Prepend(_T ( "/Groups/" ));
+		SetPath(s);
 
 		wxString t;
-		Read( _T ( "GroupName" ), &t );
+		Read(_T ( "GroupName" ), &t);
 		pGroup->m_group_name = t;
 
 		unsigned int item_count;
-		Read( _T ( "GroupItemCount" ), (int *) &item_count );
-		for( unsigned int j = 0; j < item_count; j++ ) {
+		Read(_T ( "GroupItemCount" ), (int*)&item_count);
+		for (unsigned int j = 0; j < item_count; j++) {
 			wxString sg;
-			sg.Printf( _T("Group%d/Item%d"), i + 1, j );
-			sg.Prepend( _T ( "/Groups/" ) );
-			SetPath( sg );
+			sg.Printf(_T("Group%d/Item%d"), i + 1, j);
+			sg.Prepend(_T ( "/Groups/" ));
+			SetPath(sg);
 
 			wxString v;
-			Read( _T ( "IncludeItem" ), &v );
-			ChartGroupElement *pelement = new ChartGroupElement;
+			Read(_T ( "IncludeItem" ), &v);
+			ChartGroupElement* pelement = new ChartGroupElement;
 			pelement->m_element_name = v;
-			pGroup->m_element_array.Add( pelement );
+			pGroup->m_element_array.Add(pelement);
 
 			wxString u;
-			if( Read( _T ( "ExcludeItems" ), &u ) ) {
-				if( !u.IsEmpty() ) {
-					wxStringTokenizer tk( u, _T(";") );
-					while( tk.HasMoreTokens() ) {
+			if (Read(_T ( "ExcludeItems" ), &u)) {
+				if (!u.IsEmpty()) {
+					wxStringTokenizer tk(u, _T(";"));
+					while (tk.HasMoreTokens()) {
 						wxString token = tk.GetNextToken();
-						pelement->m_missing_name_array.Add( token );
+						pelement->m_missing_name_array.Add(token);
 					}
 				}
 			}
 		}
-		pGroupArray->Add( pGroup );
+		pGroupArray->push_back(pGroup);
 	}
-
 }
 
 void Config::write_toolbar()

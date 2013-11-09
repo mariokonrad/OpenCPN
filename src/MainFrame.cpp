@@ -2453,7 +2453,7 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 
 wxString MainFrame::GetGroupName(int igroup)
 {
-	ChartGroup* pGroup = g_pGroupArray->Item(igroup - 1);
+	ChartGroup* pGroup = g_pGroupArray->at(igroup - 1);
 	return pGroup->m_group_name;
 }
 
@@ -2462,7 +2462,7 @@ bool MainFrame::CheckGroup(int igroup)
 	if (igroup == 0)
 		return true; // "all charts" is always OK
 
-	ChartGroup* pGroup = g_pGroupArray->Item(igroup - 1);
+	ChartGroup* pGroup = g_pGroupArray->at(igroup - 1);
 	bool b_chart_in_group = false;
 
 	for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
@@ -2494,7 +2494,7 @@ void MainFrame::ScrubGroupArray()
 	unsigned int igroup = 0;
 	while( igroup < g_pGroupArray->size() ) {
 		bool b_chart_in_element = false;
-		ChartGroup *pGroup = g_pGroupArray->Item( igroup );
+		ChartGroup* pGroup = g_pGroupArray->at(igroup);
 
 		for( unsigned int j = 0; j < pGroup->m_element_array.size(); j++ ) {
 			wxString element_root = pGroup->m_element_array.Item( j )->m_element_name;

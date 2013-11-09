@@ -161,7 +161,7 @@ extern bool g_bConfirmObjectDelete;
 
 extern IDX_entry* gpIDX;
 extern int gpIDXn;
-
+extern ChartGroupArray* g_pGroupArray;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
 extern double AnchorPointMinDist;
@@ -281,7 +281,6 @@ extern int g_memCacheLimit;
 extern bool g_b_assume_azerty;
 
 extern int g_GroupIndex;
-extern ChartGroupArray* g_pGroupArray;
 extern wxString g_default_wp_icon;
 
 extern int g_current_arrow_scale;
@@ -6136,7 +6135,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 		for (unsigned int i = 0; i < g_pGroupArray->size(); i++) {
 			subMenuChart->AppendRadioItem(ID_DEF_MENU_GROUPBASE + i + 1,
-										  g_pGroupArray->Item(i)->m_group_name);
+										  g_pGroupArray->at(i)->m_group_name);
 			Connect(ID_DEF_MENU_GROUPBASE + i + 1, wxEVT_COMMAND_MENU_SELECTED,
 					(wxObjectEventFunction)(wxEventFunction) & ChartCanvas::PopupMenuHandler);
 		}

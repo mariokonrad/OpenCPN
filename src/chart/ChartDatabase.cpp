@@ -41,6 +41,8 @@
 WX_DEFINE_OBJARRAY(ChartTable);
 WX_DEFINE_OBJARRAY(ArrayOfChartClassDescriptor);
 
+using chart::ChartClassDescriptor;
+
 static const int DB_VERSION_CURRENT = 17; // FIXME: duplicate
 
 extern PlugInManager* g_pi_manager;
@@ -772,7 +774,7 @@ bool ChartDatabase::Check_CM93_Structure(wxString dir_name)
 // Populate Chart Table by directory search for specified file type
 // If bupdate flag is true, search the Chart Table for matching chart.
 // if target chart is already in table, mark it valid and skip chart processing
-int ChartDatabase::SearchDirAndAddCharts(wxString& dir_name_base, ChartClassDescriptor& chart_desc,
+int ChartDatabase::SearchDirAndAddCharts(wxString& dir_name_base, chart::ChartClassDescriptor& chart_desc,
 										 wxProgressDialog* pprog)
 {
 	wxString msg(_T("Searching directory: "));
@@ -956,7 +958,7 @@ int ChartDatabase::SearchDirAndAddCharts(wxString& dir_name_base, ChartClassDesc
 
 // Create a Chart object
 ChartBase* ChartDatabase::GetChart(const wxChar* WXUNUSED(theFilePath),
-								   ChartClassDescriptor& WXUNUSED(chart_desc)) const
+								   chart::ChartClassDescriptor& WXUNUSED(chart_desc)) const
 {
 	// TODO: support non-UI chart factory
 	return NULL;
@@ -964,7 +966,7 @@ ChartBase* ChartDatabase::GetChart(const wxChar* WXUNUSED(theFilePath),
 
 // Create Chart Table entry by reading chart header info, etc.
 ChartTableEntry* ChartDatabase::CreateChartTableEntry(const wxString& filePath,
-													  ChartClassDescriptor& chart_desc)
+													  chart::ChartClassDescriptor& chart_desc)
 {
 	wxString msg = wxT("Loading chart data for ");
 	msg.Append(filePath);

@@ -26,17 +26,21 @@
 
 #include <wx/string.h>
 
+namespace chart {
+
 class ChartClassDescriptor
 {
-	public:
-		ChartClassDescriptor();
-		virtual ~ChartClassDescriptor();
-		ChartClassDescriptor(wxString classn, wxString mask, int type);
+public:
+	ChartClassDescriptor();
+	ChartClassDescriptor(wxString classn, wxString mask, int type);
+	virtual ~ChartClassDescriptor();
 
-	public:
-		wxString m_class_name;
-		wxString m_search_mask;
-		int m_descriptor_type;
+public:
+	wxString m_class_name;
+	wxString m_search_mask;
+	int m_descriptor_type;
 };
+
+}
 
 #endif

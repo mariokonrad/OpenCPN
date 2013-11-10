@@ -54,7 +54,7 @@ enum
 };
 
 WX_DECLARE_OBJARRAY(ChartTableEntry, ChartTable); // FIXME: use std container
-WX_DECLARE_OBJARRAY(ChartClassDescriptor, ArrayOfChartClassDescriptor); // FIXME: use std container
+WX_DECLARE_OBJARRAY(chart::ChartClassDescriptor, ArrayOfChartClassDescriptor); // FIXME: use std container
 
 class ChartDatabase
 {
@@ -97,11 +97,11 @@ public:
 	void ApplyGroupArray(chart::ChartGroupArray* pGroupArray);
 
 protected:
-	virtual ChartBase* GetChart(const wxChar* theFilePath, ChartClassDescriptor& chart_desc) const;
+	virtual ChartBase* GetChart(const wxChar* theFilePath, chart::ChartClassDescriptor& chart_desc) const;
 	int AddChartDirectory(const wxString& theDir, bool bshow_prog);
 	void SetValid(bool valid);
 	ChartTableEntry* CreateChartTableEntry(const wxString& filePath,
-										   ChartClassDescriptor& chart_desc);
+										   chart::ChartClassDescriptor& chart_desc);
 
 	ArrayOfChartClassDescriptor m_ChartClassDescriptorArray;
 	ArrayOfCDI m_dir_array;
@@ -109,7 +109,7 @@ protected:
 private:
 	bool IsChartDirUsed(const wxString& theDir);
 
-	int SearchDirAndAddCharts(wxString& dir_name_base, ChartClassDescriptor& chart_desc,
+	int SearchDirAndAddCharts(wxString& dir_name_base, chart::ChartClassDescriptor& chart_desc,
 							  wxProgressDialog* pprog);
 
 	int TraverseDirAndAddCharts(const ChartDirInfo& dir_info, wxProgressDialog* pprog,

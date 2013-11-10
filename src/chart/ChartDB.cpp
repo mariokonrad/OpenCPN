@@ -187,7 +187,7 @@ void ChartDB::PurgeCacheUnusedCharts(bool b_force)
 	}
 }
 
-ChartBase* ChartDB::GetChart(const wxChar* theFilePath, ChartClassDescriptor& chart_desc) const
+ChartBase* ChartDB::GetChart(const wxChar* theFilePath, chart::ChartClassDescriptor& chart_desc) const
 {
 	wxFileName fn(theFilePath);
 

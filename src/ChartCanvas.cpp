@@ -161,7 +161,7 @@ extern bool g_bConfirmObjectDelete;
 
 extern IDX_entry* gpIDX;
 extern int gpIDXn;
-extern ChartGroupArray* g_pGroupArray;
+extern chart::ChartGroupArray* g_pGroupArray;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
 extern double AnchorPointMinDist;

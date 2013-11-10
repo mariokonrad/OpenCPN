@@ -53,6 +53,7 @@
 #include <chart/ChartStack.h>
 #include <chart/ChartDB.h>
 #include <chart/ChartDummy.h>
+#include <chart/ChartGroup.h>
 
 #include <ais/AIS_Decoder.h>
 #include <ais/AISTargetAlertDialog.h>
@@ -193,7 +194,7 @@ extern bool g_bQuiltEnable;
 extern bool g_bQuiltStart;
 extern bool g_bportable;
 extern bool g_bdisable_opengl;
-extern ChartGroupArray* g_pGroupArray;
+extern chart::ChartGroupArray* g_pGroupArray;
 extern int g_GroupIndex;
 extern wxString g_GPS_Ident;
 extern wxProgressDialog* s_ProgDialog;
@@ -299,7 +300,6 @@ extern int g_iSDMMFormat;
 extern bool g_bWayPointPreventDragging;
 extern bool g_bConfirmObjectDelete;
 extern LayerList* pLayerList;
-extern ChartGroupArray* g_pGroupArray;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern Routeman* g_pRouteMan;
 extern bool g_bTrackCarryOver;
@@ -1337,7 +1337,7 @@ bool App::OnInit()
 	wxLogMessage(_T("SData_Locn is ") + sys.data().sound_data_location);
 
 	// Establish an empty ChartCroupArray
-	g_pGroupArray = new ChartGroupArray;
+	g_pGroupArray = new chart::ChartGroupArray;
 
 	// Establish the prefix of the location of user specific data files
 #ifdef __WXMSW__

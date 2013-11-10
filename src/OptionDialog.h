@@ -153,7 +153,7 @@ class options : public wxDialog
 		wxButton * m_OKButton;
 		wxButton * m_CancelButton;
 
-		ChartGroupArray * m_pGroupArray;
+		chart::ChartGroupArray * m_pGroupArray;
 		int m_groups_changed;
 
 		//    For General Options

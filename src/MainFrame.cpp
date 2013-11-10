@@ -309,7 +309,7 @@ bool g_bQuiltEnable;
 bool g_bQuiltStart;
 bool g_bportable;
 bool g_bdisable_opengl;
-ChartGroupArray* g_pGroupArray;
+chart::ChartGroupArray* g_pGroupArray;
 int g_GroupIndex;
 wxString g_GPS_Ident;
 wxProgressDialog* s_ProgDialog;
@@ -2451,22 +2451,34 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 	return 0;
 }
 
+/// Returns the name of the chart group at the specified index.
+///
+/// @param[in] igroup Index within chart group. This parameter starts at 1.
 wxString MainFrame::GetGroupName(int igroup)
 {
-	ChartGroup* pGroup = g_pGroupArray->at(igroup - 1);
-	return pGroup->m_group_name;
+	// TODO: move this to its appropriate place (move the entire chart group stuff to is right place)
+
+	if (!g_pGroupArray)
+		return wxString();
+	if (igroup < 1)
+		return wxString();
+	if (igroup > static_cast<int>(g_pGroupArray->size()))
+		return wxString();
+
+	return g_pGroupArray->at(igroup - 1)->m_group_name;
 }
 
+/// @param[in] igroup Index within chart group. This parameter starts at 1.
 bool MainFrame::CheckGroup(int igroup)
 {
 	if (igroup == 0)
 		return true; // "all charts" is always OK
 
-	ChartGroup* pGroup = g_pGroupArray->at(igroup - 1);
+	chart::ChartGroup* pGroup = g_pGroupArray->at(igroup - 1);
 	bool b_chart_in_group = false;
 
 	for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
-		wxString element_root = pGroup->m_element_array.Item(j)->m_element_name;
+		wxString element_root = pGroup->m_element_array.at(j)->m_element_name;
 
 		for (unsigned int ic = 0; ic < (unsigned int)ChartData->GetChartTableEntries(); ic++) {
 			const ChartTableEntry& cte = ChartData->GetChartTableEntry(ic);
@@ -2485,39 +2497,41 @@ bool MainFrame::CheckGroup(int igroup)
 	return b_chart_in_group; // this group is empty
 }
 
+bool MainFrame::existsChartDataTableEntryStartingWith(const wxString& element_root) const
+{
+	for (unsigned int ic = 0; ic < (unsigned int)ChartData->GetChartTableEntries(); ++ic) {
+		const ChartTableEntry& cte = ChartData->GetChartTableEntry(ic);
+		const wxString chart_full_path(cte.GetpFullPath(), wxConvUTF8);
+		if (chart_full_path.StartsWith(element_root)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void MainFrame::ScrubGroupArray()
 {
+	// FIXME: clean up this method, move things to their right places
+
 	// For each group,
 	// make sure that each group element (dir or chart) references at least oneitem in the database.
 	// If not, remove the element.
 
-	unsigned int igroup = 0;
-	while( igroup < g_pGroupArray->size() ) {
-		bool b_chart_in_element = false;
-		ChartGroup* pGroup = g_pGroupArray->at(igroup);
+	for (chart::ChartGroupArray::iterator i = g_pGroupArray->begin(); i != g_pGroupArray->end(); ++i) {
+		chart::ChartGroup* pGroup = *i;
 
-		for( unsigned int j = 0; j < pGroup->m_element_array.size(); j++ ) {
-			wxString element_root = pGroup->m_element_array.Item( j )->m_element_name;
-
-			for (unsigned int ic = 0; ic < (unsigned int) ChartData->GetChartTableEntries(); ic++) {
-				const ChartTableEntry & cte = ChartData->GetChartTableEntry(ic);
-				wxString chart_full_path(cte.GetpFullPath(), wxConvUTF8);
-
-				if (chart_full_path.StartsWith(element_root)) {
-					b_chart_in_element = true;
-					break;
-				}
-			}
-
-			if( !b_chart_in_element )             // delete the element
-			{
-				ChartGroupElement *pelement = pGroup->m_element_array.Item( j );
-				pGroup->m_element_array.RemoveAt( j );
-				delete pelement;
+		// FIXME: replace this with std algorithms
+		chart::ChartGroupElementArray::iterator j = pGroup->m_element_array.begin();
+		while (j != pGroup->m_element_array.end()) {
+			chart::ChartGroupElement* element = *j;
+			if (!existsChartDataTableEntryStartingWith(element->m_element_name)) {
+				delete element;
+				pGroup->m_element_array.erase(j);
+				j = pGroup->m_element_array.begin(); // j was invalidated by 'erase'
+			} else {
+				++j;
 			}
 		}
-
-		igroup++;                                 // next group
 	}
 }
 

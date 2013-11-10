@@ -41,12 +41,9 @@
 #include <chart/ChartTableHeader.h>
 #include <chart/ChartTableEntry.h>
 #include <chart/ChartClassDescriptor.h>
+#include <chart/ChartGroup.h>
 
 class wxProgressDialog;
-class ChartDatabase;
-class ChartGroup;
-
-typedef std::vector<ChartGroup*> ChartGroupArray;
 
 namespace geo { class BoundingBox; }
 
@@ -56,105 +53,79 @@ enum
 	PLUGIN_DESCRIPTOR
 };
 
-
-///////////////////////////////////////////////////////////////////////
-// Chart Database
-///////////////////////////////////////////////////////////////////////
-
 WX_DECLARE_OBJARRAY(ChartTableEntry, ChartTable); // FIXME: use std container
 WX_DECLARE_OBJARRAY(ChartClassDescriptor, ArrayOfChartClassDescriptor); // FIXME: use std container
 
 class ChartDatabase
 {
-	public:
-		ChartDatabase();
-		virtual ~ChartDatabase(){};
+public:
+	ChartDatabase();
+	virtual ~ChartDatabase() {};
 
-		bool Create(ArrayOfCDI & dir_array, wxProgressDialog *pprog);
-		bool Update(ArrayOfCDI & dir_array, bool bForce, wxProgressDialog *pprog);
+	bool Create(ArrayOfCDI& dir_array, wxProgressDialog* pprog);
+	bool Update(ArrayOfCDI& dir_array, bool bForce, wxProgressDialog* pprog);
 
-		bool Read(const wxString &filePath);
-		bool Write(const wxString &filePath);
+	bool Read(const wxString& filePath);
+	bool Write(const wxString& filePath);
 
-		const wxString & GetDBFileName() const;
-		ArrayOfCDI & GetChartDirArray();
-		wxArrayString &GetChartDirArrayString();
+	const wxString& GetDBFileName() const;
+	ArrayOfCDI& GetChartDirArray();
+	wxArrayString& GetChartDirArrayString();
 
-		void UpdateChartClassDescriptorArray(void);
+	void UpdateChartClassDescriptorArray(void);
 
-		int GetChartTableEntries() const;
-		const ChartTableEntry &GetChartTableEntry(int index) const;
+	int GetChartTableEntries() const;
+	const ChartTableEntry& GetChartTableEntry(int index) const;
 
-		bool IsValid() const;
-		int DisableChart(wxString& PathToDisable);
-		bool GetCentroidOfLargestScaleChart(double *clat, double *clon, chart::ChartFamilyEnum family);
-		int GetDBChartType(int dbIndex);
-		int GetDBChartFamily(int dbIndex);
-		float GetDBChartSkew(int dbIndex);
-		int GetDBChartProj(int dbIndex);
-		int GetDBChartScale(int dbIndex);
+	bool IsValid() const;
+	int DisableChart(wxString& PathToDisable);
+	bool GetCentroidOfLargestScaleChart(double* clat, double* clon, chart::ChartFamilyEnum family);
+	int GetDBChartType(int dbIndex);
+	int GetDBChartFamily(int dbIndex);
+	float GetDBChartSkew(int dbIndex);
+	int GetDBChartProj(int dbIndex);
+	int GetDBChartScale(int dbIndex);
 
-		bool GetDBBoundingBox(int dbindex, geo::BoundingBox *box);
-		int  GetnAuxPlyEntries(int dbIndex);
-		int  GetDBPlyPoint(int dbIndex, int plyindex, float *lat, float *lon);
-		int  GetDBAuxPlyPoint(int dbIndex, int plyindex, int iAuxPly, float *lat, float *lon);
-		int  GetVersion() const;
-		wxString GetFullChartInfo(ChartBase *pc, int dbIndex, int *char_width, int *line_count);
-		int FinddbIndex(wxString PathToFind);
-		wxString GetDBChartFileName(int dbIndex);
-		void ApplyGroupArray(ChartGroupArray *pGroupArray);
+	bool GetDBBoundingBox(int dbindex, geo::BoundingBox* box);
+	int GetnAuxPlyEntries(int dbIndex);
+	int GetDBPlyPoint(int dbIndex, int plyindex, float* lat, float* lon);
+	int GetDBAuxPlyPoint(int dbIndex, int plyindex, int iAuxPly, float* lat, float* lon);
+	int GetVersion() const;
+	wxString GetFullChartInfo(ChartBase* pc, int dbIndex, int* char_width, int* line_count);
+	int FinddbIndex(wxString PathToFind);
+	wxString GetDBChartFileName(int dbIndex);
+	void ApplyGroupArray(chart::ChartGroupArray* pGroupArray);
 
-	protected:
-		virtual ChartBase *GetChart(const wxChar *theFilePath, ChartClassDescriptor &chart_desc) const;
-		int AddChartDirectory(const wxString &theDir, bool bshow_prog);
-		void SetValid(bool valid) { bValid = valid; }
-		ChartTableEntry *CreateChartTableEntry(const wxString &filePath, ChartClassDescriptor &chart_desc);
+protected:
+	virtual ChartBase* GetChart(const wxChar* theFilePath, ChartClassDescriptor& chart_desc) const;
+	int AddChartDirectory(const wxString& theDir, bool bshow_prog);
+	void SetValid(bool valid);
+	ChartTableEntry* CreateChartTableEntry(const wxString& filePath,
+										   ChartClassDescriptor& chart_desc);
 
-		ArrayOfChartClassDescriptor m_ChartClassDescriptorArray;
-		ArrayOfCDI m_dir_array;
+	ArrayOfChartClassDescriptor m_ChartClassDescriptorArray;
+	ArrayOfCDI m_dir_array;
 
-	private:
-		bool IsChartDirUsed(const wxString &theDir);
+private:
+	bool IsChartDirUsed(const wxString& theDir);
 
-		int SearchDirAndAddCharts(wxString& dir_name_base, ChartClassDescriptor &chart_desc, wxProgressDialog *pprog);
+	int SearchDirAndAddCharts(wxString& dir_name_base, ChartClassDescriptor& chart_desc,
+							  wxProgressDialog* pprog);
 
-		int TraverseDirAndAddCharts(
-				const ChartDirInfo & dir_info,
-				wxProgressDialog * pprog,
-				wxString & dir_magic,
-				bool bForce);
-		bool DetectDirChange(const wxString & dir_path, const wxString & magic, wxString &new_magic, wxProgressDialog *pprog);
+	int TraverseDirAndAddCharts(const ChartDirInfo& dir_info, wxProgressDialog* pprog,
+								wxString& dir_magic, bool bForce);
+	bool DetectDirChange(const wxString& dir_path, const wxString& magic, wxString& new_magic,
+						 wxProgressDialog* pprog);
 
-		bool Check_CM93_Structure(wxString dir_name);
+	bool Check_CM93_Structure(wxString dir_name);
 
-		bool bValid;
-		wxArrayString m_chartDirs;
-		int m_dbversion;
-		ChartTable chartTable;
+	bool bValid;
+	wxArrayString m_chartDirs;
+	int m_dbversion;
+	ChartTable chartTable;
 
-		ChartTableEntry m_ChartTableEntryDummy; // FIXME: used for return value if database is not valid
-		wxString m_DBFileName;
-};
-
-
-//-------------------------------------------------------------------------------------------
-//    Chart Group Structure Definitions
-//-------------------------------------------------------------------------------------------
-
-class ChartGroupElement
-{
-	public:
-		wxString m_element_name;
-		wxArrayString m_missing_name_array;
-};
-
-WX_DECLARE_OBJARRAY(ChartGroupElement*, ChartGroupElementArray); // FIXME: use std container
-
-class ChartGroup
-{
-	public:
-		wxString m_group_name;
-		ChartGroupElementArray m_element_array;
+	ChartTableEntry m_ChartTableEntryDummy; // FIXME: used for return value if database is not valid
+	wxString m_DBFileName;
 };
 
 #endif

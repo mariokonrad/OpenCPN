@@ -188,7 +188,7 @@ extern wxString g_locale;
 extern bool g_bportable;
 extern bool g_bdisable_opengl;
 
-extern ChartGroupArray * g_pGroupArray;
+extern chart::ChartGroupArray * g_pGroupArray;
 extern ocpnStyle::StyleManager * g_StyleManager;
 
 //    Some constants
@@ -394,92 +394,91 @@ wxWindow* options::GetContentWindow() const
 	return NULL;
 }
 
-size_t options::CreatePanel(const wxString & title)
+size_t options::CreatePanel(const wxString& title)
 {
 	size_t id = m_pListbook->GetPageCount();
-	/* This is the default empty content for any top tab.
-	   It'll be replaced when we call AddPage */
-	wxPanel *panel = new wxPanel( m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, title );
-	m_pListbook->AddPage( panel, title, false, id );
+	// This is the default empty content for any top tab.
+	// It'll be replaced when we call AddPage
+	wxPanel* panel = new wxPanel(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+								 wxTAB_TRAVERSAL, title);
+	m_pListbook->AddPage(panel, title, false, id);
 	return id;
 }
 
-wxScrolledWindow *options::AddPage( size_t parent, const wxString & title)
+wxScrolledWindow* options::AddPage(size_t parent, const wxString& title)
 {
-	if( parent > m_pListbook->GetPageCount() - 1 ) {
-		wxLogMessage(
-				wxString::Format( _T("Warning: invalid parent in options::AddPage( %d, "),
-					parent ) + title + _T(" )") );
+	if (parent > m_pListbook->GetPageCount() - 1) {
+		wxLogMessage(wxString::Format(_T("Warning: invalid parent in options::AddPage( %d, "),
+									  parent) + title + _T(" )"));
 		return NULL;
 	}
-	wxNotebookPage* page = m_pListbook->GetPage( parent );
+	wxNotebookPage* page = m_pListbook->GetPage(parent);
 
-	wxScrolledWindow *window;
+	wxScrolledWindow* window;
 	int style = wxVSCROLL | wxTAB_TRAVERSAL;
-	if( page->IsKindOf( CLASSINFO(wxNotebook))) {
-		window = new wxScrolledWindow( page, wxID_ANY, wxDefaultPosition, wxDefaultSize, style );
-		window->SetScrollRate(5,5);
-		((wxNotebook *)page)->AddPage( window, title );
+	if (page->IsKindOf(CLASSINFO(wxNotebook))) {
+		window = new wxScrolledWindow(page, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
+		window->SetScrollRate(5, 5);
+		((wxNotebook*)page)->AddPage(window, title);
 	} else if (page->IsKindOf(CLASSINFO(wxScrolledWindow))) {
-		wxString toptitle = m_pListbook->GetPageText( parent );
-		wxNotebook *nb = new wxNotebook( m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize,wxNB_TOP );
+		wxString toptitle = m_pListbook->GetPageText(parent);
+		wxNotebook* nb
+			= new wxNotebook(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_TOP);
 		/* Only remove the tab from listbook, we still have original content in {page} */
-		m_pListbook->RemovePage( parent );
-		m_pListbook->InsertPage( parent, nb, toptitle, false, parent );
+		m_pListbook->RemovePage(parent);
+		m_pListbook->InsertPage(parent, nb, toptitle, false, parent);
 		wxString previoustitle = page->GetName();
-		page->Reparent( nb );
-		nb->AddPage( page, previoustitle );
+		page->Reparent(nb);
+		nb->AddPage(page, previoustitle);
 		/* wxNotebookPage is hidden under wxGTK after RemovePage/Reparent
 		 * we must explicitely Show() it */
 		page->Show();
-		window = new wxScrolledWindow( nb, wxID_ANY, wxDefaultPosition, wxDefaultSize, style );
+		window = new wxScrolledWindow(nb, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
 		window->SetScrollRate(5, 5);
-		nb->AddPage( window, title );
-		nb->ChangeSelection( 0 );
+		nb->AddPage(window, title);
+		nb->ChangeSelection(0);
 	} else { // This is the default content, we can replace it now
-		window = new wxScrolledWindow( m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize, style, title );
+		window = new wxScrolledWindow(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+									  style, title);
 		window->SetScrollRate(5, 5);
-		wxString toptitle = m_pListbook->GetPageText( parent );
-		m_pListbook->DeletePage( parent );
-		m_pListbook->InsertPage( parent, window, toptitle, false, parent );
+		wxString toptitle = m_pListbook->GetPageText(parent);
+		m_pListbook->DeletePage(parent);
+		m_pListbook->InsertPage(parent, window, toptitle, false, parent);
 	}
 
 	return window;
 }
 
-bool options::DeletePage( wxScrolledWindow *page  )
+bool options::DeletePage(wxScrolledWindow* page)
 {
-	for (size_t i = 0; i < m_pListbook->GetPageCount(); i++)
-	{
-		wxNotebookPage* pg = m_pListbook->GetPage( i );
+	for (size_t i = 0; i < m_pListbook->GetPageCount(); i++) {
+		wxNotebookPage* pg = m_pListbook->GetPage(i);
 
-		if( pg->IsKindOf( CLASSINFO(wxNotebook))) {
-			wxNotebook *nb = ((wxNotebook *)pg);
-			for (size_t j = 0; j < nb->GetPageCount(); j++)
-			{
-				wxNotebookPage* spg = nb->GetPage( j );
-				if ( spg == page )
-				{
-					nb->DeletePage( j );
-					if (nb->GetPageCount()==1)
-					{
-						/* There's only one page, remove inner notebook */
-						spg = nb->GetPage( 0 );
-						spg->Reparent( m_pListbook );
-						nb->RemovePage( 0 );
-						wxString toptitle = m_pListbook->GetPageText( i );
-						m_pListbook->DeletePage( i );
-						m_pListbook->InsertPage( i, spg, toptitle, false, i );
+		if (pg->IsKindOf(CLASSINFO(wxNotebook))) {
+			wxNotebook* nb = ((wxNotebook*)pg);
+			for (size_t j = 0; j < nb->GetPageCount(); j++) {
+				wxNotebookPage* spg = nb->GetPage(j);
+				if (spg == page) {
+					nb->DeletePage(j);
+					if (nb->GetPageCount() == 1) {
+						// There's only one page, remove inner notebook
+						spg = nb->GetPage(0);
+						spg->Reparent(m_pListbook);
+						nb->RemovePage(0);
+						wxString toptitle = m_pListbook->GetPageText(i);
+						m_pListbook->DeletePage(i);
+						m_pListbook->InsertPage(i, spg, toptitle, false, i);
 					}
 					return true;
 				}
 			}
 		} else if (pg->IsKindOf(CLASSINFO(wxScrolledWindow)) && pg == page) {
-			/* There's only one page, replace it with empty panel */
-			m_pListbook->DeletePage( i );
-			wxPanel *panel = new wxPanel( m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("") );
-			wxString toptitle = m_pListbook->GetPageText( i );
-			m_pListbook->InsertPage( i, panel, toptitle, false, i );
+			// There's only one page, replace it with empty panel
+			m_pListbook->DeletePage(i);
+			wxPanel* panel = new wxPanel(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+										 wxTAB_TRAVERSAL, _T(""));
+			wxString toptitle = m_pListbook->GetPageText(i);
+			m_pListbook->InsertPage(i, panel, toptitle, false, i);
 			return true;
 		}
 	}
@@ -877,32 +876,29 @@ void options::CreatePanel_NMEA(
 	connectionsaved = true;
 }
 
-void options::OnConnectionToggleEnable( wxMouseEvent &event )
+void options::OnConnectionToggleEnable(wxMouseEvent& event)
 {
 	wxPoint pos = event.GetPosition();
 	int flags = 0;
-	long clicked_index = m_lcSources->HitTest( pos, flags );
+	long clicked_index = m_lcSources->HitTest(pos, flags);
 
-	//    Clicking Enable Checkbox (full column)?
-	if( clicked_index > -1 && event.GetX() < m_lcSources->GetColumnWidth( 0 ) ) {
+	// Clicking Enable Checkbox (full column)?
+	if (clicked_index > -1 && event.GetX() < m_lcSources->GetColumnWidth(0)) {
 		// Process the clicked item
-		ConnectionParams *conn = g_pConnectionParams->Item( m_lcSources->GetItemData( clicked_index ) );
+		ConnectionParams* conn = g_pConnectionParams->Item(m_lcSources->GetItemData(clicked_index));
 		conn->bEnabled = !conn->bEnabled;
 		m_connection_enabled = conn->bEnabled;
-		m_lcSources->SetItemImage( clicked_index, conn->bEnabled ? 1 : 0 );
+		m_lcSources->SetItemImage(clicked_index, conn->bEnabled ? 1 : 0);
 
 		cc1->Refresh();
-	}
-	else if( clicked_index == -1 ) {
+	} else if (clicked_index == -1) {
 		ClearNMEAForm();
-		m_buttonRemove->Enable( false );
+		m_buttonRemove->Enable(false);
 	}
 
 	// Allow wx to process...
 	event.Skip();
 }
-
-
 
 void options::CreatePanel_Ownship(
 		size_t parent,
@@ -1871,9 +1867,6 @@ void options::SetInitialSettings()
 	if( m_pConfig ) pSettingsCB1->SetValue( m_pConfig->m_bShowDebugWindows );
 
 	m_cbNMEADebug->SetValue(NMEALogWindow::Get().Active());
-	/*TODO
-	  if( g_bGarminHost ) pGarminHost->SetValue( true );
-	 */
 	m_cbFilterSogCog->SetValue( g_bfilter_cogsog );
 
 	m_tFilterSec->SetValue(wxString::Format(_T("%d"), g_COGFilterSec));
@@ -2118,7 +2111,7 @@ void options::SetInitialSettings()
 
 }
 
-void options::OnCPAWarnClick(wxCommandEvent &)
+void options::OnCPAWarnClick(wxCommandEvent&)
 {
 	if (m_pCheck_CPA_Warn->GetValue()) {
 		m_pCheck_CPA_WarnT->Enable();
@@ -2128,10 +2121,9 @@ void options::OnCPAWarnClick(wxCommandEvent &)
 	}
 }
 
-
-void options::OnShowGpsWindowCheckboxClick(wxCommandEvent &)
+void options::OnShowGpsWindowCheckboxClick(wxCommandEvent&)
 {
-	if( !m_cbNMEADebug->GetValue() ) {
+	if (!m_cbNMEADebug->GetValue()) {
 		NMEALogWindow::Get().DestroyWindow();
 	} else {
 		NMEALogWindow::Get().Create(pParent, 35);
@@ -2139,21 +2131,21 @@ void options::OnShowGpsWindowCheckboxClick(wxCommandEvent &)
 	}
 }
 
-void options::OnZTCCheckboxClick(wxCommandEvent &)
+void options::OnZTCCheckboxClick(wxCommandEvent&)
 {
-	if( pEnableZoomToCursor->GetValue() ) {
+	if (pEnableZoomToCursor->GetValue()) {
 		pSmoothPanZoom->Disable();
 	} else {
 		pSmoothPanZoom->Enable();
 	}
 }
 
-void options::OnShipTypeSelect(wxCommandEvent & event)
+void options::OnShipTypeSelect(wxCommandEvent& event)
 {
-	if( m_pShipIconType->GetSelection() == 0 ) {
-		realSizes->ShowItems( false );
+	if (m_pShipIconType->GetSelection() == 0) {
+		realSizes->ShowItems(false);
 	} else {
-		realSizes->ShowItems( true );
+		realSizes->ShowItems(true);
 	}
 	dispOptions->Layout();
 	ownShip->Layout();
@@ -2162,12 +2154,12 @@ void options::OnShipTypeSelect(wxCommandEvent & event)
 	event.Skip();
 }
 
-void options::OnRadarringSelect(wxCommandEvent & event)
+void options::OnRadarringSelect(wxCommandEvent& event)
 {
-	if( pNavAidRadarRingsNumberVisible->GetSelection() == 0 ) {
-		radarGrid->ShowItems( false );
+	if (pNavAidRadarRingsNumberVisible->GetSelection() == 0) {
+		radarGrid->ShowItems(false);
 	} else {
-		radarGrid->ShowItems( true );
+		radarGrid->ShowItems(true);
 	}
 	dispOptions->Layout();
 	ownShip->Layout();
@@ -2176,17 +2168,15 @@ void options::OnRadarringSelect(wxCommandEvent & event)
 	event.Skip();
 }
 
-void options::OnDisplayCategoryRadioButton(wxCommandEvent & event)
+void options::OnDisplayCategoryRadioButton(wxCommandEvent& event)
 {
 	int select = pDispCat->GetSelection();
 
-	if( 3 == select ) {
+	if (3 == select) {
 		ps57CtlListBox->Enable();
 		itemButtonClearList->Enable();
 		itemButtonSelectList->Enable();
-	}
-
-	else {
+	} else {
 		ps57CtlListBox->Disable();
 		itemButtonClearList->Disable();
 		itemButtonSelectList->Disable();
@@ -2195,20 +2185,20 @@ void options::OnDisplayCategoryRadioButton(wxCommandEvent & event)
 	event.Skip();
 }
 
-void options::OnButtonClearClick(wxCommandEvent & event)
+void options::OnButtonClearClick(wxCommandEvent& event)
 {
 	int nOBJL = ps57CtlListBox->GetCount();
-	for( int iPtr = 0; iPtr < nOBJL; iPtr++ )
-		ps57CtlListBox->Check( iPtr, false );
+	for (int iPtr = 0; iPtr < nOBJL; iPtr++)
+		ps57CtlListBox->Check(iPtr, false);
 
 	event.Skip();
 }
 
-void options::OnButtonSelectClick( wxCommandEvent& event )
+void options::OnButtonSelectClick(wxCommandEvent& event)
 {
 	int nOBJL = ps57CtlListBox->GetCount();
-	for( int iPtr = 0; iPtr < nOBJL; iPtr++ )
-		ps57CtlListBox->Check( iPtr, true );
+	for (int iPtr = 0; iPtr < nOBJL; iPtr++)
+		ps57CtlListBox->Check(iPtr, true);
 
 	event.Skip();
 }
@@ -2218,14 +2208,14 @@ bool options::ShowToolTips()
 	return TRUE;
 }
 
-void options::OnCharHook(wxKeyEvent & event)
+void options::OnCharHook(wxKeyEvent& event)
 {
 	if (event.GetKeyCode() == WXK_RETURN) {
 		if (event.GetModifiers() == wxMOD_CONTROL) {
 			wxCommandEvent okEvent;
-			okEvent.SetId( xID_OK );
-			okEvent.SetEventType( wxEVT_COMMAND_BUTTON_CLICKED );
-			GetEventHandler()->AddPendingEvent( okEvent );
+			okEvent.SetId(xID_OK);
+			okEvent.SetEventType(wxEVT_COMMAND_BUTTON_CLICKED);
+			GetEventHandler()->AddPendingEvent(okEvent);
 		}
 	}
 	event.Skip();
@@ -2300,59 +2290,56 @@ void options::UpdateWorkArrayFromTextCtl()
 	}
 }
 
-ConnectionParams *options::CreateConnectionParamsFromSelectedItem()
+ConnectionParams* options::CreateConnectionParamsFromSelectedItem()
 {
-	if( !m_bNMEAParams_shown )
+	if (!m_bNMEAParams_shown)
 		return NULL;
 
 	//  Special encoding for deleted connection
-	if ( m_rbTypeSerial->GetValue() && m_comboPort->GetValue() == _T("Deleted" ))
+	if (m_rbTypeSerial->GetValue() && m_comboPort->GetValue() == _T("Deleted" ))
 		return NULL;
 
-	if ( m_rbTypeSerial->GetValue() && m_comboPort->GetValue() == wxEmptyString )
-	{
-		wxMessageBox( _("You must select or enter the port..."), _("Error!") );
+	if (m_rbTypeSerial->GetValue() && m_comboPort->GetValue() == wxEmptyString) {
+		wxMessageBox(_("You must select or enter the port..."), _("Error!"));
 		return NULL;
 	}
-	//  TCP (I/O), GPSD (Input) and UDP (Output) ports require address field to be set
-	else if ( m_rbTypeNet->GetValue() && m_tNetAddress->GetValue() == wxEmptyString ) {
-		if( m_rbNetProtoTCP->GetValue() ||
-				m_rbNetProtoGPSD->GetValue() ||
-				( m_rbNetProtoUDP->GetValue() &&  m_cbOutput->GetValue()) )
-		{
-			wxMessageBox( _("You must enter the address..."), _("Error!") );
+		//  TCP (I/O), GPSD (Input) and UDP (Output) ports require address field to be set
+		else if (m_rbTypeNet->GetValue() && m_tNetAddress->GetValue() == wxEmptyString) {
+		if (m_rbNetProtoTCP->GetValue() || m_rbNetProtoGPSD->GetValue()
+			|| (m_rbNetProtoUDP->GetValue() && m_cbOutput->GetValue())) {
+			wxMessageBox(_("You must enter the address..."), _("Error!"));
 			return NULL;
 		}
 	}
 
-	ConnectionParams * pConnectionParams = new ConnectionParams();
+	ConnectionParams* pConnectionParams = new ConnectionParams();
 
 	pConnectionParams->Valid = true;
-	if ( m_rbTypeSerial->GetValue() )
+	if (m_rbTypeSerial->GetValue())
 		pConnectionParams->Type = ConnectionParams::SERIAL;
 	else
 		pConnectionParams->Type = ConnectionParams::NETWORK;
 	pConnectionParams->NetworkAddress = m_tNetAddress->GetValue();
 	pConnectionParams->NetworkPort = wxAtoi(m_tNetPort->GetValue());
-	if ( m_rbNetProtoTCP->GetValue() )
+	if (m_rbNetProtoTCP->GetValue())
 		pConnectionParams->NetProtocol = ConnectionParams::TCP;
-	else if ( m_rbNetProtoUDP->GetValue() )
+	else if (m_rbNetProtoUDP->GetValue())
 		pConnectionParams->NetProtocol = ConnectionParams::UDP;
 	else
 		pConnectionParams->NetProtocol = ConnectionParams::GPSD;
 
-	pConnectionParams->Baudrate = wxAtoi( m_choiceBaudRate->GetStringSelection() );
-	pConnectionParams->Priority = wxAtoi( m_choicePriority->GetStringSelection() );
+	pConnectionParams->Baudrate = wxAtoi(m_choiceBaudRate->GetStringSelection());
+	pConnectionParams->Priority = wxAtoi(m_choicePriority->GetStringSelection());
 	pConnectionParams->ChecksumCheck = m_cbCheckCRC->GetValue();
 	pConnectionParams->Garmin = m_cbGarminHost->GetValue();
-	pConnectionParams->InputSentenceList = wxStringTokenize( m_tcInputStc->GetValue(), _T(",") );
-	if ( m_rbIAccept->GetValue() )
+	pConnectionParams->InputSentenceList = wxStringTokenize(m_tcInputStc->GetValue(), _T(","));
+	if (m_rbIAccept->GetValue())
 		pConnectionParams->InputSentenceListType = ConnectionParams::WHITELIST;
 	else
 		pConnectionParams->InputSentenceListType = ConnectionParams::BLACKLIST;
 	pConnectionParams->Output = m_cbOutput->GetValue();
-	pConnectionParams->OutputSentenceList = wxStringTokenize( m_tcOutputStc->GetValue(), _T(",") );
-	if ( m_rbOAccept->GetValue() )
+	pConnectionParams->OutputSentenceList = wxStringTokenize(m_tcOutputStc->GetValue(), _T(","));
+	if (m_rbOAccept->GetValue())
 		pConnectionParams->OutputSentenceListType = ConnectionParams::WHITELIST;
 	else
 		pConnectionParams->OutputSentenceListType = ConnectionParams::BLACKLIST;
@@ -2823,20 +2810,21 @@ void options::OnXidOkClick( wxCommandEvent& event )
 	EndModal( m_returnChanges );
 }
 
-void options::OnButtondeleteClick( wxCommandEvent& event )
+void options::OnButtondeleteClick(wxCommandEvent& event)
 {
 	wxArrayInt pListBoxSelections;
-	pActiveChartsList->GetSelections( pListBoxSelections );
+	pActiveChartsList->GetSelections(pListBoxSelections);
 	int nSelections = pListBoxSelections.GetCount();
-	for( int i = 0; i < nSelections; i++ ) {
-		pActiveChartsList->Delete( pListBoxSelections.Item( ( nSelections - i ) - 1 ) );
+	for (int i = 0; i < nSelections; i++) {
+		pActiveChartsList->Delete(pListBoxSelections.Item((nSelections - i) - 1));
 	}
 
 	UpdateWorkArrayFromTextCtl();
 
 	if (m_pWorkDirList) {
 		pActiveChartsList->Clear();
-		for (ArrayOfCDI::const_iterator dir = m_pWorkDirList->begin(); dir != m_pWorkDirList->end(); ++dir) {
+		for (ArrayOfCDI::const_iterator dir = m_pWorkDirList->begin(); dir != m_pWorkDirList->end();
+			 ++dir) {
 			if (!dir->fullpath.IsEmpty()) {
 				pActiveChartsList->Append(dir->fullpath);
 			}
@@ -2953,56 +2941,58 @@ void options::OnChartsPageChange(wxListbookEvent& event)
 	event.Skip(); // Allow continued event processing
 }
 
-void options::OnPageChange( wxListbookEvent& event )
+void options::OnPageChange(wxListbookEvent& event)
 {
 	unsigned int i = event.GetSelection();
 	lastPage = i;
 
 	//    User selected Chart Page?
 	//    If so, build the "Charts" page variants
-	if( 2 == i ) {                       // 2 is the index of "Charts" page
+	if (2 == i) { // 2 is the index of "Charts" page
 		k_charts = VISIT_CHARTS;
-	} else if( 3 == i ) {                      // 3 is the index of "VectorCharts" page
+	} else if (3 == i) { // 3 is the index of "VectorCharts" page
 		//    User selected Vector Chart Page?
 		k_vectorcharts = S52_CHANGED;
-	} else if( m_pageUI == i ) {                       // 5 is the index of "User Interface" page
-		if( !m_bVisitLang ) {
+	} else if (m_pageUI == i) { // 5 is the index of "User Interface" page
+		if (!m_bVisitLang) {
 			::wxBeginBusyCursor();
 
 			int current_language = plocale_def_lang->GetLanguage();
-			wxString current_sel = wxLocale::GetLanguageName( current_language );
+			wxString current_sel = wxLocale::GetLanguageName(current_language);
 
-			current_sel = GetOCPNKnownLanguage( g_locale, NULL );
+			current_sel = GetOCPNKnownLanguage(g_locale, NULL);
 
 			const int nLang = sizeof(LANGUAGE_LIST) / sizeof(LANGUAGE_LIST[0]);
 
 #ifdef __WXMSW__
 			// always add us english
-			m_itemLangListBox->Append( _T("English (U.S.)") );
+			m_itemLangListBox->Append(_T("English (U.S.)"));
 
-			wxString lang_dir = global::OCPN::get().sys().data().sound_data_location + _T("share/locale/");
-			for( int it = 1; it < nLang; it++ ) {
-				if( wxLocale::IsAvailable(LANGUAGE_LIST[it])) {
+			wxString lang_dir = global::OCPN::get().sys().data().sound_data_location
+								+ _T("share/locale/");
+			for (int it = 1; it < nLang; it++) {
+				if (wxLocale::IsAvailable(LANGUAGE_LIST[it])) {
 					wxLocale ltest(LANGUAGE_LIST[it], 0);
-					ltest.AddCatalog( _T("opencpn") );
-					if(!ltest.IsLoaded(_T("opencpn")))
+					ltest.AddCatalog(_T("opencpn"));
+					if (!ltest.IsLoaded(_T("opencpn")))
 						continue;
 
 					// Defaults
 					wxString loc_lang_name = wxLocale::GetLanguageName(LANGUAGE_LIST[it]);
 					wxString widgets_lang_name = loc_lang_name;
-					wxString lang_canonical = wxLocale::GetLanguageInfo(LANGUAGE_LIST[it])->CanonicalName;
+					wxString lang_canonical
+						= wxLocale::GetLanguageInfo(LANGUAGE_LIST[it])->CanonicalName;
 
-					//  Make opencpn substitutions
+					// Make opencpn substitutions
 					wxString lang_suffix;
-					loc_lang_name = GetOCPNKnownLanguage( lang_canonical, &lang_suffix );
+					loc_lang_name = GetOCPNKnownLanguage(lang_canonical, &lang_suffix);
 
-					//  Look explicitely to see if .mo is available
+					// Look explicitely to see if .mo is available
 					wxString test_dir = lang_dir + lang_suffix;
-					if (!wxDir::Exists( test_dir))
+					if (!wxDir::Exists(test_dir))
 						continue;
 
-					m_itemLangListBox->Append( loc_lang_name );
+					m_itemLangListBox->Append(loc_lang_name);
 				}
 			}
 #else
@@ -3011,64 +3001,63 @@ void options::OnPageChange( wxListbookEvent& event )
 			// always add us english
 			lang_array.Add(_T("en_US"));
 
-			for( int it = 0; it < nLang; it++)
-			{
+			for (int it = 0; it < nLang; it++) {
 				{
-					wxLog::EnableLogging(false);  // avoid "Cannot set locale to..." log message
+					wxLog::EnableLogging(false); // avoid "Cannot set locale to..." log message
 
 					wxLocale ltest(LANGUAGE_LIST[it], 0);
 					ltest.AddCatalog(_T("opencpn"));
 
 					wxLog::EnableLogging(true);
 
-					if(ltest.IsLoaded(_T("opencpn")))
-					{
+					if (ltest.IsLoaded(_T("opencpn"))) {
 						wxString s0 = wxLocale::GetLanguageInfo(LANGUAGE_LIST[it])->CanonicalName;
 						wxString sl = wxLocale::GetLanguageName(LANGUAGE_LIST[it]);
-						if(wxNOT_FOUND == lang_array.Index(s0))
+						if (wxNOT_FOUND == lang_array.Index(s0))
 							lang_array.Add(s0);
-
 					}
 				}
 			}
 
-			for(unsigned int i=0; i < lang_array.GetCount(); i++)
-			{
+			for (unsigned int i = 0; i < lang_array.GetCount(); i++) {
 				//  Make opencpn substitutions
 				wxString loc_lang_name = GetOCPNKnownLanguage(lang_array[i], NULL);
-				m_itemLangListBox->Append( loc_lang_name );
+				m_itemLangListBox->Append(loc_lang_name);
 			}
 #endif
 
 			// BUGBUG
-			//  Remember that wxLocale ctor has the effect of changing the system locale, including the "C" libraries.
-			//  It should then also happen that the locale should be switched back to ocpn initial load setting
-			//  upon the dtor of the above wxLocale instantiations....
-			//  wxWidgets may do so internally, but there seems to be no effect upon the system libraries, so that
-			//  functions like strftime() do not revert to the correct locale setting.
-			//  Also, the catalog for the application is not reloaded by the ctor, so we must reload them directly
-			//  So as workaround, we reset the locale explicitely.
+			// Remember that wxLocale ctor has the effect of changing the system locale, including
+			// the "C" libraries.
+			// It should then also happen that the locale should be switched back to ocpn initial
+			// load setting
+			// upon the dtor of the above wxLocale instantiations....
+			// wxWidgets may do so internally, but there seems to be no effect upon the system
+			// libraries, so that
+			// functions like strftime() do not revert to the correct locale setting.
+			// Also, the catalog for the application is not reloaded by the ctor, so we must reload
+			// them directly
+			// So as workaround, we reset the locale explicitely.
 
 			delete plocale_def_lang;
-			plocale_def_lang = new wxLocale( current_language );
+			plocale_def_lang = new wxLocale(current_language);
 
-			setlocale( LC_NUMERIC, "C" );
-			plocale_def_lang->AddCatalog( _T("opencpn") );
+			setlocale(LC_NUMERIC, "C");
+			plocale_def_lang->AddCatalog(_T("opencpn"));
 
-			m_itemLangListBox->SetStringSelection( current_sel );
+			m_itemLangListBox->SetStringSelection(current_sel);
 
-			//      Initialize Language tab
-			const wxLanguageInfo *pli = wxLocale::FindLanguageInfo( g_locale );
-			if( pli ) {
+			// Initialize Language tab
+			const wxLanguageInfo* pli = wxLocale::FindLanguageInfo(g_locale);
+			if (pli) {
 				wxString clang = pli->Description;
-				//                        m_itemLangListBox->SetValue(clang);
 			}
 
 			m_bVisitLang = true;
 
 			::wxEndBusyCursor();
 		}
-	} else if( m_pagePlugins == i ) {                    // 7 is the index of "Plugins" page
+	} else if (m_pagePlugins == i) { // 7 is the index of "Plugins" page
 		k_plugins = TOOLBAR_CHANGED;
 	}
 }

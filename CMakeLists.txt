@@ -584,6 +584,8 @@ SET(HDR_CHART
 	src/chart/ChartDB.h
 	src/chart/CacheEntry.h
 	src/chart/ChartDatabase.h
+	src/chart/ChartGroupElement.h
+	src/chart/ChartGroup.h
 	src/chart/ChartGEO.h
 	src/chart/ChartKAP.h
 	src/chart/ChartStack.h

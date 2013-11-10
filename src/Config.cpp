@@ -223,7 +223,7 @@ extern int              g_route_line_width;
 extern int              g_track_line_width;
 extern wxString         g_default_wp_icon;
 
-extern ChartGroupArray  *g_pGroupArray;
+extern chart::ChartGroupArray  *g_pGroupArray;
 extern int              g_GroupIndex;
 
 extern bool             g_bDebugOGL;
@@ -1464,7 +1464,7 @@ bool Config::UpdateChartDirs(ArrayOfCDI& dir_array)
 	return true;
 }
 
-void Config::CreateConfigGroups(ChartGroupArray* pGroupArray)
+void Config::CreateConfigGroups(chart::ChartGroupArray* pGroupArray)
 {
 	if (!pGroupArray)
 		return;
@@ -1473,7 +1473,7 @@ void Config::CreateConfigGroups(ChartGroupArray* pGroupArray)
 	Write(_T ( "GroupCount" ), (int)pGroupArray->size());
 
 	for (unsigned int i = 0; i < pGroupArray->size(); i++) {
-		ChartGroup* pGroup = pGroupArray->at(i);
+		chart::ChartGroup* pGroup = pGroupArray->at(i);
 		wxString s;
 		s.Printf(_T("Group%d"), i + 1);
 		s.Prepend(_T ( "/Groups/" ));
@@ -1487,10 +1487,10 @@ void Config::CreateConfigGroups(ChartGroupArray* pGroupArray)
 			sg.Printf(_T("Group%d/Item%d"), i + 1, j);
 			sg.Prepend(_T ( "/Groups/" ));
 			SetPath(sg);
-			Write(_T ( "IncludeItem" ), pGroup->m_element_array.Item(j)->m_element_name);
+			Write(_T ( "IncludeItem" ), pGroup->m_element_array.at(j)->m_element_name);
 
 			wxString t;
-			wxArrayString u = pGroup->m_element_array.Item(j)->m_missing_name_array;
+			wxArrayString u = pGroup->m_element_array.at(j)->m_missing_name_array;
 			if (u.size()) {
 				for (unsigned int k = 0; k < u.size(); k++) {
 					t += u.Item(k);
@@ -1507,14 +1507,14 @@ void Config::DestroyConfigGroups(void)
 	DeleteGroup(_T ( "/Groups" )); // zap
 }
 
-void Config::LoadConfigGroups(ChartGroupArray* pGroupArray)
+void Config::LoadConfigGroups(chart::ChartGroupArray* pGroupArray)
 {
 	SetPath(_T ( "/Groups" ));
 	unsigned int group_count;
 	Read(_T ( "GroupCount" ), (int*)&group_count, 0);
 
 	for (unsigned int i = 0; i < group_count; i++) {
-		ChartGroup* pGroup = new ChartGroup;
+		chart::ChartGroup* pGroup = new chart::ChartGroup;
 		wxString s;
 		s.Printf(_T("Group%d"), i + 1);
 		s.Prepend(_T ( "/Groups/" ));
@@ -1534,9 +1534,9 @@ void Config::LoadConfigGroups(ChartGroupArray* pGroupArray)
 
 			wxString v;
 			Read(_T ( "IncludeItem" ), &v);
-			ChartGroupElement* pelement = new ChartGroupElement;
+			chart::ChartGroupElement* pelement = new chart::ChartGroupElement;
 			pelement->m_element_name = v;
-			pGroup->m_element_array.Add(pelement);
+			pGroup->m_element_array.push_back(pelement);
 
 			wxString u;
 			if (Read(_T ( "ExcludeItems" ), &u)) {

@@ -70,7 +70,7 @@ void ChartGroupsUI::SetDBDirs(ArrayOfCDI& array)
 	m_db_dirs = array;
 }
 
-void ChartGroupsUI::SetGroupArray(ChartGroupArray* pGroupArray)
+void ChartGroupsUI::SetGroupArray(chart::ChartGroupArray* pGroupArray)
 {
 	m_pGroupArray = pGroupArray;
 }
@@ -154,7 +154,7 @@ void ChartGroupsUI::OnInsertChartItem(wxCommandEvent&)
 	if (!insert_candidate.IsEmpty()) {
 		if (m_DirCtrlArray.size()) {
 			const wxGenericDirCtrl* pDirCtrl = m_DirCtrlArray.at(m_GroupSelectedPage);
-			ChartGroup* pGroup = m_pGroupArray->at(m_GroupSelectedPage - 1);
+			chart::ChartGroup* pGroup = m_pGroupArray->at(m_GroupSelectedPage - 1);
 			if (pDirCtrl) {
 				wxTreeCtrl* ptree = pDirCtrl->GetTreeCtrl();
 				if (ptree) {
@@ -175,9 +175,9 @@ void ChartGroupsUI::OnInsertChartItem(wxCommandEvent&)
 						ptree->SetItemHasChildren(id);
 				}
 
-				ChartGroupElement* pnew_element = new ChartGroupElement;
+				chart::ChartGroupElement* pnew_element = new chart::ChartGroupElement;
 				pnew_element->m_element_name = insert_candidate;
-				pGroup->m_element_array.Add(pnew_element);
+				pGroup->m_element_array.push_back(pnew_element);
 			}
 		}
 	}
@@ -190,7 +190,7 @@ void ChartGroupsUI::OnRemoveChartItem(wxCommandEvent& event)
 {
 	if (m_DirCtrlArray.size()) {
 		const wxGenericDirCtrl* pDirCtrl = m_DirCtrlArray.at(m_GroupSelectedPage);
-		ChartGroup* pGroup = m_pGroupArray->at(m_GroupSelectedPage - 1);
+		chart::ChartGroup* pGroup = m_pGroupArray->at(m_GroupSelectedPage - 1);
 
 		if (pDirCtrl) {
 			wxString sel_item = pDirCtrl->GetPath();
@@ -203,8 +203,8 @@ void ChartGroupsUI::OnRemoveChartItem(wxCommandEvent& event)
 					wxString branch_adder;
 					int group_item_index = FindGroupBranch(pGroup, ptree, id, &branch_adder);
 					if (group_item_index >= 0) {
-						ChartGroupElement* pelement
-							= pGroup->m_element_array.Item(group_item_index);
+						chart::ChartGroupElement* pelement
+							= pGroup->m_element_array.at(group_item_index);
 						bool b_duplicate = false;
 						for (unsigned int k = 0; k < pelement->m_missing_name_array.size();
 							 k++) {
@@ -217,12 +217,12 @@ void ChartGroupsUI::OnRemoveChartItem(wxCommandEvent& event)
 							pelement->m_missing_name_array.Add(sel_item);
 						}
 
-						//    Special case...
-						//    If the selection is a branch itself,
-						//    Then delete from the tree, and delete from the group
+						// Special case...
+						// If the selection is a branch itself,
+						// Then delete from the tree, and delete from the group
 						if (branch_adder == _T("")) {
 							ptree->Delete(id);
-							pGroup->m_element_array.RemoveAt(group_item_index);
+							pGroup->m_element_array.erase(pGroup->m_element_array.begin() + group_item_index);
 						} else {
 							ptree->SetItemTextColour(id, wxColour(128, 128, 128));
 							//   what about toggle back?
@@ -281,7 +281,7 @@ void ChartGroupsUI::OnNewGroup(wxCommandEvent&)
 
 	if (pd->ShowModal() == wxID_OK) {
 		AddEmptyGroupPage(pd->GetValue());
-		ChartGroup* pGroup = new ChartGroup;
+		chart::ChartGroup* pGroup = new chart::ChartGroup;
 		pGroup->m_group_name = pd->GetValue();
 		if (m_pGroupArray)
 			m_pGroupArray->push_back(pGroup);
@@ -304,7 +304,7 @@ void ChartGroupsUI::OnDeleteGroup(wxCommandEvent&)
 	}
 }
 
-int ChartGroupsUI::FindGroupBranch(ChartGroup* pGroup, wxTreeCtrl* ptree, wxTreeItemId item,
+int ChartGroupsUI::FindGroupBranch(chart::ChartGroup* pGroup, wxTreeCtrl* ptree, wxTreeItemId item,
 								   wxString* pbranch_adder)
 {
 	wxString branch_name;
@@ -331,7 +331,7 @@ int ChartGroupsUI::FindGroupBranch(ChartGroup* pGroup, wxTreeCtrl* ptree, wxTree
 	// Find the index and element pointer of the target branch in the Group
 	unsigned int target_item_index = -1;
 	for (unsigned int i = 0; i < pGroup->m_element_array.size(); i++) {
-		wxString target = pGroup->m_element_array.Item(i)->m_element_name;
+		wxString target = pGroup->m_element_array.at(i)->m_element_name;
 		if (branch_name == target) {
 			target_item_index = i;
 			break;
@@ -350,14 +350,14 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 
 	if (m_GroupSelectedPage > 0) {
 		const wxGenericDirCtrl* pDirCtrl = m_DirCtrlArray.at(m_GroupSelectedPage);
-		ChartGroup* pGroup = m_pGroupArray->at(m_GroupSelectedPage - 1);
+		chart::ChartGroup* pGroup = m_pGroupArray->at(m_GroupSelectedPage - 1);
 		if (pDirCtrl) {
 			wxTreeCtrl* ptree = pDirCtrl->GetTreeCtrl();
 
 			wxString branch_adder;
 			int target_item_index = FindGroupBranch(pGroup, ptree, node, &branch_adder);
 			if (target_item_index >= 0) {
-				ChartGroupElement* target_element = pGroup->m_element_array.Item(target_item_index);
+				chart::ChartGroupElement* target_element = pGroup->m_element_array.at(target_item_index);
 				wxString branch_name = target_element->m_element_name;
 
 				// Walk the children of the expanded node, marking any items which appear in
@@ -388,16 +388,16 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 	}
 }
 
-void ChartGroupsUI::BuildNotebookPages(ChartGroupArray* pGroupArray)
+void ChartGroupsUI::BuildNotebookPages(chart::ChartGroupArray* pGroupArray)
 {
 	for (unsigned int i = 0; i < pGroupArray->size(); i++) {
-		ChartGroup* pGroup = pGroupArray->at(i);
+		chart::ChartGroup* pGroup = pGroupArray->at(i);
 		wxTreeCtrl* ptc = AddEmptyGroupPage(pGroup->m_group_name);
 
 		wxString itemname;
 		int nItems = pGroup->m_element_array.size();
 		for (int i = 0; i < nItems; i++) {
-			wxString itemname = pGroup->m_element_array.Item(i)->m_element_name;
+			wxString itemname = pGroup->m_element_array.at(i)->m_element_name;
 			if (!itemname.IsEmpty()) {
 				wxDirItemData* dir_item = new wxDirItemData(itemname, itemname, true);
 				wxTreeItemId id = ptc->AppendItem(ptc->GetRootItem(), itemname, 0, -1, dir_item);
@@ -522,44 +522,48 @@ void ChartGroupsUI::CompletePanel(void)
 	m_UIcomplete = true;
 }
 
-ChartGroupArray* ChartGroupsUI::CloneChartGroupArray(ChartGroupArray* s)
+chart::ChartGroupArray* ChartGroupsUI::CloneChartGroupArray(chart::ChartGroupArray* s)
 {
-	ChartGroupArray* d = new ChartGroupArray;
-	for (unsigned int i = 0; i < s->size(); i++) {
-		ChartGroup* psg = s->at(i);
-		ChartGroup* pdg = new ChartGroup;
-		pdg->m_group_name = psg->m_group_name;
+	chart::ChartGroupArray* clone = new chart::ChartGroupArray;
 
-		for (unsigned int j = 0; j < psg->m_element_array.size(); j++) {
-			ChartGroupElement* pde = new ChartGroupElement;
-			pde->m_element_name = psg->m_element_array.Item(j)->m_element_name;
+	for (chart::ChartGroupArray::const_iterator i = s->begin(); i != s->end(); ++i) {
+		const chart::ChartGroup* group = *i;
+
+		chart::ChartGroup* pdg = new chart::ChartGroup;
+		pdg->m_group_name = group->m_group_name;
+
+		for (unsigned int j = 0; j < group->m_element_array.size(); j++) {
+			chart::ChartGroupElement* pde = new chart::ChartGroupElement;
+			pde->m_element_name = group->m_element_array.at(j)->m_element_name;
 			for (unsigned int k = 0;
-				 k < psg->m_element_array.Item(j)->m_missing_name_array.size(); k++) {
-				wxString missing_name = psg->m_element_array.Item(j)->m_missing_name_array.Item(k);
-				pde->m_missing_name_array.Add(missing_name);
+				 k < group->m_element_array.at(j)->m_missing_name_array.size(); k++) {
+				wxString missing_name = group->m_element_array.at(j)->m_missing_name_array.Item(k);
+				pde->m_missing_name_array.push_back(missing_name);
 			}
-			pdg->m_element_array.Add(pde);
+			pdg->m_element_array.push_back(pde);
 		}
-		d->push_back(pdg);
+		clone->push_back(pdg);
 	}
-	return d;
+
+	return clone;
 }
 
-void ChartGroupsUI::EmptyChartGroupArray(ChartGroupArray* s)
+void ChartGroupsUI::EmptyChartGroupArray(chart::ChartGroupArray* s)
 {
 	if (!s)
 		return;
-	for (unsigned int i = 0; i < s->size(); i++) {
-		ChartGroup* psg = s->at(i);
 
-		for (unsigned int j = 0; j < psg->m_element_array.size(); j++) {
-			ChartGroupElement* pe = psg->m_element_array.Item(j);
+	for (chart::ChartGroupArray::iterator i = s->begin(); i != s->end(); ++i) {
+		chart::ChartGroup* group = *i;
+
+		// FIXME: move this to the chart group where it belongs
+		for (chart::ChartGroupElementArray::iterator j = group->m_element_array.begin();
+			 j != group->m_element_array.end(); ++j) {
+			chart::ChartGroupElement* pe = *j;
 			pe->m_missing_name_array.Clear();
-			psg->m_element_array.RemoveAt(j);
 			delete pe;
 		}
-		s->erase(s->begin() + i);
-		delete psg;
+		delete group;
 	}
 
 	s->clear();

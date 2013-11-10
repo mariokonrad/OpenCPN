@@ -33,12 +33,13 @@
 
 #include <plugin/PlugInManager.h>
 
-#include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(ChartGroupElementArray);
-
 #ifndef UINT32
 #define UINT32 unsigned int // FIXME: use C99 types
 #endif
+
+#include <wx/arrimpl.cpp>
+WX_DEFINE_OBJARRAY(ChartTable);
+WX_DEFINE_OBJARRAY(ArrayOfChartClassDescriptor);
 
 static const int DB_VERSION_CURRENT = 17; // FIXME: duplicate
 
@@ -73,9 +74,6 @@ chart::ChartFamilyEnum GetChartFamily(int charttype)
 }
 
 
-WX_DEFINE_OBJARRAY(ChartTable);
-WX_DEFINE_OBJARRAY(ArrayOfChartClassDescriptor);
-
 ChartDatabase::ChartDatabase()
 {
 	m_ChartTableEntryDummy.Clear();
@@ -87,7 +85,7 @@ void ChartDatabase::UpdateChartClassDescriptorArray(void)
 	m_ChartClassDescriptorArray.Clear();
 
 	// Create and add the descriptors for the default chart types recognized
-	ChartClassDescriptor *pcd;
+	ChartClassDescriptor* pcd;
 
 	pcd = new ChartClassDescriptor(_T("ChartKAP"), _T("*.kap"), BUILTIN_DESCRIPTOR);
 	m_ChartClassDescriptorArray.Add(pcd);
@@ -121,6 +119,11 @@ void ChartDatabase::UpdateChartClassDescriptorArray(void)
 			}
 		}
 	}
+}
+
+void ChartDatabase::SetValid(bool valid)
+{
+	bValid = valid;
 }
 
 int ChartDatabase::GetVersion() const
@@ -527,7 +530,6 @@ bool ChartDatabase::Update(ArrayOfCDI& dir_array, bool bForce, wxProgressDialog*
 }
 
 // Find Chart dbIndex
-
 int ChartDatabase::FinddbIndex(wxString PathToFind)
 {
 	// Find the chart
@@ -1014,8 +1016,8 @@ bool ChartDatabase::GetCentroidOfLargestScaleChart(double* clat, double* clon,
 	if (cur_max_i == -1)
 		return false; // nothing found
 	else {
-		*clat = (chartTable[cur_max_i].GetLatMax() + chartTable[cur_max_i].GetLatMin()) / 2.;
-		*clon = (chartTable[cur_max_i].GetLonMin() + chartTable[cur_max_i].GetLonMax()) / 2.;
+		*clat = (chartTable[cur_max_i].GetLatMax() + chartTable[cur_max_i].GetLatMin()) / 2.0;
+		*clon = (chartTable[cur_max_i].GetLonMin() + chartTable[cur_max_i].GetLonMax()) / 2.0;
 	}
 	return true;
 }
@@ -1135,7 +1137,7 @@ int ChartDatabase::GetnAuxPlyEntries(int dbIndex)
 		return 0;
 }
 
-void ChartDatabase::ApplyGroupArray(ChartGroupArray* pGroupArray)
+void ChartDatabase::ApplyGroupArray(chart::ChartGroupArray* pGroupArray)
 {
 	for (unsigned int ic = 0; ic < chartTable.size(); ic++) {
 		ChartTableEntry* pcte = &chartTable[ic];
@@ -1144,16 +1146,16 @@ void ChartDatabase::ApplyGroupArray(ChartGroupArray* pGroupArray)
 		wxString chart_full_path(pcte->GetpFullPath(), wxConvUTF8);
 
 		for (unsigned int igroup = 0; igroup < pGroupArray->size(); igroup++) {
-			ChartGroup* pGroup = pGroupArray->at(igroup);
+			chart::ChartGroup* pGroup = pGroupArray->at(igroup);
 			for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
-				wxString element_root = pGroup->m_element_array.Item(j)->m_element_name;
+				wxString element_root = pGroup->m_element_array.at(j)->m_element_name;
 				if (chart_full_path.StartsWith(element_root)) {
 					bool b_add = true;
 					for (unsigned int k = 0;
-						 k < pGroup->m_element_array.Item(j)->m_missing_name_array.size();
+						 k < pGroup->m_element_array.at(j)->m_missing_name_array.size();
 						 k++) {
 						wxString missing_item
-							= pGroup->m_element_array.Item(j)->m_missing_name_array.Item(k);
+							= pGroup->m_element_array.at(j)->m_missing_name_array.Item(k);
 						if (chart_full_path.StartsWith(missing_item)) {
 							if (chart_full_path == missing_item) {
 								// missing item is full chart name

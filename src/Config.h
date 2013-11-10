@@ -80,9 +80,9 @@ class Config : public wxFileConfig
 		virtual bool UpdateWayPoint(RoutePoint * pWP);
 		virtual bool DeleteWayPoint(RoutePoint * pWP);
 
-		virtual void CreateConfigGroups(ChartGroupArray * pGroupArray);
+		virtual void CreateConfigGroups(chart::ChartGroupArray * pGroupArray);
 		virtual void DestroyConfigGroups(void);
-		virtual void LoadConfigGroups(ChartGroupArray * pGroupArray);
+		virtual void LoadConfigGroups(chart::ChartGroupArray * pGroupArray);
 
 		virtual bool UpdateChartDirs(ArrayOfCDI & dirarray);
 		virtual bool LoadChartDirArray(ArrayOfCDI & ChartDirArray);

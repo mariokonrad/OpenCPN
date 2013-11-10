@@ -251,6 +251,7 @@ private:
 	void PostProcessNNEA(bool pos_valid, const wxString& sfixtime);
 
 	void ScrubGroupArray();
+	bool existsChartDataTableEntryStartingWith(const wxString&) const;
 	wxString GetGroupName(int igroup);
 	void LoadHarmonics();
 

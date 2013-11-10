@@ -29,6 +29,7 @@
 #include <CDI.h>
 #include <MainFrame.h>
 #include <chart/ChartDatabase.h>
+#include <chart/ChartGroup.h>
 
 #include <vector>
 
@@ -37,7 +38,6 @@ class wxButton;
 class wxNotebook;
 class wxNotebookEvent;
 class wxGenericDirCtrl;
-class ChartGroup;
 
 class ChartGroupsUI : public wxScrolledWindow
 {
@@ -52,7 +52,7 @@ public:
 
 	void CompletePanel(void);
 	void SetDBDirs(ArrayOfCDI& array);
-	void SetGroupArray(ChartGroupArray* pGroupArray);
+	void SetGroupArray(chart::ChartGroupArray* pGroupArray);
 	void SetInitialSettings();
 	void CompleteInitialSettings();
 	void PopulateTrees();
@@ -62,9 +62,9 @@ public:
 
 	wxTreeCtrl* AddEmptyGroupPage(const wxString& label);
 
-	void BuildNotebookPages(ChartGroupArray* pGroupArray);
-	ChartGroupArray* CloneChartGroupArray(ChartGroupArray* s);
-	void EmptyChartGroupArray(ChartGroupArray* s);
+	void BuildNotebookPages(chart::ChartGroupArray* pGroupArray);
+	chart::ChartGroupArray* CloneChartGroupArray(chart::ChartGroupArray* s);
+	void EmptyChartGroupArray(chart::ChartGroupArray* s);
 
 	void OnNodeExpanded(wxTreeEvent& event);
 	void OnAvailableSelection(wxTreeEvent& event);
@@ -81,7 +81,7 @@ public:
 	bool m_treespopulated;
 
 private:
-	int FindGroupBranch(ChartGroup* pGroup, wxTreeCtrl* ptree, wxTreeItemId item,
+	int FindGroupBranch(chart::ChartGroup* pGroup, wxTreeCtrl* ptree, wxTreeItemId item,
 						wxString* pbranch_adder);
 
 	wxFlexGridSizer* groupsSizer;
@@ -105,7 +105,7 @@ private:
 	typedef std::vector<wxGenericDirCtrl*> DirectoryControls;
 
 	DirectoryControls m_DirCtrlArray;
-	ChartGroupArray* m_pGroupArray;
+	chart::ChartGroupArray* m_pGroupArray;
 };
 
 #endif

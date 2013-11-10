@@ -118,11 +118,6 @@ struct ChartTableEntry_onDisk_14
 	bool bValid;
 };
 
-ChartTableEntry::ChartTableEntry()
-{
-	Clear();
-}
-
 void ChartTableEntry::SetValid(bool valid)
 {
 	bValid = valid;
@@ -339,6 +334,11 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 
 	pNoCovrPlyTable = pfpnc;
 	pNoCovrCntTable = pipnc;
+}
+
+ChartTableEntry::ChartTableEntry()
+{
+	Clear();
 }
 
 ChartTableEntry::~ChartTableEntry()

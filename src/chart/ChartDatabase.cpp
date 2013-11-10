@@ -224,6 +224,7 @@ bool ChartDatabase::Read(const wxString& filePath)
 		m_chartDirs.Add(dir);
 	}
 
+	// FIXME: be aware: the allocation and the Read/push_back combo do not caus calls to constructor
 	entries = cth.GetTableEntries();
 	chartTable.Alloc(entries);
 	while (entries-- && entry.Read(this, ifs))

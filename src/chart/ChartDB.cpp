@@ -187,7 +187,7 @@ void ChartDB::PurgeCacheUnusedCharts(bool b_force)
 	}
 }
 
-ChartBase* ChartDB::GetChart(const wxChar* theFilePath, chart::ChartClassDescriptor& chart_desc) const
+ChartBase* ChartDB::GetChart(const wxChar* theFilePath, const chart::ChartClassDescriptor& chart_desc) const
 {
 	wxFileName fn(theFilePath);
 
@@ -587,7 +587,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 
 	bool bInCache = false;
 
-	//    Search the cache
+	// Search the cache
 
 	const unsigned int nCache = pChartCache->size();
 	for (unsigned int i = 0; i < nCache; i++) {
@@ -674,11 +674,10 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 				}
 			}
 		} else { // Use n chart cache policy, if memory-limit  policy is not used
-			//      Limit cache to n charts, tossing out the oldest when space is needed
+			// Limit cache to n charts, tossing out the oldest when space is needed
 			unsigned int nCache = pChartCache->size();
 			while ((nCache > (unsigned int)g_nCacheLimit) && !m_b_locked) {
 
-				///                  wxLogMessage("Searching chart cache for oldest entry");
 				int LRUTime = now.GetTicks();
 				int iOldest = 0;
 				for (unsigned int i = 0; i < nCache; i++) {
@@ -726,11 +725,11 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 			}
 		}
 
-		if (chart_type == CHART_TYPE_KAP)
+		if (chart_type == CHART_TYPE_KAP) {
 			Ch = new ChartKAP();
-
-		else if (chart_type == CHART_TYPE_GEO)
+		} else if (chart_type == CHART_TYPE_GEO) {
 			Ch = new ChartGEO();
+		}
 
 #ifdef USE_S57
 		else if (chart_type == CHART_TYPE_S57) {
@@ -780,32 +779,19 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 			wxFileName fn(ChartFullPath);
 			wxString ext = fn.GetExt();
 			ext.Prepend(_T("*."));
-			wxString ext_upper = ext.MakeUpper();
-			wxString ext_lower = ext.MakeLower();
-			wxString chart_class_name;
 
 			// Search the array of chart class descriptors to find a match
 			// bewteen the search mask and the the chart file extension
 
-			for (unsigned int i = 0; i < m_ChartClassDescriptorArray.size(); i++) {
-				if (m_ChartClassDescriptorArray.Item(i).m_descriptor_type == PLUGIN_DESCRIPTOR) {
-					if (m_ChartClassDescriptorArray.Item(i).m_search_mask == ext_upper) {
-						chart_class_name = m_ChartClassDescriptorArray.Item(i).m_class_name;
-						break;
-					}
-					if (m_ChartClassDescriptorArray.Item(i).m_search_mask == ext_lower) {
-						chart_class_name = m_ChartClassDescriptorArray.Item(i).m_class_name;
-						break;
-					}
-				}
-			}
+			wxString chart_class_name = getChartClassName(PLUGIN_DESCRIPTOR, ext);
 
 			if (chart_class_name.Len()) {
 				ChartPlugInWrapper* cpiw = new ChartPlugInWrapper(chart_class_name);
 				Ch = (ChartBase*)cpiw;
 			}
-		} else
+		} else {
 			Ch = NULL;
+		}
 
 		if (Ch) {
 			InitReturn ir;
@@ -828,7 +814,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 			}
 
 			if (INIT_OK == ir) {
-				//    Only add to cache if requesting a full init
+				// Only add to cache if requesting a full init
 				if (FULL_INIT == init_flag) {
 					pce = new CacheEntry;
 					pce->FullPath = ChartFullPath;

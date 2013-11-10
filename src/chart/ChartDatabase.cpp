@@ -39,7 +39,6 @@
 
 #include <wx/arrimpl.cpp>
 WX_DEFINE_OBJARRAY(ChartTable);
-WX_DEFINE_OBJARRAY(ArrayOfChartClassDescriptor);
 
 using chart::ChartClassDescriptor;
 
@@ -84,21 +83,13 @@ ChartDatabase::ChartDatabase()
 
 void ChartDatabase::UpdateChartClassDescriptorArray(void)
 {
-	m_ChartClassDescriptorArray.Clear();
+	m_ChartClassDescriptorArray.clear();
 
-	// Create and add the descriptors for the default chart types recognized
-	ChartClassDescriptor* pcd;
-
-	pcd = new ChartClassDescriptor(_T("ChartKAP"), _T("*.kap"), BUILTIN_DESCRIPTOR);
-	m_ChartClassDescriptorArray.Add(pcd);
-	pcd = new ChartClassDescriptor(_T("ChartGEO"), _T("*.geo"), BUILTIN_DESCRIPTOR);
-	m_ChartClassDescriptorArray.Add(pcd);
-	pcd = new ChartClassDescriptor(_T("s57chart"), _T("*.000"), BUILTIN_DESCRIPTOR);
-	m_ChartClassDescriptorArray.Add(pcd);
-	pcd = new ChartClassDescriptor(_T("s57chart"), _T("*.s57"), BUILTIN_DESCRIPTOR);
-	m_ChartClassDescriptorArray.Add(pcd);
-	pcd = new ChartClassDescriptor(_T("cm93compchart"), _T("00300000.a"), BUILTIN_DESCRIPTOR);
-	m_ChartClassDescriptorArray.Add(pcd);
+	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("ChartKAP"), _T("*.kap"), BUILTIN_DESCRIPTOR));
+	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("ChartGEO"), _T("*.geo"), BUILTIN_DESCRIPTOR));
+	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("s57chart"), _T("*.000"), BUILTIN_DESCRIPTOR));
+	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("s57chart"), _T("*.s57"), BUILTIN_DESCRIPTOR));
+	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("cm93compchart"), _T("00300000.a"), BUILTIN_DESCRIPTOR));
 
 	// If the PlugIn Manager exists, get the array of dynamically loadable chart class names
 	if (g_pi_manager) {
@@ -109,18 +100,30 @@ void ChartDatabase::UpdateChartClassDescriptorArray(void)
 			ChartPlugInWrapper* cpiw = new ChartPlugInWrapper(class_name);
 			if (cpiw) {
 				wxString mask = cpiw->GetFileSearchMask();
-
-				// Create a new descriptor
-				ChartClassDescriptor* picd
-					= new ChartClassDescriptor(class_name, mask, PLUGIN_DESCRIPTOR);
-
-				// Add descriptor to the database array member
-				m_ChartClassDescriptorArray.Add(picd);
-
+				m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(class_name, mask, PLUGIN_DESCRIPTOR));
 				delete cpiw;
 			}
 		}
 	}
+}
+
+wxString ChartDatabase::getChartClassName(int type, const wxString& ext) const
+{
+	const wxString ext_upper = ext.Upper();
+	const wxString ext_lower = ext.Lower();
+
+	for (ArrayOfChartClassDescriptor::const_iterator i = m_ChartClassDescriptorArray.begin();
+		 i != m_ChartClassDescriptorArray.end(); ++i) {
+		if (i->m_descriptor_type == type) {
+			if (i->m_search_mask == ext_upper) {
+				return i->m_class_name;
+			}
+			if (i->m_search_mask == ext_lower) {
+				return i->m_class_name;
+			}
+		}
+	}
+	return wxString();
 }
 
 void ChartDatabase::SetValid(bool valid)
@@ -633,8 +636,9 @@ int ChartDatabase::TraverseDirAndAddCharts(
 	dir_magic = new_magic;
 
 	// Look for all possible defined chart classes
-	for (unsigned int i = 0; i < m_ChartClassDescriptorArray.size(); i++) {
-		nAdd += SearchDirAndAddCharts(dir_path, m_ChartClassDescriptorArray.Item(i), pprog);
+	for (ArrayOfChartClassDescriptor::const_iterator i = m_ChartClassDescriptorArray.begin();
+		 i != m_ChartClassDescriptorArray.end(); ++i) {
+		nAdd += SearchDirAndAddCharts(dir_path, *i, pprog);
 	}
 
 	return nAdd;
@@ -774,7 +778,8 @@ bool ChartDatabase::Check_CM93_Structure(wxString dir_name)
 // Populate Chart Table by directory search for specified file type
 // If bupdate flag is true, search the Chart Table for matching chart.
 // if target chart is already in table, mark it valid and skip chart processing
-int ChartDatabase::SearchDirAndAddCharts(wxString& dir_name_base, chart::ChartClassDescriptor& chart_desc,
+int ChartDatabase::SearchDirAndAddCharts(wxString& dir_name_base,
+										 const chart::ChartClassDescriptor& chart_desc,
 										 wxProgressDialog* pprog)
 {
 	wxString msg(_T("Searching directory: "));
@@ -958,7 +963,7 @@ int ChartDatabase::SearchDirAndAddCharts(wxString& dir_name_base, chart::ChartCl
 
 // Create a Chart object
 ChartBase* ChartDatabase::GetChart(const wxChar* WXUNUSED(theFilePath),
-								   chart::ChartClassDescriptor& WXUNUSED(chart_desc)) const
+								   const chart::ChartClassDescriptor& WXUNUSED(chart_desc)) const
 {
 	// TODO: support non-UI chart factory
 	return NULL;
@@ -966,7 +971,7 @@ ChartBase* ChartDatabase::GetChart(const wxChar* WXUNUSED(theFilePath),
 
 // Create Chart Table entry by reading chart header info, etc.
 ChartTableEntry* ChartDatabase::CreateChartTableEntry(const wxString& filePath,
-													  chart::ChartClassDescriptor& chart_desc)
+													  const chart::ChartClassDescriptor& chart_desc)
 {
 	wxString msg = wxT("Loading chart data for ");
 	msg.Append(filePath);

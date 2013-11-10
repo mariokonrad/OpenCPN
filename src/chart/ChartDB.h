@@ -95,7 +95,7 @@ public:
 
 protected:
 	virtual ChartBase* GetChart(const wxChar* theFilePath,
-								chart::ChartClassDescriptor& chart_desc) const;
+								const chart::ChartClassDescriptor& chart_desc) const;
 
 private:
 	InitReturn CreateChartTableEntry(wxString full_name, ChartTableEntry* pEntry);

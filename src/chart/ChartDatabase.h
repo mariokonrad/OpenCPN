@@ -54,7 +54,6 @@ enum
 };
 
 WX_DECLARE_OBJARRAY(ChartTableEntry, ChartTable); // FIXME: use std container
-WX_DECLARE_OBJARRAY(chart::ChartClassDescriptor, ArrayOfChartClassDescriptor); // FIXME: use std container
 
 class ChartDatabase
 {
@@ -97,19 +96,24 @@ public:
 	void ApplyGroupArray(chart::ChartGroupArray* pGroupArray);
 
 protected:
-	virtual ChartBase* GetChart(const wxChar* theFilePath, chart::ChartClassDescriptor& chart_desc) const;
+	typedef std::vector<chart::ChartClassDescriptor> ArrayOfChartClassDescriptor;
+
+	virtual ChartBase* GetChart(const wxChar* theFilePath,
+								const chart::ChartClassDescriptor& chart_desc) const;
 	int AddChartDirectory(const wxString& theDir, bool bshow_prog);
 	void SetValid(bool valid);
 	ChartTableEntry* CreateChartTableEntry(const wxString& filePath,
-										   chart::ChartClassDescriptor& chart_desc);
+										   const chart::ChartClassDescriptor& chart_desc);
 
-	ArrayOfChartClassDescriptor m_ChartClassDescriptorArray;
+	wxString getChartClassName(int type, const wxString& ext) const;
+
 	ArrayOfCDI m_dir_array;
 
 private:
 	bool IsChartDirUsed(const wxString& theDir);
 
-	int SearchDirAndAddCharts(wxString& dir_name_base, chart::ChartClassDescriptor& chart_desc,
+	int SearchDirAndAddCharts(wxString& dir_name_base,
+							  const chart::ChartClassDescriptor& chart_desc,
 							  wxProgressDialog* pprog);
 
 	int TraverseDirAndAddCharts(const ChartDirInfo& dir_info, wxProgressDialog* pprog,
@@ -124,6 +128,7 @@ private:
 	int m_dbversion;
 	ChartTable chartTable;
 
+	ArrayOfChartClassDescriptor m_ChartClassDescriptorArray;
 	ChartTableEntry m_ChartTableEntryDummy; // FIXME: used for return value if database is not valid
 	wxString m_DBFileName;
 };

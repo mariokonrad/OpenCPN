@@ -21,33 +21,37 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GEODESIC__H__
-#define __GEODESIC__H__
+#ifndef __GEO__GEODESIC__H__
+#define __GEO__GEODESIC__H__
 
 #include <cstdlib>
+
+namespace geo {
 
 /// Find the distance (meters) and bearings between two Lon/Lat pairs (given in degrees)
 /// Results are in meters and degrees as appropriate
 class Geodesic
 {
-	public:
-		static double GreatCircleDistBear(
-				double Lon1,
-				double Lat1,
-				double Lon2,
-				double Lat2,
-				double * Dist = NULL,
-				double * Bear1 = NULL,
-				double * Bear2 = NULL);
+public:
+	static double GreatCircleDistBear(
+			double Lon1,
+			double Lat1,
+			double Lon2,
+			double Lat2,
+			double * Dist = NULL,
+			double * Bear1 = NULL,
+			double * Bear2 = NULL);
 
-		static void GreatCircleTravel(
-				double Lon1,
-				double Lat1,
-				double Dist,
-				double Bear1,
-				double * Lon2 = NULL,
-				double * Lat2 = NULL,
-				double * Bear2 = NULL);
+	static void GreatCircleTravel(
+			double Lon1,
+			double Lat1,
+			double Dist,
+			double Bear1,
+			double * Lon2 = NULL,
+			double * Lat2 = NULL,
+			double * Bear2 = NULL);
 };
+
+}
 
 #endif

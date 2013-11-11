@@ -533,6 +533,7 @@ SET(SRC_GEO
 	src/geo/Polygon.cpp
 	src/geo/LineClip.cpp
 	src/geo/GeoRef.cpp
+	src/geo/Geodesic.cpp
 	)
 
 SET(HDR_GEO
@@ -542,6 +543,7 @@ SET(HDR_GEO
 	src/geo/LineClip.h
 	src/geo/lmfit.h
 	src/geo/GeoRef.h
+	src/geo/Geodesic.h
 	)
 
 SET(SRC_CHART
@@ -729,7 +731,6 @@ SET(HDRS
 	src/GrabberWin.h
 	src/OCPNFloatingToolbarDialog.h
 	src/FloatingCompassWindow.h
-	src/Geodesic.h
 	src/OCPN_DataStreamEvent.h
 	src/ConnectionParams.h
 	src/OCP_DataStreamInput_Thread.h
@@ -850,7 +851,6 @@ SET(SRCS
 	src/GrabberWin.cpp
 	src/OCPNFloatingToolbarDialog.cpp
 	src/FloatingCompassWindow.cpp
-	src/Geodesic.cpp
 	src/DataStream.cpp
 	src/GARMIN_Serial_Thread.cpp
 	src/GARMIN_USB_Thread.cpp

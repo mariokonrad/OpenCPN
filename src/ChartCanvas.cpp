@@ -36,7 +36,6 @@
 #include <TimedPopupWin.h>
 #include <MessageBox.h>
 #include <dychart.h>
-#include <Geodesic.h>
 #include <StyleManager.h>
 #include <Style.h>
 #include <Routeman.h>
@@ -80,6 +79,7 @@
 #include <plugin/PlugInManager.h>
 
 #include <geo/LineClip.h>
+#include <geo/Geodesic.h>
 
 #include <chart/gshhs/GSHHSChart.h>
 #include <chart/ChartDB.h>
@@ -5284,8 +5284,8 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					double gcDist;
 					geo::DistanceBearingMercator(rlat, rlon, m_prev_rlat, m_prev_rlon,
 												 &rhumbBearing, &rhumbDist);
-					Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, rlon, rlat, &gcDist,
-												  &gcBearing, NULL);
+					geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, rlon, rlat,
+													   &gcDist, &gcBearing, NULL);
 					double gcDistNM = gcDist / 1852.0;
 
 					// Empirically found expression to get reasonable route segments.
@@ -5313,8 +5313,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 						for (int i = 1; i <= segmentCount; i++) {
 							double fraction = (double)i * (1.0 / (double)segmentCount);
-							Geodesic::GreatCircleTravel(m_prev_rlon, m_prev_rlat, gcDist * fraction,
-														gcBearing, &gcCoord.x, &gcCoord.y, NULL);
+							geo::Geodesic::GreatCircleTravel(m_prev_rlon, m_prev_rlat,
+															 gcDist * fraction, gcBearing,
+															 &gcCoord.x, &gcCoord.y, NULL);
 
 							if (i < segmentCount) {
 								gcPoint
@@ -7852,8 +7853,8 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 		double gcDist;
 		geo::DistanceBearingMercator(m_cursor_lat, m_cursor_lon, m_prev_rlat, m_prev_rlon,
 									 &rhumbBearing, &rhumbDist);
-		Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, m_cursor_lon, m_cursor_lat, &gcDist,
-									  &gcBearing, &gcBearing2);
+		geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, m_cursor_lon, m_cursor_lat,
+										   &gcDist, &gcBearing, &gcBearing2);
 		double gcDistm = gcDist / 1852.0;
 
 		if ((m_prev_rlat == m_cursor_lat) && (m_prev_rlon == m_cursor_lon))
@@ -7884,8 +7885,8 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 			for (int i = 1; i <= milesDiff; i++) {
 				double p = (double)i * (1.0 / (double)milesDiff);
 				double pLat, pLon;
-				Geodesic::GreatCircleTravel(m_prev_rlon, m_prev_rlat, gcDist * p, brg, &pLon, &pLat,
-											&gcBearing2);
+				geo::Geodesic::GreatCircleTravel(m_prev_rlon, m_prev_rlat, gcDist * p, brg, &pLon,
+												 &pLat, &gcBearing2);
 				destPoint = VPoint.GetPixFromLL(pLat, pLon);
 				route->DrawSegment(dc, &lastPoint, &destPoint, GetVP(), false);
 				lastPoint = destPoint;

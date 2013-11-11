@@ -25,7 +25,7 @@
 #define __LAYER_H__
 
 #include <wx/string.h>
-#include <wx/list.h>
+#include <list>
 
 class Layer
 {
@@ -62,9 +62,9 @@ private:
 	wxString m_LayerFileName;
 };
 
-WX_DECLARE_LIST(Layer, LayerList); // FIXME: use std container
+typedef std::list<Layer*> LayerList;
 
 wxString GetLayerName(int id);
-Layer * getLayerAtIndex(int index);
+Layer* getLayerAtIndex(int index);
 
 #endif

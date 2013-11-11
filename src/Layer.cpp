@@ -23,9 +23,6 @@
 
 #include "Layer.h"
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(LayerList); // FIXME: use std container
-
 LayerList* pLayerList = NULL;
 
 wxString GetLayerName(int id)
@@ -43,7 +40,14 @@ wxString GetLayerName(int id)
 
 Layer* getLayerAtIndex(int index)
 {
-	return pLayerList->Item(index)->GetData();
+	if (index < 0)
+		return NULL;
+	if (index >= pLayerList->size())
+		return NULL;
+
+	LayerList::iterator i = pLayerList->begin();
+	std::advance(i, index);
+	return *i;
 }
 
 Layer::Layer(int id, const wxString& filename, bool visible)

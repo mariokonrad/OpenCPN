@@ -1628,27 +1628,27 @@ void Config::write_cm93()
 
 void Config::UpdateSettings()
 {
-	//    Global options and settings
-	SetPath( _T ( "/Settings" ) );
+	// Global options and settings
+	SetPath(_T("/Settings"));
 
 	write_view();
 	write_system_config();
 
-	Write( _T ( "UIStyle" ), g_StyleManager->GetStyleNextInvocation() );
-	Write( _T ( "ChartNotRenderScaleFactor" ), g_ChartNotRenderScaleFactor );
+	Write(_T("UIStyle"), g_StyleManager->GetStyleNextInvocation());
+	Write(_T("ChartNotRenderScaleFactor"), g_ChartNotRenderScaleFactor);
 
-	Write( _T ( "ShowDebugWindows" ), m_bShowDebugWindows );
-	Write( _T ( "SetSystemTime" ), s_bSetSystemTime );
-	Write( _T ( "ShowGrid" ), g_bDisplayGrid );
-	Write( _T ( "PlayShipsBells" ), g_bPlayShipsBells );
-	Write( _T ( "PermanentMOBIcon" ), g_bPermanentMOBIcon );
-	Write( _T ( "ShowLayers" ), g_bShowLayers );
-	Write( _T ( "AutoAnchorDrop" ), g_bAutoAnchorMark );
-	Write( _T ( "ShowActiveRouteHighway" ), g_bShowActiveRouteHighway );
-	Write( _T ( "SDMMFormat" ), g_iSDMMFormat );
-	Write( _T ( "DistanceFormat" ), g_iDistanceFormat );
-	Write( _T ( "SpeedFormat" ), g_iSpeedFormat );
-	Write( _T ( "MostRecentGPSUploadConnection" ), g_uploadConnection );
+	Write(_T("ShowDebugWindows" ), m_bShowDebugWindows);
+	Write(_T("SetSystemTime" ), s_bSetSystemTime);
+	Write(_T("ShowGrid" ), g_bDisplayGrid);
+	Write(_T("PlayShipsBells" ), g_bPlayShipsBells);
+	Write(_T("PermanentMOBIcon" ), g_bPermanentMOBIcon);
+	Write(_T("ShowLayers" ), g_bShowLayers);
+	Write(_T("AutoAnchorDrop" ), g_bAutoAnchorMark);
+	Write(_T("ShowActiveRouteHighway" ), g_bShowActiveRouteHighway);
+	Write(_T("SDMMFormat" ), g_iSDMMFormat);
+	Write(_T("DistanceFormat" ), g_iDistanceFormat);
+	Write(_T("SpeedFormat" ), g_iSpeedFormat);
+	Write(_T("MostRecentGPSUploadConnection" ), g_uploadConnection);
 
 	Write( _T ( "FilterNMEA_Avg" ), g_bfilter_cogsog );
 	Write( _T ( "FilterNMEA_Sec" ), g_COGFilterSec );
@@ -1716,8 +1716,8 @@ void Config::UpdateSettings()
 
 	wxString vis, invis;
 	int index = 0;
-	for (LayerList::iterator it = pLayerList->begin(); it != pLayerList->end(); ++it, ++index) {
-		Layer *lay = (Layer *) ( *it );
+	for (LayerList::const_iterator it = pLayerList->begin(); it != pLayerList->end(); ++it, ++index) {
+		const Layer* lay = *it;
 		if (lay->IsVisibleOnChart())
 			vis += lay->getName() + _T(";");
 		else

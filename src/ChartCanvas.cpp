@@ -8417,15 +8417,15 @@ void ChartCanvas::Refresh(bool eraseBackground, const wxRect* rect)
 		//  Note that some children are refreshed elsewhere on timer ticks, so don't need attention
 		// here.
 
+		if (pthumbwin && pthumbwin->IsShown()) {
+			pthumbwin->Raise();
+			pthumbwin->Refresh(false);
+		}
+
 		// ChartInfo window
 		if (m_pCIWin && m_pCIWin->IsShown()) {
 			m_pCIWin->Raise();
 			m_pCIWin->Refresh(false);
-		}
-
-		if (pthumbwin && pthumbwin->IsShown()) {
-			pthumbwin->Raise();
-			pthumbwin->Refresh(false);
 		}
 
 	} else

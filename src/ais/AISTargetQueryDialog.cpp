@@ -205,42 +205,40 @@ void AISTargetQueryDialog::UpdateText()
 	wxColor bg = GetBackgroundColour();
 	m_pQueryTextCtl->SetBackgroundColour( bg );
 
-	if( m_MMSI != 0 ) { //  Faulty MMSI could be reported as 0
-		AIS_Target_Data *td = g_pAIS->Get_Target_Data_From_MMSI( m_MMSI );
-		if( td ) {
-			wxFont *dFont = FontMgr::Get().GetFont( _("AISTargetQuery"), 12 );
-			wxString face = dFont->GetFaceName();
-			int sizes[7];
-			for( int i=-2; i<5; i++ ) {
-				sizes[i+2] = dFont->GetPointSize() + i + (i>0?i:0);
-			}
-
-			html.Printf( _T("<html><body bgcolor=#%02x%02x%02x><center>"), bg.Red(), bg.Blue(),
-					bg.Green() );
-
-			html << td->BuildQueryResult();
-			html << _T("</center></font></body></html>");
-
-			m_pQueryTextCtl->SetFonts( face, face, sizes );
-			m_pQueryTextCtl->SetPage( html );
-
-			// Try to create a min size that works across font sizes.
-			wxSize sz;
-			if( ! IsShown() ) {
-				sz = m_pQueryTextCtl->GetVirtualSize();
-				sz.x = 300;
-				m_pQueryTextCtl->SetSize( sz );
-			}
-			m_pQueryTextCtl->Layout();
-			wxSize ir(m_pQueryTextCtl->GetInternalRepresentation()->GetWidth(),
-					m_pQueryTextCtl->GetInternalRepresentation()->GetHeight() );
-			sz.x = wxMax( m_pQueryTextCtl->GetSize().x, ir.x );
-			sz.y = wxMax( m_pQueryTextCtl->GetSize().y, ir.y );
-			m_pQueryTextCtl->SetMinSize( sz );
-			Fit();
-			sz -= wxSize( 200, 200 );
-			m_pQueryTextCtl->SetMinSize( sz );
+	AIS_Target_Data *td = g_pAIS->Get_Target_Data_From_MMSI( m_MMSI );
+	if( td ) {
+		wxFont *dFont = FontMgr::Get().GetFont( _("AISTargetQuery"), 12 );
+		wxString face = dFont->GetFaceName();
+		int sizes[7];
+		for( int i=-2; i<5; i++ ) {
+			sizes[i+2] = dFont->GetPointSize() + i + (i>0?i:0);
 		}
+
+		html.Printf( _T("<html><body bgcolor=#%02x%02x%02x><center>"), bg.Red(), bg.Blue(),
+				bg.Green() );
+
+		html << td->BuildQueryResult();
+		html << _T("</center></font></body></html>");
+
+		m_pQueryTextCtl->SetFonts( face, face, sizes );
+		m_pQueryTextCtl->SetPage( html );
+
+		// Try to create a min size that works across font sizes.
+		wxSize sz;
+		if( ! IsShown() ) {
+			sz = m_pQueryTextCtl->GetVirtualSize();
+			sz.x = 300;
+			m_pQueryTextCtl->SetSize( sz );
+		}
+		m_pQueryTextCtl->Layout();
+		wxSize ir(m_pQueryTextCtl->GetInternalRepresentation()->GetWidth(),
+				m_pQueryTextCtl->GetInternalRepresentation()->GetHeight() );
+		sz.x = wxMax( m_pQueryTextCtl->GetSize().x, ir.x );
+		sz.y = wxMax( m_pQueryTextCtl->GetSize().y, ir.y );
+		m_pQueryTextCtl->SetMinSize( sz );
+		Fit();
+		sz -= wxSize( 200, 200 );
+		m_pQueryTextCtl->SetMinSize( sz );
 	}
 }
 

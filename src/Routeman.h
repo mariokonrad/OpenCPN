@@ -28,6 +28,7 @@
 #include <ColorScheme.h>
 
 #include <wx/dynarray.h>
+#include <vector>
 
 class Route;
 class RoutePoint;
@@ -39,7 +40,7 @@ class wxPen;
 class Routeman
 {
 	public:
-		typedef wxArrayPtrVoid RouteArray;
+		typedef std::vector<Route*> RouteArray;
 
 	public:
 		Routeman(App * parent);

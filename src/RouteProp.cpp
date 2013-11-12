@@ -529,9 +529,9 @@ bool RouteProp::IsThisRouteExtendable()
 
 		// remove invisible & own routes from choices
 		for (int i = pEditRouteArray->size(); i > 0; --i) {
-			Route* route = static_cast<Route*>(pEditRouteArray->Item(i - 1));
+			Route* route = static_cast<Route*>(pEditRouteArray->at(i - 1));
 			if (!route->IsVisible() || (route->m_GUID == m_pRoute->m_GUID))
-				pEditRouteArray->RemoveAt(i - 1); // FIXME: altering container while iterating
+				pEditRouteArray->erase(pEditRouteArray->begin() + i - 1); // FIXME: altering container while iterating
 		}
 
 		if (pEditRouteArray->size() == 1) {
@@ -554,9 +554,9 @@ bool RouteProp::IsThisRouteExtendable()
 
 						// remove invisible & own routes from choices
 						for (int i = pEditRouteArray->size(); i > 0; --i) {
-							Route* route = static_cast<Route*>(pEditRouteArray->Item(i - 1));
+							Route* route = static_cast<Route*>(pEditRouteArray->at(i - 1));
 							if (!route->IsVisible() || (route->m_GUID == m_pRoute->m_GUID))
-								pEditRouteArray->RemoveAt(
+								pEditRouteArray->erase(pEditRouteArray->begin() +
 									i - 1); // FIXME: altering container while iterating
 						}
 					}
@@ -565,7 +565,7 @@ bool RouteProp::IsThisRouteExtendable()
 		}
 
 		if (pEditRouteArray->size() == 1) {
-			Route* route = static_cast<Route*>(pEditRouteArray->Item(0));
+			Route* route = static_cast<Route*>(pEditRouteArray->at(0));
 			int fm = route->GetIndexOf(m_pExtendPoint) + 1;
 			int to = route->GetnPoints();
 			if (fm <= to) {

@@ -140,7 +140,7 @@ Routeman::RouteArray * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FI
 		for (RoutePointList::iterator waypoint = route->pRoutePointList->begin();
 			 waypoint != route->pRoutePointList->end(); ++waypoint) {
 			if (*waypoint == pWP)
-				pArray->push_back((void*)route);
+				pArray->push_back(route);
 		}
 	}
 
@@ -797,7 +797,7 @@ bool Routeman::DoesRouteContainSharedPoints(Route* pRoute)
 		RouteArray* pRA = GetRouteArrayContaining(*point);
 		if (pRA) {
 			for (unsigned int ir = 0; ir < pRA->size(); ++ir) {
-				Route* route = static_cast<Route*>(pRA->Item(ir));
+				Route* route = static_cast<Route*>(pRA->at(ir));
 				if (route == pRoute)
 					continue;
 				else

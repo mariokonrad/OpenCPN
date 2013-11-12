@@ -4889,7 +4889,7 @@ void ChartCanvas::FindRoutePointsAtCursor(float, bool setBeingEdited)
 		bool brp_viz = false;
 		if (m_pEditRouteArray) {
 			for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ++ir) {
-				Route* pr = static_cast<Route*>(m_pEditRouteArray->Item(ir));
+				Route* pr = static_cast<Route*>(m_pEditRouteArray->at(ir));
 				if (pr->IsVisible()) {
 					brp_viz = true;
 					break;
@@ -4903,7 +4903,7 @@ void ChartCanvas::FindRoutePointsAtCursor(float, bool setBeingEdited)
 			// Use route array to rubberband all affected routes
 			if (m_pEditRouteArray) { // Editing Waypoint as part of route
 				for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ++ir) {
-					Route* pr = static_cast<Route*>(m_pEditRouteArray->Item(ir));
+					Route* pr = static_cast<Route*>(m_pEditRouteArray->at(ir));
 					pr->m_bIsBeingEdited = setBeingEdited;
 				}
 				m_bRouteEditing = setBeingEdited;
@@ -5418,7 +5418,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 				if (m_pEditRouteArray) {
 					for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ir++) {
-						Route* pr = (Route*)m_pEditRouteArray->Item(ir);
+						Route* pr = (Route*)m_pEditRouteArray->at(ir);
 						//      Need to validate route pointer
 						//      Route may be gone due to drgging close to ownship with
 						//      "Delete On Arrival" state set, as in the case of
@@ -5456,7 +5456,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 				if (m_pEditRouteArray) {
 					for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ir++) {
-						Route* pr = (Route*)m_pEditRouteArray->Item(ir);
+						Route* pr = (Route*)m_pEditRouteArray->at(ir);
 						if (g_pRouteMan->IsRouteValid(pr)) {
 							wxRect route_rect;
 							pr->CalculateDCRect(m_dc_route, &route_rect, VPoint);
@@ -5555,7 +5555,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 				if (m_pEditRouteArray) {
 					for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ir++) {
-						Route* pr = (Route*)m_pEditRouteArray->Item(ir);
+						Route* pr = (Route*)m_pEditRouteArray->at(ir);
 						if (g_pRouteMan->IsRouteValid(pr)) {
 							pr->CalculateBBox();
 							pr->UpdateSegmentDistances();
@@ -5570,7 +5570,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				if ((NULL != pRoutePropDialog) && (pRoutePropDialog->IsShown())) {
 					if (m_pEditRouteArray) {
 						for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ir++) {
-							Route* pr = (Route*)m_pEditRouteArray->Item(ir);
+							Route* pr = (Route*)m_pEditRouteArray->at(ir);
 							if (g_pRouteMan->IsRouteValid(pr)) {
 								if (!pr->IsTrack() && pRoutePropDialog->getRoute() == pr) {
 									pRoutePropDialog->SetRouteAndUpdate(pr);
@@ -5745,7 +5745,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					m_pSelectedRoute = NULL;
 					if (proute_array) {
 						for (unsigned int ir = 0; ir < proute_array->size(); ++ir) {
-							Route* pr = static_cast<Route*>(proute_array->Item(ir));
+							Route* pr = static_cast<Route*>(proute_array->at(ir));
 							if (pr->m_bRtIsActive) {
 								pSelectedActiveRoute = pr;
 								pFoundActiveRoutePoint = prp;
@@ -5755,7 +5755,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 						if (NULL == pSelectedVizRoute) {
 							for (unsigned int ir = 0; ir < proute_array->size(); ++ir) {
-								Route* pr = static_cast<Route*>(proute_array->Item(ir));
+								Route* pr = static_cast<Route*>(proute_array->at(ir));
 								if (pr->IsVisible()) {
 									pSelectedVizRoute = pr;
 									pFoundVizRoutePoint = prp;

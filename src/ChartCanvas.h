@@ -38,6 +38,7 @@
 #include <CM93DSlide.h>
 #include <RolloverWin.h>
 #include <ViewPort.h>
+#include <Routeman.h>
 #include <timers.h>
 
 #include <ais/AISTargetQueryDialog.h>
@@ -279,7 +280,7 @@ private:
 	Route* m_pMouseRoute;
 	Route* m_pSelectedRoute;
 	Route* m_pSelectedTrack;
-	wxArrayPtrVoid* m_pEditRouteArray;
+	Routeman::RouteArray* m_pEditRouteArray;
 	RoutePoint* m_pFoundRoutePoint;
 	RoutePoint* m_pFoundRoutePointSecond;
 

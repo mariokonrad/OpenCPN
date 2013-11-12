@@ -47,6 +47,7 @@
 #include <global/Navigation.h>
 
 #include <iostream>
+#include <algorithm>
 
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
@@ -1350,16 +1351,17 @@ void RouteManagerDialog::OnTrkRightClick(wxListEvent&)
 	PopupMenu(&menu);
 }
 
-WX_DEFINE_ARRAY(Track*, TrackArray);
-
-static int CompareTracks(const Track** track1, const Track** track2)
+struct TrackCompareCreateTime
 {
-	RoutePoint* start1 = (*track1)->pRoutePointList->front();
-	RoutePoint* start2 = (*track2)->pRoutePointList->front();
-	if (start1->GetCreateTime() > start2->GetCreateTime())
-		return 1;
-	return -1; // Two tracks starting at the same time is not possible.
-}
+	bool operator()(Track* a, Track* b) const // FIXME: RoutePoint::GetCreateTime is a lazy initialization mess
+	{
+		RoutePoint* start1 = a->pRoutePointList->front();
+		RoutePoint* start2 = b->pRoutePointList->front();
+		if (start1->GetCreateTime() > start2->GetCreateTime())
+			return true;
+		return false;
+	}
+};
 
 void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 {
@@ -1445,8 +1447,8 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 		}
 
 		case TRACK_MERGE: {
-			TrackArray mergeList;
-			TrackArray deleteList;
+			std::vector<Track*> mergeList;
+			std::vector<Track*> deleteList;
 			bool runningSkipped = false;
 
 			::wxBeginBusyCursor();
@@ -1460,14 +1462,14 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 				mergeList.push_back(track);
 			}
 
-			mergeList.Sort((CMPFUNC_wxArrayTrackArray)CompareTracks);
+			std::sort(mergeList.begin(), mergeList.end(), TrackCompareCreateTime()); // TODO: is this sorted the right way, how the fuck does wxFuck::Sort sort. documentation wouldn't hurt.
 
-			Track* targetTrack = (Track*)mergeList.Item(0);
+			Track* targetTrack = mergeList.at(0);
 			RoutePoint* lastPoint = targetTrack->GetLastPoint();
 
 			for (unsigned int t = 1; t < mergeList.size(); t++) {
 
-				Track* mergeTrack = (Track*)mergeList.Item(t);
+				Track* mergeTrack = mergeList.at(t);
 
 				if (mergeTrack->IsRunning()) {
 					runningSkipped = true;
@@ -1499,13 +1501,13 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 			}
 
 			for (unsigned int i = 0; i < deleteList.size(); i++) {
-				Track* deleteTrack = (Track*)deleteList.Item(i);
+				Track* deleteTrack = deleteList.at(i);
 				pConfig->DeleteConfigRoute(deleteTrack);
 				g_pRouteMan->DeleteTrack(deleteTrack);
 			}
 
-			mergeList.Clear();
-			deleteList.Clear();
+			mergeList.clear();
+			deleteList.clear();
 
 			::wxEndBusyCursor();
 

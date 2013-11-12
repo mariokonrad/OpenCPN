@@ -34,6 +34,8 @@
 cmake_minimum_required(VERSION 2.6.2)
 # This should be 2.8.0 to have FindGTK2 module
 
+include(ExternalProject)
+
 if(COMMAND cmake_policy)
 	CMAKE_POLICY(SET CMP0003 OLD)
 	CMAKE_POLICY(SET CMP0005 OLD)
@@ -142,6 +144,47 @@ else(OPENGL_GLU_FOUND)
 	set(SKIP_PLUGINS true) # grib_pi contains OpenGL stuff
 endif(OPENGL_GLU_FOUND)
 
+################################################################################
+# pugixml (external)
+################################################################################
+
+set(pugixml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local/pugixml)
+set(pugixml_INCLUDE_DIR ${pugixml_INSTALL_DIR}/include) # TODO: is this automatic?
+set(pugixml_LIBRARY_DIR ${pugixml_INSTALL_DIR}/lib) # TODO: is this automatic?
+
+ExternalProject_Add(extern_pugixml
+	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/pugixml
+	# configure
+	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/pugixml-1.2/scripts
+	CMAKE_ARGS
+		-DCMAKE_INSTALL_PREFIX=${pugixml_INSTALL_DIR}
+		-DBUILD_SHARED_LIBS=OFF
+	# install
+	INSTALL_DIR ${pugixml_INSTALL_DIR}
+	)
+
+# TODO: perhaps there is a FindPugixml which makes the following unnecessary:
+
+add_library(pugixml STATIC IMPORTED)
+set_target_properties(pugixml
+	PROPERTIES
+		IMPORTED_LOCATION
+			${pugixml_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}pugixml${CMAKE_STATIC_LIBRARY_SUFFIX}
+	)
+add_dependencies(pugixml extern_pugixml)
+include_directories(${pugixml_INCLUDE_DIR})
+
+################################################################################
+# tinyxml (external)
+################################################################################
+
+# TODO
+
+################################################################################
+# GDAL (external)
+################################################################################
+
+# TODO
 
 ################################################################################
 # wxWidgets
@@ -373,6 +416,7 @@ SET(SRC_NMEA0183
 add_library(NMEA0183 ${SRC_NMEA0183})
 include_directories(${CMAKE_SOURCE_DIR}/src/nmea0183)
 
+
 SET(HDR_AIS
 	src/ais/ais.h
 	src/ais/AISTargetQueryDialog.h
@@ -424,15 +468,6 @@ SET(SRC_GPX
 	src/gpx/GpxExtensionsElement.cpp
 	src/gpx/GpxRootElement.cpp
 	src/gpx/ParseGPXDateTime.cpp
-	)
-
-SET(HDR_PUGIXML
-	src/pugixml/pugiconfig.hpp
-	src/pugixml/pugixml.hpp
-	)
-
-SET(SRC_PUGIXML
-	src/pugixml/pugixml.cpp
 	)
 
 SET(HDR_TINYXML
@@ -613,7 +648,6 @@ SET(HDR_CHART
 SET(HDRS
 	${HDR_AIS}
 	${HDR_GPX}
-	${HDR_PUGIXML}
 	${HDR_WXJSON}
 	${HDR_GLOBAL}
 	${HDR_TIDE}
@@ -750,7 +784,6 @@ SET(HDRS
 SET(SRCS
 	${SRC_AIS}
 	${SRC_GPX}
-	${SRC_PUGIXML}
 	${SRC_WXJSON}
 	${SRC_GLOBAL}
 	${SRC_TIDE}
@@ -1236,6 +1269,7 @@ If(NOT APPLE)
 		${wxWidgets_LIBRARIES}
 		NMEA0183
 		${EXTRA_LIBS}
+		pugixml
 		)
 ENDIF(NOT APPLE)
 
@@ -1254,6 +1288,7 @@ IF(UNIX)
 		${GETTEXT_LIBRARY}
 		${BZIP2_LIBRARIES}
 		${ZLIB_LIBRARY}
+		pugixml
 		)
 
 	IF(TINYXML_FOUND)
@@ -1261,8 +1296,8 @@ IF(UNIX)
 	ENDIF(TINYXML_FOUND)
 ENDIF(UNIX)
 
-#   Certain older Cmake FindGTK2 modules ( e.g. cmake-2.8.0-2) do not yield all of the required link libraries
-#   So, add them manually.  These declarations may be redundant in some architectures, but do no harm.
+# Certain older Cmake FindGTK2 modules ( e.g. cmake-2.8.0-2) do not yield all of the required link libraries
+# So, add them manually.  These declarations may be redundant in some architectures, but do no harm.
 IF(UNIX)
 	TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} dl )
 ENDIF(UNIX)

@@ -288,7 +288,7 @@ extern int g_current_arrow_scale;
 S57QueryDialog* g_pObjectQueryDialog = NULL;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern Multiplexer* g_pMUX;
-extern wxArrayOfConnPrm* g_pConnectionParams;
+extern ArrayOfConnPrm* g_pConnectionParams;
 
 extern sound::OCPN_Sound g_anchorwatch_sound;
 
@@ -9572,10 +9572,10 @@ wxString ChartCanvas::FindValidUploadPort()
 	} else if (g_pConnectionParams) {
 		// If there is no persistent upload port recorded (yet)
 		// then use the first available serial connection which has output defined.
-		for (size_t i = 0; i < g_pConnectionParams->Count(); i++) {
-			ConnectionParams* cp = g_pConnectionParams->Item(i);
-			if (cp->Output && cp->Type == ConnectionParams::SERIAL)
-				port << _T("Serial:") << cp->Port;
+		for (size_t i = 0; i < g_pConnectionParams->size(); i++) {
+			const ConnectionParams& cp = g_pConnectionParams->at(i);
+			if (cp.Output && cp.Type == ConnectionParams::SERIAL)
+				port << _T("Serial:") << cp.Port;
 		}
 	}
 

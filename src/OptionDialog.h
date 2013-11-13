@@ -423,11 +423,11 @@ class options : public wxDialog
 		bool m_bNMEAParams_shown;
 
 
-		void SetConnectionParams(ConnectionParams * cp);
+		void SetConnectionParams(const ConnectionParams& cp);
 		void SetDefaultConnectionParams(void);
 		void SetDSFormRWStates();
 		void FillSourceList();
-		ConnectionParams *CreateConnectionParamsFromSelectedItem();
+		bool CreateConnectionParamsFromSelectedItem(ConnectionParams&);
 };
 
 #endif

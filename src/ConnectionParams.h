@@ -25,8 +25,8 @@
 #define __CONNECTIONPARAMS_H__
 
 #include <wx/string.h>
-#include <wx/dynarray.h>
 #include <wx/arrstr.h>
+#include <vector>
 
 class ConnectionParams
 {
@@ -67,6 +67,8 @@ class ConnectionParams
 		ConnectionParams();
 		ConnectionParams(const wxString & configStr);
 
+		// FIXME: attributes should be private
+
 		ConnectionType Type;
 		NetworkProtocol NetProtocol;
 		wxString NetworkAddress;
@@ -91,11 +93,11 @@ class ConnectionParams
 		void Deserialize(const wxString &configStr);
 
 		wxString GetSourceTypeStr();
-		wxString GetAddressStr();
+		wxString GetAddressStr() const;
 		wxString GetParametersStr();
 		wxString GetOutputValueStr();
 		wxString GetFiltersStr();
-		wxString GetDSPort();
+		wxString GetDSPort() const;
 
 		bool Valid;
 		bool b_IsSetup;
@@ -104,6 +106,6 @@ class ConnectionParams
 		wxString FilterTypeToStr(ListType type, FilterDirection dir);
 };
 
-WX_DEFINE_ARRAY(ConnectionParams *, wxArrayOfConnPrm);
+typedef std::vector<ConnectionParams> ArrayOfConnPrm;
 
 #endif

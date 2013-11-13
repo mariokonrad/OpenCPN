@@ -71,7 +71,7 @@ extern double initial_scale_ppm;
 extern ColorScheme global_color_scheme;
 extern bool g_bShowMag;
 extern double g_UserVar;
-extern wxArrayOfConnPrm* g_pConnectionParams;
+extern ArrayOfConnPrm* g_pConnectionParams;
 extern wxString g_SENCPrefix;
 extern wxString g_UserPresLibData;
 extern WayPointman* pWayPointMan;
@@ -252,7 +252,7 @@ Config::Config(
 
 	m_bSkipChangeSetUpdate = false;
 
-	g_pConnectionParams = new wxArrayOfConnPrm();
+	g_pConnectionParams = new ArrayOfConnPrm();
 }
 
 void Config::CreateRotatingNavObjBackup()
@@ -805,11 +805,10 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	wxString connectionconfigs;
 	Read ( _T( "DataConnections" ),  &connectionconfigs, wxEmptyString );
 	wxArrayString confs = wxStringTokenize(connectionconfigs, _T("|"));
-	g_pConnectionParams->Clear();
+	g_pConnectionParams->clear();
 	for (size_t i = 0; i < confs.Count(); i++)
 	{
-		ConnectionParams * prm = new ConnectionParams(confs[i]);
-		g_pConnectionParams->Add(prm);
+		g_pConnectionParams->push_back(ConnectionParams(confs[i]));
 	}
 
 	//  Automatically handle the upgrade to DataSources architecture...
@@ -834,22 +833,22 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		if( port.Len() && (port != _T("None")) && (port != _T("AIS Port (Shared)")) ) {
 			//  Look in the ConnectionParams array to see if this port has been defined in the newer style
 			bool bfound = false;
-			for ( size_t i = 0; i < g_pConnectionParams->Count(); i++ )
+			for ( size_t i = 0; i < g_pConnectionParams->size(); i++ )
 			{
-				ConnectionParams *cp = g_pConnectionParams->Item(i);
-				if(cp->GetAddressStr() == port) {
+				const ConnectionParams& cp = g_pConnectionParams->at(i);
+				if(cp.GetAddressStr() == port) {
 					bfound = true;
 					break;
 				}
 			}
 
 			if(!bfound) {
-				ConnectionParams * prm = new ConnectionParams();
-				prm->Baudrate = wxAtoi(xRate);
-				prm->Port = port;
-				prm->Garmin = (b_garmin_host == 1);
+				ConnectionParams prm;
+				prm.Baudrate = wxAtoi(xRate);
+				prm.Port = port;
+				prm.Garmin = (b_garmin_host == 1);
 
-				g_pConnectionParams->Add(prm);
+				g_pConnectionParams->push_back(prm);
 
 				g_bGarminHostUpload = (b_garmin_host == 1);
 			}
@@ -876,24 +875,24 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		if(port.Len() && port != _T("None") ) {
 			//  Look in the ConnectionParams array to see if this port has been defined in the newer style
 			bool bfound = false;
-			for ( size_t i = 0; i < g_pConnectionParams->Count(); i++ )
+			for ( size_t i = 0; i < g_pConnectionParams->size(); i++ )
 			{
-				ConnectionParams *cp = g_pConnectionParams->Item(i);
-				if(cp->GetAddressStr() == port) {
+				const ConnectionParams& cp = g_pConnectionParams->at(i);
+				if(cp.GetAddressStr() == port) {
 					bfound = true;
 					break;
 				}
 			}
 
 			if(!bfound) {
-				ConnectionParams * prm = new ConnectionParams();
+				ConnectionParams prm;
 				if( aRate.Len() )
-					prm->Baudrate = wxAtoi(aRate);
+					prm.Baudrate = wxAtoi(aRate);
 				else
-					prm->Baudrate = 38400;              // default for most AIS receivers
-				prm->Port = port;
+					prm.Baudrate = 38400;              // default for most AIS receivers
+				prm.Port = port;
 
-				g_pConnectionParams->Add(prm);
+				g_pConnectionParams->push_back(prm);
 			}
 		}
 
@@ -916,29 +915,26 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		if(port.Len() && port != _T("None") ) {
 			//  Look in the ConnectionParams array to see if this port has been defined in the newer style
 			bool bfound = false;
-			ConnectionParams *cp;
-			for ( size_t i = 0; i < g_pConnectionParams->Count(); i++ )
+			for ( size_t i = 0; i < g_pConnectionParams->size(); i++ )
 			{
-				cp = g_pConnectionParams->Item(i);
-				if(cp->GetAddressStr() == port) {
+				ConnectionParams& cp = g_pConnectionParams->at(i);
+				if(cp.GetAddressStr() == port) {
+					// port was found, so make sure it is set for output
+					cp.Output = true;
+					cp.OutputSentenceListType = ConnectionParams::WHITELIST;
+					cp.OutputSentenceList.Add(_T("RMB"));
 					bfound = true;
 					break;
 				}
 			}
 
 			if(!bfound) {
-				ConnectionParams * prm = new ConnectionParams();
-				prm->Port = port;
-				prm->OutputSentenceListType = ConnectionParams::WHITELIST;
-				prm->OutputSentenceList.Add(_T("RMB"));
-				prm->Output = true;
-
-				g_pConnectionParams->Add(prm);
-			}
-			else {                                  // port was found, so make sure it is set for output
-				cp->Output = true;
-				cp->OutputSentenceListType = ConnectionParams::WHITELIST;
-				cp->OutputSentenceList.Add(_T("RMB"));
+				ConnectionParams prm;
+				prm.Port = port;
+				prm.OutputSentenceListType = ConnectionParams::WHITELIST;
+				prm.OutputSentenceList.Add(_T("RMB"));
+				prm.Output = true;
+				g_pConnectionParams->push_back(prm);
 			}
 		}
 
@@ -1863,10 +1859,10 @@ void Config::UpdateSettings()
 
 	SetPath( _T ( "/Settings/NMEADataSource" ) );
 	wxString connectionconfigs;
-	for (size_t i = 0; i < g_pConnectionParams->Count(); i++) {
+	for (size_t i = 0; i < g_pConnectionParams->size(); i++) {
 		if (i > 0)
 			connectionconfigs += _T("|");
-		connectionconfigs += g_pConnectionParams->Item(i)->Serialize();
+		connectionconfigs += g_pConnectionParams->at(i).Serialize();
 	}
 	Write ( _T ( "DataConnections" ), connectionconfigs );
 

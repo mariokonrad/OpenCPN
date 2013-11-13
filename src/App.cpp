@@ -133,7 +133,6 @@ extern wxString str_version_date;
 extern ColorScheme global_color_scheme;
 extern wxString OpenCPNVersion;
 extern bool s_bSetSystemTime;
-extern wxArrayOfConnPrm* g_pConnectionParams;
 extern wxDateTime g_start_time;
 extern wxDateTime g_loglast_time;
 extern RoutePoint* pAnchorWatchPoint1;

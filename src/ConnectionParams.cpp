@@ -129,7 +129,7 @@ wxString ConnectionParams::GetSourceTypeStr()
 		return _("Net");
 }
 
-wxString ConnectionParams::GetAddressStr()
+wxString ConnectionParams::GetAddressStr() const
 {
 	if ( Type == SERIAL )
 		return wxString::Format( _T("%s"), Port.c_str() );
@@ -210,7 +210,7 @@ wxString ConnectionParams::GetFiltersStr()
 	return  ret;
 }
 
-wxString ConnectionParams::GetDSPort()
+wxString ConnectionParams::GetDSPort() const
 {
 	if ( Type == SERIAL )
 		return wxString::Format( _T("Serial:%s"), Port.c_str() );

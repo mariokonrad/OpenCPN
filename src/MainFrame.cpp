@@ -196,7 +196,7 @@ wxString g_UserPresLibData;
 wxString g_uploadConnection;
 volatile int quitflag;
 bool s_bSetSystemTime;
-wxArrayOfConnPrm* g_pConnectionParams;
+ArrayOfConnPrm* g_pConnectionParams;
 wxDateTime g_start_time;
 wxDateTime g_loglast_time;
 sound::OCPN_Sound g_anchorwatch_sound;
@@ -549,27 +549,27 @@ MainFrame::MainFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, 
 
 	g_pAIS = new ais::AIS_Decoder(this);
 
-	for ( size_t i = 0; i < g_pConnectionParams->Count(); i++ )
+	for ( size_t i = 0; i < g_pConnectionParams->size(); i++ )
 	{
-		ConnectionParams *cp = g_pConnectionParams->Item(i);
-		if( cp->bEnabled ) {
+		const ConnectionParams& cp = g_pConnectionParams->at(i);
+		if( cp.bEnabled ) {
 			dsPortType port_type;
-			if (cp->Output)
+			if (cp.Output)
 				port_type = DS_TYPE_INPUT_OUTPUT;
 			else
 				port_type = DS_TYPE_INPUT;
 			DataStream *dstr = new DataStream( g_pMUX,
-					cp->GetDSPort(),
-					wxString::Format(wxT("%i"),cp->Baudrate),
+					cp.GetDSPort(),
+					wxString::Format(wxT("%i"),cp.Baudrate),
 					port_type,
-					cp->Priority,
-					cp->Garmin
+					cp.Priority,
+					cp.Garmin
 					);
-			dstr->SetInputFilter(cp->InputSentenceList);
-			dstr->SetInputFilterType(cp->InputSentenceListType);
-			dstr->SetOutputFilter(cp->OutputSentenceList);
-			dstr->SetOutputFilterType(cp->OutputSentenceListType);
-			dstr->SetChecksumCheck(cp->ChecksumCheck);
+			dstr->SetInputFilter(cp.InputSentenceList);
+			dstr->SetInputFilterType(cp.InputSentenceListType);
+			dstr->SetOutputFilter(cp.OutputSentenceList);
+			dstr->SetOutputFilterType(cp.OutputSentenceListType);
+			dstr->SetChecksumCheck(cp.ChecksumCheck);
 			g_pMUX->AddStream(dstr);
 		}
 	}

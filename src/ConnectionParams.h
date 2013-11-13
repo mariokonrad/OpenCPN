@@ -30,80 +30,112 @@
 
 class ConnectionParams
 {
+	friend class options; // only this class is allowed to fully construct
+public:
+	enum ConnectionType {
+		SERIAL = 0,
+		NETWORK = 1
+	};
+
+	enum NetworkProtocol {
+		TCP = 0,
+		UDP = 1,
+		GPSD = 2
+	};
+
+	enum ListType {
+		WHITELIST = 0,
+		BLACKLIST = 1
+	};
+
+	enum FilterDirection {
+		FILTER_INPUT = 0,
+		FILTER_OUTPUT = 1
+	};
+
+	enum DataProtocol {
+		PROTO_NMEA0183 = 0,
+		PROTO_SEATALK = 1,
+		PROTO_NMEA2000 = 2
+	};
+
+	class FindAddress
+	{
 	public:
-		enum ConnectionType
+		FindAddress(const wxString& address) : address(address)
 		{
-			SERIAL = 0,
-			NETWORK = 1
-		};
+		}
 
-		enum NetworkProtocol
+		bool operator()(const ConnectionParams& param) const
 		{
-			TCP = 0,
-			UDP = 1,
-			GPSD = 2
-		};
-
-		enum ListType
-		{
-			WHITELIST = 0,
-			BLACKLIST = 1
-		};
-
-		enum FilterDirection
-		{
-			FILTER_INPUT = 0,
-			FILTER_OUTPUT = 1
-		};
-
-		enum DataProtocol
-		{
-			PROTO_NMEA0183 = 0,
-			PROTO_SEATALK = 1,
-			PROTO_NMEA2000 = 2
-		};
-
-	public:
-		ConnectionParams();
-		ConnectionParams(const wxString & configStr);
-
-		// FIXME: attributes should be private
-
-		ConnectionType Type;
-		NetworkProtocol NetProtocol;
-		wxString NetworkAddress;
-		int NetworkPort;
-
-		DataProtocol Protocol;
-		wxString Port;
-		int Baudrate;
-		bool ChecksumCheck;
-		bool Garmin;
-		bool GarminUpload;
-		bool FurunoGP3X;
-		bool Output;
-		ListType InputSentenceListType;
-		wxArrayString InputSentenceList;
-		ListType OutputSentenceListType;
-		wxArrayString OutputSentenceList;
-		int Priority;
-		bool bEnabled;
-
-		wxString Serialize();
-		void Deserialize(const wxString &configStr);
-
-		wxString GetSourceTypeStr();
-		wxString GetAddressStr() const;
-		wxString GetParametersStr();
-		wxString GetOutputValueStr();
-		wxString GetFiltersStr();
-		wxString GetDSPort() const;
-
-		bool Valid;
-		bool b_IsSetup;
+			return param.GetAddressStr() == address;
+		}
 
 	private:
-		wxString FilterTypeToStr(ListType type, FilterDirection dir);
+		const wxString address;
+	};
+
+public:
+	ConnectionParams();
+	ConnectionParams(const wxString& configStr);
+	ConnectionParams(const wxString& port, int baudrate, bool is_garmin = false);
+
+	wxString Serialize();
+	void Deserialize(const wxString& configStr);
+
+	wxString GetSourceTypeStr() const;
+	wxString GetAddressStr() const;
+	wxString GetParametersStr() const;
+	wxString GetOutputValueStr() const;
+	wxString GetFiltersStr() const;
+	wxString GetDSPort() const;
+
+	bool isSetup() const;
+	bool isEnabled() const;
+	bool isOutput() const;
+	bool isGarmin() const;
+	bool isChecksumCheck() const;
+	ConnectionType getType() const;
+	int getBaudrate() const;
+	int getPriority() const;
+	const wxString& getPort() const;
+
+	ListType getInputSentenceListType() const;
+	const wxArrayString& getInputSentenceList() const;
+	ListType getOutputSentenceListType() const;
+	const wxArrayString& getOutputSentenceList() const;
+
+	void enableOutput(const wxString& sentence);
+	void toggleEnabled();
+
+	static ConnectionParams createOutput(const wxString& port, const wxString& sentence);
+
+private:
+	ConnectionType Type;
+	NetworkProtocol NetProtocol;
+	wxString NetworkAddress;
+	int NetworkPort;
+
+	DataProtocol Protocol;
+	wxString Port;
+	int Baudrate;
+	bool ChecksumCheck;
+	bool Garmin;
+	bool GarminUpload;
+	bool FurunoGP3X;
+	bool Output;
+	ListType InputSentenceListType;
+	wxArrayString InputSentenceList;
+	ListType OutputSentenceListType;
+	wxArrayString OutputSentenceList;
+	int Priority;
+	bool bEnabled;
+
+	bool Valid;
+	bool b_IsSetup;
+
+private:
+	wxString FilterTypeToStr(ListType type, FilterDirection dir) const;
 };
 
 typedef std::vector<ConnectionParams> ArrayOfConnPrm;

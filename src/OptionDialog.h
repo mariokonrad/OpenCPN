@@ -427,7 +427,13 @@ class options : public wxDialog
 		void SetDefaultConnectionParams(void);
 		void SetDSFormRWStates();
 		void FillSourceList();
+
 		bool CreateConnectionParamsFromSelectedItem(ConnectionParams&);
+		ConnectionParams createConnectionParams() const;
+		ConnectionParams::ConnectionType getConParamConnectionType() const;
+		ConnectionParams::NetworkProtocol getConParamNetworkProtocol() const;
+		ConnectionParams::ListType getConParamInputListType() const;
+		ConnectionParams::ListType getConParamOutputListType() const;
 };
 
 #endif

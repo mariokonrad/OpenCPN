@@ -478,22 +478,18 @@ enum
 //------------------------------------------------------------------------------
 //      Frame implementation
 BEGIN_EVENT_TABLE(MainFrame, wxFrame) EVT_CLOSE(MainFrame::OnCloseWindow)
-	EVT_MENU(wxID_EXIT, MainFrame::OnExit)
-	EVT_SIZE(MainFrame::OnSize)
-	EVT_MOVE(MainFrame::OnMove)
-	EVT_MENU(-1, MainFrame::OnToolLeftClick)
-	EVT_TIMER(FRAME_TIMER_1, MainFrame::OnFrameTimer1)
+	EVT_MENU(wxID_EXIT, MainFrame::OnExit) EVT_SIZE(MainFrame::OnSize) EVT_MOVE(MainFrame::OnMove)
+	EVT_MENU(-1, MainFrame::OnToolLeftClick) EVT_TIMER(FRAME_TIMER_1, MainFrame::OnFrameTimer1)
 	EVT_TIMER(FRAME_TC_TIMER, MainFrame::OnFrameTCTimer)
 	EVT_TIMER(FRAME_COG_TIMER, MainFrame::OnFrameCOGTimer)
-	EVT_TIMER(MEMORY_FOOTPRINT_TIMER, MainFrame::OnMemFootTimer)
-	EVT_ACTIVATE(MainFrame::OnActivate)
+	EVT_TIMER(MEMORY_FOOTPRINT_TIMER, MainFrame::OnMemFootTimer) EVT_ACTIVATE(MainFrame::OnActivate)
 	EVT_MAXIMIZE(MainFrame::OnMaximize)
 	EVT_COMMAND(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, MainFrame::RequestNewToolbarArgEvent)
-	EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
-END_EVENT_TABLE()
+	EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground) END_EVENT_TABLE()
 
-// My frame constructor
-MainFrame::MainFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+	// My frame constructor
+	MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos,
+						 const wxSize& size, long style)
 	: wxFrame(frame, -1, title, pos, size, style)
 	, chart_canvas(NULL)
 	, pDummyChart(NULL)
@@ -506,32 +502,32 @@ MainFrame::MainFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, 
 	g_toolbar = NULL;
 	m_toolbar_scale_tools_shown = false;
 
-	//      Redirect the global heartbeat timer to this frame
-	FrameTimer1.SetOwner( this, FRAME_TIMER_1 );
+	// Redirect the global heartbeat timer to this frame
+	FrameTimer1.SetOwner(this, FRAME_TIMER_1);
 
-	//      Redirect the Tide/Current update timer to this frame
-	FrameTCTimer.SetOwner( this, FRAME_TC_TIMER );
+	// Redirect the Tide/Current update timer to this frame
+	FrameTCTimer.SetOwner(this, FRAME_TC_TIMER);
 
-	//      Redirect the COG Averager timer to this frame
-	FrameCOGTimer.SetOwner( this, FRAME_COG_TIMER );
+	// Redirect the COG Averager timer to this frame
+	FrameCOGTimer.SetOwner(this, FRAME_COG_TIMER);
 
-	//      Redirect the Memory Footprint Management timer to this frame
-	MemFootTimer.SetOwner( this, MEMORY_FOOTPRINT_TIMER );
+	// Redirect the Memory Footprint Management timer to this frame
+	MemFootTimer.SetOwner(this, MEMORY_FOOTPRINT_TIMER);
 
-	//      Set up some assorted member variables
+	// Set up some assorted member variables
 	nRoute_State = 0;
 	m_bTimeIsSet = false;
 	m_bdefer_resize = false;
 
-	//    Clear the NMEA Filter tables
-	for( int i = 0; i < MAX_COGSOG_FILTER_SECONDS; i++ ) {
-		COGFilterTable[i] = 0.;
-		SOGFilterTable[i] = 0.;
+	// Clear the NMEA Filter tables
+	for (int i = 0; i < MAX_COGSOG_FILTER_SECONDS; i++) {
+		COGFilterTable[i] = 0.0;
+		SOGFilterTable[i] = 0.0;
 	}
 	m_COGFilterLast = 0.;
 	m_last_bGPSValid = false;
 
-	global::Navigation & nav = global::OCPN::get().nav();
+	global::Navigation& nav = global::OCPN::get().nav();
 
 	nav.set_heading_true(NAN);
 	nav.set_heading_magn(NAN);
@@ -542,64 +538,58 @@ MainFrame::MainFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, 
 
 	m_bpersistent_quilt = false;
 
-	m_ChartUpdatePeriod = 1;                  // set the default (1 sec.) period
+	m_ChartUpdatePeriod = 1; // set the default (1 sec.) period
 
-	//    Establish my children
+	// Establish my children
 	g_pMUX = new Multiplexer();
 
 	g_pAIS = new ais::AIS_Decoder(this);
 
-	for ( size_t i = 0; i < g_pConnectionParams->size(); i++ )
-	{
+	for (size_t i = 0; i < g_pConnectionParams->size(); i++) {
 		const ConnectionParams& cp = g_pConnectionParams->at(i);
-		if( cp.bEnabled ) {
-			dsPortType port_type;
-			if (cp.Output)
-				port_type = DS_TYPE_INPUT_OUTPUT;
-			else
-				port_type = DS_TYPE_INPUT;
-			DataStream *dstr = new DataStream( g_pMUX,
-					cp.GetDSPort(),
-					wxString::Format(wxT("%i"),cp.Baudrate),
-					port_type,
-					cp.Priority,
-					cp.Garmin
-					);
-			dstr->SetInputFilter(cp.InputSentenceList);
-			dstr->SetInputFilterType(cp.InputSentenceListType);
-			dstr->SetOutputFilter(cp.OutputSentenceList);
-			dstr->SetOutputFilterType(cp.OutputSentenceListType);
-			dstr->SetChecksumCheck(cp.ChecksumCheck);
+		if (cp.isEnabled()) {
+			dsPortType port_type = cp.isOutput() ? DS_TYPE_INPUT_OUTPUT : DS_TYPE_INPUT;
+			DataStream* dstr = new DataStream(g_pMUX, cp.GetDSPort(),
+											  wxString::Format(wxT("%i"), cp.getBaudrate()),
+											  port_type, cp.getPriority(), cp.isGarmin());
+			dstr->SetInputFilter(cp.getInputSentenceList());
+			dstr->SetInputFilterType(cp.getInputSentenceListType());
+			dstr->SetOutputFilter(cp.getOutputSentenceList());
+			dstr->SetOutputFilterType(cp.getOutputSentenceListType());
+			dstr->SetChecksumCheck(cp.isChecksumCheck());
 			g_pMUX->AddStream(dstr);
 		}
 	}
 
 	g_pMUX->SetAISHandler(g_pAIS);
 	g_pMUX->SetGPSHandler(this);
-	//  Create/connect a dynamic event handler slot
-	Connect( wxEVT_OCPN_DATASTREAM, (wxObjectEventFunction) (wxEventFunction) &MainFrame::OnEvtOCPN_NMEA );
+
+	// Create/connect a dynamic event handler slot
+	Connect(wxEVT_OCPN_DATASTREAM,
+			(wxObjectEventFunction)(wxEventFunction) & MainFrame::OnEvtOCPN_NMEA);
 
 	bFirstAuto = true;
 
 	//  Create/connect a dynamic event handler slot for OCPN_MsgEvent(s) coming from PlugIn system
-	Connect( wxEVT_OCPN_MSG, (wxObjectEventFunction) (wxEventFunction) &MainFrame::OnEvtPlugInMessage );
+	Connect(wxEVT_OCPN_MSG,
+			(wxObjectEventFunction)(wxEventFunction) & MainFrame::OnEvtPlugInMessage);
 
-	Connect( EVT_THREADMSG, (wxObjectEventFunction) (wxEventFunction) &MainFrame::OnEvtTHREADMSG );
+	Connect(EVT_THREADMSG, (wxObjectEventFunction)(wxEventFunction) & MainFrame::OnEvtTHREADMSG);
 
-	//        Establish the system icons for the frame.
+	// Establish the system icons for the frame.
 
 #ifdef __WXMSW__
-	SetIcon( wxICON(0) );           // this grabs the first icon in the integrated MSW resource file
+	SetIcon(wxICON(0)); // this grabs the first icon in the integrated MSW resource file
 #endif
 
 #ifdef __WXGTK__
-	wxIcon app_icon(opencpn);          // This comes from opencpn.xpm inclusion above
+	wxIcon app_icon(opencpn); // This comes from opencpn.xpm inclusion above
 	SetIcon(app_icon);
 #endif
 
 #ifdef __WXMSW__
 
-	//    Establish the entry points in USER32.DLL for system color control
+	// Establish the entry points in USER32.DLL for system color control
 
 	wxDynamicLibrary dllUser32( _T("user32.dll") );
 
@@ -632,12 +622,12 @@ MainFrame::~MainFrame()
 	delete pDummyChart;
 }
 
-ChartCanvas * MainFrame::GetCanvas()
+ChartCanvas* MainFrame::GetCanvas()
 {
 	return chart_canvas;
 }
 
-void MainFrame::SetCanvasWindow(ChartCanvas * canvas)
+void MainFrame::SetCanvasWindow(ChartCanvas* canvas)
 {
 	chart_canvas = canvas;
 }
@@ -647,16 +637,16 @@ int MainFrame::GetNextToolbarToolId()
 	return m_next_available_plugin_tool_id;
 }
 
-void MainFrame::RequestNewToolbarArgEvent(wxCommandEvent &)
+void MainFrame::RequestNewToolbarArgEvent(wxCommandEvent&)
 {
 	return RequestNewToolbar();
 }
 
-void MainFrame::OnEraseBackground(wxEraseEvent &)
+void MainFrame::OnEraseBackground(wxEraseEvent&)
 {
 }
 
-void MainFrame::OnMaximize(wxMaximizeEvent &)
+void MainFrame::OnMaximize(wxMaximizeEvent&)
 {
 	g_click_stop = 0;
 }
@@ -666,18 +656,21 @@ bool MainFrame::hasStatusBar() const
 	return m_pStatusBar != NULL;
 }
 
-void MainFrame::OnActivate( wxActivateEvent& event )
+void MainFrame::OnActivate(wxActivateEvent& event)
 {
 	// Code carefully in this method.
 	// It is called in some unexpected places,
 	// such as on closure of dialogs, etc.
 
-	if (chart_canvas) chart_canvas->SetFocus(); // This seems to be needed for MSW, to get key and wheel events after minimize/maximize.
+	if (chart_canvas)
+		chart_canvas->SetFocus(); // This seems to be needed for MSW, to get key and wheel events
+								  // after minimize/maximize.
 
 #ifdef __WXOSX__
-	if(event.GetActive()) {
+	if (event.GetActive()) {
 		SurfaceToolbar();
-		for (WindowList::iterator node = AppActivateList.begin(); node != AppActivateList.end(); ++node) {
+		for (WindowList::iterator node = AppActivateList.begin(); node != AppActivateList.end();
+			 ++node) {
 			(*node)->Show();
 		}
 		Raise();
@@ -697,7 +690,7 @@ void MainFrame::SetAndApplyColorScheme(ColorScheme cs)
 	global_color_scheme = cs;
 
 	wxString SchemeName;
-	switch( cs ){
+	switch (cs) {
 		case GLOBAL_COLOR_SCHEME_DAY:
 			SchemeName = _T("DAY");
 			break;
@@ -786,184 +779,196 @@ void MainFrame::SetAndApplyColorScheme(ColorScheme cs)
 
 void MainFrame::ApplyGlobalColorSchemetoStatusBar(void)
 {
-	if( m_pStatusBar != NULL ) {
-		m_pStatusBar->SetBackgroundColour(GetGlobalColor(_T("UIBDR")));    //UINFF
+	if (m_pStatusBar != NULL) {
+		m_pStatusBar->SetBackgroundColour(GetGlobalColor(_T("UIBDR"))); // UINFF
 		m_pStatusBar->ClearBackground();
 
 		int styles[] = { wxSB_FLAT, wxSB_FLAT, wxSB_FLAT, wxSB_FLAT, wxSB_FLAT, wxSB_FLAT };
-		m_pStatusBar->SetStatusStyles( m_StatusBarFieldCount, styles );
+		m_pStatusBar->SetStatusStyles(m_StatusBarFieldCount, styles);
 		int widths[] = { -6, -5, -5, -3, -4 };
-		m_pStatusBar->SetStatusWidths( m_StatusBarFieldCount, widths );
+		m_pStatusBar->SetStatusWidths(m_StatusBarFieldCount, widths);
 	}
 }
 
 void MainFrame::DestroyMyToolbar()
 {
-	if( g_FloatingToolbarDialog ) {
+	if (g_FloatingToolbarDialog) {
 		g_FloatingToolbarDialog->DestroyToolBar();
 		g_toolbar = NULL;
 	}
 }
 
-bool _toolbarConfigMenuUtil( int toolid, wxString tipString )
+bool _toolbarConfigMenuUtil(int toolid, wxString tipString)
 {
 	wxMenuItem* menuitem;
 
-	if( toolid == ID_MOB && g_bPermanentMOBIcon ) return true;
+	if (toolid == ID_MOB && g_bPermanentMOBIcon)
+		return true;
 
-	// Item ID trickery is needed because the wxCommandEvents for menu item clicked and toolbar button
+	// Item ID trickery is needed because the wxCommandEvents for menu item clicked and toolbar
+	// button
 	// clicked are 100% identical, so if we use same id's we can't tell the events apart.
 
-	int idOffset = ID_PLUGIN_BASE - ID_ZOOMIN + 100;  // Hopefully no more than 100 plugins loaded...
+	int idOffset = ID_PLUGIN_BASE - ID_ZOOMIN + 100; // Hopefully no more than 100 plugins loaded...
 	int menuItemId = toolid + idOffset;
 
-	menuitem = g_FloatingToolbarConfigMenu->FindItem( menuItemId );
+	menuitem = g_FloatingToolbarConfigMenu->FindItem(menuItemId);
 
-	if( menuitem ) {
+	if (menuitem) {
 		return menuitem->IsChecked();
 	}
 
-	menuitem = g_FloatingToolbarConfigMenu->AppendCheckItem( menuItemId, tipString );
-	menuitem->Check( g_toolbarConfig.GetChar( toolid - ID_ZOOMIN ) == _T('X') );
+	menuitem = g_FloatingToolbarConfigMenu->AppendCheckItem(menuItemId, tipString);
+	menuitem->Check(g_toolbarConfig.GetChar(toolid - ID_ZOOMIN) == _T('X'));
 	return menuitem->IsChecked();
 }
 
-ToolBarSimple *MainFrame::CreateAToolbar()
+ToolBarSimple* MainFrame::CreateAToolbar()
 {
-	ToolBarSimple *tb = NULL;
+	ToolBarSimple* tb = NULL;
 	wxToolBarToolBase* newtool;
 
-	if( g_FloatingToolbarDialog ) tb = g_FloatingToolbarDialog->GetToolbar();
-	if( !tb ) return 0;
+	if (g_FloatingToolbarDialog)
+		tb = g_FloatingToolbarDialog->GetToolbar();
+	if (!tb)
+		return 0;
 
-	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 
 	wxString tipString;
 
-	CheckAndAddPlugInTool( tb );
-	tipString = wxString( _("Zoom In") ) << _T(" (+)");
-	if( _toolbarConfigMenuUtil( ID_ZOOMIN, tipString ) )
-		tb->AddTool( ID_ZOOMIN, _T("zoomin"),
-				style->GetToolIcon( _T("zoomin"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+	CheckAndAddPlugInTool(tb);
+	tipString = wxString(_("Zoom In")) << _T(" (+)");
+	if (_toolbarConfigMenuUtil(ID_ZOOMIN, tipString))
+		tb->AddTool(ID_ZOOMIN, _T("zoomin"),
+					style->GetToolIcon(_T("zoomin"), ocpnStyle::TOOLICON_NORMAL), tipString,
+					wxITEM_NORMAL);
 
-	CheckAndAddPlugInTool( tb );
-	tipString = wxString( _("Zoom Out") ) << _T(" (-)");
-	if( _toolbarConfigMenuUtil( ID_ZOOMOUT, tipString ) )
-		tb->AddTool( ID_ZOOMOUT, _T("zoomout"),
-				style->GetToolIcon( _T("zoomout"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+	CheckAndAddPlugInTool(tb);
+	tipString = wxString(_("Zoom Out")) << _T(" (-)");
+	if (_toolbarConfigMenuUtil(ID_ZOOMOUT, tipString))
+		tb->AddTool(ID_ZOOMOUT, _T("zoomout"),
+					style->GetToolIcon(_T("zoomout"), ocpnStyle::TOOLICON_NORMAL), tipString,
+					wxITEM_NORMAL);
 
 	m_toolbar_scale_tools_shown = pCurrentStack && pCurrentStack->b_valid
-		&& ( pCurrentStack->nEntry > 1 );
+								  && (pCurrentStack->nEntry > 1);
 
-	CheckAndAddPlugInTool( tb );
-	tipString = wxString( _("Shift to Larger Scale Chart") ) << _T(" (F7)");
-	if( _toolbarConfigMenuUtil( ID_STKDN, tipString ) ) {
-		newtool = tb->AddTool( ID_STKDN, _T("scin"),
-				style->GetToolIcon( _T("scin"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
-		newtool->Enable( m_toolbar_scale_tools_shown );
+	CheckAndAddPlugInTool(tb);
+	tipString = wxString(_("Shift to Larger Scale Chart")) << _T(" (F7)");
+	if (_toolbarConfigMenuUtil(ID_STKDN, tipString)) {
+		newtool = tb->AddTool(ID_STKDN, _T("scin"),
+							  style->GetToolIcon(_T("scin"), ocpnStyle::TOOLICON_NORMAL), tipString,
+							  wxITEM_NORMAL);
+		newtool->Enable(m_toolbar_scale_tools_shown);
 	}
 
-	CheckAndAddPlugInTool( tb );
-	tipString = wxString( _("Shift to Smaller Scale Chart") ) << _T(" (F8)");
-	if( _toolbarConfigMenuUtil( ID_STKUP, tipString ) ) {
-		newtool = tb->AddTool( ID_STKUP, _T("scout"),
-				style->GetToolIcon( _T("scout"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
-		newtool->Enable( m_toolbar_scale_tools_shown );
+	CheckAndAddPlugInTool(tb);
+	tipString = wxString(_("Shift to Smaller Scale Chart")) << _T(" (F8)");
+	if (_toolbarConfigMenuUtil(ID_STKUP, tipString)) {
+		newtool = tb->AddTool(ID_STKUP, _T("scout"),
+							  style->GetToolIcon(_T("scout"), ocpnStyle::TOOLICON_NORMAL),
+							  tipString, wxITEM_NORMAL);
+		newtool->Enable(m_toolbar_scale_tools_shown);
 	}
 
-	CheckAndAddPlugInTool( tb );
-	tipString = wxString( _("Create Route") ) << _T(" (Ctrl-R)");
-	if( _toolbarConfigMenuUtil( ID_ROUTE, tipString ) )
-		tb->AddTool( ID_ROUTE, _T("route"),
-				style->GetToolIcon( _T("route"), ocpnStyle::TOOLICON_NORMAL ),
-				style->GetToolIcon( _T("route"), ocpnStyle::TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
+	CheckAndAddPlugInTool(tb);
+	tipString = wxString(_("Create Route")) << _T(" (Ctrl-R)");
+	if (_toolbarConfigMenuUtil(ID_ROUTE, tipString))
+		tb->AddTool(
+			ID_ROUTE, _T("route"), style->GetToolIcon(_T("route"), ocpnStyle::TOOLICON_NORMAL),
+			style->GetToolIcon(_T("route"), ocpnStyle::TOOLICON_TOGGLED), wxITEM_CHECK, tipString);
 
-	CheckAndAddPlugInTool( tb );
-	tipString = wxString( _("Auto Follow") ) << _T(" (F2)");
-	if( _toolbarConfigMenuUtil( ID_FOLLOW, tipString ) )
-		tb->AddTool( ID_FOLLOW, _T("follow"),
-				style->GetToolIcon( _T("follow"), ocpnStyle::TOOLICON_NORMAL ),
-				style->GetToolIcon( _T("follow"), ocpnStyle::TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
+	CheckAndAddPlugInTool(tb);
+	tipString = wxString(_("Auto Follow")) << _T(" (F2)");
+	if (_toolbarConfigMenuUtil(ID_FOLLOW, tipString))
+		tb->AddTool(
+			ID_FOLLOW, _T("follow"), style->GetToolIcon(_T("follow"), ocpnStyle::TOOLICON_NORMAL),
+			style->GetToolIcon(_T("follow"), ocpnStyle::TOOLICON_TOGGLED), wxITEM_CHECK, tipString);
 
-	CheckAndAddPlugInTool( tb );
+	CheckAndAddPlugInTool(tb);
 	tipString = _("Options");
-	if( _toolbarConfigMenuUtil( ID_SETTINGS, tipString ) )
-		tb->AddTool( ID_SETTINGS, _T("settings"),
-				style->GetToolIcon( _T("settings"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+	if (_toolbarConfigMenuUtil(ID_SETTINGS, tipString))
+		tb->AddTool(ID_SETTINGS, _T("settings"),
+					style->GetToolIcon(_T("settings"), ocpnStyle::TOOLICON_NORMAL), tipString,
+					wxITEM_NORMAL);
 
-	CheckAndAddPlugInTool( tb );
-	tipString = wxString( _("Show ENC Text") ) << _T(" (T)");
-	if( _toolbarConfigMenuUtil( ID_TEXT, tipString ) )
-		tb->AddTool( ID_TEXT, _T("text"),
-				style->GetToolIcon( _T("text"), ocpnStyle::TOOLICON_NORMAL ),
-				style->GetToolIcon( _T("text"), ocpnStyle::TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
+	CheckAndAddPlugInTool(tb);
+	tipString = wxString(_("Show ENC Text")) << _T(" (T)");
+	if (_toolbarConfigMenuUtil(ID_TEXT, tipString))
+		tb->AddTool(ID_TEXT, _T("text"), style->GetToolIcon(_T("text"), ocpnStyle::TOOLICON_NORMAL),
+					style->GetToolIcon(_T("text"), ocpnStyle::TOOLICON_TOGGLED), wxITEM_CHECK,
+					tipString);
 
 	m_pAISTool = NULL;
-	CheckAndAddPlugInTool( tb );
-	tipString = _("Hide AIS Targets");          // inital state is on
-	if( _toolbarConfigMenuUtil( ID_AIS, tipString ) )
-		m_pAISTool = tb->AddTool( ID_AIS, _T("AIS"), style->GetToolIcon( _T("AIS"), ocpnStyle::TOOLICON_NORMAL ),
-				style->GetToolIcon( _T("AIS"), ocpnStyle::TOOLICON_DISABLED ),
-				wxITEM_NORMAL, tipString );
+	CheckAndAddPlugInTool(tb);
+	tipString = _("Hide AIS Targets"); // inital state is on
+	if (_toolbarConfigMenuUtil(ID_AIS, tipString))
+		m_pAISTool = tb->AddTool(
+			ID_AIS, _T("AIS"), style->GetToolIcon(_T("AIS"), ocpnStyle::TOOLICON_NORMAL),
+			style->GetToolIcon(_T("AIS"), ocpnStyle::TOOLICON_DISABLED), wxITEM_NORMAL, tipString);
 
-	CheckAndAddPlugInTool( tb );
+	CheckAndAddPlugInTool(tb);
 	tipString = _("Show Currents");
-	if( _toolbarConfigMenuUtil( ID_CURRENT, tipString ) )
-		tb->AddTool( ID_CURRENT, _T("current"),
-				style->GetToolIcon( _T("current"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_CHECK );
+	if (_toolbarConfigMenuUtil(ID_CURRENT, tipString))
+		tb->AddTool(ID_CURRENT, _T("current"),
+					style->GetToolIcon(_T("current"), ocpnStyle::TOOLICON_NORMAL), tipString,
+					wxITEM_CHECK);
 
-	CheckAndAddPlugInTool( tb );
+	CheckAndAddPlugInTool(tb);
 	tipString = _("Show Tides");
-	if( _toolbarConfigMenuUtil( ID_TIDE, tipString ) )
-		tb->AddTool( ID_TIDE, _T("tide"),
-				style->GetToolIcon( _T("tide"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_CHECK );
+	if (_toolbarConfigMenuUtil(ID_TIDE, tipString))
+		tb->AddTool(ID_TIDE, _T("tide"), style->GetToolIcon(_T("tide"), ocpnStyle::TOOLICON_NORMAL),
+					tipString, wxITEM_CHECK);
 
-	CheckAndAddPlugInTool( tb );
+	CheckAndAddPlugInTool(tb);
 	tipString = _("Print Chart");
-	if( _toolbarConfigMenuUtil( ID_PRINT, tipString ) )
-		tb->AddTool( ID_PRINT, _T("print"),
-				style->GetToolIcon( _T("print"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+	if (_toolbarConfigMenuUtil(ID_PRINT, tipString))
+		tb->AddTool(ID_PRINT, _T("print"),
+					style->GetToolIcon(_T("print"), ocpnStyle::TOOLICON_NORMAL), tipString,
+					wxITEM_NORMAL);
 
-	CheckAndAddPlugInTool( tb );
+	CheckAndAddPlugInTool(tb);
 	tipString = _("Route Manager");
-	if( _toolbarConfigMenuUtil( ID_ROUTEMANAGER, tipString ) )
-		tb->AddTool( ID_ROUTEMANAGER,
-				_T("route_manager"), style->GetToolIcon( _T("route_manager"), ocpnStyle::TOOLICON_NORMAL ),
-				tipString, wxITEM_NORMAL );
+	if (_toolbarConfigMenuUtil(ID_ROUTEMANAGER, tipString))
+		tb->AddTool(ID_ROUTEMANAGER, _T("route_manager"),
+					style->GetToolIcon(_T("route_manager"), ocpnStyle::TOOLICON_NORMAL), tipString,
+					wxITEM_NORMAL);
 
-	CheckAndAddPlugInTool( tb );
+	CheckAndAddPlugInTool(tb);
 	tipString = _("Toggle Tracking");
-	if( _toolbarConfigMenuUtil( ID_TRACK, tipString ) )
-		tb->AddTool( ID_TRACK, _T("track"),
-				style->GetToolIcon( _T("track"), ocpnStyle::TOOLICON_NORMAL ),
-				style->GetToolIcon( _T("track"), ocpnStyle::TOOLICON_TOGGLED ), wxITEM_CHECK, tipString );
+	if (_toolbarConfigMenuUtil(ID_TRACK, tipString))
+		tb->AddTool(
+			ID_TRACK, _T("track"), style->GetToolIcon(_T("track"), ocpnStyle::TOOLICON_NORMAL),
+			style->GetToolIcon(_T("track"), ocpnStyle::TOOLICON_TOGGLED), wxITEM_CHECK, tipString);
 
-	CheckAndAddPlugInTool( tb );
-	tipString = wxString( _("Change Color Scheme") ) << _T(" (F5)");
-	if( _toolbarConfigMenuUtil( ID_COLSCHEME, tipString ) )
-		tb->AddTool( ID_COLSCHEME,
-				_T("colorscheme"), style->GetToolIcon( _T("colorscheme"), ocpnStyle::TOOLICON_NORMAL ),
-				tipString, wxITEM_NORMAL );
+	CheckAndAddPlugInTool(tb);
+	tipString = wxString(_("Change Color Scheme")) << _T(" (F5)");
+	if (_toolbarConfigMenuUtil(ID_COLSCHEME, tipString))
+		tb->AddTool(ID_COLSCHEME, _T("colorscheme"),
+					style->GetToolIcon(_T("colorscheme"), ocpnStyle::TOOLICON_NORMAL), tipString,
+					wxITEM_NORMAL);
 
-	CheckAndAddPlugInTool( tb );
+	CheckAndAddPlugInTool(tb);
 	tipString = _("About OpenCPN");
-	if( _toolbarConfigMenuUtil( ID_HELP, tipString ) )
-		tb->AddTool( ID_HELP, _T("help"),
-				style->GetToolIcon( _T("help"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+	if (_toolbarConfigMenuUtil(ID_HELP, tipString))
+		tb->AddTool(ID_HELP, _T("help"), style->GetToolIcon(_T("help"), ocpnStyle::TOOLICON_NORMAL),
+					tipString, wxITEM_NORMAL);
 
-	//      Add any PlugIn toolbar tools that request default positioning
-	AddDefaultPositionPlugInTools( tb );
+	// Add any PlugIn toolbar tools that request default positioning
+	AddDefaultPositionPlugInTools(tb);
 
-	//  And finally add the MOB tool
-	tipString = wxString( _("Drop MOB Marker") ) << _(" (Ctrl-Space)");
-	if( _toolbarConfigMenuUtil( ID_MOB, tipString ) )
-		tb->AddTool( ID_MOB, _T("mob_btn"),
-				style->GetToolIcon( _T("mob_btn"), ocpnStyle::TOOLICON_NORMAL ), tipString, wxITEM_NORMAL );
+	// And finally add the MOB tool
+	tipString = wxString(_("Drop MOB Marker")) << _(" (Ctrl-Space)");
+	if (_toolbarConfigMenuUtil(ID_MOB, tipString))
+		tb->AddTool(ID_MOB, _T("mob_btn"),
+					style->GetToolIcon(_T("mob_btn"), ocpnStyle::TOOLICON_NORMAL), tipString,
+					wxITEM_NORMAL);
 
 	// Realize() the toolbar
 	g_FloatingToolbarDialog->Realize();
 
-	//      Set up the toggle states
+	// Set up the toggle states
 
 	if (chart_canvas) {
 		//  Re-establish toggle states
@@ -982,39 +987,40 @@ ToolBarSimple *MainFrame::CreateAToolbar()
 
 	wxString initiconName;
 	if (g_bShowAIS) {
-		tb->SetToolShortHelp( ID_AIS, _("Hide AIS Targets") );
+		tb->SetToolShortHelp(ID_AIS, _("Hide AIS Targets"));
 		initiconName = _T("AIS");
 	} else {
-		tb->SetToolShortHelp( ID_AIS, _("Show AIS Targets") );
+		tb->SetToolShortHelp(ID_AIS, _("Show AIS Targets"));
 		initiconName = _T("AIS_Disabled");
 	}
-	tb->SetToolNormalBitmapEx( m_pAISTool, initiconName );
+	tb->SetToolNormalBitmapEx(m_pAISTool, initiconName);
 	m_lastAISiconName = initiconName;
 
-	tb->ToggleTool( ID_TRACK, g_bTrackActive );
+	tb->ToggleTool(ID_TRACK, g_bTrackActive);
 
 	SetStatusBarPane(-1); // don't show help on status bar
 
 	return tb;
 }
 
-bool MainFrame::CheckAndAddPlugInTool( ToolBarSimple *tb )
+bool MainFrame::CheckAndAddPlugInTool(ToolBarSimple* tb)
 {
-	if( !g_pi_manager ) return false;
+	if (!g_pi_manager)
+		return false;
 
 	bool bret = false;
 	int n_tools = tb->GetToolsCount();
 
-	//    Walk the PlugIn tool spec array, checking the requested position
-	//    If a tool has been requested by a plugin at this position, add it
+	// Walk the PlugIn tool spec array, checking the requested position
+	// If a tool has been requested by a plugin at this position, add it
 	ArrayOfPlugInToolbarTools tool_array = g_pi_manager->GetPluginToolbarToolArray();
 
-	for( unsigned int i = 0; i < tool_array.size(); i++ ) {
-		PlugInToolbarToolContainer *pttc = tool_array.Item( i );
-		if( pttc->position == n_tools ) {
-			wxBitmap *ptool_bmp;
+	for (unsigned int i = 0; i < tool_array.size(); i++) {
+		PlugInToolbarToolContainer* pttc = tool_array.Item(i);
+		if (pttc->position == n_tools) {
+			wxBitmap* ptool_bmp;
 
-			switch( global_color_scheme ){
+			switch (global_color_scheme) {
 				case GLOBAL_COLOR_SCHEME_DAY:
 					ptool_bmp = pttc->bitmap_day;
 					;
@@ -1031,37 +1037,38 @@ bool MainFrame::CheckAndAddPlugInTool( ToolBarSimple *tb )
 					break;
 			}
 
-			tb->AddTool( pttc->id, wxString( pttc->label ), *( ptool_bmp ),
-					wxString( pttc->shortHelp ), pttc->kind );
-			if( pttc->kind == wxITEM_CHECK ) tb->ToggleTool( pttc->id, pttc->b_toggle );
+			tb->AddTool(pttc->id, wxString(pttc->label), *(ptool_bmp), wxString(pttc->shortHelp),
+						pttc->kind);
+			if (pttc->kind == wxITEM_CHECK)
+				tb->ToggleTool(pttc->id, pttc->b_toggle);
 			bret = true;
 		}
 	}
 
-	//    If we added a tool, call again (recursively) to allow for adding adjacent tools
-	if( bret ) while( CheckAndAddPlugInTool( tb ) ) { /* nothing to do */
-	}
+	// If we added a tool, call again (recursively) to allow for adding adjacent tools
+	if (bret)
+		while (CheckAndAddPlugInTool(tb)) {} // nothing to do
 
 	return bret;
 }
 
-bool MainFrame::AddDefaultPositionPlugInTools( ToolBarSimple *tb )
+bool MainFrame::AddDefaultPositionPlugInTools(ToolBarSimple* tb)
 {
-	if( !g_pi_manager ) return false;
+	if (!g_pi_manager)
+		return false;
 
 	bool bret = false;
 
-	//    Walk the PlugIn tool spec array, checking the requested position
-	//    If a tool has been requested by a plugin at this position, add it
+	// Walk the PlugIn tool spec array, checking the requested position
+	// If a tool has been requested by a plugin at this position, add it
 	ArrayOfPlugInToolbarTools tool_array = g_pi_manager->GetPluginToolbarToolArray();
 
-	for( unsigned int i = 0; i < tool_array.size(); i++ ) {
-		PlugInToolbarToolContainer *pttc = tool_array.Item( i );
-		if( pttc->position == -1 )                  // PlugIn has requested default positioning
-		{
-			wxBitmap *ptool_bmp;
+	for (unsigned int i = 0; i < tool_array.size(); i++) {
+		PlugInToolbarToolContainer* pttc = tool_array.Item(i);
+		if (pttc->position == -1) { // PlugIn has requested default positioning
+			wxBitmap* ptool_bmp;
 
-			switch( global_color_scheme ){
+			switch (global_color_scheme) {
 				case GLOBAL_COLOR_SCHEME_DAY:
 					ptool_bmp = pttc->bitmap_day;
 					;
@@ -1078,9 +1085,10 @@ bool MainFrame::AddDefaultPositionPlugInTools( ToolBarSimple *tb )
 					break;
 			}
 
-			tb->AddTool( pttc->id, wxString( pttc->label ), *( ptool_bmp ),
-					wxString( pttc->shortHelp ), pttc->kind );
-			if( pttc->kind == wxITEM_CHECK ) tb->ToggleTool( pttc->id, pttc->b_toggle );
+			tb->AddTool(pttc->id, wxString(pttc->label), *(ptool_bmp), wxString(pttc->shortHelp),
+						pttc->kind);
+			if (pttc->kind == wxITEM_CHECK)
+				tb->ToggleTool(pttc->id, pttc->b_toggle);
 			bret = true;
 		}
 	}
@@ -1089,13 +1097,14 @@ bool MainFrame::AddDefaultPositionPlugInTools( ToolBarSimple *tb )
 
 void MainFrame::RequestNewToolbar()
 {
-	if( g_FloatingToolbarDialog ) {
+	if (g_FloatingToolbarDialog) {
 		bool b_reshow = g_FloatingToolbarDialog->IsShown();
-		if( g_FloatingToolbarDialog->IsToolbarShown() ) DestroyMyToolbar();
+		if (g_FloatingToolbarDialog->IsToolbarShown())
+			DestroyMyToolbar();
 
 		g_toolbar = CreateAToolbar();
 		g_FloatingToolbarDialog->RePosition();
-		g_FloatingToolbarDialog->Show( b_reshow );
+		g_FloatingToolbarDialog->Show(b_reshow);
 	}
 }
 
@@ -1114,7 +1123,7 @@ void MainFrame::UpdateToolbar(ColorScheme cs)
 	if (g_FloatingCompassDialog)
 		g_FloatingCompassDialog->SetColorScheme(cs);
 
-	if( g_toolbar ) {
+	if (g_toolbar) {
 		//  Re-establish toggle states
 		g_toolbar->ToggleTool(ID_FOLLOW, chart_canvas->m_bFollow);
 		g_toolbar->ToggleTool(ID_CURRENT, chart_canvas->GetbShowCurrent());
@@ -1150,54 +1159,54 @@ void MainFrame::EnableToolbar(bool newstate)
 }
 
 // Intercept menu commands
-void MainFrame::OnExit(wxCommandEvent &)
+void MainFrame::OnExit(wxCommandEvent&)
 {
-	quitflag++;                             // signal to the timer loop
+	quitflag++; // signal to the timer loop
 }
 
 static bool b_inCloseWindow;
 
-void MainFrame::OnCloseWindow(wxCloseEvent &)
+void MainFrame::OnCloseWindow(wxCloseEvent&)
 {
-	//    It is possible that double clicks on application exit box could cause re-entrance here
-	//    Not good, and don't need it anyway, so simply return.
-	if( b_inCloseWindow ) {
+	// It is possible that double clicks on application exit box could cause re-entrance here
+	// Not good, and don't need it anyway, so simply return.
+	if (b_inCloseWindow) {
 		//            wxLogMessage(_T("opencpn::MainFrame re-entering OnCloseWindow"));
 		return;
 	}
 
 	b_inCloseWindow = true;
 
-	::wxSetCursor( wxCURSOR_WAIT );
+	::wxSetCursor(wxCURSOR_WAIT);
 
 	// If we happen to have the measure tool open on Ctrl-Q quit
 	chart_canvas->CancelMeasureRoute();
 
 	// We save perspective before closing to restore position next time
 	// Pane is not closed so the child is not notified (OnPaneClose)
-	if( g_pAISTargetList ) {
-		wxAuiPaneInfo &pane = g_pauimgr->GetPane( g_pAISTargetList );
-		g_AisTargetList_perspective = g_pauimgr->SavePaneInfo( pane );
-		g_pauimgr->DetachPane( g_pAISTargetList );
+	if (g_pAISTargetList) {
+		wxAuiPaneInfo& pane = g_pauimgr->GetPane(g_pAISTargetList);
+		g_AisTargetList_perspective = g_pauimgr->SavePaneInfo(pane);
+		g_pauimgr->DetachPane(g_pAISTargetList);
 	}
 
-	pConfig->SetPath( _T ( "/AUI" ) );
-	pConfig->Write( _T ( "AUIPerspective" ), g_pauimgr->SavePerspective() );
+	pConfig->SetPath(_T("/AUI"));
+	pConfig->Write(_T("AUIPerspective"), g_pauimgr->SavePerspective());
 
 	g_bquiting = true;
-	chart_canvas->SetCursor( wxCURSOR_WAIT );
-	chart_canvas->Refresh( false );
+	chart_canvas->SetCursor(wxCURSOR_WAIT);
+	chart_canvas->Refresh(false);
 	chart_canvas->Update();
 
-	//   Save the saved Screen Brightness
+	// Save the saved Screen Brightness
 	RestoreScreenBrightness();
 
-	//    Deactivate the PlugIns
-	if( g_pi_manager ) {
+	// Deactivate the PlugIns
+	if (g_pi_manager) {
 		g_pi_manager->DeactivateAllPlugIns();
 	}
 
-	wxLogMessage( _T("opencpn::MainFrame exiting cleanly.") );
+	wxLogMessage(_T("opencpn::MainFrame exiting cleanly."));
 
 	quitflag++;
 
@@ -1205,15 +1214,13 @@ void MainFrame::OnCloseWindow(wxCloseEvent &)
 
 	g_pMUX->ClearStreams();
 
-	/*
-	   Automatically drop an anchorage waypoint, if enabled
-	   On following conditions:
-	   1.  In "Cruising" mode, meaning that speed has at some point exceeded 3.0 kts.
-	   2.  Current speed is less than 0.5 kts.
-	   3.  Opencpn has been up at least 30 minutes
-	   4.  And, of course, opencpn is going down now.
-	   5.  And if there is no anchor watch set on "anchor..." icon mark
-	 */
+	// Automatically drop an anchorage waypoint, if enabled
+	// On following conditions:
+	// 1.  In "Cruising" mode, meaning that speed has at some point exceeded 3.0 kts.
+	// 2.  Current speed is less than 0.5 kts.
+	// 3.  Opencpn has been up at least 30 minutes
+	// 4.  And, of course, opencpn is going down now.
+	// 5.  And if there is no anchor watch set on "anchor..." icon mark
 	if (g_bAutoAnchorMark) {
 		bool watching_anchor = false;
 		if (pAnchorWatchPoint1)
@@ -1391,10 +1398,11 @@ void MainFrame::OnSize(wxSizeEvent&)
 
 void MainFrame::ODoSetSize(void)
 {
-	int x, y;
+	int x;
+	int y;
 	GetClientSize(&x, &y);
 
-	//      Resize the children
+	// Resize the children
 
 	if (m_pStatusBar) {
 		//  Maybe resize the font

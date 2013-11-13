@@ -9569,16 +9569,17 @@ void ChartCanvas::DrawArrow(ocpnDC& dc, int x, int y, double rot_angle, double s
 wxString ChartCanvas::FindValidUploadPort()
 {
 	wxString port;
-	//  Try to use the saved persistent upload port first
+	// Try to use the saved persistent upload port first
 	if (!g_uploadConnection.IsEmpty() && g_uploadConnection.StartsWith(_T("Serial"))) {
 		port = g_uploadConnection;
 	} else if (g_pConnectionParams) {
 		// If there is no persistent upload port recorded (yet)
 		// then use the first available serial connection which has output defined.
-		for (size_t i = 0; i < g_pConnectionParams->size(); i++) {
-			const ConnectionParams& cp = g_pConnectionParams->at(i);
-			if (cp.Output && cp.Type == ConnectionParams::SERIAL)
-				port << _T("Serial:") << cp.Port;
+		for (ArrayOfConnPrm::const_iterator i = g_pConnectionParams->begin();
+			 i != g_pConnectionParams->end(); ++i) {
+			if (i->isOutput() && i->getType() == ConnectionParams::SERIAL) {
+				port << _T("Serial:") << i->getPort();
+			}
 		}
 	}
 

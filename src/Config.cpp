@@ -52,6 +52,8 @@
 #include <global/Navigation.h>
 #include <global/WatchDog.h>
 
+#include <algorithm>
+
 #include <wx/window.h>
 #include <wx/dir.h>
 #include <wx/tokenzr.h>
@@ -817,129 +819,91 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	int b_garmin_host;
 	Read ( _T ( "UseGarminHost" ), &b_garmin_host );
 
-	//  Is there an existing NMEADataSource definition?
-	SetPath( _T ( "/Settings/NMEADataSource" ) );
+	// Is there an existing NMEADataSource definition?
+	SetPath(_T("/Settings/NMEADataSource"));
 	wxString xSource;
 	wxString xRate;
-	Read ( _T ( "Source" ), &xSource );
-	Read ( _T ( "BaudRate" ), &xRate );
-	if(xSource.Len()) {
+	Read(_T("Source"), &xSource);
+	Read(_T("BaudRate"), &xRate);
+	if (xSource.Len()) {
 		wxString port;
-		if(xSource.Mid(0, 6) == _T("Serial"))
+		if (xSource.Mid(0, 6) == _T("Serial"))
 			port = xSource.Mid(7);
 		else
 			port = _T("");
 
-		if( port.Len() && (port != _T("None")) && (port != _T("AIS Port (Shared)")) ) {
-			//  Look in the ConnectionParams array to see if this port has been defined in the newer style
-			bool bfound = false;
-			for ( size_t i = 0; i < g_pConnectionParams->size(); i++ )
-			{
-				const ConnectionParams& cp = g_pConnectionParams->at(i);
-				if(cp.GetAddressStr() == port) {
-					bfound = true;
-					break;
-				}
-			}
-
-			if(!bfound) {
-				ConnectionParams prm;
-				prm.Baudrate = wxAtoi(xRate);
-				prm.Port = port;
-				prm.Garmin = (b_garmin_host == 1);
-
-				g_pConnectionParams->push_back(prm);
-
+		if (port.Len() && (port != _T("None")) && (port != _T("AIS Port (Shared)"))) {
+			// Look in the ConnectionParams array to see if this port has been defined in the newer
+			// style
+			if (std::find_if(g_pConnectionParams->begin(), g_pConnectionParams->end(),
+							 ConnectionParams::FindAddress(port)) == g_pConnectionParams->end()) {
+				g_pConnectionParams->push_back(
+					ConnectionParams(port, wxAtoi(xRate), (b_garmin_host == 1)));
 				g_bGarminHostUpload = (b_garmin_host == 1);
 			}
 		}
-		if( iteration == 1 ) {
-			Write ( _T ( "Source" ), _T("") );          // clear the old tag
-			Write ( _T ( "BaudRate" ), _T("") );
+		if (iteration == 1) {
+			Write(_T ( "Source" ), _T("")); // clear the old tag
+			Write(_T ( "BaudRate" ), _T(""));
 		}
 	}
 
-	//  Is there an existing AISPort definition?
-	SetPath( _T ( "/Settings/AISPort" ) );
+	// Is there an existing AISPort definition?
+	SetPath(_T ( "/Settings/AISPort" ));
 	wxString aSource;
 	wxString aRate;
-	Read ( _T ( "Port" ), &aSource );
-	Read ( _T ( "BaudRate" ), &aRate );
-	if(aSource.Len()) {
+	Read(_T ( "Port" ), &aSource);
+	Read(_T ( "BaudRate" ), &aRate);
+	if (aSource.Len()) {
 		wxString port;
-		if(aSource.Mid(0, 6) == _T("Serial"))
+		if (aSource.Mid(0, 6) == _T("Serial"))
 			port = aSource.Mid(7);
 		else
 			port = _T("");
 
-		if(port.Len() && port != _T("None") ) {
-			//  Look in the ConnectionParams array to see if this port has been defined in the newer style
-			bool bfound = false;
-			for ( size_t i = 0; i < g_pConnectionParams->size(); i++ )
-			{
-				const ConnectionParams& cp = g_pConnectionParams->at(i);
-				if(cp.GetAddressStr() == port) {
-					bfound = true;
-					break;
-				}
-			}
-
-			if(!bfound) {
-				ConnectionParams prm;
-				if( aRate.Len() )
-					prm.Baudrate = wxAtoi(aRate);
-				else
-					prm.Baudrate = 38400;              // default for most AIS receivers
-				prm.Port = port;
-
-				g_pConnectionParams->push_back(prm);
+		if (port.Len() && port != _T("None")) {
+			// Look in the ConnectionParams array to see if this port has been defined in the newer
+			// style
+			if (std::find_if(g_pConnectionParams->begin(), g_pConnectionParams->end(),
+							 ConnectionParams::FindAddress(port)) == g_pConnectionParams->end()) {
+				int baudrate = aRate.Len() > 0 ? wxAtoi(aRate)
+											   : 38400; // default value for most AIS receivers
+				g_pConnectionParams->push_back(ConnectionParams(port, baudrate));
 			}
 		}
 
-		if( iteration == 1 ) {
-			Write ( _T ( "Port" ), _T("") );          // clear the old tag
-			Write ( _T ( "BaudRate" ), _T("") );
+		if (iteration == 1) {
+			Write(_T ( "Port" ), _T("")); // clear the old tag
+			Write(_T ( "BaudRate" ), _T(""));
 		}
 	}
 
-	//  Is there an existing NMEAAutoPilotPort definition?
-	SetPath( _T ( "/Settings/NMEAAutoPilotPort" ) );
-	Read ( _T ( "Port" ), &xSource );
-	if(xSource.Len()) {
+	// Is there an existing NMEAAutoPilotPort definition?
+	SetPath(_T ( "/Settings/NMEAAutoPilotPort" ));
+	Read(_T ( "Port" ), &xSource);
+	if (xSource.Len()) {
 		wxString port;
-		if(xSource.Mid(0, 6) == _T("Serial"))
+		if (xSource.Mid(0, 6) == _T("Serial"))
 			port = xSource.Mid(7);
 		else
 			port = _T("");
 
-		if(port.Len() && port != _T("None") ) {
-			//  Look in the ConnectionParams array to see if this port has been defined in the newer style
-			bool bfound = false;
-			for ( size_t i = 0; i < g_pConnectionParams->size(); i++ )
-			{
-				ConnectionParams& cp = g_pConnectionParams->at(i);
-				if(cp.GetAddressStr() == port) {
-					// port was found, so make sure it is set for output
-					cp.Output = true;
-					cp.OutputSentenceListType = ConnectionParams::WHITELIST;
-					cp.OutputSentenceList.Add(_T("RMB"));
-					bfound = true;
-					break;
-				}
-			}
-
-			if(!bfound) {
-				ConnectionParams prm;
-				prm.Port = port;
-				prm.OutputSentenceListType = ConnectionParams::WHITELIST;
-				prm.OutputSentenceList.Add(_T("RMB"));
-				prm.Output = true;
-				g_pConnectionParams->push_back(prm);
+		if (port.Len() && port != _T("None")) {
+			// Look in the ConnectionParams array to see if this port has been defined in the newer
+			// style
+			ArrayOfConnPrm::iterator conn
+				= std::find_if(g_pConnectionParams->begin(), g_pConnectionParams->end(),
+							   ConnectionParams::FindAddress(port));
+			if (conn != g_pConnectionParams->end()) {
+				// port was found, so make sure it is set for output
+				conn->enableOutput(_T("RMB"));
+			} else {
+				g_pConnectionParams->push_back(ConnectionParams::createOutput(port, _T("RMB")));
 			}
 		}
 
-		if( iteration == 1 )
-			Write ( _T ( "Port" ), _T("") );          // clear the old tag
+		if (iteration == 1)
+			Write(_T ( "Port" ), _T("")); // clear the old tag
 	}
 
 	//    Reasonable starting point
@@ -952,7 +916,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	nav.set_latitude(START_LAT);
 	nav.set_longitude(START_LON);
 
-	initial_scale_ppm = .0003;        // decent initial value
+	initial_scale_ppm = 0.0003;        // decent initial value
 
 	SetPath( _T ( "/Settings/GlobalState" ) );
 	wxString st;
@@ -961,12 +925,12 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		sscanf( st.mb_str( wxConvUTF8 ), "%lf,%lf", &st_lat, &st_lon );
 
 		//    Sanity check the lat/lon...both have to be reasonable.
-		if( fabs( st_lon ) < 360. ) {
-			while( st_lon < -180. )
-				st_lon += 360.;
+		if( fabs( st_lon ) < 360.0) {
+			while( st_lon < -180.0)
+				st_lon += 360.0;
 
-			while( st_lon > 180. )
-				st_lon -= 360.;
+			while( st_lon > 180.0)
+				st_lon -= 360.0;
 
 			vLon = st_lon;
 		}
@@ -979,7 +943,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	if( Read( wxString( _T ( "VPScale" ) ), &st ) ) {
 		sscanf( st.mb_str( wxConvUTF8 ), "%lf", &st_view_scale );
 		//    Sanity check the scale
-		st_view_scale = fmax(st_view_scale, .001/32);
+		st_view_scale = fmax(st_view_scale, 0.001/32);
 		st_view_scale = fmin(st_view_scale, 4);
 		initial_scale_ppm = st_view_scale;
 	}

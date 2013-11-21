@@ -179,8 +179,7 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 	pWP->m_bDynamicName = bauto_name;
 
 	if (TimeString.Len()) {
-		pWP->m_timestring = TimeString;
-		pWP->SetCreateTime(wxInvalidDateTime); // cause deferred timestamp parsing
+		pWP->set_time_string(TimeString);
 	}
 
 	if (linklist.size()) {
@@ -464,8 +463,8 @@ bool NavObjectCollection::GPXCreateWpt(
 
 	if (flags & OUT_TIME) {
 		child = node.append_child("time");
-		if (pr->m_timestring.Len())
-			child.append_child(pugi::node_pcdata).set_value(pr->m_timestring.mb_str());
+		if (pr->get_time_string().size())
+			child.append_child(pugi::node_pcdata).set_value(pr->get_time_string().mb_str());
 		else {
 			wxString t = pr->GetCreateTime()
 							 .FormatISODate()

@@ -289,7 +289,7 @@ KmlPastebufferType Kml::ParsePasteBuffer()
 		TiXmlNode* n = placemark->FirstChild("Point");
 		if (n) {
 			if (ParseOnePlacemarkPoint(n->ToElement(), name) == KML_PASTE_WAYPOINT) {
-				parsedRoute->AddPoint(new RoutePoint(parsedRoutePoint));
+				parsedRoute->AddPoint(new RoutePoint(*parsedRoutePoint));
 				foundPoints = true;
 			}
 		}
@@ -633,8 +633,10 @@ Kml::~Kml()
 		}
 		delete parsedRoute;
 	}
-	if (parsedRoutePoint)
+	if (parsedRoutePoint) {
 		delete parsedRoutePoint;
+		parsedRoutePoint = NULL;
+	}
 }
 
 Route* Kml::GetParsedRoute()

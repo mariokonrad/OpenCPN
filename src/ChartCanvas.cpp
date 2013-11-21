@@ -6702,7 +6702,7 @@ void pupHandler_PasteWaypoint()
 	}
 
 	if (answer == wxID_NO) {
-		RoutePoint* newPoint = new RoutePoint(pasted);
+		RoutePoint* newPoint = new RoutePoint(*pasted);
 		newPoint->m_bIsolatedMark = true;
 		pSelect->AddSelectableRoutePoint(newPoint->m_lat, newPoint->m_lon, newPoint);
 		pConfig->AddNewWayPoint(newPoint, -1);
@@ -6800,7 +6800,7 @@ void pupHandler_PasteRoute()
 		} else {
 			curPoint->m_bPtIsSelected = false;
 
-			newPoint = new RoutePoint(curPoint);
+			newPoint = new RoutePoint(*curPoint);
 			newPoint->m_bIsolatedMark = false;
 			newPoint->m_IconName = _T("circle");
 			newPoint->m_bIsVisible = true;
@@ -6849,8 +6849,6 @@ void pupHandler_PasteTrack()
 	if (!pasted)
 		return;
 
-	RoutePoint* curPoint;
-
 	Track* newTrack = new Track();
 	RoutePoint* newPoint;
 	RoutePoint* prevPoint = NULL;
@@ -6858,9 +6856,9 @@ void pupHandler_PasteTrack()
 	newTrack->m_RouteNameString = pasted->m_RouteNameString;
 
 	for (int i = 1; i <= pasted->GetnPoints(); i++) {
-		curPoint = pasted->GetPoint(i);
+		RoutePoint* curPoint = pasted->GetPoint(i);
 
-		newPoint = new RoutePoint(curPoint);
+		newPoint = new RoutePoint(*curPoint);
 		newPoint->m_bShowName = false;
 		newPoint->m_bIsVisible = false;
 		newPoint->m_GPXTrkSegNo = 1;
@@ -6869,7 +6867,7 @@ void pupHandler_PasteTrack()
 
 		newTrack->AddPoint(newPoint);
 
-		//    This is a hack, need to undo the action of Route::AddPoint
+		// This is a hack, need to undo the action of Route::AddPoint
 		newPoint->m_bIsInRoute = false;
 		newPoint->m_bIsInTrack = true;
 
@@ -6894,7 +6892,8 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 	RoutePoint* pLast;
 
 	wxPoint r;
-	double zlat, zlon;
+	double zlat;
+	double zlon;
 
 	GetCanvasPixPoint(popx, popy, zlat, zlon);
 

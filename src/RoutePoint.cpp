@@ -78,39 +78,39 @@ RoutePoint::RoutePoint()
 	ReLoadIcon();
 }
 
-RoutePoint::RoutePoint(RoutePoint* orig)
+RoutePoint::RoutePoint(const RoutePoint& orig)
 {
-	m_MarkName = orig->GetName();
-	m_lat = orig->m_lat;
-	m_lon = orig->m_lon;
-	m_seg_len = orig->m_seg_len;
-	m_seg_vmg = orig->m_seg_vmg;
-	m_seg_etd = orig->m_seg_etd;
-	m_bDynamicName = orig->m_bDynamicName;
-	m_bPtIsSelected = orig->m_bPtIsSelected;
-	m_bIsBeingEdited = orig->m_bIsBeingEdited;
-	m_bIsActive = orig->m_bIsActive;
-	m_bBlink = orig->m_bBlink;
-	m_bIsInRoute = orig->m_bIsInRoute;
-	m_bIsInTrack = orig->m_bIsInTrack;
-	m_CreateTimeX = orig->m_CreateTimeX;
-	m_GPXTrkSegNo = orig->m_GPXTrkSegNo;
-	m_bIsolatedMark = orig->m_bIsolatedMark;
-	m_bShowName = orig->m_bShowName;
-	m_bKeepXRoute = orig->m_bKeepXRoute;
-	m_bIsVisible = orig->m_bIsVisible;
-	m_bIsListed = orig->m_bIsListed;
-	CurrentRect_in_DC = orig->CurrentRect_in_DC;
-	m_NameLocationOffsetX = orig->m_NameLocationOffsetX;
-	m_NameLocationOffsetY = orig->m_NameLocationOffsetY;
-	m_pMarkFont = orig->m_pMarkFont;
-	m_MarkDescription = orig->m_MarkDescription;
-	m_btemp = orig->m_btemp;
+	m_MarkName = orig.GetName();
+	m_lat = orig.m_lat;
+	m_lon = orig.m_lon;
+	m_seg_len = orig.m_seg_len;
+	m_seg_vmg = orig.m_seg_vmg;
+	m_seg_etd = orig.m_seg_etd;
+	m_bDynamicName = orig.m_bDynamicName;
+	m_bPtIsSelected = orig.m_bPtIsSelected;
+	m_bIsBeingEdited = orig.m_bIsBeingEdited;
+	m_bIsActive = orig.m_bIsActive;
+	m_bBlink = orig.m_bBlink;
+	m_bIsInRoute = orig.m_bIsInRoute;
+	m_bIsInTrack = orig.m_bIsInTrack;
+	m_CreateTimeX = orig.m_CreateTimeX;
+	m_GPXTrkSegNo = orig.m_GPXTrkSegNo;
+	m_bIsolatedMark = orig.m_bIsolatedMark;
+	m_bShowName = orig.m_bShowName;
+	m_bKeepXRoute = orig.m_bKeepXRoute;
+	m_bIsVisible = orig.m_bIsVisible;
+	m_bIsListed = orig.m_bIsListed;
+	CurrentRect_in_DC = orig.CurrentRect_in_DC;
+	m_NameLocationOffsetX = orig.m_NameLocationOffsetX;
+	m_NameLocationOffsetY = orig.m_NameLocationOffsetY;
+	m_pMarkFont = orig.m_pMarkFont;
+	m_MarkDescription = orig.m_MarkDescription;
+	m_btemp = orig.m_btemp;
 
-	m_IconName = orig->m_IconName;
+	m_IconName = orig.m_IconName;
 	ReLoadIcon();
 
-	m_bIsInLayer = orig->m_bIsInLayer;
+	m_bIsInLayer = orig.m_bIsInLayer;
 	m_GUID = pWayPointMan->CreateGUID(this);
 }
 
@@ -181,17 +181,27 @@ RoutePoint::~RoutePoint(void)
 	if (pWayPointMan)
 		pWayPointMan->remove(this);
 
-
 	m_HyperlinkList.clear();
 }
 
-wxDateTime RoutePoint::GetCreateTime() // FIXME: fix this brain-dead interface
+const wxDateTime& RoutePoint::GetCreateTime() const
 {
+	return m_CreateTimeX;
+}
+
+void RoutePoint::set_time_string(const wxString& time_string)
+{
+	SetCreateTime(wxInvalidDateTime);
+	m_timestring = time_string;
 	if (!m_CreateTimeX.IsValid()) {
-		if (m_timestring.Len())
+		if (m_timestring.size())
 			ParseGPXDateTime(m_CreateTimeX, m_timestring);
 	}
-	return m_CreateTimeX;
+}
+
+const wxString& RoutePoint::get_time_string() const
+{
+	return m_timestring;
 }
 
 void RoutePoint::SetCreateTime(wxDateTime dt)
@@ -339,16 +349,14 @@ void RoutePoint::CalculateDCRect(wxDC& dc, wxRect* prect)
 	prect->height = dc.MaxY() - dc.MinY() + 2;
 }
 
-bool RoutePoint::IsSame(RoutePoint* pOtherRP)
+bool RoutePoint::IsSame(const RoutePoint* pOtherRP) const
 {
-	bool IsSame = false;
+	if (m_MarkName != pOtherRP->m_MarkName)
+		return false;
 
-	if (this->m_MarkName == pOtherRP->m_MarkName) {
-		if (fabs(this->m_lat - pOtherRP->m_lat) < 1.e-6 && fabs(this->m_lon - pOtherRP->m_lon)
-														   < 1.e-6)
-			IsSame = true;
-	}
-	return IsSame;
+	if ((fabs(m_lat - pOtherRP->m_lat) < 1.e-6) && (fabs(m_lon - pOtherRP->m_lon) < 1.e-6))
+		return true;
+	return false;
 }
 
 bool RoutePoint::SendToGPS(const wxString& com_name, wxGauge* pProgress)

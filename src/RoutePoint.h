@@ -39,13 +39,13 @@ class RoutePoint
 public:
 	RoutePoint(double lat, double lon, const wxString& icon_ident, const wxString& name,
 			   const wxString& pGUID = _T(""), bool bAddToList = true);
-	RoutePoint(RoutePoint* orig);
+	RoutePoint(const RoutePoint& orig);
 	RoutePoint();
 	~RoutePoint(void);
 	void Draw(ocpnDC& dc, wxPoint* rpn = NULL);
 	void ReLoadIcon(void);
 
-	wxDateTime GetCreateTime(void);
+	const wxDateTime& GetCreateTime(void) const;
 	void SetCreateTime(wxDateTime dt);
 
 	void SetPosition(double lat, double lon);
@@ -53,7 +53,7 @@ public:
 	double GetLongitude() const;
 	void CalculateDCRect(wxDC& dc, wxRect* prect);
 
-	bool IsSame(RoutePoint* pOtherRP);
+	bool IsSame(const RoutePoint* pOtherRP) const;
 	bool IsVisible() const;
 	bool IsListed() const;
 	bool IsNameShown() const;
@@ -72,6 +72,9 @@ public:
 	double GetDistance() const;
 
 	bool SendToGPS(const wxString& com_name, wxGauge* pProgress);
+
+	const wxString& get_time_string() const;
+	void set_time_string(const wxString& time_string);
 
 	// FIXME: move attributes to private
 
@@ -111,7 +114,6 @@ public:
 	wxRect CurrentRect_in_DC;
 	int m_NameLocationOffsetX;
 	int m_NameLocationOffsetY;
-	wxString m_timestring;
 	int m_GPXTrkSegNo;
 	bool m_bIsInLayer;
 	int m_LayerID;
@@ -125,6 +127,7 @@ public:
 private:
 	wxString m_MarkName;
 	wxDateTime m_CreateTimeX;
+	wxString m_timestring;
 };
 
 WX_DECLARE_LIST(RoutePoint, RoutePointList); // FIXME: use std container

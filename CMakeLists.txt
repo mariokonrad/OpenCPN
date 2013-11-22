@@ -148,7 +148,7 @@ endif(OPENGL_GLU_FOUND)
 # pugixml (external)
 ################################################################################
 
-set(pugixml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local/pugixml)
+set(pugixml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
 set(pugixml_INCLUDE_DIR ${pugixml_INSTALL_DIR}/include) # TODO: is this automatic?
 set(pugixml_LIBRARY_DIR ${pugixml_INSTALL_DIR}/lib) # TODO: is this automatic?
 
@@ -178,7 +178,30 @@ include_directories(${pugixml_INCLUDE_DIR})
 # tinyxml (external)
 ################################################################################
 
-# TODO
+set(tinyxml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
+set(tinyxml_INCLUDE_DIR ${tinyxml_INSTALL_DIR}/include) # TODO: is this automatic?
+set(tinyxml_LIBRARY_DIR ${tinyxml_INSTALL_DIR}/lib) # TODO: is this automatic?
+
+ExternalProject_Add(extern_tinyxml
+	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/tinyxml
+	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/tinyxml-2.6.2
+	# configure
+	CMAKE_ARGS
+		-DCMAKE_INSTALL_PREFIX=${tinyxml_INSTALL_DIR}
+		-DUSE_STL=ON
+	# install
+	INSTALL_DIR ${tinyxmlxml_INSTALL_DIR}
+	)
+
+add_library(tinyxml STATIC IMPORTED)
+set_target_properties(tinyxml
+	PROPERTIES
+		IMPORTED_LOCATION
+			${tinyxml_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}tinyxml${CMAKE_STATIC_LIBRARY_SUFFIX}
+	)
+add_dependencies(tinyxml extern_tinyxml)
+include_directories(${tinyxml_INCLUDE_DIR})
+add_definitions("-DTIXML_USE_STL")
 
 ################################################################################
 # GDAL (external)
@@ -468,16 +491,6 @@ SET(SRC_GPX
 	src/gpx/GpxExtensionsElement.cpp
 	src/gpx/GpxRootElement.cpp
 	src/gpx/ParseGPXDateTime.cpp
-	)
-
-SET(HDR_TINYXML
-	src/tinyxml/tinyxml.h
-	)
-
-SET(SRC_TINYXML
-	src/tinyxml/tinyxml.cpp
-	src/tinyxml/tinyxmlerror.cpp
-	src/tinyxml/tinyxmlparser.cpp
 	)
 
 SET(HDR_WXJSON
@@ -915,18 +928,6 @@ if(OPENGL_GLU_FOUND)
 endif(OPENGL_GLU_FOUND)
 
 
-if(TINYXML_FOUND)
-	message(STATUS "Building with tinyxml includes")
-	include_directories(${TINYXML_INCLUDE_DIR})
-	add_definitions(-DTIXML_USE_STL)
-else(TINYXML_FOUND)
-	message (STATUS "tinyxml library not found")
-	set(HDRS ${HDRW} ${HDR_TINYXML})
-	set(SRCS ${SRCS} ${SRC_TINYXML})
-	add_definitions(-DTIXML_USE_STL)
-endif(TINYXML_FOUND)
-
-
 option (USE_S57 "Enable S57 ENC support" ON)
 if (USE_S57)
 	message (STATUS "S57 ENC support: enabled")
@@ -1266,10 +1267,11 @@ ENDIF(UNIX AND NOT APPLE)
 
 If(NOT APPLE)
 	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
+		pugixml
+		tinyxml
 		${wxWidgets_LIBRARIES}
 		NMEA0183
 		${EXTRA_LIBS}
-		pugixml
 		)
 ENDIF(NOT APPLE)
 
@@ -1288,12 +1290,7 @@ IF(UNIX)
 		${GETTEXT_LIBRARY}
 		${BZIP2_LIBRARIES}
 		${ZLIB_LIBRARY}
-		pugixml
 		)
-
-	IF(TINYXML_FOUND)
-		TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
-	ENDIF(TINYXML_FOUND)
 ENDIF(UNIX)
 
 # Certain older Cmake FindGTK2 modules ( e.g. cmake-2.8.0-2) do not yield all of the required link libraries

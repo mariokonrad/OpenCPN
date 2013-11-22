@@ -34,3 +34,16 @@ Notes:
 - From the original package, the directories src and scripts are
   unpacked, but untouched.
 
+
+tinyxml-2.6.2
+-------------
+
+License:
+
+Homepage:
+
+Download:
+
+Notes:
+- Altered CMakeLists.txt
+

@@ -80,20 +80,66 @@ static wxString timestamp2s(wxDateTime ts, int tz_selection, long LMT_offset, in
 	return s;
 }
 
-OCPNTrackListCtrl::OCPNTrackListCtrl(
-		wxWindow * parent,
-		wxWindowID id,
-		const wxPoint & pos,
-		const wxSize & size,
-		long style)
+OCPNTrackListCtrl::OCPNTrackListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos,
+									 const wxSize& size, long style)
 	: wxListCtrl(parent, id, pos, size, style)
+	, m_pRoute(NULL)
+	, m_tz_selection(0)
+	, m_LMT_Offset(0)
 {
-	m_parent = parent;
 	g_prev_item = -1;
 }
 
 OCPNTrackListCtrl::~OCPNTrackListCtrl()
 {}
+
+void OCPNTrackListCtrl::set_route(Route* route)
+{
+	m_pRoute = route;
+}
+
+wxString OCPNTrackListCtrl::leg_id(long item) const
+{
+	if (item == 0)
+		return _T("---");
+	return wxString::Format(_T("%ld"), item);
+}
+
+wxString OCPNTrackListCtrl::latitude(const RoutePoint& point) const
+{
+	return toSDMM(1, point.m_lat, 1);
+}
+
+wxString OCPNTrackListCtrl::longitude(const RoutePoint& point) const
+{
+	return toSDMM(2, point.m_lon, 1);
+}
+
+wxString OCPNTrackListCtrl::timestamp(const RoutePoint& point) const
+{
+	wxDateTime t = point.GetCreateTime();
+	if (t.IsValid())
+		return timestamp2s(t, m_tz_selection, m_LMT_Offset, TIMESTAMP_FORMAT);
+	return _T("----");
+}
+
+wxString OCPNTrackListCtrl::get_speed(long item, double dist, const RoutePoint& point_new,
+									  const RoutePoint& point_prev) const
+{
+	if ((item > 0) && point_new.GetCreateTime().IsValid() && point_prev.GetCreateTime().IsValid()) {
+		double speed = 0.0;
+		double seconds = point_new.GetCreateTime()
+							 .Subtract(point_prev.GetCreateTime())
+							 .GetSeconds()
+							 .ToDouble();
+
+		if (seconds > 0.0)
+			speed = dist / seconds * 3600;
+
+		return wxString::Format(_T("%5.2f"), toUsrSpeed(speed));
+	}
+	return _("--");
+}
 
 wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 {
@@ -158,11 +204,7 @@ wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 
 	switch (column) {
 		case 0:
-			if (item == 0)
-				ret = _T("---");
-			else
-				ret.Printf(_T("%ld"), item);
-			break;
+			return leg_id(item);
 
 		case 1:
 			double slat;
@@ -187,37 +229,16 @@ wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 			break;
 
 		case 3:
-			ret = toSDMM(1, g_this_point->m_lat, 1);
-			break;
+			return latitude(*g_this_point);
 
 		case 4:
-			ret = toSDMM(2, g_this_point->m_lon, 1);
-			break;
+			return longitude(*g_this_point);
 
-		case 5: {
-			wxDateTime timestamp = g_this_point->GetCreateTime();
-			if (timestamp.IsValid())
-				ret = timestamp2s(timestamp, m_tz_selection, m_LMT_Offset, TIMESTAMP_FORMAT);
-			else
-				ret = _T("----");
-		} break;
+		case 5:
+			return timestamp(*g_this_point);
 
 		case 6:
-			if ((item > 0) && g_this_point->GetCreateTime().IsValid()
-				&& g_prev_point->GetCreateTime().IsValid()) {
-				double speed = 0.;
-				double seconds = g_this_point->GetCreateTime()
-									 .Subtract(g_prev_point->GetCreateTime())
-									 .GetSeconds()
-									 .ToDouble();
-
-				if (seconds > 0.0)
-					speed = gt_leg_dist / seconds * 3600;
-
-				ret.Printf(_T("%5.2f"), toUsrSpeed(speed));
-			} else
-				ret = _("--");
-			break;
+			return get_speed(item, gt_leg_dist, *g_this_point, *g_prev_point);
 
 		default:
 			break;

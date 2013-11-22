@@ -28,19 +28,31 @@
 #include <wx/listctrl.h>
 
 class Route;
+class RoutePoint;
 
 class OCPNTrackListCtrl : public wxListCtrl
 {
-	public:
-		OCPNTrackListCtrl(wxWindow * parent, wxWindowID id, const wxPoint & pos, const wxSize & size, long style);
-		~OCPNTrackListCtrl();
+public:
+	OCPNTrackListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size,
+					  long style);
+	~OCPNTrackListCtrl();
 
-		wxString OnGetItemText(long item, long column) const;
-		int OnGetItemColumnImage(long item, long column) const;
+	wxString OnGetItemText(long item, long column) const;
+	int OnGetItemColumnImage(long item, long column) const;
 
-		Route * m_pRoute;
-		int m_tz_selection;
-		int m_LMT_Offset;
+	void set_route(Route* route);
+
+private:
+	wxString leg_id(long item) const;
+	wxString latitude(const RoutePoint& point) const;
+	wxString longitude(const RoutePoint& point) const;
+	wxString timestamp(const RoutePoint& point) const;
+	wxString get_speed(long item, double dist, const RoutePoint& point_new,
+					   const RoutePoint& point_prev) const;
+
+	Route* m_pRoute;
+	int m_tz_selection;
+	int m_LMT_Offset;
 };
 
 #endif

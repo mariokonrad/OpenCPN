@@ -376,7 +376,7 @@ void TrackPropDlg::InitializeList()
 	if (NULL == m_pRoute)
 		return;
 
-	m_lcPoints->m_pRoute = m_pRoute;
+	m_lcPoints->set_route(m_pRoute);
 	m_lcPoints->SetItemCount(m_pRoute->GetnPoints());
 }
 

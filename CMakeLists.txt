@@ -71,7 +71,7 @@ IF (NOT WIN32)
 	SET (LIB_INSTALL_DIR "lib")
 	IF (EXISTS /etc/debian_version)
 		SET (PACKAGE_FORMAT "DEB")
-		SET (PACKAGE_DEPS "libc6, libwxgtk2.8-0 (>= 2.8.7.1), libglu1-mesa (>= 7.0.0), libgl1-mesa-glx (>= 7.0.0), zlib1g, bzip2, libtinyxml2.6.2, libportaudio2")
+		SET (PACKAGE_DEPS "libc6, libwxgtk2.8-0 (>= 2.8.7.1), libglu1-mesa (>= 7.0.0), libgl1-mesa-glx (>= 7.0.0), zlib1g, bzip2, libportaudio2")
 		SET (PACKAGE_RECS "xcalib")
 		SET (LIB_INSTALL_DIR "lib")
 		IF (CMAKE_SIZEOF_VOID_P MATCHES "8")
@@ -149,8 +149,8 @@ endif(OPENGL_GLU_FOUND)
 ################################################################################
 
 set(pugixml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(pugixml_INCLUDE_DIR ${pugixml_INSTALL_DIR}/include) # TODO: is this automatic?
-set(pugixml_LIBRARY_DIR ${pugixml_INSTALL_DIR}/lib) # TODO: is this automatic?
+set(pugixml_INCLUDE_DIR ${pugixml_INSTALL_DIR}/include)
+set(pugixml_LIBRARY_DIR ${pugixml_INSTALL_DIR}/lib)
 
 ExternalProject_Add(extern_pugixml
 	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/pugixml
@@ -179,8 +179,8 @@ include_directories(${pugixml_INCLUDE_DIR})
 ################################################################################
 
 set(tinyxml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(tinyxml_INCLUDE_DIR ${tinyxml_INSTALL_DIR}/include) # TODO: is this automatic?
-set(tinyxml_LIBRARY_DIR ${tinyxml_INSTALL_DIR}/lib) # TODO: is this automatic?
+set(tinyxml_INCLUDE_DIR ${tinyxml_INSTALL_DIR}/include)
+set(tinyxml_LIBRARY_DIR ${tinyxml_INSTALL_DIR}/lib)
 
 ExternalProject_Add(extern_tinyxml
 	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/tinyxml
@@ -388,7 +388,6 @@ IF(UNIX)
 	INCLUDE_DIRECTORIES(${BZIP2_INCLUDE_DIR})
 	FIND_PACKAGE(ZLIB REQUIRED)
 	INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIR})
-	FIND_PACKAGE(TinyXML)
 ENDIF(UNIX)
 
 # For convenience we define the sources as a variable. You can add
@@ -436,7 +435,7 @@ SET(SRC_NMEA0183
 	src/nmea0183/apb.hpp
 	)
 
-add_library(NMEA0183 ${SRC_NMEA0183})
+add_library(NMEA0183 STATIC ${SRC_NMEA0183})
 include_directories(${CMAKE_SOURCE_DIR}/src/nmea0183)
 
 
@@ -1047,7 +1046,8 @@ if (USE_S57)
 		src/mygdal/gdal_misc.cpp
 		)
 
-	add_library(S57ENC ${SRC_S57ENC})
+	add_library(S57ENC STATIC ${SRC_S57ENC})
+	add_dependencies(S57ENC tinyxml)
 	include_directories(${CMAKE_SOURCE_DIR}/src/mygdal)
 	set(EXTRA_LIBS ${EXTRA_LIBS} S57ENC)
 else (USE_S57)
@@ -1106,7 +1106,7 @@ if (USE_GARMINHOST)
 		SET(SRC_GARMINHOST ${SRC_GARMINHOST} src/garmin/jeeps/gpsusbwin.c)
 	endif(WIN32)
 
-	add_library(GARMINHOST ${SRC_GARMINHOST})
+	add_library(GARMINHOST STATIC ${SRC_GARMINHOST})
 	include_directories(${CMAKE_SOURCE_DIR}/src/garmin/jeeps)
 	set(EXTRA_LIBS ${EXTRA_LIBS} GARMINHOST)
 

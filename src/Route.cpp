@@ -41,6 +41,8 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(RouteList);
 
+#include <algorithm>
+
 extern WayPointman* pWayPointMan;
 extern int g_LayerIdx;
 extern Routeman* g_pRouteMan;
@@ -89,9 +91,9 @@ Route::Route(void)
 
 Route::~Route(void)
 {
-	pRoutePointList->DeleteContents(false); // do not delete Marks
-	pRoutePointList->Clear();
+	pRoutePointList->clear();
 	delete pRoutePointList;
+	pRoutePointList = NULL;
 }
 
 bool Route::CrossesIDL() const
@@ -265,7 +267,7 @@ void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_de
 	pNewPoint->m_bIsolatedMark = false; // definitely no longer isolated
 	pNewPoint->m_bIsInRoute = true;
 
-	pRoutePointList->Append(pNewPoint);
+	pRoutePointList->push_back(pNewPoint);
 
 	m_nPoints++;
 
@@ -557,9 +559,10 @@ RoutePoint* Route::InsertPointBefore(RoutePoint* pRP, double rlat, double rlon, 
 	newpoint->m_bDynamicName = true;
 	newpoint->SetNameShown(false);
 
-	int nRP = pRoutePointList->IndexOf(pRP);
-	pRoutePointList->Insert(nRP, newpoint);
+	RoutePointList::iterator i = std::find(pRoutePointList->begin(), pRoutePointList->end(), pRP);
+	pRoutePointList->insert(i, newpoint);
 
+	int nRP = i - pRoutePointList->begin();
 	RoutePointGUIDList.Insert(pRP->m_GUID, nRP);
 
 	m_nPoints++;
@@ -589,11 +592,11 @@ RoutePoint* Route::GetLastPoint()
 
 int Route::GetIndexOf(RoutePoint* prp)
 {
-	int ret = pRoutePointList->IndexOf(prp) + 1;
-	if (ret == wxNOT_FOUND)
+	RoutePointList::iterator i = std::find(pRoutePointList->begin(), pRoutePointList->end(), prp);
+	if (i == pRoutePointList->end())
 		return 0;
-	else
-		return ret;
+
+	return 1 + (i - pRoutePointList->begin());
 }
 
 void Route::DeletePoint(RoutePoint* rp, bool bRenamePoints)
@@ -606,7 +609,7 @@ void Route::DeletePoint(RoutePoint* rp, bool bRenamePoints)
 	pSelect->DeleteAllSelectableRouteSegments(this);
 	pConfig->DeleteWayPoint(rp);
 
-	pRoutePointList->remove(rp);
+	pRoutePointList->erase(std::find(pRoutePointList->begin(), pRoutePointList->end(), rp));
 
 	if ((rp->m_GUID.Len()) && (wxNOT_FOUND != RoutePointGUIDList.Index(rp->m_GUID)))
 		RoutePointGUIDList.Remove(rp->m_GUID);
@@ -638,7 +641,7 @@ void Route::RemovePoint(RoutePoint* rp, bool bRenamePoints)
 	pSelect->DeleteAllSelectableRoutePoints(this);
 	pSelect->DeleteAllSelectableRouteSegments(this);
 
-	pRoutePointList->remove(rp);
+	pRoutePointList->erase(std::find(pRoutePointList->begin(), pRoutePointList->end(), rp));
 	if (wxNOT_FOUND != RoutePointGUIDList.Index(rp->m_GUID))
 		RoutePointGUIDList.Remove(rp->m_GUID);
 	m_nPoints -= 1;
@@ -887,8 +890,7 @@ void Route::Reverse(bool bRenamePoints)
 
 	RoutePointGUIDList = ArrayTemp;
 
-	pRoutePointList->DeleteContents(false);
-	pRoutePointList->Clear();
+	pRoutePointList->clear();
 	m_nPoints = 0;
 	m_route_length = 0.0;
 

@@ -36,14 +36,13 @@
 
 #include <gpx/GpxDocument.h>
 
+#include <algorithm>
+
 #include <wx/imaglist.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
 #include <wx/image.h>
 #include <wx/dcmemory.h>
-
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(RoutePointList);
 
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern WayPointman* pWayPointMan;
@@ -329,7 +328,7 @@ void WayPointman::remove(RoutePoint* route_point)
 	if (!route_point)
 		return;
 
-	m_pWayPointList->remove(route_point);
+	m_pWayPointList->erase(std::find(m_pWayPointList->begin(), m_pWayPointList->end(), route_point));
 }
 
 RoutePoint* WayPointman::find(const wxString& guid)

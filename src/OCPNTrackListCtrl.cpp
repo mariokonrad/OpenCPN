@@ -27,20 +27,7 @@
 #include <PositionParser.h>
 #include <Units.h>
 
-#include <global/OCPN.h>
-#include <global/Navigation.h>
-
 #include <geo/GeoRef.h>
-
-// FIXME: fix this crap: it makes the class essentially a singleton
-static wxRoutePointListNode* g_this_point_node = NULL;
-static wxRoutePointListNode* g_prev_point_node = NULL;
-static RoutePoint* g_this_point;
-static RoutePoint* g_prev_point;
-static int g_prev_point_index = -1;
-static int g_prev_item = -1;
-static double gt_brg = 0.0;
-static double gt_leg_dist = 0.0;
 
 #define UTCINPUT         0
 #define LTINPUT          1    // i.e. this PC local time
@@ -48,6 +35,16 @@ static double gt_leg_dist = 0.0;
 #define INPUT_FORMAT     1
 #define DISPLAY_FORMAT   2
 #define TIMESTAMP_FORMAT 3
+
+enum Column {
+	COLUMN_LEG = 0,
+	COLUMN_DISTANCE = 1,
+	COLUMN_BEARING = 2,
+	COLUMN_LATITUDE = 3,
+	COLUMN_LONGITUDE = 4,
+	COLUMN_TIMESTAMP = 5,
+	COLUMN_SPEED = 6
+};
 
 static wxString timestamp2s(wxDateTime ts, int tz_selection, long LMT_offset, int format)
 {
@@ -87,7 +84,6 @@ OCPNTrackListCtrl::OCPNTrackListCtrl(wxWindow* parent, wxWindowID id, const wxPo
 	, m_tz_selection(0)
 	, m_LMT_Offset(0)
 {
-	g_prev_item = -1;
 }
 
 OCPNTrackListCtrl::~OCPNTrackListCtrl()
@@ -98,153 +94,69 @@ void OCPNTrackListCtrl::set_route(Route* route)
 	m_pRoute = route;
 }
 
-wxString OCPNTrackListCtrl::leg_id(long item) const
-{
-	if (item == 0)
-		return _T("---");
-	return wxString::Format(_T("%ld"), item);
-}
-
-wxString OCPNTrackListCtrl::latitude(const RoutePoint& point) const
-{
-	return toSDMM(1, point.m_lat, 1);
-}
-
-wxString OCPNTrackListCtrl::longitude(const RoutePoint& point) const
-{
-	return toSDMM(2, point.m_lon, 1);
-}
-
-wxString OCPNTrackListCtrl::timestamp(const RoutePoint& point) const
-{
-	wxDateTime t = point.GetCreateTime();
-	if (t.IsValid())
-		return timestamp2s(t, m_tz_selection, m_LMT_Offset, TIMESTAMP_FORMAT);
-	return _T("----");
-}
-
-wxString OCPNTrackListCtrl::get_speed(long item, double dist, const RoutePoint& point_new,
-									  const RoutePoint& point_prev) const
-{
-	if ((item > 0) && point_new.GetCreateTime().IsValid() && point_prev.GetCreateTime().IsValid()) {
-		double speed = 0.0;
-		double seconds = point_new.GetCreateTime()
-							 .Subtract(point_prev.GetCreateTime())
-							 .GetSeconds()
-							 .ToDouble();
-
-		if (seconds > 0.0)
-			speed = dist / seconds * 3600;
-
-		return wxString::Format(_T("%5.2f"), toUsrSpeed(speed));
-	}
-	return _("--");
-}
-
 wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 {
-	wxString ret;
-
-	if (item != g_prev_item) {
-		if (g_prev_point_index == (item - 1)) {
-			if (!g_prev_point_node)
-				return wxEmptyString;
-			g_prev_point = g_this_point;
-			g_this_point_node = g_prev_point_node->GetNext();
-			if (g_this_point_node)
-				g_this_point = g_this_point_node->GetData();
-			else
-				g_this_point = NULL;
-		} else {
-			wxRoutePointListNode* node = m_pRoute->pRoutePointList->GetFirst();
-			if (node) {
-				if (item > 0) {
-					int i = 0;
-					while (node && (i < (item - 1))) {
-						node = node->GetNext();
-						i++;
-					}
-					g_prev_point_node = node;
-					if (!node)
-						return wxEmptyString;
-					g_prev_point = g_prev_point_node->GetData();
-
-					g_this_point_node = g_prev_point_node->GetNext();
-					if (g_this_point_node)
-						g_this_point = g_this_point_node->GetData();
-					else
-						g_this_point = NULL;
-				} else {
-					g_prev_point_node = NULL;
-					g_prev_point = NULL;
-
-					g_this_point_node = node;
-					if (g_this_point_node)
-						g_this_point = g_this_point_node->GetData();
-					else
-						g_this_point = NULL;
-				}
-			} else {
-				g_prev_point_node = NULL;
-				g_prev_point = NULL;
-				g_this_point_node = NULL;
-				g_this_point = NULL;
-			}
-		}
-
-		// Update for next time
-		g_prev_point_node = g_this_point_node;
-		g_prev_point_index = item;
-
-		g_prev_item = item;
-	}
-
-	if (!g_this_point)
+	if (!m_pRoute)
+		return wxEmptyString;
+	if (!m_pRoute->pRoutePointList)
+		return wxEmptyString;
+	if (m_pRoute->pRoutePointList->size() == 0)
+		return wxEmptyString;
+	if (item >= static_cast<long>(m_pRoute->pRoutePointList->size()))
 		return wxEmptyString;
 
-	switch (column) {
-		case 0:
-			return leg_id(item);
+	RoutePoint* point = m_pRoute->pRoutePointList->at(item);
 
-		case 1:
-			double slat;
-			double slon;
-			if (item == 0) {
-				const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-				slat = nav.lat;
-				slon = nav.lon;
-			} else {
-				slat = g_prev_point->m_lat;
-				slon = g_prev_point->m_lon;
-			}
+	double distance = 0.0;
+	double bearing = 0.0;
+	double speed = 0.0;
 
-			geo::DistanceBearingMercator(g_this_point->m_lat, g_this_point->m_lon, slat, slon,
-										 &gt_brg, &gt_leg_dist);
-
-			ret.Printf(_T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance(gt_leg_dist));
-			break;
-
-		case 2:
-			ret.Printf(_T("%03.0f \u00B0T"), gt_brg);
-			break;
-
-		case 3:
-			return latitude(*g_this_point);
-
-		case 4:
-			return longitude(*g_this_point);
-
-		case 5:
-			return timestamp(*g_this_point);
-
-		case 6:
-			return get_speed(item, gt_leg_dist, *g_this_point, *g_prev_point);
-
-		default:
-			break;
+	// calculate distance, bearing and speed between the current point and its predecessor
+	if ((item > 0) && (item < static_cast<long>(m_pRoute->pRoutePointList->size()))) {
+		RoutePoint* previous = m_pRoute->pRoutePointList->at(item - 1);
+		geo::DistanceBearingMercator(point->m_lat, point->m_lon, previous->m_lat, previous->m_lon,
+									 &bearing, &distance);
+		double dt
+			= point->GetCreateTime().Subtract(previous->GetCreateTime()).GetSeconds().ToDouble();
+		if (dt > 0.0)
+			speed = distance / dt * 3600.0;
 	}
 
-	return ret;
+	switch (static_cast<Column>(column)) {
+		case COLUMN_LEG:
+			if (item == 0)
+				return _T("--");
+			return wxString::Format(_T("%ld"), item);
+
+		case COLUMN_DISTANCE:
+			if (item == 0)
+				return _T("--");
+			return wxString::Format(_T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance(distance));
+
+		case COLUMN_BEARING:
+			if (item == 0)
+				return _T("--");
+			return wxString::Format(_T("%03.0f \u00B0T"), bearing);
+
+		case COLUMN_LATITUDE:
+			return toSDMM(1, point->m_lat, 1);
+
+		case COLUMN_LONGITUDE:
+			return toSDMM(2, point->m_lon, 1);
+
+		case COLUMN_TIMESTAMP:
+			if (!point->GetCreateTime().IsValid())
+				return _T("----");
+			return timestamp2s(point->GetCreateTime(), m_tz_selection, m_LMT_Offset,
+							   TIMESTAMP_FORMAT);
+
+		case COLUMN_SPEED:
+			if (item == 0)
+				return _T("--");
+			return wxString::Format(_T("%5.2f"), toUsrSpeed(speed));
+	}
+
+	return wxEmptyString;
 }
 
 int OCPNTrackListCtrl::OnGetItemColumnImage(long, long) const

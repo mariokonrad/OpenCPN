@@ -122,8 +122,7 @@ int Garmin_GPS_SendWaypoints( wxString &port_name, RoutePointList *wplist)
       for(int i=0 ; i < nPoints ; i++)
       {
             GPS_PWay pway = ppway[i];
-            wxRoutePointListNode * node = wplist->Item(i); // FIXME: access to list suboptimal at best
-            RoutePoint *prp = node->GetData();
+            RoutePoint *prp = wplist->at(i);
 
             pway->lat = prp->m_lat;
             pway->lon = prp->m_lon;
@@ -190,8 +189,7 @@ GPS_SWay **Garmin_GPS_Create_A200_Route(Route *pr, int route_number, int *size)
       for(int i=1 ; i < *size ; i++)
       {
             GPS_PWay pway = ppway[i];
-            wxRoutePointListNode *node = wplist->Item(i-1);
-            RoutePoint *prp = node->GetData();
+            RoutePoint *prp = wplist->at(i-1);
 
             pway->lat = prp->m_lat;
             pway->lon = prp->m_lon;
@@ -252,8 +250,7 @@ GPS_SWay **Garmin_GPS_Create_A201_Route(Route *pr, int route_number, int *size)
 	    if (i % 2 == 1) /* Odd */
 	    {
 	          GPS_PWay pway = ppway[i];
-                  wxRoutePointListNode *node = wplist->Item((i-1)/2);
-                  RoutePoint *prp = node->GetData();
+                  RoutePoint *prp = wplist->at((i-1)/2);
 
                   pway->lat = prp->m_lat;
                   pway->lon = prp->m_lon;

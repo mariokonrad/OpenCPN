@@ -25,6 +25,7 @@
 #define __ROUTEPOINT_H__
 
 #include <Hyperlink.h>
+#include <vector>
 
 #include <wx/string.h>
 #include <wx/datetime.h>
@@ -130,6 +131,6 @@ private:
 	wxString m_timestring;
 };
 
-WX_DECLARE_LIST(RoutePoint, RoutePointList); // FIXME: use std container
+typedef std::vector<RoutePoint*> RoutePointList;
 
 #endif

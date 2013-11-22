@@ -1207,9 +1207,9 @@ bool RouteProp::UpdateProperties()
 
 		wxString nullify = _T("----");
 
-		wxRoutePointListNode* node = m_pRoute->pRoutePointList->GetFirst();
-		while (node) {
-			RoutePoint* prp = node->GetData();
+		RoutePointList::iterator node = m_pRoute->pRoutePointList->begin();
+		while (node != m_pRoute->pRoutePointList->end()) {
+			RoutePoint* prp = *node;
 			long item_line_index = i + stopover_count;
 
 			// Leg
@@ -1267,8 +1267,8 @@ bool RouteProp::UpdateProperties()
 			// calculation of course at current WayPoint.
 			double course = 10;
 			double tmp_leg_dist = 23;
-			wxRoutePointListNode* next_node = node->GetNext();
-			RoutePoint* _next_prp = (next_node) ? next_node->GetData() : NULL;
+			RoutePointList::iterator next_node = node + 1;
+			RoutePoint* _next_prp = (next_node != m_pRoute->pRoutePointList->end()) ? *next_node : NULL;
 			if (_next_prp) {
 				geo::DistanceBearingMercator(_next_prp->m_lat, _next_prp->m_lon, prp->m_lat,
 											 prp->m_lon, &course, &tmp_leg_dist);
@@ -1437,7 +1437,7 @@ bool RouteProp::UpdateProperties()
 			} else {
 				arrival = true;
 				i++;
-				node = node->GetNext();
+				++node;
 			}
 		}
 	}

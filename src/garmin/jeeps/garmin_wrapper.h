@@ -23,7 +23,8 @@
 #ifndef __GARMIN_WRAPPER__H__
 #define __GARMIN_WRAPPER__H__
 
-class RoutePointList;
+#include <RoutePoint.h>
+
 class Route;
 class wxString;
 class wxGauge;

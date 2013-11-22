@@ -28,13 +28,13 @@
 #include <wx/imaglist.h>
 
 #include <ColorScheme.h>
+#include <RoutePoint.h>
 
 #include <vector>
 
 namespace ocpnStyle { class Style; }
 
 class RoutePoint;
-class RoutePointList;
 class MarkIcon;
 class wxBitmap;
 

@@ -2094,12 +2094,12 @@ void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent&)
 		RoutePoint* wp = (RoutePoint*)m_pWptListCtrl->GetItemData(item);
 
 		if (wp && !wp->m_bIsInLayer)
-			list.Append(wp);
+			list.push_back(wp);
 	}
 
 	if (busy) {
 		for (unsigned int i = 0; i < list.size(); i++) {
-			RoutePoint* wp = list.Item(i)->GetData();
+			RoutePoint* wp = list.at(i);
 			if (wp) {
 				if (wp->m_bIsInRoute || wp->m_bIsInTrack) {
 					if (wxYES
@@ -2194,7 +2194,7 @@ void RouteManagerDialog::OnWptExportClick(wxCommandEvent&)
 		RoutePoint* wp = (RoutePoint*)m_pWptListCtrl->GetItemData(item);
 
 		if (wp && !wp->m_bIsInLayer) {
-			list.Append(wp);
+			list.push_back(wp);
 			if (wp->GetName() != wxEmptyString)
 				suggested_name = wp->GetName();
 		}

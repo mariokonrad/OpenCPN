@@ -43,13 +43,6 @@ public:
 	void set_route(Route* route);
 
 private:
-	wxString leg_id(long item) const;
-	wxString latitude(const RoutePoint& point) const;
-	wxString longitude(const RoutePoint& point) const;
-	wxString timestamp(const RoutePoint& point) const;
-	wxString get_speed(long item, double dist, const RoutePoint& point_new,
-					   const RoutePoint& point_prev) const;
-
 	Route* m_pRoute;
 	int m_tz_selection;
 	int m_LMT_Offset;

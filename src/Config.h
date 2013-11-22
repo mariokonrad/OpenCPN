@@ -26,6 +26,7 @@
 
 #include <ChartDirInfo.h>
 #include <chart/ChartDatabase.h>
+#include <RoutePoint.h>
 
 #include <wx/config.h>
 #include <wx/confbase.h>
@@ -34,7 +35,6 @@
 class Route;
 class RoutePoint;
 class RouteList;
-class RoutePointList;
 class NavObjectChanges;
 class NavObjectCollection;
 class wxWindow;

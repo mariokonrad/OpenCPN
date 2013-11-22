@@ -445,12 +445,12 @@ void Track::Draw(ocpnDC& dc, ViewPort& VP)
 	}
 }
 
-Route* Track::RouteFromTrack(wxProgressDialog* pprog)
+Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this mess
 {
 	Route* route = new Route();
-	wxRoutePointListNode* prpnode = pRoutePointList->GetFirst();
-	RoutePoint* pWP_src = prpnode->GetData();
-	wxRoutePointListNode* prpnodeX;
+	RoutePointList::iterator prpnode = pRoutePointList->begin();
+	RoutePoint* pWP_src = *prpnode;
+	RoutePointList::iterator prpnodeX;
 	RoutePoint* pWP_dst;
 	RoutePoint* prp_OK = NULL; // last routepoint known not to exceed xte limit, if not yet added
 
@@ -484,10 +484,10 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog)
 
 	// add intermediate points as needed
 
-	prpnode = prpnode->GetNext();
+	++prpnode;
 
-	while (prpnode) {
-		RoutePoint* prp = prpnode->GetData();
+	while (prpnode != pRoutePointList->end()) {
+		RoutePoint* prp = *prpnode;
 		prpnodeX = prpnode;
 		pWP_dst = pWP_src;
 
@@ -531,8 +531,8 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog)
 				prp_OK = prp;
 		}
 
-		while (prpnodeX) {
-			RoutePoint* prpX = prpnodeX->GetData();
+		while (prpnodeX != pRoutePointList->end()) {
+			RoutePoint* prpX = *prpnodeX;
 			xte = GetXTE(pWP_src, prpX, prp);
 			if (isProminent || (xte > g_TrackDeltaDistance)) {
 
@@ -548,15 +548,14 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog)
 
 				pWP_src = pWP_dst;
 				next_ic = 0;
-				prpnodeX = NULL;
+				prpnodeX = pRoutePointList->end();
 				prp_OK = NULL;
 			}
 
-			if (prpnodeX)
-				prpnodeX = prpnodeX->GetPrevious();
-			if (back_ic-- <= 0) {
-				prpnodeX = NULL;
-			}
+			if (prpnodeX != pRoutePointList->end())
+				--prpnodeX;
+			if (back_ic-- <= 0)
+				prpnodeX = pRoutePointList->end();
 		}
 
 		if (prp_OK) {
@@ -567,7 +566,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog)
 									 &delta_dist);
 
 		if (!((delta_dist > (g_TrackDeltaDistance)) && !prp_OK)) {
-			prpnode = prpnode->GetNext(); // RoutePoint
+			++prpnode;
 			next_ic++;
 		}
 		ic++;
@@ -635,12 +634,12 @@ int Track::Simplify(double maxDelta)
 	DouglasPeuckerReducer(pointlist, 0, pointlist.size() - 1, maxDelta);
 
 	pSelect->DeleteAllSelectableTrackSegments(this);
-	pRoutePointList->Clear();
+	pRoutePointList->clear();
 
 	for (size_t i = 0; i < pointlist.size(); i++) {
 		if (pointlist[i]->m_bIsActive) {
 			pointlist[i]->m_bIsActive = false;
-			pRoutePointList->Append(pointlist[i]);
+			pRoutePointList->push_back(pointlist[i]);
 		} else {
 			delete pointlist[i];
 			reduction++;

@@ -44,6 +44,8 @@
 
 #include <plugin/PlugInManager.h>
 
+#include <algorithm>
+
 #include <cstdlib>
 #include <cmath>
 #include <ctime>
@@ -834,9 +836,9 @@ void Routeman::DeleteRoute(Route * pRoute)
 	pRouteList->remove(pRoute);
 
 	// walk the route, tentatively deleting/marking points used only by this route
-	wxRoutePointListNode *pnode = pRoute->pRoutePointList->GetFirst();
-	while (pnode) {
-		RoutePoint *prp = pnode->GetData();
+	RoutePointList::iterator pnode = pRoute->pRoutePointList->begin();
+	while (pnode != pRoute->pRoutePointList->end()) {
+		RoutePoint *prp = *pnode;
 
 		// check all other routes to see if this point appears in any other route
 		Route *pcontainer_route = FindRouteContainingWaypoint( prp );
@@ -850,13 +852,13 @@ void Routeman::DeleteRoute(Route * pRoute)
 				pSelect->DeleteSelectablePoint(prp, SelectItem::TYPE_ROUTEPOINT);
 
 				// Remove all instances of this point from the list.
-				wxRoutePointListNode *pdnode = pnode;
-				while (pdnode) {
-					pRoute->pRoutePointList->Erase(pdnode);
-					pdnode = pRoute->pRoutePointList->Find(prp);
+				RoutePointList::iterator pdnode = pnode;
+				while (pdnode != pRoute->pRoutePointList->end()) {
+					pRoute->pRoutePointList->erase(pdnode);
+					pdnode = std::find(pRoute->pRoutePointList->begin(), pRoute->pRoutePointList->end(), prp);
 				}
 
-				pnode = NULL;
+				pnode = pRoute->pRoutePointList->end();
 				delete prp;
 			} else {
 				prp->m_bDynamicName = false;
@@ -865,10 +867,10 @@ void Routeman::DeleteRoute(Route * pRoute)
 			}
 		}
 
-		if (pnode) {
-			pnode = pnode->GetNext();
+		if (pnode != pRoute->pRoutePointList->end()) {
+			++pnode;
 		} else {
-			pnode = pRoute->pRoutePointList->GetFirst(); // restart the list
+			pnode = pRoute->pRoutePointList->begin(); // restart the list
 		}
 	}
 

@@ -42,9 +42,18 @@ if(COMMAND cmake_policy)
 	CMAKE_POLICY(SET CMP0011 OLD)
 endif(COMMAND cmake_policy)
 
+#SET(CMAKE_VERBOSE_MAKEFILE ON)
+
+################################################################################
+# project information
+################################################################################
+
 project(OpenCPN)
 
-#SET(CMAKE_VERBOSE_MAKEFILE ON)
+set(VERSION_MAJOR "3")
+set(VERSION_MINOR "3")
+set(VERSION_PATCH "1117")
+set(VERSION_DATE "2013-11-17")
 
 if(APPLE)
 	set(PACKAGE_NAME OpenCPN)
@@ -233,7 +242,6 @@ message(STATUS "wxWidgets Libraries: ${wxWidgets_LIBRARIES}")
 ################################################################################
 # package version
 ################################################################################
-include(${CMAKE_SOURCE_DIR}/VERSION.cmake)
 set(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
 
 set(PACKAGE_RELEASE "1" CACHE STRING "Package release number")

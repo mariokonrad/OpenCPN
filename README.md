@@ -1,6 +1,5 @@
-----------------------------------------------------------------------
-1.  Overview
-----------------------------------------------------------------------
+Overview
+========
 
 a.  Opencpn was built with the following objectives in mind.
 
@@ -28,6 +27,9 @@ a.  Opencpn was built with the following objectives in mind.
     M/V Dyad, a 48 ft trawler yacht cruising from Newfoundland to the
     Bahamas yearly.
 
+
+Notes
+=====
 
 The purpose of this repository is to achieve a refactored version
 of the OpenCPN navigation software.

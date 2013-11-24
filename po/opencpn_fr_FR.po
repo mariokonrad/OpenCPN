@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-22 20:37-0500\n"
+"POT-Creation-Date: 2013-11-23 18:19-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Gilletarom <contact@gilletarom.fr>\n"
 "Language-Team: \n"
@@ -141,11 +141,18 @@ msgstr " %H heures  %M minutes"
 msgid " (Ctrl-Space)"
 msgstr " (Ctrl-Space)"
 #
+msgid " (Last Known)"
+msgstr ""
+#
 msgid " - "
 msgstr " - "
 #
 msgid " -- [Portable(-p) executing from "
 msgstr "  --[Version portable(-p) executée à partir de (ou depuis)"
+#
+#, fuzzy
+msgid " COG Unavailable"
+msgstr "Pas de carte disponible"
 #
 msgid " ChartFile:  "
 msgstr " Fichier de carte : "
@@ -311,6 +318,10 @@ msgstr "--"
 msgid "--"
 msgstr "--"
 #
+#, fuzzy
+msgid "---"
+msgstr "--"
+#
 msgid "---<<< Warning:  Chart georef accuracy is poor. >>>---"
 msgstr ""
 "---<<< Alerte :  La qualité du géoréférencement de la carte est insuffisante. "
@@ -446,6 +457,10 @@ msgstr ""
 msgid "?"
 msgstr "?"
 #
+#, fuzzy
+msgid "A"
+msgstr "_A"
+#
 msgid "AIS"
 msgstr "AIS :"
 #
@@ -533,6 +548,9 @@ msgstr "Avancées"
 # AIS
 msgid "Aground"
 msgstr "Echoué"
+#
+msgid "Aid to Navigation"
+msgstr ""
 #
 msgid "All"
 msgstr "Tout"
@@ -644,8 +662,16 @@ msgstr "Trace journalière automatique : Activer"
 msgid "Avg. speed"
 msgstr "Vitesse moyenne (Noeuds)"
 #
+#, fuzzy
+msgid "B"
+msgstr "_B"
+#
 msgid "Base"
 msgstr "Base"
+#
+#, fuzzy
+msgid "Base Station"
+msgstr "Destination"
 #
 msgid "Basic"
 msgstr "Base"
@@ -946,6 +972,10 @@ msgstr "Sélectionnez un fichier"
 msgid "Class"
 msgstr ""
 #
+#, fuzzy
+msgid "Clear"
+msgstr "Ne rien sélectionner"
+#
 msgid "Clear All"
 msgstr "Ne rien sélectionner"
 #
@@ -1046,6 +1076,14 @@ msgstr "Plong."
 #
 msgid "DSC"
 msgstr "DSC"
+#
+#, fuzzy
+msgid "DSC Distress"
+msgstr "Détresse"
+#
+#, fuzzy
+msgid "DSC Position Report"
+msgstr "Rapport de position"
 #
 msgid "Dark Blue"
 msgstr "Bleu foncé"
@@ -1423,6 +1461,10 @@ msgstr ""
 msgid "GPSD"
 msgstr "GPSD"
 #
+#, fuzzy
+msgid "GPSGate Buddy"
+msgstr "Portail Gps des amis"
+#
 msgid "GPX"
 msgstr "GPX"
 #
@@ -1449,6 +1491,9 @@ msgstr "Groupe\""
 #
 msgid "HSC"
 msgstr "grd. vit."
+#
+msgid "Heading"
+msgstr ""
 #
 msgid "Help"
 msgstr "Aide"
@@ -1500,6 +1545,9 @@ msgstr "Trace : Surligner"
 msgid "I&mport GPX..."
 msgstr "Importer GPX ......"
 #
+msgid "IMO"
+msgstr ""
+#
 msgid "Icon"
 msgstr "Icône"
 #
@@ -1535,6 +1583,9 @@ msgstr "Information : Zone d'abris"
 #
 msgid "Information: Position of icebreakers"
 msgstr "Information : Emplacement des briseglaces"
+#
+msgid "Inland Blue Flag"
+msgstr ""
 #
 msgid "Input filtering"
 msgstr "Filtrage en entrée"
@@ -1629,6 +1680,9 @@ msgstr "Feu avant"
 #
 msgid "Leading Light Rear"
 msgstr "Feu arrière"
+#
+msgid "Left"
+msgstr ""
 #
 msgid "Leg"
 msgstr "Segment"
@@ -2252,6 +2306,12 @@ msgstr "Effacer les cibles perdues après ... minutes :"
 msgid "Rename Waypoints?"
 msgstr "Renommer les waypoint ?"
 #
+msgid "Report Age"
+msgstr ""
+#
+msgid "Report as of"
+msgstr ""
+#
 msgid "Report from ship: Icing info"
 msgstr "Observationt de navire : Présence de glace"
 #
@@ -2315,6 +2375,10 @@ msgstr ""
 msgid "Reverse..."
 msgstr "Inverser ..."
 #
+#, fuzzy
+msgid "Right"
+msgstr "Feu"
+#
 # Mismatch dans l'original : rogue au lieu de rouge.
 msgid "Rogue or suspicious vessel"
 msgstr "Navire voyou ou suspect"
@@ -2365,11 +2429,17 @@ msgstr "Voil."
 msgid "SAR/V"
 msgstr "Nav. sauv."
 #
+msgid "SART"
+msgstr ""
+#
 msgid "SOG COG"
 msgstr "SOG / COG  (vitesse/cap fond )"
 #
 msgid "Safe Water"
 msgstr "Eau libre"
+#
+msgid "Safety Broadcast Message"
+msgstr ""
 #
 msgid "Safety Depth"
 msgstr "Profondeur de sécurité"
@@ -2448,6 +2518,10 @@ msgstr "Filtre de phrases"
 #
 msgid "Serial"
 msgstr "Série"
+#
+#, fuzzy
+msgid "Set"
+msgstr "Coucher du soleil"
 #
 msgid "Set Anchor Watch"
 msgstr "Alarme de mouillage : Activer"
@@ -2911,6 +2985,9 @@ msgstr "Traiter les phrases de type WPL comme des rapports de position APRS"
 msgid "Tug"
 msgstr "Remorqueur"
 #
+msgid "Turn Rate"
+msgstr ""
+#
 msgid "Type"
 msgstr "Type"
 #
@@ -2941,6 +3018,10 @@ msgstr "Faisant route"
 #
 msgid "Undo"
 msgstr "Défaire --> "
+#
+#, fuzzy
+msgid "Unk"
+msgstr "Inconnue"
 #
 msgid "Unknown"
 msgstr "Inconnue"
@@ -3152,6 +3233,10 @@ msgstr "_B"
 msgid "_plus"
 msgstr "_plus"
 #
+#, fuzzy
+msgid "in"
+msgstr "Lien"
+#
 msgid "km"
 msgstr "km"
 #
@@ -3168,6 +3253,10 @@ msgid "m/s"
 msgstr "m/s"
 #
 msgid "mi"
+msgstr "mi"
+#
+#, fuzzy
+msgid "min"
 msgstr "mi"
 #
 msgid "mph"

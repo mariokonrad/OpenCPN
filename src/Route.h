@@ -24,7 +24,7 @@
 #ifndef __ROUTE_H__
 #define __ROUTE_H__
 
-#include <wx/list.h>
+#include <vector>
 
 #include <RoutePoint.h>
 #include <geo/BoundingBox.h>
@@ -142,6 +142,6 @@ private:
 	bool m_bcrosses_idl;
 };
 
-WX_DECLARE_LIST(Route, RouteList); // FIXME: use std container
+typedef std::vector<Route*> RouteList;
 
 #endif

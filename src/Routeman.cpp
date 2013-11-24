@@ -833,7 +833,7 @@ void Routeman::DeleteRoute(Route * pRoute)
 
 	// Remove the route from associated lists
 	pSelect->DeleteAllSelectableRouteSegments(pRoute);
-	pRouteList->remove(pRoute);
+	pRouteList->erase(std::find(pRouteList->begin(), pRouteList->end(), pRoute));
 
 	// walk the route, tentatively deleting/marking points used only by this route
 	RoutePointList::iterator pnode = pRoute->pRoutePointList->begin();
@@ -943,7 +943,7 @@ void Routeman::DeleteAllTracks(void)
 	::wxEndBusyCursor();
 }
 
-void Routeman::DeleteTrack(Route * pRoute)
+void Routeman::DeleteTrack(Route* pRoute)
 {
 	if (!pRoute)
 		return;
@@ -968,16 +968,14 @@ void Routeman::DeleteTrack(Route * pRoute)
 
 	// Remove the route from associated lists
 	pSelect->DeleteAllSelectableTrackSegments(pRoute);
-	pRouteList->remove(pRoute);
+	pRouteList->erase(std::find(pRouteList->begin(), pRouteList->end(), pRoute));
 
 	// walk the route, tentatively deleting/marking points used only by this route
 	int ic = 0;
 	RoutePointList::iterator pnode = pRoute->pRoutePointList->begin();
 	while (pnode != pRoute->pRoutePointList->end()) {
 		if (pprog) {
-			wxString msg;
-			msg.Printf(_T("%d/%d"), ic, count);
-			pprog->Update(ic, msg);
+			pprog->Update(ic, wxString::Format(_T("%d/%d"), ic, count));
 			ic++;
 		}
 

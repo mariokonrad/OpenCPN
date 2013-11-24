@@ -18,6 +18,7 @@ function usage()
 	echo "  --info             : print just info"
 	echo "  --cppcheck         : runs cppcheck on the entire core"
 	echo "  --understand       : creates a database for SciTools Understand"
+	echo "  --index            : creates cscope/ctags index"
 	echo ""
 	echo "Options altering the default (prepare, build, install, no packaging, not incremental):"
 	echo "  --increment  | -i  : build incrementally (no prior clean)"
@@ -37,6 +38,28 @@ function usage()
 	echo ""
 }
 
+function exec_create_index()
+{
+	if [ -r "tags" ] ; then
+		rm -f tags
+	fi
+	if [ -r "cscope.files" ] ; then
+		rm -f cscope.files
+	fi
+	if [ -r "cscope.out" ] ; then
+		rm -f cscope.out
+	fi
+
+	for dn in src ; do
+			find ${dn} -type f -regextype posix-egrep -regex ".*\.(cpp|cc|cxx|c|hpp|hh|hxx|h)" >> cscope.files
+	done
+
+	ctags -L cscope.files
+	cscope -b
+}
+
+
+
 # gather information about the platform
 script_path=$(dirname `readlink -f $0`)
 cores=`grep -i 'processor' /proc/cpuinfo | wc -l`
@@ -44,7 +67,7 @@ cores=`grep -i 'processor' /proc/cpuinfo | wc -l`
 
 # parse options
 
-args=`getopt --options "hrcvij:" --longoptions help,release,package,clean,verbose,info,increment,no-install,make,prepare,install,cppcheck,understand -- "$@"`
+args=`getopt --options "hrcvij:" --longoptions help,release,package,clean,verbose,info,index,increment,no-install,make,prepare,install,cppcheck,understand -- "$@"`
 if [ $? != 0 ] ; then
 	echo "Parameter error. abort." >&2
 	exit 1
@@ -90,6 +113,10 @@ while true ; do
 		--understand)
 			prepare=1
 			opt_understand=1
+			;;
+		--index)
+			exec_create_index
+			exit 0
 			;;
 		--no-build)
 			build=0

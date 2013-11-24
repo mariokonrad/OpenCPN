@@ -27,110 +27,95 @@
 #include <ChartDirInfo.h>
 #include <chart/ChartDatabase.h>
 #include <RoutePoint.h>
+#include <Route.h>
 
 #include <wx/config.h>
 #include <wx/confbase.h>
 #include <wx/fileconf.h>
 
-class Route;
-class RoutePoint;
-class RouteList;
 class NavObjectChanges;
 class NavObjectCollection;
 class wxWindow;
 
 class Config : public wxFileConfig
 {
-	private:
-		void load_view();
-		void load_frame();
-		void load_toolbar();
-		void load_ais_alert_dialog();
-		void load_ais_query_dialog();
-		void load_system_config(int);
-		void load_watchdog();
-		void load_cm93(int, int);
+public:
+	Config(const wxString& appName, const wxString& vendorName, const wxString& LocalFileName);
 
-		void write_view();
-		void write_frame();
-		void write_toolbar();
-		void write_ais_alert_dialog();
-		void write_ais_query_dialog();
-		void write_system_config();
-		void write_cm93();
+	int LoadConfig(int iteration);
 
-		static bool WptIsInRouteList(RoutePoint * pr);
+	virtual bool AddNewRoute(Route* pr, int ConfigRouteNum = -1);
+	virtual bool UpdateRoute(Route* pr);
+	virtual bool DeleteConfigRoute(Route* pr);
 
-		wxString visibleLayers;
-		wxString invisibleLayers;
+	virtual bool AddNewWayPoint(RoutePoint* pWP, int ConfigRouteNum = -1);
+	virtual bool UpdateWayPoint(RoutePoint* pWP);
+	virtual bool DeleteWayPoint(RoutePoint* pWP);
 
-	public:
-		Config(
-				const wxString & appName,
-				const wxString & vendorName,
-				const wxString & LocalFileName);
+	virtual void CreateConfigGroups(chart::ChartGroupArray* pGroupArray);
+	virtual void DestroyConfigGroups(void);
+	virtual void LoadConfigGroups(chart::ChartGroupArray* pGroupArray);
 
-		int LoadConfig(int iteration);
+	virtual bool UpdateChartDirs(ArrayOfCDI& dirarray);
+	virtual bool LoadChartDirArray(ArrayOfCDI& ChartDirArray);
+	virtual void UpdateSettings();
+	virtual void UpdateNavObj();
+	virtual void StoreNavObjChanges();
 
-		virtual bool AddNewRoute(Route * pr, int ConfigRouteNum = -1);
-		virtual bool UpdateRoute(Route * pr);
-		virtual bool DeleteConfigRoute(Route * pr);
+	bool LoadLayers(wxString& path);
 
-		virtual bool AddNewWayPoint(RoutePoint * pWP, int ConfigRouteNum = -1);
-		virtual bool UpdateWayPoint(RoutePoint * pWP);
-		virtual bool DeleteWayPoint(RoutePoint * pWP);
+	void ExportGPX(wxWindow* parent, bool bviz_only = false, bool blayer = false);
 
-		virtual void CreateConfigGroups(chart::ChartGroupArray * pGroupArray);
-		virtual void DestroyConfigGroups(void);
-		virtual void LoadConfigGroups(chart::ChartGroupArray * pGroupArray);
+	void UI_ImportGPX(wxWindow* parent, bool islayer = false, wxString dirpath = _T(""),
+					  bool isdirectory = true);
 
-		virtual bool UpdateChartDirs(ArrayOfCDI & dirarray);
-		virtual bool LoadChartDirArray(ArrayOfCDI & ChartDirArray);
-		virtual void UpdateSettings();
-		virtual void UpdateNavObj();
-		virtual void StoreNavObjChanges();
+	bool ExportGPXRoutes(wxWindow* parent, RouteList* pRoutes,
+						 const wxString suggestedName = _T("routes"));
 
-		bool LoadLayers(wxString &path);
+	bool ExportGPXWaypoints(wxWindow* parent, RoutePointList* pRoutePoints,
+							const wxString suggestedName = _T("waypoints"));
 
-		void ExportGPX(
-				wxWindow * parent,
-				bool bviz_only = false,
-				bool blayer = false);
+	void CreateRotatingNavObjBackup();
 
-		void UI_ImportGPX(
-				wxWindow * parent,
-				bool islayer = false,
-				wxString dirpath = _T(""),
-				bool isdirectory = true);
+	// FIXME: move public attributes to private
 
-		bool ExportGPXRoutes(
-				wxWindow * parent,
-				RouteList * pRoutes,
-				const wxString suggestedName = _T("routes"));
+	double st_lat;
+	double st_lon;
+	double st_view_scale;
+	bool st_bFollow;
 
-		bool ExportGPXWaypoints(
-				wxWindow * parent,
-				RoutePointList * pRoutePoints,
-				const wxString suggestedName = _T("waypoints"));
+	wxString m_gpx_path;
 
-		void CreateRotatingNavObjBackup();
+	wxString m_sNavObjSetFile;
+	wxString m_sNavObjSetChangesFile;
 
-		// FIXME: move public attributes to private
+	NavObjectChanges* m_pNavObjectChangesSet;
+	NavObjectCollection* m_pNavObjectInputSet;
+	bool m_bSkipChangeSetUpdate;
+	bool m_bShowDebugWindows;
 
-		double st_lat;
-		double st_lon;
-		double st_view_scale;
-		bool st_bFollow;
+private:
+	void load_view();
+	void load_frame();
+	void load_toolbar();
+	void load_ais_alert_dialog();
+	void load_ais_query_dialog();
+	void load_system_config(int);
+	void load_watchdog();
+	void load_cm93(int, int);
 
-		wxString m_gpx_path;
+	void write_view();
+	void write_frame();
+	void write_toolbar();
+	void write_ais_alert_dialog();
+	void write_ais_query_dialog();
+	void write_system_config();
+	void write_cm93();
 
-		wxString m_sNavObjSetFile;
-		wxString m_sNavObjSetChangesFile;
+	static bool WptIsInRouteList(RoutePoint* pr);
 
-		NavObjectChanges * m_pNavObjectChangesSet;
-		NavObjectCollection * m_pNavObjectInputSet;
-		bool m_bSkipChangeSetUpdate;
-		bool  m_bShowDebugWindows;
+	wxString visibleLayers;
+	wxString invisibleLayers;
 };
 
 #endif

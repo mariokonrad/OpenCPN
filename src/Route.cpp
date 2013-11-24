@@ -38,9 +38,6 @@
 
 #include <gpx/gpx.h>
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(RouteList);
-
 #include <algorithm>
 
 extern WayPointman* pWayPointMan;
@@ -283,9 +280,7 @@ void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_de
 	m_pLastAddedPoint = pNewPoint;
 
 	if (b_rename_in_sequence && pNewPoint->GetName().IsEmpty() && !pNewPoint->m_bKeepXRoute) {
-		wxString name;
-		name.Printf(_T ( "%03d" ), m_nPoints);
-		pNewPoint->SetName(name);
+		pNewPoint->SetName(wxString::Format(_T ( "%03d" ), m_nPoints));
 		pNewPoint->m_bDynamicName = true;
 	}
 }
@@ -578,10 +573,8 @@ RoutePoint* Route::InsertPointBefore(RoutePoint* pRP, double rlat, double rlon, 
 
 wxString Route::GetNewMarkSequenced(void)
 {
-	wxString ret;
-	ret.Printf(_T ( "NM%03d" ), m_nm_sequence);
+	wxString ret = wxString::Format(_T("NM%03d"), m_nm_sequence);
 	m_nm_sequence++;
-
 	return ret;
 }
 

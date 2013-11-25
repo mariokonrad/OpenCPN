@@ -104,6 +104,8 @@ private:
 	void load_watchdog();
 	void load_cm93(int, int);
 	void load_s57dialog();
+	void load_tide_datasources();
+	void load_fonts(int iteration);
 
 	void write_view();
 	void write_frame();

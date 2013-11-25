@@ -445,6 +445,73 @@ void Config::load_cm93(int display_width, int display_height)
 #endif
 }
 
+void Config::load_tide_datasources()
+{
+	// Tide/Current Data Sources
+	SetPath(_T("/TideCurrentDataSources"));
+	TideCurrentDataSet.Clear();
+	if (GetNumberOfEntries()) {
+		wxString str;
+		wxString val;
+		long dummy;
+		bool bCont = GetFirstEntry(str, dummy);
+		while (bCont) {
+			Read(str, &val); // Get a file name
+			TideCurrentDataSet.Add(val);
+			bCont = GetNextEntry(str, dummy);
+		}
+	}
+}
+
+void Config::load_fonts(int iteration)
+{
+	// Fonts
+#ifdef __WXX11__
+	SetPath(_T("/Settings/X11Fonts"));
+#endif
+
+#ifdef __WXGTK__
+	SetPath(_T("/Settings/GTKFonts"));
+#endif
+
+#ifdef __WXMSW__
+	SetPath(_T("/Settings/MSWFonts"));
+#endif
+
+#ifdef __WXMAC__
+	SetPath(_T("/Settings/MacFonts"));
+#endif
+
+	if (0 == iteration) {
+		wxString str;
+		long dummy;
+		wxString* pval = new wxString;
+		wxArrayString deleteList;
+
+		bool bCont = GetFirstEntry(str, dummy);
+		while (bCont) {
+			Read(str, pval);
+
+			if (str.StartsWith(_T("Font"))) {
+				// Convert pre 3.1 setting. Can't delete old entries from inside the
+				// GetNextEntry() loop, so we need to save those and delete outside.
+				deleteList.Add(str);
+				wxString oldKey = pval->BeforeFirst(_T(':'));
+				str = FontMgr::GetFontConfigKey(oldKey);
+			}
+
+			FontMgr::Get().LoadFontNative(str, *pval);
+			bCont = GetNextEntry(str, dummy);
+		}
+
+		for (unsigned int i = 0; i < deleteList.Count(); i++) {
+			DeleteEntry(deleteList[i]);
+		}
+		deleteList.Clear();
+		delete pval;
+	}
+}
+
 int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 {
 	int read_int;
@@ -793,7 +860,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		}
 	}
 
-	Read( _T ( "GPXIODir" ), &m_gpx_path );           // Get the Directory name
+	Read(_T("GPXIODir"), &m_gpx_path); // Get the Directory name
 
 	wxString tc_data_directory;
 	Read(_T("TCDataDir"), &tc_data_directory);
@@ -803,19 +870,18 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read( _T ( "nColorScheme" ), &read_int, 0 );
 	global_color_scheme = (ColorScheme) read_int;
 
-	SetPath( _T ( "/Settings/NMEADataSource" ) );
+	SetPath( _T("/Settings/NMEADataSource"));
 
 	wxString connectionconfigs;
-	Read ( _T( "DataConnections" ),  &connectionconfigs, wxEmptyString );
+	Read(_T("DataConnections"), &connectionconfigs, wxEmptyString);
 	wxArrayString confs = wxStringTokenize(connectionconfigs, _T("|"));
 	g_pConnectionParams->clear();
-	for (size_t i = 0; i < confs.Count(); i++)
-	{
+	for (size_t i = 0; i < confs.Count(); i++) {
 		g_pConnectionParams->push_back(ConnectionParams(confs[i]));
 	}
 
-	//  Automatically handle the upgrade to DataSources architecture...
-	//  Capture Garmin host configuration
+	// Automatically handle the upgrade to DataSources architecture...
+	// Capture Garmin host configuration
 	SetPath( _T ( "/Settings" ) );
 	int b_garmin_host;
 	Read ( _T ( "UseGarminHost" ), &b_garmin_host );
@@ -844,17 +910,17 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 			}
 		}
 		if (iteration == 1) {
-			Write(_T ( "Source" ), _T("")); // clear the old tag
-			Write(_T ( "BaudRate" ), _T(""));
+			Write(_T("Source"), _T("")); // clear the old tag
+			Write(_T("BaudRate"), _T(""));
 		}
 	}
 
 	// Is there an existing AISPort definition?
-	SetPath(_T ( "/Settings/AISPort" ));
+	SetPath(_T("/Settings/AISPort"));
 	wxString aSource;
 	wxString aRate;
-	Read(_T ( "Port" ), &aSource);
-	Read(_T ( "BaudRate" ), &aRate);
+	Read(_T("Port"), &aSource);
+	Read(_T("BaudRate"), &aRate);
 	if (aSource.Len()) {
 		wxString port;
 		if (aSource.Mid(0, 6) == _T("Serial"))
@@ -874,14 +940,14 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		}
 
 		if (iteration == 1) {
-			Write(_T ( "Port" ), _T("")); // clear the old tag
-			Write(_T ( "BaudRate" ), _T(""));
+			Write(_T("Port"), _T("")); // clear the old tag
+			Write(_T("BaudRate"), _T(""));
 		}
 	}
 
 	// Is there an existing NMEAAutoPilotPort definition?
-	SetPath(_T ( "/Settings/NMEAAutoPilotPort" ));
-	Read(_T ( "Port" ), &xSource);
+	SetPath(_T("/Settings/NMEAAutoPilotPort"));
+	Read(_T("Port"), &xSource);
 	if (xSource.Len()) {
 		wxString port;
 		if (xSource.Mid(0, 6) == _T("Serial"))
@@ -904,57 +970,59 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		}
 
 		if (iteration == 1)
-			Write(_T ( "Port" ), _T("")); // clear the old tag
+			Write(_T("Port"), _T("")); // clear the old tag
 	}
 
-	//    Reasonable starting point
-	vLat = START_LAT;                   // display viewpoint
+	// Reasonable starting point
+	vLat = START_LAT; // display viewpoint
 	vLon = START_LON;
 
-	global::Navigation & nav = global::OCPN::get().nav();
+	global::Navigation& nav = global::OCPN::get().nav();
 
 	// GPS position, as default
 	nav.set_latitude(START_LAT);
 	nav.set_longitude(START_LON);
 
-	initial_scale_ppm = 0.0003;        // decent initial value
+	initial_scale_ppm = 0.0003; // decent initial value
 
-	SetPath( _T ( "/Settings/GlobalState" ) );
+	SetPath(_T("/Settings/GlobalState"));
 	wxString st;
 
-	if( Read( _T ( "VPLatLon" ), &st ) ) {
-		sscanf( st.mb_str( wxConvUTF8 ), "%lf,%lf", &st_lat, &st_lon );
+	if (Read(_T("VPLatLon"), &st)) {
+		sscanf(st.mb_str(wxConvUTF8), "%lf,%lf", &st_lat, &st_lon);
 
-		//    Sanity check the lat/lon...both have to be reasonable.
-		if( fabs( st_lon ) < 360.0) {
-			while( st_lon < -180.0)
+		// Sanity check the lat/lon...both have to be reasonable.
+		if (fabs(st_lon) < 360.0) {
+			while (st_lon < -180.0)
 				st_lon += 360.0;
 
-			while( st_lon > 180.0)
+			while (st_lon > 180.0)
 				st_lon -= 360.0;
 
 			vLon = st_lon;
 		}
 
-		if( fabs( st_lat ) < 90.0 ) vLat = st_lat;
+		if (fabs(st_lat) < 90.0)
+			vLat = st_lat;
 	}
-	wxLogMessage(wxString::Format(_T("Setting Viewpoint Lat/Lon %g, %g" ), vLat, vLon));
+	wxLogMessage(wxString::Format(_T("Setting Viewpoint Lat/Lon %g, %g"), vLat, vLon));
 
-	if( Read( wxString( _T ( "VPScale" ) ), &st ) ) {
-		sscanf( st.mb_str( wxConvUTF8 ), "%lf", &st_view_scale );
-		//    Sanity check the scale
-		st_view_scale = fmax(st_view_scale, 0.001/32);
+	if (Read(wxString(_T("VPScale")), &st)) {
+		sscanf(st.mb_str(wxConvUTF8), "%lf", &st_view_scale);
+		// Sanity check the scale
+		st_view_scale = fmax(st_view_scale, 0.001 / 32);
 		st_view_scale = fmin(st_view_scale, 4);
 		initial_scale_ppm = st_view_scale;
 	}
 
 	wxString sll;
-	double lat, lon;
-	if( Read( _T ( "OwnShipLatLon" ), &sll ) ) {
-		sscanf( sll.mb_str( wxConvUTF8 ), "%lf,%lf", &lat, &lon );
+	double lat;
+	double lon;
+	if (Read(_T("OwnShipLatLon"), &sll)) {
+		sscanf(sll.mb_str(wxConvUTF8), "%lf,%lf", &lat, &lon);
 
-		//    Sanity check the lat/lon...both have to be reasonable.
-		if (fabs( lon ) < 360.0) {
+		// Sanity check the lat/lon...both have to be reasonable.
+		if (fabs(lon) < 360.0) {
 			while (lon < -180.0)
 				lon += 360.0;
 
@@ -967,18 +1035,19 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		if (fabs(lat) < 90.0)
 			nav.set_latitude(lat);
 	}
-	wxLogMessage(wxString::Format(_T("Setting Ownship Lat/Lon %g, %g" ), nav.get_data().lat, nav.get_data().lon));
+	wxLogMessage(wxString::Format(_T("Setting Ownship Lat/Lon %g, %g"), nav.get_data().lat,
+								  nav.get_data().lon));
 
 #ifdef USE_S57
-	//    S57 Object Class Visibility
+	// S57 Object Class Visibility
 
 	OBJLElement *pOLE;
 
-	SetPath( _T ( "/Settings/ObjectFilter" ) );
+	SetPath(_T("/Settings/ObjectFilter"));
 
-	if( ps52plib ) {
+	if (ps52plib) {
 		int iOBJMax = GetNumberOfEntries();
-		if( iOBJMax ) {
+		if (iOBJMax) {
 
 			wxString str;
 			long val;
@@ -986,141 +1055,79 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 			wxString sObj;
 
-			bool bCont = pConfig->GetFirstEntry( str, dummy ); // FIXME: this is basically 'this'
-			while( bCont ) {
-				pConfig->Read( str, &val ); // Get an Object Viz
+			bool bCont = pConfig->GetFirstEntry(str, dummy); // FIXME: this is basically 'this'
+			while (bCont) {
+				pConfig->Read(str, &val); // Get an Object Viz
 
 				bool bNeedNew = true;
 
-				if( str.StartsWith( _T ( "viz" ), &sObj ) ) {
-					for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++ ) {
-						pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
-						if( !strncmp( pOLE->OBJLName, sObj.mb_str(), 6 ) ) {
+				if (str.StartsWith(_T("viz"), &sObj)) {
+					for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
+						pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+						if (!strncmp(pOLE->OBJLName, sObj.mb_str(), 6)) {
 							pOLE->nViz = val;
 							bNeedNew = false;
 							break;
 						}
 					}
 
-					if( bNeedNew ) {
-						pOLE = (OBJLElement *) calloc( sizeof(OBJLElement), 1 );
-						strncpy( pOLE->OBJLName, sObj.mb_str(), 6 );
+					if (bNeedNew) {
+						pOLE = (OBJLElement*)calloc(sizeof(OBJLElement), 1);
+						strncpy(pOLE->OBJLName, sObj.mb_str(), 6);
 						pOLE->nViz = 1;
 
-						ps52plib->pOBJLArray->Add( (void *) pOLE );
+						ps52plib->pOBJLArray->Add((void*)pOLE);
 					}
 				}
-				bCont = pConfig->GetNextEntry( str, dummy );
+				bCont = pConfig->GetNextEntry(str, dummy);
 			}
 		}
 	}
 #endif
 
-	//    Fonts
+	load_fonts(iteration);
+	load_tide_datasources();
 
-#ifdef __WXX11__
-	SetPath ( _T ( "/Settings/X11Fonts" ) );
-#endif
-
-#ifdef __WXGTK__
-	SetPath ( _T ( "/Settings/GTKFonts" ) );
-#endif
-
-#ifdef __WXMSW__
-	SetPath( _T ( "/Settings/MSWFonts" ) );
-#endif
-
-#ifdef __WXMAC__
-	SetPath ( _T ( "/Settings/MacFonts" ) );
-#endif
-
-	if( 0 == iteration ) {
-		wxString str;
-		long dummy;
-		wxString *pval = new wxString;
-		wxArrayString deleteList;
-
-		bool bCont = GetFirstEntry( str, dummy );
-		while( bCont ) {
-			Read( str, pval );
-
-			if( str.StartsWith( _T("Font") ) ) {
-				// Convert pre 3.1 setting. Can't delete old entries from inside the
-				// GetNextEntry() loop, so we need to save those and delete outside.
-				deleteList.Add( str );
-				wxString oldKey = pval->BeforeFirst( _T(':') );
-				str = FontMgr::GetFontConfigKey( oldKey );
-			}
-
-			FontMgr::Get().LoadFontNative(str, *pval);
-
-			bCont = GetNextEntry( str, dummy );
-		}
-
-		for( unsigned int i=0; i<deleteList.Count(); i++ ) {
-			DeleteEntry( deleteList[i] );
-		}
-		deleteList.Clear();
-		delete pval;
-	}
-
-	//  Tide/Current Data Sources
-	SetPath( _T ( "/TideCurrentDataSources" ) );
-	TideCurrentDataSet.Clear();
-	if( GetNumberOfEntries() ) {
-		wxString str, val;
-		long dummy;
-		bool bCont = GetFirstEntry( str, dummy );
-		while( bCont ) {
-			Read( str, &val );              // Get a file name
-			TideCurrentDataSet.Add(val);
-			bCont = GetNextEntry( str, dummy );
-		}
-	}
-
-
-	//    Layers
-	if( 0 == iteration )
+	// Layers
+	if (0 == iteration)
 		pLayerList = new LayerList;
 
-	//  Routes
-	if( 0 == iteration )
+	// Routes
+	if (0 == iteration)
 		pRouteList = new RouteList;
 
-	//    Groups
-	if( 0 == iteration )
-		LoadConfigGroups( g_pGroupArray );
+	// Groups
+	if (0 == iteration)
+		LoadConfigGroups(g_pGroupArray);
 
-
-	//      next thing to do is read tracks, etc from the NavObject XML file,
-	if( 0 == iteration ) {
+	// next thing to do is read tracks, etc from the NavObject XML file,
+	if (0 == iteration) {
 		CreateRotatingNavObjBackup();
 
-		if( NULL == m_pNavObjectInputSet )
+		if (NULL == m_pNavObjectInputSet)
 			m_pNavObjectInputSet = new NavObjectCollection();
 
-		if( ::wxFileExists( m_sNavObjSetFile ) ) {
-			if( m_pNavObjectInputSet->load_file( m_sNavObjSetFile.fn_str() ) )
+		if (::wxFileExists(m_sNavObjSetFile)) {
+			if (m_pNavObjectInputSet->load_file(m_sNavObjSetFile.fn_str()))
 				m_pNavObjectInputSet->LoadAllGPXObjects();
 		}
 
 		delete m_pNavObjectInputSet;
 
+		if (::wxFileExists(m_sNavObjSetChangesFile)) {
+			// We crashed last time :(
+			// That's why this file still exists...
+			// Let's reconstruct the unsaved changes
+			NavObjectChanges* pNavObjectChangesSet = new NavObjectChanges();
+			pNavObjectChangesSet->load_file(m_sNavObjSetChangesFile.fn_str());
 
-		if( ::wxFileExists( m_sNavObjSetChangesFile ) ) {
-			//We crashed last time :(
-			//That's why this file still exists...
-			//Let's reconstruct the unsaved changes
-			NavObjectChanges *pNavObjectChangesSet = new NavObjectChanges();
-			pNavObjectChangesSet->load_file( m_sNavObjSetChangesFile.fn_str() );
+			// Remove the file before applying the changes,
+			// just in case the changes file itself causes a fault.
+			// If it does fault, at least the next restart will proceed without fault.
+			if (::wxFileExists(m_sNavObjSetChangesFile))
+				::wxRemoveFile(m_sNavObjSetChangesFile);
 
-			//  Remove the file before applying the changes,
-			//  just in case the changes file itself causes a fault.
-			//  If it does fault, at least the next restart will proceed without fault.
-			if( ::wxFileExists( m_sNavObjSetChangesFile ) )
-				::wxRemoveFile( m_sNavObjSetChangesFile );
-
-			wxLogMessage( _T("Applying NavObjChanges") );
+			wxLogMessage(_T("Applying NavObjChanges"));
 			pNavObjectChangesSet->ApplyChanges();
 			delete pNavObjectChangesSet;
 
@@ -1128,55 +1135,59 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		}
 	}
 
-	SetPath( _T ( "/Settings/Others" ) );
+	SetPath(_T("/Settings/Others"));
 
 	// Radar rings
 	wxString val;
 	g_iNavAidRadarRingsNumberVisible = 0;
-	Read( _T ( "RadarRingsNumberVisible" ), &val );
-	if( val.Length() > 0 ) g_iNavAidRadarRingsNumberVisible = atoi( val.mb_str() );
+	Read(_T("RadarRingsNumberVisible"), &val);
+	if (val.Length() > 0)
+		g_iNavAidRadarRingsNumberVisible = atoi(val.mb_str());
 
 	g_fNavAidRadarRingsStep = 1.0;
-	Read( _T ( "RadarRingsStep" ), &val );
-	if( val.Length() > 0 ) g_fNavAidRadarRingsStep = atof( val.mb_str() );
+	Read(_T("RadarRingsStep"), &val);
+	if (val.Length() > 0)
+		g_fNavAidRadarRingsStep = atof(val.mb_str());
 
 	g_pNavAidRadarRingsStepUnits = 0;
-	Read( _T ( "RadarRingsStepUnits" ), &g_pNavAidRadarRingsStepUnits );
+	Read(_T("RadarRingsStepUnits"), &g_pNavAidRadarRingsStepUnits);
 
-	//  Support Version 3.0 and prior config setting for Radar Rings
-	bool b300RadarRings= true;
-	Read ( _T ( "ShowRadarRings" ), &b300RadarRings );
-	if(!b300RadarRings)
+	// Support Version 3.0 and prior config setting for Radar Rings
+	bool b300RadarRings = true;
+	Read(_T("ShowRadarRings"), &b300RadarRings);
+	if (!b300RadarRings)
 		g_iNavAidRadarRingsNumberVisible = 0;
 
-	Read( _T ( "ConfirmObjectDeletion" ), &g_bConfirmObjectDelete, true );
+	Read(_T("ConfirmObjectDeletion"), &g_bConfirmObjectDelete, true);
 
 	// Waypoint dragging with mouse
 	g_bWayPointPreventDragging = false;
-	Read( _T ( "WaypointPreventDragging" ), &g_bWayPointPreventDragging );
+	Read(_T("WaypointPreventDragging"), &g_bWayPointPreventDragging);
 
 	g_bEnableZoomToCursor = false;
-	Read( _T ( "EnableZoomToCursor" ), &g_bEnableZoomToCursor );
+	Read(_T("EnableZoomToCursor"), &g_bEnableZoomToCursor);
 
 	g_TrackIntervalSeconds = 60.0;
 	val.Clear();
-	Read( _T ( "TrackIntervalSeconds" ), &val );
-	if( val.Length() > 0 ) {
-		double tval = atof( val.mb_str() );
-		if( tval >= 2. ) g_TrackIntervalSeconds = tval;
+	Read(_T("TrackIntervalSeconds"), &val);
+	if (val.Length() > 0) {
+		double tval = atof(val.mb_str());
+		if (tval >= 2.0)
+			g_TrackIntervalSeconds = tval;
 	}
 
 	g_TrackDeltaDistance = 0.10;
 	val.Clear();
-	Read( _T ( "TrackDeltaDistance" ), &val );
-	if( val.Length() > 0 ) {
-		double tval = atof( val.mb_str() );
-		if( tval >= 0.05 ) g_TrackDeltaDistance = tval;
+	Read(_T("TrackDeltaDistance"), &val);
+	if (val.Length() > 0) {
+		double tval = atof(val.mb_str());
+		if (tval >= 0.05)
+			g_TrackDeltaDistance = tval;
 	}
 
-	Read( _T ( "TrackPrecision" ), &g_nTrackPrecision, 0 );
+	Read(_T("TrackPrecision"), &g_nTrackPrecision, 0);
 
-	Read( _T ( "NavObjectFileName" ), m_sNavObjSetFile );
+	Read(_T("NavObjectFileName"), m_sNavObjSetFile);
 
 	int route_line_width = 2;
 	Read(_T("RouteLineWidth"), &route_line_width, 2);
@@ -1186,38 +1197,38 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("TrackLineWidth"), &track_line_width, 3);
 	global::OCPN::get().gui().set_track_line_width(track_line_width);
 
-	Read(_T("CurrentArrowScale"), &g_current_arrow_scale, 100 );
-	Read(_T("DefaultWPIcon"), &g_default_wp_icon, _T("triangle") );
+	Read(_T("CurrentArrowScale"), &g_current_arrow_scale, 100);
+	Read(_T("DefaultWPIcon"), &g_default_wp_icon, _T("triangle"));
 
 	return ( 0 );
 }
 
-bool Config::LoadLayers(wxString &path)
+bool Config::LoadLayers(wxString& path)
 {
 	wxArrayString file_array;
 	wxDir dir;
-	dir.Open( path );
-	if( dir.IsOpened() ) {
+	dir.Open(path);
+	if (dir.IsOpened()) {
 		wxString filename;
-		bool cont = dir.GetFirst( &filename );
-		while( cont ) {
+		bool cont = dir.GetFirst(&filename);
+		while (cont) {
 			file_array.Clear();
-			filename.Prepend( wxFileName::GetPathSeparator() );
-			filename.Prepend( path );
-			wxFileName f( filename );
-			if( f.GetExt().IsSameAs( wxT("gpx") ) )
-				file_array.Add( filename); // single-gpx-file layer
+			filename.Prepend(wxFileName::GetPathSeparator());
+			filename.Prepend(path);
+			wxFileName f(filename);
+			if (f.GetExt().IsSameAs(wxT("gpx")))
+				file_array.Add(filename); // single-gpx-file layer
 			else
-				wxDir::GetAllFiles( filename, &file_array, wxT("*.gpx") );      // layers subdirectory set
+				wxDir::GetAllFiles(filename, &file_array, wxT("*.gpx")); // layers subdirectory set
 
-			if (file_array.size()){
+			if (file_array.size()) {
 				++g_LayerIdx;
-				Layer * layer = new Layer(g_LayerIdx, file_array[0], g_bShowLayers);
+				Layer* layer = new Layer(g_LayerIdx, file_array[0], g_bShowLayers);
 				wxString layerName;
 				if (file_array.size() <= 1)
-					wxFileName::SplitPath( file_array[0], NULL, NULL, &layerName, NULL, NULL );
+					wxFileName::SplitPath(file_array[0], NULL, NULL, &layerName, NULL, NULL);
 				else
-					wxFileName::SplitPath( filename, NULL, NULL, &layerName, NULL, NULL );
+					wxFileName::SplitPath(filename, NULL, NULL, &layerName, NULL, NULL);
 				layer->setName(layerName);
 
 				bool bLayerViz = g_bShowLayers;
@@ -1236,74 +1247,72 @@ bool Config::LoadLayers(wxString &path)
 
 				//  Load the entire file array as a single layer
 
-				for( unsigned int i = 0; i < file_array.size(); i++ ) {
+				for (unsigned int i = 0; i < file_array.size(); i++) {
 					wxString file_path = file_array[i];
 
-					if( ::wxFileExists( file_path ) ) {
-						NavObjectCollection *pSet = new NavObjectCollection;
+					if (::wxFileExists(file_path)) {
+						NavObjectCollection* pSet = new NavObjectCollection;
 						pSet->load_file(file_path.fn_str());
-						layer->setNoOfItems(pSet->LoadAllGPXObjectsAsLayer(layer->getID(), bLayerViz));
+						layer->setNoOfItems(
+							pSet->LoadAllGPXObjectsAsLayer(layer->getID(), bLayerViz));
 
 						delete pSet;
 					}
 				}
 			}
 
-			cont = dir.GetNext( &filename );
+			cont = dir.GetNext(&filename);
 		}
 	}
 
 	return true;
 }
 
-bool Config::LoadChartDirArray(ArrayOfCDI & ChartDirArray)
+bool Config::LoadChartDirArray(ArrayOfCDI& ChartDirArray)
 {
-	//    Chart Directories
+	// Chart Directories
 	SetPath(_T("/ChartDirectories"));
 	int iDirMax = GetNumberOfEntries();
-	if( iDirMax ) {
+	if (iDirMax) {
 		ChartDirArray.clear();
 		wxString str;
 		wxString val;
 		long dummy;
 		int nAdjustChartDirs = 0;
-		bool bCont = pConfig->GetFirstEntry( str, dummy ); // FIXME: this is basically 'this'
-		while( bCont ) {
-			pConfig->Read( str, &val );              // Get a Directory name
+		bool bCont = pConfig->GetFirstEntry(str, dummy); // FIXME: this is basically 'this'
+		while (bCont) {
+			pConfig->Read(str, &val); // Get a Directory name
 
-			wxString dirname( val );
-			if( !dirname.IsEmpty() ) {
+			wxString dirname(val);
+			if (!dirname.IsEmpty()) {
 
-				/*     Special case for first time run after Windows install with sample chart data...
-					   We desire that the sample configuration file opencpn.ini should not contain any
-					   installation dependencies, so...
-					   Detect and update the sample [ChartDirectories] entries to point to the Shared Data directory
-					   For instance, if the (sample) opencpn.ini file should contain shortcut coded entries like:
+				// Special case for first time run after Windows install with sample chart data...
+				// We desire that the sample configuration file opencpn.ini should not contain any
+				// installation dependencies, so...
+				// Detect and update the sample [ChartDirectories] entries to point to the Shared Data directory
+				// For instance, if the (sample) opencpn.ini file should contain shortcut coded entries like:
 
-					   [ChartDirectories]
-					   ChartDir1=SampleCharts\\MaptechRegion7
+				// [ChartDirectories]
+				// ChartDir1=SampleCharts\\MaptechRegion7
 
-					   then this entry will be updated to be something like:
-					   ChartDir1=c:\Program Files\opencpn\SampleCharts\\MaptechRegion7
-
-				 */
-				if( dirname.Find( _T ( "SampleCharts" ) ) == 0 ) // only update entries starting with "SampleCharts"
-				{
+				// then this entry will be updated to be something like:
+				// ChartDir1=c:\Program Files\opencpn\SampleCharts\\MaptechRegion7
+				if (dirname.Find(_T("SampleCharts")) == 0) { // only update entries starting with "SampleCharts"
 					nAdjustChartDirs++;
 
-					pConfig->DeleteEntry( str );
-					wxString new_dir = dirname.Mid( dirname.Find( _T ( "SampleCharts" ) ) );
-					new_dir.Prepend( global::OCPN::get().sys().data().sound_data_location);
+					pConfig->DeleteEntry(str);
+					wxString new_dir = dirname.Mid(dirname.Find(_T("SampleCharts")));
+					new_dir.Prepend(global::OCPN::get().sys().data().sound_data_location);
 					dirname = new_dir;
 				}
 				ChartDirInfo cdi;
-				cdi.fullpath = dirname.BeforeFirst( '^' );
-				cdi.magic_number = dirname.AfterFirst( '^' );
+				cdi.fullpath = dirname.BeforeFirst('^');
+				cdi.magic_number = dirname.AfterFirst('^');
 
 				ChartDirArray.push_back(cdi);
 			}
 
-			bCont = pConfig->GetNextEntry( str, dummy );
+			bCont = pConfig->GetNextEntry(str, dummy);
 		}
 
 		if (nAdjustChartDirs)
@@ -1400,28 +1409,20 @@ bool Config::DeleteWayPoint(RoutePoint* pWP) // FIXME: does this really belong t
 
 bool Config::UpdateChartDirs(ArrayOfCDI& dir_array)
 {
-	wxString key;
-	wxString dir;
-	wxString str_buf;
-
 	SetPath(_T("/ChartDirectories"));
 	int iDirMax = GetNumberOfEntries();
 	if (iDirMax) {
 		long dummy;
 		for (int i = 0; i < iDirMax; ++i) {
+			wxString key;
 			GetFirstEntry(key, dummy);
 			DeleteEntry(key, false);
 		}
 	}
 
-	for (ArrayOfCDI::iterator i = dir_array.begin(); i != dir_array.end(); ++i) {
-		ChartDirInfo cdi = *i;
-
-		wxString dirn = cdi.fullpath;
-		dirn += _T("^");
-		dirn += cdi.magic_number;
-		str_buf.Printf(_T("ChartDir%d"), i - dir_array.begin() + 1);
-		Write(str_buf, dirn);
+	for (ArrayOfCDI::const_iterator i = dir_array.begin(); i != dir_array.end(); ++i) {
+		Write(wxString::Format(_T("ChartDir%d"), i - dir_array.begin() + 1),
+			  i->fullpath + _T("^") + i->magic_number);
 	}
 
 	Flush();
@@ -1433,7 +1434,7 @@ void Config::CreateConfigGroups(chart::ChartGroupArray* pGroupArray)
 	if (!pGroupArray)
 		return;
 
-	SetPath(_T( "/Groups"));
+	SetPath(_T("/Groups"));
 	Write(_T("GroupCount"), (int)pGroupArray->size());
 
 	for (unsigned int i = 0; i < pGroupArray->size(); i++) {
@@ -1448,7 +1449,7 @@ void Config::CreateConfigGroups(chart::ChartGroupArray* pGroupArray)
 			sg.Printf(_T("Group%d/Item%d"), i + 1, j);
 			sg.Prepend(_T( "/Groups/"));
 			SetPath(sg);
-			Write(_T ( "IncludeItem" ), pGroup->m_element_array.at(j)->m_element_name);
+			Write(_T("IncludeItem"), pGroup->m_element_array.at(j)->m_element_name);
 
 			wxString t;
 			wxArrayString u = pGroup->m_element_array.at(j)->m_missing_name_array;
@@ -1470,27 +1471,27 @@ void Config::DestroyConfigGroups(void)
 
 void Config::LoadConfigGroups(chart::ChartGroupArray* pGroupArray)
 {
-	SetPath(_T ( "/Groups" ));
+	SetPath(_T("/Groups"));
 	unsigned int group_count;
-	Read(_T ( "GroupCount" ), (int*)&group_count, 0);
+	Read(_T("GroupCount"), (int*)&group_count, 0);
 
 	for (unsigned int i = 0; i < group_count; i++) {
 		chart::ChartGroup* pGroup = new chart::ChartGroup;
 		wxString s;
 		s.Printf(_T("Group%d"), i + 1);
-		s.Prepend(_T ( "/Groups/" ));
+		s.Prepend(_T("/Groups/"));
 		SetPath(s);
 
 		wxString t;
-		Read(_T ( "GroupName" ), &t);
+		Read(_T("GroupName"), &t);
 		pGroup->m_group_name = t;
 
 		unsigned int item_count;
-		Read(_T ( "GroupItemCount" ), (int*)&item_count);
+		Read(_T("GroupItemCount"), (int*)&item_count);
 		for (unsigned int j = 0; j < item_count; j++) {
 			wxString sg;
 			sg.Printf(_T("Group%d/Item%d"), i + 1, j);
-			sg.Prepend(_T ( "/Groups/" ));
+			sg.Prepend(_T("/Groups/"));
 			SetPath(sg);
 
 			wxString v;
@@ -1500,7 +1501,7 @@ void Config::LoadConfigGroups(chart::ChartGroupArray* pGroupArray)
 			pGroup->m_element_array.push_back(pelement);
 
 			wxString u;
-			if (Read(_T ( "ExcludeItems" ), &u)) {
+			if (Read(_T("ExcludeItems"), &u)) {
 				if (!u.IsEmpty()) {
 					wxStringTokenizer tk(u, _T(";"));
 					while (tk.HasMoreTokens()) {
@@ -1566,6 +1567,8 @@ void Config::write_view()
 	Write(_T("ShowDepthUnits"), config.show_depth_units);
 	Write(_T("LookAheadMode"), config.lookahead_mode);
 	Write(_T("AllowExtremeOverzoom"), config.allow_overzoom_x);
+	Write(_T("RouteLineWidth"), config.route_line_width);
+	Write(_T("TrackLineWidth"), config.track_line_width);
 }
 
 void Config::write_system_config()
@@ -1886,10 +1889,6 @@ void Config::UpdateSettings()
 	Write(_T("TrackDeltaDistance"), g_TrackDeltaDistance);
 	Write(_T("TrackPrecision"), g_nTrackPrecision);
 
-	const global::GUI::View& view = global::OCPN::get().gui().view();
-
-	Write(_T("RouteLineWidth"), view.route_line_width);
-	Write(_T("TrackLineWidth"), view.track_line_width);
 	Write(_T("CurrentArrowScale"), g_current_arrow_scale);
 	Write(_T("DefaultWPIcon"), g_default_wp_icon);
 

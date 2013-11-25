@@ -449,7 +449,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 
 bool NavObjectCollection::GPXCreateWpt(
 		pugi::xml_node node,
-		RoutePoint * pr,
+		const RoutePoint* pr,
 		unsigned int flags)
 {
 	wxString s;
@@ -646,7 +646,7 @@ bool NavObjectCollection::GPXCreateTrk(
 	}
 
 	RoutePointList* pRoutePointList = pRoute->pRoutePointList;
-	RoutePointList::iterator route_point = pRoutePointList->begin();
+	RoutePointList::const_iterator route_point = pRoutePointList->begin();
 
 	unsigned short int GPXTrkSegNo1 = 1;
 	do {
@@ -771,8 +771,8 @@ bool NavObjectCollection::GPXCreateRoute(
 		child.append_child(pugi::node_pcdata).set_value(pRoute->m_Colour.mb_str());
 	}
 
-	RoutePointList* list = pRoute->pRoutePointList;
-	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
+	const RoutePointList* list = pRoute->pRoutePointList;
+	for (RoutePointList::const_iterator i = list->begin(); i != list->end(); ++i) {
 		GPXCreateWpt(node.append_child("rtept"), *i, OPT_ROUTEPT);
 	}
 
@@ -937,9 +937,10 @@ bool NavObjectCollection::CreateNavObjGPXPoints(void)
 	// Routepoints that are not in any Route
 	// as indicated by m_bIsolatedMark == false
 
-	RoutePointList::iterator end = pWayPointMan->m_pWayPointList->end();
-	for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin(); i != end; ++i) {
-		RoutePoint* point = *i;
+	const RoutePointList& waypoints = pWayPointMan->waypoints();
+	RoutePointList::const_iterator end = waypoints.end();
+	for (RoutePointList::const_iterator i = waypoints.begin(); i != end; ++i) {
+		const RoutePoint* point = *i;
 		if (point->m_bIsolatedMark && !point->m_bIsInLayer && !point->m_btemp) {
 			GPXCreateWpt(m_gpx_root.append_child("wpt"), point, OPT_WPT);
 		}
@@ -995,7 +996,7 @@ bool NavObjectCollection::AddGPXTrack(Track* pTrk)
 	return true;
 }
 
-bool NavObjectCollection::AddGPXWaypoint(RoutePoint* pWP)
+bool NavObjectCollection::AddGPXWaypoint(const RoutePoint* pWP)
 {
 	SetRootGPXNode();
 	GPXCreateWpt(m_gpx_root.append_child("wpt"), pWP, OPT_WPT);
@@ -1021,7 +1022,7 @@ bool NavObjectCollection::AddGPXRoutesList(RouteList* pRoutes)
 bool NavObjectCollection::AddGPXPointsList(RoutePointList* pRoutePoints)
 {
 	SetRootGPXNode();
-	for (RoutePointList::iterator i = pRoutePoints->begin(); i != pRoutePoints->end(); ++i) {
+	for (RoutePointList::const_iterator i = pRoutePoints->begin(); i != pRoutePoints->end(); ++i) {
 		AddGPXWaypoint(*i);
 	}
 	return true;

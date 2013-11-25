@@ -937,8 +937,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 		if( fabs( st_lat ) < 90.0 ) vLat = st_lat;
 	}
-	s.Printf( _T ( "Setting Viewpoint Lat/Lon %g, %g" ), vLat, vLon );
-	wxLogMessage( s );
+	wxLogMessage(wxString::Format(_T("Setting Viewpoint Lat/Lon %g, %g" ), vLat, vLon));
 
 	if( Read( wxString( _T ( "VPScale" ) ), &st ) ) {
 		sscanf( st.mb_str( wxConvUTF8 ), "%lf", &st_view_scale );
@@ -967,8 +966,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		if (fabs(lat) < 90.0)
 			nav.set_latitude(lat);
 	}
-	s.Printf(_T("Setting Ownship Lat/Lon %g, %g" ), nav.get_data().lat, nav.get_data().lon);
-	wxLogMessage(s);
+	wxLogMessage(wxString::Format(_T("Setting Ownship Lat/Lon %g, %g" ), nav.get_data().lat, nav.get_data().lon));
 
 #ifdef USE_S57
 	//    S57 Object Class Visibility
@@ -1224,9 +1222,8 @@ bool Config::LoadLayers(wxString &path)
 
 				layer->SetVisibleOnChart(bLayerViz);
 
-				wxString laymsg;
-				laymsg.Printf( wxT("New layer %d: %s"), layer->getID(), layer->getName().c_str());
-				wxLogMessage( laymsg );
+				wxLogMessage(wxString::Format(wxT("New layer %d: %s"), layer->getID(),
+											  layer->getName().c_str()));
 
 				pLayerList->push_back(layer);
 
@@ -1434,10 +1431,7 @@ void Config::CreateConfigGroups(chart::ChartGroupArray* pGroupArray)
 
 	for (unsigned int i = 0; i < pGroupArray->size(); i++) {
 		chart::ChartGroup* pGroup = pGroupArray->at(i);
-		wxString s;
-		s.Printf(_T("Group%d"), i + 1);
-		s.Prepend(_T ( "/Groups/" ));
-		SetPath(s);
+		SetPath(wxString::Format(_T("/Groups/Group%d"), i + 1));
 
 		Write(_T ( "GroupName" ), pGroup->m_group_name);
 		Write(_T ( "GroupItemCount" ), (int)pGroup->m_element_array.size());
@@ -1670,9 +1664,7 @@ void Config::UpdateSettings()
 	Write( _T ( "GPSIdent" ), g_GPS_Ident );
 	Write( _T ( "UseGarminHostUpload" ), g_bGarminHostUpload );
 
-	wxString st0;
-	st0.Printf( _T ( "%g" ), g_PlanSpeed );
-	Write( _T ( "PlanSpeed" ), st0 );
+	Write(_T("PlanSpeed"), wxString::Format(_T("%g"), g_PlanSpeed));
 
 	wxString vis, invis;
 	int index = 0;
@@ -1709,26 +1701,21 @@ void Config::UpdateSettings()
 	}
 #endif
 
-	//    Global State
+	// Global State
 
 	SetPath( _T ( "/Settings/GlobalState" ) );
-
-	wxString st1;
 
 	if( cc1 ) {
 		ViewPort vp = cc1->GetVP();
 
 		if( vp.IsValid() ) {
-			st1.Printf( _T ( "%10.4f,%10.4f" ), vp.clat, vp.clon );
-			Write( _T ( "VPLatLon" ), st1 );
-			st1.Printf( _T ( "%g" ), vp.view_scale_ppm );
-			Write( _T ( "VPScale" ), st1 );
+			Write(_T("VPLatLon"), wxString::Format(_T("%10.4f,%10.4f" ), vp.clat, vp.clon));
+			Write(_T("VPScale"), wxString::Format(_T("%g"), vp.view_scale_ppm));
 		}
 	}
 
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-	st1.Printf( _T ( "%10.4f, %10.4f" ), nav.lat, nav.lon);
-	Write( _T ( "OwnShipLatLon" ), st1 );
+	Write(_T("OwnShipLatLon"), wxString::Format(_T("%10.4f, %10.4f"), nav.lat, nav.lon));
 
 	//    Various Options
 	SetPath( _T ( "/Settings/GlobalState" ) );
@@ -1863,9 +1850,7 @@ void Config::UpdateSettings()
 	SetPath( _T ( "/TideCurrentDataSources" ) );
 	unsigned int iDirMax = TideCurrentDataSet.Count();
 	for( unsigned int id = 0 ; id < iDirMax ; id++ ) {
-		wxString key;
-		key.Printf(_T("tcds%d"), id);
-		Write( key, TideCurrentDataSet.Item(id) );
+		Write(wxString::Format(_T("tcds%d"), id), TideCurrentDataSet.Item(id));
 	}
 
 	SetPath( _T ( "/Settings/Others" ) );
@@ -1975,93 +1960,97 @@ bool Config::ExportGPXWaypoints( wxWindow* parent, RoutePointList * pRoutePoints
 		return false;
 }
 
-void Config::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
+void Config::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer)
 {
-	wxFileDialog saveDialog( parent, _( "Export GPX file" ), m_gpx_path, wxT ( "" ),
-			wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
+	wxFileDialog saveDialog(parent, _("Export GPX file"), m_gpx_path, wxT(""),
+							wxT("GPX files (*.gpx)|*.gpx"), wxFD_SAVE);
 
 	int response = saveDialog.ShowModal();
 
 	wxString path = saveDialog.GetPath();
-	wxFileName fn( path );
+	wxFileName fn(path);
 	m_gpx_path = fn.GetPath();
 
-	if( response == wxID_OK ) {
-		fn.SetExt( _T ( "gpx" ) );
+	if (response != wxID_OK)
+		return;
 
-		if( wxFileExists( fn.GetFullPath() ) ) {
-			int answer = OCPNMessageBox( NULL, _("Overwrite existing file?"), _T("Confirm"),
-					wxICON_QUESTION | wxYES_NO | wxCANCEL );
-			if( answer != wxID_YES ) return;
-		}
+	fn.SetExt(_T ( "gpx" ));
 
-		::wxBeginBusyCursor();
-
-		NavObjectCollection *pgpx = new NavObjectCollection;
-
-		wxProgressDialog *pprog = NULL;
-		int count = pWayPointMan->m_pWayPointList->size();
-		if (count > 200) {
-			pprog = new wxProgressDialog(_("Export GPX file"), _T("0/0"), count, NULL,
-					wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
-			pprog->SetSize(400, wxDefaultCoord);
-			pprog->Centre();
-		}
-
-		//WPTs
-		int ic = 0;
-
-		for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin(); i != pWayPointMan->m_pWayPointList->end(); ++i) {
-			if (pprog) {
-				wxString msg;
-				msg.Printf(_T("%d/%d"), ic, count);
-				pprog->Update(ic, msg);
-				ic++;
-			}
-
-			RoutePoint * pr = *i;
-
-			bool b_add = true;
-
-			if (bviz_only && !pr->m_bIsVisible)
-				b_add = false;
-
-			if (pr->m_bIsInLayer && !blayer)
-				b_add = false;
-
-			if (b_add) {
-				if (pr->m_bKeepXRoute || !WptIsInRouteList(pr))
-					pgpx->AddGPXWaypoint(pr);
-			}
-		}
-
-		//RTEs and TRKs
-		for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
-			Route * route = *i;
-
-			bool b_add = true;
-
-			if (bviz_only && !route->IsVisible())
-				b_add = false;
-
-			if (route->m_bIsInLayer && !blayer)
-				b_add = false;
-
-			if (b_add) {
-				if (!route->m_bIsTrack)
-					pgpx->AddGPXRoute(route);
-				else
-					pgpx->AddGPXTrack((Track *)route);
-			}
-		}
-
-		pgpx->SaveFile( fn.GetFullPath() );
-		delete pgpx;
-		::wxEndBusyCursor();
-
-		if( pprog)
-			delete pprog;
+	if (wxFileExists(fn.GetFullPath())) {
+		int answer = OCPNMessageBox(NULL, _("Overwrite existing file?"), _T("Confirm"),
+									wxICON_QUESTION | wxYES_NO | wxCANCEL);
+		if (answer != wxID_YES)
+			return;
 	}
+
+	::wxBeginBusyCursor();
+
+	NavObjectCollection* pgpx = new NavObjectCollection;
+
+	wxProgressDialog* pprog = NULL;
+	int count = static_cast<int>(pWayPointMan->waypoints().size());
+	if (count > 200) {
+		pprog = new wxProgressDialog(_("Export GPX file"), _T("0/0"), count, NULL,
+									 wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_ELAPSED_TIME
+									 | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
+		pprog->SetSize(400, wxDefaultCoord);
+		pprog->Centre();
+	}
+
+	// WPTs
+	int ic = 0;
+
+	for (RoutePointList::const_iterator i = pWayPointMan->waypoints().begin();
+		 i != pWayPointMan->waypoints().end(); ++i) {
+		if (pprog) {
+			wxString msg;
+			msg.Printf(_T("%d/%d"), ic, count);
+			pprog->Update(ic, msg);
+			ic++;
+		}
+
+		const RoutePoint* pr = *i;
+
+		bool b_add = true;
+
+		if (bviz_only && !pr->m_bIsVisible)
+			b_add = false;
+
+		if (pr->m_bIsInLayer && !blayer)
+			b_add = false;
+
+		if (b_add) {
+			if (pr->m_bKeepXRoute || !WptIsInRouteList(pr))
+				pgpx->AddGPXWaypoint(pr);
+		}
+	}
+
+	// RTEs and TRKs
+	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
+		Route* route = *i;
+
+		bool b_add = true;
+
+		if (bviz_only && !route->IsVisible())
+			b_add = false;
+
+		if (route->m_bIsInLayer && !blayer)
+			b_add = false;
+
+		if (b_add) {
+			if (route->m_bIsTrack)
+				pgpx->AddGPXTrack(dynamic_cast<Track*>(route));
+			else
+				pgpx->AddGPXRoute(route);
+		}
+	}
+
+	pgpx->SaveFile(fn.GetFullPath());
+	delete pgpx;
+	::wxEndBusyCursor();
+
+	if (pprog)
+		delete pprog;
 }
 
 void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool isdirectory)
@@ -2069,85 +2058,85 @@ void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool
 	int response = wxID_CANCEL;
 	wxArrayString file_array;
 
-	if( !islayer || dirpath.IsSameAs( _T("") ) ) {
-		wxFileDialog openDialog( parent, _( "Import GPX file" ), m_gpx_path, wxT ( "" ),
-				wxT ( "GPX files (*.gpx)|*.gpx|All files (*.*)|*.*" ),
-				wxFD_OPEN | wxFD_MULTIPLE );
+	if (!islayer || dirpath.IsSameAs(_T(""))) {
+		wxFileDialog openDialog(parent, _("Import GPX file"), m_gpx_path, wxT(""),
+								wxT("GPX files (*.gpx)|*.gpx|All files (*.*)|*.*"),
+								wxFD_OPEN | wxFD_MULTIPLE);
 		response = openDialog.ShowModal();
-		if( response == wxID_OK ) {
-			openDialog.GetPaths( file_array );
+		if (response == wxID_OK) {
+			openDialog.GetPaths(file_array);
 
 			//    Record the currently selected directory for later use
-			if( file_array.size() ) {
-				wxFileName fn( file_array[0] );
+			if (file_array.size()) {
+				wxFileName fn(file_array[0]);
 				m_gpx_path = fn.GetPath();
 			}
 		}
-
 	} else {
-		if( isdirectory ) {
-			if( wxDir::GetAllFiles( dirpath, &file_array, wxT("*.gpx") ) )
+		if (isdirectory) {
+			if (wxDir::GetAllFiles(dirpath, &file_array, wxT("*.gpx")))
 				response = wxID_OK;
 		} else {
-			file_array.Add( dirpath );
+			file_array.Add(dirpath);
 			response = wxID_OK;
 		}
 	}
 
-	if( response == wxID_OK ) {
-		Layer * layer = NULL;
+	if (response != wxID_OK)
+		return;
 
-		if (islayer) {
-			++g_LayerIdx;
-			layer = new Layer(g_LayerIdx, file_array[0], g_bShowLayers);
-			wxString layerName;
-			if (file_array.size() <= 1) {
-					wxFileName::SplitPath(file_array[0], NULL, NULL, &layerName, NULL, NULL);
-			} else {
-				if (dirpath.IsSameAs(_T("")))
-					wxFileName::SplitPath(m_gpx_path, NULL, NULL, &layerName, NULL, NULL);
-				else
-					wxFileName::SplitPath(dirpath, NULL, NULL, &layerName, NULL, NULL);
-			}
-			layer->setName(layerName);
+	Layer* layer = NULL;
 
-			bool bLayerViz = g_bShowLayers;
-			if (visibleLayers.Contains(layer->getName()))
-				bLayerViz = true;
-			if (invisibleLayers.Contains(layer->getName()))
-				bLayerViz = false;
-			layer->SetVisibleOnChart(bLayerViz);
-
-			wxString laymsg;
-			laymsg.Printf( wxT("New layer %d: %s"), layer->getID(), layer->getName().c_str() );
-			wxLogMessage(laymsg);
-
-			pLayerList->push_back(layer);
+	if (islayer) {
+		++g_LayerIdx;
+		layer = new Layer(g_LayerIdx, file_array[0], g_bShowLayers);
+		wxString layerName;
+		if (file_array.size() <= 1) {
+			wxFileName::SplitPath(file_array[0], NULL, NULL, &layerName, NULL, NULL);
+		} else {
+			if (dirpath.IsSameAs(_T("")))
+				wxFileName::SplitPath(m_gpx_path, NULL, NULL, &layerName, NULL, NULL);
+			else
+				wxFileName::SplitPath(dirpath, NULL, NULL, &layerName, NULL, NULL);
 		}
+		layer->setName(layerName);
 
-		for (unsigned int i = 0; i < file_array.size(); ++i) {
-			wxString path = file_array[i];
-			if (::wxFileExists(path)) {
-				NavObjectCollection * pSet = new NavObjectCollection;
-				pSet->load_file(path.fn_str());
+		bool bLayerViz = g_bShowLayers;
+		if (visibleLayers.Contains(layer->getName()))
+			bLayerViz = true;
+		if (invisibleLayers.Contains(layer->getName()))
+			bLayerViz = false;
+		layer->SetVisibleOnChart(bLayerViz);
 
-				if (islayer) {
-					layer->setNoOfItems(pSet->LoadAllGPXObjectsAsLayer(layer->getID(), layer->IsVisibleOnChart()));
-				} else {
-					pSet->LoadAllGPXObjects();
-				}
+		wxLogMessage(wxString::Format(wxT("New layer %d: %s"), layer->getID(), layer->getName().c_str()));
 
-				delete pSet;
+		pLayerList->push_back(layer);
+	}
+
+	for (unsigned int i = 0; i < file_array.size(); ++i) {
+		wxString path = file_array[i];
+		if (::wxFileExists(path)) {
+			NavObjectCollection* pSet = new NavObjectCollection;
+			pSet->load_file(path.fn_str());
+
+			if (islayer) {
+				layer->setNoOfItems(
+					pSet->LoadAllGPXObjectsAsLayer(layer->getID(), layer->IsVisibleOnChart()));
+			} else {
+				pSet->LoadAllGPXObjects();
 			}
+
+			delete pSet;
 		}
 	}
 }
 
-bool Config::WptIsInRouteList(RoutePoint * pr)
+bool Config::WptIsInRouteList(const RoutePoint * pr)
 {
-	for (RouteList::iterator j = pRouteList->begin(); j != pRouteList->end(); ++j) {
-		RoutePointList * pRoutePointList = (*j)->pRoutePointList;
-		for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+	for (RouteList::const_iterator j = pRouteList->begin(); j != pRouteList->end(); ++j) {
+		const RoutePointList* pRoutePointList = (*j)->pRoutePointList;
+		for (RoutePointList::const_iterator i = pRoutePointList->begin();
+			 i != pRoutePointList->end(); ++i) {
 			if (pr->IsSame(*i)) {
 				return true;
 			}

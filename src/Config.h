@@ -112,7 +112,7 @@ private:
 	void write_system_config();
 	void write_cm93();
 
-	static bool WptIsInRouteList(RoutePoint* pr);
+	static bool WptIsInRouteList(const RoutePoint* pr);
 
 	wxString visibleLayers;
 	wxString invisibleLayers;

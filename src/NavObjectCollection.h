@@ -78,7 +78,7 @@ public:
 	bool AddGPXPointsList(RoutePointList* pRoutePoints);
 	bool AddGPXRoute(Route* pRoute);
 	bool AddGPXTrack(Track* pTrk);
-	bool AddGPXWaypoint(RoutePoint* pWP);
+	bool AddGPXWaypoint(const RoutePoint* pWP);
 	bool CreateAllGPXObjects();
 	bool LoadAllGPXObjects(void);
 	int LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
@@ -97,7 +97,7 @@ protected:
 	Route* GPXLoadRoute1(pugi::xml_node& wpt_node, bool b_fullviz, bool b_layer, bool b_layerviz,
 						 int layer_id);
 
-	bool GPXCreateWpt(pugi::xml_node node, RoutePoint* pr, unsigned int flags);
+	bool GPXCreateWpt(pugi::xml_node node, const RoutePoint* pr, unsigned int flags);
 
 	bool GPXCreateTrk(pugi::xml_node node, Route* pRoute);
 

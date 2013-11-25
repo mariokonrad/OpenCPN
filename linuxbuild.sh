@@ -38,7 +38,7 @@ function usage()
 	echo ""
 }
 
-function exec_create_index()
+function cleanup_index()
 {
 	if [ -r "tags" ] ; then
 		rm -f tags
@@ -49,6 +49,11 @@ function exec_create_index()
 	if [ -r "cscope.out" ] ; then
 		rm -f cscope.out
 	fi
+}
+
+function exec_create_index()
+{
+	cleanup_index
 
 	for dn in src ; do
 			find ${dn} -type f -regextype posix-egrep -regex ".*\.(cpp|cc|cxx|c|hpp|hh|hxx|h)" >> cscope.files
@@ -372,6 +377,7 @@ if [ ${cleanup} -ne 0 ] ; then
 	if [ -d ${DEPLOY_DIR} ] ; then
 		rm -fr ${DEPLOY_DIR}
 	fi
+	cleanup_index
 	exit 0
 fi
 

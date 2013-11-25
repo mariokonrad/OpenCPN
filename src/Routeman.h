@@ -53,9 +53,9 @@ class Routeman
 		void DeleteTrack(Route * pRoute);
 
 		Route * FindRouteByGUID(const wxString & guid) const;
-		Route * FindRouteContainingWaypoint(RoutePoint *pWP);
-		RouteArray * GetRouteArrayContaining(RoutePoint *pWP); // FIXME: returns std container
-		bool DoesRouteContainSharedPoints( Route *pRoute );
+		Route * FindRouteContainingWaypoint(const RoutePoint *pWP);
+		RouteArray * GetRouteArrayContaining(const RoutePoint *pWP); // FIXME: returns std container
+		bool DoesRouteContainSharedPoints(const Route *pRoute);
 
 		bool ActivateRoute(Route *pRouteToActivate, RoutePoint *pStartPoint = NULL);
 		bool ActivateRoutePoint(Route *pA, RoutePoint *pRP);
@@ -91,8 +91,8 @@ class Routeman
 		wxString GetRouteReverseMessage(void) const;
 
 		Route * RouteExists(const wxString & guid) const;
-		bool RouteExists(Route * route) const;
-		bool IsRouteValid(Route *pRoute) const;
+		bool RouteExists(const Route * route) const;
+		bool IsRouteValid(const Route *pRoute) const;
 		bool is_data_valid() const;
 
 	private:

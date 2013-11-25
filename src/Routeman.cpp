@@ -92,57 +92,46 @@ Routeman::~Routeman()
 
 Route* Routeman::RouteExists(const wxString& guid) const
 {
-	// FIXME: use std::find
-	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
-		Route* route = *i;
-		if (guid == route->m_GUID)
-			return route;
-	}
-	return NULL;
+	RouteList::iterator i = std::find_if(pRouteList->begin(), pRouteList->end(), Route::SameGUID(guid));
+	return i == pRouteList->end() ? NULL : *i;
 }
 
-bool Routeman::RouteExists(Route * route) const
+bool Routeman::RouteExists(const Route* route) const
 {
-	// FIXME: use std::find
-	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
-		if (*i == route)
-			return true;
-	}
-	return false;
+	RouteList::const_iterator i = std::find(pRouteList->begin(), pRouteList->end(), route);
+	return i != pRouteList->end();
 }
 
-bool Routeman::IsRouteValid(Route * pRoute) const
+bool Routeman::IsRouteValid(const Route* pRoute) const
 {
 	return RouteExists(pRoute);
 }
 
 // Make a 2-D search to find the route containing a given waypoint
-Route* Routeman::FindRouteContainingWaypoint(RoutePoint* pWP)
+Route* Routeman::FindRouteContainingWaypoint(const RoutePoint* pWP)
 {
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
 
-		for (RoutePointList::const_iterator point = route->pRoutePointList->begin();
-			 point != route->pRoutePointList->end(); ++point) {
-			if (*point == pWP)
-				return route;
-		}
+		RoutePointList::const_iterator point
+			= std::find(route->pRoutePointList->begin(), route->pRoutePointList->end(), pWP);
+		if (point != route->pRoutePointList->end())
+			return route;
 	}
 
 	return NULL;
 }
 
-Routeman::RouteArray * Routeman::GetRouteArrayContaining(RoutePoint * pWP) // FIXME: return std container
+Routeman::RouteArray* Routeman::GetRouteArrayContaining(const RoutePoint* pWP)
 {
-	RouteArray* pArray = new RouteArray;
+	RouteArray* pArray = new RouteArray; // FIXME: return std container
 
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
-		for (RoutePointList::iterator waypoint = route->pRoutePointList->begin();
-			 waypoint != route->pRoutePointList->end(); ++waypoint) {
-			if (*waypoint == pWP)
-				pArray->push_back(route);
-		}
+		RoutePointList::const_iterator point
+			= std::find(route->pRoutePointList->begin(), route->pRoutePointList->end(), pWP);
+		if (point != route->pRoutePointList->end())
+			pArray->push_back(route);
 	}
 
 	if (pArray->size()) {
@@ -275,9 +264,9 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 	// Update the RouteProperties Dialog, if currently shown
 	if ((NULL != pRoutePropDialog) && (pRoutePropDialog->IsShown())) {
 		if (pRoutePropDialog->getRoute() == pA) {
+			// FIXME: weird: if set, overwrite it?
 			if (pRoutePropDialog->getEnroutePoint())
-				pRoutePropDialog->setEnroutePoint(
-					pActivePoint); // FIXME: weird: if set, overwrite it?
+				pRoutePropDialog->setEnroutePoint(pActivePoint);
 			pRoutePropDialog->SetRouteAndUpdate(pA);
 			pRoutePropDialog->UpdateProperties();
 		}
@@ -319,9 +308,9 @@ bool Routeman::ActivateNextPoint(Route* pr, bool skipped)
 		// Update the RouteProperties Dialog, if currently shown
 		if ((NULL != pRoutePropDialog) && (pRoutePropDialog->IsShown())) {
 			if (pRoutePropDialog->getRoute() == pr) {
+				// FIXME: weird: if set, overwrite it?
 				if (pRoutePropDialog->getEnroutePoint())
-					pRoutePropDialog->setEnroutePoint(
-						pActivePoint); // FIXME: weird: if set, overwrite it?
+					pRoutePropDialog->setEnroutePoint(pActivePoint);
 				pRoutePropDialog->SetRouteAndUpdate(pr);
 				pRoutePropDialog->UpdateProperties();
 			}
@@ -416,7 +405,7 @@ bool Routeman::UpdateProgress()
 		if (vn.x > 0)
 			CourseToRouteSegment = 90.0 - (h * 180.0 / M_PI);
 		else
-			CourseToRouteSegment = 270. - (h * 180.0 / M_PI);
+			CourseToRouteSegment = 270.0 - (h * 180.0 / M_PI);
 
 		h = CurrentBrgToActivePoint - CourseToRouteSegment;
 		if (h < 0)
@@ -470,8 +459,7 @@ bool Routeman::UpdateProgress()
 
 void Routeman::DoAdvance(void)
 {
-	if (!ActivateNextPoint(pActiveRoute, false)) // at the end?
-	{
+	if (!ActivateNextPoint(pActiveRoute, false)) { // at the end?
 		Route* pthis_route = pActiveRoute;
 		DeactivateRoute(true); // this is an arrival
 
@@ -640,8 +628,8 @@ bool Routeman::UpdateAutopilot()
 		else
 			m_NMEA0183.Rmb.DirectionToSteer = Right;
 
-		m_NMEA0183.Rmb.To = pActivePoint->GetName().Truncate( 6 );
-		m_NMEA0183.Rmb.From = pActiveRouteSegmentBeginPoint->GetName().Truncate( 6 );
+		m_NMEA0183.Rmb.To = pActivePoint->GetName().Truncate(6);
+		m_NMEA0183.Rmb.From = pActiveRouteSegmentBeginPoint->GetName().Truncate(6);
 
 		if (pActivePoint->m_lat < 0.0)
 			m_NMEA0183.Rmb.DestinationPosition.Latitude.Set(-pActivePoint->m_lat, _T("S"));
@@ -662,14 +650,14 @@ bool Routeman::UpdateAutopilot()
 		else
 			m_NMEA0183.Rmb.IsArrivalCircleEntered = NFalse;
 
-		m_NMEA0183.Rmb.Write( snt );
+		m_NMEA0183.Rmb.Write(snt);
 
-		g_pMUX->SendNMEAMessage( snt.Sentence );
+		g_pMUX->SendNMEAMessage(snt.Sentence);
 	}
 
 	// RMC
 	{
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
 		m_NMEA0183.TalkerID = _T("EC");
 
@@ -702,15 +690,15 @@ bool Routeman::UpdateAutopilot()
 
 		wxDateTime now = wxDateTime::Now();
 		wxDateTime utc = now.ToUTC();
-		wxString time = utc.Format( _T("%H%M%S") );
+		wxString time = utc.Format(_T("%H%M%S"));
 		m_NMEA0183.Rmc.UTCTime = time;
 
-		wxString date = utc.Format( _T("%d%m%y") );
+		wxString date = utc.Format(_T("%d%m%y"));
 		m_NMEA0183.Rmc.Date = date;
 
-		m_NMEA0183.Rmc.Write( snt );
+		m_NMEA0183.Rmc.Write(snt);
 
-		g_pMUX->SendNMEAMessage( snt.Sentence );
+		g_pMUX->SendNMEAMessage(snt.Sentence);
 	}
 
 	// APB
@@ -724,36 +712,37 @@ bool Routeman::UpdateAutopilot()
 
 		m_NMEA0183.Apb.CrossTrackErrorMagnitude = CurrentXTEToActivePoint;
 
-		if( XTEDir < 0 ) m_NMEA0183.Apb.DirectionToSteer = Left;
+		if (XTEDir < 0)
+			m_NMEA0183.Apb.DirectionToSteer = Left;
 		else
 			m_NMEA0183.Apb.DirectionToSteer = Right;
 
 		m_NMEA0183.Apb.CrossTrackUnits = _T("N");
 
-		if( m_bArrival )
+		if (m_bArrival)
 			m_NMEA0183.Apb.IsArrivalCircleEntered = NTrue;
 		else
 			m_NMEA0183.Apb.IsArrivalCircleEntered = NFalse;
 
-		//  We never pass the perpendicular, since we declare arrival before reaching this point
+		// We never pass the perpendicular, since we declare arrival before reaching this point
 		m_NMEA0183.Apb.IsPerpendicular = NFalse;
 
-		m_NMEA0183.Apb.To = pActivePoint->GetName().Truncate( 6 );
+		m_NMEA0183.Apb.To = pActivePoint->GetName().Truncate(6);
 
-		double brg1, dist1;
-		geo::DistanceBearingMercator( pActivePoint->m_lat, pActivePoint->m_lon,
-				pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon,
-				&brg1,
-				&dist1 );
+		double brg1;
+		double dist1;
+		geo::DistanceBearingMercator(pActivePoint->m_lat, pActivePoint->m_lon,
+									 pActiveRouteSegmentBeginPoint->m_lat,
+									 pActiveRouteSegmentBeginPoint->m_lon, &brg1, &dist1);
 
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-		if( g_bMagneticAPB && !wxIsNaN(nav.var) ) {
+		if (g_bMagneticAPB && !wxIsNaN(nav.var)) {
 
 			double brg1m = ((brg1 + nav.var) >= 0.0) ? (brg1 + nav.var) : (brg1 + nav.var + 360.0);
 			double bapm = ((CurrentBrgToActivePoint + nav.var) >= 0.0)
-				? (CurrentBrgToActivePoint + nav.var)
-				: (CurrentBrgToActivePoint + nav.var + 360.0);
+							  ? (CurrentBrgToActivePoint + nav.var)
+							  : (CurrentBrgToActivePoint + nav.var + 360.0);
 
 			m_NMEA0183.Apb.BearingOriginToDestination = brg1m;
 			m_NMEA0183.Apb.BearingOriginToDestinationUnits = _T("M");
@@ -763,35 +752,32 @@ bool Routeman::UpdateAutopilot()
 
 			m_NMEA0183.Apb.HeadingToSteer = bapm;
 			m_NMEA0183.Apb.HeadingToSteerUnits = _T("M");
-		}
-		else {
+		} else {
 			m_NMEA0183.Apb.BearingOriginToDestination = brg1;
 			m_NMEA0183.Apb.BearingOriginToDestinationUnits = _T("T");
 
 			m_NMEA0183.Apb.BearingPresentPositionToDestination = CurrentBrgToActivePoint;
 			m_NMEA0183.Apb.BearingPresentPositionToDestinationUnits = _T("T");
 
-
 			m_NMEA0183.Apb.HeadingToSteer = CurrentBrgToActivePoint;
 			m_NMEA0183.Apb.HeadingToSteerUnits = _T("T");
 		}
 
-		m_NMEA0183.Apb.Write( snt );
-		g_pMUX->SendNMEAMessage( snt.Sentence );
+		m_NMEA0183.Apb.Write(snt);
+		g_pMUX->SendNMEAMessage(snt.Sentence);
 	}
-
 
 	return true;
 }
 
-bool Routeman::DoesRouteContainSharedPoints(Route* pRoute)
+bool Routeman::DoesRouteContainSharedPoints(const Route* pRoute)
 {
 	if (!pRoute)
 		return false;
 
 	// walk the route, looking at each point to see if it is used by another route
 	// or is isolated
-	for (RoutePointList::iterator point = pRoute->pRoutePointList->begin();
+	for (RoutePointList::const_iterator point = pRoute->pRoutePointList->begin();
 		 point != pRoute->pRoutePointList->end(); ++point) {
 
 		// check all other routes to see if this point appears in any other route

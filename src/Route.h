@@ -40,6 +40,17 @@ class ViewPort;
 class Route
 {
 public:
+	class SameGUID
+	{
+	public:
+		SameGUID(const wxString& guid);
+		bool operator()(const Route* route) const;
+
+	private:
+		wxString guid;
+	};
+
+public:
 	static const double DEFAULT_SPEED;
 	static const int STYLE_UNDEFINED;
 

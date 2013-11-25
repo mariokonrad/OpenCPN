@@ -856,9 +856,8 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	// This may be found in the shared data location along with other user defined icons.
 	// and will be called "ownship.xpm" or "ownship.png"
 	if (pWayPointMan && pWayPointMan->DoesIconExist(_T("ownship"))) {
-		wxBitmap* pbmp = pWayPointMan->GetIconBitmap(_T("ownship"));
 		m_pos_image_user_day = new wxImage;
-		*m_pos_image_user_day = pbmp->ConvertToImage();
+		*m_pos_image_user_day = pWayPointMan->GetIconBitmap(_T("ownship"))->ConvertToImage();
 		m_pos_image_user_day->InitAlpha();
 
 		int gimg_width = m_pos_image_user_day->GetWidth();

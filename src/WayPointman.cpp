@@ -110,7 +110,7 @@ WayPointman::~WayPointman()
 
 	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
 		MarkIcon* pmi = *i;
-		delete pmi->picon_bitmap; // FIXME: let MarkIcon handle its own resources
+		delete pmi->bitmap; // FIXME: let MarkIcon handle its own resources
 		delete pmi;
 	}
 	icons.clear();
@@ -173,21 +173,19 @@ void WayPointman::ProcessIcon(wxBitmap pimage, const wxString& key, const wxStri
 
 	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
 		pmi = *i;
-		if (pmi->icon_name.IsSameAs(key)) {
+		if (pmi->name.IsSameAs(key)) {
 			newIcon = false;
-			delete pmi->picon_bitmap;
+			delete pmi->bitmap;
 			break;
 		}
 	}
 
 	if (newIcon) {
-		pmi = new MarkIcon;
-		pmi->icon_name = key;
-		pmi->icon_description = description;
+		pmi = new MarkIcon(key, description);
 		icons.push_back(pmi);
 	}
 
-	pmi->picon_bitmap = new wxBitmap(pimage);
+	pmi->bitmap = new wxBitmap(pimage);
 }
 
 // This method cannot be const nor return a const reference to the image list
@@ -199,8 +197,8 @@ wxImageList* WayPointman::Getpmarkicon_image_list(void)
 	int h = 0;
 
 	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
-		w = wxMax(w, (*i)->picon_bitmap->GetWidth());
-		h = wxMax(h, (*i)->picon_bitmap->GetHeight());
+		w = wxMax(w, (*i)->bitmap->GetWidth());
+		h = wxMax(h, (*i)->bitmap->GetHeight());
 
 		// toh, 10.09.29
 		// User defined icons won't be displayed in the list if they are larger than 32x32 pixels
@@ -219,7 +217,7 @@ wxImageList* WayPointman::Getpmarkicon_image_list(void)
 
 	// Add the icons
 	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
-		wxImage icon_image = (*i)->picon_bitmap->ConvertToImage();
+		wxImage icon_image = (*i)->bitmap->ConvertToImage();
 
 		// toh, 10.09.29
 		// After limiting size user defined icons will be cut off
@@ -349,7 +347,7 @@ void WayPointman::SetColorScheme(ColorScheme)
 bool WayPointman::DoesIconExist(const wxString& icon_key) const
 {
 	for (Icons::const_iterator i = icons.begin(); i != icons.end(); ++i) {
-		if ((*i)->icon_name.IsSameAs(icon_key))
+		if ((*i)->name.IsSameAs(icon_key))
 			return true;
 	}
 
@@ -363,14 +361,14 @@ wxBitmap* WayPointman::GetIconBitmap(const wxString& icon_key)
 
 	for (i = 0; i < icons.size(); ++i) {
 		pmi = icons[i];
-		if (pmi->icon_name.IsSameAs(icon_key))
+		if (pmi->name.IsSameAs(icon_key))
 			break;
 	}
 
 	if (i == icons.size()) { // key not found
 		for (i = 0; i < icons.size(); ++i) {
 			pmi = icons[i];
-			if (pmi->icon_name.IsSameAs(_T("circle")))
+			if (pmi->name.IsSameAs(_T("circle")))
 				break;
 		}
 	}
@@ -378,7 +376,7 @@ wxBitmap* WayPointman::GetIconBitmap(const wxString& icon_key)
 	if (i == icons.size()) // not found again
 		pmi = icons[0];
 
-	return pmi ? pmi->picon_bitmap : NULL;
+	return pmi ? pmi->bitmap : NULL;
 }
 
 wxBitmap * WayPointman::GetIconBitmap(int index)
@@ -388,7 +386,7 @@ wxBitmap * WayPointman::GetIconBitmap(int index)
 	if (index >= static_cast<int>(icons.size()))
 		return NULL;
 
-	return icons[index]->picon_bitmap;
+	return icons[index]->bitmap;
 }
 
 wxString WayPointman::GetIconDescription(int index) const
@@ -398,7 +396,7 @@ wxString WayPointman::GetIconDescription(int index) const
 	if (index >= static_cast<int>(icons.size()))
 		return wxString();
 
-	return icons[index]->icon_description;
+	return icons[index]->description;
 }
 
 wxString WayPointman::GetIconKey(int index) const
@@ -408,13 +406,13 @@ wxString WayPointman::GetIconKey(int index) const
 	if (index >= static_cast<int>(icons.size()))
 		return wxString();
 
-	return icons[index]->icon_name;
+	return icons[index]->name;
 }
 
 int WayPointman::GetIconIndex(const wxBitmap * pbm)
 {
 	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
-		if ((*i)->picon_bitmap == pbm)
+		if ((*i)->bitmap == pbm)
 			return i - icons.begin();
 	}
 
@@ -424,7 +422,7 @@ int WayPointman::GetIconIndex(const wxBitmap * pbm)
 int WayPointman::GetXIconIndex(const wxBitmap * pbm)
 {
 	for (unsigned int i = 0; i < icons.size(); i++ ) {
-		if (icons[i]->picon_bitmap == pbm)
+		if (icons[i]->bitmap == pbm)
 			return i + m_markicon_image_list_base_count;
 	}
 

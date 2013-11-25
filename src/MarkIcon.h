@@ -25,14 +25,24 @@
 #define __MARKICON_H__
 
 #include <wx/string.h>
-#include <wx/bitmap.h>
 
+class wxBitmap;
+
+/// Provides information about a marker icon as well as the bitmap itself.
+///
+/// @note The bitmap resources are being managed by the waypoint manager.
 class MarkIcon
 {
-	public:
-		wxBitmap * picon_bitmap;
-		wxString icon_name;
-		wxString icon_description;
+public:
+	MarkIcon(const wxString& name, const wxString& description)
+		: name(name)
+		, description(description)
+		, bitmap(NULL)
+	{}
+
+	wxString name;
+	wxString description;
+	wxBitmap* bitmap;
 };
 
 #endif

@@ -508,7 +508,7 @@ void WayPointman::ClearRoutePointFonts(void)
 	// This is typically done globally after a font switch
 
 	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
-		(*i)->m_pMarkFont = NULL;
+		(*i)->clear_font();
 	}
 }
 

@@ -65,7 +65,6 @@ public:
 	wxString GetDescription(void) const;
 
 	void SetName(const wxString& name);
-	void CalculateNameExtents(void);
 
 	void SetCourse(double course);
 	double GetCourse() const;
@@ -76,6 +75,8 @@ public:
 
 	const wxString& get_time_string() const;
 	void set_time_string(const wxString& time_string);
+
+	void clear_font();
 
 	// FIXME: move attributes to private
 
@@ -103,11 +104,6 @@ public:
 	wxString m_GUID;
 	wxString m_IconName;
 
-	wxFont* m_pMarkFont;
-	wxColour m_FontColor;
-
-	wxSize m_NameExtents;
-
 	wxBitmap* m_pbmIcon;
 	bool m_bBlink;
 	bool m_bDynamicName;
@@ -126,9 +122,15 @@ public:
 	bool m_btemp;
 
 private:
+	void CalculateNameExtents(void);
+
 	wxString m_MarkName;
 	wxDateTime m_CreateTimeX;
 	wxString m_timestring;
+
+	wxFont* m_pMarkFont;
+	wxColour m_FontColor;
+	wxSize m_NameExtents;
 };
 
 typedef std::vector<RoutePoint*> RoutePointList;

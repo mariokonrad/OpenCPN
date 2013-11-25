@@ -446,3 +446,8 @@ double RoutePoint::GetDistance() const
 	return m_routeprop_distance;
 }
 
+void RoutePoint::clear_font()
+{
+	m_pMarkFont = NULL;
+}
+

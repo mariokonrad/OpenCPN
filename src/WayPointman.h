@@ -40,54 +40,56 @@ class wxBitmap;
 
 class WayPointman
 {
-	public:
-		WayPointman();
-		~WayPointman();
-		wxBitmap *GetIconBitmap(const wxString & icon_key);
-		int GetIconIndex(const wxBitmap * pbm);
-		int GetXIconIndex(const wxBitmap * pbm);
-		int GetNumIcons(void) const;
-		wxString CreateGUID(RoutePoint * pRP);
-		RoutePoint * GetNearbyWaypoint(double lat, double lon, double radius_meters);
-		RoutePoint * GetOtherNearbyWaypoint(double lat, double lon, double radius_meters, const wxString & guid);
-		void SetColorScheme(ColorScheme cs);
-		bool SharedWptsExist();
-		void DeleteAllWaypoints(bool b_delete_used);
-		void DestroyWaypoint(RoutePoint * pRp, bool b_update_changeset = true);
-		void ClearRoutePointFonts(void);
-		void ProcessIcons(ocpnStyle::Style * style);
-		bool DoesIconExist(const wxString & icon_key) const;
-		wxBitmap * GetIconBitmap(int index);
-		wxString GetIconDescription(int index) const;
-		wxString GetIconKey(int index) const;
-		wxImageList * Getpmarkicon_image_list(void);
-		void ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description);
+public:
+	WayPointman();
+	~WayPointman();
+	wxBitmap* GetIconBitmap(const wxString& icon_key);
+	int GetIconIndex(const wxBitmap* pbm);
+	int GetXIconIndex(const wxBitmap* pbm);
+	int GetNumIcons(void) const;
+	wxString CreateGUID(RoutePoint* pRP);
+	RoutePoint* GetNearbyWaypoint(double lat, double lon, double radius_meters);
+	RoutePoint* GetOtherNearbyWaypoint(double lat, double lon, double radius_meters,
+									   const wxString& guid);
+	void SetColorScheme(ColorScheme cs);
+	bool SharedWptsExist();
+	void DeleteAllWaypoints(bool b_delete_used);
+	void DestroyWaypoint(RoutePoint* pRp, bool b_update_changeset = true);
+	void ClearRoutePointFonts(void);
+	void ProcessIcons(ocpnStyle::Style* style);
+	bool DoesIconExist(const wxString& icon_key) const;
+	wxBitmap* GetIconBitmap(int index);
+	wxString GetIconDescription(int index) const;
+	wxString GetIconKey(int index) const;
+	wxImageList* Getpmarkicon_image_list(void);
+	void ProcessIcon(wxBitmap pimage, const wxString& key, const wxString& description);
 
-		static RoutePoint * FindRoutePoint(const wxString & guid);
-		static RoutePoint * WaypointExists(const wxString & name, double lat, double lon);
+	RoutePoint* WaypointExists(const wxString& name, double lat, double lon);
 
-		void deleteWayPointOnLayer(int layer_id);
-		void setWayPointVisibilityOnLayer(int layer_id, bool visible);
-		void setWayPointNameVisibilityOnLayer(int layer_id, bool visible);
-		void setWayPointListingVisibilityOnLayer(int layer_id, bool visible);
+	void deleteWayPointOnLayer(int layer_id);
+	void setWayPointVisibilityOnLayer(int layer_id, bool visible);
+	void setWayPointNameVisibilityOnLayer(int layer_id, bool visible);
+	void setWayPointListingVisibilityOnLayer(int layer_id, bool visible);
 
-		void push_back(RoutePoint *);
-		void remove(RoutePoint *);
-		RoutePoint * find(const wxString & guid);
-		bool contains(const RoutePoint * point) const;
+	void push_back(RoutePoint*);
+	void remove(RoutePoint*);
+	RoutePoint* find(const wxString& guid);
+	bool contains(const RoutePoint* point) const;
 
-		const RoutePointList & waypoints() const;
+	const RoutePointList& waypoints() const;
+	RoutePointList& waypoints(); // FIXME: temporary
 
-		RoutePointList * m_pWayPointList;
-	private:
-		typedef std::vector<MarkIcon *> Icons;
+private:
+	typedef std::vector<MarkIcon*> Icons;
 
-		wxBitmap * CreateDimBitmap(wxBitmap * pBitmap, double factor);
+	wxBitmap* CreateDimBitmap(wxBitmap* pBitmap, double factor);
 
-		int m_markicon_image_list_base_count;
-		int m_nGUID;
-		Icons icons;
-		wxImageList icon_image_list;
+	RoutePointList m_pWayPointList;
+
+	int m_markicon_image_list_base_count;
+	int m_nGUID;
+	Icons icons;
+	wxImageList icon_image_list;
 };
 
 #endif

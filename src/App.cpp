@@ -1822,10 +1822,10 @@ bool App::OnInit()
 
 	// Re-enable anchor watches if set in config file
 	if (!g_AW1GUID.IsEmpty()) {
-		pAnchorWatchPoint1 = pWayPointMan->FindRoutePoint(g_AW1GUID);
+		pAnchorWatchPoint1 = pWayPointMan->find(g_AW1GUID);
 	}
 	if (!g_AW2GUID.IsEmpty()) {
-		pAnchorWatchPoint2 = pWayPointMan->FindRoutePoint(g_AW2GUID);
+		pAnchorWatchPoint2 = pWayPointMan->find(g_AW2GUID);
 	}
 
 	stats->Show(true);

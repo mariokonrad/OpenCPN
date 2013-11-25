@@ -54,8 +54,6 @@ extern Select* pSelect;
 
 WayPointman::WayPointman()
 {
-	m_pWayPointList = new RoutePointList;
-
 	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 	ProcessIcons(style);
 
@@ -104,14 +102,14 @@ WayPointman::~WayPointman()
 	// Copy the master RoutePoint list to a temporary list,
 	// then clear and delete objects from the temp list
 	RoutePointList temp_list;
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		temp_list.push_back(*i);
 	}
 	for (RoutePointList::iterator i = temp_list.begin(); i != temp_list.end(); ++i)
 		delete *i;
 	temp_list.clear();
 
-	delete m_pWayPointList;
+	m_pWayPointList.clear();
 
 	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
 		MarkIcon* pmi = *i;
@@ -320,7 +318,7 @@ void WayPointman::push_back(RoutePoint* route_point)
 	if (!route_point)
 		return;
 
-	m_pWayPointList->push_back(route_point);
+	m_pWayPointList.push_back(route_point);
 }
 
 void WayPointman::remove(RoutePoint* route_point)
@@ -328,12 +326,12 @@ void WayPointman::remove(RoutePoint* route_point)
 	if (!route_point)
 		return;
 
-	m_pWayPointList->erase(std::find(m_pWayPointList->begin(), m_pWayPointList->end(), route_point));
+	m_pWayPointList.erase(std::find(m_pWayPointList.begin(), m_pWayPointList.end(), route_point));
 }
 
 RoutePoint* WayPointman::find(const wxString& guid)
 {
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		if ((*i)->m_GUID == guid)
 			return *i;
 	}
@@ -342,7 +340,7 @@ RoutePoint* WayPointman::find(const wxString& guid)
 
 bool WayPointman::contains(const RoutePoint* point) const
 {
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::const_iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		if (*i == point)
 			return true;
 	}
@@ -353,7 +351,7 @@ void WayPointman::SetColorScheme(ColorScheme)
 {
 	ProcessIcons(g_StyleManager->GetCurrentStyle());
 
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		(*i)->ReLoadIcon();
 	}
 }
@@ -451,23 +449,11 @@ wxString WayPointman::CreateGUID(RoutePoint *)
 	return GpxDocument::GetUUID();
 }
 
-RoutePoint * WayPointman::FindRoutePoint(const wxString & guid)
-{
-	RoutePointList * list = pWayPointMan->m_pWayPointList;
-	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
-		RoutePoint * pr = *i;
-		if (guid == pr->m_GUID) {
-			return pr;
-		}
-	}
-	return NULL;
-}
-
 RoutePoint * WayPointman::GetNearbyWaypoint( double lat, double lon, double radius_meters )
 {
 	// Iterate on the RoutePoint list, checking distance
 
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		RoutePoint * pr = *i;
 
 		double a = lat - pr->m_lat;
@@ -488,7 +474,7 @@ RoutePoint * WayPointman::GetOtherNearbyWaypoint(
 {
 	// Iterate on the RoutePoint list, checking distance
 
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::const_iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		RoutePoint * pr = *i;
 
 		double a = lat - pr->m_lat;
@@ -507,15 +493,15 @@ void WayPointman::ClearRoutePointFonts(void)
 	// Iterate on the RoutePoint list, clearing Font pointers
 	// This is typically done globally after a font switch
 
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		(*i)->clear_font();
 	}
 }
 
 bool WayPointman::SharedWptsExist()
 {
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
-		RoutePoint * prp = *i;
+	for (RoutePointList::const_iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
+		const RoutePoint* prp = *i;
 		if (true
 			&& prp->m_bKeepXRoute
 			&& (false
@@ -532,25 +518,24 @@ void WayPointman::DeleteAllWaypoints(bool b_delete_used)
 {
 	// FIXME: altering container which is iterated through
 	// Iterate on the RoutePoint list, deleting all
-	RoutePointList::iterator i = m_pWayPointList->begin();
-	while (i != m_pWayPointList->end()) {
-		RoutePoint * prp = *i;
+	RoutePointList::iterator i = m_pWayPointList.begin();
+	while (i != m_pWayPointList.end()) {
+		RoutePoint* prp = *i;
 
 		// if argument is false, then only delete non-route waypoints
 		if (!prp->m_bIsInLayer && (prp->m_IconName != _T("mob"))
-				&& ((b_delete_used && prp->m_bKeepXRoute)
-					|| ((!prp->m_bIsInRoute) && (!prp->m_bIsInTrack)
-						&& !(prp == pAnchorWatchPoint1) && !(prp == pAnchorWatchPoint2)))) {
+			&& ((b_delete_used && prp->m_bKeepXRoute)
+				|| ((!prp->m_bIsInRoute) && (!prp->m_bIsInTrack) && !(prp == pAnchorWatchPoint1)
+					&& !(prp == pAnchorWatchPoint2)))) {
 			DestroyWaypoint(prp);
 			delete prp;
 			// TODO: why not remove the entry from list
-			i = m_pWayPointList->begin();
+			i = m_pWayPointList.begin();
 		} else {
 			++i;
 		}
 	}
 	return;
-
 }
 
 void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_changeset)
@@ -616,8 +601,8 @@ int WayPointman::GetNumIcons(void) const
 
 RoutePoint* WayPointman::WaypointExists(const wxString& name, double lat, double lon)
 {
-	RoutePointList* list = pWayPointMan->m_pWayPointList;
-	for (RoutePointList::iterator i = list->begin(); i != list->end(); ++i) {
+	RoutePointList& list = pWayPointMan->m_pWayPointList; // FIXME: already in waypoint manager
+	for (RoutePointList::iterator i = list.begin(); i != list.end(); ++i) {
 		RoutePoint* pr = *i;
 		if (name == pr->GetName()) {
 			if (fabs(lat - pr->m_lat) < 1.e-6 && fabs(lon - pr->m_lon) < 1.e-6) {
@@ -631,8 +616,8 @@ RoutePoint* WayPointman::WaypointExists(const wxString& name, double lat, double
 void WayPointman::deleteWayPointOnLayer(int layer_id)
 {
 	// FIXME: container altering iterating, iterate through copy of list, only elements are interesting
-	RoutePointList::iterator i = m_pWayPointList->begin();
-	while (i != m_pWayPointList->end()) {
+	RoutePointList::iterator i = m_pWayPointList.begin();
+	while (i != m_pWayPointList.end()) {
 		RoutePointList::iterator next = i;
 		++next;
 		RoutePoint *rp = *i;
@@ -647,7 +632,7 @@ void WayPointman::deleteWayPointOnLayer(int layer_id)
 
 void WayPointman::setWayPointVisibilityOnLayer(int layer_id, bool visible)
 {
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		RoutePoint* rp = *i;
 		if (rp && (rp->m_LayerID == layer_id)) {
 			rp->SetVisible(visible);
@@ -657,7 +642,7 @@ void WayPointman::setWayPointVisibilityOnLayer(int layer_id, bool visible)
 
 void WayPointman::setWayPointNameVisibilityOnLayer(int layer_id, bool visible)
 {
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		RoutePoint* rp = *i;
 		if (rp && (rp->m_LayerID == layer_id)) {
 			rp->SetNameShown(visible);
@@ -667,7 +652,7 @@ void WayPointman::setWayPointNameVisibilityOnLayer(int layer_id, bool visible)
 
 void WayPointman::setWayPointListingVisibilityOnLayer(int layer_id, bool visible)
 {
-	for (RoutePointList::iterator i = m_pWayPointList->begin(); i != m_pWayPointList->end(); ++i) {
+	for (RoutePointList::iterator i = m_pWayPointList.begin(); i != m_pWayPointList.end(); ++i) {
 		RoutePoint* rp = *i;
 		if (rp && !rp->m_bIsInTrack && rp->m_bIsolatedMark && (rp->m_LayerID == layer_id)) {
 			rp->SetListed(visible);
@@ -677,6 +662,11 @@ void WayPointman::setWayPointListingVisibilityOnLayer(int layer_id, bool visible
 
 const RoutePointList& WayPointman::waypoints() const
 {
-	return *m_pWayPointList;
+	return m_pWayPointList;
+}
+
+RoutePointList& WayPointman::waypoints()
+{
+	return m_pWayPointList;
 }
 

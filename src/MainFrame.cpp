@@ -1238,8 +1238,9 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 			// First, delete any single anchorage waypoint closer than 0.25 NM from this point
 			// This will prevent clutter and database congestion....
 
-			for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin();
-				 i != pWayPointMan->m_pWayPointList->end(); ++i) {
+			// FIXME: refactoring: access to the waypoint managers private data
+			for (RoutePointList::iterator i = pWayPointMan->waypoints().begin();
+				 i != pWayPointMan->waypoints().end(); ++i) {
 				RoutePoint* pr = *i;
 				if (pr->GetName().StartsWith(_T("Anchorage"))) {
 					double a = nav.lat - pr->m_lat;

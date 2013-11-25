@@ -350,7 +350,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 			if (ChildName == _T("rtept")) {
 				pWp = GPXLoadWaypoint1(tschild, _T("square"), _T(""), b_fullviz, b_layer,
 									   b_layerviz, layer_id);
-				RoutePoint* erp = WayPointman::FindRoutePoint(pWp->m_GUID);
+				RoutePoint* erp = pWayPointMan->find(pWp->m_GUID);
 				if (erp != NULL)
 					pWp = erp;
 				pTentRoute->AddPoint(pWp, false, true); // defer BBox calculation
@@ -1062,7 +1062,7 @@ bool NavObjectCollection::LoadAllGPXObjects()
 
 			if (pWp) {
 				RoutePoint* pExisting
-					= WayPointman::WaypointExists(pWp->GetName(), pWp->m_lat, pWp->m_lon);
+					= pWayPointMan->WaypointExists(pWp->GetName(), pWp->m_lat, pWp->m_lon);
 				if (!pExisting) {
 					if (NULL != pWayPointMan)
 						pWayPointMan->push_back(pWp);

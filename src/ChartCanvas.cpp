@@ -9100,8 +9100,8 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& Blt
 		wxDCClipper(*pdc, clipregion);
 	}
 
-	for (RoutePointList::iterator i = pWayPointMan->m_pWayPointList->begin();
-		 i != pWayPointMan->m_pWayPointList->end(); ++i) {
+	for (RoutePointList::iterator i = pWayPointMan->waypoints().begin();
+		 i != pWayPointMan->waypoints().end(); ++i) {
 		RoutePoint* point = *i;
 		if (point) {
 			if (bDrawMarksOnly && (point->m_bIsInRoute || point->m_bIsInTrack)) {

@@ -133,7 +133,7 @@ int ChartTableEntry::GetnPlyEntries() const
 	return nPlyEntries;
 }
 
-const float *ChartTableEntry::GetpPlyTable() const
+const float* ChartTableEntry::GetpPlyTable() const
 {
 	return pPlyTable;
 }
@@ -143,7 +143,7 @@ int ChartTableEntry::GetnAuxPlyEntries() const
 	return nAuxPlyEntries;
 }
 
-const float *ChartTableEntry::GetpAuxPlyTableEntry(int index) const
+const float* ChartTableEntry::GetpAuxPlyTableEntry(int index) const
 {
 	return pAuxPlyTable[index];
 }
@@ -158,7 +158,7 @@ int ChartTableEntry::GetnNoCovrPlyEntries() const
 	return nNoCovrPlyEntries;
 }
 
-const float *ChartTableEntry::GetpNoCovrPlyTableEntry(int index) const
+const float* ChartTableEntry::GetpNoCovrPlyTableEntry(int index) const
 {
 	return pNoCovrPlyTable[index];
 }
@@ -168,7 +168,7 @@ int ChartTableEntry::GetNoCovrCntTableEntry(int index) const
 	return pNoCovrCntTable[index];
 }
 
-const char * ChartTableEntry::GetpFullPath() const
+const char* ChartTableEntry::GetpFullPath() const
 {
 	return fullpath.c_str();
 }
@@ -218,12 +218,12 @@ void ChartTableEntry::SetEntryOffset(int n)
 	EntryOffset = n;
 }
 
-std::vector<int> &ChartTableEntry::GetGroupArray(void)
+std::vector<int>& ChartTableEntry::GetGroupArray(void)
 {
 	return m_GroupArray;
 }
 
-const wxString & ChartTableEntry::GetFileName(void) const
+const wxString& ChartTableEntry::GetFileName(void) const
 {
 	return m_filename;
 }
@@ -336,29 +336,29 @@ ChartTableEntry::ChartTableEntry()
 
 ChartTableEntry::~ChartTableEntry()
 {
-	delete [] pPlyTable;
+	delete[] pPlyTable;
 
 	for (int i = 0; i < nAuxPlyEntries; i++)
 		free(pAuxPlyTable[i]);
 	free(pAuxPlyTable);
-	delete [] pAuxCntTable;
+	delete[] pAuxCntTable;
 
 	if (nNoCovrPlyEntries) {
 		for (int i = 0; i < nNoCovrPlyEntries; i++)
 			free(pNoCovrPlyTable[i]);
 		free(pNoCovrPlyTable);
-		delete [] pNoCovrCntTable;
+		delete[] pNoCovrCntTable;
 	}
 }
 
-bool ChartTableEntry::IsEarlierThan(const ChartTableEntry &cte) const
+bool ChartTableEntry::IsEarlierThan(const ChartTableEntry& cte) const
 {
 	wxDateTime mine(edition_date);
 	wxDateTime theirs(cte.edition_date);
 	return mine.IsEarlierThan(theirs);
 }
 
-bool ChartTableEntry::IsEqualTo(const ChartTableEntry &cte) const
+bool ChartTableEntry::IsEqualTo(const ChartTableEntry& cte) const
 {
 	wxDateTime mine(edition_date);
 	wxDateTime theirs(cte.edition_date);

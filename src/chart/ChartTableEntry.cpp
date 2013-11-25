@@ -168,9 +168,9 @@ int ChartTableEntry::GetNoCovrCntTableEntry(int index) const
 	return pNoCovrCntTable[index];
 }
 
-char * ChartTableEntry::GetpFullPath() const
+const char * ChartTableEntry::GetpFullPath() const
 {
-	return pFullPath;
+	return fullpath.c_str();
 }
 
 float ChartTableEntry::GetLonMax() const
@@ -232,10 +232,7 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 {
 	Clear();
 
-	// FIXME: use string
-	char* pt = (char*)malloc(strlen(theChart.GetFullPath().mb_str(wxConvUTF8)) + 1);
-	strcpy(pt, theChart.GetFullPath().mb_str(wxConvUTF8));
-	pFullPath = pt;
+	fullpath = theChart.GetFullPath().mb_str(wxConvUTF8);
 
 	ChartType = theChart.GetChartType();
 	Scale = theChart.GetNativeScale();
@@ -343,7 +340,6 @@ ChartTableEntry::ChartTableEntry()
 
 ChartTableEntry::~ChartTableEntry()
 {
-	free(pFullPath);
 	free(pPlyTable);
 
 	for (int i = 0; i < nAuxPlyEntries; i++)
@@ -420,19 +416,27 @@ int ChartTableEntry::GetChartFamily() const
 	}
 }
 
+std::string ChartTableEntry::read_path(wxInputStream& is) const
+{
+	std::string path;
+	path.reserve(128);
+
+	while (true) {
+		char c = static_cast<char>(is.GetC());
+		if (c == 0)
+			break;
+		path += c;
+	}
+	return path;
+}
+
 void ChartTableEntry::read_17(wxInputStream & is)
 {
-	char path[4096]; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
-	char *cp;
-
-	// Read the path first
-	for (cp = path; (*cp = (char)is.GetC()) != 0; cp++); // FIXME: potential buffer overflow
-	pFullPath = (char *)malloc(cp - path + 1); // FIXME: use string
-	strncpy(pFullPath, path, cp - path + 1);
-	wxLogVerbose(_T("  Chart %s"), pFullPath);
+	fullpath = read_path(is);
+	wxLogVerbose(_T("  Chart %s"), fullpath.c_str());
 
 	// Create and populate the helper members
-	m_filename = wxFileName(wxString(pFullPath, wxConvUTF8)).GetFullName();
+	m_filename = wxFileName(wxString(fullpath.c_str(), wxConvUTF8)).GetFullName();
 
 	// Read the table entry
 	ChartTableEntry_onDisk_17 cte;
@@ -495,18 +499,11 @@ void ChartTableEntry::read_17(wxInputStream & is)
 
 void ChartTableEntry::read_16(wxInputStream & is)
 {
-	char path[4096]; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
-	char *cp;
-
-	// Read the path first
-	for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
-	// TODO: optimize prepended dir
-	pFullPath = (char *)malloc(cp - path + 1); // FIXME: use string
-	strncpy(pFullPath, path, cp - path + 1);
-	wxLogVerbose(_T("  Chart %s"), pFullPath);
+	fullpath = read_path(is);
+	wxLogVerbose(_T("  Chart %s"), fullpath.c_str());
 
 	// Create and populate the helper members
-	m_filename = wxFileName(wxString(pFullPath, wxConvUTF8)).GetFullName();
+	m_filename = wxFileName(wxString(fullpath.c_str(), wxConvUTF8)).GetFullName();
 
 	// Read the table entry
 	ChartTableEntry_onDisk_16 cte;
@@ -554,15 +551,8 @@ void ChartTableEntry::read_16(wxInputStream & is)
 
 void ChartTableEntry::read_15(wxInputStream & is)
 {
-	char path[4096]; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
-	char *cp;
-
-	// Read the path first
-	for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
-	// TODO: optimize prepended dir
-	pFullPath = (char *)malloc(cp - path + 1); // FIXME: use string
-	strncpy(pFullPath, path, cp - path + 1);
-	wxLogVerbose(_T("  Chart %s"), pFullPath);
+	fullpath = read_path(is);
+	wxLogVerbose(_T("  Chart %s"), fullpath.c_str());
 
 	// Read the table entry
 	ChartTableEntry_onDisk_15 cte;
@@ -607,14 +597,8 @@ void ChartTableEntry::read_15(wxInputStream & is)
 
 void ChartTableEntry::read_14(wxInputStream & is)
 {
-	char path[4096]; // FIXME: potential buffer overflow, replace dynamic memory allocation with std::string
-	char *cp;
-
-	// Read the path first
-	for (cp = path; (*cp = (char)is.GetC()) != 0; cp++);
-	pFullPath = (char *)malloc(cp - path + 1); // FIXME: use string
-	strncpy(pFullPath, path, cp - path + 1);
-	wxLogVerbose(_T("  Chart %s"), pFullPath);
+	fullpath = read_path(is);
+	wxLogVerbose(_T("  Chart %s"), fullpath.c_str());
 
 	// Read the table entry
 	ChartTableEntry_onDisk_14 cte;
@@ -673,7 +657,7 @@ bool ChartTableEntry::Read(const ChartDatabase * pDb, wxInputStream & is)
 
 bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& os)
 {
-	os.Write(pFullPath, strlen(pFullPath) + 1);
+	os.Write(fullpath.c_str(), fullpath.size() + 1);
 
 	// Write the current version type only
 	// Create an on_disk table entry
@@ -702,7 +686,7 @@ bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& 
 	cte.nNoCovrPlyEntries = nNoCovrPlyEntries;
 
 	os.Write(&cte, sizeof(ChartTableEntry_onDisk_17));
-	wxLogVerbose(_T("  Wrote Chart %s"), pFullPath);
+	wxLogVerbose(_T("  Wrote Chart %s"), fullpath.c_str());
 
 	// Write out the tables
 	if (nPlyEntries) {
@@ -741,7 +725,7 @@ void ChartTableEntry::Clear()
 	LatMin = 0.0f;
 	LonMax = 0.0f;
 	LonMin = 0.0f;
-	pFullPath = NULL;// FIXME: memory leak?
+	fullpath.clear();
 	Scale = 0;
 	pPlyTable = NULL;// FIXME: memory leak?
 	nPlyEntries = 0;

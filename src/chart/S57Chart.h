@@ -189,7 +189,7 @@ public:
 	wxString GetISDT(void);
 
 	char GetUsageChar(void);
-	static bool IsCellOverlayType(char* pFullPath);
+	static bool IsCellOverlayType(const char* pFullPath);
 
 	bool m_b2pointLUPS;
 	bool m_b2lineLUPS;

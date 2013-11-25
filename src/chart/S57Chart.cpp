@@ -2396,7 +2396,7 @@ bool s57chart::DCRenderLPB(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 	return true;
 }
 
-bool s57chart::IsCellOverlayType(char* pFullPath)
+bool s57chart::IsCellOverlayType(const char* pFullPath)
 {
 	wxFileName fn(wxString(pFullPath, wxConvUTF8));
 	// Get the "Usage" character

@@ -26,6 +26,7 @@
 
 #include <vector>
 #include <wx/string.h>
+#include <string>
 
 class wxInputStream;
 class wxOutputStream;
@@ -60,7 +61,7 @@ struct ChartTableEntry
 		float *GetpNoCovrPlyTableEntry(int index) const;
 		int GetNoCovrCntTableEntry(int index) const;
 
-		char * GetpFullPath() const;
+		const char * GetpFullPath() const;
 		float GetLonMax() const;
 		float GetLonMin() const;
 		float GetLatMax() const;
@@ -77,6 +78,7 @@ struct ChartTableEntry
 		const wxString & GetFileName(void) const;
 
 	private:
+		std::string read_path(wxInputStream& is) const;
 		void read_17(wxInputStream &is);
 		void read_16(wxInputStream &is);
 		void read_15(wxInputStream &is);
@@ -89,7 +91,7 @@ struct ChartTableEntry
 		float       LatMin;
 		float       LonMax;
 		float       LonMin;
-		char        *pFullPath; // FIXME: use string
+		std::string fullpath;
 		int         Scale;
 		time_t      edition_date;
 		time_t      file_date;

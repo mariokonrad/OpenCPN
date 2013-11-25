@@ -63,129 +63,132 @@ wxPoint ViewPort::GetPixFromLL(double lat, double lon) const
 	double easting, northing;
 	double xlon = lon;
 
-	/*  Make sure lon and lon0 are same phase */
-	if( xlon * clon < 0. ) {
-		if( xlon < 0. ) xlon += 360.;
+	//  Make sure lon and lon0 are same phase
+	if (xlon * clon < 0.0) {
+		if (xlon < 0.0)
+			xlon += 360.0;
 		else
-			xlon -= 360.;
+			xlon -= 360.0;
 	}
 
-	if( fabs( xlon - clon ) > 180. ) {
-		if( xlon > clon ) xlon -= 360.;
+	if (fabs(xlon - clon) > 180.0) {
+		if (xlon > clon)
+			xlon -= 360.0;
 		else
-			xlon += 360.;
+			xlon += 360.0;
 	}
 
-	if( PROJECTION_TRANSVERSE_MERCATOR == m_projection_type ) {
-		//    We calculate northings as referenced to the equator
-		//    And eastings as though the projection point is midscreen.
+	if (PROJECTION_TRANSVERSE_MERCATOR == m_projection_type) {
+		// We calculate northings as referenced to the equator
+		// And eastings as though the projection point is midscreen.
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
-		geo::toTM( lat, xlon, 0., clon, &tmeasting, &tmnorthing );
+		geo::toTM(clat, clon, 0., clon, &tmceasting, &tmcnorthing);
+		geo::toTM(lat, xlon, 0., clon, &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
-	} else if( PROJECTION_POLYCONIC == m_projection_type ) {
+	} else if (PROJECTION_POLYCONIC == m_projection_type) {
 
 		//    We calculate northings as referenced to the equator
 		//    And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		geo::toPOLY( clat, clon, 0., clon, &pceasting, &pcnorthing );
+		geo::toPOLY(clat, clon, 0., clon, &pceasting, &pcnorthing);
 
 		double peasting, pnorthing;
-		geo::toPOLY( lat, xlon, 0., clon, &peasting, &pnorthing );
+		geo::toPOLY(lat, xlon, 0., clon, &peasting, &pnorthing);
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
 	} else
-		geo::toSM( lat, xlon, clat, clon, &easting, &northing );
+		geo::toSM(lat, xlon, clat, clon, &easting, &northing);
 
 	if (!wxFinite(easting) || !wxFinite(northing))
-		return wxPoint( 0, 0 );
+		return wxPoint(0, 0);
 
 	double epix = easting * view_scale_ppm;
 	double npix = northing * view_scale_ppm;
 	double dxr = epix;
 	double dyr = npix;
 
-	//    Apply VP Rotation
-	if( g_bCourseUp ) {
-		dxr = epix * cos( rotation ) + npix * sin( rotation );
-		dyr = npix * cos( rotation ) - epix * sin( rotation );
+	// Apply VP Rotation
+	if (g_bCourseUp) {
+		dxr = epix * cos(rotation) + npix * sin(rotation);
+		dyr = npix * cos(rotation) - epix * sin(rotation);
 	}
 	wxPoint r;
-	//    We definitely need a round() function here
-	r.x = (int) wxRound( ( pix_width / 2 ) + dxr );
-	r.y = (int) wxRound( ( pix_height / 2 ) - dyr );
+	// We definitely need a round() function here
+	r.x = (int)wxRound((pix_width / 2) + dxr);
+	r.y = (int)wxRound((pix_height / 2) - dyr);
 
 	return r;
 }
 
-wxPoint2DDouble ViewPort::GetDoublePixFromLL( double lat, double lon )
+wxPoint2DDouble ViewPort::GetDoublePixFromLL(double lat, double lon)
 {
 	double easting, northing;
 	double xlon = lon;
 
-	/*  Make sure lon and lon0 are same phase */
-	if( xlon * clon < 0. ) {
-		if( xlon < 0. ) xlon += 360.;
+	//  Make sure lon and lon0 are same phase
+	if (xlon * clon < 0.0) {
+		if (xlon < 0.0)
+			xlon += 360.0;
 		else
-			xlon -= 360.;
+			xlon -= 360.0;
 	}
 
-	if( fabs( xlon - clon ) > 180. ) {
-		if( xlon > clon ) xlon -= 360.;
+	if (fabs(xlon - clon) > 180.0) {
+		if (xlon > clon)
+			xlon -= 360.0;
 		else
-			xlon += 360.;
+			xlon += 360.0;
 	}
 
-	if( PROJECTION_TRANSVERSE_MERCATOR == m_projection_type ) {
-		//    We calculate northings as referenced to the equator
-		//    And eastings as though the projection point is midscreen.
+	if (PROJECTION_TRANSVERSE_MERCATOR == m_projection_type) {
+		// We calculate northings as referenced to the equator
+		// And eastings as though the projection point is midscreen.
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
-		geo::toTM( lat, xlon, 0., clon, &tmeasting, &tmnorthing );
+		geo::toTM(clat, clon, 0., clon, &tmceasting, &tmcnorthing);
+		geo::toTM(lat, xlon, 0., clon, &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
-	} else if( PROJECTION_POLYCONIC == m_projection_type ) {
-
-		//    We calculate northings as referenced to the equator
-		//    And eastings as though the projection point is midscreen.
+	} else if (PROJECTION_POLYCONIC == m_projection_type) {
+		// We calculate northings as referenced to the equator
+		// And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		geo::toPOLY( clat, clon, 0., clon, &pceasting, &pcnorthing );
+		geo::toPOLY(clat, clon, 0., clon, &pceasting, &pcnorthing);
 
 		double peasting, pnorthing;
-		geo::toPOLY( lat, xlon, 0., clon, &peasting, &pnorthing );
+		geo::toPOLY(lat, xlon, 0., clon, &peasting, &pnorthing);
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
+	} else {
+		geo::toSM(lat, xlon, clat, clon, &easting, &northing);
 	}
 
-	else
-		geo::toSM( lat, xlon, clat, clon, &easting, &northing );
-
-	if( !wxFinite(easting) || !wxFinite(northing) ) return wxPoint( 0, 0 );
+	if (!wxFinite(easting) || !wxFinite(northing))
+		return wxPoint(0, 0);
 
 	double epix = easting * view_scale_ppm;
 	double npix = northing * view_scale_ppm;
 	double dxr = epix;
 	double dyr = npix;
 
-	//    Apply VP Rotation
-	if( g_bCourseUp ) {
-		dxr = epix * cos( rotation ) + npix * sin( rotation );
-		dyr = npix * cos( rotation ) - epix * sin( rotation );
+	// Apply VP Rotation
+	if (g_bCourseUp) {
+		dxr = epix * cos(rotation) + npix * sin(rotation);
+		dyr = npix * cos(rotation) - epix * sin(rotation);
 	}
 
 	wxPoint2DDouble r;
-	//    We definitely need a round() function here
-	r.m_x = ( ( pix_width / 2 ) + dxr );
-	r.m_y = ( ( pix_height / 2 ) - dyr );
+	// We definitely need a round() function here
+	r.m_x = ((pix_width / 2) + dxr);
+	r.m_y = ((pix_height / 2) - dyr);
 
 	return r;
 }
@@ -237,35 +240,37 @@ void ViewPort::GetLLFromPix( const wxPoint &p, double *lat, double *lon )
 OCPNRegion ViewPort::GetVPRegionIntersect(
 		const OCPNRegion & Region,
 		size_t n,
-		float * llpoints,
+		const float * llpoints,
 		int chart_native_scale,
 		wxPoint * ppoints)
 {
 	using geo::BoundingBox;
 
-	//  Calculate the intersection between a given OCPNRegion (Region) and a polygon specified by lat/lon points.
+	// Calculate the intersection between a given OCPNRegion (Region) and a polygon specified by
+	// lat/lon points.
 
-	//    If the viewpoint is highly overzoomed wrt to chart native scale, the polygon region may be huge.
-	//    This can be very expensive, and lead to crashes on some platforms (gtk in particular)
-	//    So, look for this case and handle appropriately with respect to the given Region
+	// If the viewpoint is highly overzoomed wrt to chart native scale, the polygon region may be
+	// huge.
+	// This can be very expensive, and lead to crashes on some platforms (gtk in particular)
+	// So, look for this case and handle appropriately with respect to the given Region
 
-	if( chart_scale < chart_native_scale / 10 ) {
+	if (chart_scale < chart_native_scale / 10) {
 		//    Make a positive definite vp
 		ViewPort vp_positive = *this;
-		while( vp_positive.vpBBox.GetMinX() < 0 ) {
+		while (vp_positive.vpBBox.GetMinX() < 0) {
 			vp_positive.clon += 360.;
-			wxPoint2DDouble t( 360., 0. );
-			vp_positive.vpBBox.Translate( t );
+			wxPoint2DDouble t(360., 0.);
+			vp_positive.vpBBox.Translate(t);
 		}
 
 		//    Scan the points one-by-one, so that we can get min/max to make a bbox
-		float *pfp = llpoints;
-		float lon_max = -10000.;
-		float lon_min = 10000.;
-		float lat_max = -10000.;
-		float lat_min = 10000.;
+		const float* pfp = llpoints;
+		float lon_max = -10000.0;
+		float lon_min = 10000.0;
+		float lat_max = -10000.0;
+		float lat_min = 10000.0;
 
-		for( unsigned int ip = 0; ip < n; ip++ ) {
+		for (unsigned int ip = 0; ip < n; ip++) {
 			lon_max = wxMax(lon_max, pfp[1]);
 			lon_min = wxMin(lon_min, pfp[1]);
 			lat_max = wxMax(lat_max, pfp[0]);
@@ -274,48 +279,47 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 			pfp += 2;
 		}
 
-		BoundingBox chart_box( lon_min, lat_min, lon_max, lat_max );
+		BoundingBox chart_box(lon_min, lat_min, lon_max, lat_max);
 
-		//    Case:  vpBBox is completely outside the chart box, or vice versa
-		//    Return an empty region
-		if( BoundingBox::_OUT == chart_box.Intersect( (BoundingBox&) vp_positive.vpBBox ) ) {
-			if( BoundingBox::_OUT == chart_box.Intersect( (BoundingBox&) vpBBox ) ) {
+		// Case:  vpBBox is completely outside the chart box, or vice versa
+		// Return an empty region
+		if (BoundingBox::_OUT == chart_box.Intersect((BoundingBox&)vp_positive.vpBBox)) {
+			if (BoundingBox::_OUT == chart_box.Intersect((BoundingBox&)vpBBox)) {
 				// try again with the chart translated 360
-				wxPoint2DDouble rtw( 360., 0. );
+				wxPoint2DDouble rtw(360., 0.);
 				BoundingBox trans_box = chart_box;
-				trans_box.Translate( rtw );
+				trans_box.Translate(rtw);
 
-				if( BoundingBox::_OUT == trans_box.Intersect( (BoundingBox&) vp_positive.vpBBox ) ) {
-					if( BoundingBox::_OUT == trans_box.Intersect( (BoundingBox&) vpBBox ) ) {
+				if (BoundingBox::_OUT == trans_box.Intersect((BoundingBox&)vp_positive.vpBBox)) {
+					if (BoundingBox::_OUT == trans_box.Intersect((BoundingBox&)vpBBox)) {
 						return OCPNRegion();
 					}
 				}
 			}
 		}
 
-		//    Case:  vpBBox is completely inside the chart box
-		//      Note that this test is not perfect, and will fail for some charts.
-		//      The chart coverage may be  essentially triangular, and the viewport box
-		//      may be in the "cut off" segment of the chart_box, and not actually
-		//      exhibit any true overlap.  Results will be reported incorrectly.
-		//      How to fix: maybe scrub the chart points and see if it is likely that
-		//      a region may be safely built and intersection tested.
+		// Case:  vpBBox is completely inside the chart box
+		// Note that this test is not perfect, and will fail for some charts.
+		// The chart coverage may be  essentially triangular, and the viewport box
+		// may be in the "cut off" segment of the chart_box, and not actually
+		// exhibit any true overlap.  Results will be reported incorrectly.
+		// How to fix: maybe scrub the chart points and see if it is likely that
+		// a region may be safely built and intersection tested.
 
-		if( BoundingBox::_IN == chart_box.Intersect( (BoundingBox&) vp_positive.vpBBox ) ) {
+		if (BoundingBox::_IN == chart_box.Intersect((BoundingBox&)vp_positive.vpBBox)) {
 			return Region;
 		}
 
-		if(BoundingBox::_IN == chart_box.Intersect((BoundingBox&)vpBBox))
-		{
+		if (BoundingBox::_IN == chart_box.Intersect((BoundingBox&)vpBBox)) {
 			return Region;
 		}
 
-		//    The ViewPort and the chart region overlap in some way....
-		//    Create the intersection of the two bboxes
-		//    Boxes must be same phase
-		while( chart_box.GetMinX() < 0 ) {
-			wxPoint2DDouble t( 360., 0. );
-			chart_box.Translate( t );
+		// The ViewPort and the chart region overlap in some way....
+		// Create the intersection of the two bboxes
+		// Boxes must be same phase
+		while (chart_box.GetMinX() < 0) {
+			wxPoint2DDouble t(360.0, 0.0);
+			chart_box.Translate(t);
 		}
 
 		double cb_minlon = wxMax(chart_box.GetMinX(), vp_positive.vpBBox.GetMinX());
@@ -323,95 +327,89 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		double cb_minlat = wxMax(chart_box.GetMinY(), vp_positive.vpBBox.GetMinY());
 		double cb_maxlat = wxMin(chart_box.GetMaxY(), vp_positive.vpBBox.GetMaxY());
 
-		if( cb_maxlon < cb_minlon ) cb_maxlon += 360.;
+		if (cb_maxlon < cb_minlon)
+			cb_maxlon += 360.0;
 
-		wxPoint p1 = GetPixFromLL( cb_maxlat, cb_minlon );  // upper left
-		wxPoint p2 = GetPixFromLL( cb_minlat, cb_maxlon );   // lower right
+		wxPoint p1 = GetPixFromLL(cb_maxlat, cb_minlon); // upper left
+		wxPoint p2 = GetPixFromLL(cb_minlat, cb_maxlon); // lower right
 
-		OCPNRegion r( p1, p2 );
-		r.Intersect( Region );
+		OCPNRegion r(p1, p2);
+		r.Intersect(Region);
 		return r;
 	}
 
-	//    More "normal" case
+	// More "normal" case
 
-	wxPoint *pp;
+	wxPoint* pp = NULL;
 
-	//    Use the passed point buffer if available
-	if( ppoints == NULL ) pp = new wxPoint[n];
+	// Use the passed point buffer if available
+	if (ppoints == NULL)
+		pp = new wxPoint[n];
 	else
 		pp = ppoints;
 
-	float *pfp = llpoints;
+	const float* pfp = llpoints;
 
-	for( unsigned int ip = 0; ip < n; ip++ ) {
-		wxPoint p = GetPixFromLL( pfp[0], pfp[1] );
+	for (unsigned int ip = 0; ip < n; ip++) {
+		wxPoint p = GetPixFromLL(pfp[0], pfp[1]);
 		pp[ip] = p;
 		pfp += 2;
 	}
 
 #ifdef __WXGTK__
-	sigaction(SIGSEGV, NULL, &sa_all_old);             // save existing action for this signal
+	sigaction(SIGSEGV, NULL, &sa_all_old); // save existing action for this signal
 
 	struct sigaction temp;
-	sigaction(SIGSEGV, NULL, &temp);// inspect existing action for this signal
+	sigaction(SIGSEGV, NULL, &temp); // inspect existing action for this signal
 
-	temp.sa_handler = catch_signals;// point to my handler
-	sigemptyset(&temp.sa_mask);// make the blocking set
+	temp.sa_handler = catch_signals; // point to my handler
+	sigemptyset(&temp.sa_mask); // make the blocking set
 	// empty, so that all
 	// other signals will be
 	// unblocked during my handler
 	temp.sa_flags = 0;
 	sigaction(SIGSEGV, &temp, NULL);
 
-	if(sigsetjmp(env, 1))//  Something in the below code block faulted....
-	{
-		sigaction(SIGSEGV, &sa_all_old, NULL);        // reset signal handler
-
+	if (sigsetjmp(env, 1)) { //  Something in the below code block faulted....
+		sigaction(SIGSEGV, &sa_all_old, NULL); // reset signal handler
 		return Region;
-
-	}
-
-	else
-	{
-
+	} else {
 		OCPNRegion r = OCPNRegion(n, pp);
-		if(NULL == ppoints)
+		if (NULL == ppoints)
 			delete[] pp;
 
-		sigaction(SIGSEGV, &sa_all_old, NULL);        // reset signal handler
+		sigaction(SIGSEGV, &sa_all_old, NULL); // reset signal handler
 		r.Intersect(Region);
 		return r;
 	}
 
 #else
-	OCPNRegion r = OCPNRegion( n, pp );
+	OCPNRegion r = OCPNRegion(n, pp);
+	if (NULL == ppoints)
+		delete[] pp;
 
-	if( NULL == ppoints ) delete[] pp;
-
-	r.Intersect( Region );
+	r.Intersect(Region);
 	return r;
-
 #endif
 }
 
-wxRect ViewPort::GetVPRectIntersect(size_t n, float * llpoints)
+wxRect ViewPort::GetVPRectIntersect(size_t n, const float* llpoints)
 {
-	//  Calculate the intersection between the currect VP screen
-	//  and the bounding box of a polygon specified by lat/lon points.
+	// Calculate the intersection between the currect VP screen
+	// and the bounding box of a polygon specified by lat/lon points.
 
-	float *pfp = llpoints;
+	const float* pfp = llpoints;
 
 	geo::BoundingBox point_box;
-	for( unsigned int ip = 0; ip < n; ip++ ) {
+	for (unsigned int ip = 0; ip < n; ip++) {
 		point_box.Expand(pfp[1], pfp[0]);
 		pfp += 2;
 	}
 
-	wxPoint pul = GetPixFromLL( point_box.GetMaxY(), point_box.GetMinX() );
-	wxPoint plr = GetPixFromLL( point_box.GetMinY(), point_box.GetMaxX() );
+	wxPoint pul = GetPixFromLL(point_box.GetMaxY(), point_box.GetMinX());
+	wxPoint plr = GetPixFromLL(point_box.GetMinY(), point_box.GetMaxX());
 
-	OCPNRegion r( pul, plr );
+	OCPNRegion r(pul, plr);
 	OCPNRegion rs(rv_rect);
 
 	r.Intersect(rs);
@@ -419,64 +417,68 @@ wxRect ViewPort::GetVPRectIntersect(size_t n, float * llpoints)
 	return r.GetBox();
 }
 
-void ViewPort::SetBoxes( void )
+void ViewPort::SetBoxes(void)
 {
 
-	//  In the case where canvas rotation is applied, we need to define a larger "virtual" pixel window size to ensure that
-	//  enough chart data is fatched and available to fill the rotated screen.
-	rv_rect = wxRect( 0, 0, pix_width, pix_height );
+	// In the case where canvas rotation is applied, we need to define a larger "virtual" pixel
+	// window size to ensure that
+	// enough chart data is fatched and available to fill the rotated screen.
+	rv_rect = wxRect(0, 0, pix_width, pix_height);
 
-	//  Specify the minimum required rectangle in unrotated screen space which will supply full screen data after specified rotation
-	if( ( g_bskew_comp && ( fabs( skew ) > .001 ) ) || ( fabs( rotation ) > .001 ) ) {
+	// Specify the minimum required rectangle in unrotated screen space which will supply full
+	// screen data after specified rotation
+	if ((g_bskew_comp && (fabs(skew) > .001)) || (fabs(rotation) > .001)) {
 
 		double rotator = rotation;
 		rotator -= skew;
 
-		int dy = wxRound(fabs( pix_height * cos( rotator ) ) + fabs( pix_width * sin(rotator)));
-		int dx = wxRound(fabs( pix_width * cos( rotator ) ) + fabs( pix_height * sin(rotator)));
+		int dy = wxRound(fabs(pix_height * cos(rotator)) + fabs(pix_width * sin(rotator)));
+		int dx = wxRound(fabs(pix_width * cos(rotator)) + fabs(pix_height * sin(rotator)));
 
-		//  It is important for MSW build that viewport pixel dimensions be multiples of 4.....
-		if( dy % 4 ) dy += 4 - ( dy % 4 );
-		if( dx % 4 ) dx += 4 - ( dx % 4 );
+		// It is important for MSW build that viewport pixel dimensions be multiples of 4.....
+		if (dy % 4)
+			dy += 4 - (dy % 4);
+		if (dx % 4)
+			dx += 4 - (dx % 4);
 
-		//  Grow the source rectangle appropriately
-		if( fabs( rotator ) > .001 )
-			rv_rect.Inflate( ( dx - pix_width ) / 2, ( dy - pix_height ) / 2 );
+		// Grow the source rectangle appropriately
+		if (fabs(rotator) > .001)
+			rv_rect.Inflate((dx - pix_width) / 2, (dy - pix_height) / 2);
 	}
 
-	//  Compute Viewport lat/lon reference points for co-ordinate hit testing
+	// Compute Viewport lat/lon reference points for co-ordinate hit testing
 
-	//  This must be done in unrotated space with respect to full unrotated screen space calculated above
+	// This must be done in unrotated space with respect to full unrotated screen space calculated
+	// above
 	double rotation_save = rotation;
-	SetRotationAngle( 0. );
+	SetRotationAngle(0.);
 
 	double lat_ul, lat_ur, lat_lr, lat_ll;
 	double lon_ul, lon_ur, lon_lr, lon_ll;
 
-	GetLLFromPix( wxPoint( rv_rect.x, rv_rect.y ), &lat_ul, &lon_ul );
-	GetLLFromPix( wxPoint( rv_rect.x + rv_rect.width, rv_rect.y ), &lat_ur, &lon_ur );
-	GetLLFromPix( wxPoint( rv_rect.x + rv_rect.width, rv_rect.y + rv_rect.height ), &lat_lr,
-			&lon_lr );
-	GetLLFromPix( wxPoint( rv_rect.x, rv_rect.y + rv_rect.height ), &lat_ll, &lon_ll );
+	GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y), &lat_ul, &lon_ul);
+	GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y), &lat_ur, &lon_ur);
+	GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y + rv_rect.height), &lat_lr, &lon_lr);
+	GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y + rv_rect.height), &lat_ll, &lon_ll);
 
-	if( clon < 0.0) {
-		if( ( lon_ul > 0.0) && ( lon_ur < 0.0) ) {
+	if (clon < 0.0) {
+		if ((lon_ul > 0.0) && (lon_ur < 0.0)) {
 			lon_ul -= 360.0;
 			lon_ll -= 360.0;
 		}
 	} else {
-		if( ( lon_ul > 0.0) && ( lon_ur < 0.0) ) {
+		if ((lon_ul > 0.0) && (lon_ur < 0.0)) {
 			lon_ur += 360.0;
 			lon_lr += 360.0;
 		}
 	}
 
-	if( lon_ur < lon_ul ) {
+	if (lon_ur < lon_ul) {
 		lon_ur += 360.0;
 		lon_lr += 360.0;
 	}
 
-	if( lon_ur > 360.0) {
+	if (lon_ur > 360.0) {
 		lon_ur -= 360.0;
 		lon_lr -= 360.0;
 		lon_ul -= 360.0;
@@ -484,31 +486,31 @@ void ViewPort::SetBoxes( void )
 	}
 
 	double dlat_min = lat_ul;
-	dlat_min = fmin ( dlat_min, lat_ur );
-	dlat_min = fmin ( dlat_min, lat_lr );
-	dlat_min = fmin ( dlat_min, lat_ll );
+	dlat_min = fmin(dlat_min, lat_ur);
+	dlat_min = fmin(dlat_min, lat_lr);
+	dlat_min = fmin(dlat_min, lat_ll);
 
 	double dlon_min = lon_ul;
-	dlon_min = fmin ( dlon_min, lon_ur );
-	dlon_min = fmin ( dlon_min, lon_lr );
-	dlon_min = fmin ( dlon_min, lon_ll );
+	dlon_min = fmin(dlon_min, lon_ur);
+	dlon_min = fmin(dlon_min, lon_lr);
+	dlon_min = fmin(dlon_min, lon_ll);
 
 	double dlat_max = lat_ul;
-	dlat_max = fmax ( dlat_max, lat_ur );
-	dlat_max = fmax ( dlat_max, lat_lr );
-	dlat_max = fmax ( dlat_max, lat_ll );
+	dlat_max = fmax(dlat_max, lat_ur);
+	dlat_max = fmax(dlat_max, lat_lr);
+	dlat_max = fmax(dlat_max, lat_ll);
 
 	double dlon_max = lon_ur;
-	dlon_max = fmax ( dlon_max, lon_ul );
-	dlon_max = fmax ( dlon_max, lon_lr );
-	dlon_max = fmax ( dlon_max, lon_ll );
+	dlon_max = fmax(dlon_max, lon_ul);
+	dlon_max = fmax(dlon_max, lon_lr);
+	dlon_max = fmax(dlon_max, lon_ll);
 
-	//  Set the viewport lat/lon bounding box appropriately
-	vpBBox.SetMin( dlon_min, dlat_min );
-	vpBBox.SetMax( dlon_max, dlat_max );
+	// Set the viewport lat/lon bounding box appropriately
+	vpBBox.SetMin(dlon_min, dlat_min);
+	vpBBox.SetMax(dlon_max, dlat_max);
 
 	// Restore the rotation angle
-	SetRotationAngle( rotation_save );
+	SetRotationAngle(rotation_save);
 }
 
 void ViewPort::Invalidate()
@@ -536,12 +538,12 @@ void ViewPort::SetProjectionType(int type)
 	m_projection_type = type;
 }
 
-const geo::LatLonBoundingBox & ViewPort::GetBBox() const
+const geo::LatLonBoundingBox& ViewPort::GetBBox() const
 {
 	return vpBBox;
 }
 
-geo::LatLonBoundingBox & ViewPort::GetBBox()
+geo::LatLonBoundingBox& ViewPort::GetBBox()
 {
 	return vpBBox;
 }

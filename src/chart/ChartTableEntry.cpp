@@ -133,7 +133,7 @@ int ChartTableEntry::GetnPlyEntries() const
 	return nPlyEntries;
 }
 
-float *ChartTableEntry::GetpPlyTable() const
+const float *ChartTableEntry::GetpPlyTable() const
 {
 	return pPlyTable;
 }
@@ -143,7 +143,7 @@ int ChartTableEntry::GetnAuxPlyEntries() const
 	return nAuxPlyEntries;
 }
 
-float *ChartTableEntry::GetpAuxPlyTableEntry(int index) const
+const float *ChartTableEntry::GetpAuxPlyTableEntry(int index) const
 {
 	return pAuxPlyTable[index];
 }
@@ -300,18 +300,17 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 		wxASSERT(nAuxPlyEntries);
 		float** pfp = (float**)malloc(nAuxPlyEntries * sizeof(float*));
 		float** pft0 = pfp;
-		int* pip = (int*)malloc(nAuxPlyEntries * sizeof(int));
+		pAuxCntTable = new int[nAuxPlyEntries];
 
 		for (int j = 0; j < nAuxPlyEntries; j++) {
 			float* pf_entry = (float*)malloc(theChart.GetCOVRTablePoints(j) * 2 * sizeof(float));
 			memcpy(pf_entry, theChart.GetCOVRTableHead(j),
 				   theChart.GetCOVRTablePoints(j) * 2 * sizeof(float));
 			pft0[j] = pf_entry;
-			pip[j] = theChart.GetCOVRTablePoints(j);
+			pAuxCntTable[j] = theChart.GetCOVRTablePoints(j);
 		}
 
 		pAuxPlyTable = pfp;
-		pAuxCntTable = pip;
 	}
 
 	// Get and populate the NoCovr tables
@@ -319,18 +318,17 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 	nNoCovrPlyEntries = theChart.GetNoCOVREntries();
 	float** pfpnc = (float**)malloc(nNoCovrPlyEntries * sizeof(float*));
 	float** pft0nc = pfpnc;
-	int* pipnc = (int*)malloc(nNoCovrPlyEntries * sizeof(int));
+	pNoCovrCntTable = new int[nNoCovrPlyEntries];
 
 	for (int j = 0; j < nNoCovrPlyEntries; j++) {
 		float* pf_entry = (float*)malloc(theChart.GetNoCOVRTablePoints(j) * 2 * sizeof(float));
 		memcpy(pf_entry, theChart.GetNoCOVRTableHead(j),
 			   theChart.GetNoCOVRTablePoints(j) * 2 * sizeof(float));
 		pft0nc[j] = pf_entry;
-		pipnc[j] = theChart.GetNoCOVRTablePoints(j);
+		pNoCovrCntTable[j] = theChart.GetNoCOVRTablePoints(j);
 	}
 
 	pNoCovrPlyTable = pfpnc;
-	pNoCovrCntTable = pipnc;
 }
 
 ChartTableEntry::ChartTableEntry()
@@ -345,13 +343,13 @@ ChartTableEntry::~ChartTableEntry()
 	for (int i = 0; i < nAuxPlyEntries; i++)
 		free(pAuxPlyTable[i]);
 	free(pAuxPlyTable);
-	free(pAuxCntTable);
+	delete [] pAuxCntTable;
 
 	if (nNoCovrPlyEntries) {
 		for (int i = 0; i < nNoCovrPlyEntries; i++)
 			free(pNoCovrPlyTable[i]);
 		free(pNoCovrPlyTable);
-		free(pNoCovrCntTable);
+		delete [] pNoCovrCntTable;
 	}
 }
 
@@ -465,34 +463,29 @@ void ChartTableEntry::read_17(wxInputStream & is)
 	bValid = cte.bValid;
 
 	if (nPlyEntries) {
-		int npeSize = nPlyEntries * 2 * sizeof(float);
-		pPlyTable = (float *)malloc(npeSize);
-		is.Read(pPlyTable, npeSize);
+		pPlyTable = (float *)malloc(nPlyEntries * 2 * sizeof(float));
+		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
 	}
 
 	if (nAuxPlyEntries) {
-		int napeSize = nAuxPlyEntries * sizeof(int);
 		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-		pAuxCntTable = (int *)malloc(napeSize);
-		is.Read(pAuxCntTable, napeSize);
+		pAuxCntTable = new int[nAuxPlyEntries];
+		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
 
 		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
-			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
-			is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
+			is.Read(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
 		}
 	}
 
 	if (nNoCovrPlyEntries) {
-		int napeSize = nNoCovrPlyEntries * sizeof(int);
-		pNoCovrCntTable = (int *)malloc(napeSize);
-		is.Read(pNoCovrCntTable, napeSize);
+		pNoCovrCntTable = (int *)malloc(nNoCovrPlyEntries * sizeof(int));
+		is.Read(pNoCovrCntTable, nNoCovrPlyEntries * sizeof(int));
 
 		pNoCovrPlyTable = (float **)malloc(nNoCovrPlyEntries * sizeof(float *));
 		for (int i = 0; i < nNoCovrPlyEntries; i++) {
-			int nfSize = pNoCovrCntTable[i] * 2 * sizeof(float);
-			pNoCovrPlyTable[i] = (float *)malloc(nfSize);
-			is.Read(pNoCovrPlyTable[i], nfSize);
+			pNoCovrPlyTable[i] = (float *)malloc(pNoCovrCntTable[i] * 2 * sizeof(float));
+			is.Read(pNoCovrPlyTable[i], pNoCovrCntTable[i] * 2 * sizeof(float));
 		}
 	}
 }
@@ -530,21 +523,18 @@ void ChartTableEntry::read_16(wxInputStream & is)
 	bValid = cte.bValid;
 
 	if (nPlyEntries) {
-		int npeSize = nPlyEntries * 2 * sizeof(float);
-		pPlyTable = (float *)malloc(npeSize);
-		is.Read(pPlyTable, npeSize);
+		pPlyTable = (float *)malloc(nPlyEntries * 2 * sizeof(float));
+		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
 	}
 
 	if (nAuxPlyEntries) {
-		int napeSize = nAuxPlyEntries * sizeof(int);
 		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-		pAuxCntTable = (int *)malloc(napeSize);
-		is.Read(pAuxCntTable, napeSize);
+		pAuxCntTable = new int[nAuxPlyEntries];
+		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
 
 		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
-			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
-			is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
+			is.Read(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
 		}
 	}
 }
@@ -576,21 +566,18 @@ void ChartTableEntry::read_15(wxInputStream & is)
 	bValid = cte.bValid;
 
 	if (nPlyEntries) {
-		int npeSize = nPlyEntries * 2 * sizeof(float);
-		pPlyTable = (float *)malloc(npeSize);
-		is.Read(pPlyTable, npeSize);
+		pPlyTable = (float *)malloc(nPlyEntries * 2 * sizeof(float));
+		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
 	}
 
 	if (nAuxPlyEntries) {
-		int napeSize = nAuxPlyEntries * sizeof(int);
 		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-		pAuxCntTable = (int *)malloc(napeSize);
-		is.Read(pAuxCntTable, napeSize);
+		pAuxCntTable = new int[nAuxPlyEntries];
+		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
 
 		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
-			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
-			is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
+			is.Read(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
 		}
 	}
 }
@@ -619,21 +606,18 @@ void ChartTableEntry::read_14(wxInputStream & is)
 	bValid = cte.bValid;
 
 	if (nPlyEntries) {
-		int npeSize = nPlyEntries * 2 * sizeof(float);
-		pPlyTable = (float *)malloc(npeSize);
-		is.Read(pPlyTable, npeSize);
+		pPlyTable = (float *)malloc(nPlyEntries * 2 * sizeof(float));
+		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
 	}
 
 	if (nAuxPlyEntries) {
-		int napeSize = nAuxPlyEntries * sizeof(int);
 		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-		pAuxCntTable = (int *)malloc(napeSize);
-		is.Read(pAuxCntTable, napeSize);
+		pAuxCntTable = new int[nAuxPlyEntries];
+		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
 
 		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
-			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(nfSize);
-			is.Read(pAuxPlyTable[nAuxPlyEntry], nfSize);
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
+			is.Read(pAuxPlyTable[nAuxPlyEntry],pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
 		}
 	}
 }
@@ -690,23 +674,19 @@ bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& 
 
 	// Write out the tables
 	if (nPlyEntries) {
-		int npeSize = nPlyEntries * 2 * sizeof(float);
-		os.Write(pPlyTable, npeSize);
+		os.Write(pPlyTable, nPlyEntries * 2 * sizeof(float));
 	}
 
 	if (nAuxPlyEntries) {
-		int napeSize = nAuxPlyEntries * sizeof(int);
-		os.Write(pAuxCntTable, napeSize);
+		os.Write(pAuxCntTable, nAuxPlyEntries * sizeof(int));
 
 		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			int nfSize = pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float);
-			os.Write(pAuxPlyTable[nAuxPlyEntry], nfSize);
+			os.Write(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
 		}
 	}
 
 	if (nNoCovrPlyEntries) {
-		int ncSize = nNoCovrPlyEntries * sizeof(int);
-		os.Write(pNoCovrCntTable, ncSize);
+		os.Write(pNoCovrCntTable, nNoCovrPlyEntries * sizeof(int));
 
 		for (int i = 0; i < nNoCovrPlyEntries; i++) {
 			int nctSize = pNoCovrCntTable[i] * 2 * sizeof(float);

@@ -51,10 +51,10 @@ struct ChartTableEntry
 		void Clear();
 
 		int GetnPlyEntries() const;
-		float *GetpPlyTable() const;
+		const float *GetpPlyTable() const;
 
 		int GetnAuxPlyEntries() const;
-		float *GetpAuxPlyTableEntry(int index) const;
+		const float *GetpAuxPlyTableEntry(int index) const;
 		int GetAuxCntTableEntry(int index) const;
 
 		int GetnNoCovrPlyEntries() const;
@@ -99,12 +99,12 @@ struct ChartTableEntry
 		int         nPlyEntries;
 		int         nAuxPlyEntries;
 		float       **pAuxPlyTable;
-		int         *pAuxCntTable;
+		int         *pAuxCntTable; // FIXME: use std::vector
 		float       Skew;
 		int         ProjectionType;
 		bool        bValid;
 		int         nNoCovrPlyEntries;
-		int         *pNoCovrCntTable;
+		int         *pNoCovrCntTable; // FIXME: use std::vector
 		float       **pNoCovrPlyTable;
 
 		std::vector<int> m_GroupArray;

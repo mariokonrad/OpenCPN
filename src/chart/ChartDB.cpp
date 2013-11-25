@@ -462,7 +462,7 @@ int ChartDB::GetCSPlyPoint(ChartStack* ps, int stackindex, int plyindex, float* 
 {
 	const ChartTableEntry& entry = GetChartTableEntry(ps->GetDBIndex(stackindex));
 	if (entry.GetnPlyEntries()) {
-		float* fp = entry.GetpPlyTable();
+		const float* fp = entry.GetpPlyTable();
 		fp += plyindex * 2;
 		*lat = *fp;
 		fp++;
@@ -1102,7 +1102,7 @@ wxXmlDocument ChartDB::GetXMLDescription(int dbIndex, bool b_getGeom)
 			wxXmlNode* anode = new wxXmlNode(wxXML_TEXT_NODE, _T ( "" ), panel_no);
 			panelnode->AddChild(anode);
 
-			float* pf = cte.GetpPlyTable();
+			const float* pf = cte.GetpPlyTable();
 			for (int j = 0; j < cte.GetnPlyEntries(); j++) {
 				wxXmlNode* vnode = new wxXmlNode(wxXML_ELEMENT_NODE, _T ( "vertex" ));
 				panelnode->AddChild(vnode);
@@ -1136,7 +1136,7 @@ wxXmlDocument ChartDB::GetXMLDescription(int dbIndex, bool b_getGeom)
 			wxXmlNode* anode = new wxXmlNode(wxXML_TEXT_NODE, _T ( "" ), panel_no);
 			panelnode->AddChild(anode);
 
-			float* pf = cte.GetpAuxPlyTableEntry(i);
+			const float* pf = cte.GetpAuxPlyTableEntry(i);
 			for (int j = 0; j < cte.GetAuxCntTableEntry(i); j++) {
 				wxXmlNode* vnode = new wxXmlNode(wxXML_ELEMENT_NODE, _T ( "vertex" ));
 				panelnode->AddChild(vnode);

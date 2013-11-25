@@ -1102,7 +1102,7 @@ int ChartDatabase::GetDBPlyPoint(int dbIndex, int plyindex, float* lat, float* l
 	if ((bValid) && (dbIndex >= 0) && (dbIndex < (int)chartTable.size())) {
 		const ChartTableEntry& entry = GetChartTableEntry(dbIndex);
 		if (entry.GetnPlyEntries()) {
-			float* fp = entry.GetpPlyTable();
+			const float* fp = entry.GetpPlyTable();
 			fp += plyindex * 2;
 			if (lat)
 				*lat = *fp;
@@ -1121,7 +1121,7 @@ int ChartDatabase::GetDBAuxPlyPoint(int dbIndex, int plyindex, int ply, float* l
 	if ((bValid) && (dbIndex >= 0) && (dbIndex < (int)chartTable.size())) {
 		const ChartTableEntry& entry = GetChartTableEntry(dbIndex);
 		if (entry.GetnAuxPlyEntries()) {
-			float* fp = entry.GetpAuxPlyTableEntry(ply);
+			const float* fp = entry.GetpAuxPlyTableEntry(ply);
 
 			fp += plyindex * 2;
 			if (lat)

@@ -43,11 +43,11 @@ class ViewPort
 		OCPNRegion GetVPRegionIntersect(
 				const OCPNRegion & Region,
 				size_t n,
-				float * llpoints,
+				const float * llpoints,
 				int chart_native_scale,
 				wxPoint * ppoints = NULL);
 
-		wxRect GetVPRectIntersect(size_t n, float * llpoints);
+		wxRect GetVPRectIntersect(size_t n, const float * llpoints);
 
 		void SetBoxes(void);
 		void Invalidate();

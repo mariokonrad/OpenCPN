@@ -317,7 +317,7 @@ OCPNRegion Quilt::GetChartQuiltRegion(const ChartTableEntry& cte, ViewPort& vp)
 	int nAuxPlyEntries = cte.GetnAuxPlyEntries();
 	if (nAuxPlyEntries >= 1) {
 		for (int ip = 0; ip < nAuxPlyEntries; ip++) {
-			float* pfp = cte.GetpAuxPlyTableEntry(ip);
+			const float* pfp = cte.GetpAuxPlyTableEntry(ip);
 			int nAuxPly = cte.GetAuxCntTableEntry(ip);
 
 			OCPNRegion t_region
@@ -327,7 +327,7 @@ OCPNRegion Quilt::GetChartQuiltRegion(const ChartTableEntry& cte, ViewPort& vp)
 		}
 	} else {
 		int n_ply_entries = cte.GetnPlyEntries();
-		float* pfp = cte.GetpPlyTable();
+		const float* pfp = cte.GetpPlyTable();
 
 		// could happen with old database and some charts, e.g. SHOM 2381.kap
 		if (n_ply_entries >= 3) {
@@ -410,7 +410,7 @@ wxRect Quilt::GetChartQuiltBoundingRect(const ChartTableEntry& cte, ViewPort& vp
 	int nAuxPlyEntries = cte.GetnAuxPlyEntries();
 	if (nAuxPlyEntries >= 1) {
 		for (int ip = 0; ip < nAuxPlyEntries; ip++) {
-			float* pfp = cte.GetpAuxPlyTableEntry(ip);
+			const float* pfp = cte.GetpAuxPlyTableEntry(ip);
 			int nAuxPly = cte.GetAuxCntTableEntry(ip);
 
 			wxRect t_rect = vp.GetVPRectIntersect(nAuxPly, pfp);
@@ -419,7 +419,7 @@ wxRect Quilt::GetChartQuiltBoundingRect(const ChartTableEntry& cte, ViewPort& vp
 		}
 	} else {
 		int n_ply_entries = cte.GetnPlyEntries();
-		float* pfp = cte.GetpPlyTable();
+		const float* pfp = cte.GetpPlyTable();
 
 		// could happen with old database and some charts, e.g. SHOM 2381.kap
 		if (n_ply_entries >= 3) {

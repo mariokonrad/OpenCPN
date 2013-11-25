@@ -31,6 +31,7 @@
 #include <Config.h>
 
 #include <gpx/ParseGPXDateTime.h>
+#include <gpx/GpxDocument.h>
 
 extern WayPointman* pWayPointMan;
 extern Routeman* g_pRouteMan;
@@ -794,11 +795,11 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 		if (g_pRouteMan->RouteExists(pTentRoute->m_GUID)) { // We are importing a different route
 															// with the same guid, so let's generate
 															// it a new guid
-			pTentRoute->m_GUID = pWayPointMan->CreateGUID(NULL);
+			pTentRoute->m_GUID = GpxDocument::GetUUID();
 			// Now also change guids for the routepoints
 			for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
 				 node != pTentRoute->pRoutePointList->end(); ++node) {
-				(*node)->m_GUID = pWayPointMan->CreateGUID(NULL);
+				(*node)->m_GUID = GpxDocument::GetUUID();
 				// FIXME: !!!! the shared waypoint gets part of both the routes -> not goood at all
 			}
 		}

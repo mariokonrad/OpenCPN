@@ -32,6 +32,7 @@
 #include <MainFrame.h>
 
 #include <gpx/ParseGPXDateTime.h>
+#include <gpx/GpxDocument.h>
 
 #include <wx/dcscreen.h>
 #include <wx/tokenzr.h>
@@ -74,7 +75,7 @@ RoutePoint::RoutePoint()
 	, m_MarkName(wxEmptyString)
 {
 	m_CreateTimeX = wxDateTime::Now();
-	m_GUID = pWayPointMan->CreateGUID(this);
+	m_GUID = GpxDocument::GetUUID();
 	ReLoadIcon();
 }
 
@@ -111,7 +112,7 @@ RoutePoint::RoutePoint(const RoutePoint& orig)
 	ReLoadIcon();
 
 	m_bIsInLayer = orig.m_bIsInLayer;
-	m_GUID = pWayPointMan->CreateGUID(this);
+	m_GUID = GpxDocument::GetUUID();
 }
 
 RoutePoint::RoutePoint(double lat, double lon, const wxString& icon_ident, const wxString& name,
@@ -154,7 +155,7 @@ RoutePoint::RoutePoint(double lat, double lon, const wxString& icon_ident, const
 	if (!pGUID.IsEmpty())
 		m_GUID = pGUID;
 	else
-		m_GUID = pWayPointMan->CreateGUID(this);
+		m_GUID = GpxDocument::GetUUID();
 
 	// Get Icon bitmap
 	m_IconName = icon_ident;

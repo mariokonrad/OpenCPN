@@ -37,6 +37,7 @@
 #include <geo/LineClip.h>
 
 #include <gpx/gpx.h>
+#include <gpx/GpxDocument.h>
 
 #include <algorithm>
 
@@ -81,7 +82,7 @@ Route::Route(void)
 	, m_bcrosses_idl(false)
 {
 	pRoutePointList = new RoutePointList;
-	m_GUID = pWayPointMan->CreateGUID(NULL);
+	m_GUID = GpxDocument::GetUUID();
 	m_ArrivalRadius = g_n_arrival_circle_radius; // nautical miles
 	RBBox.Reset();
 }

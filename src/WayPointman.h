@@ -47,7 +47,6 @@ public:
 	int GetIconIndex(const wxBitmap* pbm);
 	int GetXIconIndex(const wxBitmap* pbm);
 	int GetNumIcons(void) const;
-	wxString CreateGUID(RoutePoint* pRP);
 	RoutePoint* GetNearbyWaypoint(double lat, double lon, double radius_meters);
 	RoutePoint* GetOtherNearbyWaypoint(double lat, double lon, double radius_meters,
 									   const wxString& guid);

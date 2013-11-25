@@ -158,7 +158,7 @@ int ChartTableEntry::GetnNoCovrPlyEntries() const
 	return nNoCovrPlyEntries;
 }
 
-float *ChartTableEntry::GetpNoCovrPlyTableEntry(int index) const
+const float *ChartTableEntry::GetpNoCovrPlyTableEntry(int index) const
 {
 	return pNoCovrPlyTable[index];
 }
@@ -261,9 +261,8 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 	// If COVR table has only one entry, us it for the primary Ply Table
 	if (theChart.GetCOVREntries() == 1) {
 		nPlyEntries = theChart.GetCOVRTablePoints(0);
-		float* pf = (float*)malloc(2 * nPlyEntries * sizeof(float));
-		pPlyTable = pf;
-		float* pfe = pf;
+		pPlyTable = new float[nPlyEntries * 2];
+		float* pfe = pPlyTable;
 		Plypoint* ppp = reinterpret_cast<Plypoint*>(theChart.GetCOVRTableHead(0)); // FIXME
 
 		for (int i = 0; i < nPlyEntries; i++) {
@@ -276,9 +275,8 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 		// and create AuxPly table from the COVR tables
 		// Create new artificial Ply table from chart extents
 		nPlyEntries = 4;
-		float* pf1 = (float*)malloc(2 * 4 * sizeof(float));
-		pPlyTable = pf1;
-		float* pfe = pf1;
+		pPlyTable = new float[nPlyEntries * 2];
+		float* pfe = pPlyTable;
 		Extent fext;
 		theChart.GetChartExtent(&fext);
 
@@ -338,7 +336,7 @@ ChartTableEntry::ChartTableEntry()
 
 ChartTableEntry::~ChartTableEntry()
 {
-	free(pPlyTable);
+	delete [] pPlyTable;
 
 	for (int i = 0; i < nAuxPlyEntries; i++)
 		free(pAuxPlyTable[i]);
@@ -463,7 +461,7 @@ void ChartTableEntry::read_17(wxInputStream & is)
 	bValid = cte.bValid;
 
 	if (nPlyEntries) {
-		pPlyTable = (float *)malloc(nPlyEntries * 2 * sizeof(float));
+		pPlyTable = new float[nPlyEntries * 2];
 		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
 	}
 
@@ -479,7 +477,7 @@ void ChartTableEntry::read_17(wxInputStream & is)
 	}
 
 	if (nNoCovrPlyEntries) {
-		pNoCovrCntTable = (int *)malloc(nNoCovrPlyEntries * sizeof(int));
+		pNoCovrCntTable = new int[nNoCovrPlyEntries];
 		is.Read(pNoCovrCntTable, nNoCovrPlyEntries * sizeof(int));
 
 		pNoCovrPlyTable = (float **)malloc(nNoCovrPlyEntries * sizeof(float *));
@@ -523,7 +521,7 @@ void ChartTableEntry::read_16(wxInputStream & is)
 	bValid = cte.bValid;
 
 	if (nPlyEntries) {
-		pPlyTable = (float *)malloc(nPlyEntries * 2 * sizeof(float));
+		pPlyTable = new float[nPlyEntries * 2];
 		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
 	}
 
@@ -566,7 +564,7 @@ void ChartTableEntry::read_15(wxInputStream & is)
 	bValid = cte.bValid;
 
 	if (nPlyEntries) {
-		pPlyTable = (float *)malloc(nPlyEntries * 2 * sizeof(float));
+		pPlyTable = new float[nPlyEntries * 2];
 		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
 	}
 
@@ -606,7 +604,7 @@ void ChartTableEntry::read_14(wxInputStream & is)
 	bValid = cte.bValid;
 
 	if (nPlyEntries) {
-		pPlyTable = (float *)malloc(nPlyEntries * 2 * sizeof(float));
+		pPlyTable = new float[nPlyEntries * 2];
 		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
 	}
 
@@ -689,8 +687,7 @@ bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& 
 		os.Write(pNoCovrCntTable, nNoCovrPlyEntries * sizeof(int));
 
 		for (int i = 0; i < nNoCovrPlyEntries; i++) {
-			int nctSize = pNoCovrCntTable[i] * 2 * sizeof(float);
-			os.Write(pNoCovrPlyTable[i], nctSize);
+			os.Write(pNoCovrPlyTable[i], pNoCovrCntTable[i] * 2 * sizeof(float));
 		}
 	}
 

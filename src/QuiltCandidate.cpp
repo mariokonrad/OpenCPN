@@ -27,7 +27,7 @@
 #include <chart/ChartFamily.h>
 #include <chart/ChartDB.h>
 
-extern ChartDB *ChartData; // FIXME: global data
+extern ChartDB* ChartData; // FIXME: global data
 
 QuiltCandidate::QuiltCandidate()
 	: b_include(false)
@@ -88,7 +88,7 @@ OCPNRegion& QuiltCandidate::GetCandidateVPRegion(ViewPort& vp) // FIXME: really 
 	int nNoCovrPlyEntries = cte.GetnNoCovrPlyEntries();
 	if (nNoCovrPlyEntries) {
 		for (int ip = 0; ip < nNoCovrPlyEntries; ip++) {
-			float* pfp = cte.GetpNoCovrPlyTableEntry(ip);
+			const float* pfp = cte.GetpNoCovrPlyTableEntry(ip);
 			int nNoCovrPly = cte.GetNoCovrCntTableEntry(ip);
 
 			OCPNRegion t_region

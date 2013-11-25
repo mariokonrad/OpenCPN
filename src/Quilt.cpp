@@ -344,7 +344,7 @@ OCPNRegion Quilt::GetChartQuiltRegion(const ChartTableEntry& cte, ViewPort& vp)
 	int nNoCovrPlyEntries = cte.GetnNoCovrPlyEntries();
 	if (nNoCovrPlyEntries) {
 		for (int ip = 0; ip < nNoCovrPlyEntries; ip++) {
-			float* pfp = cte.GetpNoCovrPlyTableEntry(ip);
+			const float* pfp = cte.GetpNoCovrPlyTableEntry(ip);
 			int nNoCovrPly = cte.GetNoCovrCntTableEntry(ip);
 
 			OCPNRegion t_region
@@ -435,7 +435,7 @@ wxRect Quilt::GetChartQuiltBoundingRect(const ChartTableEntry& cte, ViewPort& vp
 	int nNoCovrPlyEntries = cte.GetnNoCovrPlyEntries();
 	if (nNoCovrPlyEntries) {
 		for (int ip = 0; ip < nNoCovrPlyEntries; ip++) {
-			float* pfp = cte.GetpNoCovrPlyTableEntry(ip);
+			const float* pfp = cte.GetpNoCovrPlyTableEntry(ip);
 			int nNoCovrPly = cte.GetNoCovrCntTableEntry(ip);
 
 			OCPNRegion t_region

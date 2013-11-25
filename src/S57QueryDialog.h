@@ -30,7 +30,7 @@ class wxHtmlWindow;
 
 class S57QueryDialog : public wxDialog
 {
-	DECLARE_CLASS(S57QueryDialog)
+		DECLARE_CLASS(S57QueryDialog)
 		DECLARE_EVENT_TABLE()
 	public:
 
@@ -45,7 +45,6 @@ class S57QueryDialog : public wxDialog
 
 		virtual ~S57QueryDialog();
 
-		void Init();
 		bool Create(
 				wxWindow * parent,
 				wxWindowID id = wxID_ANY,

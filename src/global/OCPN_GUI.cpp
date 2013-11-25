@@ -56,6 +56,16 @@ void OCPN_GUI::set_view_allow_overzoom_x(bool flag)
 	data_view.allow_overzoom_x = flag;
 }
 
+void OCPN_GUI::set_route_line_width(int width)
+{
+	data_view.route_line_width = width;
+}
+
+void OCPN_GUI::set_track_line_width(int width)
+{
+	data_view.track_line_width = width;
+}
+
 const GUI::Frame & OCPN_GUI::frame() const
 {
 	return data_frame;
@@ -175,6 +185,16 @@ void OCPN_GUI::set_cm93_detail_dialog_position(const wxPoint & position)
 void OCPN_GUI::set_cm93_show_detail_slider(bool flag)
 {
 	data_cm93.show_detail_slider = flag;
+}
+
+const GUI::S57Dialog & OCPN_GUI::s57dialog() const
+{
+	return data_s57dialog;
+}
+
+void OCPN_GUI::set_S57_dialog_size(const wxSize & size)
+{
+	data_s57dialog.size = size;
 }
 
 }

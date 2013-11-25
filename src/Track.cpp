@@ -31,6 +31,7 @@
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+#include <global/GUI.h>
 
 #include <geo/GeoRef.h>
 
@@ -39,14 +40,13 @@
 #define TIMER_TRACK1 778
 
 extern int g_nTrackPrecision;
-extern RouteList * pRouteList;
-extern Select * pSelect;
+extern RouteList* pRouteList;
+extern Select* pSelect;
 extern bool g_bTrackDaily;
 extern bool g_bHighliteTracks;
-extern int g_route_line_width;
-extern ChartCanvas * cc1;
+extern ChartCanvas* cc1;
 extern double g_TrackDeltaDistance;
-extern RouteProp * pRoutePropDialog;
+extern RouteProp* pRoutePropDialog;
 extern double g_PlanSpeed;
 
 double _distance2(Vector2D & a, Vector2D & b) // FIXME: vector operator -
@@ -375,17 +375,17 @@ void Track::Draw(ocpnDC& dc, ViewPort& VP)
 	// Establish basic colour
 	wxColour basic_colour;
 	if (m_bRunning || prp->m_IconName.StartsWith(_T("xmred"))) {
-		basic_colour = GetGlobalColor(_T ( "URED" ));
+		basic_colour = GetGlobalColor(_T("URED"));
 	} else if (prp->m_IconName.StartsWith(_T("xmblue"))) {
-		basic_colour = GetGlobalColor(_T ( "BLUE3" ));
+		basic_colour = GetGlobalColor(_T("BLUE3"));
 	} else if (prp->m_IconName.StartsWith(_T("xmgreen"))) {
-		basic_colour = GetGlobalColor(_T ( "UGREN" ));
+		basic_colour = GetGlobalColor(_T("UGREN"));
 	} else {
-		basic_colour = GetGlobalColor(_T ( "CHMGD" ));
+		basic_colour = GetGlobalColor(_T("CHMGD"));
 	}
 
 	int style = wxSOLID;
-	int width = g_route_line_width;
+	int width = global::OCPN::get().gui().view().route_line_width;
 	wxColour col;
 	if (m_style != STYLE_UNDEFINED)
 		style = m_style;

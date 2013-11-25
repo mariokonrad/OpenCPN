@@ -223,14 +223,9 @@ extern bool g_bEnableZoomToCursor;
 extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 
-extern int g_S57_dialog_sx;
-extern int g_S57_dialog_sy;
-
 extern CM93DSlide* pCM93DetailSlider;
 
 extern bool g_bDisplayGrid;
-
-extern bool g_bUseGreenShip;
 
 extern ChartCanvas* cc1;
 
@@ -2872,14 +2867,14 @@ bool ChartCanvas::SetViewPoint(double lat, double lon, double scale_ppm, double 
 // This icon was adapted and scaled from the S52 Presentation Library version 3_03.
 // Symbol VECGND02
 
-static int s_png_pred_icon[] = { -10, -10, -10, 10, 10, 10, 10, -10 };
+static const int s_png_pred_icon[] = { -10, -10, -10, 10, 10, 10, 10, -10 };
 
 // This ownship icon was adapted and scaled from the S52 Presentation Library version 3_03
 // Symbol OWNSHP05
-static int s_ownship_icon[]
+static const int s_ownship_icon[]
 	= { 5, -42, 11, -28, 11, 42, -11, 42, -11, -28, -5, -42, -11, 0, 11, 0, 0, 42, 0, -42 };
 
-wxPoint transrot(wxPoint pt, double theta, wxPoint offset)
+static wxPoint transrot(wxPoint pt, double theta, wxPoint offset)
 {
 	wxPoint ret;
 	double px = (double)(pt.x * sin(theta)) + (double)(pt.y * cos(theta));
@@ -3317,9 +3312,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 }
 
 /// @ChartCanvas::CalcGridSpacing
-/// 
+///
 /// Calculate the major and minor spacing between the lat/lon grid
-/// 
+///
 /// @param [r] WindowDegrees [double] displayed number of lat or lan in the window
 /// @param [w] MajorSpacing [double &] Major distance between grid lines
 /// @param [w] MinorSpacing [double &] Minor distance between grid lines
@@ -3410,9 +3405,9 @@ void CalcGridText(double latlon, double spacing, bool bPostfix, char* text)
 /// - distance between Grid-lm ines are calculated automatic
 /// - major grid lines will be across the whole chart window
 /// - minor grid lines will be 10 pixel at each edge of the chart window.
-/// 
+///
 /// @param [w] dc [wxDC&] the wx drawing context
-/// 
+///
 /// @return [void]
 void ChartCanvas::GridDraw(ocpnDC& dc)
 {
@@ -3938,10 +3933,10 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		if (td->b_positionDoubtful)
 			target_brush = wxBrush(GetGlobalColor(_T ( "UINFF" )));
 
-		//    Check for alarms here, maintained by AIS class timer tick
+		// Check for alarms here, maintained by AIS class timer tick
 		if (((td->n_alarm_state == AIS_ALARM_SET) && (td->bCPA_Valid))
 			|| (td->b_show_AIS_CPA && (td->bCPA_Valid))) {
-			//  Calculate the point of CPA for target
+			// Calculate the point of CPA for target
 			double tcpa_lat;
 			double tcpa_lon;
 			geo::ll_gc_ll(td->Lat, td->Lon, td->COG, target_sog * td->TCPA / 60., &tcpa_lat,
@@ -3950,7 +3945,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			wxPoint TPoint = TargetPoint;
 			GetCanvasPointPix(tcpa_lat, tcpa_lon, &tCPAPoint);
 
-			//  Draw the intercept line from target
+			// Draw the intercept line from target
 			geo::ClipResult res = geo::cohen_sutherland_line_clip_i(
 				&TPoint.x, &TPoint.y, &tCPAPoint.x, &tCPAPoint.y, 0, GetVP().pix_width, 0,
 				GetVP().pix_height);
@@ -3963,11 +3958,11 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				dc.StrokeLine(TPoint.x, TPoint.y, tCPAPoint.x, tCPAPoint.y);
 			}
 
-			//  Calculate the point of CPA for ownship
+			// Calculate the point of CPA for ownship
 			double ocpa_lat;
 			double ocpa_lon;
 
-			//  Detect and handle the case where ownship COG is undefined....
+			// Detect and handle the case where ownship COG is undefined....
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			if (wxIsNaN(nav.cog) || wxIsNaN(nav.sog)) {
 				ocpa_lat = nav.lat;
@@ -3982,31 +3977,31 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			GetCanvasPointPix(ocpa_lat, ocpa_lon, &oCPAPoint);
 			GetCanvasPointPix(tcpa_lat, tcpa_lon, &tCPAPoint);
 
-			//        Save a copy of these unclipped points
+			// Save a copy of these unclipped points
 			wxPoint oCPAPoint_unclipped = oCPAPoint;
 			wxPoint tCPAPoint_unclipped = tCPAPoint;
 
-			//  Draw a line from target CPA point to ownship CPA point
+			// Draw a line from target CPA point to ownship CPA point
 			geo::ClipResult ores = geo::cohen_sutherland_line_clip_i(
 				&tCPAPoint.x, &tCPAPoint.y, &oCPAPoint.x, &oCPAPoint.y, 0, GetVP().pix_width, 0,
 				GetVP().pix_height);
 
 			if (ores != geo::Invisible) {
-				wxColour yellow = GetGlobalColor(_T ( "YELO1" ));
+				wxColour yellow = GetGlobalColor(_T("YELO1"));
 				dc.SetPen(wxPen(yellow, 4));
 				dc.StrokeLine(tCPAPoint.x, tCPAPoint.y, oCPAPoint.x, oCPAPoint.y);
 
-				wxPen ppPen2(GetGlobalColor(_T ( "URED" )), 2, wxUSER_DASH);
+				wxPen ppPen2(GetGlobalColor(_T("URED")), 2, wxUSER_DASH);
 				ppPen2.SetDashes(2, dash_long);
 				dc.SetPen(ppPen2);
 				dc.StrokeLine(tCPAPoint.x, tCPAPoint.y, oCPAPoint.x, oCPAPoint.y);
 
-				//        Draw little circles at the ends of the CPA alert line
-				wxBrush br(GetGlobalColor(_T ( "BLUE3" )));
+				// Draw little circles at the ends of the CPA alert line
+				wxBrush br(GetGlobalColor(_T("BLUE3")));
 				dc.SetBrush(br);
-				dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLK" ))));
+				dc.SetPen(wxPen(GetGlobalColor(_T("UBLK"))));
 
-				//  Using the true ends, not the clipped ends
+				// Using the true ends, not the clipped ends
 				dc.StrokeCircle(tCPAPoint_unclipped.x, tCPAPoint_unclipped.y, 5);
 				dc.StrokeCircle(oCPAPoint_unclipped.x, oCPAPoint_unclipped.y, 5);
 			}
@@ -4032,21 +4027,21 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			dc.SetBrush(wxBrush(GetGlobalColor(_T ( "URED" ))));
 		}
 
-		//  Highlight the AIS target symbol if an alert dialog is currently open for it
+		// Highlight the AIS target symbol if an alert dialog is currently open for it
 		if (g_pais_alert_dialog_active && g_pais_alert_dialog_active->IsShown()) {
 			if (g_pais_alert_dialog_active->Get_Dialog_MMSI() == td->MMSI)
 				JaggyCircle(dc, wxPen(GetGlobalColor(_T ( "URED" )), 2), TargetPoint.x,
 							TargetPoint.y, 100);
 		}
 
-		//  Highlight the AIS target symbol if a query dialog is currently open for it
+		// Highlight the AIS target symbol if a query dialog is currently open for it
 		if (g_pais_query_dialog_active && g_pais_query_dialog_active->IsShown()) {
 			if (g_pais_query_dialog_active->GetMMSI() == td->MMSI)
 				TargetFrame(dc, wxPen(GetGlobalColor(_T ( "UBLCK" )), 2), TargetPoint.x,
 							TargetPoint.y, 25);
 		}
 
-		//       Render the COG line if the speed is greater than moored speed defined by ais
+		// Render the COG line if the speed is greater than moored speed defined by ais
 		// options dialog
 		if ((g_bShowCOG) && (target_sog > g_ShowMoored_Kts)) {
 			int pixx = TargetPoint.x;
@@ -4054,7 +4049,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			int pixx1 = PredPoint.x;
 			int pixy1 = PredPoint.y;
 
-			//  Don't draw the COG line  and predictor point if zoomed far out.... or if target
+			// Don't draw the COG line  and predictor point if zoomed far out.... or if target
 			// lost/inactive
 			double l = pow(pow((double)(PredPoint.x - TargetPoint.x), 2)
 						   + pow((double)(PredPoint.y - TargetPoint.y), 2),
@@ -4081,7 +4076,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 					dc.StrokeCircle(PredPoint.x, PredPoint.y, 5);
 				}
 
-				//      Draw RateOfTurn Vector
+				// Draw RateOfTurn Vector
 				if ((td->ROTAIS != 0) && (td->ROTAIS != -128) && td->b_active) {
 					double nv = 10;
 					double theta2 = theta;
@@ -4098,9 +4093,9 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			}
 		}
 
-		//        Actually Draw the target
+		// Actually Draw the target
 		if (td->Class == AIS_ARPA) {
-			wxPen target_pen(GetGlobalColor(_T ( "UBLCK" )), 2);
+			wxPen target_pen(GetGlobalColor(_T("UBLCK")), 2);
 
 			dc.SetPen(target_pen);
 			dc.SetBrush(target_brush);
@@ -4263,7 +4258,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				}
 			}
 
-			//        Draw the inactive cross-out line
+			// Draw the inactive cross-out line
 			if (!td->b_active) {
 				dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" )), 2));
 
@@ -4276,8 +4271,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" )), 1));
 			}
 
-			//    European Inland AIS define a "stbd-stbd" meeting sign, a blue paddle.
-			//    Symbolize it if set by most recent message
+			// European Inland AIS define a "stbd-stbd" meeting sign, a blue paddle.
+			// Symbolize it if set by most recent message
 			if (td->b_blue_paddle) {
 				wxPoint ais_flag_icon[4];
 				ais_flag_icon[0].x = -8;
@@ -6549,7 +6544,7 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 			g_pObjectQueryDialog = new S57QueryDialog();
 
 			g_pObjectQueryDialog->Create(this, -1, _("Object Query"), wxDefaultPosition,
-										 wxSize(g_S57_dialog_sx, g_S57_dialog_sy));
+										 global::OCPN::get().gui().s57dialog().size);
 			g_pObjectQueryDialog->Centre();
 		}
 

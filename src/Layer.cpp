@@ -42,7 +42,7 @@ Layer* getLayerAtIndex(int index)
 {
 	if (index < 0)
 		return NULL;
-	if (index >= pLayerList->size())
+	if (index >= static_cast<int>(pLayerList->size()))
 		return NULL;
 
 	LayerList::iterator i = pLayerList->begin();

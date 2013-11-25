@@ -37,6 +37,7 @@ class OCPN_GUI : public GUI
 		AISAlertDialog data_ais_alert_dialog;
 		AISQueryDialog data_ais_query_dialog;
 		CM93 data_cm93;
+		S57Dialog data_s57dialog;
 
 	public: // view
 		virtual const View & view() const;
@@ -45,6 +46,8 @@ class OCPN_GUI : public GUI
 		virtual void set_view_show_depth_units(bool);
 		virtual void set_view_lookahead_mode(bool);
 		virtual void set_view_allow_overzoom_x(bool);
+		virtual void set_route_line_width(int);
+		virtual void set_track_line_width(int);
 
 	public: // frame
 		virtual const Frame & frame() const;
@@ -78,6 +81,10 @@ class OCPN_GUI : public GUI
 		virtual void set_cm93_zoom_factor(int);
 		virtual void set_cm93_detail_dialog_position(const wxPoint &);
 		virtual void set_cm93_show_detail_slider(bool);
+
+	public: // S57 dialog
+		virtual const S57Dialog & s57dialog() const;
+		virtual void set_S57_dialog_size(const wxSize &);
 };
 
 }

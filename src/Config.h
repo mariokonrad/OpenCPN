@@ -103,6 +103,7 @@ private:
 	void load_system_config(int);
 	void load_watchdog();
 	void load_cm93(int, int);
+	void load_s57dialog();
 
 	void write_view();
 	void write_frame();
@@ -111,6 +112,7 @@ private:
 	void write_ais_query_dialog();
 	void write_system_config();
 	void write_cm93();
+	void write_s57dialog();
 
 	static bool WptIsInRouteList(const RoutePoint* pr);
 

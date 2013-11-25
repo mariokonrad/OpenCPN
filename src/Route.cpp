@@ -33,6 +33,9 @@
 #include <UserColors.h>
 #include <MicrosoftCompatibility.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #include <geo/GeoRef.h>
 #include <geo/LineClip.h>
 
@@ -44,7 +47,6 @@
 extern WayPointman* pWayPointMan;
 extern int g_LayerIdx;
 extern Routeman* g_pRouteMan;
-extern int g_route_line_width;
 extern Select* pSelect;
 extern Config* pConfig;
 extern Multiplexer* g_pMUX;
@@ -351,7 +353,7 @@ void Route::Draw(ocpnDC& dc, ViewPort& VP)
 		dc.SetBrush(*g_pRouteMan->GetSelectedRouteBrush());
 	} else if (m_bVisible) {
 		int style = wxSOLID;
-		int width = g_route_line_width;
+		int width = global::OCPN::get().gui().view().route_line_width;
 		wxColour col;
 		if (m_style != STYLE_UNDEFINED)
 			style = m_style;

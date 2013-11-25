@@ -134,8 +134,6 @@ extern bool             g_bShowAISName;
 extern int              g_Show_Target_Name_Scale;
 extern bool             g_bWplIsAprsPosition;
 
-extern int              g_S57_dialog_sx, g_S57_dialog_sy;
-
 extern int              g_iNavAidRadarRingsNumberVisible;
 extern float            g_fNavAidRadarRingsStep;
 extern int              g_pNavAidRadarRingsStepUnits;
@@ -159,8 +157,6 @@ extern double           g_ownship_predictor_minutes;
 #ifdef USE_S57
 extern s52plib          *ps52plib;
 #endif
-
-extern bool             g_bUseGreenShip;
 
 extern bool             g_bshow_overzoom_emboss;
 extern int              g_nautosave_interval_seconds;
@@ -221,8 +217,6 @@ extern bool             g_bHighliteTracks;
 extern int              g_cog_predictor_width;
 extern int              g_ais_cog_predictor_width;
 
-extern int              g_route_line_width;
-extern int              g_track_line_width;
 extern wxString         g_default_wp_icon;
 
 extern chart::ChartGroupArray  *g_pGroupArray;
@@ -410,6 +404,16 @@ void Config::load_watchdog()
 	wdt.set_gps_timeout_ticks(gps_watchdog_timeout_ticks);
 }
 
+void Config::load_s57dialog()
+{
+	global::GUI& gui = global::OCPN::get().gui();
+
+	int w = Read(_T("S57QueryDialogSizeX"), 400L);
+	int h = Read(_T("S57QueryDialogSizeY"), 400L);
+
+	gui.set_S57_dialog_size(wxSize(w, h));
+}
+
 void Config::load_cm93(int display_width, int display_height)
 {
 #ifdef USE_S57
@@ -478,8 +482,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read( _T ( "DebugBSBImg" ), &g_BSBImgDebug, 0 );
 
 	load_watchdog();
-
-	Read( _T ( "UseGreenShipIcon" ), &g_bUseGreenShip, 0 );
 
 	// overzoom
 	long allow_overzoom_x = 1;
@@ -696,8 +698,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read( _T ( "bAISRolloverShowCOG" ), &g_bAISRolloverShowCOG );
 	Read( _T ( "bAISRolloverShowCPA" ), &g_bAISRolloverShowCPA );
 
-	g_S57_dialog_sx = Read( _T ( "S57QueryDialogSizeX" ), 400L );
-	g_S57_dialog_sy = Read( _T ( "S57QueryDialogSizeY" ), 400L );
+	load_s57dialog();
 
 #ifdef USE_S57
 	if( NULL != ps52plib ) {
@@ -1177,10 +1178,16 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	Read( _T ( "NavObjectFileName" ), m_sNavObjSetFile );
 
-	Read( _T ( "RouteLineWidth" ), &g_route_line_width, 2 );
-	Read( _T ( "TrackLineWidth" ), &g_track_line_width, 3 );
-	Read( _T ( "CurrentArrowScale" ), &g_current_arrow_scale, 100 );
-	Read( _T ( "DefaultWPIcon" ), &g_default_wp_icon, _T("triangle") );
+	int route_line_width = 2;
+	Read(_T("RouteLineWidth"), &route_line_width, 2);
+	global::OCPN::get().gui().set_route_line_width(route_line_width);
+
+	int track_line_width = 3;
+	Read(_T("TrackLineWidth"), &track_line_width, 3);
+	global::OCPN::get().gui().set_track_line_width(track_line_width);
+
+	Read(_T("CurrentArrowScale"), &g_current_arrow_scale, 100 );
+	Read(_T("DefaultWPIcon"), &g_default_wp_icon, _T("triangle") );
 
 	return ( 0 );
 }
@@ -1306,29 +1313,29 @@ bool Config::LoadChartDirArray(ArrayOfCDI & ChartDirArray)
 	return true;
 }
 
-bool Config::AddNewRoute(Route *pr, int) // FIXME: does this really belong to config?
+bool Config::AddNewRoute(Route* pr, int) // FIXME: does this really belong to config?
 {
 	if (pr->m_bIsInLayer)
 		return true;
 
 	if (!m_bSkipChangeSetUpdate) {
-		m_pNavObjectChangesSet->AddRoute( pr, "add" );
+		m_pNavObjectChangesSet->AddRoute(pr, "add");
 		StoreNavObjChanges();
 	}
 
 	return true;
 }
 
-bool Config::UpdateRoute(Route * pr) // FIXME: does this really belong to config?
+bool Config::UpdateRoute(Route* pr) // FIXME: does this really belong to config?
 {
-	if( pr->m_bIsInLayer )
+	if (pr->m_bIsInLayer)
 		return true;
 
-	if( !m_bSkipChangeSetUpdate ) {
-		if( pr->m_bIsTrack )
-			m_pNavObjectChangesSet->AddTrack( (Track *)pr, "update" );
+	if (!m_bSkipChangeSetUpdate) {
+		if (pr->m_bIsTrack)
+			m_pNavObjectChangesSet->AddTrack((Track*)pr, "update");
 		else
-			m_pNavObjectChangesSet->AddRoute( pr, "update" );
+			m_pNavObjectChangesSet->AddRoute(pr, "update");
 
 		StoreNavObjChanges();
 	}
@@ -1336,55 +1343,55 @@ bool Config::UpdateRoute(Route * pr) // FIXME: does this really belong to config
 	return true;
 }
 
-bool Config::DeleteConfigRoute( Route *pr ) // FIXME: does this really belong to config?
+bool Config::DeleteConfigRoute(Route* pr) // FIXME: does this really belong to config?
 {
-	if( pr->m_bIsInLayer )
+	if (pr->m_bIsInLayer)
 		return true;
 
-	if( !m_bSkipChangeSetUpdate ) {
-		if( !pr->m_bIsTrack )
-			m_pNavObjectChangesSet->AddRoute( (Track *)pr, "delete" );
+	if (!m_bSkipChangeSetUpdate) {
+		if (!pr->m_bIsTrack)
+			m_pNavObjectChangesSet->AddRoute((Track*)pr, "delete");
 		else
-			m_pNavObjectChangesSet->AddTrack( (Track *)pr, "delete" );
+			m_pNavObjectChangesSet->AddTrack((Track*)pr, "delete");
 
 		StoreNavObjChanges();
 	}
 	return true;
 }
 
-bool Config::AddNewWayPoint(RoutePoint * pWP, int) // FIXME: does this really belong to config?
+bool Config::AddNewWayPoint(RoutePoint* pWP, int) // FIXME: does this really belong to config?
 {
-	if( pWP->m_bIsInLayer )
+	if (pWP->m_bIsInLayer)
 		return true;
 
-	if( !m_bSkipChangeSetUpdate ) {
-		m_pNavObjectChangesSet->AddWP( pWP, "add" );
+	if (!m_bSkipChangeSetUpdate) {
+		m_pNavObjectChangesSet->AddWP(pWP, "add");
 		StoreNavObjChanges();
 	}
 
 	return true;
 }
 
-bool Config::UpdateWayPoint( RoutePoint *pWP ) // FIXME: does this really belong to config?
+bool Config::UpdateWayPoint(RoutePoint* pWP) // FIXME: does this really belong to config?
 {
-	if( pWP->m_bIsInLayer )
+	if (pWP->m_bIsInLayer)
 		return true;
 
-	if( !m_bSkipChangeSetUpdate ) {
-		m_pNavObjectChangesSet->AddWP( pWP, "update" );
+	if (!m_bSkipChangeSetUpdate) {
+		m_pNavObjectChangesSet->AddWP(pWP, "update");
 		StoreNavObjChanges();
 	}
 
 	return true;
 }
 
-bool Config::DeleteWayPoint( RoutePoint *pWP ) // FIXME: does this really belong to config?
+bool Config::DeleteWayPoint(RoutePoint* pWP) // FIXME: does this really belong to config?
 {
-	if( pWP->m_bIsInLayer )
+	if (pWP->m_bIsInLayer)
 		return true;
 
-	if( !m_bSkipChangeSetUpdate ) {
-		m_pNavObjectChangesSet->AddWP( pWP, "delete" );
+	if (!m_bSkipChangeSetUpdate) {
+		m_pNavObjectChangesSet->AddWP(pWP, "delete");
 		StoreNavObjChanges();
 	}
 
@@ -1426,20 +1433,20 @@ void Config::CreateConfigGroups(chart::ChartGroupArray* pGroupArray)
 	if (!pGroupArray)
 		return;
 
-	SetPath(_T ( "/Groups" ));
-	Write(_T ( "GroupCount" ), (int)pGroupArray->size());
+	SetPath(_T( "/Groups"));
+	Write(_T("GroupCount"), (int)pGroupArray->size());
 
 	for (unsigned int i = 0; i < pGroupArray->size(); i++) {
 		chart::ChartGroup* pGroup = pGroupArray->at(i);
 		SetPath(wxString::Format(_T("/Groups/Group%d"), i + 1));
 
-		Write(_T ( "GroupName" ), pGroup->m_group_name);
-		Write(_T ( "GroupItemCount" ), (int)pGroup->m_element_array.size());
+		Write(_T("GroupName"), pGroup->m_group_name);
+		Write(_T("GroupItemCount"), (int)pGroup->m_element_array.size());
 
 		for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
 			wxString sg;
 			sg.Printf(_T("Group%d/Item%d"), i + 1, j);
-			sg.Prepend(_T ( "/Groups/" ));
+			sg.Prepend(_T( "/Groups/"));
 			SetPath(sg);
 			Write(_T ( "IncludeItem" ), pGroup->m_element_array.at(j)->m_element_name);
 
@@ -1450,7 +1457,7 @@ void Config::CreateConfigGroups(chart::ChartGroupArray* pGroupArray)
 					t += u.Item(k);
 					t += _T(";");
 				}
-				Write(_T ( "ExcludeItems" ), t);
+				Write(_T("ExcludeItems"), t);
 			}
 		}
 	}
@@ -1458,7 +1465,7 @@ void Config::CreateConfigGroups(chart::ChartGroupArray* pGroupArray)
 
 void Config::DestroyConfigGroups(void)
 {
-	DeleteGroup(_T ( "/Groups" )); // zap
+	DeleteGroup(_T("/Groups")); // zap
 }
 
 void Config::LoadConfigGroups(chart::ChartGroupArray* pGroupArray)
@@ -1578,6 +1585,14 @@ void Config::write_cm93()
 	Write(_T("CM93DetailZoomPosY"), config.detail_dialog_position.y);
 
 	Write(_T("ShowCM93DetailSlider"), config.show_detail_slider);
+}
+
+void Config::write_s57dialog()
+{
+	const global::GUI::S57Dialog& config = global::OCPN::get().gui().s57dialog();
+
+	Write(_T("S57QueryDialogSizeX"), config.size.GetWidth());
+	Write(_T("S57QueryDialogSizeY"), config.size.GetHeight());
 }
 
 void Config::UpdateSettings()
@@ -1763,8 +1778,7 @@ void Config::UpdateSettings()
 	Write( _T ( "bAISTargetListSortReverse" ), g_bAisTargetList_sortReverse );
 	Write( _T ( "AISTargetListColumnSpec" ), g_AisTargetList_column_spec );
 
-	Write( _T ( "S57QueryDialogSizeX" ), g_S57_dialog_sx );
-	Write( _T ( "S57QueryDialogSizeY" ), g_S57_dialog_sy );
+	write_s57dialog();
 
 	Write( _T ( "bAISRolloverShowClass" ), g_bAISRolloverShowClass );
 	Write( _T ( "bAISRolloverShowCOG" ), g_bAISRolloverShowCOG );
@@ -1835,129 +1849,134 @@ void Config::UpdateSettings()
 	font_path = ( _T ( "/Settings/MacFonts" ) );
 #endif
 
-	SetPath( font_path );
+	SetPath(font_path);
 
 	int nFonts = FontMgr::Get().GetNumFonts();
 
-	for( int i = 0; i < nFonts; i++ ) {
+	for (int i = 0; i < nFonts; i++) {
 		wxString cfstring(FontMgr::Get().GetConfigString(i));
-		wxString valstring = FontMgr::Get().GetFullConfigDesc( i );
-		Write( cfstring, valstring );
+		wxString valstring = FontMgr::Get().GetFullConfigDesc(i);
+		Write(cfstring, valstring);
 	}
 
 	//  Tide/Current Data Sources
-	DeleteGroup( _T ( "/TideCurrentDataSources" ) );
-	SetPath( _T ( "/TideCurrentDataSources" ) );
+	DeleteGroup(_T("/TideCurrentDataSources"));
+	SetPath(_T("/TideCurrentDataSources"));
 	unsigned int iDirMax = TideCurrentDataSet.Count();
-	for( unsigned int id = 0 ; id < iDirMax ; id++ ) {
+	for (unsigned int id = 0; id < iDirMax; ++id) {
 		Write(wxString::Format(_T("tcds%d"), id), TideCurrentDataSet.Item(id));
 	}
 
 	SetPath( _T ( "/Settings/Others" ) );
 
 	// Radar rings
-	Write( _T ( "ShowRadarRings" ), (bool)(g_iNavAidRadarRingsNumberVisible > 0) );  //3.0.0 config support
-	Write( _T ( "RadarRingsNumberVisible" ), g_iNavAidRadarRingsNumberVisible );
-	Write( _T ( "RadarRingsStep" ), g_fNavAidRadarRingsStep );
-	Write( _T ( "RadarRingsStepUnits" ), g_pNavAidRadarRingsStepUnits );
+	Write(_T("ShowRadarRings"), (bool)(g_iNavAidRadarRingsNumberVisible > 0)); // 3.0.0 config support
+	Write(_T("RadarRingsNumberVisible"), g_iNavAidRadarRingsNumberVisible);
+	Write(_T("RadarRingsStep"), g_fNavAidRadarRingsStep);
+	Write(_T("RadarRingsStepUnits"), g_pNavAidRadarRingsStepUnits);
 
-	Write( _T ( "ConfirmObjectDeletion" ), g_bConfirmObjectDelete );
+	Write(_T("ConfirmObjectDeletion"), g_bConfirmObjectDelete );
 
 	// Waypoint dragging with mouse; toh, 2009.02.24
-	Write( _T ( "WaypointPreventDragging" ), g_bWayPointPreventDragging );
+	Write(_T("WaypointPreventDragging"), g_bWayPointPreventDragging);
 
-	Write( _T ( "EnableZoomToCursor" ), g_bEnableZoomToCursor );
+	Write(_T("EnableZoomToCursor"), g_bEnableZoomToCursor);
 
-	Write( _T ( "TrackIntervalSeconds" ), g_TrackIntervalSeconds );
-	Write( _T ( "TrackDeltaDistance" ), g_TrackDeltaDistance );
-	Write( _T ( "TrackPrecision" ), g_nTrackPrecision );
+	Write(_T("TrackIntervalSeconds"), g_TrackIntervalSeconds);
+	Write(_T("TrackDeltaDistance"), g_TrackDeltaDistance);
+	Write(_T("TrackPrecision"), g_nTrackPrecision);
 
-	Write( _T ( "RouteLineWidth" ), g_route_line_width );
-	Write( _T ( "TrackLineWidth" ), g_track_line_width );
-	Write( _T ( "CurrentArrowScale" ), g_current_arrow_scale );
-	Write( _T ( "DefaultWPIcon" ), g_default_wp_icon );
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
+	Write(_T("RouteLineWidth"), view.route_line_width);
+	Write(_T("TrackLineWidth"), view.track_line_width);
+	Write(_T("CurrentArrowScale"), g_current_arrow_scale);
+	Write(_T("DefaultWPIcon"), g_default_wp_icon);
 
 	Flush();
 }
 
-void Config::UpdateNavObj( void )
+void Config::UpdateNavObj(void)
 {
-	//   Create the nav object collection, and save to specified file
-	NavObjectCollection *pNavObjectSet = new NavObjectCollection();
+	// Create the nav object collection, and save to specified file
+	NavObjectCollection* pNavObjectSet = new NavObjectCollection();
 
 	pNavObjectSet->CreateAllGPXObjects();
-	pNavObjectSet->SaveFile( m_sNavObjSetFile );
+	pNavObjectSet->SaveFile(m_sNavObjSetFile);
 
 	delete pNavObjectSet;
 
-	wxRemoveFile( m_sNavObjSetChangesFile );
+	wxRemoveFile(m_sNavObjSetChangesFile);
 	delete m_pNavObjectChangesSet;
 	m_pNavObjectChangesSet = new NavObjectChanges();
 }
 
-void Config::StoreNavObjChanges( void )
+void Config::StoreNavObjChanges(void)
 {
-	m_pNavObjectChangesSet->SaveFile( m_sNavObjSetChangesFile );
+	m_pNavObjectChangesSet->SaveFile(m_sNavObjSetChangesFile);
 }
 
-bool Config::ExportGPXRoutes( wxWindow* parent, RouteList *pRoutes, const wxString suggestedName )
+bool Config::ExportGPXRoutes(wxWindow* parent, RouteList* pRoutes, const wxString suggestedName)
 {
-	wxFileDialog saveDialog( parent, _( "Export GPX file" ), m_gpx_path, suggestedName,
-			wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
+	wxFileDialog saveDialog(parent, _("Export GPX file"), m_gpx_path, suggestedName,
+							wxT("GPX files (*.gpx)|*.gpx"), wxFD_SAVE);
 
 	int response = saveDialog.ShowModal();
 
 	wxString path = saveDialog.GetPath();
-	wxFileName fn( path );
+	wxFileName fn(path);
 	m_gpx_path = fn.GetPath();
 
-	if( response == wxID_OK ) {
-		fn.SetExt( _T ( "gpx" ) );
+	if (response == wxID_OK) {
+		fn.SetExt(_T("gpx"));
 
-		if( wxFileExists( fn.GetFullPath() ) ) {
-			int answer = OCPNMessageBox( NULL, _("Overwrite existing file?"), _T("Confirm"),
-					wxICON_QUESTION | wxYES_NO | wxCANCEL );
-			if( answer != wxID_YES ) return false;
+		if (wxFileExists(fn.GetFullPath())) {
+			int answer = OCPNMessageBox(NULL, _("Overwrite existing file?"), _T("Confirm"),
+										wxICON_QUESTION | wxYES_NO | wxCANCEL);
+			if (answer != wxID_YES)
+				return false;
 		}
 
-		NavObjectCollection *pgpx = new NavObjectCollection;
-		pgpx->AddGPXRoutesList( pRoutes );
+		NavObjectCollection* pgpx = new NavObjectCollection;
+		pgpx->AddGPXRoutesList(pRoutes);
 		pgpx->SaveFile(fn.GetFullPath());
 		delete pgpx;
 
 		return true;
-	} else
-		return false;
+	}
+	return false;
 }
 
-bool Config::ExportGPXWaypoints( wxWindow* parent, RoutePointList * pRoutePoints, const wxString suggestedName )
+bool Config::ExportGPXWaypoints(wxWindow* parent, RoutePointList* pRoutePoints,
+								const wxString suggestedName)
 {
-	wxFileDialog saveDialog( parent, _( "Export GPX file" ), m_gpx_path, suggestedName,
-			wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
+	wxFileDialog saveDialog(parent, _("Export GPX file"), m_gpx_path, suggestedName,
+							wxT("GPX files (*.gpx)|*.gpx"), wxFD_SAVE);
 
 	int response = saveDialog.ShowModal();
 
 	wxString path = saveDialog.GetPath();
-	wxFileName fn( path );
+	wxFileName fn(path);
 	m_gpx_path = fn.GetPath();
 
-	if( response == wxID_OK ) {
-		fn.SetExt( _T ( "gpx" ) );
+	if (response == wxID_OK) {
+		fn.SetExt(_T("gpx"));
 
-		if( wxFileExists( fn.GetFullPath() ) ) {
-			int answer = OCPNMessageBox(NULL,  _("Overwrite existing file?"), _T("Confirm"),
-					wxICON_QUESTION | wxYES_NO | wxCANCEL );
-			if( answer != wxID_YES ) return false;
+		if (wxFileExists(fn.GetFullPath())) {
+			int answer = OCPNMessageBox(NULL, _("Overwrite existing file?"), _T("Confirm"),
+										wxICON_QUESTION | wxYES_NO | wxCANCEL);
+			if (answer != wxID_YES)
+				return false;
 		}
 
-		NavObjectCollection * pgpx = new NavObjectCollection;
+		NavObjectCollection* pgpx = new NavObjectCollection;
 		pgpx->AddGPXPointsList(pRoutePoints);
 		pgpx->SaveFile(fn.GetFullPath());
 		delete pgpx;
 
 		return true;
-	} else
-		return false;
+	}
+	return false;
 }
 
 void Config::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer)
@@ -1974,7 +1993,7 @@ void Config::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer)
 	if (response != wxID_OK)
 		return;
 
-	fn.SetExt(_T ( "gpx" ));
+	fn.SetExt(_T("gpx"));
 
 	if (wxFileExists(fn.GetFullPath())) {
 		int answer = OCPNMessageBox(NULL, _("Overwrite existing file?"), _T("Confirm"),
@@ -2131,7 +2150,7 @@ void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool
 	}
 }
 
-bool Config::WptIsInRouteList(const RoutePoint * pr)
+bool Config::WptIsInRouteList(const RoutePoint* pr)
 {
 	for (RouteList::const_iterator j = pRouteList->begin(); j != pRouteList->end(); ++j) {
 		const RoutePointList* pRoutePointList = (*j)->pRoutePointList;

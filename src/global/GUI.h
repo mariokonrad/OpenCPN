@@ -42,6 +42,8 @@ class GUI
 			bool show_depth_units;
 			bool lookahead_mode;
 			bool allow_overzoom_x; // Allow high overzoom
+			int route_line_width;
+			int track_line_width;
 		};
 
 		virtual const View & view() const = 0;
@@ -50,6 +52,8 @@ class GUI
 		virtual void set_view_show_depth_units(bool) = 0;
 		virtual void set_view_lookahead_mode(bool) = 0;
 		virtual void set_view_allow_overzoom_x(bool) = 0;
+		virtual void set_route_line_width(int) = 0;
+		virtual void set_track_line_width(int) = 0;
 
 	public:
 
@@ -120,6 +124,16 @@ class GUI
 		virtual void set_cm93_zoom_factor(int) = 0;
 		virtual void set_cm93_detail_dialog_position(const wxPoint &) = 0;
 		virtual void set_cm93_show_detail_slider(bool) = 0;
+
+	public:
+
+		struct S57Dialog
+		{
+			wxSize size;
+		};
+
+		virtual const S57Dialog & s57dialog() const = 0;
+		virtual void set_S57_dialog_size(const wxSize &) = 0;
 };
 
 }

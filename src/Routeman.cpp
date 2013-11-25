@@ -40,6 +40,7 @@
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+#include <global/GUI.h>
 
 #include <plugin/PlugInManager.h>
 
@@ -70,11 +71,9 @@ extern bool g_bMagneticAPB;
 extern Track* g_pActiveTrack;
 extern RouteProp* pRoutePropDialog;
 extern RouteManagerDialog* pRouteManagerDialog;
-extern int g_route_line_width;
 extern Multiplexer* g_pMUX;
 
 extern PlugInManager* g_pi_manager;
-extern wxString g_uploadConnection;
 
 Routeman::Routeman(App* parent)
 {
@@ -1004,19 +1003,21 @@ void Routeman::DeleteTrack(Route* pRoute)
 
 void Routeman::SetColorScheme(ColorScheme)
 {
+	const global::GUI::View & view = global::OCPN::get().gui().view();
+
 	m_pActiveRoutePointPen
-		= wxThePenList->FindOrCreatePen(wxColour(0, 0, 255), g_route_line_width, wxSOLID);
+		= wxThePenList->FindOrCreatePen(wxColour(0, 0, 255), view.route_line_width, wxSOLID);
 	m_pRoutePointPen
-		= wxThePenList->FindOrCreatePen(wxColour(0, 0, 255), g_route_line_width, wxSOLID);
+		= wxThePenList->FindOrCreatePen(wxColour(0, 0, 255), view.route_line_width, wxSOLID);
 
 	// Or in something like S-52 compliance
 
 	m_pRoutePen
-		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFB")), g_route_line_width, wxSOLID);
+		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFB")), view.route_line_width, wxSOLID);
 	m_pSelectedRoutePen
-		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFO")), g_route_line_width, wxSOLID);
+		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFO")), view.route_line_width, wxSOLID);
 	m_pActiveRoutePen
-		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UARTE")), g_route_line_width, wxSOLID);
+		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UARTE")), view.route_line_width, wxSOLID);
 
 	m_pRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFB")), wxSOLID);
 	m_pSelectedRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFO")), wxSOLID);

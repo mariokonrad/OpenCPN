@@ -46,6 +46,17 @@ extern wxRect g_blink_rect;
 extern Multiplexer* g_pMUX;
 extern MainFrame* gFrame;
 
+
+RoutePoint::SameGUID::SameGUID(const wxString& guid)
+	: guid(guid)
+{
+}
+
+bool RoutePoint::SameGUID::operator()(const RoutePoint* point) const
+{
+	return point && (guid == point->m_GUID);
+}
+
 RoutePoint::RoutePoint()
 	: m_seg_len(0.0)
 	, m_seg_vmg(0.0)

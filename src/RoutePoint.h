@@ -38,6 +38,17 @@ class wxDC;
 class RoutePoint
 {
 public:
+	class SameGUID
+	{
+	public:
+		SameGUID(const wxString& guid);
+		bool operator()(const RoutePoint* point) const;
+
+	private:
+		wxString guid;
+	};
+
+public:
 	RoutePoint(double lat, double lon, const wxString& icon_ident, const wxString& name,
 			   const wxString& pGUID = _T(""), bool bAddToList = true);
 	RoutePoint(const RoutePoint& orig);

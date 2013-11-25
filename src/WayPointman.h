@@ -79,11 +79,13 @@ public:
 	RoutePointList& waypoints(); // FIXME: temporary
 
 private:
+	bool within_distance(const RoutePoint* point, double lat, double lon, double radius_meters) const;
+
 	typedef std::vector<MarkIcon*> Icons;
 
 	wxBitmap* CreateDimBitmap(wxBitmap* pBitmap, double factor);
 
-	RoutePointList m_pWayPointList;
+	RoutePointList points;
 
 	int m_markicon_image_list_base_count;
 	int m_nGUID;

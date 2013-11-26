@@ -30,6 +30,8 @@
 
 #include <geo/GeoRef.h>
 
+#include <algorithm>
+
 extern ChartCanvas* cc1;
 
 Select::Select()
@@ -125,15 +127,10 @@ bool Select::DeleteAllSelectableRoutePoints(Route* pr)
 	while (i != select_items.end()) {
 		SelectItem* item = *i;
 		if (item->m_seltype == SelectItem::TYPE_ROUTEPOINT) {
-			RoutePoint* ps = (RoutePoint*)item->m_pData1;
+			RoutePoint* ps = const_cast<RoutePoint*>(reinterpret_cast<const RoutePoint*>(item->m_pData1));
 
-			// FIXME: replace with std::find
-			RoutePointList::iterator j = pr->pRoutePointList->begin();
-			for (; j != pr->pRoutePointList->end(); ++j) {
-				if (*j == ps)
-					break;
-			}
-
+			RoutePointList::iterator j
+				= std::find(pr->pRoutePointList->begin(), pr->pRoutePointList->end(), ps);
 			if (j != pr->pRoutePointList->end()) {
 				delete item;
 				select_items.erase(i);
@@ -151,8 +148,9 @@ bool Select::AddAllSelectableRoutePoints(Route* pr)
 	if (pr->pRoutePointList->size() == 0)
 		return false;
 
-	for (RoutePointList::iterator i = pr->pRoutePointList->begin(); i != pr->pRoutePointList->end();
-		 ++i) {
+	RoutePointList* points = pr->pRoutePointList;
+
+	for (RoutePointList::iterator i = points->begin(); i != points->end(); ++i) {
 		AddSelectableRoutePoint((*i)->m_lat, (*i)->m_lon, *i);
 	}
 

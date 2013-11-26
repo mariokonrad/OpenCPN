@@ -43,45 +43,45 @@ class RoutePoint;
 /// Route "Send to GPS..." Dialog Definition
 class SendToGpsDlg : public wxDialog
 {
-		DECLARE_DYNAMIC_CLASS(SendToGpsDlg)
-		DECLARE_EVENT_TABLE()
+	DECLARE_DYNAMIC_CLASS(SendToGpsDlg)
+	DECLARE_EVENT_TABLE()
 
-	public:
-		SendToGpsDlg();
-		SendToGpsDlg(
-				wxWindow * parent,
-				wxWindowID id,
-				const wxString & caption,
-				const wxString & hint,
-				const wxPoint & pos,
-				const wxSize & size,
-				long style);
-		virtual ~SendToGpsDlg();
+public:
+	SendToGpsDlg();
+	SendToGpsDlg(
+			wxWindow * parent,
+			wxWindowID id,
+			const wxString & caption,
+			const wxString & hint,
+			const wxPoint & pos,
+			const wxSize & size,
+			long style);
+	virtual ~SendToGpsDlg();
 
-		bool Create(
-				wxWindow * parent,
-				wxWindowID id = ID_STGDIALOG,
-				const wxString & caption = _("Send Route To GPS"),
-				const wxString & hint = _("Send Route To GPS"),
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxSize(500, 500),
-				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	bool Create(
+			wxWindow * parent,
+			wxWindowID id = ID_STGDIALOG,
+			const wxString & caption = _("Send Route To GPS"),
+			const wxString & hint = _("Send Route To GPS"),
+			const wxPoint & pos = wxDefaultPosition,
+			const wxSize & size = wxSize(500, 500),
+			long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
-		void SetRoute(Route * pRoute);
-		void SetWaypoint(RoutePoint * pRoutePoint);
+	void SetRoute(Route* pRoute);
+	void SetWaypoint(RoutePoint* pRoutePoint);
 
-	private:
-		void CreateControls(const wxString & hint);
+private:
+	void CreateControls(const wxString& hint);
 
-		void OnCancelClick(wxCommandEvent & event);
-		void OnSendClick(wxCommandEvent & event);
+	void OnCancelClick(wxCommandEvent& event);
+	void OnSendClick(wxCommandEvent& event);
 
-		Route * m_pRoute;
-		RoutePoint * m_pRoutePoint;
-		wxComboBox * m_itemCommListBox;
-		wxGauge * m_pgauge;
-		wxButton * m_CancelButton;
-		wxButton * m_SendButton;
+	Route* m_pRoute;
+	RoutePoint* m_pRoutePoint;
+	wxComboBox* m_itemCommListBox;
+	wxGauge* m_pgauge;
+	wxButton* m_CancelButton;
+	wxButton* m_SendButton;
 };
 
 #endif

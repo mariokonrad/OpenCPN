@@ -46,6 +46,22 @@ extern ChartCanvas* cc1;
 extern int g_GroupIndex;
 extern ColorScheme global_color_scheme;
 
+/// Structure to search for patches, used as functor.
+struct PatchThatContainsPoint
+{
+	wxPoint p;
+
+	PatchThatContainsPoint(const wxPoint& p)
+		: p(p)
+	{
+	}
+
+	bool operator()(const QuiltPatch* patch) const
+	{
+		return patch && patch->ActiveRegion.Contains(p) == wxInRegion;
+	}
+};
+
 static int CompareScales(QuiltCandidate* qc1, QuiltCandidate* qc2)
 {
 	if (!ChartData)
@@ -297,16 +313,15 @@ OCPNRegion Quilt::GetChartQuiltRegion(const ChartTableEntry& cte, ViewPort& vp)
 	// Special case for charts which extend around the world, or near to it
 	// Mostly this means cm93....
 	// Take the whole screen, clipped at +/- 80 degrees lat
-	if (fabs(cte.GetLonMax() - cte.GetLonMin()) > 180.) {
-		int n_ply_entries = 4;
+	if (fabs(cte.GetLonMax() - cte.GetLonMin()) > 180.0) {
 		float ply[8];
-		ply[0] = 80.;
+		ply[0] = 80.0;
 		ply[1] = vp.GetBBox().GetMinX();
-		ply[2] = 80.;
+		ply[2] = 80.0;
 		ply[3] = vp.GetBBox().GetMaxX();
-		ply[4] = -80.;
+		ply[4] = -80.0;
 		ply[5] = vp.GetBBox().GetMaxX();
-		ply[6] = -80.;
+		ply[6] = -80.0;
 		ply[7] = vp.GetBBox().GetMinX();
 
 		OCPNRegion t_region = vp.GetVPRegionIntersect(screen_region, 4, &ply[0], cte.GetScale());
@@ -389,7 +404,6 @@ wxRect Quilt::GetChartQuiltBoundingRect(const ChartTableEntry& cte, ViewPort& vp
 	// Mostly this means cm93....
 	// Take the whole screen, clipped at +/- 80 degrees lat
 	if (fabs(cte.GetLonMax() - cte.GetLonMin()) > 180.) {
-		int n_ply_entries = 4;
 		float ply[8];
 		ply[0] = 80.;
 		ply[1] = vp.GetBBox().GetMinX();
@@ -503,14 +517,10 @@ int Quilt::GetChartdbIndexAtPix(wxPoint p)
 
 	int ret = -1;
 
-	// FIXME: this is basically std::find_if
-	for (PatchList::const_iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
-		const QuiltPatch* patch = *i;
-		if (patch->ActiveRegion.Contains(p) == wxInRegion) {
-			ret = patch->dbIndex;
-			break;
-		}
-	}
+	PatchList::const_iterator i
+		= std::find_if(m_PatchList.begin(), m_PatchList.end(), PatchThatContainsPoint(p));
+	if (i != m_PatchList.end())
+		ret = (*i)->dbIndex;
 
 	m_bbusy = false;
 	return ret;
@@ -814,40 +824,41 @@ bool Quilt::IsChartSmallestScale(int dbIndex)
 	return dbIndex == target_dbindex;
 }
 
-OCPNRegion Quilt::GetHiliteRegion(ViewPort& vp)
+OCPNRegion Quilt::GetHiliteRegion(ViewPort&)
 {
+	if (m_nHiLiteIndex < 0)
+		return OCPNRegion();
+
 	OCPNRegion region;
-	if (m_nHiLiteIndex >= 0) {
-		// Walk the PatchList, looking for the target hilite index
-		for (PatchList::iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
-			const QuiltPatch* piqp = *i;
-			if ((m_nHiLiteIndex == piqp->dbIndex) && (piqp->b_Valid)) {
-				region = piqp->ActiveRegion;
-				break;
-			}
+
+	// Walk the PatchList, looking for the target hilite index
+	for (PatchList::iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
+		const QuiltPatch* piqp = *i;
+		if ((m_nHiLiteIndex == piqp->dbIndex) && (piqp->b_Valid)) {
+			region = piqp->ActiveRegion;
+			break;
 		}
+	}
 
-		// If not in the patchlist, look in the full chartbar
-		if (region.IsEmpty()) {
-			for (unsigned int ir = 0; ir < m_pcandidate_array->size(); ir++) {
-				QuiltCandidate* pqc = m_pcandidate_array->Item(ir);
-				if (m_nHiLiteIndex == pqc->dbIndex) {
-					const ChartTableEntry& cte = ChartData->GetChartTableEntry(m_nHiLiteIndex);
-					OCPNRegion chart_region = pqc->quilt_region;
-					if (!chart_region.Empty()) {
-						// Do not highlite fully eclipsed charts
-						bool b_eclipsed = false;
-						for (unsigned int ir = 0; ir < m_eclipsed_stack_array.size(); ir++) {
-							if (m_nHiLiteIndex == m_eclipsed_stack_array.at(ir)) {
-								b_eclipsed = true;
-								break;
-							}
+	// If not in the patchlist, look in the full chartbar
+	if (region.IsEmpty()) {
+		for (unsigned int ir = 0; ir < m_pcandidate_array->size(); ir++) {
+			QuiltCandidate* pqc = m_pcandidate_array->Item(ir);
+			if (m_nHiLiteIndex == pqc->dbIndex) {
+				OCPNRegion chart_region = pqc->quilt_region;
+				if (!chart_region.Empty()) {
+					// Do not highlite fully eclipsed charts
+					bool b_eclipsed = false;
+					for (unsigned int ir = 0; ir < m_eclipsed_stack_array.size(); ir++) {
+						if (m_nHiLiteIndex == m_eclipsed_stack_array.at(ir)) {
+							b_eclipsed = true;
+							break;
 						}
-
-						if (!b_eclipsed)
-							region = chart_region;
-						break;
 					}
+
+					if (!b_eclipsed)
+						region = chart_region;
+					break;
 				}
 			}
 		}
@@ -863,7 +874,6 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 
 	int reference_scale = 1.;
 	int reference_type = -1;
-	int reference_family;
 	int quilt_proj = PROJECTION_UNKNOWN;
 
 	if (ref_db_index >= 0) {
@@ -871,7 +881,6 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 		reference_scale = cte_ref.GetScale();
 		reference_type = cte_ref.GetChartType();
 		quilt_proj = ChartData->GetDBChartProj(ref_db_index);
-		reference_family = cte_ref.GetChartFamily();
 	}
 
 	bool b_need_resort = false;
@@ -1182,8 +1191,6 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	}
 
 	if (pqc_ref) {
-		const ChartTableEntry& cte_ref = ChartData->GetChartTableEntry(m_refchart_dbIndex);
-
 		OCPNRegion vpu_region(vp_local.rv_rect);
 		OCPNRegion chart_region = pqc_ref->quilt_region;
 
@@ -1505,7 +1512,6 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 				 != ctei.GetChartType()) /* && (CHART_TYPE_CM93COMP != ctei.GetChartType())*/) {
 
 				if (!vpr_region.Empty()) {
-					const ChartTableEntry& cte = ChartData->GetChartTableEntry(pqp->dbIndex);
 					OCPNRegion larger_scale_chart_region = pqp->quilt_region;
 					vpr_region.Subtract(larger_scale_chart_region);
 				}
@@ -1755,7 +1761,7 @@ void Quilt::ComputeRenderRegion(ViewPort& vp, OCPNRegion& chart_region)
 
 		OCPNRegion screen_region = chart_region;
 
-		//  Walk the quilt, considering each chart from smallest scale to largest
+		// Walk the quilt, considering each chart from smallest scale to largest
 
 		ChartBase* chart = GetFirstChart();
 
@@ -1808,9 +1814,9 @@ bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& 
 
 		OCPNRegion screen_region = chart_region;
 
-		//  Walk the quilt, drawing each chart from smallest scale to largest
-		//  Render the quilt's charts onto a temp dc
-		//  and blit the active region rectangles to to target dc, one-by-one
+		// Walk the quilt, drawing each chart from smallest scale to largest
+		// Render the quilt's charts onto a temp dc
+		// and blit the active region rectangles to to target dc, one-by-one
 
 		ChartBase* chart = GetFirstChart();
 		int chartsDrawn = 0;
@@ -1926,7 +1932,8 @@ bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& 
 					}
 				}
 
-				if( NULL == m_pBM ) m_pBM = new wxBitmap( vp.rv_rect.width, vp.rv_rect.height );
+				if (NULL == m_pBM)
+					m_pBM = new wxBitmap(vp.rv_rect.width, vp.rv_rect.height);
 
 				// Copy the entire quilt to my scratch bm
 				wxMemoryDC q_dc;

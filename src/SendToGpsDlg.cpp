@@ -22,8 +22,8 @@
  **************************************************************************/
 
 #include "SendToGpsDlg.h"
-#include "Route.h"
-#include "RoutePoint.h"
+#include <Route.h>
+#include <RoutePoint.h>
 #include <SerialPorts.h>
 
 #include <wx/combobox.h>
@@ -88,10 +88,10 @@ bool SendToGpsDlg::Create(
 	GetSizer()->SetSizeHints(this);
 	Centre();
 
-	return TRUE;
+	return true;
 }
 
-void SendToGpsDlg::CreateControls(const wxString& hint)
+void SendToGpsDlg::CreateControls(const wxString& WXUNUSED(hint))
 {
 	SendToGpsDlg* itemDialog1 = this;
 
@@ -157,30 +157,32 @@ void SendToGpsDlg::CreateControls(const wxString& hint)
 
 void SendToGpsDlg::OnSendClick(wxCommandEvent& event)
 {
-	//    Get the selected comm port
+	// Get the selected comm port
 	wxString src = m_itemCommListBox->GetValue();
-	g_uploadConnection = src;                   // save for persistence
+	g_uploadConnection = src; // save for persistence
 
-	//    And send it out
-	if( m_pRoute ) m_pRoute->SendToGPS( src, true, m_pgauge );
-	if( m_pRoutePoint ) m_pRoutePoint->SendToGPS( src, m_pgauge );
+	// And send it out
+	if (m_pRoute)
+		m_pRoute->SendToGPS(src, true, m_pgauge);
+	if (m_pRoutePoint)
+		m_pRoutePoint->SendToGPS(src, m_pgauge);
 
-	Show( false );
+	Show(false);
 	event.Skip();
 }
 
 void SendToGpsDlg::OnCancelClick(wxCommandEvent& event)
 {
-	Show( false );
+	Show(false);
 	event.Skip();
 }
 
-void SendToGpsDlg::SetRoute(Route *pRoute)
+void SendToGpsDlg::SetRoute(Route* pRoute)
 {
 	m_pRoute = pRoute;
 }
 
-void SendToGpsDlg::SetWaypoint(RoutePoint *pRoutePoint)
+void SendToGpsDlg::SetWaypoint(RoutePoint* pRoutePoint)
 {
 	m_pRoutePoint = pRoutePoint;
 }

@@ -47,3 +47,20 @@ Download:
 Notes:
 - Altered CMakeLists.txt
 
+
+libtcd-2.2.5
+------------
+
+License: Public Domain
+
+Homepage:
+
+	http://www.flaterco.com/xtide/libtcd.html
+
+Download:
+
+	ftp://ftp.flaterco.com/xtide/libtcd-2.2.5-r3.tar.bz2
+
+Notes:
+- Added a CMakeLists.txt file
+

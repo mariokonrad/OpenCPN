@@ -1,373 +1,8 @@
-#include "tcd.h"
-#include <cmath>
-
-
-/* $Id: tide_db_default.h 1092 2006-11-16 03:02:42Z flaterco $ */
-
-//#include "tcd.h"
-
-
-
-/*****************************************************************************
- *
- *                            DISTRIBUTION STATEMENT
- *
- *    This source file is unclassified, distribution unlimited, public
- *    domain.  It is distributed in the hope that it will be useful, but
- *    WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- ******************************************************************************/
-
-
-
-#define DEFAULT_HEADER_SIZE                         4096
-#define DEFAULT_NUMBER_OF_RECORDS                   0
-#define DEFAULT_LEVEL_UNIT_TYPES                    5
-#define DEFAULT_DIR_UNIT_TYPES                      3
-#define DEFAULT_RESTRICTION_TYPES                   2
-#define DEFAULT_RESTRICTION_BITS                    4
-#define DEFAULT_TZFILES                             406
-#define DEFAULT_TZFILE_BITS                         10
-#define DEFAULT_COUNTRIES                           240
-#define DEFAULT_COUNTRY_BITS                        9
-#define DEFAULT_DATUM_TYPES                         61
-#define DEFAULT_DATUM_BITS                          7
-#define DEFAULT_LEGALESES                           1
-#define DEFAULT_LEGALESE_BITS                       4
-#define DEFAULT_SPEED_SCALE                         10000000
-#define DEFAULT_EQUILIBRIUM_SCALE                   100
-#define DEFAULT_NODE_SCALE                          10000
-#define DEFAULT_AMPLITUDE_BITS                      19
-#define DEFAULT_AMPLITUDE_SCALE                     10000
-#define DEFAULT_EPOCH_BITS                          16
-#define DEFAULT_EPOCH_SCALE                         100
-#define DEFAULT_RECORD_TYPE_BITS                    4
-#define DEFAULT_LATITUDE_BITS                       25
-#define DEFAULT_LATITUDE_SCALE                      100000
-#define DEFAULT_LONGITUDE_BITS                      26
-#define DEFAULT_LONGITUDE_SCALE                     100000
-#define DEFAULT_RECORD_SIZE_BITS                    16
-#define DEFAULT_STATION_BITS                        18
-#define DEFAULT_DATUM_OFFSET_BITS                   28
-#define DEFAULT_DATUM_OFFSET_SCALE                  10000
-#define DEFAULT_DATE_BITS                           27
-#define DEFAULT_MONTHS_ON_STATION_BITS              10
-#define DEFAULT_CONFIDENCE_VALUE_BITS               4
-#define DEFAULT_NUMBER_OF_CONSTITUENTS_BITS         8
-#define DEFAULT_TIME_BITS                           13
-#define DEFAULT_LEVEL_ADD_BITS                      17
-#define DEFAULT_LEVEL_ADD_SCALE                     1000
-#define DEFAULT_LEVEL_MULTIPLY_BITS                 16
-#define DEFAULT_LEVEL_MULTIPLY_SCALE                1000
-#define DEFAULT_DIRECTION_BITS                      9
-#define DEFAULT_CONSTITUENT_SIZE                    10
-#define DEFAULT_LEVEL_UNIT_SIZE                     15
-#define DEFAULT_DIR_UNIT_SIZE                       15
-#define DEFAULT_RESTRICTION_SIZE                    30
-#define DEFAULT_DATUM_SIZE                          70
-#define DEFAULT_LEGALESE_SIZE                       70
-#define DEFAULT_TZFILE_SIZE                         30
-#define DEFAULT_COUNTRY_SIZE                        50
-
-
-/*  Stuff for inferring constituents (NAVO short duration tide stations).  */
-
-#define INFERRED_SEMI_DIURNAL_COUNT                 10
-#define INFERRED_DIURNAL_COUNT                      10
-
-#ifdef __WXMSW__
-#pragma warning (disable : 4305)                // conversion loss, double to float
-#endif
-
-const NV_CHAR *inferred_semi_diurnal[INFERRED_SEMI_DIURNAL_COUNT] = {
-    "N2", "NU2", "MU2", "2N2", "LDA2", "T2", "R2", "L2", "K2", "KJ2"};
-    const NV_CHAR *inferred_diurnal[INFERRED_DIURNAL_COUNT] = {
-        "OO1", "M1", "J1", "RHO1", "Q1", "2Q1", "P1", "PI1", "PHI1", "PSI1"};
-        NV_FLOAT32 semi_diurnal_coeff[INFERRED_SEMI_DIURNAL_COUNT] = {
-            .1759, .0341, .0219, .0235, .0066, .0248, .0035, .0251, .1151, .0064};
-            NV_FLOAT32 diurnal_coeff[INFERRED_DIURNAL_COUNT] = {
-                .0163, .0209, .0297, .0142, .0730, .0097, .1755, .0103, .0076, .0042};
-                
-                /*  These represent M2 and O1.  */
-                
-                NV_FLOAT32 coeff[2] = {.9085, .3771};
-
-                /* The following lookup tables are only used for initialization
-                 *   purposes and in the pull-down menus in TideEditor.  It should be
-                 *   possible to change them without breaking existing TCD files.  TCD
-                 *   files embed their own lookup tables.
-                 */
-                
-                
-                /*  Level unit names  */
-                
-                NV_CHAR level_unit[DEFAULT_LEVEL_UNIT_TYPES][DEFAULT_LEVEL_UNIT_SIZE] = {
-                    "Unknown", "feet", "meters", "knots", "knots^2"};
-                    
-                    
-                    /*  Direction unit names  */
-                    
-                    NV_CHAR dir_unit[DEFAULT_DIR_UNIT_TYPES][DEFAULT_DIR_UNIT_SIZE] = {
-                        "Unknown", "degrees true", "degrees"};
-                        
-                        
-                        /*  Restriction types  */
-                        
-                        NV_CHAR restriction[DEFAULT_RESTRICTION_TYPES][DEFAULT_RESTRICTION_SIZE] = {
-                            "Public Domain", "DoD/DoD Contractors Only"};
-                            
-                            
-                            /*  Legaleses  */
-                            
-                            NV_CHAR legalese[DEFAULT_LEGALESES][DEFAULT_LEGALESE_SIZE] = {
-                                "NULL"};
-                                
-                                
-                                /*  # Datum names  */
-                                
-                                NV_CHAR datum[DEFAULT_DATUM_TYPES][DEFAULT_DATUM_SIZE] = {
-                                    "Unknown", "Mean Sea Level", "Mean Low Water", "Mean Lower Low Water",
-                                    "Mean High Water", "Mean Higher High Water", "Mean Lower High Water",
-                                    "Mean Higher Low Water", "Mean Low Water Springs",
-                                    "Mean Lower Low Water Springs", "Mean Low Water Neaps",
-                                    "Mean High Water Neaps", "Mean High Water Springs",
-                                    "Mean Higher High Water Springs", "Indian Spring Low Water",
-                                    "Equatorial Spring Low Water", "Lowest Normal Low Water", "Lowest Low Water",
-                                    "Lowest Possible Low Water", "Lowest Astronomical Tide",
-                                    "International Great Lakes Datum(1955)", "Lower Low Water, Large Tide",
-                                    "Lowest Normal Tide", "Higher High Water, Large Tide", "Mean Water Level",
-                                    "Higher High Water, Mean Tide", "Lower Low Water, Mean Tide",
-                                    "Mean Tide Level", "World Geodetic System (1984)",
-                                    "National Geodetic Vertical Datum", "Gulf Coast Low Water Datum",
-                                    "Approximate Level of Mean Sea Level",
-                                    "Approximate Level of Mean Low Water",
-                                    "Approximate Level of Mean Lower Low Water",
-                                    "Approximate Level of Mean High Water",
-                                    "Approximate Level of Mean Higher High Water",
-                                    "Approximate Level of Mean Lower High Water",
-                                    "Approximate Level of Mean Higher Low Water",
-                                    "Approximate Level of Mean Low Water Springs",
-                                    "Approximate Level of Mean Lower Low Water Springs",
-                                    "Approximate Level of Mean Low Water Neaps",
-                                    "Approximate Level of Mean High Water Neaps",
-                                    "Approximate Level of Mean High Water Springs",
-                                    "Approximate Level of Mean Higher High Water Springs",
-                                    "Approximate Level of Indian Spring Low Water",
-                                    "Approximate Level of Equatorial Spring Low Water",
-                                    "Approximate Level of Lowest Normal Low Water",
-                                    "Approximate Level of Lowest Low Water",
-                                    "Approximate Level of Lowest Possible Low Water",
-                                    "Approximate Level of Lowest Astronomical Tide",
-                                    "Approximate Level of International Great Lakes Datum (1955)",
-                                    "Approximate Level of Lower Low Water, Large Tide",
-                                    "Approximate Level of Lowest Normal Tide",
-                                    "Approximate Level of Higher High Water, Large Tide",
-                                    "Approximate Level of Mean Water Level",
-                                    "Approximate Level of Higher High Water, Mean Tide",
-                                    "Approximate Level of Lower Low Water, Mean Tide",
-                                    "Approximate Level of Mean Tide Level",
-                                    "Approximate Level of World Geodetic System (1984)",
-                                    "Approximate Level of National Geodetic Vertical Datum",
-                                    "Approximate Level of Gulf Coast Low Water Datum"};
-                                    
-                                    
-                                    /*  # Country names from ISO 3166-1:1999 2-character country code list  */
-                                    
-                                    NV_CHAR country[DEFAULT_COUNTRIES][DEFAULT_COUNTRY_SIZE] = {"Unknown",
-                                    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla",
-                                    "Antarctica", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba",
-                                    "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh",
-                                    "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan",
-                                    "Bolivia", "Bosnia & Herzegovina", "Botswana", "Bouvet Island", "Brazil",
-                                    "Britain (UK)", "British Indian Ocean Territory", "Brunei", "Bulgaria",
-                                    "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde",
-                                    "Cayman Islands", "Central African Rep.", "Chad", "Chile", "China",
-                                    "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros",
-                                    "Congo (Dem. Rep.)", "Congo (Rep.)", "Cook Islands", "Costa Rica",
-                                    "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark",
-                                    "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador",
-                                    "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia",
-                                    "Ethiopia", "Faeroe Islands", "Falkland Islands", "Fiji", "Finland",
-                                    "France", "French Guiana", "French Polynesia",
-                                    "French Southern & Antarctic Lands", "Gabon", "Gambia", "Georgia", "Germany",
-                                    "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam",
-                                    "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti",
-                                    "Heard Island & McDonald Islands", "Honduras", "Hong Kong", "Hungary",
-                                    "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
-                                    "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati",
-                                    "Korea (North)", "Korea (South)", "Kuwait", "Kyrgyzstan", "Laos", "Latvia",
-                                    "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania",
-                                    "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia",
-                                    "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania",
-                                    "Mauritius", "Mayotte", "Mexico", "Micronesia", "Moldova", "Monaco",
-                                    "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar (Burma)",
-                                    "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles",
-                                    "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue",
-                                    "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan",
-                                    "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru",
-                                    "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar",
-                                    "Reunion", "Romania", "Russia", "Rwanda", "Samoa (American)",
-                                    "Samoa (Western)", "San Marino", "Sao Tome & Principe", "Saudi Arabia",
-                                    "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia",
-                                    "Solomon Islands", "Somalia", "South Africa",
-                                    "South Georgia & the South Sandwich Islands", "Spain", "Sri Lanka",
-                                    "St Helena", "St Kitts & Nevis", "St Lucia", "St Pierre & Miquelon",
-                                    "St Vincent", "Sudan", "Suriname", "Svalbard & Jan Mayen", "Swaziland",
-                                    "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania",
-                                    "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad & Tobago", "Tunisia",
-                                    "Turkey", "Turkmenistan", "Turks & Caicos Is", "Tuvalu", "Uganda", "Ukraine",
-                                    "United Arab Emirates", "United States", "Uruguay",
-                                    "US minor outlying islands", "Uzbekistan", "Vanuatu", "Vatican City",
-                                    "Venezuela", "Vietnam", "Virgin Islands (UK)", "Virgin Islands (US)",
-                                    "Wallis & Futuna", "Western Sahara", "Yemen", "Yugoslavia", "Zambia",
-                                    "Zimbabwe"};
-                                    
-                                    
-                                    /*  # Time zones extracted from tzdata2002? .  */
-                                    
-                                    NV_CHAR tzfile[DEFAULT_TZFILES][DEFAULT_TZFILE_SIZE] = {"Unknown",
-                                    ":Africa/Abidjan", ":Africa/Accra", ":Africa/Addis_Ababa",
-                                    ":Africa/Algiers", ":Africa/Asmera", ":Africa/Bamako",
-                                    ":Africa/Bangui", ":Africa/Banjul", ":Africa/Bissau",
-                                    ":Africa/Blantyre", ":Africa/Brazzaville", ":Africa/Bujumbura",
-                                    ":Africa/Cairo", ":Africa/Casablanca", ":Africa/Ceuta",
-                                    ":Africa/Conakry", ":Africa/Dakar", ":Africa/Dar_es_Salaam",
-                                    ":Africa/Djibouti", ":Africa/Douala", ":Africa/El_Aaiun",
-                                    ":Africa/Freetown", ":Africa/Gaborone", ":Africa/Harare",
-                                    ":Africa/Johannesburg", ":Africa/Kampala", ":Africa/Khartoum",
-                                    ":Africa/Kigali", ":Africa/Kinshasa", ":Africa/Lagos",
-                                    ":Africa/Libreville", ":Africa/Lome", ":Africa/Luanda",
-                                    ":Africa/Lubumbashi", ":Africa/Lusaka", ":Africa/Malabo",
-                                    ":Africa/Maputo", ":Africa/Maseru", ":Africa/Mbabane",
-                                    ":Africa/Mogadishu", ":Africa/Monrovia", ":Africa/Nairobi",
-                                    ":Africa/Ndjamena", ":Africa/Niamey", ":Africa/Nouakchott",
-                                    ":Africa/Ouagadougou", ":Africa/Porto-Novo", ":Africa/Sao_Tome",
-                                    ":Africa/Timbuktu", ":Africa/Tripoli", ":Africa/Tunis",
-                                    ":Africa/Windhoek", ":America/Adak", ":America/Anchorage",
-                                    ":America/Anguilla", ":America/Antigua", ":America/Araguaina",
-                                    ":America/Aruba", ":America/Asuncion", ":America/Atka",
-                                    ":America/Barbados", ":America/Belem", ":America/Belize",
-                                    ":America/Boa_Vista", ":America/Bogota", ":America/Boise",
-                                    ":America/Buenos_Aires", ":America/Cambridge_Bay",
-                                    ":America/Cancun", ":America/Caracas", ":America/Catamarca",
-                                    ":America/Cayenne", ":America/Cayman", ":America/Chicago",
-                                    ":America/Chihuahua", ":America/Cordoba", ":America/Costa_Rica",
-                                    ":America/Cuiaba", ":America/Curacao", ":America/Danmarkshavn",
-                                    ":America/Dawson", ":America/Dawson_Creek", ":America/Denver",
-                                    ":America/Detroit", ":America/Dominica", ":America/Edmonton",
-                                    ":America/Eirunepe", ":America/El_Salvador", ":America/Ensenada",
-                                    ":America/Fortaleza", ":America/Glace_Bay", ":America/Godthab",
-                                    ":America/Goose_Bay", ":America/Grand_Turk", ":America/Grenada",
-                                    ":America/Guadeloupe", ":America/Guatemala", ":America/Guayaquil",
-                                    ":America/Guyana", ":America/Halifax", ":America/Havana",
-                                    ":America/Hermosillo", ":America/Indiana/Knox",
-                                    ":America/Indiana/Marengo", ":America/Indianapolis",
-                                    ":America/Indiana/Vevay", ":America/Inuvik", ":America/Iqaluit",
-                                    ":America/Jamaica", ":America/Jujuy", ":America/Juneau",
-                                    ":America/Kentucky/Monticello", ":America/La_Paz", ":America/Lima",
-                                    ":America/Los_Angeles", ":America/Louisville", ":America/Maceio",
-                                    ":America/Managua", ":America/Manaus", ":America/Martinique",
-                                    ":America/Mazatlan", ":America/Mendoza", ":America/Menominee",
-                                    ":America/Merida", ":America/Mexico_City", ":America/Miquelon",
-                                    ":America/Monterrey", ":America/Montevideo", ":America/Montreal",
-                                    ":America/Montserrat", ":America/Nassau", ":America/New_York",
-                                    ":America/Nipigon", ":America/Nome", ":America/Noronha",
-                                    ":America/North_Dakota/Center", ":America/Panama",
-                                    ":America/Pangnirtung", ":America/Paramaribo", ":America/Phoenix",
-                                    ":America/Port-au-Prince", ":America/Port_of_Spain",
-                                    ":America/Porto_Velho", ":America/Puerto_Rico",
-                                    ":America/Rainy_River", ":America/Rankin_Inlet", ":America/Recife",
-                                    ":America/Regina", ":America/Rio_Branco", ":America/Santiago",
-                                    ":America/Santo_Domingo", ":America/Sao_Paulo",
-                                    ":America/Scoresbysund", ":America/Shiprock", ":America/St_Johns",
-                                    ":America/St_Kitts", ":America/St_Lucia", ":America/St_Thomas",
-                                    ":America/St_Vincent", ":America/Swift_Current",
-                                    ":America/Tegucigalpa", ":America/Thule", ":America/Thunder_Bay",
-                                    ":America/Tijuana", ":America/Tortola", ":America/Vancouver",
-                                    ":America/Whitehorse", ":America/Winnipeg", ":America/Yakutat",
-                                    ":America/Yellowknife", ":Antarctica/Casey", ":Antarctica/Davis",
-                                    ":Antarctica/DumontDUrville", ":Antarctica/Mawson",
-                                    ":Antarctica/McMurdo", ":Antarctica/Palmer",
-                                    ":Antarctica/South_Pole", ":Antarctica/Syowa", ":Antarctica/Vostok",
-                                    ":Arctic/Longyearbyen", ":Asia/Aden", ":Asia/Almaty", ":Asia/Amman",
-                                    ":Asia/Anadyr", ":Asia/Aqtau", ":Asia/Aqtobe", ":Asia/Ashgabat",
-                                    ":Asia/Baghdad", ":Asia/Bahrain", ":Asia/Baku", ":Asia/Bangkok",
-                                    ":Asia/Beirut", ":Asia/Bishkek", ":Asia/Brunei", ":Asia/Calcutta",
-                                    ":Asia/Choibalsan", ":Asia/Chongqing", ":Asia/Colombo",
-                                    ":Asia/Damascus", ":Asia/Dhaka", ":Asia/Dili", ":Asia/Dubai",
-                                    ":Asia/Dushanbe", ":Asia/Gaza", ":Asia/Harbin", ":Asia/Hong_Kong",
-                                    ":Asia/Hovd", ":Asia/Irkutsk", ":Asia/Jakarta", ":Asia/Jayapura",
-                                    ":Asia/Jerusalem", ":Asia/Kabul", ":Asia/Kamchatka",
-                                    ":Asia/Karachi", ":Asia/Kashgar", ":Asia/Katmandu",
-                                    ":Asia/Krasnoyarsk", ":Asia/Kuala_Lumpur", ":Asia/Kuching",
-                                    ":Asia/Kuwait", ":Asia/Macau", ":Asia/Magadan", ":Asia/Makassar",
-                                    ":Asia/Manila", ":Asia/Muscat", ":Asia/Nicosia",
-                                    ":Asia/Novosibirsk", ":Asia/Omsk", ":Asia/Oral", ":Asia/Phnom_Penh",
-                                    ":Asia/Pontianak", ":Asia/Pyongyang", ":Asia/Qatar",
-                                    ":Asia/Qyzylorda", ":Asia/Rangoon", ":Asia/Riyadh", ":Asia/Saigon",
-                                    ":Asia/Sakhalin", ":Asia/Samarkand", ":Asia/Seoul",
-                                    ":Asia/Shanghai", ":Asia/Singapore", ":Asia/Taipei",
-                                    ":Asia/Tashkent", ":Asia/Tbilisi", ":Asia/Tehran", ":Asia/Thimphu",
-                                    ":Asia/Tokyo", ":Asia/Ulaanbaatar", ":Asia/Urumqi",
-                                    ":Asia/Vientiane", ":Asia/Vladivostok", ":Asia/Yakutsk",
-                                    ":Asia/Yekaterinburg", ":Asia/Yerevan", ":Atlantic/Azores",
-                                    ":Atlantic/Bermuda", ":Atlantic/Canary", ":Atlantic/Cape_Verde",
-                                    ":Atlantic/Faeroe", ":Atlantic/Jan_Mayen", ":Atlantic/Madeira",
-                                    ":Atlantic/Reykjavik", ":Atlantic/South_Georgia",
-                                    ":Atlantic/Stanley", ":Atlantic/St_Helena", ":Australia/Adelaide",
-                                    ":Australia/Brisbane", ":Australia/Broken_Hill",
-                                    ":Australia/Darwin", ":Australia/Hobart", ":Australia/Lindeman",
-                                    ":Australia/Lord_Howe", ":Australia/Melbourne", ":Australia/Perth",
-                                    ":Australia/Sydney", ":Etc/GMT", ":Etc/GMT-1", ":Etc/GMT+1",
-                                    ":Etc/GMT-10", ":Etc/GMT+10", ":Etc/GMT-11", ":Etc/GMT+11",
-                                    ":Etc/GMT-12", ":Etc/GMT+12", ":Etc/GMT-13", ":Etc/GMT-14",
-                                    ":Etc/GMT-2", ":Etc/GMT+2", ":Etc/GMT-3", ":Etc/GMT+3",
-                                    ":Etc/GMT-4", ":Etc/GMT+4", ":Etc/GMT-5", ":Etc/GMT+5",
-                                    ":Etc/GMT-6", ":Etc/GMT+6", ":Etc/GMT-7", ":Etc/GMT+7",
-                                    ":Etc/GMT-8", ":Etc/GMT+8", ":Etc/GMT-9", ":Etc/GMT+9", ":Etc/UCT",
-                                    ":Etc/UTC", ":Europe/Amsterdam", ":Europe/Andorra",
-                                    ":Europe/Athens", ":Europe/Belfast", ":Europe/Belgrade",
-                                    ":Europe/Berlin", ":Europe/Bratislava", ":Europe/Brussels",
-                                    ":Europe/Bucharest", ":Europe/Budapest", ":Europe/Chisinau",
-                                    ":Europe/Copenhagen", ":Europe/Dublin", ":Europe/Gibraltar",
-                                    ":Europe/Helsinki", ":Europe/Istanbul", ":Europe/Kaliningrad",
-                                    ":Europe/Kiev", ":Europe/Lisbon", ":Europe/Ljubljana",
-                                    ":Europe/London", ":Europe/Luxembourg", ":Europe/Madrid",
-                                    ":Europe/Malta", ":Europe/Minsk", ":Europe/Monaco",
-                                    ":Europe/Moscow", ":Europe/Oslo", ":Europe/Paris", ":Europe/Prague",
-                                    ":Europe/Riga", ":Europe/Rome", ":Europe/Samara",
-                                    ":Europe/San_Marino", ":Europe/Sarajevo", ":Europe/Simferopol",
-                                    ":Europe/Skopje", ":Europe/Sofia", ":Europe/Stockholm",
-                                    ":Europe/Tallinn", ":Europe/Tirane", ":Europe/Uzhgorod",
-                                    ":Europe/Vaduz", ":Europe/Vatican", ":Europe/Vienna",
-                                    ":Europe/Vilnius", ":Europe/Warsaw", ":Europe/Zagreb",
-                                    ":Europe/Zaporozhye", ":Europe/Zurich", ":Indian/Antananarivo",
-                                    ":Indian/Chagos", ":Indian/Christmas", ":Indian/Cocos",
-                                    ":Indian/Comoro", ":Indian/Kerguelen", ":Indian/Mahe",
-                                    ":Indian/Maldives", ":Indian/Mauritius", ":Indian/Mayotte",
-                                    ":Indian/Reunion", ":Pacific/Apia", ":Pacific/Auckland",
-                                    ":Pacific/Chatham", ":Pacific/Easter", ":Pacific/Efate",
-                                    ":Pacific/Enderbury", ":Pacific/Fakaofo", ":Pacific/Fiji",
-                                    ":Pacific/Funafuti", ":Pacific/Galapagos", ":Pacific/Gambier",
-                                    ":Pacific/Guadalcanal", ":Pacific/Guam", ":Pacific/Honolulu",
-                                    ":Pacific/Johnston", ":Pacific/Kiritimati", ":Pacific/Kosrae",
-                                    ":Pacific/Kwajalein", ":Pacific/Majuro", ":Pacific/Marquesas",
-                                    ":Pacific/Midway", ":Pacific/Nauru", ":Pacific/Niue",
-                                    ":Pacific/Norfolk", ":Pacific/Noumea", ":Pacific/Pago_Pago",
-                                    ":Pacific/Palau", ":Pacific/Pitcairn", ":Pacific/Ponape",
-                                    ":Pacific/Port_Moresby", ":Pacific/Rarotonga", ":Pacific/Saipan",
-                                    ":Pacific/Tahiti", ":Pacific/Tarawa", ":Pacific/Tongatapu",
-                                    ":Pacific/Truk", ":Pacific/Wake", ":Pacific/Wallis",
-                                    ":Pacific/Yap"};
-                                    
-
-
 /* $Id: tide_db.c 3744 2010-08-17 22:34:46Z flaterco $ */
 
-//#include "tcd.h"
-//#include "tide_db_header.h"
-//#include "tide_db_default.h"
+#include "tcd.h"
+#include "tide_db_header.h"
+#include "tide_db_default.h"
 
 /* This should be done with stdbool.h, but VC doesn't have it. */
 /* Using crappy old int, must be careful not to 'require' a 64-bit value. */
@@ -379,13 +14,11 @@ const NV_CHAR *inferred_semi_diurnal[INFERRED_SEMI_DIURNAL_COUNT] = {
 }
 #endif
 
-#if 0
 #ifdef NDEBUG
 #ifdef USE_PRAGMA_MESSAGE
 #pragma message("WARNING:  NDEBUG is defined.  This configuration is unsupported and discouraged.")
 #else
 #warning NDEBUG is defined.  This configuration is unsupported and discouraged.
-#endif
 #endif
 #endif
 
@@ -407,7 +40,7 @@ const NV_CHAR *inferred_semi_diurnal[INFERRED_SEMI_DIURNAL_COUNT] = {
 #endif
 
 
-/****************************************************************************
+/*****************************************************************************\
 
                             DISTRIBUTION STATEMENT
 
@@ -416,14 +49,14 @@ const NV_CHAR *inferred_semi_diurnal[INFERRED_SEMI_DIURNAL_COUNT] = {
     WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-*****************************************************************************/
+\*****************************************************************************/
 
 
 
 /* Some of the following commentary is out of date.  See the new
    documentation in libtcd.html. */
 
-/****************************************************************************
+/*****************************************************************************\
 
     Tide Constituent Database API
 
@@ -702,7 +335,7 @@ const NV_CHAR *inferred_semi_diurnal[INFERRED_SEMI_DIURNAL_COUNT] = {
 
     See libtcd.html for changelog.
 
-*****************************************************************************/
+\*****************************************************************************/
 
 /* Maintenance by DWF */
 
@@ -748,25 +381,25 @@ static NV_CHAR              filename[MONOLOGUE_LENGTH];
 \*****************************************************************************/
 
 static void chk_fread (void *ptr, size_t size, size_t nmemb, FILE *stream) {
-    size_t ret;
-    ret = fread (ptr, size, nmemb, stream);
-    if (ret != nmemb) {
-        fprintf (stderr, "libtcd unexpected error: fread failed\n");
-        fprintf (stderr, "nmemb = %lu, got %lu\n", nmemb, ret);
-        abort();
-    }
+  size_t ret;
+  ret = fread (ptr, size, nmemb, stream);
+  if (ret != nmemb) {
+    fprintf (stderr, "libtcd unexpected error: fread failed\n");
+    fprintf (stderr, "nmemb = %u, got %u\n", nmemb, ret);
+    abort();
+  }
 }
 
 static void chk_fwrite (const void *ptr, size_t size, size_t nmemb,
-                        FILE *stream) {
-    size_t ret;
-    ret = fwrite (ptr, size, nmemb, stream);
-    if (ret != nmemb) {
-        fprintf (stderr, "libtcd unexpected error: fwrite failed\n");
-        fprintf (stderr, "nmemb = %lu, got %lu\n", nmemb, ret);
-        fprintf (stderr, "The database is probably corrupt now.\n");
-        abort();
-    }
+			FILE *stream) {
+  size_t ret;
+  ret = fwrite (ptr, size, nmemb, stream);
+  if (ret != nmemb) {
+    fprintf (stderr, "libtcd unexpected error: fwrite failed\n");
+    fprintf (stderr, "nmemb = %u, got %u\n", nmemb, ret);
+    fprintf (stderr, "The database is probably corrupt now.\n");
+    abort();
+  }
 }
 
 
@@ -800,7 +433,7 @@ void dump_tide_record (const TIDE_RECORD *rec)
     fprintf (stderr, "Latitude = %f\n", rec->header.latitude);
     fprintf (stderr, "Longitude = %f\n", rec->header.longitude);
     fprintf (stderr, "Reference station = %d\n",
-             rec->header.reference_station);
+        rec->header.reference_station);
     fprintf (stderr, "Tzfile = %s\n", get_tzfile (rec->header.tzfile));
     fprintf (stderr, "Name = %s\n", rec->header.name);
 
@@ -810,14 +443,14 @@ void dump_tide_record (const TIDE_RECORD *rec)
     fprintf (stderr, "Comments = %s\n", rec->comments);
     fprintf (stderr, "Notes = %s\n", rec->notes);
     fprintf (stderr, "Legalese = %s\n",
-             get_legalese (rec->legalese));
+        get_legalese (rec->legalese));
     fprintf (stderr, "Station ID context = %s\n", rec->station_id_context);
     fprintf (stderr, "Station ID = %s\n", rec->station_id);
     fprintf (stderr, "Date imported = %d\n", rec->date_imported);
     fprintf (stderr, "Xfields = %s\n", rec->xfields);
 
     fprintf (stderr, "Direction units = %s\n",
-             get_dir_units (rec->direction_units));
+        get_dir_units (rec->direction_units));
     fprintf (stderr, "Min direction = %d\n", rec->min_direction);
     fprintf (stderr, "Max direction = %d\n", rec->max_direction);
     fprintf (stderr, "Level units = %s\n", get_level_units (rec->level_units));
@@ -830,7 +463,7 @@ void dump_tide_record (const TIDE_RECORD *rec)
         fprintf (stderr, "Expiration date = %d\n", rec->expiration_date);
         fprintf (stderr, "Months on station = %d\n", rec->months_on_station);
         fprintf (stderr, "Last date on station = %d\n",
-                 rec->last_date_on_station);
+            rec->last_date_on_station);
         fprintf (stderr, "Confidence = %d\n", rec->confidence);
         for (i = 0 ; i < hd.pub.constituents ; ++i)
         {
@@ -866,10 +499,10 @@ void dump_tide_record (const TIDE_RECORD *rec)
 \*****************************************************************************/
 
 static void write_protect () {
-    if (hd.pub.major_rev < LIBTCD_MAJOR_REV) {
-        fprintf (stderr, "libtcd error: can't modify TCD files created by earlier version.  Use\nrewrite_tide_db to upgrade the TCD file.\n");
-        exit (-1);
-    }
+  if (hd.pub.major_rev < LIBTCD_MAJOR_REV) {
+    fprintf (stderr, "libtcd error: can't modify TCD files created by earlier version.  Use\nrewrite_tide_db to upgrade the TCD file.\n");
+    exit (-1);
+  }
 }
 
 
@@ -892,14 +525,14 @@ static void write_protect () {
 
 \*****************************************************************************/
 
-const NV_CHAR *get_country (NV_INT32 num)
+NV_CHAR *get_country (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    if (num >= 0 && num < (NV_INT32)hd.pub.countries) return (hd.country[num]);
-    return ("Unknown");
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  if (num >= 0 && num < (NV_INT32)hd.pub.countries) return (hd.country[num]);
+  return ("Unknown");
 }
 
 
@@ -920,14 +553,14 @@ const NV_CHAR *get_country (NV_INT32 num)
 
 \*****************************************************************************/
 
-const NV_CHAR *get_tzfile (NV_INT32 num)
+NV_CHAR *get_tzfile (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    if (num >= 0 && num < (NV_INT32)hd.pub.tzfiles) return (hd.tzfile[num]);
-    return ("Unknown");
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  if (num >= 0 && num < (NV_INT32)hd.pub.tzfiles) return (hd.tzfile[num]);
+  return ("Unknown");
 }
 
 
@@ -948,14 +581,14 @@ const NV_CHAR *get_tzfile (NV_INT32 num)
 
 \*****************************************************************************/
 
-const NV_CHAR *get_station (NV_INT32 num)
+NV_CHAR *get_station (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    if (num >= 0 && num < (NV_INT32)hd.pub.number_of_records) return (tindex[num].name);
-    return ("Unknown");
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  if (num >= 0 && num < (NV_INT32)hd.pub.number_of_records) return (tindex[num].name);
+  return ("Unknown");
 }
 
 
@@ -977,14 +610,14 @@ const NV_CHAR *get_station (NV_INT32 num)
 
 \*****************************************************************************/
 
-const NV_CHAR *get_constituent (NV_INT32 num)
+NV_CHAR *get_constituent (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    if (num >= 0 && num < (NV_INT32)hd.pub.constituents) return (hd.constituent[num]);
-    return ("Unknown");
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  if (num >= 0 && num < (NV_INT32)hd.pub.constituents) return (hd.constituent[num]);
+  return ("Unknown");
 }
 
 
@@ -1006,14 +639,14 @@ const NV_CHAR *get_constituent (NV_INT32 num)
 
 \*****************************************************************************/
 
-const NV_CHAR *get_level_units (NV_INT32 num)
+NV_CHAR *get_level_units (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    if (num >= 0 && num < (NV_INT32)hd.pub.level_unit_types) return (hd.level_unit[num]);
-    return ("Unknown");
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  if (num >= 0 && num < (NV_INT32)hd.pub.level_unit_types) return (hd.level_unit[num]);
+  return ("Unknown");
 }
 
 
@@ -1035,14 +668,14 @@ const NV_CHAR *get_level_units (NV_INT32 num)
 
 \*****************************************************************************/
 
-const NV_CHAR *get_dir_units (NV_INT32 num)
+NV_CHAR *get_dir_units (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    if (num >= 0 && num < (NV_INT32)hd.pub.dir_unit_types) return (hd.dir_unit[num]);
-    return ("Unknown");
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  if (num >= 0 && num < (NV_INT32)hd.pub.dir_unit_types) return (hd.dir_unit[num]);
+  return ("Unknown");
 }
 
 
@@ -1064,15 +697,15 @@ const NV_CHAR *get_dir_units (NV_INT32 num)
 
 \*****************************************************************************/
 
-const NV_CHAR *get_restriction (NV_INT32 num)
+NV_CHAR *get_restriction (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    if (num >= 0 && num < (NV_INT32)hd.pub.restriction_types)
-        return (hd.restriction[num]);
-    return ("Unknown");
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  if (num >= 0 && num < (NV_INT32)hd.pub.restriction_types)
+      return (hd.restriction[num]);
+  return ("Unknown");
 }
 
 
@@ -1096,7 +729,7 @@ const NV_CHAR *get_restriction (NV_INT32 num)
 
 #ifdef COMPAT114
 NV_CHAR *get_pedigree (NV_INT32 num) {
-    return "Unknown";
+  return "Unknown";
 }
 #endif
 
@@ -1118,28 +751,28 @@ NV_CHAR *get_pedigree (NV_INT32 num) {
 
 \*****************************************************************************/
 
-const NV_CHAR *get_datum (NV_INT32 num)
+NV_CHAR *get_datum (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    if (num >= 0 && num < (NV_INT32)hd.pub.datum_types) return (hd.datum[num]);
-    return ("Unknown");
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  if (num >= 0 && num < (NV_INT32)hd.pub.datum_types) return (hd.datum[num]);
+  return ("Unknown");
 }
 
 
 /*****************************************************************************\
 DWF 2004-10-14
 \*****************************************************************************/
-const NV_CHAR *get_legalese (NV_INT32 num)
+NV_CHAR *get_legalese (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    if (num >= 0 && num < (NV_INT32)hd.pub.legaleses) return (hd.legalese[num]);
-    return ("Unknown");
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  if (num >= 0 && num < (NV_INT32)hd.pub.legaleses) return (hd.legalese[num]);
+  return ("Unknown");
 }
 
 
@@ -1163,12 +796,12 @@ const NV_CHAR *get_legalese (NV_INT32 num)
 
 NV_FLOAT64 get_speed (NV_INT32 num)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    assert (num >= 0 && num < (NV_INT32)hd.pub.constituents);
-    return hd.speed[num];
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  assert (num >= 0 && num < (NV_INT32)hd.pub.constituents);
+  return hd.speed[num];
 }
 
 
@@ -1193,12 +826,12 @@ NV_FLOAT64 get_speed (NV_INT32 num)
 
 NV_FLOAT32 get_equilibrium (NV_INT32 num, NV_INT32 year)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    assert (num >= 0 && num < (NV_INT32)hd.pub.constituents && year >= 0 && year < (NV_INT32)hd.pub.number_of_years);
-    return hd.equilibrium[num][year];
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  assert (num >= 0 && num < (NV_INT32)hd.pub.constituents && year >= 0 && year < (NV_INT32)hd.pub.number_of_years);
+  return hd.equilibrium[num][year];
 }
 
 
@@ -1206,12 +839,12 @@ NV_FLOAT32 get_equilibrium (NV_INT32 num, NV_INT32 year)
   DWF 2004-10-04
 \*****************************************************************************/
 NV_FLOAT32 *get_equilibriums (NV_INT32 num) {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    assert (num >= 0 && num < (NV_INT32)hd.pub.constituents);
-    return hd.equilibrium[num];
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  assert (num >= 0 && num < (NV_INT32)hd.pub.constituents);
+  return hd.equilibrium[num];
 }
 
 
@@ -1236,12 +869,12 @@ NV_FLOAT32 *get_equilibriums (NV_INT32 num) {
 
 NV_FLOAT32 get_node_factor (NV_INT32 num, NV_INT32 year)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    assert (num >= 0 && num < (NV_INT32)hd.pub.constituents && year >= 0 && year < (NV_INT32)hd.pub.number_of_years);
-    return hd.node_factor[num][year];
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  assert (num >= 0 && num < (NV_INT32)hd.pub.constituents && year >= 0 && year < (NV_INT32)hd.pub.number_of_years);
+  return hd.node_factor[num][year];
 }
 
 
@@ -1249,12 +882,12 @@ NV_FLOAT32 get_node_factor (NV_INT32 num, NV_INT32 year)
   DWF 2004-10-04
 \*****************************************************************************/
 NV_FLOAT32 *get_node_factors (NV_INT32 num) {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
-    assert (num >= 0 && num < (NV_INT32)hd.pub.constituents);
-    return hd.node_factor[num];
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
+  assert (num >= 0 && num < (NV_INT32)hd.pub.constituents);
+  return hd.node_factor[num];
 }
 
 
@@ -1283,10 +916,10 @@ NV_FLOAT32 *get_node_factors (NV_INT32 num) {
 
 NV_BOOL get_partial_tide_record (NV_INT32 num, TIDE_STATION_HEADER *rec)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return NVFalse;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return NVFalse;
+  }
 
     if (num < 0 || num >= (NV_INT32)hd.pub.number_of_records) return (NVFalse);
 
@@ -1354,7 +987,7 @@ NV_INT32 get_next_partial_tide_record (TIDE_STATION_HEADER *rec)
 \*****************************************************************************/
 
 NV_INT32 get_nearest_partial_tide_record (NV_FLOAT64 lat, NV_FLOAT64 lon,
-        TIDE_STATION_HEADER *rec)
+TIDE_STATION_HEADER *rec)
 {
     NV_FLOAT64           diff, min_diff, lt, ln;
     NV_U_INT32             i, shortest = 0;
@@ -1475,11 +1108,11 @@ NV_CHAR *ret_time_neat (NV_INT32 time)
     minute = abs (time) % 100;
 
     if (time < 0)
-        sprintf (tname, "-%d:%02d", hour, minute);
+      sprintf (tname, "-%d:%02d", hour, minute);
     else if (time > 0)
-        sprintf (tname, "+%d:%02d", hour, minute);
+      sprintf (tname, "+%d:%02d", hour, minute);
     else
-        strcpy (tname, "0:00");
+      strcpy (tname, "0:00");
 
     return tname;
 }
@@ -1489,18 +1122,18 @@ NV_CHAR *ret_time_neat (NV_INT32 time)
   DWF 2004-10-04
 \*****************************************************************************/
 NV_CHAR *ret_date (NV_U_INT32 date) {
-    static NV_CHAR tname[30];
-    if (!date)
-        strcpy (tname, "NULL");
-    else {
-        unsigned y, m, d;
-        y = date / 10000;
-        date %= 10000;
-        m = date / 100;
-        d = date % 100;
-        sprintf (tname, "%4u-%02u-%02u", y, m, d);
-    }
-    return tname;
+  static NV_CHAR tname[30];
+  if (!date)
+    strcpy (tname, "NULL");
+  else {
+    unsigned y, m, d;
+    y = date / 10000;
+    date %= 10000;
+    m = date / 100;
+    d = date % 100;
+    sprintf (tname, "%4u-%02u-%02u", y, m, d);
+  }
+  return tname;
 }
 
 
@@ -1522,10 +1155,10 @@ NV_CHAR *ret_date (NV_U_INT32 date) {
 
 DB_HEADER_PUBLIC get_tide_db_header ()
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit(-1);
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit(-1);
+  }
     return (hd.pub);
 }
 
@@ -1535,15 +1168,15 @@ DB_HEADER_PUBLIC get_tide_db_header ()
    Prevent buffer overflows for MONOLOGUE_LENGTH strings.
 \*****************************************************************************/
 static void boundscheck_monologue (const NV_CHAR *string) {
-    assert (string);
-    if (strlen(string) >= MONOLOGUE_LENGTH) {
-        fprintf (stderr, "libtcd fatal error:  static buffer size exceeded\n");
-        fprintf (stderr, "Buffer is size MONOLOGUE_LENGTH (%u)\n",
-                 MONOLOGUE_LENGTH);
-        fprintf (stderr, "String is length %lu\n", strlen(string));
-        fprintf (stderr, "The offending string is:\n%s\n", string);
-        exit (-1);
-    }
+  assert (string);
+  if (strlen(string) >= MONOLOGUE_LENGTH) {
+    fprintf (stderr, "libtcd fatal error:  static buffer size exceeded\n");
+    fprintf (stderr, "Buffer is size MONOLOGUE_LENGTH (%u)\n",
+             MONOLOGUE_LENGTH);
+    fprintf (stderr, "String is length %u\n", strlen(string));
+    fprintf (stderr, "The offending string is:\n%s\n", string);
+    exit (-1);
+  }
 }
 
 
@@ -1552,15 +1185,15 @@ static void boundscheck_monologue (const NV_CHAR *string) {
    Prevent buffer overflows for ONELINER_LENGTH strings.
 \*****************************************************************************/
 static void boundscheck_oneliner (const NV_CHAR *string) {
-    assert (string);
-    if (strlen(string) >= ONELINER_LENGTH) {
-        fprintf (stderr, "libtcd fatal error:  static buffer size exceeded\n");
-        fprintf (stderr, "Buffer is size ONELINER_LENGTH (%u)\n",
-                 ONELINER_LENGTH);
-        fprintf (stderr, "String is length %lu\n", strlen(string));
-        fprintf (stderr, "The offending string is:\n%s\n", string);
-        exit (-1);
-    }
+  assert (string);
+  if (strlen(string) >= ONELINER_LENGTH) {
+    fprintf (stderr, "libtcd fatal error:  static buffer size exceeded\n");
+    fprintf (stderr, "Buffer is size ONELINER_LENGTH (%u)\n",
+             ONELINER_LENGTH);
+    fprintf (stderr, "String is length %u\n", strlen(string));
+    fprintf (stderr, "The offending string is:\n%s\n", string);
+    exit (-1);
+  }
 }
 
 
@@ -1584,32 +1217,32 @@ static void boundscheck_oneliner (const NV_CHAR *string) {
 
 static NV_CHAR *clip_string (const NV_CHAR *string)
 {
-    static NV_CHAR        new_string[MONOLOGUE_LENGTH];
-    NV_INT32              i, l, start = -1, end = -1;
+  static NV_CHAR        new_string[MONOLOGUE_LENGTH];
+  NV_INT32              i, l, start = -1, end = -1;
 
-    boundscheck_monologue (string);
-    new_string[0] = '\0';
+  boundscheck_monologue (string);
+  new_string[0] = '\0';
 
-    l = (int)strlen(string);
-    if (l) {
-        for (i=0; i<l; ++i) {
-            if (string[i] != ' ') {
-                start = i;
-                break;
-            }
-        }
-        for (i=l-1; i >= start; --i) {
-            if (string[i] != ' ' && string[i] != 10 && string[i] != 13) {
-                end = i;
-                break;
-            }
-        }
-        if (start > -1 && end > -1 && end >= start) {
-            strncpy (new_string, string+start, end-start+1);
-            new_string[end-start+1] = '\0';
-        }
+  l = (int)strlen(string);
+  if (l) {
+    for (i=0; i<l; ++i) {
+      if (string[i] != ' ') {
+        start = i;
+        break;
+      }
     }
-    return new_string;
+    for (i=l-1; i >= start; --i) {
+      if (string[i] != ' ' && string[i] != 10 && string[i] != 13) {
+        end = i;
+        break;
+      }
+    }
+    if (start > -1 && end > -1 && end >= start) {
+      strncpy (new_string, string+start, end-start+1);
+      new_string[end-start+1] = '\0';
+    }
+  }
+  return new_string;
 }
 
 
@@ -1641,10 +1274,10 @@ NV_INT32 search_station (const NV_CHAR *string)
     NV_U_INT32            i;
     NV_CHAR               name[ONELINER_LENGTH], search[ONELINER_LENGTH];
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
     boundscheck_oneliner (string);
 
@@ -1662,7 +1295,7 @@ NV_INT32 search_station (const NV_CHAR *string)
 
         ++j;
         if (strstr (name, search))
-            return (j - 1);
+          return (j - 1);
     }
 
     j = 0;
@@ -1692,10 +1325,10 @@ NV_INT32 find_station (const NV_CHAR *name)
 {
     NV_U_INT32              i;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
     assert (name);
     for (i = 0 ; i < hd.pub.number_of_records ; ++i)
@@ -1731,10 +1364,10 @@ NV_INT32 find_tzfile (const NV_CHAR *name)
     NV_U_INT32 i;
     NV_CHAR     *temp;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
     temp = clip_string(name);
 
@@ -1776,10 +1409,10 @@ NV_INT32 find_country (const NV_CHAR *name)
     NV_U_INT32  i;
     NV_CHAR     *temp;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
     temp = clip_string(name);
 
@@ -1821,10 +1454,10 @@ NV_INT32 find_level_units (const NV_CHAR *name)
     NV_U_INT32  i;
     NV_CHAR     *temp;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
     temp = clip_string(name);
 
@@ -1866,10 +1499,10 @@ NV_INT32 find_dir_units (const NV_CHAR *name)
     NV_U_INT32  i;
     NV_CHAR     *temp;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
     temp = clip_string(name);
 
@@ -1907,7 +1540,7 @@ NV_INT32 find_dir_units (const NV_CHAR *name)
 
 #ifdef COMPAT114
 NV_INT32 find_pedigree (const NV_CHAR *name) {
-    return 0;
+  return 0;
 }
 #endif
 
@@ -1936,10 +1569,10 @@ NV_INT32 find_datum (const NV_CHAR *name)
     NV_U_INT32  i;
     NV_CHAR     *temp;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
     temp = clip_string(name);
 
@@ -1962,28 +1595,28 @@ NV_INT32 find_datum (const NV_CHAR *name)
 \*****************************************************************************/
 NV_INT32 find_legalese (const NV_CHAR *name)
 {
-    NV_INT32    j;
-    NV_U_INT32  i;
-    NV_CHAR     *temp;
+  NV_INT32    j;
+  NV_U_INT32  i;
+  NV_CHAR     *temp;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
-    temp = clip_string(name);
+  temp = clip_string(name);
 
-    j = -1;
-    for (i = 0 ; i < hd.pub.legaleses ; ++i)
+  j = -1;
+  for (i = 0 ; i < hd.pub.legaleses ; ++i)
+  {
+    if (!strcmp (get_legalese (i), temp))
     {
-        if (!strcmp (get_legalese (i), temp))
-        {
-            j = i;
-            break;
-        }
+      j = i;
+      break;
     }
+  }
 
-    return (j);
+  return (j);
 }
 
 
@@ -2011,16 +1644,16 @@ NV_INT32 find_constituent (const NV_CHAR *name)
     NV_U_INT32               i;
     NV_CHAR     *temp;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
     temp = clip_string(name);
 
     for (i = 0 ; i < hd.pub.constituents ; ++i)
     {
-        if (!strcmp (get_constituent (i), temp)) return (i);
+      if (!strcmp (get_constituent (i), temp)) return (i);
     }
 
     return (-1);
@@ -2051,10 +1684,10 @@ NV_INT32 find_restriction (const NV_CHAR *name)
     NV_U_INT32  i;
     NV_CHAR     *temp;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
     temp = clip_string(name);
 
@@ -2091,18 +1724,18 @@ NV_INT32 find_restriction (const NV_CHAR *name)
 
 void set_speed (NV_INT32 num, NV_FLOAT64 value)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
-    write_protect();
-    assert (num >= 0 && num < (NV_INT32)hd.pub.constituents);
-    if (value < 0.0) {
-        fprintf (stderr, "libtcd set_speed: somebody tried to set a negative speed (%f)\n", value);
-        exit (-1);
-    }
-    hd.speed[num] = value;
-    modified = NVTrue;
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
+  write_protect();
+  assert (num >= 0 && num < (NV_INT32)hd.pub.constituents);
+  if (value < 0.0) {
+    fprintf (stderr, "libtcd set_speed: somebody tried to set a negative speed (%f)\n", value);
+    exit (-1);
+  }
+  hd.speed[num] = value;
+  modified = NVTrue;
 }
 
 
@@ -2128,14 +1761,14 @@ void set_speed (NV_INT32 num, NV_FLOAT64 value)
 
 void set_equilibrium (NV_INT32 num, NV_INT32 year, NV_FLOAT32 value)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
-    write_protect();
-    assert (num >= 0 && num < (NV_INT32)hd.pub.constituents && year >= 0 && year < (NV_INT32)hd.pub.number_of_years);
-    hd.equilibrium[num][year] = value;
-    modified = NVTrue;
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
+  write_protect();
+  assert (num >= 0 && num < (NV_INT32)hd.pub.constituents && year >= 0 && year < (NV_INT32)hd.pub.number_of_years);
+  hd.equilibrium[num][year] = value;
+  modified = NVTrue;
 }
 
 
@@ -2161,18 +1794,18 @@ void set_equilibrium (NV_INT32 num, NV_INT32 year, NV_FLOAT32 value)
 
 void set_node_factor (NV_INT32 num, NV_INT32 year, NV_FLOAT32 value)
 {
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
-    write_protect();
-    assert (num >= 0 && num < (NV_INT32)hd.pub.constituents && year >= 0 && year < (NV_INT32)hd.pub.number_of_years);
-    if (value <= 0.0) {
-        fprintf (stderr, "libtcd set_node_factor: somebody tried to set a negative or zero node factor (%f)\n", value);
-        exit (-1);
-    }
-    hd.node_factor[num][year] = value;
-    modified = NVTrue;
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
+  write_protect();
+  assert (num >= 0 && num < (NV_INT32)hd.pub.constituents && year >= 0 && year < (NV_INT32)hd.pub.number_of_years);
+  if (value <= 0.0) {
+    fprintf (stderr, "libtcd set_node_factor: somebody tried to set a negative or zero node factor (%f)\n", value);
+    exit (-1);
+  }
+  hd.node_factor[num][year] = value;
+  modified = NVTrue;
 }
 
 
@@ -2196,7 +1829,7 @@ void set_node_factor (NV_INT32 num, NV_INT32 year, NV_FLOAT32 value)
 
 #ifdef COMPAT114
 NV_INT32 add_pedigree (const NV_CHAR *name, const DB_HEADER_PUBLIC *db) {
-    return 0;
+  return 0;
 }
 #endif
 
@@ -2223,35 +1856,35 @@ NV_INT32 add_tzfile (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 {
     NV_CHAR *c_name;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
-    write_protect();
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
+  write_protect();
 
-    assert (name);
-    if (strlen(name) + 1 > hd.tzfile_size) {
-        fprintf (stderr, "libtcd error: tzfile exceeds size limit (%u).\n",
-                 hd.tzfile_size);
-        fprintf (stderr, "The offending input is: %s\n", name);
-        exit (-1);
-    }
+  assert (name);
+  if (strlen(name) + 1 > hd.tzfile_size) {
+    fprintf (stderr, "libtcd error: tzfile exceeds size limit (%u).\n",
+             hd.tzfile_size);
+    fprintf (stderr, "The offending input is: %s\n", name);
+    exit (-1);
+  }
 
     if (hd.pub.tzfiles == hd.max_tzfiles)
     {
         fprintf (stderr,
-                 "You have exceeded the maximum number of tzfile types!\n");
+            "You have exceeded the maximum number of tzfile types!\n");
         fprintf (stderr,
-                 "You cannot add any new tzfile types.\n");
+            "You cannot add any new tzfile types.\n");
         fprintf (stderr,
-                 "Modify the DEFAULT_TZFILE_BITS and rebuild the database.\n");
+            "Modify the DEFAULT_TZFILE_BITS and rebuild the database.\n");
         exit (-1);
     }
 
     c_name = clip_string (name);
 
     hd.tzfile[hd.pub.tzfiles] = (NV_CHAR *) calloc (strlen (c_name) + 1,
-                                sizeof (NV_CHAR));
+        sizeof (NV_CHAR));
 
     if (hd.tzfile[hd.pub.tzfiles] == NULL)
     {
@@ -2261,7 +1894,7 @@ NV_INT32 add_tzfile (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 
     strcpy (hd.tzfile[hd.pub.tzfiles++], c_name);
     if (db)
-        *db = hd.pub;
+      *db = hd.pub;
     modified = NVTrue;
     return (hd.pub.tzfiles - 1);
 }
@@ -2289,35 +1922,35 @@ NV_INT32 add_country (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 {
     NV_CHAR *c_name;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
-    write_protect();
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
+  write_protect();
 
-    assert (name);
-    if (strlen(name) + 1 > hd.country_size) {
-        fprintf (stderr, "libtcd error: country exceeds size limit (%u).\n",
-                 hd.country_size);
-        fprintf (stderr, "The offending input is: %s\n", name);
-        exit (-1);
-    }
+  assert (name);
+  if (strlen(name) + 1 > hd.country_size) {
+    fprintf (stderr, "libtcd error: country exceeds size limit (%u).\n",
+             hd.country_size);
+    fprintf (stderr, "The offending input is: %s\n", name);
+    exit (-1);
+  }
 
     if (hd.pub.countries == hd.max_countries)
     {
         fprintf (stderr,
-                 "You have exceeded the maximum number of country names!\n");
+            "You have exceeded the maximum number of country names!\n");
         fprintf (stderr,
-                 "You cannot add any new country names.\n");
+            "You cannot add any new country names.\n");
         fprintf (stderr,
-                 "Modify the DEFAULT_COUNTRY_BITS and rebuild the database.\n");
+            "Modify the DEFAULT_COUNTRY_BITS and rebuild the database.\n");
         exit (-1);
     }
 
     c_name = clip_string (name);
 
     hd.country[hd.pub.countries] = (NV_CHAR *) calloc (strlen (c_name) + 1,
-                                   sizeof (NV_CHAR));
+        sizeof (NV_CHAR));
 
     if (hd.country[hd.pub.countries] == NULL)
     {
@@ -2327,7 +1960,7 @@ NV_INT32 add_country (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 
     strcpy (hd.country[hd.pub.countries++], c_name);
     if (db)
-        *db = hd.pub;
+      *db = hd.pub;
     modified = NVTrue;
     return (hd.pub.countries - 1);
 }
@@ -2355,35 +1988,35 @@ NV_INT32 add_datum (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 {
     NV_CHAR *c_name;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
-    write_protect();
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
+  write_protect();
 
-    assert (name);
-    if (strlen(name) + 1 > hd.datum_size) {
-        fprintf (stderr, "libtcd error: datum exceeds size limit (%u).\n",
-                 hd.datum_size);
-        fprintf (stderr, "The offending input is: %s\n", name);
-        exit (-1);
-    }
+  assert (name);
+  if (strlen(name) + 1 > hd.datum_size) {
+    fprintf (stderr, "libtcd error: datum exceeds size limit (%u).\n",
+             hd.datum_size);
+    fprintf (stderr, "The offending input is: %s\n", name);
+    exit (-1);
+  }
 
     if (hd.pub.datum_types == hd.max_datum_types)
     {
         fprintf (stderr,
-                 "You have exceeded the maximum number of datum types!\n");
+            "You have exceeded the maximum number of datum types!\n");
         fprintf (stderr,
-                 "You cannot add any new datum types.\n");
+            "You cannot add any new datum types.\n");
         fprintf (stderr,
-                 "Modify the DEFAULT_DATUM_BITS and rebuild the database.\n");
+            "Modify the DEFAULT_DATUM_BITS and rebuild the database.\n");
         exit (-1);
     }
 
     c_name = clip_string (name);
 
     hd.datum[hd.pub.datum_types] = (NV_CHAR *) calloc (strlen (c_name) + 1,
-                                   sizeof (NV_CHAR));
+        sizeof (NV_CHAR));
 
     if (hd.datum[hd.pub.datum_types] == NULL)
     {
@@ -2393,7 +2026,7 @@ NV_INT32 add_datum (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 
     strcpy (hd.datum[hd.pub.datum_types++], c_name);
     if (db)
-        *db = hd.pub;
+      *db = hd.pub;
     modified = NVTrue;
     return (hd.pub.datum_types - 1);
 }
@@ -2406,35 +2039,35 @@ NV_INT32 add_legalese (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 {
     NV_CHAR *c_name;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
-    write_protect();
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
+  write_protect();
 
-    assert (name);
-    if (strlen(name) + 1 > hd.legalese_size) {
-        fprintf (stderr, "libtcd error: legalese exceeds size limit (%u).\n",
-                 hd.legalese_size);
-        fprintf (stderr, "The offending input is: %s\n", name);
-        exit (-1);
-    }
+  assert (name);
+  if (strlen(name) + 1 > hd.legalese_size) {
+    fprintf (stderr, "libtcd error: legalese exceeds size limit (%u).\n",
+             hd.legalese_size);
+    fprintf (stderr, "The offending input is: %s\n", name);
+    exit (-1);
+  }
 
     if (hd.pub.legaleses == hd.max_legaleses)
     {
         fprintf (stderr,
-                 "You have exceeded the maximum number of legaleses!\n");
+            "You have exceeded the maximum number of legaleses!\n");
         fprintf (stderr,
-                 "You cannot add any new legaleses.\n");
+            "You cannot add any new legaleses.\n");
         fprintf (stderr,
-                 "Modify the DEFAULT_LEGALESE_BITS and rebuild the database.\n");
+            "Modify the DEFAULT_LEGALESE_BITS and rebuild the database.\n");
         exit (-1);
     }
 
     c_name = clip_string (name);
 
     hd.legalese[hd.pub.legaleses] = (NV_CHAR *) calloc (strlen (c_name) + 1,
-                                    sizeof (NV_CHAR));
+        sizeof (NV_CHAR));
 
     if (hd.legalese[hd.pub.legaleses] == NULL)
     {
@@ -2444,7 +2077,7 @@ NV_INT32 add_legalese (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 
     strcpy (hd.legalese[hd.pub.legaleses++], c_name);
     if (db)
-        *db = hd.pub;
+      *db = hd.pub;
     modified = NVTrue;
     return (hd.pub.legaleses - 1);
 }
@@ -2472,28 +2105,28 @@ NV_INT32 add_restriction (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 {
     NV_CHAR *c_name;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
-    write_protect();
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
+  write_protect();
 
-    assert (name);
-    if (strlen(name) + 1 > hd.restriction_size) {
-        fprintf (stderr, "libtcd error: restriction exceeds size limit (%u).\n",
-                 hd.restriction_size);
-        fprintf (stderr, "The offending input is: %s\n", name);
-        exit (-1);
-    }
+  assert (name);
+  if (strlen(name) + 1 > hd.restriction_size) {
+    fprintf (stderr, "libtcd error: restriction exceeds size limit (%u).\n",
+             hd.restriction_size);
+    fprintf (stderr, "The offending input is: %s\n", name);
+    exit (-1);
+  }
 
     if (hd.pub.restriction_types == hd.max_restriction_types)
     {
         fprintf (stderr,
-                 "You have exceeded the maximum number of restriction types!\n");
+            "You have exceeded the maximum number of restriction types!\n");
         fprintf (stderr,
-                 "You cannot add any new restriction types.\n");
+            "You cannot add any new restriction types.\n");
         fprintf (stderr,
-                 "Modify the DEFAULT_RESTRICTION_BITS and rebuild the database.\n");
+            "Modify the DEFAULT_RESTRICTION_BITS and rebuild the database.\n");
         exit (-1);
     }
 
@@ -2510,7 +2143,7 @@ NV_INT32 add_restriction (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
 
     strcpy (hd.restriction[hd.pub.restriction_types++], c_name);
     if (db)
-        *db = hd.pub;
+      *db = hd.pub;
     modified = NVTrue;
     return (hd.pub.restriction_types - 1);
 }
@@ -2520,12 +2153,12 @@ NV_INT32 add_restriction (const NV_CHAR *name, DB_HEADER_PUBLIC *db)
   DWF 2004-10-04
 \*****************************************************************************/
 NV_INT32 find_or_add_restriction (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
-    NV_INT32 ret;
-    ret = find_restriction (name);
-    if (ret < 0)
-        ret = add_restriction (name, db);
-    assert (ret >= 0);
-    return ret;
+  NV_INT32 ret;
+  ret = find_restriction (name);
+  if (ret < 0)
+    ret = add_restriction (name, db);
+  assert (ret >= 0);
+  return ret;
 }
 
 
@@ -2533,12 +2166,12 @@ NV_INT32 find_or_add_restriction (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
   DWF 2004-10-04
 \*****************************************************************************/
 NV_INT32 find_or_add_tzfile (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
-    NV_INT32 ret;
-    ret = find_tzfile (name);
-    if (ret < 0)
-        ret = add_tzfile (name, db);
-    assert (ret >= 0);
-    return ret;
+  NV_INT32 ret;
+  ret = find_tzfile (name);
+  if (ret < 0)
+    ret = add_tzfile (name, db);
+  assert (ret >= 0);
+  return ret;
 }
 
 
@@ -2546,12 +2179,12 @@ NV_INT32 find_or_add_tzfile (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
   DWF 2004-10-04
 \*****************************************************************************/
 NV_INT32 find_or_add_country (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
-    NV_INT32 ret;
-    ret = find_country (name);
-    if (ret < 0)
-        ret = add_country (name, db);
-    assert (ret >= 0);
-    return ret;
+  NV_INT32 ret;
+  ret = find_country (name);
+  if (ret < 0)
+    ret = add_country (name, db);
+  assert (ret >= 0);
+  return ret;
 }
 
 
@@ -2559,12 +2192,12 @@ NV_INT32 find_or_add_country (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
   DWF 2004-10-04
 \*****************************************************************************/
 NV_INT32 find_or_add_datum (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
-    NV_INT32 ret;
-    ret = find_datum (name);
-    if (ret < 0)
-        ret = add_datum (name, db);
-    assert (ret >= 0);
-    return ret;
+  NV_INT32 ret;
+  ret = find_datum (name);
+  if (ret < 0)
+    ret = add_datum (name, db);
+  assert (ret >= 0);
+  return ret;
 }
 
 
@@ -2572,12 +2205,12 @@ NV_INT32 find_or_add_datum (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
   DWF 2004-10-14
 \*****************************************************************************/
 NV_INT32 find_or_add_legalese (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
-    NV_INT32 ret;
-    ret = find_legalese (name);
-    if (ret < 0)
-        ret = add_legalese (name, db);
-    assert (ret >= 0);
-    return ret;
+  NV_INT32 ret;
+  ret = find_legalese (name);
+  if (ret < 0)
+    ret = add_legalese (name, db);
+  assert (ret >= 0);
+  return ret;
 }
 
 
@@ -2608,16 +2241,16 @@ NV_INT32 find_or_add_legalese (const NV_CHAR *name, DB_HEADER_PUBLIC *db) {
 #ifdef COMPAT114
 NV_BOOL check_simple (TIDE_RECORD rec)
 {
-    if (rec.max_time_add       == rec.min_time_add        &&
-            rec.max_level_add      == rec.min_level_add       &&
-            rec.max_level_multiply == rec.min_level_multiply  &&
-            rec.max_avg_level == 0   &&
-            rec.min_avg_level == 0   &&
-            rec.max_direction == 361 &&
-            rec.min_direction == 361 &&
-            rec.flood_begins  == NULLSLACKOFFSET &&
-            rec.ebb_begins    == NULLSLACKOFFSET)
-        return (NVTrue);
+  if (rec.max_time_add       == rec.min_time_add        &&
+      rec.max_level_add      == rec.min_level_add       &&
+      rec.max_level_multiply == rec.min_level_multiply  &&
+      rec.max_avg_level == 0   &&
+      rec.min_avg_level == 0   &&
+      rec.max_direction == 361 &&
+      rec.min_direction == 361 &&
+      rec.flood_begins  == NULLSLACKOFFSET &&
+      rec.ebb_begins    == NULLSLACKOFFSET)
+    return (NVTrue);
 
     return (NVFalse);
 }
@@ -2645,62 +2278,61 @@ static NV_U_INT32 header_checksum ()
     NV_U_INT32          checksum, i, save_pos;
     NV_U_BYTE           *buf;
     NV_U_INT32          crc_table[256] =
-    {   0x00000000,0x77073096,0xEE0E612C,0x990951BA,0x076DC419,0x706AF48F,
-        0xE963A535,0x9E6495A3,0x0EDB8832,0x79DCB8A4,0xE0D5E91E,0x97D2D988,
-        0x09B64C2B,0x7EB17CBD,0xE7B82D07,0x90BF1D91,0x1DB71064,0x6AB020F2,
-        0xF3B97148,0x84BE41DE,0x1ADAD47D,0x6DDDE4EB,0xF4D4B551,0x83D385C7,
-        0x136C9856,0x646BA8C0,0xFD62F97A,0x8A65C9EC,0x14015C4F,0x63066CD9,
-        0xFA0F3D63,0x8D080DF5,0x3B6E20C8,0x4C69105E,0xD56041E4,0xA2677172,
-        0x3C03E4D1,0x4B04D447,0xD20D85FD,0xA50AB56B,0x35B5A8FA,0x42B2986C,
-        0xDBBBC9D6,0xACBCF940,0x32D86CE3,0x45DF5C75,0xDCD60DCF,0xABD13D59,
-        0x26D930AC,0x51DE003A,0xC8D75180,0xBFD06116,0x21B4F4B5,0x56B3C423,
-        0xCFBA9599,0xB8BDA50F,0x2802B89E,0x5F058808,0xC60CD9B2,0xB10BE924,
-        0x2F6F7C87,0x58684C11,0xC1611DAB,0xB6662D3D,0x76DC4190,0x01DB7106,
-        0x98D220BC,0xEFD5102A,0x71B18589,0x06B6B51F,0x9FBFE4A5,0xE8B8D433,
-        0x7807C9A2,0x0F00F934,0x9609A88E,0xE10E9818,0x7F6A0DBB,0x086D3D2D,
-        0x91646C97,0xE6635C01,0x6B6B51F4,0x1C6C6162,0x856530D8,0xF262004E,
-        0x6C0695ED,0x1B01A57B,0x8208F4C1,0xF50FC457,0x65B0D9C6,0x12B7E950,
-        0x8BBEB8EA,0xFCB9887C,0x62DD1DDF,0x15DA2D49,0x8CD37CF3,0xFBD44C65,
-        0x4DB26158,0x3AB551CE,0xA3BC0074,0xD4BB30E2,0x4ADFA541,0x3DD895D7,
-        0xA4D1C46D,0xD3D6F4FB,0x4369E96A,0x346ED9FC,0xAD678846,0xDA60B8D0,
-        0x44042D73,0x33031DE5,0xAA0A4C5F,0xDD0D7CC9,0x5005713C,0x270241AA,
-        0xBE0B1010,0xC90C2086,0x5768B525,0x206F85B3,0xB966D409,0xCE61E49F,
-        0x5EDEF90E,0x29D9C998,0xB0D09822,0xC7D7A8B4,0x59B33D17,0x2EB40D81,
-        0xB7BD5C3B,0xC0BA6CAD,0xEDB88320,0x9ABFB3B6,0x03B6E20C,0x74B1D29A,
-        0xEAD54739,0x9DD277AF,0x04DB2615,0x73DC1683,0xE3630B12,0x94643B84,
-        0x0D6D6A3E,0x7A6A5AA8,0xE40ECF0B,0x9309FF9D,0x0A00AE27,0x7D079EB1,
-        0xF00F9344,0x8708A3D2,0x1E01F268,0x6906C2FE,0xF762575D,0x806567CB,
-        0x196C3671,0x6E6B06E7,0xFED41B76,0x89D32BE0,0x10DA7A5A,0x67DD4ACC,
-        0xF9B9DF6F,0x8EBEEFF9,0x17B7BE43,0x60B08ED5,0xD6D6A3E8,0xA1D1937E,
-        0x38D8C2C4,0x4FDFF252,0xD1BB67F1,0xA6BC5767,0x3FB506DD,0x48B2364B,
-        0xD80D2BDA,0xAF0A1B4C,0x36034AF6,0x41047A60,0xDF60EFC3,0xA867DF55,
-        0x316E8EEF,0x4669BE79,0xCB61B38C,0xBC66831A,0x256FD2A0,0x5268E236,
-        0xCC0C7795,0xBB0B4703,0x220216B9,0x5505262F,0xC5BA3BBE,0xB2BD0B28,
-        0x2BB45A92,0x5CB36A04,0xC2D7FFA7,0xB5D0CF31,0x2CD99E8B,0x5BDEAE1D,
-        0x9B64C2B0,0xEC63F226,0x756AA39C,0x026D930A,0x9C0906A9,0xEB0E363F,
-        0x72076785,0x05005713,0x95BF4A82,0xE2B87A14,0x7BB12BAE,0x0CB61B38,
-        0x92D28E9B,0xE5D5BE0D,0x7CDCEFB7,0x0BDBDF21,0x86D3D2D4,0xF1D4E242,
-        0x68DDB3F8,0x1FDA836E,0x81BE16CD,0xF6B9265B,0x6FB077E1,0x18B74777,
-        0x88085AE6,0xFF0F6A70,0x66063BCA,0x11010B5C,0x8F659EFF,0xF862AE69,
-        0x616BFFD3,0x166CCF45,0xA00AE278,0xD70DD2EE,0x4E048354,0x3903B3C2,
-        0xA7672661,0xD06016F7,0x4969474D,0x3E6E77DB,0xAED16A4A,0xD9D65ADC,
-        0x40DF0B66,0x37D83BF0,0xA9BCAE53,0xDEBB9EC5,0x47B2CF7F,0x30B5FFE9,
-        0xBDBDF21C,0xCABAC28A,0x53B39330,0x24B4A3A6,0xBAD03605,0xCDD70693,
-        0x54DE5729,0x23D967BF,0xB3667A2E,0xC4614AB8,0x5D681B02,0x2A6F2B94,
-        0xB40BBE37,0xC30C8EA1,0x5A05DF1B,0x2D02EF8D
-    };
+      {0x00000000,0x77073096,0xEE0E612C,0x990951BA,0x076DC419,0x706AF48F,
+       0xE963A535,0x9E6495A3,0x0EDB8832,0x79DCB8A4,0xE0D5E91E,0x97D2D988,
+       0x09B64C2B,0x7EB17CBD,0xE7B82D07,0x90BF1D91,0x1DB71064,0x6AB020F2,
+       0xF3B97148,0x84BE41DE,0x1ADAD47D,0x6DDDE4EB,0xF4D4B551,0x83D385C7,
+       0x136C9856,0x646BA8C0,0xFD62F97A,0x8A65C9EC,0x14015C4F,0x63066CD9,
+       0xFA0F3D63,0x8D080DF5,0x3B6E20C8,0x4C69105E,0xD56041E4,0xA2677172,
+       0x3C03E4D1,0x4B04D447,0xD20D85FD,0xA50AB56B,0x35B5A8FA,0x42B2986C,
+       0xDBBBC9D6,0xACBCF940,0x32D86CE3,0x45DF5C75,0xDCD60DCF,0xABD13D59,
+       0x26D930AC,0x51DE003A,0xC8D75180,0xBFD06116,0x21B4F4B5,0x56B3C423,
+       0xCFBA9599,0xB8BDA50F,0x2802B89E,0x5F058808,0xC60CD9B2,0xB10BE924,
+       0x2F6F7C87,0x58684C11,0xC1611DAB,0xB6662D3D,0x76DC4190,0x01DB7106,
+       0x98D220BC,0xEFD5102A,0x71B18589,0x06B6B51F,0x9FBFE4A5,0xE8B8D433,
+       0x7807C9A2,0x0F00F934,0x9609A88E,0xE10E9818,0x7F6A0DBB,0x086D3D2D,
+       0x91646C97,0xE6635C01,0x6B6B51F4,0x1C6C6162,0x856530D8,0xF262004E,
+       0x6C0695ED,0x1B01A57B,0x8208F4C1,0xF50FC457,0x65B0D9C6,0x12B7E950,
+       0x8BBEB8EA,0xFCB9887C,0x62DD1DDF,0x15DA2D49,0x8CD37CF3,0xFBD44C65,
+       0x4DB26158,0x3AB551CE,0xA3BC0074,0xD4BB30E2,0x4ADFA541,0x3DD895D7,
+       0xA4D1C46D,0xD3D6F4FB,0x4369E96A,0x346ED9FC,0xAD678846,0xDA60B8D0,
+       0x44042D73,0x33031DE5,0xAA0A4C5F,0xDD0D7CC9,0x5005713C,0x270241AA,
+       0xBE0B1010,0xC90C2086,0x5768B525,0x206F85B3,0xB966D409,0xCE61E49F,
+       0x5EDEF90E,0x29D9C998,0xB0D09822,0xC7D7A8B4,0x59B33D17,0x2EB40D81,
+       0xB7BD5C3B,0xC0BA6CAD,0xEDB88320,0x9ABFB3B6,0x03B6E20C,0x74B1D29A,
+       0xEAD54739,0x9DD277AF,0x04DB2615,0x73DC1683,0xE3630B12,0x94643B84,
+       0x0D6D6A3E,0x7A6A5AA8,0xE40ECF0B,0x9309FF9D,0x0A00AE27,0x7D079EB1,
+       0xF00F9344,0x8708A3D2,0x1E01F268,0x6906C2FE,0xF762575D,0x806567CB,
+       0x196C3671,0x6E6B06E7,0xFED41B76,0x89D32BE0,0x10DA7A5A,0x67DD4ACC,
+       0xF9B9DF6F,0x8EBEEFF9,0x17B7BE43,0x60B08ED5,0xD6D6A3E8,0xA1D1937E,
+       0x38D8C2C4,0x4FDFF252,0xD1BB67F1,0xA6BC5767,0x3FB506DD,0x48B2364B,
+       0xD80D2BDA,0xAF0A1B4C,0x36034AF6,0x41047A60,0xDF60EFC3,0xA867DF55,
+       0x316E8EEF,0x4669BE79,0xCB61B38C,0xBC66831A,0x256FD2A0,0x5268E236,
+       0xCC0C7795,0xBB0B4703,0x220216B9,0x5505262F,0xC5BA3BBE,0xB2BD0B28,
+       0x2BB45A92,0x5CB36A04,0xC2D7FFA7,0xB5D0CF31,0x2CD99E8B,0x5BDEAE1D,
+       0x9B64C2B0,0xEC63F226,0x756AA39C,0x026D930A,0x9C0906A9,0xEB0E363F,
+       0x72076785,0x05005713,0x95BF4A82,0xE2B87A14,0x7BB12BAE,0x0CB61B38,
+       0x92D28E9B,0xE5D5BE0D,0x7CDCEFB7,0x0BDBDF21,0x86D3D2D4,0xF1D4E242,
+       0x68DDB3F8,0x1FDA836E,0x81BE16CD,0xF6B9265B,0x6FB077E1,0x18B74777,
+       0x88085AE6,0xFF0F6A70,0x66063BCA,0x11010B5C,0x8F659EFF,0xF862AE69,
+       0x616BFFD3,0x166CCF45,0xA00AE278,0xD70DD2EE,0x4E048354,0x3903B3C2,
+       0xA7672661,0xD06016F7,0x4969474D,0x3E6E77DB,0xAED16A4A,0xD9D65ADC,
+       0x40DF0B66,0x37D83BF0,0xA9BCAE53,0xDEBB9EC5,0x47B2CF7F,0x30B5FFE9,
+       0xBDBDF21C,0xCABAC28A,0x53B39330,0x24B4A3A6,0xBAD03605,0xCDD70693,
+       0x54DE5729,0x23D967BF,0xB3667A2E,0xC4614AB8,0x5D681B02,0x2A6F2B94,
+       0xB40BBE37,0xC30C8EA1,0x5A05DF1B,0x2D02EF8D};
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
 
     save_pos = ftell (fp);
 
     fseek (fp, 0, SEEK_SET);
 
     if ((buf = (NV_U_BYTE *) calloc (hd.header_size, sizeof (NV_U_BYTE))) ==
-            NULL)
+        NULL)
     {
         perror ("Allocating checksum buffer");
         exit (-1);
@@ -2726,7 +2358,7 @@ static NV_U_INT32 header_checksum ()
 
 /*****************************************************************************\
 
-    Function        old_header_checksum - compute the old-style checksum for
+    Function        old_header_checksum - compute the old-style checksum for 
                     the ASCII portion of the database header just in case this
                     is a pre 1.02 file.
 
@@ -2745,10 +2377,10 @@ static NV_U_INT32 old_header_checksum ()
     NV_U_INT32          checksum, i, save_pos;
     NV_U_BYTE           *buf;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
 
     save_pos = ftell (fp);
 
@@ -2756,8 +2388,8 @@ static NV_U_INT32 old_header_checksum ()
 
     fseek (fp, 0, SEEK_SET);
 
-    if ((buf = (NV_U_BYTE *) calloc (hd.header_size, sizeof (NV_U_BYTE))) ==
-            NULL)
+    if ((buf = (NV_U_BYTE *) calloc (hd.header_size, sizeof (NV_U_BYTE))) == 
+        NULL)
     {
         perror ("Allocating checksum buffer");
         exit (-1);
@@ -2781,10 +2413,10 @@ static NV_U_INT32 old_header_checksum ()
    Get current time in preferred format.
 \*****************************************************************************/
 static NV_CHAR *curtime () {
-    static NV_CHAR buf[ONELINER_LENGTH];
-    time_t t = time(NULL);
-    require (strftime (buf, ONELINER_LENGTH, "%Y-%m-%d %H:%M %Z", localtime(&t)) > 0);
-    return buf;
+  static NV_CHAR buf[ONELINER_LENGTH];
+  time_t t = time(NULL);
+  require (strftime (buf, ONELINER_LENGTH, "%Y-%m-%d %H:%M %Z", localtime(&t)) > 0);
+  return buf;
 }
 
 
@@ -2793,9 +2425,9 @@ static NV_CHAR *curtime () {
    Calculate bytes for number of bits.
 \*****************************************************************************/
 static NV_U_INT32 bits2bytes (NV_U_INT32 nbits) {
-    if (nbits % 8)
-        return nbits / 8 + 1;
-    return nbits / 8;
+  if (nbits % 8)
+    return nbits / 8 + 1;
+  return nbits / 8;
 }
 
 
@@ -2822,11 +2454,11 @@ static void write_tide_db_header ()
     static NV_CHAR      zero = 0;
     NV_U_BYTE           *buf, checksum_c[4];
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
-    write_protect();
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
+  write_protect();
 
     fseek (fp, 0, SEEK_SET);
 
@@ -3155,7 +2787,7 @@ static void write_tide_db_header ()
 
     pos = 0;
     size = bits2bytes (hd.pub.constituents *  hd.pub.number_of_years *
-                       hd.equilibrium_bits);
+		       hd.equilibrium_bits);
 
     if ((buf = (NV_U_BYTE *) calloc (size, sizeof (NV_U_BYTE))) == NULL)
     {
@@ -3170,7 +2802,7 @@ static void write_tide_db_header ()
         for (j = 0 ; j < hd.pub.number_of_years ; ++j)
         {
             temp_int = NINT (hd.equilibrium[i][j] * hd.equilibrium_scale) -
-                       hd.equilibrium_offset;
+                hd.equilibrium_offset;
             assert (temp_int >= 0);
             bit_pack (buf, pos, hd.equilibrium_bits, temp_int);
             pos += hd.equilibrium_bits;
@@ -3185,7 +2817,7 @@ static void write_tide_db_header ()
 
     pos = 0;
     size = bits2bytes (hd.pub.constituents * hd.pub.number_of_years *
-                       hd.node_bits);
+		       hd.node_bits);
 
     if ((buf = (NV_U_BYTE *) calloc (size, sizeof (NV_U_BYTE))) == NULL)
     {
@@ -3200,7 +2832,7 @@ static void write_tide_db_header ()
         for (j = 0 ; j < hd.pub.number_of_years ; ++j)
         {
             temp_int = NINT (hd.node_factor[i][j] * hd.node_scale) -
-                       hd.node_offset;
+                hd.node_offset;
             assert (temp_int >= 0);
             bit_pack (buf, pos, hd.node_bits, temp_int);
             pos += hd.node_bits;
@@ -3240,30 +2872,30 @@ static void write_tide_db_header ()
 \*****************************************************************************/
 
 static void unpack_string (NV_U_BYTE *buf, NV_U_INT32 bufsize, NV_U_INT32 *pos,
-                           NV_CHAR *outbuf, NV_U_INT32 outbuflen, const NV_CHAR *desc) {
-    NV_U_INT32 i;
-    NV_CHAR c = 'x';
-    assert (buf);
-    assert (pos);
-    assert (outbuf);
-    assert (desc);
-    assert (outbuflen);
-    --outbuflen;
-    bufsize <<= 3;
-    for (i = 0 ; c ; ++i) {
-        assert (*pos < bufsize); /* Catch unterminated strings */
-        c = bit_unpack (buf, *pos, 8);
-        (*pos) += 8;
-        if (i < outbuflen) {
-            outbuf[i] = c;
-        } else if (i == outbuflen) {
-            outbuf[i] = '\0';
-            if (c) {
-                fprintf (stderr, "libtcd warning: truncating overlong %s\n", desc);
-                fprintf (stderr, "The offending string starts with:\n%s\n", outbuf);
-            }
-        }
+NV_CHAR *outbuf, NV_U_INT32 outbuflen, NV_CHAR *desc) {
+  NV_U_INT32 i;
+  NV_CHAR c = 'x';
+  assert (buf);
+  assert (pos);
+  assert (outbuf);
+  assert (desc);
+  assert (outbuflen);
+  --outbuflen;
+  bufsize <<= 3;
+  for (i = 0 ; c ; ++i) {
+    assert (*pos < bufsize); /* Catch unterminated strings */
+    c = bit_unpack (buf, *pos, 8);
+    (*pos) += 8;
+    if (i < outbuflen) {
+      outbuf[i] = c;
+    } else if (i == outbuflen) {
+      outbuf[i] = '\0';
+      if (c) {
+        fprintf (stderr, "libtcd warning: truncating overlong %s\n", desc);
+        fprintf (stderr, "The offending string starts with:\n%s\n", outbuf);
+      }
     }
+  }
 }
 
 
@@ -3290,7 +2922,7 @@ static void unpack_string (NV_U_BYTE *buf, NV_U_INT32 bufsize, NV_U_INT32 *pos,
 \*****************************************************************************/
 
 static void unpack_partial_tide_record (NV_U_BYTE *buf, NV_U_INT32 bufsize,
-                                        TIDE_RECORD *rec, NV_U_INT32 *pos)
+TIDE_RECORD *rec, NV_U_INT32 *pos)
 {
     NV_INT32 temp_int;
 
@@ -3323,7 +2955,7 @@ static void unpack_partial_tide_record (NV_U_BYTE *buf, NV_U_INT32 bufsize,
     unpack_string (buf, bufsize, pos, rec->header.name, ONELINER_LENGTH, "station name");
 
     rec->header.reference_station =
-        signed_bit_unpack (buf, *pos, hd.station_bits);
+	signed_bit_unpack (buf, *pos, hd.station_bits);
     *pos += hd.station_bits;
 
     assert (*pos <= bufsize*8);
@@ -3355,10 +2987,10 @@ static NV_INT32 read_partial_tide_record (NV_INT32 num, TIDE_RECORD *rec)
     NV_U_BYTE               *buf;
     NV_U_INT32              maximum_possible_size, pos;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
 
     assert (rec);
 
@@ -3366,8 +2998,8 @@ static NV_INT32 read_partial_tide_record (NV_INT32 num, TIDE_RECORD *rec)
         name.  */
 
     maximum_possible_size = hd.record_size_bits + hd.record_type_bits +
-                            hd.latitude_bits + hd.longitude_bits + hd.tzfile_bits +
-                            (ONELINER_LENGTH * 8) + hd.station_bits;
+        hd.latitude_bits + hd.longitude_bits + hd.tzfile_bits +
+        (ONELINER_LENGTH * 8) + hd.station_bits;
     maximum_possible_size = bits2bytes (maximum_possible_size);
 
     if ((buf = (NV_U_BYTE *) calloc (maximum_possible_size, sizeof (NV_U_BYTE))) == NULL)
@@ -3413,10 +3045,10 @@ static NV_BOOL read_tide_db_header ()
     NV_U_BYTE           *buf, checksum_c[4];
     TIDE_RECORD         rec;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        exit (-1);
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    exit (-1);
+  }
 
     strcpy (hd.pub.version, "NO VERSION");
 
@@ -3430,14 +3062,14 @@ static NV_BOOL read_tide_db_header ()
     while (fgets (varin, sizeof(varin), fp) != NULL)
     {
         if (strlen (varin) == ONELINER_LENGTH-1) {
-            if (varin[ONELINER_LENGTH-2] != '\n') {
-                fprintf (stderr, "libtcd error:  header line too long, begins with:\n");
-                fprintf (stderr, "%s\n", varin);
-                fprintf (stderr, "in file %s\n", filename);
-                fprintf (stderr, "Configured limit is %u\n", ONELINER_LENGTH-1);
-                fclose (fp);
-                return NVFalse;
-            }
+          if (varin[ONELINER_LENGTH-2] != '\n') {
+            fprintf (stderr, "libtcd error:  header line too long, begins with:\n");
+            fprintf (stderr, "%s\n", varin);
+            fprintf (stderr, "in file %s\n", filename);
+            fprintf (stderr, "Configured limit is %u\n", ONELINER_LENGTH-1);
+            fclose (fp);
+            return NVFalse;
+          }
         }
 
         if (strstr (varin, "[END OF ASCII HEADER DATA]")) break;
@@ -3445,38 +3077,38 @@ static NV_BOOL read_tide_db_header ()
         /* All other lines must be field = value */
         info = strchr (varin, '=');
         if (!info) {
-            fprintf (stderr, "libtcd error:  invalid tide db header line:\n");
-            fprintf (stderr, "%s", varin);
-            fprintf (stderr, "in file %s\n", filename);
-            fclose (fp);
-            return NVFalse;
+          fprintf (stderr, "libtcd error:  invalid tide db header line:\n");
+          fprintf (stderr, "%s", varin);
+          fprintf (stderr, "in file %s\n", filename);
+          fclose (fp);
+          return NVFalse;
         }
         ++info;
 
         /* Scan the fields per "keys" defined in tide_db_header.h. */
         for (i=0; i<key_count; ++i) {
-            if (strstr (varin, keys[i].keyphrase)) {
-                if (!strcmp (keys[i].datatype, "cstr"))
-                    strcpy ((char *)keys[i].address.cstr, clip_string(info));
-                else if (!strcmp (keys[i].datatype, "i32")) {
-                    if (sscanf (info, "%d", keys[i].address.i32) != 1) {
-                        fprintf (stderr, "libtcd error:  invalid tide db header line:\n");
-                        fprintf (stderr, "%s", varin);
-                        fprintf (stderr, "in file %s\n", filename);
-                        fclose (fp);
-                        return NVFalse;
-                    }
-                } else if (!strcmp (keys[i].datatype, "ui32")) {
-                    if (sscanf (info, "%u", keys[i].address.ui32) != 1) {
-                        fprintf (stderr, "libtcd error:  invalid tide db header line:\n");
-                        fprintf (stderr, "%s", varin);
-                        fprintf (stderr, "in file %s\n", filename);
-                        fclose (fp);
-                        return NVFalse;
-                    }
-                } else
-                    assert (0);
-            }
+          if (strstr (varin, keys[i].keyphrase)) {
+            if (!strcmp (keys[i].datatype, "cstr"))
+              strcpy (keys[i].address.cstr, clip_string(info));
+            else if (!strcmp (keys[i].datatype, "i32")) {
+              if (sscanf (info, "%d", keys[i].address.i32) != 1) {
+          fprintf (stderr, "libtcd error:  invalid tide db header line:\n");
+          fprintf (stderr, "%s", varin);
+          fprintf (stderr, "in file %s\n", filename);
+          fclose (fp);
+          return NVFalse;
+              }
+            } else if (!strcmp (keys[i].datatype, "ui32")) {
+              if (sscanf (info, "%u", keys[i].address.ui32) != 1) {
+          fprintf (stderr, "libtcd error:  invalid tide db header line:\n");
+          fprintf (stderr, "%s", varin);
+          fprintf (stderr, "in file %s\n", filename);
+          fclose (fp);
+          return NVFalse;
+              }
+            } else
+              assert (0);
+          }
         }
     }
 
@@ -3492,10 +3124,10 @@ static NV_BOOL read_tide_db_header ()
 
     /* If no major or minor rev, they're 0 (pre-1.99) */
     if (hd.pub.major_rev > LIBTCD_MAJOR_REV) {
-        fprintf (stderr, "libtcd error:  major revision in TCD file (%u) exceeds major revision of\n", hd.pub.major_rev);
-        fprintf (stderr, "libtcd (%u).  You must upgrade libtcd to read this file.\n", LIBTCD_MAJOR_REV);
-        fclose (fp);
-        return NVFalse;
+      fprintf (stderr, "libtcd error:  major revision in TCD file (%u) exceeds major revision of\n", hd.pub.major_rev);
+      fprintf (stderr, "libtcd (%u).  You must upgrade libtcd to read this file.\n", LIBTCD_MAJOR_REV);
+      fclose (fp);
+      return NVFalse;
     }
 
     /*  Move to end of ASCII header.  */
@@ -3509,23 +3141,23 @@ static NV_BOOL read_tide_db_header ()
 
     if (utemp != header_checksum ()) {
 #ifdef COMPAT114
-        if (utemp != old_header_checksum ()) {
-            fprintf (stderr,
-                     "libtcd error:  header checksum error in file %s\n", filename);
-            fprintf (stderr, "Someone may have modified the ASCII portion of the header (don't do that),\n\
-or it may just be corrupt.\n");
-            fclose (fp);
-            return NVFalse;
-        }
-#else
+      if (utemp != old_header_checksum ()) {
         fprintf (stderr,
-                 "libtcd error:  header checksum error in file %s\n", filename);
+            "libtcd error:  header checksum error in file %s\n", filename);
         fprintf (stderr, "Someone may have modified the ASCII portion of the header (don't do that),\n\
+or it may just be corrupt.\n");
+        fclose (fp);
+        return NVFalse;
+      }
+#else
+      fprintf (stderr,
+          "libtcd error:  header checksum error in file %s\n", filename);
+      fprintf (stderr, "Someone may have modified the ASCII portion of the header (don't do that),\n\
 or it may be an ancient pre-version-1.02 TCD file, or it may just be corrupt.\n\
 Pre-version-1.02 TCD files can be read by building libtcd with COMPAT114\n\
 defined.\n");
-        fclose (fp);
-        return NVFalse;
+      fclose (fp);
+      return NVFalse;
 #endif
     }
     fseek (fp, hd.header_size + 4, SEEK_SET);
@@ -3535,7 +3167,7 @@ defined.\n");
         used.  */
 
     hd.max_restriction_types = NINT (pow (2.0,
-                                          (NV_FLOAT64) hd.restriction_bits));
+        (NV_FLOAT64) hd.restriction_bits));
 
 
     /*  Set the max possible tzfiles based on the number of bits used.  */
@@ -3558,9 +3190,9 @@ defined.\n");
         used.  */
 
     if (hd.pub.major_rev < 2)
-        hd.max_legaleses = 1;
+      hd.max_legaleses = 1;
     else
-        hd.max_legaleses = NINT (pow (2.0, (NV_FLOAT64) hd.legalese_bits));
+      hd.max_legaleses = NINT (pow (2.0, (NV_FLOAT64) hd.legalese_bits));
 
 
     /*  NOTE : Using strcpy for character strings (no endian issue).  */
@@ -3568,10 +3200,10 @@ defined.\n");
     /*  Read level units.  */
 
     hd.level_unit = (NV_CHAR **) calloc (hd.pub.level_unit_types,
-                                         sizeof (NV_CHAR *));
+        sizeof (NV_CHAR *));
 
     if ((buf = (NV_U_BYTE *) calloc (hd.level_unit_size,
-                                     sizeof (NV_U_BYTE))) == NULL)
+        sizeof (NV_U_BYTE))) == NULL)
     {
         perror ("Allocating level unit read buffer");
         exit (-1);
@@ -3581,7 +3213,7 @@ defined.\n");
     {
         chk_fread (buf, hd.level_unit_size, 1, fp);
         hd.level_unit[i] = (NV_CHAR *) calloc (strlen((char*)buf) + 1,
-                                               sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.level_unit[i], (NV_CHAR *) buf);
     }
     free (buf);
@@ -3591,10 +3223,10 @@ defined.\n");
     /*  Read direction units.  */
 
     hd.dir_unit = (NV_CHAR **) calloc (hd.pub.dir_unit_types,
-                                       sizeof (NV_CHAR *));
+        sizeof (NV_CHAR *));
 
     if ((buf = (NV_U_BYTE *) calloc (hd.dir_unit_size, sizeof (NV_U_BYTE))) ==
-            NULL)
+        NULL)
     {
         perror ("Allocating dir unit read buffer");
         exit (-1);
@@ -3604,7 +3236,7 @@ defined.\n");
     {
         chk_fread (buf, hd.dir_unit_size, 1, fp);
         hd.dir_unit[i] = (NV_CHAR *) calloc (strlen((char*)buf) + 1,
-                                             sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.dir_unit[i], (NV_CHAR *) buf);
     }
     free (buf);
@@ -3615,10 +3247,10 @@ defined.\n");
 
     utemp = ftell (fp);
     hd.restriction = (NV_CHAR **) calloc (hd.max_restriction_types,
-                                          sizeof (NV_CHAR *));
+        sizeof (NV_CHAR *));
 
     if ((buf = (NV_U_BYTE *) calloc (hd.restriction_size,
-                                     sizeof (NV_U_BYTE))) == NULL)
+        sizeof (NV_U_BYTE))) == NULL)
     {
         perror ("Allocating restriction read buffer");
         exit (-1);
@@ -3634,18 +3266,18 @@ defined.\n");
             break;
         }
         hd.restriction[i] = (NV_CHAR *) calloc (strlen((char*)buf) + 1,
-                                                sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.restriction[i], (NV_CHAR *) buf);
     }
     free (buf);
     fseek (fp, utemp + hd.max_restriction_types * hd.restriction_size,
-           SEEK_SET);
+        SEEK_SET);
 
 
 
     /*  Skip pedigrees. */
     if (hd.pub.major_rev < 2)
-        fseek (fp, hd.pedigree_size * NINT (pow (2.0, (NV_FLOAT64) hd.pedigree_bits)), SEEK_CUR);
+      fseek (fp, hd.pedigree_size * NINT (pow (2.0, (NV_FLOAT64) hd.pedigree_bits)), SEEK_CUR);
     hd.pub.pedigree_types = 1;
 
 
@@ -3656,7 +3288,7 @@ defined.\n");
     hd.tzfile = (NV_CHAR **) calloc (hd.max_tzfiles, sizeof (NV_CHAR *));
 
     if ((buf = (NV_U_BYTE *) calloc (hd.tzfile_size, sizeof (NV_U_BYTE))) ==
-            NULL)
+        NULL)
     {
         perror ("Allocating tzfile read buffer");
         exit (-1);
@@ -3684,7 +3316,7 @@ defined.\n");
     hd.country = (NV_CHAR **) calloc (hd.max_countries, sizeof (NV_CHAR *));
 
     if ((buf = (NV_U_BYTE *) calloc (hd.country_size, sizeof (NV_U_BYTE))) ==
-            NULL)
+        NULL)
     {
         perror ("Allocating country read buffer");
         exit (-1);
@@ -3700,7 +3332,7 @@ defined.\n");
             break;
         }
         hd.country[i] = (NV_CHAR *) calloc (strlen((char*)buf) + 1,
-                                            sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.country[i], (NV_CHAR *) buf);
     }
     free (buf);
@@ -3713,7 +3345,7 @@ defined.\n");
     hd.datum = (NV_CHAR **) calloc (hd.max_datum_types, sizeof (NV_CHAR *));
 
     if ((buf = (NV_U_BYTE *) calloc (hd.datum_size, sizeof (NV_U_BYTE))) ==
-            NULL)
+        NULL)
     {
         perror ("Allocating datum read buffer");
         exit (-1);
@@ -3739,37 +3371,37 @@ defined.\n");
     /*  Read legaleses.  */
 
     if (hd.pub.major_rev < 2) {
-        hd.legalese = (NV_CHAR **) malloc (sizeof (NV_CHAR *));
-        assert (hd.legalese != NULL);
-        hd.legalese[0] = (NV_CHAR *) malloc (5 * sizeof (NV_CHAR));
-        assert (hd.legalese[0] != NULL);
-        strcpy (hd.legalese[0], "NULL");
-        hd.pub.legaleses = 1;
+      hd.legalese = (NV_CHAR **) malloc (sizeof (NV_CHAR *));
+      assert (hd.legalese != NULL);
+      hd.legalese[0] = (NV_CHAR *) malloc (5 * sizeof (NV_CHAR));
+      assert (hd.legalese[0] != NULL);
+      strcpy (hd.legalese[0], "NULL");
+      hd.pub.legaleses = 1;
     } else {
-        utemp = ftell (fp);
-        hd.legalese = (NV_CHAR **) calloc (hd.max_legaleses, sizeof (NV_CHAR *));
+      utemp = ftell (fp);
+      hd.legalese = (NV_CHAR **) calloc (hd.max_legaleses, sizeof (NV_CHAR *));
 
-        if ((buf = (NV_U_BYTE *) calloc (hd.legalese_size, sizeof (NV_U_BYTE))) ==
-                NULL)
-        {
-            perror ("Allocating legalese read buffer");
-            exit (-1);
-        }
+      if ((buf = (NV_U_BYTE *) calloc (hd.legalese_size, sizeof (NV_U_BYTE))) ==
+	  NULL)
+      {
+	  perror ("Allocating legalese read buffer");
+	  exit (-1);
+      }
 
-        hd.pub.legaleses = 0;
-        for (i = 0 ; i < hd.max_legaleses ; ++i)
-        {
-            chk_fread (buf, hd.legalese_size, 1, fp);
-            if (!strcmp ((char*)buf, "__END__"))
-            {
-                hd.pub.legaleses = i;
-                break;
-            }
-            hd.legalese[i] = (NV_CHAR *) calloc (strlen((char*)buf) + 1, sizeof (NV_CHAR));
-            strcpy (hd.legalese[i], (NV_CHAR *) buf);
-        }
-        free (buf);
-        fseek (fp, utemp + hd.max_legaleses * hd.legalese_size, SEEK_SET);
+      hd.pub.legaleses = 0;
+      for (i = 0 ; i < hd.max_legaleses ; ++i)
+      {
+	  chk_fread (buf, hd.legalese_size, 1, fp);
+	  if (!strcmp ((char*)buf, "__END__"))
+	  {
+	      hd.pub.legaleses = i;
+	      break;
+	  }
+	  hd.legalese[i] = (NV_CHAR *) calloc (strlen((char*)buf) + 1, sizeof (NV_CHAR));
+	  strcpy (hd.legalese[i], (NV_CHAR *) buf);
+      }
+      free (buf);
+      fseek (fp, utemp + hd.max_legaleses * hd.legalese_size, SEEK_SET);
     }
 
 
@@ -3780,7 +3412,7 @@ defined.\n");
         (NV_CHAR **) calloc (hd.pub.constituents, sizeof (NV_CHAR *));
 
     if ((buf = (NV_U_BYTE *) calloc (hd.constituent_size,
-                                     sizeof (NV_U_BYTE))) == NULL)
+        sizeof (NV_U_BYTE))) == NULL)
     {
         perror ("Allocating constituent read buffer");
         exit (-1);
@@ -3790,16 +3422,16 @@ defined.\n");
     {
         chk_fread (buf, hd.constituent_size, 1, fp);
         hd.constituent[i] = (NV_CHAR *) calloc (strlen((char*)buf) + 1,
-                                                sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.constituent[i], (NV_CHAR *) buf);
     }
     free (buf);
 
 
     if (hd.speed_offset < 0 || hd.equilibrium_offset < 0 ||
-            hd.node_offset < 0) {
-        fprintf (stderr, "libtcd WARNING:  File: %s\n", filename);
-        fprintf (stderr, "WARNING:  This TCD file was created by a pre-version-1.11 libtcd.\n\
+        hd.node_offset < 0) {
+      fprintf (stderr, "libtcd WARNING:  File: %s\n", filename);
+      fprintf (stderr, "WARNING:  This TCD file was created by a pre-version-1.11 libtcd.\n\
 Versions of libtcd prior to 1.11 contained a serious bug that can result\n\
 in overflows in the speeds, equilibrium arguments, or node factors.  This\n\
 database should be rebuilt from the original data if possible.\n");
@@ -3811,14 +3443,14 @@ database should be rebuilt from the original data if possible.\n");
     /*  Read speeds.  */
 
     hd.speed = (NV_FLOAT64 *) calloc (hd.pub.constituents,
-                                      sizeof (NV_FLOAT64));
+        sizeof (NV_FLOAT64));
 
     pos = 0;
     /* wasted byte bug in V1 */
     if (hd.pub.major_rev < 2)
-        size = ((hd.pub.constituents * hd.speed_bits) / 8) + 1;
+      size = ((hd.pub.constituents * hd.speed_bits) / 8) + 1;
     else
-        size = bits2bytes (hd.pub.constituents * hd.speed_bits);
+      size = bits2bytes (hd.pub.constituents * hd.speed_bits);
 
     if ((buf = (NV_U_BYTE *) calloc (size, sizeof (NV_U_BYTE))) == NULL)
     {
@@ -3832,7 +3464,7 @@ database should be rebuilt from the original data if possible.\n");
     {
         temp_int = bit_unpack (buf, pos, hd.speed_bits);
         hd.speed[i] = (NV_FLOAT64) (temp_int + hd.speed_offset) /
-                      hd.speed_scale;
+            hd.speed_scale;
         pos += hd.speed_bits;
         assert (hd.speed[i] >= 0.0);
     }
@@ -3843,12 +3475,12 @@ database should be rebuilt from the original data if possible.\n");
     /*  Read equilibrium arguments.  */
 
     hd.equilibrium = (NV_FLOAT32 **) calloc (hd.pub.constituents,
-                     sizeof (NV_FLOAT32 *));
+        sizeof (NV_FLOAT32 *));
 
     for (i = 0 ; i < hd.pub.constituents ; ++i)
     {
         hd.equilibrium[i] = (NV_FLOAT32 *) calloc (hd.pub.number_of_years,
-                            sizeof (NV_FLOAT32));
+            sizeof (NV_FLOAT32));
     }
 
 
@@ -3856,11 +3488,11 @@ database should be rebuilt from the original data if possible.\n");
     pos = 0;
     /* wasted byte bug in V1 */
     if (hd.pub.major_rev < 2)
-        size = ((hd.pub.constituents * hd.pub.number_of_years *
-                 hd.equilibrium_bits) / 8) + 1;
+      size = ((hd.pub.constituents * hd.pub.number_of_years *
+        hd.equilibrium_bits) / 8) + 1;
     else
-        size = bits2bytes (hd.pub.constituents * hd.pub.number_of_years *
-                           hd.equilibrium_bits);
+      size = bits2bytes (hd.pub.constituents * hd.pub.number_of_years *
+        hd.equilibrium_bits);
 
 
     if ((buf = (NV_U_BYTE *) calloc (size, sizeof (NV_U_BYTE))) == NULL)
@@ -3877,7 +3509,7 @@ database should be rebuilt from the original data if possible.\n");
         {
             temp_int = bit_unpack (buf, pos, hd.equilibrium_bits);
             hd.equilibrium[i][j] = (NV_FLOAT32) (temp_int +
-                                                 hd.equilibrium_offset) / hd.equilibrium_scale;
+                hd.equilibrium_offset) / hd.equilibrium_scale;
             pos += hd.equilibrium_bits;
         }
     }
@@ -3888,24 +3520,24 @@ database should be rebuilt from the original data if possible.\n");
     /*  Read node factors.  */
 
     hd.node_factor = (NV_FLOAT32 **) calloc (hd.pub.constituents,
-                     sizeof (NV_FLOAT32 *));
+        sizeof (NV_FLOAT32 *));
 
     for (i = 0 ; i < hd.pub.constituents ; ++i)
     {
         hd.node_factor[i] =
             (NV_FLOAT32 *) calloc (hd.pub.number_of_years,
-                                   sizeof (NV_FLOAT32));
+            sizeof (NV_FLOAT32));
     }
 
 
     pos = 0;
     /* wasted byte bug in V1 */
     if (hd.pub.major_rev < 2)
-        size = ((hd.pub.constituents * hd.pub.number_of_years *
-                 hd.node_bits) / 8) + 1;
+      size = ((hd.pub.constituents * hd.pub.number_of_years *
+        hd.node_bits) / 8) + 1;
     else
-        size = bits2bytes (hd.pub.constituents * hd.pub.number_of_years *
-                           hd.node_bits);
+      size = bits2bytes (hd.pub.constituents * hd.pub.number_of_years *
+        hd.node_bits);
 
 
     if ((buf = (NV_U_BYTE *) calloc (size, sizeof (NV_U_BYTE))) == NULL)
@@ -3922,7 +3554,7 @@ database should be rebuilt from the original data if possible.\n");
         {
             temp_int = bit_unpack (buf, pos, hd.node_bits);
             hd.node_factor[i][j] = (NV_FLOAT32) (temp_int +
-                                                 hd.node_offset) / hd.node_scale;
+                hd.node_offset) / hd.node_scale;
             pos += hd.node_bits;
             assert (hd.node_factor[i][j] > 0.0);
         }
@@ -3935,13 +3567,13 @@ database should be rebuilt from the original data if possible.\n");
 
     /* DWF added test for zero 2003-11-16 -- happens on create new db */
     if (hd.pub.number_of_records) {
-        if ((tindex = (TIDE_INDEX *) calloc (hd.pub.number_of_records,
-                                             sizeof (TIDE_INDEX))) == NULL) {
-            perror ("Allocating tide index");
-            exit (-1);
-        }
-        /*  Set the first address to be immediately after the header  */
-        tindex[0].address = ftell (fp);
+      if ((tindex = (TIDE_INDEX *) calloc (hd.pub.number_of_records,
+          sizeof (TIDE_INDEX))) == NULL) {
+          perror ("Allocating tide index");
+          exit (-1);
+      }
+      /*  Set the first address to be immediately after the header  */
+      tindex[0].address = ftell (fp);
     } else tindex = NULL; /* May as well be explicit... */
 
     for (i = 0 ; i < hd.pub.number_of_records ; ++i)
@@ -3950,7 +3582,7 @@ database should be rebuilt from the original data if possible.\n");
             read_partial_tide_record will know where to go.  */
 
         if (i) tindex[i].address = tindex[i - 1].address +
-                                       rec.header.record_size;
+            rec.header.record_size;
 
         read_partial_tide_record (i, &rec);
 
@@ -3966,8 +3598,8 @@ database should be rebuilt from the original data if possible.\n");
         tindex[i].lon = NINT (rec.header.longitude * hd.longitude_scale);
 
         if ((tindex[i].name =
-                    (NV_CHAR *) calloc (strlen (rec.header.name) + 1,
-                                        sizeof (NV_CHAR))) == NULL)
+            (NV_CHAR *) calloc (strlen (rec.header.name) + 1,
+            sizeof (NV_CHAR))) == NULL)
         {
             perror ("Allocating index name memory");
             exit (-1);
@@ -4042,8 +3674,8 @@ void close_tide_db ()
     NV_U_INT32 i;
 
     if (!fp) {
-        fprintf (stderr, "libtcd warning: close_tide_db called when no database open\n");
-        return;
+      fprintf (stderr, "libtcd warning: close_tide_db called when no database open\n");
+      return;
     }
 
     /*  If we've changed something in the file, write the header to reset
@@ -4138,12 +3770,12 @@ void close_tide_db ()
 
     /* tindex will still be null on create_tide_db */
     if (tindex) {
-        for (i = 0 ; i < hd.pub.number_of_records ; ++i)
-        {
-            if (tindex[i].name) free (tindex[i].name);
-        }
-        free (tindex);
-        tindex = NULL;
+      for (i = 0 ; i < hd.pub.number_of_records ; ++i)
+      {
+          if (tindex[i].name) free (tindex[i].name);
+      }
+      free (tindex);
+      tindex = NULL;
     }
 
     fclose (fp);
@@ -4183,9 +3815,9 @@ void close_tide_db ()
 \*****************************************************************************/
 
 NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
-                        const * const constituent[], const NV_FLOAT64 *speed, NV_INT32 start_year,
-                        NV_U_INT32 num_years, NV_FLOAT32 const * const equilibrium[], NV_FLOAT32
-                        const * const node_factor[])
+const * const constituent[], const NV_FLOAT64 *speed, NV_INT32 start_year,
+NV_U_INT32 num_years, NV_FLOAT32 const * const equilibrium[], NV_FLOAT32
+const * const node_factor[])
 {
     NV_U_INT32            i, j;
     NV_FLOAT64            min_value, max_value;
@@ -4198,24 +3830,24 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     assert (equilibrium);
     assert (node_factor);
     for (i = 0 ; i < constituents ; ++i) {
-        if (speed[i] < 0.0) {
-            fprintf (stderr, "libtcd create_tide_db: somebody tried to set a negative speed (%f)\n", speed[i]);
-            return NVFalse;
+      if (speed[i] < 0.0) {
+        fprintf (stderr, "libtcd create_tide_db: somebody tried to set a negative speed (%f)\n", speed[i]);
+        return NVFalse;
+      }
+      for (j = 0 ; j < num_years ; ++j) {
+        if (node_factor[i][j] <= 0.0) {
+          fprintf (stderr, "libtcd create_tide_db: somebody tried to set a negative or zero node factor (%f)\n", node_factor[i][j]);
+          return NVFalse;
         }
-        for (j = 0 ; j < num_years ; ++j) {
-            if (node_factor[i][j] <= 0.0) {
-                fprintf (stderr, "libtcd create_tide_db: somebody tried to set a negative or zero node factor (%f)\n", node_factor[i][j]);
-                return NVFalse;
-            }
-        }
+      }
     }
 
     if (fp)
-        close_tide_db();
+      close_tide_db();
 
     if ((fp = fopen (file, "wb+")) == NULL) {
-        perror (file);
-        return (NVFalse);
+      perror (file);
+      return (NVFalse);
     }
 
     /*  Zero out the header structure.  */
@@ -4241,7 +3873,7 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     for (i = 0 ; i < hd.pub.constituents ; ++i)
     {
         hd.constituent[i] = (NV_CHAR *) calloc (strlen (constituent[i]) + 1,
-                                                sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.constituent[i], constituent[i]);
     }
 
@@ -4255,7 +3887,7 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     /*  Set all of the speed attributes.  */
 
     hd.speed =  (NV_FLOAT64 *) calloc (hd.pub.constituents,
-                                       sizeof (NV_FLOAT64));
+        sizeof (NV_FLOAT64));
 
     hd.speed_scale = DEFAULT_SPEED_SCALE;
     min_value = 99999999.0;
@@ -4281,7 +3913,7 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     /*  Set all of the equilibrium attributes.  */
 
     hd.equilibrium = (NV_FLOAT32 **) calloc (hd.pub.constituents,
-                     sizeof (NV_FLOAT32 *));
+        sizeof (NV_FLOAT32 *));
 
     hd.equilibrium_scale = DEFAULT_EQUILIBRIUM_SCALE;
     min_value = 99999999.0;
@@ -4289,7 +3921,7 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     for (i = 0 ; i < hd.pub.constituents ; ++i)
     {
         hd.equilibrium[i] = (NV_FLOAT32 *) calloc (hd.pub.number_of_years,
-                            sizeof (NV_FLOAT32));
+            sizeof (NV_FLOAT32));
         for (j = 0 ; j < hd.pub.number_of_years ; ++j)
         {
             if (equilibrium[i][j] < min_value) min_value = equilibrium[i][j];
@@ -4311,7 +3943,7 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     /*  Set all of the node factor attributes.  */
 
     hd.node_factor = (NV_FLOAT32 **) calloc (hd.pub.constituents,
-                     sizeof (NV_FLOAT32 *));
+        sizeof (NV_FLOAT32 *));
 
     hd.node_scale = DEFAULT_NODE_SCALE;
     min_value = 99999999.0;
@@ -4319,13 +3951,13 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     for (i = 0 ; i < hd.pub.constituents ; ++i)
     {
         hd.node_factor[i] = (NV_FLOAT32 *) calloc (hd.pub.number_of_years,
-                            sizeof (NV_FLOAT32));
+            sizeof (NV_FLOAT32));
         for (j = 0 ; j < hd.pub.number_of_years ; ++j)
         {
             if (node_factor[i][j] < min_value) min_value =
-                    node_factor[i][j];
+                node_factor[i][j];
             if (node_factor[i][j] > max_value) max_value =
-                    node_factor[i][j];
+                node_factor[i][j];
 
             hd.node_factor[i][j] = node_factor[i][j];
         }
@@ -4386,11 +4018,11 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     hd.level_unit_bits = calculate_bits (hd.pub.level_unit_types - 1);
 
     hd.level_unit = (NV_CHAR **) calloc (hd.pub.level_unit_types,
-                                         sizeof (NV_CHAR *));
+        sizeof (NV_CHAR *));
     for (i = 0 ; i < hd.pub.level_unit_types ; ++i)
     {
         hd.level_unit[i] = (NV_CHAR *) calloc (strlen (level_unit[i]) + 1,
-                                               sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.level_unit[i], level_unit[i]);
     }
 
@@ -4401,11 +4033,11 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     hd.dir_unit_bits = calculate_bits (hd.pub.dir_unit_types - 1);
 
     hd.dir_unit = (NV_CHAR **) calloc (hd.pub.dir_unit_types,
-                                       sizeof (NV_CHAR *));
+        sizeof (NV_CHAR *));
     for (i = 0 ; i < hd.pub.dir_unit_types ; ++i)
     {
         hd.dir_unit[i] = (NV_CHAR *) calloc (strlen (dir_unit[i]) + 1,
-                                             sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.dir_unit[i], dir_unit[i]);
     }
 
@@ -4414,17 +4046,17 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
 
     hd.restriction_bits = DEFAULT_RESTRICTION_BITS;
     hd.max_restriction_types = NINT (pow (2.0,
-                                          (NV_FLOAT64) hd.restriction_bits));
+        (NV_FLOAT64) hd.restriction_bits));
     hd.pub.restriction_types = DEFAULT_RESTRICTION_TYPES;
 
     hd.restriction = (NV_CHAR **) calloc (hd.max_restriction_types,
-                                          sizeof (NV_CHAR *));
+        sizeof (NV_CHAR *));
     for (i = 0 ; i < hd.max_restriction_types ; ++i)
     {
         if (i == hd.pub.restriction_types) break;
 
         hd.restriction[i] = (NV_CHAR *) calloc (strlen (restriction[i]) + 1,
-                                                sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.restriction[i], restriction[i]);
     }
 
@@ -4436,13 +4068,13 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
     hd.pub.legaleses = DEFAULT_LEGALESES;
 
     hd.legalese = (NV_CHAR **) calloc (hd.max_legaleses,
-                                       sizeof (NV_CHAR *));
+        sizeof (NV_CHAR *));
     for (i = 0 ; i < hd.max_legaleses ; ++i)
     {
         if (i == hd.pub.legaleses) break;
 
         hd.legalese[i] = (NV_CHAR *) calloc (strlen (legalese[i]) + 1,
-                                             sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.legalese[i], legalese[i]);
     }
 
@@ -4459,7 +4091,7 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
         if (i == hd.pub.tzfiles) break;
 
         hd.tzfile[i] = (NV_CHAR *) calloc (strlen (tzfile[i]) + 1,
-                                           sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.tzfile[i], tzfile[i]);
     }
 
@@ -4476,7 +4108,7 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
         if (i == hd.pub.countries) break;
 
         hd.country[i] = (NV_CHAR *) calloc (strlen (country[i]) + 1,
-                                            sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.country[i], country[i]);
     }
 
@@ -4493,7 +4125,7 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
         if (i == hd.pub.datum_types) break;
 
         hd.datum[i] = (NV_CHAR *) calloc (strlen (datum[i]) + 1,
-                                          sizeof (NV_CHAR));
+            sizeof (NV_CHAR));
         strcpy (hd.datum[i], datum[i]);
     }
 
@@ -4526,15 +4158,15 @@ NV_BOOL create_tide_db (const NV_CHAR *file, NV_U_INT32 constituents, NV_CHAR
   Used in check_tide_record.
 \*****************************************************************************/
 static NV_BOOL check_date (NV_U_INT32 date) {
-    if (date) {
-        unsigned m, d;
-        date %= 10000;
-        m = date / 100;
-        d = date % 100;
-        if (m < 1 || m > 12 || d < 1 || d > 31)
-            return NVFalse;
-    }
-    return NVTrue;
+  if (date) {
+    unsigned m, d;
+    date %= 10000;
+    m = date / 100;
+    d = date % 100;
+    if (m < 1 || m > 12 || d < 1 || d > 31)
+      return NVFalse;
+  }
+  return NVTrue;
 }
 
 
@@ -4548,207 +4180,207 @@ static NV_BOOL check_date (NV_U_INT32 date) {
   Note that the units-to-level-units COMPAT114 trick is wedged in here.
 \*****************************************************************************/
 static NV_BOOL check_tide_record (TIDE_RECORD *rec) {
-    NV_U_INT32 i;
-    NV_BOOL ret = NVTrue;
+  NV_U_INT32 i;
+  NV_BOOL ret = NVTrue;
 
-    if (!rec) {
-        fprintf (stderr, "libtcd error: null pointer passed to check_tide_record\n");
-        return NVFalse;
-    }
+  if (!rec) {
+    fprintf (stderr, "libtcd error: null pointer passed to check_tide_record\n");
+    return NVFalse;
+  }
 
-    /* These are all static fields--if a buffer overflow has occurred on one
-       of these, other fields might be invalid, but the problem started here. */
-    boundscheck_oneliner (rec->header.name);
-    boundscheck_oneliner (rec->source);
-    boundscheck_monologue (rec->comments);
-    boundscheck_monologue (rec->notes);
-    boundscheck_oneliner (rec->station_id_context);
-    boundscheck_oneliner (rec->station_id);
-    boundscheck_monologue (rec->xfields);
+  /* These are all static fields--if a buffer overflow has occurred on one
+     of these, other fields might be invalid, but the problem started here. */
+  boundscheck_oneliner (rec->header.name);
+  boundscheck_oneliner (rec->source);
+  boundscheck_monologue (rec->comments);
+  boundscheck_monologue (rec->notes);
+  boundscheck_oneliner (rec->station_id_context);
+  boundscheck_oneliner (rec->station_id);
+  boundscheck_monologue (rec->xfields);
 
 #ifdef COMPAT114
-    if (rec->header.record_type == REFERENCE_STATION && rec->units > 0)
-        rec->level_units = rec->units;
+  if (rec->header.record_type == REFERENCE_STATION && rec->units > 0)
+    rec->level_units = rec->units;
 #endif
 
-    if (rec->header.latitude < -90.0 || rec->header.latitude > 90.0 ||
-            rec->header.longitude < -180.0 || rec->header.longitude > 180.0) {
-        fprintf (stderr, "libtcd error: bad coordinates in tide record\n");
-        ret = NVFalse;
+  if (rec->header.latitude < -90.0 || rec->header.latitude > 90.0 ||
+      rec->header.longitude < -180.0 || rec->header.longitude > 180.0) {
+    fprintf (stderr, "libtcd error: bad coordinates in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (rec->header.tzfile < 0 || rec->header.tzfile >= (NV_INT32)hd.pub.tzfiles) {
+    fprintf (stderr, "libtcd error: bad tzfile in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (rec->header.name[0] == '\0') {
+    fprintf (stderr, "libtcd error: null name in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (rec->country < 0 || rec->country >= (NV_INT32)hd.pub.countries) {
+    fprintf (stderr, "libtcd error: bad country in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (rec->restriction >= hd.pub.restriction_types) {
+    fprintf (stderr, "libtcd error: bad restriction in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (rec->legalese >= hd.pub.legaleses) {
+    fprintf (stderr, "libtcd error: bad legalese in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (!check_date (rec->date_imported)) {
+    fprintf (stderr, "libtcd error: bad date_imported in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (rec->direction_units >= hd.pub.dir_unit_types) {
+    fprintf (stderr, "libtcd error: bad direction_units in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (rec->min_direction < 0 || rec->min_direction > 361) {
+    fprintf (stderr, "libtcd error: min_direction out of range in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (rec->max_direction < 0 || rec->max_direction > 361) {
+    fprintf (stderr, "libtcd error: max_direction out of range in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (rec->level_units >= hd.pub.level_unit_types) {
+    fprintf (stderr, "libtcd error: bad units in tide record\n");
+    ret = NVFalse;
+  }
+
+  switch (rec->header.record_type) {
+  case REFERENCE_STATION:
+    if (rec->header.reference_station != -1) {
+      fprintf (stderr, "libtcd error: type 1 record, reference_station != -1\n");
+      ret = NVFalse;
     }
 
-    if (rec->header.tzfile < 0 || rec->header.tzfile >= (NV_INT32)hd.pub.tzfiles) {
-        fprintf (stderr, "libtcd error: bad tzfile in tide record\n");
-        ret = NVFalse;
+    if (rec->datum_offset < -13421.7728 || rec->datum_offset > 13421.7727) {
+      fprintf (stderr, "libtcd error: datum_offset out of range in tide record\n");
+      ret = NVFalse;
     }
 
-    if (rec->header.name[0] == '\0') {
-        fprintf (stderr, "libtcd error: null name in tide record\n");
-        ret = NVFalse;
+    if (rec->datum < 0 || rec->datum >= (NV_INT32)hd.pub.datum_types) {
+      fprintf (stderr, "libtcd error: bad datum in tide record\n");
+      ret = NVFalse;
     }
 
-    if (rec->country < 0 || rec->country >= (NV_INT32)hd.pub.countries) {
-        fprintf (stderr, "libtcd error: bad country in tide record\n");
-        ret = NVFalse;
+    if (rec->zone_offset < -4096 || rec->zone_offset > 4095 ||
+        rec->zone_offset % 100 >= 60) {
+      fprintf (stderr, "libtcd error: bad zone_offset in tide record\n");
+      ret = NVFalse;
     }
 
-    if (rec->restriction >= hd.pub.restriction_types) {
-        fprintf (stderr, "libtcd error: bad restriction in tide record\n");
-        ret = NVFalse;
+    if (!check_date (rec->expiration_date)) {
+      fprintf (stderr, "libtcd error: bad expiration_date in tide record\n");
+      ret = NVFalse;
     }
 
-    if (rec->legalese >= hd.pub.legaleses) {
-        fprintf (stderr, "libtcd error: bad legalese in tide record\n");
-        ret = NVFalse;
+    if (rec->months_on_station > 1023) {
+      fprintf (stderr, "libtcd error: months_on_station out of range in tide record\n");
+      ret = NVFalse;
     }
 
-    if (!check_date (rec->date_imported)) {
-        fprintf (stderr, "libtcd error: bad date_imported in tide record\n");
-        ret = NVFalse;
+    if (!check_date (rec->last_date_on_station)) {
+      fprintf (stderr, "libtcd error: bad last_date_on_station in tide record\n");
+      ret = NVFalse;
     }
 
-    if (rec->direction_units >= hd.pub.dir_unit_types) {
-        fprintf (stderr, "libtcd error: bad direction_units in tide record\n");
-        ret = NVFalse;
+    if (rec->confidence > 15) {
+      fprintf (stderr, "libtcd error: confidence out of range in tide record\n");
+      ret = NVFalse;
     }
 
-    if (rec->min_direction < 0 || rec->min_direction > 361) {
-        fprintf (stderr, "libtcd error: min_direction out of range in tide record\n");
+    /* Only issue each error once. */
+    for (i=0; i < hd.pub.constituents; ++i) {
+      if (rec->amplitude[i] < 0.0 || rec->amplitude[i] > 52.4287) {
+        fprintf (stderr, "libtcd error: constituent amplitude out of range in tide record\n");
         ret = NVFalse;
-    }
-
-    if (rec->max_direction < 0 || rec->max_direction > 361) {
-        fprintf (stderr, "libtcd error: max_direction out of range in tide record\n");
-        ret = NVFalse;
-    }
-
-    if (rec->level_units >= hd.pub.level_unit_types) {
-        fprintf (stderr, "libtcd error: bad units in tide record\n");
-        ret = NVFalse;
-    }
-
-    switch (rec->header.record_type) {
-    case REFERENCE_STATION:
-        if (rec->header.reference_station != -1) {
-            fprintf (stderr, "libtcd error: type 1 record, reference_station != -1\n");
-            ret = NVFalse;
-        }
-
-        if (rec->datum_offset < -13421.7728 || rec->datum_offset > 13421.7727) {
-            fprintf (stderr, "libtcd error: datum_offset out of range in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->datum < 0 || rec->datum >= (NV_INT32)hd.pub.datum_types) {
-            fprintf (stderr, "libtcd error: bad datum in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->zone_offset < -4096 || rec->zone_offset > 4095 ||
-                rec->zone_offset % 100 >= 60) {
-            fprintf (stderr, "libtcd error: bad zone_offset in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (!check_date (rec->expiration_date)) {
-            fprintf (stderr, "libtcd error: bad expiration_date in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->months_on_station > 1023) {
-            fprintf (stderr, "libtcd error: months_on_station out of range in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (!check_date (rec->last_date_on_station)) {
-            fprintf (stderr, "libtcd error: bad last_date_on_station in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->confidence > 15) {
-            fprintf (stderr, "libtcd error: confidence out of range in tide record\n");
-            ret = NVFalse;
-        }
-
-        /* Only issue each error once. */
-        for (i=0; i < hd.pub.constituents; ++i) {
-            if (rec->amplitude[i] < 0.0 || rec->amplitude[i] > 52.4287) {
-                fprintf (stderr, "libtcd error: constituent amplitude out of range in tide record\n");
-                ret = NVFalse;
-                break;
-            }
-        }
-        for (i=0; i < hd.pub.constituents; ++i) {
-            if (rec->epoch[i] < 0.0 || rec->epoch[i] > 360.0) {
-                fprintf (stderr, "libtcd error: constituent epoch out of range in tide record\n");
-                ret = NVFalse;
-                break;
-            }
-        }
-
         break;
-
-    case SUBORDINATE_STATION:
-        if (rec->header.reference_station < 0 || rec->header.reference_station
-                >= (NV_INT32)hd.pub.number_of_records) {
-            fprintf (stderr, "libtcd error: bad reference_station in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->min_time_add < -4096 || rec->min_time_add > 4095 ||
-                rec->min_time_add % 100 >= 60) {
-            fprintf (stderr, "libtcd error: bad min_time_add in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->min_level_add < -65.536 || rec->min_level_add > 65.535) {
-            fprintf (stderr, "libtcd error: min_level_add out of range in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->min_level_multiply < 0.0 || rec->min_level_multiply > 65.535) {
-            fprintf (stderr, "libtcd error: min_level_multiply out of range in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->max_time_add < -4096 || rec->max_time_add > 4095 ||
-                rec->max_time_add % 100 >= 60) {
-            fprintf (stderr, "libtcd error: bad max_time_add in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->max_level_add < -65.536 || rec->max_level_add > 65.535) {
-            fprintf (stderr, "libtcd error: max_level_add out of range in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->max_level_multiply < 0.0 || rec->max_level_multiply > 65.535) {
-            fprintf (stderr, "libtcd error: max_level_multiply out of range in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->flood_begins != NULLSLACKOFFSET && (rec->flood_begins < -4096 ||
-                rec->flood_begins > 4095 || rec->flood_begins % 100 >= 60)) {
-            fprintf (stderr, "libtcd error: bad flood_begins in tide record\n");
-            ret = NVFalse;
-        }
-
-        if (rec->ebb_begins != NULLSLACKOFFSET && (rec->ebb_begins < -4096 ||
-                rec->ebb_begins > 4095 || rec->ebb_begins % 100 >= 60)) {
-            fprintf (stderr, "libtcd error: bad ebb_begins in tide record\n");
-            ret = NVFalse;
-        }
-
-        break;
-
-    default:
-        fprintf (stderr, "libtcd error: invalid record_type in tide record\n");
+      }
+    }
+    for (i=0; i < hd.pub.constituents; ++i) {
+      if (rec->epoch[i] < 0.0 || rec->epoch[i] > 360.0) {
+        fprintf (stderr, "libtcd error: constituent epoch out of range in tide record\n");
         ret = NVFalse;
+        break;
+      }
     }
 
-    if (ret == NVFalse)
-        dump_tide_record (rec);
-    return ret;
+    break;
+
+  case SUBORDINATE_STATION:
+    if (rec->header.reference_station < 0 || rec->header.reference_station
+    >= (NV_INT32)hd.pub.number_of_records) {
+      fprintf (stderr, "libtcd error: bad reference_station in tide record\n");
+      ret = NVFalse;
+    }
+
+    if (rec->min_time_add < -4096 || rec->min_time_add > 4095 ||
+        rec->min_time_add % 100 >= 60) {
+      fprintf (stderr, "libtcd error: bad min_time_add in tide record\n");
+      ret = NVFalse;
+    }
+
+    if (rec->min_level_add < -65.536 || rec->min_level_add > 65.535) {
+      fprintf (stderr, "libtcd error: min_level_add out of range in tide record\n");
+      ret = NVFalse;
+    }
+
+    if (rec->min_level_multiply < 0.0 || rec->min_level_multiply > 65.535) {
+      fprintf (stderr, "libtcd error: min_level_multiply out of range in tide record\n");
+      ret = NVFalse;
+    }
+
+    if (rec->max_time_add < -4096 || rec->max_time_add > 4095 ||
+        rec->max_time_add % 100 >= 60) {
+      fprintf (stderr, "libtcd error: bad max_time_add in tide record\n");
+      ret = NVFalse;
+    }
+
+    if (rec->max_level_add < -65.536 || rec->max_level_add > 65.535) {
+      fprintf (stderr, "libtcd error: max_level_add out of range in tide record\n");
+      ret = NVFalse;
+    }
+
+    if (rec->max_level_multiply < 0.0 || rec->max_level_multiply > 65.535) {
+      fprintf (stderr, "libtcd error: max_level_multiply out of range in tide record\n");
+      ret = NVFalse;
+    }
+
+    if (rec->flood_begins != NULLSLACKOFFSET && (rec->flood_begins < -4096 ||
+    rec->flood_begins > 4095 || rec->flood_begins % 100 >= 60)) {
+      fprintf (stderr, "libtcd error: bad flood_begins in tide record\n");
+      ret = NVFalse;
+    }
+
+    if (rec->ebb_begins != NULLSLACKOFFSET && (rec->ebb_begins < -4096 ||
+    rec->ebb_begins > 4095 || rec->ebb_begins % 100 >= 60)) {
+      fprintf (stderr, "libtcd error: bad ebb_begins in tide record\n");
+      ret = NVFalse;
+    }
+
+    break;
+
+  default:
+    fprintf (stderr, "libtcd error: invalid record_type in tide record\n");
+    ret = NVFalse;
+  }
+
+  if (ret == NVFalse)
+    dump_tide_record (rec);
+  return ret;
 }
 
 
@@ -4759,89 +4391,89 @@ static NV_BOOL check_tide_record (TIDE_RECORD *rec) {
   that will be encoded.
 \*****************************************************************************/
 static NV_U_INT32 figure_size (TIDE_RECORD *rec) {
-    NV_U_INT32 i, count=0, name_size, source_size, comments_size,
-                  notes_size, station_id_context_size, station_id_size, xfields_size;
+  NV_U_INT32 i, count=0, name_size, source_size, comments_size,
+    notes_size, station_id_context_size, station_id_size, xfields_size;
 
-    assert (rec);
+  assert (rec);
 
-    /*  Figure out how many bits we'll need for this record. */
+  /*  Figure out how many bits we'll need for this record. */
 
-    name_size = strlen(clip_string(rec->header.name))+1;
-    source_size = strlen(clip_string(rec->source))+1;
-    comments_size = strlen(clip_string(rec->comments))+1;
-    notes_size = strlen(clip_string(rec->notes))+1;
-    station_id_context_size = strlen(clip_string(rec->station_id_context))+1;
-    station_id_size = strlen(clip_string(rec->station_id))+1;
-    /* No clipping on xfields -- trailing \n required by syntax */
-    xfields_size = strlen(rec->xfields)+1;
+  name_size = strlen(clip_string(rec->header.name))+1;
+  source_size = strlen(clip_string(rec->source))+1;
+  comments_size = strlen(clip_string(rec->comments))+1;
+  notes_size = strlen(clip_string(rec->notes))+1;
+  station_id_context_size = strlen(clip_string(rec->station_id_context))+1;
+  station_id_size = strlen(clip_string(rec->station_id))+1;
+  /* No clipping on xfields -- trailing \n required by syntax */
+  xfields_size = strlen(rec->xfields)+1;
 
-    rec->header.record_size =
-        hd.record_size_bits +
-        hd.record_type_bits +
-        hd.latitude_bits +
-        hd.longitude_bits +
-        hd.station_bits +
-        hd.tzfile_bits +
-        (name_size * 8) +
+  rec->header.record_size =
+      hd.record_size_bits +
+      hd.record_type_bits +
+      hd.latitude_bits +
+      hd.longitude_bits +
+      hd.station_bits +
+      hd.tzfile_bits +
+      (name_size * 8) +
 
-        hd.country_bits +
-        (source_size  * 8) +
-        hd.restriction_bits +
-        (comments_size * 8) +
-        (notes_size * 8) +
-        hd.legalese_bits +
-        (station_id_context_size * 8) +
-        (station_id_size * 8) +
+      hd.country_bits +
+      (source_size  * 8) +
+      hd.restriction_bits +
+      (comments_size * 8) +
+      (notes_size * 8) +
+      hd.legalese_bits +
+      (station_id_context_size * 8) +
+      (station_id_size * 8) +
+      hd.date_bits + 
+      (xfields_size * 8) +
+      hd.dir_unit_bits +
+      hd.direction_bits +
+      hd.direction_bits +
+      hd.level_unit_bits;
+
+  switch (rec->header.record_type) {
+  case REFERENCE_STATION:
+    rec->header.record_size +=
+        hd.datum_offset_bits +
+        hd.datum_bits +
+        hd.time_bits +
         hd.date_bits +
-        (xfields_size * 8) +
-        hd.dir_unit_bits +
-        hd.direction_bits +
-        hd.direction_bits +
-        hd.level_unit_bits;
+        hd.months_on_station_bits +
+        hd.date_bits +
+        hd.confidence_value_bits +
+        hd.constituent_bits;
 
-    switch (rec->header.record_type) {
-    case REFERENCE_STATION:
-        rec->header.record_size +=
-            hd.datum_offset_bits +
-            hd.datum_bits +
-            hd.time_bits +
-            hd.date_bits +
-            hd.months_on_station_bits +
-            hd.date_bits +
-            hd.confidence_value_bits +
-            hd.constituent_bits;
-
-        for (i = 0 ; i < hd.pub.constituents ; ++i)
-        {
-            assert (rec->amplitude[i] >= 0.0);
-            if (rec->amplitude[i] >= AMPLITUDE_EPSILON) ++count;
-        }
-
-        rec->header.record_size +=
-            (count * hd.constituent_bits +
-             count * hd.amplitude_bits +
-             count * hd.epoch_bits);
-
-        break;
-
-    case SUBORDINATE_STATION:
-        rec->header.record_size +=
-            hd.time_bits +
-            hd.level_add_bits +
-            hd.level_multiply_bits +
-            hd.time_bits +
-            hd.level_add_bits +
-            hd.level_multiply_bits +
-            hd.time_bits +
-            hd.time_bits;
-        break;
-
-    default:
-        assert (0);
+    for (i = 0 ; i < hd.pub.constituents ; ++i)
+    {
+        assert (rec->amplitude[i] >= 0.0);
+        if (rec->amplitude[i] >= AMPLITUDE_EPSILON) ++count;
     }
 
-    rec->header.record_size = bits2bytes (rec->header.record_size);
-    return count;
+    rec->header.record_size +=
+        (count * hd.constituent_bits +
+        count * hd.amplitude_bits +
+        count * hd.epoch_bits);
+
+    break;
+
+  case SUBORDINATE_STATION:
+    rec->header.record_size +=
+        hd.time_bits +
+        hd.level_add_bits +
+        hd.level_multiply_bits +
+        hd.time_bits +
+        hd.level_add_bits +
+        hd.level_multiply_bits +
+        hd.time_bits +
+        hd.time_bits;
+    break;
+
+  default:
+    assert (0);
+  }
+
+  rec->header.record_size = bits2bytes (rec->header.record_size);
+  return count;
 }
 
 
@@ -4849,15 +4481,15 @@ static NV_U_INT32 figure_size (TIDE_RECORD *rec) {
 DWF 2004-10-14
 \*****************************************************************************/
 static void pack_string (NV_U_BYTE *buf, NV_U_INT32 *pos, NV_CHAR *s) {
-    NV_U_INT32 i, temp_size;
-    assert (buf);
-    assert (pos);
-    assert (s);
-    temp_size = strlen(s)+1;
-    for (i=0; i<temp_size; ++i) {
-        bit_pack (buf, *pos, 8, s[i]);
-        *pos += 8;
-    }
+  NV_U_INT32 i, temp_size;
+  assert (buf);
+  assert (pos);
+  assert (s);
+  temp_size = strlen(s)+1;
+  for (i=0; i<temp_size; ++i) {
+    bit_pack (buf, *pos, 8, s[i]);
+    *pos += 8;
+  }
 }
 
 
@@ -4882,187 +4514,187 @@ static void pack_string (NV_U_BYTE *buf, NV_U_INT32 *pos, NV_CHAR *s) {
 \*****************************************************************************/
 
 static void pack_tide_record (TIDE_RECORD *rec, NV_U_BYTE **bufptr,
-                              NV_U_INT32 *bufsize) {
-    NV_U_INT32              i, pos, constituent_count;
-    NV_INT32                temp_int;
-    NV_U_BYTE               *buf;
+NV_U_INT32 *bufsize) {
+  NV_U_INT32              i, pos, constituent_count;
+  NV_INT32                temp_int;
+  NV_U_BYTE               *buf;
 
-    /* Validate input */
-    assert (rec);
-    /* Cursory check for buffer overflows.  Should not happen here --
-       check_tide_record does a more thorough job when called by add_tide_record
-       and update_tide_record. */
-    boundscheck_oneliner (rec->header.name);
-    boundscheck_oneliner (rec->source);
-    boundscheck_monologue (rec->comments);
-    boundscheck_monologue (rec->notes);
-    boundscheck_oneliner (rec->station_id_context);
-    boundscheck_oneliner (rec->station_id);
-    boundscheck_monologue (rec->xfields);
+  /* Validate input */
+  assert (rec);
+  /* Cursory check for buffer overflows.  Should not happen here --
+     check_tide_record does a more thorough job when called by add_tide_record
+     and update_tide_record. */
+  boundscheck_oneliner (rec->header.name);
+  boundscheck_oneliner (rec->source);
+  boundscheck_monologue (rec->comments);
+  boundscheck_monologue (rec->notes);
+  boundscheck_oneliner (rec->station_id_context);
+  boundscheck_oneliner (rec->station_id);
+  boundscheck_monologue (rec->xfields);
 
-    constituent_count = figure_size (rec);
+  constituent_count = figure_size (rec);
 
-    if (!(*bufptr = (NV_U_BYTE *) calloc (rec->header.record_size,
-                                          sizeof (NV_U_BYTE)))) {
-        perror ("libtcd can't allocate memory in pack_tide_record");
-        exit (-1);
-    }
-    buf = *bufptr; /* To conserve asterisks */
+  if (!(*bufptr = (NV_U_BYTE *) calloc (rec->header.record_size,
+				    sizeof (NV_U_BYTE)))) {
+    perror ("libtcd can't allocate memory in pack_tide_record");
+    exit (-1);
+  }
+  buf = *bufptr; /* To conserve asterisks */
 
-    /*  Bit pack the common section.  "pos" is the bit position within the
-        buffer "buf".  */
+  /*  Bit pack the common section.  "pos" is the bit position within the
+      buffer "buf".  */
 
-    pos = 0;
+  pos = 0;
 
-    bit_pack (buf, pos, hd.record_size_bits, rec->header.record_size);
-    pos += hd.record_size_bits;
+  bit_pack (buf, pos, hd.record_size_bits, rec->header.record_size);
+  pos += hd.record_size_bits;
 
-    bit_pack (buf, pos, hd.record_type_bits, rec->header.record_type);
-    pos += hd.record_type_bits;
+  bit_pack (buf, pos, hd.record_type_bits, rec->header.record_type);
+  pos += hd.record_type_bits;
 
-    temp_int = NINT (rec->header.latitude * hd.latitude_scale);
-    bit_pack (buf, pos, hd.latitude_bits, temp_int);
-    pos += hd.latitude_bits;
+  temp_int = NINT (rec->header.latitude * hd.latitude_scale);
+  bit_pack (buf, pos, hd.latitude_bits, temp_int);
+  pos += hd.latitude_bits;
 
-    temp_int = NINT (rec->header.longitude * hd.longitude_scale);
-    bit_pack (buf, pos, hd.longitude_bits, temp_int);
-    pos += hd.longitude_bits;
+  temp_int = NINT (rec->header.longitude * hd.longitude_scale);
+  bit_pack (buf, pos, hd.longitude_bits, temp_int);
+  pos += hd.longitude_bits;
 
-    /* This ordering doesn't match everywhere else but there's no technical
-       reason to change it from its V1 ordering.  To do so would force
-       another conditional in unpack_partial_tide_record. */
+  /* This ordering doesn't match everywhere else but there's no technical
+     reason to change it from its V1 ordering.  To do so would force
+     another conditional in unpack_partial_tide_record. */
 
-    bit_pack (buf, pos, hd.tzfile_bits, rec->header.tzfile);
-    pos += hd.tzfile_bits;
+  bit_pack (buf, pos, hd.tzfile_bits, rec->header.tzfile);
+  pos += hd.tzfile_bits;
 
-    pack_string (buf, &pos, clip_string(rec->header.name));
+  pack_string (buf, &pos, clip_string(rec->header.name));
 
-    bit_pack (buf, pos, hd.station_bits, rec->header.reference_station);
-    pos += hd.station_bits;
+  bit_pack (buf, pos, hd.station_bits, rec->header.reference_station);
+  pos += hd.station_bits;
 
-    bit_pack (buf, pos, hd.country_bits, rec->country);
-    pos += hd.country_bits;
+  bit_pack (buf, pos, hd.country_bits, rec->country);
+  pos += hd.country_bits;
 
-    pack_string (buf, &pos, clip_string(rec->source));
+  pack_string (buf, &pos, clip_string(rec->source));
 
-    bit_pack (buf, pos, hd.restriction_bits, rec->restriction);
-    pos += hd.restriction_bits;
+  bit_pack (buf, pos, hd.restriction_bits, rec->restriction);
+  pos += hd.restriction_bits;
 
-    pack_string (buf, &pos, clip_string(rec->comments));
-    pack_string (buf, &pos, clip_string(rec->notes));
+  pack_string (buf, &pos, clip_string(rec->comments));
+  pack_string (buf, &pos, clip_string(rec->notes));
 
-    bit_pack (buf, pos, hd.legalese_bits, rec->legalese);
-    pos += hd.legalese_bits;
+  bit_pack (buf, pos, hd.legalese_bits, rec->legalese);
+  pos += hd.legalese_bits;
 
-    pack_string (buf, &pos, clip_string(rec->station_id_context));
-    pack_string (buf, &pos, clip_string(rec->station_id));
+  pack_string (buf, &pos, clip_string(rec->station_id_context));
+  pack_string (buf, &pos, clip_string(rec->station_id));
 
-    bit_pack (buf, pos, hd.date_bits, rec->date_imported);
-    pos += hd.date_bits;
+  bit_pack (buf, pos, hd.date_bits, rec->date_imported);
+  pos += hd.date_bits;
 
-    /* No clipping on xfields -- trailing \n required by syntax */
-    pack_string (buf, &pos, rec->xfields);
+  /* No clipping on xfields -- trailing \n required by syntax */
+  pack_string (buf, &pos, rec->xfields);
 
-    bit_pack (buf, pos, hd.dir_unit_bits, rec->direction_units);
-    pos += hd.dir_unit_bits;
+  bit_pack (buf, pos, hd.dir_unit_bits, rec->direction_units);
+  pos += hd.dir_unit_bits;
 
-    bit_pack (buf, pos, hd.direction_bits, rec->min_direction);
-    pos += hd.direction_bits;
+  bit_pack (buf, pos, hd.direction_bits, rec->min_direction);
+  pos += hd.direction_bits;
 
-    bit_pack (buf, pos, hd.direction_bits, rec->max_direction);
-    pos += hd.direction_bits;
+  bit_pack (buf, pos, hd.direction_bits, rec->max_direction);
+  pos += hd.direction_bits;
 
-    /* The units-to-level-units compatibility hack is in check_tide_record */
-    bit_pack (buf, pos, hd.level_unit_bits, rec->level_units);
-    pos += hd.level_unit_bits;
+  /* The units-to-level-units compatibility hack is in check_tide_record */
+  bit_pack (buf, pos, hd.level_unit_bits, rec->level_units);
+  pos += hd.level_unit_bits;
 
-    /*  Bit pack record type 1 records.  */
+  /*  Bit pack record type 1 records.  */
 
-    if (rec->header.record_type == REFERENCE_STATION) {
-        temp_int = NINT (rec->datum_offset * hd.datum_offset_scale);
-        bit_pack (buf, pos, hd.datum_offset_bits, temp_int);
-        pos += hd.datum_offset_bits;
+  if (rec->header.record_type == REFERENCE_STATION) {
+      temp_int = NINT (rec->datum_offset * hd.datum_offset_scale);
+      bit_pack (buf, pos, hd.datum_offset_bits, temp_int);
+      pos += hd.datum_offset_bits;
 
-        bit_pack (buf, pos, hd.datum_bits, rec->datum);
-        pos += hd.datum_bits;
+      bit_pack (buf, pos, hd.datum_bits, rec->datum);
+      pos += hd.datum_bits;
 
-        bit_pack (buf, pos, hd.time_bits, rec->zone_offset);
-        pos += hd.time_bits;
+      bit_pack (buf, pos, hd.time_bits, rec->zone_offset);
+      pos += hd.time_bits;
 
-        bit_pack (buf, pos, hd.date_bits, rec->expiration_date);
-        pos += hd.date_bits;
+      bit_pack (buf, pos, hd.date_bits, rec->expiration_date);
+      pos += hd.date_bits;
 
-        bit_pack (buf, pos, hd.months_on_station_bits,
-                  rec->months_on_station);
-        pos += hd.months_on_station_bits;
+      bit_pack (buf, pos, hd.months_on_station_bits,
+	  rec->months_on_station);
+      pos += hd.months_on_station_bits;
 
-        bit_pack (buf, pos, hd.date_bits, rec->last_date_on_station);
-        pos += hd.date_bits;
+      bit_pack (buf, pos, hd.date_bits, rec->last_date_on_station);
+      pos += hd.date_bits;
 
-        bit_pack (buf, pos, hd.confidence_value_bits, rec->confidence);
-        pos += hd.confidence_value_bits;
+      bit_pack (buf, pos, hd.confidence_value_bits, rec->confidence);
+      pos += hd.confidence_value_bits;
 
-        bit_pack (buf, pos, hd.constituent_bits, constituent_count);
-        pos += hd.constituent_bits;
+      bit_pack (buf, pos, hd.constituent_bits, constituent_count);
+      pos += hd.constituent_bits;
 
-        for (i = 0 ; i < hd.pub.constituents ; ++i)
-        {
-            if (rec->amplitude[i] >= AMPLITUDE_EPSILON)
-            {
-                bit_pack (buf, pos, hd.constituent_bits, i);
-                pos += hd.constituent_bits;
+      for (i = 0 ; i < hd.pub.constituents ; ++i)
+      {
+	  if (rec->amplitude[i] >= AMPLITUDE_EPSILON)
+	  {
+	      bit_pack (buf, pos, hd.constituent_bits, i);
+	      pos += hd.constituent_bits;
 
-                temp_int = NINT (rec->amplitude[i] * hd.amplitude_scale);
-                assert (temp_int);
-                bit_pack (buf, pos, hd.amplitude_bits, temp_int);
-                pos += hd.amplitude_bits;
+	      temp_int = NINT (rec->amplitude[i] * hd.amplitude_scale);
+	      assert (temp_int);
+	      bit_pack (buf, pos, hd.amplitude_bits, temp_int);
+	      pos += hd.amplitude_bits;
 
-                temp_int = NINT (rec->epoch[i] * hd.epoch_scale);
-                bit_pack (buf, pos, hd.epoch_bits, temp_int);
-                pos += hd.epoch_bits;
-            }
-        }
-    }
+	      temp_int = NINT (rec->epoch[i] * hd.epoch_scale);
+	      bit_pack (buf, pos, hd.epoch_bits, temp_int);
+	      pos += hd.epoch_bits;
+	  }
+      }
+  }
 
-    /*  Bit pack record type 2 records.  */
-    else if (rec->header.record_type == SUBORDINATE_STATION) {
-        bit_pack (buf, pos, hd.time_bits, rec->min_time_add);
-        pos += hd.time_bits;
+  /*  Bit pack record type 2 records.  */
+  else if (rec->header.record_type == SUBORDINATE_STATION) {
+      bit_pack (buf, pos, hd.time_bits, rec->min_time_add);
+      pos += hd.time_bits;
 
-        temp_int = NINT (rec->min_level_add * hd.level_add_scale);
-        bit_pack (buf, pos, hd.level_add_bits, temp_int);
-        pos += hd.level_add_bits;
+      temp_int = NINT (rec->min_level_add * hd.level_add_scale);
+      bit_pack (buf, pos, hd.level_add_bits, temp_int);
+      pos += hd.level_add_bits;
 
-        temp_int = NINT (rec->min_level_multiply * hd.level_multiply_scale);
-        bit_pack (buf, pos, hd.level_multiply_bits, temp_int);
-        pos += hd.level_multiply_bits;
+      temp_int = NINT (rec->min_level_multiply * hd.level_multiply_scale);
+      bit_pack (buf, pos, hd.level_multiply_bits, temp_int);
+      pos += hd.level_multiply_bits;
 
-        bit_pack (buf, pos, hd.time_bits, rec->max_time_add);
-        pos += hd.time_bits;
+      bit_pack (buf, pos, hd.time_bits, rec->max_time_add);
+      pos += hd.time_bits;
 
-        temp_int = NINT (rec->max_level_add * hd.level_add_scale);
-        bit_pack (buf, pos, hd.level_add_bits, temp_int);
-        pos += hd.level_add_bits;
+      temp_int = NINT (rec->max_level_add * hd.level_add_scale);
+      bit_pack (buf, pos, hd.level_add_bits, temp_int);
+      pos += hd.level_add_bits;
 
-        temp_int = NINT (rec->max_level_multiply * hd.level_multiply_scale);
-        bit_pack (buf, pos, hd.level_multiply_bits, temp_int);
-        pos += hd.level_multiply_bits;
+      temp_int = NINT (rec->max_level_multiply * hd.level_multiply_scale);
+      bit_pack (buf, pos, hd.level_multiply_bits, temp_int);
+      pos += hd.level_multiply_bits;
 
-        bit_pack (buf, pos, hd.time_bits, rec->flood_begins);
-        pos += hd.time_bits;
+      bit_pack (buf, pos, hd.time_bits, rec->flood_begins);
+      pos += hd.time_bits;
 
-        bit_pack (buf, pos, hd.time_bits, rec->ebb_begins);
-        pos += hd.time_bits;
-    }
+      bit_pack (buf, pos, hd.time_bits, rec->ebb_begins);
+      pos += hd.time_bits;
+  }
 
-    else {
-        fprintf (stderr, "libtcd error:  Record type %d is undefined\n",
-                 rec->header.record_type);
-        exit (-1);
-    }
+  else {
+    fprintf (stderr, "libtcd error:  Record type %d is undefined\n",
+	     rec->header.record_type);
+    exit (-1);
+  }
 
-    *bufsize = rec->header.record_size;
-    assert (*bufsize == bits2bytes (pos));
+  *bufsize = rec->header.record_size;
+  assert (*bufsize == bits2bytes (pos));
 }
 
 
@@ -5094,19 +4726,19 @@ static NV_BOOL write_tide_record (NV_INT32 num, TIDE_RECORD *rec)
     NV_U_INT32              bufsize = 0;
 
     if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return NVFalse;
+      fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+      return NVFalse;
     }
     write_protect();
 
     pack_tide_record (rec, &buf, &bufsize);
 
     if (num == -1)
-        ;
+      ;
     else if (num >= 0)
-        fseek (fp, tindex[num].address, SEEK_SET);
+      fseek (fp, tindex[num].address, SEEK_SET);
     else
-        assert (0);
+      assert (0);
 
     chk_fwrite (buf, bufsize, 1, fp);
     free (buf);
@@ -5135,7 +4767,7 @@ static NV_BOOL write_tide_record (NV_INT32 num, TIDE_RECORD *rec)
 
 NV_INT32 read_next_tide_record (TIDE_RECORD *rec)
 {
-    return (read_tide_record (current_record + 1, rec));
+  return (read_tide_record (current_record + 1, rec));
 }
 
 
@@ -5161,289 +4793,289 @@ NV_INT32 read_next_tide_record (TIDE_RECORD *rec)
 \*****************************************************************************/
 
 static void unpack_tide_record (NV_U_BYTE *buf, NV_U_INT32 bufsize,
-                                TIDE_RECORD *rec) {
-    NV_INT32                temp_int;
-    NV_U_INT32              i, j, pos, count;
+TIDE_RECORD *rec) {
+  NV_INT32                temp_int;
+  NV_U_INT32              i, j, pos, count;
 
-    assert (rec);
+  assert (rec);
 
-    /* Initialize record */
-    memset (rec, 0, sizeof (TIDE_RECORD));
-    {
-        int r = find_dir_units ("degrees true");
-        assert (r > 0);
-        rec->direction_units = (NV_U_BYTE)r;
-    }
-    rec->min_direction = rec->max_direction = 361;
-    rec->flood_begins = rec->ebb_begins = NULLSLACKOFFSET;
-    rec->header.record_number = current_record;
+  /* Initialize record */
+  memset (rec, 0, sizeof (TIDE_RECORD));
+  {
+    int r = find_dir_units ("degrees true");
+    assert (r > 0);
+    rec->direction_units = (NV_U_BYTE)r;
+  }
+  rec->min_direction = rec->max_direction = 361;
+  rec->flood_begins = rec->ebb_begins = NULLSLACKOFFSET;
+  rec->header.record_number = current_record;
 
-    unpack_partial_tide_record (buf, bufsize, rec, &pos);
+  unpack_partial_tide_record (buf, bufsize, rec, &pos);
 
-    switch (rec->header.record_type) {
-    case REFERENCE_STATION:
-    case SUBORDINATE_STATION:
-        break;
-    default:
-        fprintf (stderr, "libtcd fatal error: tried to read type %d tide record.\n", rec->header.record_type);
-        fprintf (stderr, "This version of libtcd only supports types 1 and 2.  Perhaps you should\nupgrade.\n");
-        exit (-1);
-    }
+  switch (rec->header.record_type) {
+  case REFERENCE_STATION:
+  case SUBORDINATE_STATION:
+    break;
+  default:
+    fprintf (stderr, "libtcd fatal error: tried to read type %d tide record.\n", rec->header.record_type);
+    fprintf (stderr, "This version of libtcd only supports types 1 and 2.  Perhaps you should\nupgrade.\n");
+    exit (-1);
+  }
 
-    switch (hd.pub.major_rev) {
+  switch (hd.pub.major_rev) {
 
-        /************************* TCD V1 *****************************/
-    case 0:
-    case 1:
+    /************************* TCD V1 *****************************/
+  case 0:
+  case 1:
 
-        /*  "pos" is the bit position within the buffer "buf".  */
+    /*  "pos" is the bit position within the buffer "buf".  */
 
-        rec->country = bit_unpack (buf, pos, hd.country_bits);
-        pos += hd.country_bits;
+    rec->country = bit_unpack (buf, pos, hd.country_bits);
+    pos += hd.country_bits;
 
-        /* pedigree */
-        pos += hd.pedigree_bits;
+    /* pedigree */
+    pos += hd.pedigree_bits;
 
-        unpack_string (buf, bufsize, &pos, rec->source, ONELINER_LENGTH, "source field");
+    unpack_string (buf, bufsize, &pos, rec->source, ONELINER_LENGTH, "source field");
 
-        rec->restriction = bit_unpack (buf, pos, hd.restriction_bits);
-        pos += hd.restriction_bits;
+    rec->restriction = bit_unpack (buf, pos, hd.restriction_bits);
+    pos += hd.restriction_bits;
 
-        unpack_string (buf, bufsize, &pos, rec->comments, MONOLOGUE_LENGTH, "comments field");
+    unpack_string (buf, bufsize, &pos, rec->comments, MONOLOGUE_LENGTH, "comments field");
 
-        if (rec->header.record_type == REFERENCE_STATION) {
-            rec->level_units = bit_unpack (buf, pos, hd.level_unit_bits);
+    if (rec->header.record_type == REFERENCE_STATION) {
+      rec->level_units = bit_unpack (buf, pos, hd.level_unit_bits);
 #ifdef COMPAT114
-            rec->units = rec->level_units;
+      rec->units = rec->level_units;
 #endif
-            pos += hd.level_unit_bits;
+      pos += hd.level_unit_bits;
 
-            temp_int = signed_bit_unpack (buf, pos, hd.datum_offset_bits);
-            rec->datum_offset = (NV_FLOAT32) temp_int / hd.datum_offset_scale;
-            pos += hd.datum_offset_bits;
+      temp_int = signed_bit_unpack (buf, pos, hd.datum_offset_bits);
+      rec->datum_offset = (NV_FLOAT32) temp_int / hd.datum_offset_scale;
+      pos += hd.datum_offset_bits;
 
-            rec->datum = bit_unpack (buf, pos, hd.datum_bits);
-            pos += hd.datum_bits;
+      rec->datum = bit_unpack (buf, pos, hd.datum_bits);
+      pos += hd.datum_bits;
 
-            rec->zone_offset = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
+      rec->zone_offset = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
 
-            rec->expiration_date = bit_unpack (buf, pos, hd.date_bits);
-            pos += hd.date_bits;
+      rec->expiration_date = bit_unpack (buf, pos, hd.date_bits);
+      pos += hd.date_bits;
 
-            rec->months_on_station = bit_unpack (buf, pos,
-                                                 hd.months_on_station_bits);
-            pos += hd.months_on_station_bits;
+      rec->months_on_station = bit_unpack (buf, pos,
+          hd.months_on_station_bits);
+      pos += hd.months_on_station_bits;
 
-            rec->last_date_on_station = bit_unpack (buf, pos, hd.date_bits);
-            pos += hd.date_bits;
+      rec->last_date_on_station = bit_unpack (buf, pos, hd.date_bits);
+      pos += hd.date_bits;
 
-            rec->confidence = bit_unpack (buf, pos, hd.confidence_value_bits);
-            pos += hd.confidence_value_bits;
+      rec->confidence = bit_unpack (buf, pos, hd.confidence_value_bits);
+      pos += hd.confidence_value_bits;
 
-            for (i = 0 ; i < hd.pub.constituents ; ++i) {
-                rec->amplitude[i] = 0.0;
-                rec->epoch[i] = 0.0;
-            }
+      for (i = 0 ; i < hd.pub.constituents ; ++i) {
+        rec->amplitude[i] = 0.0;
+        rec->epoch[i] = 0.0;
+      }
 
-            count = bit_unpack (buf, pos, hd.constituent_bits);
-            pos += hd.constituent_bits;
+      count = bit_unpack (buf, pos, hd.constituent_bits);
+      pos += hd.constituent_bits;
 
-            for (i = 0 ; i < count ; ++i) {
-                j = bit_unpack (buf, pos, hd.constituent_bits);
-                pos += hd.constituent_bits;
+      for (i = 0 ; i < count ; ++i) {
+        j = bit_unpack (buf, pos, hd.constituent_bits);
+        pos += hd.constituent_bits;
 
-                rec->amplitude[j] = (NV_FLOAT32) bit_unpack (buf, pos,
-                                    hd.amplitude_bits) / hd.amplitude_scale;
-                pos += hd.amplitude_bits;
+        rec->amplitude[j] = (NV_FLOAT32) bit_unpack (buf, pos,
+            hd.amplitude_bits) / hd.amplitude_scale;
+        pos += hd.amplitude_bits;
 
-                rec->epoch[j] = (NV_FLOAT32) bit_unpack (buf, pos, hd.epoch_bits) /
-                                hd.epoch_scale;
-                pos += hd.epoch_bits;
-            }
-        } else if (rec->header.record_type == SUBORDINATE_STATION) {
-            rec->level_units = bit_unpack (buf, pos, hd.level_unit_bits);
-            pos += hd.level_unit_bits;
+        rec->epoch[j] = (NV_FLOAT32) bit_unpack (buf, pos, hd.epoch_bits) /
+            hd.epoch_scale;
+        pos += hd.epoch_bits;
+      }
+    } else if (rec->header.record_type == SUBORDINATE_STATION) {
+      rec->level_units = bit_unpack (buf, pos, hd.level_unit_bits);
+      pos += hd.level_unit_bits;
 
-            rec->direction_units = bit_unpack (buf, pos, hd.dir_unit_bits);
-            pos += hd.dir_unit_bits;
+      rec->direction_units = bit_unpack (buf, pos, hd.dir_unit_bits);
+      pos += hd.dir_unit_bits;
 
-            /* avg_level_units */
-            pos += hd.level_unit_bits;
+      /* avg_level_units */
+      pos += hd.level_unit_bits;
 
-            rec->min_time_add = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
+      rec->min_time_add = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
 
-            temp_int = signed_bit_unpack (buf, pos, hd.level_add_bits);
-            rec->min_level_add = (NV_FLOAT32) temp_int / hd.level_add_scale;
-            pos += hd.level_add_bits;
+      temp_int = signed_bit_unpack (buf, pos, hd.level_add_bits);
+      rec->min_level_add = (NV_FLOAT32) temp_int / hd.level_add_scale;
+      pos += hd.level_add_bits;
 
-            /* Signed in V1 */
-            temp_int = signed_bit_unpack (buf, pos, hd.level_multiply_bits);
-            rec->min_level_multiply = (NV_FLOAT32) temp_int /
-                                      hd.level_multiply_scale;
-            pos += hd.level_multiply_bits;
+      /* Signed in V1 */
+      temp_int = signed_bit_unpack (buf, pos, hd.level_multiply_bits);
+      rec->min_level_multiply = (NV_FLOAT32) temp_int /
+          hd.level_multiply_scale;
+      pos += hd.level_multiply_bits;
 
-            /* min_avg_level */
-            pos += hd.level_add_bits;
+      /* min_avg_level */
+      pos += hd.level_add_bits;
 
-            rec->min_direction = bit_unpack (buf, pos, hd.direction_bits);
-            pos += hd.direction_bits;
+      rec->min_direction = bit_unpack (buf, pos, hd.direction_bits);
+      pos += hd.direction_bits;
 
-            rec->max_time_add = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
+      rec->max_time_add = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
 
-            temp_int = signed_bit_unpack (buf, pos, hd.level_add_bits);
-            rec->max_level_add = (NV_FLOAT32) temp_int / hd.level_add_scale;
-            pos += hd.level_add_bits;
+      temp_int = signed_bit_unpack (buf, pos, hd.level_add_bits);
+      rec->max_level_add = (NV_FLOAT32) temp_int / hd.level_add_scale;
+      pos += hd.level_add_bits;
 
-            /* Signed in V1 */
-            temp_int = signed_bit_unpack (buf, pos, hd.level_multiply_bits);
-            rec->max_level_multiply = (NV_FLOAT32) temp_int /
-                                      hd.level_multiply_scale;
-            pos += hd.level_multiply_bits;
+      /* Signed in V1 */
+      temp_int = signed_bit_unpack (buf, pos, hd.level_multiply_bits);
+      rec->max_level_multiply = (NV_FLOAT32) temp_int /
+          hd.level_multiply_scale;
+      pos += hd.level_multiply_bits;
 
-            /* max_avg_level */
-            pos += hd.level_add_bits;
+      /* max_avg_level */
+      pos += hd.level_add_bits;
 
-            rec->max_direction = bit_unpack (buf, pos, hd.direction_bits);
-            pos += hd.direction_bits;
+      rec->max_direction = bit_unpack (buf, pos, hd.direction_bits);
+      pos += hd.direction_bits;
 
-            rec->flood_begins = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
+      rec->flood_begins = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
 
-            rec->ebb_begins = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
-        } else {
-            assert (0);
-        }
-        break;
-
-        /************************* TCD V2 *****************************/
-    case 2:
-        rec->country = bit_unpack (buf, pos, hd.country_bits);
-        pos += hd.country_bits;
-
-        unpack_string (buf, bufsize, &pos, rec->source, ONELINER_LENGTH, "source field");
-
-        rec->restriction = bit_unpack (buf, pos, hd.restriction_bits);
-        pos += hd.restriction_bits;
-
-        unpack_string (buf, bufsize, &pos, rec->comments, MONOLOGUE_LENGTH, "comments field");
-        unpack_string (buf, bufsize, &pos, rec->notes, MONOLOGUE_LENGTH, "notes field");
-
-        rec->legalese = bit_unpack (buf, pos, hd.legalese_bits);
-        pos += hd.legalese_bits;
-
-        unpack_string (buf, bufsize, &pos, rec->station_id_context, ONELINER_LENGTH, "station_id_context field");
-        unpack_string (buf, bufsize, &pos, rec->station_id, ONELINER_LENGTH, "station_id field");
-
-        rec->date_imported = bit_unpack (buf, pos, hd.date_bits);
-        pos += hd.date_bits;
-
-        unpack_string (buf, bufsize, &pos, rec->xfields, MONOLOGUE_LENGTH, "xfields field");
-
-        rec->direction_units = bit_unpack (buf, pos, hd.dir_unit_bits);
-        pos += hd.dir_unit_bits;
-
-        rec->min_direction = bit_unpack (buf, pos, hd.direction_bits);
-        pos += hd.direction_bits;
-
-        rec->max_direction = bit_unpack (buf, pos, hd.direction_bits);
-        pos += hd.direction_bits;
-
-        rec->level_units = bit_unpack (buf, pos, hd.level_unit_bits);
-#ifdef COMPAT114
-        rec->units = rec->level_units;
-#endif
-        pos += hd.level_unit_bits;
-
-        if (rec->header.record_type == REFERENCE_STATION) {
-            temp_int = signed_bit_unpack (buf, pos, hd.datum_offset_bits);
-            rec->datum_offset = (NV_FLOAT32) temp_int / hd.datum_offset_scale;
-            pos += hd.datum_offset_bits;
-
-            rec->datum = bit_unpack (buf, pos, hd.datum_bits);
-            pos += hd.datum_bits;
-
-            rec->zone_offset = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
-
-            rec->expiration_date = bit_unpack (buf, pos, hd.date_bits);
-            pos += hd.date_bits;
-
-            rec->months_on_station = bit_unpack (buf, pos,
-                                                 hd.months_on_station_bits);
-            pos += hd.months_on_station_bits;
-
-            rec->last_date_on_station = bit_unpack (buf, pos, hd.date_bits);
-            pos += hd.date_bits;
-
-            rec->confidence = bit_unpack (buf, pos, hd.confidence_value_bits);
-            pos += hd.confidence_value_bits;
-
-            for (i = 0 ; i < hd.pub.constituents ; ++i) {
-                rec->amplitude[i] = 0.0;
-                rec->epoch[i] = 0.0;
-            }
-
-            count = bit_unpack (buf, pos, hd.constituent_bits);
-            pos += hd.constituent_bits;
-
-            for (i = 0 ; i < count ; ++i) {
-                j = bit_unpack (buf, pos, hd.constituent_bits);
-                pos += hd.constituent_bits;
-
-                rec->amplitude[j] = (NV_FLOAT32) bit_unpack (buf, pos,
-                                    hd.amplitude_bits) / hd.amplitude_scale;
-                pos += hd.amplitude_bits;
-
-                rec->epoch[j] = (NV_FLOAT32) bit_unpack (buf, pos, hd.epoch_bits) /
-                                hd.epoch_scale;
-                pos += hd.epoch_bits;
-            }
-        } else if (rec->header.record_type == SUBORDINATE_STATION) {
-            rec->min_time_add = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
-
-            temp_int = signed_bit_unpack (buf, pos, hd.level_add_bits);
-            rec->min_level_add = (NV_FLOAT32) temp_int / hd.level_add_scale;
-            pos += hd.level_add_bits;
-
-            /* Made unsigned in V2 */
-            temp_int = bit_unpack (buf, pos, hd.level_multiply_bits);
-            rec->min_level_multiply = (NV_FLOAT32) temp_int /
-                                      hd.level_multiply_scale;
-            pos += hd.level_multiply_bits;
-
-            rec->max_time_add = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
-
-            temp_int = signed_bit_unpack (buf, pos, hd.level_add_bits);
-            rec->max_level_add = (NV_FLOAT32) temp_int / hd.level_add_scale;
-            pos += hd.level_add_bits;
-
-            /* Made unsigned in V2 */
-            temp_int = bit_unpack (buf, pos, hd.level_multiply_bits);
-            rec->max_level_multiply = (NV_FLOAT32) temp_int /
-                                      hd.level_multiply_scale;
-            pos += hd.level_multiply_bits;
-
-            rec->flood_begins = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
-
-            rec->ebb_begins = signed_bit_unpack (buf, pos, hd.time_bits);
-            pos += hd.time_bits;
-        } else {
-            assert (0);
-        }
-        break;
-
-    default:
-        assert (0);
+      rec->ebb_begins = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
+    } else {
+      assert (0);
     }
+    break;
 
-    assert (pos <= bufsize*8);
+    /************************* TCD V2 *****************************/
+  case 2:
+    rec->country = bit_unpack (buf, pos, hd.country_bits);
+    pos += hd.country_bits;
+
+    unpack_string (buf, bufsize, &pos, rec->source, ONELINER_LENGTH, "source field");
+
+    rec->restriction = bit_unpack (buf, pos, hd.restriction_bits);
+    pos += hd.restriction_bits;
+
+    unpack_string (buf, bufsize, &pos, rec->comments, MONOLOGUE_LENGTH, "comments field");
+    unpack_string (buf, bufsize, &pos, rec->notes, MONOLOGUE_LENGTH, "notes field");
+
+    rec->legalese = bit_unpack (buf, pos, hd.legalese_bits);
+    pos += hd.legalese_bits;
+
+    unpack_string (buf, bufsize, &pos, rec->station_id_context, ONELINER_LENGTH, "station_id_context field");
+    unpack_string (buf, bufsize, &pos, rec->station_id, ONELINER_LENGTH, "station_id field");
+
+    rec->date_imported = bit_unpack (buf, pos, hd.date_bits);
+    pos += hd.date_bits;
+
+    unpack_string (buf, bufsize, &pos, rec->xfields, MONOLOGUE_LENGTH, "xfields field");
+
+    rec->direction_units = bit_unpack (buf, pos, hd.dir_unit_bits);
+    pos += hd.dir_unit_bits;
+
+    rec->min_direction = bit_unpack (buf, pos, hd.direction_bits);
+    pos += hd.direction_bits;
+
+    rec->max_direction = bit_unpack (buf, pos, hd.direction_bits);
+    pos += hd.direction_bits;
+
+    rec->level_units = bit_unpack (buf, pos, hd.level_unit_bits);
+#ifdef COMPAT114
+    rec->units = rec->level_units;
+#endif
+    pos += hd.level_unit_bits;
+
+    if (rec->header.record_type == REFERENCE_STATION) {
+      temp_int = signed_bit_unpack (buf, pos, hd.datum_offset_bits);
+      rec->datum_offset = (NV_FLOAT32) temp_int / hd.datum_offset_scale;
+      pos += hd.datum_offset_bits;
+
+      rec->datum = bit_unpack (buf, pos, hd.datum_bits);
+      pos += hd.datum_bits;
+
+      rec->zone_offset = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
+
+      rec->expiration_date = bit_unpack (buf, pos, hd.date_bits);
+      pos += hd.date_bits;
+
+      rec->months_on_station = bit_unpack (buf, pos,
+          hd.months_on_station_bits);
+      pos += hd.months_on_station_bits;
+
+      rec->last_date_on_station = bit_unpack (buf, pos, hd.date_bits);
+      pos += hd.date_bits;
+
+      rec->confidence = bit_unpack (buf, pos, hd.confidence_value_bits);
+      pos += hd.confidence_value_bits;
+
+      for (i = 0 ; i < hd.pub.constituents ; ++i) {
+        rec->amplitude[i] = 0.0;
+        rec->epoch[i] = 0.0;
+      }
+
+      count = bit_unpack (buf, pos, hd.constituent_bits);
+      pos += hd.constituent_bits;
+
+      for (i = 0 ; i < count ; ++i) {
+        j = bit_unpack (buf, pos, hd.constituent_bits);
+        pos += hd.constituent_bits;
+
+        rec->amplitude[j] = (NV_FLOAT32) bit_unpack (buf, pos,
+            hd.amplitude_bits) / hd.amplitude_scale;
+        pos += hd.amplitude_bits;
+
+        rec->epoch[j] = (NV_FLOAT32) bit_unpack (buf, pos, hd.epoch_bits) /
+            hd.epoch_scale;
+        pos += hd.epoch_bits;
+      }
+    } else if (rec->header.record_type == SUBORDINATE_STATION) {
+      rec->min_time_add = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
+
+      temp_int = signed_bit_unpack (buf, pos, hd.level_add_bits);
+      rec->min_level_add = (NV_FLOAT32) temp_int / hd.level_add_scale;
+      pos += hd.level_add_bits;
+
+      /* Made unsigned in V2 */
+      temp_int = bit_unpack (buf, pos, hd.level_multiply_bits);
+      rec->min_level_multiply = (NV_FLOAT32) temp_int /
+          hd.level_multiply_scale;
+      pos += hd.level_multiply_bits;
+
+      rec->max_time_add = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
+
+      temp_int = signed_bit_unpack (buf, pos, hd.level_add_bits);
+      rec->max_level_add = (NV_FLOAT32) temp_int / hd.level_add_scale;
+      pos += hd.level_add_bits;
+
+      /* Made unsigned in V2 */
+      temp_int = bit_unpack (buf, pos, hd.level_multiply_bits);
+      rec->max_level_multiply = (NV_FLOAT32) temp_int /
+          hd.level_multiply_scale;
+      pos += hd.level_multiply_bits;
+
+      rec->flood_begins = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
+
+      rec->ebb_begins = signed_bit_unpack (buf, pos, hd.time_bits);
+      pos += hd.time_bits;
+    } else {
+      assert (0);
+    }
+    break;
+
+  default:
+    assert (0);
+  }
+
+  assert (pos <= bufsize*8);
 }
 
 
@@ -5470,31 +5102,31 @@ static void unpack_tide_record (NV_U_BYTE *buf, NV_U_INT32 bufsize,
 
 NV_INT32 read_tide_record (NV_INT32 num, TIDE_RECORD *rec)
 {
-    NV_U_BYTE               *buf;
-    NV_U_INT32              bufsize;
+  NV_U_BYTE               *buf;
+  NV_U_INT32              bufsize;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return -1;
-    }
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return -1;
+  }
 
-    if (num < 0 || num >= (NV_INT32)hd.pub.number_of_records)
-        return -1;
-    assert (rec);
+  if (num < 0 || num >= (NV_INT32)hd.pub.number_of_records)
+    return -1;
+  assert (rec);
 
-    bufsize = tindex[num].record_size;
-    if ((buf = (NV_U_BYTE *) calloc (bufsize, sizeof (NV_U_BYTE))) == NULL)
-    {
-        perror ("Allocating read_tide_record buffer");
-        exit (-1);
-    }
+  bufsize = tindex[num].record_size;
+  if ((buf = (NV_U_BYTE *) calloc (bufsize, sizeof (NV_U_BYTE))) == NULL)
+  {
+      perror ("Allocating read_tide_record buffer");
+      exit (-1);
+  }
 
-    current_record = num;
-    require (fseek (fp, tindex[num].address, SEEK_SET) == 0);
-    chk_fread (buf, tindex[num].record_size, 1, fp);
-    unpack_tide_record (buf, bufsize, rec);
-    free (buf);
-    return num;
+  current_record = num;
+  require (fseek (fp, tindex[num].address, SEEK_SET) == 0);
+  chk_fread (buf, tindex[num].record_size, 1, fp);
+  unpack_tide_record (buf, bufsize, rec);
+  free (buf);
+  return num;
 }
 
 
@@ -5520,13 +5152,13 @@ NV_BOOL add_tide_record (TIDE_RECORD *rec, DB_HEADER_PUBLIC *db)
     NV_INT32                pos;
 
     if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return NVFalse;
+      fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+      return NVFalse;
     }
     write_protect();
 
     if (!check_tide_record (rec))
-        return NVFalse;
+      return NVFalse;
 
     fseek (fp, hd.end_of_file, SEEK_SET);
     pos = ftell (fp);
@@ -5537,7 +5169,7 @@ NV_BOOL add_tide_record (TIDE_RECORD *rec, DB_HEADER_PUBLIC *db)
     if (write_tide_record (-1, rec))
     {
         if ((tindex = (TIDE_INDEX *) realloc (tindex, hd.pub.number_of_records *
-                                              sizeof (TIDE_INDEX))) == NULL)
+            sizeof (TIDE_INDEX))) == NULL)
         {
             perror ("Allocating more index records");
             exit (-1);
@@ -5551,14 +5183,14 @@ NV_BOOL add_tide_record (TIDE_RECORD *rec, DB_HEADER_PUBLIC *db)
         assert (rec->header.tzfile >= 0);
         tindex[rec->header.record_number].tzfile = rec->header.tzfile;
         tindex[rec->header.record_number].lat = NINT (rec->header.latitude *
-                                                hd.latitude_scale);
+            hd.latitude_scale);
         tindex[rec->header.record_number].lon = NINT (rec->header.longitude *
-                                                hd.longitude_scale);
+            hd.longitude_scale);
 
 
         if ((tindex[rec->header.record_number].name =
-                    (NV_CHAR *) calloc (strlen (rec->header.name) + 1,
-                                        sizeof (NV_CHAR))) == NULL)
+            (NV_CHAR *) calloc (strlen (rec->header.name) + 1,
+            sizeof (NV_CHAR))) == NULL)
         {
             perror ("Allocating index name memory");
             exit (-1);
@@ -5573,7 +5205,7 @@ NV_BOOL add_tide_record (TIDE_RECORD *rec, DB_HEADER_PUBLIC *db)
 
         /*  Get the new number of records.  */
         if (db)
-            *db = hd.pub;
+          *db = hd.pub;
 
         return NVTrue;
     }
@@ -5581,7 +5213,7 @@ NV_BOOL add_tide_record (TIDE_RECORD *rec, DB_HEADER_PUBLIC *db)
     return NVFalse;
 }
 
-#if 0
+
 /*****************************************************************************\
 
     Function        delete_tide_record - deletes a record and all subordinate
@@ -5602,97 +5234,96 @@ NV_BOOL add_tide_record (TIDE_RECORD *rec, DB_HEADER_PUBLIC *db)
 
 NV_BOOL delete_tide_record (NV_INT32 num, DB_HEADER_PUBLIC *db)
 {
-    NV_INT32          i, newrecnum, *map;
-    NV_U_BYTE         **allrecs_packed;
+  NV_INT32          i, newrecnum, *map;
+  NV_U_BYTE         **allrecs_packed;
 
-    if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return NVFalse;
-    }
-    write_protect();
+  if (!fp) {
+    fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+    return NVFalse;
+  }
+  write_protect();
 
-    if (num < 0 || num >= (NV_INT32)hd.pub.number_of_records) return NVFalse;
+  if (num < 0 || num >= (NV_INT32)hd.pub.number_of_records) return NVFalse;
 
-    /* Allocate workspace */
+  /* Allocate workspace */
 
-    if (!(map = (NV_INT32 *) malloc (hd.pub.number_of_records * sizeof(NV_INT32)))) {
-        perror ("libtcd: delete_tide_record: can't malloc");
-        return NVFalse;
-    }
-    if (!(allrecs_packed = (NV_U_BYTE **) malloc (hd.pub.number_of_records * sizeof(NV_U_BYTE*)))) {
-        perror ("libtcd: delete_tide_record: can't malloc");
-        free (map);
-        return NVFalse;
-    }
-
-    /* First pass: read in database, build record number map and mark records
-       for deletion */
-
-    require (fseek (fp, tindex[0].address, SEEK_SET) == 0);
-    for (newrecnum=0,i=0; i<(NV_INT32)hd.pub.number_of_records; ++i) {
-        assert (ftell(fp) == tindex[i].address);
-        if (i == num || (tindex[i].record_type == SUBORDINATE_STATION && tindex[i].reference_station == num)) {
-            map[i] = -1;
-            allrecs_packed[i] = NULL;
-            require (fseek (fp, tindex[i].record_size, SEEK_CUR) == 0);
-        } else {
-            map[i] = newrecnum++;
-            if (!(allrecs_packed[i] = (NV_U_BYTE *) malloc (tindex[i].record_size))) {
-                perror ("libtcd: delete_tide_record: can't malloc");
-                for (--i; i>=0; --i)
-                    free (allrecs_packed[i]);
-                free (allrecs_packed);
-                free (map);
-                return NVFalse;
-            }
-            chk_fread (allrecs_packed[i], tindex[i].record_size, 1, fp);
-        }
-    }
-
-    /* Second pass: rewrite database and fix substation linkage */
-
-    require (fseek (fp, tindex[0].address, SEEK_SET) == 0);
-    require (ftruncate (fileno(fp), tindex[0].address) == 0);
-
-    for (i=0; i<(NV_INT32)hd.pub.number_of_records; ++i)
-        if (map[i] >= 0) {
-            if (tindex[i].record_type == SUBORDINATE_STATION) {
-                assert (tindex[i].reference_station >= 0);
-                assert (tindex[i].reference_station <= (NV_INT32)hd.pub.number_of_records);
-                if (map[tindex[i].reference_station] != tindex[i].reference_station) {
-                    /* Fix broken reference station linkage */
-                    TIDE_RECORD rec;
-                    unpack_tide_record (allrecs_packed[i], tindex[i].record_size, &rec);
-                    free (allrecs_packed[i]);
-                    rec.header.reference_station = map[tindex[i].reference_station];
-                    pack_tide_record (&rec, &(allrecs_packed[i]), &(tindex[i].record_size));
-                }
-            }
-            chk_fwrite (allrecs_packed[i], tindex[i].record_size, 1, fp);
-            free (allrecs_packed[i]);
-        }
-
-    /* Free workspace (packed records were freed above) */
-
-    free (allrecs_packed);
+  if (!(map = (NV_INT32 *) malloc (hd.pub.number_of_records * sizeof(NV_INT32)))) {
+    perror ("libtcd: delete_tide_record: can't malloc");
+    return NVFalse;
+  }
+  if (!(allrecs_packed = (NV_U_BYTE **) malloc (hd.pub.number_of_records * sizeof(NV_U_BYTE*)))) {
+    perror ("libtcd: delete_tide_record: can't malloc");
     free (map);
+    return NVFalse;
+  }
 
-    /* Flush, reopen, renew.  The index is now garbage; close and reopen
-       to reindex. */
+  /* First pass: read in database, build record number map and mark records
+     for deletion */
 
-    hd.end_of_file = ftell(fp);
-    hd.pub.number_of_records = newrecnum;
-    modified = NVTrue;
-    close_tide_db ();
-    open_tide_db (filename);
+  require (fseek (fp, tindex[0].address, SEEK_SET) == 0);
+  for (newrecnum=0,i=0; i<(NV_INT32)hd.pub.number_of_records; ++i) {
+    assert (ftell(fp) == tindex[i].address);
+    if (i == num || (tindex[i].record_type == SUBORDINATE_STATION && tindex[i].reference_station == num)) {
+      map[i] = -1;
+      allrecs_packed[i] = NULL;
+      require (fseek (fp, tindex[i].record_size, SEEK_CUR) == 0);
+    } else {
+      map[i] = newrecnum++;
+      if (!(allrecs_packed[i] = (NV_U_BYTE *) malloc (tindex[i].record_size))) {
+	perror ("libtcd: delete_tide_record: can't malloc");
+	for (--i; i>=0; --i)
+	  free (allrecs_packed[i]);
+	free (allrecs_packed);
+	free (map);
+	return NVFalse;
+      }
+      chk_fread (allrecs_packed[i], tindex[i].record_size, 1, fp);
+    }
+  }
 
-    if (db)
-        *db = hd.pub;
+  /* Second pass: rewrite database and fix substation linkage */
 
-    return NVTrue;
+  require (fseek (fp, tindex[0].address, SEEK_SET) == 0);
+  require (ftruncate (fileno(fp), tindex[0].address) == 0);
+
+  for (i=0; i<(NV_INT32)hd.pub.number_of_records; ++i)
+    if (map[i] >= 0) {
+      if (tindex[i].record_type == SUBORDINATE_STATION) {
+        assert (tindex[i].reference_station >= 0);
+        assert (tindex[i].reference_station <= (NV_INT32)hd.pub.number_of_records);
+        if (map[tindex[i].reference_station] != tindex[i].reference_station) {
+          /* Fix broken reference station linkage */
+          TIDE_RECORD rec;
+          unpack_tide_record (allrecs_packed[i], tindex[i].record_size, &rec);
+          free (allrecs_packed[i]);
+          rec.header.reference_station = map[tindex[i].reference_station];
+          pack_tide_record (&rec, &(allrecs_packed[i]), &(tindex[i].record_size));
+        }
+      }
+      chk_fwrite (allrecs_packed[i], tindex[i].record_size, 1, fp);
+      free (allrecs_packed[i]);
+    }
+
+  /* Free workspace (packed records were freed above) */
+
+  free (allrecs_packed);
+  free (map);
+
+  /* Flush, reopen, renew.  The index is now garbage; close and reopen
+     to reindex. */
+
+  hd.end_of_file = ftell(fp);
+  hd.pub.number_of_records = newrecnum;
+  modified = NVTrue;
+  close_tide_db ();
+  open_tide_db (filename);
+
+  if (db)
+    *db = hd.pub;
+
+  return NVTrue;
 }
 
-#endif
 
 /*****************************************************************************\
 
@@ -5723,15 +5354,15 @@ NV_BOOL update_tide_record (NV_INT32 num, TIDE_RECORD *rec, DB_HEADER_PUBLIC *db
     NV_U_BYTE               *block = NULL;
 
     if (!fp) {
-        fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
-        return NVFalse;
+      fprintf (stderr, "libtcd error: attempt to access database when database not open\n");
+      return NVFalse;
     }
     write_protect();
 
     if (num < 0 || num >= (NV_INT32)hd.pub.number_of_records) return NVFalse;
 
     if (!check_tide_record (rec))
-        return NVFalse;
+      return NVFalse;
 
     figure_size (rec);
     read_tide_record (num, &tmp_rec);
@@ -5751,7 +5382,7 @@ NV_BOOL update_tide_record (NV_INT32 num, TIDE_RECORD *rec, DB_HEADER_PUBLIC *db
         if (size)
         {
             if ((block = (NV_U_BYTE *) calloc (size, sizeof (NV_U_BYTE))) ==
-                    NULL)
+                NULL)
             {
                 perror ("Allocating block");
                 return NVFalse;
@@ -5792,16 +5423,16 @@ NV_BOOL update_tide_record (NV_INT32 num, TIDE_RECORD *rec, DB_HEADER_PUBLIC *db
         /* AH maybe? */
         /* DWF: agree, same size record does not imply that name length
            is identical. */
-        if (strcmp(tindex[num].name, rec->header.name) != 0) {
-            free(tindex[num].name);
-            tindex[num].name = (NV_CHAR *) calloc (strlen (rec->header.name) + 1, sizeof (NV_CHAR));
-            strcpy(tindex[num].name, rec->header.name);
-        }
+	if (strcmp(tindex[num].name, rec->header.name) != 0) {
+	  free(tindex[num].name);
+	  tindex[num].name = (NV_CHAR *) calloc (strlen (rec->header.name) + 1, sizeof (NV_CHAR));
+	  strcpy(tindex[num].name, rec->header.name);
+	}
     }
 
 #ifndef COMPAT114
     if (db)
-        *db = hd.pub;
+      *db = hd.pub;
 #endif
 
     return (NVTrue);
@@ -5850,7 +5481,7 @@ NV_BOOL infer_constituents (TIDE_RECORD *rec)
     require ((o1 = find_constituent ("O1")) >= 0);
 
     if (rec->amplitude[m2] == 0.0 || rec->amplitude[s2] == 0.0 ||
-            rec->amplitude[k1] == 0.0 || rec->amplitude[o1] == 0.0)
+        rec->amplitude[k1] == 0.0 || rec->amplitude[o1] == 0.0)
         return (NVFalse);
 
     epoch_m2 = rec->epoch[m2];
@@ -5869,7 +5500,7 @@ NV_BOOL infer_constituents (TIDE_RECORD *rec)
                     /*  Compute the inferred semi-diurnal constituent.  */
 
                     rec->amplitude[i] = (semi_diurnal_coeff[j] / coeff[0]) *
-                                        rec->amplitude[m2];
+                        rec->amplitude[m2];
 
                     if (fabs ((NV_FLOAT64) (epoch_s2 - epoch_m2)) > 180.0)
                     {
@@ -5883,7 +5514,7 @@ NV_BOOL infer_constituents (TIDE_RECORD *rec)
                         }
                     }
                     rec->epoch[i] = epoch_m2 + ((hd.speed[i] - hd.speed[m2]) /
-                                                (hd.speed[s2] - hd.speed[m2])) * (epoch_s2 - epoch_m2);
+                        (hd.speed[s2] - hd.speed[m2])) * (epoch_s2 - epoch_m2);
                 }
             }
 
@@ -5895,7 +5526,7 @@ NV_BOOL infer_constituents (TIDE_RECORD *rec)
                     /*  Compute the inferred diurnal constituent.  */
 
                     rec->amplitude[i] = (diurnal_coeff[j] / coeff[1]) *
-                                        rec->amplitude[o1];
+                        rec->amplitude[o1];
 
                     if (fabs ((NV_FLOAT64) (epoch_k1 - epoch_o1)) > 180.0)
                     {
@@ -5909,7 +5540,7 @@ NV_BOOL infer_constituents (TIDE_RECORD *rec)
                         }
                     }
                     rec->epoch[i] = epoch_o1 + ((hd.speed[i] - hd.speed[o1]) /
-                                                (hd.speed[k1] - hd.speed[o1])) * (epoch_k1 - epoch_o1);
+                        (hd.speed[k1] - hd.speed[o1])) * (epoch_k1 - epoch_o1);
                 }
             }
         }
@@ -5917,346 +5548,3 @@ NV_BOOL infer_constituents (TIDE_RECORD *rec)
 
     return (NVTrue);
 }
-
-/* $Id: bit_pack.c 1805 2007-01-22 15:36:20Z flaterco $ */
-
-#include <math.h>
-#include <stdio.h>
-#include <assert.h>
-
-
-
-static NV_U_BYTE        mask[8] = {0x00, 0x80, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc,
-                                   0xfe
-                                  }, notmask[8] = {0xff, 0x7f, 0x3f, 0x1f, 0x0f,
-                                          0x07, 0x03, 0x01
-                                                  };
-
-
-/*****************************************************************************\
-
-                            DISTRIBUTION STATEMENT
-
-    This source file is unclassified, distribution unlimited, public
-    domain.  It is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-\*****************************************************************************/
-
-
-
-/***************************************************************************\
-*                                                                           *
-*   Function        calculate_bits - Computes the number of bits needed     *
-*                   to store a specified value.                             *
-*                                                                           *
-*   Synopsis        calculate_bits (value);                                 *
-*                                                                           *
-*                   NV_U_INT32 value        the value to store              *
-*                                                                           *
-*   Returns         NV_U_INT32              number of bits needed           *
-*                                                                           *
-*   If value = 0, return is 0.                                              *
-*   No bits are needed to store a field whose only possible value is 0.     *
-*                                                                           *
-*   Author          Jan C. Depner                                           *
-*                                                                           *
-*   Rewritten by DWF 2007-01-21                                             *
-*     - "Range" was ambiguous and off-by-one errors existed in tide_db.c    *
-*     - Use of log10(x)/log10(2) was vulnerable to roundoff error           *
-*     - Conversion to floating point was unnecessary                        *
-*     - Was giving the answer 0 for the input value 1                       *
-*     - God only knows what it did for the input value 0 (the logarithm     *
-*       is undefined)                                                       *
-*                                                                           *
-\***************************************************************************/
-
-NV_U_INT32 calculate_bits (NV_U_INT32 value) {
-    NV_U_INT32 bits = 32;
-    NV_U_INT32 theBit = 0x80000000;
-
-    while (value < theBit) {
-        theBit >>= 1;
-        --bits;
-    }
-    assert (bits <= 32);
-    return bits;
-}
-
-
-
-/***************************************************************************\
-*                                                                           *
-*   Function        bit_pack - Packs a long value into consecutive bits in  *
-*                   buffer.                                                 *
-*                                                                           *
-*   Synopsis        bit_pack (buffer, start, numbits, value);               *
-*                                                                           *
-*                   NV_U_BYTE buffer[]      address of buffer to use        *
-*                   NV_U_INT32 start        start bit position in buffer    *
-*                   NV_U_INT32 numbits      number of bits to store         *
-*                   NV_INT32 value          value to store                  *
-*                                                                           *
-*   Description     Packs the value 'value' into 'numbits' bits in 'buffer' *
-*                   starting at bit position 'start'.  The majority of      *
-*                   this code is based on Appendix C of Naval Ocean         *
-*                   Research and Development Activity Report #236, 'Data    *
-*                   Base Structure to Support the Production of the Digital *
-*                   Bathymetric Data Base', Nov. 1989, James E. Braud,      *
-*                   John L. Breckenridge, James E. Current, Jerry L.        *
-*                   Landrum.                                                *
-*                                                                           *
-*   Returns         void                                                    *
-*                                                                           *
-*   Author          Jan C. Depner                                           *
-*                                                                           *
-\***************************************************************************/
-
-void bit_pack (NV_U_BYTE buffer[], NV_U_INT32 start, NV_U_INT32 numbits,
-               NV_INT32 value)
-{
-    NV_INT32                start_byte, end_byte, start_bit, end_bit, i;
-
-
-    i = start + numbits;
-
-
-    /*  Right shift the start and end by 3 bits, this is the same as        */
-    /*  dividing by 8 but is faster.  This is computing the start and end   */
-    /*  bytes for the field.                                                */
-
-    start_byte = start >> 3;
-    end_byte = i >> 3;
-
-
-    /*  AND the start and end bit positions with 7, this is the same as     */
-    /*  doing a mod with 8 but is faster.  Here we are computing the start  */
-    /*  and end bits within the start and end bytes for the field.          */
-
-    start_bit = start & 7;
-    end_bit = i & 7;
-
-
-    /*  Compute the number of bytes covered.                                */
-
-    i = end_byte - start_byte - 1;
-
-
-    /*  If the value is to be stored in one byte, store it.                 */
-
-    if (start_byte == end_byte)
-    {
-        /*  Rather tricky.  We are masking out anything prior to the start  */
-        /*  bit and after the end bit in order to not corrupt data that has */
-        /*  already been stored there.                                      */
-
-        buffer[start_byte] &= mask[start_bit] | notmask[end_bit];
-
-
-        /*  Now we mask out anything in the value that is prior to the      */
-        /*  start bit and after the end bit.  This is, of course, after we  */
-        /*  have shifted the value left past the end bit.                   */
-
-        buffer[start_byte] |= (value << (8 - end_bit)) &
-                              (notmask[start_bit] & mask[end_bit]);
-    }
-
-
-    /*  If the value covers more than 1 byte, store it.                     */
-
-    else
-    {
-        /*  Here we mask out data prior to the start bit of the first byte. */
-
-        buffer[start_byte] &= mask[start_bit];
-
-
-        /*  Get the upper bits of the value and mask out anything prior to  */
-        /*  the start bit.  As an example of what's happening here, if we   */
-        /*  wanted to store a 14 bit field and the start bit for the first  */
-        /*  byte is 3, we would be storing the upper 5 bits of the value in */
-        /*  the first byte.                                                 */
-
-        buffer[start_byte++] |= (value >> (numbits - (8 - start_bit))) &
-                                notmask[start_bit];
-
-
-        /*  Loop while decrementing the byte counter.                       */
-
-        while (i--)
-        {
-            /*  Clear the entire byte.                                      */
-
-            buffer[start_byte] &= 0;
-
-
-            /*  Get the next 8 bits from the value.                         */
-
-            buffer[start_byte++] |= (value >> ((i << 3) + end_bit)) & 255;
-        }
-
-
-        /*  For the last byte we mask out anything after the end bit.       */
-
-        buffer[start_byte] &= notmask[end_bit];
-
-
-        /*  Get the last part of the value and stuff it in the end byte.    */
-        /*  The left shift effectively erases anything above 8 - end_bit    */
-        /*  bits in the value so that it will fit in the last byte.         */
-
-        buffer[start_byte] |= (value << (8 - end_bit));
-    }
-}
-
-
-
-/***************************************************************************\
-*                                                                           *
-*   Function        bit_unpack - Unpacks a long value from consecutive bits *
-*                   in buffer.                                              *
-*                                                                           *
-*   Synopsis        bit_unpack (buffer, start, numbits);                    *
-*                                                                           *
-*                   NV_U_BYTE buffer[]      address of buffer to use        *
-*                   NV_U_INT32 start        start bit position in buffer    *
-*                   NV_U_INT32 numbits      number of bits to retrieve      *
-*                                                                           *
-*   Description     Unpacks the value from 'numbits' bits in 'buffer'       *
-*                   starting at bit position 'start'.  The value is assumed *
-*                   to be unsigned.  The majority of this code is based on  *
-*                   Appendix C of Naval Ocean Research and Development      *
-*                   Activity Report #236, 'Data Base Structure to Support   *
-*                   the Production of the Digital Bathymetric Data Base',   *
-*                   Nov. 1989, James E. Braud, John L. Breckenridge, James  *
-*                   E. Current, Jerry L. Landrum.                           *
-*                                                                           *
-*   Returns         NV_U_INT32              value retrieved from buffer     *
-*                                                                           *
-*   Author          Jan C. Depner                                           *
-*                                                                           *
-\***************************************************************************/
-
-NV_U_INT32 bit_unpack (NV_U_BYTE buffer[], NV_U_INT32 start, NV_U_INT32 numbits)
-{
-    NV_INT32                start_byte, end_byte, start_bit, end_bit, i;
-    NV_U_INT32              value;
-
-
-    i = start + numbits;
-
-
-    /*  Right shift the start and end by 3 bits, this is the same as        */
-    /*  dividing by 8 but is faster.  This is computing the start and end   */
-    /*  bytes for the field.                                                */
-
-    start_byte = start >> 3;
-    end_byte = i >> 3;
-
-
-    /*  AND the start and end bit positions with 7, this is the same as     */
-    /*  doing a mod with 8 but is faster.  Here we are computing the start  */
-    /*  and end bits within the start and end bytes for the field.          */
-
-    start_bit = start & 7;
-    end_bit = i & 7;
-
-
-    /*  Compute the number of bytes covered.                                */
-
-    i = end_byte - start_byte - 1;
-
-
-    /*  If the value is stored in one byte, retrieve it.                    */
-
-    if (start_byte == end_byte)
-    {
-        /*  Mask out anything prior to the start bit and after the end bit. */
-
-        value = (NV_U_INT32) buffer[start_byte] & (notmask[start_bit] &
-                mask[end_bit]);
-
-
-        /*  Now we shift the value to the right.                            */
-
-        value >>= (8 - end_bit);
-    }
-
-
-    /*  If the value covers more than 1 byte, retrieve it.                  */
-
-    else
-    {
-        /*  Here we mask out data prior to the start bit of the first byte  */
-        /*  and shift to the left the necessary amount.                     */
-
-        value = (NV_U_INT32) (buffer[start_byte++] & notmask[start_bit]) <<
-                (numbits - (8 - start_bit));
-
-
-        /*  Loop while decrementing the byte counter.                       */
-
-        while (i--)
-        {
-            /*  Get the next 8 bits from the buffer.                        */
-
-            value += (NV_U_INT32) buffer[start_byte++] << ((i << 3) + end_bit);
-        }
-
-
-        /*  For the last byte we mask out anything after the end bit and    */
-        /*  then shift to the right (8 - end_bit) bits.                     */
-
-        value += (NV_U_INT32) (buffer[start_byte] & mask[end_bit]) >>
-                 (8 - end_bit);
-    }
-
-    return (value);
-}
-
-
-
-/***************************************************************************\
-*                                                                           *
-*   Function        signed_bit_unpack - Unpacks a signed long value from    *
-*                   consecutive bits in buffer.                             *
-*                                                                           *
-*   Synopsis        signed_bit_unpack (buffer, start, numbits);             *
-*                                                                           *
-*                   NV_U_BYTE buffer[]      address of buffer to use        *
-*                   NV_U_INT32 start        start bit position in buffer    *
-*                   NV_U_INT32 numbits      number of bits to retrieve      *
-*                                                                           *
-*   Description     Unpacks the value from 'numbits' bits in 'buffer'       *
-*                   starting at bit position 'start'.  The value is assumed *
-*                   to be signed.  The majority of this code is based on    *
-*                   Appendix C of Naval Ocean Research and Development      *
-*                   Activity Report #236, 'Data Base Structure to Support   *
-*                   the Production of the Digital Bathymetric Data Base',   *
-*                   Nov. 1989, James E. Braud, John L. Breckenridge, James  *
-*                   E. Current, Jerry L. Landrum.                           *
-*                                                                           *
-*   Returns         NV_INT32              value retrieved from buffer       *
-*                                                                           *
-*   Author          Jan C. Depner                                           *
-*                                                                           *
-\***************************************************************************/
-
-NV_INT32 signed_bit_unpack (NV_U_BYTE buffer[], NV_U_INT32 start,
-                            NV_U_INT32 numbits)
-{
-    static NV_INT32              extend_mask = 0x7fffffff;
-    NV_INT32                     value;
-
-    /* This function is not used anywhere that this case could arise. */
-    assert (numbits > 0);
-
-    value = bit_unpack (buffer, start, numbits);
-
-    if (value & (1 << (numbits - 1))) value |= (extend_mask << numbits);
-
-    return (value);
-}
-
-

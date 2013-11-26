@@ -199,7 +199,7 @@ ExternalProject_Add(extern_tinyxml
 		-DCMAKE_INSTALL_PREFIX=${tinyxml_INSTALL_DIR}
 		-DUSE_STL=ON
 	# install
-	INSTALL_DIR ${tinyxmlxml_INSTALL_DIR}
+	INSTALL_DIR ${tinyxml_INSTALL_DIR}
 	)
 
 add_library(tinyxml STATIC IMPORTED)
@@ -211,6 +211,33 @@ set_target_properties(tinyxml
 add_dependencies(tinyxml extern_tinyxml)
 include_directories(${tinyxml_INCLUDE_DIR})
 add_definitions("-DTIXML_USE_STL")
+
+################################################################################
+# libtcd (external)
+################################################################################
+
+set(tcd_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
+set(tcd_INCLUDE_DIR ${tcd_INSTALL_DIR}/include)
+set(tcd_LIBRARY_DIR ${tcd_INSTALL_DIR}/lib)
+
+ExternalProject_Add(extern_tcd
+	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/tcd
+	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/libtcd-2.2.5
+	# configure
+	CMAKE_ARGS
+		-DCMAKE_INSTALL_PREFIX=${tcd_INSTALL_DIR}
+	# install
+	INSTALL_DIR ${tcd_INSTALL_DIR}
+	)
+
+add_library(tcd STATIC IMPORTED)
+set_target_properties(tcd
+	PROPERTIES
+		IMPORTED_LOCATION
+			${tcd_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}tcd${CMAKE_STATIC_LIBRARY_SUFFIX}
+	)
+add_dependencies(tcd extern_tcd)
+include_directories(${tcd_INCLUDE_DIR})
 
 ################################################################################
 # GDAL (external)
@@ -676,8 +703,6 @@ SET(HDRS
 	${HDR_GEO}
 	${HDR_CHART}
 
-	src/libtcd/tcd.h
-
 	src/tide/TCMgr.h
 
 	src/garmin/cpo_satellite_data.h
@@ -811,8 +836,6 @@ SET(SRCS
 	${SRC_SOUND}
 	${SRC_GEO}
 	${SRC_CHART}
-
-	src/libtcd/tcd.cpp
 
 	src/tide/TCMgr.cpp
 
@@ -1277,6 +1300,7 @@ If(NOT APPLE)
 	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
 		pugixml
 		tinyxml
+		tcd
 		${wxWidgets_LIBRARIES}
 		NMEA0183
 		${EXTRA_LIBS}

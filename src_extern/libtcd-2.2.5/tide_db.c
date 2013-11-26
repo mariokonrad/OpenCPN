@@ -5214,6 +5214,7 @@ NV_BOOL add_tide_record (TIDE_RECORD *rec, DB_HEADER_PUBLIC *db)
 }
 
 
+#ifdef HAVE_UNISTD_H /* necessary because of Winblows not knowing ftruncate */
 /*****************************************************************************\
 
     Function        delete_tide_record - deletes a record and all subordinate
@@ -5323,6 +5324,7 @@ NV_BOOL delete_tide_record (NV_INT32 num, DB_HEADER_PUBLIC *db)
 
   return NVTrue;
 }
+#endif
 
 
 /*****************************************************************************\

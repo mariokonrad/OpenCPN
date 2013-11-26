@@ -14,13 +14,9 @@ pugixml-1.2
 
 License: MIT (http://www.opensource.org/licenses/mit-license.html)
 
-Homepage:
+Homepage: http://pugixml.org/
 
-	http://pugixml.org/
-
-Download:
-
-	http://pugixml.googlecode.com/files/pugixml-1.2.tar.gz
+Download: http://pugixml.googlecode.com/files/pugixml-1.2.tar.gz
 
 svn:
 
@@ -38,11 +34,11 @@ Notes:
 tinyxml-2.6.2
 -------------
 
-License:
+License: zlib/libpng (http://opensource.org/licenses/Zlib)
 
-Homepage:
+Homepage: http://www.grinninglizard.com/tinyxml/
 
-Download:
+Download: http://sourceforge.net/projects/tinyxml/
 
 Notes:
 - Altered CMakeLists.txt
@@ -53,14 +49,13 @@ libtcd-2.2.5
 
 License: Public Domain
 
-Homepage:
+Homepage: http://www.flaterco.com/xtide/libtcd.html
 
-	http://www.flaterco.com/xtide/libtcd.html
-
-Download:
-
-	ftp://ftp.flaterco.com/xtide/libtcd-2.2.5-r3.tar.bz2
+Download: ftp://ftp.flaterco.com/xtide/libtcd-2.2.5-r3.tar.bz2
 
 Notes:
 - Added a CMakeLists.txt file
+- Inserted additional '#ifdef HAVE_UNISTD_H' preprocessor directive, necessary because
+  Windows does not know ftruncate (see tide_db.c:delete_tide_record).
+
 

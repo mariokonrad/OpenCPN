@@ -777,6 +777,7 @@ SET(HDRS
 	src/WayPointman.h
 	src/RouteManagerDialog.h
 	src/RouteProp.h
+	src/Daylight.h
 	src/MarkInfo.h
 	src/LatLonTextCtrl.h
 	src/RoutePrintout.h
@@ -895,6 +896,7 @@ SET(SRCS
 	src/Routeman.cpp
 	src/WayPointman.cpp
 	src/RouteManagerDialog.cpp
+	src/Daylight.cpp
 	src/RouteProp.cpp
 	src/MarkInfo.cpp
 	src/LatLonTextCtrl.cpp

@@ -134,6 +134,9 @@ public:
 	void setEnroutePoint(RoutePoint*);
 
 private:
+	void update_track_properties();
+	void update_route_properties();
+
 	wxTextCtrl* m_TotalDistCtl;
 	wxTextCtrl* m_PlanSpeedCtl;
 	wxTextCtrl* m_StartTimeCtl;

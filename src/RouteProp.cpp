@@ -36,6 +36,7 @@
 #include <DimeControl.h>
 #include <Units.h>
 #include <MagneticVariation.h>
+#include <Daylight.h>
 
 #include <geo/GeoRef.h>
 
@@ -75,197 +76,6 @@ extern MainFrame* gFrame;
 
 // Global print route selection dialog
 RoutePrintSelection* pRoutePrintSelection = NULL;
-
-#define MOTWILIGHT 1    // in some languages there may be a distinction between morning/evening
-#define SUNRISE    2
-#define DAY        3
-#define SUNSET     4
-#define EVTWILIGHT 5
-#define NIGHT      6
-
-/* Next high tide, low tide, transition of the mark level, or some
-   combination.
-   Bit      Meaning
-   0       low tide
-   1       high tide
-   2       falling transition
-   3       rising transition
- */
-
-#define LW      1
-#define HW      2
-#define FALLING 4
-#define RISING  8
-
-// Sunrise/twilight calculation for route properties.
-// limitations: latitude below 60, year between 2000 and 2100
-// riset is +1 for rise -1 for set
-// adapted by author's permission from QBASIC source as published at
-//     http://www.stargazing.net/kepler
-static wxString GetDaylightString(int index)
-{
-	switch (index) {
-		case 0:
-			return _T(" - ");
-		case 1:
-			return _("MoTwilight");
-		case 2:
-			return _("Sunrise");
-		case 3:
-			return _("Daytime");
-		case 4:
-			return _("Sunset");
-		case 5:
-			return _("EvTwilight");
-		case 6:
-			return _("Nighttime");
-		default:
-			return _T("");
-	}
-}
-
-static double sign(double x)
-{
-	if (x < 0.0)
-		return -1.0;
-	else
-		return 1.0;
-}
-
-static double FNipart(double x)
-{
-	return (sign(x) * (int)(fabs(x)));
-}
-
-static double FNday(int y, int m, int d, int h)
-{
-	long fd = (367 * y - 7 * (y + (m + 9) / 12) / 4 + 275 * m / 9 + d);
-	return ((double)fd - 730531.5 + h / 24.);
-}
-
-static double FNrange(double x)
-{
-	double b = x / (2.0 * M_PI);
-	double a = (2.0 * M_PI)* (b - FNipart(b));
-	if (a < 0.0)
-		a = (2.0 * M_PI) + a;
-	return a;
-}
-
-static double getDaylightEvent(double glat, double glong, int riset, double altitude, int y, int m,
-							   int d)
-{
-	double day = FNday(y, m, d, 0);
-	double days, correction;
-	double utold = M_PI;
-	double utnew = 0.;
-	double sinalt = sin(altitude * (M_PI / 180.0)); // go for the sunrise/sunset altitude first
-	double sinphi = sin(glat * (M_PI / 180.0));
-	double cosphi = cos(glat * (M_PI / 180.0));
-	double g = glong * (M_PI / 180.0);
-	double t, L, G, ec, lambda, E, obl, delta, GHA, cosc;
-	int limit = 12;
-	while ((fabs(utold - utnew) > .001)) {
-		if (limit-- <= 0)
-			return (-1.);
-		days = day + utnew / (2.0 * M_PI);
-		t = days / 36525.;
-		//     get arguments of Sun's orbit
-		L = FNrange(4.8949504201433 + 628.331969753199 * t);
-		G = FNrange(6.2400408 + 628.3019501 * t);
-		ec = .033423 * sin(G) + .00034907 * sin(2 * G);
-		lambda = L + ec;
-		E = -1. * ec + .0430398 * sin(2 * lambda) - .00092502 * sin(4. * lambda);
-		obl = .409093 - .0002269 * t;
-		delta = asin(sin(obl) * sin(lambda));
-		GHA = utold - M_PI + E;
-		cosc = (sinalt - sinphi * sin(delta)) / (cosphi * cos(delta));
-		if (cosc > 1.)
-			correction = 0.;
-		else if (cosc < -1.)
-			correction = M_PI;
-		else
-			correction = acos(cosc);
-		double tmp = utnew;
-		utnew = FNrange(utold - (GHA + g + riset * correction));
-		utold = tmp;
-	}
-	return (utnew * (180.0 / M_PI) / 15.0); // returns decimal hours UTC
-}
-
-static double getLMT(double ut, double lon)
-{
-	double t = ut + lon / 15.0;
-	if (t >= 0.0)
-		if (t <= 24.0)
-			return (t);
-		else
-			return (t - 24.0);
-	else
-		return (t + 24.0);
-}
-
-static int getDaylightStatus(double lat, double lon, wxDateTime utcDateTime)
-{
-	if (fabs(lat) > 60.)
-		return (0);
-	int y = utcDateTime.GetYear();
-	int m = utcDateTime.GetMonth() + 1; // wxBug? months seem to run 0..11 ?
-	int d = utcDateTime.GetDay();
-	int h = utcDateTime.GetHour();
-	int n = utcDateTime.GetMinute();
-	int s = utcDateTime.GetSecond();
-	if (y < 2000 || y > 2100)
-		return (0);
-
-	double ut = (double)h + (double)n / 60. + (double)s / 3600.;
-	double lt = getLMT(ut, lon);
-	double rsalt = -0.833;
-	double twalt = -12.;
-
-	// wxString msg;
-
-	if (lt <= 12.) {
-		double sunrise = getDaylightEvent(lat, lon, +1, rsalt, y, m, d);
-		if (sunrise < 0.0)
-			return (0);
-		else
-			sunrise = getLMT(sunrise, lon);
-
-		if (fabs(lt - sunrise) < 0.15)
-			return (SUNRISE);
-		if (lt > sunrise)
-			return (DAY);
-		double twilight = getDaylightEvent(lat, lon, +1, twalt, y, m, d);
-		if (twilight < 0.0)
-			return (0);
-		else
-			twilight = getLMT(twilight, lon);
-		if (lt > twilight)
-			return (MOTWILIGHT);
-		else
-			return (NIGHT);
-	} else {
-		double sunset = getDaylightEvent(lat, lon, -1, rsalt, y, m, d);
-		if (sunset < 0.0)
-			return (0);
-		else
-			sunset = getLMT(sunset, lon);
-		if (fabs(lt - sunset) < 0.15)
-			return (SUNSET);
-		if (lt < sunset)
-			return (DAY);
-		double twilight = getDaylightEvent(lat, lon, -1, twalt, y, m, d);
-		if (twilight < 0.0)
-			return (0);
-		else
-			twilight = getLMT(twilight, lon);
-		if (lt < twilight)
-			return (EVTWILIGHT);
-		else
-			return (NIGHT);
-	}
-}
 
 #define UTCINPUT         0
 #define LTINPUT          1 // i.e. this PC local time
@@ -317,7 +127,6 @@ BEGIN_EVENT_TABLE( RouteProp, wxDialog )
 	EVT_BUTTON( ID_ROUTEPROP_PRINT, RouteProp::OnRoutepropPrintClick )
 END_EVENT_TABLE()
 
-/// RouteProp constructor
 RouteProp::RouteProp()
 {
 }
@@ -788,14 +597,14 @@ void RouteProp::CreateControls()
 	itemBoxSizer16->Add(m_OKButton, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_OKButton->SetDefault();
 
-	//      To correct a bug in MSW commctl32, we need to catch column width drag events, and do a
+	// To correct a bug in MSW commctl32, we need to catch column width drag events, and do a
 	// Refresh()
-	//      Otherwise, the column heading disappear.....
-	//      Does no harm for GTK builds, so no need for conditional
+	// Otherwise, the column heading disappear.....
+	// Does no harm for GTK builds, so no need for conditional
 	Connect(wxEVT_COMMAND_LIST_COL_END_DRAG,
 			(wxObjectEventFunction)(wxEventFunction) & RouteProp::OnEvtColDragEnd);
 
-	//      Create the two list controls
+	// Create the two list controls
 	m_wpList = new wxListCtrl(itemDialog1, ID_LISTCTRL, wxDefaultPosition, wxSize(800, 200),
 							  wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_EDIT_LABELS);
 
@@ -1031,15 +840,388 @@ void RouteProp::InitializeList()
 		}
 
 		// Update the plan speed and route start time controls
-		wxString s;
-		s.Printf(_T("%5.2f"), m_planspeed);
-		m_PlanSpeedCtl->SetValue(s);
+		m_PlanSpeedCtl->SetValue(wxString::Format(_T("%5.2f"), m_planspeed));
 
 		if (m_starttime.IsValid()) {
-			wxString s = ts2s(m_starttime, m_tz_selection, (int)gStart_LMT_Offset, INPUT_FORMAT);
-			m_StartTimeCtl->SetValue(s);
+			m_StartTimeCtl->SetValue(ts2s(m_starttime, m_tz_selection, (int)gStart_LMT_Offset, INPUT_FORMAT));
 		} else
 			m_StartTimeCtl->Clear();
+	}
+}
+
+void RouteProp::update_track_properties()
+{
+	m_pRoute->UpdateSegmentDistances(); // get segment and total distance but ignore leg speed calcs
+
+	// Calculate AVG speed if we are showing a track and total time
+	RoutePoint* last_point = m_pRoute->GetLastPoint();
+	RoutePoint* first_point = m_pRoute->GetPoint(1);
+	double total_seconds = 0.0;
+
+	if (last_point->GetCreateTime().IsValid() && first_point->GetCreateTime().IsValid()) {
+		total_seconds = last_point->GetCreateTime()
+							.Subtract(first_point->GetCreateTime())
+							.GetSeconds()
+							.ToDouble();
+		if (total_seconds != 0.0) {
+			m_avgspeed = m_pRoute->m_route_length / total_seconds * 3600.0;
+		} else {
+			m_avgspeed = 0;
+		}
+		m_PlanSpeedCtl->SetValue(wxString::Format(_T("%5.2f"), toUsrSpeed(m_avgspeed)));
+	} else {
+		m_PlanSpeedCtl->SetValue(_T("--"));
+	}
+
+	// Total length
+	m_TotalDistCtl->SetValue(wxString::Format(wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(m_pRoute->m_route_length)));
+
+	// Time
+	wxString time_form;
+	wxTimeSpan time(0, 0, (int)total_seconds, 0);
+	if (total_seconds > 3600.0 * 24.0)
+		time_form = time.Format(_(" %D Days  %H Hours  %M Minutes"));
+	else if (total_seconds > 0.0)
+		time_form = time.Format(_(" %H Hours  %M Minutes"));
+	else
+		time_form = _T("--");
+	m_TimeEnrouteCtl->SetValue(time_form);
+}
+
+void RouteProp::update_route_properties()
+{
+	// Update the "tides event" column header
+	wxListItem column_info;
+	if (m_wpList->GetColumn(8, column_info)) {
+		wxString c = _("Next tide event");
+		if (gpIDX && m_starttime.IsValid()) {
+			c = _T("@~~");
+			c.Append(wxString(gpIDX->IDX_station_name, wxConvUTF8));
+			int i = c.Find(',');
+			if (i != wxNOT_FOUND)
+				c.Remove(i);
+		}
+		column_info.SetText(c);
+		m_wpList->SetColumn(8, column_info);
+	}
+
+	// Update the "ETE/Timestamp" column header
+
+	if (m_wpList->GetColumn(6, column_info)) {
+		if (m_starttime.IsValid())
+			column_info.SetText(_("ETA"));
+		else
+			column_info.SetText(_("ETE"));
+		m_wpList->SetColumn(6, column_info);
+	}
+
+	m_pRoute->UpdateSegmentDistances(m_planspeed); // get segment and total distance
+	double leg_speed = m_planspeed;
+	wxTimeSpan stopover_time(0); // time spent waiting for ETD
+	wxTimeSpan joining_time(0); // time spent before reaching first waypoint
+
+	double total_seconds = 0.;
+
+	if (m_pRoute) {
+		total_seconds = m_pRoute->m_route_time;
+		if (m_bStartNow) {
+			if (m_pEnroutePoint)
+				gStart_LMT_Offset = static_cast<long>(m_pEnroutePoint->m_lon * 3600.0 / 15.0);
+			else
+				gStart_LMT_Offset
+					= static_cast<long>(m_pRoute->pRoutePointList->front()->m_lon * 3600.0 / 15.0);
+		}
+	}
+
+	const int tz_selection = pDispTz->GetSelection();
+
+	if (m_starttime.IsValid()) {
+		wxString s;
+		if (m_bStartNow) {
+			wxDateTime d = wxDateTime::Now();
+			if (tz_selection == 1) {
+				m_starttime = d.ToUTC();
+				s = _T(">");
+			}
+		}
+		s += ts2s(m_starttime, tz_selection, static_cast<int>(gStart_LMT_Offset), INPUT_FORMAT);
+		m_StartTimeCtl->SetValue(s);
+	} else
+		m_StartTimeCtl->Clear();
+
+	if (IsThisRouteExtendable())
+		m_ExtendButton->Enable(true);
+
+	// Total length
+	if (!m_pEnroutePoint) {
+		m_TotalDistCtl->SetValue(wxString::Format(wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(m_pRoute->m_route_length)));
+	} else {
+		m_TotalDistCtl->Clear();
+	}
+
+	wxString time_form;
+	wxString tide_form;
+
+	// Time
+
+	wxTimeSpan time(0, 0, static_cast<int>(total_seconds), 0);
+	if (total_seconds > 3600.0 * 24.0)
+		time_form = time.Format(_(" %D Days  %H Hours  %M Minutes"));
+	else
+		time_form = time.Format(_(" %H Hours  %M Minutes"));
+
+	if (!m_pEnroutePoint)
+		m_TimeEnrouteCtl->SetValue(time_form);
+	else
+		m_TimeEnrouteCtl->Clear();
+
+	// Iterate on Route Points
+
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	int i = 0;
+	double slat = nav.lat;
+	double slon = nav.lon;
+	double tdis = 0.0;
+	double tsec = 0.0; // total time in seconds
+
+	int stopover_count = 0;
+	bool arrival = true; // marks which pass over the wpt we do - 1. arrival 2. departure
+	bool enroute = true; // for active route, skip all points up to the active point
+
+	if (m_pRoute->m_bRtIsActive) {
+		if (m_pEnroutePoint && m_bStartNow)
+			enroute = (m_pRoute->GetPoint(1)->m_GUID == m_pEnroutePoint->m_GUID);
+	}
+
+	wxString nullify = _T("----");
+
+	RoutePointList::iterator node = m_pRoute->pRoutePointList->begin();
+	while (node != m_pRoute->pRoutePointList->end()) {
+		RoutePoint* prp = *node;
+		long item_line_index = i + stopover_count;
+
+		// Leg
+		wxString t = wxString::Format(_T("%d"), i);
+		if (i == 0)
+			t = _T("---");
+		if (arrival)
+			m_wpList->SetItem(item_line_index, 0, t);
+
+		// Mark Name
+		if (arrival)
+			m_wpList->SetItem(item_line_index, 1, prp->GetName());
+		// Store Dewcription
+		if (arrival)
+			m_wpList->SetItem(item_line_index, 9, prp->GetDescription());
+
+		// Distance
+		// Note that Distance/Bearing for Leg 000 is as from current position
+
+		double brg;
+		double leg_dist;
+		bool starting_point = false;
+
+		starting_point = (i == 0) && enroute;
+		if (m_pEnroutePoint && !starting_point)
+			starting_point = (prp->m_GUID == m_pEnroutePoint->m_GUID);
+
+		if (starting_point) {
+			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+
+			slat = nav.lat;
+			slon = nav.lon;
+			if (nav.sog > 0.0)
+				leg_speed = nav.sog; // should be VMG
+			else
+				leg_speed = m_planspeed;
+			if (m_bStartNow) {
+				geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, slat, slon, &brg,
+											 &leg_dist);
+				if (i == 0)
+					joining_time
+						= wxTimeSpan::Seconds((long)wxRound((leg_dist * 3600.0) / leg_speed));
+			}
+			enroute = true;
+		} else {
+			if (prp->m_seg_vmg > 0.0)
+				leg_speed = prp->m_seg_vmg;
+			else
+				leg_speed = m_planspeed;
+		}
+
+		geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist);
+
+		// calculation of course at current WayPoint.
+		double course = 10;
+		double tmp_leg_dist = 23;
+		RoutePointList::iterator next_node = node + 1;
+		RoutePoint* _next_prp = (next_node != m_pRoute->pRoutePointList->end()) ? *next_node : NULL;
+		if (_next_prp) {
+			geo::DistanceBearingMercator(_next_prp->m_lat, _next_prp->m_lon, prp->m_lat,
+										 prp->m_lon, &course, &tmp_leg_dist);
+		} else {
+			course = 0.0;
+			tmp_leg_dist = 0.0;
+		}
+
+		prp->SetCourse(course); // save the course to the next waypoint for printing.
+		// end of calculation
+
+		t.Printf(_T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance(leg_dist));
+		if (arrival)
+			m_wpList->SetItem(item_line_index, 2, t);
+		if (!enroute)
+			m_wpList->SetItem(item_line_index, 2, nullify);
+		prp->SetDistance(leg_dist); // save the course to the next waypoint for printing.
+
+		//  Bearing
+		if (g_bShowMag)
+			t.Printf(_T("%03.0f Deg. M"), navigation::GetTrueOrMag(brg));
+		else
+			t.Printf(_T("%03.0f Deg. T"), navigation::GetTrueOrMag(brg));
+		if (arrival)
+			m_wpList->SetItem(item_line_index, 3, t);
+		if (!enroute)
+			m_wpList->SetItem(item_line_index, 3, nullify);
+
+		// Course (bearing of next )
+		if (_next_prp) {
+			if (g_bShowMag)
+				t.Printf(_T("%03.0f Deg. M"), navigation::GetTrueOrMag(course));
+			else
+				t.Printf(_T("%03.0f Deg. T"), navigation::GetTrueOrMag(course));
+			if (arrival)
+				m_wpList->SetItem(item_line_index, 10, t);
+		} else {
+			m_wpList->SetItem(item_line_index, 10, nullify);
+		}
+
+		// Lat/Lon
+		wxString tlat = toSDMM(1, prp->m_lat, prp->m_bIsInTrack); // low precision for routes
+		if (arrival)
+			m_wpList->SetItem(item_line_index, 4, tlat);
+
+		wxString tlon = toSDMM(2, prp->m_lon, prp->m_bIsInTrack);
+		if (arrival)
+			m_wpList->SetItem(item_line_index, 5, tlon);
+
+		tide_form = _T("");
+
+		long LMT_Offset = static_cast<long>(prp->m_lon * 3600.0 / 15.0); // offset in seconds from UTC for given location (-1 hr / 15 deg W)
+
+		// Time to each waypoint or creation date for tracks
+		if (i == 0 && enroute) {
+			time_form.Printf(_("Start"));
+			if (m_starttime.IsValid()) {
+				wxDateTime act_starttime = m_starttime + joining_time;
+				time_form.Append(_T(": "));
+
+				if (!arrival) {
+					wxDateTime etd = prp->m_seg_etd;
+					if (etd.IsValid() && etd.IsLaterThan(m_starttime)) {
+						stopover_time += etd.Subtract(m_starttime);
+						act_starttime = prp->m_seg_etd;
+					}
+				}
+
+				wxString s = ts2s(act_starttime, tz_selection, (int)LMT_Offset, DISPLAY_FORMAT);
+				time_form.Append(s);
+				time_form.Append(_T("   ("));
+				time_form.Append(GetDaylightString(getDaylightStatus(prp->m_lat, prp->m_lon, act_starttime)));
+				time_form.Append(_T(")"));
+
+				if (ptcmgr) {
+					int jx = 0;
+					if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
+						tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
+						jx = ptcmgr->GetStationIDXbyName(tide_form, prp->m_lat, prp->m_lon);
+					}
+					if (gpIDX || jx) {
+						time_t tm = act_starttime.GetTicks();
+						tide_form = MakeTideInfo(jx, tm, tz_selection, LMT_Offset);
+					}
+				}
+			}
+			tdis = 0;
+			tsec = 0.0;
+		} else {
+			if (arrival && enroute)
+				tdis += leg_dist;
+			if (leg_speed) {
+				if (arrival && enroute)
+					tsec += 3600 * leg_dist / leg_speed; // time in seconds to arrive here
+				wxTimeSpan time(0, 0, (int)tsec, 0);
+
+				if (m_starttime.IsValid()) {
+
+					wxDateTime ueta = m_starttime;
+					ueta.Add(time + stopover_time + joining_time);
+
+					if (!arrival) {
+						wxDateTime etd = prp->m_seg_etd;
+						if (etd.IsValid() && etd.IsLaterThan(ueta)) {
+							stopover_time += etd.Subtract(ueta);
+							ueta = prp->m_seg_etd;
+						}
+					}
+
+					time_form = ts2s(ueta, tz_selection, LMT_Offset, DISPLAY_FORMAT);
+					time_form.Append(_T("   ("));
+					time_form.Append(GetDaylightString(getDaylightStatus(prp->m_lat, prp->m_lon, ueta)));
+					time_form.Append(_T(")"));
+
+					if (ptcmgr) {
+						int jx = 0;
+						if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
+							tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
+							jx = ptcmgr->GetStationIDXbyName(tide_form, prp->m_lat, prp->m_lon);
+						}
+						if (gpIDX || jx) {
+							time_t tm = ueta.GetTicks();
+							tide_form = MakeTideInfo(jx, tm, tz_selection, LMT_Offset);
+						}
+					}
+				} else {
+					if (tsec > 3600.0 * 24.0)
+						time_form = time.Format(_T(" %D D  %H H  %M M"));
+					else
+						time_form = time.Format(_T(" %H H  %M M"));
+				}
+			}
+		}
+
+		if (enroute && (arrival || m_starttime.IsValid()))
+			m_wpList->SetItem(item_line_index, 6, time_form);
+		else
+			m_wpList->SetItem(item_line_index, 6, _T("----"));
+
+		// Leg speed
+		if (arrival) {
+			m_wpList->SetItem(item_line_index, 7, wxString::Format(_T("%5.2f"), toUsrSpeed(leg_speed)));
+		}
+
+		if (enroute) {
+			m_wpList->SetItem(item_line_index, 8, tide_form);
+		} else {
+			m_wpList->SetItem(item_line_index, 7, nullify);
+			m_wpList->SetItem(item_line_index, 8, nullify);
+		}
+
+		//  Save for iterating distance/bearing calculation
+		slat = prp->m_lat;
+		slon = prp->m_lon;
+
+		// if stopover (ETD) found, loop for next output line for the same point
+		//   with departure time & tide information
+
+		if (arrival && (prp->m_seg_etd.IsValid())) {
+			stopover_count++;
+			arrival = false;
+		} else {
+			arrival = true;
+			i++;
+			++node;
+		}
 	}
 }
 
@@ -1052,400 +1234,20 @@ bool RouteProp::UpdateProperties()
 
 	m_TotalDistCtl->SetValue(_T(""));
 	m_TimeEnrouteCtl->SetValue(_T(""));
-	int tz_selection = pDispTz->GetSelection();
-	long LMT_Offset = 0; // offset in seconds from UTC for given location (-1 hr / 15 deg W)
 
 	m_SplitButton->Enable(false);
 	m_ExtendButton->Enable(false);
 
 	if (m_pRoute->m_bIsTrack) {
-		m_pRoute->UpdateSegmentDistances(); // get segment and total distance
-		// but ignore leg speed calcs
-
-		// Calculate AVG speed if we are showing a track and total time
-		RoutePoint* last_point = m_pRoute->GetLastPoint();
-		RoutePoint* first_point = m_pRoute->GetPoint(1);
-		double total_seconds = 0.;
-
-		if (last_point->GetCreateTime().IsValid() && first_point->GetCreateTime().IsValid()) {
-			total_seconds = last_point->GetCreateTime()
-								.Subtract(first_point->GetCreateTime())
-								.GetSeconds()
-								.ToDouble();
-			if (total_seconds != 0.) {
-				m_avgspeed = m_pRoute->m_route_length / total_seconds * 3600;
-			} else {
-				m_avgspeed = 0;
-			}
-			wxString s;
-			s.Printf(_T("%5.2f"), toUsrSpeed(m_avgspeed));
-			m_PlanSpeedCtl->SetValue(s);
-		} else {
-			wxString s(_T("--"));
-			m_PlanSpeedCtl->SetValue(s);
-		}
-
-		//  Total length
-		wxString slen;
-		slen.Printf(wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(m_pRoute->m_route_length));
-
-		m_TotalDistCtl->SetValue(slen);
-
-		//  Time
-		wxString time_form;
-		wxTimeSpan time(0, 0, (int)total_seconds, 0);
-		if (total_seconds > 3600. * 24.)
-			time_form = time.Format(_(" %D Days  %H Hours  %M Minutes"));
-		else if (total_seconds > 0.)
-			time_form = time.Format(_(" %H Hours  %M Minutes"));
-		else
-			time_form = _T("--");
-		m_TimeEnrouteCtl->SetValue(time_form);
-	} else { // Route
-		//    Update the "tides event" column header
-		wxListItem column_info;
-		if (m_wpList->GetColumn(8, column_info)) {
-			wxString c = _("Next tide event");
-			if (gpIDX && m_starttime.IsValid()) {
-				c = _T("@~~");
-				c.Append(wxString(gpIDX->IDX_station_name, wxConvUTF8));
-				int i = c.Find(',');
-				if (i != wxNOT_FOUND)
-					c.Remove(i);
-			}
-			column_info.SetText(c);
-			m_wpList->SetColumn(8, column_info);
-		}
-
-		// Update the "ETE/Timestamp" column header
-
-		if (m_wpList->GetColumn(6, column_info)) {
-			if (m_starttime.IsValid())
-				column_info.SetText(_("ETA"));
-			else
-				column_info.SetText(_("ETE"));
-			m_wpList->SetColumn(6, column_info);
-		}
-
-		m_pRoute->UpdateSegmentDistances(m_planspeed); // get segment and total distance
-		double leg_speed = m_planspeed;
-		wxTimeSpan stopover_time(0); // time spent waiting for ETD
-		wxTimeSpan joining_time(0); // time spent before reaching first waypoint
-
-		double total_seconds = 0.;
-
-		if (m_pRoute) {
-			total_seconds = m_pRoute->m_route_time;
-			if (m_bStartNow) {
-				if (m_pEnroutePoint)
-					gStart_LMT_Offset = long((m_pEnroutePoint->m_lon) * 3600.0 / 15.0);
-				else
-					gStart_LMT_Offset
-						= long((m_pRoute->pRoutePointList->front()->m_lon) * 3600.0 / 15.0);
-			}
-		}
-
-		if (m_starttime.IsValid()) {
-			wxString s;
-			if (m_bStartNow) {
-				wxDateTime d = wxDateTime::Now();
-				if (tz_selection == 1) {
-					m_starttime = d.ToUTC();
-					s = _T(">");
-				}
-			}
-			s += ts2s(m_starttime, tz_selection, (int)gStart_LMT_Offset, INPUT_FORMAT);
-			m_StartTimeCtl->SetValue(s);
-		} else
-			m_StartTimeCtl->Clear();
-
-		if (IsThisRouteExtendable())
-			m_ExtendButton->Enable(true);
-
-		// Total length
-		wxString slen;
-		slen.Printf(wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(m_pRoute->m_route_length));
-
-		if (!m_pEnroutePoint)
-			m_TotalDistCtl->SetValue(slen);
-		else
-			m_TotalDistCtl->Clear();
-
-		wxString time_form;
-		wxString tide_form;
-
-		// Time
-
-		wxTimeSpan time(0, 0, (int)total_seconds, 0);
-		if (total_seconds > 3600.0 * 24.0)
-			time_form = time.Format(_(" %D Days  %H Hours  %M Minutes"));
-		else
-			time_form = time.Format(_(" %H Hours  %M Minutes"));
-
-		if (!m_pEnroutePoint)
-			m_TimeEnrouteCtl->SetValue(time_form);
-		else
-			m_TimeEnrouteCtl->Clear();
-
-		// Iterate on Route Points
-
-		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		int i = 0;
-		double slat = nav.lat;
-		double slon = nav.lon;
-		double tdis = 0.;
-		double tsec = 0.; // total time in seconds
-
-		int stopover_count = 0;
-		bool arrival = true; // marks which pass over the wpt we do - 1. arrival 2. departure
-		bool enroute = true; // for active route, skip all points up to the active point
-
-		if (m_pRoute->m_bRtIsActive) {
-			if (m_pEnroutePoint && m_bStartNow)
-				enroute = (m_pRoute->GetPoint(1)->m_GUID == m_pEnroutePoint->m_GUID);
-		}
-
-		wxString nullify = _T("----");
-
-		RoutePointList::iterator node = m_pRoute->pRoutePointList->begin();
-		while (node != m_pRoute->pRoutePointList->end()) {
-			RoutePoint* prp = *node;
-			long item_line_index = i + stopover_count;
-
-			// Leg
-			wxString t;
-			t.Printf(_T("%d"), i);
-			if (i == 0)
-				t = _T("---");
-			if (arrival)
-				m_wpList->SetItem(item_line_index, 0, t);
-
-			// Mark Name
-			if (arrival)
-				m_wpList->SetItem(item_line_index, 1, prp->GetName());
-			// Store Dewcription
-			if (arrival)
-				m_wpList->SetItem(item_line_index, 9, prp->GetDescription());
-
-			// Distance
-			// Note that Distance/Bearing for Leg 000 is as from current position
-
-			double brg;
-			double leg_dist;
-			bool starting_point = false;
-
-			starting_point = (i == 0) && enroute;
-			if (m_pEnroutePoint && !starting_point)
-				starting_point = (prp->m_GUID == m_pEnroutePoint->m_GUID);
-
-			if (starting_point) {
-				const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-
-				slat = nav.lat;
-				slon = nav.lon;
-				if (nav.sog > 0.0)
-					leg_speed = nav.sog; // should be VMG
-				else
-					leg_speed = m_planspeed;
-				if (m_bStartNow) {
-					geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, slat, slon, &brg,
-												 &leg_dist);
-					if (i == 0)
-						joining_time
-							= wxTimeSpan::Seconds((long)wxRound((leg_dist * 3600.0) / leg_speed));
-				}
-				enroute = true;
-			} else {
-				if (prp->m_seg_vmg > 0.)
-					leg_speed = prp->m_seg_vmg;
-				else
-					leg_speed = m_planspeed;
-			}
-
-			geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist);
-
-			// calculation of course at current WayPoint.
-			double course = 10;
-			double tmp_leg_dist = 23;
-			RoutePointList::iterator next_node = node + 1;
-			RoutePoint* _next_prp = (next_node != m_pRoute->pRoutePointList->end()) ? *next_node : NULL;
-			if (_next_prp) {
-				geo::DistanceBearingMercator(_next_prp->m_lat, _next_prp->m_lon, prp->m_lat,
-											 prp->m_lon, &course, &tmp_leg_dist);
-			} else {
-				course = 0.0;
-				tmp_leg_dist = 0.0;
-			}
-
-			prp->SetCourse(course); // save the course to the next waypoint for printing.
-			// end of calculation
-
-			t.Printf(_T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance(leg_dist));
-			if (arrival)
-				m_wpList->SetItem(item_line_index, 2, t);
-			if (!enroute)
-				m_wpList->SetItem(item_line_index, 2, nullify);
-			prp->SetDistance(leg_dist); // save the course to the next waypoint for printing.
-
-			//  Bearing
-			if (g_bShowMag)
-				t.Printf(_T("%03.0f Deg. M"), navigation::GetTrueOrMag(brg));
-			else
-				t.Printf(_T("%03.0f Deg. T"), navigation::GetTrueOrMag(brg));
-
-			if (arrival)
-				m_wpList->SetItem(item_line_index, 3, t);
-			if (!enroute)
-				m_wpList->SetItem(item_line_index, 3, nullify);
-
-			// Course (bearing of next )
-			if (_next_prp) {
-				if (g_bShowMag)
-					t.Printf(_T("%03.0f Deg. M"), navigation::GetTrueOrMag(course));
-				else
-					t.Printf(_T("%03.0f Deg. T"), navigation::GetTrueOrMag(course));
-				if (arrival)
-					m_wpList->SetItem(item_line_index, 10, t);
-			} else
-				m_wpList->SetItem(item_line_index, 10, nullify);
-
-			//  Lat/Lon
-			wxString tlat = toSDMM(1, prp->m_lat, prp->m_bIsInTrack); // low precision for routes
-			if (arrival)
-				m_wpList->SetItem(item_line_index, 4, tlat);
-
-			wxString tlon = toSDMM(2, prp->m_lon, prp->m_bIsInTrack);
-			if (arrival)
-				m_wpList->SetItem(item_line_index, 5, tlon);
-
-			tide_form = _T("");
-
-			LMT_Offset = long((prp->m_lon) * 3600.0 / 15.0);
-
-			// Time to each waypoint or creation date for tracks
-			if (i == 0 && enroute) {
-				time_form.Printf(_("Start"));
-				if (m_starttime.IsValid()) {
-					wxDateTime act_starttime = m_starttime + joining_time;
-					time_form.Append(_T(": "));
-
-					if (!arrival) {
-						wxDateTime etd = prp->m_seg_etd;
-						if (etd.IsValid() && etd.IsLaterThan(m_starttime)) {
-							stopover_time += etd.Subtract(m_starttime);
-							act_starttime = prp->m_seg_etd;
-						}
-					}
-
-					int ds = getDaylightStatus(prp->m_lat, prp->m_lon, act_starttime);
-					wxString s = ts2s(act_starttime, tz_selection, (int)LMT_Offset, DISPLAY_FORMAT);
-					time_form.Append(s);
-					time_form.Append(_T("   ("));
-					time_form.Append(GetDaylightString(ds));
-					time_form.Append(_T(")"));
-
-					if (ptcmgr) {
-						int jx = 0;
-						if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
-							tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
-							jx = ptcmgr->GetStationIDXbyName(tide_form, prp->m_lat, prp->m_lon);
-						}
-						if (gpIDX || jx) {
-							time_t tm = act_starttime.GetTicks();
-							tide_form = MakeTideInfo(jx, tm, tz_selection, LMT_Offset);
-						}
-					}
-				}
-				tdis = 0;
-				tsec = 0.;
-				// end of route point 0
-			} else {
-				if (arrival && enroute)
-					tdis += leg_dist;
-				if (leg_speed) {
-					if (arrival && enroute)
-						tsec += 3600 * leg_dist / leg_speed; // time in seconds to arrive here
-					wxTimeSpan time(0, 0, (int)tsec, 0);
-
-					if (m_starttime.IsValid()) {
-
-						wxDateTime ueta = m_starttime;
-						ueta.Add(time + stopover_time + joining_time);
-
-						if (!arrival) {
-							wxDateTime etd = prp->m_seg_etd;
-							if (etd.IsValid() && etd.IsLaterThan(ueta)) {
-								stopover_time += etd.Subtract(ueta);
-								ueta = prp->m_seg_etd;
-							}
-						}
-
-						int ds = getDaylightStatus(prp->m_lat, prp->m_lon, ueta);
-						time_form = ts2s(ueta, tz_selection, LMT_Offset, DISPLAY_FORMAT);
-						time_form.Append(_T("   ("));
-						time_form.Append(GetDaylightString(ds));
-						time_form.Append(_T(")"));
-
-						if (ptcmgr) {
-							int jx = 0;
-							if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
-								tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
-								jx = ptcmgr->GetStationIDXbyName(tide_form, prp->m_lat, prp->m_lon);
-							}
-							if (gpIDX || jx) {
-								time_t tm = ueta.GetTicks();
-								tide_form = MakeTideInfo(jx, tm, tz_selection, LMT_Offset);
-							}
-						}
-					} else {
-						if (tsec > 3600. * 24.)
-							time_form = time.Format(_T(" %D D  %H H  %M M"));
-						else
-							time_form = time.Format(_T(" %H H  %M M"));
-					}
-				} // end if legspeed
-			} // end of repeatable route point
-
-			if (enroute && (arrival || m_starttime.IsValid()))
-				m_wpList->SetItem(item_line_index, 6, time_form);
-			else
-				m_wpList->SetItem(item_line_index, 6, _T("----"));
-
-			// Leg speed
-			wxString s;
-			s.Printf(_T("%5.2f"), toUsrSpeed(leg_speed));
-			if (arrival)
-				m_wpList->SetItem(item_line_index, 7, s);
-
-			if (enroute)
-				m_wpList->SetItem(item_line_index, 8, tide_form);
-			else {
-				m_wpList->SetItem(item_line_index, 7, nullify);
-				m_wpList->SetItem(item_line_index, 8, nullify);
-			}
-
-			//  Save for iterating distance/bearing calculation
-			slat = prp->m_lat;
-			slon = prp->m_lon;
-
-			// if stopover (ETD) found, loop for next output line for the same point
-			//   with departure time & tide information
-
-			if (arrival && (prp->m_seg_etd.IsValid())) {
-				stopover_count++;
-				arrival = false;
-			} else {
-				arrival = true;
-				i++;
-				++node;
-			}
-		}
+		update_track_properties();
+	} else {
+		update_route_properties();
 	}
 
 	if (m_pRoute->m_Colour == wxEmptyString) {
 		m_chColor->Select(0);
 	} else {
-		for (unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(wxString); i++) {
+		for (unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(::GpxxColorNames[0]); i++) {
 			if (m_pRoute->m_Colour == ::GpxxColorNames[i]) {
 				m_chColor->Select(i + 1);
 				break;
@@ -1453,14 +1255,14 @@ bool RouteProp::UpdateProperties()
 		}
 	}
 
-	for (unsigned int i = 0; i < sizeof(::StyleValues) / sizeof(int); i++) {
+	for (unsigned int i = 0; i < sizeof(::StyleValues) / sizeof(::StyleValues[0]); i++) {
 		if (m_pRoute->m_style == ::StyleValues[i]) {
 			m_chStyle->Select(i);
 			break;
 		}
 	}
 
-	for (unsigned int i = 0; i < sizeof(::WidthValues) / sizeof(int); i++) {
+	for (unsigned int i = 0; i < sizeof(::WidthValues) / sizeof(::WidthValues[0]); i++) {
 		if (m_pRoute->m_width == ::WidthValues[i]) {
 			m_chWidth->Select(i);
 			break;

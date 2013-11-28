@@ -141,17 +141,26 @@ extern Select* pSelect;
 extern bool g_bShowLayers;
 extern wxString g_default_wp_icon;
 
-// sort callback. Sort by route name.
-int sort_route_name_dir;
-#if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortRoutesOnName(long item1, long item2, wxIntPtr list)
-#else
-int wxCALLBACK SortRoutesOnName(long item1, long item2, long list)
-#endif
+struct SortContext
 {
-	wxListCtrl *lc = (wxListCtrl*)list;
+	wxListCtrl* list;
+	int direction;
+};
 
-	wxListItem it1, it2;
+#if wxCHECK_VERSION(2, 9, 0)
+typedef wxInPtr SortPtrType;
+#else
+typedef long SortPtrType;
+#endif
+
+/// Sort callback. Sort by route name.
+static int wxCALLBACK SortRoutesOnName(long item1, long item2, SortPtrType context)
+{
+	SortContext* sorting = reinterpret_cast<SortContext*>(context);
+	wxListCtrl* lc = sorting->list;
+
+	wxListItem it1;
+	wxListItem it2;
 	it1.SetId(lc->FindItem(-1, item1));
 	it1.SetColumn(1);
 	it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
@@ -163,24 +172,20 @@ int wxCALLBACK SortRoutesOnName(long item1, long item2, long list)
 	lc->GetItem(it1);
 	lc->GetItem(it2);
 
-	if(sort_route_name_dir & 1)
+	if (sorting->direction & 1)
 		return it2.GetText().CmpNoCase(it1.GetText());
 	else
 		return it1.GetText().CmpNoCase(it2.GetText());
-
 }
 
-// sort callback. Sort by route Destination.
-int sort_route_to_dir;
-#if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortRoutesOnTo(long item1, long item2, wxIntPtr list)
-#else
-int wxCALLBACK SortRoutesOnTo(long item1, long item2, long list)
-#endif
+/// Sort callback. Sort by route Destination.
+int wxCALLBACK SortRoutesOnTo(long item1, long item2, SortPtrType context)
 {
-	wxListCtrl *lc = (wxListCtrl*)list;
+	SortContext* sorting = reinterpret_cast<SortContext*>(context);
+	wxListCtrl* lc = sorting->list;
 
-	wxListItem it1, it2;
+	wxListItem it1;
+	wxListItem it2;
 	it1.SetId(lc->FindItem(-1, item1));
 	it1.SetColumn(2);
 	it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
@@ -192,23 +197,20 @@ int wxCALLBACK SortRoutesOnTo(long item1, long item2, long list)
 	lc->GetItem(it1);
 	lc->GetItem(it2);
 
-	if(sort_route_to_dir & 1)
+	if (sorting->direction & 1)
 		return it2.GetText().CmpNoCase(it1.GetText());
 	else
 		return it1.GetText().CmpNoCase(it2.GetText());
 }
 
-// sort callback. Sort by track name.
-int sort_track_name_dir;
-#if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortTracksOnName(long item1, long item2, wxIntPtr list)
-#else
-int wxCALLBACK SortTracksOnName(long item1, long item2, long list)
-#endif
+/// Sort callback. Sort by track name.
+int wxCALLBACK SortTracksOnName(long item1, long item2, SortPtrType context)
 {
-	wxListCtrl *lc = (wxListCtrl*)list;
+	SortContext* sorting = reinterpret_cast<SortContext*>(context);
+	wxListCtrl* lc = sorting->list;
 
-	wxListItem it1, it2;
+	wxListItem it1;
+	wxListItem it2;
 	it1.SetId(lc->FindItem(-1, item1));
 	it1.SetColumn(1);
 	it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
@@ -220,24 +222,20 @@ int wxCALLBACK SortTracksOnName(long item1, long item2, long list)
 	lc->GetItem(it1);
 	lc->GetItem(it2);
 
-	if(sort_track_name_dir & 1)
+	if (sorting->direction & 1)
 		return it2.GetText().CmpNoCase(it1.GetText());
 	else
 		return it1.GetText().CmpNoCase(it2.GetText());
-
 }
 
-// sort callback. Sort by track length.
-int sort_track_len_dir;
-#if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortTracksOnDistance(long item1, long item2, wxIntPtr list)
-#else
-int wxCALLBACK SortTracksOnDistance(long item1, long item2, long list)
-#endif
+/// Sort callback. Sort by track length.
+int wxCALLBACK SortTracksOnDistance(long item1, long item2, SortPtrType context)
 {
-	wxListCtrl* lc = (wxListCtrl*)list;
+	SortContext* sorting = reinterpret_cast<SortContext*>(context);
+	wxListCtrl* lc = sorting->list;
 
-	wxListItem it1, it2;
+	wxListItem it1;
+	wxListItem it2;
 	it1.SetId(lc->FindItem(-1, item1));
 	it1.SetColumn(2);
 	it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
@@ -257,27 +255,21 @@ int wxCALLBACK SortTracksOnDistance(long item1, long item2, long list)
 	s1.ToDouble(&l1);
 	s2.ToDouble(&l2);
 
-	if (sort_track_len_dir & 1)
+	if (sorting->direction & 1)
 		return (l1 < l2);
 	else
 		return (l2 < l1);
 }
 
-int sort_wp_key;
-
-// sort callback. Sort by wpt name.
-int sort_wp_name_dir;
-#if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortWaypointsOnName(long item1, long item2, wxIntPtr WXUNUSED(list))
-#else
-int wxCALLBACK SortWaypointsOnName(long item1, long item2, long WXUNUSED(list))
-#endif
+/// Sort callback. Sort by wpt name.
+int wxCALLBACK SortWaypointsOnName(long item1, long item2, SortPtrType context)
 {
-	RoutePoint* pRP1 = (RoutePoint*)item1;
-	RoutePoint* pRP2 = (RoutePoint*)item2;
+	RoutePoint* pRP1 = reinterpret_cast<RoutePoint*>(item1);
+	RoutePoint* pRP2 = reinterpret_cast<RoutePoint*>(item2);
+	SortContext* sorting = reinterpret_cast<SortContext*>(context);
 
 	if (pRP1 && pRP2) {
-		if (sort_wp_name_dir & 1)
+		if (sorting->direction & 1)
 			return pRP2->GetName().CmpNoCase(pRP1->GetName());
 		else
 			return pRP1->GetName().CmpNoCase(pRP2->GetName());
@@ -285,17 +277,14 @@ int wxCALLBACK SortWaypointsOnName(long item1, long item2, long WXUNUSED(list))
 		return 0;
 }
 
-// sort callback. Sort by wpt distance.
-int sort_wp_len_dir;
-#if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortWaypointsOnDistance(long item1, long item2, wxIntPtr list)
-#else
-int wxCALLBACK SortWaypointsOnDistance(long item1, long item2, long list)
-#endif
+/// Sort callback. Sort by wpt distance.
+int wxCALLBACK SortWaypointsOnDistance(long item1, long item2, SortPtrType context)
 {
-	wxListCtrl* lc = (wxListCtrl*)list;
+	SortContext* sorting = reinterpret_cast<SortContext*>(context);
+	wxListCtrl* lc = sorting->list;
 
-	wxListItem it1, it2;
+	wxListItem it1;
+	wxListItem it2;
 	it1.SetId(lc->FindItem(-1, item1));
 	it1.SetColumn(2);
 	it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
@@ -315,23 +304,20 @@ int wxCALLBACK SortWaypointsOnDistance(long item1, long item2, long list)
 	s1.ToDouble(&l1);
 	s2.ToDouble(&l2);
 
-	if (sort_wp_len_dir & 1)
+	if (sorting->direction & 1)
 		return (l1 < l2);
 	else
 		return (l2 < l1);
 }
 
-// sort callback. Sort by layer name.
-int sort_layer_name_dir;
-#if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortLayersOnName(long item1, long item2, wxIntPtr list)
-#else
-int wxCALLBACK SortLayersOnName(long item1, long item2, long list)
-#endif
+/// Sort callback. Sort by layer name.
+int wxCALLBACK SortLayersOnName(long item1, long item2, SortPtrType context)
 {
-	wxListCtrl* lc = (wxListCtrl*)list;
+	SortContext* sorting = reinterpret_cast<SortContext*>(context);
+	wxListCtrl* lc = sorting->list;
 
-	wxListItem it1, it2;
+	wxListItem it1;
+	wxListItem it2;
 	it1.SetId(lc->FindItem(-1, item1));
 	it1.SetColumn(1);
 	it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
@@ -343,23 +329,20 @@ int wxCALLBACK SortLayersOnName(long item1, long item2, long list)
 	lc->GetItem(it1);
 	lc->GetItem(it2);
 
-	if (sort_layer_name_dir & 1)
+	if (sorting->direction & 1)
 		return it2.GetText().CmpNoCase(it1.GetText());
 	else
 		return it1.GetText().CmpNoCase(it2.GetText());
 }
 
-// sort callback. Sort by layer size.
-int sort_layer_len_dir;
-#if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortLayersOnSize(long item1, long item2, wxIntPtr list)
-#else
-int wxCALLBACK SortLayersOnSize(long item1, long item2, long list)
-#endif
+/// Sort callback. Sort by layer size.
+int wxCALLBACK SortLayersOnSize(long item1, long item2, SortPtrType context)
 {
-	wxListCtrl* lc = (wxListCtrl*)list;
+	SortContext* sorting = reinterpret_cast<SortContext*>(context);
+	wxListCtrl* lc = sorting->list;
 
-	wxListItem it1, it2;
+	wxListItem it1;
+	wxListItem it2;
 	it1.SetId(lc->FindItem(-1, item1));
 	it1.SetColumn(2);
 	it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
@@ -379,7 +362,7 @@ int wxCALLBACK SortLayersOnSize(long item1, long item2, long list)
 	s1.ToDouble(&l1);
 	s2.ToDouble(&l2);
 
-	if (sort_layer_len_dir & 1)
+	if (sorting->direction & 1)
 		return (l1 < l2);
 	else
 		return (l2 < l1);
@@ -397,9 +380,7 @@ void RouteManagerDialog::OnTabSwitch(wxNotebookEvent& event)
 		return;
 	int current_page = m_pNotebook->GetSelection();
 	if (current_page == 3) {
-		//        if( btnImport ) btnImport->Enable( false );
-		//        if( btnExport ) btnExport->Enable( false );
-		//        if( btnExportViz ) btnExportViz->Enable( false );
+		// ?
 	} else {
 		if (btnImport)
 			btnImport->Enable(true);
@@ -868,7 +849,8 @@ void RouteManagerDialog::UpdateRouteListCtrl()
 		m_pRouteListCtrl->SetItem(idx, rmROUTEDESC, startend);
 	}
 
-	m_pRouteListCtrl->SortItems(SortRoutesOnName, (long)m_pRouteListCtrl);
+	SortContext sorting = { m_pRouteListCtrl, sort_route_name_dir };
+	m_pRouteListCtrl->SortItems(SortRoutesOnName, (long)&sorting);
 
 	// restore selection if possible
 	// NOTE this will select a different item, if one is deleted
@@ -1289,11 +1271,13 @@ void RouteManagerDialog::OnRteColumnClicked(wxListEvent& event)
 {
 	if (event.m_col == 1) {
 		sort_route_name_dir++;
-		m_pRouteListCtrl->SortItems(SortRoutesOnName, (long)m_pRouteListCtrl);
+		SortContext sorting = { m_pRouteListCtrl, sort_route_name_dir };
+		m_pRouteListCtrl->SortItems(SortRoutesOnName, (long)&sorting);
 	} else {
 		if (event.m_col == 2) {
 			sort_route_to_dir++;
-			m_pRouteListCtrl->SortItems(SortRoutesOnTo, (long)m_pRouteListCtrl);
+			SortContext sorting = { m_pRouteListCtrl, sort_route_to_dir };
+			m_pRouteListCtrl->SortItems(SortRoutesOnTo, (long)&sorting);
 		}
 	}
 }
@@ -1566,7 +1550,8 @@ void RouteManagerDialog::UpdateTrkListCtrl()
 		m_pTrkListCtrl->SetItem(idx, colTRKLENGTH, wxString::Format(wxT("%5.2f"), trk->m_route_length));
 	}
 
-	m_pTrkListCtrl->SortItems(SortRoutesOnName, (long)m_pTrkListCtrl);
+	SortContext sorting = { m_pTrkListCtrl, sort_track_name_dir };
+	m_pTrkListCtrl->SortItems(SortTracksOnName, (long)&sorting);
 
 	// restore selection if possible
 	// NOTE this will select a different item, if one is deleted
@@ -1590,10 +1575,12 @@ void RouteManagerDialog::OnTrkColumnClicked(wxListEvent& event)
 {
 	if (event.m_col == 1) {
 		sort_track_name_dir++;
-		m_pTrkListCtrl->SortItems(SortTracksOnName, (long)m_pTrkListCtrl);
+		SortContext sorting = { m_pTrkListCtrl, sort_track_name_dir };
+		m_pTrkListCtrl->SortItems(SortTracksOnName, (long)&sorting);
 	} else if (event.m_col == 2) {
 		sort_track_len_dir++;
-		m_pTrkListCtrl->SortItems(SortTracksOnDistance, (long)m_pTrkListCtrl);
+		SortContext sorting = { m_pTrkListCtrl, sort_track_len_dir };
+		m_pTrkListCtrl->SortItems(SortTracksOnDistance, (long)&sorting);
 	}
 }
 
@@ -1618,7 +1605,7 @@ void RouteManagerDialog::OnTrkToggleVisibility(wxMouseEvent& event)
 	int flags = 0;
 	long clicked_index = m_pTrkListCtrl->HitTest(pos, flags);
 
-	//    Clicking Visibility column?
+	// Clicking Visibility column?
 	if (clicked_index > -1 && event.GetX() < m_pTrkListCtrl->GetColumnWidth(colTRKVISIBLE)) {
 		// Process the clicked item
 		long list_index = m_pTrkListCtrl->GetItemData(clicked_index);
@@ -1858,16 +1845,20 @@ void RouteManagerDialog::UpdateWptListCtrl(RoutePoint* rp_select, bool b_retain_
 	}
 
 	if (!b_retain_sort) {
-		m_pWptListCtrl->SortItems(SortWaypointsOnName, (long)m_pWptListCtrl);
+		SortContext sorting = { m_pWptListCtrl, sort_wp_name_dir };
+		m_pWptListCtrl->SortItems(SortWaypointsOnName, (long)&sorting);
 		sort_wp_key = SORT_ON_NAME;
 	} else {
 		switch (sort_wp_key) {
-			case SORT_ON_NAME:
-				m_pWptListCtrl->SortItems(SortWaypointsOnName, (long)m_pWptListCtrl);
-				break;
-			case SORT_ON_DISTANCE:
-				m_pWptListCtrl->SortItems(SortWaypointsOnDistance, (long)m_pWptListCtrl);
-				break;
+			case SORT_ON_NAME: {
+				SortContext sorting = { m_pWptListCtrl, sort_wp_name_dir };
+				m_pWptListCtrl->SortItems(SortWaypointsOnName, (long)&sorting);
+			} break;
+
+			case SORT_ON_DISTANCE: {
+				SortContext sorting = { m_pWptListCtrl, sort_wp_len_dir };
+				m_pWptListCtrl->SortItems(SortWaypointsOnDistance, (long)&sorting);
+			} break;
 		}
 	}
 
@@ -1912,11 +1903,13 @@ void RouteManagerDialog::OnWptColumnClicked(wxListEvent& event)
 {
 	if (event.m_col == 1) {
 		sort_wp_name_dir++;
-		m_pWptListCtrl->SortItems(SortWaypointsOnName, (long)m_pWptListCtrl);
+		SortContext sorting = { m_pWptListCtrl, sort_wp_name_dir };
+		m_pWptListCtrl->SortItems(SortWaypointsOnName, (long)&sorting);
 		sort_wp_key = SORT_ON_NAME;
 	} else if (event.m_col == 2) {
 		sort_wp_len_dir++;
-		m_pWptListCtrl->SortItems(SortWaypointsOnDistance, (long)m_pWptListCtrl);
+		SortContext sorting = { m_pWptListCtrl, sort_wp_len_dir };
+		m_pWptListCtrl->SortItems(SortWaypointsOnDistance, (long)&sorting);
 		sort_wp_key = SORT_ON_DISTANCE;
 	}
 }
@@ -2253,10 +2246,12 @@ void RouteManagerDialog::OnLayColumnClicked(wxListEvent& event)
 {
 	if (event.m_col == 1) {
 		sort_layer_name_dir++;
-		m_pLayListCtrl->SortItems(SortLayersOnName, (long)m_pLayListCtrl);
+		SortContext sorting = { m_pLayListCtrl, sort_layer_name_dir };
+		m_pLayListCtrl->SortItems(SortLayersOnName, (long)&sorting);
 	} else if (event.m_col == 2) {
 		sort_layer_len_dir++;
-		m_pLayListCtrl->SortItems(SortLayersOnSize, (long)m_pLayListCtrl);
+		SortContext sorting = { m_pLayListCtrl, sort_layer_len_dir };
+		m_pLayListCtrl->SortItems(SortLayersOnSize, (long)&sorting);
 	}
 }
 
@@ -2562,7 +2557,8 @@ void RouteManagerDialog::UpdateLayListCtrl()
 		m_pLayListCtrl->SetItem(idx, colLAYITEMS, wxString::Format(wxT("%d"), (int)lay->getNoOfItems()));
 	}
 
-	m_pLayListCtrl->SortItems(SortLayersOnName, (long)m_pLayListCtrl);
+	SortContext sorting = { m_pLayListCtrl, sort_layer_name_dir };
+	m_pLayListCtrl->SortItems(SortLayersOnName, (long)&sorting);
 
 	// restore selection if possible
 	// NOTE this will select a different item, if one is deleted

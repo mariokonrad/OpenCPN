@@ -68,7 +68,7 @@ static double FNipart(double x)
 static double FNday(int y, int m, int d, int h)
 {
 	long fd = (367 * y - 7 * (y + (m + 9) / 12) / 4 + 275 * m / 9 + d);
-	return ((double)fd - 730531.5 + h / 24.);
+	return ((double)fd - 730531.5 + h / 24.0);
 }
 
 static double FNrange(double x)
@@ -86,7 +86,7 @@ static double getDaylightEvent(double glat, double glong, int riset, double alti
 	double day = FNday(y, m, d, 0);
 	double days, correction;
 	double utold = M_PI;
-	double utnew = 0.;
+	double utnew = 0.0;
 	double sinalt = sin(altitude * (M_PI / 180.0)); // go for the sunrise/sunset altitude first
 	double sinphi = sin(glat * (M_PI / 180.0));
 	double cosphi = cos(glat * (M_PI / 180.0));
@@ -112,7 +112,7 @@ static double getDaylightEvent(double glat, double glong, int riset, double alti
 		G = FNrange(6.2400408 + 628.3019501 * t);
 		ec = 0.033423 * sin(G) + 0.00034907 * sin(2 * G);
 		lambda = L + ec;
-		E = -1. * ec + 0.0430398 * sin(2 * lambda) - 0.00092502 * sin(4.0 * lambda);
+		E = -1.0 * ec + 0.0430398 * sin(2 * lambda) - 0.00092502 * sin(4.0 * lambda);
 		obl = 0.409093 - 0.0002269 * t;
 		delta = asin(sin(obl) * sin(lambda));
 		GHA = utold - M_PI + E;

@@ -33,6 +33,9 @@ include(ExternalProject)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+# Let cmake find additional modules private to opencpn
+SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/")
+
 ################################################################################
 # project information
 ################################################################################
@@ -136,11 +139,6 @@ message(STATUS "")
 message(STATUS "*** Staging to build ${PACKAGE_NAME}  ***")
 
 ################################################################################
-# build type
-################################################################################
-#SET(CMAKE_BUILD_TYPE Debug)
-
-################################################################################
 # installation
 ################################################################################
 if(PREFIX)
@@ -177,17 +175,17 @@ if(NOT WIN32 AND NOT APPLE)
 	add_definitions("-Wall -Wextra -fexceptions -rdynamic")
 	add_definitions("-g -fno-strict-aliasing")
 
-	set(CMAKE_C_FLAGS                  "-O2 -Wall -Wextra")
-	set(CMAKE_C_FLAGS_DEBUG            "-ggdb -O0 -Wall -Wextra")
-	set(CMAKE_C_FLAGS_MINSIZEREL       "-O2 -Wall -Wextra")
-	set(CMAKE_C_FLAGS_RELEASE          "-O3 -Wall -Wextra")
-	set(CMAKE_C_FLAGS_RELWITHDEBINFO   "-ggdb -O3 -Wall -Wextra")
+	set(CMAKE_C_FLAGS                  "-O2 -Wall -Wextra -fPIC")
+	set(CMAKE_C_FLAGS_DEBUG            "-O0 -Wall -Wextra -fPIC -ggdb")
+	set(CMAKE_C_FLAGS_MINSIZEREL       "-O2 -Wall -Wextra -fPIC")
+	set(CMAKE_C_FLAGS_RELEASE          "-O3 -Wall -Wextra -fPIC")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO   "-O3 -Wall -Wextra -fPIC -ggdb")
 
-	set(CMAKE_CXX_FLAGS                "-O2 -Wall -Wextra")
-	set(CMAKE_CXX_FLAGS_DEBUG          "-ggdb -O0 -Wall -Wextra")
-	set(CMAKE_CXX_FLAGS_MINSIZEREL     "-O2 -Wall -Wextra")
-	set(CMAKE_CXX_FLAGS_RELEASE        "-O3 -Wall -Wextra")
-	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS                "-O2 -Wall -Wextra -fPIC")
+	set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -Wall -Wextra -fPIC -ggdb")
+	set(CMAKE_CXX_FLAGS_MINSIZEREL     "-O2 -Wall -Wextra -fPIC")
+	set(CMAKE_CXX_FLAGS_RELEASE        "-O3 -Wall -Wextra -fPIC")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -Wall -Wextra -fPIC -ggdb")
 
 	set(CMAKE_EXE_LINKER_FLAGS         "-O2 -Wall -Wextra")
 	set(CMAKE_SHARED_LINKER_FLAGS      "-O2 -Wall -Wextra")
@@ -199,21 +197,21 @@ if(APPLE)
 	add_definitions("-g -fno-strict-aliasing")
 	add_definitions("-Wno-deprecated -Wno-deprecated-declarations")
 
-	set(CMAKE_C_FLAGS "-O2 -arch ${ARCH}")
-	set(CMAKE_C_FLAGS_DEBUG "-g -O0 -arch ${ARCH}")
-	set(CMAKE_C_FLAGS_MINSIZEREL "-O2 -arch ${ARCH}")
-	set(CMAKE_C_FLAGS_RELEASE "-O3 -arch ${ARCH}")
-	set(CMAKE_C_FLAGS_RELWITHDEBINFO "-g -O3 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS                  "-O2 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_DEBUG            "-g -O0 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_MINSIZEREL       "-O2 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_RELEASE          "-O3 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO   "-g -O3 -arch ${ARCH}")
 
-	set(CMAKE_CXX_FLAGS "-O2 -arch ${ARCH}")
-	set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -arch ${ARCH}")
-	set(CMAKE_CXX_FLAGS_MINSIZEREL "-O2 -arch ${ARCH}")
-	set(CMAKE_CXX_FLAGS_RELEASE "-O3 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS                "-O2 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_DEBUG          "-g -O0 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_MINSIZEREL     "-O2 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_RELEASE        "-O3 -arch ${ARCH}")
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3 -arch ${ARCH}")
 
-	set(CMAKE_EXE_LINKER_FLAGS "-O2 -arch ${ARCH}")
-	set(CMAKE_SHARED_LINKER_FLAGS "-O2 -arch ${ARCH}")
-	set(CMAKE_MODULE_LINKER_FLAGS "-O2 -arch ${ARCH}")
+	set(CMAKE_EXE_LINKER_FLAGS         "-O2 -arch ${ARCH}")
+	set(CMAKE_SHARED_LINKER_FLAGS      "-O2 -arch ${ARCH}")
+	set(CMAKE_MODULE_LINKER_FLAGS      "-O2 -arch ${ARCH}")
 ENDIF(APPLE)
 
 add_definitions(-DUSE_GLU_TESS)
@@ -223,6 +221,17 @@ if(WIN32)
 	add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
 	add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
 	add_definitions(-DPSAPI_VERSION=1)
+
+	if(MSVC)
+		set(CMAKE_C_FLAGS_DEBUG               "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1" )
+		set(CMAKE_C_FLAGS_MINSIZEREL          "/MD  /O1  /Ob1 /D NDEBUG")
+		set(CMAKE_C_FLAGS_RELEASE             "/MD  /O2  /Ob2 /D NDEBUG")
+		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "/MD  /O2  /Ob1 /D NDEBUG /Zi")
+		set(CMAKE_CXX_FLAGS_DEBUG             "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1")
+		set(CMAKE_CXX_FLAGS_MINSIZEREL        "/MD  /O1  /Ob1 /D NDEBUG")
+		set(CMAKE_CXX_FLAGS_RELEASE           "/MD  /O2  /Ob2 /D NDEBUG")
+		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/MD  /O2  /Ob1 /D NDEBUG" /Zi )
+	endif(MSVC)
 endif(WIN32)
 
 message(STATUS "CMAKE_BUILD_TYPE       : ${CMAKE_BUILD_TYPE}")
@@ -276,8 +285,6 @@ ExternalProject_Add(extern_pugixml
 	# install
 	INSTALL_DIR ${pugixml_INSTALL_DIR}
 	)
-
-# TODO: perhaps there is a FindPugixml which makes the following unnecessary:
 
 add_library(pugixml STATIC IMPORTED)
 set_target_properties(pugixml
@@ -386,22 +393,8 @@ message(STATUS "Found wxWidgets..." )
 message(STATUS "wxWidgets Libraries: ${wxWidgets_LIBRARIES}")
 
 ################################################################################
-# TODO: documentation
+# GTK
 ################################################################################
-
-#Enable CrashReporting for Windows
-if(WIN32)
-	add_definitions(-DOCPN_USE_CRASHRPT)
-	include_directories(${CMAKE_SOURCE_DIR}/buildwin/crashrpt)
-	set(EXTRA_LIBS ${EXTRA_LIBS} ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.lib)
-	set(CMAKE_EXE_LINKER_FLAGS /DEBUG)
-endif(WIN32)
-
-# Location where cmake first looks for cmake modules.
-SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/build)
-
-# Let cmake find additional modules private to opencpn
-SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/")
 
 IF (NOT WIN32 AND NOT APPLE)
 	FIND_PACKAGE(GTK2 2.6)
@@ -436,17 +429,45 @@ IF (NOT WIN32 AND NOT APPLE)
 	ENDIF(UNIX)
 ENDIF (NOT WIN32 AND NOT APPLE)
 
+################################################################################
+# gettext
+################################################################################
 
 FIND_PACKAGE(Gettext REQUIRED)
+
+################################################################################
+# bzip2
+################################################################################
+
 IF(UNIX)
 	FIND_PACKAGE(BZip2 REQUIRED)
 	INCLUDE_DIRECTORIES(${BZIP2_INCLUDE_DIR})
+ENDIF(UNIX)
+
+################################################################################
+# zlib
+################################################################################
+
+IF(UNIX)
 	FIND_PACKAGE(ZLIB REQUIRED)
 	INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIR})
 ENDIF(UNIX)
 
-# For convenience we define the sources as a variable. You can add
-# header files and cpp/c files and CMake will sort them out
+################################################################################
+# Windows crash reporting
+################################################################################
+
+# Enable CrashReporting for Windows
+if(WIN32)
+	add_definitions(-DOCPN_USE_CRASHRPT)
+	include_directories(${CMAKE_SOURCE_DIR}/buildwin/crashrpt)
+	set(EXTRA_LIBS ${EXTRA_LIBS} ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.lib)
+	set(CMAKE_EXE_LINKER_FLAGS /DEBUG)
+endif(WIN32)
+
+################################################################################
+# TODO: documentation
+################################################################################
 
 SET(SRC_NMEA0183
 	src/nmea0183/LatLong.hpp
@@ -1237,16 +1258,6 @@ if(xAPPLE)
 endif(xAPPLE)
 
 if(WIN32)
-	if(MSVC)
-		set(CMAKE_C_FLAGS_DEBUG               "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1" )
-		set(CMAKE_C_FLAGS_MINSIZEREL          "/MD  /O1  /Ob1 /D NDEBUG")
-		set(CMAKE_C_FLAGS_RELEASE             "/MD  /O2  /Ob2 /D NDEBUG")
-		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "/MD  /O2  /Ob1 /D NDEBUG /Zi")
-		set(CMAKE_CXX_FLAGS_DEBUG             "/MDd /Ob0 /Od  /D_DEBUG  /Zi /RTC1")
-		set(CMAKE_CXX_FLAGS_MINSIZEREL        "/MD  /O1  /Ob1 /D NDEBUG")
-		set(CMAKE_CXX_FLAGS_RELEASE           "/MD  /O2  /Ob2 /D NDEBUG")
-		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/MD  /O2  /Ob1 /D NDEBUG" /Zi )
-	endif(MSVC)
 	add_executable(${PACKAGE_NAME} WIN32 ${HDRS} ${SRCS})
 endif(WIN32)
 

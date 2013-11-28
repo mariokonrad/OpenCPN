@@ -52,6 +52,8 @@ class wxGLContext;
 #include <wx/menu.h>
 #include <wx/scrolwin.h>
 
+#include <list>
+
 //    This is the most modern API Version number
 //    It is expected that the API will remain downward compatible, meaning that
 //    PlugIns conforming to API Version less then the most modern will also
@@ -493,7 +495,7 @@ public:
     wxString Type;
 };
 
-WX_DECLARE_LIST(Plugin_Hyperlink, Plugin_HyperlinkList);
+typedef std::list<Plugin_Hyperlink*> Plugin_HyperlinkList;
 
 
 
@@ -521,7 +523,7 @@ public:
     
 };
 
-WX_DECLARE_LIST(PlugIn_Waypoint, Plugin_WaypointList);
+typedef std::list<PlugIn_Waypoint*> Plugin_WaypointList;
 
 class DECL_EXP PlugIn_Route
 {

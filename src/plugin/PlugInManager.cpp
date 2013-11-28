@@ -90,10 +90,6 @@ extern RouteManagerDialog* pRouteManagerDialog;
 extern RouteList* pRouteList;
 extern PlugInManager* g_pi_manager;
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(Plugin_WaypointList); // FIXME: replace wx containers with std containers
-
-
 // Some static helper funtions
 // Scope is local to this module
 
@@ -1714,17 +1710,16 @@ PlugIn_Waypoint::~PlugIn_Waypoint()
 }
 
 // PlugInRoute implementation
-PlugIn_Route::PlugIn_Route(void )
+PlugIn_Route::PlugIn_Route(void)
 {
 	pWaypointList = new Plugin_WaypointList;
 }
 
 PlugIn_Route::~PlugIn_Route(void)
 {
-	pWaypointList->DeleteContents(false); // do not delete Waypoints
-	pWaypointList->Clear();
-
+	pWaypointList->clear();
 	delete pWaypointList;
+	pWaypointList = NULL;
 }
 
 // PlugInTrack implementation
@@ -1735,10 +1730,9 @@ PlugIn_Track::PlugIn_Track(void)
 
 PlugIn_Track::~PlugIn_Track(void)
 {
-	pWaypointList->DeleteContents(false); // do not delete Waypoints
-	pWaypointList->Clear();
-
+	pWaypointList->clear();
 	delete pWaypointList;
+	pWaypointList = NULL;
 }
 
 wxString GetNewGUID(void)

@@ -32,6 +32,7 @@
 #include <wx/notebook.h>
 
 class wxButton;
+class wxBoxSizer;
 class Route;
 class Track;
 class Layer;
@@ -58,6 +59,10 @@ public:
 
 private:
 	void Create();
+	void create_routes_panel();
+	void create_tracks_panel();
+	void create_waypoints_panel(wxBoxSizer*);
+	void create_layers_panel();
 	void UpdateRteButtons(); // Correct button state
 	void MakeAllRoutesInvisible(); // Mark all routes as invisible. Does not flush settings.
 	void ZoomtoRoute(Route* route); // Attempt to zoom route into the view

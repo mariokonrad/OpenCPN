@@ -29,6 +29,7 @@ git:
 Notes:
 - From the original package, the directories src and scripts are
   unpacked, but untouched.
+- CMakeLists.txt extended to print some variables
 
 
 tinyxml-2.6.2
@@ -42,6 +43,7 @@ Download: http://sourceforge.net/projects/tinyxml/
 
 Notes:
 - Altered CMakeLists.txt
+- CMakeLists.txt extended to print some variables
 
 
 libtcd-2.2.5
@@ -55,7 +57,7 @@ Download: ftp://ftp.flaterco.com/xtide/libtcd-2.2.5-r3.tar.bz2
 
 Notes:
 - Added a CMakeLists.txt file
-- Inserted additional '#ifdef HAVE_UNISTD_H' preprocessor directive, necessary because
-  Windows does not know ftruncate (see tide_db.c:delete_tide_record).
+- Inserted additional '#ifdef HAVE\_UNISTD\_H' preprocessor directive, necessary because
+  Windows does not know ftruncate (see tide\_db.c:delete\_tide\_record).
 
 

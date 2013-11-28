@@ -256,7 +256,7 @@ function exec_prepare()
 
 	cmake \
 		-DPREFIX=${INSTALL_DIR} \
-		-DBUILD_TYPE=${BUILD_TYPE} \
+		-DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
 		${SRC_DIR}
 

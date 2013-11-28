@@ -21,28 +21,17 @@
 ## *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ## ***************************************************************************
 
-
-#TODO:
-# - cross platform compiling
-# - test with Win & OSX
-# USE_GLU_TESS
-# USE_GLU_DLL
-# I also find it deficient in some areas. For instance, I cannot make it output a VS project with certain compile switches set as desired, namely /MT vs /MD. This means I must manually set this and other compiler options after the CMake step. Sometimes I forget. Grrr...
-# set /MT for Release build, and /MTd for debug.
-
-# define minimum cmake version
-cmake_minimum_required(VERSION 2.6.2)
-# This should be 2.8.0 to have FindGTK2 module
+cmake_minimum_required(VERSION 2.8.8)
 
 include(ExternalProject)
 
-if(COMMAND cmake_policy)
-	CMAKE_POLICY(SET CMP0003 OLD)
-	CMAKE_POLICY(SET CMP0005 OLD)
-	CMAKE_POLICY(SET CMP0011 OLD)
-endif(COMMAND cmake_policy)
+#if(COMMAND cmake_policy)
+#	CMAKE_POLICY(SET CMP0003 OLD)
+#	CMAKE_POLICY(SET CMP0005 OLD)
+#	CMAKE_POLICY(SET CMP0011 OLD)
+#endif(COMMAND cmake_policy)
 
-#SET(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 ################################################################################
 # project information
@@ -60,7 +49,6 @@ if(APPLE)
 else(APPLE)
 	set(PACKAGE_NAME opencpn)
 endif(APPLE)
-
 
 
 #Red Hat:   /etc/redhat-release
@@ -138,135 +126,6 @@ endif(ARCH MATCHES "armhf")
 message(STATUS "*** Build Architecture is ${ARCH}")
 
 ################################################################################
-# OpenGL
-################################################################################
-find_package(OpenGL)
-if(OPENGL_GLU_FOUND)
-	include_directories(${OPENGL_INCLUDE_DIR})
-    add_definitions(-DocpnUSE_GL)
-    add_definitions(-DUSE_GLU_TESS)
-	message(STATUS "Found OpenGL..." )
-	message(STATUS "    Lib: " ${OPENGL_LIBRARIES})
-	message(STATUS "    Include: " ${OPENGL_INCLUDE_DIR})
-else(OPENGL_GLU_FOUND)
-	message(STATUS "OpenGL not found..." )
-	set(SKIP_PLUGINS true) # grib_pi contains OpenGL stuff
-endif(OPENGL_GLU_FOUND)
-
-################################################################################
-# pugixml (external)
-################################################################################
-
-set(pugixml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(pugixml_INCLUDE_DIR ${pugixml_INSTALL_DIR}/include)
-set(pugixml_LIBRARY_DIR ${pugixml_INSTALL_DIR}/lib)
-
-ExternalProject_Add(extern_pugixml
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/pugixml
-	# configure
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/pugixml-1.2/scripts
-	CMAKE_ARGS
-		-DCMAKE_INSTALL_PREFIX=${pugixml_INSTALL_DIR}
-		-DBUILD_SHARED_LIBS=OFF
-	# install
-	INSTALL_DIR ${pugixml_INSTALL_DIR}
-	)
-
-# TODO: perhaps there is a FindPugixml which makes the following unnecessary:
-
-add_library(pugixml STATIC IMPORTED)
-set_target_properties(pugixml
-	PROPERTIES
-		IMPORTED_LOCATION
-			${pugixml_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}pugixml${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(pugixml extern_pugixml)
-include_directories(${pugixml_INCLUDE_DIR})
-
-################################################################################
-# tinyxml (external)
-################################################################################
-
-set(tinyxml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(tinyxml_INCLUDE_DIR ${tinyxml_INSTALL_DIR}/include)
-set(tinyxml_LIBRARY_DIR ${tinyxml_INSTALL_DIR}/lib)
-
-ExternalProject_Add(extern_tinyxml
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/tinyxml
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/tinyxml-2.6.2
-	# configure
-	CMAKE_ARGS
-		-DCMAKE_INSTALL_PREFIX=${tinyxml_INSTALL_DIR}
-		-DUSE_STL=ON
-	# install
-	INSTALL_DIR ${tinyxml_INSTALL_DIR}
-	)
-
-add_library(tinyxml STATIC IMPORTED)
-set_target_properties(tinyxml
-	PROPERTIES
-		IMPORTED_LOCATION
-			${tinyxml_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}tinyxml${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(tinyxml extern_tinyxml)
-include_directories(${tinyxml_INCLUDE_DIR})
-add_definitions("-DTIXML_USE_STL")
-
-################################################################################
-# libtcd (external)
-################################################################################
-
-set(tcd_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(tcd_INCLUDE_DIR ${tcd_INSTALL_DIR}/include)
-set(tcd_LIBRARY_DIR ${tcd_INSTALL_DIR}/lib)
-
-ExternalProject_Add(extern_tcd
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/tcd
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/libtcd-2.2.5
-	# configure
-	CMAKE_ARGS
-		-DCMAKE_INSTALL_PREFIX=${tcd_INSTALL_DIR}
-	# install
-	INSTALL_DIR ${tcd_INSTALL_DIR}
-	)
-
-add_library(tcd STATIC IMPORTED)
-set_target_properties(tcd
-	PROPERTIES
-		IMPORTED_LOCATION
-			${tcd_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}tcd${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(tcd extern_tcd)
-include_directories(${tcd_INCLUDE_DIR})
-
-################################################################################
-# GDAL (external)
-################################################################################
-
-# TODO
-
-################################################################################
-# wxWidgets
-################################################################################
-set(wxWidgets_USE_LIBS base core net xml html adv aui)
-
-if(OPENGL_GLU_FOUND)
-	set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
-endif(OPENGL_GLU_FOUND)
-
-# Find wxWidgets here, and the setting get inherited by all plugins.
-# These options can be used to set the linux widgets build type
-set(wxWidgets_USE_DEBUG OFF)
-set(wxWidgets_USE_UNICODE ON)
-set(wxWidgets_USE_UNIVERSAL OFF)
-set(wxWidgets_USE_STATIC OFF)
-
-find_package(wxWidgets REQUIRED)
-include(${wxWidgets_USE_FILE})
-message(STATUS "Found wxWidgets..." )
-message(STATUS "wxWidgets Libraries: ${wxWidgets_LIBRARIES}")
-
-################################################################################
 # package version
 ################################################################################
 set(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
@@ -313,25 +172,26 @@ endif(APPLE)
 ################################################################################
 # compiler options
 ################################################################################
+
 if(NOT WIN32 AND NOT APPLE)
 	add_definitions("-Wall -Wextra -fexceptions -rdynamic")
 	add_definitions("-g -fno-strict-aliasing")
 
-	set(CMAKE_C_FLAGS "-O2 -Wall -Wextra")
-	set(CMAKE_C_FLAGS_DEBUG "-ggdb -O0 -Wall -Wextra")
-	set(CMAKE_C_FLAGS_MINSIZEREL "-O2 -Wall -Wextra")
-	set(CMAKE_C_FLAGS_RELEASE "-O3 -Wall -Wextra")
-	set(CMAKE_C_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -Wextra")
+	set(CMAKE_C_FLAGS                  "-O2 -Wall -Wextra")
+	set(CMAKE_C_FLAGS_DEBUG            "-ggdb -O0 -Wall -Wextra")
+	set(CMAKE_C_FLAGS_MINSIZEREL       "-O2 -Wall -Wextra")
+	set(CMAKE_C_FLAGS_RELEASE          "-O3 -Wall -Wextra")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO   "-ggdb -O3 -Wall -Wextra")
 
-	set(CMAKE_CXX_FLAGS "-O2 -Wall -Wextra")
-	set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -O0 -Wall -Wextra")
-	set(CMAKE_CXX_FLAGS_MINSIZEREL "-O2 -Wall -Wextra")
-	set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS                "-O2 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_DEBUG          "-ggdb -O0 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_MINSIZEREL     "-O2 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_RELEASE        "-O3 -Wall -Wextra")
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -Wextra")
 
-	set(CMAKE_EXE_LINKER_FLAGS "-O2 -Wall -Wextra")
-	set(CMAKE_SHARED_LINKER_FLAGS "-O2 -Wall -Wextra")
-	set(CMAKE_MODULE_LINKER_FLAGS "-O2 -Wall -Wextra")
+	set(CMAKE_EXE_LINKER_FLAGS         "-O2 -Wall -Wextra")
+	set(CMAKE_SHARED_LINKER_FLAGS      "-O2 -Wall -Wextra")
+	set(CMAKE_MODULE_LINKER_FLAGS      "-O2 -Wall -Wextra")
 endif()
 
 if(APPLE)
@@ -356,14 +216,174 @@ if(APPLE)
 	set(CMAKE_MODULE_LINKER_FLAGS "-O2 -arch ${ARCH}")
 ENDIF(APPLE)
 
-# Add some definitions to satisfy MS
 add_definitions(-DUSE_GLU_TESS)
+
 if(WIN32)
 	add_definitions(-D__MSVC__)
-	add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE)
+	add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
+	add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
 	add_definitions(-DPSAPI_VERSION=1)
 endif(WIN32)
 
+message(STATUS "CMAKE_BUILD_TYPE       : ${CMAKE_BUILD_TYPE}")
+message(STATUS "CMAKE_C_COMPILER       : ${CMAKE_C_COMPILER}")
+message(STATUS "CMAKE_C_FLAGS          : ${CMAKE_C_FLAGS}")
+message(STATUS "CMAKE_C_FLAGS_DEBUG    : ${CMAKE_C_FLAGS_DEBUG}")
+message(STATUS "CMAKE_C_FLAGS_RELEASE  : ${CMAKE_C_FLAGS_RELEASE}")
+message(STATUS "CMAKE_CXX_COMPILER     : ${CMAKE_CXX_COMPILER}")
+message(STATUS "CMAKE_CXX_FLAGS        : ${CMAKE_CXX_FLAGS}")
+message(STATUS "CMAKE_CXX_FLAGS_DEBUG  : ${CMAKE_CXX_FLAGS_DEBUG}")
+message(STATUS "CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
+
+################################################################################
+# OpenGL
+################################################################################
+find_package(OpenGL)
+if(OPENGL_GLU_FOUND)
+	include_directories(${OPENGL_INCLUDE_DIR})
+    add_definitions(-DocpnUSE_GL)
+    add_definitions(-DUSE_GLU_TESS)
+	message(STATUS "Found OpenGL..." )
+	message(STATUS "    Lib: " ${OPENGL_LIBRARIES})
+	message(STATUS "    Include: " ${OPENGL_INCLUDE_DIR})
+else(OPENGL_GLU_FOUND)
+	message(STATUS "OpenGL not found..." )
+	set(SKIP_PLUGINS true) # grib_pi contains OpenGL stuff
+endif(OPENGL_GLU_FOUND)
+
+################################################################################
+# pugixml (external)
+################################################################################
+
+set(pugixml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
+set(pugixml_INCLUDE_DIR ${pugixml_INSTALL_DIR}/include)
+set(pugixml_LIBRARY_DIR ${pugixml_INSTALL_DIR}/lib)
+
+ExternalProject_Add(extern_pugixml
+	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/pugixml
+	# configure
+	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/pugixml-1.2/scripts
+	CMAKE_ARGS
+		-DCMAKE_INSTALL_PREFIX=${pugixml_INSTALL_DIR}
+		-DBUILD_SHARED_LIBS=OFF
+		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
+		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
+		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
+		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
+	# install
+	INSTALL_DIR ${pugixml_INSTALL_DIR}
+	)
+
+# TODO: perhaps there is a FindPugixml which makes the following unnecessary:
+
+add_library(pugixml STATIC IMPORTED)
+set_target_properties(pugixml
+	PROPERTIES
+		IMPORTED_LOCATION
+			${pugixml_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}pugixml${CMAKE_STATIC_LIBRARY_SUFFIX}
+	)
+add_dependencies(pugixml extern_pugixml)
+include_directories(${pugixml_INCLUDE_DIR})
+
+################################################################################
+# tinyxml (external)
+################################################################################
+
+set(tinyxml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
+set(tinyxml_INCLUDE_DIR ${tinyxml_INSTALL_DIR}/include)
+set(tinyxml_LIBRARY_DIR ${tinyxml_INSTALL_DIR}/lib)
+
+ExternalProject_Add(extern_tinyxml
+	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/tinyxml
+	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/tinyxml-2.6.2
+	# configure
+	CMAKE_ARGS
+		-DCMAKE_INSTALL_PREFIX=${tinyxml_INSTALL_DIR}
+		-DUSE_STL=ON
+		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
+		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
+		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
+		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
+	# install
+	INSTALL_DIR ${tinyxml_INSTALL_DIR}
+	)
+
+add_library(tinyxml STATIC IMPORTED)
+set_target_properties(tinyxml
+	PROPERTIES
+		IMPORTED_LOCATION
+			${tinyxml_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}tinyxml${CMAKE_STATIC_LIBRARY_SUFFIX}
+	)
+add_dependencies(tinyxml extern_tinyxml)
+include_directories(${tinyxml_INCLUDE_DIR})
+add_definitions("-DTIXML_USE_STL")
+
+################################################################################
+# libtcd (external)
+################################################################################
+
+set(tcd_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
+set(tcd_INCLUDE_DIR ${tcd_INSTALL_DIR}/include)
+set(tcd_LIBRARY_DIR ${tcd_INSTALL_DIR}/lib)
+
+ExternalProject_Add(extern_tcd
+	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/tcd
+	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/libtcd-2.2.5
+	# configure
+	CMAKE_ARGS
+		-DCMAKE_INSTALL_PREFIX=${tcd_INSTALL_DIR}
+		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
+		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
+		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
+		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
+	# install
+	INSTALL_DIR ${tcd_INSTALL_DIR}
+	)
+
+add_library(tcd STATIC IMPORTED)
+set_target_properties(tcd
+	PROPERTIES
+		IMPORTED_LOCATION
+			${tcd_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}tcd${CMAKE_STATIC_LIBRARY_SUFFIX}
+	)
+add_dependencies(tcd extern_tcd)
+include_directories(${tcd_INCLUDE_DIR})
+
+################################################################################
+# GDAL (external)
+################################################################################
+
+# TODO
+
+################################################################################
+# wxWidgets
+################################################################################
+set(wxWidgets_USE_LIBS base core net xml html adv aui)
+
+if(OPENGL_GLU_FOUND)
+	set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
+endif(OPENGL_GLU_FOUND)
+
+# Find wxWidgets here, and the setting get inherited by all plugins.
+# These options can be used to set the linux widgets build type
+set(wxWidgets_USE_DEBUG OFF)
+set(wxWidgets_USE_UNICODE ON)
+set(wxWidgets_USE_UNIVERSAL OFF)
+set(wxWidgets_USE_STATIC OFF)
+
+find_package(wxWidgets REQUIRED)
+include(${wxWidgets_USE_FILE})
+message(STATUS "Found wxWidgets..." )
+message(STATUS "wxWidgets Libraries: ${wxWidgets_LIBRARIES}")
 
 ################################################################################
 # TODO: documentation

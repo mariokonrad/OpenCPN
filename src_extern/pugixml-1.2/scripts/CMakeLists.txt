@@ -1,5 +1,15 @@
 project(pugixml)
 
+message(STATUS "CMAKE_BUILD_TYPE       : ${CMAKE_BUILD_TYPE}")
+message(STATUS "CMAKE_C_COMPILER       : ${CMAKE_C_COMPILER}")
+message(STATUS "CMAKE_C_FLAGS          : ${CMAKE_C_FLAGS}")
+message(STATUS "CMAKE_C_FLAGS_DEBUG    : ${CMAKE_C_FLAGS_DEBUG}")
+message(STATUS "CMAKE_C_FLAGS_RELEASE  : ${CMAKE_C_FLAGS_RELEASE}")
+message(STATUS "CMAKE_CXX_COMPILER     : ${CMAKE_CXX_COMPILER}")
+message(STATUS "CMAKE_CXX_FLAGS        : ${CMAKE_CXX_FLAGS}")
+message(STATUS "CMAKE_CXX_FLAGS_DEBUG  : ${CMAKE_CXX_FLAGS_DEBUG}")
+message(STATUS "CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
+
 cmake_minimum_required(VERSION 2.6)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared instead of static library")
 

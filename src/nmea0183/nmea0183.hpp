@@ -126,7 +126,9 @@
 #include "ZTG.hpp"
 */
 
-WX_DECLARE_LIST(RESPONSE, MRL);
+#include <vector>
+
+typedef std::vector<RESPONSE*> MRL;
 
 class NMEA0183
 {

@@ -39,79 +39,71 @@
 ** You can use it any way you like.
 */
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(MRL);
-
-
 NMEA0183::NMEA0183()
 {
 	initialize();
 
-/*
-   response_table.Add( (RESPONSE *) &Aam );
-   response_table.Add( (RESPONSE *) &Alm );
-   response_table.Add( (RESPONSE *) &Apb );
-   response_table.Add( (RESPONSE *) &Asd );
-   response_table.Add( (RESPONSE *) &Bec );
-   response_table.Add( (RESPONSE *) &Bod );
-   response_table.Add( (RESPONSE *) &Bwc );
-   response_table.Add( (RESPONSE *) &Bwr );
-   response_table.Add( (RESPONSE *) &Bww );
-   response_table.Add( (RESPONSE *) &Dbt );
-   response_table.Add( (RESPONSE *) &Dcn );
-   response_table.Add( (RESPONSE *) &Dpt );
-   response_table.Add( (RESPONSE *) &Fsi );
-   response_table.Add( (RESPONSE *) &Gga );
-   response_table.Add( (RESPONSE *) &Glc );
-   response_table.Add( (RESPONSE *) &Gll );
-   response_table.Add( (RESPONSE *) &Gxa );
-   response_table.Add( (RESPONSE *) &Hsc );
-   response_table.Add( (RESPONSE *) &Lcd );
-   response_table.Add( (RESPONSE *) &Mtw );
-   response_table.Add( (RESPONSE *) &Mwv );
-   response_table.Add( (RESPONSE *) &Oln );
-   response_table.Add( (RESPONSE *) &Osd );
-   response_table.Add( (RESPONSE *) &Proprietary );
-   response_table.Add( (RESPONSE *) &Rma );
-*/
-	response_table.Append((RESPONSE*)&Hdm);
-	response_table.Append((RESPONSE*)&Hdg);
-	response_table.Append((RESPONSE*)&Hdt);
-	response_table.Append((RESPONSE*)&Rmb);
-	response_table.Append((RESPONSE*)&Rmc);
-	response_table.Append((RESPONSE*)&Wpl);
-	response_table.Append((RESPONSE*)&Rte);
-	response_table.Append((RESPONSE*)&Gll);
-	response_table.Append((RESPONSE*)&Vtg);
-	response_table.Append((RESPONSE*)&Gsv);
-	response_table.Append((RESPONSE*)&Gga);
-	response_table.Append((RESPONSE*)&GPwpl);
-	response_table.Append((RESPONSE*)&Apb);
+//	response_table.push_back( (RESPONSE *) &Aam );
+//	response_table.push_back( (RESPONSE *) &Alm );
+//	response_table.push_back( (RESPONSE *) &Apb );
+//	response_table.push_back( (RESPONSE *) &Asd );
+//	response_table.push_back( (RESPONSE *) &Bec );
+//	response_table.push_back( (RESPONSE *) &Bod );
+//	response_table.push_back( (RESPONSE *) &Bwc );
+//	response_table.push_back( (RESPONSE *) &Bwr );
+//	response_table.push_back( (RESPONSE *) &Bww );
+//	response_table.push_back( (RESPONSE *) &Dbt );
+//	response_table.push_back( (RESPONSE *) &Dcn );
+//	response_table.push_back( (RESPONSE *) &Dpt );
+//	response_table.push_back( (RESPONSE *) &Fsi );
+//	response_table.push_back( (RESPONSE *) &Gga );
+//	response_table.push_back( (RESPONSE *) &Glc );
+//	response_table.push_back( (RESPONSE *) &Gll );
+//	response_table.push_back( (RESPONSE *) &Gxa );
+//	response_table.push_back( (RESPONSE *) &Hsc );
+//	response_table.push_back( (RESPONSE *) &Lcd );
+//	response_table.push_back( (RESPONSE *) &Mtw );
+//	response_table.push_back( (RESPONSE *) &Mwv );
+//	response_table.push_back( (RESPONSE *) &Oln );
+//	response_table.push_back( (RESPONSE *) &Osd );
+//	response_table.push_back( (RESPONSE *) &Proprietary );
+//	response_table.push_back( (RESPONSE *) &Rma );
+	response_table.push_back((RESPONSE*)&Hdm);
+	response_table.push_back((RESPONSE*)&Hdg);
+	response_table.push_back((RESPONSE*)&Hdt);
+	response_table.push_back((RESPONSE*)&Rmb);
+	response_table.push_back((RESPONSE*)&Rmc);
+	response_table.push_back((RESPONSE*)&Wpl);
+	response_table.push_back((RESPONSE*)&Rte);
+	response_table.push_back((RESPONSE*)&Gll);
+	response_table.push_back((RESPONSE*)&Vtg);
+	response_table.push_back((RESPONSE*)&Gsv);
+	response_table.push_back((RESPONSE*)&Gga);
+	response_table.push_back((RESPONSE*)&GPwpl);
+	response_table.push_back((RESPONSE*)&Apb);
+//	response_table.push_back( (RESPONSE *) &Rot );
+//	response_table.push_back( (RESPONSE *) &Rpm );
+//	response_table.push_back( (RESPONSE *) &Rsa );
+//	response_table.push_back( (RESPONSE *) &Rsd );
+//	response_table.push_back( (RESPONSE *) &Sfi );
+//	response_table.push_back( (RESPONSE *) &Stn );
+//	response_table.push_back( (RESPONSE *) &Trf );
+//	response_table.push_back( (RESPONSE *) &Ttm );
+//	response_table.push_back( (RESPONSE *) &Vbw );
+//	response_table.push_back( (RESPONSE *) &Vhw );
+//	response_table.push_back( (RESPONSE *) &Vdr );
+//	response_table.push_back( (RESPONSE *) &Vlw );
+//	response_table.push_back( (RESPONSE *) &Vpw );
+//	response_table.push_back( (RESPONSE *) &Vtg );
+//	response_table.push_back( (RESPONSE *) &Wcv );
+//	response_table.push_back( (RESPONSE *) &Wnc );
+//	response_table.push_back( (RESPONSE *) &Xdr );
+//	response_table.push_back( (RESPONSE *) &Xte );
+//	response_table.push_back( (RESPONSE *) &Xtr );
+//	response_table.push_back( (RESPONSE *) &Zda );
+//	response_table.push_back( (RESPONSE *) &Zfo );
+//	response_table.push_back( (RESPONSE *) &Ztg );
 
-/*
-   response_table.Add( (RESPONSE *) &Rot );
-   response_table.Add( (RESPONSE *) &Rpm );
-   response_table.Add( (RESPONSE *) &Rsa );
-   response_table.Add( (RESPONSE *) &Rsd );
-   response_table.Add( (RESPONSE *) &Sfi );
-   response_table.Add( (RESPONSE *) &Stn );
-   response_table.Add( (RESPONSE *) &Trf );
-   response_table.Add( (RESPONSE *) &Ttm );
-   response_table.Add( (RESPONSE *) &Vbw );
-   response_table.Add( (RESPONSE *) &Vhw );
-   response_table.Add( (RESPONSE *) &Vdr );
-   response_table.Add( (RESPONSE *) &Vlw );
-   response_table.Add( (RESPONSE *) &Vpw );
-   response_table.Add( (RESPONSE *) &Vtg );
-   response_table.Add( (RESPONSE *) &Wcv );
-   response_table.Add( (RESPONSE *) &Wnc );
-   response_table.Add( (RESPONSE *) &Xdr );
-   response_table.Add( (RESPONSE *) &Xte );
-   response_table.Add( (RESPONSE *) &Xtr );
-   response_table.Add( (RESPONSE *) &Zda );
-   response_table.Add( (RESPONSE *) &Zfo );
-   response_table.Add( (RESPONSE *) &Ztg );
-*/
    sort_response_table();
    set_container_pointers();
 }

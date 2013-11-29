@@ -39,10 +39,10 @@
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    7
 
-#include "plugin/ocpn_plugin.h" // FIXME: no relative paths for includes
+#include "plugin/ocpn_plugin.h"
 
-#include "wxJSON/jsonreader.h"
-#include "wxJSON/jsonwriter.h"
+#include "wx/jsonreader.h"
+#include "wx/jsonwriter.h"
 
 #include "GribSettingsDialog.h"
 #include "GribOverlayFactory.h"

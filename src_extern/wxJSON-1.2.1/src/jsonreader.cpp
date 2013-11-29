@@ -8,11 +8,11 @@
 // Licence:     wxWidgets licence
 /////////////////////////////////////////////////////////////////////////////
 
-//#ifdef __GNUG__
-//    #pragma implementation "jsonreader.cpp"
-//#endif
+#ifdef __GNUG__
+    #pragma implementation "jsonreader.cpp"
+#endif
 
-#include "jsonreader.h"
+#include <wx/jsonreader.h>
 
 #include <wx/mstream.h>
 #include <wx/sstream.h>
@@ -1849,10 +1849,10 @@ wxJSONReader::ConvertCharByChar( wxString& s, const wxMemoryBuffer& utf8Buffer )
  @return the last char read or -1 in case of EOF
 */
 
-union byte_union
+union byte
 {
-    unsigned char cu[2];
-    short int bu;
+    unsigned char c[2];
+    short int b;
 };
 
 int

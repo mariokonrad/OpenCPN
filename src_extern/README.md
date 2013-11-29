@@ -61,3 +61,18 @@ Notes:
   Windows does not know ftruncate (see tide\_db.c:delete\_tide\_record).
 
 
+wxJSON-1.2.1
+------------
+
+License: wxWidgets license (http://www.wxwidgets.org/about/newlicen.htm)
+
+Homepage:
+- http://luccat.users.sourceforge.net/wxjson/
+- http://wxcode.sourceforge.net/components/wxjson/
+
+Download: http://sourceforge.net/projects/wxcode/files/Components/wxJSON/
+
+Notes:
+- Added a CMakeLists.txt file
+
+

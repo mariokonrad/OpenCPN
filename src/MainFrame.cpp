@@ -118,7 +118,7 @@
 #include <chart/ChartDummy.h>
 #include <chart/gshhs/GSHHSChart.h>
 
-#include <wxJSON/jsonreader.h>
+#include <wx/jsonreader.h>
 
 #ifdef USE_S57
 	#include "S57QueryDialog.h"

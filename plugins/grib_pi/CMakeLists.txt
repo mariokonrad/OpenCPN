@@ -93,10 +93,6 @@ SET(SRC_GRIB
             src/GribRecord.cpp
             src/zuFile.cpp
             src/IsoLine.cpp
-
-            ../../src/wxJSON/jsonval.cpp
-            ../../src/wxJSON/jsonreader.cpp
-            ../../src/wxJSON/jsonwriter.cpp
 )
 IF(WIN32)
            SET(SRC_GRIB ${SRC_GRIB} src/smapi.h)
@@ -126,7 +122,7 @@ IF(WIN32)
   ADD_DEPENDENCIES(${PACKAGE_NAME} ${PARENT})
 ENDIF(WIN32)
 
-TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${wxWidgets_LIBRARIES} )
+TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${wxWidgets_LIBRARIES} wxjson )
 
 IF(APPLE)
  FIND_PACKAGE(ZLIB REQUIRED)

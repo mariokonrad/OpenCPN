@@ -398,6 +398,7 @@ set_target_properties(wxjson
 	)
 add_dependencies(wxjson extern_wxjson)
 include_directories(${wxjson_INCLUDE_DIR})
+add_definitions("-DwxJSON_USE_STL")
 
 ################################################################################
 # GDAL (external)
@@ -1367,6 +1368,7 @@ IF(WIN32)
 		gdiplus.lib
 		glu32.lib
 		Psapi.lib
+		wxjson
 		)
 ENDIF(WIN32)
 

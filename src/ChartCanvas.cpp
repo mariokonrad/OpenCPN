@@ -4315,7 +4315,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 }
 
 void ChartCanvas::draw_ais_ARPA(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush& target_brush,
-								const ais::AIS_Target_Data* td)
+								const ais::AIS_Target_Data* td) const
 {
 	wxPen target_pen(GetGlobalColor(_T("UBLCK")), 2);
 
@@ -4335,7 +4335,7 @@ void ChartCanvas::draw_ais_ARPA(ocpnDC& dc, const wxPoint& TargetPoint, const wx
 }
 
 void ChartCanvas::draw_ais_ATON(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush&,
-								const ais::AIS_Target_Data* td)
+								const ais::AIS_Target_Data* td) const
 {
 	using namespace ais;
 
@@ -4352,18 +4352,18 @@ void ChartCanvas::draw_ais_ATON(ocpnDC& dc, const wxPoint& TargetPoint, const wx
 }
 
 void ChartCanvas::draw_ais_BASE(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush&,
-								const ais::AIS_Target_Data*)
+								const ais::AIS_Target_Data*) const
 {
 	Base_Square(dc, wxPen(GetGlobalColor(_T("UBLCK")), 2), TargetPoint.x, TargetPoint.y, 8);
 }
 
 void ChartCanvas::draw_ais_SART(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush&,
-								const ais::AIS_Target_Data* td)
+								const ais::AIS_Target_Data* td) const
 {
 	if (td->NavStatus == 14) // active
-		SART_Render(dc, wxPen(GetGlobalColor(_T ( "URED" )), 2), TargetPoint.x, TargetPoint.y, 8);
+		SART_Render(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y, 8);
 	else
-		SART_Render(dc, wxPen(GetGlobalColor(_T ( "UGREN" )), 2), TargetPoint.x, TargetPoint.y, 8);
+		SART_Render(dc, wxPen(GetGlobalColor(_T("UGREN")), 2), TargetPoint.x, TargetPoint.y, 8);
 }
 
 void ChartCanvas::JaggyCircle(ocpnDC& dc, wxPen pen, int x, int y, int radius)
@@ -4418,10 +4418,9 @@ void ChartCanvas::JaggyCircle(ocpnDC& dc, wxPen pen, int x, int y, int radius)
 	dc.SetPen(pen_save);
 }
 
-void ChartCanvas::TargetFrame(ocpnDC& dc, wxPen pen, int x, int y, int radius)
+void ChartCanvas::TargetFrame(ocpnDC& dc, wxPen pen, int x, int y, int radius) const
 {
-	// Constants?
-	int gap2 = 2 * radius / 6;
+	const int gap2 = 2 * radius / 6;
 
 	wxPen pen_save = dc.GetPen();
 
@@ -4439,10 +4438,10 @@ void ChartCanvas::TargetFrame(ocpnDC& dc, wxPen pen, int x, int y, int radius)
 	dc.SetPen(pen_save);
 }
 
-void ChartCanvas::AtoN_Diamond(ocpnDC& dc, wxPen pen, int x, int y, int radius, bool b_virtual)
+void ChartCanvas::AtoN_Diamond(ocpnDC& dc, wxPen pen, int x, int y, int radius,
+							   bool b_virtual) const
 {
-	// Constants?
-	int gap2 = 2 * radius / 8;
+	const int gap2 = 2 * radius / 8;
 	int pen_width = pen.GetWidth();
 
 	wxPen pen_save = dc.GetPen();
@@ -4472,10 +4471,9 @@ void ChartCanvas::AtoN_Diamond(ocpnDC& dc, wxPen pen, int x, int y, int radius, 
 	dc.SetPen(pen_save);
 }
 
-void ChartCanvas::Base_Square(ocpnDC& dc, wxPen pen, int x, int y, int radius)
+void ChartCanvas::Base_Square(ocpnDC& dc, wxPen pen, int x, int y, int radius) const
 {
-	//    Constants?
-	int gap2 = 2 * radius / 6;
+	const int gap2 = 2 * radius / 6;
 	int pen_width = pen.GetWidth();
 
 	wxPen pen_save = dc.GetPen();
@@ -4499,10 +4497,9 @@ void ChartCanvas::Base_Square(ocpnDC& dc, wxPen pen, int x, int y, int radius)
 	dc.SetPen(pen_save);
 }
 
-void ChartCanvas::SART_Render(ocpnDC& dc, wxPen pen, int x, int y, int radius)
+void ChartCanvas::SART_Render(ocpnDC& dc, wxPen pen, int x, int y, int radius) const
 {
-	// Constants
-	int gap = (radius * 12) / 10;
+	const int gap = (radius * 12) / 10;
 	int pen_width = pen.GetWidth();
 
 	wxPen pen_save = dc.GetPen();
@@ -4518,8 +4515,9 @@ void ChartCanvas::SART_Render(ocpnDC& dc, wxPen pen, int x, int y, int radius)
 	if (pen_width > 1) {
 		pen_width -= 1;
 		pen.SetWidth(pen_width);
-	} // draw cross inside
+	}
 
+	// draw cross inside
 	dc.DrawLine(x - gap, y - gap, x + gap, y + gap);
 	dc.DrawLine(x - gap, y + gap, x + gap, y - gap);
 
@@ -4644,7 +4642,7 @@ void ChartCanvas::UpdateAlerts()
 	ocpnDC ocpndc = ocpnDC(temp_dc);
 	AnchorWatchDraw(ocpndc);
 
-	//  Retrieve the drawing extents
+	// Retrieve the drawing extents
 	wxRect alert_rect(temp_dc.MinX(), temp_dc.MinY(), temp_dc.MaxX() - temp_dc.MinX(),
 					  temp_dc.MaxY() - temp_dc.MinY());
 
@@ -4672,21 +4670,22 @@ void ChartCanvas::UpdateAIS()
 	if (!g_pAIS)
 		return;
 
-	//  Get the rectangle in the current dc which bounds the detected AIS targets
+	// Get the rectangle in the current dc which bounds the detected AIS targets
 
-	//  Use this dc
+	// Use this dc
 	wxClientDC dc(this);
 
 	// Get dc boundary
-	int sx, sy;
+	int sx;
+	int sy;
 	dc.GetSize(&sx, &sy);
 
 	wxRect ais_rect;
 
-	//  How many targets are there?
+	// How many targets are there?
 
-	//  If more than "some number", it will be cheaper to refresh the entire screen
-	//  than to build update rectangles for each target.
+	// If more than "some number", it will be cheaper to refresh the entire screen
+	// than to build update rectangles for each target.
 	AIS_Target_Hash* current_targets = g_pAIS->GetTargetList();
 	if (current_targets->size() > 10) {
 		ais_rect = wxRect(0, 0, sx, sy); // full screen
@@ -4707,7 +4706,7 @@ void ChartCanvas::UpdateAIS()
 		AISDraw(ocpndc);
 		AISDrawAreaNotices(ocpndc);
 
-		//  Retrieve the drawing extents
+		// Retrieve the drawing extents
 		ais_rect = wxRect(temp_dc.MinX(), temp_dc.MinY(), temp_dc.MaxX() - temp_dc.MinX(),
 						  temp_dc.MaxY() - temp_dc.MinY());
 
@@ -4718,16 +4717,16 @@ void ChartCanvas::UpdateAIS()
 	}
 
 	if (!ais_rect.IsEmpty() || !ais_draw_rect.IsEmpty()) {
-		//  The required invalidate rectangle is the union of the last drawn rectangle
-		//  and this drawn rectangle
+		// The required invalidate rectangle is the union of the last drawn rectangle
+		// and this drawn rectangle
 		wxRect ais_update_rect = ais_draw_rect;
 		ais_update_rect.Union(ais_rect);
 
-		//  Invalidate the rectangular region
+		// Invalidate the rectangular region
 		RefreshRect(ais_update_rect, false);
 	}
 
-	//  Save this rectangle for next time
+	// Save this rectangle for next time
 	ais_draw_rect = ais_rect;
 }
 
@@ -4753,7 +4752,6 @@ void ChartCanvas::OnSize(wxSizeEvent& event)
 
 	double display_size_meters = wxGetDisplaySizeMM().GetWidth()
 								 / 1000.; // gives screen size(width) in meters
-	//        m_canvas_scale_factor = m_canvas_width / display_size_meters;
 	m_canvas_scale_factor = wxGetDisplaySize().GetWidth() / display_size_meters;
 
 	m_absolute_min_scale_ppm = m_canvas_width / (0.95 * geo::WGS84_semimajor_axis_meters
@@ -4791,13 +4789,13 @@ void ChartCanvas::OnSize(wxSizeEvent& event)
 	proute_bm = new wxBitmap(VPoint.pix_width, VPoint.pix_height, -1);
 	m_dc_route.SelectObject(*proute_bm);
 
-	//  Resize the saved Bitmap
+	// Resize the saved Bitmap
 	m_cached_chart_bm.Create(VPoint.pix_width, VPoint.pix_height, -1);
 
-	//  Resize the working Bitmap
+	// Resize the working Bitmap
 	m_working_bm.Create(VPoint.pix_width, VPoint.pix_height, -1);
 
-	//  Rescale again, to capture all the changes for new canvas size
+	// Rescale again, to capture all the changes for new canvas size
 	SetVPScale(GetVPScale());
 
 #ifdef ocpnUSE_GL
@@ -4904,7 +4902,7 @@ bool ChartCanvas::CheckEdgePan(int x, int y, bool bdragging)
 		pan_y = pan_delta;
 	}
 
-	//    Of course, if dragging, and the mouse left button is not down, we must stop the event
+	// Of course, if dragging, and the mouse left button is not down, we must stop the event
 	// injection
 	if (bdragging) {
 		wxMouseState state = ::wxGetMouseState();
@@ -4919,8 +4917,8 @@ bool ChartCanvas::CheckEdgePan(int x, int y, bool bdragging)
 		return true;
 	}
 
-	//    This mouse event must not be due to pan timer event injector
-	//    Mouse is out of the pan zone, so prevent any orphan event injection
+	// This mouse event must not be due to pan timer event injector
+	// Mouse is out of the pan zone, so prevent any orphan event injection
 	if ((!bft) && pPanTimer->IsRunning()) {
 		pPanTimer->Stop();
 	}
@@ -5177,8 +5175,8 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 		double show_cursor_lon = m_cursor_lon;
 		double show_cursor_lat = m_cursor_lat;
 
-		//    Check the absolute range of the cursor position
-		//    There could be a window wherein the chart geoereferencing is not valid....
+		// Check the absolute range of the cursor position
+		// There could be a window wherein the chart geoereferencing is not valid....
 		if ((fabs(show_cursor_lat) < 90.0) && (fabs(show_cursor_lon) < 360.0)) {
 			while (show_cursor_lon < -180.0)
 				show_cursor_lon += 360.0;
@@ -5261,10 +5259,10 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 	// Mouse Clicks
 
 	if (event.LeftDown()) {
-		//  This really should not be needed, but....
-		//  on Windows, when using wxAUIManager, sometimes the focus is lost
-		//  when clicking into another pane, e.g.the AIS target list, and then back to this pane.
-		//  Oddly, some mouse events are not lost, however.  Like this one....
+		// This really should not be needed, but....
+		// on Windows, when using wxAUIManager, sometimes the focus is lost
+		// when clicking into another pane, e.g.the AIS target list, and then back to this pane.
+		// Oddly, some mouse events are not lost, however.  Like this one....
 		SetFocus();
 
 		last_drag.x = mx;

@@ -259,10 +259,10 @@ private:
 	void FinishRoute(void);
 	wxString FindValidUploadPort();
 
-	void draw_ais_ARPA(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*);
-	void draw_ais_ATON(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*);
-	void draw_ais_BASE(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*);
-	void draw_ais_SART(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*);
+	void draw_ais_ARPA(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*) const;
+	void draw_ais_ATON(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*) const;
+	void draw_ais_BASE(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*) const;
+	void draw_ais_SART(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*) const;
 
 	ChInfoWin* m_pCIWin;
 
@@ -376,10 +376,10 @@ private:
 
 	void AnchorWatchDraw(ocpnDC& dc);
 
-	void TargetFrame(ocpnDC& dc, wxPen pen, int x, int y, int radius);
-	void AtoN_Diamond(ocpnDC& dc, wxPen pen, int x, int y, int radius, bool b_virtual);
-	void Base_Square(ocpnDC& dc, wxPen pen, int x, int y, int radius);
-	void SART_Render(ocpnDC& dc, wxPen pen, int x, int y, int radius);
+	void TargetFrame(ocpnDC& dc, wxPen pen, int x, int y, int radius) const;
+	void AtoN_Diamond(ocpnDC& dc, wxPen pen, int x, int y, int radius, bool b_virtual) const;
+	void Base_Square(ocpnDC& dc, wxPen pen, int x, int y, int radius) const;
+	void SART_Render(ocpnDC& dc, wxPen pen, int x, int y, int radius) const;
 
 	void GridDraw(ocpnDC& dc);
 	void ScaleBarDraw(ocpnDC& dc);

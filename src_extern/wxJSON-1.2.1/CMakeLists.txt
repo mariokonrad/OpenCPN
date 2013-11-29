@@ -1,31 +1,21 @@
 project(wxjson)
 cmake_minimum_required(VERSION 2.8)
 
-#if(NOT WIN32 AND NOT APPLE)
-#	add_definitions("-Wall -Wextra -fexceptions -rdynamic")
-#	add_definitions("-g -fno-strict-aliasing")
-#
-#	set(CMAKE_C_FLAGS "-O2 -Wall -Wextra -fPIC")
-#	set(CMAKE_C_FLAGS_DEBUG "-ggdb -O0 -Wall -Wextra -fPIC")
-#	set(CMAKE_C_FLAGS_MINSIZEREL "-O2 -Wall -Wextra -fPIC")
-#	set(CMAKE_C_FLAGS_RELEASE "-O3 -Wall -Wextra -fPIC")
-#	set(CMAKE_C_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -Wextra -fPIC")
-#
-#	set(CMAKE_CXX_FLAGS "-O2 -Wall -Wextra -fPIC")
-#	set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -O0 -Wall -Wextra -fPIC")
-#	set(CMAKE_CXX_FLAGS_MINSIZEREL "-O2 -Wall -Wextra -fPIC")
-#	set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra -fPIC")
-#	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -Wextra -fPIC")
-#
-#	set(CMAKE_EXE_LINKER_FLAGS "-O2 -Wall -Wextra")
-#	set(CMAKE_SHARED_LINKER_FLAGS "-O2 -Wall -Wextra")
-#	set(CMAKE_MODULE_LINKER_FLAGS "-O2 -Wall -Wextra")
-#endif()
+message(STATUS "CMAKE_BUILD_TYPE       : ${CMAKE_BUILD_TYPE}")
+message(STATUS "CMAKE_C_COMPILER       : ${CMAKE_C_COMPILER}")
+message(STATUS "CMAKE_C_FLAGS          : ${CMAKE_C_FLAGS}")
+message(STATUS "CMAKE_C_FLAGS_DEBUG    : ${CMAKE_C_FLAGS_DEBUG}")
+message(STATUS "CMAKE_C_FLAGS_RELEASE  : ${CMAKE_C_FLAGS_RELEASE}")
+message(STATUS "CMAKE_CXX_COMPILER     : ${CMAKE_CXX_COMPILER}")
+message(STATUS "CMAKE_CXX_FLAGS        : ${CMAKE_CXX_FLAGS}")
+message(STATUS "CMAKE_CXX_FLAGS_DEBUG  : ${CMAKE_CXX_FLAGS_DEBUG}")
+message(STATUS "CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
 
 find_package(wxWidgets REQUIRED)
 include(${wxWidgets_USE_FILE})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+add_definitions("-DwxJSON_USE_STL")
 
 add_library(wxjson
 	STATIC

@@ -54,6 +54,16 @@
     #define WXDLLIMPEXP_DATA_JSON(type)	    type
 #endif
 
+//dsr
+#undef WXDLLIMPEXP_JSON
+#undef WXDLLIMPEXP_DATA_JSON
+
+    #define WXDLLIMPEXP_JSON
+    #define WXDLLIMPEXP_DATA_JSON(type)         type
+
+//dsr
+
+
 // the __PRETTY_FUNCTION__ macro expands to the full class's
 // member name in the GNU GCC.
 // For other compilers we use the standard __wxFUNCTION__ macro

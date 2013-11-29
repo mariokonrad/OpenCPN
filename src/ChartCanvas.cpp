@@ -4095,44 +4095,13 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 		// Actually Draw the target
 		if (td->Class == AIS_ARPA) {
-			wxPen target_pen(GetGlobalColor(_T("UBLCK")), 2);
-
-			dc.SetPen(target_pen);
-			dc.SetBrush(target_brush);
-
-			dc.StrokeCircle(TargetPoint.x, TargetPoint.y, 9);
-			dc.StrokeCircle(TargetPoint.x, TargetPoint.y, 1);
-			//        Draw the inactive cross-out line
-			if (!td->b_active) {
-				dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" )), 2));
-				dc.StrokeLine(TargetPoint.x - 14, TargetPoint.y, TargetPoint.x + 14, TargetPoint.y);
-				dc.CalcBoundingBox(TargetPoint.x - 14, TargetPoint.y);
-				dc.CalcBoundingBox(TargetPoint.x + 14, TargetPoint.y);
-				dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" )), 1));
-			}
+			draw_ais_ARPA(dc, TargetPoint, target_brush, td);
 		} else if (td->Class == AIS_ATON) { // Aid to Navigation
-			wxPen aton_pen;
-			if ((td->NavStatus == ATON_VIRTUAL_OFFPOSITION)
-				|| (td->NavStatus == ATON_REAL_OFFPOSITION))
-				aton_pen = wxPen(GetGlobalColor(_T ( "URED" )), 2);
-			else
-				aton_pen = wxPen(GetGlobalColor(_T ( "UBLCK" )), 2);
-
-			bool b_virt = (td->NavStatus == ATON_VIRTUAL)
-						  | (td->NavStatus == ATON_VIRTUAL_ONPOSITION)
-						  | (td->NavStatus == ATON_VIRTUAL_OFFPOSITION);
-
-			AtoN_Diamond(dc, aton_pen, TargetPoint.x, TargetPoint.y, 12, b_virt);
+			draw_ais_ATON(dc, TargetPoint, target_brush, td);
 		} else if (td->Class == AIS_BASE) { // Base Station
-			Base_Square(dc, wxPen(GetGlobalColor(_T ( "UBLCK" )), 2), TargetPoint.x, TargetPoint.y,
-						8);
+			draw_ais_BASE(dc, TargetPoint, target_brush, td);
 		} else if (td->Class == AIS_SART) { // SART Target
-			if (td->NavStatus == 14) // active
-				SART_Render(dc, wxPen(GetGlobalColor(_T ( "URED" )), 2), TargetPoint.x,
-							TargetPoint.y, 8);
-			else
-				SART_Render(dc, wxPen(GetGlobalColor(_T ( "UGREN" )), 2), TargetPoint.x,
-							TargetPoint.y, 8);
+			draw_ais_SART(dc, TargetPoint, target_brush, td);
 		} else { // ship class A or B or a Buddy or DSC
 			wxPen target_pen(GetGlobalColor(_T ( "UBLCK" )), 1);
 
@@ -4300,11 +4269,11 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		}
 
 		if (g_bShowAISName) {
-			double true_scale_display = floor(VPoint.chart_scale / 100.) * 100.;
+			double true_scale_display = floor(VPoint.chart_scale / 100.0) * 100.0;
 			if (true_scale_display < g_Show_Target_Name_Scale) { // from which scale to display name
 
 				wxString tgt_name = td->GetFullName();
-				tgt_name = tgt_name.substr(0, tgt_name.find(_T ( "Unknown" ), 0));
+				tgt_name = tgt_name.substr(0, tgt_name.find(_T("Unknown"), 0));
 
 				if (tgt_name != wxEmptyString) {
 					dc.SetFont(*FontMgr::Get().GetFont(_("AIS Target Name"), 12));
@@ -4318,8 +4287,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 					else
 						dc.DrawText(tgt_name, TargetPoint.x + 10, TargetPoint.y + 0.5 * h);
 
-				} // If name do not empty
-			} // if scale
+				}
+			}
 		}
 
 		// Draw tracks if enabled
@@ -4327,7 +4296,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			wxPoint TrackPointA;
 			wxPoint TrackPointB;
 
-			dc.SetPen(wxPen(GetGlobalColor(_T ( "CHMGD" )), 2));
+			dc.SetPen(wxPen(GetGlobalColor(_T("CHMGD")), 2));
 
 			// First point
 			ais::AISTargetTrackList::iterator track_point = td->m_ptrack.begin();
@@ -4337,14 +4306,64 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			}
 			while (track_point != td->m_ptrack.end()) {
 				GetCanvasPointPix(track_point->m_lat, track_point->m_lon, &TrackPointB);
-
 				dc.StrokeLine(TrackPointA, TrackPointB);
-
 				++track_point;
 				TrackPointA = TrackPointB;
 			}
 		}
 	}
+}
+
+void ChartCanvas::draw_ais_ARPA(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush& target_brush,
+								const ais::AIS_Target_Data* td)
+{
+	wxPen target_pen(GetGlobalColor(_T("UBLCK")), 2);
+
+	dc.SetPen(target_pen);
+	dc.SetBrush(target_brush);
+
+	dc.StrokeCircle(TargetPoint.x, TargetPoint.y, 9);
+	dc.StrokeCircle(TargetPoint.x, TargetPoint.y, 1);
+	// Draw the inactive cross-out line
+	if (!td->b_active) {
+		dc.SetPen(wxPen(GetGlobalColor(_T("UBLCK")), 2));
+		dc.StrokeLine(TargetPoint.x - 14, TargetPoint.y, TargetPoint.x + 14, TargetPoint.y);
+		dc.CalcBoundingBox(TargetPoint.x - 14, TargetPoint.y);
+		dc.CalcBoundingBox(TargetPoint.x + 14, TargetPoint.y);
+		dc.SetPen(wxPen(GetGlobalColor(_T("UBLCK")), 1));
+	}
+}
+
+void ChartCanvas::draw_ais_ATON(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush&,
+								const ais::AIS_Target_Data* td)
+{
+	using namespace ais;
+
+	wxPen aton_pen;
+	if ((td->NavStatus == ATON_VIRTUAL_OFFPOSITION) || (td->NavStatus == ATON_REAL_OFFPOSITION))
+		aton_pen = wxPen(GetGlobalColor(_T("URED")), 2);
+	else
+		aton_pen = wxPen(GetGlobalColor(_T("UBLCK")), 2);
+
+	bool b_virt = (td->NavStatus == ATON_VIRTUAL) | (td->NavStatus == ATON_VIRTUAL_ONPOSITION)
+				  | (td->NavStatus == ATON_VIRTUAL_OFFPOSITION);
+
+	AtoN_Diamond(dc, aton_pen, TargetPoint.x, TargetPoint.y, 12, b_virt);
+}
+
+void ChartCanvas::draw_ais_BASE(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush&,
+								const ais::AIS_Target_Data*)
+{
+	Base_Square(dc, wxPen(GetGlobalColor(_T("UBLCK")), 2), TargetPoint.x, TargetPoint.y, 8);
+}
+
+void ChartCanvas::draw_ais_SART(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush&,
+								const ais::AIS_Target_Data* td)
+{
+	if (td->NavStatus == 14) // active
+		SART_Render(dc, wxPen(GetGlobalColor(_T ( "URED" )), 2), TargetPoint.x, TargetPoint.y, 8);
+	else
+		SART_Render(dc, wxPen(GetGlobalColor(_T ( "UGREN" )), 2), TargetPoint.x, TargetPoint.y, 8);
 }
 
 void ChartCanvas::JaggyCircle(ocpnDC& dc, wxPen pen, int x, int y, int radius)

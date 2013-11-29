@@ -259,6 +259,11 @@ private:
 	void FinishRoute(void);
 	wxString FindValidUploadPort();
 
+	void draw_ais_ARPA(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*);
+	void draw_ais_ATON(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*);
+	void draw_ais_BASE(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*);
+	void draw_ais_SART(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*);
+
 	ChInfoWin* m_pCIWin;
 
 	bool m_bShowCurrent;

@@ -478,7 +478,7 @@ int ChartDB::GetStackChartScale(ChartStack* ps, int stackindex, char* buf, int W
 	const ChartTableEntry& entry = GetChartTableEntry(ps->GetDBIndex(stackindex));
 	int sc = entry.GetScale();
 	if (buf)
-		sprintf(buf, "%d", sc);
+		sprintf(buf, "%d", sc); // FIXME: potential buffer overflow
 
 	return sc;
 }
@@ -893,7 +893,7 @@ bool ChartDB::DeleteCacheChart(ChartBase* pDeleteCandidate)
 
 void ChartDB::ApplyColorSchemeToCachedCharts(ColorScheme cs)
 {
-	unsigned int nCache = pChartCache->size();
+	const unsigned int nCache = pChartCache->size();
 	for (unsigned int i = 0; i < nCache; i++) {
 		CacheEntry* pce = static_cast<CacheEntry*>(pChartCache->Item(i));
 		ChartBase* Ch = (ChartBase*)pce->pChart;
@@ -1094,20 +1094,20 @@ wxXmlDocument ChartDB::GetXMLDescription(int dbIndex, bool b_getGeom)
 
 		//    Primary table
 		if (cte.GetnPlyEntries()) {
-			wxXmlNode* panelnode = new wxXmlNode(wxXML_ELEMENT_NODE, _T ( "panel" ));
+			wxXmlNode* panelnode = new wxXmlNode(wxXML_ELEMENT_NODE, _T("panel"));
 			node->AddChild(panelnode);
 
 			wxString panel_no;
 			panel_no.Printf(_T("%d"), 0);
-			wxXmlNode* anode = new wxXmlNode(wxXML_TEXT_NODE, _T ( "" ), panel_no);
+			wxXmlNode* anode = new wxXmlNode(wxXML_TEXT_NODE, _T(""), panel_no);
 			panelnode->AddChild(anode);
 
 			const float* pf = cte.GetpPlyTable();
 			for (int j = 0; j < cte.GetnPlyEntries(); j++) {
-				wxXmlNode* vnode = new wxXmlNode(wxXML_ELEMENT_NODE, _T ( "vertex" ));
+				wxXmlNode* vnode = new wxXmlNode(wxXML_ELEMENT_NODE, _T("vertex"));
 				panelnode->AddChild(vnode);
 
-				wxXmlNode* latnode = new wxXmlNode(wxXML_ELEMENT_NODE, _T ( "lat" ));
+				wxXmlNode* latnode = new wxXmlNode(wxXML_ELEMENT_NODE, _T("lat"));
 				vnode->AddChild(latnode);
 
 				float l = *pf++;

@@ -68,8 +68,8 @@ public:
 	bool Write(const wxString& filePath);
 
 	const wxString& GetDBFileName() const;
-	ArrayOfCDI& GetChartDirArray();
-	wxArrayString& GetChartDirArrayString();
+	const ArrayOfCDI& GetChartDirArray() const;
+	const wxArrayString& GetChartDirArrayString() const;
 
 	void UpdateChartClassDescriptorArray(void);
 
@@ -77,22 +77,22 @@ public:
 	const ChartTableEntry& GetChartTableEntry(int index) const;
 
 	bool IsValid() const;
-	int DisableChart(wxString& PathToDisable);
-	bool GetCentroidOfLargestScaleChart(double* clat, double* clon, chart::ChartFamilyEnum family);
-	int GetDBChartType(int dbIndex);
-	int GetDBChartFamily(int dbIndex);
-	float GetDBChartSkew(int dbIndex);
-	int GetDBChartProj(int dbIndex);
-	int GetDBChartScale(int dbIndex);
+	int DisableChart(const wxString& PathToDisable);
+	bool GetCentroidOfLargestScaleChart(double* clat, double* clon, chart::ChartFamilyEnum family) const;
+	int GetDBChartType(int dbIndex) const;
+	int GetDBChartFamily(int dbIndex) const;
+	float GetDBChartSkew(int dbIndex) const;
+	int GetDBChartProj(int dbIndex) const;
+	int GetDBChartScale(int dbIndex) const;
 
-	bool GetDBBoundingBox(int dbindex, geo::BoundingBox* box);
-	int GetnAuxPlyEntries(int dbIndex);
-	int GetDBPlyPoint(int dbIndex, int plyindex, float* lat, float* lon);
-	int GetDBAuxPlyPoint(int dbIndex, int plyindex, int iAuxPly, float* lat, float* lon);
+	bool GetDBBoundingBox(int dbindex, geo::BoundingBox* box) const;
+	int GetnAuxPlyEntries(int dbIndex) const;
+	int GetDBPlyPoint(int dbIndex, int plyindex, float* lat, float* lon) const;
+	int GetDBAuxPlyPoint(int dbIndex, int plyindex, int iAuxPly, float* lat, float* lon) const;
 	int GetVersion() const;
-	wxString GetFullChartInfo(ChartBase* pc, int dbIndex, int* char_width, int* line_count);
-	int FinddbIndex(wxString PathToFind);
-	wxString GetDBChartFileName(int dbIndex);
+	wxString GetFullChartInfo(ChartBase* pc, int dbIndex, int* char_width, int* line_count) const;
+	int FinddbIndex(const wxString& PathToFind) const;
+	wxString GetDBChartFileName(int dbIndex) const;
 	void ApplyGroupArray(chart::ChartGroupArray* pGroupArray);
 
 protected:
@@ -110,7 +110,7 @@ protected:
 	ArrayOfCDI m_dir_array;
 
 private:
-	bool IsChartDirUsed(const wxString& theDir);
+	bool IsChartDirUsed(const wxString& theDir) const;
 
 	int SearchDirAndAddCharts(wxString& dir_name_base,
 							  const chart::ChartClassDescriptor& chart_desc,
@@ -119,9 +119,9 @@ private:
 	int TraverseDirAndAddCharts(const ChartDirInfo& dir_info, wxProgressDialog* pprog,
 								wxString& dir_magic, bool bForce);
 	bool DetectDirChange(const wxString& dir_path, const wxString& magic, wxString& new_magic,
-						 wxProgressDialog* pprog);
+						 wxProgressDialog* pprog) const;
 
-	bool Check_CM93_Structure(wxString dir_name);
+	bool Check_CM93_Structure(wxString dir_name) const;
 
 	bool bValid;
 	wxArrayString m_chartDirs;

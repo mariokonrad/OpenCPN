@@ -25,6 +25,7 @@
 #define __CHART__CHARTGROUPELEMENT__H__
 
 #include <wx/string.h>
+#include <vector>
 
 namespace chart {
 
@@ -32,7 +33,7 @@ class ChartGroupElement
 {
 public:
 	wxString m_element_name;
-	wxArrayString m_missing_name_array; // FIXME: replace this with std container
+	std::vector<wxString> missing_names;
 };
 
 }

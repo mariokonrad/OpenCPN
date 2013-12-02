@@ -206,15 +206,14 @@ void ChartGroupsUI::OnRemoveChartItem(wxCommandEvent& event)
 						chart::ChartGroupElement* pelement
 							= pGroup->m_element_array.at(group_item_index);
 						bool b_duplicate = false;
-						for (unsigned int k = 0; k < pelement->m_missing_name_array.size();
-							 k++) {
-							if (pelement->m_missing_name_array.Item(k) == sel_item) {
+						for (unsigned int k = 0; k < pelement->missing_names.size(); k++) {
+							if (pelement->missing_names.at(k) == sel_item) {
 								b_duplicate = true;
 								break;
 							}
 						}
 						if (!b_duplicate) {
-							pelement->m_missing_name_array.Add(sel_item);
+							pelement->missing_names.push_back(sel_item);
 						}
 
 						// Special case...
@@ -362,7 +361,7 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 
 				// Walk the children of the expanded node, marking any items which appear in
 				// the "missing" list
-				if ((target_element->m_missing_name_array.size())) {
+				if ((target_element->missing_names.size())) {
 					wxString full_root = branch_name;
 					full_root += branch_adder;
 					full_root += wxString(wxFILE_SEP_PATH);
@@ -373,9 +372,10 @@ void ChartGroupsUI::OnNodeExpanded(wxTreeEvent& event)
 						wxString target_string = full_root;
 						target_string += ptree->GetItemText(child);
 
-						for (unsigned int k = 0;
-							 k < target_element->m_missing_name_array.size(); k++) {
-							if (target_element->m_missing_name_array.Item(k) == target_string) {
+						const std::vector<wxString>& missing = target_element->missing_names;
+						for (std::vector<wxString>::const_iterator k = missing.begin();
+							 k != missing.end(); ++k) {
+							if (*k == target_string) {
 								ptree->SetItemTextColour(child, wxColour(128, 128, 128));
 								break;
 							}
@@ -535,10 +535,11 @@ chart::ChartGroupArray* ChartGroupsUI::CloneChartGroupArray(chart::ChartGroupArr
 		for (unsigned int j = 0; j < group->m_element_array.size(); j++) {
 			chart::ChartGroupElement* pde = new chart::ChartGroupElement;
 			pde->m_element_name = group->m_element_array.at(j)->m_element_name;
+			// FIXME: use iterators
 			for (unsigned int k = 0;
-				 k < group->m_element_array.at(j)->m_missing_name_array.size(); k++) {
-				wxString missing_name = group->m_element_array.at(j)->m_missing_name_array.Item(k);
-				pde->m_missing_name_array.push_back(missing_name);
+				 k < group->m_element_array.at(j)->missing_names.size(); k++) {
+				wxString missing_name = group->m_element_array.at(j)->missing_names.at(k);
+				pde->missing_names.push_back(missing_name);
 			}
 			pdg->m_element_array.push_back(pde);
 		}
@@ -560,7 +561,7 @@ void ChartGroupsUI::EmptyChartGroupArray(chart::ChartGroupArray* s)
 		for (chart::ChartGroupElementArray::iterator j = group->m_element_array.begin();
 			 j != group->m_element_array.end(); ++j) {
 			chart::ChartGroupElement* pe = *j;
-			pe->m_missing_name_array.Clear();
+			pe->missing_names.clear();
 			delete pe;
 		}
 		delete group;

@@ -1145,7 +1145,7 @@ int ChartDatabase::GetnAuxPlyEntries(int dbIndex)
 		return 0;
 }
 
-void ChartDatabase::ApplyGroupArray(chart::ChartGroupArray* pGroupArray)
+void ChartDatabase::ApplyGroupArray(chart::ChartGroupArray* pGroupArray) // FIXME: nested depth
 {
 	for (unsigned int ic = 0; ic < chartTable.size(); ic++) {
 		ChartTableEntry* pcte = &chartTable[ic];
@@ -1160,10 +1160,9 @@ void ChartDatabase::ApplyGroupArray(chart::ChartGroupArray* pGroupArray)
 				if (chart_full_path.StartsWith(element_root)) {
 					bool b_add = true;
 					for (unsigned int k = 0;
-						 k < pGroup->m_element_array.at(j)->m_missing_name_array.size();
-						 k++) {
+						 k < pGroup->m_element_array.at(j)->missing_names.size(); k++) {
 						wxString missing_item
-							= pGroup->m_element_array.at(j)->m_missing_name_array.Item(k);
+							= pGroup->m_element_array.at(j)->missing_names.at(k);
 						if (chart_full_path.StartsWith(missing_item)) {
 							if (chart_full_path == missing_item) {
 								// missing item is full chart name

@@ -1451,12 +1451,11 @@ void Config::CreateConfigGroups(chart::ChartGroupArray* pGroupArray)
 			SetPath(sg);
 			Write(_T("IncludeItem"), pGroup->m_element_array.at(j)->m_element_name);
 
-			wxString t;
-			wxArrayString u = pGroup->m_element_array.at(j)->m_missing_name_array;
-			if (u.size()) {
-				for (unsigned int k = 0; k < u.size(); k++) {
-					t += u.Item(k);
-					t += _T(";");
+			const std::vector<wxString>& missing = pGroup->m_element_array.at(j)->missing_names;
+			if (missing.size() > 0) {
+				wxString t;
+				for (std::vector<wxString>::const_iterator k = missing.begin(); k != missing.end(); ++k) {
+					t += *k + _T(";");
 				}
 				Write(_T("ExcludeItems"), t);
 			}
@@ -1495,7 +1494,7 @@ void Config::LoadConfigGroups(chart::ChartGroupArray* pGroupArray)
 			SetPath(sg);
 
 			wxString v;
-			Read(_T ( "IncludeItem" ), &v);
+			Read(_T("IncludeItem"), &v);
 			chart::ChartGroupElement* pelement = new chart::ChartGroupElement;
 			pelement->m_element_name = v;
 			pGroup->m_element_array.push_back(pelement);
@@ -1506,7 +1505,7 @@ void Config::LoadConfigGroups(chart::ChartGroupArray* pGroupArray)
 					wxStringTokenizer tk(u, _T(";"));
 					while (tk.HasMoreTokens()) {
 						wxString token = tk.GetNextToken();
-						pelement->m_missing_name_array.Add(token);
+						pelement->missing_names.push_back(token);
 					}
 				}
 			}

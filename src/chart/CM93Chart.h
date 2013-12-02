@@ -78,7 +78,7 @@ public:
 	std::vector<int> GetVPCellArray(const ViewPort& vpt);
 
 	typedef std::vector<M_COVR_Desc*> CovrDescContainer;
-	CovrDescContainer m_pcovr_array_loaded;
+	CovrDescContainer m_pcovr_array_loaded; // FIXME: public attribute
 
 	void SetUserOffsets(int cell_index, int object_id, int subcell, int xoff, int yoff);
 

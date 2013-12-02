@@ -51,6 +51,8 @@
 class s52plib;
 
 using chart::CacheEntry;
+using chart::ChartGEO;
+using chart::ChartKAP;
 
 extern ChartBase* Current_Ch;
 extern ThumbWin* pthumbwin;

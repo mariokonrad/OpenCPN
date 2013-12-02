@@ -26,12 +26,16 @@
 
 #include <chart/ChartBaseBSB.h>
 
+namespace chart {
+
 class ChartKAP : public ChartBaseBSB
 {
-	public:
-		ChartKAP();
-		virtual ~ChartKAP();
-		InitReturn Init(const wxString & name, ChartInitFlag init_flags);
+public:
+	ChartKAP();
+	virtual ~ChartKAP();
+	InitReturn Init(const wxString& name, ChartInitFlag init_flags);
 };
+
+}
 
 #endif

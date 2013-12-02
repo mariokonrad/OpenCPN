@@ -26,12 +26,16 @@
 
 #include <chart/ChartBaseBSB.h>
 
+namespace chart {
+
 class ChartGEO : public ChartBaseBSB
 {
-	public:
-		ChartGEO();
-		virtual ~ChartGEO();
-		InitReturn Init(const wxString & name, ChartInitFlag init_flags);
+public:
+	ChartGEO();
+	virtual ~ChartGEO();
+	InitReturn Init(const wxString& name, ChartInitFlag init_flags);
 };
+
+}
 
 #endif

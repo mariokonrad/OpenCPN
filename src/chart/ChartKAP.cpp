@@ -29,8 +29,7 @@
 #include <wx/tokenzr.h>
 #include <wx/log.h>
 
-using chart::Plypoint;
-using chart::Refpoint;
+namespace chart {
 
 ChartKAP::ChartKAP()
 {
@@ -41,7 +40,8 @@ ChartKAP::~ChartKAP()
 {
 }
 
-InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
+InitReturn ChartKAP::Init(const wxString& name,
+						  ChartInitFlag init_flags) // FIXME: refactoring, far too long
 {
 #define BUF_LEN_MAX 4000
 
@@ -65,7 +65,7 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 	ifss_bitmap = new wxFileInputStream(name); // Open again, as the bitmap
 	ifs_bitmap = new wxBufferedInputStream(*ifss_bitmap);
 
-	//    Clear georeferencing coefficients
+	// Clear georeferencing coefficients
 	for (int icl = 0; icl < 12; icl++) {
 		wpx[icl] = 0;
 		wpy[icl] = 0;
@@ -148,8 +148,7 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 				wxString token = tkz.GetNextToken();
 				if (token.IsSameAs(_T("RA"), TRUE)) {
 					// extract RA=x,y
-					int i;
-					i = tkz.GetPosition();
+					int i = tkz.GetPosition();
 					Size_X = atoi(&buffer[i]);
 					wxString token = tkz.GetNextToken();
 					i = tkz.GetPosition();
@@ -333,13 +332,13 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 			n_wpx = idx;
 		} else if (!strncmp(buffer, "WPY", 3)) {
 			int idx = 0;
-			double d;
 			wxStringTokenizer tkz(str_buf.Mid(4), _T(","));
 			wxString token = tkz.GetNextToken();
 
 			if (token.ToLong((long int*)&wpy_type)) {
 				while (tkz.HasMoreTokens() && (idx < 12)) {
 					token = tkz.GetNextToken();
+					double d;
 					if (token.ToDouble(&d)) {
 						wpy[idx] = d;
 						idx++;
@@ -349,13 +348,13 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 			n_wpy = idx;
 		} else if (!strncmp(buffer, "PWX", 3)) {
 			int idx = 0;
-			double d;
 			wxStringTokenizer tkz(str_buf.Mid(4), _T(","));
 			wxString token = tkz.GetNextToken();
 
 			if (token.ToLong((long int*)&pwx_type)) {
 				while (tkz.HasMoreTokens() && (idx < 12)) {
 					token = tkz.GetNextToken();
+					double d;
 					if (token.ToDouble(&d)) {
 						pwx[idx] = d;
 						idx++;
@@ -365,13 +364,13 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 			n_pwx = idx;
 		} else if (!strncmp(buffer, "PWY", 3)) {
 			int idx = 0;
-			double d;
 			wxStringTokenizer tkz(str_buf.Mid(4), _T(","));
 			wxString token = tkz.GetNextToken();
 
 			if (token.ToLong((long int*)&pwy_type)) {
 				while (tkz.HasMoreTokens() && (idx < 12)) {
 					token = tkz.GetNextToken();
+					double d;
 					if (token.ToDouble(&d)) {
 						pwy[idx] = d;
 						idx++;
@@ -433,14 +432,14 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 					if (dt.ParseDate(date_wxstr)) {
 						// successful parse?
 						int iyear = dt.GetYear(); // GetYear() fails on W98, DMC compiler, wx2.8.3
-						//    BSB charts typically list publish date as xx/yy/zz, we want 19zz.
+						// BSB charts typically list publish date as xx/yy/zz, we want 19zz.
 						if (iyear < 100) {
 							iyear += 1900;
 							dt.SetYear(iyear);
 						}
 						sprintf(date_buf, "%d", iyear);
 
-						//    Initialize the wxDateTime menber for Edition Date
+						// Initialize the wxDateTime menber for Edition Date
 						m_EdDate = dt;
 					} else {
 						sscanf(date_string, "%s", date_buf);
@@ -520,7 +519,7 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 	if (init_flags == HEADER_ONLY)
 		return INIT_OK;
 
-	//    Advance to the data
+	// Advance to the data
 	unsigned char c;
 	bool bcorrupt = false;
 
@@ -559,5 +558,7 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 		return pi_ret;
 	else
 		return INIT_OK;
+}
+
 }
 

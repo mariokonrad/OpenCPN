@@ -30,8 +30,7 @@
 #include <wx/dir.h>
 #include <wx/log.h>
 
-using chart::Plypoint;
-using chart::Refpoint;
+namespace chart {
 
 ChartGEO::ChartGEO()
 {
@@ -42,7 +41,7 @@ ChartGEO::~ChartGEO()
 {
 }
 
-InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
+InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags) // FIXME: refactoring: far too long
 {
 #define BUF_LEN_MAX 4000
 
@@ -50,26 +49,25 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 
 	char buffer[BUF_LEN_MAX];
 
-	ifs_hdr = new wxFileInputStream(name);          // open the file as a read-only stream
+	ifs_hdr = new wxFileInputStream(name); // open the file as a read-only stream
 
-	if(!ifs_hdr->Ok())
+	if (!ifs_hdr->Ok())
 		return INIT_FAIL_REMOVE;
 
 	int nPlypoint = 0;
-	Plypoint *pPlyTable = static_cast<Plypoint *>(malloc(sizeof(Plypoint))); // FIXME: use std::vector instead of dynamic memory allocation
+	Plypoint* pPlyTable = static_cast<Plypoint*>(
+		malloc(sizeof(Plypoint))); // FIXME: use std::vector instead of dynamic memory allocation
 
 	m_FullPath = name;
 	m_Description = m_FullPath;
 
 	wxFileName GEOFile(m_FullPath);
 
-	wxString Path;
-	Path = GEOFile.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME);
-
+	wxString Path = GEOFile.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME);
 
 	// Read the GEO file, extracting useful information
 
-	ifs_hdr->SeekI(0, wxFromStart);                 // rewind
+	ifs_hdr->SeekI(0, wxFromStart); // rewind
 
 	Size_X = Size_Y = 0;
 
@@ -80,8 +78,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
 			if (token.IsSameAs(_T("Bitmap"), TRUE)) {
-				int i;
-				i = tkz.GetPosition();
+				int i = tkz.GetPosition();
 				bitmap_filepath.Clear();
 				while (buffer[i]) {
 					bitmap_filepath.Append(buffer[i]);
@@ -91,19 +88,15 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 		} else if (!strncmp(buffer, "Scale", 5)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if(token.IsSameAs(_T("Scale"), TRUE))               // extract Scale
-			{
-				int i;
-				i = tkz.GetPosition();
+			if (token.IsSameAs(_T("Scale"), TRUE)) { // extract Scale
+				int i = tkz.GetPosition();
 				m_Chart_Scale = atoi(&buffer[i]);
 			}
 		} else if (!strncmp(buffer, "Depth", 5)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if (token.IsSameAs(_T("Depth Units"), FALSE)) // extract Depth Units
-			{
-				int i;
-				i = tkz.GetPosition();
+			if (token.IsSameAs(_T("Depth Units"), FALSE)) { // extract Depth Units
+				int i = tkz.GetPosition();
 				wxString str(&buffer[i], wxConvUTF8);
 				m_DepthUnits = str.Trim();
 			}
@@ -156,10 +149,8 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 		} else if (!strncmp(buffer, "Skew", 4)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
-			if (token.IsSameAs(_T("Skew Angle"), FALSE)) // extract Skew Angle
-			{
-				int i;
-				i = tkz.GetPosition();
+			if (token.IsSameAs(_T("Skew Angle"), FALSE)) { // extract Skew Angle
+				int i = tkz.GetPosition();
 				float fcs;
 				sscanf(&buffer[i], "%f,", &fcs);
 				m_Chart_Skew = fcs;
@@ -168,8 +159,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
 			if (token.IsSameAs(_T("Latitude Offset"), FALSE)) {
-				int i;
-				i = tkz.GetPosition();
+				int i = tkz.GetPosition();
 				float lto;
 				sscanf(&buffer[i], "%f,", &lto);
 				m_dtm_lat = lto;
@@ -178,8 +168,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 			wxStringTokenizer tkz(str_buf, _T("="));
 			wxString token = tkz.GetNextToken();
 			if (token.IsSameAs(_T("Longitude Offset"), FALSE)) {
-				int i;
-				i = tkz.GetPosition();
+				int i = tkz.GetPosition();
 				float lno;
 				sscanf(&buffer[i], "%f,", &lno);
 				m_dtm_lon = lno;
@@ -196,8 +185,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 			wxString token = tkz.GetNextToken();
 			if (token.IsSameAs(_T("Name"), FALSE)) {
 				// Name
-				int i;
-				i = tkz.GetPosition();
+				int i = tkz.GetPosition();
 				m_Name.Clear();
 				while (isprint(buffer[i]) && (i < 80))
 					m_Name.Append(buffer[i++]);
@@ -214,7 +202,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 	if (bitmap_filepath.IsEmpty())
 		return INIT_FAIL_REMOVE;
 
-	wxString NOS_Name(bitmap_filepath);            // take a copy
+	wxString NOS_Name(bitmap_filepath); // take a copy
 
 	wxDir target_dir(Path);
 	wxArrayString file_array;
@@ -275,7 +263,7 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags)
 			goto found_uclc_file;
 
 
-		//      Search harder
+		// Search harder
 
 		for(ifile = 0 ; ifile < nfiles ; ifile++)
 		{
@@ -304,26 +292,20 @@ found_uclc_file:
 
 	}
 
-
-	if(ifs_bitmap == NULL)
+	if (ifs_bitmap == NULL)
 		return INIT_FAIL_REMOVE;
 
-	if(!ifss_bitmap->Ok())
+	if (!ifss_bitmap->Ok())
 		return INIT_FAIL_REMOVE;
 
+	while ((ReadBSBHdrLine(ifss_bitmap, &buffer[0], BUF_LEN_MAX)) != 0) {
+		wxString str_buf(buffer, wxConvUTF8);
 
-	while( (ReadBSBHdrLine(ifss_bitmap, &buffer[0], BUF_LEN_MAX)) != 0 )
-	{
-		wxString str_buf(buffer,  wxConvUTF8);
-
-		if(!strncmp(buffer, "NOS", 3))
-		{
+		if (!strncmp(buffer, "NOS", 3)) {
 			wxStringTokenizer tkz(str_buf, _T(",="));
-			while ( tkz.HasMoreTokens() )
-			{
+			while (tkz.HasMoreTokens()) {
 				wxString token = tkz.GetNextToken();
-				if(token.IsSameAs(_T("RA"), TRUE))                  // extract RA=x,y
-				{
+				if (token.IsSameAs(_T("RA"), TRUE)) { // extract RA=x,y
 					int i;
 					tkz.GetNextToken();
 					tkz.GetNextToken();
@@ -332,16 +314,13 @@ found_uclc_file:
 					wxString token = tkz.GetNextToken();
 					i = tkz.GetPosition();
 					Size_Y = atoi(&buffer[i]);
-				}
-				else if(token.IsSameAs(_T("DU"), TRUE))                  // extract DU=n
-				{
+				} else if (token.IsSameAs(_T("DU"), TRUE)) { // extract DU=n
 					token = tkz.GetNextToken();
 					long temp_du;
-					if(token.ToLong(&temp_du))
+					if (token.ToLong(&temp_du))
 						m_Chart_DU = temp_du;
 				}
 			}
-
 		}
 
 		else if (!strncmp(buffer, "RGB", 3))
@@ -369,13 +348,11 @@ found_uclc_file:
 			CreatePaletteEntry(buffer, PRG);
 	}
 
-
-	//    Validate some of the header data
-	if((Size_X == 0) || (Size_Y == 0))
+	// Validate some of the header data
+	if ((Size_X == 0) || (Size_Y == 0))
 		return INIT_FAIL_REMOVE;
 
-	if(nPlypoint < 3)
-	{
+	if (nPlypoint < 3) {
 		wxString msg(_("   Chart File contains less than 3 PLY points: "));
 		msg.Append(m_FullPath);
 		wxLogMessage(msg);
@@ -383,47 +360,53 @@ found_uclc_file:
 		return INIT_FAIL_REMOVE;
 	}
 
-	//    Convert captured plypoint information into chart COVR structures
+	// Convert captured plypoint information into chart COVR structures
 	m_nCOVREntries = 1;
-	m_pCOVRTablePoints = (int *)malloc(sizeof(int));
+	m_pCOVRTablePoints = (int*)malloc(sizeof(int));
 	*m_pCOVRTablePoints = nPlypoint;
-	m_pCOVRTable = (float **)malloc(sizeof(float *));
-	*m_pCOVRTable = (float *)malloc(nPlypoint * 2 * sizeof(float));
+	m_pCOVRTable = (float**)malloc(sizeof(float*));
+	*m_pCOVRTable = (float*)malloc(nPlypoint * 2 * sizeof(float));
 	memcpy(*m_pCOVRTable, pPlyTable, nPlypoint * 2 * sizeof(float));
 
 	free(pPlyTable);
 
-	if(!SetMinMax())
-		return INIT_FAIL_REMOVE;          // have to bail here
+	if (!SetMinMax())
+		return INIT_FAIL_REMOVE; // have to bail here
 
 	AnalyzeSkew();
 
-	if(init_flags == HEADER_ONLY)
+	if (init_flags == HEADER_ONLY)
 		return INIT_OK;
 
-	//    Advance to the data
+	// Advance to the data
 	char c;
-	if((c = ifs_bitmap->GetC()) != 0x1a){ return INIT_FAIL_REMOVE;}
-	if((c = ifs_bitmap->GetC()) == 0x0d)
-	{
-		if((c = ifs_bitmap->GetC()) != 0x0a){  return INIT_FAIL_REMOVE;}
-		if((c = ifs_bitmap->GetC()) != 0x1a){  return INIT_FAIL_REMOVE;}
-		if((c = ifs_bitmap->GetC()) != 0x00){  return INIT_FAIL_REMOVE;}
+	if ((c = ifs_bitmap->GetC()) != 0x1a) {
+		return INIT_FAIL_REMOVE;
+	}
+	if ((c = ifs_bitmap->GetC()) == 0x0d) {
+		if ((c = ifs_bitmap->GetC()) != 0x0a) {
+			return INIT_FAIL_REMOVE;
+		}
+		if ((c = ifs_bitmap->GetC()) != 0x1a) {
+			return INIT_FAIL_REMOVE;
+		}
+		if ((c = ifs_bitmap->GetC()) != 0x00) {
+			return INIT_FAIL_REMOVE;
+		}
+	} else if (c != 0x00) {
+		return INIT_FAIL_REMOVE;
 	}
 
-	else if(c != 0x00){  return INIT_FAIL_REMOVE;}
-
-	//    Read the Color table bit size
+	// Read the Color table bit size
 	nColorSize = ifs_bitmap->GetC();
 
-
-	//    Perform common post-init actions in ChartBaseBSB
+	// Perform common post-init actions in ChartBaseBSB
 	InitReturn pi_ret = PostInit();
-	if( pi_ret  != INIT_OK)
+	if (pi_ret != INIT_OK)
 		return pi_ret;
 	else
 		return INIT_OK;
-
 }
 
+}
 

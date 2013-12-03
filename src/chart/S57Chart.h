@@ -47,6 +47,8 @@
 #include <chart/S57Sector.h>
 #include <chart/ChartBase.h>
 
+using chart::s57Sector_t;
+
 class ChartBase;
 class ViewPort;
 class ocpnBitmap;

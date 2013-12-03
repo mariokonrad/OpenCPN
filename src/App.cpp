@@ -110,7 +110,7 @@ void catch_signals(int signo);
 #ifdef USE_S57
 extern s52plib* ps52plib;
 extern S57ClassRegistrar* g_poRegistrar;
-extern S57RegistrarMgr* m_pRegistrarMan;
+extern chart::S57RegistrarMgr* m_pRegistrarMan;
 extern S57QueryDialog* g_pObjectQueryDialog;
 extern CM93OffsetDialog* g_pCM93OffsetDialog;
 #endif
@@ -927,7 +927,7 @@ void App::setup_s57()
 
 	// Todo Maybe initialize only when an s57 chart is actually opened???
 	if (ps52plib->m_bOK)
-		m_pRegistrarMan = new S57RegistrarMgr(g_csv_locn, file_log);
+		m_pRegistrarMan = new chart::S57RegistrarMgr(g_csv_locn, file_log);
 
 	if (!ps52plib->m_bOK) {
 		delete ps52plib;

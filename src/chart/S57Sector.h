@@ -27,6 +27,8 @@
 #include <wx/colour.h>
 #include <wx/geometry.h>
 
+namespace chart {
+
 struct s57Sector_t
 {
 	wxPoint2DDouble pos;
@@ -37,5 +39,7 @@ struct s57Sector_t
 	bool iswhite;
 	bool isleading;
 };
+
+}
 
 #endif

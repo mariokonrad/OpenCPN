@@ -29,36 +29,39 @@
 extern S57ClassRegistrar * g_poRegistrar;
 #endif
 
-static int s57_initialize(const wxString & csv_dir, FILE* WXUNUSED(file_log))
+namespace chart {
+
+static int s57_initialize(const wxString& csv_dir, FILE* WXUNUSED(file_log))
 {
-    // Get one instance of the s57classregistrar,
-    // And be prepared to give it to any module that needs it
+	// Get one instance of the s57classregistrar,
+	// And be prepared to give it to any module that needs it
 
 #ifdef USE_S57
-    if (g_poRegistrar == NULL) {
-        g_poRegistrar = new S57ClassRegistrar();
-        if (!g_poRegistrar->LoadInfo(csv_dir.mb_str(), FALSE)) {
-            wxString msg(_T("   Error: Could not load S57 ClassInfo from "));
-            msg.Append(csv_dir);
-            wxLogMessage(msg);
+	if (g_poRegistrar == NULL) {
+		g_poRegistrar = new S57ClassRegistrar();
+		if (!g_poRegistrar->LoadInfo(csv_dir.mb_str(), FALSE)) {
+			wxString msg(_T("   Error: Could not load S57 ClassInfo from "));
+			msg.Append(csv_dir);
+			wxLogMessage(msg);
 
-            delete g_poRegistrar;
-            g_poRegistrar = NULL;
-        }
-    }
+			delete g_poRegistrar;
+			g_poRegistrar = NULL;
+		}
+	}
 #endif
 
-    return 0;
+	return 0;
 }
 
 S57RegistrarMgr::S57RegistrarMgr(const wxString& csv_dir, FILE* file_log)
 {
-    s57_initialize(csv_dir, file_log);
+	s57_initialize(csv_dir, file_log);
 }
 
 S57RegistrarMgr::~S57RegistrarMgr()
 {
-    delete g_poRegistrar;
-    g_poRegistrar = NULL;
+	delete g_poRegistrar;
+	g_poRegistrar = NULL;
+}
 }
 

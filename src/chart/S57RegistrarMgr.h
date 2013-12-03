@@ -21,17 +21,21 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __S57REGISTRARMGR_H__
-#define __S57REGISTRARMGR_H__
+#ifndef __CHART__S57REGISTRARMGR__H__
+#define __CHART__S57REGISTRARMGR__H__
 
 #include <wx/string.h>
+
+namespace chart {
 
 /// This is a class holding the ctor and dtor for the global registrar
 class S57RegistrarMgr
 {
-	public:
-		S57RegistrarMgr(const wxString & csv_dir, FILE * file_log);
-		~S57RegistrarMgr();
+public:
+	S57RegistrarMgr(const wxString& csv_dir, FILE* file_log);
+	~S57RegistrarMgr();
 };
+
+}
 
 #endif

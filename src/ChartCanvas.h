@@ -326,7 +326,7 @@ private:
 	bool singleClickEventIsValid;
 	wxMouseEvent singleClickEvent;
 
-	std::vector<s57Sector_t> extendedSectorLegs;
+	std::vector<chart::s57Sector_t> extendedSectorLegs;
 
 	void OnActivate(wxActivateEvent& event);
 	void OnSize(wxSizeEvent& event);

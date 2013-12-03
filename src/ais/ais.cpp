@@ -44,54 +44,18 @@
 #include <wx/wfstream.h>
 #include <wx/imaglist.h>
 
-extern int             s_dns_test_flag;
-extern Select          *pSelectAIS;
-extern ChartCanvas      *cc1;
+extern int s_dns_test_flag;
+extern Select* pSelectAIS;
 
-//    AIS Global configuration
-extern bool             g_bCPAMax;
-extern double           g_CPAMax_NM;
-extern bool             g_bCPAWarn;
-extern double           g_CPAWarn_NM;
-extern bool             g_bTCPA_Max;
-extern double           g_TCPA_Max;
-extern bool             g_bMarkLost;
-extern double           g_MarkLost_Mins;
-extern bool             g_bRemoveLost;
-extern double           g_RemoveLost_Mins;
-extern bool             g_bAISShowTracks;
-extern double           g_AISShowTracks_Mins;
-extern bool             g_bShowMoored;
-extern double           g_ShowMoored_Kts;
-extern bool             g_bShowAllCPA;
+// AIS Global configuration
+extern bool g_bShowAllCPA;
 
-extern bool             g_bGPSAISMux;
-extern ColorScheme      global_color_scheme;
-
-extern bool             g_bAIS_CPA_Alert;
-extern bool             g_bAIS_CPA_Alert_Audio;
-extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
-
-extern wxString         g_sAIS_Alert_Sound_File;
+extern bool g_bGPSAISMux;
 
 extern ais::AISTargetListDialog* g_pAISTargetList;
-extern int              g_AisTargetList_range;
-extern wxString         g_AisTargetList_perspective;
-extern int              g_AisTargetList_sortColumn;
-extern bool             g_bAisTargetList_sortReverse;
-extern wxString         g_AisTargetList_column_spec;
-extern int              g_AisTargetList_count;
+extern int g_AisTargetList_count;
 
-extern bool             g_bAISRolloverShowClass;
-extern bool             g_bAISRolloverShowCOG;
-extern bool             g_bAISRolloverShowCPA;
-
-extern bool             g_bAIS_ACK_Timeout;
-extern double           g_AckTimeout_Mins;
-
-extern bool             bGPSValid;
-
-extern ocpnStyle::StyleManager * g_StyleManager;
+extern bool bGPSValid;
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;

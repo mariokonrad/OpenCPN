@@ -51,9 +51,7 @@ OCPNListCtrl::~OCPNListCtrl()
 	for (int i = 0; i < tlSOG + 1; i++) {
 		wxListItem item;
 		GetColumn(i, item);
-		wxString sitem;
-		sitem.Printf(_T("%d;"), item.m_width);
-		g_AisTargetList_column_spec += sitem;
+		g_AisTargetList_column_spec += wxString::Format(_T("%d;"), item.m_width);
 	}
 }
 

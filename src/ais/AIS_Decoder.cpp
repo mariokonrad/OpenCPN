@@ -62,8 +62,6 @@ extern bool g_bMarkLost;
 extern double g_MarkLost_Mins;
 extern bool g_bRemoveLost;
 extern double g_RemoveLost_Mins;
-extern bool g_bShowCOG;
-extern double g_ShowCOG_Mins;
 extern bool g_bAISShowTracks;
 extern double g_AISShowTracks_Mins;
 extern bool g_bShowMoored;
@@ -72,10 +70,6 @@ extern wxString g_sAIS_Alert_Sound_File;
 extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bAIS_ACK_Timeout;
 extern double g_AckTimeout_Mins;
-extern bool g_bShowAreaNotices;
-extern bool g_bDrawAISSize;
-extern bool g_bShowAISName;
-extern int g_Show_Target_Name_Scale;
 extern bool g_bWplIsAprsPosition;
 extern bool g_bAIS_CPA_Alert;
 extern bool g_bAIS_CPA_Alert_Audio;
@@ -1808,22 +1802,22 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data* ptarget)
 	}
 }
 
-void AIS_Decoder::OnTimerAISAudio(wxTimerEvent &)
+void AIS_Decoder::OnTimerAISAudio(wxTimerEvent&)
 {
-	if( g_bAIS_CPA_Alert_Audio && m_bAIS_Audio_Alert_On ) {
-		if(!m_AIS_Sound.IsOk() )
-			m_AIS_Sound.Create( g_sAIS_Alert_Sound_File );
+	if (g_bAIS_CPA_Alert_Audio && m_bAIS_Audio_Alert_On) {
+		if (!m_AIS_Sound.IsOk())
+			m_AIS_Sound.Create(g_sAIS_Alert_Sound_File);
 
 #ifndef __WXMSW__
-		if( m_AIS_Sound.IsOk() && !m_AIS_Sound.IsPlaying())
+		if (m_AIS_Sound.IsOk() && !m_AIS_Sound.IsPlaying())
 			m_AIS_Sound.Play();
 #else
-		if( m_AIS_Sound.IsOk() )
+		if (m_AIS_Sound.IsOk())
 			m_AIS_Sound.Play();
 #endif
 	}
 
-	m_AIS_Audio_Alert_Timer.Start( TIMER_AIS_AUDIO_MSEC, wxTIMER_CONTINUOUS );
+	m_AIS_Audio_Alert_Timer.Start(TIMER_AIS_AUDIO_MSEC, wxTIMER_CONTINUOUS);
 }
 
 void AIS_Decoder::OnTimerAIS(wxTimerEvent & WXUNUSED(event))

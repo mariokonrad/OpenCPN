@@ -48,12 +48,13 @@
 	#define GL_DEPTH_STENCIL_ATTACHMENT  0x821A
 #endif
 
+bool g_bDebugOGL;
+
 extern ChartCanvas* cc1;
 extern chart::s52plib* ps52plib;
 extern bool g_bopengl;
 extern bool g_b_useStencil;
 extern int g_GPU_MemSize;
-extern bool g_bDebugOGL;
 extern PlugInManager* g_pi_manager;
 extern bool g_bskew_comp;
 extern int g_memCacheLimit;
@@ -88,19 +89,17 @@ HINSTANCE s_hGL_DLL;                   // Handle to DLL
 
 static int s_nquickbind;
 
-static bool UploadTexture( glTextureDescriptor *ptd, int n_basemult )
+static bool UploadTexture(glTextureDescriptor* ptd, int n_basemult)
 {
-	if( g_bDebugOGL ) {
-		wxString msg;
-		msg.Printf( _T("  -->UploadTexture %d"), ptd->tex_name );
-		wxLogMessage( msg );
+	if (g_bDebugOGL) {
+		wxLogMessage(wxString::Format(_T("  -->UploadTexture %d"), ptd->tex_name));
 	}
 
-	glBindTexture( GL_TEXTURE_2D, ptd->tex_name );
+	glBindTexture(GL_TEXTURE_2D, ptd->tex_name);
 
-	//    Calculate the effective base level
+	// Calculate the effective base level
 	int base_level = 0;
-	switch( n_basemult ) {
+	switch (n_basemult) {
 		case 1:
 			base_level = 0;
 			break;
@@ -122,18 +121,18 @@ static bool UploadTexture( glTextureDescriptor *ptd, int n_basemult )
 	int height = ptd->base_size;
 
 	int level = 0;
-	while( level < ptd->level_max ) {
-		if( height == 2 ) break;                  // all done;
+	while (level < ptd->level_max) {
+		if (height == 2)
+			break; // all done;
 
-		if( g_bDebugOGL ) {
-			wxString msg;
-			msg.Printf( _T("     -->glTexImage2D...level:%d"), level );
-			wxLogMessage( msg );
+		if (g_bDebugOGL) {
+			wxLogMessage(wxString::Format(_T("     -->glTexImage2D...level:%d"), level));
 		}
 
-		//    Upload to GPU?
-		if( level >= base_level ) glTexImage2D( GL_TEXTURE_2D, level - base_level, FORMAT_INTERNAL,
-				width, height, 0, FORMAT_BITS, GL_UNSIGNED_BYTE, ptd->map_array[level] );
+		// Upload to GPU?
+		if (level >= base_level)
+			glTexImage2D(GL_TEXTURE_2D, level - base_level, FORMAT_INTERNAL, width, height, 0,
+						 FORMAT_BITS, GL_UNSIGNED_BYTE, ptd->map_array[level]);
 
 		width /= 2;
 		height /= 2;
@@ -141,30 +140,30 @@ static bool UploadTexture( glTextureDescriptor *ptd, int n_basemult )
 		level++;
 	}
 
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_LOD, 0 );
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, level - base_level - 1 );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0 );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, level - base_level - 1 );
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_LOD, 0);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, level - base_level - 1);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, level - base_level - 1);
 
 	ptd->GPU_base = n_basemult;
 
 	return true;
 }
 
-static void HalfScaleChartBits( int width, int height, unsigned char *source, unsigned char *target )
+static void HalfScaleChartBits(int width, int height, unsigned char* source, unsigned char* target)
 {
 	int newwidth = width / 2;
 	int newheight = height / 2;
 	int stride = width * 3;
 
-	unsigned char *s = target;
-	unsigned char *t = source;
+	unsigned char* s = target;
+	unsigned char* t = source;
 	// Average 4 pixels
-	for( int i = 0; i < newheight; i++ ) {
-		for( int j = 0; j < newwidth; j++ ) {
+	for (int i = 0; i < newheight; i++) {
+		for (int j = 0; j < newwidth; j++) {
 
-			for( int k = 0; k < 3; k++ ) {
-				s[0] = ( *t + *( t + 3 ) + *( t + stride ) + *( t + stride + 3 ) ) / 4;
+			for (int k = 0; k < 3; k++) {
+				s[0] = (*t + *(t + 3) + *(t + stride) + *(t + stride + 3)) / 4;
 				s++;
 				t += 1;
 			}
@@ -174,60 +173,66 @@ static void HalfScaleChartBits( int width, int height, unsigned char *source, un
 	}
 }
 
-static void OCPNPopulateTD( glTextureDescriptor *ptd, int n_basemult, wxRect &rect, chart::ChartBase *pchart )
+static void OCPNPopulateTD(glTextureDescriptor* ptd, int n_basemult, wxRect& rect,
+						   chart::ChartBase* pchart)
 {
 	using namespace chart;
 
-	if( !pchart ) return;
+	if (!pchart)
+		return;
 
-	ChartPlugInWrapper *pPlugInWrapper = dynamic_cast<ChartPlugInWrapper*>( pchart );
-	ChartBaseBSB *pBSBChart = dynamic_cast<ChartBaseBSB*>( pchart );
+	ChartPlugInWrapper* pPlugInWrapper = dynamic_cast<ChartPlugInWrapper*>(pchart);
+	ChartBaseBSB* pBSBChart = dynamic_cast<ChartBaseBSB*>(pchart);
 
-	if( !pPlugInWrapper && !pBSBChart ) return;
+	if (!pPlugInWrapper && !pBSBChart)
+		return;
 
 	bool b_plugin = false;
-	if( pPlugInWrapper ) b_plugin = true;
+	if (pPlugInWrapper)
+		b_plugin = true;
 
-	//    We do not need all possible mipmaps, since we can only zoom out so far....
-	//    So, save some memory by limiting GL_TEXTURE_MAX_LEVEL
+	// We do not need all possible mipmaps, since we can only zoom out so far....
+	// So, save some memory by limiting GL_TEXTURE_MAX_LEVEL
 
 	int n_level_max = 3;
 
-	//    Adjust the chart source rectangle to account for base multiplier
+	// Adjust the chart source rectangle to account for base multiplier
 	wxRect rbits = rect;
 	rbits.x *= n_basemult;
 	rbits.y *= n_basemult;
 	rbits.width *= n_basemult;
 	rbits.height *= n_basemult;
 
-	//    Get a buffer
-	unsigned char *t_buf = (unsigned char *) malloc( rbits.width * rbits.height * 3 );
+	// Get a buffer
+	unsigned char* t_buf = (unsigned char*)malloc(rbits.width * rbits.height * 3);
 
-	//    Prime the pump with the "zero" level bits, ie. 1x native chart bits
-	if( b_plugin ) pPlugInWrapper->GetChartBits( rbits, t_buf, 1 );
+	// Prime the pump with the "zero" level bits, ie. 1x native chart bits
+	if (b_plugin)
+		pPlugInWrapper->GetChartBits(rbits, t_buf, 1);
 	else
-		pBSBChart->GetChartBits( rbits, t_buf, 1 );
+		pBSBChart->GetChartBits(rbits, t_buf, 1);
 
-	//    and cache them here
+	// and cache them here
 	ptd->map_array[0] = t_buf;
 
 	int last_height = rbits.height;
 	int last_width = rbits.width;
 
-	unsigned char *source;
-	unsigned char *dest;
+	unsigned char* source;
+	unsigned char* dest;
 
 	int level_index = 1;
-	while( level_index < n_level_max ) {
-		if( last_height == 2 ) break;                  // all done;
+	while (level_index < n_level_max) {
+		if (last_height == 2)
+			break; // all done;
 
 		int newwidth = last_width / 2;
 		int newheight = last_height / 2;
 
-		dest = (unsigned char *) malloc( newwidth * newheight * 3 );
+		dest = (unsigned char*)malloc(newwidth * newheight * 3);
 		source = ptd->map_array[level_index - 1];
 
-		HalfScaleChartBits( last_width, last_height, source, dest );
+		HalfScaleChartBits(last_width, last_height, source, dest);
 		ptd->map_array[level_index] = dest;
 
 		last_width = newwidth;
@@ -241,7 +246,7 @@ static void OCPNPopulateTD( glTextureDescriptor *ptd, int n_basemult, wxRect &re
 	ptd->base_size = rbits.width;
 }
 
-static GLboolean QueryExtension( const char *extName )
+static GLboolean QueryExtension(const char* extName)
 {
 	/*
 	 ** Search for extName in the extensions string. Use of strstr()
@@ -249,90 +254,112 @@ static GLboolean QueryExtension( const char *extName )
 	 ** other extension names. Could use strtok() but the constant
 	 ** string returned by glGetString might be in read-only memory.
 	 */
-	char *p;
-	char *end;
+	char* p;
+	char* end;
 	int extNameLen;
 
-	extNameLen = strlen( extName );
+	extNameLen = strlen(extName);
 
-	p = (char *) glGetString( GL_EXTENSIONS );
-	if( NULL == p ) {
+	p = (char*)glGetString(GL_EXTENSIONS);
+	if (NULL == p) {
 		return GL_FALSE;
 	}
 
-	end = p + strlen( p );
+	end = p + strlen(p);
 
-	while( p < end ) {
-		int n = strcspn( p, " " );
-		if( ( extNameLen == n ) && ( strncmp( extName, p, n ) == 0 ) ) {
+	while (p < end) {
+		int n = strcspn(p, " ");
+		if ((extNameLen == n) && (strncmp(extName, p, n) == 0)) {
 			return GL_TRUE;
 		}
-		p += ( n + 1 );
+		p += (n + 1);
 	}
 	return GL_FALSE;
 }
 
-static bool GetglEntryPoints( void )
+static bool GetglEntryPoints(void)
 {
 #if defined(__WXMSW__)
-	s_hGL_DLL = LoadLibrary( (LPCWSTR) "opengl32.dll" );
-	if( NULL == s_hGL_DLL ) return false;
+	s_hGL_DLL = LoadLibrary((LPCWSTR) "opengl32.dll");
+	if (NULL == s_hGL_DLL)
+		return false;
 
-	s_glGenFramebuffersEXT = (PFNGLGENFRAMEBUFFERSEXTPROC) GetProcAddress( s_hGL_DLL,
-			"glGenFramebuffersEXT" );
-	s_glGenRenderbuffersEXT = (PFNGLGENRENDERBUFFERSEXTPROC) GetProcAddress( s_hGL_DLL,
-			"glGenRenderbuffersEXT" );
-	s_glFramebufferTexture2DEXT = (PFNGLFRAMEBUFFERTEXTURE2DEXTPROC) GetProcAddress( s_hGL_DLL,
-			"glFramebufferTexture2DEXT" );
-	s_glBindFramebufferEXT = (PFNGLBINDFRAMEBUFFEREXTPROC) GetProcAddress( s_hGL_DLL,
-			"glBindFramebufferEXT" );
-	s_glFramebufferRenderbufferEXT = (PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC) GetProcAddress(
-			s_hGL_DLL, "glFramebufferRenderbufferEXT" );
-	s_glRenderbufferStorageEXT = (PFNGLRENDERBUFFERSTORAGEEXTPROC) GetProcAddress( s_hGL_DLL,
-			"glRenderbufferStorageEXT" );
-	s_glBindRenderbufferEXT = (PFNGLBINDRENDERBUFFEREXTPROC) GetProcAddress( s_hGL_DLL,
-			"glBindRenderbufferEXT" );
-	s_glCheckFramebufferStatusEXT = (PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC) GetProcAddress( s_hGL_DLL,
-			"glCheckFramebufferStatusEXT" );
-	s_glDeleteFramebuffersEXT = (PFNGLDELETEFRAMEBUFFERSEXTPROC) GetProcAddress( s_hGL_DLL,
-			"glDeleteFramebuffersEXT" );
-	s_glDeleteRenderbuffersEXT = (PFNGLDELETERENDERBUFFERSEXTPROC) GetProcAddress( s_hGL_DLL,
-			"glDeleteRenderbuffersEXT" );
+	s_glGenFramebuffersEXT
+		= (PFNGLGENFRAMEBUFFERSEXTPROC)GetProcAddress(s_hGL_DLL, "glGenFramebuffersEXT");
+	s_glGenRenderbuffersEXT
+		= (PFNGLGENRENDERBUFFERSEXTPROC)GetProcAddress(s_hGL_DLL, "glGenRenderbuffersEXT");
+	s_glFramebufferTexture2DEXT
+		= (PFNGLFRAMEBUFFERTEXTURE2DEXTPROC)GetProcAddress(s_hGL_DLL, "glFramebufferTexture2DEXT");
+	s_glBindFramebufferEXT
+		= (PFNGLBINDFRAMEBUFFEREXTPROC)GetProcAddress(s_hGL_DLL, "glBindFramebufferEXT");
+	s_glFramebufferRenderbufferEXT = (PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC)GetProcAddress(
+		s_hGL_DLL, "glFramebufferRenderbufferEXT");
+	s_glRenderbufferStorageEXT
+		= (PFNGLRENDERBUFFERSTORAGEEXTPROC)GetProcAddress(s_hGL_DLL, "glRenderbufferStorageEXT");
+	s_glBindRenderbufferEXT
+		= (PFNGLBINDRENDERBUFFEREXTPROC)GetProcAddress(s_hGL_DLL, "glBindRenderbufferEXT");
+	s_glCheckFramebufferStatusEXT = (PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC)GetProcAddress(
+		s_hGL_DLL, "glCheckFramebufferStatusEXT");
+	s_glDeleteFramebuffersEXT
+		= (PFNGLDELETEFRAMEBUFFERSEXTPROC)GetProcAddress(s_hGL_DLL, "glDeleteFramebuffersEXT");
+	s_glDeleteRenderbuffersEXT
+		= (PFNGLDELETERENDERBUFFERSEXTPROC)GetProcAddress(s_hGL_DLL, "glDeleteRenderbuffersEXT");
 
 #elif defined(__WXMAC__)
 	return false;
 
 #else
 
-	s_glGenFramebuffersEXT = (PFNGLGENFRAMEBUFFERSEXTPROC)glXGetProcAddress((const GLubyte *)"glGenFramebuffersEXT");
-	s_glGenRenderbuffersEXT = (PFNGLGENRENDERBUFFERSEXTPROC)glXGetProcAddress((const GLubyte *)"glGenRenderbuffersEXT");
-	s_glFramebufferTexture2DEXT = (PFNGLFRAMEBUFFERTEXTURE2DEXTPROC)glXGetProcAddress((const GLubyte *)"glFramebufferTexture2DEXT");
-	s_glBindFramebufferEXT = (PFNGLBINDFRAMEBUFFEREXTPROC)glXGetProcAddress((const GLubyte *)"glBindFramebufferEXT");
-	s_glFramebufferRenderbufferEXT = (PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC)glXGetProcAddress((const GLubyte *)"glFramebufferRenderbufferEXT");
-	s_glRenderbufferStorageEXT = (PFNGLRENDERBUFFERSTORAGEEXTPROC)glXGetProcAddress((const GLubyte *)"glRenderbufferStorageEXT");
-	s_glBindRenderbufferEXT = (PFNGLBINDRENDERBUFFEREXTPROC)glXGetProcAddress((const GLubyte *)"glBindRenderbufferEXT");
-	s_glCheckFramebufferStatusEXT = (PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC)glXGetProcAddress((const GLubyte *)"glCheckFramebufferStatusEXT");
-	s_glDeleteFramebuffersEXT = (PFNGLDELETEFRAMEBUFFERSEXTPROC)glXGetProcAddress((const GLubyte *)"glDeleteFramebuffersEXT");
-	s_glDeleteRenderbuffersEXT = (PFNGLDELETERENDERBUFFERSEXTPROC)glXGetProcAddress((const GLubyte *)"glDeleteRenderbuffersEXT");
+	s_glGenFramebuffersEXT
+		= (PFNGLGENFRAMEBUFFERSEXTPROC)glXGetProcAddress((const GLubyte*)"glGenFramebuffersEXT");
+	s_glGenRenderbuffersEXT
+		= (PFNGLGENRENDERBUFFERSEXTPROC)glXGetProcAddress((const GLubyte*)"glGenRenderbuffersEXT");
+	s_glFramebufferTexture2DEXT = (PFNGLFRAMEBUFFERTEXTURE2DEXTPROC)glXGetProcAddress(
+		(const GLubyte*)"glFramebufferTexture2DEXT");
+	s_glBindFramebufferEXT
+		= (PFNGLBINDFRAMEBUFFEREXTPROC)glXGetProcAddress((const GLubyte*)"glBindFramebufferEXT");
+	s_glFramebufferRenderbufferEXT = (PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC)glXGetProcAddress(
+		(const GLubyte*)"glFramebufferRenderbufferEXT");
+	s_glRenderbufferStorageEXT = (PFNGLRENDERBUFFERSTORAGEEXTPROC)glXGetProcAddress(
+		(const GLubyte*)"glRenderbufferStorageEXT");
+	s_glBindRenderbufferEXT
+		= (PFNGLBINDRENDERBUFFEREXTPROC)glXGetProcAddress((const GLubyte*)"glBindRenderbufferEXT");
+	s_glCheckFramebufferStatusEXT = (PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC)glXGetProcAddress(
+		(const GLubyte*)"glCheckFramebufferStatusEXT");
+	s_glDeleteFramebuffersEXT = (PFNGLDELETEFRAMEBUFFERSEXTPROC)glXGetProcAddress(
+		(const GLubyte*)"glDeleteFramebuffersEXT");
+	s_glDeleteRenderbuffersEXT = (PFNGLDELETERENDERBUFFERSEXTPROC)glXGetProcAddress(
+		(const GLubyte*)"glDeleteRenderbuffersEXT");
 #endif
 
-	if( NULL == s_glGenFramebuffersEXT ) return false;
-	if( NULL == s_glGenRenderbuffersEXT ) return false;
-	if( NULL == s_glFramebufferTexture2DEXT ) return false;
-	if( NULL == s_glBindFramebufferEXT ) return false;
-	if( NULL == s_glFramebufferRenderbufferEXT ) return false;
-	if( NULL == s_glRenderbufferStorageEXT ) return false;
-	if( NULL == s_glBindRenderbufferEXT ) return false;
-	if( NULL == s_glCheckFramebufferStatusEXT ) return false;
-	if( NULL == s_glDeleteFramebuffersEXT ) return false;
-	if( NULL == s_glDeleteRenderbuffersEXT ) return false;
+	if (NULL == s_glGenFramebuffersEXT)
+		return false;
+	if (NULL == s_glGenRenderbuffersEXT)
+		return false;
+	if (NULL == s_glFramebufferTexture2DEXT)
+		return false;
+	if (NULL == s_glBindFramebufferEXT)
+		return false;
+	if (NULL == s_glFramebufferRenderbufferEXT)
+		return false;
+	if (NULL == s_glRenderbufferStorageEXT)
+		return false;
+	if (NULL == s_glBindRenderbufferEXT)
+		return false;
+	if (NULL == s_glCheckFramebufferStatusEXT)
+		return false;
+	if (NULL == s_glDeleteFramebuffersEXT)
+		return false;
+	if (NULL == s_glDeleteRenderbuffersEXT)
+		return false;
 
 	return true;
 }
 
 // This attribute set works OK with vesa software only OpenGL renderer
 int attribs[] = { WX_GL_RGBA, WX_GL_DOUBLEBUFFER, WX_GL_DEPTH_SIZE, 16, WX_GL_STENCIL_SIZE, 8, 0 };
-	BEGIN_EVENT_TABLE ( glChartCanvas, wxGLCanvas ) EVT_PAINT ( glChartCanvas::OnPaint )
+
+BEGIN_EVENT_TABLE ( glChartCanvas, wxGLCanvas ) EVT_PAINT ( glChartCanvas::OnPaint )
 	EVT_ACTIVATE ( glChartCanvas::OnActivate )
 	EVT_SIZE ( glChartCanvas::OnSize )
 	EVT_MOUSE_EVENTS ( glChartCanvas::MouseEvent )
@@ -829,28 +856,33 @@ void glChartCanvas::SetClipRegion(ViewPort& vp, OCPNRegion& region, bool b_clear
 	}
 }
 
-void glChartCanvas::RenderRasterChartRegionGL( chart::ChartBase *chart, ViewPort &vp, OCPNRegion &region )
+void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort& vp,
+											  OCPNRegion& region)
 {
 	using namespace chart;
 
-	if( !chart ) return;
+	if (!chart)
+		return;
 
-	ChartPlugInWrapper *pPlugInWrapper = dynamic_cast<ChartPlugInWrapper*>( chart );
-	ChartBaseBSB *pBSBChart = dynamic_cast<ChartBaseBSB*>( chart );
+	ChartPlugInWrapper* pPlugInWrapper = dynamic_cast<ChartPlugInWrapper*>(chart);
+	ChartBaseBSB* pBSBChart = dynamic_cast<ChartBaseBSB*>(chart);
 
-	if( !pPlugInWrapper && !pBSBChart ) return;
+	if (!pPlugInWrapper && !pBSBChart)
+		return;
 
 	bool b_plugin = false;
-	if( pPlugInWrapper ) b_plugin = true;
+	if (pPlugInWrapper)
+		b_plugin = true;
 
 	int n_longbind = 0;
 
-	/* setup texture parameters */
-	glEnable( GL_TEXTURE_2D );
-	glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+	// setup texture parameters
+	glEnable(GL_TEXTURE_2D);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-	//  Make a special VP to account for rotations
-	if( vp.b_MercatorProjectionOverride ) vp.SetProjectionType( PROJECTION_MERCATOR );
+	// Make a special VP to account for rotations
+	if (vp.b_MercatorProjectionOverride)
+		vp.SetProjectionType(PROJECTION_MERCATOR);
 	ViewPort svp = vp;
 
 	svp.pix_width = svp.rv_rect.width;
@@ -859,118 +891,119 @@ void glChartCanvas::RenderRasterChartRegionGL( chart::ChartBase *chart, ViewPort
 	wxRect R;
 	double scalefactor;
 	int size_X, size_Y;
-	if( b_plugin ) {
-		pPlugInWrapper->ComputeSourceRectangle( svp, &R );
+	if (b_plugin) {
+		pPlugInWrapper->ComputeSourceRectangle(svp, &R);
 		scalefactor = pPlugInWrapper->GetRasterScaleFactor();
 		size_X = pPlugInWrapper->GetSize_X();
 		size_Y = pPlugInWrapper->GetSize_Y();
 	} else {
-		pBSBChart->ComputeSourceRectangle( svp, &R );
+		pBSBChart->ComputeSourceRectangle(svp, &R);
 		scalefactor = pBSBChart->GetRasterScaleFactor();
 		size_X = pBSBChart->GetSize_X();
 		size_Y = pBSBChart->GetSize_Y();
 	}
 
-	int tex_dim = 512;                  //max_texture_dimension;
-	GrowData( 3 * tex_dim * tex_dim );
+	int tex_dim = 512; // max_texture_dimension;
+	GrowData(3 * tex_dim * tex_dim);
 
-	SetClipRegion( vp, region, false );         // no need to clear
+	SetClipRegion(vp, region, false); // no need to clear
 
-	//    Look for the chart texture hashmap in the member chart hashmap
-	ChartPointerHashType::iterator it = m_chart_hash.find( chart );
+	// Look for the chart texture hashmap in the member chart hashmap
+	ChartPointerHashType::iterator it = m_chart_hash.find(chart);
 
-	ChartTextureHashType *pTextureHash;
+	ChartTextureHashType* pTextureHash;
 
-	//    Not Found ?
-	if( it == m_chart_hash.end() ) {
-		ChartTextureHashType *p = new ChartTextureHashType;
+	// Not Found ?
+	if (it == m_chart_hash.end()) {
+		ChartTextureHashType* p = new ChartTextureHashType;
 		m_chart_hash[chart] = p;
 	}
 
 	pTextureHash = m_chart_hash[chart];
 
-	//    For underzoom cases, we will define the textures as having their base levels
-	//    equivalent to a level "n" mipmap, where n is calculated, and is always binary
+	// For underzoom cases, we will define the textures as having their base levels
+	// equivalent to a level "n" mipmap, where n is calculated, and is always binary
 
 	int n_basemult = 1;
-	if( scalefactor >= 2.0 ) {
+	if (scalefactor >= 2.0) {
 		n_basemult = 2;
 	}
 
-	//    Iterate on the texture hashmap....
-	//    Remove any textures whose tex_mult value does not match the target for this render (i.e. n_basemult)
-	if( m_ntex > m_tex_max_res ) {
+	// Iterate on the texture hashmap....
+	// Remove any textures whose tex_mult value does not match the target for this render (i.e. n_basemult)
+	if (m_ntex > m_tex_max_res) {
 		ChartTextureHashType::iterator itt = pTextureHash->begin();
-		while( itt != pTextureHash->end() ) {
-			glTextureDescriptor *ptd = itt->second;
+		while (itt != pTextureHash->end()) {
+			glTextureDescriptor* ptd = itt->second;
 
-			if( ( ptd->tex_name > 0 ) && ( ptd->tex_mult != n_basemult ) ) // the texture known to the GPU does not match the target
-			{
-				if( g_bDebugOGL ) printf( "   glDeleteTexture on n_basemult mismatch\n" );
-				glDeleteTextures( 1, &ptd->tex_name );
+			if ((ptd->tex_name > 0) && (ptd->tex_mult != n_basemult)) {
+				// the texture known to the GPU does not match the target
+				if (g_bDebugOGL)
+					printf("   glDeleteTexture on n_basemult mismatch\n");
+				glDeleteTextures(1, &ptd->tex_name);
 				m_ntex--;
 
-				ptd->tex_name = 0;            // mark the ptd as unknown/unavailable to GPU
+				ptd->tex_name = 0; // mark the ptd as unknown/unavailable to GPU
 
 				//    Delete the chart data?
-				if( m_b_mem_crunch ) {
-					pTextureHash->erase( itt );
+				if (m_b_mem_crunch) {
+					pTextureHash->erase(itt);
 					delete ptd;
-					itt = pTextureHash->begin();              // reset the iterator
+					itt = pTextureHash->begin(); // reset the iterator
 				}
 			} else
 				++itt;
 		}
 	}
 
-	//    Adjust the chart source rectangle by base multiplier
+	// Adjust the chart source rectangle by base multiplier
 	R.x /= n_basemult;
 	R.y /= n_basemult;
 	R.width /= n_basemult;
 	R.height /= n_basemult;
 
-	//  Calculate the number of textures needed
+	// Calculate the number of textures needed
 	int nx_tex = ( ( size_X / n_basemult ) / tex_dim ) + 1;
 	int ny_tex = ( ( size_Y / n_basemult ) / tex_dim ) + 1;
 
 	glTextureDescriptor *ptd;
 	wxRect rect( 0, 0, 1, 1 );
 
-	//    For low memory systems, aggressively manage the textures in the GPU memory.
-	//    Strategy:  Before loading any new textures,
-	//               delete all textures from  the GPU that are not to be used
-	//               in this particular VP render, on a per-chart basis.
-	if( m_ntex > m_tex_max_res ) {
+	// For low memory systems, aggressively manage the textures in the GPU memory.
+	// Strategy:  Before loading any new textures,
+	//            delete all textures from  the GPU that are not to be used
+	//            in this particular VP render, on a per-chart basis.
+	if (m_ntex > m_tex_max_res) {
 		rect.y = 0;
-		for( int i = 0; i < ny_tex; i++ ) {
+		for (int i = 0; i < ny_tex; i++) {
 			rect.height = tex_dim;
 			rect.x = 0;
-			for( int j = 0; j < nx_tex; j++ ) {
+			for (int j = 0; j < nx_tex; j++) {
 				rect.width = tex_dim;
 
 				wxASSERT(rect.x < 15383);
 				wxASSERT(rect.y < 15383);
 
-				int key = ( ( rect.x << 18 ) + ( rect.y << 4 ) ) + n_basemult;
+				int key = ((rect.x << 18) + (rect.y << 4)) + n_basemult;
 
-				if( pTextureHash->find( key ) != pTextureHash->end() )  // found?
-				{
-					//    Is this texture needed now?
+				if (pTextureHash->find(key) != pTextureHash->end()) { // found?
+					// Is this texture needed now?
 					wxRect ri = rect;
-					ri.Intersect( R );
-					if( !ri.width || !ri.height ) {
-						ptd = ( *pTextureHash )[key];
-						if( ptd->tex_name > 0 ) {
-							if( g_bDebugOGL ) printf( "   glDeleteTexture on m_ntex limit\n" );
+					ri.Intersect(R);
+					if (!ri.width || !ri.height) {
+						ptd = (*pTextureHash)[key];
+						if (ptd->tex_name > 0) {
+							if (g_bDebugOGL)
+								printf("   glDeleteTexture on m_ntex limit\n");
 
-							glDeleteTextures( 1, &ptd->tex_name );
+							glDeleteTextures(1, &ptd->tex_name);
 							m_ntex--;
 
-							ptd->tex_name = 0;            // mark the ptd as not available to GPU
+							ptd->tex_name = 0; // mark the ptd as not available to GPU
 
-							//    Delete the chart data?
-							if( m_b_mem_crunch ) {
-								pTextureHash->erase( key );
+							// Delete the chart data?
+							if (m_b_mem_crunch) {
+								pTextureHash->erase(key);
 								delete ptd;
 							}
 						}
@@ -987,176 +1020,165 @@ void glChartCanvas::RenderRasterChartRegionGL( chart::ChartBase *chart, ViewPort
 	int spx = R.x + R.width / 2;
 	int spy = R.y + R.height / 2;
 
-	//    Calculate a sub-pixel bias for overzoom renders,
-	//    anticipating and correcting for scaled up texture rendering
-	double biasx = 0.;
-	double biasy = 0.;
-	if( scalefactor < 1.0 ) {
+	// Calculate a sub-pixel bias for overzoom renders,
+	// anticipating and correcting for scaled up texture rendering
+	double biasx = 0.0;
+	double biasy = 0.0;
+	if (scalefactor < 1.0) {
 		double pixx, pixy;
-		if( b_plugin ) pPlugInWrapper->latlong_to_chartpix( vp.clat, vp.clon, pixx, pixy );
+		if (b_plugin)
+			pPlugInWrapper->latlong_to_chartpix(vp.clat, vp.clon, pixx, pixy);
 		else
-			pBSBChart->latlong_to_chartpix( vp.clat, vp.clon, pixx, pixy );
+			pBSBChart->latlong_to_chartpix(vp.clat, vp.clon, pixx, pixy);
 
 		biasy = pixy - spy;
 		biasx = pixx - spx;
 	}
 
-	glScalef( 1. / scalefactor * n_basemult, 1. / scalefactor * n_basemult, 1 );
+	glScalef(1.0 / scalefactor * n_basemult, 1.0 / scalefactor * n_basemult, 1);
 
-	double xt = 0.;
-	double yt = 0.;
+	double xt = 0.0;
+	double yt = 0.0;
 
-	if( ( ( fabs( vp.rotation ) > 0.01 ) ) || ( g_bskew_comp && ( fabs( vp.skew ) > 0.01 ) ) ) {
-
-		//    Shift texture drawing positions to account for the larger chart rectangle
-		//    needed to cover the screen on rotated images
+	if (((fabs(vp.rotation) > 0.01)) || (g_bskew_comp && (fabs(vp.skew) > 0.01))) {
+		// Shift texture drawing positions to account for the larger chart rectangle
+		// needed to cover the screen on rotated images
 		double w = vp.pix_width;
 		double h = vp.pix_height;
-		xt = ( R.width - ( w * scalefactor / n_basemult ) ) / 2;
-		yt = ( R.height - ( h * scalefactor / n_basemult ) ) / 2;
+		xt = (R.width - (w * scalefactor / n_basemult)) / 2;
+		yt = (R.height - (h * scalefactor / n_basemult)) / 2;
 
 		//    Rotations occur around 0,0, so calculate a post-rotate translation factor
 		double angle = vp.rotation;
 		angle -= vp.skew;
-		double ddx = ( scalefactor / n_basemult ) * ( w * cos( -angle ) - h * sin( -angle ) - w )
-			/ 2;
-		double ddy = ( scalefactor / n_basemult ) * ( h * cos( -angle ) + w * sin( -angle ) - h )
-			/ 2;
+		double ddx = (scalefactor / n_basemult) * (w * cos(-angle) - h * sin(-angle) - w) / 2;
+		double ddy = (scalefactor / n_basemult) * (h * cos(-angle) + w * sin(-angle) - h) / 2;
 
-		glRotatef( angle * 180. / M_PI, 0, 0, 1 );
+		glRotatef(angle * 180.0 / M_PI, 0, 0, 1);
 
-		glTranslatef( ddx, ddy, 0 );                 // post rotate translation
+		glTranslatef(ddx, ddy, 0); // post rotate translation
 	}
 
-#if 0
-	Sum and Difference Formulas
-		sin(A+B)=sin A cos B + cos A sin B
-		sin(A-B)=sin A cos B - cos A sin B
-		cos(A+B)=cos A cos B - sin A sin B
-		cos(A-B)=cos A cos B + sin A sin B
-#endif
-
-		//    Using a 2D loop, iterate thru the texture tiles of the chart
-		//    For each tile, is it (1) needed and (2) present?
-		int n_chart_tex = 0;
+	// Using a 2D loop, iterate thru the texture tiles of the chart
+	// For each tile, is it (1) needed and (2) present?
+	int n_chart_tex = 0;
 	int key;
 
 	rect.y = 0;
-	for( int i = 0; i < ny_tex; i++ ) {
+	for (int i = 0; i < ny_tex; i++) {
 		rect.height = tex_dim;
 		rect.x = 0;
-		for( int j = 0; j < nx_tex; j++ ) {
+		for (int j = 0; j < nx_tex; j++) {
 			rect.width = tex_dim;
 
-			//    Is this tile needed (i.e. does it intersect the chart source rectangle?)
+			// Is this tile needed (i.e. does it intersect the chart source rectangle?)
 			wxRect ri = rect;
-			ri.Intersect( R );
-			if( ri.width && ri.height ) {
+			ri.Intersect(R);
+			if (ri.width && ri.height) {
 				n_chart_tex++;
 
 				// calculate the on-screen rectangle coordinates for this tile
 				int w = ri.width, h = ri.height;
 				int x1 = ri.x - rect.x;
 				int y1 = ri.y - rect.y;
-				double x2 = ( ri.x - R.x ) - xt;
-				double y2 = ( ri.y - R.y ) - yt;
+				double x2 = (ri.x - R.x) - xt;
+				double y2 = (ri.y - R.y) - yt;
 
 				y2 -= biasy;
 				x2 -= biasx;
 
-				wxRect rt( ( x2 ) / scalefactor * n_basemult, ( y2 ) / scalefactor * n_basemult,
-						w / scalefactor * n_basemult, h / scalefactor * n_basemult );
-				rt.Offset( -vp.rv_rect.x, -vp.rv_rect.y ); // compensate for the adjustment made in quilt composition
+				wxRect rt((x2) / scalefactor * n_basemult, (y2) / scalefactor * n_basemult,
+						  w / scalefactor * n_basemult, h / scalefactor * n_basemult);
+				rt.Offset(-vp.rv_rect.x,
+						  -vp.rv_rect.y); // compensate for the adjustment made in quilt composition
 
-				//    And does this tile intersect the desired render region?
-				if( region.Contains( rt ) != wxOutRegion ) {
-					//    Is this texture tile already defined?
+				// And does this tile intersect the desired render region?
+				if (region.Contains(rt) != wxOutRegion) {
+					// Is this texture tile already defined?
 
-					//    Create the hash key
+					// Create the hash key
 					wxASSERT(rect.x < 15383);
 					wxASSERT(rect.y < 15383);
 
-					key = ( ( rect.x << 18 ) + ( rect.y << 4 ) ) + n_basemult;
-					ChartTextureHashType::iterator it = pTextureHash->find( key );
+					key = ((rect.x << 18) + (rect.y << 4)) + n_basemult;
+					ChartTextureHashType::iterator it = pTextureHash->find(key);
 
 					// if not found in the hash map, then get the bits as a texture descriptor
-					if( it == pTextureHash->end() ) {
+					if (it == pTextureHash->end()) {
 
 						ptd = new glTextureDescriptor;
 						ptd->tex_mult = n_basemult;
 
-						//                                    printf("  -->PopulateTD\n");
-						OCPNPopulateTD( ptd, n_basemult, rect, chart );
-						( *pTextureHash )[key] = ptd;
+						OCPNPopulateTD(ptd, n_basemult, rect, chart);
+						(*pTextureHash)[key] = ptd;
 					} else
-						ptd = ( *pTextureHash )[key];
+						ptd = (*pTextureHash)[key];
 
-					//    If the GPU does not know about this texture, upload it
-					if( ptd->tex_name == 0 ) {
+					// If the GPU does not know about this texture, upload it
+					if (ptd->tex_name == 0) {
 						GLuint tex_name;
-						glGenTextures( 1, &tex_name );
+						glGenTextures(1, &tex_name);
 						ptd->tex_name = tex_name;
 
-						glBindTexture( GL_TEXTURE_2D, tex_name );
+						glBindTexture(GL_TEXTURE_2D, tex_name);
 
-						glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-						glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-						glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-						glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-								GL_LINEAR_MIPMAP_NEAREST );
+						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
-						UploadTexture( ptd, n_basemult );
+						UploadTexture(ptd, n_basemult);
 
 						m_ntex++;
 					}
 
-					//    The texture is known to be available to the GPU
-					//    So map it in
+					// The texture is known to be available to the GPU
+					// So map it in
 
 					wxStopWatch sw;
 
-					if( g_bDebugOGL ) {
+					if (g_bDebugOGL) {
 						wxString msg;
-						msg.Printf( _T("  -->BindTexture %d"), ptd->tex_name );
-						wxLogMessage( msg );
+						msg.Printf(_T("  -->BindTexture %d"), ptd->tex_name);
+						wxLogMessage(msg);
 					}
 
-					glBindTexture( GL_TEXTURE_2D, ptd->tex_name );
+					glBindTexture(GL_TEXTURE_2D, ptd->tex_name);
 
 					GLint ltex;
-					glGetIntegerv( GL_TEXTURE_BINDING_2D, &ltex );
+					glGetIntegerv(GL_TEXTURE_BINDING_2D, &ltex);
 					wxASSERT(ltex == (GLint)ptd->tex_name);
 
 					sw.Pause();
 					long tt = sw.Time();
-					if( tt > 10 ) n_longbind++;
+					if (tt > 10)
+						n_longbind++;
 
 					double sx = rect.width;
 					double sy = rect.height;
 
-					if( g_bDebugOGL ) {
+					if (g_bDebugOGL) {
 						wxString msg;
-						msg.Printf( _T("     glQuads TexCoord (%g,%g) (%g,%g) (%g,%g) (%g,%g)"),
-								x1 / sx, y1 / sy, ( x1 + w ) / sx, y1 / sy, ( x1 + w ) / sx,
-								( y1 + h ) / sy, x1 / sx, ( y1 + h ) / sy );
-						wxLogMessage( msg );
+						msg.Printf(_T("     glQuads TexCoord (%g,%g) (%g,%g) (%g,%g) (%g,%g)"),
+								   x1 / sx, y1 / sy, (x1 + w) / sx, y1 / sy, (x1 + w) / sx,
+								   (y1 + h) / sy, x1 / sx, (y1 + h) / sy);
+						wxLogMessage(msg);
 
-						msg.Printf( _T("     glQuads Vertex2f (%g,%g) (%g,%g) (%g,%g) (%g,%g)"),
-								( x2 ), ( y2 ), ( w + x2 ), ( y2 ), ( w + x2 ), ( h + y2 ), ( x2 ),
-								( h + y2 ) );
-						wxLogMessage( msg );
+						msg.Printf(_T("     glQuads Vertex2f (%g,%g) (%g,%g) (%g,%g) (%g,%g)"),
+								   (x2), (y2), (w + x2), (y2), (w + x2), (h + y2), (x2), (h + y2));
+						wxLogMessage(msg);
 					}
 
-					glBegin( GL_QUADS );
+					glBegin(GL_QUADS);
 
-					glTexCoord2f( x1 / sx, y1 / sy );
-					glVertex2f( ( x2 ), ( y2 ) );
-					glTexCoord2f( ( x1 + w ) / sx, y1 / sy );
-					glVertex2f( ( w + x2 ), ( y2 ) );
-					glTexCoord2f( ( x1 + w ) / sx, ( y1 + h ) / sy );
-					glVertex2f( ( w + x2 ), ( h + y2 ) );
-					glTexCoord2f( x1 / sx, ( y1 + h ) / sy );
-					glVertex2f( ( x2 ), ( h + y2 ) );
+					glTexCoord2f(x1 / sx, y1 / sy);
+					glVertex2f((x2), (y2));
+					glTexCoord2f((x1 + w) / sx, y1 / sy);
+					glVertex2f((w + x2), (y2));
+					glTexCoord2f((x1 + w) / sx, (y1 + h) / sy);
+					glVertex2f((w + x2), (h + y2));
+					glTexCoord2f(x1 / sx, (y1 + h) / sy);
+					glVertex2f((x2), (h + y2));
 
 					glEnd();
 				}
@@ -1166,24 +1188,23 @@ void glChartCanvas::RenderRasterChartRegionGL( chart::ChartBase *chart, ViewPort
 
 		rect.y += rect.height;
 	}
-	//      printf("  basemult:%d  scalefactor:%g  chart_tex:%d\n", n_basemult, scalefactor, n_chart_tex);
 
 	glPopMatrix();
 
-	glDisable( GL_TEXTURE_2D );
-	glDisable( GL_STENCIL_TEST );
-	glDisable( GL_DEPTH_TEST );
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_STENCIL_TEST);
+	glDisable(GL_DEPTH_TEST);
 
-	if( n_longbind ) m_tex_max_res--;
-	else {
-		if( s_nquickbind++ > 100 ) {
+	if (n_longbind) {
+		m_tex_max_res--;
+	} else {
+		if (s_nquickbind++ > 100) {
 			s_nquickbind = 0;
 			m_tex_max_res++;
 		}
 	}
 	m_tex_max_res = wxMax(m_tex_max_res, 20);
 	m_tex_max_res = wxMin(m_tex_max_res, m_tex_max_res_initial);
-
 }
 
 void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_clear )
@@ -1297,53 +1318,50 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 		}
 
 		// Hilite rollover patch
-		OCPNRegion hiregion = cc1->m_pQuilt->GetHiliteRegion( vp );
+		OCPNRegion hiregion = cc1->m_pQuilt->GetHiliteRegion(vp);
 
-		if( !hiregion.IsEmpty() ) {
-			glPushAttrib( GL_COLOR_BUFFER_BIT );
-			glEnable( GL_BLEND );
-			glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		if (!hiregion.IsEmpty()) {
+			glPushAttrib(GL_COLOR_BUFFER_BIT);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 			double hitrans;
-			switch( global_color_scheme ) {
+			switch (global_color_scheme) {
 				case GLOBAL_COLOR_SCHEME_DAY:
-					hitrans = .4;
+					hitrans = 0.4;
 					break;
 				case GLOBAL_COLOR_SCHEME_DUSK:
-					hitrans = .2;
+					hitrans = 0.2;
 					break;
 				case GLOBAL_COLOR_SCHEME_NIGHT:
-					hitrans = .1;
+					hitrans = 0.1;
 					break;
 				default:
-					hitrans = .4;
+					hitrans = 0.4;
 					break;
 			}
 
-			glColor4f( (float) .8, (float) .4, (float) .4, (float) hitrans );
+			glColor4f(0.8f, 0.4f, 0.4f, (float)hitrans);
 
-			OCPNRegionIterator upd ( hiregion );
-			while ( upd.HaveRects() )
-			{
+			OCPNRegionIterator upd(hiregion);
+			while (upd.HaveRects()) {
 				wxRect rect = upd.GetRect();
 
-				glBegin( GL_QUADS );
-				glVertex2i( rect.x, rect.y );
-				glVertex2i( rect.x + rect.width, rect.y );
-				glVertex2i( rect.x + rect.width, rect.y + rect.height );
-				glVertex2i( rect.x, rect.y + rect.height );
+				glBegin(GL_QUADS);
+				glVertex2i(rect.x, rect.y);
+				glVertex2i(rect.x + rect.width, rect.y);
+				glVertex2i(rect.x + rect.width, rect.y + rect.height);
+				glVertex2i(rect.x, rect.y + rect.height);
 				glEnd();
 
 				upd.NextRect();
 			}
 
-			glDisable( GL_BLEND );
+			glDisable(GL_BLEND);
 			glPopAttrib();
 		}
-		cc1->m_pQuilt->SetRenderedVP( vp );
-
-	}
-	else if( !cc1->m_pQuilt->GetnCharts() ) {
+		cc1->m_pQuilt->SetRenderedVP(vp);
+	} else if (!cc1->m_pQuilt->GetnCharts()) {
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 }
@@ -1524,7 +1542,7 @@ void glChartCanvas::render()
 
 		// Try to do accelerated pans
 		if( m_b_useFBO ) {
-			if( m_gl_cache_vp.IsValid() && ( m_cache_tex > 0 ) && !g_bCourseUp ) {
+			if (m_gl_cache_vp.IsValid() && (m_cache_tex > 0) && !g_bCourseUp) {
 				if( b_newview ) {
 
 					wxPoint c_old = VPoint.GetPixFromLL( VPoint.clat, VPoint.clon );

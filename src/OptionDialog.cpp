@@ -146,9 +146,6 @@ extern double g_n_arrival_circle_radius;
 extern bool g_bEnableZoomToCursor;
 extern bool g_bTrackDaily;
 extern bool g_bHighliteTracks;
-extern double g_TrackIntervalSeconds;
-extern double g_TrackDeltaDistance;
-extern double g_TrackDeltaDistance;
 extern int g_nTrackPrecision;
 
 extern int g_iSDMMFormat;

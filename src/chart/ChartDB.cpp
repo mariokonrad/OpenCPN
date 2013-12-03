@@ -676,7 +676,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 		} else { // Use n chart cache policy, if memory-limit  policy is not used
 			// Limit cache to n charts, tossing out the oldest when space is needed
 			unsigned int nCache = pChartCache->size();
-			while ((nCache > (unsigned int)g_nCacheLimit) && !m_b_locked) {
+			while ((nCache > static_cast<unsigned int>(g_nCacheLimit)) && !m_b_locked) {
 
 				int LRUTime = now.GetTicks();
 				int iOldest = 0;

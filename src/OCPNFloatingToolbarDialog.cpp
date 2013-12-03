@@ -71,16 +71,15 @@ OCPNFloatingToolbarDialog::OCPNFloatingToolbarDialog(
 #ifdef __WXOSX__
 	wstyle |= wxSTAY_ON_TOP;
 #endif
-	wxDialog::Create( parent, -1, _T("ocpnToolbarDialog"), wxPoint( -1, -1 ), wxSize( -1, -1 ),
-			wstyle );
+	wxDialog::Create(parent, -1, _T("ocpnToolbarDialog"), wxPoint(-1, -1), wxSize(-1, -1), wstyle);
 
 	m_opacity = 255;
-	m_fade_timer.SetOwner( this, FADE_TIMER );
+	m_fade_timer.SetOwner(this, FADE_TIMER);
 	if (global::OCPN::get().gui().toolbar().transparent) {
 		m_fade_timer.Start(5000);
 	}
 
-	m_pGrabberwin = new GrabberWin( this );
+	m_pGrabberwin = new GrabberWin(this);
 
 	m_position = position;
 	m_orient = orient;
@@ -88,10 +87,10 @@ OCPNFloatingToolbarDialog::OCPNFloatingToolbarDialog(
 	m_style = g_StyleManager->GetCurrentStyle(); // FIXME: do not store the current style
 
 	// A top-level sizer
-	m_topSizer = new wxBoxSizer( wxHORIZONTAL );
-	SetSizer( m_topSizer );
+	m_topSizer = new wxBoxSizer(wxHORIZONTAL);
+	SetSizer(m_topSizer);
 
-	//    Set initial "Dock" parameters
+	// Set initial "Dock" parameters
 	m_dock_x = 0;
 	m_dock_y = 0;
 	m_block = false;
@@ -109,63 +108,65 @@ void OCPNFloatingToolbarDialog::OnWindowCreate(wxWindowCreateEvent &)
 	Realize();
 }
 
-void OCPNFloatingToolbarDialog::SetColorScheme( ColorScheme cs )
+void OCPNFloatingToolbarDialog::SetColorScheme(ColorScheme cs)
 {
 	m_cs = cs;
 
-	wxColour back_color = GetGlobalColor( _T("GREY2") );
+	wxColour back_color = GetGlobalColor(_T("GREY2"));
 
 	//  Set background
-	SetBackgroundColour( back_color );
+	SetBackgroundColour(back_color);
 	ClearBackground();
 
-	if( m_ptoolbar ) {
-		wxColour back_color = GetGlobalColor( _T("GREY2") );
+	if (m_ptoolbar) {
+		wxColour back_color = GetGlobalColor(_T("GREY2"));
 
 		//  Set background
-		m_ptoolbar->SetBackgroundColour( back_color );
+		m_ptoolbar->SetBackgroundColour(back_color);
 		m_ptoolbar->ClearBackground();
 
-		m_ptoolbar->SetToggledBackgroundColour( GetGlobalColor( _T("GREY1") ) );
+		m_ptoolbar->SetToggledBackgroundColour(GetGlobalColor(_T("GREY1")));
 
-		m_ptoolbar->SetColorScheme( cs );
-		m_ptoolbar->Refresh( true );
+		m_ptoolbar->SetColorScheme(cs);
+		m_ptoolbar->Refresh(true);
 	}
 
-	if( m_pGrabberwin )
-		m_pGrabberwin->SetColorScheme( cs );
+	if (m_pGrabberwin)
+		m_pGrabberwin->SetColorScheme(cs);
 }
 
 void OCPNFloatingToolbarDialog::SetGeometry()
 {
-
-	if( m_ptoolbar ) {
-		m_ptoolbar->SetToolBitmapSize( m_style->GetToolSize() );
+	if (m_ptoolbar) {
+		m_ptoolbar->SetToolBitmapSize(m_style->GetToolSize());
 
 		wxSize tool_size = m_ptoolbar->GetToolBitmapSize();
 
-		if( m_orient == wxTB_VERTICAL ) m_ptoolbar->SetMaxRowsCols(
-				( cc1->GetSize().y / ( tool_size.y + m_style->GetToolSeparation() ) ) - 1, 100 );
+		if (m_orient == wxTB_VERTICAL)
+			m_ptoolbar->SetMaxRowsCols(
+				(cc1->GetSize().y / (tool_size.y + m_style->GetToolSeparation())) - 1, 100);
 		else
-			m_ptoolbar->SetMaxRowsCols( 100,
-					( cc1->GetSize().x / ( tool_size.x + m_style->GetToolSeparation() ) ) - 1 );
+			m_ptoolbar->SetMaxRowsCols(
+				100, (cc1->GetSize().x / (tool_size.x + m_style->GetToolSeparation())) - 1);
 	}
 }
 
 void OCPNFloatingToolbarDialog::RePosition()
 {
-	if(m_block)
+	if (m_block)
 		return;
 
-	if( m_pparent && m_ptoolbar ) {
+	if (m_pparent && m_ptoolbar) {
 		wxSize cs = m_pparent->GetClientSize();
-		if( -1 == m_dock_x ) m_position.x = 0;
-		else
-			if( 1 == m_dock_x ) m_position.x = cs.x - GetSize().x;
+		if (-1 == m_dock_x)
+			m_position.x = 0;
+		else if (1 == m_dock_x)
+			m_position.x = cs.x - GetSize().x;
 
-		if( -1 == m_dock_y ) m_position.y = 0;
-		else
-			if( 1 == m_dock_y ) m_position.y = cs.y - GetSize().y;
+		if (-1 == m_dock_y)
+			m_position.y = 0;
+		else if (1 == m_dock_y)
+			m_position.y = cs.y - GetSize().y;
 
 		m_position.x = wxMin(cs.x - GetSize().x, m_position.x);
 		m_position.y = wxMin(cs.y - GetSize().y, m_position.y);
@@ -173,15 +174,15 @@ void OCPNFloatingToolbarDialog::RePosition()
 		m_position.x = wxMax(0, m_position.x);
 		m_position.y = wxMax(0, m_position.y);
 
-		wxPoint screen_pos = m_pparent->ClientToScreen( m_position );
-		Move( screen_pos );
+		wxPoint screen_pos = m_pparent->ClientToScreen(m_position);
+		Move(screen_pos);
 	}
 }
 
 void OCPNFloatingToolbarDialog::Submerge()
 {
 	Hide();
-	if( m_ptoolbar )
+	if (m_ptoolbar)
 		m_ptoolbar->KillTooltip();
 }
 
@@ -189,41 +190,44 @@ void OCPNFloatingToolbarDialog::Surface()
 {
 #ifndef __WXOSX__
 	Hide();
-	Move( 0, 0 );
+	Move(0, 0);
 #endif
 
 	RePosition();
 	Show();
-	if( m_ptoolbar ) m_ptoolbar->EnableTooltips();
+	if (m_ptoolbar)
+		m_ptoolbar->EnableTooltips();
 }
 
 void OCPNFloatingToolbarDialog::HideTooltip()
 {
-	if( m_ptoolbar ) m_ptoolbar->HideTooltip();
+	if (m_ptoolbar)
+		m_ptoolbar->HideTooltip();
 }
 
 void OCPNFloatingToolbarDialog::ShowTooltips()
 {
-	if( m_ptoolbar ) m_ptoolbar->EnableTooltips();
+	if (m_ptoolbar)
+		m_ptoolbar->EnableTooltips();
 }
 
 void OCPNFloatingToolbarDialog::ToggleOrientation()
 {
-	wxPoint old_screen_pos = m_pparent->ClientToScreen( m_position );
+	wxPoint old_screen_pos = m_pparent->ClientToScreen(m_position);
 
-	if( m_orient == wxTB_HORIZONTAL ) {
+	if (m_orient == wxTB_HORIZONTAL) {
 		m_orient = wxTB_VERTICAL;
-		m_ptoolbar->SetWindowStyleFlag( m_ptoolbar->GetWindowStyleFlag() & ~wxTB_HORIZONTAL );
-		m_ptoolbar->SetWindowStyleFlag( m_ptoolbar->GetWindowStyleFlag() | wxTB_VERTICAL );
+		m_ptoolbar->SetWindowStyleFlag(m_ptoolbar->GetWindowStyleFlag() & ~wxTB_HORIZONTAL);
+		m_ptoolbar->SetWindowStyleFlag(m_ptoolbar->GetWindowStyleFlag() | wxTB_VERTICAL);
 	} else {
 		m_orient = wxTB_HORIZONTAL;
-		m_ptoolbar->SetWindowStyleFlag( m_ptoolbar->GetWindowStyleFlag() & ~wxTB_VERTICAL );
-		m_ptoolbar->SetWindowStyleFlag( m_ptoolbar->GetWindowStyleFlag() | wxTB_HORIZONTAL );
+		m_ptoolbar->SetWindowStyleFlag(m_ptoolbar->GetWindowStyleFlag() & ~wxTB_VERTICAL);
+		m_ptoolbar->SetWindowStyleFlag(m_ptoolbar->GetWindowStyleFlag() | wxTB_HORIZONTAL);
 	}
 
-	wxPoint grabber_point_abs = ClientToScreen( m_pGrabberwin->GetPosition() );
+	wxPoint grabber_point_abs = ClientToScreen(m_pGrabberwin->GetPosition());
 
-	m_style->SetOrientation( m_orient );
+	m_style->SetOrientation(m_orient);
 	m_ptoolbar->InvalidateBitmaps();
 
 	SetGeometry();
@@ -231,19 +235,18 @@ void OCPNFloatingToolbarDialog::ToggleOrientation()
 
 	wxPoint pos_abs = grabber_point_abs;
 	pos_abs.x -= m_pGrabberwin->GetPosition().x;
-	MoveDialogInScreenCoords( pos_abs, old_screen_pos );
+	MoveDialogInScreenCoords(pos_abs, old_screen_pos);
 
 	RePosition();
 
-	Show();   // this seems to be necessary on GTK to kick the sizer into gear...(FS#553)
+	Show(); // this seems to be necessary on GTK to kick the sizer into gear...(FS#553)
 	Refresh();
-	//GetParent()->Refresh( false );
 }
 
-void OCPNFloatingToolbarDialog::MouseEvent( wxMouseEvent& event )
+void OCPNFloatingToolbarDialog::MouseEvent(wxMouseEvent& event)
 {
 	if (global::OCPN::get().gui().toolbar().transparent) {
-		if (event.Entering() && (m_opacity < 255 )) {
+		if (event.Entering() && (m_opacity < 255)) {
 			SetTransparent(255);
 			m_opacity = 255;
 		}
@@ -251,7 +254,7 @@ void OCPNFloatingToolbarDialog::MouseEvent( wxMouseEvent& event )
 	}
 }
 
-void OCPNFloatingToolbarDialog::FadeTimerEvent(wxTimerEvent &)
+void OCPNFloatingToolbarDialog::FadeTimerEvent(wxTimerEvent&)
 {
 	if (global::OCPN::get().gui().toolbar().transparent) {
 		if (!g_bopengl)
@@ -270,60 +273,54 @@ void OCPNFloatingToolbarDialog::DoFade(int value)
 
 void OCPNFloatingToolbarDialog::RefreshFadeTimer()
 {
-	SetTransparent( 255 );
+	SetTransparent(255);
 	m_opacity = 255;
-	m_fade_timer.Start( 500 );           // retrigger the continuous timer
+	m_fade_timer.Start(500); // retrigger the continuous timer
 }
 
-void OCPNFloatingToolbarDialog::MoveDialogInScreenCoords( wxPoint posn, wxPoint posn_old )
+void OCPNFloatingToolbarDialog::MoveDialogInScreenCoords(wxPoint posn, wxPoint posn_old)
 {
-	wxPoint pos_in_parent = m_pparent->ScreenToClient( posn );
-	wxPoint pos_in_parent_old = m_pparent->ScreenToClient( posn_old );
+	wxPoint pos_in_parent = m_pparent->ScreenToClient(posn);
+	wxPoint pos_in_parent_old = m_pparent->ScreenToClient(posn_old);
 
-	//    "Docking" support
+	// "Docking" support
 #define DOCK_MARGIN 40
 
 	// X
 	m_dock_x = 0;
-	if( pos_in_parent.x < pos_in_parent_old.x )            // moving left
-	{
-		if( pos_in_parent.x < DOCK_MARGIN ) {
+	if (pos_in_parent.x < pos_in_parent_old.x) { // moving left
+		if (pos_in_parent.x < DOCK_MARGIN) {
 			pos_in_parent.x = 0;
 			m_dock_x = -1;
 		}
-	} else
-		if( pos_in_parent.x > pos_in_parent_old.x )            // moving right
-		{
-			int max_right = m_pparent->GetClientSize().x - GetSize().x;
-			if( pos_in_parent.x > ( max_right - DOCK_MARGIN ) ) {
-				pos_in_parent.x = max_right;
-				m_dock_x = 1;
-			}
+	} else if (pos_in_parent.x > pos_in_parent_old.x) { // moving right
+		int max_right = m_pparent->GetClientSize().x - GetSize().x;
+		if (pos_in_parent.x > (max_right - DOCK_MARGIN)) {
+			pos_in_parent.x = max_right;
+			m_dock_x = 1;
 		}
+	}
 
 	// Y
 	m_dock_y = 0;
-	if( pos_in_parent.y < pos_in_parent_old.y )            // moving up
-	{
-		if( pos_in_parent.y < DOCK_MARGIN ) {
+	if (pos_in_parent.y < pos_in_parent_old.y) { // moving up
+		if (pos_in_parent.y < DOCK_MARGIN) {
 			pos_in_parent.y = 0;
 			m_dock_y = -1;
 		}
-	} else
-		if( pos_in_parent.y > pos_in_parent_old.y )            // moving down
-		{
-			int max_down = m_pparent->GetClientSize().y - GetSize().y;
-			if( pos_in_parent.y > ( max_down - DOCK_MARGIN ) ) {
-				pos_in_parent.y = max_down;
-				m_dock_y = 1;
-			}
+	} else if (pos_in_parent.y > pos_in_parent_old.y) { // moving down
+		int max_down = m_pparent->GetClientSize().y - GetSize().y;
+		if (pos_in_parent.y > (max_down - DOCK_MARGIN)) {
+			pos_in_parent.y = max_down;
+			m_dock_y = 1;
 		}
+	}
 
 	m_position = pos_in_parent;
 
-	wxPoint final_pos = m_pparent->ClientToScreen( pos_in_parent );
+	wxPoint final_pos = m_pparent->ClientToScreen(pos_in_parent);
 
-	Move( final_pos );
+	Move(final_pos);
 }
 
 void OCPNFloatingToolbarDialog::Realize()
@@ -429,27 +426,26 @@ void OCPNFloatingToolbarDialog::Realize()
 	}
 }
 
-void OCPNFloatingToolbarDialog::OnToolLeftClick( wxCommandEvent& event )
+void OCPNFloatingToolbarDialog::OnToolLeftClick(wxCommandEvent& event)
 {
 	// First see if it was actually the context menu that was clicked.
 
-	if( event.GetId() >= ID_PLUGIN_BASE + 100 ) {
+	if (event.GetId() >= ID_PLUGIN_BASE + 100) {
 
 		int itemId = event.GetId() - ID_PLUGIN_BASE - 100;
-		bool toolIsChecked = g_FloatingToolbarConfigMenu->FindItem( event.GetId() )->IsChecked();
+		bool toolIsChecked = g_FloatingToolbarConfigMenu->FindItem(event.GetId())->IsChecked();
 
-		if( toolIsChecked ) {
-			g_toolbarConfig.SetChar( itemId, _T('X') );
+		if (toolIsChecked) {
+			g_toolbarConfig.SetChar(itemId, _T('X'));
 		} else {
-
-			if( itemId + ID_ZOOMIN == ID_MOB ) {
-				ToolbarMOBDialog mdlg( this );
+			if (itemId + ID_ZOOMIN == ID_MOB) {
+				ToolbarMOBDialog mdlg(this);
 				int dialog_ret = mdlg.ShowModal();
 				int answer = mdlg.GetSelection();
 
-				if( answer == 0 || answer == 1 || dialog_ret == wxID_CANCEL ) {
-					g_FloatingToolbarConfigMenu->FindItem( event.GetId() )->Check( true );
-					if( answer == 1 && dialog_ret == wxID_OK ) {
+				if (answer == 0 || answer == 1 || dialog_ret == wxID_CANCEL) {
+					g_FloatingToolbarConfigMenu->FindItem(event.GetId())->Check(true);
+					if (answer == 1 && dialog_ret == wxID_OK) {
 						g_bPermanentMOBIcon = true;
 						delete g_FloatingToolbarConfigMenu;
 						g_FloatingToolbarConfigMenu = new wxMenu();
@@ -459,15 +455,14 @@ void OCPNFloatingToolbarDialog::OnToolLeftClick( wxCommandEvent& event )
 				}
 			}
 
-			if( m_ptoolbar->GetVisibleToolCount() == 1 ) {
-				OCPNMessageBox( this,
-						_("You can't hide the last tool from the toolbar\nas this would make it inaccessible."),
-						_("OpenCPN Alert"), wxOK );
-				g_FloatingToolbarConfigMenu->FindItem( event.GetId() )->Check( true );
+			if (m_ptoolbar->GetVisibleToolCount() == 1) {
+				OCPNMessageBox(this, _("You can't hide the last tool from the toolbar\nas this would make it inaccessible."),
+							   _("OpenCPN Alert"), wxOK);
+				g_FloatingToolbarConfigMenu->FindItem(event.GetId())->Check(true);
 				return;
 			}
 
-			g_toolbarConfig.SetChar( itemId, _T('.') );
+			g_toolbarConfig.SetChar(itemId, _T('.'));
 		}
 		toolbarConfigChanged = true;
 		return;
@@ -477,21 +472,21 @@ void OCPNFloatingToolbarDialog::OnToolLeftClick( wxCommandEvent& event )
 	// Since Dialog events don't propagate automatically, we send it explicitly
 	// (instead of relying on event.Skip()). Send events up the window hierarchy
 
-	m_pparent->GetEventHandler()->AddPendingEvent( event );
+	m_pparent->GetEventHandler()->AddPendingEvent(event);
 	gFrame->Raise();
 }
 
-ToolBarSimple *OCPNFloatingToolbarDialog::GetToolbar()
+ToolBarSimple* OCPNFloatingToolbarDialog::GetToolbar()
 {
-	if( !m_ptoolbar ) {
+	if (!m_ptoolbar) {
 		long winstyle = wxNO_BORDER | wxTB_FLAT | m_orient;
 
-		m_ptoolbar = new ToolBarSimple( this, -1, wxPoint( -1, -1 ), wxSize( -1, -1 ), winstyle );
+		m_ptoolbar = new ToolBarSimple(this, -1, wxPoint(-1, -1), wxSize(-1, -1), winstyle);
 
-		m_ptoolbar->SetBackgroundColour( GetGlobalColor( _T("GREY2") ) );
+		m_ptoolbar->SetBackgroundColour(GetGlobalColor(_T("GREY2")));
 		m_ptoolbar->ClearBackground();
-		m_ptoolbar->SetToggledBackgroundColour( GetGlobalColor( _T("GREY1") ) );
-		m_ptoolbar->SetColorScheme( m_cs );
+		m_ptoolbar->SetToggledBackgroundColour(GetGlobalColor(_T("GREY1")));
+		m_ptoolbar->SetColorScheme(m_cs);
 
 		SetGeometry();
 	}
@@ -501,7 +496,7 @@ ToolBarSimple *OCPNFloatingToolbarDialog::GetToolbar()
 
 void OCPNFloatingToolbarDialog::DestroyToolBar()
 {
-	if( m_ptoolbar ) {
+	if (m_ptoolbar) {
 		m_ptoolbar->ClearTools();
 		delete m_ptoolbar;
 		m_ptoolbar = NULL;
@@ -510,13 +505,13 @@ void OCPNFloatingToolbarDialog::DestroyToolBar()
 
 void OCPNFloatingToolbarDialog::EnableTooltips()
 {
-	if(m_ptoolbar)
+	if (m_ptoolbar)
 		m_ptoolbar->EnableTooltips();
 }
 
 void OCPNFloatingToolbarDialog::DisableTooltips()
 {
-	if(m_ptoolbar)
+	if (m_ptoolbar)
 		m_ptoolbar->DisableTooltips();
 }
 

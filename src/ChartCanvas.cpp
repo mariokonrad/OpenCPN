@@ -142,7 +142,6 @@ extern double g_ChartNotRenderScaleFactor;
 extern double vLat, vLon;
 extern chart::ChartDB* ChartData;
 extern bool bDBUpdateInProgress;
-extern ColorScheme global_color_scheme;
 extern bool g_bHDTValid;
 extern ConsoleCanvas    *console;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
@@ -195,16 +194,6 @@ extern StatWin* stats;
 
 // AIS Global configuration
 extern bool g_bShowAIS;
-extern bool g_bCPAMax;
-extern double g_CPAMax_NM;
-extern bool g_bCPAWarn;
-extern double g_CPAWarn_NM;
-extern bool g_bTCPA_Max;
-extern double g_TCPA_Max;
-extern bool g_bMarkLost;
-extern double g_MarkLost_Mins;
-extern bool g_bRemoveLost;
-extern double g_RemoveLost_Mins;
 extern bool g_bShowCOG;
 extern double g_ShowCOG_Mins;
 extern bool g_bShowTracks;
@@ -266,10 +255,7 @@ extern wxProgressDialog* s_ProgDialog;
 
 extern bool g_bsmoothpanzoom;
 
-extern int g_GPU_MemSize;
 extern bool g_b_useStencil;
-
-bool g_bDebugOGL;
 
 extern int g_memCacheLimit;
 extern bool g_b_assume_azerty;
@@ -3071,7 +3057,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 				//  Calculate the true ship length in exact pixels
 				double ship_bow_lat, ship_bow_lon;
-				geo::ll_gc_ll(nav.lat, nav.lon, icon_hdt, g_n_ownship_length_meters / 1852.,
+				geo::ll_gc_ll(nav.lat, nav.lon, icon_hdt, g_n_ownship_length_meters / 1852.0,
 							  &ship_bow_lat, &ship_bow_lon);
 				wxPoint lShipBowPoint;
 				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(ship_bow_lat, ship_bow_lon);
@@ -3088,9 +3074,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				ownship_min_mm = wxMax(ownship_min_mm, 1.0);
 
 				//  Calculate Nautical Miles distance from midships to gps antenna
-				double hdt_ant = icon_hdt + 180.;
-				double dy = (g_n_ownship_length_meters / 2 - g_n_gps_antenna_offset_y) / 1852.;
-				double dx = g_n_gps_antenna_offset_x / 1852.;
+				double hdt_ant = icon_hdt + 180.0;
+				double dy = (g_n_ownship_length_meters / 2 - g_n_gps_antenna_offset_y) / 1852.0;
+				double dx = g_n_gps_antenna_offset_x / 1852.0;
 				if (g_n_gps_antenna_offset_y > g_n_ownship_length_meters / 2) // reverse?
 				{
 					hdt_ant = icon_hdt;
@@ -3106,7 +3092,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				double ship_mid_lat, ship_mid_lon, ship_mid_lat1, ship_mid_lon1;
 
 				geo::ll_gc_ll(nav.lat, nav.lon, hdt_ant, dy, &ship_mid_lat, &ship_mid_lon);
-				geo::ll_gc_ll(ship_mid_lat, ship_mid_lon, icon_hdt - 90., dx, &ship_mid_lat1,
+				geo::ll_gc_ll(ship_mid_lat, ship_mid_lon, icon_hdt - 90.0, dx, &ship_mid_lat1,
 							  &ship_mid_lon1);
 
 				GetCanvasPointPix(ship_mid_lat1, ship_mid_lon1, &lShipMidPoint);

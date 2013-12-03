@@ -299,14 +299,12 @@ bool g_bskew_comp;
 bool g_bopengl;
 bool g_bsmoothpanzoom;
 int g_nCOMPortCheck;
-bool g_bbigred;
 PlugInManager* g_pi_manager;
 bool g_bAISRolloverShowClass;
 bool g_bAISRolloverShowCOG;
 bool g_bAISRolloverShowCPA;
 bool g_bFullScreenQuilt;
 bool g_bQuiltEnable;
-bool g_bQuiltStart;
 bool g_bportable;
 bool g_bdisable_opengl;
 chart::ChartGroupArray* g_pGroupArray;
@@ -382,7 +380,6 @@ bool g_bTrackDaily;
 bool g_bHighliteTracks;
 wxString g_default_wp_icon;
 Track* g_pActiveTrack;
-double g_TrackIntervalSeconds;
 double g_TrackDeltaDistance;
 int g_nTrackPrecision;
 int g_total_NMEAerror_messages;
@@ -405,12 +402,10 @@ wxLocale* plocale_def_lang;
 wxString g_locale;
 bool g_b_assume_azerty;
 int g_click_stop;
-int g_MemFootSec;
 int g_MemFootMB;
 std::vector<int> g_quilt_noshow_index_array;
 wxStaticBitmap* g_pStatBoxTool;
 bool g_bquiting;
-int g_BSBImgDebug;
 wxString g_AisTargetList_perspective;
 int g_AisTargetList_range;
 int g_AisTargetList_sortColumn;
@@ -5375,17 +5370,17 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 		SetStatusText(over_ground, STAT_FIELD_SOGCOG);
 	}
 
-	//    Maintain average COG for Course Up Mode
+	// Maintain average COG for Course Up Mode
 
-	if( !wxIsNaN(nav.cog) ) {
-		if( g_COGAvgSec > 0 ) {
-			//    Make a hole
-			for( int i = g_COGAvgSec - 1; i > 0; i-- )
+	if (!wxIsNaN(nav.cog)) {
+		if (g_COGAvgSec > 0) {
+			// Make a hole
+			for (int i = g_COGAvgSec - 1; i > 0; i--)
 				COGTable[i] = COGTable[i - 1];
 			COGTable[0] = nav.cog;
 
 			double sum = 0.;
-			for( int i = 0; i < g_COGAvgSec; i++ ) {
+			for (int i = 0; i < g_COGAvgSec; i++) {
 				double adder = COGTable[i];
 
 				if (fabs(adder - g_COGAvg) > 180.0) {
@@ -5410,8 +5405,8 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 	}
 
 #ifdef ocpnUPDATE_SYSTEM_TIME
-	//      Use the fix time to update the local system clock, only once per session
-	if( ( sfixtime.Len() ) && s_bSetSystemTime && ( m_bTimeIsSet == false ) ) {
+	// Use the fix time to update the local system clock, only once per session
+	if ((sfixtime.Len()) && s_bSetSystemTime && (m_bTimeIsSet == false)) {
 		wxDateTime Fix_Time;
 
 		if( 6 == sfixtime.Len() )                   // perfectly recognised format?

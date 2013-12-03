@@ -96,9 +96,8 @@ extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
 extern double g_PlanSpeed;
-extern wxRect g_blink_rect;
 
-//    AIS Global configuration
+// AIS Global configuration
 extern bool             g_bCPAMax;
 extern double           g_CPAMax_NM;
 extern bool             g_bCPAWarn;
@@ -142,7 +141,6 @@ extern bool             g_bConfirmObjectDelete;
 
 extern bool             g_bEnableZoomToCursor;
 extern wxString         g_toolbarConfig;
-extern double           g_TrackIntervalSeconds;
 extern double           g_TrackDeltaDistance;
 
 extern int              g_nCacheLimit;
@@ -178,16 +176,12 @@ extern bool             g_bCourseUp;
 extern int              g_COGAvgSec;
 extern bool             g_bMagneticAPB;
 
-extern int              g_MemFootSec;
 extern int              g_MemFootMB;
 
 extern int              g_nCOMPortCheck;
 
-extern bool             g_bbigred;
-
 extern wxString         g_AW1GUID;
 extern wxString         g_AW2GUID;
-extern int              g_BSBImgDebug;
 
 extern bool             g_bAISRolloverShowClass;
 extern bool             g_bAISRolloverShowCOG;
@@ -197,11 +191,10 @@ extern bool             g_bfilter_cogsog;
 extern int              g_COGFilterSec;
 extern int              g_SOGFilterSec;
 
-int                     g_navobjbackups;
+static int g_navobjbackups; // FIXME: move this to the class Config
 
 extern bool             g_bQuiltEnable;
 extern bool             g_bFullScreenQuilt;
-extern bool             g_bQuiltStart;
 
 extern int              g_SkewCompUpdatePeriod;
 
@@ -537,7 +530,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("AnchorWatchMax"), &g_nAWMax, 1852);
 	Read(_T("DebugCM93"), &g_bDebugCM93, 0);
 	Read(_T("DebugS57"), &g_bDebugS57, 0); // Show LUP and Feature info in object query
-	Read(_T("DebugBSBImg"), &g_BSBImgDebug, 0);
 
 	load_watchdog();
 
@@ -553,7 +545,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("UseGarminHostUpload"), &g_bGarminHostUpload, 0);
 
 	Read(_T("UseNMEA_GLL"), &g_bUseGLL, 1);
-	Read(_T("UseBigRedX"), &g_bbigred, 0);
 
 	Read(_T("FilterNMEA_Avg"), &g_bfilter_cogsog, 0);
 	Read(_T("FilterNMEA_Sec"), &g_COGFilterSec, 1);
@@ -572,13 +563,11 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	load_view();
 
-	Read(_T("MemFootprintMgrTimeSec"), &g_MemFootSec, 60);
 	Read(_T("MemFootprintTargetMB"), &g_MemFootMB, 200);
 
 	Read(_T("WindowsComPortMax"), &g_nCOMPortCheck, 32);
 
 	Read(_T("ChartQuilting"), &g_bQuiltEnable, 0);
-	Read(_T("ChartQuiltingInitial"), &g_bQuiltStart, 0);
 
 	Read(_T("CourseUpMode"), &g_bCourseUp, 0);
 	Read(_T("COGUPAvgSeconds"), &g_COGAvgSec, 15);
@@ -1160,15 +1149,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	g_bEnableZoomToCursor = false;
 	Read(_T("EnableZoomToCursor"), &g_bEnableZoomToCursor);
-
-	g_TrackIntervalSeconds = 60.0;
-	val.Clear();
-	Read(_T("TrackIntervalSeconds"), &val);
-	if (val.Length() > 0) {
-		double tval = atof(val.mb_str());
-		if (tval >= 2.0)
-			g_TrackIntervalSeconds = tval;
-	}
 
 	g_TrackDeltaDistance = 0.10;
 	val.Clear();
@@ -1883,7 +1863,6 @@ void Config::UpdateSettings()
 
 	Write(_T("EnableZoomToCursor"), g_bEnableZoomToCursor);
 
-	Write(_T("TrackIntervalSeconds"), g_TrackIntervalSeconds);
 	Write(_T("TrackDeltaDistance"), g_TrackDeltaDistance);
 	Write(_T("TrackPrecision"), g_nTrackPrecision);
 

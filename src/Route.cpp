@@ -45,7 +45,6 @@
 #include <algorithm>
 
 extern WayPointman* pWayPointMan;
-extern int g_LayerIdx;
 extern Routeman* g_pRouteMan;
 extern Select* pSelect;
 extern Config* pConfig;

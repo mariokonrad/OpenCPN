@@ -29,6 +29,7 @@
 #define TRUE 1
 #define FALSE 0
 
+namespace chart {
 
 // WARNING: must be in sync with _MARparamNm
 static double _MARparamVal[] =
@@ -87,5 +88,7 @@ int S52_setMarinerParam(S52_MAR_param_t param, double val)
 		return FALSE;
 
 	return TRUE;
+}
+
 }
 

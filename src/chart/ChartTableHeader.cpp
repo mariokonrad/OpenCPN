@@ -25,6 +25,8 @@
 #include <wx/stream.h>
 #include <wx/log.h>
 
+namespace chart {
+
 static const int DB_VERSION_PREVIOUS = 16;
 static const int DB_VERSION_CURRENT = 17;
 
@@ -101,4 +103,6 @@ int ChartTableHeader::GetTableEntries() const
 
 char *ChartTableHeader::GetDBVersionString()
 { return dbVersion; }
+
+}
 

@@ -29,6 +29,8 @@
 #include <wx/filename.h>
 #include <algorithm>
 
+namespace chart {
+
 static const char SIG_VERSION[] = "COVR1002";
 
 static void appendOSDirSep(wxString& s) // FIXME: code duplication
@@ -212,5 +214,7 @@ M_COVR_Desc* covr_set::Find_MCD(int cell_index, int object_id, int subcell)
 										M_COVR_Desc::Finder(cell_index, object_id, subcell));
 
 	return (i == outlines.end()) ? NULL : *i;
+}
+
 }
 

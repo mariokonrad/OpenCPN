@@ -26,6 +26,8 @@
 
 #include <wx/listctrl.h>
 
+namespace chart {
+
 class CM93OffsetDialog;
 
 class OCPNOffsetListCtrl : public wxListCtrl
@@ -56,5 +58,7 @@ class OCPNOffsetListCtrl : public wxListCtrl
 
 		CM93OffsetDialog * m_parent;
 };
+
+}
 
 #endif

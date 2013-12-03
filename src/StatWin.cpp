@@ -30,7 +30,7 @@
 #include <UserColors.h>
 #include <chart/ChartDB.h>
 
-extern ChartDB* ChartData;
+extern chart::ChartDB* ChartData;
 extern ocpnStyle::StyleManager* g_StyleManager;
 
 BEGIN_EVENT_TABLE(StatWin, wxDialog)

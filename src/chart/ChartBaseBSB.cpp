@@ -41,7 +41,6 @@
 #include <chart/PlyPoint.h>
 #include <algorithm>
 
-using chart::Plypoint;
 using std::min;
 
 #ifndef __WXMSW__
@@ -74,6 +73,8 @@ void catch_signals_chart(int signo)
 class MyConfig;
 extern MyConfig* pConfig;
 #endif
+
+namespace chart {
 
 typedef struct
 {
@@ -3339,4 +3340,5 @@ static double polytrans( double* coeff, double lon, double lat )
     return ret;
 }
 
+}
 

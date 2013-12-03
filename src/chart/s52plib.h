@@ -39,6 +39,12 @@ class wxGLContext;
 #include <wx/dcgraph.h>
 
 #include <wx/hashmap.h>
+
+class ViewPort;
+class PixelCache;
+
+namespace chart {
+
 class RuleHash;
 
 WX_DECLARE_HASH_MAP(wxString, Rule*, wxStringHash, wxStringEqual, RuleHash);
@@ -46,9 +52,6 @@ WX_DECLARE_HASH_MAP(wxString, Rule*, wxStringHash, wxStringEqual, RuleHash);
 WX_DEFINE_SORTED_ARRAY(LUPrec*, wxArrayOfLUPrec);
 
 WX_DECLARE_STRING_HASH_MAP(int, CARC_Hash);
-
-class ViewPort;
-class PixelCache;
 
 // FIXME: copied code, separate
 
@@ -452,5 +455,7 @@ private:
 	CARC_Hash m_CARC_hashmap;
 	RenderFromHPGL * HPGL;
 };
+
+}
 
 #endif

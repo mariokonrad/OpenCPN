@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __RENDERFROMHPGL__H__
-#define __RENDERFROMHPGL__H__
+#ifndef __CHART__RENDERFROMHPGL__H__
+#define __CHART__RENDERFROMHPGL__H__
 
 #include <wx/string.h>
 #include <wx/gdicmn.h>
@@ -34,6 +34,9 @@ class wxDC;
 class wxGCDC;
 class wxBrush;
 class wxPen;
+
+namespace chart {
+
 class s52plib;
 
 class RenderFromHPGL
@@ -81,5 +84,7 @@ class RenderFromHPGL
 		bool renderToGCDC;
 		bool havePushedOpenGlAttrib;
 };
+
+}
 
 #endif

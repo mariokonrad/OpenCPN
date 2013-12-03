@@ -29,16 +29,18 @@
 #include <chart/CM93Manager.h>
 #include <vector>
 
-class cm93_dictionary;
-class covr_set;
-
 namespace geo { class ExtendedGeometry; }
 
-struct header_struct;
+namespace chart {
+
 struct vector_record_descriptor;
+
+struct header_struct;
 struct Object;
-struct Cell_Info_Block;
+class cm93_dictionary;
+class covr_set;
 struct cm93_point;
+struct Cell_Info_Block;
 
 int Get_CM93_CellIndex(double lat, double lon, int scale);
 
@@ -136,5 +138,7 @@ private:
 	int m_nDrawBufferSize;
 	wxString m_LastFileName;
 };
+
+}
 
 #endif

@@ -24,6 +24,8 @@
 #ifndef __CHART__CHARTTYPE__H__
 #define __CHART__CHARTTYPE__H__
 
+namespace chart {
+
 // ChartType constants
 enum ChartTypeEnum
 {
@@ -37,5 +39,7 @@ enum ChartTypeEnum
 	CHART_TYPE_CM93COMP,
 	CHART_TYPE_PLUGIN
 };
+
+}
 
 #endif

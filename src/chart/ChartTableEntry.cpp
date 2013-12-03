@@ -31,7 +31,7 @@
 #include <wx/log.h>
 #include <wx/stream.h>
 
-using chart::Plypoint;
+namespace chart {
 
 extern int s_dbVersion;
 
@@ -727,5 +727,7 @@ void ChartTableEntry::Disable()
 	// TODO... Fix this heinous hack
 	LatMax = 100.0f;
 	LatMin = 91.0f;
+}
+
 }
 

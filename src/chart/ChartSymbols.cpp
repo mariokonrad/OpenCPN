@@ -29,6 +29,8 @@
 #include <wx/image.h>
 #include <stdlib.h>
 
+namespace chart {
+
 //--------------------------------------------------------------------------------------
 // The below data is global since there will ever only be one ChartSymbols instance,
 // and some methods+data of class S52plib are needed inside ChartSymbol, and s2plib
@@ -887,5 +889,7 @@ wxImage ChartSymbols::GetImage(const char* symbolName)
 	wxRect bmArea = (*symbolGraphicLocations)[HashKey(symbolName)];
 	wxBitmap bitmap = rasterSymbols.GetSubBitmap(bmArea);
 	return bitmap.ConvertToImage();
+}
+
 }
 

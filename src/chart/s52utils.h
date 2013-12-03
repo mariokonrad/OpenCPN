@@ -21,8 +21,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.
 */
 
-#ifndef __S52UTILS_H__
-#define __S52UTILS_H__
+#ifndef __CHART__S52UTILS__H__
+#define __CHART__S52UTILS__H__
+
+namespace chart {
 
 // global parameter for mariners' selection
 enum S52_MAR_param_t {
@@ -51,5 +53,7 @@ enum S52_MAR_param_t {
 
 extern double S52_getMarinerParam(S52_MAR_param_t param);
 extern int S52_setMarinerParam(S52_MAR_param_t param, double val);
+
+}
 
 #endif

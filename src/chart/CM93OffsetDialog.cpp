@@ -30,6 +30,9 @@
 #include <wx/sizer.h>
 #include <wx/button.h>
 
+
+namespace chart {
+
 IMPLEMENT_CLASS(CM93OffsetDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(CM93OffsetDialog, wxDialog)
@@ -297,5 +300,7 @@ void CM93OffsetDialog::UpdateMCOVRList(const ViewPort& vpt)
 		m_pListCtrlMCOVRs->Refresh(false);
 #endif
 	}
+}
+
 }
 

@@ -24,6 +24,8 @@
 #ifndef __CHART__CM93_ATTR_BLOCK__H__
 #define __CHART__CM93_ATTR_BLOCK__H__
 
+namespace chart {
+
 class cm93_dictionary;
 
 class cm93_attr_block
@@ -36,5 +38,7 @@ class cm93_attr_block
 		unsigned char * m_block;
 		cm93_dictionary *m_pDict;
 };
+
+}
 
 #endif

@@ -27,6 +27,8 @@
 class wxInputStream;
 class wxOutputStream;
 
+namespace chart {
+
 struct ChartTableHeader
 {
 	public:
@@ -46,5 +48,7 @@ struct ChartTableHeader
 		int nTableEntries;
 		int nDirEntries;
 };
+
+}
 
 #endif

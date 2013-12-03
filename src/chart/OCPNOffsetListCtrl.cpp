@@ -24,6 +24,8 @@
 #include "OCPNOffsetListCtrl.h"
 #include <chart/CM93OffsetDialog.h>
 
+namespace chart {
+
 OCPNOffsetListCtrl::OCPNOffsetListCtrl(
 		CM93OffsetDialog * parent,
 		wxWindowID id,
@@ -90,5 +92,7 @@ wxString OCPNOffsetListCtrl::OnGetItemText(long item, long column) const
 int OCPNOffsetListCtrl::OnGetItemColumnImage(long item, long column) const
 {
 	return -1;
+}
+
 }
 

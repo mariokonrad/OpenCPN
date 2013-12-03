@@ -32,6 +32,10 @@
 #include <chart/s52plib.h>
 #include <chart/s52utils.h>
 
+extern chart::s52plib* ps52plib;
+
+namespace chart {
+
 bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val);
 
 #define UNKNOWN 1e6 //HUGE_VAL   // INFINITY/NAN
@@ -39,8 +43,6 @@ bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val);
 
 // size of attributes value list buffer
 #define LISTSIZE   16   // list size
-
-extern s52plib* ps52plib;
 
 wxString* CSQUAPNT01(S57Obj* obj);
 wxString* CSQUALIN01(S57Obj* obj);
@@ -2790,3 +2792,4 @@ Cond condTable[] = {
    {"########",NULL}
 };
 
+}

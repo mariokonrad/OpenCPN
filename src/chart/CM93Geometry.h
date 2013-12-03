@@ -24,6 +24,8 @@
 #ifndef __CHART_CM93GEOMETRY__H__
 #define __CHART_CM93GEOMETRY__H__
 
+namespace chart {
+
 // This constant was developed empirically by looking at a
 // representative cell, comparing the cm93 point transform coefficients
 // to the stated lat/lon bounding box.
@@ -54,5 +56,7 @@ struct geometry_descriptor
 	int index;
 	cm93_point * p_points;
 };
+
+}
 
 #endif

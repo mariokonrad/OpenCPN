@@ -42,13 +42,15 @@
 
 #ifdef USE_S57
 	#include <chart/s52plib.h>
-	extern s52plib * ps52plib; // FIXME
+	extern chart::s52plib * ps52plib; // FIXME
 #endif
-
-typedef std::vector<M_COVR_Desc*> List_Of_M_COVR_Desc;
 
 extern bool g_bDebugCM93; // FIXME
 static bool s_b_busy_shown; // FIXME
+
+namespace chart {
+
+typedef std::vector<M_COVR_Desc*> List_Of_M_COVR_Desc;
 
 struct header_struct
 {
@@ -3077,5 +3079,7 @@ const wxString& cm93chart::GetLastFileName(void) const
 wxString cm93chart::GetScaleChar() const
 {
 	return m_scalechar;
+}
+
 }
 

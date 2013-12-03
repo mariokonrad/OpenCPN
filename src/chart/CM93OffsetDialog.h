@@ -33,8 +33,11 @@
 
 class wxButton;
 class wxSpinCtrl;
-class OCPNOffsetListCtrl;
 class ViewPort;
+
+namespace chart {
+
+class OCPNOffsetListCtrl;
 class cm93compchart;
 
 class CM93OffsetDialog : public wxDialog
@@ -85,5 +88,7 @@ private:
 	int m_selected_list_index;
 	double m_centerlat_cos;
 };
+
+}
 
 #endif

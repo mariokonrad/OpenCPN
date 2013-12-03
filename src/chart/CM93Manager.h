@@ -26,9 +26,9 @@
 
 #include <wx/string.h>
 
-class cm93_dictionary;
-
 namespace chart {
+
+class cm93_dictionary;
 
 class cm93manager
 {

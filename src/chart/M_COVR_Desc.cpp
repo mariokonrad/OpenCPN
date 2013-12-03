@@ -32,7 +32,7 @@
 
 #include <wx/wfstream.h>
 
-
+namespace chart {
 
 M_COVR_Desc::M_COVR_Desc()
 	: m_cell_index(0)
@@ -189,5 +189,7 @@ OCPNRegion M_COVR_Desc::GetRegion(const ViewPort& vp, wxPoint* pwp) const
 	}
 
 	return OCPNRegion(m_nvertices, pwp);
+}
+
 }
 

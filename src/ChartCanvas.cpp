@@ -130,14 +130,17 @@ extern sigjmp_buf env; // the context saved by sigsetjmp();
 static int SetScreenBrightness(int brightness);
 static int InitScreenBrightness(void);
 
-extern bool G_FloatPtInPolygon(MyFlPoint* rgpts, int wnumpts, float x, float y);
+namespace chart {
+	extern bool G_FloatPtInPolygon(MyFlPoint* rgpts, int wnumpts, float x, float y);
+}
+
 extern void catch_signals(int signo);
 
-extern ChartBase* Current_Vector_Ch;
-extern ChartBase* Current_Ch;
+extern chart::ChartBase* Current_Vector_Ch;
+extern chart::ChartBase* Current_Ch;
 extern double g_ChartNotRenderScaleFactor;
 extern double vLat, vLon;
-extern ChartDB* ChartData;
+extern chart::ChartDB* ChartData;
 extern bool bDBUpdateInProgress;
 extern ColorScheme global_color_scheme;
 extern bool g_bHDTValid;
@@ -180,8 +183,8 @@ GoToPositionDialog* pGoToPositionDialog;
 extern wxString g_uploadConnection;
 
 #ifdef USE_S57
-extern s52plib* ps52plib;
-extern CM93OffsetDialog* g_pCM93OffsetDialog;
+extern chart::s52plib* ps52plib;
+extern chart::CM93OffsetDialog* g_pCM93OffsetDialog;
 #endif
 
 extern bool bGPSValid;
@@ -249,7 +252,7 @@ extern double g_COGAvg; // only needed for debug....
 extern int g_click_stop;
 extern double g_ownship_predictor_minutes;
 
-extern ChartStack* pCurrentStack;
+extern chart::ChartStack* pCurrentStack;
 extern bool g_bquiting;
 extern ais::AISTargetListDialog* g_pAISTargetList;
 extern wxString g_sAIS_Alert_Sound_File;
@@ -1024,9 +1027,9 @@ int ChartCanvas::GetCanvasChartNativeScale()
 	return ret;
 }
 
-ChartBase* ChartCanvas::GetChartAtCursor()
+chart::ChartBase* ChartCanvas::GetChartAtCursor()
 {
-	ChartBase* target_chart;
+	chart::ChartBase* target_chart;
 	if (Current_Ch && (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_VECTOR))
 		target_chart = Current_Ch;
 	else if (VPoint.b_quilt)
@@ -1036,9 +1039,9 @@ ChartBase* ChartCanvas::GetChartAtCursor()
 	return target_chart;
 }
 
-ChartBase* ChartCanvas::GetOverlayChartAtCursor()
+chart::ChartBase* ChartCanvas::GetOverlayChartAtCursor()
 {
-	ChartBase* target_chart;
+	chart::ChartBase* target_chart;
 	if (VPoint.b_quilt)
 		target_chart = cc1->m_pQuilt->GetOverlayChartAtPix(wxPoint(mouse_x, mouse_y));
 	else
@@ -1060,11 +1063,12 @@ int ChartCanvas::FindClosestCanvasChartdbIndex(int scale)
 			}
 		}
 	} else {
-		//    Using the current quilt, select a useable reference chart
-		//    Said chart will be in the extended (possibly full-screen) stack,
-		//    And will have a scale equal to or just greater than the stipulated value
+		// Using the current quilt, select a useable reference chart
+		// Said chart will be in the extended (possibly full-screen) stack,
+		// And will have a scale equal to or just greater than the stipulated value
 		unsigned int im = m_pQuilt->GetExtendedStackIndexArray().size();
 		if (im > 0) {
+			using namespace chart;
 			for (unsigned int is = 0; is < im; is++) {
 				const ChartTableEntry& m
 					= ChartData->GetChartTableEntry(m_pQuilt->GetExtendedStackIndexArray().at(is));
@@ -1226,17 +1230,17 @@ void ChartCanvas::InvalidateAllQuiltPatchs(void)
 	m_pQuilt->InvalidateAllQuiltPatchs();
 }
 
-ChartBase* ChartCanvas::GetLargestScaleQuiltChart()
+chart::ChartBase* ChartCanvas::GetLargestScaleQuiltChart()
 {
 	return m_pQuilt->GetLargestScaleChart();
 }
 
-ChartBase* ChartCanvas::GetFirstQuiltChart()
+chart::ChartBase* ChartCanvas::GetFirstQuiltChart()
 {
 	return m_pQuilt->GetFirstChart();
 }
 
-ChartBase* ChartCanvas::GetNextQuiltChart()
+chart::ChartBase* ChartCanvas::GetNextQuiltChart()
 {
 	return m_pQuilt->GetNextChart();
 }
@@ -1286,7 +1290,7 @@ bool ChartCanvas::IsChartQuiltableRef(int db_index)
 	return m_pQuilt->IsChartQuiltableRef(db_index);
 }
 
-bool ChartCanvas::IsChartLargeEnoughToRender(ChartBase* chart, ViewPort& vp)
+bool ChartCanvas::IsChartLargeEnoughToRender(chart::ChartBase* chart, ViewPort& vp)
 {
 	double chartMaxScale = chart->GetNormalScaleMax(GetCanvasScaleFactor(), GetCanvasWidth());
 	return (chartMaxScale * g_ChartNotRenderScaleFactor > vp.chart_scale);
@@ -1496,6 +1500,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 			}
 		}
 
+		using namespace chart;
 		switch (key_char) {
 			case 'A':
 				parent_frame->ToggleAnchor();
@@ -2163,7 +2168,7 @@ void ChartCanvas::GetCanvasPointPix(double rlat, double rlon, wxPoint* r)
 		&& (((fabs(GetVP().rotation) < 0.01) && !g_bskew_comp)
 			|| ((Current_Ch->GetChartProjectionType() != PROJECTION_MERCATOR)
 				&& (Current_Ch->GetChartProjectionType() != PROJECTION_POLYCONIC)))) {
-		ChartBaseBSB* Cur_BSB_Ch = dynamic_cast<ChartBaseBSB*>(Current_Ch);
+		chart::ChartBaseBSB* Cur_BSB_Ch = dynamic_cast<chart::ChartBaseBSB*>(Current_Ch);
 		if (Cur_BSB_Ch) {
 			// This is a Raster chart....
 			// If the VP is changing, the raster chart parameters may not yet be setup
@@ -2203,7 +2208,7 @@ void ChartCanvas::GetCanvasPixPoint(int x, int y, double& lat, double& lon)
 		&& (((fabs(GetVP().rotation) < 0.01) && !g_bskew_comp)
 			|| ((Current_Ch->GetChartProjectionType() != PROJECTION_MERCATOR)
 				&& (Current_Ch->GetChartProjectionType() != PROJECTION_POLYCONIC)))) {
-		ChartBaseBSB* Cur_BSB_Ch = dynamic_cast<ChartBaseBSB*>(Current_Ch);
+		chart::ChartBaseBSB* Cur_BSB_Ch = dynamic_cast<chart::ChartBaseBSB*>(Current_Ch);
 
 		// TODO     maybe need iterative process to validate bInside
 		//          first pass is mercator, then check chart boundaries
@@ -2240,13 +2245,14 @@ bool ChartCanvas::ZoomCanvasIn(double factor)
 	bool b_smooth = g_bsmoothpanzoom & g_bopengl & !g_bEnableZoomToCursor;
 
 	if (!VPoint.b_quilt) {
-		ChartBase* pc = Current_Ch;
+		chart::ChartBase* pc = Current_Ch;
 		if (!pc)
 			return false;
 		if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
 			b_smooth = false;
-	} else
+	} else {
 		b_smooth = g_bsmoothpanzoom & !m_pQuilt->IsQuiltVector() & !g_bEnableZoomToCursor;
+	}
 
 	if (b_smooth) {
 		if (m_bzooming_out) // Interrupt?
@@ -2263,13 +2269,13 @@ bool ChartCanvas::ZoomCanvasIn(double factor)
 			m_zoom_current_factor = 1.0;
 			m_zoom_timer.Start(m_zoomt); //, true);
 			m_bzooming_in = true;
-		} else // Make sure timer is running, to recover from lost events
-		{
+		} else { // Make sure timer is running, to recover from lost events
 			if (!m_zoom_timer.IsRunning())
 				m_zoom_timer.Start(m_zoomt);
 		}
-	} else
+	} else {
 		DoZoomCanvasIn(factor);
+	}
 
 	extendedSectorLegs.clear();
 	return true;
@@ -2280,7 +2286,7 @@ bool ChartCanvas::ZoomCanvasOut(double factor)
 	bool b_smooth = g_bsmoothpanzoom & g_bopengl & !g_bEnableZoomToCursor;
 
 	if (!VPoint.b_quilt) {
-		ChartBase* pc = Current_Ch;
+		chart::ChartBase* pc = Current_Ch;
 		if (!pc)
 			return false;
 		if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
@@ -2356,6 +2362,8 @@ bool ChartCanvas::DoZoomCanvasIn(double factor)
 
 	double min_allowed_scale = 50.0; // meters per meter
 
+	using namespace chart;
+
 	double proposed_scale_onscreen = GetCanvasScaleFactor() / (GetVPScale() * zoom_factor);
 	ChartBase* pc = NULL;
 
@@ -2407,6 +2415,8 @@ bool ChartCanvas::DoZoomCanvasOut(double zoom_factor)
 	m_bzooming = true;
 
 	bool b_do_zoom = true;
+
+	using namespace chart;
 
 	double proposed_scale_onscreen = GetCanvasScaleFactor() / (GetVPScale() / zoom_factor);
 	ChartBase* pc = NULL;
@@ -2510,6 +2520,7 @@ bool ChartCanvas::PanCanvas(int dx, int dy)
 	if (VPoint.b_quilt) {
 		int new_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
 		if ((new_ref_dbIndex != cur_ref_dbIndex) && (new_ref_dbIndex != -1)) {
+			using namespace chart;
 			// Tweak the scale slightly for a new ref chart
 			ChartBase* pc = ChartData->OpenChartFromDB(new_ref_dbIndex, FULL_INIT);
 			if (pc) {
@@ -2569,7 +2580,7 @@ void ChartCanvas::UpdateCanvasOnGroupChange(void)
 {
 	delete pCurrentStack;
 	pCurrentStack = NULL;
-	pCurrentStack = new ChartStack;
+	pCurrentStack = new chart::ChartStack;
 	ChartData->BuildChartStack(pCurrentStack, VPoint.clat, VPoint.clon);
 
 	if (m_pQuilt) {
@@ -2683,6 +2694,7 @@ bool ChartCanvas::SetViewPoint(double lat, double lon, double scale_ppm, double 
 
 			// If the new stack does not contain the current ref chart....
 			if ((-1 == current_ref_stack_index) && (m_pQuilt->GetRefChartdbIndex() >= 0)) {
+				using namespace chart;
 				const ChartTableEntry& cte_ref
 					= ChartData->GetChartTableEntry(m_pQuilt->GetRefChartdbIndex());
 				int target_scale = cte_ref.GetScale();
@@ -2738,6 +2750,8 @@ bool ChartCanvas::SetViewPoint(double lat, double lon, double scale_ppm, double 
 
 			// Always keep the default Mercator projection if the reference chart is
 			// not in the patch list or the scale is too small for it to render.
+
+			using namespace chart;
 
 			bool renderable = true;
 			ChartBase* referenceChart = ChartData->OpenChartFromDB(ref_db_index, FULL_INIT);
@@ -4816,14 +4830,15 @@ void ChartCanvas::ShowChartInfoWindow(int x, int, int dbIndex)
 		}
 
 		if (!m_pCIWin->IsShown()) {
-			wxString s;
+			using namespace chart;
+
 			ChartBase* pc = NULL;
 
 			if ((ChartData->IsChartInCache(dbIndex)) && ChartData->IsValid())
 				pc = ChartData->OpenChartFromDB(dbIndex, FULL_INIT); // this must come from cache
 
 			int char_width, char_height;
-			s = ChartData->GetFullChartInfo(pc, dbIndex, &char_width, &char_height);
+			wxString s = ChartData->GetFullChartInfo(pc, dbIndex, &char_width, &char_height);
 			m_pCIWin->SetString(s);
 			m_pCIWin->FitToChars(char_width, char_height);
 
@@ -6114,6 +6129,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 		}
 
 	} else {
+		using namespace chart;
 		ChartBase* pChartTest = m_pQuilt->GetChartAtPix(wxPoint(x, y));
 		if ((pChartTest && (pChartTest->GetChartFamily() == chart::CHART_FAMILY_VECTOR))
 			|| ais_areanotice) {
@@ -6139,7 +6155,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	if (!g_bCourseUp)
 		contextMenu->Append(ID_DEF_MENU_COGUP, _("Course Up Mode"));
 	else {
-		if (!VPoint.b_quilt && Current_Ch && (fabs(Current_Ch->GetChartSkew()) > .01)
+		if (!VPoint.b_quilt && Current_Ch && (fabs(Current_Ch->GetChartSkew()) > 0.01)
 			&& !g_bskew_comp)
 			contextMenu->Append(ID_DEF_MENU_NORTHUP, _("Chart Up Mode"));
 		else
@@ -6171,6 +6187,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	}
 	delete kml;
 
+	using namespace chart;
 	if (!VPoint.b_quilt && Current_Ch && (Current_Ch->GetChartType() == CHART_TYPE_CM93COMP)) {
 		contextMenu->Append(ID_DEF_MENU_CM93OFFSET_DIALOG, _("CM93 Offset Dialog..."));
 	}
@@ -6182,8 +6199,8 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	}
 
 #ifdef __WXMSW__
-	//  If we dismiss the context menu without action, we need to discard some mouse events....
-	//  Eat the next 2 button events, which happen as down-up on MSW XP
+	// If we dismiss the context menu without action, we need to discard some mouse events....
+	// Eat the next 2 button events, which happen as down-up on MSW XP
 	g_click_stop = 2;
 #endif
 
@@ -6469,6 +6486,8 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 {
+	using namespace chart;
+
 	ChartBase* target_chart = GetChartAtCursor();
 	s57chart* Chs57 = dynamic_cast<s57chart*>(target_chart);
 	std::vector<Ais8_001_22*> area_notices;
@@ -6907,6 +6926,8 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 	double zlon;
 
 	GetCanvasPixPoint(popx, popy, zlat, zlon);
+
+	using namespace chart;
 
 	switch (event.GetId()) {
 		case ID_DEF_MENU_MAX_DETAIL:
@@ -7611,6 +7632,8 @@ void ChartCanvas::RenderAllChartOutlines(ocpnDC& dc, ViewPort& vp)
 
 	int nEntry = ChartData->GetChartTableEntries();
 
+	using namespace chart;
+
 	for (int i = 0; i < nEntry; i++) {
 		ChartTableEntry* pt = (ChartTableEntry*)&ChartData->GetChartTableEntry(i);
 
@@ -7632,7 +7655,7 @@ void ChartCanvas::RenderAllChartOutlines(ocpnDC& dc, ViewPort& vp)
 	}
 
 #ifdef USE_S57
-	//        On CM93 Composite Charts, draw the outlines of the next smaller scale cell
+	// On CM93 Composite Charts, draw the outlines of the next smaller scale cell
 	if (Current_Ch && (Current_Ch->GetChartType() == CHART_TYPE_CM93COMP)) {
 		cm93compchart* pch = (cm93compchart*)Current_Ch;
 		if (pch) {
@@ -7705,6 +7728,8 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, ViewPort& vp)
 		return;
 
 	int nPly = ChartData->GetDBPlyPoint(dbIndex, 0, &plylat, &plylon);
+
+	using namespace chart;
 
 	if (ChartData->GetDBChartType(dbIndex) == CHART_TYPE_S57)
 		dc.SetPen(wxPen(GetGlobalColor(_T("UINFG")), 1, wxSOLID));
@@ -7839,7 +7864,7 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, ViewPort& vp)
 	}
 }
 
-bool ChartCanvas::PurgeGLCanvasChartCache(ChartBase* pc)
+bool ChartCanvas::PurgeGLCanvasChartCache(chart::ChartBase* pc)
 {
 #ifdef ocpnUSE_GL
 	if (g_bopengl && m_glcc)
@@ -8696,7 +8721,9 @@ void ChartCanvas::EmbossOverzoomIndicator(ocpnDC& dc)
 		double zoom_factor = GetVP().view_scale_ppm / chart_native_ppm;
 		if (Current_Ch) {
 #ifdef USE_S57
-			//    Special case for cm93
+			using namespace chart;
+
+			// Special case for cm93
 			if (Current_Ch->GetChartType() == CHART_TYPE_CM93COMP) {
 				if (zoom_factor > 8.0) {
 
@@ -8710,7 +8737,7 @@ void ChartCanvas::EmbossOverzoomIndicator(ocpnDC& dc)
 					return;
 			} else
 #endif
-				if (zoom_factor <= 4.0)
+			if (zoom_factor <= 4.0)
 				return;
 		}
 	}
@@ -8760,6 +8787,8 @@ void ChartCanvas::EmbossDepthScale(ocpnDC& dc)
 {
 	if (!global::OCPN::get().gui().view().show_depth_units)
 		return;
+
+	using namespace chart;
 
 	int depth_unit_type = DEPTH_UNIT_UNKNOWN;
 

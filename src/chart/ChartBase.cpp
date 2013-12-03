@@ -24,6 +24,8 @@
 #include "ChartBase.h"
 #include <wx/bitmap.h>
 
+namespace chart {
+
 ChartBase::ChartBase()
 {
 	pcached_bitmap = NULL;
@@ -212,5 +214,7 @@ int ChartBase::GetNoCOVRTablenPoints(int iTable) const
 float * ChartBase::GetNoCOVRTableHead(int iTable)
 {
 	return m_pNoCOVRTable[iTable];
+}
+
 }
 

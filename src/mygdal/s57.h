@@ -35,6 +35,7 @@
 #include "iso8211.h"
 #include <chart/S57ClassRegistrar.h>
 
+using chart::S57ClassRegistrar;
 class S57Reader;
 
 char **S57FileCollector( const char * pszDataset );

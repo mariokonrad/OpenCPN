@@ -139,6 +139,8 @@
 void RedirectIOToConsole();
 #endif
 
+using chart::ChartBase;
+
 
 // Define a timer value for Tide/Current updates
 // Note that the underlying data algorithms produce fresh data only every 15 minutes
@@ -162,10 +164,10 @@ int g_unit_test_1;
 ConsoleCanvas* console;
 StatWin* stats;
 Config* pConfig;
-ChartBase* Current_Vector_Ch;
-ChartBase* Current_Ch;
-ChartDB* ChartData;
-ChartStack* pCurrentStack;
+chart::ChartBase* Current_Vector_Ch;
+chart::ChartBase* Current_Ch;
+chart::ChartDB* ChartData;
+chart::ChartStack* pCurrentStack;
 wxString* pdir_list[20];
 int g_restore_stackindex;
 int g_restore_dbindex;
@@ -243,13 +245,13 @@ int g_SkewCompUpdatePeriod;
 wxRect g_last_tb_rect;
 
 #ifdef USE_S57
-class S57RegistrarMgr;
+namespace chart { class S57RegistrarMgr; }
 
-s52plib                   *ps52plib;
-S57ClassRegistrar         *g_poRegistrar;
-S57RegistrarMgr           *m_pRegistrarMan;
-extern S57QueryDialog     *g_pObjectQueryDialog;
-CM93OffsetDialog          *g_pCM93OffsetDialog;
+chart::s52plib* ps52plib;
+chart::S57ClassRegistrar* g_poRegistrar;
+chart::S57RegistrarMgr* m_pRegistrarMan;
+extern S57QueryDialog* g_pObjectQueryDialog;
+chart::CM93OffsetDialog* g_pCM93OffsetDialog;
 #endif
 
 // begin rms
@@ -448,8 +450,8 @@ static const long long lNaN = 0xfff8000000000000;
 #define NAN (*(double*)&lNaN)
 #endif
 
-void appendOSDirSlash(wxString &);
-void SetSystemColors( ColorScheme cs );
+void appendOSDirSlash(wxString&);
+void SetSystemColors(ColorScheme cs);
 
 DEFINE_EVENT_TYPE(EVT_THREADMSG)
 
@@ -467,23 +469,22 @@ enum
 	ID_PIANO_ENABLE_QUILT_CHART
 };
 
-
-//------------------------------------------------------------------------------
-// MainFrame
-//------------------------------------------------------------------------------
-//      Frame implementation
 BEGIN_EVENT_TABLE(MainFrame, wxFrame) EVT_CLOSE(MainFrame::OnCloseWindow)
-	EVT_MENU(wxID_EXIT, MainFrame::OnExit) EVT_SIZE(MainFrame::OnSize) EVT_MOVE(MainFrame::OnMove)
-	EVT_MENU(-1, MainFrame::OnToolLeftClick) EVT_TIMER(FRAME_TIMER_1, MainFrame::OnFrameTimer1)
+	EVT_MENU(wxID_EXIT, MainFrame::OnExit)
+	EVT_SIZE(MainFrame::OnSize)
+	EVT_MOVE(MainFrame::OnMove)
+	EVT_MENU(-1, MainFrame::OnToolLeftClick)
+	EVT_TIMER(FRAME_TIMER_1, MainFrame::OnFrameTimer1)
 	EVT_TIMER(FRAME_TC_TIMER, MainFrame::OnFrameTCTimer)
 	EVT_TIMER(FRAME_COG_TIMER, MainFrame::OnFrameCOGTimer)
-	EVT_TIMER(MEMORY_FOOTPRINT_TIMER, MainFrame::OnMemFootTimer) EVT_ACTIVATE(MainFrame::OnActivate)
+	EVT_TIMER(MEMORY_FOOTPRINT_TIMER, MainFrame::OnMemFootTimer)
+	EVT_ACTIVATE(MainFrame::OnActivate)
 	EVT_MAXIMIZE(MainFrame::OnMaximize)
 	EVT_COMMAND(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, MainFrame::RequestNewToolbarArgEvent)
-	EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground) END_EVENT_TABLE()
+	EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
+END_EVENT_TABLE()
 
-	// My frame constructor
-	MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos,
+MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos,
 						 const wxSize& size, long style)
 	: wxFrame(frame, -1, title, pos, size, style)
 	, chart_canvas(NULL)
@@ -565,7 +566,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame) EVT_CLOSE(MainFrame::OnCloseWindow)
 
 	bFirstAuto = true;
 
-	//  Create/connect a dynamic event handler slot for OCPN_MsgEvent(s) coming from PlugIn system
+	// Create/connect a dynamic event handler slot for OCPN_MsgEvent(s) coming from PlugIn system
 	Connect(wxEVT_OCPN_MSG,
 			(wxObjectEventFunction)(wxEventFunction) & MainFrame::OnEvtPlugInMessage);
 
@@ -2036,6 +2037,8 @@ bool MainFrame::ToggleLights(bool doToggle, bool temporary)
 {
 	bool oldstate = true;
 #ifdef USE_S57
+	using namespace chart;
+
 	if (ps52plib) {
 		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
 			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
@@ -2060,6 +2063,8 @@ bool MainFrame::ToggleLights(bool doToggle, bool temporary)
 void MainFrame::ToggleRocks(void)
 {
 #ifdef USE_S57
+	using namespace chart;
+
 	if (ps52plib) {
 		int vis = 0;
 		// Need to loop once for UWTROC, which is our "master", then for
@@ -2089,6 +2094,8 @@ void MainFrame::ToggleRocks(void)
 void MainFrame::ToggleAnchor(void)
 {
 #ifdef USE_S57
+	using namespace chart;
+
 	if (ps52plib) {
 		int vis = 0;
 		// Need to loop once for SBDARE, which is our "master", then for
@@ -2485,7 +2492,7 @@ bool MainFrame::CheckGroup(int igroup)
 		wxString element_root = pGroup->m_element_array.at(j)->m_element_name;
 
 		for (unsigned int ic = 0; ic < (unsigned int)ChartData->GetChartTableEntries(); ic++) {
-			const ChartTableEntry& cte = ChartData->GetChartTableEntry(ic);
+			const chart::ChartTableEntry& cte = ChartData->GetChartTableEntry(ic);
 			wxString chart_full_path(cte.GetpFullPath(), wxConvUTF8);
 
 			if (chart_full_path.StartsWith(element_root)) {
@@ -2504,7 +2511,7 @@ bool MainFrame::CheckGroup(int igroup)
 bool MainFrame::existsChartDataTableEntryStartingWith(const wxString& element_root) const
 {
 	for (unsigned int ic = 0; ic < (unsigned int)ChartData->GetChartTableEntries(); ++ic) {
-		const ChartTableEntry& cte = ChartData->GetChartTableEntry(ic);
+		const chart::ChartTableEntry& cte = ChartData->GetChartTableEntry(ic);
 		const wxString chart_full_path(cte.GetpFullPath(), wxConvUTF8);
 		if (chart_full_path.StartsWith(element_root)) {
 			return true;
@@ -2562,7 +2569,8 @@ void MainFrame::ChartsRefresh(int dbi_hint, ViewPort& vp, bool b_purge)
 	if (b_purge)
 		ChartData->PurgeCache();
 
-	//    Build a new ChartStack
+	// Build a new ChartStack
+	using namespace chart;
 	pCurrentStack = new ChartStack;
 	ChartData->BuildChartStack(pCurrentStack, vLat, vLon);
 
@@ -2805,6 +2813,7 @@ void MainFrame::SetupQuiltMode( void )
 			}
 
 			if (!Current_Ch) {
+				using namespace chart;
 
 				// Build a temporary chart stack based on tLat, tLon
 				ChartStack TempStack;
@@ -3192,7 +3201,7 @@ void MainFrame::test_unit_test_1()
 
 	if (ChartData) {
 		if (ut_index < ChartData->GetChartTableEntries()) {
-			const ChartTableEntry* cte = &ChartData->GetChartTableEntry(ut_index);
+			const chart::ChartTableEntry* cte = &ChartData->GetChartTableEntry(ut_index);
 			double lat = (cte->GetLatMax() + cte->GetLatMin()) / 2;
 			double lon = (cte->GetLonMax() + cte->GetLonMin()) / 2;
 
@@ -3839,6 +3848,7 @@ void MainFrame::HandlePianoRollover(int selected_index, int selected_dbIndex)
 
 			chart_canvas->ReloadVP(false); // no VP adjustment allowed
 		} else if (pCurrentStack->nEntry == 1) {
+			using namespace chart;
 			const ChartTableEntry& cte
 				= ChartData->GetChartTableEntry(pCurrentStack->GetDBIndex(0));
 			if (CHART_TYPE_CM93COMP != cte.GetChartType()) {
@@ -3864,7 +3874,7 @@ void MainFrame::HandlePianoRolloverIcon(int selected_index, int selected_dbIndex
 	}
 }
 
-double MainFrame::GetBestVPScale(ChartBase* pchart)
+double MainFrame::GetBestVPScale(chart::ChartBase* pchart)
 {
 	if (!pchart)
 		return 1.0;
@@ -3872,6 +3882,7 @@ double MainFrame::GetBestVPScale(ChartBase* pchart)
 	double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor()
 									 / chart_canvas->GetVPScale();
 
+	using namespace chart;
 	if ((g_bPreserveScaleOnX) || (CHART_TYPE_CM93COMP == pchart->GetChartType())) {
 		double new_scale_ppm = pchart->GetNearestPreferredScalePPM(chart_canvas->GetVPScale());
 		proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
@@ -3910,6 +3921,7 @@ void MainFrame::SelectQuiltRefdbChart(int db_index)
 
 	chart_canvas->SetQuiltRefChart(db_index);
 
+	using namespace chart;
 	ChartBase* pc = ChartData->OpenChartFromDB(db_index, FULL_INIT);
 	if (pc) {
 		double best_scale = GetBestVPScale(pc);
@@ -3917,7 +3929,7 @@ void MainFrame::SelectQuiltRefdbChart(int db_index)
 	}
 }
 
-void MainFrame::SelectChartFromStack(int index, bool bDir, ChartTypeEnum New_Type,
+void MainFrame::SelectChartFromStack(int index, bool bDir, chart::ChartTypeEnum New_Type,
 									 chart::ChartFamilyEnum New_Family)
 {
 	if (!pCurrentStack)
@@ -3978,6 +3990,8 @@ void MainFrame::SelectdbChart(int dbindex)
 		return;
 
 	if (dbindex >= 0) {
+		using namespace chart;
+
 		// Open the new chart
 		ChartBase* pTentative_Chart;
 		pTentative_Chart = ChartData->OpenChartFromDB(dbindex, FULL_INIT);
@@ -4060,6 +4074,7 @@ void MainFrame::SetChartThumbnail(int index)
 	if (index >= pCurrentStack->nEntry)
 		return;
 
+	using namespace chart;
 	if ((ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_KAP)
 			|| (ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_GEO)
 			|| (ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_PLUGIN)) {
@@ -4154,7 +4169,7 @@ void MainFrame::UpdateControlBar( void )
 	std::vector<int> piano_poly_chart_index_array;
 
 	for( unsigned int ino = 0; ino < piano_chart_index_array.size(); ino++ ) {
-		const ChartTableEntry &ctei = ChartData->GetChartTableEntry(piano_chart_index_array[ino]);
+		const chart::ChartTableEntry &ctei = ChartData->GetChartTableEntry(piano_chart_index_array[ino]);
 		double skew_norm = ctei.GetChartSkew();
 		if (skew_norm > 180.0)
 			skew_norm -= 360.0;
@@ -4187,7 +4202,7 @@ void MainFrame::UpdateControlBar( void )
 //      smallest scale new chart in stack if not.
 //      Return true if a Refresh(false) was called within.
 //----------------------------------------------------------------------------------
-bool MainFrame::DoChartUpdate( void )
+bool MainFrame::DoChartUpdate(void)
 {
 	double tLat, tLon;           // Chart Stack location
 	double vpLat, vpLon;         // ViewPort location
@@ -4197,10 +4212,9 @@ bool MainFrame::DoChartUpdate( void )
 
 	bool bNewPiano = false;
 	bool bOpenSpecified;
-	ChartStack LastStack;
-	ChartBase *pLast_Ch;
-
-	ChartStack WorkStack;
+	chart::ChartStack LastStack;
+	chart::ChartBase *pLast_Ch;
+	chart::ChartStack WorkStack;
 
 	if (!chart_canvas)
 		return false;
@@ -4209,13 +4223,13 @@ bool MainFrame::DoChartUpdate( void )
 	if (!ChartData)
 		return false;
 
-	//    Startup case:
-	//    Quilting is enabled, but the last chart seen was not quiltable
-	//    In this case, drop to single chart mode, set persistence flag,
-	//    And open the specified chart
-	if( bFirstAuto && ( g_restore_dbindex >= 0 ) ) {
-		if( chart_canvas->GetQuiltMode() ) {
-			if( !chart_canvas->IsChartQuiltableRef( g_restore_dbindex ) ) {
+	// Startup case:
+	// Quilting is enabled, but the last chart seen was not quiltable
+	// In this case, drop to single chart mode, set persistence flag,
+	// And open the specified chart
+	if (bFirstAuto && (g_restore_dbindex >= 0)) {
+		if (chart_canvas->GetQuiltMode()) {
+			if (!chart_canvas->IsChartQuiltableRef(g_restore_dbindex)) {
 				ToggleQuiltMode();
 				m_bpersistent_quilt = true;
 				Current_Ch = NULL;
@@ -4227,7 +4241,7 @@ bool MainFrame::DoChartUpdate( void )
 	// Otherwise, use vLat, vLon gotten from click on chart canvas, or other means
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 
-	if( chart_canvas->m_bFollow == true ) {
+	if (chart_canvas->m_bFollow == true) {
 		tLat = nav.lat;
 		tLon = nav.lon;
 		vpLat = nav.lat;
@@ -4235,28 +4249,32 @@ bool MainFrame::DoChartUpdate( void )
 
 		// on lookahead mode, adjust the vp center point
 		if (chart_canvas && global::OCPN::get().gui().view().lookahead_mode) {
-			double angle = g_COGAvg + ( chart_canvas->GetVPRotation() * 180.0  / M_PI);
-			double pixel_deltay = fabs(cos(angle * M_PI / 180.0)) * chart_canvas->GetCanvasHeight() / 4;
-			double pixel_deltax = fabs(sin(angle * M_PI / 180.0)) * chart_canvas->GetCanvasWidth() / 4;
-			double pixel_delta_tent = sqrt((pixel_deltay * pixel_deltay) + (pixel_deltax * pixel_deltax));
+			double angle = g_COGAvg + (chart_canvas->GetVPRotation() * 180.0 / M_PI);
+			double pixel_deltay = fabs(cos(angle * M_PI / 180.0)) * chart_canvas->GetCanvasHeight()
+								  / 4;
+			double pixel_deltax = fabs(sin(angle * M_PI / 180.0)) * chart_canvas->GetCanvasWidth()
+								  / 4;
+			double pixel_delta_tent
+				= sqrt((pixel_deltay * pixel_deltay) + (pixel_deltax * pixel_deltax));
 			double pixel_delta = 0;
 
-			//    The idea here is to cancel the effect of LookAhead for slow speed ove ground, to avoid
+			//    The idea here is to cancel the effect of LookAhead for slow speed ove ground, to
+			// avoid
 			//    jumping of the vp center point during slow maneuvering, or at anchor....
-			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			if (!wxIsNaN(nav.sog)) {
 				if (nav.sog < 1.0)
 					pixel_delta = 0.0;
+				else if (nav.sog >= 3.0)
+					pixel_delta = pixel_delta_tent;
 				else
-					if (nav.sog >= 3.0)
-						pixel_delta = pixel_delta_tent;
-					else
-						pixel_delta = pixel_delta_tent * (nav.sog - 1.0) / 2.0;
+					pixel_delta = pixel_delta_tent * (nav.sog - 1.0) / 2.0;
 			}
 
-			double meters_to_shift = cos(nav.lat * M_PI / 180.0) * pixel_delta / chart_canvas->GetVPScale();
+			double meters_to_shift = cos(nav.lat * M_PI / 180.0) * pixel_delta
+									 / chart_canvas->GetVPScale();
 			double dir_to_shift = g_COGAvg;
-			geo::ll_gc_ll(nav.lat, nav.lon, dir_to_shift, meters_to_shift / 1852.0, &vpLat, &vpLon );
+			geo::ll_gc_ll(nav.lat, nav.lon, dir_to_shift, meters_to_shift / 1852.0, &vpLat, &vpLon);
 		}
 	} else {
 		tLat = vLat;
@@ -4265,16 +4283,19 @@ bool MainFrame::DoChartUpdate( void )
 		vpLon = vLon;
 	}
 
-	if( chart_canvas->GetQuiltMode() ) {
+	if (chart_canvas->GetQuiltMode()) {
 		int current_db_index = -1;
-		if( pCurrentStack ) current_db_index = pCurrentStack->GetCurrentEntrydbIndex(); // capture the currently selected Ref chart dbIndex
-		else
-			pCurrentStack = new ChartStack;
+		if (pCurrentStack) {
+			// capture the currently selected Ref chart dbIndex
+			current_db_index = pCurrentStack->GetCurrentEntrydbIndex();
+		} else {
+			pCurrentStack = new chart::ChartStack;
+		}
 
-		ChartData->BuildChartStack( pCurrentStack, tLat, tLon );
-		pCurrentStack->SetCurrentEntryFromdbIndex( current_db_index );
+		ChartData->BuildChartStack(pCurrentStack, tLat, tLon);
+		pCurrentStack->SetCurrentEntryFromdbIndex(current_db_index);
 
-		if( bFirstAuto ) {
+		if (bFirstAuto) {
 			double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / chart_canvas->GetVPScale(); // as set from config load
 
 			int initial_db_index = g_restore_dbindex;
@@ -4316,6 +4337,7 @@ bool MainFrame::DoChartUpdate( void )
 
 				// Try to bound the inital Viewport scale to something reasonable for the selected reference chart
 				if( ChartData ) {
+					using namespace chart;
 					ChartBase *pc = ChartData->OpenChartFromDB( initial_db_index, FULL_INIT );
 					if( pc ) {
 						proposed_scale_onscreen =
@@ -4340,6 +4362,7 @@ bool MainFrame::DoChartUpdate( void )
 	}
 
 	// Single Chart Mode from here....
+	using namespace chart;
 	pLast_Ch = Current_Ch;
 	ChartTypeEnum new_open_type;
 	chart::ChartFamilyEnum new_open_family;

@@ -180,7 +180,7 @@ extern bool g_bMagneticAPB;
 
 
 #ifdef USE_S57
-extern s52plib *ps52plib;
+extern chart::s52plib *ps52plib;
 #endif
 
 extern wxString g_locale;
@@ -1999,7 +1999,7 @@ void options::SetInitialSettings()
 		marinersStdXref.clear();
 
 		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+			chart::OBJLElement* pOLE = (chart::OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
 			wxString item;
 			if (iPtr < ps52plib->OBJLDescriptions.size()) {
 				item = ps52plib->OBJLDescriptions[iPtr];
@@ -2021,16 +2021,16 @@ void options::SetInitialSettings()
 
 		int nset = 2; // default OTHER
 		switch (ps52plib->m_nDisplayCategory) {
-			case DISPLAYBASE:
+			case chart::DISPLAYBASE:
 				nset = 0;
 				break;
-			case STANDARD:
+			case chart::STANDARD:
 				nset = 1;
 				break;
-			case OTHER:
+			case chart::OTHER:
 				nset = 2;
 				break;
-			case MARINERS_STANDARD:
+			case chart::MARINERS_STANDARD:
 				nset = 3;
 				break;
 			default:
@@ -2040,9 +2040,9 @@ void options::SetInitialSettings()
 
 		pDispCat->SetSelection(nset);
 
-		ps57CtlListBox->Enable(MARINERS_STANDARD == ps52plib->m_nDisplayCategory);
-		itemButtonClearList->Enable(MARINERS_STANDARD == ps52plib->m_nDisplayCategory);
-		itemButtonSelectList->Enable(MARINERS_STANDARD == ps52plib->m_nDisplayCategory);
+		ps57CtlListBox->Enable(chart::MARINERS_STANDARD == ps52plib->m_nDisplayCategory);
+		itemButtonClearList->Enable(chart::MARINERS_STANDARD == ps52plib->m_nDisplayCategory);
+		itemButtonSelectList->Enable(chart::MARINERS_STANDARD == ps52plib->m_nDisplayCategory);
 
 		// Other Display Filters
 		pCheck_SOUNDG->SetValue(ps52plib->m_bShowSoundg);
@@ -2056,24 +2056,27 @@ void options::SetInitialSettings()
 		pCheck_NATIONALTEXT->SetValue(ps52plib->m_bShowNationalTexts);
 
 		// Chart Display Style
-		if (ps52plib->m_nSymbolStyle == PAPER_CHART)
+		if (ps52plib->m_nSymbolStyle == chart::PAPER_CHART)
 			pPointStyle->SetSelection(0);
 		else
 			pPointStyle->SetSelection(1);
 
-		if (ps52plib->m_nBoundaryStyle == PLAIN_BOUNDARIES)
+		if (ps52plib->m_nBoundaryStyle == chart::PLAIN_BOUNDARIES)
 			pBoundStyle->SetSelection(0);
 		else
 			pBoundStyle->SetSelection(1);
 
-		if (S52_getMarinerParam(S52_MAR_TWO_SHADES) == 1.0)
+		if (S52_getMarinerParam(chart::S52_MAR_TWO_SHADES) == 1.0)
 			p24Color->SetSelection(0);
 		else
 			p24Color->SetSelection(1);
 
-		m_SafetyCtl->SetValue(wxString::Format(_T("%6.2f"), S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR)));
-		m_ShallowCtl->SetValue(wxString::Format(_T("%6.2f"), S52_getMarinerParam(S52_MAR_SHALLOW_CONTOUR)));
-		m_DeepCtl->SetValue(wxString::Format(_T("%6.2f"), S52_getMarinerParam(S52_MAR_DEEP_CONTOUR)));
+		m_SafetyCtl->SetValue(wxString::Format(
+			_T("%6.2f"), chart::S52_getMarinerParam(chart::S52_MAR_SAFETY_CONTOUR)));
+		m_ShallowCtl->SetValue(wxString::Format(
+			_T("%6.2f"), chart::S52_getMarinerParam(chart::S52_MAR_SHALLOW_CONTOUR)));
+		m_DeepCtl->SetValue(
+			wxString::Format(_T("%6.2f"), chart::S52_getMarinerParam(chart::S52_MAR_DEEP_CONTOUR)));
 
 		pDepthUnitSelect->SetSelection(ps52plib->m_nDepthUnitDisplay);
 	}
@@ -2617,7 +2620,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 				break;
 			}
 		}
-		OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(itemIndex));
+		chart::OBJLElement* pOLE = (chart::OBJLElement*)(ps52plib->pOBJLArray->Item(itemIndex));
 		pOLE->nViz = ps57CtlListBox->IsChecked(iPtr);
 	}
 
@@ -2632,22 +2635,22 @@ void options::OnApplyClick(wxCommandEvent& event)
 			g_bopengl = temp_bopengl;
 		}
 
-		enum DisCat nset = OTHER;
+		enum chart::DisCat nset = chart::OTHER;
 		switch (pDispCat->GetSelection()) {
 			case 0:
-				nset = DISPLAYBASE;
+				nset = chart::DISPLAYBASE;
 				break;
 			case 1:
-				nset = STANDARD;
+				nset = chart::STANDARD;
 				break;
 			case 2:
-				nset = OTHER;
+				nset = chart::OTHER;
 				break;
 			case 3:
-				nset = MARINERS_STANDARD;
+				nset = chart::MARINERS_STANDARD;
 				break;
 		}
-		ps52plib->m_nDisplayCategory = static_cast<DisCat>(nset);
+		ps52plib->m_nDisplayCategory = static_cast<chart::DisCat>(nset);
 
 		ps52plib->m_bShowSoundg = pCheck_SOUNDG->GetValue();
 		ps52plib->m_bShowMeta = pCheck_META->GetValue();
@@ -2660,32 +2663,32 @@ void options::OnApplyClick(wxCommandEvent& event)
 		ps52plib->m_bShowNationalTexts = pCheck_NATIONALTEXT->GetValue();
 
 		if (0 == pPointStyle->GetSelection())
-			ps52plib->m_nSymbolStyle = PAPER_CHART;
+			ps52plib->m_nSymbolStyle = chart::PAPER_CHART;
 		else
-			ps52plib->m_nSymbolStyle = SIMPLIFIED;
+			ps52plib->m_nSymbolStyle = chart::SIMPLIFIED;
 
 		if (0 == pBoundStyle->GetSelection())
-			ps52plib->m_nBoundaryStyle = PLAIN_BOUNDARIES;
+			ps52plib->m_nBoundaryStyle = chart::PLAIN_BOUNDARIES;
 		else
-			ps52plib->m_nBoundaryStyle = SYMBOLIZED_BOUNDARIES;
+			ps52plib->m_nBoundaryStyle = chart::SYMBOLIZED_BOUNDARIES;
 
 		if (0 == p24Color->GetSelection())
-			S52_setMarinerParam(S52_MAR_TWO_SHADES, 1.0);
+			S52_setMarinerParam(chart::S52_MAR_TWO_SHADES, 1.0);
 		else
-			S52_setMarinerParam(S52_MAR_TWO_SHADES, 0.0);
+			S52_setMarinerParam(chart::S52_MAR_TWO_SHADES, 0.0);
 
 		double dval;
 
 		if ((m_SafetyCtl->GetValue()).ToDouble(&dval)) {
-			S52_setMarinerParam(S52_MAR_SAFETY_DEPTH, dval); // controls sounding display
-			S52_setMarinerParam(S52_MAR_SAFETY_CONTOUR, dval); // controls colour
+			chart::S52_setMarinerParam(chart::S52_MAR_SAFETY_DEPTH, dval); // controls sounding display
+			chart::S52_setMarinerParam(chart::S52_MAR_SAFETY_CONTOUR, dval); // controls colour
 		}
 
 		if ((m_ShallowCtl->GetValue()).ToDouble(&dval))
-			S52_setMarinerParam(S52_MAR_SHALLOW_CONTOUR, dval);
+			chart::S52_setMarinerParam(chart::S52_MAR_SHALLOW_CONTOUR, dval);
 
 		if ((m_DeepCtl->GetValue()).ToDouble(&dval))
-			S52_setMarinerParam(S52_MAR_DEEP_CONTOUR, dval);
+			chart::S52_setMarinerParam(chart::S52_MAR_DEEP_CONTOUR, dval);
 
 		ps52plib->UpdateMarinerParams();
 		ps52plib->m_nDepthUnitDisplay = pDepthUnitSelect->GetSelection();

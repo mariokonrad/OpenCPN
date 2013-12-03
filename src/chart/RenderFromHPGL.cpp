@@ -32,6 +32,8 @@
 
 extern double g_GLMinLineWidth;
 
+namespace chart {
+
 RenderFromHPGL::RenderFromHPGL(s52plib * plibarg)
 	: plib(plibarg)
 	, renderToDC(false)
@@ -298,5 +300,7 @@ bool RenderFromHPGL::Render( char *str, char *col, wxPoint &r, wxPoint &pivot, d
     havePushedOpenGlAttrib = false;
 #endif
 	return true;
+}
+
 }
 

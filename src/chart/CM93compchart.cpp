@@ -46,11 +46,11 @@
 
 #include <wx/regex.h>
 
-using chart::FindCM93Dictionary;
-
 extern bool g_bDebugCM93; // FIXME
 extern CM93DSlide * pCM93DetailSlider; // FIXME
 extern MainFrame * gFrame; // FIXME: through constructor?
+
+namespace chart {
 
 // Answer the query: "Is there a cm93 cell at the specified scale which contains a given lat/lon?"
 static bool Is_CM93Cell_Present ( wxString &fileprefix, double lat, double lon, int scale_index ) // FIXME: should be part of the class
@@ -1632,5 +1632,7 @@ void cm93compchart::CloseandReopenCurrentSubchart(void)
 
 	SetVPParms(m_vpt);
 	InvalidateCache();
+}
+
 }
 

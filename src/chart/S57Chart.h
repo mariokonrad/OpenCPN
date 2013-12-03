@@ -47,16 +47,16 @@
 #include <chart/S57Sector.h>
 #include <chart/ChartBase.h>
 
-using chart::s57Sector_t;
-
-class ChartBase;
-class ViewPort;
 class ocpnBitmap;
 class PixelCache;
-class S57Reader;
 class OGRS57DataSource;
-class S57ClassRegistrar;
 class ocpnDC;
+class S57Reader;
+
+namespace chart {
+
+class S57ClassRegistrar;
+class ChartBase;
 
 void s57_DrawExtendedLightSectors(ocpnDC & temp_dc, ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
 bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
@@ -176,7 +176,7 @@ public:
 	double m_pixx_vp_center, m_pixy_vp_center;
 	double m_view_scale_ppm;
 
-	//    Last ViewPort succesfully rendered, stored as an aid to calculating pixel cache address
+	// Last ViewPort succesfully rendered, stored as an aid to calculating pixel cache address
 	// offsets and regions
 	ViewPort m_last_vp;
 	OCPNRegion m_last_Region;
@@ -293,5 +293,7 @@ private:
 	bool m_btex_mem;
 	char m_usage_char;
 };
+
+}
 
 #endif

@@ -27,6 +27,8 @@
 #include <wx/string.h>
 #include <wx/arrstr.h>
 
+namespace chart {
+
 /// Encapsulating the conversion between binary cm_93 object class, attributes, etc
 /// to standard S57 text conventions
 class cm93_dictionary
@@ -52,5 +54,7 @@ class cm93_dictionary
 		bool m_ok;
 		wxString m_dict_dir;
 };
+
+}
 
 #endif

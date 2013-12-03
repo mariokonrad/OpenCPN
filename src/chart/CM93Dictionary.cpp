@@ -28,6 +28,8 @@
 #include <wx/wfstream.h>
 #include <wx/log.h>
 
+namespace chart {
+
 cm93_dictionary::cm93_dictionary()
 {
 	m_S57ClassArray   = NULL;
@@ -475,15 +477,12 @@ char cm93_dictionary::GetAttrType ( int iattr )
 		return ( m_ValTypeArray[iattr] );
 }
 
-
-
-
 cm93_dictionary::~cm93_dictionary()
 {
 	delete m_S57ClassArray;
-	free ( m_GeomTypeArray );
+	free(m_GeomTypeArray);
 	delete m_AttrArray;
-	free ( m_ValTypeArray );
+	free(m_ValTypeArray);
 }
-
+}
 

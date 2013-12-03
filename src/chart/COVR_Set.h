@@ -27,6 +27,8 @@
 #include <wx/hashmap.h>
 #include <vector>
 
+namespace chart {
+
 WX_DECLARE_HASH_MAP(int, int, wxIntegerHash, wxIntegerEqual, cm93cell_hash); // FIXME: use std::unordered_map<int,int>
 
 class cm93chart;
@@ -64,5 +66,7 @@ private:
 	// found on this particular cell
 	cm93cell_hash m_cell_hash;
 };
+
+}
 
 #endif

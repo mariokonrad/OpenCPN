@@ -38,13 +38,15 @@
 	#include "OCPNMemDC.h"
 #endif
 
-extern ChartDB* ChartData;
 extern std::vector<int> g_quilt_noshow_index_array;
-extern s52plib* ps52plib;
-extern ChartStack* pCurrentStack;
+extern chart::ChartDB* ChartData;
+extern chart::s52plib* ps52plib;
+extern chart::ChartStack* pCurrentStack;
 extern ChartCanvas* cc1;
 extern int g_GroupIndex;
 extern ColorScheme global_color_scheme;
+
+using chart::ChartTableEntry;
 
 /// Structure to search for patches, used as functor.
 struct PatchThatContainsPoint
@@ -80,7 +82,7 @@ Quilt::Quilt()
 {
 	m_reference_scale = 1;
 	m_refchart_dbIndex = -1;
-	m_reference_type = CHART_TYPE_UNKNOWN;
+	m_reference_type = chart::CHART_TYPE_UNKNOWN;
 	m_reference_family = chart::CHART_FAMILY_UNKNOWN;
 
 	current_node = m_PatchList.end();
@@ -124,7 +126,7 @@ bool Quilt::IsVPBlittable(ViewPort& VPoint, int dx, int dy, bool b_allow_vector)
 	double deltay = p2.m_y - p1.m_y;
 
 	bool ret_val = true;
-	ChartBase* pch = GetFirstChart();
+	chart::ChartBase* pch = GetFirstChart();
 	while (pch) {
 		if (pch->GetChartFamily() == chart::CHART_FAMILY_RASTER) {
 			if ((fabs(deltax - dx) > 1e-2) || (fabs(deltay - dy) > 1e-2)) {
@@ -176,13 +178,13 @@ bool Quilt::IsChartQuiltableRef(int db_index)
 	return (bproj_match & skew_match & !b_noshow);
 }
 
-bool Quilt::IsChartInQuilt(ChartBase* pc)
+bool Quilt::IsChartInQuilt(chart::ChartBase* pc)
 {
 	// Iterate thru the quilt
 	for (unsigned int ir = 0; ir < m_pcandidate_array->size(); ir++) {
 		QuiltCandidate* pqc = m_pcandidate_array->Item(ir);
 		if ((pqc->b_include) && (!pqc->b_eclipsed)) {
-			if (ChartData->OpenChartFromDB(pqc->dbIndex, FULL_INIT) == pc)
+			if (ChartData->OpenChartFromDB(pqc->dbIndex, chart::FULL_INIT) == pc)
 				return true;
 		}
 	}
@@ -227,7 +229,7 @@ void Quilt::EmptyCandidateArray(void)
 	m_pcandidate_array->Clear();
 }
 
-ChartBase* Quilt::GetFirstChart()
+chart::ChartBase* Quilt::GetFirstChart()
 {
 	if (!ChartData)
 		return NULL;
@@ -243,18 +245,18 @@ ChartBase* Quilt::GetFirstChart()
 		return NULL;
 
 	m_bbusy = true;
-	ChartBase* pret = NULL;
+	chart::ChartBase* pret = NULL;
 	current_node = m_PatchList.begin();
 	while (current_node != m_PatchList.end() && !(*current_node)->b_Valid)
 		++current_node;
 	if (current_node != m_PatchList.end() && (*current_node)->b_Valid)
-		pret = ChartData->OpenChartFromDB((*current_node)->dbIndex, FULL_INIT);
+		pret = ChartData->OpenChartFromDB((*current_node)->dbIndex, chart::FULL_INIT);
 
 	m_bbusy = false;
 	return pret;
 }
 
-ChartBase* Quilt::GetNextChart()
+chart::ChartBase* Quilt::GetNextChart()
 {
 	if (!ChartData)
 		return NULL;
@@ -266,20 +268,20 @@ ChartBase* Quilt::GetNextChart()
 		return NULL;
 
 	m_bbusy = true;
-	ChartBase* pret = NULL;
+	chart::ChartBase* pret = NULL;
 	if (current_node != m_PatchList.end()) {
 		++current_node;
 		while (current_node != m_PatchList.end() && !(*current_node)->b_Valid)
 			++current_node;
 		if (current_node != m_PatchList.end() && (*current_node)->b_Valid)
-			pret = ChartData->OpenChartFromDB((*current_node)->dbIndex, FULL_INIT);
+			pret = ChartData->OpenChartFromDB((*current_node)->dbIndex, chart::FULL_INIT);
 	}
 
 	m_bbusy = false;
 	return pret;
 }
 
-ChartBase* Quilt::GetLargestScaleChart()
+chart::ChartBase* Quilt::GetLargestScaleChart()
 {
 	if (!ChartData)
 		return NULL;
@@ -288,10 +290,10 @@ ChartBase* Quilt::GetLargestScaleChart()
 		return NULL;
 
 	m_bbusy = true;
-	ChartBase* pret = NULL;
+	chart::ChartBase* pret = NULL;
 	current_node = m_PatchList.rbegin().base();
 	if (current_node != m_PatchList.end())
-		pret = ChartData->OpenChartFromDB((*current_node)->dbIndex, FULL_INIT);
+		pret = ChartData->OpenChartFromDB((*current_node)->dbIndex, chart::FULL_INIT);
 
 	m_bbusy = false;
 	return pret;
@@ -305,7 +307,7 @@ QuiltPatch* Quilt::GetCurrentPatch()
 		return NULL;
 }
 
-OCPNRegion Quilt::GetChartQuiltRegion(const ChartTableEntry& cte, ViewPort& vp)
+OCPNRegion Quilt::GetChartQuiltRegion(const chart::ChartTableEntry& cte, ViewPort& vp)
 {
 	OCPNRegion chart_region;
 	OCPNRegion screen_region(vp.rv_rect);
@@ -396,7 +398,7 @@ OCPNRegion Quilt::GetChartQuiltRegion(const ChartTableEntry& cte, ViewPort& vp)
 		return OCPNRegion(0, 0, 100, 100);
 }
 
-wxRect Quilt::GetChartQuiltBoundingRect(const ChartTableEntry& cte, ViewPort& vp)
+wxRect Quilt::GetChartQuiltBoundingRect(const chart::ChartTableEntry& cte, ViewPort& vp)
 {
 	OCPNRegion screen_region(vp.rv_rect);
 
@@ -526,7 +528,7 @@ int Quilt::GetChartdbIndexAtPix(wxPoint p)
 	return ret;
 }
 
-ChartBase* Quilt::GetChartAtPix(wxPoint p)
+chart::ChartBase* Quilt::GetChartAtPix(wxPoint p)
 {
 	if (m_bbusy)
 		return NULL;
@@ -537,18 +539,18 @@ ChartBase* Quilt::GetChartAtPix(wxPoint p)
 	// We generally will want the largest scale chart at this point, so
 	// walk the whole list.  The result will be the last one found, i.e. the largest scale chart.
 	// FIXME: this is basically std::find_if
-	ChartBase* pret = NULL;
+	chart::ChartBase* pret = NULL;
 	for (PatchList::const_iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
 		const QuiltPatch* pqp = *i;
 		if (!pqp->b_overlay && (pqp->ActiveRegion.Contains(p) == wxInRegion))
-			pret = ChartData->OpenChartFromDB(pqp->dbIndex, FULL_INIT);
+			pret = ChartData->OpenChartFromDB(pqp->dbIndex, chart::FULL_INIT);
 	}
 
 	m_bbusy = false;
 	return pret;
 }
 
-ChartBase* Quilt::GetOverlayChartAtPix(wxPoint p)
+chart::ChartBase* Quilt::GetOverlayChartAtPix(wxPoint p)
 {
 	if (m_bbusy)
 		return NULL;
@@ -559,11 +561,11 @@ ChartBase* Quilt::GetOverlayChartAtPix(wxPoint p)
 	// We generally will want the largest scale chart at this point, so
 	// walk the whole list.  The result will be the last one found, i.e. the largest scale chart.
 	// FIXME: this is basically std::find_if
-	ChartBase* pret = NULL;
+	chart::ChartBase* pret = NULL;
 	for (PatchList::const_iterator i = m_PatchList.begin(); i != m_PatchList.end(); ++i) {
 		const QuiltPatch* pqp = *i;
 		if (pqp->b_overlay && (pqp->ActiveRegion.Contains(p) == wxInRegion))
-			pret = ChartData->OpenChartFromDB(pqp->dbIndex, FULL_INIT);
+			pret = ChartData->OpenChartFromDB(pqp->dbIndex, chart::FULL_INIT);
 	}
 
 	m_bbusy = false;
@@ -607,7 +609,7 @@ void Quilt::AdjustQuiltVP(ViewPort& vp_last, ViewPort& vp_proposed)
 	if (m_bbusy)
 		return;
 
-	ChartBase* pRefChart = ChartData->OpenChartFromDB(m_refchart_dbIndex, FULL_INIT);
+	chart::ChartBase* pRefChart = ChartData->OpenChartFromDB(m_refchart_dbIndex, chart::FULL_INIT);
 
 	if (pRefChart)
 		pRefChart->AdjustVP(vp_last, vp_proposed);
@@ -617,7 +619,7 @@ double Quilt::GetRefNativeScale()
 {
 	double ret_val = 1.0;
 	if (ChartData) {
-		ChartBase* pc = ChartData->OpenChartFromDB(m_refchart_dbIndex, FULL_INIT);
+		chart::ChartBase* pc = ChartData->OpenChartFromDB(m_refchart_dbIndex, chart::FULL_INIT);
 		if (pc)
 			ret_val = pc->GetNativeScale();
 	}
@@ -668,7 +670,7 @@ int Quilt::AdjustRefOnZoomOut(double proposed_scale_onscreen)
 	unsigned int extended_array_count = m_extended_stack_array.size();
 
 	if (m_refchart_dbIndex >= 0 && (extended_array_count > 0)) {
-		ChartBase* pc = ChartData->OpenChartFromDB(m_refchart_dbIndex, FULL_INIT);
+		chart::ChartBase* pc = ChartData->OpenChartFromDB(m_refchart_dbIndex, chart::FULL_INIT);
 		if (pc) {
 			int current_db_index = m_refchart_dbIndex;
 			int current_family = m_reference_family;
@@ -688,8 +690,8 @@ int Quilt::AdjustRefOnZoomOut(double proposed_scale_onscreen)
 					if ((current_family == ChartData->GetDBChartFamily(test_db_index))
 						&& IsChartQuiltableRef(test_db_index)) {
 						// open the target, and check the min_scale
-						ChartBase* ptest_chart
-							= ChartData->OpenChartFromDB(test_db_index, FULL_INIT);
+						chart::ChartBase* ptest_chart
+							= ChartData->OpenChartFromDB(test_db_index, chart::FULL_INIT);
 						if (ptest_chart)
 							max_ref_scale = ptest_chart->GetNormalScaleMax(m_canvas_scale_factor,
 																		   m_canvas_width);
@@ -705,7 +707,7 @@ int Quilt::AdjustRefOnZoomOut(double proposed_scale_onscreen)
 					for (unsigned int ir = 0; ir < m_extended_stack_array.size(); ir++) {
 						int i = m_extended_stack_array.at(ir); // chart index
 
-						if (ChartData->GetDBChartType(i) == CHART_TYPE_CM93COMP) {
+						if (ChartData->GetDBChartType(i) == chart::CHART_TYPE_CM93COMP) {
 							target_stack_index = ir;
 							m_zout_dbindex = m_refchart_dbIndex; // save for later
 							SetReferenceChart(i);
@@ -742,13 +744,13 @@ int Quilt::AdjustRefOnZoomIn(double proposed_scale_onscreen)
 	unsigned int extended_array_count = m_extended_stack_array.size();
 
 	if (m_refchart_dbIndex >= 0 && (extended_array_count > 0)) {
-		ChartBase* pc = ChartData->OpenChartFromDB(m_refchart_dbIndex, FULL_INIT);
+		chart::ChartBase* pc = ChartData->OpenChartFromDB(m_refchart_dbIndex, chart::FULL_INIT);
 		if (pc) {
 			double min_ref_scale = pc->GetNormalScaleMin(m_canvas_scale_factor, false);
 
 			//  If the current chart is cm93, and it became so due to a zout from another family,
 			//  detect this case and allow switch to save chart index if the min/max scales comply
-			if ((pc->GetChartType() == CHART_TYPE_CM93COMP) && (m_zout_dbindex >= 0)) {
+			if ((pc->GetChartType() == chart::CHART_TYPE_CM93COMP) && (m_zout_dbindex >= 0)) {
 				min_ref_scale = proposed_scale_onscreen + 1; // just to force the test below to pass
 				current_family = ChartData->GetDBChartFamily(m_zout_dbindex);
 			}
@@ -766,8 +768,8 @@ int Quilt::AdjustRefOnZoomIn(double proposed_scale_onscreen)
 							&& IsChartQuiltableRef(test_db_index)) {
 
 							// open the target, and check the min_scale
-							ChartBase* ptest_chart
-								= ChartData->OpenChartFromDB(test_db_index, FULL_INIT);
+							chart::ChartBase* ptest_chart
+								= ChartData->OpenChartFromDB(test_db_index, chart::FULL_INIT);
 							if (ptest_chart)
 								min_ref_scale
 									= ptest_chart->GetNormalScaleMin(m_canvas_scale_factor, false);
@@ -778,7 +780,7 @@ int Quilt::AdjustRefOnZoomIn(double proposed_scale_onscreen)
 				new_db_index = m_extended_stack_array.at(target_stack_index);
 
 				// The target chart min/max scales must comply with propsed chart scale on-screen
-				ChartBase* pcandidate = ChartData->OpenChartFromDB(new_db_index, FULL_INIT);
+				chart::ChartBase* pcandidate = ChartData->OpenChartFromDB(new_db_index, chart::FULL_INIT);
 				double test_max_ref_scale = 1e8;
 				double test_min_ref_scale = 0;
 				if (pcandidate) {
@@ -888,7 +890,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 	ViewPort vp_local = vp_in; // FIXME: non-const copy
 
 	if (!pCurrentStack) {
-		pCurrentStack = new ChartStack;
+		pCurrentStack = new chart::ChartStack;
 		ChartData->BuildChartStack(pCurrentStack, vp_local.clat, vp_local.clon);
 	}
 
@@ -910,7 +912,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 			// and we avoid adding CM93 Composite until later
 			if ((reference_type == ChartData->GetDBChartType(i)) && (fabs(chart_skew) < 1.0)
 				&& (ChartData->GetDBChartProj(i) == quilt_proj)
-				&& (ChartData->GetDBChartType(i) != CHART_TYPE_CM93COMP)) {
+				&& (ChartData->GetDBChartType(i) != chart::CHART_TYPE_CM93COMP)) {
 				QuiltCandidate* qcnew = new QuiltCandidate;
 				qcnew->dbIndex = i;
 				qcnew->ChartScale = ChartData->GetDBChartScale(i);
@@ -943,7 +945,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 			if (reference_type != ChartData->GetDBChartType(i))
 				continue;
 
-			if (ChartData->GetDBChartType(i) == CHART_TYPE_CM93COMP)
+			if (ChartData->GetDBChartType(i) == chart::CHART_TYPE_CM93COMP)
 				continue;
 
 			if ((g_GroupIndex > 0) && (!ChartData->IsChartInGroup(i, g_GroupIndex)))
@@ -990,7 +992,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 
 				// Special case for S57 ENC
 				// Add the chart only if the chart's fractional area exceeds n%
-				if (CHART_TYPE_S57 == reference_type) {
+				if (chart::CHART_TYPE_S57 == reference_type) {
 					// Get the fractional area of this chart
 					double chart_fractional_area = 0.0;
 					double quilt_area = vp_local.pix_width * vp_local.pix_height;
@@ -1220,8 +1222,8 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 			// displace
 			// a geographical cell with the same extents.
 			// Overlays will be picked up in the next pass, if any are found
-			if (CHART_TYPE_S57 == m_reference_type) {
-				if (s57chart::IsCellOverlayType(cte.GetpFullPath())) {
+			if (chart::CHART_TYPE_S57 == m_reference_type) {
+				if (chart::s57chart::IsCellOverlayType(cte.GetpFullPath())) {
 					b_has_overlays = true;
 					continue;
 				}
@@ -1270,7 +1272,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 
 	// For S57 quilts, walk the list again to identify overlay cells found previously,
 	// and make sure they are always included and not eclipsed
-	if (b_has_overlays && (CHART_TYPE_S57 == m_reference_type)) {
+	if (b_has_overlays && (chart::CHART_TYPE_S57 == m_reference_type)) {
 		for (ir = 0; ir < m_pcandidate_array->size(); ir++) {
 			QuiltCandidate* pqc = m_pcandidate_array->Item(ir);
 
@@ -1301,8 +1303,8 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 						pqc->b_include = false; // skip this chart, no true overlap
 					else {
 						if (ChartData->IsChartInCache(pqc->dbIndex)) {
-							ChartBase* pc = ChartData->OpenChartFromDB(pqc->dbIndex, FULL_INIT);
-							s57chart* ps57 = dynamic_cast<s57chart*>(pc);
+							chart::ChartBase* pc = ChartData->OpenChartFromDB(pqc->dbIndex, chart::FULL_INIT);
+							chart::s57chart* ps57 = dynamic_cast<chart::s57chart*>(pc);
 							bool b_overlay
 								= (ps57->GetUsageChar() == 'L' || ps57->GetUsageChar() == 'A');
 							if (b_overlay)
@@ -1354,7 +1356,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 		if (b_must_add_cm93) {
 			for (int ics = 0; ics < pCurrentStack->nEntry; ics++) {
 				int i = pCurrentStack->GetDBIndex(ics);
-				if (CHART_TYPE_CM93COMP == ChartData->GetDBChartType(i)) {
+				if (chart::CHART_TYPE_CM93COMP == ChartData->GetDBChartType(i)) {
 					QuiltCandidate* qcnew = new QuiltCandidate;
 					qcnew->dbIndex = i;
 					qcnew->ChartScale = ChartData->GetDBChartScale(i);
@@ -1390,7 +1392,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 			const ChartTableEntry& cte = ChartData->GetChartTableEntry(pqc->dbIndex);
 
 			// Don't add cm93 yet, it is always covering the quilt...
-			if (cte.GetChartType() == CHART_TYPE_CM93COMP)
+			if (cte.GetChartType() == chart::CHART_TYPE_CM93COMP)
 				continue;
 
 			// Check intersection
@@ -1426,7 +1428,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 			// so that it would not displace possible raster or ENCs of larger scale
 			const ChartTableEntry& m = ChartData->GetChartTableEntry(pqc->dbIndex);
 
-			if (m.GetChartType() == CHART_TYPE_CM93COMP)
+			if (m.GetChartType() == chart::CHART_TYPE_CM93COMP)
 				pqc->b_include = true; // force acceptance of this chart in quilt
 			// would not be in candidate array if not elected
 
@@ -1447,7 +1449,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 #ifdef QUILT_TYPE_1
 	// Establish the quilt projection type
 	m_quilt_proj = PROJECTION_MERCATOR; // default
-	ChartBase* ppc = GetLargestScaleChart();
+	chart::ChartBase* ppc = GetLargestScaleChart();
 	if (ppc)
 		m_quilt_proj = ppc->GetChartProjectionType();
 #endif
@@ -1508,9 +1510,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 			///     until the canvas is zoomed sufficiently.
 
 			/// Above logic does not apply to cm93 composites
-			if ((CHART_TYPE_S57
-				 != ctei.GetChartType()) /* && (CHART_TYPE_CM93COMP != ctei.GetChartType())*/) {
-
+			if (chart::CHART_TYPE_S57 != ctei.GetChartType()) {
 				if (!vpr_region.Empty()) {
 					OCPNRegion larger_scale_chart_region = pqp->quilt_region;
 					vpr_region.Subtract(larger_scale_chart_region);
@@ -1591,7 +1591,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 				cc1->EnableAutoPan(false);
 				b_stop_ap = true;
 			}
-		ChartData->OpenChartFromDB(pqc->dbIndex, FULL_INIT);
+		ChartData->OpenChartFromDB(pqc->dbIndex, chart::FULL_INIT);
 	}
 
 	if (b_stop_ap) {
@@ -1615,7 +1615,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	// If they are all the same, then the value is usable
 
 	m_quilt_depth_unit = _T("");
-	ChartBase* pc = ChartData->OpenChartFromDB(m_refchart_dbIndex, FULL_INIT);
+	chart::ChartBase* pc = ChartData->OpenChartFromDB(m_refchart_dbIndex, chart::FULL_INIT);
 	if (pc) {
 		m_quilt_depth_unit = pc->GetDepthUnits();
 
@@ -1643,7 +1643,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 		if (!pqp->b_Valid) // skip invalid entries
 			continue;
 
-		ChartBase* pc = ChartData->OpenChartFromDB(pqp->dbIndex, FULL_INIT);
+		chart::ChartBase* pc = ChartData->OpenChartFromDB(pqp->dbIndex, chart::FULL_INIT);
 		if (pc) {
 			wxString du = pc->GetDepthUnits();
 #ifdef USE_S57
@@ -1693,7 +1693,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 		if (pqp->b_Valid) {
 			if (!ChartData->IsChartInCache(pqp->dbIndex)) {
 				wxLogMessage(_T("   Quilt Compose cache miss..."));
-				ChartData->OpenChartFromDB(pqp->dbIndex, FULL_INIT);
+				ChartData->OpenChartFromDB(pqp->dbIndex, chart::FULL_INIT);
 				if (!ChartData->IsChartInCache(pqp->dbIndex)) {
 					wxLogMessage(_T("    Oops, removing from quilt..."));
 					pqp->b_Valid = false;
@@ -1704,7 +1704,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 
 	// Make sure the reference chart is in the cache
 	if (!ChartData->IsChartInCache(m_refchart_dbIndex))
-		ChartData->OpenChartFromDB(m_refchart_dbIndex, FULL_INIT);
+		ChartData->OpenChartFromDB(m_refchart_dbIndex, chart::FULL_INIT);
 
 	// Walk the patch list again, checking the error factor
 	// Also, directly mark the patch to indicate if it should be treated as an overlay
@@ -1718,12 +1718,12 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 		if (!pqp->b_Valid) // skip invalid entries
 			continue;
 
-		ChartBase* pc = ChartData->OpenChartFromDB(pqp->dbIndex, FULL_INIT);
+		chart::ChartBase* pc = ChartData->OpenChartFromDB(pqp->dbIndex, chart::FULL_INIT);
 		if (pc) {
 			m_max_error_factor = wxMax(m_max_error_factor, pc->GetChart_Error_Factor());
 
-			if (pc->GetChartType() == CHART_TYPE_S57) {
-				s57chart* ps57 = dynamic_cast<s57chart*>(pc);
+			if (pc->GetChartType() == chart::CHART_TYPE_S57) {
+				chart::s57chart* ps57 = dynamic_cast<chart::s57chart*>(pc);
 				pqp->b_overlay = (ps57->GetUsageChar() == 'L' || ps57->GetUsageChar() == 'A');
 				if (pqp->b_overlay)
 					m_bquilt_has_overlays = true;
@@ -1763,7 +1763,7 @@ void Quilt::ComputeRenderRegion(ViewPort& vp, OCPNRegion& chart_region)
 
 		// Walk the quilt, considering each chart from smallest scale to largest
 
-		ChartBase* chart = GetFirstChart();
+		chart::ChartBase* chart = GetFirstChart();
 
 		while (chart) {
 			bool okToRender = cc1->IsChartLargeEnoughToRender(chart, vp);
@@ -1818,7 +1818,7 @@ bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& 
 		// Render the quilt's charts onto a temp dc
 		// and blit the active region rectangles to to target dc, one-by-one
 
-		ChartBase* chart = GetFirstChart();
+		chart::ChartBase* chart = GetFirstChart();
 		int chartsDrawn = 0;
 
 		if (!chart_region.IsEmpty()) {
@@ -1844,7 +1844,7 @@ bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& 
 
 						if (!pqp->b_overlay) {
 							b_chart_rendered = chart->RenderRegionViewOnDC(tmp_dc, vp, get_region);
-							if (chart->GetChartType() != CHART_TYPE_CM93COMP)
+							if (chart->GetChartType() != chart::CHART_TYPE_CM93COMP)
 								b_chart_rendered = true;
 							screen_region.Subtract(get_region);
 						}
@@ -1883,7 +1883,7 @@ bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& 
 						get_region.Intersect(chart_region);
 
 						if (!get_region.IsEmpty()) {
-							s57chart* Chs57 = dynamic_cast<s57chart*>(chart);
+							chart::s57chart* Chs57 = dynamic_cast<chart::s57chart*>(chart);
 							Chs57->RenderOverlayRegionViewOnDC(tmp_dc, vp, get_region);
 
 							OCPNRegionIterator upd(get_region);

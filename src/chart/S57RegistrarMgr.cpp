@@ -26,7 +26,7 @@
 #include <wx/log.h>
 
 #ifdef USE_S57
-extern S57ClassRegistrar * g_poRegistrar;
+extern chart::S57ClassRegistrar * g_poRegistrar;
 #endif
 
 namespace chart {
@@ -63,5 +63,6 @@ S57RegistrarMgr::~S57RegistrarMgr()
 	delete g_poRegistrar;
 	g_poRegistrar = NULL;
 }
+
 }
 

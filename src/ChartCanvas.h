@@ -52,6 +52,10 @@ class wxGLContext;
 
 namespace geo { class LatLonBoundingBox; }
 namespace ais { class AIS_Target_Data; }
+namespace chart {
+	class ChartBase;
+	class ChartBaseBSB;
+}
 
 class ocpnDC;
 class GSHHSChart;
@@ -69,8 +73,6 @@ class SelectItem;
 class ocpnBitmap;
 class WVSChart;
 class MainFrame;
-class ChartBaseBSB;
-class ChartBase;
 class S57ObjectTree;
 class RolloverWin;
 class Quilt;
@@ -178,8 +180,8 @@ public:
 	double GetAbsoluteMinScalePpm() const;
 	ViewPort& GetVP();
 	const ViewPort& GetVP() const;
-	ChartBase* GetChartAtCursor();
-	ChartBase* GetOverlayChartAtCursor();
+	chart::ChartBase* GetChartAtCursor();
+	chart::ChartBase* GetOverlayChartAtCursor();
 
 	GSHHSChart* GetWorldBackgroundChart();
 
@@ -206,9 +208,9 @@ public:
 
 	void ShowGoToPosition(void);
 
-	ChartBase* GetLargestScaleQuiltChart();
-	ChartBase* GetFirstQuiltChart();
-	ChartBase* GetNextQuiltChart();
+	chart::ChartBase* GetLargestScaleQuiltChart();
+	chart::ChartBase* GetFirstQuiltChart();
+	chart::ChartBase* GetNextQuiltChart();
 	int GetQuiltChartCount();
 	void InvalidateAllQuiltPatchs(void);
 	void SetQuiltRefChart(int dbIndex);
@@ -219,7 +221,7 @@ public:
 	void InvalidateQuilt(void);
 	double GetQuiltMaxErrorFactor();
 	bool IsChartQuiltableRef(int db_index);
-	bool IsChartLargeEnoughToRender(ChartBase* chart, ViewPort& vp);
+	bool IsChartLargeEnoughToRender(chart::ChartBase* chart, ViewPort& vp);
 	int GetCanvasChartNativeScale();
 	int FindClosestCanvasChartdbIndex(int scale);
 	void UpdateCanvasOnGroupChange(void);
@@ -245,7 +247,7 @@ public:
 	double m_prev_rlon;
 	RoutePoint* m_prev_pMousePoint;
 
-	bool PurgeGLCanvasChartCache(ChartBase* pc);
+	bool PurgeGLCanvasChartCache(chart::ChartBase* pc);
 
 	void RemovePointFromRoute(RoutePoint* point, Route* route);
 
@@ -442,7 +444,7 @@ private:
 
 	GSHHSChart* pWorldBackgroundChart;
 
-	ChartBaseBSB* pCBSB;
+	chart::ChartBaseBSB* pCBSB;
 	wxBitmap* pss_overlay_bmp;
 	wxMask* pss_overlay_mask;
 

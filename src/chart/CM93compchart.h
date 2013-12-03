@@ -30,8 +30,11 @@
 
 #include <wx/string.h>
 
-class CM93OffsetDialog;
 class OCPNRegion;
+
+namespace chart {
+
+class CM93OffsetDialog;
 class cm93_dictionary;
 class cm93chart;
 
@@ -141,5 +144,7 @@ private:
 
 	CM93OffsetDialog* m_pOffsetDialog;
 };
+
+}
 
 #endif

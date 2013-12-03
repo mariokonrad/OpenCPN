@@ -22,9 +22,11 @@
  **************************************************************************/
 
 #include "ChartStack.h"
-#include "chart/ChartDB.h" // FIXME: cyclic dependency
+#include <chart/ChartDB.h> // FIXME: cyclic dependency
 
-extern ChartDB * ChartData;
+extern chart::ChartDB* ChartData;
+
+namespace chart {
 
 ChartStack::ChartStack()
 {
@@ -35,7 +37,7 @@ ChartStack::ChartStack()
 
 int ChartStack::GetCurrentEntrydbIndex(void)
 {
-	if(nEntry /*&& b_valid*/)
+	if (nEntry)
 		return DBIndex[CurrentStackEntry];
 	else
 		return -1;
@@ -43,16 +45,15 @@ int ChartStack::GetCurrentEntrydbIndex(void)
 
 void ChartStack::SetCurrentEntryFromdbIndex(int current_db_index)
 {
-	for(int i=0 ; i < nEntry ; i++)
-	{
-		if(current_db_index == DBIndex[i])
+	for (int i = 0; i < nEntry; i++) {
+		if (current_db_index == DBIndex[i])
 			CurrentStackEntry = i;
 	}
 }
 
 int ChartStack::GetDBIndex(int stack_index)
 {
-	if((stack_index >= 0) && (stack_index < nEntry) && (stack_index < MAXSTACK))
+	if ((stack_index >= 0) && (stack_index < nEntry) && (stack_index < MAXSTACK))
 		return DBIndex[stack_index];
 	else
 		return -1;
@@ -60,24 +61,20 @@ int ChartStack::GetDBIndex(int stack_index)
 
 void ChartStack::SetDBIndex(int stack_index, int db_index)
 {
-	if((stack_index >= 0) && (stack_index < nEntry) && (stack_index < MAXSTACK))
+	if ((stack_index >= 0) && (stack_index < nEntry) && (stack_index < MAXSTACK))
 		DBIndex[stack_index] = db_index;
 }
 
-
 bool ChartStack::DoesStackContaindbIndex(int db_index)
 {
-	for(int i=0 ; i < nEntry ; i++)
-	{
-		if(db_index == DBIndex[i])
+	for (int i = 0; i < nEntry; i++)
+		if (db_index == DBIndex[i])
 			return true;
-	}
 
 	return false;
 }
 
-
-void ChartStack::AddChart( int db_add )
+void ChartStack::AddChart(int db_add)
 {
 	if (!ChartData)
 		return;
@@ -86,31 +83,31 @@ void ChartStack::AddChart( int db_add )
 		return;
 
 	int db_index = db_add;
-
 	int j = nEntry;
 
-	if(db_index >= 0) {
+	if (db_index >= 0) {
 		j++;
 		nEntry = j;
-		SetDBIndex(j-1, db_index);
+		SetDBIndex(j - 1, db_index);
 	}
-	//    Remove exact duplicates, i.e. charts that have exactly the same file name and
-	//     nearly the same mod time.
-	//    These charts can be in the database due to having the exact same chart in different directories,
-	//    as may be desired for some grouping schemes
-	//    Note that if the target name is actually a directory, then windows fails to produce a valid
-	//    file modification time.  Detect GetFileTime() == 0, and skip the test in this case
-	for(int id = 0 ; id < j-1 ; id++) {
-		if(GetDBIndex(id) != -1) {
-			const ChartTableEntry & pm = ChartData->GetChartTableEntry(GetDBIndex(id));
 
-			for(int jd = id+1; jd < j; jd++) {
-				if(GetDBIndex(jd) != -1) {
-					const ChartTableEntry & pn = ChartData->GetChartTableEntry(GetDBIndex(jd));
+	// Remove exact duplicates, i.e. charts that have exactly the same file name and
+	// nearly the same mod time.
+	// These charts can be in the database due to having the exact same chart in different directories,
+	// as may be desired for some grouping schemes
+	// Note that if the target name is actually a directory, then windows fails to produce a valid
+	// file modification time.  Detect GetFileTime() == 0, and skip the test in this case
+	for (int id = 0; id < j - 1; id++) {
+		if (GetDBIndex(id) != -1) {
+			const ChartTableEntry& pm = ChartData->GetChartTableEntry(GetDBIndex(id));
+
+			for (int jd = id + 1; jd < j; jd++) {
+				if (GetDBIndex(jd) != -1) {
+					const ChartTableEntry& pn = ChartData->GetChartTableEntry(GetDBIndex(jd));
 					if (pm.GetFileTime() && pn.GetFileTime()) {
-						if( abs(pm.GetFileTime() - pn.GetFileTime()) < 60 ) { // simple test
-							if(pn.GetFileName().IsSameAs(pm.GetFileName()))
-								SetDBIndex(jd, -1);           // mark to remove
+						if (abs(pm.GetFileTime() - pn.GetFileTime()) < 60) { // simple test
+							if (pn.GetFileName().IsSameAs(pm.GetFileName()))
+								SetDBIndex(jd, -1); // mark to remove
 						}
 					}
 				}
@@ -119,12 +116,12 @@ void ChartStack::AddChart( int db_add )
 	}
 
 	int id = 0;
-	while( (id < j) ) {
-		if(GetDBIndex(id) == -1) {
-			int jd = id+1;
+	while ((id < j)) {
+		if (GetDBIndex(id) == -1) {
+			int jd = id + 1;
 			while (jd < j) {
 				int db_index = GetDBIndex(jd);
-				SetDBIndex(jd-1, db_index);
+				SetDBIndex(jd - 1, db_index);
 				jd++;
 			}
 
@@ -132,8 +129,9 @@ void ChartStack::AddChart( int db_add )
 			nEntry = j;
 
 			id = 0;
-		} else
+		} else {
 			id++;
+		}
 	}
 
 	// Sort the stack on scale (bubble sort)
@@ -141,17 +139,19 @@ void ChartStack::AddChart( int db_add )
 	int ti;
 	while (swap == 1) {
 		swap = 0;
-		for (int i=0 ; i<j-1 ; i++) {
-			const ChartTableEntry &m = ChartData->GetChartTableEntry(GetDBIndex(i));
-			const ChartTableEntry &n = ChartData->GetChartTableEntry(GetDBIndex(i+1));
+		for (int i = 0; i < j - 1; i++) {
+			const ChartTableEntry& m = ChartData->GetChartTableEntry(GetDBIndex(i));
+			const ChartTableEntry& n = ChartData->GetChartTableEntry(GetDBIndex(i + 1));
 
 			if (n.GetScale() < m.GetScale()) {
 				ti = GetDBIndex(i);
-				SetDBIndex(i, GetDBIndex(i+1));
-				SetDBIndex(i+1, ti);
+				SetDBIndex(i, GetDBIndex(i + 1));
+				SetDBIndex(i + 1, ti);
 				swap = 1;
 			}
 		}
 	}
+}
+
 }
 

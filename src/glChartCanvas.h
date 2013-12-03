@@ -29,7 +29,8 @@
 #include <ViewPort.h>
 
 class glTextureDescriptor;
-class ChartBase;
+
+namespace chart { class ChartBase; }
 
 WX_DECLARE_HASH_MAP(int, glTextureDescriptor*, wxIntegerHash, wxIntegerEqual, ChartTextureHashType);
 WX_DECLARE_HASH_MAP(void *, ChartTextureHashType*, wxPointerHash, wxPointerEqual, ChartPointerHashType);
@@ -52,8 +53,8 @@ class glChartCanvas : public wxGLCanvas
 		wxString GetRendererString() const;
 		void EnablePaint(bool b_enable);
 		void Invalidate();
-		void RenderRasterChartRegionGL(ChartBase *chart, ViewPort & vp, OCPNRegion &region);
-		bool PurgeChartTextures(ChartBase *pc);
+		void RenderRasterChartRegionGL(chart::ChartBase *chart, ViewPort & vp, OCPNRegion &region);
+		bool PurgeChartTextures(chart::ChartBase *pc);
 		void ClearAllRasterTextures(void);
 		void DrawGLOverLayObjects(void);
 

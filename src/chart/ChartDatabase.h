@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHARTDBS_H__
-#define __CHARTDBS_H__
+#ifndef __CHART__CHARTDATABASE__H__
+#define __CHART__CHARTDATABASE__H__
 
 #include <wx/dynarray.h>
 #include <wx/file.h>
@@ -46,6 +46,8 @@
 class wxProgressDialog;
 
 namespace geo { class BoundingBox; }
+
+namespace chart {
 
 enum
 {
@@ -132,5 +134,7 @@ private:
 	ChartTableEntry m_ChartTableEntryDummy; // FIXME: used for return value if database is not valid
 	wxString m_DBFileName;
 };
+
+}
 
 #endif

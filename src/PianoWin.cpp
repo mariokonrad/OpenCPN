@@ -34,7 +34,7 @@ BEGIN_EVENT_TABLE(PianoWin, wxWindow)
 END_EVENT_TABLE()
 
 extern ocpnStyle::StyleManager* g_StyleManager;
-extern ChartDB* ChartData;
+extern chart::ChartDB* ChartData;
 extern MainFrame* gFrame;
 
 PianoWin::PianoWin(wxFrame* frame)
@@ -124,21 +124,21 @@ void PianoWin::OnPaint(wxPaintEvent&)
 			if (-1 == key_db_index)
 				continue;
 
-			if (ChartData->GetDBChartType(m_key_array.at(i)) == CHART_TYPE_S57) {
+			if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_S57) {
 				dc.SetBrush(m_vBrush);
 
 				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
 					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
 						dc.SetBrush(m_svBrush);
 				}
-			} else if (ChartData->GetDBChartType(m_key_array.at(i)) == CHART_TYPE_CM93) {
+			} else if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_CM93) {
 				dc.SetBrush(m_cBrush);
 
 				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
 					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
 						dc.SetBrush(m_scBrush);
 				}
-			} else if (ChartData->GetDBChartType(m_key_array.at(i)) == CHART_TYPE_CM93COMP) {
+			} else if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_CM93COMP) {
 				dc.SetBrush(m_cBrush);
 
 				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {

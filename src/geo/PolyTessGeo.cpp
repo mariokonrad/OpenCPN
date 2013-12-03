@@ -43,6 +43,8 @@
 
 #define EQUAL_EPS 1.0e-7   // tolerance value
 
+using chart::pt;
+
 
 
 #ifdef USE_GLU_TESS

@@ -56,10 +56,12 @@
 #define new DEBUG_NEW
 #endif
 
-extern s52plib* ps52plib;
+extern chart::s52plib* ps52plib;
 extern bool g_b_useStencil;
 extern wxString g_csv_locn;
 extern double g_GLMinLineWidth;
+
+namespace chart {
 
 void DrawAALine(wxDC* pDC, int x0, int y0, int x1, int y1, wxColour clrLine, int dash, int space);
 extern bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val);
@@ -6698,4 +6700,6 @@ int txfInFont(TexFont* txf, int c)
 }
 
 #endif //#ifdef ocpnUSE_GL
+
+}
 

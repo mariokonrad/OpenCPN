@@ -54,10 +54,11 @@ class OCPN_MsgEvent;
 class options;
 class Track;
 class ViewPort;
-class ChartBase;
 class ToolBarSimple;
 class OCPN_DataStreamEvent;
 class DataStream;
+
+namespace chart { class ChartBase; }
 
 class wxSocketEvent;
 
@@ -102,7 +103,7 @@ public:
 
 	void MouseEvent(wxMouseEvent& event);
 	void SelectChartFromStack(int index, bool bDir = false,
-							  ChartTypeEnum New_Type = CHART_TYPE_DONTCARE,
+							  chart::ChartTypeEnum New_Type = chart::CHART_TYPE_DONTCARE,
 							  chart::ChartFamilyEnum New_Family = chart::CHART_FAMILY_DONTCARE);
 	void SelectdbChart(int dbindex);
 	void SelectQuiltRefChart(int selected_index);
@@ -158,7 +159,7 @@ public:
 
 	void SetGroupIndex(int index);
 
-	double GetBestVPScale(ChartBase* pchart);
+	double GetBestVPScale(chart::ChartBase* pchart);
 
 	ChartCanvas* GetCanvas();
 	void SetCanvasWindow(ChartCanvas*);

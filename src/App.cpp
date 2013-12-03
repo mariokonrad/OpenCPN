@@ -108,11 +108,11 @@ void catch_signals(int signo);
 #endif
 
 #ifdef USE_S57
-extern s52plib* ps52plib;
-extern S57ClassRegistrar* g_poRegistrar;
+extern chart::s52plib* ps52plib;
+extern chart::S57ClassRegistrar* g_poRegistrar;
 extern chart::S57RegistrarMgr* m_pRegistrarMan;
 extern S57QueryDialog* g_pObjectQueryDialog;
-extern CM93OffsetDialog* g_pCM93OffsetDialog;
+extern chart::CM93OffsetDialog* g_pCM93OffsetDialog;
 #endif
 
 #ifdef OCPN_USE_PORTAUDIO
@@ -150,7 +150,7 @@ extern wxString g_csv_locn;
 extern wxString g_SENCPrefix;
 extern wxString g_UserPresLibData;
 extern wxString g_uploadConnection;
-extern ChartDB* ChartData;
+extern chart::ChartDB* ChartData;
 extern double g_ownship_predictor_minutes;
 extern int g_current_arrow_scale;
 extern Multiplexer* g_pMUX;
@@ -304,7 +304,7 @@ extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
 extern bool g_bHDT_Rx;
 extern bool g_bVAR_Rx;
-extern ChartStack* pCurrentStack;
+extern chart::ChartStack* pCurrentStack;
 extern int g_unit_test_1;
 extern bool g_bportable;
 extern bool g_bdisable_opengl;
@@ -864,7 +864,7 @@ void App::setup_s57()
 		b_force_legacy = true;
 	}
 
-	ps52plib = new s52plib(plib_data, b_force_legacy);
+	ps52plib = new chart::s52plib(plib_data, b_force_legacy);
 
 	// If the library load failed, try looking for the s57 data elsewhere
 
@@ -891,7 +891,7 @@ void App::setup_s57()
 		plib_data.Append(_T("S52RAZDS.RLE"));
 
 		wxLogMessage(_T("Looking for s57data in ") + look_data_dir);
-		ps52plib = new s52plib(plib_data);
+		ps52plib = new chart::s52plib(plib_data);
 
 		if (ps52plib->m_bOK) {
 			g_csv_locn = look_data_dir;
@@ -914,7 +914,7 @@ void App::setup_s57()
 		plib_data.Append(_T("S52RAZDS.RLE"));
 
 		wxLogMessage(_T("Looking for s57data in ") + look_data_dir);
-		ps52plib = new s52plib(plib_data);
+		ps52plib = new chart::s52plib(plib_data);
 
 		if (ps52plib->m_bOK)
 			g_csv_locn = look_data_dir;
@@ -964,6 +964,8 @@ void App::setup_for_empty_config(bool novicemode)
 
 #ifdef USE_S57
 		if (ps52plib && ps52plib->m_bOK) {
+			using namespace chart;
+
 			ps52plib->m_bShowSoundg = true;
 			ps52plib->m_nDisplayCategory = (enum DisCat)STANDARD;
 			ps52plib->m_nSymbolStyle = (LUPname)PAPER_CHART;
@@ -1721,7 +1723,7 @@ bool App::OnInit()
 		::wxRemoveFile(sys.data().chartlist_filename);
 
 	// Try to load the current chart list Data file
-	ChartData = new ChartDB(gFrame);
+	ChartData = new chart::ChartDB(gFrame);
 	if (!ChartData->LoadBinary(sys.data().chartlist_filename, ChartDirArray)) {
 		bDBUpdateInProgress = true;
 
@@ -1729,7 +1731,7 @@ bool App::OnInit()
 			// Create and Save a new Chart Database based on the hints given in the config file
 
 			delete ChartData;
-			ChartData = new ChartDB(gFrame);
+			ChartData = new chart::ChartDB(gFrame);
 
 			wxString line(_("Rebuilding chart database from configuration file entries..."));
 			// The following 3 strings are embeded in wxProgressDialog but must be included by
@@ -1793,7 +1795,7 @@ bool App::OnInit()
 	if (pCurrentStack)
 		delete pCurrentStack;
 
-	pCurrentStack = new ChartStack;
+	pCurrentStack = new chart::ChartStack;
 
 	// A useability enhancement....
 	// if the chart database is truly empty on startup, switch to SCMode

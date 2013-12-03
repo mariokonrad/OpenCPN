@@ -77,7 +77,7 @@ extern Config* pConfig;
 extern ais::AIS_Decoder* g_pAIS;
 extern wxAuiManager* g_pauimgr;
 extern wxLocale* plocale_def_lang;
-extern ChartDB* ChartData;
+extern chart::ChartDB* ChartData;
 extern MainFrame* gFrame;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern options* g_pOptions;

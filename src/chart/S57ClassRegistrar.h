@@ -21,8 +21,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __S57CLASSREGISTRAR_H__
-#define __S57CLASSREGISTRAR_H__
+#ifndef __CHART__S57CLASSREGISTRAR__H__
+#define __CHART__S57CLASSREGISTRAR__H__
+
+namespace chart {
 
 class S57ClassRegistrar
 {
@@ -94,5 +96,7 @@ class S57ClassRegistrar
 		char GetAttrClass(int i) { return pachAttrClass[i]; }
 		int FindAttrByAcronym(const char *);
 };
+
+}
 
 #endif

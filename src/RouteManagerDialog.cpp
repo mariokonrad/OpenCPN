@@ -132,7 +132,7 @@ extern TrackPropDlg* pTrackPropDialog;
 extern Routeman* g_pRouteMan;
 extern Config* pConfig;
 extern ChartCanvas* cc1;
-extern ChartBase* Current_Ch;
+extern chart::ChartBase* Current_Ch;
 extern Track* g_pActiveTrack;
 extern WayPointman* pWayPointMan;
 extern MarkInfoImpl* pMarkPropDialog;

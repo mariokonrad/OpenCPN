@@ -48,20 +48,18 @@
 	#include <chart/S57Chart.h>
 #endif
 
-class s52plib;
+namespace chart { class s52plib; }
 
-using chart::CacheEntry;
-using chart::ChartGEO;
-using chart::ChartKAP;
-
-extern ChartBase* Current_Ch;
+extern chart::ChartBase* Current_Ch;
 extern ThumbWin* pthumbwin;
 extern int g_nCacheLimit;
 extern int g_memCacheLimit;
 extern bool g_bopengl;
 extern ChartCanvas* cc1;
 extern int g_GroupIndex;
-extern s52plib* ps52plib;
+extern chart::s52plib* ps52plib;
+
+namespace chart {
 
 bool G_FloatPtInPolygon(MyFlPoint* rgpts, int wnumpts, float x, float y);
 
@@ -1271,5 +1269,7 @@ inline int CCW(MyFlPoint p0, MyFlPoint p1, MyFlPoint p2)
 	// of divide by zero possibilities with pure horizontal and pure
 	// vertical lines.
 	return ((dx1 * dy2 > dy1 * dx2) ? 1 : -1);
+}
+
 }
 

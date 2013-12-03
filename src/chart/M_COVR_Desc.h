@@ -32,6 +32,8 @@ class ViewPort;
 
 namespace geo { struct float_2Dpt; }
 
+namespace chart {
+
 class M_COVR_Desc // FIXME: change member data from public to private
 {
 public:
@@ -99,5 +101,7 @@ public:
 	geo::BoundingBox m_covr_bbox;
 	bool m_buser_offsets;
 };
+
+}
 
 #endif

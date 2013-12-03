@@ -30,6 +30,9 @@
 
 class wxInputStream;
 class wxOutputStream;
+
+namespace chart {
+
 class ChartDatabase;
 class ChartBase;
 
@@ -110,5 +113,7 @@ private:
 	std::vector<int> m_GroupArray;
 	wxString m_filename; // a helper member, not on disk
 };
+
+}
 
 #endif

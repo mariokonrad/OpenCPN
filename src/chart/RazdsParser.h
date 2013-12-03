@@ -28,10 +28,10 @@
 
 #include <chart/s52s57.h>
 
+namespace chart {
+
 class s52plib;
 class RuleHash;
-
-namespace chart {
 
 class RazdsParser
 {

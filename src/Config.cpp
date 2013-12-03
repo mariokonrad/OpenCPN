@@ -155,7 +155,7 @@ extern bool             g_bDebugS57;
 extern double           g_ownship_predictor_minutes;
 
 #ifdef USE_S57
-extern s52plib          *ps52plib;
+extern chart::s52plib          *ps52plib;
 #endif
 
 extern bool             g_bshow_overzoom_emboss;
@@ -768,9 +768,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	load_s57dialog();
 
 #ifdef USE_S57
-	if( NULL != ps52plib ) {
+	if (NULL != ps52plib) {
 		double dval;
-		SetPath( _T ( "/Settings/GlobalState" ) );
+		SetPath(_T ( "/Settings/GlobalState" ));
 
 		Read( _T ( "bShowS57Text" ), &read_int, 0 );
 		ps52plib->SetShowS57Text( !( read_int == 0 ) );
@@ -784,14 +784,14 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		Read( _T ( "bExtendLightSectors" ), &read_int, 0 );
 		ps52plib->SetExtendLightSectors( !( read_int == 0 ) );
 
-		Read( _T ( "nDisplayCategory" ), &read_int, (enum DisCat) STANDARD );
-		ps52plib->m_nDisplayCategory = (enum DisCat) read_int;
+		Read( _T ( "nDisplayCategory" ), &read_int, (enum chart::DisCat) chart::STANDARD );
+		ps52plib->m_nDisplayCategory = (enum chart::DisCat) read_int;
 
-		Read( _T ( "nSymbolStyle" ), &read_int, (enum LUPname) PAPER_CHART );
-		ps52plib->m_nSymbolStyle = (LUPname) read_int;
+		Read( _T ( "nSymbolStyle" ), &read_int, (enum chart::LUPname) chart::PAPER_CHART );
+		ps52plib->m_nSymbolStyle = (chart::LUPname) read_int;
 
-		Read( _T ( "nBoundaryStyle" ), &read_int, PLAIN_BOUNDARIES );
-		ps52plib->m_nBoundaryStyle = (LUPname) read_int;
+		Read( _T ( "nBoundaryStyle" ), &read_int, chart::PLAIN_BOUNDARIES );
+		ps52plib->m_nBoundaryStyle = (chart::LUPname) read_int;
 
 		Read( _T ( "bShowSoundg" ), &read_int, 0 );
 		ps52plib->m_bShowSoundg = !( read_int == 0 );
@@ -812,18 +812,18 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		ps52plib->m_bShowNationalTexts = !( read_int == 0 );
 
 		if( Read( _T ( "S52_MAR_SAFETY_CONTOUR" ), &dval, 5.0 ) ) {
-			S52_setMarinerParam( S52_MAR_SAFETY_CONTOUR, dval );
-			S52_setMarinerParam( S52_MAR_SAFETY_DEPTH, dval ); // Set safety_contour and safety_depth the same
+			chart::S52_setMarinerParam( chart::S52_MAR_SAFETY_CONTOUR, dval );
+			chart::S52_setMarinerParam( chart::S52_MAR_SAFETY_DEPTH, dval ); // Set safety_contour and safety_depth the same
 		}
 
-		if( Read( _T ( "S52_MAR_SHALLOW_CONTOUR" ), &dval, 3.0 ) ) S52_setMarinerParam(
-				S52_MAR_SHALLOW_CONTOUR, dval );
+		if (Read(_T ( "S52_MAR_SHALLOW_CONTOUR" ), &dval, 3.0))
+			chart::S52_setMarinerParam(chart::S52_MAR_SHALLOW_CONTOUR, dval);
 
-		if( Read( _T ( "S52_MAR_DEEP_CONTOUR" ), &dval, 10.0 ) ) S52_setMarinerParam(
-				S52_MAR_DEEP_CONTOUR, dval );
+		if (Read(_T ( "S52_MAR_DEEP_CONTOUR" ), &dval, 10.0))
+			chart::S52_setMarinerParam(chart::S52_MAR_DEEP_CONTOUR, dval);
 
-		if( Read( _T ( "S52_MAR_TWO_SHADES" ), &dval, 0.0 ) ) S52_setMarinerParam(
-				S52_MAR_TWO_SHADES, dval );
+		if (Read(_T ( "S52_MAR_TWO_SHADES" ), &dval, 0.0))
+			chart::S52_setMarinerParam(chart::S52_MAR_TWO_SHADES, dval);
 
 		ps52plib->UpdateMarinerParams();
 
@@ -1041,7 +1041,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 #ifdef USE_S57
 	// S57 Object Class Visibility
 
-	OBJLElement *pOLE;
+	chart::OBJLElement *pOLE;
 
 	SetPath(_T("/Settings/ObjectFilter"));
 
@@ -1063,7 +1063,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 				if (str.StartsWith(_T("viz"), &sObj)) {
 					for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-						pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+						pOLE = (chart::OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
 						if (!strncmp(pOLE->OBJLName, sObj.mb_str(), 6)) {
 							pOLE->nViz = val;
 							bNeedNew = false;
@@ -1072,7 +1072,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 					}
 
 					if (bNeedNew) {
-						pOLE = (OBJLElement*)calloc(sizeof(OBJLElement), 1);
+						pOLE = (chart::OBJLElement*)calloc(sizeof(chart::OBJLElement), 1);
 						strncpy(pOLE->OBJLName, sObj.mb_str(), 6);
 						pOLE->nViz = 1;
 
@@ -1706,7 +1706,7 @@ void Config::UpdateSettings()
 #ifdef USE_S57
 	if( ps52plib ) {
 		for( unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++ ) {
-			OBJLElement *pOLE = (OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
+			chart::OBJLElement *pOLE = (chart::OBJLElement *) ( ps52plib->pOBJLArray->Item( iPtr ) );
 
 			wxString st1( _T ( "viz" ) );
 			char name[7];
@@ -1807,10 +1807,10 @@ void Config::UpdateSettings()
 		Write( _T ( "bDeClutterText" ), ps52plib->m_bDeClutterText );
 		Write( _T ( "bShowNationalText" ), ps52plib->m_bShowNationalTexts );
 
-		Write( _T ( "S52_MAR_SAFETY_CONTOUR" ), S52_getMarinerParam( S52_MAR_SAFETY_CONTOUR ) );
-		Write( _T ( "S52_MAR_SHALLOW_CONTOUR" ), S52_getMarinerParam( S52_MAR_SHALLOW_CONTOUR ) );
-		Write( _T ( "S52_MAR_DEEP_CONTOUR" ), S52_getMarinerParam( S52_MAR_DEEP_CONTOUR ) );
-		Write( _T ( "S52_MAR_TWO_SHADES" ), S52_getMarinerParam( S52_MAR_TWO_SHADES ) );
+		Write( _T ( "S52_MAR_SAFETY_CONTOUR" ), chart::S52_getMarinerParam( chart::S52_MAR_SAFETY_CONTOUR ) );
+		Write( _T ( "S52_MAR_SHALLOW_CONTOUR" ), chart::S52_getMarinerParam( chart::S52_MAR_SHALLOW_CONTOUR ) );
+		Write( _T ( "S52_MAR_DEEP_CONTOUR" ), chart::S52_getMarinerParam( chart::S52_MAR_DEEP_CONTOUR ) );
+		Write( _T ( "S52_MAR_TWO_SHADES" ), chart::S52_getMarinerParam( chart::S52_MAR_TWO_SHADES ) );
 		Write( _T ( "S52_DEPTH_UNIT_SHOW" ), ps52plib->m_nDepthUnitDisplay );
 	}
 	SetPath( _T ( "/Directories" ) );

@@ -30,7 +30,7 @@ class PlugInChartBase;
 class wxRect;
 class wxObject;
 
-class ChartPlugInWrapper : public ChartBase
+class ChartPlugInWrapper : public chart::ChartBase
 {
 	public:
 		ChartPlugInWrapper();
@@ -39,7 +39,7 @@ class ChartPlugInWrapper : public ChartBase
 
 		virtual wxString GetFileSearchMask(void);
 
-		virtual InitReturn Init(const wxString& name, ChartInitFlag init_flags);
+		virtual chart::InitReturn Init(const wxString& name, chart::ChartInitFlag init_flags);
 
 		virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
 		virtual ThumbData *GetThumbData();
@@ -47,7 +47,7 @@ class ChartPlugInWrapper : public ChartBase
 
 		double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
 		double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
-		virtual bool GetChartExtent(Extent *pext);
+		virtual bool GetChartExtent(chart::Extent *pext);
 
 		virtual bool RenderRegionViewOnDC(
 				wxMemoryDC & dc,
@@ -72,8 +72,8 @@ class ChartPlugInWrapper : public ChartBase
 		virtual int  GetNoCOVRTablenPoints(int iTable) const;
 		virtual float *GetNoCOVRTableHead(int iTable);
 
-		//    The following set of methods apply to BSB (i.e. Raster) type PlugIn charts only
-		//    and need not be implemented if the ChartFamily is not CHART_FAMILY_RASTER
+		// The following set of methods apply to BSB (i.e. Raster) type PlugIn charts only
+		// and need not be implemented if the ChartFamily is not CHART_FAMILY_RASTER
 		virtual void ComputeSourceRectangle(const ViewPort & vp, wxRect * pSourceRect);
 		virtual double GetRasterScaleFactor() const;
 		virtual bool GetChartBits(wxRect & source, unsigned char *pPix, int sub_samp);

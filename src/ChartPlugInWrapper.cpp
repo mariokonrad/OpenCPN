@@ -53,16 +53,16 @@ wxString ChartPlugInWrapper::GetFileSearchMask(void)
 		return _T("");
 }
 
-InitReturn ChartPlugInWrapper::Init(const wxString& name, ChartInitFlag init_flags)
+chart::InitReturn ChartPlugInWrapper::Init(const wxString& name, chart::ChartInitFlag init_flags)
 {
 	if (m_ppicb) {
-		InitReturn ret_val = (InitReturn)m_ppicb->Init(name, (int)init_flags);
+		chart::InitReturn ret_val = (chart::InitReturn)m_ppicb->Init(name, (int)init_flags);
 
 		// Here we transcribe all the required wrapped member elements up into the chartbase object
 		// which is the parent of this class
-		if (ret_val == INIT_OK) {
+		if (ret_val == chart::INIT_OK) {
 			m_FullPath = m_ppicb->GetFullPath();
-			m_ChartType = (ChartTypeEnum)m_ppicb->GetChartType();
+			m_ChartType = (chart::ChartTypeEnum)m_ppicb->GetChartType();
 			m_ChartFamily = (chart::ChartFamilyEnum)m_ppicb->GetChartFamily();
 			m_projection = (OcpnProjType)m_ppicb->GetChartProjection();
 			m_EdDate = m_ppicb->GetEditionDate();
@@ -75,7 +75,7 @@ InitReturn ChartPlugInWrapper::Init(const wxString& name, ChartInitFlag init_fla
 			m_EdDate = m_ppicb->GetEditionDate();
 			m_ExtraInfo = m_ppicb->GetExtraInfo();
 			Chart_Error_Factor = m_ppicb->GetChartErrorFactor();
-			m_depth_unit_id = (ChartDepthUnitType)m_ppicb->GetDepthUnitId();
+			m_depth_unit_id = (chart::ChartDepthUnitType)m_ppicb->GetDepthUnitId();
 			m_Chart_Skew = m_ppicb->GetChartSkew();
 			m_Chart_Scale = m_ppicb->GetNativeScale();
 
@@ -84,7 +84,7 @@ InitReturn ChartPlugInWrapper::Init(const wxString& name, ChartInitFlag init_fla
 
 		return ret_val;
 	} else
-		return INIT_FAIL_REMOVE;
+		return chart::INIT_FAIL_REMOVE;
 }
 
 //    Accessors
@@ -145,7 +145,7 @@ float* ChartPlugInWrapper::GetNoCOVRTableHead(int iTable)
 	return 0;
 }
 
-bool ChartPlugInWrapper::GetChartExtent(Extent* pext)
+bool ChartPlugInWrapper::GetChartExtent(chart::Extent* pext)
 {
 	if (m_ppicb) {
 		ExtentPI xpi;

@@ -33,6 +33,8 @@
 
 #include <tinyxml/tinyxml.h>
 
+namespace chart {
+
 // FIXME: this is essentially a singleton, but not implemented as one...
 class ChartSymbols
 {
@@ -72,5 +74,7 @@ private:
 
 	s52plib* plib;
 };
+
+}
 
 #endif

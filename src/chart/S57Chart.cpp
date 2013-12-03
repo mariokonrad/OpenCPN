@@ -35,11 +35,11 @@
 #include <chart/S57Light.h>
 
 #include "dychart.h"
-#include "ocpn_pixel.h"
-#include "ocpnDC.h"
-#include "OCPNRegionIterator.h"
-#include "OCPNMemDC.h"
-#include "OCPNBitmap.h"
+#include <ocpn_pixel.h>
+#include <ocpnDC.h>
+#include <OCPNRegionIterator.h>
+#include <OCPNMemDC.h>
+#include <OCPNBitmap.h>
 
 #include <MessageBox.h>
 #include <UserColors.h>
@@ -67,18 +67,7 @@
 
 #include <algorithm>
 
-extern bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val); // found in s52cnsy
-
-void OpenCPN_OGRErrorHandler( CPLErr eErrClass, int nError,
-                              const char * pszErrorMsg );               // installed GDAL OGR library error handler
-
-const char *MyCSVGetField( const char * pszFilename,
-                         const char * pszKeyFieldName,
-                         const char * pszKeyFieldValue,
-                         CSVCompareCriteria eCriteria,
-                         const char * pszTargetField ) ;
-
-extern s52plib* ps52plib;
+extern chart::s52plib* ps52plib;
 extern S57ClassRegistrar* g_poRegistrar;
 extern wxString g_csv_locn;
 extern wxString g_SENCPrefix;
@@ -87,11 +76,22 @@ extern bool g_bGDAL_Debug;
 extern bool g_bDebugS57;
 extern bool g_b_useStencil;
 extern ChartCanvas* cc1;
-extern ChartBase* Current_Ch;
+extern chart::ChartBase* Current_Ch;
 
 extern wxProgressDialog *s_ProgDialog;
 
 static jmp_buf env_ogrf;                    // the context saved by setjmp();
+
+namespace chart {
+
+const char* MyCSVGetField(const char* pszFilename, const char* pszKeyFieldName,
+						  const char* pszKeyFieldValue, CSVCompareCriteria eCriteria,
+						  const char* pszTargetField);
+
+// installed GDAL OGR library error handler
+void OpenCPN_OGRErrorHandler(CPLErr eErrClass, int nError, const char* pszErrorMsg);
+
+extern bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val); // found in s52cnsy
 
 #define S57_THUMB_SIZE  200
 
@@ -6810,3 +6810,6 @@ bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort& viewport,
 
 	return newSectorsNeedDrawing;
 }
+
+}
+

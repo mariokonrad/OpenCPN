@@ -23,8 +23,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef _S52S57_H_
-#define _S52S57_H_
+#ifndef __CHART__S52S57__H__
+#define __CHART__S52S57__H__
 
 #include <geo/BoundingBox.h>
 
@@ -32,14 +32,22 @@
 #include <wx/string.h>
 #include <wx/dc.h>
 
-#define CURRENT_SENC_FORMAT_VERSION  122
-
 class wxInputStream;
+class OGRFeature;
 class OGREnvelope;
 class OGRGeometry;
+
+namespace geo {
+	class PolyTessGeo;
+	class PolyTessGeoTrap;
+}
+
+namespace chart {
+
+#define CURRENT_SENC_FORMAT_VERSION  122
+
 class s57chart;
 class S57Obj;
-class OGRFeature;
 
 
 // name of the addressed look up table set (fifth letter)
@@ -299,13 +307,6 @@ struct pt // FIXME: who the hell names types like this?
 	double y;
 };
 
-
-namespace geo {
-	class PolyTessGeo;
-	class PolyTessGeoTrap;
-}
-
-
 class S57Obj
 {
 	public:
@@ -341,10 +342,10 @@ class S57Obj
 		double                  *geoPtz;                // an array[3] for MultiPoint, SM with Z, i.e. depth
 		double                  *geoPtMulti;            // an array[2] for MultiPoint, lat/lon to make bbox
 		// of decomposed points
-		geo::PolyTessGeo             *pPolyTessGeo;
-		geo::PolyTessGeoTrap         *pPolyTrapGeo;
+		::geo::PolyTessGeo             *pPolyTessGeo;
+		::geo::PolyTessGeoTrap         *pPolyTrapGeo;
 
-		geo::BoundingBox           BBObj;                  // lat/lon BBox of the rendered object
+		::geo::BoundingBox           BBObj;                  // lat/lon BBox of the rendered object
 		double                  m_lat;                  // The lat/lon of the object's "reference" point
 		double                  m_lon;
 		bool                    bBBObj_valid;           // set after the BBObj has been calculated once.
@@ -464,5 +465,7 @@ public:
 	double easting;
 	double northing;
 };
+
+}
 
 #endif

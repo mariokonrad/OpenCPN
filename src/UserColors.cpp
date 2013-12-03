@@ -28,16 +28,15 @@
 #ifdef USE_S57
 	#include <chart/s52s57.h>
 	#include <chart/s52plib.h>
-	extern s52plib * ps52plib;
+	extern chart::s52plib* ps52plib;
 #endif
 
-typedef std::vector<colTable *> UserColorTable;
-typedef std::vector<wxColorHashMap *> UserColorHashTable;
+typedef std::vector<chart::colTable*> UserColorTable;
+typedef std::vector<chart::wxColorHashMap*> UserColorHashTable;
 
 static UserColorTable user_color_table;
 static UserColorHashTable user_color_hash_table;
-static wxColorHashMap * pcurrent_user_color_hash = NULL;
-
+static chart::wxColorHashMap* pcurrent_user_color_hash = NULL;
 
 wxColour GetGlobalColor(wxString colorName)
 {
@@ -196,6 +195,8 @@ void InitializeUserColors(void)
 
 		"*****" };
 
+	using namespace chart;
+
 	const char ** p = usercolors;
 	colTable * ct;
 
@@ -280,9 +281,9 @@ void InitializeUserColors(void)
 void DeInitializeUserColors(void)
 {
 	for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
-		colTable * ct = *i;
+		chart::colTable* ct = *i;
 		for (unsigned int j = 0; j < ct->color->size(); ++j) {
-			S52color * c = (S52color *) ct->color->Item(j);
+			chart::S52color* c = static_cast<chart::S52color*>(ct->color->Item(j));
 			delete c;
 		}
 

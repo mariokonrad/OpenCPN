@@ -21,19 +21,22 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __QUIT_H__
-#define __QUIT_H__
+#ifndef __QUIT__H__
+#define __QUIT__H__
 
-#include "OCPNRegion.h"
-#include "QuiltPatch.h"
-#include "QuiltCandidate.h"
-#include "ViewPort.h"
+#include <OCPNRegion.h>
+#include <QuiltPatch.h>
+#include <QuiltCandidate.h>
+#include <ViewPort.h>
 #include <vector>
 #include <list>
 #include <wx/dynarray.h>
 
-struct ChartTableEntry;
-class ChartBase;
+namespace chart {
+	struct ChartTableEntry;
+	class ChartBase;
+}
+
 class wxMemoryDC;
 
 WX_DEFINE_SORTED_ARRAY(QuiltCandidate *, ArrayOfSortedQuiltCandidates);
@@ -50,9 +53,9 @@ public:
 	bool Compose(const ViewPort& vp);
 	bool IsComposed() const;
 
-	ChartBase* GetFirstChart();
-	ChartBase* GetNextChart();
-	ChartBase* GetLargestScaleChart();
+	chart::ChartBase* GetFirstChart();
+	chart::ChartBase* GetNextChart();
+	chart::ChartBase* GetLargestScaleChart();
 	std::vector<int> GetQuiltIndexArray(void);
 	bool IsQuiltDelta(ViewPort& vp);
 	bool IsChartQuiltableRef(int db_index);
@@ -67,8 +70,8 @@ public:
 	void ComputeRenderRegion(ViewPort& vp, OCPNRegion& chart_region);
 	bool RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& chart_region);
 	bool IsVPBlittable(ViewPort& VPoint, int dx, int dy, bool b_allow_vector = false);
-	ChartBase* GetChartAtPix(wxPoint p);
-	ChartBase* GetOverlayChartAtPix(wxPoint p);
+	chart::ChartBase* GetChartAtPix(wxPoint p);
+	chart::ChartBase* GetOverlayChartAtPix(wxPoint p);
 	int GetChartdbIndexAtPix(wxPoint p);
 	void InvalidateAllQuiltPatchs(void);
 
@@ -98,15 +101,15 @@ public:
 	bool IsBusy() const;
 
 	QuiltPatch* GetCurrentPatch();
-	bool IsChartInQuilt(ChartBase* pc);
+	bool IsChartInQuilt(chart::ChartBase* pc);
 	bool IsQuiltVector(void);
 	OCPNRegion GetHiliteRegion(ViewPort& vp);
 
 private:
 	typedef std::list<QuiltPatch*> PatchList;
 
-	OCPNRegion GetChartQuiltRegion(const ChartTableEntry& cte, ViewPort& vp);
-	wxRect GetChartQuiltBoundingRect(const ChartTableEntry& cte, ViewPort& vp);
+	OCPNRegion GetChartQuiltRegion(const chart::ChartTableEntry& cte, ViewPort& vp);
+	wxRect GetChartQuiltBoundingRect(const chart::ChartTableEntry& cte, ViewPort& vp);
 	void EmptyCandidateArray(void);
 	void SubstituteClearDC(wxMemoryDC& dc, ViewPort& vp);
 	int GetNewRefChart(void);

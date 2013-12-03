@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef _CHARTIMG_H_
-#define _CHARTIMG_H_
+#ifndef __CHART__CHARTIMG__H__
+#define __CHART__CHARTIMG__H__
 
 #include <chart/ChartBase.h>
 #include <chart/Refpoint.h>
@@ -38,6 +38,10 @@ class wxInputStream;
 class wxBufferedInputStream;
 class wxFileInputStream;
 class wxImage;
+
+class PixelCache;
+
+namespace chart {
 
 enum ScaleTypeEnum
 {
@@ -63,8 +67,6 @@ enum BSB_Color_Capability
 	PRG,
 	N_BSB_COLORS
 };
-
-class PixelCache;
 
 class CachedLine
 {
@@ -269,5 +271,7 @@ protected:
 
 	ViewPort m_vp_render_last;
 };
+
+}
 
 #endif

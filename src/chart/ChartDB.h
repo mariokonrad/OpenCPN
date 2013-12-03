@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHARTDB_H__
-#define __CHARTDB_H__
+#ifndef __CHART__CHARTDB__H__
+#define __CHART__CHARTDB__H__
 
 #include <wx/file.h>
 #include <wx/stream.h>
@@ -35,6 +35,10 @@
 #include <chart/ChartDatabase.h>
 #include <chart/s52s57.h>
 
+class MainFrame;
+
+namespace chart {
+
 struct MyFlPoint
 {
 	float y;
@@ -43,7 +47,6 @@ struct MyFlPoint
 
 class ChartBase;
 class ChartStack;
-class MainFrame;
 
 class ChartDB : public ChartDatabase
 {
@@ -110,5 +113,7 @@ private:
 	MainFrame* pParent;
 	bool m_b_locked;
 };
+
+}
 
 #endif

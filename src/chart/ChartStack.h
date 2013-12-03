@@ -24,6 +24,7 @@
 #ifndef __CHARTSTACK__H__
 #define __CHARTSTACK__H__
 
+namespace chart {
 
 class ChartStack
 {
@@ -48,5 +49,7 @@ class ChartStack
 		bool DoesStackContaindbIndex(int db_index);
 		void AddChart(int db_add);
 };
+
+}
 
 #endif

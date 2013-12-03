@@ -33,14 +33,16 @@
 
 #include <plugin/PlugInManager.h>
 
+extern PlugInManager* g_pi_manager;
+
+namespace chart {
+
 #include <wx/arrimpl.cpp>
 WX_DEFINE_OBJARRAY(ChartTable);
 
 using chart::ChartClassDescriptor;
 
 static const int DB_VERSION_CURRENT = 17; // FIXME: duplicate
-
-extern PlugInManager* g_pi_manager;
 
 int s_dbVersion; // Database version currently in use at runtime
 
@@ -1159,5 +1161,7 @@ void ChartDatabase::ApplyGroupArray(chart::ChartGroupArray* pGroupArray) // FIXM
 			}
 		}
 	}
+}
+
 }
 

@@ -27,7 +27,7 @@
 #include <chart/ChartFamily.h>
 #include <chart/ChartDB.h>
 
-extern ChartDB* ChartData; // FIXME: global data
+extern chart::ChartDB* ChartData; // FIXME: global data
 
 QuiltCandidate::QuiltCandidate()
 	: b_include(false)
@@ -40,14 +40,14 @@ OCPNRegion& QuiltCandidate::GetCandidateVPRegion(ViewPort& vp) // FIXME: really 
 	if (candidate_region.IsOk())
 		return candidate_region;
 
-	const ChartTableEntry& cte = ChartData->GetChartTableEntry(dbIndex);
+	const chart::ChartTableEntry& cte = ChartData->GetChartTableEntry(dbIndex);
 
 	OCPNRegion screen_region(vp.rv_rect);
 
 	// Special case for charts which extend around the world, or near to it
 	// Mostly this means cm93....
 	// Take the whole screen, clipped at +/- 80 degrees lat
-	if (fabs(cte.GetLonMax() - cte.GetLonMin()) > 180.) {
+	if (fabs(cte.GetLonMax() - cte.GetLonMin()) > 180.0) {
 		int n_ply_entries = 4;
 		float ply[8];
 		ply[0] = 80.;

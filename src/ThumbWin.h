@@ -27,30 +27,28 @@
 #include <wx/window.h>
 #include <wx/bitmap.h>
 
-class ChartBase;
+namespace chart { class ChartBase; }
 
 class ThumbWin : public wxWindow
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	private:
-		wxSize m_max_size;
+public:
+	ThumbWin();
+	ThumbWin(wxWindow* parent);
+	virtual ~ThumbWin();
 
-	public:
-		wxBitmap m_bitmap;
-		ChartBase * pThumbChart;
+	void Resize(void);
+	void SetMaxSize(wxSize const& max_size);
+	const wxBitmap& GetBitmap(void);
 
-	private:
-		void OnPaint(wxPaintEvent& event);
+	wxBitmap m_bitmap;
+	chart::ChartBase* pThumbChart;
 
-	public:
-		ThumbWin();
-		ThumbWin(wxWindow * parent);
-		virtual ~ThumbWin();
+private:
+	void OnPaint(wxPaintEvent& event);
 
-		void Resize(void);
-		void SetMaxSize(wxSize const & max_size);
-		const wxBitmap & GetBitmap(void);
+	wxSize m_max_size;
 };
 
 #endif

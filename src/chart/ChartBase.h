@@ -25,9 +25,9 @@
 #define __CHART__CHARTBASE__H__
 
 #include "dychart.h"
-#include "ColorScheme.h"
-#include "ThumbData.h"
-#include "ProjectionType.h"
+#include <ColorScheme.h>
+#include <ThumbData.h>
+#include <ProjectionType.h>
 
 #include <chart/ChartType.h>
 #include <chart/ChartFamily.h>
@@ -38,6 +38,8 @@ class wxGLContext;
 class wxMemoryDC;
 class ViewPort;
 class OCPNRegion;
+
+namespace chart {
 
 enum ChartInitFlag
 {
@@ -182,5 +184,7 @@ protected:
 	int* m_pNoCOVRTablePoints; // int table of number of points in each NoCoverage table entry
 	float** m_pNoCOVRTable; // table of pointers to list of floats describing valid NOCOVR
 };
+
+}
 
 #endif

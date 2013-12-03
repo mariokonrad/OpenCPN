@@ -48,20 +48,20 @@
 	#define GL_DEPTH_STENCIL_ATTACHMENT  0x821A
 #endif
 
-extern ChartCanvas * cc1;
-extern s52plib * ps52plib;
+extern ChartCanvas* cc1;
+extern chart::s52plib* ps52plib;
 extern bool g_bopengl;
 extern bool g_b_useStencil;
 extern int g_GPU_MemSize;
 extern bool g_bDebugOGL;
-extern PlugInManager * g_pi_manager;
+extern PlugInManager* g_pi_manager;
 extern bool g_bskew_comp;
 extern int g_memCacheLimit;
 extern bool g_bCourseUp;
-extern ChartBase * Current_Ch;
+extern chart::ChartBase* Current_Ch;
 extern ColorScheme global_color_scheme;
 extern bool g_bquiting;
-extern ThumbWin * pthumbwin;
+extern ThumbWin* pthumbwin;
 
 extern PFNGLGENFRAMEBUFFERSEXTPROC         s_glGenFramebuffersEXT;
 extern PFNGLGENRENDERBUFFERSEXTPROC        s_glGenRenderbuffersEXT;
@@ -174,8 +174,10 @@ static void HalfScaleChartBits( int width, int height, unsigned char *source, un
 	}
 }
 
-static void OCPNPopulateTD( glTextureDescriptor *ptd, int n_basemult, wxRect &rect, ChartBase *pchart )
+static void OCPNPopulateTD( glTextureDescriptor *ptd, int n_basemult, wxRect &rect, chart::ChartBase *pchart )
 {
+	using namespace chart;
+
 	if( !pchart ) return;
 
 	ChartPlugInWrapper *pPlugInWrapper = dynamic_cast<ChartPlugInWrapper*>( pchart );
@@ -366,7 +368,7 @@ void glChartCanvas::ClearAllRasterTextures(void)
 	// Clear and delete all the GPU textures presently loaded
 	ChartPointerHashType::iterator it;
 	for (it = m_chart_hash.begin(); it != m_chart_hash.end(); ++it) {
-		ChartBase* pc = (ChartBase*)it->first;
+		chart::ChartBase* pc = (chart::ChartBase*)it->first;
 
 		ChartTextureHashType* pTextureHash = m_chart_hash[pc];
 
@@ -624,7 +626,7 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 	s_in_glpaint--;
 }
 
-bool glChartCanvas::PurgeChartTextures(ChartBase* pc)
+bool glChartCanvas::PurgeChartTextures(chart::ChartBase* pc)
 {
 	// Look for the chart texture hashmap in the member chart hashmap
 	ChartPointerHashType::iterator it0 = m_chart_hash.find(pc);
@@ -827,8 +829,10 @@ void glChartCanvas::SetClipRegion(ViewPort& vp, OCPNRegion& region, bool b_clear
 	}
 }
 
-void glChartCanvas::RenderRasterChartRegionGL( ChartBase *chart, ViewPort &vp, OCPNRegion &region )
+void glChartCanvas::RenderRasterChartRegionGL( chart::ChartBase *chart, ViewPort &vp, OCPNRegion &region )
 {
+	using namespace chart;
+
 	if( !chart ) return;
 
 	ChartPlugInWrapper *pPlugInWrapper = dynamic_cast<ChartPlugInWrapper*>( chart );
@@ -1191,7 +1195,7 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 		if( b_clear ) {
 			OCPNRegion clear_test_region = Region;
 
-			ChartBase *cchart = cc1->m_pQuilt->GetFirstChart();
+			chart::ChartBase *cchart = cc1->m_pQuilt->GetFirstChart();
 			while( cchart ) {
 				if( ! cc1->IsChartLargeEnoughToRender( cchart, vp ) ) {
 					cchart = cc1->m_pQuilt->GetNextChart();
@@ -1214,7 +1218,7 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 		}
 
 		//  Now render the quilt
-		ChartBase *chart = cc1->m_pQuilt->GetFirstChart();
+		chart::ChartBase *chart = cc1->m_pQuilt->GetFirstChart();
 
 		while( chart ) {
 			if( ! cc1->IsChartLargeEnoughToRender( chart, vp ) ) {
@@ -1231,9 +1235,10 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 
 				if( !get_region.IsEmpty() ) {
 					if( !pqp->b_overlay ) {
-						ChartBaseBSB *Patch_Ch_BSB = dynamic_cast<ChartBaseBSB*>( chart );
-						if( Patch_Ch_BSB ) {
-							RenderRasterChartRegionGL( chart, cc1->VPoint, get_region );
+						chart::ChartBaseBSB* Patch_Ch_BSB = dynamic_cast
+							<chart::ChartBaseBSB*>(chart);
+						if (Patch_Ch_BSB) {
+							RenderRasterChartRegionGL(chart, cc1->VPoint, get_region);
 							b_rendered = true;
 						} else {
 							ChartPlugInWrapper *Patch_Ch_Plugin =
@@ -1264,9 +1269,9 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 			chart = cc1->m_pQuilt->GetNextChart();
 		}
 
-		//    Render any Overlay patches for s57 charts(cells)
+		// Render any Overlay patches for s57 charts(cells)
 		if( cc1->m_pQuilt->HasOverlays() ) {
-			ChartBase *pch = cc1->m_pQuilt->GetFirstChart();
+			chart::ChartBase *pch = cc1->m_pQuilt->GetFirstChart();
 			while( pch ) {
 				QuiltPatch *pqp = cc1->m_pQuilt->GetCurrentPatch();
 				if( pqp->b_Valid ) {
@@ -1276,12 +1281,11 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 					if( !get_region.IsEmpty() ) {
 						if( pqp->b_overlay ) {
 							if( pch->GetChartFamily() == chart::CHART_FAMILY_VECTOR ) {
-								s57chart *Chs57 = dynamic_cast<s57chart*>( pch );
-								if( pch ) {
-									get_region.Offset( cc1->VPoint.rv_rect.x,
-											cc1->VPoint.rv_rect.y );
-									Chs57->RenderOverlayRegionViewOnGL( *m_pcontext, cc1->VPoint,
-											get_region );
+								chart::s57chart* Chs57 = dynamic_cast<chart::s57chart*>(pch);
+								if (pch) {
+									get_region.Offset(cc1->VPoint.rv_rect.x, cc1->VPoint.rv_rect.y);
+									Chs57->RenderOverlayRegionViewOnGL(*m_pcontext, cc1->VPoint,
+																	   get_region);
 								}
 							}
 						}
@@ -1349,7 +1353,7 @@ void glChartCanvas::ComputeRenderQuiltViewGLRegion( ViewPort &vp, OCPNRegion Reg
 	m_gl_rendered_region.Clear();
 
 	if( cc1->m_pQuilt->GetnCharts() && !cc1->m_pQuilt->IsBusy() ) {
-		ChartBase *chart = cc1->m_pQuilt->GetFirstChart();
+		chart::ChartBase *chart = cc1->m_pQuilt->GetFirstChart();
 
 		while( chart ) {
 			if( ! cc1->IsChartLargeEnoughToRender( chart, vp ) ) {
@@ -1431,7 +1435,7 @@ void glChartCanvas::render()
 	if ((m_ntex > m_tex_max_res) || m_b_mem_crunch) {
 		ChartPointerHashType::iterator it0;
 		for (it0 = m_chart_hash.begin(); it0 != m_chart_hash.end(); ++it0) {
-			ChartBaseBSB* pc = (ChartBaseBSB*)it0->first;
+			chart::ChartBaseBSB* pc = (chart::ChartBaseBSB*)it0->first;
 
 			if (VPoint.b_quilt) // quilted
 			{
@@ -1711,7 +1715,7 @@ void glChartCanvas::render()
 	else                  // not quilted
 	{
 		bool b_rendered = false;
-		ChartBaseBSB *Current_Ch_BSB = dynamic_cast<ChartBaseBSB*>( Current_Ch );
+		chart::ChartBaseBSB *Current_Ch_BSB = dynamic_cast<chart::ChartBaseBSB*>( Current_Ch );
 		if( Current_Ch_BSB ) {
 			glClear( GL_COLOR_BUFFER_BIT );
 			RenderRasterChartRegionGL( Current_Ch, cc1->VPoint, chart_get_region );

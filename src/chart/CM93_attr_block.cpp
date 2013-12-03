@@ -24,6 +24,8 @@
 #include "CM93_attr_block.h"
 #include <chart/CM93Dictionary.h>
 
+namespace chart {
+
 cm93_attr_block::cm93_attr_block(void * block, cm93_dictionary * pdict)
 {
 	m_cptr = 0;
@@ -106,6 +108,8 @@ unsigned char *cm93_attr_block::GetNextAttr()
 	}
 
 	return ret_val;
+
+}
 
 }
 

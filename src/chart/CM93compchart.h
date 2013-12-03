@@ -26,13 +26,13 @@
 
 #include <chart/S57Chart.h>
 #include <chart/s52s57.h>
+#include <chart/CM93Manager.h>
 
 #include <wx/string.h>
 
 class CM93OffsetDialog;
 class OCPNRegion;
 class cm93_dictionary;
-class cm93manager;
 class cm93chart;
 
 class cm93compchart : public s57chart
@@ -120,7 +120,7 @@ private:
 	// Data members
 
 	cm93_dictionary* m_pDictComposite;
-	cm93manager* m_pcm93mgr;
+	chart::cm93manager* m_pcm93mgr;
 
 	cm93chart* m_pcm93chart_array[8];
 	bool m_bScale_Array[8];

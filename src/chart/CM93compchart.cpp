@@ -46,6 +46,8 @@
 
 #include <wx/regex.h>
 
+using chart::FindCM93Dictionary;
+
 extern bool g_bDebugCM93; // FIXME
 extern CM93DSlide * pCM93DetailSlider; // FIXME
 extern MainFrame * gFrame; // FIXME: through constructor?
@@ -139,18 +141,17 @@ cm93compchart::cm93compchart()
 	m_ChartType = CHART_TYPE_CM93COMP;
 	m_pDictComposite = NULL;
 
-	//    Supply a default name for status bar field
-	m_FullPath = _T ( "CM93" );
+	// Supply a default name for status bar field
+	m_FullPath = _T("CM93");
 
-	//    Set the "Description", so that it paints nice on the screen
-	m_Description = _T ( "CM93Composite" );
+	// Set the "Description", so that it paints nice on the screen
+	m_Description = _T("CM93Composite");
 
-	m_SE = _T ( "" );
-	m_datum_str = _T ( "WGS84" );
-	m_SoundingsDatum = _T ( "Unknown" );
+	m_SE = _T("");
+	m_datum_str = _T("WGS84");
+	m_SoundingsDatum = _T("Unknown");
 
-
-	for ( int i = 0 ; i < 8 ; i++ )
+	for (int i = 0; i < 8; i++)
 		m_pcm93chart_array[i] = NULL;
 
 	m_pcm93chart_current = NULL;
@@ -160,100 +161,84 @@ cm93compchart::cm93compchart()
 
 	m_pDummyBM = NULL;
 
-	SetSpecialOutlineCellIndex ( 0, 0, 0 );
+	SetSpecialOutlineCellIndex(0, 0, 0);
 	m_pOffsetDialog = NULL;
 
-	m_pcm93mgr = new cm93manager();
+	m_pcm93mgr = new chart::cm93manager;
 }
 
 cm93compchart::~cm93compchart()
 {
-	for ( int i = 0 ; i < 8 ; i++ )
+	for (int i = 0; i < 8; i++)
 		delete m_pcm93chart_array[i];
 
 	delete m_pDictComposite;
 	delete m_pDummyBM;
 	delete m_pcm93mgr;
-
 }
 
-
-InitReturn cm93compchart::Init ( const wxString& name, ChartInitFlag flags )
+InitReturn cm93compchart::Init(const wxString& name, ChartInitFlag flags)
 {
 	m_FullPath = name;
 
-	wxFileName fn ( name );
+	wxFileName fn(name);
 
 	wxString target;
 	wxString path;
 
 	wxString sep(wxFileName::GetPathSeparator());
 
-	//    Verify that the passed file name exists
-	if ( !fn.FileExists() )
-	{
+	// Verify that the passed file name exists
+	if (!fn.FileExists()) {
 		// It may be a directory
-		if( wxDir::Exists(name) )
-		{
+		if (wxDir::Exists(name)) {
 			target = name + sep;
 			path = name + sep;
+		} else {
+			wxString msg(_T("   CM93Composite Chart Init cannot find "));
+			msg.Append(name);
+			wxLogMessage(msg);
+			return INIT_FAIL_REMOVE;
 		}
-		else {
-			wxString msg ( _T ( "   CM93Composite Chart Init cannot find " ) );
-			msg.Append ( name );
-			wxLogMessage ( msg );
-			return  INIT_FAIL_REMOVE;
-		}
-	}
-	else              // its a file that exists
-	{
-		//    Get the cm93 cell database prefix
-		path = fn.GetPath ( ( int ) ( wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME ) );
+	} else {
+		// Get the cm93 cell database prefix
+		path = fn.GetPath((int)(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME));
 
-		//    Remove two subdirectories from the passed file name
-		//    This will give a normal CM93 root
-		wxFileName file_path ( path );
+		// Remove two subdirectories from the passed file name
+		// This will give a normal CM93 root
+		wxFileName file_path(path);
 		file_path.RemoveLastDir();
 		file_path.RemoveLastDir();
 
-		target = file_path.GetPath ( wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR );
+		target = file_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 	}
 
 	m_prefixComposite = target;
 
-	wxString msg ( _T ( "CM93Composite Chart Root is " ) );
-	msg.Append ( m_prefixComposite );
-	wxLogMessage ( msg );
+	wxString msg(_T("CM93Composite Chart Root is "));
+	msg.Append(m_prefixComposite);
+	wxLogMessage(msg);
 
-
-	if ( flags == THUMB_ONLY )
-	{
-		//            SetColorScheme(cs, false);
-
+	if (flags == THUMB_ONLY) {
 		return INIT_OK;
 	}
 
-
-	if ( flags == HEADER_ONLY )
+	if (flags == HEADER_ONLY)
 		return CreateHeaderData();
 
+	// Load the cm93 dictionary if necessary
+	if (!m_pDictComposite) {
+		if (!m_pDictComposite) // second try from the file
+			m_pDictComposite = FindAndLoadDictFromDir(path);
 
-	//    Load the cm93 dictionary if necessary
-	if ( !m_pDictComposite )
-	{
-		if ( !m_pDictComposite )                           // second try from the file
-			m_pDictComposite = FindAndLoadDictFromDir ( path );
-
-		if ( !m_pDictComposite )
-		{
-			wxLogMessage ( _T ( "   CM93Composite Chart Init cannot locate CM93 dictionary." ) );
+		if (!m_pDictComposite) {
+			wxLogMessage(_T("   CM93Composite Chart Init cannot locate CM93 dictionary."));
 			return INIT_FAIL_REMOVE;
 		}
 	}
 
-
-	//    Set the color scheme
-	SetColorScheme ( m_global_color_scheme, false );
+	// Set the color scheme
+	SetColorScheme(m_global_color_scheme, false);
 
 	bReadyToRender = true;
 
@@ -263,15 +248,13 @@ InitReturn cm93compchart::Init ( const wxString& name, ChartInitFlag flags )
 void cm93compchart::Activate(void)
 {
 #define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
-	const global::GUI::CM93 & cm93 = global::OCPN::get().gui().cm93();
+	const global::GUI::CM93& cm93 = global::OCPN::get().gui().cm93();
 
 	if (cm93.show_detail_slider) {
 		if (!pCM93DetailSlider) {
 			pCM93DetailSlider = new CM93DSlide(
-				gFrame, -1 , 0, -CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
-				cm93.detail_dialog_position,
-				wxDefaultSize,
-				wxSIMPLE_BORDER, _T("cm93 Detail"));
+				gFrame, -1, 0, -CM93_ZOOM_FACTOR_MAX_RANGE, CM93_ZOOM_FACTOR_MAX_RANGE,
+				cm93.detail_dialog_position, wxDefaultSize, wxSIMPLE_BORDER, _T("cm93 Detail"));
 		}
 
 		// Here is an ugly piece of code which prevents the slider from taking the keyboard focus
@@ -282,10 +265,10 @@ void cm93compchart::Activate(void)
 	}
 }
 
-void cm93compchart::Deactivate ( void )
+void cm93compchart::Deactivate(void)
 {
 	if (pCM93DetailSlider) {
-		pCM93DetailSlider-> Destroy();
+		pCM93DetailSlider->Destroy();
 		pCM93DetailSlider = NULL;
 	}
 }
@@ -337,176 +320,144 @@ int cm93compchart::GetCMScaleFromVP ( const ViewPort &vpt )
 	return cmscale_calc;
 }
 
-void cm93compchart::SetVPParms ( const ViewPort &vpt )
+void cm93compchart::SetVPParms(const ViewPort& vpt)
 {
-	m_vpt = vpt;                              // save a copy
+	m_vpt = vpt; // save a copy
 
-	int cmscale = GetCMScaleFromVP ( vpt );         // First order calculation of cmscale
+	int cmscale = GetCMScaleFromVP(vpt); // First order calculation of cmscale
 
-	m_cmscale = PrepareChartScale ( vpt, cmscale );
+	m_cmscale = PrepareChartScale(vpt, cmscale);
 
-	//    Continuoesly update the composite chart edition date to the latest cell decoded
-	if ( m_pcm93chart_array[cmscale] )
-	{
-		if ( m_pcm93chart_array[cmscale]->GetEditionDate().IsLaterThan ( m_EdDate ) )
+	// Continuoesly update the composite chart edition date to the latest cell decoded
+	if (m_pcm93chart_array[cmscale]) {
+		if (m_pcm93chart_array[cmscale]->GetEditionDate().IsLaterThan(m_EdDate))
 			m_EdDate = m_pcm93chart_array[cmscale]->GetEditionDate();
 	}
 }
 
-int cm93compchart::PrepareChartScale ( const ViewPort &vpt, int cmscale )
+int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 {
-
-	if ( g_bDebugCM93 )
-		printf ( "\non SetVPParms, cmscale:%d, %c\n", cmscale, ( char ) ( 'A' + cmscale -1 ) );
+	if (g_bDebugCM93)
+		printf("\non SetVPParms, cmscale:%d, %c\n", cmscale, (char)('A' + cmscale - 1));
 
 	wxChar ext;
 	bool cellscale_is_useable = false;
 	bool b_nochart = false;
 
-	while ( !cellscale_is_useable )
-	{
-		//    Open the proper scale chart, if not already open
-		while ( NULL == m_pcm93chart_array[cmscale] )
-		{
-			if ( Is_CM93Cell_Present ( m_prefixComposite, vpt.clat, vpt.clon, cmscale ) )
-			{
-				if ( g_bDebugCM93 )
-					printf ( " chart %c at VP clat/clon is present\n", ( char ) ( 'A' + cmscale -1 ) );
+	while (!cellscale_is_useable) {
+		// Open the proper scale chart, if not already open
+		while (NULL == m_pcm93chart_array[cmscale]) {
+			if (Is_CM93Cell_Present(m_prefixComposite, vpt.clat, vpt.clon, cmscale)) {
+				if (g_bDebugCM93)
+					printf(" chart %c at VP clat/clon is present\n", (char)('A' + cmscale - 1));
 
 				m_pcm93chart_array[cmscale] = new cm93chart();
 
-
-				ext = ( wxChar ) ( 'A' + cmscale - 1 );
-				if ( cmscale == 0 )
+				ext = (wxChar)('A' + cmscale - 1);
+				if (cmscale == 0)
 					ext = 'Z';
 
 				wxString file_dummy = _T ( "CM93." );
 				file_dummy << ext;
 
-				m_pcm93chart_array[cmscale]->SetCM93Dict ( m_pDictComposite );
-				m_pcm93chart_array[cmscale]->SetCM93Prefix ( m_prefixComposite );
-				m_pcm93chart_array[cmscale]->SetCM93Manager ( m_pcm93mgr );
+				m_pcm93chart_array[cmscale]->SetCM93Dict(m_pDictComposite);
+				m_pcm93chart_array[cmscale]->SetCM93Prefix(m_prefixComposite);
+				m_pcm93chart_array[cmscale]->SetCM93Manager(m_pcm93mgr);
 
-				m_pcm93chart_array[cmscale]->SetColorScheme ( m_global_color_scheme );
-				m_pcm93chart_array[cmscale]->Init ( file_dummy, FULL_INIT );
-			}
-			else if ( cmscale == 0 )
-			{
-				//                        wxString msg;
-				//                        msg.Printf ( _T ( "   CM93 finds no chart of any scale present at Lat/Lon  %g %g" ), vpt.clat, vpt.clon );
-				//                        wxLogMessage ( msg );
-				if ( g_bDebugCM93 )
-					printf ( "   CM93 finds no chart of any scale present at Lat/Lon  %g %g\n", vpt.clat, vpt.clon );
+				m_pcm93chart_array[cmscale]->SetColorScheme(m_global_color_scheme);
+				m_pcm93chart_array[cmscale]->Init(file_dummy, FULL_INIT);
+			} else if (cmscale == 0) {
+				if (g_bDebugCM93)
+					printf("   CM93 finds no chart of any scale present at Lat/Lon  %g %g\n",
+						   vpt.clat, vpt.clon);
 
 				b_nochart = true;
 				break;
+			} else {
+				cmscale--; // revert to larger scale if selected is not present
+				if (g_bDebugCM93)
+					printf(" no %c scale chart present, adjusting cmscale to %c\n",
+						   (char)('A' + cmscale), (char)('A' + cmscale - 1));
 			}
-
-			else
-			{
-				cmscale--;                          // revert to larger scale if selected is not present
-				if ( g_bDebugCM93 )
-					printf ( " no %c scale chart present, adjusting cmscale to %c\n", ( char ) ( 'A' + cmscale ), ( char ) ( 'A' + cmscale -1 ) );
-			}
-
 		}
-
-
 
 		m_pcm93chart_current = m_pcm93chart_array[cmscale];
 
-		if ( b_nochart )
-		{
-			if ( g_bDebugCM93 )
-				printf ( " b_nochart return\n" );
+		if (b_nochart) {
+			if (g_bDebugCM93)
+				printf(" b_nochart return\n");
 
 			m_pcm93chart_current = NULL;
-			for ( int i = 0 ; i < 8 ; i++ )
+			for (int i = 0; i < 8; i++)
 				m_pcm93chart_array[i] = NULL;
 
 			return cmscale;
 		}
 
-		if ( m_pcm93chart_current )
-		{
-			//    Pass the parameters to the proper scale chart
-			//    Which will also load the needed cell(s)
-			m_pcm93chart_current->SetVPParms ( vpt );
+		if (m_pcm93chart_current) {
+			// Pass the parameters to the proper scale chart
+			// Which will also load the needed cell(s)
+			m_pcm93chart_current->SetVPParms(vpt);
 
-			//    Check to see if the viewpoint center is actually on the selected chart
+			// Check to see if the viewpoint center is actually on the selected chart
 			float yc = vpt.clat;
 			float xc = vpt.clon;
 
+			// Bound the clon to 0-360. degrees
+			while (xc < 0)
+				xc += 360.0;
 
-			//    Bound the clon to 0-360. degrees
-			while ( xc < 0 )
-				xc += 360.;
+			if (xc > 360.0)
+				xc -= 360.0;
 
-			if ( xc > 360. )
-				xc -= 360.;
-
-
-			if ( !m_pcm93chart_current->GetCoverSet()->GetCoverCount() )
-			{
-				if ( g_bDebugCM93 )
-					printf ( " chart %c has no M_COVR\n", ( char ) ( 'A' + cmscale -1 ) );
+			if (!m_pcm93chart_current->GetCoverSet()->GetCoverCount()) {
+				if (g_bDebugCM93)
+					printf(" chart %c has no M_COVR\n", (char)('A' + cmscale - 1));
 			}
 
-
-			if ( m_pcm93chart_current->IsPointInLoadedM_COVR ( xc, yc ) )
-			{
-				if ( g_bDebugCM93 )
-					printf ( " chart %c contains clat/clon\n", ( char ) ( 'A' + cmscale -1 ) );
+			if (m_pcm93chart_current->IsPointInLoadedM_COVR(xc, yc)) {
+				if (g_bDebugCM93)
+					printf(" chart %c contains clat/clon\n", (char)('A' + cmscale - 1));
 
 				cellscale_is_useable = true;
 				break;
-			}
-
-			//    This commented block assumed that scale 0 coverage is available worlwide.....
-			//    Might not be so with partial CM93 sets
-			/*
-			   else if(cmscale == 0)
-			   {
-			   cellscale_is_useable = true;
-			   break;
-			   }
-			 */
-
-			else if ( vpt.b_quilt &&  vpt.b_FullScreenQuilt )
-			{
+			} else if (vpt.b_quilt && vpt.b_FullScreenQuilt) {
+				// This commented block assumed that scale 0 coverage is available worlwide.....
+				// Might not be so with partial CM93 sets
 				ViewPort vpa = vpt;
 				ViewPort vp_positive = vpt;
 				vp_positive.set_positive();
 
-				covr_set *pcover = m_pcm93chart_current->GetCoverSet();
-				if ( pcover )
-				{
+				covr_set* pcover = m_pcm93chart_current->GetCoverSet();
+				if (pcover) {
 					bool boverlap = false;
-					for ( unsigned int im=0 ; im < pcover->GetCoverCount() ; im++ )
-					{
+					for (unsigned int im = 0; im < pcover->GetCoverCount(); im++) {
 						using geo::BoundingBox;
 
-						M_COVR_Desc *mcd = pcover->GetCover ( im );
+						M_COVR_Desc* mcd = pcover->GetCover(im);
 
-						if (!(BoundingBox::_OUT == vp_positive.GetBBox().Intersect(mcd->m_covr_bbox)) || !(BoundingBox::_OUT == vpa.GetBBox().Intersect(mcd->m_covr_bbox)))
-						{
+						if (!(BoundingBox::_OUT
+							  == vp_positive.GetBBox().Intersect(mcd->m_covr_bbox))
+							|| !(BoundingBox::_OUT == vpa.GetBBox().Intersect(mcd->m_covr_bbox))) {
 							boverlap = true;
 							break;
 						}
 					}
-					if ( boverlap )
+					if (boverlap)
 						cellscale_is_useable = true;
 				}
 			}
 
-			if ( !cellscale_is_useable )
-			{
-				if ( cmscale > 0 )
-					cmscale--;        // revert to larger scale if the current scale cells do not contain VP
+			if (!cellscale_is_useable) {
+				if (cmscale > 0)
+					cmscale--; // revert to larger scale if the current scale cells do not contain
+							   // VP
 				else
-					b_nochart = true;    // we have retired to scale 0, and still no chart coverage, so stop already...
-				if ( g_bDebugCM93 )
-					printf ( " VP is not in M_COVR, adjusting cmscale to %c\n", ( char ) ( 'A' + cmscale -1 ) );
+					b_nochart = true; // we have retired to scale 0, and still no chart coverage, so
+									  // stop already...
+				if (g_bDebugCM93)
+					printf(" VP is not in M_COVR, adjusting cmscale to %c\n",
+						   (char)('A' + cmscale - 1));
 			}
 		}
 	}
@@ -514,51 +465,47 @@ int cm93compchart::PrepareChartScale ( const ViewPort &vpt, int cmscale )
 	return cmscale;
 }
 
-//    Populate the member bool array describing which chart scales are available at any location
-void cm93compchart::FillScaleArray ( double lat, double lon )
+// Populate the member bool array describing which chart scales are available at any location
+void cm93compchart::FillScaleArray(double lat, double lon)
 {
-	for ( int cmscale = 0 ; cmscale < 8 ; cmscale++ )
-		m_bScale_Array[cmscale] = Is_CM93Cell_Present ( m_prefixComposite, lat, lon, cmscale );
+	for (int cmscale = 0; cmscale < 8; cmscale++)
+		m_bScale_Array[cmscale] = Is_CM93Cell_Present(m_prefixComposite, lat, lon, cmscale);
 }
-
-//    These methods simply pass the called parameters to the currently active cm93chart
-
 
 wxString cm93compchart::GetPubDate()
 {
 	wxString data;
 
-	if ( NULL != m_pcm93chart_current )
-
-		data.Printf ( _T ( "%4d" ), m_current_cell_pub_date );
+	if (NULL != m_pcm93chart_current)
+		data.Printf(_T("%4d"), m_current_cell_pub_date);
 	else
-		data = _T ( "????" );
+		data = _T("????");
 	return data;
 }
 
 int cm93compchart::GetNativeScale()
 {
-	if ( m_pcm93chart_current )
+	if (m_pcm93chart_current)
 		return m_pcm93chart_current->GetNativeScale();
 	else
-		return ( int ) 1e8;
+		return (int)1e8;
 }
 
 double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 {
-	//Adjust overzoom factor based on  b_allow_overzoom option setting
+	// Adjust overzoom factor based on  b_allow_overzoom option setting
 	double oz_factor;
 	if ( b_allow_overzoom )
-		oz_factor = 40.;
+		oz_factor = 40.0;
 	else
-		oz_factor = 4.;
+		oz_factor = 4.0;
 
 	if ( m_pcm93chart_current )
 	{
 		if ( m_pcm93chart_current->m_last_vp.IsValid() )
 			FillScaleArray ( m_pcm93chart_current->m_last_vp.clat,m_pcm93chart_current-> m_last_vp.clon );
 
-		//    Find out what the smallest available scale is
+		// Find out what the smallest available scale is
 		int cmscale = 7;
 		while ( cmscale > 0 )
 		{
@@ -568,7 +515,7 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 		}
 
 
-		//    And return a sensible minimum scale, allowing selected overzoom.
+		// And return a sensible minimum scale, allowing selected overzoom.
 		switch ( cmscale )
 		{
 			case  0: return 20000000.0 / oz_factor; // Z
@@ -582,13 +529,13 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 			default: return      500.0 / oz_factor;
 		}
 	}
-	else
-		return 500.;
+	return 500.0;
 }
 
-double cm93compchart::GetNormalScaleMax ( double canvas_scale_factor, int canvas_width )
+double cm93compchart::GetNormalScaleMax(double canvas_scale_factor, int canvas_width)
 {
-	return (180.0 / 360.0) * M_PI  * 2.0 * (geo::WGS84_semimajor_axis_meters / (canvas_width / canvas_scale_factor));
+	return (180.0 / 360.0) * M_PI * 2.0
+		   * (geo::WGS84_semimajor_axis_meters / (canvas_width / canvas_scale_factor));
 }
 
 void cm93compchart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion)
@@ -652,10 +599,6 @@ bool cm93compchart::RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort&
 
 bool cm93compchart::DoRenderRegionViewOnGL (const wxGLContext &glc, const ViewPort& VPoint, const OCPNRegion &Region )
 {
-	//      g_bDebugCM93 = true;
-
-	//      CALLGRIND_START_INSTRUMENTATION
-
 	if ( g_bDebugCM93 ) {
 		printf ( "\nOn DoRenderRegionViewOnGL Ref scale is %d, %c %g\n", m_cmscale, ( char ) ( 'A' + m_cmscale -1 ), VPoint.view_scale_ppm );
 		OCPNRegionIterator upd ( Region );
@@ -894,19 +837,17 @@ bool cm93compchart::RenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPoin
 	return DoRenderRegionViewOnDC ( dc, VPoint, Region );
 }
 
-bool cm93compchart::RenderViewOnDC ( wxMemoryDC& dc, const ViewPort& VPoint )
+bool cm93compchart::RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint)
 {
-	const OCPNRegion vpr ( 0,0,VPoint.pix_width, VPoint.pix_height );
-
-	SetVPParms ( VPoint );
-
-	return DoRenderRegionViewOnDC ( dc, VPoint, vpr );
+	const OCPNRegion vpr(0, 0, VPoint.pix_width, VPoint.pix_height);
+	SetVPParms(VPoint);
+	return DoRenderRegionViewOnDC(dc, VPoint, vpr);
 }
 
-int s_dc1;
+int s_dc1; // FIXME
+
 bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion &Region )
 {
-	//      CALLGRIND_START_INSTRUMENTATION
 	if ( g_bDebugCM93 )
 	{
 		printf ( "\nOn DoRenderRegionViewOnDC Ref scale is %d, %c\n", m_cmscale, ( char ) ( 'A' + m_cmscale -1 ) );
@@ -927,7 +868,7 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
 	{
 		m_pcm93chart_current->SetVPParms ( vp_positive );
 
-		//    Check the current chart scale to see if it covers the requested region totally
+		// Check the current chart scale to see if it covers the requested region totally
 		if ( VPoint.b_quilt )
 		{
 			OCPNRegion vpr_empty = Region;
@@ -1239,13 +1180,14 @@ void cm93compchart::UpdateRenderRegions ( const ViewPort& VPoint )
 	}
 }
 
-void cm93compchart::SetSpecialCellIndexOffset ( int cell_index, int object_id, int subcell, int xoff, int yoff )
+void cm93compchart::SetSpecialCellIndexOffset(int cell_index, int object_id, int subcell, int xoff,
+											  int yoff)
 {
 	m_special_offset_x = xoff;
 	m_special_offset_y = yoff;
 
-	if ( m_pcm93chart_current )
-		m_pcm93chart_current->SetUserOffsets ( cell_index, object_id, subcell, xoff, yoff );
+	if (m_pcm93chart_current)
+		m_pcm93chart_current->SetUserOffsets(cell_index, object_id, subcell, xoff, yoff);
 }
 
 bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, ViewPort& vp )

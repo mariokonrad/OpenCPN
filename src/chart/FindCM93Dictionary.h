@@ -24,34 +24,38 @@
 #ifndef __CHART__FINDCM93DICTIONARY__H__
 #define __CHART__FINDCM93DICTIONARY__H__
 
+namespace chart {
+
 // Case-insensitive cm93 directory tree depth-first traversal to find the dictionary...
 // This could be made simpler, but matches the old code better as is
 class FindCM93Dictionary : public wxDirTraverser
 {
-	public:
-		FindCM93Dictionary(wxString& path)
-			: m_path (path)
-		{}
+public:
+	FindCM93Dictionary(wxString& path)
+		: m_path(path)
+	{
+	}
 
-		virtual wxDirTraverseResult OnFile ( const wxString& filename )
-		{
-			wxString name = filename.AfterLast ( wxFileName::GetPathSeparator() ).Lower();
-			if ( name == wxT ( "cm93obj.dic" ) )
-			{
-				m_path = filename;
-				return wxDIR_STOP;
-			}
-
-			return wxDIR_CONTINUE;
+	virtual wxDirTraverseResult OnFile(const wxString& filename)
+	{
+		wxString name = filename.AfterLast(wxFileName::GetPathSeparator()).Lower();
+		if (name == wxT("cm93obj.dic")) {
+			m_path = filename;
+			return wxDIR_STOP;
 		}
 
-		virtual wxDirTraverseResult OnDir ( const wxString& WXUNUSED ( dirname ) )
-		{
-			return wxDIR_CONTINUE;
-		}
+		return wxDIR_CONTINUE;
+	}
 
-	private:
-		wxString & m_path;
+	virtual wxDirTraverseResult OnDir(const wxString& WXUNUSED(dirname))
+	{
+		return wxDIR_CONTINUE;
+	}
+
+private:
+	wxString& m_path;
 };
+
+}
 
 #endif

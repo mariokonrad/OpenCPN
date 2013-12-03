@@ -26,10 +26,10 @@
 
 #include <chart/S57Chart.h>
 #include <chart/M_COVR_Desc.h>
+#include <chart/CM93Manager.h>
 #include <vector>
 
 class cm93_dictionary;
-class cm93manager;
 class covr_set;
 
 namespace geo { class ExtendedGeometry; }
@@ -64,7 +64,7 @@ public:
 
 	void SetCM93Dict(cm93_dictionary* pDict);
 	void SetCM93Prefix(const wxString& prefix);
-	void SetCM93Manager(cm93manager* pManager);
+	void SetCM93Manager(chart::cm93manager* pManager);
 
 	bool UpdateCovrSet(ViewPort* vpt);
 	bool IsPointInLoadedM_COVR(double xc, double yc);
@@ -120,7 +120,7 @@ private:
 
 	Cell_Info_Block* m_CIB;
 	cm93_dictionary* m_pDict;
-	cm93manager* m_pManager;
+	chart::cm93manager* m_pManager;
 	wxString m_prefix;
 	double m_sfactor;
 	wxString m_scalechar;

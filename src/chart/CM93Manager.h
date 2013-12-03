@@ -28,29 +28,32 @@
 
 class cm93_dictionary;
 
+namespace chart {
+
 class cm93manager
 {
-	public:
-		cm93manager();
-		~cm93manager();
-		bool Loadcm93Dictionary(const wxString & name);
-		cm93_dictionary * FindAndLoadDict(const wxString &file);
+public:
+	cm93manager();
+	~cm93manager();
+	bool Loadcm93Dictionary(const wxString& name);
+	cm93_dictionary* FindAndLoadDict(const wxString& file);
 
+	cm93_dictionary* m_pcm93Dict;
 
-		cm93_dictionary * m_pcm93Dict;
+	//  Member variables used to record the calling of cm93chart::CreateHeaderDataFromCM93Cell()
+	//  for each available scale value.  This allows that routine to return quickly with no error
+	//  for all cells other than the first, at each scale....
 
-		//  Member variables used to record the calling of cm93chart::CreateHeaderDataFromCM93Cell()
-		//  for each available scale value.  This allows that routine to return quickly with no error
-		//  for all cells other than the first, at each scale....
-
-		bool m_bfoundA;
-		bool m_bfoundB;
-		bool m_bfoundC;
-		bool m_bfoundD;
-		bool m_bfoundE;
-		bool m_bfoundF;
-		bool m_bfoundG;
-		bool m_bfoundZ;
+	bool m_bfoundA;
+	bool m_bfoundB;
+	bool m_bfoundC;
+	bool m_bfoundD;
+	bool m_bfoundE;
+	bool m_bfoundF;
+	bool m_bfoundG;
+	bool m_bfoundZ;
 };
+
+}
 
 #endif

@@ -1461,7 +1461,7 @@ InitReturn cm93chart::Init(const wxString& name, ChartInitFlag flags)
 	}
 
 	if (!m_pManager)
-		m_pManager = new cm93manager;
+		m_pManager = new chart::cm93manager;
 
 	if (flags == HEADER_ONLY)
 		return CreateHeaderDataFromCM93Cell();
@@ -3064,7 +3064,7 @@ void cm93chart::SetCM93Prefix(const wxString& prefix)
 	m_prefix = prefix;
 }
 
-void cm93chart::SetCM93Manager(cm93manager* pManager)
+void cm93chart::SetCM93Manager(chart::cm93manager* pManager)
 {
 	m_pManager = pManager;
 }

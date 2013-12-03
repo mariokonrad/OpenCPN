@@ -292,7 +292,6 @@ private:
 	wxString prev_locale;
 	bool bPrevQuilt;
 	bool bPrevFullScreenQuilt;
-	bool bPrevOGL;
 
 	MsgPriorityHash NMEA_Msg_Hash;
 	wxString m_VDO_accumulator;

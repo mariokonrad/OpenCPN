@@ -404,9 +404,6 @@ wxPlatformInfo* g_pPlatform;
 wxLocale* plocale_def_lang;
 wxString g_locale;
 bool g_b_assume_azerty;
-bool g_bUseRaster;
-bool g_bUseVector;
-bool g_bUseCM93;
 int g_click_stop;
 int g_MemFootSec;
 int g_MemFootMB;
@@ -423,7 +420,6 @@ int g_AisTargetList_count;
 bool g_bGarminHostUpload;
 wxAuiManager* g_pauimgr;
 wxAuiDefaultDockArt* g_pauidockart;
-bool g_blocale_changed;
 wxMenu* g_FloatingToolbarConfigMenu;
 wxString g_toolbarConfig = _T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
@@ -2287,7 +2283,6 @@ int MainFrame::DoOptionsDialog()
 
 	bPrevQuilt = g_bQuiltEnable;
 	bPrevFullScreenQuilt = g_bFullScreenQuilt;
-	bPrevOGL = g_bopengl;
 
 	prev_locale = g_locale;
 
@@ -2390,9 +2385,6 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 		if ((prev_locale != g_locale) || (rr & STYLE_CHANGED)) {
 			OCPNMessageBox(NULL, _("Please restart OpenCPN to activate language or style changes."),
 						   _("OpenCPN Info"), wxOK | wxICON_INFORMATION);
-			if (rr & LOCALE_CHANGED)
-				g_blocale_changed = true;
-			;
 		}
 	}
 

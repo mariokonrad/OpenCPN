@@ -242,10 +242,6 @@ extern int g_n_ownship_min_mm;
 
 extern wxPlatformInfo* g_pPlatform;
 
-extern bool g_bUseRaster;
-extern bool g_bUseVector;
-extern bool g_bUseCM93;
-
 extern bool g_bCourseUp;
 extern double g_COGAvg; // only needed for debug....
 

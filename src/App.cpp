@@ -179,7 +179,6 @@ extern bool g_bCourseUp;
 extern int g_COGAvgSec; // COG average period (sec.) for Course Up Mode
 extern double g_COGAvg;
 extern bool g_bskew_comp;
-extern bool g_bopengl;
 extern bool g_bsmoothpanzoom;
 extern bool g_bbigred;
 extern PlugInManager* g_pi_manager;
@@ -236,9 +235,6 @@ extern wxPlatformInfo* g_pPlatform;
 extern wxLocale* plocale_def_lang;
 extern wxString g_locale;
 extern bool g_b_assume_azerty;
-extern bool g_bUseRaster;
-extern bool g_bUseVector;
-extern bool g_bUseCM93;
 extern int g_click_stop;
 extern int g_MemFootSec;
 extern int g_MemFootMB;
@@ -254,7 +250,6 @@ extern int g_AisTargetList_count;
 extern bool g_bGarminHostUpload;
 extern wxAuiManager* g_pauimgr;
 extern wxAuiDefaultDockArt* g_pauidockart;
-extern bool g_blocale_changed;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern bool g_bShowAIS;
 extern bool g_bCPAMax;
@@ -307,7 +302,6 @@ extern bool g_bVAR_Rx;
 extern chart::ChartStack* pCurrentStack;
 extern int g_unit_test_1;
 extern bool g_bportable;
-extern bool g_bdisable_opengl;
 extern OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 extern wxDateTime g_start_time;
 extern Config* pConfig;
@@ -803,17 +797,14 @@ void App::validate_OpenGL()
 #ifdef __WXMSW__
 	if (!g_bdisable_opengl) {
 		wxFileName fn(wxApp::GetTraits()->GetStandardPaths().GetExecutablePath());
-		bool b_test_result = TestGLCanvas(fn.GetPathWithSep());
-
-		if (!b_test_result)
+		g_bdisable_opengl = !TestGLCanvas(fn.GetPathWithSep());
+		if (g_bdisable_opengl)
 			wxLogMessage(_T("OpenGL disabled due to test app failure."));
-
-		g_bdisable_opengl = !b_test_result;
 	}
 #endif
 
 #else
-    g_bdisable_opengl = true;;
+    g_bdisable_opengl = true;
 #endif
 }
 

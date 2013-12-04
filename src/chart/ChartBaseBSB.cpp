@@ -307,7 +307,7 @@ double ChartBaseBSB::GetPPM() const
 	return m_ppm_avg;
 }
 
-InitReturn ChartBaseBSB::Init(const wxString& WXUNUSED(name), ChartInitFlag init_flags)
+InitReturn ChartBaseBSB::Init(const wxString& WXUNUSED(name), ChartInitFlag WXUNUSED(init_flags))
 {
 	m_global_color_scheme = GLOBAL_COLOR_SCHEME_RGB;
 	return INIT_OK;
@@ -1989,7 +1989,7 @@ bool ChartBaseBSB::GetView( wxRect& source, wxRect& dest, ScaleTypeEnum scale_ty
 }
 
 
-bool ChartBaseBSB::GetAndScaleData(unsigned char *ppn, wxRect& source, int source_stride,
+bool ChartBaseBSB::GetAndScaleData(unsigned char *ppn, wxRect& source, int WXUNUSED(source_stride),
                                    wxRect& dest, int dest_stride, double scale_factor, ScaleTypeEnum scale_type)
 {
 
@@ -2429,7 +2429,8 @@ int ChartBaseBSB::ReadBSBHdrLine(wxFileInputStream* ifs, char* buf, int buf_len_
 int   ChartBaseBSB::BSBScanScanline(wxInputStream *pinStream )
 {
       int nLineMarker, nValueShift, iPixel = 0;
-      unsigned char byValueMask, byCountMask;
+      unsigned char byValueMask;
+      unsigned char byCountMask;
       unsigned char byNext;
       int coffset;
 
@@ -2453,11 +2454,8 @@ int   ChartBaseBSB::BSBScanScanline(wxInputStream *pinStream )
             while( ((byNext = pinStream->GetC()) != 0 ) && (iPixel < Size_X))
             {
 
-                  int   nPixValue;
-                  int nRunCount;
-                  nPixValue = (byNext & byValueMask) >> nValueShift;
 
-                  nRunCount = byNext & byCountMask;
+                  int nRunCount = byNext & byCountMask;
 
                   while( (byNext & 0x80) != 0 )
                   {
@@ -2470,8 +2468,6 @@ int   ChartBaseBSB::BSBScanScanline(wxInputStream *pinStream )
 
 
 //          Store nPixValue in the destination
-//                  memset(pCL, nPixValue, nRunCount+1);
-//                  pCL += nRunCount+1;
                   iPixel += nRunCount+1;
             }
             coffset = pinStream->TellI();
@@ -2722,6 +2718,9 @@ bool ChartBaseBSB::AnalyzeSkew(void)
     int platmin = 100000;
     int platmax = 0;
 
+    int nlonmin, nlonmax, nlatmax, nlatmin;
+    nlonmin =0; nlonmax=0; nlatmax=0; nlatmin=0;
+
     if (reference_points.empty()) // bad chart georef...
             return false;
 
@@ -2732,11 +2731,13 @@ bool ChartBaseBSB::AnalyzeSkew(void)
         {
             lonmax = reference_points[n].lonr;
             plonmax = (int)reference_points[n].xr;
+            nlonmax = n;
         }
         if(reference_points[n].lonr < lonmin)
         {
             lonmin = reference_points[n].lonr;
             plonmin = (int)reference_points[n].xr;
+           nlonmin = n;
         }
 
         //    Latitude
@@ -2744,11 +2745,63 @@ bool ChartBaseBSB::AnalyzeSkew(void)
         {
             latmin = reference_points[n].latr;
             platmin = (int)reference_points[n].yr;
+           nlatmin = n;
         }
         if(reference_points[n].latr > latmax)
         {
             latmax = reference_points[n].latr;
             platmax = (int)reference_points[n].yr;
+           nlatmax = n;
+        }
+    }
+
+    //    Special case for charts which cross the IDL
+    if((lonmin * lonmax) < 0)
+    {
+        if(reference_points[nlonmin].xr > reference_points[nlonmax].xr)
+        {
+            //    walk the reference table and add 360 to any longitude which is < 0
+            for(unsigned int n=0 ; n< reference_points.size(); n++)
+            {
+                if(reference_points[n].lonr < 0.0)
+                    reference_points[n].lonr += 360.0;
+            }
+
+            //    And recalculate the  min/max
+            lonmin = 1000;
+            lonmax = -1000;
+
+            for(unsigned int n=0 ; n<reference_points.size(); n++)
+            {
+                //    Longitude
+                if(reference_points[n].lonr > lonmax)
+                {
+                    lonmax = reference_points[n].lonr;
+                    plonmax = (int)reference_points[n].xr;
+                    nlonmax = n;
+                }
+                if(reference_points[n].lonr < lonmin)
+                {
+                    lonmin = reference_points[n].lonr;
+                    plonmin = (int)reference_points[n].xr;
+                    nlonmin = n;
+                }
+
+                //    Latitude
+                if(reference_points[n].latr < latmin)
+                {
+                    latmin = reference_points[n].latr;
+                    platmin = (int)reference_points[n].yr;
+                    nlatmin = n;
+                }
+                if(reference_points[n].latr > latmax)
+                {
+                    latmax = reference_points[n].latr;
+                    platmax = (int)reference_points[n].yr;
+                    nlatmax = n;
+                }
+            }
+            m_bIDLcross = true;
         }
     }
 

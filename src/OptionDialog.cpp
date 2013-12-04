@@ -1862,7 +1862,7 @@ void options::SetInitialSettings()
 	}
 
 	if (m_pConfig)
-		pSettingsCB1->SetValue(m_pConfig->m_bShowDebugWindows);
+		pSettingsCB1->SetValue(m_pConfig->show_debug_windows());
 
 	m_cbNMEADebug->SetValue(NMEALogWindow::Get().Active());
 	m_cbFilterSogCog->SetValue(g_bfilter_cogsog);
@@ -2438,7 +2438,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	// Handle Settings Tab
 
 	if (m_pConfig)
-		m_pConfig->m_bShowDebugWindows = pSettingsCB1->GetValue();
+		m_pConfig->show_debug_windows(pSettingsCB1->GetValue());
 
 	global::GUI& gui = global::OCPN::get().gui();
 

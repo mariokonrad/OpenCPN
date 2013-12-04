@@ -1510,7 +1510,7 @@ bool App::OnInit()
 	gFrame->SetCanvasWindow(cc1);
 
 	cc1->SetQuiltMode(g_bQuiltEnable); // set initial quilt mode
-	cc1->m_bFollow = pConfig->st_bFollow; // set initial state
+	cc1->m_bFollow = pConfig->follow(); // set initial state
 	cc1->SetViewPoint(vLat, vLon, initial_scale_ppm, 0.0, 0.0);
 
 	gFrame->Enable();

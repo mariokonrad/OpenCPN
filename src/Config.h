@@ -77,22 +77,13 @@ public:
 
 	void CreateRotatingNavObjBackup();
 
-	// FIXME: move public attributes to private
+	bool follow() const;
+	void destroy_navobjects();
+	void show_debug_windows(bool);
+	bool show_debug_windows() const;
 
-	double st_lat;
-	double st_lon;
-	double st_view_scale;
-	bool st_bFollow;
-
-	wxString m_gpx_path;
-
-	wxString m_sNavObjSetFile;
-	wxString m_sNavObjSetChangesFile;
-
-	NavObjectChanges* m_pNavObjectChangesSet;
-	NavObjectCollection* m_pNavObjectInputSet;
-	bool m_bSkipChangeSetUpdate;
-	bool m_bShowDebugWindows;
+	void enable_changeset_update();
+	void disable_changeset_update();
 
 private:
 	void load_view();
@@ -121,7 +112,14 @@ private:
 	wxString visibleLayers;
 	wxString invisibleLayers;
 	int navobjbackups;
-
+	bool st_bFollow;
+	wxString m_gpx_path;
+	wxString m_sNavObjSetFile;
+	wxString m_sNavObjSetChangesFile;
+	NavObjectChanges* m_pNavObjectChangesSet;
+	NavObjectCollection* m_pNavObjectInputSet;
+	bool m_bShowDebugWindows;
+	bool m_bSkipChangeSetUpdate;
 };
 
 #endif

@@ -882,11 +882,11 @@ void Routeman::DeleteAllRoutes(void)
 		}
 
 		if (!proute->m_bIsTrack) {
-			pConfig->m_bSkipChangeSetUpdate = true;
+			pConfig->disable_changeset_update();
 			pConfig->DeleteConfigRoute(proute);
 			DeleteRoute(proute);
 			i = pRouteList->begin();
-			pConfig->m_bSkipChangeSetUpdate = false;
+			pConfig->enable_changeset_update();
 		} else {
 			++i;
 		}
@@ -914,11 +914,11 @@ void Routeman::DeleteAllTracks(void)
 		}
 
 		if (proute->m_bIsTrack) {
-			pConfig->m_bSkipChangeSetUpdate = true;
+			pConfig->disable_changeset_update();
 			pConfig->DeleteConfigRoute(proute);
 			DeleteTrack(proute);
 			i = pRouteList->begin();
-			pConfig->m_bSkipChangeSetUpdate = false;
+			pConfig->enable_changeset_update();
 		} else {
 			++i;
 		}
@@ -971,10 +971,10 @@ void Routeman::DeleteTrack(Route* pRoute)
 		if (pcontainer_route == NULL) {
 			prp->m_bIsInRoute = false; // Take this point out of this (and only) route
 			if (!prp->m_bKeepXRoute) {
-				pConfig->m_bSkipChangeSetUpdate = true;
+				pConfig->disable_changeset_update();
 				pConfig->DeleteWayPoint(prp);
 				pSelect->DeleteSelectablePoint(prp, SelectItem::TYPE_ROUTEPOINT);
-				pConfig->m_bSkipChangeSetUpdate = false;
+				pConfig->enable_changeset_update();
 
 				pRoute->pRoutePointList->erase(pnode);
 				pnode = pRoute->pRoutePointList->end();

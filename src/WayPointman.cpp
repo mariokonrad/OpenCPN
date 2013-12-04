@@ -536,10 +536,10 @@ void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_change
 		for (Routeman::RouteArray::iterator i = route_array->begin(); i != route_array->end(); ++i) {
 			Route * route = static_cast<Route *>(*i);
 			if (route->GetnPoints() < 2) {
-				pConfig->m_bSkipChangeSetUpdate = true;
+				pConfig->disable_changeset_update();
 				pConfig->DeleteConfigRoute(route);
 				g_pRouteMan->DeleteRoute(route);
-				pConfig->m_bSkipChangeSetUpdate = false;
+				pConfig->enable_changeset_update();
 			}
 		}
 
@@ -548,11 +548,11 @@ void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_change
 
 	// Now it is safe to delete the point
 	if (!b_update_changeset)
-		pConfig->m_bSkipChangeSetUpdate = true; // turn OFF change-set updating if requested
+		pConfig->disable_changeset_update();
 
 	pConfig->DeleteWayPoint(route_point);
 
-	pConfig->m_bSkipChangeSetUpdate = false;
+	pConfig->enable_changeset_update();
 
 	pSelect->DeleteSelectablePoint(route_point, SelectItem::TYPE_ROUTEPOINT);
 

@@ -1277,7 +1277,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 	pConfig->UpdateSettings();
 	pConfig->UpdateNavObj();
 
-	delete pConfig->m_pNavObjectChangesSet;
+	pConfig->destroy_navobjects();
 
 	// Remove any leftover Routes and Waypoints from config file as they were saved to navobj before
 	pConfig->DeleteGroup(_T("/Routes"));
@@ -2181,7 +2181,7 @@ void MainFrame::ApplyGlobalSettings(bool, bool bnewtoolbar)
 	UseNativeStatusBar(false); // better for MSW, undocumented in frame.cpp
 #endif
 
-	if (pConfig->m_bShowDebugWindows) {
+	if (pConfig->show_debug_windows()) {
 		if (!m_pStatusBar) {
 			m_pStatusBar = CreateStatusBar(m_StatusBarFieldCount, 0); // No wxST_SIZEGRIP needed
 			ApplyGlobalColorSchemetoStatusBar();

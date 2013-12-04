@@ -222,19 +222,51 @@ Config::Config(
 		const wxString & LocalFileName)
 	: wxFileConfig(appName, vendorName, LocalFileName, wxString(_T("")))
 	, navobjbackups(0)
+	, st_bFollow(false)
+	, m_pNavObjectChangesSet(NULL)
+	, m_pNavObjectInputSet(NULL)
+	, m_bShowDebugWindows(false)
+	, m_bSkipChangeSetUpdate(false)
 {
 	// Create the default nav object collection FileName
 	wxFileName config_file(LocalFileName);
 	m_sNavObjSetFile = config_file.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 	m_sNavObjSetFile += _T("navobj.xml");
 	m_sNavObjSetChangesFile = m_sNavObjSetFile + _T(".changes");
-
-	m_pNavObjectInputSet = NULL;
-	m_pNavObjectChangesSet = new NavObjectChanges();
-
-	m_bSkipChangeSetUpdate = false;
+	m_pNavObjectChangesSet = new NavObjectChanges;
 
 	g_pConnectionParams = new ArrayOfConnPrm();
+}
+
+bool Config::follow() const
+{
+	return st_bFollow;
+}
+
+void Config::destroy_navobjects()
+{
+	delete m_pNavObjectChangesSet;
+	m_pNavObjectChangesSet = NULL;
+}
+
+void Config::show_debug_windows(bool enable)
+{
+	m_bShowDebugWindows = enable;
+}
+
+bool Config::show_debug_windows() const
+{
+	return m_bShowDebugWindows;
+}
+
+void Config::enable_changeset_update()
+{
+	m_bSkipChangeSetUpdate = false;
+}
+
+void Config::disable_changeset_update()
+{
+	m_bSkipChangeSetUpdate = true;
 }
 
 void Config::CreateRotatingNavObjBackup()
@@ -971,6 +1003,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	wxString st;
 
 	if (Read(_T("VPLatLon"), &st)) {
+		double st_lat;
+		double st_lon;
 		sscanf(st.mb_str(wxConvUTF8), "%lf,%lf", &st_lat, &st_lon);
 
 		// Sanity check the lat/lon...both have to be reasonable.
@@ -990,6 +1024,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	wxLogMessage(wxString::Format(_T("Setting Viewpoint Lat/Lon %g, %g"), vLat, vLon));
 
 	if (Read(wxString(_T("VPScale")), &st)) {
+		double st_view_scale;
 		sscanf(st.mb_str(wxConvUTF8), "%lf", &st_view_scale);
 		// Sanity check the scale
 		st_view_scale = fmax(st_view_scale, 0.001 / 32);
@@ -1086,8 +1121,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	if (0 == iteration) {
 		CreateRotatingNavObjBackup();
 
-		if (NULL == m_pNavObjectInputSet)
-			m_pNavObjectInputSet = new NavObjectCollection();
+		if (!m_pNavObjectInputSet)
+			m_pNavObjectInputSet = new NavObjectCollection;
 
 		if (::wxFileExists(m_sNavObjSetFile)) {
 			if (m_pNavObjectInputSet->load_file(m_sNavObjSetFile.fn_str()))
@@ -1095,6 +1130,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		}
 
 		delete m_pNavObjectInputSet;
+		m_pNavObjectInputSet = NULL;
 
 		if (::wxFileExists(m_sNavObjSetChangesFile)) {
 			// We crashed last time :(
@@ -1882,8 +1918,8 @@ void Config::UpdateNavObj(void)
 	delete pNavObjectSet;
 
 	wxRemoveFile(m_sNavObjSetChangesFile);
-	delete m_pNavObjectChangesSet;
-	m_pNavObjectChangesSet = new NavObjectChanges();
+	destroy_navobjects();
+	m_pNavObjectChangesSet = new NavObjectChanges;
 }
 
 void Config::StoreNavObjChanges(void)

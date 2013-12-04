@@ -8124,7 +8124,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 			//  So, in small scale bFollow mode, force the full screen render.
 			//  This seems a hack....There may be better logic here.....
 
-			if (m_bm_cache_vp.IsValid() && m_cache_vp.IsValid() /*&& !m_bFollow*/) {
+			if (m_bm_cache_vp.IsValid() && m_cache_vp.IsValid()) {
 				if (b_newview) {
 					wxPoint c_old = VPoint.GetPixFromLL(VPoint.clat, VPoint.clon);
 					wxPoint c_new = m_bm_cache_vp.GetPixFromLL(VPoint.clat, VPoint.clon);

@@ -191,8 +191,6 @@ extern bool             g_bfilter_cogsog;
 extern int              g_COGFilterSec;
 extern int              g_SOGFilterSec;
 
-static int g_navobjbackups; // FIXME: move this to the class Config
-
 extern bool             g_bQuiltEnable;
 extern bool             g_bFullScreenQuilt;
 
@@ -223,6 +221,7 @@ Config::Config(
 		const wxString & vendorName,
 		const wxString & LocalFileName)
 	: wxFileConfig(appName, vendorName, LocalFileName, wxString(_T("")))
+	, navobjbackups(0)
 {
 	// Create the default nav object collection FileName
 	wxFileName config_file(LocalFileName);
@@ -241,8 +240,8 @@ Config::Config(
 void Config::CreateRotatingNavObjBackup()
 {
 	// Rotate navobj backups
-	if (g_navobjbackups > 0) {
-		for (int i = g_navobjbackups - 1; i >= 1; --i) {
+	if (navobjbackups > 0) {
+		for (int i = navobjbackups - 1; i >= 1; --i) {
 			if (wxFile::Exists(wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i)))
 				wxCopyFile(wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i),
 						   wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i + 1));
@@ -253,7 +252,7 @@ void Config::CreateRotatingNavObjBackup()
 
 	// try to clean the backups the user doesn't want - breaks if he deleted some by
 	// hand as it tries to be effective...
-	for (int i = g_navobjbackups + 1; i <= 99; ++i)
+	for (int i = navobjbackups + 1; i <= 99; ++i)
 		if (wxFile::Exists(wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i)))
 			wxRemoveFile(wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i));
 		else
@@ -652,11 +651,11 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	}
 
 	// We allow 0-99 backups ov navobj.xml
-	Read(_T("KeepNavobjBackups"), &g_navobjbackups, 5);
-	if (g_navobjbackups > 99)
-		g_navobjbackups = 99;
-	if (g_navobjbackups < 0)
-		g_navobjbackups = 0;
+	Read(_T("KeepNavobjBackups"), &navobjbackups, 5);
+	if (navobjbackups > 99)
+		navobjbackups = 99;
+	if (navobjbackups < 0)
+		navobjbackups = 0;
 
 	NMEALogWindow::Get().SetSize(Read(_T("NMEALogWindowSizeX"), 600L),
 								 Read(_T("NMEALogWindowSizeY"), 400L));
@@ -1672,7 +1671,7 @@ void Config::UpdateSettings()
 
 	Write(_T("Locale"), g_locale);
 
-	Write(_T("KeepNavobjBackups"), g_navobjbackups);
+	Write(_T("KeepNavobjBackups"), navobjbackups);
 
 	// S57 Object Filter Settings
 

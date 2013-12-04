@@ -120,6 +120,8 @@ private:
 
 	wxString visibleLayers;
 	wxString invisibleLayers;
+	int navobjbackups;
+
 };
 
 #endif

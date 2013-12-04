@@ -274,8 +274,9 @@ void Config::CreateRotatingNavObjBackup()
 	// Rotate navobj backups
 	if (navobjbackups > 0) {
 		for (int i = navobjbackups - 1; i >= 1; --i) {
-			if (wxFile::Exists(wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i)))
-				wxCopyFile(wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i),
+			const wxString filename = wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i);
+			if (wxFile::Exists(filename))
+				wxCopyFile(filename,
 						   wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i + 1));
 		}
 		if (wxFile::Exists(m_sNavObjSetFile))
@@ -284,11 +285,12 @@ void Config::CreateRotatingNavObjBackup()
 
 	// try to clean the backups the user doesn't want - breaks if he deleted some by
 	// hand as it tries to be effective...
-	for (int i = navobjbackups + 1; i <= 99; ++i)
-		if (wxFile::Exists(wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i)))
-			wxRemoveFile(wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i));
-		else
+	for (int i = navobjbackups + 1; i <= 99; ++i) {
+		const wxString filename = wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i);
+		if (!wxFile::Exists(filename))
 			break;
+		wxRemoveFile(filename);
+	}
 }
 
 void Config::load_toolbar()
@@ -1115,7 +1117,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	// Groups
 	if (0 == iteration)
-		LoadConfigGroups(g_pGroupArray);
+		LoadConfigGroups(*g_pGroupArray);
 
 	// next thing to do is read tracks, etc from the NavObject XML file,
 	if (0 == iteration) {
@@ -1212,7 +1214,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	return (0);
 }
 
-bool Config::LoadLayers(wxString& path)
+bool Config::LoadLayers(const wxString& path)
 {
 	wxArrayString file_array;
 	wxDir dir;
@@ -1419,7 +1421,7 @@ bool Config::DeleteWayPoint(RoutePoint* pWP) // FIXME: does this really belong t
 	return true;
 }
 
-bool Config::UpdateChartDirs(ArrayOfCDI& dir_array)
+bool Config::UpdateChartDirs(const ArrayOfCDI& dir_array)
 {
 	SetPath(_T("/ChartDirectories"));
 	int iDirMax = GetNumberOfEntries();
@@ -1441,25 +1443,25 @@ bool Config::UpdateChartDirs(ArrayOfCDI& dir_array)
 	return true;
 }
 
-void Config::CreateConfigGroups(chart::ChartGroupArray* pGroupArray)
+void Config::CreateConfigGroups(const chart::ChartGroupArray* pGroupArray)
 {
 	if (!pGroupArray)
 		return;
 
 	SetPath(_T("/Groups"));
-	Write(_T("GroupCount"), (int)pGroupArray->size());
+	Write(_T("GroupCount"), static_cast<int>(pGroupArray->size()));
 
 	for (unsigned int i = 0; i < pGroupArray->size(); i++) {
 		chart::ChartGroup* pGroup = pGroupArray->at(i);
 		SetPath(wxString::Format(_T("/Groups/Group%d"), i + 1));
 
 		Write(_T("GroupName"), pGroup->m_group_name);
-		Write(_T("GroupItemCount"), (int)pGroup->m_element_array.size());
+		Write(_T("GroupItemCount"), static_cast<int>(pGroup->m_element_array.size()));
 
 		for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
 			wxString sg;
 			sg.Printf(_T("Group%d/Item%d"), i + 1, j);
-			sg.Prepend(_T( "/Groups/"));
+			sg.Prepend(_T("/Groups/"));
 			SetPath(sg);
 			Write(_T("IncludeItem"), pGroup->m_element_array.at(j)->m_element_name);
 
@@ -1480,7 +1482,7 @@ void Config::DestroyConfigGroups(void)
 	DeleteGroup(_T("/Groups")); // zap
 }
 
-void Config::LoadConfigGroups(chart::ChartGroupArray* pGroupArray)
+void Config::LoadConfigGroups(chart::ChartGroupArray& pGroupArray)
 {
 	SetPath(_T("/Groups"));
 	unsigned int group_count;
@@ -1522,7 +1524,7 @@ void Config::LoadConfigGroups(chart::ChartGroupArray* pGroupArray)
 				}
 			}
 		}
-		pGroupArray->push_back(pGroup);
+		pGroupArray.push_back(pGroup);
 	}
 }
 

@@ -52,17 +52,15 @@ public:
 	virtual bool UpdateWayPoint(RoutePoint* pWP);
 	virtual bool DeleteWayPoint(RoutePoint* pWP);
 
-	virtual void CreateConfigGroups(chart::ChartGroupArray* pGroupArray);
+	virtual void CreateConfigGroups(const chart::ChartGroupArray* pGroupArray);
 	virtual void DestroyConfigGroups(void);
-	virtual void LoadConfigGroups(chart::ChartGroupArray* pGroupArray);
 
-	virtual bool UpdateChartDirs(ArrayOfCDI& dirarray);
+	virtual bool UpdateChartDirs(const ArrayOfCDI& dirarray);
 	virtual bool LoadChartDirArray(ArrayOfCDI& ChartDirArray);
 	virtual void UpdateSettings();
 	virtual void UpdateNavObj();
-	virtual void StoreNavObjChanges();
 
-	bool LoadLayers(wxString& path);
+	bool LoadLayers(const wxString& path);
 
 	void ExportGPX(wxWindow* parent, bool bviz_only = false, bool blayer = false);
 
@@ -75,8 +73,6 @@ public:
 	bool ExportGPXWaypoints(wxWindow* parent, RoutePointList* pRoutePoints,
 							const wxString suggestedName = _T("waypoints"));
 
-	void CreateRotatingNavObjBackup();
-
 	bool follow() const;
 	void destroy_navobjects();
 	void show_debug_windows(bool);
@@ -86,6 +82,10 @@ public:
 	void disable_changeset_update();
 
 private:
+	virtual void LoadConfigGroups(chart::ChartGroupArray& pGroupArray);
+	virtual void StoreNavObjChanges();
+	void CreateRotatingNavObjBackup();
+
 	void load_view();
 	void load_frame();
 	void load_toolbar();

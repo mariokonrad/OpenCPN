@@ -88,6 +88,8 @@ public:
 	void set_time_string(const wxString& time_string);
 
 	void clear_font();
+	int get_layer_ID() const;
+	void set_layer_ID(int);
 
 	// FIXME: move attributes to private
 
@@ -124,7 +126,6 @@ public:
 	int m_NameLocationOffsetY;
 	int m_GPXTrkSegNo;
 	bool m_bIsInLayer;
-	int m_LayerID;
 
 	double m_routeprop_course; // course from this waypoint to the next waypoint if in a route.
 	double m_routeprop_distance; // distance from this waypoint to the next waypoint if in a route.
@@ -134,6 +135,8 @@ public:
 
 private:
 	void CalculateNameExtents(void);
+
+	int m_LayerID;
 
 	wxString m_MarkName;
 	wxDateTime m_CreateTimeX;

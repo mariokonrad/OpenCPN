@@ -597,9 +597,9 @@ void WayPointman::deleteWayPointOnLayer(int layer_id)
 		RoutePointList::iterator next = i;
 		++next;
 		RoutePoint *rp = *i;
-		if (rp && (rp->m_LayerID == layer_id)) {
+		if (rp && (rp->get_layer_ID() == layer_id)) {
 			rp->m_bIsInLayer = false;
-			rp->m_LayerID = 0;
+			rp->set_layer_ID(0);
 			DestroyWaypoint(rp, false);
 		}
 		i = next;
@@ -610,7 +610,7 @@ void WayPointman::setWayPointVisibilityOnLayer(int layer_id, bool visible)
 {
 	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
 		RoutePoint* rp = *i;
-		if (rp && (rp->m_LayerID == layer_id)) {
+		if (rp && (rp->get_layer_ID() == layer_id)) {
 			rp->SetVisible(visible);
 		}
 	}
@@ -620,7 +620,7 @@ void WayPointman::setWayPointNameVisibilityOnLayer(int layer_id, bool visible)
 {
 	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
 		RoutePoint* rp = *i;
-		if (rp && (rp->m_LayerID == layer_id)) {
+		if (rp && (rp->get_layer_ID() == layer_id)) {
 			rp->SetNameShown(visible);
 		}
 	}
@@ -630,7 +630,7 @@ void WayPointman::setWayPointListingVisibilityOnLayer(int layer_id, bool visible
 {
 	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
 		RoutePoint* rp = *i;
-		if (rp && !rp->m_bIsInTrack && rp->m_bIsolatedMark && (rp->m_LayerID == layer_id)) {
+		if (rp && !rp->m_bIsInTrack && rp->m_bIsolatedMark && (rp->get_layer_ID() == layer_id)) {
 			rp->SetListed(visible);
 		}
 	}

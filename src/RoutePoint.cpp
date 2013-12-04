@@ -81,8 +81,8 @@ RoutePoint::RoutePoint()
 	, m_NameLocationOffsetY(8)
 	, m_GPXTrkSegNo(1)
 	, m_bIsInLayer(false)
-	, m_LayerID(0)
 	, m_btemp(false)
+	, m_LayerID(0)
 	, m_MarkName(wxEmptyString)
 {
 	m_CreateTimeX = wxDateTime::Now();
@@ -153,8 +153,8 @@ RoutePoint::RoutePoint(double lat, double lon, const wxString& icon_ident, const
 	, m_NameLocationOffsetY(8)
 	, m_GPXTrkSegNo(1)
 	, m_bIsInLayer(false)
-	, m_LayerID(0)
 	, m_btemp(false)
+	, m_LayerID(0)
 	, m_MarkName(wxEmptyString)
 {
 	// Normalize the longitude, to fix any old poorly formed points
@@ -194,6 +194,16 @@ RoutePoint::~RoutePoint(void)
 		pWayPointMan->remove(this);
 
 	m_HyperlinkList.clear();
+}
+
+int RoutePoint::get_layer_ID() const
+{
+	return m_LayerID;
+}
+
+void RoutePoint::set_layer_ID(int id)
+{
+	m_LayerID = id;
 }
 
 const wxDateTime& RoutePoint::GetCreateTime() const

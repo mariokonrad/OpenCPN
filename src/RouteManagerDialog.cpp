@@ -1908,7 +1908,7 @@ void RouteManagerDialog::WptShowPropertiesDialog(RoutePoint* wp, wxWindow* paren
 	pMarkPropDialog->UpdateProperties();
 	if (wp->m_bIsInLayer) {
 		wxString caption(_("Waypoint Properties, Layer: "));
-		caption.Append(GetLayerName(wp->m_LayerID));
+		caption.Append(GetLayerName(wp->get_layer_ID()));
 		pMarkPropDialog->SetDialogTitle(caption);
 	} else
 		pMarkPropDialog->SetDialogTitle(_("Waypoint Properties"));

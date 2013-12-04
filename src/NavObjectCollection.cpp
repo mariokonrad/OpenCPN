@@ -171,7 +171,7 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 
 	if (b_layer) {
 		pWP->m_bIsInLayer = true;
-		pWP->m_LayerID = layer_id;
+		pWP->set_layer_ID(layer_id);
 		pWP->m_bIsVisible = b_layerviz;
 		pWP->SetListed(false);
 	}

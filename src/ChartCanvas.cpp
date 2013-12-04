@@ -6639,7 +6639,7 @@ void ChartCanvas::ShowMarkPropertiesDialog(RoutePoint* markPoint)
 	pMarkPropDialog->UpdateProperties();
 	if (markPoint->m_bIsInLayer) {
 		wxString caption(_("Waypoint Properties, Layer: "));
-		caption.Append(GetLayerName(markPoint->m_LayerID));
+		caption.Append(GetLayerName(markPoint->get_layer_ID()));
 		pMarkPropDialog->SetDialogTitle(caption);
 	} else {
 		pMarkPropDialog->SetDialogTitle(_("Waypoint Properties"));

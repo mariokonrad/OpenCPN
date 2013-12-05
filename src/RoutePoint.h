@@ -25,6 +25,7 @@
 #define __ROUTEPOINT_H__
 
 #include <Hyperlink.h>
+#include <Position.h>
 #include <vector>
 
 #include <wx/string.h>
@@ -49,7 +50,7 @@ public:
 	};
 
 public:
-	RoutePoint(double lat, double lon, const wxString& icon_ident, const wxString& name,
+	RoutePoint(const Position& pos, const wxString& icon_ident, const wxString& name,
 			   const wxString& pGUID = _T(""), bool bAddToList = true);
 	RoutePoint(const RoutePoint& orig);
 	RoutePoint();
@@ -60,7 +61,7 @@ public:
 	const wxDateTime& GetCreateTime(void) const;
 	void SetCreateTime(wxDateTime dt);
 
-	void SetPosition(double lat, double lon);
+	void SetPosition(const Position& pos);
 	double GetLatitude() const;
 	double GetLongitude() const;
 	void CalculateDCRect(wxDC& dc, wxRect* prect);

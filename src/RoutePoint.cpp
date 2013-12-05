@@ -126,10 +126,10 @@ RoutePoint::RoutePoint(const RoutePoint& orig)
 	m_GUID = GpxDocument::GetUUID();
 }
 
-RoutePoint::RoutePoint(double lat, double lon, const wxString& icon_ident, const wxString& name,
+RoutePoint::RoutePoint(const Position& pos, const wxString& icon_ident, const wxString& name,
 					   const wxString& pGUID, bool bAddToList)
-	: m_lat(lat)
-	, m_lon(lon)
+	: m_lat(pos.lat())
+	, m_lon(pos.lon())
 	, m_seg_len(0)
 	, m_seg_vmg(0.0)
 	, m_seg_etd(wxInvalidDateTime)
@@ -349,10 +349,10 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 		g_blink_rect = CurrentRect_in_DC; // also save for global blinker
 }
 
-void RoutePoint::SetPosition(double lat, double lon)
+void RoutePoint::SetPosition(const Position& pos)
 {
-	m_lat = lat;
-	m_lon = lon;
+	m_lat = pos.lat();
+	m_lon = pos.lon();
 }
 
 void RoutePoint::CalculateDCRect(wxDC& dc, wxRect* prect)

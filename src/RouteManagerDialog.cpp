@@ -1340,7 +1340,7 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 				for (RoutePointList::iterator route_point = mergeTrack->pRoutePointList->begin();
 					 route_point != mergeTrack->pRoutePointList->end(); ++route_point) {
 					RoutePoint* rPoint = *route_point;
-					RoutePoint* newPoint = new RoutePoint(rPoint->m_lat, rPoint->m_lon, _T("empty"), _T(""));
+					RoutePoint* newPoint = new RoutePoint(Position(rPoint->m_lat, rPoint->m_lon), _T("empty"), _T(""));
 					newPoint->m_bShowName = false;
 					newPoint->m_bIsVisible = true;
 					newPoint->m_GPXTrkSegNo = 1;
@@ -1865,7 +1865,7 @@ void RouteManagerDialog::OnWptNewClick(wxCommandEvent&)
 {
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	RoutePoint* pWP = new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
+	RoutePoint* pWP = new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
 	pWP->m_bIsolatedMark = true; // This is an isolated mark
 	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP);
 	pConfig->AddNewWayPoint(pWP, -1); // use auto next num
@@ -2013,7 +2013,7 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	RoutePoint* pWP_src = new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
+	RoutePoint* pWP_src = new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
 	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_src);
 
 	Route* temp_route = new Route();

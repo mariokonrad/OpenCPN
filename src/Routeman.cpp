@@ -234,7 +234,7 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		// Current location
-		pRouteActivatePoint = new RoutePoint(nav.lat, nav.lon, _T(""), _T(""), _T(""), false);
+		pRouteActivatePoint = new RoutePoint(Position(nav.lat, nav.lon), _T(""), _T(""), _T(""), false);
 		pRouteActivatePoint->m_bShowName = false;
 
 		pActiveRouteSegmentBeginPoint = pRouteActivatePoint;

@@ -52,7 +52,7 @@ NavObjectCollection::NavObjectCollection()
 NavObjectCollection::~NavObjectCollection()
 {}
 
-RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
+RoutePoint* NavObjectCollection::GPXLoadWaypoint1(
 		pugi::xml_node & wpt_node,
 		wxString def_symbol_name,
 		wxString GUID,
@@ -153,7 +153,7 @@ RoutePoint * NavObjectCollection::GPXLoadWaypoint1(
 			GuidString = _T("LayGUID");
 	}
 	// do not add to global WP list yet...
-	pWP = new RoutePoint(rlat, rlon, SymString, NameString, GuidString, false);
+	pWP = new RoutePoint(Position(rlat, rlon), SymString, NameString, GuidString, false);
 	pWP->m_MarkDescription = DescString;
 	pWP->m_bIsolatedMark = bshared; // This is an isolated mark
 

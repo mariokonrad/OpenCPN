@@ -1552,12 +1552,10 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 
 			case 13: // Ctrl M // Drop Marker at cursor
 			{
-				double lat, lon;
-				lat = m_cursor_lat;
-				lon = m_cursor_lon;
-				RoutePoint* pWP = new RoutePoint(lat, lon, g_default_wp_icon, wxEmptyString);
+				Position pos(m_cursor_lat, m_cursor_lon);
+				RoutePoint* pWP = new RoutePoint(pos, g_default_wp_icon, wxEmptyString);
 				pWP->m_bIsolatedMark = true; // This is an isolated mark
-				pSelect->AddSelectableRoutePoint(lat, lon, pWP);
+				pSelect->AddSelectableRoutePoint(pos.lat(), pos.lon(), pWP);
 				pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 
 				if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
@@ -1585,7 +1583,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 			{
 				const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 				RoutePoint* pWP
-					= new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
+					= new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
 				pWP->m_bIsolatedMark = true; // This is an isolated mark
 				pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP);
 				pConfig->AddNewWayPoint(pWP, -1); // use auto next num
@@ -5316,7 +5314,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			}
 
 			if (NULL == pMousePoint) { // need a new point
-				pMousePoint = new RoutePoint(rpos.lat(), rpos.lon(), _T("diamond"), _T(""));
+				pMousePoint = new RoutePoint(rpos, _T("diamond"), _T(""));
 				pMousePoint->SetNameShown(false);
 
 				pConfig->AddNewWayPoint(pMousePoint, -1); // use auto next num
@@ -5373,7 +5371,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 							if (i < segmentCount) {
 								gcPoint
-									= new RoutePoint(gcCoord.y, gcCoord.x, _T("xmblue"), _T(""));
+									= new RoutePoint(Position(gcCoord.y, gcCoord.x), _T("xmblue"), _T(""));
 								gcPoint->SetNameShown(false);
 								pConfig->AddNewWayPoint(gcPoint, -1);
 								pSelect->AddSelectableRoutePoint(gcCoord.y, gcCoord.x, gcPoint);
@@ -5425,7 +5423,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			}
 
 			RoutePoint* pMousePoint
-				= new RoutePoint(m_cursor_lat, m_cursor_lon, wxString(_T("circle")), wxEmptyString);
+				= new RoutePoint(Position(m_cursor_lat, m_cursor_lon), wxString(_T("circle")), wxEmptyString);
 			pMousePoint->m_bShowName = false;
 
 			m_pMeasureRoute->AddPoint(pMousePoint);
@@ -6944,11 +6942,11 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 		case ID_DEF_MENU_GOTO_HERE: {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			RoutePoint* pWP_dest = new RoutePoint(zlat, zlon, g_default_wp_icon, wxEmptyString);
+			RoutePoint* pWP_dest = new RoutePoint(Position(zlat, zlon), g_default_wp_icon, wxEmptyString);
 			pSelect->AddSelectableRoutePoint(zlat, zlon, pWP_dest);
 
 			RoutePoint* pWP_src
-				= new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
+				= new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
 			pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_src);
 
 			Route* temp_route = new Route();
@@ -6974,7 +6972,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		} break;
 
 		case ID_DEF_MENU_DROP_WP: {
-			RoutePoint* pWP = new RoutePoint(zlat, zlon, g_default_wp_icon, wxEmptyString);
+			RoutePoint* pWP = new RoutePoint(Position(zlat, zlon), g_default_wp_icon, wxEmptyString);
 			pWP->m_bIsolatedMark = true; // This is an isolated mark
 			pSelect->AddSelectableRoutePoint(zlat, zlon, pWP);
 			pConfig->AddNewWayPoint(pWP, -1); // use auto next num
@@ -6994,7 +6992,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		case ID_WP_MENU_GOTO: {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			RoutePoint* pWP_src
-				= new RoutePoint(nav.lat, nav.lon, g_default_wp_icon, wxEmptyString);
+				= new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
 			pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_src);
 
 			Route* temp_route = new Route();

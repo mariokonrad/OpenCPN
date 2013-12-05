@@ -172,7 +172,7 @@ void Route::CloneRoute(Route* psourceroute, int start_nPoint, int end_nPoint,
 		else {
 			RoutePoint* psourcepoint = psourceroute->GetPoint(i);
 			RoutePoint* ptargetpoint
-				= new RoutePoint(psourcepoint->m_lat, psourcepoint->m_lon, psourcepoint->m_IconName,
+				= new RoutePoint(Position(psourcepoint->m_lat, psourcepoint->m_lon), psourcepoint->m_IconName,
 								 psourcepoint->GetName(), _T(""), false);
 
 			AddPoint(ptargetpoint, false);
@@ -208,7 +208,7 @@ void Route::CloneTrack(Route* psourceroute, int start_nPoint, int end_nPoint,
 
 		RoutePoint* psourcepoint = psourceroute->GetPoint(i);
 		RoutePoint* ptargetpoint
-			= new RoutePoint(psourcepoint->m_lat, psourcepoint->m_lon, psourcepoint->m_IconName,
+			= new RoutePoint(Position(psourcepoint->m_lat, psourcepoint->m_lon), psourcepoint->m_IconName,
 							 psourcepoint->GetName(), _T(""), false);
 
 		AddPoint(ptargetpoint, false);
@@ -562,7 +562,7 @@ void Route::ClearHighlights(void)
 RoutePoint* Route::InsertPointBefore(RoutePoint* pRP, double rlat, double rlon, bool bRenamePoints)
 {
 	RoutePoint* newpoint
-		= new RoutePoint(rlat, rlon, wxString(_T("diamond")), GetNewMarkSequenced());
+		= new RoutePoint(Position(rlat, rlon), wxString(_T("diamond")), GetNewMarkSequenced());
 	newpoint->m_bIsInRoute = true;
 	newpoint->m_bDynamicName = true;
 	newpoint->SetNameShown(false);

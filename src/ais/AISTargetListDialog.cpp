@@ -686,7 +686,7 @@ void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent&)
 
 	if (pAISTarget) {
 		RoutePoint* pWP
-			= new RoutePoint(pAISTarget->Lat, pAISTarget->Lon, g_default_wp_icon, wxEmptyString);
+			= new RoutePoint(Position(pAISTarget->Lat, pAISTarget->Lon), g_default_wp_icon, wxEmptyString);
 		pWP->m_bIsolatedMark = true; // This is an isolated mark
 		pSelect->AddSelectableRoutePoint(pAISTarget->Lat, pAISTarget->Lon, pWP);
 		pConfig->AddNewWayPoint(pWP, -1); // use auto next num

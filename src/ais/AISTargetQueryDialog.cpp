@@ -113,7 +113,7 @@ void AISTargetQueryDialog::OnIdWptCreateClick(wxCommandEvent &)
 	if( m_MMSI != 0 ) { //  Faulty MMSI could be reported as 0
 		AIS_Target_Data *td = g_pAIS->Get_Target_Data_From_MMSI( m_MMSI );
 		if( td ) {
-			RoutePoint * pWP = new RoutePoint(td->Lat, td->Lon, g_default_wp_icon, wxEmptyString);
+			RoutePoint * pWP = new RoutePoint(Position(td->Lat, td->Lon), g_default_wp_icon, wxEmptyString);
 			pWP->m_bIsolatedMark = true;                      // This is an isolated mark
 			pSelect->AddSelectableRoutePoint(td->Lat, td->Lon, pWP);
 			pConfig->AddNewWayPoint(pWP, -1);    // use auto next num

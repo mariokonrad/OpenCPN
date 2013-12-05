@@ -1754,7 +1754,7 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 	if (pWayPointMan->find(pwaypoint->m_GUID) != NULL)
 		return false;
 
-	RoutePoint* pWP = new RoutePoint(pwaypoint->m_lat, pwaypoint->m_lon, pwaypoint->m_IconName,
+	RoutePoint* pWP = new RoutePoint(Position(pwaypoint->m_lat, pwaypoint->m_lon), pwaypoint->m_IconName,
 									 pwaypoint->m_MarkName, pwaypoint->m_GUID);
 
 	pWP->m_bIsolatedMark = true; // This is an isolated mark
@@ -1862,7 +1862,7 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 		PlugIn_Waypoint* pwp = *pwpnode;
 
 		RoutePoint* pWP
-			= new RoutePoint(pwp->m_lat, pwp->m_lon, pwp->m_IconName, pwp->m_MarkName, pwp->m_GUID);
+			= new RoutePoint(Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName, pwp->m_MarkName, pwp->m_GUID);
 
 		// Transcribe (clone) the html HyperLink List, if present
 		if (pwp->m_HyperlinkList) {
@@ -1951,7 +1951,7 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 		PlugIn_Waypoint* pwp = *pwpnode;
 
 		RoutePoint* pWP
-			= new RoutePoint(pwp->m_lat, pwp->m_lon, pwp->m_IconName, pwp->m_MarkName, pwp->m_GUID);
+			= new RoutePoint(Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName, pwp->m_MarkName, pwp->m_GUID);
 
 		pWP->m_MarkDescription = pwp->m_MarkDescription;
 		pWP->m_bShowName = false;

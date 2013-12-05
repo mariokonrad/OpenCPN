@@ -1246,7 +1246,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 
 			wxString name = now.Format();
 			name.Prepend(_("Anchorage created "));
-			RoutePoint* pWP = new RoutePoint(nav.lat, nav.lon, _T("anchorage"), name);
+			RoutePoint* pWP = new RoutePoint(Position(nav.lat, nav.lon), _T("anchorage"), name);
 			pWP->m_bShowName = false;
 			pWP->m_bIsolatedMark = true;
 
@@ -1822,7 +1822,7 @@ void MainFrame::ActivateMOB(void)
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	RoutePoint* pWP_MOB = new RoutePoint(nav.lat, nav.lon, _T("mob"), mob_label);
+	RoutePoint* pWP_MOB = new RoutePoint(Position(nav.lat, nav.lon), _T("mob"), mob_label);
 	pWP_MOB->m_bKeepXRoute = true;
 	pWP_MOB->m_bIsolatedMark = true;
 	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_MOB);
@@ -1835,7 +1835,7 @@ void MainFrame::ActivateMOB(void)
 		geo::ll_gc_ll(nav.lat, nav.lon, nav.cog, 1.0, &zlat, &zlon);
 
 		RoutePoint* pWP_src
-			= new RoutePoint(zlat, zlon, g_default_wp_icon, wxString(_("1.0 NM along COG")));
+			= new RoutePoint(Position(zlat, zlon), g_default_wp_icon, wxString(_("1.0 NM along COG")));
 		pSelect->AddSelectableRoutePoint(zlat, zlon, pWP_src);
 
 		Route* temp_route = new Route;

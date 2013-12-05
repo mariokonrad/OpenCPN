@@ -232,7 +232,7 @@ void Track::OnTimerTrack(wxTimerEvent&)
 
 RoutePoint* Track::AddNewPoint(Vector2D point, wxDateTime time)
 {
-	RoutePoint* rPoint = new RoutePoint(point.lat, point.lon, _T( "empty"), _T(""));
+	RoutePoint* rPoint = new RoutePoint(Position(point.lat, point.lon), _T( "empty"), _T(""));
 	rPoint->m_bShowName = false;
 	rPoint->m_bIsVisible = true;
 	rPoint->m_GPXTrkSegNo = 1;
@@ -475,7 +475,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 	// add first point
 
-	pWP_dst = new RoutePoint(pWP_src->m_lat, pWP_src->m_lon, icon, _T ( "" ));
+	pWP_dst = new RoutePoint(Position(pWP_src->m_lat, pWP_src->m_lon), icon, _T ( "" ));
 	route->AddPoint(pWP_dst);
 
 	pWP_dst->m_bShowName = false;
@@ -506,7 +506,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 			while (delta_inserts--) {
 				geo::ll_gc_ll(pWP_src->m_lat, pWP_src->m_lon, delta_hdg, delta_dist, &tlat, &tlon);
-				pWP_dst = new RoutePoint(tlat, tlon, icon, _T (""));
+				pWP_dst = new RoutePoint(Position(tlat, tlon), icon, _T (""));
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;
 				pSelect->AddSelectableRoutePoint(pWP_dst->m_lat, pWP_dst->m_lon, pWP_dst);
@@ -536,7 +536,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 			xte = GetXTE(pWP_src, prpX, prp);
 			if (isProminent || (xte > g_TrackDeltaDistance)) {
 
-				pWP_dst = new RoutePoint(prp_OK->m_lat, prp_OK->m_lon, icon, _T ( "" ));
+				pWP_dst = new RoutePoint(Position(prp_OK->m_lat, prp_OK->m_lon), icon, _T ( "" ));
 
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;
@@ -576,8 +576,8 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 	// add last point, if needed
 	if (delta_dist >= g_TrackDeltaDistance) {
-		pWP_dst = new RoutePoint(pRoutePointList->back()->m_lat,
-								 pRoutePointList->back()->m_lon, icon, _T ( "" ));
+		pWP_dst = new RoutePoint(
+			Position(pRoutePointList->back()->m_lat, pRoutePointList->back()->m_lon), icon, _T(""));
 		route->AddPoint(pWP_dst);
 
 		pWP_dst->m_bShowName = false;

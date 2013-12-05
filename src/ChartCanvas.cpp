@@ -1980,8 +1980,8 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 
 					double brg;
 					double dist;
-					geo::DistanceBearingMercator(segShow_point_b->m_lat, segShow_point_b->m_lon,
-												 segShow_point_a->m_lat, segShow_point_a->m_lon,
+					geo::DistanceBearingMercator(segShow_point_b->latitude(), segShow_point_b->longitude(),
+												 segShow_point_a->latitude(), segShow_point_a->longitude(),
 												 &brg, &dist);
 
 					if (!pr->m_bIsInLayer)
@@ -4521,29 +4521,33 @@ void ChartCanvas::SART_Render(ocpnDC& dc, wxPen pen, int x, int y, int radius) c
 
 void ChartCanvas::AnchorWatchDraw(ocpnDC& dc)
 {
+	// FIXME: code duplication
 	// Just for prototyping, visual alert for anchorwatch goes here
 	bool play_sound = false;
 	if (pAnchorWatchPoint1 && AnchorAlertOn1) {
 		if (AnchorAlertOn1) {
 			wxPoint TargetPoint;
-			GetCanvasPointPix(pAnchorWatchPoint1->m_lat, pAnchorWatchPoint1->m_lon, &TargetPoint);
+			GetCanvasPointPix(pAnchorWatchPoint1->latitude(), pAnchorWatchPoint1->longitude(), &TargetPoint);
 			JaggyCircle(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
 						100);
 			play_sound = true;
 		}
-	} else
+	} else {
 		AnchorAlertOn1 = false;
+	}
 
 	if (pAnchorWatchPoint2 && AnchorAlertOn2) {
 		if (AnchorAlertOn2) {
 			wxPoint TargetPoint;
-			GetCanvasPointPix(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, &TargetPoint);
+			GetCanvasPointPix(pAnchorWatchPoint2->latitude(), pAnchorWatchPoint2->longitude(),
+							  &TargetPoint);
 			JaggyCircle(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
 						100);
 			play_sound = true;
 		}
-	} else
+	} else {
 		AnchorAlertOn2 = false;
+	}
 
 	if (play_sound) {
 		if (!g_anchorwatch_sound.IsOk())
@@ -4585,7 +4589,7 @@ void ChartCanvas::UpdateShips()
 		RoutePoint* p = g_pActiveTrack->GetLastPoint();
 		if (p) {
 			wxPoint px;
-			cc1->GetCanvasPointPix(p->m_lat, p->m_lon, &px);
+			cc1->GetCanvasPointPix(p->latitude(), p->longitude(), &px);
 			ocpndc.CalcBoundingBox(px.x, px.y);
 		}
 	}
@@ -5381,8 +5385,8 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 							m_pMouseRoute->AddPoint(gcPoint);
 							pSelect->AddSelectableRouteSegment(
-								prevGcPoint->m_lat, prevGcPoint->m_lon, gcPoint->m_lat,
-								gcPoint->m_lon, prevGcPoint, gcPoint, m_pMouseRoute);
+								prevGcPoint->latitude(), prevGcPoint->longitude(), gcPoint->latitude(),
+								gcPoint->longitude(), prevGcPoint, gcPoint, m_pMouseRoute);
 							prevGcPoint = gcPoint;
 						}
 
@@ -5471,10 +5475,10 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				if (m_pEditRouteArray) {
 					for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ir++) {
 						Route* pr = (Route*)m_pEditRouteArray->at(ir);
-						//      Need to validate route pointer
-						//      Route may be gone due to drgging close to ownship with
-						//      "Delete On Arrival" state set, as in the case of
-						//      navigating to an isolated waypoint on a temporary route
+						// Need to validate route pointer
+						// Route may be gone due to drgging close to ownship with
+						// "Delete On Arrival" state set, as in the case of
+						// navigating to an isolated waypoint on a temporary route
 						if (g_pRouteMan->IsRouteValid(pr)) {
 							wxRect route_rect;
 							pr->CalculateDCRect(m_dc_route, &route_rect, VPoint);
@@ -5483,17 +5487,22 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					}
 				}
 
-				m_pRoutePointEditTarget->m_lat = m_cursor_lat; // update the RoutePoint entry
-				m_pRoutePointEditTarget->m_lon = m_cursor_lon;
-				m_pFoundPoint->m_slat = m_cursor_lat; // update the SelectList entry
+				// update the RoutePoint entry
+				m_pRoutePointEditTarget->set_position(Position(m_cursor_lat, m_cursor_lon));
+
+				// update the SelectList entry
+				m_pFoundPoint->m_slat = m_cursor_lat;
 				m_pFoundPoint->m_slon = m_cursor_lon;
 
 				if (CheckEdgePan(x, y, true)) {
 					double new_cursor_lat, new_cursor_lon;
 					GetCanvasPixPoint(x, y, new_cursor_lat, new_cursor_lon);
-					m_pRoutePointEditTarget->m_lat = new_cursor_lat; // update the RoutePoint entry
-					m_pRoutePointEditTarget->m_lon = new_cursor_lon;
-					m_pFoundPoint->m_slat = new_cursor_lat; // update the SelectList entry
+
+					// update the RoutePoint entry
+					m_pRoutePointEditTarget->set_position(Position(new_cursor_lat, new_cursor_lon));
+
+					// update the SelectList entry
+					m_pFoundPoint->m_slat = new_cursor_lat;
 					m_pFoundPoint->m_slon = new_cursor_lon;
 				}
 
@@ -5545,7 +5554,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 											   m_pFoundPoint);
 				}
 
-				//      The mark may be an anchorwatch
+				// The mark may be an anchorwatch
 				double lpp1 = 0.0;
 				double lpp2 = 0.0;
 				double lppmax;
@@ -5564,9 +5573,12 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				if ((lppmax > pre_rect.width / 2) || (lppmax > pre_rect.height / 2))
 					pre_rect.Inflate((int)(lppmax - (pre_rect.width / 2)),
 									 (int)(lppmax - (pre_rect.height / 2)));
-				m_pRoutePointEditTarget->m_lat = m_cursor_lat; // update the RoutePoint entry
-				m_pRoutePointEditTarget->m_lon = m_cursor_lon;
-				m_pFoundPoint->m_slat = m_cursor_lat; // update the SelectList entry
+
+				// update the RoutePoint entry
+				m_pRoutePointEditTarget->set_position(Position(m_cursor_lat, m_cursor_lon));
+
+				// update the SelectList entry
+				m_pFoundPoint->m_slat = m_cursor_lat;
 				m_pFoundPoint->m_slon = m_cursor_lon;
 
 				// Update the MarkProperties Dialog, if currently shown
@@ -6408,9 +6420,9 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 					double dist;
 					double brg;
-					geo::DistanceBearingMercator(m_pFoundRoutePoint->m_lat,
-												 m_pFoundRoutePoint->m_lon, nav.lat, nav.lon, &brg,
-												 &dist);
+					geo::DistanceBearingMercator(m_pFoundRoutePoint->latitude(),
+												 m_pFoundRoutePoint->longitude(), nav.lat, nav.lon,
+												 &brg, &dist);
 					if (dist * 1852.0 <= g_nAWMax)
 						menuWaypoint->Append(ID_WP_MENU_SET_ANCHORWATCH, _("Set Anchor Watch"));
 				}
@@ -6619,7 +6631,7 @@ void ChartCanvas::RemovePointFromRoute(RoutePoint* point, Route* route)
 		route = NULL;
 	}
 	//  Add this point back into the selectables
-	pSelect->AddSelectableRoutePoint(point->m_lat, point->m_lon, point);
+	pSelect->AddSelectableRoutePoint(point->latitude(), point->longitude(), point);
 
 	if (pRoutePropDialog && (pRoutePropDialog->IsShown())) {
 		pRoutePropDialog->SetRouteAndUpdate(route);
@@ -6691,7 +6703,7 @@ void pupHandler_PasteWaypoint()
 	double nearby_radius_meters = nearby_sel_rad_pix / cc1->GetCanvasTrueScale();
 
 	RoutePoint* nearPoint
-		= pWayPointMan->GetNearbyWaypoint(Position(pasted->m_lat, pasted->m_lon), nearby_radius_meters);
+		= pWayPointMan->GetNearbyWaypoint(pasted->get_position(), nearby_radius_meters);
 
 	int answer = wxID_NO;
 	if (nearPoint && !nearPoint->m_bIsInTrack && !nearPoint->m_bIsInLayer) {
@@ -6713,7 +6725,7 @@ void pupHandler_PasteWaypoint()
 	if (answer == wxID_NO) {
 		RoutePoint* newPoint = new RoutePoint(*pasted);
 		newPoint->m_bIsolatedMark = true;
-		pSelect->AddSelectableRoutePoint(newPoint->m_lat, newPoint->m_lon, newPoint);
+		pSelect->AddSelectableRoutePoint(newPoint->latitude(), newPoint->longitude(), newPoint);
 		pConfig->AddNewWayPoint(newPoint, -1);
 		pWayPointMan->push_back(newPoint);
 		if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
@@ -6748,8 +6760,7 @@ void pupHandler_PasteRoute()
 
 	for (int i = 1; i <= pasted->GetnPoints(); i++) {
 		curPoint = pasted->GetPoint(i); // NB! n starts at 1 !
-		nearPoint = pWayPointMan->GetNearbyWaypoint(Position(curPoint->m_lat, curPoint->m_lon),
-													nearby_radius_meters);
+		nearPoint = pWayPointMan->GetNearbyWaypoint(curPoint->get_position(), nearby_radius_meters);
 		if (nearPoint) {
 			mergepoints = true;
 			existingWaypointCounter++;
@@ -6799,8 +6810,8 @@ void pupHandler_PasteRoute()
 		curPoint = pasted->GetPoint(i);
 		if (answer == wxID_YES && curPoint->m_bPtIsSelected) {
 			curPoint->m_bPtIsSelected = false;
-			newPoint = pWayPointMan->GetNearbyWaypoint(Position(curPoint->m_lat, curPoint->m_lon),
-													   nearby_radius_meters);
+			newPoint
+				= pWayPointMan->GetNearbyWaypoint(curPoint->get_position(), nearby_radius_meters);
 			newPoint->SetName(curPoint->GetName());
 			newPoint->m_MarkDescription = curPoint->m_MarkDescription;
 
@@ -6817,13 +6828,14 @@ void pupHandler_PasteRoute()
 			newPoint->m_bKeepXRoute = false;
 
 			newRoute->AddPoint(newPoint);
-			pSelect->AddSelectableRoutePoint(newPoint->m_lat, newPoint->m_lon, newPoint);
+			pSelect->AddSelectableRoutePoint(newPoint->latitude(), newPoint->longitude(), newPoint);
 			pConfig->AddNewWayPoint(newPoint, -1);
 			pWayPointMan->push_back(newPoint);
 		}
 		if (i > 1 && createNewRoute)
-			pSelect->AddSelectableRouteSegment(prevPoint->m_lat, prevPoint->m_lon, curPoint->m_lat,
-											   curPoint->m_lon, prevPoint, newPoint, newRoute);
+			pSelect->AddSelectableRouteSegment(prevPoint->latitude(), prevPoint->longitude(),
+											   curPoint->latitude(), curPoint->longitude(),
+											   prevPoint, newPoint, newRoute);
 		prevPoint = newPoint;
 	}
 
@@ -6881,8 +6893,9 @@ void pupHandler_PasteTrack()
 		newPoint->m_bIsInTrack = true;
 
 		if (prevPoint)
-			pSelect->AddSelectableTrackSegment(prevPoint->m_lat, prevPoint->m_lon, newPoint->m_lat,
-											   newPoint->m_lon, prevPoint, newPoint, newTrack);
+			pSelect->AddSelectableTrackSegment(prevPoint->latitude(), prevPoint->longitude(),
+											   newPoint->latitude(), newPoint->longitude(),
+											   prevPoint, newPoint, newTrack);
 
 		prevPoint = newPoint;
 	}
@@ -7002,8 +7015,8 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			temp_route->AddPoint(m_pFoundRoutePoint);
 			m_pFoundRoutePoint->m_bKeepXRoute = true;
 
-			pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, m_pFoundRoutePoint->m_lat,
-											   m_pFoundRoutePoint->m_lon, pWP_src,
+			pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, m_pFoundRoutePoint->latitude(),
+											   m_pFoundRoutePoint->longitude(), pWP_src,
 											   m_pFoundRoutePoint, temp_route);
 
 			wxString name = m_pFoundRoutePoint->GetName();
@@ -7330,14 +7343,13 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 			pLast = m_pSelectedRoute->GetLastPoint();
 
-			m_prev_rlat = pLast->m_lat;
-			m_prev_rlon = pLast->m_lon;
+			m_prev_rlat = pLast->latitude();
+			m_prev_rlon = pLast->longitude();
 			m_prev_pMousePoint = pLast;
 
 			m_bAppendingRoute = true;
 
 			SetCursor(*pCursorPencil);
-
 			break;
 
 		case ID_RT_MENU_COPY:
@@ -9127,7 +9139,7 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& Blt
 				continue;
 			} else {
 				if (BltBBox.GetValid()) {
-					if (BltBBox.PointInBox(point->m_lon, point->m_lat, 0))
+					if (BltBBox.PointInBox(point->latitude(), point->longitude(), 0))
 						point->Draw(dc, NULL);
 				}
 			}
@@ -9137,17 +9149,21 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& Blt
 	// draw anchor watch rings, if activated
 
 	if (pAnchorWatchPoint1 || pAnchorWatchPoint2) {
-		wxPoint r1, r2;
-		wxPoint lAnchorPoint1, lAnchorPoint2;
+		wxPoint r1;
+		wxPoint r2;
+		wxPoint lAnchorPoint1;
+		wxPoint lAnchorPoint2;
 		double lpp1 = 0.0;
 		double lpp2 = 0.0;
 		if (pAnchorWatchPoint1) {
 			lpp1 = GetAnchorWatchRadiusPixels(pAnchorWatchPoint1);
-			GetCanvasPointPix(pAnchorWatchPoint1->m_lat, pAnchorWatchPoint1->m_lon, &lAnchorPoint1);
+			GetCanvasPointPix(pAnchorWatchPoint1->latitude(), pAnchorWatchPoint1->longitude(),
+							  &lAnchorPoint1);
 		}
 		if (pAnchorWatchPoint2) {
 			lpp2 = GetAnchorWatchRadiusPixels(pAnchorWatchPoint2);
-			GetCanvasPointPix(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, &lAnchorPoint2);
+			GetCanvasPointPix(pAnchorWatchPoint2->latitude(), pAnchorWatchPoint2->longitude(),
+							  &lAnchorPoint2);
 		}
 
 		wxPen ppPeng(GetGlobalColor(_T ( "UGREN" )), 2);
@@ -9189,17 +9205,19 @@ double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 	double tlon1;
 
 	if (pAnchorWatchPoint) {
-		(pAnchorWatchPoint->GetName()).ToDouble(&d1);
+		pAnchorWatchPoint->GetName().ToDouble(&d1);
 		d1 = AnchorDistFix(d1, AnchorPointMinDist, g_nAWMax);
-		dabs = fabs(d1 / 1852.);
-		geo::ll_gc_ll(pAnchorWatchPoint->m_lat, pAnchorWatchPoint->m_lon, 0, dabs, &tlat1, &tlon1);
+		dabs = fabs(d1 / 1852.0);
+		geo::ll_gc_ll(pAnchorWatchPoint->latitude(), pAnchorWatchPoint->longitude(), 0, dabs,
+					  &tlat1, &tlon1);
 		GetCanvasPointPix(tlat1, tlon1, &r1);
-		GetCanvasPointPix(pAnchorWatchPoint->m_lat, pAnchorWatchPoint->m_lon, &lAnchorPoint);
-		lpp = sqrt(pow((double)(lAnchorPoint.x - r1.x), 2)
+		GetCanvasPointPix(pAnchorWatchPoint->latitude(), pAnchorWatchPoint->longitude(),
+						  &lAnchorPoint);
+		lpp = sqrt(pow((double)(lAnchorPoint.x - r1.x), 2) // FIXME
 				   + pow((double)(lAnchorPoint.y - r1.y), 2));
 
-		//    This is an entry watch
-		if (d1 < 0)
+		// This is an entry watch
+		if (d1 < 0.0)
 			lpp = -lpp;
 	}
 	return lpp;
@@ -9212,16 +9230,14 @@ double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox, bool bRebuildSelList,
 									 bool bforce_redraw_tides, bool bdraw_mono_for_mask)
 {
-	wxPen* pblack_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T ( "UINFD" )), 1, wxSOLID);
-	wxPen* pyelo_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T ( "YELO1" )), 1, wxSOLID);
-	wxPen* pblue_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T ( "BLUE2" )), 1, wxSOLID);
+	wxPen* pblack_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFD")), 1, wxSOLID);
+	wxPen* pyelo_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("YELO1")), 1, wxSOLID);
+	wxPen* pblue_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("BLUE2")), 1, wxSOLID);
 
 	wxBrush* pgreen_brush
-		= wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T ( "GREEN1" )), wxSOLID);
-	//        wxBrush *pblack_brush = wxTheBrushList->FindOrCreateBrush ( GetGlobalColor ( _T (
-	// "UINFD" ) ), wxSOLID );
-	wxBrush* brc_1 = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T ( "BLUE2" )), wxSOLID);
-	wxBrush* brc_2 = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T ( "YELO1" )), wxSOLID);
+		= wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("GREEN1")), wxSOLID);
+	wxBrush* brc_1 = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("BLUE2")), wxSOLID);
+	wxBrush* brc_2 = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("YELO1")), wxSOLID);
 
 	wxFont* dFont = FontMgr::Get().GetFont(_("ExtendedTideIcon"), 12);
 	dc.SetTextForeground(FontMgr::Get().GetFontColor(_("ExtendedTideIcon")));

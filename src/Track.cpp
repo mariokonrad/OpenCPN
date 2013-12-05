@@ -134,8 +134,8 @@ void Track::Stop(bool do_add_point)
 	double delta = 0.0;
 	if (m_lastStoredTP) {
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		delta
-			= geo::DistGreatCircle(nav.lat, nav.lon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon);
+		delta = geo::DistGreatCircle(nav.lat, nav.lon, m_lastStoredTP->latitude(),
+									 m_lastStoredTP->longitude());
 	}
 
 	if (m_bRunning && ((delta > m_minTrackpoint_delta) || do_add_point))
@@ -205,8 +205,8 @@ void Track::OnTimerTrack(wxTimerEvent&)
 
 	if (m_lastStoredTP) {
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		m_prev_dist
-			= geo::DistGreatCircle(nav.lat, nav.lon, m_lastStoredTP->m_lat, m_lastStoredTP->m_lon);
+		m_prev_dist = geo::DistGreatCircle(nav.lat, nav.lon, m_lastStoredTP->latitude(),
+										   m_lastStoredTP->longitude());
 	} else {
 		m_prev_dist = 999.0;
 	}
@@ -291,8 +291,8 @@ void Track::AddPointNow(bool do_add_point)
 
 			// Scan points skipped so far and see if anyone has XTE over the threshold.
 			for (unsigned int i = 0; i < skipPoints.size(); i++) {
-				double xte = GetXTE(m_lastStoredTP->m_lat, m_lastStoredTP->m_lon, nav.lat, nav.lon,
-									skipPoints[i].lat, skipPoints[i].lon);
+				double xte = GetXTE(m_lastStoredTP->latitude(), m_lastStoredTP->longitude(),
+									nav.lat, nav.lon, skipPoints[i].lat, skipPoints[i].lon);
 				if (xte > xteMax) {
 					xteMax = xte;
 					xteMaxIndex = i;
@@ -301,9 +301,10 @@ void Track::AddPointNow(bool do_add_point)
 			if (xteMax > m_allowedMaxXTE) {
 				RoutePoint* pTrackPoint
 					= AddNewPoint(skipPoints[xteMaxIndex], skipTimes[xteMaxIndex]);
-				pSelect->AddSelectableTrackSegment(m_lastStoredTP->m_lat, m_lastStoredTP->m_lon,
-												   pTrackPoint->m_lat, pTrackPoint->m_lon,
-												   m_lastStoredTP, pTrackPoint, this);
+				pSelect->AddSelectableTrackSegment(
+					m_lastStoredTP->latitude(), m_lastStoredTP->longitude(),
+					pTrackPoint->latitude(), pTrackPoint->longitude(), m_lastStoredTP, pTrackPoint,
+					this);
 
 				m_prevFixedTP = m_fixedTP;
 				m_fixedTP = m_removeTP;
@@ -319,9 +320,9 @@ void Track::AddPointNow(bool do_add_point)
 				// (the next to last) point can possibly be eliminated. Here we reduce the allowed
 				// XTE as a function of leg length. (Half the XTE for very short legs).
 				if (GetnPoints() > 2) {
-					double dist
-						= geo::DistGreatCircle(m_fixedTP->m_lat, m_fixedTP->m_lon,
-											   m_lastStoredTP->m_lat, m_lastStoredTP->m_lon);
+					double dist = geo::DistGreatCircle(
+						m_fixedTP->latitude(), m_fixedTP->longitude(), m_lastStoredTP->latitude(),
+						m_lastStoredTP->longitude());
 					double xte = GetXTE(m_fixedTP, m_lastStoredTP, m_removeTP);
 					if (xte < m_allowedMaxXTE / wxMax(1.0, 2.0 - dist * 2.0)) {
 						pRoutePointList->pop_back();
@@ -330,8 +331,9 @@ void Track::AddPointNow(bool do_add_point)
 						SetnPoints();
 						pSelect->DeletePointSelectableTrackSegments(m_removeTP);
 						pSelect->AddSelectableTrackSegment(
-							m_fixedTP->m_lat, m_fixedTP->m_lon, m_lastStoredTP->m_lat,
-							m_lastStoredTP->m_lon, m_fixedTP, m_lastStoredTP, this);
+							m_fixedTP->latitude(), m_fixedTP->longitude(),
+							m_lastStoredTP->latitude(), m_lastStoredTP->longitude(), m_fixedTP,
+							m_lastStoredTP, this);
 						delete m_removeTP;
 						m_removeTP = m_fixedTP;
 						m_fixedTP = m_prevFixedTP;
@@ -348,9 +350,9 @@ void Track::AddPointNow(bool do_add_point)
 	// Check if this is the last point of the track.
 	if (do_add_point) {
 		RoutePoint* pTrackPoint = AddNewPoint(gpsPoint, now.ToUTC());
-		pSelect->AddSelectableTrackSegment(m_lastStoredTP->m_lat, m_lastStoredTP->m_lon,
-										   pTrackPoint->m_lat, pTrackPoint->m_lon, m_lastStoredTP,
-										   pTrackPoint, this);
+		pSelect->AddSelectableTrackSegment(m_lastStoredTP->latitude(), m_lastStoredTP->longitude(),
+										   pTrackPoint->latitude(), pTrackPoint->longitude(),
+										   m_lastStoredTP, pTrackPoint, this);
 	}
 
 	m_prev_time = now;
@@ -415,7 +417,7 @@ void Track::Draw(ocpnDC& dc, ViewPort& VP)
 		unsigned short int ToSegNo = prp->m_GPXTrkSegNo;
 
 		wxPoint r;
-		cc1->GetCanvasPointPix(prp->m_lat, prp->m_lon, &r);
+		cc1->GetCanvasPointPix(prp->latitude(), prp->longitude(), &r);
 
 		// We do inline decomposition of the line segments, in a simple minded way
 		// If the line segment length is less than approximately 2 pixels, then simply don't render
@@ -475,12 +477,12 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 	// add first point
 
-	pWP_dst = new RoutePoint(Position(pWP_src->m_lat, pWP_src->m_lon), icon, _T ( "" ));
+	pWP_dst = new RoutePoint(pWP_src->get_position(), icon, _T ( "" ));
 	route->AddPoint(pWP_dst);
 
 	pWP_dst->m_bShowName = false;
 
-	pSelect->AddSelectableRoutePoint(pWP_dst->m_lat, pWP_dst->m_lon, pWP_dst);
+	pSelect->AddSelectableRoutePoint(pWP_dst->latitude(), pWP_dst->longitude(), pWP_dst);
 
 	// add intermediate points as needed
 
@@ -495,8 +497,8 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 		delta_hdg = 0.0;
 		back_ic = next_ic;
 
-		geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, pWP_src->m_lat, pWP_src->m_lon,
-									 &delta_hdg, &delta_dist);
+		geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), pWP_src->latitude(),
+									 pWP_src->longitude(), &delta_hdg, &delta_dist);
 
 		if ((delta_dist > (leg_speed * 6.0)) && !prp_OK) {
 			int delta_inserts = floor(delta_dist / (leg_speed * 4.0));
@@ -505,14 +507,16 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 			double tlon = 0.0;
 
 			while (delta_inserts--) {
-				geo::ll_gc_ll(pWP_src->m_lat, pWP_src->m_lon, delta_hdg, delta_dist, &tlat, &tlon);
+				geo::ll_gc_ll(pWP_src->latitude(), pWP_src->longitude(), delta_hdg, delta_dist,
+							  &tlat, &tlon);
 				pWP_dst = new RoutePoint(Position(tlat, tlon), icon, _T (""));
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;
-				pSelect->AddSelectableRoutePoint(pWP_dst->m_lat, pWP_dst->m_lon, pWP_dst);
+				pSelect->AddSelectableRoutePoint(pWP_dst->latitude(), pWP_dst->longitude(), pWP_dst);
 
-				pSelect->AddSelectableRouteSegment(pWP_src->m_lat, pWP_src->m_lon, pWP_dst->m_lat,
-												   pWP_dst->m_lon, pWP_src, pWP_dst, route);
+				pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
+												   pWP_dst->latitude(), pWP_dst->longitude(),
+												   pWP_src, pWP_dst, route);
 
 				pWP_src = pWP_dst;
 			}
@@ -536,15 +540,16 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 			xte = GetXTE(pWP_src, prpX, prp);
 			if (isProminent || (xte > g_TrackDeltaDistance)) {
 
-				pWP_dst = new RoutePoint(Position(prp_OK->m_lat, prp_OK->m_lon), icon, _T ( "" ));
+				pWP_dst = new RoutePoint(prp_OK->get_position(), icon, _T ( "" ));
 
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;
 
-				pSelect->AddSelectableRoutePoint(pWP_dst->m_lat, pWP_dst->m_lon, pWP_dst);
+				pSelect->AddSelectableRoutePoint(pWP_dst->latitude(), pWP_dst->longitude(), pWP_dst);
 
-				pSelect->AddSelectableRouteSegment(pWP_src->m_lat, pWP_src->m_lon, pWP_dst->m_lat,
-												   pWP_dst->m_lon, pWP_src, pWP_dst, route);
+				pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
+												   pWP_dst->latitude(), pWP_dst->longitude(),
+												   pWP_src, pWP_dst, route);
 
 				pWP_src = pWP_dst;
 				next_ic = 0;
@@ -562,8 +567,8 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 			prp_OK = prp;
 		}
 
-		geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, pWP_src->m_lat, pWP_src->m_lon, NULL,
-									 &delta_dist);
+		geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), pWP_src->latitude(),
+									 pWP_src->longitude(), NULL, &delta_dist);
 
 		if (!((delta_dist > (g_TrackDeltaDistance)) && !prp_OK)) {
 			++prpnode;
@@ -576,16 +581,13 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 	// add last point, if needed
 	if (delta_dist >= g_TrackDeltaDistance) {
-		pWP_dst = new RoutePoint(
-			Position(pRoutePointList->back()->m_lat, pRoutePointList->back()->m_lon), icon, _T(""));
+		pWP_dst = new RoutePoint(pRoutePointList->back()->get_position(), icon, _T(""));
 		route->AddPoint(pWP_dst);
-
 		pWP_dst->m_bShowName = false;
-
-		pSelect->AddSelectableRoutePoint(pWP_dst->m_lat, pWP_dst->m_lon, pWP_dst);
-
-		pSelect->AddSelectableRouteSegment(pWP_src->m_lat, pWP_src->m_lon, pWP_dst->m_lat,
-										   pWP_dst->m_lon, pWP_src, pWP_dst, route);
+		pSelect->AddSelectableRoutePoint(pWP_dst->latitude(), pWP_dst->longitude(), pWP_dst);
+		pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
+										   pWP_dst->latitude(), pWP_dst->longitude(), pWP_src,
+										   pWP_dst, route);
 	}
 	route->m_RouteNameString = m_RouteNameString;
 	route->m_RouteStartString = m_RouteStartString;
@@ -669,12 +671,12 @@ double Track::GetXTE(double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon,
 	double brg2;
 	double dist2;
 	geo::DistanceBearingMercator(toLat, toLon, fm1Lat, fm1Lon, &brg1, &dist1);
-	w.x = dist1 * sin(brg1 * M_PI / 180.);
-	w.y = dist1 * cos(brg1 * M_PI / 180.);
+	w.x = dist1 * sin(brg1 * M_PI / 180.0);
+	w.y = dist1 * cos(brg1 * M_PI / 180.0);
 
 	geo::DistanceBearingMercator(toLat, toLon, fm2Lat, fm2Lon, &brg2, &dist2);
-	v.x = dist2 * sin(brg2 * M_PI / 180.);
-	v.y = dist2 * cos(brg2 * M_PI / 180.);
+	v.x = dist2 * sin(brg2 * M_PI / 180.0);
+	v.y = dist2 * cos(brg2 * M_PI / 180.0);
 
 	p.x = 0.0;
 	p.y = 0.0;
@@ -710,6 +712,7 @@ double Track::GetXTE(RoutePoint* fm1, RoutePoint* fm2, RoutePoint* to)
 		return 0.0;
 	if (fm2 == to)
 		return 0.0;
-	return GetXTE(fm1->m_lat, fm1->m_lon, fm2->m_lat, fm2->m_lon, to->m_lat, to->m_lon);
+	return GetXTE(fm1->latitude(), fm1->longitude(), fm2->latitude(), fm2->longitude(),
+				  to->latitude(), to->longitude());
 }
 

@@ -349,11 +349,10 @@ bool RouteProp::IsThisRouteExtendable()
 			if (pEditRouteArray->size() == 0) {
 
 				int nearby_radius_meters = static_cast<int>(8.0 / cc1->GetCanvasTrueScale());
-				double rlat = pLastPoint->m_lat;
-				double rlon = pLastPoint->m_lon;
+				Position rpos = pLastPoint->get_position();
 
-				m_pExtendPoint = pWayPointMan->GetOtherNearbyWaypoint(
-					Position(rlat, rlon), nearby_radius_meters, pLastPoint->m_GUID);
+				m_pExtendPoint = pWayPointMan->GetOtherNearbyWaypoint(rpos, nearby_radius_meters,
+																	  pLastPoint->m_GUID);
 				if (m_pExtendPoint && !m_pExtendPoint->m_bIsInTrack) {
 					Routeman::RouteArray* pCloseWPRouteArray
 						= g_pRouteMan->GetRouteArrayContaining(m_pExtendPoint);
@@ -364,9 +363,9 @@ bool RouteProp::IsThisRouteExtendable()
 						// remove invisible & own routes from choices
 						for (int i = pEditRouteArray->size(); i > 0; --i) {
 							Route* route = static_cast<Route*>(pEditRouteArray->at(i - 1));
+							// FIXME: altering container while iterating
 							if (!route->IsVisible() || (route->m_GUID == m_pRoute->m_GUID))
-								pEditRouteArray->erase(pEditRouteArray->begin() +
-									i - 1); // FIXME: altering container while iterating
+								pEditRouteArray->erase(pEditRouteArray->begin() + i - 1);
 						}
 					}
 				}
@@ -677,7 +676,7 @@ void RouteProp::OnRoutepropListClick(wxListEvent& event)
 				m_SplitButton->Enable(true);
 			}
 
-			gFrame->JumpToPosition(Position(prp->m_lat, prp->m_lon), cc1->GetVPScale());
+			gFrame->JumpToPosition(prp->get_position(), cc1->GetVPScale());
 		}
 	}
 }
@@ -698,8 +697,7 @@ void RouteProp::OnRoutePropMenuSelected(wxCommandEvent& event)
 				item = m_wpList->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 				if (item == -1)
 					break;
-				RoutePoint* wp;
-				wp = (RoutePoint*)m_wpList->GetItemData(item);
+				RoutePoint* wp = reinterpret_cast<RoutePoint*>(m_wpList->GetItemData(item));
 				cc1->RemovePointFromRoute(wp, m_pRoute);
 				SetRouteAndUpdate(m_pRoute);
 			}
@@ -710,7 +708,7 @@ void RouteProp::OnRoutePropMenuSelected(wxCommandEvent& event)
 			long item = m_wpList->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 			if (item == -1)
 				break;
-			RoutePoint* wp = (RoutePoint*)m_wpList->GetItemData(item);
+			RoutePoint* wp = reinterpret_cast<RoutePoint*>(m_wpList->GetItemData(item));
 			if (!wp)
 				break;
 			RouteManagerDialog::WptShowPropertiesDialog(wp, this);
@@ -769,9 +767,9 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 	if (m_pRoute) {
 		// Calculate  LMT offset from the first point in the route
 		if (m_pEnroutePoint && m_bStartNow)
-			gStart_LMT_Offset = long((m_pEnroutePoint->m_lon) * 3600.0 / 15.0);
+			gStart_LMT_Offset = long((m_pEnroutePoint->longitude()) * 3600.0 / 15.0);
 		else
-			gStart_LMT_Offset = long((m_pRoute->pRoutePointList->front()->m_lon) * 3600.0 / 15.0);
+			gStart_LMT_Offset = long((m_pRoute->pRoutePointList->front()->longitude()) * 3600.0 / 15.0);
 	}
 
 	// Reorganize dialog for route or track display
@@ -814,7 +812,6 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 	GetSizer()->Layout();
 
 	InitializeList();
-
 	UpdateProperties();
 }
 
@@ -926,10 +923,10 @@ void RouteProp::update_route_properties()
 		total_seconds = m_pRoute->m_route_time;
 		if (m_bStartNow) {
 			if (m_pEnroutePoint)
-				gStart_LMT_Offset = static_cast<long>(m_pEnroutePoint->m_lon * 3600.0 / 15.0);
+				gStart_LMT_Offset = static_cast<long>(m_pEnroutePoint->longitude() * 3600.0 / 15.0);
 			else
 				gStart_LMT_Offset
-					= static_cast<long>(m_pRoute->pRoutePointList->front()->m_lon * 3600.0 / 15.0);
+					= static_cast<long>(m_pRoute->pRoutePointList->front()->longitude() * 3600.0 / 15.0);
 		}
 	}
 
@@ -1035,7 +1032,7 @@ void RouteProp::update_route_properties()
 			else
 				leg_speed = m_planspeed;
 			if (m_bStartNow) {
-				geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, slat, slon, &brg,
+				geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), slat, slon, &brg,
 											 &leg_dist);
 				if (i == 0)
 					joining_time
@@ -1049,7 +1046,7 @@ void RouteProp::update_route_properties()
 				leg_speed = m_planspeed;
 		}
 
-		geo::DistanceBearingMercator(prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist);
+		geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), slat, slon, &brg, &leg_dist);
 
 		// calculation of course at current WayPoint.
 		double course = 10;
@@ -1057,8 +1054,8 @@ void RouteProp::update_route_properties()
 		RoutePointList::iterator next_node = node + 1;
 		RoutePoint* _next_prp = (next_node != m_pRoute->pRoutePointList->end()) ? *next_node : NULL;
 		if (_next_prp) {
-			geo::DistanceBearingMercator(_next_prp->m_lat, _next_prp->m_lon, prp->m_lat,
-										 prp->m_lon, &course, &tmp_leg_dist);
+			geo::DistanceBearingMercator(_next_prp->latitude(), _next_prp->longitude(),
+										 prp->latitude(), prp->longitude(), &course, &tmp_leg_dist);
 		} else {
 			course = 0.0;
 			tmp_leg_dist = 0.0;
@@ -1084,7 +1081,7 @@ void RouteProp::update_route_properties()
 		if (!enroute)
 			m_wpList->SetItem(item_line_index, 3, nullify);
 
-		// Course (bearing of next )
+		// Course (bearing of next)
 		if (_next_prp) {
 			if (g_bShowMag)
 				t.Printf(_T("%03.0f Deg. M"), navigation::GetTrueOrMag(course));
@@ -1097,17 +1094,17 @@ void RouteProp::update_route_properties()
 		}
 
 		// Lat/Lon
-		wxString tlat = toSDMM(1, prp->m_lat, prp->m_bIsInTrack); // low precision for routes
+		wxString tlat = toSDMM(1, prp->latitude(), prp->m_bIsInTrack); // low precision for routes
 		if (arrival)
 			m_wpList->SetItem(item_line_index, 4, tlat);
 
-		wxString tlon = toSDMM(2, prp->m_lon, prp->m_bIsInTrack);
+		wxString tlon = toSDMM(2, prp->longitude(), prp->m_bIsInTrack);
 		if (arrival)
 			m_wpList->SetItem(item_line_index, 5, tlon);
 
 		tide_form = _T("");
 
-		long LMT_Offset = static_cast<long>(prp->m_lon * 3600.0 / 15.0); // offset in seconds from UTC for given location (-1 hr / 15 deg W)
+		long LMT_Offset = static_cast<long>(prp->longitude() * 3600.0 / 15.0); // offset in seconds from UTC for given location (-1 hr / 15 deg W)
 
 		// Time to each waypoint or creation date for tracks
 		if (i == 0 && enroute) {
@@ -1127,14 +1124,14 @@ void RouteProp::update_route_properties()
 				wxString s = ts2s(act_starttime, tz_selection, (int)LMT_Offset, DISPLAY_FORMAT);
 				time_form.Append(s);
 				time_form.Append(_T("   ("));
-				time_form.Append(GetDaylightString(getDaylightStatus(Position(prp->m_lat, prp->m_lon), act_starttime)));
+				time_form.Append(GetDaylightString(getDaylightStatus(prp->get_position(), act_starttime)));
 				time_form.Append(_T(")"));
 
 				if (ptcmgr) {
 					int jx = 0;
 					if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
 						tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
-						jx = ptcmgr->GetStationIDXbyName(tide_form, prp->m_lat, prp->m_lon);
+						jx = ptcmgr->GetStationIDXbyName(tide_form, prp->latitude(), prp->longitude());
 					}
 					if (gpIDX || jx) {
 						time_t tm = act_starttime.GetTicks();
@@ -1167,14 +1164,14 @@ void RouteProp::update_route_properties()
 
 					time_form = ts2s(ueta, tz_selection, LMT_Offset, DISPLAY_FORMAT);
 					time_form.Append(_T("   ("));
-					time_form.Append(GetDaylightString(getDaylightStatus(Position(prp->m_lat, prp->m_lon), ueta)));
+					time_form.Append(GetDaylightString(getDaylightStatus(prp->get_position(), ueta)));
 					time_form.Append(_T(")"));
 
 					if (ptcmgr) {
 						int jx = 0;
 						if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
 							tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
-							jx = ptcmgr->GetStationIDXbyName(tide_form, prp->m_lat, prp->m_lon);
+							jx = ptcmgr->GetStationIDXbyName(tide_form, prp->latitude(), prp->longitude());
 						}
 						if (gpIDX || jx) {
 							time_t tm = ueta.GetTicks();
@@ -1207,12 +1204,12 @@ void RouteProp::update_route_properties()
 			m_wpList->SetItem(item_line_index, 8, nullify);
 		}
 
-		//  Save for iterating distance/bearing calculation
-		slat = prp->m_lat;
-		slon = prp->m_lon;
+		// Save for iterating distance/bearing calculation
+		slat = prp->latitude();
+		slon = prp->longitude();
 
 		// if stopover (ETD) found, loop for next output line for the same point
-		//   with departure time & tide information
+		// with departure time & tide information
 
 		if (arrival && (prp->m_seg_etd.IsValid())) {
 			stopover_count++;

@@ -158,7 +158,7 @@ RoutePoint* Routeman::FindBestActivatePoint(Route* pR, const Position& pos, doub
 
 		double brg;
 		double dist;
-		geo::DistanceBearingMercator(pn->m_lat, pn->m_lon, pos.lat(), pos.lon(), &brg, &dist);
+		geo::DistanceBearingMercator(pn->latitude(), pn->longitude(), pos.lat(), pos.lon(), &brg, &dist);
 
 		double angle = brg - cog;
 		double soa = cos(angle * M_PI / 180.0);
@@ -335,15 +335,15 @@ bool Routeman::UpdateProgress()
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		double north;
 		double east;
-		geo::toSM(pActivePoint->m_lat, pActivePoint->m_lon, nav.lat, nav.lon, &east, &north);
+		geo::toSM(pActivePoint->latitude(), pActivePoint->longitude(), nav.lat, nav.lon, &east, &north);
 		double a = atan(north / east);
-		if (fabs(pActivePoint->m_lon - nav.lon) < 180.0) {
-			if (pActivePoint->m_lon > nav.lon)
+		if (fabs(pActivePoint->longitude() - nav.lon) < 180.0) {
+			if (pActivePoint->longitude() > nav.lon)
 				CurrentBrgToActivePoint = 90.0 - (a * 180.0 / M_PI);
 			else
 				CurrentBrgToActivePoint = 270.0 - (a * 180.0 / M_PI);
 		} else {
-			if (pActivePoint->m_lon > nav.lon)
+			if (pActivePoint->longitude() > nav.lon)
 				CurrentBrgToActivePoint = 270.0 - (a * 180.0 / M_PI);
 			else
 				CurrentBrgToActivePoint = 90.0 - (a * 180.0 / M_PI);
@@ -351,22 +351,22 @@ bool Routeman::UpdateProgress()
 
 		// Calculate range using Great Circle Formula
 
-		double d5
-			= geo::DistGreatCircle(nav.lat, nav.lon, pActivePoint->m_lat, pActivePoint->m_lon);
+		double d5 = geo::DistGreatCircle(nav.lat, nav.lon, pActivePoint->latitude(),
+										 pActivePoint->longitude());
 		CurrentRngToActivePoint = d5;
 
 		// Get the XTE vector, normal to current segment
 		Vector2D va, vb, vn;
 
 		double brg1, dist1, brg2, dist2;
-		geo::DistanceBearingMercator(pActivePoint->m_lat, pActivePoint->m_lon,
-									 pActiveRouteSegmentBeginPoint->m_lat,
-									 pActiveRouteSegmentBeginPoint->m_lon, &brg1, &dist1);
+		geo::DistanceBearingMercator(pActivePoint->latitude(), pActivePoint->longitude(),
+									 pActiveRouteSegmentBeginPoint->latitude(),
+									 pActiveRouteSegmentBeginPoint->longitude(), &brg1, &dist1);
 		vb.x = dist1 * sin(brg1 * M_PI / 180.0);
 		vb.y = dist1 * cos(brg1 * M_PI / 180.0);
 
-		geo::DistanceBearingMercator(pActivePoint->m_lat, pActivePoint->m_lon, nav.lat, nav.lon,
-									 &brg2, &dist2);
+		geo::DistanceBearingMercator(pActivePoint->latitude(), pActivePoint->longitude(), nav.lat,
+									 nav.lon, &brg2, &dist2);
 		va.x = dist2 * sin(brg2 * M_PI / 180.0);
 		va.y = dist2 * cos(brg2 * M_PI / 180.0);
 
@@ -387,12 +387,13 @@ bool Routeman::UpdateProgress()
 		double y1;
 		double x2;
 		double y2;
-		geo::toSM(pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon,
-				  pActiveRouteSegmentBeginPoint->m_lat, pActiveRouteSegmentBeginPoint->m_lon, &x1,
+		geo::toSM(pActiveRouteSegmentBeginPoint->latitude(), pActiveRouteSegmentBeginPoint->longitude(),
+				  pActiveRouteSegmentBeginPoint->latitude(), pActiveRouteSegmentBeginPoint->longitude(), &x1,
 				  &y1);
 
-		geo::toSM(pActivePoint->m_lat, pActivePoint->m_lon, pActiveRouteSegmentBeginPoint->m_lat,
-				  pActiveRouteSegmentBeginPoint->m_lon, &x2, &y2);
+		geo::toSM(pActivePoint->latitude(), pActivePoint->longitude(),
+				  pActiveRouteSegmentBeginPoint->latitude(),
+				  pActiveRouteSegmentBeginPoint->longitude(), &x2, &y2);
 
 		double e1 = atan2((x2 - x1), (y2 - y1));
 		CurrentSegmentCourse = e1 * 180.0 / M_PI;
@@ -415,7 +416,7 @@ bool Routeman::UpdateProgress()
 		else
 			XTEDir = -1;
 
-		//      Determine Arrival
+		// Determine Arrival
 
 		bool bDidArrival = false;
 
@@ -612,9 +613,9 @@ bool Routeman::UpdateAutopilot()
 {
 	// FIXME: split up method
 
-	//Send all known Autopilot messages upstream
+	// Send all known Autopilot messages upstream
 
-	//RMB
+	// RMB
 	{
 		m_NMEA0183.TalkerID = _T("EC");
 
@@ -630,15 +631,15 @@ bool Routeman::UpdateAutopilot()
 		m_NMEA0183.Rmb.To = pActivePoint->GetName().Truncate(6);
 		m_NMEA0183.Rmb.From = pActiveRouteSegmentBeginPoint->GetName().Truncate(6);
 
-		if (pActivePoint->m_lat < 0.0)
-			m_NMEA0183.Rmb.DestinationPosition.Latitude.Set(-pActivePoint->m_lat, _T("S"));
+		if (pActivePoint->latitude() < 0.0)
+			m_NMEA0183.Rmb.DestinationPosition.Latitude.Set(-pActivePoint->latitude(), _T("S"));
 		else
-			m_NMEA0183.Rmb.DestinationPosition.Latitude.Set(pActivePoint->m_lat, _T("N"));
+			m_NMEA0183.Rmb.DestinationPosition.Latitude.Set(pActivePoint->latitude(), _T("N"));
 
-		if (pActivePoint->m_lon < 0.0)
-			m_NMEA0183.Rmb.DestinationPosition.Longitude.Set(-pActivePoint->m_lon, _T("W"));
+		if (pActivePoint->longitude() < 0.0)
+			m_NMEA0183.Rmb.DestinationPosition.Longitude.Set(-pActivePoint->longitude(), _T("W"));
 		else
-			m_NMEA0183.Rmb.DestinationPosition.Longitude.Set(pActivePoint->m_lon, _T("E"));
+			m_NMEA0183.Rmb.DestinationPosition.Longitude.Set(pActivePoint->longitude(), _T("E"));
 
 		m_NMEA0183.Rmb.RangeToDestinationNauticalMiles = CurrentRngToActivePoint;
 		m_NMEA0183.Rmb.BearingToDestinationDegreesTrue = CurrentBrgToActivePoint;
@@ -685,7 +686,7 @@ bool Routeman::UpdateAutopilot()
 				m_NMEA0183.Rmc.MagneticVariationDirection = East;
 			}
 		} else
-			m_NMEA0183.Rmc.MagneticVariation = 361.; // A signal to NMEA converter, gVAR is unknown
+			m_NMEA0183.Rmc.MagneticVariation = 361.0; // A signal to NMEA converter, gVAR is unknown
 
 		wxDateTime now = wxDateTime::Now();
 		wxDateTime utc = now.ToUTC();
@@ -730,9 +731,9 @@ bool Routeman::UpdateAutopilot()
 
 		double brg1;
 		double dist1;
-		geo::DistanceBearingMercator(pActivePoint->m_lat, pActivePoint->m_lon,
-									 pActiveRouteSegmentBeginPoint->m_lat,
-									 pActiveRouteSegmentBeginPoint->m_lon, &brg1, &dist1);
+		geo::DistanceBearingMercator(pActivePoint->latitude(), pActivePoint->longitude(),
+									 pActiveRouteSegmentBeginPoint->latitude(),
+									 pActiveRouteSegmentBeginPoint->longitude(), &brg1, &dist1);
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
@@ -802,7 +803,7 @@ bool Routeman::DoesRouteContainSharedPoints(const Route* pRoute)
 	return false;
 }
 
-void Routeman::DeleteRoute(Route * pRoute)
+void Routeman::DeleteRoute(Route* pRoute)
 {
 	if (!pRoute)
 		return;
@@ -822,16 +823,16 @@ void Routeman::DeleteRoute(Route * pRoute)
 	// walk the route, tentatively deleting/marking points used only by this route
 	RoutePointList::iterator pnode = pRoute->pRoutePointList->begin();
 	while (pnode != pRoute->pRoutePointList->end()) {
-		RoutePoint *prp = *pnode;
+		RoutePoint* prp = *pnode;
 
 		// check all other routes to see if this point appears in any other route
-		Route *pcontainer_route = FindRouteContainingWaypoint( prp );
+		Route* pcontainer_route = FindRouteContainingWaypoint(prp);
 
 		if (pcontainer_route == NULL && prp->m_bIsInRoute) {
 			prp->m_bIsInRoute = false; // Take this point out of this (and only) route
 			if (!prp->m_bKeepXRoute) {
-				// This does not need to be done with navobj.xml storage, since the waypoints are stored with the route
-				// pConfig->DeleteWayPoint(prp);
+				// This does not need to be done with navobj.xml storage, since the waypoints are
+				// stored with the route
 
 				pSelect->DeleteSelectablePoint(prp, SelectItem::TYPE_ROUTEPOINT);
 
@@ -839,7 +840,8 @@ void Routeman::DeleteRoute(Route * pRoute)
 				RoutePointList::iterator pdnode = pnode;
 				while (pdnode != pRoute->pRoutePointList->end()) {
 					pRoute->pRoutePointList->erase(pdnode);
-					pdnode = std::find(pRoute->pRoutePointList->begin(), pRoute->pRoutePointList->end(), prp);
+					pdnode = std::find(pRoute->pRoutePointList->begin(),
+									   pRoute->pRoutePointList->end(), prp);
 				}
 
 				pnode = pRoute->pRoutePointList->end();

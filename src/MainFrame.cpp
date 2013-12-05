@@ -1230,8 +1230,8 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 				 i != pWayPointMan->waypoints().end(); ++i) {
 				RoutePoint* pr = *i;
 				if (pr->GetName().StartsWith(_T("Anchorage"))) {
-					double a = nav.lat - pr->m_lat;
-					double b = nav.lon - pr->m_lon;
+					double a = nav.lat - pr->latitude();
+					double b = nav.lon - pr->longitude();
 					double l = sqrt((a * a) + (b * b));
 
 					// caveat: this is accurate only on the Equator
@@ -3091,8 +3091,8 @@ bool MainFrame::check_anchorwatch(const RoutePoint* watch_point) const
 	double dist = 0.0;
 	double brg = 0.0;
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-	geo::DistanceBearingMercator(watch_point->m_lat, watch_point->m_lon, nav.lat, nav.lon, &brg,
-								 &dist);
+	geo::DistanceBearingMercator(watch_point->latitude(), watch_point->longitude(), nav.lat,
+								 nav.lon, &brg, &dist);
 	dist *= 1852.0; // unit conversion, anchor distances are in meter
 
 	double d = g_nAWMax;
@@ -4742,8 +4742,8 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 				wxJSONValue v;
 				for (RoutePointList::iterator itp = (*it)->pRoutePointList->begin();
 					 itp != (*it)->pRoutePointList->end(); itp++) {
-					v[_T("lat")] = (*itp)->m_lat;
-					v[_T("lon")] = (*itp)->m_lon;
+					v[_T("lat")] = (*itp)->latitude();
+					v[_T("lon")] = (*itp)->longitude();
 					v[_T("TotalNodes")] = (*it)->pRoutePointList->size();
 					v[_T("NodeNr")] = i;
 					v[_T("error")] = false;
@@ -4788,8 +4788,8 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 				for (RoutePointList::iterator itp = (*it)->pRoutePointList->begin();
 					 itp != (*it)->pRoutePointList->end(); itp++) {
 					v[i][_T("error")] = false;
-					v[i][_T("lat")] = (*itp)->m_lat;
-					v[i][_T("lon")] = (*itp)->m_lon;
+					v[i][_T("lat")] = (*itp)->latitude();
+					v[i][_T("lon")] = (*itp)->longitude();
 					v[i][_T("WPName")] = (*itp)->GetName();
 					v[i][_T("WPDescription")] = (*itp)->GetDescription();
 					const Hyperlinks& hyperlinks = (*itp)->m_HyperlinkList;

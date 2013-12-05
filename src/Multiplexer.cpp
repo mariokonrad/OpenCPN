@@ -460,15 +460,15 @@ ret_point:
 					RoutePoint* prp = *node;
 
 					if (g_GPS_Ident == _T("Generic")) {
-						if (prp->m_lat < 0.)
-							oNMEA0183.Wpl.Position.Latitude.Set(-prp->m_lat, _T("S"));
+						if (prp->latitude() < 0.0)
+							oNMEA0183.Wpl.Position.Latitude.Set(-prp->latitude(), _T("S"));
 						else
-							oNMEA0183.Wpl.Position.Latitude.Set(prp->m_lat, _T("N"));
+							oNMEA0183.Wpl.Position.Latitude.Set(prp->latitude(), _T("N"));
 
-						if (prp->m_lon < 0.)
-							oNMEA0183.Wpl.Position.Longitude.Set(-prp->m_lon, _T("W"));
+						if (prp->longitude() < 0.0)
+							oNMEA0183.Wpl.Position.Longitude.Set(-prp->longitude(), _T("W"));
 						else
-							oNMEA0183.Wpl.Position.Longitude.Set(prp->m_lon, _T("E"));
+							oNMEA0183.Wpl.Position.Longitude.Set(prp->longitude(), _T("E"));
 
 						oNMEA0183.Wpl.To = prp->GetName().Truncate(6);
 
@@ -477,15 +477,15 @@ ret_point:
 					} else if (g_GPS_Ident == _T("FurunoGP3X")) {
 						oNMEA0183.TalkerID = _T ( "PFEC," );
 
-						if (prp->m_lat < 0.)
-							oNMEA0183.GPwpl.Position.Latitude.Set(-prp->m_lat, _T("S"));
+						if (prp->latitude() < 0.0)
+							oNMEA0183.GPwpl.Position.Latitude.Set(-prp->latitude(), _T("S"));
 						else
-							oNMEA0183.GPwpl.Position.Latitude.Set(prp->m_lat, _T("N"));
+							oNMEA0183.GPwpl.Position.Latitude.Set(prp->latitude(), _T("N"));
 
-						if (prp->m_lon < 0.)
-							oNMEA0183.GPwpl.Position.Longitude.Set(-prp->m_lon, _T("W"));
+						if (prp->longitude() < 0.0)
+							oNMEA0183.GPwpl.Position.Longitude.Set(-prp->longitude(), _T("W"));
 						else
-							oNMEA0183.GPwpl.Position.Longitude.Set(prp->m_lon, _T("E"));
+							oNMEA0183.GPwpl.Position.Longitude.Set(prp->longitude(), _T("E"));
 
 						wxString name = prp->GetName();
 						name += _T("000000");
@@ -527,8 +527,8 @@ ret_point:
 				oNMEA0183.Rte.RouteName = pr->m_RouteNameString;
 
 			if (g_GPS_Ident == _T("FurunoGP3X")) {
-				oNMEA0183.Rte.RouteName = _T ( "01" );
-				oNMEA0183.TalkerID = _T ( "GP" );
+				oNMEA0183.Rte.RouteName = _T("01");
+				oNMEA0183.TalkerID = _T("GP");
 			}
 
 			oNMEA0183.Rte.total_number_of_messages = 1;
@@ -558,7 +558,7 @@ ret_point:
 				// Make a route with zero waypoints to get tare load.
 				NMEA0183 tNMEA0183;
 				SENTENCE tsnt;
-				tNMEA0183.TalkerID = _T ( "EC" );
+				tNMEA0183.TalkerID = _T("EC");
 
 				tNMEA0183.Rte.Empty();
 				tNMEA0183.Rte.TypeOfRoute = CompleteRoute;
@@ -570,7 +570,7 @@ ret_point:
 						tNMEA0183.Rte.RouteName = pr->m_RouteNameString;
 
 				} else {
-					tNMEA0183.Rte.RouteName = _T ( "01" );
+					tNMEA0183.Rte.RouteName = _T("01");
 				}
 
 				tNMEA0183.Rte.Write(tsnt);
@@ -638,11 +638,11 @@ ret_point:
 
 						if (g_GPS_Ident != _T("FurunoGP3X")) {
 							if (pr->m_RouteNameString.IsEmpty())
-								oNMEA0183.Rte.RouteName = _T ( "1" );
+								oNMEA0183.Rte.RouteName = _T("1");
 							else
 								oNMEA0183.Rte.RouteName = pr->m_RouteNameString;
 						} else {
-							oNMEA0183.Rte.RouteName = _T ( "01" );
+							oNMEA0183.Rte.RouteName = _T("01");
 						}
 
 						oNMEA0183.Rte.total_number_of_messages = final_total;
@@ -732,8 +732,7 @@ ret_point_1:
 	return ret_bool;
 }
 
-
-bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, wxGauge *pProgress)
+bool Multiplexer::SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, wxGauge* pProgress)
 {
 	bool ret_bool = false;
 	DataStream* old_stream = FindStream(com_name);
@@ -744,15 +743,10 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 
 #ifdef USE_GARMINHOST
 #ifdef __WXMSW__
-	if(com_name.Upper().Matches(_T("*GARMIN*"))) // Garmin USB Mode
-	{
-		//        if(m_pdevmon)
-		//            m_pdevmon->StopIOThread(true);
-
+	if(com_name.Upper().Matches(_T("*GARMIN*"))) { // Garmin USB Mode
 		int v_init = Garmin_GPS_Init(wxString(_T("usb:")));
 
-		if(v_init < 0)
-		{
+		if (v_init < 0) {
 			wxString msg(_T(" Garmin USB GPS could not be initialized"));
 			wxLogMessage(msg);
 			msg.Printf(_T(" Error Code is %d"), v_init);
@@ -762,9 +756,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 			wxLogMessage(msg);
 
 			ret_bool = false;
-		}
-		else
-		{
+		} else {
 			wxLogMessage(_T("Garmin USB Initialized"));
 
 			wxString msg = _T("USB Unit identifies as: ");
@@ -779,8 +771,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 
 			int ret1 = Garmin_GPS_SendWaypoints(wxString(_T("usb:")), &rplist);
 
-			if(ret1 != 1)
-			{
+			if (ret1 != 1) {
 				wxLogMessage(_T(" Error Sending Waypoint to Garmin USB"));
 				wxString msg;
 				msg = _T(" LastGarminError is: ");
@@ -788,27 +779,21 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 				wxLogMessage(msg);
 
 				ret_bool = false;
-			}
-			else
+			} else
 				ret_bool = true;
 		}
-
-		//        if(m_pdevmon)
-		//            m_pdevmon->RestartIOThread();
-
 		return ret_bool;
 	}
 #endif
 
 	// Are we using Garmin Host mode for uploads?
-	if(g_bGarminHostUpload) {
+	if (g_bGarminHostUpload) {
 		wxString short_com = com_name.Mid(7);
 		// Initialize the Garmin receiver, build required Jeeps internal data structures
 		int v_init = Garmin_GPS_Init(short_com);
-		if(v_init < 0)
-		{
+		if (v_init < 0) {
 			wxString msg(_T("Garmin GPS could not be initialized on port: "));
-			msg +=com_name;
+			msg += com_name;
 			wxString err;
 			err.Printf(_T(" Error Code is %d"), v_init);
 			msg += err;
@@ -822,7 +807,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 			goto ret_point;
 		} else {
 			wxString msg(_T("Sent waypoint(s) to Garmin GPS on port: "));
-			msg +=com_name;
+			msg += com_name;
 			msg += _T("\n Unit identifies as: ");
 			wxString GPS_Unit = Garmin_GPS_GetSaveString();
 			msg += GPS_Unit;
@@ -833,9 +818,9 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 		rplist.push_back(prp);
 
 		int ret_val = Garmin_GPS_SendWaypoints(short_com, &rplist);
-		if(ret_val != 1) {
+		if (ret_val != 1) {
 			wxString msg(_T("Error Sending Waypoint(s) to Garmin GPS on port: "));
-			msg +=com_name;
+			msg += com_name;
 			wxString err;
 			err.Printf(_T(" Error Code is %d"), ret_val);
 			msg += err;
@@ -847,8 +832,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 
 			ret_bool = false;
 			goto ret_point;
-		}
-		else
+		} else
 			ret_bool = true;
 
 		goto ret_point;
@@ -858,80 +842,68 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 
 	{ // Standard NMEA mode
 
-		//  If the port was temporarily closed, reopen as I/O type
-		//  Otherwise, open another port using default properties
+		// If the port was temporarily closed, reopen as I/O type
+		// Otherwise, open another port using default properties
 		wxString baud;
 
-		if( old_stream ) {
+		if (old_stream) {
 			baud = baud_rate_save;
-		}
-		else {
+		} else {
 			baud = _T("4800");
 		}
 
-		DataStream *dstr = new DataStream( this,
-				com_name,
-				baud,
-				DS_TYPE_INPUT_OUTPUT,
-				0 );
+		DataStream* dstr = new DataStream(this, com_name, baud, DS_TYPE_INPUT_OUTPUT, 0);
 
-
-		//  Wait up to 1 seconds for Datastream secondary thread to come up
+		// Wait up to 1 seconds for Datastream secondary thread to come up
 		int timeout = 0;
-		while( !dstr-> IsSecThreadActive()  && (timeout < 10)) {
+		while (!dstr->IsSecThreadActive() && (timeout < 10)) {
 			wxMilliSleep(100);
 			timeout++;
 		}
 
 		SENTENCE snt;
 		NMEA0183 oNMEA0183;
-		oNMEA0183.TalkerID = _T ( "EC" );
+		oNMEA0183.TalkerID = _T("EC");
 
-		if ( pProgress )
-			pProgress->SetRange ( 100 );
+		if (pProgress)
+			pProgress->SetRange(100);
 
-		if(g_GPS_Ident == _T("Generic"))
-		{
-			if ( prp->m_lat < 0. )
-				oNMEA0183.Wpl.Position.Latitude.Set ( -prp->m_lat, _T ( "S" ) );
+		if (g_GPS_Ident == _T("Generic")) {
+			if (prp->latitude() < 0.0)
+				oNMEA0183.Wpl.Position.Latitude.Set(-prp->latitude(), _T("S"));
 			else
-				oNMEA0183.Wpl.Position.Latitude.Set ( prp->m_lat, _T ( "N" ) );
+				oNMEA0183.Wpl.Position.Latitude.Set(prp->latitude(), _T("N"));
 
-			if ( prp->m_lon < 0. )
-				oNMEA0183.Wpl.Position.Longitude.Set ( -prp->m_lon, _T ( "W" ) );
+			if (prp->longitude() < 0.0)
+				oNMEA0183.Wpl.Position.Longitude.Set(-prp->longitude(), _T("W"));
 			else
-				oNMEA0183.Wpl.Position.Longitude.Set ( prp->m_lon, _T ( "E" ) );
+				oNMEA0183.Wpl.Position.Longitude.Set(prp->longitude(), _T("E"));
 
-			oNMEA0183.Wpl.To = prp->GetName().Truncate ( 6 );
+			oNMEA0183.Wpl.To = prp->GetName().Truncate(6);
+			oNMEA0183.Wpl.Write(snt);
+		} else if (g_GPS_Ident == _T("FurunoGP3X")) {
+			oNMEA0183.TalkerID = _T("PFEC,");
 
-			oNMEA0183.Wpl.Write ( snt );
-		}
-		else if(g_GPS_Ident == _T("FurunoGP3X"))
-		{
-			oNMEA0183.TalkerID = _T ( "PFEC," );
-
-			if ( prp->m_lat < 0. )
-				oNMEA0183.GPwpl.Position.Latitude.Set ( -prp->m_lat, _T ( "S" ) );
+			if (prp->latitude() < 0.0)
+				oNMEA0183.GPwpl.Position.Latitude.Set(-prp->latitude(), _T("S"));
 			else
-				oNMEA0183.GPwpl.Position.Latitude.Set ( prp->m_lat, _T ( "N" ) );
+				oNMEA0183.GPwpl.Position.Latitude.Set(prp->latitude(), _T("N"));
 
-			if ( prp->m_lon < 0. )
-				oNMEA0183.GPwpl.Position.Longitude.Set ( -prp->m_lon, _T ( "W" ) );
+			if (prp->longitude() < 0.0)
+				oNMEA0183.GPwpl.Position.Longitude.Set(-prp->longitude(), _T("W"));
 			else
-				oNMEA0183.GPwpl.Position.Longitude.Set ( prp->m_lon, _T ( "E" ) );
-
+				oNMEA0183.GPwpl.Position.Longitude.Set(prp->longitude(), _T("E"));
 
 			wxString name = prp->GetName();
 			name += _T("000000");
-			name.Truncate( 6 );
+			name.Truncate(6);
 
 			oNMEA0183.GPwpl.To = name;
-
-			oNMEA0183.GPwpl.Write ( snt );
+			oNMEA0183.GPwpl.Write(snt);
 		}
 
-		if( dstr->SendSentence( snt.Sentence ) )
-			LogOutputMessage( snt.Sentence, dstr->GetPort(), false );
+		if (dstr->SendSentence(snt.Sentence))
+			LogOutputMessage(snt.Sentence, dstr->GetPort(), false);
 
 		wxString msg(_T("-->GPS Port:"));
 		msg += com_name;
@@ -940,13 +912,12 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 		msg.Trim();
 		wxLogMessage(msg);
 
-		if(g_GPS_Ident == _T("FurunoGP3X"))
-		{
+		if (g_GPS_Ident == _T("FurunoGP3X")) {
 			wxString term;
 			term.Printf(_T("$PFEC,GPxfr,CTL,E%c%c"), 0x0d, 0x0a);
 
-			if( dstr->SendSentence( term ) )
-				LogOutputMessage( term, dstr->GetPort(), false );
+			if (dstr->SendSentence(term))
+				LogOutputMessage(term, dstr->GetPort(), false);
 
 			wxString msg(_T("-->GPS Port:"));
 			msg += com_name;
@@ -956,16 +927,15 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 			wxLogMessage(msg);
 		}
 
-		if ( pProgress )
-		{
-			pProgress->SetValue ( 100 );
+		if (pProgress) {
+			pProgress->SetValue(100);
 			pProgress->Refresh();
 			pProgress->Update();
 		}
 
-		wxMilliSleep ( 500 );
+		wxMilliSleep(500);
 
-		//  All finished with the temp port
+		// All finished with the temp port
 		dstr->Close();
 
 		ret_bool = true;
@@ -973,7 +943,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint *prp, const wxString &com_name, w
 
 ret_point:
 
-	if( old_stream )
+	if (old_stream)
 		CreateAndRestoreSavedStreamProperties();
 
 	return ret_bool;

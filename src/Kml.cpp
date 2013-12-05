@@ -85,8 +85,7 @@ KmlPastebufferType Kml::ParseTrack(TiXmlNode* node, wxString& name)
 
 			for (unsigned int i = 0; i < coordinates.size(); i++) {
 				routepoint = new RoutePoint;
-				routepoint->m_lat = coordinates[i].y;
-				routepoint->m_lon = coordinates[i].x;
+				routepoint->set_position(Position(coordinates[i].y, coordinates[i].x));
 				routepoint->m_bIsInTrack = true;
 				parsedTrack->AddPoint(routepoint);
 			}
@@ -105,9 +104,10 @@ KmlPastebufferType Kml::ParseTrack(TiXmlNode* node, wxString& name)
 			std::stringstream ss(point->GetText());
 			std::string txtCoord;
 			std::getline(ss, txtCoord, ' ');
-			routepoint->m_lon = atof(txtCoord.c_str());
+			double lon = atof(txtCoord.c_str());
 			std::getline(ss, txtCoord, ' ');
-			routepoint->m_lat = atof(txtCoord.c_str());
+			double lat = atof(txtCoord.c_str());
+			routepoint->set_position(Position(lat, lon));
 
 			parsedTrack->AddPoint(routepoint);
 			pointCounter++;
@@ -184,8 +184,7 @@ KmlPastebufferType Kml::ParseOnePlacemarkPoint(TiXmlNode* node, wxString& WXUNUS
 	}
 
 	parsedRoutePoint = new RoutePoint();
-	parsedRoutePoint->m_lat = newLat;
-	parsedRoutePoint->m_lon = newLon;
+	parsedRoutePoint->set_position(Position(newLat, newLon));
 	parsedRoutePoint->m_bIsolatedMark = true;
 	parsedRoutePoint->m_bPtIsSelected = false;
 	parsedRoutePoint->m_MarkDescription = pointDescr;
@@ -448,7 +447,7 @@ std::string Kml::PointPlacemark(TiXmlElement* document, const RoutePoint* routep
 	point->LinkEndChild(pointCoord);
 
 	std::stringstream pointCoordStr;
-	pointCoordStr << routepoint->m_lon << "," << routepoint->m_lat << ",0. ";
+	pointCoordStr << routepoint->longitude() << "," << routepoint->latitude() << ",0. ";
 
 	TiXmlText* pointText = new TiXmlText(pointCoordStr.str());
 	pointCoord->LinkEndChild(pointText);
@@ -538,8 +537,8 @@ wxString Kml::MakeKmlFromTrack(Track* track)
 		if (routepoint->m_bIsInTrack) {
 			TiXmlElement* coord = new TiXmlElement("gx:coord");
 			gxTrack->LinkEndChild(coord);
-			wxString coordStr
-				= wxString::Format(_T("%f %f 0.0"), routepoint->m_lon, routepoint->m_lat);
+			wxString coordStr = wxString::Format(_T("%f %f 0.0"), routepoint->longitude(),
+												 routepoint->latitude());
 			TiXmlText* coordVal = new TiXmlText(coordStr.mb_str(wxConvUTF8));
 			coord->LinkEndChild(coordVal);
 		}

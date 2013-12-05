@@ -61,9 +61,11 @@ public:
 	const wxDateTime& GetCreateTime(void) const;
 	void SetCreateTime(wxDateTime dt);
 
-	void SetPosition(const Position& pos);
-	double GetLatitude() const;
-	double GetLongitude() const;
+	const Position& get_position() const;
+	void set_position(const Position& pos);
+	double latitude() const;
+	double longitude() const;
+
 	void CalculateDCRect(wxDC& dc, wxRect* prect);
 
 	bool IsSame(const RoutePoint* pOtherRP) const;
@@ -80,6 +82,7 @@ public:
 
 	void SetCourse(double course);
 	double GetCourse() const;
+
 	void SetDistance(double distance);
 	double GetDistance() const;
 
@@ -92,10 +95,9 @@ public:
 	int get_layer_ID() const;
 	void set_layer_ID(int);
 
+
 	// FIXME: move attributes to private
 
-	double m_lat;
-	double m_lon;
 	double m_seg_len; // length in NMI to this point, undefined for starting point
 	double m_seg_vmg;
 	wxDateTime m_seg_etd;
@@ -137,6 +139,7 @@ public:
 private:
 	void CalculateNameExtents(void);
 
+	Position position;
 	int m_LayerID;
 
 	wxString m_MarkName;

@@ -93,8 +93,7 @@ RoutePoint::RoutePoint()
 RoutePoint::RoutePoint(const RoutePoint& orig)
 {
 	m_MarkName = orig.GetName();
-	m_lat = orig.m_lat;
-	m_lon = orig.m_lon;
+	position = orig.position;
 	m_seg_len = orig.m_seg_len;
 	m_seg_vmg = orig.m_seg_vmg;
 	m_seg_etd = orig.m_seg_etd;
@@ -128,9 +127,7 @@ RoutePoint::RoutePoint(const RoutePoint& orig)
 
 RoutePoint::RoutePoint(const Position& pos, const wxString& icon_ident, const wxString& name,
 					   const wxString& pGUID, bool bAddToList)
-	: m_lat(pos.lat())
-	, m_lon(pos.lon())
-	, m_seg_len(0)
+	: m_seg_len(0)
 	, m_seg_vmg(0.0)
 	, m_seg_etd(wxInvalidDateTime)
 	, m_bPtIsSelected(false)
@@ -154,14 +151,11 @@ RoutePoint::RoutePoint(const Position& pos, const wxString& icon_ident, const wx
 	, m_GPXTrkSegNo(1)
 	, m_bIsInLayer(false)
 	, m_btemp(false)
+	, position(pos)
 	, m_LayerID(0)
 	, m_MarkName(wxEmptyString)
 {
-	// Normalize the longitude, to fix any old poorly formed points
-	if (m_lon < -180.0)
-		m_lon += 360.0;
-	else if (m_lon > 180.0)
-		m_lon -= 360.0;
+	position.normalize_lon();
 
 	if (!pGUID.IsEmpty())
 		m_GUID = pGUID;
@@ -183,8 +177,9 @@ RoutePoint::RoutePoint(const Position& pos, const wxString& icon_ident, const wx
 	if (m_bIsInLayer) {
 		m_LayerID = g_LayerIdx;
 		m_bIsListed = false;
-	} else
+	} else {
 		m_LayerID = 0;
+	}
 }
 
 RoutePoint::~RoutePoint(void)
@@ -259,16 +254,16 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	wxRect hilitebox;
 	unsigned char transparency = 100;
 
-	cc1->GetCanvasPointPix(m_lat, m_lon, &r);
+	cc1->GetCanvasPointPix(position.lat(), position.lon(), &r);
 
-	//  return the home point in this dc to allow "connect the dots"
+	// return the home point in this dc to allow "connect the dots"
 	if (NULL != rpn)
 		*rpn = r;
 
 	if (!m_bIsVisible /*&& !m_bIsInTrack*/) // pjotrc 2010.02.13, 2011.02.24
 		return;
 
-	//    Optimization, especially apparent on tracks in normal cases
+	// Optimization, especially apparent on tracks in normal cases
 	if (m_IconName == _T("empty") && !m_bShowName && !m_bPtIsSelected)
 		return;
 
@@ -278,17 +273,17 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	else
 		pen = g_pRouteMan->GetRoutePointPen();
 
-	//    Substitue icon?
+	// Substitue icon?
 	wxBitmap* pbm;
 	if ((m_bIsActive) && (m_IconName != _T("mob")))
-		pbm = pWayPointMan->GetIconBitmap(_T ( "activepoint" ));
+		pbm = pWayPointMan->GetIconBitmap(_T("activepoint"));
 	else
 		pbm = m_pbmIcon;
 
 	int sx2 = pbm->GetWidth() / 2;
 	int sy2 = pbm->GetHeight() / 2;
 
-	//    Calculate the mark drawing extents
+	// Calculate the mark drawing extents
 	wxRect r1(r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2); // the bitmap extents
 
 	if (m_bShowName) {
@@ -349,10 +344,24 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 		g_blink_rect = CurrentRect_in_DC; // also save for global blinker
 }
 
-void RoutePoint::SetPosition(const Position& pos)
+const Position& RoutePoint::get_position() const
 {
-	m_lat = pos.lat();
-	m_lon = pos.lon();
+	return position;
+}
+
+void RoutePoint::set_position(const Position& pos)
+{
+	position = pos;
+}
+
+double RoutePoint::latitude() const
+{
+	return position.lat();
+}
+
+double RoutePoint::longitude() const
+{
+	return position.lon();
 }
 
 void RoutePoint::CalculateDCRect(wxDC& dc, wxRect* prect)
@@ -364,7 +373,7 @@ void RoutePoint::CalculateDCRect(wxDC& dc, wxRect* prect)
 	ocpnDC odc(dc);
 	Draw(odc, NULL);
 
-	//  Retrieve the drawing extents
+	// Retrieve the drawing extents
 	prect->x = dc.MinX() - 1;
 	prect->y = dc.MinY() - 1;
 	prect->width = dc.MaxX() - dc.MinX() + 2; // Mouse Poop?
@@ -376,7 +385,9 @@ bool RoutePoint::IsSame(const RoutePoint* pOtherRP) const
 	if (m_MarkName != pOtherRP->m_MarkName)
 		return false;
 
-	if ((fabs(m_lat - pOtherRP->m_lat) < 1.e-6) && (fabs(m_lon - pOtherRP->m_lon) < 1.e-6))
+	// FIXME: this calculates the minimal distance of a position difference, but wrong
+	if ((fabs(position.lat() - pOtherRP->position.lat()) < 1.e-6)
+		&& (fabs(position.lon() - pOtherRP->position.lon()) < 1.e-6))
 		return true;
 	return false;
 }
@@ -396,16 +407,6 @@ bool RoutePoint::SendToGPS(const wxString& com_name, wxGauge* pProgress)
 	OCPNMessageBox(NULL, msg, _("OpenCPN Info"), wxOK | wxICON_INFORMATION);
 
 	return result;
-}
-
-double RoutePoint::GetLatitude() const
-{
-	return m_lat;
-}
-
-double RoutePoint::GetLongitude() const
-{
-	return m_lon;
 }
 
 bool RoutePoint::IsVisible() const

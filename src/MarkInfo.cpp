@@ -436,10 +436,10 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	if (!m_pRoutePoint)
 		return true;
 
-	m_textLatitude->SetValue(::toSDMM(1, m_pRoutePoint->m_lat));
-	m_textLongitude->SetValue(::toSDMM(2, m_pRoutePoint->m_lon));
-	m_lat_save = m_pRoutePoint->m_lat;
-	m_lon_save = m_pRoutePoint->m_lon;
+	m_textLatitude->SetValue(::toSDMM(1, m_pRoutePoint->latitude()));
+	m_textLongitude->SetValue(::toSDMM(2, m_pRoutePoint->longitude()));
+	m_lat_save = m_pRoutePoint->latitude();
+	m_lon_save = m_pRoutePoint->longitude();
 
 	if (positionOnly)
 		return true;
@@ -550,8 +550,8 @@ void MarkInfoImpl::SetRoutePoint(RoutePoint* pRP)
 	if (!m_pRoutePoint)
 		return;
 
-	m_lat_save = m_pRoutePoint->m_lat;
-	m_lon_save = m_pRoutePoint->m_lon;
+	m_lat_save = m_pRoutePoint->latitude();
+	m_lon_save = m_pRoutePoint->longitude();
 	m_IconName_save = m_pRoutePoint->m_IconName;
 	m_bShowName_save = m_pRoutePoint->m_bShowName;
 	m_bIsVisible_save = m_pRoutePoint->m_bIsVisible;
@@ -693,8 +693,8 @@ bool MarkInfoImpl::SaveChanges()
 	m_pRoutePoint->m_MarkDescription = m_textDescription->GetValue();
 	m_pRoutePoint->SetVisible(m_checkBoxVisible->GetValue());
 	m_pRoutePoint->SetNameShown(m_checkBoxShowName->GetValue());
-	m_pRoutePoint->SetPosition(Position(fromDMM(m_textLatitude->GetValue()),
-							   fromDMM(m_textLongitude->GetValue())));
+	m_pRoutePoint->set_position(
+		Position(fromDMM(m_textLatitude->GetValue()), fromDMM(m_textLongitude->GetValue())));
 	m_pRoutePoint->m_IconName = pWayPointMan->GetIconKey(m_bcomboBoxIcon->GetSelection());
 	m_pRoutePoint->ReLoadIcon();
 
@@ -761,7 +761,7 @@ void MarkInfoImpl::OnMarkInfoCancelClick(wxCommandEvent& event)
 	if (m_pRoutePoint) {
 		m_pRoutePoint->SetVisible(m_bIsVisible_save);
 		m_pRoutePoint->SetNameShown(m_bShowName_save);
-		m_pRoutePoint->SetPosition(Position(m_lat_save, m_lon_save));
+		m_pRoutePoint->set_position(Position(m_lat_save, m_lon_save));
 		m_pRoutePoint->m_IconName = m_IconName_save;
 		m_pRoutePoint->ReLoadIcon();
 
@@ -778,8 +778,7 @@ void MarkInfoImpl::OnPositionCtlUpdated(wxCommandEvent&)
 	if (!m_pRoutePoint->m_bIsInLayer) {
 		// Fetch the control values, convert to degrees
 		Position pos(fromDMM(m_textLatitude->GetValue()), fromDMM(m_textLongitude->GetValue()));
-
-		m_pRoutePoint->SetPosition(pos);
+		m_pRoutePoint->set_position(pos);
 		pSelect->ModifySelectablePoint(pos.lat(), pos.lon(), (void*)m_pRoutePoint, SelectItem::TYPE_ROUTEPOINT);
 	}
 

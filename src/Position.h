@@ -32,6 +32,8 @@ public:
 	double lat() const;
 	double lon() const;
 
+	void normalize_lon();
+
 private:
 	double latitude;
 	double longitude;

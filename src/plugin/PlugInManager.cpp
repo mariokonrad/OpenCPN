@@ -1811,11 +1811,9 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 		b_found = true;
 
 	if (b_found) {
-		double lat_save = prp->m_lat;
-		double lon_save = prp->m_lon;
+		Position position_save = prp->get_position();
 
-		prp->m_lat = pwaypoint->m_lat;
-		prp->m_lon = pwaypoint->m_lon;
+		prp->set_position(Position(pwaypoint->m_lat, pwaypoint->m_lon));
 		prp->m_IconName = pwaypoint->m_IconName;
 		prp->SetName(pwaypoint->m_MarkName);
 		prp->m_MarkDescription = pwaypoint->m_MarkDescription;
@@ -1834,7 +1832,7 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 			}
 		}
 
-		SelectItem* pFind = pSelect->FindSelection(lat_save, lon_save, SelectItem::TYPE_ROUTEPOINT);
+		SelectItem* pFind = pSelect->FindSelection(position_save.lat(), position_save.lon(), SelectItem::TYPE_ROUTEPOINT);
 		if (pFind) {
 			pFind->m_slat = pwaypoint->m_lat; // update the SelectList entry
 			pFind->m_slon = pwaypoint->m_lon;
@@ -1861,8 +1859,8 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 		 pwpnode != proute->pWaypointList->end(); ++pwpnode) {
 		PlugIn_Waypoint* pwp = *pwpnode;
 
-		RoutePoint* pWP
-			= new RoutePoint(Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName, pwp->m_MarkName, pwp->m_GUID);
+		RoutePoint* pWP = new RoutePoint(Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName,
+										 pwp->m_MarkName, pwp->m_GUID);
 
 		// Transcribe (clone) the html HyperLink List, if present
 		if (pwp->m_HyperlinkList) {
@@ -1870,7 +1868,8 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 				for (Plugin_HyperlinkList::iterator linknode = pwp->m_HyperlinkList->begin();
 					 linknode != pwp->m_HyperlinkList->end(); ++linknode) {
 					Plugin_Hyperlink* link = *linknode;
-					pWP->m_HyperlinkList.push_back(Hyperlink(link->DescrText, link->Link, link->Type));
+					pWP->m_HyperlinkList.push_back(
+						Hyperlink(link->DescrText, link->Link, link->Type));
 				}
 			}
 		}
@@ -1881,11 +1880,12 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 
 		route->AddPoint(pWP);
 
-		pSelect->AddSelectableRoutePoint(pWP->m_lat, pWP->m_lon, pWP);
+		pSelect->AddSelectableRoutePoint(pWP->latitude(), pWP->longitude(), pWP);
 
 		if (ip > 0)
-			pSelect->AddSelectableRouteSegment(pWP_src->m_lat, pWP_src->m_lon, pWP->m_lat,
-											   pWP->m_lon, pWP_src, pWP, route);
+			pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
+											   pWP->latitude(), pWP->longitude(), pWP_src, pWP,
+											   route);
 		ip++;
 		pWP_src = pWP;
 	}
@@ -1959,11 +1959,12 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 
 		track->AddPoint(pWP);
 
-		pSelect->AddSelectableRoutePoint(pWP->m_lat, pWP->m_lon, pWP);
+		pSelect->AddSelectableRoutePoint(pWP->latitude(), pWP->longitude(), pWP);
 
 		if (ip > 0)
-			pSelect->AddSelectableRouteSegment(pWP_src->m_lat, pWP_src->m_lon, pWP->m_lat,
-											   pWP->m_lon, pWP_src, pWP, track);
+			pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
+											   pWP->latitude(), pWP->longitude(), pWP_src, pWP,
+											   track);
 		ip++;
 		pWP_src = pWP;
 	}

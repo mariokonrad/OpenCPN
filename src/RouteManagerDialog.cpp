@@ -57,7 +57,7 @@
 
 #define DIALOG_MARGIN 3
 
-/* XPM */
+// XPM
 static const char *eye[]={
 	"20 20 7 1",
 	". c none",
@@ -88,7 +88,7 @@ static const char *eye[]={
 	"....................",
 	"...................."};
 
-/* XPM */
+// XPM
 static const char *eyex[]={
 	"20 20 8 1",
 	"# c None",
@@ -120,7 +120,7 @@ static const char *eyex[]={
 	"#..##############..#",
 	"..################.."};
 
-enum { rmVISIBLE = 0, rmROUTENAME, rmROUTEDESC };// RMColumns;
+enum { rmVISIBLE = 0, rmROUTENAME, rmROUTEDESC }; // RMColumns;
 enum { colTRKVISIBLE = 0, colTRKNAME, colTRKLENGTH };
 enum { colLAYVISIBLE = 0, colLAYNAME, colLAYITEMS };
 enum { colWPTICON = 0, colWPTNAME, colWPTDIST };
@@ -1329,7 +1329,6 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 			RoutePoint* lastPoint = targetTrack->GetLastPoint();
 
 			for (unsigned int t = 1; t < mergeList.size(); t++) {
-
 				Track* mergeTrack = mergeList.at(t);
 
 				if (mergeTrack->IsRunning()) {
@@ -1340,7 +1339,7 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 				for (RoutePointList::iterator route_point = mergeTrack->pRoutePointList->begin();
 					 route_point != mergeTrack->pRoutePointList->end(); ++route_point) {
 					RoutePoint* rPoint = *route_point;
-					RoutePoint* newPoint = new RoutePoint(Position(rPoint->m_lat, rPoint->m_lon), _T("empty"), _T(""));
+					RoutePoint* newPoint = new RoutePoint(rPoint->get_position(), _T("empty"), _T(""));
 					newPoint->m_bShowName = false;
 					newPoint->m_bIsVisible = true;
 					newPoint->m_GPXTrkSegNo = 1;
@@ -1352,8 +1351,8 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 					newPoint->m_bIsInRoute = false;
 					newPoint->m_bIsInTrack = true;
 
-					pSelect->AddSelectableTrackSegment(lastPoint->m_lat, lastPoint->m_lon,
-													   newPoint->m_lat, newPoint->m_lon, lastPoint,
+					pSelect->AddSelectableTrackSegment(lastPoint->latitude(), lastPoint->longitude(),
+													   newPoint->latitude(), newPoint->longitude(), lastPoint,
 													   newPoint, targetTrack);
 
 					lastPoint = newPoint;
@@ -1718,8 +1717,10 @@ void RouteManagerDialog::UpdateWptListCtrl(RoutePoint* rp_select, bool b_retain_
 			m_pWptListCtrl->SetItem(idx, colWPTNAME, name);
 
 			double dst;
-			geo::DistanceBearingMercator(rp->m_lat, rp->m_lon, nav.lat, nav.lon, NULL, &dst);
-			m_pWptListCtrl->SetItem(idx, colWPTDIST, wxString::Format(_T("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(dst)));
+			geo::DistanceBearingMercator(rp->latitude(), rp->longitude(), nav.lat, nav.lon, NULL, &dst);
+			m_pWptListCtrl->SetItem(
+				idx, colWPTDIST,
+				wxString::Format(_T("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(dst)));
 
 			if (rp == rp_select)
 				selected_id = (long)rp_select;
@@ -1910,8 +1911,9 @@ void RouteManagerDialog::WptShowPropertiesDialog(RoutePoint* wp, wxWindow* paren
 		wxString caption(_("Waypoint Properties, Layer: "));
 		caption.Append(GetLayerName(wp->get_layer_ID()));
 		pMarkPropDialog->SetDialogTitle(caption);
-	} else
+	} else {
 		pMarkPropDialog->SetDialogTitle(_("Waypoint Properties"));
+	}
 
 	if (!pMarkPropDialog->IsShown())
 		pMarkPropDialog->Show();
@@ -1924,12 +1926,11 @@ void RouteManagerDialog::OnWptZoomtoClick(wxCommandEvent&)
 	if (item == -1)
 		return;
 
-	RoutePoint* wp = (RoutePoint*)m_pWptListCtrl->GetItemData(item);
-
+	RoutePoint* wp = reinterpret_cast<RoutePoint*>(m_pWptListCtrl->GetItemData(item));
 	if (!wp)
 		return;
 
-	gFrame->JumpToPosition(Position(wp->m_lat, wp->m_lon), cc1->GetVPScale());
+	gFrame->JumpToPosition(wp->get_position(), cc1->GetVPScale());
 }
 
 void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent&)
@@ -1957,7 +1958,6 @@ void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent&)
 
 		item_last_selected = item;
 		RoutePoint* wp = (RoutePoint*)m_pWptListCtrl->GetItemData(item);
-
 		if (wp && !wp->m_bIsInLayer)
 			list.push_back(wp);
 	}
@@ -2007,7 +2007,6 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 		return;
 
 	RoutePoint* wp = (RoutePoint*)m_pWptListCtrl->GetItemData(item);
-
 	if (!wp)
 		return;
 
@@ -2022,8 +2021,8 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 	temp_route->AddPoint(pWP_src);
 	temp_route->AddPoint(wp);
 
-	pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, wp->m_lat, wp->m_lon, pWP_src, wp,
-									   temp_route);
+	pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, wp->latitude(), wp->longitude(), pWP_src,
+									   wp, temp_route);
 
 	wxString name = wp->GetName();
 	if (name.IsEmpty())
@@ -2180,7 +2179,7 @@ void RouteManagerDialog::OnLayToggleVisibility(wxMouseEvent& event)
 	int flags = 0;
 	long clicked_index = m_pLayListCtrl->HitTest(pos, flags);
 
-	//    Clicking Visibility column?
+	// Clicking Visibility column?
 	if ((clicked_index > -1) && (event.GetX() < m_pLayListCtrl->GetColumnWidth(colLAYVISIBLE))) {
 		// Process the clicked item
 		long index = m_pLayListCtrl->GetItemData(clicked_index);

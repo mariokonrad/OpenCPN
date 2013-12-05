@@ -172,11 +172,10 @@ void Route::CloneRoute(Route* psourceroute, int start_nPoint, int end_nPoint,
 		else {
 			RoutePoint* psourcepoint = psourceroute->GetPoint(i);
 			RoutePoint* ptargetpoint
-				= new RoutePoint(Position(psourcepoint->m_lat, psourcepoint->m_lon), psourcepoint->m_IconName,
+				= new RoutePoint(psourcepoint->get_position(), psourcepoint->m_IconName,
 								 psourcepoint->GetName(), _T(""), false);
 
 			AddPoint(ptargetpoint, false);
-
 			CloneAddedRoutePoint(m_pLastAddedPoint, psourcepoint);
 		}
 	}
@@ -208,11 +207,10 @@ void Route::CloneTrack(Route* psourceroute, int start_nPoint, int end_nPoint,
 
 		RoutePoint* psourcepoint = psourceroute->GetPoint(i);
 		RoutePoint* ptargetpoint
-			= new RoutePoint(Position(psourcepoint->m_lat, psourcepoint->m_lon), psourcepoint->m_IconName,
+			= new RoutePoint(psourcepoint->get_position(), psourcepoint->m_IconName,
 							 psourcepoint->GetName(), _T(""), false);
 
 		AddPoint(ptargetpoint, false);
-
 		CloneAddedTrackPoint(m_pLastAddedPoint, psourcepoint);
 
 		int segment_shift = psourcepoint->m_GPXTrkSegNo;
@@ -285,8 +283,9 @@ void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_de
 		CalculateBBox();
 
 	if (m_pLastAddedPoint)
-		pNewPoint->m_seg_len = geo::DistGreatCircle(
-			m_pLastAddedPoint->m_lat, m_pLastAddedPoint->m_lon, pNewPoint->m_lat, pNewPoint->m_lon);
+		pNewPoint->m_seg_len
+			= geo::DistGreatCircle(m_pLastAddedPoint->latitude(), m_pLastAddedPoint->longitude(),
+								   pNewPoint->latitude(), pNewPoint->longitude());
 
 	m_route_length += pNewPoint->m_seg_len;
 
@@ -398,8 +397,8 @@ void Route::Draw(ocpnDC& dc, ViewPort& VP)
 
 		if (m_bVisible) {
 			// Handle offscreen points
-			bool b_2_on = VP.GetBBox().PointInBox(prp2->m_lon, prp2->m_lat, 0);
-			bool b_1_on = VP.GetBBox().PointInBox(prp1->m_lon, prp1->m_lat, 0);
+			bool b_2_on = VP.GetBBox().PointInBox(prp2->longitude(), prp2->latitude(), 0);
+			bool b_1_on = VP.GetBBox().PointInBox(prp1->longitude(), prp1->latitude(), 0);
 
 			// TODO This logic could be simpliifed
 			// Simple case
@@ -410,7 +409,7 @@ void Route::Draw(ocpnDC& dc, ViewPort& VP)
 			// we must decide which way to go in longitude
 			// Arbitrarily, we will go the shortest way
 
-			double pix_full_circle = geo::WGS84_semimajor_axis_meters * geo::mercator_k0 * 2 * M_PI
+			double pix_full_circle = geo::WGS84_semimajor_axis_meters * geo::mercator_k0 * 2.0 * M_PI
 									 * VP.view_scale_ppm;
 			double dp = pow((double)(rpt1.x - rpt2.x), 2) + pow((double)(rpt1.y - rpt2.y), 2);
 			double dtest;
@@ -700,21 +699,21 @@ void Route::CalculateBBox()
 		for (RoutePointList::const_iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
 			const RoutePoint* point = *i;
 
-			if (point->m_lon > bbox_xmax)
-				bbox_xmax = point->m_lon;
-			if (point->m_lon < bbox_xmin)
-				bbox_xmin = point->m_lon;
-			if (point->m_lat > bbox_ymax)
-				bbox_ymax = point->m_lat;
-			if (point->m_lat < bbox_ymin)
-				bbox_ymin = point->m_lat;
+			if (point->longitude() > bbox_xmax)
+				bbox_xmax = point->longitude();
+			if (point->longitude() < bbox_xmin)
+				bbox_xmin = point->longitude();
+			if (point->latitude() > bbox_ymax)
+				bbox_ymax = point->latitude();
+			if (point->latitude() < bbox_ymin)
+				bbox_ymin = point->latitude();
 		}
 	} else {
 		// For Routes that cross the IDL, we compute and store
 		// the bbox as positive definite
 		for (RoutePointList::const_iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
 			const RoutePoint* point = *i;
-			double lon = point->m_lon;
+			double lon = point->longitude();
 			if (lon < 0.0)
 				lon += 360.0;
 
@@ -722,10 +721,10 @@ void Route::CalculateBBox()
 				bbox_xmax = lon;
 			if (lon < bbox_xmin)
 				bbox_xmin = lon;
-			if (point->m_lat > bbox_ymax)
-				bbox_ymax = point->m_lat;
-			if (point->m_lat < bbox_ymin)
-				bbox_ymin = point->m_lat;
+			if (point->latitude() > bbox_ymax)
+				bbox_ymax = point->latitude();
+			if (point->latitude() < bbox_ymin)
+				bbox_ymin = point->latitude();
 		}
 	}
 
@@ -742,22 +741,22 @@ bool Route::CalculateCrossesIDL(void)
 	bool idl_cross = false;
 	RoutePoint* data = *route_point;
 
-	double lon0 = data->m_lon;
+	double lon0 = data->longitude();
 
 	++route_point;
 	for(; route_point != pRoutePointList->end(); ++route_point) {
 		data = *route_point;
-		if ((lon0 < -150.0) && (data->m_lon > 150.0)) {
+		if ((lon0 < -150.0) && (data->longitude() > 150.0)) {
 			idl_cross = true;
 			break;
 		}
 
-		if ((lon0 > 150.0) && (data->m_lon < -150.0)) {
+		if ((lon0 > 150.0) && (data->longitude() < -150.0)) {
 			idl_cross = true;
 			break;
 		}
 
-		lon0 = data->m_lon;
+		lon0 = data->longitude();
 	}
 
 	return idl_cross;
@@ -796,7 +795,10 @@ void Route::CalculateDCRect(wxDC& dc_route, wxRect* prect, ViewPort&)
 void Route::UpdateSegmentDistances(double planspeed)
 {
 	wxPoint rpt, rptn;
-	float slat1, slon1, slat2, slon2;
+	double slat1;
+	double slon1;
+	double slat2;
+	double slon2;
 
 	double route_len = 0.0;
 	double route_time = 0.0;
@@ -805,15 +807,15 @@ void Route::UpdateSegmentDistances(double planspeed)
 
 	if (node != pRoutePointList->end()) {
 		RoutePoint* prp0 = *node;
-		slat1 = prp0->m_lat;
-		slon1 = prp0->m_lon;
+		slat1 = prp0->latitude();
+		slon1 = prp0->longitude();
 
 		++node;
 
 		while (node != pRoutePointList->end()) {
 			RoutePoint* prp = *node;
-			slat2 = prp->m_lat;
-			slon2 = prp->m_lon;
+			slat2 = prp->latitude();
+			slon2 = prp->longitude();
 
 			// Calculate the absolute distance from 1->2
 
@@ -865,7 +867,7 @@ void Route::UpdateSegmentDistances(double planspeed)
 							prp0->m_seg_etd = etd;
 						else if (tz.Find(_T("LMT")) != wxNOT_FOUND) {
 							prp0->m_seg_etd = etd;
-							long lmt_offset = (long)((prp0->m_lon * 3600.0) / 15.0);
+							long lmt_offset = (long)((prp0->longitude() * 3600.0) / 15.0);
 							wxTimeSpan lmt(0, 0, (int)lmt_offset, 0);
 							prp0->m_seg_etd -= lmt;
 						} else
@@ -1007,8 +1009,8 @@ bool Route::IsEqualTo(Route* ptargetroute)
 		const RoutePoint* pthisrp = *point_a;
 		const RoutePoint* pthatrp = *point_b;
 
-		if ((fabs(pthisrp->m_lat - pthatrp->m_lat) > 1.0e-6)
-			|| (fabs(pthisrp->m_lon - pthatrp->m_lon) > 1.0e-6))
+		if ((fabs(pthisrp->latitude() - pthatrp->latitude()) > 1.0e-6) // FIXME
+			|| (fabs(pthisrp->longitude() - pthatrp->longitude()) > 1.0e-6))
 			return false;
 
 		if (!pthisrp->GetName().IsSameAs(pthatrp->GetName()))

@@ -431,8 +431,8 @@ int WayPointman::GetXIconIndex(const wxBitmap * pbm)
 
 bool WayPointman::within_distance(const RoutePoint* point, const Position& pos, double radius_meters) const
 {
-	double a = pos.lat() - point->m_lat;
-	double b = pos.lon() - point->m_lon;
+	double a = pos.lat() - point->latitude();
+	double b = pos.lon() - point->longitude();
 	double l = sqrt((a * a) + (b * b));
 
 	return (l * 60.0 * 1852.0) < radius_meters;
@@ -453,7 +453,7 @@ RoutePoint* WayPointman::GetNearbyWaypoint(const Position& pos, double radius_me
 RoutePoint* WayPointman::GetOtherNearbyWaypoint(
 		const Position& pos,
 		double radius_meters,
-		const wxString & guid)
+		const wxString& guid)
 {
 	// Iterate on the RoutePoint list, checking distance
 
@@ -580,7 +580,7 @@ RoutePoint* WayPointman::WaypointExists(const wxString& name, const Position& po
 	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
 		RoutePoint* pr = *i;
 		if (name == pr->GetName()) {
-			if (fabs(pos.lat() - pr->m_lat) < 1.e-6 && fabs(pos.lon() - pr->m_lon) < 1.e-6) {
+			if (fabs(pos.lat() - pr->latitude()) < 1.e-6 && fabs(pos.lon() - pr->longitude()) < 1.e-6) {
 				return pr;
 			}
 		}

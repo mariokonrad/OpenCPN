@@ -457,9 +457,9 @@ bool NavObjectCollection::GPXCreateWpt(
 	pugi::xml_node child;
 	pugi::xml_attribute attr;
 
-	s.Printf(_T("%.9f"), pr->m_lat);
+	s.Printf(_T("%.9f"), pr->latitude());
 	node.append_attribute("lat") = s.mb_str();
-	s.Printf(_T("%.9f"), pr->m_lon);
+	s.Printf(_T("%.9f"), pr->longitude());
 	node.append_attribute("lon") = s.mb_str();
 
 	if (flags & OUT_TIME) {
@@ -821,11 +821,12 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 			RoutePoint* prp = *node;
 
 			if (ip)
-				pSelect->AddSelectableRouteSegment(prev_rlat, prev_rlon, prp->m_lat, prp->m_lon,
-												   prev_pConfPoint, prp, pTentRoute);
-			pSelect->AddSelectableRoutePoint(prp->m_lat, prp->m_lon, prp);
-			prev_rlat = prp->m_lat;
-			prev_rlon = prp->m_lon;
+				pSelect->AddSelectableRouteSegment(prev_rlat, prev_rlon, prp->latitude(),
+												   prp->longitude(), prev_pConfPoint, prp,
+												   pTentRoute);
+			pSelect->AddSelectableRoutePoint(prp->latitude(), prp->longitude(), prp);
+			prev_rlat = prp->latitude();
+			prev_rlon = prp->longitude();
 			prev_pConfPoint = prp;
 			ip++;
 		}
@@ -880,11 +881,12 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 			RoutePoint* prp = *node;
 
 			if (ip)
-				pSelect->AddSelectableTrackSegment(prev_rlat, prev_rlon, prp->m_lat, prp->m_lon,
-												   prev_pConfPoint, prp, pTentTrack);
+				pSelect->AddSelectableTrackSegment(prev_rlat, prev_rlon, prp->latitude(),
+												   prp->longitude(), prev_pConfPoint, prp,
+												   pTentTrack);
 
-			prev_rlat = prp->m_lat;
-			prev_rlon = prp->m_lon;
+			prev_rlat = prp->latitude();
+			prev_rlon = prp->longitude();
 			prev_pConfPoint = prp;
 			ip++;
 		}
@@ -918,13 +920,12 @@ void NavObjectCollection::UpdateRouteA(Route* pTentRoute)
 			RoutePoint* prp = *node;
 			RoutePoint* ex_rp = rt->GetPoint(prp->m_GUID);
 			if (ex_rp) {
-				ex_rp->m_lat = prp->m_lat;
-				ex_rp->m_lon = prp->m_lon;
+				ex_rp->set_position(prp->get_position());
 				ex_rp->m_IconName = prp->m_IconName;
 				ex_rp->m_MarkDescription = prp->m_MarkDescription;
 				ex_rp->SetName(prp->GetName());
 			} else {
-				pSelect->AddSelectableRoutePoint(prp->m_lat, prp->m_lon, prp);
+				pSelect->AddSelectableRoutePoint(prp->latitude(), prp->longitude(), prp);
 			}
 		}
 	} else {
@@ -1063,11 +1064,11 @@ bool NavObjectCollection::LoadAllGPXObjects()
 
 			if (pWp) {
 				RoutePoint* pExisting
-					= pWayPointMan->WaypointExists(pWp->GetName(), Position(pWp->m_lat, pWp->m_lon));
+					= pWayPointMan->WaypointExists(pWp->GetName(), pWp->get_position());
 				if (!pExisting) {
 					if (NULL != pWayPointMan)
 						pWayPointMan->push_back(pWp);
-					pSelect->AddSelectableRoutePoint(pWp->m_lat, pWp->m_lon, pWp);
+					pSelect->AddSelectableRoutePoint(pWp->latitude(), pWp->longitude(), pWp);
 				} else
 					delete pWp;
 			}
@@ -1099,7 +1100,7 @@ int NavObjectCollection::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
 
 			if (pWp) {
 				pWayPointMan->push_back(pWp);
-				pSelect->AddSelectableRoutePoint(pWp->m_lat, pWp->m_lon, pWp);
+				pSelect->AddSelectableRoutePoint(pWp->latitude(), pWp->longitude(), pWp);
 				n_obj++;
 			} else
 				delete pWp;

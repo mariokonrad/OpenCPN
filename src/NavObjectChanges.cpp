@@ -98,7 +98,7 @@ bool NavObjectChanges::ApplyChanges(void)
 			if (pWp && pWayPointMan) {
 				pWp->m_bIsolatedMark = true;
 				RoutePoint* pExisting
-					= pWayPointMan->WaypointExists(pWp->GetName(), Position(pWp->m_lat, pWp->m_lon));
+					= pWayPointMan->WaypointExists(pWp->GetName(), pWp->get_position());
 
 				pugi::xml_node xchild = object.child("extensions");
 				pugi::xml_node child = xchild.child("opencpn:action");
@@ -106,12 +106,12 @@ bool NavObjectChanges::ApplyChanges(void)
 				if (!strcmp(child.first_child().value(), "add")) {
 					if (!pExisting)
 						pWayPointMan->push_back(pWp);
-					pSelect->AddSelectableRoutePoint(pWp->m_lat, pWp->m_lon, pWp);
+					pSelect->AddSelectableRoutePoint(pWp->latitude(), pWp->longitude(), pWp);
 				} else if (!strcmp(child.first_child().value(), "update")) {
 					if (pExisting)
 						pWayPointMan->remove(pExisting);
 					pWayPointMan->push_back(pWp);
-					pSelect->AddSelectableRoutePoint(pWp->m_lat, pWp->m_lon, pWp);
+					pSelect->AddSelectableRoutePoint(pWp->latitude(), pWp->longitude(), pWp);
 				} else if (!strcmp(child.first_child().value(), "delete")) {
 					if (pExisting)
 						pWayPointMan->DestroyWaypoint(pExisting);

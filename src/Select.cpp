@@ -151,7 +151,7 @@ bool Select::AddAllSelectableRoutePoints(Route* pr)
 	RoutePointList* points = pr->pRoutePointList;
 
 	for (RoutePointList::iterator i = points->begin(); i != points->end(); ++i) {
-		AddSelectableRoutePoint((*i)->m_lat, (*i)->m_lon, *i);
+		AddSelectableRoutePoint((*i)->latitude(), (*i)->longitude(), *i);
 	}
 
 	return true;
@@ -167,14 +167,14 @@ bool Select::AddAllSelectableRouteSegments(Route* pr)
 	RoutePointList::iterator i = pr->pRoutePointList->begin();
 
 	RoutePoint* prp0 = *i;
-	float slat1 = prp0->m_lat;
-	float slon1 = prp0->m_lon;
+	double slat1 = prp0->latitude();
+	double slon1 = prp0->longitude();
 
 	++i;
 	while (i != pr->pRoutePointList->end()) {
 		RoutePoint* prp = *i;
-		float slat2 = prp->m_lat;
-		float slon2 = prp->m_lon;
+		double slat2 = prp->latitude();
+		double slon2 = prp->longitude();
 
 		AddSelectableRouteSegment(slat1, slon1, slat2, slon2, prp0, prp, pr);
 
@@ -197,14 +197,14 @@ bool Select::AddAllSelectableTrackSegments(Route* pr)
 	RoutePointList::iterator i = pr->pRoutePointList->begin();
 
 	RoutePoint* prp0 = *i;
-	float slat1 = prp0->m_lat;
-	float slon1 = prp0->m_lon;
+	double slat1 = prp0->latitude();
+	double slon1 = prp0->longitude();
 
 	++i;
 	while (i != pr->pRoutePointList->end()) {
 		RoutePoint* prp = *i;
-		float slat2 = prp->m_lat;
-		float slon2 = prp->m_lon;
+		double slat2 = prp->latitude();
+		double slon2 = prp->longitude();
 
 		AddSelectableTrackSegment(slat1, slon1, slat2, slon2, prp0, prp, pr);
 
@@ -225,12 +225,12 @@ bool Select::UpdateSelectableRouteSegments(const RoutePoint* prp)
 		SelectItem* item = *i;
 		if (item->m_seltype == SelectItem::TYPE_ROUTESEGMENT) {
 			if (item->m_pData1 == prp) {
-				item->m_slat = prp->m_lat;
-				item->m_slon = prp->m_lon;
+				item->m_slat = prp->latitude();
+				item->m_slon = prp->longitude();
 				ret = true;
 			} else if (item->route_point == prp) {
-				item->m_slat2 = prp->m_lat;
-				item->m_slon2 = prp->m_lon;
+				item->m_slat2 = prp->latitude();
+				item->m_slon2 = prp->longitude();
 				ret = true;
 			}
 		}

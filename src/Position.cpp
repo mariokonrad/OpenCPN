@@ -39,3 +39,12 @@ double Position::lon() const
 	return longitude;
 }
 
+/// Normalizes the longitude to a range [-180.0 .. +180.0]
+void Position::normalize_lon()
+{
+	while (longitude < -180.0)
+		longitude += 360.0;
+	while (longitude > 180.0)
+		longitude -= 360.0;
+}
+

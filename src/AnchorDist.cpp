@@ -23,7 +23,14 @@
 
 #include "AnchorDist.h"
 
-// A helper function to check for proper parameters of anchor watch
+/// A helper function to check for proper parameters of anchor watch.
+///
+/// @param[in] d Distacnce in meter to check against boundaries.
+/// @param[in] AnchorPointMinDist Minimal distance in meter, lower bound of the range.
+/// @param[in] AnchorPointMaxDist Maximal distance in meter, upper boudn of the range.
+/// @return If distance below minimum, the minimum will return. If distance is above
+///   the maximum, the maximum will return. In all other cases the distance itself
+///   is valid and will be returned.
 double AnchorDistFix(
 		double const d,
 		double const AnchorPointMinDist,

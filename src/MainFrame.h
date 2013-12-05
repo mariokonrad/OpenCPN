@@ -58,6 +58,7 @@ class ViewPort;
 class ToolBarSimple;
 class OCPN_DataStreamEvent;
 class DataStream;
+class RoutePoint;
 
 namespace chart { class ChartBase; }
 
@@ -207,8 +208,12 @@ public:
 	bool is_route_blink_odd() const;
 
 private:
+	void activate_chart(chart::ChartBase* tentative);
+	void setup_viewpoint();
+	void refresh_pianobar();
 	void test_unit_test_1();
 	void macosx_hide_dialog_while_minimized();
+	bool check_anchorwatch(const RoutePoint*) const;
 
 	void onTimer_update_active_route();
 	void onTimer_save_configuration();
@@ -227,8 +232,6 @@ private:
 	void update_hdt_watchdog();
 	void update_var_watchdog();
 	void update_sat_watchdog();
-	void check_anchorwatch_1();
-	void check_anchorwatch_2();
 	void send_gps_to_plugins() const;
 
 	void toolLeftClick_AIS();

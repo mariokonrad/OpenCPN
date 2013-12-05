@@ -2860,55 +2860,60 @@ void MainFrame::ClearRouteTool()
 		g_toolbar->ToggleTool(ID_ROUTE, false);
 }
 
-void MainFrame::DoStackDown( void )
+void MainFrame::DoStackDown(void)
 {
+	// FIXME: partial code duplication of DoStackUp
+
 	int current_stack_index = pCurrentStack->CurrentStackEntry;
 
 	if (0 == current_stack_index)
 		return;
 
-	if (!chart_canvas->GetQuiltMode())
+	if (!chart_canvas->GetQuiltMode()) {
 		SelectChartFromStack(current_stack_index - 1);
-	else {
-		int new_dbIndex = pCurrentStack->GetDBIndex( current_stack_index - 1 );
+	} else {
+		int new_dbIndex = pCurrentStack->GetDBIndex(current_stack_index - 1);
 
 		if (!chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
 			ToggleQuiltMode();
-			SelectChartFromStack( current_stack_index - 1 );
-		} else
-			SelectQuiltRefChart( current_stack_index - 1 );
-
+			SelectChartFromStack(current_stack_index - 1);
+		} else {
+			SelectQuiltRefChart(current_stack_index - 1);
+		}
 	}
 
-	chart_canvas->SetQuiltChartHiLiteIndex( -1 );
+	chart_canvas->SetQuiltChartHiLiteIndex(-1);
 	chart_canvas->ReloadVP();
 }
 
-void MainFrame::DoStackUp( void )
+void MainFrame::DoStackUp(void)
 {
+	// FIXME: partial code duplication of DoStackDown
+
 	int current_stack_index = pCurrentStack->CurrentStackEntry;
 
 	if (current_stack_index >= pCurrentStack->nEntry - 1)
 		return;
 
-	if( !chart_canvas->GetQuiltMode() ) {
-		SelectChartFromStack( current_stack_index + 1 );
+	if (!chart_canvas->GetQuiltMode()) {
+		SelectChartFromStack(current_stack_index + 1);
 	} else {
-		int new_dbIndex = pCurrentStack->GetDBIndex( current_stack_index + 1 );
+		int new_dbIndex = pCurrentStack->GetDBIndex(current_stack_index + 1);
 
-		if( !chart_canvas->IsChartQuiltableRef( new_dbIndex ) ) {
+		if (!chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
 			ToggleQuiltMode();
-			SelectChartFromStack( current_stack_index + 1 );
-		} else
-			SelectQuiltRefChart( current_stack_index + 1 );
+			SelectChartFromStack(current_stack_index + 1);
+		} else {
+			SelectQuiltRefChart(current_stack_index + 1);
+		}
 	}
 
-	chart_canvas->SetQuiltChartHiLiteIndex( -1 );
+	chart_canvas->SetQuiltChartHiLiteIndex(-1);
 	chart_canvas->ReloadVP();
 }
 
-//    Manage the application memory footprint on a periodic schedule
-void MainFrame::OnMemFootTimer(wxTimerEvent &)
+// Manage the application memory footprint on a periodic schedule
+void MainFrame::OnMemFootTimer(wxTimerEvent&)
 {
 	MemFootTimer.Stop();
 
@@ -2919,12 +2924,12 @@ void MainFrame::OnMemFootTimer(wxTimerEvent &)
 	if (memsize > (g_MemFootMB * 1000)) {
 		if (ChartData && chart_canvas) {
 			// Get a local copy of the cache info
-			wxArrayPtrVoid * pCache = ChartData->GetChartCache();
+			wxArrayPtrVoid* pCache = ChartData->GetChartCache();
 			const unsigned int nCache = pCache->size();
 			std::vector<chart::CacheEntry> cache;
 			cache.reserve(nCache);
 			for (unsigned int i = 0; i < nCache; ++i) {
-				cache.push_back(*static_cast<chart::CacheEntry *>(pCache->Item(i)));
+				cache.push_back(*static_cast<chart::CacheEntry*>(pCache->Item(i)));
 			}
 
 			if (nCache > 1) {
@@ -2934,7 +2939,7 @@ void MainFrame::OnMemFootTimer(wxTimerEvent &)
 					b_cont = false;
 					for (unsigned int i = 0; i < nCache - 1; ++i) {
 						if (cache[i].RecentTime > cache[i + 1].RecentTime) {
-							std::swap(cache[i], cache[i+1]);
+							std::swap(cache[i], cache[i + 1]);
 							b_cont = true;
 							break;
 						}
@@ -2951,8 +2956,9 @@ void MainFrame::OnMemFootTimer(wxTimerEvent &)
 				if (chart_canvas->GetQuiltMode())
 					minimum_cache = chart_canvas->GetQuiltChartCount();
 
-				while ((memsize > (g_MemFootMB * 1000)) && (pCache->size() > minimum_cache) && (idelete < idelete_max)) {
-					ChartData->DeleteCacheChart(static_cast<ChartBase *>(cache[idelete].pChart));
+				while ((memsize > (g_MemFootMB * 1000)) && (pCache->size() > minimum_cache)
+					   && (idelete < idelete_max)) {
+					ChartData->DeleteCacheChart(static_cast<ChartBase*>(cache[idelete].pChart));
 					idelete++;
 					memsize = GetApplicationMemoryUse();
 				}
@@ -3077,55 +3083,29 @@ void MainFrame::update_sat_watchdog()
 	}
 }
 
-void MainFrame::check_anchorwatch_1()
+bool MainFrame::check_anchorwatch(const RoutePoint* watch_point) const
 {
-	if (pAnchorWatchPoint1) {
-		double dist;
-		double brg;
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-		geo::DistanceBearingMercator(pAnchorWatchPoint1->m_lat, pAnchorWatchPoint1->m_lon, nav.lat, nav.lon, &brg, &dist);
-		double d = g_nAWMax;
-		( pAnchorWatchPoint1->GetName() ).ToDouble( &d );
-		d = AnchorDistFix( d, AnchorPointMinDist, g_nAWMax );
-		bool toofar = false;
-		bool tooclose = false;
-		if (d >= 0.0)
-			toofar = (dist * 1852. > d);
-		if (d < 0.0)
-			tooclose = (dist * 1852 < -d);
+	if (!watch_point)
+		return false;
 
-		if (tooclose || toofar)
-			AnchorAlertOn1 = true;
-		else
-			AnchorAlertOn1 = false;
-	} else
-		AnchorAlertOn1 = false;
-}
+	double dist = 0.0;
+	double brg = 0.0;
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	geo::DistanceBearingMercator(watch_point->m_lat, watch_point->m_lon, nav.lat, nav.lon, &brg,
+								 &dist);
+	dist *= 1852.0; // unit conversion, anchor distances are in meter
 
-void MainFrame::check_anchorwatch_2()
-{
-	if (pAnchorWatchPoint2) {
-		double dist;
-		double brg;
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-		geo::DistanceBearingMercator(pAnchorWatchPoint2->m_lat, pAnchorWatchPoint2->m_lon, nav.lat, nav.lon, &brg, &dist);
+	double d = g_nAWMax;
+	watch_point->GetName().ToDouble(&d);
+	d = AnchorDistFix(d, AnchorPointMinDist, g_nAWMax);
+	bool toofar = false;
+	bool tooclose = false;
+	if (d >= 0.0)
+		toofar = dist > d;
+	if (d < 0.0)
+		tooclose = dist < -d;
 
-		double d = g_nAWMax;
-		pAnchorWatchPoint2->GetName().ToDouble(&d);
-		d = AnchorDistFix(d, AnchorPointMinDist, g_nAWMax);
-		bool toofar = false;
-		bool tooclose = false;
-		if (d >= 0)
-			toofar = (dist * 1852. > d);
-		if (d < 0)
-			tooclose = (dist * 1852 < -d);
-
-		if (tooclose || toofar)
-			AnchorAlertOn2 = true;
-		else
-			AnchorAlertOn2 = false;
-	} else
-		AnchorAlertOn2 = false;
+	return tooclose || toofar;
 }
 
 void MainFrame::send_gps_to_plugins() const
@@ -3189,13 +3169,14 @@ void MainFrame::test_unit_test_1()
 	if (ChartData) {
 		if (ut_index < ChartData->GetChartTableEntries()) {
 			const chart::ChartTableEntry* cte = &ChartData->GetChartTableEntry(ut_index);
-			double lat = (cte->GetLatMax() + cte->GetLatMin()) / 2;
-			double lon = (cte->GetLonMax() + cte->GetLonMin()) / 2;
+			Position pos(
+				(cte->GetLatMax() + cte->GetLatMin()) / 2,
+				(cte->GetLonMax() + cte->GetLonMin()) / 2);
 
-			vLat = lat;
-			vLon = lon;
+			vLat = pos.lat();
+			vLon = pos.lon();
 
-			chart_canvas->SetViewPoint(Position(lat, lon));
+			chart_canvas->SetViewPoint(pos);
 
 			if (chart_canvas->GetQuiltMode()) {
 				if (chart_canvas->IsChartQuiltableRef(ut_index))
@@ -3328,13 +3309,10 @@ void MainFrame::onTimer_update_status_cursor_position()
 	double cursor_lon;
 	chart_canvas->GetCursorLatLon(&cursor_lat, &cursor_lon);
 
-	wxString s1;
-	s1 += _T(" ");
-	s1 += toSDMM(1, cursor_lat);
-	s1 += _T("   ");
-	s1 += toSDMM(2, cursor_lon);
-	if (GetStatusBar())
+	if (GetStatusBar()) {
+		wxString s1 = _T(" ") + toSDMM(1, cursor_lat) + _T("   ") + toSDMM(2, cursor_lon);
 		SetStatusText(s1, STAT_FIELD_CURSOR_LL);
+	}
 }
 
 void MainFrame::onTimer_update_status_cursor_brgrng()
@@ -3390,9 +3368,9 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	update_var_watchdog();
 	update_sat_watchdog();
 	send_gps_to_plugins();
-	check_anchorwatch_1();
-	check_anchorwatch_2();
 
+	AnchorAlertOn1 = check_anchorwatch(pAnchorWatchPoint1);
+	AnchorAlertOn2 = check_anchorwatch(pAnchorWatchPoint2);
 	if ((pAnchorWatchPoint1 || pAnchorWatchPoint2) && !bGPSValid)
 		AnchorAlertOn1 = true;
 
@@ -3486,7 +3464,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	if (g_pAISTargetList && (0 == (timer_tick % 5)))
 		g_pAISTargetList->UpdateAISTargetList();
 
-	//  Pick up any change Toolbar status displays
+	// Pick up any change Toolbar status displays
 	UpdateGPSCompassStatusBox();
 	UpdateAISTool();
 
@@ -3494,10 +3472,10 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 		console->RefreshConsoleData();
 	}
 
-	//  This little hack fixes a problem seen with some UniChrome OpenGL drivers
-	//  We need a deferred resize to get glDrawPixels() to work right.
-	//  So we set a trigger to generate a resize after 5 seconds....
-	//  See the "UniChrome" hack elsewhere
+	// This little hack fixes a problem seen with some UniChrome OpenGL drivers
+	// We need a deferred resize to get glDrawPixels() to work right.
+	// So we set a trigger to generate a resize after 5 seconds....
+	// See the "UniChrome" hack elsewhere
 	if (m_bdefer_resize) {
 		if (0 == (timer_tick % 5)) {
 			printf("___RESIZE\n");
@@ -3923,52 +3901,12 @@ void MainFrame::SelectChartFromStack(int index, bool bDir, chart::ChartTypeEnum 
 		return;
 
 	if (index < pCurrentStack->nEntry) {
-		// Open the new chart
-		ChartBase* pTentative_Chart;
-		pTentative_Chart = ChartData->OpenStackChartConditional(pCurrentStack, index, bDir,
-																New_Type, New_Family);
-
-		if (pTentative_Chart) {
-			if (Current_Ch)
-				Current_Ch->Deactivate();
-
-			Current_Ch = pTentative_Chart;
-			Current_Ch->Activate();
-
-			pCurrentStack->CurrentStackEntry
-				= ChartData->GetStackEntry(pCurrentStack, Current_Ch->GetFullPath());
-		} else
-			SetChartThumbnail(-1); // need to reset thumbnail on failed chart open
-
-		// Setup the view
-		double zLat;
-		double zLon;
-		if (chart_canvas->m_bFollow) {
-			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			zLat = nav.lat;
-			zLon = nav.lon;
-		} else {
-			zLat = vLat;
-			zLon = vLon;
-		}
-
-		double best_scale = GetBestVPScale(Current_Ch);
-
-		chart_canvas->SetViewPoint(Position(zLat, zLon), best_scale,
-								   Current_Ch->GetChartSkew() * M_PI / 180.0,
-								   chart_canvas->GetVPRotation());
-		SetChartUpdatePeriod(chart_canvas->GetVP());
-		UpdateGPSCompassStatusBox(); // Pick up the rotation
+		activate_chart(
+			ChartData->OpenStackChartConditional(pCurrentStack, index, bDir, New_Type, New_Family));
+		setup_viewpoint();
 	}
 
-	// Refresh the Piano Bar
-	if (stats) {
-		std::vector<int> piano_active_chart_index_array;
-		piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
-		stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
-
-		stats->Refresh(true);
-	}
+	refresh_pianobar();
 }
 
 void MainFrame::SelectdbChart(int dbindex)
@@ -3977,52 +3915,57 @@ void MainFrame::SelectdbChart(int dbindex)
 		return;
 
 	if (dbindex >= 0) {
-		using namespace chart;
-
-		// Open the new chart
-		ChartBase* pTentative_Chart;
-		pTentative_Chart = ChartData->OpenChartFromDB(dbindex, FULL_INIT);
-
-		if (pTentative_Chart) {
-			if (Current_Ch)
-				Current_Ch->Deactivate();
-
-			Current_Ch = pTentative_Chart;
-			Current_Ch->Activate();
-
-			pCurrentStack->CurrentStackEntry
-				= ChartData->GetStackEntry(pCurrentStack, Current_Ch->GetFullPath());
-		} else
-			SetChartThumbnail(-1); // need to reset thumbnail on failed chart open
-
-		// Setup the view
-		double zLat, zLon;
-		if (chart_canvas->m_bFollow) {
-			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			zLat = nav.lat;
-			zLon = nav.lon;
-		} else {
-			zLat = vLat;
-			zLon = vLon;
-		}
-
-		double best_scale = GetBestVPScale(Current_Ch);
-
-		chart_canvas->SetViewPoint(Position(zLat, zLon), best_scale,
-								   Current_Ch->GetChartSkew() * M_PI / 180.0,
-								   chart_canvas->GetVPRotation());
-		SetChartUpdatePeriod(chart_canvas->GetVP());
-		UpdateGPSCompassStatusBox(); // Pick up the rotation
+		activate_chart(ChartData->OpenChartFromDB(dbindex, chart::FULL_INIT));
+		setup_viewpoint();
 	}
 
-	// Refresh the Piano Bar
-	if (stats) {
-		std::vector<int> piano_active_chart_index_array;
-		piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
-		stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
+	refresh_pianobar();
+}
 
-		stats->Refresh(true);
+void MainFrame::activate_chart(chart::ChartBase* tentative)
+{
+	if (tentative) {
+		if (Current_Ch)
+			Current_Ch->Deactivate();
+
+		Current_Ch = tentative;
+		Current_Ch->Activate();
+
+		pCurrentStack->CurrentStackEntry
+			= ChartData->GetStackEntry(pCurrentStack, Current_Ch->GetFullPath());
+	} else {
+		SetChartThumbnail(-1); // need to reset thumbnail on failed chart open
 	}
+}
+
+void MainFrame::setup_viewpoint()
+{
+	// Setup the view
+	Position zpos;
+	if (chart_canvas->m_bFollow) {
+		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+		zpos = Position(nav.lat, nav.lon);
+	} else {
+		zpos = Position(vLat, vLon);
+	}
+
+	double best_scale = GetBestVPScale(Current_Ch);
+
+	chart_canvas->SetViewPoint(zpos, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0,
+							   chart_canvas->GetVPRotation());
+	SetChartUpdatePeriod(chart_canvas->GetVP());
+	UpdateGPSCompassStatusBox(); // Pick up the rotation
+}
+
+void MainFrame::refresh_pianobar()
+{
+	if (!stats)
+		return;
+
+	std::vector<int> piano_active_chart_index_array;
+	piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
+	stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
+	stats->Refresh(true);
 }
 
 void MainFrame::SetChartUpdatePeriod(ViewPort& vp)
@@ -4179,7 +4122,7 @@ void MainFrame::UpdateControlBar( void )
 	stats->pPiano->SetPolyIndexArray(piano_poly_chart_index_array);
 
 	stats->FormatStat();
-	stats->Refresh( true );
+	stats->Refresh(true);
 }
 
 //----------------------------------------------------------------------------------

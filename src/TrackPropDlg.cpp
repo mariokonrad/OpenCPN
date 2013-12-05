@@ -766,7 +766,7 @@ void TrackPropDlg::OnTrackPropListClick(wxListEvent&)
 				m_nSelected = selected_no + 1;
 				m_sdbBtmBtnsSizerSplit->Enable(true);
 			}
-			gFrame->JumpToPosition(prp->m_lat, prp->m_lon, cc1->GetVPScale());
+			gFrame->JumpToPosition(Position(prp->m_lat, prp->m_lon), cc1->GetVPScale());
 		}
 	}
 	if (selected_no == 0 || selected_no == m_pRoute->GetnPoints() - 1)

@@ -40,6 +40,7 @@
 #include <ChartDirInfo.h>
 #include <NMEA_Msg_Container.h>
 #include <ColorScheme.h>
+#include <Position.h>
 
 #include <chart/ChartType.h>
 #include <chart/ChartFamily.h>
@@ -109,7 +110,7 @@ public:
 	void SelectQuiltRefChart(int selected_index);
 	void SelectQuiltRefdbChart(int db_index);
 
-	void JumpToPosition(double lat, double lon, double scale);
+	void JumpToPosition(const Position&, double scale);
 
 	void ProcessCanvasResize(void);
 

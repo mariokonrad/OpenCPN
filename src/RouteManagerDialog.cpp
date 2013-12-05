@@ -827,7 +827,7 @@ void RouteManagerDialog::ZoomtoRoute(Route* route)
 	cc1->GetSize(&ww, &wh);
 	ppm = wxMin(ww / (rw * 1852.0), wh / (rh * 1852.0)) * (100 - fabs(clat)) / 90;
 	ppm = wxMin(ppm, 1.0);
-	gFrame->JumpToPosition(clat, clon, ppm);
+	gFrame->JumpToPosition(Position(clat, clon), ppm);
 	m_bNeedConfigFlush = true;
 }
 
@@ -1058,7 +1058,7 @@ void RouteManagerDialog::OnRteActivateClick(wxCommandEvent&)
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		RoutePoint* best_point
-			= g_pRouteMan->FindBestActivatePoint(route, nav.lat, nav.lon, nav.cog, nav.sog);
+			= g_pRouteMan->FindBestActivatePoint(route, Position(nav.lat, nav.lon), nav.cog, nav.sog);
 		g_pRouteMan->ActivateRoute(route, best_point);
 	} else {
 		g_pRouteMan->DeactivateRoute();
@@ -1929,7 +1929,7 @@ void RouteManagerDialog::OnWptZoomtoClick(wxCommandEvent&)
 	if (!wp)
 		return;
 
-	gFrame->JumpToPosition(wp->m_lat, wp->m_lon, cc1->GetVPScale());
+	gFrame->JumpToPosition(Position(wp->m_lat, wp->m_lon), cc1->GetVPScale());
 }
 
 void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent&)

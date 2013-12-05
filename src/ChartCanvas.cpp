@@ -2167,7 +2167,7 @@ void ChartCanvas::GetCanvasPointPix(double rlat, double rlon, wxPoint* r)
 
 	//    if needed, use the VPoint scaling estimator,
 	if (bUseVP) {
-		wxPoint p = GetVP().GetPixFromLL(rlat, rlon);
+		wxPoint p = GetVP().GetPixFromLL(Position(rlat, rlon));
 		*r = p;
 	}
 }
@@ -2497,7 +2497,7 @@ bool ChartCanvas::PanCanvas(int dx, int dy)
 	}
 
 	int cur_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
-	SetViewPoint(dlat, dlon, VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation);
+	SetViewPoint(Position(dlat, dlon), VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation);
 
 	if (VPoint.b_quilt) {
 		int new_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
@@ -2548,7 +2548,7 @@ void ChartCanvas::LoadVP(ViewPort& vp, bool b_adjust)
 	if (m_pQuilt)
 		m_pQuilt->Invalidate();
 
-	SetViewPoint(vp.clat, vp.clon, vp.view_scale_ppm, vp.skew, vp.rotation, b_adjust);
+	SetViewPoint(Position(vp.clat, vp.clon), vp.view_scale_ppm, vp.skew, vp.rotation, b_adjust);
 }
 
 void ChartCanvas::SetQuiltRefChart(int dbIndex)
@@ -2572,23 +2572,23 @@ void ChartCanvas::UpdateCanvasOnGroupChange(void)
 
 bool ChartCanvas::SetVPScale(double scale)
 {
-	return SetViewPoint(VPoint.clat, VPoint.clon, scale, VPoint.skew, VPoint.rotation);
+	return SetViewPoint(Position(VPoint.clat, VPoint.clon), scale, VPoint.skew, VPoint.rotation);
 }
 
-bool ChartCanvas::SetViewPoint(double lat, double lon)
+bool ChartCanvas::SetViewPoint(const Position& pos)
 {
-	return SetViewPoint(lat, lon, VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation);
+	return SetViewPoint(pos, VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation);
 }
 
-bool ChartCanvas::SetViewPoint(double lat, double lon, double scale_ppm, double skew,
+bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double skew,
 							   double rotation, bool b_adjust)
 {
 	bool b_ret = false;
 
 	// Any sensible change?
 	if ((fabs(VPoint.view_scale_ppm - scale_ppm) < 1e-9) && (fabs(VPoint.skew - skew) < 1e-9)
-		&& (fabs(VPoint.rotation - rotation) < 1e-9) && (fabs(VPoint.clat - lat) < 1e-9)
-		&& (fabs(VPoint.clon - lon) < 1e-9) && VPoint.IsValid())
+		&& (fabs(VPoint.rotation - rotation) < 1e-9) && (fabs(VPoint.clat - pos.lat()) < 1e-9)
+		&& (fabs(VPoint.clon - pos.lon()) < 1e-9) && VPoint.IsValid())
 		return false;
 
 	VPoint.SetProjectionType(PROJECTION_MERCATOR); // default
@@ -2599,8 +2599,8 @@ bool ChartCanvas::SetViewPoint(double lat, double lon, double scale_ppm, double 
 	ViewPort last_vp = VPoint;
 
 	VPoint.skew = skew;
-	VPoint.clat = lat;
-	VPoint.clon = lon;
+	VPoint.clat = pos.lat();
+	VPoint.clon = pos.lon();
 	VPoint.view_scale_ppm = scale_ppm;
 	VPoint.rotation = rotation;
 
@@ -2660,7 +2660,7 @@ bool ChartCanvas::SetViewPoint(double lat, double lon, double scale_ppm, double 
 			int current_db_index = -1;
 			current_db_index = pCurrentStack->GetCurrentEntrydbIndex(); // capture the current
 
-			ChartData->BuildChartStack(pCurrentStack, lat, lon);
+			ChartData->BuildChartStack(pCurrentStack, pos.lat(), pos.lon());
 			pCurrentStack->SetCurrentEntryFromdbIndex(current_db_index);
 
 			// Check to see if the current quilt reference chart is in the new stack
@@ -3060,8 +3060,8 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				geo::ll_gc_ll(nav.lat, nav.lon, icon_hdt, g_n_ownship_length_meters / 1852.0,
 							  &ship_bow_lat, &ship_bow_lon);
 				wxPoint lShipBowPoint;
-				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(ship_bow_lat, ship_bow_lon);
-				wxPoint2DDouble a_point = GetVP().GetDoublePixFromLL(nav.lat, nav.lon);
+				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(Position(ship_bow_lat, ship_bow_lon));
+				wxPoint2DDouble a_point = GetVP().GetDoublePixFromLL(Position(nav.lat, nav.lon));
 
 				double shipLength_px = sqrt(pow((double)(b_point.m_x - a_point.m_x), 2)
 											+ pow((double)(b_point.m_y - a_point.m_y), 2));
@@ -3836,8 +3836,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			} else {
 				double ref_lat, ref_lon;
 				geo::ll_gc_ll(td->Lat, td->Lon, 0, 100. / 1852., &ref_lat, &ref_lon);
-				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(td->Lat, td->Lon);
-				wxPoint2DDouble r_point = GetVP().GetDoublePixFromLL(ref_lat, ref_lon);
+				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(Position(td->Lat, td->Lon));
+				wxPoint2DDouble r_point = GetVP().GetDoublePixFromLL(Position(ref_lat, ref_lon));
 				double ppm = r_point.GetDistance(b_point) / 100.;
 				double offwid = (td->DimC + td->DimD) * ppm * 0.25;
 				double offlen = (td->DimA + td->DimB) * ppm * 0.15;
@@ -5270,8 +5270,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			// creating route?
 
 			SetCursor(*pCursorPencil);
-			double rlat = m_cursor_lat;
-			double rlon = m_cursor_lon;
+			Position rpos(m_cursor_lat, m_cursor_lon);
 
 			m_bRouteEditing = true;
 
@@ -5290,7 +5289,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
 
 			RoutePoint* pNearbyPoint
-				= pWayPointMan->GetNearbyWaypoint(rlat, rlon, nearby_radius_meters);
+				= pWayPointMan->GetNearbyWaypoint(rpos, nearby_radius_meters);
 			if (pNearbyPoint && (pNearbyPoint != m_prev_pMousePoint) && !pNearbyPoint->m_bIsInTrack
 				&& !pNearbyPoint->m_bIsInLayer) {
 				int dlg_return;
@@ -5317,11 +5316,11 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			}
 
 			if (NULL == pMousePoint) { // need a new point
-				pMousePoint = new RoutePoint(rlat, rlon, _T("diamond"), _T(""));
+				pMousePoint = new RoutePoint(rpos.lat(), rpos.lon(), _T("diamond"), _T(""));
 				pMousePoint->SetNameShown(false);
 
 				pConfig->AddNewWayPoint(pMousePoint, -1); // use auto next num
-				pSelect->AddSelectableRoutePoint(rlat, rlon, pMousePoint);
+				pSelect->AddSelectableRoutePoint(rpos.lat(), rpos.lon(), pMousePoint);
 
 				if (parent_frame->nRoute_State > 1)
 					undo->BeforeUndoableAction(UndoAction::Undo_AppendWaypoint, pMousePoint,
@@ -5337,9 +5336,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					double rhumbDist;
 					double gcBearing;
 					double gcDist;
-					geo::DistanceBearingMercator(rlat, rlon, m_prev_rlat, m_prev_rlon,
+					geo::DistanceBearingMercator(rpos.lat(), rpos.lon(), m_prev_rlat, m_prev_rlon,
 												 &rhumbBearing, &rhumbDist);
-					geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, rlon, rlat,
+					geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, rpos.lon(), rpos.lat(),
 													   &gcDist, &gcBearing, NULL);
 					double gcDistNM = gcDist / 1852.0;
 
@@ -5393,7 +5392,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 					} else {
 						m_pMouseRoute->AddPoint(pMousePoint);
-						pSelect->AddSelectableRouteSegment(m_prev_rlat, m_prev_rlon, rlat, rlon,
+						pSelect->AddSelectableRouteSegment(m_prev_rlat, m_prev_rlon, rpos.lat(), rpos.lon(),
 														   m_prev_pMousePoint, pMousePoint,
 														   m_pMouseRoute);
 						undo->AfterUndoableAction(m_pMouseRoute);
@@ -5401,15 +5400,15 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				} else {
 					// Ordinary rhumblinesegment.
 					m_pMouseRoute->AddPoint(pMousePoint);
-					pSelect->AddSelectableRouteSegment(m_prev_rlat, m_prev_rlon, rlat, rlon,
+					pSelect->AddSelectableRouteSegment(m_prev_rlat, m_prev_rlon, rpos.lat(), rpos.lon(),
 													   m_prev_pMousePoint, pMousePoint,
 													   m_pMouseRoute);
 					undo->AfterUndoableAction(m_pMouseRoute);
 				}
 			}
 
-			m_prev_rlat = rlat;
-			m_prev_rlon = rlon;
+			m_prev_rlat = rpos.lat();
+			m_prev_rlon = rpos.lon();
 			m_prev_pMousePoint = pMousePoint;
 			m_pMouseRoute->m_lastMousePointIndex = m_pMouseRoute->GetnPoints();
 
@@ -6694,7 +6693,7 @@ void pupHandler_PasteWaypoint()
 	double nearby_radius_meters = nearby_sel_rad_pix / cc1->GetCanvasTrueScale();
 
 	RoutePoint* nearPoint
-		= pWayPointMan->GetNearbyWaypoint(pasted->m_lat, pasted->m_lon, nearby_radius_meters);
+		= pWayPointMan->GetNearbyWaypoint(Position(pasted->m_lat, pasted->m_lon), nearby_radius_meters);
 
 	int answer = wxID_NO;
 	if (nearPoint && !nearPoint->m_bIsInTrack && !nearPoint->m_bIsInLayer) {
@@ -6751,7 +6750,7 @@ void pupHandler_PasteRoute()
 
 	for (int i = 1; i <= pasted->GetnPoints(); i++) {
 		curPoint = pasted->GetPoint(i); // NB! n starts at 1 !
-		nearPoint = pWayPointMan->GetNearbyWaypoint(curPoint->m_lat, curPoint->m_lon,
+		nearPoint = pWayPointMan->GetNearbyWaypoint(Position(curPoint->m_lat, curPoint->m_lon),
 													nearby_radius_meters);
 		if (nearPoint) {
 			mergepoints = true;
@@ -6802,7 +6801,7 @@ void pupHandler_PasteRoute()
 		curPoint = pasted->GetPoint(i);
 		if (answer == wxID_YES && curPoint->m_bPtIsSelected) {
 			curPoint->m_bPtIsSelected = false;
-			newPoint = pWayPointMan->GetNearbyWaypoint(curPoint->m_lat, curPoint->m_lon,
+			newPoint = pWayPointMan->GetNearbyWaypoint(Position(curPoint->m_lat, curPoint->m_lon),
 													   nearby_radius_meters);
 			newPoint->SetName(curPoint->GetName());
 			newPoint->m_MarkDescription = curPoint->m_MarkDescription;
@@ -7273,8 +7272,8 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			if (g_pRouteMan->GetpActiveRoute())
 				g_pRouteMan->DeactivateRoute();
 
-			RoutePoint* best_point = g_pRouteMan->FindBestActivatePoint(m_pSelectedRoute, nav.lat,
-																		nav.lon, nav.cog, nav.sog);
+			RoutePoint* best_point = g_pRouteMan->FindBestActivatePoint(
+				m_pSelectedRoute, Position(nav.lat, nav.lon), nav.cog, nav.sog);
 
 			g_pRouteMan->ActivateRoute(m_pSelectedRoute, best_point);
 			m_pSelectedRoute->m_bRtIsSelected = false;
@@ -7951,7 +7950,7 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 				double pLat, pLon;
 				geo::Geodesic::GreatCircleTravel(m_prev_rlon, m_prev_rlat, gcDist * p, brg, &pLon,
 												 &pLat, &gcBearing2);
-				destPoint = VPoint.GetPixFromLL(pLat, pLon);
+				destPoint = VPoint.GetPixFromLL(Position(pLat, pLon));
 				route->DrawSegment(dc, &lastPoint, &destPoint, GetVP(), false);
 				lastPoint = destPoint;
 			}
@@ -8126,8 +8125,8 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 
 			if (m_bm_cache_vp.IsValid() && m_cache_vp.IsValid()) {
 				if (b_newview) {
-					wxPoint c_old = VPoint.GetPixFromLL(VPoint.clat, VPoint.clon);
-					wxPoint c_new = m_bm_cache_vp.GetPixFromLL(VPoint.clat, VPoint.clon);
+					wxPoint c_old = VPoint.GetPixFromLL(Position(VPoint.clat, VPoint.clon));
+					wxPoint c_new = m_bm_cache_vp.GetPixFromLL(Position(VPoint.clat, VPoint.clon));
 
 					int dy = c_new.y - c_old.y;
 					int dx = c_new.x - c_old.x;

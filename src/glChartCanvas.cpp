@@ -1545,8 +1545,8 @@ void glChartCanvas::render()
 			if (m_gl_cache_vp.IsValid() && (m_cache_tex > 0) && !g_bCourseUp) {
 				if( b_newview ) {
 
-					wxPoint c_old = VPoint.GetPixFromLL( VPoint.clat, VPoint.clon );
-					wxPoint c_new = m_gl_cache_vp.GetPixFromLL( VPoint.clat, VPoint.clon );
+					wxPoint c_old = VPoint.GetPixFromLL(Position(VPoint.clat, VPoint.clon));
+					wxPoint c_new = m_gl_cache_vp.GetPixFromLL(Position(VPoint.clat, VPoint.clon));
 
 					int dy = c_new.y - c_old.y;
 					int dx = c_new.x - c_old.x;

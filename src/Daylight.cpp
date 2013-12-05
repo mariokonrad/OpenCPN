@@ -81,17 +81,16 @@ static double FNrange(double x)
 	return a;
 }
 
-static double getDaylightEvent(double glat, double glong, int riset, double altitude, int y, int m,
-							   int d)
+static double getDaylightEvent(const Position& pos, int riset, double altitude, int y, int m, int d)
 {
 	double day = FNday(y, m, d, 0);
 	double days, correction;
 	double utold = M_PI;
 	double utnew = 0.0;
 	double sinalt = sin(altitude * (M_PI / 180.0)); // go for the sunrise/sunset altitude first
-	double sinphi = sin(glat * (M_PI / 180.0));
-	double cosphi = cos(glat * (M_PI / 180.0));
-	double g = glong * (M_PI / 180.0);
+	double sinphi = sin(pos.lat() * (M_PI / 180.0));
+	double cosphi = cos(pos.lon() * (M_PI / 180.0));
+	double g = pos.lon() * (M_PI / 180.0);
 	double t;
 	double L;
 	double G;
@@ -131,9 +130,9 @@ static double getDaylightEvent(double glat, double glong, int riset, double alti
 	return utnew * (180.0 / M_PI) / 15.0; // returns decimal hours UTC
 }
 
-static double getLMT(double ut, double lon)
+static double getLMT(double ut, const Position& pos)
 {
-	double t = ut + lon / 15.0;
+	double t = ut + pos.lon() / 15.0;
 	if (t >= 0.0)
 		if (t <= 24.0)
 			return (t);
@@ -143,9 +142,9 @@ static double getLMT(double ut, double lon)
 		return (t + 24.0);
 }
 
-Daylight getDaylightStatus(double lat, double lon, wxDateTime utcDateTime)
+Daylight getDaylightStatus(const Position& pos, wxDateTime utcDateTime)
 {
-	if (fabs(lat) > 60.0)
+	if (fabs(pos.lat()) > 60.0)
 		return UNKNOWN_DAYLIGHT;
 	int y = utcDateTime.GetYear();
 	int m = utcDateTime.GetMonth() + 1; // wxBug? months seem to run 0..11 ?
@@ -157,47 +156,47 @@ Daylight getDaylightStatus(double lat, double lon, wxDateTime utcDateTime)
 		return UNKNOWN_DAYLIGHT;
 
 	double ut = (double)h + (double)n / 60.0 + (double)s / 3600.0;
-	double lt = getLMT(ut, lon);
+	double lt = getLMT(ut, pos);
 	double rsalt = -0.833;
 	double twalt = -12.0;
 
 	// wxString msg;
 
 	if (lt <= 12.0) {
-		double sunrise = getDaylightEvent(lat, lon, +1, rsalt, y, m, d);
+		double sunrise = getDaylightEvent(pos, +1, rsalt, y, m, d);
 		if (sunrise < 0.0)
 			return UNKNOWN_DAYLIGHT;
 		else
-			sunrise = getLMT(sunrise, lon);
+			sunrise = getLMT(sunrise, pos);
 
 		if (fabs(lt - sunrise) < 0.15)
 			return SUNRISE;
 		if (lt > sunrise)
 			return DAY;
-		double twilight = getDaylightEvent(lat, lon, +1, twalt, y, m, d);
+		double twilight = getDaylightEvent(pos, +1, twalt, y, m, d);
 		if (twilight < 0.0)
 			return UNKNOWN_DAYLIGHT;
 		else
-			twilight = getLMT(twilight, lon);
+			twilight = getLMT(twilight, pos);
 		if (lt > twilight)
 			return MOTWILIGHT;
 		else
 			return NIGHT;
 	} else {
-		double sunset = getDaylightEvent(lat, lon, -1, rsalt, y, m, d);
+		double sunset = getDaylightEvent(pos, -1, rsalt, y, m, d);
 		if (sunset < 0.0)
 			return UNKNOWN_DAYLIGHT;
 		else
-			sunset = getLMT(sunset, lon);
+			sunset = getLMT(sunset, pos);
 		if (fabs(lt - sunset) < 0.15)
 			return SUNSET;
 		if (lt < sunset)
 			return DAY;
-		double twilight = getDaylightEvent(lat, lon, -1, twalt, y, m, d);
+		double twilight = getDaylightEvent(pos, -1, twalt, y, m, d);
 		if (twilight < 0.0)
 			return UNKNOWN_DAYLIGHT;
 		else
-			twilight = getLMT(twilight, lon);
+			twilight = getLMT(twilight, pos);
 		if (lt < twilight)
 			return EVTWILIGHT;
 		else

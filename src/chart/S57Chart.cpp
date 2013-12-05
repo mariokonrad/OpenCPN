@@ -6377,14 +6377,14 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport,
 			geo::ll_gc_ll(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
 						  sectorlegs[i].sector1 + 180.0, sectorlegs[i].range, &endy, &endx);
 
-			wxPoint end1 = viewport.GetPixFromLL(endy, endx);
+			wxPoint end1 = viewport.GetPixFromLL(Position(endy, endx));
 
 			geo::ll_gc_ll(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
 						  sectorlegs[i].sector2 + 180.0, sectorlegs[i].range, &endy, &endx);
 
-			wxPoint end2 = viewport.GetPixFromLL(endy, endx);
+			wxPoint end2 = viewport.GetPixFromLL(Position(endy, endx));
 
-			wxPoint lightPos = viewport.GetPixFromLL(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x);
+			wxPoint lightPos = viewport.GetPixFromLL(Position(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x));
 
 			// Make sure arcs are well inside viewport.
 			double rangePx = sqrt(pow(lightPos.x - end1.x, 2.0) + pow(lightPos.y - end1.y, 2.0));

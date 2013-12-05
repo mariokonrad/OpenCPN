@@ -58,10 +58,10 @@ ViewPort::ViewPort()
 	b_MercatorProjectionOverride = false;
 }
 
-wxPoint ViewPort::GetPixFromLL(double lat, double lon) const
+wxPoint ViewPort::GetPixFromLL(const Position& pos) const
 {
 	double easting, northing;
-	double xlon = lon;
+	double xlon = pos.lon();
 
 	//  Make sure lon and lon0 are same phase
 	if (xlon * clon < 0.0) {
@@ -84,8 +84,8 @@ wxPoint ViewPort::GetPixFromLL(double lat, double lon) const
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM(clat, clon, 0., clon, &tmceasting, &tmcnorthing);
-		geo::toTM(lat, xlon, 0., clon, &tmeasting, &tmnorthing);
+		geo::toTM(clat, clon, 0.0, clon, &tmceasting, &tmcnorthing);
+		geo::toTM(pos.lat(), xlon, 0.0, clon, &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
@@ -94,15 +94,15 @@ wxPoint ViewPort::GetPixFromLL(double lat, double lon) const
 		//    We calculate northings as referenced to the equator
 		//    And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		geo::toPOLY(clat, clon, 0., clon, &pceasting, &pcnorthing);
+		geo::toPOLY(clat, clon, 0.0, clon, &pceasting, &pcnorthing);
 
 		double peasting, pnorthing;
-		geo::toPOLY(lat, xlon, 0., clon, &peasting, &pnorthing);
+		geo::toPOLY(pos.lat(), xlon, 0.0, clon, &peasting, &pnorthing);
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
 	} else
-		geo::toSM(lat, xlon, clat, clon, &easting, &northing);
+		geo::toSM(pos.lat(), xlon, clat, clon, &easting, &northing);
 
 	if (!wxFinite(easting) || !wxFinite(northing))
 		return wxPoint(0, 0);
@@ -125,10 +125,10 @@ wxPoint ViewPort::GetPixFromLL(double lat, double lon) const
 	return r;
 }
 
-wxPoint2DDouble ViewPort::GetDoublePixFromLL(double lat, double lon)
+wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos)
 {
 	double easting, northing;
-	double xlon = lon;
+	double xlon = pos.lon();
 
 	//  Make sure lon and lon0 are same phase
 	if (xlon * clon < 0.0) {
@@ -151,8 +151,8 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(double lat, double lon)
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM(clat, clon, 0., clon, &tmceasting, &tmcnorthing);
-		geo::toTM(lat, xlon, 0., clon, &tmeasting, &tmnorthing);
+		geo::toTM(clat, clon, 0.0, clon, &tmceasting, &tmcnorthing);
+		geo::toTM(pos.lat(), xlon, 0.0, clon, &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
@@ -160,15 +160,15 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(double lat, double lon)
 		// We calculate northings as referenced to the equator
 		// And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		geo::toPOLY(clat, clon, 0., clon, &pceasting, &pcnorthing);
+		geo::toPOLY(clat, clon, 0.0, clon, &pceasting, &pcnorthing);
 
 		double peasting, pnorthing;
-		geo::toPOLY(lat, xlon, 0., clon, &peasting, &pnorthing);
+		geo::toPOLY(pos.lat(), xlon, 0.0, clon, &peasting, &pnorthing);
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
 	} else {
-		geo::toSM(lat, xlon, clat, clon, &easting, &northing);
+		geo::toSM(pos.lat(), xlon, clat, clon, &easting, &northing);
 	}
 
 	if (!wxFinite(easting) || !wxFinite(northing))
@@ -259,7 +259,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		ViewPort vp_positive = *this;
 		while (vp_positive.vpBBox.GetMinX() < 0) {
 			vp_positive.clon += 360.;
-			wxPoint2DDouble t(360., 0.);
+			wxPoint2DDouble t(360.0, 0.0);
 			vp_positive.vpBBox.Translate(t);
 		}
 
@@ -330,8 +330,8 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		if (cb_maxlon < cb_minlon)
 			cb_maxlon += 360.0;
 
-		wxPoint p1 = GetPixFromLL(cb_maxlat, cb_minlon); // upper left
-		wxPoint p2 = GetPixFromLL(cb_minlat, cb_maxlon); // lower right
+		wxPoint p1 = GetPixFromLL(Position(cb_maxlat, cb_minlon)); // upper left
+		wxPoint p2 = GetPixFromLL(Position(cb_minlat, cb_maxlon)); // lower right
 
 		OCPNRegion r(p1, p2);
 		r.Intersect(Region);
@@ -351,7 +351,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 	const float* pfp = llpoints;
 
 	for (unsigned int ip = 0; ip < n; ip++) {
-		wxPoint p = GetPixFromLL(pfp[0], pfp[1]);
+		wxPoint p = GetPixFromLL(Position(pfp[0], pfp[1]));
 		pp[ip] = p;
 		pfp += 2;
 	}
@@ -406,8 +406,8 @@ wxRect ViewPort::GetVPRectIntersect(size_t n, const float* llpoints)
 		pfp += 2;
 	}
 
-	wxPoint pul = GetPixFromLL(point_box.GetMaxY(), point_box.GetMinX());
-	wxPoint plr = GetPixFromLL(point_box.GetMinY(), point_box.GetMaxX());
+	wxPoint pul = GetPixFromLL(Position(point_box.GetMaxY(), point_box.GetMinX()));
+	wxPoint plr = GetPixFromLL(Position(point_box.GetMinY(), point_box.GetMaxX()));
 
 	OCPNRegion r(pul, plr);
 	OCPNRegion rs(rv_rect);

@@ -429,30 +429,29 @@ int WayPointman::GetXIconIndex(const wxBitmap * pbm)
 	return -1;
 }
 
-bool WayPointman::within_distance(const RoutePoint* point, double lat, double lon, double radius_meters) const
+bool WayPointman::within_distance(const RoutePoint* point, const Position& pos, double radius_meters) const
 {
-	double a = lat - point->m_lat;
-	double b = lon - point->m_lon;
+	double a = pos.lat() - point->m_lat;
+	double b = pos.lon() - point->m_lon;
 	double l = sqrt((a * a) + (b * b));
 
 	return (l * 60.0 * 1852.0) < radius_meters;
 }
 
-RoutePoint* WayPointman::GetNearbyWaypoint(double lat, double lon, double radius_meters)
+RoutePoint* WayPointman::GetNearbyWaypoint(const Position& pos, double radius_meters)
 {
 	// Iterate on the RoutePoint list, checking distance
 
 	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
 		RoutePoint* pr = *i;
-		if (within_distance(pr, lat, lon, radius_meters))
+		if (within_distance(pr, pos, radius_meters))
 			return pr;
 	}
 	return NULL;
 }
 
-RoutePoint * WayPointman::GetOtherNearbyWaypoint(
-		double lat,
-		double lon,
+RoutePoint* WayPointman::GetOtherNearbyWaypoint(
+		const Position& pos,
 		double radius_meters,
 		const wxString & guid)
 {
@@ -460,7 +459,7 @@ RoutePoint * WayPointman::GetOtherNearbyWaypoint(
 
 	for (RoutePointList::const_iterator i = points.begin(); i != points.end(); ++i) {
 		RoutePoint* pr = *i;
-		if (within_distance(pr, lat, lon, radius_meters) && (pr->m_GUID == guid))
+		if (within_distance(pr, pos, radius_meters) && (pr->m_GUID == guid))
 			return pr;
 	}
 	return NULL;
@@ -576,12 +575,12 @@ int WayPointman::GetNumIcons(void) const
 	return icons.size();
 }
 
-RoutePoint* WayPointman::WaypointExists(const wxString& name, double lat, double lon)
+RoutePoint* WayPointman::WaypointExists(const wxString& name, const Position& pos)
 {
 	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
 		RoutePoint* pr = *i;
 		if (name == pr->GetName()) {
-			if (fabs(lat - pr->m_lat) < 1.e-6 && fabs(lon - pr->m_lon) < 1.e-6) {
+			if (fabs(pos.lat() - pr->m_lat) < 1.e-6 && fabs(pos.lon() - pr->m_lon) < 1.e-6) {
 				return pr;
 			}
 		}

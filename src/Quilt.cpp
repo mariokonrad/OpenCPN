@@ -120,8 +120,8 @@ bool Quilt::IsVPBlittable(ViewPort& VPoint, int dx, int dy, bool b_allow_vector)
 	if (!m_vp_rendered.IsValid())
 		return false;
 
-	wxPoint2DDouble p1 = VPoint.GetDoublePixFromLL(m_vp_rendered.clat, m_vp_rendered.clon);
-	wxPoint2DDouble p2 = VPoint.GetDoublePixFromLL(VPoint.clat, VPoint.clon);
+	wxPoint2DDouble p1 = VPoint.GetDoublePixFromLL(Position(m_vp_rendered.clat, m_vp_rendered.clon));
+	wxPoint2DDouble p2 = VPoint.GetDoublePixFromLL(Position(VPoint.clat, VPoint.clon));
 	double deltax = p2.m_x - p1.m_x;
 	double deltay = p2.m_y - p1.m_y;
 
@@ -598,8 +598,8 @@ bool Quilt::IsQuiltDelta(ViewPort& vp)
 	// Has the quilt shifted by more than one pixel in any direction?
 	wxPoint cp_last, cp_this;
 
-	cp_last = m_vp_quilt.GetPixFromLL(vp.clat, vp.clon);
-	cp_this = vp.GetPixFromLL(vp.clat, vp.clon);
+	cp_last = m_vp_quilt.GetPixFromLL(Position(vp.clat, vp.clon));
+	cp_this = vp.GetPixFromLL(Position(vp.clat, vp.clon));
 
 	return (cp_last != cp_this);
 }

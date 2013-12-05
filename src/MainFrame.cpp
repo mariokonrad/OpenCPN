@@ -91,9 +91,9 @@
 #include <MemoryStatus.h>
 #include <Config.h>
 #include <UserColors.h>
-#include <PositionParser.h>
 #include <Units.h>
 #include <NavObjectChanges.h>
+#include <PositionParser.h>
 
 #include <plugin/PlugInManager.h>
 #include <plugin/OCPN_MsgEvent.h>
@@ -2232,14 +2232,14 @@ void MainFrame::SurfaceToolbar(void)
 	Raise();
 }
 
-void MainFrame::JumpToPosition(double lat, double lon, double scale)
+void MainFrame::JumpToPosition(const Position& pos, double scale)
 {
-	vLat = lat;
-	vLon = lon;
+	vLat = pos.lat();
+	vLon = pos.lon();
 	chart_canvas->m_bFollow = false;
 	DoChartUpdate();
 
-	chart_canvas->SetViewPoint(lat, lon, scale, 0, chart_canvas->GetVPRotation());
+	chart_canvas->SetViewPoint(pos, scale, 0, chart_canvas->GetVPRotation());
 	chart_canvas->ReloadVP();
 
 	SetToolbarItemState(ID_FOLLOW, false);
@@ -3195,7 +3195,7 @@ void MainFrame::test_unit_test_1()
 			vLat = lat;
 			vLon = lon;
 
-			chart_canvas->SetViewPoint(lat, lon);
+			chart_canvas->SetViewPoint(Position(lat, lon));
 
 			if (chart_canvas->GetQuiltMode()) {
 				if (chart_canvas->IsChartQuiltableRef(ut_index))
@@ -3954,7 +3954,7 @@ void MainFrame::SelectChartFromStack(int index, bool bDir, chart::ChartTypeEnum 
 
 		double best_scale = GetBestVPScale(Current_Ch);
 
-		chart_canvas->SetViewPoint(zLat, zLon, best_scale,
+		chart_canvas->SetViewPoint(Position(zLat, zLon), best_scale,
 								   Current_Ch->GetChartSkew() * M_PI / 180.0,
 								   chart_canvas->GetVPRotation());
 		SetChartUpdatePeriod(chart_canvas->GetVP());
@@ -4008,7 +4008,7 @@ void MainFrame::SelectdbChart(int dbindex)
 
 		double best_scale = GetBestVPScale(Current_Ch);
 
-		chart_canvas->SetViewPoint(zLat, zLon, best_scale,
+		chart_canvas->SetViewPoint(Position(zLat, zLon), best_scale,
 								   Current_Ch->GetChartSkew() * M_PI / 180.0,
 								   chart_canvas->GetVPRotation());
 		SetChartUpdatePeriod(chart_canvas->GetVP());
@@ -4327,22 +4327,27 @@ bool MainFrame::DoChartUpdate(void)
 					using namespace chart;
 					ChartBase *pc = ChartData->OpenChartFromDB( initial_db_index, FULL_INIT );
 					if( pc ) {
-						proposed_scale_onscreen =
-							wxMin(proposed_scale_onscreen, pc->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(), chart_canvas->GetCanvasWidth()));
-						proposed_scale_onscreen =
-							wxMax(proposed_scale_onscreen, pc->GetNormalScaleMin(chart_canvas->GetCanvasScaleFactor(), global::OCPN::get().gui().view().allow_overzoom_x));
+						proposed_scale_onscreen
+							= wxMin(proposed_scale_onscreen,
+									pc->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(),
+														  chart_canvas->GetCanvasWidth()));
+						proposed_scale_onscreen
+							= wxMax(proposed_scale_onscreen,
+									pc->GetNormalScaleMin(
+										chart_canvas->GetCanvasScaleFactor(),
+										global::OCPN::get().gui().view().allow_overzoom_x));
 					}
 				}
-
 			}
 
-			bNewView |= chart_canvas->SetViewPoint( vpLat, vpLon,
-					chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen, 0,
-					chart_canvas->GetVPRotation() );
-
+			bNewView |= chart_canvas->SetViewPoint(
+				Position(vpLat, vpLon),
+				chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen, 0,
+				chart_canvas->GetVPRotation());
 		}
 
-		bNewView |= chart_canvas->SetViewPoint( vpLat, vpLon, chart_canvas->GetVPScale(), 0, chart_canvas->GetVPRotation() );
+		bNewView |= chart_canvas->SetViewPoint(Position(vpLat, vpLon), chart_canvas->GetVPScale(),
+											   0, chart_canvas->GetVPRotation());
 
 		goto update_finish;
 
@@ -4386,8 +4391,8 @@ bool MainFrame::DoChartUpdate(void)
 		if (!chart_canvas->GetVP().IsValid())
 			set_scale = 1.0 / 200000.0;
 
-		bNewView
-			|= chart_canvas->SetViewPoint(tLat, tLon, set_scale, 0, chart_canvas->GetVPRotation());
+		bNewView |= chart_canvas->SetViewPoint(Position(tLat, tLon), set_scale, 0,
+											   chart_canvas->GetVPRotation());
 
 		// If the chart stack has just changed, there is new status
 		if (!ChartData->EqualStacks(&WorkStack, pCurrentStack)) {
@@ -4541,13 +4546,13 @@ bool MainFrame::DoChartUpdate(void)
 				set_scale = chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
 			}
 
-			bNewView |= chart_canvas->SetViewPoint(vpLat, vpLon, set_scale,
+			bNewView |= chart_canvas->SetViewPoint(Position(vpLat, vpLon), set_scale,
 												   Current_Ch->GetChartSkew() * M_PI / 180.,
 												   chart_canvas->GetVPRotation());
 		}
 	} else { // No change in Chart Stack
 		if ((chart_canvas->m_bFollow) && Current_Ch)
-			bNewView |= chart_canvas->SetViewPoint(vpLat, vpLon, chart_canvas->GetVPScale(),
+			bNewView |= chart_canvas->SetViewPoint(Position(vpLat, vpLon), chart_canvas->GetVPScale(),
 												   Current_Ch->GetChartSkew() * M_PI / 180.,
 												   chart_canvas->GetVPRotation());
 	}

@@ -1319,7 +1319,7 @@ void GetCanvasPixLL(PlugIn_ViewPort* vp, wxPoint* pp, double lat, double lon)
 	ocpn_vp.pix_width = vp->pix_width;
 	ocpn_vp.pix_height = vp->pix_height;
 
-	wxPoint ret = ocpn_vp.GetPixFromLL(lat, lon);
+	wxPoint ret = ocpn_vp.GetPixFromLL(Position(lat, lon));
 	pp->x = ret.x;
 	pp->y = ret.y;
 }
@@ -1460,7 +1460,7 @@ void DimeWindow(wxWindow* win)
 
 void JumpToPosition(double lat, double lon, double scale)
 {
-	gFrame->JumpToPosition(lat, lon, scale);
+	gFrame->JumpToPosition(Position(lat, lon), scale);
 }
 
 /* API 1.9 */

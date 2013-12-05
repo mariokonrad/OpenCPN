@@ -141,7 +141,7 @@ Routeman::RouteArray* Routeman::GetRouteArrayContaining(const RoutePoint* pWP)
 	}
 }
 
-RoutePoint* Routeman::FindBestActivatePoint(Route* pR, double lat, double lon, double cog,
+RoutePoint* Routeman::FindBestActivatePoint(Route* pR, const Position& pos, double cog,
 											double WXUNUSED(sog))
 {
 	if (!pR)
@@ -158,7 +158,7 @@ RoutePoint* Routeman::FindBestActivatePoint(Route* pR, double lat, double lon, d
 
 		double brg;
 		double dist;
-		geo::DistanceBearingMercator(pn->m_lat, pn->m_lon, lat, lon, &brg, &dist);
+		geo::DistanceBearingMercator(pn->m_lat, pn->m_lon, pos.lat(), pos.lon(), &brg, &dist);
 
 		double angle = brg - cog;
 		double soa = cos(angle * M_PI / 180.0);

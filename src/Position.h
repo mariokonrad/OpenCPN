@@ -21,68 +21,20 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VIEWPORT__H__
-#define __VIEWPORT__H__
+#ifndef __POSITION__H__
+#define __POSITION__H__
 
-#include <wx/gdicmn.h>
-#include <wx/geometry.h>
-#include <geo/LatLonBoundingBox.h>
-#include <OCPNRegion.h>
-#include <Position.h>
-
-namespace geo { class LatLonBoundingBox; }
-
-class ViewPort
+class Position
 {
-	public:
-		ViewPort();
+public:
+	Position(double latitude = 0.0, double longitude = 0.0);
 
-		wxPoint GetPixFromLL(const Position& pos) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(const Position& pos);
+	double lat() const;
+	double lon() const;
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				const float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
-
-		wxRect GetVPRectIntersect(size_t n, const float * llpoints);
-
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
-
-		const geo::LatLonBoundingBox & GetBBox() const;
-		geo::LatLonBoundingBox & GetBBox();
-		void set_positive();
-
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
-
-		double chart_scale; // conventional chart displayed scale
-
-		int pix_width;
-		int pix_height;
-
-		bool b_quilt;
-		bool b_FullScreenQuilt;
-
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
-
-	private:
-		geo::LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+private:
+	double latitude;
+	double longitude;
 };
 
 #endif

@@ -35,6 +35,7 @@
 
 #include <vector>
 
+#include <Position.h>
 #include <CM93DSlide.h>
 #include <RolloverWin.h>
 #include <ViewPort.h>
@@ -138,11 +139,11 @@ public:
 	void Do_Pankeys(wxTimerEvent& event);
 	void EnableAutoPan(bool b_enable);
 
-	bool SetViewPoint(double lat, double lon, double scale_ppm, double skew, double rotation,
+	bool SetViewPoint(const Position& pos, double scale_ppm, double skew, double rotation,
 					  bool b_adjust = true);
 
 	bool SetVPScale(double sc);
-	bool SetViewPoint(double lat, double lon);
+	bool SetViewPoint(const Position& pos);
 	void ReloadVP(bool b_adjust = true);
 	void LoadVP(ViewPort& vp, bool b_adjust = true);
 	void SetVPRotation(double angle);

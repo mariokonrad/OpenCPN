@@ -26,8 +26,8 @@
 
 #include "nmea0183.h"
 #include <ColorScheme.h>
+#include <Position.h>
 
-#include <wx/dynarray.h>
 #include <vector>
 
 class Route;
@@ -60,7 +60,7 @@ class Routeman
 		bool ActivateRoute(Route *pRouteToActivate, RoutePoint *pStartPoint = NULL);
 		bool ActivateRoutePoint(Route *pA, RoutePoint *pRP);
 		bool ActivateNextPoint(Route *pr, bool skipped);
-		RoutePoint *FindBestActivatePoint(Route *pR, double lat, double lon, double cog, double sog);
+		RoutePoint *FindBestActivatePoint(Route *pR, const Position& pos, double cog, double sog);
 
 		bool UpdateProgress();
 		bool UpdateAutopilot();

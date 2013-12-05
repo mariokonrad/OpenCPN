@@ -353,7 +353,7 @@ bool RouteProp::IsThisRouteExtendable()
 				double rlon = pLastPoint->m_lon;
 
 				m_pExtendPoint = pWayPointMan->GetOtherNearbyWaypoint(
-					rlat, rlon, nearby_radius_meters, pLastPoint->m_GUID);
+					Position(rlat, rlon), nearby_radius_meters, pLastPoint->m_GUID);
 				if (m_pExtendPoint && !m_pExtendPoint->m_bIsInTrack) {
 					Routeman::RouteArray* pCloseWPRouteArray
 						= g_pRouteMan->GetRouteArrayContaining(m_pExtendPoint);
@@ -677,7 +677,7 @@ void RouteProp::OnRoutepropListClick(wxListEvent& event)
 				m_SplitButton->Enable(true);
 			}
 
-			gFrame->JumpToPosition(prp->m_lat, prp->m_lon, cc1->GetVPScale());
+			gFrame->JumpToPosition(Position(prp->m_lat, prp->m_lon), cc1->GetVPScale());
 		}
 	}
 }
@@ -1127,7 +1127,7 @@ void RouteProp::update_route_properties()
 				wxString s = ts2s(act_starttime, tz_selection, (int)LMT_Offset, DISPLAY_FORMAT);
 				time_form.Append(s);
 				time_form.Append(_T("   ("));
-				time_form.Append(GetDaylightString(getDaylightStatus(prp->m_lat, prp->m_lon, act_starttime)));
+				time_form.Append(GetDaylightString(getDaylightStatus(Position(prp->m_lat, prp->m_lon), act_starttime)));
 				time_form.Append(_T(")"));
 
 				if (ptcmgr) {
@@ -1167,7 +1167,7 @@ void RouteProp::update_route_properties()
 
 					time_form = ts2s(ueta, tz_selection, LMT_Offset, DISPLAY_FORMAT);
 					time_form.Append(_T("   ("));
-					time_form.Append(GetDaylightString(getDaylightStatus(prp->m_lat, prp->m_lon, ueta)));
+					time_form.Append(GetDaylightString(getDaylightStatus(Position(prp->m_lat, prp->m_lon), ueta)));
 					time_form.Append(_T(")"));
 
 					if (ptcmgr) {

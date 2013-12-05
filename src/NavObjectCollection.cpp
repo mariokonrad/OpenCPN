@@ -1063,7 +1063,7 @@ bool NavObjectCollection::LoadAllGPXObjects()
 
 			if (pWp) {
 				RoutePoint* pExisting
-					= pWayPointMan->WaypointExists(pWp->GetName(), pWp->m_lat, pWp->m_lon);
+					= pWayPointMan->WaypointExists(pWp->GetName(), Position(pWp->m_lat, pWp->m_lon));
 				if (!pExisting) {
 					if (NULL != pWayPointMan)
 						pWayPointMan->push_back(pWp);

@@ -21,34 +21,37 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __positionparser_h__
-#define __positionparser_h__
+#ifndef __POSITIONPARSER_H__
+#define __POSITIONPARSER_H__
 
 #include <wx/string.h>
+#include <Position.h>
 
 wxString toSDMM(int NEflag, double a, bool hi_precision = true);
 double fromDMM(wxString sdms);
 
 class PositionParser
 {
-	public:
-		PositionParser(const wxString & src);
-		const wxString & GetSeparator() const;
-		const wxString & GetLatitudeString() const;
-		const wxString & GetLongitudeString() const;
-		double GetLatitude() const;
-		double GetLongitude() const;
-		bool FindSeparator(const wxString & src);
-		bool IsOk() const;
+public:
+	PositionParser(const wxString& src);
+	const wxString& GetSeparator() const;
+	const wxString& GetLatitudeString() const;
+	const wxString& GetLongitudeString() const;
+	double GetLatitude() const;
+	double GetLongitude() const;
+	bool FindSeparator(const wxString& src);
+	bool IsOk() const;
 
-	private:
-		wxString source;
-		wxString separator;
-		wxString latitudeString;
-		wxString longitudeString;
-		double latitude;
-		double longitude;
-		bool parsedOk;
+	Position get() const;
+
+private:
+	wxString source;
+	wxString separator;
+	wxString latitudeString;
+	wxString longitudeString;
+	double latitude;
+	double longitude;
+	bool parsedOk;
 };
 
 #endif

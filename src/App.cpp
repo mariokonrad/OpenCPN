@@ -38,6 +38,7 @@
 #include <ConsoleCanvas.h>
 #include <MicrosoftCompatibility.h>
 #include <GUI_IDs.h>
+#include <LogMessageOnce.h>
 
 #include <MemoryStatus.h>
 #include <CM93DSlide.h>
@@ -159,7 +160,6 @@ extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern IDX_entry* gpIDX;
 extern int gpIDXn;
-extern wxArrayString* pMessageOnceArray;
 extern FILE* s_fpdebug;
 extern bool bAutoOpen;
 extern bool bFirstAuto;
@@ -1280,10 +1280,6 @@ bool App::OnInit()
 		plugin_dir += _T("plugins");
 	}
 
-	// Create an array string to hold repeating messages, so they don't
-	// overwhelm the log
-	pMessageOnceArray = new wxArrayString;
-
 	// Init the Route Manager
 	g_pRouteMan = new Routeman(this);
 
@@ -1826,7 +1822,7 @@ int App::OnExit()
 	delete g_pRouteMan;
 	delete pWayPointMan;
 
-	delete pMessageOnceArray;
+	LogMessageOnce::destroy();
 
 	DeInitializeUserColors();
 

@@ -25,7 +25,16 @@
 #define __LOGMESSAGEONCE__H__
 
 #include <wx/string.h>
+#include <vector>
 
-bool LogMessageOnce(const wxString & msg);
+class LogMessageOnce
+{
+public:
+	static void destroy();
+	static bool log(const wxString& msg);
+
+private:
+	static std::vector<wxString> messages;
+};
 
 #endif

@@ -22,18 +22,24 @@
  **************************************************************************/
 
 #include "LogMessageOnce.h"
-
 #include <wx/log.h>
+#include <algorithm>
 
-wxArrayString * pMessageOnceArray; // FIXME: this should be encapsulated
+std::vector<wxString> LogMessageOnce::messages;
 
-bool LogMessageOnce(const wxString & msg)
+void LogMessageOnce::destroy()
 {
-	for (wxArrayString::iterator i = pMessageOnceArray->begin(); i != pMessageOnceArray->end(); ++i) {
-		if (msg.IsSameAs(*i))
-			return false;
-	}
-	pMessageOnceArray->push_back(msg);
+	messages.clear();
+}
+
+bool LogMessageOnce::log(const wxString& msg)
+{
+	// TODO: consider removing log entries after a certain time or after a certain number of entries.
+
+	std::vector<wxString>::const_iterator i = std::find(messages.begin(), messages.end(), msg);
+	if (i != messages.end())
+		return false;
+	messages.push_back(msg);
 	wxLogMessage(msg);
 	return true;
 }

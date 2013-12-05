@@ -1371,9 +1371,9 @@ int cm93chart::CreateObjChain(int cell_index, int subcell)
 				{
 					if ( g_bDebugCM93 )
 					{
-						wxString msg ( obj->FeatureName, wxConvUTF8 );
-						msg.Prepend ( _T ( "   CM93 could not find LUP for " ) );
-						LogMessageOnce ( msg );
+						wxString msg(obj->FeatureName, wxConvUTF8);
+						msg.Prepend ( _T("   CM93 could not find LUP for "));
+						LogMessageOnce::log(msg);
 					}
 					if(0 == obj->nRef)
 						delete obj;

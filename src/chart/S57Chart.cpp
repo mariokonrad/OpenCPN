@@ -4036,7 +4036,7 @@ int s57chart::BuildRAZFromSENCFile(const wxString& FullPath)
 
 				if (NULL == LUP) {
 					if (g_bDebugS57) {
-						LogMessageOnce(_T("   Could not find LUP for ")
+						LogMessageOnce::log(_T("   Could not find LUP for ")
 									   + wxString(obj->FeatureName, wxConvUTF8));
 					}
 					delete obj;

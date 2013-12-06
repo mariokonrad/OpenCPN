@@ -254,7 +254,7 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	wxRect hilitebox;
 	unsigned char transparency = 100;
 
-	cc1->GetCanvasPointPix(position.lat(), position.lon(), &r);
+	cc1->GetCanvasPointPix(position, &r);
 
 	// return the home point in this dc to allow "connect the dots"
 	if (NULL != rpn)

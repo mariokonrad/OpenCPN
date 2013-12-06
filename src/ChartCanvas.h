@@ -151,7 +151,7 @@ public:
 	double GetVPSkew(void) const;
 	void ClearbFollow(void);
 
-	void GetCanvasPointPix(double rlat, double rlon, wxPoint* r);
+	void GetCanvasPointPix(const Position& pos, wxPoint* r);
 	void GetCanvasPixPoint(int x, int y, double& lat, double& lon);
 	void WarpPointerDeferred(int x, int y);
 	void UpdateShips();

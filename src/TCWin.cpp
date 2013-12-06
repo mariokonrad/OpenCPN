@@ -346,11 +346,10 @@ void TCWin::Resize(void)
 void TCWin::RePosition(void)
 {
 	// Position the window
-	double lon = pIDX->IDX_lon;
-	double lat = pIDX->IDX_lat;
+	Position pos(pIDX->IDX_lon, pIDX->IDX_lat);
 
 	wxPoint r;
-	pParent->GetCanvasPointPix(lat, lon, &r);
+	pParent->GetCanvasPointPix(pos, &r);
 	pParent->ClientToScreen(&r.x, &r.y);
 	Move(r);
 }

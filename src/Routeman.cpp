@@ -234,7 +234,7 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		// Current location
-		pRouteActivatePoint = new RoutePoint(Position(nav.lat, nav.lon), _T(""), _T(""), _T(""), false);
+		pRouteActivatePoint = new RoutePoint(nav.pos, _T(""), _T(""), _T(""), false);
 		pRouteActivatePoint->m_bShowName = false;
 
 		pActiveRouteSegmentBeginPoint = pRouteActivatePoint;
@@ -335,15 +335,16 @@ bool Routeman::UpdateProgress()
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		double north;
 		double east;
-		geo::toSM(pActivePoint->latitude(), pActivePoint->longitude(), nav.lat, nav.lon, &east, &north);
+		geo::toSM(pActivePoint->latitude(), pActivePoint->longitude(), nav.pos.lat(), nav.pos.lon(),
+				  &east, &north);
 		double a = atan(north / east);
-		if (fabs(pActivePoint->longitude() - nav.lon) < 180.0) {
-			if (pActivePoint->longitude() > nav.lon)
+		if (fabs(pActivePoint->longitude() - nav.pos.lon()) < 180.0) {
+			if (pActivePoint->longitude() > nav.pos.lon())
 				CurrentBrgToActivePoint = 90.0 - (a * 180.0 / M_PI);
 			else
 				CurrentBrgToActivePoint = 270.0 - (a * 180.0 / M_PI);
 		} else {
-			if (pActivePoint->longitude() > nav.lon)
+			if (pActivePoint->longitude() > nav.pos.lon())
 				CurrentBrgToActivePoint = 270.0 - (a * 180.0 / M_PI);
 			else
 				CurrentBrgToActivePoint = 90.0 - (a * 180.0 / M_PI);
@@ -351,7 +352,7 @@ bool Routeman::UpdateProgress()
 
 		// Calculate range using Great Circle Formula
 
-		double d5 = geo::DistGreatCircle(nav.lat, nav.lon, pActivePoint->latitude(),
+		double d5 = geo::DistGreatCircle(nav.pos.lat(), nav.pos.lon(), pActivePoint->latitude(),
 										 pActivePoint->longitude());
 		CurrentRngToActivePoint = d5;
 
@@ -365,8 +366,8 @@ bool Routeman::UpdateProgress()
 		vb.x = dist1 * sin(brg1 * M_PI / 180.0);
 		vb.y = dist1 * cos(brg1 * M_PI / 180.0);
 
-		geo::DistanceBearingMercator(pActivePoint->latitude(), pActivePoint->longitude(), nav.lat,
-									 nav.lon, &brg2, &dist2);
+		geo::DistanceBearingMercator(pActivePoint->latitude(), pActivePoint->longitude(),
+									 nav.pos.lat(), nav.pos.lon(), &brg2, &dist2);
 		va.x = dist2 * sin(brg2 * M_PI / 180.0);
 		va.y = dist2 * cos(brg2 * M_PI / 180.0);
 
@@ -664,15 +665,15 @@ bool Routeman::UpdateAutopilot()
 		SENTENCE snt;
 		m_NMEA0183.Rmc.IsDataValid = NTrue;
 
-		if (nav.lat < 0.0)
-			m_NMEA0183.Rmc.Position.Latitude.Set(-nav.lat, _T("S"));
+		if (nav.pos.lat() < 0.0)
+			m_NMEA0183.Rmc.Position.Latitude.Set(-nav.pos.lat(), _T("S"));
 		else
-			m_NMEA0183.Rmc.Position.Latitude.Set(nav.lat, _T("N"));
+			m_NMEA0183.Rmc.Position.Latitude.Set(nav.pos.lat(), _T("N"));
 
-		if (nav.lon < 0.0)
-			m_NMEA0183.Rmc.Position.Longitude.Set(-nav.lon, _T("W"));
+		if (nav.pos.lon() < 0.0)
+			m_NMEA0183.Rmc.Position.Longitude.Set(-nav.pos.lon(), _T("W"));
 		else
-			m_NMEA0183.Rmc.Position.Longitude.Set(nav.lon, _T("E"));
+			m_NMEA0183.Rmc.Position.Longitude.Set(nav.pos.lon(), _T("E"));
 
 		m_NMEA0183.Rmc.SpeedOverGroundKnots = nav.sog;
 		m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue = nav.cog;

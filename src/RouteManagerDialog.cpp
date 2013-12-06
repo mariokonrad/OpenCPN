@@ -1058,7 +1058,7 @@ void RouteManagerDialog::OnRteActivateClick(wxCommandEvent&)
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		RoutePoint* best_point
-			= g_pRouteMan->FindBestActivatePoint(route, Position(nav.lat, nav.lon), nav.cog, nav.sog);
+			= g_pRouteMan->FindBestActivatePoint(route, nav.pos, nav.cog, nav.sog);
 		g_pRouteMan->ActivateRoute(route, best_point);
 	} else {
 		g_pRouteMan->DeactivateRoute();
@@ -1717,7 +1717,8 @@ void RouteManagerDialog::UpdateWptListCtrl(RoutePoint* rp_select, bool b_retain_
 			m_pWptListCtrl->SetItem(idx, colWPTNAME, name);
 
 			double dst;
-			geo::DistanceBearingMercator(rp->latitude(), rp->longitude(), nav.lat, nav.lon, NULL, &dst);
+			geo::DistanceBearingMercator(rp->latitude(), rp->longitude(), nav.pos.lat(),
+										 nav.pos.lon(), NULL, &dst);
 			m_pWptListCtrl->SetItem(
 				idx, colWPTDIST,
 				wxString::Format(_T("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(dst)));
@@ -1866,10 +1867,9 @@ void RouteManagerDialog::OnWptNewClick(wxCommandEvent&)
 {
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	Position navpos(nav.lat, nav.lon);
-	RoutePoint* pWP = new RoutePoint(navpos, g_default_wp_icon, wxEmptyString);
+	RoutePoint* pWP = new RoutePoint(nav.pos, g_default_wp_icon, wxEmptyString);
 	pWP->m_bIsolatedMark = true; // This is an isolated mark
-	pSelect->AddSelectableRoutePoint(navpos, pWP);
+	pSelect->AddSelectableRoutePoint(nav.pos, pWP);
 	pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 	cc1->Refresh(false); // Needed for MSW, why not GTK??
 
@@ -2013,9 +2013,8 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	Position navpos(nav.lat, nav.lon);
-	RoutePoint* pWP_src = new RoutePoint(navpos, g_default_wp_icon, wxEmptyString);
-	pSelect->AddSelectableRoutePoint(navpos, pWP_src);
+	RoutePoint* pWP_src = new RoutePoint(nav.pos, g_default_wp_icon, wxEmptyString);
+	pSelect->AddSelectableRoutePoint(nav.pos, pWP_src);
 
 	Route* temp_route = new Route();
 	pRouteList->push_back(temp_route);
@@ -2023,7 +2022,7 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 	temp_route->AddPoint(pWP_src);
 	temp_route->AddPoint(wp);
 
-	pSelect->AddSelectableRouteSegment(navpos, wp->get_position(), pWP_src, wp, temp_route);
+	pSelect->AddSelectableRouteSegment(nav.pos, wp->get_position(), pWP_src, wp, temp_route);
 
 	wxString name = wp->GetName();
 	if (name.IsEmpty())

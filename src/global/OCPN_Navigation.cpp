@@ -30,14 +30,19 @@ const Navigation::Data & OCPN_Navigation::get_data() const
 	return data;
 }
 
-void OCPN_Navigation::set_latitude(double value)
+void OCPN_Navigation::set_position(const Position& position)
 {
-	data.lat = value;
+	data.pos = position;
 }
 
-void OCPN_Navigation::set_longitude(double value)
+void OCPN_Navigation::set_latitude(double latitude)
 {
-	data.lon = value;
+	set_position(Position(latitude, data.pos.lon()));
+}
+
+void OCPN_Navigation::set_longitude(double longitude)
+{
+	set_position(Position(data.pos.lat(), longitude));
 }
 
 void OCPN_Navigation::set_magn_var(double value)

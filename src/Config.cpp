@@ -1054,8 +1054,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		if (fabs(lat) < 90.0)
 			nav.set_latitude(lat);
 	}
-	wxLogMessage(wxString::Format(_T("Setting Ownship Lat/Lon %g, %g"), nav.get_data().lat,
-								  nav.get_data().lon));
+	wxLogMessage(wxString::Format(_T("Setting Ownship Lat/Lon %g, %g"), nav.get_data().pos.lat(),
+								  nav.get_data().pos.lon()));
 
 #ifdef USE_S57
 	// S57 Object Class Visibility
@@ -1744,7 +1744,7 @@ void Config::UpdateSettings()
 	}
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-	Write(_T("OwnShipLatLon"), wxString::Format(_T("%10.4f, %10.4f"), nav.lat, nav.lon));
+	Write(_T("OwnShipLatLon"), wxString::Format(_T("%10.4f, %10.4f"), nav.pos.lat(), nav.pos.lon()));
 
 	// Various Options
 	SetPath(_T("/Settings/GlobalState"));

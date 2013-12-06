@@ -24,6 +24,8 @@
 #ifndef __GLOBAL__NAVIGATION__H__
 #define __GLOBAL__NAVIGATION__H__
 
+#include <Position.h>
+
 namespace global {
 
 class Navigation
@@ -35,8 +37,7 @@ class Navigation
 
 		struct Data
 		{
-			double lat; // latitude
-			double lon; // longitude
+			Position pos; // latitude/longitude
 			double cog; // course over ground in degrees
 			double sog; // speed over ground in knots
 			double hdt; // heading degrees true
@@ -45,6 +46,7 @@ class Navigation
 		};
 
 		virtual const Data & get_data() const = 0;
+		virtual void set_position(const Position&) = 0;
 		virtual void set_latitude(double) = 0;
 		virtual void set_longitude(double) = 0;
 		virtual void set_magn_var(double) = 0;

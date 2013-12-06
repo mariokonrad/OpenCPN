@@ -61,8 +61,8 @@ int Kml::ParseCoordinates(TiXmlNode* node, dPointList& points)
 		if (txtCoord.length() == 0)
 			break;
 
-		point.x = atof(
-			txtCoord.c_str()); // FIXME: already using the standard! use istringstream not atof
+		// FIXME: already using the standard! use istringstream not atof
+		point.x = atof(txtCoord.c_str());
 		std::getline(ss, txtCoord, ',');
 		point.y = atof(txtCoord.c_str());
 		std::getline(ss, txtCoord, ' ');
@@ -406,7 +406,7 @@ std::string Kml::PointPlacemark(TiXmlElement* document, const RoutePoint* routep
 		if (extendedData && seqCounter == 0) {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			const wxCharBuffer ownshipPos
-				= wxString::Format(_T("%f %f"), nav.lon, nav.lat).mb_str(wxConvUTF8);
+				= wxString::Format(_T("%f %f"), nav.pos.lon(), nav.pos.lat()).mb_str(wxConvUTF8);
 			TiXmlHandle h(extendedData);
 			TiXmlElement* route = h.FirstChild("vlm:route").ToElement();
 			TiXmlElement* ownship = h.FirstChild("vlm:route").FirstChild("ownship").ToElement();

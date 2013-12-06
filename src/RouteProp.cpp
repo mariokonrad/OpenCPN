@@ -976,8 +976,8 @@ void RouteProp::update_route_properties()
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	int i = 0;
-	double slat = nav.lat;
-	double slon = nav.lon;
+	double slat = nav.pos.lat();
+	double slon = nav.pos.lon();
 	double tdis = 0.0;
 	double tsec = 0.0; // total time in seconds
 
@@ -1025,8 +1025,8 @@ void RouteProp::update_route_properties()
 		if (starting_point) {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-			slat = nav.lat;
-			slon = nav.lon;
+			slat = nav.pos.lat();
+			slon = nav.pos.lon();
 			if (nav.sog > 0.0)
 				leg_speed = nav.sog; // should be VMG
 			else

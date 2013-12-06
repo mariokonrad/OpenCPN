@@ -134,7 +134,7 @@ void Track::Stop(bool do_add_point)
 	double delta = 0.0;
 	if (m_lastStoredTP) {
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		delta = geo::DistGreatCircle(nav.lat, nav.lon, m_lastStoredTP->latitude(),
+		delta = geo::DistGreatCircle(nav.pos.lat(), nav.pos.lon(), m_lastStoredTP->latitude(),
 									 m_lastStoredTP->longitude());
 	}
 
@@ -205,7 +205,7 @@ void Track::OnTimerTrack(wxTimerEvent&)
 
 	if (m_lastStoredTP) {
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		m_prev_dist = geo::DistGreatCircle(nav.lat, nav.lon, m_lastStoredTP->latitude(),
+		m_prev_dist = geo::DistGreatCircle(nav.pos.lat(), nav.pos.lon(), m_lastStoredTP->latitude(),
 										   m_lastStoredTP->longitude());
 	} else {
 		m_prev_dist = 999.0;
@@ -261,7 +261,7 @@ void Track::AddPointNow(bool do_add_point)
 				return;
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-	Vector2D gpsPoint(nav.lon, nav.lat);
+	Vector2D gpsPoint(nav.pos.lon(), nav.pos.lat());
 
 	// The dynamic interval algorithm will gather all track points in a queue,
 	// and analyze the cross track errors for each point before actually adding
@@ -276,7 +276,7 @@ void Track::AddPointNow(bool do_add_point)
 			break;
 		}
 		case secondPoint: {
-			Vector2D pPoint(nav.lon, nav.lat);
+			Vector2D pPoint(nav.pos.lon(), nav.pos.lat());
 			skipPoints.push_back(pPoint);
 			skipTimes.push_back(now.ToUTC());
 			trackPointState = potentialPoint;
@@ -292,7 +292,7 @@ void Track::AddPointNow(bool do_add_point)
 			// Scan points skipped so far and see if anyone has XTE over the threshold.
 			for (unsigned int i = 0; i < skipPoints.size(); i++) {
 				double xte = GetXTE(m_lastStoredTP->latitude(), m_lastStoredTP->longitude(),
-									nav.lat, nav.lon, skipPoints[i].lat, skipPoints[i].lon);
+									nav.pos.lat(), nav.pos.lon(), skipPoints[i].lat, skipPoints[i].lon);
 				if (xte > xteMax) {
 					xteMax = xte;
 					xteMaxIndex = i;
@@ -440,7 +440,7 @@ void Track::Draw(ocpnDC& dc, ViewPort& VP)
 	if (m_bRunning) {
 		wxPoint r;
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		cc1->GetCanvasPointPix(Position(nav.lat, nav.lon), &r);
+		cc1->GetCanvasPointPix(nav.pos, &r);
 		RenderSegment(dc, rpt.x, rpt.y, r.x, r.y, VP, false, (int)radius); // no arrows, with hilite
 	}
 }

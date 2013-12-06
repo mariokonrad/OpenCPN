@@ -1351,8 +1351,8 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 					newPoint->m_bIsInRoute = false;
 					newPoint->m_bIsInTrack = true;
 
-					pSelect->AddSelectableTrackSegment(lastPoint->latitude(), lastPoint->longitude(),
-													   newPoint->latitude(), newPoint->longitude(), lastPoint,
+					pSelect->AddSelectableTrackSegment(lastPoint->get_position(),
+													   newPoint->get_position(), lastPoint,
 													   newPoint, targetTrack);
 
 					lastPoint = newPoint;
@@ -2023,8 +2023,7 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 	temp_route->AddPoint(pWP_src);
 	temp_route->AddPoint(wp);
 
-	pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, wp->latitude(), wp->longitude(), pWP_src,
-									   wp, temp_route);
+	pSelect->AddSelectableRouteSegment(navpos, wp->get_position(), pWP_src, wp, temp_route);
 
 	wxString name = wp->GetName();
 	if (name.IsEmpty())

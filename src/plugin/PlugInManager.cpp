@@ -1883,9 +1883,8 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 		pSelect->AddSelectableRoutePoint(pWP->get_position(), pWP);
 
 		if (ip > 0)
-			pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
-											   pWP->latitude(), pWP->longitude(), pWP_src, pWP,
-											   route);
+			pSelect->AddSelectableRouteSegment(pWP_src->get_position(), pWP->get_position(),
+											   pWP_src, pWP, route);
 		ip++;
 		pWP_src = pWP;
 	}
@@ -1962,9 +1961,8 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 		pSelect->AddSelectableRoutePoint(pWP->get_position(), pWP);
 
 		if (ip > 0)
-			pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
-											   pWP->latitude(), pWP->longitude(), pWP_src, pWP,
-											   track);
+			pSelect->AddSelectableRouteSegment(pWP_src->get_position(), pWP->get_position(),
+											   pWP_src, pWP, track);
 		ip++;
 		pWP_src = pWP;
 	}

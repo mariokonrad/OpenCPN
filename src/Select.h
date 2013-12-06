@@ -37,11 +37,11 @@ public:
 	void SetSelectPixelRadius(int radius);
 
 	bool AddSelectableRoutePoint(const Position& pos, RoutePoint* pRoutePointAdd);
-	bool AddSelectableRouteSegment(float slat1, float slon1, float slat2, float slon2,
+	bool AddSelectableRouteSegment(const Position& pos1, const Position& pos2,
 								   RoutePoint* pRoutePointAdd1, RoutePoint* pRoutePointAdd2,
 								   Route* pRoute);
 
-	bool AddSelectableTrackSegment(float slat1, float slon1, float slat2, float slon2,
+	bool AddSelectableTrackSegment(const Position& pos1, const Position& pos2,
 								   RoutePoint* pRoutePointAdd1, RoutePoint* pRoutePointAdd2,
 								   Route* pRoute);
 
@@ -56,8 +56,8 @@ public:
 	bool AddAllSelectableRoutePoints(Route* pr);
 	bool UpdateSelectableRouteSegments(const RoutePoint* prp);
 	bool DeletePointSelectableTrackSegments(RoutePoint* pr);
-	bool IsSegmentSelected(float a, float b, float c, float d, float slat, float slon);
-	bool IsSelectableSegmentSelected(float slat, float slon, SelectItem* pFindSel);
+	bool IsSegmentSelected(float a, float b, float c, float d, const Position& pos);
+	bool IsSelectableSegmentSelected(const Position& pos, SelectItem* pFindSel);
 
 	// Generic Point Support
 	// e.g. Tides/Currents and AIS Targets

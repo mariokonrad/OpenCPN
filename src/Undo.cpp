@@ -164,9 +164,8 @@ void Undo::doRedoAppendWaypoint(UndoAction* action)
 	RoutePoint* prevpoint = route->GetLastPoint();
 
 	route->AddPoint(point);
-	pSelect->AddSelectableRouteSegment(prevpoint->latitude(), prevpoint->longitude(),
-									   point->latitude(), point->longitude(), prevpoint, point,
-									   route);
+	pSelect->AddSelectableRouteSegment(prevpoint->get_position(), point->get_position(), prevpoint,
+									   point, route);
 
 	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 		pRouteManagerDialog->UpdateWptListCtrl();

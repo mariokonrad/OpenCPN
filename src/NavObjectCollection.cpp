@@ -813,7 +813,7 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 		// Add the selectable points and segments
 
 		int ip = 0;
-		float prev_rlat = 0., prev_rlon = 0.;
+		Position prev_pos;
 		RoutePoint* prev_pConfPoint = NULL;
 
 		for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
@@ -821,12 +821,11 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 			RoutePoint* prp = *node;
 
 			if (ip)
-				pSelect->AddSelectableRouteSegment(prev_rlat, prev_rlon, prp->latitude(),
-												   prp->longitude(), prev_pConfPoint, prp,
+				pSelect->AddSelectableRouteSegment(prev_pos, prp->get_position(),
+												   prev_pConfPoint, prp,
 												   pTentRoute);
 			pSelect->AddSelectableRoutePoint(prp->get_position(), prp);
-			prev_rlat = prp->latitude();
-			prev_rlon = prp->longitude();
+			prev_pos = prp->get_position();
 			prev_pConfPoint = prp;
 			ip++;
 		}
@@ -872,8 +871,7 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 		// Add the selectable points and segments
 
 		int ip = 0;
-		float prev_rlat = 0.0;
-		float prev_rlon = 0.0;
+		Position prev_pos;
 		RoutePoint* prev_pConfPoint = NULL;
 
 		for (RoutePointList::iterator node = pTentTrack->pRoutePointList->begin();
@@ -881,12 +879,10 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 			RoutePoint* prp = *node;
 
 			if (ip)
-				pSelect->AddSelectableTrackSegment(prev_rlat, prev_rlon, prp->latitude(),
-												   prp->longitude(), prev_pConfPoint, prp,
-												   pTentTrack);
+				pSelect->AddSelectableTrackSegment(prev_pos, prp->get_position(), prev_pConfPoint,
+												   prp, pTentTrack);
 
-			prev_rlat = prp->latitude();
-			prev_rlon = prp->longitude();
+			prev_pos = prp->get_position();
 			prev_pConfPoint = prp;
 			ip++;
 		}

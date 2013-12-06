@@ -1845,7 +1845,7 @@ void MainFrame::ActivateMOB(void)
 		temp_route->AddPoint(pWP_src);
 		temp_route->AddPoint(pWP_MOB);
 
-		pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, zlat, zlon, pWP_src, pWP_MOB,
+		pSelect->AddSelectableRouteSegment(Position(nav.lat, nav.lon), zpos, pWP_src, pWP_MOB,
 										   temp_route);
 
 		temp_route->m_RouteNameString = _("Temporary MOB Route");

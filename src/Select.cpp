@@ -74,19 +74,17 @@ bool Select::AddSelectableRoutePoint(const Position& pos, RoutePoint* pRoutePoin
 }
 
 bool Select::AddSelectableRouteSegment(
-		float slat1,
-		float slon1,
-		float slat2,
-		float slon2,
+		const Position& pos1,
+		const Position& pos2,
 		RoutePoint * pRoutePointAdd1,
 		RoutePoint * pRoutePointAdd2,
 		Route *pRoute)
 {
 	SelectItem* pSelItem = new SelectItem;
-	pSelItem->m_slat = slat1;
-	pSelItem->m_slon = slon1;
-	pSelItem->m_slat2 = slat2;
-	pSelItem->m_slon2 = slon2;
+	pSelItem->m_slat = pos1.lat();
+	pSelItem->m_slon = pos1.lon();
+	pSelItem->m_slat2 = pos2.lat();
+	pSelItem->m_slon2 = pos2.lon();
 	pSelItem->m_seltype = SelectItem::TYPE_ROUTESEGMENT;
 	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd1;
@@ -165,23 +163,12 @@ bool Select::AddAllSelectableRouteSegments(Route* pr)
 		return false;
 
 	RoutePointList::iterator i = pr->pRoutePointList->begin();
-
 	RoutePoint* prp0 = *i;
-	double slat1 = prp0->latitude();
-	double slon1 = prp0->longitude();
-
 	++i;
 	while (i != pr->pRoutePointList->end()) {
 		RoutePoint* prp = *i;
-		double slat2 = prp->latitude();
-		double slon2 = prp->longitude();
-
-		AddSelectableRouteSegment(slat1, slon1, slat2, slon2, prp0, prp, pr);
-
-		slat1 = slat2;
-		slon1 = slon2;
+		AddSelectableRouteSegment(prp0->get_position(), prp->get_position(), prp0, prp, pr);
 		prp0 = prp;
-
 		++i;
 	}
 	return true;
@@ -195,23 +182,12 @@ bool Select::AddAllSelectableTrackSegments(Route* pr)
 		return false;
 
 	RoutePointList::iterator i = pr->pRoutePointList->begin();
-
 	RoutePoint* prp0 = *i;
-	double slat1 = prp0->latitude();
-	double slon1 = prp0->longitude();
-
 	++i;
 	while (i != pr->pRoutePointList->end()) {
 		RoutePoint* prp = *i;
-		double slat2 = prp->latitude();
-		double slon2 = prp->longitude();
-
-		AddSelectableTrackSegment(slat1, slon1, slat2, slon2, prp0, prp, pr);
-
-		slat1 = slat2;
-		slon1 = slon2;
+		AddSelectableTrackSegment(prp0->get_position(), prp->get_position(), prp0, prp, pr);
 		prp0 = prp;
-
 		++i;
 	}
 	return true;
@@ -315,19 +291,17 @@ bool Select::ModifySelectablePoint(const Position& pos, void* data, unsigned lon
 }
 
 bool Select::AddSelectableTrackSegment(
-		float slat1,
-		float slon1,
-		float slat2,
-		float slon2,
+		const Position& pos1,
+		const Position& pos2,
 		RoutePoint * pRoutePointAdd1,
 		RoutePoint * pRoutePointAdd2,
 		Route * pRoute)
 {
 	SelectItem *pSelItem = new SelectItem;
-	pSelItem->m_slat = slat1;
-	pSelItem->m_slon = slon1;
-	pSelItem->m_slat2 = slat2;
-	pSelItem->m_slon2 = slon2;
+	pSelItem->m_slat = pos1.lat();
+	pSelItem->m_slon = pos1.lon();
+	pSelItem->m_slat2 = pos2.lat();
+	pSelItem->m_slon2 = pos2.lon();
 	pSelItem->m_seltype = SelectItem::TYPE_TRACKSEGMENT;
 	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd1;
@@ -379,7 +353,7 @@ bool Select::DeletePointSelectableTrackSegments(RoutePoint* pr)
 	return true;
 }
 
-bool Select::IsSegmentSelected(float a, float b, float c, float d, float slat, float slon)
+bool Select::IsSegmentSelected(float a, float b, float c, float d, const Position& pos)
 {
 	double adder = 0.0;
 
@@ -399,15 +373,15 @@ bool Select::IsSegmentSelected(float a, float b, float c, float d, float slat, f
 		}
 		if (d < 0.0) { // idl?
 			d += 360.0;
-			if (slon < 0.0)
+			if (pos.lon() < 0.0)
 				adder = 360.0;
 		}
 	}
 
 	// As a course test, use segment bounding box test
-	if ((slat >= (fmin(a, b) - selectRadius)) && (slat <= (fmax(a, b) + selectRadius))
-		&& ((slon + adder) >= (fmin(c, d) - selectRadius))
-		&& ((slon + adder) <= (fmax(c, d) + selectRadius))) {
+	if ((pos.lat() >= (fmin(a, b) - selectRadius)) && (pos.lat() <= (fmax(a, b) + selectRadius))
+		&& ((pos.lon() + adder) >= (fmin(c, d) - selectRadius))
+		&& ((pos.lon() + adder) <= (fmax(c, d) + selectRadius))) {
 		// Use vectors to do hit test....
 		Vector2D va;
 		Vector2D vb;
@@ -422,7 +396,7 @@ bool Select::IsSegmentSelected(float a, float b, float c, float d, float slat, f
 		geo::toSM(b, d, 0.0, 0.0, &dp, &bp);
 		double slatp;
 		double slonp;
-		geo::toSM(slat, slon + adder, 0.0, 0.0, &slonp, &slatp);
+		geo::toSM(pos.lat(), pos.lon()+ adder, 0.0, 0.0, &slonp, &slatp);
 
 		va.x = slonp - cp;
 		va.y = slatp - ap;
@@ -461,7 +435,7 @@ SelectItem* Select::FindSelection(const Position& pos, unsigned long fseltype)
 				case SelectItem::TYPE_ROUTESEGMENT:
 				case SelectItem::TYPE_TRACKSEGMENT:
 					if (IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon,
-										  item->m_slon2, pos.lat(), pos.lon()))
+										  item->m_slon2, pos))
 						return item;
 					break;
 
@@ -474,10 +448,10 @@ SelectItem* Select::FindSelection(const Position& pos, unsigned long fseltype)
 	return NULL;
 }
 
-bool Select::IsSelectableSegmentSelected(float slat, float slon, SelectItem* item)
+bool Select::IsSelectableSegmentSelected(const Position& pos, SelectItem* item)
 {
 	CalcSelectRadius();
-	return IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon, item->m_slon2, slat, slon);
+	return IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon, item->m_slon2, pos);
 }
 
 SelectableItemList Select::FindSelectionList(const Position& pos, unsigned long fseltype)
@@ -503,7 +477,7 @@ SelectableItemList Select::FindSelectionList(const Position& pos, unsigned long 
 			case SelectItem::TYPE_ROUTESEGMENT:
 			case SelectItem::TYPE_TRACKSEGMENT:
 				if (IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon, item->m_slon2,
-									  pos.lat(), pos.lon()))
+									  pos))
 					ret_list.push_back(item);
 				break;
 

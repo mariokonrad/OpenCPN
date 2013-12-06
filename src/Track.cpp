@@ -301,10 +301,9 @@ void Track::AddPointNow(bool do_add_point)
 			if (xteMax > m_allowedMaxXTE) {
 				RoutePoint* pTrackPoint
 					= AddNewPoint(skipPoints[xteMaxIndex], skipTimes[xteMaxIndex]);
-				pSelect->AddSelectableTrackSegment(
-					m_lastStoredTP->latitude(), m_lastStoredTP->longitude(),
-					pTrackPoint->latitude(), pTrackPoint->longitude(), m_lastStoredTP, pTrackPoint,
-					this);
+				pSelect->AddSelectableTrackSegment(m_lastStoredTP->get_position(),
+												   pTrackPoint->get_position(), m_lastStoredTP,
+												   pTrackPoint, this);
 
 				m_prevFixedTP = m_fixedTP;
 				m_fixedTP = m_removeTP;
@@ -330,10 +329,9 @@ void Track::AddPointNow(bool do_add_point)
 						pRoutePointList->push_back(m_lastStoredTP);
 						SetnPoints();
 						pSelect->DeletePointSelectableTrackSegments(m_removeTP);
-						pSelect->AddSelectableTrackSegment(
-							m_fixedTP->latitude(), m_fixedTP->longitude(),
-							m_lastStoredTP->latitude(), m_lastStoredTP->longitude(), m_fixedTP,
-							m_lastStoredTP, this);
+						pSelect->AddSelectableTrackSegment(m_fixedTP->get_position(),
+														   m_lastStoredTP->get_position(),
+														   m_fixedTP, m_lastStoredTP, this);
 						delete m_removeTP;
 						m_removeTP = m_fixedTP;
 						m_fixedTP = m_prevFixedTP;
@@ -350,9 +348,9 @@ void Track::AddPointNow(bool do_add_point)
 	// Check if this is the last point of the track.
 	if (do_add_point) {
 		RoutePoint* pTrackPoint = AddNewPoint(gpsPoint, now.ToUTC());
-		pSelect->AddSelectableTrackSegment(m_lastStoredTP->latitude(), m_lastStoredTP->longitude(),
-										   pTrackPoint->latitude(), pTrackPoint->longitude(),
-										   m_lastStoredTP, pTrackPoint, this);
+		pSelect->AddSelectableTrackSegment(m_lastStoredTP->get_position(),
+										   pTrackPoint->get_position(), m_lastStoredTP, pTrackPoint,
+										   this);
 	}
 
 	m_prev_time = now;
@@ -514,8 +512,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 				pWP_dst->m_bShowName = false;
 				pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 
-				pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
-												   pWP_dst->latitude(), pWP_dst->longitude(),
+				pSelect->AddSelectableRouteSegment(pWP_src->get_position(), pWP_dst->get_position(),
 												   pWP_src, pWP_dst, route);
 
 				pWP_src = pWP_dst;
@@ -547,8 +544,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 				pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 
-				pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
-												   pWP_dst->latitude(), pWP_dst->longitude(),
+				pSelect->AddSelectableRouteSegment(pWP_src->get_position(), pWP_dst->get_position(),
 												   pWP_src, pWP_dst, route);
 
 				pWP_src = pWP_dst;
@@ -585,9 +581,8 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 		route->AddPoint(pWP_dst);
 		pWP_dst->m_bShowName = false;
 		pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
-		pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
-										   pWP_dst->latitude(), pWP_dst->longitude(), pWP_src,
-										   pWP_dst, route);
+		pSelect->AddSelectableRouteSegment(pWP_src->get_position(), pWP_dst->get_position(),
+										   pWP_src, pWP_dst, route);
 	}
 	route->m_RouteNameString = m_RouteNameString;
 	route->m_RouteStartString = m_RouteStartString;

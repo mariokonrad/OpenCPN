@@ -1952,12 +1952,14 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 	// Show the route segment info
 	bool showRollover = false;
 
+	Position cursorpos(m_cursor_lat, m_cursor_lon);
+
 	if (NULL == m_pRolloverRouteSeg) {
 		// Get a list of all selectable sgements, and search for the first visible segment as the
 		// rollover target.
 
 		SelectableItemList SelList
-			= pSelect->FindSelectionList(Position(m_cursor_lat, m_cursor_lon), SelectItem::TYPE_ROUTESEGMENT);
+			= pSelect->FindSelectionList(cursorpos, SelectItem::TYPE_ROUTESEGMENT);
 		SelectableItemList::iterator index = SelList.begin();
 		while (index != SelList.end()) {
 			SelectItem* pFindSel = *index;
@@ -2043,7 +2045,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 		}
 	} else {
 		// Is the cursor still in select radius?
-		if (!pSelect->IsSelectableSegmentSelected(m_cursor_lat, m_cursor_lon, m_pRolloverRouteSeg))
+		if (!pSelect->IsSelectableSegmentSelected(cursorpos, m_pRolloverRouteSeg))
 			showRollover = false;
 		else
 			showRollover = true;
@@ -5386,9 +5388,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 							}
 
 							m_pMouseRoute->AddPoint(gcPoint);
-							pSelect->AddSelectableRouteSegment(
-								prevGcPoint->latitude(), prevGcPoint->longitude(), gcPoint->latitude(),
-								gcPoint->longitude(), prevGcPoint, gcPoint, m_pMouseRoute);
+							pSelect->AddSelectableRouteSegment(prevGcPoint->get_position(),
+															   gcPoint->get_position(), prevGcPoint,
+															   gcPoint, m_pMouseRoute);
 							prevGcPoint = gcPoint;
 						}
 
@@ -5396,7 +5398,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 					} else {
 						m_pMouseRoute->AddPoint(pMousePoint);
-						pSelect->AddSelectableRouteSegment(m_prev_rlat, m_prev_rlon, rpos.lat(), rpos.lon(),
+						pSelect->AddSelectableRouteSegment(Position(m_prev_rlat, m_prev_rlon), rpos,
 														   m_prev_pMousePoint, pMousePoint,
 														   m_pMouseRoute);
 						undo->AfterUndoableAction(m_pMouseRoute);
@@ -5404,7 +5406,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				} else {
 					// Ordinary rhumblinesegment.
 					m_pMouseRoute->AddPoint(pMousePoint);
-					pSelect->AddSelectableRouteSegment(m_prev_rlat, m_prev_rlon, rpos.lat(), rpos.lon(),
+					pSelect->AddSelectableRouteSegment(Position(m_prev_rlat, m_prev_rlon), rpos,
 													   m_prev_pMousePoint, pMousePoint,
 													   m_pMouseRoute);
 					undo->AfterUndoableAction(m_pMouseRoute);
@@ -6833,8 +6835,7 @@ void pupHandler_PasteRoute()
 			pWayPointMan->push_back(newPoint);
 		}
 		if (i > 1 && createNewRoute)
-			pSelect->AddSelectableRouteSegment(prevPoint->latitude(), prevPoint->longitude(),
-											   curPoint->latitude(), curPoint->longitude(),
+			pSelect->AddSelectableRouteSegment(prevPoint->get_position(), curPoint->get_position(),
 											   prevPoint, newPoint, newRoute);
 		prevPoint = newPoint;
 	}
@@ -6893,8 +6894,7 @@ void pupHandler_PasteTrack()
 		newPoint->m_bIsInTrack = true;
 
 		if (prevPoint)
-			pSelect->AddSelectableTrackSegment(prevPoint->latitude(), prevPoint->longitude(),
-											   newPoint->latitude(), newPoint->longitude(),
+			pSelect->AddSelectableTrackSegment(prevPoint->get_position(), newPoint->get_position(),
 											   prevPoint, newPoint, newTrack);
 
 		prevPoint = newPoint;
@@ -6969,8 +6969,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			temp_route->AddPoint(pWP_src);
 			temp_route->AddPoint(pWP_dest);
 
-			pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, zlat, zlon, pWP_src, pWP_dest,
-											   temp_route);
+			pSelect->AddSelectableRouteSegment(navpos, zpos, pWP_src, pWP_dest, temp_route);
 
 			temp_route->m_RouteNameString = _("Temporary GOTO Route");
 			temp_route->m_RouteStartString = _("Here");
@@ -7017,8 +7016,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			temp_route->AddPoint(m_pFoundRoutePoint);
 			m_pFoundRoutePoint->m_bKeepXRoute = true;
 
-			pSelect->AddSelectableRouteSegment(nav.lat, nav.lon, m_pFoundRoutePoint->latitude(),
-											   m_pFoundRoutePoint->longitude(), pWP_src,
+			pSelect->AddSelectableRouteSegment(navpos, m_pFoundRoutePoint->get_position(), pWP_src,
 											   m_pFoundRoutePoint, temp_route);
 
 			wxString name = m_pFoundRoutePoint->GetName();

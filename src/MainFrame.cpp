@@ -1825,7 +1825,7 @@ void MainFrame::ActivateMOB(void)
 	RoutePoint* pWP_MOB = new RoutePoint(Position(nav.lat, nav.lon), _T("mob"), mob_label);
 	pWP_MOB->m_bKeepXRoute = true;
 	pWP_MOB->m_bIsolatedMark = true;
-	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_MOB);
+	pSelect->AddSelectableRoutePoint(Position(nav.lat, nav.lon), pWP_MOB);
 	pConfig->AddNewWayPoint(pWP_MOB, -1); // use auto next num
 
 	if (bGPSValid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
@@ -1834,9 +1834,10 @@ void MainFrame::ActivateMOB(void)
 		double zlon;
 		geo::ll_gc_ll(nav.lat, nav.lon, nav.cog, 1.0, &zlat, &zlon);
 
+		Position zpos(zlat, zlon);
 		RoutePoint* pWP_src
-			= new RoutePoint(Position(zlat, zlon), g_default_wp_icon, wxString(_("1.0 NM along COG")));
-		pSelect->AddSelectableRoutePoint(zlat, zlon, pWP_src);
+			= new RoutePoint(zpos, g_default_wp_icon, wxString(_("1.0 NM along COG")));
+		pSelect->AddSelectableRoutePoint(zpos, pWP_src);
 
 		Route* temp_route = new Route;
 		pRouteList->push_back(temp_route);

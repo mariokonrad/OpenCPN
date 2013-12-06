@@ -1555,7 +1555,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 				Position pos(m_cursor_lat, m_cursor_lon);
 				RoutePoint* pWP = new RoutePoint(pos, g_default_wp_icon, wxEmptyString);
 				pWP->m_bIsolatedMark = true; // This is an isolated mark
-				pSelect->AddSelectableRoutePoint(pos.lat(), pos.lon(), pWP);
+				pSelect->AddSelectableRoutePoint(pos, pWP);
 				pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 
 				if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
@@ -1582,10 +1582,10 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 			case 15: // Ctrl O - Drop Marker at boat's position
 			{
 				const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-				RoutePoint* pWP
-					= new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
+				Position pos(nav.lat, nav.lon);
+				RoutePoint* pWP = new RoutePoint(pos, g_default_wp_icon, wxEmptyString);
 				pWP->m_bIsolatedMark = true; // This is an isolated mark
-				pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP);
+				pSelect->AddSelectableRoutePoint(pos, pWP);
 				pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 
 				if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
@@ -5322,7 +5322,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				pMousePoint->SetNameShown(false);
 
 				pConfig->AddNewWayPoint(pMousePoint, -1); // use auto next num
-				pSelect->AddSelectableRoutePoint(rpos.lat(), rpos.lon(), pMousePoint);
+				pSelect->AddSelectableRoutePoint(rpos, pMousePoint);
 
 				if (parent_frame->nRoute_State > 1)
 					undo->BeforeUndoableAction(UndoAction::Undo_AppendWaypoint, pMousePoint,
@@ -5374,11 +5374,12 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 															 &gcCoord.x, &gcCoord.y, NULL);
 
 							if (i < segmentCount) {
+								Position pos(gcCoord.y, gcCoord.x);
 								gcPoint
-									= new RoutePoint(Position(gcCoord.y, gcCoord.x), _T("xmblue"), _T(""));
+									= new RoutePoint(pos, _T("xmblue"), _T(""));
 								gcPoint->SetNameShown(false);
 								pConfig->AddNewWayPoint(gcPoint, -1);
-								pSelect->AddSelectableRoutePoint(gcCoord.y, gcCoord.x, gcPoint);
+								pSelect->AddSelectableRoutePoint(pos, gcPoint);
 							} else {
 								gcPoint = pMousePoint; // Last point, previously exsisting!
 							}
@@ -6631,7 +6632,7 @@ void ChartCanvas::RemovePointFromRoute(RoutePoint* point, Route* route)
 		route = NULL;
 	}
 	//  Add this point back into the selectables
-	pSelect->AddSelectableRoutePoint(point->latitude(), point->longitude(), point);
+	pSelect->AddSelectableRoutePoint(point->get_position(), point);
 
 	if (pRoutePropDialog && (pRoutePropDialog->IsShown())) {
 		pRoutePropDialog->SetRouteAndUpdate(route);
@@ -6725,7 +6726,7 @@ void pupHandler_PasteWaypoint()
 	if (answer == wxID_NO) {
 		RoutePoint* newPoint = new RoutePoint(*pasted);
 		newPoint->m_bIsolatedMark = true;
-		pSelect->AddSelectableRoutePoint(newPoint->latitude(), newPoint->longitude(), newPoint);
+		pSelect->AddSelectableRoutePoint(newPoint->get_position(), newPoint);
 		pConfig->AddNewWayPoint(newPoint, -1);
 		pWayPointMan->push_back(newPoint);
 		if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
@@ -6828,7 +6829,7 @@ void pupHandler_PasteRoute()
 			newPoint->m_bKeepXRoute = false;
 
 			newRoute->AddPoint(newPoint);
-			pSelect->AddSelectableRoutePoint(newPoint->latitude(), newPoint->longitude(), newPoint);
+			pSelect->AddSelectableRoutePoint(newPoint->get_position(), newPoint);
 			pConfig->AddNewWayPoint(newPoint, -1);
 			pWayPointMan->push_back(newPoint);
 		}
@@ -6955,12 +6956,13 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 		case ID_DEF_MENU_GOTO_HERE: {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			RoutePoint* pWP_dest = new RoutePoint(Position(zlat, zlon), g_default_wp_icon, wxEmptyString);
-			pSelect->AddSelectableRoutePoint(zlat, zlon, pWP_dest);
+			Position zpos(zlat, zlon);
+			RoutePoint* pWP_dest = new RoutePoint(zpos, g_default_wp_icon, wxEmptyString);
+			pSelect->AddSelectableRoutePoint(zpos, pWP_dest);
 
-			RoutePoint* pWP_src
-				= new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
-			pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_src);
+			Position navpos(nav.lat, nav.lon);
+			RoutePoint* pWP_src = new RoutePoint(navpos, g_default_wp_icon, wxEmptyString);
+			pSelect->AddSelectableRoutePoint(navpos, pWP_src);
 
 			Route* temp_route = new Route();
 			pRouteList->push_back(temp_route);
@@ -6985,9 +6987,10 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		} break;
 
 		case ID_DEF_MENU_DROP_WP: {
-			RoutePoint* pWP = new RoutePoint(Position(zlat, zlon), g_default_wp_icon, wxEmptyString);
+			Position zpos(zlat, zlon);
+			RoutePoint* pWP = new RoutePoint(zpos, g_default_wp_icon, wxEmptyString);
 			pWP->m_bIsolatedMark = true; // This is an isolated mark
-			pSelect->AddSelectableRoutePoint(zlat, zlon, pWP);
+			pSelect->AddSelectableRoutePoint(zpos, pWP);
 			pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 
 			if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
@@ -7004,9 +7007,9 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 		case ID_WP_MENU_GOTO: {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			RoutePoint* pWP_src
-				= new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
-			pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_src);
+			Position navpos(nav.lat, nav.lon);
+			RoutePoint* pWP_src = new RoutePoint(navpos, g_default_wp_icon, wxEmptyString);
+			pSelect->AddSelectableRoutePoint(navpos, pWP_src);
 
 			Route* temp_route = new Route();
 			pRouteList->push_back(temp_route);

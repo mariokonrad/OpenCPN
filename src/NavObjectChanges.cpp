@@ -106,12 +106,12 @@ bool NavObjectChanges::ApplyChanges(void)
 				if (!strcmp(child.first_child().value(), "add")) {
 					if (!pExisting)
 						pWayPointMan->push_back(pWp);
-					pSelect->AddSelectableRoutePoint(pWp->latitude(), pWp->longitude(), pWp);
+					pSelect->AddSelectableRoutePoint(pWp->get_position(), pWp);
 				} else if (!strcmp(child.first_child().value(), "update")) {
 					if (pExisting)
 						pWayPointMan->remove(pExisting);
 					pWayPointMan->push_back(pWp);
-					pSelect->AddSelectableRoutePoint(pWp->latitude(), pWp->longitude(), pWp);
+					pSelect->AddSelectableRoutePoint(pWp->get_position(), pWp);
 				} else if (!strcmp(child.first_child().value(), "delete")) {
 					if (pExisting)
 						pWayPointMan->DestroyWaypoint(pExisting);

@@ -56,11 +56,11 @@ void Select::SetSelectPixelRadius(int radius)
 	pixelRadius = radius;
 }
 
-bool Select::AddSelectableRoutePoint(float slat, float slon, RoutePoint* pRoutePointAdd)
+bool Select::AddSelectableRoutePoint(const Position& pos, RoutePoint* pRoutePointAdd)
 {
 	SelectItem* pSelItem = new SelectItem;
-	pSelItem->m_slat = slat;
-	pSelItem->m_slon = slon;
+	pSelItem->m_slat = pos.lat();
+	pSelItem->m_slon = pos.lon();
 	pSelItem->m_seltype = SelectItem::TYPE_ROUTEPOINT;
 	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd;
@@ -151,7 +151,7 @@ bool Select::AddAllSelectableRoutePoints(Route* pr)
 	RoutePointList* points = pr->pRoutePointList;
 
 	for (RoutePointList::iterator i = points->begin(); i != points->end(); ++i) {
-		AddSelectableRoutePoint((*i)->latitude(), (*i)->longitude(), *i);
+		AddSelectableRoutePoint((*i)->get_position(), *i);
 	}
 
 	return true;

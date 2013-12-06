@@ -1773,7 +1773,7 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 	pWP->m_MarkDescription = pwaypoint->m_MarkDescription;
 	pWP->m_btemp = (b_permanent == false);
 
-	pSelect->AddSelectableRoutePoint(pwaypoint->m_lat, pwaypoint->m_lon, pWP);
+	pSelect->AddSelectableRoutePoint(Position(pwaypoint->m_lat, pwaypoint->m_lon), pWP);
 	if (b_permanent)
 		pConfig->AddNewWayPoint(pWP, -1);
 
@@ -1880,7 +1880,7 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 
 		route->AddPoint(pWP);
 
-		pSelect->AddSelectableRoutePoint(pWP->latitude(), pWP->longitude(), pWP);
+		pSelect->AddSelectableRoutePoint(pWP->get_position(), pWP);
 
 		if (ip > 0)
 			pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
@@ -1959,7 +1959,7 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 
 		track->AddPoint(pWP);
 
-		pSelect->AddSelectableRoutePoint(pWP->latitude(), pWP->longitude(), pWP);
+		pSelect->AddSelectableRoutePoint(pWP->get_position(), pWP);
 
 		if (ip > 0)
 			pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),

@@ -482,7 +482,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 	pWP_dst->m_bShowName = false;
 
-	pSelect->AddSelectableRoutePoint(pWP_dst->latitude(), pWP_dst->longitude(), pWP_dst);
+	pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 
 	// add intermediate points as needed
 
@@ -512,7 +512,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 				pWP_dst = new RoutePoint(Position(tlat, tlon), icon, _T (""));
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;
-				pSelect->AddSelectableRoutePoint(pWP_dst->latitude(), pWP_dst->longitude(), pWP_dst);
+				pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 
 				pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
 												   pWP_dst->latitude(), pWP_dst->longitude(),
@@ -545,7 +545,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;
 
-				pSelect->AddSelectableRoutePoint(pWP_dst->latitude(), pWP_dst->longitude(), pWP_dst);
+				pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 
 				pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
 												   pWP_dst->latitude(), pWP_dst->longitude(),
@@ -584,7 +584,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 		pWP_dst = new RoutePoint(pRoutePointList->back()->get_position(), icon, _T(""));
 		route->AddPoint(pWP_dst);
 		pWP_dst->m_bShowName = false;
-		pSelect->AddSelectableRoutePoint(pWP_dst->latitude(), pWP_dst->longitude(), pWP_dst);
+		pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 		pSelect->AddSelectableRouteSegment(pWP_src->latitude(), pWP_src->longitude(),
 										   pWP_dst->latitude(), pWP_dst->longitude(), pWP_src,
 										   pWP_dst, route);

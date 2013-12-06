@@ -98,7 +98,7 @@ void Undo::doUndoMoveWaypoint(UndoAction* action)
 void Undo::doUndoDeleteWaypoint(UndoAction * action)
 {
 	RoutePoint* point = reinterpret_cast<RoutePoint*>(action->before[0]);
-	pSelect->AddSelectableRoutePoint(point->latitude(), point->longitude(), point);
+	pSelect->AddSelectableRoutePoint(point->get_position(), point);
 	pConfig->AddNewWayPoint(point, -1);
 	if (NULL != pWayPointMan)
 		pWayPointMan->push_back(point);
@@ -158,7 +158,7 @@ void Undo::doRedoAppendWaypoint(UndoAction* action)
 
 	if (action->beforeType[0] == UndoAction::Undo_IsOrphanded) {
 		pConfig->AddNewWayPoint(point, -1);
-		pSelect->AddSelectableRoutePoint(point->latitude(), point->longitude(), point);
+		pSelect->AddSelectableRoutePoint(point->get_position(), point);
 	}
 
 	RoutePoint* prevpoint = route->GetLastPoint();

@@ -1866,9 +1866,10 @@ void RouteManagerDialog::OnWptNewClick(wxCommandEvent&)
 {
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	RoutePoint* pWP = new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
+	Position navpos(nav.lat, nav.lon);
+	RoutePoint* pWP = new RoutePoint(navpos, g_default_wp_icon, wxEmptyString);
 	pWP->m_bIsolatedMark = true; // This is an isolated mark
-	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP);
+	pSelect->AddSelectableRoutePoint(navpos, pWP);
 	pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 	cc1->Refresh(false); // Needed for MSW, why not GTK??
 
@@ -2012,8 +2013,9 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	RoutePoint* pWP_src = new RoutePoint(Position(nav.lat, nav.lon), g_default_wp_icon, wxEmptyString);
-	pSelect->AddSelectableRoutePoint(nav.lat, nav.lon, pWP_src);
+	Position navpos(nav.lat, nav.lon);
+	RoutePoint* pWP_src = new RoutePoint(navpos, g_default_wp_icon, wxEmptyString);
+	pSelect->AddSelectableRoutePoint(navpos, pWP_src);
 
 	Route* temp_route = new Route();
 	pRouteList->push_back(temp_route);

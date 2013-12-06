@@ -9306,11 +9306,11 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox, b
 			if (BBox.PointInBox(lon, lat, 0)) {
 				nlon = lon;
 				b_inbox = true;
-			} else if (BBox.PointInBox(lon + 360., lat, 0)) {
-				nlon = lon + 360.;
+			} else if (BBox.PointInBox(lon + 360.0, lat, 0)) {
+				nlon = lon + 360.0;
 				b_inbox = true;
-			} else if (BBox.PointInBox(lon - 360., lat, 0)) {
-				nlon = lon - 360.;
+			} else if (BBox.PointInBox(lon - 360.0, lat, 0)) {
+				nlon = lon - 360.0;
 				b_inbox = true;
 			}
 
@@ -9319,7 +9319,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox, b
 
 				//    Manage the point selection list
 				if (bRebuildSelList)
-					pSelectTC->AddSelectablePoint(lat, lon, pIDX, SelectItem::TYPE_TIDEPOINT);
+					pSelectTC->AddSelectablePoint(Position(lat, lon), pIDX, SelectItem::TYPE_TIDEPOINT);
 
 				wxPoint r;
 				GetCanvasPointPix(lat, nlon, &r);
@@ -9346,8 +9346,8 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox, b
 					else {
 						if (bforce_redraw_tides) {
 							float val, nowlev;
-							float ltleve = 0.;
-							float htleve = 0.;
+							float ltleve = 0.0;
+							float htleve = 0.0;
 							time_t tctime;
 							time_t lttime = 0;
 							time_t httime = 0;
@@ -9539,7 +9539,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox
 
 				//    Manage the point selection list
 				if (bRebuildSelList)
-					pSelectTC->AddSelectablePoint(lat, lon, pIDX, SelectItem::TYPE_CURRENTPOINT);
+					pSelectTC->AddSelectablePoint(Position(lat, lon), pIDX, SelectItem::TYPE_CURRENTPOINT);
 
 				wxPoint r;
 				GetCanvasPointPix(lat, lon, &r);

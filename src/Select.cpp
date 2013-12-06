@@ -239,13 +239,13 @@ bool Select::UpdateSelectableRouteSegments(const RoutePoint* prp)
 	return ret;
 }
 
-SelectItem* Select::AddSelectablePoint(float slat, float slon, const void* pdata,
+SelectItem* Select::AddSelectablePoint(const Position& pos, const void* pdata,
 									   SelectItem::Type fseltype)
 {
 	SelectItem* pSelItem = new SelectItem;
 	if (pSelItem) {
-		pSelItem->m_slat = slat;
-		pSelItem->m_slon = slon;
+		pSelItem->m_slat = pos.lat();
+		pSelItem->m_slon = pos.lon();
 		pSelItem->m_seltype = fseltype;
 		pSelItem->m_bIsSelected = false;
 		pSelItem->m_pData1 = pdata;
@@ -298,15 +298,15 @@ bool Select::DeleteAllSelectableTypePoints(unsigned long SeltypeToDelete)
 	return true;
 }
 
-bool Select::ModifySelectablePoint(float lat, float lon, void* data, unsigned long SeltypeToModify)
+bool Select::ModifySelectablePoint(const Position& pos, void* data, unsigned long SeltypeToModify)
 {
 	// FIXME: refactor, use std algorithms
 	for (SelectableItemList::iterator i = select_items.begin(); i != select_items.end(); ++i) {
 		SelectItem* item = *i;
 		if (item->m_seltype == SeltypeToModify) {
 			if (data == item->m_pData1) {
-				item->m_slat = lat;
-				item->m_slon = lon;
+				item->m_slat = pos.lat();
+				item->m_slon = pos.lon();
 				return true;
 			}
 		}

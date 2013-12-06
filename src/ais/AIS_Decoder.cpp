@@ -973,8 +973,8 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 			//  If this is not an ownship message, update the AIS Target in the Selectable list, and update the CPA info
 			if( !pTargetData->b_OwnShip ) {
 				if( pTargetData->b_positionOnceValid ) {
-					SelectItem * pSel = pSelectAIS->AddSelectablePoint(pTargetData->Lat,
-						pTargetData->Lon, reinterpret_cast<void *>(mmsi_long), SelectItem::TYPE_AISTARGET); // FIXME: void * misuse
+					SelectItem * pSel = pSelectAIS->AddSelectablePoint(Position(pTargetData->Lat,
+						pTargetData->Lon), reinterpret_cast<void *>(mmsi_long), SelectItem::TYPE_AISTARGET); // FIXME: void * misuse
 					pSel->SetUserData(mmsi);
 				}
 
@@ -995,8 +995,8 @@ AIS_Error AIS_Decoder::Decode( const wxString& str )
 				//  even if the message type was not recognized
 				if (!pTargetData->b_OwnShip) {
 					if (pTargetData->b_positionOnceValid) {
-						SelectItem *pSel = pSelectAIS->AddSelectablePoint(pTargetData->Lat,
-							pTargetData->Lon, reinterpret_cast<void *>(mmsi_long), SelectItem::TYPE_AISTARGET); // FIXME: void * misuse
+						SelectItem *pSel = pSelectAIS->AddSelectablePoint(Position(pTargetData->Lat,
+							pTargetData->Lon), reinterpret_cast<void *>(mmsi_long), SelectItem::TYPE_AISTARGET); // FIXME: void * misuse
 						pSel->SetUserData(mmsi);
 					}
 				}

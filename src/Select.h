@@ -61,10 +61,10 @@ public:
 
 	// Generic Point Support
 	// e.g. Tides/Currents and AIS Targets
-	SelectItem* AddSelectablePoint(float slat, float slon, const void* data, SelectItem::Type fseltype);
+	SelectItem* AddSelectablePoint(const Position& pos, const void* data, SelectItem::Type fseltype);
 	bool DeleteAllPoints(void);
 	bool DeleteSelectablePoint(void* data, unsigned long SeltypeToDelete);
-	bool ModifySelectablePoint(float slat, float slon, void* data, unsigned long fseltype);
+	bool ModifySelectablePoint(const Position& pos, void* data, unsigned long fseltype);
 
 	// Delete all selectable points in list by type
 	bool DeleteAllSelectableTypePoints(unsigned long SeltypeToDelete);

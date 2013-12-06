@@ -779,7 +779,7 @@ void MarkInfoImpl::OnPositionCtlUpdated(wxCommandEvent&)
 		// Fetch the control values, convert to degrees
 		Position pos(fromDMM(m_textLatitude->GetValue()), fromDMM(m_textLongitude->GetValue()));
 		m_pRoutePoint->set_position(pos);
-		pSelect->ModifySelectablePoint(pos.lat(), pos.lon(), (void*)m_pRoutePoint, SelectItem::TYPE_ROUTEPOINT);
+		pSelect->ModifySelectablePoint(pos, (void*)m_pRoutePoint, SelectItem::TYPE_ROUTEPOINT);
 	}
 
 	// Update the mark position dynamically

@@ -5491,23 +5491,24 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					}
 				}
 
+				Position cursorpos(m_cursor_lat, m_cursor_lon);
+
 				// update the RoutePoint entry
-				m_pRoutePointEditTarget->set_position(Position(m_cursor_lat, m_cursor_lon));
+				m_pRoutePointEditTarget->set_position(cursorpos);
 
 				// update the SelectList entry
-				m_pFoundPoint->m_slat = m_cursor_lat;
-				m_pFoundPoint->m_slon = m_cursor_lon;
+				m_pFoundPoint->pos1 = cursorpos;
 
 				if (CheckEdgePan(x, y, true)) {
 					double new_cursor_lat, new_cursor_lon;
 					GetCanvasPixPoint(x, y, new_cursor_lat, new_cursor_lon);
 
 					// update the RoutePoint entry
-					m_pRoutePointEditTarget->set_position(Position(new_cursor_lat, new_cursor_lon));
+					Position newcursorpos(new_cursor_lat, new_cursor_lon);
+					m_pRoutePointEditTarget->set_position(newcursorpos);
 
 					// update the SelectList entry
-					m_pFoundPoint->m_slat = new_cursor_lat;
-					m_pFoundPoint->m_slon = new_cursor_lon;
+					m_pFoundPoint->pos1 = newcursorpos;
 				}
 
 				// Update the MarkProperties Dialog, if currently shown
@@ -5578,12 +5579,13 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					pre_rect.Inflate((int)(lppmax - (pre_rect.width / 2)),
 									 (int)(lppmax - (pre_rect.height / 2)));
 
+				Position cursorpos(m_cursor_lat, m_cursor_lon);
+
 				// update the RoutePoint entry
-				m_pRoutePointEditTarget->set_position(Position(m_cursor_lat, m_cursor_lon));
+				m_pRoutePointEditTarget->set_position(cursorpos);
 
 				// update the SelectList entry
-				m_pFoundPoint->m_slat = m_cursor_lat;
-				m_pFoundPoint->m_slon = m_cursor_lon;
+				m_pFoundPoint->pos1 = cursorpos;
 
 				// Update the MarkProperties Dialog, if currently shown
 				if ((NULL != pMarkPropDialog) && (pMarkPropDialog->IsShown())) {

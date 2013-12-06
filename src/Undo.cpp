@@ -75,8 +75,7 @@ void Undo::doUndoMoveWaypoint(UndoAction* action)
 	lastPoint->y = lat;
 	lastPoint->x = lon;
 	SelectItem* selectable = reinterpret_cast<SelectItem*>(action->selectable[0]);
-	selectable->m_slat = currentPoint->latitude();
-	selectable->m_slon = currentPoint->longitude();
+	selectable->pos1 = currentPoint->get_position();
 
 	if ((NULL != pMarkPropDialog) && (pMarkPropDialog->IsShown())) {
 		if (currentPoint == pMarkPropDialog->GetRoutePoint())

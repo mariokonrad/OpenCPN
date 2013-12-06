@@ -1834,8 +1834,7 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 
 		SelectItem* pFind = pSelect->FindSelection(position_save, SelectItem::TYPE_ROUTEPOINT);
 		if (pFind) {
-			pFind->m_slat = pwaypoint->m_lat; // update the SelectList entry
-			pFind->m_slon = pwaypoint->m_lon;
+			pFind->pos1 = Position(pwaypoint->m_lat, pwaypoint->m_lon);
 		}
 
 		if (!prp->m_btemp)

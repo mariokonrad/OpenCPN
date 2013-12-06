@@ -59,8 +59,7 @@ void Select::SetSelectPixelRadius(int radius)
 bool Select::AddSelectableRoutePoint(const Position& pos, RoutePoint* pRoutePointAdd)
 {
 	SelectItem* pSelItem = new SelectItem;
-	pSelItem->m_slat = pos.lat();
-	pSelItem->m_slon = pos.lon();
+	pSelItem->pos1 = pos;
 	pSelItem->m_seltype = SelectItem::TYPE_ROUTEPOINT;
 	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd;
@@ -81,10 +80,8 @@ bool Select::AddSelectableRouteSegment(
 		Route *pRoute)
 {
 	SelectItem* pSelItem = new SelectItem;
-	pSelItem->m_slat = pos1.lat();
-	pSelItem->m_slon = pos1.lon();
-	pSelItem->m_slat2 = pos2.lat();
-	pSelItem->m_slon2 = pos2.lon();
+	pSelItem->pos1 = pos1;
+	pSelItem->pos2 = pos2;
 	pSelItem->m_seltype = SelectItem::TYPE_ROUTESEGMENT;
 	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd1;
@@ -201,12 +198,10 @@ bool Select::UpdateSelectableRouteSegments(const RoutePoint* prp)
 		SelectItem* item = *i;
 		if (item->m_seltype == SelectItem::TYPE_ROUTESEGMENT) {
 			if (item->m_pData1 == prp) {
-				item->m_slat = prp->latitude();
-				item->m_slon = prp->longitude();
+				item->pos1 = prp->get_position();
 				ret = true;
 			} else if (item->route_point == prp) {
-				item->m_slat2 = prp->latitude();
-				item->m_slon2 = prp->longitude();
+				item->pos2 = prp->get_position();
 				ret = true;
 			}
 		}
@@ -220,8 +215,7 @@ SelectItem* Select::AddSelectablePoint(const Position& pos, const void* pdata,
 {
 	SelectItem* pSelItem = new SelectItem;
 	if (pSelItem) {
-		pSelItem->m_slat = pos.lat();
-		pSelItem->m_slon = pos.lon();
+		pSelItem->pos1 = pos;
 		pSelItem->m_seltype = fseltype;
 		pSelItem->m_bIsSelected = false;
 		pSelItem->m_pData1 = pdata;
@@ -281,8 +275,7 @@ bool Select::ModifySelectablePoint(const Position& pos, void* data, unsigned lon
 		SelectItem* item = *i;
 		if (item->m_seltype == SeltypeToModify) {
 			if (data == item->m_pData1) {
-				item->m_slat = pos.lat();
-				item->m_slon = pos.lon();
+				item->pos1 = pos;
 				return true;
 			}
 		}
@@ -298,10 +291,8 @@ bool Select::AddSelectableTrackSegment(
 		Route * pRoute)
 {
 	SelectItem *pSelItem = new SelectItem;
-	pSelItem->m_slat = pos1.lat();
-	pSelItem->m_slon = pos1.lon();
-	pSelItem->m_slat2 = pos2.lat();
-	pSelItem->m_slon2 = pos2.lon();
+	pSelItem->pos1 = pos1;
+	pSelItem->pos2 = pos2;
 	pSelItem->m_seltype = SelectItem::TYPE_TRACKSEGMENT;
 	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd1;
@@ -427,15 +418,15 @@ SelectItem* Select::FindSelection(const Position& pos, unsigned long fseltype)
 				case SelectItem::TYPE_TIDEPOINT:
 				case SelectItem::TYPE_CURRENTPOINT:
 				case SelectItem::TYPE_AISTARGET:
-					if ((fabs(pos.lat()- item->m_slat) < selectRadius)
-						&& (fabs(pos.lon()- item->m_slon) < selectRadius))
+					if ((fabs(pos.lat()- item->pos1.lat()) < selectRadius)
+						&& (fabs(pos.lon()- item->pos1.lon()) < selectRadius))
 						return item;
 					break;
 
 				case SelectItem::TYPE_ROUTESEGMENT:
 				case SelectItem::TYPE_TRACKSEGMENT:
-					if (IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon,
-										  item->m_slon2, pos))
+					if (IsSegmentSelected(item->pos1.lat(), item->pos2.lat(), item->pos1.lon(),
+										  item->pos2.lon(), pos))
 						return item;
 					break;
 
@@ -451,7 +442,7 @@ SelectItem* Select::FindSelection(const Position& pos, unsigned long fseltype)
 bool Select::IsSelectableSegmentSelected(const Position& pos, SelectItem* item)
 {
 	CalcSelectRadius();
-	return IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon, item->m_slon2, pos);
+	return IsSegmentSelected(item->pos1.lat(), item->pos2.lat(), item->pos1.lon(), item->pos2.lon(), pos);
 }
 
 SelectableItemList Select::FindSelectionList(const Position& pos, unsigned long fseltype)
@@ -469,15 +460,15 @@ SelectableItemList Select::FindSelectionList(const Position& pos, unsigned long 
 			case SelectItem::TYPE_TIDEPOINT:
 			case SelectItem::TYPE_CURRENTPOINT:
 			case SelectItem::TYPE_AISTARGET:
-				if ((fabs(pos.lat() - item->m_slat) < selectRadius)
-					&& (fabs(pos.lon() - item->m_slon) < selectRadius))
+				if ((fabs(pos.lat() - item->pos1.lat()) < selectRadius)
+					&& (fabs(pos.lon() - item->pos1.lon()) < selectRadius))
 					ret_list.push_back(item);
 				break;
 
 			case SelectItem::TYPE_ROUTESEGMENT:
 			case SelectItem::TYPE_TRACKSEGMENT:
-				if (IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon, item->m_slon2,
-									  pos))
+				if (IsSegmentSelected(item->pos1.lat(), item->pos2.lat(), item->pos1.lon(),
+									  item->pos2.lon(), pos))
 					ret_list.push_back(item);
 				break;
 

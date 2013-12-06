@@ -240,11 +240,11 @@ public:
 	wxCursor* pCursorCross;
 	TCWin* pCwin;
 	wxBitmap* pscratch_bm;
-	double m_cursor_lon;
+	double m_cursor_lon; // FIXME: replace this with Position
 	double m_cursor_lat;
 	Undo* undo;
 	wxPoint r_rband;
-	double m_prev_rlat;
+	double m_prev_rlat; // FIXME: replace this with Position
 	double m_prev_rlon;
 	RoutePoint* m_prev_pMousePoint;
 
@@ -531,7 +531,7 @@ private:
 
 	SelectItem* m_pRolloverRouteSeg;
 
-	double m_wheel_lat;
+	double m_wheel_lat; // FIXME: replace this with Position
 	double m_wheel_lon;
 	int m_wheel_x;
 	int m_wheel_y;

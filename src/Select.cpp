@@ -441,7 +441,7 @@ void Select::CalcSelectRadius()
 	selectRadius = pixelRadius / (cc1->GetCanvasTrueScale() * 1852 * 60);
 }
 
-SelectItem* Select::FindSelection(float slat, float slon, unsigned long fseltype)
+SelectItem* Select::FindSelection(const Position& pos, unsigned long fseltype)
 {
 	CalcSelectRadius();
 
@@ -453,15 +453,15 @@ SelectItem* Select::FindSelection(float slat, float slon, unsigned long fseltype
 				case SelectItem::TYPE_TIDEPOINT:
 				case SelectItem::TYPE_CURRENTPOINT:
 				case SelectItem::TYPE_AISTARGET:
-					if ((fabs(slat - item->m_slat) < selectRadius)
-						&& (fabs(slon - item->m_slon) < selectRadius))
+					if ((fabs(pos.lat()- item->m_slat) < selectRadius)
+						&& (fabs(pos.lon()- item->m_slon) < selectRadius))
 						return item;
 					break;
 
 				case SelectItem::TYPE_ROUTESEGMENT:
 				case SelectItem::TYPE_TRACKSEGMENT:
 					if (IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon,
-										  item->m_slon2, slat, slon))
+										  item->m_slon2, pos.lat(), pos.lon()))
 						return item;
 					break;
 
@@ -480,7 +480,7 @@ bool Select::IsSelectableSegmentSelected(float slat, float slon, SelectItem* ite
 	return IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon, item->m_slon2, slat, slon);
 }
 
-SelectableItemList Select::FindSelectionList(float slat, float slon, unsigned long fseltype)
+SelectableItemList Select::FindSelectionList(const Position& pos, unsigned long fseltype)
 {
 	SelectableItemList ret_list;
 
@@ -495,15 +495,15 @@ SelectableItemList Select::FindSelectionList(float slat, float slon, unsigned lo
 			case SelectItem::TYPE_TIDEPOINT:
 			case SelectItem::TYPE_CURRENTPOINT:
 			case SelectItem::TYPE_AISTARGET:
-				if ((fabs(slat - item->m_slat) < selectRadius)
-					&& (fabs(slon - item->m_slon) < selectRadius))
+				if ((fabs(pos.lat() - item->m_slat) < selectRadius)
+					&& (fabs(pos.lon() - item->m_slon) < selectRadius))
 					ret_list.push_back(item);
 				break;
 
 			case SelectItem::TYPE_ROUTESEGMENT:
 			case SelectItem::TYPE_TRACKSEGMENT:
 				if (IsSegmentSelected(item->m_slat, item->m_slat2, item->m_slon, item->m_slon2,
-									  slat, slon))
+									  pos.lat(), pos.lon()))
 					ret_list.push_back(item);
 				break;
 

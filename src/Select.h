@@ -45,8 +45,8 @@ public:
 								   RoutePoint* pRoutePointAdd1, RoutePoint* pRoutePointAdd2,
 								   Route* pRoute);
 
-	SelectItem* FindSelection(float slat, float slon, unsigned long fseltype);
-	SelectableItemList FindSelectionList(float slat, float slon, unsigned long fseltype);
+	SelectItem* FindSelection(const Position& pos, unsigned long fseltype);
+	SelectableItemList FindSelectionList(const Position& pos, unsigned long fseltype);
 
 	bool DeleteAllSelectableRouteSegments(Route*);
 	bool DeleteAllSelectableTrackSegments(Route*);

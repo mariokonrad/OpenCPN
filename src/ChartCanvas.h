@@ -240,8 +240,7 @@ public:
 	wxCursor* pCursorCross;
 	TCWin* pCwin;
 	wxBitmap* pscratch_bm;
-	double m_cursor_lon; // FIXME: replace this with Position
-	double m_cursor_lat;
+	Position m_cursor_pos;
 	Undo* undo;
 	wxPoint r_rband;
 	double m_prev_rlat; // FIXME: replace this with Position

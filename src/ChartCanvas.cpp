@@ -1552,10 +1552,9 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 
 			case 13: // Ctrl M // Drop Marker at cursor
 			{
-				Position pos(m_cursor_lat, m_cursor_lon);
-				RoutePoint* pWP = new RoutePoint(pos, g_default_wp_icon, wxEmptyString);
+				RoutePoint* pWP = new RoutePoint(m_cursor_pos, g_default_wp_icon, wxEmptyString);
 				pWP->m_bIsolatedMark = true; // This is an isolated mark
-				pSelect->AddSelectableRoutePoint(pos, pWP);
+				pSelect->AddSelectableRoutePoint(m_cursor_pos, pWP);
 				pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 
 				if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
@@ -1888,7 +1887,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 	bool showAISRollover = false;
 	if (g_pAIS && g_pAIS->GetNumTargets() && g_bShowAIS) {
 		SelectItem* pFind
-			= pSelectAIS->FindSelection(Position(m_cursor_lat, m_cursor_lon), SelectItem::TYPE_AISTARGET);
+			= pSelectAIS->FindSelection(m_cursor_pos, SelectItem::TYPE_AISTARGET);
 		if (pFind) {
 			int FoundAIS_MMSI
 				= (long)pFind->m_pData1; // cast to long avoids problems with 64bit compilers
@@ -1951,14 +1950,12 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 	// Show the route segment info
 	bool showRollover = false;
 
-	Position cursorpos(m_cursor_lat, m_cursor_lon);
-
 	if (NULL == m_pRolloverRouteSeg) {
 		// Get a list of all selectable sgements, and search for the first visible segment as the
 		// rollover target.
 
 		SelectableItemList SelList
-			= pSelect->FindSelectionList(cursorpos, SelectItem::TYPE_ROUTESEGMENT);
+			= pSelect->FindSelectionList(m_cursor_pos, SelectItem::TYPE_ROUTESEGMENT);
 		SelectableItemList::iterator index = SelList.begin();
 		while (index != SelList.end()) {
 			SelectItem* pFindSel = *index;
@@ -2044,7 +2041,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 		}
 	} else {
 		// Is the cursor still in select radius?
-		if (!pSelect->IsSelectableSegmentSelected(cursorpos, m_pRolloverRouteSeg))
+		if (!pSelect->IsSelectableSegmentSelected(m_cursor_pos, m_pRolloverRouteSeg))
 			showRollover = false;
 		else
 			showRollover = true;
@@ -4938,7 +4935,7 @@ void ChartCanvas::FindRoutePointsAtCursor(float, bool setBeingEdited)
 	m_pFoundPoint = NULL;
 
 	SelectableItemList SelList
-		= pSelect->FindSelectionList(Position(m_cursor_lat, m_cursor_lon), SelectItem::TYPE_ROUTEPOINT);
+		= pSelect->FindSelectionList(m_cursor_pos, SelectItem::TYPE_ROUTEPOINT);
 	for (SelectableItemList::iterator i = SelList.begin(); i != SelList.end(); ++i) {
 		SelectItem* pFind = *i;
 		RoutePoint* frp = (RoutePoint*)pFind->m_pData1;
@@ -5160,7 +5157,10 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 	mx = x;
 	my = y;
-	GetCanvasPixPoint(x, y, m_cursor_lat, m_cursor_lon);
+	double lat;
+	double lon;
+	GetCanvasPixPoint(x, y, lat, lon);
+	m_cursor_pos = Position(lat, lon);
 
 	// Calculate meaningful SelectRadius
 	float SelectRadius;
@@ -5176,8 +5176,8 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 	// whenever the mouse has stopped moving for specified interval.
 	// See the method OnCursorTrackTimerEvent()
 	if (parent_frame->hasStatusBar()) {
-		double show_cursor_lon = m_cursor_lon;
-		double show_cursor_lat = m_cursor_lat;
+		double show_cursor_lon = m_cursor_pos.lon();
+		double show_cursor_lat = m_cursor_pos.lat();
 
 		// Check the absolute range of the cursor position
 		// There could be a window wherein the chart geoereferencing is not valid....
@@ -5197,7 +5197,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			double brg;
 			double dist;
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			geo::DistanceBearingMercator(m_cursor_lat, m_cursor_lon, nav.pos.lat(), nav.pos.lon(),
+			geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(), nav.pos.lat(), nav.pos.lon(),
 										 &brg, &dist);
 			wxString s;
 			if (g_bShowMag)
@@ -5213,7 +5213,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 	// Send the current cursor lat/lon to all PlugIns requesting it
 	if (g_pi_manager)
-		g_pi_manager->SendCursorLatLonToAllPlugIns(m_cursor_lat, m_cursor_lon);
+		g_pi_manager->SendCursorLatLonToAllPlugIns(m_cursor_pos.lat(), m_cursor_pos.lon());
 
 	// Check for wheel rotation
 	m_mouse_wheel_oneshot = 50; // msec
@@ -5234,16 +5234,14 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			double factor = m_bmouse_key_mod ? 1.1 : 2.0;
 
 			if (g_bEnableZoomToCursor) {
-				//  Capture current cursor position, as the zooms below may change it.
-				Position zpos(m_cursor_lat, m_cursor_lon);
-
+				// Capture current cursor position, as the zooms below may change it.
 				if (wheel_dir > 0)
 					ZoomCanvasIn(factor);
 				else if (wheel_dir < 0)
 					ZoomCanvasOut(factor);
 
 				wxPoint r;
-				GetCanvasPointPix(zpos, &r);
+				GetCanvasPointPix(m_cursor_pos, &r);
 				PanCanvas(r.x - x, r.y - y);
 				ClearbFollow(); // update the follow flag
 			} else {
@@ -5277,7 +5275,6 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			// creating route?
 
 			SetCursor(*pCursorPencil);
-			Position rpos(m_cursor_lat, m_cursor_lon);
 
 			m_bRouteEditing = true;
 
@@ -5296,7 +5293,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
 
 			RoutePoint* pNearbyPoint
-				= pWayPointMan->GetNearbyWaypoint(rpos, nearby_radius_meters);
+				= pWayPointMan->GetNearbyWaypoint(m_cursor_pos, nearby_radius_meters);
 			if (pNearbyPoint && (pNearbyPoint != m_prev_pMousePoint) && !pNearbyPoint->m_bIsInTrack
 				&& !pNearbyPoint->m_bIsInLayer) {
 				int dlg_return;
@@ -5323,11 +5320,11 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			}
 
 			if (NULL == pMousePoint) { // need a new point
-				pMousePoint = new RoutePoint(rpos, _T("diamond"), _T(""));
+				pMousePoint = new RoutePoint(m_cursor_pos, _T("diamond"), _T(""));
 				pMousePoint->SetNameShown(false);
 
 				pConfig->AddNewWayPoint(pMousePoint, -1); // use auto next num
-				pSelect->AddSelectableRoutePoint(rpos, pMousePoint);
+				pSelect->AddSelectableRoutePoint(m_cursor_pos, pMousePoint);
 
 				if (parent_frame->nRoute_State > 1)
 					undo->BeforeUndoableAction(UndoAction::Undo_AppendWaypoint, pMousePoint,
@@ -5343,9 +5340,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					double rhumbDist;
 					double gcBearing;
 					double gcDist;
-					geo::DistanceBearingMercator(rpos.lat(), rpos.lon(), m_prev_rlat, m_prev_rlon,
+					geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(), m_prev_rlat, m_prev_rlon,
 												 &rhumbBearing, &rhumbDist);
-					geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, rpos.lon(), rpos.lat(),
+					geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, m_cursor_pos.lon(), m_cursor_pos.lat(),
 													   &gcDist, &gcBearing, NULL);
 					double gcDistNM = gcDist / 1852.0;
 
@@ -5400,7 +5397,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 					} else {
 						m_pMouseRoute->AddPoint(pMousePoint);
-						pSelect->AddSelectableRouteSegment(Position(m_prev_rlat, m_prev_rlon), rpos,
+						pSelect->AddSelectableRouteSegment(Position(m_prev_rlat, m_prev_rlon), m_cursor_pos,
 														   m_prev_pMousePoint, pMousePoint,
 														   m_pMouseRoute);
 						undo->AfterUndoableAction(m_pMouseRoute);
@@ -5408,15 +5405,15 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				} else {
 					// Ordinary rhumblinesegment.
 					m_pMouseRoute->AddPoint(pMousePoint);
-					pSelect->AddSelectableRouteSegment(Position(m_prev_rlat, m_prev_rlon), rpos,
+					pSelect->AddSelectableRouteSegment(Position(m_prev_rlat, m_prev_rlon), m_cursor_pos,
 													   m_prev_pMousePoint, pMousePoint,
 													   m_pMouseRoute);
 					undo->AfterUndoableAction(m_pMouseRoute);
 				}
 			}
 
-			m_prev_rlat = rpos.lat();
-			m_prev_rlon = rpos.lon();
+			m_prev_rlat = m_cursor_pos.lat();
+			m_prev_rlon = m_cursor_pos.lon();
 			m_prev_pMousePoint = pMousePoint;
 			m_pMouseRoute->m_lastMousePointIndex = m_pMouseRoute->GetnPoints();
 
@@ -5433,13 +5430,13 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			}
 
 			RoutePoint* pMousePoint
-				= new RoutePoint(Position(m_cursor_lat, m_cursor_lon), wxString(_T("circle")), wxEmptyString);
+				= new RoutePoint(m_cursor_pos, wxString(_T("circle")), wxEmptyString);
 			pMousePoint->m_bShowName = false;
 
 			m_pMeasureRoute->AddPoint(pMousePoint);
 
-			m_prev_rlat = m_cursor_lat;
-			m_prev_rlon = m_cursor_lon;
+			m_prev_rlat = m_cursor_pos.lat();
+			m_prev_rlon = m_cursor_pos.lon();
 			m_prev_pMousePoint = pMousePoint;
 			m_pMeasureRoute->m_lastMousePointIndex = m_pMeasureRoute->GetnPoints();
 
@@ -5493,13 +5490,11 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					}
 				}
 
-				Position cursorpos(m_cursor_lat, m_cursor_lon);
-
 				// update the RoutePoint entry
-				m_pRoutePointEditTarget->set_position(cursorpos);
+				m_pRoutePointEditTarget->set_position(m_cursor_pos);
 
 				// update the SelectList entry
-				m_pFoundPoint->pos1 = cursorpos;
+				m_pFoundPoint->pos1 = m_cursor_pos;
 
 				if (CheckEdgePan(x, y, true)) {
 					double new_cursor_lat, new_cursor_lon;
@@ -5581,13 +5576,11 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					pre_rect.Inflate((int)(lppmax - (pre_rect.width / 2)),
 									 (int)(lppmax - (pre_rect.height / 2)));
 
-				Position cursorpos(m_cursor_lat, m_cursor_lon);
-
 				// update the RoutePoint entry
-				m_pRoutePointEditTarget->set_position(cursorpos);
+				m_pRoutePointEditTarget->set_position(m_cursor_pos);
 
 				// update the SelectList entry
-				m_pFoundPoint->pos1 = cursorpos;
+				m_pFoundPoint->pos1 = m_cursor_pos;
 
 				// Update the MarkProperties Dialog, if currently shown
 				if ((NULL != pMarkPropDialog) && (pMarkPropDialog->IsShown())) {
@@ -5715,7 +5708,6 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			CanvasPopupMenu(x, y, SelectItem::TYPE_ROUTECREATE);
 		} else { // General Right Click
 			// Look for selectable objects
-			Position spos(m_cursor_lat, m_cursor_lon);
 #ifdef __WXMAC__
 			wxScreenDC sdc;
 			ocpnDC dc(sdc);
@@ -5745,16 +5737,16 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			}
 
 			// Get all the selectable things at the cursor
-			pFindAIS = pSelectAIS->FindSelection(spos, SelectItem::TYPE_AISTARGET);
-			pFindRP = pSelect->FindSelection(spos, SelectItem::TYPE_ROUTEPOINT);
-			pFindRouteSeg = pSelect->FindSelection(spos, SelectItem::TYPE_ROUTESEGMENT);
-			pFindTrackSeg = pSelect->FindSelection(spos, SelectItem::TYPE_TRACKSEGMENT);
+			pFindAIS = pSelectAIS->FindSelection(m_cursor_pos, SelectItem::TYPE_AISTARGET);
+			pFindRP = pSelect->FindSelection(m_cursor_pos, SelectItem::TYPE_ROUTEPOINT);
+			pFindRouteSeg = pSelect->FindSelection(m_cursor_pos, SelectItem::TYPE_ROUTESEGMENT);
+			pFindTrackSeg = pSelect->FindSelection(m_cursor_pos, SelectItem::TYPE_TRACKSEGMENT);
 
 			if (m_bShowCurrent)
-				pFindCurrent = pSelectTC->FindSelection(spos, SelectItem::TYPE_CURRENTPOINT);
+				pFindCurrent = pSelectTC->FindSelection(m_cursor_pos, SelectItem::TYPE_CURRENTPOINT);
 
 			if (m_bShowTide) // look for tide stations
-				pFindTide = pSelectTC->FindSelection(spos, SelectItem::TYPE_TIDEPOINT);
+				pFindTide = pSelectTC->FindSelection(m_cursor_pos, SelectItem::TYPE_TIDEPOINT);
 
 			int seltype = 0;
 
@@ -5779,7 +5771,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 				// There is at least one routepoint, so get the whole list
 				SelectableItemList SelList
-					= pSelect->FindSelectionList(spos, SelectItem::TYPE_ROUTEPOINT);
+					= pSelect->FindSelectionList(m_cursor_pos, SelectItem::TYPE_ROUTEPOINT);
 				for (SelectableItemList::iterator index = SelList.begin(); index != SelList.end(); ++index) {
 					SelectItem* item = *index;
 
@@ -5862,7 +5854,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			// But call the popup handler with identifier appropriate to the type
 			if (pFindRouteSeg) { // there is at least one select item
 				SelectableItemList SelList
-					= pSelect->FindSelectionList(spos, SelectItem::TYPE_ROUTESEGMENT);
+					= pSelect->FindSelectionList(m_cursor_pos, SelectItem::TYPE_ROUTESEGMENT);
 
 				if (NULL == m_pSelectedRoute) {
 					// the case where a segment only is selected
@@ -5891,7 +5883,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			if (pFindTrackSeg) {
 				m_pSelectedTrack = NULL;
 				SelectableItemList SelList
-					= pSelect->FindSelectionList(spos, SelectItem::TYPE_TRACKSEGMENT);
+					= pSelect->FindSelectionList(m_cursor_pos, SelectItem::TYPE_TRACKSEGMENT);
 
 				// Choose the first visible track containing segment in the list
 				for (SelectableItemList::iterator index = SelList.begin(); index != SelList.end(); ++index) {
@@ -5917,7 +5909,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 				SelectItem* pFind = NULL;
 				SelectableItemList SelList = pSelectTC->FindSelectionList(
-					Position(m_cursor_lat, m_cursor_lon), SelectItem::TYPE_CURRENTPOINT);
+					m_cursor_pos, SelectItem::TYPE_CURRENTPOINT);
 
 				// Default is first entry
 				SelectableItemList::iterator index = SelList.begin();
@@ -7909,13 +7901,13 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 		double gcBearing;
 		double gcBearing2;
 		double gcDist;
-		geo::DistanceBearingMercator(m_cursor_lat, m_cursor_lon, m_prev_rlat, m_prev_rlon,
+		geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(), m_prev_rlat, m_prev_rlon,
 									 &rhumbBearing, &rhumbDist);
-		geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, m_cursor_lon, m_cursor_lat,
+		geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, m_cursor_pos.lon(), m_cursor_pos.lat(),
 										   &gcDist, &gcBearing, &gcBearing2);
 		double gcDistm = gcDist / 1852.0;
 
-		if ((m_prev_rlat == m_cursor_lat) && (m_prev_rlon == m_cursor_lon))
+		if ((m_prev_rlat == m_cursor_pos.lat()) && (m_prev_rlon == m_cursor_pos.lon()))
 			rhumbBearing = 90.0;
 
 		wxPoint destPoint, lastPoint;
@@ -8453,8 +8445,11 @@ bool ChartCanvas::SetCursor(const wxCursor& c)
 
 void ChartCanvas::Refresh(bool eraseBackground, const wxRect* rect)
 {
-	//  Keep the mouse position members up to date
-	GetCanvasPixPoint(mouse_x, mouse_y, m_cursor_lat, m_cursor_lon);
+	// Keep the mouse position members up to date
+	double lat;
+	double lon;
+	GetCanvasPixPoint(mouse_x, mouse_y, lat, lon);
+	m_cursor_pos = Position(lat, lon);
 
 	// Retrigger the route leg popup timer
 	// This handles the case when the chart is moving in auto-follow mode, but no user mouse

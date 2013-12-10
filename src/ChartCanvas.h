@@ -243,8 +243,7 @@ public:
 	Position m_cursor_pos;
 	Undo* undo;
 	wxPoint r_rband;
-	double m_prev_rlat; // FIXME: replace this with Position
-	double m_prev_rlon;
+	Position m_prev_route;
 	RoutePoint* m_prev_pMousePoint;
 
 	bool PurgeGLCanvasChartCache(chart::ChartBase* pc);

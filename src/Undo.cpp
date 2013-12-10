@@ -144,8 +144,7 @@ void Undo::doUndoAppendWaypoint(UndoAction* action)
 	if (gFrame->nRoute_State > 1) {
 		gFrame->nRoute_State--;
 		cc1->m_prev_pMousePoint = route->GetLastPoint();
-		cc1->m_prev_rlat = cc1->m_prev_pMousePoint->latitude();
-		cc1->m_prev_rlon = cc1->m_prev_pMousePoint->longitude();
+		cc1->m_prev_route = cc1->m_prev_pMousePoint->get_position();
 		route->m_lastMousePointIndex = route->GetnPoints();
 	}
 }
@@ -172,8 +171,7 @@ void Undo::doRedoAppendWaypoint(UndoAction* action)
 	if (gFrame->nRoute_State > 1) {
 		gFrame->nRoute_State++;
 		cc1->m_prev_pMousePoint = route->GetLastPoint();
-		cc1->m_prev_rlat = cc1->m_prev_pMousePoint->latitude();
-		cc1->m_prev_rlon = cc1->m_prev_pMousePoint->longitude();
+		cc1->m_prev_route = cc1->m_prev_pMousePoint->get_position();
 		route->m_lastMousePointIndex = route->GetnPoints();
 	}
 }

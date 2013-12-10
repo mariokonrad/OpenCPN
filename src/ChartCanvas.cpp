@@ -5311,9 +5311,11 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					double rhumbDist;
 					double gcBearing;
 					double gcDist;
-					geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(), m_prev_rlat, m_prev_rlon,
+					geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(),
+												 m_prev_route.lat(), m_prev_route.lon(),
 												 &rhumbBearing, &rhumbDist);
-					geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, m_cursor_pos.lon(), m_cursor_pos.lat(),
+					geo::Geodesic::GreatCircleDistBear(m_prev_route.lon(), m_prev_route.lat(),
+													   m_cursor_pos.lon(), m_cursor_pos.lat(),
 													   &gcDist, &gcBearing, NULL);
 					double gcDistNM = gcDist / 1852.0;
 
@@ -5342,7 +5344,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 						for (int i = 1; i <= segmentCount; i++) {
 							double fraction = (double)i * (1.0 / (double)segmentCount);
-							geo::Geodesic::GreatCircleTravel(m_prev_rlon, m_prev_rlat,
+							geo::Geodesic::GreatCircleTravel(m_prev_route.lon(), m_prev_route.lat(),
 															 gcDist * fraction, gcBearing,
 															 &gcCoord.x, &gcCoord.y, NULL);
 
@@ -5368,7 +5370,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 					} else {
 						m_pMouseRoute->AddPoint(pMousePoint);
-						pSelect->AddSelectableRouteSegment(Position(m_prev_rlat, m_prev_rlon), m_cursor_pos,
+						pSelect->AddSelectableRouteSegment(m_prev_route, m_cursor_pos,
 														   m_prev_pMousePoint, pMousePoint,
 														   m_pMouseRoute);
 						undo->AfterUndoableAction(m_pMouseRoute);
@@ -5376,15 +5378,14 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				} else {
 					// Ordinary rhumblinesegment.
 					m_pMouseRoute->AddPoint(pMousePoint);
-					pSelect->AddSelectableRouteSegment(Position(m_prev_rlat, m_prev_rlon), m_cursor_pos,
+					pSelect->AddSelectableRouteSegment(m_prev_route, m_cursor_pos,
 													   m_prev_pMousePoint, pMousePoint,
 													   m_pMouseRoute);
 					undo->AfterUndoableAction(m_pMouseRoute);
 				}
 			}
 
-			m_prev_rlat = m_cursor_pos.lat();
-			m_prev_rlon = m_cursor_pos.lon();
+			m_prev_route = m_cursor_pos;
 			m_prev_pMousePoint = pMousePoint;
 			m_pMouseRoute->m_lastMousePointIndex = m_pMouseRoute->GetnPoints();
 
@@ -5406,8 +5407,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 			m_pMeasureRoute->AddPoint(pMousePoint);
 
-			m_prev_rlat = m_cursor_pos.lat();
-			m_prev_rlon = m_cursor_pos.lon();
+			m_prev_route = m_cursor_pos;
 			m_prev_pMousePoint = pMousePoint;
 			m_pMeasureRoute->m_lastMousePointIndex = m_pMeasureRoute->GetnPoints();
 
@@ -7276,13 +7276,9 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			m_pMouseRoute = m_pSelectedRoute;
 			parent_frame->nRoute_State = m_pSelectedRoute->GetnPoints() + 1;
 			m_pMouseRoute->m_lastMousePointIndex = m_pSelectedRoute->GetnPoints();
-
 			pLast = m_pSelectedRoute->GetLastPoint();
-
-			m_prev_rlat = pLast->latitude();
-			m_prev_rlon = pLast->longitude();
+			m_prev_route = pLast->get_position();
 			m_prev_pMousePoint = pLast;
-
 			m_bAppendingRoute = true;
 
 			SetCursor(*pCursorPencil);
@@ -7859,13 +7855,14 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 		double gcBearing;
 		double gcBearing2;
 		double gcDist;
-		geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(), m_prev_rlat, m_prev_rlon,
-									 &rhumbBearing, &rhumbDist);
-		geo::Geodesic::GreatCircleDistBear(m_prev_rlon, m_prev_rlat, m_cursor_pos.lon(), m_cursor_pos.lat(),
-										   &gcDist, &gcBearing, &gcBearing2);
+		geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(), m_prev_route.lat(),
+									 m_prev_route.lon(), &rhumbBearing, &rhumbDist);
+		geo::Geodesic::GreatCircleDistBear(m_prev_route.lon(), m_prev_route.lat(),
+										   m_cursor_pos.lon(), m_cursor_pos.lat(), &gcDist,
+										   &gcBearing, &gcBearing2);
 		double gcDistm = gcDist / 1852.0;
 
-		if ((m_prev_rlat == m_cursor_pos.lat()) && (m_prev_rlon == m_cursor_pos.lon()))
+		if (m_prev_route == m_cursor_pos)
 			rhumbBearing = 90.0;
 
 		wxPoint destPoint, lastPoint;
@@ -7893,8 +7890,8 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 			for (int i = 1; i <= milesDiff; i++) {
 				double p = (double)i * (1.0 / (double)milesDiff);
 				double pLat, pLon;
-				geo::Geodesic::GreatCircleTravel(m_prev_rlon, m_prev_rlat, gcDist * p, brg, &pLon,
-												 &pLat, &gcBearing2);
+				geo::Geodesic::GreatCircleTravel(m_prev_route.lon(), m_prev_route.lat(), gcDist * p,
+												 brg, &pLon, &pLat, &gcBearing2);
 				destPoint = VPoint.GetPixFromLL(Position(pLat, pLon));
 				route->DrawSegment(dc, &lastPoint, &destPoint, GetVP(), false);
 				lastPoint = destPoint;

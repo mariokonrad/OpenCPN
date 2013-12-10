@@ -24,7 +24,7 @@
 #include "MyPrintout.h"
 #include <ChartCanvas.h>
 
-extern ChartCanvas * cc1;
+extern ChartCanvas* cc1;
 extern bool g_bopengl;
 
 MyPrintout::MyPrintout(const wxChar * title)
@@ -46,7 +46,6 @@ bool MyPrintout::OnBeginDocument(int startPage, int endPage)
 {
 	if (!wxPrintout::OnBeginDocument(startPage, endPage))
 		return false;
-
 	return true;
 }
 
@@ -63,12 +62,12 @@ bool MyPrintout::HasPage(int pageNum)
 	return pageNum == 1;
 }
 
-void MyPrintout::DrawPageOne(wxDC *dc)
+void MyPrintout::DrawPageOne(wxDC* dc)
 {
 	// Get the Size of the Chart Canvas
 	int sx;
 	int sy;
-	cc1->GetClientSize( &sx, &sy );
+	cc1->GetClientSize(&sx, &sy);
 
 	float maxX = sx;
 	float maxY = sy;
@@ -78,59 +77,57 @@ void MyPrintout::DrawPageOne(wxDC *dc)
 	float marginY = 50;
 
 	// Add the margin to the graphic size
-	maxX += ( 2 * marginX );
-	maxY += ( 2 * marginY );
+	maxX += (2 * marginX);
+	maxY += (2 * marginY);
 
 	// Get the size of the DC in pixels
 	int w, h;
-	dc->GetSize( &w, &h );
+	dc->GetSize(&w, &h);
 
 	// Calculate a suitable scaling factor
-	float scaleX = (float) ( w / maxX );
-	float scaleY = (float) ( h / maxY );
+	float scaleX = (float)(w / maxX);
+	float scaleY = (float)(h / maxY);
 
 	// Use x or y scaling factor, whichever fits on the DC
-	float actualScale = wxMin(scaleX,scaleY);
+	float actualScale = wxMin(scaleX, scaleY);
 
 	// Calculate the position on the DC for centring the graphic
-	float posX = (float) ( ( w - ( maxX * actualScale ) ) / 2.0 );
-	float posY = (float) ( ( h - ( maxY * actualScale ) ) / 2.0 );
+	float posX = (float)((w - (maxX * actualScale)) / 2.0);
+	float posY = (float)((h - (maxY * actualScale)) / 2.0);
 
 	posX = wxMax(posX, marginX);
 	posY = wxMax(posY, marginY);
 
 	// Set the scale and origin
-	dc->SetUserScale( actualScale, actualScale );
-	dc->SetDeviceOrigin( (long) posX, (long) posY );
+	dc->SetUserScale(actualScale, actualScale);
+	dc->SetDeviceOrigin((long)posX, (long)posY);
 
-	//  Get the latest bitmap as rendered by the ChartCanvas
+	// Get the latest bitmap as rendered by the ChartCanvas
 
-	if(g_bopengl) {
+	if (g_bopengl) {
 #ifdef ocpnUSE_GL
 		int gsx = cc1->GetglCanvas()->GetSize().x;
 		int gsy = cc1->GetglCanvas()->GetSize().y;
 
-		unsigned char *buffer = (unsigned char *)malloc( gsx * gsy * 3 );
-		glReadPixels(0, 0, gsx, gsy, GL_RGB, GL_UNSIGNED_BYTE, buffer );
-		wxImage image( gsx,gsy );
+		unsigned char* buffer = (unsigned char*)malloc(gsx * gsy * 3);
+		glReadPixels(0, 0, gsx, gsy, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+		wxImage image(gsx, gsy);
 		image.SetData(buffer);
-		wxImage mir_imag = image.Mirror( false );
-		wxBitmap bmp( mir_imag );
+		wxImage mir_imag = image.Mirror(false);
+		wxBitmap bmp(mir_imag);
 		wxMemoryDC mdc;
-		mdc.SelectObject( bmp );
-		dc->Blit( 0, 0, bmp.GetWidth(), bmp.GetHeight(), &mdc, 0, 0 );
-		mdc.SelectObject( wxNullBitmap );
+		mdc.SelectObject(bmp);
+		dc->Blit(0, 0, bmp.GetWidth(), bmp.GetHeight(), &mdc, 0, 0);
+		mdc.SelectObject(wxNullBitmap);
 #endif
-	}
-	else {
+	} else {
 
-		//  And Blit/scale it onto the Printer DC
+		// And Blit/scale it onto the Printer DC
 		wxMemoryDC mdc;
-		mdc.SelectObject( *( cc1->pscratch_bm ) );
-
-		dc->Blit( 0, 0, cc1->pscratch_bm->GetWidth(), cc1->pscratch_bm->GetHeight(), &mdc, 0, 0 );
-
-		mdc.SelectObject( wxNullBitmap );
+		mdc.SelectObject(cc1->get_scratch_bitmap());
+		dc->Blit(0, 0, cc1->get_scratch_bitmap().GetWidth(), cc1->get_scratch_bitmap().GetHeight(),
+				 &mdc, 0, 0);
+		mdc.SelectObject(wxNullBitmap);
 	}
 }
 

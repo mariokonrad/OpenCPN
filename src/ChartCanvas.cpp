@@ -4820,6 +4820,11 @@ void ChartCanvas::OnSize(wxSizeEvent& event)
 	ReloadVP();
 }
 
+wxBitmap& ChartCanvas::get_scratch_bitmap()
+{
+	return *pscratch_bm;
+}
+
 void ChartCanvas::ShowChartInfoWindow(int x, int, int dbIndex)
 {
 	if (dbIndex >= 0) {

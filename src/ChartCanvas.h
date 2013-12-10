@@ -241,20 +241,18 @@ public:
 	const wxCursor& get_cursor_arrow() const;
 	const wxCursor& get_cursor_cross() const;
 
-	// FIXME: move public attributes to private
-
-	// Todo build more accessors
-	bool m_bFollow;
-	TCWin* pCwin;
-	wxBitmap* pscratch_bm;
+	wxBitmap& get_scratch_bitmap(); // FIXME: breaks encapsulation
 
 	bool PurgeGLCanvasChartCache(chart::ChartBase* pc);
-
 	void RemovePointFromRoute(RoutePoint* point, Route* route); // FIXME: this method does not belong here
 
 #ifdef ocpnUSE_GL
-	glChartCanvas* GetglCanvas();
+	glChartCanvas* GetglCanvas(); // FIXME: breaks encapsulation
 #endif
+
+	// FIXME: move public attributes to private
+	bool m_bFollow;
+	TCWin* pCwin;
 
 private:
 	ViewPort VPoint;
@@ -565,6 +563,7 @@ private:
 	wxCursor* pCursorPencil;
 	wxCursor* pCursorArrow;
 	wxCursor* pCursorCross;
+	wxBitmap* pscratch_bm;
 };
 
 #endif

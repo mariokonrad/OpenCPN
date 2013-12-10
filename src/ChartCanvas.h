@@ -530,11 +530,6 @@ private:
 
 	SelectItem* m_pRolloverRouteSeg;
 
-	double m_wheel_lat; // FIXME: replace this with Position
-	double m_wheel_lon;
-	int m_wheel_x;
-	int m_wheel_y;
-
 	ViewPort m_bm_cache_vp;
 	wxBitmap m_working_bm; // Used to build quilt in OnPaint()
 	wxBitmap m_cached_chart_bm; // A cached copy of the fully drawn quilt

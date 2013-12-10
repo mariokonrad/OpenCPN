@@ -152,7 +152,7 @@ public:
 	void ClearbFollow(void);
 
 	void GetCanvasPointPix(const Position& pos, wxPoint* r);
-	void GetCanvasPixPoint(int x, int y, double& lat, double& lon);
+	Position GetCanvasPixPoint(int x, int y);
 	void WarpPointerDeferred(int x, int y);
 	void UpdateShips();
 	void UpdateAIS();
@@ -195,7 +195,7 @@ public:
 	double GetPixPerMM() const;
 
 	void SetOwnShipState(ownship_state_t state);
-	void GetCursorLatLon(double* lat, double* lon);
+	Position GetCursorLatLon();
 
 	bool ZoomCanvasIn(double factor);
 	bool ZoomCanvasOut(double factor);

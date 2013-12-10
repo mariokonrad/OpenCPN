@@ -6487,19 +6487,17 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport,
 bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort& viewport,
 								   std::vector<s57Sector_t>& sectorlegs)
 {
-	double cursor_lat, cursor_lon;
-	static double lastLat, lastLon;
+	static Position lastpos;
 
 	if (!ps52plib || !ps52plib->m_bExtendLightSectors)
 		return false;
 
-	cc1->GetCanvasPixPoint(mx, my, cursor_lat, cursor_lon);
+	Position cursor = cc1->GetCanvasPixPoint(mx, my);
 
-	if (lastLat == cursor_lat && lastLon == cursor_lon)
+	if (lastpos == cursor)
 		return false;
 
-	lastLat = cursor_lat;
-	lastLon = cursor_lon;
+	lastpos = cursor;
 	bool newSectorsNeedDrawing = false;
 
 	ChartBase* targetchart = cc1->GetChartAtCursor();
@@ -6522,7 +6520,7 @@ bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort& viewport,
 		float selectRadius = 16 / (viewport.view_scale_ppm * 1852 * 60);
 
 		ListOfObjRazRules* rule_list
-			= chart->GetObjRuleListAtLatLon(cursor_lat, cursor_lon, selectRadius, &viewport);
+			= chart->GetObjRuleListAtLatLon(cursor.lat(), cursor.lon(), selectRadius, &viewport);
 
 		wxPoint2DDouble lightPosD(0, 0);
 

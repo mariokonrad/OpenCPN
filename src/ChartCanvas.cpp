@@ -2083,30 +2083,24 @@ void ChartCanvas::OnCursorTrackTimerEvent(wxTimerEvent&)
 
 	// Check the absolute range of the cursor position
 	// There could be a window wherein the chart geoereferencing is not valid....
-	double cursor_lat;
-	double cursor_lon;
-	cc1->GetCanvasPixPoint(mouse_x, mouse_y, cursor_lat, cursor_lon);
+	Position cursor = cc1->GetCanvasPixPoint(mouse_x, mouse_y);
 
-	if ((fabs(cursor_lat) < 90.0) && (fabs(cursor_lon) < 360.0)) {
-		while (cursor_lon < -180.0)
-			cursor_lon += 360.0;
-
-		while (cursor_lon > 180.0)
-			cursor_lon -= 360.0;
+	if ((fabs(cursor.lat()) < 90.0) && (fabs(cursor.lon()) < 360.0)) {
+		cursor.normalize_lon();
 
 		if (parent_frame->hasStatusBar()) {
 			wxString s1;
 			s1 += _T(" ");
-			s1 += toSDMM(1, cursor_lat);
+			s1 += toSDMM(1, cursor.lat());
 			s1 += _T("   ");
-			s1 += toSDMM(2, cursor_lon);
+			s1 += toSDMM(2, cursor.lon());
 			parent_frame->SetStatusText(s1, STAT_FIELD_CURSOR_LL);
 
 			double brg;
 			double dist;
 			wxString s;
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			geo::DistanceBearingMercator(cursor_lat, cursor_lon, nav.pos.lat(), nav.pos.lon(), &brg, &dist);
+			geo::DistanceBearingMercator(cursor.lat(), cursor.lon(), nav.pos.lat(), nav.pos.lon(), &brg, &dist);
 			if (g_bShowMag)
 				s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 			else
@@ -2120,12 +2114,9 @@ void ChartCanvas::OnCursorTrackTimerEvent(wxTimerEvent&)
 #endif
 }
 
-void ChartCanvas::GetCursorLatLon(double* lat, double* lon)
+Position ChartCanvas::GetCursorLatLon()
 {
-	double clat, clon;
-	GetCanvasPixPoint(mouse_x, mouse_y, clat, clon);
-	*lat = clat;
-	*lon = clon;
+	return GetCanvasPixPoint(mouse_x, mouse_y);
 }
 
 void ChartCanvas::GetCanvasPointPix(const Position& pos, wxPoint* r)
@@ -2161,15 +2152,18 @@ void ChartCanvas::GetCanvasPointPix(const Position& pos, wxPoint* r)
 		}
 	}
 
-	//    if needed, use the VPoint scaling estimator,
+	// if needed, use the VPoint scaling estimator,
 	if (bUseVP) {
 		wxPoint p = GetVP().GetPixFromLL(pos);
 		*r = p;
 	}
 }
 
-void ChartCanvas::GetCanvasPixPoint(int x, int y, double& lat, double& lon)
+Position ChartCanvas::GetCanvasPixPoint(int x, int y)
 {
+	double lat;
+	double lon;
+
 	// If the Current Chart is a raster chart, and the
 	// requested x,y is within the boundaries of the chart,
 	// and the VP is not rotated,
@@ -2197,7 +2191,8 @@ void ChartCanvas::GetCanvasPixPoint(int x, int y, double& lat, double& lon)
 			// So do that before accessing the chart's embedded georeferencing
 			Cur_BSB_Ch->SetVPRasterParms(GetVP());
 
-			double slat, slon;
+			double slat;
+			double slon;
 			if (0 == Cur_BSB_Ch->vp_pix_to_latlong(GetVP(), x, y, &slat, &slon)) {
 				lat = slat;
 
@@ -2216,6 +2211,8 @@ void ChartCanvas::GetCanvasPixPoint(int x, int y, double& lat, double& lon)
 	if (bUseVP) {
 		GetVP().GetLLFromPix(wxPoint(x, y), &lat, &lon);
 	}
+
+	return Position(lat, lon);
 }
 
 bool ChartCanvas::ZoomCanvasIn(double factor)
@@ -2466,19 +2463,13 @@ void ChartCanvas::ClearbFollow(void)
 
 bool ChartCanvas::PanCanvas(int dx, int dy)
 {
-	double dlat;
-	double dlon;
 	wxPoint p;
 
 	extendedSectorLegs.clear();
 
 	GetCanvasPointPix(Position(GetVP().clat, GetVP().clon), &p);
-	GetCanvasPixPoint(p.x + dx, p.y + dy, dlat, dlon);
-
-	if (dlon > 360.0)
-		dlon -= 360.0;
-	if (dlon < -360.0)
-		dlon += 360.0;
+	Position dpos = GetCanvasPixPoint(p.x + dx, p.y + dy);
+	dpos.normalize_lon();
 
 	// This should not really be necessary, but round-trip georef on some charts is not perfect,
 	// So we can get creep on repeated unidimensional pans, and corrupt chart cacheing.......
@@ -2487,13 +2478,13 @@ bool ChartCanvas::PanCanvas(int dx, int dy)
 	if (((fabs(GetVP().skew) < 0.001)) && (fabs(GetVP().rotation) < 0.001)) {
 
 		if (dx == 0)
-			dlon = GetVP().clon;
+			dpos = Position(dpos.lat(), GetVP().clon);
 		if (dy == 0)
-			dlat = GetVP().clat;
+			dpos = Position(GetVP().clat, dpos.lon());
 	}
 
 	int cur_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
-	SetViewPoint(Position(dlat, dlon), VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation);
+	SetViewPoint(dpos, VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation);
 
 	if (VPoint.b_quilt) {
 		int new_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
@@ -3409,11 +3400,16 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 		  && ((fabs(GetVP().skew) < 1e-9) || g_bskew_comp)))
 		return;
 
-	double nlat, elon, slat, wlon;
-	double lat, lon;
-	double dlat, dlon;
-	double gridlatMajor, gridlatMinor, gridlonMajor, gridlonMinor;
-	wxCoord w, h;
+	double lat;
+	double lon;
+	double dlat;
+	double dlon;
+	double gridlatMajor;
+	double gridlatMinor;
+	double gridlonMajor;
+	double gridlonMinor;
+	wxCoord w;
+	wxCoord h;
 	wxPen GridPen(GetGlobalColor(_T ( "SNDG1" )), 1, wxSOLID);
 	wxFont* font = wxTheFontList->FindOrCreateFont(
 		8, wxFONTFAMILY_SWISS, wxNORMAL, wxFONTWEIGHT_NORMAL, FALSE, wxString(_T ( "Arial" )));
@@ -3424,10 +3420,10 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 	w = m_canvas_width;
 	h = m_canvas_height;
 
-	GetCanvasPixPoint(0, 0, nlat, wlon); // get lat/lon of upper left point of the window
-	GetCanvasPixPoint(w, h, slat, elon); // get lat/lon of lower right point of the window
-	dlat = nlat - slat; // calculate how many degrees of latitude are shown in the window
-	dlon = elon - wlon; // calculate how many degrees of longitude are shown in the window
+	Position p0 = GetCanvasPixPoint(0, 0); // get lat/lon of upper left point of the window
+	Position p1 = GetCanvasPixPoint(w, h); // get lat/lon of lower right point of the window
+	dlat = p0.lat() - p1.lat(); // calculate how many degrees of latitude are shown in the window
+	dlon = p1.lon() - p0.lon(); // calculate how many degrees of longitude are shown in the window
 	if (dlon < 0.0) // concider datum border at 180 degrees longitude
 	{
 		dlon = dlon + 360.0;
@@ -3436,14 +3432,14 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 	CalcGridSpacing(dlat, gridlatMajor, gridlatMinor);
 
 	// calculate position of first major latitude grid line
-	lat = ceil(slat / gridlatMajor) * gridlatMajor;
+	lat = ceil(p1.lat() / gridlatMajor) * gridlatMajor;
 
 	// Draw Major latitude grid lines and text
-	while (lat < nlat) {
+	while (lat < p0.lat()) {
 		wxPoint r;
 		char sbuf[12];
 		CalcGridText(lat, gridlatMajor, true, sbuf); // get text for grid line
-		GetCanvasPointPix(Position(lat, (elon + wlon) / 2), &r);
+		GetCanvasPointPix(Position(lat, (p1.lon() + p0.lon()) / 2), &r);
 		dc.DrawLine(0, r.y, w, r.y, false); // draw grid line
 		dc.DrawText(wxString(sbuf, wxConvUTF8), 0, r.y); // draw text
 		lat = lat + gridlatMajor;
@@ -3453,12 +3449,12 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 	}
 
 	// calculate position of first minor latitude grid line
-	lat = ceil(slat / gridlatMinor) * gridlatMinor;
+	lat = ceil(p1.lat() / gridlatMinor) * gridlatMinor;
 
 	// Draw minor latitude grid lines
-	while (lat < nlat) {
+	while (lat < p0.lat()) {
 		wxPoint r;
-		GetCanvasPointPix(Position(lat, (elon + wlon) / 2), &r);
+		GetCanvasPointPix(Position(lat, (p1.lon() + p0.lon()) / 2), &r);
 		dc.DrawLine(0, r.y, 10, r.y, false);
 		dc.DrawLine(w - 10, r.y, w, r.y, false);
 		lat = lat + gridlatMinor;
@@ -3468,14 +3464,14 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 	CalcGridSpacing(dlon, gridlonMajor, gridlonMinor);
 
 	// calculate position of first major latitude grid line
-	lon = ceil(wlon / gridlonMajor) * gridlonMajor;
+	lon = ceil(p0.lon() / gridlonMajor) * gridlonMajor;
 
 	// draw major longitude grid lines
 	for (int i = 0, itermax = (int)(dlon / gridlonMajor); i <= itermax; i++) {
 		wxPoint r;
 		char sbuf[12];
 		CalcGridText(lon, gridlonMajor, false, sbuf);
-		GetCanvasPointPix(Position((nlat + slat) / 2, lon), &r);
+		GetCanvasPointPix(Position((p0.lat() + p1.lat()) / 2, lon), &r);
 		dc.DrawLine(r.x, 0, r.x, h, false);
 		dc.DrawText(wxString(sbuf, wxConvUTF8), r.x, 0);
 		lon = lon + gridlonMajor;
@@ -3488,11 +3484,11 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 	}
 
 	// calculate position of first minor longitude grid line
-	lon = ceil(wlon / gridlonMinor) * gridlonMinor;
+	lon = ceil(p0.lon() / gridlonMinor) * gridlonMinor;
 	// draw minor longitude grid lines
 	for (int i = 0, itermax = (int)(dlon / gridlonMinor); i <= itermax; i++) {
 		wxPoint r;
-		GetCanvasPointPix(Position((nlat + slat) / 2, lon), &r);
+		GetCanvasPointPix(Position((p0.lat() + p1.lat()) / 2, lon), &r);
 		dc.DrawLine(r.x, 0, r.x, 10, false);
 		dc.DrawLine(r.x, h - 10, r.x, h, false);
 		lon = lon + gridlonMinor;
@@ -3504,19 +3500,17 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 
 void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 {
-	double blat;
-	double blon;
-	double tlat;
-	double tlon;
-	wxPoint r;
-
 	int x_origin = g_bDisplayGrid ? 60 : 20;
 	int y_origin = m_canvas_height - 50;
 
-	if (GetVP().chart_scale > 80000) // Draw 10 mile scale as SCALEB11
-	{
-		GetCanvasPixPoint(x_origin, y_origin, blat, blon);
-		geo::ll_gc_ll(blat, blon, 0, 10.0, &tlat, &tlon);
+	if (GetVP().chart_scale > 80000) {
+		// Draw 10 mile scale as SCALEB11
+		Position pos = GetCanvasPixPoint(x_origin, y_origin);
+
+		double tlat;
+		double tlon;
+		geo::ll_gc_ll(pos.lat(), pos.lon(), 0, 10.0, &tlat, &tlon);
+		wxPoint r;
 		GetCanvasPointPix(Position(tlat, tlon), &r);
 
 		int l1 = (y_origin - r.y) / 5;
@@ -3533,10 +3527,14 @@ void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 
 			dc.DrawLine(x_origin, y_origin - y, x_origin, y_origin - (y + l1));
 		}
-	} else // Draw 1 mile scale as SCALEB10
-	{
-		GetCanvasPixPoint(x_origin, y_origin, blat, blon);
-		geo::ll_gc_ll(blat, blon, 0, 1.0, &tlat, &tlon);
+	} else {
+		// Draw 1 mile scale as SCALEB10
+		Position pos = GetCanvasPixPoint(x_origin, y_origin);
+
+		double tlat;
+		double tlon;
+		geo::ll_gc_ll(pos.lat(), pos.lon(), 0, 1.0, &tlat, &tlon);
+		wxPoint r;
 		GetCanvasPointPix(Position(tlat, tlon), &r);
 
 		int l1 = (y_origin - r.y) / 10;
@@ -4991,10 +4989,7 @@ void ChartCanvas::mouse_left_center(const wxMouseEvent& event)
 	m_DoubleClickTimer->Start();
 	singleClickEventIsValid = false;
 
-	double zlat;
-	double zlon;
-	GetCanvasPixPoint(event.GetX(), event.GetY(), zlat, zlon);
-	Position zpos(zlat, zlon);
+	Position zpos = GetCanvasPixPoint(event.GetX(), event.GetY());
 
 	SelectItem* pFindAIS = pSelectAIS->FindSelection(zpos, SelectItem::TYPE_AISTARGET);
 
@@ -5033,7 +5028,7 @@ void ChartCanvas::mouse_left_center(const wxMouseEvent& event)
 
 	// Found no object to act on, so show chart info.
 
-	ShowObjectQueryWindow(event.GetX(), event.GetY(), zlat, zlon);
+	ShowObjectQueryWindow(event.GetX(), event.GetY(), zpos.lat(), zpos.lon());
 }
 
 void ChartCanvas::mouse_route_rubber_band(const wxMouseEvent& event)
@@ -5157,10 +5152,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 	mx = x;
 	my = y;
-	double lat;
-	double lon;
-	GetCanvasPixPoint(x, y, lat, lon);
-	m_cursor_pos = Position(lat, lon);
+	m_cursor_pos = GetCanvasPixPoint(x, y);
 
 	// Calculate meaningful SelectRadius
 	float SelectRadius;
@@ -5497,11 +5489,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				m_pFoundPoint->pos1 = m_cursor_pos;
 
 				if (CheckEdgePan(x, y, true)) {
-					double new_cursor_lat, new_cursor_lon;
-					GetCanvasPixPoint(x, y, new_cursor_lat, new_cursor_lon);
+					Position newcursorpos = GetCanvasPixPoint(x, y);
 
 					// update the RoutePoint entry
-					Position newcursorpos(new_cursor_lat, new_cursor_lon);
 					m_pRoutePointEditTarget->set_position(newcursorpos);
 
 					// update the SelectList entry
@@ -6910,17 +6900,14 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 	RoutePoint* pLast;
 
 	wxPoint r;
-	double zlat;
-	double zlon;
-
-	GetCanvasPixPoint(popx, popy, zlat, zlon);
+	Position zpos = GetCanvasPixPoint(popx, popy);
 
 	using namespace chart;
 
 	switch (event.GetId()) {
 		case ID_DEF_MENU_MAX_DETAIL:
-			vLat = zlat;
-			vLon = zlon;
+			vLat = zpos.lat();
+			vLon = zpos.lon();
 			ClearbFollow();
 			parent_frame->DoChartUpdate();
 			parent_frame->SelectChartFromStack(0, false, CHART_TYPE_DONTCARE, chart::CHART_FAMILY_RASTER);
@@ -6945,13 +6932,11 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			break;
 
 		case ID_DEF_MENU_MOVE_BOAT_HERE:
-			global::OCPN::get().nav().set_latitude(zlat);
-			global::OCPN::get().nav().set_longitude(zlon);
+			global::OCPN::get().nav().set_position(zpos);
 			break;
 
 		case ID_DEF_MENU_GOTO_HERE: {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			Position zpos(zlat, zlon);
 			RoutePoint* pWP_dest = new RoutePoint(zpos, g_default_wp_icon, wxEmptyString);
 			pSelect->AddSelectableRoutePoint(zpos, pWP_dest);
 
@@ -6980,7 +6965,6 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		} break;
 
 		case ID_DEF_MENU_DROP_WP: {
-			Position zpos(zlat, zlon);
 			RoutePoint* pWP = new RoutePoint(zpos, g_default_wp_icon, wxEmptyString);
 			pWP->m_bIsolatedMark = true; // This is an isolated mark
 			pSelect->AddSelectableRoutePoint(zpos, pWP);
@@ -7162,7 +7146,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			break;
 
 		case ID_DEF_MENU_QUERY: {
-			ShowObjectQueryWindow(popx, popy, zlat, zlon);
+			ShowObjectQueryWindow(popx, popy, zpos.lat(), zpos.lon());
 			break;
 		}
 #endif
@@ -7291,7 +7275,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			if (m_pSelectedRoute->m_bIsInLayer)
 				break;
 
-			m_pSelectedRoute->InsertPointBefore(m_pFoundRoutePointSecond, zlat, zlon);
+			m_pSelectedRoute->InsertPointBefore(m_pFoundRoutePointSecond, zpos.lat(), zpos.lon());
 
 			pSelect->DeleteAllSelectableRoutePoints(m_pSelectedRoute);
 			pSelect->DeleteAllSelectableRouteSegments(m_pSelectedRoute);
@@ -7485,25 +7469,25 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 		case ID_RC_MENU_SCALE_IN:
 			parent_frame->DoStackDown();
-			GetCanvasPointPix(Position(zlat, zlon), &r);
+			GetCanvasPointPix(zpos, &r);
 			WarpPointer(r.x, r.y);
 			break;
 
 		case ID_RC_MENU_SCALE_OUT:
 			parent_frame->DoStackUp();
-			GetCanvasPointPix(Position(zlat, zlon), &r);
+			GetCanvasPointPix(zpos, &r);
 			WarpPointer(r.x, r.y);
 			break;
 
 		case ID_RC_MENU_ZOOM_IN:
 			SetVPScale(GetVPScale() * 2);
-			GetCanvasPointPix(Position(zlat, zlon), &r);
+			GetCanvasPointPix(zpos, &r);
 			WarpPointer(r.x, r.y);
 			break;
 
 		case ID_RC_MENU_ZOOM_OUT:
 			SetVPScale(GetVPScale() / 2);
-			GetCanvasPointPix(Position(zlat, zlon), &r);
+			GetCanvasPointPix(zpos, &r);
 			WarpPointer(r.x, r.y);
 			break;
 
@@ -8446,10 +8430,7 @@ bool ChartCanvas::SetCursor(const wxCursor& c)
 void ChartCanvas::Refresh(bool eraseBackground, const wxRect* rect)
 {
 	// Keep the mouse position members up to date
-	double lat;
-	double lon;
-	GetCanvasPixPoint(mouse_x, mouse_y, lat, lon);
-	m_cursor_pos = Position(lat, lon);
+	m_cursor_pos = GetCanvasPixPoint(mouse_x, mouse_y);
 
 	// Retrigger the route leg popup timer
 	// This handles the case when the chart is moving in auto-follow mode, but no user mouse

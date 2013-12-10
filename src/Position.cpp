@@ -48,3 +48,11 @@ void Position::normalize_lon()
 		longitude -= 360.0;
 }
 
+bool Position::operator==(const Position& other) const
+{
+	return true
+		&& latitude == other.latitude
+		&& longitude == other.longitude
+		;
+}
+

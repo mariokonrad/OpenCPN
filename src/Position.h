@@ -34,6 +34,8 @@ public:
 
 	void normalize_lon();
 
+	bool operator==(const Position&) const;
+
 private:
 	double latitude;
 	double longitude;

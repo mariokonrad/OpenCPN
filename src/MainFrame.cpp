@@ -3305,12 +3305,10 @@ void MainFrame::onTimer_update_status_cursor_position()
 	if (!chart_canvas)
 		return;
 
-	double cursor_lat;
-	double cursor_lon;
-	chart_canvas->GetCursorLatLon(&cursor_lat, &cursor_lon);
+	Position cursor = chart_canvas->GetCursorLatLon();
 
 	if (GetStatusBar()) {
-		wxString s1 = _T(" ") + toSDMM(1, cursor_lat) + _T("   ") + toSDMM(2, cursor_lon);
+		wxString s1 = _T(" ") + toSDMM(1, cursor.lat()) + _T("   ") + toSDMM(2, cursor.lon());
 		SetStatusText(s1, STAT_FIELD_CURSOR_LL);
 	}
 }
@@ -3320,14 +3318,12 @@ void MainFrame::onTimer_update_status_cursor_brgrng()
 	if (!chart_canvas)
 		return;
 
-	double cursor_lat;
-	double cursor_lon;
-	chart_canvas->GetCursorLatLon(&cursor_lat, &cursor_lon);
+	Position cursor = chart_canvas->GetCursorLatLon();
 
 	double brg;
 	double dist;
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-	geo::DistanceBearingMercator(cursor_lat, cursor_lon, nav.pos.lat(), nav.pos.lon(), &brg, &dist);
+	geo::DistanceBearingMercator(cursor.lat(), cursor.lon(), nav.pos.lat(), nav.pos.lon(), &brg, &dist);
 	wxString s;
 	if (g_bShowMag)
 		s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));

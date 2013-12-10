@@ -231,24 +231,26 @@ public:
 	void HideChartInfoWindow(void);
 	void CancelMeasureRoute();
 
+	void set_prev_mouse_point(RoutePoint*);
+	void invalidate_undo();
+	void invalidate_redo();
+
+	Undo& get_undo(); // FIXME: breaks encapsulation
+
+	const wxCursor& get_cursor_pencil() const;
+	const wxCursor& get_cursor_arrow() const;
+	const wxCursor& get_cursor_cross() const;
+
 	// FIXME: move public attributes to private
 
 	// Todo build more accessors
 	bool m_bFollow;
-	wxCursor* pCursorPencil;
-	wxCursor* pCursorArrow;
-	wxCursor* pCursorCross;
 	TCWin* pCwin;
 	wxBitmap* pscratch_bm;
-	Position m_cursor_pos;
-	Undo* undo;
-	wxPoint r_rband;
-	Position m_prev_route;
-	RoutePoint* m_prev_pMousePoint;
 
 	bool PurgeGLCanvasChartCache(chart::ChartBase* pc);
 
-	void RemovePointFromRoute(RoutePoint* point, Route* route);
+	void RemovePointFromRoute(RoutePoint* point, Route* route); // FIXME: this method does not belong here
 
 #ifdef ocpnUSE_GL
 	glChartCanvas* GetglCanvas();
@@ -554,6 +556,15 @@ private:
 	bool m_b_paint_enable;
 
 	int m_AISRollover_MMSI;
+
+	Position m_prev_route;
+	RoutePoint* m_prev_pMousePoint;
+	Position m_cursor_pos;
+	Undo* undo;
+	wxPoint r_rband;
+	wxCursor* pCursorPencil;
+	wxCursor* pCursorArrow;
+	wxCursor* pCursorCross;
 };
 
 #endif

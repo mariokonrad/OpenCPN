@@ -683,7 +683,7 @@ void TCWin::OnTCWinPopupTimerEvent(wxTimerEvent& WXUNUSED(event))
 	wxRegion cursorarea(m_graph_rect);
 	if (cursorarea.Contains(curs_x, curs_y)) {
 		ShowRollover = true;
-		SetCursor(*pParent->pCursorCross);
+		SetCursor(pParent->get_cursor_cross());
 		if (NULL == m_pTCRolloverWin) {
 			m_pTCRolloverWin = new RolloverWin(this);
 			m_pTCRolloverWin->SetMousePropogation(1);
@@ -728,7 +728,7 @@ void TCWin::OnTCWinPopupTimerEvent(wxTimerEvent& WXUNUSED(event))
 		m_pTCRolloverWin->Refresh();
 		m_pTCRolloverWin->Show();
 	} else {
-		SetCursor(*pParent->pCursorArrow);
+		SetCursor(pParent->get_cursor_arrow());
 		ShowRollover = false;
 	}
 

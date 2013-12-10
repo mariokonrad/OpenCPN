@@ -121,8 +121,8 @@ void AISTargetQueryDialog::OnIdWptCreateClick(wxCommandEvent &)
 
 			if( pRouteManagerDialog && pRouteManagerDialog->IsShown() )
 				pRouteManagerDialog->UpdateWptListCtrl();
-			cc1->undo->BeforeUndoableAction( UndoAction::Undo_CreateWaypoint, pWP, UndoAction::Undo_HasParent, NULL );
-			cc1->undo->AfterUndoableAction( NULL );
+			cc1->get_undo().BeforeUndoableAction( UndoAction::Undo_CreateWaypoint, pWP, UndoAction::Undo_HasParent, NULL );
+			cc1->get_undo().AfterUndoableAction( NULL );
 			Refresh( false );
 		}
 	}

@@ -1296,6 +1296,42 @@ ViewPort& ChartCanvas::GetVP()
 	return VPoint;
 }
 
+void ChartCanvas::set_prev_mouse_point(RoutePoint* route_point)
+{
+	m_prev_pMousePoint = route_point;
+	m_prev_route = m_prev_pMousePoint->get_position();
+}
+
+void ChartCanvas::invalidate_undo()
+{
+	undo->InvalidateUndo();
+}
+
+void ChartCanvas::invalidate_redo()
+{
+	undo->InvalidateRedo();
+}
+
+Undo& ChartCanvas::get_undo()
+{
+	return *undo;
+}
+
+const wxCursor& ChartCanvas::get_cursor_pencil() const
+{
+	return *pCursorPencil;
+}
+
+const wxCursor& ChartCanvas::get_cursor_arrow() const
+{
+	return *pCursorArrow;
+}
+
+const wxCursor& ChartCanvas::get_cursor_cross() const
+{
+	return *pCursorCross;
+}
+
 void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 {
 	m_panx = 0; //  Stop any autopanning

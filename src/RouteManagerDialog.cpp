@@ -875,7 +875,7 @@ void RouteManagerDialog::OnRteDeleteClick(wxCommandEvent&)
 		UpdateRouteListCtrl();
 		UpdateTrkListCtrl();
 
-		cc1->undo->InvalidateUndo();
+		cc1->invalidate_undo();
 		cc1->Refresh();
 		::wxEndBusyCursor();
 	}
@@ -903,7 +903,7 @@ void RouteManagerDialog::OnRteDeleteAllClick(wxCommandEvent&)
 
 		if (pRoutePropDialog)
 			pRoutePropDialog->Hide();
-		cc1->undo->InvalidateUndo();
+		cc1->invalidate_undo();
 		cc1->Refresh();
 
 		m_bNeedConfigFlush = true;
@@ -1577,7 +1577,7 @@ void RouteManagerDialog::OnTrkDeleteClick(wxCommandEvent&)
 		UpdateRouteListCtrl();
 		UpdateTrkListCtrl();
 
-		cc1->undo->InvalidateUndo();
+		cc1->invalidate_undo();
 		cc1->Refresh();
 		::wxEndBusyCursor();
 	}
@@ -1994,7 +1994,7 @@ void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent&)
 			pMarkPropDialog->UpdateProperties();
 		}
 
-		cc1->undo->InvalidateUndo();
+		cc1->invalidate_undo();
 		cc1->Refresh();
 		::wxEndBusyCursor();
 	}
@@ -2116,7 +2116,7 @@ void RouteManagerDialog::OnWptDeleteAllClick(wxCommandEvent&)
 	m_lastWptItem = -1;
 	UpdateRouteListCtrl();
 	UpdateWptListCtrl();
-	cc1->undo->InvalidateUndo();
+	cc1->invalidate_undo();
 	cc1->Refresh();
 }
 

@@ -1698,7 +1698,7 @@ void MainFrame::OnToolLeftClick(wxCommandEvent& event)
 
 		case ID_ROUTE:
 			nRoute_State = 1;
-			chart_canvas->SetCursor(*chart_canvas->pCursorPencil);
+			chart_canvas->SetCursor(chart_canvas->get_cursor_pencil());
 			break;
 
 		case ID_FOLLOW:

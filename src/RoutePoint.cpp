@@ -250,11 +250,10 @@ void RoutePoint::ReLoadIcon(void)
 
 void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 {
-	wxPoint r;
 	wxRect hilitebox;
 	unsigned char transparency = 100;
 
-	cc1->GetCanvasPointPix(position, &r);
+	wxPoint r = cc1->GetCanvasPointPix(position);
 
 	// return the home point in this dc to allow "connect the dots"
 	if (NULL != rpn)

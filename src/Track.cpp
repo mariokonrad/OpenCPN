@@ -414,8 +414,7 @@ void Track::Draw(ocpnDC& dc, ViewPort& VP)
 		RoutePoint* prp = *route_point;
 		unsigned short int ToSegNo = prp->m_GPXTrkSegNo;
 
-		wxPoint r;
-		cc1->GetCanvasPointPix(prp->get_position(), &r);
+		wxPoint r = cc1->GetCanvasPointPix(prp->get_position());
 
 		// We do inline decomposition of the line segments, in a simple minded way
 		// If the line segment length is less than approximately 2 pixels, then simply don't render
@@ -438,9 +437,8 @@ void Track::Draw(ocpnDC& dc, ViewPort& VP)
 	// Draw last segment, dynamically, maybe.....
 
 	if (m_bRunning) {
-		wxPoint r;
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		cc1->GetCanvasPointPix(nav.pos, &r);
+		wxPoint r = cc1->GetCanvasPointPix(nav.pos);
 		RenderSegment(dc, rpt.x, rpt.y, r.x, r.y, VP, false, (int)radius); // no arrows, with hilite
 	}
 }

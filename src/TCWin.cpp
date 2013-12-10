@@ -348,8 +348,7 @@ void TCWin::RePosition(void)
 	// Position the window
 	Position pos(pIDX->IDX_lon, pIDX->IDX_lat);
 
-	wxPoint r;
-	pParent->GetCanvasPointPix(pos, &r);
+	wxPoint r = pParent->GetCanvasPointPix(pos);
 	pParent->ClientToScreen(&r.x, &r.y);
 	Move(r);
 }

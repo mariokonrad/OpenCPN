@@ -2119,8 +2119,10 @@ Position ChartCanvas::GetCursorLatLon()
 	return GetCanvasPixPoint(mouse_x, mouse_y);
 }
 
-void ChartCanvas::GetCanvasPointPix(const Position& pos, wxPoint* r)
+wxPoint ChartCanvas::GetCanvasPointPix(const Position& pos)
 {
+	wxPoint r;
+
 	// If the Current Chart is a raster chart, and the
 	// requested lat/long is within the boundaries of the chart,
 	// and the VP is not rotated,
@@ -2145,8 +2147,8 @@ void ChartCanvas::GetCanvasPointPix(const Position& pos, wxPoint* r)
 			Cur_BSB_Ch->SetVPRasterParms(GetVP());
 			int rpixxd, rpixyd;
 			if (0 == Cur_BSB_Ch->latlong_to_pix_vp(pos.lat(), pos.lon(), rpixxd, rpixyd, GetVP())) {
-				r->x = rpixxd;
-				r->y = rpixyd;
+				r.x = rpixxd;
+				r.y = rpixyd;
 				bUseVP = false;
 			}
 		}
@@ -2154,9 +2156,10 @@ void ChartCanvas::GetCanvasPointPix(const Position& pos, wxPoint* r)
 
 	// if needed, use the VPoint scaling estimator,
 	if (bUseVP) {
-		wxPoint p = GetVP().GetPixFromLL(pos);
-		*r = p;
+		r = GetVP().GetPixFromLL(pos);
 	}
+
+	return r;
 }
 
 Position ChartCanvas::GetCanvasPixPoint(int x, int y)
@@ -2463,11 +2466,9 @@ void ChartCanvas::ClearbFollow(void)
 
 bool ChartCanvas::PanCanvas(int dx, int dy)
 {
-	wxPoint p;
-
 	extendedSectorLegs.clear();
 
-	GetCanvasPointPix(Position(GetVP().clat, GetVP().clon), &p);
+	wxPoint p = GetCanvasPointPix(Position(GetVP().clat, GetVP().clon));
 	Position dpos = GetCanvasPixPoint(p.x + dx, p.y + dy);
 	dpos.normalize_lon();
 
@@ -2622,9 +2623,8 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 			Refresh(false);
 			b_ret = true;
 		} else {
-			wxPoint cp_last, cp_this;
-			GetCanvasPointPix(Position(m_cache_vp.clat, m_cache_vp.clon), &cp_last);
-			GetCanvasPointPix(Position(VPoint.clat, VPoint.clon), &cp_this);
+			wxPoint cp_last = GetCanvasPointPix(Position(m_cache_vp.clat, m_cache_vp.clon));
+			wxPoint cp_this = GetCanvasPointPix(Position(VPoint.clat, VPoint.clon));
 
 			if (cp_last != cp_this) {
 				Refresh(false);
@@ -2782,8 +2782,6 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 		// of roughly 10 % of the Viewport extent
 		double tlat;
 		double tlon;
-		wxPoint r;
-		wxPoint r1;
 		// roughly 10 % of lat range, in NM
 		double delta_y = (VPoint.GetBBox().GetMaxY() - VPoint.GetBBox().GetMinY()) * 60.0 * 0.10;
 
@@ -2796,8 +2794,8 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 
 		geo::ll_gc_ll(VPoint.clat, lon_norm, 0, delta_y, &tlat, &tlon);
 
-		GetCanvasPointPix(Position(tlat, tlon), &r1); // TODO: cleanup
-		GetCanvasPointPix(Position(VPoint.clat, lon_norm), &r);
+		wxPoint r1 = GetCanvasPointPix(Position(tlat, tlon)); // TODO: cleanup
+		wxPoint r = GetCanvasPointPix(Position(VPoint.clat, lon_norm));
 
 		m_true_scale_ppm = sqrt(pow((double)(r.y - r1.y), 2) + pow((double)(r.x - r1.x), 2))
 						   / (delta_y * 1852.0);
@@ -2875,7 +2873,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	if (!GetVP().IsValid())
 		return;
 	int drawit = 0;
-	wxPoint lGPSPoint, lShipMidPoint, lPredPoint, lHeadPoint, GPSOffsetPixels(0, 0);
+	wxPoint GPSOffsetPixels(0, 0);
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
@@ -2898,9 +2896,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), pCog, pSog * g_ownship_predictor_minutes / 60.0,
 				  &pred_lat, &pred_lon);
 
-	GetCanvasPointPix(nav.pos, &lGPSPoint);
-	lShipMidPoint = lGPSPoint;
-	GetCanvasPointPix(Position(pred_lat, pred_lon), &lPredPoint);
+	wxPoint lGPSPoint = GetCanvasPointPix(nav.pos);
+	wxPoint lShipMidPoint = lGPSPoint;
+	wxPoint lPredPoint = GetCanvasPointPix(Position(pred_lat, pred_lon));
 
 	double cog_rad
 		= atan2((double)(lPredPoint.y - lShipMidPoint.y), (double)(lPredPoint.x - lShipMidPoint.x));
@@ -2925,13 +2923,12 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 	// Calculate the ownship drawing angle icon_rad using an assumed 10 minute predictor
 	double osd_head_lat, osd_head_lon;
-	wxPoint osd_head_point;
 
 	geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), icon_hdt, pSog * 10.0 / 60.0, &osd_head_lat,
 				  &osd_head_lon);
 
-	GetCanvasPointPix(nav.pos, &lShipMidPoint);
-	GetCanvasPointPix(Position(osd_head_lat, osd_head_lon), &osd_head_point);
+	lShipMidPoint = GetCanvasPointPix(nav.pos);
+	wxPoint osd_head_point = GetCanvasPointPix(Position(osd_head_lat, osd_head_lon));
 
 	double icon_rad = atan2((double)(osd_head_point.y - lShipMidPoint.y),
 							(double)(osd_head_point.x - lShipMidPoint.x));
@@ -2946,8 +2943,8 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), icon_hdt, pSog * g_ownship_predictor_minutes / 60.0,
 				  &hdg_pred_lat, &hdg_pred_lon);
 
-	GetCanvasPointPix(nav.pos, &lShipMidPoint);
-	GetCanvasPointPix(Position(hdg_pred_lat, hdg_pred_lon), &lHeadPoint);
+	lShipMidPoint = GetCanvasPointPix(nav.pos);
+	wxPoint lHeadPoint = GetCanvasPointPix(Position(hdg_pred_lat, hdg_pred_lon));
 
 	// Should we draw the Head vector?
 	// Compare the points lHeadPoint and lPredPoint
@@ -3083,7 +3080,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				geo::ll_gc_ll(ship_mid_lat, ship_mid_lon, icon_hdt - 90.0, dx, &ship_mid_lat1,
 							  &ship_mid_lon1);
 
-				GetCanvasPointPix(Position(ship_mid_lat1, ship_mid_lon1), &lShipMidPoint);
+				lShipMidPoint = GetCanvasPointPix(Position(ship_mid_lat1, ship_mid_lon1));
 				GPSOffsetPixels.x = lShipMidPoint.x - lGPSPoint.x;
 				GPSOffsetPixels.y = lShipMidPoint.y - lGPSPoint.y;
 
@@ -3278,9 +3275,8 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 			double tlat;
 			double tlon;
-			wxPoint r;
 			geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), 0, factor, &tlat, &tlon);
-			GetCanvasPointPix(Position(tlat, tlon), &r);
+			wxPoint r = GetCanvasPointPix(Position(tlat, tlon));
 
 			double lpp = sqrt(pow((double)(lShipMidPoint.x - r.x), 2)
 							  + pow((double)(lShipMidPoint.y - r.y), 2));
@@ -3436,10 +3432,9 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 
 	// Draw Major latitude grid lines and text
 	while (lat < p0.lat()) {
-		wxPoint r;
 		char sbuf[12];
 		CalcGridText(lat, gridlatMajor, true, sbuf); // get text for grid line
-		GetCanvasPointPix(Position(lat, (p1.lon() + p0.lon()) / 2), &r);
+		wxPoint r = GetCanvasPointPix(Position(lat, (p1.lon() + p0.lon()) / 2));
 		dc.DrawLine(0, r.y, w, r.y, false); // draw grid line
 		dc.DrawText(wxString(sbuf, wxConvUTF8), 0, r.y); // draw text
 		lat = lat + gridlatMajor;
@@ -3453,8 +3448,7 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 
 	// Draw minor latitude grid lines
 	while (lat < p0.lat()) {
-		wxPoint r;
-		GetCanvasPointPix(Position(lat, (p1.lon() + p0.lon()) / 2), &r);
+		wxPoint r = GetCanvasPointPix(Position(lat, (p1.lon() + p0.lon()) / 2));
 		dc.DrawLine(0, r.y, 10, r.y, false);
 		dc.DrawLine(w - 10, r.y, w, r.y, false);
 		lat = lat + gridlatMinor;
@@ -3468,10 +3462,9 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 
 	// draw major longitude grid lines
 	for (int i = 0, itermax = (int)(dlon / gridlonMajor); i <= itermax; i++) {
-		wxPoint r;
 		char sbuf[12];
 		CalcGridText(lon, gridlonMajor, false, sbuf);
-		GetCanvasPointPix(Position((p0.lat() + p1.lat()) / 2, lon), &r);
+		wxPoint r = GetCanvasPointPix(Position((p0.lat() + p1.lat()) / 2, lon));
 		dc.DrawLine(r.x, 0, r.x, h, false);
 		dc.DrawText(wxString(sbuf, wxConvUTF8), r.x, 0);
 		lon = lon + gridlonMajor;
@@ -3487,8 +3480,7 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 	lon = ceil(p0.lon() / gridlonMinor) * gridlonMinor;
 	// draw minor longitude grid lines
 	for (int i = 0, itermax = (int)(dlon / gridlonMinor); i <= itermax; i++) {
-		wxPoint r;
-		GetCanvasPointPix(Position((p0.lat() + p1.lat()) / 2, lon), &r);
+		wxPoint r = GetCanvasPointPix(Position((p0.lat() + p1.lat()) / 2, lon));
 		dc.DrawLine(r.x, 0, r.x, 10, false);
 		dc.DrawLine(r.x, h - 10, r.x, h, false);
 		lon = lon + gridlonMinor;
@@ -3510,8 +3502,7 @@ void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 		double tlat;
 		double tlon;
 		geo::ll_gc_ll(pos.lat(), pos.lon(), 0, 10.0, &tlat, &tlon);
-		wxPoint r;
-		GetCanvasPointPix(Position(tlat, tlon), &r);
+		wxPoint r = GetCanvasPointPix(Position(tlat, tlon));
 
 		int l1 = (y_origin - r.y) / 5;
 
@@ -3534,8 +3525,7 @@ void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 		double tlat;
 		double tlon;
 		geo::ll_gc_ll(pos.lat(), pos.lon(), 0, 1.0, &tlat, &tlon);
-		wxPoint r;
-		GetCanvasPointPix(Position(tlat, tlon), &r);
+		wxPoint r = GetCanvasPointPix(Position(tlat, tlon));
 
 		int l1 = (y_origin - r.y) / 10;
 
@@ -3633,8 +3623,7 @@ void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 								lat = sa->latitude;
 								lon = sa->longitude;
 
-								wxPoint target_point;
-								GetCanvasPointPix(Position(sa->latitude, sa->longitude), &target_point);
+								wxPoint target_point = GetCanvasPointPix(Position(sa->latitude, sa->longitude));
 								points.push_back(target_point);
 								if (sa->radius_m > 0.0)
 									dc.DrawCircle(target_point, sa->radius_m * vp_scale);
@@ -3646,8 +3635,7 @@ void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 								for (int i = 0; i < 4; ++i) {
 									geo::ll_gc_ll(lat, lon, sa->angles[i], sa->dists_m[i] / 1852.0,
 												  &lat, &lon);
-									wxPoint target_point;
-									GetCanvasPointPix(Position(lat, lon), &target_point);
+									wxPoint target_point = GetCanvasPointPix(Position(lat, lon));
 									points.push_back(target_point);
 								}
 							}
@@ -3776,16 +3764,15 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 	// Do the draw if conditions indicate
 	if (drawit) {
-		GetCanvasPointPix(Position(td->Lat, td->Lon), &TargetPoint);
-		GetCanvasPointPix(Position(pred_lat, pred_lon), &PredPoint);
+		TargetPoint = GetCanvasPointPix(Position(td->Lat, td->Lon));
+		PredPoint = GetCanvasPointPix(Position(pred_lat, pred_lon));
 
 		//  Calculate the relative angle for this chart orientation
 		//    Use a 100 pixel vector to calculate angle
 		double angle_distance_nm = (100. / GetVP().view_scale_ppm) / 1852.0;
 		double angle_lat, angle_lon;
-		wxPoint AnglePoint;
 		geo::ll_gc_ll(td->Lat, td->Lon, td->COG, angle_distance_nm, &angle_lat, &angle_lon);
-		GetCanvasPointPix(Position(angle_lat, angle_lon), &AnglePoint);
+		wxPoint AnglePoint = GetCanvasPointPix(Position(angle_lat, angle_lon));
 
 		double theta;
 
@@ -3933,10 +3920,9 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			double tcpa_lon;
 			geo::ll_gc_ll(td->Lat, td->Lon, td->COG, target_sog * td->TCPA / 60., &tcpa_lat,
 						  &tcpa_lon);
-			wxPoint tCPAPoint;
 			wxPoint TPoint = TargetPoint;
 			Position tcpa(tcpa_lat, tcpa_lon);
-			GetCanvasPointPix(tcpa, &tCPAPoint);
+			wxPoint tCPAPoint = GetCanvasPointPix(tcpa);
 
 			// Draw the intercept line from target
 			geo::ClipResult res = geo::cohen_sutherland_line_clip_i(
@@ -3966,10 +3952,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				ocpa = Position(lat, lon);
 			}
 
-			wxPoint oCPAPoint;
-
-			GetCanvasPointPix(ocpa, &oCPAPoint);
-			GetCanvasPointPix(tcpa, &tCPAPoint);
+			wxPoint oCPAPoint = GetCanvasPointPix(ocpa);
+			tCPAPoint = GetCanvasPointPix(tcpa);
 
 			// Save a copy of these unclipped points
 			wxPoint oCPAPoint_unclipped = oCPAPoint;
@@ -4001,8 +3985,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			}
 
 			// Draw the intercept line from ownship
-			wxPoint oShipPoint;
-			GetCanvasPointPix(nav.pos, &oShipPoint);
+			wxPoint oShipPoint = GetCanvasPointPix(nav.pos);
 			oCPAPoint = oCPAPoint_unclipped; // recover the unclipped point
 
 			geo::ClipResult ownres = geo::cohen_sutherland_line_clip_i(
@@ -4295,11 +4278,11 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			// First point
 			ais::AISTargetTrackList::iterator track_point = td->m_ptrack.begin();
 			if (track_point != td->m_ptrack.end()) {
-				GetCanvasPointPix(Position(track_point->m_lat, track_point->m_lon), &TrackPointA);
+				TrackPointA = GetCanvasPointPix(Position(track_point->m_lat, track_point->m_lon));
 				++track_point;
 			}
 			while (track_point != td->m_ptrack.end()) {
-				GetCanvasPointPix(Position(track_point->m_lat, track_point->m_lon), &TrackPointB);
+				TrackPointB = GetCanvasPointPix(Position(track_point->m_lat, track_point->m_lon));
 				dc.StrokeLine(TrackPointA, TrackPointB);
 				++track_point;
 				TrackPointA = TrackPointB;
@@ -4526,8 +4509,7 @@ void ChartCanvas::AnchorWatchDraw(ocpnDC& dc)
 	bool play_sound = false;
 	if (pAnchorWatchPoint1 && AnchorAlertOn1) {
 		if (AnchorAlertOn1) {
-			wxPoint TargetPoint;
-			GetCanvasPointPix(pAnchorWatchPoint1->get_position(), &TargetPoint);
+			wxPoint TargetPoint = GetCanvasPointPix(pAnchorWatchPoint1->get_position());
 			JaggyCircle(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
 						100);
 			play_sound = true;
@@ -4538,8 +4520,7 @@ void ChartCanvas::AnchorWatchDraw(ocpnDC& dc)
 
 	if (pAnchorWatchPoint2 && AnchorAlertOn2) {
 		if (AnchorAlertOn2) {
-			wxPoint TargetPoint;
-			GetCanvasPointPix(pAnchorWatchPoint2->get_position(), &TargetPoint);
+			wxPoint TargetPoint = GetCanvasPointPix(pAnchorWatchPoint2->get_position());
 			JaggyCircle(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
 						100);
 			play_sound = true;
@@ -4587,8 +4568,7 @@ void ChartCanvas::UpdateShips()
 	if (g_pActiveTrack && g_pActiveTrack->IsRunning()) {
 		RoutePoint* p = g_pActiveTrack->GetLastPoint();
 		if (p) {
-			wxPoint px;
-			cc1->GetCanvasPointPix(p->get_position(), &px);
+			wxPoint px = cc1->GetCanvasPointPix(p->get_position());
 			ocpndc.CalcBoundingBox(px.x, px.y);
 		}
 	}
@@ -5232,8 +5212,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				else if (wheel_dir < 0)
 					ZoomCanvasOut(factor);
 
-				wxPoint r;
-				GetCanvasPointPix(m_cursor_pos, &r);
+				wxPoint r = GetCanvasPointPix(m_cursor_pos);
 				PanCanvas(r.x - x, r.y - y);
 				ClearbFollow(); // update the follow flag
 			} else {
@@ -6067,8 +6046,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 								lat = sa->latitude;
 								lon = sa->longitude;
 
-								wxPoint target_point;
-								GetCanvasPointPix(Position(sa->latitude, sa->longitude), &target_point);
+								wxPoint target_point = GetCanvasPointPix(Position(sa->latitude, sa->longitude));
 								bbox.Expand(target_point);
 								if (sa->radius_m > 0.0)
 									bbox.EnLarge(sa->radius_m * vp_scale);
@@ -6079,8 +6057,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 								for (int i = 0; i < 4; ++i) {
 									geo::ll_gc_ll(lat, lon, sa->angles[i], sa->dists_m[i] / 1852.0,
 												  &lat, &lon);
-									wxPoint target_point;
-									GetCanvasPointPix(Position(lat, lon), &target_point);
+									wxPoint target_point = GetCanvasPointPix(Position(lat, lon));
 									bbox.Expand(target_point);
 								}
 							}
@@ -6495,8 +6472,7 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 								lat = sa->latitude;
 								lon = sa->longitude;
 
-								wxPoint target_point;
-								GetCanvasPointPix(Position(sa->latitude, sa->longitude), &target_point);
+								wxPoint target_point = GetCanvasPointPix(Position(sa->latitude, sa->longitude));
 								bbox.Expand(target_point);
 								if (sa->radius_m > 0.0)
 									bbox.EnLarge(sa->radius_m * vp_scale);
@@ -6507,8 +6483,7 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 								for (int i = 0; i < 4; ++i) {
 									geo::ll_gc_ll(lat, lon, sa->angles[i], sa->dists_m[i] / 1852.0,
 												  &lat, &lon);
-									wxPoint target_point;
-									GetCanvasPointPix(Position(lat, lon), &target_point);
+									wxPoint target_point = GetCanvasPointPix(Position(lat, lon));
 									bbox.Expand(target_point);
 								}
 							}
@@ -7469,25 +7444,25 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 		case ID_RC_MENU_SCALE_IN:
 			parent_frame->DoStackDown();
-			GetCanvasPointPix(zpos, &r);
+			r = GetCanvasPointPix(zpos);
 			WarpPointer(r.x, r.y);
 			break;
 
 		case ID_RC_MENU_SCALE_OUT:
 			parent_frame->DoStackUp();
-			GetCanvasPointPix(zpos, &r);
+			r = GetCanvasPointPix(zpos);
 			WarpPointer(r.x, r.y);
 			break;
 
 		case ID_RC_MENU_ZOOM_IN:
 			SetVPScale(GetVPScale() * 2);
-			GetCanvasPointPix(zpos, &r);
+			r = GetCanvasPointPix(zpos);
 			WarpPointer(r.x, r.y);
 			break;
 
 		case ID_RC_MENU_ZOOM_OUT:
 			SetVPScale(GetVPScale() / 2);
-			GetCanvasPointPix(zpos, &r);
+			r = GetCanvasPointPix(zpos);
 			WarpPointer(r.x, r.y);
 			break;
 
@@ -7693,13 +7668,12 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, ViewPort& vp)
 	//        Are there any aux ply entries?
 	int nAuxPlyEntries = ChartData->GetnAuxPlyEntries(dbIndex);
 	if (0 == nAuxPlyEntries) { // There are no aux Ply Point entries
-		wxPoint r;
 		wxPoint r1;
 
 		ChartData->GetDBPlyPoint(dbIndex, 0, &plylat, &plylon);
 		plylon += lon_bias;
 
-		GetCanvasPointPix(Position(plylat, plylon), &r);
+		wxPoint r = GetCanvasPointPix(Position(plylat, plylon));
 		pixx = r.x;
 		pixy = r.y;
 
@@ -7707,7 +7681,7 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, ViewPort& vp)
 			ChartData->GetDBPlyPoint(dbIndex, i + 1, &plylat1, &plylon1);
 			plylon1 += lon_bias;
 
-			GetCanvasPointPix(Position(plylat1, plylon1), &r1);
+			r1 = GetCanvasPointPix(Position(plylat1, plylon1));
 			pixx1 = r1.x;
 			pixy1 = r1.y;
 
@@ -7745,7 +7719,7 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, ViewPort& vp)
 		ChartData->GetDBPlyPoint(dbIndex, 0, &plylat1, &plylon1);
 		plylon1 += lon_bias;
 
-		GetCanvasPointPix(Position(plylat1, plylon1), &r1);
+		r1 = GetCanvasPointPix(Position(plylat1, plylon1));
 		pixx1 = r1.x;
 		pixy1 = r1.y;
 
@@ -7761,14 +7735,14 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, ViewPort& vp)
 		for (int j = 0; j < nAuxPlyEntries; j++) {
 
 			int nAuxPly = ChartData->GetDBAuxPlyPoint(dbIndex, 0, j, &plylat, &plylon);
-			GetCanvasPointPix(Position(plylat, plylon), &r);
+			wxPoint r = GetCanvasPointPix(Position(plylat, plylon));
 			pixx = r.x;
 			pixy = r.y;
 
 			for (int i = 0; i < nAuxPly - 1; i++) {
 				ChartData->GetDBAuxPlyPoint(dbIndex, i + 1, j, &plylat1, &plylon1);
 
-				GetCanvasPointPix(Position(plylat1, plylon1), &r1);
+				r1 = GetCanvasPointPix(Position(plylat1, plylon1));
 				pixx1 = r1.x;
 				pixy1 = r1.y;
 
@@ -7804,7 +7778,7 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, ViewPort& vp)
 			}
 
 			ChartData->GetDBAuxPlyPoint(dbIndex, 0, j, &plylat1, &plylon1);
-			GetCanvasPointPix(Position(plylat1, plylon1), &r1);
+			r1 = GetCanvasPointPix(Position(plylat1, plylon1));
 			pixx1 = r1.x;
 			pixy1 = r1.y;
 
@@ -9118,11 +9092,11 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& Blt
 		double lpp2 = 0.0;
 		if (pAnchorWatchPoint1) {
 			lpp1 = GetAnchorWatchRadiusPixels(pAnchorWatchPoint1);
-			GetCanvasPointPix(pAnchorWatchPoint1->get_position(), &lAnchorPoint1);
+			lAnchorPoint1 = GetCanvasPointPix(pAnchorWatchPoint1->get_position());
 		}
 		if (pAnchorWatchPoint2) {
 			lpp2 = GetAnchorWatchRadiusPixels(pAnchorWatchPoint2);
-			GetCanvasPointPix(pAnchorWatchPoint2->get_position(), &lAnchorPoint2);
+			lAnchorPoint2 = GetCanvasPointPix(pAnchorWatchPoint2->get_position());
 		}
 
 		wxPen ppPeng(GetGlobalColor(_T("UGREN")), 2);
@@ -9156,8 +9130,6 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& Blt
 double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 {
 	double lpp = 0.;
-	wxPoint r1;
-	wxPoint lAnchorPoint;
 	double d1 = 0.0;
 	double dabs;
 	double tlat1;
@@ -9169,8 +9141,8 @@ double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 		dabs = fabs(d1 / 1852.0);
 		geo::ll_gc_ll(pAnchorWatchPoint->latitude(), pAnchorWatchPoint->longitude(), 0, dabs,
 					  &tlat1, &tlon1);
-		GetCanvasPointPix(Position(tlat1, tlon1), &r1);
-		GetCanvasPointPix(pAnchorWatchPoint->get_position(), &lAnchorPoint);
+		wxPoint r1 = GetCanvasPointPix(Position(tlat1, tlon1));
+		wxPoint lAnchorPoint = GetCanvasPointPix(pAnchorWatchPoint->get_position());
 		lpp = sqrt(pow((double)(lAnchorPoint.x - r1.x), 2) // FIXME
 				   + pow((double)(lAnchorPoint.y - r1.y), 2));
 
@@ -9277,8 +9249,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox, b
 				if (bRebuildSelList)
 					pSelectTC->AddSelectablePoint(Position(lat, lon), pIDX, SelectItem::TYPE_TIDEPOINT);
 
-				wxPoint r;
-				GetCanvasPointPix(Position(lat, nlon), &r);
+				wxPoint r = GetCanvasPointPix(Position(lat, nlon));
 				// draw standard icons
 				if (GetVP().chart_scale > 500000) {
 
@@ -9497,8 +9468,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox
 				if (bRebuildSelList)
 					pSelectTC->AddSelectablePoint(Position(lat, lon), pIDX, SelectItem::TYPE_CURRENTPOINT);
 
-				wxPoint r;
-				GetCanvasPointPix(Position(lat, lon), &r);
+				wxPoint r = GetCanvasPointPix(Position(lat, lon));
 
 				wxPoint d[4];
 				int dd = 6;
@@ -9525,8 +9495,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox
 
 							//    Get the display pixel location of the current station
 							int pixxc, pixyc;
-							wxPoint cpoint;
-							GetCanvasPointPix(Position(lat, lon), &cpoint);
+							wxPoint cpoint = GetCanvasPointPix(Position(lat, lon));
 							pixxc = cpoint.x;
 							pixyc = cpoint.y;
 

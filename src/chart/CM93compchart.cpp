@@ -1190,7 +1190,7 @@ void cm93compchart::SetSpecialCellIndexOffset(int cell_index, int object_id, int
 		m_pcm93chart_current->SetUserOffsets(cell_index, object_id, subcell, xoff, yoff);
 }
 
-bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, ViewPort& vp )
+bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, const ViewPort& vp )
 {
 	ViewPort vp_positive = vp;
 	vp_positive.set_positive();
@@ -1268,7 +1268,7 @@ bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, ViewPort& vp )
 
 			if ( ( psc ) && ( nss != 1 ) )       // skip rendering the A scale outlines
 			{
-				bool mcr = psc->UpdateCovrSet ( &vp );
+				bool mcr = psc->UpdateCovrSet ( vp );
 
 				//    Render the chart outlines
 				if ( mcr )
@@ -1338,7 +1338,7 @@ void cm93compchart::GetPointPix(ObjRazRules* rzRules, wxPoint2DDouble* en, wxPoi
 	m_pcm93chart_current->GetPointPix(rzRules, en, r, nPoints);
 }
 
-void cm93compchart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, ViewPort* vpt)
+void cm93compchart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, const ViewPort& vpt)
 {
 	m_pcm93chart_current->GetPixPoint(pixx, pixy, plat, plon, vpt);
 }
@@ -1386,29 +1386,29 @@ void cm93compchart::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
 }
 
 ListOfObjRazRules* cm93compchart::GetObjRuleListAtLatLon(float lat, float lon, float select_radius,
-														 ViewPort* VPoint)
+														 const ViewPort& VPoint)
 {
 	float alon = lon;
 
 	while (alon < 0) // CM93 longitudes are all positive
 		alon += 360;
 
-	ViewPort vp_positive = *VPoint; // needs a new ViewPort also for ObjectRenderCheck()
+	ViewPort vp_positive = VPoint; // FIXME: needs a new ViewPort also for ObjectRenderCheck()
 	vp_positive.set_positive();
 
-	if (!VPoint->b_quilt) {
+	if (!VPoint.b_quilt) {
 		if (m_pcm93chart_current) {
 			return m_pcm93chart_current->GetObjRuleListAtLatLon(lat, alon, select_radius,
-																&vp_positive);
+																vp_positive);
 		} else {
 			return new ListOfObjRazRules; // As default, return an empty list
 		}
 	} else {
-		UpdateRenderRegions(*VPoint);
+		UpdateRenderRegions(VPoint);
 
 		// Search all of the subcharts, looking for the one whose render region contains the
 		// requested point
-		wxPoint p = VPoint->GetPixFromLL(Position(lat, lon));
+		wxPoint p = VPoint.GetPixFromLL(Position(lat, lon));
 
 		for (int i = 0; i < 8; i++) {
 			if (m_pcm93chart_array[i]) {
@@ -1416,7 +1416,7 @@ ListOfObjRazRules* cm93compchart::GetObjRuleListAtLatLon(float lat, float lon, f
 				if (!m_pcm93chart_array[i]->m_render_region.IsEmpty()) {
 					if (wxInRegion == m_pcm93chart_array[i]->m_render_region.Contains(p))
 						return m_pcm93chart_array[i]
-							->GetObjRuleListAtLatLon(lat, alon, select_radius, &vp_positive);
+							->GetObjRuleListAtLatLon(lat, alon, select_radius, vp_positive);
 				}
 			}
 		}
@@ -1434,7 +1434,7 @@ VC_Hash& cm93compchart::Get_vc_hash(void)
 	return m_pcm93chart_current->Get_vc_hash();
 }
 
-bool cm93compchart::AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed)
+bool cm93compchart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 {
 	// This may be a partial screen render
 	// If it is, the cmscale value on this render must match the same parameter

@@ -125,12 +125,12 @@ wxPoint ViewPort::GetPixFromLL(const Position& pos) const
 	return r;
 }
 
-wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos)
+wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos) const
 {
 	double easting, northing;
 	double xlon = pos.lon();
 
-	//  Make sure lon and lon0 are same phase
+	// Make sure lon and lon0 are same phase
 	if (xlon * clon < 0.0) {
 		if (xlon < 0.0)
 			xlon += 360.0;
@@ -193,7 +193,7 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos)
 	return r;
 }
 
-void ViewPort::GetLLFromPix( const wxPoint &p, double *lat, double *lon )
+void ViewPort::GetLLFromPix(const wxPoint& p, double* lat, double* lon) const
 {
 	int dx = p.x - ( pix_width / 2 );
 	int dy = ( pix_height / 2 ) - p.y;
@@ -201,7 +201,7 @@ void ViewPort::GetLLFromPix( const wxPoint &p, double *lat, double *lon )
 	double xpr = dx;
 	double ypr = dy;
 
-	//    Apply VP Rotation
+	// Apply VP Rotation
 	if( g_bCourseUp ) {
 		xpr = ( dx * cos( rotation ) ) - ( dy * sin( rotation ) );
 		ypr = ( dy * cos( rotation ) ) + ( dx * sin( rotation ) );
@@ -242,7 +242,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		size_t n,
 		const float * llpoints,
 		int chart_native_scale,
-		wxPoint * ppoints)
+		wxPoint * ppoints) const
 {
 	using geo::BoundingBox;
 
@@ -255,7 +255,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 	// So, look for this case and handle appropriately with respect to the given Region
 
 	if (chart_scale < chart_native_scale / 10) {
-		//    Make a positive definite vp
+		// Make a positive definite vp
 		ViewPort vp_positive = *this;
 		while (vp_positive.vpBBox.GetMinX() < 0) {
 			vp_positive.clon += 360.;
@@ -263,7 +263,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 			vp_positive.vpBBox.Translate(t);
 		}
 
-		//    Scan the points one-by-one, so that we can get min/max to make a bbox
+		// Scan the points one-by-one, so that we can get min/max to make a bbox
 		const float* pfp = llpoints;
 		float lon_max = -10000.0;
 		float lon_min = 10000.0;
@@ -393,7 +393,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 #endif
 }
 
-wxRect ViewPort::GetVPRectIntersect(size_t n, const float* llpoints)
+wxRect ViewPort::GetVPRectIntersect(size_t n, const float* llpoints) const
 {
 	// Calculate the intersection between the currect VP screen
 	// and the bounding box of a polygon specified by lat/lon points.

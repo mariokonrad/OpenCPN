@@ -58,17 +58,17 @@ public:
 	double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
 	double GetNormalScaleMax(double canvas_scale_factor);
 
-	bool AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed);
+	bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
 	void SetVPParms(const ViewPort& vpt);
 	void GetPointPix(ObjRazRules* rzRules, float northing, float easting, wxPoint* r);
 	void GetPointPix(ObjRazRules* rzRules, wxPoint2DDouble* en, wxPoint* r, int nPoints);
-	void GetPixPoint(int pixx, int pixy, double* plat, double* plon, ViewPort* vpt);
+	void GetPixPoint(int pixx, int pixy, double* plat, double* plon, const ViewPort& vpt);
 
 	void SetCM93Dict(cm93_dictionary* pDict);
 	void SetCM93Prefix(const wxString& prefix);
 	void SetCM93Manager(chart::cm93manager* pManager);
 
-	bool UpdateCovrSet(ViewPort* vpt);
+	bool UpdateCovrSet(const ViewPort& vpt);
 	bool IsPointInLoadedM_COVR(double xc, double yc);
 
 	covr_set* GetCoverSet() // FIXME: breaks encapsulation

@@ -49,7 +49,7 @@ public:
 
 	void SetQuiltParameters(double CanvasScaleFactor, int CanvasWidth);
 	bool BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_db_index,
-												  ViewPort& vp_in);
+												  const ViewPort& vp_in);
 	bool Compose(const ViewPort& vp);
 	bool IsComposed() const;
 
@@ -57,19 +57,19 @@ public:
 	chart::ChartBase* GetNextChart();
 	chart::ChartBase* GetLargestScaleChart();
 	std::vector<int> GetQuiltIndexArray(void);
-	bool IsQuiltDelta(ViewPort& vp);
+	bool IsQuiltDelta(const ViewPort& vp);
 	bool IsChartQuiltableRef(int db_index);
 
 	ViewPort& GetQuiltVP();
 	wxString GetQuiltDepthUnit() const;
-	void SetRenderedVP(ViewPort& vp);
+	void SetRenderedVP(const ViewPort& vp);
 	bool HasOverlays(void) const;
 	int GetExtendedStackCount(void) const;
 	int GetnCharts() const;
 
-	void ComputeRenderRegion(ViewPort& vp, OCPNRegion& chart_region);
-	bool RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& chart_region);
-	bool IsVPBlittable(ViewPort& VPoint, int dx, int dy, bool b_allow_vector = false);
+	void ComputeRenderRegion(const ViewPort& vp, OCPNRegion& chart_region);
+	bool RenderQuiltRegionViewOnDC(wxMemoryDC& dc, const ViewPort& vp, OCPNRegion& chart_region);
+	bool IsVPBlittable(const ViewPort& VPoint, int dx, int dy, bool b_allow_vector = false);
 	chart::ChartBase* GetChartAtPix(wxPoint p);
 	chart::ChartBase* GetOverlayChartAtPix(wxPoint p);
 	int GetChartdbIndexAtPix(wxPoint p);
@@ -103,15 +103,15 @@ public:
 	QuiltPatch* GetCurrentPatch();
 	bool IsChartInQuilt(chart::ChartBase* pc);
 	bool IsQuiltVector(void);
-	OCPNRegion GetHiliteRegion(ViewPort& vp);
+	OCPNRegion GetHiliteRegion(const ViewPort& vp);
 
 private:
 	typedef std::list<QuiltPatch*> PatchList;
 
-	OCPNRegion GetChartQuiltRegion(const chart::ChartTableEntry& cte, ViewPort& vp);
-	wxRect GetChartQuiltBoundingRect(const chart::ChartTableEntry& cte, ViewPort& vp);
+	OCPNRegion GetChartQuiltRegion(const chart::ChartTableEntry& cte, const ViewPort& vp);
+	wxRect GetChartQuiltBoundingRect(const chart::ChartTableEntry& cte, const ViewPort& vp);
 	void EmptyCandidateArray(void);
-	void SubstituteClearDC(wxMemoryDC& dc, ViewPort& vp);
+	void SubstituteClearDC(wxMemoryDC& dc, const ViewPort& vp);
 	int GetNewRefChart(void);
 	unsigned int get_target_stack_index(int current_db_index) const;
 	void destroy_patchlist();

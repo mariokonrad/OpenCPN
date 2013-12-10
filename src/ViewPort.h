@@ -34,55 +34,54 @@ namespace geo { class LatLonBoundingBox; }
 
 class ViewPort
 {
-	public:
-		ViewPort();
+public:
+	ViewPort();
 
-		wxPoint GetPixFromLL(const Position& pos) const;
-		void GetLLFromPix(const wxPoint &p, double *lat, double *lon);
-		wxPoint2DDouble GetDoublePixFromLL(const Position& pos);
+	wxPoint GetPixFromLL(const Position& pos) const;
+	void GetLLFromPix(const wxPoint& p, double* lat, double* lon) const; // FIXME: use Position
+	wxPoint2DDouble GetDoublePixFromLL(const Position& pos) const;
 
-		OCPNRegion GetVPRegionIntersect(
-				const OCPNRegion & Region,
-				size_t n,
-				const float * llpoints,
-				int chart_native_scale,
-				wxPoint * ppoints = NULL);
+	OCPNRegion GetVPRegionIntersect(const OCPNRegion& Region, size_t n, const float* llpoints,
+									int chart_native_scale, wxPoint* ppoints = NULL) const;
 
-		wxRect GetVPRectIntersect(size_t n, const float * llpoints);
+	wxRect GetVPRectIntersect(size_t n, const float* llpoints) const;
 
-		void SetBoxes(void);
-		void Invalidate();
-		void Validate();
-		bool IsValid() const;
-		void SetRotationAngle(double angle_rad);
-		void SetProjectionType(int type);
+	void SetBoxes(void);
+	void Invalidate();
+	void Validate();
+	bool IsValid() const;
+	void SetRotationAngle(double angle_rad);
+	void SetProjectionType(int type);
 
-		const geo::LatLonBoundingBox & GetBBox() const;
-		geo::LatLonBoundingBox & GetBBox();
-		void set_positive();
+	const geo::LatLonBoundingBox& GetBBox() const;
+	geo::LatLonBoundingBox& GetBBox();
+	void set_positive();
 
-		//  Generic
-		double clat; // center point
-		double clon;
-		double view_scale_ppm;
-		double skew;
-		double rotation;
+	// FIXME: move public attributes to private
 
-		double chart_scale; // conventional chart displayed scale
+	// Generic
+	double clat; // center point
+	double clon;
+	double view_scale_ppm;
+	double skew;
+	double rotation;
 
-		int pix_width;
-		int pix_height;
+	double chart_scale; // conventional chart displayed scale
 
-		bool b_quilt;
-		bool b_FullScreenQuilt;
+	int pix_width;
+	int pix_height;
 
-		int m_projection_type;
-		bool b_MercatorProjectionOverride;
-		wxRect rv_rect;
+	bool b_quilt;
+	bool b_FullScreenQuilt;
 
-	private:
-		geo::LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains the entire vieport
-		bool bValid; // This VP is valid
+	int m_projection_type;
+	bool b_MercatorProjectionOverride;
+	wxRect rv_rect;
+
+private:
+	geo::LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains
+								   // the entire vieport
+	bool bValid; // This VP is valid
 };
 
 #endif

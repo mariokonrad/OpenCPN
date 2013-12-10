@@ -59,10 +59,10 @@ class glChartCanvas : public wxGLCanvas
 		void DrawGLOverLayObjects(void);
 
 	protected:
-		void RenderQuiltViewGL(ViewPort & vp, OCPNRegion Region, bool b_clear = true);
+		void RenderQuiltViewGL(const ViewPort & vp, OCPNRegion Region, bool b_clear = true);
 		void BuildFBO(void);
-		void SetClipRegion(ViewPort & vp, OCPNRegion &region, bool b_clear);
-		void ComputeRenderQuiltViewGLRegion(ViewPort & vp, OCPNRegion Region);
+		void SetClipRegion(const ViewPort & vp, OCPNRegion &region, bool b_clear);
+		void ComputeRenderQuiltViewGLRegion(const ViewPort & vp, OCPNRegion Region);
 
 		wxGLContext * m_pcontext;
 
@@ -78,9 +78,9 @@ class glChartCanvas : public wxGLCanvas
 
 		void GrowData(int size);
 
-		//    This is a hash table
-		//    key is ChartBaseBSB pointer
-		//    Value is ChartTextureHashType*
+		// This is a hash table
+		// key is ChartBaseBSB pointer
+		// Value is ChartTextureHashType*
 		ChartPointerHashType m_chart_hash;
 
 		ViewPort m_gl_cache_vp;

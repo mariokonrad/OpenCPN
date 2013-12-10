@@ -58,8 +58,8 @@ namespace chart {
 class S57ClassRegistrar;
 class ChartBase;
 
-void s57_DrawExtendedLightSectors(ocpnDC & temp_dc, ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
-bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
+void s57_DrawExtendedLightSectors(ocpnDC & temp_dc, const ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
+bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
 
 typedef std::list<S57Obj*> ListOfS57Obj;
 typedef std::list<ObjRazRules*> ListOfObjRazRules;
@@ -85,7 +85,7 @@ public:
 
 	virtual InitReturn Init(const wxString& name, ChartInitFlag flags);
 
-	//    Accessors
+	// Accessors
 
 	virtual ThumbData* GetThumbData(int tnx, int tny, float lat, float lon);
 	virtual ThumbData* GetThumbData();
@@ -106,11 +106,11 @@ public:
 
 	virtual void GetPointPix(ObjRazRules* rzRules, float rlat, float rlon, wxPoint* r);
 	virtual void GetPointPix(ObjRazRules* rzRules, wxPoint2DDouble* en, wxPoint* r, int nPoints);
-	virtual void GetPixPoint(int pixx, int pixy, double* plat, double* plon, ViewPort* vpt);
+	virtual void GetPixPoint(int pixx, int pixy, double* plat, double* plon, const ViewPort& vpt);
 
 	virtual void SetVPParms(const ViewPort& vpt);
 
-	virtual bool AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed);
+	virtual bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
 
 	virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
 
@@ -123,7 +123,7 @@ public:
 	int _insertRules(S57Obj* obj, LUPrec* LUP, s57chart* pOwner);
 
 	virtual ListOfObjRazRules* GetObjRuleListAtLatLon(float lat, float lon, float select_radius,
-													  ViewPort* VPoint);
+													  const ViewPort& VPoint);
 	bool DoesLatLonSelectObject(float lat, float lon, float select_radius, S57Obj* obj);
 	bool IsPointInObjArea(float lat, float lon, float select_radius, S57Obj* obj);
 	wxString GetObjectAttributeValueAsString(S57Obj* obj, int iatt, wxString curAttrName);

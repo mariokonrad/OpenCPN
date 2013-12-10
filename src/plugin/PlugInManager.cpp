@@ -712,7 +712,7 @@ bool PlugInManager::RenderAllGLCanvasOverlayPlugIns( wxGLContext *pcontext, cons
 	return true;
 }
 
-void PlugInManager::SendViewPortToRequestingPlugIns(ViewPort& vp)
+void PlugInManager::SendViewPortToRequestingPlugIns(const ViewPort& vp)
 {
 	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);

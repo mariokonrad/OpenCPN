@@ -145,7 +145,7 @@ public:
 	bool SetVPScale(double sc);
 	bool SetViewPoint(const Position& pos);
 	void ReloadVP(bool b_adjust = true);
-	void LoadVP(ViewPort& vp, bool b_adjust = true);
+	void LoadVP(const ViewPort& vp, bool b_adjust = true);
 	void SetVPRotation(double angle);
 	double GetVPRotation(void) const;
 	double GetVPSkew(void) const;
@@ -179,7 +179,6 @@ public:
 	double GetCanvasScaleFactor() const;
 	double GetCanvasTrueScale() const;
 	double GetAbsoluteMinScalePpm() const;
-	ViewPort& GetVP();
 	const ViewPort& GetVP() const;
 	chart::ChartBase* GetChartAtCursor();
 	chart::ChartBase* GetOverlayChartAtCursor();
@@ -221,8 +220,8 @@ public:
 	int GetQuiltRefChartdbIndex(void);
 	void InvalidateQuilt(void);
 	double GetQuiltMaxErrorFactor();
-	bool IsChartQuiltableRef(int db_index);
-	bool IsChartLargeEnoughToRender(chart::ChartBase* chart, ViewPort& vp);
+	bool IsChartQuiltableRef(int db_index) const;
+	bool IsChartLargeEnoughToRender(chart::ChartBase* chart, const ViewPort& vp) const;
 	int GetCanvasChartNativeScale();
 	int FindClosestCanvasChartdbIndex(int scale);
 	void UpdateCanvasOnGroupChange(void);
@@ -246,6 +245,7 @@ public:
 	bool PurgeGLCanvasChartCache(chart::ChartBase* pc);
 	void RemovePointFromRoute(RoutePoint* point, Route* route); // FIXME: this method does not belong here
 
+	void set_viewpoint_projection_type(int type);
 #ifdef ocpnUSE_GL
 	glChartCanvas* GetglCanvas(); // FIXME: breaks encapsulation
 #endif
@@ -349,24 +349,24 @@ private:
 	void OnCursorTrackTimerEvent(wxTimerEvent& event);
 	void OnZoomTimerEvent(wxTimerEvent& event);
 
-	void DrawAllRoutesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BltBBox,
+	void DrawAllRoutesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BltBBox,
 							 const wxRegion& clipregion);
 
-	void DrawAllWaypointsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BltBBox,
+	void DrawAllWaypointsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BltBBox,
 								const wxRegion& clipregion, bool bDrawMarksOnly);
 
 	double GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint);
 
-	void DrawAllTidesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox, bool bRebuildSelList,
+	void DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BBox, bool bRebuildSelList,
 							bool bforce_redraw_tides, bool bdraw_mono = false);
 
-	void DrawAllCurrentsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox, bool bRebuildSelList,
+	void DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BBox, bool bRebuildSelList,
 							   bool bforce_redraw_currents, bool bdraw_mono = false);
 
 	void DrawTCWindow(int x, int y, void* pIDX);
 
-	void RenderAllChartOutlines(ocpnDC& dc, ViewPort& vp);
-	void RenderChartOutline(ocpnDC& dc, int dbIndex, ViewPort& vp);
+	void RenderAllChartOutlines(ocpnDC& dc, const ViewPort& vp);
+	void RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp);
 	void RenderRouteLegs(ocpnDC& dc);
 
 	wxBitmap* DrawTCCBitmap(wxDC* pbackground_dc, bool bAddNewSelpoints = true);

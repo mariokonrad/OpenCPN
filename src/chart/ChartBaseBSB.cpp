@@ -933,7 +933,7 @@ bool ChartBaseBSB::UpdateThumbData(double lat, double lon)
 //-----------------------------------------------------------------------
 static double polytrans( double* coeff, double lon, double lat );
 
-int ChartBaseBSB::vp_pix_to_latlong(ViewPort& vp, int pixx, int pixy, double *plat, double *plon)
+int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, double *plat, double *plon)
 {
       if(bHaveEmbeddedGeoref)
       {
@@ -1084,7 +1084,7 @@ int ChartBaseBSB::vp_pix_to_latlong(ViewPort& vp, int pixx, int pixy, double *pl
 
 
 
-int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int &pixx, int &pixy, ViewPort& vp)
+int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int &pixx, int &pixy, const ViewPort& vp)
 {
     int px, py;
 
@@ -1485,7 +1485,7 @@ void ChartBaseBSB::SetVPRasterParms(const ViewPort &vpt)
             m_vp_render_last = vpt;
 }
 
-bool ChartBaseBSB::AdjustVP(ViewPort &vp_last, ViewPort &vp_proposed)
+bool ChartBaseBSB::AdjustVP(const ViewPort &vp_last, ViewPort &vp_proposed)
 {
       bool bInside = G_FloatPtInPolygon ( ( MyFlPoint * ) GetCOVRTableHead ( 0 ), GetCOVRTablenPoints ( 0 ), vp_proposed.clon, vp_proposed.clat );
       if(!bInside)

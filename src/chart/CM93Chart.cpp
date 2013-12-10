@@ -979,7 +979,7 @@ void cm93chart::GetPointPix(ObjRazRules* rzRules, wxPoint2DDouble* en, wxPoint* 
 	double yr = obj->y_rate;
 	double yo = obj->y_origin;
 
-	//    Crossing Greenwich right
+	// Crossing Greenwich right
 	if (m_vp_current.GetBBox().GetMaxX() > 360.0) {
 		BoundingBox bbRight(0.0, m_vp_current.GetBBox().GetMinY(),
 							m_vp_current.GetBBox().GetMaxX() - 360.0,
@@ -998,20 +998,20 @@ void cm93chart::GetPointPix(ObjRazRules* rzRules, wxPoint2DDouble* en, wxPoint* 
 	}
 }
 
-void cm93chart::GetPixPoint ( int pixx, int pixy, double *plat, double *plon, ViewPort *vpt )
+void cm93chart::GetPixPoint ( int pixx, int pixy, double *plat, double *plon, const ViewPort &vpt )
 {
 	// Use Mercator estimator
-	int dx = pixx - ( vpt->pix_width / 2 );
-	int dy = ( vpt->pix_height / 2 ) - pixy;
+	int dx = pixx - ( vpt.pix_width / 2 );
+	int dy = ( vpt.pix_height / 2 ) - pixy;
 
-	double xp = ( dx * cos ( vpt->skew ) ) - ( dy * sin ( vpt->skew ) );
-	double yp = ( dy * cos ( vpt->skew ) ) + ( dx * sin ( vpt->skew ) );
+	double xp = ( dx * cos ( vpt.skew ) ) - ( dy * sin ( vpt.skew ) );
+	double yp = ( dy * cos ( vpt.skew ) ) + ( dx * sin ( vpt.skew ) );
 
-	double d_east = xp / vpt->view_scale_ppm;
-	double d_north = yp / vpt->view_scale_ppm;
+	double d_east = xp / vpt.view_scale_ppm;
+	double d_north = yp / vpt.view_scale_ppm;
 
 	double slat, slon;
-	geo::fromSM(d_east, d_north, vpt->clat, vpt->clon, &slat, &slon);
+	geo::fromSM(d_east, d_north, vpt.clat, vpt.clon, &slat, &slon);
 
 	if ( slon > 360.0)
 		slon -= 360.0;
@@ -1020,7 +1020,7 @@ void cm93chart::GetPixPoint ( int pixx, int pixy, double *plat, double *plon, Vi
 	*plon = slon;
 }
 
-bool cm93chart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
+bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 {
 	if (IsCacheValid()) {
 		// If this viewpoint is same scale as last...
@@ -1032,8 +1032,8 @@ bool cm93chart::AdjustVP ( ViewPort &vp_last, ViewPort &vp_proposed )
 			double easting_c, northing_c;
 			geo::toSM(vp_proposed.clat, vp_proposed.clon,  ref_lat, ref_lon, &easting_c, &northing_c);
 
-			//  then require this viewport to be exact integral pixel difference from last
-			//  adjusting clat/clat and SM accordingly
+			// then require this viewport to be exact integral pixel difference from last
+			// adjusting clat/clat and SM accordingly
 
 			double delta_pix_x = ( easting_c - prev_easting_c ) * vp_proposed.view_scale_ppm;
 			int dpix_x = ( int ) round(delta_pix_x);
@@ -1065,7 +1065,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 
 	m_vp_current = vpt;
 
-	//  Set up local SM rendering constants
+	// Set up local SM rendering constants
 	m_pixx_vp_center = vpt.pix_width / 2;
 	m_pixy_vp_center = vpt.pix_height / 2;
 	m_view_scale_ppm = vpt.view_scale_ppm;
@@ -1075,7 +1075,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 
 	if (g_bDebugCM93)
 	{
-		//    Fetch the lat/lon of the screen corner points
+		// Fetch the lat/lon of the screen corner points
 		const geo::LatLonBoundingBox & box = vpt.GetBBox();
 		double ll_lon = box.GetMinX();
 		double ll_lat = box.GetMinY();
@@ -1087,10 +1087,10 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 	}
 
 
-	//    Create an array of CellIndexes covering the current viewport
+	// Create an array of CellIndexes covering the current viewport
 	std::vector<int> vpcells = GetVPCellArray ( vpt );
 
-	//    Check the member array to see if all these viewport cells have been loaded
+	// Check the member array to see if all these viewport cells have been loaded
 	bool bcell_is_in;
 
 	for ( unsigned int i=0 ; i < vpcells.size() ; i++ )
@@ -1104,7 +1104,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 			}
 		}
 
-		//    The cell is not in place, so go load it
+		// The cell is not in place, so go load it
 		if ( !bcell_is_in )
 		{
 			int cell_index = vpcells[i];
@@ -2868,10 +2868,10 @@ void cm93chart::ProcessMCOVRObjects(int cell_index, char subcell)
 	}
 }
 
-bool cm93chart::UpdateCovrSet(ViewPort* vpt)
+bool cm93chart::UpdateCovrSet(const ViewPort& vpt)
 {
 	// Create an array of CellIndexes covering the current viewport
-	std::vector<int> vpcells = GetVPCellArray(*vpt);
+	std::vector<int> vpcells = GetVPCellArray(vpt);
 
 	// Check the member covr_set to see if all these viewport cells have had their m_covr loaded
 	for (unsigned int i = 0; i < vpcells.size(); i++) {

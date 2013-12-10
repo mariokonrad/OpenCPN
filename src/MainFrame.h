@@ -173,7 +173,7 @@ public:
 	void OnFrameCOGTimer(wxTimerEvent& event);
 	void SetupQuiltMode(void);
 
-	void ChartsRefresh(int dbi_hint, ViewPort& vp, bool b_purge = true);
+	void ChartsRefresh(int dbi_hint, const ViewPort& vp, bool b_purge = true);
 
 	bool CheckGroup(int igroup);
 
@@ -250,7 +250,7 @@ private:
 	bool CheckAndAddPlugInTool(ToolBarSimple* tb);
 	bool AddDefaultPositionPlugInTools(ToolBarSimple* tb);
 	void FilterCogSog(void);
-	void SetChartUpdatePeriod(ViewPort& vp);
+	void SetChartUpdatePeriod(const ViewPort& vp);
 
 	void ApplyGlobalColorSchemetoStatusBar(void);
 	void PostProcessNNEA(bool pos_valid, const wxString& sfixtime);

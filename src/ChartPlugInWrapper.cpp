@@ -230,7 +230,7 @@ bool ChartPlugInWrapper::RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VP
 		return false;
 }
 
-bool ChartPlugInWrapper::AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed)
+bool ChartPlugInWrapper::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 {
 	if (m_ppicb) {
 		PlugIn_ViewPort pivp_last = CreatePlugInViewport(vp_last);

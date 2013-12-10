@@ -137,7 +137,7 @@ bool ChartDummy::RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint)
 	return true;
 }
 
-bool ChartDummy::AdjustVP(ViewPort& WXUNUSED(vp_last), ViewPort& WXUNUSED(vp_proposed))
+bool ChartDummy::AdjustVP(const ViewPort& WXUNUSED(vp_last), ViewPort& WXUNUSED(vp_proposed))
 {
 	return false;
 }

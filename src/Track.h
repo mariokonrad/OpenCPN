@@ -50,7 +50,7 @@ class Track
 		void Stop(bool do_add_point = false);
 		Track *DoExtendDaily(void);
 		bool IsRunning();
-		void Draw(ocpnDC& dc, ViewPort &VP);
+		void Draw(ocpnDC& dc, const ViewPort &VP);
 
 		RoutePoint* AddNewPoint(Vector2D point, wxDateTime time);
 		Route *RouteFromTrack(wxProgressDialog * pprog);

@@ -30,36 +30,32 @@ namespace chart {
 
 class ChartDummy : public ChartBase
 {
-	public:
-		ChartDummy();
-		virtual ~ChartDummy();
+public:
+	ChartDummy();
+	virtual ~ChartDummy();
 
-		virtual InitReturn Init(const wxString & name, ChartInitFlag init_flags);
-		virtual ThumbData * GetThumbData(int tnx, int tny, float lat, float lon);
-		virtual ThumbData * GetThumbData();
-		virtual bool UpdateThumbData(double lat, double lon);
-		double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
-		double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
-		virtual bool GetChartExtent(Extent * pext);
+	virtual InitReturn Init(const wxString& name, ChartInitFlag init_flags);
+	virtual ThumbData* GetThumbData(int tnx, int tny, float lat, float lon);
+	virtual ThumbData* GetThumbData();
+	virtual bool UpdateThumbData(double lat, double lon);
+	double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
+	double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
+	virtual bool GetChartExtent(Extent* pext);
 
-		virtual bool RenderRegionViewOnDC(
-				wxMemoryDC & dc,
-				const ViewPort & VPoint,
-				const OCPNRegion & Region);
+	virtual bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
+									  const OCPNRegion& Region);
 
-		virtual bool RenderRegionViewOnGL(
-				const wxGLContext & glc,
-				const ViewPort & VPoint,
-				const OCPNRegion & Region);
+	virtual bool RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
+									  const OCPNRegion& Region);
 
-		virtual bool AdjustVP(ViewPort & vp_last, ViewPort & vp_proposed);
-		virtual void GetValidCanvasRegion(const ViewPort & VPoint, OCPNRegion * pValidRegion);
-		virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
-		virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
+	virtual bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
+	virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);
+	virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
+	virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
 
-	private:
-		bool RenderViewOnDC(wxMemoryDC & dc, const ViewPort & VPoint);
-		wxBitmap * m_pBM;
+private:
+	bool RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint);
+	wxBitmap* m_pBM;
 };
 
 }

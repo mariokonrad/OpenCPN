@@ -329,7 +329,7 @@ void Route::DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint* rpn)
 	GetPoint(iPoint)->Draw(dc, rpn);
 }
 
-void Route::DrawSegment(ocpnDC& dc, wxPoint* rp1, wxPoint* rp2, ViewPort& VP, bool bdraw_arrow)
+void Route::DrawSegment(ocpnDC& dc, wxPoint* rp1, wxPoint* rp2, const ViewPort& VP, bool bdraw_arrow)
 {
 	if (m_bRtIsSelected)
 		dc.SetPen(*g_pRouteMan->GetSelectedRoutePen());
@@ -341,7 +341,7 @@ void Route::DrawSegment(ocpnDC& dc, wxPoint* rp1, wxPoint* rp2, ViewPort& VP, bo
 	RenderSegment(dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow);
 }
 
-void Route::Draw(ocpnDC& dc, ViewPort& VP)
+void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 {
 	if (m_nPoints == 0)
 		return;
@@ -463,7 +463,7 @@ void Route::Draw(ocpnDC& dc, ViewPort& VP)
 	}
 }
 
-void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort& VP,
+void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const ViewPort& VP,
 						  bool bdraw_arrow, int hilite_width)
 {
 	static int s_arrow_icon[] = { 0, 0, 5, 2, 18, 6, 12, 0, 18, -6, 5, -2, 0, 0 };
@@ -762,7 +762,7 @@ bool Route::CalculateCrossesIDL(void)
 	return idl_cross;
 }
 
-void Route::CalculateDCRect(wxDC& dc_route, wxRect* prect, ViewPort&)
+void Route::CalculateDCRect(wxDC& dc_route, wxRect* prect, const ViewPort&)
 {
 	dc_route.ResetBoundingBox();
 	dc_route.DestroyClippingRegion();

@@ -107,15 +107,15 @@ public:
 
 	virtual InitReturn Init(const wxString& name, ChartInitFlag init_flags);
 
-	virtual int latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy, ViewPort& vp);
-	virtual int vp_pix_to_latlong(ViewPort& vp, int pixx, int pixy, double* lat, double* lon);
+	virtual int latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy, const ViewPort& vp);
+	virtual int vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, double* lat, double* lon);
 
 	bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion& Region);
 
 	virtual bool RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
 									  const OCPNRegion& Region);
 
-	virtual bool AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed);
+	virtual bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
 	virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
 
 	void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);

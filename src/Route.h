@@ -68,15 +68,15 @@ public:
 	RoutePoint* InsertPointBefore(RoutePoint* pRP, double rlat, double rlon,
 								  bool bRenamePoints = false);
 	void DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint* rpn);
-	void DrawSegment(ocpnDC& dc, wxPoint* rp1, wxPoint* rp2, ViewPort& VP, bool bdraw_arrow);
-	virtual void Draw(ocpnDC& dc, ViewPort& pVP);
+	void DrawSegment(ocpnDC& dc, wxPoint* rp1, wxPoint* rp2, const ViewPort& VP, bool bdraw_arrow);
+	virtual void Draw(ocpnDC& dc, const ViewPort& pVP);
 	RoutePoint* GetLastPoint();
 	void DeletePoint(RoutePoint* rp, bool bRenamePoints = false);
 	void RemovePoint(RoutePoint* rp, bool bRenamePoints = false);
 	void DeSelectRoute();
 	void CalculateBBox();
 	void UpdateSegmentDistances(double planspeed = -1.0);
-	void CalculateDCRect(wxDC& dc_route, wxRect* prect, ViewPort& VP);
+	void CalculateDCRect(wxDC& dc_route, wxRect* prect, const ViewPort& VP);
 	int GetnPoints(void) const;
 	void SetnPoints(void);
 	void Reverse(bool bRenamePoints = false);
@@ -91,7 +91,7 @@ public:
 	void CloneAddedTrackPoint(RoutePoint* ptargetpoint, RoutePoint* psourcepoint);
 	void CloneAddedRoutePoint(RoutePoint* ptargetpoint, RoutePoint* psourcepoint);
 	void ClearHighlights(void);
-	void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort& VP, bool bdraw_arrow,
+	void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const ViewPort& VP, bool bdraw_arrow,
 					   int hilite_width = 0);
 
 	bool CrossesIDL() const;

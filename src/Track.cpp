@@ -356,7 +356,7 @@ void Track::AddPointNow(bool do_add_point)
 	m_prev_time = now;
 }
 
-void Track::Draw(ocpnDC& dc, ViewPort& VP)
+void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 {
 	if (!IsVisible() || GetnPoints() == 0)
 		return;

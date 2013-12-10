@@ -1431,7 +1431,7 @@ S52_TextC* S52_PL_parseTE(ObjRazRules* rzRules, Rules* rules, char*)
 }
 
 bool s52plib::RenderText(wxDC* pdc, S52_TextC* ptext, int x, int y, wxRect* pRectDrawn,
-						 S57Obj* pobj, bool bCheckOverlap, ViewPort* vp)
+						 S57Obj* pobj, bool bCheckOverlap, const ViewPort& vp)
 {
 #ifdef DrawText
 #undef DrawText
@@ -1541,7 +1541,7 @@ bool s52plib::RenderText(wxDC* pdc, S52_TextC* ptext, int x, int y, wxRect* pRec
 				// them clip.
 				//  TODO...do manual matrix operation to determine adjusted pixel array offsets
 				// for rotated case
-				if (fabs(vp->rotation) < 0.01) {
+				if (fabs(vp.rotation) < 0.01) {
 
 					if (xp < 0) {
 						x_offset = -xp;
@@ -1671,7 +1671,7 @@ bool s52plib::TextRenderCheck(ObjRazRules* rzRules)
 	return true;
 }
 
-int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, ViewPort* vp, bool bTX)
+int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp, bool bTX)
 {
 	if (!TextRenderCheck(rzRules))
 		return 0;
@@ -1823,12 +1823,12 @@ int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, ViewPort* vp, bool 
 	return 1;
 }
 
-int s52plib::RenderTX(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
+int s52plib::RenderTX(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 {
 	return RenderT_All(rzRules, rules, vp, true);
 }
 
-int s52plib::RenderTE(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
+int s52plib::RenderTE(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 {
 	return RenderT_All(rzRules, rules, vp, false);
 }
@@ -1866,7 +1866,7 @@ unsigned char* GetRGBA_Array(wxImage& Image)
 	return e;
 }
 
-bool s52plib::RenderHPGL(ObjRazRules* rzRules, Rule* prule, wxPoint& r, ViewPort* vp,
+bool s52plib::RenderHPGL(ObjRazRules* rzRules, Rule* prule, wxPoint& r, const ViewPort& vp,
 						 float rot_angle)
 {
 	float fsf = 100 / canvas_pix_per_mm;
@@ -2028,7 +2028,7 @@ wxImage s52plib::RuleXBMToImage(Rule* prule)
 // Render Raster Symbol
 // Symbol is instantiated as a bitmap the first time it is needed
 // and re-built on color scheme change
-bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, ViewPort* vp, float)
+bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, const ViewPort& vp, float)
 {
 	// Check to see if any cached data is valid
 	bool b_dump_cache = false;
@@ -2176,8 +2176,8 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 	if (!m_pdc) // opengl
 	{
 #ifdef ocpnUSE_GL
-		double cr = cos(vp->rotation);
-		double sr = sin(vp->rotation);
+		double cr = cos(vp.rotation);
+		double sr = sin(vp.rotation);
 		double ddx = pivot_x * cr + pivot_y * sr;
 		double ddy = pivot_y * cr - pivot_x * sr;
 
@@ -2197,8 +2197,8 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 		{
 			//    Don't bother if the symbol is off the true screen,
 			//    as for instance when an area-centered symbol is called for.
-			if (((r.x - pivot_x + b_width) < vp->pix_width)
-				&& ((r.y - pivot_y + b_height) < vp->pix_height)) {
+			if (((r.x - pivot_x + b_width) < vp.pix_width)
+				&& ((r.y - pivot_y + b_height) < vp.pix_height)) {
 				// Get the current screen contents
 				wxBitmap b1(b_width, b_height, -1);
 				wxMemoryDC mdc1(b1);
@@ -2270,7 +2270,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 }
 
 // SYmbol
-int s52plib::RenderSY(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
+int s52plib::RenderSY(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 {
 	float angle = 0;
 	double orient;
@@ -2315,7 +2315,7 @@ int s52plib::RenderSY(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 }
 
 // Line Simple Style
-int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
+int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 {
 	wxPoint* ptp;
 	int npt;
@@ -2382,11 +2382,11 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 #endif
 
 	//    Get a true pixel clipping/bounding box from the vp
-	wxPoint pbb = vp->GetPixFromLL(Position(vp->clat, vp->clon));
-	int xmin_ = pbb.x - vp->rv_rect.width / 2;
-	int xmax_ = xmin_ + vp->rv_rect.width;
-	int ymin_ = pbb.y - vp->rv_rect.height / 2;
-	int ymax_ = ymin_ + vp->rv_rect.height;
+	wxPoint pbb = vp.GetPixFromLL(Position(vp.clat, vp.clon));
+	int xmin_ = pbb.x - vp.rv_rect.width / 2;
+	int xmax_ = xmin_ + vp.rv_rect.width;
+	int ymin_ = pbb.y - vp.rv_rect.height / 2;
+	int ymax_ = ymin_ + vp.rv_rect.height;
 
 	int x0, y0, x1, y1;
 
@@ -2672,7 +2672,7 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 }
 
 // Line Complex
-int s52plib::RenderLC(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
+int s52plib::RenderLC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 {
 	wxPoint* ptp;
 	int npt;
@@ -2867,7 +2867,7 @@ int s52plib::RenderLC(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 // Render Line Complex Polyline
 
 void s52plib::draw_lc_poly(wxDC* pdc, wxColor& color, int width, wxPoint* ptp, int npt,
-						   float sym_len, float sym_factor, Rule* draw_rule, ViewPort* vp)
+						   float sym_len, float sym_factor, Rule* draw_rule, const ViewPort& vp)
 {
 	wxPoint r;
 
@@ -2883,11 +2883,11 @@ void s52plib::draw_lc_poly(wxDC* pdc, wxColor& color, int width, wxPoint* ptp, i
 	bool cw = dfSum < 0.;
 
 	//    Get a true pixel clipping/bounding box from the vp
-	wxPoint pbb = vp->GetPixFromLL(Position(vp->clat, vp->clon));
-	int xmin_ = pbb.x - vp->rv_rect.width / 2;
-	int xmax_ = xmin_ + vp->rv_rect.width;
-	int ymin_ = pbb.y - vp->rv_rect.height / 2;
-	int ymax_ = ymin_ + vp->rv_rect.height;
+	wxPoint pbb = vp.GetPixFromLL(Position(vp.clat, vp.clon));
+	int xmin_ = pbb.x - vp.rv_rect.width / 2;
+	int xmax_ = xmin_ + vp.rv_rect.width;
+	int ymin_ = pbb.y - vp.rv_rect.height / 2;
+	int ymax_ = ymin_ + vp.rv_rect.height;
 
 	int x0, y0, x1, y1;
 
@@ -3096,7 +3096,7 @@ void s52plib::draw_lc_poly(wxDC* pdc, wxColor& color, int width, wxPoint* ptp, i
 }
 
 // Multipoint Sounding
-int s52plib::RenderMPS(ObjRazRules* rzRules, Rules*, ViewPort* vp)
+int s52plib::RenderMPS(ObjRazRules* rzRules, Rules*, const ViewPort& vp)
 {
 	if (!m_bShowSoundg)
 		return 0;
@@ -3173,7 +3173,7 @@ int s52plib::RenderMPS(ObjRazRules* rzRules, Rules*, ViewPort* vp)
 	return 1;
 }
 
-int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
+int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 {
 	char* str = (char*)rules->INSTstr;
 
@@ -3592,18 +3592,18 @@ char* s52plib::RenderCS(ObjRazRules* rzRules, Rules* rules)
 	return (char*)ret;
 }
 
-int s52plib::RenderObjectToDC(wxDC* pdcin, ObjRazRules* rzRules, ViewPort* vp)
+int s52plib::RenderObjectToDC(wxDC* pdcin, ObjRazRules* rzRules, const ViewPort& vp)
 {
 	return DoRenderObject(pdcin, rzRules, vp);
 }
 
-int s52plib::RenderObjectToGL(const wxGLContext& glcc, ObjRazRules* rzRules, ViewPort* vp, wxRect&)
+int s52plib::RenderObjectToGL(const wxGLContext& glcc, ObjRazRules* rzRules, const ViewPort& vp, wxRect&)
 {
 	m_glcc = (wxGLContext*)&glcc;
 	return DoRenderObject(NULL, rzRules, vp);
 }
 
-int s52plib::DoRenderObject(wxDC* pdcin, ObjRazRules* rzRules, ViewPort* vp)
+int s52plib::DoRenderObject(wxDC* pdcin, ObjRazRules* rzRules, const ViewPort& vp)
 {
 	if (!ObjectRenderCheckPos(rzRules, vp))
 		return 0;
@@ -5113,7 +5113,7 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 	} // if pPolyTrapGeo
 }
 
-int s52plib::RenderToGLAC(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
+int s52plib::RenderToGLAC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 {
 #ifdef ocpnUSE_GL
 
@@ -5126,7 +5126,7 @@ int s52plib::RenderToGLAC(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 
 	glColor3ub(c->R, c->G, c->B);
 
-	const BoundingBox& BBView = vp->GetBBox();
+	const BoundingBox& BBView = vp.GetBBox();
 	if (rzRules->obj->pPolyTessGeo) {
 		if (!rzRules->obj->pPolyTessGeo->IsOk()) // perform deferred tesselation
 			rzRules->obj->pPolyTessGeo->BuildDeferredTess();
@@ -5136,15 +5136,15 @@ int s52plib::RenderToGLAC(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 
 		//  Allow a little slop in calculating whether a triangle
 		//  is within the requested Viewport
-		double margin = BBView.GetWidth() * .05;
+		double margin = BBView.GetWidth() * 0.05;
 
 		geo::PolyTriGroup* ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
 		geo::TriPrim* p_tp = ppg->tri_prim_head;
 		while (p_tp) {
 			bool b_greenwich = false;
-			if (BBView.GetMaxX() > 360.) {
-				BoundingBox bbRight(0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
-									vp->GetBBox().GetMaxY());
+			if (BBView.GetMaxX() > 360.0) {
+				BoundingBox bbRight(0.0, vp.GetBBox().GetMinY(), vp.GetBBox().GetMaxX() - 360.0,
+									vp.GetBBox().GetMaxY());
 				if (bbRight.Intersect(*(p_tp->p_bbox), margin) != BoundingBox::_OUT)
 					b_greenwich = true;
 			}
@@ -5198,7 +5198,7 @@ int s52plib::RenderToGLAC(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 	return 1;
 }
 
-int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
+int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 {
 #ifdef ocpnUSE_GL
 
@@ -5215,7 +5215,7 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 
 	GLuint clip_list = 0;
 
-	const geo::BoundingBox& BBView = vp->GetBBox();
+	const geo::BoundingBox& BBView = vp.GetBBox();
 	//  Allow a little slop in calculating whether a triangle
 	//  is within the requested Viewport
 	double margin = BBView.GetWidth() * .05;
@@ -5278,9 +5278,9 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 		geo::TriPrim* p_tp = ppg->tri_prim_head;
 		while (p_tp) {
 			bool b_greenwich = false;
-			if (BBView.GetMaxX() > 360.) {
-				geo::BoundingBox bbRight(0., vp->GetBBox().GetMinY(),
-										 vp->GetBBox().GetMaxX() - 360., vp->GetBBox().GetMaxY());
+			if (BBView.GetMaxX() > 360.0) {
+				geo::BoundingBox bbRight(0.0, vp.GetBBox().GetMinY(),
+										 vp.GetBBox().GetMaxX() - 360.0, vp.GetBBox().GetMaxY());
 				if (bbRight.Intersect(*(p_tp->p_bbox), margin) != geo::BoundingBox::_OUT)
 					b_greenwich = true;
 			}
@@ -5409,9 +5409,9 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 			x_stagger_off = (float)ppatt_spec->width / 2;
 		int yc = 0;
 
-		while (yr < vp->pix_height) {
+		while (yr < vp.pix_height) {
 			xr = obj_xmin;
-			while (xr < vp->pix_width) {
+			while (xr < vp.pix_width) {
 				//    Render a quad.
 
 				int xp = xr;
@@ -5483,7 +5483,7 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, ViewPort* vp)
 }
 
 #ifdef ocpnUSE_GL
-int s52plib::RenderAreaToGL(const wxGLContext&, ObjRazRules* rzRules, ViewPort* vp,
+int s52plib::RenderAreaToGL(const wxGLContext&, ObjRazRules* rzRules, const ViewPort& vp,
 							wxRect& render_rect)
 {
 	if (!ObjectRenderCheckPos(rzRules, vp))
@@ -5560,7 +5560,7 @@ int s52plib::RenderAreaToGL(const wxGLContext&, ObjRazRules* rzRules, ViewPort* 
 }
 #endif
 
-render_canvas_parms* s52plib::CreatePatternBufferSpec(ObjRazRules*, Rules* rules, ViewPort*,
+render_canvas_parms* s52plib::CreatePatternBufferSpec(ObjRazRules*, Rules* rules, const ViewPort&,
 													  bool b_revrgb, bool b_pot)
 {
 	wxImage Image;
@@ -5741,7 +5741,7 @@ render_canvas_parms* s52plib::CreatePatternBufferSpec(ObjRazRules*, Rules* rules
 	return patt_spec;
 }
 
-int s52plib::RenderToBufferAP(ObjRazRules* rzRules, Rules* rules, ViewPort* vp,
+int s52plib::RenderToBufferAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp,
 							  render_canvas_parms* pb_spec)
 {
 	wxImage Image;
@@ -5772,35 +5772,35 @@ int s52plib::RenderToBufferAP(ObjRazRules* rzRules, Rules* rules, ViewPort* vp,
 	ppatt_spec->x = r.x - 2000000; // bias way down to avoid zero-crossing logic in dda
 	ppatt_spec->y = r.y - 2000000;
 
-	RenderToBufferFilledPolygon(rzRules, rzRules->obj, NULL, vp->GetBBox(), pb_spec, ppatt_spec);
+	RenderToBufferFilledPolygon(rzRules, rzRules->obj, NULL, vp.GetBBox(), pb_spec, ppatt_spec);
 
 	return 1;
 }
 
-int s52plib::RenderToBufferAC(ObjRazRules* rzRules, Rules* rules, ViewPort* vp,
+int s52plib::RenderToBufferAC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp,
 							  render_canvas_parms* pb_spec)
 {
 	char* str = (char*)rules->INSTstr;
 
 	S52color* c = ps52plib->getColor(str);
 
-	RenderToBufferFilledPolygon(rzRules, rzRules->obj, c, vp->GetBBox(), pb_spec, NULL);
+	RenderToBufferFilledPolygon(rzRules, rzRules->obj, c, vp.GetBBox(), pb_spec, NULL);
 
 	//    At very small scales, the object could be visible on both the left and right sides of the
 	// screen.
 	//    Identify this case......
-	if (vp->chart_scale > 5e7) {
+	if (vp.chart_scale > 5e7) {
 		//    Does the object hang out over the left side of the VP?
-		if ((rzRules->obj->BBObj.GetMaxX() > vp->GetBBox().GetMinX())
-			&& (rzRules->obj->BBObj.GetMinX() < vp->GetBBox().GetMinX())) {
+		if ((rzRules->obj->BBObj.GetMaxX() > vp.GetBBox().GetMinX())
+			&& (rzRules->obj->BBObj.GetMinX() < vp.GetBBox().GetMinX())) {
 			//    If we add 360 to the objects lons, does it intersect the the right side of the VP?
-			if (((rzRules->obj->BBObj.GetMaxX() + 360.) > vp->GetBBox().GetMaxX())
-				&& ((rzRules->obj->BBObj.GetMinX() + 360.) < vp->GetBBox().GetMaxX())) {
+			if (((rzRules->obj->BBObj.GetMaxX() + 360.) > vp.GetBBox().GetMaxX())
+				&& ((rzRules->obj->BBObj.GetMinX() + 360.) < vp.GetBBox().GetMaxX())) {
 				//  If so, this area oject should be drawn again, this time for the left side
 				//    Do this by temporarily adjusting the objects rendering offset
 				rzRules->obj->x_origin -= geo::mercator_k0 * geo::WGS84_semimajor_axis_meters * 2.0
 										  * M_PI;
-				RenderToBufferFilledPolygon(rzRules, rzRules->obj, c, vp->GetBBox(), pb_spec, NULL);
+				RenderToBufferFilledPolygon(rzRules, rzRules->obj, c, vp.GetBBox(), pb_spec, NULL);
 				rzRules->obj->x_origin += geo::mercator_k0 * geo::WGS84_semimajor_axis_meters * 2.0
 										  * M_PI;
 			}
@@ -5810,7 +5810,7 @@ int s52plib::RenderToBufferAC(ObjRazRules* rzRules, Rules* rules, ViewPort* vp,
 	return 1;
 }
 
-int s52plib::RenderAreaToDC(wxDC* pdcin, ObjRazRules* rzRules, ViewPort* vp,
+int s52plib::RenderAreaToDC(wxDC* pdcin, ObjRazRules* rzRules, const ViewPort& vp,
 							render_canvas_parms* pb_spec)
 {
 	if (!ObjectRenderCheckPos(rzRules, vp))
@@ -5949,7 +5949,7 @@ void s52plib::GetAndAddCSRules(ObjRazRules* rzRules, Rules* rules)
 	rzRules->obj->CSrules = top; // patch in a new rule set
 }
 
-bool s52plib::ObjectRenderCheck(ObjRazRules* rzRules, ViewPort* vp)
+bool s52plib::ObjectRenderCheck(ObjRazRules* rzRules, const ViewPort& vp)
 {
 	if (!ObjectRenderCheckPos(rzRules, vp))
 		return false;
@@ -5960,10 +5960,10 @@ bool s52plib::ObjectRenderCheck(ObjRazRules* rzRules, ViewPort* vp)
 	return true;
 }
 
-bool s52plib::ObjectRenderCheckCS(ObjRazRules* rzRules, ViewPort*)
+bool s52plib::ObjectRenderCheckCS(ObjRazRules* rzRules, const ViewPort&)
 {
-	//  We need to do this test since some CS procedures change the display category
-	//  So we need to tentatively process all objects with CS LUPs
+	// We need to do this test since some CS procedures change the display category
+	// So we need to tentatively process all objects with CS LUPs
 	Rules* rules = rzRules->LUP->ruleList;
 	while (rules != NULL) {
 		if (RUL_CND_SY == rules->ruleType)
@@ -5975,7 +5975,7 @@ bool s52plib::ObjectRenderCheckCS(ObjRazRules* rzRules, ViewPort*)
 	return false;
 }
 
-bool s52plib::ObjectRenderCheckPos(ObjRazRules* rzRules, ViewPort* vp)
+bool s52plib::ObjectRenderCheckPos(ObjRazRules* rzRules, const ViewPort& vp)
 {
 	if (rzRules->obj == NULL)
 		return false;
@@ -5983,15 +5983,15 @@ bool s52plib::ObjectRenderCheckPos(ObjRazRules* rzRules, ViewPort* vp)
 	using geo::BoundingBox;
 
 	// Of course, the object must be at least partly visible in the viewport
-	BoundingBox BBView = vp->GetBBox();
+	BoundingBox BBView = vp.GetBBox();
 	if (BBView.Intersect(rzRules->obj->BBObj, 0)
 		== BoundingBox::_OUT) // Object is wholly outside window
 	{
 		//  Do a secondary test if the viewport crosses Greenwich
 		//  This will pick up objects east of Greenwich
-		if (vp->GetBBox().GetMaxX() > 360.0) {
-			BoundingBox bbRight(0., vp->GetBBox().GetMinY(), vp->GetBBox().GetMaxX() - 360.,
-								vp->GetBBox().GetMaxY());
+		if (vp.GetBBox().GetMaxX() > 360.0) {
+			BoundingBox bbRight(0., vp.GetBBox().GetMinY(), vp.GetBBox().GetMaxX() - 360.0,
+								vp.GetBBox().GetMaxY());
 			if (bbRight.Intersect(rzRules->obj->BBObj, 0) == BoundingBox::_OUT)
 				return false;
 		} else
@@ -6001,7 +6001,7 @@ bool s52plib::ObjectRenderCheckPos(ObjRazRules* rzRules, ViewPort* vp)
 	return true;
 }
 
-bool s52plib::ObjectRenderCheckCat(ObjRazRules* rzRules, ViewPort* vp)
+bool s52plib::ObjectRenderCheckCat(ObjRazRules* rzRules, const ViewPort& vp)
 {
 	if (rzRules->obj == NULL)
 		return false;
@@ -6056,13 +6056,13 @@ bool s52plib::ObjectRenderCheckCat(ObjRazRules* rzRules, ViewPort* vp)
 		if (m_bUseSCAMIN) {
 			if ((DISPLAYBASE == rzRules->LUP->DISC) || (PRIO_GROUP1 == rzRules->LUP->DPRI))
 				b_visible = true;
-			else if (vp->chart_scale > rzRules->obj->Scamin)
+			else if (vp.chart_scale > rzRules->obj->Scamin)
 				b_visible = false;
 
 			// On the other hand, $TEXTS features need not really be displayed at all scales,
 			// always To do so makes a very cluttered display
 			if ((!strncmp(rzRules->LUP->OBCL, "$TEXTS", 6))
-				&& (vp->chart_scale > rzRules->obj->Scamin))
+				&& (vp.chart_scale > rzRules->obj->Scamin))
 				b_visible = false;
 		}
 

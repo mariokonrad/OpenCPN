@@ -124,7 +124,7 @@ public:
 	virtual bool RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
 									  const OCPNRegion& Region) = 0;
 
-	virtual bool AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed) = 0;
+	virtual bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed) = 0;
 
 	virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion) = 0;
 

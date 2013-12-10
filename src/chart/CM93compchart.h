@@ -64,17 +64,17 @@ public:
 		return (ThumbData*)NULL;
 	}
 
-	bool AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed);
+	bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
 	bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion& Region);
 	virtual bool RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
 									  const OCPNRegion& Region);
 	void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
-	bool RenderNextSmallerCellOutlines(ocpnDC& dc, ViewPort& vp);
+	bool RenderNextSmallerCellOutlines(ocpnDC& dc, const ViewPort& vp);
 	void GetPointPix(ObjRazRules* rzRules, float rlat, float rlon, wxPoint* r);
-	void GetPixPoint(int pixx, int pixy, double* plat, double* plon, ViewPort* vpt);
+	void GetPixPoint(int pixx, int pixy, double* plat, double* plon, const ViewPort& vpt);
 	void GetPointPix(ObjRazRules* rzRules, wxPoint2DDouble* en, wxPoint* r, int nPoints);
 	ListOfObjRazRules* GetObjRuleListAtLatLon(float lat, float lon, float select_radius,
-											  ViewPort* VPoint);
+											  const ViewPort& VPoint);
 
 	VE_Hash& Get_ve_hash(void);
 	VC_Hash& Get_vc_hash(void);

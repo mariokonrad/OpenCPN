@@ -432,7 +432,7 @@ void glChartCanvas::OnSize(wxSizeEvent& event)
 	wxGLCanvas::OnSize(event);
 
 	// expand opengl widget to fill viewport
-	ViewPort& VP = cc1->GetVP();
+	const ViewPort& VP = cc1->GetVP();
 	if (GetSize().x != VP.pix_width || GetSize().y != VP.pix_height) {
 		SetSize(VP.pix_width, VP.pix_height);
 		if (m_bsetup && m_b_useFBO) {
@@ -711,7 +711,7 @@ void glChartCanvas::GrowData(int size)
 	}
 }
 
-void glChartCanvas::SetClipRegion(ViewPort& vp, OCPNRegion& region, bool b_clear)
+void glChartCanvas::SetClipRegion(const ViewPort& vp, OCPNRegion& region, bool b_clear)
 {
 	if (g_b_useStencil) {
 		glPushMatrix();
@@ -882,7 +882,7 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 
 	// Make a special VP to account for rotations
 	if (vp.b_MercatorProjectionOverride)
-		vp.SetProjectionType(PROJECTION_MERCATOR);
+		vp.SetProjectionType(PROJECTION_MERCATOR); // FIXME: there should be no writing operations on viewport
 	ViewPort svp = vp;
 
 	svp.pix_width = svp.rv_rect.width;
@@ -1207,7 +1207,7 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 	m_tex_max_res = wxMin(m_tex_max_res, m_tex_max_res_initial);
 }
 
-void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_clear )
+void glChartCanvas::RenderQuiltViewGL( const ViewPort &vp, OCPNRegion Region, bool b_clear )
 {
 	m_gl_rendered_region.Clear();
 
@@ -1366,7 +1366,7 @@ void glChartCanvas::RenderQuiltViewGL( ViewPort &vp, OCPNRegion Region, bool b_c
 	}
 }
 
-void glChartCanvas::ComputeRenderQuiltViewGLRegion( ViewPort &vp, OCPNRegion Region )
+void glChartCanvas::ComputeRenderQuiltViewGLRegion( const ViewPort &vp, OCPNRegion Region )
 {
 	m_gl_rendered_region.Clear();
 

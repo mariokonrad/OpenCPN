@@ -1289,20 +1289,20 @@ void s57chart::GetPointPix(ObjRazRules*, wxPoint2DDouble* en, wxPoint* r, int nP
 	}
 }
 
-void s57chart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, ViewPort* vpt)
+void s57chart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, const ViewPort& vpt)
 {
 	// Use Mercator estimator
-	int dx = pixx - (vpt->pix_width / 2);
-	int dy = (vpt->pix_height / 2) - pixy;
+	int dx = pixx - (vpt.pix_width / 2);
+	int dy = (vpt.pix_height / 2) - pixy;
 
-	double xp = (dx * cos(vpt->skew)) - (dy * sin(vpt->skew));
-	double yp = (dy * cos(vpt->skew)) + (dx * sin(vpt->skew));
+	double xp = (dx * cos(vpt.skew)) - (dy * sin(vpt.skew));
+	double yp = (dy * cos(vpt.skew)) + (dx * sin(vpt.skew));
 
-	double d_east = xp / vpt->view_scale_ppm;
-	double d_north = yp / vpt->view_scale_ppm;
+	double d_east = xp / vpt.view_scale_ppm;
+	double d_north = yp / vpt.view_scale_ppm;
 
 	double slat, slon;
-	geo::fromSM(d_east, d_north, vpt->clat, vpt->clon, &slat, &slon);
+	geo::fromSM(d_east, d_north, vpt.clat, vpt.clon, &slat, &slon);
 
 	*plat = slat;
 	*plon = slon;
@@ -1319,7 +1319,7 @@ void s57chart::SetVPParms(const ViewPort& vpt)
 	geo::toSM(vpt.clat, vpt.clon, ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center);
 }
 
-bool s57chart::AdjustVP(ViewPort& vp_last, ViewPort& vp_proposed)
+bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 {
 	if (!IsCacheValid())
 		return false;
@@ -1567,9 +1567,9 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 			ViewPort temp_vp = VPoint;
 			double temp_lon_left, temp_lat_bot, temp_lon_right, temp_lat_top;
 
-			GetPixPoint(rect.x, rect.y, &temp_lat_top, &temp_lon_left, (ViewPort*)&VPoint);
+			GetPixPoint(rect.x, rect.y, &temp_lat_top, &temp_lon_left, VPoint);
 			GetPixPoint(rect.x + rect.width, rect.y + rect.height, &temp_lat_bot, &temp_lon_right,
-						(ViewPort*)&VPoint);
+						VPoint);
 
 			if (temp_lon_right < temp_lon_left) // presumably crossing Greenwich
 				temp_lon_right += 360.;
@@ -1603,9 +1603,9 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 		ViewPort temp_vp = VPoint;
 		double temp_lon_left, temp_lat_bot, temp_lon_right, temp_lat_top;
 
-		GetPixPoint(rect.x, rect.y, &temp_lat_top, &temp_lon_left, (ViewPort*)&VPoint);
+		GetPixPoint(rect.x, rect.y, &temp_lat_top, &temp_lon_left, VPoint);
 		GetPixPoint(rect.x + rect.width, rect.y + rect.height, &temp_lat_bot, &temp_lon_right,
-					(ViewPort*)&VPoint);
+					VPoint);
 
 		if (temp_lon_right < temp_lon_left) // presumably crossing Greenwich
 			temp_lon_right += 360.;
@@ -1816,7 +1816,7 @@ bool s57chart::DoRenderRectOnGL(const wxGLContext& glc, const ViewPort& VPoint, 
 	ObjRazRules* top;
 	ObjRazRules* crnt;
 
-	ViewPort tvp = VPoint; // undo const  TODO fix this in PLIB
+	ViewPort tvp = VPoint; // FIXME: undo const  TODO fix this in PLIB
 
 	if (g_b_useStencil)
 		glEnable(GL_STENCIL_TEST);
@@ -1833,7 +1833,7 @@ bool s57chart::DoRenderRectOnGL(const wxGLContext& glc, const ViewPort& VPoint, 
 		while (top != NULL) {
 			crnt = top;
 			top = top->next; // next object
-			ps52plib->RenderAreaToGL(glc, crnt, &tvp, rect);
+			ps52plib->RenderAreaToGL(glc, crnt, tvp, rect);
 		}
 	}
 
@@ -1846,14 +1846,14 @@ bool s57chart::DoRenderRectOnGL(const wxGLContext& glc, const ViewPort& VPoint, 
 		while (top != NULL) {
 			crnt = top;
 			top = top->next; // next object
-			ps52plib->RenderObjectToGL(glc, crnt, &tvp, rect);
+			ps52plib->RenderObjectToGL(glc, crnt, tvp, rect);
 		}
 
 		top = razRules[i][2]; // LINES
 		while (top != NULL) {
 			ObjRazRules* crnt = top;
 			top = top->next;
-			ps52plib->RenderObjectToGL(glc, crnt, &tvp, rect);
+			ps52plib->RenderObjectToGL(glc, crnt, tvp, rect);
 		}
 
 		if (ps52plib->m_nSymbolStyle == SIMPLIFIED)
@@ -1864,7 +1864,7 @@ bool s57chart::DoRenderRectOnGL(const wxGLContext& glc, const ViewPort& VPoint, 
 		while (top != NULL) {
 			crnt = top;
 			top = top->next;
-			ps52plib->RenderObjectToGL(glc, crnt, &tvp, rect);
+			ps52plib->RenderObjectToGL(glc, crnt, tvp, rect);
 		}
 	}
 
@@ -1992,8 +1992,8 @@ bool s57chart::RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint)
 	return bnew_view;
 }
 
-bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, RenderTypeEnum option,
-								bool force_new_view)
+bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
+								RenderTypeEnum WXUNUSED(option), bool force_new_view)
 {
 	bool bnewview = false;
 	wxPoint rul, rlr;
@@ -2273,7 +2273,7 @@ int s57chart::DCRenderRect(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 		while (top != NULL) {
 			crnt = top;
 			top = top->next; // next object
-			ps52plib->RenderAreaToDC(&dcinput, crnt, &tvp, &pb_spec);
+			ps52plib->RenderAreaToDC(&dcinput, crnt, tvp, &pb_spec);
 		}
 	}
 
@@ -2316,7 +2316,7 @@ bool s57chart::DCRenderLPB(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 	int i;
 	ObjRazRules* top;
 	ObjRazRules* crnt;
-	ViewPort tvp = vp; // undo const  TODO fix this in PLIB
+	ViewPort tvp = vp; // FIXME: undo const  TODO fix this in PLIB
 
 	for (i = 0; i < PRIO_NUM; ++i) {
 		// Set up a Clipper for Lines
@@ -2329,14 +2329,14 @@ bool s57chart::DCRenderLPB(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 		while (top != NULL) {
 			crnt = top;
 			top = top->next; // next object
-			ps52plib->RenderObjectToDC(&dcinput, crnt, &tvp);
+			ps52plib->RenderObjectToDC(&dcinput, crnt, tvp);
 		}
 
 		top = razRules[i][2]; // LINES
 		while (top != NULL) {
 			ObjRazRules* crnt = top;
 			top = top->next;
-			ps52plib->RenderObjectToDC(&dcinput, crnt, &tvp);
+			ps52plib->RenderObjectToDC(&dcinput, crnt, tvp);
 		}
 
 		if (ps52plib->m_nSymbolStyle == SIMPLIFIED)
@@ -2347,7 +2347,7 @@ bool s57chart::DCRenderLPB(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 		while (top != NULL) {
 			crnt = top;
 			top = top->next;
-			ps52plib->RenderObjectToDC(&dcinput, crnt, &tvp);
+			ps52plib->RenderObjectToDC(&dcinput, crnt, tvp);
 		}
 
 		// Destroy Clipper
@@ -2387,8 +2387,8 @@ InitReturn s57chart::Init(const wxString& name, ChartInitFlag flags)
 	m_usage_char = cname[2];
 
 	// Establish a common reference point for the chart
-	ref_lat = (m_FullExtent.NLAT + m_FullExtent.SLAT) / 2.;
-	ref_lon = (m_FullExtent.WLON + m_FullExtent.ELON) / 2.;
+	ref_lat = (m_FullExtent.NLAT + m_FullExtent.SLAT) / 2.0;
+	ref_lon = (m_FullExtent.WLON + m_FullExtent.ELON) / 2.0;
 
 	if (flags == THUMB_ONLY) {
 
@@ -5163,7 +5163,7 @@ void s57chart::CreateSENCConnNodeTable(FILE* fpOut, S57Reader* poReader)
 }
 
 ListOfObjRazRules* s57chart::GetObjRuleListAtLatLon(float lat, float lon, float select_radius,
-													ViewPort* VPoint)
+													const ViewPort& VPoint)
 {
 	ListOfObjRazRules* ret_ptr = new ListOfObjRazRules;
 
@@ -6361,7 +6361,7 @@ const char* MyCSVGetField(const char* pszFilename, const char* pszKeyFieldName,
 
 // Some s57 Utilities
 // Meant to be called "bare", usually with no class instance.
-void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport,
+void s57_DrawExtendedLightSectors(ocpnDC& dc, const ViewPort& viewport,
 								  std::vector<s57Sector_t>& sectorlegs)
 {
 	double rangeScale = 0.0;
@@ -6484,7 +6484,7 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, ViewPort& viewport,
 	}
 }
 
-bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort& viewport,
+bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort& viewport,
 								   std::vector<s57Sector_t>& sectorlegs)
 {
 	static Position lastpos;
@@ -6520,7 +6520,7 @@ bool s57_CheckExtendedLightSectors(int mx, int my, ViewPort& viewport,
 		float selectRadius = 16 / (viewport.view_scale_ppm * 1852 * 60);
 
 		ListOfObjRazRules* rule_list
-			= chart->GetObjRuleListAtLatLon(cursor.lat(), cursor.lon(), selectRadius, &viewport);
+			= chart->GetObjRuleListAtLatLon(cursor.lat(), cursor.lon(), selectRadius, viewport);
 
 		wxPoint2DDouble lightPosD(0, 0);
 

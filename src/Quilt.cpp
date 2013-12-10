@@ -115,7 +115,7 @@ void Quilt::destroy_patchlist()
 	current_node = m_PatchList.end();
 }
 
-bool Quilt::IsVPBlittable(ViewPort& VPoint, int dx, int dy, bool b_allow_vector)
+bool Quilt::IsVPBlittable(const ViewPort& VPoint, int dx, int dy, bool b_allow_vector)
 {
 	if (!m_vp_rendered.IsValid())
 		return false;
@@ -307,7 +307,7 @@ QuiltPatch* Quilt::GetCurrentPatch()
 		return NULL;
 }
 
-OCPNRegion Quilt::GetChartQuiltRegion(const chart::ChartTableEntry& cte, ViewPort& vp)
+OCPNRegion Quilt::GetChartQuiltRegion(const chart::ChartTableEntry& cte, const ViewPort& vp)
 {
 	OCPNRegion chart_region;
 	OCPNRegion screen_region(vp.rv_rect);
@@ -398,7 +398,7 @@ OCPNRegion Quilt::GetChartQuiltRegion(const chart::ChartTableEntry& cte, ViewPor
 		return OCPNRegion(0, 0, 100, 100);
 }
 
-wxRect Quilt::GetChartQuiltBoundingRect(const chart::ChartTableEntry& cte, ViewPort& vp)
+wxRect Quilt::GetChartQuiltBoundingRect(const chart::ChartTableEntry& cte, const ViewPort& vp)
 {
 	OCPNRegion screen_region(vp.rv_rect);
 
@@ -587,7 +587,7 @@ std::vector<int> Quilt::GetQuiltIndexArray(void)
 	return m_index_array;
 }
 
-bool Quilt::IsQuiltDelta(ViewPort& vp)
+bool Quilt::IsQuiltDelta(const ViewPort& vp)
 {
 	if (!m_vp_quilt.IsValid() || !m_bcomposed)
 		return true;
@@ -596,12 +596,11 @@ bool Quilt::IsQuiltDelta(ViewPort& vp)
 		return true;
 
 	// Has the quilt shifted by more than one pixel in any direction?
-	wxPoint cp_last, cp_this;
 
-	cp_last = m_vp_quilt.GetPixFromLL(Position(vp.clat, vp.clon));
-	cp_this = vp.GetPixFromLL(Position(vp.clat, vp.clon));
+	wxPoint cp_last = m_vp_quilt.GetPixFromLL(Position(vp.clat, vp.clon));
+	wxPoint cp_this = vp.GetPixFromLL(Position(vp.clat, vp.clon));
 
-	return (cp_last != cp_this);
+	return cp_last != cp_this;
 }
 
 void Quilt::AdjustQuiltVP(ViewPort& vp_last, ViewPort& vp_proposed)
@@ -826,7 +825,7 @@ bool Quilt::IsChartSmallestScale(int dbIndex)
 	return dbIndex == target_dbindex;
 }
 
-OCPNRegion Quilt::GetHiliteRegion(ViewPort&)
+OCPNRegion Quilt::GetHiliteRegion(const ViewPort&)
 {
 	if (m_nHiLiteIndex < 0)
 		return OCPNRegion();
@@ -869,7 +868,7 @@ OCPNRegion Quilt::GetHiliteRegion(ViewPort&)
 }
 
 bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_db_index,
-													 ViewPort& vp_in)
+													 const ViewPort& vp_in)
 {
 	EmptyCandidateArray();
 	m_extended_stack_array.clear();
@@ -1750,7 +1749,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 
 
 // Compute and update the member quilt render region, considering all scale factors, group exclusions, etc.
-void Quilt::ComputeRenderRegion(ViewPort& vp, OCPNRegion& chart_region)
+void Quilt::ComputeRenderRegion(const ViewPort& vp, OCPNRegion& chart_region)
 {
 	if (!m_bcomposed)
 		return;
@@ -1797,7 +1796,7 @@ void Quilt::ComputeRenderRegion(ViewPort& vp, OCPNRegion& chart_region)
 	m_rendered_region = rendered_region;
 }
 
-bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& chart_region)
+bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, const ViewPort& vp, OCPNRegion& chart_region)
 {
 #ifdef ocpnUSE_DIBSECTION
 	OCPNMemDC tmp_dc;
@@ -1870,7 +1869,7 @@ bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& 
 		}
 
 		if (!chartsDrawn)
-			cc1->GetVP().SetProjectionType(PROJECTION_MERCATOR);
+			cc1->set_viewpoint_projection_type(PROJECTION_MERCATOR);
 
 		// Render any Overlay patches for s57 charts(cells)
 		if (m_bquilt_has_overlays && !chart_region.IsEmpty()) {
@@ -2028,7 +2027,7 @@ bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, ViewPort& vp, OCPNRegion& 
 	return true;
 }
 
-void Quilt::SubstituteClearDC(wxMemoryDC& dc, ViewPort& vp)
+void Quilt::SubstituteClearDC(wxMemoryDC& dc, const ViewPort& vp)
 {
 	if (m_pBM) {
 		if ((m_pBM->GetWidth() != vp.rv_rect.width) || (m_pBM->GetHeight() != vp.rv_rect.height)) {
@@ -2058,7 +2057,7 @@ wxString Quilt::GetQuiltDepthUnit() const
 	return m_quilt_depth_unit;
 }
 
-void Quilt::SetRenderedVP(ViewPort& vp)
+void Quilt::SetRenderedVP(const ViewPort& vp)
 {
 	m_vp_rendered = vp;
 }

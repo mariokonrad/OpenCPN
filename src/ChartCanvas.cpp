@@ -1267,12 +1267,12 @@ double ChartCanvas::GetQuiltMaxErrorFactor()
 	return m_pQuilt->GetMaxErrorFactor();
 }
 
-bool ChartCanvas::IsChartQuiltableRef(int db_index)
+bool ChartCanvas::IsChartQuiltableRef(int db_index) const
 {
 	return m_pQuilt->IsChartQuiltableRef(db_index);
 }
 
-bool ChartCanvas::IsChartLargeEnoughToRender(chart::ChartBase* chart, ViewPort& vp)
+bool ChartCanvas::IsChartLargeEnoughToRender(chart::ChartBase* chart, const ViewPort& vp) const
 {
 	double chartMaxScale = chart->GetNormalScaleMax(GetCanvasScaleFactor(), GetCanvasWidth());
 	return (chartMaxScale * g_ChartNotRenderScaleFactor > vp.chart_scale);
@@ -1287,11 +1287,6 @@ void ChartCanvas::CancelMeasureRoute()
 }
 
 const ViewPort& ChartCanvas::GetVP() const
-{
-	return VPoint;
-}
-
-ViewPort& ChartCanvas::GetVP()
 {
 	return VPoint;
 }
@@ -2553,7 +2548,7 @@ void ChartCanvas::ReloadVP(bool b_adjust)
 	LoadVP(VPoint, b_adjust);
 }
 
-void ChartCanvas::LoadVP(ViewPort& vp, bool b_adjust)
+void ChartCanvas::LoadVP(const ViewPort& vp, bool b_adjust)
 {
 #ifdef ocpnUSE_GL
 	if (g_bopengl) {
@@ -2921,7 +2916,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	double pred_lat;
 	double pred_lon;
 
-	//  COG/SOG may be undefined in NMEA data stream
+	// COG/SOG may be undefined in NMEA data stream
 	double pCog = nav.cog;
 	if (wxIsNaN(pCog))
 		pCog = 0.0;
@@ -3056,7 +3051,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 			else if (SHIP_NORMAL != m_ownship_state)
 				pos_image = m_pos_image_grey->Copy();
 
-			//      Substitute user ownship image if found
+			// Substitute user ownship image if found
 			if (m_pos_image_user) {
 				pos_image = m_pos_image_user->Copy();
 				if (SHIP_LOWACCURACY == m_ownship_state)
@@ -6553,7 +6548,7 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 			gFrame->ToggleLights(true, true);
 		ListOfObjRazRules* rule_list = NULL;
 		if (Chs57)
-			rule_list = Chs57->GetObjRuleListAtLatLon(zlat, zlon, SelectRadius, &GetVP());
+			rule_list = Chs57->GetObjRuleListAtLatLon(zlat, zlon, SelectRadius, GetVP());
 
 		ChartBase* overlay_chart = GetOverlayChartAtCursor();
 		s57chart* CHs57_Overlay = dynamic_cast<s57chart*>(overlay_chart);
@@ -6561,7 +6556,7 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 		ListOfObjRazRules* overlay_rule_list = NULL;
 		if (CHs57_Overlay) {
 			overlay_rule_list
-				= CHs57_Overlay->GetObjRuleListAtLatLon(zlat, zlon, SelectRadius, &GetVP());
+				= CHs57_Overlay->GetObjRuleListAtLatLon(zlat, zlon, SelectRadius, GetVP());
 		}
 
 		if (!lightsVis)
@@ -7589,7 +7584,7 @@ void ChartCanvas::ShowAISTargetList(void)
 	g_pAISTargetList->UpdateAISTargetList();
 }
 
-void ChartCanvas::RenderAllChartOutlines(ocpnDC& dc, ViewPort& vp)
+void ChartCanvas::RenderAllChartOutlines(ocpnDC& dc, const ViewPort& vp)
 {
 	if (!global::OCPN::get().gui().view().show_outlines)
 		return;
@@ -7631,7 +7626,7 @@ void ChartCanvas::RenderAllChartOutlines(ocpnDC& dc, ViewPort& vp)
 #endif
 }
 
-void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, ViewPort& vp)
+void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp)
 {
 	float plylat;
 	float plylon;
@@ -8709,6 +8704,11 @@ void ChartCanvas::EmbossOverzoomIndicator(ocpnDC& dc)
 	EmbossCanvas(dc, m_pEM_OverZoom, 0, 40);
 }
 
+void ChartCanvas::set_viewpoint_projection_type(int type)
+{
+	VPoint.SetProjectionType(type);
+}
+
 void ChartCanvas::DrawOverlayObjects(ocpnDC& dc, const wxRegion& ru)
 {
 	GridDraw(dc);
@@ -9003,7 +9003,7 @@ wxBitmap* ChartCanvas::DrawTCCBitmap(wxDC* pbackground_dc, bool bAddNewSelpoints
 	return p_bmp;
 }
 
-void ChartCanvas::DrawAllRoutesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BltBBox,
+void ChartCanvas::DrawAllRoutesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BltBBox,
 									  const wxRegion& clipregion)
 {
 	Route* active_route = NULL;
@@ -9096,7 +9096,7 @@ void ChartCanvas::DrawAllRoutesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BltBBo
 		active_track->Draw(dc, GetVP());
 }
 
-void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BltBBox,
+void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BltBBox,
 										 const wxRegion& clipregion, bool bDrawMarksOnly)
 {
 	wxDC* pdc = dc.GetDC();
@@ -9195,7 +9195,7 @@ double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 //    Tides Support
 //------------------------------------------------------------------------------------------
 
-void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox, bool bRebuildSelList,
+void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BBox, bool bRebuildSelList,
 									 bool bforce_redraw_tides, bool bdraw_mono_for_mask)
 {
 	wxPen* pblack_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFD")), 1, wxSOLID);
@@ -9441,7 +9441,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox, b
 //    Currents Support
 //------------------------------------------------------------------------------------------
 
-void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, geo::LatLonBoundingBox& BBox,
+void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BBox,
 										bool bRebuildSelList, bool bforce_redraw_currents,
 										bool bdraw_mono_for_mask)
 {

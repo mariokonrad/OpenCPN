@@ -113,7 +113,7 @@ public:
 	bool RenderAllCanvasOverlayPlugIns(ocpnDC& dc, const ViewPort& vp);
 	bool RenderAllGLCanvasOverlayPlugIns(wxGLContext* pcontext, const ViewPort& vp);
 	void SendCursorLatLonToAllPlugIns(double lat, double lon);
-	void SendViewPortToRequestingPlugIns(ViewPort& vp);
+	void SendViewPortToRequestingPlugIns(const ViewPort& vp);
 
 	void NotifySetupOptions();
 	void CloseAllPlugInPanels(int);

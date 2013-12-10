@@ -188,12 +188,12 @@ public:
 
     void SetGLRendererString(const wxString &renderer);
 
-    bool ObjectRenderCheck( ObjRazRules *rzRules, ViewPort *vp );
-    bool ObjectRenderCheckPos( ObjRazRules *rzRules, ViewPort *vp );
-    bool ObjectRenderCheckCat( ObjRazRules *rzRules, ViewPort *vp );
-    bool ObjectRenderCheckCS( ObjRazRules *rzRules, ViewPort *vp );
+	bool ObjectRenderCheck(ObjRazRules* rzRules, const ViewPort& vp);
+	bool ObjectRenderCheckPos(ObjRazRules* rzRules, const ViewPort& vp);
+	bool ObjectRenderCheckCat(ObjRazRules* rzRules, const ViewPort& vp);
+	bool ObjectRenderCheckCS(ObjRazRules* rzRules, const ViewPort& vp);
 
-    static void DestroyLUP( LUPrec *pLUP );
+	static void DestroyLUP( LUPrec *pLUP );
     static void ClearRulesCache( Rule *pR );
 
 //    Temporarily save/restore the current colortable index
@@ -214,8 +214,8 @@ public:
 	void FlushSymbolCaches();
 
 	//    For DC's
-	int RenderObjectToDC( wxDC *pdc, ObjRazRules *rzRules, ViewPort *vp );
-	int RenderAreaToDC( wxDC *pdc, ObjRazRules *rzRules, ViewPort *vp,
+	int RenderObjectToDC( wxDC *pdc, ObjRazRules *rzRules, const ViewPort &vp );
+	int RenderAreaToDC( wxDC *pdc, ObjRazRules *rzRules, const ViewPort &vp,
 			render_canvas_parms *pb_spec );
 
 	// Accessors
@@ -296,9 +296,9 @@ public:
 //#ifdef ocpnUSE_GL
     //    For OpenGL
     int RenderObjectToGL( const wxGLContext &glcc, ObjRazRules *rzRules,
-                          ViewPort *vp, wxRect &render_rect );
+                          const ViewPort &vp, wxRect &render_rect );
     int RenderAreaToGL( const wxGLContext &glcc, ObjRazRules *rzRules,
-                        ViewPort *vp, wxRect &render_rect );
+                        const ViewPort &vp, wxRect &render_rect );
 //#endif
 
     //Todo accessors
@@ -350,30 +350,30 @@ private:
 
     bool PreloadOBJLFromCSV(const wxString &csv_file);
 
-    int DoRenderObject( wxDC *pdcin, ObjRazRules *rzRules, ViewPort *vp );
+    int DoRenderObject( wxDC *pdcin, ObjRazRules *rzRules, const ViewPort& vp);
 
     //    Area Renderers
-    int RenderToBufferAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp,
+    int RenderToBufferAC( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp,
         render_canvas_parms *pb_spec );
-    int RenderToBufferAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp,
-	render_canvas_parms *pb_spec );
-    int RenderToGLAC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp );
-    int RenderToGLAP( ObjRazRules *rzRules, Rules *rules, ViewPort *vp );
+    int RenderToBufferAP( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp,
+		render_canvas_parms *pb_spec );
+    int RenderToGLAC( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp );
+    int RenderToGLAP( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp );
 
-    //    Object Renderers
-    int RenderTX( ObjRazRules *rzRules, Rules *rules, ViewPort *vp );
-    int RenderTE( ObjRazRules *rzRules, Rules *rules, ViewPort *vp );
-    int RenderSY( ObjRazRules *rzRules, Rules *rules, ViewPort *vp );
-    int RenderLS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp );
-    int RenderLC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp );
-    int RenderMPS( ObjRazRules *rzRules, Rules *rules, ViewPort *vp );
-    int RenderCARC( ObjRazRules *rzRules, Rules *rules, ViewPort *vp );
+    // Object Renderers
+    int RenderTX( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp );
+    int RenderTE( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp );
+    int RenderSY( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp );
+    int RenderLS( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp );
+    int RenderLC( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp );
+    int RenderMPS( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp );
+    int RenderCARC( ObjRazRules *rzRules, Rules *rules, const ViewPort &vp );
     char *RenderCS( ObjRazRules *rzRules, Rules *rules );
 
     void UpdateOBJLArray( S57Obj *obj );
 
     render_canvas_parms* CreatePatternBufferSpec( ObjRazRules *rzRules,
-        Rules *rules, ViewPort *vp, bool b_revrgb, bool b_pot = false );
+        Rules *rules, const ViewPort &vp, bool b_revrgb, bool b_pot = false );
 
 	void RenderToBufferFilledPolygon( ObjRazRules *rzRules, S57Obj *obj,
 			S52color *c, const geo::BoundingBox &BBView, render_canvas_parms *pb_spec,
@@ -381,19 +381,19 @@ private:
 
     void draw_lc_poly( wxDC *pdc, wxColor &color, int width, wxPoint *ptp,
         int npt, float sym_len, float sym_factor, Rule *draw_rule,
-        ViewPort *vp );
+        const ViewPort& vp );
 
     bool RenderHPGL( ObjRazRules *rzRules, Rule * rule_in, wxPoint &r,
-        ViewPort *vp, float rot_angle = 0. );
+        const ViewPort& vp, float rot_angle = 0. );
     bool RenderRasterSymbol( ObjRazRules *rzRules, Rule *prule, wxPoint &r,
-        ViewPort *vp, float rot_angle = 0. );
+        const ViewPort& vp, float rot_angle = 0. );
     wxImage RuleXBMToImage( Rule *prule );
 
     bool RenderText( wxDC *pdc, S52_TextC *ptext, int x, int y,
-        wxRect *pRectDrawn, S57Obj *pobj, bool bCheckOverlap, ViewPort *vp );
+        wxRect *pRectDrawn, S57Obj *pobj, bool bCheckOverlap, const ViewPort& vp );
 
     bool CheckTextRectList( const wxRect &test_rect, S57Obj *pobj );
-    int RenderT_All( ObjRazRules *rzRules, Rules *rules, ViewPort *vp,	bool bTX );
+    int RenderT_All( ObjRazRules *rzRules, Rules *rules, const ViewPort& vp, bool bTX );
 
     int PrioritizeLineFeature( ObjRazRules *rzRules, int npriority );
 

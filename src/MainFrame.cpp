@@ -2534,7 +2534,7 @@ void MainFrame::ScrubGroupArray()
 }
 
 // Flav: This method reloads all charts for convenience
-void MainFrame::ChartsRefresh(int dbi_hint, ViewPort& vp, bool b_purge)
+void MainFrame::ChartsRefresh(int dbi_hint, const ViewPort& vp, bool b_purge)
 {
 	if (!ChartData)
 		return;
@@ -2566,7 +2566,7 @@ void MainFrame::ChartsRefresh(int dbi_hint, ViewPort& vp, bool b_purge)
 			pCurrentStack->SetCurrentEntryFromdbIndex(dbi_hint);
 			chart_canvas->SetQuiltRefChart(dbi_hint);
 		} else {
-			//      Open the saved chart
+			// Open the saved chart
 			ChartBase* pTentative_Chart;
 			pTentative_Chart = ChartData->OpenChartFromDB(dbi_hint, FULL_INIT);
 
@@ -2592,14 +2592,14 @@ void MainFrame::ChartsRefresh(int dbi_hint, ViewPort& vp, bool b_purge)
 		}
 
 	} else {
-		//    Select reference chart from the stack, as though clicked by user
-		//    Make it the smallest scale chart on the stack
+		// Select reference chart from the stack, as though clicked by user
+		// Make it the smallest scale chart on the stack
 		pCurrentStack->CurrentStackEntry = pCurrentStack->nEntry - 1;
 		int selected_index = pCurrentStack->GetCurrentEntrydbIndex();
 		chart_canvas->SetQuiltRefChart(selected_index);
 	}
 
-	//    Validate the correct single chart, or set the quilt mode as appropriate
+	// Validate the correct single chart, or set the quilt mode as appropriate
 	SetupQuiltMode();
 
 	if (vp.IsValid())
@@ -3964,7 +3964,7 @@ void MainFrame::refresh_pianobar()
 	stats->Refresh(true);
 }
 
-void MainFrame::SetChartUpdatePeriod(ViewPort& vp)
+void MainFrame::SetChartUpdatePeriod(const ViewPort& vp)
 {
 	// Set the chart update period based upon chart skew and skew compensator
 

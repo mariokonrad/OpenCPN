@@ -1011,7 +1011,7 @@ void cm93chart::GetPixPoint ( int pixx, int pixy, double *plat, double *plon, co
 	double d_north = yp / vpt.view_scale_ppm;
 
 	double slat, slon;
-	geo::fromSM(d_east, d_north, vpt.clat, vpt.clon, &slat, &slon);
+	geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude(), &slat, &slon);
 
 	if ( slon > 360.0)
 		slon -= 360.0;
@@ -1027,10 +1027,10 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 		if (vp_last.view_scale_ppm == vp_proposed.view_scale_ppm) {
 
 			double prev_easting_c, prev_northing_c;
-			geo::toSM(vp_last.clat, vp_last.clon, ref_lat, ref_lon, &prev_easting_c, &prev_northing_c);
+			geo::toSM(vp_last.latitude(), vp_last.longitude(), ref_lat, ref_lon, &prev_easting_c, &prev_northing_c);
 
 			double easting_c, northing_c;
-			geo::toSM(vp_proposed.clat, vp_proposed.clon,  ref_lat, ref_lon, &easting_c, &northing_c);
+			geo::toSM(vp_proposed.latitude(), vp_proposed.longitude(),  ref_lat, ref_lon, &easting_c, &northing_c);
 
 			// then require this viewport to be exact integral pixel difference from last
 			// adjusting clat/clat and SM accordingly
@@ -1049,8 +1049,7 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 			double xlat, xlon;
 			geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon);
 
-			vp_proposed.clon = xlon;
-			vp_proposed.clat = xlat;
+			vp_proposed.set_position(Position(xlon, xlat));
 
 			return true;
 		}
@@ -1070,7 +1069,7 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 	m_pixy_vp_center = vpt.pix_height / 2;
 	m_view_scale_ppm = vpt.view_scale_ppm;
 
-	geo::toSM(vpt.clat, vpt.clon, ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center);
+	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center);
 
 
 	if (g_bDebugCM93)

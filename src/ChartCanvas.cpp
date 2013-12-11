@@ -702,8 +702,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	// Set some benign initial values
 
 	m_cs = GLOBAL_COLOR_SCHEME_DAY;
-	VPoint.clat = 0;
-	VPoint.clon = 0;
+	VPoint.set_position(Position(0, 0));
 	VPoint.view_scale_ppm = 1;
 	VPoint.Invalidate();
 
@@ -2499,7 +2498,7 @@ bool ChartCanvas::PanCanvas(int dx, int dy)
 {
 	extendedSectorLegs.clear();
 
-	wxPoint p = GetCanvasPointPix(Position(GetVP().clat, GetVP().clon));
+	wxPoint p = GetCanvasPointPix(GetVP().get_position());
 	Position dpos = GetCanvasPixPoint(p.x + dx, p.y + dy);
 	dpos.normalize_lon();
 
@@ -2510,9 +2509,9 @@ bool ChartCanvas::PanCanvas(int dx, int dy)
 	if (((fabs(GetVP().skew) < 0.001)) && (fabs(GetVP().rotation) < 0.001)) {
 
 		if (dx == 0)
-			dpos = Position(dpos.lat(), GetVP().clon);
+			dpos = Position(dpos.lat(), GetVP().longitude());
 		if (dy == 0)
-			dpos = Position(GetVP().clat, dpos.lon());
+			dpos = Position(GetVP().latitude(), dpos.lon());
 	}
 
 	int cur_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
@@ -2567,7 +2566,7 @@ void ChartCanvas::LoadVP(const ViewPort& vp, bool b_adjust)
 	if (m_pQuilt)
 		m_pQuilt->Invalidate();
 
-	SetViewPoint(Position(vp.clat, vp.clon), vp.view_scale_ppm, vp.skew, vp.rotation, b_adjust);
+	SetViewPoint(vp.get_position(), vp.view_scale_ppm, vp.skew, vp.rotation, b_adjust);
 }
 
 void ChartCanvas::SetQuiltRefChart(int dbIndex)
@@ -2582,7 +2581,7 @@ void ChartCanvas::UpdateCanvasOnGroupChange(void)
 	delete pCurrentStack;
 	pCurrentStack = NULL;
 	pCurrentStack = new chart::ChartStack;
-	ChartData->BuildChartStack(pCurrentStack, VPoint.clat, VPoint.clon);
+	ChartData->BuildChartStack(pCurrentStack, VPoint.latitude(), VPoint.longitude());
 
 	if (m_pQuilt) {
 		m_pQuilt->Compose(VPoint);
@@ -2591,7 +2590,7 @@ void ChartCanvas::UpdateCanvasOnGroupChange(void)
 
 bool ChartCanvas::SetVPScale(double scale)
 {
-	return SetViewPoint(Position(VPoint.clat, VPoint.clon), scale, VPoint.skew, VPoint.rotation);
+	return SetViewPoint(VPoint.get_position(), scale, VPoint.skew, VPoint.rotation);
 }
 
 bool ChartCanvas::SetViewPoint(const Position& pos)
@@ -2606,8 +2605,8 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 
 	// Any sensible change?
 	if ((fabs(VPoint.view_scale_ppm - scale_ppm) < 1e-9) && (fabs(VPoint.skew - skew) < 1e-9)
-		&& (fabs(VPoint.rotation - rotation) < 1e-9) && (fabs(VPoint.clat - pos.lat()) < 1e-9)
-		&& (fabs(VPoint.clon - pos.lon()) < 1e-9) && VPoint.IsValid())
+		&& (fabs(VPoint.rotation - rotation) < 1e-9) && (fabs(VPoint.latitude() - pos.lat()) < 1e-9)
+		&& (fabs(VPoint.longitude() - pos.lon()) < 1e-9) && VPoint.IsValid())
 		return false;
 
 	VPoint.SetProjectionType(PROJECTION_MERCATOR); // default
@@ -2618,8 +2617,7 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 	ViewPort last_vp = VPoint;
 
 	VPoint.skew = skew;
-	VPoint.clat = pos.lat();
-	VPoint.clon = pos.lon();
+	VPoint.set_position(pos);
 	VPoint.view_scale_ppm = scale_ppm;
 	VPoint.rotation = rotation;
 
@@ -2654,8 +2652,8 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 			Refresh(false);
 			b_ret = true;
 		} else {
-			wxPoint cp_last = GetCanvasPointPix(Position(m_cache_vp.clat, m_cache_vp.clon));
-			wxPoint cp_this = GetCanvasPointPix(Position(VPoint.clat, VPoint.clon));
+			wxPoint cp_last = GetCanvasPointPix(m_cache_vp.get_position());
+			wxPoint cp_this = GetCanvasPointPix(VPoint.get_position());
 
 			if (cp_last != cp_this) {
 				Refresh(false);
@@ -2817,16 +2815,16 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 		double delta_y = (VPoint.GetBBox().GetMaxY() - VPoint.GetBBox().GetMinY()) * 60.0 * 0.10;
 
 		//  Make sure the two points are in phase longitudinally
-		double lon_norm = VPoint.clon;
+		double lon_norm = VPoint.longitude();
 		if (lon_norm > 180.0)
 			lon_norm -= 360.0;
 		else if (lon_norm < -180.0)
 			lon_norm += 360.0;
 
-		geo::ll_gc_ll(VPoint.clat, lon_norm, 0, delta_y, &tlat, &tlon);
+		geo::ll_gc_ll(VPoint.latitude(), lon_norm, 0, delta_y, &tlat, &tlon);
 
 		wxPoint r1 = GetCanvasPointPix(Position(tlat, tlon)); // TODO: cleanup
-		wxPoint r = GetCanvasPointPix(Position(VPoint.clat, lon_norm));
+		wxPoint r = GetCanvasPointPix(Position(VPoint.latitude(), lon_norm));
 
 		m_true_scale_ppm = sqrt(pow((double)(r.y - r1.y), 2) + pow((double)(r.x - r1.x), 2))
 						   / (delta_y * 1852.0);
@@ -2866,8 +2864,8 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 	}
 
 	//  Maintain global vLat/vLon
-	vLat = VPoint.clat;
-	vLon = VPoint.clon;
+	vLat = VPoint.latitude();
+	vLon = VPoint.longitude();
 
 	return b_ret;
 }
@@ -8050,8 +8048,8 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	bool b_newview = true;
 
 	if ((m_cache_vp.view_scale_ppm == VPoint.view_scale_ppm)
-		&& (m_cache_vp.rotation == VPoint.rotation) && (m_cache_vp.clat == VPoint.clat)
-		&& (m_cache_vp.clon == VPoint.clon) && m_cache_vp.IsValid()) {
+		&& (m_cache_vp.rotation == VPoint.rotation) && (m_cache_vp.latitude() == VPoint.latitude())
+		&& (m_cache_vp.longitude() == VPoint.longitude()) && m_cache_vp.IsValid()) {
 		b_newview = false;
 	}
 
@@ -8103,8 +8101,8 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 
 			if (m_bm_cache_vp.IsValid() && m_cache_vp.IsValid()) {
 				if (b_newview) {
-					wxPoint c_old = VPoint.GetPixFromLL(Position(VPoint.clat, VPoint.clon));
-					wxPoint c_new = m_bm_cache_vp.GetPixFromLL(Position(VPoint.clat, VPoint.clon));
+					wxPoint c_old = VPoint.GetPixFromLL(VPoint.get_position());
+					wxPoint c_new = m_bm_cache_vp.GetPixFromLL(VPoint.get_position());
 
 					int dy = c_new.y - c_old.y;
 					int dx = c_new.x - c_old.x;
@@ -8285,8 +8283,8 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 								  m_b_rot_hidef, &m_roffset);
 
 				if ((rot_vp.view_scale_ppm == VPoint.view_scale_ppm)
-					&& (rot_vp.rotation == VPoint.rotation) && (rot_vp.clat == VPoint.clat)
-					&& (rot_vp.clon == VPoint.clon) && rot_vp.IsValid() && (ri.IsOk())) {
+					&& (rot_vp.rotation == VPoint.rotation) && (rot_vp.latitude() == VPoint.latitude())
+					&& (rot_vp.longitude() == VPoint.longitude()) && rot_vp.IsValid() && (ri.IsOk())) {
 					b_rot_ok = true;
 				}
 			}

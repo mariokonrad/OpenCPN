@@ -1027,9 +1027,9 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 	if (scalefactor < 1.0) {
 		double pixx, pixy;
 		if (b_plugin)
-			pPlugInWrapper->latlong_to_chartpix(vp.clat, vp.clon, pixx, pixy);
+			pPlugInWrapper->latlong_to_chartpix(vp.latitude(), vp.longitude(), pixx, pixy);
 		else
-			pBSBChart->latlong_to_chartpix(vp.clat, vp.clon, pixx, pixy);
+			pBSBChart->latlong_to_chartpix(vp.latitude(), vp.longitude(), pixx, pixy);
 
 		biasy = pixy - spy;
 		biasx = pixx - spx;
@@ -1422,8 +1422,8 @@ void glChartCanvas::render()
 	//  Is this viewpoint the same as the previously painted one?
 	bool b_newview = true;
 	if (false && (m_gl_cache_vp.view_scale_ppm == VPoint.view_scale_ppm)
-		&& (m_gl_cache_vp.rotation == VPoint.rotation) && (m_gl_cache_vp.clat == VPoint.clat)
-		&& (m_gl_cache_vp.clon == VPoint.clon) && m_gl_cache_vp.IsValid()) {
+		&& (m_gl_cache_vp.rotation == VPoint.rotation) && (m_gl_cache_vp.latitude() == VPoint.latitude())
+		&& (m_gl_cache_vp.longitude() == VPoint.longitude()) && m_gl_cache_vp.IsValid()) {
 		b_newview = false;
 	}
 
@@ -1545,8 +1545,8 @@ void glChartCanvas::render()
 			if (m_gl_cache_vp.IsValid() && (m_cache_tex > 0) && !g_bCourseUp) {
 				if( b_newview ) {
 
-					wxPoint c_old = VPoint.GetPixFromLL(Position(VPoint.clat, VPoint.clon));
-					wxPoint c_new = m_gl_cache_vp.GetPixFromLL(Position(VPoint.clat, VPoint.clon));
+					wxPoint c_old = VPoint.GetPixFromLL(VPoint.get_position());
+					wxPoint c_new = m_gl_cache_vp.GetPixFromLL(VPoint.get_position());
 
 					int dy = c_new.y - c_old.y;
 					int dx = c_new.x - c_old.x;

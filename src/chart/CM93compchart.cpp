@@ -347,7 +347,7 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 	while (!cellscale_is_useable) {
 		// Open the proper scale chart, if not already open
 		while (NULL == m_pcm93chart_array[cmscale]) {
-			if (Is_CM93Cell_Present(m_prefixComposite, vpt.clat, vpt.clon, cmscale)) {
+			if (Is_CM93Cell_Present(m_prefixComposite, vpt.latitude(), vpt.longitude(), cmscale)) {
 				if (g_bDebugCM93)
 					printf(" chart %c at VP clat/clon is present\n", (char)('A' + cmscale - 1));
 
@@ -369,7 +369,7 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 			} else if (cmscale == 0) {
 				if (g_bDebugCM93)
 					printf("   CM93 finds no chart of any scale present at Lat/Lon  %g %g\n",
-						   vpt.clat, vpt.clon);
+						   vpt.latitude(), vpt.longitude());
 
 				b_nochart = true;
 				break;
@@ -400,8 +400,8 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 			m_pcm93chart_current->SetVPParms(vpt);
 
 			// Check to see if the viewpoint center is actually on the selected chart
-			float yc = vpt.clat;
-			float xc = vpt.clon;
+			float yc = vpt.latitude();
+			float xc = vpt.longitude();
 
 			// Bound the clon to 0-360. degrees
 			while (xc < 0)
@@ -503,7 +503,7 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 	if ( m_pcm93chart_current )
 	{
 		if ( m_pcm93chart_current->m_last_vp.IsValid() )
-			FillScaleArray ( m_pcm93chart_current->m_last_vp.clat,m_pcm93chart_current-> m_last_vp.clon );
+			FillScaleArray ( m_pcm93chart_current->m_last_vp.latitude(), m_pcm93chart_current->m_last_vp.longitude());
 
 		// Find out what the smallest available scale is
 		int cmscale = 7;
@@ -769,17 +769,17 @@ bool cm93compchart::DoRenderRegionViewOnGL (const wxGLContext &glc, const ViewPo
 					{
 
 						double plon = p->x;
-						if ( fabs ( plon - VPoint.clon ) > 180. )
+						if ( fabs ( plon - VPoint.longitude()) > 180.0)
 						{
-							if ( plon > VPoint.clon )
-								plon -= 360.;
+							if ( plon > VPoint.longitude())
+								plon -= 360.0;
 							else
-								plon += 360.;
+								plon += 360.0;
 						}
 
 
 						double easting, northing, epix, npix;
-						geo::toSM(p->y, plon + 360., VPoint.clat, VPoint.clon + 360, &easting, &northing);
+						geo::toSM(p->y, plon + 360., VPoint.latitude(), VPoint.longitude() + 360, &easting, &northing);
 
 						//    Outlines stored in MCDs are not adjusted for offsets
 						easting -= pmcd->user_xoff;
@@ -1059,17 +1059,17 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
 					{
 
 						double plon = p->x;
-						if ( fabs ( plon - VPoint.clon ) > 180. )
+						if ( fabs ( plon - VPoint.longitude()) > 180.0)
 						{
-							if ( plon > VPoint.clon )
-								plon -= 360.;
+							if ( plon > VPoint.longitude())
+								plon -= 360.0;
 							else
-								plon += 360.;
+								plon += 360.0;
 						}
 
 
 						double easting, northing, epix, npix;
-						geo::toSM(p->y, plon + 360., VPoint.clat, VPoint.clon + 360, &easting, &northing);
+						geo::toSM(p->y, plon + 360.0, VPoint.latitude(), VPoint.longitude() + 360, &easting, &northing);
 
 						// Outlines stored in MCDs are not adjusted for offsets
 						easting -= pmcd->user_xoff;

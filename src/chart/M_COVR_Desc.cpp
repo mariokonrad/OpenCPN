@@ -163,8 +163,8 @@ OCPNRegion M_COVR_Desc::GetRegion(const ViewPort& vp, wxPoint* pwp) const
 
 	for (int ip = 0; ip < m_nvertices; ++ip) {
 		double plon = p->x;
-		if (fabs(plon - vp.clon) > 180.0) {
-			if (plon > vp.clon)
+		if (fabs(plon - vp.longitude()) > 180.0) {
+			if (plon > vp.longitude())
 				plon -= 360.0;
 			else
 				plon += 360.0;
@@ -174,7 +174,7 @@ OCPNRegion M_COVR_Desc::GetRegion(const ViewPort& vp, wxPoint* pwp) const
 		double northing;
 		double epix;
 		double npix;
-		geo::toSM(p->y, plon + 360.0, vp.clat, vp.clon + 360, &easting, &northing);
+		geo::toSM(p->y, plon + 360.0, vp.latitude(), vp.longitude() + 360, &easting, &northing);
 
 		easting -= user_xoff;
 		northing -= user_yoff;

@@ -57,11 +57,15 @@ public:
 	geo::LatLonBoundingBox& GetBBox();
 	void set_positive();
 
+	double latitude() const;
+	double longitude() const;
+
+	const Position& get_position() const;
+	void set_position(const Position& pos);
+
 	// FIXME: move public attributes to private
 
 	// Generic
-	double clat; // center point
-	double clon;
 	double view_scale_ppm;
 	double skew;
 	double rotation;
@@ -79,6 +83,7 @@ public:
 	wxRect rv_rect;
 
 private:
+	Position center_point;
 	geo::LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains
 								   // the entire vieport
 	bool bValid; // This VP is valid

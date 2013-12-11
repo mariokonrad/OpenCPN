@@ -120,8 +120,8 @@ bool Quilt::IsVPBlittable(const ViewPort& VPoint, int dx, int dy, bool b_allow_v
 	if (!m_vp_rendered.IsValid())
 		return false;
 
-	wxPoint2DDouble p1 = VPoint.GetDoublePixFromLL(Position(m_vp_rendered.clat, m_vp_rendered.clon));
-	wxPoint2DDouble p2 = VPoint.GetDoublePixFromLL(Position(VPoint.clat, VPoint.clon));
+	wxPoint2DDouble p1 = VPoint.GetDoublePixFromLL(m_vp_rendered.get_position());
+	wxPoint2DDouble p2 = VPoint.GetDoublePixFromLL(VPoint.get_position());
 	double deltax = p2.m_x - p1.m_x;
 	double deltay = p2.m_y - p1.m_y;
 
@@ -597,8 +597,8 @@ bool Quilt::IsQuiltDelta(const ViewPort& vp)
 
 	// Has the quilt shifted by more than one pixel in any direction?
 
-	wxPoint cp_last = m_vp_quilt.GetPixFromLL(Position(vp.clat, vp.clon));
-	wxPoint cp_this = vp.GetPixFromLL(Position(vp.clat, vp.clon));
+	wxPoint cp_last = m_vp_quilt.GetPixFromLL(vp.get_position());
+	wxPoint cp_this = vp.GetPixFromLL(vp.get_position());
 
 	return cp_last != cp_this;
 }
@@ -890,7 +890,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 
 	if (!pCurrentStack) {
 		pCurrentStack = new chart::ChartStack;
-		ChartData->BuildChartStack(pCurrentStack, vp_local.clat, vp_local.clon);
+		ChartData->BuildChartStack(pCurrentStack, vp_local.latitude(), vp_local.longitude());
 	}
 
 	int n_charts = 0;

@@ -64,15 +64,15 @@ wxPoint ViewPort::GetPixFromLL(const Position& pos) const
 	double xlon = pos.lon();
 
 	//  Make sure lon and lon0 are same phase
-	if (xlon * clon < 0.0) {
+	if (xlon * center_point.lon() < 0.0) {
 		if (xlon < 0.0)
 			xlon += 360.0;
 		else
 			xlon -= 360.0;
 	}
 
-	if (fabs(xlon - clon) > 180.0) {
-		if (xlon > clon)
+	if (fabs(xlon - center_point.lon()) > 180.0) {
+		if (xlon > center_point.lon())
 			xlon -= 360.0;
 		else
 			xlon += 360.0;
@@ -84,8 +84,8 @@ wxPoint ViewPort::GetPixFromLL(const Position& pos) const
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM(clat, clon, 0.0, clon, &tmceasting, &tmcnorthing);
-		geo::toTM(pos.lat(), xlon, 0.0, clon, &tmeasting, &tmnorthing);
+		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting, &tmcnorthing);
+		geo::toTM(pos.lat(), xlon, 0.0, center_point.lon(), &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
@@ -94,15 +94,15 @@ wxPoint ViewPort::GetPixFromLL(const Position& pos) const
 		//    We calculate northings as referenced to the equator
 		//    And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		geo::toPOLY(clat, clon, 0.0, clon, &pceasting, &pcnorthing);
+		geo::toPOLY(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &pceasting, &pcnorthing);
 
 		double peasting, pnorthing;
-		geo::toPOLY(pos.lat(), xlon, 0.0, clon, &peasting, &pnorthing);
+		geo::toPOLY(pos.lat(), xlon, 0.0, center_point.lon(), &peasting, &pnorthing);
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
 	} else
-		geo::toSM(pos.lat(), xlon, clat, clon, &easting, &northing);
+		geo::toSM(pos.lat(), xlon, center_point.lat(), center_point.lon(), &easting, &northing);
 
 	if (!wxFinite(easting) || !wxFinite(northing))
 		return wxPoint(0, 0);
@@ -131,15 +131,15 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos) const
 	double xlon = pos.lon();
 
 	// Make sure lon and lon0 are same phase
-	if (xlon * clon < 0.0) {
+	if (xlon * center_point.lon() < 0.0) {
 		if (xlon < 0.0)
 			xlon += 360.0;
 		else
 			xlon -= 360.0;
 	}
 
-	if (fabs(xlon - clon) > 180.0) {
-		if (xlon > clon)
+	if (fabs(xlon - center_point.lon()) > 180.0) {
+		if (xlon > center_point.lon())
 			xlon -= 360.0;
 		else
 			xlon += 360.0;
@@ -151,8 +151,8 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos) const
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM(clat, clon, 0.0, clon, &tmceasting, &tmcnorthing);
-		geo::toTM(pos.lat(), xlon, 0.0, clon, &tmeasting, &tmnorthing);
+		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting, &tmcnorthing);
+		geo::toTM(pos.lat(), xlon, 0.0, center_point.lon(), &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
@@ -160,15 +160,15 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos) const
 		// We calculate northings as referenced to the equator
 		// And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		geo::toPOLY(clat, clon, 0.0, clon, &pceasting, &pcnorthing);
+		geo::toPOLY(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &pceasting, &pcnorthing);
 
 		double peasting, pnorthing;
-		geo::toPOLY(pos.lat(), xlon, 0.0, clon, &peasting, &pnorthing);
+		geo::toPOLY(pos.lat(), xlon, 0.0, center_point.lon(), &peasting, &pnorthing);
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
 	} else {
-		geo::toSM(pos.lat(), xlon, clat, clon, &easting, &northing);
+		geo::toSM(pos.lat(), xlon, center_point.lat(), center_point.lon(), &easting, &northing);
 	}
 
 	if (!wxFinite(easting) || !wxFinite(northing))
@@ -214,18 +214,18 @@ Position ViewPort::GetLLFromPix(const wxPoint& p) const
 	if (PROJECTION_TRANSVERSE_MERCATOR == m_projection_type) {
 		double tmceasting;
 		double tmcnorthing;
-		geo::toTM(clat, clon, 0.0, clon, &tmceasting, &tmcnorthing);
-		geo::fromTM(d_east, d_north + tmcnorthing, 0.0, clon, &slat, &slon);
+		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting, &tmcnorthing);
+		geo::fromTM(d_east, d_north + tmcnorthing, 0.0, center_point.lon(), &slat, &slon);
 	} else if (PROJECTION_POLYCONIC == m_projection_type) {
 		double polyeasting;
 		double polynorthing;
-		geo::toPOLY(clat, clon, 0.0, clon, &polyeasting, &polynorthing);
-		geo::fromPOLY(d_east, d_north + polynorthing, 0.0, clon, &slat, &slon);
+		geo::toPOLY(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &polyeasting, &polynorthing);
+		geo::fromPOLY(d_east, d_north + polynorthing, 0.0, center_point.lon(), &slat, &slon);
 	} else {
 		// TODO This could be fromSM_ECC to better match some Raster charts
 		//      However, it seems that cm93 (and S57) prefer no eccentricity correction
 		//      Think about it....
-		geo::fromSM(d_east, d_north, clat, clon, &slat, &slon);
+		geo::fromSM(d_east, d_north, center_point.lat(), center_point.lon(), &slat, &slon);
 	}
 
 	Position pos(slat, slon);
@@ -254,7 +254,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		// Make a positive definite vp
 		ViewPort vp_positive = *this;
 		while (vp_positive.vpBBox.GetMinX() < 0) {
-			vp_positive.clon += 360.;
+			vp_positive.set_position(Position(vp_positive.latitude(), vp_positive.longitude() + 360.0));
 			wxPoint2DDouble t(360.0, 0.0);
 			vp_positive.vpBBox.Translate(t);
 		}
@@ -465,7 +465,7 @@ void ViewPort::SetBoxes(void)
 	double lat_ll = pos_ll.lat();
 	double lon_ll = pos_ll.lon();
 
-	if (clon < 0.0) {
+	if (center_point.lon() < 0.0) {
 		if ((lon_ul > 0.0) && (lon_ur < 0.0)) {
 			lon_ul -= 360.0;
 			lon_ll -= 360.0;
@@ -517,6 +517,26 @@ void ViewPort::SetBoxes(void)
 	SetRotationAngle(rotation_save);
 }
 
+const Position& ViewPort::get_position() const
+{
+	return center_point;
+}
+
+void ViewPort::set_position(const Position& pos)
+{
+	center_point = pos;
+}
+
+double ViewPort::latitude() const
+{
+	return center_point.lat();
+}
+
+double ViewPort::longitude() const
+{
+	return center_point.lon();
+}
+
 void ViewPort::Invalidate()
 {
 	bValid = false;
@@ -556,7 +576,7 @@ void ViewPort::set_positive()
 {
 	wxPoint2DDouble t(360.0, 0.0);
 	while (GetBBox().GetMinX() < 0) {
-		clon += 360.0;
+		center_point = Position(center_point.lat(), center_point.lon() + 360.0);
 		GetBBox().Translate(t);
 	}
 }

@@ -2382,7 +2382,7 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 #endif
 
 	//    Get a true pixel clipping/bounding box from the vp
-	wxPoint pbb = vp.GetPixFromLL(Position(vp.clat, vp.clon));
+	wxPoint pbb = vp.GetPixFromLL(vp.get_position());
 	int xmin_ = pbb.x - vp.rv_rect.width / 2;
 	int xmax_ = xmin_ + vp.rv_rect.width;
 	int ymin_ = pbb.y - vp.rv_rect.height / 2;
@@ -2883,7 +2883,7 @@ void s52plib::draw_lc_poly(wxDC* pdc, wxColor& color, int width, wxPoint* ptp, i
 	bool cw = dfSum < 0.;
 
 	//    Get a true pixel clipping/bounding box from the vp
-	wxPoint pbb = vp.GetPixFromLL(Position(vp.clat, vp.clon));
+	wxPoint pbb = vp.GetPixFromLL(vp.get_position());
 	int xmin_ = pbb.x - vp.rv_rect.width / 2;
 	int xmax_ = xmin_ + vp.rv_rect.width;
 	int ymin_ = pbb.y - vp.rv_rect.height / 2;

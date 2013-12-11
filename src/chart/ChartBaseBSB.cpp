@@ -966,7 +966,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 
                   //      Apply poly solution to vp center point
                   double easting, northing;
-                  geo::toTM(vp.clat + m_lat_datum_adjust, vp.clon + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
+                  geo::toTM(vp.latitude() + m_lat_datum_adjust, vp.longitude() + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
                   double xc = polytrans( cPoints.wpx, easting, northing );
                   double yc = polytrans( cPoints.wpy, easting, northing );
 
@@ -998,7 +998,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 
                   //      Apply poly solution to vp center point
                   double easting, northing;
-                  geo::toSM_ECC(vp.clat + m_lat_datum_adjust, vp.clon + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
+                  geo::toSM_ECC(vp.latitude() + m_lat_datum_adjust, vp.longitude() + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
                   double xc = polytrans( cPoints.wpx, easting, northing );
                   double yc = polytrans( cPoints.wpy, easting, northing );
 
@@ -1029,7 +1029,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 
                   //      Apply poly solution to vp center point
                   double easting, northing;
-                  geo::toPOLY(vp.clat + m_lat_datum_adjust, vp.clon + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
+                  geo::toPOLY(vp.latitude() + m_lat_datum_adjust, vp.longitude() + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
                   double xc = polytrans( cPoints.wpx, easting, northing );
                   double yc = polytrans( cPoints.wpy, easting, northing );
 
@@ -1065,15 +1065,15 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
                   double d_east = xp / vp.view_scale_ppm;
                   double d_north = yp / vp.view_scale_ppm;
 
-                  geo::fromSM_ECC ( d_east, d_north, vp.clat, vp.clon, &slat, &slon );
+                  geo::fromSM_ECC ( d_east, d_north, vp.latitude(), vp.longitude(), &slat, &slon );
             }
 
             *plat = slat;
 
-            if(slon < -180.)
-                  slon += 360.;
-            else if(slon > 180.)
-                  slon -= 360.;
+            if(slon < -180.0)
+                  slon += 360.0;
+            else if(slon > 180.0)
+                  slon -= 360.0;
             *plon = slon;
 
             return 0;
@@ -1141,7 +1141,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int &pixx, int &pixy
                 double yd = polytrans( cPoints.wpy, easting, northing );
 
                 //      Apply poly solution to vp center point
-                geo::toTM(vp.clat + m_lat_datum_adjust, vp.clon + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
+                geo::toTM(vp.latitude() + m_lat_datum_adjust, vp.longitude() + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
                 double xc = polytrans( cPoints.wpx, easting, northing );
                 double yc = polytrans( cPoints.wpy, easting, northing );
 
@@ -1169,8 +1169,8 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int &pixx, int &pixy
                 xlon = alon;
                 if(m_bIDLcross)
                 {
-                      if(xlon < 0.)
-                            xlon += 360.;
+                      if(xlon < 0.0)
+                            xlon += 360.0;
                 }
                 geo::toSM_ECC(alat, xlon, m_proj_lat, m_proj_lon, &easting, &northing);
 
@@ -1179,14 +1179,14 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int &pixx, int &pixy
                 double yd = polytrans( cPoints.wpy, easting, northing );
 
                 //      Apply poly solution to vp center point
-                double xlonc = vp.clon;
+                double xlonc = vp.longitude();
                 if(m_bIDLcross)
                 {
-                      if(xlonc < 0.)
-                            xlonc += 360.;
+                      if(xlonc < 0.0)
+                            xlonc += 360.0;
                 }
 
-                geo::toSM_ECC(vp.clat + m_lat_datum_adjust, xlonc + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
+                geo::toSM_ECC(vp.latitude() + m_lat_datum_adjust, xlonc + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
                 double xc = polytrans( cPoints.wpx, easting, northing );
                 double yc = polytrans( cPoints.wpy, easting, northing );
 
@@ -1214,8 +1214,8 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int &pixx, int &pixy
                 xlon = alon;
                 if(m_bIDLcross)
                 {
-                      if(xlon < 0.)
-                            xlon += 360.;
+                      if(xlon < 0.0)
+                            xlon += 360.0;
                 }
                 geo::toPOLY(alat, xlon, m_proj_lat, m_proj_lon, &easting, &northing);
 
@@ -1224,14 +1224,14 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int &pixx, int &pixy
                 double yd = polytrans( cPoints.wpy, easting, northing );
 
                 //      Apply poly solution to vp center point
-                double xlonc = vp.clon;
+                double xlonc = vp.longitude();
                 if(m_bIDLcross)
                 {
-                      if(xlonc < 0.)
-                            xlonc += 360.;
+                      if(xlonc < 0.0)
+                            xlonc += 360.0;
                 }
 
-                geo::toPOLY(vp.clat + m_lat_datum_adjust, xlonc + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
+                geo::toPOLY(vp.latitude() + m_lat_datum_adjust, xlonc + m_lon_datum_adjust, m_proj_lat, m_proj_lon, &easting, &northing);
                 double xc = polytrans( cPoints.wpx, easting, northing );
                 double yc = polytrans( cPoints.wpy, easting, northing );
 
@@ -1250,7 +1250,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int &pixx, int &pixy
           }
           else
           {
-                geo::toSM_ECC(lat, xlon, vp.clat, vp.clon, &easting, &northing);
+                geo::toSM_ECC(lat, xlon, vp.latitude(), vp.longitude(), &easting, &northing);
 
                 double epix = easting  * vp.view_scale_ppm;
                 double npix = northing * vp.view_scale_ppm;
@@ -1436,12 +1436,12 @@ void ChartBaseBSB::ComputeSourceRectangle(const ViewPort &vp, wxRect *pSourceRec
 {
 
     //      This funny contortion is necessary to allow scale factors < 1, i.e. overzoom
-      double binary_scale_factor = (wxRound(100000 * GetPPM() / vp.view_scale_ppm)) / 100000.;
+      double binary_scale_factor = (wxRound(100000 * GetPPM() / vp.view_scale_ppm)) / 100000.0;
 
       m_raster_scale_factor = binary_scale_factor;
 
       double xd, yd;
-      latlong_to_chartpix(vp.clat, vp.clon, xd, yd);
+      latlong_to_chartpix(vp.latitude(), vp.longitude(), xd, yd);
 
 
       pSourceRect->x = wxRound(xd - (vp.pix_width  * binary_scale_factor / 2));
@@ -1457,25 +1457,25 @@ void ChartBaseBSB::SetVPRasterParms(const ViewPort &vpt)
 
       if(m_datum_index == DATUM_INDEX_WGS84)
       {
-            m_lon_datum_adjust = 0.;
-            m_lat_datum_adjust = 0.;
+            m_lon_datum_adjust = 0.0;
+            m_lat_datum_adjust = 0.0;
       }
       else if(m_datum_index == DATUM_INDEX_UNKNOWN)
       {
-            m_lon_datum_adjust = (-m_dtm_lon) / 3600.;
-            m_lat_datum_adjust = (-m_dtm_lat) / 3600.;
+            m_lon_datum_adjust = (-m_dtm_lon) / 3600.0;
+            m_lat_datum_adjust = (-m_dtm_lat) / 3600.0;
       }
       else
       {
             double to_lat;
             double to_lon;
-            geo::MolodenskyTransform(vpt.clat, vpt.clon, &to_lat, &to_lon, m_datum_index, DATUM_INDEX_WGS84);
-            m_lon_datum_adjust = -(to_lon - vpt.clon);
-            m_lat_datum_adjust = -(to_lat - vpt.clat);
+            geo::MolodenskyTransform(vpt.latitude(), vpt.longitude(), &to_lat, &to_lon, m_datum_index, DATUM_INDEX_WGS84);
+            m_lon_datum_adjust = -(to_lon - vpt.longitude());
+            m_lat_datum_adjust = -(to_lat - vpt.latitude());
             if(m_b_apply_dtm)
             {
-                  m_lon_datum_adjust -= m_dtm_lon / 3600.;
-                  m_lat_datum_adjust -= m_dtm_lat / 3600.;
+                  m_lon_datum_adjust -= m_dtm_lon / 3600.0;
+                  m_lat_datum_adjust -= m_dtm_lat / 3600.0;
             }
       }
 
@@ -1487,7 +1487,7 @@ void ChartBaseBSB::SetVPRasterParms(const ViewPort &vpt)
 
 bool ChartBaseBSB::AdjustVP(const ViewPort &vp_last, ViewPort &vp_proposed)
 {
-      bool bInside = G_FloatPtInPolygon ( ( MyFlPoint * ) GetCOVRTableHead ( 0 ), GetCOVRTablenPoints ( 0 ), vp_proposed.clon, vp_proposed.clat );
+      bool bInside = G_FloatPtInPolygon ( ( MyFlPoint * ) GetCOVRTableHead ( 0 ), GetCOVRTablenPoints ( 0 ), vp_proposed.longitude(), vp_proposed.latitude());
       if(!bInside)
             return false;
 
@@ -1509,11 +1509,10 @@ bool ChartBaseBSB::AdjustVP(const ViewPort &vp_last, ViewPort &vp_proposed)
 
                         int pixx, pixy;
                         double lon_adj, lat_adj;
-                        latlong_to_pix_vp(vp_proposed.clat, vp_proposed.clon, pixx, pixy, vp_proposed);
+                        latlong_to_pix_vp(vp_proposed.latitude(), vp_proposed.longitude(), pixx, pixy, vp_proposed);
                         vp_pix_to_latlong(vp_proposed, pixx, pixy, &lat_adj, &lon_adj);
 
-                        vp_proposed.clat = lat_adj;
-                        vp_proposed.clon = lon_adj;
+                        vp_proposed.set_position(Position(lat_adj, lon_adj));
                         ret_val = 1;
                   }
       }
@@ -2208,7 +2207,7 @@ bool ChartBaseBSB::GetAndScaleData(unsigned char *ppn, wxRect& source, int WXUNU
 
 
                   double xd, yd;
-                  latlong_to_chartpix(m_vp_render_last.clat, m_vp_render_last.clon, xd, yd);
+                  latlong_to_chartpix(m_vp_render_last.latitude(), m_vp_render_last.longitude(), xd, yd);
                   double xrd = xd - (m_vp_render_last.pix_width  * m_raster_scale_factor / 2);
                   double yrd = yd - (m_vp_render_last.pix_height * m_raster_scale_factor / 2);
                   double x_vernier = (xrd - wxRound(xrd));
@@ -3176,40 +3175,13 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
        else
              m_ppm_avg = 1.0;                      // absolute fallback to prevent div-0 errors
 
-#if 0
-       // Alternate Skew verification
-       ViewPort vps;
-       vps.clat = pRefTable[0].latr;
-       vps.clon = pRefTable[0].lonr;
-       vps.view_scale_ppm = m_ppm_avg;
-       vps.skew = 0.;
-       vps.pix_width = 1000;
-       vps.pix_height = 1000;
-       
-       int x1, y1, x2, y2;
-       latlong_to_pix_vp(latmin, (lonmax + lonmin)/2., x1, y1, vps);
-       latlong_to_pix_vp(latmax, (lonmax + lonmin)/2., x2, y2, vps);
-      
-       double apparent_skew = (atan2( (y2-y1), (x2-x1) ) * 180./PI) + 90.;
-       if(apparent_skew < 0.)
-           apparent_skew += 360;
-       if(apparent_skew > 360.)
-           apparent_skew -= 360;
-       
-       if(fabs( apparent_skew - m_Chart_Skew ) > 2) {           // measured skew is more than 2 degress different
-           m_Chart_Skew = apparent_skew;
-       }
-#endif       
-       
         // Do a last little test using a synthetic ViewPort of nominal size.....
         ViewPort vp;
-        vp.clat = reference_points[0].latr;
-        vp.clon = reference_points[0].lonr;
+        vp.set_position(Position(reference_points[0].latr, reference_points[0].lonr));
         vp.view_scale_ppm = m_ppm_avg;
         vp.skew = 0.;
         vp.pix_width = 1000;
         vp.pix_height = 1000;
-//        vp.rv_rect = wxRect(0,0, vp.pix_width, vp.pix_height);
         SetVPRasterParms(vp);
 
 

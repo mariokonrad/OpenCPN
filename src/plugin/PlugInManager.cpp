@@ -99,8 +99,8 @@ PlugIn_ViewPort CreatePlugInViewport( const ViewPort &vp)
 	ViewPort tvp = vp;
 	PlugIn_ViewPort pivp;
 
-	pivp.clat =                   tvp.clat;                   // center point
-	pivp.clon =                   tvp.clon;
+	pivp.clat =                   tvp.latitude();                   // center point
+	pivp.clon =                   tvp.longitude();
 	pivp.view_scale_ppm =         tvp.view_scale_ppm;
 	pivp.skew =                   tvp.skew;
 	pivp.rotation =               tvp.rotation;
@@ -1310,8 +1310,7 @@ void GetCanvasPixLL(PlugIn_ViewPort* vp, wxPoint* pp, double lat, double lon)
 {
 	// Make enough of an application viewport to run its method....
 	ViewPort ocpn_vp;
-	ocpn_vp.clat = vp->clat;
-	ocpn_vp.clon = vp->clon;
+	ocpn_vp.set_position(Position(vp->clat, vp->clon));
 	ocpn_vp.m_projection_type = vp->m_projection_type;
 	ocpn_vp.view_scale_ppm = vp->view_scale_ppm;
 	ocpn_vp.skew = vp->skew;
@@ -1328,8 +1327,7 @@ void GetCanvasLLPix(PlugIn_ViewPort* vp, wxPoint p, double* plat, double* plon)
 {
 	// Make enough of an application viewport to run its method....
 	ViewPort ocpn_vp;
-	ocpn_vp.clat = vp->clat;
-	ocpn_vp.clon = vp->clon;
+	ocpn_vp.set_position(Position(vp->clat, vp->clon));
 	ocpn_vp.m_projection_type = vp->m_projection_type;
 	ocpn_vp.view_scale_ppm = vp->view_scale_ppm;
 	ocpn_vp.skew = vp->skew;

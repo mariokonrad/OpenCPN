@@ -71,7 +71,7 @@ void GSHHSChart::RenderViewOnDC( ocpnDC& dc, ViewPort& vp )
 {
 	if (!proj)
 		proj = new Projection();
-	proj->SetCenterInMap( vp.clon, vp.clat );
+	proj->SetCenterInMap( vp.longitude(), vp.latitude());
 	proj->SetScreenSize( vp.rv_rect.width, vp.rv_rect.height );
 
 	// Calculate the horizontal extents in degrees for the enlarged rotated ViewPort
@@ -88,7 +88,7 @@ void GSHHSChart::RenderViewOnDC( ocpnDC& dc, ViewPort& vp )
 	double lat_ur = pos_ur.lat();
 	double lon_ur = pos_ur.lon();
 
-	if (nvp.clon < 0.0) {
+	if (nvp.longitude() < 0.0) {
 		if ((lon_ul > 0.0) && (lon_ur < 0.0)) {
 			lon_ul -= 360.0;
 		}

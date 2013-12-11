@@ -1075,14 +1075,14 @@ void s57chart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRe
 	double easting, northing;
 	double epix, npix;
 
-	geo::toSM(m_FullExtent.SLAT, m_FullExtent.WLON, VPoint.clat, VPoint.clon, &easting, &northing);
+	geo::toSM(m_FullExtent.SLAT, m_FullExtent.WLON, VPoint.latitude(), VPoint.longitude(), &easting, &northing);
 	epix = easting * VPoint.view_scale_ppm;
 	npix = northing * VPoint.view_scale_ppm;
 
 	rxl = (int)round((VPoint.pix_width / 2) + epix);
 	ryb = (int)round((VPoint.pix_height / 2) - npix);
 
-	geo::toSM(m_FullExtent.NLAT, m_FullExtent.ELON, VPoint.clat, VPoint.clon, &easting, &northing);
+	geo::toSM(m_FullExtent.NLAT, m_FullExtent.ELON, VPoint.latitude(), VPoint.longitude(), &easting, &northing);
 	epix = easting * VPoint.view_scale_ppm;
 	npix = northing * VPoint.view_scale_ppm;
 
@@ -1302,7 +1302,7 @@ void s57chart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, const
 	double d_north = yp / vpt.view_scale_ppm;
 
 	double slat, slon;
-	geo::fromSM(d_east, d_north, vpt.clat, vpt.clon, &slat, &slon);
+	geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude(), &slat, &slon);
 
 	*plat = slat;
 	*plon = slon;
@@ -1316,7 +1316,7 @@ void s57chart::SetVPParms(const ViewPort& vpt)
 	m_pixy_vp_center = vpt.pix_height / 2;
 	m_view_scale_ppm = vpt.view_scale_ppm;
 
-	geo::toSM(vpt.clat, vpt.clon, ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center);
+	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center);
 }
 
 bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
@@ -1329,10 +1329,10 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 		return false;
 
 	double prev_easting_c, prev_northing_c;
-	geo::toSM(vp_last.clat, vp_last.clon, ref_lat, ref_lon, &prev_easting_c, &prev_northing_c);
+	geo::toSM(vp_last.latitude(), vp_last.longitude(), ref_lat, ref_lon, &prev_easting_c, &prev_northing_c);
 
 	double easting_c, northing_c;
-	geo::toSM(vp_proposed.clat, vp_proposed.clon, ref_lat, ref_lon, &easting_c, &northing_c);
+	geo::toSM(vp_proposed.latitude(), vp_proposed.longitude(), ref_lat, ref_lon, &easting_c, &northing_c);
 
 	// then require this viewport to be exact integral pixel difference from last
 	// adjusting clat/clat and SM accordingly
@@ -1351,8 +1351,7 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 	double xlat, xlon;
 	geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon);
 
-	vp_proposed.clon = xlon;
-	vp_proposed.clat = xlat;
+	vp_proposed.set_position(Position(xlon, xlat));
 
 	return true;
 }
@@ -2046,7 +2045,7 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 		northing_lr = northing_ul - (VPoint.pix_height / m_view_scale_ppm);
 
 		double last_easting_vp_center, last_northing_vp_center;
-		geo::toSM(m_last_vp.clat, m_last_vp.clon, ref_lat, ref_lon, &last_easting_vp_center,
+		geo::toSM(m_last_vp.latitude(), m_last_vp.longitude(), ref_lat, ref_lon, &last_easting_vp_center,
 				  &last_northing_vp_center);
 
 		prev_easting_ul = last_easting_vp_center - ((m_last_vp.pix_width / 2) / m_view_scale_ppm);
@@ -2749,8 +2748,9 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 	// Set up a private ViewPort
 	ViewPort vp;
 
-	vp.clon = (m_FullExtent.ELON + m_FullExtent.WLON) / 2.0;
-	vp.clat = (m_FullExtent.NLAT + m_FullExtent.SLAT) / 2.0;
+	vp.set_position(Position(
+		(m_FullExtent.ELON + m_FullExtent.WLON) / 2.0,
+		(m_FullExtent.NLAT + m_FullExtent.SLAT) / 2.0));
 
 	float ext_max
 		= fmax((m_FullExtent.NLAT - m_FullExtent.SLAT), (m_FullExtent.ELON - m_FullExtent.WLON));

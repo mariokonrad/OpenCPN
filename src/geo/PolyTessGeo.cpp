@@ -199,7 +199,7 @@ PolyTessGeo::PolyTessGeo(OGRPolygon *poly, bool bSENC_SM, double ref_lat, double
 
 
 //      Build PolyGeo Object from SENC file record
-PolyTessGeo::PolyTessGeo(unsigned char *polybuf, int nrecl, int index)
+PolyTessGeo::PolyTessGeo(unsigned char *polybuf, int nrecl, int WXUNUSED(index))
 {
 #define POLY_LINE_HDR_MAX 1000
 	//      Todo Add a try/catch set here, in case SENC file is corrupted??

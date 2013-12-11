@@ -130,17 +130,17 @@ int ChartPlugInWrapper::GetNoCOVREntries() const
 	return 0;
 }
 
-int ChartPlugInWrapper::GetNoCOVRTablePoints(int iTable) const
+int ChartPlugInWrapper::GetNoCOVRTablePoints(int) const
 {
 	return 0;
 }
 
-int ChartPlugInWrapper::GetNoCOVRTablenPoints(int iTable) const
+int ChartPlugInWrapper::GetNoCOVRTablenPoints(int) const
 {
 	return 0;
 }
 
-float* ChartPlugInWrapper::GetNoCOVRTableHead(int iTable)
+float* ChartPlugInWrapper::GetNoCOVRTableHead(int)
 {
 	return 0;
 }
@@ -162,7 +162,7 @@ bool ChartPlugInWrapper::GetChartExtent(chart::Extent* pext)
 		return false;
 }
 
-ThumbData* ChartPlugInWrapper::GetThumbData(int tnx, int tny, float lat, float lon)
+ThumbData* ChartPlugInWrapper::GetThumbData(int tnx, int tny, float, float)
 {
 	if (m_ppicb) {
 
@@ -190,7 +190,7 @@ ThumbData* ChartPlugInWrapper::GetThumbData()
 	return pThumbData;
 }
 
-bool ChartPlugInWrapper::UpdateThumbData(double lat, double lon)
+bool ChartPlugInWrapper::UpdateThumbData(double, double)
 {
 	return true;
 }
@@ -211,8 +211,8 @@ double ChartPlugInWrapper::GetNormalScaleMax(double canvas_scale_factor, int can
 		return 2.0e7;
 }
 
-bool ChartPlugInWrapper::RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
-											  const OCPNRegion& Region)
+bool ChartPlugInWrapper::RenderRegionViewOnGL(const wxGLContext&, const ViewPort&,
+											  const OCPNRegion&)
 {
 	return true;
 }

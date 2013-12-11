@@ -61,7 +61,7 @@ static void* CLRLIN01(void* param)
 	return NULL;
 }
 
-static void* DATCVR01(void* param)
+static void* DATCVR01(void*)
 {
 // Remarks: This conditional symbology procedure describes procedures for:
 // - symbolizing the limit of ENC coverage;
@@ -204,6 +204,8 @@ wxString* GetStringAttrWXS(S57Obj* obj, const char* AttrName)
 
 static int _parseList(const char* str_in, char* buf, int buf_size)
 {
+	(void)buf_size; // FIXME: potential buffer overflow
+
 	// Put a string of comma delimited number in an array (buf).
 	// Return: the number of value in buf.
 	// Assume: - number < 256,
@@ -327,7 +329,7 @@ wxString _selSYcol(char* buf, bool bsectr, double valnmr)
 	return sym;
 }
 
-static double _DEPVAL01(S57Obj* obj, double least_depth)
+static double _DEPVAL01(S57Obj*, double least_depth)
 {
 	// Remarks: S-57 Appendix B1 Annex A requires in Section 6 that areas of rocks be
 	// encoded as area obstruction, and that area OBSTRNs and area WRECKS

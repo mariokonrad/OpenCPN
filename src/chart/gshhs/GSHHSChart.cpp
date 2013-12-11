@@ -80,11 +80,13 @@ void GSHHSChart::RenderViewOnDC( ocpnDC& dc, ViewPort& vp )
 	nvp.pix_width = vp.rv_rect.width;
 	nvp.pix_height = vp.rv_rect.height;
 
-	double lat_ul, lat_ur;
-	double lon_ul, lon_ur;
+	Position pos_ul = nvp.GetLLFromPix( wxPoint( 0, 0 ));
+	Position pos_ur = nvp.GetLLFromPix( wxPoint( nvp.pix_width, nvp.pix_height ));
 
-	nvp.GetLLFromPix( wxPoint( 0, 0 ), &lat_ul, &lon_ul );
-	nvp.GetLLFromPix( wxPoint( nvp.pix_width, nvp.pix_height ), &lat_ur, &lon_ur );
+	double lat_ul = pos_ul.lat();
+	double lon_ul = pos_ul.lon();
+	double lat_ur = pos_ur.lat();
+	double lon_ur = pos_ur.lon();
 
 	if (nvp.clon < 0.0) {
 		if ((lon_ul > 0.0) && (lon_ur < 0.0)) {

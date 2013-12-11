@@ -38,7 +38,7 @@ public:
 	ViewPort();
 
 	wxPoint GetPixFromLL(const Position& pos) const;
-	void GetLLFromPix(const wxPoint& p, double* lat, double* lon) const; // FIXME: use Position
+	Position GetLLFromPix(const wxPoint& p) const;
 	wxPoint2DDouble GetDoublePixFromLL(const Position& pos) const;
 
 	OCPNRegion GetVPRegionIntersect(const OCPNRegion& Region, size_t n, const float* llpoints,

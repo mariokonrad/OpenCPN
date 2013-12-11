@@ -2243,7 +2243,7 @@ Position ChartCanvas::GetCanvasPixPoint(int x, int y)
 
 	// if needed, use the VPoint scaling estimator
 	if (bUseVP) {
-		GetVP().GetLLFromPix(wxPoint(x, y), &lat, &lon);
+		return GetVP().GetLLFromPix(wxPoint(x, y));
 	}
 
 	return Position(lat, lon);

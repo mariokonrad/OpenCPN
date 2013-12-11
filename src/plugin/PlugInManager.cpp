@@ -1337,7 +1337,9 @@ void GetCanvasLLPix(PlugIn_ViewPort* vp, wxPoint p, double* plat, double* plon)
 	ocpn_vp.pix_width = vp->pix_width;
 	ocpn_vp.pix_height = vp->pix_height;
 
-	return ocpn_vp.GetLLFromPix(p, plat, plon);
+	Position pos = ocpn_vp.GetLLFromPix(p);
+	*plat = pos.lat();
+	*plon = pos.lon();
 }
 
 bool GetGlobalColor(wxString colorName, wxColour* pcolour)

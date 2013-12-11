@@ -48,11 +48,11 @@ void catch_signals(int signo);
 
 
 ViewPort::ViewPort()
+	: bValid(false)
 {
-	bValid = false;
-	skew = 0.;
+	skew = 0.0;
 	view_scale_ppm = 1;
-	rotation = 0.;
+	rotation = 0.0;
 	b_quilt = false;
 	pix_height = pix_width = 0;
 	b_MercatorProjectionOverride = false;
@@ -193,48 +193,44 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos) const
 	return r;
 }
 
-void ViewPort::GetLLFromPix(const wxPoint& p, double* lat, double* lon) const
+Position ViewPort::GetLLFromPix(const wxPoint& p) const
 {
-	int dx = p.x - ( pix_width / 2 );
-	int dy = ( pix_height / 2 ) - p.y;
+	int dx = p.x - (pix_width / 2);
+	int dy = (pix_height / 2) - p.y;
 
 	double xpr = dx;
 	double ypr = dy;
 
 	// Apply VP Rotation
-	if( g_bCourseUp ) {
-		xpr = ( dx * cos( rotation ) ) - ( dy * sin( rotation ) );
-		ypr = ( dy * cos( rotation ) ) + ( dx * sin( rotation ) );
+	if (g_bCourseUp) {
+		xpr = (dx * cos(rotation)) - (dy * sin(rotation));
+		ypr = (dy * cos(rotation)) + (dx * sin(rotation));
 	}
 	double d_east = xpr / view_scale_ppm;
 	double d_north = ypr / view_scale_ppm;
 
-	double slat, slon;
-	if( PROJECTION_TRANSVERSE_MERCATOR == m_projection_type ) {
+	double slat;
+	double slon;
+	if (PROJECTION_TRANSVERSE_MERCATOR == m_projection_type) {
 		double tmceasting;
 		double tmcnorthing;
-		geo::toTM( clat, clon, 0., clon, &tmceasting, &tmcnorthing );
-		geo::fromTM( d_east, d_north + tmcnorthing, 0., clon, &slat, &slon );
-	} else if( PROJECTION_POLYCONIC == m_projection_type ) {
+		geo::toTM(clat, clon, 0.0, clon, &tmceasting, &tmcnorthing);
+		geo::fromTM(d_east, d_north + tmcnorthing, 0.0, clon, &slat, &slon);
+	} else if (PROJECTION_POLYCONIC == m_projection_type) {
 		double polyeasting;
 		double polynorthing;
-		geo::toPOLY( clat, clon, 0., clon, &polyeasting, &polynorthing );
-		geo::fromPOLY( d_east, d_north + polynorthing, 0., clon, &slat, &slon );
+		geo::toPOLY(clat, clon, 0.0, clon, &polyeasting, &polynorthing);
+		geo::fromPOLY(d_east, d_north + polynorthing, 0.0, clon, &slat, &slon);
+	} else {
+		// TODO This could be fromSM_ECC to better match some Raster charts
+		//      However, it seems that cm93 (and S57) prefer no eccentricity correction
+		//      Think about it....
+		geo::fromSM(d_east, d_north, clat, clon, &slat, &slon);
 	}
 
-	//TODO  This could be fromSM_ECC to better match some Raster charts
-	//      However, it seems that cm93 (and S57) prefer no eccentricity correction
-	//      Think about it....
-	else
-		geo::fromSM( d_east, d_north, clat, clon, &slat, &slon );
-
-	*lat = slat;
-
-	if (slon < -180.0)
-		slon += 360.0;
-	else if( slon > 180.0)
-		slon -= 360.0;
-	*lon = slon;
+	Position pos(slat, slon);
+	pos.normalize_lon();
+	return pos;
 }
 
 OCPNRegion ViewPort::GetVPRegionIntersect(
@@ -427,7 +423,7 @@ void ViewPort::SetBoxes(void)
 
 	// Specify the minimum required rectangle in unrotated screen space which will supply full
 	// screen data after specified rotation
-	if ((g_bskew_comp && (fabs(skew) > .001)) || (fabs(rotation) > .001)) {
+	if ((g_bskew_comp && (fabs(skew) > 0.001)) || (fabs(rotation) > 0.001)) {
 
 		double rotator = rotation;
 		rotator -= skew;
@@ -442,7 +438,7 @@ void ViewPort::SetBoxes(void)
 			dx += 4 - (dx % 4);
 
 		// Grow the source rectangle appropriately
-		if (fabs(rotator) > .001)
+		if (fabs(rotator) > 0.001)
 			rv_rect.Inflate((dx - pix_width) / 2, (dy - pix_height) / 2);
 	}
 
@@ -451,15 +447,23 @@ void ViewPort::SetBoxes(void)
 	// This must be done in unrotated space with respect to full unrotated screen space calculated
 	// above
 	double rotation_save = rotation;
-	SetRotationAngle(0.);
+	SetRotationAngle(0.0);
 
-	double lat_ul, lat_ur, lat_lr, lat_ll;
-	double lon_ul, lon_ur, lon_lr, lon_ll;
+	Position pos_ul = GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y));
+	double lat_ul = pos_ul.lat();
+	double lon_ul = pos_ul.lon();
 
-	GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y), &lat_ul, &lon_ul);
-	GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y), &lat_ur, &lon_ur);
-	GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y + rv_rect.height), &lat_lr, &lon_lr);
-	GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y + rv_rect.height), &lat_ll, &lon_ll);
+	Position pos_ur = GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y));
+	double lat_ur = pos_ur.lat();
+	double lon_ur = pos_ur.lon();
+
+	Position pos_lr = GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y + rv_rect.height));
+	double lat_lr = pos_lr.lat();
+	double lon_lr = pos_lr.lon();
+
+	Position pos_ll = GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y + rv_rect.height));
+	double lat_ll = pos_ll.lat();
+	double lon_ll = pos_ll.lon();
 
 	if (clon < 0.0) {
 		if ((lon_ul > 0.0) && (lon_ur < 0.0)) {

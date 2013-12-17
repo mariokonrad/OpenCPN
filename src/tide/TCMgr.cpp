@@ -40,6 +40,7 @@
 #include <wx/datetime.h>
 #include <wx/log.h>
 
+
 #define USF_REMOVE 1
 #define USF_UPDATE 2
 #define USF_WRITE  3
@@ -149,7 +150,6 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString& sources)
 			delete s;
 		} else {
 			m_source_array.push_back(s);
-
 			for (int k = 0; k < s->GetMaxIndex(); k++) {
 				IDX_entry* pIDX = s->GetIndexEntry(k);
 				pIDX->IDX_rec_num = num_IDX;
@@ -166,10 +166,11 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString& sources)
 
 const IDX_entry* TCMgr::GetIDX_entry(int index) const
 {
-	if (index < static_cast<int>(m_Combined_IDX_array.size()))
+	if (index < static_cast<int>(m_Combined_IDX_array.size())) {
 		return m_Combined_IDX_array.at(index);
-	else
+	} else {
 		return NULL;
+	}
 }
 
 bool TCMgr::GetTideOrCurrent(time_t t, int idx, float& tcvalue, float& dir)

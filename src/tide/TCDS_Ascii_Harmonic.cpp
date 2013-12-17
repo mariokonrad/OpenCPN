@@ -39,29 +39,30 @@
 #define IFF_TELL  3
 #define IFF_READ  4
 
-typedef struct {
-	void * next;
+typedef struct
+{
+	void* next;
 	short int rec_start;
-	char * name;
+	char* name;
 } harmonic_file_entry;
 
-/* Turn a time displacement of the form [-]HH:MM into the number of seconds. */
-static int hhmm2seconds(char *hhmm)
+// Turn a time displacement of the form [-]HH:MM into the number of seconds.
+static int hhmm2seconds(char* hhmm)
 {
 	int h, m;
 	char s;
-	if (sscanf (hhmm, "%d:%d", &h, &m) != 2)
-		return(0);
-	if (sscanf (hhmm, "%c", &s) != 1)
-		return(0);
+	if (sscanf(hhmm, "%d:%d", &h, &m) != 2)
+		return (0);
+	if (sscanf(hhmm, "%c", &s) != 1)
+		return (0);
 	if (h < 0 || s == '-')
 		m = -m;
-	return h*3600 + m*60;
+	return h * 3600 + m * 60;
 }
 
 TCDS_Ascii_Harmonic::TCDS_Ascii_Harmonic()
 {
-	//  Initialize member variables
+	// Initialize member variables
 	m_IndexFile = NULL;
 
 	m_cst_nodes = NULL;
@@ -76,32 +77,33 @@ TCDS_Ascii_Harmonic::~TCDS_Ascii_Harmonic()
 {
 	free_data();
 
-	for (std::vector<IDX_entry *>::iterator i = m_IDX_array.begin(); i != m_IDX_array.end(); ++i) {
+	for (std::vector<IDX_entry*>::iterator i = m_IDX_array.begin(); i != m_IDX_array.end(); ++i) {
 		delete *i;
 	}
 	m_IDX_array.clear();
 }
 
-TC_Error_Code TCDS_Ascii_Harmonic::LoadData(const wxString &data_file_path)
+TC_Error_Code TCDS_Ascii_Harmonic::LoadData(const wxString& data_file_path)
 {
-	if(m_IndexFile) IndexFileIO( IFF_CLOSE, 0 );
+	if (m_IndexFile)
+		IndexFileIO(IFF_CLOSE, 0);
 
 	m_indexfile_name = data_file_path;
 
 	TC_Error_Code error_return = init_index_file();
-	if(error_return != TC_NO_ERROR)
+	if (error_return != TC_NO_ERROR)
 		return error_return;
 
 	wxFileName f(data_file_path);
-	m_harmfile_name = f.GetPath( wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME );
+	m_harmfile_name = f.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME);
 	m_harmfile_name += f.GetName();
 	error_return = LoadHarmonicConstants(m_harmfile_name);
 
-	//  Mark the index entries individually with invariant harmonic constants
+	// Mark the index entries individually with invariant harmonic constants
 	unsigned int max_index = GetMaxIndex();
-	for(unsigned int i=0 ; i < max_index ; i++) {
-		IDX_entry *pIDX = GetIndexEntry( i );
-		if(pIDX) {
+	for (unsigned int i = 0; i < max_index; i++) {
+		IDX_entry* pIDX = GetIndexEntry(i);
+		if (pIDX) {
 			pIDX->num_nodes = num_nodes;
 			pIDX->num_csts = num_csts;
 			pIDX->num_epochs = num_epochs;
@@ -116,12 +118,10 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadData(const wxString &data_file_path)
 	return error_return;
 }
 
-
-IDX_entry * TCDS_Ascii_Harmonic::GetIndexEntry(int n_index)
+IDX_entry* TCDS_Ascii_Harmonic::GetIndexEntry(int n_index)
 {
 	return m_IDX_array.at(n_index);
 }
-
 
 TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 {
@@ -277,78 +277,74 @@ TC_Error_Code TCDS_Ascii_Harmonic::build_IDX_entry(IDX_entry *pIDX )
 	return TC_NO_ERROR;
 }
 
-
-//    Load the Harmonic Constant Invariants
-TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString &data_file_path)
+// Load the Harmonic Constant Invariants
+TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString& data_file_path)
 {
-	FILE *fp;
+	FILE* fp;
 	char linrec[linelen];
 	char junk[80];
 	int a, b;
 
 	free_data();
 
-	fp = fopen (data_file_path.mb_str(), "r");
+	fp = fopen(data_file_path.mb_str(), "r");
 	if (NULL == fp)
 		return TC_FILE_NOT_FOUND;
 
-	read_next_line (fp, linrec, 0);
-	sscanf (linrec, "%d", &num_csts);
+	read_next_line(fp, linrec, 0);
+	sscanf(linrec, "%d", &num_csts);
 
 	m_cst_speeds.clear();
 	m_cst_speeds.reserve(num_csts);
-	m_work_buffer = (double *) malloc (num_csts * sizeof (double)); // FIXME: this data is never freed
+	m_work_buffer = (double*)malloc(num_csts * sizeof(double));
 
-	/* Load constituent speeds */
-	for (a=0; a<num_csts; a++) {
-		read_next_line (fp, linrec, 0);
+	// Load constituent speeds
+	for (a = 0; a < num_csts; a++) {
+		read_next_line(fp, linrec, 0);
 		double value = 0.0;
 		sscanf(linrec, "%s %lf", junk, &value);
 		m_cst_speeds.push_back(value * M_PI / 648000); /* Convert to radians per second */
 	}
 
-	/* Get first year for nodes and epochs */
-	read_next_line (fp, linrec, 0);
-	sscanf (linrec, "%d", &m_first_year);
+	// Get first year for nodes and epochs
+	read_next_line(fp, linrec, 0);
+	sscanf(linrec, "%d", &m_first_year);
 
-	/* Load epoch table */
-	read_next_line (fp, linrec, 0);
-	sscanf (linrec, "%d", &num_epochs);
+	// Load epoch table
+	read_next_line(fp, linrec, 0);
+	sscanf(linrec, "%d", &num_epochs);
 
-	m_cst_epochs = (double **) malloc (num_csts * sizeof (double *));
-	for (int i=0; i<num_csts; i++)
-		m_cst_epochs[i] = (double *) malloc (num_epochs * sizeof (double));
+	m_cst_epochs = (double**)malloc(num_csts * sizeof(double*));
+	for (int i = 0; i < num_csts; i++)
+		m_cst_epochs[i] = (double*)malloc(num_epochs * sizeof(double));
 
-	for (int i=0; i<num_csts; i++)
-	{
-		if(EOF == fscanf (fp, "%s", linrec))
+	for (int i = 0; i < num_csts; i++) {
+		if (EOF == fscanf(fp, "%s", linrec))
 			return TC_HARM_FILE_CORRUPT;
-		for (int b=0; b<num_epochs; b++)
-		{
-			if(EOF == fscanf (fp, "%lf", &(m_cst_epochs[i][b])))
+		for (int b = 0; b < num_epochs; b++) {
+			if (EOF == fscanf(fp, "%lf", &(m_cst_epochs[i][b])))
 				return TC_HARM_FILE_CORRUPT;
 			m_cst_epochs[i][b] *= M_PI / 180.0;
 		}
 	}
 
-
-	/* Sanity check */
-	if(EOF == fscanf (fp, "%s", linrec))
+	// Sanity check
+	if (EOF == fscanf(fp, "%s", linrec))
 		return TC_HARM_FILE_CORRUPT;
-	skipnl (fp);
+	skipnl(fp);
 
-	/* Load node factor table */
-	read_next_line (fp, linrec, 0);
-	sscanf (linrec, "%d", &num_nodes);
+	// Load node factor table
+	read_next_line(fp, linrec, 0);
+	sscanf(linrec, "%d", &num_nodes);
 
-	m_cst_nodes = (double **) malloc (num_csts * sizeof (double *));
-	for (int a=0; a<num_csts; a++)
-		m_cst_nodes[a] = (double *) malloc (num_nodes * sizeof (double));
+	m_cst_nodes = (double**)malloc(num_csts * sizeof(double*));
+	for (int a = 0; a < num_csts; a++)
+		m_cst_nodes[a] = (double*)malloc(num_nodes * sizeof(double));
 
-	for (int a=0; a<num_csts; a++) {
-		fscanf (fp, "%s", linrec);
-		for (b=0; b<num_nodes; b++)
-			fscanf (fp, "%lf", &(m_cst_nodes[a][b]));
+	for (int a = 0; a < num_csts; a++) {
+		fscanf(fp, "%s", linrec);
+		for (b = 0; b < num_nodes; b++)
+			fscanf(fp, "%lf", &(m_cst_nodes[a][b]));
 	}
 
 	fclose(fp);
@@ -356,108 +352,99 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString &data_fi
 	return TC_NO_ERROR;
 }
 
-
-TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry *pIDX)
+TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry* pIDX)
 {
-	Station_Data *psd = NULL;
+	Station_Data* psd = NULL;
 
-	//    Look in the index first
-	if(pIDX->pref_sta_data)
-		return TC_NO_ERROR;         //easy
-
+	// Look in the index first
+	if (pIDX->pref_sta_data)
+		return TC_NO_ERROR; // easy
 
 	// Try the member array of "already-looked-at" master stations
-	for(unsigned int i=0 ; i < m_msd_array.size() ; i++)
-	{
+	for (unsigned int i = 0; i < m_msd_array.size(); i++) {
 		psd = &m_msd_array.at(i);
 		//    In the following comparison, it is allowed that the sub-station reference_name may be
 		//          a pre-subset of the master station name.
 		//          e.g  IDX_refence_name:  The Narrows midchannel New York
 		//                            as found in HARMONIC.IDX
-		//                 psd_station_name:      The Narrows, Midchannel, New York Harbor, New York Current
+		//                 psd_station_name:      The Narrows, Midchannel, New York Harbor, New York
+		// Current
 		//                            as found in HARMONIC
-		if( (!slackcmp(psd->station_name, pIDX->IDX_reference_name)) && (toupper(pIDX->IDX_type) == psd->station_type) )
-		{
-			pIDX->pref_sta_data = psd;                // save for later
+		if ((!slackcmp(psd->station_name, pIDX->IDX_reference_name))
+			&& (toupper(pIDX->IDX_type) == psd->station_type)) {
+			pIDX->pref_sta_data = psd; // save for later
 			return TC_NO_ERROR;
 		}
 	}
 
-
-	//    OK, have to read and create from the raw file
+	// OK, have to read and create from the raw file
 	psd = NULL;
 
-	//    If reference station was recently sought, and not found, don't bother
-	//            if(!strcmp(pIDX->IDX_reference_name, plast_reference_not_found->mb_str()))
-	if(m_last_reference_not_found.IsSameAs(wxString(pIDX->IDX_reference_name, wxConvUTF8)))
+	// If reference station was recently sought, and not found, don't bother
+	if (m_last_reference_not_found.IsSameAs(wxString(pIDX->IDX_reference_name, wxConvUTF8)))
 		return TC_MASTER_HARMONICS_NOT_FOUND;
 
-	//    Clear for this looking
+	// Clear for this looking
 	m_last_reference_not_found.Clear();
 
-	//    Find and load appropriate constituents
-	FILE *fp;
+	// Find and load appropriate constituents
 	char linrec[linelen];
-	fp = fopen (m_harmfile_name.mb_str(), "r");
+	FILE* fp = fopen(m_harmfile_name.mb_str(), "r");
 
-	while (read_next_line (fp, linrec, 1))
-	{
-		nojunk (linrec);
+	while (read_next_line(fp, linrec, 1)) {
+		nojunk(linrec);
 		int curonly = 0;
 		if (curonly)
-			if (!strstr (linrec, "Current"))
+			if (!strstr(linrec, "Current"))
 				continue;
-		//    See the note above about station names
-		//                  if(!strncmp(linrec, "Rivi", 4))
-		//                        int ggl = 4;
 
-		if (slackcmp (linrec, pIDX->IDX_reference_name))
+		// See the note above about station names
+
+		if (slackcmp(linrec, pIDX->IDX_reference_name))
 			continue;
 
-		//    Got the right location, so load the data
+		// Got the right location, so load the data
 
 		psd = new Station_Data;
 
-		psd->amplitude = (double *)malloc(num_csts * sizeof(double));
-		psd->epoch     = (double *)malloc(num_csts * sizeof(double));
-		psd->station_name = (char *)malloc(strlen(linrec) +1);
+		psd->amplitude = (double*)malloc(num_csts * sizeof(double));
+		psd->epoch = (double*)malloc(num_csts * sizeof(double));
+		psd->station_name = (char*)malloc(strlen(linrec) + 1);
 
 		char junk[80];
 		int a;
-		strcpy (psd->station_name, linrec);
+		strcpy(psd->station_name, linrec);
 
-		//    Establish Station Type
+		// Establish Station Type
 		wxString caplin(linrec, wxConvUTF8);
 		caplin.MakeUpper();
-		if(caplin.Contains(_T("CURRENT")))
+		if (caplin.Contains(_T("CURRENT")))
 			psd->station_type = 'C';
 		else
 			psd->station_type = 'T';
 
-
-
-		/* Get meridian */
-		read_next_line (fp, linrec, 0);
-		psd->meridian = hhmm2seconds (linrec);
+		// Get meridian
+		read_next_line(fp, linrec, 0);
+		psd->meridian = hhmm2seconds(linrec);
 		psd->zone_offset = 0;
 
-		/* Get tzfile, if present */
-		if (sscanf (nojunk(linrec), "%s %s", junk, psd->tzfile) < 2)
-			strcpy (psd->tzfile, "UTC0");
+		// Get tzfile, if present
+		if (sscanf(nojunk(linrec), "%s %s", junk, psd->tzfile) < 2)
+			strcpy(psd->tzfile, "UTC0");
 
-		/* Get DATUM and units */
-		read_next_line (fp, linrec, 0);
-		if (sscanf (nojunk(linrec), "%lf %s", &(psd->DATUM), psd->unit) < 2)
-			strcpy (psd->unit, "unknown");
+		// Get DATUM and units
+		read_next_line(fp, linrec, 0);
+		if (sscanf(nojunk(linrec), "%lf %s", &(psd->DATUM), psd->unit) < 2)
+			strcpy(psd->unit, "unknown");
 
-		if ((a = findunit (psd->unit)) == -1)
-		{
+		if ((a = findunit(psd->unit)) == -1) {
 			// Nonsense....
-			//                        strcpy (psd->units_abbrv, psd->unit);
-			//                        strcpy (psd->units_conv, known_units[a].name);
+			//   strcpy (psd->units_abbrv, psd->unit);
+			//   strcpy (psd->units_conv, known_units[a].name);
 		}
 
-		psd->have_BOGUS = (findunit(psd->unit) != -1) && (known_units[findunit(psd->unit)].type == BOGUS);
+		psd->have_BOGUS = (findunit(psd->unit) != -1)
+						  && (known_units[findunit(psd->unit)].type == BOGUS);
 
 		int unit_c;
 		if (psd->have_BOGUS)
@@ -465,138 +452,129 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry *pIDX)
 		else
 			unit_c = findunit(psd->unit);
 
-		if (unit_c != -1)
-		{
-			strcpy (psd->units_conv,       known_units[unit_c].name);
-			strcpy (psd->units_abbrv,      known_units[unit_c].abbrv);
+		if (unit_c != -1) {
+			strcpy(psd->units_conv, known_units[unit_c].name);
+			strcpy(psd->units_abbrv, known_units[unit_c].abbrv);
 		}
 
-		/* Get constituents */
+		// Get constituents
 		double loca, loce;
-		for (a=0; a<num_csts; a++)
-		{
-			read_next_line (fp, linrec, 0);
-			sscanf (linrec, "%s %lf %lf", junk, &loca, &loce);
-			//          loc_epoch[a] *= M_PI / 180.0;
+		for (a = 0; a < num_csts; a++) {
+			read_next_line(fp, linrec, 0);
+			sscanf(linrec, "%s %lf %lf", junk, &loca, &loce);
 			psd->amplitude[a] = loca;
-			psd->epoch[a] = loce * M_PI / 180.;
+			psd->epoch[a] = loce * M_PI / 180.0;
 		}
-		fclose (fp);
+		fclose(fp);
 
 		break;
 	}
 
-	if(!psd) {
+	if (!psd) {
 		m_last_reference_not_found = wxString(pIDX->IDX_reference_name, wxConvUTF8);
 		return TC_MASTER_HARMONICS_NOT_FOUND;
-	}
-	else {
-		m_msd_array.push_back(*psd);                     // add it to the member array
+	} else {
+		m_msd_array.push_back(*psd); // add it to the member array
 		pIDX->pref_sta_data = psd;
 		return TC_NO_ERROR;
 	}
-
 }
 
-
-/*---------------------------------
- * Low level Index file I/O
- *-------------------------------*/
-
-
+// Low level Index file I/O
 long TCDS_Ascii_Harmonic::IndexFileIO(int func, long value)
 {
-	char *str;
+	char* str;
 
-	switch ( func ) {
+	switch (func) {
 		// Close either/both if open
-		case IFF_CLOSE :
-			if (m_IndexFile) fclose(m_IndexFile);
+		case IFF_CLOSE:
+			if (m_IndexFile)
+				fclose(m_IndexFile);
 			m_IndexFile = NULL;
-			return(0);
+			return 0;
 
-			// Open
-		case IFF_OPEN :
-			m_IndexFile = fopen( m_indexfile_name.mb_str(), "rt");
-			if (m_IndexFile == NULL) return(0);
-			return(1);
+		// Open
+		case IFF_OPEN:
+			m_IndexFile = fopen(m_indexfile_name.mb_str(), "rt");
+			if (m_IndexFile == NULL)
+				return 0;
+			return 1;
 
-			// Return file pointer only happens with master file
-		case IFF_TELL :
-			return(ftell(m_IndexFile));
+		// Return file pointer only happens with master file
+		case IFF_TELL:
+			return (ftell(m_IndexFile));
 
-			// Seek
-		case IFF_SEEK :
-			return(fseek(m_IndexFile,value,SEEK_SET));
+		// Seek
+		case IFF_SEEK:
+			return (fseek(m_IndexFile, value, SEEK_SET));
 
-			// Read until EOF .
-		case IFF_READ :
-			str = fgets( index_line_buffer, 1024, m_IndexFile);
+		// Read until EOF .
+		case IFF_READ:
+			str = fgets(index_line_buffer, 1024, m_IndexFile);
 
 			if (str != NULL)
-				return(1);
-			else return(0);
-
+				return 1;
+			else
+				return 0;
 	}
-	return(0);
+	return 0;
 }
 
-/* Read a line from the harmonics file, skipping comment lines */
-int TCDS_Ascii_Harmonic::read_next_line (FILE *fp, char linrec[linelen], int end_ok)
+// Read a line from the harmonics file, skipping comment lines
+int TCDS_Ascii_Harmonic::read_next_line(FILE* fp, char linrec[linelen], int end_ok)
 {
 	do {
-		if (!fgets (linrec, linelen, fp)) {
+		if (!fgets(linrec, linelen, fp)) {
 			if (end_ok)
 				return 0;
 			else {
-				exit (-1);
+				exit(-1);
 			}
 		}
 	} while (linrec[0] == '#' || linrec[0] == '\r' || linrec[0] == '\n');
 	return 1;
 }
 
-/* Remove lingering carriage return, but do nothing else */
-int TCDS_Ascii_Harmonic::skipnl (FILE *fp)
+// Remove lingering carriage return, but do nothing else
+int TCDS_Ascii_Harmonic::skipnl(FILE* fp)
 {
 	char linrec[linelen];
-	if(NULL == fgets (linrec, linelen, fp))
+	if (NULL == fgets(linrec, linelen, fp))
 		return 0;
 	return 1;
 }
 
-/* Get rid of trailing garbage in buffer */
-char * TCDS_Ascii_Harmonic::nojunk (char *line)
+// Get rid of trailing garbage in buffer
+char* TCDS_Ascii_Harmonic::nojunk(char* line)
 {
-	char *a;
+	char* a;
 	a = &(line[strlen(line)]);
 	while (a > line)
-		if (*(a-1) == '\n' || *(a-1) == '\r' || *(a-1) == ' ')
+		if (*(a - 1) == '\n' || *(a - 1) == '\r' || *(a - 1) == ' ')
 			*(--a) = '\0';
 		else
 			break;
 	return line;
 }
 
-/* Slackful strcmp; 0 = match.  It's case-insensitive and accepts a
- *   prefix instead of the entire string.  The second argument is the
- *   one that can be shorter. Second argument can contain '?' as wild
- *   card character.
- */
-int TCDS_Ascii_Harmonic::slackcmp (char *a, char *b)
+// Slackful strcmp; 0 = match.  It's case-insensitive and accepts a
+// prefix instead of the entire string.  The second argument is the
+// one that can be shorter. Second argument can contain '?' as wild
+// card character.
+int TCDS_Ascii_Harmonic::slackcmp(char* a, char* b)
 {
-	int c, cmp, n;
-	n = strlen (b);
-	if ((int)(strlen (a)) < n)
+	int c;
+	int cmp;
+	int n;
+	n = strlen(b);
+	if ((int)(strlen(a)) < n)
 		return 1;
-	for (c=0; c<n; c++)
-	{
-		if(b[c] == '?')
+	for (c = 0; c < n; c++) {
+		if (b[c] == '?')
 			continue;
 
 		cmp = ((a[c] >= 'A' && a[c] <= 'Z') ? a[c] - 'A' + 'a' : a[c])
-			-
-			((b[c] >= 'A' && b[c] <= 'Z') ? b[c] - 'A' + 'a' : b[c]);
+			  - ((b[c] >= 'A' && b[c] <= 'Z') ? b[c] - 'A' + 'a' : b[c]);
 		if (cmp)
 			return cmp;
 	}
@@ -607,7 +585,7 @@ void TCDS_Ascii_Harmonic::free_nodes()
 {
 	int a;
 	if (num_csts && m_cst_nodes)
-		for(a=0; a<num_csts; a++)
+		for (a = 0; a < num_csts; a++)
 			free(m_cst_nodes[a]);
 	free(m_cst_nodes);
 
@@ -618,7 +596,7 @@ void TCDS_Ascii_Harmonic::free_epochs()
 {
 	int a;
 	if (num_csts && m_cst_epochs)
-		for(a=0; a<num_csts; a++)
+		for (a = 0; a < num_csts; a++)
 			free(m_cst_epochs[a]);
 	free(m_cst_epochs);
 
@@ -630,7 +608,7 @@ int TCDS_Ascii_Harmonic::GetMaxIndex(void) const
 	return m_IDX_array.size();
 }
 
-/* free harmonics data */
+// free harmonics data
 void TCDS_Ascii_Harmonic::free_data()
 {
 	free_nodes();

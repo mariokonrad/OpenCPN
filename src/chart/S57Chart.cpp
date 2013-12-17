@@ -6101,8 +6101,7 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 				lightsHtml << _T("<font size=-2>") << thisLight->position << _T("</font><br>\n");
 
 				if (curLight->hasSectors)
-					lightsHtml << _("<font size=-2>(Sector angles are True Bearings from "
-									"Seaward)</font><br>");
+					lightsHtml << _("<font size=-2>(Sector angles are True Bearings from Seaward)</font><br>");
 
 				lightsHtml << _T("<table>");
 			}

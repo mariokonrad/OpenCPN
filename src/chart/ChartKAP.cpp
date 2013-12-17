@@ -40,8 +40,8 @@ ChartKAP::~ChartKAP()
 {
 }
 
-InitReturn ChartKAP::Init(const wxString& name,
-						  ChartInitFlag init_flags) // FIXME: refactoring, far too long
+// FIXME: refactoring, far too long
+InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 {
 #define BUF_LEN_MAX 4000
 
@@ -92,13 +92,13 @@ InitReturn ChartKAP::Init(const wxString& name,
 	unsigned int i = 0;
 	for (i = 0; i < TestBlockSize - 4; i++) {
 		// Test for "BSB/"
-		if (buffer[i + 0] == 'B' && buffer[i + 1] == 'S' && buffer[i + 2] == 'B' && buffer[i + 3]
-																					== '/')
+		if ((buffer[i + 0] == 'B') && (buffer[i + 1] == 'S') && (buffer[i + 2] == 'B')
+			&& (buffer[i + 3] == '/'))
 			break;
 
 		// Test for "NOS/"
-		if (buffer[i + 0] == 'N' && buffer[i + 1] == 'O' && buffer[i + 2] == 'S' && buffer[i + 3]
-																					== '/')
+		if ((buffer[i + 0] == 'N') && (buffer[i + 1] == 'O') && (buffer[i + 2] == 'S')
+			&& (buffer[i + 3] == '/'))
 			break;
 	}
 	if (i == TestBlockSize - 4) {
@@ -274,31 +274,23 @@ InitReturn ChartKAP::Init(const wxString& name,
 					m_dy = x;
 				}
 			}
-		} else if (!strncmp(buffer, "RGB", 3))
+		} else if (!strncmp(buffer, "RGB", 3)) {
 			CreatePaletteEntry(buffer, COLOR_RGB_DEFAULT);
-
-		else if (!strncmp(buffer, "DAY", 3))
+		} else if (!strncmp(buffer, "DAY", 3)) {
 			CreatePaletteEntry(buffer, DAY);
-
-		else if (!strncmp(buffer, "DSK", 3))
+		} else if (!strncmp(buffer, "DSK", 3)) {
 			CreatePaletteEntry(buffer, DUSK);
-
-		else if (!strncmp(buffer, "NGT", 3))
+		} else if (!strncmp(buffer, "NGT", 3)) {
 			CreatePaletteEntry(buffer, NIGHT);
-
-		else if (!strncmp(buffer, "NGR", 3))
+		} else if (!strncmp(buffer, "NGR", 3)) {
 			CreatePaletteEntry(buffer, NIGHTRED);
-
-		else if (!strncmp(buffer, "GRY", 3))
+		} else if (!strncmp(buffer, "GRY", 3)) {
 			CreatePaletteEntry(buffer, GRAY);
-
-		else if (!strncmp(buffer, "PRC", 3))
+		} else if (!strncmp(buffer, "PRC", 3)) {
 			CreatePaletteEntry(buffer, PRC);
-
-		else if (!strncmp(buffer, "PRG", 3))
+		} else if (!strncmp(buffer, "PRG", 3)) {
 			CreatePaletteEntry(buffer, PRG);
-
-		else if (!strncmp(buffer, "REF", 3)) {
+		} else if (!strncmp(buffer, "REF", 3)) {
 			// FIXME: why not read Refpoint directly, DUPLICATE CODE
 			int i;
 			int xr;

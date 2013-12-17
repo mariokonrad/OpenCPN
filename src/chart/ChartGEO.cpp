@@ -41,7 +41,8 @@ ChartGEO::~ChartGEO()
 {
 }
 
-InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags) // FIXME: refactoring: far too long
+// FIXME: refactoring: far too long
+InitReturn ChartGEO::Init(const wxString& name, ChartInitFlag init_flags)
 {
 #define BUF_LEN_MAX 4000
 
@@ -212,20 +213,17 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags) // FI
 	bitmap_filepath.Prepend(Path);
 
 	wxFileName NOS_filename(bitmap_filepath);
-	if(NOS_filename.FileExists())
-	{
+	if (NOS_filename.FileExists()) {
 		ifss_bitmap = new wxFileInputStream(bitmap_filepath); // open the bitmap file
 		ifs_bitmap = new wxBufferedInputStream(*ifss_bitmap);
-	}
-	//    File as fetched verbatim from the .geo file doesn't exist.
-	//    Try all possible upper/lower cases
-	else
-	{
-		//    Extract the filename and extension
+	} else {
+		// File as fetched verbatim from the .geo file doesn't exist.
+		// Try all possible upper/lower cases
+		// Extract the filename and extension
 		wxString fname(NOS_filename.GetName());
 		wxString fext(NOS_filename.GetExt());
 
-		//    Try all four combinations, the hard way
+		// Try all four combinations, the hard way
 		// case 1
 		fname.MakeLower();
 		fext.MakeLower();
@@ -259,37 +257,32 @@ InitReturn ChartGEO::Init( const wxString& name, ChartInitFlag init_flags) // FI
 		NOS_filename.SetName(fname);
 		NOS_filename.SetExt(fext);
 
-		if(NOS_filename.FileExists())
+		if (NOS_filename.FileExists())
 			goto found_uclc_file;
-
 
 		// Search harder
 
-		for(ifile = 0 ; ifile < nfiles ; ifile++)
-		{
+		for (ifile = 0; ifile < nfiles; ifile++) {
 			wxString file_up = file_array.Item(ifile);
 			file_up.MakeUpper();
 
 			wxString target_up = bitmap_filepath;
 			target_up.MakeUpper();
 
-			if(file_up.IsSameAs( target_up))
-			{
+			if (file_up.IsSameAs(target_up)) {
 				NOS_filename.Clear();
 				NOS_filename.Assign(file_array.Item(ifile));
 				goto found_uclc_file;
 			}
-
 		}
 
-		return INIT_FAIL_REMOVE;                  // not found at all
+		return INIT_FAIL_REMOVE; // not found at all
 
 found_uclc_file:
 
 		bitmap_filepath = NOS_filename.GetFullPath();
 		ifss_bitmap = new wxFileInputStream(bitmap_filepath); // open the bitmap file
 		ifs_bitmap = new wxBufferedInputStream(*ifss_bitmap);
-
 	}
 
 	if (ifs_bitmap == NULL)
@@ -321,31 +314,23 @@ found_uclc_file:
 						m_Chart_DU = temp_du;
 				}
 			}
-		}
-
-		else if (!strncmp(buffer, "RGB", 3))
+		} else if (!strncmp(buffer, "RGB", 3)) {
 			CreatePaletteEntry(buffer, COLOR_RGB_DEFAULT);
-
-		else if (!strncmp(buffer, "DAY", 3))
+		} else if (!strncmp(buffer, "DAY", 3)) {
 			CreatePaletteEntry(buffer, DAY);
-
-		else if (!strncmp(buffer, "DSK", 3))
+		} else if (!strncmp(buffer, "DSK", 3)) {
 			CreatePaletteEntry(buffer, DUSK);
-
-		else if (!strncmp(buffer, "NGT", 3))
+		} else if (!strncmp(buffer, "NGT", 3)) {
 			CreatePaletteEntry(buffer, NIGHT);
-
-		else if (!strncmp(buffer, "NGR", 3))
+		} else if (!strncmp(buffer, "NGR", 3)) {
 			CreatePaletteEntry(buffer, NIGHTRED);
-
-		else if (!strncmp(buffer, "GRY", 3))
+		} else if (!strncmp(buffer, "GRY", 3)) {
 			CreatePaletteEntry(buffer, GRAY);
-
-		else if (!strncmp(buffer, "PRC", 3))
+		} else if (!strncmp(buffer, "PRC", 3)) {
 			CreatePaletteEntry(buffer, PRC);
-
-		else if (!strncmp(buffer, "PRG", 3))
+		} else if (!strncmp(buffer, "PRG", 3)) {
 			CreatePaletteEntry(buffer, PRG);
+		}
 	}
 
 	// Validate some of the header data

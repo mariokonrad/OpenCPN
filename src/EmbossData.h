@@ -28,14 +28,15 @@
 
 class EmbossData
 {
-	public:
-		EmbossData();
-		~EmbossData();
+public:
+	EmbossData();
+	EmbossData(int, int);
+	~EmbossData();
 
-		int * pmap;
-		int width;
-		int height;
-		GLuint gltexind;
+	int width;
+	int height;
+	int* pmap;
+	GLuint gltexind;
 };
 
 #endif

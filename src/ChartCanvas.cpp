@@ -8482,8 +8482,9 @@ void ChartCanvas::Update()
 #ifdef ocpnUSE_GL
 		m_glcc->Update();
 #endif
-	} else
+	} else {
 		wxWindow::Update();
+	}
 }
 
 void ChartCanvas::EmbossCanvas(ocpnDC& dc, EmbossData* pemboss, int x, int y)
@@ -8510,7 +8511,7 @@ void ChartCanvas::EmbossCanvas(ocpnDC& dc, EmbossData* pemboss, int x, int y)
 			for (int y = 0; y < pemboss->height; y++) {
 				int map_index = (y * pemboss->width);
 				for (int x = 0; x < pemboss->width; x++) {
-					double val = (pemboss->pmap[map_index] * factor) / 256.;
+					double val = (pemboss->pmap[map_index] * factor) / 256.0;
 
 					int nred = (int)((*pdata) + val);
 					nred = nred > 255 ? 255 : (nred < 0 ? 0 : nred);
@@ -8529,14 +8530,14 @@ void ChartCanvas::EmbossCanvas(ocpnDC& dc, EmbossData* pemboss, int x, int y)
 			}
 		}
 
-		//  Convert embossed snip to a bitmap
+		// Convert embossed snip to a bitmap
 		wxBitmap emb_bmp(snip_img);
 
-		//  Map to another memoryDC
+		// Map to another memoryDC
 		wxMemoryDC result_dc;
 		result_dc.SelectObject(emb_bmp);
 
-		//  Blit to target
+		// Blit to target
 		pmdc->Blit(x, y, pemboss->width, pemboss->height, &result_dc, 0, 0);
 
 		result_dc.SelectObject(wxNullBitmap);
@@ -8545,13 +8546,14 @@ void ChartCanvas::EmbossCanvas(ocpnDC& dc, EmbossData* pemboss, int x, int y)
 #ifdef ocpnUSE_GL
 
 #ifndef __WXMSW__
-		else if (0 /*b_useTexRect*/) {
-		int w = pemboss->width, h = pemboss->height;
+	else if (0 /*b_useTexRect*/) {
+		int w = pemboss->width;
+		int h = pemboss->height;
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 
 		// render using opengl and alpha blending
-		if (!pemboss->gltexind) { /* upload to texture */
-			/* convert to luminance alpha map */
+		if (!pemboss->gltexind) { // upload to texture
+			// convert to luminance alpha map
 			int size = pemboss->width * pemboss->height;
 			char* data = new char[2 * size];
 			for (int i = 0; i < size; i++) {
@@ -8586,7 +8588,7 @@ void ChartCanvas::EmbossCanvas(ocpnDC& dc, EmbossData* pemboss, int x, int y)
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	}
 #endif
-		else {
+	else {
 		int a = pemboss->width;
 		int p = 0;
 		while (a) {
@@ -8852,16 +8854,14 @@ void ChartCanvas::CreateOZEmbossMapData(ColorScheme cs)
 EmbossData* ChartCanvas::CreateEmbossMapData(wxFont& font, int width, int height, const wxChar* str,
 											 ColorScheme cs)
 {
-	int* pmap;
-
-	//  Create a temporary bitmap
+	// Create a temporary bitmap
 	wxBitmap bmp(width, height, -1);
 
 	// Create a memory DC
 	wxMemoryDC temp_dc;
 	temp_dc.SelectObject(bmp);
 
-	//  Paint on it
+	// Paint on it
 	temp_dc.SetBackground(*wxWHITE_BRUSH);
 	temp_dc.SetTextBackground(*wxWHITE);
 	temp_dc.SetTextForeground(*wxBLACK);
@@ -8874,10 +8874,10 @@ EmbossData* ChartCanvas::CreateEmbossMapData(wxFont& font, int width, int height
 	temp_dc.GetTextExtent(wxString(str, wxConvUTF8), &str_w, &str_h);
 	temp_dc.DrawText(wxString(str, wxConvUTF8), width - str_w - 10, 10);
 
-	//  Deselect the bitmap
+	// Deselect the bitmap
 	temp_dc.SelectObject(wxNullBitmap);
 
-	//  Convert bitmap the wxImage for manipulation
+	// Convert bitmap the wxImage for manipulation
 	wxImage img = bmp.ConvertToImage();
 
 	double val_factor;
@@ -8887,35 +8887,28 @@ EmbossData* ChartCanvas::CreateEmbossMapData(wxFont& font, int width, int height
 			val_factor = 1;
 			break;
 		case GLOBAL_COLOR_SCHEME_DUSK:
-			val_factor = .5;
+			val_factor = 0.5;
 			break;
 		case GLOBAL_COLOR_SCHEME_NIGHT:
-			val_factor = .25;
+			val_factor = 0.25;
 			break;
 	}
 
-	int val;
-	int index;
-	pmap = (int*)calloc(width * height * sizeof(int), 1);
-	//  Create emboss map by differentiating the emboss image
-	//  and storing integer results in pmap
-	//  n.b. since the image is B/W, it is sufficient to check
-	//  one channel (i.e. red) only
+	// Create emboss map by differentiating the emboss image
+	// and storing integer results in pmap
+	// n.b. since the image is B/W, it is sufficient to check
+	// one channel (i.e. red) only
+	EmbossData* emboss = new EmbossData(width, height);
 	for (int y = 1; y < height - 1; y++) {
 		for (int x = 1; x < width - 1; x++) {
-			val = img.GetRed(x + 1, y + 1) - img.GetRed(x - 1, y - 1); // range +/- 256
+			int val = img.GetRed(x + 1, y + 1) - img.GetRed(x - 1, y - 1); // range +/- 256
 			val = (int)(val * val_factor);
-			index = (y * width) + x;
-			pmap[index] = val;
+			int index = (y * width) + x;
+			emboss->pmap[index] = val;
 		}
 	}
 
-	EmbossData* pret = new EmbossData;
-	pret->pmap = pmap;
-	pret->width = width;
-	pret->height = height;
-
-	return pret;
+	return emboss;
 }
 
 //----------------------------------------------------------------------------
@@ -8980,7 +8973,7 @@ wxBitmap* ChartCanvas::DrawTCCBitmap(wxDC* pbackground_dc, bool bAddNewSelpoints
 	ssdc.SelectObject(wxNullBitmap);
 
 #ifdef __WXX11__
-	//      Invert the mono bmp, to make a useable mask bmp
+	// Invert the mono bmp, to make a useable mask bmp
 	wxMemoryDC ssdc_mask_invert;
 	wxBitmap mask_bmp_invert(GetVP().pix_width, GetVP().pix_height, 1);
 	ssdc_mask_invert.SelectObject(mask_bmp_invert);
@@ -8995,7 +8988,7 @@ wxBitmap* ChartCanvas::DrawTCCBitmap(wxDC* pbackground_dc, bool bAddNewSelpoints
 	pss_overlay_mask = new wxMask(mask_bmp);
 #endif
 
-	//      Create and associate the mask
+	// Create and associate the mask
 	p_bmp->SetMask(pss_overlay_mask);
 
 	return p_bmp;
@@ -9043,7 +9036,7 @@ void ChartCanvas::DrawAllRoutesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& 
 				if ((pRouteDraw != active_route) && (pRouteDraw != active_track))
 					pRouteDraw->Draw(dc, GetVP());
 			} else if (pRouteDraw->CrossesIDL()) {
-				wxPoint2DDouble xlate(-360., 0.);
+				wxPoint2DDouble xlate(-360.0, 0.0);
 				geo::BoundingBox test_box1 = pRouteDraw->RBBox;
 				test_box1.Translate(xlate);
 				if (b_run)
@@ -9058,10 +9051,10 @@ void ChartCanvas::DrawAllRoutesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& 
 				}
 			}
 
-			//      Need to quick check for the case where VP crosses IDL
+			// Need to quick check for the case where VP crosses IDL
 			if (!b_drawn) {
-				if ((BltBBox.GetMinX() < -180.) && (BltBBox.GetMaxX() > -180.)) {
-					wxPoint2DDouble xlate(-360., 0.);
+				if ((BltBBox.GetMinX() < -180.0) && (BltBBox.GetMaxX() > -180.0)) {
+					wxPoint2DDouble xlate(-360.0, 0.0);
 					geo::BoundingBox test_box2 = pRouteDraw->RBBox;
 					test_box2.Translate(xlate);
 					if (BltBBox.Intersect(test_box2, 0)
@@ -9071,8 +9064,8 @@ void ChartCanvas::DrawAllRoutesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& 
 						if ((pRouteDraw != active_route) && (pRouteDraw != active_track))
 							pRouteDraw->Draw(dc, GetVP());
 					}
-				} else if (!b_drawn && (BltBBox.GetMinX() < 180.) && (BltBBox.GetMaxX() > 180.)) {
-					wxPoint2DDouble xlate(360., 0.);
+				} else if (!b_drawn && (BltBBox.GetMinX() < 180.0) && (BltBBox.GetMaxX() > 180.0)) {
+					wxPoint2DDouble xlate(360.0, 0.0);
 					geo::BoundingBox test_box3 = pRouteDraw->RBBox;
 					test_box3.Translate(xlate);
 					if (BltBBox.Intersect(test_box3, 0)
@@ -9165,7 +9158,7 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, const geo::LatLonBoundingBo
 
 double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 {
-	double lpp = 0.;
+	double lpp = 0.0;
 	double d1 = 0.0;
 	double dabs;
 	double tlat1;
@@ -9254,14 +9247,13 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 	wxDateTime this_now = wxDateTime::Now();
 	time_t t_this_now = this_now.GetTicks();
 
-	double lon_last = 0.;
-	double lat_last = 0.;
+	double lon_last = 0.0;
+	double lat_last = 0.0;
 	for (int i = 1; i < ptcmgr->Get_max_IDX() + 1; i++) {
 		const IDX_entry* pIDX = ptcmgr->GetIDX_entry(i);
 
 		char type = pIDX->IDX_type; // Entry "TCtcIUu" identifier
-		if ((type == 't') || (type == 'T')) // only Tides
-		{
+		if ((type == 't') || (type == 'T')) { // only Tides
 			double lon = pIDX->IDX_lon;
 			double lat = pIDX->IDX_lat;
 			bool b_inbox = false;
@@ -9281,21 +9273,19 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 			// try to eliminate double entry , but the only good way is to clean the file!
 			if (b_inbox && (lat != lat_last) && (lon != lon_last)) {
 
-				//    Manage the point selection list
+				// Manage the point selection list
 				if (bRebuildSelList)
 					pSelectTC->AddSelectablePoint(Position(lat, lon), pIDX, SelectItem::TYPE_TIDEPOINT);
 
 				wxPoint r = GetCanvasPointPix(Position(lat, nlon));
 				// draw standard icons
 				if (GetVP().chart_scale > 500000) {
-
 					if (bdraw_mono_for_mask)
 						dc.DrawRectangle(r.x - bmw / 2, r.y - bmh / 2, bmw, bmh);
 					else
 						dc.DrawBitmap(bm, r.x - bmw / 2, r.y - bmh / 2, true);
-				}
+				} else {
 					// draw "extended" icons
-					else {
 					// set rectangle size and position (max text lengh)
 					int wx, hx;
 					dc.SetFont(*plabelFont);
@@ -9303,10 +9293,10 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 					int w = r.x - 6;
 					int h = r.y - 22;
 					// draw mask
-					if (bdraw_mono_for_mask)
+					if (bdraw_mono_for_mask) {
 						dc.DrawRectangle(r.x - (wx / 2), h, wx, hx + 45);
-					// process tides
-					else {
+					} else {
+						// process tides
 						if (bforce_redraw_tides) {
 							float val, nowlev;
 							float ltleve = 0.0;
@@ -9360,8 +9350,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 									hs = 0;
 								int ht_y = (int)(45.0 * ts);
 
-								// draw yellow rectangle as total amplitude (width = 12 , height
-								// = 45 )
+								// draw yellow rectangle as total amplitude (width=12 , height=45)
 								dc.SetPen(*pblack_pen);
 								dc.SetBrush(*brc_2);
 								dc.DrawRectangle(w, h, 12, 45);
@@ -9378,8 +9367,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 								arrow[0].x = w + 1;
 								arrow[1].x = w + 5;
 								arrow[2].x = w + 11;
-								if (ts > 0.35 || ts < 0.15) // one arrow at 3/4 hight tide
-								{
+								if (ts > 0.35 || ts < 0.15) { // one arrow at 3/4 hight tide
 									hl = (int)(45.0 * 0.25) + h;
 									arrow[0].y = hl;
 									arrow[1].y = hl + hs;
@@ -9391,8 +9379,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 
 									dc.DrawLines(3, arrow);
 								}
-								if (ts > 0.60 || ts < 0.40) // one arrow at 1/2 hight tide
-								{
+								if (ts > 0.60 || ts < 0.40) { // one arrow at 1/2 hight tide
 									hl = (int)(45.0 * 0.5) + h;
 									arrow[0].y = hl;
 									arrow[1].y = hl + hs;
@@ -9403,8 +9390,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 										dc.SetPen(*pblue_pen);
 									dc.DrawLines(3, arrow);
 								}
-								if (ts < 0.65 || ts > 0.85) // one arrow at 1/4 Hight tide
-								{
+								if (ts < 0.65 || ts > 0.85) { // one arrow at 1/4 Hight tide
 									hl = (int)(45.0 * 0.75) + h;
 									arrow[0].y = hl;
 									arrow[1].y = hl + hs;
@@ -9447,15 +9433,15 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 	bool bnew_val;
 	char sbuf[20];
 	wxFont* pTCFont;
-	double lon_last = 0.;
-	double lat_last = 0.;
+	double lon_last = 0.0;
+	double lat_last = 0.0;
 
 	wxPen* pblack_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFD")), 1, wxSOLID);
 	wxPen* porange_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFO")), 1, wxSOLID);
 	wxBrush* porange_brush
 		= wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFO")), wxSOLID);
 	wxBrush* pblack_brush
-		= wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFD" )), wxSOLID);
+		= wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFD")), wxSOLID);
 
 	double skew_angle = GetVPRotation();
 
@@ -9529,16 +9515,14 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 					} else if ((type == 'c') && (GetVP().chart_scale < 1000000)) {
 						if (bnew_val || bforce_redraw_currents) {
 
-							//    Get the display pixel location of the current station
-							int pixxc, pixyc;
+							// Get the display pixel location of the current station
 							wxPoint cpoint = GetCanvasPointPix(Position(lat, lon));
-							pixxc = cpoint.x;
-							pixyc = cpoint.y;
+							int pixxc = cpoint.x;
+							int pixyc = cpoint.y;
 
-							//    Draw arrow using preset parameters, see mm_per_knot variable
-							//                                                            double
-							// scale = fabs ( tcvalue ) * current_draw_scaler;
-							//    Adjust drawing size using logarithmic scale
+							// Draw arrow using preset parameters, see mm_per_knot variable
+							// double scale = fabs ( tcvalue ) * current_draw_scaler;
+							// Adjust drawing size using logarithmic scale
 							double a1 = fabs(tcvalue) * 10.0;
 							a1 = wxMax(1.0, a1); // Current values less than 0.1 knot
 							// will be displayed as 0

@@ -24,14 +24,25 @@
 #include "EmbossData.h"
 
 EmbossData::EmbossData()
-	: pmap(NULL)
+	: width(0)
+	, height(0)
+	, pmap(NULL)
 	, gltexind(0)
 {}
+
+EmbossData::EmbossData(int width, int height)
+	: width(width)
+	, height(height)
+	, pmap(NULL)
+	, gltexind(0)
+{
+	pmap = new int[width * height];
+}
 
 EmbossData::~EmbossData()
 {
 	if (pmap) {
-		free(pmap);
+		delete [] pmap;
 		pmap = NULL;
 	}
 }

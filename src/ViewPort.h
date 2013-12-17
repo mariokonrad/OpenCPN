@@ -55,6 +55,7 @@ public:
 
 	const geo::LatLonBoundingBox& GetBBox() const;
 	geo::LatLonBoundingBox& GetBBox();
+	void SetBBoxDirect(double latmin, double lonmin, double latmax, double lonmax);
 	void set_positive();
 
 	double latitude() const;

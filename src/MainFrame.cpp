@@ -1304,7 +1304,8 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 		g_pAISTargetList->Destroy();
 	}
 
-	g_FloatingCompassDialog->Destroy();
+	if (g_FloatingCompassDialog)
+		g_FloatingCompassDialog->Destroy();
 	g_FloatingCompassDialog = NULL;
 
 	// Delete all open charts in the cache
@@ -3887,7 +3888,8 @@ void MainFrame::SelectQuiltRefdbChart(int db_index)
 	if (pc) {
 		double best_scale = GetBestVPScale(pc);
 		chart_canvas->SetVPScale(best_scale);
-	}
+	} else
+		chart_canvas->SetQuiltRefChart(-1);
 }
 
 void MainFrame::SelectChartFromStack(int index, bool bDir, chart::ChartTypeEnum New_Type,

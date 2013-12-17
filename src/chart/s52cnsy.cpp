@@ -38,21 +38,38 @@ namespace chart {
 
 bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val);
 
-#define UNKNOWN 1e6 //HUGE_VAL   // INFINITY/NAN
-
+#define UNKNOWN 1e6 // HUGE_VAL   // INFINITY/NAN
 
 // size of attributes value list buffer
-#define LISTSIZE   16   // list size
+#define LISTSIZE 16 // list size
 
 wxString* CSQUAPNT01(S57Obj* obj);
 wxString* CSQUALIN01(S57Obj* obj);
 
-static void *_RESCSP01(void *param);
+static void* _RESCSP01(void* param);
 static wxString _LITDSN01(S57Obj* obj);
 wxString SNDFRM02(S57Obj* obj, double depth_value);
-static void *QUALIN01(void *param);
-static void *QUAPNT01(void *param);
-wxString SNDFRM02(S57Obj *obj, double depth_value);
+static void* QUALIN01(void* param);
+static void* QUAPNT01(void* param);
+wxString SNDFRM02(S57Obj* obj, double depth_value);
+
+wxArrayPtrVoid* GetChartFloatingATONArray(ObjRazRules* rzRules)
+{
+	S57Obj* obj = rzRules->obj;
+	if (obj->m_chart_context->chart)
+		return obj->m_chart_context->pFloatingATONArray;
+	else
+		return NULL;
+}
+
+wxArrayPtrVoid* GetChartRigidATONArray(ObjRazRules* rzRules)
+{
+	S57Obj* obj = rzRules->obj;
+	if (obj->m_chart_context->chart)
+		return obj->m_chart_context->pRigidATONArray;
+	else
+		return NULL;
+}
 
 static void* CLRLIN01(void* param)
 {
@@ -63,73 +80,73 @@ static void* CLRLIN01(void* param)
 
 static void* DATCVR01(void*)
 {
-// Remarks: This conditional symbology procedure describes procedures for:
-// - symbolizing the limit of ENC coverage;
-// - symbolizing navigational purpose boundaries ("scale boundarie"); and
-// - indicating overscale display.
-           //
-// Note that the mandatory meta object CATQUA is symbolized by the look-up table.
-           //
-// Because the methods adopted by an ECDIS to meet the IMO and IHO requirements
-// listed on the next page will depend on the manufacturer's software, and cannot be
-// described in terms of a flow chart in the same way as other conditional procedures,
-// this procedure is in the form of written notes.
+	// Remarks: This conditional symbology procedure describes procedures for:
+	// - symbolizing the limit of ENC coverage;
+	// - symbolizing navigational purpose boundaries ("scale boundarie"); and
+	// - indicating overscale display.
+	//
+	// Note that the mandatory meta object CATQUA is symbolized by the look-up table.
+	//
+	// Because the methods adopted by an ECDIS to meet the IMO and IHO requirements
+	// listed on the next page will depend on the manufacturer's software, and cannot be
+	// described in terms of a flow chart in the same way as other conditional procedures,
+	// this procedure is in the form of written notes.
 
-//    ObjRazRules *rzRules = (ObjRazRules *)param;
-//    S57Obj *obj = rzRules->obj;
+	//    ObjRazRules *rzRules = (ObjRazRules *)param;
+	//    S57Obj *obj = rzRules->obj;
 
-    wxString rule_str;
-       ///////////////////////
-    // 1- REQUIREMENT
-    // (IMO/IHO specs. explenation)
+	wxString rule_str;
+	///////////////////////
+	// 1- REQUIREMENT
+	// (IMO/IHO specs. explenation)
 
-       ///////////////////////
-    // 2- ENC COVERAGE
-       //
-    // 2.1- Limit of ENC coverage
-    //datcvr01 = g_string_new(";OP(3OD11060);LC(HODATA01)");
-    rule_str.Append(_T("LC(HODATA01)"));
-//    rule_str.Append("AC(DEPDW)");
-    // FIXME: get cell extend
+	///////////////////////
+	// 2- ENC COVERAGE
+	//
+	// 2.1- Limit of ENC coverage
+	// datcvr01 = g_string_new(";OP(3OD11060);LC(HODATA01)");
+	rule_str.Append(_T("LC(HODATA01)"));
+	//    rule_str.Append("AC(DEPDW)");
+	// FIXME: get cell extend
 
-    // 2.2- No data areas
-    // This can be done outside of CS (ie when clearing the screen in Mesa)
-    // FIXME: ";OP(0---);AC(NODATA)"
-    // FIXME: set geo to cover earth (!)
+	// 2.2- No data areas
+	// This can be done outside of CS (ie when clearing the screen in Mesa)
+	// FIXME: ";OP(0---);AC(NODATA)"
+	// FIXME: set geo to cover earth (!)
 
-       //////////////////////
-    // 3- SCALE BOUNDARIES
-       //
-    // 3.1- Chart scale boundaties
-    // FIXME;
-    //g_string_append(datcvr01, ";LS(SOLD,1,CHGRD)");
-    // -OR- LC(SCLBDYnn) (?)
-       //
-    // ;OP(3OS21030)
+	//////////////////////
+	// 3- SCALE BOUNDARIES
+	//
+	// 3.1- Chart scale boundaties
+	// FIXME;
+	// g_string_append(datcvr01, ";LS(SOLD,1,CHGRD)");
+	// -OR- LC(SCLBDYnn) (?)
+	//
+	// ;OP(3OS21030)
 
-    // 3.2- Graphical index of navigational purpose
-    // FIXME: draw extent of available SENC in DB
+	// 3.2- Graphical index of navigational purpose
+	// FIXME: draw extent of available SENC in DB
 
-       //////////////////////
-    // 4- OVERSCALE
-       //
-    // FIXME: get meta date CSCL of DSPM field
-    // FIXME: get object M_CSCL or CSCALE
-       //
-    // 4.1- Overscale indication
-       // FIXME: compute, scale = [denominator of the compilation scale] /
-    //                         [denominator of the display scale]
-    // FIXME: draw overscale indication (ie TX("X%3.1f",scale))
-       //
-    // 4.2- Ovescale area at a chart scale boundary
-    // FIXME: test if next chart is over scale (ie going from large scale chart
-    //        to a small scale chart)
-    // FIXME: draw AP(OVERSC01) on overscale part of display
-    //g_string(";OP(3OS21030)");
+	//////////////////////
+	// 4- OVERSCALE
+	//
+	// FIXME: get meta date CSCL of DSPM field
+	// FIXME: get object M_CSCL or CSCALE
+	//
+	// 4.1- Overscale indication
+	// FIXME: compute, scale = [denominator of the compilation scale] /
+	//                         [denominator of the display scale]
+	// FIXME: draw overscale indication (ie TX("X%3.1f",scale))
+	//
+	// 4.2- Ovescale area at a chart scale boundary
+	// FIXME: test if next chart is over scale (ie going from large scale chart
+	//        to a small scale chart)
+	// FIXME: draw AP(OVERSC01) on overscale part of display
+	// g_string(";OP(3OS21030)");
 
-       //
-    // 4.3- Larger scale data available
-    // FIXME: display indication of better scale available (?)
+	//
+	// 4.3- Larger scale data available
+	// FIXME: display indication of better scale available (?)
 
 	wxString datcvr01;
 	datcvr01.Append(rule_str);
@@ -368,7 +385,14 @@ static wxString* _UDWHAZ03(S57Obj* obj, double depth_value, ObjRazRules* rzRules
 
 		// get area DEPARE & DRGARE that intersect this point/line/area
 
-		ListOfS57Obj* pobj_list = rzRules->chart->GetAssociatedObjects(obj);
+		ListOfS57Obj* pobj_list;
+
+		if (obj->m_chart_context->chart)
+			pobj_list = obj->m_chart_context->chart->GetAssociatedObjects(obj);
+		else {
+			wxString* ret_str = new wxString(udwhaz03str);
+			return ret_str;
+		}
 
 		for (ListOfS57Obj::iterator node = pobj_list->begin(); node != pobj_list->end(); ++node) {
 			S57Obj* ptest_obj = *node;
@@ -526,10 +550,14 @@ static void* DEPCNT02(void* param)
 				safe = TRUE;
 		} else {
 			double next_safe_contour;
-			if (rzRules->chart->GetNearestSafeContour(safety_contour, next_safe_contour)) {
-				if (drval1 == next_safe_contour)
-					safe = TRUE;
-			}
+			if (obj->m_chart_context->chart) {
+				if (obj->m_chart_context->chart->GetNearestSafeContour(safety_contour,
+																	   next_safe_contour)) {
+					if (drval1 == next_safe_contour)
+						safe = TRUE;
+				}
+			} else
+				safe = true; // TODO fix for PlugIn chart
 		}
 
 		depth_value = drval1;
@@ -544,10 +572,14 @@ static void* DEPCNT02(void* param)
 			safe = TRUE; // this is useless !?!?
 		else {
 			double next_safe_contour;
-			if (rzRules->chart->GetNearestSafeContour(safety_contour, next_safe_contour)) {
-				if (valdco == next_safe_contour)
-					safe = TRUE;
-			}
+			if (obj->m_chart_context->chart) {
+				if (obj->m_chart_context->chart->GetNearestSafeContour(safety_contour,
+																	   next_safe_contour)) {
+					if (valdco == next_safe_contour)
+						safe = TRUE;
+				}
+			} else
+				safe = TRUE; // TODO fix for PlugIn
 		}
 	}
 
@@ -699,7 +731,7 @@ static void* LIGHTS05(void* param)
         wxString ssym;
 
 		// Is this LIGHTS feature colocated with ...ANY... floating aid?
-		if (_atPtPos(obj, rzRules->chart->pFloatingATONArray, false)) {
+		if (_atPtPos(obj, GetChartFloatingATONArray(rzRules), false)) {
 			flare_at_45 = false;
 
 			// TODO create LightArray in s57chart.
@@ -1987,11 +2019,11 @@ static void* TOPMAR01(void* param)
 		int floating = FALSE; // not a floating platform
 		int topshp = (!battr) ? 0 : top_int;
 
-		if (TRUE == _atPtPos(obj, rzRules->chart->pFloatingATONArray, false))
+		if (TRUE == _atPtPos(obj, GetChartFloatingATONArray(rzRules), false))
 			floating = TRUE;
 		else
 			// FIXME: this test is wierd since it doesn't affect 'floating'
-			if (TRUE == _atPtPos(obj, rzRules->chart->pRigidATONArray, false))
+			if (TRUE == _atPtPos(obj, GetChartRigidATONArray(rzRules), false))
 			floating = FALSE;
 
 		if (floating) {
@@ -2531,47 +2563,118 @@ static wxString _LITDSN01(S57Obj* obj)
 	bool b_grp2 = false; // 2 GRP attributes expected
 	if (-9 != litchr) {
 		switch (litchr) {
-//                  case 1:   return_value.Append(_T("F"));    break;
-//                  case 2:   return_value.Append(_T("Fl"));   break;
-//                  case 3:   return_value.Append(_T("Fl"));   break;
-//                  case 4:   return_value.Append(_T("Q"));    break;
-//                  case 7:   return_value.Append(_T("Iso"));  break;
-//                  case 8:   return_value.Append(_T("Occ"));  break;
-//                  case 12:  return_value.Append(_T("Mo"));   break;
+			//                  case 1:   return_value.Append(_T("F"));    break;
+			//                  case 2:   return_value.Append(_T("Fl"));   break;
+			//                  case 3:   return_value.Append(_T("Fl"));   break;
+			//                  case 4:   return_value.Append(_T("Q"));    break;
+			//                  case 7:   return_value.Append(_T("Iso"));  break;
+			//                  case 8:   return_value.Append(_T("Occ"));  break;
+			//                  case 12:  return_value.Append(_T("Mo"));   break;
 
-                  case 1: return_value.Append(_T("F"));    break;                   //fixed     IP 10.1;
-                  case 2: return_value.Append(_T("Fl"));   break;                   //flashing  IP 10.4;
-                  case 3: return_value.Append(_T("LFl"));  break;                   //long-flashing   IP 10.5;
-                  case 4: return_value.Append(_T("Q"));    break;                   //quick-flashing  IP 10.6;
-                  case 5: return_value.Append(_T("VQ"));   break;                   //very quick-flashing   IP 10.7;
-                  case 6: return_value.Append(_T("UQ"));   break;                   //ultra quick-flashing  IP 10.8;
-                  case 7: return_value.Append(_T("Iso"));  break;                   //isophased IP 10.3;
-                  case 8: return_value.Append(_T("Occ"));  break;                   //occulting IP 10.2;
-                  case 9: return_value.Append(_T("IQ"));   break;                   //interrupted quick-flashing  IP 10.6;
-                  case 10: return_value.Append(_T("IVQ")); break;                   //interrupted very quick-flashing   IP 10.7;
-                  case 11: return_value.Append(_T("IUQ")); break;                   //interrupted ultra quick-flashing  IP 10.8;
-                  case 12: return_value.Append(_T("Mo"));  break;                   //morse     IP 10.9;
-                  case 13: return_value.Append(_T("F + Fl"));   b_grp2 = true; break;                   //fixed/flash     IP 10.10;
-                  case 14: return_value.Append(_T("Fl + LFl")); b_grp2 = true; break;                   //flash/long-flash
-                  case 15: return_value.Append(_T("Occ + Fl")); b_grp2 = true; break;                   //occulting/flash
-                  case 16: return_value.Append(_T("F + LFl"));  b_grp2 = true;  break;                   //fixed/long-flash
-                  case 17: return_value.Append(_T("Al Occ"));    break;                   //occulting alternating
-                  case 18: return_value.Append(_T("Al LFl"));    break;                   //long-flash alternating
-                  case 19: return_value.Append(_T("Al Fl"));    break;                   //flash alternating
-                  case 20: return_value.Append(_T("Al Grp"));    break;                   //group alternating
-                  case 21: return_value.Append(_T("F")); spost = _T(" (vert)");    break;                   //2 fixed (vertical)
-                  case 22: return_value.Append(_T("F")); spost = _T(" (horz)");    break;                   //2 fixed (horizontal)
-                  case 23: return_value.Append(_T("F")); spost = _T(" (vert)");    break;                   //3 fixed (vertical)
-                  case 24: return_value.Append(_T("F")); spost = _T(" (horz)");    break;                   //3 fixed (horizontal)
-                  case 25: return_value.Append(_T("Q + LFl"));  b_grp2 = true;    break;                   //quick-flash plus long-flash
-                  case 26: return_value.Append(_T("VQ + LFl")); b_grp2 = true;    break;                   //very quick-flash plus long-flash
-                  case 27: return_value.Append(_T("UQ + LFl")); b_grp2 = true;    break;                   //ultra quick-flash plus long-flash
-                  case 28: return_value.Append(_T("Alt"));                        break;                   //alternating
-                  case 29: return_value.Append(_T("F + Alt")); b_grp2 = true;     break;                   //fixed and alternating flashing
+			case 1:
+				return_value.Append(_T("F"));
+				break; // fixed     IP 10.1;
+			case 2:
+				return_value.Append(_T("Fl"));
+				break; // flashing  IP 10.4;
+			case 3:
+				return_value.Append(_T("LFl"));
+				break; // long-flashing   IP 10.5;
+			case 4:
+				return_value.Append(_T("Q"));
+				break; // quick-flashing  IP 10.6;
+			case 5:
+				return_value.Append(_T("VQ"));
+				break; // very quick-flashing   IP 10.7;
+			case 6:
+				return_value.Append(_T("UQ"));
+				break; // ultra quick-flashing  IP 10.8;
+			case 7:
+				return_value.Append(_T("Iso"));
+				break; // isophased IP 10.3;
+			case 8:
+				return_value.Append(_T("Occ"));
+				break; // occulting IP 10.2;
+			case 9:
+				return_value.Append(_T("IQ"));
+				break; // interrupted quick-flashing  IP 10.6;
+			case 10:
+				return_value.Append(_T("IVQ"));
+				break; // interrupted very quick-flashing   IP 10.7;
+			case 11:
+				return_value.Append(_T("IUQ"));
+				break; // interrupted ultra quick-flashing  IP 10.8;
+			case 12:
+				return_value.Append(_T("Mo"));
+				break; // morse     IP 10.9;
+			case 13:
+				return_value.Append(_T("F + Fl"));
+				b_grp2 = true;
+				break; // fixed/flash     IP 10.10;
+			case 14:
+				return_value.Append(_T("Fl + LFl"));
+				b_grp2 = true;
+				break; // flash/long-flash
+			case 15:
+				return_value.Append(_T("Occ + Fl"));
+				b_grp2 = true;
+				break; // occulting/flash
+			case 16:
+				return_value.Append(_T("F + LFl"));
+				b_grp2 = true;
+				break; // fixed/long-flash
+			case 17:
+				return_value.Append(_T("Al Occ"));
+				break; // occulting alternating
+			case 18:
+				return_value.Append(_T("Al LFl"));
+				break; // long-flash alternating
+			case 19:
+				return_value.Append(_T("Al Fl"));
+				break; // flash alternating
+			case 20:
+				return_value.Append(_T("Al Grp"));
+				break; // group alternating
+			case 21:
+				return_value.Append(_T("F"));
+				spost = _T(" (vert)");
+				break; // 2 fixed (vertical)
+			case 22:
+				return_value.Append(_T("F"));
+				spost = _T(" (horz)");
+				break; // 2 fixed (horizontal)
+			case 23:
+				return_value.Append(_T("F"));
+				spost = _T(" (vert)");
+				break; // 3 fixed (vertical)
+			case 24:
+				return_value.Append(_T("F"));
+				spost = _T(" (horz)");
+				break; // 3 fixed (horizontal)
+			case 25:
+				return_value.Append(_T("Q + LFl"));
+				b_grp2 = true;
+				break; // quick-flash plus long-flash
+			case 26:
+				return_value.Append(_T("VQ + LFl"));
+				b_grp2 = true;
+				break; // very quick-flash plus long-flash
+			case 27:
+				return_value.Append(_T("UQ + LFl"));
+				b_grp2 = true;
+				break; // ultra quick-flash plus long-flash
+			case 28:
+				return_value.Append(_T("Alt"));
+				break; // alternating
+			case 29:
+				return_value.Append(_T("F + Alt"));
+				b_grp2 = true;
+				break; // fixed and alternating flashing
 
-                  default: break;
-            }
-      }
+			default:
+				break;
+		}
+	  }
 
 	  int nfirst_grp = -1;
 	  if (b_grp2) {
@@ -2761,37 +2864,34 @@ static wxString _LITDSN01(S57Obj* obj)
 // JUMP TABLE SECTION
 //
 //--------------------------------
-Cond condTable[] = {
-   {"CLRLIN01",CLRLIN01},
-   {"DATCVR01",DATCVR01},
-   {"DATCVR01",DATCVR01},
-   {"DEPARE01",DEPARE01},
-   {"DEPARE02",DEPARE01},                 // new in PLIB 3_3, opencpn defaults to DEPARE01
-   {"DEPCNT02",DEPCNT02},
-   {"DEPVAL01",DEPVAL01},
-   {"LEGLIN02",LEGLIN02},
-   {"LIGHTS05",LIGHTS05},                 // new in PLIB 3_3, replaces LIGHTS04
-   {"LITDSN01",LITDSN01},
-   {"OBSTRN04",OBSTRN04},
-   {"OWNSHP02",OWNSHP02},
-   {"PASTRK01",PASTRK01},
-   {"QUAPOS01",QUAPOS01},
-   {"QUALIN01",QUALIN01},
-   {"QUAPNT01",QUAPNT01},
-   {"SLCONS03",SLCONS03},
-   {"RESARE02",RESARE02},
-   {"RESTRN01",RESTRN01},
-//   {"RESCSP01",RESCSP01},
-   {"SEABED01",SEABED01},
-//   {"SNDFRM02",SNDFRM02},
-   {"SOUNDG02",SOUNDG02},
-   {"TOPMAR01",TOPMAR01},
-   {"UDWHAZ03",UDWHAZ03},
-   {"VESSEL01",VESSEL01},
-   {"VRMEBL01",VRMEBL01},
-   {"WRECKS02",WRECKS02},
-   {"SOUNDG03",SOUNDG03},                   // special case for MPS
-   {"########",NULL}
-};
-
+Cond condTable[] = { { "CLRLIN01", CLRLIN01 },
+					 { "DATCVR01", DATCVR01 },
+					 { "DATCVR01", DATCVR01 },
+					 { "DEPARE01", DEPARE01 },
+					 { "DEPARE02", DEPARE01 }, // new in PLIB 3_3, opencpn defaults to DEPARE01
+					 { "DEPCNT02", DEPCNT02 },
+					 { "DEPVAL01", DEPVAL01 },
+					 { "LEGLIN02", LEGLIN02 },
+					 { "LIGHTS05", LIGHTS05 }, // new in PLIB 3_3, replaces LIGHTS04
+					 { "LITDSN01", LITDSN01 },
+					 { "OBSTRN04", OBSTRN04 },
+					 { "OWNSHP02", OWNSHP02 },
+					 { "PASTRK01", PASTRK01 },
+					 { "QUAPOS01", QUAPOS01 },
+					 { "QUALIN01", QUALIN01 },
+					 { "QUAPNT01", QUAPNT01 },
+					 { "SLCONS03", SLCONS03 },
+					 { "RESARE02", RESARE02 },
+					 { "RESTRN01", RESTRN01 },
+					 //   {"RESCSP01",RESCSP01},
+					 { "SEABED01", SEABED01 },
+					 //   {"SNDFRM02",SNDFRM02},
+					 { "SOUNDG02", SOUNDG02 },
+					 { "TOPMAR01", TOPMAR01 },
+					 { "UDWHAZ03", UDWHAZ03 },
+					 { "VESSEL01", VESSEL01 },
+					 { "VRMEBL01", VRMEBL01 },
+					 { "WRECKS02", WRECKS02 },
+					 { "SOUNDG03", SOUNDG03 }, // special case for MPS
+					 { "########", NULL } };
 }

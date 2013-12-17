@@ -126,6 +126,7 @@ extern double initial_scale_ppm;
 extern double vLat;
 extern double vLon;
 ChartCanvas* cc1;
+wxString gExe_path;
 extern wxString str_version_start;
 extern wxString str_version_major;
 extern wxString str_version_minor;
@@ -1244,6 +1245,8 @@ bool App::OnInit()
 	wxString sound_data_location = std_path.GetDataDir();
 	appendOSDirSlash(sound_data_location);
 
+	gExe_path = std_path.GetExecutablePath();
+
 	if (g_bportable)
 		sound_data_location = sys.data().home_location;
 
@@ -1741,6 +1744,7 @@ bool App::OnInit()
 	}
 
 	stats->Show(true);
+	Yield();
 	gFrame->DoChartUpdate();
 	g_FloatingToolbarDialog->LockPosition(false);
 	gFrame->RequestNewToolbar();

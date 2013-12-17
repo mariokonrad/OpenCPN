@@ -221,7 +221,7 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 
 	strcpy(buf, first_line);
 
-//    while(!dun)
+	//    while(!dun)
 	{
 		if (!strncmp(buf, "OGRF", 4)) {
 			attVal = new wxArrayOfS57attVal();
@@ -1075,14 +1075,16 @@ void s57chart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRe
 	double easting, northing;
 	double epix, npix;
 
-	geo::toSM(m_FullExtent.SLAT, m_FullExtent.WLON, VPoint.latitude(), VPoint.longitude(), &easting, &northing);
+	geo::toSM(m_FullExtent.SLAT, m_FullExtent.WLON, VPoint.latitude(), VPoint.longitude(), &easting,
+			  &northing);
 	epix = easting * VPoint.view_scale_ppm;
 	npix = northing * VPoint.view_scale_ppm;
 
 	rxl = (int)round((VPoint.pix_width / 2) + epix);
 	ryb = (int)round((VPoint.pix_height / 2) - npix);
 
-	geo::toSM(m_FullExtent.NLAT, m_FullExtent.ELON, VPoint.latitude(), VPoint.longitude(), &easting, &northing);
+	geo::toSM(m_FullExtent.NLAT, m_FullExtent.ELON, VPoint.latitude(), VPoint.longitude(), &easting,
+			  &northing);
 	epix = easting * VPoint.view_scale_ppm;
 	npix = northing * VPoint.view_scale_ppm;
 
@@ -1316,7 +1318,8 @@ void s57chart::SetVPParms(const ViewPort& vpt)
 	m_pixy_vp_center = vpt.pix_height / 2;
 	m_view_scale_ppm = vpt.view_scale_ppm;
 
-	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center);
+	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center,
+			  &m_northing_vp_center);
 }
 
 bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
@@ -1329,10 +1332,12 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 		return false;
 
 	double prev_easting_c, prev_northing_c;
-	geo::toSM(vp_last.latitude(), vp_last.longitude(), ref_lat, ref_lon, &prev_easting_c, &prev_northing_c);
+	geo::toSM(vp_last.latitude(), vp_last.longitude(), ref_lat, ref_lon, &prev_easting_c,
+			  &prev_northing_c);
 
 	double easting_c, northing_c;
-	geo::toSM(vp_proposed.latitude(), vp_proposed.longitude(), ref_lat, ref_lon, &easting_c, &northing_c);
+	geo::toSM(vp_proposed.latitude(), vp_proposed.longitude(), ref_lat, ref_lon, &easting_c,
+			  &northing_c);
 
 	// then require this viewport to be exact integral pixel difference from last
 	// adjusting clat/clat and SM accordingly
@@ -1576,11 +1581,6 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 			temp_vp.GetBBox().SetMin(temp_lon_left, temp_lat_bot);
 			temp_vp.GetBBox().SetMax(temp_lon_right, temp_lat_top);
 
-			// Allow some slop in the viewport
-			// double margin = wxMin(temp_vp.GetBBox().GetWidth(), temp_vp.GetBBox().GetHeight()) *
-			// 0.05;
-			// temp_vp.GetBBox().EnLarge(margin);
-
 			if (g_bDebugS57)
 				printf("   S57 Render Box:  %d %d %d %d\n", rect.x, rect.y, rect.width,
 					   rect.height);
@@ -1612,11 +1612,6 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 		temp_vp.GetBBox().SetMin(temp_lon_left, temp_lat_bot);
 		temp_vp.GetBBox().SetMax(temp_lon_right, temp_lat_top);
 
-		// Allow some slop in the viewport
-		// double margin = wxMin(temp_vp.GetBBox().GetWidth(), temp_vp.GetBBox().GetHeight()) *
-		// 0.05;
-		// temp_vp.GetBBox().EnLarge(margin);
-
 		SetClipRegionGL(glc, VPoint, Region, !b_overlay);
 		DoRenderRectOnGL(glc, temp_vp, rect);
 	}
@@ -1630,11 +1625,8 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 	return true;
 }
 
-void s57chart::SetClipRegionGL(
-		const wxGLContext &,
-		const ViewPort &,
-        const OCPNRegion & Region,
-		bool b_render_nodta)
+void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const OCPNRegion& Region,
+							   bool b_render_nodta)
 {
 #ifdef ocpnUSE_GL
 
@@ -1724,11 +1716,8 @@ void s57chart::SetClipRegionGL(
 #endif
 }
 
-void s57chart::SetClipRegionGL(
-		const wxGLContext &,
-		const ViewPort &,
-		const wxRect & Rect,
-        bool b_render_nodta)
+void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const wxRect& Rect,
+							   bool b_render_nodta)
 {
 #ifdef ocpnUSE_GL
 
@@ -1872,7 +1861,7 @@ bool s57chart::DoRenderRectOnGL(const wxGLContext& glc, const ViewPort& VPoint, 
 	glDisable(GL_SCISSOR_TEST);
 #endif
 
-    return true;
+	return true;
 }
 
 bool s57chart::RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
@@ -2045,8 +2034,8 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 		northing_lr = northing_ul - (VPoint.pix_height / m_view_scale_ppm);
 
 		double last_easting_vp_center, last_northing_vp_center;
-		geo::toSM(m_last_vp.latitude(), m_last_vp.longitude(), ref_lat, ref_lon, &last_easting_vp_center,
-				  &last_northing_vp_center);
+		geo::toSM(m_last_vp.latitude(), m_last_vp.longitude(), ref_lat, ref_lon,
+				  &last_easting_vp_center, &last_northing_vp_center);
 
 		prev_easting_ul = last_easting_vp_center - ((m_last_vp.pix_width / 2) / m_view_scale_ppm);
 		prev_northing_ul = last_northing_vp_center
@@ -2215,10 +2204,6 @@ int s57chart::DCRenderRect(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 
 	wxASSERT(rect);
 	ViewPort tvp = vp; // undo const  TODO fix this in PLIB
-
-	// This does not work due to some issue with ref data of allocated buffer.....
-	// render_canvas_parms pb_spec( rect->x, rect->y, rect->width, rect->height,  GetGlobalColor (
-	// _T ( "NODTA" ) ));
 
 	render_canvas_parms pb_spec;
 
@@ -2726,8 +2711,8 @@ void s57chart::BuildDepthContourArray(void)
 
 void s57chart::InvalidateCache()
 {
-    delete pDIB;
-    pDIB = NULL;
+	delete pDIB;
+	pDIB = NULL;
 }
 
 bool s57chart::BuildThumbnail(const wxString& bmpname)
@@ -2748,9 +2733,8 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 	// Set up a private ViewPort
 	ViewPort vp;
 
-	vp.set_position(Position(
-		(m_FullExtent.ELON + m_FullExtent.WLON) / 2.0,
-		(m_FullExtent.NLAT + m_FullExtent.SLAT) / 2.0));
+	vp.set_position(Position((m_FullExtent.ELON + m_FullExtent.WLON) / 2.0,
+							 (m_FullExtent.NLAT + m_FullExtent.SLAT) / 2.0));
 
 	float ext_max
 		= fmax((m_FullExtent.NLAT - m_FullExtent.SLAT), (m_FullExtent.ELON - m_FullExtent.WLON));
@@ -2855,7 +2839,7 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 
 	delete pBMP;
 
-    return ret_code;
+	return ret_code;
 }
 
 #include <wx/arrimpl.cpp>
@@ -4217,6 +4201,22 @@ int s57chart::BuildRAZFromSENCFile(const wxString& FullPath)
 		}
 	}
 
+	// Set up the chart context
+	m_this_chart_context = (chart_context*)calloc(sizeof(chart_context), 1);
+	m_this_chart_context->chart = this;
+
+	// Loop and populate all the objects
+	for (int i = 0; i < PRIO_NUM; ++i) {
+		for (int j = 0; j < LUPNAME_NUM; j++) {
+			top = razRules[i][j];
+			while (top != NULL) {
+				S57Obj* obj = top->obj;
+				obj->m_chart_context = m_this_chart_context;
+				top = top->next;
+			}
+		}
+	}
+
 	return ret_val;
 }
 
@@ -4326,7 +4326,6 @@ int s57chart::_insertRules(S57Obj* obj, LUPrec* LUP, s57chart* pOwner)
 	rzRules->obj = obj;
 	obj->nRef++; // Increment reference counter for delete check;
 	rzRules->LUP = LUP;
-	rzRules->chart = pOwner;
 	rzRules->next = razRules[disPrioIdx][LUPtypeIdx];
 	rzRules->child = NULL;
 	razRules[disPrioIdx][LUPtypeIdx] = rzRules;
@@ -4756,14 +4755,18 @@ void s57chart::CreateSENCRecord(OGRFeature* pFeature, FILE* fpOut, int mode, S57
 
 						if (edge_ornt == 1) {
 							// forward
-							fwrite(&start_rcid, 1, sizeof(int), fpOut); // FIXME: may not be portable
-							fwrite(&pNAME_RCID[i], 1, sizeof(int), fpOut); // FIXME: may not be portable
+							fwrite(&start_rcid, 1, sizeof(int),
+								   fpOut); // FIXME: may not be portable
+							fwrite(&pNAME_RCID[i], 1, sizeof(int),
+								   fpOut); // FIXME: may not be portable
 							fwrite(&end_rcid, 1, sizeof(int), fpOut); // FIXME: may not be portable
 						} else {
 							// reverse
 							fwrite(&end_rcid, 1, sizeof(int), fpOut); // FIXME: may not be portable
-							fwrite(&pNAME_RCID[i], 1, sizeof(int), fpOut); // FIXME: may not be portable
-							fwrite(&start_rcid, 1, sizeof(int), fpOut); // FIXME: may not be portable
+							fwrite(&pNAME_RCID[i], 1, sizeof(int),
+								   fpOut); // FIXME: may not be portable
+							fwrite(&start_rcid, 1, sizeof(int),
+								   fpOut); // FIXME: may not be portable
 						}
 
 						delete pEdgeVectorRecordFeature;
@@ -6052,7 +6055,6 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 
 				attrCounter++;
 				curr_att += 6;
-
 			}
 
 			if (!isLight) {
@@ -6099,7 +6101,8 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 				lightsHtml << _T("<font size=-2>") << thisLight->position << _T("</font><br>\n");
 
 				if (curLight->hasSectors)
-					lightsHtml << _("<font size=-2>(Sector angles are True Bearings from Seaward)</font><br>");
+					lightsHtml << _("<font size=-2>(Sector angles are True Bearings from "
+									"Seaward)</font><br>");
 
 				lightsHtml << _T("<table>");
 			}
@@ -6359,6 +6362,12 @@ const char* MyCSVGetField(const char* pszFilename, const char* pszKeyFieldName,
 	return (papszRecord[iTargetField]);
 }
 
+bool s57_GetChartExtent(const wxString& FullPath, Extent* pext)
+{
+	//   Fix this  find extents of which?? layer??
+	return false;
+}
+
 // Some s57 Utilities
 // Meant to be called "bare", usually with no class instance.
 void s57_DrawExtendedLightSectors(ocpnDC& dc, const ViewPort& viewport,
@@ -6384,7 +6393,8 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, const ViewPort& viewport,
 
 			wxPoint end2 = viewport.GetPixFromLL(Position(endy, endx));
 
-			wxPoint lightPos = viewport.GetPixFromLL(Position(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x));
+			wxPoint lightPos
+				= viewport.GetPixFromLL(Position(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x));
 
 			// Make sure arcs are well inside viewport.
 			double rangePx = sqrt(pow(lightPos.x - end1.x, 2.0) + pow(lightPos.y - end1.y, 2.0));

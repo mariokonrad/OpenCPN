@@ -25,7 +25,7 @@
 
 namespace chart {
 
-ChartClassDescriptor::~ChartClassDescriptor()
+ChartClassDescriptor::ChartClassDescriptor()
 {}
 
 ChartClassDescriptor::ChartClassDescriptor(
@@ -35,6 +35,9 @@ ChartClassDescriptor::ChartClassDescriptor(
 	: m_class_name(classn)
 	, m_search_mask(mask)
 	, m_descriptor_type(type)
+{}
+
+ChartClassDescriptor::~ChartClassDescriptor()
 {}
 
 }

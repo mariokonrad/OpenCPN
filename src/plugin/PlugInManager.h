@@ -39,6 +39,8 @@
 #include "DataStream.h"
 #include <ColorScheme.h>
 
+#include <chart/s52s57.h>
+
 #include <sound/OCPN_Sound.h>
 
 #include <ais/AIS_Target_Data.h>
@@ -185,5 +187,40 @@ private:
 	int m_plugin_menu_item_id_next;
 	wxBitmap m_cached_overlay_bm;
 };
+
+//  API 1.11 adds access to S52 Presentation library
+//  These are some wrapper conversion utilities
+
+class S52PLIB_Context
+{
+public:
+	S52PLIB_Context()
+	{
+		bBBObj_valid = false;
+		bCS_Added = false;
+		bFText_Added = false;
+		CSrules = NULL;
+		FText = NULL;
+	};
+
+	~S52PLIB_Context() {};
+
+	geo::BoundingBox BBObj; // lat/lon BBox of the rendered object
+	bool bBBObj_valid; // set after the BBObj has been calculated once.
+
+	chart::Rules* CSrules; // per object conditional symbology
+	int bCS_Added;
+
+	chart::S52_TextC* FText;
+	int bFText_Added;
+	wxRect rText;
+
+	chart::LUPrec* LUP;
+};
+
+void CreateCompatibleS57Object(PI_S57Obj* pObj, chart::S57Obj* cobj);
+void UpdatePIObjectPlibContext(PI_S57Obj* pObj, chart::S57Obj* cobj);
+
+ViewPort CreateCompatibleViewport(const PlugIn_ViewPort& pivp);
 
 #endif

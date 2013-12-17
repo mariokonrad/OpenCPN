@@ -69,9 +69,13 @@ public:
 	bool Read(const wxString& filePath);
 	bool Write(const wxString& filePath);
 
+	bool AddSingleChart(wxString& fullpath);
+	bool RemoveSingleChart(wxString& ChartFullPath);
+
 	const wxString& GetDBFileName() const;
 	const ArrayOfCDI& GetChartDirArray() const;
 	const wxArrayString& GetChartDirArrayString() const;
+    void SetChartDirArray( ArrayOfCDI array ){ m_dir_array = array; }
 
 	void UpdateChartClassDescriptorArray(void);
 
@@ -112,6 +116,7 @@ protected:
 	ArrayOfCDI m_dir_array;
 
 private:
+	ChartTableEntry& GetWritableChartTableEntry(int index);
 	bool IsChartDirUsed(const wxString& theDir) const;
 
 	int SearchDirAndAddCharts(wxString& dir_name_base,
@@ -123,6 +128,9 @@ private:
 	bool DetectDirChange(const wxString& dir_path, const wxString& magic, wxString& new_magic,
 						 wxProgressDialog* pprog) const;
 
+	bool AddChart(wxString& chartfilename, ChartClassDescriptor& chart_desc,
+				  wxProgressDialog* pprog, int isearch, bool bthis_dir_in_dB);
+
 	bool Check_CM93_Structure(wxString dir_name) const;
 
 	bool bValid;
@@ -133,6 +141,9 @@ private:
 	ArrayOfChartClassDescriptor m_ChartClassDescriptorArray;
 	ChartTableEntry m_ChartTableEntryDummy; // FIXME: used for return value if database is not valid
 	wxString m_DBFileName;
+
+	int m_pdifile;
+	int m_pdnFile;
 };
 
 }

@@ -36,38 +36,40 @@ PluginListPanel::PluginListPanel(
 	m_pPluginArray = pPluginArray;
 	m_PluginSelected = NULL;
 
-	wxBoxSizer* itemBoxSizer01 = new wxBoxSizer( wxVERTICAL );
-	SetSizer( itemBoxSizer01 );
+	wxBoxSizer* itemBoxSizer01 = new wxBoxSizer(wxVERTICAL);
+	SetSizer(itemBoxSizer01);
 
 	int max_dy = 0;
 
-	for( unsigned int i=0 ; i < pPluginArray->size() ; i++ )
-	{
-		PluginPanel *pPluginPanel = new PluginPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, pPluginArray->Item(i) );
-		itemBoxSizer01->Add( pPluginPanel, 0, wxEXPAND|wxALL, 0 );
-		m_PluginItems.Add( pPluginPanel );
+	for (unsigned int i = 0; i < pPluginArray->size(); i++) {
+		PluginPanel* pPluginPanel = new PluginPanel(this, wxID_ANY, wxDefaultPosition,
+													wxDefaultSize, pPluginArray->Item(i));
+		itemBoxSizer01->Add(pPluginPanel, 0, wxEXPAND | wxALL, 0);
+		m_PluginItems.Add(pPluginPanel);
 
-		wxStaticLine* itemStaticLine = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-		itemBoxSizer01->Add( itemStaticLine, 0, wxEXPAND|wxALL, 0 );
+		wxStaticLine* itemStaticLine
+			= new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
+		itemBoxSizer01->Add(itemStaticLine, 0, wxEXPAND | wxALL, 0);
 
-		//    When a child Panel is selected, its size grows to include "Preferences" and Enable" buttons.
-		//    As a consequence, the vertical size of the ListPanel grows as well.
-		//    Calculate and add a spacer to bottom of ListPanel so that initial ListPanel
-		//    minimum size calculations account for selected Panel size growth.
+		// When a child Panel is selected, its size grows to include "Preferences" and Enable"
+		// buttons.
+		// As a consequence, the vertical size of the ListPanel grows as well.
+		// Calculate and add a spacer to bottom of ListPanel so that initial ListPanel
+		// minimum size calculations account for selected Panel size growth.
 
-		pPluginPanel->SetSelected( false );       // start unselected
+		pPluginPanel->SetSelected(false); // start unselected
 		itemBoxSizer01->Layout();
 		wxSize nsel_size = pPluginPanel->GetSize();
 
-		pPluginPanel->SetSelected( true );        // switch to selected, a bit bigger
+		pPluginPanel->SetSelected(true); // switch to selected, a bit bigger
 		itemBoxSizer01->Layout();
 		wxSize sel_size = pPluginPanel->GetSize();
 
-		pPluginPanel->SetSelected( false );       // reset to unselected
+		pPluginPanel->SetSelected(false); // reset to unselected
 		itemBoxSizer01->Layout();
 
 		int dy = sel_size.y - nsel_size.y;
-		dy += 10;                                 // fluff
+		dy += 10; // fluff
 		max_dy = wxMax(dy, max_dy);
 	}
 
@@ -80,15 +82,15 @@ PluginListPanel::~PluginListPanel()
 
 void PluginListPanel::UpdateSelections()
 {
-	for(unsigned int i=0 ; i < m_PluginItems.size() ; i++) {
-		PluginPanel *pPluginPanel = m_PluginItems.Item(i);
-		if( pPluginPanel ){
-			pPluginPanel->SetSelected( pPluginPanel->GetSelected() );
+	for (unsigned int i = 0; i < m_PluginItems.size(); i++) {
+		PluginPanel* pPluginPanel = m_PluginItems.Item(i);
+		if (pPluginPanel) {
+			pPluginPanel->SetSelected(pPluginPanel->GetSelected());
 		}
 	}
 }
 
-void PluginListPanel::SelectPlugin(PluginPanel * pi)
+void PluginListPanel::SelectPlugin(PluginPanel* pi)
 {
 	if (m_PluginSelected == pi)
 		return;

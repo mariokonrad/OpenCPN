@@ -428,6 +428,8 @@ class options : public wxDialog
 		void SetDSFormRWStates();
 		void FillSourceList();
 
+		wxNotebookPage* m_groupsPage;
+
 		bool CreateConnectionParamsFromSelectedItem(ConnectionParams&);
 		ConnectionParams createConnectionParams() const;
 		ConnectionParams::ConnectionType getConParamConnectionType() const;

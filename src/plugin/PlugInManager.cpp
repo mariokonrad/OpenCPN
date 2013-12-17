@@ -93,32 +93,54 @@ extern PlugInManager* g_pi_manager;
 // Some static helper funtions
 // Scope is local to this module
 
-PlugIn_ViewPort CreatePlugInViewport( const ViewPort &vp)
+PlugIn_ViewPort CreatePlugInViewport(const ViewPort& vp)
 {
 	// Create a PlugIn Viewport
 	ViewPort tvp = vp;
 	PlugIn_ViewPort pivp;
 
-	pivp.clat =                   tvp.latitude();                   // center point
-	pivp.clon =                   tvp.longitude();
-	pivp.view_scale_ppm =         tvp.view_scale_ppm;
-	pivp.skew =                   tvp.skew;
-	pivp.rotation =               tvp.rotation;
-	pivp.chart_scale =            tvp.chart_scale;
-	pivp.pix_width =              tvp.pix_width;
-	pivp.pix_height =             tvp.pix_height;
-	pivp.rv_rect =                tvp.rv_rect;
-	pivp.b_quilt =                tvp.b_quilt;
-	pivp.m_projection_type =      tvp.m_projection_type;
+	pivp.clat = tvp.latitude(); // center point
+	pivp.clon = tvp.longitude();
+	pivp.view_scale_ppm = tvp.view_scale_ppm;
+	pivp.skew = tvp.skew;
+	pivp.rotation = tvp.rotation;
+	pivp.chart_scale = tvp.chart_scale;
+	pivp.pix_width = tvp.pix_width;
+	pivp.pix_height = tvp.pix_height;
+	pivp.rv_rect = tvp.rv_rect;
+	pivp.b_quilt = tvp.b_quilt;
+	pivp.m_projection_type = tvp.m_projection_type;
 
-	pivp.lat_min =                tvp.GetBBox().GetMinY();
-	pivp.lat_max =                tvp.GetBBox().GetMaxY();
-	pivp.lon_min =                tvp.GetBBox().GetMinX();
-	pivp.lon_max =                tvp.GetBBox().GetMaxX();
+	pivp.lat_min = tvp.GetBBox().GetMinY();
+	pivp.lat_max = tvp.GetBBox().GetMaxY();
+	pivp.lon_min = tvp.GetBBox().GetMinX();
+	pivp.lon_max = tvp.GetBBox().GetMaxX();
 
-	pivp.bValid =                 tvp.IsValid();                 // This VP is valid
+	pivp.bValid = tvp.IsValid(); // This VP is valid
 
 	return pivp;
+}
+
+ViewPort CreateCompatibleViewport(const PlugIn_ViewPort& pivp)
+{
+	// Create a system ViewPort
+	ViewPort vp;
+
+	vp.set_position(Position(pivp.clat, pivp.clon));
+	vp.view_scale_ppm = pivp.view_scale_ppm;
+	vp.skew = pivp.skew;
+	vp.rotation = pivp.rotation;
+	vp.chart_scale = pivp.chart_scale;
+	vp.pix_width = pivp.pix_width;
+	vp.pix_height = pivp.pix_height;
+	vp.rv_rect = pivp.rv_rect;
+	vp.b_quilt = pivp.b_quilt;
+	vp.m_projection_type = pivp.m_projection_type;
+
+	vp.SetBBoxDirect(pivp.lat_min, pivp.lon_min, pivp.lat_max, pivp.lon_max);
+	vp.Validate(); // This VP is valid
+
+	return vp;
 }
 
 
@@ -138,8 +160,8 @@ PlugInManager::PlugInManager(MainFrame* parent)
 
 	MainFrame* pFrame = GetParentFrame();
 	if (pFrame) {
-		m_plugin_menu_item_id_next
-			= pFrame->GetCanvas()->GetNextContextMenuId(); // FIXME: interface transition
+		// FIXME: interface transition
+		m_plugin_menu_item_id_next = pFrame->GetCanvas()->GetNextContextMenuId();
 		m_plugin_tool_id_next = pFrame->GetNextToolbarToolId();
 	}
 }
@@ -678,7 +700,7 @@ bool PlugInManager::RenderAllCanvasOverlayPlugIns(ocpnDC& dc, const ViewPort& vp
 	return true;
 }
 
-bool PlugInManager::RenderAllGLCanvasOverlayPlugIns( wxGLContext *pcontext, const ViewPort &vp)
+bool PlugInManager::RenderAllGLCanvasOverlayPlugIns(wxGLContext* pcontext, const ViewPort& vp)
 {
 	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
@@ -983,17 +1005,10 @@ void PlugInManager::NotifyAuiPlugIns(void)
 	}
 }
 
-int PlugInManager::AddToolbarTool(
-		wxString label,
-		wxBitmap * bitmap,
-		wxBitmap * WXUNUSED(bmpDisabled),
-		wxItemKind kind,
-		wxString shortHelp,
-		wxString longHelp,
-		wxObject * clientData,
-		int position,
-		int tool_sel,
-		opencpn_plugin * pplugin)
+int PlugInManager::AddToolbarTool(wxString label, wxBitmap* bitmap, wxBitmap* WXUNUSED(bmpDisabled),
+								  wxItemKind kind, wxString shortHelp, wxString longHelp,
+								  wxObject* clientData, int position, int tool_sel,
+								  opencpn_plugin* pplugin)
 {
 	PlugInToolbarToolContainer* pttc = new PlugInToolbarToolContainer;
 	pttc->label = label;
@@ -1070,7 +1085,7 @@ void PlugInManager::SetToolbarItemState(int item, bool toggle)
 	}
 }
 
-void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap *bitmap, wxBitmap *bmpRollover)
+void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap* bitmap, wxBitmap* bmpRollover)
 {
 	for (unsigned int i = 0; i < m_PlugInToolbarTools.size(); i++) {
 		PlugInToolbarToolContainer* pttc = m_PlugInToolbarTools.Item(i);
@@ -1438,6 +1453,64 @@ wxArrayString GetChartDBDirArrayString()
 	return ChartData->GetChartDirArrayString();
 }
 
+int AddChartToDBInPlace(wxString& full_path, bool WXUNUSED(b_ProgressDialog))
+{
+	// extract the path from the chart name
+	wxFileName fn(full_path);
+	wxString fdir = fn.GetPath();
+
+	bool bret = false;
+	if (ChartData) {
+
+		bret = ChartData->AddSingleChart(full_path);
+
+		if (bret) {
+			// Save to disk
+			pConfig->UpdateChartDirs(ChartData->GetChartDirArray());
+			ChartData->SaveBinary(global::OCPN::get().sys().data().chartlist_filename);
+
+			//  Completely reload the chart database, for a fresh start
+			ArrayOfCDI XnewChartDirArray;
+			pConfig->LoadChartDirArray(XnewChartDirArray);
+			delete ChartData;
+			ChartData = new chart::ChartDB(gFrame);
+			ChartData->LoadBinary(global::OCPN::get().sys().data().chartlist_filename, XnewChartDirArray);
+
+			for (int i = 0; i < ChartData->GetChartTableEntries(); i++) {
+				const chart::ChartTableEntry& pcte = ChartData->GetChartTableEntry(i);
+			}
+
+			ViewPort vp;
+			gFrame->ChartsRefresh(-1, vp);
+		}
+	}
+	return bret;
+}
+
+int RemoveChartFromDBInPlace(wxString& full_path)
+{
+	bool bret = false;
+	if (ChartData) {
+		bret = ChartData->RemoveSingleChart(full_path);
+
+		// Save to disk
+		pConfig->UpdateChartDirs(ChartData->GetChartDirArray());
+		ChartData->SaveBinary(global::OCPN::get().sys().data().chartlist_filename);
+
+		//  Completely reload the chart database, for a fresh start
+		ArrayOfCDI XnewChartDirArray;
+		pConfig->LoadChartDirArray(XnewChartDirArray);
+		delete ChartData;
+		ChartData = new chart::ChartDB(gFrame);
+		ChartData->LoadBinary(global::OCPN::get().sys().data().chartlist_filename, XnewChartDirArray);
+
+		ViewPort vp;
+		gFrame->ChartsRefresh(-1, vp);
+	}
+
+	return bret;
+}
+
 void SendPluginMessage(wxString message_id, wxString message_body)
 {
 	s_ppim->SendMessageToAllPlugins(message_id, message_body);
@@ -1464,9 +1537,10 @@ void JumpToPosition(double lat, double lon, double scale)
 }
 
 /* API 1.9 */
-wxScrolledWindow *AddOptionsPage( OptionsParentPI parent, wxString title )
+wxScrolledWindow* AddOptionsPage(OptionsParentPI parent, wxString title)
 {
-	if (! g_pOptions) return NULL;
+	if (!g_pOptions)
+		return NULL;
 
 	size_t parentid;
 	switch (parent) {
@@ -1489,12 +1563,12 @@ wxScrolledWindow *AddOptionsPage( OptionsParentPI parent, wxString title )
 			parentid = g_pOptions->m_pagePlugins;
 			break;
 		default:
-			wxLogMessage( _T("Error in PluginManager::AddOptionsPage: Unknown parent") );
+			wxLogMessage(_T("Error in PluginManager::AddOptionsPage: Unknown parent"));
 			return NULL;
 			break;
 	}
 
-	return g_pOptions->AddPage( parentid, title );
+	return g_pOptions->AddPage(parentid, title);
 }
 
 bool DeleteOptionsPage(wxScrolledWindow* page)
@@ -1683,7 +1757,7 @@ void PlugInPlaySound(wxString& sound_file)
 }
 
 // API 1.10 Route and Waypoint Support
-//wxBitmap *FindSystemWaypointIcon( wxString& icon_name );
+// wxBitmap *FindSystemWaypointIcon( wxString& icon_name );
 
 // PlugInWaypoint implementation
 PlugIn_Waypoint::PlugIn_Waypoint()
@@ -1754,8 +1828,9 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 	if (pWayPointMan->find(pwaypoint->m_GUID) != NULL)
 		return false;
 
-	RoutePoint* pWP = new RoutePoint(Position(pwaypoint->m_lat, pwaypoint->m_lon), pwaypoint->m_IconName,
-									 pwaypoint->m_MarkName, pwaypoint->m_GUID);
+	RoutePoint* pWP
+		= new RoutePoint(Position(pwaypoint->m_lat, pwaypoint->m_lon), pwaypoint->m_IconName,
+						 pwaypoint->m_MarkName, pwaypoint->m_GUID);
 
 	pWP->m_bIsolatedMark = true; // This is an isolated mark
 
@@ -1948,8 +2023,8 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 		 pwpnode != ptrack->pWaypointList->end(); ++pwpnode) {
 		PlugIn_Waypoint* pwp = *pwpnode;
 
-		RoutePoint* pWP
-			= new RoutePoint(Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName, pwp->m_MarkName, pwp->m_GUID);
+		RoutePoint* pWP = new RoutePoint(Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName,
+										 pwp->m_MarkName, pwp->m_GUID);
 
 		pWP->m_MarkDescription = pwp->m_MarkDescription;
 		pWP->m_bShowName = false;
@@ -2075,18 +2150,20 @@ wxString opencpn_plugin::GetShortDescription()
 
 wxString opencpn_plugin::GetLongDescription()
 {
-	return _T("OpenCPN PlugIn Base Class\n\
-			PlugInManager created this base class");
+	return _T("OpenCPN PlugIn Base Class\nPlugInManager created this base class");
 }
 
-void opencpn_plugin::SetPositionFix(PlugIn_Position_Fix & WXUNUSED(pfix))
-{}
+void opencpn_plugin::SetPositionFix(PlugIn_Position_Fix& WXUNUSED(pfix))
+{
+}
 
-void opencpn_plugin::SetNMEASentence(wxString & WXUNUSED(sentence))
-{}
+void opencpn_plugin::SetNMEASentence(wxString& WXUNUSED(sentence))
+{
+}
 
-void opencpn_plugin::SetAISSentence(wxString & WXUNUSED(sentence))
-{}
+void opencpn_plugin::SetAISSentence(wxString& WXUNUSED(sentence))
+{
+}
 
 int opencpn_plugin::GetToolbarToolCount(void)
 {
@@ -2098,13 +2175,15 @@ int opencpn_plugin::GetToolboxPanelCount(void)
 	return 0;
 }
 
-void opencpn_plugin::SetupToolboxPanel(int WXUNUSED(page_sel), wxNotebook * WXUNUSED(pnotebook))
-{}
+void opencpn_plugin::SetupToolboxPanel(int WXUNUSED(page_sel), wxNotebook* WXUNUSED(pnotebook))
+{
+}
 
 void opencpn_plugin::OnCloseToolboxPanel(int WXUNUSED(page_sel), int WXUNUSED(ok_apply_cancel))
-{}
+{
+}
 
-void opencpn_plugin::ShowPreferencesDialog(wxWindow * WXUNUSED(parent))
+void opencpn_plugin::ShowPreferencesDialog(wxWindow* WXUNUSED(parent))
 {
 }
 
@@ -2247,6 +2326,15 @@ opencpn_plugin_110::~opencpn_plugin_110(void)
 }
 
 void opencpn_plugin_110::LateInit(void)
+{
+}
+
+//    Opencpn_Plugin_111 Implementation
+opencpn_plugin_111::opencpn_plugin_111(void* pmgr) : opencpn_plugin_110(pmgr)
+{
+}
+
+opencpn_plugin_111::~opencpn_plugin_111(void)
 {
 }
 

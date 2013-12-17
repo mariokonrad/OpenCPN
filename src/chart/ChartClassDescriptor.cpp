@@ -26,6 +26,7 @@
 namespace chart {
 
 ChartClassDescriptor::ChartClassDescriptor()
+	: m_descriptor_type(0)
 {}
 
 ChartClassDescriptor::ChartClassDescriptor(

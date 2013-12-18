@@ -59,7 +59,7 @@ private:
 	int read_next_line(FILE* fp, char linrec[LINELEN], int end_ok);
 	int skipnl(FILE* fp);
 	char* nojunk(char* line);
-	int slackcmp(char* a, char* b);
+	int slackcmp(const char* a, const char* b);
 
 	void free_nodes();
 	void free_epochs();

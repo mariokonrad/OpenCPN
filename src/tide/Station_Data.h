@@ -26,6 +26,8 @@
 
 #include <wx/defs.h>
 #include <wx/wxchar.h>
+#include <string>
+#include <vector>
 
 namespace tide {
 
@@ -35,10 +37,10 @@ public:
 	Station_Data();
 	~Station_Data();
 
-	char* station_name;
+	std::string station_name;
 	wxChar station_type; // T or C
-	double* amplitude;
-	double* epoch;
+	std::vector<double> amplitude;
+	std::vector<double> epoch;
 	double DATUM;
 	int meridian; // **UNUSED**
 	double zone_offset;

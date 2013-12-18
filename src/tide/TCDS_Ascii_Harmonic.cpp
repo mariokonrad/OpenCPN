@@ -365,7 +365,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry* pIDX)
 		//                 psd_station_name:      The Narrows, Midchannel, New York Harbor, New York
 		// Current
 		//                            as found in HARMONIC
-		if ((!slackcmp(psd->station_name, pIDX->IDX_reference_name))
+		if ((!slackcmp(psd->station_name.c_str(), pIDX->IDX_reference_name))
 			&& (toupper(pIDX->IDX_type) == psd->station_type)) {
 			pIDX->pref_sta_data = psd; // save for later
 			return TC_NO_ERROR;
@@ -402,13 +402,11 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry* pIDX)
 
 		psd = new Station_Data;
 
-		psd->amplitude = (double*)malloc(num_csts * sizeof(double));
-		psd->epoch = (double*)malloc(num_csts * sizeof(double));
-		psd->station_name = (char*)malloc(strlen(linrec) + 1);
-
-		char junk[80];
-		int a;
-		strcpy(psd->station_name, linrec);
+		psd->amplitude.clear();
+		psd->amplitude.resize(num_csts);
+		psd->epoch.clear();
+		psd->epoch.resize(num_csts);
+		psd->station_name = linrec;
 
 		// Establish Station Type
 		wxString caplin(linrec, wxConvUTF8);
@@ -424,6 +422,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry* pIDX)
 		psd->zone_offset = 0;
 
 		// Get tzfile, if present
+		char junk[80];
 		if (sscanf(nojunk(linrec), "%s %s", junk, psd->tzfile) < 2)
 			strcpy(psd->tzfile, "UTC0");
 
@@ -432,6 +431,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry* pIDX)
 		if (sscanf(nojunk(linrec), "%lf %s", &(psd->DATUM), psd->unit) < 2)
 			strcpy(psd->unit, "unknown");
 
+		int a;
 		if ((a = findunit(psd->unit)) == -1) {
 			// Nonsense....
 			//   strcpy (psd->units_abbrv, psd->unit);
@@ -556,7 +556,7 @@ char* TCDS_Ascii_Harmonic::nojunk(char* line)
 // prefix instead of the entire string.  The second argument is the
 // one that can be shorter. Second argument can contain '?' as wild
 // card character.
-int TCDS_Ascii_Harmonic::slackcmp(char* a, char* b)
+int TCDS_Ascii_Harmonic::slackcmp(const char* a, const char* b)
 {
 	int n = strlen(b);
 	if ((int)(strlen(a)) < n)

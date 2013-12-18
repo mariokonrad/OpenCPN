@@ -433,11 +433,12 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString& data_file_path)
 
 			Station_Data* psd = new Station_Data;
 
-			psd->amplitude = (double*)malloc(num_csts * sizeof(double));
-			psd->epoch = (double*)malloc(num_csts * sizeof(double));
-			psd->station_name = (char*)malloc(ONELINER_LENGTH);
+			psd->amplitude.clear();
+			psd->amplitude.resize(num_csts);
+			psd->epoch.clear();
+			psd->epoch.resize(num_csts);
 
-			strncpy(psd->station_name, ptiderec->header.name, IDX_entry::MAXNAMELEN);
+			psd->station_name = ptiderec->header.name;
 			psd->station_type = pIDX->IDX_type;
 
 			// Get meridian, which is seconds difference from UTC, not figuring DST, so that New
@@ -468,7 +469,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString& data_file_path)
 			// Get constituents
 			for (int a = 0; a < num_csts; a++) {
 				psd->amplitude[a] = ptiderec->amplitude[a];
-				psd->epoch[a] = ptiderec->epoch[a] * M_PI / 180.;
+				psd->epoch[a] = ptiderec->epoch[a] * M_PI / 180.0;
 			}
 
 			psd->DATUM = ptiderec->datum_offset;

@@ -22,31 +22,14 @@
  **************************************************************************/
 
 #include "Station_Data.h"
-#include <stdlib.h>
 
 namespace tide {
 
 Station_Data::Station_Data()
-	: station_name(NULL)
-	, amplitude(NULL)
-	, epoch(NULL)
 {}
 
 Station_Data::~Station_Data()
-{
-	if (station_name) {
-		::free(station_name);
-		station_name = NULL;
-	}
-	if (amplitude) {
-		::free(amplitude);
-		amplitude = NULL;
-	}
-	if (epoch) {
-		::free(epoch);
-		epoch = NULL;
-	}
-}
+{}
 
 }
 

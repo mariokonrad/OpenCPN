@@ -125,7 +125,7 @@ IDX_entry* TCDS_Ascii_Harmonic::GetIndexEntry(int n_index)
 
 TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 {
-	long int xref_start=0;
+	long int xref_start = 0;
 
 	m_abbreviation_array.clear();
 	m_IDX_array.clear();
@@ -134,29 +134,31 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 
 	if (IndexFileIO(IFF_OPEN, 0)) {
 		while (IndexFileIO(IFF_READ, 0)) {
-			if ((index_line_buffer[0] == '#') || (index_line_buffer[0] <= ' '));  // Skip comment lines
+			if ((index_line_buffer[0] == '#') || (index_line_buffer[0] <= ' '))
+				; // Skip comment lines
 			else if (!have_index && !xref_start) {
 				if (!strncmp(index_line_buffer, "XREF", 4))
 					xref_start = IndexFileIO(IFF_TELL, 0);
 			} else if (!have_index && !strncmp(index_line_buffer, "*END*", 5)) {
 				if (m_abbreviation_array.empty()) {
 					IndexFileIO(IFF_CLOSE, 0);
-					return(TC_INDEX_FILE_CORRUPT); // missing at least some data so no valid index
+					return (TC_INDEX_FILE_CORRUPT); // missing at least some data so no valid index
+				} else {
+					// We're done with abbreviation list (and no errors)
+					have_index = 1;
 				}
-				// We're done with abbreviation list (and no errors)
-				else have_index = 1;
 			} else if (!have_index && xref_start) {
-				wxString line( index_line_buffer, wxConvUTF8 );
+				wxString line(index_line_buffer, wxConvUTF8);
 
 				AbbrEntry entry;
 
 				wxStringTokenizer tkz(line, _T(" "));
 				wxString token = tkz.GetNextToken();
-				if(token.IsSameAs(_T("REGION"), FALSE))
+				if (token.IsSameAs(_T("REGION"), FALSE))
 					entry.type = REGION;
-				else if(token.IsSameAs(_T("COUNTRY"), FALSE))
+				else if (token.IsSameAs(_T("COUNTRY"), FALSE))
 					entry.type = COUNTRY;
-				else if(token.IsSameAs(_T("STATE"), FALSE))
+				else if (token.IsSameAs(_T("STATE"), FALSE))
 					entry.type = STATE;
 
 				token = tkz.GetNextToken();
@@ -167,17 +169,17 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 				m_abbreviation_array.push_back(entry);
 
 			} else if (have_index && (strchr("TtCcIUu", index_line_buffer[0]))) {
-				// Load index file data .
-				IDX_entry *pIDX = new IDX_entry;
+				// Load index file data.
+				IDX_entry* pIDX = new IDX_entry;
 				pIDX->source_data_type = IDX_entry::SOURCE_TYPE_ASCII_HARMONIC;
 				pIDX->pDataSource = NULL;
 
-				index_in_memory   = TRUE;
+				index_in_memory = TRUE;
 				pIDX->Valid15 = 0;
 
+				build_IDX_entry(pIDX);
 				m_IDX_array.push_back(pIDX);
 			}
-
 		}
 		if (index_in_memory)
 			IndexFileIO(IFF_CLOSE, 0); // All done with file
@@ -186,93 +188,84 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 	return TC_NO_ERROR;
 }
 
-// ----------------------------------
-//   Decode an index data line into an IDX_entry
-// ----------------------------------
-
-TC_Error_Code TCDS_Ascii_Harmonic::build_IDX_entry(IDX_entry *pIDX )
+// Decode an index data line into an IDX_entry
+TC_Error_Code TCDS_Ascii_Harmonic::build_IDX_entry(IDX_entry* pIDX)
 {
-	int TZHr, TZMin ;
+	int TZHr;
+	int TZMin;
+
 	char stz[80];
 
-	pIDX->pref_sta_data = NULL;                     // no reference data yet
-	pIDX->IDX_Useable = 1;                          // but assume data is OK
+	pIDX->pref_sta_data = NULL; // no reference data yet
+	pIDX->IDX_Useable = 1; // but assume data is OK
 
 	pIDX->IDX_tzname = NULL;
-	if (7 != sscanf( index_line_buffer, "%c%s%lf%lf%d:%d%*c%[^\r\n]",
-				&pIDX->IDX_type,&pIDX->IDX_zone[0],&pIDX->IDX_lon,&pIDX->IDX_lat,&TZHr,&TZMin,
-				&pIDX->IDX_station_name[0])) return(TC_INDEX_ENTRY_BAD);
+	if (7 != sscanf(index_line_buffer, "%c%s%lf%lf%d:%d%*c%[^\r\n]", &pIDX->IDX_type,
+					&pIDX->IDX_zone[0], &pIDX->IDX_lon, &pIDX->IDX_lat, &TZHr, &TZMin,
+					&pIDX->IDX_station_name[0]))
+		return (TC_INDEX_ENTRY_BAD);
 
-	pIDX->IDX_time_zone = TZHr*60 + TZMin;
+	pIDX->IDX_time_zone = TZHr * 60 + TZMin;
 
-	if (strchr("tcUu",index_line_buffer[0])) { // Substation so get second line of info
+	if (strchr("tcUu", index_line_buffer[0])) { // Substation so get second line of info
 		IndexFileIO(IFF_READ, 0);
 
-		if(index_line_buffer[0] == '^')                  // Opencpn special
-		{
+		if (index_line_buffer[0] == '^') { // Opencpn special
 			if (11 != sscanf(index_line_buffer, "%*c%d %f %f %d %f %f %d %d %d %d%*c%[^\r\n]",
-						&pIDX->IDX_ht_time_off, &pIDX->IDX_ht_mpy, &pIDX->IDX_ht_off,
-						&pIDX->IDX_lt_time_off, &pIDX->IDX_lt_mpy, &pIDX->IDX_lt_off,
-						&pIDX->IDX_sta_num, &pIDX->IDX_flood_dir, &pIDX->IDX_ebb_dir,
-						&pIDX->IDX_ref_file_num, pIDX->IDX_reference_name))
-				return(TC_INDEX_ENTRY_BAD);
+							 &pIDX->IDX_ht_time_off, &pIDX->IDX_ht_mpy, &pIDX->IDX_ht_off,
+							 &pIDX->IDX_lt_time_off, &pIDX->IDX_lt_mpy, &pIDX->IDX_lt_off,
+							 &pIDX->IDX_sta_num, &pIDX->IDX_flood_dir, &pIDX->IDX_ebb_dir,
+							 &pIDX->IDX_ref_file_num, pIDX->IDX_reference_name))
+				return (TC_INDEX_ENTRY_BAD);
 
-			if(abs(pIDX->IDX_ht_time_off) > 1000)           // useable?
+			if (abs(pIDX->IDX_ht_time_off) > 1000) // useable?
 				pIDX->IDX_Useable = 0;
 
-			if(abs(pIDX->IDX_flood_dir) > 360)           // useable?
+			if (abs(pIDX->IDX_flood_dir) > 360) // useable?
 				pIDX->IDX_Useable = 0;
-			if(abs(pIDX->IDX_ebb_dir) > 360)           // useable?
+			if (abs(pIDX->IDX_ebb_dir) > 360) // useable?
 				pIDX->IDX_Useable = 0;
 
-			//    Fix up the secondaries which are identical to masters
-			if(pIDX->IDX_ht_mpy == 0.0)
+			// Fix up the secondaries which are identical to masters
+			if (pIDX->IDX_ht_mpy == 0.0)
 				pIDX->IDX_ht_mpy = 1.0;
-			if(pIDX->IDX_lt_mpy == 0.0)
+			if (pIDX->IDX_lt_mpy == 0.0)
 				pIDX->IDX_lt_mpy = 1.0;
-
-		}
-		else
-		{
-			if (9 != sscanf(index_line_buffer, "%*c%d %f %f %d %f %f %d %d%*c%[^\r\n]",
-						&pIDX->IDX_ht_time_off, &pIDX->IDX_ht_mpy, &pIDX->IDX_ht_off,
-						&pIDX->IDX_lt_time_off, &pIDX->IDX_lt_mpy, &pIDX->IDX_lt_off,
-						&pIDX->IDX_sta_num, &pIDX->IDX_ref_file_num, pIDX->IDX_reference_name))
-			{
+		} else {
+			if (9
+				!= sscanf(index_line_buffer, "%*c%d %f %f %d %f %f %d %d%*c%[^\r\n]",
+						  &pIDX->IDX_ht_time_off, &pIDX->IDX_ht_mpy, &pIDX->IDX_ht_off,
+						  &pIDX->IDX_lt_time_off, &pIDX->IDX_lt_mpy, &pIDX->IDX_lt_off,
+						  &pIDX->IDX_sta_num, &pIDX->IDX_ref_file_num, pIDX->IDX_reference_name)) {
 				// Had an error so try alternate with timezone name before ref file number
 				if (10 != sscanf(index_line_buffer, "%*c%d %f %f %d %f %f %d %s %d%*c%[^\r\n]",
-							&pIDX->IDX_ht_time_off, &pIDX->IDX_ht_mpy, &pIDX->IDX_ht_off,
-							&pIDX->IDX_lt_time_off, &pIDX->IDX_lt_mpy, &pIDX->IDX_lt_off,
-							&pIDX->IDX_sta_num, stz, &pIDX->IDX_ref_file_num, pIDX->IDX_reference_name))
-					return(TC_INDEX_ENTRY_BAD);
+								 &pIDX->IDX_ht_time_off, &pIDX->IDX_ht_mpy, &pIDX->IDX_ht_off,
+								 &pIDX->IDX_lt_time_off, &pIDX->IDX_lt_mpy, &pIDX->IDX_lt_off,
+								 &pIDX->IDX_sta_num, stz, &pIDX->IDX_ref_file_num,
+								 pIDX->IDX_reference_name))
+					return (TC_INDEX_ENTRY_BAD);
 			}
 
-
-			if (NULL!=(pIDX->IDX_tzname = (char *)malloc(strlen(stz)+1)))
+			if (NULL != (pIDX->IDX_tzname = (char*)malloc(strlen(stz) + 1)))
 				strcpy(pIDX->IDX_tzname, stz);
-		}           // else
+		}
 
-
-		//  We only consider 1 reference file per index file
+		// We only consider 1 reference file per index file
 		pIDX->IDX_ref_file_num = 0;
 	} else {
 		// Reference stations have no offsets
 		pIDX->IDX_ht_time_off = pIDX->IDX_lt_time_off = 0;
-		pIDX->IDX_ht_mpy      = pIDX->IDX_lt_mpy = 1.0;
-		pIDX->IDX_ht_off      = pIDX->IDX_lt_off = 0.0;
-		pIDX->IDX_sta_num     = 0;
+		pIDX->IDX_ht_mpy = pIDX->IDX_lt_mpy = 1.0;
+		pIDX->IDX_ht_off = pIDX->IDX_lt_off = 0.0;
+		pIDX->IDX_sta_num = 0;
 		strcpy(pIDX->IDX_reference_name, pIDX->IDX_station_name);
-
 	}
 
-	if( pIDX->IDX_ht_time_off ||
-			pIDX->IDX_ht_off != 0.0 ||
-			pIDX->IDX_lt_off != 0.0 ||
-			pIDX->IDX_ht_mpy != 1.0 ||
-			pIDX->IDX_lt_mpy != 1.0)
+	if (pIDX->IDX_ht_time_off || pIDX->IDX_ht_off != 0.0 || pIDX->IDX_lt_off != 0.0
+		|| pIDX->IDX_ht_mpy != 1.0 || pIDX->IDX_lt_mpy != 1.0)
 		pIDX->have_offsets = 1;
 
-	pIDX->station_tz_offset = 0;            // ASCII Harmonic data is (always??) corrected to Ref Station TZ
+	pIDX->station_tz_offset = 0; // ASCII Harmonic data is (always??) corrected to Ref Station TZ
 
 	return TC_NO_ERROR;
 }
@@ -280,14 +273,14 @@ TC_Error_Code TCDS_Ascii_Harmonic::build_IDX_entry(IDX_entry *pIDX )
 // Load the Harmonic Constant Invariants
 TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString& data_file_path)
 {
-	FILE* fp;
 	char linrec[linelen];
 	char junk[80];
-	int a, b;
+	int a;
+	int b;
 
 	free_data();
 
-	fp = fopen(data_file_path.mb_str(), "r");
+	FILE* fp = fopen(data_file_path.mb_str(), "r");
 	if (NULL == fp)
 		return TC_FILE_NOT_FOUND;
 
@@ -508,7 +501,7 @@ long TCDS_Ascii_Harmonic::IndexFileIO(int func, long value)
 		case IFF_SEEK:
 			return (fseek(m_IndexFile, value, SEEK_SET));
 
-		// Read until EOF .
+		// Read until EOF.
 		case IFF_READ:
 			str = fgets(index_line_buffer, 1024, m_IndexFile);
 
@@ -563,17 +556,14 @@ char* TCDS_Ascii_Harmonic::nojunk(char* line)
 // card character.
 int TCDS_Ascii_Harmonic::slackcmp(char* a, char* b)
 {
-	int c;
-	int cmp;
-	int n;
-	n = strlen(b);
+	int n = strlen(b);
 	if ((int)(strlen(a)) < n)
 		return 1;
-	for (c = 0; c < n; c++) {
+	for (int c = 0; c < n; c++) {
 		if (b[c] == '?')
 			continue;
 
-		cmp = ((a[c] >= 'A' && a[c] <= 'Z') ? a[c] - 'A' + 'a' : a[c])
+		int cmp = ((a[c] >= 'A' && a[c] <= 'Z') ? a[c] - 'A' + 'a' : a[c])
 			  - ((b[c] >= 'A' && b[c] <= 'Z') ? b[c] - 'A' + 'a' : b[c]);
 		if (cmp)
 			return cmp;
@@ -583,23 +573,19 @@ int TCDS_Ascii_Harmonic::slackcmp(char* a, char* b)
 
 void TCDS_Ascii_Harmonic::free_nodes()
 {
-	int a;
 	if (num_csts && m_cst_nodes)
-		for (a = 0; a < num_csts; a++)
+		for (int a = 0; a < num_csts; a++)
 			free(m_cst_nodes[a]);
 	free(m_cst_nodes);
-
 	m_cst_nodes = NULL;
 }
 
 void TCDS_Ascii_Harmonic::free_epochs()
 {
-	int a;
 	if (num_csts && m_cst_epochs)
-		for (a = 0; a < num_csts; a++)
+		for (int a = 0; a < num_csts; a++)
 			free(m_cst_epochs[a]);
 	free(m_cst_epochs);
-
 	m_cst_epochs = NULL;
 }
 

@@ -191,7 +191,7 @@ double vLon;
 double initial_scale_ppm;
 bool bDBUpdateInProgress;
 ThumbWin* pthumbwin;
-TCMgr* ptcmgr;
+tide::TCMgr* ptcmgr;
 wxString g_csv_locn;
 wxString g_SENCPrefix;
 wxString g_UserPresLibData;
@@ -281,7 +281,7 @@ wxRect g_blink_rect;
 double g_PlanSpeed;
 wxDateTime g_StartTime;
 int g_StartTimeTZ;
-IDX_entry* gpIDX;
+tide::IDX_entry* gpIDX;
 int gpIDXn;
 long gStart_LMT_Offset;
 FILE* s_fpdebug;
@@ -5518,14 +5518,14 @@ void MainFrame::ResumeSockets(void)
 void MainFrame::LoadHarmonics()
 {
 	if(!ptcmgr) {
-		ptcmgr = new TCMgr;
+		ptcmgr = new tide::TCMgr;
 		ptcmgr->LoadDataSources(TideCurrentDataSet);
 		return ;
 	}
 
 	bool b_newdataset = false;
 
-	//      Test both ways
+	// Test both ways
 	wxArrayString test = ptcmgr->GetDataSet();
 	for(unsigned int i=0 ; i < test.size() ; i++) {
 		bool b_foundi = false;

@@ -59,8 +59,8 @@
 extern double g_PlanSpeed;
 extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
-extern IDX_entry* gpIDX;
-extern TCMgr* ptcmgr;
+extern tide::IDX_entry* gpIDX;
+extern tide::TCMgr* ptcmgr;
 extern long gStart_LMT_Offset;
 extern Config* pConfig;
 extern WayPointman* pWayPointMan;

@@ -24,8 +24,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TCMGR_H__
-#define __TCMGR_H__
+#ifndef __TIDE__TCMGR_H__
+#define __TIDE__TCMGR_H__
 
 #include <wx/arrstr.h>
 
@@ -36,46 +36,52 @@
 #include <vector>
 #include <cmath>
 
+namespace tide {
+
 class IDX_entry;
 
 class TCMgr
 {
-	public:
-		TCMgr();
-		~TCMgr();
+public:
+	TCMgr();
+	~TCMgr();
 
-		TC_Error_Code LoadDataSources(wxArrayString &sources);
+	TC_Error_Code LoadDataSources(wxArrayString& sources);
 
-		wxArrayString GetDataSet(void);
-		bool IsReady(void) const;
+	wxArrayString GetDataSet(void);
+	bool IsReady(void) const;
 
-		bool GetTideOrCurrent(time_t t, int idx, float &value, float& dir);
-		bool GetTideOrCurrent15(time_t t, int idx, float &tcvalue, float& dir, bool &bnew_val);
-		bool GetTideFlowSens(time_t t, int sch_step, int idx, float &tcvalue_now, float &tcvalue_prev, bool &w_t);
-		void GetHightOrLowTide(time_t t, int sch_step_1, int sch_step_2, float tide_val ,bool w_t , int idx, float &tcvalue, time_t &tctime);
+	bool GetTideOrCurrent(time_t t, int idx, float& value, float& dir);
+	bool GetTideOrCurrent15(time_t t, int idx, float& tcvalue, float& dir, bool& bnew_val);
+	bool GetTideFlowSens(time_t t, int sch_step, int idx, float& tcvalue_now, float& tcvalue_prev,
+						 bool& w_t);
+	void GetHightOrLowTide(time_t t, int sch_step_1, int sch_step_2, float tide_val, bool w_t,
+						   int idx, float& tcvalue, time_t& tctime);
 
-		int GetStationTimeOffset(IDX_entry *pIDX);
-		int GetNextBigEvent(time_t *tm, int idx);
+	int GetStationTimeOffset(IDX_entry* pIDX);
+	int GetNextBigEvent(time_t* tm, int idx);
 
-		const IDX_entry *GetIDX_entry(int index) const;
-		int Get_max_IDX() const;
-		int GetStationIDXbyName(const wxString & prefix, double xlat, double xlon) const;
-		int GetStationIDXbyNameType(const wxString & prefix, double xlat, double xlon, char type) const;
+	const IDX_entry* GetIDX_entry(int index) const;
+	int Get_max_IDX() const;
+	int GetStationIDXbyName(const wxString& prefix, double xlat, double xlon) const;
+	int GetStationIDXbyNameType(const wxString& prefix, double xlat, double xlon, char type) const;
 
-	private:
-		void PurgeData();
+private:
+	void PurgeData();
 
-		void LoadMRU(void);
-		void SaveMRU(void);
-		void AddMRU(Station_Data *psd);
-		void FreeMRU(void);
+	void LoadMRU(void);
+	void SaveMRU(void);
+	void AddMRU(Station_Data* psd);
+	void FreeMRU(void);
 
-		bool bTCMReady;
-		wxString pmru_file_name;
+	bool bTCMReady;
+	wxString pmru_file_name;
 
-		std::vector<TCDataSource *> m_source_array;
-		wxArrayString m_sourcefile_array;
-		std::vector<IDX_entry *> m_Combined_IDX_array;
+	std::vector<TCDataSource*> m_source_array;
+	wxArrayString m_sourcefile_array;
+	std::vector<IDX_entry*> m_Combined_IDX_array;
 };
+
+}
 
 #endif

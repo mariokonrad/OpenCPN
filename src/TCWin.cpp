@@ -40,9 +40,9 @@
 #include <wx/button.h>
 
 extern ColorScheme global_color_scheme;
-extern IDX_entry* gpIDX;
 extern int gpIDXn;
-extern TCMgr* ptcmgr;
+extern tide::IDX_entry* gpIDX;
+extern tide::TCMgr* ptcmgr;
 
 enum
 {
@@ -87,7 +87,7 @@ TCWin::TCWin(ChartCanvas* parent, int x, int y, void* pvIDX)
 
 	pParent = parent;
 
-	pIDX = (IDX_entry*)pvIDX;
+	pIDX = (tide::IDX_entry*)pvIDX;
 	gpIDXn++;
 
 	// Set up plot type
@@ -437,11 +437,11 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 			wxBeginBusyCursor();
 
 			// get tide flow sens ( flood or ebb ? )
-			ptcmgr->GetTideFlowSens(m_t_graphday_00_at_station, BACKWARD_ONE_HOUR_STEP,
+			ptcmgr->GetTideFlowSens(m_t_graphday_00_at_station, tide::BACKWARD_ONE_HOUR_STEP,
 									pIDX->IDX_rec_num, tcv[0], val, wt);
 
 			for (int i = 0; i < 26; i++) {
-				int tt = m_t_graphday_00_at_station + (i * FORWARD_ONE_HOUR_STEP);
+				int tt = m_t_graphday_00_at_station + (i * tide::FORWARD_ONE_HOUR_STEP);
 				ptcmgr->GetTideOrCurrent(tt, pIDX->IDX_rec_num, tcv[i], dir);
 				if (tcv[i] > tcmax)
 					tcmax = tcv[i];
@@ -452,8 +452,8 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 					if (!((tcv[i] > val) == wt)) { // if tide flow sens change
 						float tcvalue; // look backward for HW or LW
 						time_t tctime;
-						ptcmgr->GetHightOrLowTide(tt, BACKWARD_TEN_MINUTES_STEP,
-												  BACKWARD_ONE_MINUTES_STEP, tcv[i], wt,
+						ptcmgr->GetHightOrLowTide(tt, tide::BACKWARD_TEN_MINUTES_STEP,
+												  tide::BACKWARD_ONE_MINUTES_STEP, tcv[i], wt,
 												  pIDX->IDX_rec_num, tcvalue, tctime);
 
 						wxDateTime tcd; // write date
@@ -462,7 +462,7 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 						s.Printf(tcd.Format(_T("%H:%M  ")));
 						s1.Printf(_T("%05.2f "), tcvalue); // write value
 						s.Append(s1);
-						Station_Data* pmsd = pIDX->pref_sta_data; // write unit
+						tide::Station_Data* pmsd = pIDX->pref_sta_data; // write unit
 						if (pmsd)
 							s.Append(wxString(pmsd->units_abbrv, wxConvUTF8));
 						s.Append(_T("   "));
@@ -482,7 +482,7 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 					s.Printf(thx.Format(_T("%H:%M  ")));
 					s1.Printf(_T("%05.2f "), fabs(tcv[i])); // write value
 					s.Append(s1);
-					Station_Data* pmsd = pIDX->pref_sta_data; // write unit
+					tide::Station_Data* pmsd = pIDX->pref_sta_data; // write unit
 					if (pmsd)
 						s.Append(wxString(pmsd->units_abbrv, wxConvUTF8));
 					s1.Printf(_T("  %03.0f"), dir); // write direction
@@ -612,7 +612,7 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 		dc.GetTextExtent(sdate, &w, &h);
 		dc.DrawText(sdate, x / 2 - w / 2, y * 92 / 100);
 
-		Station_Data* pmsd = pIDX->pref_sta_data;
+		tide::Station_Data* pmsd = pIDX->pref_sta_data;
 		if (pmsd) {
 			dc.GetTextExtent(wxString(pmsd->units_conv, wxConvUTF8), &w, &h);
 			dc.DrawRotatedText(wxString(pmsd->units_conv, wxConvUTF8), 5,
@@ -707,7 +707,7 @@ void TCWin::OnTCWinPopupTimerEvent(wxTimerEvent& WXUNUSED(event))
 		p.Append(s);
 
 		// set unit
-		Station_Data* pmsd = pIDX->pref_sta_data;
+		tide::Station_Data* pmsd = pIDX->pref_sta_data;
 		if (pmsd)
 			p.Append(wxString(pmsd->units_abbrv, wxConvUTF8));
 

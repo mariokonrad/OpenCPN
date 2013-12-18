@@ -40,6 +40,7 @@
 #include <wx/datetime.h>
 #include <wx/log.h>
 
+namespace tide {
 
 #define USF_REMOVE 1
 #define USF_UPDATE 2
@@ -963,8 +964,8 @@ static void figure_multipliers(IDX_entry* pIDX, int year)
 }
 
 // This idiotic function is needed by the new tm2gmt.
-#define compare_int(a,b) (((int)(a))-((int)(b)))
-int compare_tm(struct tm *a, struct tm *b)
+#define compare_int(a, b) (((int)(a)) - ((int)(b)))
+int compare_tm(struct tm* a, struct tm* b)
 {
 	int temp;
 	// printf ("A is %d:%d:%d:%d:%d:%d   B is %d:%d:%d:%d:%d:%d\n",
@@ -1034,14 +1035,14 @@ static int yearoftimet(time_t t)
 }
 
 // Calculate time_t of the epoch.
-static void set_epoch(IDX_entry *pIDX, int year)
+static void set_epoch(IDX_entry* pIDX, int year)
 {
 	struct tm ht;
 
 	ht.tm_year = year - 1900;
 	ht.tm_sec = ht.tm_min = ht.tm_hour = ht.tm_mon = 0;
 	ht.tm_mday = 1;
-	pIDX->epoch = tm2gmt (&ht);
+	pIDX->epoch = tm2gmt(&ht);
 }
 
 // Re-initialize for a different year
@@ -1050,5 +1051,7 @@ static void happy_new_year(IDX_entry* pIDX, int new_year)
 	pIDX->epoch_year = new_year;
 	figure_multipliers(pIDX, new_year);
 	set_epoch(pIDX, new_year);
+}
+
 }
 

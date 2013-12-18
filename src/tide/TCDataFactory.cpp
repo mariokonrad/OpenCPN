@@ -23,49 +23,53 @@
 
 #include "TCDataFactory.h"
 
+namespace tide {
+
 TCDataFactory::TCDataFactory()
 {
-	//  Build the units array
-	known_units[0].name = (char *) malloc(strlen("feet") +1);
+	// Build the units array
+	known_units[0].name = (char*)malloc(strlen("feet") + 1);
 	strcpy(known_units[0].name, "feet");
-	known_units[0].abbrv = (char *) malloc(strlen("ft") +1);
+	known_units[0].abbrv = (char*)malloc(strlen("ft") + 1);
 	strcpy(known_units[0].abbrv, "ft");
 	known_units[0].type = LENGTH;
 	known_units[0].conv_factor = 0.3048;
 
-	known_units[1].name = (char *) malloc(strlen("meters") +1);
+	known_units[1].name = (char*)malloc(strlen("meters") + 1);
 	strcpy(known_units[1].name, "meters");
-	known_units[1].abbrv = (char *) malloc(strlen("m") +1);
+	known_units[1].abbrv = (char*)malloc(strlen("m") + 1);
 	strcpy(known_units[1].abbrv, "m");
 	known_units[1].type = LENGTH;
 	known_units[1].conv_factor = 1.0;
 
-	known_units[2].name = (char *) malloc(strlen("knots") +1);
+	known_units[2].name = (char*)malloc(strlen("knots") + 1);
 	strcpy(known_units[2].name, "knots");
-	known_units[2].abbrv = (char *) malloc(strlen("ky") +1);
+	known_units[2].abbrv = (char*)malloc(strlen("ky") + 1);
 	strcpy(known_units[2].abbrv, "kt");
 	known_units[2].type = VELOCITY;
 	known_units[2].conv_factor = 1.0;
 
-	known_units[3].name = (char *) malloc(strlen("knots^2") +1);
+	known_units[3].name = (char*)malloc(strlen("knots^2") + 1);
 	strcpy(known_units[3].name, "knots^2");
-	known_units[3].abbrv = (char *) malloc(strlen("kt^2") +1);
+	known_units[3].abbrv = (char*)malloc(strlen("kt^2") + 1);
 	strcpy(known_units[3].abbrv, "kt^2");
 	known_units[3].type = BOGUS;
 	known_units[3].conv_factor = 1.0;
 }
 
 TCDataFactory::~TCDataFactory()
-{}
+{
+}
 
 /// Find a unit; returns -1 if not found.
-int TCDataFactory::findunit(const char * unit)
+int TCDataFactory::findunit(const char* unit)
 {
-	for (int a=0; a<NUMUNITS; a++) {
-		if (!strcmp (unit, known_units[a].name) ||
-				!strcmp (unit, known_units[a].abbrv))
+	for (int a = 0; a < NUMUNITS; a++) {
+		if (!strcmp(unit, known_units[a].name) || !strcmp(unit, known_units[a].abbrv))
 			return a;
 	}
 	return -1;
+}
+
 }
 

@@ -29,7 +29,8 @@
 #include <wx/timer.h>
 #include <vector>
 
-class IDX_entry;
+namespace tide { class IDX_entry; }
+
 class ChartCanvas;
 class RolloverWin;
 class wxTimerEvent;
@@ -68,7 +69,7 @@ private:
 	int curs_y;
 	int m_plot_type;
 
-	IDX_entry* pIDX;
+	tide::IDX_entry* pIDX;
 	wxButton* OK_button;
 	wxButton* NX_button;
 	wxButton* PR_button;

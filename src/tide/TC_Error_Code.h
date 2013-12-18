@@ -21,8 +21,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TC_ERROR_CODE_H__
-#define __TC_ERROR_CODE_H__
+#ifndef __TIDE__TC_ERROR_CODE_H__
+#define __TIDE__TC_ERROR_CODE_H__
+
+namespace tide {
 
 enum TC_Error_Code
 {
@@ -35,5 +37,7 @@ enum TC_Error_Code
 	TC_MASTER_HARMONICS_NOT_FOUND,
 	TC_TCD_FILE_CORRUPT
 };
+
+}
 
 #endif

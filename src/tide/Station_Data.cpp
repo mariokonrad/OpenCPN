@@ -24,6 +24,8 @@
 #include "Station_Data.h"
 #include <stdlib.h>
 
+namespace tide {
+
 Station_Data::Station_Data()
 	: station_name(NULL)
 	, amplitude(NULL)
@@ -44,5 +46,7 @@ Station_Data::~Station_Data()
 		::free(epoch);
 		epoch = NULL;
 	}
+}
+
 }
 

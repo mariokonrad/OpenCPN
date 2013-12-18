@@ -21,45 +21,49 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TCDS_BINARY_HARMONIC_H__
-#define __TCDS_BINARY_HARMONIC_H__
+#ifndef __TIDE__TCDS_BINARY_HARMONIC_H__
+#define __TIDE__TCDS_BINARY_HARMONIC_H__
 
 #include <wx/string.h>
 
 #include <vector>
 
-#include "TCDataFactory.h"
-#include "Station_Data.h"
+#include <tide/TCDataFactory.h>
+#include <tide/Station_Data.h>
+
+namespace tide {
 
 class IDX_entry;
 
 class TCDS_Binary_Harmonic : public TCDataFactory
 {
-	public:
-		TCDS_Binary_Harmonic();
-		virtual ~TCDS_Binary_Harmonic();
+public:
+	TCDS_Binary_Harmonic();
+	virtual ~TCDS_Binary_Harmonic();
 
-		TC_Error_Code LoadData(const wxString &data_file_path);
-		virtual int GetMaxIndex(void) const;
-		IDX_entry *GetIndexEntry(int n_index);
-		TC_Error_Code LoadHarmonicData(IDX_entry *pIDX);
+	TC_Error_Code LoadData(const wxString& data_file_path);
+	virtual int GetMaxIndex(void) const;
+	IDX_entry* GetIndexEntry(int n_index);
+	TC_Error_Code LoadHarmonicData(IDX_entry* pIDX);
 
-	private:
-		std::vector<Station_Data> m_msd_array;
+private:
+	std::vector<Station_Data> m_msd_array;
 
-		wxString m_last_reference_not_found;
+	wxString m_last_reference_not_found;
 
-		std::vector<IDX_entry *> m_IDX_array;
+	std::vector<IDX_entry*> m_IDX_array;
 
-		int num_IDX;
-		int num_nodes;
-		int num_csts;
-		int num_epochs;
-		std::vector<double> m_cst_speeds;
-		double ** m_cst_nodes;
-		double ** m_cst_epochs;
-		double * m_work_buffer;
-		int m_first_year;
+	int num_IDX;
+	int num_nodes;
+	int num_csts;
+	int num_epochs;
+	std::vector<double> m_cst_speeds;
+	double** m_cst_nodes;
+	double** m_cst_epochs;
+	double* m_work_buffer;
+	int m_first_year;
 };
+
+}
 
 #endif

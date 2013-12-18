@@ -150,7 +150,7 @@ extern Config* pConfig;
 extern Select* pSelect;
 extern Routeman* g_pRouteMan;
 extern ThumbWin* pthumbwin;
-extern TCMgr* ptcmgr;
+extern tide::TCMgr* ptcmgr;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
 extern WayPointman* pWayPointMan;
@@ -161,7 +161,7 @@ extern MarkInfoImpl* pMarkInfoDialog;
 extern Track* g_pActiveTrack;
 extern bool g_bConfirmObjectDelete;
 
-extern IDX_entry* gpIDX;
+extern tide::IDX_entry* gpIDX;
 extern int gpIDXn;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern RoutePoint* pAnchorWatchPoint1;
@@ -5908,7 +5908,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				// co-located with its master.  We want to select the substation, so that
 				// the direction will be properly indicated on the graphic.
 				// So, we search the select list looking for IDX_type == 'c' (i.e substation)
-				IDX_entry* pIDX_best_candidate;
+				tide::IDX_entry* pIDX_best_candidate;
 
 				SelectItem* pFind = NULL;
 				SelectableItemList SelList = pSelectTC->FindSelectionList(
@@ -5917,13 +5917,13 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				// Default is first entry
 				SelectableItemList::iterator index = SelList.begin();
 				pFind = *index;
-				pIDX_best_candidate = (IDX_entry*)(pFind->m_pData1);
+				pIDX_best_candidate = (tide::IDX_entry*)(pFind->m_pData1);
 
 				if (SelList.size() > 1) {
 					++index;
 					while (index != SelList.end()) {
 						pFind = *index;
-						IDX_entry* pIDX_candidate = (IDX_entry*)(pFind->m_pData1);
+						tide::IDX_entry* pIDX_candidate = (tide::IDX_entry*)(pFind->m_pData1);
 						if (pIDX_candidate->IDX_type == 'c') {
 							pIDX_best_candidate = pIDX_candidate;
 							break;
@@ -5932,7 +5932,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					}
 				} else {
 					pFind = SelList.front();
-					pIDX_best_candidate = (IDX_entry*)(pFind->m_pData1);
+					pIDX_best_candidate = (tide::IDX_entry*)(pFind->m_pData1);
 				}
 
 				m_pIDXCandidate = pIDX_best_candidate;
@@ -5944,7 +5944,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				} else
 					seltype |= SelectItem::TYPE_CURRENTPOINT;
 			} else if (pFindTide) {
-				m_pIDXCandidate = (IDX_entry*)pFindTide->m_pData1;
+				m_pIDXCandidate = (tide::IDX_entry*)pFindTide->m_pData1;
 
 				if (0 == seltype) {
 					DrawTCWindow(x, y, (void*)pFindTide->m_pData1);
@@ -8370,7 +8370,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 		q_dc.SelectObject(wxNullBitmap);
 	}
 
-	//    And finally, blit the scratch dc onto the physical dc
+	// And finally, blit the scratch dc onto the physical dc
 	wxRegionIterator upd_final(rgn_blit);
 	while (upd_final) {
 		wxRect rect = upd_final.GetRect();
@@ -8378,7 +8378,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 		upd_final++;
 	}
 
-	//    Deselect the chart bitmap from the temp_dc, so that it will not be destroyed in the
+	// Deselect the chart bitmap from the temp_dc, so that it will not be destroyed in the
 	// temp_dc dtor
 	temp_dc.SelectObject(wxNullBitmap);
 	//    And for the scratch bitmap
@@ -8387,7 +8387,6 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	dc.DestroyClippingRegion();
 
 	PaintCleanup();
-	//      CALLGRIND_STOP_INSTRUMENTATION
 }
 
 void ChartCanvas::PaintCleanup()
@@ -9250,7 +9249,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 	double lon_last = 0.0;
 	double lat_last = 0.0;
 	for (int i = 1; i < ptcmgr->Get_max_IDX() + 1; i++) {
-		const IDX_entry* pIDX = ptcmgr->GetIDX_entry(i);
+		const tide::IDX_entry* pIDX = ptcmgr->GetIDX_entry(i);
 
 		char type = pIDX->IDX_type; // Entry "TCtcIUu" identifier
 		if ((type == 't') || (type == 'T')) { // only Tides
@@ -9307,14 +9306,14 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 							bool wt;
 							// define if flood or edd in the last ten minutes and verify if data
 							// are useable
-							if (ptcmgr->GetTideFlowSens(t_this_now, BACKWARD_TEN_MINUTES_STEP,
+							if (ptcmgr->GetTideFlowSens(t_this_now, tide::BACKWARD_TEN_MINUTES_STEP,
 														pIDX->IDX_rec_num, nowlev, val, wt)) {
 
 								// search forward the first HW or LW near "now" ( starting at
 								// "now" - ten minutes )
-								ptcmgr->GetHightOrLowTide(t_this_now + BACKWARD_TEN_MINUTES_STEP,
-														  FORWARD_TEN_MINUTES_STEP,
-														  FORWARD_ONE_MINUTES_STEP, val, wt,
+								ptcmgr->GetHightOrLowTide(t_this_now + tide::BACKWARD_TEN_MINUTES_STEP,
+														  tide::FORWARD_TEN_MINUTES_STEP,
+														  tide::FORWARD_ONE_MINUTES_STEP, val, wt,
 														  pIDX->IDX_rec_num, val, tctime);
 								if (wt) {
 									httime = tctime;
@@ -9327,13 +9326,13 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 
 								// then search opposite tide near "now"
 								if (tctime > t_this_now) // search backward
-									ptcmgr->GetHightOrLowTide(t_this_now, BACKWARD_TEN_MINUTES_STEP,
-															  BACKWARD_ONE_MINUTES_STEP, nowlev, wt,
+									ptcmgr->GetHightOrLowTide(t_this_now, tide::BACKWARD_TEN_MINUTES_STEP,
+															  tide::BACKWARD_ONE_MINUTES_STEP, nowlev, wt,
 															  pIDX->IDX_rec_num, val, tctime);
 								else
 									// or search forward
-									ptcmgr->GetHightOrLowTide(t_this_now, FORWARD_TEN_MINUTES_STEP,
-															  FORWARD_ONE_MINUTES_STEP, nowlev, wt,
+									ptcmgr->GetHightOrLowTide(t_this_now, tide::FORWARD_TEN_MINUTES_STEP,
+															  tide::FORWARD_ONE_MINUTES_STEP, nowlev, wt,
 															  pIDX->IDX_rec_num, val, tctime);
 								if (wt) {
 									httime = tctime;
@@ -9404,7 +9403,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 								// draw tide level text
 								wxString s;
 								s.Printf(_T("%3.1f"), nowlev);
-								Station_Data* pmsd = pIDX->pref_sta_data; // write unit
+								tide::Station_Data* pmsd = pIDX->pref_sta_data; // write unit
 								if (pmsd)
 									s.Append(wxString(pmsd->units_abbrv, wxConvUTF8));
 								int wx1;
@@ -9470,7 +9469,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 		pSelectTC->DeleteAllSelectableTypePoints(SelectItem::TYPE_CURRENTPOINT);
 
 	for (int i = 1; i < ptcmgr->Get_max_IDX() + 1; i++) {
-		const IDX_entry* pIDX = ptcmgr->GetIDX_entry(i);
+		const tide::IDX_entry* pIDX = ptcmgr->GetIDX_entry(i);
 		double lon = pIDX->IDX_lon;
 		double lat = pIDX->IDX_lat;
 

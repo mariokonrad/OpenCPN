@@ -57,6 +57,7 @@ namespace chart {
 	class ChartBase;
 	class ChartBaseBSB;
 }
+namespace tide { class IDX_entry; }
 
 class ocpnDC;
 class GSHHSChart;
@@ -64,11 +65,10 @@ class GSHHSChart;
 void ShowAISTargetQueryDialog(wxWindow *parent, int mmsi);
 int RestoreScreenBrightness(void);
 
+class TCWin;
 class EmbossData;
 class Undo;
 class Route;
-class TCWin;
-class IDX_entry;
 class RoutePoint;
 class SelectItem;
 class ocpnBitmap;
@@ -537,7 +537,7 @@ private:
 	int m_brightmod;
 
 	bool m_bzooming;
-	IDX_entry* m_pIDXCandidate;
+	tide::IDX_entry* m_pIDXCandidate;
 
 	glChartCanvas* m_glcc;
 	wxGLContext* m_pGLcontext;

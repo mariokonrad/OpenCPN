@@ -21,8 +21,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TIDE_TIME_H__
-#define __TIDE_TIME_H__
+#ifndef __TIDE__TIDE_TIME_H__
+#define __TIDE__TIDE_TIME_H__
+
+namespace tide {
 
 //constants for hight and low tide search
 enum
@@ -34,5 +36,7 @@ enum
 	BACKWARD_TEN_MINUTES_STEP =  -600,
 	BACKWARD_ONE_MINUTES_STEP =   -60
 };
+
+}
 
 #endif

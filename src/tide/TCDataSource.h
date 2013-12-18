@@ -21,12 +21,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TCDATASOURCE_H__
-#define __TCDATASOURCE_H__
+#ifndef __TIDE__TCDATASOURCE_H__
+#define __TIDE__TCDATASOURCE_H__
 
 #include <wx/string.h>
 
-#include "TC_Error_Code.h"
+#include <tide/TC_Error_Code.h>
+
+namespace tide {
 
 class IDX_entry;
 class TCDataFactory;
@@ -35,23 +37,24 @@ class TCDS_Binary_Harmonic;
 
 class TCDataSource
 {
-	public:
-		TCDataSource();
-		~TCDataSource();
+public:
+	TCDataSource();
+	~TCDataSource();
 
-		TC_Error_Code LoadData(const wxString & data_file_path);
+	TC_Error_Code LoadData(const wxString& data_file_path);
 
-		int GetMaxIndex(void);
-		IDX_entry *GetIndexEntry(int n_index);
-		TC_Error_Code LoadHarmonicData(IDX_entry * pIDX);
+	int GetMaxIndex(void);
+	IDX_entry* GetIndexEntry(int n_index);
+	TC_Error_Code LoadHarmonicData(IDX_entry* pIDX);
 
-	private:
-		wxString m_data_source_path;
+private:
+	wxString m_data_source_path;
 
-		TCDataFactory * m_pfactory;
-		TCDS_Ascii_Harmonic * pTCDS_Ascii_Harmonic;
-		TCDS_Binary_Harmonic * pTCDS_Binary_Harmonic;
-
+	TCDataFactory* m_pfactory;
+	TCDS_Ascii_Harmonic* pTCDS_Ascii_Harmonic;
+	TCDS_Binary_Harmonic* pTCDS_Binary_Harmonic;
 };
+
+}
 
 #endif

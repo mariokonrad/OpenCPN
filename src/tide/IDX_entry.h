@@ -21,11 +21,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __IDX_ENTRY_H__
-#define __IDX_ENTRY_H__
+#ifndef __TIDE__IDX_ENTRY_H__
+#define __TIDE__IDX_ENTRY_H__
 
 #include <vector>
 #include <ctime>
+
+namespace tide {
 
 class TCDataSource;
 class Station_Data;
@@ -95,5 +97,7 @@ class IDX_entry
 		time_t epoch;
 		int epoch_year;
 };
+
+}
 
 #endif

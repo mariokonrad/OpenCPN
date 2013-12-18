@@ -21,18 +21,20 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TCDS_ASCII_HARMONIC_H__
-#define __TCDS_ASCII_HARMONIC_H__
+#ifndef __TIDE__TCDS_ASCII_HARMONIC_H__
+#define __TIDE__TCDS_ASCII_HARMONIC_H__
 
 #include <wx/string.h>
 
 #include <vector>
 #include <cstdio>
 
-#include "TCDataFactory.h"
-#include "Station_Data.h"
+#include <tide/TCDataFactory.h>
+#include <tide/Station_Data.h>
 
-#define linelen 300
+namespace tide {
+
+#define LINELEN 300
 
 class IDX_entry;
 
@@ -54,7 +56,7 @@ private:
 	TC_Error_Code init_index_file();
 	TC_Error_Code build_IDX_entry(IDX_entry* pIDX);
 	TC_Error_Code LoadHarmonicConstants(const wxString& data_file_path);
-	int read_next_line(FILE* fp, char linrec[linelen], int end_ok);
+	int read_next_line(FILE* fp, char linrec[LINELEN], int end_ok);
 	int skipnl(FILE* fp);
 	char* nojunk(char* line);
 	int slackcmp(char* a, char* b);
@@ -83,5 +85,7 @@ private:
 	double* m_work_buffer;
 	int m_first_year;
 };
+
+}
 
 #endif

@@ -21,14 +21,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TCDATAFACTORY_H__
-#define __TCDATAFACTORY_H__
+#ifndef __TIDE__TCDATAFACTORY_H__
+#define __TIDE__TCDATAFACTORY_H__
 
+#include <tide/TC_Error_Code.h>
 #include <wx/string.h>
 
-#include "TC_Error_Code.h"
-
 #define NUMUNITS 4
+
+namespace tide {
 
 class IDX_entry;
 
@@ -36,37 +37,44 @@ enum { REGION = 1, COUNTRY = 2, STATE = 3 };
 
 class TCDataFactory
 {
+public:
+	enum unit_type {
+		LENGTH,
+		VELOCITY,
+		BOGUS
+	};
+
+	typedef struct
+	{
+		char* name;
+		char* abbrv;
+		unit_type type;
+		double conv_factor;
+	} unit;
+
+	class AbbrEntry
+	{
 	public:
-		enum unit_type { LENGTH, VELOCITY, BOGUS };
+		int type;
+		wxString short_s;
+		wxString long_s;
+	};
 
-		typedef struct {
-			char * name;
-			char * abbrv;
-			unit_type type;
-			double conv_factor;
-		} unit;
+public:
+	TCDataFactory();
+	virtual ~TCDataFactory();
 
-		class AbbrEntry
-		{
-			public:
-				int type;
-				wxString short_s;
-				wxString long_s;
-		};
+	virtual TC_Error_Code LoadData(const wxString& data_file_path) = 0;
 
-	public:
-		TCDataFactory();
-		virtual ~TCDataFactory();
+	virtual int GetMaxIndex(void) const = 0;
+	virtual IDX_entry* GetIndexEntry(int n_index) = 0;
 
-		virtual TC_Error_Code LoadData(const wxString & data_file_path) = 0;
+	int findunit(const char* unit);
+	unit known_units[NUMUNITS];
 
-		virtual int GetMaxIndex(void) const = 0;
-		virtual IDX_entry * GetIndexEntry(int n_index) = 0;
-
-		int findunit (const char *unit);
-		unit known_units[NUMUNITS];
-
-		wxString source_ident;
+	wxString source_ident;
 };
+
+}
 
 #endif

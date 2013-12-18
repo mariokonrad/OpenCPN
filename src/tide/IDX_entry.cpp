@@ -25,6 +25,8 @@
 
 #include <cstring>
 
+namespace tide {
+
 IDX_entry::IDX_entry()
 {
 	memset(this, 0, sizeof(IDX_entry));
@@ -32,5 +34,7 @@ IDX_entry::IDX_entry()
 
 IDX_entry::~IDX_entry()
 {
+}
+
 }
 

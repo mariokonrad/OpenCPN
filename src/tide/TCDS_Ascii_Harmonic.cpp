@@ -22,22 +22,24 @@
  **************************************************************************/
 
 #include "TCDS_Ascii_Harmonic.h"
-#include "IDX_entry.h"
+#include <tide/IDX_entry.h>
 
-#include <math.h>
+#include <MicrosoftCompatibility.h>
+
+#include <cmath>
 
 #include <wx/filename.h>
 #include <wx/tokenzr.h>
 
-#if !defined(M_PI)
-	#define M_PI 3.14159265365
-#endif
+namespace tide {
 
-#define IFF_OPEN  0
-#define IFF_CLOSE 1
-#define IFF_SEEK  2
-#define IFF_TELL  3
-#define IFF_READ  4
+enum {
+	IFF_OPEN  = 0,
+	IFF_CLOSE = 1,
+	IFF_SEEK  = 2,
+	IFF_TELL  = 3,
+	IFF_READ  = 4
+};
 
 typedef struct
 {
@@ -273,7 +275,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::build_IDX_entry(IDX_entry* pIDX)
 // Load the Harmonic Constant Invariants
 TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString& data_file_path)
 {
-	char linrec[linelen];
+	char linrec[LINELEN];
 	char junk[80];
 	int a;
 	int b;
@@ -381,7 +383,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry* pIDX)
 	m_last_reference_not_found.Clear();
 
 	// Find and load appropriate constituents
-	char linrec[linelen];
+	char linrec[LINELEN];
 	FILE* fp = fopen(m_harmfile_name.mb_str(), "r");
 
 	while (read_next_line(fp, linrec, 1)) {
@@ -514,10 +516,10 @@ long TCDS_Ascii_Harmonic::IndexFileIO(int func, long value)
 }
 
 // Read a line from the harmonics file, skipping comment lines
-int TCDS_Ascii_Harmonic::read_next_line(FILE* fp, char linrec[linelen], int end_ok)
+int TCDS_Ascii_Harmonic::read_next_line(FILE* fp, char linrec[LINELEN], int end_ok)
 {
 	do {
-		if (!fgets(linrec, linelen, fp)) {
+		if (!fgets(linrec, LINELEN, fp)) {
 			if (end_ok)
 				return 0;
 			else {
@@ -531,8 +533,8 @@ int TCDS_Ascii_Harmonic::read_next_line(FILE* fp, char linrec[linelen], int end_
 // Remove lingering carriage return, but do nothing else
 int TCDS_Ascii_Harmonic::skipnl(FILE* fp)
 {
-	char linrec[linelen];
-	if (NULL == fgets(linrec, linelen, fp))
+	char linrec[LINELEN];
+	if (NULL == fgets(linrec, LINELEN, fp))
 		return 0;
 	return 1;
 }
@@ -599,5 +601,7 @@ void TCDS_Ascii_Harmonic::free_data()
 {
 	free_nodes();
 	free_epochs();
+}
+
 }
 

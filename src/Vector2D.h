@@ -26,26 +26,34 @@
 
 class Vector2D
 {
-	public:
-		Vector2D();
-		Vector2D(double a, double b);
+public:
+	Vector2D();
+	Vector2D(double a, double b);
 
-		friend bool operator==(const Vector2D & a, const Vector2D & b);
-		friend bool operator!=(const Vector2D & a, const Vector2D & b);
-		friend Vector2D operator-(const Vector2D & a, const Vector2D & b);
-		friend Vector2D operator+(const Vector2D & a, const Vector2D & b);
-		friend Vector2D operator*(double t, const Vector2D & a);
-		friend Vector2D operator*(const Vector2D & a, double t);
+	double dot(const Vector2D& other) const;
+	double sqr() const;
+	double length() const;
 
-		union { double x; double lon; };
-		union { double y; double lat; };
+	friend bool operator==(const Vector2D& a, const Vector2D& b);
+	friend bool operator!=(const Vector2D& a, const Vector2D& b);
+	friend Vector2D operator-(const Vector2D& a, const Vector2D& b);
+	friend Vector2D operator+(const Vector2D& a, const Vector2D& b);
+	friend Vector2D operator*(double t, const Vector2D& a);
+	friend Vector2D operator*(const Vector2D& a, double t);
+	friend double operator*(const Vector2D& a, const Vector2D& b);
+
+	union
+	{
+		double x;
+		double lon;
+	};
+	union
+	{
+		double y;
+		double lat;
+	};
 };
 
-double vGetLengthOfNormal(Vector2D * a, Vector2D * b, Vector2D * n);
-double vDotProduct(Vector2D * v0, Vector2D * v1);
-Vector2D * vAddVectors(Vector2D * v0, Vector2D * v1, Vector2D * v);
-Vector2D * vSubtractVectors(Vector2D * v0, Vector2D * v1, Vector2D * v);
-double vVectorMagnitude(Vector2D * v0);
-double vVectorSquared(Vector2D * v0);
+double lengthOfNormal(const Vector2D& a, const Vector2D& b, Vector2D& n);
 
 #endif

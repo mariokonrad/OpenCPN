@@ -371,16 +371,14 @@ bool Routeman::UpdateProgress()
 		va.x = dist2 * sin(brg2 * M_PI / 180.0);
 		va.y = dist2 * cos(brg2 * M_PI / 180.0);
 
-		double sdelta = vGetLengthOfNormal(&va, &vb, &vn); // NM
+		double sdelta = lengthOfNormal(va, vb, vn); // NM
 		CurrentXTEToActivePoint = sdelta;
 
 		// Calculate the distance to the arrival line, which is perpendicular to the current
 		// route segment
 		// Taking advantage of the calculated normal from current position to route segment vn
-		Vector2D vToArriveNormal;
-		vSubtractVectors(&va, &vn, &vToArriveNormal);
-
-		CurrentRangeToActiveNormalCrossing = vVectorMagnitude(&vToArriveNormal);
+		Vector2D vToArriveNormal = va - vn;
+		CurrentRangeToActiveNormalCrossing = vToArriveNormal.length();
 
 		// Compute current segment course
 		// Using simple Mercater projection

@@ -394,7 +394,7 @@ bool Select::IsSegmentSelected(float a, float b, float c, float d, const Positio
 		vb.x = dp - cp;
 		vb.y = bp - ap;
 
-		double delta = vGetLengthOfNormal(&va, &vb, &vn);
+		double delta = lengthOfNormal(va, vb, vn);
 		if (fabs(delta) < (selectRadius * 1852 * 60))
 			return true;
 	}

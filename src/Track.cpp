@@ -687,7 +687,7 @@ double Track::GetXTE(double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon,
 	Vector2D a = p - v;
 	Vector2D b = w - v;
 
-	double t = vDotProduct(&a, &b) / lengthSquared;
+	double t = a.dot(b) / lengthSquared;
 
 	if (t < 0.0)
 		return _distance(p, v); // Beyond the 'v' end of the segment

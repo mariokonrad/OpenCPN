@@ -34,7 +34,6 @@ TriPrim::TriPrim()
 TriPrim::~TriPrim()
 {
 	free(p_vertex); // FIXME: replace traditional memory allocations
-	delete p_bbox;
 }
 
 }

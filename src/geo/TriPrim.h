@@ -26,8 +26,6 @@
 
 namespace geo {
 
-class BoundingBox;
-
 /// Used for describing/rendering tesselated polygons
 class TriPrim
 {
@@ -47,7 +45,7 @@ class TriPrim
 		Type type;
 		int nVert;
 		double * p_vertex; //  Pointer to vertex array, x,y,x,y.....
-		BoundingBox * p_bbox;
+		double minx, miny, maxx, maxy;
 		TriPrim * p_next; // chain link
 };
 

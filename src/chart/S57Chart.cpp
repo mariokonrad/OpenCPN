@@ -5450,7 +5450,11 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 
 		while (pTP) {
 			// Coarse test
-			if (pTP->p_bbox->PointInBox(lon, lat, 0)) {
+			geo::BoundingBox tp_box;
+			tp_box.SetMin(pTP->minx, pTP->miny);
+			tp_box.SetMax(pTP->maxx, pTP->maxy);
+
+			if (tp_box.PointInBox(lon, lat, 0)) {
 				double* p_vertex = pTP->p_vertex;
 
 				switch (pTP->type) {

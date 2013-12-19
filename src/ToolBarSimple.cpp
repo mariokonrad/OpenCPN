@@ -129,8 +129,8 @@ wxToolBarToolBase* ToolBarSimple::AddTool(int toolid, const wxString& label, con
 										  wxObject* data)
 {
 	InvalidateBestSize();
-	ToolBarTool* tool = (ToolBarTool*)InsertTool(GetToolsCount(), toolid, label, bitmap,
-												 bmpDisabled, kind, shortHelp, longHelp, data);
+	ToolBarTool* tool = static_cast<ToolBarTool*>(InsertTool(
+		GetToolsCount(), toolid, label, bitmap, bmpDisabled, kind, shortHelp, longHelp, data));
 	return tool;
 }
 
@@ -170,13 +170,13 @@ wxToolBarToolBase* ToolBarSimple::InsertTool(size_t pos, wxToolBarToolBase* tool
 
 bool ToolBarSimple::DoInsertTool(size_t WXUNUSED(pos), wxToolBarToolBase* toolBase)
 {
-	ToolBarTool* tool = (ToolBarTool*)toolBase;
+	ToolBarTool* tool = static_cast<ToolBarTool*>(toolBase);
 
 	// Check if the plugin is inserting same-named tools. Make sure they have different names,
 	// otherwise the style manager cannot differentiate between them.
 	if (tool->isPluginTool) {
 		for (unsigned int i = 0; i < GetToolsCount(); i++) {
-			if (tool->GetToolname() == ((ToolBarTool*)m_tools.Item(i)->GetData())->GetToolname()) {
+			if (tool->GetToolname() == static_cast<ToolBarTool*>(m_tools.Item(i)->GetData())->GetToolname()) {
 				tool->toolname << _T("1");
 			}
 		}
@@ -196,11 +196,11 @@ bool ToolBarSimple::DoInsertTool(size_t WXUNUSED(pos), wxToolBarToolBase* toolBa
 		// Calculate reasonable max size in case Layout() not called
 		if ((tool->m_x + tool->GetNormalBitmap().GetWidth() + m_style->GetLeftMargin())
 			> m_maxWidth)
-			m_maxWidth = (wxCoord)((tool->m_x + tool->GetWidth() + m_style->GetLeftMargin()));
+			m_maxWidth = static_cast<wxCoord>(tool->m_x + tool->GetWidth() + m_style->GetLeftMargin());
 
 		if ((tool->m_y + tool->GetNormalBitmap().GetHeight() + m_style->GetTopMargin())
 			> m_maxHeight)
-			m_maxHeight = (wxCoord)((tool->m_y + tool->GetHeight() + m_style->GetTopMargin()));
+			m_maxHeight = static_cast<wxCoord>(tool->m_y + tool->GetHeight() + m_style->GetTopMargin());
 	} else {
 		if (tool->IsControl()) {
 			tool->SetSize(tool->GetControl()->GetSize());
@@ -360,8 +360,8 @@ bool ToolBarSimple::Realize()
 					m_lastX = m_style->GetLeftMargin();
 					m_lastY += toolSize.y + m_style->GetTopMargin();
 				}
-				tool->m_x = (wxCoord)m_lastX;
-				tool->m_y = (wxCoord)m_lastY;
+				tool->m_x = static_cast<wxCoord>(m_lastX);
+				tool->m_y = static_cast<wxCoord>(m_lastY);
 
 				tool->trect = wxRect(tool->m_x, tool->m_y, toolSize.x, toolSize.y);
 				tool->trect.Inflate(m_style->GetToolSeparation() / 2, m_style->GetTopMargin());
@@ -377,8 +377,8 @@ bool ToolBarSimple::Realize()
 					m_lastX += toolSize.x + m_style->GetTopMargin();
 					m_lastY = m_style->GetTopMargin();
 				}
-				tool->m_x = (wxCoord)m_lastX;
-				tool->m_y = (wxCoord)m_lastY;
+				tool->m_x = static_cast<wxCoord>(m_lastX);
+				tool->m_y = static_cast<wxCoord>(m_lastY);
 
 				tool->trect = wxRect(tool->m_x, tool->m_y, toolSize.x, toolSize.y);
 				tool->trect.Inflate(m_style->GetToolSeparation() / 2, m_style->GetTopMargin());
@@ -387,12 +387,11 @@ bool ToolBarSimple::Realize()
 			}
 			m_currentRowsOrColumns++;
 		} else if (tool->IsControl()) {
-			tool->m_x = (wxCoord)(m_lastX);
-			tool->m_y = (wxCoord)(m_lastY - (m_style->GetTopMargin() / 2));
+			tool->m_x = static_cast<wxCoord>(m_lastX);
+			tool->m_y = static_cast<wxCoord>(m_lastY - (m_style->GetTopMargin() / 2));
 
 			tool->trect = wxRect(tool->m_x, tool->m_y, tool->GetWidth(), tool->GetHeight());
 			tool->trect.Inflate(m_style->GetToolSeparation() / 2, m_style->GetTopMargin());
-			;
 
 			wxSize s = tool->GetControl()->GetSize();
 			m_lastX += s.x + m_style->GetToolSeparation();
@@ -439,7 +438,7 @@ void ToolBarSimple::OnPaint(wxPaintEvent& WXUNUSED(event))
 
 	for (wxToolBarToolsList::iterator node = m_tools.begin(); node != m_tools.end(); ++node) {
 		wxToolBarToolBase* tool = *node;
-		ToolBarTool* tools = (ToolBarTool*)tool;
+		ToolBarTool* tools = static_cast<ToolBarTool*>(tool);
 		wxRect toolRect = tools->trect;
 
 		if (toolRect.Intersects(upRect)) {
@@ -448,8 +447,8 @@ void ToolBarSimple::OnPaint(wxPaintEvent& WXUNUSED(event))
 				DrawTool(dc, tool);
 			} else if (tool->IsControl()) {
 				if (tool->GetControl()->IsKindOf(CLASSINFO(wxStaticBitmap))) {
-					wxStaticBitmap* psbm = (wxStaticBitmap*)tool->GetControl();
-					ToolBarTool* toolsimp = (ToolBarTool*)tool;
+					wxStaticBitmap* psbm = static_cast<wxStaticBitmap*>(tool->GetControl());
+					ToolBarTool* toolsimp = static_cast<ToolBarTool*>(tool);
 					dc.DrawBitmap(psbm->GetBitmap(), toolsimp->m_x, toolsimp->m_y, false);
 				}
 			}
@@ -505,7 +504,7 @@ void ToolBarSimple::OnMouseEvent(wxMouseEvent& event)
 {
 	wxCoord x, y;
 	event.GetPosition(&x, &y);
-	ToolBarTool* tool = (ToolBarTool*)FindToolForPosition(x, y);
+	ToolBarTool* tool = static_cast<ToolBarTool*>(FindToolForPosition(x, y));
 	if (event.LeftDown()) {
 		CaptureMouse();
 	}
@@ -570,7 +569,7 @@ void ToolBarSimple::OnMouseEvent(wxMouseEvent& event)
 			OnMouseEnter(-1);
 		}
 
-		wxMouseEvent* pev = (wxMouseEvent*)event.Clone();
+		wxMouseEvent* pev = static_cast<wxMouseEvent*>(event.Clone());
 		GetParent()->GetEventHandler()->AddPendingEvent(*pev);
 		wxDELETE(pev);
 
@@ -595,7 +594,7 @@ void ToolBarSimple::OnMouseEvent(wxMouseEvent& event)
 			OnMouseEnter(m_currentTool);
 		}
 
-		wxMouseEvent* pev = (wxMouseEvent*)event.Clone();
+		wxMouseEvent* pev = static_cast<wxMouseEvent*>(event.Clone());
 		GetParent()->GetEventHandler()->AddPendingEvent(*pev);
 		wxDELETE(pev);
 
@@ -626,7 +625,7 @@ void ToolBarSimple::OnMouseEvent(wxMouseEvent& event)
 		}
 	}
 
-	wxMouseEvent* pev = (wxMouseEvent*)event.Clone();
+	wxMouseEvent* pev = static_cast<wxMouseEvent*>(event.Clone());
 	GetParent()->GetEventHandler()->AddPendingEvent(*pev);
 	wxDELETE(pev);
 	event.Skip();
@@ -647,7 +646,7 @@ void ToolBarSimple::DrawTool(wxToolBarToolBase* tool)
 
 void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 {
-	ToolBarTool* tool = (ToolBarTool*)toolBase;
+	ToolBarTool* tool = static_cast<ToolBarTool*>(toolBase);
 
 	PrepareDC(dc);
 
@@ -766,7 +765,7 @@ wxRect ToolBarSimple::GetToolRect(int tool_id)
 	wxRect rect;
 	wxToolBarToolBase* tool = FindById(tool_id);
 	if (tool) {
-		ToolBarTool* otool = (ToolBarTool*)tool;
+		ToolBarTool* otool = static_cast<ToolBarTool*>(tool);
 		if (otool)
 			rect = otool->trect;
 	}
@@ -785,7 +784,7 @@ void ToolBarSimple::DoEnableTool(wxToolBarToolBase* tool, bool WXUNUSED(enable))
 
 void ToolBarSimple::DoToggleTool(wxToolBarToolBase* tool, bool WXUNUSED(toggle))
 {
-	ToolBarTool* t = (ToolBarTool*)tool;
+	ToolBarTool* t = static_cast<ToolBarTool*>(tool);
 	t->bitmapOK = false;
 	DrawTool(tool);
 }
@@ -911,7 +910,7 @@ void ToolBarSimple::EnableTool(int id, bool enable)
 
 void ToolBarSimple::SetToolBitmaps(int id, wxBitmap* bmp, wxBitmap* bmpRollover)
 {
-	ToolBarTool* tool = (ToolBarTool*)FindById(id);
+	ToolBarTool* tool = static_cast<ToolBarTool*>(FindById(id));
 	if (tool) {
 		tool->pluginNormalIcon = bmp;
 		tool->pluginRolloverIcon = bmpRollover;
@@ -1060,10 +1059,10 @@ bool ToolBarSimple::OnLeftClick(int id, bool toggleDown)
 	event.SetEventObject(this);
 
 	// we use SetInt() to make wxCommandEvent::IsChecked() return toggleDown
-	event.SetInt((int)toggleDown);
+	event.SetInt(static_cast<int>(toggleDown));
 
 	// and SetExtraLong() for backwards compatibility
-	event.SetExtraLong((long)toggleDown);
+	event.SetExtraLong(static_cast<long>(toggleDown));
 
 	// Send events to this toolbar instead (and thence up the window hierarchy)
 	GetEventHandler()->ProcessEvent(event);
@@ -1079,7 +1078,8 @@ void ToolBarSimple::OnRightClick(int id, long WXUNUSED(x), long WXUNUSED(y))
 	event.SetInt(id);
 
 	HideTooltip();
-	((OCPNFloatingToolbarDialog*)GetParent())->toolbarConfigChanged = false;
+	OCPNFloatingToolbarDialog* parent = static_cast<OCPNFloatingToolbarDialog*>(GetParent());
+	parent->toolbarConfigChanged = false;
 	wxMenu* contextMenu = new wxMenu();
 	wxMenuItem* submenu
 		= contextMenu->AppendSubMenu(g_FloatingToolbarConfigMenu, _("Visible buttons"));
@@ -1089,7 +1089,7 @@ void ToolBarSimple::OnRightClick(int id, long WXUNUSED(x), long WXUNUSED(y))
 	contextMenu->Remove(submenu);
 	delete contextMenu;
 
-	if (((OCPNFloatingToolbarDialog*)GetParent())->toolbarConfigChanged)
+	if (parent->toolbarConfigChanged)
 		gFrame->GetEventHandler()->AddPendingEvent(event);
 }
 
@@ -1123,7 +1123,7 @@ void ToolBarSimple::SetToolNormalBitmapEx(wxToolBarToolBase* tool, const wxStrin
 
 		wxBitmap bmp = style->GetToolIcon(iconName, ocpnStyle::TOOLICON_NORMAL);
 		tool->SetNormalBitmap(bmp);
-		ToolBarTool* otool = (ToolBarTool*)tool;
+		ToolBarTool* otool = static_cast<ToolBarTool*>(tool);
 		if (otool)
 			otool->SetIconName(iconName);
 	}

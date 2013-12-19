@@ -32,18 +32,19 @@ BoundingBox::BoundingBox()
 	, m_maxx(0.0)
 	, m_maxy(0.0)
 	, m_validbbox(false)
-{}
+{
+}
 
-BoundingBox::BoundingBox(const BoundingBox & other)
+BoundingBox::BoundingBox(const BoundingBox& other)
 {
 	m_minx = other.m_minx;
 	m_miny = other.m_miny;
 	m_maxx = other.m_maxx;
 	m_maxy = other.m_maxy;
-	m_validbbox= other.m_validbbox;
+	m_validbbox = other.m_validbbox;
 }
 
-BoundingBox::BoundingBox(const wxPoint2DDouble & a)
+BoundingBox::BoundingBox(const wxPoint2DDouble& a)
 {
 	m_minx = a.m_x;
 	m_maxx = a.m_x;
@@ -67,13 +68,13 @@ BoundingBox::~BoundingBox()
 // This function checks if two bboxes intersect
 bool BoundingBox::And(BoundingBox *_bbox, double Marge)
 {
-	assert (m_validbbox == true);
-	assert (_bbox->GetValid());
+	assert(m_validbbox == true);
+	assert(_bbox->GetValid());
 	m_minx = wxMax(m_minx, _bbox->m_minx);
 	m_maxx = wxMin(m_maxx, _bbox->m_maxx);
 	m_miny = wxMax(m_miny, _bbox->m_miny);
 	m_maxy = wxMin(m_maxy, _bbox->m_maxy);
-	return (bool)
+	return static_cast<bool>
 		(
 		 ((m_minx - Marge) < (m_maxx + Marge)) &&
 		 ((m_miny - Marge) < (m_maxy + Marge))
@@ -91,9 +92,8 @@ void BoundingBox::Shrink(const double Marge)
 	m_maxy -= Marge;
 }
 
-
 // Expand the boundingbox with another boundingbox
-void BoundingBox::Expand(const BoundingBox &other)
+void BoundingBox::Expand(const BoundingBox& other)
 {
 	if (!m_validbbox) {
 		*this = other;
@@ -104,7 +104,6 @@ void BoundingBox::Expand(const BoundingBox &other)
 		m_maxy = wxMax(m_maxy, other.m_maxy);
 	}
 }
-
 
 // Expand the boundingbox with a point
 void BoundingBox::Expand(const wxPoint2DDouble& a_point)
@@ -122,7 +121,7 @@ void BoundingBox::Expand(const wxPoint2DDouble& a_point)
 }
 
 // Expand the boundingbox with a point
-void BoundingBox::Expand(double x,double y)
+void BoundingBox::Expand(double x, double y)
 {
 	if (!m_validbbox) {
 		m_minx = m_maxx = x;
@@ -137,7 +136,7 @@ void BoundingBox::Expand(double x,double y)
 }
 
 // Expand the boundingbox with two points
-void BoundingBox::Expand(const wxPoint2DDouble & a, const wxPoint2DDouble & b)
+void BoundingBox::Expand(const wxPoint2DDouble& a, const wxPoint2DDouble& b)
 {
 	Expand(a);
 	Expand(b);
@@ -162,24 +161,24 @@ void BoundingBox::EnLarge(const double marge)
 // If they do not intersect, two scenario's are possible:
 // other is outside this -> return _OUT
 // other is inside this -> return _IN
-BoundingBox::OVERLAP BoundingBox::Intersect(BoundingBox & other, double Marge) const
+BoundingBox::OVERLAP BoundingBox::Intersect(BoundingBox& other, double Marge) const
 {
-	assert (m_validbbox == true);
+	assert(m_validbbox == true);
 
 	// other boundingbox must exist
-	assert (&other);
+	assert(&other);
 
-	if (((m_minx - Marge) > (other.m_maxx + Marge)) ||
-			((m_maxx + Marge) < (other.m_minx - Marge)) ||
-			((m_maxy + Marge) < (other.m_miny - Marge)) ||
-			((m_miny - Marge) > (other.m_maxy + Marge)))
+	if (((m_minx - Marge) > (other.m_maxx + Marge))
+		|| ((m_maxx + Marge) < (other.m_minx - Marge))
+		|| ((m_maxy + Marge) < (other.m_miny - Marge))
+		|| ((m_miny - Marge) > (other.m_maxy + Marge)))
 		return _OUT;
 
 	// Check if other.bbox is inside this bbox
-	if ((m_minx <= other.m_minx) &&
-			(m_maxx >= other.m_maxx) &&
-			(m_maxy >= other.m_maxy) &&
-			(m_miny <= other.m_miny))
+	if ((m_minx <= other.m_minx)
+		&& (m_maxx >= other.m_maxx)
+		&& (m_maxy >= other.m_maxy)
+		&& (m_miny <= other.m_miny))
 		return _IN;
 
 	// Boundingboxes intersect
@@ -187,24 +186,22 @@ BoundingBox::OVERLAP BoundingBox::Intersect(BoundingBox & other, double Marge) c
 }
 
 // Checks if a line intersects the boundingbox
-bool BoundingBox::LineIntersect(const wxPoint2DDouble & begin, const wxPoint2DDouble & end) const
+bool BoundingBox::LineIntersect(const wxPoint2DDouble& begin, const wxPoint2DDouble& end) const
 {
-	assert (m_validbbox == true);
-
-	return (bool)
-		!(((begin.m_y > m_maxy) && (end.m_y > m_maxy)) ||
-				((begin.m_y < m_miny) && (end.m_y < m_miny)) ||
-				((begin.m_x > m_maxx) && (end.m_x > m_maxx)) ||
-				((begin.m_x < m_minx) && (end.m_x < m_minx)));
+	assert(m_validbbox == true);
+	return static_cast<bool>(!(((begin.m_y > m_maxy) && (end.m_y > m_maxy))
+							   || ((begin.m_y < m_miny) && (end.m_y < m_miny))
+							   || ((begin.m_x > m_maxx) && (end.m_x > m_maxx))
+							   || ((begin.m_x < m_minx) && (end.m_x < m_minx))));
 }
 
 // Is the given point in the boundingbox ??
 bool BoundingBox::PointInBox(double x, double y, double Marge) const
 {
-	assert (m_validbbox == true);
+	assert(m_validbbox == true);
 
-	if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
-			y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
+	if (x >= (m_minx - Marge) && x <= (m_maxx + Marge) && y >= (m_miny - Marge)
+		&& y <= (m_maxy + Marge))
 		return true;
 	return false;
 }
@@ -212,23 +209,23 @@ bool BoundingBox::PointInBox(double x, double y, double Marge) const
 //
 // Is the given point in the boundingbox ??
 //
-bool BoundingBox::PointInBox(const wxPoint2DDouble & a, double Marge) const
+bool BoundingBox::PointInBox(const wxPoint2DDouble& a, double Marge) const
 {
-	assert (m_validbbox == true);
+	assert(m_validbbox == true);
 
 	return PointInBox(a.m_x, a.m_y, Marge);
 }
 
 wxPoint2DDouble BoundingBox::GetMin() const
 {
-	assert (m_validbbox == true);
+	assert(m_validbbox == true);
 
 	return wxPoint2DDouble(m_minx, m_miny);
 }
 
 wxPoint2DDouble BoundingBox::GetMax() const
 {
-	assert (m_validbbox == true);
+	assert(m_validbbox == true);
 
 	return wxPoint2DDouble(m_maxx, m_maxy);
 }

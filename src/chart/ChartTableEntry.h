@@ -99,14 +99,19 @@ private:
 	int Scale;
 	time_t edition_date;
 	time_t file_date;
+
+	// ply table, data and number of entries
 	float* pPlyTable; // FIXME: use std::vector
 	int nPlyEntries;
+
 	int nAuxPlyEntries;
 	float** pAuxPlyTable; // FIXME: use std::vector
 	int* pAuxCntTable; // FIXME: use std::vector
+
 	float Skew;
 	int ProjectionType;
 	bool bValid;
+
 	int nNoCovrPlyEntries;
 	int* pNoCovrCntTable; // FIXME: use std::vector
 	float** pNoCovrPlyTable; // FIXME: use std::vector

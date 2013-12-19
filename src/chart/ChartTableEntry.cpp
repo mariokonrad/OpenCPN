@@ -440,7 +440,7 @@ void ChartTableEntry::read_17(wxInputStream & is)
 
 	// Transcribe the elements....
 	EntryOffset = cte.EntryOffset;
-	ChartType = cte.ChartType;
+	ChartType = static_cast<ChartTypeEnum>(cte.ChartType);
 	LatMax = cte.LatMax;
 	LatMin = cte.LatMin;
 	LonMax = cte.LonMax;
@@ -502,7 +502,7 @@ void ChartTableEntry::read_16(wxInputStream & is)
 
 	//    Transcribe the elements....
 	EntryOffset = cte.EntryOffset;
-	ChartType = cte.ChartType;
+	ChartType = static_cast<ChartTypeEnum>(cte.ChartType);
 	LatMax = cte.LatMax;
 	LatMin = cte.LatMin;
 	LonMax = cte.LonMax;
@@ -548,7 +548,7 @@ void ChartTableEntry::read_15(wxInputStream & is)
 
 	//    Transcribe the elements....
 	EntryOffset = cte.EntryOffset;
-	ChartType = cte.ChartType;
+	ChartType = static_cast<ChartTypeEnum>(cte.ChartType);
 	LatMax = cte.LatMax;
 	LatMin = cte.LatMin;
 	LonMax = cte.LonMax;
@@ -591,7 +591,7 @@ void ChartTableEntry::read_14(wxInputStream & is)
 
 	//    Transcribe the elements....
 	EntryOffset = cte.EntryOffset;
-	ChartType = cte.ChartType;
+	ChartType = static_cast<ChartTypeEnum>(cte.ChartType);
 	LatMax = cte.LatMax;
 	LatMin = cte.LatMin;
 	LonMax = cte.LonMax;
@@ -697,7 +697,7 @@ bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& 
 void ChartTableEntry::Clear()
 {
 	EntryOffset = 0;
-	ChartType = 0;
+	ChartType = CHART_TYPE_UNKNOWN;
 	LatMax = 0.0f;
 	LatMin = 0.0f;
 	LonMax = 0.0f;

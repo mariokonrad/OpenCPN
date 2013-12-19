@@ -27,6 +27,7 @@
 #include <vector>
 #include <wx/string.h>
 #include <string>
+#include <chart/ChartType.h>
 
 class wxInputStream;
 class wxOutputStream;
@@ -89,7 +90,7 @@ private:
 
 private:
 	int EntryOffset;
-	int ChartType; // FIXME: use enum
+	ChartTypeEnum ChartType;
 	float LatMax;
 	float LatMin;
 	float LonMax;

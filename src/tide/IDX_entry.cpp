@@ -23,13 +23,46 @@
 
 #include "IDX_entry.h"
 
-#include <cstring>
-
 namespace tide {
 
 IDX_entry::IDX_entry()
+	: source_data_type(SOURCE_TYPE_UNKNOWN)
+	, pDataSource(NULL)
+	, IDX_rec_num(0)
+	, IDX_type(0)
+	, IDX_lon(0.0)
+	, IDX_lat(0.0)
+	, IDX_ht_time_off(0)
+	, IDX_ht_mpy(0.0f)
+	, IDX_ht_off(0.0f)
+	, IDX_lt_time_off(0)
+	, IDX_lt_mpy(0.0f)
+	, IDX_lt_off(0.0f)
+	, IDX_sta_num(0)
+	, IDX_flood_dir(0)
+	, IDX_ebb_dir(0)
+	, IDX_Useable(0)
+	, Valid15(0)
+	, Value15(0.0f)
+	, Dir15(0.0f)
+	, Ret15(false)
+	, IDX_ref_file_num(0)
+	, IDX_ref_dbIndex(0)
+	, max_amplitude(0.0)
+	, have_offsets(0)
+	, station_tz_offset(0)
+	, IDX_time_zone(0)
+	, pref_sta_data(NULL)
+	, num_nodes(0)
+	, num_csts(0)
+	, num_epochs(0)
+	, m_cst_nodes(NULL)
+	, m_cst_epochs(NULL)
+	, m_work_buffer(NULL)
+	, first_year(0)
+	, epoch(0)
+	, epoch_year(0)
 {
-	memset(this, 0, sizeof(IDX_entry));
 }
 
 IDX_entry::~IDX_entry()

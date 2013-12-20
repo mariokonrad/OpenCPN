@@ -34,8 +34,6 @@
 
 namespace tide {
 
-#define LINELEN 300
-
 class IDX_entry;
 
 class TCDS_Ascii_Harmonic : public TCDataFactory
@@ -48,8 +46,6 @@ public:
 	virtual int GetMaxIndex(void) const;
 	virtual IDX_entry* GetIndexEntry(int n_index);
 	virtual TC_Error_Code LoadHarmonicData(IDX_entry* pIDX);
-
-	int pIDX_Ref;
 
 private:
 	class AbbrEntry
@@ -64,7 +60,7 @@ private:
 	TC_Error_Code init_index_file();
 	TC_Error_Code build_IDX_entry(IDX_entry* pIDX);
 	TC_Error_Code LoadHarmonicConstants(const wxString& data_file_path);
-	int read_next_line(FILE* fp, char linrec[LINELEN], int end_ok);
+	int read_next_line(FILE* fp, char* linrec, int end_ok);
 	int skipnl(FILE* fp);
 	char* nojunk(char* line);
 	int slackcmp(const char* a, const char* b);
@@ -81,7 +77,6 @@ private:
 
 	char index_line_buffer[1024];
 	FILE* m_IndexFile;
-	std::vector<AbbrEntry> m_abbreviation_array; // FIXME: what for? the container is filled and cleared, but not used
 	std::vector<IDX_entry*> m_IDX_array;
 
 	int num_nodes;

@@ -33,6 +33,8 @@
 
 namespace tide {
 
+#define LINELEN 300
+
 enum {
 	IFF_OPEN  = 0,
 	IFF_CLOSE = 1,
@@ -49,9 +51,10 @@ typedef struct
 } harmonic_file_entry;
 
 // Turn a time displacement of the form [-]HH:MM into the number of seconds.
-static int hhmm2seconds(char* hhmm)
+static int hhmm2seconds(const char* hhmm)
 {
-	int h, m;
+	int h;
+	int m;
 	char s;
 	if (sscanf(hhmm, "%d:%d", &h, &m) != 2)
 		return (0);
@@ -63,16 +66,13 @@ static int hhmm2seconds(char* hhmm)
 }
 
 TCDS_Ascii_Harmonic::TCDS_Ascii_Harmonic()
+	: m_IndexFile(NULL)
+	, num_nodes(0)
+	, num_csts(0)
+	, num_epochs(0)
+	, m_cst_nodes(NULL)
+	, m_cst_epochs(NULL)
 {
-	// Initialize member variables
-	m_IndexFile = NULL;
-
-	m_cst_nodes = NULL;
-	m_cst_epochs = NULL;
-
-	num_nodes = 0;
-	num_csts = 0;
-	num_epochs = 0;
 }
 
 TCDS_Ascii_Harmonic::~TCDS_Ascii_Harmonic()
@@ -129,63 +129,64 @@ TC_Error_Code TCDS_Ascii_Harmonic::init_index_file()
 {
 	long int xref_start = 0;
 
-	m_abbreviation_array.clear();
+	std::vector<AbbrEntry> abbreviation_array;
 	m_IDX_array.clear();
 	int have_index = 0;
 	int index_in_memory = 0;
 
-	if (IndexFileIO(IFF_OPEN, 0)) {
-		while (IndexFileIO(IFF_READ, 0)) {
-			if ((index_line_buffer[0] == '#') || (index_line_buffer[0] <= ' '))
-				; // Skip comment lines
-			else if (!have_index && !xref_start) {
-				if (!strncmp(index_line_buffer, "XREF", 4))
-					xref_start = IndexFileIO(IFF_TELL, 0);
-			} else if (!have_index && !strncmp(index_line_buffer, "*END*", 5)) {
-				if (m_abbreviation_array.empty()) {
-					IndexFileIO(IFF_CLOSE, 0);
-					return (TC_INDEX_FILE_CORRUPT); // missing at least some data so no valid index
-				} else {
-					// We're done with abbreviation list (and no errors)
-					have_index = 1;
-				}
-			} else if (!have_index && xref_start) {
-				wxString line(index_line_buffer, wxConvUTF8);
+	if (!IndexFileIO(IFF_OPEN, 0))
+		return TC_NO_ERROR;
 
-				AbbrEntry entry;
-
-				wxStringTokenizer tkz(line, _T(" "));
-				wxString token = tkz.GetNextToken();
-				if (token.IsSameAs(_T("REGION"), FALSE))
-					entry.type = REGION;
-				else if (token.IsSameAs(_T("COUNTRY"), FALSE))
-					entry.type = COUNTRY;
-				else if (token.IsSameAs(_T("STATE"), FALSE))
-					entry.type = STATE;
-
-				token = tkz.GetNextToken();
-				entry.short_s = token;
-
-				entry.long_s = line.Mid(tkz.GetPosition()).Strip();
-
-				m_abbreviation_array.push_back(entry);
-
-			} else if (have_index && (strchr("TtCcIUu", index_line_buffer[0]))) {
-				// Load index file data.
-				IDX_entry* pIDX = new IDX_entry;
-				pIDX->source_data_type = IDX_entry::SOURCE_TYPE_ASCII_HARMONIC;
-				pIDX->pDataSource = NULL;
-
-				index_in_memory = TRUE;
-				pIDX->Valid15 = 0;
-
-				build_IDX_entry(pIDX);
-				m_IDX_array.push_back(pIDX);
+	while (IndexFileIO(IFF_READ, 0)) {
+		if ((index_line_buffer[0] == '#') || (index_line_buffer[0] <= ' ')) {
+			// Skip comment lines
+		} else if (!have_index && !xref_start) {
+			if (!strncmp(index_line_buffer, "XREF", 4))
+				xref_start = IndexFileIO(IFF_TELL, 0);
+		} else if (!have_index && !strncmp(index_line_buffer, "*END*", 5)) {
+			if (abbreviation_array.empty()) {
+				IndexFileIO(IFF_CLOSE, 0);
+				return TC_INDEX_FILE_CORRUPT; // missing at least some data so no valid index
+			} else {
+				// We're done with abbreviation list (and no errors)
+				have_index = 1;
 			}
+		} else if (!have_index && xref_start) {
+			wxString line(index_line_buffer, wxConvUTF8);
+
+			AbbrEntry entry;
+
+			wxStringTokenizer tkz(line, _T(" "));
+			wxString token = tkz.GetNextToken();
+			if (token.IsSameAs(_T("REGION"), FALSE))
+				entry.type = REGION;
+			else if (token.IsSameAs(_T("COUNTRY"), FALSE))
+				entry.type = COUNTRY;
+			else if (token.IsSameAs(_T("STATE"), FALSE))
+				entry.type = STATE;
+
+			token = tkz.GetNextToken();
+			entry.short_s = token;
+
+			entry.long_s = line.Mid(tkz.GetPosition()).Strip();
+
+			abbreviation_array.push_back(entry);
+
+		} else if (have_index && (strchr("TtCcIUu", index_line_buffer[0]))) {
+			// Load index file data.
+			IDX_entry* pIDX = new IDX_entry;
+			pIDX->source_data_type = IDX_entry::SOURCE_TYPE_ASCII_HARMONIC;
+			pIDX->pDataSource = NULL;
+
+			index_in_memory = TRUE;
+			pIDX->Valid15 = 0;
+
+			build_IDX_entry(pIDX);
+			m_IDX_array.push_back(pIDX);
 		}
-		if (index_in_memory)
-			IndexFileIO(IFF_CLOSE, 0); // All done with file
 	}
+	if (index_in_memory)
+		IndexFileIO(IFF_CLOSE, 0); // All done with file
 
 	return TC_NO_ERROR;
 }
@@ -472,8 +473,6 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry* pIDX)
 // Low level Index file I/O
 long TCDS_Ascii_Harmonic::IndexFileIO(int func, long value)
 {
-	char* str;
-
 	switch (func) {
 		// Close either/both if open
 		case IFF_CLOSE:
@@ -499,9 +498,7 @@ long TCDS_Ascii_Harmonic::IndexFileIO(int func, long value)
 
 		// Read until EOF.
 		case IFF_READ:
-			str = fgets(index_line_buffer, 1024, m_IndexFile);
-
-			if (str != NULL)
+			if (fgets(index_line_buffer, sizeof(index_line_buffer), m_IndexFile) != NULL)
 				return 1;
 			else
 				return 0;
@@ -510,7 +507,7 @@ long TCDS_Ascii_Harmonic::IndexFileIO(int func, long value)
 }
 
 // Read a line from the harmonics file, skipping comment lines
-int TCDS_Ascii_Harmonic::read_next_line(FILE* fp, char linrec[LINELEN], int end_ok)
+int TCDS_Ascii_Harmonic::read_next_line(FILE* fp, char* linrec, int end_ok)
 {
 	do {
 		if (!fgets(linrec, LINELEN, fp)) {
@@ -536,8 +533,7 @@ int TCDS_Ascii_Harmonic::skipnl(FILE* fp)
 // Get rid of trailing garbage in buffer
 char* TCDS_Ascii_Harmonic::nojunk(char* line)
 {
-	char* a;
-	a = &(line[strlen(line)]);
+	char* a = &(line[strlen(line)]);
 	while (a > line)
 		if (*(a - 1) == '\n' || *(a - 1) == '\r' || *(a - 1) == ' ')
 			*(--a) = '\0';

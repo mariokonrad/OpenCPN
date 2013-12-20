@@ -42,6 +42,7 @@ public:
 	virtual TC_Error_Code LoadData(const wxString& data_file_path) = 0;
 	virtual int GetMaxIndex(void) const = 0;
 	virtual IDX_entry* GetIndexEntry(int n_index) = 0;
+	virtual TC_Error_Code LoadHarmonicData(IDX_entry* pIDX) = 0;
 
 protected:
 	enum unit_type {

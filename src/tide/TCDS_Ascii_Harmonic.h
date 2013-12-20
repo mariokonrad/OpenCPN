@@ -44,10 +44,10 @@ public:
 	TCDS_Ascii_Harmonic();
 	virtual ~TCDS_Ascii_Harmonic();
 
-	TC_Error_Code LoadData(const wxString& data_file_path);
+	virtual TC_Error_Code LoadData(const wxString& data_file_path);
 	virtual int GetMaxIndex(void) const;
-	IDX_entry* GetIndexEntry(int n_index);
-	TC_Error_Code LoadHarmonicData(IDX_entry* pIDX);
+	virtual IDX_entry* GetIndexEntry(int n_index);
+	virtual TC_Error_Code LoadHarmonicData(IDX_entry* pIDX);
 
 	int pIDX_Ref;
 

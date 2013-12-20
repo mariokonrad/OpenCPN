@@ -397,7 +397,7 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString& data_file_path)
 
 		pIDX->pref_sta_data = NULL; // no reference data yet
 		pIDX->IDX_Useable = 1; // but assume data is OK
-		pIDX->IDX_tzname = NULL;
+		pIDX->IDX_tzname.clear();
 
 		pIDX->IDX_lon = ptiderec->header.longitude;
 		pIDX->IDX_lat = ptiderec->header.latitude;

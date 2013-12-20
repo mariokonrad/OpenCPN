@@ -25,6 +25,7 @@
 #define __TIDE__IDX_ENTRY_H__
 
 #include <vector>
+#include <string>
 #include <ctime>
 
 namespace tide {
@@ -71,7 +72,7 @@ class IDX_entry
 		float Value15;
 		float Dir15;
 		bool Ret15;
-		char * IDX_tzname;                    // Timezone name
+		std::string IDX_tzname;                    // Timezone name
 		int IDX_ref_file_num;              // # of reference file where reference station is
 		char IDX_reference_name[MAXNAMELEN];// Name of reference station
 		int IDX_ref_dbIndex;               // tcd index of reference station

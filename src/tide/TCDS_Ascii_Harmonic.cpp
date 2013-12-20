@@ -202,7 +202,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::build_IDX_entry(IDX_entry* pIDX)
 	pIDX->pref_sta_data = NULL; // no reference data yet
 	pIDX->IDX_Useable = 1; // but assume data is OK
 
-	pIDX->IDX_tzname = NULL;
+	pIDX->IDX_tzname.clear();
 	if (7 != sscanf(index_line_buffer, "%c%s%lf%lf%d:%d%*c%[^\r\n]", &pIDX->IDX_type,
 					&pIDX->IDX_zone[0], &pIDX->IDX_lon, &pIDX->IDX_lat, &TZHr, &TZMin,
 					&pIDX->IDX_station_name[0]))
@@ -249,8 +249,7 @@ TC_Error_Code TCDS_Ascii_Harmonic::build_IDX_entry(IDX_entry* pIDX)
 					return (TC_INDEX_ENTRY_BAD);
 			}
 
-			if (NULL != (pIDX->IDX_tzname = (char*)malloc(strlen(stz) + 1)))
-				strcpy(pIDX->IDX_tzname, stz);
+			pIDX->IDX_tzname = stz;
 		}
 
 		// We only consider 1 reference file per index file

@@ -431,30 +431,24 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry* pIDX)
 		if (sscanf(nojunk(linrec), "%lf %s", &(psd->DATUM), psd->unit) < 2)
 			strcpy(psd->unit, "unknown");
 
-		int a;
-		if ((a = findunit(psd->unit)) == -1) {
-			// Nonsense....
-			//   strcpy (psd->units_abbrv, psd->unit);
-			//   strcpy (psd->units_conv, known_units[a].name);
-		}
+		int unit_index = findunit(psd->unit);
+		psd->have_BOGUS = (unit_index != -1) && (get_unit(unit_index).type == BOGUS);
 
-		psd->have_BOGUS = (findunit(psd->unit) != -1)
-						  && (known_units[findunit(psd->unit)].type == BOGUS);
-
-		int unit_c;
+		int unit_c = -1;
 		if (psd->have_BOGUS)
 			unit_c = findunit("knots");
 		else
 			unit_c = findunit(psd->unit);
 
 		if (unit_c != -1) {
-			strcpy(psd->units_conv, known_units[unit_c].name);
-			strcpy(psd->units_abbrv, known_units[unit_c].abbrv);
+			strcpy(psd->units_conv, get_unit(unit_c).name);
+			strcpy(psd->units_abbrv, get_unit(unit_c).abbrv);
 		}
 
 		// Get constituents
-		double loca, loce;
-		for (a = 0; a < num_csts; a++) {
+		double loca;
+		double loce;
+		for (int a = 0; a < num_csts; a++) {
 			read_next_line(fp, linrec, 0);
 			sscanf(linrec, "%s %lf %lf", junk, &loca, &loce);
 			psd->amplitude[a] = loca;

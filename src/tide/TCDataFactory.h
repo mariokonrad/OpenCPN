@@ -27,8 +27,6 @@
 #include <tide/TC_Error_Code.h>
 #include <wx/string.h>
 
-#define NUMUNITS 4
-
 namespace tide {
 
 class IDX_entry;
@@ -38,41 +36,35 @@ enum { REGION = 1, COUNTRY = 2, STATE = 3 };
 class TCDataFactory
 {
 public:
+	TCDataFactory();
+	virtual ~TCDataFactory();
+
+	virtual TC_Error_Code LoadData(const wxString& data_file_path) = 0;
+	virtual int GetMaxIndex(void) const = 0;
+	virtual IDX_entry* GetIndexEntry(int n_index) = 0;
+
+protected:
 	enum unit_type {
 		LENGTH,
 		VELOCITY,
 		BOGUS
 	};
 
-	typedef struct
+	struct UnitInfo
 	{
 		char* name;
 		char* abbrv;
 		unit_type type;
 		double conv_factor;
-	} unit;
-
-	class AbbrEntry
-	{
-	public:
-		int type;
-		wxString short_s;
-		wxString long_s;
 	};
 
-public:
-	TCDataFactory();
-	virtual ~TCDataFactory();
-
-	virtual TC_Error_Code LoadData(const wxString& data_file_path) = 0;
-
-	virtual int GetMaxIndex(void) const = 0;
-	virtual IDX_entry* GetIndexEntry(int n_index) = 0;
-
-	int findunit(const char* unit);
-	unit known_units[NUMUNITS];
+	int findunit(const char* unit) const;
+	const UnitInfo& get_unit(int) const;
 
 	wxString source_ident;
+
+private:
+	UnitInfo known_units[4];
 };
 
 }

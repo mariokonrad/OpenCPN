@@ -62,13 +62,21 @@ TCDataFactory::~TCDataFactory()
 }
 
 /// Find a unit; returns -1 if not found.
-int TCDataFactory::findunit(const char* unit)
+int TCDataFactory::findunit(const char* unit) const
 {
-	for (int a = 0; a < NUMUNITS; a++) {
+	for (int a = 0; a < sizeof(known_units) / sizeof(known_units[0]); ++a) {
 		if (!strcmp(unit, known_units[a].name) || !strcmp(unit, known_units[a].abbrv))
 			return a;
 	}
 	return -1;
+}
+
+/// Returns a reference to the unit information at the specified index.
+///
+/// @note This method does not check if the specified index is in range.
+const TCDataFactory::UnitInfo& TCDataFactory::get_unit(int index) const
+{
+	return known_units[index];
 }
 
 }

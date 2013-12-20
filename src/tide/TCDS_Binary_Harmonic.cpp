@@ -449,18 +449,18 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString& data_file_path)
 			// Get units
 			strncpy(psd->unit, get_level_units(ptiderec->level_units), 40);
 
-			psd->have_BOGUS = (findunit(psd->unit) != -1)
-							  && (known_units[findunit(psd->unit)].type == BOGUS);
+			int unit_index = findunit(psd->unit);
+			psd->have_BOGUS = (unit_index != -1) && (get_unit(unit_index).type == BOGUS);
 
-			int unit_c;
+			int unit_c = -1;
 			if (psd->have_BOGUS)
 				unit_c = findunit("knots");
 			else
 				unit_c = findunit(psd->unit);
 
 			if (unit_c != -1) {
-				strncpy(psd->units_conv, known_units[unit_c].name, sizeof(psd->units_conv) - 1);
-				strncpy(psd->units_abbrv, known_units[unit_c].abbrv, sizeof(psd->units_abbrv) - 1);
+				strncpy(psd->units_conv, get_unit(unit_c).name, sizeof(psd->units_conv) - 1);
+				strncpy(psd->units_abbrv, get_unit(unit_c).abbrv, sizeof(psd->units_abbrv) - 1);
 			} else {
 				strncpy(psd->units_conv, psd->unit, sizeof(psd->units_conv) - 1);
 				strncpy(psd->units_abbrv, psd->unit, sizeof(psd->units_abbrv) - 1);

@@ -52,6 +52,14 @@ public:
 	int pIDX_Ref;
 
 private:
+	class AbbrEntry
+	{
+	public:
+		int type;
+		wxString short_s;
+		wxString long_s;
+	};
+
 	long IndexFileIO(int func, long value);
 	TC_Error_Code init_index_file();
 	TC_Error_Code build_IDX_entry(IDX_entry* pIDX);
@@ -73,7 +81,7 @@ private:
 
 	char index_line_buffer[1024];
 	FILE* m_IndexFile;
-	std::vector<TCDataFactory::AbbrEntry> m_abbreviation_array; // FIXME: what for? the container is filled and cleared, but not used
+	std::vector<AbbrEntry> m_abbreviation_array; // FIXME: what for? the container is filled and cleared, but not used
 	std::vector<IDX_entry*> m_IDX_array;
 
 	int num_nodes;

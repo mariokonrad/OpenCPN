@@ -314,14 +314,11 @@ static void change_time_zone(const char* tz)
 }
 
 TCDS_Binary_Harmonic::TCDS_Binary_Harmonic()
+	: num_IDX(0)
+	, num_nodes(0)
+	, num_csts(0)
+	, num_epochs(0)
 {
-	m_cst_nodes = NULL;
-	m_cst_epochs = NULL;
-
-	num_IDX = 0;
-	num_nodes = 0;
-	num_csts = 0;
-	num_epochs = 0;
 }
 
 TCDS_Binary_Harmonic::~TCDS_Binary_Harmonic()
@@ -360,9 +357,8 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString& data_file_path)
 	m_first_year = hdr.start_year;
 	num_epochs = hdr.number_of_years;
 
-	m_cst_epochs = (double**)malloc(num_csts * sizeof(double*));
-	for (int i = 0; i < num_csts; i++)
-		m_cst_epochs[i] = (double*)malloc(num_epochs * sizeof(double));
+	m_cst_epochs.clear();
+	m_cst_epochs.resize(num_csts, std::vector<double>(num_epochs));
 
 	for (int i = 0; i < num_csts; i++) {
 		for (int year = 0; year < num_epochs; year++) {
@@ -374,9 +370,8 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString& data_file_path)
 	//  Node factors
 	num_nodes = hdr.number_of_years;
 
-	m_cst_nodes = (double**)malloc(num_csts * sizeof(double*));
-	for (int a = 0; a < num_csts; a++)
-		m_cst_nodes[a] = (double*)malloc(num_nodes * sizeof(double));
+	m_cst_nodes.clear();
+	m_cst_nodes.resize(num_csts, std::vector<double>(num_nodes));
 
 	for (int a = 0; a < num_csts; a++) {
 		for (int year = 0; year < num_nodes; year++)

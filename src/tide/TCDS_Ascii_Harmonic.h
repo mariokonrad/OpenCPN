@@ -83,8 +83,8 @@ private:
 	int num_csts;
 	int num_epochs;
 	std::vector<double> m_cst_speeds;
-	double** m_cst_nodes;
-	double** m_cst_epochs;
+	std::vector<std::vector<double> > m_cst_nodes;
+	std::vector<std::vector<double> > m_cst_epochs;
 	std::vector<double> m_work_buffer;
 	int m_first_year;
 };

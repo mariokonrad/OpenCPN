@@ -70,8 +70,6 @@ TCDS_Ascii_Harmonic::TCDS_Ascii_Harmonic()
 	, num_nodes(0)
 	, num_csts(0)
 	, num_epochs(0)
-	, m_cst_nodes(NULL)
-	, m_cst_epochs(NULL)
 {
 }
 
@@ -310,9 +308,8 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString& data_fi
 	read_next_line(fp, linrec, 0);
 	sscanf(linrec, "%d", &num_epochs);
 
-	m_cst_epochs = (double**)malloc(num_csts * sizeof(double*));
-	for (int i = 0; i < num_csts; i++)
-		m_cst_epochs[i] = (double*)malloc(num_epochs * sizeof(double));
+	m_cst_epochs.clear();
+	m_cst_epochs.resize(num_csts, std::vector<double>(num_epochs));
 
 	for (int i = 0; i < num_csts; i++) {
 		if (EOF == fscanf(fp, "%s", linrec))
@@ -333,9 +330,8 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString& data_fi
 	read_next_line(fp, linrec, 0);
 	sscanf(linrec, "%d", &num_nodes);
 
-	m_cst_nodes = (double**)malloc(num_csts * sizeof(double*));
-	for (int a = 0; a < num_csts; a++)
-		m_cst_nodes[a] = (double*)malloc(num_nodes * sizeof(double));
+	m_cst_nodes.clear();
+	m_cst_nodes.resize(num_csts, std::vector<double>(num_nodes));
 
 	for (int a = 0; a < num_csts; a++) {
 		fscanf(fp, "%s", linrec);
@@ -565,20 +561,14 @@ int TCDS_Ascii_Harmonic::slackcmp(const char* a, const char* b)
 
 void TCDS_Ascii_Harmonic::free_nodes()
 {
-	if (num_csts && m_cst_nodes)
-		for (int a = 0; a < num_csts; a++)
-			free(m_cst_nodes[a]);
-	free(m_cst_nodes);
-	m_cst_nodes = NULL;
+	std::vector<std::vector<double> > tmp;
+	m_cst_nodes.swap(tmp);
 }
 
 void TCDS_Ascii_Harmonic::free_epochs()
 {
-	if (num_csts && m_cst_epochs)
-		for (int a = 0; a < num_csts; a++)
-			free(m_cst_epochs[a]);
-	free(m_cst_epochs);
-	m_cst_epochs = NULL;
+	std::vector<std::vector<double> > tmp;
+	m_cst_epochs.swap(tmp);
 }
 
 int TCDS_Ascii_Harmonic::GetMaxIndex(void) const

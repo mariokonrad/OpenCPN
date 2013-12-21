@@ -290,15 +290,16 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString& data_fi
 	sscanf(linrec, "%d", &num_csts);
 
 	m_cst_speeds.clear();
-	m_cst_speeds.reserve(num_csts);
-	m_work_buffer = (double*)malloc(num_csts * sizeof(double));
+	m_cst_speeds.resize(num_csts);
+	m_work_buffer.clear();
+	m_work_buffer.resize(num_csts);
 
 	// Load constituent speeds
 	for (a = 0; a < num_csts; a++) {
 		read_next_line(fp, linrec, 0);
 		double value = 0.0;
 		sscanf(linrec, "%s %lf", junk, &value);
-		m_cst_speeds.push_back(value * M_PI / 648000); /* Convert to radians per second */
+		m_cst_speeds[a] = value * M_PI / 648000; // Convert to radians per second
 	}
 
 	// Get first year for nodes and epochs

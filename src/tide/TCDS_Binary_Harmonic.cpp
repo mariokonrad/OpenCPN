@@ -346,7 +346,8 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString& data_file_path)
 	num_csts = hdr.constituents;
 
 	// Allocate a working buffer
-	m_work_buffer = (double*)malloc(num_csts * sizeof(double));
+	m_work_buffer.clear();
+	m_work_buffer.resize(num_csts);
 
 	// Constituent speeds
 	m_cst_speeds.clear();

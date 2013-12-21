@@ -97,7 +97,7 @@ public:
 	std::vector<double> m_cst_speeds;
 	double** m_cst_nodes;
 	double** m_cst_epochs;
-	double* m_work_buffer;
+	std::vector<double> m_work_buffer;
 	int first_year;
 	time_t epoch;
 	int epoch_year;

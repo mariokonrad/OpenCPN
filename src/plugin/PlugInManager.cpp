@@ -196,72 +196,67 @@ bool PlugInManager::LoadAllPlugIns(const wxString& plugin_dir)
 		return false;
 	}
 
-	wxDir pi_dir(m_plugin_location);
+	wxArrayString file_list;
+	wxString plugin_file;
 
-	if (pi_dir.IsOpened()) {
-		wxString plugin_file;
-		bool b_more = pi_dir.GetFirst(&plugin_file, pispec);
-		while (b_more) {
-			wxString file_name = m_plugin_location + _T("/") + plugin_file;
+	wxDir::GetAllFiles(m_plugin_location, &file_list, pispec);
 
-			bool b_compat = CheckPluginCompatibility(file_name);
+	for (unsigned int i = 0; i < file_list.GetCount(); i++) {
+		wxString file_name = file_list[i];
 
-			if (!b_compat) {
-				wxString msg(_("    Incompatible PlugIn detected:"));
-				msg += file_name;
-				wxLogMessage(msg);
-			}
+		bool b_compat = CheckPluginCompatibility(file_name);
 
-			PlugInContainer* pic = NULL;
-			if (b_compat)
-				pic = LoadPlugIn(file_name);
-			if (pic) {
-				if (pic->m_pplugin) {
-					plugin_array.Add(pic);
-
-					//    The common name is available without initialization and startup of the
-					// PlugIn
-					pic->m_common_name = pic->m_pplugin->GetCommonName();
-
-					//    Check the config file to see if this PlugIn is user-enabled
-					wxString config_section = (_T ( "/PlugIns/" ));
-					config_section += pic->m_common_name;
-					pConfig->SetPath(config_section);
-					pConfig->Read(_T("bEnabled"), &pic->m_bEnabled);
-
-					if (pic->m_bEnabled) {
-						pic->m_cap_flag = pic->m_pplugin->Init();
-						pic->m_bInitState = true;
-					}
-
-					pic->m_short_description = pic->m_pplugin->GetShortDescription();
-					pic->m_long_description = pic->m_pplugin->GetLongDescription();
-					pic->m_version_major = pic->m_pplugin->GetPlugInVersionMajor();
-					pic->m_version_minor = pic->m_pplugin->GetPlugInVersionMinor();
-					pic->m_bitmap = pic->m_pplugin->GetPlugInBitmap();
-
-				} else {
-					// not loaded
-					wxString msg;
-					msg.Printf(_T("    PlugInManager: Unloading invalid PlugIn, API version %d "),
-							   pic->m_api_version);
-					wxLogMessage(msg);
-
-					pic->m_destroy_fn(pic->m_pplugin);
-
-					delete pic->m_plibrary; // This will unload the PlugIn
-					delete pic;
-				}
-			}
-
-			b_more = pi_dir.GetNext(&plugin_file);
+		if (!b_compat) {
+			wxString msg(_("    Incompatible PlugIn detected:"));
+			msg += file_name;
+			wxLogMessage(msg);
 		}
 
-		UpDateChartDataTypes();
+		PlugInContainer* pic = NULL;
+		if (b_compat)
+			pic = LoadPlugIn(file_name);
+		if (pic) {
+			if (pic->m_pplugin) {
+				plugin_array.Add(pic);
 
-		return true;
-	} else
-		return false;
+				// The common name is available without initialization and startup of the PlugIn
+				pic->m_common_name = pic->m_pplugin->GetCommonName();
+
+				//    Check the config file to see if this PlugIn is user-enabled
+				wxString config_section = (_T ( "/PlugIns/" ));
+				config_section += pic->m_common_name;
+				pConfig->SetPath(config_section);
+				pConfig->Read(_T("bEnabled"), &pic->m_bEnabled);
+
+				if (pic->m_bEnabled) {
+					pic->m_cap_flag = pic->m_pplugin->Init();
+					pic->m_bInitState = true;
+				}
+
+				pic->m_short_description = pic->m_pplugin->GetShortDescription();
+				pic->m_long_description = pic->m_pplugin->GetLongDescription();
+				pic->m_version_major = pic->m_pplugin->GetPlugInVersionMajor();
+				pic->m_version_minor = pic->m_pplugin->GetPlugInVersionMinor();
+				pic->m_bitmap = pic->m_pplugin->GetPlugInBitmap();
+
+			} else {
+				// not loaded
+				wxString msg;
+				msg.Printf(_T("    PlugInManager: Unloading invalid PlugIn, API version %d "),
+						   pic->m_api_version);
+				wxLogMessage(msg);
+
+				pic->m_destroy_fn(pic->m_pplugin);
+
+				delete pic->m_plibrary; // This will unload the PlugIn
+				delete pic;
+			}
+		}
+	}
+
+	UpDateChartDataTypes();
+
+	return true;
 }
 
 bool PlugInManager::CallLateInit(void)

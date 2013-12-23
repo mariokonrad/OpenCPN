@@ -5089,8 +5089,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("VTG")) {
 			if (m_NMEA0183.Parse()) {
 				global::Navigation& nav = global::OCPN::get().nav();
-				nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
-				nav.set_course_over_ground(m_NMEA0183.Vtg.TrackDegreesTrue);
+				if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots))
+					nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
+				if (!wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
+					nav.set_course_over_ground(m_NMEA0183.Vtg.TrackDegreesTrue);
 				if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots)
 					&& !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
 					global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);

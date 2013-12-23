@@ -418,7 +418,6 @@ class render_canvas_parms
 {
 	public:
 		render_canvas_parms(void);
-		render_canvas_parms(int x, int y, int width, int height, wxColour color);
 		~render_canvas_parms(void);
 
 		unsigned char * pix_buff;
@@ -434,6 +433,7 @@ class render_canvas_parms
 		int depth;
 		bool b_stagger;
 		int OGL_tex_name;
+		bool b_revrgb;
 };
 
 //----------------------------------------------------------------------------------

@@ -587,6 +587,11 @@ int PI_PLIBRenderAreaToDC(wxDC* pdc, PI_S57Obj* pObj, PlugIn_ViewPort* vp, wxRec
 	pb_spec.height = rect.height;
 	pb_spec.x = rect.x;
 	pb_spec.y = rect.y;
+#ifdef ocpnUSE_ocpnBitmap
+	pb_spec.b_revrgb = true;
+#else
+	pb_spec.b_revrgb = false;
+#endif
 
 	// Create and populate a compatible s57 Object
 	S57Obj cobj;

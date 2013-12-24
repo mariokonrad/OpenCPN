@@ -205,6 +205,7 @@ int OCPNMessageBox(
 		int y )
 {
 #ifdef __WXOSX__
+	long parent_style = 0;
 	if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->Hide();
 
@@ -213,6 +214,11 @@ int OCPNMessageBox(
 
 	if (stats)
 		stats->Hide();
+
+	if (parent) {
+		parent_style = parent->GetWindowStyle();
+		parent->SetWindowStyle(parent_style & !wxSTAY_ON_TOP);
+	}
 #endif
 
 	TimedMessageBox tbox(parent, message, caption, style, timeout_sec, wxPoint(x, y));
@@ -228,8 +234,10 @@ int OCPNMessageBox(
 	if (stats)
 		stats->Show();
 
-	if (parent)
+	if (parent) {
 		parent->Raise();
+		parent->SetWindowStyle(parent_style);
+	}
 #endif
 
 	return ret;

@@ -26,6 +26,8 @@
 #include <OCPNRegion.h>
 #include <MessageBox.h>
 #include <ViewPort.h>
+#include <PositionParser.h>
+#include <UserColors.h>
 #include <ocpn_pixel.h>
 #include <geo/GeoRef.h>
 #include <chart/s52s57.h>
@@ -334,14 +336,14 @@ void ChartPlugInWrapper::latlong_to_chartpix(double lat, double lon, double& pix
 
 /* API 1.11  adds some more common functions to avoid unnecessary code duplication */
 
-wxString toSDMM_PlugIn(int WXUNUSED(NEflag), double WXUNUSED(a), bool WXUNUSED(hi_precision))
+wxString toSDMM_PlugIn(int NEflag, double a, bool hi_precision)
 {
-	return _T("");
+	return toSDMM(NEflag, a, hi_precision);
 }
 
-wxColour GetBaseGlobalColor(wxString WXUNUSED(colorName))
+wxColour GetBaseGlobalColor(wxString colorName)
 {
-	return wxColour(255, 0, 0);
+	return GetGlobalColor(colorName);
 }
 
 int OCPNMessageBox_PlugIn(wxWindow* parent, const wxString& message, const wxString& caption,

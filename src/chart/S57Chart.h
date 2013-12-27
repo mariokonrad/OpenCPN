@@ -115,7 +115,7 @@ public:
 	virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
 
 	void SetFullExtent(Extent& ext);
-	bool GetChartExtent(Extent* pext);
+	bool GetChartExtent(Extent& ext) const;
 
 	void SetColorScheme(ColorScheme cs, bool bApplyImmediate = true);
 	virtual void UpdateLUPs(s57chart* pOwner);

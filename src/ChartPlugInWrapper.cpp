@@ -163,15 +163,15 @@ float* ChartPlugInWrapper::GetNoCOVRTableHead(int)
 	return 0;
 }
 
-bool ChartPlugInWrapper::GetChartExtent(chart::Extent* pext)
+bool ChartPlugInWrapper::GetChartExtent(chart::Extent& ext) const
 {
 	if (m_ppicb) {
 		ExtentPI xpi;
 		if (m_ppicb->GetChartExtent(&xpi)) {
-			pext->NLAT = xpi.NLAT;
-			pext->SLAT = xpi.SLAT;
-			pext->ELON = xpi.ELON;
-			pext->WLON = xpi.WLON;
+			ext.NLAT = xpi.NLAT;
+			ext.SLAT = xpi.SLAT;
+			ext.ELON = xpi.ELON;
+			ext.WLON = xpi.WLON;
 
 			return true;
 		} else

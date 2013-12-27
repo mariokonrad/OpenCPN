@@ -250,7 +250,7 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 	m_filename = fn.GetFullName();
 
 	Extent ext;
-	theChart.GetChartExtent(&ext);
+	theChart.GetChartExtent(ext);
 	LatMax = ext.NLAT;
 	LatMin = ext.SLAT;
 	LonMin = ext.WLON;
@@ -278,7 +278,7 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 		pPlyTable = new float[nPlyEntries * 2];
 		float* pfe = pPlyTable;
 		Extent fext;
-		theChart.GetChartExtent(&fext);
+		theChart.GetChartExtent(fext);
 
 		*pfe++ = fext.NLAT; // LatMax;
 		*pfe++ = fext.WLON; // LonMin;

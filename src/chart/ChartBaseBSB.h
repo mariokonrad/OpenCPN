@@ -120,7 +120,7 @@ public:
 
 	void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);
 
-	virtual bool GetChartExtent(Extent* pext);
+	virtual bool GetChartExtent(Extent& ext) const;
 
 	void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
 

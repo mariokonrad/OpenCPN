@@ -47,7 +47,7 @@ class ChartPlugInWrapper : public chart::ChartBase
 
 		double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
 		double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
-		virtual bool GetChartExtent(chart::Extent *pext);
+		virtual bool GetChartExtent(chart::Extent& ext) const;
 
 		virtual bool RenderRegionViewOnDC(
 				wxMemoryDC & dc,

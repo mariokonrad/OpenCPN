@@ -1119,10 +1119,10 @@ void s57chart::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
 	}
 }
 
-bool s57chart::GetChartExtent(Extent* pext)
+bool s57chart::GetChartExtent(Extent& ext) const
 {
 	if (m_bExtentSet) {
-		*pext = m_FullExtent;
+		ext = m_FullExtent;
 		return true;
 	}
 	return false;

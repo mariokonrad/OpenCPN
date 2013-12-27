@@ -571,12 +571,12 @@ void ChartBaseBSB::InvalidateLineCache(void)
 	}
 }
 
-bool ChartBaseBSB::GetChartExtent(Extent* pext)
+bool ChartBaseBSB::GetChartExtent(Extent& ext) const
 {
-	pext->NLAT = m_LatMax;
-	pext->SLAT = m_LatMin;
-	pext->ELON = m_LonMax;
-	pext->WLON = m_LonMin;
+	ext.NLAT = m_LatMax;
+	ext.SLAT = m_LatMin;
+	ext.ELON = m_LonMax;
+	ext.WLON = m_LonMin;
 
 	return true;
 }

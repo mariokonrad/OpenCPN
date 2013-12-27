@@ -87,12 +87,12 @@ bool ChartDummy::UpdateThumbData(double WXUNUSED(lat), double WXUNUSED(lon))
 	return FALSE;
 }
 
-bool ChartDummy::GetChartExtent(Extent *pext)
+bool ChartDummy::GetChartExtent(Extent& ext) const
 {
-	pext->NLAT = 80;
-	pext->SLAT = -80;
-	pext->ELON = 179;
-	pext->WLON = -179;
+	ext.NLAT = 80;
+	ext.SLAT = -80;
+	ext.ELON = 179;
+	ext.WLON = -179;
 
 	return true;
 }

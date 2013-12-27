@@ -38,9 +38,9 @@ public:
 	virtual ThumbData* GetThumbData(int tnx, int tny, float lat, float lon);
 	virtual ThumbData* GetThumbData();
 	virtual bool UpdateThumbData(double lat, double lon);
-	double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
-	double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
-	virtual bool GetChartExtent(Extent* pext);
+	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
+	virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
+	virtual bool GetChartExtent(Extent& ext) const;
 
 	virtual bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 									  const OCPNRegion& Region);

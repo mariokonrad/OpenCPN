@@ -49,9 +49,9 @@ public:
 	void Activate(void);
 	void Deactivate(void);
 
-	double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
-	double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
-	int GetNativeScale(void);
+	double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
+	double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
+	int GetNativeScale(void) const;
 
 	wxString GetPubDate();
 
@@ -112,7 +112,6 @@ private:
 
 	InitReturn CreateHeaderData();
 	cm93_dictionary* FindAndLoadDictFromDir(const wxString& dir);
-	void FillScaleArray(double lat, double lon);
 	int PrepareChartScale(const ViewPort& vpt, int cmscale);
 	int GetCMScaleFromVP(const ViewPort& vpt);
 	bool DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion& Region);
@@ -126,7 +125,6 @@ private:
 	chart::cm93manager* m_pcm93mgr;
 
 	cm93chart* m_pcm93chart_array[8];
-	bool m_bScale_Array[8];
 	cm93chart* m_pcm93chart_current;
 	int m_cmscale;
 

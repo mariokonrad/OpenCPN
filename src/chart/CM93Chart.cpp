@@ -915,7 +915,7 @@ void cm93chart::Unload_CM93_Cell(void)
 // If the min is too small, then the chart rendereding will be over-scaled, and accuracy suffers.
 // In some ways, this is subjective.....
 
-double cm93chart::GetNormalScaleMin(double /*canvas_scale_factor*/, bool /*b_allow_overzoom*/)
+double cm93chart::GetNormalScaleMin(double WXUNUSED(canvas_scale_factor), bool WXUNUSED(b_allow_overzoom)) const
 {
 	switch ( GetNativeScale() )
 	{
@@ -932,7 +932,7 @@ double cm93chart::GetNormalScaleMin(double /*canvas_scale_factor*/, bool /*b_all
 	return 1.0;
 }
 
-double cm93chart::GetNormalScaleMax(double /*canvas_scale_factor*/)
+double cm93chart::GetNormalScaleMax(double WXUNUSED(canvas_scale_factor)) const
 {
 	switch ( GetNativeScale() )
 	{

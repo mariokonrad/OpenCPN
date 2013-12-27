@@ -2249,35 +2249,36 @@ Position ChartCanvas::GetCanvasPixPoint(int x, int y)
 
 bool ChartCanvas::do_smooth_scrolling() const
 {
-	const global::GUI& gui = global::OCPN::get().gui();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 
-	return true
+	bool smooth = true
 		&& g_bsmoothpanzoom
 		&& g_bopengl
-		&& !gui.view().enable_zoom_to_cursor
+		&& !view.enable_zoom_to_cursor
 		;
-}
-
-bool ChartCanvas::ZoomCanvasIn(double factor)
-{
-	// FIXME: code duplication (almost), see ZoomCanvasOut
-
-	bool b_smooth = do_smooth_scrolling();
 
 	if (!VPoint.b_quilt) {
-		const chart::ChartBase* pc = Current_Ch;
-		if (!pc)
-			return false;
-		if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
-			b_smooth = false;
+		if (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
+			smooth = false;
 	} else {
-		b_smooth = true
+		smooth = true
 			&& g_bsmoothpanzoom
 			&& !m_pQuilt->IsQuiltVector()
-			&& !global::OCPN::get().gui().view().enable_zoom_to_cursor;
+			&& !view.enable_zoom_to_cursor;
 	}
 
-	if (b_smooth) {
+	return smooth;
+}
+
+bool ChartCanvas::ZoomCanvasIn(double zoom_factor)
+{
+	if (!VPoint.b_quilt) {
+		if (!Current_Ch) {
+			return false;
+		}
+	}
+
+	if (do_smooth_scrolling()) {
 		if (m_bzooming_out) {
 			// Interrupt?
 			m_zoom_timer.Stop();
@@ -2288,43 +2289,33 @@ bool ChartCanvas::ZoomCanvasIn(double factor)
 		if (!m_bzooming_in) {
 			// Set up some parameters
 			m_zoomt = 5;
-			m_zoom_target_factor = factor;
+			m_zoom_target_factor = zoom_factor;
 			m_zoom_current_factor = 1.0;
 			m_zoom_timer.Start(m_zoomt);
 			m_bzooming_in = true;
+			m_bzooming_out = false;
 		} else {
 			// Make sure timer is running, to recover from lost events
 			if (!m_zoom_timer.IsRunning())
 				m_zoom_timer.Start(m_zoomt);
 		}
 	} else {
-		DoZoomCanvasIn(factor);
+		DoZoomCanvasIn(zoom_factor);
 	}
 
 	extendedSectorLegs.clear();
 	return true;
 }
 
-bool ChartCanvas::ZoomCanvasOut(double factor)
+bool ChartCanvas::ZoomCanvasOut(double zoom_factor)
 {
-	// FIXME: code duplication (almost), see ZoomCanvasIn
-
-	bool b_smooth = do_smooth_scrolling();
-
 	if (!VPoint.b_quilt) {
-		const chart::ChartBase* pc = Current_Ch;
-		if (!pc)
+		if (!Current_Ch) {
 			return false;
-		if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
-			b_smooth = false;
-	} else {
-		b_smooth = true
-			&& g_bsmoothpanzoom
-			&& !m_pQuilt->IsQuiltVector()
-			&& !global::OCPN::get().gui().view().enable_zoom_to_cursor;
+		}
 	}
 
-	if (b_smooth) {
+	if (do_smooth_scrolling()) {
 		if (m_bzooming_in) {
 			// Interrupt?
 			m_zoom_timer.Stop();
@@ -2335,9 +2326,10 @@ bool ChartCanvas::ZoomCanvasOut(double factor)
 		if (!m_bzooming_out) {
 			// Set up some parameters
 			m_zoomt = 5;
-			m_zoom_target_factor = factor;
+			m_zoom_target_factor = zoom_factor;
 			m_zoom_current_factor = 1.0;
 			m_zoom_timer.Start(m_zoomt);
+			m_bzooming_in = false;
 			m_bzooming_out = true;
 		} else {
 			// Make sure timer is running, to recover from lost events
@@ -2346,7 +2338,7 @@ bool ChartCanvas::ZoomCanvasOut(double factor)
 		}
 
 	} else {
-		DoZoomCanvasOut(factor);
+		DoZoomCanvasOut(zoom_factor);
 	}
 
 	extendedSectorLegs.clear();
@@ -2359,7 +2351,7 @@ void ChartCanvas::OnZoomTimerEvent(wxTimerEvent&)
 		if (m_zoom_current_factor < m_zoom_target_factor) {
 			DoZoomCanvasIn(1.05);
 			m_zoom_current_factor *= 1.05;
-			m_zoom_timer.Start(m_zoomt); //, true);
+			m_zoom_timer.Start(m_zoomt);
 		} else {
 			m_bzooming_in = false;
 		}
@@ -2367,12 +2359,14 @@ void ChartCanvas::OnZoomTimerEvent(wxTimerEvent&)
 		if (m_zoom_current_factor < m_zoom_target_factor) {
 			DoZoomCanvasOut(1.05);
 			m_zoom_current_factor *= 1.05;
-			m_zoom_timer.Start(m_zoomt); //, true);
-		} else
+			m_zoom_timer.Start(m_zoomt);
+		} else {
 			m_bzooming_out = false;
+		}
 
-		if (m_zoom_current_factor >= m_zoom_target_factor)
+		if (m_zoom_current_factor >= m_zoom_target_factor) {
 			m_bzooming_out = false;
+		}
 	} else if (m_bzooming_out && m_bzooming_in) {
 		// incoherent, should never happen
 		m_zoom_timer.Stop();
@@ -2381,7 +2375,7 @@ void ChartCanvas::OnZoomTimerEvent(wxTimerEvent&)
 	}
 }
 
-bool ChartCanvas::DoZoomCanvasIn(double factor)
+bool ChartCanvas::DoZoomCanvasIn(double zoom_factor)
 {
 	// Cannot allow Yield() re-entrancy here
 	if (m_bzooming)
@@ -2390,14 +2384,10 @@ bool ChartCanvas::DoZoomCanvasIn(double factor)
 
 	bool b_do_zoom = true;
 
-	double zoom_factor = factor;
-
-	double min_allowed_scale = 50.0; // meters per meter
-
 	using namespace chart;
 
 	double proposed_scale_onscreen = GetCanvasScaleFactor() / (GetVPScale() * zoom_factor);
-	ChartBase* pc = NULL;
+	const ChartBase* pc = NULL;
 
 	if (!VPoint.b_quilt) {
 		pc = Current_Ch;
@@ -2413,6 +2403,7 @@ bool ChartCanvas::DoZoomCanvasIn(double factor)
 	}
 
 	if (pc) {
+		double min_allowed_scale = 50.0; // meters per meter
 		min_allowed_scale = pc->GetNormalScaleMin(
 			GetCanvasScaleFactor(), global::OCPN::get().gui().view().allow_overzoom_x);
 
@@ -2421,7 +2412,7 @@ bool ChartCanvas::DoZoomCanvasIn(double factor)
 
 		proposed_scale_onscreen = GetCanvasScaleFactor() / new_scale_ppm;
 
-		//  Query the chart to determine the appropriate zoom range
+		// Query the chart to determine the appropriate zoom range
 		if (proposed_scale_onscreen < min_allowed_scale) {
 			if (min_allowed_scale == GetCanvasScaleFactor() / (GetVPScale()))
 				b_do_zoom = false;
@@ -2436,12 +2427,12 @@ bool ChartCanvas::DoZoomCanvasIn(double factor)
 	}
 
 	m_bzooming = false;
-
 	return true;
 }
 
 bool ChartCanvas::DoZoomCanvasOut(double zoom_factor)
 {
+	// Cannot allow Yield() re-entrancy here
 	if (m_bzooming)
 		return false;
 	m_bzooming = true;
@@ -2451,11 +2442,12 @@ bool ChartCanvas::DoZoomCanvasOut(double zoom_factor)
 	using namespace chart;
 
 	double proposed_scale_onscreen = GetCanvasScaleFactor() / (GetVPScale() / zoom_factor);
-	ChartBase* pc = NULL;
+	const ChartBase* pc = NULL;
 
 	bool b_smallest = false;
 
-	if (!VPoint.b_quilt) { // not quilted
+	if (!VPoint.b_quilt) {
+		// not quilted
 		pc = Current_Ch;
 		double target_scale_ppm = GetVPScale() / zoom_factor;
 		double new_scale_ppm = target_scale_ppm;
@@ -2477,7 +2469,6 @@ bool ChartCanvas::DoZoomCanvasOut(double zoom_factor)
 				proposed_scale_onscreen = wxMin(proposed_scale_onscreen, max_allowed_scale);
 			}
 		}
-
 	} else {
 		int new_db_index = m_pQuilt->AdjustRefOnZoomOut(proposed_scale_onscreen);
 		if (new_db_index >= 0)
@@ -2497,7 +2488,8 @@ bool ChartCanvas::DoZoomCanvasOut(double zoom_factor)
 				= wxMin(proposed_scale_onscreen, GetCanvasScaleFactor() / m_absolute_min_scale_ppm);
 	}
 
-	if (!pc) { // no chart, so set a minimum scale
+	if (!pc) {
+		// no chart, so set a minimum scale
 		if ((GetCanvasScaleFactor() / proposed_scale_onscreen) < m_absolute_min_scale_ppm)
 			b_do_zoom = false;
 	}
@@ -2508,7 +2500,6 @@ bool ChartCanvas::DoZoomCanvasOut(double zoom_factor)
 	}
 
 	m_bzooming = false;
-
 	return true;
 }
 

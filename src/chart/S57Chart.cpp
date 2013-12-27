@@ -685,7 +685,7 @@ ThumbData* s57chart::GetThumbData()
 	return pThumbData;
 }
 
-int s57chart::GetNativeScale()
+int s57chart::GetNativeScale() const
 {
 	return m_Chart_Scale;
 }
@@ -1201,7 +1201,7 @@ void s57chart::ClearRenderedTextCache()
 	}
 }
 
-double s57chart::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom)
+double s57chart::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const
 {
 	double ppm = canvas_scale_factor / m_Chart_Scale;
 
@@ -1217,7 +1217,7 @@ double s57chart::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_over
 	return canvas_scale_factor / ppm;
 }
 
-double s57chart::GetNormalScaleMax(double, int)
+double s57chart::GetNormalScaleMax(double, int) const
 {
 	return 1.0e7;
 }

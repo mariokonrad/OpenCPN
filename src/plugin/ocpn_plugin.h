@@ -264,8 +264,8 @@ class DECL_EXP PlugInChartBase : public wxObject
             virtual int Init( const wxString& full_path, int init_flags );
             virtual void SetColorScheme(int cs, bool bApplyImmediate);
 
-            virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
-            virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
+            virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
+            virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
             virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
 
             virtual bool GetChartExtent(ExtentPI *pext);
@@ -300,7 +300,7 @@ class DECL_EXP PlugInChartBase : public wxObject
             virtual double GetChartErrorFactor()            { return m_Chart_Error_Factor;}
             virtual ChartDepthUnitTypePI GetDepthUnitId()   { return m_depth_unit_id;}
             virtual bool IsReadyToRender()                  { return m_bReadyToRender;}
-            virtual int GetNativeScale()                    { return m_Chart_Scale; };
+            virtual int GetNativeScale() const              { return m_Chart_Scale; };
             virtual double GetChartSkew()                   { return m_Chart_Skew; }
             virtual wxDateTime GetEditionDate(void)         { return m_EdDate;}
 

@@ -216,7 +216,7 @@ bool ChartPlugInWrapper::UpdateThumbData(double, double)
 	return true;
 }
 
-double ChartPlugInWrapper::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom)
+double ChartPlugInWrapper::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const
 {
 	if (m_ppicb)
 		return m_ppicb->GetNormalScaleMin(canvas_scale_factor, b_allow_overzoom);
@@ -224,7 +224,7 @@ double ChartPlugInWrapper::GetNormalScaleMin(double canvas_scale_factor, bool b_
 		return 1.0;
 }
 
-double ChartPlugInWrapper::GetNormalScaleMax(double canvas_scale_factor, int canvas_width)
+double ChartPlugInWrapper::GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const
 {
 	if (m_ppicb)
 		return m_ppicb->GetNormalScaleMax(canvas_scale_factor, canvas_width);

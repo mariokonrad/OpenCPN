@@ -91,9 +91,9 @@ public:
 	virtual ThumbData* GetThumbData();
 	bool UpdateThumbData(double lat, double lon);
 
-	virtual int GetNativeScale();
-	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
-	virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
+	virtual int GetNativeScale() const;
+	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
+	virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
 
 	void SetNativeScale(int s);
 

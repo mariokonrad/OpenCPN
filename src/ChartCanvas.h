@@ -196,10 +196,10 @@ public:
 	void SetOwnShipState(ownship_state_t state);
 	Position GetCursorLatLon();
 
-	bool ZoomCanvasIn(double factor);
-	bool ZoomCanvasOut(double factor);
-	bool DoZoomCanvasIn(double factor);
-	bool DoZoomCanvasOut(double factor);
+	bool ZoomCanvasIn(double zoom_factor);
+	bool ZoomCanvasOut(double zoom_factor);
+	bool DoZoomCanvasIn(double zoom_factor);
+	bool DoZoomCanvasOut(double zoom_factor);
 
 	bool PanCanvas(int dx, int dy);
 	void StopAutoPan(void);

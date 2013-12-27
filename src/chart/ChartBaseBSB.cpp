@@ -211,7 +211,7 @@ ChartBaseBSB::~ChartBaseBSB()
 }
 
 // Report recommended minimum and maximum scale values for which use of this chart is valid
-double ChartBaseBSB::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom)
+double ChartBaseBSB::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const
 {
 	if (b_allow_overzoom)
 		return (canvas_scale_factor / m_ppm_avg) / 32; // allow wide range overzoom overscale
@@ -219,7 +219,7 @@ double ChartBaseBSB::GetNormalScaleMin(double canvas_scale_factor, bool b_allow_
 		return (canvas_scale_factor / m_ppm_avg) / 2; // don't suggest too much overscale
 }
 
-double ChartBaseBSB::GetNormalScaleMax(double canvas_scale_factor, int WXUNUSED(canvas_width))
+double ChartBaseBSB::GetNormalScaleMax(double canvas_scale_factor, int WXUNUSED(canvas_width)) const
 {
 	return (canvas_scale_factor / m_ppm_avg) * 4.0; // excessive underscale is slow, and unreadable
 }
@@ -277,7 +277,7 @@ ThumbData* ChartBaseBSB::GetThumbData()
 	return pThumbData;
 }
 
-int ChartBaseBSB::GetNativeScale()
+int ChartBaseBSB::GetNativeScale() const
 {
 	return m_Chart_Scale;
 }

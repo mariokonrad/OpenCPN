@@ -2393,12 +2393,12 @@ int PlugInChartBase::Init(const wxString &, int)
 	return 0;
 }
 
-double PlugInChartBase::GetNormalScaleMin(double, bool)
+double PlugInChartBase::GetNormalScaleMin(double, bool) const
 {
 	return 1.0;
 }
 
-double PlugInChartBase::GetNormalScaleMax(double, int)
+double PlugInChartBase::GetNormalScaleMax(double, int) const
 {
 	return 2.0e7;
 }

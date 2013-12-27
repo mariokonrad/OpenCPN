@@ -94,8 +94,8 @@ public:
 	virtual ThumbData* GetThumbData(int tnx, int tny, float lat, float lon) = 0;
 	virtual ThumbData* GetThumbData() = 0;
 	virtual bool UpdateThumbData(double lat, double lon) = 0;
-	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) = 0;
-	virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) = 0;
+	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const = 0;
+	virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const = 0;
 	virtual bool GetChartExtent(Extent* pext) = 0;
 
 	virtual OcpnProjType GetChartProjectionType() const;

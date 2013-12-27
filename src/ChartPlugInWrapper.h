@@ -45,8 +45,8 @@ class ChartPlugInWrapper : public chart::ChartBase
 		virtual ThumbData *GetThumbData();
 		virtual bool UpdateThumbData(double lat, double lon);
 
-		double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom);
-		double GetNormalScaleMax(double canvas_scale_factor, int canvas_width);
+		double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
+		double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
 		virtual bool GetChartExtent(chart::Extent *pext);
 
 		virtual bool RenderRegionViewOnDC(

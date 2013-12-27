@@ -53,7 +53,7 @@ extern MainFrame * gFrame; // FIXME: through constructor?
 namespace chart {
 
 // Answer the query: "Is there a cm93 cell at the specified scale which contains a given lat/lon?"
-static bool Is_CM93Cell_Present ( wxString &fileprefix, double lat, double lon, int scale_index ) // FIXME: should be part of the class
+static bool Is_CM93Cell_Present (const wxString &fileprefix, double lat, double lon, int scale_index ) // FIXME: should be part of the class
 {
 	int scale;
 	int dval;
@@ -466,12 +466,6 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 }
 
 // Populate the member bool array describing which chart scales are available at any location
-void cm93compchart::FillScaleArray(double lat, double lon)
-{
-	for (int cmscale = 0; cmscale < 8; cmscale++)
-		m_bScale_Array[cmscale] = Is_CM93Cell_Present(m_prefixComposite, lat, lon, cmscale);
-}
-
 wxString cm93compchart::GetPubDate()
 {
 	wxString data;
@@ -483,7 +477,7 @@ wxString cm93compchart::GetPubDate()
 	return data;
 }
 
-int cm93compchart::GetNativeScale()
+int cm93compchart::GetNativeScale() const
 {
 	if (m_pcm93chart_current)
 		return m_pcm93chart_current->GetNativeScale();
@@ -491,7 +485,7 @@ int cm93compchart::GetNativeScale()
 		return (int)1e8;
 }
 
-double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
+double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom) const
 {
 	// Adjust overzoom factor based on  b_allow_overzoom option setting
 	double oz_factor;
@@ -502,18 +496,23 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 
 	if ( m_pcm93chart_current )
 	{
-		if ( m_pcm93chart_current->m_last_vp.IsValid() )
-			FillScaleArray ( m_pcm93chart_current->m_last_vp.latitude(), m_pcm93chart_current->m_last_vp.longitude());
+		// FIXME: this is not very perfomant, fix this lazy-init madness
+		bool scale_Array[8] = { false, false, false, false, false, false, false, false };
+//		if ( m_pcm93chart_current->m_last_vp.IsValid() ) {
+			double lat = m_pcm93chart_current->m_last_vp.latitude();
+			double lon = m_pcm93chart_current->m_last_vp.longitude();
+			for (int cmscale = 0; cmscale < 8; ++cmscale)
+				scale_Array[cmscale] = Is_CM93Cell_Present(m_prefixComposite, lat, lon, cmscale);
+//		}
 
 		// Find out what the smallest available scale is
 		int cmscale = 7;
 		while ( cmscale > 0 )
 		{
-			if ( m_bScale_Array[cmscale] )
+			if ( scale_Array[cmscale] )
 				break;
 			cmscale--;
 		}
-
 
 		// And return a sensible minimum scale, allowing selected overzoom.
 		switch ( cmscale )
@@ -532,7 +531,7 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom)
 	return 500.0;
 }
 
-double cm93compchart::GetNormalScaleMax(double canvas_scale_factor, int canvas_width)
+double cm93compchart::GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const
 {
 	return (180.0 / 360.0) * M_PI * 2.0
 		   * (geo::WGS84_semimajor_axis_meters / (canvas_width / canvas_scale_factor));

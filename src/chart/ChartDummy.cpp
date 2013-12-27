@@ -51,13 +51,13 @@ ThumbData* ChartDummy::GetThumbData()
 }
 
 double ChartDummy::GetNormalScaleMin(double WXUNUSED(canvas_scale_factor),
-									 bool WXUNUSED(b_allow_overzoom))
+									 bool WXUNUSED(b_allow_overzoom)) const
 {
 	return 1.0;
 }
 
 double ChartDummy::GetNormalScaleMax(double WXUNUSED(canvas_scale_factor),
-									 int WXUNUSED(canvas_width))
+									 int WXUNUSED(canvas_width)) const
 {
 	return 2.0e7;
 }

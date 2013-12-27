@@ -44,6 +44,7 @@ class GUI
 			bool allow_overzoom_x; // Allow high overzoom
 			int route_line_width;
 			int track_line_width;
+			bool enable_zoom_to_cursor;
 		};
 
 		virtual const View & view() const = 0;
@@ -54,6 +55,7 @@ class GUI
 		virtual void set_view_allow_overzoom_x(bool) = 0;
 		virtual void set_route_line_width(int) = 0;
 		virtual void set_track_line_width(int) = 0;
+		virtual void set_enable_zoom_to_cursor(bool) = 0;
 
 	public:
 

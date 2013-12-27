@@ -373,7 +373,6 @@ int g_Show_Target_Name_Scale;
 bool g_bWplIsAprsPosition;
 wxToolBarToolBase* m_pAISTool;
 int g_nAIS_activity_timer;
-bool g_bEnableZoomToCursor;
 bool g_bTrackActive;
 bool g_bTrackCarryOver;
 bool g_bTrackDaily;

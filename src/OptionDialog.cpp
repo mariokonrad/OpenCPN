@@ -143,7 +143,6 @@ extern double g_n_gps_antenna_offset_x;
 extern int g_n_ownship_min_mm;
 extern double g_n_arrival_circle_radius;
 
-extern bool g_bEnableZoomToCursor;
 extern bool g_bTrackDaily;
 extern bool g_bHighliteTracks;
 extern int g_nTrackPrecision;
@@ -2001,7 +2000,7 @@ void options::SetInitialSettings()
 	pSkewComp->SetValue(g_bskew_comp);
 	pOpenGL->SetValue(g_bopengl);
 	pSmoothPanZoom->SetValue(g_bsmoothpanzoom);
-	if (g_bEnableZoomToCursor || pEnableZoomToCursor->GetValue()) {
+	if (gui.view().enable_zoom_to_cursor || pEnableZoomToCursor->GetValue()) {
 		pSmoothPanZoom->SetValue(false);
 		pSmoothPanZoom->Disable();
 	}
@@ -2043,7 +2042,7 @@ void options::SetInitialSettings()
 	pWayPointPreventDragging->SetValue(g_bWayPointPreventDragging);
 	pConfirmObjectDeletion->SetValue(g_bConfirmObjectDelete);
 
-	pEnableZoomToCursor->SetValue(g_bEnableZoomToCursor);
+	pEnableZoomToCursor->SetValue(gui.view().enable_zoom_to_cursor);
 	if (pEnableZoomToCursor->GetValue()) {
 		pSmoothPanZoom->Disable();
 	} else {
@@ -2620,7 +2619,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	g_bTrackDaily = pTrackDaily->GetValue();
 	g_bHighliteTracks = pTrackHighlite->GetValue();
 
-	g_bEnableZoomToCursor = pEnableZoomToCursor->GetValue();
+	gui.set_enable_zoom_to_cursor(pEnableZoomToCursor->GetValue());
 
 	// AIS Parameters
 	// CPA Box

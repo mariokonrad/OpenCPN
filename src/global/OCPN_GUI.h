@@ -48,6 +48,7 @@ class OCPN_GUI : public GUI
 		virtual void set_view_allow_overzoom_x(bool);
 		virtual void set_route_line_width(int);
 		virtual void set_track_line_width(int);
+		virtual void set_enable_zoom_to_cursor(bool);
 
 	public: // frame
 		virtual const Frame & frame() const;

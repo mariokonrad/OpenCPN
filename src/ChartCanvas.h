@@ -406,6 +406,8 @@ private:
 
 	void ShowBrightnessLevelTimedPopup(int brightness, int min, int max);
 
+	bool do_smooth_scrolling() const;
+
 	int m_canvas_width;
 	int m_canvas_height;
 

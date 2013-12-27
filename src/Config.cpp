@@ -139,7 +139,6 @@ extern int              g_pNavAidRadarRingsStepUnits;
 extern bool             g_bWayPointPreventDragging;
 extern bool             g_bConfirmObjectDelete;
 
-extern bool             g_bEnableZoomToCursor;
 extern wxString         g_toolbarConfig;
 extern double           g_TrackDeltaDistance;
 
@@ -1155,6 +1154,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		}
 	}
 
+	global::GUI& gui = global::OCPN::get().gui();
+
 	SetPath(_T("/Settings/Others"));
 
 	// Radar rings
@@ -1184,8 +1185,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	g_bWayPointPreventDragging = false;
 	Read(_T("WaypointPreventDragging"), &g_bWayPointPreventDragging);
 
-	g_bEnableZoomToCursor = false;
-	Read(_T("EnableZoomToCursor"), &g_bEnableZoomToCursor);
+	bool enable_zoom_to_cursor = false;
+	Read(_T("EnableZoomToCursor"), &enable_zoom_to_cursor);
+	gui.set_enable_zoom_to_cursor(enable_zoom_to_cursor);
 
 	g_TrackDeltaDistance = 0.10;
 	val.Clear();
@@ -1202,11 +1204,11 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	int route_line_width = 2;
 	Read(_T("RouteLineWidth"), &route_line_width, 2);
-	global::OCPN::get().gui().set_route_line_width(route_line_width);
+	gui.set_route_line_width(route_line_width);
 
 	int track_line_width = 3;
 	Read(_T("TrackLineWidth"), &track_line_width, 3);
-	global::OCPN::get().gui().set_track_line_width(track_line_width);
+	gui.set_track_line_width(track_line_width);
 
 	Read(_T("CurrentArrowScale"), &g_current_arrow_scale, 100);
 	Read(_T("DefaultWPIcon"), &g_default_wp_icon, _T("triangle"));
@@ -1898,7 +1900,7 @@ void Config::UpdateSettings()
 	// Waypoint dragging with mouse; toh, 2009.02.24
 	Write(_T("WaypointPreventDragging"), g_bWayPointPreventDragging);
 
-	Write(_T("EnableZoomToCursor"), g_bEnableZoomToCursor);
+	Write(_T("EnableZoomToCursor"), global::OCPN::get().gui().view().enable_zoom_to_cursor);
 
 	Write(_T("TrackDeltaDistance"), g_TrackDeltaDistance);
 	Write(_T("TrackPrecision"), g_nTrackPrecision);

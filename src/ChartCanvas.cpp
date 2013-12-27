@@ -210,7 +210,6 @@ extern int g_iNavAidRadarRingsNumberVisible;
 extern float g_fNavAidRadarRingsStep;
 extern int g_pNavAidRadarRingsStepUnits;
 extern bool g_bWayPointPreventDragging;
-extern bool g_bEnableZoomToCursor;
 
 extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
@@ -2248,23 +2247,39 @@ Position ChartCanvas::GetCanvasPixPoint(int x, int y)
 	return Position(lat, lon);
 }
 
+bool ChartCanvas::do_smooth_scrolling() const
+{
+	const global::GUI& gui = global::OCPN::get().gui();
+
+	return true
+		&& g_bsmoothpanzoom
+		&& g_bopengl
+		&& !gui.view().enable_zoom_to_cursor
+		;
+}
+
 bool ChartCanvas::ZoomCanvasIn(double factor)
 {
-	bool b_smooth = g_bsmoothpanzoom & g_bopengl & !g_bEnableZoomToCursor;
+	// FIXME: code duplication (almost), see ZoomCanvasOut
+
+	bool b_smooth = do_smooth_scrolling();
 
 	if (!VPoint.b_quilt) {
-		chart::ChartBase* pc = Current_Ch;
+		const chart::ChartBase* pc = Current_Ch;
 		if (!pc)
 			return false;
 		if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
 			b_smooth = false;
 	} else {
-		b_smooth = g_bsmoothpanzoom & !m_pQuilt->IsQuiltVector() & !g_bEnableZoomToCursor;
+		b_smooth = true
+			&& g_bsmoothpanzoom
+			&& !m_pQuilt->IsQuiltVector()
+			&& !global::OCPN::get().gui().view().enable_zoom_to_cursor;
 	}
 
 	if (b_smooth) {
-		if (m_bzooming_out) // Interrupt?
-		{
+		if (m_bzooming_out) {
+			// Interrupt?
 			m_zoom_timer.Stop();
 			m_bzooming_in = false;
 			m_bzooming_out = false;
@@ -2275,9 +2290,10 @@ bool ChartCanvas::ZoomCanvasIn(double factor)
 			m_zoomt = 5;
 			m_zoom_target_factor = factor;
 			m_zoom_current_factor = 1.0;
-			m_zoom_timer.Start(m_zoomt); //, true);
+			m_zoom_timer.Start(m_zoomt);
 			m_bzooming_in = true;
-		} else { // Make sure timer is running, to recover from lost events
+		} else {
+			// Make sure timer is running, to recover from lost events
 			if (!m_zoom_timer.IsRunning())
 				m_zoom_timer.Start(m_zoomt);
 		}
@@ -2291,16 +2307,22 @@ bool ChartCanvas::ZoomCanvasIn(double factor)
 
 bool ChartCanvas::ZoomCanvasOut(double factor)
 {
-	bool b_smooth = g_bsmoothpanzoom & g_bopengl & !g_bEnableZoomToCursor;
+	// FIXME: code duplication (almost), see ZoomCanvasIn
+
+	bool b_smooth = do_smooth_scrolling();
 
 	if (!VPoint.b_quilt) {
-		chart::ChartBase* pc = Current_Ch;
+		const chart::ChartBase* pc = Current_Ch;
 		if (!pc)
 			return false;
 		if (pc->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
 			b_smooth = false;
-	} else
-		b_smooth = g_bsmoothpanzoom & !m_pQuilt->IsQuiltVector() & !g_bEnableZoomToCursor;
+	} else {
+		b_smooth = true
+			&& g_bsmoothpanzoom
+			&& !m_pQuilt->IsQuiltVector()
+			&& !global::OCPN::get().gui().view().enable_zoom_to_cursor;
+	}
 
 	if (b_smooth) {
 		if (m_bzooming_in) {
@@ -2315,7 +2337,7 @@ bool ChartCanvas::ZoomCanvasOut(double factor)
 			m_zoomt = 5;
 			m_zoom_target_factor = factor;
 			m_zoom_current_factor = 1.0;
-			m_zoom_timer.Start(m_zoomt); //, true);
+			m_zoom_timer.Start(m_zoomt);
 			m_bzooming_out = true;
 		} else {
 			// Make sure timer is running, to recover from lost events
@@ -2323,8 +2345,9 @@ bool ChartCanvas::ZoomCanvasOut(double factor)
 				m_zoom_timer.Start(m_zoomt);
 		}
 
-	} else
+	} else {
 		DoZoomCanvasOut(factor);
+	}
 
 	extendedSectorLegs.clear();
 	return true;
@@ -2337,8 +2360,9 @@ void ChartCanvas::OnZoomTimerEvent(wxTimerEvent&)
 			DoZoomCanvasIn(1.05);
 			m_zoom_current_factor *= 1.05;
 			m_zoom_timer.Start(m_zoomt); //, true);
-		} else
+		} else {
 			m_bzooming_in = false;
+		}
 	} else if (m_bzooming_out && !m_bzooming_in) {
 		if (m_zoom_current_factor < m_zoom_target_factor) {
 			DoZoomCanvasOut(1.05);
@@ -5239,7 +5263,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 		if (!m_MouseWheelTimer.IsRunning()) {
 			double factor = m_bmouse_key_mod ? 1.1 : 2.0;
 
-			if (g_bEnableZoomToCursor) {
+			if (global::OCPN::get().gui().view().enable_zoom_to_cursor) {
 				// Capture current cursor position, as the zooms below may change it.
 				if (wheel_dir > 0)
 					ZoomCanvasIn(factor);

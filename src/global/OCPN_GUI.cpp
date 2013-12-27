@@ -66,6 +66,11 @@ void OCPN_GUI::set_track_line_width(int width)
 	data_view.track_line_width = width;
 }
 
+void OCPN_GUI::set_enable_zoom_to_cursor(bool flag)
+{
+	data_view.enable_zoom_to_cursor = flag;
+}
+
 const GUI::Frame & OCPN_GUI::frame() const
 {
 	return data_frame;

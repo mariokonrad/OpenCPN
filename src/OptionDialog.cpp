@@ -72,6 +72,7 @@
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/System.h>
+#include <global/AIS.h>
 
 #ifdef USE_S57
 	#include <chart/s52plib.h>
@@ -101,8 +102,6 @@ extern ocpnStyle::StyleManager * g_StyleManager;
 extern bool g_bDisplayGrid;
 
 //    AIS Global configuration
-extern bool g_bCPAMax;
-extern double g_CPAMax_NM;
 extern bool g_bCPAWarn;
 extern double g_CPAWarn_NM;
 extern bool g_bTCPA_Max;
@@ -2063,10 +2062,11 @@ void options::SetInitialSettings()
 	pTrackPrecision->SetSelection(g_nTrackPrecision);
 
 	// AIS Parameters
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 	// CPA Box
-	m_pCheck_CPA_Max->SetValue(g_bCPAMax);
+	m_pCheck_CPA_Max->SetValue(ais.CPAMax);
 
-	m_pText_CPA_Max->SetValue(wxString::Format(_T("%4.1f"), g_CPAMax_NM));
+	m_pText_CPA_Max->SetValue(wxString::Format(_T("%4.1f"), ais.CPAMax_NM));
 	m_pCheck_CPA_Warn->SetValue(g_bCPAWarn);
 	m_pText_CPA_Warn->SetValue(wxString::Format(_T("%4.1f"), g_CPAWarn_NM));
 	m_pText_CPA_WarnT->SetValue(wxString::Format(_T("%4.0f"), g_TCPA_Max));
@@ -2622,9 +2622,15 @@ void options::OnApplyClick(wxCommandEvent& event)
 	gui.set_enable_zoom_to_cursor(pEnableZoomToCursor->GetValue());
 
 	// AIS Parameters
+	global::AIS& ais = global::OCPN::get().ais();
+
 	// CPA Box
-	g_bCPAMax = m_pCheck_CPA_Max->GetValue();
-	m_pText_CPA_Max->GetValue().ToDouble(&g_CPAMax_NM);
+	ais.set_CPAMax(m_pCheck_CPA_Max->GetValue());
+
+	double CPAMax_NM = 0.0;
+	m_pText_CPA_Max->GetValue().ToDouble(&CPAMax_NM);
+	ais.set_CPAMax_NM(CPAMax_NM);
+
 	g_bCPAWarn = m_pCheck_CPA_Warn->GetValue();
 	m_pText_CPA_Warn->GetValue().ToDouble(&g_CPAWarn_NM);
 	g_bTCPA_Max = m_pCheck_CPA_WarnT->GetValue();

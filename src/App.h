@@ -35,6 +35,7 @@ namespace global
 {
 class OCPN_GUI;
 class OCPN_Navigation;
+class OCPN_AIS;
 class OCPN_WatchDog;
 class OCPN_System;
 }
@@ -79,6 +80,7 @@ private:
 
 	global::OCPN_GUI* gui_instance;
 	global::OCPN_Navigation* nav_instance;
+	global::OCPN_AIS* ais_instance;
 	global::OCPN_WatchDog* wdt_instance;
 	global::OCPN_System* sys_instance;
 

@@ -28,39 +28,44 @@ namespace global {
 
 class GUI;
 class Navigation;
+class AIS;
 class WatchDog;
 class System;
 
 class OCPN
 {
-	private:
-		static OCPN * instance;
+private:
+	static OCPN* instance;
 
-		GUI * gui_instance;
-		Navigation * nav_instance;
-		WatchDog * wdt_instance;
-		System * sys_instance;
+	GUI* gui_instance;
+	Navigation* nav_instance;
+	AIS* ais_instance;
+	WatchDog* wdt_instance;
+	System* sys_instance;
 
-	private:
-		OCPN();
-		OCPN(const OCPN &);
-		~OCPN();
-		OCPN & operator=(const OCPN &);
+private:
+	OCPN();
+	OCPN(const OCPN&);
+	~OCPN();
+	OCPN& operator=(const OCPN&);
 
-	public:
-		static OCPN & get();
+public:
+	static OCPN& get();
 
-		void inject(GUI *);
-		GUI & gui();
+	void inject(GUI*);
+	GUI& gui();
 
-		void inject(Navigation *);
-		Navigation & nav();
+	void inject(Navigation*);
+	Navigation& nav();
 
-		void inject(WatchDog *);
-		WatchDog & wdt();
+	void inject(AIS*);
+	AIS& ais();
 
-		void inject(System *);
-		System & sys();
+	void inject(WatchDog*);
+	WatchDog& wdt();
+
+	void inject(System*);
+	System& sys();
 };
 
 }

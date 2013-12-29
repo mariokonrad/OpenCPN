@@ -50,6 +50,7 @@
 #include <global/GUI.h>
 #include <global/System.h>
 #include <global/Navigation.h>
+#include <global/AIS.h>
 #include <global/WatchDog.h>
 
 #include <algorithm>
@@ -98,8 +99,6 @@ extern int g_iSpeedFormat;
 extern double g_PlanSpeed;
 
 // AIS Global configuration
-extern bool             g_bCPAMax;
-extern double           g_CPAMax_NM;
 extern bool             g_bCPAWarn;
 extern double           g_CPAWarn_NM;
 extern bool             g_bTCPA_Max;
@@ -702,13 +701,19 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	load_frame();
 
 	// AIS
+	global::AIS& ais = global::OCPN::get().ais();
+
 	wxString s;
 	SetPath(_T("/Settings/AIS"));
 
-	Read(_T("bNoCPAMax"), &g_bCPAMax);
+	bool CPAMax = false;
+	Read(_T("bNoCPAMax"), &CPAMax);
+	ais.set_CPAMax(CPAMax);
 
 	Read(_T("NoCPAMaxNMi"), &s);
-	s.ToDouble(&g_CPAMax_NM);
+	double CPAMax_NM = 0.0;
+	s.ToDouble(&CPAMax_NM);
+	ais.set_CPAMax_NM(CPAMax_NM);
 
 	Read(_T("bCPAWarn"), &g_bCPAWarn);
 
@@ -1757,10 +1762,12 @@ void Config::UpdateSettings()
 	write_frame();
 
 	// AIS
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
 	SetPath(_T("/Settings/AIS"));
 
-	Write(_T("bNoCPAMax"), g_bCPAMax);
-	Write(_T("NoCPAMaxNMi"), g_CPAMax_NM);
+	Write(_T("bNoCPAMax"), ais.CPAMax);
+	Write(_T("NoCPAMaxNMi"), ais.CPAMax_NM);
 	Write(_T("bCPAWarn"), g_bCPAWarn);
 	Write(_T("CPAWarnNMi"), g_CPAWarn_NM);
 	Write(_T("bTCPAMax"), g_bTCPA_Max);

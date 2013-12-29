@@ -63,6 +63,7 @@
 #include <global/OCPN.h>
 #include <global/OCPN_GUI.h>
 #include <global/OCPN_Navigation.h>
+#include <global/OCPN_AIS.h>
 #include <global/OCPN_WatchDog.h>
 #include <global/OCPN_System.h>
 
@@ -201,7 +202,6 @@ extern wxAuiManager* g_pauimgr;
 extern wxAuiDefaultDockArt* g_pauidockart;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern bool g_bShowAIS;
-extern double g_CPAMax_NM;
 extern double g_CPAWarn_NM;
 extern double g_TCPA_Max;
 extern bool g_bMarkLost;
@@ -473,6 +473,9 @@ void App::inject_global_instances()
 
 	nav_instance = new global::OCPN_Navigation;
 	global::OCPN::get().inject(nav_instance);
+
+	ais_instance = new global::OCPN_AIS;
+	global::OCPN::get().inject(ais_instance);
 
 	wdt_instance = new global::OCPN_WatchDog;
 	global::OCPN::get().inject(wdt_instance);
@@ -862,7 +865,7 @@ void App::setup_for_empty_config(bool novicemode)
 	// Override some config options for initial user startup with empty config file
 	if (novicemode) {
 		global::OCPN::get().gui().set_view_show_outlines(true);
-		g_CPAMax_NM = 20.0;
+		global::OCPN::get().ais().set_CPAMax_NM(20.0);
 		g_CPAWarn_NM = 2.0;
 		g_TCPA_Max = 30.0;
 		g_bMarkLost = true;

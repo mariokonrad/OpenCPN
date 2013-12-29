@@ -39,6 +39,7 @@
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/Navigation.h>
+#include <global/AIS.h>
 
 #include <wx/tokenzr.h>
 
@@ -52,8 +53,6 @@ extern Select* pSelectAIS;
 extern MainFrame* gFrame;
 extern bool bGPSValid;
 extern bool g_bShowAIS;
-extern bool g_bCPAMax;
-extern double g_CPAMax_NM;
 extern bool g_bCPAWarn;
 extern double g_CPAWarn_NM;
 extern bool g_bTCPA_Max;
@@ -1605,7 +1604,9 @@ void AIS_Decoder::UpdateAllAlarms(void)
 {
 	m_bGeneralAlert = false; // no alerts yet
 
-	//    Iterate thru all the targets
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
+	// Iterate thru all the targets
 	AIS_Target_Hash::iterator it;
 	AIS_Target_Hash* current_targets = GetTargetList();
 
@@ -1624,7 +1625,7 @@ void AIS_Decoder::UpdateAllAlarms(void)
 					m_bGeneralAlert = false;
 
 				//    Skip distant targets if requested
-				if ((g_bCPAMax) && (td->Range_NM > g_CPAMax_NM))
+				if ((ais.CPAMax) && (td->Range_NM > ais.CPAMax_NM))
 					m_bGeneralAlert = false;
 
 				//    Skip if TCPA is too long
@@ -1665,8 +1666,8 @@ void AIS_Decoder::UpdateAllAlarms(void)
 				}
 
 				//    Skip distant targets if requested
-				if (g_bCPAMax) {
-					if (td->Range_NM > g_CPAMax_NM) {
+				if (ais.CPAMax) {
+					if (td->Range_NM > ais.CPAMax_NM) {
 						td->n_alarm_state = AIS_NO_ALARM;
 						continue;
 					}

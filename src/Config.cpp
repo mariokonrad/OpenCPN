@@ -99,7 +99,6 @@ extern int g_iSpeedFormat;
 extern double g_PlanSpeed;
 
 // AIS Global configuration
-extern bool             g_bCPAWarn;
 extern double           g_CPAWarn_NM;
 extern bool             g_bTCPA_Max;
 extern double           g_TCPA_Max;
@@ -715,7 +714,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	s.ToDouble(&CPAMax_NM);
 	ais.set_CPAMax_NM(CPAMax_NM);
 
-	Read(_T("bCPAWarn"), &g_bCPAWarn);
+	bool CPAWarn = false;
+	Read(_T("bCPAWarn"), &CPAWarn);
+	ais.set_CPAWarn(CPAWarn);
 
 	Read(_T("CPAWarnNMi"), &s);
 	s.ToDouble(&g_CPAWarn_NM);
@@ -1768,7 +1769,7 @@ void Config::UpdateSettings()
 
 	Write(_T("bNoCPAMax"), ais.CPAMax);
 	Write(_T("NoCPAMaxNMi"), ais.CPAMax_NM);
-	Write(_T("bCPAWarn"), g_bCPAWarn);
+	Write(_T("bCPAWarn"), ais.CPAWarn);
 	Write(_T("CPAWarnNMi"), g_CPAWarn_NM);
 	Write(_T("bTCPAMax"), g_bTCPA_Max);
 	Write(_T("TCPAMaxMinutes"), g_TCPA_Max);

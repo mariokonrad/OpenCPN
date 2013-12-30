@@ -38,11 +38,13 @@ public:
 	{
 		bool CPAMax;
 		double CPAMax_NM;
+		bool CPAWarn;
 	};
 
 	virtual const Data& get_data() const = 0;
 	virtual void set_CPAMax(bool) = 0;
 	virtual void set_CPAMax_NM(double) = 0;
+	virtual void set_CPAWarn(bool) = 0;
 };
 
 }

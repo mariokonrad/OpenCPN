@@ -346,7 +346,6 @@ DWORD color_inactiveborder;
 #endif
 
 bool g_bShowAIS;
-bool g_bCPAWarn;
 double g_CPAWarn_NM;
 bool g_bTCPA_Max;
 double g_TCPA_Max;

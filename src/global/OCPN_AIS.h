@@ -37,6 +37,7 @@ public: // data
 	virtual const Data& get_data() const;
 	virtual void set_CPAMax(bool);
 	virtual void set_CPAMax_NM(double);
+	virtual void set_CPAWarn(bool);
 };
 
 }

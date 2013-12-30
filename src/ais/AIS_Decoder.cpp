@@ -53,7 +53,6 @@ extern Select* pSelectAIS;
 extern MainFrame* gFrame;
 extern bool bGPSValid;
 extern bool g_bShowAIS;
-extern bool g_bCPAWarn;
 extern double g_CPAWarn_NM;
 extern bool g_bTCPA_Max;
 extern double g_TCPA_Max;
@@ -1643,29 +1642,29 @@ void AIS_Decoder::UpdateAllAlarms(void)
 
 			ais_alarm_type this_alarm = AIS_NO_ALARM;
 
-			//  SART targets always alert if "Active"
+			// SART targets always alert if "Active"
 			if (td->Class == AIS_SART && td->NavStatus == 14)
 				this_alarm = AIS_ALARM_SET;
 
-			//  DSC Distress targets always alert
+			// DSC Distress targets always alert
 			if ((td->Class == AIS_DSC) && (td->ShipType == 12))
 				this_alarm = AIS_ALARM_SET;
 
-			if (g_bCPAWarn && td->b_active && td->b_positionOnceValid && (td->Class != AIS_SART)
+			if (ais.CPAWarn && td->b_active && td->b_positionOnceValid && (td->Class != AIS_SART)
 				&& (td->Class != AIS_DSC)) {
-				//      Skip anchored/moored(interpreted as low speed) targets if requested
+				// Skip anchored/moored(interpreted as low speed) targets if requested
 				if ((!g_bShowMoored) && (td->SOG <= g_ShowMoored_Kts)) { // dsr
 					td->n_alarm_state = AIS_NO_ALARM;
 					continue;
 				}
 
-				//    No Alert on moored(interpreted as low speed) targets if so requested
+				// No Alert on moored(interpreted as low speed) targets if so requested
 				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= g_ShowMoored_Kts)) { // dsr
 					td->n_alarm_state = AIS_NO_ALARM;
 					continue;
 				}
 
-				//    Skip distant targets if requested
+				// Skip distant targets if requested
 				if (ais.CPAMax) {
 					if (td->Range_NM > ais.CPAMax_NM) {
 						td->n_alarm_state = AIS_NO_ALARM;

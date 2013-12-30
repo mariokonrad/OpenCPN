@@ -40,5 +40,10 @@ void OCPN_AIS::set_CPAMax_NM(double value)
 	data.CPAMax_NM = value;
 }
 
+void OCPN_AIS::set_CPAWarn(bool flag)
+{
+	data.CPAWarn = flag;
+}
+
 }
 

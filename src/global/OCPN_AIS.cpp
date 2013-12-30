@@ -55,5 +55,10 @@ void OCPN_AIS::set_TCPA_Max(bool value)
 	data.TCPA_Max = value;
 }
 
+void OCPN_AIS::set_TCPA_Max_min(double value)
+{
+	data.TCPA_Max_min = value;
+}
+
 }
 

@@ -102,7 +102,6 @@ extern ocpnStyle::StyleManager * g_StyleManager;
 extern bool g_bDisplayGrid;
 
 // AIS Global configuration
-extern double g_TCPA_Max;
 extern bool g_bMarkLost;
 extern double g_MarkLost_Mins;
 extern bool g_bRemoveLost;
@@ -2066,7 +2065,7 @@ void options::SetInitialSettings()
 	m_pText_CPA_Max->SetValue(wxString::Format(_T("%4.1f"), ais.CPAMax_NM));
 	m_pCheck_CPA_Warn->SetValue(ais.CPAWarn);
 	m_pText_CPA_Warn->SetValue(wxString::Format(_T("%4.1f"), ais.CPAWarn_NM));
-	m_pText_CPA_WarnT->SetValue(wxString::Format(_T("%4.0f"), g_TCPA_Max));
+	m_pText_CPA_WarnT->SetValue(wxString::Format(_T("%4.0f"), ais.TCPA_Max_min));
 
 	if (m_pCheck_CPA_Warn->GetValue()) {
 		m_pCheck_CPA_WarnT->Enable();
@@ -2633,7 +2632,9 @@ void options::OnApplyClick(wxCommandEvent& event)
 	m_pText_CPA_Warn->GetValue().ToDouble(&CPAWarn_NM);
 	ais.set_CPAWarn_NM(CPAWarn_NM);
 	ais.set_TCPA_Max(m_pCheck_CPA_WarnT->GetValue());
-	m_pText_CPA_WarnT->GetValue().ToDouble(&g_TCPA_Max);
+	double TCPA_Max_min = 0.0;
+	m_pText_CPA_WarnT->GetValue().ToDouble(&TCPA_Max_min);
+	ais.set_TCPA_Max_min(TCPA_Max_min);
 
 	// Lost Targets
 	g_bMarkLost = m_pCheck_Mark_Lost->GetValue();

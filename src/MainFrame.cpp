@@ -346,7 +346,6 @@ DWORD color_inactiveborder;
 #endif
 
 bool g_bShowAIS;
-double g_TCPA_Max;
 bool g_bMarkLost;
 double g_MarkLost_Mins;
 bool g_bRemoveLost;

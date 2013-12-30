@@ -40,6 +40,7 @@ public: // data
 	virtual void set_CPAWarn(bool);
 	virtual void set_CPAWarn_NM(double);
 	virtual void set_TCPA_Max(bool);
+	virtual void set_TCPA_Max_min(double);
 };
 
 }

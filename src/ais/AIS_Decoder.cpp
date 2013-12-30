@@ -53,7 +53,6 @@ extern Select* pSelectAIS;
 extern MainFrame* gFrame;
 extern bool bGPSValid;
 extern bool g_bShowAIS;
-extern double g_TCPA_Max;
 extern bool g_bMarkLost;
 extern double g_MarkLost_Mins;
 extern bool g_bRemoveLost;
@@ -1622,11 +1621,11 @@ void AIS_Decoder::UpdateAllAlarms(void)
 					m_bGeneralAlert = false;
 
 				// Skip distant targets if requested
-				if ((ais.CPAMax) && (td->Range_NM > ais.CPAMax_NM))
+				if (ais.CPAMax && (td->Range_NM > ais.CPAMax_NM))
 					m_bGeneralAlert = false;
 
 				// Skip if TCPA is too long
-				if ((ais.TCPA_Max) && (td->TCPA > g_TCPA_Max))
+				if (ais.TCPA_Max && (td->TCPA > ais.TCPA_Max_min))
 					m_bGeneralAlert = false;
 
 				// SART targets always alert if "Active"
@@ -1672,7 +1671,7 @@ void AIS_Decoder::UpdateAllAlarms(void)
 
 				if ((td->CPA < ais.CPAWarn_NM) && (td->TCPA > 0) && (td->Class != AIS_ATON)) {
 					if (ais.TCPA_Max) {
-						if (td->TCPA < g_TCPA_Max)
+						if (td->TCPA < ais.TCPA_Max_min)
 							this_alarm = AIS_ALARM_SET;
 					} else
 						this_alarm = AIS_ALARM_SET;

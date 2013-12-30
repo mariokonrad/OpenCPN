@@ -99,7 +99,6 @@ extern int g_iSpeedFormat;
 extern double g_PlanSpeed;
 
 // AIS Global configuration
-extern double           g_TCPA_Max;
 extern bool             g_bMarkLost;
 extern double           g_MarkLost_Mins;
 extern bool             g_bRemoveLost;
@@ -726,7 +725,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	ais.set_TCPA_Max(TCPA_Max);
 
 	Read(_T("TCPAMaxMinutes"), &s);
-	s.ToDouble(&g_TCPA_Max);
+	double TCPA_Max_min = 0.0;
+	s.ToDouble(&TCPA_Max_min);
+	ais.set_TCPA_Max_min(TCPA_Max_min);
 
 	Read(_T("bMarkLostTargets"), &g_bMarkLost);
 
@@ -1774,7 +1775,7 @@ void Config::UpdateSettings()
 	Write(_T("bCPAWarn"), ais.CPAWarn);
 	Write(_T("CPAWarnNMi"), ais.CPAWarn_NM);
 	Write(_T("bTCPAMax"), ais.TCPA_Max);
-	Write(_T("TCPAMaxMinutes"), g_TCPA_Max);
+	Write(_T("TCPAMaxMinutes"), ais.TCPA_Max_min);
 	Write(_T("bMarkLostTargets"), g_bMarkLost);
 	Write(_T("MarkLost_Minutes"), g_MarkLost_Mins);
 	Write(_T("bRemoveLostTargets"), g_bRemoveLost);

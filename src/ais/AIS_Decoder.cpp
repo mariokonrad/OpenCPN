@@ -53,8 +53,6 @@ extern Select* pSelectAIS;
 extern MainFrame* gFrame;
 extern bool bGPSValid;
 extern bool g_bShowAIS;
-extern double g_CPAWarn_NM;
-extern bool g_bTCPA_Max;
 extern double g_TCPA_Max;
 extern bool g_bMarkLost;
 extern double g_MarkLost_Mins;
@@ -1613,29 +1611,29 @@ void AIS_Decoder::UpdateAllAlarms(void)
 		AIS_Target_Data* td = it->second;
 
 		if (NULL != td) {
-			//  Maintain General Alert
+			// Maintain General Alert
 			if (!m_bGeneralAlert) {
-				//    Quick check on basic condition
-				if ((td->CPA < g_CPAWarn_NM) && (td->TCPA > 0) && (td->Class != AIS_ATON))
+				// Quick check on basic condition
+				if ((td->CPA < ais.CPAWarn_NM) && (td->TCPA > 0) && (td->Class != AIS_ATON))
 					m_bGeneralAlert = true;
 
-				//    Some options can suppress general alerts
+				// Some options can suppress general alerts
 				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= g_ShowMoored_Kts))
 					m_bGeneralAlert = false;
 
-				//    Skip distant targets if requested
+				// Skip distant targets if requested
 				if ((ais.CPAMax) && (td->Range_NM > ais.CPAMax_NM))
 					m_bGeneralAlert = false;
 
-				//    Skip if TCPA is too long
-				if ((g_bTCPA_Max) && (td->TCPA > g_TCPA_Max))
+				// Skip if TCPA is too long
+				if ((ais.TCPA_Max) && (td->TCPA > g_TCPA_Max))
 					m_bGeneralAlert = false;
 
-				//  SART targets always alert if "Active"
+				// SART targets always alert if "Active"
 				if (td->Class == AIS_SART && td->NavStatus == 14)
 					m_bGeneralAlert = true;
 
-				//  DSC Distress targets always alert
+				// DSC Distress targets always alert
 				if ((td->Class == AIS_DSC) && (td->ShipType == 12))
 					m_bGeneralAlert = true;
 			}
@@ -1672,8 +1670,8 @@ void AIS_Decoder::UpdateAllAlarms(void)
 					}
 				}
 
-				if ((td->CPA < g_CPAWarn_NM) && (td->TCPA > 0) && (td->Class != AIS_ATON)) {
-					if (g_bTCPA_Max) {
+				if ((td->CPA < ais.CPAWarn_NM) && (td->TCPA > 0) && (td->Class != AIS_ATON)) {
+					if (ais.TCPA_Max) {
 						if (td->TCPA < g_TCPA_Max)
 							this_alarm = AIS_ALARM_SET;
 					} else

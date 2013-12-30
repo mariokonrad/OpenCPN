@@ -202,7 +202,6 @@ extern wxAuiManager* g_pauimgr;
 extern wxAuiDefaultDockArt* g_pauidockart;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern bool g_bShowAIS;
-extern double g_CPAWarn_NM;
 extern double g_TCPA_Max;
 extern bool g_bMarkLost;
 extern double g_MarkLost_Mins;
@@ -866,7 +865,7 @@ void App::setup_for_empty_config(bool novicemode)
 	if (novicemode) {
 		global::OCPN::get().gui().set_view_show_outlines(true);
 		global::OCPN::get().ais().set_CPAMax_NM(20.0);
-		g_CPAWarn_NM = 2.0;
+		global::OCPN::get().ais().set_CPAWarn_NM(2.0);
 		g_TCPA_Max = 30.0;
 		g_bMarkLost = true;
 		g_MarkLost_Mins = 8;

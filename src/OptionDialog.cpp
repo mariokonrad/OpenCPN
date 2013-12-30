@@ -101,9 +101,7 @@ extern ocpnStyle::StyleManager * g_StyleManager;
 
 extern bool g_bDisplayGrid;
 
-//    AIS Global configuration
-extern double g_CPAWarn_NM;
-extern bool g_bTCPA_Max;
+// AIS Global configuration
 extern double g_TCPA_Max;
 extern bool g_bMarkLost;
 extern double g_MarkLost_Mins;
@@ -2067,12 +2065,12 @@ void options::SetInitialSettings()
 
 	m_pText_CPA_Max->SetValue(wxString::Format(_T("%4.1f"), ais.CPAMax_NM));
 	m_pCheck_CPA_Warn->SetValue(ais.CPAWarn);
-	m_pText_CPA_Warn->SetValue(wxString::Format(_T("%4.1f"), g_CPAWarn_NM));
+	m_pText_CPA_Warn->SetValue(wxString::Format(_T("%4.1f"), ais.CPAWarn_NM));
 	m_pText_CPA_WarnT->SetValue(wxString::Format(_T("%4.0f"), g_TCPA_Max));
 
 	if (m_pCheck_CPA_Warn->GetValue()) {
 		m_pCheck_CPA_WarnT->Enable();
-		m_pCheck_CPA_WarnT->SetValue(g_bTCPA_Max);
+		m_pCheck_CPA_WarnT->SetValue(ais.TCPA_Max);
 	} else {
 		m_pCheck_CPA_WarnT->Disable();
 	}
@@ -2631,8 +2629,10 @@ void options::OnApplyClick(wxCommandEvent& event)
 	ais.set_CPAMax_NM(CPAMax_NM);
 
 	ais.set_CPAWarn(m_pCheck_CPA_Warn->GetValue());
-	m_pText_CPA_Warn->GetValue().ToDouble(&g_CPAWarn_NM);
-	g_bTCPA_Max = m_pCheck_CPA_WarnT->GetValue();
+	double CPAWarn_NM = 0.0;
+	m_pText_CPA_Warn->GetValue().ToDouble(&CPAWarn_NM);
+	ais.set_CPAWarn_NM(CPAWarn_NM);
+	ais.set_TCPA_Max(m_pCheck_CPA_WarnT->GetValue());
 	m_pText_CPA_WarnT->GetValue().ToDouble(&g_TCPA_Max);
 
 	// Lost Targets

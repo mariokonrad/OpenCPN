@@ -30,9 +30,9 @@ const AIS::Data & OCPN_AIS::get_data() const
 	return data;
 }
 
-void OCPN_AIS::set_CPAMax(bool flag)
+void OCPN_AIS::set_CPAMax(bool value)
 {
-	data.CPAMax = flag;
+	data.CPAMax = value;
 }
 
 void OCPN_AIS::set_CPAMax_NM(double value)
@@ -40,9 +40,19 @@ void OCPN_AIS::set_CPAMax_NM(double value)
 	data.CPAMax_NM = value;
 }
 
-void OCPN_AIS::set_CPAWarn(bool flag)
+void OCPN_AIS::set_CPAWarn(bool value)
 {
-	data.CPAWarn = flag;
+	data.CPAWarn = value;
+}
+
+void OCPN_AIS::set_CPAWarn_NM(double value)
+{
+	data.CPAWarn_NM = value;
+}
+
+void OCPN_AIS::set_TCPA_Max(bool value)
+{
+	data.TCPA_Max = value;
 }
 
 }

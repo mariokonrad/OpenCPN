@@ -53,10 +53,6 @@ extern Select* pSelectAIS;
 extern MainFrame* gFrame;
 extern bool bGPSValid;
 extern bool g_bShowAIS;
-extern bool g_bMarkLost;
-extern double g_MarkLost_Mins;
-extern bool g_bRemoveLost;
-extern double g_RemoveLost_Mins;
 extern bool g_bAISShowTracks;
 extern double g_AISShowTracks_Mins;
 extern bool g_bShowMoored;
@@ -1848,6 +1844,8 @@ void AIS_Decoder::OnTimerAISAudio(wxTimerEvent&)
 
 void AIS_Decoder::OnTimerAIS(wxTimerEvent & WXUNUSED(event))
 {
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
 	TimerAIS.Stop();
 
 	// Scrub the target hash list
@@ -1874,21 +1872,20 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent & WXUNUSED(event))
 		int target_static_age = now.GetTicks() - td->StaticReportTicks;
 
 		// Mark lost targets if specified
-		if (g_bMarkLost) {
-			if ((target_posn_age > g_MarkLost_Mins * 60) && (td->Class != AIS_GPSG_BUDDY))
+		if (ais.MarkLost) {
+			if ((target_posn_age > ais.MarkLost_Mins * 60) && (td->Class != AIS_GPSG_BUDDY))
 				td->b_active = false;
 		}
 
 		// Remove lost targets if specified
-		double removelost_Mins = fmax(g_RemoveLost_Mins, g_MarkLost_Mins);
+		double removelost_Mins = fmax(ais.RemoveLost_Mins, ais.MarkLost_Mins);
 
 		if (td->Class == AIS_SART)
 			removelost_Mins = 18.0;
 
-		if (g_bRemoveLost) {
+		if (ais.RemoveLost) {
 			if ((target_posn_age > removelost_Mins * 60) && (td->Class != AIS_GPSG_BUDDY)) {
-				//      So mark the target as lost, with unknown position, and make it not
-				// selectable
+				// So mark the target as lost, with unknown position, and make it not selectable
 				td->b_lost = true;
 				td->b_positionOnceValid = false;
 				td->COG = 360.0;

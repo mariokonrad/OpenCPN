@@ -202,10 +202,6 @@ extern wxAuiManager* g_pauimgr;
 extern wxAuiDefaultDockArt* g_pauidockart;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern bool g_bShowAIS;
-extern bool g_bMarkLost;
-extern double g_MarkLost_Mins;
-extern bool g_bRemoveLost;
-extern double g_RemoveLost_Mins;
 extern bool g_bShowCOG;
 extern double g_ShowCOG_Mins;
 extern bool g_bShowMoored;
@@ -863,13 +859,15 @@ void App::setup_for_empty_config(bool novicemode)
 	// Override some config options for initial user startup with empty config file
 	if (novicemode) {
 		global::OCPN::get().gui().set_view_show_outlines(true);
-		global::OCPN::get().ais().set_CPAMax_NM(20.0);
-		global::OCPN::get().ais().set_CPAWarn_NM(2.0);
-		global::OCPN::get().ais().set_TCPA_Max_min(30.0);
-		g_bMarkLost = true;
-		g_MarkLost_Mins = 8;
-		g_bRemoveLost = true;
-		g_RemoveLost_Mins = 10;
+
+		global::AIS& ais = global::OCPN::get().ais();
+		ais.set_CPAMax_NM(20.0);
+		ais.set_CPAWarn_NM(2.0);
+		ais.set_TCPA_Max_min(30.0);
+		ais.set_MarkLost(true);
+		ais.set_MarkLost_Mins(8);
+		ais.set_RemoveLost(true);
+		ais.set_RemoveLost_Mins(10);
 		g_bShowCOG = true;
 		g_ShowCOG_Mins = 6;
 		g_bShowMoored = true;

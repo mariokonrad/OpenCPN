@@ -346,10 +346,6 @@ DWORD color_inactiveborder;
 #endif
 
 bool g_bShowAIS;
-bool g_bMarkLost;
-double g_MarkLost_Mins;
-bool g_bRemoveLost;
-double g_RemoveLost_Mins;
 bool g_bShowCOG;
 double g_ShowCOG_Mins;
 bool g_bAISShowTracks;

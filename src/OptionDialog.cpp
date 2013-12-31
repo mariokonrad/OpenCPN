@@ -102,10 +102,6 @@ extern ocpnStyle::StyleManager * g_StyleManager;
 extern bool g_bDisplayGrid;
 
 // AIS Global configuration
-extern bool g_bMarkLost;
-extern double g_MarkLost_Mins;
-extern bool g_bRemoveLost;
-extern double g_RemoveLost_Mins;
 extern bool g_bShowCOG;
 extern double g_ShowCOG_Mins;
 extern bool g_bAISShowTracks;
@@ -2075,10 +2071,10 @@ void options::SetInitialSettings()
 	}
 
 	// Lost Targets
-	m_pCheck_Mark_Lost->SetValue(g_bMarkLost);
-	m_pText_Mark_Lost->SetValue(wxString::Format(_T("%4.0f"), g_MarkLost_Mins));
-	m_pCheck_Remove_Lost->SetValue(g_bRemoveLost);
-	m_pText_Remove_Lost->SetValue(wxString::Format(_T("%4.0f"), g_RemoveLost_Mins));
+	m_pCheck_Mark_Lost->SetValue(ais.MarkLost);
+	m_pText_Mark_Lost->SetValue(wxString::Format(_T("%4.0f"), ais.MarkLost_Mins));
+	m_pCheck_Remove_Lost->SetValue(ais.RemoveLost);
+	m_pText_Remove_Lost->SetValue(wxString::Format(_T("%4.0f"), ais.RemoveLost_Mins));
 
 	// Display
 	m_pCheck_Show_COG->SetValue(g_bShowCOG);
@@ -2637,10 +2633,14 @@ void options::OnApplyClick(wxCommandEvent& event)
 	ais.set_TCPA_Max_min(TCPA_Max_min);
 
 	// Lost Targets
-	g_bMarkLost = m_pCheck_Mark_Lost->GetValue();
-	m_pText_Mark_Lost->GetValue().ToDouble(&g_MarkLost_Mins);
-	g_bRemoveLost = m_pCheck_Remove_Lost->GetValue();
-	m_pText_Remove_Lost->GetValue().ToDouble(&g_RemoveLost_Mins);
+	ais.set_MarkLost(m_pCheck_Mark_Lost->GetValue());
+	double MarkLost_Mins = 0.0;
+	m_pText_Mark_Lost->GetValue().ToDouble(&MarkLost_Mins);
+	ais.set_MarkLost_Mins(MarkLost_Mins);
+	ais.set_RemoveLost(m_pCheck_Remove_Lost->GetValue());
+	double RemoveLost_Mins = 0.0;
+	m_pText_Remove_Lost->GetValue().ToDouble(&RemoveLost_Mins);
+	ais.set_RemoveLost_Mins(RemoveLost_Mins);
 
 	// Display
 	g_bShowCOG = m_pCheck_Show_COG->GetValue();

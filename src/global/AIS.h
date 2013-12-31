@@ -42,6 +42,10 @@ public:
 		double CPAWarn_NM;
 		bool TCPA_Max;
 		double TCPA_Max_min;
+		bool MarkLost;
+		double MarkLost_Mins;
+		bool RemoveLost;
+		double RemoveLost_Mins;
 	};
 
 	virtual const Data& get_data() const = 0;
@@ -51,6 +55,10 @@ public:
 	virtual void set_CPAWarn_NM(double) = 0;
 	virtual void set_TCPA_Max(bool) = 0;
 	virtual void set_TCPA_Max_min(double) = 0;
+	virtual void set_MarkLost(bool) = 0;
+	virtual void set_MarkLost_Mins(double) = 0;
+	virtual void set_RemoveLost(bool) = 0;
+	virtual void set_RemoveLost_Mins(double) = 0;
 };
 
 }

@@ -99,10 +99,6 @@ extern int g_iSpeedFormat;
 extern double g_PlanSpeed;
 
 // AIS Global configuration
-extern bool             g_bMarkLost;
-extern double           g_MarkLost_Mins;
-extern bool             g_bRemoveLost;
-extern double           g_RemoveLost_Mins;
 extern bool             g_bShowCOG;
 extern double           g_ShowCOG_Mins;
 extern bool             g_bAISShowTracks;
@@ -729,15 +725,23 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	s.ToDouble(&TCPA_Max_min);
 	ais.set_TCPA_Max_min(TCPA_Max_min);
 
-	Read(_T("bMarkLostTargets"), &g_bMarkLost);
+	bool MarkLost = false;
+	Read(_T("bMarkLostTargets"), &MarkLost);
+	ais.set_MarkLost(MarkLost);
 
 	Read(_T("MarkLost_Minutes"), &s);
-	s.ToDouble(&g_MarkLost_Mins);
+	double MarkLost_Mins = 0.0;
+	s.ToDouble(&MarkLost_Mins);
+	ais.set_MarkLost_Mins(MarkLost_Mins);
 
-	Read(_T("bRemoveLostTargets"), &g_bRemoveLost);
+	bool RemoveLost = false;
+	Read(_T("bRemoveLostTargets"), &RemoveLost);
+	ais.set_RemoveLost(RemoveLost);
 
 	Read(_T("RemoveLost_Minutes"), &s);
-	s.ToDouble(&g_RemoveLost_Mins);
+	double RemoveLost_Mins = 0.0;
+	s.ToDouble(&RemoveLost_Mins);
+	ais.set_RemoveLost_Mins(RemoveLost_Mins);
 
 	Read(_T("bShowCOGArrows"), &g_bShowCOG);
 
@@ -1776,10 +1780,10 @@ void Config::UpdateSettings()
 	Write(_T("CPAWarnNMi"), ais.CPAWarn_NM);
 	Write(_T("bTCPAMax"), ais.TCPA_Max);
 	Write(_T("TCPAMaxMinutes"), ais.TCPA_Max_min);
-	Write(_T("bMarkLostTargets"), g_bMarkLost);
-	Write(_T("MarkLost_Minutes"), g_MarkLost_Mins);
-	Write(_T("bRemoveLostTargets"), g_bRemoveLost);
-	Write(_T("RemoveLost_Minutes"), g_RemoveLost_Mins);
+	Write(_T("bMarkLostTargets"), ais.MarkLost);
+	Write(_T("MarkLost_Minutes"), ais.MarkLost_Mins);
+	Write(_T("bRemoveLostTargets"), ais.RemoveLost);
+	Write(_T("RemoveLost_Minutes"), ais.RemoveLost_Mins);
 	Write(_T("bShowCOGArrows"), g_bShowCOG);
 	Write(_T("CogArrowMinutes"), g_ShowCOG_Mins);
 	Write(_T("bShowTargetTracks"), g_bAISShowTracks);

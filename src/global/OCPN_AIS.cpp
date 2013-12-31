@@ -60,5 +60,25 @@ void OCPN_AIS::set_TCPA_Max_min(double value)
 	data.TCPA_Max_min = value;
 }
 
+void OCPN_AIS::set_MarkLost(bool value)
+{
+	data.MarkLost = value;
+}
+
+void OCPN_AIS::set_MarkLost_Mins(double value)
+{
+	data.MarkLost_Mins = value;
+}
+
+void OCPN_AIS::set_RemoveLost(bool value)
+{
+	data.RemoveLost = value;
+}
+
+void OCPN_AIS::set_RemoveLost_Mins(double value)
+{
+	data.RemoveLost_Mins = value;
+}
+
 }
 

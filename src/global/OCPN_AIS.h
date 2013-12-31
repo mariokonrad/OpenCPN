@@ -41,6 +41,10 @@ public: // data
 	virtual void set_CPAWarn_NM(double);
 	virtual void set_TCPA_Max(bool);
 	virtual void set_TCPA_Max_min(double);
+	virtual void set_MarkLost(bool);
+	virtual void set_MarkLost_Mins(double);
+	virtual void set_RemoveLost(bool);
+	virtual void set_RemoveLost_Mins(double);
 };
 
 }

@@ -731,6 +731,8 @@ int PI_PLIBRenderAreaToDC(wxDC* pdc, PI_S57Obj* pObj, PlugIn_ViewPort* vp, wxRec
 	pb_spec.b_revrgb = false;
 #endif
 
+	pb_spec.b_revrgb = false;
+
 	// Create and populate a compatible s57 Object
 	S57Obj cobj;
 

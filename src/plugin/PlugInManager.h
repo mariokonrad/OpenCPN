@@ -36,8 +36,9 @@
 	#include <wx/glcanvas.h>
 #endif
 
-#include "DataStream.h"
+#include <DataStream.h>
 #include <ColorScheme.h>
+#include <ChartPlugInWrapper.h>
 
 #include <chart/s52s57.h>
 
@@ -156,6 +157,11 @@ public:
 	bool CallLateInit(void);
 
 	wxArrayString GetPlugInChartClassNameArray(void);
+
+	ListOfPI_S57Obj* GetPlugInObjRuleListAtLatLon(ChartPlugInWrapper* target, float zlat,
+												  float zlon, float SelectRadius,
+												  const ViewPort& vp);
+	wxString CreateObjDescriptions(ChartPlugInWrapper* target, ListOfPI_S57Obj* rule_list);
 
 	wxString GetLastError();
 	MainFrame* GetParentFrame()

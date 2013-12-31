@@ -89,6 +89,7 @@ extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
 extern RouteList* pRouteList;
 extern PlugInManager* g_pi_manager;
+extern bool g_b_useStencil;
 
 // Some static helper funtions
 // Scope is local to this module
@@ -323,7 +324,8 @@ bool PlugInManager::UpDateChartDataTypes(void)
 	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
 
-		if (pic->m_cap_flag & INSTALLS_PLUGIN_CHART)
+		if ((pic->m_cap_flag & INSTALLS_PLUGIN_CHART)
+			|| (pic->m_cap_flag & INSTALLS_PLUGIN_CHART_GL))
 			bret = true;
 	}
 
@@ -1197,7 +1199,9 @@ wxArrayString PlugInManager::GetPlugInChartClassNameArray(void)
 	wxArrayString array;
 	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);
-		if (pic->m_bEnabled && pic->m_bInitState && (pic->m_cap_flag & INSTALLS_PLUGIN_CHART)) {
+		if (pic->m_bEnabled && pic->m_bInitState
+			&& ((pic->m_cap_flag & INSTALLS_PLUGIN_CHART)
+				|| (pic->m_cap_flag & INSTALLS_PLUGIN_CHART_GL))) {
 			wxArrayString carray = pic->m_pplugin->GetDynamicChartClassNameArray();
 
 			for (unsigned int j = 0; j < carray.size(); j++)
@@ -2459,4 +2463,34 @@ int PlugInChartBase::GetSize_Y()
 
 void PlugInChartBase::latlong_to_chartpix(double, double, double &, double &)
 {}
+
+// ----------------------------------------------------------------------------
+// PlugInChartBaseGL Implmentation
+//  
+// ----------------------------------------------------------------------------
+
+PlugInChartBaseGL::PlugInChartBaseGL()
+{}
+
+PlugInChartBaseGL::~PlugInChartBaseGL()
+{}
+
+int PlugInChartBaseGL::RenderRegionViewOnGL( const wxGLContext &glc, const PlugIn_ViewPort& VPoint,
+                                  const wxRegion &Region, bool b_use_stencil )
+{
+    return 0;
+}
+
+ListOfPI_S57Obj *PlugInChartBaseGL::GetObjRuleListAtLatLon(float lat, float lon, float select_radius,
+                                                           PlugIn_ViewPort *VPoint)
+{
+    return NULL;
+}
+
+wxString PlugInChartBaseGL::CreateObjDescriptions( ListOfPI_S57Obj* obj_list )
+{
+    return _T("");
+}
+
+
 

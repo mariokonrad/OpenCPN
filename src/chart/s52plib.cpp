@@ -1435,7 +1435,7 @@ S52_TextC* S52_PL_parseTE(ObjRazRules* rzRules, Rules* rules, char*)
 }
 
 bool s52plib::RenderText(wxDC* pdc, S52_TextC* ptext, int x, int y, wxRect* pRectDrawn,
-						 S57Obj* pobj, bool bCheckOverlap, const ViewPort& vp)
+						 S57Obj* WXUNUSED(pobj), bool bCheckOverlap, const ViewPort& vp)
 {
 #ifdef DrawText
 #undef DrawText
@@ -1528,7 +1528,7 @@ bool s52plib::RenderText(wxDC* pdc, S52_TextC* ptext, int x, int y, wxRect* pRec
 			pRectDrawn->SetHeight(ptext->RGBA_height);
 
 			if (bCheckOverlap) {
-				if (CheckTextRectList(*pRectDrawn, pobj))
+				if (CheckTextRectList(*pRectDrawn, ptext))
 					bdraw = false;
 			}
 
@@ -1607,7 +1607,7 @@ bool s52plib::RenderText(wxDC* pdc, S52_TextC* ptext, int x, int y, wxRect* pRec
 		pRectDrawn->SetHeight(h);
 
 		if (bCheckOverlap) {
-			if (CheckTextRectList(*pRectDrawn, pobj))
+			if (CheckTextRectList(*pRectDrawn, ptext))
 				bdraw = false;
 		}
 
@@ -1631,13 +1631,13 @@ bool s52plib::RenderText(wxDC* pdc, S52_TextC* ptext, int x, int y, wxRect* pRec
 }
 
 // Return true if test_rect overlaps any rect in the current text rectangle list, except itself
-bool s52plib::CheckTextRectList(const wxRect& test_rect, S57Obj* pobj)
+bool s52plib::CheckTextRectList(const wxRect& test_rect, S52_TextC* ptext)
 {
 	// Iterate over the current object list, looking at rText
 
-	for (ObjList::const_iterator node = m_textObjList.begin(); node != m_textObjList.end(); ++node) {
+	for (TextObjList::const_iterator node = m_textObjList.begin(); node != m_textObjList.end(); ++node) {
 		if ((*node)->rText.Intersects(test_rect)) {
-			if (*node != pobj)
+			if (*node != ptext)
 				return true;
 		}
 	}
@@ -1779,13 +1779,13 @@ int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp,
 		bool bwas_drawn
 			= RenderText(m_pdc, text, r.x, r.y, &rect, rzRules->obj, m_bDeClutterText, vp);
 
-		// If this is an un-cached text object render, then do not update the S57Obj in any way
+        // If this is an un-cached text object render, then do not update the text object in any way
 		if (b_free_text) {
 			delete text;
 			return 1;
 		}
 
-		rzRules->obj->rText = rect;
+		text->rText = rect;
 
 		// If this text was actually drawn, add a pointer to its rect to the de-clutter list if
 		// it doesn't already exist
@@ -1793,14 +1793,14 @@ int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp,
 			if (bwas_drawn) {
 				// FIXME: replace this with std::find
 				bool b_found = false;
-				for (ObjList::const_iterator node = m_textObjList.begin(); node != m_textObjList.end(); ++node) {
-					if (*node == rzRules->obj) {
+				for (TextObjList::const_iterator node = m_textObjList.begin(); node != m_textObjList.end(); ++node) {
+					if (*node == text) {
 						b_found = true;
 						break;
 					}
 				}
 				if (!b_found)
-					m_textObjList.push_back(rzRules->obj);
+					m_textObjList.push_back(text);
 			}
 		}
 
@@ -6119,7 +6119,7 @@ void s52plib::AdjustTextList(int dx, int dy, int screenw, int screenh)
 	// 1. Apply the specified offset to the list elements
 	// 2. Remove any list elements that are off screen after applied offset
 
-	ObjList::iterator node = m_textObjList.begin();
+	TextObjList::iterator node = m_textObjList.begin();
 	while (node != m_textObjList.end()) {
 		wxRect* pcurrent = &((*node)->rText);
 		pcurrent->Offset(dx, dy);
@@ -6133,23 +6133,29 @@ void s52plib::AdjustTextList(int dx, int dy, int screenw, int screenh)
 	}
 }
 
-bool s52plib::GetPointPixArray(ObjRazRules* rzRules, wxPoint2DDouble* pd, wxPoint* pp, int nv,
-							   const ViewPort&)
-{
-	if (rzRules->obj->m_chart_context->chart) {
-		rzRules->obj->m_chart_context->chart->GetPointPix(rzRules, pd, pp, nv);
-	} else {
-		// todo fix for PlugIn, affects OpenGL only
-	}
-
-	return true;
-}
-
 static int roundint(double x) // FIXME: code duplication, see S57Chart.cpp
 {
 	int tmp = static_cast<int>(x);
 	tmp += (x - tmp >= 0.5) - (x - tmp <= -0.5);
 	return tmp;
+}
+
+bool s52plib::GetPointPixArray(ObjRazRules* rzRules, wxPoint2DDouble* pd, wxPoint* pp, int nv,
+							   const ViewPort& vp)
+{
+	if (rzRules->obj->m_chart_context->chart) {
+		rzRules->obj->m_chart_context->chart->GetPointPix(rzRules, pd, pp, nv);
+	} else {
+		for (int i = 0; i < nv; i++) {
+			pp[i].x = roundint(((pd[i].m_x - rzRules->sm_transform_parms->easting_vp_center)
+								* vp.view_scale_ppm) + (vp.pix_width / 2));
+			pp[i].y = roundint((vp.pix_height / 2)
+							   - ((pd[i].m_y - rzRules->sm_transform_parms->northing_vp_center)
+								  * vp.view_scale_ppm));
+		}
+	}
+
+	return true;
 }
 
 bool s52plib::GetPointPixSingle(ObjRazRules* rzRules, float north, float east, wxPoint* r,

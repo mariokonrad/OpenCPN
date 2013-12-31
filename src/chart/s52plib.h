@@ -392,10 +392,10 @@ private:
     bool RenderText( wxDC *pdc, S52_TextC *ptext, int x, int y,
         wxRect *pRectDrawn, S57Obj *pobj, bool bCheckOverlap, const ViewPort& vp );
 
-    bool CheckTextRectList( const wxRect &test_rect, S57Obj *pobj );
-    int RenderT_All( ObjRazRules *rzRules, Rules *rules, const ViewPort& vp, bool bTX );
+    bool CheckTextRectList( const wxRect &test_rect, S52_TextC *ptext );
+	int RenderT_All(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp, bool bTX);
 
-    int PrioritizeLineFeature( ObjRazRules *rzRules, int npriority );
+	int PrioritizeLineFeature( ObjRazRules *rzRules, int npriority );
 
     int dda_tri( wxPoint *ptp, S52color *c, render_canvas_parms *pb_spec,
         render_canvas_parms *pPatt_spec );
@@ -441,8 +441,8 @@ private:
     int m_colortable_index;
     int m_colortable_index_save;
 
-	typedef std::list<S57Obj*> ObjList;
-    ObjList m_textObjList;
+	typedef std::list<S52_TextC*> TextObjList;
+    TextObjList m_textObjList;
 
     double m_display_pix_per_mm;
 

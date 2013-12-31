@@ -4503,6 +4503,7 @@ void s57chart::CreateSENCRecord(OGRFeature* pFeature, FILE* fpOut, int mode, S57
 							// ENC is using UCS-2 / UTF-16 encoding
 							wxMBConvUTF16 conv;
 							wxString att_conv(pAttrVal, conv);
+							att_conv.RemoveLast(); // Remove the \037 that terminates UTF-16 strings in S57
 							wxAttrValue = att_conv;
 						} else if (poReader->GetNall() == 1) {
 							// ENC is using Lex level 1 (ISO 8859_1) encoding
@@ -4523,6 +4524,7 @@ void s57chart::CreateSENCRecord(OGRFeature* pFeature, FILE* fpOut, int mode, S57
 								// ENC is using UCS-2 / UTF-16 encoding
 								wxMBConvUTF16 conv;
 								wxString att_conv(pAttrVal, conv);
+								att_conv.RemoveLast(); // Remove the \037 that terminates UTF-16 strings in S57
 								wxAttrValue = att_conv;
 							} else if (poReader->GetNall() == 1) {
 								// ENC is using Lex level 1 (ISO 8859_1) encoding

@@ -126,6 +126,8 @@ public:
 
 	AISTargetTrackList m_ptrack;
 	AIS_Area_Notice_Hash area_notices;
+	bool b_specialPosnReport;
+	int altitude; // Metres, from special position report(9)
 };
 
 }

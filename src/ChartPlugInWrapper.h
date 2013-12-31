@@ -63,6 +63,7 @@ class ChartPlugInWrapper : public chart::ChartBase
 		virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion *pValidRegion);
 		virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
 		virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
+		virtual PlugInChartBase *GetPlugInChart(void);
 		virtual int GetCOVREntries() const;
 		virtual int GetCOVRTablePoints(int iTable) const;
 		virtual int GetCOVRTablenPoints(int iTable) const;

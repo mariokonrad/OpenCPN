@@ -70,7 +70,10 @@ int AIS_Bitstring::GetInt(int sp, int len, bool signed_flag)
 {
 	int acc = 0;
 	int s0p = sp - 1; // to zero base
-	int cp, cx, c0, cs;
+	int cp;
+	int cx;
+	int c0;
+	int cs;
 
 	for (int i = 0; i < len; i++) {
 		acc = acc << 1;
@@ -88,13 +91,15 @@ int AIS_Bitstring::GetInt(int sp, int len, bool signed_flag)
 
 int AIS_Bitstring::GetStr(int sp, int bit_len, char* dest, int max_len)
 {
-	// char temp_str[85];
 	char* temp_str = new char[max_len + 1];
 
 	char acc = 0;
 	int s0p = sp - 1; // to zero base
 	int k = 0;
-	int cp, cx, c0, cs;
+	int cp;
+	int cx;
+	int c0;
+	int cs;
 
 	int i = 0;
 	while (i < bit_len && k < max_len) {

@@ -33,7 +33,7 @@
 namespace ais
 {
 
-void make_hash_ERI(int key, const wxString & description);
+void make_hash_ERI(int key, const wxString& description);
 
 class AIS_Target_Data
 {

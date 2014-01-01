@@ -21,11 +21,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __AIS_DECODER_H__
-#define __AIS_DECODER_H__
+#ifndef __AIS__AIS_DECODER__H__
+#define __AIS__AIS_DECODER__H__
 
 #include <ais/ais.h>
-
 #include <sound/OCPN_Sound.h>
 
 class OCPN_DataStreamEvent;
@@ -44,27 +43,14 @@ public:
 
 	void OnEvtAIS(OCPN_DataStreamEvent& event);
 	AIS_Error Decode(const wxString& str);
-	AIS_Target_Hash* GetTargetList(void)
-	{
-		return AISTargetList;
-	}
-	AIS_Target_Hash* GetAreaNoticeSourcesList(void)
-	{
-		return AIS_AreaNotice_Sources;
-	}
+	AIS_Target_Hash* GetTargetList(void);
+	AIS_Target_Hash* GetAreaNoticeSourcesList(void);
 	AIS_Target_Data* Get_Target_Data_From_MMSI(int mmsi);
-	int GetNumTargets(void)
-	{
-		return m_n_targets;
-	}
-	bool IsAISSuppressed(void)
-	{
-		return m_bSuppressed;
-	}
-	bool IsAISAlertGeneral(void)
-	{
-		return m_bGeneralAlert;
-	}
+
+	int GetNumTargets(void) const;
+	bool IsAISSuppressed(void) const;
+	bool IsAISAlertGeneral(void) const;
+
 	AIS_Error DecodeSingleVDO(const wxString& str, GenericPosDatEx* pos, wxString* acc);
 
 private:

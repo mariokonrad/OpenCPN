@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __AISTARGETALERTDIALOG_H__
-#define __AISTARGETALERTDIALOG_H__
+#ifndef __AIS__AISTARGETALERTDIALOG__H__
+#define __AIS__AISTARGETALERTDIALOG__H__
 
 #include <OCPN_AlertDialog.h>
 
@@ -30,6 +30,7 @@ class wxHtmlWindow;
 
 namespace ais
 {
+
 class AIS_Decoder;
 
 class AISTargetAlertDialog : public OCPN_AlertDialog

@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __AISTARGETQUERYDIALOG_H__
-#define __AISTARGETQUERYDIALOG_H__
+#ifndef __AIS__AISTARGETQUERYDIALOG__H__
+#define __AIS__AISTARGETQUERYDIALOG__H__
 
 #include <wx/dialog.h>
 #include <ColorScheme.h>

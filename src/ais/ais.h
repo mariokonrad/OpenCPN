@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __AIS_H__
-#define __AIS_H__
+#ifndef __AIS__AIS__H__
+#define __AIS__AIS__H__
 
 #include <wx/datetime.h>
 #include <wx/listctrl.h>

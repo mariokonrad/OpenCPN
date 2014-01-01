@@ -38,6 +38,7 @@ public:
 };
 
 typedef std::list<AISTargetTrackPoint> AISTargetTrackList;
+
 }
 
 

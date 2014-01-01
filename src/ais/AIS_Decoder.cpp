@@ -82,8 +82,7 @@ BEGIN_EVENT_TABLE(AIS_Decoder, wxEvtHandler)
 	EVT_TIMER(TIMER_AISAUDIO, AIS_Decoder::OnTimerAISAudio)
 END_EVENT_TABLE()
 
-
-AIS_Decoder::AIS_Decoder( wxFrame *parent )
+AIS_Decoder::AIS_Decoder(wxFrame* parent)
 {
 	AISTargetList = new AIS_Target_Hash;
 	AIS_AreaNotice_Sources = new AIS_Target_Hash;
@@ -97,19 +96,20 @@ AIS_Decoder::AIS_Decoder( wxFrame *parent )
 	m_parent_frame = parent;
 
 	TimerAIS.SetOwner(this, TIMER_AIS1);
-	TimerAIS.Start(TIMER_AIS_MSEC,wxTIMER_CONTINUOUS);
+	TimerAIS.Start(TIMER_AIS_MSEC, wxTIMER_CONTINUOUS);
 
 	//  Create/connect a dynamic event handler slot for wxEVT_OCPN_DATASTREAM(s)
-	Connect(wxEVT_OCPN_DATASTREAM, (wxObjectEventFunction)(wxEventFunction)&AIS_Decoder::OnEvtAIS);
+	Connect(wxEVT_OCPN_DATASTREAM,
+			(wxObjectEventFunction)(wxEventFunction) & AIS_Decoder::OnEvtAIS);
 }
 
-AIS_Decoder::~AIS_Decoder( void )
+AIS_Decoder::~AIS_Decoder(void)
 {
 	AIS_Target_Hash::iterator it;
-	AIS_Target_Hash *current_targets = GetTargetList();
+	AIS_Target_Hash* current_targets = GetTargetList();
 
-	for( it = ( *current_targets ).begin(); it != ( *current_targets ).end(); ++it ) {
-		AIS_Target_Data *td = it->second;
+	for (it = (*current_targets).begin(); it != (*current_targets).end(); ++it) {
+		AIS_Target_Data* td = it->second;
 
 		delete td;
 	}
@@ -118,7 +118,8 @@ AIS_Decoder::~AIS_Decoder( void )
 	delete AIS_AreaNotice_Sources;
 
 #ifdef AIS_DEBUG
-	printf("First message[1, 2] ticks: %d  Last Message [1,2]ticks %d  Difference:  %d\n", first_rx_ticks, rx_ticks, rx_ticks - first_rx_ticks);
+	printf("First message[1, 2] ticks: %d  Last Message [1,2]ticks %d  Difference:  %d\n",
+		   first_rx_ticks, rx_ticks, rx_ticks - first_rx_ticks);
 #endif
 }
 
@@ -194,71 +195,66 @@ void AIS_Decoder::BuildERIShipTypeHash(void)
 	make_hash_ERI(1910, _("Hydrofoil"));
 }
 
-//----------------------------------------------------------------------------------
-//     Handle events from AIS DataStream
-//----------------------------------------------------------------------------------
-void AIS_Decoder::OnEvtAIS(OCPN_DataStreamEvent & event)
+/// Handle events from AIS DataStream
+void AIS_Decoder::OnEvtAIS(OCPN_DataStreamEvent& event)
 {
 	wxString message = wxString(event.GetNMEAString().c_str(), wxConvUTF8);
 
-	if( !message.IsEmpty() )
-	{
-		if( message.Mid( 3, 3 ).IsSameAs( _T("VDM") ) ||
-				message.Mid( 3, 3 ).IsSameAs( _T("VDO") ) ||
-				message.Mid( 1, 5 ).IsSameAs( _T("FRPOS") ) ||
-				message.Mid( 1, 2 ).IsSameAs( _T("CD") ) ||
-				message.Mid( 3, 3 ).IsSameAs( _T("TLL") ) ||
-				message.Mid( 3, 3 ).IsSameAs( _T("TTM") ) ||
-				message.Mid( 3, 3 ).IsSameAs( _T("OSD") ) ||
-				( g_bWplIsAprsPosition && message.Mid( 3, 3 ).IsSameAs( _T("WPL") ) ) )
-		{
+	if (!message.IsEmpty()) {
+		if (message.Mid(3, 3).IsSameAs(_T("VDM"))
+			|| message.Mid(3, 3).IsSameAs(_T("VDO"))
+			|| message.Mid(1, 5).IsSameAs(_T("FRPOS"))
+			|| message.Mid(1, 2).IsSameAs(_T("CD"))
+			|| message.Mid(3, 3).IsSameAs(_T("TLL"))
+			|| message.Mid(3, 3).IsSameAs(_T("TTM"))
+			|| message.Mid(3, 3).IsSameAs(_T("OSD"))
+			|| (g_bWplIsAprsPosition && message.Mid(3, 3).IsSameAs(_T("WPL")))) {
 			Decode(message);
 			gFrame->TouchAISActive();
 		}
 	}
 }
 
-//----------------------------------------------------------------------------------
-//      Decode a single AIVDO sentence to a Generic Position Report
-//----------------------------------------------------------------------------------
-AIS_Error AIS_Decoder::DecodeSingleVDO( const wxString& str, GenericPosDatEx *pos, wxString *accumulator )
+/// Decode a single AIVDO sentence to a Generic Position Report
+AIS_Error AIS_Decoder::DecodeSingleVDO(const wxString& str, GenericPosDatEx* pos,
+									   wxString* accumulator)
 {
-	//  Make some simple tests for validity
-	if( str.Len() > 100 )
+	// Make some simple tests for validity
+	if (str.Len() > 100)
 		return AIS_NMEAVDX_TOO_LONG;
 
-	if( !NMEACheckSumOK( str ) )
+	if (!NMEACheckSumOK(str))
 		return AIS_NMEAVDX_CHECKSUM_BAD;
 
-	if( !pos )
+	if (!pos)
 		return AIS_GENERIC_ERROR;
 
-	if( !accumulator )
+	if (!accumulator)
 		return AIS_GENERIC_ERROR;
 
-	//  We only process AIVDO messages
-	if( !str.Mid( 1, 5 ).IsSameAs( _T("AIVDO") ) )
+	// We only process AIVDO messages
+	if (!str.Mid(1, 5).IsSameAs(_T("AIVDO")))
 		return AIS_GENERIC_ERROR;
 
-	//  Use a tokenizer to pull out the first 4 fields
-	wxStringTokenizer tkz( str, _T(",") );
+	// Use a tokenizer to pull out the first 4 fields
+	wxStringTokenizer tkz(str, _T(","));
 
 	wxString token;
-	token = tkz.GetNextToken();         // !xxVDx
+	token = tkz.GetNextToken(); // !xxVDx
 
 	token = tkz.GetNextToken();
-	int nsentences = atoi( token.mb_str() );
+	int nsentences = atoi(token.mb_str());
 
 	token = tkz.GetNextToken();
-	int isentence = atoi( token.mb_str() );
+	int isentence = atoi(token.mb_str());
 
-	token = tkz.GetNextToken();         // skip 2 fields
+	token = tkz.GetNextToken(); // skip 2 fields
 	token = tkz.GetNextToken();
 
 	wxString string_to_parse;
 	string_to_parse.Clear();
 
-	//  Fill the output structure with all NANs
+	// Fill the output structure with all NANs
 	pos->kLat = NAN;
 	pos->kLon = NAN;
 	pos->kCog = NAN;
@@ -267,90 +263,77 @@ AIS_Error AIS_Decoder::DecodeSingleVDO( const wxString& str, GenericPosDatEx *po
 	pos->kVar = NAN;
 	pos->kHdm = NAN;
 
-	//  Simple case first
-	//  First and only part of a one-part sentence
-	if( ( 1 == nsentences ) && ( 1 == isentence ) ) {
-		string_to_parse = tkz.GetNextToken();         // the encapsulated data
-	}
-
-	else if( nsentences > 1 ) {
-		if( 1 == isentence ) {
-			*accumulator = tkz.GetNextToken();         // the encapsulated data
+	// Simple case first
+	// First and only part of a one-part sentence
+	if ((1 == nsentences) && (1 == isentence)) {
+		string_to_parse = tkz.GetNextToken(); // the encapsulated data
+	} else if (nsentences > 1) {
+		if (1 == isentence) {
+			*accumulator = tkz.GetNextToken(); // the encapsulated data
+		} else {
+			accumulator->Append(tkz.GetNextToken());
 		}
 
-		else {
-			accumulator->Append(tkz.GetNextToken() );
-		}
-
-		if( isentence == nsentences ) {         // ready to parse
+		if (isentence == nsentences) { // ready to parse
 			string_to_parse = *accumulator;
 		}
 	}
 
-	if( string_to_parse.IsEmpty() && (nsentences > 1) ) {      // not ready, so return with NAN
-		return AIS_INCOMPLETE_MULTIPART;                       // and non-zero return
+	if (string_to_parse.IsEmpty() && (nsentences > 1)) { // not ready, so return with NAN
+		return AIS_INCOMPLETE_MULTIPART; // and non-zero return
 	}
 
+	// Create the bit accessible string
+	AIS_Bitstring strbit(string_to_parse.mb_str());
 
-	//  Create the bit accessible string
-	AIS_Bitstring strbit( string_to_parse.mb_str() );
+	AIS_Target_Data* pTargetData = new AIS_Target_Data;
 
-	AIS_Target_Data *pTargetData = new AIS_Target_Data;
+	bool bdecode_result = Parse_VDXBitstring(&strbit, pTargetData);
 
-	bool bdecode_result = Parse_VDXBitstring( &strbit, pTargetData );
-
-	if(bdecode_result) {
-		switch(pTargetData->MID)
-		{
+	if (bdecode_result) {
+		switch (pTargetData->MID) {
 			case 1:
 			case 2:
 			case 3:
-			case 18:
-				{
-					if( !pTargetData->b_positionDoubtful ) {
-						pos->kLat = pTargetData->Lat;
-						pos->kLon = pTargetData->Lon;
-					}
-					else {
-						pos->kLat = NAN;
-						pos->kLon = NAN;
-					}
-
-					if(pTargetData->COG == 360.0)
-						pos->kCog = NAN;
-					else
-						pos->kCog = pTargetData->COG;
-
-
-					if(pTargetData->SOG > 102.2)
-						pos->kSog = NAN;
-					else
-						pos->kSog = pTargetData->SOG;
-
-					if((int)pTargetData->HDG == 511)
-						pos->kHdt = NAN;
-					else
-						pos->kHdt = pTargetData->HDG;
-
-					//  VDO messages do not contain variation or magnetic heading
-					pos->kVar = NAN;
-					pos->kHdm = NAN;
-					break;
+			case 18: {
+				if (!pTargetData->b_positionDoubtful) {
+					pos->kLat = pTargetData->Lat;
+					pos->kLon = pTargetData->Lon;
+				} else {
+					pos->kLat = NAN;
+					pos->kLon = NAN;
 				}
+
+				if (pTargetData->COG == 360.0)
+					pos->kCog = NAN;
+				else
+					pos->kCog = pTargetData->COG;
+
+				if (pTargetData->SOG > 102.2)
+					pos->kSog = NAN;
+				else
+					pos->kSog = pTargetData->SOG;
+
+				if ((int)pTargetData->HDG == 511)
+					pos->kHdt = NAN;
+				else
+					pos->kHdt = pTargetData->HDG;
+
+				// VDO messages do not contain variation or magnetic heading
+				pos->kVar = NAN;
+				pos->kHdm = NAN;
+				break;
+			}
 			default:
-				return AIS_GENERIC_ERROR;       // unrecognised sentence
+				return AIS_GENERIC_ERROR; // unrecognised sentence
 		}
 
 		return AIS_NoError;
-	}
-	else
+	} else
 		return AIS_GENERIC_ERROR;
 }
 
-
-//----------------------------------------------------------------------------------------
-//      Decode NMEA VDM/VDO/FRPOS/DSCDSE/TTM/TLL/OSD/RSD/TLB/WPL sentence to AIS Target(s)
-//----------------------------------------------------------------------------------------
+/// Decode NMEA VDM/VDO/FRPOS/DSCDSE/TTM/TLL/OSD/RSD/TLB/WPL sentence to AIS Target(s)
 AIS_Error AIS_Decoder::Decode(const wxString& str)
 {
 	AIS_Error ret;
@@ -363,12 +346,12 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 	int gpsg_utc_sec = 0;
 	char gpsg_name_str[21];
 
-	double dsc_lat = 0.;
-	double dsc_lon = 0.;
+	double dsc_lat = 0.0;
+	double dsc_lon = 0.0;
 	double dsc_mins, dsc_degs, dsc_tmp, dsc_addr;
 	double dse_tmp, dse_addr;
-	double dse_lat = 0.;
-	double dse_lon = 0.;
+	double dse_lat = 0.0;
+	double dse_lon = 0.0;
 	long dsc_fmt, dsc_quadrant;
 
 	int gpsg_mmsi = 0;
@@ -379,12 +362,12 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 	int mmsi = 0;
 
 	long arpa_tgt_num = 0;
-	double arpa_sog = 0.;
-	double arpa_cog = 0.;
-	double arpa_lat = 0.;
-	double arpa_lon = 0.;
-	double arpa_dist = 0.;
-	double arpa_brg = 0.;
+	double arpa_sog = 0.0;
+	double arpa_cog = 0.0;
+	double arpa_lat = 0.0;
+	double arpa_lon = 0.0;
+	double arpa_dist = 0.0;
+	double arpa_brg = 0.0;
 	wxString arpa_brgunit;
 	wxString arpa_status;
 	wxString arpa_distunit;
@@ -399,12 +382,12 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 	bool arpa_lost = true;
 	bool arpa_nottracked = false;
 
-	double aprs_lat = 0.;
-	double aprs_lon = 0.;
+	double aprs_lat = 0.0;
+	double aprs_lon = 0.0;
 	char aprs_name_str[21];
 	double aprs_mins, aprs_degs;
 
-	//  Make some simple tests for validity
+	// Make some simple tests for validity
 
 	if (str.Len() > 100)
 		return AIS_NMEAVDX_TOO_LONG;
@@ -414,7 +397,7 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 	}
 	if (str.Mid(1, 2).IsSameAs(_T("CD"))) {
 		// parse a DSC Position message            $CDDSx,.....
-		//  Use a tokenizer to pull out the first 9 fields
+		// Use a tokenizer to pull out the first 9 fields
 		wxString string(str);
 		wxStringTokenizer tkz(string, _T(",*"));
 
@@ -423,7 +406,7 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 
 		if (str.Mid(3, 3).IsSameAs(_T("DSC"))) {
 			token = tkz.GetNextToken(); // format specifier
-										// (02-area,12-distress,16-allships,20-individual,...)
+			// (02-area,12-distress,16-allships,20-individual,...)
 			token.ToLong(&dsc_fmt);
 
 			token = tkz.GetNextToken(); // address i.e. mmsi*10 for received msg, or area spec
@@ -571,9 +554,9 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 		}
 
 		mmsi = arpa_mmsi = 199200000 + arpa_tgt_num; // 199 is INMARSAT-A MID, should not occur ever
-													 // in AIS stream + we make sure we are out of
-													 // the hashes for GPSGate buddies by being
-													 // above 1992*
+		// in AIS stream + we make sure we are out of
+		// the hashes for GPSGate buddies by being
+		// above 1992*
 	} else if (str.Mid(3, 3).IsSameAs(_T("TLL"))) {
 		//$--TLL,xx,llll.lll,a,yyyyy.yyy,a,c--c,hhmmss.ss,a,a*hh<CR><LF>
 		//"$RATLL,01,5603.370,N,01859.976,E,ALPHA,015200.36,T,*75\r\n"
@@ -612,17 +595,17 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 		arpa_utc_min = (int)(arpa_utc_time / 100.0) - arpa_utc_hour * 100;
 		arpa_utc_sec = (int)arpa_utc_time - arpa_utc_hour * 10000 - arpa_utc_min * 100;
 		arpa_status = tkz.GetNextToken(); // 6) Target status: L = lost,tracked target has beenlost
-										  // Q = query,target in the process of acquisition T =
-										  // tracking
+		// Q = query,target in the process of acquisition T =
+		// tracking
 		if (arpa_status != _T("L"))
 			arpa_lost = false;
 		else if (arpa_status != wxEmptyString)
 			arpa_nottracked = true;
 		arpa_reftarget = tkz.GetNextToken(); // 7) Reference target=R,null otherwise
 		mmsi = arpa_mmsi = 199200000 + arpa_tgt_num; // 199 is INMARSAT-A MID, should not occur ever
-													 // in AIS stream + we make sure we are out of
-													 // the hashes for GPSGate buddies by being
-													 // above 1992*
+		// in AIS stream + we make sure we are out of
+		// the hashes for GPSGate buddies by being
+		// above 1992*
 	} else if (str.Mid(3, 3).IsSameAs(_T("OSD"))) {
 		//$--OSD,x.x,A,x.x,a,x.x,a,x.x,x.x,a*hh <CR><LF>
 		wxString string(str);
@@ -632,14 +615,14 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 		token = tkz.GetNextToken(); // Sentence (xxOSD)
 		token = tkz.GetNextToken(); // 1) Heading (true)
 		token.ToDouble(&arpa_ref_hdg);
-		//2) speed
-		//3) Vessel Course, degrees True
-		//4) Course Reference, B/M/W/R/P (see note)
-		//5) Vessel Speed
-		//6) Speed Reference, B/M/W/R/P (see note)
-		//7) Vessel Set, degrees True - Manually entered
-		//8) Vessel drift (speed) - Manually entered
-		//9) Speed Units K = km/h; N = Knots; S = statute miles/h
+		// 2) speed
+		// 3) Vessel Course, degrees True
+		// 4) Course Reference, B/M/W/R/P (see note)
+		// 5) Vessel Speed
+		// 6) Speed Reference, B/M/W/R/P (see note)
+		// 7) Vessel Set, degrees True - Manually entered
+		// 8) Vessel drift (speed) - Manually entered
+		// 9) Speed Units K = km/h; N = Knots; S = statute miles/h
 	} else if (str.Mid(3, 3).IsSameAs(_T("WPL"))) {
 		//** $--WPL,llll.ll,a,yyyyy.yy,a,c--c*hh<CR><LF>
 		wxString string(str);
@@ -676,8 +659,8 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 				hash = hash / 100000;
 		}
 		mmsi = aprs_mmsi = 199300000 + hash; // 199 is INMARSAT-A MID, should not occur ever in AIS
-											 // stream + we make sure we are out of the hashes for
-											 // GPSGate buddies and ARPA by being above 1993*
+		// stream + we make sure we are out of the hashes for
+		// GPSGate buddies and ARPA by being above 1993*
 	} else if (str.Mid(1, 5).IsSameAs(_T("FRPOS"))) {
 		// parse a GpsGate Position message            $FRPOS,.....
 
@@ -1025,507 +1008,522 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 
 		ret = AIS_NoError;
 
-	} else
-		ret = AIS_Partial;                // accumulating parts of a multi-sentence message
+	} else {
+		ret = AIS_Partial; // accumulating parts of a multi-sentence message
+	}
 	n_msgs++;
 #ifdef AIS_DEBUG
-	if((n_msgs % 10000) == 0)
-		printf("n_msgs %10d m_n_targets: %6d  n_msg1: %10d  n_msg5+24: %10d  n_new5: %10d \n", n_msgs, n_targets, n_msg1, n_msg5 + n_msg24, n_newname);
+	if ((n_msgs % 10000) == 0)
+		printf("n_msgs %10d m_n_targets: %6d  n_msg1: %10d  n_msg5+24: %10d  n_new5: %10d \n",
+			   n_msgs, n_targets, n_msg1, n_msg5 + n_msg24, n_newname);
 #endif
 
 	return ret;
 }
 
-//----------------------------------------------------------------------------
-//      Parse a NMEA VDM/VDO Bitstring
-//----------------------------------------------------------------------------
-bool AIS_Decoder::Parse_VDXBitstring( AIS_Bitstring *bstr, AIS_Target_Data *ptd )
+/// Parse a NMEA VDM/VDO Bitstring
+bool AIS_Decoder::Parse_VDXBitstring(AIS_Bitstring* bstr, AIS_Target_Data* ptd)
 {
 	bool parse_result = false;
 	bool b_posn_report = false;
 
 	wxDateTime now = wxDateTime::Now();
-	now.MakeGMT( true );                    // no DST
-	if( now.IsDST() ) now.Subtract( wxTimeSpan( 1, 0, 0, 0 ) );
-	int message_ID = bstr->GetInt( 1, 6 );        // Parse on message ID
+	now.MakeGMT(true); // no DST
+	if (now.IsDST())
+		now.Subtract(wxTimeSpan(1, 0, 0, 0));
+	int message_ID = bstr->GetInt(1, 6); // Parse on message ID
 	ptd->MID = message_ID;
-	ptd->MMSI = bstr->GetInt( 9, 30 );           // MMSI is always in the same spot in the bitstream
+	ptd->MMSI = bstr->GetInt(9, 30); // MMSI is always in the same spot in the bitstream
 
-	switch( message_ID ){
-		case 1:                                 // Position Report
+	switch (message_ID) {
+		case 1: // Position Report
 		case 2:
 		case 3: {
-					n_msg1++;
+			n_msg1++;
 
-					ptd->NavStatus = bstr->GetInt( 39, 4 );
-					ptd->SOG = 0.1 * ( bstr->GetInt( 51, 10 ) );
+			ptd->NavStatus = bstr->GetInt(39, 4);
+			ptd->SOG = 0.1 * (bstr->GetInt(51, 10));
 
-					int lon = bstr->GetInt( 62, 28 );
-					if( lon & 0x08000000 )                    // negative?
-						lon |= 0xf0000000;
-					double lon_tentative = lon / 600000.;
+			int lon = bstr->GetInt(62, 28);
+			if (lon & 0x08000000) // negative?
+				lon |= 0xf0000000;
+			double lon_tentative = lon / 600000.;
 
-					int lat = bstr->GetInt( 90, 27 );
-					if( lat & 0x04000000 )                    // negative?
-						lat |= 0xf8000000;
-					double lat_tentative = lat / 600000.;
+			int lat = bstr->GetInt(90, 27);
+			if (lat & 0x04000000) // negative?
+				lat |= 0xf8000000;
+			double lat_tentative = lat / 600000.;
 
-					if( ( lon_tentative <= 180. ) && ( lat_tentative <= 90. ) ) // Ship does not report Lat or Lon "unavailable"
-					{
-						ptd->Lon = lon_tentative;
-						ptd->Lat = lat_tentative;
-						ptd->b_positionDoubtful = false;
-						ptd->b_positionOnceValid = true;          // Got the position at least once
-						ptd->PositionReportTicks = now.GetTicks();
-					} else
-						ptd->b_positionDoubtful = true;
+			if ((lon_tentative <= 180.)
+				&& (lat_tentative <= 90.)) // Ship does not report Lat or Lon "unavailable"
+			{
+				ptd->Lon = lon_tentative;
+				ptd->Lat = lat_tentative;
+				ptd->b_positionDoubtful = false;
+				ptd->b_positionOnceValid = true; // Got the position at least once
+				ptd->PositionReportTicks = now.GetTicks();
+			} else
+				ptd->b_positionDoubtful = true;
 
-					//    decode balance of message....
-					ptd->COG = 0.1 * ( bstr->GetInt( 117, 12 ) );
-					ptd->HDG = 1.0 * ( bstr->GetInt( 129, 9 ) );
+			//    decode balance of message....
+			ptd->COG = 0.1 * (bstr->GetInt(117, 12));
+			ptd->HDG = 1.0 * (bstr->GetInt(129, 9));
 
-					ptd->ROTAIS = bstr->GetInt( 43, 8 );
-					double rot_dir = 1.0;
+			ptd->ROTAIS = bstr->GetInt(43, 8);
+			double rot_dir = 1.0;
 
-					if( ptd->ROTAIS == 128 ) ptd->ROTAIS = -128;              // not available codes as -128
-					else if( ( ptd->ROTAIS & 0x80 ) == 0x80 ) {
-						ptd->ROTAIS = ptd->ROTAIS - 256;       // convert to twos complement
-						rot_dir = -1.0;
-					}
+			if (ptd->ROTAIS == 128)
+				ptd->ROTAIS = -128; // not available codes as -128
+			else if ((ptd->ROTAIS & 0x80) == 0x80) {
+				ptd->ROTAIS = ptd->ROTAIS - 256; // convert to twos complement
+				rot_dir = -1.0;
+			}
 
-					ptd->ROTIND = wxRound( rot_dir * pow( ( ( (double) ptd->ROTAIS ) / 4.733 ), 2 ) ); // Convert to indicated ROT
+			ptd->ROTIND = wxRound(
+				rot_dir * pow((((double)ptd->ROTAIS) / 4.733), 2)); // Convert to indicated ROT
 
-					ptd->m_utc_sec = bstr->GetInt( 138, 6 );
+			ptd->m_utc_sec = bstr->GetInt(138, 6);
 
-					if( ( 1 == message_ID ) || ( 2 == message_ID ) )      // decode SOTDMA per 7.6.7.2.2
-					{
-						ptd->SyncState = bstr->GetInt( 151, 2 );
-						ptd->SlotTO = bstr->GetInt( 153, 2 );
-						if( ( ptd->SlotTO == 1 ) && ( ptd->SyncState == 0 ) ) // UTCDirect follows
-						{
-							ptd->m_utc_hour = bstr->GetInt( 155, 5 );
+			if ((1 == message_ID) || (2 == message_ID)) // decode SOTDMA per 7.6.7.2.2
+			{
+				ptd->SyncState = bstr->GetInt(151, 2);
+				ptd->SlotTO = bstr->GetInt(153, 2);
+				if ((ptd->SlotTO == 1) && (ptd->SyncState == 0)) // UTCDirect follows
+				{
+					ptd->m_utc_hour = bstr->GetInt(155, 5);
 
-							ptd->m_utc_min = bstr->GetInt( 160, 7 );
+					ptd->m_utc_min = bstr->GetInt(160, 7);
 
-							if( ( ptd->m_utc_hour < 24 ) && ( ptd->m_utc_min < 60 )
-									&& ( ptd->m_utc_sec < 60 ) ) {
-								wxDateTime rx_time( ptd->m_utc_hour, ptd->m_utc_min, ptd->m_utc_sec );
-								rx_ticks = rx_time.GetTicks();
-								if( !b_firstrx ) {
-									first_rx_ticks = rx_ticks;
-									b_firstrx = true;
-								}
-							}
+					if ((ptd->m_utc_hour < 24) && (ptd->m_utc_min < 60) && (ptd->m_utc_sec < 60)) {
+						wxDateTime rx_time(ptd->m_utc_hour, ptd->m_utc_min, ptd->m_utc_sec);
+						rx_ticks = rx_time.GetTicks();
+						if (!b_firstrx) {
+							first_rx_ticks = rx_ticks;
+							b_firstrx = true;
 						}
 					}
-
-					//    Capture Euro Inland special passing arrangement signal ("stbd-stbd")
-					ptd->blue_paddle = bstr->GetInt( 144, 2 );
-					ptd->b_blue_paddle = ( ptd->blue_paddle == 2 );             // paddle is set
-
-					ptd->Class = AIS_CLASS_A;
-
-					//    Check for SART and friends by looking at first two digits of MMSI
-					int mmsi_start = ptd->MMSI / 10000000;
-
-					if( mmsi_start == 97 ) {
-						ptd->Class = AIS_SART;
-						ptd->StaticReportTicks = now.GetTicks(); // won't get a static report, so fake it here
-
-						//    On receipt of Msg 3, force any existing SART target out of acknowledge mode
-						//    by adjusting its ack_time to yesterday
-						//    This will cause any previously "Acknowledged" SART to re-alert.
-						ptd->m_ack_time = wxDateTime::Now() - wxTimeSpan::Day();
-					}
-
-					parse_result = true;                // so far so good
-					b_posn_report = true;
-
-					break;
 				}
+			}
+
+			//    Capture Euro Inland special passing arrangement signal ("stbd-stbd")
+			ptd->blue_paddle = bstr->GetInt(144, 2);
+			ptd->b_blue_paddle = (ptd->blue_paddle == 2); // paddle is set
+
+			ptd->Class = AIS_CLASS_A;
+
+			//    Check for SART and friends by looking at first two digits of MMSI
+			int mmsi_start = ptd->MMSI / 10000000;
+
+			if (mmsi_start == 97) {
+				ptd->Class = AIS_SART;
+				ptd->StaticReportTicks
+					= now.GetTicks(); // won't get a static report, so fake it here
+
+				//    On receipt of Msg 3, force any existing SART target out of acknowledge mode
+				//    by adjusting its ack_time to yesterday
+				//    This will cause any previously "Acknowledged" SART to re-alert.
+				ptd->m_ack_time = wxDateTime::Now() - wxTimeSpan::Day();
+			}
+
+			parse_result = true; // so far so good
+			b_posn_report = true;
+
+			break;
+		}
 
 		case 18: {
-					 ptd->NavStatus = UNDEFINED;         // Class B targets have no status.  Enforce this...
+			ptd->NavStatus = UNDEFINED; // Class B targets have no status.  Enforce this...
 
-					 ptd->SOG = 0.1 * ( bstr->GetInt( 47, 10 ) );
+			ptd->SOG = 0.1 * (bstr->GetInt(47, 10));
 
-					 int lon = bstr->GetInt( 58, 28 );
-					 if( lon & 0x08000000 )                    // negative?
-						 lon |= 0xf0000000;
-					 double lon_tentative = lon / 600000.;
+			int lon = bstr->GetInt(58, 28);
+			if (lon & 0x08000000) // negative?
+				lon |= 0xf0000000;
+			double lon_tentative = lon / 600000.;
 
-					 int lat = bstr->GetInt( 86, 27 );
-					 if( lat & 0x04000000 )                    // negative?
-						 lat |= 0xf8000000;
-					 double lat_tentative = lat / 600000.;
+			int lat = bstr->GetInt(86, 27);
+			if (lat & 0x04000000) // negative?
+				lat |= 0xf8000000;
+			double lat_tentative = lat / 600000.;
 
-					 if( ( lon_tentative <= 180. ) && ( lat_tentative <= 90. ) ) // Ship does not report Lat or Lon "unavailable"
-					 {
-						 ptd->Lon = lon_tentative;
-						 ptd->Lat = lat_tentative;
-						 ptd->b_positionDoubtful = false;
-						 ptd->b_positionOnceValid = true;          // Got the position at least once
-						 ptd->PositionReportTicks = now.GetTicks();
-					 } else
-						 ptd->b_positionDoubtful = true;
+			if ((lon_tentative <= 180.)
+				&& (lat_tentative <= 90.)) // Ship does not report Lat or Lon "unavailable"
+			{
+				ptd->Lon = lon_tentative;
+				ptd->Lat = lat_tentative;
+				ptd->b_positionDoubtful = false;
+				ptd->b_positionOnceValid = true; // Got the position at least once
+				ptd->PositionReportTicks = now.GetTicks();
+			} else
+				ptd->b_positionDoubtful = true;
 
-					 ptd->COG = 0.1 * ( bstr->GetInt( 113, 12 ) );
-					 ptd->HDG = 1.0 * ( bstr->GetInt( 125, 9 ) );
+			ptd->COG = 0.1 * (bstr->GetInt(113, 12));
+			ptd->HDG = 1.0 * (bstr->GetInt(125, 9));
 
-					 ptd->m_utc_sec = bstr->GetInt( 134, 6 );
+			ptd->m_utc_sec = bstr->GetInt(134, 6);
 
-					 ptd->Class = AIS_CLASS_B;
+			ptd->Class = AIS_CLASS_B;
 
-					 parse_result = true;                // so far so good
-					 b_posn_report = true;
+			parse_result = true; // so far so good
+			b_posn_report = true;
 
-					 break;
-				 }
+			break;
+		}
 
 		case 5: {
-					n_msg5++;
-					ptd->Class = AIS_CLASS_A;
+			n_msg5++;
+			ptd->Class = AIS_CLASS_A;
 
-					//          Get the AIS Version indicator
-					//          0 = station compliant with Recommendation ITU-R M.1371-1
-					//          1 = station compliant with Recommendation ITU-R M.1371-3
-					//          2-3 = station compliant with future editions
-					int AIS_version_indicator = bstr->GetInt( 39, 2 );
-					if( AIS_version_indicator < 2 ) {
-						ptd->IMO = bstr->GetInt( 41, 30 );
+			//          Get the AIS Version indicator
+			//          0 = station compliant with Recommendation ITU-R M.1371-1
+			//          1 = station compliant with Recommendation ITU-R M.1371-3
+			//          2-3 = station compliant with future editions
+			int AIS_version_indicator = bstr->GetInt(39, 2);
+			if (AIS_version_indicator < 2) {
+				ptd->IMO = bstr->GetInt(41, 30);
 
-						bstr->GetStr( 71, 42, &ptd->CallSign[0], 7 );
-						bstr->GetStr( 113, 120, &ptd->ShipName[0], 20 );
-						ptd->b_nameValid = true;
+				bstr->GetStr(71, 42, &ptd->CallSign[0], 7);
+				bstr->GetStr(113, 120, &ptd->ShipName[0], 20);
+				ptd->b_nameValid = true;
 
-						ptd->ShipType = (unsigned char) bstr->GetInt( 233, 8 );
+				ptd->ShipType = (unsigned char)bstr->GetInt(233, 8);
 
-						ptd->DimA = bstr->GetInt( 241, 9 );
-						ptd->DimB = bstr->GetInt( 250, 9 );
-						ptd->DimC = bstr->GetInt( 259, 6 );
-						ptd->DimD = bstr->GetInt( 265, 6 );
+				ptd->DimA = bstr->GetInt(241, 9);
+				ptd->DimB = bstr->GetInt(250, 9);
+				ptd->DimC = bstr->GetInt(259, 6);
+				ptd->DimD = bstr->GetInt(265, 6);
 
-						ptd->ETA_Mo = bstr->GetInt( 275, 4 );
-						ptd->ETA_Day = bstr->GetInt( 279, 5 );
-						ptd->ETA_Hr = bstr->GetInt( 284, 5 );
-						ptd->ETA_Min = bstr->GetInt( 289, 6 );
+				ptd->ETA_Mo = bstr->GetInt(275, 4);
+				ptd->ETA_Day = bstr->GetInt(279, 5);
+				ptd->ETA_Hr = bstr->GetInt(284, 5);
+				ptd->ETA_Min = bstr->GetInt(289, 6);
 
-						ptd->Draft = (double) ( bstr->GetInt( 295, 8 ) ) / 10.0;
+				ptd->Draft = (double)(bstr->GetInt(295, 8)) / 10.0;
 
-						bstr->GetStr( 303, 120, &ptd->Destination[0], 20 );
+				bstr->GetStr(303, 120, &ptd->Destination[0], 20);
 
-						ptd->StaticReportTicks = now.GetTicks();
+				ptd->StaticReportTicks = now.GetTicks();
 
-						parse_result = true;
-					}
+				parse_result = true;
+			}
 
-					break;
-				}
+			break;
+		}
 
 		case 24: {
-					 int part_number = bstr->GetInt( 39, 2 );
-					 if( 0 == part_number ) {
-						 bstr->GetStr( 41, 120, &ptd->ShipName[0], 20 );
-						 ptd->b_nameValid = true;
-						 parse_result = true;
-						 n_msg24++;
-					 } else if( 1 == part_number ) {
-						 ptd->ShipType = (unsigned char) bstr->GetInt( 41, 8 );
-						 bstr->GetStr( 91, 42, &ptd->CallSign[0], 7 );
+			int part_number = bstr->GetInt(39, 2);
+			if (0 == part_number) {
+				bstr->GetStr(41, 120, &ptd->ShipName[0], 20);
+				ptd->b_nameValid = true;
+				parse_result = true;
+				n_msg24++;
+			} else if (1 == part_number) {
+				ptd->ShipType = (unsigned char)bstr->GetInt(41, 8);
+				bstr->GetStr(91, 42, &ptd->CallSign[0], 7);
 
-						 ptd->DimA = bstr->GetInt( 133, 9 );
-						 ptd->DimB = bstr->GetInt( 142, 9 );
-						 ptd->DimC = bstr->GetInt( 151, 6 );
-						 ptd->DimD = bstr->GetInt( 157, 6 );
-						 parse_result = true;
-					 }
-					 break;
-				 }
-		case 4:                                    // base station
-				 {
-					 ptd->Class = AIS_BASE;
+				ptd->DimA = bstr->GetInt(133, 9);
+				ptd->DimB = bstr->GetInt(142, 9);
+				ptd->DimC = bstr->GetInt(151, 6);
+				ptd->DimD = bstr->GetInt(157, 6);
+				parse_result = true;
+			}
+			break;
+		}
+		case 4: // base station
+		{
+			ptd->Class = AIS_BASE;
 
-					 ptd->m_utc_hour = bstr->GetInt( 62, 5 );
-					 ptd->m_utc_min = bstr->GetInt( 67, 6 );
-					 ptd->m_utc_sec = bstr->GetInt( 73, 6 );
-					 //                              (79,  1);
-					 int lon = bstr->GetInt( 80, 28 );
-					 if( lon & 0x08000000 )                    // negative?
-						 lon |= 0xf0000000;
-					 double lon_tentative = lon / 600000.;
+			ptd->m_utc_hour = bstr->GetInt(62, 5);
+			ptd->m_utc_min = bstr->GetInt(67, 6);
+			ptd->m_utc_sec = bstr->GetInt(73, 6);
+			//                              (79,  1);
+			int lon = bstr->GetInt(80, 28);
+			if (lon & 0x08000000) // negative?
+				lon |= 0xf0000000;
+			double lon_tentative = lon / 600000.;
 
-					 int lat = bstr->GetInt( 108, 27 );
-					 if( lat & 0x04000000 )                    // negative?
-						 lat |= 0xf8000000;
-					 double lat_tentative = lat / 600000.;
+			int lat = bstr->GetInt(108, 27);
+			if (lat & 0x04000000) // negative?
+				lat |= 0xf8000000;
+			double lat_tentative = lat / 600000.;
 
-					 if( ( lon_tentative <= 180. ) && ( lat_tentative <= 90. ) ) // Ship does not report Lat or Lon "unavailable"
-					 {
-						 ptd->Lon = lon_tentative;
-						 ptd->Lat = lat_tentative;
-						 ptd->b_positionDoubtful = false;
-						 ptd->b_positionOnceValid = true;          // Got the position at least once
-						 ptd->PositionReportTicks = now.GetTicks();
-					 } else
-						 ptd->b_positionDoubtful = true;
+			if ((lon_tentative <= 180.)
+				&& (lat_tentative <= 90.)) // Ship does not report Lat or Lon "unavailable"
+			{
+				ptd->Lon = lon_tentative;
+				ptd->Lat = lat_tentative;
+				ptd->b_positionDoubtful = false;
+				ptd->b_positionOnceValid = true; // Got the position at least once
+				ptd->PositionReportTicks = now.GetTicks();
+			} else
+				ptd->b_positionDoubtful = true;
 
-					 ptd->COG = -1.;
-					 ptd->HDG = 511;
-					 ptd->SOG = -1.;
+			ptd->COG = -1.;
+			ptd->HDG = 511;
+			ptd->SOG = -1.;
 
-					 parse_result = true;
-					 b_posn_report = true;
+			parse_result = true;
+			b_posn_report = true;
 
-					 break;
-				 }
-				 case 9: // Special Position Report (Standard SAR Aircraft Position Report)
-				 {
-					 ptd->SOG = bstr->GetInt(51, 10);
+			break;
+		}
+		case 9: // Special Position Report (Standard SAR Aircraft Position Report)
+		{
+			ptd->SOG = bstr->GetInt(51, 10);
 
-					 int lon = bstr->GetInt(62, 28);
-					 if (lon & 0x08000000) // negative?
-						 lon |= 0xf0000000;
-					 double lon_tentative = lon / 600000.;
+			int lon = bstr->GetInt(62, 28);
+			if (lon & 0x08000000) // negative?
+				lon |= 0xf0000000;
+			double lon_tentative = lon / 600000.;
 
-					 int lat = bstr->GetInt(90, 27);
-					 if (lat & 0x04000000) // negative?
-						 lat |= 0xf8000000;
-					 double lat_tentative = lat / 600000.;
+			int lat = bstr->GetInt(90, 27);
+			if (lat & 0x04000000) // negative?
+				lat |= 0xf8000000;
+			double lat_tentative = lat / 600000.;
 
-					 if ((lon_tentative <= 180.)
-						 && (lat_tentative <= 90.)) // Ship does not report Lat or Lon "unavailable"
-					 {
-						 ptd->Lon = lon_tentative;
-						 ptd->Lat = lat_tentative;
-						 ptd->b_positionDoubtful = false;
-						 ptd->b_positionOnceValid = true; // Got the position at least once
-						 ptd->PositionReportTicks = now.GetTicks();
-					 } else
-						 ptd->b_positionDoubtful = true;
+			if ((lon_tentative <= 180.)
+				&& (lat_tentative <= 90.)) // Ship does not report Lat or Lon "unavailable"
+			{
+				ptd->Lon = lon_tentative;
+				ptd->Lat = lat_tentative;
+				ptd->b_positionDoubtful = false;
+				ptd->b_positionOnceValid = true; // Got the position at least once
+				ptd->PositionReportTicks = now.GetTicks();
+			} else
+				ptd->b_positionDoubtful = true;
 
-					 //    decode balance of message....
-					 ptd->COG = 0.1 * (bstr->GetInt(117, 12));
+			//    decode balance of message....
+			ptd->COG = 0.1 * (bstr->GetInt(117, 12));
 
-					 int alt_tent = bstr->GetInt(39, 12);
-					 if (alt_tent != 4095)
-						 ptd->altitude = alt_tent;
+			int alt_tent = bstr->GetInt(39, 12);
+			if (alt_tent != 4095)
+				ptd->altitude = alt_tent;
 
-					 ptd->b_specialPosnReport = true;
+			ptd->b_specialPosnReport = true;
 
-					 parse_result = true;
-					 b_posn_report = true;
+			parse_result = true;
+			b_posn_report = true;
 
-					 break;
-				 }
-		case 21:                                    // Test Message (Aid to Navigation)
-				 {
-					 ptd->ShipType = (unsigned char) bstr->GetInt( 39, 5 );
-					 ptd->IMO = 0;
-					 ptd->SOG = 0;
-					 ptd->HDG = 0;
-					 ptd->COG = 0;
-					 ptd->ROTAIS = -128;                 // i.e. not available
-					 ptd->DimA = bstr->GetInt( 220, 9 );
-					 ptd->DimB = bstr->GetInt( 229, 9 );
-					 ptd->DimC = bstr->GetInt( 238, 6 );
-					 ptd->DimD = bstr->GetInt( 244, 6 );
-					 ptd->Draft = 0;
+			break;
+		}
+		case 21: // Test Message (Aid to Navigation)
+		{
+			ptd->ShipType = (unsigned char)bstr->GetInt(39, 5);
+			ptd->IMO = 0;
+			ptd->SOG = 0;
+			ptd->HDG = 0;
+			ptd->COG = 0;
+			ptd->ROTAIS = -128; // i.e. not available
+			ptd->DimA = bstr->GetInt(220, 9);
+			ptd->DimB = bstr->GetInt(229, 9);
+			ptd->DimC = bstr->GetInt(238, 6);
+			ptd->DimD = bstr->GetInt(244, 6);
+			ptd->Draft = 0;
 
-					 ptd->m_utc_sec = bstr->GetInt( 254, 6 );
+			ptd->m_utc_sec = bstr->GetInt(254, 6);
 
-					 int offpos = bstr->GetInt( 260, 1 ); // off position flag
-					 int virt = bstr->GetInt( 270, 1 ); // virtual flag
+			int offpos = bstr->GetInt(260, 1); // off position flag
+			int virt = bstr->GetInt(270, 1); // virtual flag
 
-					 if( virt ) ptd->NavStatus = ATON_VIRTUAL;
-					 else
-						 ptd->NavStatus = ATON_REAL;
-					 if( ptd->m_utc_sec <= 59 /*&& !virt*/) {
-						 ptd->NavStatus += 1;
-						 if( offpos ) ptd->NavStatus += 1;
-					 }
+			if (virt)
+				ptd->NavStatus = ATON_VIRTUAL;
+			else
+				ptd->NavStatus = ATON_REAL;
+			if (ptd->m_utc_sec <= 59 /*&& !virt*/) {
+				ptd->NavStatus += 1;
+				if (offpos)
+					ptd->NavStatus += 1;
+			}
 
-					 bstr->GetStr( 44, 120, &ptd->ShipName[0], 20 ); // short name only, extension wont fit in Ship structure
+			bstr->GetStr(44, 120, &ptd->ShipName[0],
+						 20); // short name only, extension wont fit in Ship structure
 
-					 if( bstr->GetBitCount() > 276 ) {
-						 int nx = ( ( bstr->GetBitCount() - 272 ) / 6 ) * 6;
-						 bstr->GetStr( 273, nx, &ptd->ShipNameExtension[0], 14 );
-						 ptd->ShipNameExtension[14] = 0;
-					 } else {
-						 ptd->ShipNameExtension[0] = 0;
-					 }
+			if (bstr->GetBitCount() > 276) {
+				int nx = ((bstr->GetBitCount() - 272) / 6) * 6;
+				bstr->GetStr(273, nx, &ptd->ShipNameExtension[0], 14);
+				ptd->ShipNameExtension[14] = 0;
+			} else {
+				ptd->ShipNameExtension[0] = 0;
+			}
 
-					 ptd->b_nameValid = true;
+			ptd->b_nameValid = true;
 
-					 parse_result = true;                // so far so good
+			parse_result = true; // so far so good
 
-					 ptd->Class = AIS_ATON;
+			ptd->Class = AIS_ATON;
 
-					 int lon = bstr->GetInt( 165, 28 );
+			int lon = bstr->GetInt(165, 28);
 
-					 if( lon & 0x08000000 )                    // negative?
-						 lon |= 0xf0000000;
-					 double lon_tentative = lon / 600000.;
+			if (lon & 0x08000000) // negative?
+				lon |= 0xf0000000;
+			double lon_tentative = lon / 600000.;
 
-					 int lat = bstr->GetInt( 193, 27 );
+			int lat = bstr->GetInt(193, 27);
 
-					 if( lat & 0x04000000 )                    // negative?
-						 lat |= 0xf8000000;
-					 double lat_tentative = lat / 600000.;
+			if (lat & 0x04000000) // negative?
+				lat |= 0xf8000000;
+			double lat_tentative = lat / 600000.;
 
-					 if( ( lon_tentative <= 180. ) && ( lat_tentative <= 90. ) ) // Ship does not report Lat or Lon "unavailable"
-					 {
-						 ptd->Lon = lon_tentative;
-						 ptd->Lat = lat_tentative;
-						 ptd->b_positionDoubtful = false;
-						 ptd->b_positionOnceValid = true;          // Got the position at least once
-						 ptd->PositionReportTicks = now.GetTicks();
-					 } else
-						 ptd->b_positionDoubtful = true;
+			if ((lon_tentative <= 180.)
+				&& (lat_tentative <= 90.)) // Ship does not report Lat or Lon "unavailable"
+			{
+				ptd->Lon = lon_tentative;
+				ptd->Lat = lat_tentative;
+				ptd->b_positionDoubtful = false;
+				ptd->b_positionOnceValid = true; // Got the position at least once
+				ptd->PositionReportTicks = now.GetTicks();
+			} else
+				ptd->b_positionDoubtful = true;
 
-					 b_posn_report = true;
-					 break;
-				 }
-		case 8:                                    // Binary Broadcast
-				 {
-					 int dac = bstr->GetInt( 41, 10 );
-					 int fi = bstr->GetInt( 51, 6 );
-					 if( dac == 200 )                  // European inland
-					 {
-						 if( fi == 10 )              // "Inland ship static and voyage related data"
-						 {
-							 ptd->b_isEuroInland = true;
+			b_posn_report = true;
+			break;
+		}
+		case 8: // Binary Broadcast
+		{
+			int dac = bstr->GetInt(41, 10);
+			int fi = bstr->GetInt(51, 6);
+			if (dac == 200) // European inland
+			{
+				if (fi == 10) // "Inland ship static and voyage related data"
+				{
+					ptd->b_isEuroInland = true;
 
-							 bstr->GetStr( 57, 48, &ptd->Euro_VIN[0], 8 );
-							 ptd->Euro_Length = ( (double) bstr->GetInt( 105, 13 ) ) / 10.0;
-							 ptd->Euro_Beam = ( (double) bstr->GetInt( 118, 10 ) ) / 10.0;
-							 ptd->UN_shiptype = bstr->GetInt( 128, 14 );
-							 ptd->Euro_Draft = ( (double) bstr->GetInt( 145, 11 ) ) / 100.0;
-							 parse_result = true;
-						 }
-					 }
-					 if( dac == 1 )                     // IMO
-					 {
-						 if( fi == 22 )                 // Area Notice
-						 {
-							 if( bstr->GetBitCount() >= 111 ) {
-								 Ais8_001_22 an;
-								 an.link_id = bstr->GetInt( 57, 10 );
-								 an.notice_type = bstr->GetInt( 67, 7 );
-								 an.month = bstr->GetInt( 74, 4 );
-								 an.day = bstr->GetInt( 78, 5 );
-								 an.hour = bstr->GetInt( 83, 5 );
-								 an.minute = bstr->GetInt( 88, 6 );
-								 an.duration_minutes = bstr->GetInt( 94, 18 );
+					bstr->GetStr(57, 48, &ptd->Euro_VIN[0], 8);
+					ptd->Euro_Length = ((double)bstr->GetInt(105, 13)) / 10.0;
+					ptd->Euro_Beam = ((double)bstr->GetInt(118, 10)) / 10.0;
+					ptd->UN_shiptype = bstr->GetInt(128, 14);
+					ptd->Euro_Draft = ((double)bstr->GetInt(145, 11)) / 100.0;
+					parse_result = true;
+				}
+			}
+			if (dac == 1) // IMO
+			{
+				if (fi == 22) // Area Notice
+				{
+					if (bstr->GetBitCount() >= 111) {
+						Ais8_001_22 an;
+						an.link_id = bstr->GetInt(57, 10);
+						an.notice_type = bstr->GetInt(67, 7);
+						an.month = bstr->GetInt(74, 4);
+						an.day = bstr->GetInt(78, 5);
+						an.hour = bstr->GetInt(83, 5);
+						an.minute = bstr->GetInt(88, 6);
+						an.duration_minutes = bstr->GetInt(94, 18);
 
-								 wxDateTime now = wxDateTime::Now();
-								 now.MakeGMT();
+						wxDateTime now = wxDateTime::Now();
+						now.MakeGMT();
 
-								 an.start_time.Set( an.day, wxDateTime::Month( an.month - 1 ), now.GetYear(),
-										 an.hour, an.minute );
+						an.start_time.Set(an.day, wxDateTime::Month(an.month - 1), now.GetYear(),
+										  an.hour, an.minute);
 
-								 // msg is not supposed to be transmitted more than a day before it comes into effect,
-								 // so a start_time less than a day or two away might indicate a month rollover
-								 if( an.start_time > now + wxTimeSpan::Hours( 48 ) ) an.start_time.Set(
-										 an.day, wxDateTime::Month( an.month - 1 ), now.GetYear() - 1,
-										 an.hour, an.minute );
+						// msg is not supposed to be transmitted more than a day before it comes
+						// into effect,
+						// so a start_time less than a day or two away might indicate a month
+						// rollover
+						if (an.start_time > now + wxTimeSpan::Hours(48))
+							an.start_time.Set(an.day, wxDateTime::Month(an.month - 1),
+											  now.GetYear() - 1, an.hour, an.minute);
 
-								 an.expiry_time = an.start_time + wxTimeSpan::Minutes( an.duration_minutes );
+						an.expiry_time = an.start_time + wxTimeSpan::Minutes(an.duration_minutes);
 
-								 // msg is not supposed to be transmitted beyond expiration, so taking into account a
-								 // fudge factor for clock issues, assume an expiry date in the past indicates incorrect year
-								 if( an.expiry_time < now - wxTimeSpan::Hours( 24 ) ) {
-									 an.start_time.Set( an.day, wxDateTime::Month( an.month - 1 ),
-											 now.GetYear() + 1, an.hour, an.minute );
-									 an.expiry_time = an.start_time
-										 + wxTimeSpan::Minutes( an.duration_minutes );
-								 }
+						// msg is not supposed to be transmitted beyond expiration, so taking into
+						// account a
+						// fudge factor for clock issues, assume an expiry date in the past
+						// indicates incorrect year
+						if (an.expiry_time < now - wxTimeSpan::Hours(24)) {
+							an.start_time.Set(an.day, wxDateTime::Month(an.month - 1),
+											  now.GetYear() + 1, an.hour, an.minute);
+							an.expiry_time = an.start_time
+											 + wxTimeSpan::Minutes(an.duration_minutes);
+						}
 
-								 int subarea_count = ( bstr->GetBitCount() - 111 ) / 87;
-								 for( int i = 0; i < subarea_count; ++i ) {
-									 int base = 111 + i * 87;
-									 Ais8_001_22_SubArea sa;
-									 sa.shape = bstr->GetInt( base + 1, 3 );
-									 int scale_factor = 1;
-									 if( sa.shape == AIS8_001_22_SHAPE_TEXT ) {
-										 char t[15];
-										 t[14] = 0;
-										 bstr->GetStr( base + 4, 84, t, 14 );
-										 sa.text = wxString( t, wxConvUTF8 );
-									 } else {
-										 int scale_multipliers[4] = { 1, 10, 100, 1000 };
-										 scale_factor = scale_multipliers[bstr->GetInt( base + 4, 2 )];
-										 switch( sa.shape ){
-											 case AIS8_001_22_SHAPE_CIRCLE:
-											 case AIS8_001_22_SHAPE_SECTOR:
-												 sa.radius_m = bstr->GetInt( base + 58, 12 ) * scale_factor;
-											 case AIS8_001_22_SHAPE_RECT:
-												 sa.longitude = bstr->GetInt( base + 6, 25, true ) / 60000.0;
-												 sa.latitude = bstr->GetInt( base + 31, 24, true ) / 60000.0;
-												 break;
-											 case AIS8_001_22_SHAPE_POLYLINE:
-											 case AIS8_001_22_SHAPE_POLYGON:
-												 for( int i = 0; i < 4; ++i ) {
-													 sa.angles[i] = bstr->GetInt( base + 6 + i * 20, 10 )
-														 * 0.5;
-													 sa.dists_m[i] = bstr->GetInt( base + 16 + i * 20, 10 )
-														 * scale_factor;
-												 }
-										 }
-										 if( sa.shape == AIS8_001_22_SHAPE_RECT ) {
-											 sa.e_dim_m = bstr->GetInt( base + 58, 8 ) * scale_factor;
-											 sa.n_dim_m = bstr->GetInt( base + 66, 8 ) * scale_factor;
-											 sa.orient_deg = bstr->GetInt( base + 74, 9 );
-										 }
-										 if( sa.shape == AIS8_001_22_SHAPE_SECTOR ) {
-											 sa.left_bound_deg = bstr->GetInt( 70, 9 );
-											 sa.right_bound_deg = bstr->GetInt( 79, 9 );
-										 }
-									 }
-									 an.sub_areas.push_back( sa );
-								 }
-								 ptd->area_notices[an.link_id] = an;
-								 parse_result = true;
-							 }
-						 }
-					 }
-					 break;
-				 }
-		case 14:                                    // Safety Related Broadcast
-				 {
-					 //  Always capture the MSG_14 text
-					 char msg_14_text[968];
-					 if( bstr->GetBitCount() > 40 ) {
-						 int nx = ( ( bstr->GetBitCount() - 40 ) / 6 ) * 6;
-						 int nd = bstr->GetStr( 41, nx, msg_14_text, 968 );
-						 nd = wxMax(0, nd);
-						 nd = wxMin(nd, 967);
-						 msg_14_text[nd] = 0;
-						 ptd->MSG_14_text = wxString( msg_14_text, wxConvUTF8 );
-					 }
-					 parse_result = true;                // so far so good
+						int subarea_count = (bstr->GetBitCount() - 111) / 87;
+						for (int i = 0; i < subarea_count; ++i) {
+							int base = 111 + i * 87;
+							Ais8_001_22_SubArea sa;
+							sa.shape = bstr->GetInt(base + 1, 3);
+							int scale_factor = 1;
+							if (sa.shape == AIS8_001_22_SHAPE_TEXT) {
+								char t[15];
+								t[14] = 0;
+								bstr->GetStr(base + 4, 84, t, 14);
+								sa.text = wxString(t, wxConvUTF8);
+							} else {
+								int scale_multipliers[4] = { 1, 10, 100, 1000 };
+								scale_factor = scale_multipliers[bstr->GetInt(base + 4, 2)];
+								switch (sa.shape) {
+									case AIS8_001_22_SHAPE_CIRCLE:
+									case AIS8_001_22_SHAPE_SECTOR:
+										sa.radius_m = bstr->GetInt(base + 58, 12) * scale_factor;
+									case AIS8_001_22_SHAPE_RECT:
+										sa.longitude = bstr->GetInt(base + 6, 25, true) / 60000.0;
+										sa.latitude = bstr->GetInt(base + 31, 24, true) / 60000.0;
+										break;
+									case AIS8_001_22_SHAPE_POLYLINE:
+									case AIS8_001_22_SHAPE_POLYGON:
+										for (int i = 0; i < 4; ++i) {
+											sa.angles[i] = bstr->GetInt(base + 6 + i * 20, 10)
+														   * 0.5;
+											sa.dists_m[i] = bstr->GetInt(base + 16 + i * 20, 10)
+															* scale_factor;
+										}
+								}
+								if (sa.shape == AIS8_001_22_SHAPE_RECT) {
+									sa.e_dim_m = bstr->GetInt(base + 58, 8) * scale_factor;
+									sa.n_dim_m = bstr->GetInt(base + 66, 8) * scale_factor;
+									sa.orient_deg = bstr->GetInt(base + 74, 9);
+								}
+								if (sa.shape == AIS8_001_22_SHAPE_SECTOR) {
+									sa.left_bound_deg = bstr->GetInt(70, 9);
+									sa.right_bound_deg = bstr->GetInt(79, 9);
+								}
+							}
+							an.sub_areas.push_back(sa);
+						}
+						ptd->area_notices[an.link_id] = an;
+						parse_result = true;
+					}
+				}
+			}
+			break;
+		}
+		case 14: // Safety Related Broadcast
+		{
+			//  Always capture the MSG_14 text
+			char msg_14_text[968];
+			if (bstr->GetBitCount() > 40) {
+				int nx = ((bstr->GetBitCount() - 40) / 6) * 6;
+				int nd = bstr->GetStr(41, nx, msg_14_text, 968);
+				nd = wxMax(0, nd);
+				nd = wxMin(nd, 967);
+				msg_14_text[nd] = 0;
+				ptd->MSG_14_text = wxString(msg_14_text, wxConvUTF8);
+			}
+			parse_result = true; // so far so good
 
-					 break;
-				 }
+			break;
+		}
 
-		case 6:                                    // Addressed Binary Message
-				 {
-					 break;
-				 }
-		case 7:                                    // Binary Ack
-				 {
-					 break;
-				 }
+		case 6: // Addressed Binary Message
+		{
+			break;
+		}
+		case 7: // Binary Ack
+		{
+			break;
+		}
 		default: {
-					 break;
-				 }
-
+			break;
+		}
 	}
 
-	if( b_posn_report ) ptd->b_lost = false;
+	if (b_posn_report)
+		ptd->b_lost = false;
 
-	if( true == parse_result ) {
+	if (true == parse_result) {
 		//      Revalidate the target under some conditions
-		if( !ptd->b_active && !ptd->b_positionDoubtful && b_posn_report ) ptd->b_active = true;
+		if (!ptd->b_active && !ptd->b_positionDoubtful && b_posn_report)
+			ptd->b_active = true;
 	}
 
 	return parse_result;
@@ -1533,7 +1531,6 @@ bool AIS_Decoder::Parse_VDXBitstring( AIS_Bitstring *bstr, AIS_Target_Data *ptd 
 
 bool AIS_Decoder::NMEACheckSumOK(const wxString& str_in)
 {
-
 	unsigned char checksum_value = 0;
 	int sentence_hex_sum;
 
@@ -1741,17 +1738,20 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data* ptarget)
 
 	// Compute the current Range/Brg to the target
 	double brg, dist;
-	geo::DistanceBearingMercator(ptarget->Lat, ptarget->Lon, nav.pos.lat(), nav.pos.lon(), &brg, &dist);
+	geo::DistanceBearingMercator(ptarget->Lat, ptarget->Lon, nav.pos.lat(), nav.pos.lon(), &brg,
+								 &dist);
 	ptarget->Range_NM = dist;
 	ptarget->Brg = brg;
 
 	if (dist <= 1e-5)
-		ptarget->Brg = -1.0;             // Brg is undefined if Range == 0.
+		ptarget->Brg = -1.0; // Brg is undefined if Range == 0.
 
 	// There can be no collision between ownship and itself....
-	// This can happen if AIVDO messages are received, and there is another source of ownship position, like NMEA GLL
-	// The two positions are always temporally out of sync, and one will always be exactly in front of the other one.
-	if( ptarget->b_OwnShip ) {
+	// This can happen if AIVDO messages are received, and there is another source of ownship
+	// position, like NMEA GLL
+	// The two positions are always temporally out of sync, and one will always be exactly in front
+	// of the other one.
+	if (ptarget->b_OwnShip) {
 		ptarget->CPA = 100;
 		ptarget->TCPA = -100;
 		ptarget->bCPA_Valid = false;
@@ -1877,7 +1877,7 @@ void AIS_Decoder::OnTimerAISAudio(wxTimerEvent&)
 	m_AIS_Audio_Alert_Timer.Start(TIMER_AIS_AUDIO_MSEC, wxTIMER_CONTINUOUS);
 }
 
-void AIS_Decoder::OnTimerAIS(wxTimerEvent & WXUNUSED(event))
+void AIS_Decoder::OnTimerAIS(wxTimerEvent& WXUNUSED(event))
 {
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 
@@ -2106,6 +2106,31 @@ AIS_Target_Data* AIS_Decoder::Get_Target_Data_From_MMSI(int mmsi)
 		return NULL;
 	else
 		return (*AISTargetList)[mmsi]; // find current entry
+}
+
+AIS_Target_Hash* AIS_Decoder::GetTargetList(void)
+{
+	return AISTargetList;
+}
+
+AIS_Target_Hash* AIS_Decoder::GetAreaNoticeSourcesList(void)
+{
+	return AIS_AreaNotice_Sources;
+}
+
+int AIS_Decoder::GetNumTargets(void) const
+{
+	return m_n_targets;
+}
+
+bool AIS_Decoder::IsAISSuppressed(void) const
+{
+	return m_bSuppressed;
+}
+
+bool AIS_Decoder::IsAISAlertGeneral(void) const
+{
+	return m_bGeneralAlert;
 }
 
 }

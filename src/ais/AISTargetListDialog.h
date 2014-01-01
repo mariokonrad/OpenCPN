@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __AISTARGETLISTDIALOG_H__
-#define __AISTARGETLISTDIALOG_H__
+#ifndef __AIS__AISTARGETLISTDIALOG__H__
+#define __AIS__AISTARGETLISTDIALOG__H__
 
 #include <wx/panel.h>
 

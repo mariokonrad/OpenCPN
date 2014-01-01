@@ -43,7 +43,7 @@ namespace ais
 
 static ERIShipTypeHash s_ERI_hash;
 
-void make_hash_ERI(int key, const wxString & description)
+void make_hash_ERI(int key, const wxString& description)
 {
 	s_ERI_hash[key] = description;
 }
@@ -80,7 +80,7 @@ AIS_Target_Data::AIS_Target_Data()
 
 	wxDateTime now = wxDateTime::Now();
 	now.MakeGMT();
-	PositionReportTicks = now.GetTicks();       // Default is my idea of NOW
+	PositionReportTicks = now.GetTicks(); // Default is my idea of NOW
 	StaticReportTicks = now.GetTicks();
 	b_lost = false;
 
@@ -90,15 +90,16 @@ AIS_Target_Data::AIS_Target_Data()
 	NavStatus = UNDEFINED;
 	SyncState = 888;
 	SlotTO = 999;
-	ShipType = 19;    // "Unknown"
+	ShipType = 19; // "Unknown"
 
-	CPA = 100;     // Large values avoid false alarms
+	CPA = 100; // Large values avoid false alarms
 	TCPA = 100;
 
 	Range_NM = -1.;
 	Brg = -1.;
 
-	DimA = DimB = DimC = DimD = 0;;
+	DimA = DimB = DimC = DimD = 0;
+	;
 
 	ETA_Mo = 0;
 	ETA_Day = 0;
@@ -113,14 +114,14 @@ AIS_Target_Data::AIS_Target_Data()
 	m_utc_min = 0;
 	m_utc_sec = 0;
 
-	Class = AIS_CLASS_A;      // default
+	Class = AIS_CLASS_A; // default
 	n_alarm_state = AIS_NO_ALARM;
 	b_suppress_audio = false;
 	b_positionDoubtful = false;
 	b_positionOnceValid = false;
 	b_nameValid = false;
 
-	Euro_Length = 0;            // Extensions for European Inland AIS
+	Euro_Length = 0; // Extensions for European Inland AIS
 	Euro_Beam = 0;
 	Euro_Draft = 0;
 	strncpy(Euro_VIN, "       ", 8);
@@ -137,8 +138,8 @@ AIS_Target_Data::AIS_Target_Data()
 	bCPA_Valid = false;
 	ROTIND = 0;
 	b_show_track = true;
-    b_specialPosnReport = false;
-    altitude = 0;
+	b_specialPosnReport = false;
+	altitude = 0;
 }
 
 AIS_Target_Data::~AIS_Target_Data()
@@ -182,68 +183,70 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 	wxString IMOstr, MMSIstr, ClassStr;
 
 	html << tableStart << _T("<tr><td nowrap colspan=2>");
-	if( ( Class != AIS_BASE ) && ( Class != AIS_SART ) ) {
-		if( b_nameValid ) {
-			html << _T("<font size=+2><i><b>") << GetFullName() ;
+	if ((Class != AIS_BASE) && (Class != AIS_SART)) {
+		if (b_nameValid) {
+			html << _T("<font size=+2><i><b>") << GetFullName();
 			html << _T("</b></i></font>&nbsp;&nbsp;<b>");
 		}
 	}
 
-	if( ( Class != AIS_ATON ) && ( Class != AIS_BASE ) && ( Class != AIS_GPSG_BUDDY )
-			&& ( Class != AIS_SART ) ) {
-		html << trimAISField( CallSign ) << _T("</b>") << rowEnd;
+	if ((Class != AIS_ATON) && (Class != AIS_BASE) && (Class != AIS_GPSG_BUDDY)
+		&& (Class != AIS_SART)) {
+		html << trimAISField(CallSign) << _T("</b>") << rowEnd;
 
-		if( Class != AIS_CLASS_B ) {
-			if( IMO > 0 ) IMOstr = wxString::Format( _T("%08d"), abs( IMO ) );
+		if (Class != AIS_CLASS_B) {
+			if (IMO > 0)
+				IMOstr = wxString::Format(_T("%08d"), abs(IMO));
 		}
-	}
-	else html << _T("</b>") << rowEnd;
+	} else
+		html << _T("</b>") << rowEnd;
 
 	html << vertSpacer;
 
-	if( Class != AIS_GPSG_BUDDY ) {
-		MMSIstr = wxString::Format( _T("%09d"), abs( MMSI ) );
+	if (Class != AIS_GPSG_BUDDY) {
+		MMSIstr = wxString::Format(_T("%09d"), abs(MMSI));
 	}
-	ClassStr = wxGetTranslation( Get_class_string( false ) );
+	ClassStr = wxGetTranslation(Get_class_string(false));
 
-	if( Class == AIS_ATON ) {
-		wxString cls(_T("AtoN: ") );
+	if (Class == AIS_ATON) {
+		wxString cls(_T("AtoN: "));
 		cls += Get_vessel_type_string(false);
-		ClassStr = wxGetTranslation( cls );
+		ClassStr = wxGetTranslation(cls);
 	}
 
-	if( IMOstr.Length() )
+	if (IMOstr.Length())
 		html << _T("<tr><td colspan=2><table width=100% border=0 cellpadding=0 cellspacing=0>")
-			<< rowStart <<_("MMSI") << _T("</font></td><td>&nbsp;</td><td><font size=-2>")
-			<< _("Class") << _T("</font></td><td>&nbsp;</td><td align=right><font size=-2>")
-			<< _("IMO") << _T("</font></td></tr>")
-			<< rowStartH << _T("<b>") << MMSIstr << _T("</b></td><td>&nbsp;</td><td><b>")
-			<< ClassStr << _T("</b></td><td>&nbsp;</td><td align=right><b>")
-			<< IMOstr << rowEnd << _T("</table></td></tr>")
-			<< vertSpacer;
+			 << rowStart << _("MMSI") << _T("</font></td><td>&nbsp;</td><td><font size=-2>")
+			 << _("Class") << _T("</font></td><td>&nbsp;</td><td align=right><font size=-2>")
+			 << _("IMO") << _T("</font></td></tr>") << rowStartH << _T("<b>") << MMSIstr
+			 << _T("</b></td><td>&nbsp;</td><td><b>") << ClassStr
+			 << _T("</b></td><td>&nbsp;</td><td align=right><b>") << IMOstr << rowEnd
+			 << _T("</table></td></tr>") << vertSpacer;
 	else
 		html << _T("<tr><td colspan=2><table width=100% border=0 cellpadding=0 cellspacing=0>")
-			<< rowStart <<_("MMSI") << _T("</font></td><td>&nbsp;</td><td align=right><font size=-2>")
-			<< _("Class") << _T("</font></td></tr>")
-			<< rowStartH << _T("<b>") << MMSIstr << _T("</b></td><td>&nbsp;</td><td align=right><b>")
-			<< ClassStr << rowEnd << _T("</table></td></tr>")
-			<< vertSpacer;
+			 << rowStart << _("MMSI")
+			 << _T("</font></td><td>&nbsp;</td><td align=right><font size=-2>") << _("Class")
+			 << _T("</font></td></tr>") << rowStartH << _T("<b>") << MMSIstr
+			 << _T("</b></td><td>&nbsp;</td><td align=right><b>") << ClassStr << rowEnd
+			 << _T("</table></td></tr>") << vertSpacer;
 
 	wxString navStatStr;
-	if( ( Class != AIS_BASE ) && ( Class != AIS_CLASS_B ) && ( Class != AIS_SART ) ) {
-		if( ( NavStatus <= 21  ) && ( NavStatus >= 0 ) )
+	if ((Class != AIS_BASE) && (Class != AIS_CLASS_B) && (Class != AIS_SART)) {
+		if ((NavStatus <= 21) && (NavStatus >= 0))
 			navStatStr = wxGetTranslation(ais_get_status(NavStatus));
-	} else if( Class == AIS_SART ) {
-		if( NavStatus == RESERVED_14 ) navStatStr = _("Active");
-		else if( NavStatus == UNDEFINED ) navStatStr = _("Testing");
+	} else if (Class == AIS_SART) {
+		if (NavStatus == RESERVED_14)
+			navStatStr = _("Active");
+		else if (NavStatus == UNDEFINED)
+			navStatStr = _("Testing");
 	}
 
 	wxString sart_sub_type;
-	if( Class == AIS_SART ) {
+	if (Class == AIS_SART) {
 		int mmsi_start = MMSI / 1000000;
-		switch( mmsi_start ){
+		switch (mmsi_start) {
 			case 970:
-				//                sart_sub_type = _T("SART");
+				// sart_sub_type = _T("SART");
 				break;
 			case 972:
 				sart_sub_type = _T("MOB");
@@ -258,19 +261,20 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 	}
 
 	wxString AISTypeStr, UNTypeStr, sizeString;
-	if( ( Class != AIS_BASE ) && ( Class != AIS_SART ) && ( Class != AIS_DSC ) ) {
+	if ((Class != AIS_BASE) && (Class != AIS_SART) && (Class != AIS_DSC)) {
 
 		//      Ship type
-		AISTypeStr = wxGetTranslation( Get_vessel_type_string() );
+		AISTypeStr = wxGetTranslation(Get_vessel_type_string());
 
-		if( b_isEuroInland && UN_shiptype ) {
-			ERIShipTypeHash::iterator it = s_ERI_hash.find( UN_shiptype );
+		if (b_isEuroInland && UN_shiptype) {
+			ERIShipTypeHash::iterator it = s_ERI_hash.find(UN_shiptype);
 			wxString type;
-			if( it == s_ERI_hash.end() ) type = _("Undefined");
+			if (it == s_ERI_hash.end())
+				type = _("Undefined");
 			else
 				type = it->second;
 
-			UNTypeStr = wxGetTranslation( type );
+			UNTypeStr = wxGetTranslation(type);
 		}
 
 		if (b_specialPosnReport) {
@@ -281,134 +285,134 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 
 		if (Class == AIS_SART) {
 			if (MSG_14_text.Len()) {
-				html << rowStart << _("Safety Broadcast Message") << rowEnd
-					<< rowStartH << _T("<b>") << MSG_14_text << rowEnd;
+				html << rowStart << _("Safety Broadcast Message") << rowEnd << rowStartH
+					 << _T("<b>") << MSG_14_text << rowEnd;
 			}
 		}
 
 		//  Dimensions
 
-		if( NavStatus != ATON_VIRTUAL && Class != AIS_ARPA && Class != AIS_APRS ) {
-			if( ( Class == AIS_CLASS_B ) || ( Class == AIS_ATON ) ) {
-				sizeString = wxString::Format( _T("%dm x %dm"), ( DimA + DimB ), ( DimC + DimD ) );
+		if (NavStatus != ATON_VIRTUAL && Class != AIS_ARPA && Class != AIS_APRS) {
+			if ((Class == AIS_CLASS_B) || (Class == AIS_ATON)) {
+				sizeString = wxString::Format(_T("%dm x %dm"), (DimA + DimB), (DimC + DimD));
 			} else if (!b_specialPosnReport) {
-				if( ( DimA + DimB + DimC + DimD ) == 0 ) {
-					if( b_isEuroInland ) {
-						if( Euro_Length == 0.0 ) {
-							if( Euro_Draft > 0.01 ) {
-								sizeString << wxString::Format( _T("---m x ---m x %4.1fm"), Euro_Draft );
+				if ((DimA + DimB + DimC + DimD) == 0) {
+					if (b_isEuroInland) {
+						if (Euro_Length == 0.0) {
+							if (Euro_Draft > 0.01) {
+								sizeString << wxString::Format(_T("---m x ---m x %4.1fm"),
+															   Euro_Draft);
 							} else {
 								sizeString << _T("---m x ---m x ---m");
 							}
 						} else {
-							if( Euro_Draft > 0.01 ) {
-								sizeString
-									<< wxString::Format( _T("%5.1fm x %4.1fm x %4.1fm"), Euro_Length,
-											Euro_Beam, Euro_Draft );
+							if (Euro_Draft > 0.01) {
+								sizeString << wxString::Format(_T("%5.1fm x %4.1fm x %4.1fm"),
+															   Euro_Length, Euro_Beam, Euro_Draft);
 							} else {
-								sizeString
-									<< wxString::Format( _T("%5.1fm x %4.1fm x ---m\n\n"), Euro_Length,
-											Euro_Beam );
+								sizeString << wxString::Format(_T("%5.1fm x %4.1fm x ---m\n\n"),
+															   Euro_Length, Euro_Beam);
 							}
 						}
 					} else {
-						if( Draft > 0.01 ) {
-							sizeString << wxString::Format( _T("---m x ---m x %4.1fm"), Draft );
+						if (Draft > 0.01) {
+							sizeString << wxString::Format(_T("---m x ---m x %4.1fm"), Draft);
 						} else {
 							sizeString << _T("---m x ---m x ---m");
 						}
 					}
-				} else if( Draft < 0.01 ) {
-					sizeString
-						<< wxString::Format( _T("%dm x %dm x ---m"), ( DimA + DimB ), ( DimC + DimD ) );
+				} else if (Draft < 0.01) {
+					sizeString << wxString::Format(_T("%dm x %dm x ---m"), (DimA + DimB),
+												   (DimC + DimD));
 				} else {
-					sizeString
-						<< wxString::Format( _T("%dm x %dm x %4.1fm"), ( DimA + DimB ), ( DimC + DimD ),
-								Draft );
+					sizeString << wxString::Format(_T("%dm x %dm x %4.1fm"), (DimA + DimB),
+												   (DimC + DimD), Draft);
 				}
 			}
 		}
 	}
 
-	if( Class == AIS_SART ) {
-		html << _T("<tr><td colspan=2>") << _T("<b>") << AISTypeStr;
-		if( sart_sub_type.Length() )
+	if (Class == AIS_SART) {
+		html << _T("<tr><td colspan=2>")
+			 << _T("<b>") << AISTypeStr;
+		if (sart_sub_type.Length())
 			html << _T(" (") << sart_sub_type << _T("), ");
 		html << navStatStr;
-		html << rowEnd << _T("<tr><td colspan=2>") << _T("<b>") << sizeString << rowEnd;
-	}
-
-    else if( Class == AIS_ATON )  {
-        html << _T("<tr><td colspan=2>") << _T("<b>") << navStatStr;
-        html << rowEnd << _T("<tr><td colspan=2>") << _T("<b>") << sizeString << rowEnd;
-    }
-
-    else if( ( Class != AIS_BASE ) && ( Class != AIS_DSC ) ) {
-		html << _T("<tr><td colspan=2>") << _T("<b>") << AISTypeStr;
-		if( navStatStr.Length() )
+		html << rowEnd << _T("<tr><td colspan=2>")
+			 << _T("<b>") << sizeString << rowEnd;
+	} else if (Class == AIS_ATON) {
+		html << _T("<tr><td colspan=2>")
+			 << _T("<b>") << navStatStr;
+		html << rowEnd << _T("<tr><td colspan=2>")
+			 << _T("<b>") << sizeString << rowEnd;
+	} else if ((Class != AIS_BASE) && (Class != AIS_DSC)) {
+		html << _T("<tr><td colspan=2>")
+			 << _T("<b>") << AISTypeStr;
+		if (navStatStr.Length())
 			html << _T(", ") << navStatStr;
-		if( UNTypeStr.Length() )
+		if (UNTypeStr.Length())
 			html << _T(" (UN Type ") << UNTypeStr << _T(")");
-		html << rowEnd << _T("<tr><td colspan=2>") << _T("<b>") << sizeString << rowEnd;
+		html << rowEnd << _T("<tr><td colspan=2>")
+			 << _T("<b>") << sizeString << rowEnd;
 	}
 
-	if( b_positionOnceValid ) {
+	if (b_positionOnceValid) {
 		wxString posTypeStr;
-		if( b_positionDoubtful ) posTypeStr << _(" (Last Known)");
+		if (b_positionDoubtful)
+			posTypeStr << _(" (Last Known)");
 
 		now.MakeGMT();
 		int target_age = now.GetTicks() - PositionReportTicks;
 
-		html << vertSpacer
-			<< rowStart << _("Position") << posTypeStr << _T("</font></td><td align=right><font size=-2>")
-			<< _("Report Age") << _T("</font></td></tr>")
-
-			<< rowStartH << _T("<b>") << toSDMM( 1, Lat ) << _T("</b></td><td align=right><b>")
-			<< FormatTimeAdaptive( target_age ) << rowEnd
-			<< rowStartH << _T("<b>") << toSDMM( 2, Lon ) << rowEnd;
+		html << vertSpacer << rowStart << _("Position") << posTypeStr
+			 << _T("</font></td><td align=right><font size=-2>") << _("Report Age")
+			 << _T("</font></td></tr>") << rowStartH << _T("<b>") << toSDMM(1, Lat)
+			 << _T("</b></td><td align=right><b>") << FormatTimeAdaptive(target_age) << rowEnd
+			 << rowStartH << _T("<b>") << toSDMM(2, Lon) << rowEnd;
 	}
 
 	wxString courseStr, sogStr, hdgStr, rotStr, rngStr, brgStr, destStr, etaStr;
 
-	if( Class == AIS_GPSG_BUDDY ) {
-		html << vertSpacer << rowStart << _("Report as of") << rowEnd
-			<< rowStartH << wxString::Format( _T("<b>%d:%d UTC "), m_utc_hour, m_utc_min )
-			<< rowEnd;
+	if (Class == AIS_GPSG_BUDDY) {
+		html << vertSpacer << rowStart << _("Report as of") << rowEnd << rowStartH
+			 << wxString::Format(_T("<b>%d:%d UTC "), m_utc_hour, m_utc_min) << rowEnd;
 	} else {
 		if (Class == AIS_CLASS_A && !b_specialPosnReport) {
 			html << vertSpacer << rowStart << _("Destination")
-				<< _T("</font></td><td align=right><font size=-2>")
-				<< _("ETA") << _T("</font></td></tr>\n")
-				<< rowStartH << _T("<b>");
-			wxString dest =  trimAISField( Destination );
-			if(dest.Length() )
+				 << _T("</font></td><td align=right><font size=-2>") << _("ETA")
+				 << _T("</font></td></tr>\n") << rowStartH << _T("<b>");
+			wxString dest = trimAISField(Destination);
+			if (dest.Length())
 				html << dest;
 			else
 				html << _("---");
 			html << _T("</b></td><td nowrap align=right><b>");
 
-			if( ( ETA_Mo ) && ( ETA_Hr < 24 ) ) {
+			if ((ETA_Mo) && (ETA_Hr < 24)) {
 				int yearOffset = 0;
-				if( now.GetMonth() > ( ETA_Mo - 1 ) ) yearOffset = 1;
-				wxDateTime eta( ETA_Day, wxDateTime::Month( ETA_Mo - 1 ),
-						now.GetYear() + yearOffset, ETA_Hr, ETA_Min );
-				html << eta.Format( _T("%b %d %H:%M") );
-			}
-			else html << _("---");
+				if (now.GetMonth() > (ETA_Mo - 1))
+					yearOffset = 1;
+				wxDateTime eta(ETA_Day, wxDateTime::Month(ETA_Mo - 1), now.GetYear() + yearOffset,
+							   ETA_Hr, ETA_Min);
+				html << eta.Format(_T("%b %d %H:%M"));
+			} else
+				html << _("---");
 			html << rowEnd;
 		}
 
-		if( Class == AIS_CLASS_A || Class == AIS_CLASS_B || Class == AIS_ARPA || Class == AIS_APRS ) {
-			int crs = wxRound( COG );
-			if( crs < 360 ) {
-				if( g_bShowMag )
-					courseStr << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( crs ) );
+		if (Class == AIS_CLASS_A || Class == AIS_CLASS_B || Class == AIS_ARPA || Class
+																				 == AIS_APRS) {
+			int crs = wxRound(COG);
+			if (crs < 360) {
+				if (g_bShowMag)
+					courseStr << wxString::Format(wxString("%03d°(M)  ", wxConvUTF8),
+												  (int)navigation::GetTrueOrMag(crs));
 				else
-					courseStr << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( crs ) );
-			}
-			else if( COG == 360.0 )
+					courseStr << wxString::Format(wxString("%03d°  ", wxConvUTF8),
+												  (int)navigation::GetTrueOrMag(crs));
+			} else if (COG == 360.0)
 				courseStr = _T("---");
-			else if( crs == 360 )
+			else if (crs == 360)
 				courseStr = _T("0&deg;");
 
 			double speed_show = toUsrSpeed(SOG);
@@ -420,142 +424,146 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 					sogStr = wxString::Format(_T("%.1f "), speed_show) + getUsrSpeedUnit();
 				else
 					sogStr = wxString::Format(_T("%.0f "), speed_show) + getUsrSpeedUnit();
-			}
-			else
+			} else
 				sogStr = _("---");
 
-			if( (int) HDG != 511 )
-				hdgStr = wxString::Format( _T("%03d&deg;"), (int) HDG );
+			if ((int)HDG != 511)
+				hdgStr = wxString::Format(_T("%03d&deg;"), (int)HDG);
 			else
 				hdgStr = _T("---");
 
-
-			if( ROTAIS != -128 ) {
-				if( ROTAIS == 127 ) rotStr << _T("> 5&deg;/30s ") << _("Right");
-				else if( ROTAIS == -127 ) rotStr << _T("> 5&deg;/30s ") << _("Left");
+			if (ROTAIS != -128) {
+				if (ROTAIS == 127)
+					rotStr << _T("> 5&deg;/30s ") << _("Right");
+				else if (ROTAIS == -127)
+					rotStr << _T("> 5&deg;/30s ") << _("Left");
 				else {
-					if( ROTIND > 0 ) rotStr << wxString::Format( _T("%3d&deg;/Min "), ROTIND ) << _("Right");
-					else if( ROTIND < 0 ) rotStr << wxString::Format( _T("%3d&deg;/Min "), -ROTIND ) << _("Left");
-					else rotStr = _T("0");
+					if (ROTIND > 0)
+						rotStr << wxString::Format(_T("%3d&deg;/Min "), ROTIND) << _("Right");
+					else if (ROTIND < 0)
+						rotStr << wxString::Format(_T("%3d&deg;/Min "), -ROTIND) << _("Left");
+					else
+						rotStr = _T("0");
 				}
 			} else if (!b_specialPosnReport)
 				rotStr = _("---");
 		}
 	}
 
-	if( b_positionOnceValid && bGPSValid && ( Range_NM >= 0. ) )
-		rngStr = cc1->FormatDistanceAdaptive( Range_NM );
+	if (b_positionOnceValid && bGPSValid && (Range_NM >= 0.))
+		rngStr = cc1->FormatDistanceAdaptive(Range_NM);
 	else
 		rngStr = _("---");
 
-	if( b_positionOnceValid && bGPSValid && ( Brg >= 0. ) && ( Range_NM > 0. ) && ( fabs( Lat ) < 85. ) ){
-		if( g_bShowMag )
-			brgStr << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( Brg ) );
+	if (b_positionOnceValid && bGPSValid && (Brg >= 0.) && (Range_NM > 0.) && (fabs(Lat) < 85.)) {
+		if (g_bShowMag)
+			brgStr << wxString::Format(wxString("%03d°(M)  ", wxConvUTF8),
+									   (int)navigation::GetTrueOrMag(Brg));
 		else
-			brgStr << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( Brg ) );
+			brgStr << wxString::Format(wxString("%03d°  ", wxConvUTF8),
+									   (int)navigation::GetTrueOrMag(Brg));
 	} else
 		brgStr = _("---");
 
-    wxString turnRateHdr; // Blank if ATON or BASE or Special Position Report (9)
-	if( ( Class != AIS_ATON ) && ( Class != AIS_BASE ) && ( Class != AIS_DSC ) ) {
-		html << vertSpacer << _T("<tr><td colspan=2><table width=100% border=0 cellpadding=0 cellspacing=0>")
-			<< rowStart <<_("Speed") << _T("</font></td><td>&nbsp;</td><td><font size=-2>")
-            << _("Course") << _T("</font></td><td>&nbsp;</td><td align=right><font size=-2>");
-            if( !b_specialPosnReport )
-                html << _("Heading") ;
+	wxString turnRateHdr; // Blank if ATON or BASE or Special Position Report (9)
+	if ((Class != AIS_ATON) && (Class != AIS_BASE) && (Class != AIS_DSC)) {
+		html << vertSpacer
+			 << _T("<tr><td colspan=2><table width=100% border=0 cellpadding=0 cellspacing=0>")
+			 << rowStart << _("Speed") << _T("</font></td><td>&nbsp;</td><td><font size=-2>")
+			 << _("Course") << _T("</font></td><td>&nbsp;</td><td align=right><font size=-2>");
+		if (!b_specialPosnReport)
+			html << _("Heading");
 
-            html << _T("</font></td></tr>")
-			<< rowStartH << _T("<b>") << sogStr << _T("</b></td><td>&nbsp;</td><td><b>")
-            << courseStr << _T("</b></td><td>&nbsp;</td><td align=right><b>");
-            if(!b_specialPosnReport)
-                html << hdgStr;
-            html  << rowEnd << _T("</table></td></tr>")
-			<< vertSpacer;
+		html << _T("</font></td></tr>") << rowStartH << _T("<b>") << sogStr
+			 << _T("</b></td><td>&nbsp;</td><td><b>") << courseStr
+			 << _T("</b></td><td>&nbsp;</td><td align=right><b>");
+		if (!b_specialPosnReport)
+			html << hdgStr;
+		html << rowEnd << _T("</table></td></tr>") << vertSpacer;
 
 		if (!b_specialPosnReport)
 			turnRateHdr = _("Turn Rate");
 	}
 	html << _T("<tr><td colspan=2><table width=100% border=0 cellpadding=0 cellspacing=0>")
-		<< rowStart <<_("Range") << _T("</font></td><td>&nbsp;</td><td><font size=-2>")
-		<< _("Bearing") << _T("</font></td><td>&nbsp;</td><td align=right><font size=-2>")
-		<< turnRateHdr << _T("</font></td></tr>")
-		<< rowStartH << _T("<b>") << rngStr << _T("</b></td><td>&nbsp;</td><td><b>")
-        << brgStr << _T("</b></td><td>&nbsp;</td><td align=right><b>");
-        if(!b_specialPosnReport)
-            html << rotStr;
-        html << rowEnd << _T("</table></td></tr>")
-		<< vertSpacer;
+		 << rowStart << _("Range") << _T("</font></td><td>&nbsp;</td><td><font size=-2>")
+		 << _("Bearing") << _T("</font></td><td>&nbsp;</td><td align=right><font size=-2>")
+		 << turnRateHdr << _T("</font></td></tr>") << rowStartH << _T("<b>") << rngStr
+		 << _T("</b></td><td>&nbsp;</td><td><b>") << brgStr
+		 << _T("</b></td><td>&nbsp;</td><td align=right><b>");
+	if (!b_specialPosnReport)
+		html << rotStr;
+	html << rowEnd << _T("</table></td></tr>") << vertSpacer;
 
 	wxString tcpaStr;
-    if( bCPA_Valid ) tcpaStr << _T("/<b> ") << _("in") << _T("<b>") << FormatTimeAdaptive( (int)(TCPA*60.) );
+	if (bCPA_Valid)
+		tcpaStr << _T("/<b> ") << _("in") << _T("<b>") << FormatTimeAdaptive((int)(TCPA * 60.));
 
-	if( bCPA_Valid ) {
-		html<< vertSpacer << rowStart << _("CPA") << rowEnd
-			<< rowStartH << _T("<b>") << cc1->FormatDistanceAdaptive( CPA )
-			<< tcpaStr << rowEnd;
+	if (bCPA_Valid) {
+		html << vertSpacer << rowStart << _("CPA") << rowEnd << rowStartH << _T("<b>")
+			 << cc1->FormatDistanceAdaptive(CPA) << tcpaStr << rowEnd;
 	}
 
-	if( Class != AIS_BASE ) {
-		if( blue_paddle == 1 ) {
-			html << rowStart << _("Inland Blue Flag") << rowEnd
-				<< rowStartH << _T("<b>") << _("Clear") << rowEnd;
-		} else if( blue_paddle == 2 ) {
-			html << rowStart << _("Inland Blue Flag") << rowEnd
-				<< rowStartH << _T("<b>") << _("Set") << rowEnd;
+	if (Class != AIS_BASE) {
+		if (blue_paddle == 1) {
+			html << rowStart << _("Inland Blue Flag") << rowEnd << rowStartH << _T("<b>")
+				 << _("Clear") << rowEnd;
+		} else if (blue_paddle == 2) {
+			html << rowStart << _("Inland Blue Flag") << rowEnd << rowStartH << _T("<b>")
+				 << _("Set") << rowEnd;
 		}
 	}
 
-    if(b_specialPosnReport) {
-        if(altitude != 4095) {
-            wxString altStr;
-            altStr.Printf(_T("%4d M"), altitude );
-            html /*<< _T("<tr><td colspan=2><table width=100% border=0 cellpadding=0 cellspacing=0>")*/
-            << rowStart <<_("Altitude") << _T("</font></td><td>&nbsp;</td><td><font size=-2>")
-            << rowStartH << _T("<b>") << altStr << _T("</b></td><td>&nbsp;</td><td><b>")
-            << rowEnd << _T("</table></td></tr>")
-            << vertSpacer;
-        }
-    }
+	if (b_specialPosnReport) {
+		if (altitude != 4095) {
+			wxString altStr;
+			altStr.Printf(_T("%4d M"), altitude);
+			html /*<< _T("<tr><td colspan=2><table width=100% border=0 cellpadding=0
+					cellspacing=0>")*/
+				<< rowStart << _("Altitude") << _T("</font></td><td>&nbsp;</td><td><font size=-2>")
+				<< rowStartH << _T("<b>") << altStr << _T("</b></td><td>&nbsp;</td><td><b>")
+				<< rowEnd << _T("</table></td></tr>") << vertSpacer;
+		}
+	}
 
 	html << _T("</table>");
 	return html;
 }
 
-wxString AIS_Target_Data::GetRolloverString( void )
+wxString AIS_Target_Data::GetRolloverString(void)
 {
 	wxString result;
 	wxString t;
-	if( b_nameValid ) {
-		result.Append( _T("\"") );
-		result.Append( GetFullName() );
-		result.Append( _T("\" ") );
+	if (b_nameValid) {
+		result.Append(_T("\""));
+		result.Append(GetFullName());
+		result.Append(_T("\" "));
 	}
-	if( Class != AIS_GPSG_BUDDY ) {
-		t.Printf( _T("%09d"), abs( MMSI ) );
-		result.Append( t );
+	if (Class != AIS_GPSG_BUDDY) {
+		t.Printf(_T("%09d"), abs(MMSI));
+		result.Append(t);
 	}
-	t = trimAISField( CallSign );
-	if( t.Len() ) {
-		result.Append( _T(" (") );
-		result.Append( t );
-		result.Append( _T(")") );
+	t = trimAISField(CallSign);
+	if (t.Len()) {
+		result.Append(_T(" ("));
+		result.Append(t);
+		result.Append(_T(")"));
 	}
-	if( g_bAISRolloverShowClass || ( Class == AIS_SART ) ) {
-		if( result.Len() ) result.Append( _T("\n") );
-		result.Append( _T("[") );
-		if( Class == AIS_ATON ) {
-			result.Append( wxGetTranslation( Get_class_string( true ) ) );
+	if (g_bAISRolloverShowClass || (Class == AIS_SART)) {
+		if (result.Len())
+			result.Append(_T("\n"));
+		result.Append(_T("["));
+		if (Class == AIS_ATON) {
+			result.Append(wxGetTranslation(Get_class_string(true)));
 			result.Append(_T(": "));
-			result.Append( wxGetTranslation( Get_vessel_type_string( false ) ) );
-		}
-		else
-			result.Append( wxGetTranslation( Get_class_string( false ) ) );
+			result.Append(wxGetTranslation(Get_vessel_type_string(false)));
+		} else
+			result.Append(wxGetTranslation(Get_class_string(false)));
 
-		result.Append( _T("] ") );
-		if( ( Class != AIS_ATON ) && ( Class != AIS_BASE ) ) {
-			if( Class == AIS_SART ) {
+		result.Append(_T("] "));
+		if ((Class != AIS_ATON) && (Class != AIS_BASE)) {
+			if (Class == AIS_SART) {
 				int mmsi_start = MMSI / 1000000;
-				switch( mmsi_start ){
+				switch (mmsi_start) {
 					case 970:
 						break;
 					case 972:
@@ -570,64 +578,66 @@ wxString AIS_Target_Data::GetRolloverString( void )
 				}
 			}
 
-            if( Class != AIS_SART ) {
-                if( !b_specialPosnReport )
-                    result.Append( wxGetTranslation( Get_vessel_type_string( false ) ) );
-                else
-                    result.Append( _("Special Position Report") );
-            }
-
-            if( ( Class != AIS_CLASS_B ) && ( Class != AIS_SART ) && !b_specialPosnReport) {
-				if( ( NavStatus <= 15 ) && ( NavStatus >= 0 ) ) {
-					result.Append( _T(" (") );
-					result.Append(wxGetTranslation(ais_get_status(NavStatus)));
-					result.Append( _T(")") );
-				}
-			} else if( Class == AIS_SART ) {
-				result.Append( _T(" (") );
-				if( NavStatus == RESERVED_14 ) result.Append( _("Active") );
-				else if( NavStatus == UNDEFINED ) result.Append( _("Testing") );
-
-				result.Append( _T(")") );
+			if (Class != AIS_SART) {
+				if (!b_specialPosnReport)
+					result.Append(wxGetTranslation(Get_vessel_type_string(false)));
+				else
+					result.Append(_("Special Position Report"));
 			}
 
+			if ((Class != AIS_CLASS_B) && (Class != AIS_SART) && !b_specialPosnReport) {
+				if ((NavStatus <= 15) && (NavStatus >= 0)) {
+					result.Append(_T(" ("));
+					result.Append(wxGetTranslation(ais_get_status(NavStatus)));
+					result.Append(_T(")"));
+				}
+			} else if (Class == AIS_SART) {
+				result.Append(_T(" ("));
+				if (NavStatus == RESERVED_14)
+					result.Append(_("Active"));
+				else if (NavStatus == UNDEFINED)
+					result.Append(_("Testing"));
+
+				result.Append(_T(")"));
+			}
 		}
 	}
 
-    if( g_bAISRolloverShowCOG && (( SOG <= 102.2 ) || b_specialPosnReport)
-			&& ( ( Class != AIS_ATON ) && ( Class != AIS_BASE ) ) ) {
-		if( result.Len() ) result << _T("\n");
+	if (g_bAISRolloverShowCOG && ((SOG <= 102.2) || b_specialPosnReport)
+		&& ((Class != AIS_ATON) && (Class != AIS_BASE))) {
+		if (result.Len())
+			result << _T("\n");
 
-		double speed_show = toUsrSpeed( SOG );
-		if( speed_show < 10.0 )
-			result << wxString::Format( _T("SOG %.2f "), speed_show ) << getUsrSpeedUnit() << _T(" ");
-        else if( speed_show < 100.0 )
-			result << wxString::Format( _T("SOG %.1f "), speed_show ) << getUsrSpeedUnit() << _T(" ");
-        else
-            result << wxString::Format( _T("SOG %.0f "), speed_show ) << getUsrSpeedUnit() << _T(" ");
+		double speed_show = toUsrSpeed(SOG);
+		if (speed_show < 10.0)
+			result << wxString::Format(_T("SOG %.2f "), speed_show) << getUsrSpeedUnit() << _T(" ");
+		else if (speed_show < 100.0)
+			result << wxString::Format(_T("SOG %.1f "), speed_show) << getUsrSpeedUnit() << _T(" ");
+		else
+			result << wxString::Format(_T("SOG %.0f "), speed_show) << getUsrSpeedUnit() << _T(" ");
 
-		int crs = wxRound( COG );
-		if( b_positionOnceValid ) {
-			if( crs < 360 ) {
-				if( g_bShowMag )
-					result << wxString::Format( wxString("COG %03d°(M)  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( crs ) );
+		int crs = wxRound(COG);
+		if (b_positionOnceValid) {
+			if (crs < 360) {
+				if (g_bShowMag)
+					result << wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8),
+											   (int)navigation::GetTrueOrMag(crs));
 				else
-					result << wxString::Format( wxString("COG %03d°  ", wxConvUTF8 ), (int)navigation::GetTrueOrMag( crs ) );
-			}
-
-			else if( COG == 360.0 )
+					result << wxString::Format(wxString("COG %03d°  ", wxConvUTF8),
+											   (int)navigation::GetTrueOrMag(crs));
+			} else if (COG == 360.0)
 				result << _(" COG Unavailable");
-			else if( crs == 360 )
-				result << wxString( " COG 000°", wxConvUTF8 );
+			else if (crs == 360)
+				result << wxString(" COG 000°", wxConvUTF8);
 		} else
 			result << _(" COG Unavailable");
 	}
 
-	if( g_bAISRolloverShowCPA && bCPA_Valid ) {
-		if( result.Len() ) result << _T("\n");
-		result << _("CPA") << _T(" ") << cc1->FormatDistanceAdaptive( CPA )
-			<< _T(" ") << _("in") << _T(" ")
-			<< wxString::Format( _T("%.0f"), TCPA ) << _T(" ") << _("min");
+	if (g_bAISRolloverShowCPA && bCPA_Valid) {
+		if (result.Len())
+			result << _T("\n");
+		result << _("CPA") << _T(" ") << cc1->FormatDistanceAdaptive(CPA) << _T(" ") << _("in")
+			   << _T(" ") << wxString::Format(_T("%.0f"), TCPA) << _T(" ") << _("min");
 	}
 	return result;
 }

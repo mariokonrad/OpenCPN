@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __AIS_BITSTRING_H__
-#define __AIS_BITSTRING_H__
+#ifndef __AIS__AIS_BITSTRING__H__
+#define __AIS__AIS_BITSTRING__H__
 
 #define AIS_MAX_MESSAGE_LEN (10 * 82) // AIS Spec allows up to 9 sentences per message, 82 bytes each
 

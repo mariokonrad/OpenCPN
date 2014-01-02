@@ -101,10 +101,6 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 
 extern bool g_bDisplayGrid;
 
-// AIS Global configuration
-extern bool g_bShowAreaNotices;
-extern bool g_bWplIsAprsPosition;
-
 extern int g_iNavAidRadarRingsNumberVisible;
 extern float g_fNavAidRadarRingsStep;
 extern int g_pNavAidRadarRingsStepUnits;
@@ -2075,11 +2071,11 @@ void options::SetInitialSettings()
 	m_pText_Track_Length->SetValue(wxString::Format(_T("%4.0f"), ais.AISShowTracks_Mins));
 	m_pCheck_Show_Moored->SetValue(!ais.ShowMoored);
 	m_pText_Moored_Speed->SetValue(wxString::Format(_T("%4.1f"), ais.ShowMoored_Kts));
-	m_pCheck_Show_Area_Notices->SetValue(g_bShowAreaNotices);
+	m_pCheck_Show_Area_Notices->SetValue(ais.ShowAreaNotices);
 	m_pCheck_Draw_Target_Size->SetValue(gui.view().DrawAISSize);
 	m_pCheck_Show_Target_Name->SetValue(gui.view().ShowAISName);
 	m_pText_Show_Target_Name_Scale->SetValue(wxString::Format(_T("%d"), gui.view().Show_Target_Name_Scale));
-	m_pCheck_Wpl_Aprs->SetValue(g_bWplIsAprsPosition);
+	m_pCheck_Wpl_Aprs->SetValue(ais.WplIsAprsPosition);
 
 	// Alerts
 	m_pCheck_AlertDialog->SetValue(ais.AIS_CPA_Alert);
@@ -2630,8 +2626,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	ais.set_AISShowTracks_Mins(get_double(m_pText_Track_Length));
 	ais.set_ShowMoored(!m_pCheck_Show_Moored->GetValue());
 	ais.set_ShowMoored_Kts(get_double(m_pText_Moored_Speed));
-
-	g_bShowAreaNotices = m_pCheck_Show_Area_Notices->GetValue();
+	ais.set_ShowAreaNotices(m_pCheck_Show_Area_Notices->GetValue());
 
 	gui.set_DrawAISSize(m_pCheck_Draw_Target_Size->GetValue());
 	gui.set_ShowAISName(m_pCheck_Show_Target_Name->GetValue());
@@ -2639,7 +2634,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	m_pText_Show_Target_Name_Scale->GetValue().ToLong(&ais_name_scale);
 	gui.set_Show_Target_Name_Scale(static_cast<int>(wxMax(5000, ais_name_scale)));
 
-	g_bWplIsAprsPosition = m_pCheck_Wpl_Aprs->GetValue();
+	ais.set_WplIsAprsPosition(m_pCheck_Wpl_Aprs->GetValue());
 
 	// Alert
 	ais.set_AIS_CPA_Alert(m_pCheck_AlertDialog->GetValue());

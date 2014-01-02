@@ -195,7 +195,6 @@ extern wxAuiManager* g_pauimgr;
 extern wxAuiDefaultDockArt* g_pauidockart;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern bool g_bShowAIS;
-extern bool g_bShowAreaNotices;
 extern bool g_bWayPointPreventDragging;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
@@ -863,7 +862,7 @@ void App::setup_for_empty_config(bool novicemode)
 		g_bFullScreenQuilt = true;
 		g_bQuiltEnable = true;
 		g_bskew_comp = false;
-		g_bShowAreaNotices = false;
+		ais.set_ShowAreaNotices(false);
 		gui.set_DrawAISSize(false);
 		gui.set_ShowAISName(false);
 

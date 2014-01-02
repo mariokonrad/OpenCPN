@@ -195,9 +195,6 @@ extern StatWin* stats;
 
 // AIS Global configuration
 extern bool g_bShowAIS;
-extern bool g_bShowTracks;
-extern double g_ShowTracks_Mins;
-extern bool g_bShowAreaNotices;
 
 extern int g_iNavAidRadarRingsNumberVisible;
 extern float g_fNavAidRadarRingsStep;
@@ -3582,7 +3579,9 @@ void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 
 void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 {
-	if (!g_pAIS || !g_bShowAIS || !g_bShowAreaNotices)
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
+	if (!g_pAIS || !g_bShowAIS || !ais.ShowAreaNotices)
 		return;
 
 	wxDateTime now = wxDateTime::Now();
@@ -6071,8 +6070,9 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 		contextMenu->Prepend(ID_REDO, _menuText(redoItem, _T("Ctrl-Y")));
 	}
 
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 	bool ais_areanotice = false;
-	if (g_pAIS && g_bShowAIS && g_bShowAreaNotices) {
+	if (g_pAIS && g_bShowAIS && ais.ShowAreaNotices) {
 
 		AIS_Target_Hash* an_sources = g_pAIS->GetAreaNoticeSourcesList();
 
@@ -6506,7 +6506,8 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 		Chs57 = dynamic_cast<s57chart*>(target_chart);
 	std::vector<Ais8_001_22*> area_notices;
 
-	if (g_pAIS && g_bShowAIS && g_bShowAreaNotices) {
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+	if (g_pAIS && g_bShowAIS && ais.ShowAreaNotices) {
 		AIS_Target_Hash* an_sources = g_pAIS->GetAreaNoticeSourcesList();
 
 		float vp_scale = GetVPScale();

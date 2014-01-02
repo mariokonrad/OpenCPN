@@ -345,8 +345,6 @@ DWORD color_inactiveborder;
 #endif
 
 bool g_bShowAIS;
-bool g_bShowAreaNotices;
-bool g_bWplIsAprsPosition;
 wxToolBarToolBase* m_pAISTool;
 int g_nAIS_activity_timer;
 bool g_bTrackActive;

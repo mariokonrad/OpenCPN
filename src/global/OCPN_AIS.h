@@ -59,6 +59,8 @@ public: // data
 	virtual void set_TrackDaily(bool);
 	virtual void set_AIS_Alert_Sound_File(const wxString&);
 	virtual void set_AIS_CPA_Alert_Suppress_Moored(bool);
+	virtual void set_ShowAreaNotices(bool);
+	virtual void set_WplIsAprsPosition(bool);
 };
 
 }

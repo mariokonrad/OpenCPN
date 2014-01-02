@@ -53,7 +53,6 @@ extern Select* pSelectAIS;
 extern MainFrame* gFrame;
 extern bool bGPSValid;
 extern bool g_bShowAIS;
-extern bool g_bWplIsAprsPosition;
 
 namespace ais
 {
@@ -191,6 +190,8 @@ void AIS_Decoder::OnEvtAIS(OCPN_DataStreamEvent& event)
 	wxString message = wxString(event.GetNMEAString().c_str(), wxConvUTF8);
 
 	if (!message.IsEmpty()) {
+		const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
 		if (message.Mid(3, 3).IsSameAs(_T("VDM"))
 			|| message.Mid(3, 3).IsSameAs(_T("VDO"))
 			|| message.Mid(1, 5).IsSameAs(_T("FRPOS"))
@@ -198,7 +199,7 @@ void AIS_Decoder::OnEvtAIS(OCPN_DataStreamEvent& event)
 			|| message.Mid(3, 3).IsSameAs(_T("TLL"))
 			|| message.Mid(3, 3).IsSameAs(_T("TTM"))
 			|| message.Mid(3, 3).IsSameAs(_T("OSD"))
-			|| (g_bWplIsAprsPosition && message.Mid(3, 3).IsSameAs(_T("WPL")))) {
+			|| (ais.WplIsAprsPosition && message.Mid(3, 3).IsSameAs(_T("WPL")))) {
 			Decode(message);
 			gFrame->TouchAISActive();
 		}

@@ -62,6 +62,8 @@ public:
 		bool TrackDaily; // TODO: does this parameter really belong to AIS?
 		wxString AIS_Alert_Sound_File;
 		bool AIS_CPA_Alert_Suppress_Moored;
+		bool ShowAreaNotices;
+		bool WplIsAprsPosition;
 	};
 
 	virtual const Data& get_data() const = 0;
@@ -89,6 +91,8 @@ public:
 	virtual void set_TrackDaily(bool) = 0;
 	virtual void set_AIS_Alert_Sound_File(const wxString&) = 0;
 	virtual void set_AIS_CPA_Alert_Suppress_Moored(bool) = 0;
+	virtual void set_ShowAreaNotices(bool) = 0;
+	virtual void set_WplIsAprsPosition(bool) = 0;
 };
 
 }

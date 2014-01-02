@@ -108,7 +108,7 @@ private:
 	void write_s57dialog();
 
 	double read_double(const wxString&) const;
-	bool read_bool(const wxString&) const;
+	bool read_bool(const wxString&, bool = false) const;
 	wxString read_string(const wxString&) const;
 
 	static bool WptIsInRouteList(const RoutePoint* pr);

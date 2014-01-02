@@ -150,5 +150,15 @@ void OCPN_AIS::set_AIS_CPA_Alert_Suppress_Moored(bool value)
 	data.AIS_CPA_Alert_Suppress_Moored = value;
 }
 
+void OCPN_AIS::set_ShowAreaNotices(bool value)
+{
+	data.ShowAreaNotices = value;
+}
+
+void OCPN_AIS::set_WplIsAprsPosition(bool value)
+{
+	data.WplIsAprsPosition = value;
+}
+
 }
 

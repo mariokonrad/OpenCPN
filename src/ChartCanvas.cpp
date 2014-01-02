@@ -92,6 +92,7 @@
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/AIS.h>
 #include <global/Navigation.h>
 
 #include <ais/ais.h>
@@ -198,8 +199,6 @@ extern bool g_bShowCOG;
 extern double g_ShowCOG_Mins;
 extern bool g_bShowTracks;
 extern double g_ShowTracks_Mins;
-extern bool g_bShowMoored;
-extern double g_ShowMoored_Kts;
 extern bool g_bAISShowTracks;
 extern bool g_bShowAreaNotices;
 
@@ -3707,6 +3706,8 @@ void ChartCanvas::AISDraw(ocpnDC& dc)
 	if (!g_bShowAIS)
 		return;
 
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
 	// Iterate over the AIS Target Hashmap
 	AIS_Target_Hash::iterator it;
 
@@ -3716,14 +3717,14 @@ void ChartCanvas::AISDraw(ocpnDC& dc)
 	// This way, fast targets are not obscured by slow/stationary targets
 	for (it = (*current_targets).begin(); it != (*current_targets).end(); ++it) {
 		AIS_Target_Data* td = it->second;
-		if ((td->SOG < g_ShowMoored_Kts)
+		if ((td->SOG < ais.ShowMoored_Kts)
 			&& !((td->Class == AIS_GPSG_BUDDY) || (td->Class == AIS_DSC)))
 			AISDrawTarget(td, dc);
 	}
 
 	for (it = (*current_targets).begin(); it != (*current_targets).end(); ++it) {
 		AIS_Target_Data* td = it->second;
-		if ((td->SOG >= g_ShowMoored_Kts)
+		if ((td->SOG >= ais.ShowMoored_Kts)
 			&& !((td->Class == AIS_GPSG_BUDDY) || (td->Class == AIS_DSC)))
 			AISDrawTarget(td, dc);
 	}
@@ -3739,6 +3740,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 {
 	using namespace ais;
 
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
 	// Target data must be valid
 	if (NULL == td)
 		return;
@@ -3749,7 +3752,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 	// Skip anchored/moored (interpreted as low speed) targets if requested
 	// unless the target is NUC or AtoN, in which case it is always displayed.
-	if ((!g_bShowMoored) && (td->SOG <= g_ShowMoored_Kts) && (td->NavStatus != NOT_UNDER_COMMAND)
+	if ((!ais.ShowMoored) && (td->SOG <= ais.ShowMoored_Kts) && (td->NavStatus != NOT_UNDER_COMMAND)
 		&& ((td->Class == AIS_CLASS_A) || (td->Class == AIS_CLASS_B)))
 		return;
 
@@ -3793,9 +3796,9 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 	geo::ll_gc_ll(td->Lat, td->Lon, td->COG, target_sog * g_ShowCOG_Mins / 60.0, &pred_lat,
 				  &pred_lon);
 
-	//    Is predicted point in the VPoint?
+	// Is predicted point in the VPoint?
 	if (GetVP().GetBBox().PointInBox(pred_lon, pred_lat, 0))
-		drawit++; // yep
+		drawit++;
 
 	// And one more test to catch the case where target COG line crosses the screen,
 	// but the target itself and its pred point are both off-screen
@@ -3810,17 +3813,18 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		TargetPoint = GetCanvasPointPix(Position(td->Lat, td->Lon));
 		PredPoint = GetCanvasPointPix(Position(pred_lat, pred_lon));
 
-		//  Calculate the relative angle for this chart orientation
-		//    Use a 100 pixel vector to calculate angle
-		double angle_distance_nm = (100. / GetVP().view_scale_ppm) / 1852.0;
-		double angle_lat, angle_lon;
+		// Calculate the relative angle for this chart orientation
+		// Use a 100 pixel vector to calculate angle
+		double angle_distance_nm = (100.0 / GetVP().view_scale_ppm) / 1852.0;
+		double angle_lat;
+		double angle_lon;
 		geo::ll_gc_ll(td->Lat, td->Lon, td->COG, angle_distance_nm, &angle_lat, &angle_lon);
 		wxPoint AnglePoint = GetCanvasPointPix(Position(angle_lat, angle_lon));
 
 		double theta;
 
 		if (abs(AnglePoint.x - TargetPoint.x) > 0) {
-			if (target_sog > g_ShowMoored_Kts)
+			if (target_sog > ais.ShowMoored_Kts)
 				theta = atan2((double)(AnglePoint.y - TargetPoint.y),
 							  (double)(AnglePoint.x - TargetPoint.x));
 			else
@@ -3829,7 +3833,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			if (AnglePoint.y > TargetPoint.y)
 				theta = M_PI / 2.0; // valid COG 180
 			else
-				theta = -M_PI / 2.0; //  valid COG 000 or speed is too low to resolve course
+				theta = -M_PI / 2.0; // valid COG 000 or speed is too low to resolve course
 		}
 
 		// Of course, if the target reported a valid HDG, then use it for icon
@@ -3843,7 +3847,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		dash_long[0] = (int)(1.0 * m_pix_per_mm); // Long dash  <---------+
 		dash_long[1] = (int)(0.5 * m_pix_per_mm); // Short gap            |
 
-		//  Draw the icon rotated to the COG
+		// Draw the icon rotated to the COG
 		wxPoint ais_quad_icon[4];
 		ais_quad_icon[0].x = -8;
 		ais_quad_icon[0].y = -6;
@@ -3887,7 +3891,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			}
 		}
 
-		//   If this is an AIS Class B target, so symbolize it differently
+		// If this is an AIS Class B target, so symbolize it differently
 		if (td->Class == AIS_CLASS_B)
 			ais_quad_icon[3].y = 0;
 		else if (td->Class == AIS_GPSG_BUDDY) {
@@ -4065,7 +4069,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 		// Render the COG line if the speed is greater than moored speed defined by ais
 		// options dialog
-		if ((g_bShowCOG) && (target_sog > g_ShowMoored_Kts)) {
+		if ((g_bShowCOG) && (target_sog > ais.ShowMoored_Kts)) {
 			int pixx = TargetPoint.x;
 			int pixy = TargetPoint.y;
 			int pixx1 = PredPoint.x;

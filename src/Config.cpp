@@ -60,6 +60,7 @@
 #include <wx/tokenzr.h>
 #include <wx/progdlg.h>
 
+
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern MainFrame* gFrame;
@@ -104,9 +105,6 @@ extern double           g_ShowCOG_Mins;
 extern bool             g_bAISShowTracks;
 extern bool             g_bTrackCarryOver;
 extern bool             g_bTrackDaily;
-extern double           g_AISShowTracks_Mins;
-extern bool             g_bShowMoored;
-extern double           g_ShowMoored_Kts;
 extern wxString         g_sAIS_Alert_Sound_File;
 extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool             g_bShowAreaNotices;
@@ -739,17 +737,24 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	Read(_T("bShowTargetTracks"), &g_bAISShowTracks, 0);
 
+	double AISShowTracks_Mins = 0.0;
 	if (Read(_T("TargetTracksMinutes"), &s)) {
-		s.ToDouble(&g_AISShowTracks_Mins);
-		g_AISShowTracks_Mins = wxMax(1.0, g_AISShowTracks_Mins);
-		g_AISShowTracks_Mins = wxMin(60.0, g_AISShowTracks_Mins);
-	} else
-		g_AISShowTracks_Mins = 20;
+		s.ToDouble(&AISShowTracks_Mins);
+		AISShowTracks_Mins = wxMax(1.0, AISShowTracks_Mins);
+		AISShowTracks_Mins = wxMin(60.0, AISShowTracks_Mins);
+	} else {
+		AISShowTracks_Mins = 20.0;
+	}
+	ais.set_AISShowTracks_Mins(AISShowTracks_Mins);
 
-	Read(_T("bShowMooredTargets"), &g_bShowMoored);
+	bool ShowMoored = false;
+	Read(_T("bShowMooredTargets"), &ShowMoored);
+	ais.set_ShowMoored(ShowMoored);
 
 	Read(_T("MooredTargetMaxSpeedKnots"), &s);
-	s.ToDouble(&g_ShowMoored_Kts);
+	double ShowMoored_Kts = 0.0;
+	s.ToDouble(&ShowMoored_Kts);
+	ais.set_ShowMoored_Kts(ShowMoored_Kts);
 
 	Read(_T("bShowAreaNotices"), &g_bShowAreaNotices);
 
@@ -1803,9 +1808,9 @@ void Config::UpdateSettings()
 	Write(_T("bShowCOGArrows"), g_bShowCOG);
 	Write(_T("CogArrowMinutes"), g_ShowCOG_Mins);
 	Write(_T("bShowTargetTracks"), g_bAISShowTracks);
-	Write(_T("TargetTracksMinutes"), g_AISShowTracks_Mins);
-	Write(_T("bShowMooredTargets"), g_bShowMoored);
-	Write(_T("MooredTargetMaxSpeedKnots"), g_ShowMoored_Kts);
+	Write(_T("TargetTracksMinutes"), ais.AISShowTracks_Mins);
+	Write(_T("bShowMooredTargets"), ais.ShowMoored);
+	Write(_T("MooredTargetMaxSpeedKnots"), ais.ShowMoored_Kts);
 	Write(_T("bAISAlertDialog"), ais.AIS_CPA_Alert);
 	Write(_T("bAISAlertAudio"), ais.AIS_CPA_Alert_Audio);
 	Write(_T("AISAlertAudioFile"), g_sAIS_Alert_Sound_File);

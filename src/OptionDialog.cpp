@@ -105,9 +105,6 @@ extern bool g_bDisplayGrid;
 extern bool g_bShowCOG;
 extern double g_ShowCOG_Mins;
 extern bool g_bAISShowTracks;
-extern double g_AISShowTracks_Mins;
-extern bool g_bShowMoored;
-extern double g_ShowMoored_Kts;
 extern wxString g_sAIS_Alert_Sound_File;
 extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bShowAreaNotices;
@@ -393,6 +390,16 @@ bool options::Create(MainFrame* parent, wxWindowID id, const wxString& caption, 
 wxWindow* options::GetContentWindow() const
 {
 	return NULL;
+}
+
+double options::get_double(const wxTextCtrl* text) const
+{
+	if (!text)
+		return 0.0;
+
+	double value = 0.0;
+	text->GetValue().ToDouble(&value);
+	return value;
 }
 
 size_t options::CreatePanel(const wxString& title)
@@ -2071,9 +2078,9 @@ void options::SetInitialSettings()
 	m_pCheck_Show_COG->SetValue(g_bShowCOG);
 	m_pText_COG_Predictor->SetValue(wxString::Format(_T("%4.0f"), g_ShowCOG_Mins));
 	m_pCheck_Show_Tracks->SetValue(g_bAISShowTracks);
-	m_pText_Track_Length->SetValue(wxString::Format(_T("%4.0f"), g_AISShowTracks_Mins));
-	m_pCheck_Show_Moored->SetValue(!g_bShowMoored);
-	m_pText_Moored_Speed->SetValue(wxString::Format(_T("%4.1f"), g_ShowMoored_Kts));
+	m_pText_Track_Length->SetValue(wxString::Format(_T("%4.0f"), ais.AISShowTracks_Mins));
+	m_pCheck_Show_Moored->SetValue(!ais.ShowMoored);
+	m_pText_Moored_Speed->SetValue(wxString::Format(_T("%4.1f"), ais.ShowMoored_Kts));
 	m_pCheck_Show_Area_Notices->SetValue(g_bShowAreaNotices);
 	m_pCheck_Draw_Target_Size->SetValue(gui.view().DrawAISSize);
 	m_pCheck_Show_Target_Name->SetValue(gui.view().ShowAISName);
@@ -2609,39 +2616,27 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 	// CPA Box
 	ais.set_CPAMax(m_pCheck_CPA_Max->GetValue());
-
-	double CPAMax_NM = 0.0;
-	m_pText_CPA_Max->GetValue().ToDouble(&CPAMax_NM);
-	ais.set_CPAMax_NM(CPAMax_NM);
-
+	ais.set_CPAMax_NM(get_double(m_pText_CPA_Max));
 	ais.set_CPAWarn(m_pCheck_CPA_Warn->GetValue());
-	double CPAWarn_NM = 0.0;
-	m_pText_CPA_Warn->GetValue().ToDouble(&CPAWarn_NM);
-	ais.set_CPAWarn_NM(CPAWarn_NM);
+	ais.set_CPAWarn_NM(get_double(m_pText_CPA_Warn));
 	ais.set_TCPA_Max(m_pCheck_CPA_WarnT->GetValue());
-	double TCPA_Max_min = 0.0;
-	m_pText_CPA_WarnT->GetValue().ToDouble(&TCPA_Max_min);
-	ais.set_TCPA_Max_min(TCPA_Max_min);
+	ais.set_TCPA_Max_min(get_double(m_pText_CPA_WarnT));
 
 	// Lost Targets
 	ais.set_MarkLost(m_pCheck_Mark_Lost->GetValue());
-	double MarkLost_Mins = 0.0;
-	m_pText_Mark_Lost->GetValue().ToDouble(&MarkLost_Mins);
-	ais.set_MarkLost_Mins(MarkLost_Mins);
+	ais.set_MarkLost_Mins(get_double(m_pText_Mark_Lost));
 	ais.set_RemoveLost(m_pCheck_Remove_Lost->GetValue());
-	double RemoveLost_Mins = 0.0;
-	m_pText_Remove_Lost->GetValue().ToDouble(&RemoveLost_Mins);
-	ais.set_RemoveLost_Mins(RemoveLost_Mins);
+	ais.set_RemoveLost_Mins(get_double(m_pText_Remove_Lost));
 
 	// Display
 	g_bShowCOG = m_pCheck_Show_COG->GetValue();
 	m_pText_COG_Predictor->GetValue().ToDouble(&g_ShowCOG_Mins);
 
 	g_bAISShowTracks = m_pCheck_Show_Tracks->GetValue();
-	m_pText_Track_Length->GetValue().ToDouble(&g_AISShowTracks_Mins);
 
-	g_bShowMoored = !m_pCheck_Show_Moored->GetValue();
-	m_pText_Moored_Speed->GetValue().ToDouble(&g_ShowMoored_Kts);
+	ais.set_AISShowTracks_Mins(get_double(m_pText_Track_Length));
+	ais.set_ShowMoored(!m_pCheck_Show_Moored->GetValue());
+	ais.set_ShowMoored_Kts(get_double(m_pText_Moored_Speed));
 
 	g_bShowAreaNotices = m_pCheck_Show_Area_Notices->GetValue();
 
@@ -2657,12 +2652,8 @@ void options::OnApplyClick(wxCommandEvent& event)
 	ais.set_AIS_CPA_Alert(m_pCheck_AlertDialog->GetValue());
 	ais.set_AIS_CPA_Alert_Audio(m_pCheck_AlertAudio->GetValue());
 	g_bAIS_CPA_Alert_Suppress_Moored = m_pCheck_Alert_Moored->GetValue();
-
 	ais.set_AIS_ACK_Timeout(m_pCheck_Ack_Timout->GetValue());
-
-	double AckTimeout_Mins = 0.0;
-	m_pText_ACK_Timeout->GetValue().ToDouble(&AckTimeout_Mins);
-	ais.set_AckTimeout_Mins(AckTimeout_Mins);
+	ais.set_AckTimeout_Mins(get_double(m_pText_ACK_Timeout));
 
 	// Rollover
 	g_bAISRolloverShowClass = m_pCheck_Rollover_Class->GetValue();

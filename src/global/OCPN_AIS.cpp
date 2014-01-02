@@ -100,5 +100,20 @@ void OCPN_AIS::set_AckTimeout_Mins(double value)
 	data.AckTimeout_Mins = value;
 }
 
+void OCPN_AIS::set_AISShowTracks_Mins(double value)
+{
+	data.AISShowTracks_Mins = value;
+}
+
+void OCPN_AIS::set_ShowMoored(bool value)
+{
+	data.ShowMoored = value;
+}
+
+void OCPN_AIS::set_ShowMoored_Kts(double value)
+{
+	data.ShowMoored_Kts = value;
+}
+
 }
 

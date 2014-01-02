@@ -49,6 +49,9 @@ public: // data
 	virtual void set_AIS_CPA_Alert_Audio(bool);
 	virtual void set_AIS_ACK_Timeout(bool);
 	virtual void set_AckTimeout_Mins(double);
+	virtual void set_AISShowTracks_Mins(double);
+	virtual void set_ShowMoored(bool);
+	virtual void set_ShowMoored_Kts(double);
 };
 
 }

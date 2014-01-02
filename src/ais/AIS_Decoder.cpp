@@ -54,9 +54,6 @@ extern MainFrame* gFrame;
 extern bool bGPSValid;
 extern bool g_bShowAIS;
 extern bool g_bAISShowTracks;
-extern double g_AISShowTracks_Mins;
-extern bool g_bShowMoored;
-extern double g_ShowMoored_Kts;
 extern wxString g_sAIS_Alert_Sound_File;
 extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bWplIsAprsPosition;
@@ -1606,8 +1603,9 @@ void AIS_Decoder::UpdateOneTrack(AIS_Target_Data* ptarget)
 	ptarget->m_ptrack.push_back(trackpoint);
 
 	// Walk the list, removing any track points that are older than the stipulated time
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 
-	time_t test_time = wxDateTime::Now().GetTicks() - (time_t)(g_AISShowTracks_Mins * 60);
+	time_t test_time = wxDateTime::Now().GetTicks() - static_cast<time_t>(ais.AISShowTracks_Mins * 60);
 
 	AISTargetTrackList::iterator track_point = ptarget->m_ptrack.begin();
 	while (track_point != ptarget->m_ptrack.end()) {
@@ -1641,7 +1639,7 @@ void AIS_Decoder::UpdateAllAlarms(void)
 					m_bGeneralAlert = true;
 
 				// Some options can suppress general alerts
-				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= g_ShowMoored_Kts))
+				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= ais.ShowMoored_Kts))
 					m_bGeneralAlert = false;
 
 				// Skip distant targets if requested
@@ -1674,13 +1672,13 @@ void AIS_Decoder::UpdateAllAlarms(void)
 			if (ais.CPAWarn && td->b_active && td->b_positionOnceValid && (td->Class != AIS_SART)
 				&& (td->Class != AIS_DSC)) {
 				// Skip anchored/moored(interpreted as low speed) targets if requested
-				if ((!g_bShowMoored) && (td->SOG <= g_ShowMoored_Kts)) { // dsr
+				if ((!ais.ShowMoored) && (td->SOG <= ais.ShowMoored_Kts)) {
 					td->n_alarm_state = AIS_NO_ALARM;
 					continue;
 				}
 
 				// No Alert on moored(interpreted as low speed) targets if so requested
-				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= g_ShowMoored_Kts)) { // dsr
+				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= ais.ShowMoored_Kts)) {
 					td->n_alarm_state = AIS_NO_ALARM;
 					continue;
 				}
@@ -1951,7 +1949,7 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent& WXUNUSED(event))
 
 	// Update the general suppression flag
 	m_bSuppressed = false;
-	if (g_bAIS_CPA_Alert_Suppress_Moored || !g_bShowMoored)
+	if (g_bAIS_CPA_Alert_Suppress_Moored || !ais.ShowMoored)
 		m_bSuppressed = true;
 
 	m_bAIS_Audio_Alert_On = false; // default, may be set on

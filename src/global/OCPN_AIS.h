@@ -47,6 +47,8 @@ public: // data
 	virtual void set_RemoveLost_Mins(double);
 	virtual void set_AIS_CPA_Alert(bool);
 	virtual void set_AIS_CPA_Alert_Audio(bool);
+	virtual void set_AIS_ACK_Timeout(bool);
+	virtual void set_AckTimeout_Mins(double);
 };
 
 }

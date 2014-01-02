@@ -90,5 +90,15 @@ void OCPN_AIS::set_AIS_CPA_Alert_Audio(bool value)
 	data.AIS_CPA_Alert_Audio = value;
 }
 
+void OCPN_AIS::set_AIS_ACK_Timeout(bool value)
+{
+	data.AIS_ACK_Timeout = value;
+}
+
+void OCPN_AIS::set_AckTimeout_Mins(double value)
+{
+	data.AckTimeout_Mins = value;
+}
+
 }
 

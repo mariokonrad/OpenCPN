@@ -59,8 +59,6 @@ extern bool g_bShowMoored;
 extern double g_ShowMoored_Kts;
 extern wxString g_sAIS_Alert_Sound_File;
 extern bool g_bAIS_CPA_Alert_Suppress_Moored;
-extern bool g_bAIS_ACK_Timeout;
-extern double g_AckTimeout_Mins;
 extern bool g_bWplIsAprsPosition;
 
 namespace ais
@@ -1707,11 +1705,11 @@ void AIS_Decoder::UpdateAllAlarms(void)
 			// Maintain the timer for in_ack flag
 			// SART and DSC targets always maintain ack timeout
 
-			if (g_bAIS_ACK_Timeout || (td->Class == AIS_SART)
+			if (ais.AIS_ACK_Timeout || (td->Class == AIS_SART)
 				|| ((td->Class == AIS_DSC) && (td->ShipType == 12))) {
 				if (td->b_in_ack_timeout) {
 					wxTimeSpan delta = wxDateTime::Now() - td->m_ack_time;
-					if (delta.GetMinutes() > g_AckTimeout_Mins)
+					if (delta.GetMinutes() > ais.AckTimeout_Mins)
 						td->b_in_ack_timeout = false;
 				}
 			} else

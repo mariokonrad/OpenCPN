@@ -109,8 +109,6 @@ extern bool             g_bShowMoored;
 extern double           g_ShowMoored_Kts;
 extern wxString         g_sAIS_Alert_Sound_File;
 extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
-extern bool             g_bAIS_ACK_Timeout;
-extern double           g_AckTimeout_Mins;
 extern bool             g_bShowAreaNotices;
 extern bool             g_bDrawAISSize;
 extern bool             g_bShowAISName;
@@ -776,9 +774,14 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("AISAlertAudioFile"), &g_sAIS_Alert_Sound_File);
 	Read(_T("bAISAlertSuppressMoored"), &g_bAIS_CPA_Alert_Suppress_Moored);
 
-	Read(_T("bAISAlertAckTimeout"), &g_bAIS_ACK_Timeout, 0);
+	long AIS_ACK_Timeout = 0;
+	Read(_T("bAISAlertAckTimeout"), &AIS_ACK_Timeout, 0);
+	ais.set_AIS_ACK_Timeout(AIS_ACK_Timeout);
+
+	double AckTimeout_Mins = 0.0;
 	Read(_T("AlertAckTimeoutMinutes"), &s);
-	s.ToDouble(&g_AckTimeout_Mins);
+	s.ToDouble(&AckTimeout_Mins);
+	ais.set_AckTimeout_Mins(AckTimeout_Mins);
 
 	load_ais_alert_dialog();
 	load_ais_query_dialog();
@@ -1825,8 +1828,8 @@ void Config::UpdateSettings()
 	Write(_T("bAISRolloverShowCOG"), g_bAISRolloverShowCOG);
 	Write(_T("bAISRolloverShowCPA"), g_bAISRolloverShowCPA);
 
-	Write(_T("bAISAlertAckTimeout"), g_bAIS_ACK_Timeout);
-	Write(_T("AlertAckTimeoutMinutes"), g_AckTimeout_Mins);
+	Write(_T("bAISAlertAckTimeout"), ais.AIS_ACK_Timeout);
+	Write(_T("AlertAckTimeoutMinutes"), ais.AckTimeout_Mins);
 
 #ifdef USE_S57
 	SetPath(_T("/Settings/GlobalState"));

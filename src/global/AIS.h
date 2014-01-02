@@ -48,6 +48,8 @@ public:
 		double RemoveLost_Mins;
 		bool AIS_CPA_Alert;
 		bool AIS_CPA_Alert_Audio;
+		bool AIS_ACK_Timeout;
+		double AckTimeout_Mins;
 	};
 
 	virtual const Data& get_data() const = 0;
@@ -63,6 +65,8 @@ public:
 	virtual void set_RemoveLost_Mins(double) = 0;
 	virtual void set_AIS_CPA_Alert(bool) = 0;
 	virtual void set_AIS_CPA_Alert_Audio(bool) = 0;
+	virtual void set_AIS_ACK_Timeout(bool) = 0;
+	virtual void set_AckTimeout_Mins(double) = 0;
 };
 
 }

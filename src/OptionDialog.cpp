@@ -150,9 +150,6 @@ extern bool g_bAISRolloverShowClass;
 extern bool g_bAISRolloverShowCOG;
 extern bool g_bAISRolloverShowCPA;
 
-extern bool g_bAIS_ACK_Timeout;
-extern double g_AckTimeout_Mins;
-
 extern bool g_bQuiltEnable;
 extern bool g_bFullScreenQuilt;
 extern bool g_bConfirmObjectDelete;
@@ -2090,8 +2087,8 @@ void options::SetInitialSettings()
 	m_pCheck_AlertDialog->SetValue(ais.AIS_CPA_Alert);
 	m_pCheck_AlertAudio->SetValue(ais.AIS_CPA_Alert_Audio);
 	m_pCheck_Alert_Moored->SetValue(g_bAIS_CPA_Alert_Suppress_Moored);
-	m_pCheck_Ack_Timout->SetValue(g_bAIS_ACK_Timeout);
-	m_pText_ACK_Timeout->SetValue(wxString::Format(_T("%4.0f"), g_AckTimeout_Mins));
+	m_pCheck_Ack_Timout->SetValue(ais.AIS_ACK_Timeout);
+	m_pText_ACK_Timeout->SetValue(wxString::Format(_T("%4.0f"), ais.AckTimeout_Mins));
 
 	// Rollover
 	m_pCheck_Rollover_Class->SetValue(g_bAISRolloverShowClass);
@@ -2663,8 +2660,11 @@ void options::OnApplyClick(wxCommandEvent& event)
 	ais.set_AIS_CPA_Alert_Audio(m_pCheck_AlertAudio->GetValue());
 	g_bAIS_CPA_Alert_Suppress_Moored = m_pCheck_Alert_Moored->GetValue();
 
-	g_bAIS_ACK_Timeout = m_pCheck_Ack_Timout->GetValue();
-	m_pText_ACK_Timeout->GetValue().ToDouble(&g_AckTimeout_Mins);
+	ais.set_AIS_ACK_Timeout(m_pCheck_Ack_Timout->GetValue());
+
+	double AckTimeout_Mins = 0.0;
+	m_pText_ACK_Timeout->GetValue().ToDouble(&AckTimeout_Mins);
+	ais.set_AckTimeout_Mins(AckTimeout_Mins);
 
 	// Rollover
 	g_bAISRolloverShowClass = m_pCheck_Rollover_Class->GetValue();

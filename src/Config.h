@@ -107,6 +107,9 @@ private:
 	void write_cm93();
 	void write_s57dialog();
 
+	double read_double(const wxString&) const;
+	bool read_bool(const wxString&) const;
+
 	static bool WptIsInRouteList(const RoutePoint* pr);
 
 	wxString visibleLayers;

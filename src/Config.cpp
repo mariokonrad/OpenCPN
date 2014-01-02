@@ -505,6 +505,24 @@ void Config::load_fonts(int iteration)
 	}
 }
 
+double Config::read_double(const wxString& entry) const
+{
+	wxString s;
+	double value = 0.0;
+
+	Read(entry, &s);
+	s.ToDouble(&value);
+	return value;
+}
+
+bool Config::read_bool(const wxString& entry) const
+{
+	bool value = false; 
+
+	Read(entry, &value);
+	return value;
+}
+
 int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 {
 	int read_int;
@@ -685,55 +703,20 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	wxString s;
 	SetPath(_T("/Settings/AIS"));
 
-	bool CPAMax = false;
-	Read(_T("bNoCPAMax"), &CPAMax);
-	ais.set_CPAMax(CPAMax);
-
-	Read(_T("NoCPAMaxNMi"), &s);
-	double CPAMax_NM = 0.0;
-	s.ToDouble(&CPAMax_NM);
-	ais.set_CPAMax_NM(CPAMax_NM);
-
-	bool CPAWarn = false;
-	Read(_T("bCPAWarn"), &CPAWarn);
-	ais.set_CPAWarn(CPAWarn);
-
-	Read(_T("CPAWarnNMi"), &s);
-	double CPAWarn_NM = 0.0;
-	s.ToDouble(&CPAWarn_NM);
-	ais.set_CPAWarn_NM(CPAWarn_NM);
-
-	bool TCPA_Max = false;
-	Read(_T("bTCPAMax"), &TCPA_Max);
-	ais.set_TCPA_Max(TCPA_Max);
-
-	Read(_T("TCPAMaxMinutes"), &s);
-	double TCPA_Max_min = 0.0;
-	s.ToDouble(&TCPA_Max_min);
-	ais.set_TCPA_Max_min(TCPA_Max_min);
-
-	bool MarkLost = false;
-	Read(_T("bMarkLostTargets"), &MarkLost);
-	ais.set_MarkLost(MarkLost);
-
-	Read(_T("MarkLost_Minutes"), &s);
-	double MarkLost_Mins = 0.0;
-	s.ToDouble(&MarkLost_Mins);
-	ais.set_MarkLost_Mins(MarkLost_Mins);
-
-	bool RemoveLost = false;
-	Read(_T("bRemoveLostTargets"), &RemoveLost);
-	ais.set_RemoveLost(RemoveLost);
-
-	Read(_T("RemoveLost_Minutes"), &s);
-	double RemoveLost_Mins = 0.0;
-	s.ToDouble(&RemoveLost_Mins);
-	ais.set_RemoveLost_Mins(RemoveLost_Mins);
+	ais.set_CPAMax(read_bool(_T("bNoCPAMax")));
+	ais.set_CPAMax_NM(read_double(_T("NoCPAMaxNMi")));
+	ais.set_CPAWarn(read_bool(_T("bCPAWarn")));
+	ais.set_CPAWarn_NM(read_double(_T("CPAWarnNMi")));
+	ais.set_TCPA_Max(read_bool(_T("bTCPAMax")));
+	ais.set_TCPA_Max_min(read_double(_T("TCPAMaxMinutes")));
+	ais.set_MarkLost(read_bool(_T("bMarkLostTargets")));
+	ais.set_MarkLost_Mins(read_double(_T("MarkLost_Minutes")));
+	ais.set_RemoveLost(read_bool(_T("bRemoveLostTargets")));
+	ais.set_RemoveLost_Mins(read_double(_T("RemoveLost_Minutes")));
 
 	Read(_T("bShowCOGArrows"), &g_bShowCOG);
 
-	Read(_T("CogArrowMinutes"), &s);
-	s.ToDouble(&g_ShowCOG_Mins);
+	g_ShowCOG_Mins = read_double(_T("CogArrowMinutes"));
 
 	Read(_T("bShowTargetTracks"), &g_bAISShowTracks, 0);
 
@@ -746,38 +729,21 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		AISShowTracks_Mins = 20.0;
 	}
 	ais.set_AISShowTracks_Mins(AISShowTracks_Mins);
-
-	bool ShowMoored = false;
-	Read(_T("bShowMooredTargets"), &ShowMoored);
-	ais.set_ShowMoored(ShowMoored);
-
-	Read(_T("MooredTargetMaxSpeedKnots"), &s);
-	double ShowMoored_Kts = 0.0;
-	s.ToDouble(&ShowMoored_Kts);
-	ais.set_ShowMoored_Kts(ShowMoored_Kts);
+	ais.set_ShowMoored(read_bool(_T("bShowMooredTargets")));
+	ais.set_ShowMoored_Kts(read_double(_T("MooredTargetMaxSpeedKnots")));
 
 	Read(_T("bShowAreaNotices"), &g_bShowAreaNotices);
 
-	bool DrawAISSize = false;
-	Read(_T("bDrawAISSize"), &DrawAISSize);
-	gui.set_DrawAISSize(DrawAISSize);
-
-	bool ShowAISName = false;
-	Read(_T("bShowAISName"), &ShowAISName);
-	gui.set_ShowAISName(ShowAISName);
-
-	bool AIS_CPA_Alert = false;
-	Read(_T("bAISAlertDialog"), &AIS_CPA_Alert);
-	ais.set_AIS_CPA_Alert(AIS_CPA_Alert);
+	gui.set_DrawAISSize(read_bool(_T("bDrawAISSize")));
+	gui.set_ShowAISName(read_bool(_T("bShowAISName")));
+	ais.set_AIS_CPA_Alert(read_bool(_T("bAISAlertDialog")));
 
 	int show_target_name_scale = Read(_T("ShowAISTargetNameScale"), 250000L);
 	gui.set_Show_Target_Name_Scale(wxMax(5000, show_target_name_scale));
 	Read(_T("bWplIsAprsPositionReport"), &g_bWplIsAprsPosition, 1);
 	Read(_T("AISCOGPredictorWidth"), &g_ais_cog_predictor_width, 3);
 
-	bool AIS_CPA_Alert_Audio = false;
-	Read(_T("bAISAlertAudio"), &AIS_CPA_Alert_Audio);
-	ais.set_AIS_CPA_Alert_Audio(AIS_CPA_Alert_Audio);
+	ais.set_AIS_CPA_Alert_Audio(read_bool(_T("bAISAlertAudio")));
 
 	Read(_T("AISAlertAudioFile"), &g_sAIS_Alert_Sound_File);
 	Read(_T("bAISAlertSuppressMoored"), &g_bAIS_CPA_Alert_Suppress_Moored);
@@ -786,10 +752,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("bAISAlertAckTimeout"), &AIS_ACK_Timeout, 0);
 	ais.set_AIS_ACK_Timeout(AIS_ACK_Timeout);
 
-	double AckTimeout_Mins = 0.0;
-	Read(_T("AlertAckTimeoutMinutes"), &s);
-	s.ToDouble(&AckTimeout_Mins);
-	ais.set_AckTimeout_Mins(AckTimeout_Mins);
+	ais.set_AckTimeout_Mins(read_double(_T("AlertAckTimeoutMinutes")));
 
 	load_ais_alert_dialog();
 	load_ais_query_dialog();
@@ -801,9 +764,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_ais_target_list_range(Read(_T("AISTargetListRange"), 40L));
 	gui.set_ais_target_list_sortColumn(Read(_T("AISTargetListSortColumn"), 2L)); // Column #2 is MMSI
 
-	bool AisTargetList_sortReverse = false;
-	Read(_T("bAISTargetListSortReverse"), &AisTargetList_sortReverse, false);
-	gui.set_ais_target_list_sortReverse(AisTargetList_sortReverse);
+	gui.set_ais_target_list_sortReverse(read_bool(_T("bAISTargetListSortReverse")));
 
 	wxString AisTargetList_column_spec;
 	Read(_T("AISTargetListColumnSpec"), &AisTargetList_column_spec);

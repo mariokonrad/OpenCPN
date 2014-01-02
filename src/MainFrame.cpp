@@ -102,6 +102,7 @@
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/AIS.h>
 #include <global/System.h>
 #include <global/Navigation.h>
 #include <global/WatchDog.h>
@@ -344,18 +345,11 @@ DWORD color_inactiveborder;
 #endif
 
 bool g_bShowAIS;
-bool g_bShowCOG;
-double g_ShowCOG_Mins;
-bool g_bAISShowTracks;
-wxString g_sAIS_Alert_Sound_File;
-bool g_bAIS_CPA_Alert_Suppress_Moored;
 bool g_bShowAreaNotices;
 bool g_bWplIsAprsPosition;
 wxToolBarToolBase* m_pAISTool;
 int g_nAIS_activity_timer;
 bool g_bTrackActive;
-bool g_bTrackCarryOver;
-bool g_bTrackDaily;
 bool g_bHighliteTracks;
 wxString g_default_wp_icon;
 Track* g_pActiveTrack;
@@ -1232,7 +1226,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 	global::OCPN::get().gui().set_frame_maximized(IsMaximized());
 
 	// Record the current state of tracking
-	g_bTrackCarryOver = g_bTrackActive;
+	global::OCPN::get().ais().set_TrackCarryOver(g_bTrackActive);
 
 	TrackOff();
 
@@ -1904,7 +1898,9 @@ Track* MainFrame::TrackOff(bool do_add_point)
 			g_pRouteMan->DeleteRoute(g_pActiveTrack);
 			return_val = NULL;
 		} else {
-			if (g_bTrackDaily) {
+			const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
+			if (ais.TrackDaily) {
 				Track* pExtendTrack = g_pActiveTrack->DoExtendDaily();
 				if (pExtendTrack) {
 					g_pRouteMan->DeleteRoute(g_pActiveTrack);
@@ -3253,7 +3249,8 @@ void MainFrame::onTimer_log_message()
 			wxLogMessage(prepare_logbook_message(lognow));
 			g_loglast_time = lognow;
 
-			if ((lognow.GetHour() == 0) && (lognow.GetMinute() == 0) && g_bTrackDaily)
+			const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+			if ((lognow.GetHour() == 0) && (lognow.GetMinute() == 0) && ais.TrackDaily)
 				TrackMidnightRestart();
 
 			onTimer_play_bells_on_log();

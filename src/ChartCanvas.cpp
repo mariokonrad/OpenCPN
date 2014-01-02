@@ -195,11 +195,8 @@ extern StatWin* stats;
 
 // AIS Global configuration
 extern bool g_bShowAIS;
-extern bool g_bShowCOG;
-extern double g_ShowCOG_Mins;
 extern bool g_bShowTracks;
 extern double g_ShowTracks_Mins;
-extern bool g_bAISShowTracks;
 extern bool g_bShowAreaNotices;
 
 extern int g_iNavAidRadarRingsNumberVisible;
@@ -235,7 +232,6 @@ extern double g_ownship_predictor_minutes;
 extern chart::ChartStack* pCurrentStack;
 extern bool g_bquiting;
 extern ais::AISTargetListDialog* g_pAISTargetList;
-extern wxString g_sAIS_Alert_Sound_File;
 
 extern PlugInManager* g_pi_manager;
 
@@ -3781,7 +3777,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		drawit++;
 
 	// If AIS tracks are shown, is the first point of the track on-screen?
-	if (g_bAISShowTracks && td->b_show_track) {
+	if (ais.AISShowTracks && td->b_show_track) {
 		ais::AISTargetTrackList::const_iterator i = td->m_ptrack.begin();
 		if (i != td->m_ptrack.end()) {
 			if (GetVP().GetBBox().PointInBox(i->m_lon, i->m_lat, 0))
@@ -3793,7 +3789,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 	double pred_lat, pred_lon;
 
-	geo::ll_gc_ll(td->Lat, td->Lon, td->COG, target_sog * g_ShowCOG_Mins / 60.0, &pred_lat,
+	geo::ll_gc_ll(td->Lat, td->Lon, td->COG, target_sog * ais.ShowCOG_Mins / 60.0, &pred_lat,
 				  &pred_lon);
 
 	// Is predicted point in the VPoint?
@@ -4069,7 +4065,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 		// Render the COG line if the speed is greater than moored speed defined by ais
 		// options dialog
-		if ((g_bShowCOG) && (target_sog > ais.ShowMoored_Kts)) {
+		if (ais.ShowCOG && (target_sog > ais.ShowMoored_Kts)) {
 			int pixx = TargetPoint.x;
 			int pixy = TargetPoint.y;
 			int pixx1 = PredPoint.x;
@@ -4318,7 +4314,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		}
 
 		// Draw tracks if enabled
-		if (g_bAISShowTracks && td->b_show_track) {
+		if (ais.AISShowTracks && td->b_show_track) {
 			wxPoint TrackPointA;
 			wxPoint TrackPointB;
 
@@ -4579,8 +4575,10 @@ void ChartCanvas::AnchorWatchDraw(ocpnDC& dc)
 	}
 
 	if (play_sound) {
+		const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
 		if (!g_anchorwatch_sound.IsOk())
-			g_anchorwatch_sound.Create(g_sAIS_Alert_Sound_File);
+			g_anchorwatch_sound.Create(ais.AIS_Alert_Sound_File);
 
 #ifndef __WXMSW__
 		if (g_anchorwatch_sound.IsOk() && !g_anchorwatch_sound.IsPlaying())
@@ -6267,7 +6265,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 					menuAIS->Append(ID_DEF_MENU_AIS_CPA, _("Show Target CPA"));
 			}
 			menuAIS->Append(ID_DEF_MENU_AISTARGETLIST, _("Target List..."));
-			if (g_bAISShowTracks) {
+			if (global::OCPN::get().ais().get_data().AISShowTracks) {
 				if (myptarget && myptarget->b_show_track)
 					menuAIS->Append(ID_DEF_MENU_AISSHOWTRACK, _("Hide Target Track"));
 				else

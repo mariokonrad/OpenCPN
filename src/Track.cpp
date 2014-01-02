@@ -32,6 +32,7 @@
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 #include <global/GUI.h>
+#include <global/AIS.h>
 
 #include <geo/GeoRef.h>
 
@@ -42,7 +43,6 @@
 extern int g_nTrackPrecision;
 extern RouteList* pRouteList;
 extern Select* pSelect;
-extern bool g_bTrackDaily;
 extern bool g_bHighliteTracks;
 extern ChartCanvas* cc1;
 extern double g_TrackDeltaDistance;
@@ -219,12 +219,16 @@ void Track::OnTimerTrack(wxTimerEvent&)
 		m_track_run = 0;
 	}
 
-	if (b_addpoint)
+	if (b_addpoint) {
 		AddPointNow();
-	else // continuously update track beginning point timestamp if no movement.
-		if ((trackPointState == firstPoint) && !g_bTrackDaily) {
-		wxDateTime now = wxDateTime::Now();
-		pRoutePointList->front()->SetCreateTime(now.ToUTC());
+	} else {
+		const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
+		// continuously update track beginning point timestamp if no movement.
+		if ((trackPointState == firstPoint) && !ais.TrackDaily) {
+			wxDateTime now = wxDateTime::Now();
+			pRoutePointList->front()->SetCreateTime(now.ToUTC());
+		}
 	}
 
 	m_TimerTrack.Start(1000, wxTIMER_CONTINUOUS);

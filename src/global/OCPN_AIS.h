@@ -52,6 +52,13 @@ public: // data
 	virtual void set_AISShowTracks_Mins(double);
 	virtual void set_ShowMoored(bool);
 	virtual void set_ShowMoored_Kts(double);
+	virtual void set_ShowCOG(bool);
+	virtual void set_ShowCOG_Mins(double);
+	virtual void set_AISShowTracks(bool);
+	virtual void set_TrackCarryOver(bool);
+	virtual void set_TrackDaily(bool);
+	virtual void set_AIS_Alert_Sound_File(const wxString&);
+	virtual void set_AIS_CPA_Alert_Suppress_Moored(bool);
 };
 
 }

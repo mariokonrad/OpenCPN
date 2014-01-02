@@ -100,13 +100,6 @@ extern int g_iSpeedFormat;
 extern double g_PlanSpeed;
 
 // AIS Global configuration
-extern bool             g_bShowCOG;
-extern double           g_ShowCOG_Mins;
-extern bool             g_bAISShowTracks;
-extern bool             g_bTrackCarryOver;
-extern bool             g_bTrackDaily;
-extern wxString         g_sAIS_Alert_Sound_File;
-extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool             g_bShowAreaNotices;
 extern bool             g_bWplIsAprsPosition;
 
@@ -507,8 +500,8 @@ void Config::load_fonts(int iteration)
 
 double Config::read_double(const wxString& entry) const
 {
-	wxString s;
 	double value = 0.0;
+	wxString s;
 
 	Read(entry, &s);
 	s.ToDouble(&value);
@@ -517,7 +510,15 @@ double Config::read_double(const wxString& entry) const
 
 bool Config::read_bool(const wxString& entry) const
 {
-	bool value = false; 
+	bool value = false;
+
+	Read(entry, &value);
+	return value;
+}
+
+wxString Config::read_string(const wxString& entry) const
+{
+	wxString value;
 
 	Read(entry, &value);
 	return value;
@@ -525,6 +526,9 @@ bool Config::read_bool(const wxString& entry) const
 
 int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 {
+	global::AIS& ais = global::OCPN::get().ais();
+	global::GUI& gui = global::OCPN::get().gui();
+
 	int read_int;
 
 	int display_width;
@@ -563,7 +567,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	// overzoom
 	long allow_overzoom_x = 1;
 	Read(_T("AllowExtremeOverzoom"), &allow_overzoom_x, 1);
-	global::OCPN::get().gui().set_view_allow_overzoom_x(allow_overzoom_x);
+	gui.set_view_allow_overzoom_x(allow_overzoom_x);
 
 	Read(_T("ShowOverzoomEmbossWarning"), &g_bshow_overzoom_emboss, 1);
 	Read(_T("AutosaveIntervalSeconds"), &g_nautosave_interval_seconds, 300);
@@ -660,8 +664,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	Read(_T("FullScreenQuilt"), &g_bFullScreenQuilt, 1);
 
-	Read(_T("StartWithTrackActive"), &g_bTrackCarryOver, 0);
-	Read(_T("AutomaticDailyTracks"), &g_bTrackDaily, 0);
+	ais.set_TrackCarryOver(read_bool(_T("StartWithTrackActive")));
+	ais.set_TrackDaily(read_bool(_T("AutomaticDailyTracks")));
 	Read(_T("HighlightTracks"), &g_bHighliteTracks, 1);
 
 	wxString stps;
@@ -697,8 +701,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	load_frame();
 
 	// AIS
-	global::AIS& ais = global::OCPN::get().ais();
-	global::GUI& gui = global::OCPN::get().gui();
 
 	wxString s;
 	SetPath(_T("/Settings/AIS"));
@@ -713,12 +715,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	ais.set_MarkLost_Mins(read_double(_T("MarkLost_Minutes")));
 	ais.set_RemoveLost(read_bool(_T("bRemoveLostTargets")));
 	ais.set_RemoveLost_Mins(read_double(_T("RemoveLost_Minutes")));
-
-	Read(_T("bShowCOGArrows"), &g_bShowCOG);
-
-	g_ShowCOG_Mins = read_double(_T("CogArrowMinutes"));
-
-	Read(_T("bShowTargetTracks"), &g_bAISShowTracks, 0);
+	ais.set_ShowCOG(read_bool(_T("bShowCOGArrows")));
+	ais.set_ShowCOG_Mins(read_double(_T("CogArrowMinutes")));
+	ais.set_AISShowTracks(read_bool(_T("bShowTargetTracks")));
 
 	double AISShowTracks_Mins = 0.0;
 	if (Read(_T("TargetTracksMinutes"), &s)) {
@@ -744,9 +743,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("AISCOGPredictorWidth"), &g_ais_cog_predictor_width, 3);
 
 	ais.set_AIS_CPA_Alert_Audio(read_bool(_T("bAISAlertAudio")));
-
-	Read(_T("AISAlertAudioFile"), &g_sAIS_Alert_Sound_File);
-	Read(_T("bAISAlertSuppressMoored"), &g_bAIS_CPA_Alert_Suppress_Moored);
+	ais.set_AIS_Alert_Sound_File(read_string(_T("AISAlertAudioFile")));
+	ais.set_AIS_CPA_Alert_Suppress_Moored(read_bool(_T("bAISAlertSuppressMoored")));
 
 	long AIS_ACK_Timeout = 0;
 	Read(_T("bAISAlertAckTimeout"), &AIS_ACK_Timeout, 0);
@@ -1608,6 +1606,10 @@ void Config::write_s57dialog()
 
 void Config::UpdateSettings()
 {
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
+
 	// Global options and settings
 	SetPath(_T("/Settings"));
 
@@ -1670,8 +1672,8 @@ void Config::UpdateSettings()
 
 	Write(_T("PreserveScaleOnX"), g_bPreserveScaleOnX);
 
-	Write(_T("StartWithTrackActive"), g_bTrackCarryOver);
-	Write(_T("AutomaticDailyTracks"), g_bTrackDaily);
+	Write(_T("StartWithTrackActive"), ais.TrackCarryOver);
+	Write(_T("AutomaticDailyTracks"), ais.TrackDaily);
 	Write(_T("HighlightTracks"), g_bHighliteTracks);
 
 	Write(_T("InitialStackIndex"), g_restore_stackindex);
@@ -1750,10 +1752,6 @@ void Config::UpdateSettings()
 	write_frame();
 
 	// AIS
-	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
-	const global::GUI::View& view = global::OCPN::get().gui().view();
-	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
-
 	SetPath(_T("/Settings/AIS"));
 
 	Write(_T("bNoCPAMax"), ais.CPAMax);
@@ -1766,16 +1764,16 @@ void Config::UpdateSettings()
 	Write(_T("MarkLost_Minutes"), ais.MarkLost_Mins);
 	Write(_T("bRemoveLostTargets"), ais.RemoveLost);
 	Write(_T("RemoveLost_Minutes"), ais.RemoveLost_Mins);
-	Write(_T("bShowCOGArrows"), g_bShowCOG);
-	Write(_T("CogArrowMinutes"), g_ShowCOG_Mins);
-	Write(_T("bShowTargetTracks"), g_bAISShowTracks);
+	Write(_T("bShowCOGArrows"), ais.ShowCOG);
+	Write(_T("CogArrowMinutes"), ais.ShowCOG_Mins);
+	Write(_T("bShowTargetTracks"), ais.AISShowTracks);
 	Write(_T("TargetTracksMinutes"), ais.AISShowTracks_Mins);
 	Write(_T("bShowMooredTargets"), ais.ShowMoored);
 	Write(_T("MooredTargetMaxSpeedKnots"), ais.ShowMoored_Kts);
 	Write(_T("bAISAlertDialog"), ais.AIS_CPA_Alert);
 	Write(_T("bAISAlertAudio"), ais.AIS_CPA_Alert_Audio);
-	Write(_T("AISAlertAudioFile"), g_sAIS_Alert_Sound_File);
-	Write(_T("bAISAlertSuppressMoored"), g_bAIS_CPA_Alert_Suppress_Moored);
+	Write(_T("AISAlertAudioFile"), ais.AIS_Alert_Sound_File);
+	Write(_T("bAISAlertSuppressMoored"), ais.AIS_CPA_Alert_Suppress_Moored);
 	Write(_T("bShowAreaNotices"), g_bShowAreaNotices);
 	Write(_T("bDrawAISSize"), view.DrawAISSize);
 	Write(_T("bShowAISName"), view.ShowAISName);

@@ -24,6 +24,8 @@
 #ifndef __GLOBAL__AIS__H__
 #define __GLOBAL__AIS__H__
 
+#include <wx/string.h>
+
 namespace global {
 
 class AIS
@@ -53,6 +55,13 @@ public:
 		double AISShowTracks_Mins;
 		bool ShowMoored;
 		double ShowMoored_Kts;
+		bool ShowCOG;
+		double ShowCOG_Mins;
+		bool AISShowTracks;
+		bool TrackCarryOver;
+		bool TrackDaily; // TODO: does this parameter really belong to AIS?
+		wxString AIS_Alert_Sound_File;
+		bool AIS_CPA_Alert_Suppress_Moored;
 	};
 
 	virtual const Data& get_data() const = 0;
@@ -73,6 +82,13 @@ public:
 	virtual void set_AISShowTracks_Mins(double) = 0;
 	virtual void set_ShowMoored(bool) = 0;
 	virtual void set_ShowMoored_Kts(double) = 0;
+	virtual void set_ShowCOG(bool) = 0;
+	virtual void set_ShowCOG_Mins(double) = 0;
+	virtual void set_AISShowTracks(bool) = 0;
+	virtual void set_TrackCarryOver(bool) = 0;
+	virtual void set_TrackDaily(bool) = 0;
+	virtual void set_AIS_Alert_Sound_File(const wxString&) = 0;
+	virtual void set_AIS_CPA_Alert_Suppress_Moored(bool) = 0;
 };
 
 }

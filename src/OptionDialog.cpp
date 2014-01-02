@@ -102,11 +102,6 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 extern bool g_bDisplayGrid;
 
 // AIS Global configuration
-extern bool g_bShowCOG;
-extern double g_ShowCOG_Mins;
-extern bool g_bAISShowTracks;
-extern wxString g_sAIS_Alert_Sound_File;
-extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bShowAreaNotices;
 extern bool g_bWplIsAprsPosition;
 
@@ -126,7 +121,6 @@ extern double g_n_gps_antenna_offset_x;
 extern int g_n_ownship_min_mm;
 extern double g_n_arrival_circle_radius;
 
-extern bool g_bTrackDaily;
 extern bool g_bHighliteTracks;
 extern int g_nTrackPrecision;
 
@@ -1948,6 +1942,7 @@ void options::SetInitialSettings()
 	// ChartsLoad
 
 	const global::GUI& gui = global::OCPN::get().gui();
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 
 	for (ArrayOfCDI::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end();
 		 ++i) {
@@ -2046,13 +2041,12 @@ void options::SetInitialSettings()
 	pDistanceFormat->Select(g_iDistanceFormat);
 	pSpeedFormat->Select(g_iSpeedFormat);
 
-	pTrackDaily->SetValue(g_bTrackDaily);
+	pTrackDaily->SetValue(ais.TrackDaily);
 	pTrackHighlite->SetValue(g_bHighliteTracks);
 
 	pTrackPrecision->SetSelection(g_nTrackPrecision);
 
 	// AIS Parameters
-	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 	// CPA Box
 	m_pCheck_CPA_Max->SetValue(ais.CPAMax);
 
@@ -2075,9 +2069,9 @@ void options::SetInitialSettings()
 	m_pText_Remove_Lost->SetValue(wxString::Format(_T("%4.0f"), ais.RemoveLost_Mins));
 
 	// Display
-	m_pCheck_Show_COG->SetValue(g_bShowCOG);
-	m_pText_COG_Predictor->SetValue(wxString::Format(_T("%4.0f"), g_ShowCOG_Mins));
-	m_pCheck_Show_Tracks->SetValue(g_bAISShowTracks);
+	m_pCheck_Show_COG->SetValue(ais.ShowCOG);
+	m_pText_COG_Predictor->SetValue(wxString::Format(_T("%4.0f"), ais.ShowCOG_Mins));
+	m_pCheck_Show_Tracks->SetValue(ais.AISShowTracks);
 	m_pText_Track_Length->SetValue(wxString::Format(_T("%4.0f"), ais.AISShowTracks_Mins));
 	m_pCheck_Show_Moored->SetValue(!ais.ShowMoored);
 	m_pText_Moored_Speed->SetValue(wxString::Format(_T("%4.1f"), ais.ShowMoored_Kts));
@@ -2090,7 +2084,7 @@ void options::SetInitialSettings()
 	// Alerts
 	m_pCheck_AlertDialog->SetValue(ais.AIS_CPA_Alert);
 	m_pCheck_AlertAudio->SetValue(ais.AIS_CPA_Alert_Audio);
-	m_pCheck_Alert_Moored->SetValue(g_bAIS_CPA_Alert_Suppress_Moored);
+	m_pCheck_Alert_Moored->SetValue(ais.AIS_CPA_Alert_Suppress_Moored);
 	m_pCheck_Ack_Timout->SetValue(ais.AIS_ACK_Timeout);
 	m_pText_ACK_Timeout->SetValue(wxString::Format(_T("%4.0f"), ais.AckTimeout_Mins));
 
@@ -2456,6 +2450,8 @@ bool options::CreateConnectionParamsFromSelectedItem(ConnectionParams& prm)
 
 void options::OnApplyClick(wxCommandEvent& event)
 {
+	global::AIS& ais = global::OCPN::get().ais();
+
 	::wxBeginBusyCursor();
 
 	m_returnChanges = 0;
@@ -2606,13 +2602,12 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 	g_nTrackPrecision = pTrackPrecision->GetSelection();
 
-	g_bTrackDaily = pTrackDaily->GetValue();
+	ais.set_TrackDaily(pTrackDaily->GetValue()); // TODO: does this parameter really belong to AIS?
 	g_bHighliteTracks = pTrackHighlite->GetValue();
 
 	gui.set_enable_zoom_to_cursor(pEnableZoomToCursor->GetValue());
 
 	// AIS Parameters
-	global::AIS& ais = global::OCPN::get().ais();
 
 	// CPA Box
 	ais.set_CPAMax(m_pCheck_CPA_Max->GetValue());
@@ -2629,11 +2624,9 @@ void options::OnApplyClick(wxCommandEvent& event)
 	ais.set_RemoveLost_Mins(get_double(m_pText_Remove_Lost));
 
 	// Display
-	g_bShowCOG = m_pCheck_Show_COG->GetValue();
-	m_pText_COG_Predictor->GetValue().ToDouble(&g_ShowCOG_Mins);
-
-	g_bAISShowTracks = m_pCheck_Show_Tracks->GetValue();
-
+	ais.set_ShowCOG(m_pCheck_Show_COG->GetValue());
+	ais.set_ShowCOG_Mins(get_double(m_pText_COG_Predictor));
+	ais.set_AISShowTracks(m_pCheck_Show_Tracks->GetValue());
 	ais.set_AISShowTracks_Mins(get_double(m_pText_Track_Length));
 	ais.set_ShowMoored(!m_pCheck_Show_Moored->GetValue());
 	ais.set_ShowMoored_Kts(get_double(m_pText_Moored_Speed));
@@ -2651,7 +2644,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	// Alert
 	ais.set_AIS_CPA_Alert(m_pCheck_AlertDialog->GetValue());
 	ais.set_AIS_CPA_Alert_Audio(m_pCheck_AlertAudio->GetValue());
-	g_bAIS_CPA_Alert_Suppress_Moored = m_pCheck_Alert_Moored->GetValue();
+	ais.set_AIS_CPA_Alert_Suppress_Moored(m_pCheck_Alert_Moored->GetValue());
 	ais.set_AIS_ACK_Timeout(m_pCheck_Ack_Timout->GetValue());
 	ais.set_AckTimeout_Mins(get_double(m_pText_ACK_Timeout));
 
@@ -3173,12 +3166,13 @@ void options::OnButtonSelectSound(wxCommandEvent&)
 	if (openDialog->ShowModal() != wxID_OK)
 		return;
 
+	global::AIS& ais = global::OCPN::get().ais();
 	if (g_bportable) {
 		wxFileName f(openDialog->GetPath());
 		f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
-		g_sAIS_Alert_Sound_File = f.GetFullPath();
+		ais.set_AIS_Alert_Sound_File(f.GetFullPath());
 	} else {
-		g_sAIS_Alert_Sound_File = openDialog->GetPath();
+		ais.set_AIS_Alert_Sound_File(openDialog->GetPath());
 	}
 
 	g_anchorwatch_sound.UnLoad();
@@ -3187,7 +3181,7 @@ void options::OnButtonSelectSound(wxCommandEvent&)
 void options::OnButtonTestSound(wxCommandEvent&)
 {
 	sound::OCPN_Sound AIS_Sound;
-	AIS_Sound.Create(g_sAIS_Alert_Sound_File);
+	AIS_Sound.Create(global::OCPN::get().ais().get_data().AIS_Alert_Sound_File);
 
 	if (AIS_Sound.IsOk()) {
 

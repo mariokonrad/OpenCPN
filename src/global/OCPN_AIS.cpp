@@ -115,5 +115,40 @@ void OCPN_AIS::set_ShowMoored_Kts(double value)
 	data.ShowMoored_Kts = value;
 }
 
+void OCPN_AIS::set_ShowCOG(bool value)
+{
+	data.ShowCOG = value;
+}
+
+void OCPN_AIS::set_ShowCOG_Mins(double value)
+{
+	data.ShowCOG_Mins = value;
+}
+
+void OCPN_AIS::set_AISShowTracks(bool value)
+{
+	data.AISShowTracks = value;
+}
+
+void OCPN_AIS::set_TrackCarryOver(bool value)
+{
+	data.TrackCarryOver = value;
+}
+
+void OCPN_AIS::set_TrackDaily(bool value)
+{
+	data.TrackDaily = value;
+}
+
+void OCPN_AIS::set_AIS_Alert_Sound_File(const wxString& value)
+{
+	data.AIS_Alert_Sound_File = value;
+}
+
+void OCPN_AIS::set_AIS_CPA_Alert_Suppress_Moored(bool value)
+{
+	data.AIS_CPA_Alert_Suppress_Moored = value;
+}
+
 }
 

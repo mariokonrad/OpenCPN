@@ -53,9 +53,6 @@ extern Select* pSelectAIS;
 extern MainFrame* gFrame;
 extern bool bGPSValid;
 extern bool g_bShowAIS;
-extern bool g_bAISShowTracks;
-extern wxString g_sAIS_Alert_Sound_File;
-extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bWplIsAprsPosition;
 
 namespace ais
@@ -935,7 +932,7 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 		} else
 			bdecode_result = Parse_VDXBitstring(&strbit, pTargetData); // Parse the new data
 
-		//  pTargetData is valid, either new or existing. Continue processing
+		// pTargetData is valid, either new or existing. Continue processing
 
 		m_pLatestTargetData = pTargetData;
 
@@ -946,8 +943,8 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 			if (!bhad_name)
 				n_newname++;
 
-		//  If the message was decoded correctly
-		//  Update the AIS Target information
+		// If the message was decoded correctly
+		// Update the AIS Target information
 		if (bdecode_result) {
 			(*AISTargetList)[mmsi] = pTargetData; // update the hash table entry
 
@@ -976,7 +973,7 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 				UpdateOneCPA(pTargetData);
 
 				// Update this target's track
-				if (g_bAISShowTracks)
+				if (global::OCPN::get().ais().get_data().AISShowTracks)
 					UpdateOneTrack(pTargetData);
 			}
 		} else {
@@ -1132,12 +1129,12 @@ bool AIS_Decoder::Parse_VDXBitstring(AIS_Bitstring* bstr, AIS_Target_Data* ptd)
 			int lon = bstr->GetInt(58, 28);
 			if (lon & 0x08000000) // negative?
 				lon |= 0xf0000000;
-			double lon_tentative = lon / 600000.;
+			double lon_tentative = lon / 600000.0;
 
 			int lat = bstr->GetInt(86, 27);
 			if (lat & 0x04000000) // negative?
 				lat |= 0xf8000000;
-			double lat_tentative = lat / 600000.;
+			double lat_tentative = lat / 600000.0;
 
 			if ((lon_tentative <= 180.)
 				&& (lat_tentative <= 90.)) // Ship does not report Lat or Lon "unavailable"
@@ -1639,7 +1636,7 @@ void AIS_Decoder::UpdateAllAlarms(void)
 					m_bGeneralAlert = true;
 
 				// Some options can suppress general alerts
-				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= ais.ShowMoored_Kts))
+				if (ais.AIS_CPA_Alert_Suppress_Moored && (td->SOG <= ais.ShowMoored_Kts))
 					m_bGeneralAlert = false;
 
 				// Skip distant targets if requested
@@ -1678,7 +1675,7 @@ void AIS_Decoder::UpdateAllAlarms(void)
 				}
 
 				// No Alert on moored(interpreted as low speed) targets if so requested
-				if (g_bAIS_CPA_Alert_Suppress_Moored && (td->SOG <= ais.ShowMoored_Kts)) {
+				if (ais.AIS_CPA_Alert_Suppress_Moored && (td->SOG <= ais.ShowMoored_Kts)) {
 					td->n_alarm_state = AIS_NO_ALARM;
 					continue;
 				}
@@ -1859,7 +1856,7 @@ void AIS_Decoder::OnTimerAISAudio(wxTimerEvent&)
 
 	if (ais.AIS_CPA_Alert_Audio && m_bAIS_Audio_Alert_On) {
 		if (!m_AIS_Sound.IsOk())
-			m_AIS_Sound.Create(g_sAIS_Alert_Sound_File);
+			m_AIS_Sound.Create(ais.AIS_Alert_Sound_File);
 
 #ifndef __WXMSW__
 		if (m_AIS_Sound.IsOk() && !m_AIS_Sound.IsPlaying())
@@ -1949,7 +1946,7 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent& WXUNUSED(event))
 
 	// Update the general suppression flag
 	m_bSuppressed = false;
-	if (g_bAIS_CPA_Alert_Suppress_Moored || !ais.ShowMoored)
+	if (ais.AIS_CPA_Alert_Suppress_Moored || !ais.ShowMoored)
 		m_bSuppressed = true;
 
 	m_bAIS_Audio_Alert_On = false; // default, may be set on
@@ -2079,7 +2076,7 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent& WXUNUSED(event))
 			m_AIS_Audio_Alert_Timer.Start(TIMER_AIS_AUDIO_MSEC);
 
 			if (!m_AIS_Sound.IsOk())
-				m_AIS_Sound.Create(g_sAIS_Alert_Sound_File);
+				m_AIS_Sound.Create(ais.AIS_Alert_Sound_File);
 
 #ifndef __WXMSW__
 			if (m_AIS_Sound.IsOk() && !m_AIS_Sound.IsPlaying())

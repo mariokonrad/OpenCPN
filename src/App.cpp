@@ -178,13 +178,9 @@ extern chart::ChartGroupArray* g_pGroupArray;
 extern int g_GroupIndex;
 extern wxProgressDialog* s_ProgDialog;
 extern wxArrayString TideCurrentDataSet;
-extern wxString g_sAIS_Alert_Sound_File;
-extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern wxToolBarToolBase* m_pAISTool;
 extern int g_nAIS_activity_timer;
 extern bool g_bTrackActive;
-extern bool g_bTrackCarryOver;
-extern bool g_bTrackDaily;
 extern Track* g_pActiveTrack;
 extern int g_total_NMEAerror_messages;
 extern CM93DSlide* pCM93DetailSlider;
@@ -199,10 +195,6 @@ extern wxAuiManager* g_pauimgr;
 extern wxAuiDefaultDockArt* g_pauidockart;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern bool g_bShowAIS;
-extern bool g_bShowCOG;
-extern double g_ShowCOG_Mins;
-extern wxString g_sAIS_Alert_Sound_File;
-extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bShowAreaNotices;
 extern bool g_bWayPointPreventDragging;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
@@ -862,11 +854,11 @@ void App::setup_for_empty_config(bool novicemode)
 		ais.set_MarkLost_Mins(8);
 		ais.set_RemoveLost(true);
 		ais.set_RemoveLost_Mins(10);
-		g_bShowCOG = true;
-		g_ShowCOG_Mins = 6;
+		ais.set_ShowCOG(true);
+		ais.set_ShowCOG_Mins(6);
 		ais.set_ShowMoored(true);
 		ais.set_ShowMoored_Kts(0.2);
-		g_bTrackDaily = false;
+		ais.set_TrackDaily(false);
 		g_PlanSpeed = 6.0;
 		g_bFullScreenQuilt = true;
 		g_bQuiltEnable = true;
@@ -903,7 +895,7 @@ void App::setup_for_empty_config(bool novicemode)
 
 void App::check_tide_current()
 {
-	const global::System::Data & sys = global::OCPN::get().sys().data();
+	const global::System::Data& sys = global::OCPN::get().sys().data();
 
 	// Check the global Tide/Current data source array
 	// If empty, preset one default (US) Ascii data source
@@ -923,21 +915,23 @@ void App::check_tide_current()
 
 void App::check_ais_alarm_sound_file()
 {
-	const global::System::Data & sys = global::OCPN::get().sys().data();
+	const global::System::Data& sys = global::OCPN::get().sys().data();
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 
-	// Check the global AIS alarm sound file
-	// If empty, preset default
-	if (g_sAIS_Alert_Sound_File.IsEmpty()) {
+	// Check the global AIS alarm sound file. If empty, preset default.
+	if (ais.AIS_Alert_Sound_File.IsEmpty()) {
 		wxString default_sound = sys.sound_data_location + _T("sounds")
 								 + wxFileName::GetPathSeparator() + _T("2bells.wav");
 
+		wxString filename;
 		if (g_bportable) {
 			wxFileName f(default_sound);
 			f.MakeRelativeTo(sys.private_data_dir);
-			g_sAIS_Alert_Sound_File = f.GetFullPath();
+			filename = f.GetFullPath();
 		} else {
-			g_sAIS_Alert_Sound_File = default_sound;
+			filename = default_sound;
 		}
+		global::OCPN::get().ais().set_AIS_Alert_Sound_File(filename);
 	}
 }
 
@@ -1725,7 +1719,7 @@ bool App::OnInit()
 	g_bVAR_Rx = false;
 
 	// Start up a new track if enabled in config file
-	if (g_bTrackCarryOver)
+	if (global::OCPN::get().ais().get_data().TrackCarryOver)
 		gFrame->TrackOn();
 
 	// Re-enable anchor watches if set in config file

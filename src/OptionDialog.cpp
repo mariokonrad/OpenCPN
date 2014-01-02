@@ -104,7 +104,6 @@ extern bool g_bDisplayGrid;
 extern int g_iNavAidRadarRingsNumberVisible;
 extern float g_fNavAidRadarRingsStep;
 extern int g_pNavAidRadarRingsStepUnits;
-extern bool g_bWayPointPreventDragging;
 
 extern bool g_bPreserveScaleOnX;
 extern bool g_bPlayShipsBells;
@@ -136,7 +135,6 @@ extern bool g_bAISRolloverShowCPA;
 
 extern bool g_bQuiltEnable;
 extern bool g_bFullScreenQuilt;
-extern bool g_bConfirmObjectDelete;
 extern wxString g_GPS_Ident;
 extern bool g_bGarminHostUpload;
 
@@ -1938,6 +1936,7 @@ void options::SetInitialSettings()
 	// ChartsLoad
 
 	const global::GUI& gui = global::OCPN::get().gui();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 
 	for (ArrayOfCDI::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end();
@@ -2019,8 +2018,8 @@ void options::SetInitialSettings()
 	m_itemRadarRingsUnits->SetSelection(g_pNavAidRadarRingsStepUnits);
 	OnRadarringSelect(eDummy);
 
-	pWayPointPreventDragging->SetValue(g_bWayPointPreventDragging);
-	pConfirmObjectDeletion->SetValue(g_bConfirmObjectDelete);
+	pWayPointPreventDragging->SetValue(view.WayPointPreventDragging);
+	pConfirmObjectDeletion->SetValue(view.ConfirmObjectDelete);
 
 	pEnableZoomToCursor->SetValue(gui.view().enable_zoom_to_cursor);
 	if (pEnableZoomToCursor->GetValue()) {
@@ -2447,6 +2446,7 @@ bool options::CreateConnectionParamsFromSelectedItem(ConnectionParams& prm)
 void options::OnApplyClick(wxCommandEvent& event)
 {
 	global::AIS& ais = global::OCPN::get().ais();
+	global::GUI& gui = global::OCPN::get().gui();
 
 	::wxBeginBusyCursor();
 
@@ -2546,8 +2546,6 @@ void options::OnApplyClick(wxCommandEvent& event)
 	if (m_pConfig)
 		m_pConfig->show_debug_windows(pSettingsCB1->GetValue());
 
-	global::GUI& gui = global::OCPN::get().gui();
-
 	gui.set_view_show_outlines(pCDOOutlines->GetValue());
 	g_bDisplayGrid = pSDisplayGrid->GetValue();
 
@@ -2584,8 +2582,8 @@ void options::OnApplyClick(wxCommandEvent& event)
 	g_iNavAidRadarRingsNumberVisible = pNavAidRadarRingsNumberVisible->GetSelection();
 	g_fNavAidRadarRingsStep = atof(pNavAidRadarRingsStep->GetValue().mb_str());
 	g_pNavAidRadarRingsStepUnits = m_itemRadarRingsUnits->GetSelection();
-	g_bWayPointPreventDragging = pWayPointPreventDragging->GetValue();
-	g_bConfirmObjectDelete = pConfirmObjectDeletion->GetValue();
+	gui.set_WayPointPreventDragging(pWayPointPreventDragging->GetValue());
+	gui.set_ConfirmObjectDelete(pConfirmObjectDeletion->GetValue());
 
 	g_bPreserveScaleOnX = pPreserveScale->GetValue();
 

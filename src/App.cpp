@@ -195,7 +195,6 @@ extern wxAuiManager* g_pauimgr;
 extern wxAuiDefaultDockArt* g_pauidockart;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern bool g_bShowAIS;
-extern bool g_bWayPointPreventDragging;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
 extern Routeman* g_pRouteMan;

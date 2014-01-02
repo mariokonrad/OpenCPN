@@ -102,8 +102,6 @@ extern double g_PlanSpeed;
 extern int              g_iNavAidRadarRingsNumberVisible;
 extern float            g_fNavAidRadarRingsStep;
 extern int              g_pNavAidRadarRingsStepUnits;
-extern bool             g_bWayPointPreventDragging;
-extern bool             g_bConfirmObjectDelete;
 
 extern wxString         g_toolbarConfig;
 extern double           g_TrackDeltaDistance;
@@ -1165,11 +1163,10 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	if (!b300RadarRings)
 		g_iNavAidRadarRingsNumberVisible = 0;
 
-	Read(_T("ConfirmObjectDeletion"), &g_bConfirmObjectDelete, true);
+	gui.set_ConfirmObjectDelete(read_bool(_T("ConfirmObjectDeletion"), true));
 
 	// Waypoint dragging with mouse
-	g_bWayPointPreventDragging = false;
-	Read(_T("WaypointPreventDragging"), &g_bWayPointPreventDragging);
+	gui.set_WayPointPreventDragging(read_bool(_T("WaypointPreventDragging"), false));
 
 	bool enable_zoom_to_cursor = false;
 	Read(_T("EnableZoomToCursor"), &enable_zoom_to_cursor);
@@ -1885,12 +1882,12 @@ void Config::UpdateSettings()
 	Write(_T("RadarRingsStep"), g_fNavAidRadarRingsStep);
 	Write(_T("RadarRingsStepUnits"), g_pNavAidRadarRingsStepUnits);
 
-	Write(_T("ConfirmObjectDeletion"), g_bConfirmObjectDelete);
+	Write(_T("ConfirmObjectDeletion"), view.ConfirmObjectDelete);
 
 	// Waypoint dragging with mouse; toh, 2009.02.24
-	Write(_T("WaypointPreventDragging"), g_bWayPointPreventDragging);
+	Write(_T("WaypointPreventDragging"), view.WayPointPreventDragging);
 
-	Write(_T("EnableZoomToCursor"), global::OCPN::get().gui().view().enable_zoom_to_cursor);
+	Write(_T("EnableZoomToCursor"), view.enable_zoom_to_cursor);
 
 	Write(_T("TrackDeltaDistance"), g_TrackDeltaDistance);
 	Write(_T("TrackPrecision"), g_nTrackPrecision);

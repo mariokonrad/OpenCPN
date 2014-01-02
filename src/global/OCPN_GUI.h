@@ -53,6 +53,8 @@ class OCPN_GUI : public GUI
 		virtual void set_DrawAISSize(bool);
 		virtual void set_ShowAISName(bool);
 		virtual void set_Show_Target_Name_Scale(int);
+		virtual void set_WayPointPreventDragging(bool);
+		virtual void set_ConfirmObjectDelete(bool);
 
 	public: // frame
 		virtual const Frame & frame() const;

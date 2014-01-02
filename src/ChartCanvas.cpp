@@ -160,7 +160,6 @@ extern RouteProp* pRoutePropDialog;
 extern TrackPropDlg* pTrackPropDialog;
 extern MarkInfoImpl* pMarkInfoDialog;
 extern Track* g_pActiveTrack;
-extern bool g_bConfirmObjectDelete;
 
 extern tide::IDX_entry* gpIDX;
 extern int gpIDXn;
@@ -199,7 +198,6 @@ extern bool g_bShowAIS;
 extern int g_iNavAidRadarRingsNumberVisible;
 extern float g_fNavAidRadarRingsStep;
 extern int g_pNavAidRadarRingsStepUnits;
-extern bool g_bWayPointPreventDragging;
 
 extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
@@ -5471,13 +5469,15 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 	}
 
 	if (event.Dragging()) {
+		const global::GUI::View& view = global::OCPN::get().gui().view();
+
 		if (m_bRouteEditing && m_pRoutePointEditTarget) {
 			bool DraggingAllowed = true;
 
 			if (NULL == pMarkPropDialog) {
-				if (g_bWayPointPreventDragging)
+				if (view.WayPointPreventDragging)
 					DraggingAllowed = false;
-			} else if (!pMarkPropDialog->IsShown() && g_bWayPointPreventDragging)
+			} else if (!pMarkPropDialog->IsShown() && view.WayPointPreventDragging)
 				DraggingAllowed = false;
 
 			if (m_pRoutePointEditTarget && (m_pRoutePointEditTarget->m_IconName == _T("mob")))
@@ -5557,9 +5557,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			bool DraggingAllowed = true;
 
 			if (NULL == pMarkPropDialog) {
-				if (g_bWayPointPreventDragging)
+				if (view.WayPointPreventDragging)
 					DraggingAllowed = false;
-			} else if (!pMarkPropDialog->IsShown() && g_bWayPointPreventDragging) {
+			} else if (!pMarkPropDialog->IsShown() && view.WayPointPreventDragging) {
 				DraggingAllowed = false;
 			}
 
@@ -7257,7 +7257,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 		case ID_RT_MENU_DELETE: {
 			int dlg_return = wxID_YES;
-			if (g_bConfirmObjectDelete) {
+			if (global::OCPN::get().gui().view().ConfirmObjectDelete) {
 				dlg_return = OCPNMessageBox(this, _("Are you sure you want to delete this route?"),
 											_("OpenCPN Route Delete"),
 											(long)wxYES_NO | wxCANCEL | wxYES_DEFAULT);
@@ -7475,7 +7475,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 		case ID_TK_MENU_DELETE: {
 			int dlg_return = wxID_YES;
-			if (g_bConfirmObjectDelete) {
+			if (global::OCPN::get().gui().view().ConfirmObjectDelete) {
 				dlg_return = OCPNMessageBox(this, _("Are you sure you want to delete this track?"),
 											_("OpenCPN Track Delete"),
 											(long)wxYES_NO | wxCANCEL | wxYES_DEFAULT);

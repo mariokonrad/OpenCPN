@@ -228,8 +228,6 @@ int g_iSpeedFormat;
 int g_iNavAidRadarRingsNumberVisible;
 float g_fNavAidRadarRingsStep;
 int g_pNavAidRadarRingsStepUnits;
-bool g_bWayPointPreventDragging;
-bool g_bConfirmObjectDelete;
 ColorScheme global_color_scheme;
 bool bGPSValid;
 bool g_bHDT_Rx;

@@ -86,6 +86,16 @@ void OCPN_GUI::set_Show_Target_Name_Scale(int value)
 	data_view.Show_Target_Name_Scale = value;
 }
 
+void OCPN_GUI::set_WayPointPreventDragging(bool value)
+{
+	data_view.WayPointPreventDragging = value;
+}
+
+void OCPN_GUI::set_ConfirmObjectDelete(bool value)
+{
+	data_view.ConfirmObjectDelete = value;
+}
+
 const GUI::Frame & OCPN_GUI::frame() const
 {
 	return data_frame;

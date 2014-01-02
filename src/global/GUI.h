@@ -48,6 +48,8 @@ class GUI
 			bool DrawAISSize;
 			bool ShowAISName;
 			int Show_Target_Name_Scale;
+			bool WayPointPreventDragging;
+			bool ConfirmObjectDelete;
 		};
 
 		virtual const View & view() const = 0;
@@ -62,6 +64,8 @@ class GUI
 		virtual void set_DrawAISSize(bool) = 0;
 		virtual void set_ShowAISName(bool) = 0;
 		virtual void set_Show_Target_Name_Scale(int) = 0;
+		virtual void set_WayPointPreventDragging(bool) = 0;
+		virtual void set_ConfirmObjectDelete(bool) = 0;
 
 	public:
 

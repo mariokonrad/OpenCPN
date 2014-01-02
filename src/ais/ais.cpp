@@ -53,7 +53,6 @@ extern bool g_bShowAllCPA;
 extern bool g_bGPSAISMux;
 
 extern ais::AISTargetListDialog* g_pAISTargetList;
-extern int g_AisTargetList_count;
 
 extern bool bGPSValid;
 

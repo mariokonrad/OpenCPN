@@ -172,6 +172,36 @@ void OCPN_GUI::set_ais_query_dialog_position(const wxPoint & position)
 	data_ais_query_dialog.position = position;
 }
 
+const GUI::AISTargetList& OCPN_GUI::ais_target_list() const
+{
+	return data_ais_target_list;
+}
+
+void OCPN_GUI::set_ais_target_list_perspective(const wxString& value)
+{
+	data_ais_target_list.perspective = value;
+}
+
+void OCPN_GUI::set_ais_target_list_range(int value)
+{
+	data_ais_target_list.range = value;
+}
+
+void OCPN_GUI::set_ais_target_list_sortColumn(int value)
+{
+	data_ais_target_list.sortColumn = value;
+}
+
+void OCPN_GUI::set_ais_target_list_sortReverse(bool value)
+{
+	data_ais_target_list.sortReverse = value;
+}
+
+void OCPN_GUI::set_ais_target_list_column_spec(const wxString& value)
+{
+	data_ais_target_list.column_spec = value;
+}
+
 const GUI::CM93 & OCPN_GUI::cm93() const
 {
 	return data_cm93;

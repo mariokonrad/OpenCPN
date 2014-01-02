@@ -25,11 +25,13 @@
 
 #include <Units.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #include <ais/AIS_Target_Data.h>
 #include <ais/AISTargetListDialog.h>
 #include <ais/ais.h>
 
-extern wxString g_AisTargetList_column_spec;
 extern bool bGPSValid;
 
 OCPNListCtrl::OCPNListCtrl(
@@ -47,12 +49,14 @@ OCPNListCtrl::~OCPNListCtrl()
 {
 	using namespace ais;
 
-	g_AisTargetList_column_spec.Clear();
+	wxString spec;
 	for (int i = 0; i < tlSOG + 1; i++) {
 		wxListItem item;
 		GetColumn(i, item);
-		g_AisTargetList_column_spec += wxString::Format(_T("%d;"), item.m_width);
+		spec += wxString::Format(_T("%d;"), item.m_width);
 	}
+
+	global::OCPN::get().gui().set_ais_target_list_column_spec(spec);
 }
 
 wxString OCPNListCtrl::OnGetItemText(long item, long column) const

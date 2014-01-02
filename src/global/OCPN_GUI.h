@@ -36,6 +36,7 @@ class OCPN_GUI : public GUI
 		Toolbar data_toolbar;
 		AISAlertDialog data_ais_alert_dialog;
 		AISQueryDialog data_ais_query_dialog;
+		AISTargetList data_ais_target_list;
 		CM93 data_cm93;
 		S57Dialog data_s57dialog;
 
@@ -76,6 +77,14 @@ class OCPN_GUI : public GUI
 	public: // ais query dialog
 		virtual const AISQueryDialog & ais_query_dialog() const;
 		virtual void set_ais_query_dialog_position(const wxPoint &);
+
+	public: // ais target list
+		virtual const AISTargetList& ais_target_list() const;
+		virtual void set_ais_target_list_perspective(const wxString&);
+		virtual void set_ais_target_list_range(int);
+		virtual void set_ais_target_list_sortColumn(int);
+		virtual void set_ais_target_list_sortReverse(bool);
+		virtual void set_ais_target_list_column_spec(const wxString&);
 
 	public: // cm93
 		virtual const CM93 & cm93() const;

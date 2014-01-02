@@ -115,6 +115,24 @@ class GUI
 
 	public:
 
+		struct AISTargetList
+		{
+			wxString perspective;
+			int range;
+			int sortColumn;
+			bool sortReverse;
+			wxString column_spec;
+		};
+
+		virtual const AISTargetList& ais_target_list() const = 0;
+		virtual void set_ais_target_list_perspective(const wxString&) = 0;
+		virtual void set_ais_target_list_range(int) = 0;
+		virtual void set_ais_target_list_sortColumn(int) = 0;
+		virtual void set_ais_target_list_sortReverse(bool) = 0;
+		virtual void set_ais_target_list_column_spec(const wxString&) = 0;
+
+	public:
+
 		struct CM93
 		{
 			int zoom_factor;

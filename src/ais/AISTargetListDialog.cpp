@@ -33,6 +33,9 @@
 #include <Config.h>
 #include <MainFrame.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #include <ais/ais.h>
 #include <ais/AIS_Decoder.h>
 #include <ais/AIS_Target_Data.h>
@@ -45,13 +48,9 @@
 static ais::AIS_Decoder* s_p_sort_decoder;
 extern ais::AISTargetListDialog* g_pAISTargetList;
 
-extern int g_AisTargetList_count;
-extern bool g_bAisTargetList_sortReverse;
-extern int g_AisTargetList_sortColumn;
-extern wxString g_AisTargetList_column_spec;
+static int s_AisTargetList_count; // FIXME
+
 extern ocpnStyle::StyleManager* g_StyleManager;
-extern int g_AisTargetList_range;
-extern wxString g_AisTargetList_perspective;
 extern Config* pConfig;
 extern MainFrame* gFrame;
 extern ChartCanvas* cc1;
@@ -77,7 +76,7 @@ static int ItemCompare(AIS_Target_Data* pAISTarget1, AIS_Target_Data* pAISTarget
 	bool b_cmptype_num = false;
 
 	// Don't sort if target list count is too large
-	if (g_AisTargetList_count > 1000)
+	if (s_AisTargetList_count > 1000)
 		return 0;
 
 	AIS_Target_Data* t1 = pAISTarget1;
@@ -97,7 +96,9 @@ static int ItemCompare(AIS_Target_Data* pAISTarget1, AIS_Target_Data* pAISTarget
 			return 1;
 	}
 
-	switch (g_AisTargetList_sortColumn) {
+	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
+
+	switch (ais_target_list.sortColumn) {
 		case tlNAME:
 			s1 = trimAISField(t1->ShipName);
 			if ((t1->Class == AIS_BASE) || (t1->Class == AIS_SART))
@@ -265,12 +266,12 @@ static int ItemCompare(AIS_Target_Data* pAISTarget1, AIS_Target_Data* pAISTarget
 	}
 
 	if (!b_cmptype_num) {
-		if (g_bAisTargetList_sortReverse)
+		if (ais_target_list.sortReverse)
 			return s2.Cmp(s1);
 		return s1.Cmp(s2);
 	} else {
-		//    If numeric sort values are equal, secondary sort is on Range_NM
-		if (g_bAisTargetList_sortReverse) {
+		// If numeric sort values are equal, secondary sort is on Range_NM
+		if (ais_target_list.sortReverse) {
 			if (n2 > n1)
 				return 1;
 			else if (n2 < n1)
@@ -306,6 +307,8 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 										 AIS_Decoder* pdecoder)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(780, 250), wxBORDER_NONE)
 {
+	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
+
 	m_pparent = parent;
 	m_pAuiManager = auimgr;
 	m_pdecoder = pdecoder;
@@ -318,8 +321,8 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 	wxBoxSizer* topSizer = new wxBoxSizer(wxHORIZONTAL);
 	SetSizer(topSizer);
 
-	//  Parse the global column width string as read from config file
-	wxStringTokenizer tkz(g_AisTargetList_column_spec, _T(";"));
+	// Parse the global column width string as read from config file
+	wxStringTokenizer tkz(ais_target_list.column_spec, _T(";"));
 	wxString s_width = tkz.GetNextToken();
 	int width;
 	long lwidth;
@@ -441,9 +444,9 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 	m_pListCtrlAISTargets->InsertColumn(tlTCPA, _("TCPA"), wxLIST_FORMAT_RIGHT, width);
 	wxListItem item;
 	item.SetMask(wxLIST_MASK_IMAGE);
-	item.SetImage(g_bAisTargetList_sortReverse ? 1 : 0);
-	g_AisTargetList_sortColumn = wxMax(g_AisTargetList_sortColumn, 0);
-	m_pListCtrlAISTargets->SetColumn(g_AisTargetList_sortColumn, item);
+	item.SetImage(ais_target_list.sortReverse ? 1 : 0);
+	global::OCPN::get().gui().set_ais_target_list_sortColumn(wxMax(ais_target_list.sortColumn, 0));
+	m_pListCtrlAISTargets->SetColumn(ais_target_list.sortColumn, item);
 
 	topSizer->Add(m_pListCtrlAISTargets, 1, wxEXPAND | wxALL, 0);
 
@@ -478,7 +481,7 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 	boxSizer02->AddSpacer(2);
 	m_pSpinCtrlRange
 		= new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(50, -1),
-						 wxSP_ARROW_KEYS, 1, 20000, g_AisTargetList_range);
+						 wxSP_ARROW_KEYS, 1, 20000, ais_target_list.range);
 	m_pSpinCtrlRange->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED,
 							  wxCommandEventHandler(AISTargetListDialog::OnLimitRange), NULL, this);
 	m_pSpinCtrlRange->Connect(wxEVT_COMMAND_TEXT_UPDATED,
@@ -518,7 +521,7 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 								 .LeftDockable(false)
 								 .RightDockable(false)
 								 .Show(true);
-		m_pAuiManager->LoadPaneInfo(g_AisTargetList_perspective, pane);
+		m_pAuiManager->LoadPaneInfo(ais_target_list.perspective, pane);
 
 		bool b_reset_pos = false;
 
@@ -560,7 +563,8 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 			pane.Row(1);
 			pane.Position(0);
 
-			g_AisTargetList_perspective = m_pAuiManager->SavePaneInfo(pane);
+			global::OCPN::get().gui().set_ais_target_list_perspective(
+				m_pAuiManager->SavePaneInfo(pane));
 			pConfig->UpdateSettings();
 		}
 
@@ -598,8 +602,8 @@ void AISTargetListDialog::SetColorScheme()
 void AISTargetListDialog::OnPaneClose(wxAuiManagerEvent& event)
 {
 	if (event.pane->name == _T("AISTargetList")) {
-		g_AisTargetList_perspective = m_pAuiManager->SavePaneInfo(*event.pane);
-		// event.Veto();
+		global::OCPN::get().gui().set_ais_target_list_perspective(
+			m_pAuiManager->SavePaneInfo(*event.pane));
 	}
 	event.Skip();
 }
@@ -657,20 +661,23 @@ void AISTargetListDialog::OnTargetQuery(wxCommandEvent&)
 
 void AISTargetListDialog::OnTargetListColumnClicked(wxListEvent& event)
 {
+	global::GUI& gui = global::OCPN::get().gui();
+	const global::GUI::AISTargetList& ais_target_list = gui.ais_target_list();
+
 	int key = event.GetColumn();
 	wxListItem item;
 	item.SetMask(wxLIST_MASK_IMAGE);
-	if (key == g_AisTargetList_sortColumn)
-		g_bAisTargetList_sortReverse = !g_bAisTargetList_sortReverse;
+	if (key == ais_target_list.sortColumn)
+		gui.set_ais_target_list_sortReverse(!ais_target_list.sortReverse);
 	else {
 		item.SetImage(-1);
-		m_pListCtrlAISTargets->SetColumn(g_AisTargetList_sortColumn, item);
-		g_bAisTargetList_sortReverse = false;
-		g_AisTargetList_sortColumn = key;
+		m_pListCtrlAISTargets->SetColumn(ais_target_list.sortColumn, item);
+		gui.set_ais_target_list_sortReverse(false);
+		gui.set_ais_target_list_sortColumn(key);
 	}
-	item.SetImage(g_bAisTargetList_sortReverse ? 1 : 0);
-	if (g_AisTargetList_sortColumn >= 0) {
-		m_pListCtrlAISTargets->SetColumn(g_AisTargetList_sortColumn, item);
+	item.SetImage(ais_target_list.sortReverse ? 1 : 0);
+	if (ais_target_list.sortColumn >= 0) {
+		m_pListCtrlAISTargets->SetColumn(ais_target_list.sortColumn, item);
 		UpdateAISTargetList();
 	}
 }
@@ -721,7 +728,7 @@ void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent&)
 
 void AISTargetListDialog::OnLimitRange(wxCommandEvent&)
 {
-	g_AisTargetList_range = m_pSpinCtrlRange->GetValue();
+	global::OCPN::get().gui().set_ais_target_list_range(m_pSpinCtrlRange->GetValue());
 	UpdateAISTargetList();
 }
 
@@ -738,9 +745,7 @@ void AISTargetListDialog::UpdateAISTargetList(void)
 	int sb_position = m_pListCtrlAISTargets->GetScrollPos(wxVERTICAL);
 
 	// Capture the MMSI of the curently selected list item
-	long selItemID = -1;
-	selItemID
-		= m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	long selItemID = m_pListCtrlAISTargets->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 
 	int selMMSI = -1;
 	if (selItemID != -1)
@@ -753,13 +758,15 @@ void AISTargetListDialog::UpdateAISTargetList(void)
 	int index = 0;
 	m_pMMSI_array->Clear();
 
-	for (it = (*current_targets).begin(); it != (*current_targets).end(); ++it, ++index) {
+	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
+
+	for (it = current_targets->begin(); it != current_targets->end(); ++it, ++index) {
 		AIS_Target_Data* pAISTarget = it->second;
 		item.SetId(index);
 
 		if (NULL != pAISTarget) {
 			if ((pAISTarget->b_positionOnceValid)
-				&& (pAISTarget->Range_NM <= g_AisTargetList_range))
+				&& (pAISTarget->Range_NM <= ais_target_list.range))
 				m_pMMSI_array->Add(pAISTarget->MMSI);
 			else if (!pAISTarget->b_positionOnceValid)
 				m_pMMSI_array->Add(pAISTarget->MMSI);
@@ -768,11 +775,11 @@ void AISTargetListDialog::UpdateAISTargetList(void)
 
 	m_pListCtrlAISTargets->SetItemCount(m_pMMSI_array->size());
 
-	g_AisTargetList_count = m_pMMSI_array->size();
+	s_AisTargetList_count = m_pMMSI_array->size();
 
 	m_pListCtrlAISTargets->SetScrollPos(wxVERTICAL, sb_position, false);
 
-	//    Restore selected item
+	// Restore selected item
 	long item_sel = 0;
 	if ((selItemID != -1) && (selMMSI != -1)) {
 		for (unsigned int i = 0; i < m_pMMSI_array->size(); i++) {

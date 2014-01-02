@@ -81,8 +81,8 @@
 
 static wxString GetOCPNKnownLanguage(wxString lang_canonical, wxString *lang_dir);
 
-extern MainFrame * gFrame;
-extern ChartCanvas * cc1;
+extern MainFrame* gFrame;
+extern ChartCanvas* cc1;
 
 extern bool g_bskew_comp;
 extern bool g_bopengl;
@@ -90,14 +90,14 @@ extern bool g_bsmoothpanzoom;
 extern bool g_bShowMag;
 extern double g_UserVar;
 
-extern ArrayOfConnPrm * g_pConnectionParams;
-extern Multiplexer * g_pMUX;
+extern ArrayOfConnPrm* g_pConnectionParams;
+extern Multiplexer* g_pMUX;
 extern bool g_bfilter_cogsog;
 extern int g_COGFilterSec;
 extern int g_SOGFilterSec;
 
-extern PlugInManager * g_pi_manager;
-extern ocpnStyle::StyleManager * g_StyleManager;
+extern PlugInManager* g_pi_manager;
+extern ocpnStyle::StyleManager* g_StyleManager;
 
 extern bool g_bDisplayGrid;
 
@@ -108,8 +108,6 @@ extern bool g_bAISShowTracks;
 extern double g_AISShowTracks_Mins;
 extern bool g_bShowMoored;
 extern double g_ShowMoored_Kts;
-extern bool g_bAIS_CPA_Alert;
-extern bool g_bAIS_CPA_Alert_Audio;
 extern wxString g_sAIS_Alert_Sound_File;
 extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bShowAreaNotices;
@@ -174,10 +172,10 @@ extern wxString g_locale;
 extern bool g_bportable;
 extern bool g_bdisable_opengl;
 
-extern chart::ChartGroupArray * g_pGroupArray;
-extern ocpnStyle::StyleManager * g_StyleManager;
+extern chart::ChartGroupArray* g_pGroupArray;
+extern ocpnStyle::StyleManager* g_StyleManager;
 
-//    Some constants
+// Some constants
 #define ID_CHOICE_NMEA  wxID_HIGHEST + 1
 
 extern wxArrayString TideCurrentDataSet;
@@ -186,13 +184,12 @@ options * g_pOptions;
 
 IMPLEMENT_DYNAMIC_CLASS(options, wxDialog)
 
-	// sort callback for Connections list  Sort by priority.
+// sort callback for Connections list  Sort by priority.
 #if wxCHECK_VERSION(2, 9, 0)
 int wxCALLBACK SortConnectionOnPriority(long item1, long item2, wxIntPtr list)
 #else
 int wxCALLBACK SortConnectionOnPriority(long item1, long item2, long list)
 #endif
-
 {
 	wxListCtrl *lc = (wxListCtrl*)list;
 
@@ -2090,8 +2087,8 @@ void options::SetInitialSettings()
 	m_pCheck_Wpl_Aprs->SetValue(g_bWplIsAprsPosition);
 
 	// Alerts
-	m_pCheck_AlertDialog->SetValue(g_bAIS_CPA_Alert);
-	m_pCheck_AlertAudio->SetValue(g_bAIS_CPA_Alert_Audio);
+	m_pCheck_AlertDialog->SetValue(ais.AIS_CPA_Alert);
+	m_pCheck_AlertAudio->SetValue(ais.AIS_CPA_Alert_Audio);
 	m_pCheck_Alert_Moored->SetValue(g_bAIS_CPA_Alert_Suppress_Moored);
 	m_pCheck_Ack_Timout->SetValue(g_bAIS_ACK_Timeout);
 	m_pText_ACK_Timeout->SetValue(wxString::Format(_T("%4.0f"), g_AckTimeout_Mins));
@@ -2662,8 +2659,8 @@ void options::OnApplyClick(wxCommandEvent& event)
 	g_bWplIsAprsPosition = m_pCheck_Wpl_Aprs->GetValue();
 
 	// Alert
-	g_bAIS_CPA_Alert = m_pCheck_AlertDialog->GetValue();
-	g_bAIS_CPA_Alert_Audio = m_pCheck_AlertAudio->GetValue();
+	ais.set_AIS_CPA_Alert(m_pCheck_AlertDialog->GetValue());
+	ais.set_AIS_CPA_Alert_Audio(m_pCheck_AlertAudio->GetValue());
 	g_bAIS_CPA_Alert_Suppress_Moored = m_pCheck_Alert_Moored->GetValue();
 
 	g_bAIS_ACK_Timeout = m_pCheck_Ack_Timout->GetValue();

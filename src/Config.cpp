@@ -107,17 +107,10 @@ extern bool             g_bTrackDaily;
 extern double           g_AISShowTracks_Mins;
 extern bool             g_bShowMoored;
 extern double           g_ShowMoored_Kts;
-extern bool             g_bAIS_CPA_Alert;
-extern bool             g_bAIS_CPA_Alert_Audio;
 extern wxString         g_sAIS_Alert_Sound_File;
 extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool             g_bAIS_ACK_Timeout;
 extern double           g_AckTimeout_Mins;
-extern wxString         g_AisTargetList_perspective;
-extern int              g_AisTargetList_range;
-extern int              g_AisTargetList_sortColumn;
-extern bool             g_bAisTargetList_sortReverse;
-extern wxString         g_AisTargetList_column_spec;
 extern bool             g_bShowAreaNotices;
 extern bool             g_bDrawAISSize;
 extern bool             g_bShowAISName;
@@ -285,7 +278,7 @@ void Config::CreateRotatingNavObjBackup()
 
 void Config::load_toolbar()
 {
-	global::GUI & gui = global::OCPN::get().gui();
+	global::GUI& gui = global::OCPN::get().gui();
 
 	int x = 0;
 	int y = 0;
@@ -307,7 +300,7 @@ void Config::load_toolbar()
 
 void Config::load_ais_alert_dialog()
 {
-	global::GUI & gui = global::OCPN::get().gui();
+	global::GUI& gui = global::OCPN::get().gui();
 
 	long size_x = 200;
 	long size_y = 200;
@@ -325,7 +318,7 @@ void Config::load_ais_alert_dialog()
 
 void Config::load_ais_query_dialog()
 {
-	global::GUI & gui = global::OCPN::get().gui();
+	global::GUI& gui = global::OCPN::get().gui();
 
 	long x = 200;
 	long y = 200;
@@ -338,7 +331,7 @@ void Config::load_ais_query_dialog()
 
 void Config::load_frame()
 {
-	global::GUI & gui = global::OCPN::get().gui();
+	global::GUI& gui = global::OCPN::get().gui();
 
 	long size_x = 0;
 	long size_y = 0;
@@ -366,7 +359,7 @@ void Config::load_frame()
 
 void Config::load_view()
 {
-	global::GUI & gui = global::OCPN::get().gui();
+	global::GUI& gui = global::OCPN::get().gui();
 
 	long brightness = 100;
 	long show_outlines = 0;
@@ -386,7 +379,7 @@ void Config::load_view()
 
 void Config::load_system_config(int iteration) // FIXME: get rid of this 'iteration'
 {
-	global::System & sys = global::OCPN::get().sys();
+	global::System& sys = global::OCPN::get().sys();
 
 	if (iteration == 0) {
 		wxString version_string = _T("");
@@ -402,7 +395,7 @@ void Config::load_system_config(int iteration) // FIXME: get rid of this 'iterat
 
 void Config::load_watchdog()
 {
-	global::WatchDog & wdt = global::OCPN::get().wdt();
+	global::WatchDog& wdt = global::OCPN::get().wdt();
 
 	long gps_watchdog_timeout_ticks;
 
@@ -424,7 +417,7 @@ void Config::load_s57dialog()
 void Config::load_cm93(int display_width, int display_height)
 {
 #ifdef USE_S57
-	global::GUI & gui = global::OCPN::get().gui();
+	global::GUI& gui = global::OCPN::get().gui();
 
 #define CM93_ZOOM_FACTOR_MAX_RANGE 5 // FIXME: better solution (maybe over global infrastructure)
 
@@ -694,6 +687,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	// AIS
 	global::AIS& ais = global::OCPN::get().ais();
+	global::GUI& gui = global::OCPN::get().gui();
 
 	wxString s;
 	SetPath(_T("/Settings/AIS"));
@@ -765,13 +759,20 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("bShowAreaNotices"), &g_bShowAreaNotices);
 	Read(_T("bDrawAISSize"), &g_bDrawAISSize);
 	Read(_T("bShowAISName"), &g_bShowAISName);
-	Read(_T("bAISAlertDialog"), &g_bAIS_CPA_Alert);
+
+	bool AIS_CPA_Alert = false;
+	Read(_T("bAISAlertDialog"), &AIS_CPA_Alert);
+	ais.set_AIS_CPA_Alert(AIS_CPA_Alert);
+
 	g_Show_Target_Name_Scale = Read(_T("ShowAISTargetNameScale"), 250000L);
 	g_Show_Target_Name_Scale = wxMax(5000, g_Show_Target_Name_Scale);
 	Read(_T("bWplIsAprsPositionReport"), &g_bWplIsAprsPosition, 1);
 	Read(_T("AISCOGPredictorWidth"), &g_ais_cog_predictor_width, 3);
 
-	Read(_T("bAISAlertAudio"), &g_bAIS_CPA_Alert_Audio);
+	bool AIS_CPA_Alert_Audio = false;
+	Read(_T("bAISAlertAudio"), &AIS_CPA_Alert_Audio);
+	ais.set_AIS_CPA_Alert_Audio(AIS_CPA_Alert_Audio);
+
 	Read(_T("AISAlertAudioFile"), &g_sAIS_Alert_Sound_File);
 	Read(_T("bAISAlertSuppressMoored"), &g_bAIS_CPA_Alert_Suppress_Moored);
 
@@ -782,11 +783,20 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	load_ais_alert_dialog();
 	load_ais_query_dialog();
 
-	Read(_T("AISTargetListPerspective"), &g_AisTargetList_perspective);
-	g_AisTargetList_range = Read(_T("AISTargetListRange"), 40L);
-	g_AisTargetList_sortColumn = Read(_T("AISTargetListSortColumn"), 2L); // Column #2 is MMSI
-	Read(_T("bAISTargetListSortReverse"), &g_bAisTargetList_sortReverse, false);
-	Read(_T("AISTargetListColumnSpec"), &g_AisTargetList_column_spec);
+	wxString AisTargetList_perspective;
+	Read(_T("AISTargetListPerspective"), &AisTargetList_perspective);
+	gui.set_ais_target_list_perspective(AisTargetList_perspective);
+
+	gui.set_ais_target_list_range(Read(_T("AISTargetListRange"), 40L));
+	gui.set_ais_target_list_sortColumn(Read(_T("AISTargetListSortColumn"), 2L)); // Column #2 is MMSI
+
+	bool AisTargetList_sortReverse = false;
+	Read(_T("bAISTargetListSortReverse"), &AisTargetList_sortReverse, false);
+	gui.set_ais_target_list_sortReverse(AisTargetList_sortReverse);
+
+	wxString AisTargetList_column_spec;
+	Read(_T("AISTargetListColumnSpec"), &AisTargetList_column_spec);
+	gui.set_ais_target_list_column_spec(AisTargetList_column_spec);
 
 	Read(_T("bAISRolloverShowClass"), &g_bAISRolloverShowClass);
 	Read(_T("bAISRolloverShowCOG"), &g_bAISRolloverShowCOG);
@@ -1167,8 +1177,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		}
 	}
 
-	global::GUI& gui = global::OCPN::get().gui();
-
 	SetPath(_T("/Settings/Others"));
 
 	// Radar rings
@@ -1545,7 +1553,7 @@ void Config::LoadConfigGroups(chart::ChartGroupArray& pGroupArray)
 
 void Config::write_toolbar()
 {
-	const global::GUI::Toolbar & config = global::OCPN::get().gui().toolbar();
+	const global::GUI::Toolbar& config = global::OCPN::get().gui().toolbar();
 
 	Write(_T("ToolbarX"), config.position.x);
 	Write(_T("ToolbarY"), config.position.y);
@@ -1556,17 +1564,17 @@ void Config::write_toolbar()
 
 void Config::write_ais_alert_dialog()
 {
-	const global::GUI::AISAlertDialog & config = global::OCPN::get().gui().ais_alert_dialog();
+	const global::GUI::AISAlertDialog& config = global::OCPN::get().gui().ais_alert_dialog();
 
 	Write(_T("AlertDialogSizeX"), config.size.GetWidth());
 	Write(_T("AlertDialogSizeY"), config.size.GetHeight());
-	Write(_T("AlertDialogPosX"),  config.position.x);
-	Write(_T("AlertDialogPosY"),  config.position.y);
+	Write(_T("AlertDialogPosX"), config.position.x);
+	Write(_T("AlertDialogPosY"), config.position.y);
 }
 
 void Config::write_ais_query_dialog()
 {
-	const global::GUI::AISQueryDialog & config = global::OCPN::get().gui().ais_query_dialog();
+	const global::GUI::AISQueryDialog& config = global::OCPN::get().gui().ais_query_dialog();
 
 	Write(_T("QueryDialogPosX"), config.position.x);
 	Write(_T("QueryDialogPosY"), config.position.y);
@@ -1574,7 +1582,7 @@ void Config::write_ais_query_dialog()
 
 void Config::write_frame()
 {
-	const global::GUI::Frame & config = global::OCPN::get().gui().frame();
+	const global::GUI::Frame& config = global::OCPN::get().gui().frame();
 
 	Write(_T("FrameWinX"), config.size.GetWidth());
 	Write(_T("FrameWinY"), config.size.GetHeight());
@@ -1589,7 +1597,7 @@ void Config::write_frame()
 
 void Config::write_view()
 {
-	const global::GUI::View & config = global::OCPN::get().gui().view();
+	const global::GUI::View& config = global::OCPN::get().gui().view();
 
 	Write(_T("ShowChartOutlines"), config.show_outlines);
 	Write(_T("ShowDepthUnits"), config.show_depth_units);
@@ -1601,7 +1609,7 @@ void Config::write_view()
 
 void Config::write_system_config()
 {
-	const global::System::Config & config = global::OCPN::get().sys().config();
+	const global::System::Config& config = global::OCPN::get().sys().config();
 
 	Write(_T("ConfigVersionString"), config.version_string);
 	Write(_T("NavMessageShown"), config.nav_message_shown);
@@ -1609,7 +1617,7 @@ void Config::write_system_config()
 
 void Config::write_cm93()
 {
-	const global::GUI::CM93 & config = global::OCPN::get().gui().cm93();
+	const global::GUI::CM93& config = global::OCPN::get().gui().cm93();
 
 	Write(_T("CM93DetailFactor"), config.zoom_factor);
 	Write(_T("CM93DetailZoomPosX"), config.detail_dialog_position.x);
@@ -1771,6 +1779,7 @@ void Config::UpdateSettings()
 
 	// AIS
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
 
 	SetPath(_T("/Settings/AIS"));
 
@@ -1790,8 +1799,8 @@ void Config::UpdateSettings()
 	Write(_T("TargetTracksMinutes"), g_AISShowTracks_Mins);
 	Write(_T("bShowMooredTargets"), g_bShowMoored);
 	Write(_T("MooredTargetMaxSpeedKnots"), g_ShowMoored_Kts);
-	Write(_T("bAISAlertDialog"), g_bAIS_CPA_Alert);
-	Write(_T("bAISAlertAudio"), g_bAIS_CPA_Alert_Audio);
+	Write(_T("bAISAlertDialog"), ais.AIS_CPA_Alert);
+	Write(_T("bAISAlertAudio"), ais.AIS_CPA_Alert_Audio);
 	Write(_T("AISAlertAudioFile"), g_sAIS_Alert_Sound_File);
 	Write(_T("bAISAlertSuppressMoored"), g_bAIS_CPA_Alert_Suppress_Moored);
 	Write(_T("bShowAreaNotices"), g_bShowAreaNotices);
@@ -1804,11 +1813,11 @@ void Config::UpdateSettings()
 	write_ais_alert_dialog();
 	write_ais_query_dialog();
 
-	Write(_T("AISTargetListPerspective"), g_AisTargetList_perspective);
-	Write(_T("AISTargetListRange"), g_AisTargetList_range);
-	Write(_T("AISTargetListSortColumn"), g_AisTargetList_sortColumn);
-	Write(_T("bAISTargetListSortReverse"), g_bAisTargetList_sortReverse);
-	Write(_T("AISTargetListColumnSpec"), g_AisTargetList_column_spec);
+	Write(_T("AISTargetListPerspective"), ais_target_list.perspective);
+	Write(_T("AISTargetListRange"), ais_target_list.range);
+	Write(_T("AISTargetListSortColumn"), ais_target_list.sortColumn);
+	Write(_T("bAISTargetListSortReverse"), ais_target_list.sortReverse);
+	Write(_T("AISTargetListColumnSpec"), ais_target_list.column_spec);
 
 	write_s57dialog();
 

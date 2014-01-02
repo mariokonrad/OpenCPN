@@ -80,5 +80,15 @@ void OCPN_AIS::set_RemoveLost_Mins(double value)
 	data.RemoveLost_Mins = value;
 }
 
+void OCPN_AIS::set_AIS_CPA_Alert(bool value)
+{
+	data.AIS_CPA_Alert = value;
+}
+
+void OCPN_AIS::set_AIS_CPA_Alert_Audio(bool value)
+{
+	data.AIS_CPA_Alert_Audio = value;
+}
+
 }
 

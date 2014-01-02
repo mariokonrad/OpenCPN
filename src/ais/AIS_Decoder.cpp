@@ -62,8 +62,6 @@ extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bAIS_ACK_Timeout;
 extern double g_AckTimeout_Mins;
 extern bool g_bWplIsAprsPosition;
-extern bool g_bAIS_CPA_Alert;
-extern bool g_bAIS_CPA_Alert_Audio;
 
 namespace ais
 {
@@ -1861,7 +1859,9 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data* ptarget)
 
 void AIS_Decoder::OnTimerAISAudio(wxTimerEvent&)
 {
-	if (g_bAIS_CPA_Alert_Audio && m_bAIS_Audio_Alert_On) {
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
+	if (ais.AIS_CPA_Alert_Audio && m_bAIS_Audio_Alert_On) {
 		if (!m_AIS_Sound.IsOk())
 			m_AIS_Sound.Create(g_sAIS_Alert_Sound_File);
 
@@ -1977,7 +1977,7 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent& WXUNUSED(event))
 			if (td) {
 				if ((td->Class != AIS_SART) && (td->Class != AIS_DSC)) {
 
-					if (g_bAIS_CPA_Alert && td->b_active) {
+					if (ais.AIS_CPA_Alert && td->b_active) {
 						if ((AIS_ALARM_SET == td->n_alarm_state) && !td->b_in_ack_timeout) {
 							if (td->TCPA < tcpa_min) {
 								tcpa_min = td->TCPA;
@@ -2074,7 +2074,7 @@ void AIS_Decoder::OnTimerAIS(wxTimerEvent& WXUNUSED(event))
 
 	// At this point, the audio flag is set
 	// Honor the global flag
-	if (!g_bAIS_CPA_Alert_Audio)
+	if (!ais.AIS_CPA_Alert_Audio)
 		m_bAIS_Audio_Alert_On = false;
 
 	if (m_bAIS_Audio_Alert_On) {

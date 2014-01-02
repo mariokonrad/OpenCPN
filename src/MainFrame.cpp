@@ -274,8 +274,6 @@ ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 double g_ownship_predictor_minutes;
 int g_current_arrow_scale;
 Multiplexer* g_pMUX;
-bool g_bAIS_CPA_Alert;
-bool g_bAIS_CPA_Alert_Audio;
 bool g_bAutoAnchorMark;
 wxRect g_blink_rect;
 double g_PlanSpeed;
@@ -395,12 +393,6 @@ int g_MemFootMB;
 std::vector<int> g_quilt_noshow_index_array;
 wxStaticBitmap* g_pStatBoxTool;
 bool g_bquiting;
-wxString g_AisTargetList_perspective;
-int g_AisTargetList_range;
-int g_AisTargetList_sortColumn;
-bool g_bAisTargetList_sortReverse;
-wxString g_AisTargetList_column_spec;
-int g_AisTargetList_count;
 bool g_bGarminHostUpload;
 wxAuiManager* g_pauimgr;
 wxAuiDefaultDockArt* g_pauidockart;
@@ -1162,7 +1154,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 	// Pane is not closed so the child is not notified (OnPaneClose)
 	if (g_pAISTargetList) {
 		wxAuiPaneInfo& pane = g_pauimgr->GetPane(g_pAISTargetList);
-		g_AisTargetList_perspective = g_pauimgr->SavePaneInfo(pane);
+		global::OCPN::get().gui().set_ais_target_list_perspective(g_pauimgr->SavePaneInfo(pane));
 		g_pauimgr->DetachPane(g_pAISTargetList);
 	}
 

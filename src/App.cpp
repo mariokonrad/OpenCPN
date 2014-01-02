@@ -207,8 +207,6 @@ extern bool g_bShowMoored;
 extern wxString g_sAIS_Alert_Sound_File;
 extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bShowAreaNotices;
-extern bool g_bDrawAISSize;
-extern bool g_bShowAISName;
 extern bool g_bWayPointPreventDragging;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
@@ -856,9 +854,10 @@ void App::setup_for_empty_config(bool novicemode)
 {
 	// Override some config options for initial user startup with empty config file
 	if (novicemode) {
-		global::OCPN::get().gui().set_view_show_outlines(true);
-
+		global::GUI& gui = global::OCPN::get().gui();
 		global::AIS& ais = global::OCPN::get().ais();
+
+		gui.set_view_show_outlines(true);
 		ais.set_CPAMax_NM(20.0);
 		ais.set_CPAWarn_NM(2.0);
 		ais.set_TCPA_Max_min(30.0);
@@ -876,8 +875,8 @@ void App::setup_for_empty_config(bool novicemode)
 		g_bQuiltEnable = true;
 		g_bskew_comp = false;
 		g_bShowAreaNotices = false;
-		g_bDrawAISSize = false;
-		g_bShowAISName = false;
+		gui.set_DrawAISSize(false);
+		gui.set_ShowAISName(false);
 
 #ifdef USE_S57
 		if (ps52plib && ps52plib->m_bOK) {

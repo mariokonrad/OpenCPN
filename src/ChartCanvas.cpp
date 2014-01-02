@@ -202,9 +202,6 @@ extern bool g_bShowMoored;
 extern double g_ShowMoored_Kts;
 extern bool g_bAISShowTracks;
 extern bool g_bShowAreaNotices;
-extern bool g_bDrawAISSize;
-extern bool g_bShowAISName;
-extern int g_Show_Target_Name_Scale;
 
 extern int g_iNavAidRadarRingsNumberVisible;
 extern float g_fNavAidRadarRingsStep;
@@ -3806,6 +3803,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 										wxPoint2DDouble(pred_lon, pred_lat)))
 		drawit++;
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	// Do the draw if conditions indicate
 	if (drawit) {
 		TargetPoint = GetCanvasPointPix(Position(td->Lat, td->Lon));
@@ -3833,7 +3832,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				theta = -M_PI / 2.0; //  valid COG 000 or speed is too low to resolve course
 		}
 
-		//    Of course, if the target reported a valid HDG, then use it for icon
+		// Of course, if the target reported a valid HDG, then use it for icon
 		if ((int)(td->HDG) != 511) {
 			theta = ((td->HDG - 90) * M_PI / 180.0) + GetVP().rotation;
 			if (!g_bskew_comp && !g_bCourseUp)
@@ -3857,7 +3856,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 		wxPoint ais_real_size[6];
 		bool bcan_draw_size = true;
-		if (g_bDrawAISSize) {
+		if (view.DrawAISSize) {
 			if (td->DimA + td->DimB == 0 || td->DimC + td->DimD == 0) {
 				bcan_draw_size = false;
 			} else {
@@ -3925,7 +3924,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			ais_quad_icon[i].y = (int)round(py);
 		}
 
-		if (g_bDrawAISSize && bcan_draw_size)
+		if (view.DrawAISSize && bcan_draw_size)
 			for (int i = 0; i < 6; i++) {
 				double px = ((double)ais_real_size[i].x) * sin(theta) + ((double)ais_real_size[i].y)
 																		* cos(theta);
@@ -4156,7 +4155,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			} else
 				dc.StrokePolygon(4, ais_quad_icon, TargetPoint.x, TargetPoint.y);
 
-			if (g_bDrawAISSize && bcan_draw_size) {
+			if (view.DrawAISSize && bcan_draw_size) {
 				dc.SetBrush(wxBrush(GetGlobalColor(_T("UBLCK")), wxTRANSPARENT));
 				dc.StrokePolygon(6, ais_real_size, TargetPoint.x, TargetPoint.y);
 			}
@@ -4291,9 +4290,9 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			}
 		}
 
-		if (g_bShowAISName) {
+		if (view.ShowAISName) {
 			double true_scale_display = floor(VPoint.chart_scale / 100.0) * 100.0;
-			if (true_scale_display < g_Show_Target_Name_Scale) { // from which scale to display name
+			if (true_scale_display < view.Show_Target_Name_Scale) { // from which scale to display name
 
 				wxString tgt_name = td->GetFullName();
 				tgt_name = tgt_name.substr(0, tgt_name.find(_T("Unknown"), 0));

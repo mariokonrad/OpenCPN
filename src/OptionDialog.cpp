@@ -111,9 +111,6 @@ extern double g_ShowMoored_Kts;
 extern wxString g_sAIS_Alert_Sound_File;
 extern bool g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool g_bShowAreaNotices;
-extern bool g_bDrawAISSize;
-extern bool g_bShowAISName;
-extern int g_Show_Target_Name_Scale;
 extern bool g_bWplIsAprsPosition;
 
 extern int g_iNavAidRadarRingsNumberVisible;
@@ -2078,9 +2075,9 @@ void options::SetInitialSettings()
 	m_pCheck_Show_Moored->SetValue(!g_bShowMoored);
 	m_pText_Moored_Speed->SetValue(wxString::Format(_T("%4.1f"), g_ShowMoored_Kts));
 	m_pCheck_Show_Area_Notices->SetValue(g_bShowAreaNotices);
-	m_pCheck_Draw_Target_Size->SetValue(g_bDrawAISSize);
-	m_pCheck_Show_Target_Name->SetValue(g_bShowAISName);
-	m_pText_Show_Target_Name_Scale->SetValue(wxString::Format(_T("%d"), g_Show_Target_Name_Scale));
+	m_pCheck_Draw_Target_Size->SetValue(gui.view().DrawAISSize);
+	m_pCheck_Show_Target_Name->SetValue(gui.view().ShowAISName);
+	m_pText_Show_Target_Name_Scale->SetValue(wxString::Format(_T("%d"), gui.view().Show_Target_Name_Scale));
 	m_pCheck_Wpl_Aprs->SetValue(g_bWplIsAprsPosition);
 
 	// Alerts
@@ -2647,11 +2644,12 @@ void options::OnApplyClick(wxCommandEvent& event)
 	m_pText_Moored_Speed->GetValue().ToDouble(&g_ShowMoored_Kts);
 
 	g_bShowAreaNotices = m_pCheck_Show_Area_Notices->GetValue();
-	g_bDrawAISSize = m_pCheck_Draw_Target_Size->GetValue();
-	g_bShowAISName = m_pCheck_Show_Target_Name->GetValue();
+
+	gui.set_DrawAISSize(m_pCheck_Draw_Target_Size->GetValue());
+	gui.set_ShowAISName(m_pCheck_Show_Target_Name->GetValue());
 	long ais_name_scale = 5000;
 	m_pText_Show_Target_Name_Scale->GetValue().ToLong(&ais_name_scale);
-	g_Show_Target_Name_Scale = (int)wxMax(5000, ais_name_scale);
+	gui.set_Show_Target_Name_Scale(static_cast<int>(wxMax(5000, ais_name_scale)));
 
 	g_bWplIsAprsPosition = m_pCheck_Wpl_Aprs->GetValue();
 

@@ -71,6 +71,21 @@ void OCPN_GUI::set_enable_zoom_to_cursor(bool flag)
 	data_view.enable_zoom_to_cursor = flag;
 }
 
+void OCPN_GUI::set_DrawAISSize(bool value)
+{
+	data_view.DrawAISSize = value;
+}
+
+void OCPN_GUI::set_ShowAISName(bool value)
+{
+	data_view.ShowAISName = value;
+}
+
+void OCPN_GUI::set_Show_Target_Name_Scale(int value)
+{
+	data_view.Show_Target_Name_Scale = value;
+}
+
 const GUI::Frame & OCPN_GUI::frame() const
 {
 	return data_frame;

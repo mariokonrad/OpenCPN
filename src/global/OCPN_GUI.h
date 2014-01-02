@@ -50,6 +50,9 @@ class OCPN_GUI : public GUI
 		virtual void set_route_line_width(int);
 		virtual void set_track_line_width(int);
 		virtual void set_enable_zoom_to_cursor(bool);
+		virtual void set_DrawAISSize(bool);
+		virtual void set_ShowAISName(bool);
+		virtual void set_Show_Target_Name_Scale(int);
 
 	public: // frame
 		virtual const Frame & frame() const;

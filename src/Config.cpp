@@ -110,9 +110,6 @@ extern double           g_ShowMoored_Kts;
 extern wxString         g_sAIS_Alert_Sound_File;
 extern bool             g_bAIS_CPA_Alert_Suppress_Moored;
 extern bool             g_bShowAreaNotices;
-extern bool             g_bDrawAISSize;
-extern bool             g_bShowAISName;
-extern int              g_Show_Target_Name_Scale;
 extern bool             g_bWplIsAprsPosition;
 
 extern int              g_iNavAidRadarRingsNumberVisible;
@@ -755,15 +752,21 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	s.ToDouble(&g_ShowMoored_Kts);
 
 	Read(_T("bShowAreaNotices"), &g_bShowAreaNotices);
-	Read(_T("bDrawAISSize"), &g_bDrawAISSize);
-	Read(_T("bShowAISName"), &g_bShowAISName);
+
+	bool DrawAISSize = false;
+	Read(_T("bDrawAISSize"), &DrawAISSize);
+	gui.set_DrawAISSize(DrawAISSize);
+
+	bool ShowAISName = false;
+	Read(_T("bShowAISName"), &ShowAISName);
+	gui.set_ShowAISName(ShowAISName);
 
 	bool AIS_CPA_Alert = false;
 	Read(_T("bAISAlertDialog"), &AIS_CPA_Alert);
 	ais.set_AIS_CPA_Alert(AIS_CPA_Alert);
 
-	g_Show_Target_Name_Scale = Read(_T("ShowAISTargetNameScale"), 250000L);
-	g_Show_Target_Name_Scale = wxMax(5000, g_Show_Target_Name_Scale);
+	int show_target_name_scale = Read(_T("ShowAISTargetNameScale"), 250000L);
+	gui.set_Show_Target_Name_Scale(wxMax(5000, show_target_name_scale));
 	Read(_T("bWplIsAprsPositionReport"), &g_bWplIsAprsPosition, 1);
 	Read(_T("AISCOGPredictorWidth"), &g_ais_cog_predictor_width, 3);
 
@@ -1782,6 +1785,7 @@ void Config::UpdateSettings()
 
 	// AIS
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
 
 	SetPath(_T("/Settings/AIS"));
@@ -1807,9 +1811,9 @@ void Config::UpdateSettings()
 	Write(_T("AISAlertAudioFile"), g_sAIS_Alert_Sound_File);
 	Write(_T("bAISAlertSuppressMoored"), g_bAIS_CPA_Alert_Suppress_Moored);
 	Write(_T("bShowAreaNotices"), g_bShowAreaNotices);
-	Write(_T("bDrawAISSize"), g_bDrawAISSize);
-	Write(_T("bShowAISName"), g_bShowAISName);
-	Write(_T("ShowAISTargetNameScale"), g_Show_Target_Name_Scale);
+	Write(_T("bDrawAISSize"), view.DrawAISSize);
+	Write(_T("bShowAISName"), view.ShowAISName);
+	Write(_T("ShowAISTargetNameScale"), view.Show_Target_Name_Scale);
 	Write(_T("bWplIsAprsPositionReport"), g_bWplIsAprsPosition);
 	Write(_T("AISCOGPredictorWidth"), g_ais_cog_predictor_width);
 

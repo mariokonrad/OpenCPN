@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: 2011-06-01 12:24+0100\n"
 "Last-Translator: Piotr Carlson <pjotrc@interia.pl>\n"
 "Language-Team: Wladyslaw Stolle <stollew@poczta.onet.pl>\n"
@@ -234,12 +234,6 @@ msgstr " Aktualizowane:"
 #
 msgid " for details."
 msgstr ""
-#
-# 
-# 
-#, c-format
-msgid " is %5g"
-msgstr " is %5g"
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -754,6 +748,12 @@ msgstr "Katalogi aktywnych map"
 #, fuzzy
 msgid "All Charts"
 msgstr "Mapy"
+#
+# 
+# 
+#, fuzzy
+msgid "Altitude"
+msgstr "Szerokość geogr."
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -3885,6 +3885,12 @@ msgstr ""
 # 
 # 
 #, fuzzy
+msgid "Special Position Report"
+msgstr "Czas ostatniego raportu:"
+#
+# 
+# 
+#, fuzzy
 msgid "Speed"
 msgstr "Planowana prędkość"
 #
@@ -5071,6 +5077,12 @@ msgstr ""
 # 
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  Nie mogę otworzyć portu szeregowego'"
+#
+#
+# 
+# 
+#~ msgid " is %5g"
+#~ msgstr " is %5g"
 #
 #
 #

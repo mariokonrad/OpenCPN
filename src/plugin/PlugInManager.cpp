@@ -1986,7 +1986,7 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 	return true;
 }
 
-bool DeletePluginRoute(wxString& GUID)
+bool DeletePlugInRoute(wxString& GUID)
 {
 	bool b_found = false;
 
@@ -2473,7 +2473,7 @@ void PlugInChartBase::latlong_to_chartpix(double, double, double &, double &)
 
 // ----------------------------------------------------------------------------
 // PlugInChartBaseGL Implmentation
-//  
+//
 // ----------------------------------------------------------------------------
 
 PlugInChartBaseGL::PlugInChartBaseGL()
@@ -2482,21 +2482,44 @@ PlugInChartBaseGL::PlugInChartBaseGL()
 PlugInChartBaseGL::~PlugInChartBaseGL()
 {}
 
-int PlugInChartBaseGL::RenderRegionViewOnGL( const wxGLContext &glc, const PlugIn_ViewPort& VPoint,
-                                  const wxRegion &Region, bool b_use_stencil )
+int PlugInChartBaseGL::RenderRegionViewOnGL(const wxGLContext& WXUNUSED(glc),
+											const PlugIn_ViewPort& WXUNUSED(VPoint),
+											const wxRegion& WXUNUSED(Region),
+											bool WXUNUSED(b_use_stencil))
 {
     return 0;
 }
 
-ListOfPI_S57Obj *PlugInChartBaseGL::GetObjRuleListAtLatLon(float lat, float lon, float select_radius,
-                                                           PlugIn_ViewPort *VPoint)
+ListOfPI_S57Obj* PlugInChartBaseGL::GetObjRuleListAtLatLon(float WXUNUSED(lat), float WXUNUSED(lon),
+														   float WXUNUSED(select_radius),
+														   PlugIn_ViewPort* WXUNUSED(VPoint))
 {
     return NULL;
 }
 
-wxString PlugInChartBaseGL::CreateObjDescriptions( ListOfPI_S57Obj* obj_list )
+wxString PlugInChartBaseGL::CreateObjDescriptions(ListOfPI_S57Obj* WXUNUSED(obj_list))
 {
     return _T("");
+}
+
+int PlugInChartBaseGL::GetNoCOVREntries()
+{
+    return 0;
+}
+
+int PlugInChartBaseGL::GetNoCOVRTablePoints(int WXUNUSED(iTable))
+{
+    return 0;
+}
+
+int  PlugInChartBaseGL::GetNoCOVRTablenPoints(int WXUNUSED(iTable))
+{
+    return 0;
+}
+
+float *PlugInChartBaseGL::GetNoCOVRTableHead(int WXUNUSED(iTable))
+{
+    return 0;
 }
 
 

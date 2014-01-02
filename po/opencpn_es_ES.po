@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenCPN Version 3.1.1328\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: 2013-02-05 09:18+0100\n"
 "Last-Translator: opencpn.es <opencpn.es@gmx.com>\n"
 "Language-Team: SpanishTeam LaTabernadelPuerto.com <opencpn.es@gmx.com>\n"
@@ -291,15 +291,6 @@ msgstr " Actualizado:  "
 #
 msgid " for details."
 msgstr " para detalles."
-#
-#
-#
-#
-#
-#
-#, c-format
-msgid " is %5g"
-msgstr " es %5g"
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -963,6 +954,15 @@ msgstr "Todas las cartas disponibles"
 #
 msgid "All Charts"
 msgstr "Todas las Cartas"
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Altitude"
+msgstr "Latitud"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -4895,6 +4895,15 @@ msgstr "Marca Especial"
 #
 #
 #
+#, fuzzy
+msgid "Special Position Report"
+msgstr "Informe Posición DCS"
+#
+#
+#
+#
+#
+#
 msgid "Speed"
 msgstr "Velocidad"
 #
@@ -6297,6 +6306,15 @@ msgstr "wxFB Website"
 #
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 Deg."
+#
+#
+#
+#
+#
+#
+#
+#~ msgid " is %5g"
+#~ msgstr " es %5g"
 #
 #
 #

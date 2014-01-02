@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn 1.3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: 2010-03-31 01:12+0300\n"
 "Last-Translator: \n"
 "Language-Team: Eugene Polyan <epolyan@gmail.com>\n"
@@ -305,15 +305,6 @@ msgid " Updated:  "
 msgstr ""
 #
 msgid " for details."
-msgstr ""
-#
-# 
-# 
-# 
-# 
-# 
-#, c-format
-msgid " is %5g"
 msgstr ""
 #
 msgid ""
@@ -1009,6 +1000,15 @@ msgstr "Выбранные каталоги карт"
 #, fuzzy
 msgid "All Charts"
 msgstr "Карты"
+#
+# 
+# 
+# 
+# 
+# 
+#, fuzzy
+msgid "Altitude"
+msgstr "Широта"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -5217,6 +5217,15 @@ msgstr ""
 #, fuzzy
 msgid "Special Mark"
 msgstr "Удалить маркер"
+#
+# 
+# 
+# 
+# 
+# 
+#, fuzzy
+msgid "Special Position Report"
+msgstr "Время последнего сообщения:       "
 #
 # 
 # 

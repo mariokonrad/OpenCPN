@@ -75,6 +75,11 @@ void OCPN_System::set_init_chart_dir(const wxString & directory)
 	data_data.init_chart_dir = directory;
 }
 
+void OCPN_System::set_plugin_dir(const wxString & value)
+{
+	data_data.plugin_dir = value;
+}
+
 const System::Config & OCPN_System::config() const
 {
 	return data_config;

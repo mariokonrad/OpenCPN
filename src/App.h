@@ -85,7 +85,6 @@ private:
 	global::OCPN_System* sys_instance;
 
 	bool start_fullscreen;
-	wxString plugin_dir;
 	bool first_run;
 	wxLog* logger;
 	wxLog* old_logger;

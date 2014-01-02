@@ -4,10 +4,10 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenCPN 3.1.1328\n"
+"Project-Id-Version: OpenCPN 3.3.1117\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
-"PO-Revision-Date: 2013-10-19 16:55+0100\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
+"PO-Revision-Date: 2013-11-30 16:25+0100\n"
 "Last-Translator: CarCode <carcode@me.com>\n"
 "Language-Team: Gerhard Mueller <carcode@me.com>\n"
 "Language: de_DE\n"
@@ -198,10 +198,6 @@ msgstr " Aktualisiert:     "
 msgid " for details."
 msgstr " für Details."
 #
-#, c-format
-msgid " is %5g"
-msgstr " ist %5g"
-#
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
@@ -313,9 +309,6 @@ msgstr "(reserviert für künftige Verwendung)"
 #
 msgid "(unnamed)"
 msgstr "(unbenannt)"
-#
-#
-#
 #
 msgid "-"
 msgstr "-"
@@ -486,9 +479,6 @@ msgstr "AIS-Zielabfrage"
 msgid "AIS Targets"
 msgstr "AIS-Ziele"
 #
-#
-#
-#
 msgid "AIS target list"
 msgstr "Liste AIS-Ziele"
 #
@@ -521,9 +511,6 @@ msgstr "Aktivieren"
 #
 msgid "Activate Next Waypoint"
 msgstr "Nächsten WP aktivieren"
-#
-#
-#
 #
 msgid "Active"
 msgstr "Aktiv"
@@ -576,6 +563,10 @@ msgstr "Alle verfügbaren Karten"
 #
 msgid "All Charts"
 msgstr "Alle Karten"
+#
+#, fuzzy
+msgid "Altitude"
+msgstr "Breitengrad"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -730,9 +721,6 @@ msgstr "Blau"
 msgid "Boundaries"
 msgstr "Kartengrenzen"
 #
-#
-#
-#
 msgid "Brg"
 msgstr "Peilung"
 #
@@ -754,9 +742,6 @@ msgstr "CM93 Offset Dialog..."
 msgid "COG Predictor Length (min)"
 msgstr "Voraus-Anzeige KüG-Pfeil (in Minuten)"
 #
-#
-#
-#
 msgid "CPA"
 msgstr "CPA"
 #
@@ -768,9 +753,6 @@ msgstr "CPA TCPA"
 #
 msgid "CPA/TCPA Alerts"
 msgstr "CPA/TCPA-Alarme"
-#
-#
-#
 #
 msgid "Call"
 msgstr "Rufzeichen"
@@ -980,9 +962,6 @@ msgstr "Wähle Format für Kopie"
 msgid "Choose a file"
 msgstr "Wähle Datei"
 #
-#
-#
-#
 msgid "Class"
 msgstr "Klasse"
 #
@@ -1010,9 +989,6 @@ msgstr "Klick zur Bestätigung der Schriftauswahl."
 #
 msgid "Close"
 msgstr "Schließen"
-#
-#
-#
 #
 msgid "CoG"
 msgstr "COG"
@@ -1080,7 +1056,6 @@ msgstr "Aktualisierungsintervall (Sek.) im Kurs-Voraus Modus"
 msgid "Create Route"
 msgstr "Route erstellen"
 #
-#, fuzzy
 msgid "Create WPT"
 msgstr "Wegpunkt erzeugen"
 #
@@ -1708,9 +1683,6 @@ msgstr "Feuerschiff"
 msgid "Light w/Sectors"
 msgstr "Sektorenfeuer"
 #
-#
-#
-#
 msgid "Limit range: NM"
 msgstr "Radius einschr. (sm):"
 #
@@ -1785,9 +1757,6 @@ msgstr "M/V"
 #
 msgid "MAN OVERBOARD"
 msgstr "MANN ÜBER BORD"
-#
-#
-#
 #
 msgid "MMSI"
 msgstr "MMSI"
@@ -1887,9 +1856,6 @@ msgstr "Seemeilen"
 #
 msgid "Nautical miles"
 msgstr "Seemeilen"
-#
-#
-#
 #
 msgid "Nav Status"
 msgstr "Navigationsstatus"
@@ -2203,9 +2169,6 @@ msgstr "Frage"
 #
 msgid "RACON"
 msgstr "RACON (Radarantwortbake)"
-#
-#
-#
 #
 msgid "Range"
 msgstr "Entfernung"
@@ -2641,9 +2604,6 @@ msgstr "Vereinfacht"
 msgid "Smooth Panning / Zooming"
 msgstr "Weiches Schwenken/Zoomen"
 #
-#
-#
-#
 msgid "SoG"
 msgstr "SOG"
 #
@@ -2658,6 +2618,10 @@ msgstr "Spezial"
 #
 msgid "Special Mark"
 msgstr "Spezielle Markierung (?)"
+#
+#, fuzzy
+msgid "Special Position Report"
+msgstr "APRS Positionsbericht"
 #
 msgid "Speed"
 msgstr "Geschwindigkeit"
@@ -2719,17 +2683,11 @@ msgstr "Symbolisch"
 msgid "TCP"
 msgstr "TCP"
 #
-#
-#
-#
 msgid "TCPA"
 msgstr "TCPA"
 #
 msgid "Tanker"
 msgstr "Tanker"
-#
-#
-#
 #
 msgid "Target Count"
 msgstr "Anzahl Ziele"
@@ -2739,9 +2697,6 @@ msgstr "Liste AIS-Ziele..."
 #
 msgid "Target Query..."
 msgstr "AIS-Zielabfrage..."
-#
-#
-#
 #
 msgid "Target info"
 msgstr "Ziel Info"
@@ -2760,9 +2715,6 @@ msgstr "Tender"
 #
 msgid "Test Alert Sound"
 msgstr "Warnton testen"
-#
-#
-#
 #
 msgid "Testing"
 msgstr "Testend"
@@ -3637,6 +3589,9 @@ msgstr "wxFB Website"
 #
 #~ msgid " COG: 000 Deg."
 #~ msgstr "COG: 000 Deg."
+#
+#~ msgid " is %5g"
+#~ msgstr " ist %5g"
 #
 #
 #

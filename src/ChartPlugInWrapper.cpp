@@ -29,11 +29,18 @@
 #include <PositionParser.h>
 #include <UserColors.h>
 #include <ocpn_pixel.h>
+
+#include <global/OCPN.h>
+#include <global/System.h>
+
 #include <geo/GeoRef.h>
+
 #include <chart/s52s57.h>
 #include <chart/s52plib.h>
+
 #include <plugin/ocpn_plugin.h>
 #include <plugin/PlugInManager.h>
+
 #include <wx/image.h>
 #include <wx/bitmap.h>
 
@@ -146,21 +153,45 @@ float* ChartPlugInWrapper::GetCOVRTableHead(int iTable)
 // and use some kind of RTTI to figure out which class to call.
 int ChartPlugInWrapper::GetNoCOVREntries() const
 {
+	if (m_ppicb) {
+		PlugInChartBaseGL* ppicbgl = dynamic_cast<PlugInChartBaseGL*>(m_ppicb);
+		if (ppicbgl) {
+			return ppicbgl->GetNoCOVREntries();
+		}
+	}
 	return 0;
 }
 
-int ChartPlugInWrapper::GetNoCOVRTablePoints(int) const
+int ChartPlugInWrapper::GetNoCOVRTablePoints(int iTable) const
 {
+	if (m_ppicb) {
+		PlugInChartBaseGL* ppicbgl = dynamic_cast<PlugInChartBaseGL*>(m_ppicb);
+		if (ppicbgl) {
+			return ppicbgl->GetNoCOVRTablePoints(iTable);
+		}
+	}
 	return 0;
 }
 
-int ChartPlugInWrapper::GetNoCOVRTablenPoints(int) const
+int ChartPlugInWrapper::GetNoCOVRTablenPoints(int iTable) const
 {
+	if (m_ppicb) {
+		PlugInChartBaseGL* ppicbgl = dynamic_cast<PlugInChartBaseGL*>(m_ppicb);
+		if (ppicbgl) {
+			return ppicbgl->GetNoCOVRTablenPoints(iTable);
+		}
+	}
 	return 0;
 }
 
-float* ChartPlugInWrapper::GetNoCOVRTableHead(int)
+float* ChartPlugInWrapper::GetNoCOVRTableHead(int iTable)
 {
+	if (m_ppicb) {
+		PlugInChartBaseGL* ppicbgl = dynamic_cast<PlugInChartBaseGL*>(m_ppicb);
+		if (ppicbgl) {
+			return ppicbgl->GetNoCOVRTableHead(iTable);
+		}
+	}
 	return 0;
 }
 
@@ -372,6 +403,13 @@ int OCPNMessageBox_PlugIn(wxWindow* parent, const wxString& message, const wxStr
 wxString GetOCPN_ExePath(void)
 {
 	return gExe_path;
+}
+
+wxString *GetpPlugInLocation() // FIXME: please, in the future, try to omit such interfaces
+{
+	static wxString plugin_dir;
+	plugin_dir = global::OCPN::get().sys().data().plugin_dir;
+	return &plugin_dir;
 }
 
 //      API 1.11 Access to Vector PlugIn charts

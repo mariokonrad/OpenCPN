@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn 2.4.606\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: 2013-02-07 12:54-0600\n"
 "Last-Translator: Pavel Kalian <pavel@kalian.cz>\n"
 "Language-Team: OpenCPN CZ <pavel@kalian.cz>\n"
@@ -300,14 +300,6 @@ msgstr " Aktualizováno:"
 #
 msgid " for details."
 msgstr " pro podrobnosti."
-#
-#
-#
-#
-#
-#, c-format
-msgid " is %5g"
-msgstr " je %5g"
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -910,6 +902,14 @@ msgstr "Všechny dostupné mapy"
 #
 msgid "All Charts"
 msgstr "Všechny mapy"
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Altitude"
+msgstr "Zem. šířka"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -4535,6 +4535,14 @@ msgstr "Speciální značka"
 #
 #
 #
+#, fuzzy
+msgid "Special Position Report"
+msgstr "Report pozice DSC"
+#
+#
+#
+#
+#
 msgid "Speed"
 msgstr "Rychlost"
 #
@@ -5981,6 +5989,14 @@ msgstr "Stránky wxFB"
 #
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 Stu."
+#
+#
+#
+#
+#
+#
+#~ msgid " is %5g"
+#~ msgstr " je %5g"
 #
 #
 #

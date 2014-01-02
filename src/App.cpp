@@ -1260,7 +1260,7 @@ bool App::OnInit()
 	// linux  : {prefix}/lib/opencpn
 	// Mac    : appname.app/Contents/PlugIns
 	// Windows: {exe dir}/plugins
-	plugin_dir = std_path.GetPluginsDir();
+	wxString plugin_dir = std_path.GetPluginsDir();
 #ifdef __WXMSW__
 	plugin_dir += _T("\\plugins");
 #endif
@@ -1269,6 +1269,7 @@ bool App::OnInit()
 		plugin_dir = sys.data().home_location;
 		plugin_dir += _T("plugins");
 	}
+	global::OCPN::get().sys().set_plugin_dir(plugin_dir);
 
 	// Init the Route Manager
 	g_pRouteMan = new Routeman(this);
@@ -1529,7 +1530,7 @@ bool App::OnInit()
 
 	// Load and initialize any PlugIns
 	g_pi_manager = new PlugInManager(gFrame);
-	g_pi_manager->LoadAllPlugIns(plugin_dir);
+	g_pi_manager->LoadAllPlugIns(global::OCPN::get().sys().data().plugin_dir);
 
 	// Show the frame
 

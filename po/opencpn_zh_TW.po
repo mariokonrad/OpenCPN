@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenCPN 3.3.814\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: 2013-09-25 15:27+0800\n"
 "Last-Translator: Eddie Pai <eddie.pai@gmail.com>\n"
 "Language-Team: Eddie Pai <eddie.pai@gmail.com>\n"
@@ -241,12 +241,6 @@ msgstr " 更新: "
 #
 msgid " for details."
 msgstr " for details."
-#
-#
-#
-#, c-format
-msgid " is %5g"
-msgstr " is %5g"
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -730,6 +724,12 @@ msgstr "所有可用的海圖"
 #
 msgid "All Charts"
 msgstr "所有海圖"
+#
+#
+#
+#, fuzzy
+msgid "Altitude"
+msgstr "緯度"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -3720,6 +3720,12 @@ msgstr "特別標記"
 #
 #
 #
+#, fuzzy
+msgid "Special Position Report"
+msgstr "APRS 位置報告"
+#
+#
+#
 msgid "Speed"
 msgstr "船速"
 #
@@ -4893,6 +4899,12 @@ msgstr "wxFB 網站"
 #
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 度."
+#
+#
+#
+#
+#~ msgid " is %5g"
+#~ msgstr " is %5g"
 #
 #
 #

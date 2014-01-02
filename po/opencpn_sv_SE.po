@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenCPN version 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: 2013-11-19 22:18+0100\n"
 "Last-Translator: hakan <momo@stupan.se>\n"
 "Language-Team: AB Torsk & Bäver <N/A>\n"
@@ -223,11 +223,6 @@ msgstr " Uppdaterad:  "
 #
 msgid " for details."
 msgstr " för ytterligare information."
-#
-#
-#, c-format
-msgid " is %5g"
-msgstr "är %5g"
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -673,6 +668,11 @@ msgstr "Alla tillgängliga sjökort"
 #
 msgid "All Charts"
 msgstr "Alla sjökort"
+#
+#
+#, fuzzy
+msgid "Altitude"
+msgstr "Latitud"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -3231,6 +3231,11 @@ msgid "Special Mark"
 msgstr "Specialmärke"
 #
 #
+#, fuzzy
+msgid "Special Position Report"
+msgstr "APRS Positionsrapport           "
+#
+#
 msgid "Speed"
 msgstr "Fart"
 #
@@ -3896,6 +3901,11 @@ msgstr "Webbsida för wxFB"
 #
 #~ msgid " </b>in<b> "
 #~ msgstr " </b>om<b> "
+#
+#
+#
+#~ msgid " is %5g"
+#~ msgstr "är %5g"
 #
 #
 #

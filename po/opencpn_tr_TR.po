@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Hasan Çetin <boraxtr@yahoo.com>\n"
 "Language-Team: \n"
-"Language: tr_TR\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -213,11 +213,6 @@ msgstr " Güncellendi: "
 msgid " for details."
 msgstr "ayrıntılar için."
 #
-#
-#, c-format
-msgid " is %5g"
-msgstr " %5g"
-#
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
@@ -226,7 +221,7 @@ msgstr ""
 "\n"
 #
 msgid " to "
-msgstr "Varış Limanı"
+msgstr "Bitiş"
 #
 msgid "\" is empty, switching to \"All Active Charts\" group."
 msgstr "\" boş, geçiş yapılıyor\"Kullanımdaki Tüm Haritalar\"grup."
@@ -568,7 +563,7 @@ msgid "Accept Sentences"
 msgstr "Cümleleri Kabul Edin"
 #
 msgid "Accept only sentences"
-msgstr "Sadece cümleleri kabul et."
+msgstr "Sadece Cümleleri Kabulet."
 #
 #
 msgid "Activate"
@@ -650,6 +645,11 @@ msgstr "Tüm Ulaşılabilir Haritalar"
 #
 msgid "All Charts"
 msgstr "Tüm Haritalar"
+#
+#
+#, fuzzy
+msgid "Altitude"
+msgstr "Enlem"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -806,9 +806,8 @@ msgstr "Kerteriz (D)"
 msgid "Black"
 msgstr "Siyah"
 #
-#, fuzzy
 msgid "Blacklisted plugin detected..."
-msgstr "Kırık Eklenti Var..."
+msgstr "Karalisyeye alınmış eklenti belirlendi..."
 #
 msgid "Blue"
 msgstr "Mavi"
@@ -1215,9 +1214,8 @@ msgid "Create Route"
 msgstr "Rota Oluştur"
 #
 # Menu contextuel : Waypoint
-#, fuzzy
 msgid "Create WPT"
-msgstr "Seyirnoktaso Oluştur"
+msgstr "Seyirnoktası Oluştur"
 #
 # Menu contextuel : Waypoint
 msgid "Create Waypoint"
@@ -1892,7 +1890,7 @@ msgstr "Bacak"
 #
 #
 msgid "Leg: from "
-msgstr "Bacak Başlangıcı"
+msgstr "Başlangıç"
 #
 #
 msgid "Length"
@@ -2407,25 +2405,27 @@ msgstr ""
 msgid "Pleasure craft"
 msgstr "Spor amaçlı tekne, Yat"
 #
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "PlugIn %s (%s), version %i.%i was detected.\n"
 " This version is known to be unstable and will not be loaded.\n"
 " Please update this PlugIn at the opencpn.org website."
 msgstr ""
-"%s Eklentisinin (%s), sürümü %i.%i Sürümü belirlendi. Bu sürüm geliştirilen "
-"sürüme ait olduğu için yüklenmeeyecek. Bu eklentinin son dengeli sürümünü "
-"lüfen opencpn.org plugin downloads sayfasından indirin."
+"%s Eklentisinin (%s), sürümü%i.%i belirlendi. \n"
+"Bu sürüm geliştirilen sürüme ait olduğu için yüklenmeyecek. \n"
+"Bu eklentinin son dengeli sürümünü lüfen opencpn.org/plugin/downloads "
+"sayfasından indirin."
 #
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "PlugIn %s (%s), version %i.%i was detected.\n"
 " This version is known to be unstable.\n"
 " Please update this PlugIn at the opencpn.org website."
 msgstr ""
-"%s Eklentisinin (%s), sürümü %i.%i Sürümü belirlendi. Bu sürüm geliştirilen "
-"sürüme ait olduğu için yüklenmeeyecek. Bu eklentinin son dengeli sürümünü "
-"lüfen opencpn.org plugin downloads sayfasından indirin."
+"%s Eklentisinin (%s), sürümü%i.%i belirlendi. \n"
+"Bu sürüm geliştirilen sürüme ait olduğu için yüklenmeyecek. \n"
+"Bu eklentinin son dengeli sürümünü lüfen opencpn.org/plugin/downloads "
+"sayfasından indirin."
 #
 msgid "Plugins"
 msgstr "Eklentiler"
@@ -3108,6 +3108,10 @@ msgstr "Özel"
 msgid "Special Mark"
 msgstr "Özel İşaret"
 #
+#, fuzzy
+msgid "Special Position Report"
+msgstr "DSC Mevki Raporu"
+#
 #
 msgid "Speed"
 msgstr "Hız"
@@ -3368,7 +3372,7 @@ msgid "To Waypoint"
 msgstr "Seyirnoktasına"
 #
 msgid "To route"
-msgstr "Yoldaki Süre "
+msgstr "Rotaya"
 #
 #
 msgid "Toggle Tracking"
@@ -3449,7 +3453,7 @@ msgid "UDP"
 msgstr "UDP"
 #
 msgid "URL"
-msgstr ""
+msgstr "URL"
 #
 #
 msgid "UTC"
@@ -4005,6 +4009,11 @@ msgstr "wxFB veb sayfası"
 #
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG : 000 Deg."
+#
+#
+#
+#~ msgid " is %5g"
+#~ msgstr " %5g"
 #
 #
 #

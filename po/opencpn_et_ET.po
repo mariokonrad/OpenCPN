@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn 2.1.622\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: 2011-01-09 19:39+0200\n"
 "Last-Translator: Peep Prants <peep@prants.ee>\n"
 "Language-Team: OpenCPN ET <LL@li.org>\n"
@@ -285,14 +285,6 @@ msgstr "Uuendatud:"
 #
 msgid " for details."
 msgstr ""
-#
-# 
-# 
-# 
-# 
-#, c-format
-msgid " is %5g"
-msgstr " on %5g"
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -918,6 +910,14 @@ msgstr "Aktiveeri kaardi kaustad"
 #, fuzzy
 msgid "All Charts"
 msgstr "Kaardid"
+#
+# 
+# 
+# 
+# 
+#, fuzzy
+msgid "Altitude"
+msgstr "Laiuskraad"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -4707,6 +4707,14 @@ msgstr "Kustuta punkt"
 # 
 # 
 #, fuzzy
+msgid "Special Position Report"
+msgstr "Viimane raport aeg:"
+#
+# 
+# 
+# 
+# 
+#, fuzzy
 msgid "Speed"
 msgstr "Plaanitud kiirus"
 #
@@ -6100,6 +6108,14 @@ msgstr ""
 # 
 #~ msgid "  Could not open serial port '"
 #~ msgstr "Ei suuda avada seeria porti"
+#
+#
+# 
+# 
+# 
+# 
+#~ msgid " is %5g"
+#~ msgstr " on %5g"
 #
 #
 #

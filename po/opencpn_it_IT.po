@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Marco Certelli <marco_certelli@yahoo.it>\n"
 "Language-Team: \n"
@@ -292,14 +292,6 @@ msgstr " Aggiornata al: "
 #
 msgid " for details."
 msgstr ""
-#
-#
-#
-#
-#
-#, c-format
-msgid " is %5g"
-msgstr " è %5g"
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -885,6 +877,14 @@ msgstr "Tutte le Carte"
 #, fuzzy
 msgid "All Charts"
 msgstr "Carte"
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Altitude"
+msgstr "Latitudine"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -4589,6 +4589,14 @@ msgstr "Segnale Speciale"
 #
 #
 #, fuzzy
+msgid "Special Position Report"
+msgstr "Report Posizione DSC "
+#
+#
+#
+#
+#
+#, fuzzy
 msgid "Speed"
 msgstr "Velocità pianificata"
 #
@@ -5903,6 +5911,14 @@ msgstr ""
 #
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 °"
+#
+#
+#
+#
+#
+#
+#~ msgid " is %5g"
+#~ msgstr " è %5g"
 #
 #
 #

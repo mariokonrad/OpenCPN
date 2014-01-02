@@ -1228,9 +1228,13 @@ double s57chart::GetNormalScaleMax(double, int) const
 
 static int roundint(double x)
 {
+#ifdef __WXOSX__
+	return (int)round(x); // FS#1278
+#else
 	int tmp = static_cast<int>(x);
 	tmp += (x - tmp >= 0.5) - (x - tmp <= -0.5);
 	return tmp;
+#endif
 }
 
 void s57chart::GetPointPix(ObjRazRules*, float north, float east, wxPoint* r)

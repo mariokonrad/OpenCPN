@@ -1764,6 +1764,9 @@ int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp,
 				// Now factor in the users selected font size.
 				fontSize += templateFont->GetPointSize() - 12;
 
+				// In no case should font size be less than 10, since it becomes unreadable
+				fontSize = wxMax(10, fontSize);
+
 				text->pFont = wxTheFontList->FindOrCreateFont(fontSize, wxFONTFAMILY_SWISS,
 															  templateFont->GetStyle(), fontweight,
 															  false, templateFont->GetFaceName());
@@ -6135,9 +6138,13 @@ void s52plib::AdjustTextList(int dx, int dy, int screenw, int screenh)
 
 static int roundint(double x) // FIXME: code duplication, see S57Chart.cpp
 {
+#ifdef __WXOSX__
+	return (int)round(x); // FS#1278
+#else
 	int tmp = static_cast<int>(x);
 	tmp += (x - tmp >= 0.5) - (x - tmp <= -0.5);
 	return tmp;
+#endif
 }
 
 bool s52plib::GetPointPixArray(ObjRazRules* rzRules, wxPoint2DDouble* pd, wxPoint* pp, int nv,

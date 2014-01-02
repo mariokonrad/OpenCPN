@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn 2.4.423\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 18:19-0500\n"
+"POT-Creation-Date: 2014-01-01 19:13-0500\n"
 "PO-Revision-Date: 2011-10-06 15:29+0100\n"
 "Last-Translator: Kaptan <khanyux@gmail.com>\n"
 "Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
@@ -208,11 +208,6 @@ msgstr " Actualizado:  "
 #
 msgid " for details."
 msgstr ""
-#
-# 
-#, c-format
-msgid " is %5g"
-msgstr "é %5g"
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -669,6 +664,11 @@ msgstr "Activar Directorio de Cartas"
 #, fuzzy
 msgid "All Charts"
 msgstr "Cartas"
+#
+# 
+#, fuzzy
+msgid "Altitude"
+msgstr "Latitude"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -3399,6 +3399,11 @@ msgstr "Marca especial"
 #
 # 
 #, fuzzy
+msgid "Special Position Report"
+msgstr "Hora último Informe:"
+#
+# 
+#, fuzzy
 msgid "Speed"
 msgstr "Velocidade Estimada"
 #
@@ -4463,6 +4468,11 @@ msgstr ""
 # 
 #~ msgid "  Could not open serial port '"
 #~ msgstr "   Non se puido abrir o porto serie '"
+#
+#
+# 
+#~ msgid " is %5g"
+#~ msgstr "é %5g"
 #
 #
 #

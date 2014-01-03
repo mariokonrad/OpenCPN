@@ -46,6 +46,7 @@
 
 extern wxString gExe_path;
 extern bool g_b_useStencil;
+extern PlugInManager* g_pi_manager;
 
 #ifdef USE_S57
 extern chart::s52plib* ps52plib;
@@ -410,6 +411,20 @@ wxString *GetpPlugInLocation() // FIXME: please, in the future, try to omit such
 	static wxString plugin_dir;
 	plugin_dir = global::OCPN::get().sys().data().plugin_dir;
 	return &plugin_dir;
+}
+
+wxString GetPlugInPath(opencpn_plugin* pplugin)
+{
+	wxString ret_val;
+	ArrayOfPlugIns* pi_array = g_pi_manager->GetPlugInArray();
+	for (unsigned int i = 0; i < pi_array->GetCount(); i++) {
+		PlugInContainer* pic = pi_array->Item(i);
+		if (pic->m_pplugin == pplugin) {
+			ret_val = pic->m_plugin_file;
+			break;
+		}
+	}
+	return ret_val;
 }
 
 //      API 1.11 Access to Vector PlugIn charts

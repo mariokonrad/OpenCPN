@@ -48,7 +48,8 @@ wxString str_version_major = wxString::Format(wxT("%i"),VERSION_MAJOR);
 wxString str_version_minor = wxString::Format(wxT("%i"),VERSION_MINOR);
 wxString str_version_patch = wxString::Format(wxT("%i"),VERSION_PATCH);
 wxString str_version_date(VERSION_DATE, wxConvUTF8);
-wxString OpenCPNVersion = str_version_start + str_version_major + wxT(".") + str_version_minor + wxT(".") + str_version_patch + wxT(" Build ") + str_version_date;
+wxString OpenCPNVersion = str_version_start + str_version_major + wxT(".") + str_version_minor
+						  + wxT(".") + str_version_patch + wxT(" Build ") + str_version_date;
 
 extern ocpnStyle::StyleManager * g_StyleManager;
 
@@ -207,6 +208,8 @@ void AboutDialog::Update()
 	wxString *pAboutString = new wxString( AboutText, wxConvUTF8 );
 
 	pAboutString->Append( OpenCPNVersion );
+	pAboutString->Append(
+		wxString::Format(wxT("\n\n(git: %s / %s)\n"), wxT(GIT_BRANCH), wxT(GIT_COMMIT_HASH)));
 	pAboutString->Append( wxString( OpenCPNInfo, wxConvUTF8 ) );
 
 	pAboutTextCtl->WriteText( *pAboutString );

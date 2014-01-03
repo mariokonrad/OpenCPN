@@ -1162,7 +1162,7 @@ ChartTableEntry& ChartDatabase::GetWritableChartTableEntry(int index)
 
 bool ChartDatabase::RemoveSingleChart(wxString& ChartFullPath)
 {
-	int rv = false;
+	bool rv = false;
 
 	//  Walk the chart table, looking for the target
 	for (unsigned int i = 0; i < chartTable.GetCount(); i++) {

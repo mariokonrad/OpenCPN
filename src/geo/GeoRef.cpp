@@ -814,22 +814,7 @@ void ll_gc_ll(double lat, double lon, double brg, double dist, double* dlat, dou
 void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2, double* bearing,
 					  double* dist)
 {
-	double th1;
-	double costh1;
-	double sinth1;
-	double sina12;
-	double cosa12;
-	double M;
-	double N;
-	double c1;
-	double c2;
-	double D;
-	double P;
-	double s1;
-	int merid;
-	int signS;
-
-	//   Input/Output from geodesic functions
+	// Input/Output from geodesic functions
 	double al12; // Forward azimuth
 	double al21; // Back azimuth
 	double geod_S; // Distance
@@ -969,21 +954,6 @@ void PositionBearingDistanceMercator(double lat, double lon, double brg, double 
 // calculates the distance along a geodesic curve, using elliptic earth model.
 double DistGreatCircle(double slat, double slon, double dlat, double dlon)
 {
-	double th1;
-	double costh1;
-	double sinth1;
-	double sina12;
-	double cosa12;
-	double M;
-	double N;
-	double c1;
-	double c2;
-	double D;
-	double P;
-	double s1;
-	int merid;
-	int signS;
-
 	// Input/Output from geodesic functions
 	double al12; // Forward azimuth
 	double al21; // Back azimuth

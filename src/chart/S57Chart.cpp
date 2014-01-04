@@ -171,7 +171,7 @@ S57Obj::~S57Obj()
 	}
 }
 
-S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
+S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 {
 	att_array = NULL;
 	attVal = NULL;
@@ -221,7 +221,7 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 
 	strcpy(buf, first_line);
 
-	//    while(!dun)
+	// while(!dun)
 	{
 		if (!strncmp(buf, "OGRF", 4)) {
 			attVal = new wxArrayOfS57attVal();
@@ -274,8 +274,8 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 				} else if (!strncmp(buf, geoMatch, 6)) {
 					attdun = 1;
 					break;
-				} else if (!strncmp(buf, "  MULT", 6)) // Special multipoint
-				{
+				} else if (!strncmp(buf, "  MULT", 6)) {
+					// Special multipoint
 					bMulti = true;
 					attdun = 1;
 					break;
@@ -335,7 +335,7 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 						pattValTmp->valType = OGR_INT;
 						pattValTmp->value = pAVI;
 
-						//      Capture SCAMIN on the fly during load
+						// Capture SCAMIN on the fly during load
 						if (!strcmp(szAtt, "SCAMIN"))
 							Scamin = AValInt;
 					} else if (buf[10] == 'S') {
@@ -347,7 +347,6 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 						int nlen = strlen(br);
 						br[nlen - 1] = 0; // dump the NL char
 						char* pAVS = (char*)malloc(nlen + 1);
-						;
 						strcpy(pAVS, br);
 
 						pattValTmp->valType = OGR_STR;
@@ -479,7 +478,7 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 							*pdd++ = northing;
 							*pdd++ = depth;
 #endif
-							//  Convert point from SM to lat/lon for later use in decomposed bboxes
+							// Convert point from SM to lat/lon for later use in decomposed bboxes
 							double xll, yll;
 							geo::fromSM(easting, northing, point_ref_lat, point_ref_lon, &yll,
 										&xll);
@@ -658,7 +657,7 @@ S57Obj::S57Obj(char * first_line, wxInputStream * pfpx, double, double)
 							m_lsindex_array = (int*)malloc(3 * m_n_lsindex * sizeof(int));
 							pfpx->Read(m_lsindex_array, 3 * m_n_lsindex * sizeof(int));
 							m_n_edge_max_points = 0; // TODO this could be precalulated and added to
-													 // next SENC format
+							// next SENC format
 
 							my_fgets(buf, MAX_LINE, *pfpx); // this should be \n
 						}
@@ -722,7 +721,7 @@ VC_Hash& s57chart::Get_vc_hash(void)
 
 bool s57chart::IsCacheValid()
 {
-	return (pDIB != NULL);
+	return pDIB != NULL;
 }
 
 char s57chart::GetUsageChar(void)
@@ -1853,8 +1852,7 @@ bool s57chart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 	if (m_plib_state_hash != ps52plib->GetStateHash()) {
 		m_bLinePrioritySet = false; // need to reset line priorities
 		UpdateLUPs(this); // and update the LUPs
-		ClearRenderedTextCache(); // and reset the text renderer,
-		// for the case where depth(height) units change
+		ClearRenderedTextCache(); // and reset the text renderer, for the case where depth(height) units change
 		ResetPointBBoxes(m_last_vp, VPoint);
 	}
 
@@ -2160,10 +2158,6 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 
 int s57chart::DCRenderRect(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect)
 {
-	int i;
-	ObjRazRules* top;
-	ObjRazRules* crnt;
-
 	wxASSERT(rect);
 	ViewPort tvp = vp; // undo const  TODO fix this in PLIB
 
@@ -2216,14 +2210,15 @@ int s57chart::DCRenderRect(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 	}
 
 	// Render the areas quickly
-	for (i = 0; i < PRIO_NUM; ++i) {
+	for (int i = 0; i < PRIO_NUM; ++i) {
+		ObjRazRules* top = NULL;
 		if (ps52plib->m_nBoundaryStyle == SYMBOLIZED_BOUNDARIES)
 			top = razRules[i][4]; // Area Symbolized Boundaries
 		else
 			top = razRules[i][3]; // Area Plain Boundaries
 
 		while (top != NULL) {
-			crnt = top;
+			ObjRazRules* crnt = top;
 			top = top->next; // next object
 			ps52plib->RenderAreaToDC(&dcinput, crnt, tvp, &pb_spec);
 		}
@@ -2263,23 +2258,21 @@ int s57chart::DCRenderRect(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 	return 1;
 }
 
-bool s57chart::DCRenderLPB(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect)
+bool s57chart::DCRenderLPB(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* WXUNUSED(rect))
 {
-	int i;
-	ObjRazRules* top;
-	ObjRazRules* crnt;
 	ViewPort tvp = vp; // FIXME: undo const  TODO fix this in PLIB
 
-	for (i = 0; i < PRIO_NUM; ++i) {
+	for (int i = 0; i < PRIO_NUM; ++i) {
 		// Set up a Clipper for Lines
 		wxDCClipper* pdcc = NULL;
 
+		ObjRazRules* top = NULL;
 		if (ps52plib->m_nBoundaryStyle == SYMBOLIZED_BOUNDARIES)
 			top = razRules[i][4]; // Area Symbolized Boundaries
 		else
 			top = razRules[i][3]; // Area Plain Boundaries
 		while (top != NULL) {
-			crnt = top;
+			ObjRazRules* crnt = top;
 			top = top->next; // next object
 			ps52plib->RenderObjectToDC(&dcinput, crnt, tvp);
 		}
@@ -2297,7 +2290,7 @@ bool s57chart::DCRenderLPB(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 			top = razRules[i][1]; // Paper Chart Points Points
 
 		while (top != NULL) {
-			crnt = top;
+			ObjRazRules* crnt = top;
 			top = top->next;
 			ps52plib->RenderObjectToDC(&dcinput, crnt, tvp);
 		}
@@ -4190,7 +4183,6 @@ int s57chart::BuildRAZFromSENCFile(const wxString& FullPath)
 
 // Local version of fgets for Binary Mode (SENC) file
 int s57chart::my_fgets(char* buf, int buf_len_max, wxInputStream& ifs)
-
 {
 	char chNext;
 	int nLineLen = 0;
@@ -4303,16 +4295,11 @@ int s57chart::_insertRules(S57Obj* obj, LUPrec* LUP, s57chart* pOwner)
 
 void s57chart::ResetPointBBoxes(const ViewPort& vp_last, const ViewPort& vp_this)
 {
-	ObjRazRules* top;
-	ObjRazRules* nxx;
-
-	double box_margin = 0.25;
-
 	// Assume a 50x50 pixel box
-	box_margin = (50. / vp_this.view_scale_ppm) / (1852. * 60.); // degrees
+	double box_margin = (50.0 / vp_this.view_scale_ppm) / (1852.0 * 60.0); // degrees
 
 	for (int i = 0; i < PRIO_NUM; ++i) {
-		top = razRules[i][0];
+		ObjRazRules* top = razRules[i][0];
 
 		while (top != NULL) {
 			if (!top->obj->geoPtMulti) {
@@ -4322,8 +4309,7 @@ void s57chart::ResetPointBBoxes(const ViewPort& vp_last, const ViewPort& vp_this
 				top->obj->BBObj.SetMax(top->obj->m_lon + box_margin, top->obj->m_lat + box_margin);
 			}
 
-			nxx = top->next;
-			top = nxx;
+			top = top->next;
 		}
 
 		top = razRules[i][1];
@@ -4336,8 +4322,7 @@ void s57chart::ResetPointBBoxes(const ViewPort& vp_last, const ViewPort& vp_this
 				top->obj->BBObj.SetMax(top->obj->m_lon + box_margin, top->obj->m_lat + box_margin);
 			}
 
-			nxx = top->next;
-			top = nxx;
+			top = top->next;
 		}
 	}
 }

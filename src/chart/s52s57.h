@@ -53,38 +53,38 @@ class S57Obj;
 // name of the addressed look up table set (fifth letter)
 enum LUPname
 {
-	SIMPLIFIED                             = 'L', // points
-	PAPER_CHART                            = 'R', // points
-	LINES                                  = 'S', // lines
-	PLAIN_BOUNDARIES                       = 'N', // areas
-	SYMBOLIZED_BOUNDARIES                  = 'O', // areas
-	LUPNAME_NUM                            = 5
+	SIMPLIFIED            = 'L', // points
+	PAPER_CHART           = 'R', // points
+	LINES                 = 'S', // lines
+	PLAIN_BOUNDARIES      = 'N', // areas
+	SYMBOLIZED_BOUNDARIES = 'O', // areas
+	LUPNAME_NUM           = 5
 };
 
 // Addressed Object Type
 enum Object_t
 {
-	POINT_T  = 'P',
-	LINES_T  = 'L',
-	AREAS_T  = 'A',
-	OBJ_NUM  = 3         // number of object type
+	POINT_T = 'P',
+	LINES_T = 'L',
+	AREAS_T = 'A',
+	OBJ_NUM = 3         // number of object type
 };
 
 
 // Display Priority
 enum DisPrio
 {
-	PRIO_NODATA          = '0',                  // no data fill area pattern
-	PRIO_GROUP1          = '1',                  // S57 group 1 filled areas
-	PRIO_AREA_1          = '2',                  // superimposed areas
-	PRIO_AREA_2          = '3',                  // superimposed areas also water features
-	PRIO_SYMB_POINT      = '4',                  // point symbol also land features
-	PRIO_SYMB_LINE       = '5',                  // line symbol also restricted areas
-	PRIO_SYMB_AREA       = '6',                  // area symbol also traffic areas
-	PRIO_ROUTEING        = '7',                  // routeing lines
-	PRIO_HAZARDS         = '8',                  // hazards
-	PRIO_MARINERS        = '9',                  // VRM, EBL, own ship
-	PRIO_NUM             = 10                    // number of priority levels
+	PRIO_NODATA     = '0',                  // no data fill area pattern
+	PRIO_GROUP1     = '1',                  // S57 group 1 filled areas
+	PRIO_AREA_1     = '2',                  // superimposed areas
+	PRIO_AREA_2     = '3',                  // superimposed areas also water features
+	PRIO_SYMB_POINT = '4',                  // point symbol also land features
+	PRIO_SYMB_LINE  = '5',                  // line symbol also restricted areas
+	PRIO_SYMB_AREA  = '6',                  // area symbol also traffic areas
+	PRIO_ROUTEING   = '7',                  // routeing lines
+	PRIO_HAZARDS    = '8',                  // hazards
+	PRIO_MARINERS   = '9',                  // VRM, EBL, own ship
+	PRIO_NUM        = 10                    // number of priority levels
 };
 
 // RADAR Priority
@@ -120,17 +120,17 @@ enum DisCat
 
 enum Rules_t
 {
-	RUL_NONE,                        // no rule type (init)
-	RUL_TXT_TX,                      // TX
-	RUL_TXT_TE,                      // TE
-	RUL_SYM_PT,                      // SY
-	RUL_SIM_LN,                      // LS
-	RUL_COM_LN,                      // LC
-	RUL_ARE_CO,                      // AC
-	RUL_ARE_PA,                      // AP
-	RUL_CND_SY,                      // CS
-	RUL_MUL_SG,                      // Multipoint Sounding
-	RUL_ARC_2C                       // Circular Arc, used for sector lights, opencpn private
+	RUL_NONE,   // no rule type (init)
+	RUL_TXT_TX, // TX
+	RUL_TXT_TE, // TE
+	RUL_SYM_PT, // SY
+	RUL_SIM_LN, // LS
+	RUL_COM_LN, // LC
+	RUL_ARE_CO, // AC
+	RUL_ARE_PA, // AP
+	RUL_CND_SY, // CS
+	RUL_MUL_SG, // Multipoint Sounding
+	RUL_ARC_2C  // Circular Arc, used for sector lights, opencpn private
 };
 
 //-- SYMBOLISATION MODULE STRUCTURE -----------------------------
@@ -177,12 +177,12 @@ struct Rule
 struct Rules
 {
 	Rules_t ruleType;
-	char * INSTstr; // Symbology Instruction string
-	Rule * razRule; // rule
-	char * INST0; // Head of the entire object Instruction string
+	char* INSTstr; // Symbology Instruction string
+	Rule* razRule; // rule
+	char* INST0; // Head of the entire object Instruction string
 	int n_sequence; // sequence number in list, used to identify a particular rule
 	bool b_private_razRule; // marker indicating that razRule should be free'd on Rules destroy
-	struct Rules * next;
+	struct Rules* next;
 };
 
 
@@ -190,68 +190,69 @@ struct Rules
 
 class LUPrec
 {
-	public:
-		int            RCID;             // record identifier
-		char           OBCL[7];          // Name (6 char) '\0' terminated
-		Object_t       FTYP;             // 'A' Area, 'L' Line, 'P' Point
-		DisPrio        DPRI;             // Display Priority
-		RadPrio        RPRI;             // 'O' or 'S', Radar Priority
-		LUPname        TNAM;             // FTYP:  areas, points, lines
-		wxArrayString *ATTCArray;        // ArrayString of LUP Attributes
-		wxString       *INST;            // Instruction Field (rules)
-		DisCat         DISC;             // Display Categorie: D/S/O, DisplayBase, Standard, Other
-		int            LUCM;             // Look-Up Comment (PLib3.x put 'groupes' here,
-		// hence 'int', but its a string in the specs)
-		int            nSequence;        // A sequence number, indicating order of encounter in
-		//  the PLIB file
-		Rules          *ruleList;        // rasterization rule list
+public:
+	int RCID; // record identifier
+	char OBCL[7]; // Name (6 char) '\0' terminated
+	Object_t FTYP; // 'A' Area, 'L' Line, 'P' Point
+	DisPrio DPRI; // Display Priority
+	RadPrio RPRI; // 'O' or 'S', Radar Priority
+	LUPname TNAM; // FTYP:  areas, points, lines
+	wxArrayString* ATTCArray; // ArrayString of LUP Attributes
+	wxString* INST; // Instruction Field (rules)
+	DisCat DISC; // Display Categorie: D/S/O, DisplayBase, Standard, Other
+	int LUCM; // Look-Up Comment (PLib3.x put 'groupes' here, hence 'int', but its a string in the specs)
+	int nSequence; // A sequence number, indicating order of encounter in the PLIB file
+	Rules* ruleList; // rasterization rule list
 };
 
 // Conditional Symbology
 struct Cond
 {
-	const char *name;
-	void *(*condInst)(void *param);
+	const char* name;
+	void* (*condInst)(void* param);
 };
 
 struct S52color
 {
 	char colName[20];
-	unsigned char  R;
-	unsigned char  G;
-	unsigned char  B;
+	unsigned char R;
+	unsigned char G;
+	unsigned char B;
 };
 
 class S52_TextC
 {
-	public:
-		S52_TextC()
-		{ pcol = NULL, pFont = NULL, m_pRGBA = NULL; }
+public:
+	S52_TextC()
+	{
+		pcol = NULL, pFont = NULL, m_pRGBA = NULL;
+	}
 
-		~S52_TextC()
-		{ free(m_pRGBA); }
+	~S52_TextC()
+	{
+		free(m_pRGBA);
+	}
 
-		wxString   frmtd;       // formated text string
-		char       hjust;
-		char       vjust;
-		char       space;
-		char       style;       // CHARS
-		char       weight;      // CHARS
-		char       width;       // CHARS
-		int        bsize;       // CHARS -body size
-		int        xoffs;       // text offsets, in units of bsize
-		int        yoffs;       //
-		S52color   *pcol;       // pointer to S52colour
-		int        dis;         // display
-		wxFont     *pFont;
-		int        rul_seq_creator;  // sequence number of the Rule creating this object
-		unsigned char *m_pRGBA;
-		int           RGBA_width;
-		int           RGBA_height;
-		int           rendered_char_height;
-		wxRect      rText;          // rectangle of the text as currently rendered, used for declutter
+	wxString frmtd; // formated text string
+	char hjust;
+	char vjust;
+	char space;
+	char style; // CHARS
+	char weight; // CHARS
+	char width; // CHARS
+	int bsize; // CHARS -body size
+	int xoffs; // text offsets, in units of bsize
+	int yoffs; //
+	S52color* pcol; // pointer to S52colour
+	int dis; // display
+	wxFont* pFont;
+	int rul_seq_creator; // sequence number of the Rule creating this object
+	unsigned char* m_pRGBA;
+	int RGBA_width;
+	int RGBA_height;
+	int rendered_char_height;
+	wxRect rText; // rectangle of the text as currently rendered, used for declutter
 };
-
 
 WX_DECLARE_STRING_HASH_MAP(wxColour, wxColorHashMap);
 WX_DECLARE_STRING_HASH_MAP(S52color, colorHashMap);
@@ -260,7 +261,7 @@ struct colTable
 {
 	wxString tableName;
 	wxString rasterFileName;
-	wxArrayPtrVoid * color;
+	wxArrayPtrVoid* color;
 	colorHashMap colors;
 	wxColorHashMap wxColors;
 };
@@ -308,133 +309,127 @@ struct pt // FIXME: who the hell names types like this?
 	double y;
 };
 
-typedef struct _chart_context{
-    void                    *m_pvc_hash;
-    void                    *m_pve_hash;
-    double                  ref_lat;
-    double                  ref_lon;
-    wxArrayPtrVoid          *pFloatingATONArray;
-    wxArrayPtrVoid          *pRigidATONArray;
-    s57chart                *chart;
-}chart_context;
+struct chart_context
+{
+	void* m_pvc_hash;
+	void* m_pve_hash;
+	double ref_lat;
+	double ref_lon;
+	wxArrayPtrVoid* pFloatingATONArray;
+	wxArrayPtrVoid* pRigidATONArray;
+	s57chart* chart;
+};
 
 class S57Obj
 {
-	public:
-		S57Obj();
-		~S57Obj();
-		S57Obj(char *first_line, wxInputStream *fpx, double ref_lat, double ref_lon);
+public:
+	S57Obj();
+	~S57Obj();
+	S57Obj(char* first_line, wxInputStream* fpx, double ref_lat, double ref_lon);
 
-		wxString GetAttrValueAsString ( char *attr );
-		int GetAttributeIndex( const char *AttrSeek );
+	wxString GetAttrValueAsString(char* attr);
+	int GetAttributeIndex(const char* AttrSeek);
 
-	private:
-		bool IsUsefulAttribute(char *buf);
-		int my_fgets( char *buf, int buf_len_max, wxInputStream& ifs );
-		int my_bufgetl( char *ib_read, char *ib_end, char *buf, int buf_len_max );
+private:
+	bool IsUsefulAttribute(char* buf);
+	int my_fgets(char* buf, int buf_len_max, wxInputStream& ifs);
+	int my_bufgetl(char* ib_read, char* ib_end, char* buf, int buf_len_max);
 
-	public:
-		// Instance Data
-		char                    FeatureName[8];
-		GeoPrim_t               Primitive_type;
+public:
+	// Instance Data
+	char FeatureName[8];
+	GeoPrim_t Primitive_type;
 
-		char                    *att_array;
-		wxArrayOfS57attVal      *attVal;
-		int                     n_attr;
+	char* att_array;
+	wxArrayOfS57attVal* attVal;
+	int n_attr;
 
-		int                     iOBJL;
-		int                     Index;
+	int iOBJL;
+	int Index;
 
-		double                  x;                      // for POINT
-		double                  y;
-		double                  z;
-		int                     npt;                    // number of points as needed by arrays
-		pt                      *geoPt;                 // for LINE & AREA not described by PolyTessGeo
-		double                  *geoPtz;                // an array[3] for MultiPoint, SM with Z, i.e. depth
-		double                  *geoPtMulti;            // an array[2] for MultiPoint, lat/lon to make bbox
-		// of decomposed points
-		::geo::PolyTessGeo             *pPolyTessGeo;
-		::geo::PolyTessGeoTrap         *pPolyTrapGeo;
+	double x; // for POINT
+	double y;
+	double z;
+	int npt; // number of points as needed by arrays
+	pt* geoPt; // for LINE & AREA not described by PolyTessGeo
+	double* geoPtz; // an array[3] for MultiPoint, SM with Z, i.e. depth
+	double* geoPtMulti; // an array[2] for MultiPoint, lat/lon to make bbox of decomposed points
+	::geo::PolyTessGeo* pPolyTessGeo;
+	::geo::PolyTessGeoTrap* pPolyTrapGeo;
 
-		::geo::BoundingBox           BBObj;                  // lat/lon BBox of the rendered object
-		double                  m_lat;                  // The lat/lon of the object's "reference" point
-		double                  m_lon;
-		bool                    bBBObj_valid;           // set after the BBObj has been calculated once.
+	::geo::BoundingBox BBObj; // lat/lon BBox of the rendered object
+	double m_lat; // The lat/lon of the object's "reference" point
+	double m_lon;
+	bool bBBObj_valid; // set after the BBObj has been calculated once.
 
-		Rules                   *CSrules;               // per object conditional symbology
-		int                     bCS_Added;
+	Rules* CSrules; // per object conditional symbology
+	int bCS_Added;
 
-		S52_TextC                *FText;
-		int                     bFText_Added;
-		wxRect                  rText;
+	S52_TextC* FText;
+	int bFText_Added;
+	wxRect rText;
 
-		int                     Scamin;                 // SCAMIN attribute decoded during load
-		bool                    bIsClone;
-		int                     nRef;                   // Reference counter, to signal OK for deletion
-		bool                    bIsAton;                // This object is an aid-to-navigation
-		bool                    bIsAssociable;          // This object is DRGARE or DEPARE
+	int Scamin; // SCAMIN attribute decoded during load
+	bool bIsClone;
+	int nRef; // Reference counter, to signal OK for deletion
+	bool bIsAton; // This object is an aid-to-navigation
+	bool bIsAssociable; // This object is DRGARE or DEPARE
 
-		int                     m_n_lsindex;
-		int                     *m_lsindex_array;
-		int                     m_n_edge_max_points;
+	int m_n_lsindex;
+	int* m_lsindex_array;
+	int m_n_edge_max_points;
 
-		DisCat                  m_DisplayCat;
+	DisCat m_DisplayCat;
 
+	// This transform converts from object geometry
+	// to SM coordinates.
+	double x_rate; // These auxiliary transform coefficients are
+	double y_rate; // to be used in GetPointPix() and friends
+	double x_origin; // on a per-object basis if necessary
+	double y_origin;
 
-		// This transform converts from object geometry
-		// to SM coordinates.
-		double                  x_rate;                 // These auxiliary transform coefficients are
-		double                  y_rate;                 // to be used in GetPointPix() and friends
-		double                  x_origin;               // on a per-object basis if necessary
-		double                  y_origin;
-
-		chart_context
-			* m_chart_context; // per-chart constants, carried in each object for convenience
+	chart_context* m_chart_context; // per-chart constants, carried in each object for convenience
 };
 
-typedef struct _sm_parms{
-    double easting_vp_center;
-    double northing_vp_center;
-}sm_parms;
-
-
+struct sm_parms
+{
+	double easting_vp_center;
+	double northing_vp_center;
+};
 
 // object rasterization rules
 struct ObjRazRules
 {
-	LUPrec * LUP;
-	S57Obj * obj;
+	LUPrec* LUP;
+	S57Obj* obj;
 	sm_parms* sm_transform_parms;
-	struct ObjRazRules * child; // child list, used only for MultiPoint Soundings
-	struct ObjRazRules * next;
+	struct ObjRazRules* child; // child list, used only for MultiPoint Soundings
+	struct ObjRazRules* next;
 };
-
-
-
 
 //----------------------------------------------------------------------------------
 //          Used for s52 Fast Polygon Renderer
 //----------------------------------------------------------------------------------
 class render_canvas_parms
 {
-	public:
-		render_canvas_parms(void);
-		~render_canvas_parms(void);
+public:
+	render_canvas_parms(void);
+	~render_canvas_parms(void);
 
-		unsigned char * pix_buff;
-		int lclip;
-		int rclip;
-		int pb_pitch;
-		int x;
-		int y;
-		int width;
-		int height;
-		int w_pot;
-		int h_pot;
-		int depth;
-		bool b_stagger;
-		int OGL_tex_name;
-		bool b_revrgb;
+	unsigned char* pix_buff;
+	int lclip;
+	int rclip;
+	int pb_pitch;
+	int x;
+	int y;
+	int width;
+	int height;
+	int w_pot;
+	int h_pot;
+	int depth;
+	bool b_stagger;
+	int OGL_tex_name;
+	bool b_revrgb;
 };
 
 //----------------------------------------------------------------------------------

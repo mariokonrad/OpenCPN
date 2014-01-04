@@ -30,11 +30,11 @@ namespace chart {
 
 class S57Light
 {
-	public:
-		wxArrayString attributeNames;
-		wxArrayString attributeValues;
-		wxString position;
-		bool hasSectors;
+public:
+	wxArrayString attributeNames;
+	wxArrayString attributeValues;
+	wxString position;
+	bool hasSectors;
 };
 
 }

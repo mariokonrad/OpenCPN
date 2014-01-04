@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __REFPOINT__H__
-#define __REFPOINT__H__
+#ifndef __CHART__REFPOINT__H__
+#define __CHART__REFPOINT__H__
 
 namespace chart {
 

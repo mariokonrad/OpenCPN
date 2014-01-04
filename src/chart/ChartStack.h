@@ -21,33 +21,35 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHARTSTACK__H__
-#define __CHARTSTACK__H__
+#ifndef __CHART__CHARTSTACK__H__
+#define __CHART__CHARTSTACK__H__
 
 namespace chart {
 
 class ChartStack
 {
-	public:
-		enum { MAXSTACK = 100 };
+public:
+	enum {
+		MAXSTACK = 100
+	};
 
-	private:
-		int DBIndex[MAXSTACK];
+private:
+	int DBIndex[MAXSTACK];
 
-	public:
-		bool b_valid;
-		int nEntry;
-		int CurrentStackEntry;
+public:
+	bool b_valid;
+	int nEntry;
+	int CurrentStackEntry;
 
-	public:
-		ChartStack();
+public:
+	ChartStack();
 
-		int GetCurrentEntrydbIndex(void);
-		void SetCurrentEntryFromdbIndex(int current_db_index);
-		int GetDBIndex(int stack_index);
-		void SetDBIndex(int stack_index, int db_index);
-		bool DoesStackContaindbIndex(int db_index);
-		void AddChart(int db_add);
+	int GetCurrentEntrydbIndex(void);
+	void SetCurrentEntryFromdbIndex(int current_db_index);
+	int GetDBIndex(int stack_index);
+	void SetDBIndex(int stack_index, int db_index);
+	bool DoesStackContaindbIndex(int db_index);
+	void AddChart(int db_add);
 };
 
 }

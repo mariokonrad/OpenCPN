@@ -40,9 +40,9 @@ public:
 
 	cm93_dictionary* m_pcm93Dict;
 
-	//  Member variables used to record the calling of cm93chart::CreateHeaderDataFromCM93Cell()
-	//  for each available scale value.  This allows that routine to return quickly with no error
-	//  for all cells other than the first, at each scale....
+	// Member variables used to record the calling of cm93chart::CreateHeaderDataFromCM93Cell()
+	// for each available scale value.  This allows that routine to return quickly with no error
+	// for all cells other than the first, at each scale....
 
 	bool m_bfoundA;
 	bool m_bfoundB;

@@ -47,13 +47,14 @@
 #include <wx/regex.h>
 
 extern bool g_bDebugCM93; // FIXME
-extern CM93DSlide * pCM93DetailSlider; // FIXME
-extern MainFrame * gFrame; // FIXME: through constructor?
+extern CM93DSlide* pCM93DetailSlider; // FIXME
+extern MainFrame* gFrame; // FIXME: through constructor?
 
 namespace chart {
 
 // Answer the query: "Is there a cm93 cell at the specified scale which contains a given lat/lon?"
-static bool Is_CM93Cell_Present (const wxString &fileprefix, double lat, double lon, int scale_index ) // FIXME: should be part of the class
+static bool Is_CM93Cell_Present(const wxString& fileprefix, double lat, double lon,
+								int scale_index) // FIXME: should be part of the class
 {
 	int scale;
 	int dval;
@@ -73,34 +74,32 @@ static bool Is_CM93Cell_Present (const wxString &fileprefix, double lat, double 
 
 	int cellindex = Get_CM93_CellIndex(lat, lon, scale);
 
-	//    Create the file name
+	// Create the file name
 	wxString file;
 
 	int ilat = cellindex / 10000;
 	int ilon = cellindex % 10000;
 
-	int jlat = ( ( ( ilat - 30 ) / dval ) * dval ) + 30;        // normalize
-	int jlon = ( ilon / dval ) * dval;
+	int jlat = (((ilat - 30) / dval) * dval) + 30; // normalize
+	int jlon = (ilon / dval) * dval;
 
-	int ilatroot = ( ( ( ilat - 30 ) / 60 ) * 60 ) + 30;
-	int ilonroot = ( ilon / 60 ) * 60;
+	int ilatroot = (((ilat - 30) / 60) * 60) + 30;
+	int ilonroot = (ilon / 60) * 60;
 
 	wxString fileroot;
-	fileroot.Printf ( _T ( "%04d%04d/" ), ilatroot, ilonroot );
+	fileroot.Printf(_T("%04d%04d/"), ilatroot, ilonroot);
 
-
-	wxString sdir ( fileprefix );
+	wxString sdir(fileprefix);
 	sdir += fileroot;
 	sdir += scale_char;
 
 	wxString tfile;
-	tfile.Printf ( _T ( "?%03d%04d." ), jlat, jlon );
+	tfile.Printf(_T("?%03d%04d."), jlat, jlon);
 	tfile += scale_char;
 
-	//    Validate that the directory exists, adjusting case if necessary
-	if ( !::wxDirExists ( sdir ) )
-	{
-		wxString old_scalechar ( scale_char );
+	// Validate that the directory exists, adjusting case if necessary
+	if (!::wxDirExists(sdir)) {
+		wxString old_scalechar(scale_char);
 		wxString new_scalechar = old_scalechar.Lower();
 
 		sdir = fileprefix;
@@ -108,31 +107,28 @@ static bool Is_CM93Cell_Present (const wxString &fileprefix, double lat, double 
 		sdir += new_scalechar;
 	}
 
-
-	if ( ::wxDirExists ( sdir ) )
-	{
-		wxDir dir ( sdir );
+	if (::wxDirExists(sdir)) {
+		wxDir dir(sdir);
 
 		wxArrayString file_array;
-		int n_files = dir.GetAllFiles ( sdir, &file_array, tfile, wxDIR_FILES );
+		int n_files = dir.GetAllFiles(sdir, &file_array, tfile, wxDIR_FILES);
 
-		if ( n_files ) {
+		if (n_files) {
 			return true;
 		} else {
 			// Try with alternate case of m_scalechar
-			wxString old_scalechar ( scale_char );
+			wxString old_scalechar(scale_char);
 			wxString new_scalechar = old_scalechar.Lower();
 
 			wxString tfile1;
-			tfile1.Printf ( _T ( "?%03d%04d." ), jlat, jlon );
+			tfile1.Printf(_T ( "?%03d%04d." ), jlat, jlon);
 			tfile1 += new_scalechar;
 
-			int n_files1 = dir.GetAllFiles ( sdir, &file_array, tfile1, wxDIR_FILES );
+			int n_files1 = dir.GetAllFiles(sdir, &file_array, tfile1, wxDIR_FILES);
 
-			return ( n_files1 > 0 );
+			return (n_files1 > 0);
 		}
-	}
-	else
+	} else
 		return false;
 }
 
@@ -290,28 +286,27 @@ int cm93compchart::GetCMScaleFromVP ( const ViewPort &vpt )
 	double scale_mpp_adj = scale_mpp;
 	double scale_breaks_adj[7];
 
-	for ( int i=0 ; i < 7 ; i++ )
+	for (int i = 0; i < 7; i++)
 		scale_breaks_adj[i] = scale_breaks[i];
 
-	const global::GUI::CM93 & cm93 = global::OCPN::get().gui().cm93();
+	const global::GUI::CM93& cm93 = global::OCPN::get().gui().cm93();
 
 	// Completely intuitive exponential curve adjustment
 	if (cm93.zoom_factor) {
 		double efactor = cm93.zoom_factor * (0.176 / 7.0);
-		for (int i = 0 ; i < 7 ; ++i) {
+		for (int i = 0; i < 7; ++i) {
 			double efr = efactor * (7 - i);
 			scale_breaks_adj[i] = scale_breaks[i] * pow(10.0, efr);
 			if (g_bDebugCM93)
-				printf("cm93.zoom_factor: %2d  efactor: %6g efr:%6g, scale_breaks[i]:%6g  scale_breaks_adj[i]: %6g\n",
-					cm93.zoom_factor, efactor, efr, scale_breaks[i], scale_breaks_adj[i]);
+				printf("cm93.zoom_factor: %2d  efactor: %6g efr:%6g, scale_breaks[i]:%6g scale_breaks_adj[i]:%6g\n",
+					   cm93.zoom_factor, efactor, efr, scale_breaks[i], scale_breaks_adj[i]);
 		}
 	}
 
 	int cmscale_calc = 7;
 	int brk_index = 0;
-	while ( cmscale_calc > 0 )
-	{
-		if ( scale_mpp_adj < scale_breaks_adj[brk_index] )
+	while (cmscale_calc > 0) {
+		if (scale_mpp_adj < scale_breaks_adj[brk_index])
 			break;
 		cmscale_calc--;
 		brk_index++;
@@ -506,17 +501,15 @@ double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom) const
 //		}
 
 		// Find out what the smallest available scale is
-		int cmscale = 7;
-		while ( cmscale > 0 )
-		{
-			if ( scale_Array[cmscale] )
-				break;
-			cmscale--;
-		}
+			int cmscale = 7;
+			while (cmscale > 0) {
+				if (scale_Array[cmscale])
+					break;
+				cmscale--;
+			}
 
 		// And return a sensible minimum scale, allowing selected overzoom.
-		switch ( cmscale )
-		{
+			switch (cmscale) {
 			case  0: return 20000000.0 / oz_factor; // Z
 			case  1: return  3000000.0 / oz_factor; // A
 			case  2: return  1000000.0 / oz_factor; // B
@@ -596,223 +589,213 @@ bool cm93compchart::RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort&
 
 }
 
-bool cm93compchart::DoRenderRegionViewOnGL (const wxGLContext &glc, const ViewPort& VPoint, const OCPNRegion &Region )
+bool cm93compchart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
+										   const OCPNRegion& Region)
 {
-	if ( g_bDebugCM93 ) {
-		printf ( "\nOn DoRenderRegionViewOnGL Ref scale is %d, %c %g\n", m_cmscale, ( char ) ( 'A' + m_cmscale -1 ), VPoint.view_scale_ppm );
-		OCPNRegionIterator upd ( Region );
-		while ( upd.HaveRects() )
-		{
+	if (g_bDebugCM93) {
+		printf("\nOn DoRenderRegionViewOnGL Ref scale is %d, %c %g\n", m_cmscale,
+			   (char)('A' + m_cmscale - 1), VPoint.view_scale_ppm);
+		OCPNRegionIterator upd(Region);
+		while (upd.HaveRects()) {
 			wxRect rect = upd.GetRect();
-			rect.Offset ( -VPoint.rv_rect.x, -VPoint.rv_rect.y );
-			printf ( "   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height );
+			rect.Offset(-VPoint.rv_rect.x, -VPoint.rv_rect.y);
+			printf("   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height);
 			upd.NextRect();
 		}
 	}
-
 
 	ViewPort vp_positive = VPoint;
 	vp_positive.set_positive();
 
 	bool render_return = false;
-	if ( m_pcm93chart_current )
-	{
-		m_pcm93chart_current->SetVPParms ( vp_positive );
+	if (m_pcm93chart_current) {
+		m_pcm93chart_current->SetVPParms(vp_positive);
 
 		//    Check the current chart scale to see if it covers the requested region totally
-		if ( VPoint.b_quilt )
-		{
+		if (VPoint.b_quilt) {
 			OCPNRegion vpr_empty = Region;
 
-			OCPNRegion chart_region =  GetValidScreenCanvasRegion ( vp_positive, Region );
+			OCPNRegion chart_region = GetValidScreenCanvasRegion(vp_positive, Region);
 
-			if ( g_bDebugCM93 )
-			{
-				printf ( "On DoRenderRegionViewOnGL : Intersecting Ref region rectangles\n" );
-				OCPNRegionIterator upd ( chart_region );
-				while ( upd.HaveRects() )
-				{
+			if (g_bDebugCM93) {
+				printf("On DoRenderRegionViewOnGL : Intersecting Ref region rectangles\n");
+				OCPNRegionIterator upd(chart_region);
+				while (upd.HaveRects()) {
 					wxRect rect = upd.GetRect();
-					rect.Offset ( -VPoint.rv_rect.x, -VPoint.rv_rect.y );
-					printf ( "   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height );
+					rect.Offset(-VPoint.rv_rect.x, -VPoint.rv_rect.y);
+					printf("   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width,
+						   rect.height);
 					upd.NextRect();
 				}
 			}
 
-			if ( !chart_region.IsEmpty() )
-				vpr_empty.Subtract ( chart_region );
+			if (!chart_region.IsEmpty())
+				vpr_empty.Subtract(chart_region);
 
-			if ( g_bDebugCM93 )
-			{
-				printf ( "On DoRenderRegionViewOnGL : Region rectangles to fill with smaller scale\n" );
-				OCPNRegionIterator upd ( vpr_empty );
-				while ( upd.HaveRects() )
-				{
+			if (g_bDebugCM93) {
+				printf(
+					"On DoRenderRegionViewOnGL : Region rectangles to fill with smaller scale\n");
+				OCPNRegionIterator upd(vpr_empty);
+				while (upd.HaveRects()) {
 					wxRect rect = upd.GetRect();
-					rect.Offset ( -VPoint.rv_rect.x, -VPoint.rv_rect.y );
-					printf ( "   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height );
+					rect.Offset(-VPoint.rv_rect.x, -VPoint.rv_rect.y);
+					printf("   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width,
+						   rect.height);
 					upd.NextRect();
 				}
 			}
 
-
-			if ( !vpr_empty.Empty() && m_cmscale )        // This chart scale does not fully cover the region
-			{
+			if (!vpr_empty.Empty() && m_cmscale) {
+				// This chart scale does not fully cover the region
 				//    Save the current cm93 chart pointer for restoration later
-				cm93chart *m_pcm93chart_save = m_pcm93chart_current;
+				cm93chart* m_pcm93chart_save = m_pcm93chart_current;
 				int cmscale_save = m_cmscale;
 
 				int cmscale_next = m_cmscale;
 
 				//    Render smaller scale cells the entire requested region is full
-				while ( !vpr_empty.Empty() && cmscale_next )
-				{
+				while (!vpr_empty.Empty() && cmscale_next) {
 					//    get the next smaller scale chart
 					cmscale_next--;
-					m_cmscale = PrepareChartScale ( vp_positive, cmscale_next );
+					m_cmscale = PrepareChartScale(vp_positive, cmscale_next);
 
-					if ( m_pcm93chart_current )
-					{
-						if ( g_bDebugCM93 )
-							printf ( "  In DRRVOD,  add quilt patch at %d, %c\n", m_cmscale, ( char ) ( 'A' + m_cmscale -1 ) );
+					if (m_pcm93chart_current) {
+						if (g_bDebugCM93)
+							printf("  In DRRVOD,  add quilt patch at %d, %c\n", m_cmscale,
+								   (char)('A' + m_cmscale - 1));
 
-
-						OCPNRegion sscale_region = GetValidScreenCanvasRegion ( vp_positive, Region );
+						OCPNRegion sscale_region = GetValidScreenCanvasRegion(vp_positive, Region);
 
 						//    Only need to render that part of the vp that is not yet full
-						sscale_region.Intersect ( vpr_empty );
+						sscale_region.Intersect(vpr_empty);
 
-						if ( g_bDebugCM93 )
-						{
-							printf ( "On DoRenderRegionViewOnGL : sscale_region rectangles\n" );
-							OCPNRegionIterator upd ( sscale_region );
-							while ( upd.HaveRects() )
-							{
+						if (g_bDebugCM93) {
+							printf("On DoRenderRegionViewOnGL : sscale_region rectangles\n");
+							OCPNRegionIterator upd(sscale_region);
+							while (upd.HaveRects()) {
 								wxRect rect = upd.GetRect();
-								rect.Offset ( -VPoint.rv_rect.x, -VPoint.rv_rect.y );
-								printf ( "   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height );
-								upd.NextRect();;
+								rect.Offset(-VPoint.rv_rect.x, -VPoint.rv_rect.y);
+								printf("   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width,
+									   rect.height);
+								upd.NextRect();
+								;
 							}
 						}
 
-						render_return |= m_pcm93chart_current->RenderRegionViewOnGL ( glc, vp_positive, sscale_region );
+						render_return |= m_pcm93chart_current->RenderRegionViewOnGL(
+							glc, vp_positive, sscale_region);
 
 						//    Update the remaining empty region
-						if ( !sscale_region.IsEmpty() )
-							vpr_empty.Subtract ( sscale_region );
+						if (!sscale_region.IsEmpty())
+							vpr_empty.Subtract(sscale_region);
 					}
 
-				}     // while
+				} // while
 
 				// restore the base chart pointer
 				m_pcm93chart_current = m_pcm93chart_save;
 				m_cmscale = cmscale_save;
 
-				if ( g_bDebugCM93 )
-				{
-					printf ( "On DoRenderRegionViewOnGL : Final (chart_region) rectangles\n" );
-					OCPNRegionIterator upd ( chart_region );
-					while ( upd.HaveRects() )
-					{
+				if (g_bDebugCM93) {
+					printf("On DoRenderRegionViewOnGL : Final (chart_region) rectangles\n");
+					OCPNRegionIterator upd(chart_region);
+					while (upd.HaveRects()) {
 						wxRect rect = upd.GetRect();
-						rect.Offset ( -VPoint.rv_rect.x, -VPoint.rv_rect.y );
-						printf ( "   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height );
+						rect.Offset(-VPoint.rv_rect.x, -VPoint.rv_rect.y);
+						printf("   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width,
+							   rect.height);
 						upd.NextRect();
 					}
 				}
 
 				//    Finally, render the target scale chart
-				if ( !chart_region.IsEmpty() )
-					render_return |= m_pcm93chart_current->RenderRegionViewOnGL ( glc, vp_positive, chart_region );
+				if (!chart_region.IsEmpty())
+					render_return |= m_pcm93chart_current->RenderRegionViewOnGL(glc, vp_positive,
+																				chart_region);
 
-			}
-			else
-				render_return = m_pcm93chart_current->RenderRegionViewOnGL ( glc, vp_positive, chart_region );
+			} else
+				render_return
+					= m_pcm93chart_current->RenderRegionViewOnGL(glc, vp_positive, chart_region);
 
 			m_Name = m_pcm93chart_current->GetName();
 
-		}
-		else  // Single chart mode
+		} else // Single chart mode
 		{
-			render_return = m_pcm93chart_current->RenderRegionViewOnGL ( glc, vp_positive, Region );
+			render_return = m_pcm93chart_current->RenderRegionViewOnGL(glc, vp_positive, Region);
 			m_Name = m_pcm93chart_current->GetLastFileName();
 		}
 	}
 
-
-
 	//    Render the cm93 cell's M_COVR outlines if called for
-	if ( m_cell_index_special_outline )
-	{
+	if (m_cell_index_special_outline) {
 		ocpnDC dc;
-		covr_set *pcover = m_pcm93chart_current->GetCoverSet();
+		covr_set* pcover = m_pcm93chart_current->GetCoverSet();
 
-		for ( unsigned int im=0 ; im < pcover->GetCoverCount() ; im++ )
-		{
-			M_COVR_Desc *pmcd = pcover->GetCover ( im );
-			if ( ( pmcd->m_cell_index == m_cell_index_special_outline ) &&
-					( pmcd->m_object_id == m_object_id_special_outline ) &&
-					( pmcd->m_subcell == m_subcell_special_outline ) )
-
-			{
+		for (unsigned int im = 0; im < pcover->GetCoverCount(); im++) {
+			M_COVR_Desc* pmcd = pcover->GetCover(im);
+			if ((pmcd->m_cell_index == m_cell_index_special_outline)
+				&& (pmcd->m_object_id == m_object_id_special_outline)
+				&& (pmcd->m_subcell == m_subcell_special_outline)) {
 				//    Draw this MCD's represented outline
 
 				//    Case:  vpBBox is completely inside the mcd box
-				//                        if(!(_OUT == vp_positive.vpBBox.Intersect(pmcd->m_covr_bbox)) || !(_OUT == vp.vpBBox.Intersect(pmcd->m_covr_bbox)))
+				//                        if(!(_OUT ==
+				// vp_positive.vpBBox.Intersect(pmcd->m_covr_bbox)) || !(_OUT ==
+				// vp.vpBBox.Intersect(pmcd->m_covr_bbox)))
 				{
 
-					geo::float_2Dpt *p = pmcd->pvertices;
-					wxPoint *pwp = m_pcm93chart_current->GetDrawBuffer ( pmcd->m_nvertices );
+					geo::float_2Dpt* p = pmcd->pvertices;
+					wxPoint* pwp = m_pcm93chart_current->GetDrawBuffer(pmcd->m_nvertices);
 
-					for ( int ip = 0 ; ip < pmcd->m_nvertices ; ip++ )
-					{
+					for (int ip = 0; ip < pmcd->m_nvertices; ip++) {
 
 						double plon = p->x;
-						if ( fabs ( plon - VPoint.longitude()) > 180.0)
-						{
-							if ( plon > VPoint.longitude())
+						if (fabs(plon - VPoint.longitude()) > 180.0) {
+							if (plon > VPoint.longitude())
 								plon -= 360.0;
 							else
 								plon += 360.0;
 						}
 
-
 						double easting, northing, epix, npix;
-						geo::toSM(p->y, plon + 360., VPoint.latitude(), VPoint.longitude() + 360, &easting, &northing);
+						geo::toSM(p->y, plon + 360., VPoint.latitude(), VPoint.longitude() + 360,
+								  &easting, &northing);
 
 						//    Outlines stored in MCDs are not adjusted for offsets
 						easting -= pmcd->user_xoff;
 						northing -= pmcd->user_yoff;
 
-						epix = easting  * VPoint.view_scale_ppm;
+						epix = easting * VPoint.view_scale_ppm;
 						npix = northing * VPoint.view_scale_ppm;
 
-						pwp[ip].x = ( int ) round ( ( VPoint.pix_width  / 2 ) + epix );
-						pwp[ip].y = ( int ) round ( ( VPoint.pix_height / 2 ) - npix );
+						pwp[ip].x = (int)round((VPoint.pix_width / 2) + epix);
+						pwp[ip].y = (int)round((VPoint.pix_height / 2) - npix);
 
 						p++;
 					}
 
 					bool btest = true; // TODO: cleanup
 					if (btest) {
-						wxPen pen ( wxTheColourDatabase->Find ( _T ( "YELLOW" ) ), 3);
+						wxPen pen(wxTheColourDatabase->Find(_T ( "YELLOW" )), 3);
 						wxDash dash1[2];
 						dash1[0] = 4; // Long dash
 						dash1[1] = 4; // Short gap
 						pen.SetStyle(wxUSER_DASH);
-						pen.SetDashes( 2, dash1 );
+						pen.SetDashes(2, dash1);
 
-						dc.SetPen ( pen );
+						dc.SetPen(pen);
 
-						for (int iseg=0 ; iseg < pmcd->m_nvertices-1 ; iseg++) {
+						for (int iseg = 0; iseg < pmcd->m_nvertices - 1; iseg++) {
 							int x0 = pwp[iseg].x;
 							int y0 = pwp[iseg].y;
-							int x1 = pwp[iseg+1].x;
-							int y1 = pwp[iseg+1].y;
+							int x1 = pwp[iseg + 1].x;
+							int y1 = pwp[iseg + 1].y;
 
-							geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, 0, VPoint.pix_width, 0, VPoint.pix_height);
+							geo::ClipResult res = geo::cohen_sutherland_line_clip_i(
+								&x0, &y0, &x1, &y1, 0, VPoint.pix_width, 0, VPoint.pix_height);
 
-							if (res == geo::Invisible) // Do not bother with segments that are invisible
+							if (res
+								== geo::Invisible) // Do not bother with segments that are invisible
 								continue;
 
 							dc.DrawLine(x0, y0, x1, y1);
@@ -843,19 +826,17 @@ bool cm93compchart::RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint)
 	return DoRenderRegionViewOnDC(dc, VPoint, vpr);
 }
 
-int s_dc1; // FIXME
-
-bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion &Region )
+bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
+										   const OCPNRegion& Region)
 {
-	if ( g_bDebugCM93 )
-	{
-		printf ( "\nOn DoRenderRegionViewOnDC Ref scale is %d, %c\n", m_cmscale, ( char ) ( 'A' + m_cmscale -1 ) );
-		OCPNRegionIterator upd ( Region );
-		while ( upd.HaveRects() )
-		{
+	if (g_bDebugCM93) {
+		printf("\nOn DoRenderRegionViewOnDC Ref scale is %d, %c\n", m_cmscale,
+			   (char)('A' + m_cmscale - 1));
+		OCPNRegionIterator upd(Region);
+		while (upd.HaveRects()) {
 			wxRect rect = upd.GetRect();
-			printf ( "   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height );
-			upd.NextRect();;
+			printf("   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height);
+			upd.NextRect();
 		}
 	}
 
@@ -863,222 +844,204 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
 	vp_positive.set_positive();
 
 	bool render_return = false;
-	if ( m_pcm93chart_current )
-	{
-		m_pcm93chart_current->SetVPParms ( vp_positive );
+	if (m_pcm93chart_current) {
+		m_pcm93chart_current->SetVPParms(vp_positive);
 
 		// Check the current chart scale to see if it covers the requested region totally
-		if ( VPoint.b_quilt )
-		{
+		if (VPoint.b_quilt) {
 			OCPNRegion vpr_empty = Region;
 
-			OCPNRegion chart_region = GetValidScreenCanvasRegion ( vp_positive, Region );
+			OCPNRegion chart_region = GetValidScreenCanvasRegion(vp_positive, Region);
 
-			if ( g_bDebugCM93 )
-			{
-				printf ( "On DoRenderRegionViewOnDC : Intersecting Ref region rectangles\n" );
-				OCPNRegionIterator upd ( chart_region );
-				while ( upd.HaveRects() )
-				{
+			if (g_bDebugCM93) {
+				printf("On DoRenderRegionViewOnDC : Intersecting Ref region rectangles\n");
+				OCPNRegionIterator upd(chart_region);
+				while (upd.HaveRects()) {
 					wxRect rect = upd.GetRect();
-					printf ( "   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height );
+					printf("   Region Rect:  %d %d %d %d\n", rect.x, rect.y, rect.width,
+						   rect.height);
 					upd.NextRect();
 				}
 			}
 
-			if ( !chart_region.IsEmpty() )
-				vpr_empty.Subtract ( chart_region );
+			if (!chart_region.IsEmpty())
+				vpr_empty.Subtract(chart_region);
 
-
-			if ( !vpr_empty.Empty() && m_cmscale )        // This chart scale does not fully cover the region
+			if (!vpr_empty.Empty() && m_cmscale) // This chart scale does not fully cover the region
 			{
-				//    Render the target scale chart on a temp dc for safekeeping
+//    Render the target scale chart on a temp dc for safekeeping
 #ifdef ocpnUSE_DIBSECTION
 				OCPNMemDC temp_dc;
 #else
 				wxMemoryDC temp_dc;
 #endif
-				render_return = m_pcm93chart_current->RenderRegionViewOnDC ( temp_dc, vp_positive, chart_region );
+				render_return = m_pcm93chart_current->RenderRegionViewOnDC(temp_dc, vp_positive,
+																		   chart_region);
 
 				//    Save the current cm93 chart pointer for restoration later
-				cm93chart *m_pcm93chart_save = m_pcm93chart_current;
+				cm93chart* m_pcm93chart_save = m_pcm93chart_current;
 
 				//    Prepare a blank quilt bitmap to build up the quilt upon
-				//    We need to do this in order to avoid polluting any of the sub-chart cached bitmaps
-				if ( m_pDummyBM )
-				{
-					if ( ( m_pDummyBM->GetWidth() != VPoint.rv_rect.width ) || ( m_pDummyBM->GetHeight() != VPoint.rv_rect.height ) )
-					{
+				//    We need to do this in order to avoid polluting any of the sub-chart cached
+				// bitmaps
+				if (m_pDummyBM) {
+					if ((m_pDummyBM->GetWidth() != VPoint.rv_rect.width)
+						|| (m_pDummyBM->GetHeight() != VPoint.rv_rect.height)) {
 						delete m_pDummyBM;
 						m_pDummyBM = NULL;
 					}
 				}
-				if ( NULL == m_pDummyBM )
-					m_pDummyBM = new wxBitmap ( VPoint.rv_rect.width, VPoint.rv_rect.height,-1 );
+				if (NULL == m_pDummyBM)
+					m_pDummyBM = new wxBitmap(VPoint.rv_rect.width, VPoint.rv_rect.height, -1);
 
-				//    Clear the quilt
+//    Clear the quilt
 #ifdef ocpnUSE_DIBSECTION
 				OCPNMemDC dumm_dc;
 #else
 				wxMemoryDC dumm_dc;
 #endif
-				dumm_dc.SelectObject ( *m_pDummyBM );
-				dumm_dc.SetBackground ( *wxBLACK_BRUSH );
+				dumm_dc.SelectObject(*m_pDummyBM);
+				dumm_dc.SetBackground(*wxBLACK_BRUSH);
 				dumm_dc.Clear();
 
 				int cmscale_next = m_cmscale;
 
-				//    Render smaller scale cells onto a temporary DC, blitting the valid region onto the quilt dc until the region is full
-				while ( !vpr_empty.Empty() && cmscale_next )
-				{
+				//    Render smaller scale cells onto a temporary DC, blitting the valid region onto
+				// the quilt dc until the region is full
+				while (!vpr_empty.Empty() && cmscale_next) {
 					//    get the next smaller scale chart
 					cmscale_next--;
-					m_cmscale = PrepareChartScale ( vp_positive, cmscale_next );
+					m_cmscale = PrepareChartScale(vp_positive, cmscale_next);
 #ifdef ocpnUSE_DIBSECTION
 					OCPNMemDC build_dc;
 #else
 					wxMemoryDC build_dc;
 #endif
 
-					if ( m_pcm93chart_current )
-					{
-						if ( g_bDebugCM93 )
-							printf ( "  In DRRVOD,  add quilt patch at %d, %c\n", m_cmscale, ( char ) ( 'A' + m_cmscale -1 ) );
+					if (m_pcm93chart_current) {
+						if (g_bDebugCM93)
+							printf("  In DRRVOD,  add quilt patch at %d, %c\n", m_cmscale,
+								   (char)('A' + m_cmscale - 1));
 
-						m_pcm93chart_current->RenderRegionViewOnDC ( build_dc, vp_positive, Region );
+						m_pcm93chart_current->RenderRegionViewOnDC(build_dc, vp_positive, Region);
 
-						OCPNRegion sscale_region = GetValidScreenCanvasRegion ( vp_positive, Region );
+						OCPNRegion sscale_region = GetValidScreenCanvasRegion(vp_positive, Region);
 
 						//    Only need to render that part of the vp that is not yet full
-						sscale_region.Intersect ( vpr_empty );
+						sscale_region.Intersect(vpr_empty);
 
 						//    Blit the smaller scale chart patch onto the target DC
-						OCPNRegionIterator upd ( sscale_region );
-						while ( upd.HaveRects() )
-						{
+						OCPNRegionIterator upd(sscale_region);
+						while (upd.HaveRects()) {
 							wxRect rect = upd.GetRect();
-							dumm_dc.Blit ( rect.x, rect.y, rect.width, rect.height, &build_dc, rect.x, rect.y );
+							dumm_dc.Blit(rect.x, rect.y, rect.width, rect.height, &build_dc, rect.x,
+										 rect.y);
 							upd.NextRect();
 						}
-						build_dc.SelectObject ( wxNullBitmap );          // safely unmap the bmp
+						build_dc.SelectObject(wxNullBitmap); // safely unmap the bmp
 
 						//    Update the remaining empty region
-						if ( !sscale_region.IsEmpty() )
-							vpr_empty.Subtract ( sscale_region );
+						if (!sscale_region.IsEmpty())
+							vpr_empty.Subtract(sscale_region);
 					}
 
-				}     // while
+				} // while
 
 				//    Finally, Blit the target scale chart as saved on temp_dc to quilt dc
-				OCPNRegionIterator updt ( chart_region );
-				while ( updt.HaveRects() )
-				{
+				OCPNRegionIterator updt(chart_region);
+				while (updt.HaveRects()) {
 					wxRect rect = updt.GetRect();
-					dumm_dc.Blit ( rect.x, rect.y, rect.width, rect.height, &temp_dc, rect.x, rect.y );
+					dumm_dc.Blit(rect.x, rect.y, rect.width, rect.height, &temp_dc, rect.x, rect.y);
 					updt.NextRect();
 				}
-				temp_dc.SelectObject ( wxNullBitmap );          // safely unmap the base chart bmp
-
+				temp_dc.SelectObject(wxNullBitmap); // safely unmap the base chart bmp
 
 				// restore the base chart pointer
 				m_pcm93chart_current = m_pcm93chart_save;
 
 				//    And the return dc is the quilt
-				dc.SelectObject ( *m_pDummyBM );
+				dc.SelectObject(*m_pDummyBM);
 
 				render_return = true;
-			}
-			else {
-				m_pcm93chart_current->RenderRegionViewOnDC ( dc, vp_positive, Region );
+			} else {
+				m_pcm93chart_current->RenderRegionViewOnDC(dc, vp_positive, Region);
 				render_return = true;
 			}
 			m_Name = m_pcm93chart_current->GetName();
 
-		}
-		else  // Single chart mode
+		} else // Single chart mode
 		{
-			render_return = m_pcm93chart_current->RenderRegionViewOnDC ( dc, vp_positive, Region );
+			render_return = m_pcm93chart_current->RenderRegionViewOnDC(dc, vp_positive, Region);
 			m_Name = m_pcm93chart_current->GetLastFileName();
 		}
 
-	}
-	else
-	{
+	} else {
 		//    one must always return a valid bitmap selected into the specified DC
 		//    Since the CM93 cell is not available at this location, select a dummy placeholder
-		if ( m_pDummyBM )
-		{
-			if ( ( m_pDummyBM->GetWidth() != VPoint.pix_width ) || ( m_pDummyBM->GetHeight() != VPoint.pix_height ) )
-			{
+		if (m_pDummyBM) {
+			if ((m_pDummyBM->GetWidth() != VPoint.pix_width)
+				|| (m_pDummyBM->GetHeight() != VPoint.pix_height)) {
 				delete m_pDummyBM;
 				m_pDummyBM = NULL;
 			}
 		}
 
-		if ( NULL == m_pDummyBM )
-			m_pDummyBM = new wxBitmap ( VPoint.pix_width, VPoint.pix_height,-1 );
-
+		if (NULL == m_pDummyBM)
+			m_pDummyBM = new wxBitmap(VPoint.pix_width, VPoint.pix_height, -1);
 
 		// Clear the bitmap
 		wxMemoryDC mdc;
-		mdc.SelectObject ( *m_pDummyBM );
-		mdc.SetBackground ( *wxBLACK_BRUSH );
+		mdc.SelectObject(*m_pDummyBM);
+		mdc.SetBackground(*wxBLACK_BRUSH);
 		mdc.Clear();
-		mdc.SelectObject ( wxNullBitmap );
+		mdc.SelectObject(wxNullBitmap);
 
-
-		dc.SelectObject ( *m_pDummyBM );
+		dc.SelectObject(*m_pDummyBM);
 	}
 
-	//      CALLGRIND_STOP_INSTRUMENTATION
+	// Render the cm93 cell's M_COVR outlines if called for
+	if (m_cell_index_special_outline) {
+		covr_set* pcover = m_pcm93chart_current->GetCoverSet();
 
-	//    Render the cm93 cell's M_COVR outlines if called for
-	if ( m_cell_index_special_outline )
-	{
-		covr_set *pcover = m_pcm93chart_current->GetCoverSet();
-
-		for ( unsigned int im=0 ; im < pcover->GetCoverCount() ; im++ )
-		{
-			M_COVR_Desc *pmcd = pcover->GetCover ( im );
-			if ( ( pmcd->m_cell_index == m_cell_index_special_outline ) &&
-					( pmcd->m_object_id == m_object_id_special_outline ) &&
-					( pmcd->m_subcell == m_subcell_special_outline ) )
-
-			{
+		for (unsigned int im = 0; im < pcover->GetCoverCount(); im++) {
+			M_COVR_Desc* pmcd = pcover->GetCover(im);
+			if ((pmcd->m_cell_index == m_cell_index_special_outline)
+				&& (pmcd->m_object_id == m_object_id_special_outline)
+				&& (pmcd->m_subcell == m_subcell_special_outline)) {
 				//    Draw this MCD's represented outline
 
 				//    Case:  vpBBox is completely inside the mcd box
-				//                        if(!(_OUT == vp_positive.vpBBox.Intersect(pmcd->m_covr_bbox)) || !(_OUT == vp.vpBBox.Intersect(pmcd->m_covr_bbox)))
+				//                        if(!(_OUT ==
+				// vp_positive.vpBBox.Intersect(pmcd->m_covr_bbox)) || !(_OUT ==
+				// vp.vpBBox.Intersect(pmcd->m_covr_bbox)))
 				{
 
-					geo::float_2Dpt *p = pmcd->pvertices;
-					wxPoint *pwp = m_pcm93chart_current->GetDrawBuffer ( pmcd->m_nvertices );
+					geo::float_2Dpt* p = pmcd->pvertices;
+					wxPoint* pwp = m_pcm93chart_current->GetDrawBuffer(pmcd->m_nvertices);
 
-					for ( int ip = 0 ; ip < pmcd->m_nvertices ; ip++ )
-					{
+					for (int ip = 0; ip < pmcd->m_nvertices; ip++) {
 
 						double plon = p->x;
-						if ( fabs ( plon - VPoint.longitude()) > 180.0)
-						{
-							if ( plon > VPoint.longitude())
+						if (fabs(plon - VPoint.longitude()) > 180.0) {
+							if (plon > VPoint.longitude())
 								plon -= 360.0;
 							else
 								plon += 360.0;
 						}
 
-
 						double easting, northing, epix, npix;
-						geo::toSM(p->y, plon + 360.0, VPoint.latitude(), VPoint.longitude() + 360, &easting, &northing);
+						geo::toSM(p->y, plon + 360.0, VPoint.latitude(), VPoint.longitude() + 360,
+								  &easting, &northing);
 
 						// Outlines stored in MCDs are not adjusted for offsets
 						easting -= pmcd->user_xoff;
 						northing -= pmcd->user_yoff;
 
-						epix = easting  * VPoint.view_scale_ppm;
+						epix = easting * VPoint.view_scale_ppm;
 						npix = northing * VPoint.view_scale_ppm;
 
-						pwp[ip].x = ( int ) round ( ( VPoint.pix_width  / 2 ) + epix );
-						pwp[ip].y = ( int ) round ( ( VPoint.pix_height / 2 ) - npix );
+						pwp[ip].x = (int)round((VPoint.pix_width / 2) + epix);
+						pwp[ip].y = (int)round((VPoint.pix_height / 2) - npix);
 
 						p++;
 					}
@@ -1087,18 +1050,21 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
 					// looking for segments for which the wrong longitude decision was made
 					// TODO all this mole needs to be rethought, again
 					bool btest = true;
-					if ( btest ) { // TODO: cleanup
-						dc.SetPen ( wxPen ( wxTheColourDatabase->Find ( _T ( "YELLOW" ) ), 4, wxLONG_DASH ) );
+					if (btest) { // TODO: cleanup
+						dc.SetPen(
+							wxPen(wxTheColourDatabase->Find(_T ( "YELLOW" )), 4, wxLONG_DASH));
 
-						for ( int iseg=0 ; iseg < pmcd->m_nvertices-1 ; iseg++) {
+						for (int iseg = 0; iseg < pmcd->m_nvertices - 1; iseg++) {
 							int x0 = pwp[iseg].x;
 							int y0 = pwp[iseg].y;
-							int x1 = pwp[iseg+1].x;
-							int y1 = pwp[iseg+1].y;
+							int x1 = pwp[iseg + 1].x;
+							int y1 = pwp[iseg + 1].y;
 
-							geo::ClipResult res = geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, 0, VPoint.pix_width, 0, VPoint.pix_height);
+							geo::ClipResult res = geo::cohen_sutherland_line_clip_i(
+								&x0, &y0, &x1, &y1, 0, VPoint.pix_width, 0, VPoint.pix_height);
 
-							if (res == geo::Invisible) // Do not bother with segments that are invisible
+							if (res
+								== geo::Invisible) // Do not bother with segments that are invisible
 								continue;
 
 							dc.DrawLine(x0, y0, x1, y1);
@@ -1112,65 +1078,57 @@ bool cm93compchart::DoRenderRegionViewOnDC ( wxMemoryDC& dc, const ViewPort& VPo
 	return render_return;
 }
 
-
-void cm93compchart::UpdateRenderRegions ( const ViewPort& VPoint )
+void cm93compchart::UpdateRenderRegions(const ViewPort& VPoint)
 {
-	OCPNRegion full_screen_region(0,0,VPoint.rv_rect.width, VPoint.rv_rect.height);
+	OCPNRegion full_screen_region(0, 0, VPoint.rv_rect.width, VPoint.rv_rect.height);
 
 	ViewPort vp_positive = VPoint;
 	vp_positive.set_positive();
 
-	SetVPParms ( VPoint );
+	SetVPParms(VPoint);
 
-	if ( m_pcm93chart_current )
-	{
-		m_pcm93chart_current->SetVPParms ( vp_positive );
+	if (m_pcm93chart_current) {
+		m_pcm93chart_current->SetVPParms(vp_positive);
 
-		//    Check the current chart scale to see if it covers the requested region totally
-		if ( VPoint.b_quilt )
-		{
-			//    Clear all the subchart regions
-			for ( int i = 0 ; i < 8 ; i++ )
-			{
-				if ( m_pcm93chart_array[i] )
+		// Check the current chart scale to see if it covers the requested region totally
+		if (VPoint.b_quilt) {
+			// Clear all the subchart regions
+			for (int i = 0; i < 8; i++) {
+				if (m_pcm93chart_array[i])
 					m_pcm93chart_array[i]->m_render_region.Clear();
 			}
 
 			OCPNRegion vpr_empty = full_screen_region;
 
-			OCPNRegion chart_region = GetValidScreenCanvasRegion ( vp_positive, full_screen_region );
-			m_pcm93chart_current->m_render_region = chart_region;       // update
+			OCPNRegion chart_region = GetValidScreenCanvasRegion(vp_positive, full_screen_region);
+			m_pcm93chart_current->m_render_region = chart_region; // update
 
-			if ( !chart_region.IsEmpty() )
-				vpr_empty.Subtract ( chart_region );
+			if (!chart_region.IsEmpty())
+				vpr_empty.Subtract(chart_region);
 
-
-			if ( !vpr_empty.Empty() && m_cmscale )        // This chart scale does not fully cover the region
+			if (!vpr_empty.Empty() && m_cmscale) // This chart scale does not fully cover the region
 			{
-
-				//    Save the current cm93 chart pointer for restoration later
-				cm93chart *m_pcm93chart_save = m_pcm93chart_current;
+				// Save the current cm93 chart pointer for restoration later
+				cm93chart* m_pcm93chart_save = m_pcm93chart_current;
 
 				int cmscale_next = m_cmscale;
 
-				while ( !vpr_empty.Empty() && cmscale_next )
-				{
-					//    get the next smaller scale chart
+				while (!vpr_empty.Empty() && cmscale_next) {
+					// get the next smaller scale chart
 					cmscale_next--;
-					m_cmscale = PrepareChartScale ( vp_positive, cmscale_next );
+					m_cmscale = PrepareChartScale(vp_positive, cmscale_next);
 
-					if ( m_pcm93chart_current )
-					{
-						OCPNRegion sscale_region = GetValidScreenCanvasRegion ( vp_positive, full_screen_region );
-						sscale_region.Intersect ( vpr_empty );
+					if (m_pcm93chart_current) {
+						OCPNRegion sscale_region
+							= GetValidScreenCanvasRegion(vp_positive, full_screen_region);
+						sscale_region.Intersect(vpr_empty);
 						m_pcm93chart_current->m_render_region = sscale_region;
 
 						//    Update the remaining empty region
-						if ( !sscale_region.IsEmpty() )
-							vpr_empty.Subtract ( sscale_region );
+						if (!sscale_region.IsEmpty())
+							vpr_empty.Subtract(sscale_region);
 					}
-
-				}     // while
+				}
 
 				// restore the base chart pointer
 				m_pcm93chart_current = m_pcm93chart_save;
@@ -1189,22 +1147,19 @@ void cm93compchart::SetSpecialCellIndexOffset(int cell_index, int object_id, int
 		m_pcm93chart_current->SetUserOffsets(cell_index, object_id, subcell, xoff, yoff);
 }
 
-bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, const ViewPort& vp )
+bool cm93compchart::RenderNextSmallerCellOutlines(ocpnDC& dc, const ViewPort& vp)
 {
 	ViewPort vp_positive = vp;
 	vp_positive.set_positive();
 
-	if ( m_cmscale < 7 )
-	{
-		//    Something like an effective true_scale
+	if (m_cmscale < 7) {
+		// Something like an effective true_scale
 		double top_scale = vp.chart_scale * 0.25;
 
 		int nss_max = m_cmscale;
-		while ( nss_max < 7 )
-		{
+		while (nss_max < 7) {
 			double candidate_cell_scale;
-			switch ( nss_max )
-			{
+			switch (nss_max) {
 				case  0: candidate_cell_scale = 20000000.0; break; // Z
 				case  1: candidate_cell_scale =  3000000.0; break; // A
 				case  2: candidate_cell_scale =  1000000.0; break; // B
@@ -1216,113 +1171,106 @@ bool cm93compchart::RenderNextSmallerCellOutlines ( ocpnDC &dc, const ViewPort& 
 				default: candidate_cell_scale =       10.0; break;
 			}
 
-			if ( candidate_cell_scale < top_scale )
+			if (candidate_cell_scale < top_scale)
 				break;
-			nss_max ++;
+			nss_max++;
 		}
 
-		nss_max = wxMax ( nss_max, m_cmscale+1 );
+		nss_max = wxMax(nss_max, m_cmscale + 1);
 
-		if ( g_bDebugCM93 )
-		{
-			printf ( " RenderNextSmallerCellOutline, base chart scale is %c\n", ( char ) ( 'A' +m_cmscale - 1 ) );
-			printf ( "    top_scale: %8.0f   VP.chart_scale: %8.0f\n", top_scale, vp.chart_scale );
-			printf ( "    nss_max is %c\n", ( char ) ( 'A' +nss_max - 1 ) );
+		if (g_bDebugCM93) {
+			printf(" RenderNextSmallerCellOutline, base chart scale is %c\n",
+				   (char)('A' + m_cmscale - 1));
+			printf("    top_scale: %8.0f   VP.chart_scale: %8.0f\n", top_scale, vp.chart_scale);
+			printf("    nss_max is %c\n", (char)('A' + nss_max - 1));
 		}
-
 
 		int nss = m_cmscale +1;
 
-		//    A little magic here.
-		//    Drawing all larger scale cell outlines is way too expensive.
-		//    So, stop the loop after we have rendered "something"
-		//    But don't stop at all if the viewport scale is less than 3 million.
-		//    This will have the effect of bringing in outlines of isolated large scale cells
-		//    embedded within small scale cells, like isolated islands in the Pacific.
+		// A little magic here.
+		// Drawing all larger scale cell outlines is way too expensive.
+		// So, stop the loop after we have rendered "something"
+		// But don't stop at all if the viewport scale is less than 3 million.
+		// This will have the effect of bringing in outlines of isolated large scale cells
+		// embedded within small scale cells, like isolated islands in the Pacific.
 		bool bdrawn = false;
 		nss_max = 7;
-		while ( nss <= nss_max && ( !bdrawn || ( vp.chart_scale < 3e6 ) ) )
-		{
-			cm93chart *psc = m_pcm93chart_array[nss];
+		while (nss <= nss_max && (!bdrawn || (vp.chart_scale < 3e6))) {
+			cm93chart* psc = m_pcm93chart_array[nss];
 
-			if ( !psc )
-			{
+			if (!psc) {
 				m_pcm93chart_array[nss] = new cm93chart();
 				psc = m_pcm93chart_array[nss];
 
-				wxChar ext = ( wxChar ) ( 'A' + nss - 1 );
-				if ( nss == 0 )
+				wxChar ext = (wxChar)('A' + nss - 1);
+				if (nss == 0)
 					ext = 'Z';
 
 				wxString file_dummy = _T ( "CM93." );
 				file_dummy << ext;
 
-				psc->SetCM93Dict ( m_pDictComposite );
-				psc->SetCM93Prefix ( m_prefixComposite );
-				psc->SetCM93Manager ( m_pcm93mgr );
+				psc->SetCM93Dict(m_pDictComposite);
+				psc->SetCM93Prefix(m_prefixComposite);
+				psc->SetCM93Manager(m_pcm93mgr);
 
-				psc->SetColorScheme ( m_global_color_scheme );
-				psc->Init ( file_dummy, FULL_INIT );
+				psc->SetColorScheme(m_global_color_scheme);
+				psc->Init(file_dummy, FULL_INIT);
 			}
 
-			if ( ( psc ) && ( nss != 1 ) )       // skip rendering the A scale outlines
-			{
-				bool mcr = psc->UpdateCovrSet ( vp );
+			if ((psc) && (nss != 1)) {
+				// skip rendering the A scale outlines
+				bool mcr = psc->UpdateCovrSet(vp);
 
 				//    Render the chart outlines
-				if ( mcr )
-				{
-					covr_set *pcover = psc->GetCoverSet();
+				if (mcr) {
+					covr_set* pcover = psc->GetCoverSet();
 
-					for ( unsigned int im=0 ; im < pcover->GetCoverCount() ; im++ )
-					{
+					for (unsigned int im = 0; im < pcover->GetCoverCount(); im++) {
 						using geo::BoundingBox;
 
-						M_COVR_Desc *mcd = pcover->GetCover(im);
+						M_COVR_Desc* mcd = pcover->GetCover(im);
 
 						//    Case:  vpBBox is completely inside the mcd box
-						if (!(BoundingBox::_OUT == vp_positive.GetBBox().Intersect(mcd->m_covr_bbox)) || !(BoundingBox::_OUT == vp.GetBBox().Intersect(mcd->m_covr_bbox)))
-						{
-							geo::float_2Dpt *p = mcd->pvertices;
-							wxPoint *pwp = psc->GetDrawBuffer ( mcd->m_nvertices );
+						if (!(BoundingBox::_OUT
+							  == vp_positive.GetBBox().Intersect(mcd->m_covr_bbox))
+							|| !(BoundingBox::_OUT == vp.GetBBox().Intersect(mcd->m_covr_bbox))) {
+							geo::float_2Dpt* p = mcd->pvertices;
+							wxPoint* pwp = psc->GetDrawBuffer(mcd->m_nvertices);
 
-							for ( int ip = 0 ; ip < mcd->m_nvertices ; ip++ ,  p++)
-							{
+							for (int ip = 0; ip < mcd->m_nvertices; ip++, p++) {
 
 								pwp[ip] = vp_positive.GetPixFromLL(Position(p->y, p->x));
 
-								//    Outlines stored in MCDs are not adjusted for offsets
+								// Outlines stored in MCDs are not adjusted for offsets
 								pwp[ip].x -= mcd->user_xoff * vp.view_scale_ppm;
 								pwp[ip].y -= mcd->user_yoff * vp.view_scale_ppm;
-
 							}
 
-							//    Scrub the points
-							//    looking for segments for which the wrong longitude decision was made
-							//    TODO all this mole needs to be rethought, again
+							// Scrub the points
+							// looking for segments for which the wrong longitude decision was
+							// made
+							// TODO all this mole needs to be rethought, again
 							bool btest = true;
 							wxPoint p0 = pwp[0];
-							for ( int ip = 1 ; ip < mcd->m_nvertices ; ip++ )
-							{
-								if ( ( ( p0.x > vp.pix_width ) && ( pwp[ip].x < 0 ) ) || ( ( p0.x < 0 ) && ( pwp[ip].x > vp.pix_width ) ) )
+							for (int ip = 1; ip < mcd->m_nvertices; ip++) {
+								if (((p0.x > vp.pix_width) && (pwp[ip].x < 0))
+									|| ((p0.x < 0) && (pwp[ip].x > vp.pix_width)))
 									btest = false;
 
 								p0 = pwp[ip];
 							}
 
-							if ( btest )
-							{
-								dc.DrawLines ( mcd->m_nvertices, pwp, 0, 0, false );
+							if (btest) {
+								dc.DrawLines(mcd->m_nvertices, pwp, 0, 0, false);
 								bdrawn = true;
 							}
 						}
 					}
 				}
 			}
-			nss ++;
+			nss++;
 		}
 	}
-
 
 	return true;
 }

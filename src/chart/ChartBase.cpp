@@ -66,7 +66,7 @@ ChartBase::~ChartBase()
 
 	delete pThumbData;
 
-	//    Free the COVR tables
+	// Free the COVR tables
 
 	for (unsigned int j = 0; j < (unsigned int)m_nCOVREntries; ++j)
 		free(m_pCOVRTable[j]);

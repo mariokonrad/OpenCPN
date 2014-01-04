@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHARTSYMBOL__H__
-#define __CHARTSYMBOL__H__
+#ifndef __CHART__CHARTSYMBOL__H__
+#define __CHART__CHARTSYMBOL__H__
 
 #include <chart/SymbolSizeInfo.h>
 

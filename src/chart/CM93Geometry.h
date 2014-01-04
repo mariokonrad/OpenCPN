@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHART_CM93GEOMETRY__H__
-#define __CHART_CM93GEOMETRY__H__
+#ifndef __CHART__CM93GEOMETRY__H__
+#define __CHART__CM93GEOMETRY__H__
 
 namespace chart {
 
@@ -54,7 +54,7 @@ struct geometry_descriptor
 	unsigned short x_max;
 	unsigned short y_max;
 	int index;
-	cm93_point * p_points;
+	cm93_point* p_points;
 };
 
 }

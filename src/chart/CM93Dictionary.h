@@ -33,26 +33,26 @@ namespace chart {
 /// to standard S57 text conventions
 class cm93_dictionary
 {
-	public:
-		cm93_dictionary();
-		~cm93_dictionary();
+public:
+	cm93_dictionary();
+	~cm93_dictionary();
 
-		bool LoadDictionary(const wxString & dictionary_dir);
-		bool IsOk(void) const;
-		wxString GetDictDir(void) const;
-		wxString GetClassName(int iclass);
-		wxString GetAttrName(int iattr);
-		char GetAttrType(int iattr);
+	bool LoadDictionary(const wxString& dictionary_dir);
+	bool IsOk(void) const;
+	wxString GetDictDir(void) const;
+	wxString GetClassName(int iclass);
+	wxString GetAttrName(int iattr);
+	char GetAttrType(int iattr);
 
-	private:
-		int m_max_class;
-		int m_max_attr;
-		wxArrayString * m_S57ClassArray; // FIXME: replace wxArrayString with std containers
-		wxArrayString * m_AttrArray; // FIXME: replace wxArrayString with std containers
-		int * m_GeomTypeArray;
-		char * m_ValTypeArray;
-		bool m_ok;
-		wxString m_dict_dir;
+private:
+	int m_max_class;
+	int m_max_attr;
+	wxArrayString* m_S57ClassArray; // FIXME: replace wxArrayString with std containers
+	wxArrayString* m_AttrArray; // FIXME: replace wxArrayString with std containers
+	int* m_GeomTypeArray;
+	char* m_ValTypeArray;
+	bool m_ok;
+	wxString m_dict_dir;
 };
 
 }

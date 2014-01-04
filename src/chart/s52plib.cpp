@@ -149,16 +149,16 @@ LUPHashIndex* LUPArrayContainer::GetArrayIndexHelper(const char* objectName)
 		pindex->count = 0;
 		IndexHash[key] = pindex;
 
-		//      Find the first matching entry in the LUP Array
+		// Find the first matching entry in the LUP Array
 		int index = 0;
 		int index_max = LUPArray->size();
 		int first_match = 0;
 		int ocnt = 0;
 		LUPrec* LUPCandidate;
 
-		//        This technique of extracting proper LUPs depends on the fact that
-		//        the LUPs have been sorted in their array, by OBCL.
-		//        Thus, all the LUPS with the same OBCL will be grouped together
+		// This technique of extracting proper LUPs depends on the fact that
+		// the LUPs have been sorted in their array, by OBCL.
+		// Thus, all the LUPS with the same OBCL will be grouped together
 
 		while (!first_match && (index < index_max)) {
 			LUPCandidate = LUPArray->Item(index);
@@ -193,7 +193,8 @@ LUPHashIndex* LUPArrayContainer::GetArrayIndexHelper(const char* objectName)
 //-----------------------------------------------------------------------------
 //      s52plib implementation
 //-----------------------------------------------------------------------------
-s52plib::s52plib(const wxString& PLib, bool b_forceLegacy) : HPGL(NULL)
+s52plib::s52plib(const wxString& PLib, bool b_forceLegacy)
+	: HPGL(NULL)
 {
 	m_plib_file = PLib;
 
@@ -262,7 +263,7 @@ s52plib::~s52plib()
 
 	S52_flush_Plib();
 
-	//      Free the OBJL Array Elements
+	// Free the OBJL Array Elements
 	for (unsigned int iPtr = 0; iPtr < pOBJLArray->size(); iPtr++)
 		free(pOBJLArray->Item(iPtr));
 
@@ -465,8 +466,7 @@ LUPrec* s52plib::FindBestLUP(wxArrayOfLUPrec* LUPArray, unsigned int startIndex,
 								break;
 							}
 
-							case OGR_INT_LST
-								: // S57 attribute type 'L' list: comma separated integer
+							case OGR_INT_LST: // S57 attribute type 'L' list: comma separated integer
 							{
 								int a;
 								char ss[41];
@@ -534,9 +534,9 @@ LUPrec* s52plib::FindBestLUP(wxArrayOfLUPrec* LUPArray, unsigned int startIndex,
 			attIdx = 0;
 		} // for iLUPAtt
 
-		//      Create a "match score", defined as fraction of candidate LUP attributes
-		//      actually matched by feature.
-		//      Used later for resolving "ties"
+		// Create a "match score", defined as fraction of candidate LUP attributes
+		// actually matched by feature.
+		// Used later for resolving "ties"
 
 		int nattr_matching_on_candidate = countATT;
 		int nattrs_on_candidate = LUPCandidate->ATTCArray->size();
@@ -550,7 +550,7 @@ LUPrec* s52plib::FindBestLUP(wxArrayOfLUPrec* LUPArray, unsigned int startIndex,
 			break; // selects the first 100% match
 		}
 
-	} // for loop
+	}
 
 check_LUP:
 	//  In strict mode, we require at least one attribute to match exactly

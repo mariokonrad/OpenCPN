@@ -72,7 +72,6 @@ static double _MARparamVal[] =
 	16.0      // NUM
 };
 
-
 // return Mariner parameter or '0.0' if fail
 // FIXME: check mariner param against groups selection
 double S52_getMarinerParam(S52_MAR_param_t param)
@@ -82,7 +81,7 @@ double S52_getMarinerParam(S52_MAR_param_t param)
 
 int S52_setMarinerParam(S52_MAR_param_t param, double val)
 {
-	if (S52_MAR_NONE<param && param<S52_MAR_NUM)
+	if (S52_MAR_NONE < param && param < S52_MAR_NUM)
 		_MARparamVal[param] = val;
 	else
 		return FALSE;

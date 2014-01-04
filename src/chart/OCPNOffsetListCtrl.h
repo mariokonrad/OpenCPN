@@ -32,33 +32,27 @@ class CM93OffsetDialog;
 
 class OCPNOffsetListCtrl : public wxListCtrl
 {
-	public:
-		enum
-		{
-			tlCELL = 0,
-			tlMCOVR,
-			tlSCALE,
-			tlXOFF,
-			tlYOFF,
-			tlUXOFF,
-			tlUYOFF,
-		};
+public:
+	enum {
+		tlCELL = 0,
+		tlMCOVR,
+		tlSCALE,
+		tlXOFF,
+		tlYOFF,
+		tlUXOFF,
+		tlUYOFF,
+	};
 
-	public:
-		OCPNOffsetListCtrl(
-				CM93OffsetDialog * parent,
-				wxWindowID id,
-				const wxPoint & pos,
-				const wxSize & size,
-				long style);
-		virtual ~OCPNOffsetListCtrl();
+public:
+	OCPNOffsetListCtrl(CM93OffsetDialog* parent, wxWindowID id, const wxPoint& pos,
+					   const wxSize& size, long style);
+	virtual ~OCPNOffsetListCtrl();
 
-		wxString OnGetItemText(long item, long column) const;
-		int OnGetItemColumnImage(long item, long column) const;
+	wxString OnGetItemText(long item, long column) const;
+	int OnGetItemColumnImage(long item, long column) const;
 
-		CM93OffsetDialog * m_parent;
+	CM93OffsetDialog* m_parent;
 };
-
 }
 
 #endif

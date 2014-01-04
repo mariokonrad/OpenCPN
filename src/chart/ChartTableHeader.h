@@ -31,22 +31,22 @@ namespace chart {
 
 struct ChartTableHeader
 {
-	public:
-		ChartTableHeader();
-		ChartTableHeader(int dirEntries, int tableEntries);
+public:
+	ChartTableHeader();
+	ChartTableHeader(int dirEntries, int tableEntries);
 
-		void Read(wxInputStream &is);
-		void Write(wxOutputStream &os);
-		bool CheckValid();
-		int GetDirEntries() const;
-		int GetTableEntries() const;
-		char *GetDBVersionString();
+	void Read(wxInputStream& is);
+	void Write(wxOutputStream& os);
+	bool CheckValid();
+	int GetDirEntries() const;
+	int GetTableEntries() const;
+	char* GetDBVersionString();
 
-	private:
-		// NOTE: on-disk structure - cannot add, remove, or reorder!
-		char dbVersion[4];
-		int nTableEntries;
-		int nDirEntries;
+private:
+	// NOTE: on-disk structure - cannot add, remove, or reorder!
+	char dbVersion[4];
+	int nTableEntries;
+	int nDirEntries;
 };
 
 }

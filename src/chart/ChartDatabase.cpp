@@ -60,14 +60,22 @@ bool FindMatchingFile(const wxString& theDir, const wxChar* theRegEx, int nameLe
 chart::ChartFamilyEnum GetChartFamily(int charttype)
 {
 	switch (charttype) {
-		case CHART_TYPE_KAP:      return chart::CHART_FAMILY_RASTER;
-		case CHART_TYPE_GEO:      return chart::CHART_FAMILY_RASTER;
-		case CHART_TYPE_S57:      return chart::CHART_FAMILY_VECTOR;
-		case CHART_TYPE_CM93:     return chart::CHART_FAMILY_VECTOR;
-		case CHART_TYPE_CM93COMP: return chart::CHART_FAMILY_VECTOR;
-		case CHART_TYPE_DUMMY:    return chart::CHART_FAMILY_RASTER;
-		case CHART_TYPE_UNKNOWN:  return chart::CHART_FAMILY_UNKNOWN;
-		default: break;
+		case CHART_TYPE_KAP:
+			return chart::CHART_FAMILY_RASTER;
+		case CHART_TYPE_GEO:
+			return chart::CHART_FAMILY_RASTER;
+		case CHART_TYPE_S57:
+			return chart::CHART_FAMILY_VECTOR;
+		case CHART_TYPE_CM93:
+			return chart::CHART_FAMILY_VECTOR;
+		case CHART_TYPE_CM93COMP:
+			return chart::CHART_FAMILY_VECTOR;
+		case CHART_TYPE_DUMMY:
+			return chart::CHART_FAMILY_RASTER;
+		case CHART_TYPE_UNKNOWN:
+			return chart::CHART_FAMILY_UNKNOWN;
+		default:
+			break;
 	}
 	return chart::CHART_FAMILY_UNKNOWN;
 }
@@ -82,11 +90,16 @@ void ChartDatabase::UpdateChartClassDescriptorArray(void)
 {
 	m_ChartClassDescriptorArray.clear();
 
-	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("ChartKAP"), _T("*.kap"), BUILTIN_DESCRIPTOR));
-	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("ChartGEO"), _T("*.geo"), BUILTIN_DESCRIPTOR));
-	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("s57chart"), _T("*.000"), BUILTIN_DESCRIPTOR));
-	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("s57chart"), _T("*.s57"), BUILTIN_DESCRIPTOR));
-	m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(_T("cm93compchart"), _T("00300000.a"), BUILTIN_DESCRIPTOR));
+	m_ChartClassDescriptorArray.push_back(
+		ChartClassDescriptor(_T("ChartKAP"), _T("*.kap"), BUILTIN_DESCRIPTOR));
+	m_ChartClassDescriptorArray.push_back(
+		ChartClassDescriptor(_T("ChartGEO"), _T("*.geo"), BUILTIN_DESCRIPTOR));
+	m_ChartClassDescriptorArray.push_back(
+		ChartClassDescriptor(_T("s57chart"), _T("*.000"), BUILTIN_DESCRIPTOR));
+	m_ChartClassDescriptorArray.push_back(
+		ChartClassDescriptor(_T("s57chart"), _T("*.s57"), BUILTIN_DESCRIPTOR));
+	m_ChartClassDescriptorArray.push_back(
+		ChartClassDescriptor(_T("cm93compchart"), _T("00300000.a"), BUILTIN_DESCRIPTOR));
 
 	// If the PlugIn Manager exists, get the array of dynamically loadable chart class names
 	if (g_pi_manager) {
@@ -97,7 +110,8 @@ void ChartDatabase::UpdateChartClassDescriptorArray(void)
 			ChartPlugInWrapper* cpiw = new ChartPlugInWrapper(class_name);
 			if (cpiw) {
 				wxString mask = cpiw->GetFileSearchMask();
-				m_ChartClassDescriptorArray.push_back(ChartClassDescriptor(class_name, mask, PLUGIN_DESCRIPTOR));
+				m_ChartClassDescriptorArray.push_back(
+					ChartClassDescriptor(class_name, mask, PLUGIN_DESCRIPTOR));
 				delete cpiw;
 			}
 		}
@@ -312,8 +326,8 @@ wxString ChartDatabase::GetFullChartInfo(ChartBase* pc, int dbIndex, int* char_w
 	unsigned int target_width = 60;
 
 	const ChartTableEntry& cte = GetChartTableEntry(dbIndex);
-	if (1) // TODO why can't this be cte.GetbValid()?
-	{
+	if (1) {
+		// TODO why can't this be cte.GetbValid()?
 		wxString line;
 		line = _(" ChartFile:  ");
 		wxString longline(cte.GetpFullPath(), wxConvUTF8);
@@ -959,10 +973,10 @@ bool ChartDatabase::AddChart(wxString& chartfilename, ChartClassDescriptor& char
 	wxString full_name = file.GetFullPath();
 	wxString file_name = file.GetFullName();
 
-	//    Validate the file name again, considering MSW's semi-random treatment of case....
+	// Validate the file name again, considering MSW's semi-random treatment of case....
 	// TODO...something fishy here - may need to normalize saved name?
-	//    if(!file_name.Matches(lowerFileSpec) && !file_name.Matches(filespec) && !b_found_cm93)
-	//        continue;
+	// if(!file_name.Matches(lowerFileSpec) && !file_name.Matches(filespec) && !b_found_cm93)
+	//   continue;
 
 	if (pprog)
 		pprog->Update(wxMin((m_pdifile * 100) / m_pdnFile, 100), full_name);
@@ -978,17 +992,17 @@ bool ChartDatabase::AddChart(wxString& chartfilename, ChartClassDescriptor& char
 		msg.Append(full_name);
 		wxLogMessage(msg);
 		return false;
-	} else // traverse the existing database looking for duplicates, and choosing the right one
-	{
+	} else {
+		// traverse the existing database looking for duplicates, and choosing the right one
 		int nEntry = chartTable.GetCount();
 		for (int i = 0; i < nEntry; i++) {
 			wxString table_file_name(chartTable[isearch].GetpFullPath(), wxConvUTF8);
 
-			//    If the chart full file paths are exactly the same, select the newer one
+			// If the chart full file paths are exactly the same, select the newer one
 			if (bthis_dir_in_dB && full_name.IsSameAs(table_file_name)) {
 				b_add_msg++;
 
-				//    Check the file modification time
+				// Check the file modification time
 				time_t t_oldFile = chartTable[isearch].GetFileTime();
 				time_t t_newFile = file.GetModificationTime().GetTicks();
 
@@ -1006,17 +1020,17 @@ bool ChartDatabase::AddChart(wxString& chartfilename, ChartClassDescriptor& char
 				break;
 			}
 
-			//  Look at the chart file name (without directory prefix) for a further check for
+			// Look at the chart file name (without directory prefix) for a further check for
 			// duplicates
-			//  This catches the case in which the "same" chart is in different locations,
-			//  and one may be newer than the other.
+			// This catches the case in which the "same" chart is in different locations,
+			// and one may be newer than the other.
 			wxFileName table_file(table_file_name);
 
 			if (table_file.GetFullName() == file_name) {
 				b_add_msg++;
 
 				if (pnewChart->IsEarlierThan(chartTable[isearch])) {
-					//    Make sure the compare file actually exists
+					// Make sure the compare file actually exists
 					if (table_file.IsFileReadable()) {
 						chartTable[isearch].SetValid(true);
 						bAddFinal = false;
@@ -1025,11 +1039,11 @@ bool ChartDatabase::AddChart(wxString& chartfilename, ChartClassDescriptor& char
 						wxLogMessage(msg);
 					}
 				} else if (pnewChart->IsEqualTo(chartTable[isearch])) {
-					//    The file names (without dir prefix) are identical,
-					//    and the mod times are identical
-					//    Prsume that this is intentional, in order to facilitate
-					//    having the same chart in multiple groups.
-					//    So, add this chart.
+					// The file names (without dir prefix) are identical,
+					// and the mod times are identical
+					// Prsume that this is intentional, in order to facilitate
+					// having the same chart in multiple groups.
+					// So, add this chart.
 					bAddFinal = true;
 				} else {
 					chartTable[isearch].SetValid(false);
@@ -1047,7 +1061,7 @@ bool ChartDatabase::AddChart(wxString& chartfilename, ChartClassDescriptor& char
 			isearch++;
 			if (nEntry == isearch)
 				isearch = 0;
-		} // for
+		}
 	}
 
 	if (bAddFinal) {
@@ -1061,9 +1075,9 @@ bool ChartDatabase::AddChart(wxString& chartfilename, ChartClassDescriptor& char
 
 		rv = true;
 	} else {
-		//                  wxString msg = _T("   Not adding chart file: ");
-		//                  msg.Append(full_name);
-		//                  wxLogMessage(msg);
+		// wxString msg = _T("   Not adding chart file: ");
+		// msg.Append(full_name);
+		// wxLogMessage(msg);
 		rv = false;
 	}
 

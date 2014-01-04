@@ -26,47 +26,39 @@
 
 namespace chart {
 
-cm93_attr_block::cm93_attr_block(void * block, cm93_dictionary * pdict)
+cm93_attr_block::cm93_attr_block(void* block, cm93_dictionary* pdict)
 {
 	m_cptr = 0;
-	m_block = ( unsigned char * ) block;
+	m_block = (unsigned char*)block;
 	m_pDict = pdict;
 }
 
-unsigned char *cm93_attr_block::GetNextAttr()
+unsigned char* cm93_attr_block::GetNextAttr()
 {
-	//    return current pointer
-	unsigned char *ret_val = m_block + m_cptr;
+	// return current pointer
+	unsigned char* ret_val = m_block + m_cptr;
 
-	//    Advance the pointer
+	// Advance the pointer
 
-	unsigned char iattr = * ( m_block + m_cptr );
+	unsigned char iattr = *(m_block + m_cptr);
 	m_cptr++;
 
-	//      char vtype = m_pDict->m_ValTypeArray[iattr];
-	char vtype = m_pDict->GetAttrType ( iattr );
+	char vtype = m_pDict->GetAttrType(iattr);
 
-	switch ( vtype )
-	{
-		case 'I':                           // never seen?
+	switch (vtype) {
+		case 'I': // never seen?
 			m_cptr += 2;
 			break;
 		case 'B':
 			m_cptr += 1;
-			//                  pb = (unsigned char *)aval;
-			//                  sprintf(val, "%d", *pb);
-			//                  pvtype = 'I';                 // override
 			break;
 		case 'S':
-			while ( * ( m_block + m_cptr ) )
+			while (*(m_block + m_cptr))
 				m_cptr++;
-			m_cptr++;                           // skip terminator
-			//                  sprintf(val, "%s", aval);
+			m_cptr++; // skip terminator
 			break;
 		case 'R':
 			m_cptr += 4;
-			//                  pf = (float *)aval;
-			//                  sprintf(val, "%g", *pf);
 			break;
 		case 'W':
 			m_cptr += 2;
@@ -76,39 +68,21 @@ unsigned char *cm93_attr_block::GetNextAttr()
 			break;
 		case 'C':
 			m_cptr += 3;
-			while ( * ( m_block + m_cptr ) )
+			while (*(m_block + m_cptr))
 				m_cptr++;
-			m_cptr++;                           // skip terminator
-			//                  sprintf(val, "%s", &aval[3]);
-			//                  pvtype = 'S';                 // override
+			m_cptr++; // skip terminator
 			break;
-		case 'L':
-			{
-				unsigned char nl = * ( m_block + m_cptr );
-				m_cptr++;
-				m_cptr += nl;
-
-				//                  pb = (unsigned char *)aval;
-				//                  unsigned char nl = *pb++;
-				//                  char vi[20];
-				//                  val[0] = 0;
-				//                  for(int i=0 ; i<nl ; i++)
-				//                  {
-				//                        sprintf(vi, "%d,", *pb++);
-				//                        strcat(val, vi);
-				//                  }
-				//                  if(strlen(val))
-				//                        val[strlen(val)-1] = 0;         // strip last ","
-				//                  pvtype = 'S';                 // override
-				break;
-			}
+		case 'L': {
+			unsigned char nl = *(m_block + m_cptr);
+			m_cptr++;
+			m_cptr += nl;
+			break;
+		}
 		default:
-			//                  sprintf(val, "Unknown Value Type");
 			break;
 	}
 
 	return ret_val;
-
 }
 
 }

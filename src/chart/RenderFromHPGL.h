@@ -41,50 +41,44 @@ class s52plib;
 
 class RenderFromHPGL
 {
-	public:
-		RenderFromHPGL(s52plib * plibarg);
+public:
+	RenderFromHPGL(s52plib* plibarg);
 
-		void SetTargetDC(wxDC * pdc);
-		void SetTargetOpenGl();
-		void SetTargetGCDC(wxGCDC * gdc);
+	void SetTargetDC(wxDC* pdc);
+	void SetTargetOpenGl();
+	void SetTargetGCDC(wxGCDC* gdc);
 
-		bool Render(
-				char * str,
-				char * col,
-				wxPoint & r,
-				wxPoint & pivot,
-				double rot_angle = 0);
+	bool Render(char* str, char* col, wxPoint& r, wxPoint& pivot, double rot_angle = 0);
 
-	private:
-		const char * findColorNameInRef(char colorCode, char * col);
-		void RotatePoint(wxPoint & point, double angle);
-		wxPoint ParsePoint(wxString & argument);
-		void SetPen();
-		void Line(wxPoint from, wxPoint to);
-		void Circle(wxPoint center, int radius, bool filled = false);
-		void Polygon();
+private:
+	const char* findColorNameInRef(char colorCode, char* col);
+	void RotatePoint(wxPoint& point, double angle);
+	wxPoint ParsePoint(wxString& argument);
+	void SetPen();
+	void Line(wxPoint from, wxPoint to);
+	void Circle(wxPoint center, int radius, bool filled = false);
+	void Polygon();
 
-		s52plib * plib;
-		int scaleFactor;
+	s52plib* plib;
+	int scaleFactor;
 
-		wxDC* targetDC;
-		wxGCDC* targetGCDC;
+	wxDC* targetDC;
+	wxGCDC* targetGCDC;
 
-		wxColor penColor;
-		wxPen* pen;
-		wxColor brushColor;
-		wxBrush* brush;
-		long penWidth;
+	wxColor penColor;
+	wxPen* pen;
+	wxColor brushColor;
+	wxBrush* brush;
+	long penWidth;
 
-		int noPoints;
-		wxPoint polygon[100];
+	int noPoints;
+	wxPoint polygon[100];
 
-		bool renderToDC;
-		bool renderToOpenGl;
-		bool renderToGCDC;
-		bool havePushedOpenGlAttrib;
+	bool renderToDC;
+	bool renderToOpenGl;
+	bool renderToGCDC;
+	bool havePushedOpenGlAttrib;
 };
-
 }
 
 #endif

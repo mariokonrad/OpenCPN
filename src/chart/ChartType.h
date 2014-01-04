@@ -27,8 +27,7 @@
 namespace chart {
 
 // ChartType constants
-enum ChartTypeEnum
-{
+enum ChartTypeEnum {
 	CHART_TYPE_UNKNOWN = 0,
 	CHART_TYPE_DUMMY,
 	CHART_TYPE_DONTCARE,
@@ -39,7 +38,6 @@ enum ChartTypeEnum
 	CHART_TYPE_CM93COMP,
 	CHART_TYPE_PLUGIN
 };
-
 }
 
 #endif

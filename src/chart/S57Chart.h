@@ -58,17 +58,19 @@ namespace chart {
 class S57ClassRegistrar;
 class ChartBase;
 
-void s57_DrawExtendedLightSectors(ocpnDC & temp_dc, const ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
-bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort & VPoint, std::vector<s57Sector_t> & sectorlegs);
+void s57_DrawExtendedLightSectors(ocpnDC& temp_dc, const ViewPort& VPoint,
+								  std::vector<s57Sector_t>& sectorlegs);
+bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort& VPoint,
+								   std::vector<s57Sector_t>& sectorlegs);
 
 typedef std::list<S57Obj*> ListOfS57Obj;
 typedef std::list<ObjRazRules*> ListOfObjRazRules;
 
-WX_DECLARE_HASH_MAP( int, wxString, wxIntegerHash, wxIntegerEqual, MyNatsurHash );
-WX_DECLARE_HASH_MAP( int, int, wxIntegerHash, wxIntegerEqual, VectorHelperHash );
+WX_DECLARE_HASH_MAP(int, wxString, wxIntegerHash, wxIntegerEqual, MyNatsurHash);
+WX_DECLARE_HASH_MAP(int, int, wxIntegerHash, wxIntegerEqual, VectorHelperHash);
 
-WX_DECLARE_HASH_MAP( int, VE_Element *, wxIntegerHash, wxIntegerEqual, VE_Hash );
-WX_DECLARE_HASH_MAP( int, VC_Element *, wxIntegerHash, wxIntegerEqual, VC_Hash );
+WX_DECLARE_HASH_MAP(int, VE_Element*, wxIntegerHash, wxIntegerEqual, VE_Hash);
+WX_DECLARE_HASH_MAP(int, VC_Element*, wxIntegerHash, wxIntegerEqual, VC_Hash);
 
 class s57chart : public ChartBase
 {
@@ -81,7 +83,7 @@ private:
 
 public:
 	s57chart();
-	~s57chart();
+	virtual ~s57chart();
 
 	virtual InitReturn Init(const wxString& name, ChartInitFlag flags);
 
@@ -138,10 +140,10 @@ public:
 
 	int my_fgets(char* buf, int buf_len_max, wxInputStream& ifs);
 
-	//    Initialize from an existing SENC file
+	// Initialize from an existing SENC file
 	bool InitFromSENCMinimal(const wxString& FullPath);
 
-	//    DEPCNT VALDCO array access
+	// DEPCNT VALDCO array access
 	bool GetNearestSafeContour(double safe_cnt, double& next_safe_cnt);
 
 	virtual ListOfS57Obj* GetAssociatedObjects(S57Obj* obj);
@@ -153,12 +155,12 @@ public:
 
 	void ClearRenderedTextCache();
 
-	//#ifdef ocpnUSE_GL
+//#ifdef ocpnUSE_GL
 	virtual bool RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
 									  const OCPNRegion& Region);
 	virtual bool RenderOverlayRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
 											 const OCPNRegion& Region);
-	//#endif
+//#endif
 
 	// Public data
 	// Todo Accessors here
@@ -171,7 +173,7 @@ public:
 	bool m_bExtentSet;
 	bool m_bLinePrioritySet;
 
-	//  SM Projection parms, stored as convenience to expedite pixel conversions
+	// SM Projection parms, stored as convenience to expedite pixel conversions
 	double m_easting_vp_center, m_northing_vp_center;
 	double m_pixx_vp_center, m_pixy_vp_center;
 	double m_view_scale_ppm;
@@ -196,7 +198,7 @@ public:
 	bool m_b2pointLUPS;
 	bool m_b2lineLUPS;
 
-	struct _chart_context* m_this_chart_context;
+	struct chart_context* m_this_chart_context;
 
 private:
 	bool DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, RenderTypeEnum option,
@@ -226,7 +228,7 @@ private:
 
 	void ResetPointBBoxes(const ViewPort& vp_last, const ViewPort& vp_this);
 
-	//    Access to raw ENC DataSet
+	// Access to raw ENC DataSet
 	bool InitENCMinimal(const wxString& FullPath);
 	int GetENCScale();
 	OGRFeature* GetChartFirstM_COVR(int& catcov);

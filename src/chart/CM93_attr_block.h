@@ -30,13 +30,13 @@ class cm93_dictionary;
 
 class cm93_attr_block
 {
-	public:
-		cm93_attr_block(void * block, cm93_dictionary * pdict);
-		unsigned char * GetNextAttr();
+public:
+	cm93_attr_block(void* block, cm93_dictionary* pdict);
+	unsigned char* GetNextAttr();
 
-		int m_cptr;
-		unsigned char * m_block;
-		cm93_dictionary *m_pDict;
+	int m_cptr;
+	unsigned char* m_block;
+	cm93_dictionary* m_pDict;
 };
 
 }

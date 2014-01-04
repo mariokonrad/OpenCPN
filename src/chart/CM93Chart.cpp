@@ -335,139 +335,133 @@ static int read_and_decode_ushort(FILE* stream, unsigned short* p)
 	return 1;
 }
 
-static bool read_header_and_populate_cib ( FILE *stream, Cell_Info_Block *pCIB )
+static bool read_header_and_populate_cib(FILE* stream, Cell_Info_Block* pCIB)
 {
-	//    Read header, populate Cell_Info_Block
+	// Read header, populate Cell_Info_Block
 
-	//    This 128 byte block is read element-by-element, to allow for
-	//    endian-ness correction by element.
-	//    Unused elements are read and, well, unused.
+	// This 128 byte block is read element-by-element, to allow for
+	// endian-ness correction by element.
+	// Unused elements are read and, well, unused.
 
 	header_struct header;
 
-	memset ( ( void * ) &header, 0, sizeof ( header ) );
+	memset((void*)&header, 0, sizeof(header));
 
-	read_and_decode_double ( stream,&header.lon_min );
-	read_and_decode_double ( stream,&header.lat_min );
-	read_and_decode_double ( stream,&header.lon_max );
-	read_and_decode_double ( stream,&header.lat_max );
+	read_and_decode_double(stream, &header.lon_min);
+	read_and_decode_double(stream, &header.lat_min);
+	read_and_decode_double(stream, &header.lon_max);
+	read_and_decode_double(stream, &header.lat_max);
 
-	read_and_decode_double ( stream,&header.easting_min );
-	read_and_decode_double ( stream,&header.northing_min );
-	read_and_decode_double ( stream,&header.easting_max );
-	read_and_decode_double ( stream,&header.northing_max );
+	read_and_decode_double(stream, &header.easting_min);
+	read_and_decode_double(stream, &header.northing_min);
+	read_and_decode_double(stream, &header.easting_max);
+	read_and_decode_double(stream, &header.northing_max);
 
-	read_and_decode_ushort ( stream,&header.usn_vector_records );
-	read_and_decode_int ( stream,&header.n_vector_record_points );
-	read_and_decode_int ( stream,&header.m_46 );
-	read_and_decode_int ( stream,&header.m_4a );
-	read_and_decode_ushort ( stream,&header.usn_point3d_records );
-	read_and_decode_int ( stream,&header.m_50 );
-	read_and_decode_int ( stream,&header.m_54 );
-	read_and_decode_ushort ( stream,&header.usn_point2d_records );
-	read_and_decode_ushort ( stream,&header.m_5a );
-	read_and_decode_ushort ( stream,&header.m_5c );
-	read_and_decode_ushort ( stream,&header.usn_feature_records );
+	read_and_decode_ushort(stream, &header.usn_vector_records);
+	read_and_decode_int(stream, &header.n_vector_record_points);
+	read_and_decode_int(stream, &header.m_46);
+	read_and_decode_int(stream, &header.m_4a);
+	read_and_decode_ushort(stream, &header.usn_point3d_records);
+	read_and_decode_int(stream, &header.m_50);
+	read_and_decode_int(stream, &header.m_54);
+	read_and_decode_ushort(stream, &header.usn_point2d_records);
+	read_and_decode_ushort(stream, &header.m_5a);
+	read_and_decode_ushort(stream, &header.m_5c);
+	read_and_decode_ushort(stream, &header.usn_feature_records);
 
-	read_and_decode_int ( stream,&header.m_60 );
-	read_and_decode_int ( stream,&header.m_64 );
-	read_and_decode_ushort ( stream,&header.m_68 );
-	read_and_decode_ushort ( stream,&header.m_6a );
-	read_and_decode_ushort ( stream,&header.m_6c );
-	read_and_decode_int ( stream,&header.m_nrelated_object_pointers );
+	read_and_decode_int(stream, &header.m_60);
+	read_and_decode_int(stream, &header.m_64);
+	read_and_decode_ushort(stream, &header.m_68);
+	read_and_decode_ushort(stream, &header.m_6a);
+	read_and_decode_ushort(stream, &header.m_6c);
+	read_and_decode_int(stream, &header.m_nrelated_object_pointers);
 
-	read_and_decode_int ( stream,&header.m_72 );
-	read_and_decode_ushort ( stream,&header.m_76 );
+	read_and_decode_int(stream, &header.m_72);
+	read_and_decode_ushort(stream, &header.m_76);
 
-	read_and_decode_int ( stream,&header.m_78 );
-	read_and_decode_int ( stream,&header.m_7c );
+	read_and_decode_int(stream, &header.m_78);
+	read_and_decode_int(stream, &header.m_7c);
 
-
-	//    Calculate and record the cell coordinate transform coefficients
-
+	// Calculate and record the cell coordinate transform coefficients
 
 	double delta_x = header.easting_max - header.easting_min;
-	if ( delta_x < 0 )
-		delta_x += CM93_semimajor_axis_meters * 2.0 * M_PI;              // add one trip around
+	if (delta_x < 0)
+		delta_x += CM93_semimajor_axis_meters * 2.0 * M_PI; // add one trip around
 
 	pCIB->transform_x_rate = delta_x / 65535;
-	pCIB->transform_y_rate = ( header.northing_max - header.northing_min ) / 65535;
+	pCIB->transform_y_rate = (header.northing_max - header.northing_min) / 65535;
 
-	//    Force all transforms to produce positive longitude only
+	// Force all transforms to produce positive longitude only
 	pCIB->transform_x_origin = header.easting_min;
-	if ( pCIB->transform_x_origin < 0 )
-		pCIB->transform_x_origin += CM93_semimajor_axis_meters * 2.0 * M_PI;              // add one trip around
+	if (pCIB->transform_x_origin < 0)
+		pCIB->transform_x_origin += CM93_semimajor_axis_meters * 2.0 * M_PI; // add one trip around
 	pCIB->transform_y_origin = header.northing_min;
 
-	//      pCIB->m_cell_mcovr_array.Empty();
-
-	//    Extract some table sizes from the header, and pre-allocate the tables
-	//    We do it this way to avoid incremental realloc() calls, which are expensive
+	// Extract some table sizes from the header, and pre-allocate the tables
+	// We do it this way to avoid incremental realloc() calls, which are expensive
 
 	pCIB->m_nfeature_records = header.usn_feature_records;
-	pCIB->pobject_block = ( Object * ) calloc ( pCIB->m_nfeature_records * sizeof ( Object ), 1 );
+	pCIB->pobject_block = (Object*)calloc(pCIB->m_nfeature_records * sizeof(Object), 1);
 
 	pCIB->m_n_point2d_records = header.usn_point2d_records;
-	pCIB->p2dpoint_array = ( cm93_point * ) malloc ( pCIB->m_n_point2d_records * sizeof ( cm93_point ) );
+	pCIB->p2dpoint_array = (cm93_point*)malloc(pCIB->m_n_point2d_records * sizeof(cm93_point));
 
-	pCIB->pprelated_object_block = ( Object ** ) malloc ( header.m_nrelated_object_pointers * sizeof ( Object * ) );
+	pCIB->pprelated_object_block
+		= (Object**)malloc(header.m_nrelated_object_pointers * sizeof(Object*));
 
-	pCIB->object_vector_record_descriptor_block = ( vector_record_descriptor * ) malloc ( ( header.m_4a + header.m_46 ) * sizeof ( vector_record_descriptor ) );
+	pCIB->object_vector_record_descriptor_block = (vector_record_descriptor*)malloc(
+		(header.m_4a + header.m_46) * sizeof(vector_record_descriptor));
 
-	pCIB->attribute_block_top = ( unsigned char * ) calloc ( header.m_78, 1 );
+	pCIB->attribute_block_top = (unsigned char*)calloc(header.m_78, 1);
 
 	pCIB->m_nvector_records = header.usn_vector_records;
-	pCIB->edge_vector_descriptor_block = ( geometry_descriptor * ) malloc ( header.usn_vector_records * sizeof ( geometry_descriptor ) );
+	pCIB->edge_vector_descriptor_block
+		= (geometry_descriptor*)malloc(header.usn_vector_records * sizeof(geometry_descriptor));
 
-	pCIB->pvector_record_block_top = ( cm93_point * ) malloc ( header.n_vector_record_points * sizeof ( cm93_point ) );
+	pCIB->pvector_record_block_top
+		= (cm93_point*)malloc(header.n_vector_record_points * sizeof(cm93_point));
 
 	pCIB->m_n_point3d_records = header.usn_point3d_records;
-	pCIB->point3d_descriptor_block = ( geometry_descriptor * ) malloc ( pCIB->m_n_point3d_records * sizeof ( geometry_descriptor ) );
+	pCIB->point3d_descriptor_block
+		= (geometry_descriptor*)malloc(pCIB->m_n_point3d_records * sizeof(geometry_descriptor));
 
-	pCIB->p3dpoint_array = ( cm93_point_3d * ) malloc ( header.m_50 * sizeof ( cm93_point_3d ) );
+	pCIB->p3dpoint_array = (cm93_point_3d*)malloc(header.m_50 * sizeof(cm93_point_3d));
 
 	return true;
 }
 
-static bool read_vector_record_table ( FILE *stream, int count, Cell_Info_Block *pCIB )
+static bool read_vector_record_table(FILE* stream, int count, Cell_Info_Block* pCIB)
 {
 	bool brv;
 
-	geometry_descriptor *p = pCIB->edge_vector_descriptor_block;
-	cm93_point *q = pCIB->pvector_record_block_top;
+	geometry_descriptor* p = pCIB->edge_vector_descriptor_block;
+	cm93_point* q = pCIB->pvector_record_block_top;
 
-	for ( int iedge=0 ; iedge < count ; iedge++ )
-	{
+	for (int iedge = 0; iedge < count; iedge++) {
 
 		p->index = iedge;
 
 		unsigned short npoints;
-		brv = ! ( read_and_decode_ushort ( stream, &npoints ) == 0 );
-		if ( !brv )
+		brv = !(read_and_decode_ushort(stream, &npoints) == 0);
+		if (!brv)
 			return false;
 
 		p->n_points = npoints;
 		p->p_points = q;
 
-		//           brv = read_and_decode_bytes(stream, q, p->n_points * sizeof(cm93_point));
-		//            if(!brv)
-		//                  return false;
-
 		unsigned short x, y;
-		for ( int index = 0 ; index <  p->n_points ; index++ )
-		{
-			if ( !read_and_decode_ushort ( stream, &x ) )
+		for (int index = 0; index < p->n_points; index++) {
+			if (!read_and_decode_ushort(stream, &x))
 				return false;
-			if ( !read_and_decode_ushort ( stream, &y ) )
+			if (!read_and_decode_ushort(stream, &y))
 				return false;
 
 			q[index].x = x;
 			q[index].y = y;
 		}
 
-
-		//    Compute and store the min/max of this block of n_points
-		cm93_point *t = p->p_points;
+		// Compute and store the min/max of this block of n_points
+		cm93_point* t = p->p_points;
 
 		p->x_max = t->x;
 		p->x_min = t->x;
@@ -476,69 +470,58 @@ static bool read_vector_record_table ( FILE *stream, int count, Cell_Info_Block 
 
 		t++;
 
-		for ( int j=0 ; j < p->n_points-1 ; j++ )
-		{
-			if ( t->x >= p->x_max )
+		for (int j = 0; j < p->n_points - 1; j++) {
+			if (t->x >= p->x_max)
 				p->x_max = t->x;
 
-			if ( t->x <= p->x_min )
+			if (t->x <= p->x_min)
 				p->x_min = t->x;
 
-			if ( t->y >= p->y_max )
+			if (t->y >= p->y_max)
 				p->y_max = t->y;
 
-			if ( t->y <= p->y_max )
+			if (t->y <= p->y_max)
 				p->y_min = t->y;
 
 			t++;
 		}
 
-		//    Advance the block pointer
+		// Advance the block pointer
 		q += p->n_points;
 
-		//    Advance the geometry descriptor pointer
+		// Advance the geometry descriptor pointer
 		p++;
-
 	}
 
 	return true;
 }
 
-
-static bool read_3dpoint_table ( FILE *stream, int count, Cell_Info_Block *pCIB )
+static bool read_3dpoint_table(FILE* stream, int count, Cell_Info_Block* pCIB)
 {
-	geometry_descriptor *p = pCIB->point3d_descriptor_block;
-	cm93_point_3d *q = pCIB->p3dpoint_array;
+	geometry_descriptor* p = pCIB->point3d_descriptor_block;
+	cm93_point_3d* q = pCIB->p3dpoint_array;
 
-	for ( int i = 0 ; i < count ; i++ )
-	{
+	for (int i = 0; i < count; i++) {
 		unsigned short npoints;
-		if ( !read_and_decode_ushort ( stream, &npoints ) )
+		if (!read_and_decode_ushort(stream, &npoints))
 			return false;
 
 		p->n_points = npoints;
-		p->p_points = ( cm93_point * ) q;       // might not be the right cast
-
-		//            unsigned short t = p->n_points;
-
-		//            if(!read_and_decode_bytes(stream, q, t*6))
-		//                  return false;
+		p->p_points = (cm93_point*)q; // might not be the right cast
 
 		unsigned short x, y, z;
-		for ( int index = 0 ; index < p->n_points ; index++ )
-		{
-			if ( !read_and_decode_ushort ( stream, &x ) )
+		for (int index = 0; index < p->n_points; index++) {
+			if (!read_and_decode_ushort(stream, &x))
 				return false;
-			if ( !read_and_decode_ushort ( stream, &y ) )
+			if (!read_and_decode_ushort(stream, &y))
 				return false;
-			if ( !read_and_decode_ushort ( stream, &z ) )
+			if (!read_and_decode_ushort(stream, &z))
 				return false;
 
 			q[index].x = x;
 			q[index].y = y;
 			q[index].z = z;
 		}
-
 
 		p++;
 		q++;
@@ -564,19 +547,20 @@ static bool read_2dpoint_table(FILE* stream, int count, Cell_Info_Block* pCIB)
 	return true;
 }
 
-static bool read_feature_record_table ( FILE *stream, int n_features, Cell_Info_Block *pCIB )
+static bool read_feature_record_table(FILE* stream, int n_features, Cell_Info_Block* pCIB)
 {
 	try
 	{
+		Object* pobj = pCIB->pobject_block; // head of object array
 
-		Object *pobj = pCIB->pobject_block;                // head of object array
+		vector_record_descriptor* pobject_vector_collection
+			= pCIB->object_vector_record_descriptor_block;
 
-		vector_record_descriptor *pobject_vector_collection = pCIB->object_vector_record_descriptor_block;
+		Object** p_relob = pCIB->pprelated_object_block; // head of previously allocated related
+														 // object pointer block
 
-		Object **p_relob = pCIB->pprelated_object_block;             // head of previously allocated related object pointer block
-
-		unsigned char *puc_var10 = pCIB->attribute_block_top;       //m_3a;
-		int puc10count = 0;                 // should be same as header.m_78
+		unsigned char* puc_var10 = pCIB->attribute_block_top; // m_3a;
+		int puc10count = 0; // should be same as header.m_78
 
 		unsigned char object_type;
 		unsigned char geom_prim;
@@ -586,169 +570,155 @@ static bool read_feature_record_table ( FILE *stream, int n_features, Cell_Info_
 		unsigned short index;
 		unsigned short n_elements;
 
-
-		for ( int iobject = 0 ; iobject < n_features ; iobject++ )
-		{
+		for (int iobject = 0; iobject < n_features; iobject++) {
 
 			// read the object definition
-			read_and_decode_bytes ( stream, &object_type, 1 );           // read the object type
-			read_and_decode_bytes ( stream, &geom_prim, 1 );             // read the object geometry primitive type
-			read_and_decode_ushort ( stream, &obj_desc_bytes );          // read the object byte count
+			read_and_decode_bytes(stream, &object_type, 1); // read the object type
+			read_and_decode_bytes(stream, &geom_prim, 1); // read the object geometry primitive type
+			read_and_decode_ushort(stream, &obj_desc_bytes); // read the object byte count
 
 			pobj->otype = object_type;
 			pobj->geotype = geom_prim;
 
+			switch (pobj->geotype & 0x0f) {
+				case 4: // AREA
+				{
+					if (!read_and_decode_ushort(stream, &n_elements))
+						return false;
 
-			switch ( pobj->geotype & 0x0f )
-			{
-				case 4:              // AREA
-					{
+					pobj->n_geom_elements = n_elements;
+					t = (pobj->n_geom_elements * 2) + 2;
+					obj_desc_bytes -= t;
 
-						if ( !read_and_decode_ushort ( stream, &n_elements ) )
+					pobj->pGeometry = pobject_vector_collection; // save pointer to created
+																 // vector_record_descriptor in the
+																 // object
+
+					for (unsigned short i = 0; i < pobj->n_geom_elements; i++) {
+						if (!read_and_decode_ushort(stream, &index))
 							return false;
 
-						pobj->n_geom_elements = n_elements;
-						t = ( pobj->n_geom_elements * 2 ) + 2;
-						obj_desc_bytes -= t;
+						if ((index & 0x1fff) > pCIB->m_nvector_records)
+							return false; // error in this cell, ignore all of it
 
-						pobj->pGeometry = pobject_vector_collection;           // save pointer to created vector_record_descriptor in the object
+						geometry_descriptor* u =
+							&pCIB->edge_vector_descriptor_block[(index & 0x1fff)]; // point to the
+																				   // vector
+																				   // descriptor
 
-						for ( unsigned short i = 0 ; i < pobj->n_geom_elements ; i++ )
-						{
-							if ( !read_and_decode_ushort ( stream, &index ) )
-								return false;
+						pobject_vector_collection->pGeom_Description = u;
+						pobject_vector_collection->segment_usage = (unsigned char)(index >> 13);
 
-							if ( ( index & 0x1fff ) > pCIB->m_nvector_records )
-								return false;               // error in this cell, ignore all of it
-
-							geometry_descriptor *u = &pCIB->edge_vector_descriptor_block[ ( index & 0x1fff ) ];   //point to the vector descriptor
-
-							pobject_vector_collection->pGeom_Description = u;
-							pobject_vector_collection->segment_usage = ( unsigned char ) ( index >> 13 );
-
-							pobject_vector_collection++;
-						}
-
-						break;
-					}                                   // AREA geom
-
-
-
-				case 2:                                         // LINE geometry
-					{
-
-						if ( !read_and_decode_ushort ( stream, &n_elements ) )      // read geometry element count
-							return false;
-
-						pobj->n_geom_elements = n_elements;
-						t = ( pobj->n_geom_elements * 2 ) + 2;
-						obj_desc_bytes -= t;
-
-						pobj->pGeometry = pobject_vector_collection;                     // save pointer to created vector_record_descriptor in the object
-
-						for ( unsigned short i = 0 ; i < pobj->n_geom_elements ; i++ )
-						{
-							unsigned short geometry_index;
-
-							if ( !read_and_decode_ushort ( stream, &geometry_index ) )
-								return false;
-
-
-							if ( ( geometry_index & 0x1fff ) > pCIB->m_nvector_records )
-								//                                    *(int *)(0) = 0;                              // error
-								return 0;               // error, bad pointer
-
-							geometry_descriptor *u = &pCIB->edge_vector_descriptor_block[ ( geometry_index & 0x1fff ) ];  //point to the vector descriptor
-
-							pobject_vector_collection->pGeom_Description = u;
-							pobject_vector_collection->segment_usage = ( unsigned char ) ( geometry_index >> 13 );
-
-							pobject_vector_collection++;
-						}
-
-						break;
-
-
+						pobject_vector_collection++;
 					}
 
-				case 1:
-					{
-						if ( !read_and_decode_ushort ( stream, &index ) )
+					break;
+				} // AREA geom
+
+				case 2: // LINE geometry
+				{
+					if (!read_and_decode_ushort(stream, &n_elements)) // read geometry element count
+						return false;
+
+					pobj->n_geom_elements = n_elements;
+					t = (pobj->n_geom_elements * 2) + 2;
+					obj_desc_bytes -= t;
+
+					pobj->pGeometry = pobject_vector_collection; // save pointer to created
+																 // vector_record_descriptor in the
+																 // object
+
+					for (unsigned short i = 0; i < pobj->n_geom_elements; i++) {
+						unsigned short geometry_index;
+
+						if (!read_and_decode_ushort(stream, &geometry_index))
 							return false;
 
-						obj_desc_bytes -= 2;
+						if ((geometry_index & 0x1fff) > pCIB->m_nvector_records)
+							return 0; // error, bad pointer
 
-						pobj->n_geom_elements = 1;                 // one point
+						geometry_descriptor* u =
+							&pCIB->edge_vector_descriptor_block
+								 [(geometry_index & 0x1fff)]; // point to the vector descriptor
 
-						pobj->pGeometry = &pCIB->p2dpoint_array[index];            //cm93_point *
+						pobject_vector_collection->pGeom_Description = u;
+						pobject_vector_collection->segment_usage
+							= (unsigned char)(geometry_index >> 13);
 
-						break;
+						pobject_vector_collection++;
 					}
+					break;
+				}
 
-				case 8:
-					{
-						if ( !read_and_decode_ushort ( stream, &index ) )
-							return false;
-						obj_desc_bytes -= 2;
+				case 1: {
+					if (!read_and_decode_ushort(stream, &index))
+						return false;
 
-						pobj->n_geom_elements = 1;                 // one point
+					obj_desc_bytes -= 2;
+					pobj->n_geom_elements = 1; // one point
+					pobj->pGeometry = &pCIB->p2dpoint_array[index]; // cm93_point *
+					break;
+				}
 
-						pobj->pGeometry = &pCIB->point3d_descriptor_block[index];          //geometry_descriptor *
+				case 8: {
+					if (!read_and_decode_ushort(stream, &index))
+						return false;
+					obj_desc_bytes -= 2;
 
-						break;
-					}
+					pobj->n_geom_elements = 1; // one point
 
-			}           // switch
+					pobj->pGeometry =
+						&pCIB->point3d_descriptor_block[index]; // geometry_descriptor *
 
+					break;
+				}
+			}
 
-
-			if ( ( pobj->geotype & 0x10 ) == 0x10 )        // children/related
+			if ((pobj->geotype & 0x10) == 0x10) // children/related
 			{
 				unsigned char nrelated;
-				if ( !read_and_decode_bytes ( stream, &nrelated, 1 ) )
+				if (!read_and_decode_bytes(stream, &nrelated, 1))
 					return false;
 
 				pobj->n_related_objects = nrelated;
-				t = ( pobj->n_related_objects * 2 ) + 1;
+				t = (pobj->n_related_objects * 2) + 1;
 				obj_desc_bytes -= t;
 
 				pobj->p_related_object_pointer_array = p_relob;
 				p_relob += pobj->n_related_objects;
 
-				Object **w = ( Object ** ) pobj->p_related_object_pointer_array;
-				for ( unsigned char j = 0 ; j < pobj->n_related_objects ; j++ )
-				{
-					if ( !read_and_decode_ushort ( stream, &index ) )
+				Object** w = (Object**)pobj->p_related_object_pointer_array;
+				for (unsigned char j = 0; j < pobj->n_related_objects; j++) {
+					if (!read_and_decode_ushort(stream, &index))
 						return false;
 
-					if ( index > pCIB->m_nfeature_records )
-						//                              *(int *)(0) = 0;                              // error
+					if (index > pCIB->m_nfeature_records)
 						return false;
 
-					Object *prelated_object = &pCIB->pobject_block[index];
-					*w = prelated_object;                       // fwd link
+					Object* prelated_object = &pCIB->pobject_block[index];
+					*w = prelated_object; // fwd link
 
-					prelated_object->p_related_object_pointer_array = pobj;              // back link, array of 1 element
+					prelated_object->p_related_object_pointer_array
+						= pobj; // back link, array of 1 element
 					w++;
 				}
 			}
 
-			if ( ( pobj->geotype & 0x20 ) == 0x20 )
-			{
+			if ((pobj->geotype & 0x20) == 0x20) {
 				unsigned short nrelated;
-				if ( !read_and_decode_ushort ( stream, &nrelated ) )
+				if (!read_and_decode_ushort(stream, &nrelated))
 					return false;
 
-				pobj->n_related_objects = ( unsigned char ) ( nrelated & 0xFF );
+				pobj->n_related_objects = (unsigned char)(nrelated & 0xFF);
 				obj_desc_bytes -= 2;
 			}
 
-			if ( ( pobj->geotype & 0x80 ) == 0x80 )        // attributes
-			{
+			// attributes
+			if ((pobj->geotype & 0x80) == 0x80) {
 
 				unsigned char nattr;
-				if ( !read_and_decode_bytes ( stream, &nattr, 1 ) )
-					return false;        //m_od
+				if (!read_and_decode_bytes(stream, &nattr, 1))
+					return false; // m_od
 
 				pobj->n_attributes = nattr;
 				obj_desc_bytes -= 5;
@@ -758,17 +728,15 @@ static bool read_feature_record_table ( FILE *stream, int n_features, Cell_Info_
 
 				puc10count += obj_desc_bytes;
 
-
-				if ( !read_and_decode_bytes ( stream, pobj->attributes_block, obj_desc_bytes ) )
-					return false;           // the attributes....
+				if (!read_and_decode_bytes(stream, pobj->attributes_block, obj_desc_bytes))
+					return false; // the attributes....
 			}
-			pobj++;                       // next object
+			pobj++; // next object
 		}
 	}
-
-	catch ( ... )
+	catch (...)
 	{
-		printf ( "catch on read_feature_record_table\n" );
+		printf("catch on read_feature_record_table\n");
 	}
 
 	return true;
@@ -800,14 +768,14 @@ static bool Ingest_CM93_Cell(const char* cell_file_name, Cell_Info_Block* pCIB) 
 		int int0 = 0;
 		int int1 = 0;
 
-		read_and_decode_ushort ( stream, &word0 );     // length of prolog + header (10 + 128)
-		read_and_decode_int ( stream, &int0 );         // length of table 1
-		read_and_decode_int ( stream, &int1 );         // length of table 2
+		read_and_decode_ushort(stream, &word0); // length of prolog + header (10 + 128)
+		read_and_decode_int(stream, &int0); // length of table 1
+		read_and_decode_int(stream, &int1); // length of table 2
 
 		int test = word0 + int0 + int1;
 		if (test != file_length) {
-			fclose ( stream );
-			return false;                           // file is corrupt
+			fclose(stream);
+			return false; // file is corrupt
 		}
 
 		// Cell is OK, proceed to ingest
@@ -958,7 +926,7 @@ void cm93chart::GetPointPix(ObjRazRules* rzRules, float north, float east, wxPoi
 	double valx = (east * obj->x_rate) + obj->x_origin;
 	double valy = (north * obj->y_rate) + obj->y_origin;
 
-	//    Crossing Greenwich right
+	// Crossing Greenwich right
 	if (m_vp_current.GetBBox().GetMaxX() > 360.0) {
 		BoundingBox bbRight(0.0, m_vp_current.GetBBox().GetMinY(),
 							m_vp_current.GetBBox().GetMaxX() - 360.,
@@ -1062,7 +1030,7 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 	return false;
 }
 
-void cm93chart::SetVPParms ( const ViewPort &vpt )
+void cm93chart::SetVPParms(const ViewPort& vpt)
 {
 	// Save a copy for later reference
 
@@ -1073,34 +1041,31 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 	m_pixy_vp_center = vpt.pix_height / 2;
 	m_view_scale_ppm = vpt.view_scale_ppm;
 
-	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center, &m_northing_vp_center);
+	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center,
+			  &m_northing_vp_center);
 
-
-	if (g_bDebugCM93)
-	{
+	if (g_bDebugCM93) {
 		// Fetch the lat/lon of the screen corner points
-		const geo::LatLonBoundingBox & box = vpt.GetBBox();
+		const geo::LatLonBoundingBox& box = vpt.GetBBox();
 		double ll_lon = box.GetMinX();
 		double ll_lat = box.GetMinY();
 
 		double ur_lon = box.GetMaxX();
 		double ur_lat = box.GetMaxY();
 
-		printf ( "cm93chart::SetVPParms   ll_lon: %g  ll_lat: %g   ur_lon: %g   ur_lat:  %g  m_dval: %g\n", ll_lon, ll_lat, ur_lon, ur_lat, m_dval );
+		printf("cm93chart::SetVPParms  ll_lon:%g ll_lat:%g ur_lon:%g ur_lat:%g m_dval:%g\n",
+			   ll_lon, ll_lat, ur_lon, ur_lat, m_dval);
 	}
 
-
 	// Create an array of CellIndexes covering the current viewport
-	std::vector<int> vpcells = GetVPCellArray ( vpt );
+	std::vector<int> vpcells = GetVPCellArray(vpt);
 
 	// Check the member array to see if all these viewport cells have been loaded
 	bool bcell_is_in;
 
-	for ( unsigned int i=0 ; i < vpcells.size() ; i++ )
-	{
+	for (unsigned int i = 0; i < vpcells.size(); i++) {
 		bcell_is_in = false;
-		for ( unsigned int j=0 ; j < m_cells_loaded_array.size() ; j++ )
-		{
+		for (unsigned int j = 0; j < m_cells_loaded_array.size(); j++) {
 			if (vpcells[i] == m_cells_loaded_array[j]) {
 				bcell_is_in = true;
 				break;
@@ -1108,32 +1073,31 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 		}
 
 		// The cell is not in place, so go load it
-		if ( !bcell_is_in )
-		{
+		if (!bcell_is_in) {
 			int cell_index = vpcells[i];
 
-			if (loadcell_in_sequence(cell_index, '0')) // Base cell
-			{
+			if (loadcell_in_sequence(cell_index, '0')) {
+				// Base cell
 				ProcessVectorEdges();
-				CreateObjChain(cell_index, ( int ) '0');
-				ForceEdgePriorityEvaluate();              // need to re-evaluate priorities
+				CreateObjChain(cell_index, (int)'0');
+				ForceEdgePriorityEvaluate(); // need to re-evaluate priorities
 				BuildDepthContourArray();
 				m_cells_loaded_array.push_back(cell_index);
 				Unload_CM93_Cell();
 			}
 
-			char loadcell_key = 'A';               // starting
+			char loadcell_key = 'A'; // starting
 
-			//    Load any subcells in sequence
-			//    On successful load, add it to the member list and process the cell
-			while ( loadcell_in_sequence ( cell_index, loadcell_key ) )
-			{
+			// Load any subcells in sequence
+			// On successful load, add it to the member list and process the cell
+			while (loadcell_in_sequence(cell_index, loadcell_key)) {
 				ProcessVectorEdges();
-				CreateObjChain(cell_index, ( int ) loadcell_key);
+				CreateObjChain(cell_index, (int)loadcell_key);
 
-				ForceEdgePriorityEvaluate();              // need to re-evaluate priorities
+				ForceEdgePriorityEvaluate(); // need to re-evaluate priorities
 
-				if (m_cells_loaded_array.end() == std::find(m_cells_loaded_array.begin(), m_cells_loaded_array.end(), cell_index))
+				if (m_cells_loaded_array.end() == std::find(m_cells_loaded_array.begin(),
+															m_cells_loaded_array.end(), cell_index))
 					m_cells_loaded_array.push_back(cell_index);
 
 				Unload_CM93_Cell();
@@ -1141,94 +1105,86 @@ void cm93chart::SetVPParms ( const ViewPort &vpt )
 			}
 		}
 	}
-	if( s_b_busy_shown){
+	if (s_b_busy_shown) {
 		::wxEndBusyCursor();
 		s_b_busy_shown = false;
 	}
 }
 
-
-std::vector<int> cm93chart::GetVPCellArray(const ViewPort &vpt)
+std::vector<int> cm93chart::GetVPCellArray(const ViewPort& vpt)
 {
-	//    Fetch the lat/lon of the screen corner points
-	const geo::LatLonBoundingBox & box = vpt.GetBBox();
+	// Fetch the lat/lon of the screen corner points
+	const geo::LatLonBoundingBox& box = vpt.GetBBox();
 	double ll_lon = box.GetMinX();
 	double ll_lat = box.GetMinY();
 
 	double ur_lon = box.GetMaxX();
 	double ur_lat = box.GetMaxY();
 
-	//    Adjust to always positive for easier cell calculations
-	if ( ll_lon < 0 )
-	{
+	// Adjust to always positive for easier cell calculations
+	if (ll_lon < 0) {
 		ll_lon += 360;
 		ur_lon += 360;
 	}
 
-	//    Create an array of CellIndexes covering the current viewport
+	// Create an array of CellIndexes covering the current viewport
 	std::vector<int> vpcells;
 
-	int lower_left_cell = Get_CM93_CellIndex ( ll_lat, ll_lon, GetNativeScale() );
-	vpcells.push_back(lower_left_cell);                // always add the lower left cell
+	int lower_left_cell = Get_CM93_CellIndex(ll_lat, ll_lon, GetNativeScale());
+	vpcells.push_back(lower_left_cell); // always add the lower left cell
 
-	if ( g_bDebugCM93 )
-		printf ( "cm93chart::GetVPCellArray   Adding %d\n", lower_left_cell );
+	if (g_bDebugCM93)
+		printf("cm93chart::GetVPCellArray   Adding %d\n", lower_left_cell);
 
 	double rlat, rlon;
-	Get_CM93_Cell_Origin ( lower_left_cell, GetNativeScale(), &rlat, &rlon );
-
+	Get_CM93_Cell_Origin(lower_left_cell, GetNativeScale(), &rlat, &rlon);
 
 	// Use exact integer math here
-	//    It is more obtuse, but it removes dependency on FP rounding policy
+	// It is more obtuse, but it removes dependency on FP rounding policy
 
-	int loni_0 = ( int ) wxRound ( rlon * 3 );
-	int loni_20 = loni_0 + ( int ) m_dval;            // already added the lower left cell
-	int lati_20 = ( int ) wxRound ( rlat * 3 );
+	int loni_0 = (int)wxRound(rlon * 3);
+	int loni_20 = loni_0 + (int)m_dval; // already added the lower left cell
+	int lati_20 = (int)wxRound(rlat * 3);
 
-
-	while ( lati_20 < ( ur_lat * 3. ) )
-	{
-		while ( loni_20 < ( ur_lon * 3. ) )
-		{
+	while (lati_20 < (ur_lat * 3.0)) {
+		while (loni_20 < (ur_lon * 3.0)) {
 			unsigned int next_lon = loni_20 + 1080;
-			while ( next_lon >= 1080 )
+			while (next_lon >= 1080)
 				next_lon -= 1080;
 
 			unsigned int next_cell = next_lon;
 
-			next_cell += ( lati_20 + 270 ) * 10000;
+			next_cell += (lati_20 + 270) * 10000;
 
 			vpcells.push_back(next_cell);
-			if ( g_bDebugCM93 )
-				printf ( "cm93chart::GetVPCellArray   Adding %d\n", next_cell );
+			if (g_bDebugCM93)
+				printf("cm93chart::GetVPCellArray   Adding %d\n", next_cell);
 
-			loni_20 += ( int ) m_dval;
+			loni_20 += (int)m_dval;
 		}
-		lati_20 += ( int ) m_dval;
+		lati_20 += (int)m_dval;
 		loni_20 = loni_0;
 	}
 
 	return vpcells;
 }
 
-
-
 void cm93chart::ProcessVectorEdges(void)
 {
 	// Create the vector(edge) map for this cell, appending to the existing member hash map
 
-	VE_Hash & vehash = Get_ve_hash();
+	VE_Hash& vehash = Get_ve_hash();
 
 	m_current_cell_vearray_offset = vehash.size(); // keys start at the current size
-	geometry_descriptor *pgd = m_CIB->edge_vector_descriptor_block;
+	geometry_descriptor* pgd = m_CIB->edge_vector_descriptor_block;
 
-	for (int iedge = 0 ; iedge < m_CIB->m_nvector_records ; ++iedge) {
-		VE_Element * vep = new VE_Element(iedge + m_current_cell_vearray_offset, pgd->n_points);
+	for (int iedge = 0; iedge < m_CIB->m_nvector_records; ++iedge) {
+		VE_Element* vep = new VE_Element(iedge + m_current_cell_vearray_offset, pgd->n_points);
 		if (pgd->n_points) {
-			double * pPoints = new double[pgd->n_points * 2];
+			double* pPoints = new double[pgd->n_points * 2];
 			vep->pPoints = pPoints;
 
-			cm93_point *ppt = pgd->p_points;
+			cm93_point* ppt = pgd->p_points;
 			for (int ip = 0; ip < pgd->n_points; ++ip) {
 				*pPoints++ = ppt->x;
 				*pPoints++ = ppt->y;
@@ -1248,42 +1204,39 @@ int cm93chart::CreateObjChain(int cell_index, int subcell)
 
 	m_CIB->m_cell_mcovr_list.clear();
 
-	Object *pobjectDef = m_CIB->pobject_block;           // head of object array
-	m_CIB->b_have_offsets = false;                       // will be set if any M_COVRs in this cell have defined, non-zero WGS84 offsets
-	m_CIB->b_have_user_offsets = false;                  // will be set if any M_COVRs in this cell have user defined offsets
+	Object* pobjectDef = m_CIB->pobject_block; // head of object array
+	m_CIB->b_have_offsets
+		= false; // will be set if any M_COVRs in this cell have defined, non-zero WGS84 offsets
+	m_CIB->b_have_user_offsets
+		= false; // will be set if any M_COVRs in this cell have user defined offsets
 
 	int iObj = 0;
-	S57Obj *obj;
+	S57Obj* obj;
 
-	while ( iObj < m_CIB->m_nfeature_records )
-	{
-		if ( ( pobjectDef != NULL ) )
-		{
-			geo::ExtendedGeometry *xgeom = BuildGeom ( pobjectDef, NULL, iObj );
+	while (iObj < m_CIB->m_nfeature_records) {
+		if ((pobjectDef != NULL)) {
+			geo::ExtendedGeometry* xgeom = BuildGeom(pobjectDef, NULL, iObj);
 
 			obj = NULL;
-			if ( NULL != xgeom )
-				obj = CreateS57Obj ( cell_index, iObj, subcell, pobjectDef, m_pDict, xgeom, ref_lat, ref_lon, GetNativeScale() );
+			if (NULL != xgeom)
+				obj = CreateS57Obj(cell_index, iObj, subcell, pobjectDef, m_pDict, xgeom, ref_lat,
+								   ref_lon, GetNativeScale());
 
-			if ( obj )
-			{
+			if (obj) {
 
 				//      Build/Maintain the ATON floating/rigid arrays
-				if ( GEO_POINT == obj->Primitive_type )
-				{
+				if (GEO_POINT == obj->Primitive_type) {
 
 					// set floating platform
-					if ( ( !strncmp ( obj->FeatureName, "LITFLT", 6 ) ) ||
-							( !strncmp ( obj->FeatureName, "LITVES", 6 ) ) ||
-							( !strncmp ( obj->FeatureName, "BOY",    3 ) ) )
-					{
-						pFloatingATONArray->Add ( obj );
+					if ((!strncmp(obj->FeatureName, "LITFLT", 6))
+						|| (!strncmp(obj->FeatureName, "LITVES", 6))
+						|| (!strncmp(obj->FeatureName, "BOY", 3))) {
+						pFloatingATONArray->Add(obj);
 					}
 
 					// set rigid platform
-					if ( !strncmp ( obj->FeatureName, "BCN",    3 ) )
-						pRigidATONArray->Add ( obj );
-
+					if (!strncmp(obj->FeatureName, "BCN", 3))
+						pRigidATONArray->Add(obj);
 
 					//    Mark the object as an ATON
 					if ( ( !strncmp ( obj->FeatureName,   "LIT",    3 ) ) ||
@@ -1300,42 +1253,40 @@ int cm93chart::CreateObjChain(int cell_index, int subcell)
 					}
 				}
 
-				//    Mark th object as an "associable depth area"
-				//    Flag is used by conditional symbology
-				if ( GEO_AREA == obj->Primitive_type )
-				{
-					if ( !strncmp ( obj->FeatureName, "DEPARE", 6 ) || !strncmp ( obj->FeatureName, "DRGARE", 6 ) )
+				// Mark th object as an "associable depth area"
+				// Flag is used by conditional symbology
+				if (GEO_AREA == obj->Primitive_type) {
+					if (!strncmp(obj->FeatureName, "DEPARE", 6)
+						|| !strncmp(obj->FeatureName, "DRGARE", 6))
 						obj->bIsAssociable = true;
 				}
 
+				// This is where Simplified or Paper-Type point features are selected
+				// In the case where the chart needs alternate LUPS loaded, do so.
+				// This case is triggered when the UpdateLUP() method has been called on a partially loaded chart.
 
-				//      This is where Simplified or Paper-Type point features are selected
-				//      In the case where the chart needs alternate LUPS loaded, do so.
-				//      This case is triggered when the UpdateLUP() method has been called on a partially loaded chart.
-
-				switch ( obj->Primitive_type )
-				{
+				switch (obj->Primitive_type) {
 					case GEO_POINT:
 					case GEO_META:
 					case GEO_PRIM:
-						if ( PAPER_CHART == ps52plib->m_nSymbolStyle )
+						if (PAPER_CHART == ps52plib->m_nSymbolStyle)
 							LUP_Name = PAPER_CHART;
 						else
 							LUP_Name = SIMPLIFIED;
 
-						if(m_b2pointLUPS)
-						{
-							LUPname  LUPO_Name;
-							if ( PAPER_CHART == ps52plib->m_nSymbolStyle )
+						if (m_b2pointLUPS) {
+							LUPname LUPO_Name;
+							if (PAPER_CHART == ps52plib->m_nSymbolStyle)
 								LUPO_Name = SIMPLIFIED;
 							else
 								LUPO_Name = PAPER_CHART;
 
 							//  Load the alternate LUP
-							LUPrec *LUPO = ps52plib->S52_LUPLookup ( LUPO_Name, obj->FeatureName, obj );
-							if( LUPO ) {
-								ps52plib->_LUP2rules ( LUPO, obj );
-								_insertRules ( obj,LUPO, this );
+							LUPrec* LUPO
+								= ps52plib->S52_LUPLookup(LUPO_Name, obj->FeatureName, obj);
+							if (LUPO) {
+								ps52plib->_LUP2rules(LUPO, obj);
+								_insertRules(obj, LUPO, this);
 							}
 						}
 						break;
@@ -1345,49 +1296,45 @@ int cm93chart::CreateObjChain(int cell_index, int subcell)
 						break;
 
 					case GEO_AREA:
-						if ( PLAIN_BOUNDARIES == ps52plib->m_nBoundaryStyle )
+						if (PLAIN_BOUNDARIES == ps52plib->m_nBoundaryStyle)
 							LUP_Name = PLAIN_BOUNDARIES;
 						else
 							LUP_Name = SYMBOLIZED_BOUNDARIES;
 
-						if(m_b2lineLUPS)
-						{
-							LUPname  LUPO_Name;
-							if ( PLAIN_BOUNDARIES == ps52plib->m_nBoundaryStyle )
+						if (m_b2lineLUPS) {
+							LUPname LUPO_Name;
+							if (PLAIN_BOUNDARIES == ps52plib->m_nBoundaryStyle)
 								LUPO_Name = SYMBOLIZED_BOUNDARIES;
 							else
 								LUPO_Name = PLAIN_BOUNDARIES;
 
 							//  Load the alternate LUP
-							LUPrec *LUPO = ps52plib->S52_LUPLookup ( LUPO_Name, obj->FeatureName, obj );
-							if( LUPO ) {
-								ps52plib->_LUP2rules ( LUPO, obj );
-								_insertRules ( obj,LUPO, this );
+							LUPrec* LUPO
+								= ps52plib->S52_LUPLookup(LUPO_Name, obj->FeatureName, obj);
+							if (LUPO) {
+								ps52plib->_LUP2rules(LUPO, obj);
+								_insertRules(obj, LUPO, this);
 							}
 						}
 						break;
 				}
 
-				LUP = ps52plib->S52_LUPLookup ( LUP_Name, obj->FeatureName, obj );
+				LUP = ps52plib->S52_LUPLookup(LUP_Name, obj->FeatureName, obj);
 
-				if ( NULL == LUP )
-				{
-					if ( g_bDebugCM93 )
-					{
+				if (NULL == LUP) {
+					if (g_bDebugCM93) {
 						wxString msg(obj->FeatureName, wxConvUTF8);
-						msg.Prepend ( _T("   CM93 could not find LUP for "));
+						msg.Prepend(_T("   CM93 could not find LUP for "));
 						LogMessageOnce::log(msg);
 					}
-					if(0 == obj->nRef)
+					if (0 == obj->nRef)
 						delete obj;
-				}
-				else
-				{
+				} else {
 					// Convert LUP to rules set
-					ps52plib->_LUP2rules ( LUP, obj );
+					ps52plib->_LUP2rules(LUP, obj);
 
 					// Add linked object/LUP to the working set
-					_insertRules ( obj,LUP, this );
+					_insertRules(obj, LUP, this);
 
 					// Establish Object's Display Category
 					obj->m_DisplayCat = LUP->DISC;
@@ -1400,7 +1347,6 @@ int cm93chart::CreateObjChain(int cell_index, int subcell)
 			break;
 
 		pobjectDef++;
-
 		iObj++;
 	}
 	return 1;
@@ -1421,8 +1367,7 @@ InitReturn cm93chart::Init(const wxString& name, ChartInitFlag flags)
 	// Figure out the scale from the file name
 
 	int scale;
-	switch ( ( m_scalechar.mb_str() ) [ ( size_t ) 0] )
-	{
+	switch ((m_scalechar.mb_str())[(size_t)0]) {
 		case 'Z': scale = 20000000;  break;
 		case 'A': scale =  3000000;  break;
 		case 'B': scale =  1000000;  break;
@@ -1436,9 +1381,7 @@ InitReturn cm93chart::Init(const wxString& name, ChartInitFlag flags)
 
 	m_Chart_Scale = scale;
 
-
-	switch ( GetNativeScale() )
-	{
+	switch (GetNativeScale()) {
 		case 20000000: m_dval = 120; break; // Z
 		case  3000000: m_dval =  60; break; // A
 		case  1000000: m_dval =  30; break; // B
@@ -1451,10 +1394,10 @@ InitReturn cm93chart::Init(const wxString& name, ChartInitFlag flags)
 	}
 
 	// Set the nice name
-	wxString data = _T ( "CM93Chart " );
+	wxString data = _T("CM93Chart ");
 	data.Append(m_scalechar);
 	wxString s;
-	s.Printf(_T ( "  1/%d" ), m_Chart_Scale);
+	s.Printf(_T("  1/%d"), m_Chart_Scale);
 	data.Append(s);
 	m_Name = data;
 
@@ -1478,7 +1421,7 @@ InitReturn cm93chart::Init(const wxString& name, ChartInitFlag flags)
 			if (m_pManager->Loadcm93Dictionary(name))
 				m_pDict = m_pManager->m_pcm93Dict;
 			else {
-				wxLogMessage(_T ( "   CM93Chart Init cannot locate CM93 dictionary." ));
+				wxLogMessage(_T("   CM93Chart Init cannot locate CM93 dictionary."));
 				return INIT_FAIL_REMOVE;
 			}
 		}
@@ -1497,8 +1440,7 @@ geo::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileOutputStream*
 
 	int geom_type_maybe = pobject->geotype;
 
-	switch ( geom_type_maybe )
-	{
+	switch (geom_type_maybe) {
 		case 1:    geomtype = 1; break;
 		case 2:    geomtype = 2; break;
 		case 4:    geomtype = 3; break;
@@ -1515,358 +1457,330 @@ geo::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileOutputStream*
 
 	int iseg;
 
-	geo::ExtendedGeometry *ret_ptr = new geo::ExtendedGeometry;
+	geo::ExtendedGeometry* ret_ptr = new geo::ExtendedGeometry;
 
 	int lon_max, lat_max, lon_min, lat_min;
-	lon_max = 0; lon_min = 65536; lat_max = 0; lat_min = 65536;
+	lon_max = 0;
+	lon_min = 65536;
+	lat_max = 0;
+	lat_min = 65536;
 
-	switch ( geomtype )
-	{
+	switch (geomtype) {
 
-		case 3:                               // Areas
-			{
-				vector_record_descriptor *psegs = ( vector_record_descriptor * ) pobject->pGeometry;
+		case 3: // Areas
+		{
+			vector_record_descriptor* psegs = (vector_record_descriptor*)pobject->pGeometry;
 
-				int nsegs = pobject->n_geom_elements;
+			int nsegs = pobject->n_geom_elements;
 
-				ret_ptr->n_vector_indices = nsegs;
-				ret_ptr->pvector_index = ( int * ) malloc ( nsegs * 3 * sizeof ( int ) );
+			ret_ptr->n_vector_indices = nsegs;
+			ret_ptr->pvector_index = (int*)malloc(nsegs * 3 * sizeof(int));
 
-				//Traverse the object once to get a maximum polygon vertex count
-				int n_maxvertex = 0;
-				for ( int i=0 ; i < nsegs ; i++ )
-				{
-					geometry_descriptor *pgd = ( geometry_descriptor* ) ( psegs[i].pGeom_Description );
-					n_maxvertex += pgd->n_points;
-				}
-
-				//TODO  May not need this fluff adder....
-				n_maxvertex += 1;       // fluff
-
-				wxPoint2DDouble *pPoints = ( wxPoint2DDouble * ) calloc ( ( n_maxvertex ) * sizeof ( wxPoint2DDouble ), 1 );
-
-				int ip = 1;
-				int n_prev_vertex_index = 1;
-				bool bnew_ring = true;
-				int ncontours = 0;
-				iseg = 0;
-
-				cm93_point start_point;
-				start_point.x = 0; start_point.y = 0;
-
-				cm93_point cur_end_point;
-				cur_end_point.x = 1; cur_end_point.y = 1;
-
-				int n_max_points = -1;
-				while ( iseg < nsegs )
-				{
-					int type_seg = psegs[iseg].segment_usage;
-
-					geometry_descriptor *pgd = ( geometry_descriptor* ) ( psegs[iseg].pGeom_Description );
-
-					int npoints = pgd->n_points;
-					cm93_point *rseg = pgd->p_points;
-
-					n_max_points = wxMax ( n_max_points, npoints );
-
-					//    Establish ring starting conditions
-					if ( bnew_ring )
-					{
-						bnew_ring = false;
-
-						if ( ( type_seg & 4 ) == 0 )
-							start_point = rseg[0];
-						else
-							start_point = rseg[npoints-1];
-					}
-
-
-
-					if ( ( ( type_seg & 4 ) == 0 ) )
-					{
-						cur_end_point = rseg[npoints-1];
-						for ( int j=0 ; j<npoints  ; j++ )
-						{
-							//                                    if(ncontours == 0)                             // outer ring describes envelope
-							{
-								lon_max = wxMax ( lon_max, rseg[j].x );
-								lon_min = wxMin ( lon_min, rseg[j].x );
-								lat_max = wxMax ( lat_max, rseg[j].y );
-								lat_min = wxMin ( lat_min, rseg[j].y );
-							}
-
-							pPoints[ip].m_x = rseg[j].x;
-							pPoints[ip].m_y = rseg[j].y;
-							ip++;
-						}
-					}
-					else if ( ( type_seg & 4 ) == 4 )   // backwards
-					{
-						cur_end_point = rseg[0];
-						for ( int j=npoints-1 ; j>= 0  ; j-- )
-						{
-							//                                    if(ncontours == 0)                             // outer ring describes envelope
-							{
-								lon_max = wxMax ( lon_max, rseg[j].x );
-								lon_min = wxMin ( lon_min, rseg[j].x );
-								lat_max = wxMax ( lat_max, rseg[j].y );
-								lat_min = wxMin ( lat_min, rseg[j].y );
-							}
-
-							pPoints[ip].m_x = rseg[j].x;
-							pPoints[ip].m_y = rseg[j].y;
-							ip++;
-						}
-					}
-
-					ip--;                                                 // skip the last point in each segment
-
-					ret_ptr->pvector_index[iseg * 3 + 0] = -1;                 // first connected node
-					ret_ptr->pvector_index[iseg * 3 + 1] = pgd->index + m_current_cell_vearray_offset;         // edge index
-					ret_ptr->pvector_index[iseg * 3 + 2] = -2;                 // last connected node
-
-					if ( ( cur_end_point.x == start_point.x ) && ( cur_end_point.y == start_point.y ) )
-					{
-						// done with a ring
-
-						ip++;                                                 // leave in ring closure point
-
-						int nRingVertex = ip - n_prev_vertex_index;
-
-						//    possibly increase contour array size
-						if ( ncontours > m_ncontour_alloc - 1 )
-						{
-							m_ncontour_alloc *= 2;
-							int * tmp = m_pcontour_array;
-							m_pcontour_array = ( int * ) realloc ( m_pcontour_array, m_ncontour_alloc * sizeof ( int ) );
-							if (NULL == tmp)
-							{
-								free (tmp);
-								tmp = NULL;
-							}
-						}
-						m_pcontour_array[ncontours] = nRingVertex;               // store the vertex count
-
-						bnew_ring = true;                                               // set for next ring
-						n_prev_vertex_index = ip;
-						ncontours++;
-
-					}
-					iseg++;
-				}           // while iseg
-
-
-				ret_ptr->n_max_edge_points = n_max_points;
-
-				ret_ptr->n_contours = ncontours;                          // parameters passed to trapezoid tesselator
-
-				ret_ptr->contour_array = ( int * ) malloc ( ncontours * sizeof ( int ) );
-				memcpy ( ret_ptr->contour_array, m_pcontour_array, ncontours * sizeof ( int ) );
-
-				ret_ptr->vertex_array = pPoints;
-				ret_ptr->n_max_vertex = n_maxvertex;
-
-				ret_ptr->pogrGeom = NULL;
-
-				ret_ptr->xmin = lon_min;
-				ret_ptr->xmax = lon_max;
-				ret_ptr->ymin = lat_min;
-				ret_ptr->ymax = lat_max;
-
-				break;
-			}           // case 3
-
-
-
-		case 1:     //single points
-			{
-				cm93_point *pt = ( cm93_point * ) pobject->pGeometry;
-				ret_ptr->pogrGeom = NULL; //t;
-
-				ret_ptr->pointx = pt->x;
-				ret_ptr->pointy = pt->y;
-				break;
+			// Traverse the object once to get a maximum polygon vertex count
+			int n_maxvertex = 0;
+			for (int i = 0; i < nsegs; i++) {
+				geometry_descriptor* pgd = (geometry_descriptor*)(psegs[i].pGeom_Description);
+				n_maxvertex += pgd->n_points;
 			}
 
-		case 2:                                               // LINE geometry
-			{
-				vector_record_descriptor *psegs = ( vector_record_descriptor * ) pobject->pGeometry;
+			// TODO  May not need this fluff adder....
+			n_maxvertex += 1; // fluff
 
-				int nsegs = pobject->n_geom_elements;
+			wxPoint2DDouble* pPoints
+				= (wxPoint2DDouble*)calloc((n_maxvertex) * sizeof(wxPoint2DDouble), 1);
 
-				ret_ptr->n_vector_indices = nsegs;
-				ret_ptr->pvector_index = ( int * ) malloc ( nsegs * 3 * sizeof ( int ) );
+			int ip = 1;
+			int n_prev_vertex_index = 1;
+			bool bnew_ring = true;
+			int ncontours = 0;
+			iseg = 0;
 
-				//    Calculate the number of points
-				int n_maxvertex = 0;
-				for ( int imseg = 0 ; imseg < nsegs ; imseg++ )
-				{
-					geometry_descriptor *pgd = ( geometry_descriptor* ) psegs->pGeom_Description;
+			cm93_point start_point;
+			start_point.x = 0;
+			start_point.y = 0;
 
-					n_maxvertex += pgd->n_points;
-					psegs++;
-				}
+			cm93_point cur_end_point;
+			cur_end_point.x = 1;
+			cur_end_point.y = 1;
 
+			int n_max_points = -1;
+			while (iseg < nsegs) {
+				int type_seg = psegs[iseg].segment_usage;
 
-				wxPoint2DDouble *pPoints = ( wxPoint2DDouble * ) malloc ( n_maxvertex * sizeof ( wxPoint2DDouble ) );
-
-				psegs = ( vector_record_descriptor * ) pobject->pGeometry;
-
-				int ip = 0;
-				int lon_max, lat_max, lon_min, lat_min;
-				lon_max = 0; lon_min = 65536; lat_max = 0; lat_min = 65536;
-				int n_max_points = -1;
-
-				for ( int iseg = 0 ; iseg < nsegs ; iseg++ )
-				{
-
-					int type_seg = psegs->segment_usage;
-
-					geometry_descriptor *pgd = ( geometry_descriptor* ) psegs->pGeom_Description;
-
-					psegs++;          // next segment
-
-					int npoints = pgd->n_points;
-					cm93_point *rseg = pgd->p_points;
-
-					n_max_points = wxMax ( n_max_points, npoints );
-
-					if ( ( ( type_seg & 4 ) != 4 ) )
-					{
-						for ( int j=0 ; j<npoints  ; j++ )
-						{
-							lon_max = wxMax ( lon_max, rseg[j].x );
-							lon_min = wxMin ( lon_min, rseg[j].x );
-							lat_max = wxMax ( lat_max, rseg[j].y );
-							lat_min = wxMin ( lat_min, rseg[j].y );
-
-							pPoints[ip].m_x = rseg[j].x;
-							pPoints[ip].m_y = rseg[j].y;
-							ip++;
-
-						}
-					}
-
-					else if ( ( type_seg & 4 ) == 4 )   // backwards
-					{
-						for ( int j=npoints-1 ; j>= 0  ; j-- )
-						{
-							lon_max = wxMax ( lon_max, rseg[j].x );
-							lon_min = wxMin ( lon_min, rseg[j].x );
-							lat_max = wxMax ( lat_max, rseg[j].y );
-							lat_min = wxMin ( lat_min, rseg[j].y );
-
-							pPoints[ip].m_x = rseg[j].x;
-							pPoints[ip].m_y = rseg[j].y;
-							ip++;
-						}
-					}
-
-					ret_ptr->pvector_index[iseg * 3 + 0] = -1;                 // first connected node
-					ret_ptr->pvector_index[iseg * 3 + 1] = pgd->index + m_current_cell_vearray_offset;         // edge index
-					ret_ptr->pvector_index[iseg * 3 + 2] = -2;                 // last connected node
-
-				}           //for
-
-				ret_ptr->n_max_edge_points = n_max_points;
-
-				ret_ptr->vertex_array = pPoints;
-				ret_ptr->n_max_vertex = n_maxvertex;
-
-				ret_ptr->pogrGeom = NULL;
-
-				ret_ptr->xmin = lon_min;
-				ret_ptr->xmax = lon_max;
-				ret_ptr->ymin = lat_min;
-				ret_ptr->ymax = lat_max;
-
-				break;
-			}           //case 2  (lines)
-
-		case 8:
-			{
-				geometry_descriptor *pgd = ( geometry_descriptor* ) pobject->pGeometry;
+				geometry_descriptor* pgd = (geometry_descriptor*)(psegs[iseg].pGeom_Description);
 
 				int npoints = pgd->n_points;
-				cm93_point_3d *rseg = ( cm93_point_3d * ) pgd->p_points;
+				cm93_point* rseg = pgd->p_points;
 
-				OGRMultiPoint *pSMP = new OGRMultiPoint;
+				n_max_points = wxMax(n_max_points, npoints);
 
-				int z;
-				double zp;
-				for ( int ip=0 ; ip < npoints ; ip++ )
-				{
-					z = rseg[ip].z;
+				// Establish ring starting conditions
+				if (bnew_ring) {
+					bnew_ring = false;
 
-					//    This is a magic number if there ever was one.....
-					if ( z >= 12000 )
-						zp = double ( z - 12000 );
+					if ((type_seg & 4) == 0)
+						start_point = rseg[0];
 					else
-						zp = z / 10.;
-
-					OGRPoint *ppoint = new OGRPoint ( rseg[ip].x, rseg[ip].y, zp );
-					pSMP->addGeometryDirectly ( ppoint );
-
-					lon_max = wxMax ( lon_max, rseg[ip].x );
-					lon_min = wxMin ( lon_min, rseg[ip].x );
-					lat_max = wxMax ( lat_max, rseg[ip].y );
-					lat_min = wxMin ( lat_min, rseg[ip].y );
-
+						start_point = rseg[npoints - 1];
 				}
 
-				ret_ptr->pogrGeom = pSMP;
+				if (((type_seg & 4) == 0)) {
+					cur_end_point = rseg[npoints - 1];
+					for (int j = 0; j < npoints; j++) {
+						lon_max = wxMax(lon_max, rseg[j].x);
+						lon_min = wxMin(lon_min, rseg[j].x);
+						lat_max = wxMax(lat_max, rseg[j].y);
+						lat_min = wxMin(lat_min, rseg[j].y);
 
-				ret_ptr->xmin = lon_min;
-				ret_ptr->xmax = lon_max;
-				ret_ptr->ymin = lat_min;
-				ret_ptr->ymax = lat_max;
+						pPoints[ip].m_x = rseg[j].x;
+						pPoints[ip].m_y = rseg[j].y;
+						ip++;
+					}
+				} else if ((type_seg & 4) == 4) {
+					// backwards
+					cur_end_point = rseg[0];
+					for (int j = npoints - 1; j >= 0; j--) {
+						lon_max = wxMax(lon_max, rseg[j].x);
+						lon_min = wxMin(lon_min, rseg[j].x);
+						lat_max = wxMax(lat_max, rseg[j].y);
+						lat_min = wxMin(lat_min, rseg[j].y);
 
+						pPoints[ip].m_x = rseg[j].x;
+						pPoints[ip].m_y = rseg[j].y;
+						ip++;
+					}
+				}
 
-				break;
+				ip--; // skip the last point in each segment
+
+				ret_ptr->pvector_index[iseg * 3 + 0] = -1; // first connected node
+				ret_ptr->pvector_index[iseg * 3 + 1]
+					= pgd->index + m_current_cell_vearray_offset; // edge index
+				ret_ptr->pvector_index[iseg * 3 + 2] = -2; // last connected node
+
+				if ((cur_end_point.x == start_point.x) && (cur_end_point.y == start_point.y)) {
+					// done with a ring
+
+					ip++; // leave in ring closure point
+
+					int nRingVertex = ip - n_prev_vertex_index;
+
+					//    possibly increase contour array size
+					if (ncontours > m_ncontour_alloc - 1) {
+						m_ncontour_alloc *= 2;
+						int* tmp = m_pcontour_array;
+						m_pcontour_array
+							= (int*)realloc(m_pcontour_array, m_ncontour_alloc * sizeof(int));
+						if (NULL == tmp) {
+							free(tmp);
+							tmp = NULL;
+						}
+					}
+					m_pcontour_array[ncontours] = nRingVertex; // store the vertex count
+
+					bnew_ring = true; // set for next ring
+					n_prev_vertex_index = ip;
+					ncontours++;
+				}
+					iseg++;
 			}
 
+			ret_ptr->n_max_edge_points = n_max_points;
+
+			ret_ptr->n_contours = ncontours; // parameters passed to trapezoid tesselator
+
+			ret_ptr->contour_array = (int*)malloc(ncontours * sizeof(int));
+			memcpy(ret_ptr->contour_array, m_pcontour_array, ncontours * sizeof(int));
+
+			ret_ptr->vertex_array = pPoints;
+			ret_ptr->n_max_vertex = n_maxvertex;
+
+			ret_ptr->pogrGeom = NULL;
+
+			ret_ptr->xmin = lon_min;
+			ret_ptr->xmax = lon_max;
+			ret_ptr->ymin = lat_min;
+			ret_ptr->ymax = lat_max;
+
+			break;
+		} // case 3
+
+		case 1: // single points
+		{
+			cm93_point* pt = (cm93_point*)pobject->pGeometry;
+			ret_ptr->pogrGeom = NULL;
+
+			ret_ptr->pointx = pt->x;
+			ret_ptr->pointy = pt->y;
+			break;
+		}
+
+		case 2: // LINE geometry
+		{
+			vector_record_descriptor* psegs = (vector_record_descriptor*)pobject->pGeometry;
+
+			int nsegs = pobject->n_geom_elements;
+
+			ret_ptr->n_vector_indices = nsegs;
+			ret_ptr->pvector_index = (int*)malloc(nsegs * 3 * sizeof(int));
+
+			//    Calculate the number of points
+			int n_maxvertex = 0;
+			for (int imseg = 0; imseg < nsegs; imseg++) {
+				geometry_descriptor* pgd = (geometry_descriptor*)psegs->pGeom_Description;
+
+				n_maxvertex += pgd->n_points;
+				psegs++;
+			}
+
+			wxPoint2DDouble* pPoints
+				= (wxPoint2DDouble*)malloc(n_maxvertex * sizeof(wxPoint2DDouble));
+
+			psegs = (vector_record_descriptor*)pobject->pGeometry;
+
+			int ip = 0;
+			int lon_max, lat_max, lon_min, lat_min;
+			lon_max = 0;
+			lon_min = 65536;
+			lat_max = 0;
+			lat_min = 65536;
+			int n_max_points = -1;
+
+			for (int iseg = 0; iseg < nsegs; iseg++) {
+
+				int type_seg = psegs->segment_usage;
+
+				geometry_descriptor* pgd = (geometry_descriptor*)psegs->pGeom_Description;
+
+				psegs++; // next segment
+
+				int npoints = pgd->n_points;
+				cm93_point* rseg = pgd->p_points;
+
+				n_max_points = wxMax(n_max_points, npoints);
+
+				if (((type_seg & 4) != 4)) {
+					for (int j = 0; j < npoints; j++) {
+						lon_max = wxMax(lon_max, rseg[j].x);
+						lon_min = wxMin(lon_min, rseg[j].x);
+						lat_max = wxMax(lat_max, rseg[j].y);
+						lat_min = wxMin(lat_min, rseg[j].y);
+
+						pPoints[ip].m_x = rseg[j].x;
+						pPoints[ip].m_y = rseg[j].y;
+						ip++;
+					}
+				} else if ((type_seg & 4) == 4) {
+					// backwards
+					for (int j = npoints - 1; j >= 0; j--) {
+						lon_max = wxMax(lon_max, rseg[j].x);
+						lon_min = wxMin(lon_min, rseg[j].x);
+						lat_max = wxMax(lat_max, rseg[j].y);
+						lat_min = wxMin(lat_min, rseg[j].y);
+
+						pPoints[ip].m_x = rseg[j].x;
+						pPoints[ip].m_y = rseg[j].y;
+						ip++;
+					}
+				}
+
+				ret_ptr->pvector_index[iseg * 3 + 0] = -1; // first connected node
+				ret_ptr->pvector_index[iseg * 3 + 1]
+					= pgd->index + m_current_cell_vearray_offset; // edge index
+				ret_ptr->pvector_index[iseg * 3 + 2] = -2; // last connected node
+
+			}
+
+			ret_ptr->n_max_edge_points = n_max_points;
+
+			ret_ptr->vertex_array = pPoints;
+			ret_ptr->n_max_vertex = n_maxvertex;
+
+			ret_ptr->pogrGeom = NULL;
+
+			ret_ptr->xmin = lon_min;
+			ret_ptr->xmax = lon_max;
+			ret_ptr->ymin = lat_min;
+			ret_ptr->ymax = lat_max;
+
+			break;
+		} // case 2  (lines)
+
+		case 8: {
+			geometry_descriptor* pgd = (geometry_descriptor*)pobject->pGeometry;
+
+			int npoints = pgd->n_points;
+			cm93_point_3d* rseg = (cm93_point_3d*)pgd->p_points;
+
+			OGRMultiPoint* pSMP = new OGRMultiPoint;
+
+			int z;
+			double zp;
+			for (int ip = 0; ip < npoints; ip++) {
+				z = rseg[ip].z;
+
+				// This is a magic number if there ever was one.....
+				if (z >= 12000)
+					zp = double(z - 12000);
+				else
+					zp = z / 10.0;
+
+				OGRPoint* ppoint = new OGRPoint(rseg[ip].x, rseg[ip].y, zp);
+				pSMP->addGeometryDirectly(ppoint);
+
+				lon_max = wxMax(lon_max, rseg[ip].x);
+				lon_min = wxMin(lon_min, rseg[ip].x);
+				lat_max = wxMax(lat_max, rseg[ip].y);
+				lat_min = wxMin(lat_min, rseg[ip].y);
+			}
+
+			ret_ptr->pogrGeom = pSMP;
+
+			ret_ptr->xmin = lon_min;
+			ret_ptr->xmax = lon_max;
+			ret_ptr->ymin = lat_min;
+			ret_ptr->ymax = lat_max;
+
+			break;
+		}
 
 		case 16:
-			break;                        // this is the case of objects with children
-			// the parent has no geometry.....
+			break; // this is the case of objects with children
+		// the parent has no geometry.....
 
-		default:
-			{
-				wxPrintf ( _T ( "Unexpected geomtype %d for Feature %d\n" ), geomtype,iobject );
-				break;
-			}
+		default: {
+			wxPrintf(_T ( "Unexpected geomtype %d for Feature %d\n" ), geomtype, iobject);
+			break;
+		}
 
-	}     // switch
-
+	}
 
 	return ret_ptr;
 }
 
-void cm93chart::Transform ( cm93_point *s, double trans_x, double trans_y, double *lat, double *lon )
+void cm93chart::Transform(cm93_point* s, double trans_x, double trans_y, double* lat, double* lon)
 {
-	//    Simple linear transform
-	double valx = ( s->x * m_CIB->transform_x_rate ) + m_CIB->transform_x_origin;
-	double valy = ( s->y * m_CIB->transform_y_rate ) + m_CIB->transform_y_origin;
+	// Simple linear transform
+	double valx = (s->x * m_CIB->transform_x_rate) + m_CIB->transform_x_origin;
+	double valy = (s->y * m_CIB->transform_y_rate) + m_CIB->transform_y_origin;
 
-	//    Add in the WGS84 offset corrections
+	// Add in the WGS84 offset corrections
 	valx -= trans_x;
 	valy -= trans_y;
 
-	//    Convert to lat/lon
-	*lat = ( 2.0 * atan ( exp ( valy/CM93_semimajor_axis_meters ) ) - M_PI/2.0) / (M_PI / 180.0);
-	*lon = ( valx / ( (M_PI / 180.0)* CM93_semimajor_axis_meters ) );
-
+	// Convert to lat/lon
+	*lat = (2.0 * atan(exp(valy / CM93_semimajor_axis_meters)) - M_PI / 2.0) / (M_PI / 180.0);
+	*lon = (valx / ((M_PI / 180.0) * CM93_semimajor_axis_meters));
 }
 
 void cm93chart::translate_colmar(const wxString& WXUNUSED(sclass), S57attVal* pattValTmp)
 {
-	int *pcur_attr = ( int * ) pattValTmp->value;
+	int* pcur_attr = (int*)pattValTmp->value;
 	int cur_attr = *pcur_attr;
 
 	wxString lstring;
 
-	switch ( cur_attr )
-	{
+	switch (cur_attr) {
 		case 1: lstring = _T ( "4" ); break;            // green
 		case 2: lstring = _T ( "2" ); break;            // black
 		case 3: lstring = _T ( "3" ); break;            // red
@@ -1888,17 +1802,13 @@ void cm93chart::translate_colmar(const wxString& WXUNUSED(sclass), S57attVal* pa
 		default: break;
 	}
 
-	if ( lstring.Len() )
-	{
-		free ( pattValTmp->value );                       // free the old int pointer
-
+	if (lstring.Len()) {
+		free(pattValTmp->value); // free the old int pointer
 		pattValTmp->valType = OGR_STR;
-		pattValTmp->value = ( char * ) malloc ( lstring.Len() + 1 );      // create a new Lstring attribute
-		strcpy ( ( char * ) pattValTmp->value, lstring.mb_str() );
-
+		pattValTmp->value = (char*)malloc(lstring.Len() + 1); // create a new Lstring attribute
+		strcpy((char*)pattValTmp->value, lstring.mb_str());
 	}
 }
-
 
 S57Obj * cm93chart::CreateS57Obj(
 		int cell_index,
@@ -1926,151 +1836,144 @@ S57Obj * cm93chart::CreateS57Obj(
 	double trans_WGS84_offset_x = 0.;
 	double trans_WGS84_offset_y = 0.;
 
-	wxString sclass = pDict->GetClassName ( iclass );
-	if ( sclass == _T ( "Unknown" ) )
-	{
+	wxString sclass = pDict->GetClassName(iclass);
+	if (sclass == _T ( "Unknown" )) {
 		wxString msg;
-		msg.Printf ( _T ( "   CM93 Error...object type %d not found in CM93OBJ.DIC" ), iclass );
-		wxLogMessage ( msg );
+		msg.Printf(_T ( "   CM93 Error...object type %d not found in CM93OBJ.DIC" ), iclass);
+		wxLogMessage(msg);
 		return NULL;
 	}
 
 	wxString sclass_sub = sclass;
 
 	//  Going to make some substitutions here
-	if ( sclass.IsSameAs ( _T ( "ITDARE" ) ) )
-		sclass_sub = _T ( "DEPARE" );
+	if (sclass.IsSameAs(_T("ITDARE")))
+		sclass_sub = _T("DEPARE");
 
-	if ( sclass.IsSameAs ( _T ( "_m_sor" ) ) )
-		sclass_sub = _T ( "M_COVR" );
+	if (sclass.IsSameAs(_T("_m_sor")))
+		sclass_sub = _T("M_COVR");
 
-	if ( sclass.IsSameAs ( _T ( "SPOGRD" ) ) )
-		sclass_sub = _T ( "DMPGRD" );
+	if (sclass.IsSameAs(_T("SPOGRD")))
+		sclass_sub = _T("DMPGRD");
 
-	if ( sclass.IsSameAs ( _T ( "FSHHAV" ) ) )
-		sclass_sub = _T ( "FSHFAC" );
+	if (sclass.IsSameAs(_T("FSHHAV")))
+		sclass_sub = _T("FSHFAC");
 
-	if ( sclass.IsSameAs ( _T ( "OFSPRD" ) ) )
-		sclass_sub = _T ( "CTNARE" );
+	if (sclass.IsSameAs(_T("OFSPRD")))
+		sclass_sub = _T("CTNARE");
 
-
-
-	//    Create the S57 Object
-	S57Obj *pobj = new S57Obj();
+	// Create the S57 Object
+	S57Obj* pobj = new S57Obj();
 
 	pobj->Index = iobject;
 
 	char u[201];
-	strncpy ( u, sclass_sub.mb_str(), 199 );
+	strncpy(u, sclass_sub.mb_str(), 199);
 	u[200] = '\0';
-	strncpy ( pobj->FeatureName, u, 7 );
+	strncpy(pobj->FeatureName, u, 7);
 
-	pobj->attVal =  new wxArrayOfS57attVal();
+	pobj->attVal = new wxArrayOfS57attVal();
 
+	cm93_attr_block* pab = new cm93_attr_block(pobject->attributes_block, pDict);
 
-	cm93_attr_block *pab = new cm93_attr_block ( pobject->attributes_block, pDict );
-
-
-	for ( int jattr = 0 ; jattr  < pobject->n_attributes ; jattr++ )
-	{
-
-		unsigned char *curr_attr = pab->GetNextAttr();
+	for (int jattr = 0; jattr < pobject->n_attributes; jattr++) {
+		unsigned char* curr_attr = pab->GetNextAttr();
 
 		unsigned char iattr = *curr_attr;
 
-		wxString sattr = pDict->GetAttrName ( iattr );
+		wxString sattr = pDict->GetAttrName(iattr);
 
-		char vtype = pDict->GetAttrType ( iattr );
+		char vtype = pDict->GetAttrType(iattr);
 
-		unsigned char *aval = curr_attr + 1;
+		unsigned char* aval = curr_attr + 1;
 
 		char val[4000];
-		int *pi;
-		float *pf;
-		unsigned short *pw;
-		unsigned char *pb;
-		int *pAVI;
-		char *pAVS;
-		double *pAVR;
+		int* pi;
+		float* pf;
+		unsigned short* pw;
+		unsigned char* pb;
+		int* pAVI;
+		char* pAVS;
+		double* pAVR;
 		int nlen;
 		double dival;
 		int ival;
 
-		S57attVal *pattValTmp = new S57attVal;
+		S57attVal* pattValTmp = new S57attVal;
 
-		switch ( vtype )
-		{
-			case 'I':                           // never seen?
-				pi = ( int * ) aval;
-				pAVI = ( int * ) malloc ( sizeof ( int ) );         //new int;
+		switch (vtype) {
+			case 'I': // never seen?
+				pi = (int*)aval;
+				pAVI = (int*)malloc(sizeof(int)); // new int;
 				*pAVI = *pi;
 				pattValTmp->valType = OGR_INT;
-				pattValTmp->value   = pAVI;
+				pattValTmp->value = pAVI;
 				break;
 			case 'B':
-				pb = ( unsigned char * ) aval;
-				pAVI = ( int * ) malloc ( sizeof ( int ) );         //new int;
-				*pAVI = ( int ) ( *pb );
+				pb = (unsigned char*)aval;
+				pAVI = (int*)malloc(sizeof(int)); // new int;
+				*pAVI = (int)(*pb);
 				pattValTmp->valType = OGR_INT;
-				pattValTmp->value   = pAVI;
+				pattValTmp->value = pAVI;
 				break;
-			case 'W':                                       // aWORD10
-				pw = ( unsigned short * ) aval;
-				ival = ( int ) ( *pw );
+			case 'W': // aWORD10
+				pw = (unsigned short*)aval;
+				ival = (int)(*pw);
 				dival = ival;
 
-				pAVR = ( double * ) malloc ( sizeof ( double ) );   //new double;
-				*pAVR = dival/10.;
+				pAVR = (double*)malloc(sizeof(double)); // new double;
+				*pAVR = dival / 10.;
 				pattValTmp->valType = OGR_REAL;
-				pattValTmp->value   = pAVR;
+				pattValTmp->value = pAVR;
 				break;
 			case 'G':
-				pi = ( int * ) aval;
-				pAVI = ( int * ) malloc ( sizeof ( int ) );         //new int;
-				*pAVI = ( int ) ( *pi );
+				pi = (int*)aval;
+				pAVI = (int*)malloc(sizeof(int)); // new int;
+				*pAVI = (int)(*pi);
 				pattValTmp->valType = OGR_INT;
-				pattValTmp->value   = pAVI;
+				pattValTmp->value = pAVI;
 				break;
 
 			case 'S':
-				nlen = strlen ( ( const char * ) aval );
-				pAVS = ( char * ) malloc ( nlen + 1 );          ;
-				strcpy ( pAVS, ( char * ) aval );
+				nlen = strlen((const char*)aval);
+				pAVS = (char*)malloc(nlen + 1);
+				;
+				strcpy(pAVS, (char*)aval);
 				pattValTmp->valType = OGR_STR;
-				pattValTmp->value   = pAVS;
+				pattValTmp->value = pAVS;
 				break;
 
 			case 'C':
-				nlen = strlen ( ( const char * ) &aval[3] );
-				pAVS = ( char * ) malloc ( nlen + 1 );          ;
-				strcpy ( pAVS, ( const char * ) &aval[3] );
+				nlen = strlen((const char*)&aval[3]);
+				pAVS = (char*)malloc(nlen + 1);
+				;
+				strcpy(pAVS, (const char*)&aval[3]);
 				pattValTmp->valType = OGR_STR;
-				pattValTmp->value   = pAVS;
+				pattValTmp->value = pAVS;
 				break;
-			case 'L':
-				{
-					pb = ( unsigned char * ) aval;
-					unsigned char nl = *pb++;
-					char vi[20];
-					val[0] = 0;
-					for ( int i=0 ; i<nl ; i++ )
-					{
-						sprintf ( vi, "%d,", *pb++ );
-						strcat ( val, vi );
-					}
-					if ( strlen ( val ) )
-						val[strlen ( val )-1] = 0;      // strip last ","
-
-					int nlen = strlen ( val );
-					pAVS = ( char * ) malloc ( nlen + 1 );          ;
-					strcpy ( pAVS, val );
-					pattValTmp->valType = OGR_STR;
-					pattValTmp->value   = pAVS;
-					break;
+			case 'L': {
+				pb = (unsigned char*)aval;
+				unsigned char nl = *pb++;
+				char vi[20];
+				val[0] = 0;
+				for (int i = 0; i < nl; i++) {
+					sprintf(vi, "%d,", *pb++);
+					strcat(val, vi);
 				}
+				if (strlen(val))
+					val[strlen(val) - 1] = 0; // strip last ","
+
+				int nlen = strlen(val);
+				pAVS = (char*)malloc(nlen + 1);
+				;
+				strcpy(pAVS, val);
+				pattValTmp->valType = OGR_STR;
+				pattValTmp->value = pAVS;
+				break;
+			}
 			case 'R':
-				pAVR = ( double * ) malloc ( sizeof ( double ) );   //new double;
-				pf = ( float * ) aval;
+				pAVR = (double*)malloc(sizeof(double)); // new double;
+				pf = (float*)aval;
 #ifdef ARMHF
 				float tf1;
 				memcpy(&tf1, pf, sizeof(float));
@@ -2079,106 +1982,83 @@ S57Obj * cm93chart::CreateS57Obj(
 				*pAVR = *pf;
 #endif
 				pattValTmp->valType = OGR_REAL;
-				pattValTmp->value   = pAVR;
+				pattValTmp->value = pAVR;
 				break;
 			default:
-				sattr.Clear();               // Unknown, TODO track occasional case '?'
+				sattr.Clear(); // Unknown, TODO track occasional case '?'
 				break;
-		}     // switch
-
-
-		if ( sattr.IsSameAs ( _T ( "COLMAR" ) ) )
-		{
-			translate_colmar ( sclass, pattValTmp );
-			sattr = _T ( "COLOUR" );
 		}
 
+		if (sattr.IsSameAs(_T("COLMAR"))) {
+			translate_colmar(sclass, pattValTmp);
+			sattr = _T("COLOUR");
+		}
 
-
-		//    Do CM93 $SCODE attribute substitutions
-		if ( sclass.IsSameAs ( _T ( "$AREAS" ) ) && ( vtype == 'S' ) && sattr.IsSameAs ( _T ( "$SCODE" ) ) )
-		{
-			if ( !strcmp ( ( char * ) pattValTmp->value, "II25" ) )
-			{
-				free ( pattValTmp->value );
-				pattValTmp->value   = ( char * ) malloc ( strlen ( "BACKGROUND" ) + 1 );
-				strcpy ( ( char * ) pattValTmp->value, "BACKGROUND" );
+		// Do CM93 $SCODE attribute substitutions
+		if (sclass.IsSameAs(_T("$AREAS")) && (vtype == 'S') && sattr.IsSameAs(_T("$SCODE"))) {
+			if (!strcmp((char*)pattValTmp->value, "II25")) {
+				free(pattValTmp->value);
+				pattValTmp->value = (char*)malloc(strlen("BACKGROUND") + 1);
+				strcpy((char*)pattValTmp->value, "BACKGROUND");
 			}
 		}
 
-
-		//    Capture some attributes on the fly as needed
-		if ( sattr.IsSameAs ( _T ( "RECDAT" ) ) || sattr.IsSameAs ( _T ( "_dgdat" ) ) )
-		{
-			if ( sclass_sub.IsSameAs ( _T ( "M_COVR" ) ) && ( vtype == 'S' ) )
-			{
-				wxString pub_date ( ( char * ) pattValTmp->value, wxConvUTF8 );
+		// Capture some attributes on the fly as needed
+		if (sattr.IsSameAs(_T("RECDAT")) || sattr.IsSameAs(_T("_dgdat"))) {
+			if (sclass_sub.IsSameAs(_T("M_COVR")) && (vtype == 'S')) {
+				wxString pub_date((char*)pattValTmp->value, wxConvUTF8);
 
 				wxDateTime upd;
-				upd.ParseFormat ( pub_date, _T ( "%Y%m%d" ) );
-				if ( !upd.IsValid() )
-					upd.ParseFormat ( _T ( "20000101" ), _T ( "%Y%m%d" ) );
+				upd.ParseFormat(pub_date, _T("%Y%m%d"));
+				if (!upd.IsValid())
+					upd.ParseFormat(_T("20000101"), _T("%Y%m%d"));
 				m_EdDate = upd;
 
-				pub_date.Truncate ( 4 );
+				pub_date.Truncate(4);
 
 				long nyear = 0;
-				pub_date.ToLong ( &nyear );
+				pub_date.ToLong(&nyear);
 				npub_year = nyear;
-
 			}
 		}
 
-
-		//    Capture the potential WGS84 transform offset for later use
-		if ( sclass_sub.IsSameAs ( _T ( "M_COVR" ) ) && ( vtype == 'R' ) )
-		{
-			if ( sattr.IsSameAs ( _T ( "_wgsox" ) ) )
-			{
-				tmp_transform_x = * ( double * ) pattValTmp->value;
-				if ( fabs ( tmp_transform_x ) > 1.0 )                 // metres
+		// Capture the potential WGS84 transform offset for later use
+		if (sclass_sub.IsSameAs(_T("M_COVR")) && (vtype == 'R')) {
+			if (sattr.IsSameAs(_T("_wgsox"))) {
+				tmp_transform_x = *(double*)pattValTmp->value;
+				if (fabs(tmp_transform_x) > 1.0) // metres
 					m_CIB->b_have_offsets = true;
-			}
-			else if ( sattr.IsSameAs ( _T ( "_wgsoy" ) ) )
-			{
-				tmp_transform_y = * ( double * ) pattValTmp->value;
-				if ( fabs ( tmp_transform_x ) > 1.0 )
+			} else if (sattr.IsSameAs(_T("_wgsoy"))) {
+				tmp_transform_y = *(double*)pattValTmp->value;
+				if (fabs(tmp_transform_x) > 1.0)
 					m_CIB->b_have_offsets = true;
 			}
 		}
 
-
-		if ( sattr.Len() )
-		{
-			wxASSERT( sattr.Len() == 6);
-			wxCharBuffer dbuffer=sattr.ToUTF8();
-			if(dbuffer.data()) {
-				pobj->att_array = (char *)realloc(pobj->att_array, 6*(pobj->n_attr + 1));
+		if (sattr.Len()) {
+			wxASSERT(sattr.Len() == 6);
+			wxCharBuffer dbuffer = sattr.ToUTF8();
+			if (dbuffer.data()) {
+				pobj->att_array = (char*)realloc(pobj->att_array, 6 * (pobj->n_attr + 1));
 
 				strncpy(pobj->att_array + (6 * sizeof(char) * pobj->n_attr), dbuffer.data(), 6);
 				pobj->n_attr++;
 
-				pobj->attVal->Add ( pattValTmp );
-			}
-			else
+				pobj->attVal->Add(pattValTmp);
+			} else
 				delete pattValTmp;
-		}
-		else
+		} else
 			delete pattValTmp;
-
-
-	}     //for
+	}
 
 	delete pab;
 
-	//    ATON label optimization:
-	//    Some CM93 ATON objects do not contain OBJNAM attribute, which means that no label is shown
-	//    for these objects when ATON labals are requested
-	//    Look for these cases, and change the INFORM attribute label to OBJNAM, if present.
+	// ATON label optimization:
+	// Some CM93 ATON objects do not contain OBJNAM attribute, which means that no label is shown
+	// for these objects when ATON labals are requested
+	// Look for these cases, and change the INFORM attribute label to OBJNAM, if present.
 
-
-	if ( 1 == geomtype )
-	{
+	if (1 == geomtype) {
 		if ( ( !strncmp ( pobj->FeatureName,   "LIT",    3 ) ) ||
 				( !strncmp ( pobj->FeatureName, "LIGHTS", 6 ) ) ||
 				( !strncmp ( pobj->FeatureName, "BCN",    3 ) ) ||
@@ -2189,418 +2069,391 @@ S57Obj * cm93chart::CreateS57Obj(
 				( !strncmp ( pobj->FeatureName, "TOWERS", 6 ) ) ||
 				( !strncmp ( pobj->FeatureName, "BOY",    3 ) ) )
 		{
+			bool bfound_OBJNAM = (pobj->GetAttributeIndex("OBJNAM") != -1);
+			bool bfound_INFORM = (pobj->GetAttributeIndex("INFORM") != -1);
 
-			bool bfound_OBJNAM =  ( pobj->GetAttributeIndex("OBJNAM") != -1 );
-			bool bfound_INFORM =  ( pobj->GetAttributeIndex("INFORM") != -1 );
-
-
-			if ( ( !bfound_OBJNAM ) && ( bfound_INFORM ) )        // can make substitution
+			if ((!bfound_OBJNAM) && (bfound_INFORM)) // can make substitution
 			{
-				char *patl = pobj->att_array;
-				for(int i=0 ; i < pobj->n_attr ; i++) {           // find "INFORM"
-					if(!strncmp(patl, "INFORM", 6)){
-						memcpy ( patl, "OBJNAM", 6 );            // change to "OBJNAM"
+				char* patl = pobj->att_array;
+				for (int i = 0; i < pobj->n_attr; i++) { // find "INFORM"
+					if (!strncmp(patl, "INFORM", 6)) {
+						memcpy(patl, "OBJNAM", 6); // change to "OBJNAM"
 						break;
 					}
 
 					patl += 6;
 				}
-
 			}
 		}
 	}
 
+	switch (geomtype) {
+		case 4: {
+			pobj->Primitive_type = GEO_AREA;
 
+			// Check for and maintain the class array of M_COVR objects
+			if (sclass_sub.IsSameAs(_T ( "M_COVR" ))) {
+				M_COVR_Desc* pmcd;
 
-	switch ( geomtype )
-	{
-		case 4:
-			{
-				pobj->Primitive_type = GEO_AREA;
+				M_COVR_Desc* pmcd_look = GetCoverSet()->Find_MCD(cell_index, iobject, subcell);
+				if (NULL == pmcd_look) {
+					// not found
+					double lat, lon;
 
-				//    Check for and maintain the class array of M_COVR objects
-				if ( sclass_sub.IsSameAs ( _T ( "M_COVR" ) ) )
-				{
-					M_COVR_Desc *pmcd;
+					pmcd = new M_COVR_Desc;
 
-					M_COVR_Desc *pmcd_look = GetCoverSet()->Find_MCD ( cell_index, iobject, subcell );
-					if ( NULL == pmcd_look )     // not found
-					{
-						double lat, lon;
+					// Record unique identifiers for this M_COVR object
+					pmcd->m_cell_index = cell_index;
+					pmcd->m_object_id = iobject;
+					pmcd->m_subcell = subcell;
 
-						pmcd = new M_COVR_Desc;
+					// User offsets start empty
+					pmcd->user_xoff = 0;
+					pmcd->user_yoff = 0;
+					pmcd->m_buser_offsets = false;
 
-						//    Record unique identifiers for this M_COVR object
-						pmcd->m_cell_index = cell_index;
-						pmcd->m_object_id = iobject;
-						pmcd->m_subcell = subcell;
+					// Record the Publication Year of this cell
+					pmcd->m_npub_year = npub_year;
 
-						//    User offsets start empty
-						pmcd->user_xoff = 0;
-						pmcd->user_yoff = 0;
-						pmcd->m_buser_offsets = false;
+					// Get number of exterior ring points(vertices)
+					int npta = xgeom->contour_array[0];
+					geo::float_2Dpt* geoPt = new geo::float_2Dpt[npta + 2]; // vertex array
+					geo::float_2Dpt* ppt = geoPt;
 
-						//    Record the Publication Year of this cell
-						pmcd->m_npub_year = npub_year;
+					pmcd->m_covr_lon_max = -1000.0;
+					pmcd->m_covr_lon_min = 1000.0;
+					pmcd->m_covr_lat_max = -1000.0;
+					pmcd->m_covr_lat_min = 1000.0;
 
-						//      Get number of exterior ring points(vertices)
-						int npta  = xgeom->contour_array[0];
-						geo::float_2Dpt *geoPt = new geo::float_2Dpt[npta + 2];     // vertex array
-						geo::float_2Dpt *ppt = geoPt;
+					// Transcribe exterior ring points to vertex array, in Lat/Lon coordinates
+					for (int ip = 0; ip < npta; ip++) {
+						cm93_point p;
+						p.x = (int)xgeom->vertex_array[ip + 1].m_x;
+						p.y = (int)xgeom->vertex_array[ip + 1].m_y;
 
-						pmcd->m_covr_lon_max = -1000.0;
-						pmcd->m_covr_lon_min = 1000.0;
-						pmcd->m_covr_lat_max = -1000.0;
-						pmcd->m_covr_lat_min = 1000.0;
+						Transform(&p, 0, 0, /*tmp_transform_x, tmp_transform_y,*/ &lat, &lon);
+						ppt->x = lon;
+						ppt->y = lat;
 
-						// Transcribe exterior ring points to vertex array, in Lat/Lon coordinates
-						for (int ip = 0; ip < npta; ip++) {
-							cm93_point p;
-							p.x = (int)xgeom->vertex_array[ip + 1].m_x;
-							p.y = (int)xgeom->vertex_array[ip + 1].m_y;
+						pmcd->m_covr_lon_max = wxMax(pmcd->m_covr_lon_max, lon);
+						pmcd->m_covr_lon_min = wxMin(pmcd->m_covr_lon_min, lon);
+						pmcd->m_covr_lat_max = wxMax(pmcd->m_covr_lat_max, lat);
+						pmcd->m_covr_lat_min = wxMin(pmcd->m_covr_lat_min, lat);
 
-							Transform(&p, 0, 0, /*tmp_transform_x, tmp_transform_y,*/ &lat, &lon);
-							ppt->x = lon;
-							ppt->y = lat;
-
-							pmcd->m_covr_lon_max = wxMax(pmcd->m_covr_lon_max, lon);
-							pmcd->m_covr_lon_min = wxMin(pmcd->m_covr_lon_min, lon);
-							pmcd->m_covr_lat_max = wxMax(pmcd->m_covr_lat_max, lat);
-							pmcd->m_covr_lat_min = wxMin(pmcd->m_covr_lat_min, lat);
-
-							ppt++;
-						}
-						pmcd->m_nvertices = npta;
-						pmcd->pvertices = geoPt;
-
-						pmcd->m_covr_bbox
-							= geo::BoundingBox(pmcd->m_covr_lon_min, pmcd->m_covr_lat_min,
-											   pmcd->m_covr_lon_max, pmcd->m_covr_lat_max);
-
-						// Capture and store the potential WGS transform offsets grabbed during
-						// attribute decode
-						pmcd->transform_WGS84_offset_x = tmp_transform_x;
-						pmcd->transform_WGS84_offset_y = tmp_transform_y;
-
-						pmcd->m_centerlat_cos = cos(
-							((pmcd->m_covr_lat_min + pmcd->m_covr_lat_max) / 2.0) * M_PI / 180.0);
-
-						// Add this MCD to the persistent class covr_set
-						GetCoverSet()->Add_Update_MCD(pmcd);
-					} else {
-						// If already in the coverset, are there user offsets applied to this MCD?
-						if (pmcd_look->m_buser_offsets) {
-							m_CIB->b_have_user_offsets = true;
-
-							m_CIB->user_xoff = pmcd_look->user_xoff;
-							m_CIB->user_yoff = pmcd_look->user_yoff;
-						}
-						pmcd = pmcd_look;
+						ppt++;
 					}
+					pmcd->m_nvertices = npta;
+					pmcd->pvertices = geoPt;
 
-					// Add this geometry to the currently loaded class M_COVR array
-					m_pcovr_array_loaded.push_back(pmcd);
+					pmcd->m_covr_bbox
+						= geo::BoundingBox(pmcd->m_covr_lon_min, pmcd->m_covr_lat_min,
+										   pmcd->m_covr_lon_max, pmcd->m_covr_lat_max);
 
-					// Add the MCD it to the current (temporary) per cell list
-					// This array is used only to quickly find the M_COVR object parameters which apply to other objects
-					// loaded from this cell.
-					// We do this so we don't have to search the entire (worldwide) coverset for this chart scale
-					m_CIB->m_cell_mcovr_list.push_back(pmcd);
+					// Capture and store the potential WGS transform offsets grabbed during
+					// attribute decode
+					pmcd->transform_WGS84_offset_x = tmp_transform_x;
+					pmcd->transform_WGS84_offset_y = tmp_transform_y;
+
+					pmcd->m_centerlat_cos
+						= cos(((pmcd->m_covr_lat_min + pmcd->m_covr_lat_max) / 2.0) * M_PI / 180.0);
+
+					// Add this MCD to the persistent class covr_set
+					GetCoverSet()->Add_Update_MCD(pmcd);
+				} else {
+					// If already in the coverset, are there user offsets applied to this MCD?
+					if (pmcd_look->m_buser_offsets) {
+						m_CIB->b_have_user_offsets = true;
+
+						m_CIB->user_xoff = pmcd_look->user_xoff;
+						m_CIB->user_yoff = pmcd_look->user_yoff;
+					}
+					pmcd = pmcd_look;
 				}
 
-				//  Declare x/y of the object to be average of all cm93points
-				pobj->x = (xgeom->xmin + xgeom->xmax) / 2.;
-				pobj->y = (xgeom->ymin + xgeom->ymax) / 2.;
+				// Add this geometry to the currently loaded class M_COVR array
+				m_pcovr_array_loaded.push_back(pmcd);
 
-				//    associate the vector(edge) index table
-				pobj->m_n_lsindex = xgeom->n_vector_indices;
-				pobj->m_lsindex_array = xgeom->pvector_index; // object now owns the array
-				pobj->m_n_edge_max_points = xgeom->n_max_edge_points;
+				// Add the MCD it to the current (temporary) per cell list
+				// This array is used only to quickly find the M_COVR object parameters which apply
+				// to other objects
+				// loaded from this cell.
+				// We do this so we don't have to search the entire (worldwide) coverset for this
+				// chart scale
+				m_CIB->m_cell_mcovr_list.push_back(pmcd);
+			}
 
-				// Find the proper WGS offset for this object
-				if (m_CIB->b_have_offsets || m_CIB->b_have_user_offsets) {
-					double latc, lonc;
-					cm93_point pc;
-					pc.x = (short unsigned int)pobj->x;
-					pc.y = (short unsigned int)pobj->y;
-					Transform(&pc, 0.0, 0.0, &latc, &lonc);
+			//  Declare x/y of the object to be average of all cm93points
+			pobj->x = (xgeom->xmin + xgeom->xmax) / 2.;
+			pobj->y = (xgeom->ymin + xgeom->ymax) / 2.;
 
-					M_COVR_Desc* pmcd = FindM_COVR_InWorkingSet(latc, lonc);
+			//    associate the vector(edge) index table
+			pobj->m_n_lsindex = xgeom->n_vector_indices;
+			pobj->m_lsindex_array = xgeom->pvector_index; // object now owns the array
+			pobj->m_n_edge_max_points = xgeom->n_max_edge_points;
+
+			// Find the proper WGS offset for this object
+			if (m_CIB->b_have_offsets || m_CIB->b_have_user_offsets) {
+				double latc, lonc;
+				cm93_point pc;
+				pc.x = (short unsigned int)pobj->x;
+				pc.y = (short unsigned int)pobj->y;
+				Transform(&pc, 0.0, 0.0, &latc, &lonc);
+
+				M_COVR_Desc* pmcd = FindM_COVR_InWorkingSet(latc, lonc);
+				if (pmcd) {
+					trans_WGS84_offset_x = pmcd->user_xoff;
+					trans_WGS84_offset_y = pmcd->user_yoff;
+				}
+			}
+
+			//  Set the s57obj bounding box as lat/lon
+			double lat;
+			double lon;
+			cm93_point p;
+
+			p.x = (int)xgeom->xmin;
+			p.y = (int)xgeom->ymin;
+			Transform(&p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon);
+			pobj->BBObj.SetMin(lon, lat);
+
+			p.x = (int)xgeom->xmax;
+			p.y = (int)xgeom->ymax;
+			Transform(&p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon);
+			pobj->BBObj.SetMax(lon, lat);
+
+			pobj->bBBObj_valid = true;
+
+			// Set the object base point
+			p.x = (int)pobj->x;
+			p.y = (int)pobj->y;
+			Transform(&p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon);
+			pobj->m_lon = lon;
+			pobj->m_lat = lat;
+
+			// Set up the conversion factors for use in the tesselator
+			xgeom->x_rate = m_CIB->transform_x_rate;
+			xgeom->x_offset = m_CIB->transform_x_origin - trans_WGS84_offset_x;
+			xgeom->y_rate = m_CIB->transform_y_rate;
+			xgeom->y_offset = m_CIB->transform_y_origin - trans_WGS84_offset_y;
+
+			// Set up a deferred tesselation
+			pobj->pPolyTessGeo = new geo::PolyTessGeo(xgeom);
+
+			break;
+		}
+
+		case 1: {
+			pobj->Primitive_type = GEO_POINT;
+			pobj->npt = 1;
+
+			pobj->x = xgeom->pointx;
+			pobj->y = xgeom->pointy;
+
+			double lat, lon;
+			cm93_point p;
+			p.x = xgeom->pointx;
+			p.y = xgeom->pointy;
+			Transform(&p, 0.0, 0.0, &lat, &lon);
+
+			// Find the proper WGS offset for this object
+			if (m_CIB->b_have_offsets || m_CIB->b_have_user_offsets) {
+				M_COVR_Desc* pmcd = FindM_COVR_InWorkingSet(lat, lon);
+				if (pmcd) {
+					trans_WGS84_offset_x = pmcd->user_xoff;
+					trans_WGS84_offset_y = pmcd->user_yoff;
+				}
+			}
+
+			// Transform again to pick up offsets
+			Transform(&p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon);
+
+			pobj->m_lat = lat;
+			pobj->m_lon = lon;
+
+			pobj->BBObj.SetMin(lon - 0.25, lat - 0.25);
+			pobj->BBObj.SetMax(lon + 0.25, lat + 0.25);
+
+			break;
+		}
+
+		case 8: // wkbMultiPoint25D:
+		{
+			pobj->Primitive_type = GEO_POINT;
+
+			//  Set the s57obj bounding box as lat/lon
+			double lat, lon;
+			cm93_point p;
+
+			p.x = (int)xgeom->xmin;
+			p.y = (int)xgeom->ymin;
+			Transform(&p, 0.0, 0.0, &lat, &lon);
+			pobj->BBObj.SetMin(lon, lat);
+
+			p.x = (int)xgeom->xmax;
+			p.y = (int)xgeom->ymax;
+			Transform(&p, 0.0, 0.0, &lat, &lon);
+			pobj->BBObj.SetMax(lon, lat);
+
+			//  and declare x/y of the object to be average of all cm93points
+			pobj->x = (xgeom->xmin + xgeom->xmax) / 2.0;
+			pobj->y = (xgeom->ymin + xgeom->ymax) / 2.0;
+
+			OGRMultiPoint* pGeo = (OGRMultiPoint*)xgeom->pogrGeom;
+			pobj->npt = pGeo->getNumGeometries();
+
+			pobj->geoPtz = (double*)malloc(pobj->npt * 3 * sizeof(double));
+			pobj->geoPtMulti = (double*)malloc(pobj->npt * 2 * sizeof(double));
+
+			double* pdd = pobj->geoPtz;
+			double* pdl = pobj->geoPtMulti;
+
+			for (int ip = 0; ip < pobj->npt; ip++) {
+				OGRPoint* ppt = (OGRPoint*)(pGeo->getGeometryRef(ip));
+
+				cm93_point p;
+				p.x = (int)ppt->getX();
+				p.y = (int)ppt->getY();
+				double depth = ppt->getZ();
+
+				double east = p.x;
+				double north = p.y;
+
+				double snd_trans_x = 0.0;
+				double snd_trans_y = 0.0;
+
+				// Find the proper offset for this individual sounding
+				if (m_CIB->b_have_user_offsets) {
+					double lats, lons;
+					Transform(&p, 0.0, 0.0, &lats, &lons);
+
+					M_COVR_Desc* pmcd = FindM_COVR_InWorkingSet(lats, lons);
 					if (pmcd) {
-						trans_WGS84_offset_x = pmcd->user_xoff;
-						trans_WGS84_offset_y = pmcd->user_yoff;
+						// For lat/lon calculation below
+						snd_trans_x = pmcd->user_xoff;
+						snd_trans_y = pmcd->user_yoff;
+
+						// Actual cm93 point of this sounding, back-converted from metres e/n
+						east -= pmcd->user_xoff / m_CIB->transform_x_rate;
+						north -= pmcd->user_yoff / m_CIB->transform_y_rate;
 					}
 				}
 
-				//  Set the s57obj bounding box as lat/lon
-				double lat;
-				double lon;
-				cm93_point p;
+				*pdd++ = east;
+				*pdd++ = north;
+				*pdd++ = depth;
 
-				p.x = ( int ) xgeom->xmin;
-				p.y = ( int ) xgeom->ymin;
-				Transform ( &p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon );
-				pobj->BBObj.SetMin ( lon, lat );
-
-				p.x = ( int ) xgeom->xmax;
-				p.y = ( int ) xgeom->ymax;
-				Transform ( &p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon );
-				pobj->BBObj.SetMax ( lon, lat );
-
-				pobj->bBBObj_valid = true;
-
-				// Set the object base point
-				p.x = ( int ) pobj->x;
-				p.y = ( int ) pobj->y;
-				Transform ( &p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon );
-				pobj->m_lon = lon;
-				pobj->m_lat = lat;
-
-				// Set up the conversion factors for use in the tesselator
-				xgeom->x_rate = m_CIB->transform_x_rate;
-				xgeom->x_offset = m_CIB->transform_x_origin - trans_WGS84_offset_x;
-				xgeom->y_rate = m_CIB->transform_y_rate;
-				xgeom->y_offset = m_CIB->transform_y_origin - trans_WGS84_offset_y;
-
-				// Set up a deferred tesselation
-				pobj->pPolyTessGeo = new geo::PolyTessGeo(xgeom);
-
-				break;
+				//  Save offset lat/lon of point in obj->geoPtMulti for later use in decomposed
+				// bboxes
+				Transform(&p, snd_trans_x, snd_trans_y, &lat, &lon);
+				*pdl++ = lon;
+				*pdl++ = lat;
 			}
 
+			//  Set the object base point
+			p.x = (int)pobj->x;
+			p.y = (int)pobj->y;
+			Transform(&p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon);
+			pobj->m_lon = lon;
+			pobj->m_lat = lat;
 
-		case 1:
-			{
-				pobj->Primitive_type = GEO_POINT;
-				pobj->npt = 1;
+			delete pGeo;
 
-				pobj->x = xgeom->pointx;
-				pobj->y = xgeom->pointy;
+			break;
+		} // case 8
 
-				double lat, lon;
-				cm93_point p;
-				p.x = xgeom->pointx;
-				p.y = xgeom->pointy;
-				Transform ( &p, 0.0, 0.0, &lat, &lon );
+		case 2: {
+			pobj->Primitive_type = GEO_LINE;
 
-				//    Find the proper WGS offset for this object
-				if ( m_CIB->b_have_offsets || m_CIB->b_have_user_offsets )
-				{
-					M_COVR_Desc *pmcd = FindM_COVR_InWorkingSet ( lat, lon );
-					if ( pmcd )
-					{
-						trans_WGS84_offset_x = pmcd->user_xoff;
-						trans_WGS84_offset_y = pmcd->user_yoff;
-					}
+			pobj->npt = xgeom->n_max_vertex;
+			pobj->geoPt = (pt*)xgeom->vertex_array;
+			xgeom->vertex_array = NULL; // object now owns the array
+
+			//  Declare x/y of the object to be average of all cm93points
+			pobj->x = (xgeom->xmin + xgeom->xmax) / 2.0;
+			pobj->y = (xgeom->ymin + xgeom->ymax) / 2.0;
+
+			//    associate the vector(edge) index table
+			pobj->m_n_lsindex = xgeom->n_vector_indices;
+			pobj->m_lsindex_array = xgeom->pvector_index; // object now owns the array
+			pobj->m_n_edge_max_points = xgeom->n_max_edge_points;
+
+			//    Find the proper WGS offset for this object
+			if (m_CIB->b_have_offsets || m_CIB->b_have_user_offsets) {
+				double latc, lonc;
+				cm93_point pc;
+				pc.x = (short unsigned int)pobj->x;
+				pc.y = (short unsigned int)pobj->y;
+				Transform(&pc, 0., 0., &latc, &lonc);
+
+				M_COVR_Desc* pmcd = FindM_COVR_InWorkingSet(latc, lonc);
+				if (pmcd) {
+					trans_WGS84_offset_x = pmcd->user_xoff;
+					trans_WGS84_offset_y = pmcd->user_yoff;
 				}
-
-				//    Transform again to pick up offsets
-				Transform ( &p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon );
-
-				pobj->m_lat = lat;
-				pobj->m_lon = lon;
-
-				pobj->BBObj.SetMin ( lon-0.25, lat-0.25 );
-				pobj->BBObj.SetMax ( lon+0.25, lat+0.25 );
-
-
-				break;
 			}
 
+			//  Set the s57obj bounding box as lat/lon
+			double lat, lon;
+			cm93_point p;
 
+			p.x = (int)xgeom->xmin;
+			p.y = (int)xgeom->ymin;
+			Transform(&p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon);
+			pobj->BBObj.SetMin(lon, lat);
 
-		case 8:               //wkbMultiPoint25D:
-			{
+			p.x = (int)xgeom->xmax;
+			p.y = (int)xgeom->ymax;
+			Transform(&p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon);
+			pobj->BBObj.SetMax(lon, lat);
 
+			pobj->bBBObj_valid = true;
 
-				pobj->Primitive_type = GEO_POINT;
+			//  Set the object base point
+			p.x = (int)pobj->x;
+			p.y = (int)pobj->y;
+			Transform(&p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon);
+			pobj->m_lon = lon;
+			pobj->m_lat = lat;
 
-				//  Set the s57obj bounding box as lat/lon
-				double lat, lon;
-				cm93_point p;
+			break;
 
-				p.x = ( int ) xgeom->xmin;
-				p.y = ( int ) xgeom->ymin;
-				Transform ( &p, 0.0, 0.0, &lat, &lon );
-				pobj->BBObj.SetMin ( lon, lat );
+		} // case 2
 
-				p.x = ( int ) xgeom->xmax;
-				p.y = ( int ) xgeom->ymax;
-				Transform ( &p, 0.0, 0.0, &lat, &lon );
-				pobj->BBObj.SetMax ( lon, lat );
-
-				//  and declare x/y of the object to be average of all cm93points
-				pobj->x = ( xgeom->xmin + xgeom->xmax ) / 2.0;
-				pobj->y = ( xgeom->ymin + xgeom->ymax ) / 2.0;
-
-
-
-				OGRMultiPoint *pGeo = ( OGRMultiPoint * ) xgeom->pogrGeom;
-				pobj->npt = pGeo->getNumGeometries();
-
-				pobj->geoPtz = ( double * ) malloc ( pobj->npt * 3 * sizeof ( double ) );
-				pobj->geoPtMulti = ( double * ) malloc ( pobj->npt * 2 * sizeof ( double ) );
-
-				double *pdd = pobj->geoPtz;
-				double *pdl = pobj->geoPtMulti;
-
-				for ( int ip=0 ; ip<pobj->npt ; ip++ )
-				{
-					OGRPoint *ppt = ( OGRPoint * ) ( pGeo->getGeometryRef ( ip ) );
-
-					cm93_point p;
-					p.x = ( int ) ppt->getX();
-					p.y = ( int ) ppt->getY();
-					double depth = ppt->getZ();
-
-					double east  = p.x;
-					double north = p.y;
-
-					double snd_trans_x = 0.0;
-					double snd_trans_y = 0.0;
-
-					//    Find the proper offset for this individual sounding
-					if ( m_CIB->b_have_user_offsets )
-					{
-						double lats, lons;
-						Transform ( &p, 0.0, 0.0, &lats, &lons );
-
-						M_COVR_Desc *pmcd = FindM_COVR_InWorkingSet ( lats, lons );
-						if ( pmcd )
-						{
-							// For lat/lon calculation below
-							snd_trans_x = pmcd->user_xoff;
-							snd_trans_y = pmcd->user_yoff;
-
-							// Actual cm93 point of this sounding, back-converted from metres e/n
-							east  -= pmcd->user_xoff / m_CIB->transform_x_rate;
-							north -= pmcd->user_yoff / m_CIB->transform_y_rate;
-						}
-					}
-
-					*pdd++ = east;
-					*pdd++ = north;
-					*pdd++ = depth;
-
-					//  Save offset lat/lon of point in obj->geoPtMulti for later use in decomposed bboxes
-					Transform ( &p, snd_trans_x, snd_trans_y, &lat, &lon );
-					*pdl++ = lon;
-					*pdl++ = lat;
-				}
-
-				//  Set the object base point
-				p.x = ( int ) pobj->x;
-				p.y = ( int ) pobj->y;
-				Transform ( &p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon );
-				pobj->m_lon = lon;
-				pobj->m_lat = lat;
-
-
-				delete pGeo;
-
-				break;
-			}         // case 8
-
-
-
-
-
-		case 2:
-			{
-				pobj->Primitive_type = GEO_LINE;
-
-				pobj->npt = xgeom->n_max_vertex;
-				pobj->geoPt = ( pt * ) xgeom->vertex_array;
-				xgeom->vertex_array = NULL;               // object now owns the array
-
-				//  Declare x/y of the object to be average of all cm93points
-				pobj->x = ( xgeom->xmin + xgeom->xmax ) / 2.0;
-				pobj->y = ( xgeom->ymin + xgeom->ymax ) / 2.0;
-
-				//    associate the vector(edge) index table
-				pobj->m_n_lsindex = xgeom->n_vector_indices;
-				pobj->m_lsindex_array = xgeom->pvector_index;         // object now owns the array
-				pobj->m_n_edge_max_points = xgeom->n_max_edge_points;
-
-
-				//    Find the proper WGS offset for this object
-				if ( m_CIB->b_have_offsets || m_CIB->b_have_user_offsets )
-				{
-					double latc, lonc;
-					cm93_point pc;   pc.x = ( short unsigned int ) pobj->x;  pc.y = ( short unsigned int ) pobj->y;
-					Transform ( &pc, 0., 0., &latc, &lonc );
-
-					M_COVR_Desc *pmcd = FindM_COVR_InWorkingSet ( latc, lonc );
-					if ( pmcd )
-					{
-						trans_WGS84_offset_x = pmcd->user_xoff;
-						trans_WGS84_offset_y = pmcd->user_yoff;
-					}
-				}
-
-
-
-				//  Set the s57obj bounding box as lat/lon
-				double lat, lon;
-				cm93_point p;
-
-				p.x = ( int ) xgeom->xmin;
-				p.y = ( int ) xgeom->ymin;
-				Transform ( &p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon );
-				pobj->BBObj.SetMin ( lon, lat );
-
-				p.x = ( int ) xgeom->xmax;
-				p.y = ( int ) xgeom->ymax;
-				Transform ( &p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon );
-				pobj->BBObj.SetMax ( lon, lat );
-
-				pobj->bBBObj_valid = true;
-
-				//  Set the object base point
-				p.x = ( int ) pobj->x;
-				p.y = ( int ) pobj->y;
-				Transform ( &p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon );
-				pobj->m_lon = lon;
-				pobj->m_lat = lat;
-
-				break;
-
-			}                // case 2
-		default:
-			{
-				//TODO GEO_PRIM here is a placeholder.  Trace this code....
-				pobj->Primitive_type = GEO_PRIM;
-				break;
-			}
-
-	} // geomtype switch
-
+		default: {
+			// TODO GEO_PRIM here is a placeholder.  Trace this code....
+			pobj->Primitive_type = GEO_PRIM;
+			break;
+		}
+	}
 
 	// Build/Maintain a list of found OBJL types for later use
 	// And back-reference the appropriate list index in S57Obj for Display Filtering
 
-
-	if ( pobj )
-	{
+	if (pobj) {
 		pobj->iOBJL = -1; // deferred, done by OBJL filtering in the PLIB as needed
 	}
 
-
-
 	// Everything in Xgeom that is needed later has been given to the object
-	// So, the xgeom object can be deleted
-	// Except for area features, which will get deferred tesselation, and so need the Extended geometry point
+	// So, the xgeom object can be deleted Except for area features, which will get deferred
+	// tesselation, and so need the Extended geometry point
 	// Those features will own the xgeom...
-	if ( geomtype != 4 )
+	if (geomtype != 4)
 		delete xgeom;
 
-	//    Set the per-object transform coefficients
-	pobj->x_rate   = m_CIB->transform_x_rate * ( geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
-	pobj->y_rate   = m_CIB->transform_y_rate * ( geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
-	pobj->x_origin = m_CIB->transform_x_origin * ( geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
-	pobj->y_origin = m_CIB->transform_y_origin * ( geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters );
+	// Set the per-object transform coefficients
+	pobj->x_rate = m_CIB->transform_x_rate * (geo::mercator_k0 * geo::WGS84_semimajor_axis_meters
+											  / CM93_semimajor_axis_meters);
+	pobj->y_rate = m_CIB->transform_y_rate * (geo::mercator_k0 * geo::WGS84_semimajor_axis_meters
+											  / CM93_semimajor_axis_meters);
+	pobj->x_origin
+		= m_CIB->transform_x_origin
+		  * (geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters);
+	pobj->y_origin
+		= m_CIB->transform_y_origin
+		  * (geo::mercator_k0 * geo::WGS84_semimajor_axis_meters / CM93_semimajor_axis_meters);
 
-	//    Add in the possible offsets to WGS84 which come from the proper M_COVR containing this feature
+	// Add in the possible offsets to WGS84 which come from the proper M_COVR containing this
+	// feature
 	pobj->x_origin -= trans_WGS84_offset_x;
 	pobj->y_origin -= trans_WGS84_offset_y;
 
@@ -2656,12 +2509,11 @@ wxPoint2DDouble cm93chart::FindM_COVROffset(double lat, double lon)
 InitReturn cm93chart::CreateHeaderDataFromCM93Cell(void)
 {
 	// Figure out the scale from the file name
-	wxFileName fn ( m_FullPath );
+	wxFileName fn(m_FullPath);
 	wxString ext = fn.GetExt();
 
 	int scale;
-	switch ( ( ext.mb_str() ) [ ( size_t ) 0] )
-	{
+	switch ((ext.mb_str())[(size_t)0]) {
 		case 'Z': scale = 20000000;  break;
 		case 'A': scale =  3000000;  break;
 		case 'B': scale =  1000000;  break;
@@ -2675,15 +2527,11 @@ InitReturn cm93chart::CreateHeaderDataFromCM93Cell(void)
 
 	m_Chart_Scale = scale;
 
-
-
-	//    Check with the manager to see if a chart of this scale has been processed
-	//    If there is no manager, punt and open the chart
-	if(m_pManager)
-	{
+	// Check with the manager to see if a chart of this scale has been processed
+	// If there is no manager, punt and open the chart
+	if (m_pManager) {
 		bool bproc = false;
-		switch ( m_Chart_Scale )
-		{
+		switch (m_Chart_Scale) {
 			case 20000000: bproc = m_pManager->m_bfoundZ; break;
 			case  3000000: bproc = m_pManager->m_bfoundA; break;
 			case  1000000: bproc = m_pManager->m_bfoundB; break;
@@ -2694,16 +2542,11 @@ InitReturn cm93chart::CreateHeaderDataFromCM93Cell(void)
 			case     7500: bproc = m_pManager->m_bfoundG; break;
 		}
 
-
-		if ( bproc )
+		if (bproc)
 			return INIT_FAIL_NOERROR;
 
-
-
-
-		//    Inform the manager that a chart of this scale has been processed
-		switch ( m_Chart_Scale )
-		{
+		// Inform the manager that a chart of this scale has been processed
+		switch (m_Chart_Scale) {
 			case 20000000: m_pManager->m_bfoundZ = true; break;
 			case  3000000: m_pManager->m_bfoundA = true; break;
 			case  1000000: m_pManager->m_bfoundB = true; break;
@@ -2715,36 +2558,33 @@ InitReturn cm93chart::CreateHeaderDataFromCM93Cell(void)
 		}
 	}
 
-	//    Specify the whole world as chart coverage
+	// Specify the whole world as chart coverage
 	m_FullExtent.ELON = 179.0;
 	m_FullExtent.WLON = -179.0;
 	m_FullExtent.NLAT = 80.0;
 	m_FullExtent.SLAT = -80.0;
 	m_bExtentSet = true;
 
-
-	//    Populate one (huge) M_COVR Entry
+	// Populate one (huge) M_COVR Entry
 	m_nCOVREntries = 1;
-	m_pCOVRTablePoints = ( int * ) malloc ( sizeof ( int ) );
+	m_pCOVRTablePoints = (int*)malloc(sizeof(int));
 	*m_pCOVRTablePoints = 4;
-	m_pCOVRTable = ( float ** ) malloc ( sizeof ( float * ) );
-	float *pf = ( float * ) malloc ( 2 * 4 * sizeof ( float ) );
+	m_pCOVRTable = (float**)malloc(sizeof(float*));
+	float* pf = (float*)malloc(2 * 4 * sizeof(float));
 	*m_pCOVRTable = pf;
-	float *pfe = pf;
+	float* pfe = pf;
 
-	*pfe++ = m_FullExtent.NLAT; //LatMax;
-	*pfe++ = m_FullExtent.WLON; //LonMin;
+	*pfe++ = m_FullExtent.NLAT; // LatMax;
+	*pfe++ = m_FullExtent.WLON; // LonMin;
 
-	*pfe++ = m_FullExtent.NLAT; //LatMax;
-	*pfe++ = m_FullExtent.ELON; //LonMax;
+	*pfe++ = m_FullExtent.NLAT; // LatMax;
+	*pfe++ = m_FullExtent.ELON; // LonMax;
 
-	*pfe++ = m_FullExtent.SLAT; //LatMin;
-	*pfe++ = m_FullExtent.ELON; //LonMax;
+	*pfe++ = m_FullExtent.SLAT; // LatMin;
+	*pfe++ = m_FullExtent.ELON; // LonMax;
 
-	*pfe++ = m_FullExtent.SLAT; //LatMin;
-	*pfe++ = m_FullExtent.WLON; //LonMin;
-
-
+	*pfe++ = m_FullExtent.SLAT; // LatMin;
+	*pfe++ = m_FullExtent.WLON; // LonMin;
 
 	return INIT_OK;
 }
@@ -2768,7 +2608,7 @@ void cm93chart::ProcessMCOVRObjects(int cell_index, char subcell)
 				if (NULL == pmcd) {
 					geo::ExtendedGeometry* xgeom = BuildGeom(pobject, NULL, iObj);
 
-					//    Decode the attributes, specifically looking for _wgsox, _wgsoy
+					// Decode the attributes, specifically looking for _wgsox, _wgsoy
 
 					double tmp_transform_x = 0.;
 					double tmp_transform_y = 0.;
@@ -2807,17 +2647,17 @@ void cm93chart::ProcessMCOVRObjects(int cell_index, char subcell)
 
 						pmcd = new M_COVR_Desc;
 
-						//    Record unique identifiers for this M_COVR object
+						// Record unique identifiers for this M_COVR object
 						pmcd->m_cell_index = cell_index;
 						pmcd->m_object_id = iObj;
 						pmcd->m_subcell = (int)subcell;
 
-						//      Get number of exterior ring points(vertices)
+						// Get number of exterior ring points(vertices)
 						int npta = xgeom->contour_array[0];
 						geo::float_2Dpt* geoPt = new geo::float_2Dpt[npta + 2]; // vertex array
 						geo::float_2Dpt* ppt = geoPt;
 
-						//  Transcribe exterior ring points to vertex array, in Lat/Lon coordinates
+						// Transcribe exterior ring points to vertex array, in Lat/Lon coordinates
 						pmcd->m_covr_lon_max = -1000.0;
 						pmcd->m_covr_lon_min = 1000.0;
 						pmcd->m_covr_lat_max = -1000.0;
@@ -2854,10 +2694,10 @@ void cm93chart::ProcessMCOVRObjects(int cell_index, char subcell)
 						pmcd->m_centerlat_cos = cos(
 							((pmcd->m_covr_lat_min + pmcd->m_covr_lat_max) / 2.0) * M_PI / 180.0);
 
-						//     Add this object to the covr_set
+						// Add this object to the covr_set
 						m_pcovr_set->Add_Update_MCD(pmcd);
 
-						//    Clean up the xgeom
+						// Clean up the xgeom
 						free(xgeom->pvector_index);
 
 						delete xgeom;

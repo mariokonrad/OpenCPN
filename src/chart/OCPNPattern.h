@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPNPATTERN__H__
-#define __OCPNPATTERN__H__
+#ifndef __CHART__OCPNPATTERN__H__
+#define __CHART__OCPNPATTERN__H__
 
 #include <chart/SymbolSizeInfo.h>
 

@@ -56,13 +56,8 @@ sigjmp_buf env_chart; // the context saved by sigsetjmp();
 
 void catch_signals_chart(int signo)
 {
-	switch (signo) {
-		case SIGSEGV:
-			siglongjmp(env_chart, 1); // jump back to the setjmp() point
-			break;
-
-		default:
-			break;
+	if (signo == SIGSEGV) {
+		siglongjmp(env_chart, 1);
 	}
 }
 
@@ -1048,8 +1043,8 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy,
 									const ViewPort& vp) // FIXME: refactoring
 {
-	int px;
-	int py;
+	int px = 0;
+	int py = 0;
 
 	if (bHaveEmbeddedGeoref) {
 		double alon = lon + m_lon_datum_adjust;
@@ -1998,21 +1993,17 @@ bool ChartBaseBSB::GetAndScaleData(unsigned char* ppn, wxRect& source, int WXUNU
 		sigaction(SIGSEGV, &temp, NULL);
 
 		if (sigsetjmp(env_chart, 1)) {
-			//  Something in the below code block faulted....
+			// Something in the below code block faulted....
 			sigaction(SIGSEGV, &sa_all_previous, NULL); // reset signal handler
 
-			wxString msg;
-			msg.Printf(_T("   Caught SIGSEGV on GetandScaleData, Factor < 1"));
-			wxLogMessage(msg);
-
-			msg.Printf(_T("   m_raster_scale_factor:  %g   source.width: %d  dest.y: %d dest.x: %d dest.width: %d  dest.height: %d "),
-					   m_raster_scale_factor, source.width, dest.y, dest.x, dest.width,
-					   dest.height);
-			wxLogMessage(msg);
-
-			msg.Printf(_T("   i: %d  j: %d dest_stride: %d  target_line_start: %p  target_data_x: %p  y_offset: %d"),
-					   i, j, dest_stride, target_line_start, target_data_x, y_offset);
-			wxLogMessage(msg);
+			wxLogMessage(_T("   Caught SIGSEGV on GetandScaleData, Factor < 1"));
+			wxLogMessage(wxString::Format(
+				_T("   m_raster_scale_factor:  %g   source.width: %d  dest.y: %d dest.x: %d dest.width: %d  dest.height: %d "),
+				m_raster_scale_factor, source.width, dest.y, dest.x, dest.width,
+				dest.height));
+			wxLogMessage(wxString::Format(
+				_T("   i: %d  j: %d dest_stride: %d  target_line_start: %p  target_data_x: %p  y_offset: %d"),
+				i, j, dest_stride, target_line_start, target_data_x, y_offset));
 
 			free(s_data);
 			return true;
@@ -2202,46 +2193,40 @@ int ChartBaseBSB::ReadBSBHdrLine(wxFileInputStream* ifs, char* buf, int buf_len_
 /// Leaving stream pointer at start of next line
 int ChartBaseBSB::BSBScanScanline(wxInputStream* pinStream)
 {
-	int nLineMarker;
-	int nValueShift;
+	int nLineMarker = 0;
+	int nValueShift = 0;
 	int iPixel = 0;
 	unsigned char byValueMask;
 	unsigned char byCountMask;
 	unsigned char byNext;
-	int coffset;
 
-	//      if(1)
-	{
-		// Read the line number.
-		nLineMarker = 0;
-		do {
+	// Read the line number.
+	do {
+		byNext = pinStream->GetC();
+		nLineMarker = nLineMarker * 128 + (byNext & 0x7f);
+	} while ((byNext & 0x80) != 0);
+
+	// Setup masking values.
+	nValueShift = 7 - nColorSize;
+	byValueMask = (((1 << nColorSize)) - 1) << nValueShift;
+	byCountMask = (1 << (7 - nColorSize)) - 1;
+
+	// Read and simulate expansion of runs.
+
+	while (((byNext = pinStream->GetC()) != 0) && (iPixel < Size_X)) {
+
+		int nRunCount = byNext & byCountMask;
+
+		while ((byNext & 0x80) != 0) {
 			byNext = pinStream->GetC();
-			nLineMarker = nLineMarker * 128 + (byNext & 0x7f);
-		} while ((byNext & 0x80) != 0);
-
-		// Setup masking values.
-		nValueShift = 7 - nColorSize;
-		byValueMask = (((1 << nColorSize)) - 1) << nValueShift;
-		byCountMask = (1 << (7 - nColorSize)) - 1;
-
-		// Read and simulate expansion of runs.
-
-		while (((byNext = pinStream->GetC()) != 0) && (iPixel < Size_X)) {
-
-			int nRunCount = byNext & byCountMask;
-
-			while ((byNext & 0x80) != 0) {
-				byNext = pinStream->GetC();
-				nRunCount = nRunCount * 128 + (byNext & 0x7f);
-			}
-
-			if (iPixel + nRunCount + 1 > Size_X)
-				nRunCount = Size_X - iPixel - 1;
-
-			// Store nPixValue in the destination
-			iPixel += nRunCount + 1;
+			nRunCount = nRunCount * 128 + (byNext & 0x7f);
 		}
-		coffset = pinStream->TellI();
+
+		if (iPixel + nRunCount + 1 > Size_X)
+			nRunCount = Size_X - iPixel - 1;
+
+		// Store nPixValue in the destination
+		iPixel += nRunCount + 1;
 	}
 
 	return nLineMarker;
@@ -2250,8 +2235,11 @@ int ChartBaseBSB::BSBScanScanline(wxInputStream* pinStream)
 /// Get a BSB Scan Line Using Cache and scan line index if available
 int ChartBaseBSB::BSBGetScanline(unsigned char* pLineBuf, int y, int xs, int xl, int sub_samp)
 {
-	int nLineMarker, nValueShift, iPixel = 0;
-	unsigned char byValueMask, byCountMask;
+	int nLineMarker;
+	int nValueShift;
+	int iPixel = 0;
+	unsigned char byValueMask;
+	unsigned char byCountMask;
 	unsigned char byNext;
 	CachedLine* pt = NULL;
 	unsigned char* pCL;
@@ -2267,12 +2255,13 @@ int ChartBaseBSB::BSBGetScanline(unsigned char* pLineBuf, int y, int xs, int xl,
 		{
 			if (pt->pPix)
 				free(pt->pPix);
-			pt->pPix = (unsigned char*)malloc(Size_X);
+			pt->pPix = static_cast<unsigned char*>(malloc(Size_X));
 		}
 
 		xtemp_line = pt->pPix;
-	} else
-		xtemp_line = (unsigned char*)malloc(Size_X);
+	} else {
+		xtemp_line = static_cast<unsigned char*>(malloc(Size_X));
+	}
 
 	if ((bUseLineCache && !pt->bValid) || (!bUseLineCache)) {
 		if (line_offset_table[y] == 0) {
@@ -2366,7 +2355,7 @@ int ChartBaseBSB::BSBGetScanline(unsigned char* pLineBuf, int y, int xs, int xl,
 		ix = xs;
 		while (ix < xl - 1) {
 			unsigned char cur_by = *pCL;
-			rgbval = (int)(pPalette[cur_by]);
+			rgbval = pPalette[cur_by];
 			while ((ix < xl - 1)) {
 				if (cur_by != *pCL)
 					break;
@@ -2381,7 +2370,7 @@ int ChartBaseBSB::BSBGetScanline(unsigned char* pLineBuf, int y, int xs, int xl,
 		ix = xs;
 		while (ix < xl - 1) {
 			unsigned char cur_by = *pCL;
-			rgbval = (int)(pPalette[cur_by]);
+			rgbval = pPalette[cur_by];
 			while ((ix < xl - 1)) {
 				if (cur_by != *pCL)
 					break;
@@ -2393,14 +2382,13 @@ int ChartBaseBSB::BSBGetScanline(unsigned char* pLineBuf, int y, int xs, int xl,
 		}
 	}
 
-	// Get the last pixel explicitely
-	//  irrespective of the sub_sampling factor
+	// Get the last pixel explicitely irrespective of the sub_sampling factor
 
 	if (xs < xl - 1) {
 		unsigned char* pCLast = xtemp_line + (xl - 1);
 		unsigned char* prgb_last = pLineBuf + ((xl - 1) - xs) * BPP / 8;
 
-		rgbval = (int)(pPalette[*pCLast]); // last pixel
+		rgbval = pPalette[*pCLast]; // last pixel
 		unsigned char a = rgbval & 0xff;
 		*prgb_last++ = a;
 		a = (rgbval >> 8) & 0xff;
@@ -2419,9 +2407,9 @@ int* ChartBaseBSB::GetPalettePtr(BSB_Color_Capability color_index)
 {
 	if (pPalettes[color_index]) {
 		if (palette_direction == PaletteFwd)
-			return (int*)(pPalettes[color_index]->FwdPalette);
+			return pPalettes[color_index]->FwdPalette;
 		else
-			return (int*)(pPalettes[color_index]->RevPalette);
+			return pPalettes[color_index]->RevPalette;
 	}
 	return NULL;
 }
@@ -2451,37 +2439,38 @@ bool ChartBaseBSB::AnalyzeSkew(void)
 	int platmin = 100000;
 	int platmax = 0;
 
-	int nlonmin, nlonmax, nlatmax, nlatmin;
-	nlonmin = 0;
-	nlonmax = 0;
-	nlatmax = 0;
-	nlatmin = 0;
+	int nlonmin = 0;
+	int nlonmax = 0;
+	int nlatmax = 0;
+	int nlatmin = 0;
 
 	if (reference_points.empty()) // bad chart georef...
 		return false;
+
+	// FIXME: partially code duplication, see AnalyzeRefpoints
 
 	for (unsigned int n = 0; n < reference_points.size(); ++n) {
 		// Longitude
 		if (reference_points[n].lonr > lonmax) {
 			lonmax = reference_points[n].lonr;
-			plonmax = (int)reference_points[n].xr;
+			plonmax = static_cast<int>(reference_points[n].xr);
 			nlonmax = n;
 		}
 		if (reference_points[n].lonr < lonmin) {
 			lonmin = reference_points[n].lonr;
-			plonmin = (int)reference_points[n].xr;
+			plonmin = static_cast<int>(reference_points[n].xr);
 			nlonmin = n;
 		}
 
 		// Latitude
 		if (reference_points[n].latr < latmin) {
 			latmin = reference_points[n].latr;
-			platmin = (int)reference_points[n].yr;
+			platmin = static_cast<int>(reference_points[n].yr);
 			nlatmin = n;
 		}
 		if (reference_points[n].latr > latmax) {
 			latmax = reference_points[n].latr;
-			platmax = (int)reference_points[n].yr;
+			platmax = static_cast<int>(reference_points[n].yr);
 			nlatmax = n;
 		}
 	}
@@ -2503,24 +2492,24 @@ bool ChartBaseBSB::AnalyzeSkew(void)
 				// Longitude
 				if (reference_points[n].lonr > lonmax) {
 					lonmax = reference_points[n].lonr;
-					plonmax = (int)reference_points[n].xr;
+					plonmax = static_cast<int>(reference_points[n].xr);
 					nlonmax = n;
 				}
 				if (reference_points[n].lonr < lonmin) {
 					lonmin = reference_points[n].lonr;
-					plonmin = (int)reference_points[n].xr;
+					plonmin = static_cast<int>(reference_points[n].xr);
 					nlonmin = n;
 				}
 
 				// Latitude
 				if (reference_points[n].latr < latmin) {
 					latmin = reference_points[n].latr;
-					platmin = (int)reference_points[n].yr;
+					platmin = static_cast<int>(reference_points[n].yr);
 					nlatmin = n;
 				}
 				if (reference_points[n].latr > latmax) {
 					latmax = reference_points[n].latr;
-					platmax = (int)reference_points[n].yr;
+					platmax = static_cast<int>(reference_points[n].yr);
 					nlatmax = n;
 				}
 			}
@@ -2571,15 +2560,8 @@ bool ChartBaseBSB::AnalyzeSkew(void)
 
 		if (fabs(apparent_skew - m_Chart_Skew) > 2) { // measured skew is more than 2 degrees
 			m_Chart_Skew = apparent_skew; // different from stated skew
-
-			wxString msg = _T("   Warning: Skew override on chart ");
-			msg.Append(m_FullPath);
-			wxString msg1;
-			msg1.Printf(_T(" is %5g degrees"), apparent_skew);
-			msg.Append(msg1);
-
-			wxLogMessage(msg);
-
+			wxLogMessage(_T("   Warning: Skew override on chart ") + m_FullPath
+						 + wxString::Format(_T(" is %5g degrees"), apparent_skew));
 			return false;
 		}
 	}
@@ -2589,7 +2571,6 @@ bool ChartBaseBSB::AnalyzeSkew(void)
 
 int ChartBaseBSB::AnalyzeRefpoints(void)
 {
-	int i, n;
 	double elt, elg;
 
 	// Calculate the max/min reference points
@@ -2611,28 +2592,30 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 	if (reference_points.empty()) // bad chart georef...
 		return 1;
 
-	for (n = 0; n < reference_points.size(); n++) {
+	// FIXME: partially code duplication, see AnalyzeSkew
+
+	for (unsigned int n = 0; n < reference_points.size(); n++) {
 		// Longitude
 		if (reference_points[n].lonr > lonmax) {
 			lonmax = reference_points[n].lonr;
-			plonmax = (int)reference_points[n].xr;
+			plonmax = static_cast<int>(reference_points[n].xr);
 			nlonmax = n;
 		}
 		if (reference_points[n].lonr < lonmin) {
 			lonmin = reference_points[n].lonr;
-			plonmin = (int)reference_points[n].xr;
+			plonmin = static_cast<int>(reference_points[n].xr);
 			nlonmin = n;
 		}
 
 		// Latitude
 		if (reference_points[n].latr < latmin) {
 			latmin = reference_points[n].latr;
-			platmin = (int)reference_points[n].yr;
+			platmin = static_cast<int>(reference_points[n].yr);
 			nlatmin = n;
 		}
 		if (reference_points[n].latr > latmax) {
 			latmax = reference_points[n].latr;
-			platmax = (int)reference_points[n].yr;
+			platmax = static_cast<int>(reference_points[n].yr);
 			nlatmax = n;
 		}
 	}
@@ -2640,8 +2623,8 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 	// Special case for charts which cross the IDL
 	if ((lonmin * lonmax) < 0) {
 		if (reference_points[nlonmin].xr > reference_points[nlonmax].xr) {
-			//    walk the reference table and add 360 to any longitude which is < 0
-			for (n = 0; n < reference_points.size(); n++) {
+			// walk the reference table and add 360 to any longitude which is < 0
+			for (unsigned int n = 0; n < reference_points.size(); n++) {
 				if (reference_points[n].lonr < 0.0)
 					reference_points[n].lonr += 360.0;
 			}
@@ -2650,28 +2633,28 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 			lonmin = 1000;
 			lonmax = -1000;
 
-			for (n = 0; n < reference_points.size(); n++) {
-				//    Longitude
+			for (unsigned int n = 0; n < reference_points.size(); n++) {
+				// Longitude
 				if (reference_points[n].lonr > lonmax) {
 					lonmax = reference_points[n].lonr;
-					plonmax = (int)reference_points[n].xr;
+					plonmax = static_cast<int>(reference_points[n].xr);
 					nlonmax = n;
 				}
 				if (reference_points[n].lonr < lonmin) {
 					lonmin = reference_points[n].lonr;
-					plonmin = (int)reference_points[n].xr;
+					plonmin = static_cast<int>(reference_points[n].xr);
 					nlonmin = n;
 				}
 
 				// Latitude
 				if (reference_points[n].latr < latmin) {
 					latmin = reference_points[n].latr;
-					platmin = (int)reference_points[n].yr;
+					platmin = static_cast<int>(reference_points[n].yr);
 					nlatmin = n;
 				}
 				if (reference_points[n].latr > latmax) {
 					latmax = reference_points[n].latr;
-					platmax = (int)reference_points[n].yr;
+					platmax = static_cast<int>(reference_points[n].yr);
 					nlatmax = n;
 				}
 			}
@@ -2682,23 +2665,23 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 	// Build the Control Point Structure, etc
 	cPoints.count = reference_points.size();
 
-	cPoints.tx = (double*)malloc(reference_points.size() * sizeof(double));
-	cPoints.ty = (double*)malloc(reference_points.size() * sizeof(double));
-	cPoints.lon = (double*)malloc(reference_points.size() * sizeof(double));
-	cPoints.lat = (double*)malloc(reference_points.size() * sizeof(double));
+	cPoints.tx = static_cast<double*>(malloc(reference_points.size() * sizeof(double)));
+	cPoints.ty = static_cast<double*>(malloc(reference_points.size() * sizeof(double)));
+	cPoints.lon = static_cast<double*>(malloc(reference_points.size() * sizeof(double)));
+	cPoints.lat = static_cast<double*>(malloc(reference_points.size() * sizeof(double)));
 
-	cPoints.pwx = (double*)malloc(12 * sizeof(double));
-	cPoints.wpx = (double*)malloc(12 * sizeof(double));
-	cPoints.pwy = (double*)malloc(12 * sizeof(double));
-	cPoints.wpy = (double*)malloc(12 * sizeof(double));
+	cPoints.pwx = static_cast<double*>(malloc(12 * sizeof(double)));
+	cPoints.wpx = static_cast<double*>(malloc(12 * sizeof(double)));
+	cPoints.pwy = static_cast<double*>(malloc(12 * sizeof(double)));
+	cPoints.wpy = static_cast<double*>(malloc(12 * sizeof(double)));
 
 	// Find the two REF points that are farthest apart
 	double dist_max = 0.;
-	int imax = 0;
-	int jmax = 0;
+	unsigned int imax = 0;
+	unsigned int jmax = 0;
 
-	for (i = 0; i < reference_points.size(); i++) {
-		for (int j = i + 1; j < reference_points.size(); j++) {
+	for (unsigned int i = 0; i < reference_points.size(); i++) {
+		for (unsigned int j = i + 1; j < reference_points.size(); j++) {
 			double dx = reference_points[i].xr - reference_points[j].xr;
 			double dy = reference_points[i].yr - reference_points[j].yr;
 			double dist = (dx * dx) + (dy * dy);
@@ -2733,7 +2716,7 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		// Set up and solve polynomial solution for pix<->east/north as projected
 		// Fill the cpoints structure with pixel points and transformed lat/lon
 
-		for (int n = 0; n < reference_points.size(); n++) {
+		for (unsigned int n = 0; n < reference_points.size(); n++) {
 			double easting, northing;
 			geo::toTM(reference_points[n].latr, reference_points[n].lonr, m_proj_lat, m_proj_lon,
 					  &easting, &northing);
@@ -2776,7 +2759,7 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		// Set up and solve polynomial solution for pix<->east/north as projected
 		// Fill the cpoints structure with pixel points and transformed lat/lon
 
-		for (int n = 0; n < reference_points.size(); n++) {
+		for (unsigned int n = 0; n < reference_points.size(); n++) {
 			double easting, northing;
 			geo::toSM_ECC(reference_points[n].latr, reference_points[n].lonr, m_proj_lat,
 						  m_proj_lon, &easting, &northing);
@@ -2832,12 +2815,9 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		// Set up and solve polynomial solution for pix<->cartesian east/north as projected
 		// Fill the cpoints structure with pixel points and transformed lat/lon
 
-		for (int n = 0; n < reference_points.size(); n++) {
-			double lata, lona;
-			lata = reference_points[n].latr;
-			lona = reference_points[n].lonr;
-
-			double easting, northing;
+		for (unsigned int n = 0; n < reference_points.size(); n++) {
+			double easting;
+			double northing;
 			geo::toPOLY(reference_points[n].latr, reference_points[n].lonr, m_proj_lat, m_proj_lon,
 						&easting, &northing);
 
@@ -2892,14 +2872,13 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 
 	double xpl_err_max = 0;
 	double ypl_err_max = 0;
-	double xpl_err_max_meters, ypl_err_max_meters;
 	int px, py;
 
 	int pxref, pyref;
 	pxref = (int)reference_points[0].xr;
 	pyref = (int)reference_points[0].yr;
 
-	for (i = 0; i < reference_points.size(); i++) {
+	for (unsigned int i = 0; i < reference_points.size(); i++) {
 		px = (int)(vp.pix_width / 2 + reference_points[i].xr) - pxref;
 		py = (int)(vp.pix_height / 2 + reference_points[i].yr) - pyref;
 
@@ -2923,9 +2902,6 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 			ypl_err_max = reference_points[i].ypl_error;
 		if (fabs(reference_points[i].xpl_error) > fabs(xpl_err_max))
 			xpl_err_max = reference_points[i].xpl_error;
-
-		xpl_err_max_meters = fabs(xpl_err_max * 60.0 * 1852.0);
-		ypl_err_max_meters = fabs(ypl_err_max * 60.0 * 1852.0);
 	}
 
 	Chart_Error_Factor
@@ -2939,15 +2915,9 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 
 	// Good enough for navigation?
 	if (chart_error_pixels > 10) {
-		wxString msg = _("   VP Final Check: Georeference Chart_Error_Factor on chart ");
-		msg.Append(m_FullPath);
-		wxString msg1;
-		msg1.Printf(_T(" is %5g \n     nominal pixel error is: %5g"), Chart_Error_Factor,
-					chart_error_pixels);
-		msg.Append(msg1);
-
-		wxLogMessage(msg);
-
+		wxLogMessage(_("   VP Final Check: Georeference Chart_Error_Factor on chart ") + m_FullPath
+					 + wxString::Format(_T(" is %5g \n     nominal pixel error is: %5g"),
+										Chart_Error_Factor, chart_error_pixels));
 		m_ExtraInfo = _("---<<< Warning:  Chart georef accuracy is poor. >>>---");
 	}
 
@@ -2966,7 +2936,7 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		pxref = (int)reference_points[0].xr;
 		pyref = (int)reference_points[0].yr;
 
-		for (i = 0; i < reference_points.size(); i++) {
+		for (unsigned int i = 0; i < reference_points.size(); i++) {
 			px = (int)(vp.pix_width / 2 + reference_points[i].xr) - pxref;
 			py = (int)(vp.pix_height / 2 + reference_points[i].yr) - pyref;
 
@@ -2990,9 +2960,6 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 				ypl_err_max = reference_points[i].ypl_error;
 			if (fabs(reference_points[i].xpl_error) > fabs(xpl_err_max))
 				xpl_err_max = reference_points[i].xpl_error;
-
-			xpl_err_max_meters = fabs(xpl_err_max * 60.0 * 1852.0);
-			ypl_err_max_meters = fabs(ypl_err_max * 60.0 * 1852.0);
 		}
 
 		Chart_Error_Factor
@@ -3004,15 +2971,10 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 
 		// Good enough for navigation?
 		if (chart_error_pixels > 10) {
-			wxString msg = _("   VP Final Check with internal georef: Georeference Chart_Error_Factor on chart ");
-			msg.Append(m_FullPath);
-			wxString msg1;
-			msg1.Printf(_T(" is %5g\n     nominal pixel error is: %5g"), Chart_Error_Factor,
-						chart_error_pixels);
-			msg.Append(msg1);
-
-			wxLogMessage(msg);
-
+			wxLogMessage(_("   VP Final Check with internal georef: Georeference Chart_Error_Factor on chart ")
+				+ m_FullPath
+				+ wxString::Format(_T(" is %5g\n     nominal pixel error is: %5g"),
+					Chart_Error_Factor, chart_error_pixels));
 			m_ExtraInfo = _("---<<< Warning:  Chart georef accuracy is poor. >>>---");
 		} else {
 			wxLogMessage(_("   Result: OK, Internal georef solution used."));

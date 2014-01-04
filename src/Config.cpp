@@ -263,19 +263,19 @@ void Config::load_toolbar()
 	int x = 0;
 	int y = 0;
 	long orientation;
-	long transparent = 1;
-	long full_screen = 1;
+	bool transparent = true;
+	bool full_screen = true;
 
 	Read(_T("ToolbarX"), &x, 0);
 	Read(_T("ToolbarY"), &y, 0);
 	Read(_T("ToolbarOrient"), &orientation, wxTB_HORIZONTAL);
-	Read(_T("TransparentToolbar"), &transparent, 1);
-	Read(_T("FullscreenToolbar"), &full_screen, 1);
+	Read(_T("TransparentToolbar"), &transparent, true);
+	Read(_T("FullscreenToolbar"), &full_screen, true);
 
 	gui.set_toolbar_position(wxPoint(x, y));
 	gui.set_toolbar_orientation(orientation);
-	gui.set_toolbar_transparent(transparent != 0);
-	gui.set_toolbar_full_screen(full_screen != 0);
+	gui.set_toolbar_transparent(transparent);
+	gui.set_toolbar_full_screen(full_screen);
 }
 
 void Config::load_ais_alert_dialog()
@@ -342,14 +342,14 @@ void Config::load_view()
 	global::GUI& gui = global::OCPN::get().gui();
 
 	long brightness = 100;
-	long show_outlines = 0;
-	long show_depth_units = 1;
-	long lookahead_mode = 0;
+	bool show_outlines = false;
+	bool show_depth_units = true;
+	bool lookahead_mode = false;
 
 	Read(_T("ScreenBrightness"), &brightness, 100);
-	Read(_T("ShowChartOutlines"), &show_outlines, 0);
-	Read(_T("ShowDepthUnits"), &show_depth_units, 1);
-	Read(_T("LookAheadMode"), &lookahead_mode, 0);
+	Read(_T("ShowChartOutlines"), &show_outlines, false);
+	Read(_T("ShowDepthUnits"), &show_depth_units, true);
+	Read(_T("LookAheadMode"), &lookahead_mode, false);
 
 	gui.set_view_screen_brightness(brightness);
 	gui.set_view_show_outlines(show_outlines);
@@ -363,10 +363,10 @@ void Config::load_system_config(int iteration) // FIXME: get rid of this 'iterat
 
 	if (iteration == 0) {
 		wxString version_string = _T("");
-		long nav_message_shown = 0;
+		bool nav_message_shown = false;
 
 		Read(_T("ConfigVersionString"), &version_string, _T(""));
-		Read(_T("NavMessageShown"), &nav_message_shown, 0);
+		Read(_T("NavMessageShown"), &nav_message_shown, false);
 
 		sys.set_config_version_string(version_string);
 		sys.set_config_nav_message_shown(nav_message_shown);
@@ -404,7 +404,7 @@ void Config::load_cm93(int display_width, int display_height)
 	int zoom_factor = 0;
 	long pos_x = 200;
 	long pos_y = 200;
-	long show_detail_slider = 0;
+	bool show_detail_slider = false;
 
 	Read(_T("CM93DetailFactor"), &zoom_factor, 0);
 	zoom_factor = wxMin(zoom_factor, CM93_ZOOM_FACTOR_MAX_RANGE);
@@ -417,7 +417,7 @@ void Config::load_cm93(int display_width, int display_height)
 	if ((pos_y < 0) || (pos_y > display_height))
 		pos_y = 5;
 
-	Read(_T("ShowCM93DetailSlider"), &show_detail_slider, 0);
+	Read(_T("ShowCM93DetailSlider"), &show_detail_slider, false);
 
 	gui.set_cm93_zoom_factor(zoom_factor);
 	gui.set_cm93_detail_dialog_position(wxPoint(pos_x, pos_y));
@@ -560,9 +560,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	load_watchdog();
 
 	// overzoom
-	long allow_overzoom_x = 1;
-	Read(_T("AllowExtremeOverzoom"), &allow_overzoom_x, 1);
-	gui.set_view_allow_overzoom_x(allow_overzoom_x);
+	gui.set_view_allow_overzoom_x(read_bool(_T("AllowExtremeOverzoom"), true));
 
 	Read(_T("ShowOverzoomEmbossWarning"), &g_bshow_overzoom_emboss, 1);
 	Read(_T("AutosaveIntervalSeconds"), &g_nautosave_interval_seconds, 300);
@@ -738,11 +736,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	ais.set_AIS_CPA_Alert_Audio(read_bool(_T("bAISAlertAudio")));
 	ais.set_AIS_Alert_Sound_File(read_string(_T("AISAlertAudioFile")));
 	ais.set_AIS_CPA_Alert_Suppress_Moored(read_bool(_T("bAISAlertSuppressMoored")));
-
-	long AIS_ACK_Timeout = 0;
-	Read(_T("bAISAlertAckTimeout"), &AIS_ACK_Timeout, 0);
-	ais.set_AIS_ACK_Timeout(AIS_ACK_Timeout);
-
+	ais.set_AIS_ACK_Timeout(read_bool(_T("bAISAlertAckTimeout")));
 	ais.set_AckTimeout_Mins(read_double(_T("AlertAckTimeoutMinutes")));
 
 	load_ais_alert_dialog();

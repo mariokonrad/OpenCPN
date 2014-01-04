@@ -47,57 +47,52 @@ class DataStream;
 /// This thread manages reading the NMEA data stream from the declared source.
 class OCP_DataStreamInput_Thread : public wxThread
 {
-	public:
-		OCP_DataStreamInput_Thread(
-				DataStream *Launcher,
-				wxEvtHandler *MessageTarget,
-				const wxString& PortName,
-				const wxString& strBaudRate,
-				wxMutex *out_mutex,
-				dsPortType io_select
-				);
+public:
+	OCP_DataStreamInput_Thread(DataStream* Launcher, wxEvtHandler* MessageTarget,
+							   const wxString& PortName, const wxString& strBaudRate,
+							   wxMutex* out_mutex, dsPortType io_select);
 
-		~OCP_DataStreamInput_Thread(void);
-		void *Entry();
-		bool SetOutMsg(const wxString & msg);
-		void OnExit(void);
+	~OCP_DataStreamInput_Thread(void);
+	void* Entry();
+	bool SetOutMsg(const wxString& msg);
+	void OnExit(void);
 
-	private:
-		void ThreadMessage(const wxString &msg);
-		void Parse_And_Send_Posn(const char *s);
-		int OpenComPortPhysical(const wxString &com_name, int baud_rate);
-		int CloseComPortPhysical(int fd);
-		int WriteComPortPhysical(int port_descriptor, const wxString& string);
-		int WriteComPortPhysical(int port_descriptor, char *msg);
-		int ReadComPortPhysical(int port_descriptor, int count, unsigned char *p);
-		bool CheckComPortPhysical(int port_descriptor);
+private:
+	void ThreadMessage(const wxString& msg);
+	void Parse_And_Send_Posn(const char* s);
+	int OpenComPortPhysical(const wxString& com_name, int baud_rate);
+	int CloseComPortPhysical(int fd);
+	int WriteComPortPhysical(int port_descriptor, const wxString& string);
+	int WriteComPortPhysical(int port_descriptor, char* msg);
+	int ReadComPortPhysical(int port_descriptor, int count, unsigned char* p);
+	bool CheckComPortPhysical(int port_descriptor);
 
-		wxMutex * m_pout_mutex;
-		wxEvtHandler * m_pMessageTarget;
-		DataStream *m_launcher;
-		wxString m_PortName;
-		wxString m_FullPortName;
+	wxMutex* m_pout_mutex;
+	wxEvtHandler* m_pMessageTarget;
+	DataStream* m_launcher;
+	wxString m_PortName;
+	wxString m_FullPortName;
 
-		dsPortType m_io_select;
+	dsPortType m_io_select;
 
-		char * put_ptr;
-		char * tak_ptr;
+	char* put_ptr;
+	char* tak_ptr;
 
-		char * rx_buffer;
-		char * temp_buf;
+	char* rx_buffer;
+	char* temp_buf;
 
-		unsigned long error;
+	unsigned long error;
 
-		int m_gps_fd;
-		int m_baud;
-		int m_n_timeout;
+	int m_gps_fd;
+	int m_baud;
+	int m_n_timeout;
 
-		int m_takIndex;
-		int m_putIndex;
-		char * m_poutQueue[OUT_QUEUE_LENGTH];
+	int m_takIndex;
+	int m_putIndex;
+	char* m_poutQueue[OUT_QUEUE_LENGTH];
 
 #ifdef __WXMSW__
-		HANDLE m_hSerialComm;
+	HANDLE m_hSerialComm;
 #endif
 };
 

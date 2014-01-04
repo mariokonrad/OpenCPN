@@ -274,8 +274,8 @@ void Config::load_toolbar()
 
 	gui.set_toolbar_position(wxPoint(x, y));
 	gui.set_toolbar_orientation(orientation);
-	gui.set_toolbar_transparent(transparent);
-	gui.set_toolbar_full_screen(full_screen);
+	gui.set_toolbar_transparent(transparent != 0);
+	gui.set_toolbar_full_screen(full_screen != 0);
 }
 
 void Config::load_ais_alert_dialog()
@@ -784,14 +784,14 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		Read(_T("bExtendLightSectors"), &read_int, 0);
 		ps52plib->SetExtendLightSectors(!(read_int == 0));
 
-		Read(_T("nDisplayCategory"), &read_int, (enum chart::DisCat)chart::STANDARD);
-		ps52plib->m_nDisplayCategory = (enum chart::DisCat)read_int;
+		Read(_T("nDisplayCategory"), &read_int, static_cast<chart::DisCat>(chart::STANDARD));
+		ps52plib->m_nDisplayCategory = static_cast<chart::DisCat>(read_int);
 
-		Read(_T("nSymbolStyle"), &read_int, (enum chart::LUPname)chart::PAPER_CHART);
-		ps52plib->m_nSymbolStyle = (chart::LUPname)read_int;
+		Read(_T("nSymbolStyle"), &read_int, static_cast<chart::LUPname>(chart::PAPER_CHART));
+		ps52plib->m_nSymbolStyle = static_cast<chart::LUPname>(read_int);
 
 		Read(_T("nBoundaryStyle"), &read_int, chart::PLAIN_BOUNDARIES);
-		ps52plib->m_nBoundaryStyle = (chart::LUPname)read_int;
+		ps52plib->m_nBoundaryStyle = static_cast<chart::LUPname>(read_int);
 
 		Read(_T("bShowSoundg"), &read_int, 0);
 		ps52plib->m_bShowSoundg = !(read_int == 0);
@@ -869,7 +869,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	SetPath(_T("/Settings/GlobalState"));
 	Read(_T("nColorScheme"), &read_int, 0);
-	global_color_scheme = (ColorScheme)read_int;
+	global_color_scheme = static_cast<ColorScheme>(read_int);
 
 	SetPath(_T("/Settings/NMEADataSource"));
 
@@ -1067,7 +1067,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 				if (str.StartsWith(_T("viz"), &sObj)) {
 					for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-						pOLE = (chart::OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+						pOLE = static_cast<chart::OBJLElement*>(ps52plib->pOBJLArray->Item(iPtr));
 						if (!strncmp(pOLE->OBJLName, sObj.mb_str(), 6)) {
 							pOLE->nViz = val;
 							bNeedNew = false;
@@ -1076,11 +1076,11 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 					}
 
 					if (bNeedNew) {
-						pOLE = (chart::OBJLElement*)calloc(sizeof(chart::OBJLElement), 1);
+						pOLE = static_cast<chart::OBJLElement*>(calloc(sizeof(chart::OBJLElement), 1));
 						strncpy(pOLE->OBJLName, sObj.mb_str(), 6);
 						pOLE->nViz = 1;
 
-						ps52plib->pOBJLArray->Add((void*)pOLE);
+						ps52plib->pOBJLArray->Add(pOLE);
 					}
 				}
 				bCont = pConfig->GetNextEntry(str, dummy);
@@ -1444,10 +1444,7 @@ void Config::CreateConfigGroups(const chart::ChartGroupArray* pGroupArray)
 		Write(_T("GroupItemCount"), static_cast<int>(pGroup->m_element_array.size()));
 
 		for (unsigned int j = 0; j < pGroup->m_element_array.size(); j++) {
-			wxString sg;
-			sg.Printf(_T("Group%d/Item%d"), i + 1, j);
-			sg.Prepend(_T("/Groups/"));
-			SetPath(sg);
+			SetPath(wxString::Format(_T("/Groups/Group%d/Item%d"), i + 1, j));
 			Write(_T("IncludeItem"), pGroup->m_element_array.at(j)->m_element_name);
 
 			const std::vector<wxString>& missing = pGroup->m_element_array.at(j)->missing_names;
@@ -1470,27 +1467,21 @@ void Config::DestroyConfigGroups(void)
 void Config::LoadConfigGroups(chart::ChartGroupArray& pGroupArray)
 {
 	SetPath(_T("/Groups"));
-	unsigned int group_count;
-	Read(_T("GroupCount"), (int*)&group_count, 0);
+	long group_count;
+	Read(_T("GroupCount"), &group_count, 0);
 
-	for (unsigned int i = 0; i < group_count; i++) {
+	for (long i = 0; i < group_count; i++) {
 		chart::ChartGroup* pGroup = new chart::ChartGroup;
-		wxString s;
-		s.Printf(_T("Group%d"), i + 1);
-		s.Prepend(_T("/Groups/"));
-		SetPath(s);
+		SetPath(wxString::Format(_T("/Groups/Group%d"), i + 1));
 
 		wxString t;
 		Read(_T("GroupName"), &t);
 		pGroup->m_group_name = t;
 
-		unsigned int item_count;
-		Read(_T("GroupItemCount"), (int*)&item_count);
-		for (unsigned int j = 0; j < item_count; j++) {
-			wxString sg;
-			sg.Printf(_T("Group%d/Item%d"), i + 1, j);
-			sg.Prepend(_T("/Groups/"));
-			SetPath(sg);
+		long item_count = 0;
+		Read(_T("GroupItemCount"), &item_count, 0);
+		for (long j = 0; j < item_count; ++j) {
+			SetPath(wxString::Format(_T("/Groups/Group%d/Item%d"), i + 1, j));
 
 			wxString v;
 			Read(_T("IncludeItem"), &v);
@@ -1707,7 +1698,7 @@ void Config::UpdateSettings()
 #ifdef USE_S57
 	if (ps52plib) {
 		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-			chart::OBJLElement* pOLE = (chart::OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+			chart::OBJLElement* pOLE = reinterpret_cast<chart::OBJLElement*>(ps52plib->pOBJLArray->Item(iPtr));
 
 			wxString st1(_T("viz"));
 			char name[7];
@@ -1739,7 +1730,7 @@ void Config::UpdateSettings()
 	SetPath(_T("/Settings/GlobalState"));
 	if (cc1)
 		Write(_T("bFollow"), cc1->m_bFollow);
-	Write(_T("nColorScheme"), (int)gFrame->GetColorScheme());
+	Write(_T("nColorScheme"), static_cast<int>(gFrame->GetColorScheme()));
 
 	write_frame();
 
@@ -1796,9 +1787,9 @@ void Config::UpdateSettings()
 	if (ps52plib) {
 		Write(_T("bShowS57Text"), ps52plib->GetShowS57Text());
 		Write(_T("bShowS57ImportantTextOnly"), ps52plib->GetShowS57ImportantTextOnly());
-		Write(_T("nDisplayCategory"), (long)ps52plib->m_nDisplayCategory);
-		Write(_T("nSymbolStyle"), (int)ps52plib->m_nSymbolStyle);
-		Write(_T("nBoundaryStyle"), (int)ps52plib->m_nBoundaryStyle);
+		Write(_T("nDisplayCategory"), static_cast<long>(ps52plib->m_nDisplayCategory));
+		Write(_T("nSymbolStyle"), static_cast<int>(ps52plib->m_nSymbolStyle));
+		Write(_T("nBoundaryStyle"), static_cast<int>(ps52plib->m_nBoundaryStyle));
 
 		Write(_T("bShowSoundg"), ps52plib->m_bShowSoundg);
 		Write(_T("bShowMeta"), ps52plib->m_bShowMeta);
@@ -1876,8 +1867,7 @@ void Config::UpdateSettings()
 	SetPath(_T("/Settings/Others"));
 
 	// Radar rings
-	Write(_T("ShowRadarRings"),
-		  (bool)(g_iNavAidRadarRingsNumberVisible > 0)); // 3.0.0 config support
+	Write(_T("ShowRadarRings"), g_iNavAidRadarRingsNumberVisible > 0);
 	Write(_T("RadarRingsNumberVisible"), g_iNavAidRadarRingsNumberVisible);
 	Write(_T("RadarRingsStep"), g_fNavAidRadarRingsStep);
 	Write(_T("RadarRingsStepUnits"), g_pNavAidRadarRingsStepUnits);
@@ -2024,9 +2014,7 @@ void Config::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer)
 	for (RoutePointList::const_iterator i = pWayPointMan->waypoints().begin();
 		 i != pWayPointMan->waypoints().end(); ++i) {
 		if (pprog) {
-			wxString msg;
-			msg.Printf(_T("%d/%d"), ic, count);
-			pprog->Update(ic, msg);
+			pprog->Update(ic, wxString::Format(_T("%d/%d"), ic, count));
 			ic++;
 		}
 

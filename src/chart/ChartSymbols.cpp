@@ -91,10 +91,14 @@ void ChartSymbols::DeleteGlobals(void)
 	colorTables = NULL;
 }
 
-#define TGET_INT_PROPERTY_VALUE(node, name, target)        \
-	propVal = wxString(node->Attribute(name), wxConvUTF8); \
-	propVal.ToLong(&numVal, 0);                            \
-	target = numVal;
+template <typename T>
+static void property_num_value(const TiXmlElement* node, const char* name, T& value)
+{
+	wxString property = wxString(node->Attribute(name), wxConvUTF8);
+	long number = 0;
+	property.ToLong(&number, 0);
+	value = static_cast<T>(number);
+}
 
 void ChartSymbols::ProcessColorTables(TiXmlElement* colortableNodes)
 {
@@ -107,16 +111,14 @@ void ChartSymbols::ProcessColorTables(TiXmlElement* colortableNodes)
 
 		while (colorNode) {
 			S52color color;
-			wxString propVal;
-			long numVal;
 
 			if (wxString(colorNode->Value(), wxConvUTF8) == _T("graphics-file")) {
 				colortable->rasterFileName = wxString(colorNode->Attribute("name"), wxConvUTF8);
 				goto next;
 			} else {
-				TGET_INT_PROPERTY_VALUE(colorNode, "r", color.R)
-				TGET_INT_PROPERTY_VALUE(colorNode, "g", color.G)
-				TGET_INT_PROPERTY_VALUE(colorNode, "b", color.B)
+				property_num_value(colorNode, "r", color.R);
+				property_num_value(colorNode, "g", color.G);
+				property_num_value(colorNode, "b", color.B);
 
 				wxString key(colorNode->Attribute("name"), wxConvUTF8);
 				strncpy(color.colName, key.char_str(), 5);
@@ -137,15 +139,13 @@ void ChartSymbols::ProcessColorTables(TiXmlElement* colortableNodes)
 void ChartSymbols::ProcessLookups(TiXmlElement* lookupNodes)
 {
 	chart::Lookup lookup;
-	wxString propVal;
-	long numVal;
 
 	for (TiXmlNode* childNode = lookupNodes->FirstChild(); childNode;
 		 childNode = childNode->NextSibling()) {
 		TiXmlElement* child = childNode->ToElement();
 
-		TGET_INT_PROPERTY_VALUE(child, "id", lookup.id)
-		TGET_INT_PROPERTY_VALUE(child, "RCID", lookup.RCID)
+		property_num_value(child, "id", lookup.id);
+		property_num_value(child, "RCID", lookup.RCID);
 		lookup.name = wxString(child->Attribute("name"), wxConvUTF8);
 		lookup.attributeCodeArray = NULL;
 
@@ -296,10 +296,8 @@ void ChartSymbols::BuildLookup(chart::Lookup& lookup)
 
 void ChartSymbols::ProcessVectorTag(TiXmlElement* vectorNode, SymbolSizeInfo& vectorSize)
 {
-	wxString propVal;
-	long numVal;
-	TGET_INT_PROPERTY_VALUE(vectorNode, "width", vectorSize.size.x)
-	TGET_INT_PROPERTY_VALUE(vectorNode, "height", vectorSize.size.y)
+	property_num_value(vectorNode, "width", vectorSize.size.x);
+	property_num_value(vectorNode, "height", vectorSize.size.y);
 
 	TiXmlElement* vectorNodes = vectorNode->FirstChild()->ToElement();
 
@@ -307,18 +305,18 @@ void ChartSymbols::ProcessVectorTag(TiXmlElement* vectorNode, SymbolSizeInfo& ve
 		wxString nodeType(vectorNodes->Value(), wxConvUTF8);
 
 		if (nodeType == _T("distance")) {
-			TGET_INT_PROPERTY_VALUE(vectorNodes, "min", vectorSize.minDistance)
-			TGET_INT_PROPERTY_VALUE(vectorNodes, "max", vectorSize.maxDistance)
+			property_num_value(vectorNodes, "min", vectorSize.minDistance);
+			property_num_value(vectorNodes, "max", vectorSize.maxDistance);
 			goto nextVector;
 		}
 		if (nodeType == _T("origin")) {
-			TGET_INT_PROPERTY_VALUE(vectorNodes, "x", vectorSize.origin.x)
-			TGET_INT_PROPERTY_VALUE(vectorNodes, "y", vectorSize.origin.y)
+			property_num_value(vectorNodes, "x", vectorSize.origin.x);
+			property_num_value(vectorNodes, "y", vectorSize.origin.y);
 			goto nextVector;
 		}
 		if (nodeType == _T("pivot")) {
-			TGET_INT_PROPERTY_VALUE(vectorNodes, "x", vectorSize.pivot.x)
-			TGET_INT_PROPERTY_VALUE(vectorNodes, "y", vectorSize.pivot.y)
+			property_num_value(vectorNodes, "x", vectorSize.pivot.x);
+			property_num_value(vectorNodes, "y", vectorSize.pivot.y);
 			goto nextVector;
 		}
 nextVector:
@@ -329,14 +327,12 @@ nextVector:
 void ChartSymbols::ProcessLinestyles(TiXmlElement* linestyleNodes)
 {
 	chart::LineStyle lineStyle;
-	wxString propVal;
-	long numVal;
 
 	for (TiXmlNode* childNode = linestyleNodes->FirstChild(); childNode;
 		 childNode = childNode->NextSibling()) {
 		TiXmlElement* child = childNode->ToElement();
 
-		TGET_INT_PROPERTY_VALUE(child, "RCID", lineStyle.RCID)
+		property_num_value(child, "RCID", lineStyle.RCID);
 
 		TiXmlElement* subNode = child->FirstChild()->ToElement();
 
@@ -410,14 +406,12 @@ void ChartSymbols::BuildLineStyle(chart::LineStyle& lineStyle)
 void ChartSymbols::ProcessPatterns(TiXmlElement* patternNodes)
 {
 	OCPNPattern pattern;
-	wxString propVal;
-	long numVal;
 
 	for (TiXmlNode* childNode = patternNodes->FirstChild(); childNode;
 		 childNode = childNode->NextSibling()) {
 		TiXmlElement* child = childNode->ToElement();
 
-		TGET_INT_PROPERTY_VALUE(child, "RCID", pattern.RCID)
+		property_num_value(child, "RCID", pattern.RCID);
 
 		pattern.hasVector = false;
 		pattern.hasBitmap = false;
@@ -462,8 +456,8 @@ void ChartSymbols::ProcessPatterns(TiXmlElement* patternNodes)
 				goto nextNode;
 			}
 			if (nodeType == _T("bitmap")) {
-				TGET_INT_PROPERTY_VALUE(subNodes, "width", pattern.bitmapSize.size.x)
-				TGET_INT_PROPERTY_VALUE(subNodes, "height", pattern.bitmapSize.size.y)
+				property_num_value(subNodes, "width", pattern.bitmapSize.size.x);
+				property_num_value(subNodes, "height", pattern.bitmapSize.size.y);
 				pattern.hasBitmap = true;
 
 				TiXmlElement* bitmapNodes = subNodes->FirstChild()->ToElement();
@@ -471,23 +465,23 @@ void ChartSymbols::ProcessPatterns(TiXmlElement* patternNodes)
 					wxString bitmapnodeType(bitmapNodes->Value(), wxConvUTF8);
 
 					if (bitmapnodeType == _T("distance")) {
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "min", pattern.bitmapSize.minDistance)
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "max", pattern.bitmapSize.maxDistance)
+						property_num_value(bitmapNodes, "min", pattern.bitmapSize.minDistance);
+						property_num_value(bitmapNodes, "max", pattern.bitmapSize.maxDistance);
 						goto nextBitmap;
 					}
 					if (bitmapnodeType == _T("origin")) {
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "x", pattern.bitmapSize.origin.x)
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "y", pattern.bitmapSize.origin.y)
+						property_num_value(bitmapNodes, "x", pattern.bitmapSize.origin.x);
+						property_num_value(bitmapNodes, "y", pattern.bitmapSize.origin.y);
 						goto nextBitmap;
 					}
 					if (bitmapnodeType == _T("pivot")) {
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "x", pattern.bitmapSize.pivot.x)
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "y", pattern.bitmapSize.pivot.y)
+						property_num_value(bitmapNodes, "x", pattern.bitmapSize.pivot.x);
+						property_num_value(bitmapNodes, "y", pattern.bitmapSize.pivot.y);
 						goto nextBitmap;
 					}
 					if (bitmapnodeType == _T("graphics-location")) {
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "x", pattern.bitmapSize.graphics.x)
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "y", pattern.bitmapSize.graphics.y)
+						property_num_value(bitmapNodes, "x", pattern.bitmapSize.graphics.x);
+						property_num_value(bitmapNodes, "y", pattern.bitmapSize.graphics.y);
 					}
 				nextBitmap:
 					bitmapNodes = bitmapNodes->NextSiblingElement();
@@ -574,14 +568,12 @@ void ChartSymbols::BuildPattern(OCPNPattern& pattern)
 void ChartSymbols::ProcessSymbols(TiXmlElement* symbolNodes)
 {
 	ChartSymbol symbol;
-	wxString propVal;
-	long numVal;
 
 	for (TiXmlNode* childNode = symbolNodes->FirstChild(); childNode;
 		 childNode = childNode->NextSibling()) {
 		TiXmlElement* child = childNode->ToElement();
 
-		TGET_INT_PROPERTY_VALUE(child, "RCID", symbol.RCID)
+		property_num_value(child, "RCID", symbol.RCID);
 
 		symbol.hasVector = false;
 		symbol.hasBitmap = false;
@@ -622,31 +614,31 @@ void ChartSymbols::ProcessSymbols(TiXmlElement* symbolNodes)
 				goto nextNode;
 			}
 			if (nodeType == _T("bitmap")) {
-				TGET_INT_PROPERTY_VALUE(subNodes, "width", symbol.bitmapSize.size.x)
-				TGET_INT_PROPERTY_VALUE(subNodes, "height", symbol.bitmapSize.size.y)
+				property_num_value(subNodes, "width", symbol.bitmapSize.size.x);
+				property_num_value(subNodes, "height", symbol.bitmapSize.size.y);
 				symbol.hasBitmap = true;
 
 				TiXmlElement* bitmapNodes = subNodes->FirstChild()->ToElement();
 				while (bitmapNodes) {
 					wxString bitmapnodeType(bitmapNodes->Value(), wxConvUTF8);
 					if (bitmapnodeType == _T("distance")) {
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "min", symbol.bitmapSize.minDistance)
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "max", symbol.bitmapSize.maxDistance)
+						property_num_value(bitmapNodes, "min", symbol.bitmapSize.minDistance);
+						property_num_value(bitmapNodes, "max", symbol.bitmapSize.maxDistance);
 						goto nextBitmap;
 					}
 					if (bitmapnodeType == _T("origin")) {
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "x", symbol.bitmapSize.origin.x)
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "y", symbol.bitmapSize.origin.y)
+						property_num_value(bitmapNodes, "x", symbol.bitmapSize.origin.x);
+						property_num_value(bitmapNodes, "y", symbol.bitmapSize.origin.y);
 						goto nextBitmap;
 					}
 					if (bitmapnodeType == _T("pivot")) {
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "x", symbol.bitmapSize.pivot.x)
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "y", symbol.bitmapSize.pivot.y)
+						property_num_value(bitmapNodes, "x", symbol.bitmapSize.pivot.x);
+						property_num_value(bitmapNodes, "y", symbol.bitmapSize.pivot.y);
 						goto nextBitmap;
 					}
 					if (bitmapnodeType == _T("graphics-location")) {
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "x", symbol.bitmapSize.graphics.x)
-						TGET_INT_PROPERTY_VALUE(bitmapNodes, "y", symbol.bitmapSize.graphics.y)
+						property_num_value(bitmapNodes, "x", symbol.bitmapSize.graphics.x);
+						property_num_value(bitmapNodes, "y", symbol.bitmapSize.graphics.y);
 					}
 				nextBitmap:
 					bitmapNodes = bitmapNodes->NextSiblingElement();
@@ -654,26 +646,26 @@ void ChartSymbols::ProcessSymbols(TiXmlElement* symbolNodes)
 				goto nextNode;
 			}
 			if (nodeType == _T("vector")) {
-				TGET_INT_PROPERTY_VALUE(subNodes, "width", symbol.vectorSize.size.x)
-				TGET_INT_PROPERTY_VALUE(subNodes, "height", symbol.vectorSize.size.y)
+				property_num_value(subNodes, "width", symbol.vectorSize.size.x);
+				property_num_value(subNodes, "height", symbol.vectorSize.size.y);
 				symbol.hasVector = true;
 
 				TiXmlElement* vectorNodes = subNodes->FirstChild()->ToElement();
 				while (vectorNodes) {
 					wxString vectornodeType(vectorNodes->Value(), wxConvUTF8);
 					if (vectornodeType == _T("distance")) {
-						TGET_INT_PROPERTY_VALUE(vectorNodes, "min", symbol.vectorSize.minDistance)
-						TGET_INT_PROPERTY_VALUE(vectorNodes, "max", symbol.vectorSize.maxDistance)
+						property_num_value(vectorNodes, "min", symbol.vectorSize.minDistance);
+						property_num_value(vectorNodes, "max", symbol.vectorSize.maxDistance);
 						goto nextVector;
 					}
 					if (vectornodeType == _T("origin")) {
-						TGET_INT_PROPERTY_VALUE(vectorNodes, "x", symbol.vectorSize.origin.x)
-						TGET_INT_PROPERTY_VALUE(vectorNodes, "y", symbol.vectorSize.origin.y)
+						property_num_value(vectorNodes, "x", symbol.vectorSize.origin.x);
+						property_num_value(vectorNodes, "y", symbol.vectorSize.origin.y);
 						goto nextVector;
 					}
 					if (vectornodeType == _T("pivot")) {
-						TGET_INT_PROPERTY_VALUE(vectorNodes, "x", symbol.vectorSize.pivot.x)
-						TGET_INT_PROPERTY_VALUE(vectorNodes, "y", symbol.vectorSize.pivot.y)
+						property_num_value(vectorNodes, "x", symbol.vectorSize.pivot.x);
+						property_num_value(vectorNodes, "y", symbol.vectorSize.pivot.y);
 						goto nextVector;
 					}
 					if (vectornodeType == _T("HPGL")) {

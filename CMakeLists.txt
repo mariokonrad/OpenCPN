@@ -1078,6 +1078,8 @@ if (USE_S57)
 		src/geo/PolyTessGeoTrap.cpp
 		src/geo/PolyTessGeo.cpp
 
+		src/chart/S52Color.h
+		src/chart/ColorTable.h
 		src/chart/RenderFromHPGL.h
 		src/chart/RenderFromHPGL.cpp
 		src/chart/s52cnsy.cpp

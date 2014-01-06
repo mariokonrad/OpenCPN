@@ -28,11 +28,12 @@
 
 #include <vector>
 
-#include <geo/BoundingBox.h>
-
 #include <wx/colour.h>
 #include <wx/string.h>
 #include <wx/dc.h>
+
+#include <geo/BoundingBox.h>
+#include <chart/S52Color.h>
 
 class wxInputStream;
 class OGRFeature;
@@ -214,14 +215,6 @@ struct Cond
 	void* (*condInst)(void* param);
 };
 
-struct S52color
-{
-	char colName[20];
-	unsigned char R;
-	unsigned char G;
-	unsigned char B;
-};
-
 class S52_TextC
 {
 public:
@@ -257,25 +250,6 @@ public:
 	int rendered_char_height;
 	wxRect rText; // rectangle of the text as currently rendered, used for declutter
 };
-
-WX_DECLARE_STRING_HASH_MAP(wxColour, wxColorHashMap);
-WX_DECLARE_STRING_HASH_MAP(S52color, colorHashMap);
-
-class ColorTable
-{
-public:
-	ColorTable(const wxString& tableName)
-		: tableName(tableName)
-	{
-	}
-
-	wxString tableName;
-	wxString rasterFileName;
-	wxArrayPtrVoid* color;
-	colorHashMap colors;
-	wxColorHashMap wxColors;
-};
-
 
 //
 // WARNING: must be in sync OGRatt_t

@@ -23,14 +23,15 @@
 
 #include "RazdsParser.h"
 
-#include <chart/s52plib.h>
-#include <chart/ChartSymbols.h>
-
 #include <cstdio>
 #include <cmath>
 
 #include <wx/tokenzr.h>
 #include <wx/log.h>
+
+#include <chart/s52plib.h>
+#include <chart/ColorTable.h>
+#include <chart/ChartSymbols.h>
 
 namespace chart {
 

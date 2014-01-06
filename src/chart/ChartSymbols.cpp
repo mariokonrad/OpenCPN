@@ -24,10 +24,14 @@
 // FIXME: clean up this fucking mess with gotos
 
 #include "ChartSymbols.h"
+
+#include <cstdlib>
+
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/image.h>
-#include <stdlib.h>
+
+#include <chart/ColorTable.h>
 
 namespace chart {
 
@@ -94,7 +98,6 @@ void ChartSymbols::DeleteGlobals(void)
 
 void ChartSymbols::ProcessColorTables(TiXmlElement* colortableNodes)
 {
-
 	for (TiXmlNode* childNode = colortableNodes->FirstChild(); childNode;
 		 childNode = childNode->NextSibling()) {
 		TiXmlElement* child = childNode->ToElement();

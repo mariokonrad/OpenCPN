@@ -26,6 +26,8 @@
 #ifndef __CHART__S52S57__H__
 #define __CHART__S52S57__H__
 
+#include <vector>
+
 #include <geo/BoundingBox.h>
 
 #include <wx/colour.h>
@@ -224,8 +226,10 @@ class S52_TextC
 {
 public:
 	S52_TextC()
+		: pcol(NULL)
+		, pFont(NULL)
+		, m_pRGBA(NULL)
 	{
-		pcol = NULL, pFont = NULL, m_pRGBA = NULL;
 	}
 
 	~S52_TextC()
@@ -257,7 +261,7 @@ public:
 WX_DECLARE_STRING_HASH_MAP(wxColour, wxColorHashMap);
 WX_DECLARE_STRING_HASH_MAP(S52color, colorHashMap);
 
-struct colTable
+struct ColorTable
 {
 	wxString tableName;
 	wxString rasterFileName;

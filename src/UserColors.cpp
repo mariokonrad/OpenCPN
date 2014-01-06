@@ -31,7 +31,7 @@
 	extern chart::s52plib* ps52plib;
 #endif
 
-typedef std::vector<chart::colTable*> UserColorTable;
+typedef std::vector<chart::ColorTable*> UserColorTable;
 typedef std::vector<chart::wxColorHashMap*> UserColorHashTable;
 
 static UserColorTable user_color_table;
@@ -198,23 +198,23 @@ void InitializeUserColors(void)
 	using namespace chart;
 
 	const char ** p = usercolors;
-	colTable * ct;
+	ColorTable* ct;
 
 	user_color_table.clear();
 	user_color_hash_table.clear();
 
 	// Create 3 color table entries
-	ct = new colTable;
+	ct = new ColorTable;
 	ct->tableName = wxString(_T("DAY"));
 	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
-	ct = new colTable;
+	ct = new ColorTable;
 	ct->tableName = wxString(_T("DUSK"));
 	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
-	ct = new colTable;
+	ct = new ColorTable;
 	ct->tableName = wxString(_T("NIGHT"));
 	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
@@ -260,11 +260,11 @@ void InitializeUserColors(void)
 	// Now create the Hash tables
 	user_color_hash_table.reserve(user_color_table.size());
 	for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
-		wxColorHashMap * phash = new wxColorHashMap;
+		wxColorHashMap* phash = new wxColorHashMap;
 		user_color_hash_table.push_back(phash);
 
 		for (unsigned int ic = 0; ic < (*i)->color->size(); ++ic) {
-			S52color * c2 = (S52color *)((*i)->color->Item(ic));
+			S52color* c2 = static_cast<S52color*>((*i)->color->Item(ic));
 
 			wxColour c(c2->R, c2->G, c2->B);
 			wxString key(c2->colName, wxConvUTF8);
@@ -281,18 +281,19 @@ void InitializeUserColors(void)
 void DeInitializeUserColors(void)
 {
 	for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
-		chart::colTable* ct = *i;
+		chart::ColorTable* ct = *i;
 		for (unsigned int j = 0; j < ct->color->size(); ++j) {
 			chart::S52color* c = static_cast<chart::S52color*>(ct->color->Item(j));
 			delete c;
 		}
 
 		delete ct->color; // wxArrayPtrVoid
-		delete ct; // colTable
+		delete ct;
 	}
 	user_color_table.clear();
 
-	for (UserColorHashTable::iterator i = user_color_hash_table.begin(); i != user_color_hash_table.end(); ++i) {
+	for (UserColorHashTable::iterator i = user_color_hash_table.begin();
+		 i != user_color_hash_table.end(); ++i) {
 		delete *i;
 	}
 	user_color_hash_table.clear();

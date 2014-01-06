@@ -75,7 +75,7 @@ void ChartSymbols::DeleteGlobals(void)
 	symbolGraphicLocations = NULL;
 
 	for (unsigned int i = 0; i < colorTables->size(); i++) {
-		colTable* ct = (colTable*)colorTables->Item(i);
+		ColorTable* ct = static_cast<ColorTable*>(colorTables->Item(i));
 		ct->tableName.clear();
 		ct->colors.clear();
 		ct->wxColors.clear();
@@ -98,7 +98,7 @@ void ChartSymbols::ProcessColorTables(TiXmlElement* colortableNodes)
 	for (TiXmlNode* childNode = colortableNodes->FirstChild(); childNode;
 		 childNode = childNode->NextSibling()) {
 		TiXmlElement* child = childNode->ToElement();
-		colTable* colortable = new colTable;
+		ColorTable* colortable = new ColorTable;
 
 		const char* pName = child->Attribute("name");
 		colortable->tableName = wxString(pName, wxConvUTF8);
@@ -819,14 +819,14 @@ int ChartSymbols::LoadRasterFileForColorTable(int tableNo)
 	if (tableNo == rasterSymbolsLoadedColorMapNumber)
 		return true;
 
-	colTable* coltab = (colTable*)colorTables->Item(tableNo);
+	ColorTable* coltab = static_cast<ColorTable*>(colorTables->Item(tableNo));
 
 	wxString filename = configFileDirectory + wxFileName::GetPathSeparator()
 						+ coltab->rasterFileName;
 
 	wxImage rasterFileImg;
 	if (rasterFileImg.LoadFile(filename, wxBITMAP_TYPE_PNG)) {
-		rasterSymbols = wxBitmap(rasterFileImg, -1 /*32*/);
+		rasterSymbols = wxBitmap(rasterFileImg, -1);
 		rasterSymbolsLoadedColorMapNumber = tableNo;
 		return true;
 	}
@@ -845,30 +845,28 @@ wxArrayPtrVoid* ChartSymbols::GetColorTables()
 
 S52color* ChartSymbols::GetColor(const char* colorName, int fromTable)
 {
-	colTable* colortable;
 	wxString key(colorName, wxConvUTF8, 5);
-	colortable = (colTable*)colorTables->Item(fromTable);
+	ColorTable* colortable = static_cast<ColorTable*>(colorTables->Item(fromTable));
 	return &(colortable->colors[key]);
 }
 
 wxColor ChartSymbols::GetwxColor(const wxString& colorName, int fromTable)
 {
-	colTable* colortable;
-	colortable = (colTable*)colorTables->Item(fromTable);
+	ColorTable* colortable = static_cast<ColorTable*>(colorTables->Item(fromTable));
 	wxColor c = colortable->wxColors[colorName];
 	return c;
 }
 
-wxColor ChartSymbols::GetwxColor( const char *colorName, int fromTable )
+wxColor ChartSymbols::GetwxColor(const char* colorName, int fromTable)
 {
-	wxString key( colorName, wxConvUTF8, 5 );
-	return GetwxColor( key, fromTable );
+	wxString key(colorName, wxConvUTF8, 5);
+	return GetwxColor(key, fromTable);
 }
 
 int ChartSymbols::FindColorTable(const wxString& tableName)
 {
 	for (unsigned int i = 0; i < colorTables->size(); i++) {
-		colTable* ct = (colTable*)colorTables->Item(i);
+		ColorTable* ct = static_cast<ColorTable*>(colorTables->Item(i));
 		if (tableName.IsSameAs(ct->tableName)) {
 			return i;
 		}

@@ -90,6 +90,8 @@ static int get_static_line(char * d, const char ** p, int index, int n)
 
 void InitializeUserColors(void)
 {
+	// FIXME: change representation of colors, directly as array of structs, to avoid string parsing
+
 	static const char * usercolors[] =
 	{
 		"Table:DAY",
@@ -206,15 +208,12 @@ void InitializeUserColors(void)
 
 	// Create 3 color table entries
 	ct = new ColorTable(_T("DAY"));
-	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
 	ct = new ColorTable(_T("DUSK"));
-	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
 	ct = new ColorTable(_T("NIGHT"));
-	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
 	int index = 0;
@@ -250,7 +249,7 @@ void InitializeUserColors(void)
 			c->G = (char)G;
 			c->B = (char)B;
 
-			ct->color->Add(c);
+			ct->color.push_back(c);
 		}
 		index++;
 	}
@@ -261,8 +260,8 @@ void InitializeUserColors(void)
 		wxColorHashMap* phash = new wxColorHashMap;
 		user_color_hash_table.push_back(phash);
 
-		for (unsigned int ic = 0; ic < (*i)->color->size(); ++ic) {
-			S52color* c2 = static_cast<S52color*>((*i)->color->Item(ic));
+		for (unsigned int ic = 0; ic < (*i)->color.size(); ++ic) {
+			S52color* c2 = (*i)->color.at(ic);
 
 			wxColour c(c2->R, c2->G, c2->B);
 			wxString key(c2->colName, wxConvUTF8);
@@ -280,12 +279,11 @@ void DeInitializeUserColors(void)
 {
 	for (UserColorTable::iterator i = user_color_table.begin(); i != user_color_table.end(); ++i) {
 		chart::ColorTable* ct = *i;
-		for (unsigned int j = 0; j < ct->color->size(); ++j) {
-			chart::S52color* c = static_cast<chart::S52color*>(ct->color->Item(j));
+		for (unsigned int j = 0; j < ct->color.size(); ++j) {
+			chart::S52color* c = ct->color.at(j);
 			delete c;
 		}
 
-		delete ct->color; // wxArrayPtrVoid
 		delete ct;
 	}
 	user_color_table.clear();

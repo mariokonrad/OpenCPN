@@ -24,6 +24,8 @@
 #ifndef __CHART__COLORTABLE__H__
 #define __CHART__COLORTABLE__H__
 
+#include <vector>
+
 #include <wx/string.h>
 #include <wx/colour.h>
 
@@ -44,7 +46,7 @@ public:
 
 	wxString tableName;
 	wxString rasterFileName;
-	wxArrayPtrVoid* color;
+	std::vector<S52color*> color;
 	colorHashMap colors;
 	wxColorHashMap wxColors;
 };

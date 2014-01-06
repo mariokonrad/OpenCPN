@@ -204,18 +204,15 @@ void InitializeUserColors(void)
 	user_color_hash_table.clear();
 
 	// Create 3 color table entries
-	ct = new ColorTable;
-	ct->tableName = wxString(_T("DAY"));
+	ct = new ColorTable(_T("DAY"));
 	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
-	ct = new ColorTable;
-	ct->tableName = wxString(_T("DUSK"));
+	ct = new ColorTable(_T("DUSK"));
 	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 
-	ct = new ColorTable;
-	ct->tableName = wxString(_T("NIGHT"));
+	ct = new ColorTable(_T("NIGHT"));
 	ct->color = new wxArrayPtrVoid;
 	user_color_table.push_back(ct);
 

@@ -261,8 +261,14 @@ public:
 WX_DECLARE_STRING_HASH_MAP(wxColour, wxColorHashMap);
 WX_DECLARE_STRING_HASH_MAP(S52color, colorHashMap);
 
-struct ColorTable
+class ColorTable
 {
+public:
+	ColorTable(const wxString& tableName)
+		: tableName(tableName)
+	{
+	}
+
 	wxString tableName;
 	wxString rasterFileName;
 	wxArrayPtrVoid* color;

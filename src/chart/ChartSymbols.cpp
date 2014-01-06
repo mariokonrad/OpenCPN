@@ -98,10 +98,7 @@ void ChartSymbols::ProcessColorTables(TiXmlElement* colortableNodes)
 	for (TiXmlNode* childNode = colortableNodes->FirstChild(); childNode;
 		 childNode = childNode->NextSibling()) {
 		TiXmlElement* child = childNode->ToElement();
-		ColorTable* colortable = new ColorTable;
-
-		const char* pName = child->Attribute("name");
-		colortable->tableName = wxString(pName, wxConvUTF8);
+		ColorTable* colortable = new ColorTable(wxString(child->Attribute("name"), wxConvUTF8));
 
 		TiXmlElement* colorNode = child->FirstChild()->ToElement();
 

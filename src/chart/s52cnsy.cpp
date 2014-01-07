@@ -43,17 +43,16 @@ bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val);
 // size of attributes value list buffer
 #define LISTSIZE 16 // list size
 
-wxString* CSQUAPNT01(S57Obj* obj);
-wxString* CSQUALIN01(S57Obj* obj);
+static wxString* CSQUAPNT01(S57Obj* obj);
+static wxString* CSQUALIN01(S57Obj* obj);
 
 static void* _RESCSP01(void* param);
 static wxString _LITDSN01(S57Obj* obj);
-wxString SNDFRM02(S57Obj* obj, double depth_value);
+static wxString SNDFRM02(S57Obj* obj, double depth_value);
 static void* QUALIN01(void* param);
 static void* QUAPNT01(void* param);
-wxString SNDFRM02(S57Obj* obj, double depth_value);
 
-wxArrayPtrVoid* GetChartFloatingATONArray(ObjRazRules* rzRules)
+static wxArrayPtrVoid* GetChartFloatingATONArray(ObjRazRules* rzRules)
 {
 	S57Obj* obj = rzRules->obj;
 	if (obj->m_chart_context->chart)
@@ -62,7 +61,7 @@ wxArrayPtrVoid* GetChartFloatingATONArray(ObjRazRules* rzRules)
 		return obj->m_chart_context->pFloatingATONArray;
 }
 
-wxArrayPtrVoid* GetChartRigidATONArray(ObjRazRules* rzRules)
+static wxArrayPtrVoid* GetChartRigidATONArray(ObjRazRules* rzRules)
 {
 	S57Obj* obj = rzRules->obj;
 	if (obj->m_chart_context->chart)
@@ -158,7 +157,7 @@ static void* DATCVR01(void*)
 	return r;
 }
 
-bool GetIntAttr(S57Obj* obj, const char* AttrName, int& val)
+static bool GetIntAttr(S57Obj* obj, const char* AttrName, int& val)
 {
 	int idx = obj->GetAttributeIndex(AttrName);
 
@@ -187,7 +186,7 @@ bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val)
 		return false;
 }
 
-bool GetStringAttr(S57Obj* obj, const char* AttrName, char* pval, int nc)
+static bool GetStringAttr(S57Obj* obj, const char* AttrName, char* pval, int nc)
 {
 	int idx = obj->GetAttributeIndex(AttrName);
 
@@ -204,7 +203,7 @@ bool GetStringAttr(S57Obj* obj, const char* AttrName, char* pval, int nc)
 		return false;
 }
 
-wxString* GetStringAttrWXS(S57Obj* obj, const char* AttrName)
+static wxString* GetStringAttrWXS(S57Obj* obj, const char* AttrName)
 {
 	int idx = obj->GetAttributeIndex(AttrName);
 
@@ -251,7 +250,7 @@ static int _parseList(const char* str_in, char* buf, int buf_size)
 	return i;
 }
 
-static int _atPtPos(S57Obj* objNew, wxArrayPtrVoid* curntList, int bSectorCheck)
+static bool _atPtPos(const S57Obj* objNew, wxArrayPtrVoid* curntList, bool bSectorCheck)
 {
 	// return TRUE if there is a light at this position
 	// or if its an extended arc radius else FALSE
@@ -261,16 +260,15 @@ static int _atPtPos(S57Obj* objNew, wxArrayPtrVoid* curntList, int bSectorCheck)
 		return false;
 
 	for (i = 0; i < curntList->size(); i++) {
-		S57Obj* objOld = (S57Obj*)curntList->Item(i);
+		const S57Obj* objOld = static_cast<S57Obj*>(curntList->Item(i));
 
 		if ((objOld->x == objNew->x) && (objOld->y == objNew->y)) {
-
 			if (!bSectorCheck)
-				return TRUE;
+				return true;
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 wxString _selSYcol(char* buf, bool bsectr, double valnmr)
@@ -451,7 +449,7 @@ static wxString* _UDWHAZ03(S57Obj* obj, double depth_value, ObjRazRules* rzRules
 
 static void* DEPARE01(void* param)
 {
-	ObjRazRules* rzRules = (ObjRazRules*)param;
+	ObjRazRules* rzRules = static_cast<ObjRazRules*>(param);
 	S57Obj* obj = rzRules->obj;
 
 	double drval1, drval2;
@@ -536,7 +534,7 @@ static void* DEPCNT02(void* param)
 	wxString rule_str;
 	double safety_contour = S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR);
 
-	ObjRazRules* rzRules = (ObjRazRules*)param;
+	ObjRazRules* rzRules = static_cast<ObjRazRules*>(param);
 	S57Obj* obj = rzRules->obj;
 
 	if ((!strncmp(obj->FeatureName, "DEPARE", 6)) && GEO_LINE == obj->Primitive_type) {
@@ -631,14 +629,14 @@ static void* DEPCNT02(void* param)
 
 static void* DEPVAL01(void* param)
 {
-	ObjRazRules* rzRules = (ObjRazRules*)param;
+	ObjRazRules* rzRules = static_cast<ObjRazRules*>(param);
 	printf("s52csny : DEPVAL01 ERROR no conditional symbology for: %s\n", rzRules->LUP->OBCL);
 	return NULL;
 }
 
 static void* LEGLIN02(void* param)
 {
-	ObjRazRules* rzRules = (ObjRazRules*)param;
+	ObjRazRules* rzRules = static_cast<ObjRazRules*>(param);
 	printf("s52csny : LEGLIN02 ERROR no conditional symbology for: %s\n", rzRules->LUP->OBCL);
 	return NULL;
 }
@@ -665,7 +663,7 @@ static void* LIGHTS05(void* param)
 #define UNKNOWN_DOUBLE -9;
 	wxString lights05;
 
-	ObjRazRules* rzRules = (ObjRazRules*)param;
+	ObjRazRules* rzRules = static_cast<ObjRazRules*>(param);
 	S57Obj* obj = rzRules->obj;
 
 	double valnmr = UNKNOWN_DOUBLE;
@@ -709,9 +707,9 @@ static void* LIGHTS05(void* param)
 
 	GetStringAttr(obj, "COLOUR", col_str, 19);
 
-	if (strlen(col_str))
+	if (strlen(col_str)) {
 		_parseList(col_str, colist, sizeof(colist));
-	else {
+	} else {
 		colist[0] = '\014'; // magenta (12)
 		colist[1] = '\000';
 	}
@@ -719,16 +717,15 @@ static void* LIGHTS05(void* param)
 	GetDoubleAttr(obj, "SECTR1", sectr1);
 	GetDoubleAttr(obj, "SECTR2", sectr2);
 
-	if ((-9 == sectr1) || (-9 == sectr2))
-    {
-        // This is not a sector light
+	if ((-9 == sectr1) || (-9 == sectr2)) {
+		// This is not a sector light
 
-          // What follows is one interpretation of the modern (3_3 +)
-          // Presentation Library CS flow chart, which I(dsr) have never seen verbatim.
-          // We will use flare light symbols for floating aids, and
-          // all round sector lights for fixed aids.
+		// What follows is one interpretation of the modern (3_3 +)
+		// Presentation Library CS flow chart, which I(dsr) have never seen verbatim.
+		// We will use flare light symbols for floating aids, and
+		// all round sector lights for fixed aids.
 
-        wxString ssym;
+		wxString ssym;
 
 		// Is this LIGHTS feature colocated with ...ANY... floating aid?
 		if (_atPtPos(obj, GetChartFloatingATONArray(rzRules), false)) {
@@ -749,8 +746,9 @@ static void* LIGHTS05(void* param)
 				lights05.Append(ssym);
 				lights05.Append(orientstr);
 				lights05.Append(_T(";TE('%03.0lf deg','ORIENT',3,3,3,'15110',3,1,CHBLK,23)" ));
-			} else
+			} else {
 				lights05.Append(_T(";SY(QUESMRK1)"));
+			}
 		} else {
 			lights05.Append(ssym);
 			if (b_isflare) {
@@ -768,8 +766,9 @@ static void* LIGHTS05(void* param)
 	if (-9 == sectr1) {
 		sectr1 = 0.0;
 		sectr2 = 0.0;
-	} else
+	} else {
 		sweep = (sectr1 > sectr2) ? sectr2 - sectr1 + 360 : sectr2 - sectr1;
+	}
 
 	if (sweep < 1.0 || sweep == 360.0) {
 		// handle all round light
@@ -818,8 +817,9 @@ static void* LIGHTS05(void* param)
 				strcat(sym, ",LITGN, 2");
 			else
 				strcat(sym, ",CHMGD, 2"); // default is magenta
-		} else
+		} else {
 			strcat(sym, ",CHMGD, 2"); // default is magenta
+		}
 
 		// Obscured/faint sector?
 		if (strlen(litvisstr)) {
@@ -875,16 +875,16 @@ l05_end:
 			lights05.Append(litdsn01);
 
 			if (flare_at_45)
-				lights05.Append(_T("',3,3,3,'15110',2,-1,CHBLK,23)" ));
+				lights05.Append(_T("',3,3,3,'15110',2,-1,CHBLK,23)"));
 			else
-				lights05.Append(_T("',3,2,3,'15110',2,0,CHBLK,23)" ));
+				lights05.Append(_T("',3,2,3,'15110',2,0,CHBLK,23)"));
 		}
 
 		if (!isFirstSector && lastDescription != litdsn01) {
 			lastDescription = litdsn01;
 			lights05.Append(_T(";TX('"));
 			lights05.Append(litdsn01);
-			lights05.Append(_T("',3,2,3,'15110',2,1,CHBLK,23)" ));
+			lights05.Append(_T("',3,2,3,'15110',2,1,CHBLK,23)"));
 		}
 	}
 
@@ -1229,7 +1229,7 @@ static void* PASTRK01(void* param)
 // and returns the appropriate symbolization to QUAPOS01.
 static void* QUAPOS01(void* param)
 {
-	ObjRazRules* rzRules = (ObjRazRules*)param;
+	ObjRazRules* rzRules = static_cast<ObjRazRules*>(param);
 	S57Obj* obj = rzRules->obj;
 
 	wxString* q = NULL;
@@ -1256,7 +1256,7 @@ static void* QUAPOS01(void* param)
 // objects, and symbolizes the line according to the positional accuracy.
 static void* QUALIN01(void* param)
 {
-	ObjRazRules* rzRules = (ObjRazRules*)param;
+	ObjRazRules* rzRules = static_cast<ObjRazRules*>(param);
 	S57Obj* obj = rzRules->obj;
 
 	wxString* q = CSQUALIN01(obj);
@@ -1274,7 +1274,7 @@ static void* QUALIN01(void* param)
 //
 // This procedure looks at each of the spatial
 // objects, and symbolizes the line according to the positional accuracy.
-wxString* CSQUALIN01(S57Obj* obj)
+static wxString* CSQUALIN01(S57Obj* obj)
 {
 	wxString qualino1;
 	int quapos = 0;
@@ -1333,7 +1333,7 @@ static void* QUAPNT01(void* param)
 //
 // This procedure retrieves any QUALTY (ne QUAPOS) attributes, and returns the
 // appropriate symbols to the calling procedure.
-wxString* CSQUAPNT01(S57Obj* obj)
+static wxString* CSQUAPNT01(S57Obj* obj)
 {
 	wxString quapnt01;
 	int accurate = TRUE;
@@ -1768,7 +1768,7 @@ static void* SOUNDG03(void* param)
 // sounding symbols provided by the symbol library and composes them to
 // sounding labels. It symbolizes swept depth and it also symbolizes for low
 // reliability as indicated by attributes QUASOU and QUAPOS.
-wxString SNDFRM02(S57Obj* obj, double depth_value_in)
+static wxString SNDFRM02(S57Obj* obj, double depth_value_in)
 {
 	wxString sndfrm02;
 	char temp_str[LISTSIZE] = { '\0' };
@@ -2005,7 +2005,7 @@ return_point:
 // mariner is used to.
 static void* TOPMAR01(void* param)
 {
-	ObjRazRules* rzRules = (ObjRazRules*)param;
+	ObjRazRules* rzRules = static_cast<ObjRazRules*>(param);
 	S57Obj* obj = rzRules->obj;
 
 	int top_int = 0;
@@ -2013,18 +2013,19 @@ static void* TOPMAR01(void* param)
 
 	wxString sy;
 
-	if (!battr)
+	if (!battr) {
 		sy = _T(";SY(QUESMRK1)");
-	else {
-		int floating = FALSE; // not a floating platform
+	} else {
+		bool floating = false; // not a floating platform
 		int topshp = (!battr) ? 0 : top_int;
 
-		if (TRUE == _atPtPos(obj, GetChartFloatingATONArray(rzRules), false))
-			floating = TRUE;
-		else
-			// FIXME: this test is wierd since it doesn't affect 'floating'
-			if (TRUE == _atPtPos(obj, GetChartRigidATONArray(rzRules), false))
-			floating = FALSE;
+		if (_atPtPos(obj, GetChartFloatingATONArray(rzRules), false)) {
+			floating = true;
+		} else {
+			if (_atPtPos(obj, GetChartRigidATONArray(rzRules), false)) {
+				floating = false;
+			}
+		}
 
 		if (floating) {
 			// floating platform

@@ -371,7 +371,6 @@ wxLocale* plocale_def_lang;
 wxString g_locale;
 bool g_b_assume_azerty;
 int g_click_stop;
-int g_MemFootMB;
 std::vector<int> g_quilt_noshow_index_array;
 wxStaticBitmap* g_pStatBoxTool;
 bool g_bquiting;
@@ -463,6 +462,7 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos,
 
 	// Redirect the Memory Footprint Management timer to this frame
 	MemFootTimer.SetOwner(this, MEMORY_FOOTPRINT_TIMER);
+	MemFootTimer.Start(9000, wxTIMER_CONTINUOUS);
 
 	// Set up some assorted member variables
 	nRoute_State = 0;
@@ -2881,51 +2881,34 @@ void MainFrame::DoStackUp(void)
 // Manage the application memory footprint on a periodic schedule
 void MainFrame::OnMemFootTimer(wxTimerEvent&)
 {
+	const global::System::Config& sys = global::OCPN::get().sys().config();
+
 	MemFootTimer.Stop();
 
 	int memsize = GetApplicationMemoryUse();
 
-	g_MemFootMB = 100;
 	// The application memory usage has exceeded the target, so try to manage it down....
-	if (memsize > (g_MemFootMB * 1000)) {
+	if (memsize > sys.memory_footprint_kB) {
 		if (ChartData && chart_canvas) {
-			// Get a local copy of the cache info
-			wxArrayPtrVoid* pCache = ChartData->GetChartCache();
-			const unsigned int nCache = pCache->size();
 			std::vector<chart::CacheEntry> cache;
-			cache.reserve(nCache);
-			for (unsigned int i = 0; i < nCache; ++i) {
-				cache.push_back(*static_cast<chart::CacheEntry*>(pCache->Item(i)));
-			}
-
-			if (nCache > 1) {
-				// Bubble Sort the local cache entry array
-				bool b_cont = true;
-				while (b_cont) {
-					b_cont = false;
-					for (unsigned int i = 0; i < nCache - 1; ++i) {
-						if (cache[i].RecentTime > cache[i + 1].RecentTime) {
-							std::swap(cache[i], cache[i + 1]);
-							b_cont = true;
-							break;
-						}
-					}
-				}
+			ChartData->get_chart_cache_copy(cache);
+			if (cache.size() > 1) {
+				std::sort(cache.begin(), cache.end(), chart::CacheEntry::OldestFirst());
 
 				// Free up some chart cache entries until the memory footprint target is realized
 
 				unsigned int idelete = 0; // starting at top. which is oldest
-				unsigned int idelete_max = pCache->size();
+				const unsigned int idelete_max = cache.size();
 
 				// How many can be deleted?
 				unsigned int minimum_cache = 1;
 				if (chart_canvas->GetQuiltMode())
 					minimum_cache = chart_canvas->GetQuiltChartCount();
 
-				while ((memsize > (g_MemFootMB * 1000)) && (pCache->size() > minimum_cache)
+				while ((memsize > sys.memory_footprint_kB) && (cache.size() > minimum_cache)
 					   && (idelete < idelete_max)) {
 					ChartData->DeleteCacheChart(static_cast<ChartBase*>(cache[idelete].pChart));
-					idelete++;
+					++idelete;
 					memsize = GetApplicationMemoryUse();
 				}
 			}
@@ -3651,9 +3634,9 @@ int MainFrame::GetnChartStack(void)
 }
 
 // Application memory footprint management
-int MainFrame::GetApplicationMemoryUse(void) // FIXME: move this out of MainFrame
+long MainFrame::GetApplicationMemoryUse(void) const // FIXME: move this out of MainFrame
 {
-	int memsize = -1;
+	long memsize = -1;
 #ifdef __LINUX__
 
 	// Use a contrived ps command to get the virtual memory size associated with this process

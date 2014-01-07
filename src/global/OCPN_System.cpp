@@ -95,5 +95,10 @@ void OCPN_System::set_config_nav_message_shown(bool flag)
 	data_config.nav_message_shown = flag;
 }
 
+void OCPN_System::set_config_memory_footprint(long value_kB)
+{
+	data_config.memory_footprint_kB = value_kB;
+}
+
 }
 

@@ -109,6 +109,7 @@ private:
 
 	double read_double(const wxString&) const;
 	bool read_bool(const wxString&, bool = false) const;
+	long read_long(const wxString&, long = 0) const;
 	wxString read_string(const wxString&) const;
 
 	static bool WptIsInRouteList(const RoutePoint* pr);

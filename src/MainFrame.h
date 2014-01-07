@@ -80,7 +80,7 @@ public:
 
 	virtual ~MainFrame();
 
-	int GetApplicationMemoryUse(void);
+	long GetApplicationMemoryUse(void) const;
 
 	void OnEraseBackground(wxEraseEvent& event);
 	void OnActivate(wxActivateEvent& event);

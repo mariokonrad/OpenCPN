@@ -51,6 +51,7 @@ class OCPN_System : public System
 		virtual const Config & config() const;
 		virtual void set_config_version_string(const wxString &);
 		virtual void set_config_nav_message_shown(bool);
+		virtual void set_config_memory_footprint(long);
 };
 
 }

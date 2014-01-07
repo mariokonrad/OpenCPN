@@ -67,11 +67,13 @@ class System
 		{
 			wxString version_string;
 			bool nav_message_shown;
+			long memory_footprint_kB;
 		};
 
 		virtual const Config & config() const = 0;
 		virtual void set_config_version_string(const wxString &) = 0;
 		virtual void set_config_nav_message_shown(bool) = 0;
+		virtual void set_config_memory_footprint(long) = 0;
 };
 
 }

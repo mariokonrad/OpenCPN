@@ -31,6 +31,15 @@ namespace chart {
 class CacheEntry
 {
 public:
+	struct OldestFirst
+	{
+		bool operator()(const CacheEntry& a, const CacheEntry& b) const
+		{
+			return a.RecentTime < b.RecentTime;
+		}
+	};
+
+public:
 	wxString FullPath;
 	void* pChart;
 	int RecentTime;

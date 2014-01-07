@@ -34,6 +34,7 @@
 
 #include <chart/ChartDatabase.h>
 #include <chart/s52s57.h>
+#include <chart/CacheEntry.h>
 
 class MainFrame;
 
@@ -71,7 +72,7 @@ public:
 										 ChartTypeEnum New_Type,
 										 chart::ChartFamilyEnum New_Family_Fallback);
 
-	wxArrayPtrVoid* GetChartCache(void); // FIXME: breaks encapsulation
+	void get_chart_cache_copy(std::vector<CacheEntry>&) const;
 	std::vector<int> GetCSArray(ChartStack* ps);
 
 	int GetStackEntry(ChartStack* ps, wxString fp);

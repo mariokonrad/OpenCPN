@@ -29,7 +29,6 @@
 #include <cmath>
 
 #include "ChartDB.h"
-#include <chart/CacheEntry.h>
 #include <chart/ChartGEO.h>
 #include <chart/ChartKAP.h>
 #include <chart/ChartStack.h>
@@ -98,9 +97,14 @@ bool ChartDB::SaveBinary(const wxString& filename)
 	return ChartDatabase::Write(filename);
 }
 
-wxArrayPtrVoid* ChartDB::GetChartCache(void) // FIXME: breaks ecapsulation
+void ChartDB::get_chart_cache_copy(std::vector<CacheEntry>& v) const
 {
-	return pChartCache;
+	v.clear();
+	const unsigned int N = pChartCache->size();
+	v.reserve(N);
+	for (unsigned int i = 0; i < N; ++i) {
+		v.push_back(*static_cast<CacheEntry*>(pChartCache->Item(i)));
+	}
 }
 
 void ChartDB::LockCache(bool bl)

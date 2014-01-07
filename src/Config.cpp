@@ -139,8 +139,6 @@ extern bool             g_bCourseUp;
 extern int              g_COGAvgSec;
 extern bool             g_bMagneticAPB;
 
-extern int              g_MemFootMB;
-
 extern int              g_nCOMPortCheck;
 
 extern wxString         g_AW1GUID;
@@ -511,6 +509,15 @@ bool Config::read_bool(const wxString& entry, bool default_value) const
 	return value;
 }
 
+long Config::read_long(const wxString& entry, long default_value) const
+{
+	long value = default_value;
+
+	if (!Read(entry, &value))
+		return default_value;
+	return value;
+}
+
 wxString Config::read_string(const wxString& entry) const
 {
 	wxString value;
@@ -587,7 +594,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	load_view();
 
-	Read(_T("MemFootprintTargetMB"), &g_MemFootMB, 200);
+	global::OCPN::get().sys().set_config_memory_footprint(
+		read_long(_T("MemFootprintTargetMB"), 200 * 1024));
 
 	Read(_T("WindowsComPortMax"), &g_nCOMPortCheck, 32);
 

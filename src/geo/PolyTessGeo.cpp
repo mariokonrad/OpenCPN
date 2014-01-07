@@ -127,52 +127,57 @@ static int tess_orient;
 static wxMemoryOutputStream *ostream1;
 static wxMemoryOutputStream *ostream2;
 
-static bool ispolysame(polyout *p1, polyout *p2)
+static void destroy_combined_vertices()
+{
+	// Free up any "Combine" vertices created
+	for (unsigned int i = 0; i < s_pCombineVertexArray->size(); ++i)
+		free(s_pCombineVertexArray->Item(i));
+	delete s_pCombineVertexArray;
+}
+
+static bool ispolysame(polyout* p1, polyout* p2)
 {
 	int i2;
 
-	if(p1->nvert != p2->nvert)
+	if (p1->nvert != p2->nvert)
 		return false;
 
 	int v10 = p1->vertex_index_list[0];
 
-	for(i2 = 0 ; i2 < p2->nvert ; i2++)
-	{
-		if(p2->vertex_index_list[i2] == v10)
+	for (i2 = 0; i2 < p2->nvert; i2++) {
+		if (p2->vertex_index_list[i2] == v10)
 			break;
 	}
-	if(i2 == p2->nvert)
+	if (i2 == p2->nvert)
 		return false;
 
-	for(int j = 0 ; j<p1->nvert ; j++)
-	{
-		if(p1->vertex_index_list[j] != p2->vertex_index_list[i2])
+	for (int j = 0; j < p1->nvert; j++) {
+		if (p1->vertex_index_list[j] != p2->vertex_index_list[i2])
 			return false;
 		i2++;
-		if(i2 == p2->nvert)
+		if (i2 == p2->nvert)
 			i2 = 0;
 	}
 
 	return true;
 }
 
-
 PolyTessGeo::PolyTessGeo()
 {
 }
 
-//      Build PolyTessGeo Object from ExtendedGeometry
-PolyTessGeo::PolyTessGeo(ExtendedGeometry *pxGeom)
+// Build PolyTessGeo Object from ExtendedGeometry
+PolyTessGeo::PolyTessGeo(ExtendedGeometry* pxGeom)
 {
 	m_ppg_head = NULL;
 	m_bOK = false;
 
 	m_pxgeom = pxGeom;
-
 }
 
-//      Build PolyTessGeo Object from OGR Polygon
-PolyTessGeo::PolyTessGeo(OGRPolygon *poly, bool bSENC_SM, double ref_lat, double ref_lon, bool bUseInternalTess)
+// Build PolyTessGeo Object from OGR Polygon
+PolyTessGeo::PolyTessGeo(OGRPolygon* poly, bool bSENC_SM, double ref_lat, double ref_lon,
+						 bool bUseInternalTess)
 {
 	ErrorCode = 0;
 	m_ppg_head = NULL;
@@ -181,11 +186,10 @@ PolyTessGeo::PolyTessGeo(OGRPolygon *poly, bool bSENC_SM, double ref_lat, double
 	m_ref_lat = ref_lat;
 	m_ref_lon = ref_lon;
 
-    if(bUseInternalTess){
-        printf("internal tess\n");
+	if (bUseInternalTess) {
+		printf("internal tess\n");
 		ErrorCode = PolyTessGeoTri(poly, bSENC_SM, ref_lat, ref_lon);
-    }
-    else {
+	} else {
 #ifdef USE_GLU_TESS
 		printf("USE_GLU_TESS tess\n");
 		ErrorCode = PolyTessGeoGL(poly, bSENC_SM, ref_lat, ref_lon);
@@ -193,16 +197,14 @@ PolyTessGeo::PolyTessGeo(OGRPolygon *poly, bool bSENC_SM, double ref_lat, double
 		printf("PolyTessGeoTri tess\n");
 		ErrorCode = PolyTessGeoTri(poly, bSENC_SM, ref_lat, ref_lon);
 #endif
-    }
+	}
 }
 
-
-
-//      Build PolyGeo Object from SENC file record
+// Build PolyGeo Object from SENC file record
 PolyTessGeo::PolyTessGeo(unsigned char* polybuf, int nrecl, int WXUNUSED(index))
 {
 #define POLY_LINE_HDR_MAX 1000
-	//      Todo Add a try/catch set here, in case SENC file is corrupted??
+	// Todo Add a try/catch set here, in case SENC file is corrupted??
 
 	m_pxgeom = NULL;
 
@@ -254,7 +256,7 @@ PolyTessGeo::PolyTessGeo(unsigned char* polybuf, int nrecl, int WXUNUSED(index))
 
 	geo::TriPrim** p_prev_triprim = &(ppg->tri_prim_head);
 
-	//  Read the PTG_Triangle Geometry in a loop
+	// Read the PTG_Triangle Geometry in a loop
 	geo::TriPrim::Type tri_type;
 	int nvert;
 	int nvert_max = 0;
@@ -266,8 +268,8 @@ PolyTessGeo::PolyTessGeo(unsigned char* polybuf, int nrecl, int WXUNUSED(index))
 			nvert = *pi;
 			m_buf_ptr += 2 * sizeof(int);
 
-			//    Here is the usual stop condition, which results from
-			//    interpreting the string "POLYEND" as an int
+			// Here is the usual stop condition, which results from
+			// interpreting the string "POLYEND" as an int
 			if (tri_type == 0x594c4f50) {
 				not_finished = false;
 				break;
@@ -290,7 +292,7 @@ PolyTessGeo::PolyTessGeo(unsigned char* polybuf, int nrecl, int WXUNUSED(index))
 			memmove(tp->p_vertex, m_buf_ptr, byte_size);
 			m_buf_ptr += byte_size;
 
-			//  Read the triangle primitive bounding box as lat/lon
+			// Read the triangle primitive bounding box as lat/lon
 			double* pbb = (double*)m_buf_ptr;
 
 #ifdef ARMHF
@@ -389,7 +391,7 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 	ppt->y = 0.;
 	ppt++; // vertex 0 is unused
 
-	//  Check and account for winding direction of ring
+	// Check and account for winding direction of ring
 	bool cw = !(poly->getExteriorRing()->isClockwise() == 0);
 
 	double x0, y0, x, y;
@@ -405,12 +407,11 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 		y0 = p.getY();
 	}
 
-	//  Transcribe points to vertex array, in proper order with no duplicates
-	for(ip = 0 ; ip < npte ; ip++)
-	{
+	// Transcribe points to vertex array, in proper order with no duplicates
+	for (ip = 0; ip < npte; ip++) {
 
 		int pidx;
-		if(cw)
+		if (cw)
 			pidx = npte - ip - 1;
 
 		else
@@ -420,50 +421,41 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 		x = p.getX();
 		y = p.getY();
 
-		if((fabs(x-x0) > EQUAL_EPS) || (fabs(y-y0) > EQUAL_EPS))
-		{
+		if ((fabs(x - x0) > EQUAL_EPS) || (fabs(y - y0) > EQUAL_EPS)) {
 			ppt->x = x;
 			ppt->y = y;
 
 			ppt++;
-		}
-		else
+		} else
 			cntr[0]--;
 
 		x0 = x;
 		y0 = y;
 	}
 
-
-	//  Now the interior contours
-	for(iir=0 ; iir < nint ; iir++)
-	{
+	// Now the interior contours
+	for (iir = 0; iir < nint; iir++) {
 		int npti = poly->getInteriorRing(iir)->getNumPoints();
 		cntr[iir + 1] = npti;
-
 
 		//  Check and account for winding direction of ring
 		bool cw = !(poly->getInteriorRing(iir)->isClockwise() == 0);
 
-		if(!cw)
-		{
+		if (!cw) {
 			poly->getInteriorRing(iir)->getPoint(0, &p);
 			x0 = p.getX();
 			y0 = p.getY();
-		}
-		else
-		{
-			poly->getInteriorRing(iir)->getPoint(npti-1, &p);
+		} else {
+			poly->getInteriorRing(iir)->getPoint(npti - 1, &p);
 			x0 = p.getX();
 			y0 = p.getY();
 		}
 
-		//  Transcribe points to vertex array, in proper order with no duplicates
-		for(int ip = 0 ; ip < npti ; ip++)
-		{
+		// Transcribe points to vertex array, in proper order with no duplicates
+		for (int ip = 0; ip < npti; ip++) {
 			OGRPoint p;
 			int pidx;
-			if(!cw)                               // interior contours must be cw
+			if (!cw) // interior contours must be cw
 				pidx = npti - ip - 1;
 			else
 				pidx = ip;
@@ -472,102 +464,84 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 			x = p.getX();
 			y = p.getY();
 
-			if((fabs(x-x0) > EQUAL_EPS) || (fabs(y-y0) > EQUAL_EPS))
-			{
+			if ((fabs(x - x0) > EQUAL_EPS) || (fabs(y - y0) > EQUAL_EPS)) {
 				ppt->x = x;
 				ppt->y = y;
 				ppt++;
-			}
-			else
-				cntr[iir+1]--;
+			} else
+				cntr[iir + 1]--;
 
 			x0 = x;
 			y0 = y;
-
 		}
 	}
 
-	polyout *polys = triangulate_polygon(ncnt, cntr, (double (*)[2])geoPt);
+	polyout* polys = triangulate_polygon(ncnt, cntr, (double(*)[2])geoPt);
 
+	// Check the triangles
+	// Especially looking for poorly formed polys
+	// These may come from several sources, all
+	// of which should be considered latent bugs in the trapezator.
 
-	//  Check the triangles
-	//  Especially looking for poorly formed polys
-	//  These may come from several sources, all
-	//  of which should be considered latent bugs in the trapezator.
+	// Known to occur:
+	// Trapezator fails if any two inner contours share a common vertex.
+	// Found on US5VA19M.000
 
-	//  Known to occur:
-	//  Trapezator fails if any two inner contours share a common vertex.
-	//  Found on US5VA19M.000
+	polyout* pck = polys;
+	while (NULL != pck) {
+		if (pck->is_valid) {
+			int* ivs = pck->vertex_index_list;
 
-	polyout *pck = polys;
-	while(NULL != pck)
-	{
-		if(pck->is_valid)
-		{
-			int *ivs = pck->vertex_index_list;
-
-			for(int i3 = 0 ; i3 < pck->nvert-1 ; i3++)
-			{
+			for (int i3 = 0; i3 < pck->nvert - 1; i3++) {
 				int ptest = ivs[i3];
-				for(int i4=i3+1 ; i4 < pck->nvert ; i4++)
-				{
-					if(ptest == ivs[i4])
-					{
+				for (int i4 = i3 + 1; i4 < pck->nvert; i4++) {
+					if (ptest == ivs[i4]) {
 						pck->is_valid = false;
 					}
 				}
 			}
 		}
 
-		pck = (polyout *)pck->poly_next;
+		pck = (polyout*)pck->poly_next;
 	}
 
-
-	//  Walk the list once to get poly count
-	polyout *pr;
+	// Walk the list once to get poly count
+	polyout* pr;
 	pr = polys;
 	int npoly0 = 0;
-	while(NULL != pr)
-	{
-		pr = (polyout *)pr->poly_next;
+	while (NULL != pr) {
+		pr = (polyout*)pr->poly_next;
 		npoly0++;
 	}
 
-	//  Check the list for duplicates
+	// Check the list for duplicates
 
 	pr = polys;
-	for(int idt = 0 ; idt<npoly0-1 ; idt++)
-	{
-		polyout *p1 = pr;
+	for (int idt = 0; idt < npoly0 - 1; idt++) {
+		polyout* p1 = pr;
 
-		polyout *p2 = (polyout *)pr->poly_next;
-		while(NULL != p2)
-		{
-			if(p1->is_valid && p2->is_valid)
-			{
-				if(ispolysame(p1, p2))
+		polyout* p2 = (polyout*)pr->poly_next;
+		while (NULL != p2) {
+			if (p1->is_valid && p2->is_valid) {
+				if (ispolysame(p1, p2))
 					p1->is_valid = false;
 			}
-			p2 = (polyout *)p2->poly_next;
+			p2 = (polyout*)p2->poly_next;
 		}
 
-		pr = (polyout *)pr->poly_next;
+		pr = (polyout*)pr->poly_next;
 	}
 
-	//  Walk the list again to get unique poly count
+	// Walk the list again to get unique poly count
 	pr = polys;
 	int npoly = 0;
-	while(NULL != pr)
-	{
-		if(pr->is_valid)
+	while (NULL != pr) {
+		if (pr->is_valid)
 			npoly++;
-		pr = (polyout *)pr->poly_next;
-
+		pr = (polyout*)pr->poly_next;
 	}
 
-
-
-	//  Create the data structures
+	// Create the data structures
 
 	m_nvertex_max = 0;
 
@@ -576,17 +550,17 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 
 	m_ppg_head->nContours = ncnt;
 
-	m_ppg_head->pn_vertex = cntr;             // pointer to array of poly vertex counts
+	m_ppg_head->pn_vertex = cntr; // pointer to array of poly vertex counts
 
-
-	//  Transcribe the raw geometry buffer
-	//  Converting to float as we go, and
-	//  allowing for tess_orient
+	// Transcribe the raw geometry buffer
+	// Converting to float as we go, and
+	// allowing for tess_orient
 
 	nwkb = (npta + 1) * 2 * sizeof(float);
 	m_ppg_head->pgroup_geom = (float*)malloc(nwkb);
 	float* vro = m_ppg_head->pgroup_geom;
-	float tx, ty;
+	float tx;
+	float ty;
 
 	for (ip = 1; ip < npta + 1; ip++) {
 		if (TESS_HORZ == tess_orient) {
@@ -609,7 +583,7 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 		}
 	}
 
-	//  Now the Triangle Primitives
+	// Now the Triangle Primitives
 
 	geo::TriPrim* pTP = NULL;
 	geo::TriPrim* pTP_Head = NULL;
@@ -657,7 +631,7 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 					memcpy(pdd++, &geoPt[ivp].y, sizeof(double));
 				}
 			}
-			//  Calculate bounding box as lat/lon
+			// Calculate bounding box as lat/lon
 
 			float sxmax = -179; // this poly BBox
 			float sxmin = 170;
@@ -686,7 +660,7 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 
 	m_ppg_head->tri_prim_head = pTP_Head; // head of linked list of TriPrims
 
-	//  Free the polyout structure
+	// Free the polyout structure
 	pr = polys;
 	while (NULL != pr) {
 		free(pr->vertex_index_list);
@@ -711,25 +685,25 @@ int PolyTessGeo::Write_PolyTriGroup(FILE* ofs)
 
 	PolyTriGroup* pPTG = m_ppg_head;
 
-	//  Begin creating the output record
-	//      Use a wxMemoryStream for temporary record output.
-	//      When all finished, we'll touch up a few items before
-	//      committing to disk.
+	// Begin creating the output record
+	// Use a wxMemoryStream for temporary record output.
+	// When all finished, we'll touch up a few items before
+	// committing to disk.
 
 	ostream1 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
 	ostream2 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
 
-	//  Create initial known part of the output record
+	// Create initial known part of the output record
 
-	stemp.sprintf(_T("  POLYTESSGEOPROP %f %f %f %f\n"), xmin, ymin, xmax,
-				  ymax); // PolyTessGeo Properties
+	// PolyTessGeo Properties
+	stemp.sprintf(_T("  POLYTESSGEOPROP %f %f %f %f\n"), xmin, ymin, xmax, ymax);
 	sout += stemp;
 
-	//  Transcribe the true number of  contours, and the raw geometry wkb size
+	// Transcribe the true number of  contours, and the raw geometry wkb size
 	stemp.sprintf(_T("Contours/nWKB %d %d\n"), ncnt, nwkb);
 	sout += stemp;
 
-	//  Transcribe the contour counts
+	// Transcribe the contour counts
 	stemp.sprintf(_T("Contour nV"));
 	sout += stemp;
 	for (int i = 0; i < ncnt; i++) {
@@ -740,12 +714,12 @@ int PolyTessGeo::Write_PolyTriGroup(FILE* ofs)
 	sout += stemp;
 	ostream1->Write(sout.mb_str(), sout.Len());
 
-	//  Transcribe the raw geometry buffer
+	// Transcribe the raw geometry buffer
 	ostream1->Write(pPTG->pgroup_geom, nwkb);
 	stemp.sprintf(_T("\n"));
 	ostream1->Write(stemp.mb_str(), stemp.Len());
 
-	//  Transcribe the TriPrim chain
+	// Transcribe the TriPrim chain
 
 	geo::TriPrim* pTP = pPTG->tri_prim_head; // head of linked list of TriPrims
 
@@ -755,7 +729,7 @@ int PolyTessGeo::Write_PolyTriGroup(FILE* ofs)
 
 		ostream2->Write(pTP->p_vertex, pTP->nVert * 2 * sizeof(double));
 
-		//  Write out the object bounding box as lat/lon
+		// Write out the object bounding box as lat/lon
 		ostream2->Write(&pTP->minx, sizeof(double));
 		ostream2->Write(&pTP->maxx, sizeof(double));
 		ostream2->Write(&pTP->miny, sizeof(double));
@@ -796,25 +770,25 @@ int PolyTessGeo::Write_PolyTriGroup(wxOutputStream& out_stream)
 
 	PolyTriGroup* pPTG = m_ppg_head;
 
-	//  Begin creating the output record
-	//      Use a wxMemoryStream for temporary record output.
-	//      When all finished, we'll touch up a few items before
-	//      committing to disk.
+	// Begin creating the output record
+	// Use a wxMemoryStream for temporary record output.
+	// When all finished, we'll touch up a few items before
+	// committing to disk.
 
-	ostream1 = new wxMemoryOutputStream(NULL, 0);                      // auto buffer creation
-	ostream2 = new wxMemoryOutputStream(NULL, 0);                      // auto buffer creation
+	ostream1 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
+	ostream2 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
 
-	//  Create initial known part of the output record
+	// Create initial known part of the output record
 
-	stemp.sprintf(_T("  POLYTESSGEOPROP %f %f %f %f\n"), xmin, ymin, xmax,
-				  ymax); // PolyTessGeo Properties
+	// PolyTessGeo Properties
+	stemp.sprintf(_T("  POLYTESSGEOPROP %f %f %f %f\n"), xmin, ymin, xmax, ymax);
 	sout += stemp;
 
-	//  Transcribe the true number of  contours, and the raw geometry wkb size
-	stemp.sprintf(_T("Contours/nWKB %d %d\n"),  ncnt, nwkb);
+	// Transcribe the true number of  contours, and the raw geometry wkb size
+	stemp.sprintf(_T("Contours/nWKB %d %d\n"), ncnt, nwkb);
 	sout += stemp;
 
-	//  Transcribe the contour counts
+	// Transcribe the contour counts
 	stemp.sprintf(_T("Contour nV"));
 	sout += stemp;
 	for (int i = 0; i < ncnt; i++) {
@@ -825,12 +799,12 @@ int PolyTessGeo::Write_PolyTriGroup(wxOutputStream& out_stream)
 	sout += stemp;
 	ostream1->Write(sout.mb_str(), sout.Len());
 
-	//  Transcribe the raw geometry buffer
+	// Transcribe the raw geometry buffer
 	ostream1->Write(pPTG->pgroup_geom, nwkb);
 	stemp.sprintf(_T("\n"));
 	ostream1->Write(stemp.mb_str(), stemp.Len());
 
-	//  Transcribe the TriPrim chain
+	// Transcribe the TriPrim chain
 
 	geo::TriPrim* pTP = pPTG->tri_prim_head; // head of linked list of TriPrims
 
@@ -886,7 +860,7 @@ int PolyTessGeo::my_bufgets(char* buf, int buf_len_max)
 	while ((nLineLen < buf_len_max) && ((m_buf_ptr - m_buf_head) < m_nrecl)) {
 		chNext = *m_buf_ptr++;
 
-		/* each CR/LF (or LF/CR) as if just "CR" */
+		// each CR/LF (or LF/CR) as if just "CR"
 		if (chNext == 10 || chNext == 13) {
 			chNext = '\n';
 		}
@@ -908,7 +882,6 @@ int PolyTessGeo::my_bufgets(char* buf, int buf_len_max)
 PolyTessGeo::~PolyTessGeo()
 {
 	delete m_ppg_head;
-
 	delete m_pxgeom;
 
 #ifdef USE_GLU_TESS
@@ -921,13 +894,11 @@ PolyTessGeo::~PolyTessGeo()
 int PolyTessGeo::BuildDeferredTess(void)
 {
 #ifdef USE_GLU_TESS
-    return BuildTessGL();
+	return BuildTessGL();
 #else
-    return 0;
+	return 0;
 #endif
 }
-
-
 
 #ifdef USE_GLU_TESS
 #ifdef __WXMSW__
@@ -948,71 +919,66 @@ void __CALL_CONVENTION combineCallback(
 		GLdouble **dataOut);
 
 
-//      Build PolyTessGeo Object from OGR Polygon
-//      Using OpenGL/GLU tesselator
-int PolyTessGeo::PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, double ref_lon)
+// Build PolyTessGeo Object from OGR Polygon
+// Using OpenGL/GLU tesselator
+int PolyTessGeo::PolyTessGeoGL(OGRPolygon* poly, bool bSENC_SM, double ref_lat, double ref_lon)
 {
 #ifdef ocpnUSE_GL
-    
-	int iir, ip;
-	int *cntr;
-	GLdouble *geoPt;
 
-	wxString    sout;
-	wxString    sout1;
-	wxString    stemp;
+	int iir, ip;
+	int* cntr;
+	GLdouble* geoPt;
+
+	wxString sout;
+	wxString sout1;
+	wxString stemp;
 
 	//  Make a quick sanity check of the polygon coherence
 	bool b_ok = true;
-	OGRLineString *tls = poly->getExteriorRing();
-	if(!tls) {
+	OGRLineString* tls = poly->getExteriorRing();
+	if (!tls) {
 		b_ok = false;
-	}
-	else {
-		int tnpta  = poly->getExteriorRing()->getNumPoints();
-		if(tnpta < 3 )
+	} else {
+		int tnpta = poly->getExteriorRing()->getNumPoints();
+		if (tnpta < 3)
 			b_ok = false;
 	}
 
-
-	for( iir=0 ; iir < poly->getNumInteriorRings() ; iir++)
-	{
+	for (iir = 0; iir < poly->getNumInteriorRings(); iir++) {
 		int tnptr = poly->getInteriorRing(iir)->getNumPoints();
-		if( tnptr < 3 )
+		if (tnptr < 3)
 			b_ok = false;
 	}
 
-	if( !b_ok )
+	if (!b_ok)
 		return ERROR_BAD_OGRPOLY;
 
-
 #ifdef __WXMSW__
-	//  If using the OpenGL dlls provided with Windows,
-	//  load the dll and establish addresses of the entry points needed
+	// If using the OpenGL dlls provided with Windows,
+	// load the dll and establish addresses of the entry points needed
 
 #ifdef USE_GLU_DLL
 
-	if(!s_glu_dll_ready)
-	{
-
+	if (!s_glu_dll_ready) {
 
 		s_hGLU_DLL = LoadLibrary("glu32.dll");
-		if (s_hGLU_DLL != NULL)
-		{
-			s_lpfnTessProperty = (LPFNDLLTESSPROPERTY)GetProcAddress(s_hGLU_DLL,"gluTessProperty");
+		if (s_hGLU_DLL != NULL) {
+			s_lpfnTessProperty = (LPFNDLLTESSPROPERTY)GetProcAddress(s_hGLU_DLL, "gluTessProperty");
 			s_lpfnNewTess = (LPFNDLLNEWTESS)GetProcAddress(s_hGLU_DLL, "gluNewTess");
-			s_lpfnTessBeginContour = (LPFNDLLTESSBEGINCONTOUR)GetProcAddress(s_hGLU_DLL, "gluTessBeginContour");
-			s_lpfnTessEndContour = (LPFNDLLTESSENDCONTOUR)GetProcAddress(s_hGLU_DLL, "gluTessEndContour");
-			s_lpfnTessBeginPolygon = (LPFNDLLTESSBEGINPOLYGON)GetProcAddress(s_hGLU_DLL, "gluTessBeginPolygon");
-			s_lpfnTessEndPolygon = (LPFNDLLTESSENDPOLYGON)GetProcAddress(s_hGLU_DLL, "gluTessEndPolygon");
+			s_lpfnTessBeginContour
+				= (LPFNDLLTESSBEGINCONTOUR)GetProcAddress(s_hGLU_DLL, "gluTessBeginContour");
+			s_lpfnTessEndContour
+				= (LPFNDLLTESSENDCONTOUR)GetProcAddress(s_hGLU_DLL, "gluTessEndContour");
+			s_lpfnTessBeginPolygon
+				= (LPFNDLLTESSBEGINPOLYGON)GetProcAddress(s_hGLU_DLL, "gluTessBeginPolygon");
+			s_lpfnTessEndPolygon
+				= (LPFNDLLTESSENDPOLYGON)GetProcAddress(s_hGLU_DLL, "gluTessEndPolygon");
 			s_lpfnDeleteTess = (LPFNDLLDELETETESS)GetProcAddress(s_hGLU_DLL, "gluDeleteTess");
 			s_lpfnTessVertex = (LPFNDLLTESSVERTEX)GetProcAddress(s_hGLU_DLL, "gluTessVertex");
 			s_lpfnTessCallback = (LPFNDLLTESSCALLBACK)GetProcAddress(s_hGLU_DLL, "gluTessCallback");
 
 			s_glu_dll_ready = true;
-		}
-		else
-		{
+		} else {
 			return ERROR_NO_DLL;
 		}
 	}
@@ -1020,45 +986,39 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, 
 #endif
 #endif
 
-
-	//  Allocate a work buffer, which will be grown as needed
+// Allocate a work buffer, which will be grown as needed
 #define NINIT_BUFFER_LEN 10000
-	s_pwork_buf = (GLdouble *)malloc(NINIT_BUFFER_LEN * 2 * sizeof(GLdouble));
+	s_pwork_buf = (GLdouble*)malloc(NINIT_BUFFER_LEN * 2 * sizeof(GLdouble));
 	s_buf_len = NINIT_BUFFER_LEN * 2;
 	s_buf_idx = 0;
 
-	//    Create an array to hold pointers to allocated vertices created by "combine" callback,
-	//    so that they may be deleted after tesselation.
+	// Create an array to hold pointers to allocated vertices created by "combine" callback,
+	// so that they may be deleted after tesselation.
 	s_pCombineVertexArray = new wxArrayPtrVoid;
 
-	//  Create tesselator
+	// Create tesselator
 	GLUtessobj = gluNewTess();
 
-	//  Register the callbacks
-	gluTessCallback(GLUtessobj, GLU_TESS_BEGIN,   (GLvoid (__CALL_CONVENTION *) ())&beginCallback);
-	gluTessCallback(GLUtessobj, GLU_TESS_BEGIN,   (GLvoid (__CALL_CONVENTION *) ())&beginCallback);
-	gluTessCallback(GLUtessobj, GLU_TESS_VERTEX,  (GLvoid (__CALL_CONVENTION *) ())&vertexCallback);
-	gluTessCallback(GLUtessobj, GLU_TESS_END,     (GLvoid (__CALL_CONVENTION *) ())&endCallback);
-	gluTessCallback(GLUtessobj, GLU_TESS_COMBINE, (GLvoid (__CALL_CONVENTION *) ())&combineCallback);
+	// Register the callbacks
+	gluTessCallback(GLUtessobj, GLU_TESS_BEGIN, (GLvoid(__CALL_CONVENTION*)()) & beginCallback);
+	gluTessCallback(GLUtessobj, GLU_TESS_BEGIN, (GLvoid(__CALL_CONVENTION*)()) & beginCallback);
+	gluTessCallback(GLUtessobj, GLU_TESS_VERTEX, (GLvoid(__CALL_CONVENTION*)()) & vertexCallback);
+	gluTessCallback(GLUtessobj, GLU_TESS_END, (GLvoid(__CALL_CONVENTION*)()) & endCallback);
+	gluTessCallback(GLUtessobj, GLU_TESS_COMBINE, (GLvoid(__CALL_CONVENTION*)()) & combineCallback);
 
-	//    gluTessCallback(GLUtessobj, GLU_TESS_ERROR,   (GLvoid (__CALL_CONVENTION *) ())&errorCallback);
+	gluTessProperty(GLUtessobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_POSITIVE);
 
-	//    glShadeModel(GL_SMOOTH);
-	gluTessProperty(GLUtessobj, GLU_TESS_WINDING_RULE,
-			GLU_TESS_WINDING_POSITIVE );
+	// gluTess algorithm internally selects vertically oriented triangle strips and fans.
+	// This orientation is not optimal for conventional memory-mapped raster display shape filling.
+	// We can "fool" the algorithm by interchanging the x and y vertex values passed to
+	// gluTessVertex
+	// and then reverting x and y on the resulting vertexCallbacks.
+	// In this implementation, we will explicitely set the preferred orientation.
 
-	//  gluTess algorithm internally selects vertically oriented triangle strips and fans.
-	//  This orientation is not optimal for conventional memory-mapped raster display shape filling.
-	//  We can "fool" the algorithm by interchanging the x and y vertex values passed to gluTessVertex
-	//  and then reverting x and y on the resulting vertexCallbacks.
-	//  In this implementation, we will explicitely set the preferred orientation.
+	// Set the preferred orientation
+	tess_orient = TESS_HORZ; // prefer horizontal tristrips
 
-	//Set the preferred orientation
-	tess_orient = TESS_HORZ;                    // prefer horizontal tristrips
-
-
-
-	//    PolyGeo BBox as lat/lon
+	// PolyGeo BBox as lat/lon
 	OGREnvelope Envelope;
 	poly->getEnvelope(&Envelope);
 	xmin = Envelope.MinX;
@@ -1066,88 +1026,70 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, 
 	xmax = Envelope.MaxX;
 	ymax = Envelope.MaxY;
 
-
-	//      Get total number of contours
-	ncnt = 1;                         // always exterior ring
-	int nint = poly->getNumInteriorRings();  // interior rings
+	// Get total number of contours
+	ncnt = 1; // always exterior ring
+	int nint = poly->getNumInteriorRings(); // interior rings
 	ncnt += nint;
 
+	// Allocate cntr array
+	cntr = (int*)malloc(ncnt * sizeof(int));
 
-	//      Allocate cntr array
-	cntr = (int *)malloc(ncnt * sizeof(int));
-
-
-	//      Get total number of points(vertices)
-	int npta  = poly->getExteriorRing()->getNumPoints();
+	// Get total number of points(vertices)
+	int npta = poly->getExteriorRing()->getNumPoints();
 	cntr[0] = npta;
-	npta += 2;                            // fluff
+	npta += 2; // fluff
 
-	for( iir=0 ; iir < nint ; iir++)
-	{
+	for (iir = 0; iir < nint; iir++) {
 		int nptr = poly->getInteriorRing(iir)->getNumPoints();
-		cntr[iir+1] = nptr;
+		cntr[iir + 1] = nptr;
 
 		npta += nptr + 2;
 	}
 
-	//    printf("pPoly npta: %d\n", npta);
+	geoPt = (GLdouble*)malloc((npta) * 3 * sizeof(GLdouble)); // vertex array
 
-	geoPt = (GLdouble *)malloc((npta) * 3 * sizeof(GLdouble));     // vertex array
+	// Grow the work buffer if necessary
 
-
-
-	//  Grow the work buffer if necessary
-
-	if((npta * 4) > s_buf_len)
-	{
-		s_pwork_buf = (GLdouble *)realloc(s_pwork_buf, npta * 4 * 2 * sizeof(GLdouble *));
+	if ((npta * 4) > s_buf_len) {
+		s_pwork_buf = (GLdouble*)realloc(s_pwork_buf, npta * 4 * 2 * sizeof(GLdouble*));
 		s_buf_len = npta * 4 * 2;
 	}
 
-
-	//  Define the polygon
+	// Define the polygon
 	gluTessBeginPolygon(GLUtessobj, NULL);
 
+	// Create input structures
 
-	//      Create input structures
-
-	//    Exterior Ring
-	int npte  = poly->getExteriorRing()->getNumPoints();
+	// Exterior Ring
+	int npte = poly->getExteriorRing()->getNumPoints();
 	cntr[0] = npte;
 
-	GLdouble *ppt = geoPt;
+	GLdouble* ppt = geoPt;
 
-
-	//  Check and account for winding direction of ring
+	// Check and account for winding direction of ring
 	bool cw = !(poly->getExteriorRing()->isClockwise() == 0);
 
 	double x0, y0, x, y;
 	OGRPoint p;
 
-	if(cw)
-	{
+	if (cw) {
 		poly->getExteriorRing()->getPoint(0, &p);
 		x0 = p.getX();
 		y0 = p.getY();
-	}
-	else
-	{
-		poly->getExteriorRing()->getPoint(npte-1, &p);
+	} else {
+		poly->getExteriorRing()->getPoint(npte - 1, &p);
 		x0 = p.getX();
 		y0 = p.getY();
 	}
 
-
 	gluTessBeginContour(GLUtessobj);
 
-	//  Transcribe points to vertex array, in proper order with no duplicates
-	//   also, accounting for tess_orient
-	for(ip = 0 ; ip < npte ; ip++)
-	{
+	// Transcribe points to vertex array, in proper order with no duplicates
+	// also, accounting for tess_orient
+	for (ip = 0; ip < npte; ip++) {
 		int pidx;
-		if(cw)
+		if (cw)
 			pidx = npte - ip - 1;
-
 		else
 			pidx = ip;
 
@@ -1155,28 +1097,21 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, 
 		x = p.getX();
 		y = p.getY();
 
-		if((fabs(x-x0) > EQUAL_EPS) || (fabs(y-y0) > EQUAL_EPS))
-		{
-			GLdouble *ppt_temp = ppt;
-			if(tess_orient == TESS_VERT)
-			{
+		if ((fabs(x - x0) > EQUAL_EPS) || (fabs(y - y0) > EQUAL_EPS)) {
+			GLdouble* ppt_temp = ppt;
+			if (tess_orient == TESS_VERT) {
 				*ppt++ = x;
 				*ppt++ = y;
-			}
-			else
-			{
+			} else {
 				*ppt++ = y;
 				*ppt++ = x;
 			}
 
 			*ppt++ = 0.0;
 
-			gluTessVertex( GLUtessobj, ppt_temp, ppt_temp ) ;
-			//printf("tess from pPoly, external vertex %g %g\n", x, y);
+			gluTessVertex(GLUtessobj, ppt_temp, ppt_temp);
 
-
-		}
-		else
+		} else
 			cntr[0]--;
 
 		x0 = x;
@@ -1185,39 +1120,31 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, 
 
 	gluTessEndContour(GLUtessobj);
 
-
-
-
-	//  Now the interior contours
-	for(iir=0 ; iir < nint ; iir++)
-	{
+	// Now the interior contours
+	for (iir = 0; iir < nint; iir++) {
 		gluTessBeginContour(GLUtessobj);
 
 		int npti = poly->getInteriorRing(iir)->getNumPoints();
 
-		//  Check and account for winding direction of ring
+		// Check and account for winding direction of ring
 		bool cw = !(poly->getInteriorRing(iir)->isClockwise() == 0);
 
-		if(!cw)
-		{
+		if (!cw) {
 			poly->getInteriorRing(iir)->getPoint(0, &p);
 			x0 = p.getX();
 			y0 = p.getY();
-		}
-		else
-		{
-			poly->getInteriorRing(iir)->getPoint(npti-1, &p);
+		} else {
+			poly->getInteriorRing(iir)->getPoint(npti - 1, &p);
 			x0 = p.getX();
 			y0 = p.getY();
 		}
 
-		//  Transcribe points to vertex array, in proper order with no duplicates
-		//   also, accounting for tess_orient
-		for(int ip = 0 ; ip < npti ; ip++)
-		{
+		// Transcribe points to vertex array, in proper order with no duplicates
+		// also, accounting for tess_orient
+		for (int ip = 0; ip < npti; ip++) {
 			OGRPoint p;
 			int pidx;
-			if(!cw)                               // interior contours must be cw
+			if (!cw) // interior contours must be cw
 				pidx = npti - ip - 1;
 			else
 				pidx = ip;
@@ -1226,172 +1153,151 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, 
 			x = p.getX();
 			y = p.getY();
 
-			if((fabs(x-x0) > EQUAL_EPS) || (fabs(y-y0) > EQUAL_EPS))
-			{
-				GLdouble *ppt_temp = ppt;
-				if(tess_orient == TESS_VERT)
-				{
+			if ((fabs(x - x0) > EQUAL_EPS) || (fabs(y - y0) > EQUAL_EPS)) {
+				GLdouble* ppt_temp = ppt;
+				if (tess_orient == TESS_VERT) {
 					*ppt++ = x;
 					*ppt++ = y;
-				}
-				else
-				{
+				} else {
 					*ppt++ = y;
 					*ppt++ = x;
 				}
 				*ppt++ = 0.0;
 
-				gluTessVertex( GLUtessobj, ppt_temp, ppt_temp ) ;
+				gluTessVertex(GLUtessobj, ppt_temp, ppt_temp);
 
-				//       printf("tess from Poly, internal vertex %d %g %g\n", ip, x, y);
-
-			}
-			else
-				cntr[iir+1]--;
+			} else
+				cntr[iir + 1]--;
 
 			x0 = x;
 			y0 = y;
-
 		}
 
 		gluTessEndContour(GLUtessobj);
 	}
 
-	//  Store some SM conversion data in static store,
-	//  for callback access
+	// Store some SM conversion data in static store,
+	// for callback access
 	s_ref_lat = ref_lat;
 	s_ref_lon = ref_lon;
 	s_bSENC_SM = bSENC_SM;
 
 	s_bmerc_transform = false;
 
-	//      Ready to kick off the tesselator
+	// Ready to kick off the tesselator
 
 	s_pTPG_Last = NULL;
 	s_pTPG_Head = NULL;
 
 	s_nvmax = 0;
 
-	gluTessEndPolygon(GLUtessobj);          // here it goes
+	gluTessEndPolygon(GLUtessobj); // here it goes
 
-	m_nvertex_max = s_nvmax;               // record largest vertex count, updates in callback
+	m_nvertex_max = s_nvmax; // record largest vertex count, updates in callback
 
+	// Tesselation all done, so...
 
-	//  Tesselation all done, so...
-
-	//  Create the data structures
+	// Create the data structures
 
 	m_ppg_head = new PolyTriGroup;
 	m_ppg_head->m_bSMSENC = s_bSENC_SM;
 
 	m_ppg_head->nContours = ncnt;
 
-	m_ppg_head->pn_vertex = cntr;             // pointer to array of poly vertex counts
+	m_ppg_head->pn_vertex = cntr; // pointer to array of poly vertex counts
 
+	// Transcribe the raw geometry buffer
+	// Converting to float as we go, and
+	// allowing for tess_orient
+	// Also, convert to SM if requested
 
-	//  Transcribe the raw geometry buffer
-	//  Converting to float as we go, and
-	//  allowing for tess_orient
-	//  Also, convert to SM if requested
-
-	nwkb = (npta +1) * 2 * sizeof(float);
-	m_ppg_head->pgroup_geom = (float *)malloc(nwkb);
-	float *vro = m_ppg_head->pgroup_geom;
+	nwkb = (npta + 1) * 2 * sizeof(float);
+	m_ppg_head->pgroup_geom = (float*)malloc(nwkb);
+	float* vro = m_ppg_head->pgroup_geom;
 	ppt = geoPt;
-	float tx,ty;
+	float tx;
+	float ty;
 
-	for(ip = 0 ; ip < npta ; ip++)
-	{
-		if(TESS_HORZ == tess_orient)
-		{
+	for (ip = 0; ip < npta; ip++) {
+		if (TESS_HORZ == tess_orient) {
 			ty = *ppt++;
 			tx = *ppt++;
-		}
-		else
-		{
+		} else {
 			tx = *ppt++;
 			ty = *ppt++;
 		}
 
-		if(bSENC_SM)
-		{
-			//  Calculate SM from chart common reference point
+		if (bSENC_SM) {
+			// Calculate SM from chart common reference point
 			double easting, northing;
 			toSM(ty, tx, ref_lat, ref_lon, &easting, &northing);
-			*vro++ = easting;              // x
-			*vro++ = northing;             // y
-		}
-		else
-		{
-			*vro++ = tx;                  // lon
-			*vro++ = ty;                  // lat
+			*vro++ = easting; // x
+			*vro++ = northing; // y
+		} else {
+			*vro++ = tx; // lon
+			*vro++ = ty; // lat
 		}
 
-		ppt++;                      // skip z
+		ppt++; // skip z
 	}
 
-	m_ppg_head->tri_prim_head = s_pTPG_Head;         // head of linked list of TriPrims
+	m_ppg_head->tri_prim_head = s_pTPG_Head; // head of linked list of TriPrims
 
 	gluDeleteTess(GLUtessobj);
 
-	free( s_pwork_buf );
+	free(s_pwork_buf);
 	s_pwork_buf = NULL;
 
-	free (geoPt);
+	free(geoPt);
 
-	//      Free up any "Combine" vertices created
-	for(unsigned int i = 0; i < s_pCombineVertexArray->size() ; i++)
-		free (s_pCombineVertexArray->Item(i));
-	delete s_pCombineVertexArray;
+	destroy_combined_vertices();
 
 	m_bOK = true;
 
-#endif          //    #ifdef ocpnUSE_GL
+#endif //    #ifdef ocpnUSE_GL
 
 	return 0;
 }
-
 
 int PolyTessGeo::BuildTessGL(void)
 {
 #ifdef ocpnUSE_GL
 
-	int iir, ip;
-	int *cntr;
-	GLdouble *geoPt;
+	int iir;
+	int ip;
+	int* cntr;
+	GLdouble* geoPt;
 
-	wxString    sout;
-	wxString    sout1;
-	wxString    stemp;
-
+	wxString sout;
+	wxString sout1;
+	wxString stemp;
 
 #ifdef __WXMSW__
-	//  If using the OpenGL dlls provided with Windows,
-	//  load the dll and establish addresses of the entry points needed
+	// If using the OpenGL dlls provided with Windows,
+	// load the dll and establish addresses of the entry points needed
 
 #ifdef USE_GLU_DLL
 
-	if(!s_glu_dll_ready)
-	{
-
+	if (!s_glu_dll_ready) {
 
 		s_hGLU_DLL = LoadLibrary("glu32.dll");
-		if (s_hGLU_DLL != NULL)
-		{
-			s_lpfnTessProperty = (LPFNDLLTESSPROPERTY)GetProcAddress(s_hGLU_DLL,"gluTessProperty");
+		if (s_hGLU_DLL != NULL) {
+			s_lpfnTessProperty = (LPFNDLLTESSPROPERTY)GetProcAddress(s_hGLU_DLL, "gluTessProperty");
 			s_lpfnNewTess = (LPFNDLLNEWTESS)GetProcAddress(s_hGLU_DLL, "gluNewTess");
-			s_lpfnTessBeginContour = (LPFNDLLTESSBEGINCONTOUR)GetProcAddress(s_hGLU_DLL, "gluTessBeginContour");
-			s_lpfnTessEndContour = (LPFNDLLTESSENDCONTOUR)GetProcAddress(s_hGLU_DLL, "gluTessEndContour");
-			s_lpfnTessBeginPolygon = (LPFNDLLTESSBEGINPOLYGON)GetProcAddress(s_hGLU_DLL, "gluTessBeginPolygon");
-			s_lpfnTessEndPolygon = (LPFNDLLTESSENDPOLYGON)GetProcAddress(s_hGLU_DLL, "gluTessEndPolygon");
+			s_lpfnTessBeginContour
+				= (LPFNDLLTESSBEGINCONTOUR)GetProcAddress(s_hGLU_DLL, "gluTessBeginContour");
+			s_lpfnTessEndContour
+				= (LPFNDLLTESSENDCONTOUR)GetProcAddress(s_hGLU_DLL, "gluTessEndContour");
+			s_lpfnTessBeginPolygon
+				= (LPFNDLLTESSBEGINPOLYGON)GetProcAddress(s_hGLU_DLL, "gluTessBeginPolygon");
+			s_lpfnTessEndPolygon
+				= (LPFNDLLTESSENDPOLYGON)GetProcAddress(s_hGLU_DLL, "gluTessEndPolygon");
 			s_lpfnDeleteTess = (LPFNDLLDELETETESS)GetProcAddress(s_hGLU_DLL, "gluDeleteTess");
 			s_lpfnTessVertex = (LPFNDLLTESSVERTEX)GetProcAddress(s_hGLU_DLL, "gluTessVertex");
 			s_lpfnTessCallback = (LPFNDLLTESSCALLBACK)GetProcAddress(s_hGLU_DLL, "gluTessCallback");
 
 			s_glu_dll_ready = true;
-		}
-		else
-		{
+		} else {
 			return ERROR_NO_DLL;
 		}
 	}
@@ -1399,91 +1305,75 @@ int PolyTessGeo::BuildTessGL(void)
 #endif
 #endif
 
-
-	//  Allocate a work buffer, which will be grown as needed
+	// Allocate a work buffer, which will be grown as needed
 #define NINIT_BUFFER_LEN 10000
-	s_pwork_buf = (GLdouble *)malloc(NINIT_BUFFER_LEN * 2 * sizeof(GLdouble));
+	s_pwork_buf = (GLdouble*)malloc(NINIT_BUFFER_LEN * 2 * sizeof(GLdouble));
 	s_buf_len = NINIT_BUFFER_LEN * 2;
 	s_buf_idx = 0;
 
-	//    Create an array to hold pointers to allocated vertices created by "combine" callback,
-	//    so that they may be deleted after tesselation.
+	// Create an array to hold pointers to allocated vertices created by "combine" callback,
+	// so that they may be deleted after tesselation.
 	s_pCombineVertexArray = new wxArrayPtrVoid;
 
-	//  Create tesselator
+	// Create tesselator
 	GLUtessobj = gluNewTess();
 
-	//  Register the callbacks
-	gluTessCallback(GLUtessobj, GLU_TESS_BEGIN,   (GLvoid (__CALL_CONVENTION *) ())&beginCallback);
-	gluTessCallback(GLUtessobj, GLU_TESS_BEGIN,   (GLvoid (__CALL_CONVENTION *) ())&beginCallback);
-	gluTessCallback(GLUtessobj, GLU_TESS_VERTEX,  (GLvoid (__CALL_CONVENTION *) ())&vertexCallback);
-	gluTessCallback(GLUtessobj, GLU_TESS_END,     (GLvoid (__CALL_CONVENTION *) ())&endCallback);
-	gluTessCallback(GLUtessobj, GLU_TESS_COMBINE, (GLvoid (__CALL_CONVENTION *) ())&combineCallback);
+	// Register the callbacks
+	gluTessCallback(GLUtessobj, GLU_TESS_BEGIN, (GLvoid(__CALL_CONVENTION*)()) & beginCallback);
+	gluTessCallback(GLUtessobj, GLU_TESS_BEGIN, (GLvoid(__CALL_CONVENTION*)()) & beginCallback);
+	gluTessCallback(GLUtessobj, GLU_TESS_VERTEX, (GLvoid(__CALL_CONVENTION*)()) & vertexCallback);
+	gluTessCallback(GLUtessobj, GLU_TESS_END, (GLvoid(__CALL_CONVENTION*)()) & endCallback);
+	gluTessCallback(GLUtessobj, GLU_TESS_COMBINE, (GLvoid(__CALL_CONVENTION*)()) & combineCallback);
 
-	//    gluTessCallback(GLUtessobj, GLU_TESS_ERROR,   (GLvoid (__CALL_CONVENTION *) ())&errorCallback);
+	gluTessProperty(GLUtessobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_POSITIVE);
 
-	//    glShadeModel(GL_SMOOTH);
-	gluTessProperty(GLUtessobj, GLU_TESS_WINDING_RULE,
-			GLU_TESS_WINDING_POSITIVE );
+	// gluTess algorithm internally selects vertically oriented triangle strips and fans.
+	// This orientation is not optimal for conventional memory-mapped raster display shape filling.
+	// We can "fool" the algorithm by interchanging the x and y vertex values passed to
+	// gluTessVertex
+	// and then reverting x and y on the resulting vertexCallbacks.
+	// In this implementation, we will explicitely set the preferred orientation.
 
-	//  gluTess algorithm internally selects vertically oriented triangle strips and fans.
-	//  This orientation is not optimal for conventional memory-mapped raster display shape filling.
-	//  We can "fool" the algorithm by interchanging the x and y vertex values passed to gluTessVertex
-	//  and then reverting x and y on the resulting vertexCallbacks.
-	//  In this implementation, we will explicitely set the preferred orientation.
+	// Set the preferred orientation
+	tess_orient = TESS_HORZ; // prefer horizontal tristrips
 
-	//Set the preferred orientation
-	tess_orient = TESS_HORZ;                    // prefer horizontal tristrips
+	// Get total number of contours
+	ncnt = m_pxgeom->n_contours;
 
+	// Allocate cntr array
+	cntr = (int*)malloc(ncnt * sizeof(int));
 
-
-	//      Get total number of contours
-	ncnt  = m_pxgeom->n_contours;
-
-	//      Allocate cntr array
-	cntr = (int *)malloc(ncnt * sizeof(int));
-
-	//      Get total number of points(vertices)
-	int npta  = m_pxgeom->contour_array[0];
+	// Get total number of points(vertices)
+	int npta = m_pxgeom->contour_array[0];
 	cntr[0] = npta;
-	npta += 2;                            // fluff
+	npta += 2; // fluff
 
-	for( iir=0 ; iir < ncnt-1 ; iir++)
-	{
-		int nptr = m_pxgeom->contour_array[iir+1];
-		cntr[iir+1] = nptr;
+	for (iir = 0; iir < ncnt - 1; iir++) {
+		int nptr = m_pxgeom->contour_array[iir + 1];
+		cntr[iir + 1] = nptr;
 
-		npta += nptr + 2;             // fluff
+		npta += nptr + 2; // fluff
 	}
 
+	geoPt = (GLdouble*)malloc((npta) * 3 * sizeof(GLdouble)); // vertex array
 
+	// Grow the work buffer if necessary
 
-	//      printf("xgeom npta: %d\n", npta);
-	geoPt = (GLdouble *)malloc((npta) * 3 * sizeof(GLdouble));     // vertex array
-
-
-
-	//  Grow the work buffer if necessary
-
-	if((npta * 4) > s_buf_len)
-	{
-		s_pwork_buf = (GLdouble *)realloc(s_pwork_buf, npta * 4 * 2 * sizeof(GLdouble *));
+	if ((npta * 4) > s_buf_len) {
+		s_pwork_buf = (GLdouble*)realloc(s_pwork_buf, npta * 4 * 2 * sizeof(GLdouble*));
 		s_buf_len = npta * 4 * 2;
 	}
-
 
 	//  Define the polygon
 	gluTessBeginPolygon(GLUtessobj, NULL);
 
+	// Create input structures
 
-	//      Create input structures
-
-	//    Exterior Ring
+	// Exterior Ring
 	int npte = m_pxgeom->contour_array[0];
 	cntr[0] = npte;
 
-	GLdouble *ppt = geoPt;
-
+	GLdouble* ppt = geoPt;
 
 	//  Check and account for winding direction of ring
 	bool cw = true;
@@ -1491,66 +1381,46 @@ int PolyTessGeo::BuildTessGL(void)
 	double x0, y0, x, y;
 	OGRPoint p;
 
-	wxPoint2DDouble *pp = m_pxgeom->vertex_array;
-	pp++;       // skip 0?
+	wxPoint2DDouble* pp = m_pxgeom->vertex_array;
+	pp++; // skip 0?
 
-	if(cw)
-	{
-		//            poly->getExteriorRing()->getPoint(0, &p);
+	if (cw) {
 		x0 = pp->m_x;
 		y0 = pp->m_y;
+	} else {
+		x0 = pp[npte - 1].m_x;
+		y0 = pp[npte - 1].m_y;
 	}
-	else
-	{
-		//            poly->getExteriorRing()->getPoint(npte-1, &p);
-		x0 = pp[npte-1].m_x;
-		y0 = pp[npte-1].m_y;
-		//            x0 = p.getX();
-		//            y0 = p.getY();
-	}
-
-	//      pp++;
 
 	gluTessBeginContour(GLUtessobj);
 
-	//  Transcribe points to vertex array, in proper order with no duplicates
-	//   also, accounting for tess_orient
-	for(ip = 0 ; ip < npte ; ip++)
-	{
+	// Transcribe points to vertex array, in proper order with no duplicates
+	// also, accounting for tess_orient
+	for (ip = 0; ip < npte; ip++) {
 		int pidx;
-		if(cw)
+		if (cw)
 			pidx = npte - ip - 1;
-
 		else
 			pidx = ip;
 
-		//            poly->getExteriorRing()->getPoint(pidx, &p);
 		x = pp[pidx].m_x;
 		y = pp[pidx].m_y;
 
-		//            pp++;
-
-		if((fabs(x-x0) > EQUAL_EPS) || (fabs(y-y0) > EQUAL_EPS))
-		{
-			GLdouble *ppt_temp = ppt;
-			if(tess_orient == TESS_VERT)
-			{
+		if ((fabs(x - x0) > EQUAL_EPS) || (fabs(y - y0) > EQUAL_EPS)) {
+			GLdouble* ppt_temp = ppt;
+			if (tess_orient == TESS_VERT) {
 				*ppt++ = x;
 				*ppt++ = y;
-			}
-			else
-			{
+			} else {
 				*ppt++ = y;
 				*ppt++ = x;
 			}
 
 			*ppt++ = 0.0;
 
-			gluTessVertex( GLUtessobj, ppt_temp, ppt_temp ) ;
-			//printf("tess from xgeom, external vertex %g %g\n", x, y);
+			gluTessVertex(GLUtessobj, ppt_temp, ppt_temp);
 
-		}
-		else
+		} else
 			cntr[0]--;
 
 		x0 = x;
@@ -1559,71 +1429,56 @@ int PolyTessGeo::BuildTessGL(void)
 
 	gluTessEndContour(GLUtessobj);
 
-
 	int index_offset = npte;
 #if 1
-	//  Now the interior contours
-	for(iir=0; iir < ncnt-1; iir++)
-	{
+	// Now the interior contours
+	for (iir = 0; iir < ncnt - 1; iir++) {
 		gluTessBeginContour(GLUtessobj);
 
-		//            int npti = cntr[iir];
-		int npti  = m_pxgeom->contour_array[iir+1];
+		int npti = m_pxgeom->contour_array[iir + 1];
 
-		//  Check and account for winding direction of ring
+		// Check and account for winding direction of ring
 		bool cw = false; //!(poly->getInteriorRing(iir)->isClockwise() == 0);
 
-		if(!cw)
-		{
+		if (!cw) {
 			x0 = pp[index_offset].m_x;
 			y0 = pp[index_offset].m_y;
-		}
-		else
-		{
-			x0 = pp[index_offset + npti-1].m_x;
-			y0 = pp[index_offset + npti-1].m_y;
+		} else {
+			x0 = pp[index_offset + npti - 1].m_x;
+			y0 = pp[index_offset + npti - 1].m_y;
 		}
 
-		//  Transcribe points to vertex array, in proper order with no duplicates
-		//   also, accounting for tess_orient
-		for(int ip = 0 ; ip < npti ; ip++)
-		{
+		// Transcribe points to vertex array, in proper order with no duplicates
+		// also, accounting for tess_orient
+		for (int ip = 0; ip < npti; ip++) {
 			OGRPoint p;
 			int pidx;
-			if(!cw)                               // interior contours must be cw
+			if (!cw) // interior contours must be cw
 				pidx = npti - ip - 1;
 			else
 				pidx = ip;
 
-
 			x = pp[pidx + index_offset].m_x;
 			y = pp[pidx + index_offset].m_y;
 
-			if((fabs(x-x0) > EQUAL_EPS) || (fabs(y-y0) > EQUAL_EPS))
-			{
-				GLdouble *ppt_temp = ppt;
-				if(tess_orient == TESS_VERT)
-				{
+			if ((fabs(x - x0) > EQUAL_EPS) || (fabs(y - y0) > EQUAL_EPS)) {
+				GLdouble* ppt_temp = ppt;
+				if (tess_orient == TESS_VERT) {
 					*ppt++ = x;
 					*ppt++ = y;
-				}
-				else
-				{
+				} else {
 					*ppt++ = y;
 					*ppt++ = x;
 				}
 				*ppt++ = 0.0;
 
-				gluTessVertex( GLUtessobj, ppt_temp, ppt_temp ) ;
-				//      printf("tess from xgeom, internal vertex %d %g %g\n", ip, x, y);
+				gluTessVertex(GLUtessobj, ppt_temp, ppt_temp);
 
-			}
-			else
-				cntr[iir+1]--;
+			} else
+				cntr[iir + 1]--;
 
 			x0 = x;
 			y0 = y;
-
 		}
 
 		gluTessEndContour(GLUtessobj);
@@ -1632,112 +1487,94 @@ int PolyTessGeo::BuildTessGL(void)
 	}
 #endif
 
-	//  Store some SM conversion data in static store,
-	//  for callback access
-	s_bSENC_SM =  false;
+	// Store some SM conversion data in static store,
+	// for callback access
+	s_bSENC_SM = false;
 
 	s_bmerc_transform = true;
-	s_transform_x_rate   =  m_pxgeom->x_rate;
-	s_transform_x_origin =  m_pxgeom->x_offset;
-	s_transform_y_rate   =  m_pxgeom->y_rate;
-	s_transform_y_origin =  m_pxgeom->y_offset;
+	s_transform_x_rate = m_pxgeom->x_rate;
+	s_transform_x_origin = m_pxgeom->x_offset;
+	s_transform_y_rate = m_pxgeom->y_rate;
+	s_transform_y_origin = m_pxgeom->y_offset;
 
-
-	//      Ready to kick off the tesselator
+	// Ready to kick off the tesselator
 
 	s_pTPG_Last = NULL;
 	s_pTPG_Head = NULL;
 
 	s_nvmax = 0;
 
-	gluTessEndPolygon(GLUtessobj);          // here it goes
+	gluTessEndPolygon(GLUtessobj); // here it goes
 
-	m_nvertex_max = s_nvmax;               // record largest vertex count, updates in callback
+	m_nvertex_max = s_nvmax; // record largest vertex count, updates in callback
 
+	// Tesselation all done, so...
 
-	//  Tesselation all done, so...
-
-	//  Create the data structures
+	// Create the data structures
 
 	m_ppg_head = new PolyTriGroup;
 	m_ppg_head->m_bSMSENC = s_bSENC_SM;
 
 	m_ppg_head->nContours = ncnt;
-	m_ppg_head->pn_vertex = cntr;             // pointer to array of poly vertex counts
+	m_ppg_head->pn_vertex = cntr; // pointer to array of poly vertex counts
 
+	// Transcribe the raw geometry buffer
+	// Converting to float as we go, and
+	// allowing for tess_orient
+	// Also, convert to SM if requested
 
-	//  Transcribe the raw geometry buffer
-	//  Converting to float as we go, and
-	//  allowing for tess_orient
-	//  Also, convert to SM if requested
-
-	nwkb = (npta +1) * 2 * sizeof(float);
-	m_ppg_head->pgroup_geom = (float *)malloc(nwkb);
-	float *vro = m_ppg_head->pgroup_geom;
+	nwkb = (npta + 1) * 2 * sizeof(float);
+	m_ppg_head->pgroup_geom = (float*)malloc(nwkb);
+	float* vro = m_ppg_head->pgroup_geom;
 	ppt = geoPt;
-	float tx,ty;
+	float tx;
+	float ty;
 
-	for(ip = 0 ; ip < npta ; ip++)
-	{
-		if(TESS_HORZ == tess_orient)
-		{
+	for (ip = 0; ip < npta; ip++) {
+		if (TESS_HORZ == tess_orient) {
 			ty = *ppt++;
 			tx = *ppt++;
-		}
-		else
-		{
+		} else {
 			tx = *ppt++;
 			ty = *ppt++;
 		}
 
-		if(0/*bSENC_SM*/)
-		{
-			//  Calculate SM from chart common reference point
+		if (0 /*bSENC_SM*/) {
+			// Calculate SM from chart common reference point
 			double easting, northing;
-			//                  toSM(ty, tx, ref_lat, ref_lon, &easting, &northing);
-			*vro++ = easting;              // x
-			*vro++ = northing;             // y
-		}
-		else
-		{
-			*vro++ = tx;                  // lon
-			*vro++ = ty;                  // lat
+			*vro++ = easting; // x
+			*vro++ = northing; // y
+		} else {
+			*vro++ = tx; // lon
+			*vro++ = ty; // lat
 		}
 
-		ppt++;                      // skip z
+		ppt++; // skip z
 	}
 
-	m_ppg_head->tri_prim_head = s_pTPG_Head;         // head of linked list of TriPrims
+	m_ppg_head->tri_prim_head = s_pTPG_Head; // head of linked list of TriPrims
 
 	gluDeleteTess(GLUtessobj);
 
-	free( s_pwork_buf );
+	free(s_pwork_buf);
 	s_pwork_buf = NULL;
 
-	free (geoPt);
+	free(geoPt);
 
-	//    All allocated buffers are owned now by the m_ppg_head
-	//    And will be freed on dtor of this object
+	// All allocated buffers are owned now by the m_ppg_head
+	// And will be freed on dtor of this object
 	delete m_pxgeom;
 
-	//      Free up any "Combine" vertices created
-	for(unsigned int i = 0; i < s_pCombineVertexArray->size() ; i++)
-		free (s_pCombineVertexArray->Item(i));
-	delete s_pCombineVertexArray;
-
+	destroy_combined_vertices();
 
 	m_pxgeom = NULL;
 
 	m_bOK = true;
 
-#endif          //#ifdef ocpnUSE_GL
+#endif
 
 	return 0;
 }
-
-
-
-
 
 // GLU tesselation support functions
 void __CALL_CONVENTION beginCallback(GLenum which)
@@ -1749,7 +1586,7 @@ void __CALL_CONVENTION beginCallback(GLenum which)
 
 void __CALL_CONVENTION endCallback(void)
 {
-	//      Create a TriPrim
+	// Create a TriPrim
 
 	char buf[40];
 
@@ -1836,6 +1673,7 @@ void __CALL_CONVENTION endCallback(void)
 
 			break;
 		}
+
 		default: {
 			sprintf(buf, "....begin Callback  unknown\n");
 			break;
@@ -1845,9 +1683,7 @@ void __CALL_CONVENTION endCallback(void)
 
 void __CALL_CONVENTION vertexCallback(GLvoid* vertex)
 {
-	GLdouble* pointer;
-
-	pointer = (GLdouble*)vertex;
+	GLdouble* pointer = static_cast<GLdouble*>(vertex);
 
 	if (s_buf_idx > s_buf_len - 4) {
 		int new_buf_len = s_buf_len + 100;
@@ -1872,18 +1708,21 @@ void __CALL_CONVENTION vertexCallback(GLvoid* vertex)
 	s_nvcall++;
 }
 
-/*  combineCallback is used to create a new vertex when edges
- *  intersect.
- */
+// combineCallback is used to create a new vertex when edges
+// intersect.
 void __CALL_CONVENTION
 combineCallback(GLdouble coords[3], GLdouble* vertex_data[4], GLfloat weight[4], GLdouble** dataOut)
 {
+	// prevent compiler warnings
+	(void)vertex_data;
+	(void)weight;
+
 	GLdouble* vertex = (GLdouble*)malloc(6 * sizeof(GLdouble));
 
 	vertex[0] = coords[0];
 	vertex[1] = coords[1];
 	vertex[2] = coords[2];
-	vertex[3] = vertex[4] = vertex[5] = 0.; // 01/13/05 bugfix
+	vertex[3] = vertex[4] = vertex[5] = 0.0; // 01/13/05 bugfix
 
 	*dataOut = vertex;
 

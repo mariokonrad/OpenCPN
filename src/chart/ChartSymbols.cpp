@@ -56,6 +56,7 @@ static symbolGraphicsHashMap* symbolGraphicLocations
 	= NULL; // FIXME: this should be part of the class
 
 ChartSymbols::ChartSymbols(void)
+	: plib(NULL)
 {
 }
 

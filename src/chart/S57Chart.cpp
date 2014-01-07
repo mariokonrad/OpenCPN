@@ -1317,7 +1317,7 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 	double xlat, xlon;
 	geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon);
 
-	vp_proposed.set_position(Position(xlon, xlat));
+	vp_proposed.set_position(Position(xlat, xlon));
 
 	return true;
 }

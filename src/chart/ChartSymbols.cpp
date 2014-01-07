@@ -44,7 +44,7 @@ namespace chart {
 wxBitmap ChartSymbols::rasterSymbols;
 int ChartSymbols::rasterSymbolsLoadedColorMapNumber = -1;
 wxString ChartSymbols::configFileDirectory;
-wxArrayPtrVoid * ChartSymbols::colorTables = NULL;
+ChartSymbols::ColorTables ChartSymbols::colorTables;
 
 WX_DECLARE_STRING_HASH_MAP(wxRect, symbolGraphicsHashMap);
 
@@ -63,10 +63,21 @@ ChartSymbols::~ChartSymbols(void)
 {
 }
 
+void ChartSymbols::clear_color_table()
+{
+	for (ColorTables::iterator i = colorTables.begin(); i != colorTables.end(); ++i) {
+		ColorTable* table = *i;
+		table->tableName.clear();
+		table->colors.clear();
+		table->wxColors.clear();
+		delete table;
+	}
+	colorTables.clear();
+}
+
 void ChartSymbols::InitializeGlobals(void)
 {
-	if (!colorTables)
-		colorTables = new wxArrayPtrVoid;
+	clear_color_table();
 	if (!symbolGraphicLocations)
 		symbolGraphicLocations = new symbolGraphicsHashMap;
 	rasterSymbolsLoadedColorMapNumber = -1;
@@ -78,17 +89,7 @@ void ChartSymbols::DeleteGlobals(void)
 	delete symbolGraphicLocations;
 	symbolGraphicLocations = NULL;
 
-	for (unsigned int i = 0; i < colorTables->size(); i++) {
-		ColorTable* ct = static_cast<ColorTable*>(colorTables->Item(i));
-		ct->tableName.clear();
-		ct->colors.clear();
-		ct->wxColors.clear();
-		delete ct;
-	}
-
-	colorTables->Clear();
-	delete colorTables;
-	colorTables = NULL;
+	clear_color_table();
 }
 
 template <typename T>
@@ -129,10 +130,10 @@ void ChartSymbols::ProcessColorTables(TiXmlElement* colortableNodes)
 				wxColour wxcolor(color.R, color.G, color.B);
 				colortable->wxColors[key] = wxcolor;
 			}
-		next:
+next:
 			colorNode = colorNode->NextSiblingElement();
 		}
-		colorTables->Add((void*)colortable);
+		colorTables.push_back(colortable);
 	}
 }
 
@@ -811,7 +812,7 @@ int ChartSymbols::LoadRasterFileForColorTable(int tableNo)
 	if (tableNo == rasterSymbolsLoadedColorMapNumber)
 		return true;
 
-	ColorTable* coltab = static_cast<ColorTable*>(colorTables->Item(tableNo));
+	ColorTable* coltab = colorTables.at(tableNo);
 
 	wxString filename = configFileDirectory + wxFileName::GetPathSeparator()
 						+ coltab->rasterFileName;
@@ -829,24 +830,25 @@ int ChartSymbols::LoadRasterFileForColorTable(int tableNo)
 	return false;
 }
 
-// Convenience method for old s52plib code.
-wxArrayPtrVoid* ChartSymbols::GetColorTables()
+void ChartSymbols::add(ColorTable* table)
 {
-	return colorTables;
+	if (!table)
+		return;
+
+	colorTables.push_back(table);
 }
 
 S52color* ChartSymbols::GetColor(const char* colorName, int fromTable)
 {
 	wxString key(colorName, wxConvUTF8, 5);
-	ColorTable* colortable = static_cast<ColorTable*>(colorTables->Item(fromTable));
+	ColorTable* colortable = colorTables.at(fromTable);
 	return &(colortable->colors[key]);
 }
 
 wxColor ChartSymbols::GetwxColor(const wxString& colorName, int fromTable)
 {
-	ColorTable* colortable = static_cast<ColorTable*>(colorTables->Item(fromTable));
-	wxColor c = colortable->wxColors[colorName];
-	return c;
+	ColorTable* colortable = colorTables.at(fromTable);
+	return colortable->wxColors[colorName];
 }
 
 wxColor ChartSymbols::GetwxColor(const char* colorName, int fromTable)
@@ -857,8 +859,8 @@ wxColor ChartSymbols::GetwxColor(const char* colorName, int fromTable)
 
 int ChartSymbols::FindColorTable(const wxString& tableName)
 {
-	for (unsigned int i = 0; i < colorTables->size(); i++) {
-		ColorTable* ct = static_cast<ColorTable*>(colorTables->Item(i));
+	for (unsigned int i = 0; i < colorTables.size(); i++) {
+		const ColorTable* ct = colorTables.at(i);
 		if (tableName.IsSameAs(ct->tableName)) {
 			return i;
 		}

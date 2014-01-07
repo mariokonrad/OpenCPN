@@ -59,7 +59,6 @@ private:
 	char buffer[MAX_BUF];
 	char* pBuf;
 	s52plib* plib;
-	wxArrayPtrVoid* ColorTableArray;
 	int m_LUPSequenceNumber;
 };
 

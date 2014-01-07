@@ -37,7 +37,6 @@ namespace chart {
 
 RazdsParser::RazdsParser()
 {
-	ColorTableArray = ChartSymbols::GetColorTables();
 	pBuf = buffer;
 }
 
@@ -111,8 +110,7 @@ int RazdsParser::ParseCOLS(FILE* fp)
 	// get color table name
 	ChopS52Line(pBuf, '\0');
 	ColorTable* ct = new ColorTable(wxString(pBuf + 19, wxConvUTF8));
-
-	ColorTableArray->Add((void*)ct);
+	ChartSymbols::add(ct);
 
 	// read color
 	int ret = ReadS52Line(pBuf, NEWLN, 0, fp);

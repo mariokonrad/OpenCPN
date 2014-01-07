@@ -24,6 +24,8 @@
 #ifndef __CHART__CHARTSYMBOLS__H__
 #define __CHART__CHARTSYMBOLS__H__
 
+#include <vector>
+
 #include <chart/s52plib.h>
 #include <chart/Lookup.h>
 #include <chart/SymbolSizeInfo.h>
@@ -34,6 +36,8 @@
 #include <tinyxml/tinyxml.h>
 
 namespace chart {
+
+class ColorTable;
 
 // FIXME: this is essentially a singleton, but not implemented as one...
 class ChartSymbols
@@ -46,7 +50,7 @@ public:
 	static void InitializeGlobals(void);
 	static void DeleteGlobals(void);
 	static int LoadRasterFileForColorTable(int tableNo);
-	static wxArrayPtrVoid* GetColorTables();
+	static void add(ColorTable*);
 	static int FindColorTable(const wxString& tableName);
 	static S52color* GetColor(const char* colorName, int fromTable);
 	static wxColor GetwxColor(const wxString& colorName, int fromTable);
@@ -70,7 +74,11 @@ private:
 	static wxBitmap rasterSymbols;
 	static int rasterSymbolsLoadedColorMapNumber;
 	static wxString configFileDirectory;
-	static wxArrayPtrVoid* colorTables;
+
+	static void clear_color_table();
+
+	typedef std::vector<ColorTable*> ColorTables;
+	static ColorTables colorTables;
 
 	s52plib* plib;
 };

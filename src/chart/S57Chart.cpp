@@ -100,6 +100,38 @@ static int s_bInS57; // Exclusion flag to prvent recursion in this class init ca
 
 int s_cnt;
 
+struct LightComparison
+{
+	bool operator()(const S57Light* l1, const S57Light* l2) const
+	{
+		int positionDiff = l1->position.Cmp(l2->position);
+		if (positionDiff != 0)
+			return true;
+
+		int attrIndex1 = l1->attributeNames.Index(_T("SECTR1"));
+		int attrIndex2 = l2->attributeNames.Index(_T("SECTR1"));
+
+		// This should put Lights without sectors last in the list.
+		if (attrIndex1 == wxNOT_FOUND && attrIndex2 == wxNOT_FOUND)
+			return false;
+		if (attrIndex1 != wxNOT_FOUND && attrIndex2 == wxNOT_FOUND)
+			return false;
+		if (attrIndex1 == wxNOT_FOUND && attrIndex2 != wxNOT_FOUND)
+			return true;
+
+		double angle1;
+		double angle2;
+		l1->attributeValues.Item(attrIndex1).ToDouble(&angle1);
+		l2->attributeValues.Item(attrIndex2).ToDouble(&angle2);
+
+		if (angle1 == angle2)
+			return false;
+		if (angle1 > angle2)
+			return true;
+		return false;
+	}
+};
+
 S57Obj::S57Obj()
 {
 	att_array = NULL;
@@ -5817,37 +5849,6 @@ wxString s57chart::GetObjectAttributeValueAsString(S57Obj* obj, int iatt, wxStri
 	return value;
 }
 
-int s57chart::CompareLights(const void** l1ptr, const void** l2ptr)
-{
-	chart::S57Light l1 = *(chart::S57Light*)*l1ptr;
-	chart::S57Light l2 = *(chart::S57Light*)*l2ptr;
-
-	int positionDiff = l1.position.Cmp(l2.position);
-	if (positionDiff != 0)
-		return positionDiff;
-
-	double angle1, angle2;
-	int attrIndex1 = l1.attributeNames.Index(_T("SECTR1"));
-	int attrIndex2 = l2.attributeNames.Index(_T("SECTR1"));
-
-	// This should put Lights without sectors last in the list.
-	if (attrIndex1 == wxNOT_FOUND && attrIndex2 == wxNOT_FOUND)
-		return 0;
-	if (attrIndex1 != wxNOT_FOUND && attrIndex2 == wxNOT_FOUND)
-		return -1;
-	if (attrIndex1 == wxNOT_FOUND && attrIndex2 != wxNOT_FOUND)
-		return 1;
-
-	l1.attributeValues.Item(attrIndex1).ToDouble(&angle1);
-	l2.attributeValues.Item(attrIndex2).ToDouble(&angle2);
-
-	if (angle1 == angle2)
-		return 0;
-	if (angle1 > angle2)
-		return 1;
-	return -1;
-}
-
 wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 {
 	wxString ret_val;
@@ -5860,7 +5861,7 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 	wxString objText;
 	wxString lightsHtml;
 	wxString positionString;
-	wxArrayPtrVoid lights; // FIXME: use std container
+	std::vector<chart::S57Light*> lights;
 	chart::S57Light* curLight = NULL;
 
 	for (ListOfObjRazRules::reverse_iterator node = rule_list->rbegin(); node != rule_list->rend(); ++node) {
@@ -5945,7 +5946,7 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 				curLight = new chart::S57Light;
 				curLight->position = positionString;
 				curLight->hasSectors = false;
-				lights.Add(curLight);
+				lights.push_back(curLight);
 			}
 		}
 
@@ -6036,17 +6037,17 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 		}
 	}
 
-	if (lights.Count() > 0) {
+	if (lights.size() > 0) {
 
 		// For lights we now have all the info gathered but no HTML output yet, now
 		// run through the data and build a merged table for all lights.
 
-		lights.Sort((CMPFUNC_wxArraywxArrayPtrVoid)(&s57chart::CompareLights));
+		std::sort(lights.begin(), lights.end(), LightComparison());
 
 		wxString lastPos;
 
-		for (unsigned int curLightNo = 0; curLightNo < lights.Count(); curLightNo++) {
-			chart::S57Light* thisLight = (chart::S57Light*)lights.Item(curLightNo);
+		for (unsigned int curLightNo = 0; curLightNo < lights.size(); curLightNo++) {
+			chart::S57Light* thisLight = lights.at(curLightNo);
 			int attrIndex;
 
 			if (thisLight->position != lastPos) {
@@ -6158,7 +6159,7 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 		lightsHtml << _T("</table><hr noshade>\n");
 		ret_val = lightsHtml << ret_val;
 
-		lights.Clear();
+		lights.clear();
 	}
 
 	return ret_val;

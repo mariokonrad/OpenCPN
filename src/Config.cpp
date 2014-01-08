@@ -1047,7 +1047,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 #ifdef USE_S57
 	// S57 Object Class Visibility
 
-	chart::OBJLElement* pOLE;
 
 	SetPath(_T("/Settings/ObjectFilter"));
 
@@ -1068,8 +1067,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 				bool bNeedNew = true;
 
 				if (str.StartsWith(_T("viz"), &sObj)) {
-					for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-						pOLE = static_cast<chart::OBJLElement*>(ps52plib->pOBJLArray->Item(iPtr));
+					for (unsigned int iPtr = 0; iPtr < ps52plib->OBJLArray.size(); ++iPtr) {
+						chart::OBJLElement* pOLE = static_cast<chart::OBJLElement*>(ps52plib->OBJLArray.at(iPtr));
 						if (!strncmp(pOLE->OBJLName, sObj.mb_str(), 6)) {
 							pOLE->nViz = val;
 							bNeedNew = false;
@@ -1078,11 +1077,10 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 					}
 
 					if (bNeedNew) {
-						pOLE = static_cast<chart::OBJLElement*>(calloc(sizeof(chart::OBJLElement), 1));
+						chart::OBJLElement* pOLE = static_cast<chart::OBJLElement*>(calloc(sizeof(chart::OBJLElement), 1));
 						strncpy(pOLE->OBJLName, sObj.mb_str(), 6);
 						pOLE->nViz = 1;
-
-						ps52plib->pOBJLArray->Add(pOLE);
+						ps52plib->OBJLArray.push_back(pOLE);
 					}
 				}
 				bCont = pConfig->GetNextEntry(str, dummy);
@@ -1699,8 +1697,8 @@ void Config::UpdateSettings()
 
 #ifdef USE_S57
 	if (ps52plib) {
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-			chart::OBJLElement* pOLE = reinterpret_cast<chart::OBJLElement*>(ps52plib->pOBJLArray->Item(iPtr));
+		for (unsigned int iPtr = 0; iPtr < ps52plib->OBJLArray.size(); ++iPtr) {
+			chart::OBJLElement* pOLE = ps52plib->OBJLArray.at(iPtr);
 
 			wxString st1(_T("viz"));
 			char name[7];

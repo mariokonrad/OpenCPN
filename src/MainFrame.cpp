@@ -1997,8 +1997,8 @@ bool MainFrame::ToggleLights(bool doToggle, bool temporary)
 	using namespace chart;
 
 	if (ps52plib) {
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+		for (unsigned int iPtr = 0; iPtr < ps52plib->OBJLArray.size(); ++iPtr) {
+			OBJLElement* pOLE = ps52plib->OBJLArray.at(iPtr);
 			if (!strncmp(pOLE->OBJLName, "LIGHTS", 6)) {
 				oldstate = pOLE->nViz != 0;
 				if (doToggle)
@@ -2026,15 +2026,15 @@ void MainFrame::ToggleRocks(void)
 		int vis = 0;
 		// Need to loop once for UWTROC, which is our "master", then for
 		// other categories, since order is unknown?
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+		for (unsigned int iPtr = 0; iPtr < ps52plib->OBJLArray.size(); ++iPtr) {
+			OBJLElement* pOLE = ps52plib->OBJLArray.at(iPtr);
 			if (!strncmp(pOLE->OBJLName, "UWTROC", 6)) {
 				pOLE->nViz = !pOLE->nViz;
 				vis = pOLE->nViz;
 			}
 		}
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+		for (unsigned int iPtr = 0; iPtr < ps52plib->OBJLArray.size(); ++iPtr) {
+			OBJLElement* pOLE = ps52plib->OBJLArray.at(iPtr);
 			if (!strncmp(pOLE->OBJLName, "OBSTRN", 6)) {
 				pOLE->nViz = vis;
 			}
@@ -2057,8 +2057,8 @@ void MainFrame::ToggleAnchor(void)
 		int vis = 0;
 		// Need to loop once for SBDARE, which is our "master", then for
 		// other categories, since order is unknown?
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+		for (unsigned int iPtr = 0; iPtr < ps52plib->OBJLArray.size(); ++iPtr) {
+			OBJLElement* pOLE = ps52plib->OBJLArray.at(iPtr);
 			if (!strncmp(pOLE->OBJLName, "SBDARE", 6)) {
 				pOLE->nViz = !pOLE->nViz;
 				vis = pOLE->nViz;
@@ -2068,8 +2068,8 @@ void MainFrame::ToggleAnchor(void)
 		static const char* categories[] = { "ACHBRT", "ACHARE", "CBLSUB", "PIPARE", "PIPSOL", "TUNNEL" };
 		unsigned int num = sizeof(categories) / sizeof(categories[0]);
 		unsigned int cnt = 0;
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-			OBJLElement* pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+		for (unsigned int iPtr = 0; iPtr < ps52plib->OBJLArray.size(); ++iPtr) {
+			OBJLElement* pOLE = ps52plib->OBJLArray.at(iPtr);
 			for (unsigned int c = 0; c < num; c++) {
 				if (!strncmp(pOLE->OBJLName, categories[c], 6)) {
 					pOLE->nViz = vis;

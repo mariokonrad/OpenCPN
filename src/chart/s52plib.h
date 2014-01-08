@@ -268,7 +268,9 @@ public:
 
 	wxArrayOfLUPrec* condSymbolLUPArray; // Dynamic Conditional Symbology
 
-	wxArrayPtrVoid* pOBJLArray; // Used for Display Filtering
+	typedef std::vector<OBJLElement*> OBJLContainer;
+	OBJLContainer OBJLArray; // Used for Display Filtering
+
 	std::vector<wxString> OBJLDescriptions;
 
 	RuleHash* _symb_sym; // symbol symbolisation rules

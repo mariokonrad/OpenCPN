@@ -2720,7 +2720,7 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 	// Borrow the OBJLArray temporarily to set the object type visibility for this render
 	// First, make a copy for the curent OBJLArray viz settings, setting current value to invisible
 
-	unsigned int OBJLCount = ps52plib->pOBJLArray->size();
+	unsigned int OBJLCount = ps52plib->OBJLArray.size();
 	int* psave_viz = (int*)malloc(OBJLCount * sizeof(int));
 
 	int* psvr = psave_viz;
@@ -2728,7 +2728,7 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 	unsigned int iPtr;
 
 	for (iPtr = 0; iPtr < OBJLCount; iPtr++) {
-		pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+		pOLE = ps52plib->OBJLArray.at(iPtr);
 		*psvr++ = pOLE->nViz;
 		pOLE->nViz = 0;
 	}
@@ -2738,7 +2738,7 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 
 	// Now, set up what I want for this render
 	for (iPtr = 0; iPtr < OBJLCount; iPtr++) {
-		pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+		pOLE = ps52plib->OBJLArray.at(iPtr);
 		if (!strncmp(pOLE->OBJLName, "LNDARE", 6))
 			pOLE->nViz = 1;
 		if (!strncmp(pOLE->OBJLName, "DEPARE", 6))
@@ -2769,7 +2769,7 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 	// Restore the plib to previous state
 	psvr = psave_viz;
 	for (iPtr = 0; iPtr < OBJLCount; iPtr++) {
-		pOLE = (OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+		pOLE = ps52plib->OBJLArray.at(iPtr);
 		pOLE->nViz = *psvr++;
 	}
 

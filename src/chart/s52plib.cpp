@@ -115,8 +115,8 @@ static int CompareLUPObjects(LUPrec* item1, LUPrec* item2)
 //-----------------------------------------------------------------------------
 LUPArrayContainer::LUPArrayContainer()
 {
-	//   Build the initially empty sorted arrays of LUP Records, per LUP type.
-	//   Sorted on object name, e.g. ACHARE.  Why sorted?  Helps in the S52_LUPLookup method....
+	// Build the initially empty sorted arrays of LUP Records, per LUP type.
+	// Sorted on object name, e.g. ACHARE.  Why sorted?  Helps in the S52_LUPLookup method....
 	LUPArray = new wxArrayOfLUPrec(CompareLUPObjects);
 }
 
@@ -143,7 +143,7 @@ LUPHashIndex* LUPArrayContainer::GetArrayIndexHelper(const char* objectName)
 	LUPArrayIndexHash::iterator it = IndexHash.find(key);
 
 	if (it == IndexHash.end()) {
-		//      Key not found, needs to be added
+		// Key not found, needs to be added
 		LUPHashIndex* pindex = (LUPHashIndex*)malloc(sizeof(LUPHashIndex));
 		pindex->n_start = -1;
 		pindex->count = 0;
@@ -198,8 +198,6 @@ s52plib::s52plib(const wxString& PLib, bool b_forceLegacy)
 {
 	m_plib_file = PLib;
 
-	pOBJLArray = new wxArrayPtrVoid;
-
 	condSymbolLUPArray = NULL; // Dynamic Conditional Symbology
 
 	_symb_sym = NULL;
@@ -218,7 +216,7 @@ s52plib::s52plib(const wxString& PLib, bool b_forceLegacy)
 	_symb_symR = NULL;
 	bUseRasterSym = false;
 
-	//      Sensible defaults
+	// Sensible defaults
 	m_nSymbolStyle = PAPER_CHART;
 	m_nBoundaryStyle = PLAIN_BOUNDARIES;
 	m_nDisplayCategory = OTHER;
@@ -264,10 +262,9 @@ s52plib::~s52plib()
 	S52_flush_Plib();
 
 	// Free the OBJL Array Elements
-	for (unsigned int iPtr = 0; iPtr < pOBJLArray->size(); iPtr++)
-		free(pOBJLArray->Item(iPtr));
-
-	delete pOBJLArray;
+	for (unsigned int iPtr = 0; iPtr < OBJLArray.size(); ++iPtr)
+		free(OBJLArray.at(iPtr));
+	OBJLArray.clear();
 
 	delete[] ledge;
 	delete[] redge;
@@ -3873,8 +3870,8 @@ bool s52plib::PreloadOBJLFromCSV(const wxString& csv_file)
 			//    Filter out any duplicates, in a case insensitive way
 			//    i.e. only the first of "DEPARE" and "depare" is added
 			bool bdup = false;
-			for (unsigned int iPtr = 0; iPtr < pOBJLArray->size(); iPtr++) {
-				OBJLElement* pOLEt = (OBJLElement*)(pOBJLArray->Item(iPtr));
+			for (unsigned int iPtr = 0; iPtr < OBJLArray.size(); ++iPtr) {
+				OBJLElement* pOLEt = OBJLArray.at(iPtr);
 				if (!token.CmpNoCase(wxString(pOLEt->OBJLName, wxConvUTF8))) {
 					bdup = true;
 					break;
@@ -3888,8 +3885,7 @@ bool s52plib::PreloadOBJLFromCSV(const wxString& csv_file)
 					strncpy(pOLE->OBJLName, buffer.data(), 6);
 					pOLE->nViz = 0;
 
-					pOBJLArray->Add((void*)pOLE);
-
+					OBJLArray.push_back(pOLE);
 					OBJLDescriptions.push_back(description);
 				}
 			}
@@ -3903,10 +3899,9 @@ void s52plib::UpdateOBJLArray(S57Obj* obj)
 	// Search the array for this object class
 
 	bool bNeedNew = true;
-	OBJLElement* pOLE;
 
-	for (unsigned int iPtr = 0; iPtr < pOBJLArray->size(); iPtr++) {
-		pOLE = (OBJLElement*)(pOBJLArray->Item(iPtr));
+	for (unsigned int iPtr = 0; iPtr < OBJLArray.size(); ++iPtr) {
+		OBJLElement* pOLE = OBJLArray.at(iPtr);
 		if (!strncmp(pOLE->OBJLName, obj->FeatureName, 6)) {
 			obj->iOBJL = iPtr;
 			bNeedNew = false;
@@ -3916,12 +3911,12 @@ void s52plib::UpdateOBJLArray(S57Obj* obj)
 
 	// Not found yet, so add an element
 	if (bNeedNew) {
-		pOLE = (OBJLElement*)calloc(sizeof(OBJLElement), 1);
+		OBJLElement* pOLE = (OBJLElement*)calloc(sizeof(OBJLElement), 1);
 		strncpy(pOLE->OBJLName, obj->FeatureName, 6);
 		pOLE->nViz = 1;
 
-		pOBJLArray->Add((void*)pOLE);
-		obj->iOBJL = pOBJLArray->size() - 1;
+		OBJLArray.push_back(pOLE);
+		obj->iOBJL = OBJLArray.size() - 1;
 	}
 }
 
@@ -3941,7 +3936,7 @@ int s52plib::SetLineFeaturePriority(ObjRazRules* rzRules, int npriority)
 		if (-1 == rzRules->obj->iOBJL)
 			UpdateOBJLArray(rzRules->obj);
 
-		if (!((OBJLElement*)(pOBJLArray->Item(rzRules->obj->iOBJL)))->nViz)
+		if (!OBJLArray.at(rzRules->obj->iOBJL)->nViz)
 			b_catfilter = false;
 	}
 
@@ -6149,7 +6144,7 @@ bool s52plib::ObjectRenderCheckCat(ObjRazRules* rzRules, const ViewPort& vp)
 		if (-1 == rzRules->obj->iOBJL)
 			UpdateOBJLArray(rzRules->obj);
 
-		if (!((OBJLElement*)(pOBJLArray->Item(rzRules->obj->iOBJL)))->nViz)
+		if (!OBJLArray.at(rzRules->obj->iOBJL)->nViz)
 			b_catfilter = false;
 	} else if (m_nDisplayCategory == OTHER) {
 		if ((DISPLAYBASE != obj_cat) && (STANDARD != obj_cat) && (OTHER != obj_cat)) {
@@ -6165,7 +6160,7 @@ bool s52plib::ObjectRenderCheckCat(ObjRazRules* rzRules, const ViewPort& vp)
 		}
 	}
 
-	//  Soundings override
+	// Soundings override
 	if (!strncmp(rzRules->LUP->OBCL, "SOUNDG", 6))
 		b_catfilter = m_bShowSoundg;
 

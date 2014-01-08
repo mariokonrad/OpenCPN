@@ -2098,8 +2098,8 @@ void options::SetInitialSettings()
 		ps57CtlListBox->Clear();
 		marinersStdXref.clear();
 
-		for (unsigned int iPtr = 0; iPtr < ps52plib->pOBJLArray->size(); iPtr++) {
-			chart::OBJLElement* pOLE = (chart::OBJLElement*)(ps52plib->pOBJLArray->Item(iPtr));
+		for (unsigned int iPtr = 0; iPtr < ps52plib->OBJLArray.size(); ++iPtr) {
+			chart::OBJLElement* pOLE = ps52plib->OBJLArray.at(iPtr);
 			wxString item;
 			if (iPtr < ps52plib->OBJLDescriptions.size()) {
 				item = ps52plib->OBJLDescriptions[iPtr];
@@ -2719,7 +2719,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 				break;
 			}
 		}
-		chart::OBJLElement* pOLE = (chart::OBJLElement*)(ps52plib->pOBJLArray->Item(itemIndex));
+		chart::OBJLElement* pOLE = ps52plib->OBJLArray.at(itemIndex);
 		pOLE->nViz = ps57CtlListBox->IsChecked(iPtr);
 	}
 

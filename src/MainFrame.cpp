@@ -48,6 +48,10 @@
 	#include <psapi.h>
 #endif
 
+#ifndef __WXMSW__
+	#include <signal.h>
+#endif
+
 #include <algorithm>
 
 #include "MainFrame.h"

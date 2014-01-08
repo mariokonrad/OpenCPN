@@ -282,6 +282,103 @@ s52plib::~s52plib()
 	delete HPGL;
 }
 
+void s52plib::SetPPMM(float ppmm)
+{
+	canvas_pix_per_mm = ppmm;
+}
+
+float s52plib::GetPPMM() const
+{
+	return canvas_pix_per_mm;
+}
+
+long s52plib::GetStateHash() const
+{
+	return m_state_hash;
+}
+
+wxString s52plib::GetPLIBColorScheme(void)
+{
+	return m_ColorScheme;
+}
+
+void s52plib::SaveColorScheme(void)
+{
+	m_colortable_index_save = m_colortable_index;
+}
+
+void s52plib::RestoreColorScheme(void)
+{
+}
+
+bool s52plib::GetShowSoundings() const
+{
+	return m_bShowSoundg;
+}
+
+void s52plib::SetShowSoundings(bool f)
+{
+	m_bShowSoundg = f;
+	GenerateStateHash();
+}
+
+bool s52plib::GetShowS57Text() const
+{
+	return m_bShowS57Text;
+}
+
+void s52plib::SetShowS57Text(bool f)
+{
+	m_bShowS57Text = f;
+	GenerateStateHash();
+}
+
+bool s52plib::GetShowS57ImportantTextOnly() const
+{
+	return m_bShowS57ImportantTextOnly;
+}
+
+void s52plib::SetShowS57ImportantTextOnly(bool f)
+{
+	m_bShowS57ImportantTextOnly = f;
+	GenerateStateHash();
+}
+
+int s52plib::GetMajorVersion(void) const
+{
+	return m_VersionMajor;
+}
+
+int s52plib::GetMinorVersion(void) const
+{
+	return m_VersionMinor;
+}
+
+void s52plib::SetTextOverlapAvoid(bool f)
+{
+	m_bDeClutterText = f;
+}
+
+void s52plib::SetShowNationalText(bool f)
+{
+	m_bShowNationalTexts = f;
+}
+
+void s52plib::SetShowAtonText(bool f)
+{
+	m_bShowAtonText = f;
+}
+
+void s52plib::SetShowLdisText(bool f)
+{
+	m_bShowLdisText = f;
+}
+
+void s52plib::SetExtendLightSectors(bool f)
+{
+	m_bExtendLightSectors = f;
+}
+
 void s52plib::DestroyLUP(LUPrec* pLUP)
 {
 	Rules* top = pLUP->ruleList;
@@ -553,13 +650,13 @@ LUPrec* s52plib::FindBestLUP(wxArrayOfLUPrec* LUPArray, unsigned int startIndex,
 	}
 
 check_LUP:
-	//  In strict mode, we require at least one attribute to match exactly
+	// In strict mode, we require at least one attribute to match exactly
 
 	if (bStrict) {
 		if (nATTMatch == 0) // nothing matched
 			LUP = NULL;
 	} else {
-		//      If no match found, return the first LUP in the list which has no attributes
+		// If no match found, return the first LUP in the list which has no attributes
 		if (!bmatch_found) {
 			for (unsigned int j = 0; j < count; ++j) {
 				LUPrec* LUPtmp = NULL;
@@ -590,7 +687,7 @@ Rules* s52plib::StringToRules(const wxString& str_in)
 	Rules* last;
 	char strk[20];
 
-	//    Allocate and pre-clear the Rules structure
+	// Allocate and pre-clear the Rules structure
 	Rules* r = (Rules*)calloc(1, sizeof(Rules));
 	top = r;
 	last = top;
@@ -789,7 +886,7 @@ int s52plib::S52_load_Plib(const wxString& PLib, bool b_forceLegacy)
 {
 	pAlloc = new wxArrayPtrVoid;
 
-	//   Create the Rule Lookup Hash Tables
+	// Create the Rule Lookup Hash Tables
 	_line_sym = new RuleHash; // line
 	_patt_sym = new RuleHash; // pattern
 	_symb_sym = new RuleHash; // symbol

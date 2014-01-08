@@ -37,7 +37,6 @@ class wxGLContext;
 #endif
 
 #include <wx/dcgraph.h>
-
 #include <wx/hashmap.h>
 
 class ViewPort;
@@ -48,9 +47,7 @@ namespace chart {
 class RuleHash;
 
 WX_DECLARE_HASH_MAP(wxString, Rule*, wxStringHash, wxStringEqual, RuleHash);
-
 WX_DEFINE_SORTED_ARRAY(LUPrec*, wxArrayOfLUPrec);
-
 WX_DECLARE_STRING_HASH_MAP(int, CARC_Hash);
 
 // FIXME: copied code, separate
@@ -70,44 +67,47 @@ WX_DECLARE_STRING_HASH_MAP(int, CARC_Hash);
 #define TXF_FORMAT_BYTE       0
 #define TXF_FORMAT_BITMAP     1
 
-typedef struct {
-    unsigned short c; /* Potentially support 16-bit glyphs. */
-    unsigned char width;
-    unsigned char height;
-    signed char xoffset;
-    signed char yoffset;
-    signed char advance;
-    char dummy; /* Space holder for alignment reasons. */
-    short x;
-    short y;
-} TexGlyphInfo;
+struct TexGlyphInfo
+{
+	unsigned short c; // Potentially support 16-bit glyphs.
+	unsigned char width;
+	unsigned char height;
+	signed char xoffset;
+	signed char yoffset;
+	signed char advance;
+	char dummy; // Space holder for alignment reasons.
+	short x;
+	short y;
+};
 
-typedef struct {
-    GLfloat t0[2];
-    GLshort v0[2];
-    GLfloat t1[2];
-    GLshort v1[2];
-    GLfloat t2[2];
-    GLshort v2[2];
-    GLfloat t3[2];
-    GLshort v3[2];
-    GLfloat advance;
-} TexGlyphVertexInfo;
+struct TexGlyphVertexInfo
+{
+	GLfloat t0[2];
+	GLshort v0[2];
+	GLfloat t1[2];
+	GLshort v1[2];
+	GLfloat t2[2];
+	GLshort v2[2];
+	GLfloat t3[2];
+	GLshort v3[2];
+	GLfloat advance;
+};
 
-typedef struct {
-    GLuint texobj;
-    int tex_width;
-    int tex_height;
-    int max_ascent;
-    int max_descent;
-    int num_glyphs;
-    int min_glyph;
-    int range;
-    unsigned char *teximage;
-    TexGlyphInfo *tgi;
-    TexGlyphVertexInfo *tgvi;
-    TexGlyphVertexInfo **lut;
-} TexFont;
+struct TexFont
+{
+	GLuint texobj;
+	int tex_width;
+	int tex_height;
+	int max_ascent;
+	int max_descent;
+	int num_glyphs;
+	int min_glyph;
+	int range;
+	unsigned char* teximage;
+	TexGlyphInfo* tgi;
+	TexGlyphVertexInfo* tgvi;
+	TexGlyphVertexInfo** lut;
+};
 
 #endif /* __TEXFONT_H__ */
 
@@ -122,27 +122,31 @@ class RenderFromHPGL;
 //-----------------------------------------------------------------------------
 //      LUP Array container, and friends
 //-----------------------------------------------------------------------------
-typedef struct _LUPHashIndex {
-    int n_start;
-    int count;
-} LUPHashIndex;
+struct LUPHashIndex
+{
+	int n_start;
+	int count;
+};
 
-WX_DECLARE_STRING_HASH_MAP( LUPHashIndex*, LUPArrayIndexHash );
+WX_DECLARE_STRING_HASH_MAP(LUPHashIndex*, LUPArrayIndexHash);
 
 class LUPArrayContainer // FIXME: separate
 {
 public:
-    LUPArrayContainer();
-    ~LUPArrayContainer();
+	LUPArrayContainer();
+	~LUPArrayContainer();
 
-    wxArrayOfLUPrec     *GetLUPArray(void){ return LUPArray; }
-    LUPHashIndex        *GetArrayIndexHelper( const char *objectName );
+	wxArrayOfLUPrec* GetLUPArray(void)
+	{
+		return LUPArray;
+	}
+
+	LUPHashIndex* GetArrayIndexHelper(const char* objectName);
 
 private:
-    wxArrayOfLUPrec             *LUPArray;          // Sorted Array
-    LUPArrayIndexHash           IndexHash;
+	wxArrayOfLUPrec* LUPArray; // Sorted Array
+	LUPArrayIndexHash IndexHash;
 };
-
 
 //-----------------------------------------------------------------------------
 //    s52plib definition
@@ -151,60 +155,39 @@ private:
 class s52plib
 {
 public:
-     s52plib( const wxString& PLib, bool b_forceLegacy = false );
-    ~s52plib();
+	s52plib(const wxString& PLib, bool b_forceLegacy = false);
+	~s52plib();
 
-    void SetPPMM(float ppmm)
-	{
-		canvas_pix_per_mm = ppmm;
-	}
+	void SetPPMM(float ppmm);
+	float GetPPMM() const;
 
-    float GetPPMM() const
-	{
-		return canvas_pix_per_mm;
-	}
+	LUPrec* S52_LUPLookup(LUPname LUP_name, const char* objectName, S57Obj* pObj, bool bStrict = 0);
+	int _LUP2rules(LUPrec* LUP, S57Obj* pObj);
+	S52color* getColor(const char* colorName);
+	wxColour getwxColour(const wxString& colorName);
 
-    LUPrec *S52_LUPLookup( LUPname LUP_name, const char * objectName,
-        S57Obj *pObj, bool bStrict = 0 );
-    int _LUP2rules( LUPrec *LUP, S57Obj *pObj );
-    S52color* getColor( const char *colorName );
-    wxColour getwxColour( const wxString &colorName );
+	void UpdateMarinerParams(void);
+	void ClearCNSYLUPArray(void);
 
-    void UpdateMarinerParams( void );
-    void ClearCNSYLUPArray( void );
+	void GenerateStateHash();
+	long GetStateHash() const;
 
-    void GenerateStateHash();
-
-    long GetStateHash() const
-	{
-		return m_state_hash;
-	}
-
-    void SetPLIBColorScheme( wxString scheme );
-    wxString GetPLIBColorScheme(void)
-	{
-		return m_ColorScheme;
-	}
-
-    void SetGLRendererString(const wxString &renderer);
+	void SetPLIBColorScheme(wxString scheme);
+	wxString GetPLIBColorScheme(void);
+	void SetGLRendererString(const wxString& renderer);
 
 	bool ObjectRenderCheck(ObjRazRules* rzRules, const ViewPort& vp);
 	bool ObjectRenderCheckPos(ObjRazRules* rzRules, const ViewPort& vp);
 	bool ObjectRenderCheckCat(ObjRazRules* rzRules, const ViewPort& vp);
 	bool ObjectRenderCheckCS(ObjRazRules* rzRules, const ViewPort& vp);
 
-	static void DestroyLUP( LUPrec *pLUP );
-    static void ClearRulesCache( Rule *pR );
+	static void DestroyLUP(LUPrec* pLUP);
+	static void ClearRulesCache(Rule* pR);
 
-//    Temporarily save/restore the current colortable index
-//    Useful for Thumbnail rendering
-	void SaveColorScheme(void)
-	{
-		m_colortable_index_save = m_colortable_index;
-	}
-
-	void RestoreColorScheme(void)
-	{}
+	// Temporarily save/restore the current colortable index
+	// Useful for Thumbnail rendering
+	void SaveColorScheme(void);
+	void RestoreColorScheme(void);
 
 	// Rendering stuff
 	void PrepareForRender(void);
@@ -219,73 +202,19 @@ public:
 					   render_canvas_parms* pb_spec);
 
 	// Accessors
-	bool GetShowSoundings() const
-	{
-		return m_bShowSoundg;
-	}
-
-	void SetShowSoundings(bool f)
-	{
-		m_bShowSoundg = f;
-		GenerateStateHash();
-	}
-
-	bool GetShowS57Text() const
-	{
-		return m_bShowS57Text;
-	}
-
-	void SetShowS57Text(bool f)
-	{
-		m_bShowS57Text = f;
-		GenerateStateHash();
-	}
-
-	bool GetShowS57ImportantTextOnly() const
-	{
-		return m_bShowS57ImportantTextOnly;
-	}
-
-	void SetShowS57ImportantTextOnly(bool f)
-	{
-		m_bShowS57ImportantTextOnly = f;
-		GenerateStateHash();
-	}
-
-	int GetMajorVersion(void) const
-	{
-		return m_VersionMajor;
-	}
-
-    int GetMinorVersion(void) const
-	{
-		return m_VersionMinor;
-	}
-
-    void SetTextOverlapAvoid(bool f)
-	{
-		m_bDeClutterText = f;
-	}
-
-    void SetShowNationalText(bool f)
-	{
-		m_bShowNationalTexts = f;
-	}
-
-    void SetShowAtonText(bool f)
-	{
-		m_bShowAtonText = f;
-	}
-
-    void SetShowLdisText(bool f)
-	{
-		m_bShowLdisText = f;
-	}
-
-    void SetExtendLightSectors(bool f)
-	{
-		m_bExtendLightSectors = f;
-	}
+	bool GetShowSoundings() const;
+	void SetShowSoundings(bool f);
+	bool GetShowS57Text() const;
+	void SetShowS57Text(bool f);
+	bool GetShowS57ImportantTextOnly() const;
+	void SetShowS57ImportantTextOnly(bool f);
+	int GetMajorVersion(void) const;
+	int GetMinorVersion(void) const;
+	void SetTextOverlapAvoid(bool f);
+	void SetShowNationalText(bool f);
+	void SetShowAtonText(bool f);
+	void SetShowLdisText(bool f);
+	void SetExtendLightSectors(bool f);
 
 	wxArrayOfLUPrec* SelectLUPARRAY(LUPname TNAM);
 	LUPArrayContainer* SelectLUPArrayContainer(LUPname TNAM);
@@ -294,7 +223,7 @@ public:
 	void DestroyRuleNode(Rule* pR);
 
 //#ifdef ocpnUSE_GL
-	//    For OpenGL
+	// For OpenGL
 	int RenderObjectToGL(const wxGLContext& glcc, ObjRazRules* rzRules, const ViewPort& vp,
 						 wxRect& render_rect);
 	int RenderAreaToGL(const wxGLContext& glcc, ObjRazRules* rzRules, const ViewPort& vp,
@@ -319,9 +248,9 @@ public:
 	bool m_bShowNationalTexts;
 
 	int m_VersionMajor;
-    int m_VersionMinor;
+	int m_VersionMinor;
 
-    int m_nDepthUnitDisplay;
+	int m_nDepthUnitDisplay;
 
 	// Library data
 	wxArrayPtrVoid* pAlloc;
@@ -352,7 +281,7 @@ private:
 
 	int DoRenderObject(wxDC* pdcin, ObjRazRules* rzRules, const ViewPort& vp);
 
-	//    Area Renderers
+	// Area Renderers
 	int RenderToBufferAC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp,
 						 render_canvas_parms* pb_spec);
 	int RenderToBufferAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp,

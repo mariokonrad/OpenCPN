@@ -2077,28 +2077,24 @@ bool s52plib::RenderHPGL(ObjRazRules* rzRules, Rule* prule, wxPoint& r, const Vi
 //-----------------------------------------------------------------------------------------
 wxImage s52plib::RuleXBMToImage(Rule* prule)
 {
-	//      Decode the color definitions
-	wxArrayPtrVoid* pColorArray = new wxArrayPtrVoid;
+	// Decode the color definitions
+	std::vector<S52color*> colors;
 
-	int i = 0;
 	char* cstr = prule->colRef.SCRF;
 
-	char colname[6];
-	int nl = strlen(cstr);
-
-	while (i < nl) {
+	const size_t NL = strlen(cstr);
+	for (size_t i = 0; i < NL; ) {
 		i++;
 
+		char colname[6];
 		strncpy(colname, &cstr[i], 5);
 		colname[5] = 0;
-		S52color* pColor = getColor(colname);
-
-		pColorArray->Add((void*)pColor);
+		colors.push_back(getColor(colname));
 
 		i += 5;
 	}
 
-	//      Get geometry
+	// Get geometry
 	int width = prule->pos.line.bnbox_w.SYHL;
 	int height = prule->pos.line.bnbox_h.SYVL;
 
@@ -2112,7 +2108,7 @@ wxImage s52plib::RuleXBMToImage(Rule* prule)
 		for (int ix = 0; ix < width; ix++) {
 			int cref = (int)(thisrow[ix] - 'A'); // make an index
 			if (cref >= 0) {
-				S52color* pthisbitcolor = (S52color*)(pColorArray->Item(cref));
+				const S52color* pthisbitcolor = colors.at(cref);
 				Image.SetRGB(ix, iy, pthisbitcolor->R, pthisbitcolor->G, pthisbitcolor->B);
 			} else {
 				Image.SetRGB(ix, iy, m_unused_color.R, m_unused_color.G, m_unused_color.B);
@@ -2120,8 +2116,6 @@ wxImage s52plib::RuleXBMToImage(Rule* prule)
 		}
 	}
 
-	pColorArray->Clear();
-	delete pColorArray;
 	return Image;
 }
 
@@ -2160,7 +2154,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 
 		if (!m_pdc) // opengl
 		{
-			//    Get the glRGBA format data from the wxImage
+			// Get the glRGBA format data from the wxImage
 			unsigned char* d = Image.GetData();
 			unsigned char* a = Image.GetAlpha();
 
@@ -2187,7 +2181,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 				}
 			}
 
-			//      Save the bitmap ptr and aux parms in the rule
+			// Save the bitmap ptr and aux parms in the rule
 			prule->pixelPtr = e;
 			prule->parm0 = ID_RGBA;
 			prule->parm1 = m_colortable_index;
@@ -2204,11 +2198,11 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 			bool b_has_trans = false;
 #if (defined(__WXGTK__) || defined(__WXMAC__))
 
-			//    Blitting of wxBitmap with transparency in wxGTK is broken....
-			//    We can do it the hard way, by manually alpha blending the
-			//    symbol with a clip taken from the current screen DC contents.
+			// Blitting of wxBitmap with transparency in wxGTK is broken....
+			// We can do it the hard way, by manually alpha blending the
+			// symbol with a clip taken from the current screen DC contents.
 
-			//    Inspect the symbol image, to see if it actually has alpha transparency
+			// Inspect the symbol image, to see if it actually has alpha transparency
 			if (Image.HasAlpha()) {
 				unsigned char* a = Image.GetAlpha();
 				for (int i = 0; i < Image.GetHeight(); i++, a++) {
@@ -2226,7 +2220,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 			b_has_trans = true;
 #endif
 
-			//    If the symbol image has no transparency, then a standard wxDC:Blit() will work
+			// If the symbol image has no transparency, then a standard wxDC:Blit() will work
 			if (!b_has_trans) {
 				pbm = new wxBitmap(Image, -1);
 				wxMask* pmask = new wxMask(*pbm, m_unused_wxColor);
@@ -2241,16 +2235,16 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 			}
 #endif
 
-			//      Save the bitmap ptr and aux parms in the rule
+			// Save the bitmap ptr and aux parms in the rule
 			prule->pixelPtr = pbm;
 			prule->parm0 = ID_wxBitmap;
 			prule->parm1 = m_colortable_index;
 			prule->parm2 = w;
 			prule->parm3 = h;
 		}
-	} // instantiation
+	}
 
-	//        Get the bounding box for the to-be-drawn symbol
+	// Get the bounding box for the to-be-drawn symbol
 	int b_width, b_height;
 	b_width = prule->parm2;
 	b_height = prule->parm3;
@@ -2264,14 +2258,14 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 	GetPixPointSingle(r.x - pivot_x + b_width, r.y - pivot_y, &plat, &plon, vp);
 	symbox.SetMax(plon, plat);
 
-	//  Special case for GEO_AREA objects with centred symbols
+	// Special case for GEO_AREA objects with centred symbols
 	if (rzRules->obj->Primitive_type == GEO_AREA) {
 		if (rzRules->obj->BBObj.Intersect(symbox, 0)
 			!= geo::BoundingBox::_IN) // Symbol is wholly outside base object
 			return true;
 	}
 
-	//      Now render the symbol
+	// Now render the symbol
 
 	if (!m_pdc) // opengl
 	{
@@ -2295,8 +2289,8 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 
 		if (!(prule->pixelPtr)) // This symbol requires manual alpha blending
 		{
-			//    Don't bother if the symbol is off the true screen,
-			//    as for instance when an area-centered symbol is called for.
+			// Don't bother if the symbol is off the true screen,
+			// as for instance when an area-centered symbol is called for.
 			if (((r.x - pivot_x + b_width) < vp.pix_width)
 				&& ((r.y - pivot_y + b_height) < vp.pix_height)) {
 				// Get the current screen contents
@@ -2305,7 +2299,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 				mdc1.Blit(0, 0, b_width, b_height, m_pdc, r.x - pivot_x, r.y - pivot_y, wxCOPY);
 				wxImage im_back = b1.ConvertToImage();
 
-				//    Get the symbol
+				// Get the symbol
 				wxImage im_sym = ChartSymbols::GetImage(prule->name.SYNM);
 
 				wxImage im_result(b_width, b_height);
@@ -2317,7 +2311,7 @@ bool s52plib::RenderRasterSymbol(ObjRazRules* rzRules, Rule* prule, wxPoint& r, 
 				if (im_sym.HasAlpha())
 					asym = im_sym.GetAlpha();
 
-				//    Do alpha blending, the hard way
+				// Do alpha blending, the hard way
 
 				for (int i = 0; i < b_height; i++) {
 					for (int j = 0; j < b_width; j++) {

@@ -70,5 +70,35 @@ void OCPN_Navigation::set_course_over_ground(double value)
 	data.cog = value;
 }
 
+const Navigation::Track& OCPN_Navigation::get_track() const
+{
+	return track;
+}
+
+void OCPN_Navigation::set_TrackPrecision(long value)
+{
+	track.TrackPrecision = value;
+}
+
+void OCPN_Navigation::set_HighliteTracks(bool value)
+{
+	track.HighliteTracks = value;
+}
+
+void OCPN_Navigation::set_TrackDaily(bool value)
+{
+	track.TrackDaily = value;
+}
+
+void OCPN_Navigation::set_TrackDeltaDistance(double value)
+{
+	track.TrackDeltaDistance = value;
+}
+
+void OCPN_Navigation::set_PlanSpeed(double value)
+{
+	track.PlanSpeed = value;
+}
+
 }
 

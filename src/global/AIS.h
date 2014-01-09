@@ -59,7 +59,6 @@ public:
 		double ShowCOG_Mins;
 		bool AISShowTracks;
 		bool TrackCarryOver;
-		bool TrackDaily; // TODO: does this parameter really belong to AIS?
 		wxString AIS_Alert_Sound_File;
 		bool AIS_CPA_Alert_Suppress_Moored;
 		bool ShowAreaNotices;
@@ -88,7 +87,6 @@ public:
 	virtual void set_ShowCOG_Mins(double) = 0;
 	virtual void set_AISShowTracks(bool) = 0;
 	virtual void set_TrackCarryOver(bool) = 0;
-	virtual void set_TrackDaily(bool) = 0;
 	virtual void set_AIS_Alert_Sound_File(const wxString&) = 0;
 	virtual void set_AIS_CPA_Alert_Suppress_Moored(bool) = 0;
 	virtual void set_ShowAreaNotices(bool) = 0;

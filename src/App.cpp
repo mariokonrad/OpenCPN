@@ -158,7 +158,6 @@ extern ais::AIS_Decoder* g_pAIS;
 extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 extern ais::AISTargetListDialog* g_pAISTargetList;
-extern double g_PlanSpeed;
 extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern int gpIDXn;
@@ -843,6 +842,7 @@ void App::setup_for_empty_config(bool novicemode)
 	if (novicemode) {
 		global::GUI& gui = global::OCPN::get().gui();
 		global::AIS& ais = global::OCPN::get().ais();
+		global::Navigation& nav = global::OCPN::get().nav();
 
 		gui.set_view_show_outlines(true);
 		ais.set_CPAMax_NM(20.0);
@@ -856,8 +856,8 @@ void App::setup_for_empty_config(bool novicemode)
 		ais.set_ShowCOG_Mins(6);
 		ais.set_ShowMoored(true);
 		ais.set_ShowMoored_Kts(0.2);
-		ais.set_TrackDaily(false);
-		g_PlanSpeed = 6.0;
+		nav.set_TrackDaily(false);
+		nav.set_PlanSpeed(6.0);
 		g_bFullScreenQuilt = true;
 		g_bQuiltEnable = true;
 		g_bskew_comp = false;

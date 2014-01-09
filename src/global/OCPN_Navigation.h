@@ -30,19 +30,28 @@ namespace global {
 
 class OCPN_Navigation : public Navigation
 {
-	private:
-		Data data;
+private:
+	Data data;
+	Track track;
 
-	public: // data
-		virtual const Data & get_data() const;
-		virtual void set_position(const Position&);
-		virtual void set_latitude(double);
-		virtual void set_longitude(double);
-		virtual void set_magn_var(double);
-		virtual void set_heading_true(double);
-		virtual void set_heading_magn(double);
-		virtual void set_speed_over_ground(double);
-		virtual void set_course_over_ground(double);
+public: // data
+	virtual const Data& get_data() const;
+	virtual void set_position(const Position&);
+	virtual void set_latitude(double);
+	virtual void set_longitude(double);
+	virtual void set_magn_var(double);
+	virtual void set_heading_true(double);
+	virtual void set_heading_magn(double);
+	virtual void set_speed_over_ground(double);
+	virtual void set_course_over_ground(double);
+
+public: // track
+	virtual const Track& get_track() const;
+	virtual void set_TrackPrecision(long);
+	virtual void set_HighliteTracks(bool);
+	virtual void set_TrackDaily(bool);
+	virtual void set_TrackDeltaDistance(double);
+	virtual void set_PlanSpeed(double);
 };
 
 }

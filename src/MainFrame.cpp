@@ -279,7 +279,6 @@ int g_current_arrow_scale;
 Multiplexer* g_pMUX;
 bool g_bAutoAnchorMark;
 wxRect g_blink_rect;
-double g_PlanSpeed;
 wxDateTime g_StartTime;
 int g_StartTimeTZ;
 tide::IDX_entry* gpIDX;
@@ -350,11 +349,8 @@ bool g_bShowAIS;
 wxToolBarToolBase* m_pAISTool;
 int g_nAIS_activity_timer;
 bool g_bTrackActive;
-bool g_bHighliteTracks;
 wxString g_default_wp_icon;
 Track* g_pActiveTrack;
-double g_TrackDeltaDistance;
-int g_nTrackPrecision;
 int g_total_NMEAerror_messages;
 CM93DSlide* pCM93DetailSlider;
 wxString g_AW1GUID;
@@ -1898,9 +1894,9 @@ Track* MainFrame::TrackOff(bool do_add_point)
 			g_pRouteMan->DeleteRoute(g_pActiveTrack);
 			return_val = NULL;
 		} else {
-			const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+			const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 
-			if (ais.TrackDaily) {
+			if (track.TrackDaily) {
 				Track* pExtendTrack = g_pActiveTrack->DoExtendDaily();
 				if (pExtendTrack) {
 					g_pRouteMan->DeleteRoute(g_pActiveTrack);
@@ -2372,7 +2368,7 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 	pConfig->UpdateSettings();
 
 	if (g_pActiveTrack) {
-		g_pActiveTrack->SetPrecision(g_nTrackPrecision);
+		g_pActiveTrack->SetPrecision(global::OCPN::get().nav().get_track().TrackPrecision);
 	}
 
 	if ((bPrevQuilt != g_bQuiltEnable) || (bPrevFullScreenQuilt != g_bFullScreenQuilt)) {
@@ -3232,8 +3228,8 @@ void MainFrame::onTimer_log_message()
 			wxLogMessage(prepare_logbook_message(lognow));
 			g_loglast_time = lognow;
 
-			const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
-			if ((lognow.GetHour() == 0) && (lognow.GetMinute() == 0) && ais.TrackDaily)
+			const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
+			if ((lognow.GetHour() == 0) && (lognow.GetMinute() == 0) && track.TrackDaily)
 				TrackMidnightRestart();
 
 			onTimer_play_bells_on_log();

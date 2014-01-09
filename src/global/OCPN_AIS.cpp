@@ -135,11 +135,6 @@ void OCPN_AIS::set_TrackCarryOver(bool value)
 	data.TrackCarryOver = value;
 }
 
-void OCPN_AIS::set_TrackDaily(bool value)
-{
-	data.TrackDaily = value;
-}
-
 void OCPN_AIS::set_AIS_Alert_Sound_File(const wxString& value)
 {
 	data.AIS_Alert_Sound_File = value;

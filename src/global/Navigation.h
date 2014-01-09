@@ -30,30 +30,48 @@ namespace global {
 
 class Navigation
 {
-	public:
-		virtual ~Navigation() {}
+public:
+	virtual ~Navigation()
+	{
+	}
 
-	public:
+public:
+	struct Data
+	{
+		Position pos; // latitude/longitude
+		double cog; // course over ground in degrees
+		double sog; // speed over ground in knots
+		double hdt; // heading degrees true
+		double hdm; // heading degrees magnetic
+		double var; // magnetic variationn in degrees
+	};
 
-		struct Data
-		{
-			Position pos; // latitude/longitude
-			double cog; // course over ground in degrees
-			double sog; // speed over ground in knots
-			double hdt; // heading degrees true
-			double hdm; // heading degrees magnetic
-			double var; // magnetic variationn in degrees
-		};
+	virtual const Data& get_data() const = 0;
+	virtual void set_position(const Position&) = 0;
+	virtual void set_latitude(double) = 0;
+	virtual void set_longitude(double) = 0;
+	virtual void set_magn_var(double) = 0;
+	virtual void set_heading_true(double) = 0;
+	virtual void set_heading_magn(double) = 0;
+	virtual void set_speed_over_ground(double) = 0;
+	virtual void set_course_over_ground(double) = 0;
 
-		virtual const Data & get_data() const = 0;
-		virtual void set_position(const Position&) = 0;
-		virtual void set_latitude(double) = 0;
-		virtual void set_longitude(double) = 0;
-		virtual void set_magn_var(double) = 0;
-		virtual void set_heading_true(double) = 0;
-		virtual void set_heading_magn(double) = 0;
-		virtual void set_speed_over_ground(double) = 0;
-		virtual void set_course_over_ground(double) = 0;
+public:
+	struct Track
+	{
+		long TrackPrecision;
+		bool HighliteTracks;
+		bool TrackDaily;
+		double TrackDeltaDistance;
+		double PlanSpeed;
+	};
+
+	virtual const Track& get_track() const = 0;
+	virtual void set_TrackPrecision(long) = 0;
+	virtual void set_HighliteTracks(bool) = 0;
+	virtual void set_TrackDaily(bool) = 0;
+	virtual void set_TrackDeltaDistance(double) = 0;
+	virtual void set_PlanSpeed(double) = 0;
 };
 
 }

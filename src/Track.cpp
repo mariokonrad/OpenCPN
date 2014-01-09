@@ -32,7 +32,6 @@
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 #include <global/GUI.h>
-#include <global/AIS.h>
 
 #include <geo/GeoRef.h>
 
@@ -40,14 +39,10 @@
 
 #define TIMER_TRACK1 778
 
-extern int g_nTrackPrecision;
 extern RouteList* pRouteList;
 extern Select* pSelect;
-extern bool g_bHighliteTracks;
 extern ChartCanvas* cc1;
-extern double g_TrackDeltaDistance;
 extern RouteProp* pRoutePropDialog;
-extern double g_PlanSpeed;
 
 BEGIN_EVENT_TABLE(Track, wxEvtHandler)
 	EVT_TIMER(TIMER_TRACK1, Track::OnTimerTrack)
@@ -61,7 +56,7 @@ Track::Track(void)
 	m_bRunning = false;
 	m_bIsTrack = true;
 
-	SetPrecision(g_nTrackPrecision);
+	SetPrecision(global::OCPN::get().nav().get_track().TrackPrecision);
 
 	m_prev_time = wxInvalidDateTime;
 	m_lastStoredTP = NULL;
@@ -212,10 +207,10 @@ void Track::OnTimerTrack(wxTimerEvent&)
 	if (b_addpoint) {
 		AddPointNow();
 	} else {
-		const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+		const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 
 		// continuously update track beginning point timestamp if no movement.
-		if ((trackPointState == firstPoint) && !ais.TrackDaily) {
+		if ((trackPointState == firstPoint) && !track.TrackDaily) {
 			wxDateTime now = wxDateTime::Now();
 			pRoutePointList->front()->SetCreateTime(now.ToUTC());
 		}
@@ -354,7 +349,7 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 		return;
 
 	double radius = 0.0;
-	if (g_bHighliteTracks) {
+	if (global::OCPN::get().nav().get_track().HighliteTracks) {
 		double radius_meters = 20;
 		radius = radius_meters * VP.view_scale_ppm;
 	}
@@ -443,8 +438,10 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 	RoutePoint* pWP_dst;
 	RoutePoint* prp_OK = NULL; // last routepoint known not to exceed xte limit, if not yet added
 
+	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
+
 	wxString icon = _T("xmblue");
-	if (g_TrackDeltaDistance >= 0.1)
+	if (track.TrackDeltaDistance >= 0.1)
 		icon = _T("diamond");
 
 	int ic = 0;
@@ -460,7 +457,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 	if (pRoutePropDialog)
 		leg_speed = pRoutePropDialog->getPlanSpeed();
 	else
-		leg_speed = g_PlanSpeed;
+		leg_speed = track.PlanSpeed;
 
 	// add first point
 
@@ -524,7 +521,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 		while (prpnodeX != pRoutePointList->end()) {
 			RoutePoint* prpX = *prpnodeX;
 			xte = GetXTE(pWP_src, prpX, prp);
-			if (isProminent || (xte > g_TrackDeltaDistance)) {
+			if (isProminent || (xte > track.TrackDeltaDistance)) {
 
 				pWP_dst = new RoutePoint(prp_OK->get_position(), icon, _T ( "" ));
 
@@ -555,7 +552,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 		geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), pWP_src->latitude(),
 									 pWP_src->longitude(), NULL, &delta_dist);
 
-		if (!((delta_dist > (g_TrackDeltaDistance)) && !prp_OK)) {
+		if (!((delta_dist > (track.TrackDeltaDistance)) && !prp_OK)) {
 			++prpnode;
 			next_ic++;
 		}
@@ -565,7 +562,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 	}
 
 	// add last point, if needed
-	if (delta_dist >= g_TrackDeltaDistance) {
+	if (delta_dist >= track.TrackDeltaDistance) {
 		pWP_dst = new RoutePoint(pRoutePointList->back()->get_position(), icon, _T(""));
 		route->AddPoint(pWP_dst);
 		pWP_dst->m_bShowName = false;

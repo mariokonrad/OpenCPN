@@ -73,6 +73,7 @@
 #include <global/GUI.h>
 #include <global/System.h>
 #include <global/AIS.h>
+#include <global/Navigation.h>
 
 #ifdef USE_S57
 	#include <chart/s52plib.h>
@@ -115,9 +116,6 @@ extern double g_n_gps_antenna_offset_y;
 extern double g_n_gps_antenna_offset_x;
 extern int g_n_ownship_min_mm;
 extern double g_n_arrival_circle_radius;
-
-extern bool g_bHighliteTracks;
-extern int g_nTrackPrecision;
 
 extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
@@ -1938,6 +1936,7 @@ void options::SetInitialSettings()
 	const global::GUI& gui = global::OCPN::get().gui();
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 
 	for (ArrayOfCDI::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end();
 		 ++i) {
@@ -2036,10 +2035,9 @@ void options::SetInitialSettings()
 	pDistanceFormat->Select(g_iDistanceFormat);
 	pSpeedFormat->Select(g_iSpeedFormat);
 
-	pTrackDaily->SetValue(ais.TrackDaily);
-	pTrackHighlite->SetValue(g_bHighliteTracks);
-
-	pTrackPrecision->SetSelection(g_nTrackPrecision);
+	pTrackDaily->SetValue(track.TrackDaily);
+	pTrackHighlite->SetValue(track.HighliteTracks);
+	pTrackPrecision->SetSelection(track.TrackPrecision);
 
 	// AIS Parameters
 	// CPA Box
@@ -2447,6 +2445,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 {
 	global::AIS& ais = global::OCPN::get().ais();
 	global::GUI& gui = global::OCPN::get().gui();
+	global::Navigation& nav = global::OCPN::get().nav();
 
 	::wxBeginBusyCursor();
 
@@ -2594,10 +2593,10 @@ void options::OnApplyClick(wxCommandEvent& event)
 	g_iDistanceFormat = pDistanceFormat->GetSelection();
 	g_iSpeedFormat = pSpeedFormat->GetSelection();
 
-	g_nTrackPrecision = pTrackPrecision->GetSelection();
+	nav.set_TrackPrecision(pTrackPrecision->GetSelection());
 
-	ais.set_TrackDaily(pTrackDaily->GetValue()); // TODO: does this parameter really belong to AIS?
-	g_bHighliteTracks = pTrackHighlite->GetValue();
+	nav.set_TrackDaily(pTrackDaily->GetValue());
+	nav.set_HighliteTracks(pTrackHighlite->GetValue());
 
 	gui.set_enable_zoom_to_cursor(pEnableZoomToCursor->GetValue());
 

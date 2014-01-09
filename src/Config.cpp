@@ -93,18 +93,15 @@ extern bool g_bShowActiveRouteHighway;
 extern int g_nNMEADebug;
 extern int g_nAWDefault;
 extern int g_nAWMax;
-extern int g_nTrackPrecision;
 extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
-extern double g_PlanSpeed;
 
 extern int              g_iNavAidRadarRingsNumberVisible;
 extern float            g_fNavAidRadarRingsStep;
 extern int              g_pNavAidRadarRingsStepUnits;
 
 extern wxString         g_toolbarConfig;
-extern double           g_TrackDeltaDistance;
 
 extern int              g_nCacheLimit;
 extern int              g_memCacheLimit;
@@ -159,7 +156,6 @@ extern int              g_SkewCompUpdatePeriod;
 
 extern int              g_GPU_MemSize;
 
-extern bool             g_bHighliteTracks;
 extern int              g_cog_predictor_width;
 extern int              g_ais_cog_predictor_width;
 
@@ -530,6 +526,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 {
 	global::AIS& ais = global::OCPN::get().ais();
 	global::GUI& gui = global::OCPN::get().gui();
+	global::Navigation& nav = global::OCPN::get().nav();
 
 	int read_int;
 
@@ -666,12 +663,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("FullScreenQuilt"), &g_bFullScreenQuilt, 1);
 
 	ais.set_TrackCarryOver(read_bool(_T("StartWithTrackActive")));
-	ais.set_TrackDaily(read_bool(_T("AutomaticDailyTracks")));
-	Read(_T("HighlightTracks"), &g_bHighliteTracks, 1);
-
-	wxString stps;
-	Read(_T("PlanSpeed"), &stps);
-	stps.ToDouble(&g_PlanSpeed);
+	nav.set_TrackDaily(read_bool(_T("AutomaticDailyTracks")));
+	nav.set_HighliteTracks(read_bool(_T("HighlightTracks"), true));
+	nav.set_PlanSpeed(read_double(_T("PlanSpeed")));
 
 	Read(_T("VisibleLayers"), &visibleLayers);
 	Read(_T("InvisibleLayers"), &invisibleLayers);
@@ -980,8 +974,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	vLat = START_LAT; // display viewpoint
 	vLon = START_LON;
 
-	global::Navigation& nav = global::OCPN::get().nav();
-
 	// GPS position, as default
 	nav.set_latitude(START_LAT);
 	nav.set_longitude(START_LON);
@@ -1167,31 +1159,23 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	// Waypoint dragging with mouse
 	gui.set_WayPointPreventDragging(read_bool(_T("WaypointPreventDragging"), false));
+	gui.set_enable_zoom_to_cursor(read_bool(_T("EnableZoomToCursor")));
 
-	bool enable_zoom_to_cursor = false;
-	Read(_T("EnableZoomToCursor"), &enable_zoom_to_cursor);
-	gui.set_enable_zoom_to_cursor(enable_zoom_to_cursor);
-
-	g_TrackDeltaDistance = 0.10;
+	nav.set_TrackDeltaDistance(0.10);
 	val.Clear();
 	Read(_T("TrackDeltaDistance"), &val);
 	if (val.Length() > 0) {
 		double tval = atof(val.mb_str());
 		if (tval >= 0.05)
-			g_TrackDeltaDistance = tval;
+			nav.set_TrackDeltaDistance(tval);
 	}
 
-	Read(_T("TrackPrecision"), &g_nTrackPrecision, 0);
+	nav.set_TrackPrecision(read_long(_T("TrackPrecision")));
 
 	Read(_T("NavObjectFileName"), m_sNavObjSetFile);
 
-	int route_line_width = 2;
-	Read(_T("RouteLineWidth"), &route_line_width, 2);
-	gui.set_route_line_width(route_line_width);
-
-	int track_line_width = 3;
-	Read(_T("TrackLineWidth"), &track_line_width, 3);
-	gui.set_track_line_width(track_line_width);
+	gui.set_route_line_width(read_long(_T("RouteLineWidth"), 2));
+	gui.set_track_line_width(read_long(_T("TrackLineWidth"), 3));
 
 	Read(_T("CurrentArrowScale"), &g_current_arrow_scale, 100);
 	Read(_T("DefaultWPIcon"), &g_default_wp_icon, _T("triangle"));
@@ -1592,6 +1576,7 @@ void Config::UpdateSettings()
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
+	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 
 	// Global options and settings
 	SetPath(_T("/Settings"));
@@ -1656,8 +1641,8 @@ void Config::UpdateSettings()
 	Write(_T("PreserveScaleOnX"), g_bPreserveScaleOnX);
 
 	Write(_T("StartWithTrackActive"), ais.TrackCarryOver);
-	Write(_T("AutomaticDailyTracks"), ais.TrackDaily);
-	Write(_T("HighlightTracks"), g_bHighliteTracks);
+	Write(_T("AutomaticDailyTracks"), track.TrackDaily);
+	Write(_T("HighlightTracks"), track.HighliteTracks);
 
 	Write(_T("InitialStackIndex"), g_restore_stackindex);
 	Write(_T("InitialdBIndex"), g_restore_dbindex);
@@ -1672,7 +1657,7 @@ void Config::UpdateSettings()
 	Write(_T("GPSIdent"), g_GPS_Ident);
 	Write(_T("UseGarminHostUpload"), g_bGarminHostUpload);
 
-	Write(_T("PlanSpeed"), wxString::Format(_T("%g"), g_PlanSpeed));
+	Write(_T("PlanSpeed"), wxString::Format(_T("%g"), track.PlanSpeed));
 
 	wxString vis, invis;
 	int index = 0;
@@ -1879,8 +1864,8 @@ void Config::UpdateSettings()
 
 	Write(_T("EnableZoomToCursor"), view.enable_zoom_to_cursor);
 
-	Write(_T("TrackDeltaDistance"), g_TrackDeltaDistance);
-	Write(_T("TrackPrecision"), g_nTrackPrecision);
+	Write(_T("TrackDeltaDistance"), track.TrackDeltaDistance);
+	Write(_T("TrackPrecision"), track.TrackPrecision);
 
 	Write(_T("CurrentArrowScale"), g_current_arrow_scale);
 	Write(_T("DefaultWPIcon"), g_default_wp_icon);

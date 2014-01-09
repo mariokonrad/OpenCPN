@@ -56,7 +56,6 @@
 #include <wx/printdlg.h>
 #include <wx/stattext.h>
 
-extern double g_PlanSpeed;
 extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern tide::IDX_entry* gpIDX;
@@ -414,8 +413,6 @@ bool RouteProp::Create(wxWindow* parent, wxWindowID id, const wxString& caption,
 
 void RouteProp::CreateControls()
 {
-	////@begin RouteProp content construction
-
 	RouteProp* itemDialog1 = this;
 
 	wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
@@ -639,8 +636,8 @@ void RouteProp::CreateControls()
 	Connect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(RouteProp::OnRoutePropMenuSelected),
 			NULL, this);
 
-	//  Fetch any config file values
-	m_planspeed = g_PlanSpeed;
+	// Fetch any config file values
+	m_planspeed = global::OCPN::get().nav().get_track().PlanSpeed;
 
 	pDispTz->SetSelection(g_StartTimeTZ);
 
@@ -1302,8 +1299,8 @@ wxString RouteProp::MakeTideInfo(int jx, time_t tm, int tz_selection, long LMT_O
 
 bool RouteProp::SaveChanges(void)
 {
-	//  Save the current planning speed
-	g_PlanSpeed = m_planspeed;
+	// Save the current planning speed
+	global::OCPN::get().nav().set_PlanSpeed(m_planspeed);
 	g_StartTime = m_starttime; // both always UTC
 	g_StartTimeTZ = pDispTz->GetSelection();
 	m_StartTimeCtl->Clear();

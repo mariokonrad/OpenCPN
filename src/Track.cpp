@@ -49,16 +49,6 @@ extern double g_TrackDeltaDistance;
 extern RouteProp* pRoutePropDialog;
 extern double g_PlanSpeed;
 
-double _distance2(Vector2D & a, Vector2D & b) // FIXME: vector operator -
-{
-	return (a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y);
-}
-
-double _distance(Vector2D & a, Vector2D & b) // FIXME: vector operator -
-{
-	return sqrt(_distance2( a, b ));
-}
-
 BEGIN_EVENT_TABLE(Track, wxEvtHandler)
 	EVT_TIMER(TIMER_TRACK1, Track::OnTimerTrack)
 END_EVENT_TABLE()
@@ -88,7 +78,7 @@ Track::~Track()
 	Stop();
 }
 
-bool Track::IsRunning()
+bool Track::IsRunning() const
 {
 	return m_bRunning;
 }
@@ -271,10 +261,9 @@ void Track::AddPointNow(bool do_add_point)
 	// and analyze the cross track errors for each point before actually adding
 	// a point to the track.
 
-	switch (trackPointState) { // FIXME: cases of switch contain too much code
+	switch (trackPointState) {
 		case firstPoint: {
-			RoutePoint* pTrackPoint = AddNewPoint(gpsPoint, now.ToUTC());
-			m_lastStoredTP = pTrackPoint;
+			m_lastStoredTP = AddNewPoint(gpsPoint, now.ToUTC());
 			trackPointState = secondPoint;
 			do_add_point = false;
 			break;
@@ -295,8 +284,8 @@ void Track::AddPointNow(bool do_add_point)
 
 			// Scan points skipped so far and see if anyone has XTE over the threshold.
 			for (unsigned int i = 0; i < skipPoints.size(); i++) {
-				double xte = GetXTE(m_lastStoredTP->latitude(), m_lastStoredTP->longitude(),
-									nav.pos.lat(), nav.pos.lon(), skipPoints[i].lat, skipPoints[i].lon);
+				double xte = GetXTE(m_lastStoredTP->get_position(), nav.pos,
+									Position(skipPoints[i].lat, skipPoints[i].lon));
 				if (xte > xteMax) {
 					xteMax = xte;
 					xteMaxIndex = i;
@@ -319,9 +308,8 @@ void Track::AddPointNow(bool do_add_point)
 				}
 
 				// Now back up and see if we just made 3 points in a straight line and the middle
-				// one
-				// (the next to last) point can possibly be eliminated. Here we reduce the allowed
-				// XTE as a function of leg length. (Half the XTE for very short legs).
+				// one (the next to last) point can possibly be eliminated. Here we reduce the
+				// allowed XTE as a function of leg length. (Half the XTE for very short legs).
 				if (GetnPoints() > 2) {
 					double dist = geo::DistGreatCircle(
 						m_fixedTP->latitude(), m_fixedTP->longitude(), m_lastStoredTP->latitude(),
@@ -422,8 +410,7 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 
 		// We do inline decomposition of the line segments, in a simple minded way
 		// If the line segment length is less than approximately 2 pixels, then simply don't render
-		// it,
-		// but continue on to the next point.
+		// it, but continue on to the next point.
 		if ((abs(r.x - rpt.x) > 1) || (abs(r.y - rpt.y) > 1)) {
 			prp->Draw(dc, &rptn);
 
@@ -653,8 +640,7 @@ int Track::Simplify(double maxDelta)
 	return reduction;
 }
 
-double Track::GetXTE(double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon, double toLat,
-					 double toLon)
+double Track::GetXTE(const Position& fm1, const Position& fm2, const Position& to) const
 {
 	Vector2D v;
 	Vector2D w;
@@ -667,21 +653,20 @@ double Track::GetXTE(double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon,
 	double dist1;
 	double brg2;
 	double dist2;
-	geo::DistanceBearingMercator(toLat, toLon, fm1Lat, fm1Lon, &brg1, &dist1);
+	geo::DistanceBearingMercator(to.lat(), to.lon(), fm1.lat(), fm1.lon(), &brg1, &dist1);
 	w.x = dist1 * sin(brg1 * M_PI / 180.0);
 	w.y = dist1 * cos(brg1 * M_PI / 180.0);
 
-	geo::DistanceBearingMercator(toLat, toLon, fm2Lat, fm2Lon, &brg2, &dist2);
+	geo::DistanceBearingMercator(to.lat(), to.lon(), fm2.lat(), fm2.lon(), &brg2, &dist2);
 	v.x = dist2 * sin(brg2 * M_PI / 180.0);
 	v.y = dist2 * cos(brg2 * M_PI / 180.0);
 
 	p.x = 0.0;
 	p.y = 0.0;
 
-	const double lengthSquared = _distance2(v, w);
+	const double lengthSquared = (v - w).sqr();
 	if (lengthSquared == 0.0) {
-		// v == w case
-		return _distance(p, v);
+		return (p - v).length();
 	}
 
 	// Consider the line extending the segment, parameterized as v + t (w - v).
@@ -694,14 +679,14 @@ double Track::GetXTE(double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon,
 	double t = a.dot(b) / lengthSquared;
 
 	if (t < 0.0)
-		return _distance(p, v); // Beyond the 'v' end of the segment
+		return (p - v).length(); // Beyond the 'v' end of the segment
 	else if (t > 1.0)
-		return _distance(p, w); // Beyond the 'w' end of the segment
+		return (p - w).length(); // Beyond the 'w' end of the segment
 	Vector2D projection = v + t * (w - v); // Projection falls on the segment
-	return _distance(p, projection);
+	return (p - projection).length();
 }
 
-double Track::GetXTE(RoutePoint* fm1, RoutePoint* fm2, RoutePoint* to)
+double Track::GetXTE(const RoutePoint* fm1, const RoutePoint* fm2, const RoutePoint* to) const
 {
 	if (!fm1 || !fm2 || !to)
 		return 0.0;
@@ -709,7 +694,6 @@ double Track::GetXTE(RoutePoint* fm1, RoutePoint* fm2, RoutePoint* to)
 		return 0.0;
 	if (fm2 == to)
 		return 0.0;
-	return GetXTE(fm1->latitude(), fm1->longitude(), fm2->latitude(), fm2->longitude(),
-				  to->latitude(), to->longitude());
+	return GetXTE(fm1->get_position(), fm2->get_position(), to->get_position());
 }
 

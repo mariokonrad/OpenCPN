@@ -31,68 +31,71 @@
 #include <vector>
 #include <deque>
 
-#include "Route.h"
-#include "Vector2D.h"
+#include <Route.h>
+#include <Vector2D.h>
+#include <Position.h>
 
 class Track
 	: public wxEvtHandler
 	, public Route
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		Track(void);
-		virtual ~Track(void);
+public:
+	Track(void);
+	virtual ~Track(void);
 
-		void SetPrecision(int precision);
+	void SetPrecision(int precision);
 
-		void Start(void);
-		void Stop(bool do_add_point = false);
-		Track *DoExtendDaily(void);
-		bool IsRunning();
-		void Draw(ocpnDC& dc, const ViewPort &VP);
+	void Start(void);
+	void Stop(bool do_add_point = false);
+	Track* DoExtendDaily(void);
+	bool IsRunning() const;
+	void Draw(ocpnDC& dc, const ViewPort& VP);
 
-		RoutePoint* AddNewPoint(Vector2D point, wxDateTime time);
-		Route *RouteFromTrack(wxProgressDialog * pprog);
+	Route* RouteFromTrack(wxProgressDialog* pprog);
 
-		void DouglasPeuckerReducer(std::vector<RoutePoint*> & list, int from, int to, double delta);
-		int Simplify( double maxDelta );
-		double GetXTE(RoutePoint * fm1, RoutePoint * fm2, RoutePoint * to);
-		double GetXTE(double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon, double toLat, double toLon);
+	int Simplify(double maxDelta);
 
-		void AdjustCurrentTrackPoint(RoutePoint * prototype);
+	void AdjustCurrentTrackPoint(RoutePoint* prototype);
 
-	private:
-		void OnTimerTrack(wxTimerEvent & event);
-		void AddPointNow(bool do_add_point = false);
+private:
+	void OnTimerTrack(wxTimerEvent& event);
+	void AddPointNow(bool do_add_point = false);
+	double GetXTE(const RoutePoint* fm1, const RoutePoint* fm2, const RoutePoint* to) const;
+	double GetXTE(const Position& fm1, const Position& fm2, const Position& to) const;
+	void DouglasPeuckerReducer(std::vector<RoutePoint*>& list, int from, int to, double delta);
+	RoutePoint* AddNewPoint(Vector2D point, wxDateTime time);
 
-		bool m_bRunning;
-		wxTimer m_TimerTrack;
+	bool m_bRunning;
+	wxTimer m_TimerTrack;
 
-		int m_nPrecision;
-		double m_TrackTimerSec;
-		double m_allowedMaxXTE;
-		double m_allowedMaxAngle;
+	int m_nPrecision;
+	double m_TrackTimerSec;
+	double m_allowedMaxXTE;
+	double m_allowedMaxAngle;
 
-		Vector2D m_lastAddedPoint;
-		double m_prev_dist;
-		wxDateTime m_prev_time;
+	Vector2D m_lastAddedPoint;
+	double m_prev_dist;
+	wxDateTime m_prev_time;
 
-		RoutePoint * m_lastStoredTP;
-		RoutePoint * m_removeTP;
-		RoutePoint * m_prevFixedTP;
-		RoutePoint * m_fixedTP;
-		int m_track_run;
-		double m_minTrackpoint_delta;
+	RoutePoint* m_lastStoredTP;
+	RoutePoint* m_removeTP;
+	RoutePoint* m_prevFixedTP;
+	RoutePoint* m_fixedTP;
+	int m_track_run;
+	double m_minTrackpoint_delta;
 
-		enum eTrackPointState {
-			firstPoint,
-			secondPoint,
-			potentialPoint
-		} trackPointState;
+	enum eTrackPointState {
+		firstPoint,
+		secondPoint,
+		potentialPoint
+	};
 
-		std::deque<Vector2D> skipPoints;
-		std::deque<wxDateTime> skipTimes;
+	eTrackPointState trackPointState;
+
+	std::deque<Vector2D> skipPoints;
+	std::deque<wxDateTime> skipTimes;
 };
 
 #endif

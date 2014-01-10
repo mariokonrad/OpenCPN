@@ -421,8 +421,6 @@ if [ ${opt_info} -ne 0 ] ; then
 	exit 0
 fi
 
-exit -1
-
 # remove all directories
 if [ ${opt_cleanup} -ne 0 ] ; then
 	if [ -d ${INSTALL_DIR} ] ; then

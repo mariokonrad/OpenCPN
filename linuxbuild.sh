@@ -79,14 +79,14 @@ if [ $? != 0 ] ; then
 fi
 eval set -- "${args}"
 
-cleanup=0
-verbose=0
-info=0
-prepare=1
-build=1
-install=1
-create_packages=0
-incremental=0
+opt_cleanup=0
+opt_verbose=0
+opt_info=0
+opt_prepare=1
+opt_build=1
+opt_install=1
+opt_create_packages=0
+opt_incremental=0
 opt_cppcheck=0
 opt_understand=0
 
@@ -97,26 +97,26 @@ while true ; do
 			exit 1
 			;;
 		--increment|-i)
-			incremental=1
+			opt_incremental=1
 			;;
 		--release|-r)
 			BUILD_TYPE=Release
 			;;
 		--clean|-c)
-			cleanup=1
+			opt_cleanup=1
 			;;
 		--verbose|-v)
-			verbose=1
+			opt_verbose=1
 			;;
 		--info)
-			info=1
-			verbose=1
+			opt_info=1
+			opt_verbose=1
 			;;
 		--cppcheck)
 			opt_cppcheck=1
 			;;
 		--understand)
-			prepare=1
+			opt_prepare=1
 			opt_understand=1
 			;;
 		--index)
@@ -124,41 +124,41 @@ while true ; do
 			exit 0
 			;;
 		--no-build)
-			build=0
+			opt_build=0
 			;;
 		--no-install)
-			install=0
+			opt_install=0
 			;;
 		--no-package)
-			create_packages=0
+			opt_create_packages=0
 			;;
 		--prepare)
-			prepare=1
-			build=0
-			install=0
-			create_packages=0
-			incremental=0
+			opt_prepare=1
+			opt_build=0
+			opt_install=0
+			opt_create_packages=0
+			opt_incremental=0
 			;;
 		--make)
-			prepare=0
-			build=1
-			install=0
-			create_packages=0
-			incremental=1
+			opt_prepare=0
+			opt_build=1
+			opt_install=0
+			opt_create_packages=0
+			opt_incremental=1
 			;;
 		--install)
-			prepare=0
-			build=0
-			install=1
-			create_packages=0
-			incremental=1
+			opt_prepare=0
+			opt_build=0
+			opt_install=1
+			opt_create_packages=0
+			opt_incremental=1
 			;;
 		--package)
-			prepare=0
-			build=0
-			install=0
-			create_packages=1
-			incremental=1
+			opt_prepare=0
+			opt_build=0
+			opt_install=0
+			opt_create_packages=1
+			opt_incremental=1
 			;;
 		-j)
 			cores=$2
@@ -190,7 +190,7 @@ CORES=${CORES:-${cores}}
 CURRENT_DIR=`pwd`
 
 # print information
-if [ ${verbose} -ne 0 ] ; then
+if [ ${opt_verbose} -ne 0 ] ; then
 	echo ""
 	echo "INFO:"
 	echo "  SRC_DIR     = ${SRC_DIR}"
@@ -203,20 +203,22 @@ if [ ${verbose} -ne 0 ] ; then
 	echo "  BUILD_TYPE  = ${BUILD_TYPE}"
 	echo "  CORES       = ${CORES}"
 	echo ""
-	echo "  incremental    : ${incremental}"
-	echo "  cleanup        : ${cleanup}"
-	echo "  verbose        : ${verbose}"
-	echo "  info           : ${info}"
-	echo "  prepare        : ${prepare}"
-	echo "  build          : ${build}"
-	echo "  install        : ${install}"
-	echo "  create packages: ${create_packages}"
+	echo "  cppcheck    = `which cppcheck`"
+	echo ""
+	echo "  incremental    : ${opt_incremental}"
+	echo "  cleanup        : ${opt_cleanup}"
+	echo "  verbose        : ${opt_verbose}"
+	echo "  info           : ${opt_info}"
+	echo "  prepare        : ${opt_prepare}"
+	echo "  build          : ${opt_build}"
+	echo "  install        : ${opt_install}"
+	echo "  create packages: ${opt_create_packages}"
 	echo "  cppcheck       : ${opt_cppcheck}"
 	echo "  understand     : ${opt_understand}"
 	echo ""
 fi
 
-if [ ${info} -ne 0 ] ; then
+if [ ${opt_info} -ne 0 ] ; then
 	exit 0
 fi
 
@@ -247,7 +249,7 @@ function check_deploy_dir()
 
 function exec_prepare()
 {
-	if [ ${prepare} -eq 0 ] ; then
+	if [ ${opt_prepare} -eq 0 ] ; then
 		return
 	fi
 
@@ -318,7 +320,7 @@ function exec_understand()
 
 function exec_build()
 {
-	if [ ${build} -eq 0 ] ; then
+	if [ ${opt_build} -eq 0 ] ; then
 		return
 	fi
 
@@ -332,7 +334,7 @@ function exec_build()
 
 function exec_install()
 {
-	if [ ${install} -eq 0 ] ; then
+	if [ ${opt_install} -eq 0 ] ; then
 		return
 	fi
 
@@ -347,7 +349,7 @@ function exec_install()
 
 function exec_packaging()
 {
-	if [ ${create_packages} -eq 0 ] ; then
+	if [ ${opt_create_packages} -eq 0 ] ; then
 		return
 	fi
 
@@ -367,7 +369,7 @@ function exec_packaging()
 
 
 # remove all directories
-if [ ${cleanup} -ne 0 ] ; then
+if [ ${opt_cleanup} -ne 0 ] ; then
 	if [ -d ${INSTALL_DIR} ] ; then
 		rm -fr ${INSTALL_DIR}
 	fi
@@ -381,7 +383,7 @@ if [ ${cleanup} -ne 0 ] ; then
 	exit 0
 fi
 
-if [ ${incremental} -eq 0 ] ; then
+if [ ${opt_incremental} -eq 0 ] ; then
 	# cleanup previous installation
 	if [ -d "${INSTALL_DIR}" ] ; then
 		rm -fr ${INSTALL_DIR}/*

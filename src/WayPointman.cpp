@@ -335,7 +335,7 @@ bool WayPointman::contains(const RoutePoint* point) const
 	return std::find(points.begin(), points.end(), point) != points.end();
 }
 
-void WayPointman::SetColorScheme(ColorScheme)
+void WayPointman::SetColorScheme(global::ColorScheme)
 {
 	ProcessIcons(g_StyleManager->GetCurrentStyle());
 

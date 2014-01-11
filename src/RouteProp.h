@@ -35,7 +35,7 @@
 
 #include <LinkPropDlg.h>
 #include <GUI_IDs.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 class wxListCtrl;
 class Route;
@@ -101,7 +101,7 @@ public:
 
 	void CreateControls();
 
-	void SetColorScheme(ColorScheme cs);
+	void SetColorScheme(global::ColorScheme cs);
 	void SetDialogTitle(const wxString& title);
 	void OnRoutepropCancelClick(wxCommandEvent& event);
 	void OnRoutepropOkClick(wxCommandEvent& event);

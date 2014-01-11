@@ -26,48 +26,47 @@
 
 #include <wx/window.h>
 #include <wx/timer.h>
-#include "ColorScheme.h"
+#include <global/ColorScheme.h>
 
 class RolloverWin : public wxWindow
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		//constants for rollovers fonts
-		enum
-		{
-			AIS_ROLLOVER = 1,
-			LEG_ROLLOVER = 2,
-			TC_ROLLOVER  = 3
-		};
+public:
+	// constants for rollovers fonts
+	enum {
+		AIS_ROLLOVER = 1,
+		LEG_ROLLOVER = 2,
+		TC_ROLLOVER = 3
+	};
 
-	public:
-		RolloverWin(wxWindow *parent, int timeout = -1);
-		virtual ~RolloverWin();
+public:
+	RolloverWin(wxWindow* parent, int timeout = -1);
+	virtual ~RolloverWin();
 
-		void OnPaint(wxPaintEvent& event);
-		void SetColorScheme( ColorScheme cs );
-		void SetString(const wxString & s);
-		void SetPosition( wxPoint pt );
-		void SetBitmap( int rollover );
-		wxBitmap* GetBitmap();
-		void SetBestPosition( int x, int y, int off_x, int off_y, int rollover, wxSize parent_size );
-		void OnTimer( wxTimerEvent& event );
-		void OnMouseEvent( wxMouseEvent& event );
-		void SetMousePropogation(int level);
-		bool IsActive() const;
-		void IsActive(bool state);
+	void OnPaint(wxPaintEvent& event);
+	void SetColorScheme(global::ColorScheme cs);
+	void SetString(const wxString& s);
+	void SetPosition(wxPoint pt);
+	void SetBitmap(int rollover);
+	wxBitmap* GetBitmap();
+	void SetBestPosition(int x, int y, int off_x, int off_y, int rollover, wxSize parent_size);
+	void OnTimer(wxTimerEvent& event);
+	void OnMouseEvent(wxMouseEvent& event);
+	void SetMousePropogation(int level);
+	bool IsActive() const;
+	void IsActive(bool state);
 
-	private:
-		wxString m_string;
-		wxSize m_size;
-		wxPoint m_position;
-		wxBitmap *m_pbm;
-		wxTimer m_timer_timeout;
-		int m_timeout_sec;
-		int m_mmouse_propogate;
-		bool isActive;
-		wxFont *m_plabelFont;
+private:
+	wxString m_string;
+	wxSize m_size;
+	wxPoint m_position;
+	wxBitmap* m_pbm;
+	wxTimer m_timer_timeout;
+	int m_timeout_sec;
+	int m_mmouse_propogate;
+	bool isActive;
+	wxFont* m_plabelFont;
 };
 
 #endif

@@ -43,7 +43,6 @@
 
 extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 extern ais::AIS_Decoder* g_pAIS;
-extern ColorScheme global_color_scheme;
 extern wxString g_default_wp_icon;
 extern Select* pSelect;
 extern Config* pConfig;
@@ -87,7 +86,7 @@ void AISTargetQueryDialog::Init()
 	m_MMSI = -1;
 	m_pQueryTextCtl = NULL;
 	m_nl = 0;
-	m_colorscheme = (ColorScheme)(-1);
+	m_colorscheme = static_cast<global::ColorScheme>(-1);
 	m_okButton = NULL;
 }
 
@@ -132,9 +131,11 @@ bool AISTargetQueryDialog::Create(wxWindow* parent, wxWindowID id, const wxStrin
 	// This way, any window decorations set by external themes, etc
 	// will not detract from night-vision
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	long wstyle = wxDEFAULT_FRAME_STYLE;
-	if ((global_color_scheme != GLOBAL_COLOR_SCHEME_DAY)
-		&& (global_color_scheme != GLOBAL_COLOR_SCHEME_RGB))
+	if ((view.color_scheme != global::GLOBAL_COLOR_SCHEME_DAY)
+		&& (view.color_scheme != global::GLOBAL_COLOR_SCHEME_RGB))
 		wstyle |= (wxNO_BORDER);
 
 	if (!wxDialog::Create(parent, id, caption, pos, size, wstyle))
@@ -153,7 +154,7 @@ bool AISTargetQueryDialog::Create(wxWindow* parent, wxWindowID id, const wxStrin
 
 	CreateControls();
 
-	SetColorScheme(global_color_scheme);
+	SetColorScheme(view.color_scheme);
 
 	// This ensures that the dialog cannot be sized smaller
 	// than the minimum size
@@ -162,7 +163,7 @@ bool AISTargetQueryDialog::Create(wxWindow* parent, wxWindowID id, const wxStrin
 	return true;
 }
 
-void AISTargetQueryDialog::SetColorScheme(ColorScheme cs)
+void AISTargetQueryDialog::SetColorScheme(global::ColorScheme cs)
 {
 	if (cs != m_colorscheme) {
 		DimeControl(this);

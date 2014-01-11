@@ -895,7 +895,7 @@ bool ChartDB::DeleteCacheChart(ChartBase* pDeleteCandidate)
 	return false;
 }
 
-void ChartDB::ApplyColorSchemeToCachedCharts(ColorScheme cs)
+void ChartDB::ApplyColorSchemeToCachedCharts(global::ColorScheme cs)
 {
 	const unsigned int nCache = pChartCache->size();
 	for (unsigned int i = 0; i < nCache; i++) {

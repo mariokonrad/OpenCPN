@@ -88,7 +88,7 @@ public:
 	size_t CreatePanel(const wxString& title);
 	wxScrolledWindow* AddPage(size_t parent, const wxString& title);
 	bool DeletePage(wxScrolledWindow* page);
-	void SetColorScheme(ColorScheme cs);
+	void SetColorScheme(global::ColorScheme cs);
 
 	void SetInitChartDir(const wxString& dir);
 	void SetInitialSettings();

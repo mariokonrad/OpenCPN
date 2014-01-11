@@ -25,7 +25,7 @@
 #define __AIS__AISTARGETQUERYDIALOG__H__
 
 #include <wx/dialog.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 class wxHtmlWindow;
 class wxBoxSizer;
@@ -65,7 +65,7 @@ public:
 	void CreateControls();
 
 	void SetText(const wxString& text_string);
-	void SetColorScheme(ColorScheme cs);
+	void SetColorScheme(global::ColorScheme cs);
 
 	void UpdateText(void);
 	void SetMMSI(int mmsi);
@@ -74,7 +74,7 @@ public:
 	// Data
 	int m_MMSI;
 	wxHtmlWindow* m_pQueryTextCtl;
-	ColorScheme m_colorscheme;
+	global::ColorScheme m_colorscheme;
 	wxBoxSizer* m_pboxSizer;
 	int m_nl;
 	wxButton* m_okButton;

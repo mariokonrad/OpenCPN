@@ -60,16 +60,16 @@ void DimeControl(
 		wxColour udkrd,
 		wxColour gridline)
 {
-	ColorScheme cs = cc1->GetColorScheme(); // FIXME: is ChartCanvas really needed here? MainFrame vs. ChartCanvas GetColorScheme??
+	global::ColorScheme cs = cc1->GetColorScheme(); // FIXME: is ChartCanvas really needed here? MainFrame vs. ChartCanvas GetColorScheme??
 
-	if (cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB)
+	if (cs != global::GLOBAL_COLOR_SCHEME_DAY && cs != global::GLOBAL_COLOR_SCHEME_RGB)
 		ctrl->SetBackgroundColour(back_color);
 	else
 		ctrl->SetBackgroundColour(wxNullColour);
 
 #ifdef __WXMAC__
 #if wxCHECK_VERSION(2, 9, 0)
-	if (cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB)
+	if (cs != global::GLOBAL_COLOR_SCHEME_DAY && cs != global::GLOBAL_COLOR_SCHEME_RGB)
 		ctrl->SetBackgroundColour(back_color);
 	else
 		ctrl->SetBackgroundColour(wxColour(0xff, 0xff, 0xff));
@@ -129,12 +129,12 @@ void DimeControl(
 		} else if (win->IsKindOf(CLASSINFO(wxToggleButton))) {
 			((wxToggleButton*)win)->SetBackgroundColour(col1);
 		} else if (win->IsKindOf(CLASSINFO(wxPanel))) {
-			if (cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB)
+			if (cs != global::GLOBAL_COLOR_SCHEME_DAY && cs != global::GLOBAL_COLOR_SCHEME_RGB)
 				((wxPanel*)win)->SetBackgroundColour(back_color);
 			else
 				((wxPanel*)win)->SetBackgroundColour(wxNullColour);
 		} else if (win->IsKindOf(CLASSINFO(wxHtmlWindow))) {
-			if (cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB)
+			if (cs != global::GLOBAL_COLOR_SCHEME_DAY && cs != global::GLOBAL_COLOR_SCHEME_RGB)
 				((wxPanel*)win)->SetBackgroundColour(back_color);
 			else
 				((wxPanel*)win)->SetBackgroundColour(wxNullColour);

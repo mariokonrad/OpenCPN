@@ -39,8 +39,9 @@
 #include "nmea0183.h"
 #include <ChartDirInfo.h>
 #include <NMEA_Msg_Container.h>
-#include <ColorScheme.h>
 #include <Position.h>
+
+#include <global/ColorScheme.h>
 
 #include <chart/ChartType.h>
 #include <chart/ChartFamily.h>
@@ -166,8 +167,8 @@ public:
 	ChartCanvas* GetCanvas();
 	void SetCanvasWindow(ChartCanvas*);
 
-	ColorScheme GetColorScheme();
-	void SetAndApplyColorScheme(ColorScheme cs);
+	global::ColorScheme GetColorScheme();
+	void SetAndApplyColorScheme(global::ColorScheme cs);
 
 	void OnFrameTCTimer(wxTimerEvent& event);
 	void OnFrameCOGTimer(wxTimerEvent& event);
@@ -243,7 +244,7 @@ private:
 	// Toolbar support
 	ToolBarSimple* CreateAToolbar();
 	void DestroyMyToolbar();
-	void UpdateToolbar(ColorScheme cs);
+	void UpdateToolbar(global::ColorScheme cs);
 
 	void EnableToolbar(bool newstate);
 

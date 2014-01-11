@@ -25,7 +25,7 @@
 #define __CHART__GSHHS__GSHHSCHART__H__
 
 #include <wx/colour.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 class ocpnDC;
 class ViewPort;
@@ -34,17 +34,17 @@ class GshhsReader;
 
 class GSHHSChart
 {
-	public:
-		GSHHSChart();
-		~GSHHSChart();
-		void SetColorScheme(ColorScheme scheme);
-		void RenderViewOnDC(ocpnDC & dc, ViewPort & VPoint);
+public:
+	GSHHSChart();
+	~GSHHSChart();
+	void SetColorScheme(global::ColorScheme scheme);
+	void RenderViewOnDC(ocpnDC& dc, ViewPort& VPoint);
 
-	private:
-		Projection* proj;
-		GshhsReader* reader;
-		wxColor land;
-		wxColor water;
+private:
+	Projection* proj;
+	GshhsReader* reader;
+	wxColor land;
+	wxColor water;
 };
 
 #endif

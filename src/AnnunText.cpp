@@ -83,7 +83,7 @@ void AnnunText::CalculateMinSize(void)
 	SetMinSize(min);
 }
 
-void AnnunText::SetColorScheme(ColorScheme)
+void AnnunText::SetColorScheme(global::ColorScheme)
 {
 	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 	m_pbackBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UBLCK")), wxSOLID);

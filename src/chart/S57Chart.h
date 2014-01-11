@@ -119,7 +119,7 @@ public:
 	void SetFullExtent(Extent& ext);
 	bool GetChartExtent(Extent& ext) const;
 
-	void SetColorScheme(ColorScheme cs, bool bApplyImmediate = true);
+	void SetColorScheme(global::ColorScheme cs, bool bApplyImmediate = true);
 	virtual void UpdateLUPs(s57chart* pOwner);
 
 	int _insertRules(S57Obj* obj, LUPrec* LUP, s57chart* pOwner);
@@ -210,7 +210,7 @@ private:
 	int DCRenderRect(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect);
 	bool DCRenderLPB(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect);
 
-	InitReturn PostInit(ChartInitFlag flags, ColorScheme cs);
+	InitReturn PostInit(ChartInitFlag flags, global::ColorScheme cs);
 	InitReturn FindOrCreateSenc(const wxString& name);
 	int BuildSENCFile(const wxString& FullPath000, const wxString& SENCFileName);
 

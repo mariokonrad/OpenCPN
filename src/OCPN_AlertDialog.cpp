@@ -22,9 +22,10 @@
  **************************************************************************/
 
 #include "OCPN_AlertDialog.h"
-#include <ColorScheme.h>
 
-extern ColorScheme global_color_scheme;
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 extern bool g_bopengl;
 
 IMPLEMENT_CLASS(OCPN_AlertDialog, wxDialog)
@@ -60,9 +61,11 @@ bool OCPN_AlertDialog::Create(
 	// This way, any window decorations set by external themes, etc
 	// will not detract from night-vision
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	long wstyle = wxDEFAULT_FRAME_STYLE;
-	if ((global_color_scheme != GLOBAL_COLOR_SCHEME_DAY)
-			&& (global_color_scheme != GLOBAL_COLOR_SCHEME_RGB))
+	if ((view.color_scheme != global::GLOBAL_COLOR_SCHEME_DAY)
+			&& (view.color_scheme != global::GLOBAL_COLOR_SCHEME_RGB))
 		wstyle |= wxNO_BORDER;
 
 	wxSize size_min = size;

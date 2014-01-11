@@ -26,7 +26,7 @@
 
 #include <wx/dialog.h>
 #include <wx/brush.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 class PianoWin;
 class TextStatWin;
@@ -42,7 +42,7 @@ public:
 	void OnPaint(wxPaintEvent& event);
 	int GetFontHeight();
 	int GetRows() const;
-	void SetColorScheme(ColorScheme cs);
+	void SetColorScheme(global::ColorScheme cs);
 	void RePosition();
 	void ReSize();
 

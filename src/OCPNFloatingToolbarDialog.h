@@ -26,7 +26,7 @@
 
 #include <wx/dialog.h>
 #include <wx/timer.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 #define FADE_TIMER 2
 
@@ -35,62 +35,62 @@ class ToolBarSimple;
 class GrabberWin;
 class wxBoxSizer;
 
-class OCPNFloatingToolbarDialog: public wxDialog
+class OCPNFloatingToolbarDialog : public wxDialog
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		OCPNFloatingToolbarDialog(wxWindow *parent, wxPoint position, long orient);
-		virtual ~OCPNFloatingToolbarDialog();
+public:
+	OCPNFloatingToolbarDialog(wxWindow* parent, wxPoint position, long orient);
+	virtual ~OCPNFloatingToolbarDialog();
 
-		void OnClose( wxCloseEvent& event );
-		void OnWindowCreate( wxWindowCreateEvent& event );
-		void OnToolLeftClick( wxCommandEvent& event );
-		void MouseEvent( wxMouseEvent& event );
-		void FadeTimerEvent( wxTimerEvent& event );
-		bool IsToolbarShown() const;
-		void Realize();
-		ToolBarSimple * GetToolbar();
-		void Submerge();
-		void Surface();
-		void HideTooltip();
-		void ShowTooltips();
-		void EnableTooltips();
-		void DisableTooltips();
+	void OnClose(wxCloseEvent& event);
+	void OnWindowCreate(wxWindowCreateEvent& event);
+	void OnToolLeftClick(wxCommandEvent& event);
+	void MouseEvent(wxMouseEvent& event);
+	void FadeTimerEvent(wxTimerEvent& event);
+	bool IsToolbarShown() const;
+	void Realize();
+	ToolBarSimple* GetToolbar();
+	void Submerge();
+	void Surface();
+	void HideTooltip();
+	void ShowTooltips();
+	void EnableTooltips();
+	void DisableTooltips();
 
-		void DestroyToolBar();
-		void ToggleOrientation();
-		void MoveDialogInScreenCoords( wxPoint posn, wxPoint posn_old );
-		void RePosition();
-		void LockPosition(bool lock);
-		void SetColorScheme( ColorScheme cs );
+	void DestroyToolBar();
+	void ToggleOrientation();
+	void MoveDialogInScreenCoords(wxPoint posn, wxPoint posn_old);
+	void RePosition();
+	void LockPosition(bool lock);
+	void SetColorScheme(global::ColorScheme cs);
 
-		void SetGeometry();
-		long GetOrient() const;
-		void RefreshFadeTimer();
-		int GetDockX() const;
-		int GetDockY() const;
-		bool toolbarConfigChanged;
+	void SetGeometry();
+	long GetOrient() const;
+	void RefreshFadeTimer();
+	int GetDockX() const;
+	int GetDockY() const;
+	bool toolbarConfigChanged;
 
-	private:
-		void DoFade( int value );
+private:
+	void DoFade(int value);
 
-		wxWindow *m_pparent;
-		ToolBarSimple *m_ptoolbar;
-		wxBoxSizer *m_topSizer;
+	wxWindow* m_pparent;
+	ToolBarSimple* m_ptoolbar;
+	wxBoxSizer* m_topSizer;
 
-		GrabberWin *m_pGrabberwin;
+	GrabberWin* m_pGrabberwin;
 
-		long m_orient;
-		wxTimer m_fade_timer;
-		int m_opacity;
-		ColorScheme m_cs;
+	long m_orient;
+	wxTimer m_fade_timer;
+	int m_opacity;
+	global::ColorScheme m_cs;
 
-		wxPoint m_position;
-		int m_dock_x;
-		int m_dock_y;
-		ocpnStyle::Style * m_style;
-		bool m_block;
+	wxPoint m_position;
+	int m_dock_x;
+	int m_dock_y;
+	ocpnStyle::Style* m_style;
+	bool m_block;
 };
 
 #endif

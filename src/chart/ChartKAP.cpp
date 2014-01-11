@@ -48,7 +48,7 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 	int nPlypoint = 0;
 	Plypoint* pPlyTable = static_cast<Plypoint*>(malloc(sizeof(Plypoint))); // FIXME: use std vector
 
-	PreInit(name, init_flags, GLOBAL_COLOR_SCHEME_DAY);
+	PreInit(name, init_flags, global::GLOBAL_COLOR_SCHEME_DAY);
 
 	char buffer[BUF_LEN_MAX];
 

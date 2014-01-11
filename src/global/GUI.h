@@ -26,6 +26,8 @@
 
 #include <wx/gdicmn.h>
 
+#include <global/ColorScheme.h>
+
 namespace global {
 
 class GUI
@@ -50,6 +52,7 @@ class GUI
 			int Show_Target_Name_Scale;
 			bool WayPointPreventDragging;
 			bool ConfirmObjectDelete;
+			ColorScheme color_scheme;
 		};
 
 		virtual const View & view() const = 0;
@@ -66,6 +69,7 @@ class GUI
 		virtual void set_Show_Target_Name_Scale(int) = 0;
 		virtual void set_WayPointPreventDragging(bool) = 0;
 		virtual void set_ConfirmObjectDelete(bool) = 0;
+		virtual void set_color_scheme(ColorScheme) = 0;
 
 	public:
 

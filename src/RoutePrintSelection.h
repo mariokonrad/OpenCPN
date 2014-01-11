@@ -26,8 +26,8 @@
 
 #include <wx/dialog.h>
 
-#include "Route.h"
-#include "ColorScheme.h"
+#include <Route.h>
+#include <global/ColorScheme.h>
 
 #define ID_ROUTEPRINTSELECTION 9000
 #define ID_ROUTEPRINT_SELECTION_OK 9001
@@ -38,48 +38,42 @@ class wxCheckBox;
 
 class RoutePrintSelection : public wxDialog
 {
-		DECLARE_DYNAMIC_CLASS(RoutePrintSelection)
-		DECLARE_EVENT_TABLE()
+	DECLARE_DYNAMIC_CLASS(RoutePrintSelection)
+	DECLARE_EVENT_TABLE()
 
-	public:
-		RoutePrintSelection();
+public:
+	RoutePrintSelection();
 
-		RoutePrintSelection(
-				wxWindow * parent,
-				Route * route,
-				wxWindowID id = ID_ROUTEPRINTSELECTION,
-				const wxString & caption = _("Print Route Selection"),
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxSize(750, 300),
+	RoutePrintSelection(wxWindow* parent, Route* route, wxWindowID id = ID_ROUTEPRINTSELECTION,
+						const wxString& caption = _("Print Route Selection"),
+						const wxPoint& pos = wxDefaultPosition,
+						const wxSize& size = wxSize(750, 300),
+						long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+
+	virtual ~RoutePrintSelection();
+
+	bool Create(wxWindow* parent, wxWindowID id = ID_ROUTEPRINTSELECTION,
+				const wxString& caption = _("Print Route Selection"),
+				const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(750, 300),
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
-		virtual ~RoutePrintSelection();
+	void CreateControls();
 
-		bool Create(
-				wxWindow * parent,
-				wxWindowID id = ID_ROUTEPRINTSELECTION,
-				const wxString & caption = _("Print Route Selection"),
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxSize(750, 300),
-				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	void SetColorScheme(global::ColorScheme cs);
+	void SetDialogTitle(const wxString& title);
+	void OnRoutepropCancelClick(wxCommandEvent& event);
+	void OnRoutepropOkClick(wxCommandEvent& event);
 
-		void CreateControls();
+	static bool ShowToolTips();
 
-		void SetColorScheme(ColorScheme cs);
-		void SetDialogTitle(const wxString & title);
-		void OnRoutepropCancelClick(wxCommandEvent& event);
-		void OnRoutepropOkClick(wxCommandEvent& event);
-
-		static bool ShowToolTips();
-
-		wxButton * m_CancelButton;
-		wxButton * m_OKButton;
-		wxCheckBox * m_checkBoxWPName;
-		wxCheckBox * m_checkBoxWPPosition;
-		wxCheckBox * m_checkBoxWPCourse;
-		wxCheckBox * m_checkBoxWPDistanceToNext;
-		wxCheckBox * m_checkBoxWPDescription;
-		Route * route;
+	wxButton* m_CancelButton;
+	wxButton* m_OKButton;
+	wxCheckBox* m_checkBoxWPName;
+	wxCheckBox* m_checkBoxWPPosition;
+	wxCheckBox* m_checkBoxWPCourse;
+	wxCheckBox* m_checkBoxWPDistanceToNext;
+	wxCheckBox* m_checkBoxWPDescription;
+	Route* route;
 };
 
 #endif

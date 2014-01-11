@@ -27,6 +27,9 @@
 
 #include <ChartCanvas.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #include <chart/s52plib.h>
 #include <chart/ChartDB.h>
 #include <chart/ChartStack.h>
@@ -44,7 +47,6 @@ extern chart::s52plib* ps52plib;
 extern chart::ChartStack* pCurrentStack;
 extern ChartCanvas* cc1;
 extern int g_GroupIndex;
-extern ColorScheme global_color_scheme;
 
 using chart::ChartTableEntry;
 
@@ -1993,14 +1995,14 @@ bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, const ViewPort& vp, OCPNRe
 					rbm.SetMask(pr_mask);
 					rdc.SelectObject(rbm);
 					unsigned char hlcolor = 255;
-					switch (global_color_scheme) {
-						case GLOBAL_COLOR_SCHEME_DAY:
+					switch (global::OCPN::get().gui().view().color_scheme) {
+						case global::GLOBAL_COLOR_SCHEME_DAY:
 							hlcolor = 255;
 							break;
-						case GLOBAL_COLOR_SCHEME_DUSK:
+						case global::GLOBAL_COLOR_SCHEME_DUSK:
 							hlcolor = 64;
 							break;
-						case GLOBAL_COLOR_SCHEME_NIGHT:
+						case global::GLOBAL_COLOR_SCHEME_NIGHT:
 							hlcolor = 16;
 							break;
 						default:

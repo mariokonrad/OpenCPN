@@ -25,9 +25,10 @@
 #define __CHART__CHARTBASE__H__
 
 #include "dychart.h"
-#include <ColorScheme.h>
 #include <ThumbData.h>
 #include <ProjectionType.h>
+
+#include <global/ColorScheme.h>
 
 #include <chart/ChartType.h>
 #include <chart/ChartFamily.h>
@@ -128,7 +129,7 @@ public:
 
 	virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion) = 0;
 
-	virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate = true) = 0;
+	virtual void SetColorScheme(global::ColorScheme cs, bool bApplyImmediate = true) = 0;
 
 	virtual double GetNearestPreferredScalePPM(double target_scale_ppm) = 0;
 
@@ -161,7 +162,7 @@ protected:
 	wxDateTime m_EdDate;
 	wxBitmap* pcached_bitmap;
 	ThumbData* pThumbData;
-	ColorScheme m_global_color_scheme;
+	global::ColorScheme m_global_color_scheme;
 	bool bReadyToRender;
 	double Chart_Error_Factor;
 	double m_lon_datum_adjust; // Add these numbers to WGS84 position to obtain internal chart

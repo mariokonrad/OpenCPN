@@ -72,7 +72,7 @@ double ChartDummy::GetNearestPreferredScalePPM(double target_scale_ppm)
 	return target_scale_ppm;
 }
 
-void ChartDummy::SetColorScheme(ColorScheme WXUNUSED(cs), bool WXUNUSED(bApplyImmediate))
+void ChartDummy::SetColorScheme(global::ColorScheme WXUNUSED(cs), bool WXUNUSED(bApplyImmediate))
 {
 }
 

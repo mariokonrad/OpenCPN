@@ -641,7 +641,7 @@ void RouteProp::CreateControls()
 
 	pDispTz->SetSelection(g_StartTimeTZ);
 
-	SetColorScheme((ColorScheme)0);
+	SetColorScheme(static_cast<global::ColorScheme>(0));
 }
 
 void RouteProp::OnRoutepropListClick(wxListEvent& event)
@@ -715,7 +715,7 @@ void RouteProp::OnRoutePropMenuSelected(wxCommandEvent& event)
 	}
 }
 
-void RouteProp::SetColorScheme(ColorScheme)
+void RouteProp::SetColorScheme(global::ColorScheme)
 {
 	DimeControl(this);
 }

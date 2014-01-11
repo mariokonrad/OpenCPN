@@ -27,7 +27,7 @@
 #include <wx/string.h>
 #include <wx/imaglist.h>
 
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 #include <RoutePoint.h>
 #include <Position.h>
 
@@ -51,7 +51,7 @@ public:
 	RoutePoint* GetNearbyWaypoint(const Position& pos, double radius_meters);
 	RoutePoint* GetOtherNearbyWaypoint(const Position& pos, double radius_meters,
 									   const wxString& guid);
-	void SetColorScheme(ColorScheme cs);
+	void SetColorScheme(global::ColorScheme cs);
 	bool SharedWptsExist();
 	void DeleteAllWaypoints(bool b_delete_used);
 	void DestroyWaypoint(RoutePoint* pRp, bool b_update_changeset = true);

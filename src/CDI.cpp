@@ -46,28 +46,29 @@ CDI::CDI(
 		const wxString& name )
 	: wxWindow(parent, id, wxDefaultPosition, wxDefaultSize, style, name)
 {
-	SetMinSize( wxSize( 10, 150 ) );
+	SetMinSize(wxSize(10, 150));
 }
 
-void CDI::SetColorScheme(ColorScheme)
+void CDI::SetColorScheme(global::ColorScheme)
 {
-	m_pbackBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("DILG2") ), wxSOLID );
-	m_proadBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("DILG1") ), wxSOLID );
-	m_proadPen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T("CHBLK") ), 1, wxSOLID );
+	m_pbackBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("DILG2")), wxSOLID);
+	m_proadBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("DILG1")), wxSOLID);
+	m_proadPen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("CHBLK")), 1, wxSOLID);
 }
 
-void CDI::OnPaint(wxPaintEvent &)
+void CDI::OnPaint(wxPaintEvent&)
 {
-	int sx, sy;
-	GetClientSize( &sx, &sy );
+	int sx;
+	int sy;
+	GetClientSize(&sx, &sy);
 
-	//    Do the drawing on an off-screen memory DC, and blit into place
-	//    to avoid objectionable flashing
+	// Do the drawing on an off-screen memory DC, and blit into place
+	// to avoid objectionable flashing
 	wxMemoryDC mdc;
 
-	wxBitmap m_bitmap( sx, sy, -1 );
-	mdc.SelectObject( m_bitmap );
-	mdc.SetBackground( *m_pbackBrush );
+	wxBitmap m_bitmap(sx, sy, -1);
+	mdc.SelectObject(m_bitmap);
+	mdc.SetBackground(*m_pbackBrush);
 	mdc.Clear();
 
 	int xp = sx / 2;

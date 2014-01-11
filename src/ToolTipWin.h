@@ -25,7 +25,7 @@
 #define __TOOLTIPWIN__H__
 
 #include <wx/dialog.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 class ToolTipWin : public wxDialog
 {
@@ -36,7 +36,7 @@ class ToolTipWin : public wxDialog
 		virtual ~ToolTipWin();
 
 		void OnPaint(wxPaintEvent& event);
-		void SetColorScheme(ColorScheme cs);
+		void SetColorScheme(global::ColorScheme cs);
 		void SetString(const wxString & s);
 		void SetPosition(wxPoint pt);
 		void SetBitmap(void);

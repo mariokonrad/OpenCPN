@@ -25,7 +25,7 @@
 #define __CONCANV_H__
 
 #include <wx/dialog.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 #define ID_LEGROUTE 1000
 
@@ -36,39 +36,39 @@ class wxStaticText;
 
 class ConsoleCanvas : public wxDialog
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		ConsoleCanvas(wxWindow * frame);
-		virtual ~ConsoleCanvas();
-		void UpdateRouteData();
-		void ShowWithFreshFonts(void);
-		void UpdateFonts(void);
-		void SetColorScheme(ColorScheme cs);
-		void LegRoute();
-		void OnContextMenu(wxContextMenuEvent & event);
-		void OnContextMenuSelection(wxCommandEvent & event);
-		void RefreshConsoleData(void);
+public:
+	ConsoleCanvas(wxWindow* frame);
+	virtual ~ConsoleCanvas();
+	void UpdateRouteData();
+	void ShowWithFreshFonts(void);
+	void UpdateFonts(void);
+	void SetColorScheme(global::ColorScheme cs);
+	void LegRoute();
+	void OnContextMenu(wxContextMenuEvent& event);
+	void OnContextMenuSelection(wxCommandEvent& event);
+	void RefreshConsoleData(void);
 
-		wxWindow * m_pParent;
-		wxStaticText * pThisLegText;
-		wxBoxSizer * m_pitemBoxSizerLeg;
+	wxWindow* m_pParent;
+	wxStaticText* pThisLegText;
+	wxBoxSizer* m_pitemBoxSizerLeg;
 
-		AnnunText * pXTE;
-		AnnunText * pBRG;
-		AnnunText * pRNG;
-		AnnunText * pTTG;
-		AnnunText * pVMG;
-		CDI * pCDI;
+	AnnunText* pXTE;
+	AnnunText* pBRG;
+	AnnunText* pRNG;
+	AnnunText* pTTG;
+	AnnunText* pVMG;
+	CDI* pCDI;
 
-		wxFont * pThisLegFont;
-		bool m_bShowRouteTotal;
-		bool m_bNeedClear;
-		wxBrush * pbackBrush;
+	wxFont* pThisLegFont;
+	bool m_bShowRouteTotal;
+	bool m_bNeedClear;
+	wxBrush* pbackBrush;
 
-	private:
-		void OnPaint(wxPaintEvent & event);
-		void OnShow(wxShowEvent & event);
+private:
+	void OnPaint(wxPaintEvent& event);
+	void OnShow(wxShowEvent& event);
 };
 
 #endif

@@ -991,7 +991,7 @@ void PlugInManager::SendResizeEventToAllPlugIns(int x, int y)
 	}
 }
 
-void PlugInManager::SetColorSchemeForAllPlugIns(ColorScheme cs)
+void PlugInManager::SetColorSchemeForAllPlugIns(global::ColorScheme cs)
 {
 	for (unsigned int i = 0; i < plugin_array.size(); i++) {
 		PlugInContainer* pic = plugin_array.Item(i);

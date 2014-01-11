@@ -1322,7 +1322,7 @@ void cm93compchart::ForceEdgePriorityEvaluate(void)
 	}
 }
 
-void cm93compchart::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
+void cm93compchart::SetColorScheme(global::ColorScheme cs, bool bApplyImmediate)
 {
 	m_global_color_scheme = cs;
 

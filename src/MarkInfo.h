@@ -27,7 +27,8 @@
 #define __MARKINFO__H__
 
 #include "RoutePoint.h"
-#include <ColorScheme.h>
+
+#include <global/ColorScheme.h>
 
 #include <wx/dialog.h>
 
@@ -118,7 +119,7 @@ class MarkInfoDef : public wxDialog
 class MarkInfoImpl : public MarkInfoDef
 {
 public:
-	void SetColorScheme(ColorScheme cs);
+	void SetColorScheme(global::ColorScheme cs);
 	void OnMarkInfoOKClick(wxCommandEvent& event);
 	void OnMarkInfoCancelClick(wxCommandEvent& event);
 	void SetRoutePoint(RoutePoint* pRP);

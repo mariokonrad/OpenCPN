@@ -304,12 +304,12 @@ double ChartBaseBSB::GetPPM() const
 
 InitReturn ChartBaseBSB::Init(const wxString& WXUNUSED(name), ChartInitFlag WXUNUSED(init_flags))
 {
-	m_global_color_scheme = GLOBAL_COLOR_SCHEME_RGB;
+	m_global_color_scheme = global::GLOBAL_COLOR_SCHEME_RGB;
 	return INIT_OK;
 }
 
 InitReturn ChartBaseBSB::PreInit(const wxString& WXUNUSED(name), ChartInitFlag WXUNUSED(init_flags),
-								 ColorScheme cs)
+								 global::ColorScheme cs)
 {
 	m_global_color_scheme = cs;
 	return INIT_OK;
@@ -699,22 +699,22 @@ bool ChartBaseBSB::SetMinMax(void)
 	return true;
 }
 
-void ChartBaseBSB::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
+void ChartBaseBSB::SetColorScheme(global::ColorScheme cs, bool bApplyImmediate)
 {
 	// Here we convert (subjectively) the Global ColorScheme
 	// to an appropriate BSB_Color_Capability index.
 
 	switch (cs) {
-		case GLOBAL_COLOR_SCHEME_RGB:
+		case global::GLOBAL_COLOR_SCHEME_RGB:
 			m_mapped_color_index = COLOR_RGB_DEFAULT;
 			break;
-		case GLOBAL_COLOR_SCHEME_DAY:
+		case global::GLOBAL_COLOR_SCHEME_DAY:
 			m_mapped_color_index = DAY;
 			break;
-		case GLOBAL_COLOR_SCHEME_DUSK:
+		case global::GLOBAL_COLOR_SCHEME_DUSK:
 			m_mapped_color_index = DUSK;
 			break;
-		case GLOBAL_COLOR_SCHEME_NIGHT:
+		case global::GLOBAL_COLOR_SCHEME_NIGHT:
 			m_mapped_color_index = NIGHT;
 			break;
 		default:
@@ -736,7 +736,7 @@ void ChartBaseBSB::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
 		pThumbData->pDIBThumb = NULL;
 }
 
-wxBitmap* ChartBaseBSB::CreateThumbnail(int tnx, int tny, ColorScheme cs)
+wxBitmap* ChartBaseBSB::CreateThumbnail(int tnx, int tny, global::ColorScheme cs)
 {
 	// Calculate the size and divisors
 
@@ -770,7 +770,7 @@ wxBitmap* ChartBaseBSB::CreateThumbnail(int tnx, int tny, ColorScheme cs)
 	unsigned char* pxd;
 
 	// Temporarily set the color scheme
-	ColorScheme cs_tmp = m_global_color_scheme;
+	global::ColorScheme cs_tmp = m_global_color_scheme;
 	SetColorScheme(cs, false);
 
 	while (iyd < des_height) {

@@ -25,7 +25,7 @@
 #define __ROUTEMAN_H__
 
 #include "nmea0183.h"
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 #include <Position.h>
 
 #include <vector>
@@ -39,97 +39,97 @@ class wxPen;
 
 class Routeman
 {
-	public:
-		typedef std::vector<Route*> RouteArray;
+public:
+	typedef std::vector<Route*> RouteArray;
 
-	public:
-		Routeman(App * parent);
-		~Routeman();
+public:
+	Routeman(App* parent);
+	~Routeman();
 
-		void DeleteRoute(Route *pRoute);
-		void DeleteAllRoutes(void);
-		void DeleteAllTracks(void);
+	void DeleteRoute(Route* pRoute);
+	void DeleteAllRoutes(void);
+	void DeleteAllTracks(void);
 
-		void DeleteTrack(Route * pRoute);
+	void DeleteTrack(Route* pRoute);
 
-		Route * FindRouteByGUID(const wxString & guid) const;
-		Route * FindRouteContainingWaypoint(const RoutePoint *pWP);
-		RouteArray * GetRouteArrayContaining(const RoutePoint *pWP); // FIXME: returns std container
-		bool DoesRouteContainSharedPoints(const Route *pRoute);
+	Route* FindRouteByGUID(const wxString& guid) const;
+	Route* FindRouteContainingWaypoint(const RoutePoint* pWP);
+	RouteArray* GetRouteArrayContaining(const RoutePoint* pWP); // FIXME: returns std container
+	bool DoesRouteContainSharedPoints(const Route* pRoute);
 
-		bool ActivateRoute(Route *pRouteToActivate, RoutePoint *pStartPoint = NULL);
-		bool ActivateRoutePoint(Route *pA, RoutePoint *pRP);
-		bool ActivateNextPoint(Route *pr, bool skipped);
-		RoutePoint *FindBestActivatePoint(Route *pR, const Position& pos, double cog, double sog);
+	bool ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint = NULL);
+	bool ActivateRoutePoint(Route* pA, RoutePoint* pRP);
+	bool ActivateNextPoint(Route* pr, bool skipped);
+	RoutePoint* FindBestActivatePoint(Route* pR, const Position& pos, double cog, double sog);
 
-		bool UpdateProgress();
-		bool UpdateAutopilot();
-		bool DeactivateRoute(bool b_arrival = false);
-		bool IsAnyRouteActive(void) const;
-		void SetColorScheme(ColorScheme cs);
+	bool UpdateProgress();
+	bool UpdateAutopilot();
+	bool DeactivateRoute(bool b_arrival = false);
+	bool IsAnyRouteActive(void) const;
+	void SetColorScheme(global::ColorScheme cs);
 
-		Route *GetpActiveRoute();
-		RoutePoint *GetpActivePoint();
-		double GetCurrentRngToActivePoint() const;
-		double GetCurrentBrgToActivePoint() const;
-		double GetCurrentRngToActiveNormalArrival() const;
-		double GetCurrentXTEToActivePoint() const;
-		double GetCurrentSegmentCourse() const;
-		int GetXTEDir() const;
+	Route* GetpActiveRoute();
+	RoutePoint* GetpActivePoint();
+	double GetCurrentRngToActivePoint() const;
+	double GetCurrentBrgToActivePoint() const;
+	double GetCurrentRngToActiveNormalArrival() const;
+	double GetCurrentXTEToActivePoint() const;
+	double GetCurrentSegmentCourse() const;
+	int GetXTEDir() const;
 
-		wxPen * GetRoutePen(void);
-		wxPen * GetSelectedRoutePen(void);
-		wxPen * GetActiveRoutePen(void);
-		wxPen * GetActiveRoutePointPen(void);
-		wxPen * GetRoutePointPen(void);
-		wxBrush * GetRouteBrush(void);
-		wxBrush * GetSelectedRouteBrush(void);
-		wxBrush * GetActiveRouteBrush(void);
-		wxBrush * GetActiveRoutePointBrush(void);
-		wxBrush * GetRoutePointBrush(void);
+	wxPen* GetRoutePen(void);
+	wxPen* GetSelectedRoutePen(void);
+	wxPen* GetActiveRoutePen(void);
+	wxPen* GetActiveRoutePointPen(void);
+	wxPen* GetRoutePointPen(void);
+	wxBrush* GetRouteBrush(void);
+	wxBrush* GetSelectedRouteBrush(void);
+	wxBrush* GetActiveRouteBrush(void);
+	wxBrush* GetActiveRoutePointBrush(void);
+	wxBrush* GetRoutePointBrush(void);
 
-		wxString GetRouteReverseMessage(void) const;
+	wxString GetRouteReverseMessage(void) const;
 
-		Route * RouteExists(const wxString & guid) const;
-		bool RouteExists(const Route * route) const;
-		bool IsRouteValid(const Route *pRoute) const;
-		bool is_data_valid() const;
+	Route* RouteExists(const wxString& guid) const;
+	bool RouteExists(const Route* route) const;
+	bool IsRouteValid(const Route* pRoute) const;
+	bool is_data_valid() const;
 
-	private:
-		void DoAdvance(void);
+private:
+	void DoAdvance(void);
 
-		bool m_bDataValid;
-		App * m_pparent_app;
-		Route * pActiveRoute;
-		RoutePoint * pActivePoint;
-		double RouteBrgToActivePoint;        //TODO all these need to be doubles
-		double CurrentSegmentBeginLat;
-		double CurrentSegmentBeginLon;
-		double CurrentRngToActivePoint;
-		double CurrentBrgToActivePoint;
-		double CurrentXTEToActivePoint;
-		double CourseToRouteSegment;
-		double CurrentRangeToActiveNormalCrossing;
-		RoutePoint * pActiveRouteSegmentBeginPoint;
-		RoutePoint * pRouteActivatePoint;
-		double CurrentSegmentCourse;
-		int XTEDir;
-		bool m_bArrival;
-		wxPen * m_pRoutePen;
-		wxPen * m_pSelectedRoutePen;
-		wxPen * m_pActiveRoutePen;
-		wxPen * m_pActiveRoutePointPen;
-		wxPen * m_pRoutePointPen;
-		wxBrush * m_pRouteBrush;
-		wxBrush * m_pSelectedRouteBrush;
-		wxBrush * m_pActiveRouteBrush;
-		wxBrush * m_pActiveRoutePointBrush;
-		wxBrush * m_pRoutePointBrush;
+	bool m_bDataValid;
+	App* m_pparent_app;
+	Route* pActiveRoute;
+	RoutePoint* pActivePoint;
+	double RouteBrgToActivePoint; // TODO all these need to be doubles
+	double CurrentSegmentBeginLat;
+	double CurrentSegmentBeginLon;
+	double CurrentRngToActivePoint;
+	double CurrentBrgToActivePoint;
+	double CurrentXTEToActivePoint;
+	double CourseToRouteSegment;
+	double CurrentRangeToActiveNormalCrossing;
+	RoutePoint* pActiveRouteSegmentBeginPoint;
+	RoutePoint* pRouteActivatePoint;
+	double CurrentSegmentCourse;
+	int XTEDir;
+	bool m_bArrival;
+	wxPen* m_pRoutePen;
+	wxPen* m_pSelectedRoutePen;
+	wxPen* m_pActiveRoutePen;
+	wxPen* m_pActiveRoutePointPen;
+	wxPen* m_pRoutePointPen;
+	wxBrush* m_pRouteBrush;
+	wxBrush* m_pSelectedRouteBrush;
+	wxBrush* m_pActiveRouteBrush;
+	wxBrush* m_pActiveRoutePointBrush;
+	wxBrush* m_pRoutePointBrush;
 
-		NMEA0183 m_NMEA0183; // For autopilot output
+	NMEA0183 m_NMEA0183; // For autopilot output
 
-		double m_arrival_min;
-		int m_arrival_test;
+	double m_arrival_min;
+	int m_arrival_test;
 };
 
 #endif

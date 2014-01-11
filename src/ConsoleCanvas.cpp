@@ -128,14 +128,14 @@ ConsoleCanvas::~ConsoleCanvas()
 	delete pCDI;
 }
 
-void ConsoleCanvas::SetColorScheme(ColorScheme cs)
+void ConsoleCanvas::SetColorScheme(global::ColorScheme cs)
 {
 	wxColour color = GetGlobalColor(_T("DILG1" /*UIBDR*/));
 
 	pbackBrush = wxTheBrushList->FindOrCreateBrush(color, wxSOLID);
 	SetBackgroundColour(color);
 
-	//  Also apply color scheme to all known children
+	// Also apply color scheme to all known children
 
 	pThisLegText->SetBackgroundColour(color);
 

@@ -124,7 +124,7 @@ int StatWin::GetFontHeight()
 	return h;
 }
 
-void StatWin::SetColorScheme(ColorScheme cs)
+void StatWin::SetColorScheme(global::ColorScheme cs)
 {
 	m_backBrush = wxBrush(GetGlobalColor(_T("UIBDR")), wxSOLID);
 

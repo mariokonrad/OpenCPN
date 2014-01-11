@@ -27,7 +27,7 @@
 #include <wx/window.h>
 #include <wx/brush.h>
 #include <vector>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 class wxBitmap;
 
@@ -43,7 +43,7 @@ public:
 	void OnPaint(wxPaintEvent& event);
 	void FormatKeys(void);
 	void MouseEvent(wxMouseEvent& event);
-	void SetColorScheme(ColorScheme cs);
+	void SetColorScheme(global::ColorScheme cs);
 	void SetKeyArray(std::vector<int> piano_chart_index_array);
 	void SetActiveKey(int iactive);
 	void SetActiveKeyArray(std::vector<int> array);

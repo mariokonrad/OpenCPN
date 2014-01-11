@@ -25,21 +25,21 @@
 #define __CDI__H__
 
 #include <wx/window.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 class CDI : public wxWindow
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		CDI(wxWindow * parent, wxWindowID id, long style, const wxString & name);
+public:
+	CDI(wxWindow* parent, wxWindowID id, long style, const wxString& name);
 
-		void OnPaint(wxPaintEvent & event);
-		void SetColorScheme(ColorScheme cs);
+	void OnPaint(wxPaintEvent& event);
+	void SetColorScheme(global::ColorScheme cs);
 
-		wxBrush * m_pbackBrush;
-		wxBrush * m_proadBrush;
-		wxPen * m_proadPen;
+	wxBrush* m_pbackBrush;
+	wxBrush* m_proadBrush;
+	wxPen* m_proadPen;
 };
 
 #endif

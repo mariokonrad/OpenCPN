@@ -167,8 +167,8 @@ public:
 
 	int GetNextContextMenuId();
 
-	void SetColorScheme(ColorScheme cs);
-	ColorScheme GetColorScheme() const;
+	void SetColorScheme(global::ColorScheme cs);
+	global::ColorScheme GetColorScheme() const;
 
 	wxString FormatDistanceAdaptive(double distance);
 
@@ -389,11 +389,11 @@ private:
 
 	void EmbossDepthScale(ocpnDC& dc);
 	EmbossData* CreateEmbossMapData(wxFont& font, int width, int height, const wxChar* str,
-									ColorScheme cs);
-	void CreateDepthUnitEmbossMaps(ColorScheme cs);
+									global::ColorScheme cs);
+	void CreateDepthUnitEmbossMaps(global::ColorScheme cs);
 	wxBitmap CreateDimBitmap(wxBitmap& Bitmap, double factor);
 
-	void CreateOZEmbossMapData(ColorScheme cs);
+	void CreateOZEmbossMapData(global::ColorScheme cs);
 	void EmbossOverzoomIndicator(ocpnDC& dc);
 
 	void EmbossCanvas(ocpnDC& dc, EmbossData* pemboss, int x, int y);
@@ -469,7 +469,7 @@ private:
 
 	ownship_state_t m_ownship_state;
 
-	ColorScheme m_cs;
+	global::ColorScheme m_cs;
 	bool m_bMeasure_Active;
 	int m_nMeasureState;
 	Route* m_pMeasureRoute;
@@ -519,7 +519,7 @@ private:
 	wxImage m_ship_pix_image; // cached ship draw image for high overzoom
 	int m_cur_ship_pix;
 	bool m_cur_ship_pix_isgrey;
-	ColorScheme m_ship_cs;
+	global::ColorScheme m_ship_cs;
 
 	Quilt* m_pQuilt;
 

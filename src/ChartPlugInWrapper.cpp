@@ -315,7 +315,7 @@ void ChartPlugInWrapper::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion
 	return;
 }
 
-void ChartPlugInWrapper::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
+void ChartPlugInWrapper::SetColorScheme(global::ColorScheme cs, bool bApplyImmediate)
 {
 	if (m_ppicb)
 		m_ppicb->SetColorScheme(cs, bApplyImmediate);

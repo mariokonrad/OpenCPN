@@ -46,7 +46,7 @@ InitReturn ChartGEO::Init(const wxString& name, ChartInitFlag init_flags)
 {
 #define BUF_LEN_MAX 4000
 
-	PreInit(name, init_flags, GLOBAL_COLOR_SCHEME_DAY);
+	PreInit(name, init_flags, global::GLOBAL_COLOR_SCHEME_DAY);
 
 	char buffer[BUF_LEN_MAX];
 

@@ -55,6 +55,7 @@ class OCPN_GUI : public GUI
 		virtual void set_Show_Target_Name_Scale(int);
 		virtual void set_WayPointPreventDragging(bool);
 		virtual void set_ConfirmObjectDelete(bool);
+		virtual void set_color_scheme(ColorScheme);
 
 	public: // frame
 		virtual const Frame & frame() const;

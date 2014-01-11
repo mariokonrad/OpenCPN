@@ -44,7 +44,7 @@ namespace ocpnStyle {
 
 wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset)
 {
-	wxBitmap merged( back.GetWidth(), back.GetHeight(), back.GetDepth() );
+	wxBitmap merged(back.GetWidth(), back.GetHeight(), back.GetDepth());
 #if (!wxCHECK_VERSION(2,9,4) && (defined(__WXGTK__) || defined(__WXMAC__)))
 
 	// Manual alpha blending for broken wxWidgets platforms.
@@ -54,48 +54,55 @@ wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset)
 
 	wxImage im_front = front.ConvertToImage();
 	wxImage im_back = back.ConvertToImage();
-	wxImage im_result = back.ConvertToImage();// Only way to make result have alpha channel in wxW 2.8.
+	// Only way to make result have alpha channel in wxW 2.8.
+	wxImage im_result = back.ConvertToImage();
 
-	unsigned char *presult = im_result.GetData();
-	unsigned char *pback = im_back.GetData();
-	unsigned char *pfront = im_front.GetData();
+	unsigned char* presult = im_result.GetData();
+	unsigned char* pback = im_back.GetData();
+	unsigned char* pfront = im_front.GetData();
 
-	unsigned char *afront = NULL;
-	if( im_front.HasAlpha() )
+	unsigned char* afront = NULL;
+	if (im_front.HasAlpha())
 		afront = im_front.GetAlpha();
 
-	unsigned char *aback = NULL;
-	if( im_back.HasAlpha() )
+	unsigned char* aback = NULL;
+	if (im_back.HasAlpha())
 		aback = im_back.GetAlpha();
 
-	unsigned char *aresult = NULL;
-	if( im_result.HasAlpha() )
+	unsigned char* aresult = NULL;
+	if (im_result.HasAlpha())
 		aresult = im_result.GetAlpha();
 
 	// Do alpha blending, associative version of "over" operator.
 
-	for( int i = 0; i < back.GetHeight(); i++ ) {
-		for( int j = 0; j < back.GetWidth(); j++ ) {
+	for (int i = 0; i < back.GetHeight(); i++) {
+		for (int j = 0; j < back.GetWidth(); j++) {
 
 			int fX = j - offset.x;
 			int fY = i - offset.y;
 
 			bool inFront = true;
-			if( fX < 0 || fY < 0 ) inFront = false;
-			if( fX >= front.GetWidth() ) inFront = false;
-			if( fY >= front.GetHeight() ) inFront = false;
+			if (fX < 0 || fY < 0)
+				inFront = false;
+			if (fX >= front.GetWidth())
+				inFront = false;
+			if (fY >= front.GetHeight())
+				inFront = false;
 
-			if( inFront ) {
-				double alphaF = (double) ( *afront++ ) / 256.0;
-				double alphaB = (double) ( *aback++ ) / 256.0;
-				double alphaRes = alphaF + alphaB * ( 1.0 - alphaF );
+			if (inFront) {
+				double alphaF = (double)(*afront++) / 256.0;
+				double alphaB = (double)(*aback++) / 256.0;
+				double alphaRes = alphaF + alphaB * (1.0 - alphaF);
 				unsigned char a = alphaRes * 256;
 				*aresult++ = a;
-				unsigned char r = (*pfront++ * alphaF + *pback++ * alphaB * ( 1.0 - alphaF )) / alphaRes;
+				unsigned char r = (*pfront++ * alphaF + *pback++ * alphaB * (1.0 - alphaF))
+								  / alphaRes;
 				*presult++ = r;
-				unsigned char g = (*pfront++ * alphaF + *pback++ * alphaB * ( 1.0 - alphaF )) / alphaRes;
+				unsigned char g = (*pfront++ * alphaF + *pback++ * alphaB * (1.0 - alphaF))
+								  / alphaRes;
 				*presult++ = g;
-				unsigned char b = (*pfront++ * alphaF + *pback++ * alphaB * ( 1.0 - alphaF )) / alphaRes;
+				unsigned char b = (*pfront++ * alphaF + *pback++ * alphaB * (1.0 - alphaF))
+								  / alphaRes;
 				*presult++ = b;
 			} else {
 				*aresult++ = *aback++;
@@ -106,13 +113,13 @@ wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset)
 		}
 	}
 
-	merged = wxBitmap( im_result );
+	merged = wxBitmap(im_result);
 
 #else
-	wxMemoryDC mdc( merged );
-	mdc.DrawBitmap( back, 0, 0, true );
-	mdc.DrawBitmap( front, offset.x, offset.y, true );
-	mdc.SelectObject( wxNullBitmap );
+	wxMemoryDC mdc(merged);
+	mdc.DrawBitmap(back, 0, 0, true);
+	mdc.DrawBitmap(front, offset.x, offset.y, true);
+	mdc.SelectObject(wxNullBitmap);
 #endif
 
 	return merged;
@@ -122,39 +129,40 @@ wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset)
 // channel and put it in a 24 bit deep bitmap with no alpha, that can be safely
 // drawn in the crappy wxWindows implementations.
 
-wxBitmap ConvertTo24Bit( wxColor bgColor, wxBitmap front )
+wxBitmap ConvertTo24Bit(wxColor bgColor, wxBitmap front)
 {
-	if( front.GetDepth() == 24 ) return front;
+	if (front.GetDepth() == 24)
+		return front;
 
-	wxBitmap result( front.GetWidth(), front.GetHeight(), 24 );
-#if !wxCHECK_VERSION(2,9,4)
+	wxBitmap result(front.GetWidth(), front.GetHeight(), 24);
+#if !wxCHECK_VERSION(2, 9, 4)
 	front.UseAlpha();
 #endif
 
 	wxImage im_front = front.ConvertToImage();
 	wxImage im_result = result.ConvertToImage();
 
-	unsigned char *presult = im_result.GetData();
-	unsigned char *pfront = im_front.GetData();
+	unsigned char* presult = im_result.GetData();
+	unsigned char* pfront = im_front.GetData();
 
-	unsigned char *afront = NULL;
-	if( im_front.HasAlpha() )
+	unsigned char* afront = NULL;
+	if (im_front.HasAlpha())
 		afront = im_front.GetAlpha();
 
-	for( int i = 0; i < result.GetWidth(); i++ ) {
-		for( int j = 0; j < result.GetHeight(); j++ ) {
+	for (int i = 0; i < result.GetWidth(); i++) {
+		for (int j = 0; j < result.GetHeight(); j++) {
 
-			double alphaF = (double) ( *afront++ ) / 256.0;
-			unsigned char r = *pfront++ * alphaF + bgColor.Red() * ( 1.0 - alphaF );
+			double alphaF = (double)(*afront++) / 256.0;
+			unsigned char r = *pfront++ * alphaF + bgColor.Red() * (1.0 - alphaF);
 			*presult++ = r;
-			unsigned char g = *pfront++ * alphaF + bgColor.Green() * ( 1.0 - alphaF );
+			unsigned char g = *pfront++ * alphaF + bgColor.Green() * (1.0 - alphaF);
 			*presult++ = g;
-			unsigned char b = *pfront++ * alphaF + bgColor.Blue() * ( 1.0 - alphaF );
+			unsigned char b = *pfront++ * alphaF + bgColor.Blue() * (1.0 - alphaF);
 			*presult++ = b;
 		}
 	}
 
-	result = wxBitmap( im_result );
+	result = wxBitmap(im_result);
 	return result;
 }
 
@@ -246,8 +254,9 @@ bool Style::HasToolbarEnd() const
 // Tools and Icons perform on-demand loading and dimming of bitmaps.
 // Changing color scheme invalidatres all loaded bitmaps.
 
-wxBitmap Style::GetIcon(const wxString & name) // FIXME: do not use lazy initialization, styles are initialized by StyleManager
+wxBitmap Style::GetIcon(const wxString& name)
 {
+	// FIXME: do not use lazy initialization, styles are initialized by StyleManager
 	intHash::iterator index = iconIndex.find(name);
 
 	if (index == iconIndex.end()) {
@@ -255,189 +264,186 @@ wxBitmap Style::GetIcon(const wxString & name) // FIXME: do not use lazy initial
 		return wxBitmap(GetToolSize().x, GetToolSize().y); // Prevents crashing.
 	}
 
-	Icon * icon = icons[index->second];
+	Icon* icon = icons[index->second];
 
 	if (icon->loaded)
 		return icon->icon;
 	if (icon->size.x == 0)
 		icon->size = toolSize[currentOrientation];
-	wxRect location( icon->iconLoc, icon->size );
-	wxBitmap bm = graphics->GetSubBitmap( location );
-	icon->icon = SetBitmapBrightness( bm );
+	wxRect location(icon->iconLoc, icon->size);
+	wxBitmap bm = graphics->GetSubBitmap(location);
+	icon->icon = SetBitmapBrightness(bm);
 	icon->loaded = true;
 	return icon->icon;
 }
 
-wxBitmap Style::GetToolIcon(const wxString & toolname, int iconType, bool rollover) // FIXME: do not use lazy initialization, styles are initialized by StyleManager
+wxBitmap Style::GetToolIcon(const wxString& toolname, int iconType, bool rollover)
 {
+	// FIXME: do not use lazy initialization, styles are initialized by StyleManager
 	intHash::iterator index = toolIndex.find(toolname);
 
 	if (index == toolIndex.end()) {
 		return wxBitmap(GetToolSize().x, GetToolSize().y, 1);
 	}
 
-	Tool * tool = tools[index->second];
+	Tool* tool = tools[index->second];
 
 	switch (iconType) {
-		case TOOLICON_NORMAL:
-			{
-				if( tool->iconLoaded && !rollover )
-					return tool->icon;
-				if( tool->rolloverLoaded && rollover )
-					return tool->rollover;
+		case TOOLICON_NORMAL: {
+			if (tool->iconLoaded && !rollover)
+				return tool->icon;
+			if (tool->rolloverLoaded && rollover)
+				return tool->rollover;
 
-				wxSize size = tool->customSize;
-				if( size.x == 0 )
-					size = toolSize[currentOrientation];
-				wxRect location( tool->iconLoc, size );
+			wxSize size = tool->customSize;
+			if (size.x == 0)
+				size = toolSize[currentOrientation];
+			wxRect location(tool->iconLoc, size);
 
-				//  If rollover icon does not exist, use the defult icon
-				if( rollover ) {
-					if( (tool->rolloverLoc.x != 0) || (tool->rolloverLoc.y != 0) )
-						location = wxRect( tool->rolloverLoc, size );
-				}
-
-				if( currentOrientation ) {
-					location.x -= verticalIconOffset.x;
-					location.y -= verticalIconOffset.y;
-				}
-
-				wxBitmap bm = graphics->GetSubBitmap( location );
-				if( hasBackground ) {
-					bm = MergeBitmaps( GetNormalBG(), bm, wxSize( 0, 0 ) );
-				} else {
-					wxBitmap bg( GetToolSize().x, GetToolSize().y );
-					wxMemoryDC mdc( bg );
-					mdc.SetBackground( wxBrush( GetGlobalColor( _T("GREY2") ), wxSOLID ) );
-					mdc.Clear();
-					mdc.SelectObject( wxNullBitmap );
-					bm = MergeBitmaps( bg, bm, wxSize( 0, 0 ) );
-				}
-				if( rollover ) {
-					tool->rollover = SetBitmapBrightness( bm );
-					tool->rolloverLoaded = true;
-					return tool->rollover;
-				} else {
-					if( toolname == _T("mob_btn") ) {
-						double dimLevel = 1.0;
-						if(colorscheme ==  GLOBAL_COLOR_SCHEME_DUSK)
-							dimLevel = 0.5;
-						else if(colorscheme ==  GLOBAL_COLOR_SCHEME_NIGHT)
-							dimLevel = 0.5;
-						tool->icon = SetBitmapBrightnessAbs( bm, dimLevel );
-					} else {
-						tool->icon = SetBitmapBrightness( bm );
-					}
-
-					tool->iconLoaded = true;
-					return tool->icon;
-				}
+			//  If rollover icon does not exist, use the defult icon
+			if (rollover) {
+				if ((tool->rolloverLoc.x != 0) || (tool->rolloverLoc.y != 0))
+					location = wxRect(tool->rolloverLoc, size);
 			}
-			break;
 
-		case TOOLICON_TOGGLED:
-			{
-				if( tool->toggledLoaded && !rollover )
-					return tool->toggled;
-				if( tool->rolloverToggledLoaded && rollover )
-					return tool->rolloverToggled;
-
-				wxSize size = tool->customSize;
-				if( size.x == 0 )
-					size = toolSize[currentOrientation];
-				wxRect location( tool->iconLoc, size );
-				if( rollover )
-					location = wxRect( tool->rolloverLoc, size );
-				wxSize offset( 0, 0 );
-				if( GetToolSize() != GetToggledToolSize() ) {
-					offset = GetToggledToolSize() - GetToolSize();
-					offset /= 2;
-				}
-				if( currentOrientation ) {
-					location.x -= verticalIconOffset.x;
-					location.y -= verticalIconOffset.y;
-				}
-				wxBitmap bm = MergeBitmaps(GetToggledBG(), graphics->GetSubBitmap(location), offset);
-				if( rollover ) {
-					tool->rolloverToggled = SetBitmapBrightness( bm );
-					tool->rolloverToggledLoaded = true;
-					return tool->rolloverToggled;
-				} else {
-					tool->toggled = SetBitmapBrightness( bm );
-					tool->toggledLoaded = true;
-					return tool->toggled;
-				}
+			if (currentOrientation) {
+				location.x -= verticalIconOffset.x;
+				location.y -= verticalIconOffset.y;
 			}
-			break;
 
-		case TOOLICON_DISABLED:
-			{
-				if( tool->disabledLoaded )
-					return tool->disabled;
-				wxSize size = tool->customSize;
-				if( size.x == 0 )
-					size = toolSize[currentOrientation];
-				wxRect location( tool->disabledLoc, size );
-				wxBitmap bm = graphics->GetSubBitmap( location );
-				if( currentOrientation ) {
-					location.x -= verticalIconOffset.x;
-					location.y -= verticalIconOffset.y;
+			wxBitmap bm = graphics->GetSubBitmap(location);
+			if (hasBackground) {
+				bm = MergeBitmaps(GetNormalBG(), bm, wxSize(0, 0));
+			} else {
+				wxBitmap bg(GetToolSize().x, GetToolSize().y);
+				wxMemoryDC mdc(bg);
+				mdc.SetBackground(wxBrush(GetGlobalColor(_T("GREY2")), wxSOLID));
+				mdc.Clear();
+				mdc.SelectObject(wxNullBitmap);
+				bm = MergeBitmaps(bg, bm, wxSize(0, 0));
+			}
+			if (rollover) {
+				tool->rollover = SetBitmapBrightness(bm);
+				tool->rolloverLoaded = true;
+				return tool->rollover;
+			} else {
+				if (toolname == _T("mob_btn")) {
+					double dimLevel = 1.0;
+					if (colorscheme == global::GLOBAL_COLOR_SCHEME_DUSK)
+						dimLevel = 0.5;
+					else if (colorscheme == global::GLOBAL_COLOR_SCHEME_NIGHT)
+						dimLevel = 0.5;
+					tool->icon = SetBitmapBrightnessAbs(bm, dimLevel);
+				} else {
+					tool->icon = SetBitmapBrightness(bm);
 				}
-				if( hasBackground ) {
-					bm = MergeBitmaps( GetNormalBG(), bm, wxSize( 0, 0 ) );
-				}
-				tool->disabled = SetBitmapBrightness( bm );
-				tool->disabledLoaded = true;
+
+				tool->iconLoaded = true;
+				return tool->icon;
+			}
+		} break;
+
+		case TOOLICON_TOGGLED: {
+			if (tool->toggledLoaded && !rollover)
+				return tool->toggled;
+			if (tool->rolloverToggledLoaded && rollover)
+				return tool->rolloverToggled;
+
+			wxSize size = tool->customSize;
+			if (size.x == 0)
+				size = toolSize[currentOrientation];
+			wxRect location(tool->iconLoc, size);
+			if (rollover)
+				location = wxRect(tool->rolloverLoc, size);
+			wxSize offset(0, 0);
+			if (GetToolSize() != GetToggledToolSize()) {
+				offset = GetToggledToolSize() - GetToolSize();
+				offset /= 2;
+			}
+			if (currentOrientation) {
+				location.x -= verticalIconOffset.x;
+				location.y -= verticalIconOffset.y;
+			}
+			wxBitmap bm = MergeBitmaps(GetToggledBG(), graphics->GetSubBitmap(location), offset);
+			if (rollover) {
+				tool->rolloverToggled = SetBitmapBrightness(bm);
+				tool->rolloverToggledLoaded = true;
+				return tool->rolloverToggled;
+			} else {
+				tool->toggled = SetBitmapBrightness(bm);
+				tool->toggledLoaded = true;
+				return tool->toggled;
+			}
+		} break;
+
+		case TOOLICON_DISABLED: {
+			if (tool->disabledLoaded)
 				return tool->disabled;
+			wxSize size = tool->customSize;
+			if (size.x == 0)
+				size = toolSize[currentOrientation];
+			wxRect location(tool->disabledLoc, size);
+			wxBitmap bm = graphics->GetSubBitmap(location);
+			if (currentOrientation) {
+				location.x -= verticalIconOffset.x;
+				location.y -= verticalIconOffset.y;
 			}
-			break;
+			if (hasBackground) {
+				bm = MergeBitmaps(GetNormalBG(), bm, wxSize(0, 0));
+			}
+			tool->disabled = SetBitmapBrightness(bm);
+			tool->disabledLoaded = true;
+			return tool->disabled;
+		} break;
 	}
 	wxLogMessage(_T("A requested icon type for this tool was not found in the style: ") + toolname);
-	return wxBitmap( GetToolSize().x, GetToolSize().y ); // Prevents crashing.
+	return wxBitmap(GetToolSize().x, GetToolSize().y); // Prevents crashing.
 }
 
-wxBitmap Style::BuildPluginIcon( const wxBitmap* bm, int iconType ) const
+wxBitmap Style::BuildPluginIcon(const wxBitmap* bm, int iconType) const
 {
-	if( ! bm || ! bm->IsOk() ) return wxNullBitmap;
+	if (!bm || !bm->IsOk())
+		return wxNullBitmap;
 
 	wxBitmap iconbm;
 
-	switch( iconType ){
+	switch (iconType) {
 		case TOOLICON_NORMAL:
-			if( hasBackground ) {
+			if (hasBackground) {
 				wxBitmap bg = GetNormalBG();
-				bg = SetBitmapBrightness( bg );
-				wxSize offset = wxSize( bg.GetWidth() - bm->GetWidth(), bg.GetHeight() - bm->GetHeight() );
+				bg = SetBitmapBrightness(bg);
+				wxSize offset
+					= wxSize(bg.GetWidth() - bm->GetWidth(), bg.GetHeight() - bm->GetHeight());
 				offset /= 2;
-				iconbm = MergeBitmaps( bg, *bm, offset );
+				iconbm = MergeBitmaps(bg, *bm, offset);
 			} else {
-				wxBitmap bg( GetToolSize().x, GetToolSize().y );
-				wxMemoryDC mdc( bg );
-				wxSize offset = GetToolSize() - wxSize( bm->GetWidth(), bm->GetHeight() );
+				wxBitmap bg(GetToolSize().x, GetToolSize().y);
+				wxMemoryDC mdc(bg);
+				wxSize offset = GetToolSize() - wxSize(bm->GetWidth(), bm->GetHeight());
 				offset /= 2;
-				mdc.SetBackground( wxBrush( GetGlobalColor( _T("GREY2") ), wxSOLID ) );
+				mdc.SetBackground(wxBrush(GetGlobalColor(_T("GREY2")), wxSOLID));
 				mdc.Clear();
-				mdc.SelectObject( wxNullBitmap );
-				iconbm = MergeBitmaps( bg, *bm, offset );
+				mdc.SelectObject(wxNullBitmap);
+				iconbm = MergeBitmaps(bg, *bm, offset);
 			}
 			break;
 
 		case TOOLICON_TOGGLED:
-			iconbm = MergeBitmaps( GetToggledBG(), *bm, wxSize( 0, 0 ) );
+			iconbm = MergeBitmaps(GetToggledBG(), *bm, wxSize(0, 0));
 			break;
 	}
 	return iconbm;
 }
 
-wxBitmap Style::SetBitmapBrightness( wxBitmap& bitmap ) const
+wxBitmap Style::SetBitmapBrightness(wxBitmap& bitmap) const
 {
 	double dimLevel;
-	switch( colorscheme ){
-		case GLOBAL_COLOR_SCHEME_DUSK:
+	switch (colorscheme) {
+		case global::GLOBAL_COLOR_SCHEME_DUSK:
 			dimLevel = 0.5;
 			break;
 
-		case GLOBAL_COLOR_SCHEME_NIGHT:
+		case global::GLOBAL_COLOR_SCHEME_NIGHT:
 			dimLevel = 0.125;
 			break;
 
@@ -448,68 +454,67 @@ wxBitmap Style::SetBitmapBrightness( wxBitmap& bitmap ) const
 	return SetBitmapBrightnessAbs(bitmap, dimLevel);
 }
 
-wxBitmap Style::SetBitmapBrightnessAbs( wxBitmap& bitmap, double level ) const
+wxBitmap Style::SetBitmapBrightnessAbs(wxBitmap& bitmap, double level) const
 {
 	wxImage image = bitmap.ConvertToImage();
 
 	int gimg_width = image.GetWidth();
 	int gimg_height = image.GetHeight();
 
-	for( int iy = 0; iy < gimg_height; iy++ ) {
-		for( int ix = 0; ix < gimg_width; ix++ ) {
-			if( !image.IsTransparent( ix, iy, 30 ) ) {
-				wxImage::RGBValue rgb( image.GetRed( ix, iy ), image.GetGreen( ix, iy ),
-						image.GetBlue( ix, iy ) );
-				wxImage::HSVValue hsv = wxImage::RGBtoHSV( rgb );
+	for (int iy = 0; iy < gimg_height; iy++) {
+		for (int ix = 0; ix < gimg_width; ix++) {
+			if (!image.IsTransparent(ix, iy, 30)) {
+				wxImage::RGBValue rgb(image.GetRed(ix, iy), image.GetGreen(ix, iy),
+									  image.GetBlue(ix, iy));
+				wxImage::HSVValue hsv = wxImage::RGBtoHSV(rgb);
 				hsv.value = hsv.value * level;
-				wxImage::RGBValue nrgb = wxImage::HSVtoRGB( hsv );
-				image.SetRGB( ix, iy, nrgb.red, nrgb.green, nrgb.blue );
+				wxImage::RGBValue nrgb = wxImage::HSVtoRGB(hsv);
+				image.SetRGB(ix, iy, nrgb.red, nrgb.green, nrgb.blue);
 			}
 		}
 	}
-	return wxBitmap( image );
+	return wxBitmap(image);
 }
 
 wxBitmap Style::GetNormalBG() const
 {
 	wxSize size = toolSize[currentOrientation];
-	return graphics->GetSubBitmap(
-			wxRect( normalBGlocation[currentOrientation].x, normalBGlocation[currentOrientation].y,
-				size.x, size.y ) );
+	return graphics->GetSubBitmap(wxRect(normalBGlocation[currentOrientation].x,
+										 normalBGlocation[currentOrientation].y, size.x, size.y));
 }
 
 wxBitmap Style::GetActiveBG() const
 {
 	return graphics->GetSubBitmap(
-			wxRect( activeBGlocation[currentOrientation].x, activeBGlocation[currentOrientation].y,
-				toolSize[currentOrientation].x, toolSize[currentOrientation].y ) );
+		wxRect(activeBGlocation[currentOrientation].x, activeBGlocation[currentOrientation].y,
+			   toolSize[currentOrientation].x, toolSize[currentOrientation].y));
 }
 
 wxBitmap Style::GetToggledBG() const
 {
 	wxSize size = toolSize[currentOrientation];
-	if( toggledBGSize[currentOrientation].x ) {
+	if (toggledBGSize[currentOrientation].x) {
 		size = toggledBGSize[currentOrientation];
 	}
-	return graphics->GetSubBitmap( wxRect( toggledBGlocation[currentOrientation], size ) );
+	return graphics->GetSubBitmap(wxRect(toggledBGlocation[currentOrientation], size));
 }
 
 wxBitmap Style::GetToolbarStart() const
 {
 	wxSize size = toolbarStartSize[currentOrientation];
-	if( toolbarStartSize[currentOrientation].x == 0 ) {
+	if (toolbarStartSize[currentOrientation].x == 0) {
 		size = toolbarStartSize[currentOrientation];
 	}
-	return graphics->GetSubBitmap( wxRect( toolbarStartLoc[currentOrientation], size ) );
+	return graphics->GetSubBitmap(wxRect(toolbarStartLoc[currentOrientation], size));
 }
 
 wxBitmap Style::GetToolbarEnd() const
 {
 	wxSize size = toolbarEndSize[currentOrientation];
-	if( toolbarEndSize[currentOrientation].x == 0 ) {
+	if (toolbarEndSize[currentOrientation].x == 0) {
 		size = toolbarEndSize[currentOrientation];
 	}
-	return graphics->GetSubBitmap( wxRect( toolbarEndLoc[currentOrientation], size ) );
+	return graphics->GetSubBitmap(wxRect(toolbarEndLoc[currentOrientation], size));
 }
 
 int Style::GetToolbarCornerRadius() const
@@ -517,34 +522,34 @@ int Style::GetToolbarCornerRadius() const
 	return cornerRadius[currentOrientation];
 }
 
-void Style::DrawToolbarLineStart(wxBitmap & bmp) const
+void Style::DrawToolbarLineStart(wxBitmap& bmp) const
 {
 	if (!HasToolbarStart())
 		return;
-	wxMemoryDC dc( bmp );
-	dc.DrawBitmap( GetToolbarStart(), 0, 0, true );
+	wxMemoryDC dc(bmp);
+	dc.DrawBitmap(GetToolbarStart(), 0, 0, true);
 	dc.SelectObject(wxNullBitmap);
 }
 
-void Style::DrawToolbarLineEnd( wxBitmap& bmp ) const
+void Style::DrawToolbarLineEnd(wxBitmap& bmp) const
 {
 	if (!HasToolbarStart())
 		return;
-	wxMemoryDC dc( bmp );
-	if( currentOrientation ) {
-		dc.DrawBitmap( GetToolbarEnd(), 0, bmp.GetHeight() - GetToolbarEnd().GetHeight(), true );
+	wxMemoryDC dc(bmp);
+	if (currentOrientation) {
+		dc.DrawBitmap(GetToolbarEnd(), 0, bmp.GetHeight() - GetToolbarEnd().GetHeight(), true);
 	} else {
-		dc.DrawBitmap( GetToolbarEnd(), bmp.GetWidth() - GetToolbarEnd().GetWidth(), 0, true );
+		dc.DrawBitmap(GetToolbarEnd(), bmp.GetWidth() - GetToolbarEnd().GetWidth(), 0, true);
 	}
-	dc.SelectObject( wxNullBitmap );
+	dc.SelectObject(wxNullBitmap);
 }
 
-void Style::SetOrientation( long orient )
+void Style::SetOrientation(long orient)
 {
 	int newOrient = 0;
 	if (orient == wxTB_VERTICAL)
 		newOrient = 1;
-	if( newOrient == currentOrientation )
+	if (newOrient == currentOrientation)
 		return;
 	currentOrientation = newOrient;
 	Unload();
@@ -555,20 +560,21 @@ int Style::GetOrientation() const
 	return currentOrientation;
 }
 
-void Style::SetColorScheme( ColorScheme cs )
+void Style::SetColorScheme(global::ColorScheme cs)
 {
 	colorscheme = cs;
 	Unload();
 
-	if( (consoleTextBackgroundSize.x) && (consoleTextBackgroundSize.y)) {
-		wxBitmap bm = graphics->GetSubBitmap(
-				wxRect( consoleTextBackgroundLoc, consoleTextBackgroundSize ) );
+	if ((consoleTextBackgroundSize.x) && (consoleTextBackgroundSize.y)) {
+		wxBitmap bm
+			= graphics->GetSubBitmap(wxRect(consoleTextBackgroundLoc, consoleTextBackgroundSize));
 
 		// The background bitmap in the icons file may be too small, so will grow it arbitrailly
 		wxImage image = bm.ConvertToImage();
-		image.Rescale( consoleTextBackgroundSize.GetX() * 2, consoleTextBackgroundSize.GetY() * 2 , wxIMAGE_QUALITY_NORMAL );
-		wxBitmap bn( image );
-		consoleTextBackground = SetBitmapBrightness( bn );
+		image.Rescale(consoleTextBackgroundSize.GetX() * 2, consoleTextBackgroundSize.GetY() * 2,
+					  wxIMAGE_QUALITY_NORMAL);
+		wxBitmap bn(image);
+		consoleTextBackground = SetBitmapBrightness(bn);
 	}
 }
 
@@ -625,7 +631,7 @@ Style::Style(void)
 	: graphics(NULL)
 {
 	currentOrientation = 0;
-	colorscheme = GLOBAL_COLOR_SCHEME_DAY;
+	colorscheme = global::GLOBAL_COLOR_SCHEME_DAY;
 	marginsInvisible = false;
 	hasBackground = false;
 	chartStatusIconWidth = 0;

@@ -140,10 +140,10 @@ void GoToPositionDialog::CreateControls()
 	sizer3->Add(m_OKButton, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_OKButton->SetDefault();
 
-	SetColorScheme((ColorScheme)0);
+	SetColorScheme(static_cast<global::ColorScheme>(0));
 }
 
-void GoToPositionDialog::SetColorScheme(ColorScheme)
+void GoToPositionDialog::SetColorScheme(global::ColorScheme)
 {
 	DimeControl(this);
 }

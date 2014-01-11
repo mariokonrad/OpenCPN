@@ -687,7 +687,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 
 	// Set some benign initial values
 
-	m_cs = GLOBAL_COLOR_SCHEME_DAY;
+	m_cs = global::GLOBAL_COLOR_SCHEME_DAY;
 	VPoint.set_position(Position(0, 0));
 	VPoint.view_scale_ppm = 1;
 	VPoint.Invalidate();
@@ -704,10 +704,10 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	m_pEM_Meters = NULL;
 	m_pEM_Fathoms = NULL;
 
-	CreateDepthUnitEmbossMaps(GLOBAL_COLOR_SCHEME_DAY);
+	CreateDepthUnitEmbossMaps(global::GLOBAL_COLOR_SCHEME_DAY);
 
 	m_pEM_OverZoom = NULL;
-	CreateOZEmbossMapData(GLOBAL_COLOR_SCHEME_DAY);
+	CreateOZEmbossMapData(global::GLOBAL_COLOR_SCHEME_DAY);
 
 	// Build icons for tide/current points
 	m_bmTideDay = style->GetIcon(_T("tidesml"));
@@ -718,7 +718,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	// Night
 	m_bmTideNight = CreateDimBitmap(m_bmTideDay, 0.20);
 
-	//    Build Dusk/Night  ownship icons
+	// Build Dusk/Night  ownship icons
 	double factor_dusk = 0.5;
 	double factor_night = 0.25;
 
@@ -1117,7 +1117,7 @@ void ChartCanvas::SetOwnShipState(ownship_state_t state)
 	m_ownship_state = state;
 }
 
-ColorScheme ChartCanvas::GetColorScheme() const
+global::ColorScheme ChartCanvas::GetColorScheme() const
 {
 	return m_cs;
 }
@@ -1768,11 +1768,11 @@ void ChartCanvas::Do_Pankeys(wxTimerEvent&)
 	pPanKeyTimer->Start(repeat, wxTIMER_ONE_SHOT);
 }
 
-void ChartCanvas::SetColorScheme(ColorScheme cs)
+void ChartCanvas::SetColorScheme(global::ColorScheme cs)
 {
 	// Setup ownship image pointers
 	switch (cs) {
-		case GLOBAL_COLOR_SCHEME_DAY:
+		case global::GLOBAL_COLOR_SCHEME_DAY:
 			m_pos_image_red = &m_os_image_red_day;
 			m_pos_image_grey = &m_os_image_grey_day;
 			m_pos_image_yellow = &m_os_image_yellow_day;
@@ -1780,7 +1780,7 @@ void ChartCanvas::SetColorScheme(ColorScheme cs)
 			m_pos_image_user_grey = m_pos_image_user_grey_day;
 			m_pos_image_user_yellow = m_pos_image_user_yellow_day;
 			break;
-		case GLOBAL_COLOR_SCHEME_DUSK:
+		case global::GLOBAL_COLOR_SCHEME_DUSK:
 			m_pos_image_red = &m_os_image_red_dusk;
 			m_pos_image_grey = &m_os_image_grey_dusk;
 			m_pos_image_yellow = &m_os_image_yellow_dusk;
@@ -1788,7 +1788,7 @@ void ChartCanvas::SetColorScheme(ColorScheme cs)
 			m_pos_image_user_grey = m_pos_image_user_grey_dusk;
 			m_pos_image_user_yellow = m_pos_image_user_yellow_dusk;
 			break;
-		case GLOBAL_COLOR_SCHEME_NIGHT:
+		case global::GLOBAL_COLOR_SCHEME_NIGHT:
 			m_pos_image_red = &m_os_image_red_night;
 			m_pos_image_grey = &m_os_image_grey_night;
 			m_pos_image_yellow = &m_os_image_yellow_night;
@@ -8836,7 +8836,7 @@ void ChartCanvas::EmbossDepthScale(ocpnDC& dc)
 		EmbossCanvas(dc, ped, (GetVP().pix_width - ped->width), 40);
 }
 
-void ChartCanvas::CreateDepthUnitEmbossMaps(ColorScheme cs)
+void ChartCanvas::CreateDepthUnitEmbossMaps(global::ColorScheme cs)
 {
 	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 	const wxString& embossFont = style->getEmbossFont();
@@ -8862,7 +8862,7 @@ void ChartCanvas::CreateDepthUnitEmbossMaps(ColorScheme cs)
 	m_pEM_Fathoms = CreateEmbossMapData(font, emboss_width, emboss_height, _("Fathoms"), cs);
 }
 
-void ChartCanvas::CreateOZEmbossMapData(ColorScheme cs)
+void ChartCanvas::CreateOZEmbossMapData(global::ColorScheme cs)
 {
 	delete m_pEM_OverZoom;
 
@@ -8886,7 +8886,7 @@ void ChartCanvas::CreateOZEmbossMapData(ColorScheme cs)
 }
 
 EmbossData* ChartCanvas::CreateEmbossMapData(wxFont& font, int width, int height, const wxChar* str,
-											 ColorScheme cs)
+											 global::ColorScheme cs)
 {
 	// Create a temporary bitmap
 	wxBitmap bmp(width, height, -1);
@@ -8916,14 +8916,14 @@ EmbossData* ChartCanvas::CreateEmbossMapData(wxFont& font, int width, int height
 
 	double val_factor;
 	switch (cs) {
-		case GLOBAL_COLOR_SCHEME_DAY:
+		case global::GLOBAL_COLOR_SCHEME_DAY:
 		default:
 			val_factor = 1;
 			break;
-		case GLOBAL_COLOR_SCHEME_DUSK:
+		case global::GLOBAL_COLOR_SCHEME_DUSK:
 			val_factor = 0.5;
 			break;
-		case GLOBAL_COLOR_SCHEME_NIGHT:
+		case global::GLOBAL_COLOR_SCHEME_NIGHT:
 			val_factor = 0.25;
 			break;
 	}
@@ -9261,13 +9261,13 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 
 	wxBitmap bm;
 	switch (m_cs) {
-		case GLOBAL_COLOR_SCHEME_DAY:
+		case global::GLOBAL_COLOR_SCHEME_DAY:
 			bm = m_bmTideDay;
 			break;
-		case GLOBAL_COLOR_SCHEME_DUSK:
+		case global::GLOBAL_COLOR_SCHEME_DUSK:
 			bm = m_bmTideDusk;
 			break;
-		case GLOBAL_COLOR_SCHEME_NIGHT:
+		case global::GLOBAL_COLOR_SCHEME_NIGHT:
 			bm = m_bmTideNight;
 			break;
 		default:

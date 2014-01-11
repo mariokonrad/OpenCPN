@@ -39,49 +39,49 @@ GSHHSChart::GSHHSChart()
 
 GSHHSChart::~GSHHSChart()
 {
-	if	(proj)
+	if (proj)
 		delete proj;
-	if	(reader)
+	if (reader)
 		delete reader;
 }
 
-void GSHHSChart::SetColorScheme( ColorScheme scheme )
+void GSHHSChart::SetColorScheme(global::ColorScheme scheme)
 {
-	land = wxColor( 170, 175, 80 );
-	water = wxColor( 170, 195, 240 );
+	land = wxColor(170, 175, 80);
+	water = wxColor(170, 195, 240);
 
 	float dim = 1.0;
 
-	switch( scheme ){
-		case GLOBAL_COLOR_SCHEME_DUSK:
+	switch (scheme) {
+		case global::GLOBAL_COLOR_SCHEME_DUSK:
 			dim = 0.5;
 			break;
-		case GLOBAL_COLOR_SCHEME_NIGHT:
+		case global::GLOBAL_COLOR_SCHEME_NIGHT:
 			dim = 0.25;
 			break;
 		default:
 			return;
 	}
 
-	land.Set( land.Red()*dim, land.Green()*dim, land.Blue()*dim );
-	water.Set( water.Red()*dim, water.Green()*dim, water.Blue()*dim );
+	land.Set(land.Red() * dim, land.Green() * dim, land.Blue() * dim);
+	water.Set(water.Red() * dim, water.Green() * dim, water.Blue() * dim);
 }
 
-void GSHHSChart::RenderViewOnDC( ocpnDC& dc, ViewPort& vp )
+void GSHHSChart::RenderViewOnDC(ocpnDC& dc, ViewPort& vp)
 {
 	if (!proj)
 		proj = new Projection();
-	proj->SetCenterInMap( vp.longitude(), vp.latitude());
-	proj->SetScreenSize( vp.rv_rect.width, vp.rv_rect.height );
+	proj->SetCenterInMap(vp.longitude(), vp.latitude());
+	proj->SetScreenSize(vp.rv_rect.width, vp.rv_rect.height);
 
 	// Calculate the horizontal extents in degrees for the enlarged rotated ViewPort
 	ViewPort nvp = vp;
-	nvp.SetRotationAngle( 0. );
+	nvp.SetRotationAngle(0.);
 	nvp.pix_width = vp.rv_rect.width;
 	nvp.pix_height = vp.rv_rect.height;
 
-	Position pos_ul = nvp.GetLLFromPix( wxPoint( 0, 0 ));
-	Position pos_ur = nvp.GetLLFromPix( wxPoint( nvp.pix_width, nvp.pix_height ));
+	Position pos_ul = nvp.GetLLFromPix(wxPoint(0, 0));
+	Position pos_ur = nvp.GetLLFromPix(wxPoint(nvp.pix_width, nvp.pix_height));
 
 	double lat_ul = pos_ul.lat();
 	double lon_ul = pos_ul.lon();
@@ -108,24 +108,24 @@ void GSHHSChart::RenderViewOnDC( ocpnDC& dc, ViewPort& vp )
 	}
 
 	//  And set the scale for the gshhs renderer
-	proj->SetScale( (float)vp.rv_rect.width / ( fabs(lon_ul - lon_ur ) ));
+	proj->SetScale((float)vp.rv_rect.width / (fabs(lon_ul - lon_ur)));
 
-
-	if( ! reader ) {
-		reader = new GshhsReader( proj );
-		if( reader->GetPolyVersion() < 210 || reader->GetPolyVersion() > 220 ) {
-			wxLogMessage(_T("GSHHS World chart files have wrong version. Found %ld, expected 210-220."), reader->GetPolyVersion());
+	if (!reader) {
+		reader = new GshhsReader(proj);
+		if (reader->GetPolyVersion() < 210 || reader->GetPolyVersion() > 220) {
+			wxLogMessage(
+				_T("GSHHS World chart files have wrong version. Found %ld, expected 210-220."),
+				reader->GetPolyVersion());
 		} else {
-			wxLogMessage(_T("Background world map loaded from GSHHS datafiles found in: ") + global::OCPN::get().sys().data().world_map_location);
+			wxLogMessage(_T("Background world map loaded from GSHHS datafiles found in: ")
+						 + global::OCPN::get().sys().data().world_map_location);
 		}
 	}
 
-	//    dc.SetBackground( wxBrush( water ) );
-	//    dc.Clear();
-	dc.SetBrush( wxBrush( water ) );
-	dc.DrawRectangle( 0, 0, vp.rv_rect.width, vp.rv_rect.height );
+	dc.SetBrush(wxBrush(water));
+	dc.DrawRectangle(0, 0, vp.rv_rect.width, vp.rv_rect.height);
 
-	reader->drawContinents( dc, proj, water, land );
-	reader->drawBoundaries( dc, proj );
+	reader->drawContinents(dc, proj, water, land);
+	reader->drawBoundaries(dc, proj);
 }
 

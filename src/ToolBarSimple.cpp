@@ -299,7 +299,7 @@ void ToolBarSimple::HideTooltip()
 	}
 }
 
-void ToolBarSimple::SetColorScheme(ColorScheme cs)
+void ToolBarSimple::SetColorScheme(global::ColorScheme cs)
 {
 	if (m_pToolTipWin) {
 		m_pToolTipWin->Destroy();

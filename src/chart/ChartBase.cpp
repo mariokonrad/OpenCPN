@@ -34,7 +34,7 @@ ChartBase::ChartBase()
 
 	pThumbData = new ThumbData;
 
-	m_global_color_scheme = GLOBAL_COLOR_SCHEME_RGB;
+	m_global_color_scheme = global::GLOBAL_COLOR_SCHEME_RGB;
 
 	bReadyToRender = false;
 

@@ -72,7 +72,6 @@ extern LayerList* pLayerList;
 extern int g_LayerIdx;
 extern double vLat, vLon;
 extern double initial_scale_ppm;
-extern ColorScheme global_color_scheme;
 extern bool g_bShowMag;
 extern double g_UserVar;
 extern ArrayOfConnPrm* g_pConnectionParams;
@@ -865,7 +864,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	SetPath(_T("/Settings/GlobalState"));
 	Read(_T("nColorScheme"), &read_int, 0);
-	global_color_scheme = static_cast<ColorScheme>(read_int);
+	gui.set_color_scheme(static_cast<global::ColorScheme>(read_int));
 
 	SetPath(_T("/Settings/NMEADataSource"));
 

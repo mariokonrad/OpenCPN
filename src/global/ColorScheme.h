@@ -21,8 +21,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __COLORSCHEME__H__
-#define __COLORSCHEME__H__
+#ifndef __GLOBAL__COLORSCHEME__H__
+#define __GLOBAL__COLORSCHEME__H__
+
+namespace global {
 
 enum ColorScheme
 {
@@ -32,5 +34,7 @@ enum ColorScheme
 	GLOBAL_COLOR_SCHEME_NIGHT,
 	N_COLOR_SCHEMES
 };
+
+}
 
 #endif

@@ -25,11 +25,13 @@
 #include <timers.h>
 #include <RolloverWin.h>
 #include <dychart.h>
-#include <ColorScheme.h>
 #include <MicrosoftCompatibility.h>
 #include <UserColors.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
+
+#include <global/OCPN.h>
+#include <global/GUI.h>
 
 #include <tide/tide_time.h>
 #include <tide/IDX_entry.h>
@@ -39,7 +41,6 @@
 
 #include <wx/button.h>
 
-extern ColorScheme global_color_scheme;
 extern int gpIDXn;
 extern tide::IDX_entry* gpIDX;
 extern tide::TCMgr* ptcmgr;
@@ -77,10 +78,12 @@ TCWin::TCWin(ChartCanvas* parent, int x, int y, void* pvIDX)
 	// This way, any window decorations set by external themes, etc
 	// will not detract from night-vision
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	long wstyle = wxCLIP_CHILDREN | wxDEFAULT_DIALOG_STYLE;
-	if ((global_color_scheme != GLOBAL_COLOR_SCHEME_DAY)
-		&& (global_color_scheme != GLOBAL_COLOR_SCHEME_RGB))
-		wstyle |= (wxNO_BORDER);
+	if ((view.color_scheme != global::GLOBAL_COLOR_SCHEME_DAY)
+		&& (view.color_scheme != global::GLOBAL_COLOR_SCHEME_RGB))
+		wstyle |= wxNO_BORDER;
 
 	wxDialog::Create(parent, wxID_ANY, wxString(_T("test")), wxPoint(x, y), wxSize(550, 480),
 					 wstyle);

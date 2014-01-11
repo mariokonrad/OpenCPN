@@ -73,7 +73,7 @@ void PianoWin::OnSize(wxSizeEvent&)
 {
 }
 
-void PianoWin::SetColorScheme(ColorScheme)
+void PianoWin::SetColorScheme(global::ColorScheme)
 {
 	// Recreate the local brushes
 

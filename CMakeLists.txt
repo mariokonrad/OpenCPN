@@ -635,6 +635,7 @@ SET(SRC_GPX
 	)
 
 SET(HDR_GLOBAL
+	src/global/ColorScheme.h
 	src/global/GUI.h
 	src/global/Navigation.h
 	src/global/WatchDog.h
@@ -834,7 +835,6 @@ SET(HDRS
 	src/AnnunText.h
 	src/CDI.h
 	src/MyPrintout.h
-	src/ColorScheme.h
 	src/timers.h
 	src/ThumbData.h
 	src/EmbossData.h

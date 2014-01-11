@@ -27,24 +27,24 @@
 #include <wx/panel.h>
 #include <wx/bitmap.h>
 
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 namespace ocpnStyle { class Style; }
 
 class GrabberWin : public wxPanel
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		GrabberWin(wxWindow * parent);
-		void OnPaint(wxPaintEvent & event);
-		void MouseEvent(wxMouseEvent & event);
-		void SetColorScheme(ColorScheme cs);
+public:
+	GrabberWin(wxWindow* parent);
+	void OnPaint(wxPaintEvent& event);
+	void MouseEvent(wxMouseEvent& event);
+	void SetColorScheme(global::ColorScheme cs);
 
-		wxBitmap m_pbitmap;
-		bool m_bLeftDown;
-		bool m_bRightDown;
-		ocpnStyle::Style * m_style;
+	wxBitmap m_pbitmap;
+	bool m_bLeftDown;
+	bool m_bRightDown;
+	ocpnStyle::Style* m_style;
 };
 
 #endif

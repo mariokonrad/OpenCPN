@@ -50,7 +50,7 @@ public:
 
 	virtual bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
 	virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);
-	virtual void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
+	virtual void SetColorScheme(global::ColorScheme cs, bool bApplyImmediate);
 	virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
 
 private:

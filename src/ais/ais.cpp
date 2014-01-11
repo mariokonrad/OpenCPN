@@ -31,7 +31,6 @@
 #include <DataStream.h>
 #include <Select.h>
 #include <ChartCanvas.h>
-#include <ColorScheme.h>
 
 #include <cstdlib>
 #include <cmath>

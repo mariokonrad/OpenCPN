@@ -25,7 +25,7 @@
 #define __GOTOPOSITIONDIALOG_H__
 
 #include <wx/dialog.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 #define ID_GOTOPOS 8100
 
@@ -52,7 +52,7 @@ public:
 				const wxSize& size = wxSize(200, 300),
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
-	void SetColorScheme(ColorScheme cs);
+	void SetColorScheme(global::ColorScheme cs);
 	void CreateControls();
 	void OnGoToPosCancelClick(wxCommandEvent& event);
 	void OnGoToPosOkClick(wxCommandEvent& event);

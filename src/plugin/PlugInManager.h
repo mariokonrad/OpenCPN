@@ -37,7 +37,6 @@
 #endif
 
 #include <DataStream.h>
-#include <ColorScheme.h>
 #include <ChartPlugInWrapper.h>
 
 #include <chart/s52s57.h>
@@ -45,6 +44,8 @@
 #include <sound/OCPN_Sound.h>
 
 #include <ais/AIS_Target_Data.h>
+
+#include <global/ColorScheme.h>
 
 #include <plugin/ocpn_plugin.h>
 #include <plugin/PlugInContainer.h>
@@ -152,7 +153,7 @@ public:
 	void SendMessageToAllPlugins(const wxString& message_id, const wxString& message_body);
 
 	void SendResizeEventToAllPlugIns(int x, int y);
-	void SetColorSchemeForAllPlugIns(ColorScheme cs);
+	void SetColorSchemeForAllPlugIns(global::ColorScheme cs);
 	void NotifyAuiPlugIns(void);
 	bool CallLateInit(void);
 

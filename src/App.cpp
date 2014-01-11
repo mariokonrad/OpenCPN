@@ -133,7 +133,6 @@ extern wxString str_version_major;
 extern wxString str_version_minor;
 extern wxString str_version_patch;
 extern wxString str_version_date;
-extern ColorScheme global_color_scheme;
 extern wxString OpenCPNVersion;
 extern wxDateTime g_start_time;
 extern wxDateTime g_loglast_time;
@@ -1430,7 +1429,7 @@ bool App::OnInit()
 	setup_s57();
 
 	// Set default color scheme
-	global_color_scheme = GLOBAL_COLOR_SCHEME_DAY;
+	global::OCPN::get().gui().set_color_scheme(global::GLOBAL_COLOR_SCHEME_DAY);
 
 #ifdef __WXMSW__
 	// On Windows platforms, establish a default cache managment policy
@@ -1501,6 +1500,8 @@ bool App::OnInit()
 	gFrame->Enable();
 	cc1->SetFocus();
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	console = new ConsoleCanvas(gFrame); // the console
 	pthumbwin = new ThumbWin(cc1);
 	gFrame->ApplyGlobalSettings(1, false); // done once on init with resize
@@ -1512,7 +1513,7 @@ bool App::OnInit()
 	g_FloatingToolbarDialog = new OCPNFloatingToolbarDialog(cc1, gui_instance->toolbar().position,
 															gui_instance->toolbar().orientation);
 	g_FloatingToolbarDialog->LockPosition(true);
-	gFrame->SetAndApplyColorScheme(global_color_scheme);
+	gFrame->SetAndApplyColorScheme(view.color_scheme);
 
 	// The position and size of the static frame children (i.e. the canvas, and the status bar) are now set
 	// So now we can establish the AUI panes for them.
@@ -1539,7 +1540,7 @@ bool App::OnInit()
 		gFrame->Maximize(true);
 
 	stats = new StatWin(cc1);
-	stats->SetColorScheme(global_color_scheme);
+	stats->SetColorScheme(view.color_scheme);
 	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 	if (cc1->GetQuiltMode()) {
 		stats->pPiano->SetVizIcon(new wxBitmap(style->GetIcon(_T("viz"))));

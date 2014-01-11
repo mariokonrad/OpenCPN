@@ -47,46 +47,44 @@ GrabberWin::GrabberWin(wxWindow * parent)
 	m_style = g_StyleManager->GetCurrentStyle();
 	m_pbitmap = m_style->GetIcon(_T("grabber"));
 
-	Create( parent, -1 );
+	Create(parent, -1);
 
 	SetSize(wxSize(m_pbitmap.GetWidth(), m_pbitmap.GetHeight()));
 	SetMinSize(wxSize(m_pbitmap.GetWidth(), m_pbitmap.GetHeight()));
 }
 
-void GrabberWin::OnPaint(wxPaintEvent &)
+void GrabberWin::OnPaint(wxPaintEvent&)
 {
-	wxPaintDC dc( this );
-
-	dc.DrawBitmap( m_pbitmap, 0, 0, true );
+	wxPaintDC dc(this);
+	dc.DrawBitmap(m_pbitmap, 0, 0, true);
 }
 
-void GrabberWin::SetColorScheme(ColorScheme)
+void GrabberWin::SetColorScheme(global::ColorScheme)
 {
-	wxColour back_color = GetGlobalColor( _T("GREY2") );
+	wxColour back_color = GetGlobalColor(_T("GREY2"));
 
 	SetBackgroundColour(back_color);
 	ClearBackground();
 	m_pbitmap = m_style->GetIcon(_T("grabber"));
 }
 
-void GrabberWin::MouseEvent( wxMouseEvent& event )
+void GrabberWin::MouseEvent(wxMouseEvent& event)
 {
 	static wxPoint s_gspt;
-	int x, y;
+	int x;
+	int y;
 
-	event.GetPosition( &x, &y );
+	event.GetPosition(&x, &y);
 
-	wxPoint spt = ClientToScreen( wxPoint( x, y ) );
+	wxPoint spt = ClientToScreen(wxPoint(x, y));
 
 #ifdef __WXOSX__
-	if (!m_bLeftDown && event.LeftIsDown())
-	{
+	if (!m_bLeftDown && event.LeftIsDown()) {
 		m_bLeftDown = true;
 		s_gspt = spt;
 		if (!HasCapture())
 			CaptureMouse();
-	} else if (m_bLeftDown && !event.LeftIsDown())
-	{
+	} else if (m_bLeftDown && !event.LeftIsDown()) {
 		m_bLeftDown = false;
 		if (HasCapture())
 			ReleaseMouse();
@@ -96,7 +94,7 @@ void GrabberWin::MouseEvent( wxMouseEvent& event )
 		m_bRightDown = true;
 		if (!HasCapture()) {
 			CaptureMouse();
-			OCPNFloatingToolbarDialog *pp = wxDynamicCast(GetParent(), OCPNFloatingToolbarDialog);
+			OCPNFloatingToolbarDialog* pp = wxDynamicCast(GetParent(), OCPNFloatingToolbarDialog);
 			pp->ToggleOrientation();
 		}
 	} else if (m_bRightDown && !event.RightIsDown()) {
@@ -105,33 +103,34 @@ void GrabberWin::MouseEvent( wxMouseEvent& event )
 			ReleaseMouse();
 	}
 #else
-	if( event.LeftDown() ) {
+	if (event.LeftDown()) {
 		s_gspt = spt;
 		CaptureMouse();
 	}
 
-	if( event.LeftUp() ) {
-		if( HasCapture() ) ReleaseMouse();
+	if (event.LeftUp()) {
+		if (HasCapture())
+			ReleaseMouse();
 	}
 
-	if( event.RightDown() ) {
-		OCPNFloatingToolbarDialog *pp = wxDynamicCast(GetParent(), OCPNFloatingToolbarDialog);
+	if (event.RightDown()) {
+		OCPNFloatingToolbarDialog* pp = wxDynamicCast(GetParent(), OCPNFloatingToolbarDialog);
 		pp->ToggleOrientation();
 	}
 #endif
 
-	if( event.Dragging() ) {
+	if (event.Dragging()) {
 		wxPoint par_pos_old = GetParent()->GetPosition();
 
 		wxPoint par_pos = par_pos_old;
 		par_pos.x += spt.x - s_gspt.x;
 		par_pos.y += spt.y - s_gspt.y;
 
-		OCPNFloatingToolbarDialog *dp = wxDynamicCast(GetParent(), OCPNFloatingToolbarDialog);
-		if( dp ) dp->MoveDialogInScreenCoords( par_pos, par_pos_old );
+		OCPNFloatingToolbarDialog* dp = wxDynamicCast(GetParent(), OCPNFloatingToolbarDialog);
+		if (dp)
+			dp->MoveDialogInScreenCoords(par_pos, par_pos_old);
 
 		s_gspt = spt;
-
 	}
 	gFrame->Raise();
 }

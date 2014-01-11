@@ -23,7 +23,6 @@
 
 #include "S57QueryDialog.h"
 #include <DimeControl.h>
-#include <ColorScheme.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -31,7 +30,6 @@
 #include <wx/sizer.h>
 #include <wx/html/htmlwin.h>
 
-extern ColorScheme global_color_scheme;
 extern S57QueryDialog* g_pObjectQueryDialog;
 
 IMPLEMENT_CLASS(S57QueryDialog, wxDialog)
@@ -79,9 +77,11 @@ bool S57QueryDialog::Create(
 	wstyle |= wxSTAY_ON_TOP;
 #endif
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	if (true
-			&& (global_color_scheme != GLOBAL_COLOR_SCHEME_DAY)
-			&& (global_color_scheme != GLOBAL_COLOR_SCHEME_RGB))
+			&& (view.color_scheme != global::GLOBAL_COLOR_SCHEME_DAY)
+			&& (view.color_scheme != global::GLOBAL_COLOR_SCHEME_RGB))
 		wstyle |= wxNO_BORDER;
 
 	if (!wxDialog::Create( parent, id, caption, pos, size, wstyle))

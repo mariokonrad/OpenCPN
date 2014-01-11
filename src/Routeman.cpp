@@ -1002,9 +1002,9 @@ void Routeman::DeleteTrack(Route* pRoute)
 		delete pprog;
 }
 
-void Routeman::SetColorScheme(ColorScheme)
+void Routeman::SetColorScheme(global::ColorScheme)
 {
-	const global::GUI::View & view = global::OCPN::get().gui().view();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 
 	m_pActiveRoutePointPen
 		= wxThePenList->FindOrCreatePen(wxColour(0, 0, 255), view.route_line_width, wxSOLID);
@@ -1013,12 +1013,12 @@ void Routeman::SetColorScheme(ColorScheme)
 
 	// Or in something like S-52 compliance
 
-	m_pRoutePen
-		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFB")), view.route_line_width, wxSOLID);
-	m_pSelectedRoutePen
-		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFO")), view.route_line_width, wxSOLID);
-	m_pActiveRoutePen
-		= wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UARTE")), view.route_line_width, wxSOLID);
+	m_pRoutePen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFB")), view.route_line_width,
+												wxSOLID);
+	m_pSelectedRoutePen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFO")),
+														view.route_line_width, wxSOLID);
+	m_pActiveRoutePen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UARTE")),
+													  view.route_line_width, wxSOLID);
 
 	m_pRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFB")), wxSOLID);
 	m_pSelectedRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFO")), wxSOLID);

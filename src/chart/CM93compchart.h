@@ -68,7 +68,7 @@ public:
 	bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion& Region);
 	virtual bool RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
 									  const OCPNRegion& Region);
-	void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
+	void SetColorScheme(global::ColorScheme cs, bool bApplyImmediate);
 	bool RenderNextSmallerCellOutlines(ocpnDC& dc, const ViewPort& vp);
 	void GetPointPix(ObjRazRules* rzRules, float rlat, float rlon, wxPoint* r);
 	void GetPixPoint(int pixx, int pixy, double* plat, double* plon, const ViewPort& vpt);

@@ -27,7 +27,7 @@
 #include <wx/dialog.h>
 #include <wx/bitmap.h>
 
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 
 class wxStaticBitmap;
 class wxBoxSizer;
@@ -46,7 +46,7 @@ class FloatingCompassWindow : public wxDialog
 		void OnClose(wxCloseEvent & event);
 		void OnToolLeftClick(wxCommandEvent & event);
 		void MouseEvent(wxMouseEvent & event);
-		void SetColorScheme(ColorScheme cs);
+		void SetColorScheme(global::ColorScheme cs);
 		int GetXOffset(void) const;
 		int GetYOffset(void) const;
 

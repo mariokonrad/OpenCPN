@@ -1084,7 +1084,7 @@ void s57chart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRe
 	pValidRegion->Union(rxl, ryt, rxr - rxl, ryb - ryt);
 }
 
-void s57chart::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
+void s57chart::SetColorScheme(global::ColorScheme cs, bool bApplyImmediate)
 {
 	if (!ps52plib)
 		return;
@@ -1093,13 +1093,13 @@ void s57chart::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
 	// to an appropriate S52 Color scheme, by name.
 
 	switch (cs) {
-		case GLOBAL_COLOR_SCHEME_DAY:
+		case global::GLOBAL_COLOR_SCHEME_DAY:
 			ps52plib->SetPLIBColorScheme(_T("DAY"));
 			break;
-		case GLOBAL_COLOR_SCHEME_DUSK:
+		case global::GLOBAL_COLOR_SCHEME_DUSK:
 			ps52plib->SetPLIBColorScheme(_T("DUSK"));
 			break;
-		case GLOBAL_COLOR_SCHEME_NIGHT:
+		case global::GLOBAL_COLOR_SCHEME_NIGHT:
 			ps52plib->SetPLIBColorScheme(_T("NIGHT"));
 			break;
 		default:
@@ -1122,12 +1122,12 @@ void s57chart::SetColorScheme(ColorScheme cs, bool bApplyImmediate)
 	if (NULL != m_pDIBThumbDay) {
 		switch (cs) {
 			default:
-			case GLOBAL_COLOR_SCHEME_DAY:
+			case global::GLOBAL_COLOR_SCHEME_DAY:
 				pThumbData->pDIBThumb = m_pDIBThumbDay;
 				m_pDIBThumbOrphan = m_pDIBThumbDim;
 				break;
-			case GLOBAL_COLOR_SCHEME_DUSK:
-			case GLOBAL_COLOR_SCHEME_NIGHT: {
+			case global::GLOBAL_COLOR_SCHEME_DUSK:
+			case global::GLOBAL_COLOR_SCHEME_NIGHT: {
 				if (NULL == m_pDIBThumbDim) {
 					wxImage img = m_pDIBThumbDay->ConvertToImage();
 
@@ -2615,7 +2615,7 @@ InitReturn s57chart::FindOrCreateSenc(const wxString& name)
 	return INIT_OK;
 }
 
-InitReturn s57chart::PostInit(ChartInitFlag, ColorScheme cs)
+InitReturn s57chart::PostInit(ChartInitFlag, global::ColorScheme cs)
 {
 	// SENC file is ready, so build the RAZ structure
 	if (0 != BuildRAZFromSENCFile(m_SENCFileName.GetFullPath())) {
@@ -6476,9 +6476,9 @@ bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort& viewport,
 	bool bleading_attribute = false;
 
 	int opacity = 100;
-	if (cc1->GetColorScheme() == GLOBAL_COLOR_SCHEME_DUSK)
+	if (cc1->GetColorScheme() == global::GLOBAL_COLOR_SCHEME_DUSK)
 		opacity = 50;
-	if (cc1->GetColorScheme() == GLOBAL_COLOR_SCHEME_NIGHT)
+	if (cc1->GetColorScheme() == global::GLOBAL_COLOR_SCHEME_NIGHT)
 		opacity = 20;
 
 	int yOpacity = (float)opacity * 1.3; // Matched perception of white/yellow with red/green

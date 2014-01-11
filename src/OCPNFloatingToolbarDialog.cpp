@@ -108,7 +108,7 @@ void OCPNFloatingToolbarDialog::OnWindowCreate(wxWindowCreateEvent &)
 	Realize();
 }
 
-void OCPNFloatingToolbarDialog::SetColorScheme(ColorScheme cs)
+void OCPNFloatingToolbarDialog::SetColorScheme(global::ColorScheme cs)
 {
 	m_cs = cs;
 

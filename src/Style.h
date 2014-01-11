@@ -26,7 +26,7 @@
 
 #include <wx/bitmap.h>
 #include <wx/string.h>
-#include <ColorScheme.h>
+#include <global/ColorScheme.h>
 #include <vector>
 
 namespace ocpnStyle {
@@ -95,7 +95,7 @@ class Style
 		int GetOrientation() const;
 
 		void SetOrientation(long orient);
-		void SetColorScheme(ColorScheme cs);
+		void SetColorScheme(global::ColorScheme cs);
 		void Unload();
 
 		wxColour getConsoleFontColor() const;
@@ -163,7 +163,7 @@ class Style
 		Tools tools;
 
 		int currentOrientation;
-		ColorScheme colorscheme;
+		global::ColorScheme colorscheme;
 		bool hasBackground;
 };
 }

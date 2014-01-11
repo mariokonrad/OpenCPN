@@ -84,7 +84,7 @@ public:
 
 	ChartBase* OpenChartFromDB(int index, ChartInitFlag init_flag);
 
-	void ApplyColorSchemeToCachedCharts(ColorScheme cs);
+	void ApplyColorSchemeToCachedCharts(global::ColorScheme cs);
 	void PurgeCache();
 	bool DeleteCacheChart(ChartBase* pChart);
 

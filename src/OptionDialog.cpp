@@ -1909,7 +1909,7 @@ void options::CreateControls()
 
 	pSettingsCB1 = pDebugShowStat;
 
-	SetColorScheme((ColorScheme)0);
+	SetColorScheme(static_cast<global::ColorScheme>(0));
 
 	//  Update the PlugIn page to reflect the state of individual selections
 	m_pPlugInCtrl->UpdateSelections();
@@ -1924,7 +1924,7 @@ void options::CreateControls()
 						 wxListbookEventHandler(options::OnPageChange), NULL, this);
 }
 
-void options::SetColorScheme(ColorScheme)
+void options::SetColorScheme(global::ColorScheme)
 {
 	DimeControl(this);
 }

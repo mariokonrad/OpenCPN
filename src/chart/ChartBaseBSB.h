@@ -122,7 +122,7 @@ public:
 
 	virtual bool GetChartExtent(Extent& ext) const;
 
-	void SetColorScheme(ColorScheme cs, bool bApplyImmediate);
+	void SetColorScheme(global::ColorScheme cs, bool bApplyImmediate);
 
 	wxImage* GetImage();
 
@@ -162,7 +162,7 @@ protected:
 	virtual void InvalidateLineCache();
 	virtual bool CreateLineIndex(void);
 
-	virtual wxBitmap* CreateThumbnail(int tnx, int tny, ColorScheme cs);
+	virtual wxBitmap* CreateThumbnail(int tnx, int tny, global::ColorScheme cs);
 	virtual int BSBGetScanline(unsigned char* pLineBuf, int y, int xs, int xl, int sub_samp);
 
 	bool GetViewUsingCache(wxRect& source, wxRect& dest, const OCPNRegion& Region,
@@ -176,7 +176,7 @@ protected:
 
 	virtual bool SetMinMax(void);
 
-	InitReturn PreInit(const wxString& name, ChartInitFlag init_flags, ColorScheme cs);
+	InitReturn PreInit(const wxString& name, ChartInitFlag init_flags, global::ColorScheme cs);
 	InitReturn PostInit(void);
 
 	PixelCache* pPixCache;

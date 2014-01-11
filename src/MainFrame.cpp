@@ -232,7 +232,6 @@ int g_iSpeedFormat;
 int g_iNavAidRadarRingsNumberVisible;
 float g_fNavAidRadarRingsStep;
 int g_pNavAidRadarRingsStepUnits;
-ColorScheme global_color_scheme;
 bool bGPSValid;
 bool g_bHDT_Rx;
 bool g_bVAR_Rx;
@@ -404,7 +403,7 @@ static const long long lNaN = 0xfff8000000000000;
 #endif
 
 void appendOSDirSlash(wxString&);
-void SetSystemColors(ColorScheme cs);
+void SetSystemColors(global::ColorScheme cs);
 
 DEFINE_EVENT_TYPE(EVT_THREADMSG)
 
@@ -630,24 +629,24 @@ void MainFrame::OnActivate(wxActivateEvent& event)
 	event.Skip();
 }
 
-ColorScheme MainFrame::GetColorScheme()
+global::ColorScheme MainFrame::GetColorScheme()
 {
-	return global_color_scheme;
+	return global::OCPN::get().gui().view().color_scheme;
 }
 
-void MainFrame::SetAndApplyColorScheme(ColorScheme cs)
+void MainFrame::SetAndApplyColorScheme(global::ColorScheme cs)
 {
-	global_color_scheme = cs;
+	global::OCPN::get().gui().set_color_scheme(cs);
 
 	wxString SchemeName;
 	switch (cs) {
-		case GLOBAL_COLOR_SCHEME_DAY:
+		case global::GLOBAL_COLOR_SCHEME_DAY:
 			SchemeName = _T("DAY");
 			break;
-		case GLOBAL_COLOR_SCHEME_DUSK:
+		case global::GLOBAL_COLOR_SCHEME_DUSK:
 			SchemeName = _T("DUSK");
 			break;
-		case GLOBAL_COLOR_SCHEME_NIGHT:
+		case global::GLOBAL_COLOR_SCHEME_NIGHT:
 			SchemeName = _T("NIGHT");
 			break;
 		default:
@@ -970,20 +969,18 @@ bool MainFrame::CheckAndAddPlugInTool(ToolBarSimple* tb)
 		if (pttc->position == n_tools) {
 			wxBitmap* ptool_bmp;
 
-			switch (global_color_scheme) {
-				case GLOBAL_COLOR_SCHEME_DAY:
+			switch (global::OCPN::get().gui().view().color_scheme) {
+				case global::GLOBAL_COLOR_SCHEME_DAY:
 					ptool_bmp = pttc->bitmap_day;
-					;
 					break;
-				case GLOBAL_COLOR_SCHEME_DUSK:
+				case global::GLOBAL_COLOR_SCHEME_DUSK:
 					ptool_bmp = pttc->bitmap_dusk;
 					break;
-				case GLOBAL_COLOR_SCHEME_NIGHT:
+				case global::GLOBAL_COLOR_SCHEME_NIGHT:
 					ptool_bmp = pttc->bitmap_night;
 					break;
 				default:
 					ptool_bmp = pttc->bitmap_day;
-					;
 					break;
 			}
 
@@ -1018,20 +1015,18 @@ bool MainFrame::AddDefaultPositionPlugInTools(ToolBarSimple* tb)
 		if (pttc->position == -1) { // PlugIn has requested default positioning
 			wxBitmap* ptool_bmp;
 
-			switch (global_color_scheme) {
-				case GLOBAL_COLOR_SCHEME_DAY:
+			switch (global::OCPN::get().gui().view().color_scheme) {
+				case global::GLOBAL_COLOR_SCHEME_DAY:
 					ptool_bmp = pttc->bitmap_day;
-					;
 					break;
-				case GLOBAL_COLOR_SCHEME_DUSK:
+				case global::GLOBAL_COLOR_SCHEME_DUSK:
 					ptool_bmp = pttc->bitmap_dusk;
 					break;
-				case GLOBAL_COLOR_SCHEME_NIGHT:
+				case global::GLOBAL_COLOR_SCHEME_NIGHT:
 					ptool_bmp = pttc->bitmap_night;
 					break;
 				default:
 					ptool_bmp = pttc->bitmap_day;
-					;
 					break;
 			}
 
@@ -1059,7 +1054,7 @@ void MainFrame::RequestNewToolbar()
 }
 
 // Update inplace the current toolbar with bitmaps corresponding to the current color scheme
-void MainFrame::UpdateToolbar(ColorScheme cs)
+void MainFrame::UpdateToolbar(global::ColorScheme cs)
 {
 	if (g_FloatingToolbarDialog) {
 		g_FloatingToolbarDialog->SetColorScheme(cs);
@@ -1753,12 +1748,12 @@ void MainFrame::OnToolLeftClick(wxCommandEvent& event)
 
 void MainFrame::ToggleColorScheme()
 {
-	ColorScheme s = GetColorScheme();
+	global::ColorScheme s = GetColorScheme();
 	int is = static_cast<int>(s);
 	is++;
-	s = static_cast<ColorScheme>(is);
-	if (s == N_COLOR_SCHEMES)
-		s = GLOBAL_COLOR_SCHEME_RGB;
+	s = static_cast<global::ColorScheme>(is);
+	if (s == global::N_COLOR_SCHEMES)
+		s = global::GLOBAL_COLOR_SCHEME_RGB;
 
 	SetAndApplyColorScheme(s);
 }
@@ -1772,7 +1767,7 @@ void MainFrame::ToggleFullScreen()
 		g_FloatingToolbarDialog->Show(global::OCPN::get().gui().toolbar().full_screen | !to);
 
 	ShowFullScreen(to, style);
-	UpdateToolbar(global_color_scheme);
+	UpdateToolbar(global::OCPN::get().gui().view().color_scheme);
 	Layout();
 }
 
@@ -2166,7 +2161,7 @@ void MainFrame::ApplyGlobalSettings(bool, bool bnewtoolbar)
 	}
 
 	if (bnewtoolbar)
-		UpdateToolbar(global_color_scheme);
+		UpdateToolbar(global::OCPN::get().gui().view().color_scheme);
 }
 
 void MainFrame::SubmergeToolbarIfOverlap(int x, int y, int margin)
@@ -5580,7 +5575,7 @@ void RestoreSystemColors()
 
 #endif
 
-void SetSystemColors(ColorScheme cs)
+void SetSystemColors(global::ColorScheme cs)
 {
 	//---------------
 #if 0
@@ -5649,7 +5644,7 @@ void SetSystemColors(ColorScheme cs)
 	int element[NCOLORS];
 	int rgbcolor[NCOLORS];
 	int i = 0;
-	if( ( GLOBAL_COLOR_SCHEME_DUSK == cs ) || ( GLOBAL_COLOR_SCHEME_NIGHT == cs ) ) {
+	if( ( global::GLOBAL_COLOR_SCHEME_DUSK == cs ) || ( global::GLOBAL_COLOR_SCHEME_NIGHT == cs ) ) {
 		MSW_COLOR_SPEC *pcspec = &color_spec[0];
 		while( pcspec->COLOR_NAME != -1 ) {
 			wxColour color = GetGlobalColor( pcspec->S52_RGB_COLOR );

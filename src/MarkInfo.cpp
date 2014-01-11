@@ -411,7 +411,7 @@ MarkInfoImpl::MarkInfoImpl(wxWindow* parent, wxWindowID id, const wxString& titl
 	m_pLinkProp = new LinkPropDialog(this);
 	m_staticTextGpx->Show(false);
 	m_textCtrlGpx->Show(false);
-	SetColorScheme((ColorScheme)0);
+	SetColorScheme(static_cast<global::ColorScheme>(0));
 }
 
 MarkInfoImpl::~MarkInfoImpl()
@@ -425,7 +425,7 @@ void MarkInfoImpl::InitialFocus(void)
 	m_textName->SetInsertionPointEnd();
 }
 
-void MarkInfoImpl::SetColorScheme(ColorScheme)
+void MarkInfoImpl::SetColorScheme(global::ColorScheme)
 {
 	DimeControl(this);
 	DimeControl(m_pLinkProp);

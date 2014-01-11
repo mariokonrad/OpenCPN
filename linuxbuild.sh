@@ -41,165 +41,6 @@ function usage()
 	echo ""
 }
 
-
-# gather information about the platform
-cores=`grep -i 'processor' /proc/cpuinfo | wc -l`
-
-# parse options
-
-args=$(getopt \
-	--options "hrcvij:" \
-	--longopt "help" \
-	--longopt "release" \
-	--longopt "package" \
-	--longopt "clean" \
-	--longopt "verbose" \
-	--longopt "info" \
-	--longopt "index" \
-	--longopt "increment" \
-	--longopt "no-install" \
-	--longopt "make" \
-	--longopt "prepare" \
-	--longopt "install" \
-	--longopt "cppcheck" \
-	--longopt "understand" \
-	-- "$@")
-if [ $? != 0 ] ; then
-	echo "Parameter error. abort." >&2
-	exit 1
-fi
-eval set -- "${args}"
-
-opt_cleanup=0
-opt_verbose=0
-opt_info=0
-opt_prepare=1
-opt_build=1
-opt_install=1
-opt_create_packages=0
-opt_incremental=0
-opt_cppcheck=0
-opt_understand=0
-opt_actions=()
-
-function add_action()
-{
-	opt_actions[${#opt_actions[*]}]=$1
-}
-
-while [ $# -ne 0 ] ; do
-	case "$1" in
-		--help|-h)
-			usage
-			exit 1
-			;;
-		--increment|-i)
-			opt_incremental=1
-			;;
-		--release|-r)
-			BUILD_TYPE=Release
-			;;
-		--clean|-c)
-			add_action "clean"
-			opt_cleanup=1
-			;;
-		--verbose|-v)
-			opt_verbose=1
-			;;
-		--info)
-			add_action "info"
-			opt_info=1
-			opt_verbose=1
-			;;
-		--cppcheck)
-			add_action "cppcheck"
-			opt_cppcheck=1
-			;;
-		--understand)
-			add_action "understand"
-			opt_prepare=1
-			opt_understand=1
-			;;
-		--index)
-			add_action "index"
-			exec_create_index
-			exit 0
-			;;
-		--no-build)
-			opt_build=0
-			;;
-		--no-install)
-			opt_install=0
-			;;
-		--no-package)
-			opt_create_packages=0
-			;;
-		--prepare)
-			add_action "prepare"
-			opt_prepare=1
-			opt_build=0
-			opt_install=0
-			opt_create_packages=0
-			opt_incremental=0
-			;;
-		--make)
-			add_action "make"
-			opt_prepare=0
-			opt_build=1
-			opt_install=0
-			opt_create_packages=0
-			opt_incremental=1
-			;;
-		--install)
-			add_action "install"
-			opt_prepare=0
-			opt_build=0
-			opt_install=1
-			opt_create_packages=0
-			opt_incremental=1
-			;;
-		--package)
-			add_action "package"
-			opt_prepare=0
-			opt_build=0
-			opt_install=0
-			opt_create_packages=1
-			opt_incremental=1
-			;;
-		-j)
-			cores=$2
-			shift
-			;;
-		*)
-			if [ $# -gt 1 ] ; then
-				add_action "$2"
-			fi
-			;;
-	esac
-	shift
-done
-
-# ensure defaults
-if [ ${#opt_actions[*]} -eq 0 ] ; then
-	add_action "prepare"
-	add_action "make"
-	add_action "install"
-fi
-
-# ensure lower bound of cores
-if [ ${cores} -lt 1 ] ; then
-	cores=1
-fi
-
-# set necessary variables, using default values
-SRC_DIR=${SRC_DIR:-${script_path}}
-BUILD_DIR=${BUILD_DIR:-`pwd`/build}
-INSTALL_DIR=${INSTALL_DIR:-`pwd`/install}
-DEPLOY_DIR=${DEPLOY_DIR:-`pwd`/deploy}
-BUILD_TYPE=${BUILD_TYPE:-Debug}
-CORES=${CORES:-${cores}}
-CURRENT_DIR=`pwd`
-
 function cleanup_index()
 {
 	if [ -r "tags" ] ; then
@@ -402,6 +243,165 @@ function exec_packaging()
 
 	cd ${CURRENT_DIR}
 }
+
+
+# gather information about the platform
+cores=`grep -i 'processor' /proc/cpuinfo | wc -l`
+
+# parse options
+
+args=$(getopt \
+	--options "hrcvij:" \
+	--longopt "help" \
+	--longopt "release" \
+	--longopt "package" \
+	--longopt "clean" \
+	--longopt "verbose" \
+	--longopt "info" \
+	--longopt "index" \
+	--longopt "increment" \
+	--longopt "no-install" \
+	--longopt "make" \
+	--longopt "prepare" \
+	--longopt "install" \
+	--longopt "cppcheck" \
+	--longopt "understand" \
+	-- "$@")
+if [ $? != 0 ] ; then
+	echo "Parameter error. abort." >&2
+	exit 1
+fi
+eval set -- "${args}"
+
+opt_cleanup=0
+opt_verbose=0
+opt_info=0
+opt_prepare=1
+opt_build=1
+opt_install=1
+opt_create_packages=0
+opt_incremental=0
+opt_cppcheck=0
+opt_understand=0
+opt_actions=()
+
+function add_action()
+{
+	opt_actions[${#opt_actions[*]}]=$1
+}
+
+while [ $# -ne 0 ] ; do
+	case "$1" in
+		--help|-h)
+			usage
+			exit 1
+			;;
+		--increment|-i)
+			opt_incremental=1
+			;;
+		--release|-r)
+			BUILD_TYPE=Release
+			;;
+		--clean|-c)
+			add_action "clean"
+			opt_cleanup=1
+			;;
+		--verbose|-v)
+			opt_verbose=1
+			;;
+		--info)
+			add_action "info"
+			opt_info=1
+			opt_verbose=1
+			;;
+		--cppcheck)
+			add_action "cppcheck"
+			opt_cppcheck=1
+			;;
+		--understand)
+			add_action "understand"
+			opt_prepare=1
+			opt_understand=1
+			;;
+		--index)
+			add_action "index"
+			exec_create_index
+			exit 0
+			;;
+		--no-build)
+			opt_build=0
+			;;
+		--no-install)
+			opt_install=0
+			;;
+		--no-package)
+			opt_create_packages=0
+			;;
+		--prepare)
+			add_action "prepare"
+			opt_prepare=1
+			opt_build=0
+			opt_install=0
+			opt_create_packages=0
+			opt_incremental=0
+			;;
+		--make)
+			add_action "make"
+			opt_prepare=0
+			opt_build=1
+			opt_install=0
+			opt_create_packages=0
+			opt_incremental=1
+			;;
+		--install)
+			add_action "install"
+			opt_prepare=0
+			opt_build=0
+			opt_install=1
+			opt_create_packages=0
+			opt_incremental=1
+			;;
+		--package)
+			add_action "package"
+			opt_prepare=0
+			opt_build=0
+			opt_install=0
+			opt_create_packages=1
+			opt_incremental=1
+			;;
+		-j)
+			cores=$2
+			shift
+			;;
+		*)
+			if [ $# -gt 1 ] ; then
+				add_action "$2"
+			fi
+			;;
+	esac
+	shift
+done
+
+# ensure defaults
+if [ ${#opt_actions[*]} -eq 0 ] ; then
+	add_action "prepare"
+	add_action "make"
+	add_action "install"
+fi
+
+# ensure lower bound of cores
+if [ ${cores} -lt 1 ] ; then
+	cores=1
+fi
+
+# set necessary variables, using default values
+SRC_DIR=${SRC_DIR:-${script_path}}
+BUILD_DIR=${BUILD_DIR:-`pwd`/build}
+INSTALL_DIR=${INSTALL_DIR:-`pwd`/install}
+DEPLOY_DIR=${DEPLOY_DIR:-`pwd`/deploy}
+BUILD_TYPE=${BUILD_TYPE:-Debug}
+CORES=${CORES:-${cores}}
+CURRENT_DIR=`pwd`
 
 
 # execute actions

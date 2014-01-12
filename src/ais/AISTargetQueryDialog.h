@@ -67,7 +67,6 @@ private:
 	void SetColorScheme(global::ColorScheme cs);
 
 	int m_MMSI;
-	global::ColorScheme m_colorscheme;
 	wxHtmlWindow* m_pQueryTextCtl;
 	wxBoxSizer* m_pboxSizer;
 	wxButton* m_okButton;

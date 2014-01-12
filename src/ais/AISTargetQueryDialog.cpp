@@ -66,7 +66,6 @@ END_EVENT_TABLE()
 
 AISTargetQueryDialog::AISTargetQueryDialog()
 	: m_MMSI(-1)
-	, m_colorscheme(global::GLOBAL_COLOR_SCHEME_INVALID)
 	, m_pQueryTextCtl(NULL)
 	, m_pboxSizer(NULL)
 	, m_okButton(NULL)
@@ -76,7 +75,6 @@ AISTargetQueryDialog::AISTargetQueryDialog()
 AISTargetQueryDialog::AISTargetQueryDialog(wxWindow* parent, wxWindowID id, const wxString& caption,
 										   const wxPoint& pos, const wxSize& size, long style)
 	: m_MMSI(-1)
-	, m_colorscheme(global::GLOBAL_COLOR_SCHEME_INVALID)
 	, m_pQueryTextCtl(NULL)
 	, m_pboxSizer(NULL)
 	, m_okButton(NULL)
@@ -162,12 +160,10 @@ bool AISTargetQueryDialog::Create(wxWindow* parent, wxWindowID id, const wxStrin
 	return true;
 }
 
-void AISTargetQueryDialog::SetColorScheme(global::ColorScheme cs)
+void AISTargetQueryDialog::SetColorScheme(global::ColorScheme)
 {
-	if (cs != m_colorscheme) {
-		DimeControl(this);
-		Refresh();
-	}
+	DimeControl(this);
+	Refresh();
 }
 
 void AISTargetQueryDialog::CreateControls()

@@ -84,7 +84,6 @@ private:
 	long m_orient;
 	wxTimer m_fade_timer;
 	int m_opacity;
-	global::ColorScheme m_cs;
 
 	wxPoint m_position;
 	int m_dock_x;

@@ -40,13 +40,13 @@
 #include <wx/sizer.h>
 #include <wx/menu.h>
 
-extern ocpnStyle::StyleManager * g_StyleManager;
-extern ChartCanvas * cc1;
+extern ocpnStyle::StyleManager* g_StyleManager;
+extern ChartCanvas* cc1;
 extern bool g_bopengl;
-extern wxMenu * g_FloatingToolbarConfigMenu;
+extern wxMenu* g_FloatingToolbarConfigMenu;
 extern wxString g_toolbarConfig;
 extern bool g_bPermanentMOBIcon;
-extern MainFrame * gFrame;
+extern MainFrame* gFrame;
 
 BEGIN_EVENT_TABLE(OCPNFloatingToolbarDialog, wxDialog)
 	EVT_MOUSE_EVENTS(OCPNFloatingToolbarDialog::MouseEvent)
@@ -110,18 +110,16 @@ void OCPNFloatingToolbarDialog::OnWindowCreate(wxWindowCreateEvent &)
 
 void OCPNFloatingToolbarDialog::SetColorScheme(global::ColorScheme cs)
 {
-	m_cs = cs;
-
 	wxColour back_color = GetGlobalColor(_T("GREY2"));
 
-	//  Set background
+	// Set background
 	SetBackgroundColour(back_color);
 	ClearBackground();
 
 	if (m_ptoolbar) {
 		wxColour back_color = GetGlobalColor(_T("GREY2"));
 
-		//  Set background
+		// Set background
 		m_ptoolbar->SetBackgroundColour(back_color);
 		m_ptoolbar->ClearBackground();
 
@@ -325,17 +323,17 @@ void OCPNFloatingToolbarDialog::MoveDialogInScreenCoords(wxPoint posn, wxPoint p
 
 void OCPNFloatingToolbarDialog::Realize()
 {
-	if( m_ptoolbar ) {
+	if (m_ptoolbar) {
 		m_ptoolbar->Realize();
 
 		m_topSizer->Clear();
-		m_topSizer->Add( m_ptoolbar );
-		m_topSizer->Add( m_pGrabberwin, 0, wxTOP, m_style->GetTopMargin() );
+		m_topSizer->Add(m_ptoolbar);
+		m_topSizer->Add(m_pGrabberwin, 0, wxTOP, m_style->GetTopMargin());
 
 		m_topSizer->Layout();
-		m_topSizer->Fit( this );
+		m_topSizer->Fit(this);
 
-		//    Update "Dock" parameters
+		// Update "Dock" parameters
 		if (m_position.x == 0)
 			m_dock_x = -1;
 		else if (m_position.x == m_pparent->GetClientSize().x - GetSize().x)
@@ -350,77 +348,77 @@ void OCPNFloatingToolbarDialog::Realize()
 
 		if (m_style->isMarginsInvisible()) {
 			int toolCount = m_ptoolbar->GetVisibleToolCount();
-			wxBitmap shape( GetSize().x, GetSize().y );
-			wxMemoryDC sdc( shape );
-			sdc.SetBackground( *wxWHITE_BRUSH );
-			sdc.SetBrush( *wxBLACK_BRUSH );
-			sdc.SetPen( *wxBLACK_PEN );
+			wxBitmap shape(GetSize().x, GetSize().y);
+			wxMemoryDC sdc(shape);
+			sdc.SetBackground(*wxWHITE_BRUSH);
+			sdc.SetBrush(*wxBLACK_BRUSH);
+			sdc.SetPen(*wxBLACK_PEN);
 			sdc.Clear();
 
-			wxPoint upperLeft( m_style->GetLeftMargin(), m_style->GetTopMargin() );
+			wxPoint upperLeft(m_style->GetLeftMargin(), m_style->GetTopMargin());
 			wxSize visibleSize;
-			if( m_ptoolbar->IsVertical() ) {
+			if (m_ptoolbar->IsVertical()) {
 				int noTools = m_ptoolbar->GetMaxRows();
-				if( noTools > toolCount ) noTools = toolCount;
+				if (noTools > toolCount)
+					noTools = toolCount;
 				visibleSize.x = m_ptoolbar->GetLineCount()
-					* ( m_style->GetToolSize().x + m_style->GetTopMargin() );
-				visibleSize.y = noTools
-					* ( m_style->GetToolSize().y + m_style->GetToolSeparation() );
+								* (m_style->GetToolSize().x + m_style->GetTopMargin());
+				visibleSize.y = noTools * (m_style->GetToolSize().y + m_style->GetToolSeparation());
 				visibleSize.x -= m_style->GetTopMargin();
 				visibleSize.y -= m_style->GetToolSeparation();
 			} else {
 				int noTools = m_ptoolbar->GetMaxCols();
-				if( noTools > toolCount ) noTools = toolCount;
-				visibleSize.x = noTools
-					* ( m_style->GetToolSize().x + m_style->GetToolSeparation() );
+				if (noTools > toolCount)
+					noTools = toolCount;
+				visibleSize.x = noTools * (m_style->GetToolSize().x + m_style->GetToolSeparation());
 				visibleSize.y = m_ptoolbar->GetLineCount()
-					* ( m_style->GetToolSize().y + m_style->GetTopMargin() );
+								* (m_style->GetToolSize().y + m_style->GetTopMargin());
 				visibleSize.x -= m_style->GetToolSeparation();
 				visibleSize.y -= m_style->GetTopMargin();
 			}
 
 			int lines = m_ptoolbar->GetLineCount();
-			for( int i = 1; i <= lines; i++ ) {
-				if( m_ptoolbar->IsVertical() ) {
-					wxSize barsize( m_style->GetToolSize().x, visibleSize.y );
-					if( i == lines && i > 1 ) {
+			for (int i = 1; i <= lines; i++) {
+				if (m_ptoolbar->IsVertical()) {
+					wxSize barsize(m_style->GetToolSize().x, visibleSize.y);
+					if (i == lines && i > 1) {
 						int toolsInLastLine = toolCount % m_ptoolbar->GetMaxRows();
-						if( toolsInLastLine == 0 ) toolsInLastLine = m_ptoolbar->GetMaxRows();
-						int emptySpace = ( m_ptoolbar->GetMaxRows() - toolsInLastLine );
+						if (toolsInLastLine == 0)
+							toolsInLastLine = m_ptoolbar->GetMaxRows();
+						int emptySpace = (m_ptoolbar->GetMaxRows() - toolsInLastLine);
 						barsize.y -= emptySpace
-							* ( m_style->GetToolSize().y + m_style->GetToolSeparation() );
+									 * (m_style->GetToolSize().y + m_style->GetToolSeparation());
 					}
-					if( i == lines ) {
+					if (i == lines) {
 						// Also do grabber here, since it is to the right of the last line.
-						wxRect grabMask( upperLeft, barsize );
-						grabMask.width += m_style->GetIcon( _T("grabber") ).GetWidth();
-						grabMask.height = m_style->GetIcon( _T("grabber") ).GetHeight();
-						sdc.DrawRoundedRectangle( grabMask, m_style->GetToolbarCornerRadius() );
+						wxRect grabMask(upperLeft, barsize);
+						grabMask.width += m_style->GetIcon(_T("grabber")).GetWidth();
+						grabMask.height = m_style->GetIcon(_T("grabber")).GetHeight();
+						sdc.DrawRoundedRectangle(grabMask, m_style->GetToolbarCornerRadius());
 					}
-					sdc.DrawRoundedRectangle( upperLeft, barsize,
-							m_style->GetToolbarCornerRadius() );
+					sdc.DrawRoundedRectangle(upperLeft, barsize, m_style->GetToolbarCornerRadius());
 					upperLeft.x += m_style->GetTopMargin() + m_style->GetToolSize().x;
 				} else {
-					wxSize barsize( visibleSize.x, m_style->GetToolSize().y );
+					wxSize barsize(visibleSize.x, m_style->GetToolSize().y);
 
-					if( i == 1 ) {
-						barsize.x += m_style->GetIcon( _T("grabber") ).GetWidth();
+					if (i == 1) {
+						barsize.x += m_style->GetIcon(_T("grabber")).GetWidth();
 					}
-					if( i == lines && i > 1 ) {
+					if (i == lines && i > 1) {
 						int toolsInLastLine = toolCount % m_ptoolbar->GetMaxCols();
-						if( toolsInLastLine == 0 ) toolsInLastLine = m_ptoolbar->GetMaxCols();
-						int emptySpace = ( m_ptoolbar->GetMaxCols() - toolsInLastLine );
+						if (toolsInLastLine == 0)
+							toolsInLastLine = m_ptoolbar->GetMaxCols();
+						int emptySpace = (m_ptoolbar->GetMaxCols() - toolsInLastLine);
 						barsize.x -= emptySpace
-							* ( m_style->GetToolSize().x + m_style->GetToolSeparation() );
+									 * (m_style->GetToolSize().x + m_style->GetToolSeparation());
 					}
 
-					sdc.DrawRoundedRectangle( upperLeft, barsize,
-							m_style->GetToolbarCornerRadius() );
+					sdc.DrawRoundedRectangle(upperLeft, barsize, m_style->GetToolbarCornerRadius());
 					upperLeft.y += m_style->GetTopMargin() + m_style->GetToolSize().y;
 				}
 			}
 #ifndef __WXMAC__
-			SetShape( wxRegion( shape, *wxWHITE, 10 ) );
+			SetShape(wxRegion(shape, *wxWHITE, 10));
 #endif
 		}
 	}
@@ -486,7 +484,7 @@ ToolBarSimple* OCPNFloatingToolbarDialog::GetToolbar()
 		m_ptoolbar->SetBackgroundColour(GetGlobalColor(_T("GREY2")));
 		m_ptoolbar->ClearBackground();
 		m_ptoolbar->SetToggledBackgroundColour(GetGlobalColor(_T("GREY1")));
-		m_ptoolbar->SetColorScheme(m_cs);
+		m_ptoolbar->SetColorScheme(global::OCPN::get().gui().view().color_scheme);
 
 		SetGeometry();
 	}

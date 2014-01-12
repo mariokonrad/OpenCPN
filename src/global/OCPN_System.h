@@ -30,28 +30,28 @@ namespace global {
 
 class OCPN_System : public System
 {
-	private:
-		Data data_data;
-		Config data_config;
+private:
+	Data data_data;
+	Config data_config;
 
-	public: // data
-		virtual const Data & data() const;
-		virtual void set_home_location(const wxString &);
-		virtual void set_private_data_dir(const wxString &);
-		virtual void set_tc_data_dir(const wxString &);
-		virtual void set_config_file(const wxString &);
-		virtual void set_log_file(const wxString &);
-		virtual void set_sound_data_location(const wxString &);
-		virtual void set_world_map_location(const wxString &);
-		virtual void set_chartlist_fileame(const wxString &);
-		virtual void set_init_chart_dir(const wxString &);
-		virtual void set_plugin_dir(const wxString &);
+public: // data
+	virtual const Data& data() const;
+	virtual void set_home_location(const wxString&);
+	virtual void set_private_data_dir(const wxString&);
+	virtual void set_tc_data_dir(const wxString&);
+	virtual void set_config_file(const wxString&);
+	virtual void set_log_file(const wxString&);
+	virtual void set_sound_data_location(const wxString&);
+	virtual void set_world_map_location(const wxString&);
+	virtual void set_chartlist_fileame(const wxString&);
+	virtual void set_init_chart_dir(const wxString&);
+	virtual void set_plugin_dir(const wxString&);
 
-	public: // config
-		virtual const Config & config() const;
-		virtual void set_config_version_string(const wxString &);
-		virtual void set_config_nav_message_shown(bool);
-		virtual void set_config_memory_footprint(long);
+public: // config
+	virtual const Config& config() const;
+	virtual void set_config_version_string(const wxString&);
+	virtual void set_config_nav_message_shown(bool);
+	virtual void set_config_memory_footprint(long);
 };
 
 }

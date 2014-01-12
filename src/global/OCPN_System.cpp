@@ -25,67 +25,67 @@
 
 namespace global {
 
-const System::Data & OCPN_System::data() const
+const System::Data& OCPN_System::data() const
 {
 	return data_data;
 }
 
-void OCPN_System::set_home_location(const wxString & home_location)
+void OCPN_System::set_home_location(const wxString& home_location)
 {
 	data_data.home_location = home_location;
 }
 
-void OCPN_System::set_private_data_dir(const wxString & directory)
+void OCPN_System::set_private_data_dir(const wxString& directory)
 {
 	data_data.private_data_dir = directory;
 }
 
-void OCPN_System::set_tc_data_dir(const wxString & directory)
+void OCPN_System::set_tc_data_dir(const wxString& directory)
 {
 	data_data.tc_data_dir = directory;
 }
 
-void OCPN_System::set_config_file(const wxString & filename)
+void OCPN_System::set_config_file(const wxString& filename)
 {
 	data_data.config_file = filename;
 }
 
-void OCPN_System::set_log_file(const wxString & log_file)
+void OCPN_System::set_log_file(const wxString& log_file)
 {
 	data_data.log_file = log_file;
 }
 
-void OCPN_System::set_sound_data_location(const wxString & directory)
+void OCPN_System::set_sound_data_location(const wxString& directory)
 {
 	data_data.sound_data_location = directory;
 }
 
-void OCPN_System::set_world_map_location(const wxString & location)
+void OCPN_System::set_world_map_location(const wxString& location)
 {
 	data_data.world_map_location = location;
 }
 
-void OCPN_System::set_chartlist_fileame(const wxString & filename)
+void OCPN_System::set_chartlist_fileame(const wxString& filename)
 {
 	data_data.chartlist_filename = filename;
 }
 
-void OCPN_System::set_init_chart_dir(const wxString & directory)
+void OCPN_System::set_init_chart_dir(const wxString& directory)
 {
 	data_data.init_chart_dir = directory;
 }
 
-void OCPN_System::set_plugin_dir(const wxString & value)
+void OCPN_System::set_plugin_dir(const wxString& value)
 {
 	data_data.plugin_dir = value;
 }
 
-const System::Config & OCPN_System::config() const
+const System::Config& OCPN_System::config() const
 {
 	return data_config;
 }
 
-void OCPN_System::set_config_version_string(const wxString & version_string)
+void OCPN_System::set_config_version_string(const wxString& version_string)
 {
 	data_config.version_string = version_string;
 }

@@ -89,8 +89,6 @@ extern bool g_bdisable_opengl;
 extern bool g_bsmoothpanzoom;
 extern bool g_bShowActiveRouteHighway;
 extern int g_nNMEADebug;
-extern int g_nAWDefault;
-extern int g_nAWMax;
 extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
@@ -554,10 +552,11 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("DebugGDAL"), &g_bGDAL_Debug, 0);
 	Read(_T("DebugNMEA"), &g_nNMEADebug, 0);
 	Read(_T("DebugOpenGL"), &g_bDebugOGL, 0);
-	Read(_T("AnchorWatchDefault"), &g_nAWDefault, 50);
-	Read(_T("AnchorWatchMax"), &g_nAWMax, 1852);
 	Read(_T("DebugCM93"), &g_bDebugCM93, 0);
 	Read(_T("DebugS57"), &g_bDebugS57, 0); // Show LUP and Feature info in object query
+
+	nav.set_anchor_AWDefault(read_long(_T("AnchorWatchDefault"), 50));
+	nav.set_anchor_AWMax(read_long(_T("AnchorWatchMax"), 1852));
 
 	load_watchdog();
 

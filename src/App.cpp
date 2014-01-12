@@ -137,9 +137,6 @@ extern wxDateTime g_start_time;
 extern wxDateTime g_loglast_time;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
-extern double AnchorPointMinDist;
-extern bool AnchorAlertOn1;
-extern bool AnchorAlertOn2;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern int g_sticky_chart;
 extern double g_GLMinLineWidth;
@@ -1139,7 +1136,7 @@ bool App::OnInit()
 	g_loglast_time.MakeGMT();
 	g_loglast_time.Subtract(wxTimeSpan(0, 29, 0, 0)); // give 1 minute for GPS to get a fix
 
-	AnchorPointMinDist = 5.0;
+	global::OCPN::get().nav().set_anchor_PointMinDist(5.0);
 
 #ifdef __WXMSW__
 	// Handle any Floating Point Exceptions which may leak thru from other

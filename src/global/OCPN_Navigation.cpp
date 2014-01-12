@@ -100,5 +100,35 @@ void OCPN_Navigation::set_PlanSpeed(double value)
 	track.PlanSpeed = value;
 }
 
+const Navigation::Anchor& OCPN_Navigation::anchor() const
+{
+	return data_anchor;
+}
+
+void OCPN_Navigation::set_anchor_PointMinDist(double value)
+{
+	data_anchor.PointMinDist = value;
+}
+
+void OCPN_Navigation::set_anchor_AlertOn1(bool value)
+{
+	data_anchor.AlertOn1 = value;
+}
+
+void OCPN_Navigation::set_anchor_AlertOn2(bool value)
+{
+	data_anchor.AlertOn2 = value;
+}
+
+void OCPN_Navigation::set_anchor_AWDefault(long value)
+{
+	data_anchor.AWDefault = value;
+}
+
+void OCPN_Navigation::set_anchor_AWMax(long value)
+{
+	data_anchor.AWMax = value;
+}
+
 }
 

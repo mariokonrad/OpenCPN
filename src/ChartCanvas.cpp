@@ -166,13 +166,8 @@ extern int gpIDXn;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
-extern double AnchorPointMinDist;
-extern bool AnchorAlertOn1;
-extern bool AnchorAlertOn2;
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
-extern int g_nAWDefault;
-extern int g_nAWMax;
 
 extern bool g_bTrackActive;
 
@@ -4541,27 +4536,30 @@ void ChartCanvas::AnchorWatchDraw(ocpnDC& dc)
 {
 	// FIXME: code duplication
 	// Just for prototyping, visual alert for anchorwatch goes here
+
+	global::Navigation& nav = global::OCPN::get().nav();
+
 	bool play_sound = false;
-	if (pAnchorWatchPoint1 && AnchorAlertOn1) {
-		if (AnchorAlertOn1) {
+	if (pAnchorWatchPoint1 && nav.anchor().AlertOn1) {
+		if (nav.anchor().AlertOn1) {
 			wxPoint TargetPoint = GetCanvasPointPix(pAnchorWatchPoint1->get_position());
 			JaggyCircle(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
 						100);
 			play_sound = true;
 		}
 	} else {
-		AnchorAlertOn1 = false;
+		nav.set_anchor_AlertOn1(false);
 	}
 
-	if (pAnchorWatchPoint2 && AnchorAlertOn2) {
-		if (AnchorAlertOn2) {
+	if (pAnchorWatchPoint2 && nav.anchor().AlertOn2) {
+		if (nav.anchor().AlertOn2) {
 			wxPoint TargetPoint = GetCanvasPointPix(pAnchorWatchPoint2->get_position());
 			JaggyCircle(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
 						100);
 			play_sound = true;
 		}
 	} else {
-		AnchorAlertOn2 = false;
+		nav.set_anchor_AlertOn2(false);
 	}
 
 	if (play_sound) {
@@ -6205,7 +6203,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	g_click_stop = 2;
 #endif
 
-	//  ChartGroup SubMenu
+	// ChartGroup SubMenu
 	wxMenuItem* subItemChart = contextMenu->AppendSubMenu(subMenuChart, _("Chart Groups"));
 	if (g_pGroupArray->size()) {
 		subMenuChart->AppendRadioItem(ID_DEF_MENU_GROUPBASE, _("All Active Charts"));
@@ -6220,7 +6218,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 		subMenuChart->Check(ID_DEF_MENU_GROUPBASE + g_GroupIndex, true);
 	}
 
-	//  Add PlugIn Context Menu items
+	// Add PlugIn Context Menu items
 	ArrayOfPlugInMenuItems item_array = g_pi_manager->GetPluginContextMenuItemArray();
 
 	for (unsigned int i = 0; i < item_array.size(); i++) {
@@ -6240,7 +6238,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 		}
 	}
 
-	//  This is the default context menu
+	// This is the default context menu
 	menuFocus = contextMenu;
 
 	if (g_pAIS) {
@@ -6318,7 +6316,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 			}
 			menuRoute->Append(ID_RT_MENU_SENDTOGPS, item);
 		}
-		//      Set this menu as the "focused context menu"
+		// Set this menu as the "focused context menu"
 		menuFocus = menuRoute;
 	}
 
@@ -6337,7 +6335,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 			menuTrack->Append(ID_TK_MENU_DELETE, _("Delete..."));
 		}
 
-		//      Set this menu as the "focused context menu"
+		// Set this menu as the "focused context menu"
 		menuFocus = menuTrack;
 	}
 
@@ -6386,7 +6384,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 			}
 			menuWaypoint->Append(ID_WPT_MENU_SENDTOGPS, item);
 		}
-		//      Set this menu as the "focused context menu"
+		// Set this menu as the "focused context menu"
 		menuFocus = menuWaypoint;
 	}
 
@@ -6433,20 +6431,20 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 					geo::DistanceBearingMercator(m_pFoundRoutePoint->latitude(),
 												 m_pFoundRoutePoint->longitude(), nav.pos.lat(),
 												 nav.pos.lon(), &brg, &dist);
-					if (dist * 1852.0 <= g_nAWMax)
+					if (dist * 1852.0 <= global::OCPN::get().nav().anchor().AWMax)
 						menuWaypoint->Append(ID_WP_MENU_SET_ANCHORWATCH, _("Set Anchor Watch"));
 				}
 			}
 		}
 
-		//      Set this menu as the "focused context menu"
+		// Set this menu as the "focused context menu"
 		menuFocus = menuWaypoint;
 	}
 
 	if (!subMenuChart->GetMenuItemCount())
 		contextMenu->Destroy(subItemChart);
 
-	//  Add the Tide/Current selections if the item was not activated by shortcut in right-click
+	// Add the Tide/Current selections if the item was not activated by shortcut in right-click
 	// handlers
 	bool bsep = false;
 	if (seltype & SelectItem::TYPE_TIDEPOINT) {
@@ -6461,7 +6459,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 		menuFocus->Append(ID_DEF_MENU_CURRENTINFO, _("Show Current Information"));
 	}
 
-	//        Invoke the correct focused drop-down menu
+	// Invoke the correct focused drop-down menu
 	PopupMenu(menuFocus, x, y);
 
 	// Cleanup
@@ -7126,19 +7124,17 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			if (pAnchorWatchPoint1 == NULL) {
 				pAnchorWatchPoint1 = m_pFoundRoutePoint;
 				g_AW1GUID = pAnchorWatchPoint1->m_GUID;
-				wxString nn;
-				nn = m_pFoundRoutePoint->GetName();
+				wxString nn = m_pFoundRoutePoint->GetName();
 				if (nn.IsNull()) {
-					nn.Printf(_T("%d m"), g_nAWDefault);
+					nn.Printf(_T("%d m"), global::OCPN::get().nav().anchor().AWDefault);
 					m_pFoundRoutePoint->SetName(nn);
 				}
 			} else if (pAnchorWatchPoint2 == NULL) {
 				pAnchorWatchPoint2 = m_pFoundRoutePoint;
 				g_AW2GUID = pAnchorWatchPoint2->m_GUID;
-				wxString nn;
-				nn = m_pFoundRoutePoint->GetName();
+				wxString nn = m_pFoundRoutePoint->GetName();
 				if (nn.IsNull()) {
-					nn.Printf(_T("%d m"), g_nAWDefault);
+					nn.Printf(_T("%d m"), global::OCPN::get().nav().anchor().AWDefault);
 					m_pFoundRoutePoint->SetName(nn);
 				}
 			}
@@ -9192,8 +9188,10 @@ double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 	double tlon1;
 
 	if (pAnchorWatchPoint) {
+		const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
+
 		pAnchorWatchPoint->GetName().ToDouble(&d1);
-		d1 = AnchorDistFix(d1, AnchorPointMinDist, g_nAWMax);
+		d1 = AnchorDistFix(d1, anchor.PointMinDist, anchor.AWMax);
 		dabs = fabs(d1 / 1852.0);
 		geo::ll_gc_ll(pAnchorWatchPoint->latitude(), pAnchorWatchPoint->longitude(), 0, dabs,
 					  &tlat1, &tlon1);

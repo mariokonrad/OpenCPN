@@ -208,9 +208,6 @@ wxDateTime g_loglast_time;
 sound::OCPN_Sound g_anchorwatch_sound;
 RoutePoint* pAnchorWatchPoint1;
 RoutePoint* pAnchorWatchPoint2;
-double AnchorPointMinDist;
-bool AnchorAlertOn1;
-bool AnchorAlertOn2;
 bool g_bCruising;
 ToolBarSimple* g_toolbar;
 ocpnStyle::StyleManager* g_StyleManager;
@@ -219,8 +216,6 @@ wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
 bool g_bDisplayGrid; // Flag indicating weather the lat/lon grid should be displayed
 bool g_bShowActiveRouteHighway;
 int g_nNMEADebug;
-int g_nAWDefault;
-int g_nAWMax;
 bool g_bPlayShipsBells;
 bool g_bShowLayers;
 bool g_bTransparentToolbar;
@@ -3042,9 +3037,10 @@ bool MainFrame::check_anchorwatch(const RoutePoint* watch_point) const
 								 nav.pos.lon(), &brg, &dist);
 	dist *= 1852.0; // unit conversion, anchor distances are in meter
 
-	double d = g_nAWMax;
+	const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
+	double d = anchor.AWMax;
 	watch_point->GetName().ToDouble(&d);
-	d = AnchorDistFix(d, AnchorPointMinDist, g_nAWMax);
+	d = AnchorDistFix(d, anchor.PointMinDist, anchor.AWMax);
 	bool toofar = false;
 	bool tooclose = false;
 	if (d >= 0.0)
@@ -3313,10 +3309,11 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	update_sat_watchdog();
 	send_gps_to_plugins();
 
-	AnchorAlertOn1 = check_anchorwatch(pAnchorWatchPoint1);
-	AnchorAlertOn2 = check_anchorwatch(pAnchorWatchPoint2);
+	global::Navigation& nav = global::OCPN::get().nav();
+	nav.set_anchor_AlertOn1(check_anchorwatch(pAnchorWatchPoint1));
+	nav.set_anchor_AlertOn2(check_anchorwatch(pAnchorWatchPoint2));
 	if ((pAnchorWatchPoint1 || pAnchorWatchPoint2) && !bGPSValid)
-		AnchorAlertOn1 = true;
+		nav.set_anchor_AlertOn1(true);
 
 	onTimer_log_message();
 	onTimer_update_status_sogcog();

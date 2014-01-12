@@ -33,6 +33,7 @@ class OCPN_Navigation : public Navigation
 private:
 	Data data;
 	Track track;
+	Anchor data_anchor;
 
 public: // data
 	virtual const Data& get_data() const;
@@ -52,6 +53,14 @@ public: // track
 	virtual void set_TrackDaily(bool);
 	virtual void set_TrackDeltaDistance(double);
 	virtual void set_PlanSpeed(double);
+
+public: // anchor
+	virtual const Anchor& anchor() const;
+	virtual void set_anchor_PointMinDist(double);
+	virtual void set_anchor_AlertOn1(bool);
+	virtual void set_anchor_AlertOn2(bool);
+	virtual void set_anchor_AWDefault(long);
+	virtual void set_anchor_AWMax(long);
 };
 
 }

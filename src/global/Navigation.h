@@ -72,6 +72,23 @@ public:
 	virtual void set_TrackDaily(bool) = 0;
 	virtual void set_TrackDeltaDistance(double) = 0;
 	virtual void set_PlanSpeed(double) = 0;
+
+public:
+	struct Anchor
+	{
+		double PointMinDist;
+		bool AlertOn1;
+		bool AlertOn2;
+		long AWDefault;
+		long AWMax;
+	};
+
+	virtual const Anchor& anchor() const = 0;
+	virtual void set_anchor_PointMinDist(double) = 0;
+	virtual void set_anchor_AlertOn1(bool) = 0;
+	virtual void set_anchor_AlertOn2(bool) = 0;
+	virtual void set_anchor_AWDefault(long) = 0;
+	virtual void set_anchor_AWMax(long) = 0;
 };
 
 }

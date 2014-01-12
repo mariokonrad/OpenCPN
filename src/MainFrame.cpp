@@ -1748,11 +1748,15 @@ void MainFrame::OnToolLeftClick(wxCommandEvent& event)
 
 void MainFrame::ToggleColorScheme()
 {
+	// TODO: cycle through color schemes using arithmetic operation is not desired
+
 	global::ColorScheme s = GetColorScheme();
 	int is = static_cast<int>(s);
-	is++;
+	++is;
 	s = static_cast<global::ColorScheme>(is);
-	if (s == global::N_COLOR_SCHEMES)
+	if (s > global::GLOBAL_COLOR_SCHEME_MAX)
+		s = global::GLOBAL_COLOR_SCHEME_RGB;
+	if (s <= global::GLOBAL_COLOR_SCHEME_INVALID)
 		s = global::GLOBAL_COLOR_SCHEME_RGB;
 
 	SetAndApplyColorScheme(s);

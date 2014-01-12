@@ -174,7 +174,7 @@ struct Ais8_001_22
 // key is link_id, which should be unique for a given mmsi
 WX_DECLARE_HASH_MAP(int, Ais8_001_22, wxIntegerHash, wxIntegerEqual, AIS_Area_Notice_Hash);
 WX_DEFINE_SORTED_ARRAY(AIS_Target_Data *, ArrayOfAISTarget);
-WX_DECLARE_HASH_MAP(int, AIS_Target_Data*, wxIntegerHash, wxIntegerEqual, AIS_Target_Hash);
+WX_DECLARE_HASH_MAP(int, AIS_Target_Data*, wxIntegerHash, wxIntegerEqual, AIS_Target_Hash); // FIXME: replace this with std::map
 
 wxString trimAISField(char* data);
 wxString ais_get_status(int index);

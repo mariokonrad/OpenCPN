@@ -48,10 +48,6 @@ public:
 
 	virtual ~AISTargetQueryDialog();
 
-	// Initialise our variables
-	void Init();
-
-	// Creation
 	bool Create(wxWindow* parent, wxWindowID id = wxID_ANY,
 				const wxString& caption = _("Object Query"), const wxPoint& pos = wxDefaultPosition,
 				const wxSize& size = wxDefaultSize,
@@ -62,21 +58,18 @@ public:
 	void OnIdWptCreateClick(wxCommandEvent& event);
 	void OnMove(wxMoveEvent& event);
 
-	void CreateControls();
-
-	void SetText(const wxString& text_string);
-	void SetColorScheme(global::ColorScheme cs);
-
 	void UpdateText(void);
 	void SetMMSI(int mmsi);
 	int GetMMSI(void) const;
 
-	// Data
+private:
+	void CreateControls();
+	void SetColorScheme(global::ColorScheme cs);
+
 	int m_MMSI;
-	wxHtmlWindow* m_pQueryTextCtl;
 	global::ColorScheme m_colorscheme;
+	wxHtmlWindow* m_pQueryTextCtl;
 	wxBoxSizer* m_pboxSizer;
-	int m_nl;
 	wxButton* m_okButton;
 };
 

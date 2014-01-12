@@ -26,13 +26,17 @@
 
 namespace global {
 
-enum ColorScheme
-{
-	GLOBAL_COLOR_SCHEME_RGB,
-	GLOBAL_COLOR_SCHEME_DAY,
-	GLOBAL_COLOR_SCHEME_DUSK,
-	GLOBAL_COLOR_SCHEME_NIGHT,
-	N_COLOR_SCHEMES
+/// Enumeration of all possible color schemes. Used to present the GUI
+/// differently, depending on the desired brightness.
+///
+/// This enumeration must be gapless.
+enum ColorScheme {
+	GLOBAL_COLOR_SCHEME_INVALID = -1,
+	GLOBAL_COLOR_SCHEME_RGB = 0,
+	GLOBAL_COLOR_SCHEME_DAY = 1,
+	GLOBAL_COLOR_SCHEME_DUSK = 2,
+	GLOBAL_COLOR_SCHEME_NIGHT = 3,
+	GLOBAL_COLOR_SCHEME_MAX
 };
 
 }

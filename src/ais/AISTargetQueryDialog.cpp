@@ -41,7 +41,7 @@
 #include <wx/html/htmlwin.h>
 #include <wx/button.h>
 
-extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
+extern ais::AISTargetQueryDialog* g_pais_query_dialog_active; // FIXME: this dialog may exist only once, pseudo-singleton
 extern ais::AIS_Decoder* g_pAIS;
 extern wxString g_default_wp_icon;
 extern Select* pSelect;
@@ -57,7 +57,7 @@ namespace ais
 
 IMPLEMENT_CLASS(AISTargetQueryDialog, wxDialog)
 
-BEGIN_EVENT_TABLE ( AISTargetQueryDialog, wxDialog)
+BEGIN_EVENT_TABLE(AISTargetQueryDialog, wxDialog)
 	EVT_BUTTON(xID_OK, AISTargetQueryDialog::OnIdOKClick)
 	EVT_BUTTON(xID_WPT_CREATE, AISTargetQueryDialog::OnIdWptCreateClick)
 	EVT_CLOSE(AISTargetQueryDialog::OnClose)
@@ -65,29 +65,28 @@ BEGIN_EVENT_TABLE ( AISTargetQueryDialog, wxDialog)
 END_EVENT_TABLE()
 
 AISTargetQueryDialog::AISTargetQueryDialog()
+	: m_MMSI(-1)
+	, m_colorscheme(global::GLOBAL_COLOR_SCHEME_INVALID)
+	, m_pQueryTextCtl(NULL)
+	, m_pboxSizer(NULL)
+	, m_okButton(NULL)
 {
-	Init();
 }
 
 AISTargetQueryDialog::AISTargetQueryDialog(wxWindow* parent, wxWindowID id, const wxString& caption,
 										   const wxPoint& pos, const wxSize& size, long style)
+	: m_MMSI(-1)
+	, m_colorscheme(global::GLOBAL_COLOR_SCHEME_INVALID)
+	, m_pQueryTextCtl(NULL)
+	, m_pboxSizer(NULL)
+	, m_okButton(NULL)
 {
-	Init();
 	Create(parent, id, caption, pos, size, style);
 }
 
 AISTargetQueryDialog::~AISTargetQueryDialog()
 {
 	delete m_pQueryTextCtl;
-}
-
-void AISTargetQueryDialog::Init()
-{
-	m_MMSI = -1;
-	m_pQueryTextCtl = NULL;
-	m_nl = 0;
-	m_colorscheme = static_cast<global::ColorScheme>(-1);
-	m_okButton = NULL;
 }
 
 void AISTargetQueryDialog::OnClose(wxCloseEvent&)

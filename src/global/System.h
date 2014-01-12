@@ -30,50 +30,50 @@ namespace global {
 
 class System
 {
-	public:
-		virtual ~System() {}
+public:
+	virtual ~System()
+	{
+	}
 
-	public:
+public:
+	struct Data
+	{
+		wxString home_location;
+		wxString private_data_dir;
+		wxString tc_data_dir;
+		wxString config_file;
+		wxString log_file;
+		wxString sound_data_location;
+		wxString world_map_location;
+		wxString chartlist_filename;
+		wxString init_chart_dir;
+		wxString plugin_dir;
+	};
 
-		struct Data
-		{
-			wxString home_location;
-			wxString private_data_dir;
-			wxString tc_data_dir;
-			wxString config_file;
-			wxString log_file;
-			wxString sound_data_location;
-			wxString world_map_location;
-			wxString chartlist_filename;
-			wxString init_chart_dir;
-			wxString plugin_dir;
-		};
+	virtual const Data& data() const = 0;
+	virtual void set_home_location(const wxString&) = 0;
+	virtual void set_private_data_dir(const wxString&) = 0;
+	virtual void set_tc_data_dir(const wxString&) = 0;
+	virtual void set_config_file(const wxString&) = 0;
+	virtual void set_log_file(const wxString&) = 0;
+	virtual void set_sound_data_location(const wxString&) = 0;
+	virtual void set_world_map_location(const wxString&) = 0;
+	virtual void set_chartlist_fileame(const wxString&) = 0;
+	virtual void set_init_chart_dir(const wxString&) = 0;
+	virtual void set_plugin_dir(const wxString&) = 0;
 
-		virtual const Data & data() const = 0;
-		virtual void set_home_location(const wxString &) = 0;
-		virtual void set_private_data_dir(const wxString &) = 0;
-		virtual void set_tc_data_dir(const wxString &) = 0;
-		virtual void set_config_file(const wxString &) = 0;
-		virtual void set_log_file(const wxString &) = 0;
-		virtual void set_sound_data_location(const wxString &) = 0;
-		virtual void set_world_map_location(const wxString &) = 0;
-		virtual void set_chartlist_fileame(const wxString &) = 0;
-		virtual void set_init_chart_dir(const wxString &) = 0;
-		virtual void set_plugin_dir(const wxString &) = 0;
+public:
+	struct Config
+	{
+		wxString version_string;
+		bool nav_message_shown;
+		long memory_footprint_kB;
+	};
 
-	public:
-
-		struct Config
-		{
-			wxString version_string;
-			bool nav_message_shown;
-			long memory_footprint_kB;
-		};
-
-		virtual const Config & config() const = 0;
-		virtual void set_config_version_string(const wxString &) = 0;
-		virtual void set_config_nav_message_shown(bool) = 0;
-		virtual void set_config_memory_footprint(long) = 0;
+	virtual const Config& config() const = 0;
+	virtual void set_config_version_string(const wxString&) = 0;
+	virtual void set_config_nav_message_shown(bool) = 0;
+	virtual void set_config_memory_footprint(long) = 0;
 };
 
 }

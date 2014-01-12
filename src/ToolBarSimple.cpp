@@ -34,6 +34,9 @@
 #include <UserColors.h>
 #include <MainFrame.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #include <plugin/PlugInManager.h>
 
 #include <vector>
@@ -299,7 +302,7 @@ void ToolBarSimple::HideTooltip()
 	}
 }
 
-void ToolBarSimple::SetColorScheme(global::ColorScheme cs)
+void ToolBarSimple::SetColorScheme(global::ColorScheme)
 {
 	if (m_pToolTipWin) {
 		m_pToolTipWin->Destroy();
@@ -307,7 +310,6 @@ void ToolBarSimple::SetColorScheme(global::ColorScheme cs)
 	}
 
 	m_toolOutlineColour = GetGlobalColor(_T("UIBDR"));
-	m_currentColorScheme = cs;
 }
 
 bool ToolBarSimple::Realize()
@@ -518,7 +520,7 @@ void ToolBarSimple::OnMouseEvent(wxMouseEvent& event)
 		// ToolTips
 		if (NULL == m_pToolTipWin) {
 			m_pToolTipWin = new ToolTipWin(GetParent());
-			m_pToolTipWin->SetColorScheme(m_currentColorScheme);
+			m_pToolTipWin->SetColorScheme(global::OCPN::get().gui().view().color_scheme);
 			m_pToolTipWin->Hide();
 		}
 
@@ -1142,5 +1144,57 @@ int ToolBarSimple::GetNoRowsOrColumns() const
 int ToolBarSimple::GetLineCount() const
 {
 	return m_LineCount;
+}
+
+void ToolBarSimple::SetToggledBackgroundColour(wxColour c)
+{
+	m_toggle_bg_color = c;
+}
+
+void ToolBarSimple::SetMaxRowsCols(int rows, int cols)
+{
+	m_maxRows = rows;
+	m_maxCols = cols;
+}
+
+int ToolBarSimple::GetMaxRows() const
+{
+	return m_maxRows;
+}
+
+int ToolBarSimple::GetMaxCols() const
+{
+	return m_maxCols;
+}
+
+void ToolBarSimple::SetToolBitmapSize(const wxSize& size)
+{
+	m_defaultWidth = size.x;
+	m_defaultHeight = size.y;
+}
+
+wxSize ToolBarSimple::GetToolBitmapSize() const
+{
+	return wxSize(m_defaultWidth, m_defaultHeight);
+}
+
+wxSize ToolBarSimple::GetToolSize() const
+{
+	return GetToolBitmapSize();
+}
+
+bool ToolBarSimple::IsVertical() const
+{
+	return HasFlag(wxTB_LEFT | wxTB_RIGHT);
+}
+
+void ToolBarSimple::EnableTooltips()
+{
+	m_btooltip_show = true;
+}
+
+void ToolBarSimple::DisableTooltips()
+{
+	m_btooltip_show = false;
 }
 

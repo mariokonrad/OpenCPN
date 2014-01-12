@@ -58,11 +58,7 @@ public:
 
 	virtual ~ToolBarSimple();
 
-	virtual void SetToggledBackgroundColour(wxColour c)
-	{
-		m_toggle_bg_color = c;
-	}
-
+	virtual void SetToggledBackgroundColour(wxColour c);
 	virtual void SetColorScheme(global::ColorScheme cs);
 
 	// implementation from now on
@@ -164,42 +160,18 @@ public:
 	// ----------------
 
 	// the toolbar can wrap - limit the number of columns or rows it may take
-	void SetMaxRowsCols(int rows, int cols)
-	{
-		m_maxRows = rows;
-		m_maxCols = cols;
-	}
-
-	int GetMaxRows() const
-	{
-		return m_maxRows;
-	}
-
-	int GetMaxCols() const
-	{
-		return m_maxCols;
-	}
+	void SetMaxRowsCols(int rows, int cols);
+	int GetMaxRows() const;
+	int GetMaxCols() const;
 
 	// get/set the size of the bitmaps used by the toolbar: should be called
 	// before adding any tools to the toolbar
-	virtual void SetToolBitmapSize(const wxSize& size)
-	{
-		m_defaultWidth = size.x;
-		m_defaultHeight = size.y;
-	}
-
-	virtual wxSize GetToolBitmapSize() const
-	{
-		return wxSize(m_defaultWidth, m_defaultHeight);
-	}
+	virtual void SetToolBitmapSize(const wxSize& size);
+	virtual wxSize GetToolBitmapSize() const;
 
 	// the button size in some implementations is bigger than the bitmap size:
 	// get the total button size (by default the same as bitmap size)
-	virtual wxSize GetToolSize() const
-	{
-		return GetToolBitmapSize();
-	}
-
+	virtual wxSize GetToolSize() const;
 	virtual wxRect GetToolRect(int tool_id);
 
 	// returns a (non separator) tool containing the point (x, y) or NULL if
@@ -210,34 +182,13 @@ public:
 	wxToolBarToolBase* FindById(int toolid) const;
 
 	// return true if this is a vertical toolbar, otherwise false
-	bool IsVertical() const
-	{
-		return HasFlag(wxTB_LEFT | wxTB_RIGHT);
-	}
-
-	// the list of all our tools
-	wxToolBarToolsList m_tools;
-
-	// the maximum number of toolbar rows/columns
-	int m_maxRows;
-	int m_maxCols;
-
-	// the size of the toolbar bitmaps
-	wxCoord m_defaultWidth;
-	wxCoord m_defaultHeight;
+	bool IsVertical() const;
 
 	void HideTooltip();
 	void KillTooltip();
 
-	void EnableTooltips()
-	{
-		m_btooltip_show = true;
-	}
-
-	void DisableTooltips()
-	{
-		m_btooltip_show = false;
-	}
+	void EnableTooltips();
+	void DisableTooltips();
 
 protected:
 	// common part of all ctors
@@ -262,10 +213,21 @@ protected:
 										  wxItemKind kind, wxObject* clientData,
 										  const wxString& shortHelp, const wxString& longHelp);
 
-	// helpers
 	void DrawTool(wxToolBarToolBase* tool);
 	virtual void DrawTool(wxDC& dc, wxToolBarToolBase* tool);
 	virtual void SpringUpButton(int index);
+
+private:
+	// the list of all our tools
+	wxToolBarToolsList m_tools;
+
+	// the maximum number of toolbar rows/columns
+	int m_maxRows;
+	int m_maxCols;
+
+	// the size of the toolbar bitmaps
+	wxCoord m_defaultWidth;
+	wxCoord m_defaultHeight;
 
 	int m_currentRowsOrColumns;
 	int m_LineCount;
@@ -284,8 +246,6 @@ protected:
 	wxColour m_toolOutlineColour;
 	ToolTipWin* m_pToolTipWin;
 	ToolBarTool* m_last_ro_tool;
-
-	global::ColorScheme m_currentColorScheme;
 
 	wxTimer m_tooltip_timer;
 	int m_one_shot;

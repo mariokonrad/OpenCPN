@@ -98,8 +98,6 @@ extern bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val); // fo
 static int s_bInS57; // Exclusion flag to prvent recursion in this class init call. Init() is not
 					 // reentrant due to static wxProgressDialog callback....
 
-int s_cnt;
-
 struct LightComparison
 {
 	bool operator()(const S57Light* l1, const S57Light* l2) const

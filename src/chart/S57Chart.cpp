@@ -34,6 +34,9 @@
 #include <chart/s52plib.h>
 #include <chart/S57Light.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #include "dychart.h"
 #include <ocpn_pixel.h>
 #include <ocpnDC.h>
@@ -6473,10 +6476,12 @@ bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort& viewport,
 	bool bhas_red_green = false;
 	bool bleading_attribute = false;
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	int opacity = 100;
-	if (cc1->GetColorScheme() == global::GLOBAL_COLOR_SCHEME_DUSK)
+	if (view.color_scheme == global::GLOBAL_COLOR_SCHEME_DUSK)
 		opacity = 50;
-	if (cc1->GetColorScheme() == global::GLOBAL_COLOR_SCHEME_NIGHT)
+	if (view.color_scheme == global::GLOBAL_COLOR_SCHEME_NIGHT)
 		opacity = 20;
 
 	int yOpacity = (float)opacity * 1.3; // Matched perception of white/yellow with red/green

@@ -22,8 +22,10 @@
  **************************************************************************/
 
 #include "DimeControl.h"
-#include <ChartCanvas.h> // FIXME: meh...
 #include <UserColors.h>
+
+#include <global/OCPN.h>
+#include <global/GUI.h>
 
 #include <wx/bmpcbox.h>
 #include <wx/listbook.h>
@@ -31,8 +33,14 @@
 #include <wx/tglbtn.h>
 #include <wx/radiobut.h>
 #include <wx/button.h>
-
-extern ChartCanvas* cc1;
+#include <wx/listbox.h>
+#include <wx/grid.h>
+#include <wx/treectrl.h>
+#include <wx/dirctrl.h>
+#include <wx/stattext.h>
+#include <wx/combobox.h>
+#include <wx/pen.h>
+#include <wx/html/htmlwin.h>
 
 void DimeControl(wxWindow* ctrl)
 {
@@ -60,7 +68,7 @@ void DimeControl(
 		wxColour udkrd,
 		wxColour gridline)
 {
-	global::ColorScheme cs = cc1->GetColorScheme(); // FIXME: is ChartCanvas really needed here? MainFrame vs. ChartCanvas GetColorScheme??
+	global::ColorScheme cs = global::OCPN::get().gui().view().color_scheme;
 
 	if (cs != global::GLOBAL_COLOR_SCHEME_DAY && cs != global::GLOBAL_COLOR_SCHEME_RGB)
 		ctrl->SetBackgroundColour(back_color);
@@ -140,12 +148,13 @@ void DimeControl(
 				((wxPanel*)win)->SetBackgroundColour(wxNullColour);
 
 		} else if (win->IsKindOf(CLASSINFO(wxGrid))) {
-			((wxGrid*)win)->SetDefaultCellBackgroundColour(col1);
-			((wxGrid*)win)->SetDefaultCellTextColour(uitext);
-			((wxGrid*)win)->SetLabelBackgroundColour(col);
-			((wxGrid*)win)->SetLabelTextColour(uitext);
-			((wxGrid*)win)->SetDividerPen(wxPen(col));
-			((wxGrid*)win)->SetGridLineColour(gridline);
+			wxGrid* grid = static_cast<wxGrid*>(win);
+			grid->SetDefaultCellBackgroundColour(col1);
+			grid->SetDefaultCellTextColour(uitext);
+			grid->SetLabelBackgroundColour(col);
+			grid->SetLabelTextColour(uitext);
+			grid->SetDividerPen(wxPen(col));
+			grid->SetGridLineColour(gridline);
 		}
 
 		if (win->GetChildren().size() > 0) {

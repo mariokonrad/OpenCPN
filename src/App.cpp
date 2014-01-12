@@ -1082,6 +1082,9 @@ bool App::OnInit()
 	int mem_total = 0;
 	int mem_initial = 0;
 
+	// default value is DAY
+	global::OCPN::get().gui().set_color_scheme(global::GLOBAL_COLOR_SCHEME_DAY);
+
 #ifdef __WXMSW__
 	// On Windows
 	// We allow only one instance unless the portable option is used

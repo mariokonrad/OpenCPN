@@ -168,7 +168,6 @@ public:
 	int GetNextContextMenuId();
 
 	void SetColorScheme(global::ColorScheme cs);
-	global::ColorScheme GetColorScheme() const;
 
 	wxString FormatDistanceAdaptive(double distance);
 
@@ -469,7 +468,6 @@ private:
 
 	ownship_state_t m_ownship_state;
 
-	global::ColorScheme m_cs;
 	bool m_bMeasure_Active;
 	int m_nMeasureState;
 	Route* m_pMeasureRoute;

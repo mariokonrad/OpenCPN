@@ -136,7 +136,6 @@ public:
 	void TrackOn(void);
 	Track* TrackOff(bool do_add_point = false);
 	void TrackMidnightRestart(void);
-	void ToggleColorScheme();
 	int GetnChartStack(void);
 	void SetToolbarItemState(int tool_id, bool state);
 	void SetToolbarItemBitmaps(int tool_id, wxBitmap* bitmap, wxBitmap* bmpDisabled);
@@ -167,6 +166,7 @@ public:
 	ChartCanvas* GetCanvas();
 	void SetCanvasWindow(ChartCanvas*);
 
+	void ToggleColorScheme();
 	global::ColorScheme GetColorScheme();
 	void SetAndApplyColorScheme(global::ColorScheme cs);
 

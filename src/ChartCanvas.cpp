@@ -687,7 +687,6 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 
 	// Set some benign initial values
 
-	m_cs = global::GLOBAL_COLOR_SCHEME_DAY;
 	VPoint.set_position(Position(0, 0));
 	VPoint.view_scale_ppm = 1;
 	VPoint.Invalidate();
@@ -1115,11 +1114,6 @@ double ChartCanvas::GetPixPerMM() const
 void ChartCanvas::SetOwnShipState(ownship_state_t state)
 {
 	m_ownship_state = state;
-}
-
-global::ColorScheme ChartCanvas::GetColorScheme() const
-{
-	return m_cs;
 }
 
 int ChartCanvas::GetCanvasWidth() const
@@ -1816,7 +1810,6 @@ void ChartCanvas::SetColorScheme(global::ColorScheme cs)
 
 	SetbTCUpdate(true); // force re-render of tide/current locators
 	ReloadVP();
-	m_cs = cs;
 }
 
 wxBitmap ChartCanvas::CreateDimBitmap(wxBitmap& Bitmap, double factor)
@@ -9260,7 +9253,7 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 		pSelectTC->DeleteAllSelectableTypePoints(SelectItem::TYPE_TIDEPOINT);
 
 	wxBitmap bm;
-	switch (m_cs) {
+	switch (global::OCPN::get().gui().view().color_scheme) {
 		case global::GLOBAL_COLOR_SCHEME_DAY:
 			bm = m_bmTideDay;
 			break;

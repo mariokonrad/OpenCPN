@@ -74,6 +74,23 @@ public:
 	virtual void set_config_version_string(const wxString&) = 0;
 	virtual void set_config_nav_message_shown(bool) = 0;
 	virtual void set_config_memory_footprint(long) = 0;
+
+public:
+	struct Debug
+	{
+		bool gdal;
+		long nmea;
+		bool ogl;
+		bool cm93;
+		bool s57;
+	};
+
+	virtual const Debug& debug() const = 0;
+	virtual void set_debug_gdal(bool) = 0;
+	virtual void set_debug_nmea(long) = 0;
+	virtual void set_debug_ogl(bool) = 0;
+	virtual void set_debug_cm93(bool) = 0;
+	virtual void set_debug_s57(bool) = 0;
 };
 
 }

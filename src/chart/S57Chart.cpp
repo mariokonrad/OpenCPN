@@ -35,6 +35,7 @@
 #include <chart/S57Light.h>
 
 #include <global/OCPN.h>
+#include <global/System.h>
 #include <global/GUI.h>
 
 #include "dychart.h"
@@ -75,8 +76,6 @@ extern S57ClassRegistrar* g_poRegistrar;
 extern wxString g_csv_locn;
 extern wxString g_SENCPrefix;
 extern FILE* s_fpdebug;
-extern bool g_bGDAL_Debug;
-extern bool g_bDebugS57;
 extern bool g_b_useStencil;
 extern ChartCanvas* cc1;
 extern chart::ChartBase* Current_Ch;
@@ -1492,11 +1491,12 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 									  const OCPNRegion& Region, bool b_overlay)
 {
 #ifdef ocpnUSE_GL
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	if (!ps52plib)
 		return false;
 
-	if (g_bDebugS57)
+	if (debug.s57)
 		printf("\n");
 
 	SetVPParms(VPoint);
@@ -1575,7 +1575,7 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 			temp_vp.GetBBox().SetMin(temp_lon_left, temp_lat_bot);
 			temp_vp.GetBBox().SetMax(temp_lon_right, temp_lat_top);
 
-			if (g_bDebugS57)
+			if (debug.s57)
 				printf("   S57 Render Box:  %d %d %d %d\n", rect.x, rect.y, rect.width,
 					   rect.height);
 
@@ -1586,7 +1586,7 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 		}
 	} else {
 		wxRect rect = Region.GetBox();
-		if (g_bDebugS57)
+		if (debug.s57)
 			printf("   S57 Render GetBox:  %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height);
 
 		// Build synthetic ViewPort on this rectangle
@@ -1676,7 +1676,7 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const OCPNRe
 
 		} else {
 			//  Use depth buffer for clipping
-			if (g_bDebugS57)
+			if (global::OCPN::get().sys().debug().s57)
 				printf("   Depth buffer Region rect:  %d %d %d %d\n", rect.x, rect.y, rect.width,
 					   rect.height);
 
@@ -1762,7 +1762,7 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const wxRect
 
 	} else {
 		// Use depth buffer for clipping
-		if (g_bDebugS57)
+		if (global::OCPN::get().sys().debug().s57)
 			printf("   Depth buffer rect:  %d %d %d %d\n", Rect.x, Rect.y, Rect.width, Rect.height);
 
 		glBegin(GL_QUADS);
@@ -2045,8 +2045,10 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 		rlr.x = (int)round((easting_lr - prev_easting_ul) * m_view_scale_ppm);
 		rlr.y = (int)round((prev_northing_ul - northing_lr) * m_view_scale_ppm);
 
+		const global::System::Debug& debug = global::OCPN::get().sys().debug();
+
 		if ((fabs(dx - wxRound(dx)) > 1e-5) || (fabs(dy - wxRound(dy)) > 1e-5)) {
-			if (g_bDebugS57)
+			if (debug.s57)
 				printf("s57chart::DoRender  Cache miss on non-integer pixel delta %g %g\n", dx, dy);
 			rul.x = 0;
 			rul.y = 0;
@@ -2054,7 +2056,7 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 			rlr.y = 0;
 			bNewVP = true;
 		} else if ((rul.x != 0) || (rul.y != 0)) {
-			if (g_bDebugS57)
+			if (debug.s57)
 				printf("newvp due to rul\n");
 			bNewVP = true;
 		}
@@ -4013,7 +4015,7 @@ int s57chart::BuildRAZFromSENCFile(const wxString& FullPath)
 				LUP = ps52plib->S52_LUPLookup(LUP_Name, obj->FeatureName, obj);
 
 				if (NULL == LUP) {
-					if (g_bDebugS57) {
+					if (global::OCPN::get().sys().debug().s57) {
 						LogMessageOnce::log(_T("   Could not find LUP for ")
 									   + wxString(obj->FeatureName, wxConvUTF8));
 					}
@@ -5907,7 +5909,7 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 		}
 
 		// Show LUP
-		if (g_bDebugS57) {
+		if (global::OCPN::get().sys().debug().s57) {
 			wxString index;
 			index.Printf(_T("Feature Index: %d\n"), current->obj->Index);
 			classAttributes << index;
@@ -6280,7 +6282,7 @@ void OpenCPN_OGRErrorHandler(CPLErr eErrClass, int nError, const char* pszErrorM
 	else
 		sprintf(buf, "   ERROR %d: %s\n", nError, pszErrorMsg);
 
-	if (g_bGDAL_Debug || (CE_Debug != eErrClass)) { // log every warning or error
+	if (global::OCPN::get().sys().debug().gdal || (CE_Debug != eErrClass)) { // log every warning or error
 		wxString msg(buf, wxConvUTF8);
 		wxLogMessage(msg);
 	}

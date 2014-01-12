@@ -22,9 +22,9 @@
  **************************************************************************/
 
 #include "OCP_DataStreamInput_Thread.h"
-#include "OCPN_DataStreamEvent.h"
-#include "DataStream.h"
-#include "dychart.h"
+#include <OCPN_DataStreamEvent.h>
+#include <DataStream.h>
+#include <dychart.h>
 
 #ifdef __POSIX__
 	#include <sys/termios.h>
@@ -39,8 +39,10 @@ extern const wxEventType wxEVT_OCPN_DATASTREAM;
 extern MainFrame * gFrame;
 
 #ifdef __WXMSW__
-extern int g_total_NMEAerror_messages;
-extern int g_nNMEADebug;
+	#include <global/OCPN.h>
+	#include <global/System.h>
+
+	extern int g_total_NMEAerror_messages;
 #endif
 
 enum DS_ENUM_BUFFER_STATE
@@ -488,8 +490,10 @@ void* OCP_DataStreamInput_Thread::Entry()
 
 HandleASuccessfulRead:
 
+		const global::System::Debug& debug = global::OCPN::get().sys().debug();
+
 		if (dwRead > 0) {
-			if ((g_total_NMEAerror_messages < g_nNMEADebug) && (g_nNMEADebug > 1000)) {
+			if ((g_total_NMEAerror_messages < debug.nmea) && (debug.nmea > 1000)) {
 				g_total_NMEAerror_messages++;
 				wxString msg;
 				msg.Printf(_T("NMEA activity...%d bytes"), dwRead);
@@ -509,7 +513,7 @@ HandleASuccessfulRead:
 
 				nchar--;
 			}
-			if ((g_total_NMEAerror_messages < g_nNMEADebug) && (g_nNMEADebug > 1000)) {
+			if ((g_total_NMEAerror_messages < debug.nmea) && (debug.nmea > 1000)) {
 				g_total_NMEAerror_messages++;
 				wxString msg1 = _T("Buffer is: ");
 				int nc = dwRead;

@@ -37,6 +37,7 @@
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/System.h>
 
 #include <chart/s52plib.h>
 #include <chart/S57Chart.h>
@@ -50,8 +51,6 @@
 #ifndef GL_DEPTH_STENCIL_ATTACHMENT
 	#define GL_DEPTH_STENCIL_ATTACHMENT  0x821A
 #endif
-
-bool g_bDebugOGL;
 
 extern ChartCanvas* cc1;
 extern chart::s52plib* ps52plib;
@@ -93,7 +92,9 @@ static int s_nquickbind;
 
 static bool UploadTexture(glTextureDescriptor* ptd, int n_basemult)
 {
-	if (g_bDebugOGL) {
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
+
+	if (debug.ogl) {
 		wxLogMessage(wxString::Format(_T("  -->UploadTexture %d"), ptd->tex_name));
 	}
 
@@ -127,7 +128,7 @@ static bool UploadTexture(glTextureDescriptor* ptd, int n_basemult)
 		if (height == 2)
 			break; // all done;
 
-		if (g_bDebugOGL) {
+		if (debug.ogl) {
 			wxLogMessage(wxString::Format(_T("     -->glTexImage2D...level:%d"), level));
 		}
 
@@ -532,10 +533,7 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 		strncpy(render_string, (char*)glGetString(GL_RENDERER), 79);
 		m_renderer = wxString(render_string, wxConvUTF8);
 
-		wxString msg;
-		msg.Printf(_T("OpenGL-> Renderer String: "));
-		msg += m_renderer;
-		wxLogMessage(msg);
+		wxLogMessage(_T("OpenGL-> Renderer String: ") + m_renderer);
 
 		if (ps52plib)
 			ps52plib->SetGLRendererString(m_renderer);
@@ -597,9 +595,7 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 			(s_glBindFramebufferEXT)(GL_FRAMEBUFFER_EXT, 0);
 
 			if (fb_status != GL_FRAMEBUFFER_COMPLETE_EXT) {
-				wxString msg;
-				msg.Printf(_T("    OpenGL-> Framebuffer Incomplete:  %08X"), fb_status);
-				wxLogMessage(msg);
+				wxLogMessage(wxString::Format(_T("    OpenGL-> Framebuffer Incomplete:  %08X"), fb_status));
 				m_b_useFBO = false;
 			}
 		}
@@ -632,10 +628,7 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 		m_tex_max_res /= 2;
 		m_tex_max_res_initial = m_tex_max_res;
 
-		wxString str;
-		str.Printf(_T("OpenGL-> Estimated Max Resident Textures: %d"), m_tex_max_res);
-		wxLogMessage(str);
-
+		wxLogMessage(wxString::Format(_T("OpenGL-> Estimated Max Resident Textures: %d"), m_tex_max_res));
 		m_bsetup = true;
 	}
 
@@ -672,7 +665,7 @@ bool glChartCanvas::PurgeChartTextures(chart::ChartBase* pc)
 			glTextureDescriptor* ptd = it->second;
 
 			if (ptd->tex_name > 0) {
-				if (g_bDebugOGL)
+				if (global::OCPN::get().sys().debug().ogl)
 					printf("glDeleteTextures in Purge...()\n");
 				glDeleteTextures(1, &ptd->tex_name);
 				m_ntex--;
@@ -688,8 +681,8 @@ bool glChartCanvas::PurgeChartTextures(chart::ChartBase* pc)
 		delete pTextureHash;
 
 		return true;
-	} else
-		return false;
+	}
+	return false;
 }
 
 void glChartCanvas::DrawGLOverLayObjects(void)
@@ -929,6 +922,8 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 		n_basemult = 2;
 	}
 
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
+
 	// Iterate on the texture hashmap....
 	// Remove any textures whose tex_mult value does not match the target for this render (i.e. n_basemult)
 	if (m_ntex > m_tex_max_res) {
@@ -938,7 +933,7 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 
 			if ((ptd->tex_name > 0) && (ptd->tex_mult != n_basemult)) {
 				// the texture known to the GPU does not match the target
-				if (g_bDebugOGL)
+				if (debug.ogl)
 					printf("   glDeleteTexture on n_basemult mismatch\n");
 				glDeleteTextures(1, &ptd->tex_name);
 				m_ntex--;
@@ -993,7 +988,7 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 					if (!ri.width || !ri.height) {
 						ptd = (*pTextureHash)[key];
 						if (ptd->tex_name > 0) {
-							if (g_bDebugOGL)
+							if (debug.ogl)
 								printf("   glDeleteTexture on m_ntex limit\n");
 
 							glDeleteTextures(1, &ptd->tex_name);
@@ -1137,10 +1132,8 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 
 					wxStopWatch sw;
 
-					if (g_bDebugOGL) {
-						wxString msg;
-						msg.Printf(_T("  -->BindTexture %d"), ptd->tex_name);
-						wxLogMessage(msg);
+					if (debug.ogl) {
+						wxLogMessage(wxString::Format(_T("  -->BindTexture %d"), ptd->tex_name));
 					}
 
 					glBindTexture(GL_TEXTURE_2D, ptd->tex_name);
@@ -1157,7 +1150,7 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 					double sx = rect.width;
 					double sy = rect.height;
 
-					if (g_bDebugOGL) {
+					if (debug.ogl) {
 						wxString msg;
 						msg.Printf(_T("     glQuads TexCoord (%g,%g) (%g,%g) (%g,%g) (%g,%g)"),
 								   x1 / sx, y1 / sy, (x1 + w) / sx, y1 / sy, (x1 + w) / sx,
@@ -1455,6 +1448,7 @@ void glChartCanvas::render()
 		ChartPointerHashType::iterator it0;
 		for (it0 = m_chart_hash.begin(); it0 != m_chart_hash.end(); ++it0) {
 			chart::ChartBaseBSB* pc = (chart::ChartBaseBSB*)it0->first;
+			const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 			if (VPoint.b_quilt) // quilted
 			{
@@ -1468,21 +1462,21 @@ void glChartCanvas::render()
 
 						ChartTextureHashType::iterator it = pTextureHash->begin();
 						while (it != pTextureHash->end()) {
-							glTextureDescriptor *ptd = it->second;
+							glTextureDescriptor* ptd = it->second;
 
-							if( ptd->tex_name > 0 ) {
-								if( g_bDebugOGL ) printf(
-										"glDeleteTextures in Unused chart...()\n" );
-								glDeleteTextures( 1, &ptd->tex_name );
+							if (ptd->tex_name > 0) {
+								if (debug.ogl)
+									printf("glDeleteTextures in Unused chart...()\n");
+								glDeleteTextures(1, &ptd->tex_name);
 								m_ntex--;
 
 								ptd->tex_name = 0;
 
 								//    Delete the chart data?
-								if( m_b_mem_crunch ) {
-									pTextureHash->erase( it );
+								if (m_b_mem_crunch) {
+									pTextureHash->erase(it);
 									delete ptd;
-									it = pTextureHash->begin();              // reset the iterator
+									it = pTextureHash->begin(); // reset the iterator
 								}
 
 							} else
@@ -1504,7 +1498,7 @@ void glChartCanvas::render()
 						glTextureDescriptor* ptd = it->second;
 
 						if (ptd->tex_name > 0) {
-							if (g_bDebugOGL)
+							if (debug.ogl)
 								printf("glDeleteTextures in Unused chart...()\n");
 							glDeleteTextures(1, &ptd->tex_name);
 							m_ntex--;
@@ -1647,25 +1641,24 @@ void glChartCanvas::render()
 						}
 					} else {
 						// not blitable
-						( *s_glBindFramebufferEXT )( GL_FRAMEBUFFER_EXT, m_fb0 );
+						(*s_glBindFramebufferEXT)(GL_FRAMEBUFFER_EXT, m_fb0);
 
 						// Delete the current cached texture
-						glDeleteTextures( 1, &m_cache_tex );
+						glDeleteTextures(1, &m_cache_tex);
 
 						// Make a new texture, and bind to FBO
-						glGenTextures( 1, &m_cache_tex );
+						glGenTextures(1, &m_cache_tex);
 
-						glBindTexture( m_TEX_TYPE, m_cache_tex );
-						glTexParameterf( m_TEX_TYPE, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-						glTexParameteri( m_TEX_TYPE, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-						glTexImage2D( m_TEX_TYPE, 0, GL_RGBA, m_cache_tex_x, m_cache_tex_y, 0,
-								GL_RGBA, GL_UNSIGNED_BYTE, NULL );
-						( *s_glFramebufferTexture2DEXT )( GL_FRAMEBUFFER_EXT,
-								GL_COLOR_ATTACHMENT0_EXT, m_TEX_TYPE, m_cache_tex, 0 );
+						glBindTexture(m_TEX_TYPE, m_cache_tex);
+						glTexParameterf(m_TEX_TYPE, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+						glTexParameteri(m_TEX_TYPE, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+						glTexImage2D(m_TEX_TYPE, 0, GL_RGBA, m_cache_tex_x, m_cache_tex_y, 0,
+									 GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+						(*s_glFramebufferTexture2DEXT)(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT,
+													   m_TEX_TYPE, m_cache_tex, 0);
 
 						// Render the chart(s)
-						RenderQuiltViewGL( VPoint, chart_get_region );
-
+						RenderQuiltViewGL(VPoint, chart_get_region);
 					}
 				} else {
 					// No change in the view, so use the cached member texture
@@ -1675,22 +1668,21 @@ void glChartCanvas::render()
 				(*s_glBindFramebufferEXT)(GL_FRAMEBUFFER_EXT, m_fb0);
 
 				// Delete the current cached texture
-				glDeleteTextures( 1, &m_cache_tex );
+				glDeleteTextures(1, &m_cache_tex);
 
 				// Make a new texture, and bind to FBO
-				glGenTextures( 1, &m_cache_tex );
+				glGenTextures(1, &m_cache_tex);
 
-				glBindTexture( m_TEX_TYPE, m_cache_tex );
-				glTexParameterf( m_TEX_TYPE, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-				glTexParameteri( m_TEX_TYPE, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-				glTexImage2D( m_TEX_TYPE, 0, GL_RGBA, m_cache_tex_x, m_cache_tex_y, 0, GL_RGBA,
-						GL_UNSIGNED_BYTE, NULL );
-				( *s_glFramebufferTexture2DEXT )( GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT,
-						m_TEX_TYPE, m_cache_tex, 0 );
+				glBindTexture(m_TEX_TYPE, m_cache_tex);
+				glTexParameterf(m_TEX_TYPE, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				glTexParameteri(m_TEX_TYPE, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				glTexImage2D(m_TEX_TYPE, 0, GL_RGBA, m_cache_tex_x, m_cache_tex_y, 0, GL_RGBA,
+							 GL_UNSIGNED_BYTE, NULL);
+				(*s_glFramebufferTexture2DEXT)(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT,
+											   m_TEX_TYPE, m_cache_tex, 0);
 
 				// Render the chart(s)
-				RenderQuiltViewGL( VPoint, chart_get_region );
-
+				RenderQuiltViewGL(VPoint, chart_get_region);
 			}
 
 			// Disable Render to FBO
@@ -1889,10 +1881,8 @@ void glChartCanvas::render()
 
 	cc1->PaintCleanup();
 
-	if (g_bDebugOGL) {
-		wxString msg;
-		msg.Printf(_T("  -->m_ntex %d %d\n"), m_ntex, m_tex_max_res);
-		wxLogMessage(msg);
+	if (global::OCPN::get().sys().debug().ogl) {
+		wxLogMessage(wxString::Format(_T("  -->m_ntex %d %d\n"), m_ntex, m_tex_max_res));
 	}
 }
 

@@ -215,7 +215,6 @@ wxPrintData* g_printData = (wxPrintData*)NULL;
 wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
 bool g_bDisplayGrid; // Flag indicating weather the lat/lon grid should be displayed
 bool g_bShowActiveRouteHighway;
-int g_nNMEADebug;
 bool g_bPlayShipsBells;
 bool g_bShowLayers;
 bool g_bTransparentToolbar;
@@ -231,8 +230,6 @@ bool g_bHDT_Rx;
 bool g_bVAR_Rx;
 int g_SatsInView;
 bool g_bSatValid;
-bool g_bDebugCM93;
-bool g_bDebugS57;
 bool g_bfilter_cogsog;
 int g_COGFilterSec;
 int g_SOGFilterSec;
@@ -283,7 +280,6 @@ bool bFirstAuto;
 bool g_bUseGLL;
 int g_nCacheLimit;
 int g_memCacheLimit;
-bool g_bGDAL_Debug;
 double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode
 bool g_bCourseUp;
 int g_COGAvgSec; // COG average period (sec.) for Course Up Mode
@@ -2954,16 +2950,17 @@ int ut_index;
 
 void MainFrame::update_gps_watchdog()
 {
-	global::WatchDog & wdt = global::OCPN::get().wdt();
+	global::WatchDog& wdt = global::OCPN::get().wdt();
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	// Update and check watchdog timer for GPS data source
 	wdt.decrement_gps_watchdog();
 	if (wdt.get_data().gps_watchdog <= 0) {
 		bGPSValid = false;
-		if (g_nNMEADebug && (wdt.get_data().gps_watchdog == 0))
+		if ((debug.nmea > 0) && (wdt.get_data().gps_watchdog == 0))
 			wxLogMessage(_T("   ***GPS Watchdog timeout..."));
 
-		global::Navigation & nav = global::OCPN::get().nav();
+		global::Navigation& nav = global::OCPN::get().nav();
 		nav.set_speed_over_ground(NAN);
 		nav.set_course_over_ground(NAN);
 	}
@@ -2971,56 +2968,60 @@ void MainFrame::update_gps_watchdog()
 
 void MainFrame::update_hdx_watchdog()
 {
-	global::WatchDog & wdt = global::OCPN::get().wdt();
+	global::WatchDog& wdt = global::OCPN::get().wdt();
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	// Update and check watchdog timer for Mag Heading data source
 	wdt.decrement_hdx_watchdog();
 	if (wdt.get_data().hdx_watchdog <= 0) {
-		global::Navigation & nav = global::OCPN::get().nav();
+		global::Navigation& nav = global::OCPN::get().nav();
 		nav.set_heading_magn(NAN);
-		if (g_nNMEADebug && (wdt.get_data().hdx_watchdog == 0))
+		if ((debug.nmea > 0) && (wdt.get_data().hdx_watchdog == 0))
 			wxLogMessage(_T("   ***HDx Watchdog timeout..."));
 	}
 }
 
 void MainFrame::update_hdt_watchdog()
 {
-	global::WatchDog & wdt = global::OCPN::get().wdt();
+	global::WatchDog& wdt = global::OCPN::get().wdt();
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	// Update and check watchdog timer for True Heading data source
 	wdt.decrement_hdt_watchdog();
 	if (wdt.get_data().hdt_watchdog <= 0) {
 		g_bHDT_Rx = false;
-		global::Navigation & nav = global::OCPN::get().nav();
+		global::Navigation& nav = global::OCPN::get().nav();
 		nav.set_heading_true(NAN);
-		if (g_nNMEADebug && (wdt.get_data().hdt_watchdog == 0))
+		if ((debug.nmea > 0) && (wdt.get_data().hdt_watchdog == 0))
 			wxLogMessage(_T("   ***HDT Watchdog timeout..."));
 	}
 }
 
 void MainFrame::update_var_watchdog()
 {
-	global::WatchDog & wdt = global::OCPN::get().wdt();
+	global::WatchDog& wdt = global::OCPN::get().wdt();
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	// Update and check watchdog timer for Magnetic Variation data source
 	wdt.decrement_var_watchdog();
 	if (wdt.get_data().var_watchdog <= 0) {
 		g_bVAR_Rx = false;
-		if (g_nNMEADebug && (wdt.get_data().var_watchdog == 0))
+		if ((debug.nmea > 0) && (wdt.get_data().var_watchdog == 0))
 			wxLogMessage(_T("   ***VAR Watchdog timeout..."));
 	}
 }
 
 void MainFrame::update_sat_watchdog()
 {
-	global::WatchDog & wdt = global::OCPN::get().wdt();
+	global::WatchDog& wdt = global::OCPN::get().wdt();
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	// Update and check watchdog timer for GSV (Satellite data)
 	wdt.decrement_sat_watchdog();
 	if (wdt.get_data().sat_watchdog <= 0) {
 		g_bSatValid = false;
 		g_SatsInView = 0;
-		if (g_nNMEADebug && (wdt.get_data().sat_watchdog == 0))
+		if ((debug.nmea > 0) && (wdt.get_data().sat_watchdog == 0))
 			wxLogMessage(_T("   ***SAT Watchdog timeout..."));
 	}
 }
@@ -4907,10 +4908,11 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 	bool ll_valid = true;
 
 	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	wxString str_buf = wxString(event.GetNMEAString().c_str(), wxConvUTF8);
 
-	if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
+	if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
 		g_total_NMEAerror_messages++;
 		wxString msg(_T("MEH.NMEA Sentence received..."));
 		msg.Append(str_buf);
@@ -4923,7 +4925,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 
 	if (event.GetStream()) {
 		if (!event.GetStream()->ChecksumOK(str_buf)) {
-			if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
+			if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
 				g_total_NMEAerror_messages++;
 				wxString msg(_T(">>>>>>NMEA Sentence Checksum Bad..."));
 				msg.Append(str_buf);
@@ -4990,7 +4992,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 					}
 					pos_valid = ll_valid;
 				}
-			} else if (g_nNMEADebug) {
+			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDT")) {
@@ -5000,7 +5002,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 					g_bHDT_Rx = true;
 					global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
 				}
-			} else if (g_nNMEADebug) {
+			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDG")) {
@@ -5019,7 +5021,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 					g_bVAR_Rx = true;
 					global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
 				}
-			} else if (g_nNMEADebug) {
+			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDM")) {
@@ -5027,7 +5029,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 				global::OCPN::get().nav().set_heading_magn(m_NMEA0183.Hdm.DegreesMagnetic);
 				if (!wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic))
 					global::OCPN::get().wdt().set_hdx_watchdog(wdt.gps_watchdog_timeout_ticks);
-			} else if (g_nNMEADebug) {
+			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("VTG")) {
@@ -5040,7 +5042,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 				if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots)
 					&& !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
 					global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
-			} else if (g_nNMEADebug) {
+			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("GSV")) {
@@ -5048,7 +5050,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 				g_SatsInView = m_NMEA0183.Gsv.SatsInView;
 				global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
 				g_bSatValid = true;
-			} else if (g_nNMEADebug) {
+			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		} else if (g_bUseGLL && m_NMEA0183.LastSentenceIDReceived == _T("GLL")) {
@@ -5086,7 +5088,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 					}
 					pos_valid = ll_valid;
 				}
-			} else if (g_nNMEADebug) {
+			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("GGA")) {
@@ -5128,7 +5130,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 					global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
 					g_bSatValid = true;
 				}
-			} else if (g_nNMEADebug) {
+			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		}
@@ -5161,7 +5163,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 				pos_valid = true;
 			}
 		} else {
-			if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
+			if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
 				g_total_NMEAerror_messages++;
 				wxString msg(_T("   Invalid AIVDO Sentence..."));
 				msg.Append(str_buf);
@@ -5170,7 +5172,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 		}
 	} else {
 		bis_recognized_sentence = false;
-		if (g_nNMEADebug && (g_total_NMEAerror_messages < g_nNMEADebug)) {
+		if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
 			g_total_NMEAerror_messages++;
 			wxString msg(_T("   Unrecognized NMEA Sentence..."));
 			msg.Append(str_buf);
@@ -5182,79 +5184,85 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 		PostProcessNNEA(pos_valid, sfixtime);
 }
 
-void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
+void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 {
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-	const global::WatchDog::Data & wdt = global::OCPN::get().wdt().get_data();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	FilterCogSog();
 
-	//    If speed over ground is greater than some threshold, we determine that we are "cruising"
+	// If speed over ground is greater than some threshold, we determine that we are "cruising"
 	if (nav.sog > 3.0)
 		g_bCruising = true;
 
-	//    Here is the one place we try to create Hdt from Hdm and Var,
-	//    but only if NMEA HDT sentence is not being received
+	// Here is the one place we try to create Hdt from Hdm and Var,
+	// but only if NMEA HDT sentence is not being received
 
 	if (!g_bHDT_Rx) {
-		if( !wxIsNaN(nav.var) && !wxIsNaN(nav.hdm)) {
+		if (!wxIsNaN(nav.var) && !wxIsNaN(nav.hdm)) {
 			global::OCPN::get().nav().set_heading_true(nav.hdm + nav.var);
 			global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
 		}
 	}
 
-	if( pos_valid ) {
-		if( g_nNMEADebug ) {
+	if (pos_valid) {
+		if (debug.nmea > 0) {
 			wxLogMessage(_T("PostProcess NMEA with valid position"));
 		}
 
-		//      Maintain the validity flags
+		// Maintain the validity flags
 		bool last_bGPSValid = bGPSValid;
 		bGPSValid = true;
-		if( !last_bGPSValid ) UpdateGPSCompassStatusBox();
+		if (!last_bGPSValid)
+			UpdateGPSCompassStatusBox();
 
 		// Show a little heartbeat tick in StatusWindow0 on NMEA events
 		// But no faster than 10 hz.
 		unsigned long uiCurrentTickCount;
 		m_MMEAeventTime.SetToCurrent();
-		uiCurrentTickCount = m_MMEAeventTime.GetMillisecond() / 100;           // tenths of a second
+		uiCurrentTickCount = m_MMEAeventTime.GetMillisecond() / 100; // tenths of a second
 		uiCurrentTickCount += m_MMEAeventTime.GetTicks() * 10;
-		if( uiCurrentTickCount > m_ulLastNEMATicktime + 1 ) {
+		if (uiCurrentTickCount > m_ulLastNEMATicktime + 1) {
 			m_ulLastNEMATicktime = uiCurrentTickCount;
 
-			if( tick_idx++ > 6 ) tick_idx = 0;
+			if (tick_idx++ > 6)
+				tick_idx = 0;
 		}
 	}
 
 	// Show latitude / longitude in StatusWindow0
 
 	if (NULL != GetStatusBar()) {
-		const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		char tick_buf[2];
 		tick_buf[0] = nmea_tick_chars[tick_idx];
 		tick_buf[1] = 0;
 
-		wxString s1( tick_buf, wxConvUTF8 );
+		wxString s1(tick_buf, wxConvUTF8);
 		s1 += _(" Ship ");
 		s1 += toSDMM(1, nav.pos.lat());
 		s1 += _T("   ");
 		s1 += toSDMM(2, nav.pos.lon());
-		SetStatusText( s1, STAT_FIELD_TICK );
+		SetStatusText(s1, STAT_FIELD_TICK);
 
 		wxString over_ground;
 		if (wxIsNaN(nav.sog))
 			over_ground += wxString::Format(_T("SOG --- ") + getUsrSpeedUnit() + _T("  "));
 		else
-			over_ground += wxString::Format(_T("SOG %2.2f ") + getUsrSpeedUnit() + _T("  "), toUsrSpeed(nav.sog));
+			over_ground += wxString::Format(_T("SOG %2.2f ") + getUsrSpeedUnit() + _T("  "),
+											toUsrSpeed(nav.sog));
 
 		if (wxIsNaN(nav.cog)) {
 			over_ground += wxString("COG ---\u00B0", wxConvUTF8);
 		} else {
-			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			if (g_bShowMag) {
-				over_ground += wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(nav.cog));
+				over_ground += wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8),
+												(int)navigation::GetTrueOrMag(nav.cog));
 			} else {
-				over_ground += wxString::Format(wxString("COG %03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(nav.cog));
+				over_ground += wxString::Format(wxString("COG %03d°  ", wxConvUTF8),
+												(int)navigation::GetTrueOrMag(nav.cog));
 			}
 		}
 
@@ -5300,7 +5308,7 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 	if ((sfixtime.Len()) && s_bSetSystemTime && (m_bTimeIsSet == false)) {
 		wxDateTime Fix_Time;
 
-		if( 6 == sfixtime.Len() )                   // perfectly recognised format?
+		if (6 == sfixtime.Len()) // perfectly recognised format?
 		{
 			wxString a;
 			long b;
@@ -5308,31 +5316,35 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 			int min = 0;
 			int sec = 0;
 
-			a = sfixtime.Mid( 0, 2 );
-			if( a.ToLong( &b ) ) hr = b;
-			a = sfixtime.Mid( 2, 2 );
-			if( a.ToLong( &b ) ) min = b;
-			a = sfixtime.Mid( 4, 2 );
-			if( a.ToLong( &b ) ) sec = b;
+			a = sfixtime.Mid(0, 2);
+			if (a.ToLong(&b))
+				hr = b;
+			a = sfixtime.Mid(2, 2);
+			if (a.ToLong(&b))
+				min = b;
+			a = sfixtime.Mid(4, 2);
+			if (a.ToLong(&b))
+				sec = b;
 
-			Fix_Time.Set( hr, min, sec );
+			Fix_Time.Set(hr, min, sec);
 		}
-		wxString fix_time_format = Fix_Time.Format( _T("%Y-%m-%dT%H:%M:%S") ); // this should show as LOCAL
+		wxString fix_time_format
+			= Fix_Time.Format(_T("%Y-%m-%dT%H:%M:%S")); // this should show as LOCAL
 
 		//          Compare the server (fix) time to the current system time
 		wxDateTime sdt;
 		sdt.SetToCurrent();
-		wxDateTime cwxft = Fix_Time;                  // take a copy
+		wxDateTime cwxft = Fix_Time; // take a copy
 		wxTimeSpan ts;
-		ts = cwxft.Subtract( sdt );
+		ts = cwxft.Subtract(sdt);
 
-		int b = ( ts.GetSeconds() ).ToLong();
+		int b = (ts.GetSeconds()).ToLong();
 
 		//          Correct system time if necessary
 		//      Only set the time if wrong by more than 1 minute, and less than 2 hours
 		//      This should eliminate bogus times which may come from faulty GPS units
 
-		if( ( abs( b ) > 60 ) && ( abs( b ) < ( 2 * 60 * 60 ) ) ) {
+		if ((abs(b) > 60) && (abs(b) < (2 * 60 * 60))) {
 
 #ifdef __WXMSW__
 			//      Fix up the fix_time to convert to GMT
@@ -5340,11 +5352,11 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 
 			//    Code snippet following borrowed from wxDateCtrl, MSW
 
-			const wxDateTime::Tm tm( Fix_Time.GetTm() );
+			const wxDateTime::Tm tm(Fix_Time.GetTm());
 
 			SYSTEMTIME stm;
-			stm.wYear = (WXWORD) tm.year;
-			stm.wMonth = (WXWORD) ( tm.mon - wxDateTime::Jan + 1 );
+			stm.wYear = (WXWORD)tm.year;
+			stm.wMonth = (WXWORD)(tm.mon - wxDateTime::Jan + 1);
 			stm.wDay = tm.mday;
 
 			stm.wDayOfWeek = 0;
@@ -5353,7 +5365,7 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 			stm.wSecond = tm.sec;
 			stm.wMilliseconds = 0;
 
-			::SetSystemTime( &stm );            // in GMT
+			::SetSystemTime(&stm); // in GMT
 
 #else
 
@@ -5378,13 +5390,13 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString &sfixtime)
 			wxLogMessage(msg);
 			wxExecute(sdate, wxEXEC_ASYNC);
 
-#endif      //__WXMSW__
+#endif //__WXMSW__
 			m_bTimeIsSet = true;
 
-		}           // if needs correction
-	}               // if valid time
+		} // if needs correction
+	} // if valid time
 
-#endif            //ocpnUPDATE_SYSTEM_TIME
+#endif // ocpnUPDATE_SYSTEM_TIME
 }
 
 void MainFrame::FilterCogSog(void)

@@ -33,6 +33,7 @@ class OCPN_System : public System
 private:
 	Data data_data;
 	Config data_config;
+	Debug data_debug;
 
 public: // data
 	virtual const Data& data() const;
@@ -52,6 +53,14 @@ public: // config
 	virtual void set_config_version_string(const wxString&);
 	virtual void set_config_nav_message_shown(bool);
 	virtual void set_config_memory_footprint(long);
+
+public: // debug
+	virtual const Debug& debug() const;
+	virtual void set_debug_gdal(bool);
+	virtual void set_debug_nmea(long);
+	virtual void set_debug_ogl(bool);
+	virtual void set_debug_cm93(bool);
+	virtual void set_debug_s57(bool);
 };
 
 }

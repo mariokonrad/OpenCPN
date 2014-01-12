@@ -100,5 +100,35 @@ void OCPN_System::set_config_memory_footprint(long value_kB)
 	data_config.memory_footprint_kB = value_kB;
 }
 
+const System::Debug& OCPN_System::debug() const
+{
+	return data_debug;
+}
+
+void OCPN_System::set_debug_gdal(bool value)
+{
+	data_debug.gdal = value;
+}
+
+void OCPN_System::set_debug_nmea(long value)
+{
+	data_debug.nmea = value;
+}
+
+void OCPN_System::set_debug_ogl(bool value)
+{
+	data_debug.ogl = value;
+}
+
+void OCPN_System::set_debug_cm93(bool value)
+{
+	data_debug.cm93 = value;
+}
+
+void OCPN_System::set_debug_s57(bool value)
+{
+	data_debug.s57 = value;
+}
+
 }
 

@@ -88,7 +88,6 @@ extern bool g_bopengl;
 extern bool g_bdisable_opengl;
 extern bool g_bsmoothpanzoom;
 extern bool g_bShowActiveRouteHighway;
-extern int g_nNMEADebug;
 extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
@@ -101,10 +100,6 @@ extern wxString         g_toolbarConfig;
 
 extern int              g_nCacheLimit;
 extern int              g_memCacheLimit;
-
-extern bool             g_bGDAL_Debug;
-extern bool             g_bDebugCM93;
-extern bool             g_bDebugS57;
 
 extern double           g_ownship_predictor_minutes;
 
@@ -160,7 +155,6 @@ extern wxString         g_default_wp_icon;
 extern chart::ChartGroupArray  *g_pGroupArray;
 extern int              g_GroupIndex;
 
-extern bool             g_bDebugOGL;
 extern int              g_current_arrow_scale;
 extern wxString         g_GPS_Ident;
 extern bool             g_bGarminHostUpload;
@@ -520,6 +514,7 @@ wxString Config::read_string(const wxString& entry) const
 
 int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 {
+	global::System& sys = global::OCPN::get().sys();
 	global::AIS& ais = global::OCPN::get().ais();
 	global::GUI& gui = global::OCPN::get().gui();
 	global::Navigation& nav = global::OCPN::get().nav();
@@ -549,11 +544,11 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 			g_memCacheLimit = mem_limit * 1024; // convert from MBytes to kBytes
 	}
 
-	Read(_T("DebugGDAL"), &g_bGDAL_Debug, 0);
-	Read(_T("DebugNMEA"), &g_nNMEADebug, 0);
-	Read(_T("DebugOpenGL"), &g_bDebugOGL, 0);
-	Read(_T("DebugCM93"), &g_bDebugCM93, 0);
-	Read(_T("DebugS57"), &g_bDebugS57, 0); // Show LUP and Feature info in object query
+	sys.set_debug_gdal(read_bool(_T("DebugGDAL")));
+	sys.set_debug_nmea(read_long(_T("DebugNMEA")));
+	sys.set_debug_ogl(read_bool(_T("DebugOpenGL")));
+	sys.set_debug_cm93(read_bool(_T("DebugCM93")));
+	sys.set_debug_s57(read_bool(_T("DebugS57")));
 
 	nav.set_anchor_AWDefault(read_long(_T("AnchorWatchDefault"), 50));
 	nav.set_anchor_AWMax(read_long(_T("AnchorWatchMax"), 1852));

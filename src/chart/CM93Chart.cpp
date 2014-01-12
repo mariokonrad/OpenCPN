@@ -34,6 +34,9 @@
 #include <geo/GeoRef.h>
 #include <geo/Polygon.h>
 
+#include <global/OCPN.h>
+#include <global/System.h>
+
 #include <MicrosoftCompatibility.h>
 #include <LogMessageOnce.h>
 
@@ -45,7 +48,6 @@
 	extern chart::s52plib * ps52plib; // FIXME
 #endif
 
-extern bool g_bDebugCM93; // FIXME
 static bool s_b_busy_shown; // FIXME
 
 namespace chart {
@@ -1044,7 +1046,7 @@ void cm93chart::SetVPParms(const ViewPort& vpt)
 	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center,
 			  &m_northing_vp_center);
 
-	if (g_bDebugCM93) {
+	if (global::OCPN::get().sys().debug().cm93) {
 		// Fetch the lat/lon of the screen corner points
 		const geo::LatLonBoundingBox& box = vpt.GetBBox();
 		double ll_lon = box.GetMinX();
@@ -1133,7 +1135,7 @@ std::vector<int> cm93chart::GetVPCellArray(const ViewPort& vpt)
 	int lower_left_cell = Get_CM93_CellIndex(ll_lat, ll_lon, GetNativeScale());
 	vpcells.push_back(lower_left_cell); // always add the lower left cell
 
-	if (g_bDebugCM93)
+	if (global::OCPN::get().sys().debug().cm93)
 		printf("cm93chart::GetVPCellArray   Adding %d\n", lower_left_cell);
 
 	double rlat, rlon;
@@ -1157,7 +1159,7 @@ std::vector<int> cm93chart::GetVPCellArray(const ViewPort& vpt)
 			next_cell += (lati_20 + 270) * 10000;
 
 			vpcells.push_back(next_cell);
-			if (g_bDebugCM93)
+			if (global::OCPN::get().sys().debug().cm93)
 				printf("cm93chart::GetVPCellArray   Adding %d\n", next_cell);
 
 			loni_20 += (int)m_dval;
@@ -1322,7 +1324,7 @@ int cm93chart::CreateObjChain(int cell_index, int subcell)
 				LUP = ps52plib->S52_LUPLookup(LUP_Name, obj->FeatureName, obj);
 
 				if (NULL == LUP) {
-					if (g_bDebugCM93) {
+					if (global::OCPN::get().sys().debug().cm93) {
 						wxString msg(obj->FeatureName, wxConvUTF8);
 						msg.Prepend(_T("   CM93 could not find LUP for "));
 						LogMessageOnce::log(msg);
@@ -2761,14 +2763,16 @@ int cm93chart::loadcell_in_sequence(int cellindex, char subcell)
 
 int cm93chart::loadsubcell(int cellindex, wxChar sub_char)
 {
+	const global::System::Debug& debug = global::OCPN::get().sys().debug();
+
 	// Create the file name
 
 	int ilat = cellindex / 10000;
 	int ilon = cellindex % 10000;
 
-	if (g_bDebugCM93) {
-		double dlat = m_dval / 3.;
-		double dlon = m_dval / 3.;
+	if (debug.cm93) {
+		double dlat = m_dval / 3.0;
+		double dlon = m_dval / 3.0;
 		double lat, lon;
 		Get_CM93_Cell_Origin(cellindex, GetNativeScale(), &lat, &lon);
 		printf("\n   Attempting loadcell %d scale %lc, sub_char %lc at lat: %g/%g lon:%g/%g\n",
@@ -2794,7 +2798,7 @@ int cm93chart::loadsubcell(int cellindex, wxChar sub_char)
 	file[0] = sub_char;
 	file.Prepend(fileroot);
 
-	if (g_bDebugCM93) {
+	if (debug.cm93) {
 		char sfile[200];
 		strncpy(sfile, file.mb_str(), 199);
 		sfile[199] = 0;
@@ -2818,7 +2822,7 @@ int cm93chart::loadsubcell(int cellindex, wxChar sub_char)
 
 		file1.Prepend(fileroot);
 
-		if (g_bDebugCM93) {
+		if (debug.cm93) {
 			char sfile[200];
 			strncpy(sfile, file1.mb_str(), 199);
 			sfile[199] = 0;
@@ -2829,7 +2833,7 @@ int cm93chart::loadsubcell(int cellindex, wxChar sub_char)
 
 			// This is not really an error if the sub_char is not '0'.  It just means there are no
 			// more subcells....
-			if (g_bDebugCM93) {
+			if (debug.cm93) {
 				if (sub_char == '0')
 					printf("   Tried to load non-existent CM93 cell\n");
 				else
@@ -2854,7 +2858,7 @@ int cm93chart::loadsubcell(int cellindex, wxChar sub_char)
 	// Set the member variable to be the actual file name for use in single chart mode info display
 	m_LastFileName = file;
 
-	if (g_bDebugCM93) {
+	if (debug.cm93) {
 		char str[256];
 		strncpy(str, msg.mb_str(), 255);
 		str[255] = 0;

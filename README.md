@@ -35,6 +35,52 @@ The purpose of this repository is to achieve a refactored version
 of the OpenCPN navigation software.
 
 
+Changes
+-------
+
+- Contains all patches from the mainline tree.
+
+- Fully compatible to configuration and cache files.
+
+- Does not maintain binary compatibility for plugins. Plugins have to be
+  recompiled.
+
+- Since I am not able to perform builds on OSX, this build might be broken.
+  Everything else is tested on various flavor of Linux (64 bit, 32 bit),
+  Microsoft Windows (Visual Studio Express 2010).
+
+
+Rules
+-----
+
+The following rules do apply for this refactoring.
+
+- Code formatting is done using clang-format and the corresponding
+  configuration file of this repository (./.clang-format).
+
+- Classes shall remain in their own pair of files (.cpp/.h), except
+  where only a header file is necessary (enum, struct, etc.).
+
+- Use standard containers and algorithms instead of onces provided by
+  the wxWidgets. This enhances the porability, as well as robustness
+  of the software. From a design point of view, the wxWidgets containers
+  are broken.
+
+- Do not use C++11 features (yet).
+
+- Prevent preprocessor directives to differentiate platform specific stuff.
+  This is what software design (in this case polymorphism) is for.
+
+- Do not leave dead code (commented code, #if 0, etc.). This applies to
+  code in general, including function, method, attributes,
+  method parameters, etc.
+
+- External software packages are not to be "copied" into the existing
+  codebase. If thrid party libraries have to be part of this repository,
+  they must be put to the directory 'src_extern', and they must be visible
+  as external sources (document changes, etc.).
+
+
 Library Notes & Requirements
 ============================
 

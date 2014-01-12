@@ -193,7 +193,6 @@ MarkInfoImpl* pMarkInfoDialog;
 RouteManagerDialog* pRouteManagerDialog;
 double vLat;
 double vLon;
-double initial_scale_ppm;
 bool bDBUpdateInProgress;
 ThumbWin* pthumbwin;
 tide::TCMgr* ptcmgr;

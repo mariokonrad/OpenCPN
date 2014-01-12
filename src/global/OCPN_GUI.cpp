@@ -101,6 +101,11 @@ void OCPN_GUI::set_color_scheme(ColorScheme value)
 	data_view.color_scheme = value;
 }
 
+void OCPN_GUI::set_initial_scale_ppm(double value)
+{
+	data_view.initial_scale_ppm = value;
+}
+
 const GUI::Frame & OCPN_GUI::frame() const
 {
 	return data_frame;

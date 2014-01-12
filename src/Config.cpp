@@ -71,7 +71,6 @@ extern RouteList* pRouteList;
 extern LayerList* pLayerList;
 extern int g_LayerIdx;
 extern double vLat, vLon;
-extern double initial_scale_ppm;
 extern bool g_bShowMag;
 extern double g_UserVar;
 extern ArrayOfConnPrm* g_pConnectionParams;
@@ -977,8 +976,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	nav.set_latitude(START_LAT);
 	nav.set_longitude(START_LON);
 
-	initial_scale_ppm = 0.0003; // decent initial value
-
 	SetPath(_T("/Settings/GlobalState"));
 	wxString st;
 
@@ -1009,7 +1006,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		// Sanity check the scale
 		st_view_scale = fmax(st_view_scale, 0.001 / 32);
 		st_view_scale = fmin(st_view_scale, 4);
-		initial_scale_ppm = st_view_scale;
+		global::OCPN::get().gui().set_initial_scale_ppm(st_view_scale);
+	} else {
+		global::OCPN::get().gui().set_initial_scale_ppm(0.0003); // decent initial value
 	}
 
 	wxString sll;

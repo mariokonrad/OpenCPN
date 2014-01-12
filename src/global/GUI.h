@@ -53,6 +53,7 @@ class GUI
 			bool WayPointPreventDragging;
 			bool ConfirmObjectDelete;
 			ColorScheme color_scheme;
+			double initial_scale_ppm;
 		};
 
 		virtual const View & view() const = 0;
@@ -70,6 +71,7 @@ class GUI
 		virtual void set_WayPointPreventDragging(bool) = 0;
 		virtual void set_ConfirmObjectDelete(bool) = 0;
 		virtual void set_color_scheme(ColorScheme) = 0;
+		virtual void set_initial_scale_ppm(double) = 0;
 
 	public:
 

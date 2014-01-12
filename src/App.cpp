@@ -123,7 +123,6 @@ namespace sound { extern bool portaudio_initialized; }
 
 extern StatWin* stats;
 extern ConsoleCanvas* console;
-extern double initial_scale_ppm;
 extern double vLat;
 extern double vLon;
 ChartCanvas* cc1;
@@ -1493,17 +1492,17 @@ bool App::OnInit()
 	// to the parent client area automatically, (as a favor?)
 	// Here, we'll do explicit sizing on SIZE events
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	cc1 = new ChartCanvas(gFrame); // the chart display canvas
 	gFrame->SetCanvasWindow(cc1);
 
 	cc1->SetQuiltMode(g_bQuiltEnable); // set initial quilt mode
 	cc1->m_bFollow = pConfig->follow(); // set initial state
-	cc1->SetViewPoint(Position(vLat, vLon), initial_scale_ppm, 0.0, 0.0);
+	cc1->SetViewPoint(Position(vLat, vLon), view.initial_scale_ppm, 0.0, 0.0);
 
 	gFrame->Enable();
 	cc1->SetFocus();
-
-	const global::GUI::View& view = global::OCPN::get().gui().view();
 
 	console = new ConsoleCanvas(gFrame); // the console
 	pthumbwin = new ThumbWin(cc1);

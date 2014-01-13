@@ -40,12 +40,12 @@ bool StyleManager::IsOK() const
 	return isOK;
 }
 
-void StyleManager::SetStyleNextInvocation(const wxString & name)
+void StyleManager::SetStyleNextInvocation(const wxString& name)
 {
 	nextInvocationStyle = name;
 }
 
-const wxString & StyleManager::GetStyleNextInvocation() const
+const wxString& StyleManager::GetStyleNextInvocation() const
 {
 	return nextInvocationStyle;
 }
@@ -64,7 +64,7 @@ StyleManager::StyleManager(void)
 	: isOK(false)
 	, currentStyle(NULL)
 {
-	const global::System::Data & sys = global::OCPN::get().sys().data();
+	const global::System::Data& sys = global::OCPN::get().sys().data();
 
 	Init(sys.sound_data_location + _T("uidata") + wxFileName::GetPathSeparator());
 	Init(sys.home_location);
@@ -87,12 +87,12 @@ StyleManager::~StyleManager(void)
 	styles.clear();
 }
 
-Style * StyleManager::GetCurrentStyle()
+Style* StyleManager::GetCurrentStyle()
 {
 	return currentStyle;
 }
 
-void StyleManager::Init(const wxString & fromPath)
+void StyleManager::Init(const wxString& fromPath)
 {
 	TiXmlDocument doc;
 
@@ -129,7 +129,7 @@ void StyleManager::Init(const wxString & fromPath)
 
 		wxString fullFilePath = fromPath + filename;
 
-		if (!doc.LoadFile((const char*) fullFilePath.mb_str())) {
+		if (!doc.LoadFile((const char*)fullFilePath.mb_str())) {
 			wxLogMessage(_T("Attempt to load styles from this file failed: ") + fullFilePath);
 			continue;
 		}
@@ -138,230 +138,238 @@ void StyleManager::Init(const wxString & fromPath)
 
 		TiXmlHandle hRoot(doc.RootElement());
 
-		wxString root = wxString( doc.RootElement()->Value(), wxConvUTF8 );
-		if( root != _T("styles" ) ) {
+		wxString root = wxString(doc.RootElement()->Value(), wxConvUTF8);
+		if (root != _T("styles" )) {
 			wxLogMessage(_T("    StyleManager: Expected XML Root <styles> not found."));
 			continue;
 		}
 
 		TiXmlElement* styleElem = hRoot.FirstChild().Element();
 
-		for( ; styleElem; styleElem = styleElem->NextSiblingElement() ) {
+		for (; styleElem; styleElem = styleElem->NextSiblingElement()) {
 
-			if( wxString( styleElem->Value(), wxConvUTF8 ) == _T("style") ) {
+			if (wxString(styleElem->Value(), wxConvUTF8) == _T("style")) {
 
-				Style * style = new Style();
+				Style* style = new Style();
 				styles.push_back(style);
 
-				style->name = wxString( styleElem->Attribute( "name" ), wxConvUTF8 );
+				style->name = wxString(styleElem->Attribute("name"), wxConvUTF8);
 				style->myConfigFileDir = fromPath;
 
 				TiXmlElement* subNode = styleElem->FirstChild()->ToElement();
+				for (; subNode; subNode = subNode->NextSiblingElement()) {
+					wxString nodeType(subNode->Value(), wxConvUTF8);
 
-				for( ; subNode; subNode = subNode->NextSiblingElement() ) {
-					wxString nodeType( subNode->Value(), wxConvUTF8 );
-
-					if( nodeType == _T("description") ) {
-						style->description = wxString( subNode->GetText(), wxConvUTF8 );
+					if (nodeType == _T("description")) {
+						style->description = wxString(subNode->GetText(), wxConvUTF8);
 						continue;
 					}
-					if( nodeType == _T("chart-status-icon") ) {
+					if (nodeType == _T("chart-status-icon")) {
 						int w = 0;
-						subNode->QueryIntAttribute( "width", &w );
+						subNode->QueryIntAttribute("width", &w);
 						style->chartStatusIconWidth = w;
 						continue;
 					}
-					if( nodeType == _T("chart-status-window") ) {
-						style->chartStatusWindowTransparent = wxString(
-								subNode->Attribute( "transparent" ), wxConvUTF8 ).Lower().IsSameAs(
-								_T("true") );
+					if (nodeType == _T("chart-status-window")) {
+						style->chartStatusWindowTransparent
+							= wxString(subNode->Attribute("transparent"), wxConvUTF8)
+								  .Lower()
+								  .IsSameAs(_T("true"));
 						continue;
 					}
-					if( nodeType == _T("embossed-indicators") ) {
-						style->embossFont = wxString( subNode->Attribute( "font" ), wxConvUTF8 );
-						subNode->QueryIntAttribute( "size", &(style->embossHeight) );
+					if (nodeType == _T("embossed-indicators")) {
+						style->embossFont = wxString(subNode->Attribute("font"), wxConvUTF8);
+						subNode->QueryIntAttribute("size", &(style->embossHeight));
 						continue;
 					}
-					if( nodeType == _T("graphics-file") ) {
-						style->graphicsFile = wxString( subNode->Attribute( "name" ), wxConvUTF8 );
+					if (nodeType == _T("graphics-file")) {
+						style->graphicsFile = wxString(subNode->Attribute("name"), wxConvUTF8);
 						isOK = true; // If we got this far we are at least partially OK...
 						continue;
 					}
-					if( nodeType == _T("active-route") ) {
-						TiXmlHandle handle( subNode );
-						TiXmlElement* tag = handle.Child( "font-color", 0 ).ToElement();
-						if( tag ) {
+					if (nodeType == _T("active-route")) {
+						TiXmlHandle handle(subNode);
+						TiXmlElement* tag = handle.Child("font-color", 0).ToElement();
+						if (tag) {
 							int r, g, b;
-							tag->QueryIntAttribute( "r", &r );
-							tag->QueryIntAttribute( "g", &g );
-							tag->QueryIntAttribute( "b", &b );
-							style->consoleFontColor = wxColour( r, g, b );
+							tag->QueryIntAttribute("r", &r);
+							tag->QueryIntAttribute("g", &g);
+							tag->QueryIntAttribute("b", &b);
+							style->consoleFontColor = wxColour(r, g, b);
 						}
-						tag = handle.Child( "text-background-location", 0 ).ToElement();
-						if( tag ) {
+						tag = handle.Child("text-background-location", 0).ToElement();
+						if (tag) {
 							int x, y, w, h;
-							tag->QueryIntAttribute( "x", &x );
-							tag->QueryIntAttribute( "y", &y );
-							tag->QueryIntAttribute( "width", &w );
-							tag->QueryIntAttribute( "height", &h );
-							style->consoleTextBackgroundLoc = wxPoint( x, y );
-							style->consoleTextBackgroundSize = wxSize( w, h );
+							tag->QueryIntAttribute("x", &x);
+							tag->QueryIntAttribute("y", &y);
+							tag->QueryIntAttribute("width", &w);
+							tag->QueryIntAttribute("height", &h);
+							style->consoleTextBackgroundLoc = wxPoint(x, y);
+							style->consoleTextBackgroundSize = wxSize(w, h);
 						}
 						continue;
 					}
-					if( nodeType == _T("icons") ) {
+					if (nodeType == _T("icons")) {
 						TiXmlElement* iconNode = subNode->FirstChild()->ToElement();
 
-						for( ; iconNode; iconNode = iconNode->NextSiblingElement() ) {
-							wxString nodeType( iconNode->Value(), wxConvUTF8 );
-							if( nodeType == _T("icon") ) {
+						for (; iconNode; iconNode = iconNode->NextSiblingElement()) {
+							wxString nodeType(iconNode->Value(), wxConvUTF8);
+							if (nodeType == _T("icon")) {
 								Icon* icon = new Icon();
 								style->icons.push_back(icon);
 								icon->name = wxString(iconNode->Attribute("name"), wxConvUTF8);
 								style->iconIndex[icon->name] = style->icons.size() - 1;
-								TiXmlHandle handle( iconNode );
-								TiXmlElement* tag = handle.Child( "icon-location", 0 ).ToElement();
-								if( tag ) {
-									int x, y;
-									tag->QueryIntAttribute( "x", &x );
-									tag->QueryIntAttribute( "y", &y );
-									icon->iconLoc = wxPoint( x, y );
+								TiXmlHandle handle(iconNode);
+								TiXmlElement* tag = handle.Child("icon-location", 0).ToElement();
+								if (tag) {
+									int x;
+									int y;
+									tag->QueryIntAttribute("x", &x);
+									tag->QueryIntAttribute("y", &y);
+									icon->iconLoc = wxPoint(x, y);
 								}
-								tag = handle.Child( "size", 0 ).ToElement();
-								if( tag ) {
-									int x, y;
-									tag->QueryIntAttribute( "x", &x );
-									tag->QueryIntAttribute( "y", &y );
-									icon->size = wxSize( x, y );
+								tag = handle.Child("size", 0).ToElement();
+								if (tag) {
+									int x;
+									int y;
+									tag->QueryIntAttribute("x", &x);
+									tag->QueryIntAttribute("y", &y);
+									icon->size = wxSize(x, y);
 								}
 							}
 						}
 					}
-					if( nodeType == _T("tools") ) {
+					if (nodeType == _T("tools")) {
 						TiXmlElement* toolNode = subNode->FirstChild()->ToElement();
+						for (; toolNode; toolNode = toolNode->NextSiblingElement()) {
+							wxString nodeType(toolNode->Value(), wxConvUTF8);
 
-						for( ; toolNode; toolNode = toolNode->NextSiblingElement() ) {
-							wxString nodeType( toolNode->Value(), wxConvUTF8 );
-
-							if( nodeType == _T("horizontal") || nodeType == _T("vertical") ) {
+							if (nodeType == _T("horizontal") || nodeType == _T("vertical")) {
 								int orientation = 0;
-								if( nodeType == _T("vertical") ) orientation = 1;
+								if (nodeType == _T("vertical"))
+									orientation = 1;
 
 								TiXmlElement* attrNode = toolNode->FirstChild()->ToElement();
-								for( ; attrNode; attrNode = attrNode->NextSiblingElement() ) {
-									wxString nodeType( attrNode->Value(), wxConvUTF8 );
-									if( nodeType == _T("separation") ) {
-										attrNode->QueryIntAttribute( "distance",
-												&style->toolSeparation[orientation] );
+								for (; attrNode; attrNode = attrNode->NextSiblingElement()) {
+									wxString nodeType(attrNode->Value(), wxConvUTF8);
+									if (nodeType == _T("separation")) {
+										attrNode->QueryIntAttribute(
+											"distance", &style->toolSeparation[orientation]);
 										continue;
 									}
-									if( nodeType == _T("margin") ) {
-										attrNode->QueryIntAttribute( "top",
-												&style->toolMarginTop[orientation] );
-										attrNode->QueryIntAttribute( "right",
-												&style->toolMarginRight[orientation] );
-										attrNode->QueryIntAttribute( "bottom",
-												&style->toolMarginBottom[orientation] );
-										attrNode->QueryIntAttribute( "left",
-												&style->toolMarginLeft[orientation] );
-										wxString invis = wxString(
-												attrNode->Attribute( "invisible" ), wxConvUTF8 );
-										style->marginsInvisible = ( invis.Lower() == _T("true") );
-										continue;;
+									if (nodeType == _T("margin")) {
+										attrNode->QueryIntAttribute(
+											"top", &style->toolMarginTop[orientation]);
+										attrNode->QueryIntAttribute(
+											"right", &style->toolMarginRight[orientation]);
+										attrNode->QueryIntAttribute(
+											"bottom", &style->toolMarginBottom[orientation]);
+										attrNode->QueryIntAttribute(
+											"left", &style->toolMarginLeft[orientation]);
+										wxString invis = wxString(attrNode->Attribute("invisible"),
+																  wxConvUTF8);
+										style->marginsInvisible = (invis.Lower() == _T("true"));
+										continue;
 									}
-									if( nodeType == _T("toggled-location") ) {
+									if (nodeType == _T("toggled-location")) {
 										int x, y;
-										attrNode->QueryIntAttribute( "x", &x );
-										attrNode->QueryIntAttribute( "y", &y );
-										style->toggledBGlocation[orientation] = wxPoint( x, y );
+										attrNode->QueryIntAttribute("x", &x);
+										attrNode->QueryIntAttribute("y", &y);
+										style->toggledBGlocation[orientation] = wxPoint(x, y);
 										x = 0;
 										y = 0;
-										attrNode->QueryIntAttribute( "width", &x );
-										attrNode->QueryIntAttribute( "height", &y );
-										style->toggledBGSize[orientation] = wxSize( x, y );
+										attrNode->QueryIntAttribute("width", &x);
+										attrNode->QueryIntAttribute("height", &y);
+										style->toggledBGSize[orientation] = wxSize(x, y);
 										continue;
 									}
-									if( nodeType == _T("toolbar-start") ) {
-										int x, y;
-										attrNode->QueryIntAttribute( "x", &x );
-										attrNode->QueryIntAttribute( "y", &y );
-										style->toolbarStartLoc[orientation] = wxPoint( x, y );
+									if (nodeType == _T("toolbar-start")) {
+										int x;
+										int y;
+										attrNode->QueryIntAttribute("x", &x);
+										attrNode->QueryIntAttribute("y", &y);
+										style->toolbarStartLoc[orientation] = wxPoint(x, y);
 										x = 0;
 										y = 0;
-										attrNode->QueryIntAttribute( "width", &x );
-										attrNode->QueryIntAttribute( "height", &y );
-										style->toolbarStartSize[orientation] = wxSize( x, y );
+										attrNode->QueryIntAttribute("width", &x);
+										attrNode->QueryIntAttribute("height", &y);
+										style->toolbarStartSize[orientation] = wxSize(x, y);
 										continue;
 									}
-									if( nodeType == _T("toolbar-end") ) {
-										int x, y;
-										attrNode->QueryIntAttribute( "x", &x );
-										attrNode->QueryIntAttribute( "y", &y );
-										style->toolbarEndLoc[orientation] = wxPoint( x, y );
+									if (nodeType == _T("toolbar-end")) {
+										int x;
+										int y;
+										attrNode->QueryIntAttribute("x", &x);
+										attrNode->QueryIntAttribute("y", &y);
+										style->toolbarEndLoc[orientation] = wxPoint(x, y);
 										x = 0;
 										y = 0;
-										attrNode->QueryIntAttribute( "width", &x );
-										attrNode->QueryIntAttribute( "height", &y );
-										style->toolbarEndSize[orientation] = wxSize( x, y );
+										attrNode->QueryIntAttribute("width", &x);
+										attrNode->QueryIntAttribute("height", &y);
+										style->toolbarEndSize[orientation] = wxSize(x, y);
 										continue;
 									}
-									if( nodeType == _T("toolbar-corners") ) {
+									if (nodeType == _T("toolbar-corners")) {
 										int r;
-										attrNode->QueryIntAttribute( "radius", &r );
+										attrNode->QueryIntAttribute("radius", &r);
 										style->cornerRadius[orientation] = r;
 										continue;
 									}
-									if( nodeType == _T("background-location") ) {
+									if (nodeType == _T("background-location")) {
 										int x, y;
-										attrNode->QueryIntAttribute( "x", &x );
-										attrNode->QueryIntAttribute( "y", &y );
-										style->normalBGlocation[orientation] = wxPoint( x, y );
+										attrNode->QueryIntAttribute("x", &x);
+										attrNode->QueryIntAttribute("y", &y);
+										style->normalBGlocation[orientation] = wxPoint(x, y);
 										style->hasBackground = true;
 										continue;
 									}
-									if( nodeType == _T("active-location") ) {
+									if (nodeType == _T("active-location")) {
 										int x, y;
-										attrNode->QueryIntAttribute( "x", &x );
-										attrNode->QueryIntAttribute( "y", &y );
-										style->activeBGlocation[orientation] = wxPoint( x, y );
+										attrNode->QueryIntAttribute("x", &x);
+										attrNode->QueryIntAttribute("y", &y);
+										style->activeBGlocation[orientation] = wxPoint(x, y);
 										continue;
 									}
-									if( nodeType == _T("size") ) {
+									if (nodeType == _T("size")) {
 										int x, y;
-										attrNode->QueryIntAttribute( "x", &x );
-										attrNode->QueryIntAttribute( "y", &y );
-										style->toolSize[orientation] = wxSize( x, y );
+										attrNode->QueryIntAttribute("x", &x);
+										attrNode->QueryIntAttribute("y", &y);
+										style->toolSize[orientation] = wxSize(x, y);
 										continue;
 									}
-									if( nodeType == _T("icon-offset") ) {
+									if (nodeType == _T("icon-offset")) {
 										int x, y;
-										attrNode->QueryIntAttribute( "x", &x );
-										attrNode->QueryIntAttribute( "y", &y );
-										style->verticalIconOffset = wxSize( x, y );
+										attrNode->QueryIntAttribute("x", &x);
+										attrNode->QueryIntAttribute("y", &y);
+										style->verticalIconOffset = wxSize(x, y);
 										continue;
 									}
 								}
 								continue;
 							}
-							if( nodeType == _T("compass") ) {
+							if (nodeType == _T("compass")) {
 
 								TiXmlElement* attrNode = toolNode->FirstChild()->ToElement();
-								for( ; attrNode; attrNode = attrNode->NextSiblingElement() ) {
-									wxString nodeType( attrNode->Value(), wxConvUTF8 );
-									if( nodeType == _T("margin") ) {
-										attrNode->QueryIntAttribute("top", &style->compassMarginTop);
-										attrNode->QueryIntAttribute("right", &style->compassMarginRight);
-										attrNode->QueryIntAttribute("bottom", &style->compassMarginBottom);
-										attrNode->QueryIntAttribute("left", &style->compassMarginLeft);
+								for (; attrNode; attrNode = attrNode->NextSiblingElement()) {
+									wxString nodeType(attrNode->Value(), wxConvUTF8);
+									if (nodeType == _T("margin")) {
+										attrNode->QueryIntAttribute("top",
+																	&style->compassMarginTop);
+										attrNode->QueryIntAttribute("right",
+																	&style->compassMarginRight);
+										attrNode->QueryIntAttribute("bottom",
+																	&style->compassMarginBottom);
+										attrNode->QueryIntAttribute("left",
+																	&style->compassMarginLeft);
 										continue;
 									}
-									if( nodeType == _T("compass-corners") ) {
+									if (nodeType == _T("compass-corners")) {
 										int r;
-										attrNode->QueryIntAttribute( "radius", &r );
+										attrNode->QueryIntAttribute("radius", &r);
 										style->compasscornerRadius = r;
 										continue;
 									}
-									if( nodeType == _T("offset") ) {
+									if (nodeType == _T("offset")) {
 										attrNode->QueryIntAttribute("x", &style->compassXoffset);
 										attrNode->QueryIntAttribute("y", &style->compassYoffset);
 										continue;
@@ -369,39 +377,40 @@ void StyleManager::Init(const wxString & fromPath)
 								}
 							}
 
-							if( nodeType == _T("tool") ) {
+							if (nodeType == _T("tool")) {
 								Tool* tool = new Tool();
 								style->tools.push_back(tool);
-								tool->name = wxString( toolNode->Attribute( "name" ), wxConvUTF8 );
+								tool->name = wxString(toolNode->Attribute("name"), wxConvUTF8);
 								style->toolIndex[tool->name] = style->tools.size() - 1;
-								TiXmlHandle toolHandle( toolNode );
-								TiXmlElement* toolTag = toolHandle.Child( "icon-location", 0 ).ToElement();
-								if( toolTag ) {
+								TiXmlHandle toolHandle(toolNode);
+								TiXmlElement* toolTag
+									= toolHandle.Child("icon-location", 0).ToElement();
+								if (toolTag) {
 									int x, y;
-									toolTag->QueryIntAttribute( "x", &x );
-									toolTag->QueryIntAttribute( "y", &y );
-									tool->iconLoc = wxPoint( x, y );
+									toolTag->QueryIntAttribute("x", &x);
+									toolTag->QueryIntAttribute("y", &y);
+									tool->iconLoc = wxPoint(x, y);
 								}
-								toolTag = toolHandle.Child( "rollover-location", 0 ).ToElement();
-								if( toolTag ) {
+								toolTag = toolHandle.Child("rollover-location", 0).ToElement();
+								if (toolTag) {
 									int x, y;
-									toolTag->QueryIntAttribute( "x", &x );
-									toolTag->QueryIntAttribute( "y", &y );
-									tool->rolloverLoc = wxPoint( x, y );
+									toolTag->QueryIntAttribute("x", &x);
+									toolTag->QueryIntAttribute("y", &y);
+									tool->rolloverLoc = wxPoint(x, y);
 								}
-								toolTag = toolHandle.Child( "disabled-location", 0 ).ToElement();
-								if( toolTag ) {
+								toolTag = toolHandle.Child("disabled-location", 0).ToElement();
+								if (toolTag) {
 									int x, y;
-									toolTag->QueryIntAttribute( "x", &x );
-									toolTag->QueryIntAttribute( "y", &y );
-									tool->disabledLoc = wxPoint( x, y );
+									toolTag->QueryIntAttribute("x", &x);
+									toolTag->QueryIntAttribute("y", &y);
+									tool->disabledLoc = wxPoint(x, y);
 								}
-								toolTag = toolHandle.Child( "size", 0 ).ToElement();
-								if( toolTag ) {
+								toolTag = toolHandle.Child("size", 0).ToElement();
+								if (toolTag) {
 									int x, y;
-									toolTag->QueryIntAttribute( "x", &x );
-									toolTag->QueryIntAttribute( "y", &y );
-									tool->customSize = wxSize( x, y );
+									toolTag->QueryIntAttribute("x", &x);
+									toolTag->QueryIntAttribute("y", &y);
+									tool->customSize = wxSize(x, y);
 								}
 								continue;
 							}
@@ -416,7 +425,7 @@ void StyleManager::Init(const wxString & fromPath)
 
 void StyleManager::SetStyle(wxString name)
 {
-	Style * style = NULL;
+	Style* style = NULL;
 	bool ok = true;
 
 	if (currentStyle)
@@ -431,16 +440,17 @@ void StyleManager::SetStyle(wxString name)
 
 	for (Styles::iterator i = styles.begin(); i != styles.end(); ++i) {
 		style = *i;
-		if( style->name == name || selectFirst ) {
-			if( style->graphics ) {
+		if (style->name == name || selectFirst) {
+			if (style->graphics) {
 				currentStyle = style;
 				ok = true;
 				break;
 			}
 
-			wxString fullFilePath = style->myConfigFileDir + wxFileName::GetPathSeparator() + style->graphicsFile;
+			wxString fullFilePath = style->myConfigFileDir + wxFileName::GetPathSeparator()
+									+ style->graphicsFile;
 
-			if( !wxFileName::FileExists( fullFilePath ) ) {
+			if (!wxFileName::FileExists(fullFilePath)) {
 				wxLogMessage(_T("Styles Graphics File not found: ") + fullFilePath);
 				ok = false;
 				if (selectFirst)
@@ -470,14 +480,12 @@ void StyleManager::SetStyle(wxString name)
 	if (style) {
 		if ((style->consoleTextBackgroundSize.x) && (style->consoleTextBackgroundSize.y)) {
 			style->consoleTextBackground = style->graphics->GetSubBitmap(
-					wxRect(style->consoleTextBackgroundLoc, style->consoleTextBackgroundSize));
+				wxRect(style->consoleTextBackgroundLoc, style->consoleTextBackgroundSize));
 		}
 	}
 
 	if (style)
 		nextInvocationStyle = style->name;
-
-	return;
 }
 
 }

@@ -148,11 +148,11 @@ static char AuthorText[] =
 IMPLEMENT_DYNAMIC_CLASS(AboutDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(AboutDialog, wxDialog)
-	EVT_BUTTON( xID_OK, AboutDialog::OnXidOkClick )
+	EVT_BUTTON(xID_OK, AboutDialog::OnXidOkClick)
 	EVT_NOTEBOOK_PAGE_CHANGED(ID_NOTEBOOK_HELP, AboutDialog::OnPageChange)
-	EVT_BUTTON( ID_DONATE, AboutDialog::OnDonateClick)
-	EVT_BUTTON( ID_COPYINI, AboutDialog::OnCopyClick)
-	EVT_BUTTON( ID_COPYLOG, AboutDialog::OnCopyClick)
+	EVT_BUTTON(ID_DONATE, AboutDialog::OnDonateClick)
+	EVT_BUTTON(ID_COPYINI, AboutDialog::OnCopyClick)
+	EVT_BUTTON(ID_COPYLOG, AboutDialog::OnCopyClick)
 END_EVENT_TABLE()
 
 AboutDialog::AboutDialog()
@@ -185,8 +185,8 @@ bool AboutDialog::Create(
 		const wxSize & size,
 		long style)
 {
-	SetExtraStyle( GetExtraStyle() | wxWS_EX_BLOCK_EVENTS );
-	wxDialog::Create( parent, id, caption, pos, size, style );
+	SetExtraStyle(GetExtraStyle() | wxWS_EX_BLOCK_EVENTS);
+	wxDialog::Create(parent, id, caption, pos, size, style);
 
 	m_parent = parent;
 
@@ -195,32 +195,32 @@ bool AboutDialog::Create(
 	CreateControls();
 	Update();
 
-	GetSizer()->Fit( this );
-	GetSizer()->SetSizeHints( this );
+	GetSizer()->Fit(this);
+	GetSizer()->SetSizeHints(this);
 	Centre();
 
-	return TRUE;
+	return true;
 }
 
 void AboutDialog::Update()
 {
 	pAboutTextCtl->Clear();
-	wxString *pAboutString = new wxString( AboutText, wxConvUTF8 );
+	wxString* pAboutString = new wxString(AboutText, wxConvUTF8);
 
-	pAboutString->Append( OpenCPNVersion );
+	pAboutString->Append(OpenCPNVersion);
 	pAboutString->Append(
 		wxString::Format(wxT("\n\n(git: %s / %s)\n"), wxT(GIT_BRANCH), wxT(GIT_COMMIT_HASH)));
-	pAboutString->Append( wxString( OpenCPNInfo, wxConvUTF8 ) );
+	pAboutString->Append(wxString(OpenCPNInfo, wxConvUTF8));
 
-	pAboutTextCtl->WriteText( *pAboutString );
+	pAboutTextCtl->WriteText(*pAboutString);
 	delete pAboutString;
 
-	const global::System::Data & sys = global::OCPN::get().sys().data();
+	const global::System::Data& sys = global::OCPN::get().sys().data();
 
 	// Show the user where the log file is going to be
 	wxString log = _T("    Logfile location: ");
 	log.Append(sys.log_file);
-	pAboutTextCtl->WriteText( log );
+	pAboutTextCtl->WriteText(log);
 
 	// Show the user where the config file is going to be
 	wxString conf = _T("\n    Config file location: ");
@@ -228,8 +228,8 @@ void AboutDialog::Update()
 	pAboutTextCtl->WriteText(conf);
 
 	pAuthorTextCtl->Clear();
-	wxString *pAuthorsString = new wxString( AuthorText, wxConvUTF8 );
-	pAuthorTextCtl->WriteText( *pAuthorsString );
+	wxString* pAuthorsString = new wxString(AuthorText, wxConvUTF8);
+	pAuthorTextCtl->WriteText(*pAuthorsString);
 	delete pAuthorsString;
 
 	pLicenseTextCtl->Clear();
@@ -241,151 +241,149 @@ void AboutDialog::Update()
 	if (license_file.Open()) {
 		wxString str;
 		str = license_file.GetFirstLine();
-		pLicenseTextCtl->WriteText( str );
+		pLicenseTextCtl->WriteText(str);
 
-		while( !license_file.Eof() ) {
+		while (!license_file.Eof()) {
 			str = license_file.GetNextLine();
-			str.Append( _T("\n") );
-			pLicenseTextCtl->AppendText( str );
+			str.Append(_T("\n"));
+			pLicenseTextCtl->AppendText(str);
 		}
 		license_file.Close();
 	} else {
-		wxString msg( _T("Could not open License file: ") );
-		msg.Append( license_loc );
-		wxLogMessage( msg );
+		wxString msg(_T("Could not open License file: "));
+		msg.Append(license_loc);
+		wxLogMessage(msg);
 	}
-	pLicenseTextCtl->SetInsertionPoint( 0 );
+	pLicenseTextCtl->SetInsertionPoint(0);
 
-	DimeControl( this );
+	DimeControl(this);
 }
 
 void AboutDialog::CreateControls()
 {
 	AboutDialog* itemDialog1 = this;
 
-	wxBoxSizer* aboutSizer = new wxBoxSizer( wxVERTICAL );
-	itemDialog1->SetSizer( aboutSizer );
+	wxBoxSizer* aboutSizer = new wxBoxSizer(wxVERTICAL);
+	itemDialog1->SetSizer(aboutSizer);
 
-	wxStaticText *pST1 = new wxStaticText( this, -1, _T("Label"), wxDefaultPosition,
-			wxSize( 500, 30 ), wxALIGN_CENTRE | wxALIGN_CENTER_VERTICAL );
-	pST1->SetLabel( _("The Open Source Chart Plotter/Navigator") );
-	wxFont *headerFont = wxTheFontList->FindOrCreateFont( 14, wxFONTFAMILY_SWISS,
-			wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD );
-	pST1->SetFont( *headerFont );
-	aboutSizer->Add( pST1, 1, wxALL | wxEXPAND, 8 );
+	wxStaticText* pST1 = new wxStaticText(this, -1, _T("Label"), wxDefaultPosition, wxSize(500, 30),
+										  wxALIGN_CENTRE | wxALIGN_CENTER_VERTICAL);
+	pST1->SetLabel(_("The Open Source Chart Plotter/Navigator"));
+	wxFont* headerFont = wxTheFontList->FindOrCreateFont(14, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL,
+														 wxFONTWEIGHT_BOLD);
+	pST1->SetFont(*headerFont);
+	aboutSizer->Add(pST1, 1, wxALL | wxEXPAND, 8);
 
-	wxBoxSizer* buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
-	wxButton* copyIni = new wxButton( itemDialog1, ID_COPYINI, _("Copy Settings File to Clipboard") );
-	buttonSizer->Add( copyIni, 1, wxALL | wxEXPAND, 3 );
+	wxButton* copyIni = new wxButton(itemDialog1, ID_COPYINI, _("Copy Settings File to Clipboard"));
+	buttonSizer->Add(copyIni, 1, wxALL | wxEXPAND, 3);
 
-	wxButton* copyLog = new wxButton( itemDialog1, ID_COPYLOG, _("Copy Log File to Clipboard") );
-	buttonSizer->Add( copyLog, 1, wxALL | wxEXPAND, 3 );
+	wxButton* copyLog = new wxButton(itemDialog1, ID_COPYLOG, _("Copy Log File to Clipboard"));
+	buttonSizer->Add(copyLog, 1, wxALL | wxEXPAND, 3);
 
-	ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 
-	wxBitmap donate_bmp = style->GetIcon( _T("donate") );
+	wxBitmap donate_bmp = style->GetIcon(_T("donate"));
 
-	wxButton* donateButton = new wxBitmapButton( itemDialog1, ID_DONATE, donate_bmp,
-			wxDefaultPosition, wxDefaultSize, 0 );
+	wxButton* donateButton = new wxBitmapButton(itemDialog1, ID_DONATE, donate_bmp,
+												wxDefaultPosition, wxDefaultSize, 0);
 
-	buttonSizer->Add( donateButton, 1, wxALL | wxEXPAND | wxALIGN_RIGHT, 3 );
+	buttonSizer->Add(donateButton, 1, wxALL | wxEXPAND | wxALIGN_RIGHT, 3);
 
-
-	//  Main Notebook
-	pNotebook = new wxNotebook( itemDialog1, ID_NOTEBOOK_HELP, wxDefaultPosition,
-			wxSize( -1, -1 ), wxNB_TOP );
+	// Main Notebook
+	pNotebook = new wxNotebook(itemDialog1, ID_NOTEBOOK_HELP, wxDefaultPosition, wxSize(-1, -1),
+							   wxNB_TOP);
 	pNotebook->InheritAttributes();
-	aboutSizer->Add( pNotebook, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL, 5 );
+	aboutSizer->Add(pNotebook, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL, 5);
 
-	aboutSizer->Add( buttonSizer, 0, wxALL, 0 );
+	aboutSizer->Add(buttonSizer, 0, wxALL, 0);
 
-	//    About Panel
-	itemPanelAbout = new wxPanel( pNotebook, -1, wxDefaultPosition, wxDefaultSize,
-			wxSUNKEN_BORDER | wxTAB_TRAVERSAL );
+	// About Panel
+	itemPanelAbout = new wxPanel(pNotebook, -1, wxDefaultPosition, wxDefaultSize,
+								 wxSUNKEN_BORDER | wxTAB_TRAVERSAL);
 	itemPanelAbout->InheritAttributes();
-	pNotebook->AddPage( itemPanelAbout, _("About") );
+	pNotebook->AddPage(itemPanelAbout, _("About"));
 
-	wxBoxSizer* itemBoxSizer6 = new wxBoxSizer( wxVERTICAL );
-	itemPanelAbout->SetSizer( itemBoxSizer6 );
+	wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxVERTICAL);
+	itemPanelAbout->SetSizer(itemBoxSizer6);
 
-	pAboutTextCtl = new wxTextCtrl( itemPanelAbout, -1, _T(""), wxDefaultPosition,
-			wxSize( -1, 300 ), wxTE_MULTILINE | wxTE_READONLY );
+	pAboutTextCtl = new wxTextCtrl(itemPanelAbout, -1, _T(""), wxDefaultPosition, wxSize(-1, 300),
+								   wxTE_MULTILINE | wxTE_READONLY);
 	pAboutTextCtl->InheritAttributes();
-	itemBoxSizer6->Add( pAboutTextCtl, 0, wxALIGN_CENTER_HORIZONTAL | wxEXPAND | wxALL, 5 );
+	itemBoxSizer6->Add(pAboutTextCtl, 0, wxALIGN_CENTER_HORIZONTAL | wxEXPAND | wxALL, 5);
 
-	//     Authors Panel
-	itemPanelAuthors = new wxPanel( pNotebook, -1, wxDefaultPosition, wxDefaultSize,
-			wxSUNKEN_BORDER | wxTAB_TRAVERSAL );
+	// Authors Panel
+	itemPanelAuthors = new wxPanel(pNotebook, -1, wxDefaultPosition, wxDefaultSize,
+								   wxSUNKEN_BORDER | wxTAB_TRAVERSAL);
 	itemPanelAuthors->InheritAttributes();
-	pNotebook->AddPage( itemPanelAuthors, _("Authors") );
+	pNotebook->AddPage(itemPanelAuthors, _("Authors"));
 
-	wxBoxSizer* itemBoxSizer7 = new wxBoxSizer( wxVERTICAL );
-	itemPanelAuthors->SetSizer( itemBoxSizer7 );
+	wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxVERTICAL);
+	itemPanelAuthors->SetSizer(itemBoxSizer7);
 
-	pAuthorTextCtl = new wxTextCtrl( itemPanelAuthors, -1, _T(""), wxDefaultPosition,
-			wxSize( -1, 300 ), wxTE_MULTILINE | wxTE_READONLY );
+	pAuthorTextCtl = new wxTextCtrl(itemPanelAuthors, -1, _T(""), wxDefaultPosition,
+									wxSize(-1, 300), wxTE_MULTILINE | wxTE_READONLY);
 	pAuthorTextCtl->InheritAttributes();
-	itemBoxSizer7->Add( pAuthorTextCtl, 0, wxALIGN_CENTER_HORIZONTAL | wxEXPAND | wxALL, 5 );
+	itemBoxSizer7->Add(pAuthorTextCtl, 0, wxALIGN_CENTER_HORIZONTAL | wxEXPAND | wxALL, 5);
 
-	//  License Panel
-	itemPanelLicense = new wxPanel( pNotebook, -1, wxDefaultPosition, wxDefaultSize,
-			wxSUNKEN_BORDER | wxTAB_TRAVERSAL );
+	// License Panel
+	itemPanelLicense = new wxPanel(pNotebook, -1, wxDefaultPosition, wxDefaultSize,
+								   wxSUNKEN_BORDER | wxTAB_TRAVERSAL);
 	itemPanelLicense->InheritAttributes();
-	pNotebook->AddPage( itemPanelLicense, _("License") );
+	pNotebook->AddPage(itemPanelLicense, _("License"));
 
-	wxBoxSizer* itemBoxSizer8 = new wxBoxSizer( wxVERTICAL );
-	itemPanelLicense->SetSizer( itemBoxSizer8 );
+	wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxVERTICAL);
+	itemPanelLicense->SetSizer(itemBoxSizer8);
 
 	int tcflags = wxTE_MULTILINE | wxTE_READONLY;
 
-	//    wxX11 TextCtrl is broken in many ways.
-	//    Here, the wxTE_DONTWRAP flag creates a horizontal scroll bar
-	//    which fails in wxX11 2.8.2....
+	// wxX11 TextCtrl is broken in many ways.
+	// Here, the wxTE_DONTWRAP flag creates a horizontal scroll bar
+	// which fails in wxX11 2.8.2....
 #ifndef __WXX11__
 	tcflags |= wxTE_DONTWRAP;
 #endif
-	pLicenseTextCtl = new wxTextCtrl( itemPanelLicense, -1, _T(""), wxDefaultPosition,
-			wxSize( -1, 300 ), tcflags );
+	pLicenseTextCtl
+		= new wxTextCtrl(itemPanelLicense, -1, _T(""), wxDefaultPosition, wxSize(-1, 300), tcflags);
 
 	pLicenseTextCtl->InheritAttributes();
-	itemBoxSizer8->Add( pLicenseTextCtl, 0, wxALIGN_CENTER_HORIZONTAL | wxEXPAND | wxALL, 5 );
+	itemBoxSizer8->Add(pLicenseTextCtl, 0, wxALIGN_CENTER_HORIZONTAL | wxEXPAND | wxALL, 5);
 
-	//     Help Panel
-	itemPanelTips = new wxPanel( pNotebook, -1, wxDefaultPosition, wxDefaultSize,
-			wxSUNKEN_BORDER | wxTAB_TRAVERSAL );
+	// Help Panel
+	itemPanelTips = new wxPanel(pNotebook, -1, wxDefaultPosition, wxDefaultSize,
+								wxSUNKEN_BORDER | wxTAB_TRAVERSAL);
 	itemPanelTips->InheritAttributes();
-	pNotebook->AddPage( itemPanelTips, _("Help") );
+	pNotebook->AddPage(itemPanelTips, _("Help"));
 
-	wxBoxSizer* itemBoxSizer9 = new wxBoxSizer( wxVERTICAL );
-	itemPanelTips->SetSizer( itemBoxSizer9 );
+	wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
+	itemPanelTips->SetSizer(itemBoxSizer9);
 
-	//    Close Button
+	// Close Button
 
-	wxBoxSizer* itemBoxSizer28 = new wxBoxSizer( wxHORIZONTAL );
-	aboutSizer->Add( itemBoxSizer28, 0, wxALIGN_RIGHT | wxALL, 5 );
+	wxBoxSizer* itemBoxSizer28 = new wxBoxSizer(wxHORIZONTAL);
+	aboutSizer->Add(itemBoxSizer28, 0, wxALIGN_RIGHT | wxALL, 5);
 
-	wxButton* itemButton29 = new wxButton( itemDialog1, xID_OK, _("Close"), wxDefaultPosition,
-			wxDefaultSize, 0 );
+	wxButton* itemButton29
+		= new wxButton(itemDialog1, xID_OK, _("Close"), wxDefaultPosition, wxDefaultSize, 0);
 	itemButton29->SetDefault();
 	itemButton29->InheritAttributes();
-	itemBoxSizer28->Add( itemButton29, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5 );
+	itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 }
 
-
-void AboutDialog::OnXidOkClick(wxCommandEvent &)
+void AboutDialog::OnXidOkClick(wxCommandEvent&)
 {
 	Close();
 }
 
-void AboutDialog::OnDonateClick(wxCommandEvent &)
+void AboutDialog::OnDonateClick(wxCommandEvent&)
 {
 	wxLaunchDefaultBrowser(_T("https://sourceforge.net/donate/index.php?group_id=180842"));
 }
 
-void AboutDialog::OnCopyClick(wxCommandEvent & event)
+void AboutDialog::OnCopyClick(wxCommandEvent& event)
 {
-	const global::System::Data & sys = global::OCPN::get().sys().data();
+	const global::System::Data& sys = global::OCPN::get().sys().data();
 
 	wxString filename = sys.config_file;
 	if (event.GetId() == ID_COPYLOG)
@@ -393,53 +391,52 @@ void AboutDialog::OnCopyClick(wxCommandEvent & event)
 
 	wxFFile file(filename);
 
-	if (!file.IsOpened() ) {
-		wxLogMessage( _T("Failed to open file for Copy to Clipboard.") );
+	if (!file.IsOpened()) {
+		wxLogMessage(_T("Failed to open file for Copy to Clipboard."));
 		return;
 	}
 
 	wxString fileContent;
 	char buf[1024];
-	while (! file.Eof()) {
+	while (!file.Eof()) {
 		int c = file.Read(&buf, 1024);
 		if (c)
-			fileContent += wxString( buf, wxConvUTF8, c );
+			fileContent += wxString(buf, wxConvUTF8, c);
 	}
 
 	file.Close();
 
-	if( event.GetId() == ID_COPYLOG ) {
+	if (event.GetId() == ID_COPYLOG) {
 		wxString lastLogs = fileContent;
-		int pos = lastLogs.Find( _T("________") );
-		while( pos != wxNOT_FOUND && lastLogs.Length() > 65000 ) {
+		int pos = lastLogs.Find(_T("________"));
+		while (pos != wxNOT_FOUND && lastLogs.Length() > 65000) {
 			lastLogs = lastLogs.Right(lastLogs.Length() - pos - 8);
-			pos = lastLogs.Find( _T("________") );
+			pos = lastLogs.Find(_T("________"));
 		}
 		fileContent = lastLogs;
 	}
 
 	::wxBeginBusyCursor();
 
-	if( wxTheClipboard->Open() ) {
+	if (wxTheClipboard->Open()) {
 		wxTextDataObject* data = new wxTextDataObject;
-		data->SetText( fileContent );
-		if( ! wxTheClipboard->SetData( data ) ) {
-			wxLogMessage( _T("wxTheClipboard->Open() failed.") );
+		data->SetText(fileContent);
+		if (!wxTheClipboard->SetData(data)) {
+			wxLogMessage(_T("wxTheClipboard->Open() failed."));
 		}
 		wxTheClipboard->Close();
 	} else {
-		wxLogMessage( _T("wxTheClipboard->Open() failed.") );
+		wxLogMessage(_T("wxTheClipboard->Open() failed."));
 	}
 	::wxEndBusyCursor();
 }
 
-void AboutDialog::OnPageChange( wxNotebookEvent& event )
+void AboutDialog::OnPageChange(wxNotebookEvent& event)
 {
 	int i = event.GetSelection();
 
-	if( 3 == i )                        // 3 is the index of "Help" page
-	{
-		wxString def_lang_canonical = wxLocale::GetLanguageInfo( wxLANGUAGE_DEFAULT )->CanonicalName;
+	if (3 == i) { // 3 is the index of "Help" page
+		wxString def_lang_canonical = wxLocale::GetLanguageInfo(wxLANGUAGE_DEFAULT)->CanonicalName;
 
 		wxString help_locn = _T("doc/help_");
 		help_locn.Prepend(m_dataLocn);
@@ -448,23 +445,23 @@ void AboutDialog::OnPageChange( wxNotebookEvent& event )
 		help_try += def_lang_canonical;
 		help_try += _T(".html");
 
-		if( ::wxFileExists( help_try ) ) {
-			wxLaunchDefaultBrowser(wxString( _T("file:///") ) + help_try );
+		if (::wxFileExists(help_try)) {
+			wxLaunchDefaultBrowser(wxString(_T("file:///")) + help_try);
 			pNotebook->ChangeSelection(0);
 		} else {
 			help_try = help_locn;
 			help_try += _T("en_US");
 			help_try += _T(".html");
 
-			if( ::wxFileExists( help_try ) ){
+			if (::wxFileExists(help_try)) {
 				pNotebook->ChangeSelection(0);
-				wxLaunchDefaultBrowser( wxString( _T("file:///") ) + help_try );
+				wxLaunchDefaultBrowser(wxString(_T("file:///")) + help_try);
 			} else {
 				help_try = _T("doc/help_web.html");
 				help_try.Prepend(m_dataLocn);
-				if( ::wxFileExists(help_try) ) {
+				if (::wxFileExists(help_try)) {
 					pNotebook->ChangeSelection(0);
-					wxLaunchDefaultBrowser(wxString( _T("file:///") ) + help_try );
+					wxLaunchDefaultBrowser(wxString(_T("file:///")) + help_try);
 				}
 			}
 		}

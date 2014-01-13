@@ -34,30 +34,30 @@ class Style;
 
 class StyleManager
 {
-	public:
-		typedef std::vector<wxString> StyleNames;
+public:
+	typedef std::vector<wxString> StyleNames;
 
-	public:
-		StyleManager(void);
-		~StyleManager(void);
-		StyleManager(const wxString & configDir);
+public:
+	StyleManager(void);
+	~StyleManager(void);
+	StyleManager(const wxString& configDir);
 
-		bool IsOK() const;
-		void Init(const wxString & fromPath);
-		void SetStyle(wxString name);
-		void SetStyleNextInvocation(const wxString & name);
-		const wxString & GetStyleNextInvocation() const;
-		Style * GetCurrentStyle();
+	bool IsOK() const;
+	void Init(const wxString& fromPath);
+	void SetStyle(wxString name);
+	void SetStyleNextInvocation(const wxString& name);
+	const wxString& GetStyleNextInvocation() const;
+	Style* GetCurrentStyle();
 
-		StyleNames GetStyleNames() const;
+	StyleNames GetStyleNames() const;
 
-	private:
-		typedef std::vector<Style *> Styles;
+private:
+	typedef std::vector<Style*> Styles;
 
-		bool isOK;
-		Styles styles;
-		Style * currentStyle;
-		wxString nextInvocationStyle;
+	bool isOK;
+	Styles styles;
+	Style* currentStyle;
+	wxString nextInvocationStyle;
 };
 
 }

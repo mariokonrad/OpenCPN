@@ -59,7 +59,8 @@ AnnunText::AnnunText(
 }
 
 AnnunText::~AnnunText()
-{}
+{
+}
 
 void AnnunText::CalculateMinSize(void)
 {

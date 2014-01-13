@@ -2581,10 +2581,10 @@ bool MainFrame::UpdateChartDatabaseInplace(
 		const wxString & ChartListFileName)
 {
 	bool b_run = FrameTimer1.IsRunning();
-	FrameTimer1.Stop();                  // stop other asynchronous activity
+	FrameTimer1.Stop(); // stop other asynchronous activity
 
 	chart_canvas->InvalidateQuilt();
-	chart_canvas->SetQuiltRefChart( -1 );
+	chart_canvas->SetQuiltRefChart(-1);
 
 	Current_Ch = NULL;
 
@@ -2593,19 +2593,20 @@ bool MainFrame::UpdateChartDatabaseInplace(
 
 	::wxBeginBusyCursor();
 
-	wxProgressDialog *pprog = NULL;
-	if( b_prog ) {
-		pprog = new wxProgressDialog( _("OpenCPN Chart Update"), _T(""), 100, this,
-				wxPD_SMOOTH | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME );
+	wxProgressDialog* pprog = NULL;
+	if (b_prog) {
+		pprog = new wxProgressDialog(_("OpenCPN Chart Update"), _T(""), 100, this,
+									 wxPD_SMOOTH | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME
+									 | wxPD_REMAINING_TIME);
 
-		//    Make sure the dialog is big enough to be readable
+		// Make sure the dialog is big enough to be readable
 		pprog->Hide();
 		wxSize sz = pprog->GetSize();
 		wxSize csz = GetClientSize();
 		sz.x = csz.x * 7 / 10;
-		pprog->SetSize( sz );
+		pprog->SetSize(sz);
 		pprog->Centre();
-		pprog->Update( 1, _T("") );
+		pprog->Update(1, _T(""));
 		pprog->Show();
 		pprog->Raise();
 	}
@@ -2624,37 +2625,35 @@ bool MainFrame::UpdateChartDatabaseInplace(
 	pConfig->UpdateChartDirs(DirArray);
 
 	if (b_run)
-		FrameTimer1.Start( TIMER_GFRAME_1, wxTIMER_CONTINUOUS );
+		FrameTimer1.Start(TIMER_GFRAME_1, wxTIMER_CONTINUOUS);
 
 	return true;
 }
 
-void MainFrame::ToggleQuiltMode( void )
+void MainFrame::ToggleQuiltMode(void)
 {
 	if (chart_canvas) {
 		bool cur_mode = chart_canvas->GetQuiltMode();
 
-		if (!chart_canvas->GetQuiltMode() && g_bQuiltEnable)
+		if (!chart_canvas->GetQuiltMode() && g_bQuiltEnable) {
 			chart_canvas->SetQuiltMode(true);
-		else
-			if (chart_canvas->GetQuiltMode()) {
-				chart_canvas->SetQuiltMode(false);
-				g_sticky_chart = chart_canvas->GetQuiltReferenceChartIndex();
-			}
-
+		} else if (chart_canvas->GetQuiltMode()) {
+			chart_canvas->SetQuiltMode(false);
+			g_sticky_chart = chart_canvas->GetQuiltReferenceChartIndex();
+		}
 
 		if (cur_mode != chart_canvas->GetQuiltMode())
 			SetupQuiltMode();
 	}
 }
 
-void MainFrame::SetQuiltMode( bool bquilt )
+void MainFrame::SetQuiltMode(bool bquilt)
 {
-	if(chart_canvas)
+	if (chart_canvas)
 		chart_canvas->SetQuiltMode(bquilt);
 }
 
-bool MainFrame::GetQuiltMode( void )
+bool MainFrame::GetQuiltMode(void)
 {
 	if (chart_canvas)
 		return chart_canvas->GetQuiltMode();
@@ -2662,81 +2661,76 @@ bool MainFrame::GetQuiltMode( void )
 		return false;
 }
 
-void MainFrame::SetupQuiltMode( void )
+void MainFrame::SetupQuiltMode(void)
 {
-
-	if( chart_canvas->GetQuiltMode() ) // going to quilt mode
-	{
+	if (chart_canvas->GetQuiltMode()) { // going to quilt mode
 		ChartData->LockCache();
 
 		stats->pPiano->SetNoshowIndexArray(g_quilt_noshow_index_array);
 
-		ocpnStyle::Style * style = g_StyleManager->GetCurrentStyle();
+		ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 
-		stats->pPiano->SetVizIcon( new wxBitmap( style->GetIcon( _T("viz") ) ) );
-		stats->pPiano->SetInVizIcon( new wxBitmap( style->GetIcon( _T("redX") ) ) );
-		stats->pPiano->SetTMercIcon( new wxBitmap( style->GetIcon( _T("tmercprj") ) ) );
-		stats->pPiano->SetSkewIcon( new wxBitmap( style->GetIcon( _T("skewprj") ) ) );
+		stats->pPiano->SetVizIcon(new wxBitmap(style->GetIcon(_T("viz"))));
+		stats->pPiano->SetInVizIcon(new wxBitmap(style->GetIcon(_T("redX"))));
+		stats->pPiano->SetTMercIcon(new wxBitmap(style->GetIcon(_T("tmercprj"))));
+		stats->pPiano->SetSkewIcon(new wxBitmap(style->GetIcon(_T("skewprj"))));
 
-		stats->pPiano->SetRoundedRectangles( true );
+		stats->pPiano->SetRoundedRectangles(true);
 
-		//    Select the proper Ref chart
+		// Select the proper Ref chart
 		int target_new_dbindex = -1;
-		if( pCurrentStack ) {
+		if (pCurrentStack) {
 			target_new_dbindex = pCurrentStack->GetCurrentEntrydbIndex();
 
 #ifdef QUILT_ONLY_MERC
-			if(-1 != target_new_dbindex)
-			{
-				//    Check to see if the target new chart is Merc
+			if (-1 != target_new_dbindex) {
+				// Check to see if the target new chart is Merc
 				int proj = ChartData->GetDBChartProj(target_new_dbindex);
 				int type = ChartData->GetDBChartType(target_new_dbindex);
 
-				if(PROJECTION_MERCATOR != proj)
-				{
+				if (PROJECTION_MERCATOR != proj) {
 					// If it is not Merc, cannot use it for quilting
 					// walk the stack up looking for a satisfactory chart
 					int stack_index = pCurrentStack->CurrentStackEntry;
 
-					while((stack_index < pCurrentStack->nEntry-1) && (stack_index >= 0))
-					{
-						int proj_tent = ChartData->GetDBChartProj( pCurrentStack->GetDBIndex(stack_index));
-						int type_tent = ChartData->GetDBChartType( pCurrentStack->GetDBIndex(stack_index));
+					while ((stack_index < pCurrentStack->nEntry - 1) && (stack_index >= 0)) {
+						int proj_tent
+							= ChartData->GetDBChartProj(pCurrentStack->GetDBIndex(stack_index));
+						int type_tent
+							= ChartData->GetDBChartType(pCurrentStack->GetDBIndex(stack_index));
 
-						if((PROJECTION_MERCATOR ==proj_tent) && (type_tent == type))
-						{
+						if ((PROJECTION_MERCATOR == proj_tent) && (type_tent == type)) {
 							target_new_dbindex = pCurrentStack->GetDBIndex(stack_index);
 							break;
 						}
 						stack_index++;
 					}
 				}
-
 			}
 #endif
 		}
 
-		if (chart_canvas->IsChartQuiltableRef( target_new_dbindex ))
+		if (chart_canvas->IsChartQuiltableRef(target_new_dbindex))
 			SelectQuiltRefdbChart(target_new_dbindex);
 		else
 			SelectQuiltRefdbChart(-1);
 
 		Current_Ch = NULL; // Bye....
 		chart_canvas->ReloadVP();
-
-	} else { // going to SC Mode
+	} else {
+		// going to SC Mode
 		stats->pPiano->SetActiveKeyArray(std::vector<int>());
 		stats->pPiano->SetNoshowIndexArray(std::vector<int>());
 		stats->pPiano->SetSubliteIndexArray(std::vector<int>());
-		stats->pPiano->SetVizIcon( NULL );
-		stats->pPiano->SetInVizIcon( NULL );
+		stats->pPiano->SetVizIcon(NULL);
+		stats->pPiano->SetInVizIcon(NULL);
 
 		ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 
-		stats->pPiano->SetTMercIcon( new wxBitmap( style->GetIcon( _T("tmercprj") ) ) );
-		stats->pPiano->SetSkewIcon( new wxBitmap( style->GetIcon( _T("skewprj") ) ) );
+		stats->pPiano->SetTMercIcon(new wxBitmap(style->GetIcon(_T("tmercprj"))));
+		stats->pPiano->SetSkewIcon(new wxBitmap(style->GetIcon(_T("skewprj"))));
 
-		stats->pPiano->SetRoundedRectangles( false );
+		stats->pPiano->SetRoundedRectangles(false);
 	}
 
 	// When shifting from quilt to single chart mode, select the "best" single chart to show
@@ -2946,8 +2940,6 @@ wxString MainFrame::prepare_logbook_message(const wxDateTime & lognow)
 	return navmsg;
 }
 
-int ut_index;
-
 void MainFrame::update_gps_watchdog()
 {
 	global::WatchDog& wdt = global::OCPN::get().wdt();
@@ -3100,6 +3092,8 @@ void MainFrame::onTimer_save_configuration()
 		pConfig->UpdateNavObj();
 	}
 }
+
+int ut_index; // FIXME: uninitialized, global data, used just in one method... test_unit_test_1
 
 void MainFrame::test_unit_test_1()
 {

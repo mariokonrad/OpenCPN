@@ -282,9 +282,7 @@ void AboutDialog::CreateControls()
 	wxButton* copyLog = new wxButton(itemDialog1, ID_COPYLOG, _("Copy Log File to Clipboard"));
 	buttonSizer->Add(copyLog, 1, wxALL | wxEXPAND, 3);
 
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-
-	wxBitmap donate_bmp = style->GetIcon(_T("donate"));
+	wxBitmap donate_bmp = g_StyleManager->current().GetIcon(_T("donate"));
 
 	wxButton* donateButton = new wxBitmapButton(itemDialog1, ID_DONATE, donate_bmp,
 												wxDefaultPosition, wxDefaultSize, 0);

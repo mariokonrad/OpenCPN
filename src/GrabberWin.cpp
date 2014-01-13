@@ -22,17 +22,17 @@
  **************************************************************************/
 
 #include "GrabberWin.h"
-#include "OCPNFloatingToolbarDialog.h"
-#include "StyleManager.h"
-#include "Style.h"
+#include <OCPNFloatingToolbarDialog.h>
+#include <StyleManager.h>
+#include <Style.h>
 
 #include <UserColors.h>
 #include <MainFrame.h>
 
 #include <wx/dcclient.h>
 
-extern ocpnStyle::StyleManager * g_StyleManager;
-extern MainFrame * gFrame;
+extern ocpnStyle::StyleManager* g_StyleManager;
+extern MainFrame* gFrame;
 
 BEGIN_EVENT_TABLE(GrabberWin, wxPanel)
 	EVT_MOUSE_EVENTS(GrabberWin::MouseEvent)
@@ -44,8 +44,7 @@ GrabberWin::GrabberWin(wxWindow * parent)
 	: m_bLeftDown(false)
 	, m_bRightDown(false)
 {
-	m_style = g_StyleManager->GetCurrentStyle();
-	m_pbitmap = m_style->GetIcon(_T("grabber"));
+	m_pbitmap = g_StyleManager->current().GetIcon(_T("grabber"));
 
 	Create(parent, -1);
 
@@ -65,7 +64,7 @@ void GrabberWin::SetColorScheme(global::ColorScheme)
 
 	SetBackgroundColour(back_color);
 	ClearBackground();
-	m_pbitmap = m_style->GetIcon(_T("grabber"));
+	m_pbitmap = g_StyleManager->current().GetIcon(_T("grabber"));
 }
 
 void GrabberWin::MouseEvent(wxMouseEvent& event)

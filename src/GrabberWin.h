@@ -29,8 +29,6 @@
 
 #include <global/ColorScheme.h>
 
-namespace ocpnStyle { class Style; }
-
 class GrabberWin : public wxPanel
 {
 	DECLARE_EVENT_TABLE()
@@ -44,7 +42,6 @@ public:
 	wxBitmap m_pbitmap;
 	bool m_bLeftDown;
 	bool m_bRightDown;
-	ocpnStyle::Style* m_style;
 };
 
 #endif

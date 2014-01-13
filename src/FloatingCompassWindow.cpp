@@ -55,21 +55,21 @@ FloatingCompassWindow::FloatingCompassWindow(wxWindow* parent)
 #endif
 	wxDialog::Create(parent, -1, _T(""), wxPoint(0, 0), wxSize(-1, -1), wstyle);
 
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-	_img_compass = style->GetIcon(_T("CompassRose"));
-	_img_gpsRed = style->GetIcon(_T("gpsRed"));
+	ocpnStyle::Style& style = g_StyleManager->current();
+	_img_compass = style.GetIcon(_T("CompassRose"));
+	_img_gpsRed = style.GetIcon(_T("gpsRed"));
 
 	m_rose_angle = -999; // force a refresh when first used
 
 	m_pStatBoxToolStaticBmp = NULL;
 
-	SetSize(_img_compass.GetWidth() + _img_gpsRed.GetWidth() + style->GetCompassLeftMargin() * 2
-			+ style->GetToolSeparation(),
-			_img_compass.GetHeight() + style->GetCompassTopMargin()
-			+ style->GetCompassBottomMargin());
+	SetSize(_img_compass.GetWidth() + _img_gpsRed.GetWidth() + style.GetCompassLeftMargin() * 2
+			+ style.GetToolSeparation(),
+			_img_compass.GetHeight() + style.GetCompassTopMargin()
+			+ style.GetCompassBottomMargin());
 
-	m_xoffset = style->GetCompassXOffset();
-	m_yoffset = style->GetCompassYOffset();
+	m_xoffset = style.GetCompassXOffset();
+	m_yoffset = style.GetCompassYOffset();
 }
 
 FloatingCompassWindow::~FloatingCompassWindow()
@@ -79,7 +79,8 @@ FloatingCompassWindow::~FloatingCompassWindow()
 
 void FloatingCompassWindow::OnPaint(wxPaintEvent&)
 {
-	int width, height;
+	int width;
+	int height;
 	GetClientSize(&width, &height);
 	wxPaintDC dc(this);
 
@@ -113,35 +114,39 @@ void FloatingCompassWindow::UpdateStatus(bool bnew)
 wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 {
 	wxString gpsIconName;
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style& style = g_StyleManager->current();
 
 	// In order to draw a horizontal compass window when the toolbar is vertical, we
 	// need to save away the sizes and backgrounds for the two icons.
 
-	static wxBitmap compassBg, gpsBg;
+	// FIXME: static data inside method... investigate
+	static wxBitmap compassBg;
+	static wxBitmap gpsBg;
 	static wxSize toolsize;
-	static int topmargin, leftmargin, radius;
+	static int topmargin;
+	static int leftmargin;
+	static int radius;
 
 	if (!compassBg.IsOk() || newColorScheme) {
-		int orient = style->GetOrientation();
-		style->SetOrientation(wxTB_HORIZONTAL);
-		if (style->HasBackground()) {
-			compassBg = style->GetNormalBG();
-			style->DrawToolbarLineStart(compassBg);
-			compassBg = style->SetBitmapBrightness(compassBg);
-			gpsBg = style->GetNormalBG();
-			style->DrawToolbarLineEnd(gpsBg);
-			gpsBg = style->SetBitmapBrightness(gpsBg);
+		int orient = style.GetOrientation();
+		style.SetOrientation(wxTB_HORIZONTAL);
+		if (style.HasBackground()) {
+			compassBg = style.GetNormalBG();
+			style.DrawToolbarLineStart(compassBg);
+			compassBg = style.SetBitmapBrightness(compassBg);
+			gpsBg = style.GetNormalBG();
+			style.DrawToolbarLineEnd(gpsBg);
+			gpsBg = style.SetBitmapBrightness(gpsBg);
 		}
 
-		leftmargin = style->GetCompassLeftMargin();
-		topmargin = style->GetCompassTopMargin();
-		toolsize = style->GetToolSize();
+		leftmargin = style.GetCompassLeftMargin();
+		topmargin = style.GetCompassTopMargin();
+		toolsize = style.GetToolSize();
 		toolsize.x *= 2;
-		radius = style->GetCompassCornerRadius();
+		radius = style.GetCompassCornerRadius();
 
 		if (orient)
-			style->SetOrientation(wxTB_VERTICAL);
+			style.SetOrientation(wxTB_VERTICAL);
 	}
 
 	bool b_need_refresh = false;
@@ -164,9 +169,9 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 	if (m_lastgpsIconName != gpsIconName)
 		b_need_refresh = true;
 
-	double rose_angle = -999.;
+	double rose_angle = -999.0;
 
-	if ((fabs(cc1->GetVPRotation()) > .01) || (fabs(cc1->GetVPSkew()) > .01)) {
+	if ((fabs(cc1->GetVPRotation()) > 0.01) || (fabs(cc1->GetVPSkew()) > 0.01)) {
 		rose_angle = -cc1->GetVPRotation();
 
 		if (!g_bCourseUp && !g_bskew_comp)
@@ -174,18 +179,18 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 
 		b_need_refresh = true;
 	} else
-		rose_angle = 0.;
+		rose_angle = 0.0;
 
-	if (fabs(m_rose_angle - rose_angle) > .001)
+	if (fabs(m_rose_angle - rose_angle) > 0.001)
 		b_need_refresh = true;
 
 	if (b_need_refresh) {
 		wxBitmap StatBmp;
 
 		StatBmp.Create((_img_compass.GetWidth() + _img_gpsRed.GetWidth())
-					   + style->GetCompassLeftMargin() * 2 + style->GetToolSeparation(),
-					   _img_compass.GetHeight() + style->GetCompassTopMargin()
-					   + style->GetCompassBottomMargin());
+					   + style.GetCompassLeftMargin() * 2 + style.GetToolSeparation(),
+					   _img_compass.GetHeight() + style.GetCompassTopMargin()
+					   + style.GetCompassBottomMargin());
 
 		if (StatBmp.IsOk()) {
 
@@ -198,18 +203,18 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 			mdc.SetBrush(wxBrush(GetGlobalColor(_T("UITX1")), wxTRANSPARENT));
 
 			mdc.DrawRoundedRectangle(0, 0, StatBmp.GetWidth(), StatBmp.GetHeight(),
-									 style->GetCompassCornerRadius());
+									 style.GetCompassCornerRadius());
 
-			wxPoint offset(style->GetCompassLeftMargin(), style->GetCompassTopMargin());
+			wxPoint offset(style.GetCompassLeftMargin(), style.GetCompassTopMargin());
 
 			//    Build Compass Rose, rotated...
 			wxBitmap BMPRose;
 			wxPoint after_rotate;
 
 			if (g_bCourseUp)
-				BMPRose = style->GetIcon(_T("CompassRose"));
+				BMPRose = style.GetIcon(_T("CompassRose"));
 			else
-				BMPRose = style->GetIcon(_T("CompassRoseBlue"));
+				BMPRose = style.GetIcon(_T("CompassRoseBlue"));
 			if ((fabs(cc1->GetVPRotation()) > .01) || (fabs(cc1->GetVPSkew()) > .01)) {
 				wxPoint rot_ctr(BMPRose.GetWidth() / 2, BMPRose.GetHeight() / 2);
 				wxImage rose_img = BMPRose.ConvertToImage();
@@ -221,7 +226,7 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 
 			wxBitmap iconBm;
 
-			if (style->HasBackground()) {
+			if (style.HasBackground()) {
 				iconBm = ocpnStyle::MergeBitmaps(compassBg, BMPRose, wxSize(0, 0));
 			} else {
 				iconBm = BMPRose;
@@ -232,10 +237,10 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 
 			m_rose_angle = rose_angle;
 
-			if (style->HasBackground()) {
-				iconBm = ocpnStyle::MergeBitmaps(gpsBg, style->GetIcon(gpsIconName), wxSize(0, 0));
+			if (style.HasBackground()) {
+				iconBm = ocpnStyle::MergeBitmaps(gpsBg, style.GetIcon(gpsIconName), wxSize(0, 0));
 			} else {
-				iconBm = style->GetIcon(gpsIconName);
+				iconBm = style.GetIcon(gpsIconName);
 			}
 			mdc.DrawBitmap(iconBm, offset);
 			mdc.SelectObject(wxNullBitmap);
@@ -243,7 +248,7 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 		}
 
 #ifndef __WXMAC__
-		if (style->isMarginsInvisible()) {
+		if (style.isMarginsInvisible()) {
 			m_MaskBmp = wxBitmap(StatBmp.GetWidth(), StatBmp.GetHeight());
 			wxMemoryDC sdc(m_MaskBmp);
 			sdc.SetBackground(*wxWHITE_BRUSH);

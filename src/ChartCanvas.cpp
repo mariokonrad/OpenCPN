@@ -523,15 +523,15 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 
 	// Build the cursors
 
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style& style = g_StyleManager->current();
 
 #if defined(__WXGTK__) || defined(__WXOSX__)
-	wxImage ICursorLeft = style->GetIcon(_T("left")).ConvertToImage();
-	wxImage ICursorRight = style->GetIcon(_T("right")).ConvertToImage();
-	wxImage ICursorUp = style->GetIcon(_T("up")).ConvertToImage();
-	wxImage ICursorDown = style->GetIcon(_T("down")).ConvertToImage();
-	wxImage ICursorPencil = style->GetIcon(_T("pencil")).ConvertToImage();
-	wxImage ICursorCross = style->GetIcon(_T("cross")).ConvertToImage();
+	wxImage ICursorLeft = style.GetIcon(_T("left")).ConvertToImage();
+	wxImage ICursorRight = style.GetIcon(_T("right")).ConvertToImage();
+	wxImage ICursorUp = style.GetIcon(_T("up")).ConvertToImage();
+	wxImage ICursorDown = style.GetIcon(_T("down")).ConvertToImage();
+	wxImage ICursorPencil = style.GetIcon(_T("pencil")).ConvertToImage();
+	wxImage ICursorCross = style.GetIcon(_T("cross")).ConvertToImage();
 
 	ICursorLeft.ConvertAlphaToMask(128);
 	ICursorRight.ConvertAlphaToMask(128);
@@ -582,12 +582,12 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	} else
 		pCursorCross = new wxCursor(wxCURSOR_ARROW);
 #else
-	wxImage ICursorLeft = style->GetIcon(_T("left")).ConvertToImage();
-	wxImage ICursorRight = style->GetIcon(_T("right")).ConvertToImage();
-	wxImage ICursorUp = style->GetIcon(_T("up")).ConvertToImage();
-	wxImage ICursorDown = style->GetIcon(_T("down")).ConvertToImage();
-	wxImage ICursorPencil = style->GetIcon(_T("pencil")).ConvertToImage();
-	wxImage ICursorCross = style->GetIcon(_T("cross")).ConvertToImage();
+	wxImage ICursorLeft = style.GetIcon(_T("left")).ConvertToImage();
+	wxImage ICursorRight = style.GetIcon(_T("right")).ConvertToImage();
+	wxImage ICursorUp = style.GetIcon(_T("up")).ConvertToImage();
+	wxImage ICursorDown = style.GetIcon(_T("down")).ConvertToImage();
+	wxImage ICursorPencil = style.GetIcon(_T("pencil")).ConvertToImage();
+	wxImage ICursorCross = style.GetIcon(_T("cross")).ConvertToImage();
 
 	if (ICursorLeft.Ok()) {
 		ICursorLeft.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_X, 0);
@@ -704,7 +704,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	CreateOZEmbossMapData(global::GLOBAL_COLOR_SCHEME_DAY);
 
 	// Build icons for tide/current points
-	m_bmTideDay = style->GetIcon(_T("tidesml"));
+	m_bmTideDay = style.GetIcon(_T("tidesml"));
 
 	// Dusk
 	m_bmTideDusk = CreateDimBitmap(m_bmTideDay, 0.50);
@@ -717,7 +717,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	double factor_night = 0.25;
 
 	// Red
-	m_os_image_red_day = style->GetIcon(_T("ship-red")).ConvertToImage();
+	m_os_image_red_day = style.GetIcon(_T("ship-red")).ConvertToImage();
 
 	int rimg_width = m_os_image_red_day.GetWidth();
 	int rimg_height = m_os_image_red_day.GetHeight();
@@ -745,7 +745,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	}
 
 	// Grey
-	m_os_image_grey_day = style->GetIcon(_T("ship-red")).ConvertToImage().ConvertToGreyscale();
+	m_os_image_grey_day = style.GetIcon(_T("ship-red")).ConvertToImage().ConvertToGreyscale();
 
 	int gimg_width = m_os_image_grey_day.GetWidth();
 	int gimg_height = m_os_image_grey_day.GetHeight();
@@ -8827,14 +8827,14 @@ void ChartCanvas::EmbossDepthScale(ocpnDC& dc)
 
 void ChartCanvas::CreateDepthUnitEmbossMaps(global::ColorScheme cs)
 {
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-	const wxString& embossFont = style->getEmbossFont();
+	const ocpnStyle::Style& style = g_StyleManager->current();
+	const wxString& embossFont = style.getEmbossFont();
 
 	wxFont font;
 	if (embossFont == wxEmptyString)
 		font = wxFont(60, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
 	else
-		font = wxFont(style->getEmbossHeight(), wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL,
+		font = wxFont(style.getEmbossHeight(), wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL,
 					  wxFONTWEIGHT_BOLD, false, embossFont);
 
 	int emboss_width = 500;
@@ -8854,15 +8854,16 @@ void ChartCanvas::CreateDepthUnitEmbossMaps(global::ColorScheme cs)
 void ChartCanvas::CreateOZEmbossMapData(global::ColorScheme cs)
 {
 	delete m_pEM_OverZoom;
+	m_pEM_OverZoom = NULL;
 
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-	const wxString& embossFont = style->getEmbossFont();
+	const ocpnStyle::Style& style = g_StyleManager->current();
+	const wxString& embossFont = style.getEmbossFont();
 
 	wxFont font;
 	if (embossFont == wxEmptyString)
 		font = wxFont(40, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
 	else
-		font = wxFont(style->getEmbossHeight(), wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL,
+		font = wxFont(style.getEmbossHeight(), wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL,
 					  wxFONTWEIGHT_BOLD, false, embossFont);
 
 	wxClientDC dc(this);

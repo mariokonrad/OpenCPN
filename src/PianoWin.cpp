@@ -93,8 +93,8 @@ void PianoWin::SetColorScheme(global::ColorScheme)
 
 void PianoWin::OnPaint(wxPaintEvent&)
 {
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-	int width, height;
+	int width;
+	int height;
 	GetClientSize(&width, &height);
 	wxPaintDC dc(this);
 
@@ -126,28 +126,24 @@ void PianoWin::OnPaint(wxPaintEvent&)
 
 			if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_S57) {
 				dc.SetBrush(m_vBrush);
-
 				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
 					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
 						dc.SetBrush(m_svBrush);
 				}
 			} else if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_CM93) {
 				dc.SetBrush(m_cBrush);
-
 				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
 					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
 						dc.SetBrush(m_scBrush);
 				}
 			} else if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_CM93COMP) {
 				dc.SetBrush(m_cBrush);
-
 				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
 					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
 						dc.SetBrush(m_scBrush);
 				}
 			} else {
 				dc.SetBrush(m_tBrush);
-
 				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
 					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
 						dc.SetBrush(m_slBrush);
@@ -157,10 +153,9 @@ void PianoWin::OnPaint(wxPaintEvent&)
 			// Check to see if this box appears in the sub_light array
 			// If so, add a crosshatch pattern to the brush
 			for (unsigned int ino = 0; ino < m_sublite_index_array.size(); ino++) {
-				if (m_sublite_index_array.at(ino) == key_db_index) // chart is in the sublite list
-				{
+				if (m_sublite_index_array.at(ino) == key_db_index) {
+					// chart is in the sublite list
 					wxBrush ebrush(dc.GetBrush().GetColour(), wxCROSSDIAG_HATCH);
-					//                              dc.SetBrush(ebrush);
 				}
 			}
 
@@ -183,7 +178,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 				}
 			}
 
-			//    Look in the current noshow array for this index
+			// Look in the current noshow array for this index
 			for (unsigned int ino = 0; ino < m_noshow_index_array.size(); ino++) {
 				if (m_noshow_index_array[ino] == key_db_index) { // chart is in the noshow list
 					if (m_pInVizIconBmp && m_pInVizIconBmp->IsOk())
@@ -194,9 +189,10 @@ void PianoWin::OnPaint(wxPaintEvent&)
 				}
 			}
 
-			//    Look in the current skew array for this index
+			// Look in the current skew array for this index
 			for (unsigned int ino = 0; ino < m_skew_index_array.size(); ino++) {
-				if (m_skew_index_array.at(ino) == key_db_index) { // chart is in the list
+				if (m_skew_index_array.at(ino) == key_db_index) {
+					// chart is in the list
 					if (m_pSkewIconBmp && m_pSkewIconBmp->IsOk())
 						dc.DrawBitmap(
 							ocpnStyle::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pSkewIconBmp),
@@ -205,7 +201,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 				}
 			}
 
-			//    Look in the current tmerc array for this index
+			// Look in the current tmerc array for this index
 			for (unsigned int ino = 0; ino < m_tmerc_index_array.size(); ino++) {
 				if (m_tmerc_index_array.at(ino) == key_db_index) { // chart is in the list
 					if (m_pTmercIconBmp && m_pTmercIconBmp->IsOk())
@@ -216,7 +212,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 				}
 			}
 
-			//    Look in the current poly array for this index
+			// Look in the current poly array for this index
 			for (unsigned int ino = 0; ino < m_poly_index_array.size(); ino++) {
 				if (m_poly_index_array.at(ino) == key_db_index) { // chart is in the list
 					if (m_pPolyIconBmp && m_pPolyIconBmp->IsOk())
@@ -228,15 +224,15 @@ void PianoWin::OnPaint(wxPaintEvent&)
 			}
 		}
 #ifndef __WXMAC__
-		if (style->isChartStatusWindowTransparent())
-			((wxDialog*) GetParent())->SetShape( wxRegion( shape, *wxBLACK, 0 ) );
+		if (g_StyleManager->current().isChartStatusWindowTransparent())
+			((wxDialog*)GetParent())->SetShape(wxRegion(shape, *wxBLACK, 0));
 	} else {
 		// SetShape() with a completely empty shape doesn't work, and leaving the shape
 		// but hiding the window causes artifacts when dragging in GL mode on MSW.
 		// The best solution found so far is to show just a single pixel, this is less
 		// disturbing than flashing piano keys when dragging. (wxWidgets 2.8)
-		if (style->isChartStatusWindowTransparent())
-			((wxDialog*) GetParent())->SetShape( wxRegion( wxRect(0,0,1,1) ));
+		if (g_StyleManager->current().isChartStatusWindowTransparent())
+			((wxDialog*)GetParent())->SetShape(wxRegion(wxRect(0, 0, 1, 1)));
 #endif
 	}
 }
@@ -281,11 +277,10 @@ void PianoWin::FormatKeys(void)
 {
 	int nKeys = m_key_array.size();
 	if (nKeys) {
-		ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 		int width;
 		int height;
 		GetClientSize(&width, &height);
-		int kw = style->getChartStatusIconWidth();
+		int kw = g_StyleManager->current().getChartStatusIconWidth();
 		if (!kw)
 			kw = width / nKeys;
 

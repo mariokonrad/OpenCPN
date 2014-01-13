@@ -72,7 +72,7 @@ StyleManager::StyleManager(void)
 	SetStyle(_T(""));
 }
 
-StyleManager::StyleManager(const wxString & configDir)
+StyleManager::StyleManager(const wxString& configDir)
 	: isOK(false)
 	, currentStyle(NULL)
 {
@@ -87,9 +87,14 @@ StyleManager::~StyleManager(void)
 	styles.clear();
 }
 
-Style* StyleManager::GetCurrentStyle()
+const Style& StyleManager::current() const
 {
-	return currentStyle;
+	return *currentStyle;
+}
+
+Style& StyleManager::current()
+{
+	return *currentStyle;
 }
 
 void StyleManager::Init(const wxString& fromPath)

@@ -30,7 +30,6 @@
 
 #define FADE_TIMER 2
 
-namespace ocpnStyle { class Style; }
 class ToolBarSimple;
 class GrabberWin;
 class wxBoxSizer;
@@ -88,7 +87,6 @@ private:
 	wxPoint m_position;
 	int m_dock_x;
 	int m_dock_y;
-	ocpnStyle::Style* m_style;
 	bool m_block;
 };
 

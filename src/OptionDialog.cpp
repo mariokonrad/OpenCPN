@@ -1689,7 +1689,7 @@ void options::CreatePanel_UI(size_t parent, int border_size, int WXUNUSED(group_
 		 i != style_names.end(); ++i) {
 		m_itemStyleListBox->Append(*i);
 	}
-	m_itemStyleListBox->SetStringSelection(g_StyleManager->GetCurrentStyle()->getName());
+	m_itemStyleListBox->SetStringSelection(g_StyleManager->current().getName());
 	itemStyleStaticBoxSizer->Add(m_itemStyleListBox, 1, wxEXPAND | wxALL, border_size);
 
 	wxStaticBox* miscOptionsBox
@@ -1808,44 +1808,44 @@ void options::CreateControls()
 	m_pListbook
 		= new wxListbook(itemDialog1, ID_NOTEBOOK, wxDefaultPosition, wxSize(-1, -1), wxLB_TOP);
 	m_topImgList = new wxImageList(40, 40, true, 1);
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style& style = g_StyleManager->current();
 
 #if wxCHECK_VERSION(2, 8, 12)
-	m_topImgList->Add(style->GetIcon(_T("Display")));
-	m_topImgList->Add(style->GetIcon(_T("Connections")));
-	m_topImgList->Add(style->GetIcon(_T("Charts")));
-	m_topImgList->Add(style->GetIcon(_T("Ship")));
-	m_topImgList->Add(style->GetIcon(_T("UI")));
-	m_topImgList->Add(style->GetIcon(_T("Plugins")));
+	m_topImgList->Add(style.GetIcon(_T("Display")));
+	m_topImgList->Add(style.GetIcon(_T("Connections")));
+	m_topImgList->Add(style.GetIcon(_T("Charts")));
+	m_topImgList->Add(style.GetIcon(_T("Ship")));
+	m_topImgList->Add(style.GetIcon(_T("UI")));
+	m_topImgList->Add(style.GetIcon(_T("Plugins")));
 #else
 	wxBitmap bmp;
 	wxImage img;
-	bmp = style->GetIcon(_T("Display"));
+	bmp = style.GetIcon(_T("Display"));
 	img = bmp.ConvertToImage();
 	img.ConvertAlphaToMask(128);
 	bmp = wxBitmap(img);
 	m_topImgList->Add(bmp);
-	bmp = style->GetIcon(_T("Connections"));
+	bmp = style.GetIcon(_T("Connections"));
 	img = bmp.ConvertToImage();
 	img.ConvertAlphaToMask(128);
 	bmp = wxBitmap(img);
 	m_topImgList->Add(bmp);
-	bmp = style->GetIcon(_T("Charts"));
+	bmp = style.GetIcon(_T("Charts"));
 	img = bmp.ConvertToImage();
 	img.ConvertAlphaToMask(128);
 	bmp = wxBitmap(img);
 	m_topImgList->Add(bmp);
-	bmp = style->GetIcon(_T("Ship"));
+	bmp = style.GetIcon(_T("Ship"));
 	img = bmp.ConvertToImage();
 	img.ConvertAlphaToMask(128);
 	bmp = wxBitmap(img);
 	m_topImgList->Add(bmp);
-	bmp = style->GetIcon(_T("UI"));
+	bmp = style.GetIcon(_T("UI"));
 	img = bmp.ConvertToImage();
 	img.ConvertAlphaToMask(128);
 	bmp = wxBitmap(img);
 	m_topImgList->Add(bmp);
-	bmp = style->GetIcon(_T("Plugins"));
+	bmp = style.GetIcon(_T("Plugins"));
 	img = bmp.ConvertToImage();
 	img.ConvertAlphaToMask(128);
 	bmp = wxBitmap(img);
@@ -2816,7 +2816,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 		if (g_locale != locale_old)
 			m_returnChanges |= LOCALE_CHANGED;
 
-		wxString oldStyle = g_StyleManager->GetCurrentStyle()->getName();
+		wxString oldStyle = g_StyleManager->current().getName();
 		g_StyleManager->SetStyleNextInvocation(m_itemStyleListBox->GetStringSelection());
 		if (g_StyleManager->GetStyleNextInvocation() != oldStyle) {
 			m_returnChanges |= STYLE_CHANGED;

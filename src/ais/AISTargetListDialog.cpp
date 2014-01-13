@@ -332,9 +332,9 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 		wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_HRULES | wxLC_VRULES | wxBORDER_SUNKEN | wxLC_VIRTUAL);
 	wxImageList* imglist = new wxImageList(16, 16, true, 2);
 
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-	imglist->Add(style->GetIcon(_T("sort_asc")));
-	imglist->Add(style->GetIcon(_T("sort_desc")));
+	ocpnStyle::Style& style = g_StyleManager->current();
+	imglist->Add(style.GetIcon(_T("sort_asc")));
+	imglist->Add(style.GetIcon(_T("sort_desc")));
 
 	m_pListCtrlAISTargets->AssignImageList(imglist, wxIMAGE_LIST_SMALL);
 	m_pListCtrlAISTargets->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED,
@@ -610,8 +610,7 @@ void AISTargetListDialog::OnPaneClose(wxAuiManagerEvent& event)
 
 void AISTargetListDialog::UpdateButtons()
 {
-	long item = -1;
-	item = m_pListCtrlAISTargets->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	long item = m_pListCtrlAISTargets->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	bool enable = (item != -1);
 
 	m_pButtonInfo->Enable(enable);
@@ -645,9 +644,7 @@ void AISTargetListDialog::OnTargetDefaultAction(wxListEvent& event)
 
 void AISTargetListDialog::OnTargetQuery(wxCommandEvent&)
 {
-	long selItemID = -1;
-	selItemID
-		= m_pListCtrlAISTargets->GetNextItem(selItemID, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	long selItemID = m_pListCtrlAISTargets->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if (selItemID == -1)
 		return;
 

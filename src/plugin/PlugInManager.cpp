@@ -1018,10 +1018,9 @@ int PlugInManager::AddToolbarTool(wxString label, wxBitmap* bitmap, wxBitmap* WX
 	pttc->label = label;
 
 	if (!bitmap->IsOk()) {
-		ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-		pttc->bitmap_day = new wxBitmap(style->GetIcon(_T("default_pi")));
+		pttc->bitmap_day = new wxBitmap(g_StyleManager->current().GetIcon(_T("default_pi")));
 	} else {
-		//  Force a non-reference copy of the bitmap from the PlugIn
+		// Force a non-reference copy of the bitmap from the PlugIn
 		pttc->bitmap_day = new wxBitmap(*bitmap);
 		pttc->bitmap_day->UnShare();
 	}
@@ -1100,8 +1099,7 @@ void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap* bitmap, wxBitmap* 
 			delete pttc->bitmap_Rollover;
 
 			if (!bitmap->IsOk()) {
-				ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-				pttc->bitmap_day = new wxBitmap(style->GetIcon(_T("default_pi")));
+				pttc->bitmap_day = new wxBitmap(g_StyleManager->current().GetIcon(_T("default_pi")));
 			} else {
 				// Force a non-reference copy of the bitmap from the PlugIn
 				pttc->bitmap_day = new wxBitmap(*bitmap);
@@ -1109,8 +1107,7 @@ void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap* bitmap, wxBitmap* 
 			}
 
 			if (!bmpRollover->IsOk()) {
-				ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-				pttc->bitmap_Rollover = new wxBitmap(style->GetIcon(_T("default_pi")));
+				pttc->bitmap_Rollover = new wxBitmap(g_StyleManager->current().GetIcon(_T("default_pi")));
 			} else {
 				// Force a non-reference copy of the bitmap from the PlugIn
 				pttc->bitmap_Rollover = new wxBitmap(*bmpRollover);
@@ -2140,8 +2137,7 @@ int opencpn_plugin::GetPlugInVersionMinor()
 
 wxBitmap* opencpn_plugin::GetPlugInBitmap()
 {
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-	return new wxBitmap(style->GetIcon(_T("default_pi")));
+	return new wxBitmap(g_StyleManager->current().GetIcon(_T("default_pi")));
 }
 
 wxString opencpn_plugin::GetCommonName()

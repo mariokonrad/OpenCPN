@@ -47,7 +47,9 @@ public:
 	void SetStyle(wxString name);
 	void SetStyleNextInvocation(const wxString& name);
 	const wxString& GetStyleNextInvocation() const;
-	Style* GetCurrentStyle();
+
+	const Style& current() const;
+	Style& current(); // FIXME: as soon as Style has a reasonable behaviour (icon handling), this method has to go
 
 	StyleNames GetStyleNames() const;
 

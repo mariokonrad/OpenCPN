@@ -31,7 +31,6 @@
 
 #define TOOLTIPON_TIMER 10000
 
-namespace ocpnStyle { class Style; }
 class ToolTipWin;
 class GrabberWin;
 class ToolBarTool;
@@ -250,8 +249,6 @@ private:
 	wxTimer m_tooltip_timer;
 	int m_one_shot;
 	bool m_btooltip_show;
-
-	ocpnStyle::Style* m_style;
 };
 
 #endif

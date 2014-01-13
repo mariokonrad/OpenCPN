@@ -86,10 +86,8 @@ void AnnunText::CalculateMinSize(void)
 
 void AnnunText::SetColorScheme(global::ColorScheme)
 {
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 	m_pbackBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UBLCK")), wxSOLID);
-
-	m_text_color = style->getConsoleFontColor();
+	m_text_color = g_StyleManager->current().getConsoleFontColor();
 }
 
 void AnnunText::RefreshFonts()
@@ -125,7 +123,6 @@ void AnnunText::OnPaint(wxPaintEvent &)
 	int sx;
 	int sy;
 	GetClientSize(&sx, &sy);
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
 
 	// Do the drawing on an off-screen memory DC, and blit into place
 	// to avoid objectionable flashing
@@ -136,7 +133,7 @@ void AnnunText::OnPaint(wxPaintEvent &)
 	mdc.SetBackground(*m_pbackBrush);
 	mdc.Clear();
 
-	const wxBitmap& background = style->getConsoleTextBackground();
+	const wxBitmap& background = g_StyleManager->current().getConsoleTextBackground();
 	if (background.IsOk())
 		mdc.DrawBitmap(background, 0, 0);
 

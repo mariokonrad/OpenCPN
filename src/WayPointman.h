@@ -56,7 +56,7 @@ public:
 	void DeleteAllWaypoints(bool b_delete_used);
 	void DestroyWaypoint(RoutePoint* pRp, bool b_update_changeset = true);
 	void ClearRoutePointFonts(void);
-	void ProcessIcons(ocpnStyle::Style* style);
+	void ProcessIcons(ocpnStyle::Style& style);
 	bool DoesIconExist(const wxString& icon_key) const;
 	wxBitmap* GetIconBitmap(int index);
 	wxString GetIconDescription(int index) const;

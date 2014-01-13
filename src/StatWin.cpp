@@ -91,7 +91,7 @@ void StatWin::ReSize()
 
 void StatWin::OnPaint(wxPaintEvent &)
 {
-	if (g_StyleManager->GetCurrentStyle()->isChartStatusWindowTransparent())
+	if (g_StyleManager->current().isChartStatusWindowTransparent())
 		return;
 
 	wxPaintDC dc(this);

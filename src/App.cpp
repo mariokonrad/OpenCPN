@@ -1321,7 +1321,7 @@ bool App::OnInit()
 
 	// Init the WayPoint Manager (Must be after UI Style init).
 	pWayPointMan = new WayPointman();
-	pWayPointMan->ProcessIcons(g_StyleManager->GetCurrentStyle());
+	pWayPointMan->ProcessIcons(g_StyleManager->current());
 
 	// Open/Create the Config Object (Must be after UI Style init).
 	pConfig = new Config(wxString(_T("")), wxString(_T("")), sys.data().config_file);
@@ -1540,15 +1540,15 @@ bool App::OnInit()
 
 	stats = new StatWin(cc1);
 	stats->SetColorScheme(view.color_scheme);
-	ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+	ocpnStyle::Style& style = g_StyleManager->current();
 	if (cc1->GetQuiltMode()) {
-		stats->pPiano->SetVizIcon(new wxBitmap(style->GetIcon(_T("viz"))));
-		stats->pPiano->SetInVizIcon(new wxBitmap(style->GetIcon(_T("redX"))));
+		stats->pPiano->SetVizIcon(new wxBitmap(style.GetIcon(_T("viz"))));
+		stats->pPiano->SetInVizIcon(new wxBitmap(style.GetIcon(_T("redX"))));
 		stats->pPiano->SetRoundedRectangles(true);
 	}
-	stats->pPiano->SetTMercIcon(new wxBitmap(style->GetIcon(_T("tmercprj"))));
-	stats->pPiano->SetPolyIcon(new wxBitmap(style->GetIcon(_T("polyprj"))));
-	stats->pPiano->SetSkewIcon(new wxBitmap(style->GetIcon(_T("skewprj"))));
+	stats->pPiano->SetTMercIcon(new wxBitmap(style.GetIcon(_T("tmercprj"))));
+	stats->pPiano->SetPolyIcon(new wxBitmap(style.GetIcon(_T("polyprj"))));
+	stats->pPiano->SetSkewIcon(new wxBitmap(style.GetIcon(_T("skewprj"))));
 
 	// Yield to pick up the OnSize() calls that result from Maximize()
 	Yield();

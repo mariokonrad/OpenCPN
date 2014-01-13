@@ -66,7 +66,8 @@ wxToolBarToolBase * ToolBarSimple::CreateTool(
 		const wxString & shortHelp,
 		const wxString& longHelp)
 {
-	return new ToolBarTool(this, id, label, bmpNormal, bmpDisabled, kind, clientData, shortHelp, longHelp);
+	return new ToolBarTool(this, id, label, bmpNormal, bmpDisabled, kind, clientData, shortHelp,
+						   longHelp);
 }
 
 ToolBarSimple::ToolBarSimple()
@@ -98,8 +99,6 @@ void ToolBarSimple::Init()
 	m_pressedTool = m_currentTool = -1;
 
 	m_xPos = m_yPos = wxDefaultCoord;
-
-	m_style = g_StyleManager->GetCurrentStyle(); // FIXME: do not store the style
 
 	m_defaultWidth = 16;
 	m_defaultHeight = 15;
@@ -185,25 +184,26 @@ bool ToolBarSimple::DoInsertTool(size_t WXUNUSED(pos), wxToolBarToolBase* toolBa
 		}
 	}
 
+	const ocpnStyle::Style& style = g_StyleManager->current();
 	tool->m_x = m_xPos;
 	if (tool->m_x == wxDefaultCoord)
-		tool->m_x = m_style->GetLeftMargin();
+		tool->m_x = style.GetLeftMargin();
 
 	tool->m_y = m_yPos;
 	if (tool->m_y == wxDefaultCoord)
-		tool->m_y = m_style->GetTopMargin();
+		tool->m_y = style.GetTopMargin();
 
 	if (tool->IsButton()) {
 		tool->SetSize(GetToolSize());
 
 		// Calculate reasonable max size in case Layout() not called
-		if ((tool->m_x + tool->GetNormalBitmap().GetWidth() + m_style->GetLeftMargin())
+		if ((tool->m_x + tool->GetNormalBitmap().GetWidth() + style.GetLeftMargin())
 			> m_maxWidth)
-			m_maxWidth = static_cast<wxCoord>(tool->m_x + tool->GetWidth() + m_style->GetLeftMargin());
+			m_maxWidth = static_cast<wxCoord>(tool->m_x + tool->GetWidth() + style.GetLeftMargin());
 
-		if ((tool->m_y + tool->GetNormalBitmap().GetHeight() + m_style->GetTopMargin())
+		if ((tool->m_y + tool->GetNormalBitmap().GetHeight() + style.GetTopMargin())
 			> m_maxHeight)
-			m_maxHeight = static_cast<wxCoord>(tool->m_y + tool->GetHeight() + m_style->GetTopMargin());
+			m_maxHeight = static_cast<wxCoord>(tool->m_y + tool->GetHeight() + style.GetTopMargin());
 	} else {
 		if (tool->IsControl()) {
 			tool->SetSize(tool->GetControl()->GetSize());
@@ -284,12 +284,13 @@ void ToolBarSimple::KillTooltip()
 
 	if (m_last_ro_tool) {
 		if (m_last_ro_tool->IsEnabled()) {
+			ocpnStyle::Style& style = g_StyleManager->current();
 			if (m_last_ro_tool->IsToggled()) {
-				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon(m_last_ro_tool->GetToolname(),
-																	 ocpnStyle::TOOLICON_TOGGLED));
+				m_last_ro_tool->SetNormalBitmap(
+					style.GetToolIcon(m_last_ro_tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED));
 			} else {
-				m_last_ro_tool->SetNormalBitmap(m_style->GetToolIcon(m_last_ro_tool->GetToolname(),
-																	 ocpnStyle::TOOLICON_NORMAL));
+				m_last_ro_tool->SetNormalBitmap(
+					style.GetToolIcon(m_last_ro_tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL));
 			}
 		}
 	}
@@ -314,20 +315,22 @@ void ToolBarSimple::SetColorScheme(global::ColorScheme)
 
 bool ToolBarSimple::Realize()
 {
+	ocpnStyle::Style& style = g_StyleManager->current();
+
 	m_currentRowsOrColumns = 0;
 	m_LineCount = 1;
-	m_lastX = m_style->GetLeftMargin();
-	m_lastY = m_style->GetTopMargin();
+	m_lastX = style.GetLeftMargin();
+	m_lastY = style.GetTopMargin();
 	m_maxWidth = 0;
 	m_maxHeight = 0;
 
 	if (IsVertical())
-		m_style->SetOrientation(wxTB_VERTICAL);
+		style.SetOrientation(wxTB_VERTICAL);
 	else
-		m_style->SetOrientation(wxTB_HORIZONTAL);
+		style.SetOrientation(wxTB_HORIZONTAL);
 
-	wxSize toolSize = m_style->GetToolSize();
-	int separatorSize = m_style->GetToolSeparation();
+	wxSize toolSize = style.GetToolSize();
+	int separatorSize = style.GetToolSeparation();
 
 	ToolBarTool* lastTool = NULL;
 	bool firstNode = true;
@@ -359,16 +362,16 @@ bool ToolBarSimple::Realize()
 						lastTool->lastInLine = true;
 					m_LineCount++;
 					m_currentRowsOrColumns = 0;
-					m_lastX = m_style->GetLeftMargin();
-					m_lastY += toolSize.y + m_style->GetTopMargin();
+					m_lastX = style.GetLeftMargin();
+					m_lastY += toolSize.y + style.GetTopMargin();
 				}
 				tool->m_x = static_cast<wxCoord>(m_lastX);
 				tool->m_y = static_cast<wxCoord>(m_lastY);
 
 				tool->trect = wxRect(tool->m_x, tool->m_y, toolSize.x, toolSize.y);
-				tool->trect.Inflate(m_style->GetToolSeparation() / 2, m_style->GetTopMargin());
+				tool->trect.Inflate(style.GetToolSeparation() / 2, style.GetTopMargin());
 
-				m_lastX += toolSize.x + m_style->GetToolSeparation();
+				m_lastX += toolSize.x + style.GetToolSeparation();
 			} else {
 				if (m_currentRowsOrColumns >= m_maxRows) {
 					tool->firstInLine = true;
@@ -376,27 +379,27 @@ bool ToolBarSimple::Realize()
 						lastTool->lastInLine = true;
 					m_LineCount++;
 					m_currentRowsOrColumns = 0;
-					m_lastX += toolSize.x + m_style->GetTopMargin();
-					m_lastY = m_style->GetTopMargin();
+					m_lastX += toolSize.x + style.GetTopMargin();
+					m_lastY = style.GetTopMargin();
 				}
 				tool->m_x = static_cast<wxCoord>(m_lastX);
 				tool->m_y = static_cast<wxCoord>(m_lastY);
 
 				tool->trect = wxRect(tool->m_x, tool->m_y, toolSize.x, toolSize.y);
-				tool->trect.Inflate(m_style->GetToolSeparation() / 2, m_style->GetTopMargin());
+				tool->trect.Inflate(style.GetToolSeparation() / 2, style.GetTopMargin());
 
-				m_lastY += toolSize.y + m_style->GetToolSeparation();
+				m_lastY += toolSize.y + style.GetToolSeparation();
 			}
 			m_currentRowsOrColumns++;
 		} else if (tool->IsControl()) {
 			tool->m_x = static_cast<wxCoord>(m_lastX);
-			tool->m_y = static_cast<wxCoord>(m_lastY - (m_style->GetTopMargin() / 2));
+			tool->m_y = static_cast<wxCoord>(m_lastY - (style.GetTopMargin() / 2));
 
 			tool->trect = wxRect(tool->m_x, tool->m_y, tool->GetWidth(), tool->GetHeight());
-			tool->trect.Inflate(m_style->GetToolSeparation() / 2, m_style->GetTopMargin());
+			tool->trect.Inflate(style.GetToolSeparation() / 2, style.GetTopMargin());
 
 			wxSize s = tool->GetControl()->GetSize();
-			m_lastX += s.x + m_style->GetToolSeparation();
+			m_lastX += s.x + style.GetToolSeparation();
 		}
 
 		if (m_lastX > m_maxWidth)
@@ -415,8 +418,8 @@ bool ToolBarSimple::Realize()
 	else
 		m_maxWidth += toolSize.x;
 
-	m_maxWidth += m_style->GetRightMargin();
-	m_maxHeight += m_style->GetBottomMargin();
+	m_maxWidth += style.GetRightMargin();
+	m_maxHeight += style.GetBottomMargin();
 
 	SetSize(m_maxWidth, m_maxHeight);
 	SetMinSize(wxSize(m_maxWidth, m_maxHeight));
@@ -649,6 +652,7 @@ void ToolBarSimple::DrawTool(wxToolBarToolBase* tool)
 void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 {
 	ToolBarTool* tool = static_cast<ToolBarTool*>(toolBase);
+	ocpnStyle::Style& style = g_StyleManager->current();
 
 	PrepareDC(dc);
 
@@ -659,12 +663,12 @@ void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 		if (tool->IsEnabled()) {
 			bmp = tool->GetNormalBitmap();
 			if (!bmp.IsOk())
-				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL,
+				bmp = style.GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL,
 										   tool->rollover);
 		} else {
 			bmp = tool->GetDisabledBitmap();
 			if (!bmp.IsOk())
-				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED);
+				bmp = style.GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED);
 		}
 	} else {
 		if (tool->isPluginTool) {
@@ -673,31 +677,31 @@ void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 			// If it is not in the style we build a new icon from the style BG and the plugin icon.
 
 			if (tool->IsToggled()) {
-				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED,
+				bmp = style.GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED,
 										   tool->rollover);
 				if (bmp.GetDepth() == 1) {
 					if (tool->rollover) {
-						bmp = m_style->BuildPluginIcon(tool->pluginRolloverIcon,
+						bmp = style.BuildPluginIcon(tool->pluginRolloverIcon,
 													   ocpnStyle::TOOLICON_TOGGLED);
 						if (!bmp.IsOk())
-							bmp = m_style->BuildPluginIcon(tool->pluginNormalIcon,
+							bmp = style.BuildPluginIcon(tool->pluginNormalIcon,
 														   ocpnStyle::TOOLICON_TOGGLED);
 					} else
-						bmp = m_style->BuildPluginIcon(tool->pluginNormalIcon,
+						bmp = style.BuildPluginIcon(tool->pluginNormalIcon,
 													   ocpnStyle::TOOLICON_TOGGLED);
 				}
 			} else {
-				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL,
+				bmp = style.GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_NORMAL,
 										   tool->rollover);
 				if (bmp.GetDepth() == 1) {
 					if (tool->rollover) {
-						bmp = m_style->BuildPluginIcon(tool->pluginRolloverIcon,
+						bmp = style.BuildPluginIcon(tool->pluginRolloverIcon,
 													   ocpnStyle::TOOLICON_NORMAL);
 						if (!bmp.IsOk())
-							bmp = m_style->BuildPluginIcon(tool->pluginNormalIcon,
+							bmp = style.BuildPluginIcon(tool->pluginNormalIcon,
 														   ocpnStyle::TOOLICON_NORMAL);
 					} else
-						bmp = m_style->BuildPluginIcon(tool->pluginNormalIcon,
+						bmp = style.BuildPluginIcon(tool->pluginNormalIcon,
 													   ocpnStyle::TOOLICON_NORMAL);
 				}
 			}
@@ -706,16 +710,16 @@ void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 		} else {
 			if (tool->IsEnabled()) {
 				if (tool->IsToggled())
-					bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED,
+					bmp = style.GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED,
 											   tool->rollover);
 				else
-					bmp = m_style->GetToolIcon(tool->GetIconName(), ocpnStyle::TOOLICON_NORMAL,
+					bmp = style.GetToolIcon(tool->GetIconName(), ocpnStyle::TOOLICON_NORMAL,
 											   tool->rollover);
 
 				tool->SetNormalBitmap(bmp);
 				tool->bitmapOK = true;
 			} else {
-				bmp = m_style->GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED);
+				bmp = style.GetToolIcon(tool->GetToolname(), ocpnStyle::TOOLICON_DISABLED);
 				tool->SetDisabledBitmap(bmp);
 				tool->bitmapOK = true;
 			}
@@ -723,15 +727,15 @@ void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 	}
 
 	if (tool->firstInLine) {
-		m_style->DrawToolbarLineStart(bmp);
+		style.DrawToolbarLineStart(bmp);
 	}
 	if (tool->lastInLine) {
-		m_style->DrawToolbarLineEnd(bmp);
+		style.DrawToolbarLineEnd(bmp);
 	}
 
-	if (bmp.GetWidth() != m_style->GetToolSize().x || bmp.GetHeight() != m_style->GetToolSize().y) {
-		drawAt.x -= (bmp.GetWidth() - m_style->GetToolSize().x) / 2;
-		drawAt.y -= (bmp.GetHeight() - m_style->GetToolSize().y) / 2;
+	if (bmp.GetWidth() != style.GetToolSize().x || bmp.GetHeight() != style.GetToolSize().y) {
+		drawAt.x -= (bmp.GetWidth() - style.GetToolSize().x) / 2;
+		drawAt.y -= (bmp.GetHeight() - style.GetToolSize().y) / 2;
 	}
 
 	dc.DrawBitmap(bmp, drawAt);
@@ -1121,9 +1125,7 @@ void ToolBarSimple::OnMouseEnter(int id)
 void ToolBarSimple::SetToolNormalBitmapEx(wxToolBarToolBase* tool, const wxString& iconName)
 {
 	if (tool) {
-		ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-
-		wxBitmap bmp = style->GetToolIcon(iconName, ocpnStyle::TOOLICON_NORMAL);
+		wxBitmap bmp = g_StyleManager->current().GetToolIcon(iconName, ocpnStyle::TOOLICON_NORMAL);
 		tool->SetNormalBitmap(bmp);
 		ToolBarTool* otool = static_cast<ToolBarTool*>(tool);
 		if (otool)

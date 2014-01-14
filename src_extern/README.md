@@ -26,6 +26,21 @@ Notes:
 - Genuine distribution
 
 
+bzip2-1.0.6
+-----------
+
+License: proprietary (see file: LICENSE)
+
+Homepage: http://www.bzip.org/
+
+Download: http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz
+
+Notes:
+- Tarball extracted and contents reduced to the necessary parts.
+  All checks and test as well as most of the documentation was removed.
+- Added a CMakeLists.txt file
+
+
 pugixml-1.2
 -----------
 

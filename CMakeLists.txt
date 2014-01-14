@@ -292,6 +292,38 @@ else(OPENGL_GLU_FOUND)
 endif(OPENGL_GLU_FOUND)
 
 ################################################################################
+# zlib (external)
+################################################################################
+
+set(zlib_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
+set(zlib_INCLUDE_DIR ${zlib_INSTALL_DIR}/include)
+set(zlib_LIBRARY_DIR ${zlib_INSTALL_DIR}/lib)
+
+ExternalProject_Add(extern_zlib
+	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/zlib
+	URL ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/zlib-1.2.8.tar.gz
+	URL_MD5 44d667c142d7cda120332623eab69f40
+	CMAKE_ARGS
+		-DCMAKE_BUILD_TYPE=Release
+		-DCMAKE_INSTALL_PREFIX=${zlib_INSTALL_DIR}
+		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
+		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
+		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
+		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
+	)
+
+add_library(zlib STATIC IMPORTED)
+set_target_properties(zlib
+	PROPERTIES
+		IMPORTED_LOCATION
+			${zlib_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}z${CMAKE_STATIC_LIBRARY_SUFFIX}
+	)
+add_dependencies(zlib extern_zlib)
+include_directories(${zlib_INCLUDE_DIR})
+
+################################################################################
 # pugixml (external)
 ################################################################################
 

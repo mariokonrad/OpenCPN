@@ -1066,16 +1066,16 @@ void s57chart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRe
 
 	geo::toSM(m_FullExtent.SLAT, m_FullExtent.WLON, VPoint.latitude(), VPoint.longitude(), &easting,
 			  &northing);
-	epix = easting * VPoint.view_scale_ppm;
-	npix = northing * VPoint.view_scale_ppm;
+	epix = easting * VPoint.view_scale();
+	npix = northing * VPoint.view_scale();
 
 	rxl = (int)round((VPoint.pix_width / 2) + epix);
 	ryb = (int)round((VPoint.pix_height / 2) - npix);
 
 	geo::toSM(m_FullExtent.NLAT, m_FullExtent.ELON, VPoint.latitude(), VPoint.longitude(), &easting,
 			  &northing);
-	epix = easting * VPoint.view_scale_ppm;
-	npix = northing * VPoint.view_scale_ppm;
+	epix = easting * VPoint.view_scale();
+	npix = northing * VPoint.view_scale();
 
 	rxr = (int)round((VPoint.pix_width / 2) + epix);
 	ryt = (int)round((VPoint.pix_height / 2) - npix);
@@ -1293,8 +1293,8 @@ void s57chart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, const
 	double xp = (dx * cos(vpt.skew)) - (dy * sin(vpt.skew));
 	double yp = (dy * cos(vpt.skew)) + (dx * sin(vpt.skew));
 
-	double d_east = xp / vpt.view_scale_ppm;
-	double d_north = yp / vpt.view_scale_ppm;
+	double d_east = xp / vpt.view_scale();
+	double d_north = yp / vpt.view_scale();
 
 	double slat, slon;
 	geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude(), &slat, &slon);
@@ -1309,7 +1309,7 @@ void s57chart::SetVPParms(const ViewPort& vpt)
 	// Set up local SM rendering constants
 	m_pixx_vp_center = vpt.pix_width / 2;
 	m_pixy_vp_center = vpt.pix_height / 2;
-	m_view_scale_ppm = vpt.view_scale_ppm;
+	m_view_scale_ppm = vpt.view_scale();
 
 	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center,
 			  &m_northing_vp_center);
@@ -1321,7 +1321,7 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 		return false;
 
 	// If this viewpoint is same scale as last...
-	if (vp_last.view_scale_ppm != vp_proposed.view_scale_ppm)
+	if (vp_last.view_scale() != vp_proposed.view_scale())
 		return false;
 
 	double prev_easting_c, prev_northing_c;
@@ -1335,16 +1335,16 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 	// then require this viewport to be exact integral pixel difference from last
 	// adjusting clat/clat and SM accordingly
 
-	double delta_pix_x = (easting_c - prev_easting_c) * vp_proposed.view_scale_ppm;
+	double delta_pix_x = (easting_c - prev_easting_c) * vp_proposed.view_scale();
 	int dpix_x = (int)round(delta_pix_x);
 	double dpx = dpix_x;
 
-	double delta_pix_y = (northing_c - prev_northing_c) * vp_proposed.view_scale_ppm;
+	double delta_pix_y = (northing_c - prev_northing_c) * vp_proposed.view_scale();
 	int dpix_y = (int)round(delta_pix_y);
 	double dpy = dpix_y;
 
-	double c_east_d = (dpx / vp_proposed.view_scale_ppm) + prev_easting_c;
-	double c_north_d = (dpy / vp_proposed.view_scale_ppm) + prev_northing_c;
+	double c_east_d = (dpx / vp_proposed.view_scale()) + prev_easting_c;
+	double c_north_d = (dpy / vp_proposed.view_scale()) + prev_northing_c;
 
 	double xlat, xlon;
 	geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon);
@@ -1512,7 +1512,7 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 		m_plib_state_hash = ps52plib->GetStateHash();
 	}
 
-	if (VPoint.view_scale_ppm != m_last_vp.view_scale_ppm) {
+	if (VPoint.view_scale() != m_last_vp.view_scale()) {
 		ResetPointBBoxes(m_last_vp, VPoint);
 	}
 
@@ -1889,7 +1889,7 @@ bool s57chart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 		ResetPointBBoxes(m_last_vp, VPoint);
 	}
 
-	if (VPoint.view_scale_ppm != m_last_vp.view_scale_ppm) {
+	if (VPoint.view_scale() != m_last_vp.view_scale()) {
 		ResetPointBBoxes(m_last_vp, VPoint);
 	}
 
@@ -1898,7 +1898,7 @@ bool s57chart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 	bool bnew_view = DoRenderViewOnDC(dc, VPoint, DC_RENDER_ONLY, force_new_view);
 
 	// If quilting, we need to return a cloned bitmap instead of the original golden item
-	if (VPoint.b_quilt) {
+	if (VPoint.is_quilt()) {
 		if (m_pCloneBM) {
 			if ((m_pCloneBM->GetWidth() != VPoint.pix_width)
 				|| (m_pCloneBM->GetHeight() != VPoint.pix_height)) {
@@ -1995,7 +1995,7 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 		bReallyNew = true;
 	m_lastColorScheme = ps52plib->GetPLIBColorScheme();
 
-	if (VPoint.view_scale_ppm != m_last_vp.view_scale_ppm)
+	if (VPoint.view_scale() != m_last_vp.view_scale())
 		bReallyNew = true;
 
 	// If the scale is very small, do not use the cache to avoid harmonic difficulties...
@@ -2735,7 +2735,7 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 	float ext_max
 		= fmax((m_FullExtent.NLAT - m_FullExtent.SLAT), (m_FullExtent.ELON - m_FullExtent.WLON));
 
-	vp.view_scale_ppm = (S57_THUMB_SIZE / ext_max) / (1852 * 60);
+	vp.set_view_scale((S57_THUMB_SIZE / ext_max) / (1852 * 60));
 
 	vp.pix_height = S57_THUMB_SIZE;
 	vp.pix_width = S57_THUMB_SIZE;
@@ -4331,7 +4331,7 @@ int s57chart::_insertRules(S57Obj* obj, LUPrec* LUP, s57chart* pOwner)
 void s57chart::ResetPointBBoxes(const ViewPort& vp_last, const ViewPort& vp_this)
 {
 	// Assume a 50x50 pixel box
-	double box_margin = (50.0 / vp_this.view_scale_ppm) / (1852.0 * 60.0); // degrees
+	double box_margin = (50.0 / vp_this.view_scale()) / (1852.0 * 60.0); // degrees
 
 	for (int i = 0; i < PRIO_NUM; ++i) {
 		ObjRazRules* top = razRules[i][0];
@@ -6491,7 +6491,7 @@ bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort& viewport,
 	if (chart) {
 		sectorlegs.clear();
 
-		float selectRadius = 16 / (viewport.view_scale_ppm * 1852 * 60);
+		float selectRadius = 16 / (viewport.view_scale() * 1852.0 * 60.0);
 
 		ListOfObjRazRules* rule_list
 			= chart->GetObjRuleListAtLatLon(cursor.lat(), cursor.lon(), selectRadius, viewport);

@@ -179,8 +179,8 @@ OCPNRegion M_COVR_Desc::GetRegion(const ViewPort& vp, wxPoint* pwp) const
 		easting -= user_xoff;
 		northing -= user_yoff;
 
-		epix = easting * vp.view_scale_ppm;
-		npix = northing * vp.view_scale_ppm;
+		epix = easting * vp.view_scale();
+		npix = northing * vp.view_scale();
 
 		pwp[ip].x = (int)round((vp.pix_width / 2) + epix);
 		pwp[ip].y = (int)round((vp.pix_height / 2) - npix);

@@ -158,8 +158,8 @@ public:
 	void UpdateAIS();
 	void UpdateAlerts();
 
-	void SetQuiltMode(bool b_quilt);
-	bool GetQuiltMode(void);
+	void SetQuiltMode(bool);
+	bool GetQuiltMode(void) const;
 	std::vector<int> GetQuiltIndexArray(void);
 	bool IsQuiltDelta(void);
 	void SetQuiltChartHiLiteIndex(int dbIndex);

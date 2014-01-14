@@ -1696,7 +1696,7 @@ void Config::UpdateSettings()
 
 		if (vp.IsValid()) {
 			Write(_T("VPLatLon"), wxString::Format(_T("%10.4f,%10.4f"), vp.latitude(), vp.longitude()));
-			Write(_T("VPScale"), wxString::Format(_T("%g"), vp.view_scale_ppm));
+			Write(_T("VPScale"), wxString::Format(_T("%g"), vp.view_scale()));
 		}
 	}
 

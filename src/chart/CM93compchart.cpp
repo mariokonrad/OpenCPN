@@ -293,7 +293,7 @@ int cm93compchart::GetCMScaleFromVP ( const ViewPort &vpt )
 		3000000.0  // A
 	};
 
-	double scale_mpp = 3000.0 / vpt.view_scale_ppm;
+	double scale_mpp = 3000.0 / vpt.view_scale();
 	double scale_mpp_adj = scale_mpp;
 	double scale_breaks_adj[7];
 
@@ -429,7 +429,7 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 
 				cellscale_is_useable = true;
 				break;
-			} else if (vpt.b_quilt && vpt.b_FullScreenQuilt) {
+			} else if (vpt.is_quilt() && vpt.is_fullscreen_quilt()) {
 				// This commented block assumed that scale 0 coverage is available worlwide.....
 				// Might not be so with partial CM93 sets
 				ViewPort vpa = vpt;
@@ -609,7 +609,7 @@ bool cm93compchart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPor
 
 	if (debug.cm93) {
 		printf("\nOn DoRenderRegionViewOnGL Ref scale is %d, %c %g\n", m_cmscale,
-			   (char)('A' + m_cmscale - 1), VPoint.view_scale_ppm);
+			   (char)('A' + m_cmscale - 1), VPoint.view_scale());
 		debug_dump_rects(Region, VPoint.rv_rect);
 	}
 
@@ -621,7 +621,7 @@ bool cm93compchart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPor
 		m_pcm93chart_current->SetVPParms(vp_positive);
 
 		// Check the current chart scale to see if it covers the requested region totally
-		if (VPoint.b_quilt) {
+		if (VPoint.is_quilt()) {
 			OCPNRegion vpr_empty = Region;
 
 			OCPNRegion chart_region = GetValidScreenCanvasRegion(vp_positive, Region);
@@ -743,8 +743,8 @@ bool cm93compchart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPor
 						easting -= pmcd->user_xoff;
 						northing -= pmcd->user_yoff;
 
-						epix = easting * VPoint.view_scale_ppm;
-						npix = northing * VPoint.view_scale_ppm;
+						epix = easting * VPoint.view_scale();
+						npix = northing * VPoint.view_scale();
 
 						pwp[ip].x = (int)round((VPoint.pix_width / 2) + epix);
 						pwp[ip].y = (int)round((VPoint.pix_height / 2) - npix);
@@ -824,7 +824,7 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 		m_pcm93chart_current->SetVPParms(vp_positive);
 
 		// Check the current chart scale to see if it covers the requested region totally
-		if (VPoint.b_quilt) {
+		if (VPoint.is_quilt()) {
 			OCPNRegion vpr_empty = Region;
 
 			OCPNRegion chart_region = GetValidScreenCanvasRegion(vp_positive, Region);
@@ -1005,8 +1005,8 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 						easting -= pmcd->user_xoff;
 						northing -= pmcd->user_yoff;
 
-						epix = easting * VPoint.view_scale_ppm;
-						npix = northing * VPoint.view_scale_ppm;
+						epix = easting * VPoint.view_sclae();
+						npix = northing * VPoint.view_scale();
 
 						pwp[ip].x = (int)round((VPoint.pix_width / 2) + epix);
 						pwp[ip].y = (int)round((VPoint.pix_height / 2) - npix);
@@ -1059,7 +1059,7 @@ void cm93compchart::UpdateRenderRegions(const ViewPort& VPoint)
 		m_pcm93chart_current->SetVPParms(vp_positive);
 
 		// Check the current chart scale to see if it covers the requested region totally
-		if (VPoint.b_quilt) {
+		if (VPoint.is_quilt()) {
 			// Clear all the subchart regions
 			for (int i = 0; i < 8; i++) {
 				if (m_pcm93chart_array[i])
@@ -1210,8 +1210,8 @@ bool cm93compchart::RenderNextSmallerCellOutlines(ocpnDC& dc, const ViewPort& vp
 								pwp[ip] = vp_positive.GetPixFromLL(Position(p->y, p->x));
 
 								// Outlines stored in MCDs are not adjusted for offsets
-								pwp[ip].x -= mcd->user_xoff * vp.view_scale_ppm;
-								pwp[ip].y -= mcd->user_yoff * vp.view_scale_ppm;
+								pwp[ip].x -= mcd->user_xoff * vp.view_scale();
+								pwp[ip].y -= mcd->user_yoff * vp.view_scale();
 							}
 
 							// Scrub the points
@@ -1311,7 +1311,7 @@ ListOfObjRazRules* cm93compchart::GetObjRuleListAtLatLon(float lat, float lon, f
 	ViewPort vp_positive = VPoint; // FIXME: needs a new ViewPort also for ObjectRenderCheck()
 	vp_positive.set_positive();
 
-	if (!VPoint.b_quilt) {
+	if (!VPoint.is_quilt()) {
 		if (m_pcm93chart_current) {
 			return m_pcm93chart_current->GetObjRuleListAtLatLon(lat, alon, select_radius,
 																vp_positive);
@@ -1379,7 +1379,7 @@ bool cm93compchart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 		return false;
 
 	// In quilt mode, always indicate that the adjusted vp requires a full repaint
-	if (vp_last.b_quilt)
+	if (vp_last.is_quilt())
 		return false;
 
 	return single_adjust;

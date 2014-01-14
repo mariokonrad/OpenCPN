@@ -683,7 +683,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	// Set some benign initial values
 
 	VPoint.set_position(Position(0, 0));
-	VPoint.view_scale_ppm = 1;
+	VPoint.set_view_scale(1.0);
 	VPoint.Invalidate();
 
 	m_canvas_scale_factor = 1.0;
@@ -979,7 +979,7 @@ ChartCanvas::~ChartCanvas()
 int ChartCanvas::GetCanvasChartNativeScale()
 {
 	int ret = 1;
-	if (!VPoint.b_quilt) {
+	if (!VPoint.is_quilt()) {
 		if (Current_Ch)
 			ret = Current_Ch->GetNativeScale();
 	} else
@@ -993,7 +993,7 @@ chart::ChartBase* ChartCanvas::GetChartAtCursor()
 	chart::ChartBase* target_chart;
 	if (Current_Ch && (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_VECTOR))
 		target_chart = Current_Ch;
-	else if (VPoint.b_quilt)
+	else if (VPoint.is_quilt())
 		target_chart = cc1->m_pQuilt->GetChartAtPix(wxPoint(mouse_x, mouse_y));
 	else
 		target_chart = NULL;
@@ -1003,7 +1003,7 @@ chart::ChartBase* ChartCanvas::GetChartAtCursor()
 chart::ChartBase* ChartCanvas::GetOverlayChartAtCursor()
 {
 	chart::ChartBase* target_chart;
-	if (VPoint.b_quilt)
+	if (VPoint.is_quilt())
 		target_chart = cc1->m_pQuilt->GetOverlayChartAtPix(wxPoint(mouse_x, mouse_y));
 	else
 		target_chart = NULL;
@@ -1013,7 +1013,7 @@ chart::ChartBase* ChartCanvas::GetOverlayChartAtCursor()
 int ChartCanvas::FindClosestCanvasChartdbIndex(int scale)
 {
 	int new_dbIndex = -1;
-	if (!VPoint.b_quilt) {
+	if (!VPoint.is_quilt()) {
 		if (pCurrentStack) {
 			for (int i = 0; i < pCurrentStack->nEntry; i++) {
 				int sc = ChartData->GetStackChartScale(pCurrentStack, i, NULL, 0);
@@ -1123,7 +1123,7 @@ int ChartCanvas::GetCanvasHeight() const
 
 float ChartCanvas::GetVPScale() const
 {
-	return GetVP().view_scale_ppm;
+	return GetVP().view_scale();
 }
 
 float ChartCanvas::GetVPChartScale() const
@@ -1165,15 +1165,14 @@ std::vector<int> ChartCanvas::GetQuiltIndexArray(void)
 	return m_pQuilt->GetQuiltIndexArray();
 }
 
-void ChartCanvas::SetQuiltMode(bool b_quilt)
+void ChartCanvas::SetQuiltMode(bool quilt)
 {
-	VPoint.b_quilt = b_quilt;
-	VPoint.b_FullScreenQuilt = g_bFullScreenQuilt;
+	VPoint.set_quilt(quilt, g_bFullScreenQuilt);
 }
 
-bool ChartCanvas::GetQuiltMode(void)
+bool ChartCanvas::GetQuiltMode(void) const
 {
-	return VPoint.b_quilt;
+	return VPoint.is_quilt();
 }
 
 int ChartCanvas::GetQuiltReferenceChartIndex(void)
@@ -1498,7 +1497,7 @@ void ChartCanvas::OnKeyDown( wxKeyEvent &event )
 				event.GetPosition(&x, &y);
 				bool cm93IsAvailable
 					= (Current_Ch && (Current_Ch->GetChartType() == CHART_TYPE_CM93COMP));
-				if (VPoint.b_quilt) {
+				if (VPoint.is_quilt()) {
 					ChartBase* pChartTest = m_pQuilt->GetChartAtPix(wxPoint(x, y));
 					if (pChartTest) {
 						if (pChartTest->GetChartType() == CHART_TYPE_CM93)
@@ -2232,7 +2231,7 @@ bool ChartCanvas::do_smooth_scrolling() const
 		&& !view.enable_zoom_to_cursor
 		;
 
-	if (!VPoint.b_quilt) {
+	if (!VPoint.is_quilt()) {
 		if (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_VECTOR)
 			smooth = false;
 	} else {
@@ -2247,7 +2246,7 @@ bool ChartCanvas::do_smooth_scrolling() const
 
 bool ChartCanvas::ZoomCanvasIn(double zoom_factor)
 {
-	if (!VPoint.b_quilt) {
+	if (!VPoint.is_quilt()) {
 		if (!Current_Ch) {
 			return false;
 		}
@@ -2284,7 +2283,7 @@ bool ChartCanvas::ZoomCanvasIn(double zoom_factor)
 
 bool ChartCanvas::ZoomCanvasOut(double zoom_factor)
 {
-	if (!VPoint.b_quilt) {
+	if (!VPoint.is_quilt()) {
 		if (!Current_Ch) {
 			return false;
 		}
@@ -2364,7 +2363,7 @@ bool ChartCanvas::DoZoomCanvasIn(double zoom_factor)
 	double proposed_scale_onscreen = GetCanvasScaleFactor() / (GetVPScale() * zoom_factor);
 	const ChartBase* pc = NULL;
 
-	if (!VPoint.b_quilt) {
+	if (!VPoint.is_quilt()) {
 		pc = Current_Ch;
 	} else {
 		int new_db_index = m_pQuilt->AdjustRefOnZoomIn(proposed_scale_onscreen);
@@ -2421,7 +2420,7 @@ bool ChartCanvas::DoZoomCanvasOut(double zoom_factor)
 
 	bool b_smallest = false;
 
-	if (!VPoint.b_quilt) {
+	if (!VPoint.is_quilt()) {
 		// not quilted
 		pc = Current_Ch;
 		double target_scale_ppm = GetVPScale() / zoom_factor;
@@ -2505,16 +2504,16 @@ bool ChartCanvas::PanCanvas(int dx, int dy)
 	}
 
 	int cur_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
-	SetViewPoint(dpos, VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation);
+	SetViewPoint(dpos, VPoint.view_scale(), VPoint.skew, VPoint.rotation);
 
-	if (VPoint.b_quilt) {
+	if (VPoint.is_quilt()) {
 		int new_ref_dbIndex = m_pQuilt->GetRefChartdbIndex();
 		if ((new_ref_dbIndex != cur_ref_dbIndex) && (new_ref_dbIndex != -1)) {
 			using namespace chart;
 			// Tweak the scale slightly for a new ref chart
 			ChartBase* pc = ChartData->OpenChartFromDB(new_ref_dbIndex, FULL_INIT);
 			if (pc) {
-				double tweak_scale_ppm = pc->GetNearestPreferredScalePPM(VPoint.view_scale_ppm);
+				double tweak_scale_ppm = pc->GetNearestPreferredScalePPM(VPoint.view_scale());
 				SetVPScale(tweak_scale_ppm);
 			}
 		}
@@ -2556,7 +2555,7 @@ void ChartCanvas::LoadVP(const ViewPort& vp, bool b_adjust)
 	if (m_pQuilt)
 		m_pQuilt->Invalidate();
 
-	SetViewPoint(vp.get_position(), vp.view_scale_ppm, vp.skew, vp.rotation, b_adjust);
+	SetViewPoint(vp.get_position(), vp.view_scale(), vp.skew, vp.rotation, b_adjust);
 }
 
 void ChartCanvas::SetQuiltRefChart(int dbIndex)
@@ -2585,7 +2584,7 @@ bool ChartCanvas::SetVPScale(double scale)
 
 bool ChartCanvas::SetViewPoint(const Position& pos)
 {
-	return SetViewPoint(pos, VPoint.view_scale_ppm, VPoint.skew, VPoint.rotation);
+	return SetViewPoint(pos, VPoint.view_scale(), VPoint.skew, VPoint.rotation);
 }
 
 bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double skew,
@@ -2594,7 +2593,7 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 	bool b_ret = false;
 
 	// Any sensible change?
-	if ((fabs(VPoint.view_scale_ppm - scale_ppm) < 1e-9) && (fabs(VPoint.skew - skew) < 1e-9)
+	if ((fabs(VPoint.view_scale() - scale_ppm) < 1e-9) && (fabs(VPoint.skew - skew) < 1e-9)
 		&& (fabs(VPoint.rotation - rotation) < 1e-9) && (fabs(VPoint.latitude() - pos.lat()) < 1e-9)
 		&& (fabs(VPoint.longitude() - pos.lon()) < 1e-9) && VPoint.IsValid())
 		return false;
@@ -2608,14 +2607,14 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 
 	VPoint.skew = skew;
 	VPoint.set_position(pos);
-	VPoint.view_scale_ppm = scale_ppm;
+	VPoint.set_view_scale(scale_ppm);
 	VPoint.rotation = rotation;
 
 	if ((VPoint.pix_width <= 0) || (VPoint.pix_height <= 0)) // Canvas parameters not yet set
 		return false;
 
 	// Has the Viewport scale changed?  If so, invalidate the vp describing the cached bitmap
-	if (last_vp.view_scale_ppm != scale_ppm) {
+	if (last_vp.view_scale() != scale_ppm) {
 		m_cache_vp.Invalidate();
 
 #ifdef ocpnUSE_GL
@@ -2627,7 +2626,7 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 	// A preliminary value, may be tweaked below
 	VPoint.chart_scale = m_canvas_scale_factor / (scale_ppm);
 
-	if (!VPoint.b_quilt && Current_Ch) {
+	if (!VPoint.is_quilt() && Current_Ch) {
 
 		VPoint.SetProjectionType(Current_Ch->GetChartProjectionType());
 		VPoint.SetBoxes();
@@ -2638,7 +2637,7 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 			Current_Ch->AdjustVP(last_vp, VPoint);
 
 		// If there is a sensible change in the chart render, refresh the whole screen
-		if ((!m_cache_vp.IsValid()) || (m_cache_vp.view_scale_ppm != VPoint.view_scale_ppm)) {
+		if ((!m_cache_vp.IsValid()) || (m_cache_vp.view_scale() != VPoint.view_scale())) {
 			Refresh(false);
 			b_ret = true;
 		} else {
@@ -2653,9 +2652,9 @@ bool ChartCanvas::SetViewPoint(const Position& pos, double scale_ppm, double ske
 	}
 
 	// Handle the quilted case
-	if (VPoint.b_quilt) {
+	if (VPoint.is_quilt()) {
 
-		if (last_vp.view_scale_ppm != scale_ppm)
+		if (last_vp.view_scale() != scale_ppm)
 			m_pQuilt->InvalidateAllQuiltPatchs();
 
 		// Create the quilt
@@ -3796,7 +3795,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 		// Calculate the relative angle for this chart orientation
 		// Use a 100 pixel vector to calculate angle
-		double angle_distance_nm = (100.0 / GetVP().view_scale_ppm) / 1852.0;
+		double angle_distance_nm = (100.0 / GetVP().view_scale()) / 1852.0;
 		double angle_lat;
 		double angle_lon;
 		geo::ll_gc_ll(td->Lat, td->Lon, td->COG, angle_distance_nm, &angle_lat, &angle_lon);
@@ -6115,7 +6114,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 			}
 		}
 	}
-	if (!VPoint.b_quilt) {
+	if (!VPoint.is_quilt()) {
 		if (parent_frame->GetnChartStack() > 1) {
 			contextMenu->Append(ID_DEF_MENU_MAX_DETAIL, _("Max Detail Here"));
 			contextMenu->Append(ID_DEF_MENU_SCALE_IN, _menuText(_("Scale In"), _T("F7")));
@@ -6154,7 +6153,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	if (!g_bCourseUp)
 		contextMenu->Append(ID_DEF_MENU_COGUP, _("Course Up Mode"));
 	else {
-		if (!VPoint.b_quilt && Current_Ch && (fabs(Current_Ch->GetChartSkew()) > 0.01)
+		if (!VPoint.is_quilt() && Current_Ch && (fabs(Current_Ch->GetChartSkew()) > 0.01)
 			&& !g_bskew_comp)
 			contextMenu->Append(ID_DEF_MENU_NORTHUP, _("Chart Up Mode"));
 		else
@@ -6187,11 +6186,11 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	delete kml;
 
 	using namespace chart;
-	if (!VPoint.b_quilt && Current_Ch && (Current_Ch->GetChartType() == CHART_TYPE_CM93COMP)) {
+	if (!VPoint.is_quilt() && Current_Ch && (Current_Ch->GetChartType() == CHART_TYPE_CM93COMP)) {
 		contextMenu->Append(ID_DEF_MENU_CM93OFFSET_DIALOG, _("CM93 Offset Dialog..."));
 	}
 
-	if ((VPoint.b_quilt) && (pCurrentStack && pCurrentStack->b_valid)) {
+	if (VPoint.is_quilt() && (pCurrentStack && pCurrentStack->b_valid)) {
 		int dbIndex = m_pQuilt->GetChartdbIndexAtPix(wxPoint(popx, popy));
 		if (dbIndex != -1)
 			contextMenu->Append(ID_DEF_MENU_QUILTREMOVE, _("Hide This Chart"));
@@ -6551,7 +6550,7 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 	if (target_plugin_chart || Chs57 || !area_notices.empty()) {
 		// Go get the array of all objects at the cursor lat/lon
 		int sel_rad_pix = 5;
-		float SelectRadius = sel_rad_pix / (GetVP().view_scale_ppm * 1852 * 60);
+		float SelectRadius = sel_rad_pix / (GetVP().view_scale() * 1852.0 * 60.0);
 
 		// Make sure we always get the lights from an object, even if we are currently
 		// not displaying lights on the chart.
@@ -7167,7 +7166,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 #ifdef USE_S57
 		case ID_DEF_MENU_CM93OFFSET_DIALOG:
 			if (NULL == g_pCM93OffsetDialog) {
-				if (!VPoint.b_quilt && Current_Ch
+				if (!VPoint.is_quilt() && Current_Ch
 					&& (Current_Ch->GetChartType() == CHART_TYPE_CM93COMP)) {
 					cm93compchart* pch = (cm93compchart*)Current_Ch;
 					g_pCM93OffsetDialog = new CM93OffsetDialog(parent_frame, pch);
@@ -7205,7 +7204,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		}
 
 		case ID_DEF_MENU_QUILTREMOVE: {
-			if (VPoint.b_quilt) {
+			if (VPoint.is_quilt()) {
 				int dbIndex = m_pQuilt->GetChartdbIndexAtPix(wxPoint(popx, popy));
 				parent_frame->RemoveChartFromQuilt(dbIndex);
 
@@ -7745,16 +7744,16 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 			bool b_skip = false;
 
 			if (vp.chart_scale > 5e7) {
-				//    calculate projected distance between these two points in meters
+				// calculate projected distance between these two points in meters
 				double dist = sqrt((double)((pixx1 - pixx) * (pixx1 - pixx))
-								   + ((pixy1 - pixy) * (pixy1 - pixy))) / vp.view_scale_ppm;
-				//    calculate GC distance between these two points in meters
-				double distgc = geo::DistGreatCircle(plylat, plylon, plylat1, plylon1) * 1852.;
+								   + ((pixy1 - pixy) * (pixy1 - pixy))) / vp.view_scale();
+				// calculate GC distance between these two points in meters
+				double distgc = geo::DistGreatCircle(plylat, plylon, plylat1, plylon1) * 1852.0;
 
-				//    If the distances are nonsense, it means that the scale is very small and the
+				// If the distances are nonsense, it means that the scale is very small and the
 				// segment wrapped the world
-				//    So skip it....
-				//    TODO improve this to draw two segments
+				// So skip it....
+				// TODO improve this to draw two segments
 				if (fabs(dist - distgc) > 10000. * 1852.) // lotsa miles
 					b_skip = true;
 			}
@@ -7808,7 +7807,7 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 				if (vp.chart_scale > 5e7) {
 					//    calculate projected distance between these two points in meters
 					double dist = sqrt((double)((pixx1 - pixx) * (pixx1 - pixx))
-									   + ((pixy1 - pixy) * (pixy1 - pixy))) / vp.view_scale_ppm;
+									   + ((pixy1 - pixy) * (pixy1 - pixy))) / vp.view_scale();
 					//    calculate GC distance between these two points in meters
 					double distgc = geo::DistGreatCircle(plylat, plylon, plylat1, plylon1) * 1852.0;
 
@@ -8071,7 +8070,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	//  Is this viewpoint the same as the previously painted one?
 	bool b_newview = true;
 
-	if ((m_cache_vp.view_scale_ppm == VPoint.view_scale_ppm)
+	if ((m_cache_vp.view_scale() == VPoint.view_scale())
 		&& (m_cache_vp.rotation == VPoint.rotation) && (m_cache_vp.latitude() == VPoint.latitude())
 		&& (m_cache_vp.longitude() == VPoint.longitude()) && m_cache_vp.IsValid()) {
 		b_newview = false;
@@ -8103,8 +8102,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 		chart_get_region.Clear();
 
 	//  Blit pan acceleration
-	if (VPoint.b_quilt) // quilted
-	{
+	if (VPoint.is_quilt()) {
 		if (m_pQuilt && !m_pQuilt->IsComposed())
 			return;
 
@@ -8240,7 +8238,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	//    Arrange to render the World Chart vector data behind the rendered current chart
 	//    so that uncovered canvas areas show at least the world chart.
 	OCPNRegion chartValidRegion;
-	if (!VPoint.b_quilt)
+	if (!VPoint.is_quilt())
 		Current_Ch->GetValidCanvasRegion(
 			svp, &chartValidRegion); // Make a region covering the current chart on the canvas
 	else
@@ -8306,7 +8304,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 								  wxPoint(GetVP().rv_rect.width / 2, GetVP().rv_rect.height / 2),
 								  m_b_rot_hidef, &m_roffset);
 
-				if ((rot_vp.view_scale_ppm == VPoint.view_scale_ppm)
+				if ((rot_vp.view_scale() == VPoint.view_scale())
 					&& (rot_vp.rotation == VPoint.rotation) && (rot_vp.latitude() == VPoint.latitude())
 					&& (rot_vp.longitude() == VPoint.longitude()) && rot_vp.IsValid() && (ri.IsOk())) {
 					b_rot_ok = true;
@@ -8689,7 +8687,7 @@ void ChartCanvas::EmbossOverzoomIndicator(ocpnDC& dc)
 		double chart_native_ppm;
 		chart_native_ppm = m_canvas_scale_factor / m_pQuilt->GetRefNativeScale();
 
-		double zoom_factor = GetVP().view_scale_ppm / chart_native_ppm;
+		double zoom_factor = GetVP().view_scale() / chart_native_ppm;
 
 		if (zoom_factor <= 4.0)
 			return;
@@ -8700,7 +8698,7 @@ void ChartCanvas::EmbossOverzoomIndicator(ocpnDC& dc)
 		else
 			chart_native_ppm = m_true_scale_ppm;
 
-		double zoom_factor = GetVP().view_scale_ppm / chart_native_ppm;
+		double zoom_factor = GetVP().view_scale() / chart_native_ppm;
 		if (Current_Ch) {
 #ifdef USE_S57
 			using namespace chart;

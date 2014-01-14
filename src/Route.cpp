@@ -410,7 +410,7 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 			// Arbitrarily, we will go the shortest way
 
 			double pix_full_circle = geo::WGS84_semimajor_axis_meters * geo::mercator_k0 * 2.0 * M_PI
-									 * VP.view_scale_ppm;
+									 * VP.view_scale();
 			double dp = pow((double)(rpt1.x - rpt2.x), 2) + pow((double)(rpt1.y - rpt2.y), 2);
 			double dtest;
 			int adder;
@@ -515,7 +515,7 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const View
 		theta -= M_PI / 2;
 
 		wxPoint icon[10];
-		double icon_scale_factor = 100 * VP.view_scale_ppm;
+		double icon_scale_factor = 100 * VP.view_scale();
 		icon_scale_factor = fmin(icon_scale_factor, 1.5); // Sets the max size
 		icon_scale_factor = fmax(icon_scale_factor, .10);
 

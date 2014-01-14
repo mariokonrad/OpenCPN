@@ -750,7 +750,7 @@ void glChartCanvas::SetClipRegion(const ViewPort& vp, OCPNRegion& region, bool b
 		while (clipit.HaveRects()) {
 			wxRect rect = clipit.GetRect();
 
-			if (vp.b_quilt)
+			if (vp.is_quilt())
 				rect.Offset(vp.rv_rect.x,
 							vp.rv_rect.y); // undo the adjustment made in quilt composition
 			else if (Current_Ch && Current_Ch->GetChartFamily() != chart::CHART_FAMILY_VECTOR)
@@ -816,7 +816,7 @@ void glChartCanvas::SetClipRegion(const ViewPort& vp, OCPNRegion& region, bool b
 		while (clipit.HaveRects()) {
 			wxRect rect = clipit.GetRect();
 
-			if (vp.b_quilt)
+			if (vp.is_quilt())
 				rect.Offset(vp.rv_rect.x,
 							vp.rv_rect.y); // undo the adjustment made in quilt composition
 			else if (Current_Ch && Current_Ch->GetChartFamily() != chart::CHART_FAMILY_VECTOR)
@@ -1393,7 +1393,7 @@ void glChartCanvas::render()
 	if (!m_bsetup)
 		return;
 
-	if ((!cc1->VPoint.b_quilt) && (!Current_Ch))
+	if ((!cc1->VPoint.is_quilt()) && (!Current_Ch))
 		return;
 
 	// Take a look and see if memory is getting close to exceeding the user specified max
@@ -1414,7 +1414,7 @@ void glChartCanvas::render()
 
 	// Is this viewpoint the same as the previously painted one?
 	bool b_newview = true;
-	if (false && (m_gl_cache_vp.view_scale_ppm == VPoint.view_scale_ppm)
+	if (false && (m_gl_cache_vp.view_scale() == VPoint.view_scale())
 		&& (m_gl_cache_vp.rotation == VPoint.rotation) && (m_gl_cache_vp.latitude() == VPoint.latitude())
 		&& (m_gl_cache_vp.longitude() == VPoint.longitude()) && m_gl_cache_vp.IsValid()) {
 		b_newview = false;
@@ -1450,8 +1450,7 @@ void glChartCanvas::render()
 			chart::ChartBaseBSB* pc = (chart::ChartBaseBSB*)it0->first;
 			const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
-			if (VPoint.b_quilt) // quilted
-			{
+			if (VPoint.is_quilt()) {
 				if (cc1->m_pQuilt && cc1->m_pQuilt->IsComposed()) {
 					if (!cc1->m_pQuilt->IsChartInQuilt(pc)) {
 						ChartTextureHashType* pTextureHash = m_chart_hash[pc];
@@ -1523,8 +1522,7 @@ void glChartCanvas::render()
 	int sx = GetSize().x;
 	int sy = GetSize().y;
 
-	if (VPoint.b_quilt) {
-		// quilted
+	if (VPoint.is_quilt()) {
 		if (cc1->m_pQuilt && !cc1->m_pQuilt->IsComposed())
 			return;
 
@@ -1745,7 +1743,7 @@ void glChartCanvas::render()
 
 	OCPNRegion chartValidRegion;
 
-	if (!VPoint.b_quilt)
+	if (!VPoint.is_quilt())
 		Current_Ch->GetValidCanvasRegion(svp, &chartValidRegion);
 	else
 		chartValidRegion = m_gl_rendered_region;

@@ -596,7 +596,7 @@ bool Quilt::IsQuiltDelta(const ViewPort& vp)
 	if (!m_vp_quilt.IsValid() || !m_bcomposed)
 		return true;
 
-	if (m_vp_quilt.view_scale_ppm != vp.view_scale_ppm)
+	if (m_vp_quilt.view_scale() != vp.view_scale())
 		return true;
 
 	// Has the quilt shifted by more than one pixel in any direction?
@@ -977,7 +977,7 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 			// Calculate zoom factor for this chart
 			double chart_native_ppm;
 			chart_native_ppm = m_canvas_scale_factor / ChartData->GetDBChartScale(i);
-			double zoom_factor = vp_in.view_scale_ppm / chart_native_ppm;
+			double zoom_factor = vp_in.view_scale() / chart_native_ppm;
 
 			// Try to guarantee that there is one chart added with scale larger than reference scale
 			// Take note here, and keep track of the smallest scale chart that is larger scale than
@@ -1156,7 +1156,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	double saved_vp_rotation = vp_local.rotation; // save a copy
 	vp_local.SetRotationAngle(0.0);
 
-	bool bfull = vp_in.b_FullScreenQuilt;
+	bool bfull = vp_in.is_fullscreen_quilt();
 	BuildExtendedChartStackAndCandidateArray(bfull, m_refchart_dbIndex, vp_local);
 
 	// It is possible that the reference chart is not really part of the visible quilt

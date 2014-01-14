@@ -64,10 +64,15 @@ public:
 	const Position& get_position() const;
 	void set_position(const Position& pos);
 
+	bool is_quilt() const;
+	bool is_fullscreen_quilt() const;
+	void set_quilt(bool, bool = false);
+
+	double view_scale() const;
+	void set_view_scale(double);
+
 	// FIXME: move public attributes to private
 
-	// Generic
-	double view_scale_ppm;
 	double skew;
 	double rotation;
 
@@ -75,9 +80,6 @@ public:
 
 	int pix_width;
 	int pix_height;
-
-	bool b_quilt;
-	bool b_FullScreenQuilt;
 
 	int m_projection_type;
 	bool b_MercatorProjectionOverride;
@@ -87,7 +89,10 @@ private:
 	Position center_point;
 	geo::LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains
 								   // the entire vieport
-	bool bValid; // This VP is valid
+	bool valid; // This VP is valid
+	bool quilt;
+	bool fullscreen_quilt;
+	double view_scale_ppm;
 };
 
 #endif

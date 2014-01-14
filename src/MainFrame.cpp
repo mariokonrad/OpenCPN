@@ -3911,7 +3911,7 @@ void MainFrame::SetChartUpdatePeriod(const ViewPort& vp)
 
 	g_ChartUpdatePeriod = 1; // General default
 
-	if (!vp.b_quilt) {
+	if (!vp.is_quilt()) {
 		if (g_bskew_comp && (fabs(vp.skew)) > 0.01)
 			g_ChartUpdatePeriod = g_SkewCompUpdatePeriod;
 	}

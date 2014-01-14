@@ -981,8 +981,8 @@ void cm93chart::GetPixPoint ( int pixx, int pixy, double *plat, double *plon, co
 	double xp = ( dx * cos ( vpt.skew ) ) - ( dy * sin ( vpt.skew ) );
 	double yp = ( dy * cos ( vpt.skew ) ) + ( dx * sin ( vpt.skew ) );
 
-	double d_east = xp / vpt.view_scale_ppm;
-	double d_north = yp / vpt.view_scale_ppm;
+	double d_east = xp / vpt.view_scale();
+	double d_north = yp / vpt.view_scale();
 
 	double slat, slon;
 	geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude(), &slat, &slon);
@@ -998,7 +998,7 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 {
 	if (IsCacheValid()) {
 		// If this viewpoint is same scale as last...
-		if (vp_last.view_scale_ppm == vp_proposed.view_scale_ppm) {
+		if (vp_last.view_scale() == vp_proposed.view_scale()) {
 
 			double prev_easting_c, prev_northing_c;
 			geo::toSM(vp_last.latitude(), vp_last.longitude(), ref_lat, ref_lon, &prev_easting_c, &prev_northing_c);
@@ -1009,16 +1009,16 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 			// then require this viewport to be exact integral pixel difference from last
 			// adjusting clat/clat and SM accordingly
 
-			double delta_pix_x = ( easting_c - prev_easting_c ) * vp_proposed.view_scale_ppm;
+			double delta_pix_x = (easting_c - prev_easting_c) * vp_proposed.view_scale();
 			int dpix_x = ( int ) round(delta_pix_x);
 			double dpx = dpix_x;
 
-			double delta_pix_y = ( northing_c - prev_northing_c ) * vp_proposed.view_scale_ppm;
+			double delta_pix_y = (northing_c - prev_northing_c) * vp_proposed.view_scale();
 			int dpix_y = ( int ) round(delta_pix_y);
 			double dpy = dpix_y;
 
-			double c_east_d = ( dpx / vp_proposed.view_scale_ppm ) + prev_easting_c;
-			double c_north_d = ( dpy / vp_proposed.view_scale_ppm ) + prev_northing_c;
+			double c_east_d = (dpx / vp_proposed.view_scale()) + prev_easting_c;
+			double c_north_d = (dpy / vp_proposed.view_scale()) + prev_northing_c;
 
 			double xlat, xlon;
 			geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon);
@@ -1041,7 +1041,7 @@ void cm93chart::SetVPParms(const ViewPort& vpt)
 	// Set up local SM rendering constants
 	m_pixx_vp_center = vpt.pix_width / 2;
 	m_pixy_vp_center = vpt.pix_height / 2;
-	m_view_scale_ppm = vpt.view_scale_ppm;
+	m_view_scale_ppm = vpt.view_scale();
 
 	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center,
 			  &m_northing_vp_center);

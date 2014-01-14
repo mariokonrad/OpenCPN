@@ -851,7 +851,7 @@ ThumbData* ChartBaseBSB::GetThumbData(int tnx, int tny, float lat, float lon)
 	ViewPort tvp;
 	tvp.pix_width = tnx;
 	tvp.pix_height = tny;
-	tvp.view_scale_ppm = GetPPM() / div_factor;
+	tvp.set_view_scale(GetPPM() / div_factor);
 	wxRect trex = Rsrc;
 	Rsrc.x = 0;
 	Rsrc.y = 0;
@@ -881,7 +881,7 @@ bool ChartBaseBSB::UpdateThumbData(double lat, double lon)
 	ViewPort tvp;
 	tvp.pix_width = pThumbData->Thumb_Size_X;
 	tvp.pix_height = pThumbData->Thumb_Size_Y;
-	tvp.view_scale_ppm = GetPPM() / div_factor;
+	tvp.set_view_scale(GetPPM() / div_factor);
 	wxRect trex = Rsrc;
 	Rsrc.x = 0;
 	Rsrc.y = 0;
@@ -905,7 +905,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 									double* plon) // FIXME: refactoring
 {
 	if (bHaveEmbeddedGeoref) {
-		double raster_scale = GetPPM() / vp.view_scale_ppm;
+		double raster_scale = GetPPM() / vp.view_scale();
 
 		int px = (int)(pixx * raster_scale) + Rsrc.x;
 		int py = (int)(pixy * raster_scale) + Rsrc.y;
@@ -925,7 +925,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 		if (m_projection == PROJECTION_TRANSVERSE_MERCATOR) {
 			// Use Projected Polynomial algorithm
 
-			double raster_scale = GetPPM() / vp.view_scale_ppm;
+			double raster_scale = GetPPM() / vp.view_scale();
 
 			// Apply poly solution to vp center point
 			double easting, northing;
@@ -956,7 +956,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 		} else if (m_projection == PROJECTION_MERCATOR) {
 			// Use Projected Polynomial algorithm
 
-			double raster_scale = GetPPM() / vp.view_scale_ppm;
+			double raster_scale = GetPPM() / vp.view_scale();
 
 			// Apply poly solution to vp center point
 			double easting, northing;
@@ -986,7 +986,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 		} else if (m_projection == PROJECTION_POLYCONIC) {
 			// Use Projected Polynomial algorithm
 
-			double raster_scale = GetPPM() / vp.view_scale_ppm;
+			double raster_scale = GetPPM() / vp.view_scale();
 
 			// Apply poly solution to vp center point
 			double easting, northing;
@@ -1022,8 +1022,8 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			xp = (dx * cos(vp.skew)) - (dy * sin(vp.skew));
 			yp = (dy * cos(vp.skew)) + (dx * sin(vp.skew));
 
-			double d_east = xp / vp.view_scale_ppm;
-			double d_north = yp / vp.view_scale_ppm;
+			double d_east = xp / vp.view_scale();
+			double d_north = yp / vp.view_scale();
 
 			geo::fromSM_ECC(d_east, d_north, vp.latitude(), vp.longitude(), &slat, &slon);
 		}
@@ -1063,7 +1063,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 			px = (int)(xd + 0.5);
 			py = (int)(yd + 0.5);
 
-			double raster_scale = GetPPM() / vp.view_scale_ppm;
+			double raster_scale = GetPPM() / vp.view_scale();
 
 			pixx = (int)(((px - Rsrc.x) / raster_scale) + 0.5);
 			pixy = (int)(((py - Rsrc.y) / raster_scale) + 0.5);
@@ -1095,7 +1095,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 			double yc = polytrans(cPoints.wpy, easting, northing);
 
 			// Calculate target point relative to vp center
-			double raster_scale = GetPPM() / vp.view_scale_ppm;
+			double raster_scale = GetPPM() / vp.view_scale();
 
 			int xs = (int)xc - (int)(vp.pix_width * raster_scale / 2);
 			int ys = (int)yc - (int)(vp.pix_height * raster_scale / 2);
@@ -1137,7 +1137,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 			double yc = polytrans(cPoints.wpy, easting, northing);
 
 			// Calculate target point relative to vp center
-			double raster_scale = GetPPM() / vp.view_scale_ppm;
+			double raster_scale = GetPPM() / vp.view_scale();
 
 			int xs = (int)xc - (int)(vp.pix_width * raster_scale / 2);
 			int ys = (int)yc - (int)(vp.pix_height * raster_scale / 2);
@@ -1179,7 +1179,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 			double yc = polytrans(cPoints.wpy, easting, northing);
 
 			// Calculate target point relative to vp center
-			double raster_scale = GetPPM() / vp.view_scale_ppm;
+			double raster_scale = GetPPM() / vp.view_scale();
 
 			int xs = (int)xc - (int)(vp.pix_width * raster_scale / 2);
 			int ys = (int)yc - (int)(vp.pix_height * raster_scale / 2);
@@ -1193,8 +1193,8 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 		} else {
 			geo::toSM_ECC(lat, xlon, vp.latitude(), vp.longitude(), &easting, &northing);
 
-			double epix = easting * vp.view_scale_ppm;
-			double npix = northing * vp.view_scale_ppm;
+			double epix = easting * vp.view_scale();
+			double npix = northing * vp.view_scale();
 
 			double dx = epix * cos(vp.skew) + npix * sin(vp.skew);
 			double dy = npix * cos(vp.skew) - epix * sin(vp.skew);
@@ -1347,7 +1347,7 @@ void ChartBaseBSB::chartpix_to_latlong(double pixx, double pixy, double* plat, d
 void ChartBaseBSB::ComputeSourceRectangle(const ViewPort& vp, wxRect* pSourceRect)
 {
 	// This funny contortion is necessary to allow scale factors < 1, i.e. overzoom
-	double binary_scale_factor = (wxRound(100000 * GetPPM() / vp.view_scale_ppm)) / 100000.0;
+	double binary_scale_factor = (wxRound(100000 * GetPPM() / vp.view_scale())) / 100000.0;
 
 	m_raster_scale_factor = binary_scale_factor;
 
@@ -1400,7 +1400,7 @@ bool ChartBaseBSB::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 	ViewPort vp_save = vp_proposed; // save a copy
 
 	int ret_val = 0;
-	double binary_scale_factor = GetPPM() / vp_proposed.view_scale_ppm;
+	double binary_scale_factor = GetPPM() / vp_proposed.view_scale();
 
 	if (vp_last.IsValid()) {
 		// We only need to adjust the VP if the cache is valid and potentially usable, i.e. the
@@ -1453,7 +1453,7 @@ void ChartBaseBSB::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pVal
 {
 	SetVPRasterParms(VPoint);
 
-	double raster_scale = VPoint.view_scale_ppm / GetPPM();
+	double raster_scale = VPoint.view_scale() / GetPPM();
 
 	int rxl, rxr;
 	if (Rsrc.x < 0)
@@ -1692,7 +1692,7 @@ bool ChartBaseBSB::RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 	}
 
 	// Invalidate the cache if the scale has changed or the viewport size has changed....
-	if ((fabs(m_cached_scale_ppm - VPoint.view_scale_ppm) > 1e-9) || (m_last_vprect != dest)) {
+	if ((fabs(m_cached_scale_ppm - VPoint.view_scale()) > 1e-9) || (m_last_vprect != dest)) {
 		cached_image_ok = false;
 		m_vp_render_last.Invalidate();
 	}
@@ -1705,7 +1705,7 @@ bool ChartBaseBSB::RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 	} else
 		pPixCache = new PixelCache(dest.width, dest.height, BPP);
 
-	m_cached_scale_ppm = VPoint.view_scale_ppm;
+	m_cached_scale_ppm = VPoint.view_scale();
 	m_last_vprect = dest;
 
 	if (cached_image_ok) {
@@ -1773,7 +1773,7 @@ bool ChartBaseBSB::RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 
 	// A performance enhancement.....
 	ScaleTypeEnum scale_type_zoom = RENDER_HIDEF;
-	double binary_scale_factor = VPoint.view_scale_ppm / GetPPM();
+	double binary_scale_factor = VPoint.view_scale() / GetPPM();
 	if (binary_scale_factor < .20)
 		scale_type_zoom = RENDER_LODEF;
 
@@ -2864,7 +2864,7 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 	// Do a last little test using a synthetic ViewPort of nominal size.....
 	ViewPort vp;
 	vp.set_position(Position(reference_points[0].latr, reference_points[0].lonr));
-	vp.view_scale_ppm = m_ppm_avg;
+	vp.set_view_scale(m_ppm_avg);
 	vp.skew = 0.;
 	vp.pix_width = 1000;
 	vp.pix_height = 1000;

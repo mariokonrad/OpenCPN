@@ -102,14 +102,14 @@ PlugIn_ViewPort CreatePlugInViewport(const ViewPort& vp)
 
 	pivp.clat = tvp.latitude(); // center point
 	pivp.clon = tvp.longitude();
-	pivp.view_scale_ppm = tvp.view_scale_ppm;
+	pivp.view_scale_ppm = tvp.view_scale();
 	pivp.skew = tvp.skew;
 	pivp.rotation = tvp.rotation;
 	pivp.chart_scale = tvp.chart_scale;
 	pivp.pix_width = tvp.pix_width;
 	pivp.pix_height = tvp.pix_height;
 	pivp.rv_rect = tvp.rv_rect;
-	pivp.b_quilt = tvp.b_quilt;
+	pivp.b_quilt = tvp.is_quilt();
 	pivp.m_projection_type = tvp.m_projection_type;
 
 	pivp.lat_min = tvp.GetBBox().GetMinY();
@@ -128,14 +128,14 @@ ViewPort CreateCompatibleViewport(const PlugIn_ViewPort& pivp)
 	ViewPort vp;
 
 	vp.set_position(Position(pivp.clat, pivp.clon));
-	vp.view_scale_ppm = pivp.view_scale_ppm;
+	vp.set_view_scale(pivp.view_scale_ppm);
 	vp.skew = pivp.skew;
 	vp.rotation = pivp.rotation;
 	vp.chart_scale = pivp.chart_scale;
 	vp.pix_width = pivp.pix_width;
 	vp.pix_height = pivp.pix_height;
 	vp.rv_rect = pivp.rv_rect;
-	vp.b_quilt = pivp.b_quilt;
+	vp.set_quilt(pivp.b_quilt);
 	vp.m_projection_type = pivp.m_projection_type;
 
 	vp.SetBBoxDirect(pivp.lat_min, pivp.lon_min, pivp.lat_max, pivp.lon_max);
@@ -1330,7 +1330,7 @@ void GetCanvasPixLL(PlugIn_ViewPort* vp, wxPoint* pp, double lat, double lon)
 	ViewPort ocpn_vp;
 	ocpn_vp.set_position(Position(vp->clat, vp->clon));
 	ocpn_vp.m_projection_type = vp->m_projection_type;
-	ocpn_vp.view_scale_ppm = vp->view_scale_ppm;
+	ocpn_vp.set_view_scale(vp->view_scale_ppm);
 	ocpn_vp.skew = vp->skew;
 	ocpn_vp.rotation = vp->rotation;
 	ocpn_vp.pix_width = vp->pix_width;
@@ -1347,7 +1347,7 @@ void GetCanvasLLPix(PlugIn_ViewPort* vp, wxPoint p, double* plat, double* plon)
 	ViewPort ocpn_vp;
 	ocpn_vp.set_position(Position(vp->clat, vp->clon));
 	ocpn_vp.m_projection_type = vp->m_projection_type;
-	ocpn_vp.view_scale_ppm = vp->view_scale_ppm;
+	ocpn_vp.set_view_scale(vp->view_scale_ppm);
 	ocpn_vp.skew = vp->skew;
 	ocpn_vp.rotation = vp->rotation;
 	ocpn_vp.pix_width = vp->pix_width;

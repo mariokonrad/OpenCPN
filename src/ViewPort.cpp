@@ -48,14 +48,41 @@ void catch_signals(int signo);
 
 
 ViewPort::ViewPort()
-	: bValid(false)
+	: valid(false)
+	, quilt(false)
+	, fullscreen_quilt(false)
+	, view_scale_ppm(1.0)
 {
 	skew = 0.0;
-	view_scale_ppm = 1;
 	rotation = 0.0;
-	b_quilt = false;
 	pix_height = pix_width = 0;
 	b_MercatorProjectionOverride = false;
+}
+
+bool ViewPort::is_quilt() const
+{
+	return quilt;
+}
+
+bool ViewPort::is_fullscreen_quilt() const
+{
+	return fullscreen_quilt;
+}
+
+void ViewPort::set_quilt(bool quilt, bool fullscreen_quilt)
+{
+	this->quilt = quilt;
+	this->fullscreen_quilt = fullscreen_quilt;
+}
+
+double ViewPort::view_scale() const
+{
+	return view_scale_ppm;
+}
+
+void ViewPort::set_view_scale(double value)
+{
+	view_scale_ppm = value;
 }
 
 wxPoint ViewPort::GetPixFromLL(const Position& pos) const
@@ -107,8 +134,8 @@ wxPoint ViewPort::GetPixFromLL(const Position& pos) const
 	if (!wxFinite(easting) || !wxFinite(northing))
 		return wxPoint(0, 0);
 
-	double epix = easting * view_scale_ppm;
-	double npix = northing * view_scale_ppm;
+	double epix = easting * view_scale();
+	double npix = northing * view_scale();
 	double dxr = epix;
 	double dyr = npix;
 
@@ -174,8 +201,8 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos) const
 	if (!wxFinite(easting) || !wxFinite(northing))
 		return wxPoint(0, 0);
 
-	double epix = easting * view_scale_ppm;
-	double npix = northing * view_scale_ppm;
+	double epix = easting * view_scale();
+	double npix = northing * view_scale();
 	double dxr = epix;
 	double dyr = npix;
 
@@ -206,8 +233,8 @@ Position ViewPort::GetLLFromPix(const wxPoint& p) const
 		xpr = (dx * cos(rotation)) - (dy * sin(rotation));
 		ypr = (dy * cos(rotation)) + (dx * sin(rotation));
 	}
-	double d_east = xpr / view_scale_ppm;
-	double d_north = ypr / view_scale_ppm;
+	double d_east = xpr / view_scale();
+	double d_north = ypr / view_scale();
 
 	double slat;
 	double slon;
@@ -544,17 +571,17 @@ double ViewPort::longitude() const
 
 void ViewPort::Invalidate()
 {
-	bValid = false;
+	valid = false;
 }
 
 void ViewPort::Validate()
 {
-	bValid = true;
+	valid = true;
 }
 
 bool ViewPort::IsValid() const
 {
-	return bValid;
+	return valid;
 }
 
 void ViewPort::SetRotationAngle(double angle_rad)

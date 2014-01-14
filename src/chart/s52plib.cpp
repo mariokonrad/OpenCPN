@@ -6241,10 +6241,10 @@ bool s52plib::GetPointPixArray(ObjRazRules* rzRules, wxPoint2DDouble* pd, wxPoin
 	} else {
 		for (int i = 0; i < nv; i++) {
 			pp[i].x = roundint(((pd[i].m_x - rzRules->sm_transform_parms->easting_vp_center)
-								* vp.view_scale_ppm) + (vp.pix_width / 2));
+								* vp.view_scale()) + (vp.pix_width / 2));
 			pp[i].y = roundint((vp.pix_height / 2)
 							   - ((pd[i].m_y - rzRules->sm_transform_parms->northing_vp_center)
-								  * vp.view_scale_ppm));
+								  * vp.view_scale()));
 		}
 	}
 
@@ -6258,10 +6258,10 @@ bool s52plib::GetPointPixSingle(ObjRazRules* rzRules, float north, float east, w
 		rzRules->obj->m_chart_context->chart->GetPointPix(rzRules, north, east, r);
 	} else {
 		r->x = roundint(((east - rzRules->sm_transform_parms->easting_vp_center)
-						 * vp.view_scale_ppm) + (vp.pix_width / 2));
+						 * vp.view_scale()) + (vp.pix_width / 2));
 		r->y = roundint(
 			(vp.pix_height / 2)
-			- ((north - rzRules->sm_transform_parms->northing_vp_center) * vp.view_scale_ppm));
+			- ((north - rzRules->sm_transform_parms->northing_vp_center) * vp.view_scale()));
 	}
 
 	return true;
@@ -6276,8 +6276,8 @@ void s52plib::GetPixPointSingle(int pixx, int pixy, double* plat, double* plon, 
 	double xp = (dx * cos(vpt.skew)) - (dy * sin(vpt.skew));
 	double yp = (dy * cos(vpt.skew)) + (dx * sin(vpt.skew));
 
-	double d_east = xp / vpt.view_scale_ppm;
-	double d_north = yp / vpt.view_scale_ppm;
+	double d_east = xp / vpt.view_scale();
+	double d_north = yp / vpt.view_scale();
 
 	double slat, slon;
 	geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude(), &slat, &slon);

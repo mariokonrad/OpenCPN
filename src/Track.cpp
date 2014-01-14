@@ -351,7 +351,7 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 	double radius = 0.0;
 	if (global::OCPN::get().nav().get_track().HighliteTracks) {
 		double radius_meters = 20;
-		radius = radius_meters * VP.view_scale_ppm;
+		radius = radius_meters * VP.view_scale();
 	}
 
 	unsigned short int FromSegNo = 1;

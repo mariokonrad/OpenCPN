@@ -543,15 +543,6 @@ IF(UNIX)
 ENDIF(UNIX)
 
 ################################################################################
-# zlib
-################################################################################
-
-IF(UNIX)
-	FIND_PACKAGE(ZLIB REQUIRED)
-	INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIR})
-ENDIF(UNIX)
-
-################################################################################
 # Windows crash reporting
 ################################################################################
 
@@ -1446,7 +1437,7 @@ IF(UNIX)
 		${OPENGL_LIBRARIES}
 		${GETTEXT_LIBRARY}
 		${BZIP2_LIBRARIES}
-		${ZLIB_LIBRARY}
+		zlib
 		)
 ENDIF(UNIX)
 

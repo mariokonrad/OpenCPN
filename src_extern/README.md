@@ -9,6 +9,23 @@ External sources should remain as unpatched as possible, outside the
 projects own source.
 
 
+zlib-1.2.8
+----------
+
+License: zlib (http://zlib.net/zlib_license.html)
+
+Homepage: http://zlib.net/
+
+Download: http://zlib.net/zlib-1.2.8.tar.gz
+
+git:
+
+	git clone https://github.com/madler/zlib.git
+
+Notes:
+- Genuine distribution
+
+
 pugixml-1.2
 -----------
 

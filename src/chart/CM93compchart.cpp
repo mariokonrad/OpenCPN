@@ -1005,7 +1005,7 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 						easting -= pmcd->user_xoff;
 						northing -= pmcd->user_yoff;
 
-						epix = easting * VPoint.view_sclae();
+						epix = easting * VPoint.view_scale();
 						npix = northing * VPoint.view_scale();
 
 						pwp[ip].x = (int)round((VPoint.pix_width / 2) + epix);
@@ -1020,7 +1020,7 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 					bool btest = true;
 					if (btest) { // TODO: cleanup
 						dc.SetPen(
-							wxPen(wxTheColourDatabase->Find(_T ( "YELLOW" )), 4, wxLONG_DASH));
+							wxPen(wxTheColourDatabase->Find(_T("YELLOW")), 4, wxLONG_DASH));
 
 						for (int iseg = 0; iseg < pmcd->m_nvertices - 1; iseg++) {
 							int x0 = pwp[iseg].x;

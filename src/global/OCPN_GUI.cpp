@@ -106,6 +106,11 @@ void OCPN_GUI::set_initial_scale_ppm(double value)
 	data_view.initial_scale_ppm = value;
 }
 
+void OCPN_GUI::set_smooth_pan_zoom(bool value)
+{
+	data_view.smooth_pan_zoom = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

@@ -208,7 +208,6 @@ wxDateTime g_loglast_time;
 sound::OCPN_Sound g_anchorwatch_sound;
 RoutePoint* pAnchorWatchPoint1;
 RoutePoint* pAnchorWatchPoint2;
-bool g_bCruising;
 ToolBarSimple* g_toolbar;
 ocpnStyle::StyleManager* g_StyleManager;
 wxPrintData* g_printData = (wxPrintData*)NULL;
@@ -275,7 +274,6 @@ tide::IDX_entry* gpIDX;
 int gpIDXn;
 long gStart_LMT_Offset;
 FILE* s_fpdebug;
-bool bAutoOpen;
 bool bFirstAuto;
 bool g_bUseGLL;
 int g_nCacheLimit;
@@ -286,7 +284,6 @@ int g_COGAvgSec; // COG average period (sec.) for Course Up Mode
 double g_COGAvg;
 bool g_bskew_comp;
 bool g_bopengl;
-bool g_bsmoothpanzoom;
 int g_nCOMPortCheck;
 PlugInManager* g_pi_manager;
 bool g_bAISRolloverShowClass;
@@ -433,6 +430,7 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos,
 	, pDummyChart(NULL)
 	, timer_tick(0)
 	, route_blinker_tick(0)
+	, cruising(false)
 {
 	m_ulLastNEMATicktime = 0;
 	m_pStatusBar = NULL;
@@ -1168,7 +1166,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-		if (!watching_anchor && (g_bCruising) && (nav.sog < 0.5)
+		if (!watching_anchor && cruising && (nav.sog < 0.5)
 			&& uptime.IsLongerThan(wxTimeSpan(0, 30, 0, 0))) {
 			// First, delete any single anchorage waypoint closer than 0.25 NM from this point
 			// This will prevent clutter and database congestion....
@@ -4247,7 +4245,6 @@ bool MainFrame::DoChartUpdate(void)
 	}
 
 	bOpenSpecified = bFirstAuto;
-	bAutoOpen = true; // debugging
 
 	//  Make sure the target stack is valid
 	if (NULL == pCurrentStack)
@@ -4313,47 +4310,41 @@ bool MainFrame::DoChartUpdate(void)
 
 			ChartBase* pProposed = NULL;
 
-			if (bAutoOpen) {
-				bool search_direction = false; // default is to search from lowest to highest
-				int start_index = 0;
+			bool search_direction = false; // default is to search from lowest to highest
+			int start_index = 0;
 
-				// A special case:  If panning at high scale, open largest scale chart first
-				if ((LastStack.CurrentStackEntry == LastStack.nEntry - 1)
-					|| (LastStack.nEntry == 0)) {
-					search_direction = true;
-					start_index = pCurrentStack->nEntry - 1;
-				}
+			// A special case:  If panning at high scale, open largest scale chart first
+			if ((LastStack.CurrentStackEntry == LastStack.nEntry - 1) || (LastStack.nEntry == 0)) {
+				search_direction = true;
+				start_index = pCurrentStack->nEntry - 1;
+			}
 
-				// Another special case, open specified index on program start
-				if (bOpenSpecified) {
-					search_direction = false;
-					start_index = g_restore_stackindex;
-					if ((start_index < 0) | (start_index >= pCurrentStack->nEntry))
-						start_index = 0;
-					new_open_type = CHART_TYPE_DONTCARE;
-				}
+			// Another special case, open specified index on program start
+			if (bOpenSpecified) {
+				search_direction = false;
+				start_index = g_restore_stackindex;
+				if ((start_index < 0) | (start_index >= pCurrentStack->nEntry))
+					start_index = 0;
+				new_open_type = CHART_TYPE_DONTCARE;
+			}
 
+			pProposed = ChartData->OpenStackChartConditional(
+				pCurrentStack, start_index, search_direction, new_open_type, new_open_family);
+
+			// Try to open other types/families of chart in some priority
+			if (NULL == pProposed)
 				pProposed = ChartData->OpenStackChartConditional(
-					pCurrentStack, start_index, search_direction, new_open_type, new_open_family);
+					pCurrentStack, start_index, search_direction, CHART_TYPE_CM93COMP,
+					chart::CHART_FAMILY_VECTOR);
 
-				//    Try to open other types/families of chart in some priority
-				if (NULL == pProposed)
-					pProposed = ChartData->OpenStackChartConditional(
-						pCurrentStack, start_index, search_direction, CHART_TYPE_CM93COMP,
-						chart::CHART_FAMILY_VECTOR);
+			if (NULL == pProposed)
+				pProposed = ChartData->OpenStackChartConditional(
+					pCurrentStack, start_index, search_direction, CHART_TYPE_CM93COMP,
+					chart::CHART_FAMILY_RASTER);
 
-				if (NULL == pProposed)
-					pProposed = ChartData->OpenStackChartConditional(
-						pCurrentStack, start_index, search_direction, CHART_TYPE_CM93COMP,
-						chart::CHART_FAMILY_RASTER);
+			bNewChart = true;
 
-				bNewChart = true;
-
-			} else
-				pProposed = NULL;
-
-			// If no go, then
-			// Open a Dummy Chart
+			// If no go,then open a Dummy Chart
 			if (NULL == pProposed) {
 				if (NULL == pDummyChart) {
 					pDummyChart = new chart::ChartDummy;
@@ -5188,7 +5179,7 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 
 	// If speed over ground is greater than some threshold, we determine that we are "cruising"
 	if (nav.sog > 3.0)
-		g_bCruising = true;
+		cruising = true;
 
 	// Here is the one place we try to create Hdt from Hdm and Var,
 	// but only if NMEA HDT sentence is not being received

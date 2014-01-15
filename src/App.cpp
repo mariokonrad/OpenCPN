@@ -157,7 +157,6 @@ extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern int gpIDXn;
 extern FILE* s_fpdebug;
-extern bool bAutoOpen;
 extern bool bFirstAuto;
 extern int g_memCacheLimit;
 extern double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode

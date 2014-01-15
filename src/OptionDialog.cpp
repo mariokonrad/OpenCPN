@@ -87,7 +87,6 @@ extern ChartCanvas* cc1;
 
 extern bool g_bskew_comp;
 extern bool g_bopengl;
-extern bool g_bsmoothpanzoom;
 extern bool g_bShowMag;
 extern double g_UserVar;
 
@@ -1363,11 +1362,11 @@ void options::CreatePanel_Display(size_t parent, int border_size, int WXUNUSED(g
 		= new wxStaticBoxSizer(itemStaticBoxSizerCDOStatic, wxVERTICAL);
 	itemBoxSizerUI->Add(itemStaticBoxSizerCDO, 0, wxEXPAND | wxALL, border_size);
 
-	//  "Course Up" checkbox
+	// "Course Up" checkbox
 	pCBCourseUp = new wxCheckBox(itemPanelUI, ID_COURSEUPCHECKBOX, _("Course UP Mode"));
 	itemStaticBoxSizerCDO->Add(pCBCourseUp, 0, wxALL, border_size);
 
-	//  Course Up display update period
+	// Course Up display update period
 	wxFlexGridSizer* pCOGUPFilterGrid = new wxFlexGridSizer(2);
 	pCOGUPFilterGrid->AddGrowableCol(1);
 	itemStaticBoxSizerCDO->Add(pCOGUPFilterGrid, 0, wxALL | wxEXPAND, border_size);
@@ -1380,24 +1379,24 @@ void options::CreatePanel_Display(size_t parent, int border_size, int WXUNUSED(g
 		= new wxTextCtrl(itemPanelUI, ID_TEXTCTRL, _T(""), wxDefaultPosition, wxDefaultSize);
 	pCOGUPFilterGrid->Add(pCOGUPUpdateSecs, 0, wxALIGN_RIGHT | wxALL, border_size);
 
-	//  "LookAhead" checkbox
+	// "LookAhead" checkbox
 	pCBLookAhead = new wxCheckBox(itemPanelUI, ID_CHECK_LOOKAHEAD, _("Look Ahead Mode"));
 	itemStaticBoxSizerCDO->Add(pCBLookAhead, 0, wxALL, border_size);
 
-	//  Grid display  checkbox
+	// Grid display  checkbox
 	pSDisplayGrid = new wxCheckBox(itemPanelUI, ID_CHECK_DISPLAYGRID, _("Show Grid"));
 	itemStaticBoxSizerCDO->Add(pSDisplayGrid, 1, wxALL, border_size);
 
-	//  Depth Unit checkbox
+	// Depth Unit checkbox
 	pSDepthUnits = new wxCheckBox(itemPanelUI, ID_SHOWDEPTHUNITSBOX1, _("Show Depth Units"));
 	itemStaticBoxSizerCDO->Add(pSDepthUnits, 1, wxALL, border_size);
 
-	//  OpenGL Render checkbox
+	// OpenGL Render checkbox
 	pOpenGL = new wxCheckBox(itemPanelUI, ID_OPENGLBOX, _("Use Accelerated Graphics (OpenGL)"));
 	itemStaticBoxSizerCDO->Add(pOpenGL, 1, wxALL, border_size);
 	pOpenGL->Enable(!g_bdisable_opengl);
 
-	//  Smooth Pan/Zoom checkbox
+	// Smooth Pan/Zoom checkbox
 	pSmoothPanZoom
 		= new wxCheckBox(itemPanelUI, ID_SMOOTHPANZOOMBOX, _("Smooth Panning / Zooming"));
 	itemStaticBoxSizerCDO->Add(pSmoothPanZoom, 1, wxALL, border_size);
@@ -1410,30 +1409,30 @@ void options::CreatePanel_Display(size_t parent, int border_size, int WXUNUSED(g
 									_("Preserve Scale when Switching Charts"));
 	itemStaticBoxSizerCDO->Add(pPreserveScale, 1, wxALL, border_size);
 
-	//  Quilting checkbox
+	// Quilting checkbox
 	pCDOQuilting = new wxCheckBox(itemPanelUI, ID_QUILTCHECKBOX1, _("Enable Chart Quilting"));
 	itemStaticBoxSizerCDO->Add(pCDOQuilting, 1, wxALL, border_size);
 
-	//  Full Screen Quilting Disable checkbox
+	// Full Screen Quilting Disable checkbox
 	pFullScreenQuilt
 		= new wxCheckBox(itemPanelUI, ID_FULLSCREENQUILT, _("Disable Full Screen Quilting"));
 	itemStaticBoxSizerCDO->Add(pFullScreenQuilt, 1, wxALL, border_size);
 
-	//  Chart Outlines checkbox
+	// Chart Outlines checkbox
 	pCDOOutlines = new wxCheckBox(itemPanelUI, ID_OUTLINECHECKBOX1, _("Show Chart Outlines"));
 	itemStaticBoxSizerCDO->Add(pCDOOutlines, 1, wxALL, border_size);
 
-	//  Skewed Raster compenstation checkbox
+	// Skewed Raster compenstation checkbox
 	pSkewComp
 		= new wxCheckBox(itemPanelUI, ID_SKEWCOMPBOX, _("Show Skewed Raster Charts as North-Up"));
 	itemStaticBoxSizerCDO->Add(pSkewComp, 1, wxALL, border_size);
 
-	//  "Mag Heading" checkbox
+	// "Mag Heading" checkbox
 	pCBMagShow
 		= new wxCheckBox(itemPanelUI, ID_MAGSHOWCHECKBOX, _("Show Magnetic bearings and headings"));
 	itemStaticBoxSizerCDO->Add(pCBMagShow, 0, wxALL, border_size);
 
-	//  Mag Heading user variation
+	// Mag Heading user variation
 	wxFlexGridSizer* pUserVarGrid = new wxFlexGridSizer(2);
 	pUserVarGrid->AddGrowableCol(1);
 	itemStaticBoxSizerCDO->Add(pUserVarGrid, 0, wxALL | wxEXPAND, border_size);
@@ -1778,12 +1777,12 @@ void options::CreateControls()
 	GetTextExtent(_T("0"), NULL, &font_size_y, &font_descent, &font_lead);
 	wxSize small_button_size(-1, (int)(1.4 * (font_size_y + font_descent + font_lead)));
 
-	//      Some members (pointers to controls) need to initialized
+	// Some members (pointers to controls) need to initialized
 	pEnableZoomToCursor = NULL;
 	pSmoothPanZoom = NULL;
 
-	//      Check the display size.
-	//      If "small", adjust some factors to squish out some more white space
+	// Check the display size.
+	// If "small", adjust some factors to squish out some more white space
 	int width, height;
 	::wxDisplaySize(&width, &height);
 
@@ -1971,14 +1970,14 @@ void options::SetInitialSettings()
 
 	pCOGUPUpdateSecs->SetValue(wxString::Format(_T("%d"), g_COGAvgSec));
 
-	pCDOOutlines->SetValue(gui.view().show_outlines);
+	pCDOOutlines->SetValue(view.show_outlines);
 	pCDOQuilting->SetValue(g_bQuiltEnable);
 	pFullScreenQuilt->SetValue(!g_bFullScreenQuilt);
-	pSDepthUnits->SetValue(gui.view().show_depth_units);
+	pSDepthUnits->SetValue(view.show_depth_units);
 	pSkewComp->SetValue(g_bskew_comp);
 	pOpenGL->SetValue(g_bopengl);
-	pSmoothPanZoom->SetValue(g_bsmoothpanzoom);
-	if (gui.view().enable_zoom_to_cursor || pEnableZoomToCursor->GetValue()) {
+	pSmoothPanZoom->SetValue(view.smooth_pan_zoom);
+	if (view.enable_zoom_to_cursor || pEnableZoomToCursor->GetValue()) {
 		pSmoothPanZoom->SetValue(false);
 		pSmoothPanZoom->Disable();
 	}
@@ -1991,7 +1990,7 @@ void options::SetInitialSettings()
 	pSDisplayGrid->SetValue(g_bDisplayGrid);
 
 	pCBCourseUp->SetValue(g_bCourseUp);
-	pCBLookAhead->SetValue(gui.view().lookahead_mode);
+	pCBLookAhead->SetValue(view.lookahead_mode);
 
 	if (fabs(wxRound(g_ownship_predictor_minutes) - g_ownship_predictor_minutes) > 1e-4)
 		m_pText_OSCOG_Predictor->SetValue(
@@ -2020,7 +2019,7 @@ void options::SetInitialSettings()
 	pWayPointPreventDragging->SetValue(view.WayPointPreventDragging);
 	pConfirmObjectDeletion->SetValue(view.ConfirmObjectDelete);
 
-	pEnableZoomToCursor->SetValue(gui.view().enable_zoom_to_cursor);
+	pEnableZoomToCursor->SetValue(view.enable_zoom_to_cursor);
 	if (pEnableZoomToCursor->GetValue()) {
 		pSmoothPanZoom->Disable();
 	} else {
@@ -2069,9 +2068,9 @@ void options::SetInitialSettings()
 	m_pCheck_Show_Moored->SetValue(!ais.ShowMoored);
 	m_pText_Moored_Speed->SetValue(wxString::Format(_T("%4.1f"), ais.ShowMoored_Kts));
 	m_pCheck_Show_Area_Notices->SetValue(ais.ShowAreaNotices);
-	m_pCheck_Draw_Target_Size->SetValue(gui.view().DrawAISSize);
-	m_pCheck_Show_Target_Name->SetValue(gui.view().ShowAISName);
-	m_pText_Show_Target_Name_Scale->SetValue(wxString::Format(_T("%d"), gui.view().Show_Target_Name_Scale));
+	m_pCheck_Draw_Target_Size->SetValue(view.DrawAISSize);
+	m_pCheck_Show_Target_Name->SetValue(view.ShowAISName);
+	m_pText_Show_Target_Name_Scale->SetValue(wxString::Format(_T("%d"), view.Show_Target_Name_Scale));
 	m_pCheck_Wpl_Aprs->SetValue(ais.WplIsAprsPosition);
 
 	// Alerts
@@ -2554,7 +2553,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	gui.set_view_show_depth_units(pSDepthUnits->GetValue());
 	g_bskew_comp = pSkewComp->GetValue();
 	bool temp_bopengl = pOpenGL->GetValue();
-	g_bsmoothpanzoom = pSmoothPanZoom->GetValue();
+	gui.set_smooth_pan_zoom(pSmoothPanZoom->GetValue());
 
 	g_bfilter_cogsog = m_cbFilterSogCog->GetValue();
 

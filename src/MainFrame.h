@@ -312,6 +312,8 @@ private:
 	int timer_tick;
 	int route_blinker_tick;
 
+	bool cruising;
+
 	sound::OCPN_Sound bells_sound[8]; // FIXME: std container
 };
 

@@ -57,6 +57,7 @@ public: // view
 	virtual void set_ConfirmObjectDelete(bool);
 	virtual void set_color_scheme(ColorScheme);
 	virtual void set_initial_scale_ppm(double);
+	virtual void set_smooth_pan_zoom(bool);
 
 public: // frame
 	virtual const Frame& frame() const;

@@ -55,6 +55,7 @@ public:
 		bool ConfirmObjectDelete;
 		ColorScheme color_scheme;
 		double initial_scale_ppm;
+		bool smooth_pan_zoom;
 	};
 
 	virtual const View& view() const = 0;
@@ -73,6 +74,7 @@ public:
 	virtual void set_ConfirmObjectDelete(bool) = 0;
 	virtual void set_color_scheme(ColorScheme) = 0;
 	virtual void set_initial_scale_ppm(double) = 0;
+	virtual void set_smooth_pan_zoom(bool) = 0;
 
 public:
 	struct Frame

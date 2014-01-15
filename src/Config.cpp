@@ -86,7 +86,6 @@ extern bool g_bAutoAnchorMark;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bdisable_opengl;
-extern bool g_bsmoothpanzoom;
 extern bool g_bShowActiveRouteHighway;
 extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
@@ -602,7 +601,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	Read(_T("GPUMemorySize"), &g_GPU_MemSize, 256);
 
-	Read(_T("SmoothPanZoom"), &g_bsmoothpanzoom, 0);
+	gui.set_smooth_pan_zoom(read_bool(_T("SmoothPanZoom")));
 
 	load_toolbar();
 	Read(_T("ToolbarConfig"), &g_toolbarConfig);
@@ -1602,7 +1601,7 @@ void Config::UpdateSettings()
 
 	Write(_T("SkewToNorthUp"), g_bskew_comp);
 	Write(_T("OpenGL"), g_bopengl);
-	Write(_T("SmoothPanZoom"), g_bsmoothpanzoom);
+	Write(_T("SmoothPanZoom"), view.smooth_pan_zoom);
 
 	Write(_T("CourseUpMode"), g_bCourseUp);
 	Write(_T("COGUPAvgSeconds"), g_COGAvgSec);

@@ -234,8 +234,6 @@ extern bool g_bdisable_opengl;
 extern bool g_bFullScreenQuilt;
 extern wxProgressDialog* s_ProgDialog;
 
-extern bool g_bsmoothpanzoom;
-
 extern bool g_b_useStencil;
 
 extern int g_memCacheLimit;
@@ -1742,8 +1740,8 @@ void ChartCanvas::Do_Pankeys(wxTimerEvent&)
 
 	if (m_modkeys == wxMOD_ALT)
 		m_panspeed = slowpan;
-	else if (g_bsmoothpanzoom) {
-		/* accelerate panning */
+	else if (global::OCPN::get().gui().view().smooth_pan_zoom) {
+		// accelerate panning
 		m_panspeed += 2;
 		if (m_panspeed > maxpan)
 			m_panspeed = maxpan;
@@ -2226,7 +2224,7 @@ bool ChartCanvas::do_smooth_scrolling() const
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 
 	bool smooth = true
-		&& g_bsmoothpanzoom
+		&& view.smooth_pan_zoom
 		&& g_bopengl
 		&& !view.enable_zoom_to_cursor
 		;
@@ -2236,7 +2234,7 @@ bool ChartCanvas::do_smooth_scrolling() const
 			smooth = false;
 	} else {
 		smooth = true
-			&& g_bsmoothpanzoom
+			&& view.smooth_pan_zoom
 			&& !m_pQuilt->IsQuiltVector()
 			&& !view.enable_zoom_to_cursor;
 	}

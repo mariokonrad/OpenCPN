@@ -56,6 +56,11 @@ void OCPN_GUI::set_view_allow_overzoom_x(bool flag)
 	data_view.allow_overzoom_x = flag;
 }
 
+void OCPN_GUI::set_view_show_overzoom_emboss(bool value)
+{
+	data_view.show_overzoom_emboss = value;
+}
+
 void OCPN_GUI::set_route_line_width(int width)
 {
 	data_view.route_line_width = width;
@@ -109,6 +114,36 @@ void OCPN_GUI::set_initial_scale_ppm(double value)
 void OCPN_GUI::set_smooth_pan_zoom(bool value)
 {
 	data_view.smooth_pan_zoom = value;
+}
+
+void OCPN_GUI::set_view_display_grid(bool value)
+{
+	data_view.display_grid = value;
+}
+
+void OCPN_GUI::set_view_show_layers(bool value)
+{
+	data_view.show_layers = value;
+}
+
+void OCPN_GUI::set_view_permanent_mob_icon(bool value)
+{
+	data_view.permanent_mob_icon = value;
+}
+
+void OCPN_GUI::set_view_show_active_route_highway(bool value)
+{
+	data_view.show_active_route_highway = value;
+}
+
+void OCPN_GUI::set_auto_anchor_mark(bool value)
+{
+	data_view.auto_anchor_mark = value;
+}
+
+void OCPN_GUI::set_view_preserve_scale_on_x(bool value)
+{
+	data_view.preserve_scale_on_x = value;
 }
 
 const GUI::Frame& OCPN_GUI::frame() const

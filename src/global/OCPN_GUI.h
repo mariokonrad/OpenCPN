@@ -47,6 +47,7 @@ public: // view
 	virtual void set_view_show_depth_units(bool);
 	virtual void set_view_lookahead_mode(bool);
 	virtual void set_view_allow_overzoom_x(bool);
+	virtual void set_view_show_overzoom_emboss(bool);
 	virtual void set_route_line_width(int);
 	virtual void set_track_line_width(int);
 	virtual void set_enable_zoom_to_cursor(bool);
@@ -58,6 +59,12 @@ public: // view
 	virtual void set_color_scheme(ColorScheme);
 	virtual void set_initial_scale_ppm(double);
 	virtual void set_smooth_pan_zoom(bool);
+	virtual void set_view_display_grid(bool);
+	virtual void set_view_show_layers(bool);
+	virtual void set_view_permanent_mob_icon(bool);
+	virtual void set_view_show_active_route_highway(bool);
+	virtual void set_auto_anchor_mark(bool);
+	virtual void set_view_preserve_scale_on_x(bool);
 
 public: // frame
 	virtual const Frame& frame() const;

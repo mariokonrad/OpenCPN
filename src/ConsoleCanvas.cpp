@@ -35,6 +35,7 @@
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+#include <global/GUI.h>
 
 #include <cstdlib>
 #include <cmath>
@@ -44,7 +45,6 @@
 
 extern Routeman* g_pRouteMan;
 extern MainFrame* gFrame;
-extern bool g_bShowActiveRouteHighway;
 extern bool g_bShowMag;
 
 enum eMenuItems {
@@ -160,13 +160,13 @@ void ConsoleCanvas::OnPaint(wxPaintEvent&)
 		UpdateRouteData();
 	}
 
-	if (!g_bShowActiveRouteHighway)
+	if (!global::OCPN::get().gui().view().show_active_route_highway)
 		pCDI->Hide();
 }
 
 void ConsoleCanvas::OnShow(wxShowEvent&)
 {
-	pCDI->Show(g_bShowActiveRouteHighway);
+	pCDI->Show(global::OCPN::get().gui().view().show_active_route_highway);
 	m_pitemBoxSizerLeg->SetSizeHints(this);
 }
 
@@ -197,7 +197,7 @@ void ConsoleCanvas::OnContextMenu(wxContextMenuEvent&)
 
 	btnLeg->Check(!m_bShowRouteTotal);
 	btnRoute->Check(m_bShowRouteTotal);
-	btnHighw->Check(g_bShowActiveRouteHighway);
+	btnHighw->Check(global::OCPN::get().gui().view().show_active_route_highway);
 
 	PopupMenu(contextMenu);
 
@@ -217,15 +217,16 @@ void ConsoleCanvas::OnContextMenuSelection(wxCommandEvent& event)
 			LegRoute();
 			break;
 
-		case ID_NAVHIGHWAY:
-			g_bShowActiveRouteHighway = !g_bShowActiveRouteHighway;
-			if (g_bShowActiveRouteHighway) {
+		case ID_NAVHIGHWAY: {
+			global::GUI& gui = global::OCPN::get().gui();
+			gui.set_view_show_active_route_highway(!gui.view().show_active_route_highway);
+			if (gui.view().show_active_route_highway) {
 				pCDI->Show();
 			} else {
 				pCDI->Hide();
 			}
 			m_pitemBoxSizerLeg->SetSizeHints(this);
-			break;
+			} break;
 	}
 }
 

@@ -45,7 +45,6 @@ extern ChartCanvas* cc1;
 extern bool g_bopengl;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern wxString g_toolbarConfig;
-extern bool g_bPermanentMOBIcon;
 extern MainFrame* gFrame;
 
 BEGIN_EVENT_TABLE(OCPNFloatingToolbarDialog, wxDialog)
@@ -445,7 +444,7 @@ void OCPNFloatingToolbarDialog::OnToolLeftClick(wxCommandEvent& event)
 				if (answer == 0 || answer == 1 || dialog_ret == wxID_CANCEL) {
 					g_FloatingToolbarConfigMenu->FindItem(event.GetId())->Check(true);
 					if (answer == 1 && dialog_ret == wxID_OK) {
-						g_bPermanentMOBIcon = true;
+						global::OCPN::get().gui().set_view_permanent_mob_icon(true);
 						delete g_FloatingToolbarConfigMenu;
 						g_FloatingToolbarConfigMenu = new wxMenu();
 						toolbarConfigChanged = true;

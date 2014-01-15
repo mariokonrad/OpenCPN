@@ -45,6 +45,7 @@
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+#include <global/GUI.h>
 
 #include <iostream>
 #include <algorithm>
@@ -138,7 +139,6 @@ extern WayPointman* pWayPointMan;
 extern MarkInfoImpl* pMarkPropDialog;
 extern MainFrame* gFrame;
 extern Select* pSelect;
-extern bool g_bShowLayers;
 extern wxString g_default_wp_icon;
 
 struct SortContext
@@ -288,20 +288,23 @@ void RouteManagerDialog::create_routes_panel()
 	sort_layer_len_dir = 1;
 
 	// Setup GUI
-	m_pRouteListCtrl = new wxListCtrl( m_pPanelRte, -1, wxDefaultPosition, wxSize( 400, -1 ),
-			wxLC_REPORT  | wxLC_SORT_ASCENDING | wxLC_HRULES
-			| wxBORDER_SUNKEN/*|wxLC_VRULES*/);
-	m_pRouteListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED,
-			wxListEventHandler(RouteManagerDialog::OnRteSelected), NULL, this );
-	m_pRouteListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_DESELECTED,
-			wxListEventHandler(RouteManagerDialog::OnRteSelected), NULL, this );
-	m_pRouteListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED,
-			wxListEventHandler(RouteManagerDialog::OnRteDefaultAction), NULL, this );
-	m_pRouteListCtrl->Connect( wxEVT_LEFT_DOWN,
-			wxMouseEventHandler(RouteManagerDialog::OnRteToggleVisibility), NULL, this );
-	m_pRouteListCtrl->Connect( wxEVT_COMMAND_LIST_COL_CLICK,
-			wxListEventHandler(RouteManagerDialog::OnRteColumnClicked), NULL, this );
-	sbsRoutes->Add( m_pRouteListCtrl, 1, wxEXPAND | wxALL, DIALOG_MARGIN );
+	m_pRouteListCtrl = new wxListCtrl(m_pPanelRte, -1, wxDefaultPosition, wxSize(400, -1),
+									  wxLC_REPORT | wxLC_SORT_ASCENDING | wxLC_HRULES
+									  | wxBORDER_SUNKEN /*|wxLC_VRULES*/);
+	m_pRouteListCtrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED,
+							  wxListEventHandler(RouteManagerDialog::OnRteSelected), NULL, this);
+	m_pRouteListCtrl->Connect(wxEVT_COMMAND_LIST_ITEM_DESELECTED,
+							  wxListEventHandler(RouteManagerDialog::OnRteSelected), NULL, this);
+	m_pRouteListCtrl->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED,
+							  wxListEventHandler(RouteManagerDialog::OnRteDefaultAction), NULL,
+							  this);
+	m_pRouteListCtrl->Connect(wxEVT_LEFT_DOWN,
+							  wxMouseEventHandler(RouteManagerDialog::OnRteToggleVisibility), NULL,
+							  this);
+	m_pRouteListCtrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK,
+							  wxListEventHandler(RouteManagerDialog::OnRteColumnClicked), NULL,
+							  this);
+	sbsRoutes->Add(m_pRouteListCtrl, 1, wxEXPAND | wxALL, DIALOG_MARGIN);
 
 	// Columns: visibility ctrl, name
 	// note that under MSW for SetColumnWidth() to work we need to create the
@@ -2196,10 +2199,12 @@ void RouteManagerDialog::OnLayToggleVisibility(wxMouseEvent& event)
 
 void RouteManagerDialog::OnLayNewClick(wxCommandEvent&)
 {
-	bool show_flag = g_bShowLayers;
-	g_bShowLayers = true;
+	global::GUI& gui = global::OCPN::get().gui();
+
+	bool show_flag = gui.view().show_layers;
+	gui.set_view_show_layers(true);
 	pConfig->UI_ImportGPX(this, true, _T(""));
-	g_bShowLayers = show_flag;
+	gui.set_view_show_layers(show_flag);
 
 	UpdateRouteListCtrl();
 	UpdateTrkListCtrl();

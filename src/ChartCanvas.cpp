@@ -199,11 +199,8 @@ extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 
 extern CM93DSlide* pCM93DetailSlider;
 
-extern bool g_bDisplayGrid;
-
 extern ChartCanvas* cc1;
 
-extern bool g_bshow_overzoom_emboss;
 extern int g_OwnShipIconType;
 extern double g_n_ownship_length_meters;
 extern double g_n_ownship_beam_meters;
@@ -3408,7 +3405,9 @@ void CalcGridText(double latlon, double spacing, bool bPostfix, char* text)
 /// @return [void]
 void ChartCanvas::GridDraw(ocpnDC& dc)
 {
-	if (!(g_bDisplayGrid && (fabs(GetVP().rotation) < 1e-5)
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
+	if (!(view.display_grid && (fabs(GetVP().rotation) < 1e-5)
 		  && ((fabs(GetVP().skew) < 1e-9) || g_bskew_comp)))
 		return;
 
@@ -3508,7 +3507,7 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 
 void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 {
-	int x_origin = g_bDisplayGrid ? 60 : 20;
+	int x_origin = global::OCPN::get().gui().view().display_grid ? 60 : 20;
 	int y_origin = m_canvas_height - 50;
 
 	if (GetVP().chart_scale > 80000) {
@@ -8678,7 +8677,7 @@ void ChartCanvas::EmbossCanvas(ocpnDC& dc, EmbossData* pemboss, int x, int y)
 
 void ChartCanvas::EmbossOverzoomIndicator(ocpnDC& dc)
 {
-	if (!g_bshow_overzoom_emboss)
+	if (!global::OCPN::get().gui().view().show_overzoom_emboss)
 		return;
 
 	if (GetQuiltMode()) {

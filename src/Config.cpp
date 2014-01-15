@@ -78,15 +78,10 @@ extern wxString g_SENCPrefix;
 extern wxString g_UserPresLibData;
 extern WayPointman* pWayPointMan;
 extern bool s_bSetSystemTime;
-extern bool g_bDisplayGrid; // Flag indicating if grid is to be displayed
 extern bool g_bPlayShipsBells;
-extern bool g_bShowLayers;
-extern bool g_bPermanentMOBIcon;
-extern bool g_bAutoAnchorMark;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bdisable_opengl;
-extern bool g_bShowActiveRouteHighway;
 extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
@@ -106,7 +101,6 @@ extern double           g_ownship_predictor_minutes;
 extern chart::s52plib          *ps52plib;
 #endif
 
-extern bool             g_bshow_overzoom_emboss;
 extern int              g_nautosave_interval_seconds;
 extern int              g_OwnShipIconType;
 extern double           g_n_ownship_length_meters;
@@ -115,8 +109,6 @@ extern double           g_n_gps_antenna_offset_y;
 extern double           g_n_gps_antenna_offset_x;
 extern int              g_n_ownship_min_mm;
 extern double           g_n_arrival_circle_radius;
-
-extern bool             g_bPreserveScaleOnX;
 
 extern bool             g_bUseGLL;
 
@@ -557,7 +549,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	// overzoom
 	gui.set_view_allow_overzoom_x(read_bool(_T("AllowExtremeOverzoom"), true));
 
-	Read(_T("ShowOverzoomEmbossWarning"), &g_bshow_overzoom_emboss, 1);
+	gui.set_view_show_overzoom_emboss(read_bool(_T("ShowOverzoomEmbossWarning"), true));
 	Read(_T("AutosaveIntervalSeconds"), &g_nautosave_interval_seconds, 300);
 
 	Read(_T("GPSIdent"), &g_GPS_Ident, wxT("Generic"));
@@ -620,12 +612,12 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	Read(_T("SetSystemTime"), &s_bSetSystemTime, 0);
 	Read(_T("ShowDebugWindows"), &m_bShowDebugWindows, 1);
-	Read(_T("ShowGrid"), &g_bDisplayGrid, 0);
+	gui.set_view_display_grid(read_bool(_T("ShowGrid")));
 	Read(_T("PlayShipsBells"), &g_bPlayShipsBells, 0);
-	Read(_T("PermanentMOBIcon"), &g_bPermanentMOBIcon, 0);
-	Read(_T("ShowLayers"), &g_bShowLayers, 1);
-	Read(_T("AutoAnchorDrop"), &g_bAutoAnchorMark, 0);
-	Read(_T("ShowActiveRouteHighway"), &g_bShowActiveRouteHighway, 1);
+	gui.set_view_permanent_mob_icon(read_bool(_T("PermanentMOBIcon")));
+	gui.set_view_show_layers(read_bool(_T("ShowLayers"), true));
+	gui.set_auto_anchor_mark(read_bool(_T("AutoAnchorDrop")));
+	gui.set_view_show_active_route_highway(read_bool(_T("ShowActiveRouteHighway"), true));
 	Read(_T("MostRecentGPSUploadConnection"), &g_uploadConnection, _T(""));
 
 	Read(_T("SDMMFormat"), &g_iSDMMFormat, 0); // 0 = "Degrees, Decimal minutes"), 1 = "Decimal
@@ -661,7 +653,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("VisibleLayers"), &visibleLayers);
 	Read(_T("InvisibleLayers"), &invisibleLayers);
 
-	Read(_T("PreserveScaleOnX"), &g_bPreserveScaleOnX, 0);
+	gui.set_view_preserve_scale_on_x(read_bool(_T("PreserveScaleOnX")));
 
 	if (iteration == 0) {
 		g_locale = _T("en_US");
@@ -1176,6 +1168,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 bool Config::LoadLayers(const wxString& path)
 {
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	wxArrayString file_array;
 	wxDir dir;
 	dir.Open(path);
@@ -1194,7 +1188,7 @@ bool Config::LoadLayers(const wxString& path)
 
 			if (file_array.size()) {
 				++g_LayerIdx;
-				Layer* layer = new Layer(g_LayerIdx, file_array[0], g_bShowLayers);
+				Layer* layer = new Layer(g_LayerIdx, file_array[0], view.show_layers);
 				wxString layerName;
 				if (file_array.size() <= 1)
 					wxFileName::SplitPath(file_array[0], NULL, NULL, &layerName, NULL, NULL);
@@ -1202,7 +1196,7 @@ bool Config::LoadLayers(const wxString& path)
 					wxFileName::SplitPath(filename, NULL, NULL, &layerName, NULL, NULL);
 				layer->setName(layerName);
 
-				bool bLayerViz = g_bShowLayers;
+				bool bLayerViz = view.show_layers;
 
 				if (visibleLayers.Contains(layer->getName()))
 					bLayerViz = true;
@@ -1580,12 +1574,12 @@ void Config::UpdateSettings()
 
 	Write(_T("ShowDebugWindows"), m_bShowDebugWindows);
 	Write(_T("SetSystemTime"), s_bSetSystemTime);
-	Write(_T("ShowGrid"), g_bDisplayGrid);
+	Write(_T("ShowGrid"), view.display_grid);
 	Write(_T("PlayShipsBells"), g_bPlayShipsBells);
-	Write(_T("PermanentMOBIcon"), g_bPermanentMOBIcon);
-	Write(_T("ShowLayers"), g_bShowLayers);
-	Write(_T("AutoAnchorDrop"), g_bAutoAnchorMark);
-	Write(_T("ShowActiveRouteHighway"), g_bShowActiveRouteHighway);
+	Write(_T("PermanentMOBIcon"), view.permanent_mob_icon);
+	Write(_T("ShowLayers"), view.show_layers);
+	Write(_T("AutoAnchorDrop"), view.auto_anchor_mark);
+	Write(_T("ShowActiveRouteHighway"), view.show_active_route_highway);
 	Write(_T("SDMMFormat"), g_iSDMMFormat);
 	Write(_T("DistanceFormat"), g_iDistanceFormat);
 	Write(_T("SpeedFormat"), g_iSpeedFormat);
@@ -1629,7 +1623,7 @@ void Config::UpdateSettings()
 	Write(_T("NMEALogWindowPosX"), NMEALogWindow::Get().GetPosX());
 	Write(_T("NMEALogWindowPosY"), NMEALogWindow::Get().GetPosY());
 
-	Write(_T("PreserveScaleOnX"), g_bPreserveScaleOnX);
+	Write(_T("PreserveScaleOnX"), view.preserve_scale_on_x);
 
 	Write(_T("StartWithTrackActive"), ais.TrackCarryOver);
 	Write(_T("AutomaticDailyTracks"), track.TrackDaily);
@@ -2070,11 +2064,12 @@ void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool
 	if (response != wxID_OK)
 		return;
 
-	Layer* layer = NULL;
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 
+	Layer* layer = NULL;
 	if (islayer) {
 		++g_LayerIdx;
-		layer = new Layer(g_LayerIdx, file_array[0], g_bShowLayers);
+		layer = new Layer(g_LayerIdx, file_array[0], view.show_layers);
 		wxString layerName;
 		if (file_array.size() <= 1) {
 			wxFileName::SplitPath(file_array[0], NULL, NULL, &layerName, NULL, NULL);
@@ -2086,7 +2081,7 @@ void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool
 		}
 		layer->setName(layerName);
 
-		bool bLayerViz = g_bShowLayers;
+		bool bLayerViz = view.show_layers;
 		if (visibleLayers.Contains(layer->getName()))
 			bLayerViz = true;
 		if (invisibleLayers.Contains(layer->getName()))

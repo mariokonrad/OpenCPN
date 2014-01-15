@@ -212,12 +212,7 @@ ToolBarSimple* g_toolbar;
 ocpnStyle::StyleManager* g_StyleManager;
 wxPrintData* g_printData = (wxPrintData*)NULL;
 wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
-bool g_bDisplayGrid; // Flag indicating weather the lat/lon grid should be displayed
-bool g_bShowActiveRouteHighway;
 bool g_bPlayShipsBells;
-bool g_bShowLayers;
-bool g_bTransparentToolbar;
-bool g_bPermanentMOBIcon;
 int g_iSDMMFormat;
 int g_iDistanceFormat;
 int g_iSpeedFormat;
@@ -266,7 +261,6 @@ ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 double g_ownship_predictor_minutes;
 int g_current_arrow_scale;
 Multiplexer* g_pMUX;
-bool g_bAutoAnchorMark;
 wxRect g_blink_rect;
 wxDateTime g_StartTime;
 int g_StartTimeTZ;
@@ -341,7 +335,6 @@ int g_total_NMEAerror_messages;
 CM93DSlide* pCM93DetailSlider;
 wxString g_AW1GUID;
 wxString g_AW2GUID;
-bool g_bshow_overzoom_emboss;
 int g_OwnShipIconType;
 double g_n_ownship_length_meters;
 double g_n_ownship_beam_meters;
@@ -350,7 +343,6 @@ double g_n_gps_antenna_offset_x;
 int g_n_ownship_min_mm;
 double g_n_arrival_circle_radius;
 int g_nautosave_interval_seconds;
-bool g_bPreserveScaleOnX;
 AboutDialog* g_pAboutDlg;
 wxPlatformInfo* g_pPlatform;
 wxLocale* plocale_def_lang;
@@ -737,9 +729,7 @@ void MainFrame::DestroyMyToolbar()
 
 bool _toolbarConfigMenuUtil(int toolid, wxString tipString)
 {
-	wxMenuItem* menuitem;
-
-	if (toolid == ID_MOB && g_bPermanentMOBIcon)
+	if (toolid == ID_MOB && global::OCPN::get().gui().view().permanent_mob_icon)
 		return true;
 
 	// Item ID trickery is needed because the wxCommandEvents for menu item clicked and toolbar
@@ -749,7 +739,7 @@ bool _toolbarConfigMenuUtil(int toolid, wxString tipString)
 	int idOffset = ID_PLUGIN_BASE - ID_ZOOMIN + 100; // Hopefully no more than 100 plugins loaded...
 	int menuItemId = toolid + idOffset;
 
-	menuitem = g_FloatingToolbarConfigMenu->FindItem(menuItemId);
+	wxMenuItem* menuitem = g_FloatingToolbarConfigMenu->FindItem(menuItemId);
 
 	if (menuitem) {
 		return menuitem->IsChecked();
@@ -1154,7 +1144,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 	// 3.  Opencpn has been up at least 30 minutes
 	// 4.  And, of course, opencpn is going down now.
 	// 5.  And if there is no anchor watch set on "anchor..." icon mark
-	if (g_bAutoAnchorMark) {
+	if (global::OCPN::get().gui().view().auto_anchor_mark) {
 		bool watching_anchor = false;
 		if (pAnchorWatchPoint1)
 			watching_anchor = (pAnchorWatchPoint1->m_IconName.StartsWith(_T("anchor")));
@@ -3781,8 +3771,10 @@ double MainFrame::GetBestVPScale(chart::ChartBase* pchart)
 	double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor()
 									 / chart_canvas->GetVPScale();
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	using namespace chart;
-	if ((g_bPreserveScaleOnX) || (CHART_TYPE_CM93COMP == pchart->GetChartType())) {
+	if (view.preserve_scale_on_x || (CHART_TYPE_CM93COMP == pchart->GetChartType())) {
 		double new_scale_ppm = pchart->GetNearestPreferredScalePPM(chart_canvas->GetVPScale());
 		proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
 	} else {
@@ -4104,7 +4096,7 @@ bool MainFrame::DoChartUpdate(void)
 
 	// If in auto-follow mode, use the current glat,glon to build chart stack.
 	// Otherwise, use vLat, vLon gotten from click on chart canvas, or other means
-	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
 	if (chart_canvas->m_bFollow == true) {
 		tLat = nav.pos.lat();
@@ -4123,9 +4115,8 @@ bool MainFrame::DoChartUpdate(void)
 				= sqrt((pixel_deltay * pixel_deltay) + (pixel_deltax * pixel_deltax));
 			double pixel_delta = 0;
 
-			//    The idea here is to cancel the effect of LookAhead for slow speed ove ground, to
-			// avoid
-			//    jumping of the vp center point during slow maneuvering, or at anchor....
+			// The idea here is to cancel the effect of LookAhead for slow speed ove ground, to
+			// avoid jumping of the vp center point during slow maneuvering, or at anchor....
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			if (!wxIsNaN(nav.sog)) {
 				if (nav.sog < 1.0)
@@ -4161,7 +4152,9 @@ bool MainFrame::DoChartUpdate(void)
 		pCurrentStack->SetCurrentEntryFromdbIndex(current_db_index);
 
 		if (bFirstAuto) {
-			double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / chart_canvas->GetVPScale(); // as set from config load
+			// as set from config load
+			double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor()
+											 / chart_canvas->GetVPScale();
 
 			int initial_db_index = g_restore_dbindex;
 			if( initial_db_index < 0 ) {
@@ -4389,11 +4382,12 @@ bool MainFrame::DoChartUpdate(void)
 				} else
 					proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / set_scale;
 
-				//  This logic will bring a new chart onscreen at roughly twice the true paper scale
+				// This logic will bring a new chart onscreen at roughly twice the true paper scale
 				// equivalent.
-				//  Note that first chart opened on application startup (bOpenSpecified = true) will
+				// Note that first chart opened on application startup (bOpenSpecified = true) will
 				// open at the config saved scale
-				if (bNewChart && !g_bPreserveScaleOnX && !bOpenSpecified) {
+				const global::GUI::View& view = global::OCPN::get().gui().view();
+				if (bNewChart && !view.preserve_scale_on_x && !bOpenSpecified) {
 					proposed_scale_onscreen = Current_Ch->GetNativeScale() / 2;
 					double equivalent_vp_scale = chart_canvas->GetCanvasScaleFactor()
 												 / proposed_scale_onscreen;

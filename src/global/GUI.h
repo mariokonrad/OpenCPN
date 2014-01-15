@@ -45,6 +45,7 @@ public:
 		bool show_depth_units;
 		bool lookahead_mode;
 		bool allow_overzoom_x; // Allow high overzoom
+		bool show_overzoom_emboss;
 		int route_line_width;
 		int track_line_width;
 		bool enable_zoom_to_cursor;
@@ -56,6 +57,12 @@ public:
 		ColorScheme color_scheme;
 		double initial_scale_ppm;
 		bool smooth_pan_zoom;
+		bool display_grid; // Flag indicating weather the lat/lon grid should be displayed
+		bool show_layers;
+		bool permanent_mob_icon;
+		bool show_active_route_highway;
+		bool auto_anchor_mark;
+		bool preserve_scale_on_x;
 	};
 
 	virtual const View& view() const = 0;
@@ -64,6 +71,7 @@ public:
 	virtual void set_view_show_depth_units(bool) = 0;
 	virtual void set_view_lookahead_mode(bool) = 0;
 	virtual void set_view_allow_overzoom_x(bool) = 0;
+	virtual void set_view_show_overzoom_emboss(bool) = 0;
 	virtual void set_route_line_width(int) = 0;
 	virtual void set_track_line_width(int) = 0;
 	virtual void set_enable_zoom_to_cursor(bool) = 0;
@@ -75,6 +83,12 @@ public:
 	virtual void set_color_scheme(ColorScheme) = 0;
 	virtual void set_initial_scale_ppm(double) = 0;
 	virtual void set_smooth_pan_zoom(bool) = 0;
+	virtual void set_view_display_grid(bool) = 0;
+	virtual void set_view_show_layers(bool) = 0;
+	virtual void set_view_permanent_mob_icon(bool) = 0;
+	virtual void set_view_show_active_route_highway(bool) = 0;
+	virtual void set_auto_anchor_mark(bool) = 0;
+	virtual void set_view_preserve_scale_on_x(bool) = 0;
 
 public:
 	struct Frame

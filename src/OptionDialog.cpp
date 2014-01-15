@@ -99,13 +99,10 @@ extern int g_SOGFilterSec;
 extern PlugInManager* g_pi_manager;
 extern ocpnStyle::StyleManager* g_StyleManager;
 
-extern bool g_bDisplayGrid;
-
 extern int g_iNavAidRadarRingsNumberVisible;
 extern float g_fNavAidRadarRingsStep;
 extern int g_pNavAidRadarRingsStepUnits;
 
-extern bool g_bPreserveScaleOnX;
 extern bool g_bPlayShipsBells;
 
 extern int g_OwnShipIconType;
@@ -1987,7 +1984,7 @@ void options::SetInitialSettings()
 
 	pMagVar->SetValue(wxString::Format(_T("%4.1f"), g_UserVar));
 
-	pSDisplayGrid->SetValue(g_bDisplayGrid);
+	pSDisplayGrid->SetValue(view.display_grid);
 
 	pCBCourseUp->SetValue(g_bCourseUp);
 	pCBLookAhead->SetValue(view.lookahead_mode);
@@ -2026,7 +2023,7 @@ void options::SetInitialSettings()
 		pSmoothPanZoom->Enable();
 	}
 
-	pPreserveScale->SetValue(g_bPreserveScaleOnX);
+	pPreserveScale->SetValue(view.preserve_scale_on_x);
 	pPlayShipsBells->SetValue(g_bPlayShipsBells);
 	pFullScreenToolbar->SetValue(gui.toolbar().full_screen);
 	pTransparentToolbar->SetValue(gui.toolbar().transparent);
@@ -2545,7 +2542,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 		m_pConfig->show_debug_windows(pSettingsCB1->GetValue());
 
 	gui.set_view_show_outlines(pCDOOutlines->GetValue());
-	g_bDisplayGrid = pSDisplayGrid->GetValue();
+	gui.set_view_display_grid(pSDisplayGrid->GetValue());
 
 	g_bQuiltEnable = pCDOQuilting->GetValue();
 	g_bFullScreenQuilt = !pFullScreenQuilt->GetValue();
@@ -2583,7 +2580,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	gui.set_WayPointPreventDragging(pWayPointPreventDragging->GetValue());
 	gui.set_ConfirmObjectDelete(pConfirmObjectDeletion->GetValue());
 
-	g_bPreserveScaleOnX = pPreserveScale->GetValue();
+	gui.set_view_preserve_scale_on_x(pPreserveScale->GetValue());
 
 	g_bPlayShipsBells = pPlayShipsBells->GetValue();
 	gui.set_toolbar_full_screen(pFullScreenToolbar->GetValue());

@@ -179,7 +179,6 @@ extern int g_total_NMEAerror_messages;
 extern CM93DSlide* pCM93DetailSlider;
 extern wxPlatformInfo* g_pPlatform;
 extern wxLocale* plocale_def_lang;
-extern wxString g_locale;
 extern bool g_b_assume_azerty;
 extern int g_click_stop;
 extern wxStaticBitmap* g_pStatBoxTool;
@@ -1358,13 +1357,15 @@ bool App::OnInit()
 		wxRegKey RegKey(wxString(_T("HKEY_LOCAL_MACHINE\\SOFTWARE\\OpenCPN")));
 		if (RegKey.Exists()) {
 			wxLogMessage(_("Retrieving initial language selection from Windows Registry"));
-			RegKey.QueryValue(wxString(_T("InstallerLanguage")), g_locale);
+			wxString locale;
+			RegKey.QueryValue(wxString(_T("InstallerLanguage")), locale);
+			global::OCPN::get().sys().set_locale(locale);
 		}
 	}
 #endif
 
 	// Find the language specified by the config file
-	const wxLanguageInfo* pli = wxLocale::FindLanguageInfo(g_locale);
+	const wxLanguageInfo* pli = wxLocale::FindLanguageInfo(global::OCPN::get().sys().data().locale);
 	wxString loc_lang_canonical;
 	bool b_initok;
 	plocale_def_lang = new wxLocale;

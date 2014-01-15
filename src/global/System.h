@@ -48,6 +48,7 @@ public:
 		wxString chartlist_filename;
 		wxString init_chart_dir;
 		wxString plugin_dir;
+		wxString locale;
 	};
 
 	virtual const Data& data() const = 0;
@@ -61,6 +62,7 @@ public:
 	virtual void set_chartlist_fileame(const wxString&) = 0;
 	virtual void set_init_chart_dir(const wxString&) = 0;
 	virtual void set_plugin_dir(const wxString&) = 0;
+	virtual void set_locale(const wxString&) = 0;
 
 public:
 	struct Config

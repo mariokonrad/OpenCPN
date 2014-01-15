@@ -47,6 +47,7 @@ public: // data
 	virtual void set_chartlist_fileame(const wxString&);
 	virtual void set_init_chart_dir(const wxString&);
 	virtual void set_plugin_dir(const wxString&);
+	virtual void set_locale(const wxString&);
 
 public: // config
 	virtual const Config& config() const;

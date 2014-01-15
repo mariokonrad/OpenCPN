@@ -141,7 +141,6 @@ extern bool g_bMagneticAPB;
 extern chart::s52plib *ps52plib;
 #endif
 
-extern wxString g_locale;
 extern bool g_bportable;
 extern bool g_bdisable_opengl;
 
@@ -1648,11 +1647,12 @@ void options::CreatePanel_UI(size_t parent, int border_size, int WXUNUSED(group_
 
 	m_itemFontElementListBox = new wxChoice(itemPanelFont, ID_CHOICE_FONTELEMENT);
 
+	const global::System::Data& sys = global::OCPN::get().sys().data();
 	int nFonts = FontMgr::Get().GetNumFonts();
 	for (int it = 0; it < nFonts; it++) {
 		const wxString& t = FontMgr::Get().GetDialogString(it);
 
-		if (FontMgr::Get().GetConfigString(it).StartsWith(g_locale)) {
+		if (FontMgr::Get().GetConfigString(it).StartsWith(sys.locale)) {
 			m_itemFontElementListBox->Append(t);
 		}
 	}
@@ -2806,10 +2806,11 @@ void options::OnApplyClick(wxCommandEvent& event)
 			}
 		}
 
-		wxString locale_old = g_locale;
-		g_locale = new_canon;
+		global::System& sys = global::OCPN::get().sys();
+		wxString locale_old = sys.data().locale;
+		sys.set_locale(new_canon);
 
-		if (g_locale != locale_old)
+		if (sys.data().locale != locale_old)
 			m_returnChanges |= LOCALE_CHANGED;
 
 		wxString oldStyle = g_StyleManager->current().getName();
@@ -3040,7 +3041,7 @@ void options::OnPageChange(wxListbookEvent& event)
 			int current_language = plocale_def_lang->GetLanguage();
 			wxString current_sel = wxLocale::GetLanguageName(current_language);
 
-			current_sel = GetOCPNKnownLanguage(g_locale, NULL);
+			current_sel = GetOCPNKnownLanguage(global::OCPN::get().sys().data().locale, NULL);
 
 			const int nLang = sizeof(LANGUAGE_LIST) / sizeof(LANGUAGE_LIST[0]);
 
@@ -3128,7 +3129,8 @@ void options::OnPageChange(wxListbookEvent& event)
 			m_itemLangListBox->SetStringSelection(current_sel);
 
 			// Initialize Language tab
-			const wxLanguageInfo* pli = wxLocale::FindLanguageInfo(g_locale);
+			const wxLanguageInfo* pli
+				= wxLocale::FindLanguageInfo(global::OCPN::get().sys().data().locale);
 			if (pli) {
 				wxString clang = pli->Description;
 			}

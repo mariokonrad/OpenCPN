@@ -80,6 +80,11 @@ void OCPN_System::set_plugin_dir(const wxString& value)
 	data_data.plugin_dir = value;
 }
 
+void OCPN_System::set_locale(const wxString& value)
+{
+	data_data.locale = value;
+}
+
 const System::Config& OCPN_System::config() const
 {
 	return data_config;

@@ -346,7 +346,6 @@ int g_nautosave_interval_seconds;
 AboutDialog* g_pAboutDlg;
 wxPlatformInfo* g_pPlatform;
 wxLocale* plocale_def_lang;
-wxString g_locale;
 bool g_b_assume_azerty;
 int g_click_stop;
 std::vector<int> g_quilt_noshow_index_array;
@@ -2222,7 +2221,7 @@ int MainFrame::DoOptionsDialog()
 	bPrevQuilt = g_bQuiltEnable;
 	bPrevFullScreenQuilt = g_bFullScreenQuilt;
 
-	prev_locale = g_locale;
+	prev_locale = global::OCPN::get().sys().data().locale;
 
 	bool b_sub = false;
 	if (g_FloatingToolbarDialog && g_FloatingToolbarDialog->IsShown()) {
@@ -2319,8 +2318,9 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 		ChartsRefresh(dbii, chart_canvas->GetVP());
 	}
 
+	const global::System::Data& sys = global::OCPN::get().sys().data();
 	if ((rr & LOCALE_CHANGED) || (rr & STYLE_CHANGED)) {
-		if ((prev_locale != g_locale) || (rr & STYLE_CHANGED)) {
+		if ((prev_locale != sys.locale) || (rr & STYLE_CHANGED)) {
 			OCPNMessageBox(NULL, _("Please restart OpenCPN to activate language or style changes."),
 						   _("OpenCPN Info"), wxOK | wxICON_INFORMATION);
 		}

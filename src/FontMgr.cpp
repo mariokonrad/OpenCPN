@@ -23,6 +23,9 @@
 
 #include "FontMgr.h"
 
+#include <global/OCPN.h>
+#include <global/System.h>
+
 #include <locale>
 
 #include <wx/gdicmn.h>
@@ -30,12 +33,9 @@
 #include <wx/font.h>
 #include <wx/utils.h>
 
+FontMgr* FontMgr::instance = NULL;
 
-extern wxString g_locale;
-
-FontMgr * FontMgr::instance = NULL;
-
-FontMgr & FontMgr::Get()
+FontMgr& FontMgr::Get()
 {
 	if (!instance)
 		instance = new FontMgr;
@@ -43,7 +43,8 @@ FontMgr & FontMgr::Get()
 }
 
 FontMgr::FontMgr()
-{}
+{
+}
 
 FontMgr::~FontMgr()
 {
@@ -51,7 +52,7 @@ FontMgr::~FontMgr()
 		delete *i;
 }
 
-wxColour FontMgr::GetFontColor(const wxString &TextElement) const
+wxColour FontMgr::GetFontColor(const wxString& TextElement) const
 {
 	// Look thru the font list for a match
 
@@ -63,14 +64,14 @@ wxColour FontMgr::GetFontColor(const wxString &TextElement) const
 	return wxColour(0, 0, 0);
 }
 
-wxString FontMgr::GetFontConfigKey( const wxString &description )
+wxString FontMgr::GetFontConfigKey(const wxString& description)
 {
 	// Create the configstring by combining the locale with
 	// a hash of the font description. Hash is used because the i18n
 	// description can contain characters that mess up the config file.
 
 	wxString configkey;
-	configkey = g_locale;
+	configkey = global::OCPN::get().sys().data().locale;
 	configkey.Append(_T("-"));
 
 	using namespace std;
@@ -85,7 +86,7 @@ wxString FontMgr::GetFontConfigKey( const wxString &description )
 	return configkey;
 }
 
-wxFont * FontMgr::find_font(const wxString & text_element)
+wxFont* FontMgr::find_font(const wxString& text_element)
 {
 	// Look thru the font list for a match
 
@@ -96,9 +97,9 @@ wxFont * FontMgr::find_font(const wxString & text_element)
 	return NULL;
 }
 
-wxFont * FontMgr::GetFont(const wxString &TextElement, int default_size)
+wxFont* FontMgr::GetFont(const wxString& TextElement, int default_size)
 {
-	wxFont * font = find_font(TextElement);
+	wxFont* font = find_font(TextElement);
 	if (font)
 		return font;
 
@@ -110,9 +111,9 @@ wxFont * FontMgr::GetFont(const wxString &TextElement, int default_size)
 	int new_size = (default_size != 0) ? default_size : 12;
 
 	wxString nativefont = GetSimpleNativeFont(new_size);
-	wxFont * nf = wxFont::New(nativefont);
+	wxFont* nf = wxFont::New(nativefont);
 
-	FontDesc * pnewfd = new FontDesc(TextElement, configkey, nf, *wxBLACK);
+	FontDesc* pnewfd = new FontDesc(TextElement, configkey, nf, *wxBLACK);
 	fontlist.push_back(pnewfd);
 
 	return pnewfd->m_font;
@@ -124,12 +125,11 @@ wxString FontMgr::GetSimpleNativeFont(int size)
 	wxString nativefont;
 
 	// For those platforms which have no native font description string format
-	nativefont.Printf(_T("%d;%d;%d;%d;%d;%d;%s;%d"),
-			0,                                 // version
-			size, wxFONTFAMILY_DEFAULT, (int) wxFONTSTYLE_NORMAL, (int) wxFONTWEIGHT_NORMAL, false,
-			"", (int) wxFONTENCODING_DEFAULT );
+	nativefont.Printf(_T("%d;%d;%d;%d;%d;%d;%s;%d"), 0, // version
+					  size, wxFONTFAMILY_DEFAULT, (int)wxFONTSTYLE_NORMAL, (int)wxFONTWEIGHT_NORMAL,
+					  false, "", (int)wxFONTENCODING_DEFAULT);
 
-	// If we know of a detailed description string format, use it.
+// If we know of a detailed description string format, use it.
 #ifdef __WXGTK__
 	nativefont.Printf(_T("Fixed %2d"), size);
 #endif
@@ -141,26 +141,30 @@ wxString FontMgr::GetSimpleNativeFont(int size)
 #ifdef __WXMSW__
 	// nativefont = _T ( "0;-11;0;0;0;400;0;0;0;0;0;0;0;0;MS Sans Serif" );
 
-	int h, w, hm, wm;
-	::wxDisplaySize( &w, &h );            // pixels
-	::wxDisplaySizeMM( &wm, &hm );        // MM
-	double pix_per_inch_v = wxMax( 72.0, ( h / hm ) * 25.4);
-	int lfHeight = -(int) ( ( size * ( pix_per_inch_v / 72.0 ) ) + 0.5 );
+	int h;
+	int w;
+	int hm;
+	int wm;
+	::wxDisplaySize(&w, &h); // pixels
+	::wxDisplaySizeMM(&wm, &hm); // MM
+	double pix_per_inch_v = wxMax(72.0, (h / hm) * 25.4);
+	int lfHeight = -(int)((size * (pix_per_inch_v / 72.0)) + 0.5);
 
-	nativefont.Printf( _T("%d;%ld;%ld;%ld;%ld;%ld;%d;%d;%d;%d;%d;%d;%d;%d;"), 0, // version, in case we want to change the format later
-			lfHeight,            //lf.lfHeight
-			0,                   //lf.lfWidth,
-			0,                   //lf.lfEscapement,
-			0,                   //lf.lfOrientation,
-			400,                 //lf.lfWeight,
-			0,                   //lf.lfItalic,
-			0,                   //lf.lfUnderline,
-			0,                   //lf.lfStrikeOut,
-			0,                   //lf.lfCharSet,
-			0,                   //lf.lfOutPrecision,
-			0,                   //lf.lfClipPrecision,
-			0,                   //lf.lfQuality,
-			0 );                    //lf.lfPitchAndFamily,
+	// version, in case we want to change the format later
+	nativefont.Printf( _T("%d;%ld;%ld;%ld;%ld;%ld;%d;%d;%d;%d;%d;%d;%d;%d;"), 0,
+			lfHeight, // lf.lfHeight
+			0,        // lf.lfWidth,
+			0,        // lf.lfEscapement,
+			0,        // lf.lfOrientation,
+			400,      // lf.lfWeight,
+			0,        // lf.lfItalic,
+			0,        // lf.lfUnderline,
+			0,        // lf.lfStrikeOut,
+			0,        // lf.lfCharSet,
+			0,        // lf.lfOutPrecision,
+			0,        // lf.lfClipPrecision,
+			0,        // lf.lfQuality,
+			0 );      // lf.lfPitchAndFamily,
 
 	nativefont.Append(_T("Verdana"));
 #endif
@@ -168,11 +172,11 @@ wxString FontMgr::GetSimpleNativeFont(int size)
 	return nativefont;
 }
 
-bool FontMgr::SetFont(const wxString &TextElement, wxFont *pFont, wxColour color)
+bool FontMgr::SetFont(const wxString& TextElement, wxFont* pFont, wxColour color)
 {
 	// Look thru the font list for a match
 	for (FontList::iterator i = fontlist.begin(); i != fontlist.end(); ++i) {
-		FontDesc * pmfd = *i;
+		FontDesc* pmfd = *i;
 		if (pmfd->m_dialogstring == TextElement) {
 			// TODO Think about this
 			//
@@ -195,24 +199,24 @@ int FontMgr::GetNumFonts(void) const
 	return static_cast<int>(fontlist.size());
 }
 
-const wxString & FontMgr::GetConfigString(int i) const
+const wxString& FontMgr::GetConfigString(int i) const
 {
 	return fontlist.at(i)->m_configstring;
 }
 
-const wxString & FontMgr::GetDialogString(int i) const
+const wxString& FontMgr::GetDialogString(int i) const
 {
 	return fontlist.at(i)->m_dialogstring;
 }
 
-const wxString & FontMgr::GetNativeDesc(int i) const
+const wxString& FontMgr::GetNativeDesc(int i) const
 {
 	return fontlist.at(i)->m_nativeInfo;
 }
 
 wxString FontMgr::GetFullConfigDesc(int i) const
 {
-	const FontDesc * pfd = fontlist.at(i);
+	const FontDesc* pfd = fontlist.at(i);
 	wxString ret = pfd->m_dialogstring;
 	ret.Append(_T(":"));
 	ret.Append(pfd->m_nativeInfo);
@@ -226,7 +230,7 @@ wxString FontMgr::GetFullConfigDesc(int i) const
 	return ret;
 }
 
-void FontMgr::LoadFontNative(const wxString & ConfigString, const wxString & NativeDesc)
+void FontMgr::LoadFontNative(const wxString& ConfigString, const wxString& NativeDesc)
 {
 	// Parse the descriptor string
 	wxStringTokenizer tk(NativeDesc, _T(":"));
@@ -236,23 +240,23 @@ void FontMgr::LoadFontNative(const wxString & ConfigString, const wxString & Nat
 
 	// Search for a match in the list
 	for (FontList::iterator i = fontlist.begin(); i != fontlist.end(); ++i) {
-		FontDesc * pmfd = *i;
+		FontDesc* pmfd = *i;
 		if (pmfd->m_configstring == ConfigString) {
 			pmfd->m_nativeInfo = nativefont;
-			wxFont * nf = pmfd->m_font->New(pmfd->m_nativeInfo);
+			wxFont* nf = pmfd->m_font->New(pmfd->m_nativeInfo);
 			pmfd->m_font = nf;
 			return;
 		}
 	}
 
 	// Create and add the font to the list
-	wxFont * nf0 = new wxFont();
-	wxFont * nf = nf0->New(nativefont);
+	wxFont* nf0 = new wxFont();
+	wxFont* nf = nf0->New(nativefont);
 
 	// Scrub the native font string for bad unicode conversion
 #ifdef __WXMSW__
 	wxString face = nf->GetFaceName();
-	const wxChar * t = face.c_str();
+	const wxChar* t = face.c_str();
 	if (*t > 255) {
 		delete nf;
 		wxString substitute_native = GetSimpleNativeFont(12);
@@ -261,7 +265,7 @@ void FontMgr::LoadFontNative(const wxString & ConfigString, const wxString & Nat
 #endif
 	delete nf0;
 
-	FontDesc * pnewfd = new FontDesc(dialogstring, ConfigString, nf, color);
+	FontDesc* pnewfd = new FontDesc(dialogstring, ConfigString, nf, color);
 	fontlist.push_back(pnewfd);
 }
 

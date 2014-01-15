@@ -112,8 +112,6 @@ extern double           g_n_arrival_circle_radius;
 
 extern bool             g_bUseGLL;
 
-extern wxString         g_locale;
-
 extern bool             g_bCourseUp;
 extern int              g_COGAvgSec;
 extern bool             g_bMagneticAPB;
@@ -656,8 +654,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_view_preserve_scale_on_x(read_bool(_T("PreserveScaleOnX")));
 
 	if (iteration == 0) {
-		g_locale = _T("en_US");
-		Read(_T("Locale"), &g_locale);
+		wxString locale = _T("en_US");
+		Read(_T("Locale"), &locale);
+		sys.set_locale(locale);
 	}
 
 	// We allow 0-99 backups ov navobj.xml
@@ -1562,6 +1561,7 @@ void Config::UpdateSettings()
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
 	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
+	const global::System& sys = global::OCPN::get().sys();
 
 	// Global options and settings
 	SetPath(_T("/Settings"));
@@ -1657,7 +1657,7 @@ void Config::UpdateSettings()
 	Write(_T("VisibleLayers"), vis);
 	Write(_T("InvisibleLayers"), invis);
 
-	Write(_T("Locale"), g_locale);
+	Write(_T("Locale"), sys.data().locale);
 
 	Write(_T("KeepNavobjBackups"), navobjbackups);
 

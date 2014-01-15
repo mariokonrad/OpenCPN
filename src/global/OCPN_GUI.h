@@ -30,78 +30,78 @@ namespace global {
 
 class OCPN_GUI : public GUI
 {
-	private:
-		View data_view;
-		Frame data_frame;
-		Toolbar data_toolbar;
-		AISAlertDialog data_ais_alert_dialog;
-		AISQueryDialog data_ais_query_dialog;
-		AISTargetList data_ais_target_list;
-		CM93 data_cm93;
-		S57Dialog data_s57dialog;
+private:
+	View data_view;
+	Frame data_frame;
+	Toolbar data_toolbar;
+	AISAlertDialog data_ais_alert_dialog;
+	AISQueryDialog data_ais_query_dialog;
+	AISTargetList data_ais_target_list;
+	CM93 data_cm93;
+	S57Dialog data_s57dialog;
 
-	public: // view
-		virtual const View & view() const;
-		virtual void set_view_screen_brightness(int);
-		virtual void set_view_show_outlines(bool);
-		virtual void set_view_show_depth_units(bool);
-		virtual void set_view_lookahead_mode(bool);
-		virtual void set_view_allow_overzoom_x(bool);
-		virtual void set_route_line_width(int);
-		virtual void set_track_line_width(int);
-		virtual void set_enable_zoom_to_cursor(bool);
-		virtual void set_DrawAISSize(bool);
-		virtual void set_ShowAISName(bool);
-		virtual void set_Show_Target_Name_Scale(int);
-		virtual void set_WayPointPreventDragging(bool);
-		virtual void set_ConfirmObjectDelete(bool);
-		virtual void set_color_scheme(ColorScheme);
-		virtual void set_initial_scale_ppm(double);
+public: // view
+	virtual const View& view() const;
+	virtual void set_view_screen_brightness(int);
+	virtual void set_view_show_outlines(bool);
+	virtual void set_view_show_depth_units(bool);
+	virtual void set_view_lookahead_mode(bool);
+	virtual void set_view_allow_overzoom_x(bool);
+	virtual void set_route_line_width(int);
+	virtual void set_track_line_width(int);
+	virtual void set_enable_zoom_to_cursor(bool);
+	virtual void set_DrawAISSize(bool);
+	virtual void set_ShowAISName(bool);
+	virtual void set_Show_Target_Name_Scale(int);
+	virtual void set_WayPointPreventDragging(bool);
+	virtual void set_ConfirmObjectDelete(bool);
+	virtual void set_color_scheme(ColorScheme);
+	virtual void set_initial_scale_ppm(double);
 
-	public: // frame
-		virtual const Frame & frame() const;
-		virtual void set_frame_position(const wxPoint &);
-		virtual void set_frame_size(const wxSize &);
-		virtual void set_frame_maximized(bool);
-		virtual void set_frame_last_position(const wxPoint &);
-		virtual void set_frame_last_size(const wxSize &);
+public: // frame
+	virtual const Frame& frame() const;
+	virtual void set_frame_position(const wxPoint&);
+	virtual void set_frame_size(const wxSize&);
+	virtual void set_frame_maximized(bool);
+	virtual void set_frame_last_position(const wxPoint&);
+	virtual void set_frame_last_size(const wxSize&);
 
-	public: // toolbar
-		virtual const Toolbar & toolbar() const;
-		virtual void set_toolbar_position(const wxPoint &);
-		virtual void set_toolbar_orientation(long);
-		virtual void set_toolbar_transparent(bool);
-		virtual void set_toolbar_full_screen(bool);
-		void ensure_toolbar_position_range(wxPoint, wxPoint);
+public: // toolbar
+	virtual const Toolbar& toolbar() const;
+	virtual void set_toolbar_position(const wxPoint&);
+	virtual void set_toolbar_orientation(long);
+	virtual void set_toolbar_transparent(bool);
+	virtual void set_toolbar_full_screen(bool);
+	void ensure_toolbar_position_range(wxPoint, wxPoint);
 
-	public: // ais alert dialog
-		virtual const AISAlertDialog & ais_alert_dialog() const;
-		virtual void set_ais_alert_dialog_position(const wxPoint &);
-		virtual void set_ais_alert_dialog_size(const wxSize &);
-		void ensure_ais_alert_dialog_position_range(wxPoint, wxPoint);
-		void ensure_ais_alert_dialog_position_range(wxPoint, wxSize);
+public: // ais alert dialog
+	virtual const AISAlertDialog& ais_alert_dialog() const;
+	virtual void set_ais_alert_dialog_position(const wxPoint&);
+	virtual void set_ais_alert_dialog_size(const wxSize&);
+	void ensure_ais_alert_dialog_position_range(wxPoint, wxPoint);
+	void ensure_ais_alert_dialog_position_range(wxPoint, wxSize);
 
-	public: // ais query dialog
-		virtual const AISQueryDialog & ais_query_dialog() const;
-		virtual void set_ais_query_dialog_position(const wxPoint &);
+public: // ais query dialog
+	virtual const AISQueryDialog& ais_query_dialog() const;
+	virtual void set_ais_query_dialog_position(const wxPoint&);
 
-	public: // ais target list
-		virtual const AISTargetList& ais_target_list() const;
-		virtual void set_ais_target_list_perspective(const wxString&);
-		virtual void set_ais_target_list_range(int);
-		virtual void set_ais_target_list_sortColumn(int);
-		virtual void set_ais_target_list_sortReverse(bool);
-		virtual void set_ais_target_list_column_spec(const wxString&);
+public: // ais target list
+	virtual const AISTargetList& ais_target_list() const;
+	virtual void set_ais_target_list_perspective(const wxString&);
+	virtual void set_ais_target_list_range(int);
+	virtual void set_ais_target_list_sortColumn(int);
+	virtual void set_ais_target_list_sortReverse(bool);
+	virtual void set_ais_target_list_column_spec(const wxString&);
 
-	public: // cm93
-		virtual const CM93 & cm93() const;
-		virtual void set_cm93_zoom_factor(int);
-		virtual void set_cm93_detail_dialog_position(const wxPoint &);
-		virtual void set_cm93_show_detail_slider(bool);
+public: // cm93
+	virtual const CM93& cm93() const;
+	virtual void set_cm93_zoom_factor(int);
+	virtual void set_cm93_detail_dialog_position(const wxPoint&);
+	virtual void set_cm93_show_detail_slider(bool);
 
-	public: // S57 dialog
-		virtual const S57Dialog & s57dialog() const;
-		virtual void set_S57_dialog_size(const wxSize &);
+public: // S57 dialog
+	virtual const S57Dialog& s57dialog() const;
+	virtual void set_S57_dialog_size(const wxSize&);
 };
 
 }

@@ -26,7 +26,7 @@
 
 namespace global {
 
-const GUI::View & OCPN_GUI::view() const
+const GUI::View& OCPN_GUI::view() const
 {
 	return data_view;
 }
@@ -106,17 +106,17 @@ void OCPN_GUI::set_initial_scale_ppm(double value)
 	data_view.initial_scale_ppm = value;
 }
 
-const GUI::Frame & OCPN_GUI::frame() const
+const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;
 }
 
-void OCPN_GUI::set_frame_position(const wxPoint & position)
+void OCPN_GUI::set_frame_position(const wxPoint& position)
 {
 	data_frame.position = position;
 }
 
-void OCPN_GUI::set_frame_size(const wxSize & size)
+void OCPN_GUI::set_frame_size(const wxSize& size)
 {
 	data_frame.size = size;
 }
@@ -126,22 +126,22 @@ void OCPN_GUI::set_frame_maximized(bool flag)
 	data_frame.maximized = flag;
 }
 
-void OCPN_GUI::set_frame_last_position(const wxPoint & position)
+void OCPN_GUI::set_frame_last_position(const wxPoint& position)
 {
 	data_frame.last_position = position;
 }
 
-void OCPN_GUI::set_frame_last_size(const wxSize & size)
+void OCPN_GUI::set_frame_last_size(const wxSize& size)
 {
 	data_frame.last_size = size;
 }
 
-const GUI::Toolbar & OCPN_GUI::toolbar() const
+const GUI::Toolbar& OCPN_GUI::toolbar() const
 {
 	return data_toolbar;
 }
 
-void OCPN_GUI::set_toolbar_position(const wxPoint & position)
+void OCPN_GUI::set_toolbar_position(const wxPoint& position)
 {
 	data_toolbar.position = position;
 }
@@ -169,17 +169,17 @@ void OCPN_GUI::ensure_toolbar_position_range(wxPoint p0, wxPoint p1)
 	data_toolbar.position.y = std::min(data_toolbar.position.y, p1.y);
 }
 
-const GUI::AISAlertDialog & OCPN_GUI::ais_alert_dialog() const
+const GUI::AISAlertDialog& OCPN_GUI::ais_alert_dialog() const
 {
 	return data_ais_alert_dialog;
 }
 
-void OCPN_GUI::set_ais_alert_dialog_position(const wxPoint & position)
+void OCPN_GUI::set_ais_alert_dialog_position(const wxPoint& position)
 {
 	data_ais_alert_dialog.position = position;
 }
 
-void OCPN_GUI::set_ais_alert_dialog_size(const wxSize & size)
+void OCPN_GUI::set_ais_alert_dialog_size(const wxSize& size)
 {
 	data_ais_alert_dialog.size = size;
 }
@@ -197,12 +197,12 @@ void OCPN_GUI::ensure_ais_alert_dialog_position_range(wxPoint p0, wxSize p1)
 	ensure_ais_alert_dialog_position_range(p0, wxPoint(0, 0) + p1);
 }
 
-const GUI::AISQueryDialog & OCPN_GUI::ais_query_dialog() const
+const GUI::AISQueryDialog& OCPN_GUI::ais_query_dialog() const
 {
 	return data_ais_query_dialog;
 }
 
-void OCPN_GUI::set_ais_query_dialog_position(const wxPoint & position)
+void OCPN_GUI::set_ais_query_dialog_position(const wxPoint& position)
 {
 	data_ais_query_dialog.position = position;
 }
@@ -237,7 +237,7 @@ void OCPN_GUI::set_ais_target_list_column_spec(const wxString& value)
 	data_ais_target_list.column_spec = value;
 }
 
-const GUI::CM93 & OCPN_GUI::cm93() const
+const GUI::CM93& OCPN_GUI::cm93() const
 {
 	return data_cm93;
 }
@@ -247,7 +247,7 @@ void OCPN_GUI::set_cm93_zoom_factor(int factor)
 	data_cm93.zoom_factor = factor;
 }
 
-void OCPN_GUI::set_cm93_detail_dialog_position(const wxPoint & position)
+void OCPN_GUI::set_cm93_detail_dialog_position(const wxPoint& position)
 {
 	data_cm93.detail_dialog_position = position;
 }
@@ -257,12 +257,12 @@ void OCPN_GUI::set_cm93_show_detail_slider(bool flag)
 	data_cm93.show_detail_slider = flag;
 }
 
-const GUI::S57Dialog & OCPN_GUI::s57dialog() const
+const GUI::S57Dialog& OCPN_GUI::s57dialog() const
 {
 	return data_s57dialog;
 }
 
-void OCPN_GUI::set_S57_dialog_size(const wxSize & size)
+void OCPN_GUI::set_S57_dialog_size(const wxSize& size)
 {
 	data_s57dialog.size = size;
 }

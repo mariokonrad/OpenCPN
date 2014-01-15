@@ -32,144 +32,138 @@ namespace global {
 
 class GUI
 {
-	public:
-		virtual ~GUI() {}
+public:
+	virtual ~GUI()
+	{
+	}
 
-	public:
+public:
+	struct View
+	{
+		int screen_brightness;
+		bool show_outlines;
+		bool show_depth_units;
+		bool lookahead_mode;
+		bool allow_overzoom_x; // Allow high overzoom
+		int route_line_width;
+		int track_line_width;
+		bool enable_zoom_to_cursor;
+		bool DrawAISSize;
+		bool ShowAISName;
+		int Show_Target_Name_Scale;
+		bool WayPointPreventDragging;
+		bool ConfirmObjectDelete;
+		ColorScheme color_scheme;
+		double initial_scale_ppm;
+	};
 
-		struct View
-		{
-			int screen_brightness;
-			bool show_outlines;
-			bool show_depth_units;
-			bool lookahead_mode;
-			bool allow_overzoom_x; // Allow high overzoom
-			int route_line_width;
-			int track_line_width;
-			bool enable_zoom_to_cursor;
-			bool DrawAISSize;
-			bool ShowAISName;
-			int Show_Target_Name_Scale;
-			bool WayPointPreventDragging;
-			bool ConfirmObjectDelete;
-			ColorScheme color_scheme;
-			double initial_scale_ppm;
-		};
+	virtual const View& view() const = 0;
+	virtual void set_view_screen_brightness(int) = 0;
+	virtual void set_view_show_outlines(bool) = 0;
+	virtual void set_view_show_depth_units(bool) = 0;
+	virtual void set_view_lookahead_mode(bool) = 0;
+	virtual void set_view_allow_overzoom_x(bool) = 0;
+	virtual void set_route_line_width(int) = 0;
+	virtual void set_track_line_width(int) = 0;
+	virtual void set_enable_zoom_to_cursor(bool) = 0;
+	virtual void set_DrawAISSize(bool) = 0;
+	virtual void set_ShowAISName(bool) = 0;
+	virtual void set_Show_Target_Name_Scale(int) = 0;
+	virtual void set_WayPointPreventDragging(bool) = 0;
+	virtual void set_ConfirmObjectDelete(bool) = 0;
+	virtual void set_color_scheme(ColorScheme) = 0;
+	virtual void set_initial_scale_ppm(double) = 0;
 
-		virtual const View & view() const = 0;
-		virtual void set_view_screen_brightness(int) = 0;
-		virtual void set_view_show_outlines(bool) = 0;
-		virtual void set_view_show_depth_units(bool) = 0;
-		virtual void set_view_lookahead_mode(bool) = 0;
-		virtual void set_view_allow_overzoom_x(bool) = 0;
-		virtual void set_route_line_width(int) = 0;
-		virtual void set_track_line_width(int) = 0;
-		virtual void set_enable_zoom_to_cursor(bool) = 0;
-		virtual void set_DrawAISSize(bool) = 0;
-		virtual void set_ShowAISName(bool) = 0;
-		virtual void set_Show_Target_Name_Scale(int) = 0;
-		virtual void set_WayPointPreventDragging(bool) = 0;
-		virtual void set_ConfirmObjectDelete(bool) = 0;
-		virtual void set_color_scheme(ColorScheme) = 0;
-		virtual void set_initial_scale_ppm(double) = 0;
+public:
+	struct Frame
+	{
+		wxPoint position;
+		wxSize size;
+		bool maximized;
+		wxPoint last_position;
+		wxSize last_size;
+	};
 
-	public:
+	virtual const Frame& frame() const = 0;
+	virtual void set_frame_position(const wxPoint&) = 0;
+	virtual void set_frame_size(const wxSize&) = 0;
+	virtual void set_frame_maximized(bool) = 0;
+	virtual void set_frame_last_position(const wxPoint&) = 0;
+	virtual void set_frame_last_size(const wxSize&) = 0;
 
-		struct Frame
-		{
-			wxPoint position;
-			wxSize size;
-			bool maximized;
-			wxPoint last_position;
-			wxSize last_size;
-		};
+public:
+	struct Toolbar
+	{
+		wxPoint position;
+		long orientation;
+		bool transparent;
+		bool full_screen;
+	};
 
-		virtual const Frame & frame() const = 0;
-		virtual void set_frame_position(const wxPoint &) = 0;
-		virtual void set_frame_size(const wxSize &) = 0;
-		virtual void set_frame_maximized(bool) = 0;
-		virtual void set_frame_last_position(const wxPoint &) = 0;
-		virtual void set_frame_last_size(const wxSize &) = 0;
+	virtual const Toolbar& toolbar() const = 0;
+	virtual void set_toolbar_position(const wxPoint&) = 0;
+	virtual void set_toolbar_orientation(long) = 0;
+	virtual void set_toolbar_transparent(bool) = 0;
+	virtual void set_toolbar_full_screen(bool) = 0;
 
-	public:
+public:
+	struct AISAlertDialog
+	{
+		wxPoint position;
+		wxSize size;
+	};
 
-		struct Toolbar
-		{
-			wxPoint position;
-			long orientation;
-			bool transparent;
-			bool full_screen;
-		};
+	virtual const AISAlertDialog& ais_alert_dialog() const = 0;
+	virtual void set_ais_alert_dialog_position(const wxPoint&) = 0;
+	virtual void set_ais_alert_dialog_size(const wxSize&) = 0;
 
-		virtual const Toolbar & toolbar() const = 0;
-		virtual void set_toolbar_position(const wxPoint &) = 0;
-		virtual void set_toolbar_orientation(long) = 0;
-		virtual void set_toolbar_transparent(bool) = 0;
-		virtual void set_toolbar_full_screen(bool) = 0;
+public:
+	struct AISQueryDialog
+	{
+		wxPoint position;
+	};
 
-	public:
+	virtual const AISQueryDialog& ais_query_dialog() const = 0;
+	virtual void set_ais_query_dialog_position(const wxPoint&) = 0;
 
-		struct AISAlertDialog
-		{
-			wxPoint position;
-			wxSize size;
-		};
+public:
+	struct AISTargetList
+	{
+		wxString perspective;
+		int range;
+		int sortColumn;
+		bool sortReverse;
+		wxString column_spec;
+	};
 
-		virtual const AISAlertDialog & ais_alert_dialog() const = 0;
-		virtual void set_ais_alert_dialog_position(const wxPoint &) = 0;
-		virtual void set_ais_alert_dialog_size(const wxSize &) = 0;
+	virtual const AISTargetList& ais_target_list() const = 0;
+	virtual void set_ais_target_list_perspective(const wxString&) = 0;
+	virtual void set_ais_target_list_range(int) = 0;
+	virtual void set_ais_target_list_sortColumn(int) = 0;
+	virtual void set_ais_target_list_sortReverse(bool) = 0;
+	virtual void set_ais_target_list_column_spec(const wxString&) = 0;
 
-	public:
+public:
+	struct CM93
+	{
+		int zoom_factor;
+		wxPoint detail_dialog_position;
+		bool show_detail_slider;
+	};
 
-		struct AISQueryDialog
-		{
-			wxPoint position;
-		};
+	virtual const CM93& cm93() const = 0;
+	virtual void set_cm93_zoom_factor(int) = 0;
+	virtual void set_cm93_detail_dialog_position(const wxPoint&) = 0;
+	virtual void set_cm93_show_detail_slider(bool) = 0;
 
-		virtual const AISQueryDialog & ais_query_dialog() const = 0;
-		virtual void set_ais_query_dialog_position(const wxPoint &) = 0;
+public:
+	struct S57Dialog
+	{
+		wxSize size;
+	};
 
-	public:
-
-		struct AISTargetList
-		{
-			wxString perspective;
-			int range;
-			int sortColumn;
-			bool sortReverse;
-			wxString column_spec;
-		};
-
-		virtual const AISTargetList& ais_target_list() const = 0;
-		virtual void set_ais_target_list_perspective(const wxString&) = 0;
-		virtual void set_ais_target_list_range(int) = 0;
-		virtual void set_ais_target_list_sortColumn(int) = 0;
-		virtual void set_ais_target_list_sortReverse(bool) = 0;
-		virtual void set_ais_target_list_column_spec(const wxString&) = 0;
-
-	public:
-
-		struct CM93
-		{
-			int zoom_factor;
-			wxPoint detail_dialog_position;
-			bool show_detail_slider;
-		};
-
-		virtual const CM93 & cm93() const = 0;
-		virtual void set_cm93_zoom_factor(int) = 0;
-		virtual void set_cm93_detail_dialog_position(const wxPoint &) = 0;
-		virtual void set_cm93_show_detail_slider(bool) = 0;
-
-	public:
-
-		struct S57Dialog
-		{
-			wxSize size;
-		};
-
-		virtual const S57Dialog & s57dialog() const = 0;
-		virtual void set_S57_dialog_size(const wxSize &) = 0;
+	virtual const S57Dialog& s57dialog() const = 0;
+	virtual void set_S57_dialog_size(const wxSize&) = 0;
 };
 
 }

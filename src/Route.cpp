@@ -54,6 +54,11 @@ extern double g_n_arrival_circle_radius;
 const double Route::DEFAULT_SPEED = 5.0;
 const int Route::STYLE_UNDEFINED = -1;
 
+template <typename T>
+static T sqr(T a)
+{
+	return a * a;
+}
 
 Route::SameGUID::SameGUID(const wxString& guid)
 	: guid(guid)
@@ -411,17 +416,18 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 
 			double pix_full_circle = geo::WGS84_semimajor_axis_meters * geo::mercator_k0 * 2.0 * M_PI
 									 * VP.view_scale();
-			double dp = pow((double)(rpt1.x - rpt2.x), 2) + pow((double)(rpt1.y - rpt2.y), 2);
+			double dp = sqr(static_cast<double>(rpt1.x - rpt2.x))
+						+ sqr(static_cast<double>(rpt1.y - rpt2.y));
 			double dtest;
-			int adder;
+			int adder = 0;
 			if (b_1_on && !b_2_on) {
 				if (rpt2.x < rpt1.x)
-					adder = (int)pix_full_circle;
+					adder = static_cast<int>(pix_full_circle);
 				else
-					adder = -(int)pix_full_circle;
+					adder = -static_cast<int>(pix_full_circle);
 
-				dtest = pow((double)(rpt1.x - (rpt2.x + adder)), 2)
-						+ pow((double)(rpt1.y - rpt2.y), 2);
+				dtest = sqr(static_cast<double>(rpt1.x - (rpt2.x + adder)))
+						+ sqr(static_cast<double>(rpt1.y - rpt2.y));
 
 				if (dp < dtest)
 					adder = 0;
@@ -429,12 +435,12 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 				RenderSegment(dc, rpt1.x, rpt1.y, rpt2.x + adder, rpt2.y, VP, true);
 			} else if (!b_1_on && b_2_on) {
 				if (rpt1.x < rpt2.x)
-					adder = (int)pix_full_circle;
+					adder = static_cast<int>(pix_full_circle);
 				else
-					adder = -(int)pix_full_circle;
+					adder = -static_cast<int>(pix_full_circle);
 
-				dtest = pow((double)(rpt2.x - (rpt1.x + adder)), 2)
-						+ pow((double)(rpt1.y - rpt2.y), 2);
+				dtest = sqr(static_cast<double>(rpt2.x - (rpt1.x + adder)))
+						+ sqr(static_cast<double>(rpt1.y - rpt2.y));
 
 				if (dp < dtest)
 					adder = 0;
@@ -443,12 +449,12 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 			} else if (!b_1_on && !b_2_on) {
 				// Both off, need to check shortest distance
 				if (rpt1.x < rpt2.x)
-					adder = (int)pix_full_circle;
+					adder = static_cast<int>(pix_full_circle);
 				else
-					adder = -(int)pix_full_circle;
+					adder = -static_cast<int>(pix_full_circle);
 
-				dtest = pow((double)(rpt2.x - (rpt1.x + adder)), 2)
-						+ pow((double)(rpt1.y - rpt2.y), 2);
+				dtest = sqr(static_cast<double>(rpt2.x - (rpt1.x + adder)))
+						+ sqr(static_cast<double>(rpt1.y - rpt2.y));
 
 				if (dp < dtest)
 					adder = 0;
@@ -468,7 +474,8 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const View
 {
 	static int s_arrow_icon[] = { 0, 0, 5, 2, 18, 6, 12, 0, 18, -6, 5, -2, 0, 0 };
 	// Get the dc boundary
-	int sx;int sy;
+	int sx;
+	int sy;
 	dc.GetSize(&sx, &sy);
 
 	// Try to exit early if the segment is nowhere near the screen
@@ -511,19 +518,19 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const View
 	if (bdraw_arrow) {
 		// Draw a direction arrow
 
-		double theta = atan2((double)(yb - ya), (double)(xb - xa));
+		double theta = atan2(static_cast<double>(yb - ya), static_cast<double>(xb - xa));
 		theta -= M_PI / 2;
 
 		wxPoint icon[10];
 		double icon_scale_factor = 100 * VP.view_scale();
 		icon_scale_factor = fmin(icon_scale_factor, 1.5); // Sets the max size
-		icon_scale_factor = fmax(icon_scale_factor, .10);
+		icon_scale_factor = fmax(icon_scale_factor, 0.10);
 
 		// Get the absolute line length
 		// and constrain the arrow to be no more than xx% of the line length
 		double nom_arrow_size = 20.;
 		double max_arrow_to_leg = .20;
-		double lpp = sqrt(pow((double)(xa - xb), 2) + pow((double)(ya - yb), 2));
+		double lpp = sqrt(sqr(static_cast<double>(xa - xb)) + sqr(static_cast<double>(ya - yb)));
 
 		double icon_size = icon_scale_factor * nom_arrow_size;
 		if (icon_size > (lpp * max_arrow_to_leg))

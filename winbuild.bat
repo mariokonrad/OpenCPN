@@ -9,6 +9,7 @@ mkdir build
 cd build
 
 cmake -G "Visual Studio 10" -DCMAKE_BUILD_TYPE=Debug %~dp0
+rem cmake -G "Visual Studio 11" -DCMAKE_BUILD_TYPE=Debug %~dp0
 cmake --build .
 
 rem cpack -G NSIS -C Debug

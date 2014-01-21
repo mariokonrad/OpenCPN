@@ -409,38 +409,37 @@ void toPOLY(double lat, double lon, double lat0, double lon0, double* x, double*
 	}
 }
 
-void fromPOLY(double x, double y, double lat0, double lon0, double* lat, double* lon)
+Position fromPOLY(double x, double y, double lat0, double lon0)
 {
 	const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
 	double yp = y - (lat0 * (M_PI / 180.0) * z);
 	if (fabs(yp) <= TOL) {
-		*lon = lon0 + (x / ((M_PI / 180.0) * z));
-		*lat = lat0;
-	} else {
-		yp = y / z;
-		const double xp = x / z;
-
-		double lat3 = yp;
-		const double B = (xp * xp) + (yp * yp);
-		int i = N_ITER;
-		double dphi;
-		do {
-			double tp = tan(lat3);
-			dphi = ((yp) * (lat3 * tp + 1.0) - lat3 - 0.5 * (lat3 * lat3 + B) * tp);
-			lat3 -= (dphi / ((lat3 - (yp)) / tp - 1.0));
-		} while (fabs(dphi) > CONV && --i);
-		if (!i) {
-			*lon = 0.0;
-			*lat = 0.0;
-		} else {
-			*lon = asin(xp * tan(lat3)) / sin(lat3);
-			*lon /= (M_PI / 180.0);
-			*lon += lon0;
-
-			*lat = lat3 / (M_PI / 180.0);
-		}
+		return geo::Position(lat0, lon0 + (x / ((M_PI / 180.0) * z)));
 	}
+
+	yp = y / z;
+	const double xp = x / z;
+
+	double lat3 = yp;
+	const double B = (xp * xp) + (yp * yp);
+	int i = N_ITER;
+	double dphi;
+
+	do {
+		double tp = tan(lat3);
+		dphi = ((yp) * (lat3 * tp + 1.0) - lat3 - 0.5 * (lat3 * lat3 + B) * tp);
+		lat3 -= (dphi / ((lat3 - (yp)) / tp - 1.0));
+	} while (fabs(dphi) > CONV && --i);
+
+	if (!i) {
+		return geo::Position(0.0, 0.0);
+	}
+
+	double t = asin(xp * tan(lat3)) / sin(lat3);
+	t /= (M_PI / 180.0);
+	t += lon0;
+	return geo::Position(lat3 / (M_PI / 180.0), t);
 }
 
 // Convert Lat/Lon <-> Transverse Mercator

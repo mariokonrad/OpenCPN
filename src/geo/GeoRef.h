@@ -77,7 +77,7 @@ void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, doubl
 void fromSM_ECC(double x, double y, double lat0, double lon0, double* lat, double* lon);
 
 void toPOLY(double lat, double lon, double lat0, double lon0, double* x, double* y);
-void fromPOLY(double x, double y, double lat0, double lon0, double* lat, double* lon);
+Position fromPOLY(double x, double y, double lat0, double lon0);
 
 /// distance in nautical miles
 Position ll_gc_ll(const Position& pos, double crs, double dist);

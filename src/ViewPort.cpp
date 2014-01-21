@@ -247,7 +247,9 @@ geo::Position ViewPort::GetLLFromPix(const wxPoint& p) const
 		double polyeasting;
 		double polynorthing;
 		geo::toPOLY(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &polyeasting, &polynorthing);
-		geo::fromPOLY(d_east, d_north + polynorthing, 0.0, center_point.lon(), &slat, &slon);
+		geo::Position t = geo::fromPOLY(d_east, d_north + polynorthing, 0.0, center_point.lon());
+		slat = t.lat();
+		slon = t.lon();
 	} else {
 		// TODO This could be fromSM_ECC to better match some Raster charts
 		//      However, it seems that cm93 (and S57) prefer no eccentricity correction

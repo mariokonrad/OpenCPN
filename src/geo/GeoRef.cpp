@@ -392,19 +392,19 @@ Position fromSM_ECC(double x, double y, const Position& pos0)
 #define I_ITER 20
 #define ITOL 1.e-12
 
-void toPOLY(double lat, double lon, double lat0, double lon0, double* x, double* y)
+void toPOLY(const Position& pos, const Position& pos0, double* x, double* y)
 {
 	const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-	if (fabs((lat - lat0) * (M_PI / 180.0)) <= TOL) {
-		*x = (lon - lon0) * (M_PI / 180.0) * z;
+	if (fabs((pos.lat() - pos0.lat()) * (M_PI / 180.0)) <= TOL) {
+		*x = (pos.lon() - pos0.lon()) * (M_PI / 180.0) * z;
 		*y = 0.0;
 
 	} else {
-		const double E = (lon - lon0) * (M_PI / 180.0);
-		const double cot = 1.0 / tan(lat * (M_PI / 180.0));
-		*x = sin(E * sin((lat * (M_PI / 180.0)))) * cot;
-		*y = (lat * (M_PI / 180.0)) - (lat0 * (M_PI / 180.0)) + cot * (1.0 - cos(E));
+		const double E = (pos.lon() - pos0.lon()) * (M_PI / 180.0);
+		const double cot = 1.0 / tan(pos.lat() * (M_PI / 180.0));
+		*x = sin(E * sin((pos.lat() * (M_PI / 180.0)))) * cot;
+		*y = (pos.lat() * (M_PI / 180.0)) - (pos0.lat() * (M_PI / 180.0)) + cot * (1.0 - cos(E));
 
 		*x *= z;
 		*y *= z;

@@ -111,7 +111,8 @@ wxPoint ViewPort::GetPixFromLL(const geo::Position& pos) const
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting, &tmcnorthing);
+		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting,
+				  &tmcnorthing);
 		geo::toTM(pos.lat(), xlon, 0.0, center_point.lon(), &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
@@ -121,10 +122,11 @@ wxPoint ViewPort::GetPixFromLL(const geo::Position& pos) const
 		//    We calculate northings as referenced to the equator
 		//    And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		geo::toPOLY(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &pceasting, &pcnorthing);
+		geo::toPOLY(center_point, geo::Position(0.0, center_point.lon()), &pceasting, &pcnorthing);
 
 		double peasting, pnorthing;
-		geo::toPOLY(pos.lat(), xlon, 0.0, center_point.lon(), &peasting, &pnorthing);
+		geo::toPOLY(geo::Position(pos.lat(), xlon), geo::Position(0.0, center_point.lon()),
+					&peasting, &pnorthing);
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
@@ -178,7 +180,8 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const geo::Position& pos) const
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting, &tmcnorthing);
+		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting,
+				  &tmcnorthing);
 		geo::toTM(pos.lat(), xlon, 0.0, center_point.lon(), &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
@@ -187,10 +190,11 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const geo::Position& pos) const
 		// We calculate northings as referenced to the equator
 		// And eastings as though the projection point is midscreen.
 		double pceasting, pcnorthing;
-		geo::toPOLY(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &pceasting, &pcnorthing);
+		geo::toPOLY(center_point, geo::Position(0.0, center_point.lon()), &pceasting, &pcnorthing);
 
 		double peasting, pnorthing;
-		geo::toPOLY(pos.lat(), xlon, 0.0, center_point.lon(), &peasting, &pnorthing);
+		geo::toPOLY(geo::Position(pos.lat(), xlon), geo::Position(0.0, center_point.lon()),
+					&peasting, &pnorthing);
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
@@ -240,12 +244,14 @@ geo::Position ViewPort::GetLLFromPix(const wxPoint& p) const
 	if (PROJECTION_TRANSVERSE_MERCATOR == m_projection_type) {
 		double tmceasting;
 		double tmcnorthing;
-		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting, &tmcnorthing);
+		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting,
+				  &tmcnorthing);
 		pos = geo::fromTM(d_east, d_north + tmcnorthing, geo::Position(0.0, center_point.lon()));
 	} else if (PROJECTION_POLYCONIC == m_projection_type) {
 		double polyeasting;
 		double polynorthing;
-		geo::toPOLY(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &polyeasting, &polynorthing);
+		geo::toPOLY(center_point, geo::Position(0.0, center_point.lon()), &polyeasting,
+					&polynorthing);
 		pos = geo::fromPOLY(d_east, d_north + polynorthing, geo::Position(0.0, center_point.lon()));
 	} else {
 		// TODO This could be fromSM_ECC to better match some Raster charts

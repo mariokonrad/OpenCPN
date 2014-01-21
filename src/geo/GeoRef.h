@@ -74,7 +74,7 @@ void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y
 void fromSM(double x, double y, double lat0, double lon0, double* lat, double* lon);
 
 void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, double* y);
-void fromSM_ECC(double x, double y, double lat0, double lon0, double* lat, double* lon);
+Position fromSM_ECC(double x, double y, double lat0, double lon0);
 
 void toPOLY(double lat, double lon, double lat0, double lon0, double* x, double* y);
 Position fromPOLY(double x, double y, double lat0, double lon0);

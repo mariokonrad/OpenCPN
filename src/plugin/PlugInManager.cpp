@@ -1701,7 +1701,9 @@ void toSM_ECC_Plugin(double lat, double lon, double lat0, double lon0, double* x
 
 void fromSM_ECC_Plugin(double x, double y, double lat0, double lon0, double* lat, double* lon)
 {
-	geo::fromSM_ECC(x, y, lat0, lon0, lat, lon);
+	geo::Position t = geo::fromSM_ECC(x, y, lat0, lon0);
+	*lat = t.lat();
+	*lon = t.lon();
 }
 
 double toUsrDistance_Plugin(double nm_distance, int unit)

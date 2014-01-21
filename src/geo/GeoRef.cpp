@@ -355,7 +355,7 @@ void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, doubl
 	*y = test - falsen;
 }
 
-void fromSM_ECC(double x, double y, double lat0, double lon0, double* lat, double* lon)
+Position fromSM_ECC(double x, double y, double lat0, double lon0)
 {
 	const double f = 1.0 / WGSinvf; // WGS84 ellipsoid flattening parameter
 	const double es = 2 * f - f * f; // eccentricity^2  .006700
@@ -363,7 +363,7 @@ void fromSM_ECC(double x, double y, double lat0, double lon0, double* lat, doubl
 
 	const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-	*lon = lon0 + (x / ((M_PI / 180.0) * z));
+	double tlon = lon0 + (x / ((M_PI / 180.0) * z));
 
 	const double s0 = sin(lat0 * (M_PI / 180.0));
 
@@ -381,7 +381,9 @@ void fromSM_ECC(double x, double y, double lat0, double lon0, double* lat, doubl
 	esf += ((7.0 * es * es * es / 120.0) + (81 * es * es * es * es / 1120.0)
 			+ (4279.0 * es * es * es * es / 161280.0)) * sin(8.0 * xi);
 
-	*lat = -(xi + esf) / (M_PI / 180.0);
+	double tlat = -(xi + esf) / (M_PI / 180.0);
+
+	return Position(tlat, tlon);
 }
 
 #define TOL 1e-10

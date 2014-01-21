@@ -317,16 +317,14 @@ void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y
 	*y = y3 - y30;
 }
 
-Position fromSM(double x, double y, double lat0, double lon0)
+Position fromSM(double x, double y, const Position& pos0)
 {
 	const double z = WGS84_semimajor_axis_meters * mercator_k0;
-	const double s0 = sin(lat0 * (M_PI / 180.0));
+	const double s0 = sin(pos0.lat() * (M_PI / 180.0));
 	const double y0 = (0.5 * log((1 + s0) / (1 - s0))) * z;
 
 	double tlat = (2.0 * atan(exp((y0 + y) / z)) - M_PI / 2.0) / (M_PI / 180.0);
-
-	// lon = x + lon0
-	double tlon = lon0 + (x / ((M_PI / 180.0) * z));
+	double tlon = pos0.lon() + (x / ((M_PI / 180.0) * z));
 
 	return Position(tlat, tlon);
 }
@@ -357,7 +355,7 @@ void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, doubl
 	*y = test - falsen;
 }
 
-Position fromSM_ECC(double x, double y, double lat0, double lon0)
+Position fromSM_ECC(double x, double y, const Position& pos0)
 {
 	const double f = 1.0 / WGSinvf; // WGS84 ellipsoid flattening parameter
 	const double es = 2 * f - f * f; // eccentricity^2  .006700
@@ -365,11 +363,11 @@ Position fromSM_ECC(double x, double y, double lat0, double lon0)
 
 	const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-	double tlon = lon0 + (x / ((M_PI / 180.0) * z));
+	double tlon = pos0.lon() + (x / ((M_PI / 180.0) * z));
 
-	const double s0 = sin(lat0 * (M_PI / 180.0));
+	const double s0 = sin(pos0.lat() * (M_PI / 180.0));
 
-	const double falsen = z * log(tan(M_PI / 4 + lat0 * (M_PI / 180.0) / 2)
+	const double falsen = z * log(tan(M_PI / 4 + pos0.lat() * (M_PI / 180.0) / 2)
 								  * pow((1.0 - e * s0) / (1.0 + e * s0), e / 2.0));
 	const double t = exp((y + falsen) / (z));
 	const double xi = (M_PI / 2.0) - 2.0 * atan(t);
@@ -413,13 +411,13 @@ void toPOLY(double lat, double lon, double lat0, double lon0, double* x, double*
 	}
 }
 
-Position fromPOLY(double x, double y, double lat0, double lon0)
+Position fromPOLY(double x, double y, const Position& pos0)
 {
 	const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-	double yp = y - (lat0 * (M_PI / 180.0) * z);
+	double yp = y - (pos0.lat() * (M_PI / 180.0) * z);
 	if (fabs(yp) <= TOL) {
-		return geo::Position(lat0, lon0 + (x / ((M_PI / 180.0) * z)));
+		return geo::Position(pos0.lat(), pos0.lon() + (x / ((M_PI / 180.0) * z)));
 	}
 
 	yp = y / z;
@@ -442,7 +440,7 @@ Position fromPOLY(double x, double y, double lat0, double lon0)
 
 	double t = asin(xp * tan(lat3)) / sin(lat3);
 	t /= (M_PI / 180.0);
-	t += lon0;
+	t += pos0.lon();
 	return geo::Position(lat3 / (M_PI / 180.0), t);
 }
 
@@ -495,7 +493,7 @@ void toTM(float lat, float lon, float lat0, float lon0, double* x, double* y)
 // Lat and Long are in decimal degrees
 // Written by Chuck Gantz- chuck.gantz@globalstar.com
 // Adapted for opencpn by David S. Register
-Position fromTM(double x, double y, double lat0, double lon0)
+Position fromTM(double x, double y, const Position& pos0)
 {
 	const double rad2deg = 1.0 / (M_PI / 180.0);
 	// constants for WGS-84
@@ -528,12 +526,12 @@ Position fromTM(double x, double y, double lat0, double lon0)
 									* D * D * D / 24 + (61 + 90 * T1 + 298 * C1 + 45 * T1 * T1
 														- 252 * eccPrimeSquared - 3 * C1 * C1) * D
 													   * D * D * D * D * D / 720);
-	tlat = lat0 + (tlat * rad2deg);
+	tlat = pos0.lat() + (tlat * rad2deg);
 
 	double tlon = (D - (1 + 2 * T1 + C1) * D * D * D / 6
 			+ (5 - 2 * C1 + 28 * T1 - 3 * C1 * C1 + 8 * eccPrimeSquared + 24 * T1 * T1) * D * D * D
 			  * D * D / 120) / cos(phi1Rad);
-	tlon = lon0 + tlon * rad2deg;
+	tlon = pos0.lon() + tlon * rad2deg;
 
 	return Position(tlat, tlon);
 }

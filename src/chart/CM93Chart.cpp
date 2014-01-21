@@ -984,7 +984,7 @@ void cm93chart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, cons
 	double d_east = xp / vpt.view_scale();
 	double d_north = yp / vpt.view_scale();
 
-	geo::Position t = geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude());
+	geo::Position t = geo::fromSM(d_east, d_north, vpt.get_position());
 
 	*plat = t.lat();
 	*plon = t.lon();
@@ -1019,7 +1019,7 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 			double c_east_d = (dpx / vp_proposed.view_scale()) + prev_easting_c;
 			double c_north_d = (dpy / vp_proposed.view_scale()) + prev_northing_c;
 
-			geo::Position t = geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon);
+			geo::Position t = geo::fromSM(c_east_d, c_north_d, geo::Position(ref_lat, ref_lon));
 			vp_proposed.set_position(t);
 
 			return true;

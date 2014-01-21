@@ -168,7 +168,7 @@ public:
 	wxArrayPtrVoid* pFloatingATONArray;
 	wxArrayPtrVoid* pRigidATONArray;
 
-	double ref_lat, ref_lon; // Common reference point, derived from FullExtent
+	double ref_lat, ref_lon; // FIXME: replace this with geo::Position // Common reference point, derived from FullExtent
 	Extent m_FullExtent;
 	bool m_bExtentSet;
 	bool m_bLinePrioritySet;

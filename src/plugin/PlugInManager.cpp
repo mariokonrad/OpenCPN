@@ -1679,7 +1679,7 @@ void toTM_Plugin(float lat, float lon, float lat0, float lon0, double* x, double
 
 void fromTM_Plugin(double x, double y, double lat0, double lon0, double* lat, double* lon)
 {
-	geo::Position t = geo::fromTM(x, y, lat0, lon0);
+	geo::Position t = geo::fromTM(x, y, geo::Position(lat0, lon0));
 	*lat = t.lat();
 	*lon = t.lon();
 }
@@ -1691,7 +1691,7 @@ void toSM_Plugin(double lat, double lon, double lat0, double lon0, double* x, do
 
 void fromSM_Plugin(double x, double y, double lat0, double lon0, double* lat, double* lon)
 {
-	geo::Position t = geo::fromSM(x, y, lat0, lon0);
+	geo::Position t = geo::fromSM(x, y, geo::Position(lat0, lon0));
 	*lat = t.lat();
 	*lon = t.lon();
 }
@@ -1703,7 +1703,7 @@ void toSM_ECC_Plugin(double lat, double lon, double lat0, double lon0, double* x
 
 void fromSM_ECC_Plugin(double x, double y, double lat0, double lon0, double* lat, double* lon)
 {
-	geo::Position t = geo::fromSM_ECC(x, y, lat0, lon0);
+	geo::Position t = geo::fromSM_ECC(x, y, geo::Position(lat0, lon0));
 	*lat = t.lat();
 	*lon = t.lon();
 }

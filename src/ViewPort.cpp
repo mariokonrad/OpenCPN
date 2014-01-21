@@ -241,17 +241,17 @@ geo::Position ViewPort::GetLLFromPix(const wxPoint& p) const
 		double tmceasting;
 		double tmcnorthing;
 		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting, &tmcnorthing);
-		pos = geo::fromTM(d_east, d_north + tmcnorthing, 0.0, center_point.lon());
+		pos = geo::fromTM(d_east, d_north + tmcnorthing, geo::Position(0.0, center_point.lon()));
 	} else if (PROJECTION_POLYCONIC == m_projection_type) {
 		double polyeasting;
 		double polynorthing;
 		geo::toPOLY(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &polyeasting, &polynorthing);
-		pos = geo::fromPOLY(d_east, d_north + polynorthing, 0.0, center_point.lon());
+		pos = geo::fromPOLY(d_east, d_north + polynorthing, geo::Position(0.0, center_point.lon()));
 	} else {
 		// TODO This could be fromSM_ECC to better match some Raster charts
 		//      However, it seems that cm93 (and S57) prefer no eccentricity correction
 		//      Think about it....
-		pos = geo::fromSM(d_east, d_north, center_point.lat(), center_point.lon());
+		pos = geo::fromSM(d_east, d_north, center_point);
 	}
 
 	pos.normalize_lon();

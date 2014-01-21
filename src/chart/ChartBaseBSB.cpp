@@ -943,15 +943,11 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double north = polytrans(cPoints.pwy, px, py);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromTM(east, north, m_proj_lat, m_proj_lon);
+			geo::Position t = geo::fromTM(east, north, geo::Position(m_proj_lat, m_proj_lon));
 
 			// Datum adjustments.....
-			double slat_p = t.lat() - m_lat_datum_adjust;
-			double slon_p = t.lon() - m_lon_datum_adjust;
-
-			slat = slat_p;
-			slon = slon_p;
-
+			slat = t.lat() - m_lat_datum_adjust;
+			slon = t.lon() - m_lon_datum_adjust;
 		} else if (m_projection == PROJECTION_MERCATOR) {
 			// Use Projected Polynomial algorithm
 
@@ -973,14 +969,11 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double north = polytrans(cPoints.pwy, px, py);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromSM_ECC(east, north, m_proj_lat, m_proj_lon);
+			geo::Position t = geo::fromSM_ECC(east, north, geo::Position(m_proj_lat, m_proj_lon));
 
 			// Make Datum adjustments.....
-			double slat_p = t.lat() - m_lat_datum_adjust;
-			double slon_p = t.lon() - m_lon_datum_adjust;
-
-			slat = slat_p;
-			slon = slon_p;
+			slat = t.lat() - m_lat_datum_adjust;
+			slon = t.lon() - m_lon_datum_adjust;
 		} else if (m_projection == PROJECTION_POLYCONIC) {
 			// Use Projected Polynomial algorithm
 
@@ -1002,15 +995,11 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double north = polytrans(cPoints.pwy, px, py);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromPOLY(east, north, m_proj_lat, m_proj_lon);
+			geo::Position t = geo::fromPOLY(east, north, geo::Position(m_proj_lat, m_proj_lon));
 
 			// Make Datum adjustments.....
-			double slat_p = t.lat() - m_lat_datum_adjust;
-			double slon_p = t.lon() - m_lon_datum_adjust;
-
-			slat = slat_p;
-			slon = slon_p;
-
+			slat = t.lat() - m_lat_datum_adjust;
+			slon = t.lon() - m_lon_datum_adjust;
 		} else {
 			// Use a Mercator estimator, with Eccentricity corrrection applied
 			int dx = pixx - (vp.pix_width / 2);
@@ -1022,7 +1011,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double d_east = xp / vp.view_scale();
 			double d_north = yp / vp.view_scale();
 
-			geo::Position t = geo::fromSM_ECC(d_east, d_north, vp.latitude(), vp.longitude());
+			geo::Position t = geo::fromSM_ECC(d_east, d_north, vp.get_position());
 			slat = t.lat();
 			slon = t.lon();
 		}
@@ -1296,7 +1285,7 @@ void ChartBaseBSB::chartpix_to_latlong(double pixx, double pixy, double* plat, d
 			double north = polytrans(cPoints.pwy, pixx, pixy);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromTM(east, north, m_proj_lat, m_proj_lon);
+			geo::Position t = geo::fromTM(east, north, geo::Position(m_proj_lat, m_proj_lon));
 
 			// Datum adjustments.....
 			slat = t.lat() - m_lat_datum_adjust;
@@ -1308,7 +1297,7 @@ void ChartBaseBSB::chartpix_to_latlong(double pixx, double pixy, double* plat, d
 			double north = polytrans(cPoints.pwy, pixx, pixy);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromSM_ECC(east, north, m_proj_lat, m_proj_lon);
+			geo::Position t = geo::fromSM_ECC(east, north, geo::Position(m_proj_lat, m_proj_lon));
 
 			// Make Datum adjustments.....
 			slat = t.lat() - m_lat_datum_adjust;
@@ -1320,7 +1309,7 @@ void ChartBaseBSB::chartpix_to_latlong(double pixx, double pixy, double* plat, d
 			double north = polytrans(cPoints.pwy, pixx, pixy);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromPOLY(east, north, m_proj_lat, m_proj_lon);
+			geo::Position t = geo::fromPOLY(east, north, geo::Position(m_proj_lat, m_proj_lon));
 
 			// Make Datum adjustments.....
 			slat = t.lat() - m_lat_datum_adjust;

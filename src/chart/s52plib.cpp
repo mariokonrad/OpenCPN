@@ -6278,7 +6278,7 @@ void s52plib::GetPixPointSingle(int pixx, int pixy, double* plat, double* plon, 
 	double d_east = xp / vpt.view_scale();
 	double d_north = yp / vpt.view_scale();
 
-	geo::Position t = geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude());
+	geo::Position t = geo::fromSM(d_east, d_north, vpt.get_position());
 
 	*plat = t.lat();
 	*plon = t.lon();

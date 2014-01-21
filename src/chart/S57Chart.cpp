@@ -436,7 +436,7 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 
 						char tbuf[40];
 						float point_ref_lat, point_ref_lon;
-						sscanf(buf, "%s %f %f", tbuf, &point_ref_lat, &point_ref_lon);
+						sscanf(buf, "%s %f %f", tbuf, &point_ref_lat, &point_ref_lon); // FIXME: refactor
 
 						my_fgets(buf, MAX_LINE, *pfpx);
 						int wkb_len = atoi(buf + 2);
@@ -459,7 +459,8 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 						y = northing;
 
 						// Convert from SM to lat/lon for bbox
-						geo::Position ll = geo::fromSM(easting, northing, point_ref_lat, point_ref_lon);
+						geo::Position ll = geo::fromSM(easting, northing,
+													   geo::Position(point_ref_lat, point_ref_lon));
 
 						m_lat = ll.lat();
 						m_lon = ll.lon();
@@ -471,7 +472,7 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 
 						char tbuf[40];
 						float point_ref_lat, point_ref_lon;
-						sscanf(buf, "%s %f %f", tbuf, &point_ref_lat, &point_ref_lon);
+						sscanf(buf, "%s %f %f", tbuf, &point_ref_lat, &point_ref_lon); // FIXME: refactor
 
 						my_fgets(buf, MAX_LINE, *pfpx);
 						int wkb_len = atoi(buf + 2);
@@ -510,7 +511,8 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 							*pdd++ = depth;
 #endif
 							// Convert point from SM to lat/lon for later use in decomposed bboxes
-							geo::Position ll = geo::fromSM(easting, northing, point_ref_lat, point_ref_lon);
+							geo::Position ll = geo::fromSM(
+								easting, northing, geo::Position(point_ref_lat, point_ref_lon));
 
 							*pdl++ = ll.lon();
 							*pdl++ = ll.lat();
@@ -535,7 +537,7 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 
 						char tbuf[40];
 						float line_ref_lat, line_ref_lon;
-						sscanf(buf, "%s %f %f", tbuf, &line_ref_lat, &line_ref_lon);
+						sscanf(buf, "%s %f %f", tbuf, &line_ref_lat, &line_ref_lon); // FIXME: refactor
 
 						my_fgets(buf, MAX_LINE, *pfpx);
 						int sb_len = atoi(buf + 2);
@@ -598,7 +600,7 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 						y = (n1 + n2) / 2.0;
 
 						// Set the object base point
-						geo::Position ll = geo::fromSM(x, y, line_ref_lat, line_ref_lon);
+						geo::Position ll = geo::fromSM(x, y, geo::Position(line_ref_lat, line_ref_lon));
 						m_lat = ll.lat();
 						m_lon = ll.lon();
 
@@ -639,7 +641,7 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 						int nrecl;
 						char tbuf[40];
 
-						sscanf(buf, " %s %d %f %f", tbuf, &nrecl, &area_ref_lat, &area_ref_lon);
+						sscanf(buf, " %s %d %f %f", tbuf, &nrecl, &area_ref_lat, &area_ref_lon); // FIXME: refactor
 
 						if (nrecl) {
 							unsigned char* polybuf = (unsigned char*)malloc(nrecl + 1);
@@ -669,7 +671,7 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 							y = (n1 + n2) / 2.;
 
 							//  Set the object base point
-							geo::Position t = geo::fromSM(x, y, area_ref_lat, area_ref_lon);
+							geo::Position t = geo::fromSM(x, y, geo::Position(area_ref_lat, area_ref_lon));
 							m_lat = t.lat();
 							m_lon = t.lon();
 
@@ -1290,7 +1292,7 @@ void s57chart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, const
 	double d_east = xp / vpt.view_scale();
 	double d_north = yp / vpt.view_scale();
 
-	geo::Position t = geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude());
+	geo::Position t = geo::fromSM(d_east, d_north, vpt.get_position());
 
 	*plat = t.lat();
 	*plon = t.lon();
@@ -1339,7 +1341,7 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 	double c_east_d = (dpx / vp_proposed.view_scale()) + prev_easting_c;
 	double c_north_d = (dpy / vp_proposed.view_scale()) + prev_northing_c;
 
-	geo::Position t = geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon);
+	geo::Position t = geo::fromSM(c_east_d, c_north_d, geo::Position(ref_lat, ref_lon));
 	vp_proposed.set_position(t);
 
 	return true;
@@ -2127,11 +2129,13 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 									  - (rect.y / m_view_scale_ppm);
 			double temp_easting_ul = prev_easting_ul + (rul.x / m_view_scale_ppm)
 									 + (rect.x / m_view_scale_ppm);
-			geo::Position p0 = geo::fromSM(temp_easting_ul, temp_northing_ul, ref_lat, ref_lon);
+			geo::Position p0
+				= geo::fromSM(temp_easting_ul, temp_northing_ul, geo::Position(ref_lat, ref_lon));
 
 			double temp_northing_lr = temp_northing_ul - (rect.height / m_view_scale_ppm);
 			double temp_easting_lr = temp_easting_ul + (rect.width / m_view_scale_ppm);
-			geo::Position p1 = geo::fromSM(temp_easting_lr, temp_northing_lr, ref_lat, ref_lon);
+			geo::Position p1
+				= geo::fromSM(temp_easting_lr, temp_northing_lr, geo::Position(ref_lat, ref_lon));
 
 			temp_vp.GetBBox().SetMin(p0.lon(), p1.lat());
 			temp_vp.GetBBox().SetMax(p1.lon(), p0.lat());
@@ -3179,8 +3183,9 @@ ListOfS57Obj* s57chart::GetAssociatedObjects(S57Obj* obj)
 
 	ListOfS57Obj* pobj_list = new ListOfS57Obj;
 
-	geo::Position pos = geo::fromSM((obj->x * obj->x_rate) + obj->x_origin,
-									(obj->y * obj->y_rate) + obj->y_origin, ref_lat, ref_lon);
+	geo::Position pos
+		= geo::fromSM((obj->x * obj->x_rate) + obj->x_origin,
+					  (obj->y * obj->y_rate) + obj->y_origin, geo::Position(ref_lat, ref_lon));
 	// What is the entry object geometry type?
 
 	switch (obj->Primitive_type) {
@@ -5222,9 +5227,9 @@ bool s57chart::DoesLatLonSelectObject(float lat, float lon, float select_radius,
 				// This is too big for pick area, can be confusing....
 				// So make a temporary box at the light's lat/lon, with select_radius size
 				if (!strncmp(obj->FeatureName, "LIGHTS", 6)) {
-					geo::Position t
-						= geo::fromSM((obj->x * obj->x_rate) + obj->x_origin,
-									  (obj->y * obj->y_rate) + obj->y_origin, ref_lat, ref_lon);
+					geo::Position t = geo::fromSM((obj->x * obj->x_rate) + obj->x_origin,
+												  (obj->y * obj->y_rate) + obj->y_origin,
+												  geo::Position(ref_lat, ref_lon));
 
 					// Double the select radius to adjust for the fact that LIGHTS has
 					// a 0x0 BBox to start with, which makes it smaller than all other
@@ -5920,7 +5925,7 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 			geo::Position t
 				= geo::fromSM((current->obj->x * current->obj->x_rate) + current->obj->x_origin,
 							  (current->obj->y * current->obj->y_rate) + current->obj->y_origin,
-							  ref_lat, ref_lon);
+							  geo::Position(ref_lat, ref_lon));
 
 			t.normalize_lon();
 

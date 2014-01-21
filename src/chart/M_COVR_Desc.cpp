@@ -174,7 +174,8 @@ OCPNRegion M_COVR_Desc::GetRegion(const ViewPort& vp, wxPoint* pwp) const
 		double northing;
 		double epix;
 		double npix;
-		geo::toSM(p->y, plon + 360.0, vp.latitude(), vp.longitude() + 360, &easting, &northing);
+		geo::toSM(geo::Position(p->y, plon + 360.0),
+				  geo::Position(vp.latitude(), vp.longitude() + 360.0), &easting, &northing);
 
 		easting -= user_xoff;
 		northing -= user_yoff;

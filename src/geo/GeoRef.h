@@ -70,7 +70,7 @@ const double mercator_k0                 = 0.9996;
 void toTM(const Position& pos, const Position& pos0, double* x, double* y);
 Position fromTM(double x, double y, const Position& pos0);
 
-void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y);
+void toSM(const Position& pos, const Position& pos0, double* x, double* y);
 Position fromSM(double x, double y, const Position& pos0);
 
 void toSM_ECC(const Position& pos, const Position& pos0, double* x, double* y);

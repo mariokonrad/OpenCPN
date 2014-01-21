@@ -381,13 +381,14 @@ bool Select::IsSegmentSelected(float a, float b, float c, float d, const geo::Po
 		// Assuming a Mercator projection
 		double ap;
 		double cp;
-		geo::toSM(a, c, 0.0, 0.0, &cp, &ap);
+		geo::toSM(geo::Position(a, c), geo::Position(0.0, 0.0), &cp, &ap);
 		double bp;
 		double dp;
-		geo::toSM(b, d, 0.0, 0.0, &dp, &bp);
+		geo::toSM(geo::Position(b, d), geo::Position(0.0, 0.0), &dp, &bp);
 		double slatp;
 		double slonp;
-		geo::toSM(pos.lat(), pos.lon()+ adder, 0.0, 0.0, &slonp, &slatp);
+		geo::toSM(geo::Position(pos.lat(), pos.lon() + adder), geo::Position(0.0, 0.0), &slonp,
+				  &slatp);
 
 		va.x = slonp - cp;
 		va.y = slatp - ap;

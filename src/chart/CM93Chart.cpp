@@ -999,12 +999,10 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 		if (vp_last.view_scale() == vp_proposed.view_scale()) {
 
 			double prev_easting_c, prev_northing_c;
-			geo::toSM(vp_last.latitude(), vp_last.longitude(), reference_point.lat(),
-					  reference_point.lon(), &prev_easting_c, &prev_northing_c);
+			geo::toSM(vp_last.get_position(), reference_point, &prev_easting_c, &prev_northing_c);
 
 			double easting_c, northing_c;
-			geo::toSM(vp_proposed.latitude(), vp_proposed.longitude(), reference_point.lat(),
-					  reference_point.lon(), &easting_c, &northing_c);
+			geo::toSM(vp_proposed.get_position(), reference_point, &easting_c, &northing_c);
 
 			// then require this viewport to be exact integral pixel difference from last
 			// adjusting clat/clat and SM accordingly
@@ -1041,8 +1039,7 @@ void cm93chart::SetVPParms(const ViewPort& vpt)
 	m_pixy_vp_center = vpt.pix_height / 2;
 	m_view_scale_ppm = vpt.view_scale();
 
-	geo::toSM(vpt.latitude(), vpt.longitude(), reference_point.lat(), reference_point.lon(),
-			  &m_easting_vp_center, &m_northing_vp_center);
+	geo::toSM(vpt.get_position(), reference_point, &m_easting_vp_center, &m_northing_vp_center);
 
 	if (global::OCPN::get().sys().debug().cm93) {
 		// Fetch the lat/lon of the screen corner points

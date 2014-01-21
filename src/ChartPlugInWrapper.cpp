@@ -741,8 +741,9 @@ int PI_PLIBRenderObjectToDC(wxDC* pdc, PI_S57Obj* pObj, PlugIn_ViewPort* vp)
 
 	//  Set up object SM rendering constants
 	chart::sm_parms transform;
-	geo::toSM(vp->clat, vp->clon, pObj->chart_ref_lat, pObj->chart_ref_lon, &transform.easting_vp_center,
-		 &transform.northing_vp_center);
+	geo::toSM(geo::Position(vp->clat, vp->clon),
+			  geo::Position(pObj->chart_ref_lat, pObj->chart_ref_lon), &transform.easting_vp_center,
+			  &transform.northing_vp_center);
 
 	//  Create and populate a minimally compatible object container
 	ObjRazRules rzRules;
@@ -795,8 +796,9 @@ int PI_PLIBRenderAreaToDC(wxDC* pdc, PI_S57Obj* pObj, PlugIn_ViewPort* vp, wxRec
 
 	// Set up object SM rendering constants
 	chart::sm_parms transform;
-	geo::toSM(vp->clat, vp->clon, pObj->chart_ref_lat, pObj->chart_ref_lon, &transform.easting_vp_center,
-		 &transform.northing_vp_center);
+	geo::toSM(geo::Position(vp->clat, vp->clon),
+			  geo::Position(pObj->chart_ref_lat, pObj->chart_ref_lon), &transform.easting_vp_center,
+			  &transform.northing_vp_center);
 
 	// Create and populate a minimally compatible object container
 	ObjRazRules rzRules;
@@ -829,8 +831,9 @@ int PI_PLIBRenderAreaToGL(const wxGLContext& glcc, PI_S57Obj* pObj, PlugIn_ViewP
 
 	//  Set up object SM rendering constants
 	sm_parms transform;
-	geo::toSM(vp->clat, vp->clon, pObj->chart_ref_lat, pObj->chart_ref_lon, &transform.easting_vp_center,
-		 &transform.northing_vp_center);
+	geo::toSM(geo::Position(vp->clat, vp->clon),
+			  geo::Position(pObj->chart_ref_lat, pObj->chart_ref_lon), &transform.easting_vp_center,
+			  &transform.northing_vp_center);
 
 	//  Create and populate a minimally compatible object container
 	ObjRazRules rzRules;
@@ -863,8 +866,9 @@ int PI_PLIBRenderObjectToGL(const wxGLContext& glcc, PI_S57Obj* pObj, PlugIn_Vie
 
 	//  Set up object SM rendering constants
 	sm_parms transform;
-	geo::toSM(vp->clat, vp->clon, pObj->chart_ref_lat, pObj->chart_ref_lon, &transform.easting_vp_center,
-		 &transform.northing_vp_center);
+	geo::toSM(geo::Position(vp->clat, vp->clon),
+			  geo::Position(pObj->chart_ref_lat, pObj->chart_ref_lon), &transform.easting_vp_center,
+			  &transform.northing_vp_center);
 
 	//  Create and populate a minimally compatible object container
 	ObjRazRules rzRules;

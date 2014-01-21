@@ -593,8 +593,10 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 						double e2;
 						double n1;
 						double n2;
-						geo::toSM(ymax, xmax, line_ref_lat, line_ref_lon, &e1, &n1);
-						geo::toSM(ymin, xmin, line_ref_lat, line_ref_lon, &e2, &n2);
+						geo::toSM(geo::Position(ymax, xmax),
+								  geo::Position(line_ref_lat, line_ref_lon), &e1, &n1);
+						geo::toSM(geo::Position(ymin, xmin),
+								  geo::Position(line_ref_lat, line_ref_lon), &e2, &n2);
 
 						x = (e1 + e2) / 2.0;
 						y = (n1 + n2) / 2.0;
@@ -662,10 +664,10 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 							double e2;
 							double n1;
 							double n2;
-							geo::toSM(ppg->Get_ymax(), ppg->Get_xmax(), area_ref_lat, area_ref_lon,
-									  &e1, &n1);
-							geo::toSM(ppg->Get_ymin(), ppg->Get_xmin(), area_ref_lat, area_ref_lon,
-									  &e2, &n2);
+							geo::toSM(geo::Position(ppg->Get_ymax(), ppg->Get_xmax()),
+									  geo::Position(area_ref_lat, area_ref_lon), &e1, &n1);
+							geo::toSM(geo::Position(ppg->Get_ymin(), ppg->Get_xmin()),
+									  geo::Position(area_ref_lat, area_ref_lon), &e2, &n2);
 
 							x = (e1 + e2) / 2.;
 							y = (n1 + n2) / 2.;
@@ -1059,7 +1061,7 @@ void s57chart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRe
 	double easting, northing;
 	double epix, npix;
 
-	geo::toSM(m_FullExtent.SLAT, m_FullExtent.WLON, VPoint.latitude(), VPoint.longitude(), &easting,
+	geo::toSM(geo::Position(m_FullExtent.SLAT, m_FullExtent.WLON), VPoint.get_position(), &easting,
 			  &northing);
 	epix = easting * VPoint.view_scale();
 	npix = northing * VPoint.view_scale();
@@ -1067,7 +1069,7 @@ void s57chart::GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRe
 	rxl = (int)round((VPoint.pix_width / 2) + epix);
 	ryb = (int)round((VPoint.pix_height / 2) - npix);
 
-	geo::toSM(m_FullExtent.NLAT, m_FullExtent.ELON, VPoint.latitude(), VPoint.longitude(), &easting,
+	geo::toSM(geo::Position(m_FullExtent.NLAT, m_FullExtent.ELON), VPoint.get_position(), &easting,
 			  &northing);
 	epix = easting * VPoint.view_scale();
 	npix = northing * VPoint.view_scale();
@@ -1305,8 +1307,7 @@ void s57chart::SetVPParms(const ViewPort& vpt)
 	m_pixy_vp_center = vpt.pix_height / 2;
 	m_view_scale_ppm = vpt.view_scale();
 
-	geo::toSM(vpt.latitude(), vpt.longitude(), reference_point.lat(), reference_point.lon(),
-			  &m_easting_vp_center, &m_northing_vp_center);
+	geo::toSM(vpt.get_position(), reference_point, &m_easting_vp_center, &m_northing_vp_center);
 }
 
 bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
@@ -1319,12 +1320,10 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 		return false;
 
 	double prev_easting_c, prev_northing_c;
-	geo::toSM(vp_last.latitude(), vp_last.longitude(), reference_point.lat(), reference_point.lon(),
-			  &prev_easting_c, &prev_northing_c);
+	geo::toSM(vp_last.get_position(), reference_point, &prev_easting_c, &prev_northing_c);
 
 	double easting_c, northing_c;
-	geo::toSM(vp_proposed.latitude(), vp_proposed.longitude(), reference_point.lat(),
-			  reference_point.lon(), &easting_c, &northing_c);
+	geo::toSM(vp_proposed.get_position(), reference_point, &easting_c, &northing_c);
 
 	// then require this viewport to be exact integral pixel difference from last
 	// adjusting clat/clat and SM accordingly
@@ -1361,7 +1360,9 @@ ThumbData* s57chart::GetThumbData(int, int, float lat, float lon)
 
 		float thumb_view_scale_ppm = (S57_THUMB_SIZE / ext_max) / (1852 * 60);
 		double east, north;
-		geo::toSM(lat, lon, (lat_top + lat_bot) / 2., (lon_left + lon_right) / 2., &east, &north);
+		geo::toSM(geo::Position(lat, lon),
+				  geo::Position((lat_top + lat_bot) / 2.0, (lon_left + lon_right) / 2.0), &east,
+				  &north);
 
 		pThumbData->ShipX = pThumbData->pDIBThumb->GetWidth() / 2
 							+ (int)(east * thumb_view_scale_ppm);
@@ -1392,7 +1393,9 @@ bool s57chart::UpdateThumbData(double lat, double lon)
 
 		double thumb_view_scale_ppm = (S57_THUMB_SIZE / ext_max) / (1852 * 60);
 		double east, north;
-		geo::toSM(lat, lon, (lat_top + lat_bot) / 2., (lon_left + lon_right) / 2., &east, &north);
+		geo::toSM(geo::Position(lat, lon),
+				  geo::Position((lat_top + lat_bot) / 2.0, (lon_left + lon_right) / 2.0), &east,
+				  &north);
 
 		test_x = pThumbData->pDIBThumb->GetWidth() / 2 + (int)(east * thumb_view_scale_ppm);
 		test_y = pThumbData->pDIBThumb->GetHeight() / 2 - (int)(north * thumb_view_scale_ppm);
@@ -2019,8 +2022,8 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 		northing_lr = northing_ul - (VPoint.pix_height / m_view_scale_ppm);
 
 		double last_easting_vp_center, last_northing_vp_center;
-		geo::toSM(m_last_vp.latitude(), m_last_vp.longitude(), reference_point.lat(),
-				  reference_point.lon(), &last_easting_vp_center, &last_northing_vp_center);
+		geo::toSM(m_last_vp.get_position(), reference_point, &last_easting_vp_center,
+				  &last_northing_vp_center);
 
 		prev_easting_ul = last_easting_vp_center - ((m_last_vp.pix_width / 2) / m_view_scale_ppm);
 		prev_northing_ul = last_northing_vp_center
@@ -4647,8 +4650,7 @@ void s57chart::CreateSENCRecord(OGRFeature* pFeature, FILE* fpOut, int mode, S57
 					lat = north_d;
 
 					// Calculate SM from chart common reference point
-					geo::toSM(lat, lon, reference_point.lat(), reference_point.lon(), &easting,
-							  &northing);
+					geo::toSM(geo::Position(lat, lon), reference_point, &easting, &northing);
 					memcpy(pdf++, &easting, sizeof(float));
 					memcpy(pdf++, &northing, sizeof(float));
 
@@ -4657,8 +4659,7 @@ void s57chart::CreateSENCRecord(OGRFeature* pFeature, FILE* fpOut, int mode, S57
 					lat = (float)*psd++;
 
 					// Calculate SM from chart common reference point
-					geo::toSM(lat, lon, reference_point.lat(), reference_point.lon(), &easting,
-							  &northing);
+					geo::toSM(geo::Position(lat, lon), reference_point, &easting, &northing);
 
 					*pdf++ = easting;
 					*pdf++ = northing;
@@ -4816,8 +4817,7 @@ void s57chart::CreateSENCRecord(OGRFeature* pFeature, FILE* fpOut, int mode, S57
 
 				// Calculate SM from chart common reference point
 				double easting, northing;
-				geo::toSM(lat, lon, reference_point.lat(), reference_point.lon(), &easting,
-						  &northing);
+				geo::toSM(geo::Position(lat, lon), reference_point, &easting, &northing);
 
 #ifdef ARMHF
 				float east;
@@ -4878,8 +4878,7 @@ void s57chart::CreateSENCRecord(OGRFeature* pFeature, FILE* fpOut, int mode, S57
 					// Calculate SM from chart common reference point
 					double easting;
 					double northing;
-					geo::toSM(lat, lon, reference_point.lat(), reference_point.lon(), &easting,
-							  &northing);
+					geo::toSM(geo::Position(lat, lon), reference_point, &easting, &northing);
 
 #ifdef ARMHF
 					float east = easting;
@@ -5072,8 +5071,7 @@ void s57chart::CreateSENCVectorEdgeTable(FILE* fpOut, S57Reader* poReader)
 
 			// Calculate SM from chart common reference point
 			double easting, northing;
-			geo::toSM(p.getY(), p.getX(), reference_point.lat(), reference_point.lon(), &easting,
-					  &northing);
+			geo::toSM(geo::Position(p.getY(), p.getX()), reference_point, &easting, &northing);
 
 			geo::MyPoint pd;
 			pd.x = easting;
@@ -5126,8 +5124,8 @@ void s57chart::CreateSENCConnNodeTable(FILE* fpOut, S57Reader* poReader)
 
 				//  Calculate SM from chart common reference point
 				double easting, northing;
-				geo::toSM(pP->getY(), pP->getX(), reference_point.lat(), reference_point.lon(),
-						  &easting, &northing);
+				geo::toSM(geo::Position(pP->getY(), pP->getX()), reference_point, &easting,
+						  &northing);
 
 				geo::MyPoint pd;
 				pd.x = easting;
@@ -5293,8 +5291,7 @@ bool s57chart::DoesLatLonSelectObject(float lat, float lon, float select_radius,
 
 				double easting;
 				double northing;
-				geo::toSM(lat, lon, reference_point.lat(), reference_point.lon(), &easting,
-						  &northing);
+				geo::toSM(geo::Position(lat, lon), reference_point, &easting, &northing);
 
 				pt* ppt = obj->geoPt;
 				int npt = obj->npt;
@@ -5419,7 +5416,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 		// make the hit test thus.
 		double easting;
 		double northing;
-		geo::toSM(lat, lon, reference_point.lat(), reference_point.lon(), &easting, &northing);
+		geo::toSM(geo::Position(lat, lon), reference_point, &easting, &northing);
 
 		// On some chart types (e.g. cm93), the tesseleated coordinates are stored differently.
 		// Adjust the pick point (easting/northing) to correspond.
@@ -5519,7 +5516,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 		// However, since PolyTrapGeo geometry is (always??) in cm-93 coordinates, convert to sm as
 		// necessary
 		double easting, northing;
-		geo::toSM(lat, lon, reference_point.lat(), reference_point.lon(), &easting, &northing);
+		geo::toSM(geo::Position(lat, lon), reference_point, &easting, &northing);
 
 		int ntraps = ptg->ntrap_count;
 		geo::trapz_t* ptraps = ptg->trap_array;

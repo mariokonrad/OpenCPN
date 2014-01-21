@@ -130,8 +130,9 @@ wxPoint ViewPort::GetPixFromLL(const geo::Position& pos) const
 
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
-	} else
-		geo::toSM(pos.lat(), xlon, center_point.lat(), center_point.lon(), &easting, &northing);
+	} else {
+		geo::toSM(geo::Position(pos.lat(), xlon), center_point, &easting, &northing);
+	}
 
 	if (!wxFinite(easting) || !wxFinite(northing))
 		return wxPoint(0, 0);
@@ -199,7 +200,7 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const geo::Position& pos) const
 		easting = peasting;
 		northing = pnorthing - pcnorthing;
 	} else {
-		geo::toSM(pos.lat(), xlon, center_point.lat(), center_point.lon(), &easting, &northing);
+		geo::toSM(geo::Position(pos.lat(), xlon), center_point, &easting, &northing);
 	}
 
 	if (!wxFinite(easting) || !wxFinite(northing))

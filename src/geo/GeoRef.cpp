@@ -294,25 +294,25 @@ static void toDMM(double a, char* bufp, int bufplen)
 }
 
 // Convert Lat/Lon <-> Simple Mercator
-void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y)
+void toSM(const Position& pos, const Position& pos0, double* x, double* y)
 {
-	double xlon = lon;
+	double xlon = pos.lon();
 
-	// Make sure lon and lon0 are same phase
+	// Make sure pos.lon and pos0.lon are same phase
 
-	if ((lon * lon0 < 0.0) && (fabs(lon - lon0) > 180.0)) {
-		lon < 0.0 ? xlon += 360.0 : xlon -= 360.0;
+	if ((pos.lon() * pos0.lon() < 0.0) && (fabs(pos.lon() - pos0.lon()) > 180.0)) {
+		pos.lon() < 0.0 ? xlon += 360.0 : xlon -= 360.0;
 	}
 
 	const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-	*x = (xlon - lon0) * (M_PI / 180.0) * z;
+	*x = (xlon - pos0.lon()) * (M_PI / 180.0) * z;
 
 	// y =.5 ln( (1 + sin t) / (1 - sin t) )
-	const double s = sin(lat * (M_PI / 180.0));
+	const double s = sin(pos.lat() * (M_PI / 180.0));
 	const double y3 = (.5 * log((1 + s) / (1 - s))) * z;
 
-	const double s0 = sin(lat0 * (M_PI / 180.0));
+	const double s0 = sin(pos0.lat() * (M_PI / 180.0));
 	const double y30 = (.5 * log((1 + s0) / (1 - s0))) * z;
 	*y = y3 - y30;
 }

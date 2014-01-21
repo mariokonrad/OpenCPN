@@ -571,7 +571,7 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 		if (bSENC_SM) {
 			//  Calculate SM from chart common reference point
 			double easting, northing;
-			toSM(ty, tx, ref_lat, ref_lon, &easting, &northing);
+			toSM(geo::Position(ty, tx), geo::Position(ref_lat, ref_lon), &easting, &northing);
 			*vro++ = easting; // x
 			*vro++ = northing; // y
 		} else {
@@ -616,7 +616,8 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 					double dlat = geoPt[ivp].y;
 
 					double easting, northing;
-					toSM(dlat, dlon, ref_lat, ref_lon, &easting, &northing);
+					toSM(geo::Position(dlat, dlon), geo::Position(ref_lat, ref_lon), &easting,
+						 &northing);
 					*pdd++ = easting;
 					*pdd++ = northing;
 				}
@@ -1227,7 +1228,7 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon* poly, bool bSENC_SM, double ref_lat, 
 		if (bSENC_SM) {
 			// Calculate SM from chart common reference point
 			double easting, northing;
-			toSM(ty, tx, ref_lat, ref_lon, &easting, &northing);
+			toSM(geo::Position(ty, tx), geo::Position(ref_lat, ref_lon), &easting, &northing);
 			*vro++ = easting; // x
 			*vro++ = northing; // y
 		} else {
@@ -1657,7 +1658,8 @@ void __CALL_CONVENTION endCallback(void)
 					double dlat = *pds++;
 
 					double easting, northing;
-					toSM(dlat, dlon, s_ref_lat, s_ref_lon, &easting, &northing);
+					toSM(geo::Position(dlat, dlon), geo::Position(s_ref_lat, s_ref_lon), &easting,
+						 &northing);
 					double deast = easting;
 					double dnorth = northing;
 					*pdd++ = deast;

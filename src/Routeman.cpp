@@ -335,8 +335,7 @@ bool Routeman::UpdateProgress()
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		double north;
 		double east;
-		geo::toSM(pActivePoint->latitude(), pActivePoint->longitude(), nav.pos.lat(), nav.pos.lon(),
-				  &east, &north);
+		geo::toSM(pActivePoint->get_position(), nav.pos, &east, &north);
 		double a = atan(north / east);
 		if (fabs(pActivePoint->longitude() - nav.pos.lon()) < 180.0) {
 			if (pActivePoint->longitude() > nav.pos.lon())
@@ -383,13 +382,11 @@ bool Routeman::UpdateProgress()
 		double y1;
 		double x2;
 		double y2;
-		geo::toSM(pActiveRouteSegmentBeginPoint->latitude(), pActiveRouteSegmentBeginPoint->longitude(),
-				  pActiveRouteSegmentBeginPoint->latitude(), pActiveRouteSegmentBeginPoint->longitude(), &x1,
-				  &y1);
+		geo::toSM(pActiveRouteSegmentBeginPoint->get_position(),
+				  pActiveRouteSegmentBeginPoint->get_position(), &x1, &y1);
 
-		geo::toSM(pActivePoint->latitude(), pActivePoint->longitude(),
-				  pActiveRouteSegmentBeginPoint->latitude(),
-				  pActiveRouteSegmentBeginPoint->longitude(), &x2, &y2);
+		geo::toSM(pActivePoint->get_position(), pActiveRouteSegmentBeginPoint->get_position(), &x2,
+				  &y2);
 
 		double e1 = atan2((x2 - x1), (y2 - y1));
 		CurrentSegmentCourse = e1 * 180.0 / M_PI;

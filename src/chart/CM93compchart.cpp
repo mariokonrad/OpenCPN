@@ -736,7 +736,8 @@ bool cm93compchart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPor
 						}
 
 						double easting, northing, epix, npix;
-						geo::toSM(p->y, plon + 360., VPoint.latitude(), VPoint.longitude() + 360,
+						geo::toSM(geo::Position(p->y, plon + 360.0),
+								  geo::Position(VPoint.latitude(), VPoint.longitude() + 360.0),
 								  &easting, &northing);
 
 						// Outlines stored in MCDs are not adjusted for offsets
@@ -998,7 +999,8 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 						}
 
 						double easting, northing, epix, npix;
-						geo::toSM(p->y, plon + 360.0, VPoint.latitude(), VPoint.longitude() + 360,
+						geo::toSM(geo::Position(p->y, plon + 360.0),
+								  geo::Position(VPoint.latitude(), VPoint.longitude() + 360.0),
 								  &easting, &northing);
 
 						// Outlines stored in MCDs are not adjusted for offsets

@@ -450,8 +450,6 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 	int nPoints = pRoutePointList->size();
 	bool isProminent = true;
 	double delta_dist;
-	double delta_hdg;
-	double xte;
 	double leg_speed = 0.1;
 
 	if (pRoutePropDialog)
@@ -461,7 +459,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 	// add first point
 
-	pWP_dst = new RoutePoint(pWP_src->get_position(), icon, _T ( "" ));
+	pWP_dst = new RoutePoint(pWP_src->get_position(), icon, _T(""));
 	route->AddPoint(pWP_dst);
 
 	pWP_dst->m_bShowName = false;
@@ -478,7 +476,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 		pWP_dst = pWP_src;
 
 		delta_dist = 0.0;
-		delta_hdg = 0.0;
+		double delta_hdg = 0.0;
 		back_ic = next_ic;
 
 		geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), pWP_src->latitude(),
@@ -493,7 +491,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 			while (delta_inserts--) {
 				geo::ll_gc_ll(pWP_src->latitude(), pWP_src->longitude(), delta_hdg, delta_dist,
 							  &tlat, &tlon);
-				pWP_dst = new RoutePoint(Position(tlat, tlon), icon, _T (""));
+				pWP_dst = new RoutePoint(Position(tlat, tlon), icon, _T(""));
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;
 				pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
@@ -520,10 +518,10 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 		while (prpnodeX != pRoutePointList->end()) {
 			RoutePoint* prpX = *prpnodeX;
-			xte = GetXTE(pWP_src, prpX, prp);
+			double xte = GetXTE(pWP_src, prpX, prp);
 			if (isProminent || (xte > track.TrackDeltaDistance)) {
 
-				pWP_dst = new RoutePoint(prp_OK->get_position(), icon, _T ( "" ));
+				pWP_dst = new RoutePoint(prp_OK->get_position(), icon, _T(""));
 
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;

@@ -25,7 +25,8 @@
 #define __ROUTEPOINT_H__
 
 #include <Hyperlink.h>
-#include <Position.h>
+#include <geo/Position.h>
+
 #include <vector>
 
 #include <wx/string.h>
@@ -50,7 +51,7 @@ public:
 	};
 
 public:
-	RoutePoint(const Position& pos, const wxString& icon_ident, const wxString& name,
+	RoutePoint(const geo::Position& pos, const wxString& icon_ident, const wxString& name,
 			   const wxString& pGUID = _T(""), bool bAddToList = true);
 	RoutePoint(const RoutePoint& orig);
 	RoutePoint();
@@ -61,8 +62,8 @@ public:
 	const wxDateTime& GetCreateTime(void) const;
 	void SetCreateTime(wxDateTime dt);
 
-	const Position& get_position() const;
-	void set_position(const Position& pos);
+	const geo::Position& get_position() const;
+	void set_position(const geo::Position& pos);
 	double latitude() const;
 	double longitude() const;
 
@@ -139,7 +140,7 @@ public:
 private:
 	void CalculateNameExtents(void);
 
-	Position position;
+	geo::Position position;
 	int m_LayerID;
 
 	wxString m_MarkName;

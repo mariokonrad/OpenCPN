@@ -39,7 +39,8 @@
 #include "nmea0183.h"
 #include <ChartDirInfo.h>
 #include <NMEA_Msg_Container.h>
-#include <Position.h>
+
+#include <geo/Position.h>
 
 #include <global/ColorScheme.h>
 
@@ -112,7 +113,7 @@ public:
 	void SelectQuiltRefChart(int selected_index);
 	void SelectQuiltRefdbChart(int db_index);
 
-	void JumpToPosition(const Position&, double scale);
+	void JumpToPosition(const geo::Position&, double scale);
 
 	void ProcessCanvasResize(void);
 

@@ -125,7 +125,7 @@ RoutePoint::RoutePoint(const RoutePoint& orig)
 	m_GUID = GpxDocument::GetUUID();
 }
 
-RoutePoint::RoutePoint(const Position& pos, const wxString& icon_ident, const wxString& name,
+RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, const wxString& name,
 					   const wxString& pGUID, bool bAddToList)
 	: m_seg_len(0)
 	, m_seg_vmg(0.0)
@@ -343,12 +343,12 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 		g_blink_rect = CurrentRect_in_DC; // also save for global blinker
 }
 
-const Position& RoutePoint::get_position() const
+const geo::Position& RoutePoint::get_position() const
 {
 	return position;
 }
 
-void RoutePoint::set_position(const Position& pos)
+void RoutePoint::set_position(const geo::Position& pos)
 {
 	position = pos;
 }

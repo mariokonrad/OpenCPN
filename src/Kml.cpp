@@ -85,7 +85,7 @@ KmlPastebufferType Kml::ParseTrack(TiXmlNode* node, wxString& name)
 
 			for (unsigned int i = 0; i < coordinates.size(); i++) {
 				routepoint = new RoutePoint;
-				routepoint->set_position(Position(coordinates[i].y, coordinates[i].x));
+				routepoint->set_position(geo::Position(coordinates[i].y, coordinates[i].x));
 				routepoint->m_bIsInTrack = true;
 				parsedTrack->AddPoint(routepoint);
 			}
@@ -107,7 +107,7 @@ KmlPastebufferType Kml::ParseTrack(TiXmlNode* node, wxString& name)
 			double lon = atof(txtCoord.c_str());
 			std::getline(ss, txtCoord, ' ');
 			double lat = atof(txtCoord.c_str());
-			routepoint->set_position(Position(lat, lon));
+			routepoint->set_position(geo::Position(lat, lon));
 
 			parsedTrack->AddPoint(routepoint);
 			pointCounter++;
@@ -184,7 +184,7 @@ KmlPastebufferType Kml::ParseOnePlacemarkPoint(TiXmlNode* node, wxString& WXUNUS
 	}
 
 	parsedRoutePoint = new RoutePoint();
-	parsedRoutePoint->set_position(Position(newLat, newLon));
+	parsedRoutePoint->set_position(geo::Position(newLat, newLon));
 	parsedRoutePoint->m_bIsolatedMark = true;
 	parsedRoutePoint->m_bPtIsSelected = false;
 	parsedRoutePoint->m_MarkDescription = pointDescr;

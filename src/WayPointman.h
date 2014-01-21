@@ -28,8 +28,8 @@
 #include <wx/imaglist.h>
 
 #include <global/ColorScheme.h>
+#include <geo/Position.h>
 #include <RoutePoint.h>
-#include <Position.h>
 
 #include <vector>
 
@@ -48,8 +48,8 @@ public:
 	int GetIconIndex(const wxBitmap* pbm);
 	int GetXIconIndex(const wxBitmap* pbm);
 	int GetNumIcons(void) const;
-	RoutePoint* GetNearbyWaypoint(const Position& pos, double radius_meters);
-	RoutePoint* GetOtherNearbyWaypoint(const Position& pos, double radius_meters,
+	RoutePoint* GetNearbyWaypoint(const geo::Position& pos, double radius_meters);
+	RoutePoint* GetOtherNearbyWaypoint(const geo::Position& pos, double radius_meters,
 									   const wxString& guid);
 	void SetColorScheme(global::ColorScheme cs);
 	bool SharedWptsExist();
@@ -64,7 +64,7 @@ public:
 	wxImageList* Getpmarkicon_image_list(void);
 	void ProcessIcon(wxBitmap pimage, const wxString& key, const wxString& description);
 
-	RoutePoint* WaypointExists(const wxString& name, const Position& pos);
+	RoutePoint* WaypointExists(const wxString& name, const geo::Position& pos);
 
 	void deleteWayPointOnLayer(int layer_id);
 	void setWayPointVisibilityOnLayer(int layer_id, bool visible);
@@ -80,7 +80,7 @@ public:
 	RoutePointList& waypoints(); // FIXME: temporary
 
 private:
-	bool within_distance(const RoutePoint* point, const Position& pos, double radius_meters) const;
+	bool within_distance(const RoutePoint* point, const geo::Position& pos, double radius_meters) const;
 
 	typedef std::vector<MarkIcon*> Icons;
 

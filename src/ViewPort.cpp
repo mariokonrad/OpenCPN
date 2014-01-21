@@ -85,7 +85,7 @@ void ViewPort::set_view_scale(double value)
 	view_scale_ppm = value;
 }
 
-wxPoint ViewPort::GetPixFromLL(const Position& pos) const
+wxPoint ViewPort::GetPixFromLL(const geo::Position& pos) const
 {
 	double easting, northing;
 	double xlon = pos.lon();
@@ -152,7 +152,7 @@ wxPoint ViewPort::GetPixFromLL(const Position& pos) const
 	return r;
 }
 
-wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos) const
+wxPoint2DDouble ViewPort::GetDoublePixFromLL(const geo::Position& pos) const
 {
 	double easting, northing;
 	double xlon = pos.lon();
@@ -220,7 +220,7 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const Position& pos) const
 	return r;
 }
 
-Position ViewPort::GetLLFromPix(const wxPoint& p) const
+geo::Position ViewPort::GetLLFromPix(const wxPoint& p) const
 {
 	int dx = p.x - (pix_width / 2);
 	int dy = (pix_height / 2) - p.y;
@@ -255,7 +255,7 @@ Position ViewPort::GetLLFromPix(const wxPoint& p) const
 		geo::fromSM(d_east, d_north, center_point.lat(), center_point.lon(), &slat, &slon);
 	}
 
-	Position pos(slat, slon);
+	geo::Position pos(slat, slon);
 	pos.normalize_lon();
 	return pos;
 }
@@ -281,7 +281,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		// Make a positive definite vp
 		ViewPort vp_positive = *this;
 		while (vp_positive.vpBBox.GetMinX() < 0) {
-			vp_positive.set_position(Position(vp_positive.latitude(), vp_positive.longitude() + 360.0));
+			vp_positive.set_position(geo::Position(vp_positive.latitude(), vp_positive.longitude() + 360.0));
 			wxPoint2DDouble t(360.0, 0.0);
 			vp_positive.vpBBox.Translate(t);
 		}
@@ -353,8 +353,8 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		if (cb_maxlon < cb_minlon)
 			cb_maxlon += 360.0;
 
-		wxPoint p1 = GetPixFromLL(Position(cb_maxlat, cb_minlon)); // upper left
-		wxPoint p2 = GetPixFromLL(Position(cb_minlat, cb_maxlon)); // lower right
+		wxPoint p1 = GetPixFromLL(geo::Position(cb_maxlat, cb_minlon)); // upper left
+		wxPoint p2 = GetPixFromLL(geo::Position(cb_minlat, cb_maxlon)); // lower right
 
 		OCPNRegion r(p1, p2);
 		r.Intersect(Region);
@@ -374,7 +374,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 	const float* pfp = llpoints;
 
 	for (unsigned int ip = 0; ip < n; ip++) {
-		wxPoint p = GetPixFromLL(Position(pfp[0], pfp[1]));
+		wxPoint p = GetPixFromLL(geo::Position(pfp[0], pfp[1]));
 		pp[ip] = p;
 		pfp += 2;
 	}
@@ -429,8 +429,8 @@ wxRect ViewPort::GetVPRectIntersect(size_t n, const float* llpoints) const
 		pfp += 2;
 	}
 
-	wxPoint pul = GetPixFromLL(Position(point_box.GetMaxY(), point_box.GetMinX()));
-	wxPoint plr = GetPixFromLL(Position(point_box.GetMinY(), point_box.GetMaxX()));
+	wxPoint pul = GetPixFromLL(geo::Position(point_box.GetMaxY(), point_box.GetMinX()));
+	wxPoint plr = GetPixFromLL(geo::Position(point_box.GetMinY(), point_box.GetMaxX()));
 
 	OCPNRegion r(pul, plr);
 	OCPNRegion rs(rv_rect);
@@ -475,19 +475,19 @@ void ViewPort::SetBoxes(void)
 	double rotation_save = rotation;
 	SetRotationAngle(0.0);
 
-	Position pos_ul = GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y));
+	geo::Position pos_ul = GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y));
 	double lat_ul = pos_ul.lat();
 	double lon_ul = pos_ul.lon();
 
-	Position pos_ur = GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y));
+	geo::Position pos_ur = GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y));
 	double lat_ur = pos_ur.lat();
 	double lon_ur = pos_ur.lon();
 
-	Position pos_lr = GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y + rv_rect.height));
+	geo::Position pos_lr = GetLLFromPix(wxPoint(rv_rect.x + rv_rect.width, rv_rect.y + rv_rect.height));
 	double lat_lr = pos_lr.lat();
 	double lon_lr = pos_lr.lon();
 
-	Position pos_ll = GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y + rv_rect.height));
+	geo::Position pos_ll = GetLLFromPix(wxPoint(rv_rect.x, rv_rect.y + rv_rect.height));
 	double lat_ll = pos_ll.lat();
 	double lon_ll = pos_ll.lon();
 
@@ -549,12 +549,12 @@ void ViewPort::SetBBoxDirect(double latmin, double lonmin, double latmax, double
 	vpBBox.SetMax(lonmax, latmax);
 }
 
-const Position& ViewPort::get_position() const
+const geo::Position& ViewPort::get_position() const
 {
 	return center_point;
 }
 
-void ViewPort::set_position(const Position& pos)
+void ViewPort::set_position(const geo::Position& pos)
 {
 	center_point = pos;
 }
@@ -608,7 +608,7 @@ void ViewPort::set_positive()
 {
 	wxPoint2DDouble t(360.0, 0.0);
 	while (GetBBox().GetMinX() < 0) {
-		center_point = Position(center_point.lat(), center_point.lon() + 360.0);
+		center_point = geo::Position(center_point.lat(), center_point.lon() + 360.0);
 		GetBBox().Translate(t);
 	}
 }

@@ -830,7 +830,7 @@ void RouteManagerDialog::ZoomtoRoute(Route* route)
 	cc1->GetSize(&ww, &wh);
 	ppm = wxMin(ww / (rw * 1852.0), wh / (rh * 1852.0)) * (100 - fabs(clat)) / 90;
 	ppm = wxMin(ppm, 1.0);
-	gFrame->JumpToPosition(Position(clat, clon), ppm);
+	gFrame->JumpToPosition(geo::Position(clat, clon), ppm);
 	m_bNeedConfigFlush = true;
 }
 

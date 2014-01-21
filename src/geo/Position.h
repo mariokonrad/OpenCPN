@@ -21,38 +21,28 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "Position.h"
+#ifndef __GEO__POSITION__H__
+#define __GEO__POSITION__H__
 
-Position::Position(double latitude, double longitude)
-	: latitude(latitude)
-	, longitude(longitude)
+namespace geo {
+
+class Position
 {
+public:
+	Position(double latitude = 0.0, double longitude = 0.0);
+
+	double lat() const;
+	double lon() const;
+
+	void normalize_lon();
+
+	bool operator==(const Position&) const;
+
+private:
+	double latitude;
+	double longitude;
+};
+
 }
 
-double Position::lat() const
-{
-	return latitude;
-}
-
-double Position::lon() const
-{
-	return longitude;
-}
-
-/// Normalizes the longitude to a range [-180.0 .. +180.0]
-void Position::normalize_lon()
-{
-	while (longitude < -180.0)
-		longitude += 360.0;
-	while (longitude > 180.0)
-		longitude -= 360.0;
-}
-
-bool Position::operator==(const Position& other) const
-{
-	return true
-		&& latitude == other.latitude
-		&& longitude == other.longitude
-		;
-}
-
+#endif

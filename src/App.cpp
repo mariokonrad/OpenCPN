@@ -1496,7 +1496,7 @@ bool App::OnInit()
 
 	cc1->SetQuiltMode(g_bQuiltEnable); // set initial quilt mode
 	cc1->m_bFollow = pConfig->follow(); // set initial state
-	cc1->SetViewPoint(Position(vLat, vLon), view.initial_scale_ppm, 0.0, 0.0);
+	cc1->SetViewPoint(geo::Position(vLat, vLon), view.initial_scale_ppm, 0.0, 0.0);
 
 	gFrame->Enable();
 	cc1->SetFocus();

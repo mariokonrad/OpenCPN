@@ -71,7 +71,7 @@ void Undo::doUndoMoveWaypoint(UndoAction* action)
 	wxRealPoint* lastPoint = reinterpret_cast<wxRealPoint*>(action->before[0]);
 	double lat = currentPoint->latitude();
 	double lon = currentPoint->longitude();
-	currentPoint->set_position(Position(lastPoint->y, lastPoint->x));
+	currentPoint->set_position(geo::Position(lastPoint->y, lastPoint->x));
 	lastPoint->y = lat;
 	lastPoint->x = lon;
 	SelectItem* selectable = reinterpret_cast<SelectItem*>(action->selectable[0]);

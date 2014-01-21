@@ -1774,7 +1774,7 @@ void MainFrame::ActivateMOB(void)
 		double zlon;
 		geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), nav.cog, 1.0, &zlat, &zlon);
 
-		Position zpos(zlat, zlon);
+		geo::Position zpos(zlat, zlon);
 		RoutePoint* pWP_src
 			= new RoutePoint(zpos, g_default_wp_icon, wxString(_("1.0 NM along COG")));
 		pSelect->AddSelectableRoutePoint(zpos, pWP_src);
@@ -2174,7 +2174,7 @@ void MainFrame::SurfaceToolbar(void)
 	Raise();
 }
 
-void MainFrame::JumpToPosition(const Position& pos, double scale)
+void MainFrame::JumpToPosition(const geo::Position& pos, double scale)
 {
 	vLat = pos.lat();
 	vLon = pos.lon();
@@ -3034,7 +3034,7 @@ bool MainFrame::check_anchorwatch(const RoutePoint* watch_point) const
 
 void MainFrame::send_gps_to_plugins() const
 {
-	// Build and send a Position Fix event to PlugIns
+	// Build and send a position Fix event to PlugIns
 	if (!g_pi_manager)
 		return;
 
@@ -3095,7 +3095,7 @@ void MainFrame::test_unit_test_1()
 	if (ChartData) {
 		if (ut_index < ChartData->GetChartTableEntries()) {
 			const chart::ChartTableEntry* cte = &ChartData->GetChartTableEntry(ut_index);
-			Position pos(
+			geo::Position pos(
 				(cte->GetLatMax() + cte->GetLatMin()) / 2,
 				(cte->GetLonMax() + cte->GetLonMin()) / 2);
 
@@ -3232,7 +3232,7 @@ void MainFrame::onTimer_update_status_cursor_position()
 	if (!chart_canvas)
 		return;
 
-	Position cursor = chart_canvas->GetCursorLatLon();
+	geo::Position cursor = chart_canvas->GetCursorLatLon();
 
 	if (GetStatusBar()) {
 		wxString s1 = _T(" ") + toSDMM(1, cursor.lat()) + _T("   ") + toSDMM(2, cursor.lon());
@@ -3245,7 +3245,7 @@ void MainFrame::onTimer_update_status_cursor_brgrng()
 	if (!chart_canvas)
 		return;
 
-	Position cursor = chart_canvas->GetCursorLatLon();
+	geo::Position cursor = chart_canvas->GetCursorLatLon();
 
 	double brg;
 	double dist;
@@ -3868,12 +3868,12 @@ void MainFrame::activate_chart(chart::ChartBase* tentative)
 void MainFrame::setup_viewpoint()
 {
 	// Setup the view
-	Position zpos;
+	geo::Position zpos;
 	if (chart_canvas->m_bFollow) {
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		zpos = nav.pos;
 	} else {
-		zpos = Position(vLat, vLon);
+		zpos = geo::Position(vLat, vLon);
 	}
 
 	double best_scale = GetBestVPScale(Current_Ch);
@@ -4212,12 +4212,12 @@ bool MainFrame::DoChartUpdate(void)
 			}
 
 			bNewView |= chart_canvas->SetViewPoint(
-				Position(vpLat, vpLon),
+				geo::Position(vpLat, vpLon),
 				chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen, 0,
 				chart_canvas->GetVPRotation());
 		}
 
-		bNewView |= chart_canvas->SetViewPoint(Position(vpLat, vpLon), chart_canvas->GetVPScale(),
+		bNewView |= chart_canvas->SetViewPoint(geo::Position(vpLat, vpLon), chart_canvas->GetVPScale(),
 											   0, chart_canvas->GetVPRotation());
 
 		goto update_finish;
@@ -4261,7 +4261,7 @@ bool MainFrame::DoChartUpdate(void)
 		if (!chart_canvas->GetVP().IsValid())
 			set_scale = 1.0 / 200000.0;
 
-		bNewView |= chart_canvas->SetViewPoint(Position(tLat, tLon), set_scale, 0,
+		bNewView |= chart_canvas->SetViewPoint(geo::Position(tLat, tLon), set_scale, 0,
 											   chart_canvas->GetVPRotation());
 
 		// If the chart stack has just changed, there is new status
@@ -4411,13 +4411,13 @@ bool MainFrame::DoChartUpdate(void)
 				set_scale = chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
 			}
 
-			bNewView |= chart_canvas->SetViewPoint(Position(vpLat, vpLon), set_scale,
+			bNewView |= chart_canvas->SetViewPoint(geo::Position(vpLat, vpLon), set_scale,
 												   Current_Ch->GetChartSkew() * M_PI / 180.,
 												   chart_canvas->GetVPRotation());
 		}
 	} else { // No change in Chart Stack
 		if ((chart_canvas->m_bFollow) && Current_Ch)
-			bNewView |= chart_canvas->SetViewPoint(Position(vpLat, vpLon), chart_canvas->GetVPScale(),
+			bNewView |= chart_canvas->SetViewPoint(geo::Position(vpLat, vpLon), chart_canvas->GetVPScale(),
 												   Current_Ch->GetChartSkew() * M_PI / 180.,
 												   chart_canvas->GetVPRotation());
 	}

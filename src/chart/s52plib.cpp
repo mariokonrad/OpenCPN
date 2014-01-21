@@ -26,7 +26,6 @@
 #include <ocpn_pixel.h>
 #include <FontMgr.h>
 #include <UserColors.h>
-#include <Position.h>
 
 #include <chart/RazdsParser.h>
 #include <chart/RenderFromHPGL.h>

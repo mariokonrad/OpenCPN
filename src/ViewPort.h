@@ -26,9 +26,9 @@
 
 #include <wx/gdicmn.h>
 #include <wx/geometry.h>
+#include <geo/Position.h>
 #include <geo/LatLonBoundingBox.h>
 #include <OCPNRegion.h>
-#include <Position.h>
 
 namespace geo { class LatLonBoundingBox; }
 
@@ -37,9 +37,9 @@ class ViewPort
 public:
 	ViewPort();
 
-	wxPoint GetPixFromLL(const Position& pos) const;
-	Position GetLLFromPix(const wxPoint& p) const;
-	wxPoint2DDouble GetDoublePixFromLL(const Position& pos) const;
+	wxPoint GetPixFromLL(const geo::Position& pos) const;
+	geo::Position GetLLFromPix(const wxPoint& p) const;
+	wxPoint2DDouble GetDoublePixFromLL(const geo::Position& pos) const;
 
 	OCPNRegion GetVPRegionIntersect(const OCPNRegion& Region, size_t n, const float* llpoints,
 									int chart_native_scale, wxPoint* ppoints = NULL) const;
@@ -61,8 +61,8 @@ public:
 	double latitude() const;
 	double longitude() const;
 
-	const Position& get_position() const;
-	void set_position(const Position& pos);
+	const geo::Position& get_position() const;
+	void set_position(const geo::Position& pos);
 
 	bool is_quilt() const;
 	bool is_fullscreen_quilt() const;
@@ -86,7 +86,7 @@ public:
 	wxRect rv_rect;
 
 private:
-	Position center_point;
+	geo::Position center_point;
 	geo::LatLonBoundingBox vpBBox; // An un-skewed rectangular lat/lon bounding box which contains
 								   // the entire vieport
 	bool valid; // This VP is valid

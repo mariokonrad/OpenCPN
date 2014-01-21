@@ -757,6 +757,7 @@ SET(HDR_SOUND
 	)
 
 SET(SRC_GEO
+	src/geo/Position.cpp
 	src/geo/BoundingBox.cpp
 	src/geo/LatLonBoundingBox.cpp
 	src/geo/lmfit.cpp
@@ -767,6 +768,7 @@ SET(SRC_GEO
 	)
 
 SET(HDR_GEO
+	src/geo/Position.h
 	src/geo/BoundingBox.h
 	src/geo/LatLonBoundingBox.h
 	src/geo/Polygon.h
@@ -927,7 +929,6 @@ SET(HDRS
 	src/MarkInfo.h
 	src/LatLonTextCtrl.h
 	src/RoutePrintout.h
-	src/Position.h
 	src/PositionParser.h
 	src/PrintTable.h
 	src/Table.h
@@ -1048,7 +1049,6 @@ SET(SRCS
 	src/LatLonTextCtrl.cpp
 	src/RoutePrintout.cpp
 	src/RoutePrintSelection.cpp
-	src/Position.cpp
 	src/PositionParser.cpp
 	src/PrintTable.cpp
 	src/Table.cpp

@@ -348,7 +348,7 @@ bool RouteProp::IsThisRouteExtendable()
 			if (pEditRouteArray->size() == 0) {
 
 				int nearby_radius_meters = static_cast<int>(8.0 / cc1->GetCanvasTrueScale());
-				Position rpos = pLastPoint->get_position();
+				geo::Position rpos = pLastPoint->get_position();
 
 				m_pExtendPoint = pWayPointMan->GetOtherNearbyWaypoint(rpos, nearby_radius_meters,
 																	  pLastPoint->m_GUID);

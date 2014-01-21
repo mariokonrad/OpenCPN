@@ -221,7 +221,7 @@ void Track::OnTimerTrack(wxTimerEvent&)
 
 RoutePoint* Track::AddNewPoint(Vector2D point, wxDateTime time)
 {
-	RoutePoint* rPoint = new RoutePoint(Position(point.lat, point.lon), _T( "empty"), _T(""));
+	RoutePoint* rPoint = new RoutePoint(geo::Position(point.lat, point.lon), _T("empty"), _T(""));
 	rPoint->m_bShowName = false;
 	rPoint->m_bIsVisible = true;
 	rPoint->m_GPXTrkSegNo = 1;
@@ -280,7 +280,7 @@ void Track::AddPointNow(bool do_add_point)
 			// Scan points skipped so far and see if anyone has XTE over the threshold.
 			for (unsigned int i = 0; i < skipPoints.size(); i++) {
 				double xte = GetXTE(m_lastStoredTP->get_position(), nav.pos,
-									Position(skipPoints[i].lat, skipPoints[i].lon));
+									geo::Position(skipPoints[i].lat, skipPoints[i].lon));
 				if (xte > xteMax) {
 					xteMax = xte;
 					xteMaxIndex = i;
@@ -491,7 +491,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 			while (delta_inserts--) {
 				geo::ll_gc_ll(pWP_src->latitude(), pWP_src->longitude(), delta_hdg, delta_dist,
 							  &tlat, &tlon);
-				pWP_dst = new RoutePoint(Position(tlat, tlon), icon, _T(""));
+				pWP_dst = new RoutePoint(geo::Position(tlat, tlon), icon, _T(""));
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;
 				pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
@@ -635,7 +635,7 @@ int Track::Simplify(double maxDelta)
 	return reduction;
 }
 
-double Track::GetXTE(const Position& fm1, const Position& fm2, const Position& to) const
+double Track::GetXTE(const geo::Position& fm1, const geo::Position& fm2, const geo::Position& to) const
 {
 	Vector2D v;
 	Vector2D w;

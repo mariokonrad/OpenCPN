@@ -1207,7 +1207,7 @@ bool cm93compchart::RenderNextSmallerCellOutlines(ocpnDC& dc, const ViewPort& vp
 
 							for (int ip = 0; ip < mcd->m_nvertices; ip++, p++) {
 
-								pwp[ip] = vp_positive.GetPixFromLL(Position(p->y, p->x));
+								pwp[ip] = vp_positive.GetPixFromLL(geo::Position(p->y, p->x));
 
 								// Outlines stored in MCDs are not adjusted for offsets
 								pwp[ip].x -= mcd->user_xoff * vp.view_scale();
@@ -1323,7 +1323,7 @@ ListOfObjRazRules* cm93compchart::GetObjRuleListAtLatLon(float lat, float lon, f
 
 		// Search all of the subcharts, looking for the one whose render region contains the
 		// requested point
-		wxPoint p = VPoint.GetPixFromLL(Position(lat, lon));
+		wxPoint p = VPoint.GetPixFromLL(geo::Position(lat, lon));
 
 		for (int i = 0; i < 8; i++) {
 			if (m_pcm93chart_array[i]) {

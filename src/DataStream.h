@@ -91,7 +91,7 @@ enum
 #define RX_BUFFER_SIZE        4096
 
 
-// A generic Position Data structure
+// A generic position Data structure
 struct GenericPosDatEx
 {
 	double kLat;

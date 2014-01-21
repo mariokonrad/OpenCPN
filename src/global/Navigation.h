@@ -24,7 +24,7 @@
 #ifndef __GLOBAL__NAVIGATION__H__
 #define __GLOBAL__NAVIGATION__H__
 
-#include <Position.h>
+#include <geo/Position.h>
 
 namespace global {
 
@@ -38,7 +38,7 @@ public:
 public:
 	struct Data
 	{
-		Position pos; // latitude/longitude
+		geo::Position pos; // latitude/longitude
 		double cog; // course over ground in degrees
 		double sog; // speed over ground in knots
 		double hdt; // heading degrees true
@@ -47,7 +47,7 @@ public:
 	};
 
 	virtual const Data& get_data() const = 0;
-	virtual void set_position(const Position&) = 0;
+	virtual void set_position(const geo::Position&) = 0;
 	virtual void set_latitude(double) = 0;
 	virtual void set_longitude(double) = 0;
 	virtual void set_magn_var(double) = 0;

@@ -26,7 +26,7 @@
 
 #include <wx/string.h>
 #include <wx/datetime.h>
-#include <Position.h>
+#include <geo/Position.h>
 
 enum Daylight {
 	UNKNOWN_DAYLIGHT = 0,
@@ -38,7 +38,7 @@ enum Daylight {
 	NIGHT      = 6
 };
 
-Daylight getDaylightStatus(const Position& pos, wxDateTime utcDateTime);
+Daylight getDaylightStatus(const geo::Position& pos, wxDateTime utcDateTime);
 wxString GetDaylightString(Daylight status);
 
 #endif

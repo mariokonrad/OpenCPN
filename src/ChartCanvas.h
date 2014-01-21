@@ -35,12 +35,13 @@
 
 #include <vector>
 
-#include <Position.h>
 #include <CM93DSlide.h>
 #include <RolloverWin.h>
 #include <ViewPort.h>
 #include <Routeman.h>
 #include <timers.h>
+
+#include <geo/Position.h>
 
 #include <ais/AISTargetQueryDialog.h>
 
@@ -139,11 +140,11 @@ public:
 	void Do_Pankeys(wxTimerEvent& event);
 	void EnableAutoPan(bool b_enable);
 
-	bool SetViewPoint(const Position& pos, double scale_ppm, double skew, double rotation,
+	bool SetViewPoint(const geo::Position& pos, double scale_ppm, double skew, double rotation,
 					  bool b_adjust = true);
 
 	bool SetVPScale(double sc);
-	bool SetViewPoint(const Position& pos);
+	bool SetViewPoint(const geo::Position& pos);
 	void ReloadVP(bool b_adjust = true);
 	void LoadVP(const ViewPort& vp, bool b_adjust = true);
 	void SetVPRotation(double angle);
@@ -151,8 +152,8 @@ public:
 	double GetVPSkew(void) const;
 	void ClearbFollow(void);
 
-	wxPoint GetCanvasPointPix(const Position& pos);
-	Position GetCanvasPixPoint(int x, int y);
+	wxPoint GetCanvasPointPix(const geo::Position& pos);
+	geo::Position GetCanvasPixPoint(int x, int y);
 	void WarpPointerDeferred(int x, int y);
 	void UpdateShips();
 	void UpdateAIS();
@@ -193,7 +194,7 @@ public:
 	double GetPixPerMM() const;
 
 	void SetOwnShipState(ownship_state_t state);
-	Position GetCursorLatLon();
+	geo::Position GetCursorLatLon();
 
 	bool ZoomCanvasIn(double zoom_factor);
 	bool ZoomCanvasOut(double zoom_factor);
@@ -554,9 +555,9 @@ private:
 
 	int m_AISRollover_MMSI;
 
-	Position m_prev_route;
+	geo::Position m_prev_route;
 	RoutePoint* m_prev_pMousePoint;
-	Position m_cursor_pos;
+	geo::Position m_cursor_pos;
 	Undo* undo;
 	wxPoint r_rband;
 	wxCursor* pCursorPencil;

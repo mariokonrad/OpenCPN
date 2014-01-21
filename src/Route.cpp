@@ -568,7 +568,7 @@ void Route::ClearHighlights(void)
 RoutePoint* Route::InsertPointBefore(RoutePoint* pRP, double rlat, double rlon, bool bRenamePoints)
 {
 	RoutePoint* newpoint
-		= new RoutePoint(Position(rlat, rlon), wxString(_T("diamond")), GetNewMarkSequenced());
+		= new RoutePoint(geo::Position(rlat, rlon), wxString(_T("diamond")), GetNewMarkSequenced());
 	newpoint->m_bIsInRoute = true;
 	newpoint->m_bDynamicName = true;
 	newpoint->SetNameShown(false);

@@ -24,7 +24,7 @@
 #ifndef __SELECTITEM_H__
 #define __SELECTITEM_H__
 
-#include <Position.h>
+#include <geo/Position.h>
 #include <list>
 
 class Route;
@@ -53,8 +53,8 @@ public:
 	int GetUserData(void) const;
 	void SetUserData(int data);
 
-	Position pos1;
-	Position pos2;
+	geo::Position pos1;
+	geo::Position pos2;
 	unsigned long m_seltype; // bitcombination of Type
 	bool m_bIsSelected;
 

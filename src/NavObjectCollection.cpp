@@ -153,7 +153,7 @@ RoutePoint* NavObjectCollection::GPXLoadWaypoint1(
 			GuidString = _T("LayGUID");
 	}
 	// do not add to global WP list yet...
-	pWP = new RoutePoint(Position(rlat, rlon), SymString, NameString, GuidString, false);
+	pWP = new RoutePoint(geo::Position(rlat, rlon), SymString, NameString, GuidString, false);
 	pWP->m_MarkDescription = DescString;
 	pWP->m_bIsolatedMark = bshared; // This is an isolated mark
 
@@ -813,7 +813,7 @@ void NavObjectCollection::InsertRouteA(Route * pTentRoute)
 		// Add the selectable points and segments
 
 		int ip = 0;
-		Position prev_pos;
+		geo::Position prev_pos;
 		RoutePoint* prev_pConfPoint = NULL;
 
 		for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
@@ -871,7 +871,7 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 		// Add the selectable points and segments
 
 		int ip = 0;
-		Position prev_pos;
+		geo::Position prev_pos;
 		RoutePoint* prev_pConfPoint = NULL;
 
 		for (RoutePointList::iterator node = pTentTrack->pRoutePointList->begin();

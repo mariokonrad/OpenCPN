@@ -348,8 +348,8 @@ void TCWin::Resize(void)
 
 void TCWin::RePosition(void)
 {
-	// Position the window
-	Position pos(pIDX->IDX_lon, pIDX->IDX_lat);
+	// position the window
+	geo::Position pos(pIDX->IDX_lon, pIDX->IDX_lat);
 
 	wxPoint r = pParent->GetCanvasPointPix(pos);
 	pParent->ClientToScreen(&r.x, &r.y);

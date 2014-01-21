@@ -39,9 +39,9 @@ PositionParser::PositionParser(const wxString & src)
 	}
 }
 
-Position PositionParser::get() const
+geo::Position PositionParser::get() const
 {
-	return Position(latitude, longitude);
+	return geo::Position(latitude, longitude);
 }
 
 bool PositionParser::FindSeparator(const wxString & src)

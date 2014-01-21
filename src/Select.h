@@ -36,17 +36,17 @@ public:
 
 	void SetSelectPixelRadius(int radius);
 
-	bool AddSelectableRoutePoint(const Position& pos, RoutePoint* pRoutePointAdd);
-	bool AddSelectableRouteSegment(const Position& pos1, const Position& pos2,
+	bool AddSelectableRoutePoint(const geo::Position& pos, RoutePoint* pRoutePointAdd);
+	bool AddSelectableRouteSegment(const geo::Position& pos1, const geo::Position& pos2,
 								   RoutePoint* pRoutePointAdd1, RoutePoint* pRoutePointAdd2,
 								   Route* pRoute);
 
-	bool AddSelectableTrackSegment(const Position& pos1, const Position& pos2,
+	bool AddSelectableTrackSegment(const geo::Position& pos1, const geo::Position& pos2,
 								   RoutePoint* pRoutePointAdd1, RoutePoint* pRoutePointAdd2,
 								   Route* pRoute);
 
-	SelectItem* FindSelection(const Position& pos, unsigned long fseltype);
-	SelectableItemList FindSelectionList(const Position& pos, unsigned long fseltype);
+	SelectItem* FindSelection(const geo::Position& pos, unsigned long fseltype);
+	SelectableItemList FindSelectionList(const geo::Position& pos, unsigned long fseltype);
 
 	bool DeleteAllSelectableRouteSegments(Route*);
 	bool DeleteAllSelectableTrackSegments(Route*);
@@ -56,15 +56,15 @@ public:
 	bool AddAllSelectableRoutePoints(Route* pr);
 	bool UpdateSelectableRouteSegments(const RoutePoint* prp);
 	bool DeletePointSelectableTrackSegments(RoutePoint* pr);
-	bool IsSegmentSelected(float a, float b, float c, float d, const Position& pos);
-	bool IsSelectableSegmentSelected(const Position& pos, SelectItem* pFindSel);
+	bool IsSegmentSelected(float a, float b, float c, float d, const geo::Position& pos);
+	bool IsSelectableSegmentSelected(const geo::Position& pos, SelectItem* pFindSel);
 
 	// Generic Point Support
 	// e.g. Tides/Currents and AIS Targets
-	SelectItem* AddSelectablePoint(const Position& pos, const void* data, SelectItem::Type fseltype);
+	SelectItem* AddSelectablePoint(const geo::Position& pos, const void* data, SelectItem::Type fseltype);
 	bool DeleteAllPoints(void);
 	bool DeleteSelectablePoint(void* data, unsigned long SeltypeToDelete);
-	bool ModifySelectablePoint(const Position& pos, void* data, unsigned long fseltype);
+	bool ModifySelectablePoint(const geo::Position& pos, void* data, unsigned long fseltype);
 
 	// Delete all selectable points in list by type
 	bool DeleteAllSelectableTypePoints(unsigned long SeltypeToDelete);

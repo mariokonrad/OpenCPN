@@ -56,7 +56,7 @@ void Select::SetSelectPixelRadius(int radius)
 	pixelRadius = radius;
 }
 
-bool Select::AddSelectableRoutePoint(const Position& pos, RoutePoint* pRoutePointAdd)
+bool Select::AddSelectableRoutePoint(const geo::Position& pos, RoutePoint* pRoutePointAdd)
 {
 	SelectItem* pSelItem = new SelectItem;
 	pSelItem->pos1 = pos;
@@ -73,8 +73,8 @@ bool Select::AddSelectableRoutePoint(const Position& pos, RoutePoint* pRoutePoin
 }
 
 bool Select::AddSelectableRouteSegment(
-		const Position& pos1,
-		const Position& pos2,
+		const geo::Position& pos1,
+		const geo::Position& pos2,
 		RoutePoint * pRoutePointAdd1,
 		RoutePoint * pRoutePointAdd2,
 		Route *pRoute)
@@ -210,7 +210,7 @@ bool Select::UpdateSelectableRouteSegments(const RoutePoint* prp)
 	return ret;
 }
 
-SelectItem* Select::AddSelectablePoint(const Position& pos, const void* pdata,
+SelectItem* Select::AddSelectablePoint(const geo::Position& pos, const void* pdata,
 									   SelectItem::Type fseltype)
 {
 	SelectItem* pSelItem = new SelectItem;
@@ -268,7 +268,7 @@ bool Select::DeleteAllSelectableTypePoints(unsigned long SeltypeToDelete)
 	return true;
 }
 
-bool Select::ModifySelectablePoint(const Position& pos, void* data, unsigned long SeltypeToModify)
+bool Select::ModifySelectablePoint(const geo::Position& pos, void* data, unsigned long SeltypeToModify)
 {
 	// FIXME: refactor, use std algorithms
 	for (SelectableItemList::iterator i = select_items.begin(); i != select_items.end(); ++i) {
@@ -284,8 +284,8 @@ bool Select::ModifySelectablePoint(const Position& pos, void* data, unsigned lon
 }
 
 bool Select::AddSelectableTrackSegment(
-		const Position& pos1,
-		const Position& pos2,
+		const geo::Position& pos1,
+		const geo::Position& pos2,
 		RoutePoint * pRoutePointAdd1,
 		RoutePoint * pRoutePointAdd2,
 		Route * pRoute)
@@ -344,7 +344,7 @@ bool Select::DeletePointSelectableTrackSegments(RoutePoint* pr)
 	return true;
 }
 
-bool Select::IsSegmentSelected(float a, float b, float c, float d, const Position& pos)
+bool Select::IsSegmentSelected(float a, float b, float c, float d, const geo::Position& pos)
 {
 	double adder = 0.0;
 
@@ -406,7 +406,7 @@ void Select::CalcSelectRadius()
 	selectRadius = pixelRadius / (cc1->GetCanvasTrueScale() * 1852 * 60);
 }
 
-SelectItem* Select::FindSelection(const Position& pos, unsigned long fseltype)
+SelectItem* Select::FindSelection(const geo::Position& pos, unsigned long fseltype)
 {
 	CalcSelectRadius();
 
@@ -439,13 +439,13 @@ SelectItem* Select::FindSelection(const Position& pos, unsigned long fseltype)
 	return NULL;
 }
 
-bool Select::IsSelectableSegmentSelected(const Position& pos, SelectItem* item)
+bool Select::IsSelectableSegmentSelected(const geo::Position& pos, SelectItem* item)
 {
 	CalcSelectRadius();
 	return IsSegmentSelected(item->pos1.lat(), item->pos2.lat(), item->pos1.lon(), item->pos2.lon(), pos);
 }
 
-SelectableItemList Select::FindSelectionList(const Position& pos, unsigned long fseltype)
+SelectableItemList Select::FindSelectionList(const geo::Position& pos, unsigned long fseltype)
 {
 	SelectableItemList ret_list;
 

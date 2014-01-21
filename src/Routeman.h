@@ -26,7 +26,7 @@
 
 #include "nmea0183.h"
 #include <global/ColorScheme.h>
-#include <Position.h>
+#include <geo/Position.h>
 
 #include <vector>
 
@@ -60,7 +60,7 @@ public:
 	bool ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint = NULL);
 	bool ActivateRoutePoint(Route* pA, RoutePoint* pRP);
 	bool ActivateNextPoint(Route* pr, bool skipped);
-	RoutePoint* FindBestActivatePoint(Route* pR, const Position& pos, double cog, double sog);
+	RoutePoint* FindBestActivatePoint(Route* pR, const geo::Position& pos, double cog, double sog);
 
 	bool UpdateProgress();
 	bool UpdateAutopilot();

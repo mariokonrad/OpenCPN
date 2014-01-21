@@ -81,7 +81,7 @@ static double FNrange(double x)
 	return a;
 }
 
-static double getDaylightEvent(const Position& pos, int riset, double altitude, int y, int m, int d)
+static double getDaylightEvent(const geo::Position& pos, int riset, double altitude, int y, int m, int d)
 {
 	double day = FNday(y, m, d, 0);
 	double days, correction;
@@ -130,7 +130,7 @@ static double getDaylightEvent(const Position& pos, int riset, double altitude, 
 	return utnew * (180.0 / M_PI) / 15.0; // returns decimal hours UTC
 }
 
-static double getLMT(double ut, const Position& pos)
+static double getLMT(double ut, const geo::Position& pos)
 {
 	double t = ut + pos.lon() / 15.0;
 	if (t >= 0.0)
@@ -142,7 +142,7 @@ static double getLMT(double ut, const Position& pos)
 		return (t + 24.0);
 }
 
-Daylight getDaylightStatus(const Position& pos, wxDateTime utcDateTime)
+Daylight getDaylightStatus(const geo::Position& pos, wxDateTime utcDateTime)
 {
 	if (fabs(pos.lat()) > 60.0)
 		return UNKNOWN_DAYLIGHT;

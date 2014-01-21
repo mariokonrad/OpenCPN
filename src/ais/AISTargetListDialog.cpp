@@ -692,7 +692,7 @@ void AISTargetListDialog::OnTargetScrollTo(wxCommandEvent&)
 		pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(selItemID));
 
 	if (pAISTarget)
-		gFrame->JumpToPosition(Position(pAISTarget->Lat, pAISTarget->Lon), cc1->GetVPScale());
+		gFrame->JumpToPosition(geo::Position(pAISTarget->Lat, pAISTarget->Lon), cc1->GetVPScale());
 }
 
 void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent&)
@@ -708,7 +708,7 @@ void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent&)
 		pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(selItemID));
 
 	if (pAISTarget) {
-		Position pos(pAISTarget->Lat, pAISTarget->Lon);
+		geo::Position pos(pAISTarget->Lat, pAISTarget->Lon);
 		RoutePoint* pWP = new RoutePoint(pos, g_default_wp_icon, wxEmptyString);
 		pWP->m_bIsolatedMark = true; // This is an isolated mark
 		pSelect->AddSelectableRoutePoint(pos, pWP);

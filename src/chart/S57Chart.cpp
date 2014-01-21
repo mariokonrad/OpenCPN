@@ -1349,7 +1349,7 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 	double xlat, xlon;
 	geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon);
 
-	vp_proposed.set_position(Position(xlat, xlon));
+	vp_proposed.set_position(geo::Position(xlat, xlon));
 
 	return true;
 }
@@ -2729,8 +2729,8 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 	// Set up a private ViewPort
 	ViewPort vp;
 
-	vp.set_position(Position((m_FullExtent.ELON + m_FullExtent.WLON) / 2.0,
-							 (m_FullExtent.NLAT + m_FullExtent.SLAT) / 2.0));
+	vp.set_position(geo::Position((m_FullExtent.ELON + m_FullExtent.WLON) / 2.0,
+								  (m_FullExtent.NLAT + m_FullExtent.SLAT) / 2.0));
 
 	float ext_max
 		= fmax((m_FullExtent.NLAT - m_FullExtent.SLAT), (m_FullExtent.ELON - m_FullExtent.WLON));
@@ -6348,15 +6348,15 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, const ViewPort& viewport,
 			geo::ll_gc_ll(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
 						  sectorlegs[i].sector1 + 180.0, sectorlegs[i].range, &endy, &endx);
 
-			wxPoint end1 = viewport.GetPixFromLL(Position(endy, endx));
+			wxPoint end1 = viewport.GetPixFromLL(geo::Position(endy, endx));
 
 			geo::ll_gc_ll(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
 						  sectorlegs[i].sector2 + 180.0, sectorlegs[i].range, &endy, &endx);
 
-			wxPoint end2 = viewport.GetPixFromLL(Position(endy, endx));
+			wxPoint end2 = viewport.GetPixFromLL(geo::Position(endy, endx));
 
 			wxPoint lightPos
-				= viewport.GetPixFromLL(Position(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x));
+				= viewport.GetPixFromLL(geo::Position(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x));
 
 			// Make sure arcs are well inside viewport.
 			double rangePx = sqrt(pow(lightPos.x - end1.x, 2.0) + pow(lightPos.y - end1.y, 2.0));
@@ -6459,12 +6459,12 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, const ViewPort& viewport,
 bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort& viewport,
 								   std::vector<s57Sector_t>& sectorlegs)
 {
-	static Position lastpos;
+	static geo::Position lastpos;
 
 	if (!ps52plib || !ps52plib->m_bExtendLightSectors)
 		return false;
 
-	Position cursor = cc1->GetCanvasPixPoint(mx, my);
+	geo::Position cursor = cc1->GetCanvasPixPoint(mx, my);
 
 	if (lastpos == cursor)
 		return false;

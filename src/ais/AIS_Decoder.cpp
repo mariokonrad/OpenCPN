@@ -206,7 +206,7 @@ void AIS_Decoder::OnEvtAIS(OCPN_DataStreamEvent& event)
 	}
 }
 
-/// Decode a single AIVDO sentence to a Generic Position Report
+/// Decode a single AIVDO sentence to a Generic position report
 AIS_Error AIS_Decoder::DecodeSingleVDO(const wxString& str, GenericPosDatEx* pos,
 									   wxString* accumulator)
 {
@@ -387,7 +387,7 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 		return AIS_NMEAVDX_CHECKSUM_BAD;
 	}
 	if (str.Mid(1, 2).IsSameAs(_T("CD"))) {
-		// parse a DSC Position message            $CDDSx,.....
+		// parse a DSC position message            $CDDSx,.....
 		// Use a tokenizer to pull out the first 9 fields
 		wxString string(str);
 		wxStringTokenizer tkz(string, _T(",*"));
@@ -653,7 +653,7 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 		// stream + we make sure we are out of the hashes for
 		// GPSGate buddies and ARPA by being above 1993*
 	} else if (str.Mid(1, 5).IsSameAs(_T("FRPOS"))) {
-		// parse a GpsGate Position message            $FRPOS,.....
+		// parse a GpsGate position message            $FRPOS,.....
 
 		//  Use a tokenizer to pull out the first 9 fields
 		wxString string(str);
@@ -964,7 +964,7 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 			if (!pTargetData->b_OwnShip) {
 				if (pTargetData->b_positionOnceValid) {
 					SelectItem* pSel = pSelectAIS->AddSelectablePoint(
-						Position(pTargetData->Lat, pTargetData->Lon),
+						geo::Position(pTargetData->Lat, pTargetData->Lon),
 						reinterpret_cast<void*>(mmsi_long),
 						SelectItem::TYPE_AISTARGET); // FIXME: void * misuse
 					pSel->SetUserData(mmsi);
@@ -988,7 +988,7 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 				if (!pTargetData->b_OwnShip) {
 					if (pTargetData->b_positionOnceValid) {
 						SelectItem* pSel = pSelectAIS->AddSelectablePoint(
-							Position(pTargetData->Lat, pTargetData->Lon),
+							geo::Position(pTargetData->Lat, pTargetData->Lon),
 							reinterpret_cast<void*>(mmsi_long),
 							SelectItem::TYPE_AISTARGET); // FIXME: void * misuse
 						pSel->SetUserData(mmsi);
@@ -1027,7 +1027,7 @@ bool AIS_Decoder::Parse_VDXBitstring(AIS_Bitstring* bstr, AIS_Target_Data* ptd)
 	ptd->MMSI = bstr->GetInt(9, 30); // MMSI is always in the same spot in the bitstream
 
 	switch (message_ID) {
-		case 1: // Position Report
+		case 1: // position report
 		case 2:
 		case 3: {
 			n_msg1++;
@@ -1258,7 +1258,7 @@ bool AIS_Decoder::Parse_VDXBitstring(AIS_Bitstring* bstr, AIS_Target_Data* ptd)
 
 			break;
 		}
-		case 9: // Special Position Report (Standard SAR Aircraft Position Report)
+		case 9: // Special position report (Standard SAR Aircraft position report)
 		{
 			ptd->SOG = bstr->GetInt(51, 10);
 

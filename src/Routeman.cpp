@@ -141,7 +141,7 @@ Routeman::RouteArray* Routeman::GetRouteArrayContaining(const RoutePoint* pWP)
 	}
 }
 
-RoutePoint* Routeman::FindBestActivatePoint(Route* pR, const Position& pos, double cog,
+RoutePoint* Routeman::FindBestActivatePoint(Route* pR, const geo::Position& pos, double cog,
 											double WXUNUSED(sog))
 {
 	if (!pR)

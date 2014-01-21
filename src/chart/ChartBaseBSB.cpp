@@ -1419,7 +1419,7 @@ bool ChartBaseBSB::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 							  vp_proposed);
 			vp_pix_to_latlong(vp_proposed, pixx, pixy, &lat_adj, &lon_adj);
 
-			vp_proposed.set_position(Position(lat_adj, lon_adj));
+			vp_proposed.set_position(geo::Position(lat_adj, lon_adj));
 			ret_val = 1;
 		}
 	}
@@ -2863,7 +2863,7 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 
 	// Do a last little test using a synthetic ViewPort of nominal size.....
 	ViewPort vp;
-	vp.set_position(Position(reference_points[0].latr, reference_points[0].lonr));
+	vp.set_position(geo::Position(reference_points[0].latr, reference_points[0].lonr));
 	vp.set_view_scale(m_ppm_avg);
 	vp.skew = 0.;
 	vp.pix_width = 1000;

@@ -679,7 +679,7 @@ void ll_gc_ll(double lat, double lon, double brg, double dist, double* dlat, dou
 	double f4;
 
 	// Setup the static parameters
-	phi1 = lat * (M_PI / 180.0); // Initial Position
+	phi1 = lat * (M_PI / 180.0); // initial position
 	lam1 = lon * (M_PI / 180.0);
 	al12 = brg * (M_PI / 180.0); // Forward azimuth
 	geod_S = dist * 1852.0; // Distance
@@ -834,7 +834,7 @@ void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2, double
 	double f4;
 
 	// Setup the static parameters
-	phi1 = lat1 * (M_PI / 180.0); // Initial Position
+	phi1 = lat1 * (M_PI / 180.0); // initial position
 	lam1 = lon1 * (M_PI / 180.0);
 	phi2 = lat2 * (M_PI / 180.0);
 	lam2 = lon2 * (M_PI / 180.0);

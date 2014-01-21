@@ -127,7 +127,7 @@ ViewPort CreateCompatibleViewport(const PlugIn_ViewPort& pivp)
 	// Create a system ViewPort
 	ViewPort vp;
 
-	vp.set_position(Position(pivp.clat, pivp.clon));
+	vp.set_position(geo::Position(pivp.clat, pivp.clon));
 	vp.set_view_scale(pivp.view_scale_ppm);
 	vp.skew = pivp.skew;
 	vp.rotation = pivp.rotation;
@@ -1328,7 +1328,7 @@ void GetCanvasPixLL(PlugIn_ViewPort* vp, wxPoint* pp, double lat, double lon)
 {
 	// Make enough of an application viewport to run its method....
 	ViewPort ocpn_vp;
-	ocpn_vp.set_position(Position(vp->clat, vp->clon));
+	ocpn_vp.set_position(geo::Position(vp->clat, vp->clon));
 	ocpn_vp.m_projection_type = vp->m_projection_type;
 	ocpn_vp.set_view_scale(vp->view_scale_ppm);
 	ocpn_vp.skew = vp->skew;
@@ -1336,7 +1336,7 @@ void GetCanvasPixLL(PlugIn_ViewPort* vp, wxPoint* pp, double lat, double lon)
 	ocpn_vp.pix_width = vp->pix_width;
 	ocpn_vp.pix_height = vp->pix_height;
 
-	wxPoint ret = ocpn_vp.GetPixFromLL(Position(lat, lon));
+	wxPoint ret = ocpn_vp.GetPixFromLL(geo::Position(lat, lon));
 	pp->x = ret.x;
 	pp->y = ret.y;
 }
@@ -1345,7 +1345,7 @@ void GetCanvasLLPix(PlugIn_ViewPort* vp, wxPoint p, double* plat, double* plon)
 {
 	// Make enough of an application viewport to run its method....
 	ViewPort ocpn_vp;
-	ocpn_vp.set_position(Position(vp->clat, vp->clon));
+	ocpn_vp.set_position(geo::Position(vp->clat, vp->clon));
 	ocpn_vp.m_projection_type = vp->m_projection_type;
 	ocpn_vp.set_view_scale(vp->view_scale_ppm);
 	ocpn_vp.skew = vp->skew;
@@ -1353,7 +1353,7 @@ void GetCanvasLLPix(PlugIn_ViewPort* vp, wxPoint p, double* plat, double* plon)
 	ocpn_vp.pix_width = vp->pix_width;
 	ocpn_vp.pix_height = vp->pix_height;
 
-	Position pos = ocpn_vp.GetLLFromPix(p);
+	geo::Position pos = ocpn_vp.GetLLFromPix(p);
 	*plat = pos.lat();
 	*plon = pos.lon();
 }
@@ -1536,7 +1536,7 @@ void DimeWindow(wxWindow* win)
 
 void JumpToPosition(double lat, double lon, double scale)
 {
-	gFrame->JumpToPosition(Position(lat, lon), scale);
+	gFrame->JumpToPosition(geo::Position(lat, lon), scale);
 }
 
 /* API 1.9 */
@@ -1832,7 +1832,7 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 		return false;
 
 	RoutePoint* pWP
-		= new RoutePoint(Position(pwaypoint->m_lat, pwaypoint->m_lon), pwaypoint->m_IconName,
+		= new RoutePoint(geo::Position(pwaypoint->m_lat, pwaypoint->m_lon), pwaypoint->m_IconName,
 						 pwaypoint->m_MarkName, pwaypoint->m_GUID);
 
 	pWP->m_bIsolatedMark = true; // This is an isolated mark
@@ -1851,7 +1851,7 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 	pWP->m_MarkDescription = pwaypoint->m_MarkDescription;
 	pWP->m_btemp = (b_permanent == false);
 
-	pSelect->AddSelectableRoutePoint(Position(pwaypoint->m_lat, pwaypoint->m_lon), pWP);
+	pSelect->AddSelectableRoutePoint(geo::Position(pwaypoint->m_lat, pwaypoint->m_lon), pWP);
 	if (b_permanent)
 		pConfig->AddNewWayPoint(pWP, -1);
 
@@ -1889,9 +1889,9 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 		b_found = true;
 
 	if (b_found) {
-		Position position_save = prp->get_position();
+		geo::Position position_save = prp->get_position();
 
-		prp->set_position(Position(pwaypoint->m_lat, pwaypoint->m_lon));
+		prp->set_position(geo::Position(pwaypoint->m_lat, pwaypoint->m_lon));
 		prp->m_IconName = pwaypoint->m_IconName;
 		prp->SetName(pwaypoint->m_MarkName);
 		prp->m_MarkDescription = pwaypoint->m_MarkDescription;
@@ -1912,7 +1912,7 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 
 		SelectItem* pFind = pSelect->FindSelection(position_save, SelectItem::TYPE_ROUTEPOINT);
 		if (pFind) {
-			pFind->pos1 = Position(pwaypoint->m_lat, pwaypoint->m_lon);
+			pFind->pos1 = geo::Position(pwaypoint->m_lat, pwaypoint->m_lon);
 		}
 
 		if (!prp->m_btemp)
@@ -1936,7 +1936,7 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 		 pwpnode != proute->pWaypointList->end(); ++pwpnode) {
 		PlugIn_Waypoint* pwp = *pwpnode;
 
-		RoutePoint* pWP = new RoutePoint(Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName,
+		RoutePoint* pWP = new RoutePoint(geo::Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName,
 										 pwp->m_MarkName, pwp->m_GUID);
 
 		// Transcribe (clone) the html HyperLink List, if present
@@ -2026,7 +2026,7 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 		 pwpnode != ptrack->pWaypointList->end(); ++pwpnode) {
 		PlugIn_Waypoint* pwp = *pwpnode;
 
-		RoutePoint* pWP = new RoutePoint(Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName,
+		RoutePoint* pWP = new RoutePoint(geo::Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName,
 										 pwp->m_MarkName, pwp->m_GUID);
 
 		pWP->m_MarkDescription = pwp->m_MarkDescription;

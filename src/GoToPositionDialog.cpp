@@ -180,7 +180,7 @@ void GoToPositionDialog::OnGoToPosOkClick(wxCommandEvent& event)
 	if (lon > 180.0 || lon < -180.0)
 		goto noGo;
 
-	gFrame->JumpToPosition(Position(lat, lon), cc1->GetVPScale());
+	gFrame->JumpToPosition(geo::Position(lat, lon), cc1->GetVPScale());
 	Hide();
 	event.Skip();
 	return;

@@ -103,7 +103,7 @@ void AISTargetQueryDialog::OnIdWptCreateClick(wxCommandEvent&)
 	if (m_MMSI != 0) { // Faulty MMSI could be reported as 0
 		AIS_Target_Data* td = g_pAIS->Get_Target_Data_From_MMSI(m_MMSI);
 		if (td) {
-			Position pos(td->Lat, td->Lon);
+			geo::Position pos(td->Lat, td->Lon);
 			RoutePoint* pWP = new RoutePoint(pos, g_default_wp_icon, wxEmptyString);
 			pWP->m_bIsolatedMark = true; // This is an isolated mark
 			pSelect->AddSelectableRoutePoint(pos, pWP);

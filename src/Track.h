@@ -33,7 +33,7 @@
 
 #include <Route.h>
 #include <Vector2D.h>
-#include <Position.h>
+#include <geo/Position.h>
 
 class Track
 	: public wxEvtHandler
@@ -63,7 +63,7 @@ private:
 	void OnTimerTrack(wxTimerEvent& event);
 	void AddPointNow(bool do_add_point = false);
 	double GetXTE(const RoutePoint* fm1, const RoutePoint* fm2, const RoutePoint* to) const;
-	double GetXTE(const Position& fm1, const Position& fm2, const Position& to) const;
+	double GetXTE(const geo::Position& fm1, const geo::Position& fm2, const geo::Position& to) const;
 	void DouglasPeuckerReducer(std::vector<RoutePoint*>& list, int from, int to, double delta);
 	RoutePoint* AddNewPoint(Vector2D point, wxDateTime time);
 

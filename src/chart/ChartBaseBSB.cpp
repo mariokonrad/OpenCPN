@@ -943,12 +943,11 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double north = polytrans(cPoints.pwy, px, py);
 
 			// Apply inverse Projection to get lat/lon
-			double lat, lon;
-			geo::fromTM(east, north, m_proj_lat, m_proj_lon, &lat, &lon);
+			geo::Position t = geo::fromTM(east, north, m_proj_lat, m_proj_lon);
 
 			// Datum adjustments.....
-			double slon_p = lon - m_lon_datum_adjust;
-			double slat_p = lat - m_lat_datum_adjust;
+			double slon_p = t.lon() - m_lon_datum_adjust;
+			double slat_p = t.lat() - m_lat_datum_adjust;
 
 			slon = slon_p;
 			slat = slat_p;
@@ -1296,12 +1295,11 @@ void ChartBaseBSB::chartpix_to_latlong(double pixx, double pixy, double* plat, d
 			double north = polytrans(cPoints.pwy, pixx, pixy);
 
 			// Apply inverse Projection to get lat/lon
-			double lat, lon;
-			geo::fromTM(east, north, m_proj_lat, m_proj_lon, &lat, &lon);
+			geo::Position t = geo::fromTM(east, north, m_proj_lat, m_proj_lon);
 
 			// Datum adjustments.....
-			slon = lon - m_lon_datum_adjust;
-			slat = lat - m_lat_datum_adjust;
+			slon = t.lon() - m_lon_datum_adjust;
+			slat = t.lat() - m_lat_datum_adjust;
 		} else if (m_projection == PROJECTION_MERCATOR) {
 			// Use Projected Polynomial algorithm
 			// Apply polynomial solution to chart relative pixels to get e/n

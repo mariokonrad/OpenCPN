@@ -491,7 +491,7 @@ void toTM(float lat, float lon, float lat0, float lon0, double* x, double* y)
 // Lat and Long are in decimal degrees
 // Written by Chuck Gantz- chuck.gantz@globalstar.com
 // Adapted for opencpn by David S. Register
-void fromTM(double x, double y, double lat0, double lon0, double* lat, double* lon)
+Position fromTM(double x, double y, double lat0, double lon0)
 {
 	const double rad2deg = 1.0 / (M_PI / 180.0);
 	// constants for WGS-84
@@ -519,17 +519,19 @@ void fromTM(double x, double y, double lat0, double lon0, double* lat, double* l
 	const double R1 = a * (1 - eccSquared) / pow(1 - eccSquared * sin(phi1Rad) * sin(phi1Rad), 1.5);
 	const double D = x / (N1 * k0);
 
-	*lat = phi1Rad - (N1 * tan(phi1Rad) / R1)
+	double tlat = phi1Rad - (N1 * tan(phi1Rad) / R1)
 					 * (D * D / 2 - (5 + 3 * T1 + 10 * C1 - 4 * C1 * C1 - 9 * eccPrimeSquared) * D
 									* D * D * D / 24 + (61 + 90 * T1 + 298 * C1 + 45 * T1 * T1
 														- 252 * eccPrimeSquared - 3 * C1 * C1) * D
 													   * D * D * D * D * D / 720);
-	*lat = lat0 + (*lat * rad2deg);
+	tlat = lat0 + (tlat * rad2deg);
 
-	*lon = (D - (1 + 2 * T1 + C1) * D * D * D / 6
+	double tlon = (D - (1 + 2 * T1 + C1) * D * D * D / 6
 			+ (5 - 2 * C1 + 28 * T1 - 3 * C1 * C1 + 8 * eccPrimeSquared + 24 * T1 * T1) * D * D * D
 			  * D * D / 120) / cos(phi1Rad);
-	*lon = lon0 + *lon * rad2deg;
+	tlon = lon0 + tlon * rad2deg;
+
+	return Position(tlat, tlon);
 }
 
 /* --------------------------------------------------------------------------------- *

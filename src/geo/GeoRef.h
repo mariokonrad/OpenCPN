@@ -68,7 +68,7 @@ const double WGS84_semimajor_axis_meters = 6378137.0;     // WGS84 semimajor axi
 const double mercator_k0                 = 0.9996;
 
 void toTM(float lat, float lon, float lat0, float lon0, double* x, double* y);
-void fromTM(double x, double y, double lat0, double lon0, double* lat, double* lon);
+Position fromTM(double x, double y, double lat0, double lon0);
 
 void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y);
 void fromSM(double x, double y, double lat0, double lon0, double* lat, double* lon);

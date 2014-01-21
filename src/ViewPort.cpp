@@ -242,7 +242,9 @@ geo::Position ViewPort::GetLLFromPix(const wxPoint& p) const
 		double tmceasting;
 		double tmcnorthing;
 		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting, &tmcnorthing);
-		geo::fromTM(d_east, d_north + tmcnorthing, 0.0, center_point.lon(), &slat, &slon);
+		geo::Position t = geo::fromTM(d_east, d_north + tmcnorthing, 0.0, center_point.lon());
+		slat = t.lat();
+		slon = t.lon();
 	} else if (PROJECTION_POLYCONIC == m_projection_type) {
 		double polyeasting;
 		double polynorthing;

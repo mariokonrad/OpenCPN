@@ -1679,7 +1679,9 @@ void toTM_Plugin(float lat, float lon, float lat0, float lon0, double* x, double
 
 void fromTM_Plugin(double x, double y, double lat0, double lon0, double* lat, double* lon)
 {
-	geo::fromTM(x, y, lat0, lon0, lat, lon);
+	geo::Position t = geo::fromTM(x, y, lat0, lon0);
+	*lat = t.lat();
+	*lon = t.lon();
 }
 
 void toSM_Plugin(double lat, double lon, double lat0, double lon0, double* x, double* y)

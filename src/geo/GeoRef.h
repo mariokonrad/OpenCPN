@@ -81,11 +81,9 @@ void fromPOLY(double x, double y, double lat0, double lon0, double* lat, double*
 
 /// distance in nautical miles
 Position ll_gc_ll(const Position& pos, double crs, double dist);
-void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2, double* bearing,
-					  double* dist);
+void ll_gc_ll_reverse(const Position& pos1, const Position& pos2, double* bearing, double* dist);
 
-void PositionBearingDistanceMercator(const Position& pos, double brg, double dist, double* dlat,
-									 double* dlon);
+Position PositionBearingDistanceMercator(const Position& pos, double brg, double dist);
 double DistGreatCircle(const Position& start, const Position& destination);
 
 int GetDatumIndex(const char* str);

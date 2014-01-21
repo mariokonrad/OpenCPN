@@ -871,8 +871,9 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 				if (!bnewtarget) {
 					int age_of_last = (now.GetTicks() - pTargetData->PositionReportTicks);
 					if (age_of_last > 0) {
-						geo::ll_gc_ll_reverse(pTargetData->Lat, pTargetData->Lon, arpa_lat,
-											  arpa_lon, &pTargetData->COG, &pTargetData->SOG);
+						geo::ll_gc_ll_reverse(geo::Position(pTargetData->Lat, pTargetData->Lon),
+											  geo::Position(arpa_lat, arpa_lon), &pTargetData->COG,
+											  &pTargetData->SOG);
 						pTargetData->SOG = pTargetData->SOG * 3600 / age_of_last;
 					}
 				}
@@ -915,8 +916,9 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 			if (!bnewtarget) {
 				int age_of_last = (now.GetTicks() - pTargetData->PositionReportTicks);
 				if (age_of_last > 0) {
-					geo::ll_gc_ll_reverse(pTargetData->Lat, pTargetData->Lon, aprs_lat, aprs_lon,
-										  &pTargetData->COG, &pTargetData->SOG);
+					geo::ll_gc_ll_reverse(geo::Position(pTargetData->Lat, pTargetData->Lon),
+										  geo::Position(aprs_lat, aprs_lon), &pTargetData->COG,
+										  &pTargetData->SOG);
 					pTargetData->SOG = pTargetData->SOG * 3600 / age_of_last;
 				}
 			}

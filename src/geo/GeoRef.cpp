@@ -807,8 +807,7 @@ Position ll_gc_ll(const Position& pos, double brg, double dist)
 	return Position(phi2 / (M_PI / 180.0), lam2 / (M_PI / 180.0));
 }
 
-void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2, double* bearing,
-					  double* dist)
+void ll_gc_ll_reverse(const Position& pos1, const Position& pos2, double* bearing, double* dist)
 {
 	// Input/Output from geodesic functions
 	double al12; // Forward azimuth
@@ -830,10 +829,10 @@ void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2, double
 	double f4;
 
 	// Setup the static parameters
-	phi1 = lat1 * (M_PI / 180.0); // initial position
-	lam1 = lon1 * (M_PI / 180.0);
-	phi2 = lat2 * (M_PI / 180.0);
-	lam2 = lon2 * (M_PI / 180.0);
+	phi1 = pos1.lat() * (M_PI / 180.0); // initial position
+	lam1 = pos1.lon() * (M_PI / 180.0);
+	phi2 = pos2.lat() * (M_PI / 180.0);
+	lam2 = pos2.lon() * (M_PI / 180.0);
 
 	// void geod_inv(struct georef_state *state)
 	{
@@ -940,12 +939,9 @@ void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2, double
 		*dist = geod_S / 1852.0;
 }
 
-void PositionBearingDistanceMercator(const Position& pos, double brg, double dist, double* dlat,
-									 double* dlon)
+Position PositionBearingDistanceMercator(const Position& pos, double brg, double dist)
 {
-	Position p = ll_gc_ll(pos, brg, dist);
-	*dlat = p.lat();
-	*dlon = p.lon();
+	return ll_gc_ll(pos, brg, dist);
 }
 
 // Given the lat/long of starting point and ending point,

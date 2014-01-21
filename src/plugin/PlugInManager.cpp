@@ -1656,7 +1656,9 @@ bool GetActiveRoutepointGPX(char* buffer, unsigned int buffer_length)
 void PositionBearingDistanceMercator_Plugin(double lat, double lon, double brg, double dist,
 											double* dlat, double* dlon)
 {
-	geo::PositionBearingDistanceMercator(geo::Position(lat, lon), brg, dist, dlat, dlon);
+	geo::Position p = geo::PositionBearingDistanceMercator(geo::Position(lat, lon), brg, dist);
+	*dlat = p.lat();
+	*dlon = p.lon();
 }
 
 void DistanceBearingMercator_Plugin(double lat0, double lon0, double lat1, double lon1, double* brg,

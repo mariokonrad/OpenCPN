@@ -458,14 +458,13 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 						x = easting; // and save as SM
 						y = northing;
 
-						//  Convert from SM to lat/lon for bbox
-						double xll, yll;
-						geo::fromSM(easting, northing, point_ref_lat, point_ref_lon, &yll, &xll);
+						// Convert from SM to lat/lon for bbox
+						geo::Position ll = geo::fromSM(easting, northing, point_ref_lat, point_ref_lon);
 
-						m_lon = xll;
-						m_lat = yll;
-						BBObj.SetMin(m_lon - .25, m_lat - .25);
-						BBObj.SetMax(m_lon + .25, m_lat + .25);
+						m_lat = ll.lat();
+						m_lon = ll.lon();
+						BBObj.SetMin(m_lon - 0.25, m_lat - 0.25);
+						BBObj.SetMax(m_lon + 0.25, m_lat + 0.25);
 
 					} else {
 						Primitive_type = GEO_POINT;
@@ -511,12 +510,10 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 							*pdd++ = depth;
 #endif
 							// Convert point from SM to lat/lon for later use in decomposed bboxes
-							double xll, yll;
-							geo::fromSM(easting, northing, point_ref_lat, point_ref_lon, &yll,
-										&xll);
+							geo::Position ll = geo::fromSM(easting, northing, point_ref_lat, point_ref_lon);
 
-							*pdl++ = xll;
-							*pdl++ = yll;
+							*pdl++ = ll.lon();
+							*pdl++ = ll.lat();
 						}
 						// Capture bbox limits recorded in SENC record as lon/lat
 						float xmax = *pfs++;
@@ -601,11 +598,9 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 						y = (n1 + n2) / 2.0;
 
 						// Set the object base point
-						double xll;
-						double yll;
-						geo::fromSM(x, y, line_ref_lat, line_ref_lon, &yll, &xll);
-						m_lon = xll;
-						m_lat = yll;
+						geo::Position ll = geo::fromSM(x, y, line_ref_lat, line_ref_lon);
+						m_lat = ll.lat();
+						m_lon = ll.lon();
 
 						//  Capture the edge and connected node table indices
 						my_fgets(buf, MAX_LINE, *pfpx); // this will be "\n"
@@ -615,8 +610,9 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 
 						m_lsindex_array = (int*)malloc(3 * m_n_lsindex * sizeof(int));
 						pfpx->Read(m_lsindex_array, 3 * m_n_lsindex * sizeof(int));
-						m_n_edge_max_points
-							= 0; // TODO this could be precalulated and added to next SENC format
+
+						// TODO this could be precalulated and added to next SENC format
+						m_n_edge_max_points = 0;
 
 						my_fgets(buf, MAX_LINE, *pfpx); // this should be \n
 					}
@@ -673,11 +669,9 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 							y = (n1 + n2) / 2.;
 
 							//  Set the object base point
-							double xll;
-							double yll;
-							geo::fromSM(x, y, area_ref_lat, area_ref_lon, &yll, &xll);
-							m_lon = xll;
-							m_lat = yll;
+							geo::Position t = geo::fromSM(x, y, area_ref_lat, area_ref_lon);
+							m_lat = t.lat();
+							m_lon = t.lon();
 
 							//  Capture the edge and connected node table indices
 							//                            my_fgets(buf, MAX_LINE, *pfpx);     //
@@ -1296,11 +1290,10 @@ void s57chart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, const
 	double d_east = xp / vpt.view_scale();
 	double d_north = yp / vpt.view_scale();
 
-	double slat, slon;
-	geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude(), &slat, &slon);
+	geo::Position t = geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude());
 
-	*plat = slat;
-	*plon = slon;
+	*plat = t.lat();
+	*plon = t.lon();
 }
 
 // Calculate and Set ViewPoint Constants
@@ -1346,10 +1339,8 @@ bool s57chart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 	double c_east_d = (dpx / vp_proposed.view_scale()) + prev_easting_c;
 	double c_north_d = (dpy / vp_proposed.view_scale()) + prev_northing_c;
 
-	double xlat, xlon;
-	geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon);
-
-	vp_proposed.set_position(geo::Position(xlat, xlon));
+	geo::Position t = geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon);
+	vp_proposed.set_position(t);
 
 	return true;
 }
@@ -2131,22 +2122,19 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 			// Build temp ViewPort on this region
 
 			ViewPort temp_vp = VPoint;
-			double temp_lon_left, temp_lat_bot, temp_lon_right, temp_lat_top;
 
 			double temp_northing_ul = prev_northing_ul - (rul.y / m_view_scale_ppm)
 									  - (rect.y / m_view_scale_ppm);
 			double temp_easting_ul = prev_easting_ul + (rul.x / m_view_scale_ppm)
 									 + (rect.x / m_view_scale_ppm);
-			geo::fromSM(temp_easting_ul, temp_northing_ul, ref_lat, ref_lon, &temp_lat_top,
-						&temp_lon_left);
+			geo::Position p0 = geo::fromSM(temp_easting_ul, temp_northing_ul, ref_lat, ref_lon);
 
 			double temp_northing_lr = temp_northing_ul - (rect.height / m_view_scale_ppm);
 			double temp_easting_lr = temp_easting_ul + (rect.width / m_view_scale_ppm);
-			geo::fromSM(temp_easting_lr, temp_northing_lr, ref_lat, ref_lon, &temp_lat_bot,
-						&temp_lon_right);
+			geo::Position p1 = geo::fromSM(temp_easting_lr, temp_northing_lr, ref_lat, ref_lon);
 
-			temp_vp.GetBBox().SetMin(temp_lon_left, temp_lat_bot);
-			temp_vp.GetBBox().SetMax(temp_lon_right, temp_lat_top);
+			temp_vp.GetBBox().SetMin(p0.lon(), p1.lat());
+			temp_vp.GetBBox().SetMax(p1.lon(), p0.lat());
 
 			// Allow some slop in the viewport
 			// TODO: Investigate why this fails if greater than 5 percent
@@ -3191,9 +3179,8 @@ ListOfS57Obj* s57chart::GetAssociatedObjects(S57Obj* obj)
 
 	ListOfS57Obj* pobj_list = new ListOfS57Obj;
 
-	double lat, lon;
-	geo::fromSM((obj->x * obj->x_rate) + obj->x_origin, (obj->y * obj->y_rate) + obj->y_origin,
-				ref_lat, ref_lon, &lat, &lon);
+	geo::Position pos = geo::fromSM((obj->x * obj->x_rate) + obj->x_origin,
+									(obj->y * obj->y_rate) + obj->y_origin, ref_lat, ref_lon);
 	// What is the entry object geometry type?
 
 	switch (obj->Primitive_type) {
@@ -3210,8 +3197,8 @@ ListOfS57Obj* s57chart::GetAssociatedObjects(S57Obj* obj)
 			top = razRules[disPrioIdx][3]; // PLAIN_BOUNDARIES
 			while (top != NULL) {
 				if (top->obj->bIsAssociable) {
-					if (top->obj->BBObj.PointInBox(lon, lat, 0.0)) {
-						if (IsPointInObjArea(lat, lon, 0.0, top->obj)) {
+					if (top->obj->BBObj.PointInBox(pos.lon(), pos.lat(), 0.0)) {
+						if (IsPointInObjArea(pos.lat(), pos.lon(), 0.0, top->obj)) {
 							pobj_list->push_back(top->obj);
 							gotit = true;
 							break;
@@ -3226,8 +3213,8 @@ ListOfS57Obj* s57chart::GetAssociatedObjects(S57Obj* obj)
 				top = razRules[disPrioIdx][4]; // SYMBOLIZED_BOUNDARIES
 				while (top != NULL) {
 					if (top->obj->bIsAssociable) {
-						if (top->obj->BBObj.PointInBox(lon, lat, 0.0)) {
-							if (IsPointInObjArea(lat, lon, 0.0, top->obj)) {
+						if (top->obj->BBObj.PointInBox(pos.lon(), pos.lat(), 0.0)) {
+							if (IsPointInObjArea(pos.lat(), pos.lon(), 0.0, top->obj)) {
 								pobj_list->push_back(top->obj);
 								break;
 							}
@@ -5235,17 +5222,15 @@ bool s57chart::DoesLatLonSelectObject(float lat, float lon, float select_radius,
 				// This is too big for pick area, can be confusing....
 				// So make a temporary box at the light's lat/lon, with select_radius size
 				if (!strncmp(obj->FeatureName, "LIGHTS", 6)) {
-					double olon;
-					double olat;
-					geo::fromSM((obj->x * obj->x_rate) + obj->x_origin,
-								(obj->y * obj->y_rate) + obj->y_origin, ref_lat, ref_lon, &olat,
-								&olon);
+					geo::Position t
+						= geo::fromSM((obj->x * obj->x_rate) + obj->x_origin,
+									  (obj->y * obj->y_rate) + obj->y_origin, ref_lat, ref_lon);
 
 					// Double the select radius to adjust for the fact that LIGHTS has
 					// a 0x0 BBox to start with, which makes it smaller than all other
 					// rendered objects.
-					geo::BoundingBox sbox(olon - 2 * select_radius, olat - 2 * select_radius,
-										  olon + 2 * select_radius, olat + 2 * select_radius);
+					geo::BoundingBox sbox(t.lon() - 2 * select_radius, t.lat() - 2 * select_radius,
+										  t.lon() + 2 * select_radius, t.lat() + 2 * select_radius);
 
 					if (sbox.PointInBox(lon, lat, 0))
 						return true;
@@ -5932,18 +5917,17 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 		}
 
 		if (GEO_POINT == current->obj->Primitive_type) {
-			double lon, lat;
-			geo::fromSM((current->obj->x * current->obj->x_rate) + current->obj->x_origin,
-						(current->obj->y * current->obj->y_rate) + current->obj->y_origin, ref_lat,
-						ref_lon, &lat, &lon);
+			geo::Position t
+				= geo::fromSM((current->obj->x * current->obj->x_rate) + current->obj->x_origin,
+							  (current->obj->y * current->obj->y_rate) + current->obj->y_origin,
+							  ref_lat, ref_lon);
 
-			if (lon > 180.0)
-				lon -= 360.0;
+			t.normalize_lon();
 
 			positionString.Clear();
-			positionString += toSDMM(1, lat);
+			positionString += toSDMM(1, t.lat());
 			positionString << _T(" ");
-			positionString += toSDMM(2, lon);
+			positionString += toSDMM(2, t.lon());
 
 			if (isLight) {
 				curLight = new chart::S57Light;

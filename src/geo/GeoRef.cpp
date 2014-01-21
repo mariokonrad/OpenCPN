@@ -317,16 +317,18 @@ void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y
 	*y = y3 - y30;
 }
 
-void fromSM(double x, double y, double lat0, double lon0, double* lat, double* lon)
+Position fromSM(double x, double y, double lat0, double lon0)
 {
 	const double z = WGS84_semimajor_axis_meters * mercator_k0;
 	const double s0 = sin(lat0 * (M_PI / 180.0));
-	const double y0 = (.5 * log((1 + s0) / (1 - s0))) * z;
+	const double y0 = (0.5 * log((1 + s0) / (1 - s0))) * z;
 
-	*lat = (2.0 * atan(exp((y0 + y) / z)) - M_PI / 2.0) / (M_PI / 180.0);
+	double tlat = (2.0 * atan(exp((y0 + y) / z)) - M_PI / 2.0) / (M_PI / 180.0);
 
 	// lon = x + lon0
-	*lon = lon0 + (x / ((M_PI / 180.0) * z));
+	double tlon = lon0 + (x / ((M_PI / 180.0) * z));
+
+	return Position(tlat, tlon);
 }
 
 void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, double* y)

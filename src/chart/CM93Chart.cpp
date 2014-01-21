@@ -972,26 +972,25 @@ void cm93chart::GetPointPix(ObjRazRules* rzRules, wxPoint2DDouble* en, wxPoint* 
 	}
 }
 
-void cm93chart::GetPixPoint ( int pixx, int pixy, double *plat, double *plon, const ViewPort &vpt )
+void cm93chart::GetPixPoint(int pixx, int pixy, double* plat, double* plon, const ViewPort& vpt)
 {
 	// Use Mercator estimator
-	int dx = pixx - ( vpt.pix_width / 2 );
-	int dy = ( vpt.pix_height / 2 ) - pixy;
+	int dx = pixx - (vpt.pix_width / 2);
+	int dy = (vpt.pix_height / 2) - pixy;
 
-	double xp = ( dx * cos ( vpt.skew ) ) - ( dy * sin ( vpt.skew ) );
-	double yp = ( dy * cos ( vpt.skew ) ) + ( dx * sin ( vpt.skew ) );
+	double xp = (dx * cos(vpt.skew)) - (dy * sin(vpt.skew));
+	double yp = (dy * cos(vpt.skew)) + (dx * sin(vpt.skew));
 
 	double d_east = xp / vpt.view_scale();
 	double d_north = yp / vpt.view_scale();
 
-	double slat, slon;
-	geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude(), &slat, &slon);
+	geo::Position t = geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude());
 
-	if ( slon > 360.0)
-		slon -= 360.0;
+	*plat = t.lat();
+	*plon = t.lon();
 
-	*plat = slat;
-	*plon = slon;
+	if (*plon > 360.0)
+		*plon -= 360.0;
 }
 
 bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
@@ -1020,10 +1019,8 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 			double c_east_d = (dpx / vp_proposed.view_scale()) + prev_easting_c;
 			double c_north_d = (dpy / vp_proposed.view_scale()) + prev_northing_c;
 
-			double xlat, xlon;
-			geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon, &xlat, &xlon);
-
-			vp_proposed.set_position(geo::Position(xlat, xlon));
+			geo::Position t = geo::fromSM(c_east_d, c_north_d, ref_lat, ref_lon);
+			vp_proposed.set_position(t);
 
 			return true;
 		}

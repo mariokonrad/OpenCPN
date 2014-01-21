@@ -71,7 +71,7 @@ void toTM(float lat, float lon, float lat0, float lon0, double* x, double* y);
 Position fromTM(double x, double y, double lat0, double lon0);
 
 void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y);
-void fromSM(double x, double y, double lat0, double lon0, double* lat, double* lon);
+Position fromSM(double x, double y, double lat0, double lon0);
 
 void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, double* y);
 Position fromSM_ECC(double x, double y, double lat0, double lon0);

@@ -6268,7 +6268,7 @@ bool s52plib::GetPointPixSingle(ObjRazRules* rzRules, float north, float east, w
 
 void s52plib::GetPixPointSingle(int pixx, int pixy, double* plat, double* plon, const ViewPort& vpt)
 {
-	//    Use Mercator estimator
+	// Use Mercator estimator
 	int dx = pixx - (vpt.pix_width / 2);
 	int dy = (vpt.pix_height / 2) - pixy;
 
@@ -6278,11 +6278,10 @@ void s52plib::GetPixPointSingle(int pixx, int pixy, double* plat, double* plon, 
 	double d_east = xp / vpt.view_scale();
 	double d_north = yp / vpt.view_scale();
 
-	double slat, slon;
-	geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude(), &slat, &slon);
+	geo::Position t = geo::fromSM(d_east, d_north, vpt.latitude(), vpt.longitude());
 
-	*plat = slat;
-	*plon = slon;
+	*plat = t.lat();
+	*plon = t.lon();
 }
 
 void DrawAALine(wxDC* pDC, int x0, int y0, int x1, int y1, wxColour clrLine, int dash, int space)

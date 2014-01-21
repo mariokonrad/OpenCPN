@@ -1691,7 +1691,9 @@ void toSM_Plugin(double lat, double lon, double lat0, double lon0, double* x, do
 
 void fromSM_Plugin(double x, double y, double lat0, double lon0, double* lat, double* lon)
 {
-	geo::fromSM(x, y, lat0, lon0, lat, lon);
+	geo::Position t = geo::fromSM(x, y, lat0, lon0);
+	*lat = t.lat();
+	*lon = t.lon();
 }
 
 void toSM_ECC_Plugin(double lat, double lon, double lat0, double lon0, double* x, double* y)

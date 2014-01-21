@@ -236,30 +236,24 @@ geo::Position ViewPort::GetLLFromPix(const wxPoint& p) const
 	double d_east = xpr / view_scale();
 	double d_north = ypr / view_scale();
 
-	double slat;
-	double slon;
+	geo::Position pos;
 	if (PROJECTION_TRANSVERSE_MERCATOR == m_projection_type) {
 		double tmceasting;
 		double tmcnorthing;
 		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting, &tmcnorthing);
-		geo::Position t = geo::fromTM(d_east, d_north + tmcnorthing, 0.0, center_point.lon());
-		slat = t.lat();
-		slon = t.lon();
+		pos = geo::fromTM(d_east, d_north + tmcnorthing, 0.0, center_point.lon());
 	} else if (PROJECTION_POLYCONIC == m_projection_type) {
 		double polyeasting;
 		double polynorthing;
 		geo::toPOLY(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &polyeasting, &polynorthing);
-		geo::Position t = geo::fromPOLY(d_east, d_north + polynorthing, 0.0, center_point.lon());
-		slat = t.lat();
-		slon = t.lon();
+		pos = geo::fromPOLY(d_east, d_north + polynorthing, 0.0, center_point.lon());
 	} else {
 		// TODO This could be fromSM_ECC to better match some Raster charts
 		//      However, it seems that cm93 (and S57) prefer no eccentricity correction
 		//      Think about it....
-		geo::fromSM(d_east, d_north, center_point.lat(), center_point.lon(), &slat, &slon);
+		pos = geo::fromSM(d_east, d_north, center_point.lat(), center_point.lon());
 	}
 
-	geo::Position pos(slat, slon);
 	pos.normalize_lon();
 	return pos;
 }

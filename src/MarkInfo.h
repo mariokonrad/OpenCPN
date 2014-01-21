@@ -52,68 +52,65 @@ class LinkPropDialog;
 
 class MarkInfoDef : public wxDialog
 {
-	protected:
-		wxBoxSizer*             bSizerLinks;
-		wxBitmapComboBox*       m_bcomboBoxIcon;
-		wxStaticBitmap*         m_bitmapIcon;
-		wxButton*               m_buttonAddLink;
-		wxButton*               m_buttonExtDescription;
-		wxCheckBox*             m_checkBoxShowName;
-		wxCheckBox*             m_checkBoxVisible;
-		wxHyperlinkCtrl*        m_hyperlink17;
-		wxObject*               m_contextObject;
-		wxMenu*                 m_menuLink;
-		wxNotebook*             m_notebookProperties;
-		wxPanel*                m_panelBasicProperties;
-		wxPanel*                m_panelDescription;
-		wxPanel*                m_panelExtendedProperties;
-		wxScrolledWindow*       m_scrolledWindowLinks;
-		wxStdDialogButtonSizer* m_sdbSizerButtons;
-		wxButton*               m_sdbSizerButtonsCancel;
-		wxButton*               m_sdbSizerButtonsOK;
-		wxStaticText*           m_staticTextDescription;
-		wxStaticText*           m_staticTextEditEnabled;
-		wxStaticText*           m_staticTextGpx;
-		wxStaticText*           m_staticTextGuid;
-		wxStaticText*           m_staticTextIcon;
-		wxStaticText*           m_staticTextLatitude;
-		wxStaticText*           m_staticTextLayer;
-		wxStaticText*           m_staticTextLongitude;
-		wxStaticText*           m_staticTextName;
-		wxTextCtrl*             m_textCtrlExtDescription;
-		wxTextCtrl*             m_textCtrlGpx;
-		wxTextCtrl*             m_textCtrlGuid;
-		wxTextCtrl*             m_textDescription;
-		wxTextCtrl*             m_textLatitude;
-		wxTextCtrl*             m_textLongitude;
-		wxTextCtrl*             m_textName;
-		wxToggleButton*         m_toggleBtnEdit;
-		wxStaticBoxSizer*       sbSizerLinks;
-
-		// Virtual event handlers, overide them in your derived class
-		virtual void OnPositionCtlUpdated( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnDescChangedBasic( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnExtDescriptionClick( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnDeleteLink( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEditLink( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnAddLink( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEditLinkToggle( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnDescChangedExt( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnMarkInfoCancelClick( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnMarkInfoOKClick( wxCommandEvent& event ) { event.Skip(); }
-		void OnCopyPasteLatLon( wxCommandEvent& event );
-
-	public:
-		MarkInfoDef(
-				wxWindow * parent,
-				wxWindowID id = wxID_ANY,
-				const wxString & title = _("Waypoint Properties"),
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxSize( 450,550 ),
+public:
+	MarkInfoDef(wxWindow* parent, wxWindowID id = wxID_ANY,
+				const wxString& title = _("Waypoint Properties"),
+				const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(450, 550),
 				long style = wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER);
 
-		virtual ~MarkInfoDef();
-		void hyperlink17OnContextMenu(wxMouseEvent & event);
+	virtual ~MarkInfoDef();
+	void hyperlink17OnContextMenu(wxMouseEvent& event);
+
+protected:
+	wxBoxSizer* bSizerLinks;
+	wxBitmapComboBox* m_bcomboBoxIcon;
+	wxStaticBitmap* m_bitmapIcon;
+	wxButton* m_buttonAddLink;
+	wxButton* m_buttonExtDescription;
+	wxCheckBox* m_checkBoxShowName;
+	wxCheckBox* m_checkBoxVisible;
+	wxHyperlinkCtrl* m_hyperlink17;
+	wxObject* m_contextObject;
+	wxMenu* m_menuLink;
+	wxNotebook* m_notebookProperties;
+	wxPanel* m_panelBasicProperties;
+	wxPanel* m_panelDescription;
+	wxPanel* m_panelExtendedProperties;
+	wxScrolledWindow* m_scrolledWindowLinks;
+	wxStdDialogButtonSizer* m_sdbSizerButtons;
+	wxButton* m_sdbSizerButtonsCancel;
+	wxButton* m_sdbSizerButtonsOK;
+	wxStaticText* m_staticTextDescription;
+	wxStaticText* m_staticTextEditEnabled;
+	wxStaticText* m_staticTextGpx;
+	wxStaticText* m_staticTextGuid;
+	wxStaticText* m_staticTextIcon;
+	wxStaticText* m_staticTextLatitude;
+	wxStaticText* m_staticTextLayer;
+	wxStaticText* m_staticTextLongitude;
+	wxStaticText* m_staticTextName;
+	wxTextCtrl* m_textCtrlExtDescription;
+	wxTextCtrl* m_textCtrlGpx;
+	wxTextCtrl* m_textCtrlGuid;
+	wxTextCtrl* m_textDescription;
+	wxTextCtrl* m_textLatitude;
+	wxTextCtrl* m_textLongitude;
+	wxTextCtrl* m_textName;
+	wxToggleButton* m_toggleBtnEdit;
+	wxStaticBoxSizer* sbSizerLinks;
+
+	// Virtual event handlers, overide them in your derived class
+	virtual void OnPositionCtlUpdated(wxCommandEvent& event);
+	virtual void OnDescChangedBasic(wxCommandEvent& event);
+	virtual void OnExtDescriptionClick(wxCommandEvent& event);
+	virtual void OnDeleteLink(wxCommandEvent& event);
+	virtual void OnEditLink(wxCommandEvent& event);
+	virtual void OnAddLink(wxCommandEvent& event);
+	virtual void OnEditLinkToggle(wxCommandEvent& event);
+	virtual void OnDescChangedExt(wxCommandEvent& event);
+	virtual void OnMarkInfoCancelClick(wxCommandEvent& event);
+	virtual void OnMarkInfoOKClick(wxCommandEvent& event);
+	void OnCopyPasteLatLon(wxCommandEvent& event);
 };
 
 class MarkInfoImpl : public MarkInfoDef
@@ -124,15 +121,8 @@ public:
 	void OnMarkInfoCancelClick(wxCommandEvent& event);
 	void SetRoutePoint(RoutePoint* pRP);
 
-	void SetDialogTitle(const wxString& title)
-	{
-		SetTitle(title);
-	}
-
-	RoutePoint* GetRoutePoint(void)
-	{
-		return m_pRoutePoint;
-	}
+	void SetDialogTitle(const wxString& title);
+	RoutePoint* GetRoutePoint(void);
 
 	bool UpdateProperties(bool positionOnly = false);
 	void ValidateMark(void);

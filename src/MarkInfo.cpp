@@ -399,7 +399,57 @@ MarkInfoDef::~MarkInfoDef()
 	delete m_menuLink;
 }
 
-void MarkInfoDef::hyperlink17OnContextMenu(wxMouseEvent & event)
+void MarkInfoDef::OnPositionCtlUpdated(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::OnDescChangedBasic(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::OnExtDescriptionClick(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::OnDeleteLink(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::OnEditLink(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::OnAddLink(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::OnEditLinkToggle(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::OnDescChangedExt(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::OnMarkInfoCancelClick(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::OnMarkInfoOKClick(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MarkInfoDef::hyperlink17OnContextMenu(wxMouseEvent& event)
 {
 	m_hyperlink17->PopupMenu(m_menuLink, event.GetPosition());
 }
@@ -417,6 +467,16 @@ MarkInfoImpl::MarkInfoImpl(wxWindow* parent, wxWindowID id, const wxString& titl
 MarkInfoImpl::~MarkInfoImpl()
 {
 	m_bcomboBoxIcon->Clear();
+}
+
+void MarkInfoImpl::SetDialogTitle(const wxString& title)
+{
+	SetTitle(title);
+}
+
+RoutePoint* MarkInfoImpl::GetRoutePoint(void)
+{
+	return m_pRoutePoint;
 }
 
 void MarkInfoImpl::InitialFocus(void)
@@ -561,7 +621,7 @@ void MarkInfoImpl::SetRoutePoint(RoutePoint* pRP)
 
 void MarkInfoImpl::hyperlinkContextMenu(wxMouseEvent& event)
 {
-	m_pEditedLink = (wxHyperlinkCtrl*)event.GetEventObject();
+	m_pEditedLink = static_cast<wxHyperlinkCtrl*>(event.GetEventObject());
 	m_scrolledWindowLinks->PopupMenu(m_menuLink,
 									 m_pEditedLink->GetPosition().x + event.GetPosition().x,
 									 m_pEditedLink->GetPosition().y + event.GetPosition().y);

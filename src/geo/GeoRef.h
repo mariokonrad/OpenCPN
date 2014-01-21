@@ -73,7 +73,7 @@ Position fromTM(double x, double y, const Position& pos0);
 void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y);
 Position fromSM(double x, double y, const Position& pos0);
 
-void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, double* y);
+void toSM_ECC(const Position& pos, const Position& pos0, double* x, double* y);
 Position fromSM_ECC(double x, double y, const Position& pos0);
 
 void toPOLY(double lat, double lon, double lat0, double lon0, double* x, double* y);

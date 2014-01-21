@@ -329,7 +329,7 @@ Position fromSM(double x, double y, const Position& pos0)
 	return Position(tlat, tlon);
 }
 
-void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, double* y)
+void toSM_ECC(const Position& pos, const Position& pos0, double* x, double* y)
 {
 	const double f = 1.0 / WGSinvf; // WGS84 ellipsoid flattening parameter
 	const double e2 = 2 * f - f * f; // eccentricity^2  .006700
@@ -337,20 +337,20 @@ void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, doubl
 
 	const double z = WGS84_semimajor_axis_meters * mercator_k0;
 
-	*x = (lon - lon0) * (M_PI / 180.0) * z;
+	*x = (pos.lon() - pos0.lon()) * (M_PI / 180.0) * z;
 
-	const double s = sin(lat * (M_PI / 180.0));
+	const double s = sin(pos.lat() * (M_PI / 180.0));
 	const double y3 = (0.5 * log((1 + s) / (1 - s))) * z;
 
-	const double s0 = sin(lat0 * (M_PI / 180.0));
+	const double s0 = sin(pos0.lat() * (M_PI / 180.0));
 	const double y30 = (0.5 * log((1 + s0) / (1 - s0))) * z;
 	const double y4 = y3 - y30;
 
 	// Add eccentricity terms
 
-	const double falsen = z * log(tan(M_PI / 4 + lat0 * (M_PI / 180.0) / 2)
+	const double falsen = z * log(tan(M_PI / 4 + pos0.lat() * (M_PI / 180.0) / 2)
 								  * pow((1.0 - e * s0) / (1.0 + e * s0), e / 2.0));
-	const double test = z * log(tan(M_PI / 4 + lat * (M_PI / 180.0) / 2)
+	const double test = z * log(tan(M_PI / 4 + pos.lat() * (M_PI / 180.0) / 2)
 								* pow((1.0 - e * s) / (1.0 + e * s), e / 2.0));
 	*y = test - falsen;
 }
@@ -1105,7 +1105,7 @@ void DistanceBearingMercator(const Position& pos0, const Position& pos1, double*
 		const double mlat0 = fabs(pos1.lat() - pos0.lat()) < 1e-9 ? pos0.lat() + 1e-9 : pos0.lat();
 
 		double east, north;
-		toSM_ECC(pos1.lat(), lon1x, mlat0, lon0x, &east, &north);
+		toSM_ECC(Position(pos1.lat(), lon1x), Position(mlat0, lon0x), &east, &north);
 		const double C = atan2(east, north);
 		if (cos(C)) {
 			const double dlat = (pos1.lat() - mlat0) * 60.0; // in minutes
@@ -1118,7 +1118,7 @@ void DistanceBearingMercator(const Position& pos0, const Position& pos1, double*
 	// Calculate the bearing using the un-adjusted original latitudes and Mercator Sailing
 	if (brg) {
 		double east, north;
-		toSM_ECC(pos1.lat(), lon1x, pos0.lat(), lon0x, &east, &north);
+		toSM_ECC(Position(pos1.lat(), lon1x), Position(pos0.lat(), lon0x), &east, &north);
 
 		const double C = atan2(east, north);
 		const double brgt = 180.0 + (C * 180.0 / M_PI);

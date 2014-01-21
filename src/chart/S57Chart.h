@@ -168,7 +168,6 @@ public:
 	wxArrayPtrVoid* pFloatingATONArray;
 	wxArrayPtrVoid* pRigidATONArray;
 
-	double ref_lat, ref_lon; // FIXME: replace this with geo::Position // Common reference point, derived from FullExtent
 	Extent m_FullExtent;
 	bool m_bExtentSet;
 	bool m_bLinePrioritySet;
@@ -199,6 +198,9 @@ public:
 	bool m_b2lineLUPS;
 
 	struct chart_context* m_this_chart_context;
+
+protected:
+	geo::Position reference_point; // Common reference point, derived from FullExtent
 
 private:
 	bool DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, RenderTypeEnum option,

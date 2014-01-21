@@ -837,8 +837,7 @@ cm93chart::cm93chart()
 	m_pcontour_array = (int*)malloc(m_ncontour_alloc * sizeof(int));
 
 	// Establish a common reference point for the cell
-	ref_lat = 0.0;
-	ref_lon = 0.0;
+	reference_point = geo::Position(0.0, 0.0);
 
 	// Need a covr_set
 	m_pcovr_set = new covr_set(this);
@@ -1000,10 +999,12 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 		if (vp_last.view_scale() == vp_proposed.view_scale()) {
 
 			double prev_easting_c, prev_northing_c;
-			geo::toSM(vp_last.latitude(), vp_last.longitude(), ref_lat, ref_lon, &prev_easting_c, &prev_northing_c);
+			geo::toSM(vp_last.latitude(), vp_last.longitude(), reference_point.lat(),
+					  reference_point.lon(), &prev_easting_c, &prev_northing_c);
 
 			double easting_c, northing_c;
-			geo::toSM(vp_proposed.latitude(), vp_proposed.longitude(),  ref_lat, ref_lon, &easting_c, &northing_c);
+			geo::toSM(vp_proposed.latitude(), vp_proposed.longitude(), reference_point.lat(),
+					  reference_point.lon(), &easting_c, &northing_c);
 
 			// then require this viewport to be exact integral pixel difference from last
 			// adjusting clat/clat and SM accordingly
@@ -1019,7 +1020,7 @@ bool cm93chart::AdjustVP ( const ViewPort &vp_last, ViewPort &vp_proposed )
 			double c_east_d = (dpx / vp_proposed.view_scale()) + prev_easting_c;
 			double c_north_d = (dpy / vp_proposed.view_scale()) + prev_northing_c;
 
-			geo::Position t = geo::fromSM(c_east_d, c_north_d, geo::Position(ref_lat, ref_lon));
+			geo::Position t = geo::fromSM(c_east_d, c_north_d, reference_point);
 			vp_proposed.set_position(t);
 
 			return true;
@@ -1040,8 +1041,8 @@ void cm93chart::SetVPParms(const ViewPort& vpt)
 	m_pixy_vp_center = vpt.pix_height / 2;
 	m_view_scale_ppm = vpt.view_scale();
 
-	geo::toSM(vpt.latitude(), vpt.longitude(), ref_lat, ref_lon, &m_easting_vp_center,
-			  &m_northing_vp_center);
+	geo::toSM(vpt.latitude(), vpt.longitude(), reference_point.lat(), reference_point.lon(),
+			  &m_easting_vp_center, &m_northing_vp_center);
 
 	if (global::OCPN::get().sys().debug().cm93) {
 		// Fetch the lat/lon of the screen corner points
@@ -1218,8 +1219,8 @@ int cm93chart::CreateObjChain(int cell_index, int subcell)
 
 			obj = NULL;
 			if (NULL != xgeom)
-				obj = CreateS57Obj(cell_index, iObj, subcell, pobjectDef, m_pDict, xgeom, ref_lat,
-								   ref_lon, GetNativeScale());
+				obj = CreateS57Obj(cell_index, iObj, subcell, pobjectDef, m_pDict, xgeom,
+								   reference_point.lat(), reference_point.lon(), GetNativeScale());
 
 			if (obj) {
 

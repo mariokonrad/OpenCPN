@@ -67,7 +67,7 @@ struct GeoRef // FIXME: memory allocation outside GeoRef (using malloc), use std
 const double WGS84_semimajor_axis_meters = 6378137.0;     // WGS84 semimajor axis
 const double mercator_k0                 = 0.9996;
 
-void toTM(float lat, float lon, float lat0, float lon0, double* x, double* y);
+void toTM(const Position& pos, const Position& pos0, double* x, double* y);
 Position fromTM(double x, double y, const Position& pos0);
 
 void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y);

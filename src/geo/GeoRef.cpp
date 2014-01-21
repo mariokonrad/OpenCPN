@@ -452,7 +452,7 @@ Position fromPOLY(double x, double y, const Position& pos0)
 // Lat and Long are in decimal degrees.
 // Written by Chuck Gantz- chuck.gantz@globalstar.com
 // Adapted for opencpn by David S. Register
-void toTM(float lat, float lon, float lat0, float lon0, double* x, double* y)
+void toTM(const Position& pos, const Position& pos0, double* x, double* y)
 {
 	// constants for WGS-84
 	const double f = 1.0 / WGSinvf; // WGS84 ellipsoid flattening parameter
@@ -461,9 +461,9 @@ void toTM(float lat, float lon, float lat0, float lon0, double* x, double* y)
 
 	const double eccSquared = 2 * f - f * f;
 	const double eccPrimeSquared = (eccSquared) / (1 - eccSquared);
-	const double LatRad = lat * (M_PI / 180.0);
-	const double LongOriginRad = lon0 * (M_PI / 180.0);
-	const double LongRad = lon * (M_PI / 180.0);
+	const double LatRad = pos.lat() * (M_PI / 180.0);
+	const double LongOriginRad = pos0.lon() * (M_PI / 180.0);
+	const double LongRad = pos.lon() * (M_PI / 180.0);
 
 	const double N = a / sqrt(1 - eccSquared * sin(LatRad) * sin(LatRad));
 	const double T = tan(LatRad) * tan(LatRad);

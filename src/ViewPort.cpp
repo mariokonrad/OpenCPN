@@ -111,9 +111,9 @@ wxPoint ViewPort::GetPixFromLL(const geo::Position& pos) const
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting,
-				  &tmcnorthing);
-		geo::toTM(pos.lat(), xlon, 0.0, center_point.lon(), &tmeasting, &tmnorthing);
+		geo::toTM(center_point, geo::Position(0.0, center_point.lon()), &tmceasting, &tmcnorthing);
+		geo::toTM(geo::Position(pos.lat(), xlon), geo::Position(0.0, center_point.lon()),
+				  &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
@@ -180,9 +180,9 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const geo::Position& pos) const
 
 		double tmeasting, tmnorthing;
 		double tmceasting, tmcnorthing;
-		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting,
-				  &tmcnorthing);
-		geo::toTM(pos.lat(), xlon, 0.0, center_point.lon(), &tmeasting, &tmnorthing);
+		geo::toTM(center_point, geo::Position(0.0, center_point.lon()), &tmceasting, &tmcnorthing);
+		geo::toTM(geo::Position(pos.lat(), xlon), geo::Position(0.0, center_point.lon()),
+				  &tmeasting, &tmnorthing);
 
 		northing = tmnorthing - tmcnorthing;
 		easting = tmeasting - tmceasting;
@@ -244,8 +244,7 @@ geo::Position ViewPort::GetLLFromPix(const wxPoint& p) const
 	if (PROJECTION_TRANSVERSE_MERCATOR == m_projection_type) {
 		double tmceasting;
 		double tmcnorthing;
-		geo::toTM(center_point.lat(), center_point.lon(), 0.0, center_point.lon(), &tmceasting,
-				  &tmcnorthing);
+		geo::toTM(center_point, geo::Position(0.0, center_point.lon()), &tmceasting, &tmcnorthing);
 		pos = geo::fromTM(d_east, d_north + tmcnorthing, geo::Position(0.0, center_point.lon()));
 	} else if (PROJECTION_POLYCONIC == m_projection_type) {
 		double polyeasting;

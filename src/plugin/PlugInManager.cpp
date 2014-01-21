@@ -1674,7 +1674,7 @@ double DistGreatCircle_Plugin(double slat, double slon, double dlat, double dlon
 
 void toTM_Plugin(float lat, float lon, float lat0, float lon0, double* x, double* y)
 {
-	geo::toTM(lat, lon, lat0, lon0, x, y);
+	geo::toTM(geo::Position(lat, lon), geo::Position(lat0, lon0), x, y);
 }
 
 void fromTM_Plugin(double x, double y, double lat0, double lon0, double* lat, double* lon)

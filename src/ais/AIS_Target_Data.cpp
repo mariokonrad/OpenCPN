@@ -99,7 +99,6 @@ AIS_Target_Data::AIS_Target_Data()
 	Brg = -1.;
 
 	DimA = DimB = DimC = DimD = 0;
-	;
 
 	ETA_Mo = 0;
 	ETA_Day = 0;

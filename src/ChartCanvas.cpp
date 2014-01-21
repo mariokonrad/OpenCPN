@@ -1975,9 +1975,8 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 
 					double brg;
 					double dist;
-					geo::DistanceBearingMercator(segShow_point_b->latitude(), segShow_point_b->longitude(),
-												 segShow_point_a->latitude(), segShow_point_a->longitude(),
-												 &brg, &dist);
+					geo::DistanceBearingMercator(segShow_point_b->get_position(),
+												 segShow_point_a->get_position(), &brg, &dist);
 
 					if (!pr->m_bIsInLayer)
 						s.Append(_("Route: "));
@@ -2097,7 +2096,7 @@ void ChartCanvas::OnCursorTrackTimerEvent(wxTimerEvent&)
 			double dist;
 			wxString s;
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			geo::DistanceBearingMercator(cursor.lat(), cursor.lon(), nav.pos.lat(), nav.pos.lon(), &brg, &dist);
+			geo::DistanceBearingMercator(cursor, nav.pos, &brg, &dist);
 			if (g_bShowMag)
 				s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 			else
@@ -2792,8 +2791,7 @@ bool ChartCanvas::SetViewPoint(const geo::Position& pos, double scale_ppm, doubl
 		// Calculate the on-screen displayed actual scale
 		// by a simple traverse northward from the center point
 		// of roughly 10 % of the Viewport extent
-		double tlat;
-		double tlon;
+
 		// roughly 10 % of lat range, in NM
 		double delta_y = (VPoint.GetBBox().GetMaxY() - VPoint.GetBBox().GetMinY()) * 60.0 * 0.10;
 
@@ -2804,9 +2802,9 @@ bool ChartCanvas::SetViewPoint(const geo::Position& pos, double scale_ppm, doubl
 		else if (lon_norm < -180.0)
 			lon_norm += 360.0;
 
-		geo::ll_gc_ll(VPoint.latitude(), lon_norm, 0, delta_y, &tlat, &tlon);
+		geo::Position t = geo::ll_gc_ll(geo::Position(VPoint.latitude(), lon_norm), 0, delta_y);
 
-		wxPoint r1 = GetCanvasPointPix(geo::Position(tlat, tlon)); // TODO: cleanup
+		wxPoint r1 = GetCanvasPointPix(t); // TODO: cleanup
 		wxPoint r = GetCanvasPointPix(geo::Position(VPoint.latitude(), lon_norm));
 
 		m_true_scale_ppm = sqrt(pow((double)(r.y - r1.y), 2) + pow((double)(r.x - r1.x), 2))
@@ -2893,10 +2891,6 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	if (GetVP().GetBBox().PointInBox(nav.pos.lon(), nav.pos.lat(), 0)) // FIXME: alter interface: use position
 		drawit++;
 
-	// Calculate ownship position Predictor
-	double pred_lat;
-	double pred_lon;
-
 	// COG/SOG may be undefined in NMEA data stream
 	double pCog = nav.cog;
 	if (wxIsNaN(pCog))
@@ -2905,12 +2899,12 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	if (wxIsNaN(pSog))
 		pSog = 0.0;
 
-	geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), pCog, pSog * g_ownship_predictor_minutes / 60.0,
-				  &pred_lat, &pred_lon);
+	// Calculate ownship position Predictor
+	geo::Position pred = geo::ll_gc_ll(nav.pos, pCog, pSog * g_ownship_predictor_minutes / 60.0);
 
 	wxPoint lGPSPoint = GetCanvasPointPix(nav.pos);
 	wxPoint lShipMidPoint = lGPSPoint;
-	wxPoint lPredPoint = GetCanvasPointPix(geo::Position(pred_lat, pred_lon));
+	wxPoint lPredPoint = GetCanvasPointPix(pred);
 
 	double cog_rad
 		= atan2((double)(lPredPoint.y - lShipMidPoint.y), (double)(lPredPoint.x - lShipMidPoint.x));
@@ -2920,7 +2914,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 					  + pow((double)(lPredPoint.y - lShipMidPoint.y), 2));
 
 	// Is predicted point in the VPoint?
-	if (GetVP().GetBBox().PointInBox(pred_lon, pred_lat, 0))
+	if (GetVP().GetBBox().PointInBox(pred.lon(), pred.lat(), 0))
 		drawit++; // yep
 
 	// Draw the icon rotated to the COG
@@ -2934,13 +2928,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 		icon_hdt = 0.0;
 
 	// Calculate the ownship drawing angle icon_rad using an assumed 10 minute predictor
-	double osd_head_lat, osd_head_lon;
-
-	geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), icon_hdt, pSog * 10.0 / 60.0, &osd_head_lat,
-				  &osd_head_lon);
-
+	geo::Position osd_head = geo::ll_gc_ll(nav.pos, icon_hdt, pSog * 10.0 / 60.0);
 	lShipMidPoint = GetCanvasPointPix(nav.pos);
-	wxPoint osd_head_point = GetCanvasPointPix(geo::Position(osd_head_lat, osd_head_lon));
+	wxPoint osd_head_point = GetCanvasPointPix(osd_head);
 
 	double icon_rad = atan2((double)(osd_head_point.y - lShipMidPoint.y),
 							(double)(osd_head_point.x - lShipMidPoint.x));
@@ -2950,13 +2940,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 		icon_rad = ((icon_hdt + 90.0) * M_PI / 180.0) + GetVP().rotation;
 
 	// Calculate ownship Heading pointer as a predictor
-	double hdg_pred_lat, hdg_pred_lon;
-
-	geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), icon_hdt, pSog * g_ownship_predictor_minutes / 60.0,
-				  &hdg_pred_lat, &hdg_pred_lon);
-
+	geo::Position hdg_pred = geo::ll_gc_ll(nav.pos, icon_hdt, pSog * g_ownship_predictor_minutes / 60.0);
 	lShipMidPoint = GetCanvasPointPix(nav.pos);
-	wxPoint lHeadPoint = GetCanvasPointPix(geo::Position(hdg_pred_lat, hdg_pred_lon));
+	wxPoint lHeadPoint = GetCanvasPointPix(hdg_pred);
 
 	// Should we draw the Head vector?
 	// Compare the points lHeadPoint and lPredPoint
@@ -2982,7 +2968,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	// but ownship and pred point are both off
 
 	if (GetVP().GetBBox().LineIntersect(wxPoint2DDouble(nav.pos.lon(), nav.pos.lat()),
-										wxPoint2DDouble(pred_lon, pred_lat)))
+										wxPoint2DDouble(pred.lon(), pred.lat())))
 		drawit++;
 
 	// Do the draw if either the ship or prediction is within the current VPoint
@@ -3053,11 +3039,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				}
 
 				// Calculate the true ship length in exact pixels
-				double ship_bow_lat, ship_bow_lon;
-				geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), icon_hdt,
-							  g_n_ownship_length_meters / 1852.0, &ship_bow_lat, &ship_bow_lon);
+				geo::Position ship_bow = geo::ll_gc_ll(nav.pos, icon_hdt, g_n_ownship_length_meters / 1852.0);
 				wxPoint lShipBowPoint;
-				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(geo::Position(ship_bow_lat, ship_bow_lon));
+				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(ship_bow);
 				wxPoint2DDouble a_point = GetVP().GetDoublePixFromLL(nav.pos);
 
 				double shipLength_px = sqrt(pow((double)(b_point.m_x - a_point.m_x), 2)
@@ -3085,14 +3069,10 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 					dx /= shipLength_mm / ownship_min_mm;
 				}
 
-				double ship_mid_lat, ship_mid_lon, ship_mid_lat1, ship_mid_lon1;
+				geo::Position ship_mid = geo::ll_gc_ll(nav.pos, hdt_ant, dy);
+				geo::Position ship_mid1 = geo::ll_gc_ll(ship_mid, icon_hdt - 90.0, dx);
 
-				geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), hdt_ant, dy, &ship_mid_lat,
-							  &ship_mid_lon);
-				geo::ll_gc_ll(ship_mid_lat, ship_mid_lon, icon_hdt - 90.0, dx, &ship_mid_lat1,
-							  &ship_mid_lon1);
-
-				lShipMidPoint = GetCanvasPointPix(geo::Position(ship_mid_lat1, ship_mid_lon1));
+				lShipMidPoint = GetCanvasPointPix(ship_mid1);
 				GPSOffsetPixels.x = lShipMidPoint.x - lGPSPoint.x;
 				GPSOffsetPixels.y = lShipMidPoint.y - lGPSPoint.y;
 
@@ -3113,7 +3093,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 					pos_image.Rescale(ownShipWidth * scale_factor_x, ownShipLength * scale_factor_y,
 									  wxIMAGE_QUALITY_HIGH);
 					wxPoint rot_ctr(pos_image.GetWidth() / 2, pos_image.GetHeight() / 2);
-					wxImage rot_image = pos_image.Rotate(-(icon_rad - (M_PI / 2.)), rot_ctr, true);
+					wxImage rot_image = pos_image.Rotate(-(icon_rad - (M_PI / 2.0)), rot_ctr, true);
 
 					// Simple sharpening algorithm.....
 					for (int ip = 0; ip < rot_image.GetWidth(); ip++)
@@ -3155,7 +3135,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 					dc.StrokePolygon(6, &ownship_icon[0], 0, 0);
 
-					//     draw reference point (midships) cross
+					// draw reference point (midships) cross
 					dc.StrokeLine(ownship_icon[6].x, ownship_icon[6].y, ownship_icon[7].x,
 								  ownship_icon[7].y);
 					dc.StrokeLine(ownship_icon[8].x, ownship_icon[8].y, ownship_icon[9].x,
@@ -3164,13 +3144,13 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 				img_height = ownShipLength * scale_factor_y;
 
-				//      Reference point, where the GPS antenna is
+				// Reference point, where the GPS antenna is
 				int circle_rad = 3;
 				if (m_pos_image_user)
 					circle_rad = 1;
 
-				dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" )), 1));
-				dc.SetBrush(wxBrush(GetGlobalColor(_T ( "UIBCK" ))));
+				dc.SetPen(wxPen(GetGlobalColor(_T("UBLCK")), 1));
+				dc.SetBrush(wxBrush(GetGlobalColor(_T("UIBCK"))));
 				dc.StrokeCircle(lGPSPoint.x, lGPSPoint.y, circle_rad);
 			} else { // Fixed bitmap icon.
 				wxPoint rot_ctr(pos_image.GetWidth() / 2, pos_image.GetHeight() / 2);
@@ -3190,7 +3170,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 				dc.DrawBitmap(os_bm, lShipMidPoint.x - w / 2, lShipMidPoint.y - h / 2, true);
 
-				//      Reference point, where the GPS antenna is
+				//  Reference point, where the GPS antenna is
 				int circle_rad = 3;
 				if (m_pos_image_user)
 					circle_rad = 1;
@@ -3226,7 +3206,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 					icon[i].y = (int)wxRound(py) + lPredPoint.y + GPSOffsetPixels.y;
 				}
 
-				//      COG Predictor
+				// COG Predictor
 				wxDash dash_long[2];
 				dash_long[0] = (int)(3.0 * m_pix_per_mm); // 8// Long dash  <---------+
 				dash_long[1] = (int)(1.5 * m_pix_per_mm); // 2// Short gap            |
@@ -3257,7 +3237,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 			}
 		}
 
-		//      HDT Predictor
+		// HDT Predictor
 		if (b_render_hdt) {
 			wxDash dash_short[2];
 			dash_short[0] = (int)(1.5 * m_pix_per_mm); // Short dash  <---------+
@@ -3272,7 +3252,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 			wxPen ppPen1(pred_colour, 2, wxSOLID);
 			dc.SetPen(ppPen1);
-			dc.SetBrush(wxBrush(GetGlobalColor(_T ( "GREY2" ))));
+			dc.SetBrush(wxBrush(GetGlobalColor(_T("GREY2"))));
 
 			dc.StrokeCircle(lHeadPoint.x + GPSOffsetPixels.x, lHeadPoint.y + GPSOffsetPixels.y, 4);
 		}
@@ -3285,18 +3265,16 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 			factor *= g_fNavAidRadarRingsStep;
 
-			double tlat;
-			double tlon;
-			geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), 0, factor, &tlat, &tlon);
-			wxPoint r = GetCanvasPointPix(geo::Position(tlat, tlon));
+			geo::Position t = geo::ll_gc_ll(nav.pos, 0, factor);
+			wxPoint r = GetCanvasPointPix(t);
 
 			double lpp = sqrt(pow((double)(lShipMidPoint.x - r.x), 2)
 							  + pow((double)(lShipMidPoint.y - r.y), 2));
 			int pix_radius = (int)lpp;
 
-			wxPen ppPen1(GetGlobalColor(_T ( "URED" )), 2);
+			wxPen ppPen1(GetGlobalColor(_T("URED")), 2);
 			dc.SetPen(ppPen1);
-			dc.SetBrush(wxBrush(GetGlobalColor(_T ( "URED" )), wxTRANSPARENT));
+			dc.SetBrush(wxBrush(GetGlobalColor(_T("URED")), wxTRANSPARENT));
 
 			for (int i = 1; i <= g_iNavAidRadarRingsNumberVisible; i++)
 				dc.StrokeCircle(lShipMidPoint.x, lShipMidPoint.y, i * pix_radius);
@@ -3434,8 +3412,8 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 	geo::Position p1 = GetCanvasPixPoint(w, h); // get lat/lon of lower right point of the window
 	dlat = p0.lat() - p1.lat(); // calculate how many degrees of latitude are shown in the window
 	dlon = p1.lon() - p0.lon(); // calculate how many degrees of longitude are shown in the window
-	if (dlon < 0.0) // concider datum border at 180 degrees longitude
-	{
+	if (dlon < 0.0) {
+		// consider datum border at 180 degrees longitude
 		dlon = dlon + 360.0;
 	}
 	// calculate distance between latitude grid lines
@@ -3513,10 +3491,8 @@ void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 		// Draw 10 mile scale as SCALEB11
 		geo::Position pos = GetCanvasPixPoint(x_origin, y_origin);
 
-		double tlat;
-		double tlon;
-		geo::ll_gc_ll(pos.lat(), pos.lon(), 0, 10.0, &tlat, &tlon);
-		wxPoint r = GetCanvasPointPix(geo::Position(tlat, tlon));
+		geo::Position t = geo::ll_gc_ll(pos, 0, 10.0);
+		wxPoint r = GetCanvasPointPix(t);
 
 		int l1 = (y_origin - r.y) / 5;
 
@@ -3536,10 +3512,8 @@ void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 		// Draw 1 mile scale as SCALEB10
 		geo::Position pos = GetCanvasPixPoint(x_origin, y_origin);
 
-		double tlat;
-		double tlon;
-		geo::ll_gc_ll(pos.lat(), pos.lon(), 0, 1.0, &tlat, &tlon);
-		wxPoint r = GetCanvasPointPix(geo::Position(tlat, tlon));
+		geo::Position t= geo::ll_gc_ll(pos, 0, 1.0);
+		wxPoint r = GetCanvasPointPix(t);
 
 		int l1 = (y_origin - r.y) / 10;
 
@@ -3590,10 +3564,10 @@ void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 				pen_save = dc.GetPen();
 				brush_save = dc.GetBrush();
 
-				yellow = GetGlobalColor(_T ( "YELO1" ));
+				yellow = GetGlobalColor(_T("YELO1"));
 				yellow.Set(yellow.Red(), yellow.Green(), yellow.Blue(), 64);
 
-				green = GetGlobalColor(_T ( "GREEN4" ));
+				green = GetGlobalColor(_T("GREEN4"));
 				green.Set(green.Red(), green.Green(), green.Blue(), 64);
 
 				pen.SetColour(yellow);
@@ -3613,7 +3587,6 @@ void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 				if (area_notice.expiry_time > now) {
 					std::vector<wxPoint> points;
 					bool draw_polygon = false;
-					double lat, lon;
 
 					switch (area_notice.notice_type) {
 						case 0:
@@ -3631,13 +3604,13 @@ void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 					dc.SetPen(pen);
 					dc.SetBrush(*brush);
 
+					geo::Position pos;
 					for (Ais8_001_22_SubAreaList::iterator sa = area_notice.sub_areas.begin();
 						 sa != area_notice.sub_areas.end(); ++sa) {
 						using namespace ais;
 						switch (sa->shape) {
 							case AIS8_001_22_SHAPE_CIRCLE: {
-								lat = sa->latitude;
-								lon = sa->longitude;
+								pos = geo::Position(sa->latitude, sa->longitude);
 
 								wxPoint target_point = GetCanvasPointPix(geo::Position(sa->latitude, sa->longitude));
 								points.push_back(target_point);
@@ -3649,9 +3622,8 @@ void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 								draw_polygon = true;
 							case AIS8_001_22_SHAPE_POLYLINE: {
 								for (int i = 0; i < 4; ++i) {
-									geo::ll_gc_ll(lat, lon, sa->angles[i], sa->dists_m[i] / 1852.0,
-												  &lat, &lon);
-									wxPoint target_point = GetCanvasPointPix(geo::Position(lat, lon));
+									pos = geo::ll_gc_ll(pos, sa->angles[i], sa->dists_m[i] / 1852.0);
+									wxPoint target_point = GetCanvasPointPix(pos);
 									points.push_back(target_point);
 								}
 							}
@@ -3767,19 +3739,17 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 	// Calculate AIS target position Predictor, using global static variable for length of vector
 
-	double pred_lat, pred_lon;
-
-	geo::ll_gc_ll(td->Lat, td->Lon, td->COG, target_sog * ais.ShowCOG_Mins / 60.0, &pred_lat,
-				  &pred_lon);
+	geo::Position pred = geo::ll_gc_ll(geo::Position(td->Lat, td->Lon), td->COG,
+									   target_sog * ais.ShowCOG_Mins / 60.0);
 
 	// Is predicted point in the VPoint?
-	if (GetVP().GetBBox().PointInBox(pred_lon, pred_lat, 0))
+	if (GetVP().GetBBox().PointInBox(pred.lon(), pred.lat(), 0))
 		drawit++;
 
 	// And one more test to catch the case where target COG line crosses the screen,
 	// but the target itself and its pred point are both off-screen
 	if (GetVP().GetBBox().LineIntersect(wxPoint2DDouble(td->Lon, td->Lat),
-										wxPoint2DDouble(pred_lon, pred_lat)))
+										wxPoint2DDouble(pred.lon(), pred.lat())))
 		drawit++;
 
 	const global::GUI::View& view = global::OCPN::get().gui().view();
@@ -3787,15 +3757,14 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 	// Do the draw if conditions indicate
 	if (drawit) {
 		TargetPoint = GetCanvasPointPix(geo::Position(td->Lat, td->Lon));
-		PredPoint = GetCanvasPointPix(geo::Position(pred_lat, pred_lon));
+		PredPoint = GetCanvasPointPix(pred);
 
 		// Calculate the relative angle for this chart orientation
 		// Use a 100 pixel vector to calculate angle
 		double angle_distance_nm = (100.0 / GetVP().view_scale()) / 1852.0;
-		double angle_lat;
-		double angle_lon;
-		geo::ll_gc_ll(td->Lat, td->Lon, td->COG, angle_distance_nm, &angle_lat, &angle_lon);
-		wxPoint AnglePoint = GetCanvasPointPix(geo::Position(angle_lat, angle_lon));
+		geo::Position angle
+			= geo::ll_gc_ll(geo::Position(td->Lat, td->Lon), td->COG, angle_distance_nm);
+		wxPoint AnglePoint = GetCanvasPointPix(angle);
 
 		double theta;
 
@@ -3840,11 +3809,11 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			if (td->DimA + td->DimB == 0 || td->DimC + td->DimD == 0) {
 				bcan_draw_size = false;
 			} else {
-				double ref_lat, ref_lon;
-				geo::ll_gc_ll(td->Lat, td->Lon, 0, 100. / 1852., &ref_lat, &ref_lon);
+				geo::Position ref
+					= geo::ll_gc_ll(geo::Position(td->Lat, td->Lon), 0, 100.0 / 1852.0);
 				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(geo::Position(td->Lat, td->Lon));
-				wxPoint2DDouble r_point = GetVP().GetDoublePixFromLL(geo::Position(ref_lat, ref_lon));
-				double ppm = r_point.GetDistance(b_point) / 100.;
+				wxPoint2DDouble r_point = GetVP().GetDoublePixFromLL(ref);
+				double ppm = r_point.GetDistance(b_point) / 100.0;
 				double offwid = (td->DimC + td->DimD) * ppm * 0.25;
 				double offlen = (td->DimA + td->DimB) * ppm * 0.15;
 				ais_real_size[0].x = -td->DimD * ppm;
@@ -3941,12 +3910,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		if (((td->n_alarm_state == AIS_ALARM_SET) && (td->bCPA_Valid))
 			|| (td->b_show_AIS_CPA && (td->bCPA_Valid))) {
 			// Calculate the point of CPA for target
-			double tcpa_lat;
-			double tcpa_lon;
-			geo::ll_gc_ll(td->Lat, td->Lon, td->COG, target_sog * td->TCPA / 60., &tcpa_lat,
-						  &tcpa_lon);
+			geo::Position tcpa = geo::ll_gc_ll(geo::Position(td->Lat, td->Lon), td->COG, target_sog * td->TCPA / 60.0);
 			wxPoint TPoint = TargetPoint;
-			geo::Position tcpa(tcpa_lat, tcpa_lon);
 			wxPoint tCPAPoint = GetCanvasPointPix(tcpa);
 
 			// Draw the intercept line from target
@@ -3970,11 +3935,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			if (wxIsNaN(nav.cog) || wxIsNaN(nav.sog)) {
 				ocpa = nav.pos;
 			} else {
-				double lat;
-				double lon;
-				geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), nav.cog, nav.sog * td->TCPA / 60.0,
-							  &lat, &lon);
-				ocpa = geo::Position(lat, lon);
+				ocpa = geo::ll_gc_ll(nav.pos, nav.cog, nav.sog * td->TCPA / 60.0);
 			}
 
 			wxPoint oCPAPoint = GetCanvasPointPix(ocpa);
@@ -5204,8 +5165,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			double brg;
 			double dist;
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(), nav.pos.lat(), nav.pos.lon(),
-										 &brg, &dist);
+			geo::DistanceBearingMercator(m_cursor_pos, nav.pos, &brg, &dist);
 			wxString s;
 			if (g_bShowMag)
 				s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
@@ -5346,9 +5306,8 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					double rhumbDist;
 					double gcBearing;
 					double gcDist;
-					geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(),
-												 m_prev_route.lat(), m_prev_route.lon(),
-												 &rhumbBearing, &rhumbDist);
+					geo::DistanceBearingMercator(m_cursor_pos, m_prev_route, &rhumbBearing,
+												 &rhumbDist);
 					geo::Geodesic::GreatCircleDistBear(m_prev_route.lon(), m_prev_route.lat(),
 													   m_cursor_pos.lon(), m_cursor_pos.lat(),
 													   &gcDist, &gcBearing, NULL);
@@ -6073,16 +6032,14 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 					Ais8_001_22& area_notice = ani->second;
 
 					geo::BoundingBox bbox;
-					double lat;
-					double lon;
+					geo::Position pos;
 
 					for (Ais8_001_22_SubAreaList::iterator sa = area_notice.sub_areas.begin();
 						 sa != area_notice.sub_areas.end(); ++sa) {
 						using namespace ais;
 						switch (sa->shape) {
 							case AIS8_001_22_SHAPE_CIRCLE: {
-								lat = sa->latitude;
-								lon = sa->longitude;
+								pos = geo::Position(sa->latitude, sa->longitude);
 
 								wxPoint target_point = GetCanvasPointPix(geo::Position(sa->latitude, sa->longitude));
 								bbox.Expand(target_point);
@@ -6093,9 +6050,8 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 							case AIS8_001_22_SHAPE_POLYGON:
 							case AIS8_001_22_SHAPE_POLYLINE: {
 								for (int i = 0; i < 4; ++i) {
-									geo::ll_gc_ll(lat, lon, sa->angles[i], sa->dists_m[i] / 1852.0,
-												  &lat, &lon);
-									wxPoint target_point = GetCanvasPointPix(geo::Position(lat, lon));
+									pos = geo::ll_gc_ll(pos, sa->angles[i], sa->dists_m[i] / 1852.0);
+									wxPoint target_point = GetCanvasPointPix(pos);
 									bbox.Expand(target_point);
 								}
 							}
@@ -6423,9 +6379,8 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 					double dist;
 					double brg;
-					geo::DistanceBearingMercator(m_pFoundRoutePoint->latitude(),
-												 m_pFoundRoutePoint->longitude(), nav.pos.lat(),
-												 nav.pos.lon(), &brg, &dist);
+					geo::DistanceBearingMercator(m_pFoundRoutePoint->get_position(), nav.pos, &brg,
+												 &dist);
 					if (dist * 1852.0 <= global::OCPN::get().nav().anchor().AWMax)
 						menuWaypoint->Append(ID_WP_MENU_SET_ANCHORWATCH, _("Set Anchor Watch"));
 				}
@@ -6509,17 +6464,17 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 					Ais8_001_22& area_notice = ani->second;
 
 					geo::BoundingBox bbox;
-					double lat, lon;
+					geo::Position pos;
 
 					for (Ais8_001_22_SubAreaList::iterator sa = area_notice.sub_areas.begin();
 						 sa != area_notice.sub_areas.end(); ++sa) {
 						using namespace ais;
 						switch (sa->shape) {
 							case AIS8_001_22_SHAPE_CIRCLE: {
-								lat = sa->latitude;
-								lon = sa->longitude;
+								pos = geo::Position(sa->latitude, sa->longitude);
 
-								wxPoint target_point = GetCanvasPointPix(geo::Position(sa->latitude, sa->longitude));
+								wxPoint target_point
+									= GetCanvasPointPix(geo::Position(sa->latitude, sa->longitude));
 								bbox.Expand(target_point);
 								if (sa->radius_m > 0.0)
 									bbox.EnLarge(sa->radius_m * vp_scale);
@@ -6528,9 +6483,8 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 							case AIS8_001_22_SHAPE_POLYGON:
 							case AIS8_001_22_SHAPE_POLYLINE: {
 								for (int i = 0; i < 4; ++i) {
-									geo::ll_gc_ll(lat, lon, sa->angles[i], sa->dists_m[i] / 1852.0,
-												  &lat, &lon);
-									wxPoint target_point = GetCanvasPointPix(geo::Position(lat, lon));
+									pos = geo::ll_gc_ll(pos, sa->angles[i], sa->dists_m[i] / 1852.0);
+									wxPoint target_point = GetCanvasPointPix(pos);
 									bbox.Expand(target_point);
 								}
 							}
@@ -7746,7 +7700,8 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 				double dist = sqrt((double)((pixx1 - pixx) * (pixx1 - pixx))
 								   + ((pixy1 - pixy) * (pixy1 - pixy))) / vp.view_scale();
 				// calculate GC distance between these two points in meters
-				double distgc = geo::DistGreatCircle(plylat, plylon, plylat1, plylon1) * 1852.0;
+				double distgc = geo::DistGreatCircle(geo::Position(plylat, plylon),
+													 geo::Position(plylat1, plylon1)) * 1852.0;
 
 				// If the distances are nonsense, it means that the scale is very small and the
 				// segment wrapped the world
@@ -7807,7 +7762,8 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 					double dist = sqrt((double)((pixx1 - pixx) * (pixx1 - pixx))
 									   + ((pixy1 - pixy) * (pixy1 - pixy))) / vp.view_scale();
 					//    calculate GC distance between these two points in meters
-					double distgc = geo::DistGreatCircle(plylat, plylon, plylat1, plylon1) * 1852.0;
+					double distgc = geo::DistGreatCircle(geo::Position(plylat, plylon),
+														 geo::Position(plylat1, plylon1)) * 1852.0;
 
 					//    If the distances are nonsense, it means that the scale is very small and
 					// the segment wrapped the world
@@ -7910,8 +7866,7 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 		double gcBearing;
 		double gcBearing2;
 		double gcDist;
-		geo::DistanceBearingMercator(m_cursor_pos.lat(), m_cursor_pos.lon(), m_prev_route.lat(),
-									 m_prev_route.lon(), &rhumbBearing, &rhumbDist);
+		geo::DistanceBearingMercator(m_cursor_pos, m_prev_route, &rhumbBearing, &rhumbDist);
 		geo::Geodesic::GreatCircleDistBear(m_prev_route.lon(), m_prev_route.lat(),
 										   m_cursor_pos.lon(), m_cursor_pos.lat(), &gcDist,
 										   &gcBearing, &gcBearing2);
@@ -9181,8 +9136,6 @@ double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 	double lpp = 0.0;
 	double d1 = 0.0;
 	double dabs;
-	double tlat1;
-	double tlon1;
 
 	if (pAnchorWatchPoint) {
 		const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
@@ -9190,9 +9143,8 @@ double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 		pAnchorWatchPoint->GetName().ToDouble(&d1);
 		d1 = AnchorDistFix(d1, anchor.PointMinDist, anchor.AWMax);
 		dabs = fabs(d1 / 1852.0);
-		geo::ll_gc_ll(pAnchorWatchPoint->latitude(), pAnchorWatchPoint->longitude(), 0, dabs,
-					  &tlat1, &tlon1);
-		wxPoint r1 = GetCanvasPointPix(geo::Position(tlat1, tlon1));
+		geo::Position t = geo::ll_gc_ll(pAnchorWatchPoint->get_position(), 0, dabs);
+		wxPoint r1 = GetCanvasPointPix(t);
 		wxPoint lAnchorPoint = GetCanvasPointPix(pAnchorWatchPoint->get_position());
 		lpp = sqrt(pow((double)(lAnchorPoint.x - r1.x), 2) // FIXME
 				   + pow((double)(lAnchorPoint.y - r1.y), 2));

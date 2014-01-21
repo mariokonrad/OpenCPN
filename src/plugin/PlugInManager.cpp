@@ -1656,18 +1656,18 @@ bool GetActiveRoutepointGPX(char* buffer, unsigned int buffer_length)
 void PositionBearingDistanceMercator_Plugin(double lat, double lon, double brg, double dist,
 											double* dlat, double* dlon)
 {
-	geo::PositionBearingDistanceMercator(lat, lon, brg, dist, dlat, dlon);
+	geo::PositionBearingDistanceMercator(geo::Position(lat, lon), brg, dist, dlat, dlon);
 }
 
 void DistanceBearingMercator_Plugin(double lat0, double lon0, double lat1, double lon1, double* brg,
 									double* dist)
 {
-	geo::DistanceBearingMercator(lat0, lon0, lat1, lon1, brg, dist);
+	geo::DistanceBearingMercator(geo::Position(lat0, lon0), geo::Position(lat1, lon1), brg, dist);
 }
 
 double DistGreatCircle_Plugin(double slat, double slon, double dlat, double dlon)
 {
-	return geo::DistGreatCircle(slat, slon, dlat, dlon);
+	return geo::DistGreatCircle(geo::Position(slat, slon), geo::Position(dlat, dlon));
 }
 
 void toTM_Plugin(float lat, float lon, float lat0, float lon0, double* x, double* y)

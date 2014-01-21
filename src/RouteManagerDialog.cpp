@@ -821,11 +821,11 @@ void RouteManagerDialog::ZoomtoRoute(Route* route)
 	double rw, rh, ppm; // route width, height, final ppm scale to use
 	int ww, wh; // chart window width, height
 	// route bbox width in nm
-	geo::DistanceBearingMercator(route->RBBox.GetMinY(), route->RBBox.GetMinX(),
-								 route->RBBox.GetMinY(), route->RBBox.GetMaxX(), NULL, &rw);
+	geo::DistanceBearingMercator(geo::Position(route->RBBox.GetMinY(), route->RBBox.GetMinX()),
+								 geo::Position(route->RBBox.GetMinY(), route->RBBox.GetMaxX()), NULL, &rw);
 	// route bbox height in nm
-	geo::DistanceBearingMercator(route->RBBox.GetMinY(), route->RBBox.GetMinX(),
-								 route->RBBox.GetMaxY(), route->RBBox.GetMinX(), NULL, &rh);
+	geo::DistanceBearingMercator(geo::Position(route->RBBox.GetMinY(), route->RBBox.GetMinX()),
+								 geo::Position(route->RBBox.GetMaxY(), route->RBBox.GetMinX()), NULL, &rh);
 
 	cc1->GetSize(&ww, &wh);
 	ppm = wxMin(ww / (rw * 1852.0), wh / (rh * 1852.0)) * (100 - fabs(clat)) / 90;
@@ -1720,8 +1720,7 @@ void RouteManagerDialog::UpdateWptListCtrl(RoutePoint* rp_select, bool b_retain_
 			m_pWptListCtrl->SetItem(idx, colWPTNAME, name);
 
 			double dst;
-			geo::DistanceBearingMercator(rp->latitude(), rp->longitude(), nav.pos.lat(),
-										 nav.pos.lon(), NULL, &dst);
+			geo::DistanceBearingMercator(rp->get_position(), nav.pos, NULL, &dst);
 			m_pWptListCtrl->SetItem(
 				idx, colWPTDIST,
 				wxString::Format(_T("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(dst)));

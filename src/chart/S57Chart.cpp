@@ -6343,17 +6343,14 @@ void s57_DrawExtendedLightSectors(ocpnDC& dc, const ViewPort& viewport,
 			if (fabs(sectorlegs[i].sector1 - sectorlegs[i].sector2) < 0.3)
 				continue;
 
-			double endx;
-			double endy;
-			geo::ll_gc_ll(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
-						  sectorlegs[i].sector1 + 180.0, sectorlegs[i].range, &endy, &endx);
+			geo::Position endxy
+				= geo::ll_gc_ll(geo::Position(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x),
+								sectorlegs[i].sector1 + 180.0, sectorlegs[i].range);
+			wxPoint end1 = viewport.GetPixFromLL(endxy);
 
-			wxPoint end1 = viewport.GetPixFromLL(geo::Position(endy, endx));
-
-			geo::ll_gc_ll(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x,
-						  sectorlegs[i].sector2 + 180.0, sectorlegs[i].range, &endy, &endx);
-
-			wxPoint end2 = viewport.GetPixFromLL(geo::Position(endy, endx));
+			endxy = geo::ll_gc_ll(geo::Position(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x),
+						  sectorlegs[i].sector2 + 180.0, sectorlegs[i].range);
+			wxPoint end2 = viewport.GetPixFromLL(endxy);
 
 			wxPoint lightPos
 				= viewport.GetPixFromLL(geo::Position(sectorlegs[i].pos.m_y, sectorlegs[i].pos.m_x));

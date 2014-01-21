@@ -352,7 +352,7 @@ bool Select::IsSegmentSelected(float a, float b, float c, float d, const geo::Po
 		// Arrange for points to be increasing longitude, c to d
 		double dist;
 		double brg;
-		geo::DistanceBearingMercator(a, c, b, d, &brg, &dist);
+		geo::DistanceBearingMercator(geo::Position(a, c), geo::Position(b, d), &brg, &dist);
 		if (brg < 180.0) { // swap points?
 			double tmp;
 			tmp = c;

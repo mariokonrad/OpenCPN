@@ -245,7 +245,7 @@ static void toDMS(double a, char* bufp, int bufplen)
 	int n = (int)((a - (int)a) * 36000.0);
 	int m = n / 600;
 	int s = n % 600;
-	sprintf(bufp, "%d%02d'%02d.%01d\"", (int)(neg ? -a : a), m, s / 10, s % 10);
+	snprintf(bufp, bufplen, "%d%02d'%02d.%01d\"", (int)(neg ? -a : a), m, s / 10, s % 10);
 }
 
 // Convert dd mm'ss.s" (DMS-Format) to degrees.
@@ -547,11 +547,11 @@ void fromTM(double x, double y, double lat0, double lon0, double* lat, double* l
 
  * --------------------------------------------------------------------------------- */
 
-void MolodenskyTransform(double lat, double lon, double* to_lat, double* to_lon,
-						 int from_datum_index, int to_datum_index)
+void MolodenskyTransform(const Position& pos, Position& to, int from_datum_index,
+						 int to_datum_index)
 {
-	const double from_lat = lat * (M_PI / 180.0);
-	const double from_lon = lon * (M_PI / 180.0);
+	const double from_lat = pos.lat() * (M_PI / 180.0);
+	const double from_lon = pos.lon() * (M_PI / 180.0);
 	const double from_f = 1.0 / gEllipsoid[gDatum[from_datum_index].ellipsoid].invf; // flattening
 	const double from_esq = 2 * from_f - from_f * from_f; // eccentricity^2
 	const double from_a = gEllipsoid[gDatum[from_datum_index].ellipsoid].a; // semimajor axis
@@ -583,10 +583,7 @@ void MolodenskyTransform(double lat, double lon, double* to_lat, double* to_lon,
 	const double dh = (dx * clat * clon) + (dy * clat * slon) + (dz * slat) - (da * (from_a / rn))
 					  + ((df * rn * ssqlat) / adb);
 
-	*to_lon = lon + dlon / (M_PI / 180.0);
-	*to_lat = lat + dlat / (M_PI / 180.0);
-
-	return;
+	to = Position(pos.lat() + dlat / (M_PI / 180.0), pos.lon() + dlon / (M_PI / 180.0));
 }
 
 /* --------------------------------------------------------------------------------- */
@@ -642,7 +639,7 @@ double adjlon(double lon)
 // Given the lat/long of starting point, and traveling a specified distance,
 // at an initial bearing, calculates the lat/long of the resulting location.
 // using elliptic earth model.
-void ll_gc_ll(double lat, double lon, double brg, double dist, double* dlat, double* dlon)
+Position ll_gc_ll(const Position& pos, double brg, double dist)
 {
 	double th1;
 	double costh1;
@@ -679,8 +676,8 @@ void ll_gc_ll(double lat, double lon, double brg, double dist, double* dlat, dou
 	double f4;
 
 	// Setup the static parameters
-	phi1 = lat * (M_PI / 180.0); // initial position
-	lam1 = lon * (M_PI / 180.0);
+	phi1 = pos.lat() * (M_PI / 180.0); // initial position
+	lam1 = pos.lon() * (M_PI / 180.0);
 	al12 = brg * (M_PI / 180.0); // Forward azimuth
 	geod_S = dist * 1852.0; // Distance
 
@@ -807,8 +804,7 @@ void ll_gc_ll(double lat, double lon, double brg, double dist, double* dlat, dou
 		lam2 = adjlon(lam1 + de);
 	}
 
-	*dlat = phi2 / (M_PI / 180.0);
-	*dlon = lam2 / (M_PI / 180.0);
+	return Position(phi2 / (M_PI / 180.0), lam2 / (M_PI / 180.0));
 }
 
 void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2, double* bearing,
@@ -944,15 +940,17 @@ void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2, double
 		*dist = geod_S / 1852.0;
 }
 
-void PositionBearingDistanceMercator(double lat, double lon, double brg, double dist, double* dlat,
+void PositionBearingDistanceMercator(const Position& pos, double brg, double dist, double* dlat,
 									 double* dlon)
 {
-	ll_gc_ll(lat, lon, brg, dist, dlat, dlon);
+	Position p = ll_gc_ll(pos, brg, dist);
+	*dlat = p.lat();
+	*dlon = p.lon();
 }
 
 // Given the lat/long of starting point and ending point,
 // calculates the distance along a geodesic curve, using elliptic earth model.
-double DistGreatCircle(double slat, double slon, double dlat, double dlon)
+double DistGreatCircle(const Position& start, const Position& destination)
 {
 	// Input/Output from geodesic functions
 	double al12; // Forward azimuth
@@ -974,10 +972,10 @@ double DistGreatCircle(double slat, double slon, double dlat, double dlon)
 	double f4;
 
 	double d5;
-	phi1 = slat * (M_PI / 180.0);
-	lam1 = slon * (M_PI / 180.0);
-	phi2 = dlat * (M_PI / 180.0);
-	lam2 = dlon * (M_PI / 180.0);
+	phi1 = start.lat() * (M_PI / 180.0);
+	lam1 = start.lon() * (M_PI / 180.0);
+	phi2 = destination.lat() * (M_PI / 180.0);
+	lam2 = destination.lon() * (M_PI / 180.0);
 
 	// void geod_inv(struct georef_state *state)
 	{
@@ -1076,13 +1074,12 @@ double DistGreatCircle(double slat, double slon, double dlat, double dlon)
 	return d5;
 }
 
-void DistanceBearingMercator(double lat0, double lon0, double lat1, double lon1, double* brg,
-							 double* dist)
+void DistanceBearingMercator(const Position& pos0, const Position& pos1, double* brg, double* dist)
 {
 	// Calculate bearing by conversion to SM (Mercator) coordinates, then simple trigonometry
 
-	double lon0x = lon0;
-	double lon1x = lon1;
+	double lon0x = pos0.lon();
+	double lon1x = pos1.lon();
 
 	// Make lon points the same phase
 	if ((lon0x * lon1x) < 0.) {
@@ -1093,8 +1090,8 @@ void DistanceBearingMercator(double lat0, double lon0, double lat1, double lon1,
 		}
 
 		//    Make always positive
-		lon1x += 360.;
-		lon0x += 360.;
+		lon1x += 360.0;
+		lon0x += 360.0;
 	}
 
 	// Classic formula, which fails for due east/west courses....
@@ -1106,30 +1103,30 @@ void DistanceBearingMercator(double lat0, double lon0, double lat1, double lon1,
 		// We simply require the dlat to be (slightly) non-zero, and carry on.
 		// MAS022210 for HamishB from 1e-4 && .001 to 1e-9 for better precision
 		// on small latitude diffs
-		const double mlat0 = fabs(lat1 - lat0) < 1e-9 ? lat0 + 1e-9 : lat0;
+		const double mlat0 = fabs(pos1.lat() - pos0.lat()) < 1e-9 ? pos0.lat() + 1e-9 : pos0.lat();
 
 		double east, north;
-		toSM_ECC(lat1, lon1x, mlat0, lon0x, &east, &north);
+		toSM_ECC(pos1.lat(), lon1x, mlat0, lon0x, &east, &north);
 		const double C = atan2(east, north);
 		if (cos(C)) {
-			const double dlat = (lat1 - mlat0) * 60.; // in minutes
+			const double dlat = (pos1.lat() - mlat0) * 60.0; // in minutes
 			*dist = (dlat / cos(C));
 		} else {
-			*dist = DistGreatCircle(lat0, lon0, lat1, lon1);
+			*dist = DistGreatCircle(pos0, pos1);
 		}
 	}
 
 	// Calculate the bearing using the un-adjusted original latitudes and Mercator Sailing
 	if (brg) {
 		double east, north;
-		toSM_ECC(lat1, lon1x, lat0, lon0x, &east, &north);
+		toSM_ECC(pos1.lat(), lon1x, pos0.lat(), lon0x, &east, &north);
 
 		const double C = atan2(east, north);
-		const double brgt = 180. + (C * 180. / M_PI);
+		const double brgt = 180.0 + (C * 180.0 / M_PI);
 		if (brgt < 0)
-			*brg = brgt + 360.;
-		else if (brgt > 360.)
-			*brg = brgt - 360.;
+			*brg = brgt + 360.0;
+		else if (brgt > 360.0)
+			*brg = brgt - 360.0;
 		else
 			*brg = brgt;
 	}

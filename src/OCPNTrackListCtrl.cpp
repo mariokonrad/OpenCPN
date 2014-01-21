@@ -114,8 +114,8 @@ wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 	// calculate distance, bearing and speed between the current point and its predecessor
 	if ((item > 0) && (item < static_cast<long>(m_pRoute->pRoutePointList->size()))) {
 		RoutePoint* previous = m_pRoute->pRoutePointList->at(item - 1);
-		geo::DistanceBearingMercator(point->latitude(), point->longitude(), previous->latitude(),
-									 previous->longitude(), &bearing, &distance);
+		geo::DistanceBearingMercator(point->get_position(), previous->get_position(), &bearing,
+									 &distance);
 		double dt
 			= point->GetCreateTime().Subtract(previous->GetCreateTime()).GetSeconds().ToDouble();
 		if (dt > 0.0)

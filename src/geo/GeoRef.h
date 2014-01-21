@@ -34,6 +34,8 @@
 #include <cmath>
 #include <ctype.h>
 
+#include <geo/Position.h>
+
 namespace geo {
 
 struct GeoRef // FIXME: memory allocation outside GeoRef (using malloc), use std containers instead
@@ -41,14 +43,14 @@ struct GeoRef // FIXME: memory allocation outside GeoRef (using malloc), use std
 	int status;
 	int count;
 	int order;
-	double * tx;
-	double * ty;
-	double * lon;
-	double * lat;
-	double * pwx;
-	double * pwy;
-	double * wpx;
-	double * wpy;
+	double* tx;
+	double* ty;
+	double* lon;
+	double* lat;
+	double* pwx;
+	double* pwy;
+	double* wpx;
+	double* wpy;
 	int txmax;
 	int tymax;
 	int txmin;
@@ -65,35 +67,35 @@ struct GeoRef // FIXME: memory allocation outside GeoRef (using malloc), use std
 const double WGS84_semimajor_axis_meters = 6378137.0;     // WGS84 semimajor axis
 const double mercator_k0                 = 0.9996;
 
-void toTM(float lat, float lon, float lat0, float lon0, double *x, double *y);
-void fromTM(double x, double y, double lat0, double lon0, double *lat, double *lon);
+void toTM(float lat, float lon, float lat0, float lon0, double* x, double* y);
+void fromTM(double x, double y, double lat0, double lon0, double* lat, double* lon);
 
-void toSM(double lat, double lon, double lat0, double lon0, double *x, double *y);
-void fromSM(double x, double y, double lat0, double lon0, double *lat, double *lon);
+void toSM(double lat, double lon, double lat0, double lon0, double* x, double* y);
+void fromSM(double x, double y, double lat0, double lon0, double* lat, double* lon);
 
-void toSM_ECC(double lat, double lon, double lat0, double lon0, double *x, double *y);
-void fromSM_ECC(double x, double y, double lat0, double lon0, double *lat, double *lon);
+void toSM_ECC(double lat, double lon, double lat0, double lon0, double* x, double* y);
+void fromSM_ECC(double x, double y, double lat0, double lon0, double* lat, double* lon);
 
-void toPOLY(double lat, double lon, double lat0, double lon0, double *x, double *y);
-void fromPOLY(double x, double y, double lat0, double lon0, double *lat, double *lon);
+void toPOLY(double lat, double lon, double lat0, double lon0, double* x, double* y);
+void fromPOLY(double x, double y, double lat0, double lon0, double* lat, double* lon);
 
 /// distance in nautical miles
-void ll_gc_ll(double lat, double lon, double crs, double dist, double *dlat, double *dlon);
-void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2,
-		double *bearing, double *dist);
+Position ll_gc_ll(const Position& pos, double crs, double dist);
+void ll_gc_ll_reverse(double lat1, double lon1, double lat2, double lon2, double* bearing,
+					  double* dist);
 
+void PositionBearingDistanceMercator(const Position& pos, double brg, double dist, double* dlat,
+									 double* dlon);
+double DistGreatCircle(const Position& start, const Position& destination);
 
-void PositionBearingDistanceMercator(double lat, double lon, double brg, double dist,
-		double *dlat, double *dlon);
-double DistGreatCircle(double slat, double slon, double dlat, double dlon);
+int GetDatumIndex(const char* str);
+void MolodenskyTransform(const Position& pos, Position& to, int from_datum_index,
+						 int to_datum_index);
 
-int GetDatumIndex(const char *str);
-void MolodenskyTransform(double lat, double lon, double *to_lat, double *to_lon, int from_datum_index, int to_datum_index);
+void DistanceBearingMercator(const Position& pos0, const Position& pos1, double* brg, double* dist);
 
-void DistanceBearingMercator(double lat0, double lon0, double lat1, double lon1, double *brg, double *dist);
-
-int Georef_Calculate_Coefficients(struct GeoRef *cp, int nlin_lon);
-int Georef_Calculate_Coefficients_Proj(struct GeoRef *cp);
+int Georef_Calculate_Coefficients(struct GeoRef* cp, int nlin_lon);
+int Georef_Calculate_Coefficients_Proj(struct GeoRef* cp);
 
 }
 

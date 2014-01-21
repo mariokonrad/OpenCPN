@@ -422,7 +422,9 @@ int TCMgr::GetStationIDXbyName(const wxString& prefix, double xlat, double xlon)
 		if (((type == 't') || (type == 'T')) // only Tides
 			&& (locnx.StartsWith(prefix))) {
 			double brg, dist;
-			geo::DistanceBearingMercator(xlat, xlon, lpIDX->IDX_lat, lpIDX->IDX_lon, &brg, &dist);
+			geo::DistanceBearingMercator(geo::Position(xlat, xlon),
+										 geo::Position(lpIDX->IDX_lat, lpIDX->IDX_lon), &brg,
+										 &dist);
 			if (dist < distx) {
 				distx = dist;
 				jx = j;
@@ -447,7 +449,9 @@ int TCMgr::GetStationIDXbyNameType(const wxString& prefix, double xlat, double x
 
 		if ((type == typep) && (locnx.StartsWith(prefix))) {
 			double brg, dist;
-			geo::DistanceBearingMercator(xlat, xlon, lpIDX->IDX_lat, lpIDX->IDX_lon, &brg, &dist);
+			geo::DistanceBearingMercator(geo::Position(xlat, xlon),
+										 geo::Position(lpIDX->IDX_lat, lpIDX->IDX_lon), &brg,
+										 &dist);
 			if (dist < distx) {
 				distx = dist;
 				jx = j;

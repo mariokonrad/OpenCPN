@@ -158,7 +158,7 @@ RoutePoint* Routeman::FindBestActivatePoint(Route* pR, const geo::Position& pos,
 
 		double brg;
 		double dist;
-		geo::DistanceBearingMercator(pn->latitude(), pn->longitude(), pos.lat(), pos.lon(), &brg, &dist);
+		geo::DistanceBearingMercator(pn->get_position(), pos, &brg, &dist);
 
 		double angle = brg - cog;
 		double soa = cos(angle * M_PI / 180.0);
@@ -352,22 +352,19 @@ bool Routeman::UpdateProgress()
 
 		// Calculate range using Great Circle Formula
 
-		double d5 = geo::DistGreatCircle(nav.pos.lat(), nav.pos.lon(), pActivePoint->latitude(),
-										 pActivePoint->longitude());
+		double d5 = geo::DistGreatCircle(nav.pos, pActivePoint->get_position());
 		CurrentRngToActivePoint = d5;
 
 		// Get the XTE vector, normal to current segment
 		Vector2D va, vb, vn;
 
 		double brg1, dist1, brg2, dist2;
-		geo::DistanceBearingMercator(pActivePoint->latitude(), pActivePoint->longitude(),
-									 pActiveRouteSegmentBeginPoint->latitude(),
-									 pActiveRouteSegmentBeginPoint->longitude(), &brg1, &dist1);
+		geo::DistanceBearingMercator(pActivePoint->get_position(),
+									 pActiveRouteSegmentBeginPoint->get_position(), &brg1, &dist1);
 		vb.x = dist1 * sin(brg1 * M_PI / 180.0);
 		vb.y = dist1 * cos(brg1 * M_PI / 180.0);
 
-		geo::DistanceBearingMercator(pActivePoint->latitude(), pActivePoint->longitude(),
-									 nav.pos.lat(), nav.pos.lon(), &brg2, &dist2);
+		geo::DistanceBearingMercator(pActivePoint->get_position(), nav.pos, &brg2, &dist2);
 		va.x = dist2 * sin(brg2 * M_PI / 180.0);
 		va.y = dist2 * cos(brg2 * M_PI / 180.0);
 
@@ -730,9 +727,8 @@ bool Routeman::UpdateAutopilot()
 
 		double brg1;
 		double dist1;
-		geo::DistanceBearingMercator(pActivePoint->latitude(), pActivePoint->longitude(),
-									 pActiveRouteSegmentBeginPoint->latitude(),
-									 pActiveRouteSegmentBeginPoint->longitude(), &brg1, &dist1);
+		geo::DistanceBearingMercator(pActivePoint->get_position(),
+									 pActiveRouteSegmentBeginPoint->get_position(), &brg1, &dist1);
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 

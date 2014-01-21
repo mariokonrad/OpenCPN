@@ -880,11 +880,14 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 				pTargetData->Lon = arpa_lon;
 			} else if (str.Mid(3, 3).IsSameAs(_T("TTM"))) {
 				const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-				if (arpa_dist != 0.) // Not a new or turned off target
-					geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), arpa_brg, arpa_dist,
-								  &pTargetData->Lat, &pTargetData->Lon);
-				else
+				if (arpa_dist != 0.0) {
+					// Not a new or turned off target
+					geo::Position pos = geo::ll_gc_ll(nav.pos, arpa_brg, arpa_dist);
+					pTargetData->Lat = pos.lat();
+					pTargetData->Lon = pos.lon();
+				} else {
 					arpa_lost = true;
+				}
 				pTargetData->COG = arpa_cog;
 				pTargetData->SOG = arpa_sog;
 			}
@@ -1730,8 +1733,7 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data* ptarget)
 
 	// Compute the current Range/Brg to the target
 	double brg, dist;
-	geo::DistanceBearingMercator(ptarget->Lat, ptarget->Lon, nav.pos.lat(), nav.pos.lon(), &brg,
-								 &dist);
+	geo::DistanceBearingMercator(geo::Position(ptarget->Lat, ptarget->Lon), nav.pos, &brg, &dist);
 	ptarget->Range_NM = dist;
 	ptarget->Brg = brg;
 
@@ -1833,16 +1835,12 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data* ptarget)
 		// Calculate CPA
 		// Using TCPA, predict ownship and target positions
 
-		double OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA;
+		geo::Position OwnshipCPA = geo::ll_gc_ll(nav.pos, cpa_calc_ownship_cog, nav.sog * tcpa);
+		geo::Position TargetCPA = geo::ll_gc_ll(geo::Position(ptarget->Lat, ptarget->Lon),
+												cpa_calc_target_cog, ptarget->SOG * tcpa);
 
-		geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), cpa_calc_ownship_cog, nav.sog * tcpa,
-					  &OwnshipLatCPA, &OwnshipLonCPA);
-		geo::ll_gc_ll(ptarget->Lat, ptarget->Lon, cpa_calc_target_cog, ptarget->SOG * tcpa,
-					  &TargetLatCPA, &TargetLonCPA);
-
-		//   And compute the distance
-		ptarget->CPA
-			= geo::DistGreatCircle(OwnshipLatCPA, OwnshipLonCPA, TargetLatCPA, TargetLonCPA);
+		// And compute the distance
+		ptarget->CPA = geo::DistGreatCircle(OwnshipCPA, TargetCPA);
 
 		ptarget->bCPA_Valid = true;
 

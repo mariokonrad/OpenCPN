@@ -1770,11 +1770,7 @@ void MainFrame::ActivateMOB(void)
 
 	if (bGPSValid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
 		// Create a point that is one mile along the present course
-		double zlat;
-		double zlon;
-		geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), nav.cog, 1.0, &zlat, &zlon);
-
-		geo::Position zpos(zlat, zlon);
+		geo::Position zpos = geo::ll_gc_ll(nav.pos, nav.cog, 1.0);
 		RoutePoint* pWP_src
 			= new RoutePoint(zpos, g_default_wp_icon, wxString(_("1.0 NM along COG")));
 		pSelect->AddSelectableRoutePoint(zpos, pWP_src);
@@ -3014,8 +3010,7 @@ bool MainFrame::check_anchorwatch(const RoutePoint* watch_point) const
 	double dist = 0.0;
 	double brg = 0.0;
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-	geo::DistanceBearingMercator(watch_point->latitude(), watch_point->longitude(), nav.pos.lat(),
-								 nav.pos.lon(), &brg, &dist);
+	geo::DistanceBearingMercator(watch_point->get_position(), nav.pos, &brg, &dist);
 	dist *= 1852.0; // unit conversion, anchor distances are in meter
 
 	const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
@@ -3250,7 +3245,7 @@ void MainFrame::onTimer_update_status_cursor_brgrng()
 	double brg;
 	double dist;
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-	geo::DistanceBearingMercator(cursor.lat(), cursor.lon(), nav.pos.lat(), nav.pos.lon(), &brg, &dist);
+	geo::DistanceBearingMercator(cursor, nav.pos, &brg, &dist);
 	wxString s;
 	if (g_bShowMag)
 		s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
@@ -4062,7 +4057,7 @@ void MainFrame::UpdateControlBar( void )
 bool MainFrame::DoChartUpdate(void)
 {
 	double tLat, tLon;           // Chart Stack location
-	double vpLat, vpLon;         // ViewPort location
+	geo::Position vp_pos; // view port location
 
 	bool bNewChart = false;
 	bool bNewView = false;
@@ -4101,8 +4096,7 @@ bool MainFrame::DoChartUpdate(void)
 	if (chart_canvas->m_bFollow == true) {
 		tLat = nav.pos.lat();
 		tLon = nav.pos.lon();
-		vpLat = nav.pos.lat();
-		vpLon = nav.pos.lon();
+		vp_pos = nav.pos;
 
 		// on lookahead mode, adjust the vp center point
 		if (chart_canvas && global::OCPN::get().gui().view().lookahead_mode) {
@@ -4130,13 +4124,12 @@ bool MainFrame::DoChartUpdate(void)
 			double meters_to_shift = cos(nav.pos.lat() * M_PI / 180.0) * pixel_delta
 									 / chart_canvas->GetVPScale();
 			double dir_to_shift = g_COGAvg;
-			geo::ll_gc_ll(nav.pos.lat(), nav.pos.lon(), dir_to_shift, meters_to_shift / 1852.0, &vpLat, &vpLon);
+			vp_pos = geo::ll_gc_ll(nav.pos, dir_to_shift, meters_to_shift / 1852.0);
 		}
 	} else {
 		tLat = vLat;
 		tLon = vLon;
-		vpLat = vLat;
-		vpLon = vLon;
+		vp_pos = geo::Position(vLat, vLon);
 	}
 
 	if (chart_canvas->GetQuiltMode()) {
@@ -4211,14 +4204,13 @@ bool MainFrame::DoChartUpdate(void)
 				}
 			}
 
-			bNewView |= chart_canvas->SetViewPoint(
-				geo::Position(vpLat, vpLon),
-				chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen, 0,
-				chart_canvas->GetVPRotation());
+			bNewView |= chart_canvas->SetViewPoint(vp_pos, chart_canvas->GetCanvasScaleFactor()
+														   / proposed_scale_onscreen,
+												   0, chart_canvas->GetVPRotation());
 		}
 
-		bNewView |= chart_canvas->SetViewPoint(geo::Position(vpLat, vpLon), chart_canvas->GetVPScale(),
-											   0, chart_canvas->GetVPRotation());
+		bNewView |= chart_canvas->SetViewPoint(vp_pos, chart_canvas->GetVPScale(), 0,
+											   chart_canvas->GetVPRotation());
 
 		goto update_finish;
 
@@ -4411,14 +4403,14 @@ bool MainFrame::DoChartUpdate(void)
 				set_scale = chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
 			}
 
-			bNewView |= chart_canvas->SetViewPoint(geo::Position(vpLat, vpLon), set_scale,
-												   Current_Ch->GetChartSkew() * M_PI / 180.,
+			bNewView |= chart_canvas->SetViewPoint(vp_pos, set_scale,
+												   Current_Ch->GetChartSkew() * M_PI / 180.0,
 												   chart_canvas->GetVPRotation());
 		}
 	} else { // No change in Chart Stack
 		if ((chart_canvas->m_bFollow) && Current_Ch)
-			bNewView |= chart_canvas->SetViewPoint(geo::Position(vpLat, vpLon), chart_canvas->GetVPScale(),
-												   Current_Ch->GetChartSkew() * M_PI / 180.,
+			bNewView |= chart_canvas->SetViewPoint(vp_pos, chart_canvas->GetVPScale(),
+												   Current_Ch->GetChartSkew() * M_PI / 180.0,
 												   chart_canvas->GetVPRotation());
 	}
 

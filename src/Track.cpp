@@ -119,8 +119,7 @@ void Track::Stop(bool do_add_point)
 	double delta = 0.0;
 	if (m_lastStoredTP) {
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		delta = geo::DistGreatCircle(nav.pos.lat(), nav.pos.lon(), m_lastStoredTP->latitude(),
-									 m_lastStoredTP->longitude());
+		delta = geo::DistGreatCircle(nav.pos, m_lastStoredTP->get_position());
 	}
 
 	if (m_bRunning && ((delta > m_minTrackpoint_delta) || do_add_point))
@@ -190,8 +189,7 @@ void Track::OnTimerTrack(wxTimerEvent&)
 
 	if (m_lastStoredTP) {
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		m_prev_dist = geo::DistGreatCircle(nav.pos.lat(), nav.pos.lon(), m_lastStoredTP->latitude(),
-										   m_lastStoredTP->longitude());
+		m_prev_dist = geo::DistGreatCircle(nav.pos, m_lastStoredTP->get_position());
 	} else {
 		m_prev_dist = 999.0;
 	}
@@ -306,9 +304,8 @@ void Track::AddPointNow(bool do_add_point)
 				// one (the next to last) point can possibly be eliminated. Here we reduce the
 				// allowed XTE as a function of leg length. (Half the XTE for very short legs).
 				if (GetnPoints() > 2) {
-					double dist = geo::DistGreatCircle(
-						m_fixedTP->latitude(), m_fixedTP->longitude(), m_lastStoredTP->latitude(),
-						m_lastStoredTP->longitude());
+					double dist = geo::DistGreatCircle(m_fixedTP->get_position(),
+													   m_lastStoredTP->get_position());
 					double xte = GetXTE(m_fixedTP, m_lastStoredTP, m_removeTP);
 					if (xte < m_allowedMaxXTE / wxMax(1.0, 2.0 - dist * 2.0)) {
 						pRoutePointList->pop_back();
@@ -479,19 +476,16 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 		double delta_hdg = 0.0;
 		back_ic = next_ic;
 
-		geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), pWP_src->latitude(),
-									 pWP_src->longitude(), &delta_hdg, &delta_dist);
+		geo::DistanceBearingMercator(prp->get_position(), pWP_src->get_position(), &delta_hdg,
+									 &delta_dist);
 
 		if ((delta_dist > (leg_speed * 6.0)) && !prp_OK) {
 			int delta_inserts = floor(delta_dist / (leg_speed * 4.0));
 			delta_dist = delta_dist / (delta_inserts + 1);
-			double tlat = 0.0;
-			double tlon = 0.0;
 
 			while (delta_inserts--) {
-				geo::ll_gc_ll(pWP_src->latitude(), pWP_src->longitude(), delta_hdg, delta_dist,
-							  &tlat, &tlon);
-				pWP_dst = new RoutePoint(geo::Position(tlat, tlon), icon, _T(""));
+				geo::Position t = geo::ll_gc_ll(pWP_src->get_position(), delta_hdg, delta_dist);
+				pWP_dst = new RoutePoint(t, icon, _T(""));
 				route->AddPoint(pWP_dst);
 				pWP_dst->m_bShowName = false;
 				pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
@@ -547,8 +541,8 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 			prp_OK = prp;
 		}
 
-		geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), pWP_src->latitude(),
-									 pWP_src->longitude(), NULL, &delta_dist);
+		geo::DistanceBearingMercator(prp->get_position(), pWP_src->get_position(), NULL,
+									 &delta_dist);
 
 		if (!((delta_dist > (track.TrackDeltaDistance)) && !prp_OK)) {
 			++prpnode;
@@ -648,11 +642,11 @@ double Track::GetXTE(const geo::Position& fm1, const geo::Position& fm2, const g
 	double dist1;
 	double brg2;
 	double dist2;
-	geo::DistanceBearingMercator(to.lat(), to.lon(), fm1.lat(), fm1.lon(), &brg1, &dist1);
+	geo::DistanceBearingMercator(to, fm1, &brg1, &dist1);
 	w.x = dist1 * sin(brg1 * M_PI / 180.0);
 	w.y = dist1 * cos(brg1 * M_PI / 180.0);
 
-	geo::DistanceBearingMercator(to.lat(), to.lon(), fm2.lat(), fm2.lon(), &brg2, &dist2);
+	geo::DistanceBearingMercator(to, fm2, &brg2, &dist2);
 	v.x = dist2 * sin(brg2 * M_PI / 180.0);
 	v.y = dist2 * cos(brg2 * M_PI / 180.0);
 

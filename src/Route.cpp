@@ -289,8 +289,7 @@ void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_de
 
 	if (m_pLastAddedPoint)
 		pNewPoint->m_seg_len
-			= geo::DistGreatCircle(m_pLastAddedPoint->latitude(), m_pLastAddedPoint->longitude(),
-								   pNewPoint->latitude(), pNewPoint->longitude());
+			= geo::DistGreatCircle(m_pLastAddedPoint->get_position(), pNewPoint->get_position());
 
 	m_route_length += pNewPoint->m_seg_len;
 
@@ -828,7 +827,7 @@ void Route::UpdateSegmentDistances(double planspeed)
 
 			double brg;
 			double dd;
-			geo::DistanceBearingMercator(slat1, slon1, slat2, slon2, &brg, &dd);
+			geo::DistanceBearingMercator(geo::Position(slat1, slon1), geo::Position(slat2, slon2), &brg, &dd);
 
 			// And store in Point 2
 			prp->m_seg_len = dd;

@@ -1031,7 +1031,7 @@ void RouteProp::update_route_properties()
 			else
 				leg_speed = m_planspeed;
 			if (m_bStartNow) {
-				geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), slat, slon, &brg,
+				geo::DistanceBearingMercator(prp->get_position(), geo::Position(slat, slon), &brg,
 											 &leg_dist);
 				if (i == 0)
 					joining_time
@@ -1045,7 +1045,7 @@ void RouteProp::update_route_properties()
 				leg_speed = m_planspeed;
 		}
 
-		geo::DistanceBearingMercator(prp->latitude(), prp->longitude(), slat, slon, &brg, &leg_dist);
+		geo::DistanceBearingMercator(prp->get_position(), geo::Position(slat, slon), &brg, &leg_dist);
 
 		// calculation of course at current WayPoint.
 		double course = 10;
@@ -1053,8 +1053,8 @@ void RouteProp::update_route_properties()
 		RoutePointList::iterator next_node = node + 1;
 		RoutePoint* _next_prp = (next_node != m_pRoute->pRoutePointList->end()) ? *next_node : NULL;
 		if (_next_prp) {
-			geo::DistanceBearingMercator(_next_prp->latitude(), _next_prp->longitude(),
-										 prp->latitude(), prp->longitude(), &course, &tmp_leg_dist);
+			geo::DistanceBearingMercator(_next_prp->get_position(), prp->get_position(), &course,
+										 &tmp_leg_dist);
 		} else {
 			course = 0.0;
 			tmp_leg_dist = 0.0;

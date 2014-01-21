@@ -1372,12 +1372,10 @@ void ChartBaseBSB::SetVPRasterParms(const ViewPort& vpt)
 		m_lon_datum_adjust = (-m_dtm_lon) / 3600.0;
 		m_lat_datum_adjust = (-m_dtm_lat) / 3600.0;
 	} else {
-		double to_lat;
-		double to_lon;
-		geo::MolodenskyTransform(vpt.latitude(), vpt.longitude(), &to_lat, &to_lon, m_datum_index,
-								 DATUM_INDEX_WGS84);
-		m_lon_datum_adjust = -(to_lon - vpt.longitude());
-		m_lat_datum_adjust = -(to_lat - vpt.latitude());
+		geo::Position to;
+		geo::MolodenskyTransform(vpt.get_position(), to, m_datum_index, DATUM_INDEX_WGS84);
+		m_lat_datum_adjust = -(to.lat() - vpt.latitude());
+		m_lon_datum_adjust = -(to.lon() - vpt.longitude());
 		if (m_b_apply_dtm) {
 			m_lon_datum_adjust -= m_dtm_lon / 3600.0;
 			m_lat_datum_adjust -= m_dtm_lat / 3600.0;

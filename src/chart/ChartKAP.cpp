@@ -385,12 +385,14 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 			wxString token = tkz.GetNextToken();
 
 			token = tkz.GetNextToken();
-			if (token.ToDouble(&val))
-				m_dtm_lat = val;
+			if (token.ToDouble(&val)) {
+				m_dtm = geo::Position(val, m_dtm.lon());
+			}
 
 			token = tkz.GetNextToken();
-			if (token.ToDouble(&val))
-				m_dtm_lon = val;
+			if (token.ToDouble(&val)) {
+				m_dtm = geo::Position(m_dtm.lat(), val);
+			}
 		} else if (!strncmp(buffer, "PLY", 3)) {
 			int i;
 			float ltp;
@@ -506,8 +508,8 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 	// should use molodensky transform, and then consider SHOM Ver 1.1 charts
 
 	for (int u = 0; u < cnPlypoint; u++) {
-		ppp->lnp += m_dtm_lon / 3600;
-		ppp->ltp += m_dtm_lat / 3600;
+		ppp->lnp += m_dtm.lon() / 3600.0;
+		ppp->ltp += m_dtm.lat() / 3600.0;
 		ppp++;
 	}
 

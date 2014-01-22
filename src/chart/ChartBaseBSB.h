@@ -194,8 +194,7 @@ protected:
 	bool m_b_apply_dtm;
 
 	int m_datum_index;
-	double m_dtm_lat;
-	double m_dtm_lon;
+	geo::Position m_dtm;
 
 	wxRect cache_rect;
 	wxRect cache_rect_scaled;

@@ -163,7 +163,7 @@ InitReturn ChartGEO::Init(const wxString& name, ChartInitFlag init_flags)
 				int i = tkz.GetPosition();
 				float lto;
 				sscanf(&buffer[i], "%f,", &lto);
-				m_dtm_lat = lto;
+				m_dtm = geo::Position(lto, m_dtm.lon());
 			}
 		} else if (!strncmp(buffer, "Longitude Offset", 16)) {
 			wxStringTokenizer tkz(str_buf, _T("="));
@@ -172,7 +172,7 @@ InitReturn ChartGEO::Init(const wxString& name, ChartInitFlag init_flags)
 				int i = tkz.GetPosition();
 				float lno;
 				sscanf(&buffer[i], "%f,", &lno);
-				m_dtm_lon = lno;
+				m_dtm = geo::Position(m_dtm.lat(), lno);
 			}
 		} else if (!strncmp(buffer, "Datum", 5)) {
 			wxStringTokenizer tkz(str_buf, _T("="));

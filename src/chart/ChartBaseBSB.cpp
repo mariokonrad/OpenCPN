@@ -143,8 +143,7 @@ ChartBaseBSB::ChartBaseBSB()
 
 	m_datum_str = _T("WGS84"); // assume until proven otherwise
 
-	m_dtm_lat = 0.0;
-	m_dtm_lon = 0.0;
+	m_dtm = geo::Position(0.0, 0.0);
 
 	m_bIDLcross = false;
 
@@ -523,8 +522,8 @@ InitReturn ChartBaseBSB::PostInit(void)
 		return INIT_FAIL_REMOVE;
 
 	// Establish defaults, may be overridden later
-	m_lon_datum_adjust = (-m_dtm_lon) / 3600.0;
-	m_lat_datum_adjust = (-m_dtm_lat) / 3600.0;
+	m_lon_datum_adjust = -m_dtm.lon() / 3600.0;
+	m_lat_datum_adjust = -m_dtm.lat() / 3600.0;
 
 	bReadyToRender = true;
 	return INIT_OK;
@@ -1359,16 +1358,16 @@ void ChartBaseBSB::SetVPRasterParms(const ViewPort& vpt)
 		m_lon_datum_adjust = 0.0;
 		m_lat_datum_adjust = 0.0;
 	} else if (m_datum_index == DATUM_INDEX_UNKNOWN) {
-		m_lon_datum_adjust = (-m_dtm_lon) / 3600.0;
-		m_lat_datum_adjust = (-m_dtm_lat) / 3600.0;
+		m_lon_datum_adjust = -m_dtm.lon() / 3600.0;
+		m_lat_datum_adjust = -m_dtm.lat() / 3600.0;
 	} else {
 		geo::Position to;
 		geo::MolodenskyTransform(vpt.get_position(), to, m_datum_index, DATUM_INDEX_WGS84);
 		m_lat_datum_adjust = -(to.lat() - vpt.latitude());
 		m_lon_datum_adjust = -(to.lon() - vpt.longitude());
 		if (m_b_apply_dtm) {
-			m_lon_datum_adjust -= m_dtm_lon / 3600.0;
-			m_lat_datum_adjust -= m_dtm_lat / 3600.0;
+			m_lon_datum_adjust -= m_dtm.lon() / 3600.0;
+			m_lat_datum_adjust -= m_dtm.lat() / 3600.0;
 		}
 	}
 

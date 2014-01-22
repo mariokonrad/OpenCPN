@@ -1022,9 +1022,9 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 	if (scalefactor < 1.0) {
 		double pixx, pixy;
 		if (b_plugin)
-			pPlugInWrapper->latlong_to_chartpix(vp.latitude(), vp.longitude(), pixx, pixy);
+			pPlugInWrapper->latlong_to_chartpix(vp.get_position(), pixx, pixy);
 		else
-			pBSBChart->latlong_to_chartpix(vp.latitude(), vp.longitude(), pixx, pixy);
+			pBSBChart->latlong_to_chartpix(vp.get_position(), pixx, pixy);
 
 		biasy = pixy - spy;
 		biasx = pixx - spx;

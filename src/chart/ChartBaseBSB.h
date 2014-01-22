@@ -134,8 +134,8 @@ public:
 	int GetSize_X() const;
 	int GetSize_Y() const;
 
-	void latlong_to_chartpix(double lat, double lon, double& pixx, double& pixy);
-	void chartpix_to_latlong(double pixx, double pixy, double* plat, double* plon);
+	void latlong_to_chartpix(const geo::Position& pos, double& pixx, double& pixy);
+	void chartpix_to_latlong(double pixx, double pixy, geo::Position& pos);
 
 protected:
 	wxRect GetSourceRect() const;

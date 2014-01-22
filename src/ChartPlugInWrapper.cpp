@@ -374,10 +374,10 @@ int ChartPlugInWrapper::GetSize_Y() const
 		return 1;
 }
 
-void ChartPlugInWrapper::latlong_to_chartpix(double lat, double lon, double& pixx, double& pixy)
+void ChartPlugInWrapper::latlong_to_chartpix(const geo::Position& pos, double& pixx, double& pixy)
 {
 	if (m_ppicb)
-		m_ppicb->latlong_to_chartpix(lat, lon, pixx, pixy);
+		m_ppicb->latlong_to_chartpix(pos, pixx, pixy);
 }
 
 /* API 1.11  */

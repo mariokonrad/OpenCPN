@@ -2472,7 +2472,7 @@ int PlugInChartBase::GetSize_Y()
 	return 1;
 }
 
-void PlugInChartBase::latlong_to_chartpix(double, double, double &, double &)
+void PlugInChartBase::latlong_to_chartpix(const geo::Position&, double &, double &)
 {}
 
 // ----------------------------------------------------------------------------

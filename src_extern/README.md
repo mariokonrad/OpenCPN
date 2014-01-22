@@ -108,3 +108,19 @@ Notes:
 - Added a CMakeLists.txt file
 
 
+gmock-1.7.0
+-----------
+
+License: BSD (http://opensource.org/licenses/BSD-3-Clause)
+
+Homepage: https://code.google.com/p/googlemock/
+
+Download: https://code.google.com/p/googlemock/downloads/detail?name=gmock-1.7.0.zip
+
+Notess:
+- Only the fused source
+- Added custom\_main.cpp
+  - Supports output in CppUnit (XML) format in addition to the standard
+    behaviour (JUnit format).
+- Added a CMakeLists.txt file
+

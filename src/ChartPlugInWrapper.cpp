@@ -198,45 +198,44 @@ float* ChartPlugInWrapper::GetNoCOVRTableHead(int iTable)
 
 bool ChartPlugInWrapper::GetChartExtent(chart::Extent& ext) const
 {
-	if (m_ppicb) {
-		ExtentPI xpi;
-		if (m_ppicb->GetChartExtent(&xpi)) {
-			ext.NLAT = xpi.NLAT;
-			ext.SLAT = xpi.SLAT;
-			ext.ELON = xpi.ELON;
-			ext.WLON = xpi.WLON;
+	if (!m_ppicb)
+		return false;
 
-			return true;
-		} else
-			return false;
+	ExtentPI xpi;
+	if (m_ppicb->GetChartExtent(&xpi)) {
+		ext.NLAT = xpi.NLAT;
+		ext.SLAT = xpi.SLAT;
+		ext.ELON = xpi.ELON;
+		ext.WLON = xpi.WLON;
+
+		return true;
 	} else
 		return false;
 }
 
-ThumbData* ChartPlugInWrapper::GetThumbData(int tnx, int tny, float, float)
+ThumbData* ChartPlugInWrapper::GetThumbData(int tnx, int tny, const geo::Position& WXUNUSED(pos))
 {
-	if (m_ppicb) {
-
-		// Create the bitmap if needed, doing a deep copy from the Bitmap owned by the PlugIn
-		// Chart
-		if (!pThumbData->pDIBThumb) {
-			wxBitmap* pBMPOwnedByChart = m_ppicb->GetThumbnail(tnx, tny, m_global_color_scheme);
-			if (pBMPOwnedByChart) {
-				wxImage img = pBMPOwnedByChart->ConvertToImage();
-				pThumbData->pDIBThumb = new wxBitmap(img);
-			} else
-				pThumbData->pDIBThumb = NULL;
-		}
-
-		pThumbData->Thumb_Size_X = tnx;
-		pThumbData->Thumb_Size_Y = tny;
-
-		pThumbData->ShipX = 0;
-		pThumbData->ShipY = 0;
-
-		return pThumbData;
-	} else
+	if (!m_ppicb)
 		return NULL;
+
+	// Create the bitmap if needed, doing a deep copy from the Bitmap owned by the PlugIn
+	// Chart
+	if (!pThumbData->pDIBThumb) {
+		wxBitmap* pBMPOwnedByChart = m_ppicb->GetThumbnail(tnx, tny, m_global_color_scheme);
+		if (pBMPOwnedByChart) {
+			wxImage img = pBMPOwnedByChart->ConvertToImage();
+			pThumbData->pDIBThumb = new wxBitmap(img);
+		} else
+			pThumbData->pDIBThumb = NULL;
+	}
+
+	pThumbData->Thumb_Size_X = tnx;
+	pThumbData->Thumb_Size_Y = tny;
+
+	pThumbData->ShipX = 0;
+	pThumbData->ShipY = 0;
+
+	return pThumbData;
 }
 
 ThumbData* ChartPlugInWrapper::GetThumbData()

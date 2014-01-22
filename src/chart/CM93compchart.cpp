@@ -1387,7 +1387,12 @@ bool cm93compchart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 	return single_adjust;
 }
 
-ThumbData* cm93compchart::GetThumbData(int, int, float, float)
+ThumbData* cm93compchart::GetThumbData()
+{
+	return (ThumbData*)NULL;
+}
+
+ThumbData* cm93compchart::GetThumbData(int, int, const geo::Position& WXUNUSED(pos))
 {
 	return (ThumbData*)NULL;
 }

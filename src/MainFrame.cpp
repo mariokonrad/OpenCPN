@@ -3933,7 +3933,7 @@ void MainFrame::SetChartThumbnail(int index)
 		ChartBase *new_pThumbChart = ChartData->OpenChartFromStack( pCurrentStack, index );
 		if (new_pThumbChart) { // chart opened ok
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-			ThumbData *pTD = new_pThumbChart->GetThumbData(150, 150, nav.pos.lat(), nav.pos.lon());
+			ThumbData *pTD = new_pThumbChart->GetThumbData(150, 150, nav.pos);
 			if (pTD) {
 				pthumbwin->pThumbChart = new_pThumbChart;
 
@@ -3967,7 +3967,7 @@ void MainFrame::SetChartThumbnail(int index)
 		pthumbwin->pThumbChart = new_pThumbChart;
 		if (new_pThumbChart) {
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-			ThumbData * pTD = new_pThumbChart->GetThumbData(200, 200, nav.pos.lat(), nav.pos.lon());
+			ThumbData * pTD = new_pThumbChart->GetThumbData(200, 200, nav.pos);
 			if (pTD) {
 				pthumbwin->Resize();
 				pthumbwin->Show(true);

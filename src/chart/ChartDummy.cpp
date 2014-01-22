@@ -76,8 +76,8 @@ void ChartDummy::SetColorScheme(global::ColorScheme WXUNUSED(cs), bool WXUNUSED(
 {
 }
 
-ThumbData* ChartDummy::GetThumbData(int WXUNUSED(tnx), int WXUNUSED(tny), float WXUNUSED(lat),
-									float WXUNUSED(lon))
+ThumbData* ChartDummy::GetThumbData(int WXUNUSED(tnx), int WXUNUSED(tny),
+									const geo::Position& WXUNUSED(pos))
 {
 	return NULL;
 }

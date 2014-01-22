@@ -829,7 +829,7 @@ wxBitmap* ChartBaseBSB::CreateThumbnail(int tnx, int tny, global::ColorScheme cs
 //          Creating the thumbnail bitmap as required
 //-------------------------------------------------------------------------------------------------
 
-ThumbData* ChartBaseBSB::GetThumbData(int tnx, int tny, float lat, float lon)
+ThumbData* ChartBaseBSB::GetThumbData(int tnx, int tny, const geo::Position& pos)
 {
 	// Create the bitmap if needed
 	if (!pThumbData->pDIBThumb)
@@ -855,7 +855,7 @@ ThumbData* ChartBaseBSB::GetThumbData(int tnx, int tny, float lat, float lon)
 	wxRect trex = Rsrc;
 	Rsrc.x = 0;
 	Rsrc.y = 0;
-	latlong_to_pix_vp(lat, lon, pixx, pixy, tvp);
+	latlong_to_pix_vp(pos.lat(), pos.lon(), pixx, pixy, tvp);
 	Rsrc = trex;
 
 	pThumbData->ShipX = pixx;

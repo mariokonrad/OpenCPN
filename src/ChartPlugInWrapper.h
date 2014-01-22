@@ -41,7 +41,7 @@ class ChartPlugInWrapper : public chart::ChartBase
 
 		virtual chart::InitReturn Init(const wxString& name, chart::ChartInitFlag init_flags);
 
-		virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
+		virtual ThumbData *GetThumbData(int tnx, int tny, const geo::Position& pos);
 		virtual ThumbData *GetThumbData();
 		virtual bool UpdateThumbData(const geo::Position& pos);
 

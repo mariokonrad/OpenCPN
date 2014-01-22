@@ -93,7 +93,7 @@ public:
 	virtual void Activate(void);
 	virtual void Deactivate(void);
 
-	virtual ThumbData* GetThumbData(int tnx, int tny, float lat, float lon) = 0;
+	virtual ThumbData* GetThumbData(int tnx, int tny, const geo::Position& pos) = 0;
 	virtual ThumbData* GetThumbData() = 0;
 	virtual bool UpdateThumbData(const geo::Position& pos) = 0;
 	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const = 0;

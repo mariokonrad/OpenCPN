@@ -35,7 +35,7 @@ public:
 	virtual ~ChartDummy();
 
 	virtual InitReturn Init(const wxString& name, ChartInitFlag init_flags);
-	virtual ThumbData* GetThumbData(int tnx, int tny, float lat, float lon);
+	virtual ThumbData* GetThumbData(int tnx, int tny, const geo::Position& pos);
 	virtual ThumbData* GetThumbData();
 	virtual bool UpdateThumbData(const geo::Position& pos);
 	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;

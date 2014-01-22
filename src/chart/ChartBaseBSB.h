@@ -97,7 +97,7 @@ public:
 	ChartBaseBSB();
 	virtual ~ChartBaseBSB();
 
-	virtual ThumbData* GetThumbData(int tnx, int tny, float lat, float lon);
+	virtual ThumbData* GetThumbData(int tnx, int tny, const geo::Position& pos);
 	virtual ThumbData* GetThumbData();
 	virtual bool UpdateThumbData(const geo::Position& pos);
 

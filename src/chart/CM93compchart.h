@@ -58,11 +58,8 @@ public:
 	void SetVPParms(const ViewPort& vpt);
 	void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);
 
-	ThumbData* GetThumbData(int tnx, int tny, float lat, float lon);
-	ThumbData* GetThumbData()
-	{
-		return (ThumbData*)NULL;
-	}
+	ThumbData* GetThumbData(int tnx, int tny, const geo::Position& pos);
+	ThumbData* GetThumbData();
 
 	bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
 	bool RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, const OCPNRegion& Region);

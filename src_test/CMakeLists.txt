@@ -1,0 +1,28 @@
+
+message(STATUS "CMAKE_BUILD_TYPE       : ${CMAKE_BUILD_TYPE}")
+message(STATUS "CMAKE_C_COMPILER       : ${CMAKE_C_COMPILER}")
+message(STATUS "CMAKE_C_FLAGS          : ${CMAKE_C_FLAGS}")
+message(STATUS "CMAKE_C_FLAGS_DEBUG    : ${CMAKE_C_FLAGS_DEBUG}")
+message(STATUS "CMAKE_C_FLAGS_RELEASE  : ${CMAKE_C_FLAGS_RELEASE}")
+message(STATUS "CMAKE_CXX_COMPILER     : ${CMAKE_CXX_COMPILER}")
+message(STATUS "CMAKE_CXX_FLAGS        : ${CMAKE_CXX_FLAGS}")
+message(STATUS "CMAKE_CXX_FLAGS_DEBUG  : ${CMAKE_CXX_FLAGS_DEBUG}")
+message(STATUS "CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
+
+file(GLOB_RECURSE TEST_SRC . "*.cpp")
+
+message(STATUS "Tests found: ${TEST_SRC}")
+
+# TODO: instead of compile/link to individual files, the tests should
+#       link against libraries (for example: libgeo instead of geo/Position)
+#   OR: the built files should be built with coverage
+
+add_executable(testrunner
+	${TEST_SRC}
+	${CMAKE_SOURCE_DIR}/src/geo/Position.cpp
+	)
+
+target_link_libraries(testrunner
+	gmock
+	)
+

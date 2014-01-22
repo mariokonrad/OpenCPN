@@ -58,5 +58,10 @@ bool Position::operator==(const Position& other) const
 		;
 }
 
+bool Position::operator!=(const Position& other) const
+{
+	return !(*this == other);
+}
+
 }
 

@@ -1653,6 +1653,8 @@ IF(NOT SKIP_PLUGINS)
 	add_subdirectory(plugins)
 ENDIF(NOT SKIP_PLUGINS)
 
+add_subdirectory(src_test)
+
 # build a CPack driven installer package
 SET(CPACK_PACKAGE_NAME "OpenCPN")
 SET(CPACK_PACKAGE_VENDOR "opencpn.org")

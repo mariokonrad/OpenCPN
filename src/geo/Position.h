@@ -26,6 +26,8 @@
 
 namespace geo {
 
+/// Represents a geographic position, specified by latitude/longitude.
+/// All values are in degrees.
 class Position
 {
 public:
@@ -37,6 +39,7 @@ public:
 	void normalize_lon();
 
 	bool operator==(const Position&) const;
+	bool operator!=(const Position&) const;
 
 private:
 	double latitude;

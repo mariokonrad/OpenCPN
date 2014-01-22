@@ -2,7 +2,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-#if defined(__LINUX__)
+#if defined(__linux__)
 	#include <getopt.h>
 	#include <string>
 	#include <exception>
@@ -12,7 +12,7 @@
 #endif
 
 
-#if defined(__LINUX__) // do not care about windows at the moment (affects only CppUnit output)
+#if defined(__linux__) // do not care about windows at the moment (affects only CppUnit output)
 
 // FIXME: this should be moved to its own file, no preprocessor stuff
 
@@ -238,7 +238,7 @@ GTEST_API_ int main(int argc, char** argv)
 {
 	testing::InitGoogleMock(&argc, argv);
 
-#if defined(__LINUX__)
+#if defined(__linux__)
 	// argc/argv used by GoogleTest/-Mock were consumed
 	params::Options options = params::parse(argc, argv);
 
@@ -252,7 +252,7 @@ GTEST_API_ int main(int argc, char** argv)
 
 	int rc = RUN_ALL_TESTS();
 
-#if defined(__LINUX__)
+#if defined(__linux__)
 	if (options.cppunit_output) {
 		if (options.cppunit_output_filename.empty()) {
 			printer->dump(std::cerr);

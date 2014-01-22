@@ -21,82 +21,67 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __WXBOUNDINGBOX_H__
-#define __WXBOUNDINGBOX_H__
-
-#include <wx/geometry.h>
-
-class wxTransformMatrix;
-class wxPoint2DDouble;
+#ifndef __GEO__BOUNDINGBOX__H__
+#define __GEO__BOUNDINGBOX__H__
 
 namespace geo {
 
-//Purpose   The BoundingBox class stores one BoundingBox.
-//The BoundingBox is defined by two coordiates,
-//a upperleft coordinate and a lowerright coordinate.
+// The BoundingBox class stores one BoundingBox.
+// The BoundingBox is defined by two coordiates,
+// a upperleft coordinate and a lowerright coordinate.
 class BoundingBox
 {
-	public:
-		enum OVERLAP
-		{
-			_IN,
-			_ON,
-			_OUT
-		};
+public:
+	enum OVERLAP {
+		_IN,
+		_ON,
+		_OUT
+	};
 
-	public:
-		BoundingBox();
-		BoundingBox(const BoundingBox&);
-		BoundingBox(const wxPoint2DDouble&);
-		BoundingBox(double xmin, double ymin, double xmax, double ymax);
-		virtual ~BoundingBox();
+public:
+	BoundingBox();
+	BoundingBox(const BoundingBox&);
+	BoundingBox(double xmin, double ymin, double xmax, double ymax);
+	virtual ~BoundingBox();
 
-		bool And(BoundingBox*, double Marge = 0);
+	bool And(const BoundingBox&, double Marge = 0.0);
 
-		void EnLarge(const double Marge);
-		void Shrink(const double Marge);
+	void EnLarge(const double Marge);
+	void Shrink(const double Marge);
 
-		void Expand(const wxPoint2DDouble& , const wxPoint2DDouble&);
-		void Expand(const wxPoint2DDouble&);
-		void Expand(double x,double y);
-		void Expand(const BoundingBox& bbox);
+	void Expand(double x, double y);
+	void Expand(const BoundingBox& bbox);
 
-		OVERLAP Intersect(BoundingBox &, double Marge = 0) const;
-		bool LineIntersect(const wxPoint2DDouble & begin, const wxPoint2DDouble & end) const;
-		bool PointInBox(const wxPoint2DDouble &, double Marge = 0) const;
-		virtual bool PointInBox(double, double, double Marge = 0) const;
+	OVERLAP Intersect(BoundingBox&, double Marge = 0) const;
+	bool LineIntersect(double x0, double y0, double x1, double y1) const;
+	virtual bool PointInBox(double x, double y, double Marge = 0) const;
 
-		void Reset();
+	void Reset();
 
-		void Translate( wxPoint2DDouble& );
-		void MapBbox( const wxTransformMatrix & matrix);
+	void Translate(double, double);
 
-		double GetWidth() const;
-		double GetHeight() const;
-		bool GetValid() const;
-		void SetValid(bool);
+	double GetWidth() const;
+	double GetHeight() const;
+	bool GetValid() const;
+	void SetValid(bool);
 
-		void SetBoundingBox(const wxPoint2DDouble& a_point);
+	void SetMin(double, double);
+	void SetMax(double, double);
+	double GetMinX() const;
+	double GetMinY() const;
+	double GetMaxX() const;
+	double GetMaxY() const;
 
-		void SetMin(double, double);
-		void SetMax(double, double);
-		wxPoint2DDouble GetMin() const;
-		wxPoint2DDouble GetMax() const;
-		double GetMinX() const;
-		double GetMinY() const;
-		double GetMaxX() const;
-		double GetMaxY() const;
+	BoundingBox& operator+(BoundingBox&);
+	BoundingBox& operator=(const BoundingBox&);
 
-		BoundingBox & operator+(BoundingBox &);
-		BoundingBox & operator=(const BoundingBox &);
-
-	protected:
-		//bounding box in world
-		double m_minx;
-		double m_miny;
-		double m_maxx;
-		double m_maxy;
-		bool m_validbbox;
+protected:
+	// bounding box in world
+	double m_minx;
+	double m_miny;
+	double m_maxx;
+	double m_maxy;
+	bool m_validbbox;
 };
 
 }

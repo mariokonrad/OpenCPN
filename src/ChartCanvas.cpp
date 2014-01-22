@@ -2961,14 +2961,13 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	// Another draw test ,based on pixels, assuming the ship icon is a fixed nominal size
 	// and is just barely outside the viewport        ....
 	geo::BoundingBox bb_screen(0, 0, GetVP().pix_width, GetVP().pix_height);
-	if (bb_screen.PointInBox(lShipMidPoint, 20))
+	if (bb_screen.PointInBox(lShipMidPoint.x, lShipMidPoint.y, 20))
 		drawit++;
 
 	// And one more test to catch the case where COG line crosses the screen,
 	// but ownship and pred point are both off
 
-	if (GetVP().GetBBox().LineIntersect(wxPoint2DDouble(nav.pos.lon(), nav.pos.lat()),
-										wxPoint2DDouble(pred.lon(), pred.lat())))
+	if (GetVP().GetBBox().LineIntersect(nav.pos.lon(), nav.pos.lat(), pred.lon(), pred.lat()))
 		drawit++;
 
 	// Do the draw if either the ship or prediction is within the current VPoint
@@ -3748,8 +3747,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 	// And one more test to catch the case where target COG line crosses the screen,
 	// but the target itself and its pred point are both off-screen
-	if (GetVP().GetBBox().LineIntersect(wxPoint2DDouble(td->Lon, td->Lat),
-										wxPoint2DDouble(pred.lon(), pred.lat())))
+	if (GetVP().GetBBox().LineIntersect(td->Lon, td->Lat, pred.lon(), pred.lat()))
 		drawit++;
 
 	const global::GUI::View& view = global::OCPN::get().gui().view();
@@ -6042,7 +6040,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 								pos = geo::Position(sa->latitude, sa->longitude);
 
 								wxPoint target_point = GetCanvasPointPix(geo::Position(sa->latitude, sa->longitude));
-								bbox.Expand(target_point);
+								bbox.Expand(target_point.x, target_point.y);
 								if (sa->radius_m > 0.0)
 									bbox.EnLarge(sa->radius_m * vp_scale);
 								break;
@@ -6052,7 +6050,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 								for (int i = 0; i < 4; ++i) {
 									pos = geo::ll_gc_ll(pos, sa->angles[i], sa->dists_m[i] / 1852.0);
 									wxPoint target_point = GetCanvasPointPix(pos);
-									bbox.Expand(target_point);
+									bbox.Expand(target_point.x, target_point.y);
 								}
 							}
 						}
@@ -6475,7 +6473,7 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 
 								wxPoint target_point
 									= GetCanvasPointPix(geo::Position(sa->latitude, sa->longitude));
-								bbox.Expand(target_point);
+								bbox.Expand(target_point.x, target_point.y);
 								if (sa->radius_m > 0.0)
 									bbox.EnLarge(sa->radius_m * vp_scale);
 								break;
@@ -6485,7 +6483,7 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 								for (int i = 0; i < 4; ++i) {
 									pos = geo::ll_gc_ll(pos, sa->angles[i], sa->dists_m[i] / 1852.0);
 									wxPoint target_point = GetCanvasPointPix(pos);
-									bbox.Expand(target_point);
+									bbox.Expand(target_point.x, target_point.y);
 								}
 							}
 						}
@@ -7620,37 +7618,31 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 		!= geo::BoundingBox::_OUT) // chart is not outside of viewport
 		b_draw = true;
 
-	//  Does simple test fail, and current vp cross international dateline?
+	// Does simple test fail, and current vp cross international dateline?
 	if (!b_draw && ((vp.GetBBox().GetMinX() < -180.0) || (vp.GetBBox().GetMaxX() > 180.0))) {
 		//  If so, do an explicit test with alternate phasing
 		if (vp.GetBBox().GetMinX() < -180.0) {
-			wxPoint2DDouble p(-360.0, 0);
-			box.Translate(p);
-			if (vp.GetBBox().Intersect(box, 0)
-				!= geo::BoundingBox::_OUT) // chart is not outside of viewport
-			{
+			box.Translate(-360.0, 0.0);
+			if (vp.GetBBox().Intersect(box, 0) != geo::BoundingBox::_OUT) {
+				// chart is not outside of viewport
 				b_draw = true;
 				lon_bias = -360.;
 			}
 		} else {
-			wxPoint2DDouble p(360., 0);
-			box.Translate(p);
-			if (vp.GetBBox().Intersect(box, 0)
-				!= geo::BoundingBox::_OUT) // chart is not outside of viewport
-			{
+			box.Translate(360.0, 0.0);
+			if (vp.GetBBox().Intersect(box, 0) != geo::BoundingBox::_OUT) {
+				// chart is not outside of viewport
 				b_draw = true;
 				lon_bias = 360.;
 			}
 		}
 	}
 
-	//  Does simple test fail, and chart box cross international dateline?
+	// Does simple test fail, and chart box cross international dateline?
 	if (!b_draw && (box.GetMinX() < 180.0) && (box.GetMaxX() > 180.0)) {
-		wxPoint2DDouble p(-360., 0);
-		box.Translate(p);
-		if (vp.GetBBox().Intersect(box, 0)
-			!= geo::BoundingBox::_OUT) // chart is not outside of viewport
-		{
+		box.Translate(-360.0, 0.0);
+		if (vp.GetBBox().Intersect(box, 0) != geo::BoundingBox::_OUT) {
+			// chart is not outside of viewport
 			b_draw = true;
 			lon_bias = -360.;
 		}
@@ -9003,23 +8995,20 @@ void ChartCanvas::DrawAllRoutesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& 
 			if (b_run)
 				test_box.Expand(nav.pos.lon(), nav.pos.lat());
 
-			if (BltBBox.Intersect(test_box, 0)
-				!= geo::BoundingBox::_OUT) // Route is not wholly outside window
-			{
+			if (BltBBox.Intersect(test_box, 0) != geo::BoundingBox::_OUT) {
+				// Route is not wholly outside window
 				b_drawn = true;
 
 				if ((pRouteDraw != active_route) && (pRouteDraw != active_track))
 					pRouteDraw->Draw(dc, GetVP());
 			} else if (pRouteDraw->CrossesIDL()) {
-				wxPoint2DDouble xlate(-360.0, 0.0);
 				geo::BoundingBox test_box1 = pRouteDraw->RBBox;
-				test_box1.Translate(xlate);
+				test_box1.Translate(-360.0, 0.0);
 				if (b_run)
 					test_box1.Expand(nav.pos.lon(), nav.pos.lat());
 
-				if (BltBBox.Intersect(test_box1, 0)
-					!= geo::BoundingBox::_OUT) // Route is not wholly outside window
-				{
+				if (BltBBox.Intersect(test_box1, 0) != geo::BoundingBox::_OUT) {
+					// Route is not wholly outside window
 					b_drawn = true;
 					if ((pRouteDraw != active_route) && (pRouteDraw != active_track))
 						pRouteDraw->Draw(dc, GetVP());
@@ -9029,23 +9018,19 @@ void ChartCanvas::DrawAllRoutesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& 
 			// Need to quick check for the case where VP crosses IDL
 			if (!b_drawn) {
 				if ((BltBBox.GetMinX() < -180.0) && (BltBBox.GetMaxX() > -180.0)) {
-					wxPoint2DDouble xlate(-360.0, 0.0);
 					geo::BoundingBox test_box2 = pRouteDraw->RBBox;
-					test_box2.Translate(xlate);
-					if (BltBBox.Intersect(test_box2, 0)
-						!= geo::BoundingBox::_OUT) // Route is not wholly outside window
-					{
+					test_box2.Translate(-360.0, 0.0);
+					if (BltBBox.Intersect(test_box2, 0) != geo::BoundingBox::_OUT) {
+						// Route is not wholly outside window
 						b_drawn = true;
 						if ((pRouteDraw != active_route) && (pRouteDraw != active_track))
 							pRouteDraw->Draw(dc, GetVP());
 					}
 				} else if (!b_drawn && (BltBBox.GetMinX() < 180.0) && (BltBBox.GetMaxX() > 180.0)) {
-					wxPoint2DDouble xlate(360.0, 0.0);
 					geo::BoundingBox test_box3 = pRouteDraw->RBBox;
-					test_box3.Translate(xlate);
-					if (BltBBox.Intersect(test_box3, 0)
-						!= geo::BoundingBox::_OUT) // Route is not wholly outside window
-					{
+					test_box3.Translate(360.0, 0.0);
+					if (BltBBox.Intersect(test_box3, 0) != geo::BoundingBox::_OUT) {
+						// Route is not wholly outside window
 						b_drawn = true;
 						if ((pRouteDraw != active_route) && (pRouteDraw != active_track))
 							pRouteDraw->Draw(dc, GetVP());

@@ -570,8 +570,7 @@ OCPNRegion cm93compchart::GetValidScreenCanvasRegion(const ViewPort& VPoint,
 			// We can make a quick test based on the bbox of the M_COVR and the bbox of the
 			// ViewPort
 			BoundingBox rtwbb = pmcd->m_covr_bbox;
-			wxPoint2DDouble rtw(360.0, 0.0);
-			rtwbb.Translate(rtw);
+			rtwbb.Translate(360.0, 0.0);
 
 			if ((vp_positive.GetBBox().Intersect(pmcd->m_covr_bbox) == BoundingBox::_OUT)
 				&& (vp_positive.GetBBox().Intersect(rtwbb) == BoundingBox::_OUT))
@@ -591,15 +590,15 @@ OCPNRegion cm93compchart::GetValidScreenCanvasRegion(const ViewPort& VPoint,
 	return ret_region;
 }
 
-bool cm93compchart::RenderRegionViewOnGL(const wxGLContext &glc, const ViewPort& VPoint, const OCPNRegion &Region)
+bool cm93compchart::RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
+										 const OCPNRegion& Region)
 {
-	SetVPParms ( VPoint );
+	SetVPParms(VPoint);
 
-	if ( m_pOffsetDialog && m_pOffsetDialog->IsShown() )
-		m_pOffsetDialog->UpdateMCOVRList ( VPoint );
+	if (m_pOffsetDialog && m_pOffsetDialog->IsShown())
+		m_pOffsetDialog->UpdateMCOVRList(VPoint);
 
-	return DoRenderRegionViewOnGL ( glc, VPoint, Region );
-
+	return DoRenderRegionViewOnGL(glc, VPoint, Region);
 }
 
 bool cm93compchart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,

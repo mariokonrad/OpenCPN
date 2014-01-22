@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __LATLONGBOUNDINGBOX__H__
-#define __LATLONGBOUNDINGBOX__H__
+#ifndef __GEO__LATLONGBOUNDINGBOX__H__
+#define __GEO__LATLONGBOUNDINGBOX__H__
 
 #include "BoundingBox.h"
 

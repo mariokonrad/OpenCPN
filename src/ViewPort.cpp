@@ -286,8 +286,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		ViewPort vp_positive = *this;
 		while (vp_positive.vpBBox.GetMinX() < 0) {
 			vp_positive.set_position(geo::Position(vp_positive.latitude(), vp_positive.longitude() + 360.0));
-			wxPoint2DDouble t(360.0, 0.0);
-			vp_positive.vpBBox.Translate(t);
+			vp_positive.vpBBox.Translate(360.0, 0.0);
 		}
 
 		// Scan the points one-by-one, so that we can get min/max to make a bbox
@@ -313,9 +312,8 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		if (BoundingBox::_OUT == chart_box.Intersect((BoundingBox&)vp_positive.vpBBox)) {
 			if (BoundingBox::_OUT == chart_box.Intersect((BoundingBox&)vpBBox)) {
 				// try again with the chart translated 360
-				wxPoint2DDouble rtw(360., 0.);
 				BoundingBox trans_box = chart_box;
-				trans_box.Translate(rtw);
+				trans_box.Translate(360.0, 0.0);
 
 				if (BoundingBox::_OUT == trans_box.Intersect((BoundingBox&)vp_positive.vpBBox)) {
 					if (BoundingBox::_OUT == trans_box.Intersect((BoundingBox&)vpBBox)) {
@@ -345,8 +343,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 		// Create the intersection of the two bboxes
 		// Boxes must be same phase
 		while (chart_box.GetMinX() < 0) {
-			wxPoint2DDouble t(360.0, 0.0);
-			chart_box.Translate(t);
+			chart_box.Translate(360.0, 0.0);
 		}
 
 		double cb_minlon = wxMax(chart_box.GetMinX(), vp_positive.vpBBox.GetMinX());
@@ -610,10 +607,9 @@ geo::LatLonBoundingBox& ViewPort::GetBBox()
 
 void ViewPort::set_positive()
 {
-	wxPoint2DDouble t(360.0, 0.0);
 	while (GetBBox().GetMinX() < 0) {
 		center_point = geo::Position(center_point.lat(), center_point.lon() + 360.0);
-		GetBBox().Translate(t);
+		GetBBox().Translate(360.0, 0.0);
 	}
 }
 

@@ -864,7 +864,7 @@ ThumbData* ChartBaseBSB::GetThumbData(int tnx, int tny, float lat, float lon)
 	return pThumbData;
 }
 
-bool ChartBaseBSB::UpdateThumbData(double lat, double lon)
+bool ChartBaseBSB::UpdateThumbData(const geo::Position& pos)
 {
 	// Plot the supplied Lat/Lon on the thumbnail
 	// Return TRUE if the pixel location of ownship has changed
@@ -885,7 +885,7 @@ bool ChartBaseBSB::UpdateThumbData(double lat, double lon)
 	wxRect trex = Rsrc;
 	Rsrc.x = 0;
 	Rsrc.y = 0;
-	latlong_to_pix_vp(lat, lon, pixx_test, pixy_test, tvp);
+	latlong_to_pix_vp(pos.lat(), pos.lon(), pixx_test, pixy_test, tvp);
 	Rsrc = trex;
 
 	if ((pixx_test != pThumbData->ShipX) || (pixy_test != pThumbData->ShipY)) {

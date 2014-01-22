@@ -39,6 +39,7 @@ class wxGLContext;
 class wxMemoryDC;
 class ViewPort;
 class OCPNRegion;
+namespace geo { class Position; }
 
 namespace chart {
 
@@ -59,9 +60,9 @@ enum RenderTypeEnum
 enum InitReturn
 {
 	INIT_OK = 0,
-	INIT_FAIL_RETRY,        // Init failed, retry suggested
-	INIT_FAIL_REMOVE,       // Init failed, suggest remove from further use
-	INIT_FAIL_NOERROR       // Init failed, request no explicit error message
+	INIT_FAIL_RETRY,  // Init failed, retry suggested
+	INIT_FAIL_REMOVE, // Init failed, suggest remove from further use
+	INIT_FAIL_NOERROR // Init failed, request no explicit error message
 };
 
 struct Extent
@@ -94,7 +95,7 @@ public:
 
 	virtual ThumbData* GetThumbData(int tnx, int tny, float lat, float lon) = 0;
 	virtual ThumbData* GetThumbData() = 0;
-	virtual bool UpdateThumbData(double lat, double lon) = 0;
+	virtual bool UpdateThumbData(const geo::Position& pos) = 0;
 	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const = 0;
 	virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const = 0;
 	virtual bool GetChartExtent(Extent& ext) const = 0;

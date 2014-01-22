@@ -244,7 +244,7 @@ ThumbData* ChartPlugInWrapper::GetThumbData()
 	return pThumbData;
 }
 
-bool ChartPlugInWrapper::UpdateThumbData(double, double)
+bool ChartPlugInWrapper::UpdateThumbData(const geo::Position& WXUNUSED(pos))
 {
 	return true;
 }

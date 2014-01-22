@@ -82,7 +82,7 @@ ThumbData* ChartDummy::GetThumbData(int WXUNUSED(tnx), int WXUNUSED(tny), float 
 	return NULL;
 }
 
-bool ChartDummy::UpdateThumbData(double WXUNUSED(lat), double WXUNUSED(lon))
+bool ChartDummy::UpdateThumbData(const geo::Position& WXUNUSED(pos))
 {
 	return FALSE;
 }

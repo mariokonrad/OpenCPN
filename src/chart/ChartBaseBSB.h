@@ -99,7 +99,7 @@ public:
 
 	virtual ThumbData* GetThumbData(int tnx, int tny, float lat, float lon);
 	virtual ThumbData* GetThumbData();
-	virtual bool UpdateThumbData(double lat, double lon);
+	virtual bool UpdateThumbData(const geo::Position& pos);
 
 	int GetNativeScale() const;
 	double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;

@@ -4428,7 +4428,7 @@ update_finish:
 	//  Update the ownship position on thumbnail chart, if shown
 	if (pthumbwin && pthumbwin->IsShown()) {
 		if (pthumbwin->pThumbChart) {
-			if (pthumbwin->pThumbChart->UpdateThumbData(nav.pos.lat(), nav.pos.lon()))
+			if (pthumbwin->pThumbChart->UpdateThumbData(nav.pos))
 				pthumbwin->Refresh(TRUE);
 		}
 	}

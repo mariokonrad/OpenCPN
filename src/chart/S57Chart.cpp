@@ -1377,7 +1377,7 @@ ThumbData* s57chart::GetThumbData(int, int, float lat, float lon)
 	return pThumbData;
 }
 
-bool s57chart::UpdateThumbData(double lat, double lon)
+bool s57chart::UpdateThumbData(const geo::Position& pos)
 {
 	// Plot the passed lat/lon at the thumbnail bitmap scale
 	// Using simple linear algorithm.
@@ -1393,9 +1393,8 @@ bool s57chart::UpdateThumbData(double lat, double lon)
 
 		double thumb_view_scale_ppm = (S57_THUMB_SIZE / ext_max) / (1852 * 60);
 		double east, north;
-		geo::toSM(geo::Position(lat, lon),
-				  geo::Position((lat_top + lat_bot) / 2.0, (lon_left + lon_right) / 2.0), &east,
-				  &north);
+		geo::toSM(pos, geo::Position((lat_top + lat_bot) / 2.0, (lon_left + lon_right) / 2.0),
+				  &east, &north);
 
 		test_x = pThumbData->pDIBThumb->GetWidth() / 2 + (int)(east * thumb_view_scale_ppm);
 		test_y = pThumbData->pDIBThumb->GetHeight() / 2 - (int)(north * thumb_view_scale_ppm);

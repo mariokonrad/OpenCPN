@@ -27,14 +27,16 @@ function usage()
 	echo "   --increment  | -i  : build incrementally (no prior clean)"
 	echo "   --release    | -r  : build release"
 	echo "   --no-bulid         : prevent building"
+	echo "   --no-unittest      : prevent unit testing"
 	echo "   --no-install       : prevent installing"
 	echo "   --no-package       : prevent build packages"
 	echo ""
 	echo "Options for explicit execution:"
-	echo "   --prepare          : equivalent of 'cmake' (prepare, no build, no install, no packaging, not incremental)"
-	echo "   --make             : equivalent of 'make' (no prepare, build, no install, no packaging, incremental)"
-	echo "   --install          : equivalent of 'make install' (no prepare, no build, install, no packaging, incremental)"
-	echo "   --package          : equivalent of 'cpack' (no prepare, no build, no install, packaging, incremental)"
+	echo "   --prepare          : equivalent of 'cmake' (prepare, no build, no test, no install, no packaging, not incremental)"
+	echo "   --make             : equivalent of 'make' (no prepare, build, no test, no install, no packaging, incremental)"
+	echo "   --test             : equivalent of 'make unittest' (no prepare, no build, test, no install, no packaging, incremental)"
+	echo "   --install          : equivalent of 'make install' (no prepare, no build, no test, install, no packaging, incremental)"
+	echo "   --package          : equivalent of 'cpack' (no prepare, no build, no test, no install, packaging, incremental)"
 	echo ""
 	echo "Options for low level control:"
 	echo "   -j cores           : specify number of cores"
@@ -92,6 +94,7 @@ function exec_info()
 	echo "  info           : ${opt_info}"
 	echo "  prepare        : ${opt_prepare}"
 	echo "  build          : ${opt_build}"
+	echo "  unittest       : ${opt_unittest}"
 	echo "  install        : ${opt_install}"
 	echo "  create packages: ${opt_create_packages}"
 	echo "  cppcheck       : ${opt_cppcheck}"
@@ -134,6 +137,7 @@ function exec_prepare()
 	cd ${BUILD_DIR}
 
 	cmake \
+		-DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
 		-DPREFIX=${INSTALL_DIR} \
 		-DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
@@ -209,6 +213,20 @@ function exec_build()
 	cd ${CURRENT_DIR}
 }
 
+function exec_unittest()
+{
+	if [ ${opt_unittest} -eq 0 ] ; then
+		return
+	fi
+
+	check_build_dir
+	cd ${BUILD_DIR}
+
+	make unittest
+
+	cd ${CURRENT_DIR}
+}
+
 function exec_install()
 {
 	if [ ${opt_install} -eq 0 ] ; then
@@ -260,8 +278,12 @@ args=$(getopt \
 	--longopt "info" \
 	--longopt "index" \
 	--longopt "increment" \
+	--longopt "no-build" \
+	--longopt "no-unittest" \
 	--longopt "no-install" \
+	--longopt "no-package" \
 	--longopt "make" \
+	--longopt "test" \
 	--longopt "prepare" \
 	--longopt "install" \
 	--longopt "cppcheck" \
@@ -278,6 +300,7 @@ opt_verbose=0
 opt_info=0
 opt_prepare=1
 opt_build=1
+opt_unittest=1
 opt_install=1
 opt_create_packages=0
 opt_incremental=0
@@ -331,6 +354,9 @@ while [ $# -ne 0 ] ; do
 		--no-build)
 			opt_build=0
 			;;
+		--no-unittest)
+			opt_unittest=0
+			;;
 		--no-install)
 			opt_install=0
 			;;
@@ -341,6 +367,7 @@ while [ $# -ne 0 ] ; do
 			add_action "prepare"
 			opt_prepare=1
 			opt_build=0
+			opt_unittest=0
 			opt_install=0
 			opt_create_packages=0
 			opt_incremental=0
@@ -349,6 +376,16 @@ while [ $# -ne 0 ] ; do
 			add_action "make"
 			opt_prepare=0
 			opt_build=1
+			opt_unittest=0
+			opt_install=0
+			opt_create_packages=0
+			opt_incremental=1
+			;;
+		--test)
+			add_action "test"
+			opt_prepare=0
+			opt_build=0
+			opt_unittest=1
 			opt_install=0
 			opt_create_packages=0
 			opt_incremental=1
@@ -357,6 +394,7 @@ while [ $# -ne 0 ] ; do
 			add_action "install"
 			opt_prepare=0
 			opt_build=0
+			opt_unittest=0
 			opt_install=1
 			opt_create_packages=0
 			opt_incremental=1
@@ -365,6 +403,7 @@ while [ $# -ne 0 ] ; do
 			add_action "package"
 			opt_prepare=0
 			opt_build=0
+			opt_unittest=0
 			opt_install=0
 			opt_create_packages=1
 			opt_incremental=1
@@ -476,6 +515,7 @@ fi
 
 exec_prepare
 exec_build
+exec_unittest
 exec_install
 exec_packaging
 

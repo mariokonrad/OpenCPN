@@ -1653,6 +1653,16 @@ IF(NOT SKIP_PLUGINS)
 	add_subdirectory(plugins)
 ENDIF(NOT SKIP_PLUGINS)
 
+add_custom_target(unittest)
+macro(run_unittest unittest_target)
+	add_custom_target(${unittest_target}_runtest
+		COMMAND ${unittest_target}
+		DEPENDS ${unittest_target}
+		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+		)
+	add_dependencies(unittest ${unittest_target}_runtest)
+endmacro()
+
 add_subdirectory(src_test)
 
 # build a CPack driven installer package

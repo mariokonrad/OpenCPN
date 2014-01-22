@@ -266,9 +266,7 @@ protected:
 
 	int m_b_cdebug;
 
-	double m_proj_lat;
-	double m_proj_lon;
-
+	geo::Position m_proj;
 	ViewPort m_vp_render_last;
 };
 

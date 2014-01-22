@@ -460,18 +460,20 @@ InitReturn ChartKAP::Init(const wxString& name, ChartInitFlag init_flags)
 		bHaveEmbeddedGeoref = true;
 
 	// Set up the projection point according to the projection parameter
-	if (m_projection == PROJECTION_MERCATOR)
-		m_proj_lat = m_proj_parameter;
-	else if (m_projection == PROJECTION_TRANSVERSE_MERCATOR)
-		m_proj_lon = m_proj_parameter;
-	else if (m_projection == PROJECTION_POLYCONIC)
-		m_proj_lon = m_proj_parameter;
+	if (m_projection == PROJECTION_MERCATOR) {
+		m_proj = geo::Position(m_proj_parameter, m_proj.lon());
+	} else if (m_projection == PROJECTION_TRANSVERSE_MERCATOR) {
+		m_proj = geo::Position(m_proj.lat(), m_proj_parameter);
+	} else if (m_projection == PROJECTION_POLYCONIC) {
+		m_proj = geo::Position(m_proj.lat(), m_proj_parameter);
+	}
 
 	// We have seen improperly coded charts, with non-sense value of PP parameter
 	// FS#1251
 	// Check and override if necessary
-	if (m_proj_lat > 82.0 || m_proj_lat < -82.0)
-		m_proj_lat = 0.0;
+	if (m_proj.lat() > 82.0 || m_proj.lat() < -82.0) {
+		m_proj = geo::Position(0.0, m_proj.lon());
+	}
 
 	// Validate some of the header data
 	if ((Size_X == 0) || (Size_Y == 0)) {

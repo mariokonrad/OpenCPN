@@ -33,7 +33,7 @@ function usage()
 	echo ""
 	echo "Options for explicit execution:"
 	echo "   --prepare          : equivalent of 'cmake' (prepare, no build, no test, no install, no packaging, not incremental)"
-	echo "   --make             : equivalent of 'make' (no prepare, build, no test, no install, no packaging, incremental)"
+	echo "   --make             : equivalent of 'make' (no prepare, build, test, no install, no packaging, incremental)"
 	echo "   --test             : equivalent of 'make unittest' (no prepare, no build, test, no install, no packaging, incremental)"
 	echo "   --install          : equivalent of 'make install' (no prepare, no build, no test, install, no packaging, incremental)"
 	echo "   --package          : equivalent of 'cpack' (no prepare, no build, no test, no install, packaging, incremental)"
@@ -376,7 +376,7 @@ while [ $# -ne 0 ] ; do
 			add_action "make"
 			opt_prepare=0
 			opt_build=1
-			opt_unittest=0
+			opt_unittest=1
 			opt_install=0
 			opt_create_packages=0
 			opt_incremental=1

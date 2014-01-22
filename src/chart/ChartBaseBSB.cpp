@@ -150,8 +150,9 @@ ChartBaseBSB::ChartBaseBSB()
 
 	m_dx = 0.0;
 	m_dy = 0.0;
-	m_proj_lat = 0.0;
-	m_proj_lon = 0.0;
+
+	m_proj = geo::Position(0.0, 0.0);
+
 	m_proj_parameter = 0.0;
 	m_b_SHOM = false;
 	m_b_apply_dtm = true;
@@ -931,7 +932,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double easting, northing;
 			geo::toTM(geo::Position(vp.latitude() + m_lat_datum_adjust,
 									vp.longitude() + m_lon_datum_adjust),
-					  geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+					  m_proj, &easting, &northing);
 			double xc = polytrans(cPoints.wpx, easting, northing);
 			double yc = polytrans(cPoints.wpy, easting, northing);
 
@@ -944,7 +945,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double north = polytrans(cPoints.pwy, px, py);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromTM(east, north, geo::Position(m_proj_lat, m_proj_lon));
+			geo::Position t = geo::fromTM(east, north, m_proj);
 
 			// Datum adjustments.....
 			slat = t.lat() - m_lat_datum_adjust;
@@ -958,7 +959,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double easting, northing;
 			geo::toSM_ECC(geo::Position(vp.latitude() + m_lat_datum_adjust,
 										vp.longitude() + m_lon_datum_adjust),
-						  geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+						  m_proj, &easting, &northing);
 			double xc = polytrans(cPoints.wpx, easting, northing);
 			double yc = polytrans(cPoints.wpy, easting, northing);
 
@@ -971,7 +972,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double north = polytrans(cPoints.pwy, px, py);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromSM_ECC(east, north, geo::Position(m_proj_lat, m_proj_lon));
+			geo::Position t = geo::fromSM_ECC(east, north, m_proj);
 
 			// Make Datum adjustments.....
 			slat = t.lat() - m_lat_datum_adjust;
@@ -985,7 +986,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double easting, northing;
 			geo::toPOLY(geo::Position(vp.latitude() + m_lat_datum_adjust,
 									  vp.longitude() + m_lon_datum_adjust),
-						geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+						m_proj, &easting, &northing);
 			double xc = polytrans(cPoints.wpx, easting, northing);
 			double yc = polytrans(cPoints.wpy, easting, northing);
 
@@ -998,7 +999,7 @@ int ChartBaseBSB::vp_pix_to_latlong(const ViewPort& vp, int pixx, int pixy, doub
 			double north = polytrans(cPoints.pwy, px, py);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromPOLY(east, north, geo::Position(m_proj_lat, m_proj_lon));
+			geo::Position t = geo::fromPOLY(east, north, m_proj);
 
 			// Make Datum adjustments.....
 			slat = t.lat() - m_lat_datum_adjust;
@@ -1072,7 +1073,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 			geo::Position a(lat + m_lat_datum_adjust, lon + m_lon_datum_adjust);
 
 			// Get e/n from TM Projection
-			geo::toTM(a, geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+			geo::toTM(a, m_proj, &easting, &northing);
 
 			// Apply poly solution to target point
 			double xd = polytrans(cPoints.wpx, easting, northing);
@@ -1081,7 +1082,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 			// Apply poly solution to vp center point
 			geo::toTM(geo::Position(vp.latitude() + m_lat_datum_adjust,
 									vp.longitude() + m_lon_datum_adjust),
-					  geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+					  m_proj, &easting, &northing);
 			double xc = polytrans(cPoints.wpx, easting, northing);
 			double yc = polytrans(cPoints.wpy, easting, northing);
 
@@ -1109,8 +1110,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 				if (xlon < 0.0)
 					xlon += 360.0;
 			}
-			geo::toSM_ECC(geo::Position(alat, xlon), geo::Position(m_proj_lat, m_proj_lon),
-						  &easting, &northing);
+			geo::toSM_ECC(geo::Position(alat, xlon), m_proj, &easting, &northing);
 
 			// Apply poly solution to target point
 			double xd = polytrans(cPoints.wpx, easting, northing);
@@ -1125,7 +1125,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 
 			geo::toSM_ECC(
 				geo::Position(vp.latitude() + m_lat_datum_adjust, xlonc + m_lon_datum_adjust),
-				geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+				m_proj, &easting, &northing);
 			double xc = polytrans(cPoints.wpx, easting, northing);
 			double yc = polytrans(cPoints.wpy, easting, northing);
 
@@ -1153,8 +1153,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 				if (xlon < 0.0)
 					xlon += 360.0;
 			}
-			geo::toPOLY(geo::Position(alat, xlon), geo::Position(m_proj_lat, m_proj_lon), &easting,
-						&northing);
+			geo::toPOLY(geo::Position(alat, xlon), m_proj, &easting, &northing);
 
 			// Apply poly solution to target point
 			double xd = polytrans(cPoints.wpx, easting, northing);
@@ -1169,7 +1168,7 @@ int ChartBaseBSB::latlong_to_pix_vp(double lat, double lon, int& pixx, int& pixy
 
 			geo::toPOLY(
 				geo::Position(vp.latitude() + m_lat_datum_adjust, xlonc + m_lon_datum_adjust),
-				geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+				m_proj, &easting, &northing);
 			double xc = polytrans(cPoints.wpx, easting, northing);
 			double yc = polytrans(cPoints.wpy, easting, northing);
 
@@ -1229,7 +1228,7 @@ void ChartBaseBSB::latlong_to_chartpix(double lat, double lon, double& pixx, dou
 			geo::Position a(lat + m_lat_datum_adjust, lon + m_lon_datum_adjust);
 
 			// Get e/n from TM Projection
-			geo::toTM(a, geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+			geo::toTM(a, m_proj, &easting, &northing);
 
 			// Apply poly solution to target point
 			pixx = polytrans(cPoints.wpx, easting, northing);
@@ -1247,8 +1246,7 @@ void ChartBaseBSB::latlong_to_chartpix(double lat, double lon, double& pixx, dou
 				if (xlon < 0.0)
 					xlon += 360.0;
 			}
-			geo::toSM_ECC(geo::Position(alat, xlon), geo::Position(m_proj_lat, m_proj_lon),
-						  &easting, &northing);
+			geo::toSM_ECC(geo::Position(alat, xlon), m_proj, &easting, &northing);
 
 			// Apply poly solution to target point
 			pixx = polytrans(cPoints.wpx, easting, northing);
@@ -1266,8 +1264,7 @@ void ChartBaseBSB::latlong_to_chartpix(double lat, double lon, double& pixx, dou
 				if (xlon < 0.0)
 					xlon += 360.0;
 			}
-			geo::toPOLY(geo::Position(alat, xlon), geo::Position(m_proj_lat, m_proj_lon), &easting,
-						&northing);
+			geo::toPOLY(geo::Position(alat, xlon), m_proj, &easting, &northing);
 
 			// Apply poly solution to target point
 			pixx = polytrans(cPoints.wpx, easting, northing);
@@ -1293,7 +1290,7 @@ void ChartBaseBSB::chartpix_to_latlong(double pixx, double pixy, double* plat, d
 			double north = polytrans(cPoints.pwy, pixx, pixy);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromTM(east, north, geo::Position(m_proj_lat, m_proj_lon));
+			geo::Position t = geo::fromTM(east, north, m_proj);
 
 			// Datum adjustments.....
 			slat = t.lat() - m_lat_datum_adjust;
@@ -1305,7 +1302,7 @@ void ChartBaseBSB::chartpix_to_latlong(double pixx, double pixy, double* plat, d
 			double north = polytrans(cPoints.pwy, pixx, pixy);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromSM_ECC(east, north, geo::Position(m_proj_lat, m_proj_lon));
+			geo::Position t = geo::fromSM_ECC(east, north, m_proj);
 
 			// Make Datum adjustments.....
 			slat = t.lat() - m_lat_datum_adjust;
@@ -1317,7 +1314,7 @@ void ChartBaseBSB::chartpix_to_latlong(double pixx, double pixy, double* plat, d
 			double north = polytrans(cPoints.pwy, pixx, pixy);
 
 			// Apply inverse Projection to get lat/lon
-			geo::Position t = geo::fromPOLY(east, north, geo::Position(m_proj_lat, m_proj_lon));
+			geo::Position t = geo::fromPOLY(east, north, m_proj);
 
 			// Make Datum adjustments.....
 			slat = t.lat() - m_lat_datum_adjust;
@@ -2530,9 +2527,9 @@ bool ChartBaseBSB::AnalyzeSkew(void)
 		double easting0, easting1, northing0, northing1;
 		//  Get the Merc projection of the two REF points
 		geo::toSM_ECC(geo::Position(reference_points[imax].latr, reference_points[imax].lonr),
-					  geo::Position(m_proj_lat, m_proj_lon), &easting0, &northing0);
+					  m_proj, &easting0, &northing0);
 		geo::toSM_ECC(geo::Position(reference_points[jmax].latr, reference_points[jmax].lonr),
-					  geo::Position(m_proj_lat, m_proj_lon), &easting1, &northing1);
+					  m_proj, &easting1, &northing1);
 
 		double skew_proj = atan2((easting1 - easting0), (northing1 - northing0)) * 180.0 / M_PI;
 		double skew_points = atan2((reference_points[jmax].yr - reference_points[imax].yr),
@@ -2690,9 +2687,9 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		double easting0, easting1, northing0, northing1;
 		// Get the TMerc projection of the two REF points
 		geo::toTM(geo::Position(reference_points[imax].latr, reference_points[imax].lonr),
-				  geo::Position(m_proj_lat, m_proj_lon), &easting0, &northing0);
+				  m_proj, &easting0, &northing0);
 		geo::toTM(geo::Position(reference_points[jmax].latr, reference_points[jmax].lonr),
-				  geo::Position(m_proj_lat, m_proj_lon), &easting1, &northing1);
+				  m_proj, &easting1, &northing1);
 
 		// Calculate the scale factor using exact REF point math
 		double dx2 = (reference_points[jmax].xr - reference_points[imax].xr)
@@ -2710,7 +2707,7 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		for (unsigned int n = 0; n < reference_points.size(); n++) {
 			double easting, northing;
 			geo::toTM(geo::Position(reference_points[n].latr, reference_points[n].lonr),
-					  geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+					  m_proj, &easting, &northing);
 
 			cPoints.tx[n] = reference_points[n].xr;
 			cPoints.ty[n] = reference_points[n].yr;
@@ -2723,10 +2720,8 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		cPoints.txmin = plonmin;
 		cPoints.tymax = platmax;
 		cPoints.tymin = platmin;
-		geo::toTM(geo::Position(latmax, lonmax), geo::Position(m_proj_lat, m_proj_lon),
-				  &cPoints.lonmax, &cPoints.latmax);
-		geo::toTM(geo::Position(latmin, lonmin), geo::Position(m_proj_lat, m_proj_lon),
-				  &cPoints.lonmin, &cPoints.latmin);
+		geo::toTM(geo::Position(latmax, lonmax), m_proj, &cPoints.lonmax, &cPoints.latmax);
+		geo::toTM(geo::Position(latmin, lonmin), m_proj, &cPoints.lonmin, &cPoints.latmin);
 
 		cPoints.status = 1;
 
@@ -2736,9 +2731,9 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		double easting0, easting1, northing0, northing1;
 		// Get the Merc projection of the two REF points
 		geo::toSM_ECC(geo::Position(reference_points[imax].latr, reference_points[imax].lonr),
-					  geo::Position(m_proj_lat, m_proj_lon), &easting0, &northing0);
+					  m_proj, &easting0, &northing0);
 		geo::toSM_ECC(geo::Position(reference_points[jmax].latr, reference_points[jmax].lonr),
-					  geo::Position(m_proj_lat, m_proj_lon), &easting1, &northing1);
+					  m_proj, &easting1, &northing1);
 
 		double dx2 = (reference_points[jmax].xr - reference_points[imax].xr)
 					 * (reference_points[jmax].xr - reference_points[imax].xr);
@@ -2755,7 +2750,7 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		for (unsigned int n = 0; n < reference_points.size(); n++) {
 			double easting, northing;
 			geo::toSM_ECC(geo::Position(reference_points[n].latr, reference_points[n].lonr),
-						  geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+						  m_proj, &easting, &northing);
 
 			cPoints.tx[n] = reference_points[n].xr;
 			cPoints.ty[n] = reference_points[n].yr;
@@ -2768,10 +2763,8 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		cPoints.txmin = plonmin;
 		cPoints.tymax = platmax;
 		cPoints.tymin = platmin;
-		geo::toSM_ECC(geo::Position(latmax, lonmax), geo::Position(m_proj_lat, m_proj_lon),
-					  &cPoints.lonmax, &cPoints.latmax);
-		geo::toSM_ECC(geo::Position(latmin, lonmin), geo::Position(m_proj_lat, m_proj_lon),
-					  &cPoints.lonmin, &cPoints.latmin);
+		geo::toSM_ECC(geo::Position(latmax, lonmax), m_proj, &cPoints.lonmax, &cPoints.latmax);
+		geo::toSM_ECC(geo::Position(latmin, lonmin), m_proj, &cPoints.lonmin, &cPoints.latmin);
 
 		cPoints.status = 1;
 
@@ -2784,18 +2777,19 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		// We check for this case, and make a correction if necessary.....
 		// Obviously, the projection meridian should be on the chart, i.e. between the min and max
 		// longitudes....
-		double proj_meridian = m_proj_lon;
+		const double proj_meridian = m_proj.lon();
 
 		if ((reference_points[nlonmax].lonr >= -proj_meridian)
-			&& (-proj_meridian >= reference_points[nlonmin].lonr))
-			m_proj_lon = -m_proj_lon;
+			&& (-proj_meridian >= reference_points[nlonmin].lonr)) {
+			m_proj = geo::Position(m_proj.lat(), -m_proj.lon());
+		}
 
 		double easting0, easting1, northing0, northing1;
 		// Get the Poly projection of the two REF points
 		geo::toPOLY(geo::Position(reference_points[imax].latr, reference_points[imax].lonr),
-					geo::Position(m_proj_lat, m_proj_lon), &easting0, &northing0);
+					m_proj, &easting0, &northing0);
 		geo::toPOLY(geo::Position(reference_points[jmax].latr, reference_points[jmax].lonr),
-					geo::Position(m_proj_lat, m_proj_lon), &easting1, &northing1);
+					m_proj, &easting1, &northing1);
 
 		// Calculate the scale factor using exact REF point math
 		double dx2 = (reference_points[jmax].xr - reference_points[imax].xr)
@@ -2813,8 +2807,8 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		for (unsigned int n = 0; n < reference_points.size(); n++) {
 			double easting;
 			double northing;
-			geo::toPOLY(geo::Position(reference_points[n].latr, reference_points[n].lonr),
-						geo::Position(m_proj_lat, m_proj_lon), &easting, &northing);
+			geo::toPOLY(geo::Position(reference_points[n].latr, reference_points[n].lonr), m_proj,
+						&easting, &northing);
 
 			cPoints.tx[n] = reference_points[n].xr;
 			cPoints.ty[n] = reference_points[n].yr;
@@ -2827,10 +2821,8 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		cPoints.txmin = plonmin;
 		cPoints.tymax = platmax;
 		cPoints.tymin = platmin;
-		geo::toPOLY(geo::Position(latmax, lonmax), geo::Position(m_proj_lat, m_proj_lon),
-					&cPoints.lonmax, &cPoints.latmax);
-		geo::toPOLY(geo::Position(latmin, lonmin), geo::Position(m_proj_lat, m_proj_lon),
-					&cPoints.lonmin, &cPoints.latmin);
+		geo::toPOLY(geo::Position(latmax, lonmax), m_proj, &cPoints.lonmax, &cPoints.latmax);
+		geo::toPOLY(geo::Position(latmin, lonmin), m_proj, &cPoints.lonmin, &cPoints.latmin);
 
 		cPoints.status = 1;
 
@@ -2842,9 +2834,9 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 		double easting0, easting1, northing0, northing1;
 		// Get the Merc projection of the two REF points
 		geo::toSM_ECC(geo::Position(reference_points[imax].latr, reference_points[imax].lonr),
-					  geo::Position(m_proj_lat, m_proj_lon), &easting0, &northing0);
+					  m_proj, &easting0, &northing0);
 		geo::toSM_ECC(geo::Position(reference_points[jmax].latr, reference_points[jmax].lonr),
-					  geo::Position(m_proj_lat, m_proj_lon), &easting1, &northing1);
+					  m_proj, &easting1, &northing1);
 
 		// Calculate the scale factor using exact REF point math in x(longitude) direction
 

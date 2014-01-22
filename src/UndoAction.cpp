@@ -22,26 +22,29 @@
  **************************************************************************/
 
 #include "UndoAction.h"
-#include "RoutePoint.h"
+#include <RoutePoint.h>
 #include <wx/gdicmn.h>
 
 UndoAction::~UndoAction()
 {
 	assert(before.size() == beforeType.size());
 
-	for( unsigned int i = 0; i < before.size(); i++ ) {
+	for (unsigned int i = 0; i < before.size(); i++) {
 		switch (beforeType[i]) {
 			case Undo_NeedsCopy:
 				switch (type) {
 					case Undo_MoveWaypoint:
-						if( before[i] ) {
-							delete (wxRealPoint*) before[i];
+						if (before[i]) {
+							delete (wxRealPoint*)before[i];
 							before[i] = NULL;
 						}
 						break;
-					case Undo_DeleteWaypoint: break;
-					case Undo_CreateWaypoint: break;
-					case Undo_AppendWaypoint: break;
+					case Undo_DeleteWaypoint:
+						break;
+					case Undo_CreateWaypoint:
+						break;
+					case Undo_AppendWaypoint:
+						break;
 				}
 				break;
 
@@ -49,21 +52,24 @@ UndoAction::~UndoAction()
 				switch (type) {
 					case Undo_DeleteWaypoint:
 						if (before[i]) {
-							delete (RoutePoint*) before[i];
+							delete (RoutePoint*)before[i];
 						}
 						break;
-					case Undo_CreateWaypoint: break;
-					case Undo_MoveWaypoint: break;
+					case Undo_CreateWaypoint:
+						break;
+					case Undo_MoveWaypoint:
+						break;
 					case Undo_AppendWaypoint:
 						if (before[i]) {
-							delete (RoutePoint*) before[i];
+							delete (RoutePoint*)before[i];
 							before[i] = NULL;
 						}
 						break;
 				}
 				break;
 
-			case Undo_HasParent: break;
+			case Undo_HasParent:
+				break;
 		}
 	}
 	before.clear();
@@ -72,7 +78,7 @@ UndoAction::~UndoAction()
 wxString UndoAction::Description()
 {
 	wxString descr;
-	switch( type ){
+	switch (type) {
 		case Undo_CreateWaypoint:
 			descr = _("Create Waypoint");
 			break;

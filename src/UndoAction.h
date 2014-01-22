@@ -29,33 +29,31 @@
 
 class UndoAction
 {
-	public:
-		typedef void * ItemPointer;
+public:
+	typedef void* ItemPointer;
 
-		enum Type
-		{
-			Undo_CreateWaypoint,
-			Undo_DeleteWaypoint,
-			Undo_AppendWaypoint,
-			Undo_MoveWaypoint
-		};
+	enum Type {
+		Undo_CreateWaypoint,
+		Undo_DeleteWaypoint,
+		Undo_AppendWaypoint,
+		Undo_MoveWaypoint
+	};
 
-		enum BeforePointerType
-		{
-			Undo_IsOrphanded,
-			Undo_NeedsCopy,
-			Undo_HasParent
-		};
+	enum BeforePointerType {
+		Undo_IsOrphanded,
+		Undo_NeedsCopy,
+		Undo_HasParent
+	};
 
-	public:
-		~UndoAction();
-		wxString Description();
+public:
+	~UndoAction();
+	wxString Description();
 
-		Type type;
-		std::vector<ItemPointer> before;
-		std::vector<BeforePointerType> beforeType;
-		std::vector<ItemPointer> after;
-		std::vector<ItemPointer> selectable;
+	Type type;
+	std::vector<ItemPointer> before;
+	std::vector<BeforePointerType> beforeType;
+	std::vector<ItemPointer> after;
+	std::vector<ItemPointer> selectable;
 };
 
 #endif

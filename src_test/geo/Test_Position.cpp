@@ -68,5 +68,33 @@ TEST_F(Test_Position, normalize_lon)
 	EXPECT_EQ(  0.0, p4.lon());
 }
 
+TEST_F(Test_Position, operator_add)
+{
+	geo::Position p0( 1.0,  2.0);
+	geo::Position p1(10.0, 20.0);
+
+	geo::Position r0 = p0 + p1;
+	EXPECT_EQ(11.0, r0.lat());
+	EXPECT_EQ(22.0, r0.lon());
+
+	geo::Position r1 = p1 + p0;
+	EXPECT_EQ(11.0, r1.lat());
+	EXPECT_EQ(22.0, r1.lon());
+}
+
+TEST_F(Test_Position, operator_sub)
+{
+	geo::Position p0( 1.0,  2.0);
+	geo::Position p1(10.0, 20.0);
+
+	geo::Position r0 = p0 - p1;
+	EXPECT_EQ( -9.0, r0.lat());
+	EXPECT_EQ(-18.0, r0.lon());
+
+	geo::Position r1 = p1 - p0;
+	EXPECT_EQ( 9.0, r1.lat());
+	EXPECT_EQ(18.0, r1.lon());
+}
+
 }
 

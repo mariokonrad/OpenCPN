@@ -53,9 +53,6 @@ ChartBase::ChartBase()
 
 	m_EdDate.Set(1, wxDateTime::Jan, 2000);
 
-	m_lon_datum_adjust = 0.;
-	m_lat_datum_adjust = 0.;
-
 	m_projection = PROJECTION_MERCATOR; // default
 }
 

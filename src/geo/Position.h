@@ -41,6 +41,9 @@ public:
 	bool operator==(const Position&) const;
 	bool operator!=(const Position&) const;
 
+	friend Position operator+(const Position&, const Position&);
+	friend Position operator-(const Position&, const Position&);
+
 private:
 	double latitude;
 	double longitude;

@@ -166,9 +166,6 @@ protected:
 	global::ColorScheme m_global_color_scheme; // FIXME: get rid of this attribute, it is redundant to global information
 	bool bReadyToRender;
 	double Chart_Error_Factor;
-	double m_lon_datum_adjust; // Add these numbers to WGS84 position to obtain internal chart
-							   // position
-	double m_lat_datum_adjust;
 	double m_Chart_Skew;
 
 	// Chart region coverage information

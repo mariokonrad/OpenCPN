@@ -267,6 +267,9 @@ protected:
 
 	geo::Position m_proj;
 	ViewPort m_vp_render_last;
+
+	// Add this position adjustmetn to WGS84 position to obtain internal chart position
+	geo::Position m_datum_adjust;
 };
 
 }

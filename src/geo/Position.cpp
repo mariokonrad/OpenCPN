@@ -63,5 +63,15 @@ bool Position::operator!=(const Position& other) const
 	return !(*this == other);
 }
 
+Position operator+(const Position& a, const Position& b)
+{
+	return Position(a.latitude + b.latitude, a.longitude + b.longitude);
+}
+
+Position operator-(const Position& a, const Position& b)
+{
+	return Position(a.latitude - b.latitude, a.longitude - b.longitude);
+}
+
 }
 

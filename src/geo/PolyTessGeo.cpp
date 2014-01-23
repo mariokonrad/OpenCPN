@@ -116,7 +116,7 @@ static LPFNDLLTESSCALLBACK      s_lpfnTessCallback;
 #endif
 
 //  Flag to tell that dll is ready
-bool s_glu_dll_ready;
+bool s_glu_dll_ready = false;
 HINSTANCE s_hGLU_DLL; // Handle to DLL
 
 #endif
@@ -124,8 +124,6 @@ HINSTANCE s_hGLU_DLL; // Handle to DLL
 namespace geo {
 
 static int tess_orient;
-static wxMemoryOutputStream *ostream1;
-static wxMemoryOutputStream *ostream2;
 
 static void destroy_combined_vertices()
 {
@@ -723,8 +721,8 @@ int PolyTessGeo::Write_PolyTriGroup(FILE* ofs)
 	// When all finished, we'll touch up a few items before
 	// committing to disk.
 
-	ostream1 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
-	ostream2 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
+	wxMemoryOutputStream* ostream1 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
+	wxMemoryOutputStream* ostream2 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
 
 	// Create initial known part of the output record
 
@@ -808,8 +806,8 @@ int PolyTessGeo::Write_PolyTriGroup(wxOutputStream& out_stream)
 	// When all finished, we'll touch up a few items before
 	// committing to disk.
 
-	ostream1 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
-	ostream2 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
+	wxMemoryOutputStream* ostream1 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
+	wxMemoryOutputStream* ostream2 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
 
 	// Create initial known part of the output record
 

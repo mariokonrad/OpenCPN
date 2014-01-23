@@ -28,16 +28,18 @@
 
 namespace geo {
 
+class Position;
+
 /// Find the distance (meters) and bearings between two Lon/Lat pairs (given in degrees)
 /// Results are in meters and degrees as appropriate
 class Geodesic
 {
 public:
-	static double GreatCircleDistBear(double Lon1, double Lat1, double Lon2, double Lat2,
+	static double GreatCircleDistBear(const Position& pos1, const Position& pos2,
 									  double* Dist = NULL, double* Bear1 = NULL,
 									  double* Bear2 = NULL);
 
-	static void GreatCircleTravel(double Lon1, double Lat1, double Dist, double Bear1,
+	static void GreatCircleTravel(const Position& pos1, double Dist, double Bear1,
 								  double* Lon2 = NULL, double* Lat2 = NULL, double* Bear2 = NULL);
 };
 

@@ -5306,9 +5306,8 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					double gcDist;
 					geo::DistanceBearingMercator(m_cursor_pos, m_prev_route, &rhumbBearing,
 												 &rhumbDist);
-					geo::Geodesic::GreatCircleDistBear(m_prev_route.lon(), m_prev_route.lat(),
-													   m_cursor_pos.lon(), m_cursor_pos.lat(),
-													   &gcDist, &gcBearing, NULL);
+					geo::Geodesic::GreatCircleDistBear(m_prev_route, m_cursor_pos, &gcDist,
+													   &gcBearing, NULL);
 					double gcDistNM = gcDist / 1852.0;
 
 					// Empirically found expression to get reasonable route segments.
@@ -5336,9 +5335,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 						for (int i = 1; i <= segmentCount; i++) {
 							double fraction = (double)i * (1.0 / (double)segmentCount);
-							geo::Geodesic::GreatCircleTravel(m_prev_route.lon(), m_prev_route.lat(),
-															 gcDist * fraction, gcBearing,
-															 &gcCoord.x, &gcCoord.y, NULL);
+							geo::Geodesic::GreatCircleTravel(m_prev_route, gcDist * fraction,
+															 gcBearing, &gcCoord.x, &gcCoord.y,
+															 NULL);
 
 							if (i < segmentCount) {
 								geo::Position pos(gcCoord.y, gcCoord.x);
@@ -7859,9 +7858,8 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 		double gcBearing2;
 		double gcDist;
 		geo::DistanceBearingMercator(m_cursor_pos, m_prev_route, &rhumbBearing, &rhumbDist);
-		geo::Geodesic::GreatCircleDistBear(m_prev_route.lon(), m_prev_route.lat(),
-										   m_cursor_pos.lon(), m_cursor_pos.lat(), &gcDist,
-										   &gcBearing, &gcBearing2);
+		geo::Geodesic::GreatCircleDistBear(m_prev_route, m_cursor_pos, &gcDist, &gcBearing,
+										   &gcBearing2);
 		double gcDistm = gcDist / 1852.0;
 
 		if (m_prev_route == m_cursor_pos)
@@ -7892,8 +7890,8 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 			for (int i = 1; i <= milesDiff; i++) {
 				double p = (double)i * (1.0 / (double)milesDiff);
 				double pLat, pLon;
-				geo::Geodesic::GreatCircleTravel(m_prev_route.lon(), m_prev_route.lat(), gcDist * p,
-												 brg, &pLon, &pLat, &gcBearing2);
+				geo::Geodesic::GreatCircleTravel(m_prev_route, gcDist * p, brg, &pLon, &pLat,
+												 &gcBearing2);
 				destPoint = VPoint.GetPixFromLL(geo::Position(pLat, pLon));
 				route->DrawSegment(dc, &lastPoint, &destPoint, GetVP(), false);
 				lastPoint = destPoint;

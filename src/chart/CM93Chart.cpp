@@ -1584,10 +1584,8 @@ geo::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileOutputStream*
 
 			ret_ptr->n_max_edge_points = n_max_points;
 
-			ret_ptr->n_contours = ncontours; // parameters passed to trapezoid tesselator
-
-			ret_ptr->contour_array = (int*)malloc(ncontours * sizeof(int));
-			memcpy(ret_ptr->contour_array, m_pcontour_array, ncontours * sizeof(int));
+			// parameters passed to trapezoid tesselator
+			ret_ptr->set_contour_array(m_pcontour_array, ncontours);
 
 			ret_ptr->vertex_array = pPoints;
 			ret_ptr->n_max_vertex = n_maxvertex;

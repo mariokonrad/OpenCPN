@@ -24,40 +24,42 @@
 #ifndef __GEO__EXTENDEDGEOMETRY__H__
 #define __GEO__EXTENDEDGEOMETRY__H__
 
-#include <ogr_geometry.h>
-
 class wxPoint2DDouble;
+class OGRGeometry;
 
 namespace geo {
 
 class ExtendedGeometry
 {
-	public:
-		ExtendedGeometry();
-		~ExtendedGeometry();
+public:
+	ExtendedGeometry();
+	~ExtendedGeometry();
 
-		OGRGeometry * pogrGeom;
-		int n_vector_indices;
-		int * pvector_index;
-		int n_contours;                          // parameters passed to trapezoid tesselator
-		int * contour_array;
-		int n_max_vertex;
-		int pointx;
-		int pointy;
-		wxPoint2DDouble * vertex_array;
-		int xmin;
-		int xmax;
-		int ymin;
-		int ymax;
-		int n_max_edge_points;
+	void set_contour_array(const int* data, int n);
 
-		//    Conversion parameters
-		//    for (assummed linear) convertions from vertex_array points to easting/northing, metres from 0,0
-		//    To convert to lat/lon, use simple merctor equations
-		double x_rate;
-		double x_offset;
-		double y_rate;
-		double y_offset;
+	OGRGeometry* pogrGeom;
+	int n_vector_indices;
+	int* pvector_index;
+	int n_contours;
+	int* contour_array; // FIXME: use std::vector
+	int n_max_vertex;
+	int pointx;
+	int pointy;
+	wxPoint2DDouble* vertex_array;
+	int xmin;
+	int xmax;
+	int ymin;
+	int ymax;
+	int n_max_edge_points;
+
+	// Conversion parameters
+	// for (assummed linear) convertions from vertex_array points to easting/northing, metres from
+	// 0,0
+	// To convert to lat/lon, use simple merctor equations
+	double x_rate;
+	double x_offset;
+	double y_rate;
+	double y_offset;
 };
 
 }

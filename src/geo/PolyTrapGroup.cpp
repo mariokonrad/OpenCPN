@@ -52,7 +52,7 @@ PolyTrapGroup::PolyTrapGroup(ExtendedGeometry* pxGeom)
 
 PolyTrapGroup::~PolyTrapGroup()
 {
-	free(pn_vertex);
+	free(pn_vertex); // FIXME: potential 'double free' of allocated data, see ~ExtendedGeometry
 	free(ptrapgroup_geom);
 	free(trap_array);
 }

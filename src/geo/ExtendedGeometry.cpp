@@ -22,19 +22,46 @@
  **************************************************************************/
 
 #include "ExtendedGeometry.h"
+#include <cstring>
+#include <cstdlib>
 
 namespace geo {
 
 ExtendedGeometry::ExtendedGeometry()
+	: pogrGeom(NULL)
+	, n_vector_indices(0)
+	, pvector_index(NULL)
+	, n_contours(0)
+	, contour_array(NULL)
+	, n_max_vertex(0)
+	, pointx(0)
+	, pointy(0)
+	, vertex_array(NULL)
+	, xmin(0)
+	, xmax(0)
+	, ymin(0)
+	, ymax(0)
+	, n_max_edge_points(0)
+	, x_rate(0.0)
+	, x_offset(0.0)
+	, y_rate(0.0)
+	, y_offset(0.0)
 {
-	vertex_array = NULL;
-	contour_array = NULL;
 }
 
 ExtendedGeometry::~ExtendedGeometry()
 {
 	free(vertex_array);
-	free(contour_array);
+	delete [] contour_array;
+}
+
+void ExtendedGeometry::set_contour_array(const int* data, int n)
+{
+	// FIXME: check if the memory is already allocated
+
+	n_contours = n;
+	contour_array = new int[n];
+	memcpy(contour_array, data, n * sizeof(int));
 }
 
 }

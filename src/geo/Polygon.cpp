@@ -58,7 +58,8 @@ int G_PtInPolygon(MyPoint* rgpts, int wnumpts, float x, float y)
 
 	// Now go through each of the lines in the polygon and see if it
 	// intersects
-	for (int i = 0, ppt = rgpts; i < wnumpts - 1; i++, ppt++) {
+	ppt = rgpts;
+	for (int i = 0; i < wnumpts - 1; i++, ppt++) {
 		ppt1 = ppt;
 		ppt1++;
 		if (Intersect(pt0, pt2, *ppt, *(ppt1)))
@@ -89,7 +90,7 @@ static int Intersect(MyPoint p1, MyPoint p2, MyPoint p3, MyPoint p4)
 
 /// Determines, given three points, if when travelling from the first to
 /// the second to the third, we travel in a counterclockwise direction.
-/// 
+///
 /// RETURN VALUE
 /// (int) 1 if the movement is in a counterclockwise direction, -1 if
 /// not.

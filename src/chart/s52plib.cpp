@@ -2616,9 +2616,8 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		if (!rzRules->obj->pPolyTessGeo->IsOk()) // perform deferred tesselation
 			rzRules->obj->pPolyTessGeo->BuildDeferredTess();
 
-		geo::PolyTriGroup* pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
-
-		float* ppolygeo = pptg->pgroup_geom;
+		const geo::PolyTriGroup* pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const float* ppolygeo = pptg->pgroup_geom;
 
 		int ctr_offset = 0;
 		for (int ic = 0; ic < pptg->nContours; ic++) {
@@ -2627,7 +2626,7 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 			wxPoint* ptp = (wxPoint*)malloc((npt + 1) * sizeof(wxPoint));
 			wxPoint* pr = ptp;
 
-			float* pf = &ppolygeo[ctr_offset];
+			const float* pf = &ppolygeo[ctr_offset];
 			for (int ip = 0; ip < npt; ip++) {
 				float plon = *pf++;
 				float plat = *pf++;
@@ -2888,8 +2887,8 @@ int s52plib::RenderLC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		if (!rzRules->obj->pPolyTessGeo->IsOk()) // perform deferred tesselation
 			rzRules->obj->pPolyTessGeo->BuildDeferredTess();
 
-		geo::PolyTriGroup* pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
-		float* ppolygeo = pptg->pgroup_geom;
+		const geo::PolyTriGroup* pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const float* ppolygeo = pptg->pgroup_geom;
 
 		int ctr_offset = 0;
 		for (int ic = 0; ic < pptg->nContours; ic++) {
@@ -5066,13 +5065,13 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 		wxPoint* pp3 = (wxPoint*)malloc(3 * sizeof(wxPoint));
 		wxPoint* ptp = (wxPoint*)malloc((obj->pPolyTessGeo->GetnVertexMax() + 1) * sizeof(wxPoint));
 
-		//  Allow a little slop in calculating whether a triangle
-		//  is within the requested Viewport
+		// Allow a little slop in calculating whether a triangle
+		// is within the requested Viewport
 		double margin = BBView.GetWidth() * 0.05;
 
-		geo::PolyTriGroup* ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const geo::PolyTriGroup* ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const geo::TriPrim* p_tp = ppg->tri_prim_head;
 		geo::BoundingBox tp_box;
-		geo::TriPrim* p_tp = ppg->tri_prim_head;
 		while (p_tp) {
 			tp_box.SetMin(p_tp->minx, p_tp->miny);
 			tp_box.SetMax(p_tp->maxx, p_tp->maxy);
@@ -5244,13 +5243,13 @@ int s52plib::RenderToGLAC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 		wxPoint* ptp
 			= (wxPoint*)malloc((rzRules->obj->pPolyTessGeo->GetnVertexMax() + 1) * sizeof(wxPoint));
 
-		//  Allow a little slop in calculating whether a triangle
-		//  is within the requested Viewport
+		// Allow a little slop in calculating whether a triangle
+		// is within the requested Viewport
 		double margin = BBView.GetWidth() * 0.05;
 
-		geo::PolyTriGroup* ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const geo::PolyTriGroup* ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const geo::TriPrim* p_tp = ppg->tri_prim_head;
 		geo::BoundingBox tp_box;
-		geo::TriPrim* p_tp = ppg->tri_prim_head;
 		while (p_tp) {
 			tp_box.SetMin(p_tp->minx, p_tp->miny);
 			tp_box.SetMax(p_tp->maxx, p_tp->maxy);
@@ -5386,9 +5385,9 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 			glNewList(clip_list, GL_COMPILE);
 		}
 
-		geo::PolyTriGroup* ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const geo::PolyTriGroup* ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const geo::TriPrim* p_tp = ppg->tri_prim_head;
 		geo::BoundingBox tp_box;
-		geo::TriPrim* p_tp = ppg->tri_prim_head;
 		while (p_tp) {
 			tp_box.SetMin(p_tp->minx, p_tp->miny);
 			tp_box.SetMax(p_tp->maxx, p_tp->maxy);
@@ -5402,7 +5401,7 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 
 			if (b_greenwich || (BBView.Intersect(tp_box, margin) != geo::BoundingBox::_OUT)) {
 
-				//      Get and convert the points
+				// Get and convert the points
 
 				wxPoint* pr = ptp;
 				double* pvert_list = p_tp->p_vertex;

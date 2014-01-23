@@ -23,6 +23,8 @@
 
 #include "PolyTessGeo.h"
 
+#include <ogr_geometry.h>
+
 #include <MicrosoftCompatibility.h>
 #include <dychart.h>
 
@@ -698,7 +700,7 @@ double PolyTessGeo::Get_ymax() const
 	return ymax;
 }
 
-PolyTriGroup* PolyTessGeo::Get_PolyTriGroup_head()
+const PolyTriGroup* PolyTessGeo::Get_PolyTriGroup_head() const
 {
 	return m_ppg_head;
 }

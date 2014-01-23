@@ -24,13 +24,14 @@
 #ifndef __GEO__POLYTESSGEO__H__
 #define __GEO__POLYTESSGEO__H__
 
-#include <ogr_geometry.h>
 #include <cstdio>
 
 // Error Return Codes
 #define ERROR_NONE        0
 #define ERROR_NO_DLL      1
 #define ERROR_BAD_OGRPOLY 2
+
+class OGRPolygon;
 
 namespace geo {
 
@@ -62,7 +63,7 @@ public:
 	double Get_xmax() const;
 	double Get_ymin() const;
 	double Get_ymax() const;
-	PolyTriGroup* Get_PolyTriGroup_head();
+	const PolyTriGroup* Get_PolyTriGroup_head() const;
 	int GetnVertexMax() const;
 
 	int ErrorCode;

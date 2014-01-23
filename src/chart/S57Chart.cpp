@@ -5406,8 +5406,8 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 		if (!obj->pPolyTessGeo->IsOk())
 			obj->pPolyTessGeo->BuildDeferredTess();
 
-		geo::PolyTriGroup* ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
-		geo::TriPrim* pTP = ppg->tri_prim_head;
+		const geo::PolyTriGroup* ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const geo::TriPrim* pTP = ppg->tri_prim_head;
 		geo::MyPoint pvert_list[3];
 
 		// Polygon geometry is carried in SM coordinates, so...

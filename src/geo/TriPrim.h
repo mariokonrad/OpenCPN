@@ -24,29 +24,32 @@
 #ifndef __GEO__TRIPRIM__H__
 #define __GEO__TRIPRIM__H__
 
-namespace geo {
+namespace geo
+{
 
 /// Used for describing/rendering tesselated polygons
 class TriPrim
 {
-	public:
-		//  nota bene  These definitions are identical to OpenGL prototypes
-		enum Type
-		{
-			PTG_TRIANGLES      = 0x0004,
-			PTG_TRIANGLE_STRIP = 0x0005,
-			PTG_TRIANGLE_FAN   = 0x0006
-		};
+public:
+	// nota bene  These definitions are identical to OpenGL prototypes
+	enum Type {
+		PTG_TRIANGLES = 0x0004,
+		PTG_TRIANGLE_STRIP = 0x0005,
+		PTG_TRIANGLE_FAN = 0x0006
+	};
 
-	public:
-		TriPrim();
-		~TriPrim();
+public:
+	TriPrim();
+	~TriPrim();
 
-		Type type;
-		int nVert;
-		double * p_vertex; //  Pointer to vertex array, x,y,x,y.....
-		double minx, miny, maxx, maxy;
-		TriPrim * p_next; // chain link
+	Type type;
+	int nVert;
+	double* p_vertex; //  Pointer to vertex array, x,y,x,y.....
+	double minx;
+	double miny;
+	double maxx;
+	double maxy;
+	TriPrim* p_next; // chain link
 };
 
 }

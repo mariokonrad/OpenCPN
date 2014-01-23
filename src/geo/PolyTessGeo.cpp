@@ -50,13 +50,13 @@ using chart::pt;
 #ifdef USE_GLU_TESS
 static int s_nvcall;
 static int s_nvmax;
-static double *s_pwork_buf;
+static double* s_pwork_buf;
 static int s_buf_len;
 static int s_buf_idx;
 static geo::TriPrim::Type s_gltri_type;
-geo::TriPrim * s_pTPG_Head;
-geo::TriPrim * s_pTPG_Last;
-static GLUtesselator  * GLUtessobj;
+geo::TriPrim* s_pTPG_Head;
+geo::TriPrim* s_pTPG_Last;
+static GLUtesselator* GLUtessobj;
 static double s_ref_lat;
 static double s_ref_lon;
 static bool s_bSENC_SM;
@@ -66,7 +66,7 @@ static double s_transform_x_rate;
 static double s_transform_x_origin;
 static double s_transform_y_rate;
 static double s_transform_y_origin;
-wxArrayPtrVoid * s_pCombineVertexArray;
+wxArrayPtrVoid* s_pCombineVertexArray;
 
 static const double CM93_semimajor_axis_meters = 6378388.0;
 #endif
@@ -673,6 +673,41 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 	m_bOK = true;
 
 	return 0;
+}
+
+bool PolyTessGeo::IsOk() const
+{
+	return m_bOK;
+}
+
+double PolyTessGeo::Get_xmin() const
+{
+	return xmin;
+}
+
+double PolyTessGeo::Get_xmax() const
+{
+	return xmax;
+}
+
+double PolyTessGeo::Get_ymin() const
+{
+	return ymin;
+}
+
+double PolyTessGeo::Get_ymax() const
+{
+	return ymax;
+}
+
+PolyTriGroup* PolyTessGeo::Get_PolyTriGroup_head()
+{
+	return m_ppg_head;
+}
+
+int PolyTessGeo::GetnVertexMax() const
+{
+	return m_nvertex_max;
 }
 
 int PolyTessGeo::Write_PolyTriGroup(FILE* ofs)

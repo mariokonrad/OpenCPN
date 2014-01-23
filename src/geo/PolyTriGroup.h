@@ -32,20 +32,20 @@ class TriPrim;
 /// Used for describing/rendering tesselated polygons
 class PolyTriGroup
 {
-	public:
-		PolyTriGroup();
-		PolyTriGroup(ExtendedGeometry * pxGeom);
-		~PolyTriGroup();
+public:
+	PolyTriGroup();
+	PolyTriGroup(ExtendedGeometry* pxGeom);
+	~PolyTriGroup();
 
-		int nContours;
-		int * pn_vertex;             // pointer to array of poly vertex counts
-		float * pgroup_geom;           // pointer to Raw geometry, used for contour line drawing
+	int nContours; // pointer to array of poly vertex counts
+	int* pn_vertex; // pointer to array of poly vertex counts
+	float* pgroup_geom; // pointer to Raw geometry, used for contour line drawing
 
-		TriPrim * tri_prim_head;         // head of linked list of TriPrims
-		bool m_bSMSENC;
+	TriPrim* tri_prim_head; // head of linked list of TriPrims
+	bool m_bSMSENC;
 
-	private:
-		int my_bufgets( char *buf, int buf_len_max );
+private:
+	int my_bufgets(char* buf, int buf_len_max);
 };
 
 }

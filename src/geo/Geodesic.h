@@ -33,23 +33,12 @@ namespace geo {
 class Geodesic
 {
 public:
-	static double GreatCircleDistBear(
-			double Lon1,
-			double Lat1,
-			double Lon2,
-			double Lat2,
-			double * Dist = NULL,
-			double * Bear1 = NULL,
-			double * Bear2 = NULL);
+	static double GreatCircleDistBear(double Lon1, double Lat1, double Lon2, double Lat2,
+									  double* Dist = NULL, double* Bear1 = NULL,
+									  double* Bear2 = NULL);
 
-	static void GreatCircleTravel(
-			double Lon1,
-			double Lat1,
-			double Dist,
-			double Bear1,
-			double * Lon2 = NULL,
-			double * Lat2 = NULL,
-			double * Bear2 = NULL);
+	static void GreatCircleTravel(double Lon1, double Lat1, double Dist, double Bear1,
+								  double* Lon2 = NULL, double* Lat2 = NULL, double* Bear2 = NULL);
 };
 
 }

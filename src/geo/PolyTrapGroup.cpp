@@ -28,28 +28,26 @@
 namespace geo {
 
 PolyTrapGroup::PolyTrapGroup()
+	: nContours(0)
+	, pn_vertex(NULL)
+	, ptrapgroup_geom(NULL)
+	, ntrap_count(0)
+	, trap_array(NULL)
+	, m_trap_error(0)
 {
-	pn_vertex = NULL;             // pointer to array of poly vertex counts
-	ptrapgroup_geom = NULL;           // pointer to Raw geometry, used for contour line drawing
-	trap_array = NULL;            // pointer to trapz_t array
-
-	ntrap_count = 0;
 }
 
-PolyTrapGroup::PolyTrapGroup(ExtendedGeometry *pxGeom)
+PolyTrapGroup::PolyTrapGroup(ExtendedGeometry* pxGeom)
+	: nContours(0)
+	, pn_vertex(NULL)
+	, ptrapgroup_geom(NULL)
+	, ntrap_count(0)
+	, trap_array(NULL)
+	, m_trap_error(0)
 {
-	m_trap_error = 0;
-
 	nContours = pxGeom->n_contours;
-
-	pn_vertex = pxGeom->contour_array;             // pointer to array of poly vertex counts
-	pxGeom->contour_array = NULL;
-
+	pn_vertex = pxGeom->contour_array;
 	ptrapgroup_geom = pxGeom->vertex_array;
-	pxGeom->vertex_array = NULL;
-
-	ntrap_count = 0;                                // provisional
-	trap_array = NULL;                              // pointer to generated trapz_t array
 }
 
 PolyTrapGroup::~PolyTrapGroup()

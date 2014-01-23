@@ -38,8 +38,8 @@ struct float_2Dpt
 	float x;
 };
 
-int G_PtInPolygon(MyPoint *, int, float, float);
-int G_PtInPolygon_FL(float_2Dpt *, int, float, float);
+int G_PtInPolygon(MyPoint*, int, float, float);
+int G_PtInPolygon_FL(float_2Dpt*, int, float, float);
 
 }
 

@@ -27,7 +27,7 @@
 #include <ogr_geometry.h>
 #include <cstdio>
 
-//  Error Return Codes
+// Error Return Codes
 #define ERROR_NONE        0
 #define ERROR_NO_DLL      1
 #define ERROR_BAD_OGRPOLY 2
@@ -42,61 +42,58 @@ class PolyTriGroup;
 /// Tesselator
 class PolyTessGeo
 {
-	public:
-		PolyTessGeo();
-		~PolyTessGeo();
+public:
+	PolyTessGeo();
+	~PolyTessGeo();
 
-		PolyTessGeo(unsigned char *polybuf, int nrecl, int index);      // Build this from SENC file record
+	/// Build this from SENC file record
+	PolyTessGeo(unsigned char* polybuf, int nrecl, int index);
 
-		PolyTessGeo(
-				OGRPolygon * poly,
-				bool bSENC_SM,
-				double ref_lat,
-				double ref_lon,
-				bool bUseInternalTess);  // Build this from OGRPolygon
+	/// Build this from OGRPolygon
+	PolyTessGeo(OGRPolygon* poly, bool bSENC_SM, double ref_lat, double ref_lon,
+				bool bUseInternalTess);
 
-		PolyTessGeo(ExtendedGeometry *pxGeom);
+	PolyTessGeo(ExtendedGeometry* pxGeom);
 
-		bool IsOk(){ return m_bOK;}
+	bool IsOk() const;
+	int BuildDeferredTess(void);
 
-        int BuildDeferredTess(void);
+	int Write_PolyTriGroup(FILE* ofs);
+	int Write_PolyTriGroup(wxOutputStream& ostream);
 
-		int Write_PolyTriGroup(FILE *ofs);
-		int Write_PolyTriGroup(wxOutputStream & ostream);
+	double Get_xmin() const;
+	double Get_xmax() const;
+	double Get_ymin() const;
+	double Get_ymax() const;
+	PolyTriGroup* Get_PolyTriGroup_head();
+	int GetnVertexMax() const;
 
-		double Get_xmin() const { return xmin;}
-		double Get_xmax() const { return xmax;}
-		double Get_ymin() const { return ymin;}
-		double Get_ymax() const { return ymax;}
-		PolyTriGroup * Get_PolyTriGroup_head(){ return m_ppg_head;}
-		int GetnVertexMax(){ return m_nvertex_max; }
-		int ErrorCode;
+	int ErrorCode;
 
+private:
+	int BuildTessGL(void);
+	int PolyTessGeoGL(OGRPolygon* poly, bool bSENC_SM, double ref_lat, double ref_lon);
+	int PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat, double ref_lon);
+	int my_bufgets(char* buf, int buf_len_max);
 
-	private:
-		int BuildTessGL(void);
-		int PolyTessGeoGL(OGRPolygon *poly, bool bSENC_SM, double ref_lat, double ref_lon);
-		int PolyTessGeoTri(OGRPolygon *poly, bool bSENC_SM, double ref_lat, double ref_lon);
-		int my_bufgets( char *buf, int buf_len_max );
+	bool m_bOK;
+	ExtendedGeometry* m_pxgeom;
+	double xmin;
+	double xmax;
+	double ymin;
+	double ymax;
+	PolyTriGroup* m_ppg_head; // head of a PolyTriGroup chain
+	int m_nvertex_max; // and computed max vertex count used by drawing primitives as optimization
 
-		bool m_bOK;
-		ExtendedGeometry * m_pxgeom;
-		double xmin;
-		double xmax;
-		double ymin;
-		double ymax;
-		PolyTriGroup * m_ppg_head; // head of a PolyTriGroup chain
-		int m_nvertex_max; // and computed max vertex count used by drawing primitives as optimization
+	int ncnt;
+	int nwkb;
 
-		int ncnt;
-		int nwkb;
+	char* m_buf_head;
+	char* m_buf_ptr; // used to read passed SENC record
+	int m_nrecl;
 
-		char * m_buf_head;
-		char * m_buf_ptr;                   // used to read passed SENC record
-		int m_nrecl;
-
-		double m_ref_lat;
-		double m_ref_lon;
+	double m_ref_lat;
+	double m_ref_lon;
 };
 
 }

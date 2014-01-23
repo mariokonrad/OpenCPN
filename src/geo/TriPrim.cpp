@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "TriPrim.h"
-#include "BoundingBox.h"
+#include <geo/BoundingBox.h>
 #include <cstdlib>
 
 namespace geo {

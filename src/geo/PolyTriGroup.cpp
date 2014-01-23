@@ -28,24 +28,23 @@
 namespace geo {
 
 PolyTriGroup::PolyTriGroup()
+	: nContours(0)
+	, pn_vertex(NULL)
+	, pgroup_geom(NULL)
+	, tri_prim_head(NULL)
+	, m_bSMSENC(false)
 {
-	pn_vertex = NULL;             // pointer to array of poly vertex counts
-	pgroup_geom = NULL;           // pointer to Raw geometry, used for contour line drawing
-	tri_prim_head = NULL;         // head of linked list of TriPrims
-	m_bSMSENC = false;
-
 }
 
 PolyTriGroup::~PolyTriGroup()
 {
 	free(pn_vertex);
 	free(pgroup_geom);
-	//Walk the list of TriPrims, deleting as we go
-	TriPrim *tp_next;
-	TriPrim *tp = tri_prim_head;
-	while(tp)
-	{
-		tp_next = tp->p_next;
+
+	// Walk the list of TriPrims, deleting as we go
+	TriPrim* tp = tri_prim_head;
+	while (tp) {
+		TriPrim* tp_next = tp->p_next;
 		delete tp;
 		tp = tp_next;
 	}

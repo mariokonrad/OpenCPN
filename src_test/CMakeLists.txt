@@ -22,6 +22,7 @@ message(STATUS "Tests found: ${TEST_SRC}")
 add_executable(testrunner
 	${TEST_SRC}
 	${CMAKE_SOURCE_DIR}/src/geo/Position.cpp
+	${CMAKE_SOURCE_DIR}/src/geo/BoundingBox.cpp
 	)
 
 target_link_libraries(testrunner

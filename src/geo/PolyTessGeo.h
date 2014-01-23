@@ -32,8 +32,6 @@
 #define ERROR_NO_DLL      1
 #define ERROR_BAD_OGRPOLY 2
 
-class wxOutputStream;
-
 namespace geo {
 
 class ExtendedGeometry;
@@ -58,8 +56,7 @@ public:
 	bool IsOk() const;
 	int BuildDeferredTess(void);
 
-	int Write_PolyTriGroup(FILE* ofs);
-	int Write_PolyTriGroup(wxOutputStream& ostream);
+	int Write_PolyTriGroup(FILE* ofs) const;
 
 	double Get_xmin() const;
 	double Get_xmax() const;

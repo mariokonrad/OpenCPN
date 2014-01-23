@@ -322,7 +322,7 @@ PolyTessGeo::PolyTessGeo(unsigned char* polybuf, int nrecl, int WXUNUSED(index))
 // Using internal Triangle tesselator
 int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat, double ref_lon)
 {
-	//  Make a quick sanity check of the polygon coherence
+	// Make a quick sanity check of the polygon coherence
 	bool b_ok = true;
 	OGRLineString* tls = poly->getExteriorRing();
 	if (!tls) {
@@ -433,7 +433,7 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 		int npti = poly->getInteriorRing(iir)->getNumPoints();
 		cntr[iir + 1] = npti;
 
-		//  Check and account for winding direction of ring
+		// Check and account for winding direction of ring
 		bool cw = !(poly->getInteriorRing(iir)->isClockwise() == 0);
 
 		if (!cw) {
@@ -708,13 +708,12 @@ int PolyTessGeo::GetnVertexMax() const
 	return m_nvertex_max;
 }
 
-int PolyTessGeo::Write_PolyTriGroup(FILE* ofs)
+int PolyTessGeo::Write_PolyTriGroup(FILE* ofs) const
 {
 	wxString sout;
-	wxString sout1;
 	wxString stemp;
 
-	PolyTriGroup* pPTG = m_ppg_head;
+	const PolyTriGroup* pPTG = m_ppg_head;
 
 	// Begin creating the output record
 	// Use a wxMemoryStream for temporary record output.
@@ -727,22 +726,17 @@ int PolyTessGeo::Write_PolyTriGroup(FILE* ofs)
 	// Create initial known part of the output record
 
 	// PolyTessGeo Properties
-	stemp.sprintf(_T("  POLYTESSGEOPROP %f %f %f %f\n"), xmin, ymin, xmax, ymax);
-	sout += stemp;
+	sout += wxString::Format(_T("  POLYTESSGEOPROP %f %f %f %f\n"), xmin, ymin, xmax, ymax);
 
 	// Transcribe the true number of  contours, and the raw geometry wkb size
-	stemp.sprintf(_T("Contours/nWKB %d %d\n"), ncnt, nwkb);
-	sout += stemp;
+	sout += wxString::Format(_T("Contours/nWKB %d %d\n"), ncnt, nwkb);
 
 	// Transcribe the contour counts
-	stemp.sprintf(_T("Contour nV"));
-	sout += stemp;
+	sout += wxString::Format(_T("Contour nV"));
 	for (int i = 0; i < ncnt; i++) {
-		stemp.sprintf(_T(" %d"), pPTG->pn_vertex[i]);
-		sout += stemp;
+		sout += wxString::Format(_T(" %d"), pPTG->pn_vertex[i]);
 	}
-	stemp.sprintf(_T("\n"));
-	sout += stemp;
+	sout += wxString::Format(_T("\n"));
 	ostream1->Write(sout.mb_str(), sout.Len());
 
 	// Transcribe the raw geometry buffer
@@ -752,7 +746,7 @@ int PolyTessGeo::Write_PolyTriGroup(FILE* ofs)
 
 	// Transcribe the TriPrim chain
 
-	geo::TriPrim* pTP = pPTG->tri_prim_head; // head of linked list of TriPrims
+	const geo::TriPrim* pTP = pPTG->tri_prim_head; // head of linked list of TriPrims
 
 	while (pTP) {
 		ostream2->Write(&pTP->type, sizeof(int));
@@ -777,102 +771,15 @@ int PolyTessGeo::Write_PolyTriGroup(FILE* ofs)
 
 	fwrite(stemp.mb_str(), 1, stemp.Len(), ofs); // Header, + record length
 
-	char* tb = (char*)malloc(ostream1->GetSize());
+	char* tb = new char[ostream1->GetSize()];
 	ostream1->CopyTo(tb, ostream1->GetSize());
 	fwrite(tb, 1, ostream1->GetSize(), ofs);
-	free(tb);
+	delete [] tb;
 
-	tb = (char*)malloc(ostream2->GetSize());
+	tb = new char[ostream2->GetSize()];
 	ostream2->CopyTo(tb, ostream2->GetSize());
 	fwrite(tb, 1, ostream2->GetSize(), ofs);
-	free(tb);
-
-	delete ostream1;
-	delete ostream2;
-
-	return 0;
-}
-
-int PolyTessGeo::Write_PolyTriGroup(wxOutputStream& out_stream)
-{
-	wxString sout;
-	wxString sout1;
-	wxString stemp;
-
-	PolyTriGroup* pPTG = m_ppg_head;
-
-	// Begin creating the output record
-	// Use a wxMemoryStream for temporary record output.
-	// When all finished, we'll touch up a few items before
-	// committing to disk.
-
-	wxMemoryOutputStream* ostream1 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
-	wxMemoryOutputStream* ostream2 = new wxMemoryOutputStream(NULL, 0); // auto buffer creation
-
-	// Create initial known part of the output record
-
-	// PolyTessGeo Properties
-	stemp.sprintf(_T("  POLYTESSGEOPROP %f %f %f %f\n"), xmin, ymin, xmax, ymax);
-	sout += stemp;
-
-	// Transcribe the true number of  contours, and the raw geometry wkb size
-	stemp.sprintf(_T("Contours/nWKB %d %d\n"), ncnt, nwkb);
-	sout += stemp;
-
-	// Transcribe the contour counts
-	stemp.sprintf(_T("Contour nV"));
-	sout += stemp;
-	for (int i = 0; i < ncnt; i++) {
-		stemp.sprintf(_T(" %d"), pPTG->pn_vertex[i]);
-		sout += stemp;
-	}
-	stemp.sprintf(_T("\n"));
-	sout += stemp;
-	ostream1->Write(sout.mb_str(), sout.Len());
-
-	// Transcribe the raw geometry buffer
-	ostream1->Write(pPTG->pgroup_geom, nwkb);
-	stemp.sprintf(_T("\n"));
-	ostream1->Write(stemp.mb_str(), stemp.Len());
-
-	// Transcribe the TriPrim chain
-
-	geo::TriPrim* pTP = pPTG->tri_prim_head; // head of linked list of TriPrims
-
-	while (pTP) {
-		ostream2->Write(&pTP->type, sizeof(int));
-		ostream2->Write(&pTP->nVert, sizeof(int));
-
-		ostream2->Write(pTP->p_vertex, pTP->nVert * 2 * sizeof(double));
-
-		//  Write out the object bounding box as lat/lon
-		ostream2->Write(&pTP->minx, sizeof(double));
-		ostream2->Write(&pTP->maxx, sizeof(double));
-		ostream2->Write(&pTP->miny, sizeof(double));
-		ostream2->Write(&pTP->maxy, sizeof(double));
-
-		pTP = pTP->p_next;
-	}
-
-	stemp.sprintf(_T("POLYEND\n"));
-	ostream2->Write(stemp.mb_str(), stemp.Len());
-
-	int nrecl = ostream1->GetSize() + ostream2->GetSize();
-	stemp.sprintf(_T("  POLYTESSGEO  %08d %g %g\n"), nrecl, m_ref_lat, m_ref_lon);
-
-	out_stream.Write(stemp.mb_str(), stemp.Len()); // Header, + record length
-
-	char* tb = (char*)malloc(ostream1->GetSize());
-	ostream1->CopyTo(tb, ostream1->GetSize());
-
-	out_stream.Write(tb, ostream1->GetSize());
-	free(tb);
-
-	tb = (char*)malloc(ostream2->GetSize());
-	ostream2->CopyTo(tb, ostream2->GetSize());
-	out_stream.Write(tb, ostream2->GetSize());
-
-	free(tb);
+	delete [] tb;
 
 	delete ostream1;
 	delete ostream2;
@@ -956,7 +863,8 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon* poly, bool bSENC_SM, double ref_lat, 
 {
 #ifdef ocpnUSE_GL
 
-	int iir, ip;
+	int iir;
+	int ip;
 	int* cntr;
 	GLdouble* geoPt;
 
@@ -964,7 +872,7 @@ int PolyTessGeo::PolyTessGeoGL(OGRPolygon* poly, bool bSENC_SM, double ref_lat, 
 	wxString sout1;
 	wxString stemp;
 
-	//  Make a quick sanity check of the polygon coherence
+	// Make a quick sanity check of the polygon coherence
 	bool b_ok = true;
 	OGRLineString* tls = poly->getExteriorRing();
 	if (!tls) {

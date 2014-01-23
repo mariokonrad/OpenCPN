@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "PolyTriGroup.h"
-#include "geo/TriPrim.h"
+#include <geo/TriPrim.h>
 #include <cstdlib>
 
 namespace geo {

@@ -26,7 +26,6 @@
 
 namespace geo {
 
-class ExtendedGeometry;
 class TriPrim;
 
 /// Used for describing/rendering tesselated polygons
@@ -34,7 +33,6 @@ class PolyTriGroup
 {
 public:
 	PolyTriGroup();
-	PolyTriGroup(ExtendedGeometry* pxGeom);
 	~PolyTriGroup();
 
 	int nContours; // pointer to array of poly vertex counts
@@ -43,9 +41,6 @@ public:
 
 	TriPrim* tri_prim_head; // head of linked list of TriPrims
 	bool m_bSMSENC;
-
-private:
-	int my_bufgets(char* buf, int buf_len_max);
 };
 
 }

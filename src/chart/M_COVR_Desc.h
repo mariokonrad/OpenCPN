@@ -30,7 +30,7 @@
 class wxFFileInputStream;
 class ViewPort;
 
-namespace geo { struct float_2Dpt; }
+namespace geo { struct PointF; }
 
 namespace chart {
 
@@ -86,7 +86,7 @@ public:
 	int m_subcell;
 
 	int m_nvertices;
-	geo::float_2Dpt* pvertices; // FIXME: use std container
+	geo::PointF* pvertices; // FIXME: use std container
 	int m_npub_year;
 	double transform_WGS84_offset_x;
 	double transform_WGS84_offset_y;

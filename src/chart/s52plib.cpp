@@ -4128,7 +4128,7 @@ bool s52plib::inter_tri_rect(wxPoint* ptp, render_canvas_parms* pb_spec)
 	//    Check all four points of rectangle to see it any are within the render triangle
 
 	double p[6]; // FIXME: fubar
-	geo::MyPoint* pmp = (geo::MyPoint*)p;
+	geo::PointD* pmp = (geo::PointD*)p;
 
 	for (int i = 0; i < 3; i++) {
 		pmp[i].x = ptp[i].x;

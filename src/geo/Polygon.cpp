@@ -26,11 +26,11 @@
 
 namespace geo {
 
-static int Intersect(MyPoint, MyPoint, MyPoint, MyPoint);
-static int CCW(MyPoint, MyPoint, MyPoint);
+static int Intersect(PointD, PointD, PointD, PointD);
+static int CCW(PointD, PointD, PointD);
 
-static int Intersect_FL(float_2Dpt, float_2Dpt, float_2Dpt, float_2Dpt);
-static int CCW_FL(float_2Dpt, float_2Dpt, float_2Dpt);
+static int Intersect_FL(PointF, PointF, PointF, PointF);
+static int CCW_FL(PointF, PointF, PointF);
 
 /// This routine determines if the point passed is in the polygon. It uses
 /// the classical polygon hit-testing algorithm: a horizontal ray starting
@@ -41,13 +41,13 @@ static int CCW_FL(float_2Dpt, float_2Dpt, float_2Dpt);
 /// Polygon is assumed OPEN, not CLOSED.
 /// RETURN VALUE
 /// (bool) TRUE if the point is inside the polygon, FALSE if not.
-int G_PtInPolygon(MyPoint* rgpts, int wnumpts, float x, float y)
+int G_PtInPolygon(const PointD* rgpts, int wnumpts, float x, float y)
 {
-	MyPoint* ppt;
-	MyPoint* ppt1;
-	MyPoint pt1;
-	MyPoint pt2;
-	MyPoint pt0;
+	const PointD* ppt;
+	const PointD* ppt1;
+	PointD pt1;
+	PointD pt2;
+	PointD pt0;
 	int wnumintsct = 0;
 
 	pt0.x = x;
@@ -77,7 +77,7 @@ int G_PtInPolygon(MyPoint* rgpts, int wnumpts, float x, float y)
 ///
 /// RETURN VALUE
 /// TRUE if they intersect, FALSE if not.
-static int Intersect(MyPoint p1, MyPoint p2, MyPoint p3, MyPoint p4)
+static int Intersect(PointD p1, PointD p2, PointD p3, PointD p4)
 {
 	int i;
 	i = CCW(p1, p2, p3);
@@ -94,7 +94,7 @@ static int Intersect(MyPoint p1, MyPoint p2, MyPoint p3, MyPoint p4)
 /// RETURN VALUE
 /// (int) 1 if the movement is in a counterclockwise direction, -1 if
 /// not.
-static int CCW(MyPoint p0, MyPoint p1, MyPoint p2)
+static int CCW(PointD p0, PointD p1, PointD p2)
 {
 	double dx1;
 	double dx2;
@@ -112,13 +112,15 @@ static int CCW(MyPoint p0, MyPoint p1, MyPoint p2)
 	return ((dx1 * dy2 > dy1 * dx2) ? 1 : -1);
 }
 
-int G_PtInPolygon_FL(float_2Dpt* rgpts, int wnumpts, float x, float y)
+int G_PtInPolygon_FL(const PointF* rgpts, int wnumpts, float x, float y)
 {
-	float_2Dpt* ppt;
-	float_2Dpt* ppt1;
-	float_2Dpt pt0;
-	float_2Dpt pt1;
-	float_2Dpt pt2;
+	// FIXME: check for code duplication (possibly use a template)
+
+	const PointF* ppt;
+	const PointF* ppt1;
+	PointF pt0;
+	PointF pt1;
+	PointF pt2;
 	int wnumintsct = 0;
 
 	pt0.x = x;
@@ -148,7 +150,7 @@ int G_PtInPolygon_FL(float_2Dpt* rgpts, int wnumpts, float x, float y)
 ///
 /// RETURN VALUE
 /// TRUE if they intersect, FALSE if not.
-static int Intersect_FL(float_2Dpt p1, float_2Dpt p2, float_2Dpt p3, float_2Dpt p4)
+static int Intersect_FL(PointF p1, PointF p2, PointF p3, PointF p4)
 {
 	int i;
 	i = CCW_FL(p1, p2, p3);
@@ -165,7 +167,7 @@ static int Intersect_FL(float_2Dpt p1, float_2Dpt p2, float_2Dpt p3, float_2Dpt 
 /// RETURN VALUE
 /// (int) 1 if the movement is in a counterclockwise direction, -1 if
 /// not.
-static int CCW_FL(float_2Dpt p0, float_2Dpt p1, float_2Dpt p2)
+static int CCW_FL(PointF p0, PointF p1, PointF p2)
 {
 	double dx1;
 	double dx2;

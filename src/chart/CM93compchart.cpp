@@ -721,7 +721,7 @@ bool cm93compchart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPor
 				// vp.vpBBox.Intersect(pmcd->m_covr_bbox)))
 				{
 
-					geo::float_2Dpt* p = pmcd->pvertices;
+					geo::PointF* p = pmcd->pvertices;
 					wxPoint* pwp = m_pcm93chart_current->GetDrawBuffer(pmcd->m_nvertices);
 
 					for (int ip = 0; ip < pmcd->m_nvertices; ip++) {
@@ -984,7 +984,7 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 				// vp.vpBBox.Intersect(pmcd->m_covr_bbox)))
 				{
 
-					geo::float_2Dpt* p = pmcd->pvertices;
+					geo::PointF* p = pmcd->pvertices;
 					wxPoint* pwp = m_pcm93chart_current->GetDrawBuffer(pmcd->m_nvertices);
 
 					for (int ip = 0; ip < pmcd->m_nvertices; ip++) {
@@ -1203,7 +1203,7 @@ bool cm93compchart::RenderNextSmallerCellOutlines(ocpnDC& dc, const ViewPort& vp
 						if (!(BoundingBox::_OUT
 							  == vp_positive.GetBBox().Intersect(mcd->m_covr_bbox))
 							|| !(BoundingBox::_OUT == vp.GetBBox().Intersect(mcd->m_covr_bbox))) {
-							geo::float_2Dpt* p = mcd->pvertices;
+							geo::PointF* p = mcd->pvertices;
 							wxPoint* pwp = psc->GetDrawBuffer(mcd->m_nvertices);
 
 							for (int ip = 0; ip < mcd->m_nvertices; ip++, p++) {

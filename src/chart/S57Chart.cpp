@@ -5074,7 +5074,7 @@ void s57chart::CreateSENCVectorEdgeTable(FILE* fpOut, S57Reader* poReader)
 			double easting, northing;
 			geo::toSM(geo::Position(p.getY(), p.getX()), reference_point, &easting, &northing);
 
-			geo::MyPoint pd;
+			geo::PointD pd;
 			pd.x = easting;
 			pd.y = northing;
 			fwrite(&pd, 1, sizeof(pd), fpOut);
@@ -5128,7 +5128,7 @@ void s57chart::CreateSENCConnNodeTable(FILE* fpOut, S57Reader* poReader)
 				geo::toSM(geo::Position(pP->getY(), pP->getX()), reference_point, &easting,
 						  &northing);
 
-				geo::MyPoint pd;
+				geo::PointD pd;
 				pd.x = easting;
 				pd.y = northing;
 				fwrite(&pd, 1, sizeof(pd), fpOut);
@@ -5411,7 +5411,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 
 		const PolyTriGroup* ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
 		const TriPrim* pTP = ppg->tri_prim_head;
-		geo::MyPoint pvert_list[3];
+		geo::PointD pvert_list[3];
 
 		// Polygon geometry is carried in SM coordinates, so...
 		// make the hit test thus.
@@ -5521,9 +5521,9 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 
 		int ntraps = ptg->ntrap_count;
 		trapz_t* ptraps = ptg->trap_array;
-		geo::MyPoint* segs = (geo::MyPoint*)ptg->ptrapgroup_geom; // TODO convert MyPoint to wxPoint2DDouble globally
+		geo::PointD* segs = (geo::PointD*)ptg->ptrapgroup_geom; // TODO convert PointD to wxPoint2DDouble globally
 
-		geo::MyPoint pvert_list[4];
+		geo::PointD pvert_list[4];
 
 		double y_rate = obj->y_rate;
 		double y_origin = obj->y_origin;

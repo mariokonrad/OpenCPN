@@ -26,20 +26,20 @@
 
 namespace geo {
 
-struct MyPoint
+struct PointD
 {
 	double x;
 	double y;
 };
 
-struct float_2Dpt
+struct PointF
 {
 	float y;
 	float x;
 };
 
-int G_PtInPolygon(MyPoint*, int, float, float);
-int G_PtInPolygon_FL(float_2Dpt*, int, float, float);
+int G_PtInPolygon(const PointD*, int, float, float);
+int G_PtInPolygon_FL(const PointF*, int, float, float);
 
 }
 

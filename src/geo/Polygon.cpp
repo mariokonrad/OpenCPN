@@ -53,7 +53,7 @@ bool Polygon::inside(const PointD* polygon, int polygon_size, const PointD& poin
 	if (intersect(point, p, polygon[polygon_size - 1], polygon[0]))
 		++num_intersection;
 
-	return num_intersection % 2;
+	return (num_intersection % 2) == 1;
 }
 
 /// Given two line segments, determine if they intersect.
@@ -102,7 +102,7 @@ bool Polygon::insidef(const PointF* polygon, int polygon_size, const PointF& poi
 	if (intersectf(point, p, polygon[polygon_size - 1], polygon[0]))
 		++num_intersection;
 
-	return num_intersection % 2;
+	return (num_intersection % 2) == 1;
 }
 
 /// @see intersect

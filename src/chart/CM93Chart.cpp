@@ -2493,7 +2493,7 @@ wxPoint2DDouble cm93chart::FindM_COVROffset(double lat, double lon)
 	if (m_CIB->m_cell_mcovr_list.size() > 1) {
 		for (List_Of_M_COVR_Desc::const_iterator i = m_CIB->m_cell_mcovr_list.begin();
 			 i != m_CIB->m_cell_mcovr_list.end(); ++i) {
-			M_COVR_Desc* pmcd = *i;
+			const M_COVR_Desc* pmcd = *i;
 			if (G_PtInPolygon_FL(pmcd->pvertices, pmcd->m_nvertices, lon, lat)) {
 				ret.m_x = pmcd->transform_WGS84_offset_x;
 				ret.m_y = pmcd->transform_WGS84_offset_y;
@@ -2745,7 +2745,7 @@ bool cm93chart::UpdateCovrSet(const ViewPort& vpt)
 
 bool cm93chart::IsPointInLoadedM_COVR(double xc, double yc)
 {
-	for (CovrDescContainer::iterator i = m_pcovr_array_loaded.begin();
+	for (CovrDescContainer::const_iterator i = m_pcovr_array_loaded.begin();
 		 i != m_pcovr_array_loaded.end(); ++i) {
 		if (G_PtInPolygon_FL((*i)->pvertices, (*i)->m_nvertices, xc, yc))
 			return true;

@@ -23,6 +23,7 @@ add_executable(testrunner
 	${TEST_SRC}
 	${CMAKE_SOURCE_DIR}/src/geo/Position.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/BoundingBox.cpp
+	${CMAKE_SOURCE_DIR}/src/geo/Polygon.cpp
 	)
 
 target_link_libraries(testrunner

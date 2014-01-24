@@ -4114,8 +4114,8 @@ bool TestLinesIntersection(XLINE& a, XLINE& b)
 //-----------------------------------------------------------------------
 bool s52plib::inter_tri_rect(wxPoint* ptp, render_canvas_parms* pb_spec)
 {
-	//    First stage
-	//    Check all three points of triangle to see it any are within the render rectangle
+	// First stage
+	// Check all three points of triangle to see it any are within the render rectangle
 
 	geo::BoundingBox rect(pb_spec->lclip, pb_spec->y, pb_spec->rclip, pb_spec->y + pb_spec->height);
 
@@ -4124,12 +4124,11 @@ bool s52plib::inter_tri_rect(wxPoint* ptp, render_canvas_parms* pb_spec)
 			return true;
 	}
 
-	//    Next stage
-	//    Check all four points of rectangle to see it any are within the render triangle
+	// Next stage
+	// Check all four points of rectangle to see it any are within the render triangle
 
 	double p[6]; // FIXME: fubar
 	geo::PointD* pmp = (geo::PointD*)p;
-
 	for (int i = 0; i < 3; i++) {
 		pmp[i].x = ptp[i].x;
 		pmp[i].y = ptp[i].y;
@@ -4147,8 +4146,8 @@ bool s52plib::inter_tri_rect(wxPoint* ptp, render_canvas_parms* pb_spec)
 	if (geo::G_PtInPolygon(pmp, 3, pb_spec->rclip, pb_spec->y + pb_spec->height))
 		return true;
 
-	//    last step
-	//    Check triangle lines against rect lines for line intersect
+	// last step
+	// Check triangle lines against rect lines for line intersect
 
 	for (int i = 0; i < 3; i++) {
 		XLINE a;

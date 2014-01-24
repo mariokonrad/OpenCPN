@@ -38,6 +38,21 @@ struct PointF
 	float x;
 };
 
+class Polygon
+{
+public:
+	static bool inside(const PointD*, int, const PointD&);
+	static bool insidef(const PointF*, int, const PointF&); // FIXME: really necessary?
+
+private:
+	static bool intersect(const PointD& p1, const PointD& p2, const PointD& p3, const PointD& p4);
+	static int ccw(const PointD&, const PointD&, const PointD&);
+
+	// FIXME: those two really necessary?
+	static bool intersectf(const PointF& p1, const PointF& p2, const PointF& p3, const PointF& p4);
+	static int ccwf(const PointF&, const PointF&, const PointF&);
+};
+
 int G_PtInPolygon(const PointD*, int, float, float);
 int G_PtInPolygon_FL(const PointF*, int, float, float);
 

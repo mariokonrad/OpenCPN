@@ -791,23 +791,25 @@ SET(HDR_SOUND
 	)
 
 SET(SRC_GEO
+	src/geo/Polygon.cpp
+	src/geo/triangulate.cpp
+	src/geo/lmfit.cpp
+	src/geo/LineClip.cpp
 	src/geo/Position.cpp
 	src/geo/BoundingBox.cpp
 	src/geo/LatLonBoundingBox.cpp
-	src/geo/lmfit.cpp
-	src/geo/Polygon.cpp
-	src/geo/LineClip.cpp
 	src/geo/GeoRef.cpp
 	src/geo/Geodesic.cpp
 	)
 
 SET(HDR_GEO
+	src/geo/Polygon.h
+	src/geo/triangulate.h
+	src/geo/lmfit.h
+	src/geo/LineClip.h
 	src/geo/Position.h
 	src/geo/BoundingBox.h
 	src/geo/LatLonBoundingBox.h
-	src/geo/Polygon.h
-	src/geo/LineClip.h
-	src/geo/lmfit.h
 	src/geo/GeoRef.h
 	src/geo/Geodesic.h
 	)
@@ -1147,20 +1149,18 @@ if (USE_S57)
 	add_definitions(-DUSE_S57)
 
 	set(SRC_S57ENC
-		src/geo/ExtendedGeometry.h
-		src/geo/TriPrim.h
-		src/geo/PolyTriGroup.h
-		src/geo/PolyTrapGroup.h
-		src/geo/PolyTessGeo.h
-		src/geo/triangulate.h
-		src/geo/triangulate.cpp
-
-		src/geo/TriPrim.cpp
 		src/geo/ExtendedGeometry.cpp
+		src/geo/ExtendedGeometry.h
+		src/geo/TriPrim.cpp
+		src/geo/TriPrim.h
 		src/geo/PolyTriGroup.cpp
+		src/geo/PolyTriGroup.h
 		src/geo/PolyTrapGroup.cpp
-		src/geo/PolyTessGeoTrap.cpp
+		src/geo/PolyTrapGroup.h
 		src/geo/PolyTessGeo.cpp
+		src/geo/PolyTessGeo.h
+		src/geo/PolyTessGeoTrap.cpp
+		src/geo/PolyTessGeoTrap.h
 
 		src/chart/S52Color.h
 		src/chart/ColorTable.h

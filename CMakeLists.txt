@@ -790,7 +790,7 @@ SET(HDR_SOUND
 	src/sound/OCPN_Sound.h
 	)
 
-SET(SRC_GEO
+add_library(geo STATIC
 	src/geo/Polygon.cpp
 	src/geo/triangulate.cpp
 	src/geo/lmfit.cpp
@@ -800,9 +800,7 @@ SET(SRC_GEO
 	src/geo/LatLonBoundingBox.cpp
 	src/geo/GeoRef.cpp
 	src/geo/Geodesic.cpp
-	)
 
-SET(HDR_GEO
 	src/geo/Polygon.h
 	src/geo/triangulate.h
 	src/geo/lmfit.h
@@ -885,7 +883,6 @@ SET(HDRS
 	${HDR_TIDE}
 	${HDR_PLUGIN}
 	${HDR_SOUND}
-	${HDR_GEO}
 	${HDR_CHART}
 
 	src/tide/TCMgr.h
@@ -1018,7 +1015,6 @@ SET(SRCS
 	${SRC_TIDE}
 	${SRC_PLUGIN}
 	${SRC_SOUND}
-	${SRC_GEO}
 	${SRC_CHART}
 
 	src/tide/TCMgr.cpp
@@ -1459,10 +1455,11 @@ if(APPLE)
 		BUNDLE DESTINATION ${PREFIX_BIN}
 		PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 
-	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
+	target_link_libraries(${PACKAGE_NAME}
 		${wxWidgets_LIBRARIES}
 		NMEA0183
 		${EXTRA_LIBS}
+		geo
 		)
 ENDIF(APPLE)
 
@@ -1472,7 +1469,7 @@ ENDIF(UNIX AND NOT APPLE)
 
 
 If(NOT APPLE)
-	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
+	target_link_libraries(${PACKAGE_NAME}
 		pugixml
 		tinyxml
 		tcd
@@ -1480,11 +1477,12 @@ If(NOT APPLE)
 		${wxWidgets_LIBRARIES}
 		NMEA0183
 		${EXTRA_LIBS}
+		geo
 		)
 ENDIF(NOT APPLE)
 
 IF(WIN32)
-	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
+	target_link_libraries(${PACKAGE_NAME}
 		setupapi.lib
 		gdiplus.lib
 		glu32.lib
@@ -1494,7 +1492,7 @@ IF(WIN32)
 ENDIF(WIN32)
 
 IF(UNIX)
-	TARGET_LINK_LIBRARIES(${PACKAGE_NAME}
+	target_link_libraries(${PACKAGE_NAME}
 		${OPENGL_LIBRARIES}
 		${GETTEXT_LIBRARY}
 		bzip2
@@ -1505,11 +1503,11 @@ ENDIF(UNIX)
 # Certain older Cmake FindGTK2 modules ( e.g. cmake-2.8.0-2) do not yield all of the required link libraries
 # So, add them manually.  These declarations may be redundant in some architectures, but do no harm.
 IF(UNIX)
-	TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} dl )
+	target_link_libraries( ${PACKAGE_NAME} dl )
 ENDIF(UNIX)
 
 IF(GTK2_FOUND)
-	TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} gobject-2.0 )
+	target_link_libraries(${PACKAGE_NAME} gobject-2.0)
 ENDIF(GTK2_FOUND)
 
 

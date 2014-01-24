@@ -281,8 +281,6 @@ PlugInManager* g_pi_manager;
 bool g_bAISRolloverShowClass;
 bool g_bAISRolloverShowCOG;
 bool g_bAISRolloverShowCPA;
-bool g_bFullScreenQuilt;
-bool g_bQuiltEnable;
 bool g_bportable;
 bool g_bdisable_opengl;
 chart::ChartGroupArray* g_pGroupArray;
@@ -2210,8 +2208,9 @@ int MainFrame::DoOptionsDialog()
 
 	bDBUpdateInProgress = true;
 
-	bPrevQuilt = g_bQuiltEnable;
-	bPrevFullScreenQuilt = g_bFullScreenQuilt;
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+	bPrevQuilt = view.quilt_enable;
+	bPrevFullScreenQuilt = view.fullscreen_quilt;
 
 	prev_locale = global::OCPN::get().sys().data().locale;
 
@@ -2340,8 +2339,9 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 		g_pActiveTrack->SetPrecision(global::OCPN::get().nav().get_track().TrackPrecision);
 	}
 
-	if ((bPrevQuilt != g_bQuiltEnable) || (bPrevFullScreenQuilt != g_bFullScreenQuilt)) {
-		chart_canvas->SetQuiltMode(g_bQuiltEnable);
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+	if ((bPrevQuilt != view.quilt_enable) || (bPrevFullScreenQuilt != view.fullscreen_quilt)) {
+		chart_canvas->SetQuiltMode(view.quilt_enable);
 		SetupQuiltMode();
 	}
 
@@ -2616,7 +2616,7 @@ void MainFrame::ToggleQuiltMode(void)
 	if (chart_canvas) {
 		bool cur_mode = chart_canvas->GetQuiltMode();
 
-		if (!chart_canvas->GetQuiltMode() && g_bQuiltEnable) {
+		if (!chart_canvas->GetQuiltMode() && global::OCPN::get().gui().view().quilt_enable) {
 			chart_canvas->SetQuiltMode(true);
 		} else if (chart_canvas->GetQuiltMode()) {
 			chart_canvas->SetQuiltMode(false);
@@ -3657,7 +3657,7 @@ void MainFrame::HandlePianoClick(int selected_index, int selected_dbIndex)
 		return;
 
 	if (!chart_canvas->GetQuiltMode()) {
-		if (m_bpersistent_quilt && g_bQuiltEnable) {
+		if (m_bpersistent_quilt && global::OCPN::get().gui().view().quilt_enable) {
 			if (chart_canvas->IsChartQuiltableRef(selected_dbIndex)) {
 				ToggleQuiltMode();
 				SelectQuiltRefdbChart(selected_dbIndex);

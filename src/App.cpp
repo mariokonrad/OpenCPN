@@ -161,8 +161,6 @@ extern double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode
 extern double g_COGAvg;
 extern bool g_bskew_comp;
 extern PlugInManager* g_pi_manager;
-extern bool g_bFullScreenQuilt;
-extern bool g_bQuiltEnable;
 extern bool g_bportable;
 extern bool g_bdisable_opengl;
 extern chart::ChartGroupArray* g_pGroupArray;
@@ -188,8 +186,6 @@ extern bool g_bShowAIS;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
 extern Routeman* g_pRouteMan;
-extern RoutePoint* pAnchorWatchPoint1;
-extern RoutePoint* pAnchorWatchPoint2;
 extern WayPointman* pWayPointMan;
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
@@ -849,8 +845,8 @@ void App::setup_for_empty_config(bool novicemode)
 		ais.set_ShowMoored_Kts(0.2);
 		nav.set_TrackDaily(false);
 		nav.set_PlanSpeed(6.0);
-		g_bFullScreenQuilt = true;
-		g_bQuiltEnable = true;
+		gui.set_view_fullscreen_quilt(true);
+		gui.set_view_quilt_enable(true);
 		g_bskew_comp = false;
 		ais.set_ShowAreaNotices(false);
 		gui.set_DrawAISSize(false);
@@ -1492,7 +1488,7 @@ bool App::OnInit()
 	cc1 = new ChartCanvas(gFrame); // the chart display canvas
 	gFrame->SetCanvasWindow(cc1);
 
-	cc1->SetQuiltMode(g_bQuiltEnable); // set initial quilt mode
+	cc1->SetQuiltMode(view.quilt_enable); // set initial quilt mode
 	cc1->m_bFollow = pConfig->follow(); // set initial state
 	cc1->SetViewPoint(global::OCPN::get().nav().get_data().view_point, view.initial_scale_ppm, 0.0, 0.0);
 

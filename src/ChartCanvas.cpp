@@ -227,7 +227,6 @@ extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bdisable_opengl;
 
-extern bool g_bFullScreenQuilt;
 extern wxProgressDialog* s_ProgDialog;
 
 extern bool g_b_useStencil;
@@ -1161,7 +1160,7 @@ std::vector<int> ChartCanvas::GetQuiltIndexArray(void)
 
 void ChartCanvas::SetQuiltMode(bool quilt)
 {
-	VPoint.set_quilt(quilt, g_bFullScreenQuilt);
+	VPoint.set_quilt(quilt, global::OCPN::get().gui().view().fullscreen_quilt);
 }
 
 bool ChartCanvas::GetQuiltMode(void) const
@@ -2667,7 +2666,7 @@ bool ChartCanvas::SetViewPoint(const geo::Position& pos, double scale_ppm, doubl
 					current_ref_stack_index = i;
 			}
 
-			if (g_bFullScreenQuilt) {
+			if (global::OCPN::get().gui().view().fullscreen_quilt) {
 				current_ref_stack_index = m_pQuilt->GetRefChartdbIndex();
 			}
 

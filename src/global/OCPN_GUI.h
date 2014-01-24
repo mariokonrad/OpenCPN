@@ -65,6 +65,8 @@ public: // view
 	virtual void set_view_show_active_route_highway(bool);
 	virtual void set_auto_anchor_mark(bool);
 	virtual void set_view_preserve_scale_on_x(bool);
+	virtual void set_view_quilt_enable(bool);
+	virtual void set_view_fullscreen_quilt(bool);
 
 public: // frame
 	virtual const Frame& frame() const;

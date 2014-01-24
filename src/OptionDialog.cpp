@@ -127,8 +127,6 @@ extern bool g_bAISRolloverShowClass;
 extern bool g_bAISRolloverShowCOG;
 extern bool g_bAISRolloverShowCPA;
 
-extern bool g_bQuiltEnable;
-extern bool g_bFullScreenQuilt;
 extern wxString g_GPS_Ident;
 extern bool g_bGarminHostUpload;
 
@@ -1968,8 +1966,8 @@ void options::SetInitialSettings()
 	pCOGUPUpdateSecs->SetValue(wxString::Format(_T("%d"), g_COGAvgSec));
 
 	pCDOOutlines->SetValue(view.show_outlines);
-	pCDOQuilting->SetValue(g_bQuiltEnable);
-	pFullScreenQuilt->SetValue(!g_bFullScreenQuilt);
+	pCDOQuilting->SetValue(view.quilt_enable);
+	pFullScreenQuilt->SetValue(!view.fullscreen_quilt);
 	pSDepthUnits->SetValue(view.show_depth_units);
 	pSkewComp->SetValue(g_bskew_comp);
 	pOpenGL->SetValue(g_bopengl);
@@ -2544,8 +2542,8 @@ void options::OnApplyClick(wxCommandEvent& event)
 	gui.set_view_show_outlines(pCDOOutlines->GetValue());
 	gui.set_view_display_grid(pSDisplayGrid->GetValue());
 
-	g_bQuiltEnable = pCDOQuilting->GetValue();
-	g_bFullScreenQuilt = !pFullScreenQuilt->GetValue();
+	gui.set_view_quilt_enable(pCDOQuilting->GetValue());
+	gui.set_view_fullscreen_quilt(!pFullScreenQuilt->GetValue());
 
 	gui.set_view_show_depth_units(pSDepthUnits->GetValue());
 	g_bskew_comp = pSkewComp->GetValue();

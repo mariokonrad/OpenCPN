@@ -128,9 +128,6 @@ extern bool             g_bfilter_cogsog;
 extern int              g_COGFilterSec;
 extern int              g_SOGFilterSec;
 
-extern bool             g_bQuiltEnable;
-extern bool             g_bFullScreenQuilt;
-
 extern int              g_SkewCompUpdatePeriod;
 
 extern int              g_GPU_MemSize;
@@ -576,7 +573,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	Read(_T("WindowsComPortMax"), &g_nCOMPortCheck, 32);
 
-	Read(_T("ChartQuilting"), &g_bQuiltEnable, 0);
+	gui.set_view_quilt_enable(read_bool(_T("ChartQuilting"), false));
 
 	Read(_T("CourseUpMode"), &g_bCourseUp, 0);
 	Read(_T("COGUPAvgSeconds"), &g_COGAvgSec, 15);
@@ -640,7 +637,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		racr.ToDouble(&g_n_arrival_circle_radius);
 	g_n_arrival_circle_radius = wxMax(g_n_arrival_circle_radius, .001);
 
-	Read(_T("FullScreenQuilt"), &g_bFullScreenQuilt, 1);
+	gui.set_view_fullscreen_quilt(read_bool(_T("FullScreenQuilt"), true));
 
 	ais.set_TrackCarryOver(read_bool(_T("StartWithTrackActive")));
 	nav.set_TrackDaily(read_bool(_T("AutomaticDailyTracks")));
@@ -1616,8 +1613,8 @@ void Config::UpdateSettings()
 
 	Write(_T("RouteArrivalCircleRadius"), wxString::Format(_T("%.2f"), g_n_arrival_circle_radius));
 
-	Write(_T("ChartQuilting"), g_bQuiltEnable);
-	Write(_T("FullScreenQuilt"), g_bFullScreenQuilt);
+	Write(_T("ChartQuilting"), view.quilt_enable);
+	Write(_T("FullScreenQuilt"), view.fullscreen_quilt);
 
 	if (cc1)
 		Write(_T("ChartQuiltingInitial"), cc1->GetQuiltMode());

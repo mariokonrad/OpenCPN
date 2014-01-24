@@ -146,6 +146,16 @@ void OCPN_GUI::set_view_preserve_scale_on_x(bool value)
 	data_view.preserve_scale_on_x = value;
 }
 
+void OCPN_GUI::set_view_quilt_enable(bool value)
+{
+	data_view.quilt_enable = value;
+}
+
+void OCPN_GUI::set_view_fullscreen_quilt(bool value)
+{
+	data_view.fullscreen_quilt = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

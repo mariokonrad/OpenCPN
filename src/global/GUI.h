@@ -63,6 +63,8 @@ public:
 		bool show_active_route_highway;
 		bool auto_anchor_mark;
 		bool preserve_scale_on_x;
+		bool quilt_enable;
+		bool fullscreen_quilt;
 	};
 
 	virtual const View& view() const = 0;
@@ -89,6 +91,8 @@ public:
 	virtual void set_view_show_active_route_highway(bool) = 0;
 	virtual void set_auto_anchor_mark(bool) = 0;
 	virtual void set_view_preserve_scale_on_x(bool) = 0;
+	virtual void set_view_quilt_enable(bool) = 0;
+	virtual void set_view_fullscreen_quilt(bool) = 0;
 
 public:
 	struct Frame

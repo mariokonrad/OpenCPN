@@ -140,7 +140,6 @@ extern void catch_signals(int signo);
 extern chart::ChartBase* Current_Vector_Ch;
 extern chart::ChartBase* Current_Ch;
 extern double g_ChartNotRenderScaleFactor;
-extern double vLat, vLon;
 extern chart::ChartDB* ChartData;
 extern bool bDBUpdateInProgress;
 extern bool g_bHDTValid;
@@ -2844,9 +2843,8 @@ bool ChartCanvas::SetViewPoint(const geo::Position& pos, double scale_ppm, doubl
 		}
 	}
 
-	//  Maintain global vLat/vLon
-	vLat = VPoint.latitude();
-	vLon = VPoint.longitude();
+	//  Maintain global view point position
+	global::OCPN::get().nav().set_view_point(VPoint.get_position());
 
 	return b_ret;
 }
@@ -6889,8 +6887,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 	switch (event.GetId()) {
 		case ID_DEF_MENU_MAX_DETAIL:
-			vLat = zpos.lat();
-			vLon = zpos.lon();
+			global::OCPN::get().nav().set_view_point(zpos);
 			ClearbFollow();
 			parent_frame->DoChartUpdate();
 			parent_frame->SelectChartFromStack(0, false, CHART_TYPE_DONTCARE, chart::CHART_FAMILY_RASTER);

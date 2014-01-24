@@ -30,6 +30,11 @@ const Navigation::Data & OCPN_Navigation::get_data() const
 	return data;
 }
 
+void OCPN_Navigation::set_view_point(const geo::Position& view_point)
+{
+	data.view_point = view_point;
+}
+
 void OCPN_Navigation::set_position(const geo::Position& position)
 {
 	data.pos = position;

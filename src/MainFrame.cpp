@@ -191,8 +191,6 @@ RouteProp* pRoutePropDialog;
 TrackPropDlg* pTrackPropDialog;
 MarkInfoImpl* pMarkInfoDialog;
 RouteManagerDialog* pRouteManagerDialog;
-double vLat;
-double vLon;
 bool bDBUpdateInProgress;
 ThumbWin* pthumbwin;
 tide::TCMgr* ptcmgr;
@@ -2076,11 +2074,10 @@ void MainFrame::SetbFollow(void)
 
 void MainFrame::ClearbFollow(void)
 {
-	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	global::Navigation& nav = global::OCPN::get().nav();
 
 	// Center the screen on the GPS position, for lack of a better place
-	vLat = nav.pos.lat();
-	vLon = nav.pos.lon();
+	nav.set_view_point(nav.get_data().pos);
 	chart_canvas->m_bFollow = false;
 	SetToolbarItemState(ID_FOLLOW, chart_canvas->m_bFollow);
 	DoChartUpdate();
@@ -2172,8 +2169,7 @@ void MainFrame::SurfaceToolbar(void)
 
 void MainFrame::JumpToPosition(const geo::Position& pos, double scale)
 {
-	vLat = pos.lat();
-	vLon = pos.lon();
+	global::OCPN::get().nav().set_view_point(pos);
 	chart_canvas->m_bFollow = false;
 	DoChartUpdate();
 
@@ -2496,9 +2492,10 @@ void MainFrame::ChartsRefresh(int dbi_hint, const ViewPort& vp, bool b_purge)
 		ChartData->PurgeCache();
 
 	// Build a new ChartStack
+	const geo::Position& view_point = global::OCPN::get().nav().get_data().view_point;
 	using namespace chart;
 	pCurrentStack = new ChartStack;
-	ChartData->BuildChartStack(pCurrentStack, vLat, vLon);
+	ChartData->BuildChartStack(pCurrentStack, view_point.lat(), view_point.lon());
 
 	if (-1 != dbi_hint) {
 		if (chart_canvas->GetQuiltMode()) {
@@ -2728,8 +2725,8 @@ void MainFrame::SetupQuiltMode(void)
 				tLat = nav.pos.lat();
 				tLon = nav.pos.lon();
 			} else {
-				tLat = vLat;
-				tLon = vLon;
+				tLat = nav.view_point.lat();
+				tLon = nav.view_point.lon();
 			}
 
 			if (!Current_Ch) {
@@ -3094,9 +3091,7 @@ void MainFrame::test_unit_test_1()
 				(cte->GetLatMax() + cte->GetLatMin()) / 2,
 				(cte->GetLonMax() + cte->GetLonMin()) / 2);
 
-			vLat = pos.lat();
-			vLon = pos.lon();
-
+			global::OCPN::get().nav().set_view_point(pos);
 			chart_canvas->SetViewPoint(pos);
 
 			if (chart_canvas->GetQuiltMode()) {
@@ -3863,12 +3858,12 @@ void MainFrame::activate_chart(chart::ChartBase* tentative)
 void MainFrame::setup_viewpoint()
 {
 	// Setup the view
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	geo::Position zpos;
 	if (chart_canvas->m_bFollow) {
-		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		zpos = nav.pos;
 	} else {
-		zpos = geo::Position(vLat, vLon);
+		zpos = nav.view_point;
 	}
 
 	double best_scale = GetBestVPScale(Current_Ch);
@@ -4090,7 +4085,7 @@ bool MainFrame::DoChartUpdate(void)
 	}
 
 	// If in auto-follow mode, use the current glat,glon to build chart stack.
-	// Otherwise, use vLat, vLon gotten from click on chart canvas, or other means
+	// Otherwise, use view point gotten from click on chart canvas, or other means
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
 	if (chart_canvas->m_bFollow == true) {
@@ -4111,7 +4106,6 @@ bool MainFrame::DoChartUpdate(void)
 
 			// The idea here is to cancel the effect of LookAhead for slow speed ove ground, to
 			// avoid jumping of the vp center point during slow maneuvering, or at anchor....
-			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			if (!wxIsNaN(nav.sog)) {
 				if (nav.sog < 1.0)
 					pixel_delta = 0.0;
@@ -4127,9 +4121,9 @@ bool MainFrame::DoChartUpdate(void)
 			vp_pos = geo::ll_gc_ll(nav.pos, dir_to_shift, meters_to_shift / 1852.0);
 		}
 	} else {
-		tLat = vLat;
-		tLon = vLon;
-		vp_pos = geo::Position(vLat, vLon);
+		vp_pos = global::OCPN::get().nav().get_data().view_point;
+		tLat = vp_pos.lat();
+		tLon = vp_pos.lat();
 	}
 
 	if (chart_canvas->GetQuiltMode()) {

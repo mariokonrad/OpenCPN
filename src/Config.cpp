@@ -70,7 +70,6 @@ extern int g_restore_dbindex;
 extern RouteList* pRouteList;
 extern LayerList* pLayerList;
 extern int g_LayerIdx;
-extern double vLat, vLon;
 extern bool g_bShowMag;
 extern double g_UserVar;
 extern ArrayOfConnPrm* g_pConnectionParams;
@@ -953,8 +952,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	}
 
 	// Reasonable starting point
-	vLat = START_LAT; // display viewpoint
-	vLon = START_LON;
+	nav.set_view_point(geo::Position(START_LAT, START_LON));
 
 	// GPS position, as default
 	nav.set_latitude(START_LAT);
@@ -968,6 +966,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		double st_lon;
 		sscanf(st.mb_str(wxConvUTF8), "%lf,%lf", &st_lat, &st_lon);
 
+		double lat = nav.get_data().view_point.lat();
+		double lon = nav.get_data().view_point.lon();
+
 		// Sanity check the lat/lon...both have to be reasonable.
 		if (fabs(st_lon) < 360.0) {
 			while (st_lon < -180.0)
@@ -976,13 +977,16 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 			while (st_lon > 180.0)
 				st_lon -= 360.0;
 
-			vLon = st_lon;
+			lon = st_lon;
 		}
 
 		if (fabs(st_lat) < 90.0)
-			vLat = st_lat;
+			lat = st_lat;
+
+		nav.set_view_point(geo::Position(lat, lon));
 	}
-	wxLogMessage(wxString::Format(_T("Setting Viewpoint Lat/Lon %g, %g"), vLat, vLon));
+	wxLogMessage(wxString::Format(_T("Setting Viewpoint Lat/Lon %g, %g"),
+								  nav.get_data().view_point.lat(), nav.get_data().view_point.lon()));
 
 	if (Read(wxString(_T("VPScale")), &st)) {
 		double st_view_scale;

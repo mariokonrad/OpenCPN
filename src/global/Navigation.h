@@ -38,6 +38,7 @@ public:
 public:
 	struct Data
 	{
+		geo::Position view_point; // position of view point
 		geo::Position pos; // latitude/longitude
 		double cog; // course over ground in degrees
 		double sog; // speed over ground in knots
@@ -47,6 +48,7 @@ public:
 	};
 
 	virtual const Data& get_data() const = 0;
+	virtual void set_view_point(const geo::Position&) = 0;
 	virtual void set_position(const geo::Position&) = 0;
 	virtual void set_latitude(double) = 0;
 	virtual void set_longitude(double) = 0;

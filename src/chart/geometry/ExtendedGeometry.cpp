@@ -21,20 +21,49 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "TriPrim.h"
-#include <geo/BoundingBox.h>
+#include "ExtendedGeometry.h"
+#include <cstring>
 #include <cstdlib>
 
-namespace geo {
+namespace chart {
+namespace geometry {
 
-TriPrim::TriPrim()
+ExtendedGeometry::ExtendedGeometry()
+	: pogrGeom(NULL)
+	, n_vector_indices(0)
+	, pvector_index(NULL)
+	, n_contours(0)
+	, contour_array(NULL)
+	, n_max_vertex(0)
+	, pointx(0)
+	, pointy(0)
+	, vertex_array(NULL)
+	, xmin(0)
+	, xmax(0)
+	, ymin(0)
+	, ymax(0)
+	, n_max_edge_points(0)
+	, x_rate(0.0)
+	, x_offset(0.0)
+	, y_rate(0.0)
+	, y_offset(0.0)
 {
 }
 
-TriPrim::~TriPrim()
+ExtendedGeometry::~ExtendedGeometry()
 {
-	free(p_vertex); // FIXME: replace traditional memory allocations
+	free(vertex_array);
+	delete [] contour_array;
 }
 
+void ExtendedGeometry::set_contour_array(const int* data, int n)
+{
+	// FIXME: check if the memory is already allocated
+
+	n_contours = n;
+	contour_array = new int[n];
+	memcpy(contour_array, data, n * sizeof(int));
 }
+
+}}
 

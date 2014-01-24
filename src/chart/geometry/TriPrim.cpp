@@ -21,41 +21,20 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "PolyTrapGroup.h"
-#include <geo/ExtendedGeometry.h>
+#include "TriPrim.h"
 #include <cstdlib>
 
-namespace geo {
+namespace chart {
+namespace geometry {
 
-PolyTrapGroup::PolyTrapGroup()
-	: nContours(0)
-	, pn_vertex(NULL)
-	, ptrapgroup_geom(NULL)
-	, ntrap_count(0)
-	, trap_array(NULL)
-	, m_trap_error(0)
+TriPrim::TriPrim()
 {
 }
 
-PolyTrapGroup::PolyTrapGroup(ExtendedGeometry* pxGeom)
-	: nContours(0)
-	, pn_vertex(NULL)
-	, ptrapgroup_geom(NULL)
-	, ntrap_count(0)
-	, trap_array(NULL)
-	, m_trap_error(0)
+TriPrim::~TriPrim()
 {
-	nContours = pxGeom->n_contours;
-	pn_vertex = pxGeom->contour_array;
-	ptrapgroup_geom = pxGeom->vertex_array;
+	free(p_vertex); // FIXME: replace traditional memory allocations
 }
 
-PolyTrapGroup::~PolyTrapGroup()
-{
-	free(pn_vertex); // FIXME: potential 'double free' of allocated data, see ~ExtendedGeometry
-	free(ptrapgroup_geom);
-	free(trap_array);
-}
-
-}
+}}
 

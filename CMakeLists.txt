@@ -1149,18 +1149,18 @@ if (USE_S57)
 	add_definitions(-DUSE_S57)
 
 	set(SRC_S57ENC
-		src/geo/ExtendedGeometry.cpp
-		src/geo/ExtendedGeometry.h
-		src/geo/TriPrim.cpp
-		src/geo/TriPrim.h
-		src/geo/PolyTriGroup.cpp
-		src/geo/PolyTriGroup.h
-		src/geo/PolyTrapGroup.cpp
-		src/geo/PolyTrapGroup.h
-		src/geo/PolyTessGeo.cpp
-		src/geo/PolyTessGeo.h
-		src/geo/PolyTessGeoTrap.cpp
-		src/geo/PolyTessGeoTrap.h
+		src/chart/geometry/ExtendedGeometry.cpp
+		src/chart/geometry/ExtendedGeometry.h
+		src/chart/geometry/TriPrim.cpp
+		src/chart/geometry/TriPrim.h
+		src/chart/geometry/PolyTriGroup.cpp
+		src/chart/geometry/PolyTriGroup.h
+		src/chart/geometry/PolyTrapGroup.cpp
+		src/chart/geometry/PolyTrapGroup.h
+		src/chart/geometry/PolyTessGeo.cpp
+		src/chart/geometry/PolyTessGeo.h
+		src/chart/geometry/PolyTessGeoTrap.cpp
+		src/chart/geometry/PolyTessGeoTrap.h
 
 		src/chart/S52Color.h
 		src/chart/ColorTable.h

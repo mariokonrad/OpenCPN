@@ -21,47 +21,49 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GEO__EXTENDEDGEOMETRY__H__
-#define __GEO__EXTENDEDGEOMETRY__H__
+#ifndef __CHART__GEOMETRY__POLYTESSGEOTRAP__H__
+#define __CHART__GEOMETRY__POLYTESSGEOTRAP__H__
 
-class wxPoint2DDouble;
-class OGRGeometry;
+namespace chart {
+namespace geometry {
 
-namespace geo {
+class ExtendedGeometry;
+class PolyTrapGroup;
 
-class ExtendedGeometry
+/// Trapezoid Tesselator
+class PolyTessGeoTrap
 {
 public:
-	ExtendedGeometry();
-	~ExtendedGeometry();
+	PolyTessGeoTrap();
+	~PolyTessGeoTrap();
 
-	void set_contour_array(const int* data, int n);
+	PolyTessGeoTrap(ExtendedGeometry* pxGeom); // Build this from Extended Geometry
 
-	OGRGeometry* pogrGeom;
-	int n_vector_indices;
-	int* pvector_index;
-	int n_contours;
-	int* contour_array; // FIXME: use std::vector
-	int n_max_vertex;
-	int pointx;
-	int pointy;
-	wxPoint2DDouble* vertex_array;
-	int xmin;
-	int xmax;
-	int ymin;
-	int ymax;
-	int n_max_edge_points;
+	void BuildTess();
 
-	// Conversion parameters
-	// for (assummed linear) convertions from vertex_array points to easting/northing, metres from
-	// 0,0
-	// To convert to lat/lon, use simple merctor equations
-	double x_rate;
-	double x_offset;
-	double y_rate;
-	double y_offset;
+	double Get_xmin() const;
+	double Get_xmax() const;
+	double Get_ymin() const;
+	double Get_ymax() const;
+	PolyTrapGroup* Get_PolyTrapGroup_head();
+	int GetnVertexMax() const;
+	bool IsOk() const;
+
+	int ErrorCode;
+
+private:
+	bool m_bOK;
+	double xmin;
+	double xmax;
+	double ymin;
+	double ymax;
+	PolyTrapGroup* m_ptg_head; // PolyTrapGroup
+	int m_nvertex_max; // computed max vertex count used by drawing primitives as optimization for
+					   // malloc
+	int m_ncnt;
+	int m_nwkb;
 };
 
-}
+}}
 
 #endif

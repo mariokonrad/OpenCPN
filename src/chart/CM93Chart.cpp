@@ -29,8 +29,9 @@
 #include <chart/CM93Geometry.h>
 #include <chart/CM93_attr_block.h>
 
-#include <geo/ExtendedGeometry.h>
-#include <geo/PolyTessGeo.h>
+#include <chart/geometry/ExtendedGeometry.h>
+#include <chart/geometry/PolyTessGeo.h>
+
 #include <geo/GeoRef.h>
 #include <geo/Polygon.h>
 
@@ -51,6 +52,9 @@
 static bool s_b_busy_shown; // FIXME
 
 namespace chart {
+
+using geometry::PolyTessGeo;
+using geometry::ExtendedGeometry;
 
 typedef std::vector<M_COVR_Desc*> List_Of_M_COVR_Desc;
 
@@ -1212,7 +1216,7 @@ int cm93chart::CreateObjChain(int cell_index, int subcell)
 
 	while (iObj < m_CIB->m_nfeature_records) {
 		if ((pobjectDef != NULL)) {
-			geo::ExtendedGeometry* xgeom = BuildGeom(pobjectDef, NULL, iObj);
+			ExtendedGeometry* xgeom = BuildGeom(pobjectDef, NULL, iObj);
 
 			obj = NULL;
 			if (NULL != xgeom)
@@ -1429,7 +1433,7 @@ InitReturn cm93chart::Init(const wxString& name, ChartInitFlag flags)
 	return INIT_OK;
 }
 
-geo::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileOutputStream* /*postream*/,
+chart::geometry::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileOutputStream* /*postream*/,
 											int iobject)
 {
 	wxString s;
@@ -1454,7 +1458,7 @@ geo::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileOutputStream*
 
 	int iseg;
 
-	geo::ExtendedGeometry* ret_ptr = new geo::ExtendedGeometry;
+	ExtendedGeometry* ret_ptr = new ExtendedGeometry;
 
 	int lon_max, lat_max, lon_min, lat_min;
 	lon_max = 0;
@@ -1811,7 +1815,7 @@ S57Obj * cm93chart::CreateS57Obj(
 		int subcell,
 		Object * pobject,
 		cm93_dictionary * pDict,
-		geo::ExtendedGeometry * xgeom,
+		chart::geometry::ExtendedGeometry * xgeom,
 		double WXUNUSED(ref_lat),
 		double WXUNUSED(ref_lon),
 		double WXUNUSED(scale))
@@ -2232,7 +2236,7 @@ S57Obj * cm93chart::CreateS57Obj(
 			xgeom->y_offset = m_CIB->transform_y_origin - trans_WGS84_offset_y;
 
 			// Set up a deferred tesselation
-			pobj->pPolyTessGeo = new geo::PolyTessGeo(xgeom);
+			pobj->pPolyTessGeo = new PolyTessGeo(xgeom);
 
 			break;
 		}
@@ -2601,7 +2605,7 @@ void cm93chart::ProcessMCOVRObjects(int cell_index, char subcell)
 			if (sclass.IsSameAs(_T ( "_m_sor" ))) {
 				M_COVR_Desc* pmcd = m_pcovr_set->Find_MCD(cell_index, iObj, (int)subcell);
 				if (NULL == pmcd) {
-					geo::ExtendedGeometry* xgeom = BuildGeom(pobject, NULL, iObj);
+					ExtendedGeometry* xgeom = BuildGeom(pobject, NULL, iObj);
 
 					// Decode the attributes, specifically looking for _wgsox, _wgsoy
 

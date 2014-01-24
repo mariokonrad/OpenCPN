@@ -40,14 +40,14 @@ class OGRFeature;
 class OGREnvelope;
 class OGRGeometry;
 
-namespace geo {
-	class PolyTessGeo;
-	class PolyTessGeoTrap;
-}
-
 namespace chart {
 
 #define CURRENT_SENC_FORMAT_VERSION  122
+
+namespace geometry {
+	class PolyTessGeo;
+	class PolyTessGeoTrap;
+}
 
 class s57chart;
 class S57Obj;
@@ -338,10 +338,10 @@ public:
 	pt* geoPt; // for LINE & AREA not described by PolyTessGeo
 	double* geoPtz; // an array[3] for MultiPoint, SM with Z, i.e. depth
 	double* geoPtMulti; // an array[2] for MultiPoint, lat/lon to make bbox of decomposed points
-	::geo::PolyTessGeo* pPolyTessGeo;
-	::geo::PolyTessGeoTrap* pPolyTrapGeo;
+	geometry::PolyTessGeo* pPolyTessGeo;
+	geometry::PolyTessGeoTrap* pPolyTrapGeo;
 
-	::geo::BoundingBox BBObj; // lat/lon BBox of the rendered object
+	geo::BoundingBox BBObj; // lat/lon BBox of the rendered object
 	double m_lat; // The lat/lon of the object's "reference" point
 	double m_lon;
 	bool bBBObj_valid; // set after the BBObj has been calculated once.

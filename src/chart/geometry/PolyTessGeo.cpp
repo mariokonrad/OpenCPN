@@ -30,10 +30,11 @@
 
 #include <geo/BoundingBox.h>
 #include <geo/GeoRef.h>
-#include <geo/TriPrim.h>
-#include <geo/PolyTriGroup.h>
-#include <geo/ExtendedGeometry.h>
 #include <geo/triangulate.h>
+
+#include <chart/geometry/TriPrim.h>
+#include <chart/geometry/PolyTriGroup.h>
+#include <chart/geometry/ExtendedGeometry.h>
 
 #include <chart/s52s57.h>
 
@@ -55,9 +56,9 @@ static int s_nvmax;
 static double* s_pwork_buf;
 static int s_buf_len;
 static int s_buf_idx;
-static geo::TriPrim::Type s_gltri_type;
-geo::TriPrim* s_pTPG_Head;
-geo::TriPrim* s_pTPG_Last;
+static chart::geometry::TriPrim::Type s_gltri_type;
+chart::geometry::TriPrim* s_pTPG_Head;
+chart::geometry::TriPrim* s_pTPG_Last;
 static GLUtesselator* GLUtessobj;
 static double s_ref_lat;
 static double s_ref_lon;
@@ -123,7 +124,8 @@ HINSTANCE s_hGLU_DLL; // Handle to DLL
 
 #endif
 
-namespace geo {
+namespace chart {
+namespace geometry {
 
 static int tess_orient;
 
@@ -251,17 +253,17 @@ PolyTessGeo::PolyTessGeo(unsigned char* polybuf, int nrecl, int WXUNUSED(index))
 	m_buf_ptr += twkb_len + 1;
 	ppg->pgroup_geom = ppolygeo;
 
-	geo::TriPrim** p_prev_triprim = &(ppg->tri_prim_head);
+	TriPrim** p_prev_triprim = &(ppg->tri_prim_head);
 
 	// Read the PTG_Triangle Geometry in a loop
-	geo::TriPrim::Type tri_type;
+	TriPrim::Type tri_type;
 	int nvert;
 	int nvert_max = 0;
 	bool not_finished = true;
 	while (not_finished) {
 		if ((m_buf_ptr - m_buf_head) != m_nrecl) {
 			int* pi = (int*)m_buf_ptr;
-			tri_type = static_cast<geo::TriPrim::Type>(*pi++);
+			tri_type = static_cast<TriPrim::Type>(*pi++);
 			nvert = *pi;
 			m_buf_ptr += 2 * sizeof(int);
 
@@ -272,7 +274,7 @@ PolyTessGeo::PolyTessGeo(unsigned char* polybuf, int nrecl, int WXUNUSED(index))
 				break;
 			}
 
-			geo::TriPrim* tp = new geo::TriPrim;
+			TriPrim* tp = new TriPrim;
 			*p_prev_triprim = tp; // make the link
 			p_prev_triprim = &(tp->p_next);
 			tp->p_next = NULL;
@@ -582,14 +584,14 @@ int PolyTessGeo::PolyTessGeoTri(OGRPolygon* poly, bool bSENC_SM, double ref_lat,
 
 	// Now the Triangle Primitives
 
-	geo::TriPrim* pTP = NULL;
-	geo::TriPrim* pTP_Head = NULL;
-	geo::TriPrim* pTP_Last = NULL;
+	TriPrim* pTP = NULL;
+	TriPrim* pTP_Head = NULL;
+	TriPrim* pTP_Last = NULL;
 
 	pr = polys;
 	while (NULL != pr) {
 		if (pr->is_valid) {
-			pTP = new geo::TriPrim;
+			pTP = new TriPrim;
 			if (NULL == pTP_Last) {
 				pTP_Head = pTP;
 				pTP_Last = pTP;
@@ -748,7 +750,7 @@ int PolyTessGeo::Write_PolyTriGroup(FILE* ofs) const
 
 	// Transcribe the TriPrim chain
 
-	const geo::TriPrim* pTP = pPTG->tri_prim_head; // head of linked list of TriPrims
+	const TriPrim* pTP = pPTG->tri_prim_head; // head of linked list of TriPrims
 
 	while (pTP) {
 		ostream2->Write(&pTP->type, sizeof(int));
@@ -1522,7 +1524,7 @@ void __CALL_CONVENTION beginCallback(GLenum which)
 {
 	s_buf_idx = 0;
 	s_nvcall = 0;
-	s_gltri_type = static_cast<geo::TriPrim::Type>(which);
+	s_gltri_type = static_cast<TriPrim::Type>(which);
 }
 
 void __CALL_CONVENTION endCallback(void)
@@ -1538,7 +1540,7 @@ void __CALL_CONVENTION endCallback(void)
 		case GL_TRIANGLE_FAN:
 		case GL_TRIANGLE_STRIP:
 		case GL_TRIANGLES: {
-			geo::TriPrim* pTPG = new geo::TriPrim;
+			TriPrim* pTPG = new TriPrim;
 			if (NULL == s_pTPG_Last) {
 				s_pTPG_Head = pTPG;
 				s_pTPG_Last = pTPG;
@@ -1673,5 +1675,5 @@ combineCallback(GLdouble coords[3], GLdouble* vertex_data[4], GLfloat weight[4],
 
 #endif
 
-}
+}}
 

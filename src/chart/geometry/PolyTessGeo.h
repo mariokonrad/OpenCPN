@@ -21,8 +21,8 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 **************************************************************************/
 
-#ifndef __GEO__POLYTESSGEO__H__
-#define __GEO__POLYTESSGEO__H__
+#ifndef __CHART__GEOMETRY__POLYTESSGEO__H__
+#define __CHART__GEOMETRY__POLYTESSGEO__H__
 
 #include <cstdio>
 
@@ -33,7 +33,8 @@
 
 class OGRPolygon;
 
-namespace geo {
+namespace chart {
+namespace geometry {
 
 class ExtendedGeometry;
 class PolyTriGroup;
@@ -94,6 +95,6 @@ private:
 	double m_ref_lon;
 };
 
-}
+}}
 
 #endif

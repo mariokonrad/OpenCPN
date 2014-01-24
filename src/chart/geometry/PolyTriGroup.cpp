@@ -22,10 +22,11 @@
  **************************************************************************/
 
 #include "PolyTriGroup.h"
-#include <geo/TriPrim.h>
+#include <chart/geometry/TriPrim.h>
 #include <cstdlib>
 
-namespace geo {
+namespace chart {
+namespace geometry {
 
 PolyTriGroup::PolyTriGroup()
 	: nContours(0)
@@ -50,5 +51,5 @@ PolyTriGroup::~PolyTriGroup()
 	}
 }
 
-}
+}}
 

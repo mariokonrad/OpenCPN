@@ -114,7 +114,6 @@ chart::InitReturn ChartPlugInWrapper::Init(const wxString& name, chart::ChartIni
 		return chart::INIT_FAIL_REMOVE;
 }
 
-//    Accessors
 int ChartPlugInWrapper::GetCOVREntries() const
 {
 	if (m_ppicb)
@@ -493,27 +492,26 @@ int PI_GetPLIBBoundaryStyle()
 
 bool PI_PLIBObjectRenderCheck(PI_S57Obj* pObj, PlugIn_ViewPort* vp)
 {
-    if(ps52plib) {
-        //  Create and populate a compatible s57 Object
-        chart::S57Obj cobj;
-        CreateCompatibleS57Object( pObj, &cobj );
+	if (ps52plib) {
+		//  Create and populate a compatible s57 Object
+		chart::S57Obj cobj;
+		CreateCompatibleS57Object(pObj, &cobj);
 
-        ViewPort cvp = CreateCompatibleViewport( *vp );
+		ViewPort cvp = CreateCompatibleViewport(*vp);
 
-        S52PLIB_Context *pContext = (S52PLIB_Context *)pObj->S52_Context;
+		S52PLIB_Context* pContext = (S52PLIB_Context*)pObj->S52_Context;
 
-        //  Create and populate a minimally compatible object container
-        ObjRazRules rzRules;
-        rzRules.obj = &cobj;
-        rzRules.LUP = pContext->LUP;
-        rzRules.sm_transform_parms = 0;
-        rzRules.child = NULL;
-        rzRules.next = NULL;
+		//  Create and populate a minimally compatible object container
+		ObjRazRules rzRules;
+		rzRules.obj = &cobj;
+		rzRules.LUP = pContext->LUP;
+		rzRules.sm_transform_parms = 0;
+		rzRules.child = NULL;
+		rzRules.next = NULL;
 
-        return ps52plib->ObjectRenderCheck( &rzRules, cvp );
-    }
-    else
-        return false;
+		return ps52plib->ObjectRenderCheck(&rzRules, cvp);
+	} else
+		return false;
 }
 
 int PI_GetPLIBStateHash()
@@ -562,7 +560,7 @@ void CreateCompatibleS57Object(PI_S57Obj* pObj, chart::S57Obj* cobj)
 	cobj->m_lsindex_array = pObj->m_lsindex_array;
 	cobj->m_n_edge_max_points = pObj->m_n_edge_max_points;
 
-	cobj->pPolyTessGeo = (geo::PolyTessGeo*)pObj->pPolyTessGeo;
+	cobj->pPolyTessGeo = (chart::geometry::PolyTessGeo*)pObj->pPolyTessGeo;
 	cobj->m_chart_context = (chart_context*)pObj->m_chart_context;
 
 	cobj->bBBObj_valid = pObj->bBBObj_valid;
@@ -598,11 +596,11 @@ bool PI_PLIBSetContext(PI_S57Obj* pObj)
 
 	LUPname LUP_Name;
 
-	//      Force a re-evaluation of CS rules
+	// Force a re-evaluation of CS rules
 	ctx->CSrules = NULL;
 	ctx->bCS_Added = false;
 
-	//      Clear the rendered text cache
+	// Clear the rendered text cache
 	if (ctx->bFText_Added) {
 		ctx->bFText_Added = false;
 		delete ctx->FText;
@@ -642,7 +640,7 @@ bool PI_PLIBSetContext(PI_S57Obj* pObj)
 	LUPrec* lup = ps52plib->S52_LUPLookup(LUP_Name, cobj.FeatureName, &cobj);
 	ctx->LUP = lup;
 
-	//              Convert LUP to rules set
+	// Convert LUP to rules set
 	ps52plib->_LUP2rules(lup, &cobj);
 	return true;
 }
@@ -700,14 +698,14 @@ PI_DisCat PI_GetObjectDisplayCategory(PI_S57Obj* pObj)
 
 void PI_PLIBSetLineFeaturePriority(PI_S57Obj* pObj, int prio)
 {
-	//  Create and populate a compatible s57 Object
+	// Create and populate a compatible s57 Object
 	S57Obj cobj;
 
 	CreateCompatibleS57Object(pObj, &cobj);
 
 	S52PLIB_Context* pContext = (S52PLIB_Context*)pObj->S52_Context;
 
-	//  Create and populate a minimally compatible object container
+	// Create and populate a minimally compatible object container
 	ObjRazRules rzRules;
 	rzRules.obj = &cobj;
 	rzRules.LUP = pContext->LUP;
@@ -717,7 +715,7 @@ void PI_PLIBSetLineFeaturePriority(PI_S57Obj* pObj, int prio)
 
 	ps52plib->SetLineFeaturePriority(&rzRules, prio);
 
-	//  Update the PLIB context after the render operation
+	// Update the PLIB context after the render operation
 	UpdatePIObjectPlibContext(pObj, &cobj);
 }
 
@@ -731,20 +729,20 @@ void PI_PLIBPrepareForNewRender(void)
 
 int PI_PLIBRenderObjectToDC(wxDC* pdc, PI_S57Obj* pObj, PlugIn_ViewPort* vp)
 {
-	//  Create and populate a compatible s57 Object
+	// Create and populate a compatible s57 Object
 	S57Obj cobj;
 
 	CreateCompatibleS57Object(pObj, &cobj);
 
 	S52PLIB_Context* pContext = (S52PLIB_Context*)pObj->S52_Context;
 
-	//  Set up object SM rendering constants
+	// Set up object SM rendering constants
 	chart::sm_parms transform;
 	geo::toSM(geo::Position(vp->clat, vp->clon),
 			  geo::Position(pObj->chart_ref_lat, pObj->chart_ref_lon), &transform.easting_vp_center,
 			  &transform.northing_vp_center);
 
-	//  Create and populate a minimally compatible object container
+	// Create and populate a minimally compatible object container
 	ObjRazRules rzRules;
 	rzRules.obj = &cobj;
 	rzRules.LUP = pContext->LUP;
@@ -754,10 +752,10 @@ int PI_PLIBRenderObjectToDC(wxDC* pdc, PI_S57Obj* pObj, PlugIn_ViewPort* vp)
 
 	ViewPort cvp = CreateCompatibleViewport(*vp);
 
-	//  Do the render
+	// Do the render
 	ps52plib->RenderObjectToDC(pdc, &rzRules, cvp);
 
-	//  Update the PLIB context after the render operation
+	// Update the PLIB context after the render operation
 	UpdatePIObjectPlibContext(pObj, &cobj);
 
 	return 1;

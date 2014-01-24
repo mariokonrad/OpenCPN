@@ -21,10 +21,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GEO__POLYTRIGROUP__H__
-#define __GEO__POLYTRIGROUP__H__
+#ifndef __CHART__GEOMETRY__POLYTRIGROUP__H__
+#define __CHART__GEOMETRY__POLYTRIGROUP__H__
 
-namespace geo {
+namespace chart {
+namespace geometry {
 
 class TriPrim;
 
@@ -43,6 +44,6 @@ public:
 	bool m_bSMSENC;
 };
 
-}
+}}
 
 #endif

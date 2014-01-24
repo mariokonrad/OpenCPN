@@ -24,12 +24,13 @@
 #include "S57Chart.h"
 
 #include <geo/GeoRef.h>
-#include <geo/PolyTessGeo.h>
-#include <geo/PolyTessGeoTrap.h>
-#include <geo/TriPrim.h>
-#include <geo/PolyTriGroup.h>
-#include <geo/PolyTrapGroup.h>
 #include <geo/Polygon.h>
+
+#include <chart/geometry/PolyTessGeo.h>
+#include <chart/geometry/PolyTessGeoTrap.h>
+#include <chart/geometry/TriPrim.h>
+#include <chart/geometry/PolyTriGroup.h>
+#include <chart/geometry/PolyTrapGroup.h>
 
 #include <chart/s52plib.h>
 #include <chart/S57Light.h>
@@ -85,6 +86,8 @@ extern wxProgressDialog *s_ProgDialog;
 static jmp_buf env_ogrf;                    // the context saved by setjmp();
 
 namespace chart {
+
+using namespace geometry;
 
 const char* MyCSVGetField(const char* pszFilename, const char* pszKeyFieldName,
 						  const char* pszKeyFieldValue, CSVCompareCriteria eCriteria,
@@ -649,7 +652,7 @@ S57Obj::S57Obj(char* first_line, wxInputStream* pfpx, double, double)
 							unsigned char* polybuf = (unsigned char*)malloc(nrecl + 1);
 							pfpx->Read(polybuf, nrecl);
 							polybuf[nrecl] = 0; // endit
-							geo::PolyTessGeo* ppg = new geo::PolyTessGeo(polybuf, nrecl, FEIndex);
+							PolyTessGeo* ppg = new PolyTessGeo(polybuf, nrecl, FEIndex);
 							free(polybuf);
 
 							pPolyTessGeo = ppg;
@@ -4925,9 +4928,9 @@ void s57chart::CreateSENCRecord(OGRFeature* pFeature, FILE* fpOut, int mode, S57
 			// Special case, polygons are handled separately
 			case wkbPolygon: {
 				int error_code;
-				geo::PolyTessGeo* ppg = NULL;
+				PolyTessGeo* ppg = NULL;
 				OGRPolygon* poly = (OGRPolygon*)(pGeo);
-				ppg = new geo::PolyTessGeo(poly, true, reference_point.lat(), reference_point.lon(),
+				ppg = new PolyTessGeo(poly, true, reference_point.lat(), reference_point.lon(),
 										   0);
 				error_code = ppg->ErrorCode;
 				if (error_code == ERROR_NO_DLL) {
@@ -4939,7 +4942,7 @@ void s57chart::CreateSENCRecord(OGRFeature* pFeature, FILE* fpOut, int mode, S57
 
 					delete ppg;
 					// Try with internal tesselator
-					ppg = new geo::PolyTessGeo(poly, true, reference_point.lat(),
+					ppg = new PolyTessGeo(poly, true, reference_point.lat(),
 											   reference_point.lon(), 1);
 					error_code = ppg->ErrorCode;
 				}
@@ -5406,8 +5409,8 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 		if (!obj->pPolyTessGeo->IsOk())
 			obj->pPolyTessGeo->BuildDeferredTess();
 
-		const geo::PolyTriGroup* ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
-		const geo::TriPrim* pTP = ppg->tri_prim_head;
+		const PolyTriGroup* ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const TriPrim* pTP = ppg->tri_prim_head;
 		geo::MyPoint pvert_list[3];
 
 		// Polygon geometry is carried in SM coordinates, so...
@@ -5440,7 +5443,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 				double* p_vertex = pTP->p_vertex;
 
 				switch (pTP->type) {
-					case geo::TriPrim::PTG_TRIANGLE_FAN:
+					case TriPrim::PTG_TRIANGLE_FAN:
 						for (int it = 0; it < pTP->nVert - 2; it++) {
 							pvert_list[0].x = p_vertex[0];
 							pvert_list[0].y = p_vertex[1];
@@ -5460,7 +5463,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 						}
 						break;
 
-					case geo::TriPrim::PTG_TRIANGLE_STRIP:
+					case TriPrim::PTG_TRIANGLE_STRIP:
 						for (int it = 0; it < pTP->nVert - 2; it++) {
 							pvert_list[0].x = p_vertex[(it * 2)];
 							pvert_list[0].y = p_vertex[(it * 2) + 1];
@@ -5480,7 +5483,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 						}
 						break;
 
-					case geo::TriPrim::PTG_TRIANGLES:
+					case TriPrim::PTG_TRIANGLES:
 						for (int it = 0; it < pTP->nVert; it += 3) {
 							pvert_list[0].x = p_vertex[(it * 2)];
 							pvert_list[0].y = p_vertex[(it * 2) + 1];
@@ -5507,7 +5510,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 		if (!obj->pPolyTrapGeo->IsOk())
 			obj->pPolyTrapGeo->BuildTess();
 
-		geo::PolyTrapGroup* ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
+		PolyTrapGroup* ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
 		// Polygon geometry is carried in SM coordinates, so...
 		// make the hit test thus.
@@ -5517,7 +5520,7 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 		geo::toSM(geo::Position(lat, lon), reference_point, &easting, &northing);
 
 		int ntraps = ptg->ntrap_count;
-		geo::trapz_t* ptraps = ptg->trap_array;
+		trapz_t* ptraps = ptg->trap_array;
 		geo::MyPoint* segs = (geo::MyPoint*)ptg->ptrapgroup_geom; // TODO convert MyPoint to wxPoint2DDouble globally
 
 		geo::MyPoint pvert_list[4];

@@ -21,37 +21,41 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GEO__TRIPRIM__H__
-#define __GEO__TRIPRIM__H__
+#ifndef __CHART__GEOMETRY__POLYTRAPGROUP__H__
+#define __CHART__GEOMETRY__POLYTRAPGROUP__H__
 
-namespace geo
+class wxPoint2DDouble;
+
+namespace chart {
+namespace geometry {
+
+class ExtendedGeometry;
+
+struct trapz_t
 {
-
-/// Used for describing/rendering tesselated polygons
-class TriPrim
-{
-public:
-	// nota bene  These definitions are identical to OpenGL prototypes
-	enum Type {
-		PTG_TRIANGLES = 0x0004,
-		PTG_TRIANGLE_STRIP = 0x0005,
-		PTG_TRIANGLE_FAN = 0x0006
-	};
-
-public:
-	TriPrim();
-	~TriPrim();
-
-	Type type;
-	int nVert;
-	double* p_vertex; //  Pointer to vertex array, x,y,x,y.....
-	double minx;
-	double miny;
-	double maxx;
-	double maxy;
-	TriPrim* p_next; // chain link
+	int ilseg;
+	int irseg;
+	double loy;
+	double hiy;
 };
 
-}
+/// Used for describing/rendering tesselated polygons
+class PolyTrapGroup
+{
+public:
+	PolyTrapGroup();
+	PolyTrapGroup(ExtendedGeometry* pxGeom);
+	~PolyTrapGroup();
+
+	int nContours;
+	int* pn_vertex; // pointer to array of poly vertex counts
+	wxPoint2DDouble* ptrapgroup_geom; // pointer to Raw geometry, used for contour line drawing
+
+	int ntrap_count;
+	trapz_t* trap_array; // pointer to trapz_t array
+	int m_trap_error;
+};
+
+}}
 
 #endif

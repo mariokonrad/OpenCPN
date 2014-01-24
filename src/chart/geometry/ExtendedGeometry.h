@@ -21,48 +21,48 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "ExtendedGeometry.h"
-#include <cstring>
-#include <cstdlib>
+#ifndef __CHART__GEOMETRY__EXTENDEDGEOMETRY__H__
+#define __CHART__GEOMETRY__EXTENDEDGEOMETRY__H__
 
-namespace geo {
+class wxPoint2DDouble;
+class OGRGeometry;
 
-ExtendedGeometry::ExtendedGeometry()
-	: pogrGeom(NULL)
-	, n_vector_indices(0)
-	, pvector_index(NULL)
-	, n_contours(0)
-	, contour_array(NULL)
-	, n_max_vertex(0)
-	, pointx(0)
-	, pointy(0)
-	, vertex_array(NULL)
-	, xmin(0)
-	, xmax(0)
-	, ymin(0)
-	, ymax(0)
-	, n_max_edge_points(0)
-	, x_rate(0.0)
-	, x_offset(0.0)
-	, y_rate(0.0)
-	, y_offset(0.0)
+namespace chart {
+namespace geometry {
+
+class ExtendedGeometry
 {
-}
+public:
+	ExtendedGeometry();
+	~ExtendedGeometry();
 
-ExtendedGeometry::~ExtendedGeometry()
-{
-	free(vertex_array);
-	delete [] contour_array;
-}
+	void set_contour_array(const int* data, int n);
 
-void ExtendedGeometry::set_contour_array(const int* data, int n)
-{
-	// FIXME: check if the memory is already allocated
+	OGRGeometry* pogrGeom;
+	int n_vector_indices;
+	int* pvector_index;
+	int n_contours;
+	int* contour_array; // FIXME: use std::vector
+	int n_max_vertex;
+	int pointx;
+	int pointy;
+	wxPoint2DDouble* vertex_array;
+	int xmin;
+	int xmax;
+	int ymin;
+	int ymax;
+	int n_max_edge_points;
 
-	n_contours = n;
-	contour_array = new int[n];
-	memcpy(contour_array, data, n * sizeof(int));
-}
+	// Conversion parameters
+	// for (assummed linear) convertions from vertex_array points to easting/northing, metres from
+	// 0,0
+	// To convert to lat/lon, use simple merctor equations
+	double x_rate;
+	double x_offset;
+	double y_rate;
+	double y_offset;
+};
 
-}
+}}
 
+#endif

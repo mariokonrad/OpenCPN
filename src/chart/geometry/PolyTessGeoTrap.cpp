@@ -24,12 +24,13 @@
 #include "PolyTessGeoTrap.h"
 
 #include <geo/triangulate.h>
-#include <geo/PolyTrapGroup.h>
-#include <geo/ExtendedGeometry.h>
+#include <chart/geometry/PolyTrapGroup.h>
+#include <chart/geometry/ExtendedGeometry.h>
 
 #include <wx/geometry.h>
 
-namespace geo {
+namespace chart {
+namespace geometry {
 
 // Build Trapezoidal PolyTessGeoTrap Object from ExtendedGeometry
 PolyTessGeoTrap::PolyTessGeoTrap(ExtendedGeometry* pxGeom)
@@ -186,5 +187,5 @@ bool PolyTessGeoTrap::IsOk() const
 	return m_bOK;
 }
 
-}
+}}
 

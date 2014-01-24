@@ -21,48 +21,42 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GEO__POLYTESSGEOTRAP__H__
-#define __GEO__POLYTESSGEOTRAP__H__
+#include "PolyTrapGroup.h"
+#include <chart/geometry/ExtendedGeometry.h>
+#include <cstdlib>
 
-namespace geo {
+namespace chart {
+namespace geometry {
 
-class ExtendedGeometry;
-class PolyTrapGroup;
-
-/// Trapezoid Tesselator
-class PolyTessGeoTrap
+PolyTrapGroup::PolyTrapGroup()
+	: nContours(0)
+	, pn_vertex(NULL)
+	, ptrapgroup_geom(NULL)
+	, ntrap_count(0)
+	, trap_array(NULL)
+	, m_trap_error(0)
 {
-public:
-	PolyTessGeoTrap();
-	~PolyTessGeoTrap();
-
-	PolyTessGeoTrap(ExtendedGeometry* pxGeom); // Build this from Extended Geometry
-
-	void BuildTess();
-
-	double Get_xmin() const;
-	double Get_xmax() const;
-	double Get_ymin() const;
-	double Get_ymax() const;
-	PolyTrapGroup* Get_PolyTrapGroup_head();
-	int GetnVertexMax() const;
-	bool IsOk() const;
-
-	int ErrorCode;
-
-private:
-	bool m_bOK;
-	double xmin;
-	double xmax;
-	double ymin;
-	double ymax;
-	PolyTrapGroup* m_ptg_head; // PolyTrapGroup
-	int m_nvertex_max; // computed max vertex count used by drawing primitives as optimization for
-					   // malloc
-	int m_ncnt;
-	int m_nwkb;
-};
-
 }
 
-#endif
+PolyTrapGroup::PolyTrapGroup(ExtendedGeometry* pxGeom)
+	: nContours(0)
+	, pn_vertex(NULL)
+	, ptrapgroup_geom(NULL)
+	, ntrap_count(0)
+	, trap_array(NULL)
+	, m_trap_error(0)
+{
+	nContours = pxGeom->n_contours;
+	pn_vertex = pxGeom->contour_array;
+	ptrapgroup_geom = pxGeom->vertex_array;
+}
+
+PolyTrapGroup::~PolyTrapGroup()
+{
+	free(pn_vertex); // FIXME: potential 'double free' of allocated data, see ~ExtendedGeometry
+	free(ptrapgroup_geom);
+	free(trap_array);
+}
+
+}}
+

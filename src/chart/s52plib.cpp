@@ -33,12 +33,13 @@
 #include <chart/S57Chart.h>
 #include <chart/ChartSymbols.h>
 
+#include <chart/geometry/TriPrim.h>
+#include <chart/geometry/PolyTessGeo.h>
+#include <chart/geometry/PolyTessGeoTrap.h>
+#include <chart/geometry/PolyTriGroup.h>
+#include <chart/geometry/PolyTrapGroup.h>
+
 #include <geo/GeoRef.h>
-#include <geo/TriPrim.h>
-#include <geo/PolyTessGeo.h>
-#include <geo/PolyTessGeoTrap.h>
-#include <geo/PolyTriGroup.h>
-#include <geo/PolyTrapGroup.h>
 #include <geo/LineClip.h>
 #include <geo/Polygon.h>
 
@@ -62,6 +63,8 @@ extern wxString g_csv_locn;
 extern double g_GLMinLineWidth;
 
 namespace chart {
+
+using namespace geometry;
 
 void DrawAALine(wxDC* pDC, int x0, int y0, int x1, int y1, wxColour clrLine, int dash, int space);
 extern bool GetDoubleAttr(S57Obj* obj, const char* AttrName, double& val);
@@ -2616,7 +2619,7 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		if (!rzRules->obj->pPolyTessGeo->IsOk()) // perform deferred tesselation
 			rzRules->obj->pPolyTessGeo->BuildDeferredTess();
 
-		const geo::PolyTriGroup* pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const PolyTriGroup* pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
 		const float* ppolygeo = pptg->pgroup_geom;
 
 		int ctr_offset = 0;
@@ -2673,7 +2676,7 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		if (!rzRules->obj->pPolyTrapGeo->IsOk())
 			rzRules->obj->pPolyTrapGeo->BuildTess();
 
-		geo::PolyTrapGroup* pptg = rzRules->obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
+		PolyTrapGroup* pptg = rzRules->obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
 		wxPoint2DDouble* ppolygeo = pptg->ptrapgroup_geom;
 
@@ -2887,7 +2890,7 @@ int s52plib::RenderLC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		if (!rzRules->obj->pPolyTessGeo->IsOk()) // perform deferred tesselation
 			rzRules->obj->pPolyTessGeo->BuildDeferredTess();
 
-		const geo::PolyTriGroup* pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const PolyTriGroup* pptg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
 		const float* ppolygeo = pptg->pgroup_geom;
 
 		int ctr_offset = 0;
@@ -2917,7 +2920,7 @@ int s52plib::RenderLC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		if (!rzRules->obj->pPolyTrapGeo->IsOk())
 			rzRules->obj->pPolyTrapGeo->BuildTess();
 
-		geo::PolyTrapGroup* pptg = rzRules->obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
+		PolyTrapGroup* pptg = rzRules->obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
 		wxPoint2DDouble* ppolygeo = pptg->ptrapgroup_geom;
 
@@ -5069,8 +5072,8 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 		// is within the requested Viewport
 		double margin = BBView.GetWidth() * 0.05;
 
-		const geo::PolyTriGroup* ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
-		const geo::TriPrim* p_tp = ppg->tri_prim_head;
+		const PolyTriGroup* ppg = obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const TriPrim* p_tp = ppg->tri_prim_head;
 		geo::BoundingBox tp_box;
 		while (p_tp) {
 			tp_box.SetMin(p_tp->minx, p_tp->miny);
@@ -5098,7 +5101,7 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 				}
 
 				switch (p_tp->type) {
-					case geo::TriPrim::PTG_TRIANGLE_FAN:
+					case TriPrim::PTG_TRIANGLE_FAN:
 						for (int it = 0; it < p_tp->nVert - 2; it++) {
 							pp3[0].x = ptp[0].x;
 							pp3[0].y = ptp[0].y;
@@ -5113,7 +5116,7 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 						}
 						break;
 
-					case geo::TriPrim::PTG_TRIANGLE_STRIP:
+					case TriPrim::PTG_TRIANGLE_STRIP:
 						for (int it = 0; it < p_tp->nVert - 2; it++) {
 							pp3[0].x = ptp[it].x;
 							pp3[0].y = ptp[it].y;
@@ -5128,7 +5131,7 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 						}
 						break;
 
-					case geo::TriPrim::PTG_TRIANGLES:
+					case TriPrim::PTG_TRIANGLES:
 						for (int it = 0; it < p_tp->nVert; it += 3) {
 							pp3[0].x = ptp[it].x;
 							pp3[0].y = ptp[it].y;
@@ -5160,7 +5163,7 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 
 		if (obj->pPolyTrapGeo
 				->IsOk() /*&& (obj->Index == 7) && ( obj->pPolyTrapGeo->GetnVertexMax() < 1000)*/) {
-			geo::PolyTrapGroup* ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
+			PolyTrapGroup* ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
 			//  Convert the segment array to screen coordinates
 			int nVertex = obj->pPolyTrapGeo->GetnVertexMax();
@@ -5171,7 +5174,7 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 
 			//  Render the trapezoids
 			int ntraps = ptg->ntrap_count;
-			geo::trapz_t* ptraps = ptg->trap_array;
+			geometry::trapz_t* ptraps = ptg->trap_array;
 
 			for (int i = 0; i < ntraps; i++) {
 				cs.R = 0;
@@ -5247,8 +5250,8 @@ int s52plib::RenderToGLAC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 		// is within the requested Viewport
 		double margin = BBView.GetWidth() * 0.05;
 
-		const geo::PolyTriGroup* ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
-		const geo::TriPrim* p_tp = ppg->tri_prim_head;
+		const PolyTriGroup* ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const TriPrim* p_tp = ppg->tri_prim_head;
 		geo::BoundingBox tp_box;
 		while (p_tp) {
 			tp_box.SetMin(p_tp->minx, p_tp->miny);
@@ -5266,21 +5269,21 @@ int s52plib::RenderToGLAC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 				GetPointPixArray(rzRules, (wxPoint2DDouble*)p_tp->p_vertex, ptp, p_tp->nVert, vp);
 
 				switch (p_tp->type) {
-					case geo::TriPrim::PTG_TRIANGLE_FAN:
+					case TriPrim::PTG_TRIANGLE_FAN:
 						glBegin(GL_TRIANGLE_FAN);
 						for (int it = 0; it < p_tp->nVert; it++)
 							glVertex2f(ptp[it].x, ptp[it].y);
 						glEnd();
 						break;
 
-					case geo::TriPrim::PTG_TRIANGLE_STRIP:
+					case TriPrim::PTG_TRIANGLE_STRIP:
 						glBegin(GL_TRIANGLE_STRIP);
 						for (int it = 0; it < p_tp->nVert; it++)
 							glVertex2f(ptp[it].x, ptp[it].y);
 						glEnd();
 						break;
 
-					case geo::TriPrim::PTG_TRIANGLES:
+					case TriPrim::PTG_TRIANGLES:
 						for (int it = 0; it < p_tp->nVert; it += 3) {
 							int xmin = wxMin(ptp[it].x, wxMin(ptp[it + 1].x, ptp[it + 2].x));
 							int xmax = wxMax(ptp[it].x, wxMax(ptp[it + 1].x, ptp[it + 2].x));
@@ -5385,8 +5388,8 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 			glNewList(clip_list, GL_COMPILE);
 		}
 
-		const geo::PolyTriGroup* ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
-		const geo::TriPrim* p_tp = ppg->tri_prim_head;
+		const PolyTriGroup* ppg = rzRules->obj->pPolyTessGeo->Get_PolyTriGroup_head();
+		const TriPrim* p_tp = ppg->tri_prim_head;
 		geo::BoundingBox tp_box;
 		while (p_tp) {
 			tp_box.SetMin(p_tp->minx, p_tp->miny);
@@ -5420,21 +5423,21 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 				}
 
 				switch (p_tp->type) {
-					case geo::TriPrim::PTG_TRIANGLE_FAN:
+					case TriPrim::PTG_TRIANGLE_FAN:
 						glBegin(GL_TRIANGLE_FAN);
 						for (int it = 0; it < p_tp->nVert; it++)
 							glVertex3f(ptp[it].x, ptp[it].y, z_clip_geom);
 						glEnd();
 						break;
 
-					case geo::TriPrim::PTG_TRIANGLE_STRIP:
+					case TriPrim::PTG_TRIANGLE_STRIP:
 						glBegin(GL_TRIANGLE_STRIP);
 						for (int it = 0; it < p_tp->nVert; it++)
 							glVertex3f(ptp[it].x, ptp[it].y, z_clip_geom);
 						glEnd();
 						break;
 
-					case geo::TriPrim::PTG_TRIANGLES:
+					case TriPrim::PTG_TRIANGLES:
 						for (int it = 0; it < p_tp->nVert; it += 3) {
 							int xmin = wxMin(ptp[it].x, wxMin(ptp[it + 1].x, ptp[it + 2].x));
 							int xmax = wxMax(ptp[it].x, wxMax(ptp[it + 1].x, ptp[it + 2].x));

@@ -29,12 +29,11 @@
 #include <chart/CM93Manager.h>
 #include <vector>
 
-namespace geo { class ExtendedGeometry; }
-
 namespace chart {
 
-struct vector_record_descriptor;
+namespace geometry { class ExtendedGeometry; }
 
+struct vector_record_descriptor;
 struct header_struct;
 struct Object;
 class cm93_dictionary;
@@ -92,7 +91,7 @@ public:
 private:
 	InitReturn CreateHeaderDataFromCM93Cell(void);
 	int read_header_and_populate_cib(header_struct* ph, Cell_Info_Block* pCIB);
-	geo::ExtendedGeometry* BuildGeom(Object* pobject, wxFileOutputStream* postream, int iobject);
+	geometry::ExtendedGeometry* BuildGeom(Object* pobject, wxFileOutputStream* postream, int iobject);
 
 	S57Obj * CreateS57Obj(
 			int cell_index,
@@ -100,7 +99,7 @@ private:
 			int subcell,
 			Object * pobject,
 			cm93_dictionary * pDict,
-			geo::ExtendedGeometry * xgeom,
+			geometry::ExtendedGeometry * xgeom,
 			double ref_lat,
 			double ref_lon,
 			double scale);

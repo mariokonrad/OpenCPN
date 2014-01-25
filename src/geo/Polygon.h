@@ -28,12 +28,23 @@ namespace geo {
 
 struct PointD
 {
+	PointD(double x = 0.0, double y = 0.0)
+		: x(x)
+		, y(y)
+	{}
+
 	double x;
 	double y;
 };
 
+/// TODO: is the reversed order y/x really intentional?
 struct PointF
 {
+	PointF(float x = 0.0f, float y = 0.0f)
+		: y(y)
+		, x(x)
+	{}
+
 	float y;
 	float x;
 };
@@ -52,9 +63,6 @@ private:
 	static bool intersectf(const PointF& p1, const PointF& p2, const PointF& p3, const PointF& p4);
 	static int ccwf(const PointF&, const PointF&, const PointF&);
 };
-
-int G_PtInPolygon(const PointD*, int, float, float);
-int G_PtInPolygon_FL(const PointF*, int, float, float);
 
 }
 

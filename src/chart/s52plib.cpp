@@ -4134,16 +4134,16 @@ bool s52plib::inter_tri_rect(wxPoint* ptp, render_canvas_parms* pb_spec)
 		pmp[i].y = ptp[i].y;
 	}
 
-	if (geo::G_PtInPolygon(pmp, 3, pb_spec->lclip, pb_spec->y))
+	if (geo::Polygon::inside(pmp, 3, geo::PointD(pb_spec->lclip, pb_spec->y)))
 		return true;
 
-	if (geo::G_PtInPolygon(pmp, 3, pb_spec->lclip, pb_spec->y + pb_spec->height))
+	if (geo::Polygon::inside(pmp, 3, geo::PointD(pb_spec->lclip, pb_spec->y + pb_spec->height)))
 		return true;
 
-	if (geo::G_PtInPolygon(pmp, 3, pb_spec->rclip, pb_spec->y))
+	if (geo::Polygon::inside(pmp, 3, geo::PointD(pb_spec->rclip, pb_spec->y)))
 		return true;
 
-	if (geo::G_PtInPolygon(pmp, 3, pb_spec->rclip, pb_spec->y + pb_spec->height))
+	if (geo::Polygon::inside(pmp, 3, geo::PointD(pb_spec->rclip, pb_spec->y + pb_spec->height)))
 		return true;
 
 	// last step

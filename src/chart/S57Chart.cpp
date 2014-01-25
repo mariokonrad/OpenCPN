@@ -5454,9 +5454,9 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 							pvert_list[2].x = p_vertex[(it * 2) + 4];
 							pvert_list[2].y = p_vertex[(it * 2) + 5];
 
-							if (geo::G_PtInPolygon(pvert_list,
-												   sizeof(pvert_list) / sizeof(pvert_list[0]),
-												   easting, northing)) {
+							if (geo::Polygon::inside(pvert_list,
+													 sizeof(pvert_list) / sizeof(pvert_list[0]),
+													 geo::PointD(easting, northing))) {
 								ret = true;
 								break;
 							}
@@ -5474,9 +5474,9 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 							pvert_list[2].x = p_vertex[(it * 2) + 4];
 							pvert_list[2].y = p_vertex[(it * 2) + 5];
 
-							if (geo::G_PtInPolygon(pvert_list,
-												   sizeof(pvert_list) / sizeof(pvert_list[0]),
-												   easting, northing)) {
+							if (geo::Polygon::inside(pvert_list,
+													 sizeof(pvert_list) / sizeof(pvert_list[0]),
+													 geo::PointD(easting, northing))) {
 								ret = true;
 								break;
 							}
@@ -5494,9 +5494,9 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 							pvert_list[2].x = p_vertex[(it * 2) + 4];
 							pvert_list[2].y = p_vertex[(it * 2) + 5];
 
-							if (geo::G_PtInPolygon(pvert_list,
-												   sizeof(pvert_list) / sizeof(pvert_list[0]),
-												   easting, northing)) {
+							if (geo::Polygon::inside(pvert_list,
+													 sizeof(pvert_list) / sizeof(pvert_list[0]),
+													 geo::PointD(easting, northing))) {
 								ret = true;
 								break;
 							}
@@ -5606,8 +5606,8 @@ bool s57chart::IsPointInObjArea(float lat, float lon, float, S57Obj* obj)
 			pvert_list[3].x = (xcb * obj->x_rate) + obj->x_origin;
 			pvert_list[3].y = loy;
 
-			if (geo::G_PtInPolygon(pvert_list, sizeof(pvert_list) / sizeof(pvert_list[0]), easting,
-								   northing)) {
+			if (geo::Polygon::inside(pvert_list, sizeof(pvert_list) / sizeof(pvert_list[0]),
+									 geo::PointD(easting, northing))) {
 				ret = true;
 				break;
 			}

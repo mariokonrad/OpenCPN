@@ -1566,7 +1566,7 @@ chart::geometry::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileO
 
 					int nRingVertex = ip - n_prev_vertex_index;
 
-					//    possibly increase contour array size
+					// possibly increase contour array size
 					if (ncontours > m_ncontour_alloc - 1) {
 						m_ncontour_alloc *= 2;
 						int* tmp = m_pcontour_array;
@@ -1623,7 +1623,7 @@ chart::geometry::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileO
 			ret_ptr->n_vector_indices = nsegs;
 			ret_ptr->pvector_index = (int*)malloc(nsegs * 3 * sizeof(int));
 
-			//    Calculate the number of points
+			// Calculate the number of points
 			int n_maxvertex = 0;
 			for (int imseg = 0; imseg < nsegs; imseg++) {
 				geometry_descriptor* pgd = (geometry_descriptor*)psegs->pGeom_Description;
@@ -1638,11 +1638,10 @@ chart::geometry::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileO
 			psegs = (vector_record_descriptor*)pobject->pGeometry;
 
 			int ip = 0;
-			int lon_max, lat_max, lon_min, lat_min;
-			lon_max = 0;
-			lon_min = 65536;
-			lat_max = 0;
-			lat_min = 65536;
+			int lon_max = 0;
+			int lon_min = 65536;
+			int lat_max = 0;
+			int lat_min = 65536;
 			int n_max_points = -1;
 
 			for (int iseg = 0; iseg < nsegs; iseg++) {
@@ -2469,7 +2468,7 @@ M_COVR_Desc* cm93chart::FindM_COVR_InWorkingSet(double lat, double lon)
 	for (List_Of_M_COVR_Desc::iterator i = m_CIB->m_cell_mcovr_list.begin();
 		 i != m_CIB->m_cell_mcovr_list.end(); ++i) {
 		M_COVR_Desc* pmcd = *i;
-		if (G_PtInPolygon_FL(pmcd->pvertices, pmcd->m_nvertices, lon, lat)) {
+		if (geo::Polygon::insidef(pmcd->pvertices, pmcd->m_nvertices, geo::PointF(lon, lat))) {
 			return pmcd;
 		}
 	}
@@ -2494,7 +2493,7 @@ wxPoint2DDouble cm93chart::FindM_COVROffset(double lat, double lon)
 		for (List_Of_M_COVR_Desc::const_iterator i = m_CIB->m_cell_mcovr_list.begin();
 			 i != m_CIB->m_cell_mcovr_list.end(); ++i) {
 			const M_COVR_Desc* pmcd = *i;
-			if (G_PtInPolygon_FL(pmcd->pvertices, pmcd->m_nvertices, lon, lat)) {
+			if (geo::Polygon::insidef(pmcd->pvertices, pmcd->m_nvertices, geo::PointF(lon, lat))) {
 				ret.m_x = pmcd->transform_WGS84_offset_x;
 				ret.m_y = pmcd->transform_WGS84_offset_y;
 				break;
@@ -2602,7 +2601,7 @@ void cm93chart::ProcessMCOVRObjects(int cell_index, char subcell)
 
 			wxString sclass = m_pDict->GetClassName(iclass);
 
-			if (sclass.IsSameAs(_T ( "_m_sor" ))) {
+			if (sclass.IsSameAs(_T("_m_sor"))) {
 				M_COVR_Desc* pmcd = m_pcovr_set->Find_MCD(cell_index, iObj, (int)subcell);
 				if (NULL == pmcd) {
 					ExtendedGeometry* xgeom = BuildGeom(pobject, NULL, iObj);
@@ -2625,14 +2624,14 @@ void cm93chart::ProcessMCOVRObjects(int cell_index, char subcell)
 #ifdef ARMHF
 							float tf1;
 							memcpy(&tf1, pf, sizeof(float));
-							if (sattr.IsSameAs(_T ( "_wgsox" )))
+							if (sattr.IsSameAs(_T("_wgsox")))
 								tmp_transform_x = tf1;
-							else if (sattr.IsSameAs(_T ( "_wgsoy" )))
+							else if (sattr.IsSameAs(_T("_wgsoy")))
 								tmp_transform_y = tf1;
 #else
-							if (sattr.IsSameAs(_T ( "_wgsox" )))
+							if (sattr.IsSameAs(_T("_wgsox")))
 								tmp_transform_x = *pf;
-							else if (sattr.IsSameAs(_T ( "_wgsoy" )))
+							else if (sattr.IsSameAs(_T("_wgsoy")))
 								tmp_transform_y = *pf;
 #endif
 						}
@@ -2747,7 +2746,7 @@ bool cm93chart::IsPointInLoadedM_COVR(double xc, double yc)
 {
 	for (CovrDescContainer::const_iterator i = m_pcovr_array_loaded.begin();
 		 i != m_pcovr_array_loaded.end(); ++i) {
-		if (G_PtInPolygon_FL((*i)->pvertices, (*i)->m_nvertices, xc, yc))
+		if (geo::Polygon::insidef((*i)->pvertices, (*i)->m_nvertices, geo::PointF(xc, yc)))
 			return true;
 	}
 	return false;
@@ -2783,13 +2782,13 @@ int cm93chart::loadsubcell(int cellindex, wxChar sub_char)
 	int ilonroot = (ilon / 60) * 60;
 
 	wxString file;
-	file.Printf(_T ( "%04d%04d." ), jlat, jlon);
+	file.Printf(_T("%04d%04d."), jlat, jlon);
 	file += m_scalechar;
 
 	wxString fileroot;
-	fileroot.Printf(_T ( "%04d%04d/" ), ilatroot, ilonroot);
+	fileroot.Printf(_T("%04d%04d/"), ilatroot, ilonroot);
 	fileroot += m_scalechar;
-	fileroot += _T ( "/" );
+	fileroot += _T("/");
 	fileroot.Prepend(m_prefix);
 
 	file[0] = sub_char;
@@ -2807,14 +2806,14 @@ int cm93chart::loadsubcell(int cellindex, wxChar sub_char)
 		wxString new_scalechar = m_scalechar.Lower();
 
 		wxString file1;
-		file1.Printf(_T ( "%04d%04d." ), jlat, jlon);
+		file1.Printf(_T("%04d%04d."), jlat, jlon);
 		file1 += new_scalechar;
 
 		file1[0] = sub_char;
 
-		fileroot.Printf(_T ( "%04d%04d/" ), ilatroot, ilonroot);
+		fileroot.Printf(_T("%04d%04d/"), ilatroot, ilonroot);
 		fileroot += new_scalechar;
-		fileroot += _T ( "/" );
+		fileroot += _T("/");
 		fileroot.Prepend(m_prefix);
 
 		file1.Prepend(fileroot);

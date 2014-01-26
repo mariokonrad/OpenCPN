@@ -29,13 +29,6 @@
 
 #include <geo/GeoRef.h>
 
-#define UTCINPUT         0
-#define LTINPUT          1    // i.e. this PC local time
-#define LMTINPUT         2    // i.e. the remote location LMT time
-#define INPUT_FORMAT     1
-#define DISPLAY_FORMAT   2
-#define TIMESTAMP_FORMAT 3
-
 enum Column {
 	COLUMN_LEG = 0,
 	COLUMN_DISTANCE = 1,
@@ -45,37 +38,6 @@ enum Column {
 	COLUMN_TIMESTAMP = 5,
 	COLUMN_SPEED = 6
 };
-
-static wxString timestamp2s(wxDateTime ts, int tz_selection, long LMT_offset, int format)
-{
-	wxString s = _T("");
-	wxString f;
-
-	if (format == INPUT_FORMAT)
-		f = _T("%m/%d/%Y %H:%M");
-	else if (format == TIMESTAMP_FORMAT)
-		f = _T("%m/%d/%Y %H:%M:%S");
-	else
-		f = _T(" %m/%d %H:%M");
-
-	switch (tz_selection) {
-		case 0:
-			s.Append(ts.Format(f));
-			if (format != INPUT_FORMAT)
-				s.Append(_T(" UT"));
-			break;
-		case 1:
-			s.Append(ts.FromUTC().Format(f));
-			break;
-		case 2:
-			wxTimeSpan lmt(0, 0, (int)LMT_offset, 0);
-			s.Append(ts.Add(lmt).Format(f));
-			if (format != INPUT_FORMAT)
-				s.Append(_T(" LMT"));
-			break;
-	}
-	return s;
-}
 
 OCPNTrackListCtrl::OCPNTrackListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos,
 									 const wxSize& size, long style)
@@ -89,9 +51,51 @@ OCPNTrackListCtrl::OCPNTrackListCtrl(wxWindow* parent, wxWindowID id, const wxPo
 OCPNTrackListCtrl::~OCPNTrackListCtrl()
 {}
 
+wxString OCPNTrackListCtrl::timestamp2s(wxDateTime ts, int tz_selection, long LMT_offset,
+										int format) const
+{
+	wxString s = _T("");
+	wxString f;
+
+	if (format == INPUT_FORMAT)
+		f = _T("%m/%d/%Y %H:%M");
+	else if (format == TIMESTAMP_FORMAT)
+		f = _T("%m/%d/%Y %H:%M:%S");
+	else
+		f = _T(" %m/%d %H:%M");
+
+	switch (tz_selection) {
+		case UTCINPUT:
+			s.Append(ts.Format(f));
+			if (format != INPUT_FORMAT)
+				s.Append(_T(" UT"));
+			break;
+		case LTINPUT:
+			s.Append(ts.FromUTC().Format(f));
+			break;
+		case LMTINPUT:
+			wxTimeSpan lmt(0, 0, (int)LMT_offset, 0);
+			s.Append(ts.Add(lmt).Format(f));
+			if (format != INPUT_FORMAT)
+				s.Append(_T(" LMT"));
+			break;
+	}
+	return s;
+}
+
 void OCPNTrackListCtrl::set_route(Route* route)
 {
 	m_pRoute = route;
+}
+
+void OCPNTrackListCtrl::set_tz_selection(int value)
+{
+	m_tz_selection = value;
+}
+
+void OCPNTrackListCtrl::set_lmt_offset(int offset)
+{
+	m_LMT_Offset = offset;
 }
 
 wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const

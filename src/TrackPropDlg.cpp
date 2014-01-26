@@ -209,6 +209,28 @@ TrackPropDlg::TrackPropDlg(
 	sbSizerPoints = new wxStaticBoxSizer(
 		new wxStaticBox(m_panelBasic, wxID_ANY, _("Recorded points")), wxVERTICAL);
 
+	wxBoxSizer* bSizerShowTime;
+	bSizerShowTime = new wxBoxSizer(wxHORIZONTAL);
+
+	m_stShowTime = new wxStaticText(m_panelBasic, wxID_ANY, _("Time shown as"), wxDefaultPosition,
+									wxDefaultSize, 0);
+	m_stShowTime->Wrap(-1);
+	bSizerShowTime->Add(m_stShowTime, 0, wxALL, 5);
+
+	m_rbShowTimeUTC
+		= new wxRadioButton(m_panelBasic, wxID_ANY, _("UTC"), wxDefaultPosition, wxDefaultSize, 0);
+	bSizerShowTime->Add(m_rbShowTimeUTC, 0, 0, 5);
+
+	m_rbShowTimePC = new wxRadioButton(m_panelBasic, wxID_ANY, _("Local @ PC"), wxDefaultPosition,
+									   wxDefaultSize, 0);
+	bSizerShowTime->Add(m_rbShowTimePC, 0, 0, 5);
+
+	m_rbShowTimeLocal = new wxRadioButton(m_panelBasic, wxID_ANY, _("LMT @ Track Start"),
+										  wxDefaultPosition, wxDefaultSize, 0);
+	bSizerShowTime->Add(m_rbShowTimeLocal, 0, 0, 5);
+
+	sbSizerPoints->Add(bSizerShowTime, 0, wxEXPAND, 5);
+
 	m_lcPoints = new OCPNTrackListCtrl(m_panelBasic, wxID_ANY, wxDefaultPosition, wxDefaultSize,
 									   wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_EDIT_LABELS
 									   | wxLC_VIRTUAL);
@@ -336,7 +358,7 @@ TrackPropDlg::TrackPropDlg(
 
 	bSizerMain->Add(m_sdbBtmBtnsSizer, 0, wxALL | wxEXPAND, 5);
 
-	//Make it look nice and add the needed non-standard buttons
+	// Make it look nice and add the needed non-standard buttons
 	int w1;
 	int w2;
 	int h;
@@ -389,22 +411,45 @@ TrackPropDlg::TrackPropDlg(
 	m_toggleBtnEdit->Connect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,
 							 wxCommandEventHandler(TrackPropDlg::OnEditLinkToggle), NULL, this);
 
+	m_rbShowTimeUTC->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED,
+							 wxCommandEventHandler(TrackPropDlg::OnShowTimeTZ), NULL, this);
+	m_rbShowTimePC->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED,
+							wxCommandEventHandler(TrackPropDlg::OnShowTimeTZ), NULL, this);
+	m_rbShowTimeLocal->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED,
+							   wxCommandEventHandler(TrackPropDlg::OnShowTimeTZ), NULL, this);
+
 	m_pLinkProp = new LinkPropDialog(this);
 }
 
 TrackPropDlg::~TrackPropDlg()
 {
 	// Disconnect Events
-	m_sdbBtmBtnsSizerCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TrackPropDlg::OnCancelBtnClick ), NULL, this );
-	m_sdbBtmBtnsSizerOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TrackPropDlg::OnOKBtnClick ), NULL, this );
-	m_sdbBtmBtnsSizerPrint->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TrackPropDlg::OnPrintBtnClick ), NULL, this );
-	m_sdbBtmBtnsSizerSplit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TrackPropDlg::OnSplitBtnClick ), NULL, this );
-	m_sdbBtmBtnsSizerExtend->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TrackPropDlg::OnExtendBtnClick ), NULL, this );
-	m_sdbBtmBtnsSizerToRoute->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TrackPropDlg::OnToRouteBtnClick ), NULL, this );
-	m_sdbBtmBtnsSizerExport->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TrackPropDlg::OnExportBtnClick ), NULL, this );
-	m_lcPoints->Disconnect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( TrackPropDlg::OnTrackPropListClick ), NULL, this );
-	Disconnect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK, wxListEventHandler(TrackPropDlg::OnTrackPropRightClick), NULL, this );
-	Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(TrackPropDlg::OnTrackPropMenuSelected), NULL, this );
+	m_sdbBtmBtnsSizerCancel->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+										wxCommandEventHandler(TrackPropDlg::OnCancelBtnClick), NULL,
+										this);
+	m_sdbBtmBtnsSizerOK->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+									wxCommandEventHandler(TrackPropDlg::OnOKBtnClick), NULL, this);
+	m_sdbBtmBtnsSizerPrint->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+									   wxCommandEventHandler(TrackPropDlg::OnPrintBtnClick), NULL,
+									   this);
+	m_sdbBtmBtnsSizerSplit->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+									   wxCommandEventHandler(TrackPropDlg::OnSplitBtnClick), NULL,
+									   this);
+	m_sdbBtmBtnsSizerExtend->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+										wxCommandEventHandler(TrackPropDlg::OnExtendBtnClick), NULL,
+										this);
+	m_sdbBtmBtnsSizerToRoute->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+										 wxCommandEventHandler(TrackPropDlg::OnToRouteBtnClick),
+										 NULL, this);
+	m_sdbBtmBtnsSizerExport->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED,
+										wxCommandEventHandler(TrackPropDlg::OnExportBtnClick), NULL,
+										this);
+	m_lcPoints->Disconnect(wxEVT_COMMAND_LIST_ITEM_SELECTED,
+						   wxListEventHandler(TrackPropDlg::OnTrackPropListClick), NULL, this);
+	Disconnect(wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,
+			   wxListEventHandler(TrackPropDlg::OnTrackPropRightClick), NULL, this);
+	Disconnect(wxEVT_COMMAND_MENU_SELECTED,
+			   wxCommandEventHandler(TrackPropDlg::OnTrackPropMenuSelected), NULL, this);
 
 	Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED,
 			   wxCommandEventHandler(TrackPropDlg::OnDeleteLink));
@@ -416,6 +461,13 @@ TrackPropDlg::~TrackPropDlg()
 								wxCommandEventHandler(TrackPropDlg::OnAddLink), NULL, this);
 	m_toggleBtnEdit->Disconnect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED,
 								wxCommandEventHandler(TrackPropDlg::OnEditLinkToggle), NULL, this);
+
+	m_rbShowTimeUTC->Disconnect(wxEVT_COMMAND_RADIOBUTTON_SELECTED,
+								wxCommandEventHandler(TrackPropDlg::OnShowTimeTZ), NULL, this);
+	m_rbShowTimePC->Disconnect(wxEVT_COMMAND_RADIOBUTTON_SELECTED,
+							   wxCommandEventHandler(TrackPropDlg::OnShowTimeTZ), NULL, this);
+	m_rbShowTimeLocal->Disconnect(wxEVT_COMMAND_RADIOBUTTON_SELECTED,
+								  wxCommandEventHandler(TrackPropDlg::OnShowTimeTZ), NULL, this);
 
 	delete m_menuLink;
 }
@@ -434,6 +486,7 @@ void TrackPropDlg::InitializeList()
 		return;
 
 	m_lcPoints->set_route(m_pRoute);
+	m_lcPoints->set_lmt_offset((m_pRoute->pRoutePointList->front()->latitude()) * 3600.0 / 15.0);
 	m_lcPoints->SetItemCount(m_pRoute->GetnPoints());
 }
 
@@ -461,6 +514,7 @@ bool TrackPropDlg::UpdateProperties()
 	// FIXME: code duplication of MarkInfoImpl::add_hyperlink
 	const Hyperlinks& linklist = m_pRoute->m_HyperlinkList;
 	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
+		// FIXME: maybe here got some code lost (ctrl->Connect(wxEVT_COMMAND_HYPERLINK...)???
 		add_hyperlink(i->DescrText, i->Link, m_pRoute->m_bIsInLayer);
 	}
 	bSizerLinks->Fit(m_scrolledWindowLinks);
@@ -922,7 +976,7 @@ void TrackPropDlg::OnEditLinkToggle(wxCommandEvent& event)
 	event.Skip();
 }
 
-void TrackPropDlg::OnHyperLinkClick( wxHyperlinkEvent &event )
+void TrackPropDlg::OnHyperLinkClick(wxHyperlinkEvent& event)
 {
 	if (m_toggleBtnEdit->GetValue()) {
 		m_pEditedLink = (wxHyperlinkCtrl*)event.GetEventObject();
@@ -974,6 +1028,18 @@ void TrackPropDlg::OnHyperLinkClick( wxHyperlinkEvent &event )
 	url.Replace(_T(" "), _T("%20"));
 	::wxLaunchDefaultBrowser(url);
 #endif
+}
+
+void TrackPropDlg::OnShowTimeTZ(wxCommandEvent& event)
+{
+	if (m_rbShowTimeUTC->GetValue())
+		m_lcPoints->set_tz_selection(OCPNTrackListCtrl::UTCINPUT);
+	else if (m_rbShowTimePC->GetValue())
+		m_lcPoints->set_tz_selection(OCPNTrackListCtrl::LTINPUT);
+	else
+		m_lcPoints->set_tz_selection(OCPNTrackListCtrl::LMTINPUT);
+	m_lcPoints->DeleteAllItems();
+	InitializeList();
 }
 
 bool TrackPropDlg::SaveChanges(void)

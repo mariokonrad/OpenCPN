@@ -33,6 +33,15 @@ class RoutePoint;
 class OCPNTrackListCtrl : public wxListCtrl
 {
 public:
+	enum {
+		UTCINPUT = 0,
+		LTINPUT = 1, // i.e. this PC local time
+		LMTINPUT = 2, // i.e. the remote location LMT time
+		INPUT_FORMAT = 1,
+		DISPLAY_FORMAT = 2,
+		TIMESTAMP_FORMAT = 3
+	};
+
 	OCPNTrackListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size,
 					  long style);
 	~OCPNTrackListCtrl();
@@ -41,8 +50,12 @@ public:
 	int OnGetItemColumnImage(long item, long column) const;
 
 	void set_route(Route* route);
+	void set_tz_selection(int);
+	void set_lmt_offset(int);
 
 private:
+	wxString timestamp2s(wxDateTime ts, int tz_selection, long LMT_offset, int format) const;
+
 	Route* m_pRoute;
 	int m_tz_selection;
 	int m_LMT_Offset;

@@ -51,6 +51,7 @@
 #include <wx/notebook.h>
 #include <wx/listctrl.h>
 #include <wx/dialog.h>
+#include <wx/radiobut.h>
 
 #include "Route.h"
 
@@ -103,6 +104,10 @@ protected:
 	wxTextCtrl* m_tAvgSpeed;
 	wxStaticText* m_stTimeEnroute;
 	wxTextCtrl* m_tTimeEnroute;
+	wxStaticText* m_stShowTime;
+	wxRadioButton* m_rbShowTimeUTC;
+	wxRadioButton* m_rbShowTimePC;
+	wxRadioButton* m_rbShowTimeLocal;
 	OCPNTrackListCtrl* m_lcPoints;
 	wxPanel* m_panelAdvanced;
 	wxStaticText* m_stDescription;
@@ -141,6 +146,7 @@ protected:
 	void OnEditLink(wxCommandEvent& event);
 	void OnAddLink(wxCommandEvent& event);
 	void OnEditLinkToggle(wxCommandEvent& event);
+	void OnShowTimeTZ(wxCommandEvent& event);
 
 private:
 	void build_hyperlink_list();

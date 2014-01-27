@@ -28,11 +28,11 @@
 #include <Units.h>
 #include <MagneticVariation.h>
 
+#include <global/OCPN.h>
+#include <global/AIS.h>
+
 extern bool bGPSValid;
 extern ChartCanvas* cc1;
-extern bool g_bAISRolloverShowClass;
-extern bool g_bAISRolloverShowCOG;
-extern bool g_bAISRolloverShowCPA;
 extern bool g_bShowMag;
 
 // Define and declare a hasmap for ERI Ship type strings, keyed by their UN Codes.
@@ -547,7 +547,10 @@ wxString AIS_Target_Data::GetRolloverString(void)
 		result.Append(t);
 		result.Append(_T(")"));
 	}
-	if (g_bAISRolloverShowClass || (Class == AIS_SART)) {
+
+	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+
+	if (ais.AISRolloverShowClass || (Class == AIS_SART)) {
 		if (result.Len())
 			result.Append(_T("\n"));
 		result.Append(_T("["));
@@ -602,7 +605,7 @@ wxString AIS_Target_Data::GetRolloverString(void)
 		}
 	}
 
-	if (g_bAISRolloverShowCOG && ((SOG <= 102.2) || b_specialPosnReport)
+	if (ais.AISRolloverShowCOG && ((SOG <= 102.2) || b_specialPosnReport)
 		&& ((Class != AIS_ATON) && (Class != AIS_BASE))) {
 		if (result.Len())
 			result << _T("\n");
@@ -632,7 +635,7 @@ wxString AIS_Target_Data::GetRolloverString(void)
 			result << _(" COG Unavailable");
 	}
 
-	if (g_bAISRolloverShowCPA && bCPA_Valid) {
+	if (ais.AISRolloverShowCPA && bCPA_Valid) {
 		if (result.Len())
 			result << _T("\n");
 		result << _("CPA") << _T(" ") << cc1->FormatDistanceAdaptive(CPA) << _T(" ") << _("in")

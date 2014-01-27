@@ -60,6 +60,9 @@ public: // data
 	virtual void set_AIS_CPA_Alert_Suppress_Moored(bool);
 	virtual void set_ShowAreaNotices(bool);
 	virtual void set_WplIsAprsPosition(bool);
+	virtual void set_AISRolloverShowClass(bool);
+	virtual void set_AISRolloverShowCOG(bool);
+	virtual void set_AISRolloverShowCPA(bool);
 };
 
 }

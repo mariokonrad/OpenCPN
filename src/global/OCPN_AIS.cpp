@@ -155,5 +155,20 @@ void OCPN_AIS::set_WplIsAprsPosition(bool value)
 	data.WplIsAprsPosition = value;
 }
 
+void OCPN_AIS::set_AISRolloverShowClass(bool value)
+{
+	data.AISRolloverShowClass = value;
+}
+
+void OCPN_AIS::set_AISRolloverShowCOG(bool value)
+{
+	data.AISRolloverShowCOG = value;
+}
+
+void OCPN_AIS::set_AISRolloverShowCPA(bool value)
+{
+	data.AISRolloverShowCPA = value;
+}
+
 }
 

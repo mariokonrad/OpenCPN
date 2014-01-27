@@ -63,6 +63,9 @@ public:
 		bool AIS_CPA_Alert_Suppress_Moored;
 		bool ShowAreaNotices;
 		bool WplIsAprsPosition;
+		bool AISRolloverShowClass;
+		bool AISRolloverShowCOG;
+		bool AISRolloverShowCPA;
 	};
 
 	virtual const Data& get_data() const = 0;
@@ -91,6 +94,9 @@ public:
 	virtual void set_AIS_CPA_Alert_Suppress_Moored(bool) = 0;
 	virtual void set_ShowAreaNotices(bool) = 0;
 	virtual void set_WplIsAprsPosition(bool) = 0;
+	virtual void set_AISRolloverShowClass(bool) = 0;
+	virtual void set_AISRolloverShowCOG(bool) = 0;
+	virtual void set_AISRolloverShowCPA(bool) = 0;
 };
 
 }

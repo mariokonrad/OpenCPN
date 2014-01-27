@@ -120,10 +120,6 @@ extern int              g_nCOMPortCheck;
 extern wxString         g_AW1GUID;
 extern wxString         g_AW2GUID;
 
-extern bool             g_bAISRolloverShowClass;
-extern bool             g_bAISRolloverShowCOG;
-extern bool             g_bAISRolloverShowCPA;
-
 extern bool             g_bfilter_cogsog;
 extern int              g_COGFilterSec;
 extern int              g_SOGFilterSec;
@@ -735,9 +731,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("AISTargetListColumnSpec"), &AisTargetList_column_spec);
 	gui.set_ais_target_list_column_spec(AisTargetList_column_spec);
 
-	Read(_T("bAISRolloverShowClass"), &g_bAISRolloverShowClass);
-	Read(_T("bAISRolloverShowCOG"), &g_bAISRolloverShowCOG);
-	Read(_T("bAISRolloverShowCPA"), &g_bAISRolloverShowCPA);
+	ais.set_AISRolloverShowClass(read_bool(_T("bAISRolloverShowClass")));
+	ais.set_AISRolloverShowCOG(read_bool(_T("bAISRolloverShowCOG")));
+	ais.set_AISRolloverShowCPA(read_bool(_T("bAISRolloverShowCPA")));
 
 	load_s57dialog();
 
@@ -1746,9 +1742,9 @@ void Config::UpdateSettings()
 
 	write_s57dialog();
 
-	Write(_T("bAISRolloverShowClass"), g_bAISRolloverShowClass);
-	Write(_T("bAISRolloverShowCOG"), g_bAISRolloverShowCOG);
-	Write(_T("bAISRolloverShowCPA"), g_bAISRolloverShowCPA);
+	Write(_T("bAISRolloverShowClass"), ais.AISRolloverShowClass);
+	Write(_T("bAISRolloverShowCOG"), ais.AISRolloverShowCOG);
+	Write(_T("bAISRolloverShowCPA"), ais.AISRolloverShowCPA);
 
 	Write(_T("bAISAlertAckTimeout"), ais.AIS_ACK_Timeout);
 	Write(_T("AlertAckTimeoutMinutes"), ais.AckTimeout_Mins);

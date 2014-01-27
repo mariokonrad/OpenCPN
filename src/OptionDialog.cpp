@@ -123,10 +123,6 @@ extern bool g_bCourseUp;
 
 extern double g_ownship_predictor_minutes;
 
-extern bool g_bAISRolloverShowClass;
-extern bool g_bAISRolloverShowCOG;
-extern bool g_bAISRolloverShowCPA;
-
 extern wxString g_GPS_Ident;
 extern bool g_bGarminHostUpload;
 
@@ -2076,9 +2072,9 @@ void options::SetInitialSettings()
 	m_pText_ACK_Timeout->SetValue(wxString::Format(_T("%4.0f"), ais.AckTimeout_Mins));
 
 	// Rollover
-	m_pCheck_Rollover_Class->SetValue(g_bAISRolloverShowClass);
-	m_pCheck_Rollover_COG->SetValue(g_bAISRolloverShowCOG);
-	m_pCheck_Rollover_CPA->SetValue(g_bAISRolloverShowCPA);
+	m_pCheck_Rollover_Class->SetValue(ais.AISRolloverShowClass);
+	m_pCheck_Rollover_COG->SetValue(ais.AISRolloverShowCOG);
+	m_pCheck_Rollover_CPA->SetValue(ais.AISRolloverShowCPA);
 
 #ifdef USE_S57
 	m_pSlider_CM93_Zoom->SetValue(gui.cm93().zoom_factor);
@@ -2635,9 +2631,9 @@ void options::OnApplyClick(wxCommandEvent& event)
 	ais.set_AckTimeout_Mins(get_double(m_pText_ACK_Timeout));
 
 	// Rollover
-	g_bAISRolloverShowClass = m_pCheck_Rollover_Class->GetValue();
-	g_bAISRolloverShowCOG = m_pCheck_Rollover_COG->GetValue();
-	g_bAISRolloverShowCPA = m_pCheck_Rollover_CPA->GetValue();
+	ais.set_AISRolloverShowClass(m_pCheck_Rollover_Class->GetValue());
+	ais.set_AISRolloverShowCOG(m_pCheck_Rollover_COG->GetValue());
+	ais.set_AISRolloverShowCPA(m_pCheck_Rollover_CPA->GetValue());
 
 	// NMEA Source
 	long itemIndex = m_lcSources->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);

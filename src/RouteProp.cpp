@@ -29,7 +29,7 @@
 #include <RouteManagerDialog.h>
 #include <MessageBox.h>
 #include <RoutePrintSelection.h>
-#include <PositionParser.h>
+#include <PositionConvert.h>
 #include <Config.h>
 #include <ChartCanvas.h>
 #include <MainFrame.h>

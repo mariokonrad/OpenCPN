@@ -26,7 +26,7 @@
 #include <OCPNRegion.h>
 #include <MessageBox.h>
 #include <ViewPort.h>
-#include <PositionParser.h>
+#include <PositionConvert.h>
 #include <UserColors.h>
 #include <ocpn_pixel.h>
 

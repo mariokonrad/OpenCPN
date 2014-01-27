@@ -51,7 +51,7 @@
 #include <MicrosoftCompatibility.h>
 #include <ChartCanvas.h>
 #include <LogMessageOnce.h>
-#include <PositionParser.h>
+#include <PositionConvert.h>
 
 #include "cpl_csv.h"
 #include "setjmp.h"

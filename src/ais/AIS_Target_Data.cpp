@@ -24,7 +24,7 @@
 #include "AIS_Target_Data.h"
 #include <ChartCanvas.h>
 #include <MainFrame.h>
-#include <PositionParser.h>
+#include <PositionConvert.h>
 #include <Units.h>
 #include <MagneticVariation.h>
 

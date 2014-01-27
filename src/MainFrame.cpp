@@ -97,7 +97,7 @@
 #include <UserColors.h>
 #include <Units.h>
 #include <NavObjectChanges.h>
-#include <PositionParser.h>
+#include <PositionConvert.h>
 
 #include <plugin/PlugInManager.h>
 #include <plugin/OCPN_MsgEvent.h>

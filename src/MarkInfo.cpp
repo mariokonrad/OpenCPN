@@ -27,6 +27,7 @@
 #include <WayPointman.h>
 #include <Select.h>
 #include <Routeman.h>
+#include <PositionConvert.h>
 #include <PositionParser.h>
 #include <RouteManagerDialog.h>
 #include <Config.h>

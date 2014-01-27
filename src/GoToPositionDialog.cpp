@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include "GoToPositionDialog.h"
+#include <PositionConvert.h>
 #include <PositionParser.h>
 #include <RouteProp.h>
 #include <LatLonTextCtrl.h>

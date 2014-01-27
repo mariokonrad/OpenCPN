@@ -73,7 +73,7 @@
 #include <Config.h>
 #include <UserColors.h>
 #include <Layer.h>
-#include <PositionParser.h>
+#include <PositionConvert.h>
 #include <Units.h>
 
 #include <plugin/PlugInManager.h>

@@ -962,6 +962,7 @@ SET(HDRS
 	src/MarkInfo.h
 	src/LatLonTextCtrl.h
 	src/RoutePrintout.h
+	src/PositionConvert.h
 	src/PositionParser.h
 	src/PrintTable.h
 	src/Table.h
@@ -1081,6 +1082,7 @@ SET(SRCS
 	src/LatLonTextCtrl.cpp
 	src/RoutePrintout.cpp
 	src/RoutePrintSelection.cpp
+	src/PositionConvert.cpp
 	src/PositionParser.cpp
 	src/PrintTable.cpp
 	src/Table.cpp

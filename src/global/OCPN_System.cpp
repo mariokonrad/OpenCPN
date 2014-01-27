@@ -105,6 +105,11 @@ void OCPN_System::set_config_memory_footprint(long value_kB)
 	data_config.memory_footprint_kB = value_kB;
 }
 
+void OCPN_System::set_config_autosave_interval_seconds(long value)
+{
+	data_config.autosave_interval_seconds = value;
+}
+
 const System::Debug& OCPN_System::debug() const
 {
 	return data_debug;

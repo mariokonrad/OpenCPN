@@ -70,12 +70,14 @@ public:
 		wxString version_string;
 		bool nav_message_shown;
 		long memory_footprint_kB;
+		long autosave_interval_seconds;
 	};
 
 	virtual const Config& config() const = 0;
 	virtual void set_config_version_string(const wxString&) = 0;
 	virtual void set_config_nav_message_shown(bool) = 0;
 	virtual void set_config_memory_footprint(long) = 0;
+	virtual void set_config_autosave_interval_seconds(long) = 0;
 
 public:
 	struct Debug

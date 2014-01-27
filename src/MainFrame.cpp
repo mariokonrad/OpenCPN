@@ -330,7 +330,6 @@ wxString g_AW1GUID;
 wxString g_AW2GUID;
 int g_OwnShipIconType;
 double g_n_arrival_circle_radius;
-int g_nautosave_interval_seconds;
 AboutDialog* g_pAboutDlg;
 wxPlatformInfo* g_pPlatform;
 wxLocale* plocale_def_lang;
@@ -3059,7 +3058,7 @@ void MainFrame::onTimer_update_active_route()
 void MainFrame::onTimer_save_configuration()
 {
 	// Possibly save the current configuration
-	if (0 == (timer_tick % (g_nautosave_interval_seconds))) {
+	if (0 == (timer_tick % (global::OCPN::get().sys().config().autosave_interval_seconds))) {
 		pConfig->UpdateSettings();
 		pConfig->UpdateNavObj();
 	}

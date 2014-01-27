@@ -100,7 +100,6 @@ extern double           g_ownship_predictor_minutes;
 extern chart::s52plib          *ps52plib;
 #endif
 
-extern int              g_nautosave_interval_seconds;
 extern int              g_OwnShipIconType;
 extern double           g_n_arrival_circle_radius;
 
@@ -534,7 +533,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_view_allow_overzoom_x(read_bool(_T("AllowExtremeOverzoom"), true));
 
 	gui.set_view_show_overzoom_emboss(read_bool(_T("ShowOverzoomEmbossWarning"), true));
-	Read(_T("AutosaveIntervalSeconds"), &g_nautosave_interval_seconds, 300);
+	sys.set_config_autosave_interval_seconds(read_long(_T("AutosaveIntervalSeconds"), 300));
 
 	Read(_T("GPSIdent"), &g_GPS_Ident, wxT("Generic"));
 	Read(_T("UseGarminHostUpload"), &g_bGarminHostUpload, 0);

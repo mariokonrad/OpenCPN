@@ -102,8 +102,6 @@ extern chart::s52plib          *ps52plib;
 
 extern int              g_nautosave_interval_seconds;
 extern int              g_OwnShipIconType;
-extern double           g_n_ownship_length_meters;
-extern double           g_n_ownship_beam_meters;
 extern double           g_n_gps_antenna_offset_y;
 extern double           g_n_gps_antenna_offset_x;
 extern int              g_n_ownship_min_mm;
@@ -618,8 +616,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("OwnshipCOGPredictorMinutes"), &g_ownship_predictor_minutes, 5);
 	gui.set_ownship_cog_predictor_width(read_long(_T("OwnshipCOGPredictorWidth"), 3));
 	Read(_T("OwnShipIconType"), &g_OwnShipIconType, 0);
-	Read(_T("OwnShipLength"), &g_n_ownship_length_meters, 0);
-	Read(_T("OwnShipWidth"), &g_n_ownship_beam_meters, 0);
+	gui.set_ownship_length_meters(read_double(_T("OwnShipLength")));
+	gui.set_ownship_beam_meters(read_double(_T("OwnShipWidth")));
 	Read(_T("OwnShipGPSOffsetX"), &g_n_gps_antenna_offset_x, 0);
 	Read(_T("OwnShipGPSOffsetY"), &g_n_gps_antenna_offset_y, 0);
 	Read(_T("OwnShipMinSize"), &g_n_ownship_min_mm, 1);
@@ -1601,8 +1599,8 @@ void Config::UpdateSettings()
 	Write(_T("OwnshipCOGPredictorMinutes"), g_ownship_predictor_minutes);
 	Write(_T("OwnshipCOGPredictorWidth"), ownship.cog_predictor_width);
 	Write(_T("OwnShipIconType"), g_OwnShipIconType);
-	Write(_T("OwnShipLength"), g_n_ownship_length_meters);
-	Write(_T("OwnShipWidth"), g_n_ownship_beam_meters);
+	Write(_T("OwnShipLength"), ownship.length_meters);
+	Write(_T("OwnShipWidth"), ownship.beam_meters);
 	Write(_T("OwnShipGPSOffsetX"), g_n_gps_antenna_offset_x);
 	Write(_T("OwnShipGPSOffsetY"), g_n_gps_antenna_offset_y);
 	Write(_T("OwnShipMinSize"), g_n_ownship_min_mm);

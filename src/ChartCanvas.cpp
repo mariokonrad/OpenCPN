@@ -201,8 +201,6 @@ extern CM93DSlide* pCM93DetailSlider;
 extern ChartCanvas* cc1;
 
 extern int g_OwnShipIconType;
-extern double g_n_ownship_length_meters;
-extern double g_n_ownship_beam_meters;
 extern double g_n_gps_antenna_offset_y;
 extern double g_n_gps_antenna_offset_x;
 extern int g_n_ownship_min_mm;
@@ -3022,7 +3020,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 					pos_image = m_pos_image_user_grey->Copy();
 			}
 
-			if (g_n_ownship_beam_meters > 0.0 && g_n_ownship_length_meters > 0.0
+			const global::GUI::OwnShip& ownship = global::OCPN::get().gui().ownship();
+
+			if (ownship.beam_meters > 0.0 && ownship.length_meters > 0.0
 				&& g_OwnShipIconType > 0) // use large ship
 			{
 				int ownShipWidth = 22; // Default values from s_ownship_icon
@@ -3034,7 +3034,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				}
 
 				// Calculate the true ship length in exact pixels
-				geo::Position ship_bow = geo::ll_gc_ll(nav.pos, icon_hdt, g_n_ownship_length_meters / 1852.0);
+				geo::Position ship_bow = geo::ll_gc_ll(nav.pos, icon_hdt, ownship.length_meters / 1852.0);
 				wxPoint lShipBowPoint;
 				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(ship_bow);
 				wxPoint2DDouble a_point = GetVP().GetDoublePixFromLL(nav.pos);
@@ -3051,9 +3051,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 				// Calculate Nautical Miles distance from midships to gps antenna
 				double hdt_ant = icon_hdt + 180.0;
-				double dy = (g_n_ownship_length_meters / 2 - g_n_gps_antenna_offset_y) / 1852.0;
+				double dy = (ownship.length_meters / 2 - g_n_gps_antenna_offset_y) / 1852.0;
 				double dx = g_n_gps_antenna_offset_x / 1852.0;
-				if (g_n_gps_antenna_offset_y > g_n_ownship_length_meters / 2) { // reverse?
+				if (g_n_gps_antenna_offset_y > ownship.length_meters / 2) { // reverse?
 					hdt_ant = icon_hdt;
 					dy = -dy;
 				}
@@ -3082,7 +3082,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				double scale_factor_y = scale_factor;
 				double scale_factor_x
 					= scale_factor_y * ((double)ownShipLength / ownShipWidth)
-					  / ((double)g_n_ownship_length_meters / g_n_ownship_beam_meters);
+					  / (ownship.length_meters / ownship.beam_meters);
 
 				if (g_OwnShipIconType == 1) { // Scaled bitmap
 					pos_image.Rescale(ownShipWidth * scale_factor_x, ownShipLength * scale_factor_y,

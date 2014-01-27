@@ -106,8 +106,6 @@ extern int g_pNavAidRadarRingsStepUnits;
 extern bool g_bPlayShipsBells;
 
 extern int g_OwnShipIconType;
-extern double g_n_ownship_length_meters;
-extern double g_n_ownship_beam_meters;
 extern double g_n_gps_antenna_offset_y;
 extern double g_n_gps_antenna_offset_x;
 extern int g_n_ownship_min_mm;
@@ -1925,6 +1923,7 @@ void options::SetInitialSettings()
 
 	const global::GUI& gui = global::OCPN::get().gui();
 	const global::GUI::View& view = global::OCPN::get().gui().view();
+	const global::GUI::OwnShip& ownship = global::OCPN::get().gui().ownship();
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 
@@ -1993,8 +1992,8 @@ void options::SetInitialSettings()
 	m_pShipIconType->SetSelection(g_OwnShipIconType);
 	wxCommandEvent eDummy;
 	OnShipTypeSelect(eDummy);
-	m_pOSLength->SetValue(wxString::Format(_T("%.1f"), g_n_ownship_length_meters));
-	m_pOSWidth->SetValue(wxString::Format(_T("%.1f"), g_n_ownship_beam_meters));
+	m_pOSLength->SetValue(wxString::Format(_T("%.1f"), ownship.length_meters));
+	m_pOSWidth->SetValue(wxString::Format(_T("%.1f"), ownship.beam_meters));
 	m_pOSGPSOffsetX->SetValue(wxString::Format(_T("%.1f"), g_n_gps_antenna_offset_x));
 	m_pOSGPSOffsetY->SetValue(wxString::Format(_T("%.1f"), g_n_gps_antenna_offset_y));
 	m_pOSMinSize->SetValue(wxString::Format(_T("%d"), g_n_ownship_min_mm));
@@ -2472,8 +2471,8 @@ void options::OnApplyClick(wxCommandEvent& event)
 			event.SetInt(wxID_STOP);
 			return;
 		}
-		g_n_ownship_length_meters = n_ownship_length_meters;
-		g_n_ownship_beam_meters = n_ownship_beam_meters;
+		gui.set_ownship_length_meters(n_ownship_length_meters);
+		gui.set_ownship_beam_meters(n_ownship_beam_meters);
 		g_n_gps_antenna_offset_y = n_gps_antenna_offset_y;
 		g_n_gps_antenna_offset_x = n_gps_antenna_offset_x;
 		g_n_ownship_min_mm = (int)n_ownship_min_mm;

@@ -329,8 +329,6 @@ CM93DSlide* pCM93DetailSlider;
 wxString g_AW1GUID;
 wxString g_AW2GUID;
 int g_OwnShipIconType;
-double g_n_ownship_length_meters;
-double g_n_ownship_beam_meters;
 double g_n_gps_antenna_offset_y;
 double g_n_gps_antenna_offset_x;
 int g_n_ownship_min_mm;

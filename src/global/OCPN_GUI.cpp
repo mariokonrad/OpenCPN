@@ -327,5 +327,15 @@ void OCPN_GUI::set_ownship_cog_predictor_width(int value)
 	data_ownship.cog_predictor_width = value;
 }
 
+void OCPN_GUI::set_ownship_length_meters(double value)
+{
+	data_ownship.length_meters = value;
+}
+
+void OCPN_GUI::set_ownship_beam_meters(double value)
+{
+	data_ownship.beam_meters = value;
+}
+
 }
 

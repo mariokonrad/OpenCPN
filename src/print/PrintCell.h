@@ -21,48 +21,71 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __PRINTTABLE_H__
-#define __PRINTTABLE_H__
+#ifndef __PRINT__PRINTCELL__H__
+#define __PRINT__PRINTCELL__H__
 
-#include <Table.h>
-#include <PrintCell.h>
+#include <wx/string.h>
+#include <wx/gdicmn.h>
 
-#include <iostream>
-#include <vector>
+class wxDC;
 
-#ifdef __WXMSW__
-	#include <wx/msw/private.h>
-#endif
+namespace print {
 
-
-///\brief Extension of a class Table with printing into dc.
-///
-/// It takes all elements, takes DC as a printing device, takes  a maximal
-/// possible table width,  calculate width of every column.
-/// For printing of every cell it modifies its content so, that it fits into cell by inserting
-/// new lines.
-class PrintTable : public Table
+/// \brief This class takes multilined string and modifies it to fit into given width
+/// for given device. If it is too wide for given DC (by class PrintTable )
+/// it introduces new lines between words
+class PrintCell
 {
-	public:
-		typedef std::vector<PrintCell> ContentRow;
-		typedef std::vector<ContentRow> Content;
-	protected:
-		Content contents;
-		ContentRow header_content;
-		std::vector<int> rows_heights;
-		int header_height;
-		int number_of_pages; // stores the number of pages for printing of this table. It is set by AdjustCells
+protected:
+	// Copy of printing device
+	wxDC* dc;
 
-	public:
-		PrintTable();
+	// Target width
+	int width;
 
-		// creates internally vector of PrintCell's, to calculate columns widths and row sizes
-		void AdjustCells(wxDC * _dc, int marginX, int marginY);
+	// Target height
+	int height;
 
-		const Content & GetContent() const;
-		const ContentRow & GetHeader() const;
-		int GetNumberPages() const;
-		int GetHeaderHeight() const;
+	// Cellpadding
+	int cellpadding;
+
+	// Content of a cell
+	wxString content;
+
+	// Result of modification
+	wxString modified_content;
+
+	// Rect for printing of modified string
+	wxRect rect;
+
+	// Stores page, where this cell will be printed
+	int page;
+
+	// Stores, if one has to ovveride property "weight" of the font with the value "bold" - used to
+	// print header of the table.
+	bool bold_font;
+
+	// Adjust text
+	void Adjust();
+
+public:
+	// Constructor with content to print and device
+	PrintCell();
+
+	// Constructor with content to print and device
+	void Init(const wxString& _content, wxDC* _dc, int _width, int _cellpadding,
+			  bool bold_font = false);
+
+	wxRect GetRect() const;
+	wxString GetText() const;
+	int GetHeight() const;
+	int GetWidth() const;
+	void SetPage(int _page);
+	;
+	void SetHeight(int _height);
+	int GetPage() const;
 };
+
+}
 
 #endif

@@ -24,7 +24,7 @@
 #ifndef __ROUTEPRINTOUT_H__
 #define __ROUTEPRINTOUT_H__
 
-#include <PrintTable.h>
+#include <print/PrintTable.h>
 #include <MyPrintout.h>
 
 #include <wx/print.h>
@@ -39,40 +39,31 @@ class Route;
 
 class RoutePrintout : public MyPrintout
 {
-	public:
-		RoutePrintout(
-				std::vector<bool> _toPrintOut,
-				Route * route,
-				const wxChar * title = _T("My Route printout"));
+public:
+	RoutePrintout(std::vector<bool> _toPrintOut, Route* route,
+				  const wxChar* title = _T("My Route printout"));
 
-		virtual bool OnPrintPage(int page);
-		virtual void OnPreparePrinting();
-		void DrawPage(wxDC * dc);
+	virtual bool OnPrintPage(int page);
+	virtual void OnPreparePrinting();
+	void DrawPage(wxDC* dc);
 
-		virtual bool HasPage(int num) const
-		{
-			return num > 0 || num <= 1;
-		}
+	virtual bool HasPage(int num) const;
+	virtual void GetPageInfo( // FIXME: bad interface of method
+		int* minPage, int* maxPage, int* selPageFrom, int* selPageTo);
 
-		virtual void GetPageInfo( // FIXME: bad interface of method
-				int * minPage,
-				int * maxPage,
-				int * selPageFrom,
-				int * selPageTo);
+protected:
+	static const int pN = 5; // number of fields sofar
 
-	protected:
-		static const int pN = 5;     // number of fields sofar
-
-		wxDC * myDC;
-		PrintTable table;
-		Route * myRoute;
-		std::vector<bool> toPrintOut; // list of fields of bool, if certain element should be print out.
-		int pageToPrint;
-		int numberOfPages;
-		int marginX;
-		int marginY;
-		int textOffsetX;
-		int textOffsetY;
+	wxDC* myDC;
+	print::PrintTable table;
+	Route* myRoute;
+	std::vector<bool> toPrintOut; // list of fields of bool, if certain element should be print out.
+	int pageToPrint;
+	int numberOfPages;
+	int marginX;
+	int marginY;
+	int textOffsetX;
+	int textOffsetY;
 };
 
 #endif

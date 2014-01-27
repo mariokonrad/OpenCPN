@@ -40,7 +40,7 @@
 #include <wx/colour.h>
 #include <wx/dc.h>
 
-#if wxCHECK_VERSION( 2, 9, 0 )
+#if wxCHECK_VERSION(2, 9, 0)
 	#include <wx/dialog.h>
 #endif
 
@@ -150,6 +150,11 @@ RoutePrintout::RoutePrintout(
 	}
 }
 
+bool RoutePrintout::HasPage(int num) const
+{
+	return num > 0 || num <= 1;
+}
+
 void RoutePrintout::GetPageInfo(int* minPage, int* maxPage, int* selPageFrom, int* selPageTo)
 {
 	*minPage = 1;
@@ -216,9 +221,9 @@ void RoutePrintout::DrawPage(wxDC* dc)
 
 	int currentX = marginX;
 	int currentY = marginY;
-	const PrintTable::ContentRow& header_content = table.GetHeader();
+	const print::PrintTable::ContentRow& header_content = table.GetHeader();
 	for (size_t j = 0; j < header_content.size(); j++) {
-		const PrintCell& cell = header_content[j];
+		const print::PrintCell& cell = header_content[j];
 		dc->DrawRectangle(currentX, currentY, cell.GetWidth(), cell.GetHeight());
 		dc->DrawText(cell.GetText(), currentX + header_textOffsetX, currentY + header_textOffsetY);
 		currentX += cell.GetWidth();
@@ -227,14 +232,14 @@ void RoutePrintout::DrawPage(wxDC* dc)
 	wxFont routePrintFont_normal(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
 	dc->SetFont(routePrintFont_normal);
 
-	const PrintTable::Content& cells = table.GetContent();
+	const print::PrintTable::Content& cells = table.GetContent();
 	currentY = marginY + table.GetHeaderHeight();
 	int currentHeight = 0;
 	for (size_t i = 0; i < cells.size(); i++) {
-		const PrintTable::ContentRow& content_row = cells[i];
+		const print::PrintTable::ContentRow& content_row = cells[i];
 		currentX = marginX;
 		for (size_t j = 0; j < content_row.size(); j++) {
-			const PrintCell& cell = content_row[j];
+			const print::PrintCell& cell = content_row[j];
 			if (cell.GetPage() == pageToPrint) {
 				wxRect r(currentX, currentY, cell.GetWidth(), cell.GetHeight());
 				dc->DrawRectangle(r);

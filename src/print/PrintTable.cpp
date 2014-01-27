@@ -39,7 +39,7 @@
 #include <wx/tokenzr.h>
 #include <wx/dc.h>
 
-#if wxCHECK_VERSION( 2, 9, 0 )
+#if wxCHECK_VERSION(2, 9, 0)
 	#include <wx/dialog.h>
 #endif
 
@@ -60,6 +60,7 @@
 #include "PrintTable.h"
 
 
+namespace print {
 
 PrintTable::PrintTable()
 	: Table()
@@ -67,17 +68,17 @@ PrintTable::PrintTable()
 	rows_heights.clear();
 }
 
-void PrintTable::AdjustCells(wxDC * dc, int marginX, int marginY)
+void PrintTable::AdjustCells(wxDC* dc, int marginX, int marginY)
 {
 	number_of_pages = -1;
 	contents.clear();
 	int sum = 0;
-	for ( size_t j = 0; j < widths.size(); j++ ) {
-		sum += widths[ j ];
+	for (size_t j = 0; j < widths.size(); j++) {
+		sum += widths[j];
 	}
 
 	int w, h;
-	dc->GetSize( &w, &h );
+	dc->GetSize(&w, &h);
 
 	double scale_x, scale_y;
 	dc->GetUserScale(&scale_x, &scale_y);
@@ -86,47 +87,47 @@ void PrintTable::AdjustCells(wxDC * dc, int marginX, int marginY)
 
 	int width = w - 4 * marginX;
 	header_height = -1;
-	for ( size_t j = 0; j < header.size(); j++ ) {
-		int cell_width = ( int )( ( double )width * widths[ j ] / sum );
+	for (size_t j = 0; j < header.size(); j++) {
+		int cell_width = (int)((double)width * widths[j] / sum);
 		PrintCell cell_content;
-		cell_content.Init( header[ j ], dc, cell_width, 10, true );
-		header_content.push_back( cell_content );
-		header_height = std::max( header_height, cell_content.GetHeight() );
+		cell_content.Init(header[j], dc, cell_width, 10, true);
+		header_content.push_back(cell_content);
+		header_height = std::max(header_height, cell_content.GetHeight());
 	}
 
-	for ( size_t i = 0; i < data.size(); i++ ) {
-		const Row & row = data[ i ];
+	for (size_t i = 0; i < data.size(); i++) {
+		const Row& row = data[i];
 		ContentRow contents_row;
 		int max_height = -1;
-		for ( size_t j = 0; j < row.size(); j++ ) {
-			int cell_width = ( int )( ( double )width * widths[ j ] / sum );
+		for (size_t j = 0; j < row.size(); j++) {
+			int cell_width = (int)((double)width * widths[j] / sum);
 			PrintCell cell_content;
-			cell_content.Init( row[ j ], dc, cell_width, 10 );
-			contents_row.push_back( cell_content );
-			max_height = std::max( max_height, cell_content.GetHeight() );
+			cell_content.Init(row[j], dc, cell_width, 10);
+			contents_row.push_back(cell_content);
+			max_height = std::max(max_height, cell_content.GetHeight());
 		}
-		rows_heights.push_back( max_height );
-		contents.push_back( contents_row );
+		rows_heights.push_back(max_height);
+		contents.push_back(contents_row);
 	}
 
 	int stripped_page = h - 4 * marginY - header_height;
 	int current_page = 1;
 	int current_y = 0;
-	for ( size_t i = 0; i < data.size(); i++ ) {
-		int row_height = rows_heights[ i ];
-		if ( row_height + current_y > stripped_page ) {
+	for (size_t i = 0; i < data.size(); i++) {
+		int row_height = rows_heights[i];
+		if (row_height + current_y > stripped_page) {
 			current_page++;
 			current_y = row_height;
 		} else {
 			current_y += row_height;
 		}
 		int row_page = current_page;
-		ContentRow & contents_row = contents[ i ];
-		for ( size_t j = 0; j < contents_row.size(); j++ ) {
-			contents_row[ j ].SetPage( row_page );
-			contents_row[ j ].SetHeight( row_height );
+		ContentRow& contents_row = contents[i];
+		for (size_t j = 0; j < contents_row.size(); j++) {
+			contents_row[j].SetPage(row_page);
+			contents_row[j].SetHeight(row_height);
 		}
-		number_of_pages = std::max( row_page, number_of_pages );
+		number_of_pages = std::max(row_page, number_of_pages);
 	}
 }
 
@@ -152,5 +153,7 @@ int PrintTable::GetNumberPages() const
 int PrintTable::GetHeaderHeight() const
 {
 	return header_height;
+}
+
 }
 

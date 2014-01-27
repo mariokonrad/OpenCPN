@@ -21,71 +21,76 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __PRINTCELL__H__
-#define __PRINTCELL__H__
+#ifndef __PRINT__TABLE__H__
+#define __PRINT__TABLE__H__
 
+#include <vector>
+#include <string>
+#include <ostream>
 #include <wx/string.h>
-#include <wx/gdicmn.h>
 
-class wxDC;
+namespace print {
 
-/// \brief This class takes multilined string and modifies it to fit into given width
-/// for given device. If it is too wide for given DC (by class PrintTable )
-/// it introduces new lines between words
-class PrintCell
+/// \brief
+/// Enumeration is used to notice the state of the table.
+///
+/// Different states are used to signalize different semanic of the data in
+/// the operator << of the class Table.
+/// If the state is "setup columns widths" -> then the data is used to store
+/// the width of the columns.
+/// If the state is "fill with data" -> then the data is the cell content.
+enum TableState
 {
-	protected:
-		// Copy of printing device
-		wxDC * dc;
-
-		// Target width
-		int width;
-
-		// Target height
-		int height;
-
-		// Cellpadding
-		int cellpadding;
-
-		// Content of a cell
-		wxString content;
-
-		// Result of modification
-		wxString modified_content;
-
-		// Rect for printing of modified string
-		wxRect rect;
-
-		// Stores page, where this cell will be printed
-		int page;
-
-		// Stores, if one has to ovveride property "weight" of the font with the value "bold" - used to print header of the table.
-		bool bold_font;
-
-		// Adjust text
-		void Adjust();
-
-	public:
-
-		// Constructor with content to print and device
-		PrintCell();
-
-		// Constructor with content to print and device
-		void Init(
-				const wxString & _content,
-				wxDC * _dc,
-				int _width,
-				int _cellpadding,
-				bool bold_font = false);
-
-		wxRect GetRect() const;
-		wxString GetText() const;
-		int GetHeight() const;
-		int GetWidth() const;
-		void SetPage(int _page);;
-		void SetHeight(int _height);
-		int GetPage() const;
+	TABLE_SETUP_WIDTHS = 0,
+	TABLE_FILL_DATA,
+	TABLE_FILL_HEADER
 };
 
+
+/// \brief Represents a NxM simple table with captions.
+///
+/// Input operator is "<<"
+/// Number of columns and rows are given dynamically by the input data.
+/// Captions are given by first input line.
+/// Every cell is given column by column.
+/// Next row is given by "<< '\n'" (or << endl)
+class Table
+{
+public:
+	typedef std::vector<wxString> Row;
+	typedef std::vector<Row> Data;
+
+protected:
+	int nrows;
+	int ncols;
+
+	bool create_next_row;
+
+	Data data;
+	std::vector<double> widths;
+	Row header;
+	TableState state;
+
+	void Start();
+	void NewRow();
+
+public:
+	Table();
+	~Table();
+
+	Table& operator<<(const std::string&);
+	Table& operator<<(const int&);
+	Table& operator<<(const double&);
+
+	const Data& GetData() const;
+	void StartFillData();
+	void StartFillHeader();
+	void StartFillWidths();
+	int GetRowHeight(int i) const;
+
+	friend std::ostream& operator<<(std::ostream&, const Table&);
+};
+
+}
 
 #endif

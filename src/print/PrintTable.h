@@ -21,72 +21,53 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TABLE__H__
-#define __TABLE__H__
+#ifndef __PRINT__PRINTTABLE__H__
+#define __PRINT__PRINTTABLE__H__
 
+#include <print/Table.h>
+#include <print/PrintCell.h>
+
+#include <iostream>
 #include <vector>
-#include <string>
-#include <ostream>
-#include <wx/string.h>
 
-/// \brief
-/// Enumeration is used to notice the state of the table.
+#ifdef __WXMSW__
+	#include <wx/msw/private.h>
+#endif
+
+namespace print {
+
+///\brief Extension of a class Table with printing into dc.
 ///
-/// Different states are used to signalize different semanic of the data in
-/// the operator << of the class Table.
-/// If the state is "setup columns widths" -> then the data is used to store
-/// the width of the columns.
-/// If the state is "fill with data" -> then the data is the cell content.
-enum TableState
+/// It takes all elements, takes DC as a printing device, takes  a maximal
+/// possible table width,  calculate width of every column.
+/// For printing of every cell it modifies its content so, that it fits into cell by inserting
+/// new lines.
+class PrintTable : public Table
 {
-	TABLE_SETUP_WIDTHS = 0,
-	TABLE_FILL_DATA,
-	TABLE_FILL_HEADER
+public:
+	typedef std::vector<PrintCell> ContentRow;
+	typedef std::vector<ContentRow> Content;
+
+protected:
+	Content contents;
+	ContentRow header_content;
+	std::vector<int> rows_heights;
+	int header_height;
+	int number_of_pages; // stores the number of pages for printing of this table. It is set by
+						 // AdjustCells
+
+public:
+	PrintTable();
+
+	// creates internally vector of PrintCell's, to calculate columns widths and row sizes
+	void AdjustCells(wxDC* _dc, int marginX, int marginY);
+
+	const Content& GetContent() const;
+	const ContentRow& GetHeader() const;
+	int GetNumberPages() const;
+	int GetHeaderHeight() const;
 };
 
-
-/// \brief Represents a NxM simple table with captions.
-///
-/// Input operator is "<<"
-/// Number of columns and rows are given dynamically by the input data.
-/// Captions are given by first input line.
-/// Every cell is given column by column.
-/// Next row is given by "<< '\n'" (or << endl)
-class Table
-{
-	public:
-		typedef std::vector<wxString> Row;
-		typedef std::vector<Row> Data;
-
-	protected:
-		int nrows;
-		int ncols;
-
-		bool create_next_row;
-
-		Data data;
-		std::vector<double> widths;
-		Row header;
-		TableState state;
-
-		void Start();
-		void NewRow();
-
-	public:
-		Table();
-		~Table();
-
-		Table & operator<<(const std::string &);
-		Table & operator<<(const int &);
-		Table & operator<<(const double &);
-
-		const Data & GetData() const;
-		void StartFillData();
-		void StartFillHeader();
-		void StartFillWidths();
-		int GetRowHeight(int i) const;
-
-		friend std::ostream & operator<<(std::ostream &, const Table &);
-};
+}
 
 #endif

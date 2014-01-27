@@ -24,6 +24,8 @@
 #include "Table.h"
 #include <sstream>
 
+namespace print {
+
 Table::Table()
 	: nrows(0)
 	, ncols(0)
@@ -43,7 +45,7 @@ Table::~Table()
 
 void Table::Start()
 {
-	if ( create_next_row ) {
+	if (create_next_row) {
 		NewRow();
 		create_next_row = false;
 	}
@@ -54,64 +56,66 @@ void Table::NewRow()
 	data.push_back(Row());
 }
 
-Table& Table::operator<<( const double& cellcontent )
+Table& Table::operator<<(const double& cellcontent)
 {
-	if ( state == TABLE_SETUP_WIDTHS ) {
-		widths.push_back( cellcontent );
+	if (state == TABLE_SETUP_WIDTHS) {
+		widths.push_back(cellcontent);
 		return *this;
 	}
-	if ( state == TABLE_FILL_DATA ) {
+	if (state == TABLE_FILL_DATA) {
 		std::stringstream sstr;
 		sstr << cellcontent;
 		std::string _cellcontent = sstr.str();
 		Start();
-		wxString _str( _cellcontent.c_str(), wxConvUTF8 );
-		data[ data.size() - 1 ].push_back( _str );
+		wxString _str(_cellcontent.c_str(), wxConvUTF8);
+		data[data.size() - 1].push_back(_str);
 	}
 	return *this;
 }
 
-Table & Table::operator<<(const std::string & cellcontent)
+Table& Table::operator<<(const std::string& cellcontent)
 {
 	Start();
-	if ( state == TABLE_FILL_HEADER ) { // if we start to fill with string data, we change state automatically.
-		wxString _str( cellcontent.c_str(), wxConvUTF8 );
-		header.push_back( _str );
+	if (state == TABLE_FILL_HEADER) { // if we start to fill with string data, we change state
+									  // automatically.
+		wxString _str(cellcontent.c_str(), wxConvUTF8);
+		header.push_back(_str);
 		return *this;
 	}
-	if ( state == TABLE_SETUP_WIDTHS ) { // if we start to fill with string data, we change state automatically.
+	if (state == TABLE_SETUP_WIDTHS) { // if we start to fill with string data, we change state
+									   // automatically.
 		state = TABLE_FILL_DATA;
 	}
 
-	if ( ( cellcontent.compare( "\n" ) == 0 ) ) {
+	if ((cellcontent.compare("\n") == 0)) {
 		create_next_row = true;
 		return *this;
 	}
-	wxString _str( cellcontent.c_str(), wxConvUTF8 );
-	data[ data.size() - 1 ].push_back( _str );
+	wxString _str(cellcontent.c_str(), wxConvUTF8);
+	data[data.size() - 1].push_back(_str);
 	return *this;
 }
 
-Table & Table::operator<<(const int & cellcontent)
+Table& Table::operator<<(const int& cellcontent)
 {
 	using namespace std;
 
-	if ( state == TABLE_SETUP_WIDTHS ) {
-		widths.push_back( ( double )cellcontent );
+	if (state == TABLE_SETUP_WIDTHS) {
+		widths.push_back((double)cellcontent);
 		return *this;
 	}
-	if ( state == TABLE_FILL_DATA ) {
+	if (state == TABLE_FILL_DATA) {
 		stringstream sstr;
 		sstr << cellcontent;
 		string _cellcontent = sstr.str();
 		Start();
-		wxString _str( _cellcontent.c_str(), wxConvUTF8 );
-		data[ data.size() - 1 ].push_back( _str );
+		wxString _str(_cellcontent.c_str(), wxConvUTF8);
+		data[data.size() - 1].push_back(_str);
 	}
 	return *this;
 }
 
-const Table::Data & Table::GetData() const
+const Table::Data& Table::GetData() const
 {
 	return data;
 }
@@ -133,19 +137,21 @@ void Table::StartFillWidths()
 
 int Table::GetRowHeight(int i) const
 {
-	return widths[ i ];
+	return widths[i];
 }
 
-std::ostream& operator<<(std::ostream& out, const Table & table)
+std::ostream& operator<<(std::ostream& out, const Table& table)
 {
-    const Table::Data & data = table.GetData();
+	const Table::Data& data = table.GetData();
 
-    for (Table::Data::const_iterator i = data.begin(); i != data.end(); ++i) {
-        for (Table::Row::const_iterator row = i->begin(); row != i->end(); ++row) {
-            out << row->fn_str() << " ";
-        }
-        out << std::endl;
-    }
-    return out;
+	for (Table::Data::const_iterator i = data.begin(); i != data.end(); ++i) {
+		for (Table::Row::const_iterator row = i->begin(); row != i->end(); ++row) {
+			out << row->fn_str() << " ";
+		}
+		out << std::endl;
+	}
+	return out;
+}
+
 }
 

@@ -891,6 +891,10 @@ SET(HDRS
 	src/garmin/unit_info.h
 	src/garmin/usb_packet.h
 
+	src/print/Table.h
+	src/print/PrintTable.h
+	src/print/PrintCell.h
+
 	src/ocpn_pixel.h
 	src/Units.h
 	src/DataStream.h
@@ -964,9 +968,6 @@ SET(HDRS
 	src/RoutePrintout.h
 	src/PositionConvert.h
 	src/PositionParser.h
-	src/PrintTable.h
-	src/Table.h
-	src/PrintCell.h
 	src/RoutePrintSelection.h
 	src/StatWin.h
 	src/TextStatWin.h
@@ -1019,6 +1020,10 @@ SET(SRCS
 	${SRC_CHART}
 
 	src/tide/TCMgr.cpp
+
+	src/print/Table.cpp
+	src/print/PrintTable.cpp
+	src/print/PrintCell.cpp
 
 	src/MemoryStatus.cpp
 	src/AnchorDist.cpp
@@ -1084,9 +1089,6 @@ SET(SRCS
 	src/RoutePrintSelection.cpp
 	src/PositionConvert.cpp
 	src/PositionParser.cpp
-	src/PrintTable.cpp
-	src/Table.cpp
-	src/PrintCell.cpp
 	src/StatWin.cpp
 	src/TextStatWin.cpp
 	src/PianoWin.cpp

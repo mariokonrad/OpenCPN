@@ -31,10 +31,12 @@ namespace geo {
 /// that is assummed to be a geographic area, with coordinates
 /// expressed in Lat/Lon.
 /// This class understands the International Date Line (E/W Longitude)
+///
+/// @note Breaks Liskov Substitution Principle
 class LatLonBoundingBox : public BoundingBox
 {
-	public:
-		virtual bool PointInBox(double Lon, double Lat, double Marge) const;
+public:
+	virtual bool PointInBox(double Lon, double Lat, double Marge) const;
 };
 
 }

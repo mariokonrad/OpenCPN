@@ -31,37 +31,32 @@ bool LatLonBoundingBox::PointInBox(double Lon, double Lat, double Marge) const
 	double x = Lon;
 	double y = Lat;
 
-	//    Box is centered in East lon, crossing IDL
-	if(m_maxx > 180.0)
-	{
-		if( x < m_maxx - 360.0)
-			x +=  360.0;
+	// Box is centered in East lon, crossing IDL
+	if (m_maxx > 180.0) {
+		if (x < m_maxx - 360.0)
+			x += 360.0;
 
-		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
-				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
+		if (x >= (m_minx - Marge) && x <= (m_maxx + Marge) && y >= (m_miny - Marge)
+			&& y <= (m_maxy + Marge))
 			return true;
 		return false;
 	}
 
-	//    Box is centered in Wlon, crossing IDL
-	else if(m_minx < -180.0)
-	{
-		if(x > m_minx + 360.0)
+	// Box is centered in Wlon, crossing IDL
+	if (m_minx < -180.0) {
+		if (x > m_minx + 360.0)
 			x -= 360.0;
 
-		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
-				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
+		if (x >= (m_minx - Marge) && x <= (m_maxx + Marge) && y >= (m_miny - Marge)
+			&& y <= (m_maxy + Marge))
 			return true;
 		return false;
 	}
 
-	else
-	{
-		if (  x >= (m_minx - Marge) && x <= (m_maxx + Marge) &&
-				y >= (m_miny - Marge) && y <= (m_maxy + Marge) )
-			return true;
-		return false;
-	}
+	if (x >= (m_minx - Marge) && x <= (m_maxx + Marge) && y >= (m_miny - Marge)
+		&& y <= (m_maxy + Marge))
+		return true;
+	return false;
 }
 
 }

@@ -120,6 +120,8 @@ public: // own ship
 	virtual void set_ownship_length_meters(double);
 	virtual void set_ownship_beam_meters(double);
 	virtual void set_ownship_min_mm(int);
+	virtual void set_gps_antenna_offset_x(double);
+	virtual void set_gps_antenna_offset_y(double);
 };
 
 }

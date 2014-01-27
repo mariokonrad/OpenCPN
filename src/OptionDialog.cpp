@@ -106,8 +106,6 @@ extern int g_pNavAidRadarRingsStepUnits;
 extern bool g_bPlayShipsBells;
 
 extern int g_OwnShipIconType;
-extern double g_n_gps_antenna_offset_y;
-extern double g_n_gps_antenna_offset_x;
 extern double g_n_arrival_circle_radius;
 
 extern int g_iSDMMFormat;
@@ -1993,8 +1991,8 @@ void options::SetInitialSettings()
 	OnShipTypeSelect(eDummy);
 	m_pOSLength->SetValue(wxString::Format(_T("%.1f"), ownship.length_meters));
 	m_pOSWidth->SetValue(wxString::Format(_T("%.1f"), ownship.beam_meters));
-	m_pOSGPSOffsetX->SetValue(wxString::Format(_T("%.1f"), g_n_gps_antenna_offset_x));
-	m_pOSGPSOffsetY->SetValue(wxString::Format(_T("%.1f"), g_n_gps_antenna_offset_y));
+	m_pOSGPSOffsetX->SetValue(wxString::Format(_T("%.1f"), ownship.gps_antenna_offset_x));
+	m_pOSGPSOffsetY->SetValue(wxString::Format(_T("%.1f"), ownship.gps_antenna_offset_y));
 	m_pOSMinSize->SetValue(wxString::Format(_T("%d"), ownship.min_mm));
 	m_pText_ACRadius->SetValue(wxString::Format(_T("%.2f"), g_n_arrival_circle_radius));
 
@@ -2472,8 +2470,8 @@ void options::OnApplyClick(wxCommandEvent& event)
 		}
 		gui.set_ownship_length_meters(n_ownship_length_meters);
 		gui.set_ownship_beam_meters(n_ownship_beam_meters);
-		g_n_gps_antenna_offset_y = n_gps_antenna_offset_y;
-		g_n_gps_antenna_offset_x = n_gps_antenna_offset_x;
+		gui.set_gps_antenna_offset_x(n_gps_antenna_offset_x);
+		gui.set_gps_antenna_offset_y(n_gps_antenna_offset_y);
 		gui.set_ownship_min_mm(n_ownship_min_mm);
 	}
 	g_OwnShipIconType = m_pShipIconType->GetSelection();

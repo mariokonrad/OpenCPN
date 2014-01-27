@@ -192,6 +192,8 @@ public:
 		double length_meters;
 		double beam_meters;
 		int min_mm;
+		double gps_antenna_offset_x;
+		double gps_antenna_offset_y;
 	};
 
 	virtual const OwnShip& ownship() const = 0;
@@ -199,6 +201,8 @@ public:
 	virtual void set_ownship_length_meters(double) = 0;
 	virtual void set_ownship_beam_meters(double) = 0;
 	virtual void set_ownship_min_mm(int) = 0;
+	virtual void set_gps_antenna_offset_x(double) = 0;
+	virtual void set_gps_antenna_offset_y(double) = 0;
 };
 
 }

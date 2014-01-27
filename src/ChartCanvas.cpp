@@ -201,8 +201,6 @@ extern CM93DSlide* pCM93DetailSlider;
 extern ChartCanvas* cc1;
 
 extern int g_OwnShipIconType;
-extern double g_n_gps_antenna_offset_y;
-extern double g_n_gps_antenna_offset_x;
 
 extern wxPlatformInfo* g_pPlatform;
 
@@ -3050,9 +3048,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 				// Calculate Nautical Miles distance from midships to gps antenna
 				double hdt_ant = icon_hdt + 180.0;
-				double dy = (ownship.length_meters / 2 - g_n_gps_antenna_offset_y) / 1852.0;
-				double dx = g_n_gps_antenna_offset_x / 1852.0;
-				if (g_n_gps_antenna_offset_y > ownship.length_meters / 2) { // reverse?
+				double dy = (ownship.length_meters / 2 - ownship.gps_antenna_offset_y) / 1852.0;
+				double dx = ownship.gps_antenna_offset_x / 1852.0;
+				if (ownship.gps_antenna_offset_y > ownship.length_meters / 2) { // reverse?
 					hdt_ant = icon_hdt;
 					dy = -dy;
 				}

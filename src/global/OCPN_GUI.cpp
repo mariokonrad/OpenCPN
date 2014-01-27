@@ -342,5 +342,15 @@ void OCPN_GUI::set_ownship_min_mm(int value)
 	data_ownship.min_mm = value;
 }
 
+void OCPN_GUI::set_gps_antenna_offset_x(double value)
+{
+	data_ownship.gps_antenna_offset_x = value;
+}
+
+void OCPN_GUI::set_gps_antenna_offset_y(double value)
+{
+	data_ownship.gps_antenna_offset_y = value;
+}
+
 }
 

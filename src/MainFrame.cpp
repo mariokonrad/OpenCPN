@@ -329,8 +329,6 @@ CM93DSlide* pCM93DetailSlider;
 wxString g_AW1GUID;
 wxString g_AW2GUID;
 int g_OwnShipIconType;
-double g_n_gps_antenna_offset_y;
-double g_n_gps_antenna_offset_x;
 double g_n_arrival_circle_radius;
 int g_nautosave_interval_seconds;
 AboutDialog* g_pAboutDlg;

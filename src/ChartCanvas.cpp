@@ -200,8 +200,6 @@ extern CM93DSlide* pCM93DetailSlider;
 
 extern ChartCanvas* cc1;
 
-extern int g_OwnShipIconType;
-
 extern wxPlatformInfo* g_pPlatform;
 
 extern bool g_bCourseUp;
@@ -3020,13 +3018,13 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 			const global::GUI::OwnShip& ownship = global::OCPN::get().gui().ownship();
 
-			if (ownship.beam_meters > 0.0 && ownship.length_meters > 0.0
-				&& g_OwnShipIconType > 0) // use large ship
-			{
+			if (ownship.beam_meters > 0.0 && ownship.length_meters > 0.0 && ownship.icon_type > 0) {
+				// use large ship
+
 				int ownShipWidth = 22; // Default values from s_ownship_icon
 				int ownShipLength = 84;
 
-				if (g_OwnShipIconType == 1) {
+				if (ownship.icon_type == 1) { // FIXME: use enum
 					ownShipWidth = pos_image.GetWidth();
 					ownShipLength = pos_image.GetHeight();
 				}
@@ -3082,7 +3080,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 					= scale_factor_y * ((double)ownShipLength / ownShipWidth)
 					  / (ownship.length_meters / ownship.beam_meters);
 
-				if (g_OwnShipIconType == 1) { // Scaled bitmap
+				if (ownship.icon_type == 1) { // Scaled bitmap (FIXME:use enum)
 					pos_image.Rescale(ownShipWidth * scale_factor_x, ownShipLength * scale_factor_y,
 									  wxIMAGE_QUALITY_HIGH);
 					wxPoint rot_ctr(pos_image.GetWidth() / 2, pos_image.GetHeight() / 2);
@@ -3105,7 +3103,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 					// Maintain dirty box,, missing in __WXMSW__ library
 					dc.CalcBoundingBox(lShipMidPoint.x - w / 2, lShipMidPoint.y - h / 2);
 					dc.CalcBoundingBox(lShipMidPoint.x - w / 2 + w, lShipMidPoint.y - h / 2 + h);
-				} else if (g_OwnShipIconType == 2) { // Scaled Vector
+				} else if (ownship.icon_type == 2) { // Scaled Vector (FIXME:use enum)
 					wxPoint ownship_icon[10];
 
 					for (int i = 0; i < 10; i++) {

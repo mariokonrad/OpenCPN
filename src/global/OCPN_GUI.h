@@ -123,6 +123,7 @@ public: // own ship
 	virtual void set_gps_antenna_offset_x(double);
 	virtual void set_gps_antenna_offset_y(double);
 	virtual void set_ownship_predictor_minutes(double);
+	virtual void set_ownship_icon_type(int);
 };
 
 }

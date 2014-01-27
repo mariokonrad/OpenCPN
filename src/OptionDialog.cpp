@@ -105,7 +105,6 @@ extern int g_pNavAidRadarRingsStepUnits;
 
 extern bool g_bPlayShipsBells;
 
-extern int g_OwnShipIconType;
 extern double g_n_arrival_circle_radius;
 
 extern int g_iSDMMFormat;
@@ -1984,7 +1983,7 @@ void options::SetInitialSettings()
 		m_pText_OSCOG_Predictor->SetValue(
 			wxString::Format(_T("%4.0f"), ownship.predictor_minutes));
 
-	m_pShipIconType->SetSelection(g_OwnShipIconType);
+	m_pShipIconType->SetSelection(ownship.icon_type);
 	wxCommandEvent eDummy;
 	OnShipTypeSelect(eDummy);
 	m_pOSLength->SetValue(wxString::Format(_T("%.1f"), ownship.length_meters));
@@ -2472,7 +2471,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 		gui.set_gps_antenna_offset_y(n_gps_antenna_offset_y);
 		gui.set_ownship_min_mm(n_ownship_min_mm);
 	}
-	g_OwnShipIconType = m_pShipIconType->GetSelection();
+	gui.set_ownship_icon_type(m_pShipIconType->GetSelection());
 
 	m_pText_ACRadius->GetValue().ToDouble(&g_n_arrival_circle_radius);
 

@@ -357,5 +357,10 @@ void OCPN_GUI::set_ownship_predictor_minutes(double value)
 	data_ownship.predictor_minutes = value;
 }
 
+void OCPN_GUI::set_ownship_icon_type(int value)
+{
+	data_ownship.icon_type = value;
+}
+
 }
 

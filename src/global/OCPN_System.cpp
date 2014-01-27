@@ -110,6 +110,16 @@ void OCPN_System::set_config_autosave_interval_seconds(long value)
 	data_config.autosave_interval_seconds = value;
 }
 
+void OCPN_System::set_config_CacheLimit(long value)
+{
+	data_config.CacheLimit = value;
+}
+
+void OCPN_System::set_config_memCacheLimit(long value)
+{
+	data_config.memCacheLimit = value;
+}
+
 const System::Debug& OCPN_System::debug() const
 {
 	return data_debug;

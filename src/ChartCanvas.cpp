@@ -223,7 +223,6 @@ extern wxProgressDialog* s_ProgDialog;
 
 extern bool g_b_useStencil;
 
-extern int g_memCacheLimit;
 extern bool g_b_assume_azerty;
 
 extern int g_GroupIndex;

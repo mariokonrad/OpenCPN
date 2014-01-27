@@ -91,9 +91,6 @@ extern int              g_pNavAidRadarRingsStepUnits;
 
 extern wxString         g_toolbarConfig;
 
-extern int              g_nCacheLimit;
-extern int              g_memCacheLimit;
-
 #ifdef USE_S57
 extern chart::s52plib          *ps52plib;
 #endif
@@ -506,13 +503,14 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	g_StyleManager->SetStyle(uiStyle);
 
 	if (iteration == 0) {
-		Read(_T("NCacheLimit"), &g_nCacheLimit, CACHE_N_LIMIT_DEFAULT);
+		sys.set_config_CacheLimit(read_long(_T("NCacheLimit"), CACHE_N_LIMIT_DEFAULT));
 
-		int mem_limit;
+		int mem_limit = 0;
 		Read(_T("MEMCacheLimit"), &mem_limit, 0);
-
 		if (mem_limit > 0)
-			g_memCacheLimit = mem_limit * 1024; // convert from MBytes to kBytes
+			sys.set_config_memCacheLimit(mem_limit * 1024); // convert from MBytes to kBytes
+
+		// FIXME: memCacheLimit possibly uninitialized
 	}
 
 	sys.set_debug_gdal(read_bool(_T("DebugGDAL")));

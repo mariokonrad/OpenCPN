@@ -43,6 +43,9 @@
 #include <ChartCanvas.h>
 #include <MemoryStatus.h>
 
+#include <global/OCPN.h>
+#include <global/System.h>
+
 #ifdef USE_S57
 	#include <chart/S57Chart.h>
 #endif
@@ -51,8 +54,6 @@ namespace chart { class s52plib; }
 
 extern chart::ChartBase* Current_Ch;
 extern ThumbWin* pthumbwin;
-extern int g_nCacheLimit;
-extern int g_memCacheLimit;
 extern bool g_bopengl;
 extern ChartCanvas* cc1;
 extern int g_GroupIndex;
@@ -71,12 +72,13 @@ ChartDB::ChartDB(MainFrame* parent)
 	UnLockCache();
 
 	// Report cache policy
-	if (g_memCacheLimit) {
+	const global::System::Config& sys = global::OCPN::get().sys().config();
+	if (sys.memCacheLimit) {
 		wxLogMessage(wxString::Format(_T("ChartDB Cache policy:  Application target is %d MBytes"),
-									  g_memCacheLimit / 1024));
+									  sys.memCacheLimit / 1024));
 	} else {
 		wxLogMessage(wxString::Format(_T("ChartDB Cache policy:  Max open chart limit is %d."),
-									  g_nCacheLimit));
+									  sys.CacheLimit));
 	}
 }
 
@@ -158,11 +160,13 @@ void ChartDB::ClearCacheInUseFlags(void)
 void ChartDB::PurgeCacheUnusedCharts(bool b_force)
 {
 	// Use memory limited cache policy, if defined....
-	if (g_memCacheLimit) {
+	const global::System::Config& sys = global::OCPN::get().sys().config();
+	if (sys.memCacheLimit) {
 		// Check memory status to see if above limit
-		int mem_total, mem_used;
+		int mem_total;
+		int mem_used;
 		GetMemoryStatus(mem_total, mem_used);
-		int mem_limit = g_memCacheLimit * 8 / 10;
+		int mem_limit = sys.memCacheLimit * 8 / 10;
 
 		if (((mem_used > mem_limit) || b_force) && !m_b_locked) {
 			unsigned int i = 0;
@@ -184,8 +188,9 @@ void ChartDB::PurgeCacheUnusedCharts(bool b_force)
 
 					i = 0; // restart
 
-				} else
+				} else {
 					i++;
+				}
 			}
 		}
 	}
@@ -624,12 +629,14 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 
 	if (!bInCache) { // not in cache
 		// Use memory limited cache policy, if defined....
-		if (g_memCacheLimit) {
+		const global::System::Config& sys = global::OCPN::get().sys().config();
+		if (sys.memCacheLimit) {
 
 			// Check memory status to see if enough room to open another chart
-			int mem_total, mem_used;
+			int mem_total;
+			int mem_used;
 			GetMemoryStatus(mem_total, mem_used);
-			while ((mem_used > g_memCacheLimit * 8 / 10) && !m_b_locked
+			while ((mem_used > sys.memCacheLimit * 8 / 10) && !m_b_locked
 				   && (pChartCache->size() > 2)) {
 				// Search the cache for oldest entry that is not Current_Ch
 				unsigned int nCache = pChartCache->size();
@@ -680,7 +687,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 		} else { // Use n chart cache policy, if memory-limit  policy is not used
 			// Limit cache to n charts, tossing out the oldest when space is needed
 			unsigned int nCache = pChartCache->size();
-			while ((nCache > static_cast<unsigned int>(g_nCacheLimit)) && !m_b_locked) {
+			while ((nCache > static_cast<unsigned int>(sys.CacheLimit)) && !m_b_locked) {
 
 				int LRUTime = now.GetTicks();
 				int iOldest = 0;

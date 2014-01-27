@@ -59,7 +59,6 @@ extern bool g_b_useStencil;
 extern int g_GPU_MemSize;
 extern PlugInManager* g_pi_manager;
 extern bool g_bskew_comp;
-extern int g_memCacheLimit;
 extern bool g_bCourseUp;
 extern chart::ChartBase* Current_Ch;
 extern bool g_bquiting;
@@ -1400,7 +1399,7 @@ void glChartCanvas::render()
 	m_b_mem_crunch = false;
 	int mem_total, mem_used;
 	GetMemoryStatus(mem_total, mem_used);
-	if (mem_used > g_memCacheLimit * 8 / 10)
+	if (mem_used > global::OCPN::get().sys().config().memCacheLimit * 8 / 10)
 		m_b_mem_crunch = true;
 
 	wxPaintDC(this);

@@ -267,8 +267,6 @@ long gStart_LMT_Offset;
 FILE* s_fpdebug;
 bool bFirstAuto;
 bool g_bUseGLL;
-int g_nCacheLimit;
-int g_memCacheLimit;
 double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode
 bool g_bCourseUp;
 int g_COGAvgSec; // COG average period (sec.) for Course Up Mode

@@ -156,7 +156,6 @@ extern int g_StartTimeTZ;
 extern int gpIDXn;
 extern FILE* s_fpdebug;
 extern bool bFirstAuto;
-extern int g_memCacheLimit;
 extern double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode
 extern double g_COGAvg;
 extern bool g_bskew_comp;
@@ -1430,9 +1429,9 @@ bool App::OnInit()
 	// not to exceed 1 GB
 	// Note that this logic implies that Windows platforms always use
 	// the memCacheLimit policy, and never use the fallback nCacheLimit policy
-	if (0 == g_memCacheLimit)
-		g_memCacheLimit = (int)(mem_total * 0.5);
-	g_memCacheLimit = wxMin(g_memCacheLimit, 1024 * 1024); // math in kBytes
+	if (0 == sys.config().memCacheLimit)
+		sys.set_config_memCacheLimit(mem_total * 0.5);
+	sys.set_config_memCacheLimit(wxMin(sys.config().memCacheLimit, 1024 * 1024));
 #endif
 
 	determine_chartlist_filename();

@@ -55,6 +55,8 @@ public: // config
 	virtual void set_config_nav_message_shown(bool);
 	virtual void set_config_memory_footprint(long);
 	virtual void set_config_autosave_interval_seconds(long);
+	virtual void set_config_CacheLimit(long);
+	virtual void set_config_memCacheLimit(long);
 
 public: // debug
 	virtual const Debug& debug() const;

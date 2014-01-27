@@ -104,7 +104,6 @@ extern int              g_nautosave_interval_seconds;
 extern int              g_OwnShipIconType;
 extern double           g_n_gps_antenna_offset_y;
 extern double           g_n_gps_antenna_offset_x;
-extern int              g_n_ownship_min_mm;
 extern double           g_n_arrival_circle_radius;
 
 extern bool             g_bUseGLL;
@@ -620,8 +619,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_ownship_beam_meters(read_double(_T("OwnShipWidth")));
 	Read(_T("OwnShipGPSOffsetX"), &g_n_gps_antenna_offset_x, 0);
 	Read(_T("OwnShipGPSOffsetY"), &g_n_gps_antenna_offset_y, 0);
-	Read(_T("OwnShipMinSize"), &g_n_ownship_min_mm, 1);
-	g_n_ownship_min_mm = wxMax(g_n_ownship_min_mm, 1);
+
+	long ownship_min_mm = read_long(_T("OwnShipMinSize"), 1);
+	gui.set_ownship_min_mm(wxMax(ownship_min_mm, 1));
 
 	g_n_arrival_circle_radius = .050; // default
 	wxString racr;
@@ -1603,7 +1603,7 @@ void Config::UpdateSettings()
 	Write(_T("OwnShipWidth"), ownship.beam_meters);
 	Write(_T("OwnShipGPSOffsetX"), g_n_gps_antenna_offset_x);
 	Write(_T("OwnShipGPSOffsetY"), g_n_gps_antenna_offset_y);
-	Write(_T("OwnShipMinSize"), g_n_ownship_min_mm);
+	Write(_T("OwnShipMinSize"), ownship.min_mm);
 
 	Write(_T("RouteArrivalCircleRadius"), wxString::Format(_T("%.2f"), g_n_arrival_circle_radius));
 

@@ -337,5 +337,10 @@ void OCPN_GUI::set_ownship_beam_meters(double value)
 	data_ownship.beam_meters = value;
 }
 
+void OCPN_GUI::set_ownship_min_mm(int value)
+{
+	data_ownship.min_mm = value;
+}
+
 }
 

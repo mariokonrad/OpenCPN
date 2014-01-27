@@ -191,12 +191,14 @@ public:
 		int cog_predictor_width;
 		double length_meters;
 		double beam_meters;
+		int min_mm;
 	};
 
 	virtual const OwnShip& ownship() const = 0;
 	virtual void set_ownship_cog_predictor_width(int) = 0;
 	virtual void set_ownship_length_meters(double) = 0;
 	virtual void set_ownship_beam_meters(double) = 0;
+	virtual void set_ownship_min_mm(int) = 0;
 };
 
 }

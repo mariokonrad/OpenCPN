@@ -203,7 +203,6 @@ extern ChartCanvas* cc1;
 extern int g_OwnShipIconType;
 extern double g_n_gps_antenna_offset_y;
 extern double g_n_gps_antenna_offset_x;
-extern int g_n_ownship_min_mm;
 
 extern wxPlatformInfo* g_pPlatform;
 
@@ -3046,7 +3045,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				double shipLength_mm = shipLength_px / screenResolution;
 
 				// Set minimum ownship drawing size
-				double ownship_min_mm = g_n_ownship_min_mm;
+				double ownship_min_mm = ownship.min_mm;
 				ownship_min_mm = wxMax(ownship_min_mm, 1.0);
 
 				// Calculate Nautical Miles distance from midships to gps antenna

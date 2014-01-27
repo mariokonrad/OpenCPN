@@ -108,7 +108,6 @@ extern bool g_bPlayShipsBells;
 extern int g_OwnShipIconType;
 extern double g_n_gps_antenna_offset_y;
 extern double g_n_gps_antenna_offset_x;
-extern int g_n_ownship_min_mm;
 extern double g_n_arrival_circle_radius;
 
 extern int g_iSDMMFormat;
@@ -1996,7 +1995,7 @@ void options::SetInitialSettings()
 	m_pOSWidth->SetValue(wxString::Format(_T("%.1f"), ownship.beam_meters));
 	m_pOSGPSOffsetX->SetValue(wxString::Format(_T("%.1f"), g_n_gps_antenna_offset_x));
 	m_pOSGPSOffsetY->SetValue(wxString::Format(_T("%.1f"), g_n_gps_antenna_offset_y));
-	m_pOSMinSize->SetValue(wxString::Format(_T("%d"), g_n_ownship_min_mm));
+	m_pOSMinSize->SetValue(wxString::Format(_T("%d"), ownship.min_mm));
 	m_pText_ACRadius->SetValue(wxString::Format(_T("%.2f"), g_n_arrival_circle_radius));
 
 	if (g_iNavAidRadarRingsNumberVisible > 10)
@@ -2475,7 +2474,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 		gui.set_ownship_beam_meters(n_ownship_beam_meters);
 		g_n_gps_antenna_offset_y = n_gps_antenna_offset_y;
 		g_n_gps_antenna_offset_x = n_gps_antenna_offset_x;
-		g_n_ownship_min_mm = (int)n_ownship_min_mm;
+		gui.set_ownship_min_mm(n_ownship_min_mm);
 	}
 	g_OwnShipIconType = m_pShipIconType->GetSelection();
 

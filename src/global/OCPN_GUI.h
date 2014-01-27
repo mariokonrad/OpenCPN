@@ -119,6 +119,7 @@ public: // own ship
 	virtual void set_ownship_cog_predictor_width(int);
 	virtual void set_ownship_length_meters(double);
 	virtual void set_ownship_beam_meters(double);
+	virtual void set_ownship_min_mm(int);
 };
 
 }

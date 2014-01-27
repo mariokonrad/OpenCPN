@@ -76,6 +76,9 @@ private:
 	void OnTargetListColumnClicked(wxListEvent& event);
 	void OnTargetScrollTo(wxCommandEvent& event);
 	void OnTargetCreateWpt(wxCommandEvent& event);
+	void OnShowAllTracks(wxCommandEvent& event);
+	void OnHideAllTracks(wxCommandEvent& event);
+	void OnToggleTrack(wxCommandEvent& event);
 	void OnLimitRange(wxCommandEvent& event);
 
 	wxWindow* m_pparent;
@@ -83,6 +86,9 @@ private:
 	wxButton* m_pButtonInfo;
 	wxButton* m_pButtonJumpTo;
 	wxButton* m_pButtonCreateWpt;
+	wxButton* m_pButtonHideAllTracks;
+	wxButton* m_pButtonShowAllTracks;
+	wxButton* m_pButtonToggleTrack;
 	wxStaticText* m_pStaticTextRange;
 	wxSpinCtrl* m_pSpinCtrlRange;
 	wxStaticText* m_pStaticTextCount;

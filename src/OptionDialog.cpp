@@ -2380,6 +2380,11 @@ ConnectionParams options::createConnectionParams() const
 	prm.Valid = true;
 	prm.Type = getConParamConnectionType();
 	prm.NetProtocol = getConParamNetworkProtocol();
+
+	// Save the existing addr/port to allow closing of existing port
+	prm.LastNetworkAddress = prm.NetworkAddress;
+	prm.NetworkPort = prm.NetworkPort;
+
 	prm.NetworkAddress = m_tNetAddress->GetValue();
 	prm.NetworkPort = wxAtoi(m_tNetPort->GetValue());
 	prm.Baudrate = wxAtoi(m_choiceBaudRate->GetStringSelection());
@@ -2631,6 +2636,17 @@ void options::OnApplyClick(wxCommandEvent& event)
 	// NMEA Source
 	long itemIndex = m_lcSources->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 
+	// If the stream selected exists, capture some of its existing parameters
+	// to facility identification and allow stop and restart of the stream
+	wxString lastAddr;
+	int lastPort;
+	if (itemIndex >= 0) {
+		int params_index = m_lcSources->GetItemData(itemIndex);
+		const ConnectionParams& cpo = g_pConnectionParams->at(params_index);
+		lastAddr = cpo.NetworkAddress;
+		lastPort = cpo.NetworkPort;
+	}
+
 	if (!connectionsaved) {
 		ConnectionParams cp;
 		if (CreateConnectionParamsFromSelectedItem(cp)) {
@@ -2641,6 +2657,11 @@ void options::OnApplyClick(wxCommandEvent& event)
 				g_pConnectionParams->push_back(cp);
 				itemIndex = g_pConnectionParams->size() - 1;
 			}
+
+			// Record the previous parameters, if any
+			cp.LastNetworkAddress = lastAddr;
+			cp.LastNetworkPort = lastPort;
+
 			FillSourceList();
 			m_lcSources->SetItemState(itemIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 			m_lcSources->Refresh();
@@ -2655,6 +2676,11 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 			// Terminate and remove any existing stream with the same port name
 			DataStream* pds_existing = g_pMUX->FindStream(cp.GetDSPort());
+			if (pds_existing)
+				g_pMUX->StopAndRemoveStream(pds_existing);
+
+			// Try to stop any previous stream to avoid orphans
+			pds_existing = g_pMUX->FindStream(cp.GetLastDSPort());
 			if (pds_existing)
 				g_pMUX->StopAndRemoveStream(pds_existing);
 

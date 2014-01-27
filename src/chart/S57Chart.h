@@ -155,6 +155,8 @@ public:
 
 	void ClearRenderedTextCache();
 
+	double GetCalculatedSafetyContour(void);
+
 //#ifdef ocpnUSE_GL
 	virtual bool RenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VPoint,
 									  const OCPNRegion& Region);
@@ -203,6 +205,7 @@ protected:
 	geo::Position reference_point; // Common reference point, derived from FullExtent
 
 private:
+	void SetSafetyContour(void);
 	bool DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, RenderTypeEnum option,
 						  bool force_new_view);
 
@@ -298,6 +301,8 @@ private:
 	long m_plib_state_hash;
 	bool m_btex_mem;
 	char m_usage_char;
+
+	double m_next_safe_cnt;
 };
 
 }

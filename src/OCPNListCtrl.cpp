@@ -87,12 +87,19 @@ wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data * pAISTarget, lo
 		return ret;
 
 	switch (column) {
+		case tlTRK:
+			if (pAISTarget->b_show_track)
+				ret = _("Yes");
+			else
+				ret = _("No");
+			break;
+
 		case tlNAME:
 			if ((pAISTarget->Class == AIS_BASE) || (pAISTarget->Class == AIS_SART))
 				ret = _("-");
 			else {
-				wxString uret = trimAISField( pAISTarget->ShipName );
-				if( uret == _T("Unknown") )
+				wxString uret = trimAISField(pAISTarget->ShipName);
+				if (uret == _T("Unknown"))
 					ret = wxGetTranslation(uret);
 				else
 					ret = uret;
@@ -103,7 +110,7 @@ wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data * pAISTarget, lo
 			break;
 
 		case tlCALL:
-			ret = trimAISField( pAISTarget->CallSign );
+			ret = trimAISField(pAISTarget->CallSign);
 			break;
 
 		case tlMMSI:
@@ -125,12 +132,11 @@ wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data * pAISTarget, lo
 			break;
 
 		case tlNAVSTATUS:
-			if( pAISTarget->Class == AIS_SART ) {
+			if (pAISTarget->Class == AIS_SART) {
 				if (pAISTarget->NavStatus == RESERVED_14)
 					ret = _("Active");
-				else
-					if (pAISTarget->NavStatus == UNDEFINED)
-						ret = _("Testing");
+				else if (pAISTarget->NavStatus == UNDEFINED)
+					ret = _("Testing");
 			} else {
 
 				if ((pAISTarget->NavStatus <= 20)
@@ -188,7 +194,7 @@ wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data * pAISTarget, lo
 					|| (pAISTarget->Class == AIS_BASE))
 				ret = _("-");
 			else
-				ret.Printf( _T("%5.2f"), toUsrDistance( pAISTarget->CPA ) );
+				ret.Printf(_T("%5.2f"), toUsrDistance(pAISTarget->CPA));
 			break;
 
 		case tlTCPA:
@@ -201,8 +207,8 @@ wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data * pAISTarget, lo
 			break;
 
 		case tlRNG:
-			if( pAISTarget->b_positionOnceValid && bGPSValid && ( pAISTarget->Range_NM >= 0. ) )
-				ret.Printf(_T("%5.2f"), toUsrDistance( pAISTarget->Range_NM));
+			if (pAISTarget->b_positionOnceValid && bGPSValid && (pAISTarget->Range_NM >= 0.0))
+				ret.Printf(_T("%5.2f"), toUsrDistance(pAISTarget->Range_NM));
 			else
 				ret = _("-");
 			break;

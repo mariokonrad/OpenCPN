@@ -46,6 +46,7 @@
 
 #ifndef __WXMSW__
 #include <arpa/inet.h>
+#include <netinet/tcp.h>
 #endif
 
 #if !defined(NAN)
@@ -221,6 +222,18 @@ void DataStream::Open(void)
 					// TCP Datastreams can be either input or output, but not both...
 					if ((m_io_select == DS_TYPE_INPUT_OUTPUT) || (m_io_select == DS_TYPE_OUTPUT)) {
 						m_socket_server = new wxSocketServer(m_addr, wxSOCKET_REUSEADDR);
+
+						// Disable nagle algorithm on outgoing connection
+						// Doing this here rather than after the accept() is
+						// pointless  on platforms where TCP_NODELAY is
+						// not inherited.  However, none of OpenCPN's currently
+						// supported platforms fall into that category.
+
+						if (m_socket_server->IsOk()) {
+							int nagleDisable = 1;
+							m_socket_server->SetOption(IPPROTO_TCP, TCP_NODELAY, &nagleDisable,
+													   sizeof(nagleDisable));
+						}
 						m_socket_server->SetEventHandler(*this, DS_SERVERSOCKET_ID);
 						m_socket_server->SetNotify(wxSOCKET_CONNECTION_FLAG);
 						m_socket_server->Notify(TRUE);

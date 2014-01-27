@@ -2953,6 +2953,7 @@ int ChartBaseBSB::AnalyzeRefpoints(void)
 			m_ExtraInfo = _("---<<< Warning:  Chart georef accuracy is poor. >>>---");
 		} else {
 			wxLogMessage(_("   Result: OK, Internal georef solution used."));
+			m_ExtraInfo = _T("");
 		}
 	}
 

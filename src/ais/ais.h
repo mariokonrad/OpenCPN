@@ -51,7 +51,8 @@ namespace ais
 
 // AISTargetListCtrl Columns
 enum {
-	tlNAME = 0,
+	tlTRK = 0,
+	tlNAME,
 	tlCALL,
 	tlMMSI,
 	tlCLASS,

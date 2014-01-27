@@ -302,6 +302,7 @@ struct chart_context
 	wxArrayPtrVoid* pFloatingATONArray;
 	wxArrayPtrVoid* pRigidATONArray;
 	s57chart* chart;
+	double safety_contour;
 };
 
 class S57Obj

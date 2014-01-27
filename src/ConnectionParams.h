@@ -89,6 +89,7 @@ public:
 	wxString GetOutputValueStr() const;
 	wxString GetFiltersStr() const;
 	wxString GetDSPort() const;
+	wxString GetLastDSPort();
 
 	bool isSetup() const;
 	bool isEnabled() const;
@@ -115,6 +116,8 @@ private:
 	NetworkProtocol NetProtocol;
 	wxString NetworkAddress;
 	int NetworkPort;
+	wxString LastNetworkAddress;
+	int LastNetworkPort;
 
 	DataProtocol Protocol;
 	wxString Port;

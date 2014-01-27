@@ -229,6 +229,8 @@ TrackPropDlg::TrackPropDlg(
 										  wxDefaultPosition, wxDefaultSize, 0);
 	bSizerShowTime->Add(m_rbShowTimeLocal, 0, 0, 5);
 
+	m_rbShowTimePC->SetValue(true);
+
 	sbSizerPoints->Add(bSizerShowTime, 0, wxEXPAND, 5);
 
 	m_lcPoints = new OCPNTrackListCtrl(m_panelBasic, wxID_ANY, wxDefaultPosition, wxDefaultSize,

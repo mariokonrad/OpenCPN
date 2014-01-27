@@ -32,6 +32,7 @@
 #include <chart/geometry/PolyTriGroup.h>
 #include <chart/geometry/PolyTrapGroup.h>
 
+#include <chart/s52utils.h>
 #include <chart/s52plib.h>
 #include <chart/S57Light.h>
 
@@ -762,6 +763,11 @@ char s57chart::GetUsageChar(void)
 	return m_usage_char;
 }
 
+double s57chart::GetCalculatedSafetyContour(void)
+{
+	return m_next_safe_cnt;
+}
+
 //-------------------------------------------------------------------------------------------
 //      Attributes in SENC file may not be needed, and can be safely ignored when creating S57Obj
 //      Look at a buffer, and return true or false according to a (default) definition
@@ -1007,10 +1013,7 @@ s57chart::s57chart()
 	m_bbase_file_attr_known = false;
 
 	m_bLinePrioritySet = false;
-	if (ps52plib)
-		m_plib_state_hash = ps52plib->GetStateHash();
-	else
-		m_plib_state_hash = 0;
+	m_plib_state_hash = 0;
 
 	m_btex_mem = false;
 
@@ -1018,6 +1021,8 @@ s57chart::s57chart()
 
 	m_b2pointLUPS = false;
 	m_b2lineLUPS = false;
+
+	m_next_safe_cnt = 1e6;
 }
 
 s57chart::~s57chart()
@@ -1505,6 +1510,8 @@ bool s57chart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPort& VP
 		ClearRenderedTextCache(); // and reset the text renderer,
 		// for the case where depth(height) units change
 		ResetPointBBoxes(m_last_vp, VPoint);
+		SetSafetyContour();
+
 		m_plib_state_hash = ps52plib->GetStateHash();
 	}
 
@@ -2696,6 +2703,32 @@ void s57chart::BuildDepthContourArray(void)
 	}
 
 	std::sort(m_pvaldco_array, m_pvaldco_array + m_nvaldco);
+}
+
+void s57chart::SetSafetyContour(void)
+{
+	// Iterate through the array of contours in this cell, choosing the best one to
+	// render as a bold "safety contour" in the PLIB.
+
+	// This method computes the smallest chart DEPCNT:VALDCO value which
+	// is greater than or equal to the current PLIB mariner parameter S52_MAR_SAFETY_CONTOUR
+
+	double mar_safety_contour = S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR);
+
+	int i = 0;
+	if (NULL != m_pvaldco_array) {
+		for (i = 0; i < m_nvaldco; i++) {
+			if (m_pvaldco_array[i] >= mar_safety_contour)
+				break;
+		}
+
+		if (i < m_nvaldco)
+			m_next_safe_cnt = m_pvaldco_array[i];
+		else
+			m_next_safe_cnt = (double)1e6;
+	} else {
+		m_next_safe_cnt = (double)1e6;
+	}
 }
 
 void s57chart::InvalidateCache()
@@ -5829,6 +5862,10 @@ wxString s57chart::GetObjectAttributeValueAsString(S57Obj* obj, int iatt, wxStri
 				val_suffix = _T(" Nm");
 			} else if (curAttrName == _T("SIGPER")) {
 				val_suffix = _T("s");
+			} else if (curAttrName == _T("VALACM")) {
+				val_suffix = _T(" Minutes/year");
+			} else if (curAttrName == _T("VALMAG")) {
+				val_suffix = _T("&deg;");
 			}
 
 			if (dval - floor(dval) < 0.01)

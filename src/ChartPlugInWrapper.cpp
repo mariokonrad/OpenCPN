@@ -37,6 +37,7 @@
 
 #include <chart/s52s57.h>
 #include <chart/s52plib.h>
+#include <chart/s52utils.h>
 
 #include <plugin/ocpn_plugin.h>
 #include <plugin/PlugInManager.h>
@@ -694,6 +695,11 @@ PI_DisCat PI_GetObjectDisplayCategory(PI_S57Obj* pObj)
 			return (PI_DisCat)(lup->DISC);
 	}
 	return (PI_DisCat)(-1);
+}
+
+double PI_GetPLIBMarinerSafetyContour()
+{
+	return S52_getMarinerParam(S52_MAR_SAFETY_CONTOUR);
 }
 
 void PI_PLIBSetLineFeaturePriority(PI_S57Obj* pObj, int prio)

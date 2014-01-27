@@ -3201,7 +3201,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				dash_long[0] = (int)(3.0 * m_pix_per_mm); // 8// Long dash  <---------+
 				dash_long[1] = (int)(1.5 * m_pix_per_mm); // 2// Short gap            |
 
-				const bool cog_predictor_width = global::OCPN::get().gui().ownship().cog_predictor_width;
+				const int cog_predictor_width = global::OCPN::get().gui().ownship().cog_predictor_width;
 
 				wxPen ppPen2(pred_colour, cog_predictor_width, wxUSER_DASH);
 				ppPen2.SetDashes(2, dash_long);
@@ -3214,14 +3214,14 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				dash_long3[1] = cog_predictor_width * dash_long[1];
 
 				if (cog_predictor_width > 1) {
-					wxPen ppPen3(GetGlobalColor(_T ( "UBLCK" )), 1, wxUSER_DASH);
+					wxPen ppPen3(GetGlobalColor(_T("UBLCK")), 1, wxUSER_DASH);
 					ppPen3.SetDashes(2, dash_long3);
 					dc.SetPen(ppPen3);
 					dc.StrokeLine(lGPSPoint.x + GPSOffsetPixels.x, lGPSPoint.y + GPSOffsetPixels.y,
 								  lPredPoint.x + GPSOffsetPixels.x,
 								  lPredPoint.y + GPSOffsetPixels.y);
 				}
-				wxPen ppPen1(GetGlobalColor(_T ( "UBLCK" )), 1, wxSOLID);
+				wxPen ppPen1(GetGlobalColor(_T("UBLCK")), 1, wxSOLID);
 				dc.SetPen(ppPen1);
 				dc.SetBrush(wxBrush(pred_colour));
 

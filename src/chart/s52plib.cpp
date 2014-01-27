@@ -26,6 +26,7 @@
 #include <ocpn_pixel.h>
 #include <FontMgr.h>
 #include <UserColors.h>
+#include <crc32.h>
 
 #include <chart/RazdsParser.h>
 #include <chart/RenderFromHPGL.h>
@@ -442,7 +443,20 @@ void s52plib::UpdateMarinerParams(void)
 
 void s52plib::GenerateStateHash()
 {
-	m_state_hash = ::wxGetUTCTime();
+	// Needs to be at least sizeof(int) + (S52_MAR_NUM * sizeof(double))
+	unsigned char state_buffer[200];
+	int time = ::wxGetUTCTime();
+	memcpy(state_buffer, &time, sizeof(int));
+
+	int offset = sizeof(int); // skipping the time int, first element
+
+	for (int i = 0; i < S52_MAR_NUM; i++) {
+		if (((i * sizeof(double)) + offset) < sizeof(state_buffer)) {
+			double t = S52_getMarinerParam((S52_MAR_param_t)i);
+			memcpy(&state_buffer[(i * sizeof(double)) + offset], &t, sizeof(double));
+		}
+	}
+	m_state_hash = crc32buf(state_buffer, offset + (S52_MAR_NUM * sizeof(double)));
 }
 
 wxArrayOfLUPrec* s52plib::SelectLUPARRAY(LUPname TNAM)

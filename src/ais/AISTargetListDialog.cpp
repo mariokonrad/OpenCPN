@@ -99,6 +99,12 @@ static int ItemCompare(AIS_Target_Data* pAISTarget1, AIS_Target_Data* pAISTarget
 	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
 
 	switch (ais_target_list.sortColumn) {
+		case tlTRK:
+			n1 = t1->b_show_track;
+			n2 = t1->b_show_track;
+			b_cmptype_num = true;
+			break;
+
 		case tlNAME:
 			s1 = trimAISField(t1->ShipName);
 			if ((t1->Class == AIS_BASE) || (t1->Class == AIS_SART))
@@ -350,6 +356,14 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 		wxEVT_COMMAND_LIST_COL_CLICK,
 		wxListEventHandler(AISTargetListDialog::OnTargetListColumnClicked), NULL, this);
 
+	width = 20;
+	if (s_width.ToLong(&lwidth)) {
+		width = wxMax(20, lwidth);
+		width = wxMin(width, 250);
+	}
+	m_pListCtrlAISTargets->InsertColumn(tlTRK, _("Trk"), wxLIST_FORMAT_LEFT, width);
+	s_width = tkz.GetNextToken();
+
 	width = 105;
 	if (s_width.ToLong(&lwidth)) {
 		width = wxMax(20, lwidth);
@@ -457,7 +471,7 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 								 wxBU_AUTODRAW);
 	m_pButtonInfo->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
 						   wxCommandEventHandler(AISTargetListDialog::OnTargetQuery), NULL, this);
-	boxSizer02->Add(m_pButtonInfo, 0, wxALL, 0);
+	boxSizer02->Add(m_pButtonInfo, 0, wxEXPAND | wxALL, 0);
 	boxSizer02->AddSpacer(5);
 
 	m_pButtonJumpTo = new wxButton(this, wxID_ANY, _("Center View"), wxDefaultPosition,
@@ -465,14 +479,36 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 	m_pButtonJumpTo->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
 							 wxCommandEventHandler(AISTargetListDialog::OnTargetScrollTo), NULL,
 							 this);
-	boxSizer02->Add(m_pButtonJumpTo, 0, wxALL, 0);
+	boxSizer02->Add(m_pButtonJumpTo, 0, wxEXPAND | wxALL, 0);
 
 	m_pButtonCreateWpt = new wxButton(this, wxID_ANY, _("Create WPT"), wxDefaultPosition,
 									  wxDefaultSize, wxBU_AUTODRAW);
 	m_pButtonCreateWpt->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
 								wxCommandEventHandler(AISTargetListDialog::OnTargetCreateWpt), NULL,
 								this);
-	boxSizer02->Add(m_pButtonCreateWpt, 0, wxALL, 0);
+	boxSizer02->Add(m_pButtonCreateWpt, 0, wxEXPAND | wxALL, 0);
+
+	m_pButtonHideAllTracks = new wxButton(this, wxID_ANY, _("Hide All Tracks"), wxDefaultPosition,
+										  wxDefaultSize, wxBU_AUTODRAW);
+	m_pButtonHideAllTracks->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
+									wxCommandEventHandler(AISTargetListDialog::OnHideAllTracks),
+									NULL, this);
+	boxSizer02->Add(m_pButtonHideAllTracks, 0, wxEXPAND | wxALL, 0);
+
+	m_pButtonShowAllTracks = new wxButton(this, wxID_ANY, _("Show All Tracks"), wxDefaultPosition,
+										  wxDefaultSize, wxBU_AUTODRAW);
+	m_pButtonShowAllTracks->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
+									wxCommandEventHandler(AISTargetListDialog::OnShowAllTracks),
+									NULL, this);
+	boxSizer02->Add(m_pButtonShowAllTracks, 0, wxEXPAND | wxALL, 0);
+
+	m_pButtonToggleTrack = new wxButton(this, wxID_ANY, _("Toggle track"), wxDefaultPosition,
+										wxDefaultSize, wxBU_AUTODRAW);
+	m_pButtonToggleTrack->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
+								  wxCommandEventHandler(AISTargetListDialog::OnToggleTrack), NULL,
+								  this);
+	boxSizer02->Add(m_pButtonToggleTrack, 0, wxEXPAND | wxALL, 0);
+
 	boxSizer02->AddSpacer(10);
 
 	m_pStaticTextRange = new wxStaticText(this, wxID_ANY, _("Limit range: NM"), wxDefaultPosition,
@@ -622,6 +658,8 @@ void AISTargetListDialog::UpdateButtons()
 			enable = false;
 	}
 	m_pButtonJumpTo->Enable(enable);
+	m_pButtonCreateWpt->Enable(enable);
+	m_pButtonToggleTrack->Enable(enable);
 }
 
 void AISTargetListDialog::OnTargetSelected(wxListEvent&)
@@ -720,6 +758,48 @@ void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent&)
 											 UndoAction::Undo_HasParent, NULL);
 		cc1->get_undo().AfterUndoableAction(NULL);
 		Refresh(false);
+	}
+}
+
+void AISTargetListDialog::OnShowAllTracks(wxCommandEvent& event)
+{
+	AIS_Target_Hash::iterator it;
+	AIS_Target_Hash* current_targets = m_pdecoder->GetTargetList();
+	for (it = (*current_targets).begin(); it != (*current_targets).end(); ++it) {
+		AIS_Target_Data* pAISTarget = it->second;
+		if (NULL != pAISTarget) {
+			pAISTarget->b_show_track = true;
+		}
+	}
+	UpdateAISTargetList();
+}
+
+void AISTargetListDialog::OnHideAllTracks(wxCommandEvent& event)
+{
+	AIS_Target_Hash::iterator it;
+	AIS_Target_Hash* current_targets = m_pdecoder->GetTargetList();
+	for (it = (*current_targets).begin(); it != (*current_targets).end(); ++it) {
+		AIS_Target_Data* pAISTarget = it->second;
+		if (NULL != pAISTarget) {
+			pAISTarget->b_show_track = false;
+		}
+	}
+	UpdateAISTargetList();
+}
+
+void AISTargetListDialog::OnToggleTrack(wxCommandEvent& event)
+{
+	long selItemID = m_pListCtrlAISTargets->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (selItemID == -1)
+		return;
+
+	AIS_Target_Data* pAISTarget = NULL;
+	if (m_pdecoder)
+		pAISTarget = m_pdecoder->Get_Target_Data_From_MMSI(m_pMMSI_array->Item(selItemID));
+
+	if (pAISTarget) {
+		pAISTarget->b_show_track = !pAISTarget->b_show_track;
+		UpdateAISTargetList();
 	}
 }
 

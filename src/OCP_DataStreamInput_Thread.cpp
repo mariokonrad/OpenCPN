@@ -785,6 +785,7 @@ int OCP_DataStreamInput_Thread::OpenComPortPhysical(const wxString& com_name, in
 									open_flags, NULL);
 
 	if (hSerialComm == INVALID_HANDLE_VALUE) {
+		ThreadMessage(_T("Error:Invalid Handle"));
 		return (0 - abs((int)::GetLastError()));
 	}
 
@@ -793,7 +794,7 @@ int OCP_DataStreamInput_Thread::OpenComPortPhysical(const wxString& com_name, in
 	ClearCommError(hSerialComm, &err, &cs);
 
 	if (!SetupComm(hSerialComm, 1024, 1024)) {
-		return (0 - abs((int)::GetLastError()));
+		ThreadMessage(_T("Error:SetupComm"));
 	}
 
 	DCB dcbConfig;
@@ -815,11 +816,11 @@ int OCP_DataStreamInput_Thread::OpenComPortPhysical(const wxString& com_name, in
 		dcbConfig.fInX = false;
 		dcbConfig.fInX = false;
 	} else {
-		return (0 - abs((int)::GetLastError()));
+		ThreadMessage(_T("Error:GetCommState"));
 	}
 
 	if (!SetCommState(hSerialComm, &dcbConfig)) {
-		return (0 - abs((int)::GetLastError()));
+		ThreadMessage(_T("Error:SetCommState"));
 	}
 
 	COMMTIMEOUTS commTimeout;
@@ -831,7 +832,7 @@ int OCP_DataStreamInput_Thread::OpenComPortPhysical(const wxString& com_name, in
 	commTimeout.WriteTotalTimeoutMultiplier = 0;
 
 	if (!SetCommTimeouts(hSerialComm, &commTimeout)) {
-		return (0 - abs((int)::GetLastError()));
+		ThreadMessage(_T("Error:SetCommTimeouts"));
 	}
 
 	return (int)hSerialComm;
@@ -889,5 +890,5 @@ bool OCP_DataStreamInput_Thread::CheckComPortPhysical(int port_descriptor)
 	return false;
 }
 
-#endif            // __WXMSW__
+#endif
 

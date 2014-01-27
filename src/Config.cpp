@@ -1870,7 +1870,17 @@ bool Config::ExportGPXRoutes(wxWindow* parent, RouteList* pRoutes, const wxStrin
 	wxFileDialog saveDialog(parent, _("Export GPX file"), m_gpx_path, suggestedName,
 							wxT("GPX files (*.gpx)|*.gpx"), wxFD_SAVE);
 
+#ifdef __WXOSX__
+	if (parent)
+		parent->HideWithEffect(wxSHOW_EFFECT_BLEND);
+#endif
+
 	int response = saveDialog.ShowModal();
+
+#ifdef __WXOSX__
+	if (parent)
+		parent->ShowWithEffect(wxSHOW_EFFECT_BLEND);
+#endif
 
 	wxString path = saveDialog.GetPath();
 	wxFileName fn(path);

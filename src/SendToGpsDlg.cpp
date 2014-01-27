@@ -163,18 +163,16 @@ void SendToGpsDlg::OnSendClick(wxCommandEvent& event)
 
 	// And send it out
 	if (m_pRoute)
-		m_pRoute->SendToGPS(src, true, m_pgauge);
+		m_pRoute->SendToGPS(src.BeforeFirst(' '), true, m_pgauge);
 	if (m_pRoutePoint)
-		m_pRoutePoint->SendToGPS(src, m_pgauge);
+		m_pRoutePoint->SendToGPS(src.BeforeFirst(' '), m_pgauge);
 
-	Show(false);
-	event.Skip();
+	Close();
 }
 
 void SendToGpsDlg::OnCancelClick(wxCommandEvent& event)
 {
-	Show(false);
-	event.Skip();
+	Close();
 }
 
 void SendToGpsDlg::SetRoute(Route* pRoute)

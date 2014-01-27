@@ -30,6 +30,8 @@ ConnectionParams::ConnectionParams()
 	, NetProtocol(TCP)
 	, NetworkAddress(wxEmptyString)
 	, NetworkPort(0)
+	, LastNetworkAddress(wxEmptyString)
+	, LastNetworkPort(0)
 	, Protocol(PROTO_NMEA0183)
 	, Port(wxEmptyString)
 	, Baudrate(4800)
@@ -57,6 +59,8 @@ ConnectionParams::ConnectionParams(const wxString& port, int baudrate, bool is_g
 	, NetProtocol(TCP)
 	, NetworkAddress(wxEmptyString)
 	, NetworkPort(0)
+	, LastNetworkAddress(wxEmptyString)
+	, LastNetworkPort(0)
 	, Protocol(PROTO_NMEA0183)
 	, Port(port)
 	, Baudrate(baudrate)
@@ -310,5 +314,22 @@ void ConnectionParams::enableOutput(const wxString& sentence)
 void ConnectionParams::toggleEnabled()
 {
 	bEnabled = !bEnabled;
+}
+
+wxString ConnectionParams::GetLastDSPort()
+{
+	if (Type == SERIAL)
+		return wxString::Format(_T("Serial:%s"), Port.c_str());
+	else {
+		wxString proto;
+		if (NetProtocol == TCP)
+			proto = _T("TCP");
+		else if (NetProtocol == UDP)
+			proto = _T("UDP");
+		else
+			proto = _T("GPSD");
+		return wxString::Format(_T("%s:%s:%d"), proto.c_str(), LastNetworkAddress.c_str(),
+								LastNetworkPort);
+	}
 }
 

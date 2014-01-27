@@ -43,7 +43,7 @@ OCPNTrackListCtrl::OCPNTrackListCtrl(wxWindow* parent, wxWindowID id, const wxPo
 									 const wxSize& size, long style)
 	: wxListCtrl(parent, id, pos, size, style)
 	, m_pRoute(NULL)
-	, m_tz_selection(0)
+	, m_tz_selection(LTINPUT)
 	, m_LMT_Offset(0)
 {
 }

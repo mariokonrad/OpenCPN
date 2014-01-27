@@ -107,7 +107,7 @@ private:
 	void write_cm93();
 	void write_s57dialog();
 
-	double read_double(const wxString&) const;
+	double read_double(const wxString&, double = 0.0) const;
 	bool read_bool(const wxString&, bool = false) const;
 	long read_long(const wxString&, long = 0) const;
 	wxString read_string(const wxString&) const;

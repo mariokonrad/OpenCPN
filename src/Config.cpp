@@ -94,8 +94,6 @@ extern wxString         g_toolbarConfig;
 extern int              g_nCacheLimit;
 extern int              g_memCacheLimit;
 
-extern double           g_ownship_predictor_minutes;
-
 #ifdef USE_S57
 extern chart::s52plib          *ps52plib;
 #endif
@@ -450,9 +448,9 @@ void Config::load_fonts(int iteration)
 	}
 }
 
-double Config::read_double(const wxString& entry) const
+double Config::read_double(const wxString& entry, double default_value) const
 {
-	double value = 0.0;
+	double value = default_value;
 	wxString s;
 
 	Read(entry, &s);
@@ -609,7 +607,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 		 0); // 0 = "Nautical miles"), 1 = "Statute miles", 2 = "Kilometers", 3 = "Meters"
 	Read(_T("SpeedFormat"), &g_iSpeedFormat, 0); // 0 = "kts"), 1 = "mph", 2 = "km/h", 3 = "m/s"
 
-	Read(_T("OwnshipCOGPredictorMinutes"), &g_ownship_predictor_minutes, 5);
+	gui.set_ownship_predictor_minutes(read_double(_T("OwnshipCOGPredictorMinutes"), 5.0));
 	gui.set_ownship_cog_predictor_width(read_long(_T("OwnshipCOGPredictorWidth"), 3));
 	Read(_T("OwnShipIconType"), &g_OwnShipIconType, 0);
 	gui.set_ownship_length_meters(read_double(_T("OwnShipLength")));
@@ -1593,7 +1591,7 @@ void Config::UpdateSettings()
 	Write(_T("COGUPAvgSeconds"), g_COGAvgSec);
 	Write(_T("ShowMag"), g_bMagneticAPB);
 
-	Write(_T("OwnshipCOGPredictorMinutes"), g_ownship_predictor_minutes);
+	Write(_T("OwnshipCOGPredictorMinutes"), ownship.predictor_minutes);
 	Write(_T("OwnshipCOGPredictorWidth"), ownship.cog_predictor_width);
 	Write(_T("OwnShipIconType"), g_OwnShipIconType);
 	Write(_T("OwnShipLength"), ownship.length_meters);

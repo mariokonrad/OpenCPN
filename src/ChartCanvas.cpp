@@ -208,7 +208,6 @@ extern bool g_bCourseUp;
 extern double g_COGAvg; // only needed for debug....
 
 extern int g_click_stop;
-extern double g_ownship_predictor_minutes;
 
 extern chart::ChartStack* pCurrentStack;
 extern bool g_bquiting;
@@ -2890,8 +2889,10 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	if (wxIsNaN(pSog))
 		pSog = 0.0;
 
+	const double ownship_predictor_minutes = global::OCPN::get().gui().ownship().predictor_minutes;
+
 	// Calculate ownship position Predictor
-	geo::Position pred = geo::ll_gc_ll(nav.pos, pCog, pSog * g_ownship_predictor_minutes / 60.0);
+	geo::Position pred = geo::ll_gc_ll(nav.pos, pCog, pSog * ownship_predictor_minutes / 60.0);
 
 	wxPoint lGPSPoint = GetCanvasPointPix(nav.pos);
 	wxPoint lShipMidPoint = lGPSPoint;
@@ -2931,7 +2932,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 		icon_rad = ((icon_hdt + 90.0) * M_PI / 180.0) + GetVP().rotation;
 
 	// Calculate ownship Heading pointer as a predictor
-	geo::Position hdg_pred = geo::ll_gc_ll(nav.pos, icon_hdt, pSog * g_ownship_predictor_minutes / 60.0);
+	geo::Position hdg_pred = geo::ll_gc_ll(nav.pos, icon_hdt, pSog * ownship_predictor_minutes / 60.0);
 	lShipMidPoint = GetCanvasPointPix(nav.pos);
 	wxPoint lHeadPoint = GetCanvasPointPix(hdg_pred);
 

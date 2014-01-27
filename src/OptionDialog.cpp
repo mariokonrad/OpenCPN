@@ -116,8 +116,6 @@ extern int g_COGAvgSec;
 
 extern bool g_bCourseUp;
 
-extern double g_ownship_predictor_minutes;
-
 extern wxString g_GPS_Ident;
 extern bool g_bGarminHostUpload;
 
@@ -1979,12 +1977,12 @@ void options::SetInitialSettings()
 	pCBCourseUp->SetValue(g_bCourseUp);
 	pCBLookAhead->SetValue(view.lookahead_mode);
 
-	if (fabs(wxRound(g_ownship_predictor_minutes) - g_ownship_predictor_minutes) > 1e-4)
+	if (fabs(wxRound(ownship.predictor_minutes) - ownship.predictor_minutes) > 1e-4)
 		m_pText_OSCOG_Predictor->SetValue(
-			wxString::Format(_T("%6.2f"), g_ownship_predictor_minutes));
+			wxString::Format(_T("%6.2f"), ownship.predictor_minutes));
 	else
 		m_pText_OSCOG_Predictor->SetValue(
-			wxString::Format(_T("%4.0f"), g_ownship_predictor_minutes));
+			wxString::Format(_T("%4.0f"), ownship.predictor_minutes));
 
 	m_pShipIconType->SetSelection(g_OwnShipIconType);
 	wxCommandEvent eDummy;
@@ -2562,7 +2560,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 	g_bMagneticAPB = m_cbAPBMagnetic->GetValue();
 
-	m_pText_OSCOG_Predictor->GetValue().ToDouble(&g_ownship_predictor_minutes);
+	gui.set_ownship_predictor_minutes(get_double(m_pText_OSCOG_Predictor));
 
 	g_iNavAidRadarRingsNumberVisible = pNavAidRadarRingsNumberVisible->GetSelection();
 	g_fNavAidRadarRingsStep = atof(pNavAidRadarRingsStep->GetValue().mb_str());

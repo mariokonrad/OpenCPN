@@ -256,7 +256,6 @@ ais::AIS_Decoder* g_pAIS;
 ais::AISTargetListDialog* g_pAISTargetList;
 ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 ais::AISTargetQueryDialog* g_pais_query_dialog_active;
-double g_ownship_predictor_minutes;
 int g_current_arrow_scale;
 Multiplexer* g_pMUX;
 wxRect g_blink_rect;

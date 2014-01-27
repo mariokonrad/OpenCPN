@@ -194,6 +194,7 @@ public:
 		int min_mm;
 		double gps_antenna_offset_x;
 		double gps_antenna_offset_y;
+		double predictor_minutes;
 	};
 
 	virtual const OwnShip& ownship() const = 0;
@@ -203,6 +204,7 @@ public:
 	virtual void set_ownship_min_mm(int) = 0;
 	virtual void set_gps_antenna_offset_x(double) = 0;
 	virtual void set_gps_antenna_offset_y(double) = 0;
+	virtual void set_ownship_predictor_minutes(double) = 0;
 };
 
 }

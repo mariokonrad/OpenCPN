@@ -352,5 +352,10 @@ void OCPN_GUI::set_gps_antenna_offset_y(double value)
 	data_ownship.gps_antenna_offset_y = value;
 }
 
+void OCPN_GUI::set_ownship_predictor_minutes(double value)
+{
+	data_ownship.predictor_minutes = value;
+}
+
 }
 

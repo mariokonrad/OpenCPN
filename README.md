@@ -55,7 +55,7 @@ Rules
 
 The following rules do apply for this refactoring.
 
-- Code formatting is done using clang-format and the corresponding
+- Code formatting is done using clang-format (version 3.4) and the corresponding
   configuration file of this repository (./.clang-format).
 
 - Classes shall remain in their own pair of files (.cpp/.h), except

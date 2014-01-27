@@ -39,6 +39,7 @@ private:
 	AISTargetList data_ais_target_list;
 	CM93 data_cm93;
 	S57Dialog data_s57dialog;
+	OwnShip data_ownship;
 
 public: // view
 	virtual const View& view() const;
@@ -112,6 +113,10 @@ public: // cm93
 public: // S57 dialog
 	virtual const S57Dialog& s57dialog() const;
 	virtual void set_S57_dialog_size(const wxSize&);
+
+public: // own ship
+	virtual const OwnShip& ownship() const;
+	virtual void set_ownship_cog_predictor_width(int);
 };
 
 }

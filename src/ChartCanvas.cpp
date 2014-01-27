@@ -253,7 +253,6 @@ static int mouse_x;
 static int mouse_y;
 static bool mouse_leftisdown;
 
-int g_cog_predictor_width;
 int g_ais_cog_predictor_width;
 
 // FIXME: (semi-)globals?
@@ -3207,17 +3206,19 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				dash_long[0] = (int)(3.0 * m_pix_per_mm); // 8// Long dash  <---------+
 				dash_long[1] = (int)(1.5 * m_pix_per_mm); // 2// Short gap            |
 
-				wxPen ppPen2(pred_colour, g_cog_predictor_width, wxUSER_DASH);
+				const bool cog_predictor_width = global::OCPN::get().gui().ownship().cog_predictor_width;
+
+				wxPen ppPen2(pred_colour, cog_predictor_width, wxUSER_DASH);
 				ppPen2.SetDashes(2, dash_long);
 				dc.SetPen(ppPen2);
 				dc.StrokeLine(lGPSPoint.x + GPSOffsetPixels.x, lGPSPoint.y + GPSOffsetPixels.y,
 							  lPredPoint.x + GPSOffsetPixels.x, lPredPoint.y + GPSOffsetPixels.y);
 
 				wxDash dash_long3[2];
-				dash_long3[0] = g_cog_predictor_width * dash_long[0];
-				dash_long3[1] = g_cog_predictor_width * dash_long[1];
+				dash_long3[0] = cog_predictor_width * dash_long[0];
+				dash_long3[1] = cog_predictor_width * dash_long[1];
 
-				if (g_cog_predictor_width > 1) {
+				if (cog_predictor_width > 1) {
 					wxPen ppPen3(GetGlobalColor(_T ( "UBLCK" )), 1, wxUSER_DASH);
 					ppPen3.SetDashes(2, dash_long3);
 					dc.SetPen(ppPen3);
@@ -3227,7 +3228,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				}
 				wxPen ppPen1(GetGlobalColor(_T ( "UBLCK" )), 1, wxSOLID);
 				dc.SetPen(ppPen1);
-				dc.SetBrush(wxBrush(pred_colour)); //*wxWHITE_BRUSH);
+				dc.SetBrush(wxBrush(pred_colour));
 
 				dc.StrokePolygon(4, icon);
 			}

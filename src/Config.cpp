@@ -128,7 +128,6 @@ extern int              g_SkewCompUpdatePeriod;
 
 extern int              g_GPU_MemSize;
 
-extern int              g_cog_predictor_width;
 extern int              g_ais_cog_predictor_width;
 
 extern wxString         g_default_wp_icon;
@@ -617,7 +616,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("SpeedFormat"), &g_iSpeedFormat, 0); // 0 = "kts"), 1 = "mph", 2 = "km/h", 3 = "m/s"
 
 	Read(_T("OwnshipCOGPredictorMinutes"), &g_ownship_predictor_minutes, 5);
-	Read(_T("OwnshipCOGPredictorWidth"), &g_cog_predictor_width, 3);
+	gui.set_ownship_cog_predictor_width(read_long(_T("OwnshipCOGPredictorWidth"), 3));
 	Read(_T("OwnShipIconType"), &g_OwnShipIconType, 0);
 	Read(_T("OwnShipLength"), &g_n_ownship_length_meters, 0);
 	Read(_T("OwnShipWidth"), &g_n_ownship_beam_meters, 0);
@@ -1557,6 +1556,7 @@ void Config::UpdateSettings()
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
+	const global::GUI::OwnShip& ownship = global::OCPN::get().gui().ownship();
 	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 	const global::System& sys = global::OCPN::get().sys();
 
@@ -1599,7 +1599,7 @@ void Config::UpdateSettings()
 	Write(_T("ShowMag"), g_bMagneticAPB);
 
 	Write(_T("OwnshipCOGPredictorMinutes"), g_ownship_predictor_minutes);
-	Write(_T("OwnshipCOGPredictorWidth"), g_cog_predictor_width);
+	Write(_T("OwnshipCOGPredictorWidth"), ownship.cog_predictor_width);
 	Write(_T("OwnShipIconType"), g_OwnShipIconType);
 	Write(_T("OwnShipLength"), g_n_ownship_length_meters);
 	Write(_T("OwnShipWidth"), g_n_ownship_beam_meters);

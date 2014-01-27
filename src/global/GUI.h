@@ -184,6 +184,15 @@ public:
 
 	virtual const S57Dialog& s57dialog() const = 0;
 	virtual void set_S57_dialog_size(const wxSize&) = 0;
+
+public:
+	struct OwnShip
+	{
+		int cog_predictor_width;
+	};
+
+	virtual const OwnShip& ownship() const = 0;
+	virtual void set_ownship_cog_predictor_width(int) = 0;
 };
 
 }

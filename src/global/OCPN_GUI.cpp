@@ -317,5 +317,15 @@ void OCPN_GUI::set_S57_dialog_size(const wxSize& size)
 	data_s57dialog.size = size;
 }
 
+const GUI::OwnShip& OCPN_GUI::ownship() const
+{
+	return data_ownship;
+}
+
+void OCPN_GUI::set_ownship_cog_predictor_width(int value)
+{
+	data_ownship.cog_predictor_width = value;
+}
+
 }
 

@@ -85,10 +85,6 @@ extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
 
-extern int              g_iNavAidRadarRingsNumberVisible;
-extern float            g_fNavAidRadarRingsStep;
-extern int              g_pNavAidRadarRingsStepUnits;
-
 extern wxString         g_toolbarConfig;
 
 #ifdef USE_S57
@@ -1104,24 +1100,20 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	// Radar rings
 	wxString val;
-	g_iNavAidRadarRingsNumberVisible = 0;
-	Read(_T("RadarRingsNumberVisible"), &val);
-	if (val.Length() > 0)
-		g_iNavAidRadarRingsNumberVisible = atoi(val.mb_str());
+	int nav_aid_radar_rings_number_visible = read_long(_T("RadarRingsNumberVisible"));
+	if (nav_aid_radar_rings_number_visible < 0)
+		nav_aid_radar_rings_number_visible = 0;
+	if (nav_aid_radar_rings_number_visible > 10)
+		nav_aid_radar_rings_number_visible = 10;
+	gui.set_NavAidRadarRingsNumberVisible(nav_aid_radar_rings_number_visible);
 
-	g_fNavAidRadarRingsStep = 1.0;
-	Read(_T("RadarRingsStep"), &val);
-	if (val.Length() > 0)
-		g_fNavAidRadarRingsStep = atof(val.mb_str());
+	gui.set_NavAidRadarRingsStep(read_double(_T("RadarRingsStep"), 1.0));
 
-	g_pNavAidRadarRingsStepUnits = 0;
-	Read(_T("RadarRingsStepUnits"), &g_pNavAidRadarRingsStepUnits);
+	gui.set_NavAidRadarRingsStepUnits(read_long(_T("RadarRingsStepUnits")));
 
 	// Support Version 3.0 and prior config setting for Radar Rings
-	bool b300RadarRings = true;
-	Read(_T("ShowRadarRings"), &b300RadarRings);
-	if (!b300RadarRings)
-		g_iNavAidRadarRingsNumberVisible = 0;
+	if (!read_bool(_T("ShowRadarRings")))
+		gui.set_NavAidRadarRingsNumberVisible(0);
 
 	gui.set_ConfirmObjectDelete(read_bool(_T("ConfirmObjectDeletion"), true));
 
@@ -1824,10 +1816,10 @@ void Config::UpdateSettings()
 	SetPath(_T("/Settings/Others"));
 
 	// Radar rings
-	Write(_T("ShowRadarRings"), g_iNavAidRadarRingsNumberVisible > 0);
-	Write(_T("RadarRingsNumberVisible"), g_iNavAidRadarRingsNumberVisible);
-	Write(_T("RadarRingsStep"), g_fNavAidRadarRingsStep);
-	Write(_T("RadarRingsStepUnits"), g_pNavAidRadarRingsStepUnits);
+	Write(_T("ShowRadarRings"), view.NavAidRadarRingsNumberVisible > 0);
+	Write(_T("RadarRingsNumberVisible"), view.NavAidRadarRingsNumberVisible);
+	Write(_T("RadarRingsStep"), view.NavAidRadarRingsStep);
+	Write(_T("RadarRingsStepUnits"), view.NavAidRadarRingsStepUnits);
 
 	Write(_T("ConfirmObjectDeletion"), view.ConfirmObjectDelete);
 

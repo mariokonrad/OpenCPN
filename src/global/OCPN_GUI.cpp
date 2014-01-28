@@ -156,6 +156,21 @@ void OCPN_GUI::set_view_fullscreen_quilt(bool value)
 	data_view.fullscreen_quilt = value;
 }
 
+void OCPN_GUI::set_NavAidRadarRingsNumberVisible(int value)
+{
+	data_view.NavAidRadarRingsNumberVisible = value;
+}
+
+void OCPN_GUI::set_NavAidRadarRingsStep(double value)
+{
+	data_view.NavAidRadarRingsStep = value;
+}
+
+void OCPN_GUI::set_NavAidRadarRingsStepUnits(int value)
+{
+	data_view.NavAidRadarRingsStepUnits = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

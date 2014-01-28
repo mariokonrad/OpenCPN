@@ -189,10 +189,6 @@ extern StatWin* stats;
 // AIS Global configuration
 extern bool g_bShowAIS;
 
-extern int g_iNavAidRadarRingsNumberVisible;
-extern float g_fNavAidRadarRingsStep;
-extern int g_pNavAidRadarRingsStepUnits;
-
 extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 
@@ -3250,12 +3246,13 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 		}
 
 		// Draw radar rings if activated
-		if (g_iNavAidRadarRingsNumberVisible) {
+		const global::GUI::View& view = global::OCPN::get().gui().view();
+		if (view.NavAidRadarRingsNumberVisible > 0) {
 			double factor = 1.00;
-			if (g_pNavAidRadarRingsStepUnits == 1) // nautical miles
+			if (view.NavAidRadarRingsStepUnits == 1) // nautical miles
 				factor = 1 / 1.852;
 
-			factor *= g_fNavAidRadarRingsStep;
+			factor *= view.NavAidRadarRingsStep;
 
 			geo::Position t = geo::ll_gc_ll(nav.pos, 0, factor);
 			wxPoint r = GetCanvasPointPix(t);
@@ -3268,7 +3265,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 			dc.SetPen(ppPen1);
 			dc.SetBrush(wxBrush(GetGlobalColor(_T("URED")), wxTRANSPARENT));
 
-			for (int i = 1; i <= g_iNavAidRadarRingsNumberVisible; i++)
+			for (int i = 1; i <= view.NavAidRadarRingsNumberVisible; i++)
 				dc.StrokeCircle(lShipMidPoint.x, lShipMidPoint.y, i * pix_radius);
 		}
 	}

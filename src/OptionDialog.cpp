@@ -99,10 +99,6 @@ extern int g_SOGFilterSec;
 extern PlugInManager* g_pi_manager;
 extern ocpnStyle::StyleManager* g_StyleManager;
 
-extern int g_iNavAidRadarRingsNumberVisible;
-extern float g_fNavAidRadarRingsStep;
-extern int g_pNavAidRadarRingsStepUnits;
-
 extern bool g_bPlayShipsBells;
 
 extern double g_n_arrival_circle_radius;
@@ -1993,11 +1989,11 @@ void options::SetInitialSettings()
 	m_pOSMinSize->SetValue(wxString::Format(_T("%d"), ownship.min_mm));
 	m_pText_ACRadius->SetValue(wxString::Format(_T("%.2f"), g_n_arrival_circle_radius));
 
-	if (g_iNavAidRadarRingsNumberVisible > 10)
-		g_iNavAidRadarRingsNumberVisible = 10;
-	pNavAidRadarRingsNumberVisible->SetSelection(g_iNavAidRadarRingsNumberVisible);
-	pNavAidRadarRingsStep->SetValue(wxString::Format(_T("%.3f"), g_fNavAidRadarRingsStep));
-	m_itemRadarRingsUnits->SetSelection(g_pNavAidRadarRingsStepUnits);
+	if (view.NavAidRadarRingsNumberVisible > 10) // FIXME: this is the wrong point to ensure range
+		global::OCPN::get().gui().set_NavAidRadarRingsNumberVisible(10);
+	pNavAidRadarRingsNumberVisible->SetSelection(view.NavAidRadarRingsNumberVisible);
+	pNavAidRadarRingsStep->SetValue(wxString::Format(_T("%.3f"), view.NavAidRadarRingsStep));
+	m_itemRadarRingsUnits->SetSelection(view.NavAidRadarRingsStepUnits);
 	OnRadarringSelect(eDummy);
 
 	pWayPointPreventDragging->SetValue(view.WayPointPreventDragging);
@@ -2566,9 +2562,9 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 	gui.set_ownship_predictor_minutes(get_double(m_pText_OSCOG_Predictor));
 
-	g_iNavAidRadarRingsNumberVisible = pNavAidRadarRingsNumberVisible->GetSelection();
-	g_fNavAidRadarRingsStep = atof(pNavAidRadarRingsStep->GetValue().mb_str());
-	g_pNavAidRadarRingsStepUnits = m_itemRadarRingsUnits->GetSelection();
+	gui.set_NavAidRadarRingsNumberVisible(pNavAidRadarRingsNumberVisible->GetSelection());
+	gui.set_NavAidRadarRingsStep(atof(pNavAidRadarRingsStep->GetValue().mb_str()));
+	gui.set_NavAidRadarRingsStepUnits(m_itemRadarRingsUnits->GetSelection());
 	gui.set_WayPointPreventDragging(pWayPointPreventDragging->GetValue());
 	gui.set_ConfirmObjectDelete(pConfirmObjectDeletion->GetValue());
 

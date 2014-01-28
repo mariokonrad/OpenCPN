@@ -68,6 +68,9 @@ public: // view
 	virtual void set_view_preserve_scale_on_x(bool);
 	virtual void set_view_quilt_enable(bool);
 	virtual void set_view_fullscreen_quilt(bool);
+	virtual void set_NavAidRadarRingsNumberVisible(int);
+	virtual void set_NavAidRadarRingsStep(double);
+	virtual void set_NavAidRadarRingsStepUnits(int);
 
 public: // frame
 	virtual const Frame& frame() const;

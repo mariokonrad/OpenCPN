@@ -65,6 +65,9 @@ public:
 		bool preserve_scale_on_x;
 		bool quilt_enable;
 		bool fullscreen_quilt;
+		int NavAidRadarRingsNumberVisible;
+		double NavAidRadarRingsStep;
+		int NavAidRadarRingsStepUnits;
 	};
 
 	virtual const View& view() const = 0;
@@ -93,6 +96,9 @@ public:
 	virtual void set_view_preserve_scale_on_x(bool) = 0;
 	virtual void set_view_quilt_enable(bool) = 0;
 	virtual void set_view_fullscreen_quilt(bool) = 0;
+	virtual void set_NavAidRadarRingsNumberVisible(int) = 0;
+	virtual void set_NavAidRadarRingsStep(double) = 0;
+	virtual void set_NavAidRadarRingsStepUnits(int) = 0;
 
 public:
 	struct Frame

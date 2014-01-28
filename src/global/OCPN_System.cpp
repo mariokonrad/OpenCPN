@@ -120,6 +120,11 @@ void OCPN_System::set_config_memCacheLimit(long value)
 	data_config.memCacheLimit = value;
 }
 
+void OCPN_System::set_config_GPU_MemSize(long value)
+{
+	data_config.GPU_MemSize = value;
+}
+
 const System::Debug& OCPN_System::debug() const
 {
 	return data_debug;

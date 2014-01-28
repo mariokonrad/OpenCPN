@@ -57,6 +57,7 @@ public: // config
 	virtual void set_config_autosave_interval_seconds(long);
 	virtual void set_config_CacheLimit(long);
 	virtual void set_config_memCacheLimit(long);
+	virtual void set_config_GPU_MemSize(long);
 
 public: // debug
 	virtual const Debug& debug() const;

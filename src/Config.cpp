@@ -106,8 +106,6 @@ extern int              g_SOGFilterSec;
 
 extern int              g_SkewCompUpdatePeriod;
 
-extern int              g_GPU_MemSize;
-
 extern int              g_ais_cog_predictor_width;
 
 extern wxString         g_default_wp_icon;
@@ -562,7 +560,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	Read(_T("ActiveChartGroup"), &g_GroupIndex, 0);
 
-	Read(_T("GPUMemorySize"), &g_GPU_MemSize, 256);
+	sys.set_config_GPU_MemSize(read_long(_T("GPUMemorySize"), 256));
 
 	gui.set_smooth_pan_zoom(read_bool(_T("SmoothPanZoom")));
 

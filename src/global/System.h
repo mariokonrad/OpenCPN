@@ -73,6 +73,7 @@ public:
 		long autosave_interval_seconds;
 		long CacheLimit;
 		long memCacheLimit;
+		long GPU_MemSize;
 	};
 
 	virtual const Config& config() const = 0;
@@ -82,6 +83,7 @@ public:
 	virtual void set_config_autosave_interval_seconds(long) = 0;
 	virtual void set_config_CacheLimit(long) = 0;
 	virtual void set_config_memCacheLimit(long) = 0;
+	virtual void set_config_GPU_MemSize(long) = 0;
 
 public:
 	struct Debug

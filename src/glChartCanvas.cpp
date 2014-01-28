@@ -56,7 +56,6 @@ extern ChartCanvas* cc1;
 extern chart::s52plib* ps52plib;
 extern bool g_bopengl;
 extern bool g_b_useStencil;
-extern int g_GPU_MemSize;
 extern PlugInManager* g_pi_manager;
 extern bool g_bskew_comp;
 extern bool g_bCourseUp;
@@ -621,7 +620,7 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		int n_tex_size = 512;
-		double n_GPU_Mem = wxMax(64, g_GPU_MemSize) * (1 << 20);
+		double n_GPU_Mem = wxMax(64, global::OCPN::get().sys().config().GPU_MemSize) * (1 << 20);
 		m_tex_max_res = n_GPU_Mem / (n_tex_size * n_tex_size * 4
 									 * 1.3); // 1.3 multiplier allows for full mipmaps
 		m_tex_max_res /= 2;

@@ -337,7 +337,6 @@ wxMenu* g_FloatingToolbarConfigMenu;
 OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 FloatingCompassWindow* g_FloatingCompassDialog;
 bool g_bMagneticAPB;
-int g_GPU_MemSize;
 bool g_b_useStencil;
 
 bool g_bShowMag;

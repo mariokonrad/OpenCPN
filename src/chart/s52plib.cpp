@@ -28,6 +28,9 @@
 #include <UserColors.h>
 #include <crc32.h>
 
+#include <global/OCPN.h>
+#include <global/System.h>
+
 #include <chart/RazdsParser.h>
 #include <chart/RenderFromHPGL.h>
 #include <chart/s52utils.h>
@@ -60,7 +63,6 @@
 
 extern chart::s52plib* ps52plib;
 extern bool g_b_useStencil;
-extern wxString g_csv_locn;
 extern double g_GLMinLineWidth;
 
 namespace chart {
@@ -955,7 +957,7 @@ int s52plib::S52_load_Plib(const wxString& PLib, bool b_forceLegacy)
 		(*_cond_sym)[index] = (Rule*)(condTable[i].condInst);
 	}
 
-	wxString oc_file(g_csv_locn);
+	wxString oc_file(global::OCPN::get().sys().data().csv_location);
 	oc_file.Append(_T("/s57objectclasses.csv"));
 
 	PreloadOBJLFromCSV(oc_file);

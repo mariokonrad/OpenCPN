@@ -75,8 +75,6 @@
 
 extern chart::s52plib* ps52plib;
 extern S57ClassRegistrar* g_poRegistrar;
-extern wxString g_csv_locn;
-extern wxString g_SENCPrefix;
 extern FILE* s_fpdebug;
 extern bool g_b_useStencil;
 extern ChartCanvas* cc1;
@@ -992,7 +990,7 @@ s57chart::s57chart()
 	pRigidATONArray = new wxArrayPtrVoid;
 
 	m_tmpup_array = NULL;
-	m_pcsv_locn = new wxString(g_csv_locn);
+	m_pcsv_locn = new wxString(global::OCPN::get().sys().data().csv_location);
 
 	m_DepthUnits = _T("METERS");
 	m_depth_unit_id = DEPTH_UNIT_METERS;
@@ -2374,7 +2372,7 @@ InitReturn s57chart::Init(const wxString& name, ChartInitFlag flags)
 
 		// Look for Thumbnail
 		// Set the proper directory for the SENC/BMP files
-		wxString SENCdir = g_SENCPrefix;
+		wxString SENCdir = global::OCPN::get().sys().data().SENCPrefix;
 
 		if (SENCdir.Last() != fn.GetPathSeparator())
 			SENCdir.Append(fn.GetPathSeparator());
@@ -2467,7 +2465,7 @@ InitReturn s57chart::FindOrCreateSenc(const wxString& name)
 	m_SENCFileName.SetExt(_T("S57"));
 
 	// Set the proper directory for the SENC files
-	wxString SENCdir = g_SENCPrefix;
+	wxString SENCdir = global::OCPN::get().sys().data().SENCPrefix;
 
 	if (SENCdir.Last() != m_SENCFileName.GetPathSeparator())
 		SENCdir.Append(m_SENCFileName.GetPathSeparator());
@@ -2632,7 +2630,7 @@ InitReturn s57chart::PostInit(ChartInitFlag, global::ColorScheme cs)
 	// Check for and if necessary rebuild Thumbnail
 	// Going to be in the global (user) SENC file directory
 
-	wxString SENCdir = g_SENCPrefix;
+	wxString SENCdir = global::OCPN::get().sys().data().SENCPrefix;
 	if (SENCdir.Last() != m_SENCFileName.GetPathSeparator())
 		SENCdir.Append(m_SENCFileName.GetPathSeparator());
 

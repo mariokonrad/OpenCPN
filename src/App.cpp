@@ -142,8 +142,6 @@ extern bool bDBUpdateInProgress;
 extern ThumbWin* pthumbwin;
 extern tide::TCMgr* ptcmgr;
 extern tide::IDX_entry* gpIDX;
-extern wxString g_csv_locn;
-extern wxString g_SENCPrefix;
 extern wxString g_UserPresLibData;
 extern chart::ChartDB* ChartData;
 extern Multiplexer* g_pMUX;
@@ -711,29 +709,30 @@ void App::setup_s57()
 	CPLSetErrorHandler(OCPN_CPLErrorHandler);
 
 	// Init the s57 chart object, specifying the location of the required csv files
-	g_csv_locn = sys.sound_data_location + _T("s57data");
-
+	wxString csv_location = sys.sound_data_location + _T("s57data");
 	if (g_bportable) {
-		g_csv_locn = _T(".");
-		appendOSDirSlash(g_csv_locn);
-		g_csv_locn.Append(_T("s57data"));
+		csv_location = _T(".");
+		appendOSDirSlash(csv_location);
+		csv_location.Append(_T("s57data"));
 	}
+	global::OCPN::get().sys().set_csv_location(csv_location);
 
 	// If the config file contains an entry for SENC file prefix, use it.
 	// Otherwise, default to PrivateDataDir
-	if (g_SENCPrefix.IsEmpty()) {
-		g_SENCPrefix = sys.private_data_dir;
-		appendOSDirSlash(g_SENCPrefix);
-		g_SENCPrefix.Append(_T("SENC"));
+	wxString senc_prefix = sys.SENCPrefix;
+	if (sys.SENCPrefix.IsEmpty()) {
+		senc_prefix = sys.private_data_dir;
+		appendOSDirSlash(senc_prefix);
+		senc_prefix.Append(_T("SENC"));
 	}
-
 	if (g_bportable) {
-		wxFileName f(g_SENCPrefix);
+		wxFileName f(senc_prefix);
 		if (f.MakeRelativeTo(sys.private_data_dir))
-			g_SENCPrefix = f.GetFullPath();
+			senc_prefix = f.GetFullPath();
 		else
-			g_SENCPrefix = _T("SENC");
+			senc_prefix = _T("SENC");
 	}
+	global::OCPN::get().sys().set_SENCPrefix(senc_prefix);
 
 	// If the config file contains an entry for PresentationLibraryData, use it.
 	// Otherwise, default to conditionally set spot under g_pcsv_locn
@@ -741,7 +740,7 @@ void App::setup_s57()
 	bool b_force_legacy = false;
 
 	if (g_UserPresLibData.IsEmpty()) {
-		plib_data = g_csv_locn;
+		plib_data = sys.csv_location;
 		appendOSDirSlash(plib_data);
 		plib_data.Append(_T("S52RAZDS.RLE"));
 	} else {
@@ -779,7 +778,7 @@ void App::setup_s57()
 		ps52plib = new chart::s52plib(plib_data);
 
 		if (ps52plib->m_bOK) {
-			g_csv_locn = look_data_dir;
+			global::OCPN::get().sys().set_csv_location(look_data_dir);
 			global::OCPN::get().sys().set_sound_data_location(tentative_SData_Locn);
 		}
 	}
@@ -802,17 +801,17 @@ void App::setup_s57()
 		ps52plib = new chart::s52plib(plib_data);
 
 		if (ps52plib->m_bOK)
-			g_csv_locn = look_data_dir;
+			global::OCPN::get().sys().set_csv_location(look_data_dir);
 	}
 
 	if (ps52plib->m_bOK)
-		wxLogMessage(_T("Using s57data in ") + g_csv_locn);
+		wxLogMessage(_T("Using s57data in ") + sys.csv_location);
 	else
 		wxLogMessage(_T("   S52PLIB Initialization failed, disabling Vector charts."));
 
 	// Todo Maybe initialize only when an s57 chart is actually opened???
 	if (ps52plib->m_bOK)
-		m_pRegistrarMan = new chart::S57RegistrarMgr(g_csv_locn, file_log);
+		m_pRegistrarMan = new chart::S57RegistrarMgr(sys.csv_location, file_log);
 
 	if (!ps52plib->m_bOK) {
 		delete ps52plib;

@@ -48,6 +48,8 @@ public: // data
 	virtual void set_init_chart_dir(const wxString&);
 	virtual void set_plugin_dir(const wxString&);
 	virtual void set_locale(const wxString&);
+	virtual void set_csv_location(const wxString&);
+	virtual void set_SENCPrefix(const wxString&);
 
 public: // config
 	virtual const Config& config() const;

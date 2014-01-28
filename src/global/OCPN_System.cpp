@@ -85,6 +85,16 @@ void OCPN_System::set_locale(const wxString& value)
 	data_data.locale = value;
 }
 
+void OCPN_System::set_csv_location(const wxString& value)
+{
+	data_data.csv_location = value;
+}
+
+void OCPN_System::set_SENCPrefix(const wxString& value)
+{
+	data_data.SENCPrefix = value;
+}
+
 const System::Config& OCPN_System::config() const
 {
 	return data_config;

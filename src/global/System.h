@@ -49,6 +49,8 @@ public:
 		wxString init_chart_dir;
 		wxString plugin_dir;
 		wxString locale;
+		wxString csv_location;
+		wxString SENCPrefix;
 	};
 
 	virtual const Data& data() const = 0;
@@ -63,6 +65,8 @@ public:
 	virtual void set_init_chart_dir(const wxString&) = 0;
 	virtual void set_plugin_dir(const wxString&) = 0;
 	virtual void set_locale(const wxString&) = 0;
+	virtual void set_csv_location(const wxString&) = 0;
+	virtual void set_SENCPrefix(const wxString&) = 0;
 
 public:
 	struct Config

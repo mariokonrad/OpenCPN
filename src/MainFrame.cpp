@@ -194,8 +194,6 @@ RouteManagerDialog* pRouteManagerDialog;
 bool bDBUpdateInProgress;
 ThumbWin* pthumbwin;
 tide::TCMgr* ptcmgr;
-wxString g_csv_locn;
-wxString g_SENCPrefix;
 wxString g_UserPresLibData;
 wxString g_uploadConnection;
 volatile int quitflag;

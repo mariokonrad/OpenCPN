@@ -73,7 +73,6 @@ extern int g_LayerIdx;
 extern bool g_bShowMag;
 extern double g_UserVar;
 extern ArrayOfConnPrm* g_pConnectionParams;
-extern wxString g_SENCPrefix;
 extern wxString g_UserPresLibData;
 extern WayPointman* pWayPointMan;
 extern bool s_bSetSystemTime;
@@ -790,7 +789,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(strs, &vals); // Get the Directory name
 
 	if (iteration == 0)
-		g_SENCPrefix = vals;
+		sys.set_SENCPrefix(vals);
 
 #endif
 

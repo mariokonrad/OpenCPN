@@ -101,8 +101,6 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 
 extern bool g_bPlayShipsBells;
 
-extern double g_n_arrival_circle_radius;
-
 extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
@@ -1915,6 +1913,7 @@ void options::SetInitialSettings()
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::GUI::OwnShip& ownship = global::OCPN::get().gui().ownship();
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+	const global::Navigation::Route& route = global::OCPN::get().nav().route();
 	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 
 	for (ArrayOfCDI::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end();
@@ -1987,7 +1986,7 @@ void options::SetInitialSettings()
 	m_pOSGPSOffsetX->SetValue(wxString::Format(_T("%.1f"), ownship.gps_antenna_offset_x));
 	m_pOSGPSOffsetY->SetValue(wxString::Format(_T("%.1f"), ownship.gps_antenna_offset_y));
 	m_pOSMinSize->SetValue(wxString::Format(_T("%d"), ownship.min_mm));
-	m_pText_ACRadius->SetValue(wxString::Format(_T("%.2f"), g_n_arrival_circle_radius));
+	m_pText_ACRadius->SetValue(wxString::Format(_T("%.2f"), route.arrival_circle_radius));
 
 	if (view.NavAidRadarRingsNumberVisible > 10) // FIXME: this is the wrong point to ensure range
 		global::OCPN::get().gui().set_NavAidRadarRingsNumberVisible(10);
@@ -2474,7 +2473,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	}
 	gui.set_ownship_icon_type(m_pShipIconType->GetSelection());
 
-	m_pText_ACRadius->GetValue().ToDouble(&g_n_arrival_circle_radius);
+	nav.set_route_arrival_circle_radius(get_double(m_pText_ACRadius));
 
 	// Handle Chart Tab
 	wxString dirname;

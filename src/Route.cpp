@@ -35,6 +35,7 @@
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/Navigation.h>
 
 #include <geo/GeoRef.h>
 #include <geo/LineClip.h>
@@ -49,7 +50,6 @@ extern Routeman* g_pRouteMan;
 extern Select* pSelect;
 extern Config* pConfig;
 extern Multiplexer* g_pMUX;
-extern double g_n_arrival_circle_radius;
 
 const double Route::DEFAULT_SPEED = 5.0;
 const int Route::STYLE_UNDEFINED = -1;
@@ -100,7 +100,7 @@ Route::Route(void)
 {
 	pRoutePointList = new RoutePointList;
 	m_GUID = GpxDocument::GetUUID();
-	m_ArrivalRadius = g_n_arrival_circle_radius; // nautical miles
+	m_ArrivalRadius = global::OCPN::get().nav().route().arrival_circle_radius;
 	RBBox.Reset();
 }
 

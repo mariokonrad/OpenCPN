@@ -75,6 +75,16 @@ void OCPN_Navigation::set_course_over_ground(double value)
 	data.cog = value;
 }
 
+const Navigation::Route& OCPN_Navigation::route() const
+{
+	return data_route;
+}
+
+void OCPN_Navigation::set_route_arrival_circle_radius(double value)
+{
+	data_route.arrival_circle_radius = value;
+}
+
 const Navigation::Track& OCPN_Navigation::get_track() const
 {
 	return track;

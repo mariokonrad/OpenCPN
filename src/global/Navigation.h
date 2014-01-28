@@ -59,6 +59,15 @@ public:
 	virtual void set_course_over_ground(double) = 0;
 
 public:
+	struct Route
+	{
+		double arrival_circle_radius; // nautical miles
+	};
+
+	virtual const Route& route() const = 0;
+	virtual void set_route_arrival_circle_radius(double) = 0;
+
+public:
 	struct Track
 	{
 		long TrackPrecision;

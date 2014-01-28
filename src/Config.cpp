@@ -89,8 +89,6 @@ extern int g_iSpeedFormat;
 extern chart::s52plib          *ps52plib;
 #endif
 
-extern double           g_n_arrival_circle_radius;
-
 extern bool             g_bUseGLL;
 
 extern bool             g_bCourseUp;
@@ -609,12 +607,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	long ownship_min_mm = read_long(_T("OwnShipMinSize"), 1);
 	gui.set_ownship_min_mm(wxMax(ownship_min_mm, 1));
 
-	g_n_arrival_circle_radius = .050; // default
-	wxString racr;
-	Read(_T("RouteArrivalCircleRadius"), &racr);
-	if (racr.Len())
-		racr.ToDouble(&g_n_arrival_circle_radius);
-	g_n_arrival_circle_radius = wxMax(g_n_arrival_circle_radius, .001);
+	double arrival_circle_radius = read_double(_T("RouteArrivalCircleRadius"), 0.050);
+	arrival_circle_radius = wxMax(arrival_circle_radius, 0.001);
+	nav.set_route_arrival_circle_radius(arrival_circle_radius);
 
 	gui.set_view_fullscreen_quilt(read_bool(_T("FullScreenQuilt"), true));
 
@@ -1538,6 +1533,7 @@ void Config::UpdateSettings()
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
 	const global::GUI::OwnShip& ownship = global::OCPN::get().gui().ownship();
+	const global::Navigation::Route& route = global::OCPN::get().nav().route();
 	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 	const global::System& sys = global::OCPN::get().sys();
 
@@ -1588,7 +1584,7 @@ void Config::UpdateSettings()
 	Write(_T("OwnShipGPSOffsetY"), ownship.gps_antenna_offset_y);
 	Write(_T("OwnShipMinSize"), ownship.min_mm);
 
-	Write(_T("RouteArrivalCircleRadius"), wxString::Format(_T("%.2f"), g_n_arrival_circle_radius));
+	Write(_T("RouteArrivalCircleRadius"), wxString::Format(_T("%.2f"), route.arrival_circle_radius));
 
 	Write(_T("ChartQuilting"), view.quilt_enable);
 	Write(_T("FullScreenQuilt"), view.fullscreen_quilt);

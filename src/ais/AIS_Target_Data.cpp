@@ -136,7 +136,7 @@ AIS_Target_Data::AIS_Target_Data()
 	blue_paddle = 0;
 	bCPA_Valid = false;
 	ROTIND = 0;
-	b_show_track = true;
+	b_show_track = global::OCPN::get().ais().get_data().AISShowTracks;
 	b_specialPosnReport = false;
 	altitude = 0;
 }

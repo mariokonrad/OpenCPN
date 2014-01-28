@@ -3718,7 +3718,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		drawit++;
 
 	// If AIS tracks are shown, is the first point of the track on-screen?
-	if (ais.AISShowTracks && td->b_show_track) {
+	if (td->b_show_track) {
 		ais::AISTargetTrackList::const_iterator i = td->m_ptrack.begin();
 		if (i != td->m_ptrack.end()) {
 			if (GetVP().GetBBox().PointInBox(i->m_lon, i->m_lat, 0))
@@ -3898,7 +3898,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		if (((td->n_alarm_state == AIS_ALARM_SET) && (td->bCPA_Valid))
 			|| (td->b_show_AIS_CPA && (td->bCPA_Valid))) {
 			// Calculate the point of CPA for target
-			geo::Position tcpa = geo::ll_gc_ll(geo::Position(td->Lat, td->Lon), td->COG, target_sog * td->TCPA / 60.0);
+			geo::Position tcpa = geo::ll_gc_ll(geo::Position(td->Lat, td->Lon), td->COG,
+											   target_sog * td->TCPA / 60.0);
 			wxPoint TPoint = TargetPoint;
 			wxPoint tCPAPoint = GetCanvasPointPix(tcpa);
 
@@ -4243,7 +4244,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		}
 
 		// Draw tracks if enabled
-		if (ais.AISShowTracks && td->b_show_track) {
+		if (td->b_show_track) {
 			wxPoint TrackPointA;
 			wxPoint TrackPointB;
 
@@ -6194,12 +6195,10 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 					menuAIS->Append(ID_DEF_MENU_AIS_CPA, _("Show Target CPA"));
 			}
 			menuAIS->Append(ID_DEF_MENU_AISTARGETLIST, _("Target List..."));
-			if (global::OCPN::get().ais().get_data().AISShowTracks) {
-				if (myptarget && myptarget->b_show_track)
-					menuAIS->Append(ID_DEF_MENU_AISSHOWTRACK, _("Hide Target Track"));
-				else
-					menuAIS->Append(ID_DEF_MENU_AISSHOWTRACK, _("Show Target Track"));
-			}
+			if (myptarget && myptarget->b_show_track)
+				menuAIS->Append(ID_DEF_MENU_AISSHOWTRACK, _("Hide Target Track"));
+			else
+				menuAIS->Append(ID_DEF_MENU_AISSHOWTRACK, _("Show Target Track"));
 			menuFocus = menuAIS;
 		}
 	}

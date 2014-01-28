@@ -979,7 +979,7 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 				UpdateOneCPA(pTargetData);
 
 				// Update this target's track
-				if (global::OCPN::get().ais().get_data().AISShowTracks)
+				if (pTargetData->b_show_track)
 					UpdateOneTrack(pTargetData);
 			}
 		} else {

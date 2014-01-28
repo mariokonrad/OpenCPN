@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn 2.6.1718\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-01 19:13-0500\n"
+"POT-Creation-Date: 2014-01-28 18:35+0100\n"
 "PO-Revision-Date: 2013-02-08 20:42+0100\n"
 "Last-Translator: Szabolcs SZIGETI <szigi@ik.bme.hu>\n"
 "Language-Team: SZIGETI Szabolcs <szigiszabolcs@gmail.com>\n"
@@ -86,25 +86,12 @@ msgid "    Incompatible PlugIn detected:"
 msgstr "  Nem kompatibilis plugint találtam:"
 #
 #
-msgid "   Chart File RLL data corrupt on chart "
-msgstr "  Térkép fájl RLL adat sérült "
-#
-#
 msgid "   Chart File contains less than 3 PLY points: "
 msgstr "  A térkép fájl kevesebb mint 3 PLY pontot tartalmaz: "
 #
 #
 msgid "   Chart File corrupt in PostInit() on chart "
 msgstr "  Térkép fájl sérült a PostInit()-ben "
-#
-#
-msgid "   Chart file has no BSB header, cannot Init."
-msgstr "  Térkép fájlnak nincs BSB fejléce, nem lehet inicializálni."
-#
-#
-#, c-format
-msgid "   Could not read first %d bytes of header for chart file: "
-msgstr "  Nem tudtam az első %d bájtot kiolvasni a térkép fájl fejlécéből: "
 #
 #
 msgid "   Error creating Line Index for chart "
@@ -224,6 +211,9 @@ msgstr " Frissítve:  "
 msgid " for details."
 msgstr " a részletekért."
 #
+msgid " routing points for this leg?"
+msgstr ""
+#
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
@@ -247,6 +237,17 @@ msgstr ""
 #
 msgid "%H:%M"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "&Acknowledge"
+msgstr "Nyugtázás"
 #
 #
 msgid "&Activate"
@@ -287,6 +288,17 @@ msgid "&Go To"
 msgstr "Menj"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "&Jump To"
+msgstr "Ugrás"
+#
+#
 msgid "&Merge Selected Tracks"
 msgstr "Kiválasztott nyomvonalak egyesítése"
 #
@@ -321,6 +333,17 @@ msgstr "Megfordítás"
 #
 msgid "&Send to GPS"
 msgstr "GPS-re küldés"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "&Silence Alert"
+msgstr "Risztás némítás"
 #
 #
 msgid "&Start Track"
@@ -365,10 +388,16 @@ msgstr "(későbbi felhasználásra foglalt)"
 msgid "(unnamed)"
 msgstr "(névtelen)"
 #
-msgid "-"
-msgstr ""
 #
-msgid "--"
+#
+#
+#
+#
+#
+msgid ", Out: None"
+msgstr ", Ki: semmi"
+#
+msgid "-"
 msgstr ""
 #
 msgid "---"
@@ -518,6 +547,17 @@ msgid "AIS"
 msgstr "AIS"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "AIS Alert"
+msgstr "AIS riasztás"
+#
+#
 msgid "AIS Target List..."
 msgstr "AIS célpont lista..."
 #
@@ -542,6 +582,39 @@ msgstr "AIS célpontok"
 msgid "AIS target list"
 msgstr "AIS célpont lista"
 #
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "AISRollover"
+msgstr "AISfelirat"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "AISTargetAlert"
+msgstr "AIS célpont risztás"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "AISTargetQuery"
+msgstr "AIS Cél Lekérdezés"
+#
 msgid "APRS"
 msgstr ""
 #
@@ -563,6 +636,9 @@ msgstr "Névjegy"
 #
 msgid "About OpenCPN"
 msgstr "Az OpenCPN-ről"
+#
+msgid "Accept"
+msgstr ""
 #
 msgid "Accept Sentences"
 msgstr "Mondatok elfogadása"
@@ -762,6 +838,17 @@ msgid "B"
 msgstr ""
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Barge, tanker, chemical"
+msgstr "Bárka, tanker, vegyianyag"
+#
+#
 msgid "Base"
 msgstr "Alap"
 #
@@ -844,6 +931,28 @@ msgstr "Irány"
 #
 msgid "Buddy"
 msgstr "Társ"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Bulk carrier maritime"
+msgstr "Tengeri tömegárú szállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Bunkership"
+msgstr "Üzemanyagszállító"
 #
 msgid "Buoy/Light Labels"
 msgstr "Bója/fény címkék"
@@ -1203,6 +1312,17 @@ msgstr "Konzol érték"
 msgid "Constrained by draught"
 msgstr "Merülés miatt korlátozva"
 #
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Container vessel"
+msgstr "Konténerszállító jármű"
+#
 msgid "Control checksum"
 msgstr "Ellenőrzőösszeg"
 #
@@ -1220,6 +1340,16 @@ msgstr "KML-ként másolás"
 #
 msgid "Copy as KML..."
 msgstr "KML-ként másolás..."
+#
+#
+#
+#
+#
+#
+#
+#, c-format
+msgid "Couldn't load sound data from '%s'."
+msgstr "Nem tudtam a hangokat betölteni a '%s' állományból."
 #
 #
 msgid "Course"
@@ -1254,6 +1384,28 @@ msgstr "Útpont létrehozása"
 #
 msgid "Create Waypoint"
 msgstr "Útpont létrehozása"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Cruise ship"
+msgstr "Kirándulóhajó"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Current"
+msgstr "Áramlat"
 #
 #
 msgid "Cyan"
@@ -1305,8 +1457,54 @@ msgid "Dark Yellow"
 msgstr "Sötét-sárga"
 #
 #
+#, fuzzy
+msgid "DarkBlue"
+msgstr "Sötétkék"
+#
+#
+#, fuzzy
+msgid "DarkCyan"
+msgstr "Sötétlila"
+#
+#
+#, fuzzy
+msgid "DarkGray"
+msgstr "Sötétszürke"
+#
+#
+#, fuzzy
+msgid "DarkGreen"
+msgstr "Sötétzöld"
+#
+#
+#, fuzzy
+msgid "DarkMagenta"
+msgstr "Sötét-magenta"
+#
+#
+#, fuzzy
+msgid "DarkRed"
+msgstr "Sötétpiros"
+#
+#
+#, fuzzy
+msgid "DarkYellow"
+msgstr "Sötét-sárga"
+#
+#
 msgid "Data Connections"
 msgstr "Adat kapcsolatok"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Data Source :"
+msgstr "Adatforrás :"
 #
 #
 msgid "DataPort"
@@ -1502,6 +1700,17 @@ msgid "Dredge"
 msgstr "Kotró"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Drop"
+msgstr "Lerak"
+#
+#
 msgid "Drop MOB Marker"
 msgstr "Ember A Vízben jel lerakása"
 #
@@ -1598,6 +1807,28 @@ msgstr "Meteorológiai elővigyázatos terület: viharjelzés (cella vagy front)
 msgid "Environmental Caution Area: Strong currents"
 msgstr "Meteorológiai elővigyázatos terület: erős áramlatok"
 #
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Error on Route Upload.  Please check logfiles..."
+msgstr "Hiba történt az útvonal feltöltés közben. Ellenőrizd a naplófájlt..."
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Error on Waypoint Upload.  Please check logfiles..."
+msgstr "Hiba történt az útpont feltöltés közben. Ellenőrizd a naplófájlt..."
+#
 msgid "Error!"
 msgstr "Hiba!"
 #
@@ -1656,12 +1887,34 @@ msgid "Failed to initialize the user interface. "
 msgstr "Nem sikerült a felhasználói felület inicializálása. "
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Fast ship"
+msgstr "Gyorsjáratú hajó"
+#
+#
 msgid "Fathoms"
 msgstr "öl"
 #
 #
 msgid "Feet"
 msgstr "láb"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Ferry"
+msgstr "Komp"
 #
 #
 msgid "Filter NMEA Course and Speed data"
@@ -1674,6 +1927,17 @@ msgstr "Szűrési periódus (mp)"
 #
 msgid "Filters"
 msgstr "Szűrők"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Fishing boat"
+msgstr "Halászhajó"
 #
 #
 msgid "Fix.Struct."
@@ -1696,6 +1960,28 @@ msgstr "Teljes adatbázis újraépítés kényszerítése"
 msgid "Format uploads for Furuno GP3X"
 msgstr "Formátum feltöltés Furuno GP3X-re"
 #
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Freightbarge"
+msgstr "Teherbárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Freightbarge with containers"
+msgstr "Konténeres teherbárka"
+#
 msgid "From"
 msgstr ""
 #
@@ -1708,6 +1994,17 @@ msgstr "GPS eltolás az orrtól (m)"
 #
 msgid "GPS Offset from Midship (m)"
 msgstr "GPS eltolás a középvonaltól (m)"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "GPS/Plotter Port"
+msgstr "GPS/Plotter port"
 #
 msgid "GPSD"
 msgstr ""
@@ -1722,12 +2019,34 @@ msgid "GUID"
 msgstr ""
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Gas tanker"
+msgstr "Gázszállító tankhajó"
+#
+#
 msgid "General"
 msgstr "Általános"
 #
 #
 msgid "General Options"
 msgstr "Általános beállítások"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "General cargo Vessel maritime"
+msgstr "Általános tengeri teherjármű"
 #
 #
 msgid "Go to "
@@ -1745,6 +2064,9 @@ msgstr "Csoport \""
 #
 #
 msgid "HSC"
+msgstr ""
+#
+msgid "HW"
 msgstr ""
 #
 #
@@ -1765,6 +2087,10 @@ msgstr "Itt"
 #
 msgid "Hide AIS Targets"
 msgstr "AIS célpontok elrejtése"
+#
+#, fuzzy
+msgid "Hide All Tracks"
+msgstr "Célpont CPA elrejtése"
 #
 msgid "Hide Target CPA"
 msgstr "Célpont CPA elrejtése"
@@ -1801,6 +2127,17 @@ msgid "Highlight Tracks"
 msgstr "Nyomvonal kiemelése"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Hydrofoil"
+msgstr "Szárnyashajó"
+#
+#
 msgid "I&mport GPX..."
 msgstr "GPX import..."
 #
@@ -1829,6 +2166,26 @@ msgstr "GPX fájl importálása"
 #
 msgid "Important Text Only"
 msgstr "Csak a fontos szövegek"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "In"
+msgstr "Be"
+#
+#
+#
+#
+#
+#
+#
+msgid "In: None"
+msgstr "Be: semmi"
 #
 msgid "Information: Icebreaker waiting area"
 msgstr "Információ: jégtörő várakozási terület"
@@ -1903,6 +2260,12 @@ msgstr ""
 msgid "LMT @ Location"
 msgstr "LMT az adott helyen"
 #
+msgid "LMT @ Track Start"
+msgstr ""
+#
+msgid "LW"
+msgstr ""
+#
 #
 msgid "Language"
 msgstr "Nyelv"
@@ -1974,6 +2337,17 @@ msgid "Leg: from "
 msgstr "Szakasz: honnan "
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Legend"
+msgstr "Jelmagyarázat"
+#
+#
 msgid "Length"
 msgstr "Hossz"
 #
@@ -2003,6 +2377,11 @@ msgstr "Világítóhajó"
 #
 msgid "Light w/Sectors"
 msgstr "Fény, szektorokkal"
+#
+#
+#, fuzzy
+msgid "LightGray"
+msgstr "Sötétszürke"
 #
 #
 #
@@ -2048,6 +2427,17 @@ msgstr "Hivatkozások megnyitva szerkesztésre."
 #
 msgid "Links are opened in the default browser."
 msgstr "Hivatkozások az alapértelmezett böngészőben nyílnak."
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Liquified gas tanker"
+msgstr "Cseppfolyós gáz tanker"
 #
 #
 msgid "List contents"
@@ -2147,6 +2537,17 @@ msgid "Mark targets as lost after (min)"
 msgstr "Célpont eltűntnek nyilvánítása ennyi idő után (perc)"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Marks"
+msgstr "Jelek"
+#
+#
 msgid "Max Detail Here"
 msgstr "Maximális részletesség itt"
 #
@@ -2182,6 +2583,24 @@ msgid "Merge waypoints?"
 msgstr "Összefésüljem az útpontokat?"
 #
 #
+#
+#
+#
+#
+#
+msgid "Message accepted"
+msgstr "Üzenet elfogadva"
+#
+#
+#
+#
+#
+#
+#
+msgid "Message filtered and dropped"
+msgstr "Üzenet kiszűrve és eldobva"
+#
+#
 msgid "Meters"
 msgstr "méter"
 #
@@ -2207,6 +2626,127 @@ msgid "Moored"
 msgstr "Vesztegel"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter"
+msgstr "Motoros áruszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter pushing at least one tank-ship"
+msgstr "Motoros áruszállító, legalább egy tolt tankhajóval"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter pushing one or more freighters"
+msgstr "Motoros áruszállító, egy vagy tolt szállítóval"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter with one or more ships alongside"
+msgstr "Motoros áruszállító, egy vagy több szállítóval mellévett alakzatban"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter with tanker"
+msgstr "Motoros áruszállító tankhajóval"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter, tug"
+msgstr "Motoros áruszállító tankhajóval"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker"
+msgstr "Motoros tanker"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
+msgstr "Motoros tanker, száraz rakománnyal (pl. cement)"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker, liquid cargo, type C"
+msgstr "Motoros tanker, C típusú folyékony rakomány"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker, liquid cargo, type N"
+msgstr "Motoros tanker, N típusú folyékony rakomány"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker, tug"
+msgstr "Motoros tanker, tolóhajó"
+#
+#
 msgid "Move Boat Here"
 msgstr "Hajó mozgatása ide"
 #
@@ -2226,8 +2766,14 @@ msgstr ""
 msgid "NMEA 2000"
 msgstr ""
 #
-msgid "NMi"
-msgstr "tmf"
+#
+#
+#
+#
+#
+#
+msgid "NMEA Debug Window"
+msgstr "NMEA nyomkövető ablak"
 #
 #
 msgid "Name"
@@ -2260,6 +2806,18 @@ msgstr "Navigálj ide"
 msgid "Navigate To This"
 msgstr "Ide navigálni"
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Net"
+msgstr "Következő"
+#
 msgid "Network"
 msgstr "Hálózat"
 #
@@ -2271,11 +2829,31 @@ msgid "New Group..."
 msgstr "Új csoport..."
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Next"
+msgstr "Következő"
+#
+#
 msgid "Next tide event"
 msgstr "Következő árapály esemény"
 #
 msgid "Nighttime"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+msgid "No"
+msgstr "Nem"
 #
 #
 msgid "No CPA Calculation if target range is greater than (NMi)"
@@ -2327,6 +2905,28 @@ msgid "Object Query..."
 msgstr "Objektum lekérdezése..."
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Object, not otherwise specified"
+msgstr "Nem specifikált objektum"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Object, towed, not otherwise specified"
+msgstr "Nem specifikált vontatott objektum"
+#
+#
 msgid "ObjectQuery"
 msgstr "ObjektumLekérdezése"
 #
@@ -2334,8 +2934,13 @@ msgstr "ObjektumLekérdezése"
 msgid "Ok"
 msgstr "Rendben"
 #
-msgid "Old log will be moved to opencpn.log.log"
+msgid "Old log will be moved to "
 msgstr ""
+#
+#
+#, fuzzy
+msgid "OpenCPN AIS Alert"
+msgstr "OpenCPN riasztás"
 #
 #
 msgid "OpenCPN Alert"
@@ -2372,6 +2977,18 @@ msgstr "OpenCPN Csoport Közlemény"
 #
 msgid "OpenCPN Info"
 msgstr "OpenCPN információ"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "OpenCPN Message"
+msgstr "Kimenet üzenet"
 #
 #
 msgid "OpenCPN Remove Waypoint"
@@ -2420,8 +3037,28 @@ msgstr "Beállítások"
 msgid "Other - Define in associated text field"
 msgstr "Más: csatolt szövegben definiálva"
 #
+#
+#
+#
+#
+#
+#
+msgid "Out"
+msgstr "Ki"
+#
 msgid "Output"
 msgstr "Kimenet"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Output Message"
+msgstr "Kimenet üzenet"
 #
 msgid "Output filtering"
 msgstr "Kimenet szűrés"
@@ -2432,6 +3069,9 @@ msgstr "Kimenet ezen a porton (mint Autopilot vagy NMEA Repeater)"
 #
 msgid "OverZoom"
 msgstr "Túlnagyítás"
+#
+msgid "Overwrite Garmin device route number 1?"
+msgstr ""
 #
 #
 msgid "Overwrite existing file?"
@@ -2466,6 +3106,28 @@ msgid "Passenger Ship"
 msgstr "Utasszállító jármű"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Passenger ship without accomodation"
+msgstr "Személyszállító, szálláshely nélkül"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Passenger ship, ferry, cruise ship, red cross ship"
+msgstr "Utasszállítóhajó, komp, kirándulóhajó, vöröskereszt hajó"
+#
+#
 msgid "Paste Route"
 msgstr "Útvonal beillesztése"
 #
@@ -2476,6 +3138,15 @@ msgstr "Nyomvonal beillesztése"
 #
 msgid "Paste Waypoint"
 msgstr "Útpont beillesztése"
+#
+#
+#
+#
+#
+#
+#
+msgid "Pause"
+msgstr "Szünet"
 #
 #
 msgid "Pilot Vessel"
@@ -2511,6 +3182,17 @@ msgstr ""
 #
 msgid "Pleasure craft"
 msgstr "Kedvtelési hajó"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pleasure craft, longer than 20 metres"
+msgstr "Kedvetlési jármű, 20 méter felett"
 #
 #, c-format
 msgid ""
@@ -2583,8 +3265,31 @@ msgid "Preferred Channel Starboard Hand"
 msgstr "Javasolt csatorna jobb oldal"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Prepare GPS for Route/Waypoint upload and press Send..."
+msgstr ""
+"Állítsd be a GPS-t az útvonal/útpont feltöltésre és nyomd meg a Küldést..."
+#
+#
 msgid "Preserve Scale when Switching Charts"
 msgstr "Lépték megtartása térkép váltáskor"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Prev"
+msgstr "Előző"
 #
 #
 msgid "Preview:"
@@ -2626,6 +3331,17 @@ msgid "Processing Waypoints..."
 msgstr "Útpontok feldolgozása..."
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Progress..."
+msgstr "Folyamatban..."
+#
+#
 msgid "Properties"
 msgstr "Tulajdonságok"
 #
@@ -2635,6 +3351,215 @@ msgstr "Tulajdonságok..."
 #
 msgid "Protocol"
 msgstr "Protokoll"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushboat, single"
+msgstr "Tolóhajó, egyedüli"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, eight barges at least one tanker or gas barge"
+msgstr "Tolóhajó, nyolc bárka, legalább egy tanker vagy gázszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, eight cargo barges"
+msgstr "Tolóhajó, nyolc bárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, five barges at least one tanker or gas barge"
+msgstr "Tolóhajó, öt bárka, legalább egy tanker vagy gázszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, five cargo barges"
+msgstr "Tolóhajó, öt bárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, four barges at least one tanker or gas barge"
+msgstr "Tolóhajó, négy bárka, legalább egy tanker vagy gázszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, four cargo barges"
+msgstr "Tolóhajó, négy bárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, nine or more barges"
+msgstr "Tolóhajó, kilenc vagy több bárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, nine or more barges at least one tanker or gas barge"
+msgstr "Tolóhajó, kilenc vagy több bárka, legalább egy tanker vagy gázszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, one cargo barge"
+msgstr "Tolóhajó, egy bárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, one tank/gas barge"
+msgstr "Tolóhajó, egy tanker/gázszállító bárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, seven barges at least one tanker or gas barge"
+msgstr "Tolóhajó, hét bárka, legalább egy tanker vagy gázszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, seven cargo barges"
+msgstr "Tolóhajó, hét bárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, six barges at least one tanker or gas barge"
+msgstr "Tolóhajó, hat bárka, legalább egy tanker vagy gázszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, six cargo barges"
+msgstr "Tolóhajó, hat bárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, three barges at least one tanker or gas barge"
+msgstr "Tolóhajó, három bárka, legalább egy tanker vagy gázszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, three cargo barges"
+msgstr "Tolóhajó, három bárka"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, two barges at least one tanker or gas barge"
+msgstr "Tolóhajó, kettő bárka, legalább egy tanker vagy gázszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, two cargo barges"
+msgstr "Tolóhajó, kettő bárka"
 #
 #
 msgid "Question"
@@ -2683,6 +3608,17 @@ msgstr "Összefésüljem az útpontokat?"
 msgid "Red"
 msgstr "Vörös"
 #
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Red cross ship"
+msgstr "Vöröskeresztes hajó"
+#
 msgid "Redo"
 msgstr "Újra"
 #
@@ -2702,6 +3638,20 @@ msgstr "Ref. pont"
 #
 msgid "Reference Point"
 msgstr "Viszonyítási pont"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Reference Station :"
+msgstr "Referencia állomás :"
+#
+msgid "Reject"
+msgstr ""
 #
 #
 msgid "Remaining time : "
@@ -2794,6 +3744,15 @@ msgid "Restricted Manoeuvrability"
 msgstr "Korlátozott műveletvégző képesség"
 #
 #
+#
+#
+#
+#
+#
+msgid "Resume"
+msgstr "Folytatás"
+#
+#
 msgid "Retrieving initial Chart Directory set from Windows Registry"
 msgstr "Kezdeti térkép könyvtár beállítás lekérdezése a Windows Registry-ből"
 #
@@ -2841,6 +3800,17 @@ msgstr "Útvonal nyomtatása"
 #
 msgid "Route Properties"
 msgstr "Útvonal tulajdonságok"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Route Uploaded successfully."
+msgstr "Útvonal sikeresen feltöltve."
 #
 #
 msgid "Route from Track"
@@ -2971,6 +3941,28 @@ msgstr ""
 "az adat összevonás után."
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Send"
+msgstr "Küldés"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Send Route To GPS"
+msgstr "Útvonal GPS-re töltése"
+#
+#
 msgid "Send To GPS..."
 msgstr "GPS-re küldés..."
 #
@@ -2984,6 +3976,17 @@ msgstr "Mondat szűrő"
 #
 msgid "Serial"
 msgstr "Soros"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Service vessel, police patrol, port service"
+msgstr "Ellátóhajó, rendőrhajó, kikötő hatóság"
 #
 #
 #
@@ -3030,6 +4033,11 @@ msgstr "AIS célpontok mutatása"
 #
 msgid "Show AIS targets real size"
 msgstr "AIS célpontok mutatása valós méretben"
+#
+#
+#, fuzzy
+msgid "Show All Tracks"
+msgstr "Célpont CPA mutatása"
 #
 #
 msgid "Show CPA/TCPA Alert Dialog"
@@ -3184,6 +4192,16 @@ msgid "Solid"
 msgstr "Szilárd"
 #
 #
+#
+#
+#
+#
+#
+#, c-format
+msgid "Sound file '%s' is in unsupported format."
+msgstr "Nem támogatott formátumú hang fájl: '%s'."
+#
+#
 msgid "Spare"
 msgstr "Tartalék"
 #
@@ -3280,6 +4298,61 @@ msgstr ""
 #
 msgid "TCPA"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge"
+msgstr "Tankhajó"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
+msgstr "Tanker bárka, száraz rakománnyal (pl. cement)"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge, gas"
+msgstr "Gázszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge, liquid cargo, type C"
+msgstr "Tankerbárka, C típusú folyékony rakomány"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge, liquid cargo, type N"
+msgstr "Tankerbárka, N típusú folyékony rakomány"
 #
 #
 msgid "Tanker"
@@ -3398,10 +4471,9 @@ msgstr "Az útpont, amelyet törölni szeretnél, része egy útnak. Biztosan t�
 msgid "There"
 msgstr "Ott"
 #
+#, fuzzy
 msgid ""
 "There are existing waypoints at the same location as some of the ones you are "
-"pasting. Would you like to just merge the pasted data into them?\n"
-"\n"
 msgstr ""
 "Már vannak útpontok azon a helyen, ahová most másolsz. Szeretnéd összefésülni "
 "velük a másolt adatokat?\n"
@@ -3416,10 +4488,10 @@ msgstr ""
 "Ekkor megváltozank az útvonalak és kikapcsolnak a horgonyőrök. 'Nem' válasz "
 "esetén az útvonalakban vagy horgonyőrben használt útpontok megmaradnak."
 #
+#, fuzzy
 msgid ""
 "There is an existing waypoint at the same location as the one you are "
-"pasting. Would you like to merge the pasted data with it?\n"
-"\n"
+"pasting. "
 msgstr ""
 "Már van egy útpont azon a helyen, ahová most másolsz. Szeretnéd összefésülni "
 "velük a másolt adatokat?\n"
@@ -3441,6 +4513,20 @@ msgid "This waypoint is part of a layer and can't be edited"
 msgstr "Ez az útpont része egy rétegnek, ezért nem szerkeszthető"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Tide"
+msgstr "Árapály"
+#
+msgid "TideCurrentGraphRollover"
+msgstr ""
+#
+#
 msgid "Tides && Currents"
 msgstr "Árapály és áramlatok"
 #
@@ -3452,6 +4538,11 @@ msgstr "Út időtartama"
 #, fuzzy
 msgid "Time enroute"
 msgstr "Út időtartama"
+#
+#
+#, fuzzy
+msgid "Time shown as"
+msgstr "Idők mutatása mint"
 #
 #
 msgid "Times shown as"
@@ -3477,8 +4568,35 @@ msgid "To route"
 msgstr "Út időtartama"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Today"
+msgstr "Ma"
+#
+#
 msgid "Toggle Tracking"
 msgstr "Követés átkapcsolása"
+#
+#
+#, fuzzy
+msgid "Toggle track"
+msgstr "Követés átkapcsolása"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tomorrow"
+msgstr "Holnap"
 #
 #
 msgid "ToolTips"
@@ -3545,8 +4663,90 @@ msgid "Treat WPL sentences as APRS position reports"
 msgstr ""
 #
 #
+#, fuzzy
+msgid "Trk"
+msgstr "Nyomvonal"
+#
+#
 msgid "Tug"
 msgstr "Vontató"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug freighter, coupled"
+msgstr "Tolóhajó és áruszállító kötelékben"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, assisting a vessel or linked combination"
+msgstr "Tolóhajó más jármű segítségén, vagy kötelkében"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, freighter"
+msgstr "Tolóhajó, áruszállító"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, freighter/tanker, coupled"
+msgstr "Tolóhajó, áruszállító/tanker"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, one or more tows"
+msgstr "Tolóhajó, egy vagy több"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, single"
+msgstr "Tolóhajó, egyedüli"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, tanker"
+msgstr "Tolóhajó, tanker"
 #
 #
 #
@@ -3587,6 +4787,17 @@ msgstr "Úton"
 #
 msgid "Undo"
 msgstr "Vissza"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Unit carrier maritime"
+msgstr "Csapatszállító"
 #
 #
 #
@@ -3682,6 +4893,30 @@ msgid "Vessel requesting non-distress assistance"
 msgstr "Nem vészhelyzeti segítséget igénylő hajó"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Vessel, type unknown"
+msgstr "Ismertelen típusú jármű"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid ""
+"Vessel, work maintainance craft, floating derrick, cable-ship, buoy-ship, "
+"dredge"
+msgstr "Úszójármű, javítóhajó, úszódaru, kábelfektető, bójarakó, kotróhajó"
+#
+#
 msgid "Virtual"
 msgstr "Virtuális"
 #
@@ -3728,6 +4963,17 @@ msgid "Waypoint Properties, Layer: "
 msgstr "Útpont tulajdonságok, réteg: "
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Waypoint(s) Uploaded successfully."
+msgstr "Útpontok sikeresen feltöltve."
+#
+#
 msgid "Waypoints"
 msgstr "Útpontok"
 #
@@ -3769,8 +5015,14 @@ msgstr "Szélesség:"
 msgid "Wing In Ground Effect"
 msgstr "Talajközelséghatás"
 #
-msgid "Would you like include the Great Circle routing points for this leg?"
+#, fuzzy
+msgid "Would you like include the Great Circle"
 msgstr "Szeretnéd a főkör útvonal pontjait felvennie erre a szakaszra?"
+#
+msgid ""
+"Would you like to merge the pasted data with it?\n"
+"\n"
+msgstr ""
 #
 msgid "Wrong length of the NMEA filter value"
 msgstr "Rossz hossz az NMEA filter értékre"
@@ -3790,6 +5042,15 @@ msgstr ""
 #
 msgid "Yellow"
 msgstr "Sárga"
+#
+#
+#
+#
+#
+#
+#
+msgid "Yes"
+msgstr "Igen"
 #
 msgid "Yes, hide it."
 msgstr "Igen, tünjön el."
@@ -3835,6 +5096,20 @@ msgstr ""
 msgid "_plus"
 msgstr ""
 #
+msgid "cm"
+msgstr ""
+#
+msgid "fa"
+msgstr ""
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "ft"
+msgstr "Bal"
+#
 #
 #
 #
@@ -3843,30 +5118,23 @@ msgstr ""
 msgid "in"
 msgstr "Hivatkozás"
 #
-msgid "km"
-msgstr ""
-#
 msgid "km/h"
-msgstr ""
-#
-#, fuzzy
-msgid "kts"
-msgstr "Csomó"
-#
-msgid "m"
 msgstr ""
 #
 msgid "m/s"
 msgstr ""
 #
-msgid "mi"
-msgstr ""
-#
 msgid "min"
 msgstr ""
 #
-msgid "mph"
+#, fuzzy
+msgid ""
+"pasting. Would you like to just merge the pasted data into them?\n"
+"\n"
 msgstr ""
+"Már vannak útpontok azon a helyen, ahová most másolsz. Szeretnéd összefésülni "
+"velük a másolt adatokat?\n"
+"\n"
 #
 #
 #, fuzzy
@@ -3891,8 +5159,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "\n"
 #~ msgstr "\n"
+#
+#
 #
 #
 #
@@ -3915,8 +5187,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "      Maximális sebesség vesztegléshez (csomó):"
+#
+#
 #
 #
 #
@@ -3930,6 +5206,18 @@ msgstr ""
 #
 #
 #
+#~ msgid "   Chart File RLL data corrupt on chart "
+#~ msgstr "  Térkép fájl RLL adat sérült "
+#
+#
+#
+#~ msgid "   Chart file has no BSB header, cannot Init."
+#~ msgstr "  Térkép fájlnak nincs BSB fejléce, nem lehet inicializálni."
+#
+#
+#
+#
+#
 #
 #
 #
@@ -3937,6 +5225,13 @@ msgstr ""
 #
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "  Térképi vetület ismeretlen, feltétlezem a Mercator vetületet: "
+#
+#
+#
+#~ msgid "   Could not read first %d bytes of header for chart file: "
+#~ msgstr "  Nem tudtam az első %d bájtot kiolvasni a térkép fájl fejlécéből: "
+#
+#
 #
 #
 #
@@ -3955,8 +5250,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  Nem lehet megnyitni a soros portot '"
+#
+#
 #
 #
 #
@@ -3975,8 +5274,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 fok"
+#
+#
 #
 #
 #
@@ -3990,38 +5293,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "&Acknowledge"
-#~ msgstr "Nyugtázás"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "&Export Track..."
 #~ msgstr "Nyomvonal export"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "&Jump To"
-#~ msgstr "Ugrás"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "&Silence Alert"
-#~ msgstr "Risztás némítás"
 #
 #
 #
@@ -4053,12 +5330,16 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "'\n"
 #~ " Suggestion: Try 'xxx.xxx.xxx.xxx' notation"
 #~ msgstr ""
 #~ "'\n"
 #~ "Próbáld xxx.xxx.xxx.xxx' formában"
+#
+#
 #
 #
 #
@@ -4079,18 +5360,14 @@ msgstr ""
 #
 #
 #
-#~ msgid ", Out: None"
-#~ msgstr ", Ki: semmi"
-#
-#
-#
-#
 #
 #
 #
 #
 #~ msgid ":               "
 #~ msgstr ":               "
+#
+#
 #
 #
 #
@@ -4114,6 +5391,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "<--Remove"
 #~ msgstr "<--Eltávolít"
 #
@@ -4124,16 +5403,10 @@ msgstr ""
 #
 #
 #
-#~ msgid "AIS Alert"
-#~ msgstr "AIS riasztás"
-#
-#
-#
-#
-#
-#
 #~ msgid "AIS Port (Shared)"
 #~ msgstr "AIS Port (megosztott)"
+#
+#
 #
 #
 #
@@ -4152,38 +5425,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "AISRollover"
-#~ msgstr "AISfelirat"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "AISTargetAlert"
-#~ msgstr "AIS célpont risztás"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "AISTargetQuery"
-#~ msgstr "AIS Cél Lekérdezés"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "CM93 eltolás bekapcsolása"
+#
+#
 #
 #
 #
@@ -4202,8 +5449,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Activate Route"
 #~ msgstr "Útvonal aktiválása"
+#
+#
 #
 #
 #
@@ -4222,6 +5473,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Térkép összefűzéshez adása."
 #
@@ -4231,8 +5484,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Add-->"
 #~ msgstr "Hozzáad-->"
+#
+#
 #
 #
 #
@@ -4251,8 +5508,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Minden fájl (*.*)|*.*"
+#
+#
 #
 #
 #
@@ -4271,18 +5532,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Available Chart Directories"
 #~ msgstr "Elérhető térkép könyvtárak"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Barge, tanker, chemical"
-#~ msgstr "Bárka, tanker, vegyianyag"
 #
 #
 #
@@ -4301,28 +5556,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Iránylat:                Nem áll rendelkezésre\n"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Bulk carrier maritime"
-#~ msgstr "Tengeri tömegárú szállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Bunkership"
-#~ msgstr "Üzemanyagszállító"
 #
 #
 #
@@ -4341,8 +5580,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CM93 Offset Display"
 #~ msgstr "CM93 eltolás megjelenítés"
+#
+#
 #
 #
 #
@@ -4361,6 +5604,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "CM93 nagyítás részletessége"
 #
@@ -4371,8 +5616,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f tmf\n"
+#
+#
 #
 #
 #
@@ -4399,6 +5648,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CallSign:             "
 #~ msgstr "Hívójel:             "
 #
@@ -4407,8 +5658,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Can't send waypoint. Found no serial data port with output defined."
 #~ msgstr "Az útpont nem küldhető el. Nincs kimenetként definiált soros port."
+#
+#
 #
 #
 #
@@ -4427,8 +5682,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Chart Display Filters"
 #~ msgstr "Térkép megjelenítés szűrése"
+#
+#
 #
 #
 #
@@ -4446,6 +5705,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Chart Groups..."
 #~ msgstr "Térkép csoportok..."
 #
@@ -4455,8 +5716,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Chart Groups...New Group"
 #~ msgstr "Térkép csoportok...Új csoport"
+#
+#
 #
 #
 #
@@ -4475,16 +5740,10 @@ msgstr ""
 #
 #
 #
-#~ msgid "Container vessel"
-#~ msgstr "Konténerszállító jármű"
-#
-#
-#
-#
-#
-#
 #~ msgid "Copy"
 #~ msgstr "Másolás"
+#
+#
 #
 #
 #
@@ -4497,12 +5756,6 @@ msgstr ""
 #~ msgstr "TCP/IP állomás névfeloldása sikertelen '"
 #
 #
-#
-#
-#
-#
-#~ msgid "Couldn't load sound data from '%s'."
-#~ msgstr "Nem tudtam a hangokat betölteni a '%s' állományból."
 #
 #
 #
@@ -4521,8 +5774,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Irány:                 000 fok\n"
+#
+#
 #
 #
 #
@@ -4541,38 +5798,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "Cruise ship"
-#~ msgstr "Kirándulóhajó"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Current"
-#~ msgstr "Áramlat"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Cursor: "
 #~ msgstr "Kurzor: "
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Data Source :"
-#~ msgstr "Adatforrás :"
 #
 #
 #
@@ -4591,8 +5822,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Default dataset"
 #~ msgstr "Alap adatkészlet"
+#
+#
 #
 #
 #
@@ -4611,8 +5846,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Delete Mark"
 #~ msgstr "Jel törlése"
+#
+#
 #
 #
 #
@@ -4631,8 +5870,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Depth Settings"
 #~ msgstr "Mélység beállítások"
+#
+#
 #
 #
 #
@@ -4651,18 +5894,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "Drop"
-#~ msgstr "Lerak"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vektor"
+#
+#
 #
 #
 #
@@ -4681,8 +5918,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Engedélyezze a kézi CM93 eltolást"
+#
+#
 #
 #
 #
@@ -4695,24 +5936,6 @@ msgstr ""
 #~ msgstr "Nagyítás egérgörgővel"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Error on Route Upload.  Please check logfiles..."
-#~ msgstr "Hiba történt az útvonal feltöltés közben. Ellenőrizd a naplófájlt..."
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Error on Waypoint Upload.  Please check logfiles..."
-#~ msgstr "Hiba történt az útpont feltöltés közben. Ellenőrizd a naplófájlt..."
 #
 #
 #
@@ -4744,58 +5967,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Exit OpenCPN"
 #~ msgstr "Kilépés az OpenCPN-ből"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Fast ship"
-#~ msgstr "Gyorsjáratú hajó"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Ferry"
-#~ msgstr "Komp"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Fishing boat"
-#~ msgstr "Halászhajó"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Freightbarge"
-#~ msgstr "Teherbárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Freightbarge with containers"
-#~ msgstr "Konténeres teherbárka"
 #
 #
 #
@@ -4814,38 +5991,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "GPS/Plotter Port"
-#~ msgstr "GPS/Plotter port"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "GPSD Data Server"
 #~ msgstr "GPSD adat kiszolgáló"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Gas tanker"
-#~ msgstr "Gázszállító tankhajó"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "General cargo Vessel maritime"
-#~ msgstr "Általános tengeri teherjármű"
 #
 #
 #
@@ -4863,8 +6014,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Groups"
 #~ msgstr "Csoportok"
+#
+#
 #
 #
 #
@@ -4881,18 +6036,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Iránylat:                %03d fok\n"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Hydrofoil"
-#~ msgstr "Szárnyashajó"
 #
 #
 #
@@ -4924,26 +6073,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Import new layer"
 #~ msgstr "Új réteg importálása"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "In"
-#~ msgstr "Be"
-#
-#
-#
-#
-#
-#
-#~ msgid "In: None"
-#~ msgstr "Be: semmi"
 #
 #
 #
@@ -4962,8 +6097,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Jump To"
 #~ msgstr "Ugrás"
+#
+#
 #
 #
 #
@@ -4982,6 +6121,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Jump To Position..."
 #~ msgstr "Pozícióra ugrás..."
 #
@@ -4990,8 +6131,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Just "
 #~ msgstr "Csak"
+#
+#
 #
 #
 #
@@ -5010,8 +6155,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Utolsó pozíció jelentési idő:  "
+#
+#
 #
 #
 #
@@ -5030,24 +6179,6 @@ msgstr ""
 #
 #
 #
-#~ msgid "Legend"
-#~ msgstr "Jelmagyarázat"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Liquified gas tanker"
-#~ msgstr "Cseppfolyós gáz tanker"
-#
-#
-#
-#
-#
-#
 #~ msgid "Loaded legacy PLIB data: "
 #~ msgstr "Örökölt PLIB adat betöltése: "
 #
@@ -5058,8 +6189,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "META Objects"
 #~ msgstr "META objektumok"
+#
+#
 #
 #
 #
@@ -5079,8 +6214,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Mark Icon"
 #~ msgstr "Jelölés képe"
+#
+#
 #
 #
 #
@@ -5099,8 +6238,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Mark Properties"
 #~ msgstr "Jel tulajdonságok"
+#
+#
 #
 #
 #
@@ -5119,34 +6262,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "Marks"
-#~ msgstr "Jelek"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Measure....."
 #~ msgstr "Mérés....."
 #
 #
-#
-#
-#
-#
-#~ msgid "Message accepted"
-#~ msgstr "Üzenet elfogadva"
-#
-#
-#
-#
-#
-#
-#~ msgid "Message filtered and dropped"
-#~ msgstr "Üzenet kiszűrve és eldobva"
 #
 #
 #
@@ -5165,114 +6286,6 @@ msgstr ""
 #
 #
 #
-#~ msgid "Motor freighter"
-#~ msgstr "Motoros áruszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter pushing at least one tank-ship"
-#~ msgstr "Motoros áruszállító, legalább egy tolt tankhajóval"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter pushing one or more freighters"
-#~ msgstr "Motoros áruszállító, egy vagy tolt szállítóval"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter with one or more ships alongside"
-#~ msgstr "Motoros áruszállító, egy vagy több szállítóval mellévett alakzatban"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter with tanker"
-#~ msgstr "Motoros áruszállító tankhajóval"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter, tug"
-#~ msgstr "Motoros áruszállító tankhajóval"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker"
-#~ msgstr "Motoros tanker"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
-#~ msgstr "Motoros tanker, száraz rakománnyal (pl. cement)"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, liquid cargo, type C"
-#~ msgstr "Motoros tanker, C típusú folyékony rakomány"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, liquid cargo, type N"
-#~ msgstr "Motoros tanker, N típusú folyékony rakomány"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, tug"
-#~ msgstr "Motoros tanker, tolóhajó"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "NMEA Data Source"
@@ -5283,18 +6296,18 @@ msgstr ""
 #
 #
 #
-#~ msgid "NMEA Debug Window"
-#~ msgstr "NMEA nyomkövető ablak"
-#
-#
-#
-#
 #
 #
 #
 #
 #~ msgid "NMEA Options"
 #~ msgstr "NMEA beállítások"
+#
+#
+#~ msgid "NMi"
+#~ msgstr "tmf"
+#
+#
 #
 #
 #
@@ -5313,8 +6326,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Navigation Data"
 #~ msgstr "Navigációs adatok"
+#
+#
 #
 #
 #
@@ -5331,8 +6348,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Network LIBGPS"
 #~ msgstr "Hálózati LIBGPS"
+#
+#
 #
 #
 #
@@ -5354,22 +6375,6 @@ msgstr ""
 #
 #
 #
-#~ msgid "Next"
-#~ msgstr "Következő"
-#
-#
-#
-#
-#
-#
-#~ msgid "No"
-#~ msgstr "Nem"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Number of radar rings shown"
@@ -5382,45 +6387,11 @@ msgstr ""
 #
 #
 #
-#~ msgid "Object, not otherwise specified"
-#~ msgstr "Nem specifikált objektum"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Object, towed, not otherwise specified"
-#~ msgstr "Nem specifikált vontatott objektum"
-#
-#
-#
-#
-#
-#
 #
 #~ msgid "Other"
 #~ msgstr "Más"
 #
 #
-#
-#
-#
-#
-#~ msgid "Out"
-#~ msgstr "Ki"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Output Message"
-#~ msgstr "Kimenet üzenet"
 #
 #
 #
@@ -5439,36 +6410,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "OwnShip Display Options"
 #~ msgstr "Saját hajó megjelenítés beállításai"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Passenger ship without accomodation"
-#~ msgstr "Személyszállító, szálláshely nélkül"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Passenger ship, ferry, cruise ship, red cross ship"
-#~ msgstr "Utasszállítóhajó, komp, kirándulóhajó, vöröskereszt hajó"
-#
-#
-#
-#
-#
-#
-#~ msgid "Pause"
-#~ msgstr "Szünet"
 #
 #
 #
@@ -5487,8 +6434,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Place Trackpoints at time interval (Seconds):"
 #~ msgstr "Nyomvonalpontok időbeli sűrűsége (mp):"
+#
+#
 #
 #
 #
@@ -5501,14 +6452,6 @@ msgstr ""
 #~ msgstr "Tervezett sebesség (csomó)"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Pleasure craft, longer than 20 metres"
-#~ msgstr "Kedvetlési jármű, 20 méter felett"
 #
 #
 #
@@ -5535,8 +6478,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Position:               "
 #~ msgstr "Pozíció:"
+#
+#
 #
 #
 #
@@ -5563,230 +6510,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "Prepare GPS for Route/Waypoint upload and press Send..."
-#~ msgstr ""
-#~ "Állítsd be a GPS-t az útvonal/útpont feltöltésre és nyomd meg a Küldést..."
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Prev"
-#~ msgstr "Előző"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Progress..."
-#~ msgstr "Folyamatban..."
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushboat, single"
-#~ msgstr "Tolóhajó, egyedüli"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, eight barges at least one tanker or gas barge"
-#~ msgstr "Tolóhajó, nyolc bárka, legalább egy tanker vagy gázszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, eight cargo barges"
-#~ msgstr "Tolóhajó, nyolc bárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, five barges at least one tanker or gas barge"
-#~ msgstr "Tolóhajó, öt bárka, legalább egy tanker vagy gázszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, five cargo barges"
-#~ msgstr "Tolóhajó, öt bárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, four barges at least one tanker or gas barge"
-#~ msgstr "Tolóhajó, négy bárka, legalább egy tanker vagy gázszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, four cargo barges"
-#~ msgstr "Tolóhajó, négy bárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, nine or more barges"
-#~ msgstr "Tolóhajó, kilenc vagy több bárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, nine or more barges at least one tanker or gas barge"
-#~ msgstr ""
-#~ "Tolóhajó, kilenc vagy több bárka, legalább egy tanker vagy gázszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, one cargo barge"
-#~ msgstr "Tolóhajó, egy bárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, one tank/gas barge"
-#~ msgstr "Tolóhajó, egy tanker/gázszállító bárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, seven barges at least one tanker or gas barge"
-#~ msgstr "Tolóhajó, hét bárka, legalább egy tanker vagy gázszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, seven cargo barges"
-#~ msgstr "Tolóhajó, hét bárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, six barges at least one tanker or gas barge"
-#~ msgstr "Tolóhajó, hat bárka, legalább egy tanker vagy gázszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, six cargo barges"
-#~ msgstr "Tolóhajó, hat bárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, three barges at least one tanker or gas barge"
-#~ msgstr "Tolóhajó, három bárka, legalább egy tanker vagy gázszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, three cargo barges"
-#~ msgstr "Tolóhajó, három bárka"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, two barges at least one tanker or gas barge"
-#~ msgstr "Tolóhajó, kettő bárka, legalább egy tanker vagy gázszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, two cargo barges"
-#~ msgstr "Tolóhajó, kettő bárka"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Radar rings"
 #~ msgstr "Radar gyűrűk"
+#
+#
 #
 #
 #
@@ -5805,8 +6534,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Távolság:                %5.1f tmf\n"
+#
+#
 #
 #
 #
@@ -5825,8 +6558,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Fordulás sebessége:            %3d fok/perc. Balra\n"
+#
+#
 #
 #
 #
@@ -5845,8 +6582,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Fordulás sebessége:            0\n"
+#
+#
 #
 #
 #
@@ -5865,8 +6606,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Fordulás sebessége:       > 5 fok/30 sec. Jobbra\n"
+#
+#
 #
 #
 #
@@ -5902,24 +6647,6 @@ msgstr ""
 #
 #
 #
-#~ msgid "Red cross ship"
-#~ msgstr "Vöröskeresztes hajó"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Reference Station :"
-#~ msgstr "Referencia állomás :"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Remove this chart from quilt."
@@ -5930,16 +6657,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "RenderHPGL: The '%s' instruction is not implemented."
 #~ msgstr "RenderHPGL: '%s' utasítás nincs megvalósítva."
 #
 #
-#
-#
-#
-#
-#~ msgid "Resume"
-#~ msgstr "Folytatás"
 #
 #
 #
@@ -5958,48 +6681,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "Route Uploaded successfully."
-#~ msgstr "Útvonal sikeresen feltöltve."
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Válaszd ki az összefűzendő térkép típusokat"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Send"
-#~ msgstr "Küldés"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Send Route To GPS"
-#~ msgstr "Útvonal GPS-re töltése"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Service vessel, police patrol, port service"
-#~ msgstr "Ellátóhajó, rendőrhajó, kikötő hatóság"
 #
 #
 #
@@ -6018,8 +6705,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Settings"
 #~ msgstr "Beállítások"
+#
+#
 #
 #
 #
@@ -6038,8 +6729,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Show Printing Icon"
 #~ msgstr "Nyomtatási ikon mutatása"
+#
+#
 #
 #
 #
@@ -6058,8 +6753,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Show layers initially"
 #~ msgstr "Rétegek mutatása induláskor"
+#
+#
 #
 #
 #
@@ -6074,6 +6773,8 @@ msgstr ""
 #~ msgstr ""
 #~ "Méret:                 %dm x %dm\n"
 #~ "\n"
+#
+#
 #
 #
 #
@@ -6107,12 +6808,16 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "Size:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Méret:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
+#
+#
 #
 #
 #
@@ -6135,12 +6840,16 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "Size:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Méret:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
+#
+#
 #
 #
 #
@@ -6163,12 +6872,16 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "Size:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Méret:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
+#
+#
 #
 #
 #
@@ -6189,18 +6902,14 @@ msgstr ""
 #
 #
 #
-#~ msgid "Sound file '%s' is in unsupported format."
-#~ msgstr "Nem támogatott formátumú hang fájl: '%s'."
-#
-#
-#
-#
 #
 #
 #
 #
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Sebesség:                  Nem elérhető\n"
+#
+#
 #
 #
 #
@@ -6219,8 +6928,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "TCP/IP WiFi adatkiszolgáló"
+#
+#
 #
 #
 #
@@ -6239,88 +6952,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "Tankbarge"
-#~ msgstr "Tankhajó"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
-#~ msgstr "Tanker bárka, száraz rakománnyal (pl. cement)"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, gas"
-#~ msgstr "Gázszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, liquid cargo, type C"
-#~ msgstr "Tankerbárka, C típusú folyékony rakomány"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, liquid cargo, type N"
-#~ msgstr "Tankerbárka, N típusú folyékony rakomány"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Text Element"
 #~ msgstr "Szöveg elem"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Tide"
-#~ msgstr "Árapály"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Today"
-#~ msgstr "Ma"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tomorrow"
-#~ msgstr "Holnap"
 #
 #
 #
@@ -6339,78 +6976,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Valós méretarány: %8.0f             "
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug freighter, coupled"
-#~ msgstr "Tolóhajó és áruszállító kötelékben"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, assisting a vessel or linked combination"
-#~ msgstr "Tolóhajó más jármű segítségén, vagy kötelkében"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, freighter"
-#~ msgstr "Tolóhajó, áruszállító"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, freighter/tanker, coupled"
-#~ msgstr "Tolóhajó, áruszállító/tanker"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, one or more tows"
-#~ msgstr "Tolóhajó, egy vagy több"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, single"
-#~ msgstr "Tolóhajó, egyedüli"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, tanker"
-#~ msgstr "Tolóhajó, tanker"
 #
 #
 #
@@ -6429,8 +7000,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "UN Ship Type:         "
 #~ msgstr "UN hajó típus:         "
+#
+#
 #
 #
 #
@@ -6455,8 +7030,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Unable to load libgps"
 #~ msgstr "Libgps betöltése sikertelen"
+#
+#
 #
 #
 #
@@ -6475,18 +7054,12 @@ msgstr ""
 #
 #
 #
-#~ msgid "Unit carrier maritime"
-#~ msgstr "Csapatszállító"
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Units"
 #~ msgstr "Mértékegységek"
+#
+#
 #
 #
 #
@@ -6505,40 +7078,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Use SCAMIN"
 #~ msgstr "SCAMIN használata"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Vessel, type unknown"
-#~ msgstr "Ismertelen típusú jármű"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid ""
-#~ "Vessel, work maintainance craft, floating derrick, cable-ship, buoy-ship, "
-#~ "dredge"
-#~ msgstr "Úszójármű, javítóhajó, úszódaru, kábelfektető, bójarakó, kotróhajó"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Waypoint(s) Uploaded successfully."
-#~ msgstr "Útpontok sikeresen feltöltve."
 #
 #
 #
@@ -6557,8 +7102,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "X Offset (Positive moves map to East) (NMi Projected) :"
 #~ msgstr "X eltolás (Pozitív érték keletre mozgatja a térképet) (tmf) :"
+#
+#
 #
 #
 #
@@ -6575,18 +7124,19 @@ msgstr ""
 #
 #
 #
-#~ msgid "Yes"
-#~ msgstr "Igen"
-#
-#
-#
-#
 #
 #
 #
 #
 #~ msgid "cm93 Detail"
 #~ msgstr "cm93 részletesség"
+#
+#
+#, fuzzy
+#~ msgid "kts"
+#~ msgstr "Csomó"
+#
+#
 #
 #
 #

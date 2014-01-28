@@ -63,6 +63,9 @@
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 
+#include <ais/AIS_Decoder.h>
+#include <ais/ais.h>
+
 #include <chart/ChartDB.h>
 
 #include <sound/OCPN_Sound.h>
@@ -131,6 +134,8 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 #define ID_CHOICE_NMEA  wxID_HIGHEST + 1
 
 extern wxArrayString TideCurrentDataSet;
+
+extern ais::AIS_Decoder* g_pAIS;
 
 options * g_pOptions;
 
@@ -2607,6 +2612,16 @@ void options::OnApplyClick(wxCommandEvent& event)
 	ais.set_ShowMoored(!m_pCheck_Show_Moored->GetValue());
 	ais.set_ShowMoored_Kts(get_double(m_pText_Moored_Speed));
 	ais.set_ShowAreaNotices(m_pCheck_Show_Area_Notices->GetValue());
+
+	// Update all the current targets
+	ais::AIS_Target_Hash::iterator it;
+	ais::AIS_Target_Hash* current_targets = g_pAIS->GetTargetList();
+	for (it = (*current_targets).begin(); it != (*current_targets).end(); ++it) {
+		ais::AIS_Target_Data* pAISTarget = it->second;
+		if (NULL != pAISTarget) {
+			pAISTarget->b_show_track = ais.get_data().AISShowTracks;
+		}
+	}
 
 	gui.set_DrawAISSize(m_pCheck_Draw_Target_Size->GetValue());
 	gui.set_ShowAISName(m_pCheck_Show_Target_Name->GetValue());

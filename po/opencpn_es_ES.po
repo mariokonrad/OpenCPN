@@ -5,17 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenCPN Version 3.1.1328\n"
+"Project-Id-Version: OpenCPN Version 3.3.1303\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-01 19:13-0500\n"
-"PO-Revision-Date: 2013-02-05 09:18+0100\n"
-"Last-Translator: opencpn.es <opencpn.es@gmx.com>\n"
+"POT-Creation-Date: 2014-01-28 18:35+0100\n"
+"PO-Revision-Date: 2014-01-20 21:18+0100\n"
+"Last-Translator: Pepo II <Pepo_II@outlok.es>\n"
 "Language-Team: SpanishTeam LaTabernadelPuerto.com <opencpn.es@gmx.com>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.3\n"
 #
 msgid ""
 "\n"
@@ -83,18 +83,10 @@ msgstr ""
 "\n"
 "NO dependa de OpenCPN en cuanto a seguridad de vidas o propiedades.\n"
 "\n"
-"Pulse \"OK\" para aceptar y proceder, \"Cancel\" para salir.\n"
+"Pulse \"Aceptar\" para aceptar y proceder, \"Cancelar\" para salir.\n"
 #
 msgid "    Incompatible PlugIn detected:"
 msgstr "    Detectado PlugIn Incompatible:"
-#
-#
-#
-#
-#
-#
-msgid "   Chart File RLL data corrupt on chart "
-msgstr "   Fichero Carta RLL datos corruptos en carta"
 #
 #
 #
@@ -111,23 +103,6 @@ msgstr "   Fichero de Carta contiene menos de 3 puntos PLY: "
 #
 msgid "   Chart File corrupt in PostInit() on chart "
 msgstr "   Fichero Carta corrupto en PostInit() en carta "
-#
-#
-#
-#
-#
-#
-msgid "   Chart file has no BSB header, cannot Init."
-msgstr "   Fichero Carta sin encabezado BSB, no se puede Inic."
-#
-#
-#
-#
-#
-#
-#, c-format
-msgid "   Could not read first %d bytes of header for chart file: "
-msgstr "   No se pudo leer primeros %d bytes de encabezado de fichero carta: "
 #
 #
 #
@@ -207,11 +182,6 @@ msgid " (Ctrl-Space)"
 msgstr " (Ctrl-Barra Espaciadora)"
 #
 #
-#
-#
-#
-#
-#
 msgid " (Last Known)"
 msgstr " (Ultimo Conocido)"
 #
@@ -225,11 +195,6 @@ msgstr " - "
 #
 msgid " -- [Portable(-p) executing from "
 msgstr " -- [Portable(-p) executando desde"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -292,6 +257,9 @@ msgstr " Actualizado:  "
 msgid " for details."
 msgstr " para detalles."
 #
+msgid " routing points for this leg?"
+msgstr ""
+#
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
@@ -317,10 +285,18 @@ msgid "\"Ship Name\" MMSI (Call Sign)"
 msgstr "\"Nombre Barco\" MMSI (Señal Llamada)"
 #
 msgid "%D Days, %H:%M"
-msgstr ""
+msgstr "%D Días, %H:%M"
 #
 msgid "%H:%M"
-msgstr ""
+msgstr "%H:%M"
+#
+#
+#
+#
+#
+#
+msgid "&Acknowledge"
+msgstr "&Enterado"
 #
 #
 #
@@ -368,9 +344,8 @@ msgstr "&Eliminar todo"
 #
 #
 #
-#, fuzzy
 msgid "&Export selected..."
-msgstr "&Exportar Ruta...."
+msgstr "&Exportar selección..."
 #
 #
 #
@@ -387,6 +362,14 @@ msgstr "Tipo de &Fuente:"
 #
 msgid "&Go To"
 msgstr "&Ir A"
+#
+#
+#
+#
+#
+#
+msgid "&Jump To"
+msgstr "&Saltar A"
 #
 #
 #
@@ -458,6 +441,14 @@ msgstr "&Inversa"
 #
 msgid "&Send to GPS"
 msgstr "&Enviar a GPS..."
+#
+#
+#
+#
+#
+#
+msgid "&Silence Alert"
+msgstr "&Silenciar Alerta"
 #
 #
 #
@@ -542,9 +533,8 @@ msgstr "(reservado para uso futuro)"
 msgid "(unnamed)"
 msgstr "(sin nombre)"
 #
-#
-#
-#
+msgid ", Out: None"
+msgstr ", Salida: Ninguno"
 #
 #
 #
@@ -552,18 +542,6 @@ msgstr "(sin nombre)"
 #
 msgid "-"
 msgstr "-"
-#
-#
-#
-#
-#
-msgid "--"
-msgstr "--"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -733,11 +711,6 @@ msgstr "?"
 #
 #
 #
-#
-#
-#
-#
-#
 msgid "A"
 msgstr "A"
 #
@@ -754,6 +727,14 @@ msgstr "AIS"
 #
 #
 #
+msgid "AIS Alert"
+msgstr "Alerta AIS"
+#
+#
+#
+#
+#
+#
 msgid "AIS Target List..."
 msgstr "Lista de Blancos AIS"
 #
@@ -762,9 +743,8 @@ msgstr "Lista de Blancos AIS"
 #
 #
 #
-#, fuzzy
 msgid "AIS Target Name"
-msgstr "Consulta Blanco AIS"
+msgstr "Nombre Blanco AIS"
 #
 #
 #
@@ -787,30 +767,45 @@ msgstr "Blancos AIS"
 #
 #
 #
-#
-#
-#
-#
 msgid "AIS target list"
 msgstr "Lista Blancos AIS"
 #
+# Lista desplegable del selector de fuentes del Interface de Usuario
+msgid "AISRollover"
+msgstr "Cartel  AIS"
+#
+#
+#
+#
+#
+#
+msgid "AISTargetAlert"
+msgstr "Alerta blanco AIS"
+#
+#
+#
+#
+#
+#
+msgid "AISTargetQuery"
+msgstr "Consulta Blanco AIS"
+#
 msgid "APRS"
-msgstr ""
+msgstr "APRS"
 #
 #
 #
 #
 #
 #
-#, fuzzy
 msgid "APRS Position Report"
-msgstr "Informe Posición DCS"
+msgstr "Informe Posición ARPS"
 #
 msgid "ARPA"
-msgstr ""
+msgstr "ARPA"
 #
 msgid "ARPA radar target"
-msgstr ""
+msgstr "Blanco radar ARPA"
 #
 #
 #
@@ -827,6 +822,9 @@ msgstr "Acerca de"
 #
 msgid "About OpenCPN"
 msgstr "Acerca de OpenCPN"
+#
+msgid "Accept"
+msgstr "Aceptar"
 #
 msgid "Accept Sentences"
 msgstr "Aceptar sentencias"
@@ -849,10 +847,6 @@ msgstr "Activar"
 #
 msgid "Activate Next Waypoint"
 msgstr "Activar Siguiente Waypoint"
-#
-#
-#
-#
 #
 #  } else if( Class == AIS_SART ) {
 #         if( NavStatus == RESERVED_14 ) navStatStr = _("Active");
@@ -899,17 +893,12 @@ msgid "Address"
 msgstr "Dirección"
 #
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzado"
 #
 #
 #
 msgid "Aground"
 msgstr "Varado"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -922,14 +911,12 @@ msgstr "Ayuda a la Navegación"
 #
 #
 #
-#
 #  if ( type == BLACKLIST )
 #         return _("All but");
 #     else
 #         return _("Just ");
-#, fuzzy
 msgid "All"
-msgstr "Todo excepto"
+msgstr "Todo"
 #
 #
 #
@@ -960,9 +947,8 @@ msgstr "Todas las Cartas"
 #
 #
 #
-#, fuzzy
 msgid "Altitude"
-msgstr "Latitud"
+msgstr "Altitud"
 #
 msgid ""
 "An NMEA sentence is generally 3 characters long (like RMC, GGA etc.) It can "
@@ -1044,9 +1030,8 @@ msgstr "¿Seguro que desea borrar <TODOS> los waypoints?"
 #
 #
 #
-#, fuzzy
 msgid "Are you sure you want to delete the selected object(s)"
-msgstr "¿Seguro que desea borrar esta ruta?"
+msgstr "¿Seguro que desea borrar objetos(s) seleccionado(s)?"
 #
 #
 #
@@ -1078,7 +1063,7 @@ msgid "Assumed 1 Mile Point"
 msgstr "Se supone 1 Milla por Punto"
 #
 msgid "Assumed Magnetic Variation, deg."
-msgstr ""
+msgstr "Declinación Magnética Asumida, grados"
 #
 #
 #
@@ -1118,14 +1103,8 @@ msgstr "Derrotas diarias automat."
 #
 #
 #
-#, fuzzy
 msgid "Avg. speed"
-msgstr "Vel. media (Kts)"
-#
-#
-#
-#
-#
+msgstr "Vel. media"
 #
 #
 #
@@ -1136,16 +1115,16 @@ msgstr "B"
 #
 #
 #
+msgid "Barge, tanker, chemical"
+msgstr "Barcaza, buque cisterna, quimiquero"
+#
+#
+#
 #
 #
 #
 msgid "Base"
 msgstr "Base"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -1213,21 +1192,16 @@ msgstr "Baliza, de estribor"
 msgid "Bearing"
 msgstr "Demora"
 #
-#
-#
-#
-#
-#
-#, fuzzy
 msgid "Bearing (M)"
-msgstr "Demora"
+msgstr "Demora (M)"
 #
 #
 msgid "Black"
 msgstr "Negro"
 #
+# No se que tal quedará así...
 msgid "Blacklisted plugin detected..."
-msgstr ""
+msgstr "Detectado plugin en lista negra..."
 #
 #
 msgid "Blue"
@@ -1246,15 +1220,21 @@ msgstr "Límites"
 #
 #
 #
-#
-#
-#
-#
 msgid "Brg"
 msgstr "Demora"
 #
 msgid "Buddy"
 msgstr "Buddy"
+#
+#
+#
+msgid "Bulk carrier maritime"
+msgstr "Transp. marit. de grano"
+#
+#
+#
+msgid "Bunkership"
+msgstr "Carbonero"
 #
 msgid "Buoy/Light Labels"
 msgstr "Etiquetas Boyas/Luces"
@@ -1292,10 +1272,6 @@ msgstr "Longitud estimación por COG (min):"
 #
 #
 #
-#
-#
-#
-#
 msgid "CPA"
 msgstr "CPA"
 #
@@ -1322,10 +1298,6 @@ msgstr "CPA TCPA"
 #
 msgid "CPA/TCPA Alerts"
 msgstr "Alarmas CPA/TCPA"
-#
-#
-#
-#
 #
 #
 #
@@ -1496,9 +1468,6 @@ msgstr "Celda"
 msgid "Cell Scale"
 msgstr "Escala de celda"
 #
-#
-#
-#
 msgid "Center View"
 msgstr "Centrar Vista"
 #
@@ -1626,9 +1595,8 @@ msgstr "Cartas"
 #
 #
 #
-#, fuzzy
 msgid "Choose Font Color..."
-msgstr "Elegir Fuente..."
+msgstr "Elegir Color Fuente..."
 #
 #
 #
@@ -1645,9 +1613,6 @@ msgstr "Elegir formato de copia"
 #
 #
 #
-#
-#
-#
 msgid "Choose a file"
 msgstr "Selecciona un archivo"
 #
@@ -1656,17 +1621,8 @@ msgstr "Selecciona un archivo"
 #
 #
 #
-#
-#
-#
-#
 msgid "Class"
 msgstr "Clase"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -1723,10 +1679,6 @@ msgstr "Cerrar"
 #
 #
 #
-#
-#
-#
-#
 msgid "CoG"
 msgstr "CoG"
 #
@@ -1735,9 +1687,8 @@ msgstr "CoG"
 #
 #
 #
-#, fuzzy
 msgid "Color"
-msgstr "Color:"
+msgstr "Color"
 #
 #
 #
@@ -1782,6 +1733,11 @@ msgstr "Valor Consola"
 msgid "Constrained by draught"
 msgstr "Limitación por calado"
 #
+#
+#
+msgid "Container vessel"
+msgstr "Portacontenedores"
+#
 msgid "Control checksum"
 msgstr "Control de checksum"
 #
@@ -1800,14 +1756,18 @@ msgstr "Copiar como KML"
 msgid "Copy as KML..."
 msgstr "Copiar como KML..."
 #
+# No se si se refiere a sonar o a profundidad
+#, c-format
+msgid "Couldn't load sound data from '%s'."
+msgstr "No se ha podido cargar los datos de sonido de '% s'."
+#
 # Rumbo efectivo
 msgid "Course"
 msgstr "Rumbo efectivo"
 #
-# Rumbo efectivo
-#, fuzzy
+# Es Rumbo. Si lleva (M) magnético, por lo que no puede ser efectivo
 msgid "Course (M)"
-msgstr "Rumbo efectivo"
+msgstr "Rumbo (M)"
 #
 #
 #
@@ -1842,9 +1802,8 @@ msgstr "Crear Ruta"
 #
 #
 #
-#, fuzzy
 msgid "Create WPT"
-msgstr "Crear Waypoint"
+msgstr "Crear WPT"
 #
 #
 #
@@ -1853,6 +1812,19 @@ msgstr "Crear Waypoint"
 #
 msgid "Create Waypoint"
 msgstr "Crear Waypoint"
+#
+#
+#
+msgid "Cruise ship"
+msgstr "Crucero"
+#
+#
+#
+#
+#
+#
+msgid "Current"
+msgstr "Corriente"
 #
 #
 #
@@ -1871,18 +1843,16 @@ msgid "DSC"
 msgstr "DSC"
 #
 # Es una señal AIS, Lo normal es que sea socorro, pero podría ser peligro en funcion del contexto
-#, fuzzy
 msgid "DSC Distress"
-msgstr "Socorro"
+msgstr "Socorro DSC"
 #
 #
 #
 #
 #
 #
-#, fuzzy
 msgid "DSC Position Report"
-msgstr "Informe Posición"
+msgstr "Informe Posición DSC"
 #
 #
 msgid "Dark Blue"
@@ -1913,6 +1883,41 @@ msgid "Dark Yellow"
 msgstr "Amarillo Oscuro"
 #
 #
+#, fuzzy
+msgid "DarkBlue"
+msgstr "Azul Oscuro"
+#
+#
+#, fuzzy
+msgid "DarkCyan"
+msgstr "Cian Oscuro"
+#
+#
+#, fuzzy
+msgid "DarkGray"
+msgstr "Gris Oscuro"
+#
+#
+#, fuzzy
+msgid "DarkGreen"
+msgstr "Verde Oscuro"
+#
+#
+#, fuzzy
+msgid "DarkMagenta"
+msgstr "Magenta Oscuro"
+#
+#
+#, fuzzy
+msgid "DarkRed"
+msgstr "Rojo Oscuro"
+#
+#
+#, fuzzy
+msgid "DarkYellow"
+msgstr "Amarillo Oscuro"
+#
+#
 #
 #
 #
@@ -1925,12 +1930,20 @@ msgstr "Conexiones de Datos"
 #
 #
 #
+msgid "Data Source :"
+msgstr "Origen Datos :"
+#
+#
+#
+#
+#
+#
 #
 msgid "DataPort"
 msgstr "Puerto Datos"
 #
 msgid "Daytime"
-msgstr ""
+msgstr "Diurno"
 #
 #
 #
@@ -2122,9 +2135,8 @@ msgstr "Opciones Visualización"
 #
 #
 #
-#, fuzzy
 msgid "Display parameters"
-msgstr "Mostrar Categoría"
+msgstr "Mostrar parámetros"
 #
 #
 #
@@ -2202,13 +2214,12 @@ msgstr "Distress Area: Buque hundiéndose"
 msgid "Distress Area: Vessel under assault"
 msgstr "Distress Area: Buque bajo asalto"
 #
-#, fuzzy
 msgid ""
 "Do you also want to make the shared waypoints being part of this route "
 "invisible?"
 msgstr ""
-"¿Quieres cambiar también la visibilidad de los waypoints compartidos que son "
-"parte de esta ruta?"
+"¿Quieres hacer invisibles los waypoints compartidos que son parte de esta "
+"ruta?"
 #
 #
 #
@@ -2225,6 +2236,10 @@ msgstr "Guión punteado"
 #
 msgid "Dredge"
 msgstr "Draga"
+#
+# Cartel en mensajes de parametros de conexion de datos
+msgid "Drop"
+msgstr "Dejar"
 #
 # Aparece en el encabezamiento del menu contextual al señalar un elemento de Capa
 msgid "Drop MOB Marker"
@@ -2354,6 +2369,20 @@ msgstr ""
 msgid "Environmental Caution Area: Strong currents"
 msgstr "Area de Precaución Medioambiental: Corrientes fuertes"
 #
+#
+#
+#
+#
+msgid "Error on Route Upload.  Please check logfiles..."
+msgstr "Error en Carga de Ruta.  Por favor compruebe ficheros log..."
+#
+#
+#
+#
+#
+msgid "Error on Waypoint Upload.  Please check logfiles..."
+msgstr "Error en Carga de Waypoint.  Por favor compruebe fichero log..."
+#
 msgid "Error!"
 msgstr "¡Error!"
 #
@@ -2362,19 +2391,17 @@ msgstr "¡Error!"
 msgid "Estimated time : "
 msgstr "Tiempo estimado : "
 #
+# Evening twilight
 msgid "EvTwilight"
-msgstr ""
+msgstr "Crepúsculo al anochecer"
 #
 #
 #
 #
 #
 #
-#
-#
-#, fuzzy
 msgid "Export"
-msgstr "&Exportar Marca..."
+msgstr "Exportar"
 #
 #
 #
@@ -2392,14 +2419,9 @@ msgstr "Exportar Todos Visibles..."
 msgid "Export GPX file"
 msgstr "Exportar Fichero GPX"
 #
-#
-#
-#
-#
-#
-#, fuzzy
+# Es de la ventana de propiedades derrota, boton para añadir derrotas
 msgid "Extend"
-msgstr "Extendedido"
+msgstr "Añadir"
 #
 #
 #
@@ -2423,7 +2445,7 @@ msgstr "Unir Derrotas"
 #
 #
 msgid "Extended"
-msgstr "Extendedido"
+msgstr "Extendido"
 #
 #
 #
@@ -2444,6 +2466,11 @@ msgstr "Fallo al iniciar la interfaz de usuario."
 #
 #
 #
+msgid "Fast ship"
+msgstr "Barco rápido"
+#
+#
+#
 #
 #
 #
@@ -2457,6 +2484,11 @@ msgstr "Brazas"
 #
 msgid "Feet"
 msgstr "Pies"
+#
+#
+#
+msgid "Ferry"
+msgstr "Ferry"
 #
 #
 #
@@ -2475,6 +2507,11 @@ msgstr "Filtrar Periodo (seg.)"
 #
 msgid "Filters"
 msgstr "Filtros"
+#
+#
+#
+msgid "Fishing boat"
+msgstr "Pesquero"
 #
 #
 #
@@ -2503,8 +2540,19 @@ msgstr "Forzar Reparación de Toda la Base de Datos"
 msgid "Format uploads for Furuno GP3X"
 msgstr "Formato subida para Furuno GP3X"
 #
+#
+#
+msgid "Freightbarge"
+msgstr "Barcaza de carga"
+#
+#
+#
+msgid "Freightbarge with containers"
+msgstr "Barcaza de carga con contenedores"
+#
+# No se donde va, hay eque ver el contexto pero en principio quedaría así,  ¿no?
 msgid "From"
-msgstr ""
+msgstr "Desde"
 #
 # Ojo puede ser Completa o llena ver sentido
 msgid "Full Route"
@@ -2516,13 +2564,17 @@ msgstr "Ajuste GPS desde Proa (m)"
 msgid "GPS Offset from Midship (m)"
 msgstr "Ajuste GPS desde el Centro (m)"
 #
+#
+#
+#
+#
+#
+#
+msgid "GPS/Plotter Port"
+msgstr "Puerto GPS/Plotter"
+#
 msgid "GPSD"
 msgstr "GPSD"
-#
-#
-#
-#
-#
 #
 msgid "GPSGate Buddy"
 msgstr "GPSGate Buddy"
@@ -2543,6 +2595,14 @@ msgstr "GUID"
 #
 #
 #
+msgid "Gas tanker"
+msgstr "Gasero"
+#
+#
+#
+#
+#
+#
 #
 msgid "General"
 msgstr "General"
@@ -2554,6 +2614,11 @@ msgstr "General"
 #
 msgid "General Options"
 msgstr "Opciones Generales"
+#
+#
+#
+msgid "General cargo Vessel maritime"
+msgstr "Buque de carga general"
 #
 #
 #
@@ -2580,8 +2645,8 @@ msgstr "HSC"
 #
 #
 #
-#
-#
+msgid "HW"
+msgstr "HW"
 #
 msgid "Heading"
 msgstr "Rumbo ver."
@@ -2615,6 +2680,15 @@ msgstr "Ocultar Blancos AIS"
 #
 #
 #
+#, fuzzy
+msgid "Hide All Tracks"
+msgstr "Ocultar Derrota del Blanco"
+#
+#
+#
+#
+#
+#
 msgid "Hide Target CPA"
 msgstr "Ocultar CPA del Blanco"
 #
@@ -2623,9 +2697,8 @@ msgstr "Ocultar CPA del Blanco"
 #
 #
 #
-#, fuzzy
 msgid "Hide Target Track"
-msgstr "Ocultar CPA del Blanco"
+msgstr "Ocultar Derrota del Blanco"
 #
 #
 #
@@ -2668,16 +2741,16 @@ msgstr "Resaltar Derrotas"
 #
 #
 #
+msgid "Hydrofoil"
+msgstr "Hidroala"
+#
+#
+#
 #
 #
 #
 msgid "I&mport GPX..."
 msgstr "I&mportar GPX..."
-#
-#
-#
-#
-#
 #
 #
 msgid "IMO"
@@ -2716,6 +2789,17 @@ msgstr "Importar Fichero GPX"
 msgid "Important Text Only"
 msgstr "Solo Texto Importante"
 #
+#
+#
+#
+#
+#
+msgid "In"
+msgstr "En"
+#
+msgid "In: None"
+msgstr "Entrada: Ninguno"
+#
 msgid "Information: Icebreaker waiting area"
 msgstr "Información: Area espera rompehielos"
 #
@@ -2730,11 +2814,6 @@ msgstr "Información: Refugios"
 #
 msgid "Information: Position of icebreakers"
 msgstr "Información: Posición de rompehielos"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -2798,7 +2877,7 @@ msgid "Kilometers"
 msgstr "Kilómetros"
 #
 msgid "Knots"
-msgstr ""
+msgstr "Nudos"
 #
 #
 #
@@ -2809,6 +2888,14 @@ msgstr "LE/V"
 #
 msgid "LMT @ Location"
 msgstr "LMT @ Lugar"
+#
+msgid "LMT @ Track Start"
+msgstr ""
+#
+#
+#
+msgid "LW"
+msgstr "LW"
 #
 #
 #
@@ -2884,11 +2971,6 @@ msgstr "Luz frontal princ."
 msgid "Leading Light Rear"
 msgstr "Luz trasera princ."
 #
-#
-#
-#
-#
-#
 msgid "Left"
 msgstr "Izquierda"
 #
@@ -2907,6 +2989,10 @@ msgstr "Etapa"
 #
 msgid "Leg: from "
 msgstr "Etapa:desde"
+#
+# Lista desplegable del selector de fuentes del Interface de Usuario
+msgid "Legend"
+msgstr "Leyenda"
 #
 #
 #
@@ -2966,12 +3052,14 @@ msgstr "Luz b/Sectores"
 #
 #
 #
+#, fuzzy
+msgid "LightGray"
+msgstr "Gris Claro"
+#
+#
 #
 msgid "Limit range: NM"
 msgstr "Límite distancia: NM"
-#
-#
-#
 #
 #
 #
@@ -2986,9 +3074,6 @@ msgstr "Enlace"
 #
 #
 #
-#
-#
-#
 msgid "Link Properties"
 msgstr "Propiedades Enlace"
 #
@@ -2997,14 +3082,8 @@ msgstr "Propiedades Enlace"
 #
 #
 #
-#
-#
-#
 msgid "Link description"
 msgstr "Descripción enlace"
-#
-#
-#
 #
 msgid "Link not complete, can't be saved."
 msgstr "Link incompleto, no se puede guardar."
@@ -3022,6 +3101,11 @@ msgstr "Los enlaces se abren para edición."
 #
 msgid "Links are opened in the default browser."
 msgstr "Los enlaces se abren en el navegador por defecto."
+#
+#
+#
+msgid "Liquified gas tanker"
+msgstr "B. cisterna de gas liq."
 #
 #
 #
@@ -3043,9 +3127,6 @@ msgstr "Cartas Cargadas"
 #
 msgid "Local @ PC"
 msgstr "Local @ PC"
-#
-#
-#
 #
 msgid "Local file..."
 msgstr "Archivo local..."
@@ -3134,10 +3215,6 @@ msgstr "HOMBRE AL AGUA"
 #
 #
 #
-#
-#
-#
-#
 msgid "MMSI"
 msgstr "MMSI"
 #
@@ -3173,6 +3250,10 @@ msgstr "Estándar Marino"
 #
 msgid "Mark targets as lost after (min)"
 msgstr "Marcar blancos como perdidos tras (min)"
+#
+# Lista desplegable del selector de fuentes del Interface de Usuario
+msgid "Marks"
+msgstr "Marcas"
 #
 #
 #
@@ -3235,6 +3316,12 @@ msgstr "¿Unir waypoint?"
 msgid "Merge waypoints?"
 msgstr "¿Unir waypoints?"
 #
+msgid "Message accepted"
+msgstr "Mensaje aceptado"
+#
+msgid "Message filtered and dropped"
+msgstr "Mensaje filtrado y descartado"
+#
 #
 #
 #
@@ -3260,12 +3347,67 @@ msgid "Miscellaneous Options"
 msgstr "Opciones Variadas"
 #
 msgid "MoTwilight"
-msgstr ""
+msgstr "MoCrepúsculo"
 #
 #
 #
 msgid "Moored"
 msgstr "Amarrado"
+#
+#
+#
+msgid "Motor freighter"
+msgstr "Buque de carga a motor"
+#
+#
+#
+msgid "Motor freighter pushing at least one tank-ship"
+msgstr "Buque de carga a motor tirando al menos de un buque cisterna"
+#
+#
+#
+msgid "Motor freighter pushing one or more freighters"
+msgstr "Buque de carga a motor tirando de uno o más cargueros"
+#
+#
+#
+msgid "Motor freighter with one or more ships alongside"
+msgstr "Embarcación de carga junto a uno o más barcos"
+#
+#
+#
+msgid "Motor freighter with tanker"
+msgstr "Buque de carga a motor con cisterna"
+#
+#
+#
+msgid "Motor freighter, tug"
+msgstr "Buque de carga a motor, remolcado"
+#
+#
+#
+msgid "Motor tanker"
+msgstr "Barco cisterna a motor"
+#
+#
+#
+msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
+msgstr "Barco cisterna a motor, carga seca fluida (p.ej. cemento)"
+#
+#
+#
+msgid "Motor tanker, liquid cargo, type C"
+msgstr "Barco cisterna a motor, carga líquida, tipo C"
+#
+#
+#
+msgid "Motor tanker, liquid cargo, type N"
+msgstr "Barco cisterna a motor, carga liquida, tipo N"
+#
+#
+#
+msgid "Motor tanker, tug"
+msgstr "Barco cisterna a motor, remolcado"
 #
 #
 #
@@ -3284,7 +3426,7 @@ msgid "Move Waypoint"
 msgstr "Mover Waypoint"
 #
 msgid "Mph"
-msgstr ""
+msgstr "Mph"
 #
 msgid "NMEA"
 msgstr "NMEA"
@@ -3295,18 +3437,8 @@ msgstr "NMEA 0183"
 msgid "NMEA 2000"
 msgstr "NMEA 2000"
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-msgid "NMi"
-msgstr "NMi"
+msgid "NMEA Debug Window"
+msgstr "Ventana depuración NMEA"
 #
 #
 #
@@ -3316,8 +3448,9 @@ msgstr "NMi"
 msgid "Name"
 msgstr "Nombre"
 #
+# incluye los mensajes de la carta en su lengua original
 msgid "National text on chart"
-msgstr ""
+msgstr "Incluir mensajes en idioma nacional"
 #
 #
 #
@@ -3332,13 +3465,8 @@ msgstr "Millas Náuticas"
 #
 #
 #
-#, fuzzy
 msgid "Nautical miles"
-msgstr "Millas Náuticas"
-#
-#
-#
-#
+msgstr "Millas náuticas"
 #
 #
 #
@@ -3360,6 +3488,14 @@ msgstr "Navegar hasta Aquí"
 msgid "Navigate To This"
 msgstr "Navegar hasta Esta"
 #
+#
+#
+#
+#
+#
+msgid "Net"
+msgstr "Red"
+#
 msgid "Network"
 msgstr "Red"
 #
@@ -3376,11 +3512,23 @@ msgstr "Nuevo Grupo..."
 #
 #
 #
+#
+#
+#
+msgid "Next"
+msgstr "Siguiente"
+#
+#
+#
 msgid "Next tide event"
 msgstr "Próximo evento de marea"
 #
+# Podría ser "De noche"?: Nocturno
 msgid "Nighttime"
-msgstr ""
+msgstr "Nocturno"
+#
+msgid "No"
+msgstr "No"
 #
 #
 #
@@ -3453,6 +3601,16 @@ msgstr "Consulta Objetos"
 msgid "Object Query..."
 msgstr "Consulta Objetos..."
 #
+#
+#
+msgid "Object, not otherwise specified"
+msgstr "Objeto, mientras no se especifique otra cosa"
+#
+#
+#
+msgid "Object, towed, not otherwise specified"
+msgstr "Objeto, remolcado, no especificado"
+#
 # Lista desplegable del selector de fuentes del Interface de Usuario
 msgid "ObjectQuery"
 msgstr "Consulta Objetos"
@@ -3465,8 +3623,18 @@ msgstr "Consulta Objetos"
 msgid "Ok"
 msgstr "Aceptar"
 #
-msgid "Old log will be moved to opencpn.log.log"
-msgstr ""
+#, fuzzy
+msgid "Old log will be moved to "
+msgstr "El log antiguo se moverá a opencpn.log.log"
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "OpenCPN AIS Alert"
+msgstr "Alerta OpenCPN "
 #
 #
 #
@@ -3526,6 +3694,15 @@ msgstr "OpenCPN Group Notice"
 #
 msgid "OpenCPN Info"
 msgstr "Información OpenCPN"
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "OpenCPN Message"
+msgstr "Mensaje Salida"
 #
 #
 #
@@ -3614,8 +3791,19 @@ msgstr "Caja de Herramientas"
 msgid "Other - Define in associated text field"
 msgstr "Otro - Definir en campo de texto asociado"
 #
+msgid "Out"
+msgstr "Salida"
+#
 msgid "Output"
 msgstr "Salida"
+#
+#
+#
+#
+#
+#
+msgid "Output Message"
+msgstr "Mensaje Salida"
 #
 msgid "Output filtering"
 msgstr "Filtro salida"
@@ -3626,6 +3814,9 @@ msgstr "Salida en este puerto (como piloto automático o repetidor NMEA)"
 # Cartel que aparece cuando se sobrepasa el rango adecuado de zoom para la carta
 msgid "OverZoom"
 msgstr "Zoom excesivo"
+#
+msgid "Overwrite Garmin device route number 1?"
+msgstr ""
 #
 #
 #
@@ -3681,6 +3872,16 @@ msgstr "Buque de Pasajeros"
 #
 #
 #
+msgid "Passenger ship without accomodation"
+msgstr "Barco pasajeros sin acomodaciópn"
+#
+#
+#
+msgid "Passenger ship, ferry, cruise ship, red cross ship"
+msgstr "Barco pasajeros, ferry, crucero, barco Cruz Roja"
+#
+#
+#
 #
 #
 #
@@ -3703,6 +3904,9 @@ msgstr "Pegar Derrota"
 msgid "Paste Waypoint"
 msgstr "Pegar Waypoint"
 #
+msgid "Pause"
+msgstr "Pausa"
+#
 #
 #
 msgid "Pilot Vessel"
@@ -3724,14 +3928,9 @@ msgstr "Sencillo"
 msgid "Plan Speed"
 msgstr "Velocidad Estimada"
 #
-#
-#
-#
-#
-#
-#, fuzzy
+# Es la velocidad promedio de toda la ruta al completo
 msgid "Plan speed"
-msgstr "Velocidad Estimada"
+msgstr "Velocidad global"
 #
 #
 #
@@ -3746,9 +3945,8 @@ msgstr "Dar toques de campana"
 #
 #
 #
-#, fuzzy
 msgid "Play Sound on CPA/TCPA Alerts and DSC/SART emergencies."
-msgstr "Reproducir Sonido Alarmas CPA/TCPA"
+msgstr "Reproducir Sonido Alarmas CPA/TCPA y urgencias DSC/SART."
 #
 #
 #
@@ -3766,12 +3964,20 @@ msgstr "Reinicie OpenCPN para activar cambios de idioma o estilo."
 msgid "Pleasure craft"
 msgstr "Embarcación de recreo"
 #
+#
+#
+msgid "Pleasure craft, longer than 20 metres"
+msgstr "Buque de recreo, mayor de 20 metros"
+#
 #, c-format
 msgid ""
 "PlugIn %s (%s), version %i.%i was detected.\n"
 " This version is known to be unstable and will not be loaded.\n"
 " Please update this PlugIn at the opencpn.org website."
 msgstr ""
+"PlugIn %s (%s), version %i.%i detectado.\n"
+" Se sabe que esta versión es inestable y no se cargará.\n"
+" Por favor actualice el PlugIn desde opencpn.org."
 #
 #, c-format
 msgid ""
@@ -3779,6 +3985,9 @@ msgid ""
 " This version is known to be unstable.\n"
 " Please update this PlugIn at the opencpn.org website."
 msgstr ""
+"PlugIn %s (%s), version %i.%i detectado.\n"
+" Se sabe que esta versión es inestable.\n"
+" Por favor actualice el PlugIn desde opencpn.org."
 #
 #
 #
@@ -3867,8 +4076,24 @@ msgstr "Canal Principal Estribor"
 #
 #
 #
+msgid "Prepare GPS for Route/Waypoint upload and press Send..."
+msgstr "Prepare GPS para actualizar Ruta/Waypoint y pulse Enviar..."
+#
+#
+#
+#
+#
+#
 msgid "Preserve Scale when Switching Charts"
 msgstr "Conservar escala al alternar entre cartas"
+#
+#
+#
+#
+#
+#
+msgid "Prev"
+msgstr "Anterior"
 #
 #
 #
@@ -3901,11 +4126,8 @@ msgstr "Vista previa:"
 #
 #
 #
-#
-#
-#, fuzzy
 msgid "Print"
-msgstr "Imprimiendo"
+msgstr "Imprimir"
 #
 #
 #
@@ -3934,9 +4156,6 @@ msgstr "Imprimir Ruta Seleccionada"
 msgid "Priority"
 msgstr "Prioridad"
 #
-#
-#
-#
 msgid "Problem discovered"
 msgstr "Encontrado problema"
 #
@@ -3961,6 +4180,14 @@ msgstr "Procesando Waypoints..."
 #
 #
 #
+msgid "Progress..."
+msgstr "Progreso..."
+#
+#
+#
+#
+#
+#
 msgid "Properties"
 msgstr "Propiedades"
 #
@@ -3977,6 +4204,104 @@ msgstr "Protocolo"
 #
 #
 #
+msgid "Pushboat, single"
+msgstr "Remolcador empuje, solo"
+#
+#
+#
+msgid "Pushtow, eight barges at least one tanker or gas barge"
+msgstr "Remolcador de empuje, ocho barcazas al menos una barcaza depósito o gas"
+#
+#
+#
+msgid "Pushtow, eight cargo barges"
+msgstr "Remolcador de empuje, ocho barcazas de carga"
+#
+#
+#
+msgid "Pushtow, five barges at least one tanker or gas barge"
+msgstr ""
+"Remolcador de empuje, cinco barcazas al menos una barcaza depósito o gas"
+#
+#
+#
+msgid "Pushtow, five cargo barges"
+msgstr "Remolcador de empuje, cinco barcazas de carga"
+#
+#
+#
+msgid "Pushtow, four barges at least one tanker or gas barge"
+msgstr ""
+"Remolcador de empuje, cuatro barcazas al menos una barcaza depósito o gas"
+#
+#
+#
+msgid "Pushtow, four cargo barges"
+msgstr "Remolcador de empuje, cuatro barcazas de carga"
+#
+#
+msgid "Pushtow, nine or more barges"
+msgstr "Remolcador de empuje, nueve o más barcazas de carga"
+#
+#
+#
+msgid "Pushtow, nine or more barges at least one tanker or gas barge"
+msgstr ""
+"Remolcador de empuje, nueve o más barcazas al menos una barcaza depósito o gas"
+#
+#
+#
+msgid "Pushtow, one cargo barge"
+msgstr "Remolcador de empuje, una barcaza de carga"
+#
+#
+#
+msgid "Pushtow, one tank/gas barge"
+msgstr "Remolcador de empuje, una barcaza depósito/gas"
+#
+#
+#
+msgid "Pushtow, seven barges at least one tanker or gas barge"
+msgstr ""
+"Remolcador de empuje, siete barcazas al menos una barcaza depósito o gas"
+#
+#
+#
+msgid "Pushtow, seven cargo barges"
+msgstr "Remolcador de empuje, siete barcazas de carga"
+#
+#
+#
+msgid "Pushtow, six barges at least one tanker or gas barge"
+msgstr "Remolcador de empuje, seis barcazas al menos una barcaza depósito o gas"
+#
+#
+#
+msgid "Pushtow, six cargo barges"
+msgstr "Remolcador de empuje, seis barcazas de carga"
+#
+#
+#
+msgid "Pushtow, three barges at least one tanker or gas barge"
+msgstr "Remolcador de empuje, tres barcazas al menos una barcaza depósito o gas"
+#
+#
+#
+msgid "Pushtow, three cargo barges"
+msgstr "Remolcador de empuje, tres barcazas de carga"
+#
+#
+#
+msgid "Pushtow, two barges at least one tanker or gas barge"
+msgstr "Remolcador de empuje, dos barcazas al menos una barcaza depósito o gas"
+#
+#
+#
+msgid "Pushtow, two cargo barges"
+msgstr "Remolcador de empuje, dos barcazas de carga"
+#
+#
+#
 #
 #
 #
@@ -3987,10 +4312,6 @@ msgstr "Pregunta"
 #
 msgid "RACON"
 msgstr "RACON"
-#
-#
-#
-#
 #
 #
 #
@@ -4040,13 +4361,17 @@ msgstr "Reconstruyendo la base de datos desde los archivos de configuración....
 #
 #
 #
-#, fuzzy
 msgid "Recorded points"
-msgstr "¿Unir waypoints?"
+msgstr "Puntos grabados"
 #
 #
 msgid "Red"
 msgstr "Rojo"
+#
+#
+#
+msgid "Red cross ship"
+msgstr "Barco Cruz Roja"
 #
 msgid "Redo"
 msgstr "Rehacer"
@@ -4072,6 +4397,17 @@ msgstr "Ref. Pt"
 #
 msgid "Reference Point"
 msgstr "Punto  de Referencia"
+#
+#
+#
+#
+#
+#
+msgid "Reference Station :"
+msgstr "Estación de Referencia :"
+#
+msgid "Reject"
+msgstr "Rechazar"
 #
 #
 #
@@ -4122,18 +4458,8 @@ msgstr "Eliminar blancos perdidos después de (min)"
 msgid "Rename Waypoints?"
 msgstr "¿Renombrar Waypoints?"
 #
-#
-#
-#
-#
-#
 msgid "Report Age"
 msgstr "Antigüedad Informe"
-#
-#
-#
-#
-#
 #
 msgid "Report as of"
 msgstr "Informe a partir de"
@@ -4190,6 +4516,9 @@ msgstr "Restricted Area: No fondear."
 msgid "Restricted Manoeuvrability"
 msgstr "Maniobrabilidad Restringida"
 #
+msgid "Resume"
+msgstr "Reanudar"
+#
 #
 #
 #
@@ -4217,15 +4546,9 @@ msgstr "Inversa..."
 #
 #
 #
-#
-#
-#
-#
-#
 msgid "Right"
 msgstr "Derecha"
 #
-#, fuzzy
 msgid "Rogue or suspicious vessel"
 msgstr "Buque \"rojo\" o sospechoso"
 #
@@ -4280,6 +4603,13 @@ msgstr "Propiedades Ruta"
 #
 #
 #
+msgid "Route Uploaded successfully."
+msgstr "Ruta Cargada correctamente."
+#
+#
+#
+#
+#
 msgid "Route from Track"
 msgstr "Ruta desde Derrota"
 #
@@ -4321,11 +4651,6 @@ msgstr "S/V"
 msgid "SAR/V"
 msgstr "SAR/V"
 #
-#
-#
-#
-#
-#
 msgid "SART"
 msgstr "SART"
 #
@@ -4340,11 +4665,6 @@ msgstr "SOG COG"
 #
 msgid "Safe Water"
 msgstr "Aguas Seguras"
-#
-#
-#
-#
-#
 #
 # if( Class == AIS_SART ) {
 #             if( MSG_14_text.Len() ) {
@@ -4472,6 +4792,22 @@ msgstr ""
 #
 #
 #
+msgid "Send"
+msgstr "Enviar"
+#
+#
+#
+#
+#
+#
+msgid "Send Route To GPS"
+msgstr "Enviar Ruta a GPS"
+#
+#
+#
+#
+#
+#
 msgid "Send To GPS..."
 msgstr "Enviar a GPS..."
 #
@@ -4496,8 +4832,8 @@ msgstr "Serie"
 #
 #
 #
-#
-#
+msgid "Service vessel, police patrol, port service"
+msgstr "Barco servicio, policia, servicio puerto"
 #
 msgid "Set"
 msgstr "Ajustar"
@@ -4582,6 +4918,15 @@ msgstr "Mostrar tamaño real blancos AIS"
 #
 #
 #
+#, fuzzy
+msgid "Show All Tracks"
+msgstr "Mostrar Derrota del Blanco "
+#
+#
+#
+#
+#
+#
 msgid "Show CPA/TCPA Alert Dialog"
 msgstr "Mostrar Diálogo Alarmas CPA/TCPA"
 #
@@ -4648,7 +4993,7 @@ msgid "Show Lat/Long as"
 msgstr "Mostrar Lat/Long como"
 #
 msgid "Show Magnetic bearings and headings"
-msgstr ""
+msgstr "Mostrar demoras y rumbos Magnéticos"
 #
 #
 #
@@ -4686,9 +5031,8 @@ msgstr "Mostrar CPA del Blanco "
 #
 #
 #
-#, fuzzy
 msgid "Show Target Track"
-msgstr "Mostrar CPA del Blanco "
+msgstr "Mostrar Derrota del Blanco "
 #
 #
 #
@@ -4774,9 +5118,8 @@ msgstr "Mostrar rumbo desde cada Waypoint hasta el siguiente."
 #
 #
 #
-#, fuzzy
 msgid "Show distance as"
-msgstr "Distancia Ruta:"
+msgstr "Mostrar distancia como"
 #
 #
 #
@@ -4787,7 +5130,7 @@ msgid "Show name"
 msgstr "Mostrar Nombre"
 #
 msgid "Show names with AIS targets at scale greater than 1:"
-msgstr ""
+msgstr "Mostrar nombres de blancos AIS con escala mayor que 1:"
 #
 #
 #
@@ -4810,9 +5153,8 @@ msgstr "Mostrar Marcas Radar"
 #
 #
 #
-#, fuzzy
 msgid "Show speed as"
-msgstr "Mostrar Mareas"
+msgstr "Mostrar velocidad como"
 #
 #
 #
@@ -4854,10 +5196,6 @@ msgstr "Desplazam/zoom suave"
 #
 #
 #
-#
-#
-#
-#
 msgid "SoG"
 msgstr "SoG"
 #
@@ -4868,6 +5206,10 @@ msgstr "SoG"
 #
 msgid "Solid"
 msgstr "Sólido"
+#
+#, c-format
+msgid "Sound file '%s' is in unsupported format."
+msgstr "Fichero de sonido '%s' está en formato no soportado."
 #
 #
 #
@@ -4895,9 +5237,8 @@ msgstr "Marca Especial"
 #
 #
 #
-#, fuzzy
 msgid "Special Position Report"
-msgstr "Informe Posición DCS"
+msgstr "Informe Especial Posición"
 #
 #
 #
@@ -4920,9 +5261,8 @@ msgstr "Velocidad (Kts)"
 #
 #
 #
-#, fuzzy
 msgid "Split"
-msgstr "Cortar Ruta"
+msgstr "Cortar"
 #
 #
 #
@@ -4962,14 +5302,14 @@ msgid "Start"
 msgstr "Inicio"
 #
 msgid "Statistics"
-msgstr ""
+msgstr "Estadísticas"
 #
 # Lista desplegable del selector de fuentes del Interface de Usuario
 msgid "StatusBar"
 msgstr "Barra de Estado"
 #
 msgid "Statute miles"
-msgstr ""
+msgstr "Millas terrestres"
 #
 #
 #
@@ -4986,9 +5326,8 @@ msgstr "Estribor"
 #
 #
 #
-#, fuzzy
 msgid "Style"
-msgstr "Estilo:"
+msgstr "Estilo"
 #
 #
 #
@@ -4999,10 +5338,10 @@ msgid "Style:"
 msgstr "Estilo:"
 #
 msgid "Sunrise"
-msgstr ""
+msgstr "Salida del sol"
 #
 msgid "Sunset"
-msgstr ""
+msgstr "Ocaso"
 #
 #
 #
@@ -5033,21 +5372,38 @@ msgstr "TCP"
 #
 #
 #
-#
-#
-#
-#
 msgid "TCPA"
 msgstr "TCPA"
 #
 #
 #
+msgid "Tankbarge"
+msgstr "Barcaza cisterna"
+#
+#
+#
+msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
+msgstr "Barcaza tanque, carga seca similar a líquida (p.ej. cemento)"
+#
+#
+#
+msgid "Tankbarge, gas"
+msgstr "Barcaza tanque, gas"
+#
+#
+#
+msgid "Tankbarge, liquid cargo, type C"
+msgstr "Barcaza tanque, carga líquida, tipo C"
+#
+#
+#
+msgid "Tankbarge, liquid cargo, type N"
+msgstr "Barcaza tanque, carga líquida, tipo N"
+#
+#
+#
 msgid "Tanker"
 msgstr "Petrolero"
-#
-#
-#
-#
 #
 #
 #
@@ -5069,10 +5425,6 @@ msgstr "Lista de Blancos..."
 #
 msgid "Target Query..."
 msgstr "Consulta Blanco..."
-#
-#
-#
-#
 #
 #
 #
@@ -5115,10 +5467,6 @@ msgstr "Lancha"
 #
 msgid "Test Alert Sound"
 msgstr "Prueba Sonido Alarma"
-#
-#
-#
-#
 #
 #
 #
@@ -5220,10 +5568,9 @@ msgstr ""
 msgid "There"
 msgstr "Allí"
 #
+#, fuzzy
 msgid ""
 "There are existing waypoints at the same location as some of the ones you are "
-"pasting. Would you like to just merge the pasted data into them?\n"
-"\n"
 msgstr ""
 "Ya hay waypoints donde estas pegando los nuevos. ¿Quieres unirlos con ellos?\n"
 "\n"
@@ -5237,10 +5584,10 @@ msgstr ""
 "también? Esto cambiará las rutas y deshabilitará las alarmas de fondeo. "
 "Respondiendo No mantendrá los waypoints usados en rutas y alarmas."
 #
+#, fuzzy
 msgid ""
 "There is an existing waypoint at the same location as the one you are "
-"pasting. Would you like to merge the pasted data with it?\n"
-"\n"
+"pasting. "
 msgstr ""
 "Ya hay un waypoint donde estas pegando éste. ¿Quieres unirlo con él ?\n"
 "\n"
@@ -5273,6 +5620,18 @@ msgstr "Este waypoint es parte de una capa y no puede ser editado"
 #
 #
 #
+msgid "Tide"
+msgstr "Marea"
+#
+# Lista desplegable del selector de fuentes del Interface de Usuario
+msgid "TideCurrentGraphRollover"
+msgstr "Cartel Gráfico Marea/Corrientes"
+#
+#
+#
+#
+#
+#
 msgid "Tides && Currents"
 msgstr "Mareas && Corrientes"
 #
@@ -5289,16 +5648,19 @@ msgstr "Tiempo en ruta"
 #
 #
 #
-#, fuzzy
 msgid "Time enroute"
 msgstr "Tiempo en ruta"
 #
 #
 #
-msgid "Times shown as"
+#, fuzzy
+msgid "Time shown as"
 msgstr "Mostrar horario como"
 #
 #
+#
+msgid "Times shown as"
+msgstr "Mostrar horario como"
 #
 #
 #
@@ -5324,18 +5686,34 @@ msgstr "A"
 msgid "To Waypoint"
 msgstr "Hacia Waypoint"
 #
-#
-#
-#
-#
-#
-#, fuzzy
+# Es de la ventana de propiedades derrota. boton para convertirla en una Ruta
 msgid "To route"
-msgstr "Tiempo en ruta"
+msgstr "Hacer Ruta"
+#
+#
+#
+#
+#
+#
+msgid "Today"
+msgstr "Hoy"
 #
 # Cambiado, está en la barra de herramientas
 msgid "Toggle Tracking"
 msgstr "Dejar Derrota"
+#
+# Cambiado, está en la barra de herramientas
+#, fuzzy
+msgid "Toggle track"
+msgstr "Dejar Derrota"
+#
+#
+#
+#
+#
+#
+msgid "Tomorrow"
+msgstr "Mañana"
 #
 # Lista desplegable del selector de fuentes del Interface de Usuario
 msgid "ToolTips"
@@ -5361,9 +5739,8 @@ msgstr "Long. Total:"
 #
 #
 #
-#, fuzzy
 msgid "Total distance"
-msgstr "Distancia Total"
+msgstr "Distancia total"
 #
 #
 #
@@ -5394,8 +5771,6 @@ msgstr "Nombre Derrota"
 #
 #
 #
-#
-#
 msgid "Track Properties"
 msgstr "Propiedades Derrota"
 #
@@ -5404,9 +5779,9 @@ msgstr "Propiedades Derrota"
 #
 #
 #
-#, fuzzy, c-format
+#, c-format
 msgid "Track Properties, Layer: %d"
-msgstr "Propiedades Waypoint, Capa:"
+msgstr "Propiedades Derrota, Capa: %d"
 #
 #
 #
@@ -5439,7 +5814,16 @@ msgid "Transverse Mercator"
 msgstr "Mercator Transversal"
 #
 msgid "Treat WPL sentences as APRS position reports"
-msgstr ""
+msgstr "Tratar sentencias WPL como informes de posición APRS"
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Trk"
+msgstr "Derrota"
 #
 #
 #
@@ -5448,8 +5832,38 @@ msgstr "Remolcador"
 #
 #
 #
+msgid "Tug freighter, coupled"
+msgstr "Buque de carga remolcador, acoplados"
 #
 #
+#
+msgid "Tug, assisting a vessel or linked combination"
+msgstr "Remolcador, asistiendo a un buque o combinación varios"
+#
+#
+#
+msgid "Tug, freighter"
+msgstr "Remolcador, Buque de carga"
+#
+#
+#
+msgid "Tug, freighter/tanker, coupled"
+msgstr "Remolcador, carguero/cisterna, acoplados"
+#
+#
+#
+msgid "Tug, one or more tows"
+msgstr "Remolcador, uno o más remolques"
+#
+#
+#
+msgid "Tug, single"
+msgstr "Remolcador, solo"
+#
+#
+#
+msgid "Tug, tanker"
+msgstr "Remolcador, Cisterna"
 #
 msgid "Turn Rate"
 msgstr "Velocidad de giro"
@@ -5463,9 +5877,6 @@ msgstr "Tipo"
 #
 msgid "UDP"
 msgstr "UDP"
-#
-#
-#
 #
 msgid "URL"
 msgstr "URL"
@@ -5509,8 +5920,8 @@ msgstr "Deshacer"
 #
 #
 #
-#
-#
+msgid "Unit carrier maritime"
+msgstr "Unidad de transporte maritima"
 #
 #
 #
@@ -5567,7 +5978,7 @@ msgid "Use Garmin GRMN (Host) mode for uploads"
 msgstr "Usar modo Garmin (host) para subidas"
 #
 msgid "Use magnetic bearings in output sentence ECAPB"
-msgstr ""
+msgstr "Usar demoras magnéticas en sentencias salida ECAPB"
 #
 #
 #
@@ -5646,6 +6057,20 @@ msgstr "Buque solicitando asistencia sin peligro"
 #
 #
 #
+msgid "Vessel, type unknown"
+msgstr "Buque, tipo desconocido"
+#
+#
+#
+msgid ""
+"Vessel, work maintainance craft, floating derrick, cable-ship, buoy-ship, "
+"dredge"
+msgstr ""
+"Buque, barco de trabajos de mantenimiento, grúa flotante, cablero, barco "
+"boya, draga"
+#
+#
+#
 msgid "Virtual"
 msgstr "Virtual"
 #
@@ -5682,8 +6107,9 @@ msgstr "Aviso si CPA es inferior a (NMi):"
 msgid "Waypoint"
 msgstr "Marca"
 #
+# Radio del círculo que activa la detección de llegada a un punto de ruta con piloto automático
 msgid "Waypoint Arrival Circle Radius (NMi)"
-msgstr ""
+msgstr "Radio del círculo de llegada a waypoint (NMi)"
 #
 #
 #
@@ -5712,6 +6138,13 @@ msgstr "Propiedades Waypoint"
 #
 msgid "Waypoint Properties, Layer: "
 msgstr "Propiedades Waypoint, Capa:"
+#
+#
+#
+#
+#
+msgid "Waypoint(s) Uploaded successfully."
+msgstr "Waypoint(s) Cargados correctamente."
 #
 # Pestaña del Gestor de Rutas
 msgid "Waypoints"
@@ -5753,9 +6186,8 @@ msgstr "Si la fuente está subrayada."
 msgid "White"
 msgstr "Blanco"
 #
-#, fuzzy
 msgid "Width"
-msgstr "Ancho:"
+msgstr "Ancho"
 #
 msgid "Width Over All (m)"
 msgstr "Manga total (m)"
@@ -5768,8 +6200,14 @@ msgstr "Ancho:"
 msgid "Wing In Ground Effect"
 msgstr "Vehículo de efecto suelo"
 #
-msgid "Would you like include the Great Circle routing points for this leg?"
+#, fuzzy
+msgid "Would you like include the Great Circle"
 msgstr "¿Quiere incluir los puntos de la ruta ortodrómica en esta etapa?"
+#
+msgid ""
+"Would you like to merge the pasted data with it?\n"
+"\n"
+msgstr ""
 #
 msgid "Wrong length of the NMEA filter value"
 msgstr "Longitud errónea del valor de filtro NMEA"
@@ -5802,6 +6240,9 @@ msgstr "Yate"
 #
 msgid "Yellow"
 msgstr "Amarillo"
+#
+msgid "Yes"
+msgstr "Si"
 #
 msgid "Yes, hide it."
 msgstr "Si, ocúltalo."
@@ -5869,10 +6310,16 @@ msgstr "_B"
 msgid "_plus"
 msgstr "_plus"
 #
+#, fuzzy
+msgid "cm"
+msgstr "m"
 #
+msgid "fa"
+msgstr ""
 #
-#
-#
+#, fuzzy
+msgid "ft"
+msgstr "Izquierda"
 #
 #
 #
@@ -5882,41 +6329,30 @@ msgstr "_plus"
 msgid "in"
 msgstr "en"
 #
-msgid "km"
-msgstr ""
-#
 msgid "km/h"
-msgstr ""
-#
-#, fuzzy
-msgid "kts"
-msgstr "Kts"
-#
-msgid "m"
-msgstr ""
+msgstr "km/h"
 #
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 #
-#, fuzzy
-msgid "mi"
-msgstr "min"
-#
-#, fuzzy
 msgid "min"
 msgstr "min"
 #
-msgid "mph"
-msgstr ""
-#
-#
-#
-#
-#
-#
 #, fuzzy
+msgid ""
+"pasting. Would you like to just merge the pasted data into them?\n"
+"\n"
+msgstr ""
+"Ya hay waypoints donde estas pegando los nuevos. ¿Quieres unirlos con ellos?\n"
+"\n"
+#
+#
+#
+#
+#
+#
 msgid "track"
-msgstr "Derrota"
+msgstr "derrota"
 #
 #
 #
@@ -5930,11 +6366,6 @@ msgstr "wgsoy"
 #
 msgid "wxFB Website"
 msgstr "wxFB Website"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -5982,11 +6413,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "\n"
 #~ "\n"
@@ -5995,11 +6421,6 @@ msgstr "wxFB Website"
 #~ "\n"
 #~ "\n"
 #~ "\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6028,18 +6449,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "     Predicción longitud flecha COG (Minutos):"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6068,11 +6479,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Longitud Derrota Objetivo (Minutos):"
 #
@@ -6080,6 +6486,19 @@ msgstr "wxFB Website"
 #
 #
 #
+#
+#
+#~ msgid "   Chart File RLL data corrupt on chart "
+#~ msgstr "   Fichero Carta RLL datos corruptos en carta"
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "   Chart file has no BSB header, cannot Init."
+#~ msgstr "   Fichero Carta sin encabezado BSB, no se puede Inic."
 #
 #
 #
@@ -6112,6 +6531,11 @@ msgstr "wxFB Website"
 #
 #
 #
+#
+#
+#~ msgid "   Could not read first %d bytes of header for chart file: "
+#~ msgstr ""
+#~ "   No se pudo leer primeros %d bytes de encabezado de fichero carta: "
 #
 #
 #
@@ -6180,18 +6604,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "   Gestor de PlugIns: No se puede cargar símbolo create_pi: "
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6239,18 +6653,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  No se pudo abrir puerto serie AIS '"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6267,18 +6671,8 @@ msgstr "wxFB Website"
 #~ msgstr "  No se pudo abrir puerto serie '"
 #
 #
-#
-#
-#
-#
-#
 #~ msgid " </b>in<b> "
 #~ msgstr " </b>en<b> "
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6299,11 +6693,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 Deg."
 #
@@ -6315,25 +6704,6 @@ msgstr "wxFB Website"
 #
 #~ msgid " is %5g"
 #~ msgstr " es %5g"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "&Acknowledge"
-#~ msgstr "&Enterado"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6391,11 +6761,6 @@ msgstr "wxFB Website"
 #
 #~ msgid "&Close"
 #~ msgstr "&Cerrar"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6518,11 +6883,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "&Delete All Tracks..."
 #~ msgstr "&Borrar Todas Las Derrotas..."
 #
@@ -6532,46 +6892,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "&Export Track..."
 #~ msgstr "&Exportar Derrota..."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "&Jump To"
-#~ msgstr "&Saltar A"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "&Silence Alert"
-#~ msgstr "&Silenciar Alerta"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6602,22 +6924,12 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "'\n"
 #~ "Suggestion: Try closing other applications."
 #~ msgstr ""
 #~ "'\n"
 #~ "Sugerencia: Pruebe a cerrar otros programas."
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6698,27 +7010,14 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "(m)"
 #~ msgstr "(m)"
 #
 #
 #
 #
-#
-#
-#
-#~ msgid ", Out: None"
-#~ msgstr ", Salida: Ninguno"
-#
-#
-#
-#
-#
+#~ msgid "--"
+#~ msgstr "--"
 #
 #
 #
@@ -6749,11 +7048,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ ":               Unavailable\n"
 #~ "\n"
@@ -6769,32 +7063,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "<--Remove"
 #~ msgstr "<--Eliminar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "AIS Alert"
-#~ msgstr "Alerta AIS"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6832,68 +7102,11 @@ msgstr "wxFB Website"
 #
 #
 #
-# Lista desplegable del selector de fuentes del Interface de Usuario
-#~ msgid "AISRollover"
-#~ msgstr "Cartel  AIS"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "AISTargetAlert"
-#~ msgstr "Alerta blanco AIS"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "AISTargetQuery"
-#~ msgstr "Consulta Blanco AIS"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Accept"
-#~ msgstr "Aceptar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "Activar Compensación CM93"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6930,18 +7143,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Active Charts"
 #~ msgstr "Cartas Activas"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6969,18 +7172,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Añadir esta carta a continuidad"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7019,18 +7212,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Additional information"
 #~ msgstr "Información adicional"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7082,18 +7265,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Attempting to load libgps.so"
 #~ msgstr "Intentando cargar libgps.so"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7121,29 +7294,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Available Chart Directories"
 #~ msgstr "Carpetas de Cartas disponibles"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Barge, tanker, chemical"
-#~ msgstr "Barcaza, buque cisterna, quimiquero"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7193,11 +7345,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Demora:                %03d Deg.\n"
 #
@@ -7214,40 +7361,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Marcación:            No disponible\n"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Bulk carrier maritime"
-#~ msgstr "Transp. marit. de grano"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Bunkership"
-#~ msgstr "Carbonero"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7275,11 +7390,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Habilitar Control de Detalle CM93"
@@ -7293,18 +7403,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "CM93 Offset Display"
 #~ msgstr "Mostrar Compensación CM93"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7403,18 +7503,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "CM93 Offset On"
 #~ msgstr "Compensación CM93 On"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7513,11 +7603,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "CM93 Offset Tool....."
 #~ msgstr "Herramienta Compensación CM93....."
 #
@@ -7530,18 +7615,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "CM93 Offsets"
 #~ msgstr "Compensación CM93"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7605,18 +7680,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "Detalle Zoom CM93"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7647,18 +7712,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f NM\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7737,18 +7792,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "CallSign:  "
 #~ msgstr "Señal Llamada:  "
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7767,20 +7812,10 @@ msgstr "wxFB Website"
 #~ msgstr "Señal Llamada:              "
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Can't send waypoint. Found no serial data port with output defined."
 #~ msgstr ""
 #~ "No se puede enviar waypoint. No se encontró puerto serie con salida "
 #~ "definida."
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7876,19 +7911,9 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Cell Y Offset"
 #~ msgstr "Ajustar Compensación CM93"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7932,18 +7957,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Chart Display Filters"
 #~ msgstr "Filtros Visualización Cartas"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7960,18 +7975,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Chart Groups...New Group"
 #~ msgstr "Grupos Cartas...Nuevo Grupo"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8038,18 +8043,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Chart file corrupt.. disabling this chart \n"
 #~ msgstr "Fichero de carta corrupto.. desactivando carta \n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8173,21 +8168,11 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Class:     "
 #~ msgstr ""
 #~ "Clase:     A\n"
 #~ "\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8209,22 +8194,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#~ msgid "Container vessel"
-#~ msgstr "Portacontenedores"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #~ msgid "Copy"
 #~ msgstr "Copiar"
 #
@@ -8239,27 +8208,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "No se pudo resolver anfitrión TCP/IP"
-#
-#
-#
-#
-#
-#
-# No se si se refiere a sonar o a profundidad
-#~ msgid "Couldn't load sound data from '%s'."
-#~ msgstr "No se ha podido cargar los datos de sonido de '% s'."
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8290,18 +8240,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Rumbo:                 000 Deg.\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8327,61 +8267,12 @@ msgstr "wxFB Website"
 #
 #
 #
-#~ msgid "Cruise ship"
-#~ msgstr "Crucero"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Current"
-#~ msgstr "Corriente"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
 #
 #~ msgid "Cursor: "
 #~ msgstr "Cursor: "
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Data Source :"
-#~ msgstr "Origen Datos :"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8431,19 +8322,9 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Default dataset"
 #~ msgstr "Datos por defecto"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8481,18 +8362,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Delete Mark"
 #~ msgstr "Eliminar Marca"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8521,11 +8392,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Delete Selection"
 #~ msgstr "Eliminar Selección"
 #
@@ -8541,18 +8407,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Delete Track"
 #~ msgstr "Borrar Derrota"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8582,18 +8438,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Destination:          "
 #~ msgstr "Destino:          "
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8615,28 +8461,9 @@ msgstr "wxFB Website"
 #
 #
 #
-# Cartel en mensajes de parametros de conexion de datos
-#~ msgid "Drop"
-#~ msgstr "Dejar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #~ msgid "E&xport All..."
 #~ msgstr "&Exportar Todo..."
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8665,18 +8492,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "ETA:"
 #~ msgstr "ETA:"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8727,11 +8544,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "ETE/Timestamp"
 #~ msgstr "Tiempo estimado"
 #
@@ -8744,18 +8556,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Activar Compensación Manual CM93 "
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8782,46 +8584,10 @@ msgstr "wxFB Website"
 #
 #
 #
-#~ msgid "Error on Route Upload.  Please check logfiles..."
-#~ msgstr "Error en Carga de Ruta.  Por favor compruebe ficheros log..."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Error on Waypoint Upload.  Please check logfiles..."
-#~ msgstr "Error en Carga de Waypoint.  Por favor compruebe fichero log..."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "Etc."
 #~ msgstr "Etc."
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8907,18 +8673,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Failed to load libgps.so"
 #~ msgstr "Error al cargar libgps.so"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8966,66 +8722,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#~ msgid "Fast ship"
-#~ msgstr "Barco rápido"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Ferry"
-#~ msgstr "Ferry"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Fishing boat"
-#~ msgstr "Pesquero"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Freightbarge"
-#~ msgstr "Barcaza de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Freightbarge with containers"
-#~ msgstr "Barcaza de carga con contenedores"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9033,11 +8729,6 @@ msgstr "wxFB Website"
 #, fuzzy
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Desde Embarcación: %03d Deg  %6.2f NMi"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9065,58 +8756,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#~ msgid "GPS/Plotter Port"
-#~ msgstr "Puerto GPS/Plotter"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #~ msgid "GPSD Data Server"
 #~ msgstr "Servidor Datos GPSD"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Gas tanker"
-#~ msgstr "Gasero"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "General cargo Vessel maritime"
-#~ msgstr "Buque de carga general"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9154,11 +8795,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Ir a Marca/WP"
 #
@@ -9168,29 +8804,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Groups"
 #~ msgstr "Grupos"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "HW"
-#~ msgstr "HW"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9228,29 +8843,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Demora:                %03d Deg.\n"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Hydrofoil"
-#~ msgstr "Hidroala"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9310,42 +8904,9 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Import new layer"
 #~ msgstr "Importar Fichero GPX"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "In"
-#~ msgstr "En"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "In: None"
-#~ msgstr "Entrada: Ninguno"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9374,18 +8935,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Jump To"
 #~ msgstr "Saltar A"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9420,18 +8971,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Jump To Position..."
 #~ msgstr "Saltar A Posición..."
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9453,33 +8994,12 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #  if ( type == BLACKLIST )
 #         return _("All but");
 #     else
 #         return _("Just ");
 #~ msgid "Just "
 #~ msgstr "Sólo"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "LW"
-#~ msgstr "LW"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9522,18 +9042,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Hora Último Informe Posición:       "
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9556,32 +9066,6 @@ msgstr "wxFB Website"
 #
 #
 #
-# Lista desplegable del selector de fuentes del Interface de Usuario
-#~ msgid "Legend"
-#~ msgstr "Leyenda"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Liquified gas tanker"
-#~ msgstr "B. cisterna de gas liq."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9590,11 +9074,6 @@ msgstr "wxFB Website"
 #
 #~ msgid "META Objects"
 #~ msgstr "META Objetos"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9676,18 +9155,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "MarinersStandard"
 #~ msgstr "Estándar Marino"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9748,18 +9217,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Mark Name"
 #~ msgstr "Nombre Marca"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9791,28 +9250,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Propiedades Marca/WP..."
-#
-#
-#
-#
-#
-#
-#
-# Lista desplegable del selector de fuentes del Interface de Usuario
-#~ msgid "Marks"
-#~ msgstr "Marcas"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9844,29 +9283,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#~ msgid "Message accepted"
-#~ msgstr "Mensaje aceptado"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Message filtered and dropped"
-#~ msgstr "Mensaje filtrado y descartado"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9875,132 +9291,6 @@ msgstr "wxFB Website"
 #
 #~ msgid "Metres"
 #~ msgstr "Metros"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter"
-#~ msgstr "Buque de carga a motor"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter pushing at least one tank-ship"
-#~ msgstr "Buque de carga a motor tirando al menos de un buque cisterna"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter pushing one or more freighters"
-#~ msgstr "Buque de carga a motor tirando de uno o más cargueros"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter with one or more ships alongside"
-#~ msgstr "Embarcación de carga junto a uno o más barcos"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter with tanker"
-#~ msgstr "Buque de carga a motor con cisterna"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter, tug"
-#~ msgstr "Buque de carga a motor, remolcado"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker"
-#~ msgstr "Barco cisterna a motor"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
-#~ msgstr "Barco cisterna a motor, carga seca fluida (p.ej. cemento)"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, liquid cargo, type C"
-#~ msgstr "Barco cisterna a motor, carga líquida, tipo C"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, liquid cargo, type N"
-#~ msgstr "Barco cisterna a motor, carga liquida, tipo N"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, tug"
-#~ msgstr "Barco cisterna a motor, remolcado"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10022,20 +9312,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#~ msgid "NMEA Debug Window"
-#~ msgstr "Ventana depuración NMEA"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10049,6 +9325,15 @@ msgstr "wxFB Website"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "NMi"
+#~ msgstr "NMi"
 #
 #
 #
@@ -10079,32 +9364,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Navigational Status:  "
 #~ msgstr "Estado Navegación:  "
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Net"
-#~ msgstr "Red"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10151,64 +9412,9 @@ msgstr "wxFB Website"
 #
 #
 #
-#~ msgid "Next"
-#~ msgstr "Siguiente"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "No"
-#~ msgstr "No"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Número de marcas de radar mostradas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Object, not otherwise specified"
-#~ msgstr "Objeto, mientras no se especifique otra cosa"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Object, towed, not otherwise specified"
-#~ msgstr "Objeto, remolcado, no especificado"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10244,11 +9450,6 @@ msgstr "wxFB Website"
 #
 #~ msgid "OpenCPN PlugIn Base Class"
 #~ msgstr "Plugin OpenCPN Clase de base"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10329,17 +9530,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "OpenCPN S57 SENC File Load"
 #~ msgstr "OpenCPN Carga Archivo S57 SENC"
-#
-#
-#
-#
 #
 #
 #
@@ -10356,34 +9548,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#~ msgid "Out"
-#~ msgstr "Salida"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Output Message"
-#~ msgstr "Mensaje Salida"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10392,42 +9556,6 @@ msgstr "wxFB Website"
 #, fuzzy
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Opciones Visualización Embarcación"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Passenger ship without accomodation"
-#~ msgstr "Barco pasajeros sin acomodaciópn"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Passenger ship, ferry, cruise ship, red cross ship"
-#~ msgstr "Barco pasajeros, ferry, crucero, barco Cruz Roja"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pause"
-#~ msgstr "Pausa"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10455,11 +9583,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Marcar Puntos de Derrota a intervalo de tiempo (Segundos):"
@@ -10470,29 +9593,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Velocidad Estimada (Kts)"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pleasure craft, longer than 20 metres"
-#~ msgstr "Buque de recreo, mayor de 20 metros"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10527,11 +9629,6 @@ msgstr "wxFB Website"
 #
 #~ msgid "PlugInManager searching for PlugIns in location "
 #~ msgstr "Gestor de PlugIns buscando PlugIns en ubicación"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10600,18 +9697,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "PlugInManager: Initializing PlugIn: "
 #~ msgstr "Gestor de PlugIns: Iniciando PlugIn: "
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10680,18 +9767,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "PlugInManager: UnLoading PlugIn: "
 #~ msgstr "Gestor de PlugIns: Cerrando PlugIn: "
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10742,20 +9819,10 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "Position Report Age:       %3d Sec.\n"
 #~ "\n"
 #~ msgstr "Antiguedad Informe Posición:               %3d Sec.\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -10816,11 +9883,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "Possible libgps API version mismatch.\n"
 #~ "libgps did not reasonably respond to version request\n"
@@ -10843,277 +9905,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#~ msgid "Prepare GPS for Route/Waypoint upload and press Send..."
-#~ msgstr "Prepare GPS para actualizar Ruta/Waypoint y pulse Enviar..."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Prev"
-#~ msgstr "Anterior"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Progress..."
-#~ msgstr "Progreso..."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushboat, single"
-#~ msgstr "Remolcador empuje, solo"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, eight barges at least one tanker or gas barge"
-#~ msgstr ""
-#~ "Remolcador de empuje, ocho barcazas al menos una barcaza depósito o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, eight cargo barges"
-#~ msgstr "Remolcador de empuje, ocho barcazas de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, five barges at least one tanker or gas barge"
-#~ msgstr ""
-#~ "Remolcador de empuje, cinco barcazas al menos una barcaza depósito o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, five cargo barges"
-#~ msgstr "Remolcador de empuje, cinco barcazas de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, four barges at least one tanker or gas barge"
-#~ msgstr ""
-#~ "Remolcador de empuje, cuatro barcazas al menos una barcaza depósito o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, four cargo barges"
-#~ msgstr "Remolcador de empuje, cuatro barcazas de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, nine or more barges"
-#~ msgstr "Remolcador de empuje, nueve o más barcazas de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, nine or more barges at least one tanker or gas barge"
-#~ msgstr ""
-#~ "Remolcador de empuje, nueve o más barcazas al menos una barcaza depósito o "
-#~ "gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, one cargo barge"
-#~ msgstr "Remolcador de empuje, una barcaza de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, one tank/gas barge"
-#~ msgstr "Remolcador de empuje, una barcaza depósito/gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, seven barges at least one tanker or gas barge"
-#~ msgstr ""
-#~ "Remolcador de empuje, siete barcazas al menos una barcaza depósito o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, seven cargo barges"
-#~ msgstr "Remolcador de empuje, siete barcazas de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, six barges at least one tanker or gas barge"
-#~ msgstr ""
-#~ "Remolcador de empuje, seis barcazas al menos una barcaza depósito o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, six cargo barges"
-#~ msgstr "Remolcador de empuje, seis barcazas de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, three barges at least one tanker or gas barge"
-#~ msgstr ""
-#~ "Remolcador de empuje, tres barcazas al menos una barcaza depósito o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, three cargo barges"
-#~ msgstr "Remolcador de empuje, tres barcazas de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, two barges at least one tanker or gas barge"
-#~ msgstr ""
-#~ "Remolcador de empuje, dos barcazas al menos una barcaza depósito o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, two cargo barges"
-#~ msgstr "Remolcador de empuje, dos barcazas de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #~ msgid "Radar rings"
 #~ msgstr "Marcas de Radar"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11144,11 +9937,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Alcance:                %5.1f NM\n"
 #
@@ -11164,18 +9952,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Raster"
 #~ msgstr "Raster"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11206,18 +9984,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Tasa De Giro            %3d Deg./Min. Der.\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11248,18 +10016,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Tasa De Giro:       > 5 Deg./30 s. Left\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11320,56 +10078,12 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "Recent Report Period:   %3d Sec.\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Plazo Informe Reciente:   %3d Sec.\n"
 #~ "\n"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Red cross ship"
-#~ msgstr "Barco Cruz Roja"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Reference Station :"
-#~ msgstr "Estación de Referencia :"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Reject"
-#~ msgstr "Rechazar"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11397,36 +10111,12 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Eliminar esta carta de continuidad."
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "RenderHPGL: The '%s' instruction is not implemented."
 #~ msgstr "RenderHPGL: La '%s' instrucción no está implementada."
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Resume"
-#~ msgstr "Reanudar"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11464,32 +10154,9 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Route Properties..."
 #~ msgstr "Propiedades Ruta"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Route Uploaded successfully."
-#~ msgstr "Ruta Cargada correctamente."
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11518,11 +10185,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Seleccionar Tipo de Cartas para Continuidad"
 #
@@ -11532,57 +10194,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
-#~ msgid "Send"
-#~ msgstr "Enviar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Send Route To GPS"
-#~ msgstr "Enviar Ruta a GPS"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #~ msgid "Send to GPS ( "
 #~ msgstr "Enviar a GPS ( "
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Service vessel, police patrol, port service"
-#~ msgstr "Barco servicio, policia, servicio puerto"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11607,11 +10220,6 @@ msgstr "wxFB Website"
 #
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Fijar modo rumbo hacia arriba"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11676,11 +10284,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "ShipName:  "
 #~ msgstr "Nombre Barco:"
 #
@@ -11696,18 +10299,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Show ATON labels"
 #~ msgstr "Mostrar Etiquetas ATON"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11760,18 +10353,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Show Track icon"
 #~ msgstr "Mostrar Icono Derrotas"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11797,22 +10380,12 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "Size:                 %dm x %dm\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Tamaño:                 %dm x %dm\n"
 #~ "\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11873,22 +10446,12 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "Size:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Tamaño:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11923,22 +10486,12 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "Size:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Tamaño:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -11973,11 +10526,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "Size:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
@@ -11998,31 +10546,12 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "Size:               %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Tamaño:               %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Sound file '%s' is in unsupported format."
-#~ msgstr "Fichero de sonido '%s' está en formato no soportado."
-#
-#
-#
-#
-#
 #
 #
 #
@@ -12053,16 +10582,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Velocidad:                %5.2f Kts.\n"
-#
-#
-#
 #
 #
 #
@@ -12085,18 +10606,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "Servidor Datos TCP/IP WiFi"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -12127,73 +10638,8 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d Hr:Min\n"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge"
-#~ msgstr "Barcaza cisterna"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
-#~ msgstr "Barcaza tanque, carga seca similar a líquida (p.ej. cemento)"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, gas"
-#~ msgstr "Barcaza tanque, gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, liquid cargo, type C"
-#~ msgstr "Barcaza tanque, carga líquida, tipo C"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, liquid cargo, type N"
-#~ msgstr "Barcaza tanque, carga líquida, tipo N"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -12221,25 +10667,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#~ msgid "Tide"
-#~ msgstr "Marea"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #, fuzzy
 #~ msgid "Tide & Current Dataset Selection"
@@ -12254,43 +10681,9 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Tide/Current Data Selector"
 #~ msgstr "TideCurrentGraphRollover"
-#
-#
-#
-#
-#
-#
-#
-# Lista desplegable del selector de fuentes del Interface de Usuario
-#~ msgid "TideCurrentGraphRollover"
-#~ msgstr "Cartel Gráfico Marea/Corrientes"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Today"
-#~ msgstr "Hoy"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -12380,33 +10773,9 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Toggle Names"
 #~ msgstr "Nombre Ruta"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tomorrow"
-#~ msgstr "Mañana"
-#
-#
-#
-#
-#
 #
 #
 #
@@ -12435,11 +10804,6 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#
-#
-#
 #, fuzzy
 #~ msgid "Track Properties..."
 #~ msgstr "Propiedades Derrota"
@@ -12450,146 +10814,19 @@ msgstr "wxFB Website"
 #
 #
 #
-#
-#
-#~ msgid "Tug freighter, coupled"
-#~ msgstr "Buque de carga remolcador, acoplados"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, assisting a vessel or linked combination"
-#~ msgstr "Remolcador, asistiendo a un buque o combinación varios"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, freighter"
-#~ msgstr "Remolcador, Buque de carga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, freighter/tanker, coupled"
-#~ msgstr "Remolcador, carguero/cisterna, acoplados"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, one or more tows"
-#~ msgstr "Remolcador, uno o más remolques"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, single"
-#~ msgstr "Remolcador, solo"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, tanker"
-#~ msgstr "Remolcador, Cisterna"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #~ msgid "Unavailable"
 #~ msgstr "No disponible"
 #
+#~ msgid "km"
+#~ msgstr "km"
 #
 #
+#~ msgid "kts"
+#~ msgstr "kts"
 #
 #
+#~ msgid "mi"
+#~ msgstr "mi"
 #
-#
-#
-#
-#~ msgid "Unit carrier maritime"
-#~ msgstr "Unidad de transporte maritima"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Vessel, type unknown"
-#~ msgstr "Buque, tipo desconocido"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid ""
-#~ "Vessel, work maintainance craft, floating derrick, cable-ship, buoy-ship, "
-#~ "dredge"
-#~ msgstr ""
-#~ "Buque, barco de trabajos de mantenimiento, grúa flotante, cablero, barco "
-#~ "boya, draga"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Waypoint(s) Uploaded successfully."
-#~ msgstr "Waypoint(s) Cargados correctamente."
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Yes"
-#~ msgstr "Si"
+#~ msgid "mph"
+#~ msgstr "mph"

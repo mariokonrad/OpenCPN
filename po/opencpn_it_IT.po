@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-01 19:13-0500\n"
+"POT-Creation-Date: 2014-01-28 18:35+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Marco Certelli <marco_certelli@yahoo.it>\n"
 "Language-Team: \n"
@@ -79,13 +79,6 @@ msgstr ""
 #
 #
 #
-msgid "   Chart File RLL data corrupt on chart "
-msgstr "   I dati RLL nel file sono corrotti"
-#
-#
-#
-#
-#
 msgid "   Chart File contains less than 3 PLY points: "
 msgstr "   La carta contiene meno di 3 punti PLY: "
 #
@@ -95,21 +88,6 @@ msgstr "   La carta contiene meno di 3 punti PLY: "
 #
 msgid "   Chart File corrupt in PostInit() on chart "
 msgstr "   Il file della Carta è corrotto in PostInit()"
-#
-#
-#
-#
-#
-msgid "   Chart file has no BSB header, cannot Init."
-msgstr "   La carta non ha un header BSB, inizializzazione fallita."
-#
-#
-#
-#
-#
-#, c-format
-msgid "   Could not read first %d bytes of header for chart file: "
-msgstr "   Non posso leggere i primi %d bytes dell'header: "
 #
 #
 #
@@ -293,6 +271,9 @@ msgstr " Aggiornata al: "
 msgid " for details."
 msgstr ""
 #
+msgid " routing points for this leg?"
+msgstr ""
+#
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
@@ -319,6 +300,20 @@ msgstr ""
 #
 msgid "%H:%M"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "&Acknowledge"
+msgstr "&OK"
 #
 #
 #
@@ -383,6 +378,18 @@ msgstr "&Rotta al Wpt."
 #
 #
 #
+#
+#
+#
+#
+#
+msgid "&Jump To"
+msgstr "&Vai a"
+#
+#
+#
+#
+#
 msgid "&Merge Selected Tracks"
 msgstr "&Unisci Tracce selezionate"
 #
@@ -441,6 +448,20 @@ msgstr "In&verti"
 #
 msgid "&Send to GPS"
 msgstr "&Invia al GPS"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "&Silence Alert"
+msgstr "&Silenzia allerta"
 #
 #
 #
@@ -516,10 +537,10 @@ msgstr ""
 msgid "(unnamed)"
 msgstr "(senza nome)"
 #
-msgid "-"
+msgid ", Out: None"
 msgstr ""
 #
-msgid "--"
+msgid "-"
 msgstr ""
 #
 msgid "---"
@@ -694,6 +715,20 @@ msgstr "AIS"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "AIS Alert"
+msgstr "Allerta AIS"
+#
+#
+#
+#
+#
 #, fuzzy
 msgid "AIS Target List..."
 msgstr "Lista Target AIS"
@@ -732,6 +767,49 @@ msgstr "Mostra/Nascondi Target AIS"
 msgid "AIS target list"
 msgstr "Lista Target AIS"
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "AISRollover"
+msgstr "AISRollover"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "AISTargetAlert"
+msgstr "MostraInfoAIS"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "AISTargetQuery"
+msgstr "MostraInfoAIS"
+#
 msgid "APRS"
 msgstr ""
 #
@@ -762,6 +840,9 @@ msgstr "Info..."
 #
 msgid "About OpenCPN"
 msgstr "Informazioni su OpenCPN"
+#
+msgid "Accept"
+msgstr ""
 #
 msgid "Accept Sentences"
 msgstr ""
@@ -1036,6 +1117,18 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+msgid "Barge, tanker, chemical"
+msgstr "Chiatta, Cisterna, Merci chimiche"
+#
+#
+#
+#
+#
 msgid "Base"
 msgstr "Base"
 #
@@ -1142,6 +1235,31 @@ msgstr "Rlv"
 #
 msgid "Buddy"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Bulk carrier maritime"
+msgstr "Unità Cargo Generico"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Bunkership"
+msgstr "Bettolina"
 #
 msgid "Buoy/Light Labels"
 msgstr ""
@@ -1626,6 +1744,18 @@ msgstr "ValoriConsole"
 msgid "Constrained by draught"
 msgstr "Condizionata dall'Immersione"
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Container vessel"
+msgstr "Unità porta Container"
+#
 msgid "Control checksum"
 msgstr ""
 #
@@ -1642,6 +1772,10 @@ msgid "Copy as KML"
 msgstr ""
 #
 msgid "Copy as KML..."
+msgstr ""
+#
+#, c-format
+msgid "Couldn't load sound data from '%s'."
 msgstr ""
 #
 #
@@ -1707,6 +1841,32 @@ msgstr "Elimina Waypoint"
 #
 #
 #
+#
+#
+#
+#
+#
+msgid "Cruise ship"
+msgstr "Nave da Crociera"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Current"
+msgstr "Corrente"
+#
+#
+#
+#
+#
 msgid "Cyan"
 msgstr "Ciano"
 #
@@ -1763,12 +1923,62 @@ msgid "Dark Yellow"
 msgstr "Giallo scuro"
 #
 #
+#, fuzzy
+msgid "DarkBlue"
+msgstr "Blu scuro"
+#
+#
+#, fuzzy
+msgid "DarkCyan"
+msgstr "Ciano scuro"
+#
+#
+#, fuzzy
+msgid "DarkGray"
+msgstr "Grigio scuro"
+#
+#
+#, fuzzy
+msgid "DarkGreen"
+msgstr "Verde scuro"
+#
+#
+#, fuzzy
+msgid "DarkMagenta"
+msgstr "Magenta scuro"
+#
+#
+#, fuzzy
+msgid "DarkRed"
+msgstr "Rosso scuro"
+#
+#
+#, fuzzy
+msgid "DarkYellow"
+msgstr "Giallo scuro"
+#
+#
 #
 #
 #
 #, fuzzy
 msgid "Data Connections"
 msgstr "Opzioni Caratteri"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Data Source :"
+msgstr "Sorgente dati NMEA"
 #
 #
 #
@@ -2063,6 +2273,21 @@ msgstr "Draga"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Drop"
+msgstr "Aggiungi un Punto"
+#
+#
+#
+#
+#
 msgid "Drop MOB Marker"
 msgstr "UOMO A MARE: Aggiungi Punto!"
 #
@@ -2182,6 +2407,32 @@ msgstr ""
 msgid "Environmental Caution Area: Strong currents"
 msgstr ""
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Error on Route Upload.  Please check logfiles..."
+msgstr "Errore di caricamento delle Rotte. Controlla il logfile..."
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Error on Waypoint Upload.  Please check logfiles..."
+msgstr "Errore di caricamento dei Punti/WP. Controlla il logfile..."
+#
 msgid "Error!"
 msgstr ""
 #
@@ -2270,6 +2521,18 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+msgid "Fast ship"
+msgstr "Nave Veloce"
+#
+#
+#
+#
+#
 msgid "Fathoms"
 msgstr "Fathoms (1 F=1.83m)"
 #
@@ -2279,6 +2542,18 @@ msgstr "Fathoms (1 F=1.83m)"
 #
 msgid "Feet"
 msgstr "Piedi (1 feet=0.305m)"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Ferry"
+msgstr "Traghetto"
 #
 #
 #
@@ -2298,6 +2573,18 @@ msgstr "     Periodo del Filtro (Secondi)"
 #, fuzzy
 msgid "Filters"
 msgstr "&Chilometri"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Fishing boat"
+msgstr "Peschereccio"
 #
 #
 #
@@ -2325,6 +2612,30 @@ msgstr "Forza la ricostruzione del Database"
 msgid "Format uploads for Furuno GP3X"
 msgstr ""
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Freightbarge"
+msgstr "Chiatta merci"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Freightbarge with containers"
+msgstr "Chiatta merci con Container"
+#
 msgid "From"
 msgstr ""
 #
@@ -2341,6 +2652,21 @@ msgstr ""
 #
 msgid "GPS Offset from Midship (m)"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "GPS/Plotter Port"
+msgstr "Porta GPS/Plotter"
 #
 msgid "GPSD"
 msgstr ""
@@ -2363,6 +2689,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+msgid "Gas tanker"
+msgstr "Cisterna (Gas)"
+#
+#
+#
+#
+#
+#
 #, fuzzy
 msgid "General"
 msgstr "AIS Generale"
@@ -2374,6 +2714,18 @@ msgstr "AIS Generale"
 #, fuzzy
 msgid "General Options"
 msgstr "Opzioni speciali dell'interfaccia Utente"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "General cargo Vessel maritime"
+msgstr "Unità Cargo Generico"
 #
 #
 #
@@ -2395,6 +2747,9 @@ msgstr "Gruppo \""
 #
 #
 msgid "HSC"
+msgstr ""
+#
+msgid "HW"
 msgstr ""
 #
 msgid "Heading"
@@ -2421,6 +2776,14 @@ msgstr "Partenza"
 #, fuzzy
 msgid "Hide AIS Targets"
 msgstr "Mostra/Nascondi Target AIS"
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Hide All Tracks"
+msgstr "Interroga Target AIS"
 #
 #
 #
@@ -2481,6 +2844,18 @@ msgstr "Evidenzia Tracce"
 #
 #
 #
+#
+#
+#
+#
+#
+msgid "Hydrofoil"
+msgstr "Aliscafo"
+#
+#
+#
+#
+#
 msgid "I&mport GPX..."
 msgstr "I&mporta GPX..."
 #
@@ -2524,6 +2899,24 @@ msgstr "Importa file GPX"
 #, fuzzy
 msgid "Important Text Only"
 msgstr "Solo testo importante"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "In"
+msgstr "Icona"
+#
+msgid "In: None"
+msgstr ""
 #
 msgid "Information: Icebreaker waiting area"
 msgstr ""
@@ -2613,6 +3006,12 @@ msgstr ""
 #
 msgid "LMT @ Location"
 msgstr "LMT @ Posizione"
+#
+msgid "LMT @ Track Start"
+msgstr ""
+#
+msgid "LW"
+msgstr ""
 #
 #
 #
@@ -2721,6 +3120,20 @@ msgstr "Tratto: da "
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Legend"
+msgstr "LegendaConsole"
+#
+#
+#
+#
+#
 msgid "Length"
 msgstr "Lunghezza"
 #
@@ -2765,6 +3178,14 @@ msgstr "Unità Faro"
 #
 msgid "Light w/Sectors"
 msgstr "Faro con settori"
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "LightGray"
+msgstr "Grigio chiaro"
 #
 #
 #
@@ -2823,6 +3244,18 @@ msgstr "Click sul Link: Modifica"
 #
 msgid "Links are opened in the default browser."
 msgstr "Click sul Link: Apri"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Liquified gas tanker"
+msgstr "Cisterna (Gas Liquefatto)"
 #
 #
 #
@@ -2966,6 +3399,20 @@ msgstr "Segna i Target come persi dopo (Minuti):"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Marks"
+msgstr "Punti"
+#
+#
+#
+#
+#
 msgid "Max Detail Here"
 msgstr "Massimo Dettaglio"
 #
@@ -3020,6 +3467,12 @@ msgstr "Rinomina Waypoints?"
 msgid "Merge waypoints?"
 msgstr "Rinomina Waypoints?"
 #
+msgid "Message accepted"
+msgstr ""
+#
+msgid "Message filtered and dropped"
+msgstr ""
+#
 #
 #
 #
@@ -3055,6 +3508,138 @@ msgstr "Ormeggiata"
 #
 #
 #
+#
+#
+#
+#
+#
+msgid "Motor freighter"
+msgstr "Chiatta motorizzata"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter pushing at least one tank-ship"
+msgstr "Chiatta motorizzata che spinge almeno una Cisterna"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter pushing one or more freighters"
+msgstr "Chiatta motorizzata che spinge almeno una chiatta"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter with one or more ships alongside"
+msgstr "Chiatta motorizzata con una o più unità al seguito"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter with tanker"
+msgstr "Chiatta motorizzata con Cisterna"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor freighter, tug"
+msgstr "Chiatta motorizzata, Rimorchiatore"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker"
+msgstr "Petroliera, Cisterna"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
+msgstr "Cisterna, carico secco (es. cemento)"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker, liquid cargo, type C"
+msgstr "Petroliera, carico liquido, tipo C"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker, liquid cargo, type N"
+msgstr "Petroliera, carico liquido, tipo N"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Motor tanker, tug"
+msgstr "Cisterna, Rimorchiatore"
+#
+#
+#
+#
+#
 #, fuzzy
 msgid "Move Boat Here"
 msgstr "Muovi Imbarcazione qui!"
@@ -3079,8 +3664,13 @@ msgstr ""
 msgid "NMEA 2000"
 msgstr ""
 #
-msgid "NMi"
-msgstr ""
+#
+#
+#
+#
+#, fuzzy
+msgid "NMEA Debug Window"
+msgstr "Mostra la finestra con i dati GPS/NMEA"
 #
 #
 #
@@ -3130,6 +3720,21 @@ msgstr "Dati di Navigazione"
 msgid "Navigate To This"
 msgstr ""
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Net"
+msgstr "Succ."
+#
 msgid "Network"
 msgstr ""
 #
@@ -3146,10 +3751,27 @@ msgstr "Nuovo Gruppo..."
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Next"
+msgstr "Succ."
+#
+#
+#
 msgid "Next tide event"
 msgstr "Prossimo Evento Marea"
 #
 msgid "Nighttime"
+msgstr ""
+#
+msgid "No"
 msgstr ""
 #
 #
@@ -3230,6 +3852,30 @@ msgstr "Info Oggetti Vettoriali"
 #
 #
 #
+#
+#
+#
+#
+#
+msgid "Object, not otherwise specified"
+msgstr "Oggetto, non meglio specificato"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Object, towed, not otherwise specified"
+msgstr "Oggetto, rimorchiato, non meglio specificato"
+#
+#
+#
+#
+#
 msgid "ObjectQuery"
 msgstr "InfoOggettiVettoriali"
 #
@@ -3240,8 +3886,16 @@ msgstr "InfoOggettiVettoriali"
 msgid "Ok"
 msgstr "Ok"
 #
-msgid "Old log will be moved to opencpn.log.log"
+msgid "Old log will be moved to "
 msgstr ""
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "OpenCPN AIS Alert"
+msgstr "OpenCPN Allerta"
 #
 #
 #
@@ -3299,6 +3953,21 @@ msgstr "Notifica Gruppo OpenCPN"
 #
 msgid "OpenCPN Info"
 msgstr "OpenCPN Info"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "OpenCPN Message"
+msgstr "OpenCPN Messaggio"
 #
 #
 #
@@ -3387,8 +4056,26 @@ msgstr "Opzioni"
 msgid "Other - Define in associated text field"
 msgstr ""
 #
+msgid "Out"
+msgstr ""
+#
 msgid "Output"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Output Message"
+msgstr "OpenCPN Messaggio"
 #
 msgid "Output filtering"
 msgstr ""
@@ -3402,6 +4089,9 @@ msgstr ""
 #
 msgid "OverZoom"
 msgstr "OverZoom"
+#
+msgid "Overwrite Garmin device route number 1?"
+msgstr ""
 #
 #
 #
@@ -3457,6 +4147,30 @@ msgstr "Nave Passeggeri"
 #
 #
 #
+#
+#
+#
+#
+#
+msgid "Passenger ship without accomodation"
+msgstr "Nave Passeggeri senza alloggio "
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Passenger ship, ferry, cruise ship, red cross ship"
+msgstr "Nave Passeggeri, Traghetto, Crociera, Croce Rossa"
+#
+#
+#
+#
+#
 #, fuzzy
 msgid "Paste Route"
 msgstr "Crea una Rotta"
@@ -3476,6 +4190,9 @@ msgstr "E&sporta Traccia"
 #, fuzzy
 msgid "Paste Waypoint"
 msgstr "Attiva Waypoint"
+#
+msgid "Pause"
+msgstr ""
 #
 #
 #
@@ -3536,6 +4253,18 @@ msgstr "Riavviare OpenCPN per attivare la lingua selezionata (Restart OpenCPN)"
 #
 msgid "Pleasure craft"
 msgstr "Unità da diporto"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pleasure craft, longer than 20 metres"
+msgstr "Unità da diporto, lunghezza oltre 20 metri"
 #
 #, c-format
 msgid ""
@@ -3636,9 +4365,37 @@ msgstr "Biforcazione canale, principale a Dritta"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Prepare GPS for Route/Waypoint upload and press Send..."
+msgstr "Prepara il GPS per caricare Punto/WP/Rotte e premi Invia..."
+#
+#
+#
+#
+#
 #, fuzzy
 msgid "Preserve Scale when Switching Charts"
 msgstr "Mantieni la scala quando cambia la carta"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Prev"
+msgstr "Prec."
 #
 #
 #
@@ -3726,6 +4483,20 @@ msgstr "Processamento Punti/WP..."
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Progress..."
+msgstr "Avanzamento..."
+#
+#
+#
+#
+#
 msgid "Properties"
 msgstr "Proprietà"
 #
@@ -3739,6 +4510,234 @@ msgstr "&Proprietà"
 #
 msgid "Protocol"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushboat, single"
+msgstr "Spintore, singolo"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, eight barges at least one tanker or gas barge"
+msgstr "Spintore, otto chiatte, almeno una cisterna o gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, eight cargo barges"
+msgstr "Spintore, otto chiatte da carico"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, five barges at least one tanker or gas barge"
+msgstr "Spintore, cinque chiatte, almeno una cisterna o gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, five cargo barges"
+msgstr "Spintore, cinque chiatte da carico"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, four barges at least one tanker or gas barge"
+msgstr "Spintore, quattro chiatte, almeno una cisterna o gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, four cargo barges"
+msgstr "Spintore, quattro chiatte da carico"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, nine or more barges"
+msgstr "Spintore, nove o più chiatte da carico"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, nine or more barges at least one tanker or gas barge"
+msgstr "Spintore, nove o più chiatte, almeno una cisterna o gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, one cargo barge"
+msgstr "Spintore, una chiatta"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, one tank/gas barge"
+msgstr "Spintore, una chiatta cisterna o gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, seven barges at least one tanker or gas barge"
+msgstr "Spintore, sette chiatte, almeno una cisterna o gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, seven cargo barges"
+msgstr "Spintore, sette chiatte da carico"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, six barges at least one tanker or gas barge"
+msgstr "Spintore, sei chiatte, almeno una cisterna o gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, six cargo barges"
+msgstr "Spintore, sei chiatte da carico"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, three barges at least one tanker or gas barge"
+msgstr "Spintore, tre chiatte, almeno una cisterna o gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, three cargo barges"
+msgstr "Spintore, tre chiatte da carico"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, two barges at least one tanker or gas barge"
+msgstr "Spintore, due chiatte, almeno una cisterna o gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Pushtow, two cargo barges"
+msgstr "Spintore, due chiatte da carico"
 #
 #
 #
@@ -3808,6 +4807,18 @@ msgstr "Rinomina Waypoints?"
 msgid "Red"
 msgstr "Rosso"
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Red cross ship"
+msgstr "Nave Croce Rossa"
+#
 msgid "Redo"
 msgstr ""
 #
@@ -3831,6 +4842,23 @@ msgstr ""
 #
 msgid "Reference Point"
 msgstr "Punto di riferimento:"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Reference Station :"
+msgstr "Stazione di riferimento:"
+#
+msgid "Reject"
+msgstr ""
 #
 #
 #
@@ -3938,6 +4966,9 @@ msgstr ""
 msgid "Restricted Manoeuvrability"
 msgstr "Manovrabilità limitata"
 #
+msgid "Resume"
+msgstr ""
+#
 #
 #
 #
@@ -4015,6 +5046,19 @@ msgstr "Proprietà Rotta"
 #
 msgid "Route Properties"
 msgstr "Proprietà Rotta"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Route Uploaded successfully."
+msgstr "Rotta caricata correttamente."
 #
 #
 #
@@ -4184,6 +5228,34 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Send"
+msgstr "Invia"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Send Route To GPS"
+msgstr "Invia Rotta al GPS"
+#
+#
+#
+#
+#
 msgid "Send To GPS..."
 msgstr "Invia al GPS..."
 #
@@ -4205,6 +5277,18 @@ msgstr "&Silenzia allerta"
 #
 msgid "Serial"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Service vessel, police patrol, port service"
+msgstr "Unità di Servizio, Polizia, Portuale"
 #
 #
 #
@@ -4286,6 +5370,14 @@ msgstr "Mostra/Nascondi Target AIS"
 #
 #, fuzzy
 msgid "Show AIS targets real size"
+msgstr "Mostra/Nascondi Target AIS"
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Show All Tracks"
 msgstr "Mostra/Nascondi Target AIS"
 #
 #
@@ -4565,6 +5657,10 @@ msgstr ""
 msgid "Solid"
 msgstr "Solido"
 #
+#, c-format
+msgid "Sound file '%s' is in unsupported format."
+msgstr ""
+#
 #
 #
 #
@@ -4729,6 +5825,66 @@ msgstr "Minima Distanza, TCPA : ---\n"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge"
+msgstr "Chiatta Cisterna"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
+msgstr "Chiatta Cisterna, carico secco (es. cemento)"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge, gas"
+msgstr "Chiatta Cisterna, Gas"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge, liquid cargo, type C"
+msgstr "Chiatta Cisterna, carico liquido, tipo C"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tankbarge, liquid cargo, type N"
+msgstr "Chiatta Cisterna, carico liquido, tipo N"
+#
+#
+#
 msgid "Tanker"
 msgstr "Petroliera"
 #
@@ -4890,8 +6046,6 @@ msgstr "Destinazione"
 #
 msgid ""
 "There are existing waypoints at the same location as some of the ones you are "
-"pasting. Would you like to just merge the pasted data into them?\n"
-"\n"
 msgstr ""
 #
 msgid ""
@@ -4902,8 +6056,7 @@ msgstr ""
 #
 msgid ""
 "There is an existing waypoint at the same location as the one you are "
-"pasting. Would you like to merge the pasted data with it?\n"
-"\n"
+"pasting. "
 msgstr ""
 #
 #
@@ -4931,6 +6084,32 @@ msgstr "Questo Punto/WP è parte di un Layer e non può essere modificato"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Tide"
+msgstr "Marea"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "TideCurrentGraphRollover"
+msgstr "GraficoCorrenteMareaRollover"
+#
+#
+#
+#
+#
 msgid "Tides && Currents"
 msgstr "Mostra/Nascondi le Correnti"
 #
@@ -4948,6 +6127,12 @@ msgstr "Tempo di percorrenza"
 #, fuzzy
 msgid "Time enroute"
 msgstr "Tempo di percorrenza"
+#
+#
+#
+#, fuzzy
+msgid "Time shown as"
+msgstr "Orari mostrati come:"
 #
 #
 #
@@ -4983,8 +6168,44 @@ msgstr "Tempo di percorrenza"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Today"
+msgstr "Oggi"
+#
+#
+#
+#
+#
 msgid "Toggle Tracking"
 msgstr "Mostra/Nascondi la Traccia"
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Toggle track"
+msgstr "Mostra/Nascondi la Traccia"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tomorrow"
+msgstr "Domani"
 #
 #
 #
@@ -5090,8 +6311,100 @@ msgstr ""
 #
 #
 #
+#
+#
+#, fuzzy
+msgid "Trk"
+msgstr "Tracce"
+#
+#
+#
 msgid "Tug"
 msgstr "Rimorchiatore"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug freighter, coupled"
+msgstr "Rimorchiatore Cargo accoppiato"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, assisting a vessel or linked combination"
+msgstr "Rimorchiatore che assiste unità o unità combinate"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, freighter"
+msgstr "Rimorchiatore, Cargo"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, freighter/tanker, coupled"
+msgstr "Rimorchiatore, Cargo/Cisterna, accoppiati"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, one or more tows"
+msgstr "Rimorchiatore, uno o più rimorchi"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, single"
+msgstr "Rimorchiatore, singolo"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Tug, tanker"
+msgstr "Rimorchiatore, Cisterna"
 #
 msgid "Turn Rate"
 msgstr ""
@@ -5142,6 +6455,19 @@ msgstr "In Navigazione"
 #
 msgid "Undo"
 msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Unit carrier maritime"
+msgstr "Unità Cargo Generico"
 #
 #
 #
@@ -5276,6 +6602,32 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+msgid "Vessel, type unknown"
+msgstr "Unità, tipo sconosciuto"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid ""
+"Vessel, work maintainance craft, floating derrick, cable-ship, buoy-ship, "
+"dredge"
+msgstr "Unità, Manutenzione, Gru galleggiante, Posacavi, Nave-boa, Draga"
+#
+#
+#
 msgid "Virtual"
 msgstr "Virtuale"
 #
@@ -5353,6 +6705,19 @@ msgstr "Propietà Punto"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+msgid "Waypoint(s) Uploaded successfully."
+msgstr "Punti/WP caricati correttamente."
+#
+#
+#
+#
+#
 msgid "Waypoints"
 msgstr "WP"
 #
@@ -5403,7 +6768,12 @@ msgstr "Spessore:"
 msgid "Wing In Ground Effect"
 msgstr ""
 #
-msgid "Would you like include the Great Circle routing points for this leg?"
+msgid "Would you like include the Great Circle"
+msgstr ""
+#
+msgid ""
+"Would you like to merge the pasted data with it?\n"
+"\n"
 msgstr ""
 #
 msgid "Wrong length of the NMEA filter value"
@@ -5434,6 +6804,9 @@ msgstr ""
 #
 msgid "Yellow"
 msgstr "Giallo"
+#
+msgid "Yes"
+msgstr ""
 #
 msgid "Yes, hide it."
 msgstr ""
@@ -5492,6 +6865,15 @@ msgstr ""
 msgid "_plus"
 msgstr ""
 #
+msgid "cm"
+msgstr ""
+#
+msgid "fa"
+msgstr ""
+#
+msgid "ft"
+msgstr ""
+#
 #
 #
 #
@@ -5505,22 +6887,10 @@ msgstr ""
 msgid "in"
 msgstr "Link"
 #
-msgid "km"
-msgstr ""
-#
 msgid "km/h"
 msgstr ""
 #
-msgid "kts"
-msgstr ""
-#
-msgid "m"
-msgstr ""
-#
 msgid "m/s"
-msgstr ""
-#
-msgid "mi"
 msgstr ""
 #
 #
@@ -5536,7 +6906,9 @@ msgstr ""
 msgid "min"
 msgstr "Link"
 #
-msgid "mph"
+msgid ""
+"pasting. Would you like to just merge the pasted data into them?\n"
+"\n"
 msgstr ""
 #
 #
@@ -5559,6 +6931,8 @@ msgstr ""
 #
 msgid "wxFB Website"
 msgstr ""
+#
+#
 #
 #
 #
@@ -5611,6 +6985,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "      Velocità Max. Target ancorati (nodi):"
 #
@@ -5638,8 +7014,28 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Lunghezza tracce Target (Minuti):"
+#
+#
+#
+#
+#
+#
+#~ msgid "   Chart File RLL data corrupt on chart "
+#~ msgstr "   I dati RLL nel file sono corrotti"
+#
+#
+#
+#
+#
+#
+#~ msgid "   Chart file has no BSB header, cannot Init."
+#~ msgstr "   La carta non ha un header BSB, inizializzazione fallita."
+#
+#
 #
 #
 #
@@ -5679,6 +7075,16 @@ msgstr ""
 #
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "   Proiezione della carta sconosciuta, assumo sia Mercatore: "
+#
+#
+#
+#
+#
+#
+#~ msgid "   Could not read first %d bytes of header for chart file: "
+#~ msgstr "   Non posso leggere i primi %d bytes dell'header: "
+#
+#
 #
 #
 #
@@ -5765,8 +7171,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "   PlugInManager: Non posso caricare il simbolo create_pi: "
+#
+#
 #
 #
 #
@@ -5835,8 +7245,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  Impossibile aprire porta Sorgente AIS '"
+#
+#
 #
 #
 #
@@ -5885,8 +7299,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid " COG: %03d Deg."
 #~ msgstr " COG: %03d °"
+#
+#
 #
 #
 #
@@ -5917,21 +7335,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid " is %5g"
 #~ msgstr " è %5g"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "&Acknowledge"
-#~ msgstr "&OK"
 #
 #
 #
@@ -5988,6 +7397,8 @@ msgstr ""
 #
 #~ msgid "&Close"
 #~ msgstr "&Chiudi"
+#
+#
 #
 #
 #
@@ -6108,8 +7519,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "&Delete All Tracks..."
 #~ msgstr "Elimina tutte le &Tracce..."
+#
+#
 #
 #
 #
@@ -6125,28 +7540,6 @@ msgstr ""
 #~ msgstr "E&sporta Traccia"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "&Jump To"
-#~ msgstr "&Vai a"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "&Silence Alert"
-#~ msgstr "&Silenzia allerta"
 #
 #
 #
@@ -6214,12 +7607,16 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "'\n"
 #~ " Suggestion: Try 'xxx.xxx.xxx.xxx' notation"
 #~ msgstr ""
 #~ "'\n"
 #~ " Suggerimento: Prova la notazione 'xxx.xxx.xxx.xxx'"
+#
+#
 #
 #
 #
@@ -6309,8 +7706,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "(Active Track)"
 #~ msgstr "(Traccia attiva)"
+#
+#
 #
 #
 #
@@ -6365,6 +7766,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ ":               Unavailable\n"
 #~ "\n"
@@ -6393,21 +7796,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "<--Remove"
 #~ msgstr "<--Rimuovi"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "AIS Alert"
-#~ msgstr "Allerta AIS"
 #
 #
 #
@@ -6460,30 +7854,6 @@ msgstr ""
 #
 #
 #
-#~ msgid "AISRollover"
-#~ msgstr "AISRollover"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "AISTargetQuery"
-#~ msgstr "MostraInfoAIS"
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -6500,6 +7870,8 @@ msgstr ""
 #
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "Attiva CM93 Offset"
+#
+#
 #
 #
 #
@@ -6560,8 +7932,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Active Charts"
 #~ msgstr "Cartelle Carte Attive"
+#
+#
 #
 #
 #
@@ -6613,6 +7989,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Aggiungi questa carta al Mosaico"
 #
@@ -6635,8 +8013,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Add-->"
 #~ msgstr "Aggiungi-->"
+#
+#
 #
 #
 #
@@ -6719,8 +8101,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Attempting to load libgps.so"
 #~ msgstr "Tentativo di caricamento libgps.so"
+#
+#
 #
 #
 #
@@ -6772,19 +8158,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Available Chart Directories"
 #~ msgstr "Cartelle da selezionare per ricercare Carte Nautiche"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Barge, tanker, chemical"
-#~ msgstr "Chiatta, Cisterna, Merci chimiche"
 #
 #
 #
@@ -6841,21 +8220,14 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr ""
 #~ "Rilevamento  : Non disponibile\n"
 #~ "\n"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Bunkership"
-#~ msgstr "Bettolina"
 #
 #
 #
@@ -6906,8 +8278,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CM93 Offset Display"
 #~ msgstr "CM93 Offsets"
+#
+#
 #
 #
 #
@@ -7006,8 +8382,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CM93 Offset On"
 #~ msgstr "CM93 Applica Offset"
+#
+#
 #
 #
 #
@@ -7106,6 +8486,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CM93 Offset Tool....."
 #~ msgstr "CM93 Strumento Offset..."
 #
@@ -7131,8 +8513,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CM93 Offsets"
 #~ msgstr "CM93 Offsets"
+#
+#
 #
 #
 #
@@ -7208,8 +8594,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "Dettagli CM93"
+#
+#
 #
 #
 #
@@ -7264,8 +8654,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "                  CPA : %3.1f Miglia\n"
+#
+#
 #
 #
 #
@@ -7325,8 +8719,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "CallSign:             "
 #~ msgstr "CallSign     : "
+#
+#
 #
 #
 #
@@ -7422,9 +8820,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "Cell Y Offset"
 #~ msgstr "Configura Offset CM93"
+#
+#
 #
 #
 #
@@ -7490,8 +8892,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Chart Display Filters"
 #~ msgstr "Opzioni di Visualizzazione Carta Vettoriale"
+#
+#
 #
 #
 #
@@ -7534,8 +8940,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Chart Groups...New Group"
 #~ msgstr "Gruppi Carte...Nuovo Gruppo"
+#
+#
 #
 #
 #
@@ -7613,8 +9023,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Chart file corrupt.. disabling this chart \n"
 #~ msgstr "Il file della Carta è corrotto e verrà ignorato \n"
+#
+#
 #
 #
 #
@@ -7736,11 +9150,15 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "Class:     "
 #~ msgstr ""
 #~ "Classe:    A\n"
 #~ "\n"
+#
+#
 #
 #
 #
@@ -7778,15 +9196,6 @@ msgstr ""
 #
 #
 #
-#~ msgid "Container vessel"
-#~ msgstr "Unità porta Container"
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7806,6 +9215,8 @@ msgstr ""
 #
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "Indirizzo IP non trovato"
+#
+#
 #
 #
 #
@@ -7860,8 +9271,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Rotta        : 000 °\n"
+#
+#
 #
 #
 #
@@ -7899,28 +9314,6 @@ msgstr ""
 #
 #
 #
-#~ msgid "Cruise ship"
-#~ msgstr "Nave da Crociera"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Current"
-#~ msgstr "Corrente"
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -7943,18 +9336,6 @@ msgstr ""
 #~ msgstr "Cursore: "
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Data Source :"
-#~ msgstr "Sorgente dati NMEA"
 #
 #
 #
@@ -8028,6 +9409,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Default dataset"
 #~ msgstr "Default File"
 #
@@ -8053,8 +9436,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Deg"
 #~ msgstr "Gradi"
+#
+#
 #
 #
 #
@@ -8116,8 +9503,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Delete Route"
 #~ msgstr "Elimina Rotta"
+#
+#
 #
 #
 #
@@ -8170,8 +9561,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Delete Track"
 #~ msgstr "Elimina Traccia"
+#
+#
 #
 #
 #
@@ -8225,8 +9620,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Destination:          "
 #~ msgstr "Destinazione : "
+#
+#
 #
 #
 #
@@ -8265,18 +9664,6 @@ msgstr ""
 #
 #
 #
-#, fuzzy
-#~ msgid "Drop"
-#~ msgstr "Aggiungi un Punto"
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -8284,6 +9671,8 @@ msgstr ""
 #
 #~ msgid "E&xport All..."
 #~ msgstr "Esporta &tutto..."
+#
+#
 #
 #
 #
@@ -8337,8 +9726,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "ETA:                  "
 #~ msgstr "ETA          : "
+#
+#
 #
 #
 #
@@ -8389,33 +9782,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr ""
 #~ "Centra la carta sul cursore quando si usa la rotella del mouse (zoom)"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Error on Route Upload.  Please check logfiles..."
-#~ msgstr "Errore di caricamento delle Rotte. Controlla il logfile..."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Error on Waypoint Upload.  Please check logfiles..."
-#~ msgstr "Errore di caricamento dei Punti/WP. Controlla il logfile..."
 #
 #
 #
@@ -8445,59 +9818,6 @@ msgstr ""
 #~ msgstr "Etc."
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Fast ship"
-#~ msgstr "Nave Veloce"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Ferry"
-#~ msgstr "Traghetto"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Fishing boat"
-#~ msgstr "Peschereccio"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Freightbarge"
-#~ msgstr "Chiatta merci"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Freightbarge with containers"
-#~ msgstr "Chiatta merci con Container"
 #
 #
 #
@@ -8551,46 +9871,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "GPS"
 #~ msgstr "GPS"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "GPS/Plotter Port"
-#~ msgstr "Porta GPS/Plotter"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Gas tanker"
-#~ msgstr "Cisterna (Gas)"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "General cargo Vessel maritime"
-#~ msgstr "Unità Cargo Generico"
 #
 #
 #
@@ -8652,6 +9938,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Vai a Punto/WP"
 #
@@ -8674,8 +9962,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Groups"
 #~ msgstr "Gruppi"
+#
+#
 #
 #
 #
@@ -8737,19 +10029,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Prua         : %03d °\n"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Hydrofoil"
-#~ msgstr "Aliscafo"
 #
 #
 #
@@ -8780,18 +10065,6 @@ msgstr ""
 #~ msgstr "IMO          : %7d\n"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "In"
-#~ msgstr "Icona"
 #
 #
 #
@@ -8842,8 +10115,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Jump To"
 #~ msgstr "Vai a"
+#
+#
 #
 #
 #
@@ -8903,8 +10180,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Jump To Position..."
 #~ msgstr "Zoom a Lat/Lon"
+#
+#
 #
 #
 #
@@ -8931,6 +10212,8 @@ msgstr ""
 #, fuzzy
 #~ msgid "Jump To..."
 #~ msgstr "Vai a"
+#
+#
 #
 #
 #
@@ -8997,8 +10280,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Ora ultimo Report     : "
+#
+#
 #
 #
 #
@@ -9036,28 +10323,6 @@ msgstr ""
 #
 #
 #
-#, fuzzy
-#~ msgid "Legend"
-#~ msgstr "LegendaConsole"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Liquified gas tanker"
-#~ msgstr "Cisterna (Gas Liquefatto)"
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9077,6 +10342,8 @@ msgstr ""
 #
 #~ msgid "META Objects"
 #~ msgstr "META Oggetti"
+#
+#
 #
 #
 #
@@ -9127,21 +10394,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Propietà Punto/WP..."
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Marks"
-#~ msgstr "Punti"
 #
 #
 #
@@ -9203,129 +10461,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Metres"
 #~ msgstr "Metri"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter"
-#~ msgstr "Chiatta motorizzata"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter pushing at least one tank-ship"
-#~ msgstr "Chiatta motorizzata che spinge almeno una Cisterna"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter pushing one or more freighters"
-#~ msgstr "Chiatta motorizzata che spinge almeno una chiatta"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter with one or more ships alongside"
-#~ msgstr "Chiatta motorizzata con una o più unità al seguito"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter with tanker"
-#~ msgstr "Chiatta motorizzata con Cisterna"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor freighter, tug"
-#~ msgstr "Chiatta motorizzata, Rimorchiatore"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker"
-#~ msgstr "Petroliera, Cisterna"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
-#~ msgstr "Cisterna, carico secco (es. cemento)"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, liquid cargo, type C"
-#~ msgstr "Petroliera, carico liquido, tipo C"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, liquid cargo, type N"
-#~ msgstr "Petroliera, carico liquido, tipo N"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Motor tanker, tug"
-#~ msgstr "Cisterna, Rimorchiatore"
 #
 #
 #
@@ -9377,8 +10518,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "NMEA Options"
 #~ msgstr "Opzioni NMEA"
+#
+#
 #
 #
 #
@@ -9433,21 +10578,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Navigational Status:  "
 #~ msgstr "Stato        : "
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Next"
-#~ msgstr "Succ."
 #
 #
 #
@@ -9484,26 +10620,6 @@ msgstr ""
 #
 #
 #
-#~ msgid "Object, not otherwise specified"
-#~ msgstr "Oggetto, non meglio specificato"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Object, towed, not otherwise specified"
-#~ msgstr "Oggetto, rimorchiato, non meglio specificato"
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -9511,18 +10627,6 @@ msgstr ""
 #~ msgstr "Completa"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Output Message"
-#~ msgstr "OpenCPN Messaggio"
 #
 #
 #
@@ -9552,26 +10656,6 @@ msgstr ""
 #~ msgstr "Opzioni Visualizzazione Imbarcazione"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Passenger ship without accomodation"
-#~ msgstr "Nave Passeggeri senza alloggio "
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Passenger ship, ferry, cruise ship, red cross ship"
-#~ msgstr "Nave Passeggeri, Traghetto, Crociera, Croce Rossa"
 #
 #
 #
@@ -9623,9 +10707,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Aggiungi un punto sulla traccia ogni (Secondi):"
+#
+#
 #
 #
 #
@@ -9641,15 +10729,6 @@ msgstr ""
 #~ msgstr "Velocità pianificata"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pleasure craft, longer than 20 metres"
-#~ msgstr "Unità da diporto, lunghezza oltre 20 metri"
 #
 #
 #
@@ -9717,6 +10796,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "Possible libgps API version mismatch.\n"
 #~ "libgps did not reasonably respond to version request\n"
@@ -9729,252 +10810,6 @@ msgstr ""
 #~ "Uso questa versione di libgps comunque?"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Prepare GPS for Route/Waypoint upload and press Send..."
-#~ msgstr "Prepara il GPS per caricare Punto/WP/Rotte e premi Invia..."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Prev"
-#~ msgstr "Prec."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Progress..."
-#~ msgstr "Avanzamento..."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushboat, single"
-#~ msgstr "Spintore, singolo"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, eight barges at least one tanker or gas barge"
-#~ msgstr "Spintore, otto chiatte, almeno una cisterna o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, eight cargo barges"
-#~ msgstr "Spintore, otto chiatte da carico"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, five barges at least one tanker or gas barge"
-#~ msgstr "Spintore, cinque chiatte, almeno una cisterna o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, five cargo barges"
-#~ msgstr "Spintore, cinque chiatte da carico"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, four barges at least one tanker or gas barge"
-#~ msgstr "Spintore, quattro chiatte, almeno una cisterna o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, four cargo barges"
-#~ msgstr "Spintore, quattro chiatte da carico"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, nine or more barges"
-#~ msgstr "Spintore, nove o più chiatte da carico"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, nine or more barges at least one tanker or gas barge"
-#~ msgstr "Spintore, nove o più chiatte, almeno una cisterna o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, one cargo barge"
-#~ msgstr "Spintore, una chiatta"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, one tank/gas barge"
-#~ msgstr "Spintore, una chiatta cisterna o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, seven barges at least one tanker or gas barge"
-#~ msgstr "Spintore, sette chiatte, almeno una cisterna o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, seven cargo barges"
-#~ msgstr "Spintore, sette chiatte da carico"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, six barges at least one tanker or gas barge"
-#~ msgstr "Spintore, sei chiatte, almeno una cisterna o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, six cargo barges"
-#~ msgstr "Spintore, sei chiatte da carico"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, three barges at least one tanker or gas barge"
-#~ msgstr "Spintore, tre chiatte, almeno una cisterna o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, three cargo barges"
-#~ msgstr "Spintore, tre chiatte da carico"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, two barges at least one tanker or gas barge"
-#~ msgstr "Spintore, due chiatte, almeno una cisterna o gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Pushtow, two cargo barges"
-#~ msgstr "Spintore, due chiatte da carico"
 #
 #
 #
@@ -10001,6 +10836,8 @@ msgstr ""
 #
 #~ msgid "Radar rings"
 #~ msgstr "Cerchi distanza Radar"
+#
+#
 #
 #
 #
@@ -10055,6 +10892,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Distanza     : %3.1f Miglia\n"
 #
@@ -10082,8 +10921,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Raster"
 #~ msgstr "Raster"
+#
+#
 #
 #
 #
@@ -10138,8 +10981,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Accostata    : a Destra, %3d°/Min.\n"
+#
+#
 #
 #
 #
@@ -10194,8 +11041,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Accostata    : a Sinistra, > 10°/Min.\n"
+#
+#
 #
 #
 #
@@ -10226,28 +11077,6 @@ msgstr ""
 #~ msgstr "Accostata    : a Destra, > 10°/Min.\n"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Red cross ship"
-#~ msgstr "Nave Croce Rossa"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Reference Station :"
-#~ msgstr "Stazione di riferimento:"
 #
 #
 #
@@ -10299,8 +11128,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Rimuovi carta dal Mosaico"
+#
+#
 #
 #
 #
@@ -10362,21 +11195,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "Route Properties..."
 #~ msgstr "Proprietà Rotta"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Route Uploaded successfully."
-#~ msgstr "Rotta caricata correttamente."
 #
 #
 #
@@ -10429,34 +11254,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Seleziona i tipi di carta per il Mosaico"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Send"
-#~ msgstr "Invia"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Send Route To GPS"
-#~ msgstr "Invia Rotta al GPS"
 #
 #
 #
@@ -10476,15 +11279,6 @@ msgstr ""
 #~ msgstr "&Invia al GPS"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Service vessel, police patrol, port service"
-#~ msgstr "Unità di Servizio, Polizia, Portuale"
 #
 #
 #
@@ -10546,6 +11340,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Settings"
 #~ msgstr "Configurazioni"
 #
@@ -10573,8 +11369,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Show ATON labels"
 #~ msgstr "Mostra etichette ATON"
+#
+#
 #
 #
 #
@@ -10651,6 +11451,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Show Track icon"
 #~ msgstr "Mostra l'icona della Traccia"
 #
@@ -10675,8 +11477,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Show layers initially"
 #~ msgstr "Mostra inizialmente i Layer"
+#
+#
 #
 #
 #
@@ -10735,12 +11541,16 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "Size:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Dimensioni   : %dm x %dm x %4.1fm\n"
 #~ "\n"
+#
+#
 #
 #
 #
@@ -10799,6 +11609,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "Size:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
@@ -10830,12 +11642,16 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "Size:                 ---m x ---m x ---m\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Dimensioni   : ---m x ---m x ---m\n"
 #~ "\n"
+#
+#
 #
 #
 #
@@ -10894,12 +11710,16 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid ""
 #~ "Size:               %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Dimensioni   :%5.1fm x %4.1fm x ---m\n"
 #~ "\n"
+#
+#
 #
 #
 #
@@ -10954,8 +11774,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Velocità     : %3.1f Nodi\n"
+#
+#
 #
 #
 #
@@ -10968,6 +11792,8 @@ msgstr ""
 #, fuzzy
 #~ msgid "T"
 #~ msgstr "Partenza-Destinazione"
+#
+#
 #
 #
 #
@@ -11022,63 +11848,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "Minima Distanza, TCPA : %1d:%02d ore:min\n"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge"
-#~ msgstr "Chiatta Cisterna"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
-#~ msgstr "Chiatta Cisterna, carico secco (es. cemento)"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, gas"
-#~ msgstr "Chiatta Cisterna, Gas"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, liquid cargo, type C"
-#~ msgstr "Chiatta Cisterna, carico liquido, tipo C"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tankbarge, liquid cargo, type N"
-#~ msgstr "Chiatta Cisterna, carico liquido, tipo N"
 #
 #
 #
@@ -11108,17 +11883,6 @@ msgstr ""
 #~ msgstr "Elementi Testo"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tide"
-#~ msgstr "Marea"
 #
 #
 #
@@ -11170,46 +11934,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "Tide/Current Data Selector"
 #~ msgstr "GraficoCorrenteMareaRollover"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "TideCurrentGraphRollover"
-#~ msgstr "GraficoCorrenteMareaRollover"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Today"
-#~ msgstr "Oggi"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tomorrow"
-#~ msgstr "Domani"
 #
 #
 #
@@ -11237,6 +11968,8 @@ msgstr ""
 #
 #~ msgid "ToolBox"
 #~ msgstr "Strumenti"
+#
+#
 #
 #
 #
@@ -11290,85 +12023,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Scala Reale: %8.0f"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug freighter, coupled"
-#~ msgstr "Rimorchiatore Cargo accoppiato"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, assisting a vessel or linked combination"
-#~ msgstr "Rimorchiatore che assiste unità o unità combinate"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, freighter"
-#~ msgstr "Rimorchiatore, Cargo"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, freighter/tanker, coupled"
-#~ msgstr "Rimorchiatore, Cargo/Cisterna, accoppiati"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, one or more tows"
-#~ msgstr "Rimorchiatore, uno o più rimorchi"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, single"
-#~ msgstr "Rimorchiatore, singolo"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Tug, tanker"
-#~ msgstr "Rimorchiatore, Cisterna"
 #
 #
 #
@@ -11423,8 +12083,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "UN Ship Type:         "
 #~ msgstr "UN Tipo di Nave:"
+#
+#
 #
 #
 #
@@ -11479,8 +12143,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Unable to load libgps"
 #~ msgstr "Impossibile caricare libgps"
+#
+#
 #
 #
 #
@@ -11526,8 +12194,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Units"
 #~ msgstr "Unità"
+#
+#
 #
 #
 #
@@ -11577,32 +12249,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Use SCAMIN"
 #~ msgstr "Usa SCAMIN"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Vessel, type unknown"
-#~ msgstr "Unità, tipo sconosciuto"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid ""
-#~ "Vessel, work maintainance craft, floating derrick, cable-ship, buoy-ship, "
-#~ "dredge"
-#~ msgstr "Unità, Manutenzione, Gru galleggiante, Posacavi, Nave-boa, Draga"
 #
 #
 #
@@ -11632,16 +12284,6 @@ msgstr ""
 #~ msgstr "Blocco Punti/WP"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Waypoint(s) Uploaded successfully."
-#~ msgstr "Punti/WP caricati correttamente."
 #
 #
 #
@@ -11692,8 +12334,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "X Offset (Positive moves map to East) (NMi Projected) :"
 #~ msgstr "X Offset (se positivo, muove la mappa verso Est) (Miglia/cos(lat)) :"
+#
+#
 #
 #
 #
@@ -11745,8 +12391,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "cm93 Detail"
 #~ msgstr "Dettagli CM93"
+#
+#
 #
 #
 #

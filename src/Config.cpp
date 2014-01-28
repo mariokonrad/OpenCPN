@@ -85,8 +85,6 @@ extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
 
-extern wxString         g_toolbarConfig;
-
 #ifdef USE_S57
 extern chart::s52plib          *ps52plib;
 #endif
@@ -224,6 +222,7 @@ void Config::load_toolbar()
 	gui.set_toolbar_orientation(orientation);
 	gui.set_toolbar_transparent(transparent);
 	gui.set_toolbar_full_screen(full_screen);
+	gui.set_toolbar_config(read_string(_T("ToolbarConfig")));
 }
 
 void Config::load_ais_alert_dialog()
@@ -570,7 +569,6 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_smooth_pan_zoom(read_bool(_T("SmoothPanZoom")));
 
 	load_toolbar();
-	Read(_T("ToolbarConfig"), &g_toolbarConfig);
 
 	Read(_T("AnchorWatch1GUID"), &g_AW1GUID, _T(""));
 	Read(_T("AnchorWatch2GUID"), &g_AW2GUID, _T(""));
@@ -1459,6 +1457,7 @@ void Config::write_toolbar()
 	Write(_T("ToolbarOrient"), config.orientation);
 	Write(_T("TransparentToolbar"), config.transparent);
 	Write(_T("FullscreenToolbar"), config.full_screen);
+	Write(_T("ToolbarConfig"), config.config);
 }
 
 void Config::write_ais_alert_dialog()
@@ -1616,7 +1615,6 @@ void Config::UpdateSettings()
 	Write(_T("AnchorWatch2GUID"), g_AW2GUID);
 
 	write_toolbar();
-	Write(_T("ToolbarConfig"), g_toolbarConfig);
 
 	Write(_T("GPSIdent"), g_GPS_Ident);
 	Write(_T("UseGarminHostUpload"), g_bGarminHostUpload);

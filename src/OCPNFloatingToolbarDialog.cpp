@@ -44,7 +44,6 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 extern ChartCanvas* cc1;
 extern bool g_bopengl;
 extern wxMenu* g_FloatingToolbarConfigMenu;
-extern wxString g_toolbarConfig;
 extern MainFrame* gFrame;
 
 BEGIN_EVENT_TABLE(OCPNFloatingToolbarDialog, wxDialog)
@@ -433,8 +432,10 @@ void OCPNFloatingToolbarDialog::OnToolLeftClick(wxCommandEvent& event)
 		int itemId = event.GetId() - ID_PLUGIN_BASE - 100;
 		bool toolIsChecked = g_FloatingToolbarConfigMenu->FindItem(event.GetId())->IsChecked();
 
+		global::GUI& gui = global::OCPN::get().gui();
+
 		if (toolIsChecked) {
-			g_toolbarConfig.SetChar(itemId, _T('X'));
+			gui.set_toolbar_config_at(itemId, _T('X'));
 		} else {
 			if (itemId + ID_ZOOMIN == ID_MOB) {
 				ToolbarMOBDialog mdlg(this);
@@ -460,7 +461,7 @@ void OCPNFloatingToolbarDialog::OnToolLeftClick(wxCommandEvent& event)
 				return;
 			}
 
-			g_toolbarConfig.SetChar(itemId, _T('.'));
+			gui.set_toolbar_config_at(itemId, _T('.'));
 		}
 		toolbarConfigChanged = true;
 		return;

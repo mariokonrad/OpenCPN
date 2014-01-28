@@ -1048,13 +1048,15 @@ void App::determine_chartlist_filename()
 
 void App::set_init_chart_dir()
 {
-	wxString path = global::OCPN::get().sys().data().init_chart_dir;
+	global::System& sys = global::OCPN::get().sys();
+
+	wxString path = sys.data().init_chart_dir;
 
 	// Establish guessed location of chart tree
 	if (path.IsEmpty()) {
 		if (!g_bportable) {
-			path.Append( wxApp::GetTraits()->GetStandardPaths().GetDocumentsDir());
-			global::OCPN::get().sys().set_init_chart_dir(path);
+			path.Append(wxApp::GetTraits()->GetStandardPaths().GetDocumentsDir());
+			sys.set_init_chart_dir(path);
 		}
 	}
 }
@@ -1068,6 +1070,9 @@ bool App::OnInit()
 
 	int mem_total = 0;
 	int mem_initial = 0;
+
+	// default values for toolbar
+	global::OCPN::get().gui().set_toolbar_config(_T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"));
 
 	// default value is DAY
 	global::OCPN::get().gui().set_color_scheme(global::GLOBAL_COLOR_SCHEME_DAY);

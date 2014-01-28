@@ -335,7 +335,6 @@ bool g_bGarminHostUpload;
 wxAuiManager* g_pauimgr;
 wxAuiDefaultDockArt* g_pauidockart;
 wxMenu* g_FloatingToolbarConfigMenu;
-wxString g_toolbarConfig = _T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 FloatingCompassWindow* g_FloatingCompassDialog;
 bool g_bMagneticAPB;
@@ -725,7 +724,7 @@ bool _toolbarConfigMenuUtil(int toolid, wxString tipString)
 	}
 
 	menuitem = g_FloatingToolbarConfigMenu->AppendCheckItem(menuItemId, tipString);
-	menuitem->Check(g_toolbarConfig.GetChar(toolid - ID_ZOOMIN) == _T('X'));
+	menuitem->Check(global::OCPN::get().gui().toolbar().config.GetChar(toolid - ID_ZOOMIN) == _T('X'));
 	return menuitem->IsChecked();
 }
 

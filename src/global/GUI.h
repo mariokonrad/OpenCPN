@@ -124,6 +124,7 @@ public:
 		long orientation;
 		bool transparent;
 		bool full_screen;
+		wxString config;
 	};
 
 	virtual const Toolbar& toolbar() const = 0;
@@ -131,6 +132,8 @@ public:
 	virtual void set_toolbar_orientation(long) = 0;
 	virtual void set_toolbar_transparent(bool) = 0;
 	virtual void set_toolbar_full_screen(bool) = 0;
+	virtual void set_toolbar_config(const wxString&) = 0;
+	virtual void set_toolbar_config_at(int, wxChar) = 0;
 
 public:
 	struct AISAlertDialog

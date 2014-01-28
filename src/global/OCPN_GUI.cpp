@@ -234,6 +234,16 @@ void OCPN_GUI::ensure_toolbar_position_range(wxPoint p0, wxPoint p1)
 	data_toolbar.position.y = std::min(data_toolbar.position.y, p1.y);
 }
 
+void OCPN_GUI::set_toolbar_config(const wxString& value)
+{
+	data_toolbar.config = value;
+}
+
+void OCPN_GUI::set_toolbar_config_at(int index, wxChar c)
+{
+	data_toolbar.config.SetChar(index, c);
+}
+
 const GUI::AISAlertDialog& OCPN_GUI::ais_alert_dialog() const
 {
 	return data_ais_alert_dialog;

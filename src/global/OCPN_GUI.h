@@ -87,6 +87,8 @@ public: // toolbar
 	virtual void set_toolbar_transparent(bool);
 	virtual void set_toolbar_full_screen(bool);
 	void ensure_toolbar_position_range(wxPoint, wxPoint);
+	virtual void set_toolbar_config(const wxString&);
+	virtual void set_toolbar_config_at(int, wxChar);
 
 public: // ais alert dialog
 	virtual const AISAlertDialog& ais_alert_dialog() const;

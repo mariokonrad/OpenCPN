@@ -89,8 +89,6 @@ extern int g_iSpeedFormat;
 extern chart::s52plib          *ps52plib;
 #endif
 
-extern bool             g_bUseGLL;
-
 extern bool             g_bCourseUp;
 extern int              g_COGAvgSec;
 extern bool             g_bMagneticAPB;
@@ -524,7 +522,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("GPSIdent"), &g_GPS_Ident, wxT("Generic"));
 	Read(_T("UseGarminHostUpload"), &g_bGarminHostUpload, 0);
 
-	Read(_T("UseNMEA_GLL"), &g_bUseGLL, 1);
+	sys.set_config_nmea_use_gll(read_bool(_T("UseNMEA_GLL"), true));
 
 	Read(_T("FilterNMEA_Avg"), &g_bfilter_cogsog, 0);
 	Read(_T("FilterNMEA_Sec"), &g_COGFilterSec, 1);

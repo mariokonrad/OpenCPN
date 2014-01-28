@@ -263,7 +263,6 @@ int gpIDXn;
 long gStart_LMT_Offset;
 FILE* s_fpdebug;
 bool bFirstAuto;
-bool g_bUseGLL;
 double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode
 bool g_bCourseUp;
 int g_COGAvgSec; // COG average period (sec.) for Course Up Mode
@@ -4999,7 +4998,8 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
-		} else if (g_bUseGLL && m_NMEA0183.LastSentenceIDReceived == _T("GLL")) {
+		} else if (global::OCPN::get().sys().config().nmea_UseGLL
+				   && m_NMEA0183.LastSentenceIDReceived == _T("GLL")) {
 			if (m_NMEA0183.Parse()) {
 				if (m_NMEA0183.Gll.IsDataValid == NTrue) {
 					if (!wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude)) {

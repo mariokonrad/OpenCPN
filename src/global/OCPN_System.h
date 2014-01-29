@@ -64,6 +64,11 @@ public: // config
 	virtual void set_config_nmea_use_gll(bool);
 	virtual void set_config_SetSystemTime(bool);
 	virtual void set_config_PlayShipsBells(bool);
+	virtual void set_config_restore_stackindex(int);
+	virtual void set_config_restore_dbindex(int);
+	virtual void set_config_SDMMFormat(int);
+	virtual void set_config_DistanceFormat(int);
+	virtual void set_config_SpeedFormat(int);
 
 public: // debug
 	virtual const Debug& debug() const;

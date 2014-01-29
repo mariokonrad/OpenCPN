@@ -83,6 +83,29 @@ public:
 		bool nmea_UseGLL;
 		bool SetSystemTime;
 		bool PlayShipsBells;
+		int restore_stackindex;
+		int restore_dbindex;
+
+		// 0 = "Degrees, Decimal minutes"
+		// 1 = "Decimal degrees"
+		// 2 = "Degrees, Minutes, Seconds"
+		int SDMMFormat;
+
+		// 0 = "Nautical miles"
+		// 1 = "Statute miles"
+		// 2 = "Kilometers"
+		// 3 = "Meters"
+		// ...
+		// see DistanceUnit
+		int DistanceFormat;
+
+		// 0 = "kts",
+		// 1 = "mph"
+		// 2 = "km/h"
+		// 3 = "m/s"
+		// ...
+		// see SpeedUnit
+		int SpeedFormat;
 	};
 
 	virtual const Config& config() const = 0;
@@ -96,6 +119,11 @@ public:
 	virtual void set_config_nmea_use_gll(bool) = 0;
 	virtual void set_config_SetSystemTime(bool) = 0;
 	virtual void set_config_PlayShipsBells(bool) = 0;
+	virtual void set_config_restore_stackindex(int) = 0;
+	virtual void set_config_restore_dbindex(int) = 0;
+	virtual void set_config_SDMMFormat(int) = 0;
+	virtual void set_config_DistanceFormat(int) = 0;
+	virtual void set_config_SpeedFormat(int) = 0;
 
 public:
 	struct Debug

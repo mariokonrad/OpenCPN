@@ -155,6 +155,31 @@ void OCPN_System::set_config_PlayShipsBells(bool value)
 	data_config.PlayShipsBells = value;
 }
 
+void OCPN_System::set_config_restore_stackindex(int value)
+{
+	data_config.restore_stackindex = value;
+}
+
+void OCPN_System::set_config_restore_dbindex(int value)
+{
+	data_config.restore_dbindex = value;
+}
+
+void OCPN_System::set_config_SDMMFormat(int value)
+{
+	data_config.SDMMFormat = value;
+}
+
+void OCPN_System::set_config_DistanceFormat(int value)
+{
+	data_config.DistanceFormat = value;
+}
+
+void OCPN_System::set_config_SpeedFormat(int value)
+{
+	data_config.SpeedFormat = value;
+}
+
 const System::Debug& OCPN_System::debug() const
 {
 	return data_debug;

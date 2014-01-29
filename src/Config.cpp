@@ -64,8 +64,6 @@ extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern MainFrame* gFrame;
 extern double g_ChartNotRenderScaleFactor;
-extern int g_restore_stackindex;
-extern int g_restore_dbindex;
 extern RouteList* pRouteList;
 extern LayerList* pLayerList;
 extern int g_LayerIdx;
@@ -74,9 +72,6 @@ extern WayPointman* pWayPointMan;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bdisable_opengl;
-extern int g_iSDMMFormat;
-extern int g_iDistanceFormat;
-extern int g_iSpeedFormat;
 
 #ifdef USE_S57
 extern chart::s52plib* ps52plib;
@@ -556,8 +551,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("AnchorWatch1GUID"), &g_AW1GUID, _T(""));
 	Read(_T("AnchorWatch2GUID"), &g_AW2GUID, _T(""));
 
-	Read(_T("InitialStackIndex"), &g_restore_stackindex, 0);
-	Read(_T("InitialdBIndex"), &g_restore_dbindex, -1);
+	sys.set_config_restore_stackindex(read_long(_T("InitialStackIndex")));
+	sys.set_config_restore_dbindex(read_long(_T("InitialdBIndex"), -1));
 
 	Read(_T("ChartNotRenderScaleFactor"), &g_ChartNotRenderScaleFactor, 1.5);
 
@@ -575,11 +570,9 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_view_show_active_route_highway(read_bool(_T("ShowActiveRouteHighway"), true));
 	Read(_T("MostRecentGPSUploadConnection"), &g_uploadConnection, _T(""));
 
-	Read(_T("SDMMFormat"), &g_iSDMMFormat, 0); // 0 = "Degrees, Decimal minutes"), 1 = "Decimal
-											   // degrees", 2 = "Degrees,Minutes, Seconds"
-	Read(_T("DistanceFormat"), &g_iDistanceFormat,
-		 0); // 0 = "Nautical miles"), 1 = "Statute miles", 2 = "Kilometers", 3 = "Meters"
-	Read(_T("SpeedFormat"), &g_iSpeedFormat, 0); // 0 = "kts"), 1 = "mph", 2 = "km/h", 3 = "m/s"
+	sys.set_config_SDMMFormat(read_long(_T("SDMMFormat"), 0));
+	sys.set_config_DistanceFormat(read_long(_T("DistanceFormat"), 0));
+	sys.set_config_SpeedFormat(read_long(_T("SpeedFormat"), 0));
 
 	gui.set_ownship_predictor_minutes(read_double(_T("OwnshipCOGPredictorMinutes"), 5.0));
 	gui.set_ownship_cog_predictor_width(read_long(_T("OwnshipCOGPredictorWidth"), 3));
@@ -1540,9 +1533,9 @@ void Config::UpdateSettings()
 	Write(_T("ShowLayers"), view.show_layers);
 	Write(_T("AutoAnchorDrop"), view.auto_anchor_mark);
 	Write(_T("ShowActiveRouteHighway"), view.show_active_route_highway);
-	Write(_T("SDMMFormat"), g_iSDMMFormat);
-	Write(_T("DistanceFormat"), g_iDistanceFormat);
-	Write(_T("SpeedFormat"), g_iSpeedFormat);
+	Write(_T("SDMMFormat"), sys.config().SDMMFormat);
+	Write(_T("DistanceFormat"), sys.config().DistanceFormat);
+	Write(_T("SpeedFormat"), sys.config().SpeedFormat);
 	Write(_T("MostRecentGPSUploadConnection"), g_uploadConnection);
 
 	Write(_T("FilterNMEA_Avg"), g_bfilter_cogsog);
@@ -1589,8 +1582,8 @@ void Config::UpdateSettings()
 	Write(_T("AutomaticDailyTracks"), track.TrackDaily);
 	Write(_T("HighlightTracks"), track.HighliteTracks);
 
-	Write(_T("InitialStackIndex"), g_restore_stackindex);
-	Write(_T("InitialdBIndex"), g_restore_dbindex);
+	Write(_T("InitialStackIndex"), sys.config().restore_stackindex);
+	Write(_T("InitialdBIndex"), sys.config().restore_dbindex);
 	Write(_T("ActiveChartGroup"), g_GroupIndex);
 
 	Write(_T("AnchorWatch1GUID"), g_AW1GUID);

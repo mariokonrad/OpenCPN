@@ -174,8 +174,6 @@ chart::ChartBase* Current_Ch;
 chart::ChartDB* ChartData;
 chart::ChartStack* pCurrentStack;
 wxString* pdir_list[20];
-int g_restore_stackindex;
-int g_restore_dbindex;
 double g_ChartNotRenderScaleFactor;
 RouteList* pRouteList;
 bool g_bIsNewLayer;
@@ -206,9 +204,6 @@ ToolBarSimple* g_toolbar;
 ocpnStyle::StyleManager* g_StyleManager;
 wxPrintData* g_printData = (wxPrintData*)NULL;
 wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
-int g_iSDMMFormat;
-int g_iDistanceFormat;
-int g_iSpeedFormat;
 bool g_bfilter_cogsog;
 int g_COGFilterSec;
 int g_SOGFilterSec;
@@ -1165,14 +1160,16 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 	TrackOff();
 
 	if (pCurrentStack) {
-		g_restore_stackindex = pCurrentStack->CurrentStackEntry;
-		g_restore_dbindex = pCurrentStack->GetCurrentEntrydbIndex();
+		global::System& sys = global::OCPN::get().sys();
+		sys.set_config_restore_stackindex(pCurrentStack->CurrentStackEntry);
+		sys.set_config_restore_dbindex(pCurrentStack->GetCurrentEntrydbIndex());
 	}
 
 	if (g_FloatingToolbarDialog) {
 		wxPoint tbp = g_FloatingToolbarDialog->GetPosition();
-		global::OCPN::get().gui().set_toolbar_position(chart_canvas->ScreenToClient(tbp));
-		global::OCPN::get().gui().set_toolbar_orientation(g_FloatingToolbarDialog->GetOrient());
+		global::GUI& gui = global::OCPN::get().gui();
+		gui.set_toolbar_position(chart_canvas->ScreenToClient(tbp));
+		gui.set_toolbar_orientation(g_FloatingToolbarDialog->GetOrient());
 	}
 
 	pConfig->UpdateSettings();
@@ -4044,13 +4041,15 @@ bool MainFrame::DoChartUpdate(void)
 	if (!ChartData)
 		return false;
 
+	const global::System::Config& sys = global::OCPN::get().sys().config();
+
 	// Startup case:
 	// Quilting is enabled, but the last chart seen was not quiltable
 	// In this case, drop to single chart mode, set persistence flag,
 	// And open the specified chart
-	if (bFirstAuto && (g_restore_dbindex >= 0)) {
+	if (bFirstAuto && (sys.restore_dbindex >= 0)) {
 		if (chart_canvas->GetQuiltMode()) {
-			if (!chart_canvas->IsChartQuiltableRef(g_restore_dbindex)) {
+			if (!chart_canvas->IsChartQuiltableRef(sys.restore_dbindex)) {
 				ToggleQuiltMode();
 				m_bpersistent_quilt = true;
 				Current_Ch = NULL;
@@ -4117,33 +4116,32 @@ bool MainFrame::DoChartUpdate(void)
 			double proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor()
 											 / chart_canvas->GetVPScale();
 
-			int initial_db_index = g_restore_dbindex;
-			if( initial_db_index < 0 ) {
-				if( pCurrentStack->nEntry ) {
-					if( ( g_restore_stackindex < pCurrentStack->nEntry )
-							&& ( g_restore_stackindex >= 0 ) ) initial_db_index =
-						pCurrentStack->GetDBIndex( g_restore_stackindex );
+			int initial_db_index = sys.restore_dbindex;
+			if (initial_db_index < 0) {
+				if (pCurrentStack->nEntry) {
+					if ((sys.restore_stackindex < pCurrentStack->nEntry)
+						&& (sys.restore_stackindex >= 0))
+						initial_db_index = pCurrentStack->GetDBIndex(sys.restore_stackindex);
 					else
-						initial_db_index = pCurrentStack->GetDBIndex( pCurrentStack->nEntry - 1 );
+						initial_db_index = pCurrentStack->GetDBIndex(pCurrentStack->nEntry - 1);
 				} else
 					initial_db_index = 0;
 			}
 
 			if( pCurrentStack->nEntry ) {
-
 				int initial_type = ChartData->GetDBChartType( initial_db_index );
 
-				//    Check to see if the target new chart is quiltable as a reference chart
+				// Check to see if the target new chart is quiltable as a reference chart
 
 				if( !chart_canvas->IsChartQuiltableRef( initial_db_index ) ) {
 					// If it is not quiltable, then walk the stack up looking for a satisfactory chart
 					// i.e. one that is quiltable and of the same type
-					int stack_index = g_restore_stackindex;
+					int stack_index = sys.restore_stackindex;
 
-					while( ( stack_index < pCurrentStack->nEntry - 1 ) && ( stack_index >= 0 ) ) {
-						int test_db_index = pCurrentStack->GetDBIndex( stack_index );
-						if( chart_canvas->IsChartQuiltableRef( test_db_index )
-								&& ( initial_type == ChartData->GetDBChartType( initial_db_index ) ) ) {
+					while ((stack_index < pCurrentStack->nEntry - 1) && (stack_index >= 0)) {
+						int test_db_index = pCurrentStack->GetDBIndex(stack_index);
+						if (chart_canvas->IsChartQuiltableRef(test_db_index)
+							&& (initial_type == ChartData->GetDBChartType(initial_db_index))) {
 							initial_db_index = test_db_index;
 							break;
 						}
@@ -4275,7 +4273,7 @@ bool MainFrame::DoChartUpdate(void)
 			// Another special case, open specified index on program start
 			if (bOpenSpecified) {
 				search_direction = false;
-				start_index = g_restore_stackindex;
+				start_index = sys.restore_stackindex;
 				if ((start_index < 0) | (start_index >= pCurrentStack->nEntry))
 					start_index = 0;
 				new_open_type = CHART_TYPE_DONTCARE;

@@ -24,7 +24,8 @@
 #include "PositionConvert.h"
 #include <wx/math.h>
 
-extern int g_iSDMMFormat; // FIXME: use an enumeration
+#include <global/OCPN.h>
+#include <global/System.h>
 
 /// Formats the coordinates to string.
 ///
@@ -67,7 +68,7 @@ wxString toSDMM(int NEflag, double a, bool hi_precision) // FIXME: this interfac
 		}
 	}
 
-	switch (g_iSDMMFormat) {
+	switch (global::OCPN::get().sys().config().SDMMFormat) {
 		case 0:
 			mpy = 600.0;
 			if (hi_precision)

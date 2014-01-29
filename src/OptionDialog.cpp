@@ -100,10 +100,6 @@ extern int g_SOGFilterSec;
 extern PlugInManager* g_pi_manager;
 extern ocpnStyle::StyleManager* g_StyleManager;
 
-extern int g_iSDMMFormat;
-extern int g_iDistanceFormat;
-extern int g_iSpeedFormat;
-
 extern int g_COGAvgSec;
 
 extern bool g_bCourseUp;
@@ -2012,9 +2008,9 @@ void options::SetInitialSettings()
 	pPlayShipsBells->SetValue(cfg.PlayShipsBells);
 	pFullScreenToolbar->SetValue(gui.toolbar().full_screen);
 	pTransparentToolbar->SetValue(gui.toolbar().transparent);
-	pSDMMFormat->Select(g_iSDMMFormat);
-	pDistanceFormat->Select(g_iDistanceFormat);
-	pSpeedFormat->Select(g_iSpeedFormat);
+	pSDMMFormat->Select(cfg.SDMMFormat);
+	pDistanceFormat->Select(cfg.DistanceFormat);
+	pSpeedFormat->Select(cfg.SpeedFormat);
 
 	pTrackDaily->SetValue(track.TrackDaily);
 	pTrackHighlite->SetValue(track.HighliteTracks);
@@ -2576,9 +2572,9 @@ void options::OnApplyClick(wxCommandEvent& event)
 	sys.set_config_PlayShipsBells(pPlayShipsBells->GetValue());
 	gui.set_toolbar_full_screen(pFullScreenToolbar->GetValue());
 	gui.set_toolbar_transparent(pTransparentToolbar->GetValue());
-	g_iSDMMFormat = pSDMMFormat->GetSelection();
-	g_iDistanceFormat = pDistanceFormat->GetSelection();
-	g_iSpeedFormat = pSpeedFormat->GetSelection();
+	sys.set_config_SDMMFormat(pSDMMFormat->GetSelection());
+	sys.set_config_DistanceFormat(pDistanceFormat->GetSelection());
+	sys.set_config_SpeedFormat(pSpeedFormat->GetSelection());
 
 	nav.set_TrackPrecision(pTrackPrecision->GetSelection());
 

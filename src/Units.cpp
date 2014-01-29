@@ -22,34 +22,18 @@
  **************************************************************************/
 
 #include "Units.h"
-#include "dychart.h"
+#include <dychart.h>
 
-#include <MicrosoftCompatibility.h>
-#include <Layer.h>
+#include <global/OCPN.h>
+#include <global/System.h>
 
-#include <cstdlib>
-#include <cmath>
-#include <ctime>
-#include <locale>
-#include <deque>
-
-#include <wx/tokenzr.h>
-#include <wx/sstream.h>
-#include <wx/image.h>
-#include <wx/filename.h>
-#include <wx/graphics.h>
-#include <wx/dir.h>
-#include <wx/listimpl.cpp>
-#include <wx/progdlg.h>
-
-extern int g_iDistanceFormat;
-extern int g_iSpeedFormat;
+#include <wx/string.h>
 
 // Converts the distance to the units selected by user
 double toUsrDistance(double nm_distance, DistanceUnit unit)
 {
 	if (unit == DISTANCE_NONE)
-		unit = static_cast<DistanceUnit>(g_iDistanceFormat);
+		unit = static_cast<DistanceUnit>(global::OCPN::get().sys().config().DistanceFormat);
 	switch (unit) {
 		case DISTANCE_NMI:
 			return nm_distance; // Nautical miles
@@ -58,7 +42,7 @@ double toUsrDistance(double nm_distance, DistanceUnit unit)
 		case DISTANCE_KM:
 			return nm_distance * 1.852;
 		case DISTANCE_M:
-			return nm_distance * 1852;
+			return nm_distance * 1852.0;
 		case DISTANCE_FT:
 			return nm_distance * 6076.12;
 		case DISTANCE_FA:
@@ -66,7 +50,7 @@ double toUsrDistance(double nm_distance, DistanceUnit unit)
 		case DISTANCE_IN:
 			return nm_distance * 72913.4;
 		case DISTANCE_CM:
-			return nm_distance * 185200;
+			return nm_distance * 185200.0;
 		case DISTANCE_NONE:
 			break;
 	}
@@ -77,7 +61,7 @@ double toUsrDistance(double nm_distance, DistanceUnit unit)
 double fromUsrDistance(double usr_distance, DistanceUnit unit)
 {
 	if (unit == DISTANCE_NONE)
-		unit = static_cast<DistanceUnit>(g_iDistanceFormat);
+		unit = static_cast<DistanceUnit>(global::OCPN::get().sys().config().DistanceFormat);
 	switch (unit) {
 		case DISTANCE_NMI:
 			return usr_distance; // nautical miles
@@ -86,7 +70,15 @@ double fromUsrDistance(double usr_distance, DistanceUnit unit)
 		case DISTANCE_KM:
 			return usr_distance / 1.852;
 		case DISTANCE_M:
-			return usr_distance / 1852;
+			return usr_distance / 1852.0;
+		case DISTANCE_FT:
+			return usr_distance / 6076.12;
+		case DISTANCE_FA:
+			return usr_distance / 1012.68591;
+		case DISTANCE_IN:
+			return usr_distance / 72913.4;
+		case DISTANCE_CM:
+			return usr_distance / 185200.0;
 		case DISTANCE_NONE:
 			break;
 	}
@@ -97,7 +89,7 @@ double fromUsrDistance(double usr_distance, DistanceUnit unit)
 wxString getUsrDistanceUnit(DistanceUnit unit)
 {
 	if (unit == DISTANCE_NONE)
-		unit = static_cast<DistanceUnit>(g_iDistanceFormat);
+		unit = static_cast<DistanceUnit>(global::OCPN::get().sys().config().DistanceFormat);
 	switch (unit) {
 		case DISTANCE_NMI:
 			return _T("NMi"); // nautical miles
@@ -108,13 +100,13 @@ wxString getUsrDistanceUnit(DistanceUnit unit)
 		case DISTANCE_M:
 			return _T("m");
 		case DISTANCE_FT:
-			return _("ft");
+			return _T("ft");
 		case DISTANCE_FA:
-			return _("fa");
+			return _T("fa");
 		case DISTANCE_IN:
-			return _("in");
+			return _T("in");
 		case DISTANCE_CM:
-			return _("cm");
+			return _T("cm");
 		case DISTANCE_NONE:
 			break;
 	}
@@ -125,7 +117,7 @@ wxString getUsrDistanceUnit(DistanceUnit unit)
 double toUsrSpeed(double kts_speed, SpeedUnit unit)
 {
 	if (unit == SPEED_NONE)
-		unit = static_cast<SpeedUnit>(g_iSpeedFormat);
+		unit = static_cast<SpeedUnit>(global::OCPN::get().sys().config().SpeedFormat);
 	switch (unit) {
 		case SPEED_KTS:
 			return kts_speed; // kts
@@ -145,7 +137,7 @@ double toUsrSpeed(double kts_speed, SpeedUnit unit)
 double fromUsrSpeed(double usr_speed, SpeedUnit unit)
 {
 	if (unit == SPEED_NONE)
-		unit = static_cast<SpeedUnit>(g_iSpeedFormat);
+		unit = static_cast<SpeedUnit>(global::OCPN::get().sys().config().SpeedFormat);
 	switch (unit) {
 		case SPEED_KTS:
 			return usr_speed; // kts
@@ -165,7 +157,7 @@ double fromUsrSpeed(double usr_speed, SpeedUnit unit)
 wxString getUsrSpeedUnit(SpeedUnit unit)
 {
 	if (unit == SPEED_NONE)
-		unit = static_cast<SpeedUnit>(g_iSpeedFormat);
+		unit = static_cast<SpeedUnit>(global::OCPN::get().sys().config().SpeedFormat);
 	switch (unit) {
 		case SPEED_KTS:
 			return _T("kts"); // kts

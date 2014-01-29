@@ -23,6 +23,7 @@
 
 #include "crc32.h"
 
+namespace util {
 
 // CRC calculation for a byte buffer
 
@@ -74,7 +75,7 @@ static unsigned int crc_32_tab[] = { /* CRC polynomial 0xedb88320 */
 
 #define UPDC32(octet, crc) (crc_32_tab[((crc) ^ ((unsigned char)octet)) & 0xff] ^ ((crc) >> 8))
 
-unsigned int crc32buf(unsigned char* buf, size_t len)
+unsigned int crc32buf(const unsigned char* buf, size_t len)
 {
 	unsigned int oldcrc32 = 0xFFFFFFFF;
 
@@ -83,5 +84,7 @@ unsigned int crc32buf(unsigned char* buf, size_t len)
 	}
 
 	return ~oldcrc32;
+}
+
 }
 

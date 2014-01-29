@@ -815,6 +815,8 @@ add_library(geo STATIC
 add_library(util STATIC
 	src/util/ValueFilter.cpp
 	src/util/ValueFilter.h
+	src/util/crc32.cpp
+	src/util/crc32.h
 	)
 
 SET(SRC_CHART
@@ -900,7 +902,6 @@ SET(HDRS
 	src/print/PrintTable.h
 	src/print/PrintCell.h
 
-	src/crc32.h
 	src/ocpn_pixel.h
 	src/Units.h
 	src/DataStream.h
@@ -1031,7 +1032,6 @@ SET(SRCS
 	src/print/PrintTable.cpp
 	src/print/PrintCell.cpp
 
-	src/crc32.cpp
 	src/MemoryStatus.cpp
 	src/AnchorDist.cpp
 	src/SerialPorts.cpp

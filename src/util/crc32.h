@@ -21,12 +21,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __CRC32__H__
-#define __CRC32__H__
+#ifndef __UTIL__CRC32__H__
+#define __UTIL__CRC32__H__
 
 #include <cstddef>
 
+namespace util {
+
 // Simple and fast CRC32 calculator
-unsigned int crc32buf(unsigned char *buf, size_t len);
+unsigned int crc32buf(const unsigned char *buf, size_t len);
+
+}
 
 #endif

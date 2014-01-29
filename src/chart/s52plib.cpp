@@ -26,7 +26,8 @@
 #include <ocpn_pixel.h>
 #include <FontMgr.h>
 #include <UserColors.h>
-#include <crc32.h>
+
+#include <util/crc32.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
@@ -458,7 +459,7 @@ void s52plib::GenerateStateHash()
 			memcpy(&state_buffer[(i * sizeof(double)) + offset], &t, sizeof(double));
 		}
 	}
-	m_state_hash = crc32buf(state_buffer, offset + (S52_MAR_NUM * sizeof(double)));
+	m_state_hash = util::crc32buf(state_buffer, offset + (S52_MAR_NUM * sizeof(double)));
 }
 
 wxArrayOfLUPrec* s52plib::SelectLUPARRAY(LUPname TNAM)

@@ -61,6 +61,7 @@ public: // config
 	virtual void set_config_memCacheLimit(long);
 	virtual void set_config_GPU_MemSize(long);
 	virtual void set_config_nmea_use_gll(bool);
+	virtual void set_config_SetSystemTime(bool);
 
 public: // debug
 	virtual const Debug& debug() const;

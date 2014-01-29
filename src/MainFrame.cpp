@@ -197,7 +197,6 @@ tide::TCMgr* ptcmgr;
 wxString g_UserPresLibData;
 wxString g_uploadConnection;
 volatile int quitflag;
-bool s_bSetSystemTime;
 ArrayOfConnPrm* g_pConnectionParams;
 wxDateTime g_start_time;
 wxDateTime g_loglast_time;
@@ -5251,7 +5250,8 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 
 #ifdef ocpnUPDATE_SYSTEM_TIME
 	// Use the fix time to update the local system clock, only once per session
-	if ((sfixtime.Len()) && s_bSetSystemTime && (m_bTimeIsSet == false)) {
+	if ((sfixtime.Len()) && global::OCPN::get().sys().config().SetSystemTime
+		&& (m_bTimeIsSet == false)) {
 		wxDateTime Fix_Time;
 
 		if (6 == sfixtime.Len()) // perfectly recognised format?

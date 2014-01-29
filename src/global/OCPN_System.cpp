@@ -140,6 +140,11 @@ void OCPN_System::set_config_nmea_use_gll(bool value)
 	data_config.nmea_UseGLL = value;
 }
 
+void OCPN_System::set_config_SetSystemTime(bool value)
+{
+	data_config.SetSystemTime = value;
+}
+
 const System::Debug& OCPN_System::debug() const
 {
 	return data_debug;

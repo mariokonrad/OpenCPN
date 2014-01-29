@@ -75,7 +75,6 @@ extern double g_UserVar;
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern wxString g_UserPresLibData;
 extern WayPointman* pWayPointMan;
-extern bool s_bSetSystemTime;
 extern bool g_bPlayShipsBells;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
@@ -575,7 +574,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	Read(_T("SkewCompUpdatePeriod"), &g_SkewCompUpdatePeriod, 10);
 
-	Read(_T("SetSystemTime"), &s_bSetSystemTime, 0);
+	sys.set_config_SetSystemTime(read_bool(_T("SetSystemTime")));
 	Read(_T("ShowDebugWindows"), &m_bShowDebugWindows, 1);
 	gui.set_view_display_grid(read_bool(_T("ShowGrid")));
 	Read(_T("PlayShipsBells"), &g_bPlayShipsBells, 0);
@@ -1542,7 +1541,7 @@ void Config::UpdateSettings()
 	Write(_T("ChartNotRenderScaleFactor"), g_ChartNotRenderScaleFactor);
 
 	Write(_T("ShowDebugWindows"), m_bShowDebugWindows);
-	Write(_T("SetSystemTime"), s_bSetSystemTime);
+	Write(_T("SetSystemTime"), sys.config().SetSystemTime);
 	Write(_T("ShowGrid"), view.display_grid);
 	Write(_T("PlayShipsBells"), g_bPlayShipsBells);
 	Write(_T("PermanentMOBIcon"), view.permanent_mob_icon);

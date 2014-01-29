@@ -79,6 +79,7 @@ public:
 		long memCacheLimit;
 		long GPU_MemSize;
 		bool nmea_UseGLL;
+		bool SetSystemTime;
 	};
 
 	virtual const Config& config() const = 0;
@@ -90,6 +91,7 @@ public:
 	virtual void set_config_memCacheLimit(long) = 0;
 	virtual void set_config_GPU_MemSize(long) = 0;
 	virtual void set_config_nmea_use_gll(bool) = 0;
+	virtual void set_config_SetSystemTime(bool) = 0;
 
 public:
 	struct Debug

@@ -70,7 +70,6 @@ extern RouteList* pRouteList;
 extern LayerList* pLayerList;
 extern int g_LayerIdx;
 extern bool g_bShowMag;
-extern double g_UserVar;
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern WayPointman* pWayPointMan;
 extern bool g_bskew_comp;
@@ -526,11 +525,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	g_SOGFilterSec = g_COGFilterSec;
 
 	Read(_T("ShowMag"), &g_bShowMag, 0);
-	g_UserVar = 0.0;
-	wxString umv;
-	Read(_T("UserMagVariation"), &umv);
-	if (umv.Len())
-		umv.ToDouble(&g_UserVar);
+	nav.set_user_var(read_double(_T("UserMagVariation"), 0.0));
 
 	Read(_T("UseMagAPB"), &g_bMagneticAPB, 0);
 
@@ -1524,6 +1519,7 @@ void Config::UpdateSettings()
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::GUI::AISTargetList& ais_target_list = global::OCPN::get().gui().ais_target_list();
 	const global::GUI::OwnShip& ownship = global::OCPN::get().gui().ownship();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	const global::Navigation::Route& route = global::OCPN::get().nav().route();
 	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 	const global::System& sys = global::OCPN::get().sys();
@@ -1554,7 +1550,7 @@ void Config::UpdateSettings()
 	Write(_T("FilterNMEA_Sec"), g_COGFilterSec);
 
 	Write(_T("ShowMag"), g_bShowMag);
-	Write(_T("UserMagVariation"), wxString::Format(_T("%.2f"), g_UserVar));
+	Write(_T("UserMagVariation"), wxString::Format(_T("%.2f"), nav.user_var));
 
 	write_cm93();
 
@@ -1657,7 +1653,6 @@ void Config::UpdateSettings()
 		}
 	}
 
-	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	Write(_T("OwnShipLatLon"), wxString::Format(_T("%10.4f, %10.4f"), nav.pos.lat(), nav.pos.lon()));
 
 	// Various Options

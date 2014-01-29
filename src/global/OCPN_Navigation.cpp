@@ -75,6 +75,11 @@ void OCPN_Navigation::set_course_over_ground(double value)
 	data.cog = value;
 }
 
+void OCPN_Navigation::set_user_var(double value)
+{
+	data.user_var = value;
+}
+
 const Navigation::Route& OCPN_Navigation::route() const
 {
 	return data_route;

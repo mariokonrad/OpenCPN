@@ -29,7 +29,6 @@
 #include <wx/math.h> // FIXME: VS2010 does not know isnan (do not like the _isnan hack), but dependencies to wx seems overkill
 
 extern bool g_bShowMag;
-extern double g_UserVar;
 
 namespace navigation
 {
@@ -44,10 +43,10 @@ double GetTrueOrMag(double a)
 			else
 				return ((a + nav.var) >= 0.0) ? (a + nav.var) : (a + nav.var + 360.0);
 		} else {
-			if ((a + g_UserVar) > 360.0)
-				return (a + g_UserVar - 360.0);
+			if ((a + nav.user_var) > 360.0)
+				return (a + nav.user_var - 360.0);
 			else
-				return ((a + g_UserVar) >= 0.0) ? (a + g_UserVar) : (a + g_UserVar + 360.0);
+				return ((a + nav.user_var) >= 0.0) ? (a + nav.user_var) : (a + nav.user_var + 360.0);
 		}
 	}
 	return a;

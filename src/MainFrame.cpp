@@ -327,7 +327,6 @@ bool g_bMagneticAPB;
 bool g_b_useStencil;
 
 bool g_bShowMag;
-double g_UserVar;
 int g_sticky_chart;
 double g_GLMinLineWidth;
 

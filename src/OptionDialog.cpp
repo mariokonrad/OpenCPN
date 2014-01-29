@@ -91,7 +91,6 @@ extern ChartCanvas* cc1;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bShowMag;
-extern double g_UserVar;
 
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern Multiplexer* g_pMUX;
@@ -1917,6 +1916,7 @@ void options::SetInitialSettings()
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::GUI::OwnShip& ownship = global::OCPN::get().gui().ownship();
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	const global::Navigation::Route& route = global::OCPN::get().nav().route();
 	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 
@@ -1968,7 +1968,7 @@ void options::SetInitialSettings()
 	m_cbAPBMagnetic->SetValue(g_bMagneticAPB);
 	pCBMagShow->SetValue(g_bShowMag);
 
-	pMagVar->SetValue(wxString::Format(_T("%4.1f"), g_UserVar));
+	pMagVar->SetValue(wxString::Format(_T("%4.1f"), nav.user_var));
 
 	pSDisplayGrid->SetValue(view.display_grid);
 
@@ -2560,7 +2560,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	gui.set_view_lookahead_mode(pCBLookAhead->GetValue());
 
 	g_bShowMag = pCBMagShow->GetValue();
-	pMagVar->GetValue().ToDouble(&g_UserVar);
+	nav.set_user_var(get_double(pMagVar));
 
 	g_bMagneticAPB = m_cbAPBMagnetic->GetValue();
 

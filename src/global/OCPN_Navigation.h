@@ -48,6 +48,7 @@ public: // data
 	virtual void set_heading_magn(double);
 	virtual void set_speed_over_ground(double);
 	virtual void set_course_over_ground(double);
+	virtual void set_user_var(double);
 
 public: // route
 	virtual const Route& route() const;

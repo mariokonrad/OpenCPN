@@ -45,6 +45,7 @@ public:
 		double hdt; // heading degrees true
 		double hdm; // heading degrees magnetic
 		double var; // magnetic variationn in degrees
+		double user_var; // user defined magnetic variation
 	};
 
 	virtual const Data& get_data() const = 0;
@@ -57,6 +58,7 @@ public:
 	virtual void set_heading_magn(double) = 0;
 	virtual void set_speed_over_ground(double) = 0;
 	virtual void set_course_over_ground(double) = 0;
+	virtual void set_user_var(double) = 0;
 
 public:
 	struct Route

@@ -812,6 +812,11 @@ add_library(geo STATIC
 	src/geo/Geodesic.h
 	)
 
+add_library(util STATIC
+	src/util/ValueFilter.cpp
+	src/util/ValueFilter.h
+	)
+
 SET(SRC_CHART
 	src/chart/gshhs/Projection.cpp
 	src/chart/gshhs/GshhsPolygon.cpp
@@ -1466,6 +1471,7 @@ if(APPLE)
 		NMEA0183
 		${EXTRA_LIBS}
 		geo
+		util
 		)
 ENDIF(APPLE)
 
@@ -1484,6 +1490,7 @@ If(NOT APPLE)
 		NMEA0183
 		${EXTRA_LIBS}
 		geo
+		util
 		)
 ENDIF(NOT APPLE)
 

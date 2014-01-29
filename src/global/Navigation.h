@@ -100,6 +100,19 @@ public:
 	virtual void set_anchor_AlertOn2(bool) = 0;
 	virtual void set_anchor_AWDefault(long) = 0;
 	virtual void set_anchor_AWMax(long) = 0;
+
+public:
+	struct GPS
+	{
+		bool valid;
+		int SatsInView;
+		bool SatValid;
+	};
+
+	virtual const GPS& gps() const = 0;
+	virtual void set_gps_valid(bool) = 0;
+	virtual void set_gps_SatsInView(int) = 0;
+	virtual void set_gps_SatValid(bool) = 0;
 };
 
 }

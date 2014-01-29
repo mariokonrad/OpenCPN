@@ -28,6 +28,9 @@
 #include <ChartCanvas.h>
 #include <UserColors.h>
 
+#include <global/OCPN.h>
+#include <global/Navigation.h>
+
 #include <wx/toolbar.h>
 #include <wx/statbmp.h>
 
@@ -37,9 +40,6 @@ END_EVENT_TABLE()
 
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern ChartCanvas* cc1;
-extern bool bGPSValid;
-extern bool g_bSatValid;
-extern int g_SatsInView;
 extern bool g_bCourseUp;
 extern bool g_bskew_comp;
 
@@ -150,15 +150,16 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 	}
 
 	bool b_need_refresh = false;
+	const global::Navigation::GPS& gps = global::OCPN::get().nav().gps();
 
-	if (bGPSValid) {
-		if (g_bSatValid) {
+	if (gps.valid) {
+		if (gps.SatValid) {
 			gpsIconName = _T("gps3Bar");
-			if (g_SatsInView <= 8)
+			if (gps.SatsInView <= 8)
 				gpsIconName = _T("gps2Bar");
-			if (g_SatsInView <= 4)
+			if (gps.SatsInView <= 4)
 				gpsIconName = _T("gps1Bar");
-			if (g_SatsInView < 0)
+			if (gps.SatsInView < 0)
 				gpsIconName = _T("gpsGry");
 
 		} else

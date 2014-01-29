@@ -196,7 +196,6 @@ extern Select* pSelect;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
 extern wxDateTime g_loglast_time;
-extern bool bGPSValid;
 extern int g_GroupIndex;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern wxAuiManager* g_pauimgr;

@@ -212,9 +212,6 @@ bool g_bPlayShipsBells;
 int g_iSDMMFormat;
 int g_iDistanceFormat;
 int g_iSpeedFormat;
-bool bGPSValid;
-int g_SatsInView;
-bool g_bSatValid;
 bool g_bfilter_cogsog;
 int g_COGFilterSec;
 int g_SOGFilterSec;
@@ -1735,6 +1732,7 @@ void MainFrame::ActivateMOB(void)
 	mob_label += mob_time.FormatTime();
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	const global::Navigation::GPS& gps = global::OCPN::get().nav().gps();
 
 	RoutePoint* pWP_MOB = new RoutePoint(nav.pos, _T("mob"), mob_label);
 	pWP_MOB->m_bKeepXRoute = true;
@@ -1742,7 +1740,7 @@ void MainFrame::ActivateMOB(void)
 	pSelect->AddSelectableRoutePoint(nav.pos, pWP_MOB);
 	pConfig->AddNewWayPoint(pWP_MOB, -1); // use auto next num
 
-	if (bGPSValid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
+	if (gps.valid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
 		// Create a point that is one mile along the present course
 		geo::Position zpos = geo::ll_gc_ll(nav.pos, nav.cog, 1.0);
 		RoutePoint* pWP_src
@@ -2889,7 +2887,8 @@ wxString MainFrame::prepare_logbook_message(const wxDateTime & lognow)
 	navmsg += _T(" UTC ");
 
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
-	if( bGPSValid ) {
+	const global::Navigation::GPS& gps = global::OCPN::get().nav().gps();
+	if (gps.valid) {
 		navmsg += wxString::Format(_T(" GPS Lat %10.5f Lon %10.5f "), nav.pos.lat(), nav.pos.lon());
 		navmsg += get_cog();
 		navmsg += get_sog();
@@ -2907,7 +2906,7 @@ void MainFrame::update_gps_watchdog()
 	// Update and check watchdog timer for GPS data source
 	wdt.decrement_gps_watchdog();
 	if (wdt.get_data().gps_watchdog <= 0) {
-		bGPSValid = false;
+		global::OCPN::get().nav().set_gps_valid(false);
 		if ((debug.nmea > 0) && (wdt.get_data().gps_watchdog == 0))
 			wxLogMessage(_T("   ***GPS Watchdog timeout..."));
 
@@ -2970,8 +2969,8 @@ void MainFrame::update_sat_watchdog()
 	// Update and check watchdog timer for GSV (Satellite data)
 	wdt.decrement_sat_watchdog();
 	if (wdt.get_data().sat_watchdog <= 0) {
-		g_bSatValid = false;
-		g_SatsInView = 0;
+		global::OCPN::get().nav().set_gps_SatValid(false);
+		global::OCPN::get().nav().set_gps_SatsInView(0);
 		if ((debug.nmea > 0) && (wdt.get_data().sat_watchdog == 0))
 			wxLogMessage(_T("   ***SAT Watchdog timeout..."));
 	}
@@ -3009,6 +3008,7 @@ void MainFrame::send_gps_to_plugins() const
 		return;
 
 	const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
+	const global::Navigation::GPS& gps = global::OCPN::get().nav().gps();
 
 	GenericPosDatEx GPSData;
 	GPSData.kLat = nav.pos.lat();
@@ -3018,7 +3018,7 @@ void MainFrame::send_gps_to_plugins() const
 	GPSData.kVar = nav.var;
 	GPSData.kHdm = nav.hdm;
 	GPSData.kHdt = nav.hdt;
-	GPSData.nSats = g_SatsInView;
+	GPSData.nSats = gps.SatsInView;
 
 	GPSData.FixTime = m_fixtime;
 
@@ -3260,10 +3260,11 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	update_sat_watchdog();
 	send_gps_to_plugins();
 
+	const global::Navigation::GPS& gps = global::OCPN::get().nav().gps();
 	global::Navigation& nav = global::OCPN::get().nav();
 	nav.set_anchor_AlertOn1(check_anchorwatch(pAnchorWatchPoint1));
 	nav.set_anchor_AlertOn2(check_anchorwatch(pAnchorWatchPoint2));
-	if ((pAnchorWatchPoint1 || pAnchorWatchPoint2) && !bGPSValid)
+	if ((pAnchorWatchPoint1 || pAnchorWatchPoint2) && !gps.valid)
 		nav.set_anchor_AlertOn1(true);
 
 	onTimer_log_message();
@@ -3298,16 +3299,16 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 		}
 	}
 
-	if (!bGPSValid) {
+	if (!gps.valid) {
 		chart_canvas->SetOwnShipState(SHIP_INVALID);
 		if (chart_canvas->m_bFollow)
 			chart_canvas->UpdateShips();
 	}
 
-	if (bGPSValid != m_last_bGPSValid) {
+	if (gps.valid != m_last_bGPSValid) {
 		chart_canvas->UpdateShips();
 		bnew_view = true; // force a full Refresh()
-		m_last_bGPSValid = bGPSValid;
+		m_last_bGPSValid = gps.valid;
 	}
 
 	// If any PlugIn requested dynamic overlay callbacks, force a full canvas refresh
@@ -4990,9 +4991,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 			}
 		} else if (m_NMEA0183.LastSentenceIDReceived == _T("GSV")) {
 			if (m_NMEA0183.Parse()) {
-				g_SatsInView = m_NMEA0183.Gsv.SatsInView;
 				global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
-				g_bSatValid = true;
+				global::Navigation& nav = global::OCPN::get().nav();
+				nav.set_gps_SatsInView(m_NMEA0183.Gsv.SatsInView);
+				nav.set_gps_SatValid(true);
 			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
@@ -5070,9 +5072,10 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 					}
 					pos_valid = ll_valid;
 
-					g_SatsInView = m_NMEA0183.Gga.NumberOfSatellitesInUse;
 					global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
-					g_bSatValid = true;
+					global::Navigation& nav = global::OCPN::get().nav();
+					nav.set_gps_SatsInView(m_NMEA0183.Gga.NumberOfSatellitesInUse);
+					nav.set_gps_SatValid(true);
 				}
 			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
@@ -5156,8 +5159,8 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 		}
 
 		// Maintain the validity flags
-		bool last_bGPSValid = bGPSValid;
-		bGPSValid = true;
+		bool last_bGPSValid = global::OCPN::get().nav().gps().valid;
+		global::OCPN::get().nav().set_gps_valid(true);
 		if (!last_bGPSValid)
 			UpdateGPSCompassStatusBox();
 
@@ -5178,7 +5181,6 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 	// Show latitude / longitude in StatusWindow0
 
 	if (NULL != GetStatusBar()) {
-		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		char tick_buf[2];
 		tick_buf[0] = nmea_tick_chars[tick_idx];
 		tick_buf[1] = 0;

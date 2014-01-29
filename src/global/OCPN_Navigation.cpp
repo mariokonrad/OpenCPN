@@ -145,5 +145,25 @@ void OCPN_Navigation::set_anchor_AWMax(long value)
 	data_anchor.AWMax = value;
 }
 
+const Navigation::GPS& OCPN_Navigation::gps() const
+{
+	return data_gps;
+}
+
+void OCPN_Navigation::set_gps_valid(bool value)
+{
+	data_gps.valid = value;
+}
+
+void OCPN_Navigation::set_gps_SatsInView(int value)
+{
+	data_gps.SatsInView = value;
+}
+
+void OCPN_Navigation::set_gps_SatValid(bool value)
+{
+	data_gps.SatValid = value;
+}
+
 }
 

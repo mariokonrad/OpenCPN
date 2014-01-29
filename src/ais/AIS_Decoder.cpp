@@ -51,7 +51,6 @@ static const long long lNaN = 0xfff8000000000000;
 extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 extern Select* pSelectAIS;
 extern MainFrame* gFrame;
-extern bool bGPSValid;
 extern bool g_bShowAIS;
 
 namespace ais
@@ -1726,7 +1725,7 @@ void AIS_Decoder::UpdateOneCPA(AIS_Target_Data* ptarget)
 	ptarget->Range_NM = -1.0; // Defaults
 	ptarget->Brg = -1.0;
 
-	if (!ptarget->b_positionOnceValid || !bGPSValid) {
+	if (!ptarget->b_positionOnceValid || !global::OCPN::get().nav().gps().valid) {
 		ptarget->bCPA_Valid = false;
 		return;
 	}

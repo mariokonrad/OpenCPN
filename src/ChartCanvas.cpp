@@ -180,7 +180,6 @@ extern chart::s52plib* ps52plib;
 extern chart::CM93OffsetDialog* g_pCM93OffsetDialog;
 #endif
 
-extern bool bGPSValid;
 extern ais::AIS_Decoder* g_pAIS;
 
 extern MainFrame* gFrame;
@@ -6082,7 +6081,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 	contextMenu->Append(ID_DEF_MENU_DROP_WP, _menuText(_("Drop Mark"), _T("Ctrl-M")));
 
-	if (!bGPSValid)
+	if (!global::OCPN::get().nav().gps().valid)
 		contextMenu->Append(ID_DEF_MENU_MOVE_BOAT_HERE, _("Move Boat Here"));
 
 	if (!(g_pRouteMan->GetpActiveRoute() || (seltype & SelectItem::TYPE_MARKPOINT)))

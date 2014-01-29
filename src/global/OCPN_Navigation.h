@@ -35,6 +35,7 @@ private:
 	Route data_route;
 	Track track;
 	Anchor data_anchor;
+	GPS data_gps;
 
 public: // data
 	virtual const Data& get_data() const;
@@ -67,6 +68,12 @@ public: // anchor
 	virtual void set_anchor_AlertOn2(bool);
 	virtual void set_anchor_AWDefault(long);
 	virtual void set_anchor_AWMax(long);
+
+public: // gps
+	virtual const GPS& gps() const;
+	virtual void set_gps_valid(bool);
+	virtual void set_gps_SatsInView(int);
+	virtual void set_gps_SatValid(bool);
 };
 
 }

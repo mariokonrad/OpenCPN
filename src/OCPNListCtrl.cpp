@@ -27,18 +27,17 @@
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/Navigation.h>
 
 #include <ais/AIS_Target_Data.h>
 #include <ais/AISTargetListDialog.h>
 #include <ais/ais.h>
 
-extern bool bGPSValid;
-
 OCPNListCtrl::OCPNListCtrl(
-		ais::AISTargetListDialog * parent,
+		ais::AISTargetListDialog* parent,
 		wxWindowID id,
-		const wxPoint & pos,
-		const wxSize & size,
+		const wxPoint& pos,
+		const wxSize& size,
 		long style)
 	: wxListCtrl(parent, id, pos, size, style)
 {
@@ -77,7 +76,7 @@ int OCPNListCtrl::OnGetItemColumnImage(long WXUNUSED(item), long WXUNUSED(column
 	return -1;
 }
 
-wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data * pAISTarget, long column) const
+wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data* pAISTarget, long column) const
 {
 	using namespace ais;
 
@@ -154,7 +153,7 @@ wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data * pAISTarget, lo
 
 		case tlBRG:
 			if (pAISTarget->b_positionOnceValid
-					&& bGPSValid
+					&& global::OCPN::get().nav().gps().valid
 					&& (pAISTarget->Brg >= 0.0)
 					&& (fabs(pAISTarget->Lat) < 85.0)) {
 				int brg = (int) wxRound(pAISTarget->Brg);
@@ -207,7 +206,8 @@ wxString OCPNListCtrl::GetTargetColumnData(ais::AIS_Target_Data * pAISTarget, lo
 			break;
 
 		case tlRNG:
-			if (pAISTarget->b_positionOnceValid && bGPSValid && (pAISTarget->Range_NM >= 0.0))
+			if (pAISTarget->b_positionOnceValid && global::OCPN::get().nav().gps().valid
+				&& (pAISTarget->Range_NM >= 0.0))
 				ret.Printf(_T("%5.2f"), toUsrDistance(pAISTarget->Range_NM));
 			else
 				ret = _("-");

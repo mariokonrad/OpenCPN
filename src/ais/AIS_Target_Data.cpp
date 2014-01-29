@@ -30,8 +30,8 @@
 
 #include <global/OCPN.h>
 #include <global/AIS.h>
+#include <global/Navigation.h>
 
-extern bool bGPSValid;
 extern ChartCanvas* cc1;
 extern bool g_bShowMag;
 
@@ -449,12 +449,15 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 		}
 	}
 
-	if (b_positionOnceValid && bGPSValid && (Range_NM >= 0.))
+	const bool gps_valid = global::OCPN::get().nav().gps().valid;
+
+	if (b_positionOnceValid && gps_valid && (Range_NM >= 0.0))
 		rngStr = cc1->FormatDistanceAdaptive(Range_NM);
 	else
 		rngStr = _("---");
 
-	if (b_positionOnceValid && bGPSValid && (Brg >= 0.) && (Range_NM > 0.) && (fabs(Lat) < 85.)) {
+	if (b_positionOnceValid && gps_valid && (Brg >= 0.0) && (Range_NM > 0.0)
+		&& (fabs(Lat) < 85.0)) {
 		if (g_bShowMag)
 			brgStr << wxString::Format(wxString("%03d°(M)  ", wxConvUTF8),
 									   (int)navigation::GetTrueOrMag(Brg));

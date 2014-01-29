@@ -214,9 +214,7 @@ int g_iSpeedFormat;
 bool g_bfilter_cogsog;
 int g_COGFilterSec;
 int g_SOGFilterSec;
-int g_ChartUpdatePeriod;
 int g_SkewCompUpdatePeriod;
-wxRect g_last_tb_rect;
 
 #ifdef USE_S57
 namespace chart { class S57RegistrarMgr; }
@@ -382,16 +380,20 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame) EVT_CLOSE(MainFrame::OnCloseWindow)
 	EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
 END_EVENT_TABLE()
 
-MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos,
-						 const wxSize& size, long style)
+int MainFrame::default_ChartUpdatePeriod = 0;
+
+MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos, const wxSize& size,
+					 long style)
 	: wxFrame(frame, -1, title, pos, size, style)
 	, chart_canvas(NULL)
 	, pDummyChart(NULL)
 	, timer_tick(0)
 	, route_blinker_tick(0)
 	, cruising(false)
+	, m_ChartUpdatePeriod(1) // set the default (1 sec.) period
 	, HDT_Rx(false) // Most likely installations have no ownship heading information
 	, VAR_Rx(false) // Most likely installations have no ownship heading information
+
 {
 	m_ulLastNEMATicktime = 0;
 	m_pStatusBar = NULL;
@@ -435,8 +437,6 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos,
 	m_fixtime = 0;
 
 	m_bpersistent_quilt = false;
-
-	m_ChartUpdatePeriod = 1; // set the default (1 sec.) period
 
 	// Establish my children
 	g_pMUX = new Multiplexer();
@@ -1056,14 +1056,14 @@ void MainFrame::OnExit(wxCommandEvent&)
 	quitflag++; // signal to the timer loop
 }
 
-static bool b_inCloseWindow;
-
 void MainFrame::OnCloseWindow(wxCloseEvent&)
 {
+	static bool b_inCloseWindow = false;
+
 	// It is possible that double clicks on application exit box could cause re-entrance here
 	// Not good, and don't need it anyway, so simply return.
 	if (b_inCloseWindow) {
-		//            wxLogMessage(_T("opencpn::MainFrame re-entering OnCloseWindow"));
+		// FIXME: race conditions?
 		return;
 	}
 
@@ -3278,7 +3278,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	// If in COG UP mode, the chart update is handled by COG Update timer
 	if (!g_bCourseUp && (0 == m_ChartUpdatePeriod--)) {
 		bnew_view = DoChartUpdate();
-		m_ChartUpdatePeriod = g_ChartUpdatePeriod;
+		m_ChartUpdatePeriod = default_ChartUpdatePeriod;
 	}
 
 	onTimer_update_active_route();
@@ -3545,7 +3545,7 @@ void MainFrame::UpdateGPSCompassStatusBox(bool b_force_new)
 	}
 
 	// If the toolbar location has changed, or the proposed compassDialog location has changed
-	if ((g_FloatingToolbarDialog->GetScreenRect() != g_last_tb_rect)
+	if ((g_FloatingToolbarDialog->GetScreenRect() != last_tb_rect)
 		|| (tentative_rect != g_FloatingCompassDialog->GetScreenRect())) {
 
 		wxRect tb_rect = g_FloatingToolbarDialog->GetScreenRect();
@@ -3562,7 +3562,7 @@ void MainFrame::UpdateGPSCompassStatusBox(bool b_force_new)
 
 		b_update = true;
 
-		g_last_tb_rect = tb_rect;
+		last_tb_rect = tb_rect;
 	}
 
 	if (g_FloatingCompassDialog && g_FloatingCompassDialog->IsShown()) {
@@ -3867,14 +3867,14 @@ void MainFrame::SetChartUpdatePeriod(const ViewPort& vp)
 {
 	// Set the chart update period based upon chart skew and skew compensator
 
-	g_ChartUpdatePeriod = 1; // General default
+	default_ChartUpdatePeriod = 1; // General default
 
 	if (!vp.is_quilt()) {
 		if (g_bskew_comp && (fabs(vp.skew)) > 0.01)
-			g_ChartUpdatePeriod = g_SkewCompUpdatePeriod;
+			default_ChartUpdatePeriod = g_SkewCompUpdatePeriod;
 	}
 
-	m_ChartUpdatePeriod = g_ChartUpdatePeriod;
+	m_ChartUpdatePeriod = default_ChartUpdatePeriod;
 }
 
 void MainFrame::SetChartThumbnail(int index)

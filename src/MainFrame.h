@@ -291,8 +291,9 @@ private:
 	double COGFilterTable[MAX_COGSOG_FILTER_SECONDS];
 	double SOGFilterTable[MAX_COGSOG_FILTER_SECONDS];
 
-	bool m_bpersistent_quilt;
+	static int default_ChartUpdatePeriod;
 	int m_ChartUpdatePeriod;
+	bool m_bpersistent_quilt;
 	bool m_last_bGPSValid;
 
 	wxString prev_locale;
@@ -319,6 +320,8 @@ private:
 
 	bool HDT_Rx; ///< HDT receive flag
 	bool VAR_Rx; ///< VAR receive flag
+
+	wxRect last_tb_rect;
 };
 
 #endif

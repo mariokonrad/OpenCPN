@@ -141,7 +141,6 @@ extern chart::ChartBase* Current_Vector_Ch;
 extern chart::ChartBase* Current_Ch;
 extern double g_ChartNotRenderScaleFactor;
 extern chart::ChartDB* ChartData;
-extern bool bDBUpdateInProgress;
 extern bool g_bHDTValid;
 extern ConsoleCanvas    *console;
 extern FloatingCompassWindow* g_FloatingCompassDialog;

@@ -47,6 +47,7 @@
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+#include <global/GUI.h>
 
 #include <gpx/gpx.h>
 
@@ -70,7 +71,6 @@ extern RouteManagerDialog* pRouteManagerDialog;
 extern Track* g_pActiveTrack;
 extern RouteList* pRouteList;
 extern PlugInManager* g_pi_manager;
-extern bool g_bShowMag;
 extern MainFrame* gFrame;
 
 // Global print route selection dialog
@@ -608,7 +608,9 @@ void RouteProp::CreateControls()
 	m_wpList->InsertColumn(1, _("To Waypoint"), wxLIST_FORMAT_LEFT, 120);
 	m_wpList->InsertColumn(2, _("Distance"), wxLIST_FORMAT_RIGHT, 70);
 
-	if (g_bShowMag)
+	const bool show_mag = global::OCPN::get().gui().view().ShowMag;
+
+	if (show_mag)
 		m_wpList->InsertColumn(3, _("Bearing (M)"), wxLIST_FORMAT_LEFT, 80);
 	else
 		m_wpList->InsertColumn(3, _("Bearing"), wxLIST_FORMAT_LEFT, 80);
@@ -620,7 +622,7 @@ void RouteProp::CreateControls()
 	m_wpList->InsertColumn(8, _("Next tide event"), wxLIST_FORMAT_LEFT, 90);
 	m_wpList->InsertColumn(9, _("Description"), wxLIST_FORMAT_LEFT,
 						   90); // additional columt with WP description
-	if (g_bShowMag)
+	if (show_mag)
 		m_wpList->InsertColumn(
 			10, _("Course (M)"), wxLIST_FORMAT_LEFT,
 			80); // additional columt with WP new course. Is it same like "bearing" of the next WP.
@@ -1070,8 +1072,10 @@ void RouteProp::update_route_properties()
 			m_wpList->SetItem(item_line_index, 2, nullify);
 		prp->SetDistance(leg_dist); // save the course to the next waypoint for printing.
 
-		//  Bearing
-		if (g_bShowMag)
+		const bool show_mag = global::OCPN::get().gui().view().ShowMag;
+
+		// Bearing
+		if (show_mag)
 			t.Printf(_T("%03.0f Deg. M"), navigation::GetTrueOrMag(brg));
 		else
 			t.Printf(_T("%03.0f Deg. T"), navigation::GetTrueOrMag(brg));
@@ -1082,7 +1086,7 @@ void RouteProp::update_route_properties()
 
 		// Course (bearing of next)
 		if (_next_prp) {
-			if (g_bShowMag)
+			if (show_mag)
 				t.Printf(_T("%03.0f Deg. M"), navigation::GetTrueOrMag(course));
 			else
 				t.Printf(_T("%03.0f Deg. T"), navigation::GetTrueOrMag(course));

@@ -326,7 +326,6 @@ FloatingCompassWindow* g_FloatingCompassDialog;
 bool g_bMagneticAPB;
 bool g_b_useStencil;
 
-bool g_bShowMag;
 int g_sticky_chart;
 double g_GLMinLineWidth;
 
@@ -3216,7 +3215,7 @@ void MainFrame::onTimer_update_status_cursor_brgrng()
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	geo::DistanceBearingMercator(cursor, nav.pos, &brg, &dist);
 	wxString s;
-	if (g_bShowMag)
+	if (global::OCPN::get().gui().view().ShowMag) // FIXME: code duplication, the same can be found in AIS_Target_Data... move it to MagneticVariation
 		s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 	else
 		s.Printf(wxString("%03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
@@ -5199,7 +5198,7 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 			over_ground += wxString("COG ---\u00B0", wxConvUTF8);
 		} else {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			if (g_bShowMag) {
+			if (global::OCPN::get().gui().view().ShowMag) { // FIXME: code duplication, the same can be found in AIS_Target_Data... move it to MagneticVariation
 				over_ground += wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8),
 												(int)navigation::GetTrueOrMag(nav.cog));
 			} else {

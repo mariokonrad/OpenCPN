@@ -45,7 +45,6 @@
 
 extern Routeman* g_pRouteMan;
 extern MainFrame* gFrame;
-extern bool g_bShowMag;
 
 enum eMenuItems {
 	ID_NAVLEG,
@@ -266,7 +265,7 @@ void ConsoleCanvas::UpdateRouteData()
 				dcog = 0;
 
 			wxString cogstr;
-			if (g_bShowMag)
+			if (global::OCPN::get().gui().view().ShowMag)
 				cogstr << wxString::Format(wxString("%6.0f(M)", wxConvUTF8),
 										   navigation::GetTrueOrMag(dcog));
 			else

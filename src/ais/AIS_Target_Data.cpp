@@ -30,10 +30,10 @@
 
 #include <global/OCPN.h>
 #include <global/AIS.h>
+#include <global/GUI.h>
 #include <global/Navigation.h>
 
 extern ChartCanvas* cc1;
-extern bool g_bShowMag;
 
 // Define and declare a hasmap for ERI Ship type strings, keyed by their UN Codes.
 WX_DECLARE_HASH_MAP(int, wxString, wxIntegerHash, wxIntegerEqual, ERIShipTypeHash);
@@ -403,7 +403,7 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 																				 == AIS_APRS) {
 			int crs = wxRound(COG);
 			if (crs < 360) {
-				if (g_bShowMag)
+				if (global::OCPN::get().gui().view().ShowMag)
 					courseStr << wxString::Format(wxString("%03d°(M)  ", wxConvUTF8),
 												  (int)navigation::GetTrueOrMag(crs));
 				else
@@ -458,7 +458,7 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 
 	if (b_positionOnceValid && gps_valid && (Brg >= 0.0) && (Range_NM > 0.0)
 		&& (fabs(Lat) < 85.0)) {
-		if (g_bShowMag)
+		if (global::OCPN::get().gui().view().ShowMag)
 			brgStr << wxString::Format(wxString("%03d°(M)  ", wxConvUTF8),
 									   (int)navigation::GetTrueOrMag(Brg));
 		else
@@ -624,7 +624,7 @@ wxString AIS_Target_Data::GetRolloverString(void)
 		int crs = wxRound(COG);
 		if (b_positionOnceValid) {
 			if (crs < 360) {
-				if (g_bShowMag)
+				if (global::OCPN::get().gui().view().ShowMag)
 					result << wxString::Format(wxString("COG %03d°(M)  ", wxConvUTF8),
 											   (int)navigation::GetTrueOrMag(crs));
 				else

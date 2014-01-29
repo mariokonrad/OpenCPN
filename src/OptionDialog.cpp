@@ -90,7 +90,6 @@ extern ChartCanvas* cc1;
 
 extern bool g_bskew_comp;
 extern bool g_bopengl;
-extern bool g_bShowMag;
 
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern Multiplexer* g_pMUX;
@@ -1966,7 +1965,7 @@ void options::SetInitialSettings()
 	}
 
 	m_cbAPBMagnetic->SetValue(g_bMagneticAPB);
-	pCBMagShow->SetValue(g_bShowMag);
+	pCBMagShow->SetValue(view.ShowMag);
 
 	pMagVar->SetValue(wxString::Format(_T("%4.1f"), nav.user_var));
 
@@ -2559,7 +2558,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	g_bCourseUp = pCBCourseUp->GetValue();
 	gui.set_view_lookahead_mode(pCBLookAhead->GetValue());
 
-	g_bShowMag = pCBMagShow->GetValue();
+	gui.set_ShowMag(pCBMagShow->GetValue());
 	nav.set_user_var(get_double(pMagVar));
 
 	g_bMagneticAPB = m_cbAPBMagnetic->GetValue();

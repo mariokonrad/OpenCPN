@@ -71,6 +71,7 @@ public: // view
 	virtual void set_NavAidRadarRingsNumberVisible(int);
 	virtual void set_NavAidRadarRingsStep(double);
 	virtual void set_NavAidRadarRingsStepUnits(int);
+	virtual void set_ShowMag(bool);
 
 public: // frame
 	virtual const Frame& frame() const;

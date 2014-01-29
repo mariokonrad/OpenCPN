@@ -68,6 +68,7 @@ public:
 		int NavAidRadarRingsNumberVisible;
 		double NavAidRadarRingsStep;
 		int NavAidRadarRingsStepUnits;
+		bool ShowMag;
 	};
 
 	virtual const View& view() const = 0;
@@ -99,6 +100,7 @@ public:
 	virtual void set_NavAidRadarRingsNumberVisible(int) = 0;
 	virtual void set_NavAidRadarRingsStep(double) = 0;
 	virtual void set_NavAidRadarRingsStepUnits(int) = 0;
+	virtual void set_ShowMag(bool) = 0;
 
 public:
 	struct Frame

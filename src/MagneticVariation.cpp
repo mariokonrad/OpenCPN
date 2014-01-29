@@ -25,17 +25,16 @@
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+#include <global/GUI.h>
 
 #include <wx/math.h> // FIXME: VS2010 does not know isnan (do not like the _isnan hack), but dependencies to wx seems overkill
-
-extern bool g_bShowMag;
 
 namespace navigation
 {
 
 double GetTrueOrMag(double a)
 {
-	if (g_bShowMag) {
+	if (global::OCPN::get().gui().view().ShowMag) {
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		if (!wxIsNaN(nav.var)) {
 			if ((a + nav.var) > 360.0)

@@ -171,6 +171,11 @@ void OCPN_GUI::set_NavAidRadarRingsStepUnits(int value)
 	data_view.NavAidRadarRingsStepUnits = value;
 }
 
+void OCPN_GUI::set_ShowMag(bool value)
+{
+	data_view.ShowMag = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

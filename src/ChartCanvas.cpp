@@ -231,8 +231,6 @@ extern ArrayOfConnPrm* g_pConnectionParams;
 
 extern sound::OCPN_Sound g_anchorwatch_sound;
 
-extern bool g_bShowMag;
-
 // TODO why are these static?
 static int mouse_x;
 static int mouse_y;
@@ -1975,7 +1973,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 					  << segShow_point_a->GetName() << _(" to ") << segShow_point_b->GetName()
 					  << _T("\n");
 
-					if (g_bShowMag)
+					if (global::OCPN::get().gui().view().ShowMag) // FIXME: code duplication
 						s << wxString::Format(wxString("%03d°(M)  ", wxConvUTF8),
 											  (int)navigation::GetTrueOrMag(brg));
 					else
@@ -2079,7 +2077,7 @@ void ChartCanvas::OnCursorTrackTimerEvent(wxTimerEvent&)
 			wxString s;
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			geo::DistanceBearingMercator(cursor, nav.pos, &brg, &dist);
-			if (g_bShowMag)
+			if (global::OCPN::get().gui().view().ShowMag) // FIXME: code duplication
 				s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 			else
 				s.Printf(wxString("%03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
@@ -5154,7 +5152,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			geo::DistanceBearingMercator(m_cursor_pos, nav.pos, &brg, &dist);
 			wxString s;
-			if (g_bShowMag)
+			if (global::OCPN::get().gui().view().ShowMag) // FIXME: code duplication
 				s.Printf(wxString("%03d°(M)  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
 			else
 				s.Printf(wxString("%03d°  ", wxConvUTF8), (int)navigation::GetTrueOrMag(brg));
@@ -7887,7 +7885,7 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 		}
 
 		wxString routeInfo;
-		if (g_bShowMag)
+		if (global::OCPN::get().gui().view().ShowMag) // FIXME: code duplication
 			routeInfo << wxString::Format(wxString("%03d°(M)  ", wxConvUTF8),
 										  (int)navigation::GetTrueOrMag(brg));
 		else

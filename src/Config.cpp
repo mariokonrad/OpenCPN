@@ -69,7 +69,6 @@ extern int g_restore_dbindex;
 extern RouteList* pRouteList;
 extern LayerList* pLayerList;
 extern int g_LayerIdx;
-extern bool g_bShowMag;
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern WayPointman* pWayPointMan;
 extern bool g_bskew_comp;
@@ -524,7 +523,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	g_COGFilterSec = wxMax(g_COGFilterSec, 1);
 	g_SOGFilterSec = g_COGFilterSec;
 
-	Read(_T("ShowMag"), &g_bShowMag, 0);
+	gui.set_ShowMag(read_bool(_T("ShowMag")));
 	nav.set_user_var(read_double(_T("UserMagVariation"), 0.0));
 
 	Read(_T("UseMagAPB"), &g_bMagneticAPB, 0);
@@ -1549,7 +1548,7 @@ void Config::UpdateSettings()
 	Write(_T("FilterNMEA_Avg"), g_bfilter_cogsog);
 	Write(_T("FilterNMEA_Sec"), g_COGFilterSec);
 
-	Write(_T("ShowMag"), g_bShowMag);
+	Write(_T("ShowMag"), view.ShowMag);
 	Write(_T("UserMagVariation"), wxString::Format(_T("%.2f"), nav.user_var));
 
 	write_cm93();

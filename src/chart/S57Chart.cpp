@@ -75,7 +75,6 @@
 
 extern chart::s52plib* ps52plib;
 extern S57ClassRegistrar* g_poRegistrar;
-extern FILE* s_fpdebug;
 extern bool g_b_useStencil;
 extern ChartCanvas* cc1;
 extern chart::ChartBase* Current_Ch;

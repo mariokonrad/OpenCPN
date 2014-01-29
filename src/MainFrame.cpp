@@ -225,12 +225,17 @@ chart::CM93OffsetDialog* g_pCM93OffsetDialog;
 #ifdef USE_GLU_TESS
 #ifdef USE_GLU_DLL
 // end rms
-extern bool               s_glu_dll_ready;
-extern HINSTANCE          s_hGLU_DLL; // Handle to DLL
+extern bool s_glu_dll_ready;
+extern HINSTANCE s_hGLU_DLL; // Handle to DLL
 #endif
 #endif
 #endif
 #endif
+
+wxDateTime g_StartTime;
+int g_StartTimeTZ;
+tide::IDX_entry* gpIDX;
+int gpIDXn;
 
 ais::AIS_Decoder* g_pAIS;
 ais::AISTargetListDialog* g_pAISTargetList;
@@ -239,20 +244,11 @@ ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 int g_current_arrow_scale;
 Multiplexer* g_pMUX;
 wxRect g_blink_rect;
-wxDateTime g_StartTime;
-int g_StartTimeTZ;
-tide::IDX_entry* gpIDX;
-int gpIDXn;
-long gStart_LMT_Offset;
-FILE* s_fpdebug;
-bool bFirstAuto;
-double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode
 bool g_bCourseUp;
 int g_COGAvgSec; // COG average period (sec.) for Course Up Mode
 double g_COGAvg;
 bool g_bskew_comp;
 bool g_bopengl;
-int g_nCOMPortCheck;
 PlugInManager* g_pi_manager;
 bool g_bportable;
 bool g_bdisable_opengl;
@@ -266,8 +262,6 @@ wxArrayString TideCurrentDataSet;
 struct sigaction sa_all;
 struct sigaction sa_all_old;
 #endif
-
-bool g_boptionsactive;
 
 #ifdef __WXMSW__
 // System color control support
@@ -384,7 +378,8 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos, 
 	, m_ChartUpdatePeriod(1) // set the default (1 sec.) period
 	, HDT_Rx(false) // Most likely installations have no ownship heading information
 	, VAR_Rx(false) // Most likely installations have no ownship heading information
-
+	, bFirstAuto(true)
+	, VPRotate(0.0)
 {
 	m_ulLastNEMATicktime = 0;
 	m_pStatusBar = NULL;
@@ -456,8 +451,6 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos, 
 	// Create/connect a dynamic event handler slot
 	Connect(wxEVT_OCPN_DATASTREAM,
 			(wxObjectEventFunction)(wxEventFunction) & MainFrame::OnEvtOCPN_NMEA);
-
-	bFirstAuto = true;
 
 	// Create/connect a dynamic event handler slot for OCPN_MsgEvent(s) coming from PlugIn system
 	Connect(wxEVT_OCPN_MSG,
@@ -2155,8 +2148,6 @@ int MainFrame::DoOptionsDialog()
 	static wxPoint lastWindowPos(0, 0);
 	static wxSize lastWindowSize(0, 0);
 
-	g_boptionsactive = true;
-
 	::wxBeginBusyCursor();
 	options optionsDlg(this, -1, _("Options"));
 	::wxEndBusyCursor();
@@ -2249,8 +2240,6 @@ int MainFrame::DoOptionsDialog()
 #endif
 
 	Refresh(false);
-
-	g_boptionsactive = false;
 
 	return ret_val;
 }
@@ -3466,19 +3455,19 @@ void MainFrame::OnFrameCOGTimer(wxTimerEvent&)
 
 void MainFrame::DoCOGSet(void)
 {
-	double old_VPRotate = g_VPRotate;
+	double old_VPRotate = VPRotate;
 
 	if (g_bCourseUp)
-		g_VPRotate = -g_COGAvg * M_PI / 180.0;
+		VPRotate = -g_COGAvg * M_PI / 180.0;
 	else
-		g_VPRotate = 0.0;
+		VPRotate = 0.0;
 
 	if (chart_canvas)
-		chart_canvas->SetVPRotation(g_VPRotate);
+		chart_canvas->SetVPRotation(VPRotate);
 
 	if (g_bCourseUp) {
 		bool bnew_chart = DoChartUpdate();
-		if ((bnew_chart) || (old_VPRotate != g_VPRotate))
+		if ((bnew_chart) || (old_VPRotate != VPRotate))
 			if (chart_canvas)
 				chart_canvas->ReloadVP();
 	}

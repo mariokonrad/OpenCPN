@@ -182,6 +182,8 @@ private:
 	wxChoice* m_chWidth;
 
 	wxStaticBoxSizer* m_pListSizer;
+
+	static long Start_LMT_Offset; // TODO: must this be static?
 };
 
 #endif

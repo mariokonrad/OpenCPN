@@ -180,6 +180,11 @@ void OCPN_System::set_config_SpeedFormat(int value)
 	data_config.SpeedFormat = value;
 }
 
+void OCPN_System::set_config_COMPortCheck(int value)
+{
+	data_config.COMPortCheck = value;
+}
+
 const System::Debug& OCPN_System::debug() const
 {
 	return data_debug;

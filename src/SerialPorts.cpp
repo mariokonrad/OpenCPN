@@ -24,6 +24,9 @@
 #include "SerialPorts.h"
 #include <wx/log.h>
 
+#include <global/OCPN.h>
+#include <global/System.h>
+
 #ifdef __WXGTK__
 	extern "C" int wait(int *); // POSIX wait() for process
 	#include <termios.h>
@@ -40,7 +43,6 @@
 	#include <setupapi.h>
 	#include <guiddef.h>
 	#include <initguid.h>
-	extern int g_nCOMPortCheck;
 
 	// FIXME: thid guid is defined multiple times
 	// {2C9C45C2-8E7D-4C08-A12D-816BBAE722C0}
@@ -304,8 +306,12 @@ wxArrayString* EnumerateSerialPorts(void)
 	if (preturn->IsEmpty()) {
 		preturn->Add(_T("/dev/ttyS0"));
 		preturn->Add(_T("/dev/ttyS1"));
+		preturn->Add(_T("/dev/ttyS2"));
+		preturn->Add(_T("/dev/ttyS3"));
 		preturn->Add(_T("/dev/ttyUSB0"));
 		preturn->Add(_T("/dev/ttyUSB1"));
+		preturn->Add(_T("/dev/ttyUSB2"));
+		preturn->Add(_T("/dev/ttyUSB3"));
 	}
 
 	// Clean up the temporary files created by helper.
@@ -345,16 +351,16 @@ wxArrayString* EnumerateSerialPorts(void)
 	// *************************************************************************
 
 	// Method 1:  Use GetDefaultCommConfig()
-	// Try first {g_nCOMPortCheck} possible COM ports, check for a default configuration
+	// Try first a number of possible COM ports, check for a default configuration
 	// This method will not find some Bluetooth SPP ports
-	for (int i = 1; i < g_nCOMPortCheck; i++) {
-		wxString s;
-		s.Printf(_T("COM%d"), i);
+	const int N_COM_PORTS = global::OCPN::get().sys().config().COMPortCheck;
+	for (int i = 1; i < N_COM_PORTS; i++) {
+		wxString s = wxString::Format(_T("COM%d"), i);
 
 		COMMCONFIG cc;
 		DWORD dwSize = sizeof(COMMCONFIG);
 		if (GetDefaultCommConfig(s.fn_str(), &cc, &dwSize))
-			preturn->Add(wxString(s));
+			preturn->Add(s);
 	}
 
 	// Method 3:  WDM-Setupapi

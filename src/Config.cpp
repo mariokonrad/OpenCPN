@@ -81,8 +81,6 @@ extern bool g_bCourseUp;
 extern int g_COGAvgSec;
 extern bool g_bMagneticAPB;
 
-extern int g_nCOMPortCheck;
-
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
 
@@ -528,7 +526,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	global::OCPN::get().sys().set_config_memory_footprint(
 		read_long(_T("MemFootprintTargetMB"), 200 * 1024));
 
-	Read(_T("WindowsComPortMax"), &g_nCOMPortCheck, 32);
+	sys.set_config_COMPortCheck(read_long(_T("WindowsComPortMax"), 32));
 
 	gui.set_view_quilt_enable(read_bool(_T("ChartQuilting"), false));
 

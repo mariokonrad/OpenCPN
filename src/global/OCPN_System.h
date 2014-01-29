@@ -69,6 +69,7 @@ public: // config
 	virtual void set_config_SDMMFormat(int);
 	virtual void set_config_DistanceFormat(int);
 	virtual void set_config_SpeedFormat(int);
+	virtual void set_config_COMPortCheck(int);
 
 public: // debug
 	virtual const Debug& debug() const;

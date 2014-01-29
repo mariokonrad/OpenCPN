@@ -151,9 +151,6 @@ extern ais::AISTargetListDialog* g_pAISTargetList;
 extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern int gpIDXn;
-extern FILE* s_fpdebug;
-extern bool bFirstAuto;
-extern double g_VPRotate; // Viewport rotation angle, used on "Course Up" mode
 extern double g_COGAvg;
 extern bool g_bskew_comp;
 extern PlugInManager* g_pi_manager;

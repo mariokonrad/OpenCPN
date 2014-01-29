@@ -61,7 +61,6 @@ extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern tide::IDX_entry* gpIDX;
 extern tide::TCMgr* ptcmgr;
-extern long gStart_LMT_Offset;
 extern Config* pConfig;
 extern WayPointman* pWayPointMan;
 extern ChartCanvas* cc1;
@@ -125,6 +124,8 @@ BEGIN_EVENT_TABLE( RouteProp, wxDialog )
 	EVT_BUTTON( ID_ROUTEPROP_EXTEND, RouteProp::OnRoutepropExtendClick )
 	EVT_BUTTON( ID_ROUTEPROP_PRINT, RouteProp::OnRoutepropPrintClick )
 END_EVENT_TABLE()
+
+long RouteProp::Start_LMT_Offset = 0;
 
 RouteProp::RouteProp()
 {
@@ -739,7 +740,7 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 	m_tz_selection = 1;
 
 	if (pR == m_pRoute) {
-		gStart_LMT_Offset = 0;
+		Start_LMT_Offset = 0;
 		if (!pR->m_PlannedDeparture.IsValid())
 			m_tz_selection = 0;
 	} else {
@@ -755,7 +756,7 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 			m_tz_selection = 2;
 		else
 			m_tz_selection = g_StartTimeTZ;
-		gStart_LMT_Offset = 0;
+		Start_LMT_Offset = 0;
 		m_pEnroutePoint = NULL;
 		m_bStartNow = false;
 		m_planspeed = pR->m_PlannedSpeed;
@@ -768,9 +769,9 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 	if (m_pRoute) {
 		// Calculate  LMT offset from the first point in the route
 		if (m_pEnroutePoint && m_bStartNow)
-			gStart_LMT_Offset = long((m_pEnroutePoint->longitude()) * 3600.0 / 15.0);
+			Start_LMT_Offset = long((m_pEnroutePoint->longitude()) * 3600.0 / 15.0);
 		else
-			gStart_LMT_Offset = long((m_pRoute->pRoutePointList->front()->longitude()) * 3600.0 / 15.0);
+			Start_LMT_Offset = long((m_pRoute->pRoutePointList->front()->longitude()) * 3600.0 / 15.0);
 	}
 
 	// Reorganize dialog for route or track display
@@ -841,7 +842,7 @@ void RouteProp::InitializeList()
 		m_PlanSpeedCtl->SetValue(wxString::Format(_T("%5.2f"), m_planspeed));
 
 		if (m_starttime.IsValid()) {
-			m_StartTimeCtl->SetValue(ts2s(m_starttime, m_tz_selection, (int)gStart_LMT_Offset, INPUT_FORMAT));
+			m_StartTimeCtl->SetValue(ts2s(m_starttime, m_tz_selection, (int)Start_LMT_Offset, INPUT_FORMAT));
 		} else
 			m_StartTimeCtl->Clear();
 	}
@@ -924,10 +925,9 @@ void RouteProp::update_route_properties()
 		total_seconds = m_pRoute->m_route_time;
 		if (m_bStartNow) {
 			if (m_pEnroutePoint)
-				gStart_LMT_Offset = static_cast<long>(m_pEnroutePoint->longitude() * 3600.0 / 15.0);
+				Start_LMT_Offset = static_cast<long>(m_pEnroutePoint->longitude() * 3600.0 / 15.0);
 			else
-				gStart_LMT_Offset
-					= static_cast<long>(m_pRoute->pRoutePointList->front()->longitude() * 3600.0 / 15.0);
+				Start_LMT_Offset = static_cast<long>(m_pRoute->pRoutePointList->front()->longitude() * 3600.0 / 15.0);
 		}
 	}
 
@@ -942,7 +942,7 @@ void RouteProp::update_route_properties()
 				s = _T(">");
 			}
 		}
-		s += ts2s(m_starttime, tz_selection, static_cast<int>(gStart_LMT_Offset), INPUT_FORMAT);
+		s += ts2s(m_starttime, tz_selection, static_cast<int>(Start_LMT_Offset), INPUT_FORMAT);
 		m_StartTimeCtl->SetValue(s);
 	} else
 		m_StartTimeCtl->Clear();
@@ -1391,7 +1391,7 @@ void RouteProp::OnStartTimeCtlUpdated(wxCommandEvent&)
 			if (tz_selection == 1)
 				m_starttime = d.ToUTC();
 			if (tz_selection == 2) {
-				wxTimeSpan glmt(0, 0, (int)gStart_LMT_Offset, 0);
+				wxTimeSpan glmt(0, 0, (int)Start_LMT_Offset, 0);
 				m_starttime -= glmt;
 			}
 		}

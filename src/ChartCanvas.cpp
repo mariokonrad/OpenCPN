@@ -159,8 +159,6 @@ extern TrackPropDlg* pTrackPropDialog;
 extern MarkInfoImpl* pMarkInfoDialog;
 extern Track* g_pActiveTrack;
 
-extern tide::IDX_entry* gpIDX;
-extern int gpIDXn;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;

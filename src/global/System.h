@@ -51,6 +51,7 @@ public:
 		wxString locale;
 		wxString csv_location;
 		wxString SENCPrefix;
+		wxString UserPresLibData;
 	};
 
 	virtual const Data& data() const = 0;
@@ -67,6 +68,7 @@ public:
 	virtual void set_locale(const wxString&) = 0;
 	virtual void set_csv_location(const wxString&) = 0;
 	virtual void set_SENCPrefix(const wxString&) = 0;
+	virtual void set_UserPresLibData(const wxString&) = 0;
 
 public:
 	struct Config
@@ -80,6 +82,7 @@ public:
 		long GPU_MemSize;
 		bool nmea_UseGLL;
 		bool SetSystemTime;
+		bool PlayShipsBells;
 	};
 
 	virtual const Config& config() const = 0;
@@ -92,6 +95,7 @@ public:
 	virtual void set_config_GPU_MemSize(long) = 0;
 	virtual void set_config_nmea_use_gll(bool) = 0;
 	virtual void set_config_SetSystemTime(bool) = 0;
+	virtual void set_config_PlayShipsBells(bool) = 0;
 
 public:
 	struct Debug

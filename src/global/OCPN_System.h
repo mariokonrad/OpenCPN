@@ -50,6 +50,7 @@ public: // data
 	virtual void set_locale(const wxString&);
 	virtual void set_csv_location(const wxString&);
 	virtual void set_SENCPrefix(const wxString&);
+	virtual void set_UserPresLibData(const wxString&);
 
 public: // config
 	virtual const Config& config() const;
@@ -62,6 +63,7 @@ public: // config
 	virtual void set_config_GPU_MemSize(long);
 	virtual void set_config_nmea_use_gll(bool);
 	virtual void set_config_SetSystemTime(bool);
+	virtual void set_config_PlayShipsBells(bool);
 
 public: // debug
 	virtual const Debug& debug() const;

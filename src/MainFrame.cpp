@@ -194,7 +194,6 @@ RouteManagerDialog* pRouteManagerDialog;
 bool bDBUpdateInProgress;
 ThumbWin* pthumbwin;
 tide::TCMgr* ptcmgr;
-wxString g_UserPresLibData;
 wxString g_uploadConnection;
 volatile int quitflag;
 ArrayOfConnPrm* g_pConnectionParams;
@@ -207,7 +206,6 @@ ToolBarSimple* g_toolbar;
 ocpnStyle::StyleManager* g_StyleManager;
 wxPrintData* g_printData = (wxPrintData*)NULL;
 wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
-bool g_bPlayShipsBells;
 int g_iSDMMFormat;
 int g_iDistanceFormat;
 int g_iSpeedFormat;
@@ -3144,7 +3142,7 @@ void MainFrame::init_bell_sounds()
 // Assumes minute to be either 0 or 30.
 void MainFrame::onTimer_play_bells_on_log()
 {
-	if (!g_bPlayShipsBells)
+	if (!global::OCPN::get().sys().config().PlayShipsBells)
 		return;
 
 	wxDateTime lognow = wxDateTime::Now().MakeGMT();

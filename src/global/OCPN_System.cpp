@@ -95,6 +95,11 @@ void OCPN_System::set_SENCPrefix(const wxString& value)
 	data_data.SENCPrefix = value;
 }
 
+void OCPN_System::set_UserPresLibData(const wxString& value)
+{
+	data_data.UserPresLibData = value;
+}
+
 const System::Config& OCPN_System::config() const
 {
 	return data_config;
@@ -143,6 +148,11 @@ void OCPN_System::set_config_nmea_use_gll(bool value)
 void OCPN_System::set_config_SetSystemTime(bool value)
 {
 	data_config.SetSystemTime = value;
+}
+
+void OCPN_System::set_config_PlayShipsBells(bool value)
+{
+	data_config.PlayShipsBells = value;
 }
 
 const System::Debug& OCPN_System::debug() const

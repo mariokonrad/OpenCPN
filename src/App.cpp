@@ -142,7 +142,6 @@ extern bool bDBUpdateInProgress;
 extern ThumbWin* pthumbwin;
 extern tide::TCMgr* ptcmgr;
 extern tide::IDX_entry* gpIDX;
-extern wxString g_UserPresLibData;
 extern chart::ChartDB* ChartData;
 extern Multiplexer* g_pMUX;
 extern ais::AIS_Decoder* g_pAIS;
@@ -736,12 +735,12 @@ void App::setup_s57()
 	wxString plib_data;
 	bool b_force_legacy = false;
 
-	if (g_UserPresLibData.IsEmpty()) {
+	if (sys.UserPresLibData.IsEmpty()) {
 		plib_data = sys.csv_location;
 		appendOSDirSlash(plib_data);
 		plib_data.Append(_T("S52RAZDS.RLE"));
 	} else {
-		plib_data = g_UserPresLibData;
+		plib_data = sys.UserPresLibData;
 		b_force_legacy = true;
 	}
 

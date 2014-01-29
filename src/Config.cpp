@@ -60,7 +60,6 @@
 #include <wx/tokenzr.h>
 #include <wx/progdlg.h>
 
-
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern MainFrame* gFrame;
@@ -73,9 +72,7 @@ extern int g_LayerIdx;
 extern bool g_bShowMag;
 extern double g_UserVar;
 extern ArrayOfConnPrm* g_pConnectionParams;
-extern wxString g_UserPresLibData;
 extern WayPointman* pWayPointMan;
-extern bool g_bPlayShipsBells;
 extern bool g_bskew_comp;
 extern bool g_bopengl;
 extern bool g_bdisable_opengl;
@@ -84,38 +81,38 @@ extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
 
 #ifdef USE_S57
-extern chart::s52plib          *ps52plib;
+extern chart::s52plib* ps52plib;
 #endif
 
-extern bool             g_bCourseUp;
-extern int              g_COGAvgSec;
-extern bool             g_bMagneticAPB;
+extern bool g_bCourseUp;
+extern int g_COGAvgSec;
+extern bool g_bMagneticAPB;
 
-extern int              g_nCOMPortCheck;
+extern int g_nCOMPortCheck;
 
-extern wxString         g_AW1GUID;
-extern wxString         g_AW2GUID;
+extern wxString g_AW1GUID;
+extern wxString g_AW2GUID;
 
-extern bool             g_bfilter_cogsog;
-extern int              g_COGFilterSec;
-extern int              g_SOGFilterSec;
+extern bool g_bfilter_cogsog;
+extern int g_COGFilterSec;
+extern int g_SOGFilterSec;
 
-extern int              g_SkewCompUpdatePeriod;
+extern int g_SkewCompUpdatePeriod;
 
-extern int              g_ais_cog_predictor_width;
+extern int g_ais_cog_predictor_width;
 
-extern wxString         g_default_wp_icon;
+extern wxString g_default_wp_icon;
 
-extern chart::ChartGroupArray  *g_pGroupArray;
-extern int              g_GroupIndex;
+extern chart::ChartGroupArray* g_pGroupArray;
+extern int g_GroupIndex;
 
-extern int              g_current_arrow_scale;
-extern wxString         g_GPS_Ident;
-extern bool             g_bGarminHostUpload;
-extern wxString         g_uploadConnection;
+extern int g_current_arrow_scale;
+extern wxString g_GPS_Ident;
+extern bool g_bGarminHostUpload;
+extern wxString g_uploadConnection;
 
-extern ocpnStyle::StyleManager * g_StyleManager;
-extern wxArrayString    TideCurrentDataSet;
+extern ocpnStyle::StyleManager* g_StyleManager;
+extern wxArrayString TideCurrentDataSet;
 
 Config::Config(
 		const wxString & appName,
@@ -577,7 +574,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	sys.set_config_SetSystemTime(read_bool(_T("SetSystemTime")));
 	Read(_T("ShowDebugWindows"), &m_bShowDebugWindows, 1);
 	gui.set_view_display_grid(read_bool(_T("ShowGrid")));
-	Read(_T("PlayShipsBells"), &g_bPlayShipsBells, 0);
+	sys.set_config_PlayShipsBells(read_bool(_T("PlayShipsBells")));
 	gui.set_view_permanent_mob_icon(read_bool(_T("PermanentMOBIcon")));
 	gui.set_view_show_layers(read_bool(_T("ShowLayers"), true));
 	gui.set_auto_anchor_mark(read_bool(_T("AutoAnchorDrop")));
@@ -780,7 +777,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	SetPath(_T("/Directories"));
 	Read(strpres, &valpres); // Get the File name
 	if (iteration == 0)
-		g_UserPresLibData = valpres;
+		sys.set_UserPresLibData(valpres);
 
 	wxString strs(_T("SENCFileLocation"));
 	SetPath(_T("/Directories"));
@@ -1543,7 +1540,7 @@ void Config::UpdateSettings()
 	Write(_T("ShowDebugWindows"), m_bShowDebugWindows);
 	Write(_T("SetSystemTime"), sys.config().SetSystemTime);
 	Write(_T("ShowGrid"), view.display_grid);
-	Write(_T("PlayShipsBells"), g_bPlayShipsBells);
+	Write(_T("PlayShipsBells"), sys.config().PlayShipsBells);
 	Write(_T("PermanentMOBIcon"), view.permanent_mob_icon);
 	Write(_T("ShowLayers"), view.show_layers);
 	Write(_T("AutoAnchorDrop"), view.auto_anchor_mark);

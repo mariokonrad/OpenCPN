@@ -102,8 +102,6 @@ extern int g_SOGFilterSec;
 extern PlugInManager* g_pi_manager;
 extern ocpnStyle::StyleManager* g_StyleManager;
 
-extern bool g_bPlayShipsBells;
-
 extern int g_iSDMMFormat;
 extern int g_iDistanceFormat;
 extern int g_iSpeedFormat;
@@ -137,7 +135,7 @@ extern wxArrayString TideCurrentDataSet;
 
 extern ais::AIS_Decoder* g_pAIS;
 
-options * g_pOptions;
+options* g_pOptions;
 
 IMPLEMENT_DYNAMIC_CLASS(options, wxDialog)
 
@@ -1914,6 +1912,7 @@ void options::SetInitialSettings()
 {
 	// ChartsLoad
 
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
 	const global::GUI& gui = global::OCPN::get().gui();
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::GUI::OwnShip& ownship = global::OCPN::get().gui().ownship();
@@ -2011,7 +2010,7 @@ void options::SetInitialSettings()
 	}
 
 	pPreserveScale->SetValue(view.preserve_scale_on_x);
-	pPlayShipsBells->SetValue(g_bPlayShipsBells);
+	pPlayShipsBells->SetValue(cfg.PlayShipsBells);
 	pFullScreenToolbar->SetValue(gui.toolbar().full_screen);
 	pTransparentToolbar->SetValue(gui.toolbar().transparent);
 	pSDMMFormat->Select(g_iSDMMFormat);
@@ -2434,6 +2433,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	global::AIS& ais = global::OCPN::get().ais();
 	global::GUI& gui = global::OCPN::get().gui();
 	global::Navigation& nav = global::OCPN::get().nav();
+	global::System& sys = global::OCPN::get().sys();
 
 	::wxBeginBusyCursor();
 
@@ -2574,7 +2574,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 	gui.set_view_preserve_scale_on_x(pPreserveScale->GetValue());
 
-	g_bPlayShipsBells = pPlayShipsBells->GetValue();
+	sys.set_config_PlayShipsBells(pPlayShipsBells->GetValue());
 	gui.set_toolbar_full_screen(pFullScreenToolbar->GetValue());
 	gui.set_toolbar_transparent(pTransparentToolbar->GetValue());
 	g_iSDMMFormat = pSDMMFormat->GetSelection();

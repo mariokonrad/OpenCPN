@@ -186,8 +186,6 @@ extern Routeman* g_pRouteMan;
 extern WayPointman* pWayPointMan;
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
-extern bool g_bHDT_Rx;
-extern bool g_bVAR_Rx;
 extern chart::ChartStack* pCurrentStack;
 extern int g_unit_test_1;
 extern bool g_bportable;
@@ -1709,10 +1707,6 @@ bool App::OnInit()
 	// All set to go.....
 
 	setup_gps_watchdog();
-
-	// Most likely installations have no ownship heading information
-	g_bHDT_Rx = false;
-	g_bVAR_Rx = false;
 
 	// Start up a new track if enabled in config file
 	if (global::OCPN::get().ais().get_data().TrackCarryOver)

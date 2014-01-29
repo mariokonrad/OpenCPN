@@ -213,8 +213,6 @@ int g_iSDMMFormat;
 int g_iDistanceFormat;
 int g_iSpeedFormat;
 bool bGPSValid;
-bool g_bHDT_Rx;
-bool g_bVAR_Rx;
 int g_SatsInView;
 bool g_bSatValid;
 bool g_bfilter_cogsog;
@@ -396,6 +394,8 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos,
 	, timer_tick(0)
 	, route_blinker_tick(0)
 	, cruising(false)
+	, HDT_Rx(false) // Most likely installations have no ownship heading information
+	, VAR_Rx(false) // Most likely installations have no ownship heading information
 {
 	m_ulLastNEMATicktime = 0;
 	m_pStatusBar = NULL;
@@ -2940,7 +2940,7 @@ void MainFrame::update_hdt_watchdog()
 	// Update and check watchdog timer for True Heading data source
 	wdt.decrement_hdt_watchdog();
 	if (wdt.get_data().hdt_watchdog <= 0) {
-		g_bHDT_Rx = false;
+		HDT_Rx = false;
 		global::Navigation& nav = global::OCPN::get().nav();
 		nav.set_heading_true(NAN);
 		if ((debug.nmea > 0) && (wdt.get_data().hdt_watchdog == 0))
@@ -2956,7 +2956,7 @@ void MainFrame::update_var_watchdog()
 	// Update and check watchdog timer for Magnetic Variation data source
 	wdt.decrement_var_watchdog();
 	if (wdt.get_data().var_watchdog <= 0) {
-		g_bVAR_Rx = false;
+		VAR_Rx = false;
 		if ((debug.nmea > 0) && (wdt.get_data().var_watchdog == 0))
 			wxLogMessage(_T("   ***VAR Watchdog timeout..."));
 	}
@@ -4573,7 +4573,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 
 	//  We can possibly use the estimated magnetic variation if WMM_pi is present and active
 	//  and we have no other source of Variation
-	if (!g_bVAR_Rx) {
+	if (!VAR_Rx) {
 		if (message_ID == _T("WMM_VARIATION_BOAT")) {
 
 			// construct the JSON root object
@@ -4923,7 +4923,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 							global::OCPN::get().nav().set_magn_var(
 								-m_NMEA0183.Rmc.MagneticVariation);
 
-						g_bVAR_Rx = true;
+						VAR_Rx = true;
 						global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
 					}
 
@@ -4942,7 +4942,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 			if (m_NMEA0183.Parse()) {
 				global::OCPN::get().nav().set_heading_true(m_NMEA0183.Hdt.DegreesTrue);
 				if (!wxIsNaN(m_NMEA0183.Hdt.DegreesTrue)) {
-					g_bHDT_Rx = true;
+					HDT_Rx = true;
 					global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
 				}
 			} else if (debug.nmea > 0) {
@@ -4961,7 +4961,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 					nav.set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
 
 				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees)) {
-					g_bVAR_Rx = true;
+					VAR_Rx = true;
 					global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
 				}
 			} else if (debug.nmea > 0) {
@@ -5097,7 +5097,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 
 			global::OCPN::get().nav().set_heading_true(gpd.kHdt);
 			if (!wxIsNaN(gpd.kHdt)) {
-				g_bHDT_Rx = true;
+				HDT_Rx = true;
 				global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
 			}
 
@@ -5143,7 +5143,7 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 	// Here is the one place we try to create Hdt from Hdm and Var,
 	// but only if NMEA HDT sentence is not being received
 
-	if (!g_bHDT_Rx) {
+	if (!HDT_Rx) {
 		if (!wxIsNaN(nav.var) && !wxIsNaN(nav.hdm)) {
 			global::OCPN::get().nav().set_heading_true(nav.hdm + nav.var);
 			global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);

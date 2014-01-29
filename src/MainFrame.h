@@ -316,6 +316,9 @@ private:
 	bool cruising;
 
 	sound::OCPN_Sound bells_sound[8]; // FIXME: std container
+
+	bool HDT_Rx; ///< HDT receive flag
+	bool VAR_Rx; ///< VAR receive flag
 };
 
 #endif

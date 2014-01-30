@@ -27,7 +27,7 @@
 
 #include <libtcd/tcd.h>
 
-#include <MicrosoftCompatibility.h>
+#include <windows/compatibility.h>
 
 namespace tide {
 

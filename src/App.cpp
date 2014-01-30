@@ -36,7 +36,6 @@
 #include <StatWin.h>
 #include <PianoWin.h>
 #include <ConsoleCanvas.h>
-#include <MicrosoftCompatibility.h>
 #include <GUI_IDs.h>
 #include <LogMessageOnce.h>
 
@@ -46,6 +45,8 @@
 #include <Config.h>
 #include <UserColors.h>
 #include <Layer.h>
+
+#include <windows/compatibility.h>
 
 #include <tide/TCMgr.h>
 

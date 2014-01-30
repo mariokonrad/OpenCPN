@@ -38,7 +38,7 @@
 #include <global/OCPN.h>
 #include <global/System.h>
 
-#include <MicrosoftCompatibility.h>
+#include <windows/compatibility.h>
 #include <LogMessageOnce.h>
 
 #include <algorithm>

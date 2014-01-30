@@ -34,11 +34,14 @@
 
 #include <sys/stat.h>
 
+#include <chart/PlyPoint.h>
+
+#include <windows/compatibility.h>
+
 #include <ocpn_pixel.h>
 #include <OCPNRegionIterator.h>
 #include <OCPNBitmap.h>
-#include <MicrosoftCompatibility.h>
-#include <chart/PlyPoint.h>
+
 #include <algorithm>
 
 using std::min;

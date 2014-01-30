@@ -43,7 +43,7 @@
 #include <ocpnDC.h>
 
 #include <MainFrame.h>
-#include <MicrosoftCompatibility.h>
+#include <windows/compatibility.h>
 
 #include <wx/regex.h>
 

@@ -27,8 +27,10 @@
  **************************************************************************/
 
 #include "GeoRef.h"
+
 #include <geo/lmfit.h>
-#include <MicrosoftCompatibility.h>
+
+#include <windows/compatibility.h>
 
 #include <vector>
 #include <utility>

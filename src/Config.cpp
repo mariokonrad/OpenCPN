@@ -37,7 +37,8 @@
 #include <NMEALogWindow.h>
 #include <FontMgr.h>
 #include <MessageBox.h>
-#include <MicrosoftCompatibility.h>
+
+#include <windows/compatibility.h>
 
 #ifdef USE_S57
 	#include <chart/s52plib.h>

@@ -25,10 +25,11 @@
 #include <timers.h>
 #include <RolloverWin.h>
 #include <dychart.h>
-#include <MicrosoftCompatibility.h>
 #include <UserColors.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
+
+#include <windows/compatibility.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

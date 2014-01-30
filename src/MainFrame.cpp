@@ -48,6 +48,8 @@
 	#include <psapi.h>
 #endif
 
+#include <windows/compatibility.h>
+
 #ifndef __WXMSW__
 	#include <signal.h>
 #endif
@@ -87,7 +89,6 @@
 #include <RouteManagerDialog.h>
 #include <MyPrintout.h>
 #include <OCPNFloatingToolbarDialog.h>
-#include <MicrosoftCompatibility.h>
 #include <StatusBar.h>
 #include <MagneticVariation.h>
 #include <GUI_IDs.h>

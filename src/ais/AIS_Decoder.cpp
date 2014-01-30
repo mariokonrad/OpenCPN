@@ -28,8 +28,9 @@
 
 #include <geo/GeoRef.h>
 
+#include <windows/compatibility.h>
+
 #include <GUI_IDs.h>
-#include <MicrosoftCompatibility.h>
 #include <MainFrame.h>
 #include <Select.h>
 #include <OCPN_DataStreamEvent.h>

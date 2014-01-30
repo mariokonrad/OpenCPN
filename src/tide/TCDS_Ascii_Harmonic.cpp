@@ -24,7 +24,7 @@
 #include "TCDS_Ascii_Harmonic.h"
 #include <tide/IDX_entry.h>
 
-#include <MicrosoftCompatibility.h>
+#include <windows/compatibility.h>
 
 #include <cmath>
 

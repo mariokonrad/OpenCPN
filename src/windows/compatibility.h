@@ -1,5 +1,5 @@
-#ifndef __MICROSOFTCOMPATIBILITY__H__
-#define __MICROSOFTCOMPATIBILITY__H__
+#ifndef __WINDOWS__COMPATIBILITY__H__
+#define __WINDOWS__COMPATIBILITY__H__
 
 #ifdef __MSVC__
 
@@ -17,7 +17,7 @@ long __stdcall MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS * Exception
 // __MSVC__ randomly does not link snprintf, or _snprintf
 // Replace it with a local version
 #define snprintf mysnprintf
-int mysnprintf( char *buffer, int count, const char *format, ... );
+int mysnprintf(char* buffer, int count, const char* format, ...);
 
 #define round round_msvc
 double round_msvc(double flt);

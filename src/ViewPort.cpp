@@ -25,9 +25,10 @@
 
 #include "ViewPort.h"
 
-#include <MicrosoftCompatibility.h>
 #include <OCPNRegion.h>
 #include <ProjectionType.h>
+
+#include <windows/compatibility.h>
 
 #include <geo/GeoRef.h>
 

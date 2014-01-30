@@ -24,8 +24,9 @@
 #include <wx/wx.h>
 
 #include <Select.h>
-#include <MicrosoftCompatibility.h>
 #include <ChartCanvas.h>
+
+#include <windows/compatibility.h>
 
 #include <util/Vector2D.h>
 

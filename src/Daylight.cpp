@@ -23,7 +23,7 @@
 
 #include "Daylight.h"
 #include <wx/intl.h>
-#include <MicrosoftCompatibility.h>
+#include <windows/compatibility.h>
 #include <cmath>
 
 // Sunrise/twilight calculation for route properties.

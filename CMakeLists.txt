@@ -964,7 +964,6 @@ SET(HDRS
 	src/Layer.h
 	src/ConsoleCanvas.h
 	src/ViewPort.h
-	src/MicrosoftCompatibility.h
 	src/Track.h
 	src/Routeman.h
 	src/WayPointman.h
@@ -1081,7 +1080,6 @@ SET(SRCS
 	src/Layer.cpp
 	src/ConsoleCanvas.cpp
 	src/ViewPort.cpp
-	src/MicrosoftCompatibility.cpp
 	src/Units.cpp
 	src/Config.cpp
 	src/LogMessageOnce.cpp
@@ -1345,6 +1343,8 @@ endif (USE_GARMINHOST)
 # containing the manifest, icon and other resources
 if(WIN32)
 	set(SRCS ${SRCS}
+		src/windows/compatibility.cpp
+		src/windows/compatibility.h
 		${CMAKE_CURRENT_BINARY_DIR}/src/opencpn.rc
 		)
 endif(WIN32)
@@ -1391,8 +1391,8 @@ set(tcData
 
 if(APPLE)
 	set(SRCS ${SRCS}
-		src/macutils.h
-		src/macutils.c
+		src/osx/macutils.h
+		src/osx/macutils.c
 		)
 ENDIF(APPLE)
 

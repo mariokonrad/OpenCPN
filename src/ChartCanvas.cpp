@@ -66,7 +66,6 @@
 #include <OCPNMemDC.h>
 #include <EmbossData.h>
 #include <TCWin.h>
-#include <MicrosoftCompatibility.h>
 #include <StatusBar.h>
 #include <GUI_IDs.h>
 #include <AnchorDist.h>
@@ -75,6 +74,8 @@
 #include <Layer.h>
 #include <PositionConvert.h>
 #include <Units.h>
+
+#include <windows/compatibility.h>
 
 #include <plugin/PlugInManager.h>
 

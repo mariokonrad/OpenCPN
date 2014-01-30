@@ -25,7 +25,7 @@
 
 #include <ogr_geometry.h>
 
-#include <MicrosoftCompatibility.h>
+#include <windows/compatibility.h>
 #include <dychart.h>
 
 #include <geo/BoundingBox.h>

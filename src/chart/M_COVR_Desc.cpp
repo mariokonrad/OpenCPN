@@ -23,11 +23,11 @@
 
 #include "M_COVR_Desc.h"
 #include <ViewPort.h>
-#include <MicrosoftCompatibility.h>
 
 #include <geo/GeoRef.h>
 #include <geo/Polygon.h>
 
+#include <windows/compatibility.h>
 #include <cmath>
 
 #include <wx/wfstream.h>

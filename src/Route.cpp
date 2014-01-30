@@ -31,7 +31,8 @@
 #include <ViewPort.h>
 #include <Config.h>
 #include <UserColors.h>
-#include <MicrosoftCompatibility.h>
+
+#include <windows/compatibility.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

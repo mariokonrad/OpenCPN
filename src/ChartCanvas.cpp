@@ -8535,174 +8535,144 @@ void ChartCanvas::Update()
 	}
 }
 
-void ChartCanvas::EmbossCanvas(ocpnDC& dc, EmbossData* pemboss, int x, int y)
+void ChartCanvas::EmbossCanvas_DC(ocpnDC& dc, EmbossData& emboss, int x, int y)
 {
 	const double factor = 200;
 
-	if (dc.GetDC()) {
-		wxMemoryDC* pmdc = dynamic_cast<wxMemoryDC*>(dc.GetDC());
-		wxASSERT_MSG(pmdc, wxT("dc to EmbossCanvas not a memory dc"));
+	wxMemoryDC* pmdc = dynamic_cast<wxMemoryDC*>(dc.GetDC());
+	wxASSERT_MSG(pmdc, wxT("dc to EmbossCanvas not a memory dc"));
 
-		// Grab a snipped image out of the chart
-		wxMemoryDC snip_dc;
-		wxBitmap snip_bmp(pemboss->width, pemboss->height, -1);
-		snip_dc.SelectObject(snip_bmp);
+	// Grab a snipped image out of the chart
+	wxMemoryDC snip_dc;
+	wxBitmap snip_bmp(emboss.width(), emboss.height(), -1);
+	snip_dc.SelectObject(snip_bmp);
 
-		snip_dc.Blit(0, 0, pemboss->width, pemboss->height, pmdc, x, y);
-		snip_dc.SelectObject(wxNullBitmap);
+	snip_dc.Blit(0, 0, emboss.width(), emboss.height(), pmdc, x, y);
+	snip_dc.SelectObject(wxNullBitmap);
 
-		wxImage snip_img = snip_bmp.ConvertToImage();
+	wxImage snip_img = snip_bmp.ConvertToImage();
 
-		//  Apply Emboss map to the snip image
-		unsigned char* pdata = snip_img.GetData();
-		if (pdata) {
-			for (int y = 0; y < pemboss->height; y++) {
-				int map_index = (y * pemboss->width);
-				for (int x = 0; x < pemboss->width; x++) {
-					double val = (pemboss->pmap[map_index] * factor) / 256.0;
+	//  Apply Emboss map to the snip image
+	unsigned char* pdata = snip_img.GetData();
+	if (pdata) {
+		for (int y = 0; y < emboss.height(); y++) {
+			int map_index = (y * emboss.width());
+			for (int x = 0; x < emboss.width(); x++) {
+				double val = (emboss.at(map_index) * factor) / 256.0;
 
-					int nred = (int)((*pdata) + val);
-					nred = nred > 255 ? 255 : (nred < 0 ? 0 : nred);
-					*pdata++ = (unsigned char)nred;
+				int nred = (int)((*pdata) + val);
+				nred = nred > 255 ? 255 : (nred < 0 ? 0 : nred);
+				*pdata++ = (unsigned char)nred;
 
-					int ngreen = (int)((*pdata) + val);
-					ngreen = ngreen > 255 ? 255 : (ngreen < 0 ? 0 : ngreen);
-					*pdata++ = (unsigned char)ngreen;
+				int ngreen = (int)((*pdata) + val);
+				ngreen = ngreen > 255 ? 255 : (ngreen < 0 ? 0 : ngreen);
+				*pdata++ = (unsigned char)ngreen;
 
-					int nblue = (int)((*pdata) + val);
-					nblue = nblue > 255 ? 255 : (nblue < 0 ? 0 : nblue);
-					*pdata++ = (unsigned char)nblue;
+				int nblue = (int)((*pdata) + val);
+				nblue = nblue > 255 ? 255 : (nblue < 0 ? 0 : nblue);
+				*pdata++ = (unsigned char)nblue;
 
-					map_index++;
-				}
+				map_index++;
 			}
 		}
-
-		// Convert embossed snip to a bitmap
-		wxBitmap emb_bmp(snip_img);
-
-		// Map to another memoryDC
-		wxMemoryDC result_dc;
-		result_dc.SelectObject(emb_bmp);
-
-		// Blit to target
-		pmdc->Blit(x, y, pemboss->width, pemboss->height, &result_dc, 0, 0);
-
-		result_dc.SelectObject(wxNullBitmap);
 	}
 
+	// Convert embossed snip to a bitmap
+	wxBitmap emb_bmp(snip_img);
+
+	// Map to another memoryDC
+	wxMemoryDC result_dc;
+	result_dc.SelectObject(emb_bmp);
+
+	// Blit to target
+	pmdc->Blit(x, y, emboss.width(), emboss.height(), &result_dc, 0, 0);
+
+	result_dc.SelectObject(wxNullBitmap);
+}
+
+void ChartCanvas::EmbossCanvas_GL(ocpnDC& dc, EmbossData& emboss, int x, int y)
+{
 #ifdef ocpnUSE_GL
+	const double factor = 200;
 
-#ifndef __WXMSW__
-	else if (0 /*b_useTexRect*/) {
-		int w = pemboss->width;
-		int h = pemboss->height;
-		glEnable(GL_TEXTURE_RECTANGLE_ARB);
-
-		// render using opengl and alpha blending
-		if (!pemboss->gltexind) { // upload to texture
-			// convert to luminance alpha map
-			int size = pemboss->width * pemboss->height;
-			char* data = new char[2 * size];
-			for (int i = 0; i < size; i++) {
-				data[2 * i] = pemboss->pmap[i] > 0 ? 0 : 255;
-				data[2 * i + 1] = abs(pemboss->pmap[i]);
-			}
-
-			glGenTextures(1, &pemboss->gltexind);
-			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, pemboss->gltexind);
-			glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_LUMINANCE_ALPHA, w, h, 0,
-						 GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
-
-			delete[] data;
-		}
-
-		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, pemboss->gltexind);
-
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
-
-		glColor4f(1, 1, 1, factor / 256);
-
-		glBegin(GL_QUADS);
-		glTexCoord2i(0, 0), glVertex2i(x, y);
-		glTexCoord2i(w, 0), glVertex2i(x + w, y);
-		glTexCoord2i(w, h), glVertex2i(x + w, y + h);
-		glTexCoord2i(0, h), glVertex2i(x, y + h);
-		glEnd();
-
-		glDisable(GL_BLEND);
-		glDisable(GL_TEXTURE_RECTANGLE_ARB);
+	int a = emboss.width();
+	int p = 0;
+	while (a) {
+		a = a >> 1;
+		p++;
 	}
-#endif
-	else {
-		int a = pemboss->width;
-		int p = 0;
-		while (a) {
-			a = a >> 1;
-			p++;
-		}
-		int width_p2 = 1 << p;
+	int width_p2 = 1 << p;
 
-		a = pemboss->height;
-		p = 0;
-		while (a) {
-			a = a >> 1;
-			p++;
-		}
-		int height_p2 = 1 << p;
+	a = emboss.height();
+	p = 0;
+	while (a) {
+		a = a >> 1;
+		p++;
+	}
+	int height_p2 = 1 << p;
 
-		int w = pemboss->width, h = pemboss->height;
+	int w = emboss.width();
+	int h = emboss.height();
 
-		glEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 
-		// render using opengl and alpha blending
-		if (!pemboss->gltexind) { /* upload to texture */
-			/* convert to luminance alpha map */
-			int size = width_p2 * height_p2;
-			char* data = new char[2 * size];
-			for (int i = 0; i < h; i++) {
-				for (int j = 0; j < width_p2; j++) {
-					if (j < w) {
-						data[2 * ((i * width_p2) + j)] = pemboss->pmap[(i * w) + j] > 0 ? 0 : 255;
-						data[2 * ((i * width_p2) + j) + 1] = abs(pemboss->pmap[(i * w) + j]);
-					}
+	// render using opengl and alpha blending
+	// FIXME: lazy initialization
+	if (!emboss.gltex_index()) { // upload to texture
+		// convert to luminance alpha map
+		const int size = width_p2 * height_p2;
+		char* data = new char[2 * size];
+		for (int i = 0; i < h; i++) {
+			for (int j = 0; j < width_p2; j++) {
+				if (j < w) {
+					data[2 * ((i * width_p2) + j)] = emboss.at((i * w) + j) > 0 ? 0 : 255;
+					data[2 * ((i * width_p2) + j) + 1] = abs(emboss.at((i * w) + j));
 				}
 			}
-
-			glGenTextures(1, &pemboss->gltexind);
-			glBindTexture(GL_TEXTURE_2D, pemboss->gltexind);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, width_p2, height_p2, 0,
-						 GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-			delete[] data;
 		}
 
-		glBindTexture(GL_TEXTURE_2D, pemboss->gltexind);
+		GLuint tex_index = 0;
+		glGenTextures(1, &tex_index);
+		glBindTexture(GL_TEXTURE_2D, tex_index);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, width_p2, height_p2, 0,
+					 GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		emboss.set_gltex_index(tex_index);
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
-
-		glColor4f(1, 1, 1, factor / 256);
-
-		double wp = (double)w / width_p2;
-		double hp = (double)h / height_p2;
-
-		glBegin(GL_QUADS);
-		glTexCoord2f(0, 0), glVertex2i(x, y);
-		glTexCoord2f(wp, 0), glVertex2i(x + w, y);
-		glTexCoord2f(wp, hp), glVertex2i(x + w, y + h);
-		glTexCoord2f(0, hp), glVertex2i(x, y + h);
-		glEnd();
-
-		glDisable(GL_BLEND);
-		glDisable(GL_TEXTURE_2D);
+		delete[] data;
 	}
+
+	glBindTexture(GL_TEXTURE_2D, emboss.gltex_index());
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
+
+	glColor4f(1, 1, 1, factor / 256);
+
+	double wp = (double)w / width_p2;
+	double hp = (double)h / height_p2;
+
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0), glVertex2i(x, y);
+	glTexCoord2f(wp, 0), glVertex2i(x + w, y);
+	glTexCoord2f(wp, hp), glVertex2i(x + w, y + h);
+	glTexCoord2f(0, hp), glVertex2i(x, y + h);
+	glEnd();
+
+	glDisable(GL_BLEND);
+	glDisable(GL_TEXTURE_2D);
 #endif
+}
+
+void ChartCanvas::EmbossCanvas(ocpnDC& dc, EmbossData& emboss, int x, int y)
+{
+	if (dc.GetDC()) {
+		EmbossCanvas_DC(dc, emboss, x, y);
+	} else {
+		EmbossCanvas_GL(dc, emboss, x, y);
+	}
 }
 
 void ChartCanvas::EmbossOverzoomIndicator(ocpnDC& dc)
@@ -8749,7 +8719,7 @@ void ChartCanvas::EmbossOverzoomIndicator(ocpnDC& dc)
 		}
 	}
 
-	EmbossCanvas(dc, m_pEM_OverZoom, 0, 40);
+	EmbossCanvas(dc, *m_pEM_OverZoom, 0, 40);
 }
 
 void ChartCanvas::set_viewpoint_projection_type(int type)
@@ -8847,7 +8817,7 @@ void ChartCanvas::EmbossDepthScale(ocpnDC& dc)
 	}
 
 	if (ped)
-		EmbossCanvas(dc, ped, (GetVP().pix_width - ped->width), 40);
+		EmbossCanvas(dc, *ped, (GetVP().pix_width - ped->width()), 40);
 }
 
 void ChartCanvas::CreateDepthUnitEmbossMaps(global::ColorScheme cs)
@@ -8953,7 +8923,7 @@ EmbossData* ChartCanvas::CreateEmbossMapData(wxFont& font, int width, int height
 			int val = img.GetRed(x + 1, y + 1) - img.GetRed(x - 1, y - 1); // range +/- 256
 			val = (int)(val * val_factor);
 			int index = (y * width) + x;
-			emboss->pmap[index] = val;
+			emboss->at(index) = val;
 		}
 	}
 

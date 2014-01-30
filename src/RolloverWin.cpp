@@ -34,16 +34,16 @@
 BEGIN_EVENT_TABLE(RolloverWin, wxWindow)
 	EVT_PAINT(RolloverWin::OnPaint)
 	EVT_TIMER(ROLLOVER_TIMER, RolloverWin::OnTimer)
-	EVT_MOUSE_EVENTS ( RolloverWin::OnMouseEvent )
+	EVT_MOUSE_EVENTS(RolloverWin::OnMouseEvent)
 END_EVENT_TABLE()
 
 // Define a constructor
-RolloverWin::RolloverWin( wxWindow *parent, int timeout )
-	: wxWindow(parent, wxID_ANY, wxPoint( 0, 0 ), wxSize( 1, 1 ), wxNO_BORDER)
+RolloverWin::RolloverWin(wxWindow* parent, int timeout)
+	: wxWindow(parent, wxID_ANY, wxPoint(0, 0), wxSize(1, 1), wxNO_BORDER)
 {
 	m_pbm = NULL;
 
-	m_timer_timeout.SetOwner( this, ROLLOVER_TIMER );
+	m_timer_timeout.SetOwner(this, ROLLOVER_TIMER);
 	m_timeout_sec = timeout;
 	m_mmouse_propogate = 0;
 	isActive = false;
@@ -56,18 +56,18 @@ RolloverWin::~RolloverWin()
 	delete m_pbm;
 }
 
-void RolloverWin::OnTimer(wxTimerEvent &)
+void RolloverWin::OnTimer(wxTimerEvent&)
 {
 	if (IsShown())
 		Hide();
 }
 
-void RolloverWin::OnMouseEvent(wxMouseEvent & event)
+void RolloverWin::OnMouseEvent(wxMouseEvent& event)
 {
-	//    If directed, send mouse events up the window family tree,
-	//    until some parent window does NOT call event.Skip()
-	if( m_mmouse_propogate ) {
-		event.ResumePropagation( m_mmouse_propogate );
+	// If directed, send mouse events up the window family tree,
+	// until some parent window does NOT call event.Skip()
+	if (m_mmouse_propogate) {
+		event.ResumePropagation(m_mmouse_propogate);
 		event.Skip();
 	}
 }
@@ -79,57 +79,57 @@ void RolloverWin::SetBitmap(int rollover)
 
 	wxMemoryDC mdc;
 	delete m_pbm;
-	m_pbm = new wxBitmap( m_size.x, m_size.y, -1 );
-	mdc.SelectObject( *m_pbm );
+	m_pbm = new wxBitmap(m_size.x, m_size.y, -1);
+	mdc.SelectObject(*m_pbm);
 
-	mdc.Blit( 0, 0, m_size.x, m_size.y, cdc, m_position.x + canvasPos.x,
-			m_position.y + canvasPos.y );
+	mdc.Blit(0, 0, m_size.x, m_size.y, cdc, m_position.x + canvasPos.x, m_position.y + canvasPos.y);
 	delete cdc;
 
-	ocpnDC dc( mdc );
+	ocpnDC dc(mdc);
 
-	switch( rollover ) {
+	switch (rollover) {
 		case AIS_ROLLOVER:
-			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, GetGlobalColor( _T ( "YELO1" ) ), 172);
-			mdc.SetTextForeground( FontMgr::Get().GetFontColor( _("AISRollover") ) );
+			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, GetGlobalColor(_T("YELO1")), 172);
+			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("AISRollover")));
 			break;
 
 		case TC_ROLLOVER:
-			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 0.0, GetGlobalColor( _T ( "YELO1" ) ), 255);
-			mdc.SetTextForeground( FontMgr::Get().GetFontColor( _("TideCurrentGraphRollover") ) );
+			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 0.0, GetGlobalColor(_T("YELO1")), 255);
+			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("TideCurrentGraphRollover")));
 			break;
 		default:
 		case LEG_ROLLOVER:
-			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, GetGlobalColor( _T ( "YELO1" ) ), 172);
-			mdc.SetTextForeground( FontMgr::Get().GetFontColor( _("RouteLegInfoRollover") ) );
+			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, GetGlobalColor(_T("YELO1")), 172);
+			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("RouteLegInfoRollover")));
 			break;
 	}
 
+	if (m_plabelFont && m_plabelFont->IsOk()) {
 
-	if(m_plabelFont && m_plabelFont->IsOk()) {
+		// Draw the text
+		mdc.SetFont(*m_plabelFont);
 
-		//    Draw the text
-		mdc.SetFont( *m_plabelFont );
-
-		mdc.DrawLabel( m_string, wxRect( 0, 0, m_size.x, m_size.y ), wxALIGN_CENTRE_HORIZONTAL | wxALIGN_CENTRE_VERTICAL);
+		mdc.DrawLabel(m_string, wxRect(0, 0, m_size.x, m_size.y),
+					  wxALIGN_CENTRE_HORIZONTAL | wxALIGN_CENTRE_VERTICAL);
 	}
 
-	SetSize( m_position.x, m_position.y, m_size.x, m_size.y );   // Assumes a nominal 32 x 32 cursor
+	SetSize(m_position.x, m_position.y, m_size.x, m_size.y); // Assumes a nominal 32 x 32 cursor
 
 	// Retrigger the auto timeout
-	if( m_timeout_sec > 0 ) m_timer_timeout.Start( m_timeout_sec * 1000, wxTIMER_ONE_SHOT );
+	if (m_timeout_sec > 0)
+		m_timer_timeout.Start(m_timeout_sec * 1000, wxTIMER_ONE_SHOT);
 }
 
-void RolloverWin::OnPaint(wxPaintEvent &)
+void RolloverWin::OnPaint(wxPaintEvent&)
 {
 	int width, height;
-	GetClientSize( &width, &height );
-	wxPaintDC dc( this );
+	GetClientSize(&width, &height);
+	wxPaintDC dc(this);
 
-	if( m_string.Len() ) {
+	if (m_string.Len()) {
 		wxMemoryDC mdc;
-		mdc.SelectObject( *m_pbm );
-		dc.Blit( 0, 0, width, height, &mdc, 0, 0 );
+		mdc.SelectObject(*m_pbm);
+		dc.Blit(0, 0, width, height, &mdc, 0, 0);
 	}
 }
 
@@ -141,40 +141,39 @@ void RolloverWin::SetBestPosition(
 		int rollover,
 		wxSize parent_size)
 {
-	int h, w;
+	int h;
+	int w;
 
-	wxFont *dFont;
-	switch( rollover ) {
+	wxFont* dFont;
+	switch (rollover) {
 
 		case AIS_ROLLOVER:
-			dFont = FontMgr::Get().GetFont( _("AISRollover"), 12 );
+			dFont = FontMgr::Get().GetFont(_("AISRollover"), 12);
 			break;
 
 		case TC_ROLLOVER:
-			dFont = FontMgr::Get().GetFont( _("TideCurrentGraphRollover"), 12 );
+			dFont = FontMgr::Get().GetFont(_("TideCurrentGraphRollover"), 12);
 			break;
 
 		default:
 		case LEG_ROLLOVER:
-			dFont = FontMgr::Get().GetFont( _("RouteLegInfoRollover"), 12 );
+			dFont = FontMgr::Get().GetFont(_("RouteLegInfoRollover"), 12);
 			break;
-
 	}
 
 	int font_size = wxMax(8, dFont->GetPointSize());
-	m_plabelFont = wxTheFontList->FindOrCreateFont( font_size, dFont->GetFamily(),
-			dFont->GetStyle(), dFont->GetWeight(), false, dFont->GetFaceName() );
+	m_plabelFont = wxTheFontList->FindOrCreateFont(font_size, dFont->GetFamily(), dFont->GetStyle(),
+												   dFont->GetWeight(), false, dFont->GetFaceName());
 
-	if(m_plabelFont && m_plabelFont->IsOk()) {
+	if (m_plabelFont && m_plabelFont->IsOk()) {
 #ifdef __WXMAC__
 		wxScreenDC sdc;
 		sdc.GetMultiLineTextExtent(m_string, &w, &h, NULL, m_plabelFont);
 #else
-		wxClientDC cdc( GetParent() );
-		cdc.GetMultiLineTextExtent( m_string, &w, &h, NULL, m_plabelFont );
+		wxClientDC cdc(GetParent());
+		cdc.GetMultiLineTextExtent(m_string, &w, &h, NULL, m_plabelFont);
 #endif
-	}
-	else {
+	} else {
 		w = 10;
 		h = 10;
 	}
@@ -183,31 +182,31 @@ void RolloverWin::SetBestPosition(
 	m_size.y = h + 8;
 
 	int xp, yp;
-	if( ( x + off_x + m_size.x ) > parent_size.x ) {
-		xp = x - ( off_x / 2 ) - m_size.x;
+	if ((x + off_x + m_size.x) > parent_size.x) {
+		xp = x - (off_x / 2) - m_size.x;
 		xp = wxMax(0, xp);
 	} else
 		xp = x + off_x;
 
-	if( ( y + off_y + m_size.y ) > parent_size.y ) {
-		yp = y - ( off_y / 2 ) - m_size.y;
+	if ((y + off_y + m_size.y) > parent_size.y) {
+		yp = y - (off_y / 2) - m_size.y;
 	} else
 		yp = y + off_y;
 
-	SetPosition( wxPoint( xp, yp ) );
+	SetPosition(wxPoint(xp, yp));
 }
 
-void RolloverWin::SetString(const wxString & s)
+void RolloverWin::SetString(const wxString& s)
 {
 	m_string = s;
 }
 
-void RolloverWin::SetPosition( wxPoint pt )
+void RolloverWin::SetPosition(wxPoint pt)
 {
 	m_position = pt;
 }
 
-wxBitmap * RolloverWin::GetBitmap()
+wxBitmap* RolloverWin::GetBitmap()
 {
 	return m_pbm;
 }

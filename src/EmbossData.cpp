@@ -24,19 +24,19 @@
 #include "EmbossData.h"
 
 EmbossData::EmbossData()
-	: width(0)
-	, height(0)
+	: map_width(0)
+	, map_height(0)
 	, pmap(NULL)
 	, gltexind(0)
 {}
 
 EmbossData::EmbossData(int width, int height)
-	: width(width)
-	, height(height)
+	: map_width(width)
+	, map_height(height)
 	, pmap(NULL)
 	, gltexind(0)
 {
-	pmap = new int[width * height];
+	pmap = new int[map_width * map_height];
 }
 
 EmbossData::~EmbossData()
@@ -45,5 +45,40 @@ EmbossData::~EmbossData()
 		delete [] pmap;
 		pmap = NULL;
 	}
+}
+
+int EmbossData::size() const
+{
+	return map_width * map_height;
+}
+
+int EmbossData::width() const
+{
+	return map_width;
+}
+
+int EmbossData::height() const
+{
+	return map_height;
+}
+
+GLuint EmbossData::gltex_index() const
+{
+	return gltexind;
+}
+
+void EmbossData::set_gltex_index(GLuint tex_index)
+{
+	gltexind = tex_index;
+}
+
+int EmbossData::at(int index) const
+{
+	return pmap[index];
+}
+
+int& EmbossData::at(int index)
+{
+	return pmap[index];
 }
 

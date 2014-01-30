@@ -396,7 +396,9 @@ private:
 	void CreateOZEmbossMapData(global::ColorScheme cs);
 	void EmbossOverzoomIndicator(ocpnDC& dc);
 
-	void EmbossCanvas(ocpnDC& dc, EmbossData* pemboss, int x, int y);
+	void EmbossCanvas(ocpnDC& dc, EmbossData& emboss, int x, int y);
+	void EmbossCanvas_DC(ocpnDC& dc, EmbossData& emboss, int x, int y);
+	void EmbossCanvas_GL(ocpnDC& dc, EmbossData& emboss, int x, int y);
 
 	void JaggyCircle(ocpnDC& dc, wxPen pen, int x, int y, int radius);
 	void ShowObjectQueryWindow(int x, int y, float zlat, float zlon);

@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __EMBOSS_DATA_H__
-#define __EMBOSS_DATA_H__
+#ifndef __EMBOSSDATA__H__
+#define __EMBOSSDATA__H__
 
 #include "dychart.h"
 
@@ -33,8 +33,17 @@ public:
 	EmbossData(int, int);
 	~EmbossData();
 
-	int width;
-	int height;
+	int size() const;
+	int width() const;
+	int height() const;
+	GLuint gltex_index() const;
+	void set_gltex_index(GLuint tex_index);
+	int at(int) const;
+	int& at(int);
+
+private:
+	int map_width;
+	int map_height;
 	int* pmap;
 	GLuint gltexind;
 };

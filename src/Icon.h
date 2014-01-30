@@ -33,15 +33,15 @@ namespace ocpnStyle {
 
 class Icon
 {
-	public:
-		wxString name;
-		wxPoint iconLoc;
-		wxSize size;
-		wxBitmap icon;
-		bool loaded;
+public:
+	wxString name;
+	wxPoint iconLoc;
+	wxSize size;
+	wxBitmap icon;
+	bool loaded;
 
-		Icon(void);
-		void Unload(void);
+	Icon(void);
+	void Unload(void);
 };
 
 }

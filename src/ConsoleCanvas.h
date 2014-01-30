@@ -49,6 +49,11 @@ public:
 	void OnContextMenu(wxContextMenuEvent& event);
 	void OnContextMenuSelection(wxCommandEvent& event);
 	void RefreshConsoleData(void);
+	void clear_background(void);
+
+private:
+	void OnPaint(wxPaintEvent& event);
+	void OnShow(wxShowEvent& event);
 
 	wxWindow* m_pParent;
 	wxStaticText* pThisLegText;
@@ -65,10 +70,6 @@ public:
 	bool m_bShowRouteTotal;
 	bool m_bNeedClear;
 	wxBrush* pbackBrush;
-
-private:
-	void OnPaint(wxPaintEvent& event);
-	void OnShow(wxShowEvent& event);
 };
 
 #endif

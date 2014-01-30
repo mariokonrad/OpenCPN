@@ -418,3 +418,8 @@ void ConsoleCanvas::UpdateFonts(void)
 	Refresh();
 }
 
+void ConsoleCanvas::clear_background(void)
+{
+	pCDI->ClearBackground();
+}
+

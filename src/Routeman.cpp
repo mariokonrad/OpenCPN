@@ -599,7 +599,7 @@ bool Routeman::DeactivateRoute(bool b_arrival)
 		delete pRouteActivatePoint;
 	pRouteActivatePoint = NULL;
 
-	console->pCDI->ClearBackground();
+	console->clear_background();
 	console->Show(false);
 	m_bDataValid = false;
 	return true;

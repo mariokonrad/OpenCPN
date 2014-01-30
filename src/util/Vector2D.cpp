@@ -24,6 +24,8 @@
 #include "Vector2D.h"
 #include <cmath>
 
+namespace util {
+
 Vector2D::Vector2D()
 {
 	x = 0.0;
@@ -96,5 +98,7 @@ double lengthOfNormal(const Vector2D& a, const Vector2D& b, Vector2D& n)
 	n = a - c;
 
 	return n.length();
+}
+
 }
 

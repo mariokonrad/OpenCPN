@@ -217,7 +217,7 @@ void Track::OnTimerTrack(wxTimerEvent&)
 	m_TimerTrack.Start(1000, wxTIMER_CONTINUOUS);
 }
 
-RoutePoint* Track::AddNewPoint(Vector2D point, wxDateTime time)
+RoutePoint* Track::AddNewPoint(util::Vector2D point, wxDateTime time)
 {
 	RoutePoint* rPoint = new RoutePoint(geo::Position(point.lat, point.lon), _T("empty"), _T(""));
 	rPoint->m_bShowName = false;
@@ -248,7 +248,7 @@ void Track::AddPointNow(bool do_add_point)
 				return;
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-	Vector2D gpsPoint(nav.pos.lon(), nav.pos.lat());
+	util::Vector2D gpsPoint(nav.pos.lon(), nav.pos.lat());
 
 	// The dynamic interval algorithm will gather all track points in a queue,
 	// and analyze the cross track errors for each point before actually adding
@@ -262,7 +262,7 @@ void Track::AddPointNow(bool do_add_point)
 			break;
 		}
 		case secondPoint: {
-			Vector2D pPoint(nav.pos.lon(), nav.pos.lat());
+			util::Vector2D pPoint(nav.pos.lon(), nav.pos.lat());
 			skipPoints.push_back(pPoint);
 			skipTimes.push_back(now.ToUTC());
 			trackPointState = potentialPoint;
@@ -631,9 +631,9 @@ int Track::Simplify(double maxDelta)
 
 double Track::GetXTE(const geo::Position& fm1, const geo::Position& fm2, const geo::Position& to) const
 {
-	Vector2D v;
-	Vector2D w;
-	Vector2D p;
+	util::Vector2D v;
+	util::Vector2D w;
+	util::Vector2D p;
 
 	// First we get the cartesian coordinates to the line endpoints, using
 	// the current position as origo.
@@ -662,8 +662,8 @@ double Track::GetXTE(const geo::Position& fm1, const geo::Position& fm2, const g
 	// We find projection of origo onto the line.
 	// It falls where t = [(p-v) . (w-v)] / |w-v|^2
 
-	Vector2D a = p - v;
-	Vector2D b = w - v;
+	util::Vector2D a = p - v;
+	util::Vector2D b = w - v;
 
 	double t = a.dot(b) / lengthSquared;
 
@@ -671,7 +671,7 @@ double Track::GetXTE(const geo::Position& fm1, const geo::Position& fm2, const g
 		return (p - v).length(); // Beyond the 'v' end of the segment
 	else if (t > 1.0)
 		return (p - w).length(); // Beyond the 'w' end of the segment
-	Vector2D projection = v + t * (w - v); // Projection falls on the segment
+	util::Vector2D projection = v + t * (w - v); // Projection falls on the segment
 	return (p - projection).length();
 }
 

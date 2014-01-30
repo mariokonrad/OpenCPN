@@ -32,7 +32,7 @@
 #include <deque>
 
 #include <Route.h>
-#include <Vector2D.h>
+#include <util/Vector2D.h>
 #include <geo/Position.h>
 
 class Track
@@ -65,7 +65,7 @@ private:
 	double GetXTE(const RoutePoint* fm1, const RoutePoint* fm2, const RoutePoint* to) const;
 	double GetXTE(const geo::Position& fm1, const geo::Position& fm2, const geo::Position& to) const;
 	void DouglasPeuckerReducer(std::vector<RoutePoint*>& list, int from, int to, double delta);
-	RoutePoint* AddNewPoint(Vector2D point, wxDateTime time);
+	RoutePoint* AddNewPoint(util::Vector2D point, wxDateTime time);
 
 	bool m_bRunning;
 	wxTimer m_TimerTrack;
@@ -75,7 +75,7 @@ private:
 	double m_allowedMaxXTE;
 	double m_allowedMaxAngle;
 
-	Vector2D m_lastAddedPoint;
+	util::Vector2D m_lastAddedPoint;
 	double m_prev_dist;
 	wxDateTime m_prev_time;
 
@@ -94,7 +94,7 @@ private:
 
 	eTrackPointState trackPointState;
 
-	std::deque<Vector2D> skipPoints;
+	std::deque<util::Vector2D> skipPoints;
 	std::deque<wxDateTime> skipTimes;
 };
 

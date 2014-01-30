@@ -26,7 +26,8 @@
 #include <Select.h>
 #include <MicrosoftCompatibility.h>
 #include <ChartCanvas.h>
-#include <Vector2D.h>
+
+#include <util/Vector2D.h>
 
 #include <geo/GeoRef.h>
 
@@ -374,9 +375,9 @@ bool Select::IsSegmentSelected(float a, float b, float c, float d, const geo::Po
 		&& ((pos.lon() + adder) >= (fmin(c, d) - selectRadius))
 		&& ((pos.lon() + adder) <= (fmax(c, d) + selectRadius))) {
 		// Use vectors to do hit test....
-		Vector2D va;
-		Vector2D vb;
-		Vector2D vn;
+		util::Vector2D va;
+		util::Vector2D vb;
+		util::Vector2D vn;
 
 		// Assuming a Mercator projection
 		double ap;

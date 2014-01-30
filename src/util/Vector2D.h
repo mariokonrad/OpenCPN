@@ -21,8 +21,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __VECTOR2D_H__
-#define __VECTOR2D_H__
+#ifndef __UTIL__VECTOR2D_H__
+#define __UTIL__VECTOR2D_H__
+
+namespace util {
 
 class Vector2D
 {
@@ -55,5 +57,7 @@ public:
 };
 
 double lengthOfNormal(const Vector2D& a, const Vector2D& b, Vector2D& n);
+
+}
 
 #endif

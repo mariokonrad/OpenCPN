@@ -25,6 +25,7 @@ add_executable(testrunner
 	${CMAKE_SOURCE_DIR}/src/geo/BoundingBox.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/Polygon.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/LatLonBoundingBox.cpp
+	${CMAKE_SOURCE_DIR}/src/util/Vector2D.cpp
 	${CMAKE_SOURCE_DIR}/src/util/ValueFilter.cpp
 	${CMAKE_SOURCE_DIR}/src/util/crc32.cpp
 	)

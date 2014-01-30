@@ -813,6 +813,8 @@ add_library(geo STATIC
 	)
 
 add_library(util STATIC
+	src/util/Vector2D.cpp
+	src/util/Vector2D.h
 	src/util/ValueFilter.cpp
 	src/util/ValueFilter.h
 	src/util/crc32.cpp
@@ -955,7 +957,6 @@ SET(HDRS
 	src/Select.h
 	src/FontMgr.h
 	src/FontDesc.h
-	src/Vector2D.h
 	src/NMEALogWindow.h
 	src/WindowDestroyListener.h
 	src/TTYWindow.h
@@ -1133,7 +1134,6 @@ SET(SRCS
 	src/OCPNTrackListCtrl.cpp
 	src/LinkPropDlg.cpp
 	src/OCPN_AlertDialog.cpp
-	src/Vector2D.cpp
 	)
 
 SET( PACKAGE_HEADERS "" )

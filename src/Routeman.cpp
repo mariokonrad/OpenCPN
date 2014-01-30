@@ -32,9 +32,10 @@
 #include <Multiplexer.h>
 #include <Select.h>
 #include <Config.h>
-#include <Vector2D.h>
 #include <UserColors.h>
 #include <App.h>
+
+#include <util/Vector2D.h>
 
 #include <geo/GeoRef.h>
 
@@ -355,7 +356,9 @@ bool Routeman::UpdateProgress()
 		CurrentRngToActivePoint = d5;
 
 		// Get the XTE vector, normal to current segment
-		Vector2D va, vb, vn;
+		util::Vector2D va;
+		util::Vector2D vb;
+		util::Vector2D vn;
 
 		double brg1, dist1, brg2, dist2;
 		geo::DistanceBearingMercator(pActivePoint->get_position(),
@@ -373,7 +376,7 @@ bool Routeman::UpdateProgress()
 		// Calculate the distance to the arrival line, which is perpendicular to the current
 		// route segment
 		// Taking advantage of the calculated normal from current position to route segment vn
-		Vector2D vToArriveNormal = va - vn;
+		util::Vector2D vToArriveNormal = va - vn;
 		CurrentRangeToActiveNormalCrossing = vToArriveNormal.length();
 
 		// Compute current segment course

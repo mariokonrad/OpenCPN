@@ -26,10 +26,11 @@
 
 #include <wx/scrolwin.h>
 #include <wx/treebase.h>
-#include <CDI.h>
-#include <MainFrame.h>
-#include <chart/ChartDatabase.h>
+
 #include <chart/ChartGroup.h>
+
+#include <CDI.h>
+#include <ChartDirInfo.h>
 
 #include <vector>
 
@@ -38,10 +39,12 @@ class wxButton;
 class wxNotebook;
 class wxNotebookEvent;
 class wxGenericDirCtrl;
+class wxFlexGridSizer;
 
 class ChartGroupsUI : public wxScrolledWindow
 {
 	DECLARE_EVENT_TABLE()
+	friend class options;
 
 public:
 	ChartGroupsUI(wxWindow* parent);
@@ -74,15 +77,15 @@ public:
 	void OnNewGroup(wxCommandEvent& event);
 	void OnDeleteGroup(wxCommandEvent& event);
 
-	// FIXME: move attributes from public to private
-	bool modified;
-	bool m_UIcomplete;
-	bool m_settingscomplete;
-	bool m_treespopulated;
 
 private:
 	int FindGroupBranch(chart::ChartGroup* pGroup, wxTreeCtrl* ptree, wxTreeItemId item,
 						wxString* pbranch_adder);
+
+	bool modified;
+	bool m_UIcomplete;
+	bool m_settingscomplete;
+	bool m_treespopulated;
 
 	wxFlexGridSizer* groupsSizer;
 	wxButton* m_pAddButton;

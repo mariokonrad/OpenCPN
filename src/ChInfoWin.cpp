@@ -32,12 +32,12 @@ BEGIN_EVENT_TABLE(ChInfoWin, wxWindow)
 	EVT_ERASE_BACKGROUND(ChInfoWin::OnEraseBackground)
 END_EVENT_TABLE()
 
-
-ChInfoWin::ChInfoWin(wxWindow * parent)
+ChInfoWin::ChInfoWin(wxWindow* parent)
 	: wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER)
 {
 	int ststyle = wxALIGN_LEFT | wxST_NO_AUTORESIZE;
-	m_pInfoTextCtl = new wxStaticText( this, -1, _T ( "" ), wxDefaultPosition, wxDefaultSize, ststyle );
+	m_pInfoTextCtl
+		= new wxStaticText(this, -1, _T ( "" ), wxDefaultPosition, wxDefaultSize, ststyle);
 	Hide();
 }
 
@@ -46,32 +46,32 @@ ChInfoWin::~ChInfoWin()
 	delete m_pInfoTextCtl;
 }
 
-void ChInfoWin::OnEraseBackground(wxEraseEvent &)
+void ChInfoWin::OnEraseBackground(wxEraseEvent&)
 {
 }
 
-void ChInfoWin::OnPaint(wxPaintEvent &)
+void ChInfoWin::OnPaint(wxPaintEvent&)
 {
 	int width, height;
-	GetClientSize( &width, &height );
-	wxPaintDC dc( this );
+	GetClientSize(&width, &height);
+	wxPaintDC dc(this);
 
-	dc.SetBrush( wxBrush( GetGlobalColor( _T ( "UIBCK" ) ) ) );
-	dc.SetPen( wxPen( GetGlobalColor( _T ( "UITX1" ) ) ) );
-	dc.DrawRectangle( 0, 0, width, height );
+	dc.SetBrush(wxBrush(GetGlobalColor(_T ( "UIBCK" ))));
+	dc.SetPen(wxPen(GetGlobalColor(_T ( "UITX1" ))));
+	dc.DrawRectangle(0, 0, width, height);
 }
 
 void ChInfoWin::SetBitmap()
 {
-	SetBackgroundColour( GetGlobalColor( _T ( "UIBCK" ) ) );
+	SetBackgroundColour(GetGlobalColor(_T ( "UIBCK" )));
 
-	m_pInfoTextCtl->SetBackgroundColour( GetGlobalColor( _T ( "UIBCK" ) ) );
-	m_pInfoTextCtl->SetForegroundColour( GetGlobalColor( _T ( "UITX1" ) ) );
+	m_pInfoTextCtl->SetBackgroundColour(GetGlobalColor(_T ( "UIBCK" )));
+	m_pInfoTextCtl->SetForegroundColour(GetGlobalColor(_T ( "UITX1" )));
 
-	m_pInfoTextCtl->SetSize( 1, 1, m_size.x - 2, m_size.y - 2 );
-	m_pInfoTextCtl->SetLabel( m_string );
+	m_pInfoTextCtl->SetSize(1, 1, m_size.x - 2, m_size.y - 2);
+	m_pInfoTextCtl->SetLabel(m_string);
 
-	SetSize( m_position.x, m_position.y, m_size.x, m_size.y );
+	SetSize(m_position.x, m_position.y, m_size.x, m_size.y);
 }
 
 void ChInfoWin::FitToChars(int char_width, int char_height)
@@ -83,8 +83,8 @@ void ChInfoWin::FitToChars(int char_width, int char_height)
 	adjust = 2;
 #endif
 	size.x = GetCharWidth() * char_width;
-	size.y = GetCharHeight() * ( char_height + adjust );
-	SetWinSize( size );
+	size.y = GetCharHeight() * (char_height + adjust);
+	SetWinSize(size);
 }
 
 wxSize ChInfoWin::GetWinSize(void) const
@@ -92,7 +92,7 @@ wxSize ChInfoWin::GetWinSize(void) const
 	return m_size;
 }
 
-void ChInfoWin::SetString(const wxString & s)
+void ChInfoWin::SetString(const wxString& s)
 {
 	m_string = s;
 }

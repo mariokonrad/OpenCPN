@@ -78,10 +78,6 @@ extern bool g_bdisable_opengl;
 extern chart::s52plib* ps52plib;
 #endif
 
-extern bool g_bCourseUp;
-extern int g_COGAvgSec;
-extern bool g_bMagneticAPB;
-
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
 
@@ -519,8 +515,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	gui.set_ShowMag(read_bool(_T("ShowMag")));
 	nav.set_user_var(read_double(_T("UserMagVariation"), 0.0));
-
-	Read(_T("UseMagAPB"), &g_bMagneticAPB, 0);
+	nav.set_MagneticAPB(read_bool(_T("UseMagAPB")));
 
 	load_view();
 
@@ -531,9 +526,13 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	gui.set_view_quilt_enable(read_bool(_T("ChartQuilting"), false));
 
-	Read(_T("CourseUpMode"), &g_bCourseUp, 0);
-	Read(_T("COGUPAvgSeconds"), &g_COGAvgSec, 15);
-	g_COGAvgSec = wxMin(g_COGAvgSec, MAX_COG_AVERAGE_SECONDS); // Bound the array size
+	nav.set_CourseUp(read_bool(_T("CourseUpMode")));
+
+	long cog_avg_sec = 15;
+	Read(_T("COGUPAvgSeconds"), &cog_avg_sec, 15);
+	cog_avg_sec = wxMin(cog_avg_sec, MAX_COG_AVERAGE_SECONDS); // Bound the array size
+	nav.set_COGAvgSec(cog_avg_sec);
+
 	Read(_T("SkewToNorthUp"), &g_bskew_comp, 0);
 	Read(_T("OpenGL"), &g_bopengl, 0);
 	if (g_bdisable_opengl)
@@ -1549,9 +1548,9 @@ void Config::UpdateSettings()
 	Write(_T("OpenGL"), g_bopengl);
 	Write(_T("SmoothPanZoom"), view.smooth_pan_zoom);
 
-	Write(_T("CourseUpMode"), g_bCourseUp);
-	Write(_T("COGUPAvgSeconds"), g_COGAvgSec);
-	Write(_T("ShowMag"), g_bMagneticAPB);
+	Write(_T("CourseUpMode"), nav.CourseUp);
+	Write(_T("COGUPAvgSeconds"), nav.COGAvgSec);
+	Write(_T("ShowMag"), nav.MagneticAPB);
 
 	Write(_T("OwnshipCOGPredictorMinutes"), ownship.predictor_minutes);
 	Write(_T("OwnshipCOGPredictorWidth"), ownship.cog_predictor_width);

@@ -100,16 +100,11 @@ extern int g_SOGFilterSec;
 extern PlugInManager* g_pi_manager;
 extern ocpnStyle::StyleManager* g_StyleManager;
 
-extern int g_COGAvgSec;
-
-extern bool g_bCourseUp;
-
 extern wxString g_GPS_Ident;
 extern bool g_bGarminHostUpload;
 
 extern wxLocale *plocale_def_lang;
 extern sound::OCPN_Sound g_anchorwatch_sound;
-extern bool g_bMagneticAPB;
 
 
 #ifdef USE_S57
@@ -514,14 +509,14 @@ void options::CreatePanel_NMEA(size_t parent, int WXUNUSED(border_size),
 	m_cbAPBMagnetic
 		= new wxCheckBox(m_pNMEAForm, wxID_ANY, _("Use magnetic bearings in output sentence ECAPB"),
 						 wxDefaultPosition, wxDefaultSize, 0);
-	m_cbAPBMagnetic->SetValue(g_bMagneticAPB);
+	m_cbAPBMagnetic->SetValue(global::OCPN::get().nav().get_data().MagneticAPB);
 	bSizer161->Add(m_cbAPBMagnetic, 0, wxALL, cb_space);
 
 	bSizer151->Add(bSizer161, 1, wxEXPAND, 5);
 	sbSizerGeneral->Add(bSizer151, 1, wxEXPAND, 5);
 	bSizerOuterContainer->Add(sbSizerGeneral, 0, wxALL | wxEXPAND, 5);
 
-	//  Connections listbox, etc
+	// Connections listbox, etc
 	wxStaticBoxSizer* sbSizerLB = new wxStaticBoxSizer(
 		new wxStaticBox(m_pNMEAForm, wxID_ANY, _("Data Connections")), wxVERTICAL);
 
@@ -548,7 +543,7 @@ void options::CreatePanel_NMEA(size_t parent, int WXUNUSED(border_size),
 	sbSizerLB->Add(bSizer17, 1, wxEXPAND, 5);
 	bSizerOuterContainer->Add(sbSizerLB, 0, wxEXPAND, 5);
 
-	//  Connections Properties
+	// Connections Properties
 
 	sbSizerConnectionProps
 		= new wxStaticBoxSizer(new wxStaticBox(m_pNMEAForm, wxID_ANY, _("Properties")), wxVERTICAL);
@@ -1946,7 +1941,7 @@ void options::SetInitialSettings()
 
 	m_tFilterSec->SetValue(wxString::Format(_T("%d"), g_COGFilterSec));
 
-	pCOGUPUpdateSecs->SetValue(wxString::Format(_T("%d"), g_COGAvgSec));
+	pCOGUPUpdateSecs->SetValue(wxString::Format(_T("%d"), nav.COGAvgSec));
 
 	pCDOOutlines->SetValue(view.show_outlines);
 	pCDOQuilting->SetValue(view.quilt_enable);
@@ -1960,14 +1955,14 @@ void options::SetInitialSettings()
 		pSmoothPanZoom->Disable();
 	}
 
-	m_cbAPBMagnetic->SetValue(g_bMagneticAPB);
+	m_cbAPBMagnetic->SetValue(nav.MagneticAPB);
 	pCBMagShow->SetValue(view.ShowMag);
 
 	pMagVar->SetValue(wxString::Format(_T("%4.1f"), nav.user_var));
 
 	pSDisplayGrid->SetValue(view.display_grid);
 
-	pCBCourseUp->SetValue(g_bCourseUp);
+	pCBCourseUp->SetValue(nav.CourseUp);
 	pCBLookAhead->SetValue(view.lookahead_mode);
 
 	if (fabs(wxRound(ownship.predictor_minutes) - ownship.predictor_minutes) > 1e-4)
@@ -2543,21 +2538,20 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 	long filter_val = 1;
 	m_tFilterSec->GetValue().ToLong(&filter_val);
-	g_COGFilterSec = wxMin((int)filter_val, MAX_COGSOG_FILTER_SECONDS);
+	g_COGFilterSec = wxMin(static_cast<int>(filter_val), MAX_COGSOG_FILTER_SECONDS);
 	g_COGFilterSec = wxMax(g_COGFilterSec, 1);
 	g_SOGFilterSec = g_COGFilterSec;
 
 	long update_val = 1;
 	pCOGUPUpdateSecs->GetValue().ToLong(&update_val);
-	g_COGAvgSec = wxMin((int)update_val, MAX_COG_AVERAGE_SECONDS);
+	nav.set_COGAvgSec(wxMin(static_cast<int>(update_val), MAX_COG_AVERAGE_SECONDS));
 
-	g_bCourseUp = pCBCourseUp->GetValue();
+	nav.set_CourseUp(pCBCourseUp->GetValue());
 	gui.set_view_lookahead_mode(pCBLookAhead->GetValue());
 
 	gui.set_ShowMag(pCBMagShow->GetValue());
 	nav.set_user_var(get_double(pMagVar));
-
-	g_bMagneticAPB = m_cbAPBMagnetic->GetValue();
+	nav.set_MagneticAPB(m_cbAPBMagnetic->GetValue());
 
 	gui.set_ownship_predictor_minutes(get_double(m_pText_OSCOG_Predictor));
 

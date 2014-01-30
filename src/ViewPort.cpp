@@ -32,12 +32,14 @@
 
 #include <geo/GeoRef.h>
 
+#include <global/OCPN.h>
+#include <global/Navigation.h>
+
 #ifndef __WXMSW__
 	#include <signal.h>
 	#include <setjmp.h>
 #endif
 
-extern bool g_bCourseUp;
 extern bool g_bskew_comp;
 
 #ifndef __WXMSW__
@@ -144,7 +146,7 @@ wxPoint ViewPort::GetPixFromLL(const geo::Position& pos) const
 	double dyr = npix;
 
 	// Apply VP Rotation
-	if (g_bCourseUp) {
+	if (global::OCPN::get().nav().get_data().CourseUp) {
 		dxr = epix * cos(rotation) + npix * sin(rotation);
 		dyr = npix * cos(rotation) - epix * sin(rotation);
 	}
@@ -213,7 +215,7 @@ wxPoint2DDouble ViewPort::GetDoublePixFromLL(const geo::Position& pos) const
 	double dyr = npix;
 
 	// Apply VP Rotation
-	if (g_bCourseUp) {
+	if (global::OCPN::get().nav().get_data().CourseUp) {
 		dxr = epix * cos(rotation) + npix * sin(rotation);
 		dyr = npix * cos(rotation) - epix * sin(rotation);
 	}
@@ -235,7 +237,7 @@ geo::Position ViewPort::GetLLFromPix(const wxPoint& p) const
 	double ypr = dy;
 
 	// Apply VP Rotation
-	if (g_bCourseUp) {
+	if (global::OCPN::get().nav().get_data().CourseUp) {
 		xpr = (dx * cos(rotation)) - (dy * sin(rotation));
 		ypr = (dy * cos(rotation)) + (dx * sin(rotation));
 	}

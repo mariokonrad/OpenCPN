@@ -37,6 +37,7 @@
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/Navigation.h>
 #include <global/System.h>
 
 #include <chart/s52plib.h>
@@ -58,7 +59,6 @@ extern bool g_bopengl;
 extern bool g_b_useStencil;
 extern PlugInManager* g_pi_manager;
 extern bool g_bskew_comp;
-extern bool g_bCourseUp;
 extern chart::ChartBase* Current_Ch;
 extern bool g_bquiting;
 extern ThumbWin* pthumbwin;
@@ -1526,7 +1526,8 @@ void glChartCanvas::render()
 
 		// Try to do accelerated pans
 		if (m_b_useFBO) {
-			if (m_gl_cache_vp.IsValid() && (m_cache_tex > 0) && !g_bCourseUp) {
+			if (m_gl_cache_vp.IsValid() && (m_cache_tex > 0)
+				&& !global::OCPN::get().nav().get_data().CourseUp) {
 				if (b_newview) {
 
 					wxPoint c_old = VPoint.GetPixFromLL(VPoint.get_position());

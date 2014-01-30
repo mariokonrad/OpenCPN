@@ -195,7 +195,6 @@ extern ChartCanvas* cc1;
 
 extern wxPlatformInfo* g_pPlatform;
 
-extern bool g_bCourseUp;
 extern double g_COGAvg; // only needed for debug....
 
 extern int g_click_stop;
@@ -3736,6 +3735,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		drawit++;
 
 	const global::GUI::View& view = global::OCPN::get().gui().view();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
 	// Do the draw if conditions indicate
 	if (drawit) {
@@ -3767,7 +3767,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		// Of course, if the target reported a valid HDG, then use it for icon
 		if ((int)(td->HDG) != 511) {
 			theta = ((td->HDG - 90) * M_PI / 180.0) + GetVP().rotation;
-			if (!g_bskew_comp && !g_bCourseUp)
+			if (!g_bskew_comp && !nav.CourseUp)
 				theta += GetVP().skew;
 		}
 
@@ -5204,8 +5204,8 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 		gFrame->SubmergeToolbarIfOverlap(p.x, p.y, 20);
 	}
 
-	//  Kick off the Rotation control timer
-	if (g_bCourseUp) {
+	// Kick off the Rotation control timer
+	if (global::OCPN::get().nav().get_data().CourseUp) {
 		m_b_rot_hidef = false;
 		pRotDefTimer->Start(500, wxTIMER_ONE_SHOT);
 	}
@@ -6200,7 +6200,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 	contextMenu->Append(ID_DEF_MENU_GOTOPOSITION, _("Center View..."));
 
-	if (!g_bCourseUp)
+	if (!global::OCPN::get().nav().get_data().CourseUp)
 		contextMenu->Append(ID_DEF_MENU_COGUP, _("Course Up Mode"));
 	else {
 		if (!VPoint.is_quilt() && Current_Ch && (fabs(Current_Ch->GetChartSkew()) > 0.01)
@@ -8095,7 +8095,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 
 	wxRegion rgn_chart(0, 0, GetVP().pix_width, GetVP().pix_height);
 
-	//    In case Thumbnail is shown, set up dc clipper and blt iterator regions
+	// In case Thumbnail is shown, set up dc clipper and blt iterator regions
 	if (pthumbwin) {
 		int thumbx, thumby, thumbsx, thumbsy;
 		pthumbwin->GetPosition(&thumbx, &thumby);
@@ -8108,7 +8108,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 		}
 	}
 
-	//  Is this viewpoint the same as the previously painted one?
+	// Is this viewpoint the same as the previously painted one?
 	bool b_newview = true;
 
 	if ((m_cache_vp.view_scale() == VPoint.view_scale())
@@ -8117,12 +8117,14 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 		b_newview = false;
 	}
 
-	//  If in COG UP Mode, we may be able to use the cached rotated bitmap
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+
+	// If in COG UP Mode, we may be able to use the cached rotated bitmap
 	bool b_rcache_ok = false;
-	if (g_bCourseUp && (fabs(VPoint.rotation) > 0.01))
+	if (nav.CourseUp && (fabs(VPoint.rotation) > 0.01))
 		b_rcache_ok = !b_newview;
 
-	//  If in skew compensation mode, with a skewed VP shown, we may be able to use the cached
+	// If in skew compensation mode, with a skewed VP shown, we may be able to use the cached
 	// rotated bitmap
 	if (g_bskew_comp && (fabs(VPoint.skew) > 0.01))
 		b_rcache_ok = !b_newview;
@@ -8137,12 +8139,12 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 
 	OCPNRegion chart_get_region(wxRect(0, 0, svp.pix_width, svp.pix_height));
 
-	//  If we are going to use the cached rotated image, there is no need to fetch any chart data
-	//  and this will do it...
+	// If we are going to use the cached rotated image, there is no need to fetch any chart data
+	// and this will do it...
 	if (b_rcache_ok)
 		chart_get_region.Clear();
 
-	//  Blit pan acceleration
+	// Blit pan acceleration
 	if (VPoint.is_quilt()) {
 		if (m_pQuilt && !m_pQuilt->IsComposed())
 			return;
@@ -8152,15 +8154,15 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 			m_working_bm.Create(svp.pix_width, svp.pix_height,
 								-1); // make sure the target is big enoug
 
-		if (!g_bCourseUp) {
+		if (!nav.CourseUp) {
 			bool b_save = true;
 
-			//  If the saved wxBitmap from last OnPaint is useable
-			//  calculate the blit parameters
+			// If the saved wxBitmap from last OnPaint is useable
+			// calculate the blit parameters
 
-			//  We can only do screen blit painting if subsequent ViewPorts differ by whole pixels
-			//  So, in small scale bFollow mode, force the full screen render.
-			//  This seems a hack....There may be better logic here.....
+			// We can only do screen blit painting if subsequent ViewPorts differ by whole pixels
+			// So, in small scale bFollow mode, force the full screen render.
+			// This seems a hack....There may be better logic here.....
 
 			if (m_bm_cache_vp.IsValid() && m_cache_vp.IsValid()) {
 				if (b_newview) {
@@ -8172,7 +8174,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 
 					if (m_pQuilt->IsVPBlittable(VPoint, dx, dy, true)) {
 						if (dx || dy) {
-							//  Blit the reuseable portion of the cached wxBitmap to a working
+							// Blit the reuseable portion of the cached wxBitmap to a working
 							// bitmap
 							temp_dc.SelectObject(m_working_bm);
 
@@ -8215,39 +8217,35 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 									update_region.Union(wxRect(0, 0, -dx, VPoint.pix_height));
 							}
 
-							//  Render the new region
+							// Render the new region
 							m_pQuilt->RenderQuiltRegionViewOnDC(temp_dc, svp, update_region);
 							cache_dc.SelectObject(wxNullBitmap);
 						} else {
-							//    No sensible (dx, dy) change in the view, so use the cached member
+							// No sensible (dx, dy) change in the view, so use the cached member
 							// bitmap
 							temp_dc.SelectObject(m_cached_chart_bm);
 							b_save = false;
 						}
 						m_pQuilt->ComputeRenderRegion(svp, chart_get_region);
 
-					} else // not blitable
-					{
+					} else {
+						// not blitable
 						temp_dc.SelectObject(m_working_bm);
 						m_pQuilt->RenderQuiltRegionViewOnDC(temp_dc, svp, chart_get_region);
 					}
 				} else {
-					//    No change in the view, so use the cached member bitmap2
+					// No change in the view, so use the cached member bitmap2
 					temp_dc.SelectObject(m_cached_chart_bm);
 					b_save = false;
 				}
-			} else // cached bitmap is not yet valid
-			{
+			} else {
+				// cached bitmap is not yet valid
 				temp_dc.SelectObject(m_working_bm);
 				m_pQuilt->RenderQuiltRegionViewOnDC(temp_dc, svp, chart_get_region);
 			}
 
 			//  Save the fully rendered quilt image as a wxBitmap member of this class
 			if (b_save) {
-				//                        if((m_cached_chart_bm.GetWidth() != svp.pix_width) ||
-				// (m_cached_chart_bm.GetHeight() != svp.pix_height))
-				//                              m_cached_chart_bm.Create(svp.pix_width,
-				// svp.pix_height, -1); // target wxBitmap is big enough
 				wxMemoryDC scratch_dc_0;
 				scratch_dc_0.SelectObject(m_cached_chart_bm);
 				scratch_dc_0.Blit(0, 0, svp.pix_width, svp.pix_height, &temp_dc, 0, 0);
@@ -8256,14 +8254,14 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 
 				m_bm_cache_vp = VPoint; // save the ViewPort associated with the cached wxBitmap
 			}
-		} else // quilted, course-up
-		{
+		} else {
+			// quilted, course-up
 			temp_dc.SelectObject(m_working_bm);
 			OCPNRegion chart_get_all_region(wxRect(0, 0, svp.pix_width, svp.pix_height));
 			m_pQuilt->RenderQuiltRegionViewOnDC(temp_dc, svp, chart_get_all_region);
 		}
-	} else // not quilted
-	{
+	} else {
+		// not quilted
 		if (!Current_Ch) {
 			dc.SetBackground(wxBrush(*wxLIGHT_GREY));
 			dc.Clear();
@@ -8276,8 +8274,8 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	if (!temp_dc.IsOk())
 		return;
 
-	//    Arrange to render the World Chart vector data behind the rendered current chart
-	//    so that uncovered canvas areas show at least the world chart.
+	// Arrange to render the World Chart vector data behind the rendered current chart
+	// so that uncovered canvas areas show at least the world chart.
 	OCPNRegion chartValidRegion;
 	if (!VPoint.is_quilt())
 		Current_Ch->GetValidCanvasRegion(
@@ -8285,7 +8283,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	else
 		chartValidRegion = m_pQuilt->GetFullQuiltRenderedRegion();
 
-	//    Copy current chart region
+	// Copy current chart region
 	wxRegion backgroundRegion(wxRect(0, 0, svp.pix_width, svp.pix_height));
 
 	wxRegion clip_region;
@@ -8294,11 +8292,11 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 		backgroundRegion.Subtract(clip_region);
 	}
 
-	//    Associate with temp_dc
+	// Associate with temp_dc
 	temp_dc.DestroyClippingRegion();
 	temp_dc.SetClippingRegion(backgroundRegion);
 
-	//    Draw the Background Chart only in the areas NOT covered by the current chart view
+	// Draw the Background Chart only in the areas NOT covered by the current chart view
 
 	if ((fabs(GetVP().skew) < .01) && !backgroundRegion.IsEmpty()) {
 		ocpnDC bgdc(temp_dc);
@@ -8326,8 +8324,8 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 			if (bm_base.IsOk())
 				base_image = bm_base.ConvertToImage();
 
-			//    Use a local static image rotator to improve wxWidgets code profile
-			//    Especially, on GTK the wxRound and wxRealPoint functions are very expensive.....
+			// Use a local static image rotator to improve wxWidgets code profile
+			// Especially, on GTK the wxRound and wxRealPoint functions are very expensive.....
 			double angle;
 			angle = -GetVP().rotation;
 			angle += GetVP().skew;
@@ -8338,8 +8336,6 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 				ViewPort rot_vp = GetVP();
 
 				m_b_rot_hidef = false;
-				//                              if(g_bskew_comp && (fabs(GetVP().skew) > 0.01))
-				//                                    m_b_rot_hidef = true;
 
 				ri = Image_Rotate(base_image, angle,
 								  wxPoint(GetVP().rv_rect.width / 2, GetVP().rv_rect.height / 2),
@@ -9500,7 +9496,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 
 	double skew_angle = GetVPRotation();
 
-	if (!g_bCourseUp && !g_bskew_comp)
+	if (!global::OCPN::get().nav().get_data().CourseUp && !g_bskew_comp)
 		skew_angle = GetVPRotation() + GetVPSkew();
 
 	if (bdraw_mono_for_mask) {

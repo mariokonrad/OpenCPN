@@ -49,6 +49,9 @@ public: // data
 	virtual void set_speed_over_ground(double);
 	virtual void set_course_over_ground(double);
 	virtual void set_user_var(double);
+	virtual void set_CourseUp(bool);
+	virtual void set_COGAvgSec(int);
+	virtual void set_MagneticAPB(bool);
 
 public: // route
 	virtual const Route& route() const;

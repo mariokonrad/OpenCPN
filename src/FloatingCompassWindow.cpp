@@ -40,7 +40,6 @@ END_EVENT_TABLE()
 
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern ChartCanvas* cc1;
-extern bool g_bCourseUp;
 extern bool g_bskew_comp;
 
 FloatingCompassWindow::FloatingCompassWindow(wxWindow* parent)
@@ -151,6 +150,7 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 
 	bool b_need_refresh = false;
 	const global::Navigation::GPS& gps = global::OCPN::get().nav().gps();
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
 	if (gps.valid) {
 		if (gps.SatValid) {
@@ -175,7 +175,7 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 	if ((fabs(cc1->GetVPRotation()) > 0.01) || (fabs(cc1->GetVPSkew()) > 0.01)) {
 		rose_angle = -cc1->GetVPRotation();
 
-		if (!g_bCourseUp && !g_bskew_comp)
+		if (!nav.CourseUp && !g_bskew_comp)
 			rose_angle = -cc1->GetVPRotation() - cc1->GetVPSkew();
 
 		b_need_refresh = true;
@@ -208,15 +208,15 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 
 			wxPoint offset(style.GetCompassLeftMargin(), style.GetCompassTopMargin());
 
-			//    Build Compass Rose, rotated...
+			// Build Compass Rose, rotated...
 			wxBitmap BMPRose;
 			wxPoint after_rotate;
 
-			if (g_bCourseUp)
+			if (nav.CourseUp)
 				BMPRose = style.GetIcon(_T("CompassRose"));
 			else
 				BMPRose = style.GetIcon(_T("CompassRoseBlue"));
-			if ((fabs(cc1->GetVPRotation()) > .01) || (fabs(cc1->GetVPSkew()) > .01)) {
+			if ((fabs(cc1->GetVPRotation()) > .01) || (fabs(cc1->GetVPSkew()) > 0.01)) {
 				wxPoint rot_ctr(BMPRose.GetWidth() / 2, BMPRose.GetHeight() / 2);
 				wxImage rose_img = BMPRose.ConvertToImage();
 

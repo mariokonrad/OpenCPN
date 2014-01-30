@@ -80,6 +80,21 @@ void OCPN_Navigation::set_user_var(double value)
 	data.user_var = value;
 }
 
+void OCPN_Navigation::set_CourseUp(bool value)
+{
+	data.CourseUp = value;
+}
+
+void OCPN_Navigation::set_COGAvgSec(int value)
+{
+	data.COGAvgSec = value;
+}
+
+void OCPN_Navigation::set_MagneticAPB(bool value)
+{
+	data.MagneticAPB = value;
+}
+
 const Navigation::Route& OCPN_Navigation::route() const
 {
 	return data_route;

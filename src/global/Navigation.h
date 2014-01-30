@@ -46,6 +46,10 @@ public:
 		double hdm; // heading degrees magnetic
 		double var; // magnetic variationn in degrees
 		double user_var; // user defined magnetic variation
+
+		bool CourseUp;
+		int COGAvgSec; // COG average period (sec.) for Course Up Mode
+		bool MagneticAPB;
 	};
 
 	virtual const Data& get_data() const = 0;
@@ -59,6 +63,9 @@ public:
 	virtual void set_speed_over_ground(double) = 0;
 	virtual void set_course_over_ground(double) = 0;
 	virtual void set_user_var(double) = 0;
+	virtual void set_CourseUp(bool) = 0;
+	virtual void set_COGAvgSec(int) = 0;
+	virtual void set_MagneticAPB(bool) = 0;
 
 public:
 	struct Route

@@ -67,8 +67,6 @@ extern Config* pConfig;
 
 extern wxRect g_blink_rect;
 
-extern bool g_bMagneticAPB;
-
 extern Track* g_pActiveTrack;
 extern RouteProp* pRoutePropDialog;
 extern RouteManagerDialog* pRouteManagerDialog;
@@ -732,7 +730,7 @@ bool Routeman::UpdateAutopilot()
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-		if (g_bMagneticAPB && !wxIsNaN(nav.var)) {
+		if (nav.MagneticAPB && !wxIsNaN(nav.var)) {
 
 			double brg1m = ((brg1 + nav.var) >= 0.0) ? (brg1 + nav.var) : (brg1 + nav.var + 360.0);
 			double bapm = ((CurrentBrgToActivePoint + nav.var) >= 0.0)

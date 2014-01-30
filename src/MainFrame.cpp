@@ -245,8 +245,6 @@ ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 int g_current_arrow_scale;
 Multiplexer* g_pMUX;
 wxRect g_blink_rect;
-bool g_bCourseUp;
-int g_COGAvgSec; // COG average period (sec.) for Course Up Mode
 double g_COGAvg;
 bool g_bskew_comp;
 bool g_bopengl;
@@ -313,7 +311,6 @@ wxAuiDefaultDockArt* g_pauidockart;
 wxMenu* g_FloatingToolbarConfigMenu;
 OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 FloatingCompassWindow* g_FloatingCompassDialog;
-bool g_bMagneticAPB;
 bool g_b_useStencil;
 
 int g_sticky_chart;
@@ -1286,7 +1283,7 @@ void MainFrame::ODoSetSize(void)
 	// Resize the children
 
 	if (m_pStatusBar) {
-		//  Maybe resize the font
+		// Maybe resize the font
 		wxRect stat_box;
 		m_pStatusBar->GetFieldRect(0, stat_box);
 		int font_size = stat_box.width / 28; // 30 for linux
@@ -1352,17 +1349,17 @@ void MainFrame::ODoSetSize(void)
 		stats->RePosition();
 	}
 
-	//  Update the stored window size
+	// Update the stored window size
 	GetSize(&x, &y);
 	global::OCPN::get().gui().set_frame_size(wxSize(x, y));
 
-	//  Inform the PlugIns
+	// Inform the PlugIns
 	if (g_pi_manager)
 		g_pi_manager->SendResizeEventToAllPlugIns(x, y);
 
-	//  Force redraw if in lookahead mode
+	// Force redraw if in lookahead mode
 	if (global::OCPN::get().gui().view().lookahead_mode) {
-		if (g_bCourseUp)
+		if (global::OCPN::get().nav().get_data().CourseUp)
 			DoCOGSet();
 		else
 			DoChartUpdate();
@@ -1874,18 +1871,19 @@ void MainFrame::TrackMidnightRestart(void)
 
 void MainFrame::ToggleCourseUp(void)
 {
-	g_bCourseUp = !g_bCourseUp;
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	if (g_bCourseUp) {
-		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	global::OCPN::get().nav().set_CourseUp(!nav.CourseUp);
+
+	if (nav.CourseUp) {
 
 		// Stuff the COGAvg table in case COGUp is selected
 		double stuff = 0.;
 		if (!wxIsNaN(nav.cog))
 			stuff = nav.cog;
 
-		if (g_COGAvgSec > 0) {
-			for (int i = 0; i < g_COGAvgSec; i++)
+		if (nav.COGAvgSec > 0) {
+			for (int i = 0; i < nav.COGAvgSec; i++)
 				COGTable[i] = stuff;
 		}
 		g_COGAvg = stuff;
@@ -2305,19 +2303,19 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	if (g_bCourseUp) {
-		//    Stuff the COGAvg table in case COGUp is selected
-		double stuff = 0.;
+	if (nav.CourseUp) {
+		// Stuff the COGAvg table in case COGUp is selected
+		double stuff = 0.0;
 		if (!wxIsNaN(nav.cog))
 			stuff = nav.cog;
-		if (g_COGAvgSec > 0) {
-			for (int i = 0; i < g_COGAvgSec; i++)
+		if (nav.COGAvgSec > 0) {
+			for (int i = 0; i < nav.COGAvgSec; i++)
 				COGTable[i] = stuff;
 		}
 
 		g_COGAvg = stuff;
 
-		//    Short circuit the COG timer to force immediate refresh of canvas in case COGUp is
+		// Short circuit the COG timer to force immediate refresh of canvas in case COGUp is
 		// selected
 		FrameCOGTimer.Stop();
 		FrameCOGTimer.Start(100, wxTIMER_CONTINUOUS);
@@ -3259,7 +3257,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 
 	// Do the chart update based on the global update period currently set
 	// If in COG UP mode, the chart update is handled by COG Update timer
-	if (!g_bCourseUp && (0 == m_ChartUpdatePeriod--)) {
+	if (!nav.get_data().CourseUp && (0 == m_ChartUpdatePeriod--)) {
 		bnew_view = DoChartUpdate();
 		m_ChartUpdatePeriod = default_ChartUpdatePeriod;
 	}
@@ -3321,7 +3319,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	// In follow mode, if there has already been a full screen refresh,
 	// there is no need to check ownship or AIS,
 	// since they will be always drawn on the full screen paint.
-	if ((!chart_canvas->m_bFollow) || g_bCourseUp) {
+	if ((!chart_canvas->m_bFollow) || nav.get_data().CourseUp) {
 		chart_canvas->UpdateShips();
 		chart_canvas->UpdateAIS();
 		chart_canvas->UpdateAlerts();
@@ -3448,17 +3446,19 @@ void MainFrame::OnFrameCOGTimer(wxTimerEvent&)
 	DoCOGSet();
 
 	// Restart the timer, max frequency is 10 hz.
-	if (g_COGAvgSec > 0)
-		FrameCOGTimer.Start(g_COGAvgSec * 1000, wxTIMER_CONTINUOUS);
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	if (nav.COGAvgSec > 0)
+		FrameCOGTimer.Start(nav.COGAvgSec * 1000, wxTIMER_CONTINUOUS);
 	else
 		FrameCOGTimer.Start(100, wxTIMER_CONTINUOUS);
 }
 
 void MainFrame::DoCOGSet(void)
 {
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	double old_VPRotate = VPRotate;
 
-	if (g_bCourseUp)
+	if (nav.CourseUp)
 		VPRotate = -g_COGAvg * M_PI / 180.0;
 	else
 		VPRotate = 0.0;
@@ -3466,7 +3466,7 @@ void MainFrame::DoCOGSet(void)
 	if (chart_canvas)
 		chart_canvas->SetVPRotation(VPRotate);
 
-	if (g_bCourseUp) {
+	if (nav.CourseUp) {
 		bool bnew_chart = DoChartUpdate();
 		if ((bnew_chart) || (old_VPRotate != VPRotate))
 			if (chart_canvas)
@@ -5201,14 +5201,14 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 	// Maintain average COG for Course Up Mode
 
 	if (!wxIsNaN(nav.cog)) {
-		if (g_COGAvgSec > 0) {
+		if (nav.COGAvgSec > 0) {
 			// Make a hole
-			for (int i = g_COGAvgSec - 1; i > 0; i--)
+			for (int i = nav.COGAvgSec - 1; i > 0; i--)
 				COGTable[i] = COGTable[i - 1];
 			COGTable[0] = nav.cog;
 
 			double sum = 0.;
-			for (int i = 0; i < g_COGAvgSec; i++) {
+			for (int i = 0; i < nav.COGAvgSec; i++) {
 				double adder = COGTable[i];
 
 				if (fabs(adder - g_COGAvg) > 180.0) {
@@ -5220,7 +5220,7 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 
 				sum += adder;
 			}
-			sum /= g_COGAvgSec;
+			sum /= nav.COGAvgSec;
 
 			if (sum < 0.0)
 				sum += 360.0;

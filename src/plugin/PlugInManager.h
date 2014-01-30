@@ -37,7 +37,6 @@
 #endif
 
 #include <DataStream.h>
-#include <ChartPlugInWrapper.h>
 
 #include <chart/s52s57.h>
 
@@ -51,6 +50,7 @@
 #include <plugin/PlugInContainer.h>
 #include <plugin/PlugInMenuItemContainer.h>
 #include <plugin/PlugInToolbarToolContainer.h>
+#include <plugin/ChartPlugInWrapper.h>
 
 // Include wxJSON headers
 // We undefine MIN/MAX so avoid warning of redefinition coming from

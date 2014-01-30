@@ -34,84 +34,72 @@
 #include <pwd.h>
 #include <stdbool.h>
 
-
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    int option, debuglevel;
+	int option, debuglevel;
 
-    int inF, ouF, bytes;
-    char line[512];
+	int inF, ouF, bytes;
+	char line[512];
 
-    while ((option = getopt(argc, argv, "D:SBUV")) != -1)
-    {
-        switch (option) {
-            case 'B':
-            {
-                 inF = open("/proc/tty/driver/usb-serial", O_RDONLY);
-                 if (inF == -1)
-            		inF = open("/proc/tty/driver/usbserial", O_RDONLY);
- 
-		 if(inF != -1) 
-		 {
-	                 if((ouF = open("/var/tmp/usbserial", O_WRONLY | O_CREAT | O_TRUNC, 0777)) != -1)
-        	         {
-                 		while((bytes = read(inF, line, sizeof(line))) > 0)
-                     			write(ouF, line, bytes);
-                                close(ouF);
-			 }
-		         close(inF);
-                 }
-                 break;
-            }
+	while ((option = getopt(argc, argv, "D:SBUV")) != -1) {
+		switch (option) {
+			case 'B': {
+				inF = open("/proc/tty/driver/usb-serial", O_RDONLY);
+				if (inF == -1)
+					inF = open("/proc/tty/driver/usbserial", O_RDONLY);
 
-            case 'S':
-            {
-                 inF = open("/proc/tty/driver/serial", O_RDONLY);
- 
-		 if(inF != -1) 
-		 {
-	                 if((ouF = open("/var/tmp/serial", O_WRONLY | O_CREAT | O_TRUNC, 0777)) != -1)
-        	         {
-                 		while((bytes = read(inF, line, sizeof(line))) > 0)
-                     			write(ouF, line, bytes);
-                                close(ouF);
-			 }
-		         close(inF);
-                 }
-                 break;
-             }
+				if (inF != -1) {
+					if ((ouF = open("/var/tmp/usbserial", O_WRONLY | O_CREAT | O_TRUNC, 0777))
+						!= -1) {
+						while ((bytes = read(inF, line, sizeof(line))) > 0)
+							write(ouF, line, bytes);
+						close(ouF);
+					}
+					close(inF);
+				}
+				break;
+			}
 
-            case 'U':
-            {
-                /*  Kill the helper files  */
-                unlink("/var/tmp/usbserial");
-                unlink("/var/tmp/serial");
-		break;
-            }
+			case 'S': {
+				inF = open("/proc/tty/driver/serial", O_RDONLY);
 
-            case 'D':
-            {
-                debuglevel = (int) strtol(optarg, 0, 0);
-                break;
-            }
-             
-            case 'V':
-            {
-                (void)printf("ocpnhelper %s\n", VERSION);
-                exit(0);
-            }
+				if (inF != -1) {
+					if ((ouF = open("/var/tmp/serial", O_WRONLY | O_CREAT | O_TRUNC, 0777)) != -1) {
+						while ((bytes = read(inF, line, sizeof(line))) > 0)
+							write(ouF, line, bytes);
+						close(ouF);
+					}
+					close(inF);
+				}
+				break;
+			}
 
-            case 'h': case '?':
-            default:
-            { 
-//                usage();
-                exit(0);
-            }
-        }
-    }
+			case 'U': {
+				/*  Kill the helper files  */
+				unlink("/var/tmp/usbserial");
+				unlink("/var/tmp/serial");
+				break;
+			}
 
+			case 'D': {
+				debuglevel = (int)strtol(optarg, 0, 0);
+				break;
+			}
 
-    return 0;
+			case 'V': {
+				(void)printf("ocpnhelper %s\n", VERSION);
+				exit(0);
+			}
+
+			case 'h':
+			case '?':
+			default: {
+				//                usage();
+				exit(0);
+			}
+		}
+	}
+
+	return 0;
 }
-
 

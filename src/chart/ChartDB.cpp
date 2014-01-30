@@ -37,7 +37,8 @@
 #include <chart/ChartBase.h>
 #include <chart/ChartBaseBSB.h>
 
-#include <ChartPlugInWrapper.h>
+#include <plugin/ChartPlugInWrapper.h>
+
 #include <MainFrame.h>
 #include <ThumbWin.h>
 #include <ChartCanvas.h>

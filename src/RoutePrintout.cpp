@@ -51,11 +51,6 @@
 	#include <psapi.h>
 #endif
 
-#ifndef __WXMSW__
-	#include <signal.h>
-	#include <setjmp.h>
-#endif
-
 #define PRINT_WP_NAME 0
 #define PRINT_WP_POSITION 1
 #define PRINT_WP_COURSE 2

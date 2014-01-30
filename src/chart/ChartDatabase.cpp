@@ -26,12 +26,12 @@
 #include <wx/progdlg.h>
 
 #include "ChartDatabase.h"
-#include <ChartPlugInWrapper.h>
 #include <chart/ChartBase.h>
 
 #include <geo/BoundingBox.h>
 
 #include <plugin/PlugInManager.h>
+#include <plugin/ChartPlugInWrapper.h>
 
 extern PlugInManager* g_pi_manager;
 

@@ -52,11 +52,6 @@
 	#include <psapi.h>
 #endif
 
-#ifndef __WXMSW__
-	#include <signal.h>
-	#include <setjmp.h>
-#endif
-
 #include "PrintTable.h"
 
 

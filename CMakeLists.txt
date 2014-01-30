@@ -768,6 +768,7 @@ SET(SRC_PLUGIN
 	src/plugin/PluginPanel.cpp
 	src/plugin/PluginListPanel.cpp
 	src/plugin/OCPN_MsgEvent.cpp
+	src/plugin/ChartPlugInWrapper.cpp
 	)
 
 SET(HDR_PLUGIN
@@ -778,6 +779,7 @@ SET(HDR_PLUGIN
 	src/plugin/PluginListPanel.h
 	src/plugin/OCPN_MsgEvent.h
 	src/plugin/ocpn_plugin.h
+	src/plugin/ChartPlugInWrapper.h
 	)
 
 SET(SRC_SOUND
@@ -916,7 +918,6 @@ SET(HDRS
 	src/ChartCanvas.h
 	src/MemoryStatus.h
 	src/MainFrame.h
-	src/ChartPlugInWrapper.h
 	src/MagneticVariation.h
 	src/GUI_IDs.h
 	src/AnchorDist.h
@@ -1061,7 +1062,6 @@ SET(SRCS
 	src/Quilt.cpp
 	src/EmbossData.cpp
 	src/ThumbData.cpp
-	src/ChartPlugInWrapper.cpp
 	src/QuiltPatch.cpp
 	src/QuiltCandidate.cpp
 	src/Hyperlink.cpp

@@ -28,12 +28,12 @@
 #include <ChInfoWin.h>
 #include <ThumbWin.h>
 #include <OCPNRegionIterator.h>
-#include <ChartPlugInWrapper.h>
 #include <ocpnDC.h>
 #include <MemoryStatus.h>
 #include <ChartCanvas.h>
 
 #include <plugin/PlugInManager.h>
+#include <plugin/ChartPlugInWrapper.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

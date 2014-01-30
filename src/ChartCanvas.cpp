@@ -118,16 +118,6 @@
 #define new DEBUG_NEW
 #endif
 
-#ifndef __WXMSW__
-#include <signal.h>
-#include <setjmp.h>
-
-extern struct sigaction sa_all;
-extern struct sigaction sa_all_old;
-
-extern sigjmp_buf env; // the context saved by sigsetjmp();
-#endif
-
 
 static int SetScreenBrightness(int brightness);
 static int InitScreenBrightness(void);

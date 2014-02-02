@@ -69,6 +69,7 @@ public:
 		double NavAidRadarRingsStep;
 		int NavAidRadarRingsStepUnits;
 		bool ShowMag;
+		int current_arrow_scale;
 	};
 
 	virtual const View& view() const = 0;
@@ -101,6 +102,7 @@ public:
 	virtual void set_NavAidRadarRingsStep(double) = 0;
 	virtual void set_NavAidRadarRingsStepUnits(int) = 0;
 	virtual void set_ShowMag(bool) = 0;
+	virtual void set_current_arrow_scale(int) = 0;
 
 public:
 	struct Frame

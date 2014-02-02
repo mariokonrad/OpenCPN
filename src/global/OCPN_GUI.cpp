@@ -176,6 +176,11 @@ void OCPN_GUI::set_ShowMag(bool value)
 	data_view.ShowMag = value;
 }
 
+void OCPN_GUI::set_current_arrow_scale(int value)
+{
+	data_view.current_arrow_scale = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

@@ -94,7 +94,6 @@ extern wxString g_default_wp_icon;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern int g_GroupIndex;
 
-extern int g_current_arrow_scale;
 extern wxString g_GPS_Ident;
 extern bool g_bGarminHostUpload;
 extern wxString g_uploadConnection;
@@ -1106,7 +1105,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_route_line_width(read_long(_T("RouteLineWidth"), 2));
 	gui.set_track_line_width(read_long(_T("TrackLineWidth"), 3));
 
-	Read(_T("CurrentArrowScale"), &g_current_arrow_scale, 100);
+	gui.set_current_arrow_scale(read_long(_T("CurrentArrowScale"), 100));
 	Read(_T("DefaultWPIcon"), &g_default_wp_icon, _T("triangle"));
 
 	return (0);
@@ -1801,7 +1800,7 @@ void Config::UpdateSettings()
 	Write(_T("TrackDeltaDistance"), track.TrackDeltaDistance);
 	Write(_T("TrackPrecision"), track.TrackPrecision);
 
-	Write(_T("CurrentArrowScale"), g_current_arrow_scale);
+	Write(_T("CurrentArrowScale"), view.current_arrow_scale);
 	Write(_T("DefaultWPIcon"), g_default_wp_icon);
 
 	Flush();

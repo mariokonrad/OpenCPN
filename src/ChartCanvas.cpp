@@ -204,8 +204,6 @@ extern bool g_b_assume_azerty;
 extern int g_GroupIndex;
 extern wxString g_default_wp_icon;
 
-extern int g_current_arrow_scale;
-
 S57QueryDialog* g_pObjectQueryDialog = NULL;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern Multiplexer* g_pMUX;
@@ -631,7 +629,8 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	m_pix_per_mm = (static_cast<double>(sx)) / (static_cast<double>(mmx));
 
 	int mm_per_knot = 10;
-	current_draw_scaler = mm_per_knot * m_pix_per_mm * g_current_arrow_scale / 100.0;
+	current_draw_scaler = mm_per_knot * m_pix_per_mm
+						  * global::OCPN::get().gui().view().current_arrow_scale / 100.0;
 	pscratch_bm = NULL;
 	proute_bm = NULL;
 

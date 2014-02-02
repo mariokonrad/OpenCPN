@@ -173,7 +173,6 @@ double g_ChartNotRenderScaleFactor;
 RouteList* pRouteList;
 bool g_bIsNewLayer;
 int g_LayerIdx;
-bool g_bLayerViz;
 Select* pSelect;
 Select* pSelectTC;
 Select* pSelectAIS;

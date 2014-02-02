@@ -307,7 +307,6 @@ wxMenu* g_FloatingToolbarConfigMenu;
 OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 FloatingCompassWindow* g_FloatingCompassDialog;
 bool g_b_useStencil;
-
 double g_GLMinLineWidth;
 
 #ifdef __MSVC__

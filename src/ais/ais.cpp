@@ -43,16 +43,6 @@
 #include <wx/wfstream.h>
 #include <wx/imaglist.h>
 
-extern int s_dns_test_flag;
-extern Select* pSelectAIS;
-
-// AIS Global configuration
-extern bool g_bShowAllCPA;
-
-extern bool g_bGPSAISMux;
-
-extern ais::AISTargetListDialog* g_pAISTargetList;
-
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;
 #define NAN (*(double*)&lNaN)

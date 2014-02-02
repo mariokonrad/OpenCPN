@@ -206,7 +206,6 @@ extern wxString g_default_wp_icon;
 
 S57QueryDialog* g_pObjectQueryDialog = NULL;
 extern ocpnStyle::StyleManager* g_StyleManager;
-extern Multiplexer* g_pMUX;
 extern ArrayOfConnPrm* g_pConnectionParams;
 
 extern sound::OCPN_Sound g_anchorwatch_sound;

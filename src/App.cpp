@@ -137,8 +137,6 @@ extern wxDateTime g_loglast_time;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
 extern ocpnStyle::StyleManager* g_StyleManager;
-extern int g_sticky_chart;
-extern double g_GLMinLineWidth;
 extern bool bDBUpdateInProgress;
 extern ThumbWin* pthumbwin;
 extern tide::TCMgr* ptcmgr;
@@ -161,21 +159,10 @@ extern chart::ChartGroupArray* g_pGroupArray;
 extern int g_GroupIndex;
 extern wxProgressDialog* s_ProgDialog;
 extern wxArrayString TideCurrentDataSet;
-extern wxToolBarToolBase* m_pAISTool;
-extern int g_nAIS_activity_timer;
-extern bool g_bTrackActive;
-extern Track* g_pActiveTrack;
-extern int g_total_NMEAerror_messages;
-extern CM93DSlide* pCM93DetailSlider;
 extern wxPlatformInfo* g_pPlatform;
 extern wxLocale* plocale_def_lang;
 extern bool g_b_assume_azerty;
-extern int g_click_stop;
-extern wxStaticBitmap* g_pStatBoxTool;
-extern bool g_bquiting;
 extern wxAuiManager* g_pauimgr;
-extern wxAuiDefaultDockArt* g_pauidockart;
-extern wxMenu* g_FloatingToolbarConfigMenu;
 extern bool g_bShowAIS;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
@@ -187,16 +174,13 @@ extern chart::ChartStack* pCurrentStack;
 extern int g_unit_test_1;
 extern bool g_bportable;
 extern OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
-extern wxDateTime g_start_time;
 extern Config* pConfig;
 extern Select* pSelect;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
-extern wxDateTime g_loglast_time;
 extern int g_GroupIndex;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern wxAuiManager* g_pauimgr;
-extern wxLocale* plocale_def_lang;
 extern MainFrame* gFrame;
 
 #ifdef __WXMSW__
@@ -1116,8 +1100,6 @@ bool App::OnInit()
 	// Fulup: force floating point to use dot as separation.
 	// This needs to be set early to catch numerics in config file.
 	setlocale(LC_NUMERIC, "C");
-
-	// CALLGRIND_STOP_INSTRUMENTATION
 
 	g_start_time = wxDateTime::Now();
 

@@ -31,8 +31,8 @@
 
 #define ID_CM93ZOOMG 102
 
-extern CM93DSlide * pCM93DetailSlider;
-extern ChartCanvas * cc1;
+extern CM93DSlide* pCM93DetailSlider;
+extern ChartCanvas* cc1;
 
 BEGIN_EVENT_TABLE(CM93DSlide, wxDialog)
 	EVT_MOVE(CM93DSlide::OnMove)
@@ -47,15 +47,15 @@ BEGIN_EVENT_TABLE(CM93DSlide, wxDialog)
 END_EVENT_TABLE()
 
 CM93DSlide::CM93DSlide(
-		wxWindow * parent,
+		wxWindow* parent,
 		wxWindowID id,
 		int value,
 		int minValue,
 		int maxValue,
 		const wxPoint& pos,
-		const wxSize & size,
+		const wxSize& size,
 		long style,
-		const wxString & title)
+		const wxString& title)
 {
 	Init();
 	Create(parent, ID_CM93ZOOMG, value, minValue, maxValue, pos, size, style, title);
@@ -72,29 +72,29 @@ void CM93DSlide::Init(void)
 }
 
 bool CM93DSlide::Create(
-		wxWindow * parent,
+		wxWindow* parent,
 		wxWindowID id,
 		int value,
 		int minValue,
 		int maxValue,
-		const wxPoint & pos,
-		const wxSize & size,
+		const wxPoint& pos,
+		const wxSize& size,
 		long,
-		const wxString & title)
+		const wxString& title)
 {
 	long wstyle = wxDEFAULT_DIALOG_STYLE;
 #ifdef __WXOSX__
 	wstyle |= wxSTAY_ON_TOP;
 #endif
 
-	if (!wxDialog::Create( parent, id, title, pos, size, wstyle))
+	if (!wxDialog::Create(parent, id, title, pos, size, wstyle))
 		return false;
 
 	m_pparent = parent;
 
-	m_pCM93DetailSlider = new wxSlider(this, id, value, minValue, maxValue, wxPoint(0, 0),
-		wxDefaultSize, wxSL_HORIZONTAL | wxSL_AUTOTICKS | wxSL_LABELS, wxDefaultValidator,
-		title);
+	m_pCM93DetailSlider
+		= new wxSlider(this, id, value, minValue, maxValue, wxPoint(0, 0), wxDefaultSize,
+					   wxSL_HORIZONTAL | wxSL_AUTOTICKS | wxSL_LABELS, wxDefaultValidator, title);
 
 	m_pCM93DetailSlider->SetSize(wxSize(200, -1));
 

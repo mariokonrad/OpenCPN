@@ -52,7 +52,6 @@ static const long long lNaN = 0xfff8000000000000;
 extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 extern Select* pSelectAIS;
 extern MainFrame* gFrame;
-extern bool g_bShowAIS;
 
 namespace ais
 {

@@ -89,7 +89,6 @@ extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
 extern RouteList* pRouteList;
 extern PlugInManager* g_pi_manager;
-extern bool g_b_useStencil;
 
 // Some static helper funtions
 // Scope is local to this module

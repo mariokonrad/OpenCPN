@@ -156,8 +156,6 @@ extern RoutePoint* pAnchorWatchPoint2;
 extern wxString g_AW1GUID;
 extern wxString g_AW2GUID;
 
-extern bool g_bTrackActive;
-
 extern OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 extern RouteManagerDialog* pRouteManagerDialog;
 GoToPositionDialog* pGoToPositionDialog;
@@ -183,8 +181,6 @@ extern CM93DSlide* pCM93DetailSlider;
 
 extern ChartCanvas* cc1;
 
-extern wxPlatformInfo* g_pPlatform;
-
 extern double g_COGAvg; // only needed for debug....
 
 extern int g_click_stop;
@@ -202,8 +198,6 @@ extern bool g_bopengl;
 extern bool g_bdisable_opengl;
 
 extern wxProgressDialog* s_ProgDialog;
-
-extern bool g_b_useStencil;
 
 extern bool g_b_assume_azerty;
 
@@ -1263,7 +1257,7 @@ const wxCursor& ChartCanvas::get_cursor_cross() const
 	return *pCursorCross;
 }
 
-void ChartCanvas::OnKeyDown( wxKeyEvent &event )
+void ChartCanvas::OnKeyDown(wxKeyEvent& event)
 {
 	m_panx = 0; //  Stop any autopanning
 	m_pany = 0;

@@ -156,11 +156,6 @@ static const unsigned int TIMER_TC_VALUE_SECONDS = 300;
 static char nmea_tick_chars[] = { '|', '/', '-', '\\', '|', '/', '-', '\\' };
 static int tick_idx;
 
-extern wxString str_version_major;
-extern wxString str_version_minor;
-extern wxString str_version_patch;
-extern wxString OpenCPNVersion;
-
 #ifdef __WXOSX__
 wxWindowList AppActivateList;
 #endif
@@ -287,33 +282,33 @@ DWORD color_inactiveborder;
 
 #endif
 
+wxPlatformInfo* g_pPlatform; // FIXME: App only
+
+wxToolBarToolBase* m_pAISTool; // FIXME: MainFrame only
+int g_nAIS_activity_timer; // FIXME: MainFrame only
+bool g_bTrackActive; // FIXME: MainFrame only
+AboutDialog* g_pAboutDlg; // FIXME: MainFrame only
+int g_sticky_chart; // FIXME: MainFrame only
+
 bool g_bShowAIS;
-wxToolBarToolBase* m_pAISTool;
-int g_nAIS_activity_timer;
-bool g_bTrackActive;
 wxString g_default_wp_icon;
 Track* g_pActiveTrack;
 int g_total_NMEAerror_messages;
 CM93DSlide* pCM93DetailSlider;
 wxString g_AW1GUID;
 wxString g_AW2GUID;
-AboutDialog* g_pAboutDlg;
-wxPlatformInfo* g_pPlatform;
 wxLocale* plocale_def_lang;
 bool g_b_assume_azerty;
 int g_click_stop;
 std::vector<int> g_quilt_noshow_index_array;
-wxStaticBitmap* g_pStatBoxTool;
 bool g_bquiting;
 bool g_bGarminHostUpload;
 wxAuiManager* g_pauimgr;
-wxAuiDefaultDockArt* g_pauidockart;
 wxMenu* g_FloatingToolbarConfigMenu;
 OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 FloatingCompassWindow* g_FloatingCompassDialog;
 bool g_b_useStencil;
 
-int g_sticky_chart;
 double g_GLMinLineWidth;
 
 #ifdef __MSVC__
@@ -3167,7 +3162,7 @@ void MainFrame::onTimer_update_status_sogcog()
 	// Update the Toolbar Status windows and lower status bar the first time watchdog times out
 	const global::WatchDog::Data wdt = global::OCPN::get().wdt().get_data();
 	if ((wdt.gps_watchdog == 0) || (wdt.sat_watchdog == 0)) {
-		wxString sogcog( _T("SOG --- ") + getUsrSpeedUnit() + _T(" COG ---\u00B0") );
+		wxString sogcog(_T("SOG --- ") + getUsrSpeedUnit() + _T(" COG ---\u00B0"));
 		if (GetStatusBar())
 			SetStatusText(sogcog, STAT_FIELD_SOGCOG);
 

@@ -21,19 +21,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __ROUTEPRINTOUT_H__
-#define __ROUTEPRINTOUT_H__
+#ifndef __ROUTEPRINTOUT__H__
+#define __ROUTEPRINTOUT__H__
 
 #include <print/PrintTable.h>
 #include <MyPrintout.h>
-
-#include <wx/print.h>
-#include <wx/datetime.h>
-#include <wx/cmdline.h>
-
-#ifdef __WXMSW__
-	#include <wx/msw/private.h>
-#endif
 
 class Route;
 

@@ -27,15 +27,15 @@
 extern ChartCanvas* cc1;
 extern bool g_bopengl;
 
-MyPrintout::MyPrintout(const wxChar * title)
+MyPrintout::MyPrintout(const wxChar* title)
 	: wxPrintout(title)
 {}
 
 bool MyPrintout::OnPrintPage(int page)
 {
-	wxDC *dc = GetDC();
-	if( dc ) {
-		if( page == 1 )
+	wxDC* dc = GetDC();
+	if (dc) {
+		if (page == 1)
 			DrawPageOne(dc);
 		return true;
 	} else
@@ -49,7 +49,7 @@ bool MyPrintout::OnBeginDocument(int startPage, int endPage)
 	return true;
 }
 
-void MyPrintout::GetPageInfo(int *minPage, int *maxPage, int *selPageFrom, int *selPageTo)
+void MyPrintout::GetPageInfo(int* minPage, int* maxPage, int* selPageFrom, int* selPageTo)
 {
 	*minPage = 1;
 	*maxPage = 1;

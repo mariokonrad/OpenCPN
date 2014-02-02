@@ -45,6 +45,7 @@
 #include <Config.h>
 #include <UserColors.h>
 #include <Layer.h>
+#include <OCPN_Version.h>
 
 #include <windows/compatibility.h>
 
@@ -126,12 +127,6 @@ extern StatWin* stats;
 extern ConsoleCanvas* console;
 ChartCanvas* cc1;
 wxString gExe_path;
-extern wxString str_version_start;
-extern wxString str_version_major;
-extern wxString str_version_minor;
-extern wxString str_version_patch;
-extern wxString str_version_date;
-extern wxString OpenCPNVersion;
 extern wxDateTime g_start_time;
 extern wxDateTime g_loglast_time;
 extern RoutePoint* pAnchorWatchPoint1;
@@ -281,15 +276,8 @@ paper charts and traditional methods of navigation.\n\n\
 DO NOT rely upon OpenCPN for safety of life or property.\n\n\
 Please click \"OK\" to agree and proceed, \"Cancel\" to quit.\n") );
 
-	wxString vs = wxT(" .. Version ")
-		+ str_version_major
-		+ wxT(".")
-		+ str_version_minor
-		+ wxT(".")
-		+ str_version_patch;
-
+	wxString vs = wxT(" .. Version ") + ocpn::Version().get_short();
 	wxMessageDialog odlg(gFrame, msg0, _("Welcome to OpenCPN") + vs, wxCANCEL | wxOK);
-
 	return odlg.ShowModal();
 }
 
@@ -496,8 +484,7 @@ void App::install_crash_reporting()
 	info.cb = sizeof(CR_INSTALL_INFO);
 	info.pszAppName = _T("OpenCPN");
 
-	wxString version_crash = str_version_major + _T(".") + str_version_minor + _T(".")
-							 + str_version_patch;
+	wxString version_crash = ocpn::Version().get_short();
 	info.pszAppVersion = version_crash.c_str();
 
 	// Include the data sections from all loaded modules.
@@ -1172,7 +1159,7 @@ bool App::OnInit()
 #endif
 
 	// version
-	wxString vs = OpenCPNVersion.Trim(true).Trim(false);
+	wxString vs = ocpn::Version().get_version().Trim(true).Trim(false);
 
 	// Send init message
 	wxLogMessage( _T("\n\n________\n") );
@@ -1442,8 +1429,7 @@ bool App::OnInit()
 	long app_style = wxDEFAULT_FRAME_STYLE | wxWANTS_CHARS;
 
 	// Create the main frame window
-	wxString myframe_window_title = wxT("OpenCPN ") + str_version_major + wxT(".")
-									+ str_version_minor + wxT(".") + str_version_patch;
+	wxString myframe_window_title = wxT("OpenCPN ") + ocpn::Version().get_short();
 	if (g_bportable) {
 		myframe_window_title += _(" -- [Portable(-p) executing from ");
 		myframe_window_title += sys.data().home_location;

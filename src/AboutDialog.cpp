@@ -27,7 +27,7 @@
 
 #include <ChartCanvas.h>
 #include <DimeControl.h>
-#include <version.h>
+#include <OCPN_Version.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
@@ -43,15 +43,7 @@
 #include <wx/dataobj.h>
 #include <wx/html/htmlwin.h>
 
-wxString str_version_start = wxT("\n      Version ");
-wxString str_version_major = wxString::Format(wxT("%i"),VERSION_MAJOR);
-wxString str_version_minor = wxString::Format(wxT("%i"),VERSION_MINOR);
-wxString str_version_patch = wxString::Format(wxT("%i"),VERSION_PATCH);
-wxString str_version_date(VERSION_DATE, wxConvUTF8);
-wxString OpenCPNVersion = str_version_start + str_version_major + wxT(".") + str_version_minor
-						  + wxT(".") + str_version_patch + wxT(" Build ") + str_version_date;
-
-extern ocpnStyle::StyleManager * g_StyleManager;
+extern ocpnStyle::StyleManager* g_StyleManager;
 
 static char AboutText[] =
 {
@@ -207,9 +199,8 @@ void AboutDialog::Update()
 	pAboutTextCtl->Clear();
 	wxString* pAboutString = new wxString(AboutText, wxConvUTF8);
 
-	pAboutString->Append(OpenCPNVersion);
-	pAboutString->Append(
-		wxString::Format(wxT("\n\n(git: %s / %s)\n"), wxT(GIT_BRANCH), wxT(GIT_COMMIT_HASH)));
+	pAboutString->Append(ocpn::Version().get_version());
+	pAboutString->Append(ocpn::Version().get_git_info());
 	pAboutString->Append(wxString(OpenCPNInfo, wxConvUTF8));
 
 	pAboutTextCtl->WriteText(*pAboutString);
@@ -239,8 +230,7 @@ void AboutDialog::Update()
 	wxTextFile license_file(license_loc);
 
 	if (license_file.Open()) {
-		wxString str;
-		str = license_file.GetFirstLine();
+		wxString str = license_file.GetFirstLine();
 		pLicenseTextCtl->WriteText(str);
 
 		while (!license_file.Eof()) {

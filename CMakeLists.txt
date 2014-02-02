@@ -906,6 +906,7 @@ SET(HDRS
 	src/print/PrintTable.h
 	src/print/PrintCell.h
 
+	src/OCPN_Version.h
 	src/ocpn_pixel.h
 	src/Units.h
 	src/DataStream.h
@@ -1033,6 +1034,7 @@ SET(SRCS
 	src/print/PrintTable.cpp
 	src/print/PrintCell.cpp
 
+	src/OCPN_Version.cpp
 	src/MemoryStatus.cpp
 	src/AnchorDist.cpp
 	src/SerialPorts.cpp

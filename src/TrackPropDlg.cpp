@@ -52,11 +52,11 @@ extern ChartCanvas* cc1;
 extern PlugInManager* g_pi_manager;
 
 TrackPropDlg::TrackPropDlg(
-		wxWindow * parent,
+		wxWindow* parent,
 		wxWindowID id,
-		const wxString & title,
-		const wxPoint & pos,
-		const wxSize & size,
+		const wxString& title,
+		const wxPoint& pos,
+		const wxSize& size,
 		long style)
 	: wxDialog(parent, id, title, pos, size, style)
 {
@@ -1032,7 +1032,7 @@ void TrackPropDlg::OnHyperLinkClick(wxHyperlinkEvent& event)
 #endif
 }
 
-void TrackPropDlg::OnShowTimeTZ(wxCommandEvent& event)
+void TrackPropDlg::OnShowTimeTZ(wxCommandEvent& WXUNUSED(event))
 {
 	if (m_rbShowTimeUTC->GetValue())
 		m_lcPoints->set_tz_selection(OCPNTrackListCtrl::UTCINPUT);
@@ -1047,7 +1047,7 @@ void TrackPropDlg::OnShowTimeTZ(wxCommandEvent& event)
 bool TrackPropDlg::SaveChanges(void)
 {
 	if (m_pRoute && !m_pRoute->m_bIsInLayer) {
-		//  Get User input Text Fields
+		// Get User input Text Fields
 		m_pRoute->m_RouteNameString = m_tName->GetValue();
 		m_pRoute->m_RouteStartString = m_tFrom->GetValue();
 		m_pRoute->m_RouteEndString = m_tTo->GetValue();
@@ -1064,7 +1064,7 @@ bool TrackPropDlg::SaveChanges(void)
 		pConfig->UpdateSettings();
 	}
 
-	if (((Track*)m_pRoute)->IsRunning()) {
+	if (static_cast<Track*>(m_pRoute)->IsRunning()) {
 		wxJSONValue v;
 		v[_T("Name")] = m_pRoute->m_RouteNameString;
 		v[_T("GUID")] = m_pRoute->m_GUID;

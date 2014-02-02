@@ -57,7 +57,6 @@
 #include <algorithm>
 
 #include "MainFrame.h"
-#include <version.h>
 #include <dychart.h>
 #include <ChartCanvas.h>
 #include <TimedPopupWin.h>

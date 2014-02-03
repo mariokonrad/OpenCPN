@@ -24,6 +24,8 @@
 #ifndef __USERCOLORS__H__
 #define __USERCOLORS__H__
 
+#include <map>
+
 #include <wx/colour.h>
 #include <wx/string.h>
 
@@ -46,8 +48,13 @@ public:
 	virtual global::ColorScheme get_current() const;
 
 private:
-	global::ColorScheme color_scheme;
+	global::ColorScheme current_scheme;
 	global::ColorProvider* chart_color_provider;
+
+	typedef std::map<wxString, wxColour> Table;
+	typedef std::map<global::ColorScheme, Table> Schemes;
+
+	Schemes color_schemes;
 };
 
 #endif

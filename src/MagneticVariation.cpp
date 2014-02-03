@@ -37,15 +37,15 @@ double GetTrueOrMag(double a)
 	if (global::OCPN::get().gui().view().ShowMag) {
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		if (!wxIsNaN(nav.var)) {
-			if ((a + nav.var) > 360.0)
-				return (a + nav.var - 360.0);
+			if ((a - nav.var) > 360.0)
+				return (a - nav.var - 360.0);
 			else
-				return ((a + nav.var) >= 0.0) ? (a + nav.var) : (a + nav.var + 360.0);
+				return ((a - nav.var) >= 0.0) ? (a - nav.var) : (a - nav.var + 360.0);
 		} else {
-			if ((a + nav.user_var) > 360.0)
-				return (a + nav.user_var - 360.0);
+			if ((a - nav.user_var) > 360.0)
+				return (a - nav.user_var - 360.0);
 			else
-				return ((a + nav.user_var) >= 0.0) ? (a + nav.user_var) : (a + nav.user_var + 360.0);
+				return ((a - nav.user_var) >= 0.0) ? (a - nav.user_var) : (a - nav.user_var + 360.0);
 		}
 	}
 	return a;

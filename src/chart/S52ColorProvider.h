@@ -21,32 +21,18 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GLOBAL__COLORMANAGER__H__
-#define __GLOBAL__COLORMANAGER__H__
+#ifndef __CHART__S52COLORPRIVDER__H__
+#define __CHART__S52COLORPRIVDER__H__
 
-#include <global/ColorScheme.h>
 #include <global/ColorProvider.h>
 
-namespace global {
+namespace chart {
 
-/// Manages the color scheme.
-///
-/// This interface represents partly a decorator pattern.
-class ColorManager : public ColorProvider
+class S52ColorProvider : public global::ColorProvider
 {
 public:
-	virtual ~ColorManager()
-	{
-	}
-
-	/// Injects a chart colors provider
-	virtual void inject_chart_color_provider(ColorProvider*) = 0;
-
-	/// Sets the current color scheme.
-	virtual void set_current(ColorScheme scheme) = 0;
-
-	/// Returns the current color scheme.
-	virtual ColorScheme get_current() const = 0;
+	virtual ~S52ColorProvider();
+	virtual wxColour get_color(const wxString& color_name) const;
 };
 
 }

@@ -21,34 +21,30 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GLOBAL__COLORMANAGER__H__
-#define __GLOBAL__COLORMANAGER__H__
+#include "S52ColorProvider.h"
 
-#include <global/ColorScheme.h>
-#include <global/ColorProvider.h>
+#ifdef USE_S57 // FIXME: remove this preprocessor stuff
+	#include <chart/s52s57.h>
+	#include <chart/s52plib.h>
+	#include <chart/ColorTable.h>
+	extern chart::s52plib* ps52plib;
+#endif
 
-namespace global {
+namespace chart {
 
-/// Manages the color scheme.
-///
-/// This interface represents partly a decorator pattern.
-class ColorManager : public ColorProvider
+S52ColorProvider::~S52ColorProvider()
 {
-public:
-	virtual ~ColorManager()
-	{
+}
+
+wxColour S52ColorProvider::get_color(const wxString& color_name) const
+{
+	// Use the S52 Presentation library if present
+	if (ps52plib) {
+		return ps52plib->getwxColour(color_name);
 	}
 
-	/// Injects a chart colors provider
-	virtual void inject_chart_color_provider(ColorProvider*) = 0;
-
-	/// Sets the current color scheme.
-	virtual void set_current(ColorScheme scheme) = 0;
-
-	/// Returns the current color scheme.
-	virtual ColorScheme get_current() const = 0;
-};
+	return wxColour();
+}
 
 }
 
-#endif

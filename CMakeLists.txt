@@ -1176,6 +1176,8 @@ if (USE_S57)
 		src/chart/RenderFromHPGL.cpp
 		src/chart/s52cnsy.cpp
 		src/chart/s52s57.h
+		src/chart/S52ColorProvider.h
+		src/chart/S52ColorProvider.cpp
 		src/chart/s52plib.h
 		src/chart/s52plib.cpp
 		src/chart/s52utils.cpp

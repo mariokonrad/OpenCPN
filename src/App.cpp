@@ -95,6 +95,7 @@
 	#include <chart/s52plib.h>
 	#include <chart/CM93OffsetDialog.h>
 	#include <chart/S57ClassRegistrar.h>
+	#include <chart/S52ColorProvider.h>
 #endif
 
 unsigned int malloc_max;
@@ -288,6 +289,7 @@ App::App()
 	, wdt_instance(NULL)
 	, sys_instance(NULL)
 	, colors_instance(NULL)
+	, s52_color_provider(NULL)
 	, start_fullscreen(false)
 	, first_run(false)
 	, logger(NULL)
@@ -404,6 +406,11 @@ void App::inject_global_instances()
 
 	colors_instance = new UserColors;
 	global::OCPN::get().inject(colors_instance);
+
+#ifdef USE_S57
+	s52_color_provider = new chart::S52ColorProvider;
+	colors_instance->inject_chart_color_provider(s52_color_provider);
+#endif
 }
 
 void App::establish_home_location()
@@ -1818,6 +1825,7 @@ int App::OnExit()
 #endif
 
 	delete colors_instance;
+	delete s52_color_provider;
 	delete gui_instance;
 	delete nav_instance;
 	delete wdt_instance;

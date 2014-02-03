@@ -21,32 +21,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GLOBAL__COLORMANAGER__H__
-#define __GLOBAL__COLORMANAGER__H__
+#ifndef __GLOBAL__COLORPROVIDER__H__
+#define __GLOBAL__COLORPROVIDER__H__
 
-#include <global/ColorScheme.h>
-#include <global/ColorProvider.h>
+#include <wx/colour.h>
 
 namespace global {
 
-/// Manages the color scheme.
-///
-/// This interface represents partly a decorator pattern.
-class ColorManager : public ColorProvider
+/// Implementations of this interface are able to provide a color
+/// associated with a defined name.
+class ColorProvider
 {
 public:
-	virtual ~ColorManager()
+	virtual ~ColorProvider()
 	{
 	}
 
-	/// Injects a chart colors provider
-	virtual void inject_chart_color_provider(ColorProvider*) = 0;
-
-	/// Sets the current color scheme.
-	virtual void set_current(ColorScheme scheme) = 0;
-
-	/// Returns the current color scheme.
-	virtual ColorScheme get_current() const = 0;
+	/// Returns the color corresponding to the specified name.
+	virtual wxColour get_color(const wxString& color_name) const = 0;
 };
 
 }

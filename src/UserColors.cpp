@@ -47,14 +47,11 @@ wxColour GetGlobalColor(wxString colorName)
 	// Use the S52 Presentation library if present
 	if (ps52plib) {
 		ret_color = ps52plib->getwxColour(colorName);
-
-		if (!ret_color.Ok()) { //261 likes Ok(), 283 likes IsOk()...
-			if (pcurrent_user_color_hash)
-				ret_color = (*pcurrent_user_color_hash)[colorName];
-		}
-	} else
+	}
 #endif
-	{
+
+	// read color from mapping
+	if (!ret_color.Ok()) {
 		if (pcurrent_user_color_hash)
 			ret_color = (*pcurrent_user_color_hash)[colorName];
 	}
@@ -297,6 +294,7 @@ void DeInitializeUserColors(void)
 
 
 UserColors::UserColors()
+	: chart_color_provider(NULL)
 {
 	// FIXME: NOT IMPLEMENTED
 }
@@ -306,7 +304,12 @@ UserColors::~UserColors()
 	// FIXME: NOT IMPLEMENTED
 }
 
-wxColour UserColors::get(const wxString& color_name) const
+void UserColors::inject_chart_color_provider(global::ColorProvider* provider)
+{
+	chart_color_provider = provider;
+}
+
+wxColour UserColors::get_color(const wxString& color_name) const
 {
 	// FIXME: NOT IMPLEMENTED
 	return wxColour();

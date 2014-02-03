@@ -40,9 +40,13 @@ public:
 	UserColors();
 	virtual ~UserColors();
 
-	virtual wxColour get(const wxString& color_name) const;
+	virtual void inject_chart_color_provider(global::ColorProvider*);
+	virtual wxColour get_color(const wxString& color_name) const;
 	virtual void set_current(global::ColorScheme scheme);
 	virtual global::ColorScheme get_current() const;
+
+private:
+	global::ColorProvider* chart_color_provider;
 };
 
 #endif

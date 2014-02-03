@@ -39,6 +39,7 @@ class OCPN_AIS;
 class OCPN_WatchDog;
 class OCPN_System;
 class ColorManager;
+class ColorProvider;
 }
 
 class App : public wxApp
@@ -85,6 +86,8 @@ private:
 	global::OCPN_WatchDog* wdt_instance;
 	global::OCPN_System* sys_instance;
 	global::ColorManager* colors_instance;
+
+	global::ColorProvider* s52_color_provider;
 
 	bool start_fullscreen;
 	bool first_run;

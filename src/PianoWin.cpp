@@ -24,7 +24,10 @@
 #include "PianoWin.h"
 #include <StyleManager.h>
 #include <Style.h>
-#include <UserColors.h>
+
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
+
 #include <chart/ChartDB.h>
 
 BEGIN_EVENT_TABLE(PianoWin, wxWindow)
@@ -77,18 +80,20 @@ void PianoWin::SetColorScheme(global::ColorScheme)
 {
 	// Recreate the local brushes
 
-	m_backBrush = wxBrush(GetGlobalColor(_T("UIBDR")), wxSOLID);
+	const global::ColorManager& colors = global::OCPN::get().color();
 
-	m_tBrush = wxBrush(GetGlobalColor(_T("BLUE2")), wxSOLID); // Raster Chart unselected
-	m_slBrush = wxBrush(GetGlobalColor(_T("BLUE1")), wxSOLID); // and selected
+	m_backBrush = wxBrush(colors.get_color(_T("UIBDR")), wxSOLID);
 
-	m_vBrush = wxBrush(GetGlobalColor(_T("GREEN2")), wxSOLID); // Vector Chart unselected
-	m_svBrush = wxBrush(GetGlobalColor(_T("GREEN1")), wxSOLID); // and selected
+	m_tBrush = wxBrush(colors.get_color(_T("BLUE2")), wxSOLID); // Raster Chart unselected
+	m_slBrush = wxBrush(colors.get_color(_T("BLUE1")), wxSOLID); // and selected
 
-	m_cBrush = wxBrush(GetGlobalColor(_T("YELO2")), wxSOLID); // CM93 Chart unselected
-	m_scBrush = wxBrush(GetGlobalColor(_T("YELO1")), wxSOLID); // and selected
+	m_vBrush = wxBrush(colors.get_color(_T("GREEN2")), wxSOLID); // Vector Chart unselected
+	m_svBrush = wxBrush(colors.get_color(_T("GREEN1")), wxSOLID); // and selected
 
-	m_uvBrush = wxBrush(GetGlobalColor(_T("UINFD")), wxSOLID); // and unavailable
+	m_cBrush = wxBrush(colors.get_color(_T("YELO2")), wxSOLID); // CM93 Chart unselected
+	m_scBrush = wxBrush(colors.get_color(_T("YELO1")), wxSOLID); // and selected
+
+	m_uvBrush = wxBrush(colors.get_color(_T("UINFD")), wxSOLID); // and unavailable
 }
 
 void PianoWin::OnPaint(wxPaintEvent&)
@@ -113,7 +118,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 	int nKeys = m_key_array.size();
 
 	if (nKeys) {
-		wxPen ppPen(GetGlobalColor(_T("CHBLK")), 1, wxSOLID);
+		wxPen ppPen(global::OCPN::get().color().get_color(_T("CHBLK")), 1, wxSOLID);
 		dc.SetPen(ppPen);
 
 		dc.SetBrush(m_tBrush);

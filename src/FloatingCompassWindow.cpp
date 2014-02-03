@@ -22,14 +22,14 @@
  **************************************************************************/
 
 #include "FloatingCompassWindow.h"
-#include "StyleManager.h"
-#include "Style.h"
+#include <StyleManager.h>
+#include <Style.h>
 
 #include <ChartCanvas.h>
-#include <UserColors.h>
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
+#include <global/ColorManager.h>
 
 #include <wx/toolbar.h>
 #include <wx/statbmp.h>
@@ -88,7 +88,7 @@ void FloatingCompassWindow::OnPaint(wxPaintEvent&)
 
 void FloatingCompassWindow::SetColorScheme(global::ColorScheme)
 {
-	wxColour back_color = GetGlobalColor(_T("GREY2"));
+	wxColour back_color = global::OCPN::get().color().get_color(_T("GREY2"));
 
 	// Set background
 	SetBackgroundColour(back_color);
@@ -194,14 +194,15 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 					   + style.GetCompassBottomMargin());
 
 		if (StatBmp.IsOk()) {
+			const global::ColorManager& colors = global::OCPN::get().color();
 
 			wxMemoryDC mdc;
 			mdc.SelectObject(StatBmp);
-			mdc.SetBackground(wxBrush(GetGlobalColor(_T("GREY2")), wxSOLID));
+			mdc.SetBackground(wxBrush(colors.get_color(_T("GREY2")), wxSOLID));
 			mdc.Clear();
 
-			mdc.SetPen(wxPen(GetGlobalColor(_T("UITX1")), 1));
-			mdc.SetBrush(wxBrush(GetGlobalColor(_T("UITX1")), wxTRANSPARENT));
+			mdc.SetPen(wxPen(colors.get_color(_T("UITX1")), 1));
+			mdc.SetBrush(wxBrush(colors.get_color(_T("UITX1")), wxTRANSPARENT));
 
 			mdc.DrawRoundedRectangle(0, 0, StatBmp.GetWidth(), StatBmp.GetHeight(),
 									 style.GetCompassCornerRadius());

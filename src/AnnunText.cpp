@@ -26,7 +26,9 @@
 #include <StyleManager.h>
 #include <Style.h>
 #include <Routeman.h>
-#include <UserColors.h>
+
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 #include <wx/dcmemory.h>
 
@@ -37,9 +39,9 @@ BEGIN_EVENT_TABLE(AnnunText, wxWindow)
 END_EVENT_TABLE()
 
 AnnunText::AnnunText(
-		wxWindow * parent,
+		wxWindow* parent,
 		wxWindowID id,
-		const wxString & LegendElement,
+		const wxString& LegendElement,
 		const wxString& ValueElement)
 	: wxWindow(parent, id, wxDefaultPosition, wxDefaultSize, wxNO_BORDER)
 {
@@ -86,7 +88,8 @@ void AnnunText::CalculateMinSize(void)
 
 void AnnunText::SetColorScheme(global::ColorScheme)
 {
-	m_pbackBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UBLCK")), wxSOLID);
+	m_pbackBrush = wxTheBrushList->FindOrCreateBrush(
+		global::OCPN::get().color().get_color(_T("UBLCK")), wxSOLID);
 	m_text_color = g_StyleManager->current().getConsoleFontColor();
 }
 

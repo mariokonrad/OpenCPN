@@ -25,9 +25,10 @@
 #include <OCPNFloatingToolbarDialog.h>
 #include <StyleManager.h>
 #include <Style.h>
-
-#include <UserColors.h>
 #include <MainFrame.h>
+
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 #include <wx/dcclient.h>
 
@@ -60,7 +61,7 @@ void GrabberWin::OnPaint(wxPaintEvent&)
 
 void GrabberWin::SetColorScheme(global::ColorScheme)
 {
-	wxColour back_color = GetGlobalColor(_T("GREY2"));
+	wxColour back_color = global::OCPN::get().color().get_color(_T("GREY2"));
 
 	SetBackgroundColour(back_color);
 	ClearBackground();

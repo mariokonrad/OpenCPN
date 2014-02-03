@@ -39,6 +39,7 @@
 #include <global/GUI.h>
 #include <global/Navigation.h>
 #include <global/System.h>
+#include <global/ColorManager.h>
 
 #include <chart/s52plib.h>
 #include <chart/S57Chart.h>
@@ -1819,11 +1820,13 @@ void glChartCanvas::render()
 		wxBitmap bmp(width, height, -1);
 		wxMemoryDC dc(bmp);
 		if (bmp.IsOk()) {
-			dc.SetBackground(wxBrush(GetGlobalColor(_T("UIBCK"))));
+			const global::ColorManager& colors = global::OCPN::get().color();
+
+			dc.SetBackground(wxBrush(colors.get_color(_T("UIBCK"))));
 			dc.Clear();
 
-			dc.SetTextBackground(GetGlobalColor(_T("UIBCK")));
-			dc.SetTextForeground(GetGlobalColor(_T("UITX1")));
+			dc.SetTextBackground(colors.get_color(_T("UIBCK")));
+			dc.SetTextForeground(colors.get_color(_T("UITX1")));
 
 			int yt = 0;
 			int xt = 0;
@@ -1845,7 +1848,8 @@ void glChartCanvas::render()
 	}
 
 	if (pthumbwin && pthumbwin->IsShown()) {
-		int thumbx, thumby;
+		int thumbx;
+		int thumby;
 		pthumbwin->GetPosition(&thumbx, &thumby);
 		if (pthumbwin->GetBitmap().IsOk())
 			gldc.DrawBitmap(pthumbwin->GetBitmap(), thumbx, thumby, false);

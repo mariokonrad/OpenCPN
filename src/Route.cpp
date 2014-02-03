@@ -30,13 +30,13 @@
 #include <MessageBox.h>
 #include <ViewPort.h>
 #include <Config.h>
-#include <UserColors.h>
 
 #include <windows/compatibility.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/Navigation.h>
+#include <global/ColorManager.h>
 
 #include <geo/GeoRef.h>
 #include <geo/LineClip.h>
@@ -499,7 +499,7 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const View
 		if (geo::Visible == geo::cohen_sutherland_line_clip_i(&x0, &y0, &x1, &y1, 0, sx, 0, sy)) {
 			wxPen psave = dc.GetPen();
 
-			wxColour y = GetGlobalColor(_T ( "YELO1" ));
+			wxColour y = global::OCPN::get().color().get_color(_T("YELO1"));
 			wxColour hilt(y.Red(), y.Green(), y.Blue(), 128);
 
 			wxPen HiPen(hilt, hilite_width, wxSOLID);

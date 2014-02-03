@@ -25,7 +25,6 @@
 #include <timers.h>
 #include <RolloverWin.h>
 #include <dychart.h>
-#include <UserColors.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 
@@ -33,6 +32,7 @@
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/ColorManager.h>
 
 #include <tide/tide_time.h>
 #include <tide/IDX_entry.h>
@@ -208,12 +208,13 @@ TCWin::TCWin(ChartCanvas* parent, int x, int y, void* pvIDX)
 	pLFont = wxTheFontList->FindOrCreateFont(12, wxFONTFAMILY_SWISS, wxNORMAL, wxBOLD, FALSE,
 											 wxString(_T("Arial")));
 
-	pblack_1 = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFD")), 1, wxSOLID);
-	pblack_2 = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFD")), 2, wxSOLID);
-	pblack_3 = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UWHIT")), 1, wxSOLID);
-	pred_2 = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFR")), 4, wxSOLID);
-	pltgray = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UIBCK")), wxSOLID);
-	pltgray2 = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("DILG1")), wxSOLID);
+	const global::ColorManager& colors = global::OCPN::get().color();
+	pblack_1 = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFD")), 1, wxSOLID);
+	pblack_2 = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFD")), 2, wxSOLID);
+	pblack_3 = wxThePenList->FindOrCreatePen(colors.get_color(_T("UWHIT")), 1, wxSOLID);
+	pred_2 = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFR")), 4, wxSOLID);
+	pltgray = wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("UIBCK")), wxSOLID);
+	pltgray2 = wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("DILG1")), wxSOLID);
 
 	DimeControl(this);
 
@@ -532,7 +533,7 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 			btc_valid = true;
 		}
 
-		dc.SetTextForeground(GetGlobalColor(_T ( "DILG3" )));
+		dc.SetTextForeground(global::OCPN::get().color().get_color(_T("DILG3")));
 
 		// Vertical Axis
 

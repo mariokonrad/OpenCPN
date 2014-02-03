@@ -94,7 +94,6 @@
 #include <AnchorDist.h>
 #include <MemoryStatus.h>
 #include <Config.h>
-#include <UserColors.h>
 #include <Units.h>
 #include <NavObjectChanges.h>
 #include <PositionConvert.h>
@@ -110,6 +109,7 @@
 #include <global/System.h>
 #include <global/Navigation.h>
 #include <global/WatchDog.h>
+#include <global/ColorManager.h>
 
 #include <ais/ais.h>
 #include <ais/AISTargetListDialog.h>
@@ -651,7 +651,7 @@ void MainFrame::SetAndApplyColorScheme(global::ColorScheme cs)
 void MainFrame::ApplyGlobalColorSchemetoStatusBar(void)
 {
 	if (m_pStatusBar != NULL) {
-		m_pStatusBar->SetBackgroundColour(GetGlobalColor(_T("UIBDR"))); // UINFF
+		m_pStatusBar->SetBackgroundColour(global::OCPN::get().color().get_color(_T("UIBDR")));
 		m_pStatusBar->ClearBackground();
 
 		int styles[] = { wxSB_FLAT, wxSB_FLAT, wxSB_FLAT, wxSB_FLAT, wxSB_FLAT, wxSB_FLAT };
@@ -3465,17 +3465,19 @@ void MainFrame::DoCOGSet(void)
 	}
 }
 
-void RenderShadowText( wxDC *pdc, wxFont *pFont, wxString& str, int x, int y )
+void RenderShadowText(wxDC* pdc, wxFont* pFont, wxString& str, int x, int y)
 {
 #ifdef DrawText
 #undef DrawText
 #define FIXIT
 #endif
 
+	const global::ColorManager& colors = global::OCPN::get().color();
+
 	wxFont oldfont = pdc->GetFont(); // save current font
 
 	pdc->SetFont(*pFont);
-	pdc->SetTextForeground(GetGlobalColor(_T("CHGRF")));
+	pdc->SetTextForeground(colors.get_color(_T("CHGRF")));
 	pdc->SetBackgroundMode(wxTRANSPARENT);
 
 	pdc->DrawText(str, x, y + 1);
@@ -3483,7 +3485,7 @@ void RenderShadowText( wxDC *pdc, wxFont *pFont, wxString& str, int x, int y )
 	pdc->DrawText(str, x + 1, y);
 	pdc->DrawText(str, x - 1, y);
 
-	pdc->SetTextForeground(GetGlobalColor(_T("CHBLK")));
+	pdc->SetTextForeground(colors.get_color(_T("CHBLK")));
 
 	pdc->DrawText(str, x, y);
 
@@ -5577,20 +5579,20 @@ void SetSystemColors(global::ColorScheme cs)
 	int element[NCOLORS];
 	int rgbcolor[NCOLORS];
 	int i = 0;
-	if( ( global::GLOBAL_COLOR_SCHEME_DUSK == cs ) || ( global::GLOBAL_COLOR_SCHEME_NIGHT == cs ) ) {
-		MSW_COLOR_SPEC *pcspec = &color_spec[0];
-		while( pcspec->COLOR_NAME != -1 ) {
-			wxColour color = GetGlobalColor( pcspec->S52_RGB_COLOR );
-			rgbcolor[i] = ( color.Red() << 16 ) + ( color.Green() << 8 ) + color.Blue();
+	if ((global::GLOBAL_COLOR_SCHEME_DUSK == cs) || (global::GLOBAL_COLOR_SCHEME_NIGHT == cs)) {
+		MSW_COLOR_SPEC* pcspec = &color_spec[0];
+		while (pcspec->COLOR_NAME != -1) {
+			wxColour color = global::OCPN::get().color().get_color(pcspec->S52_RGB_COLOR);
+			rgbcolor[i] = (color.Red() << 16) + (color.Green() << 8) + color.Blue();
 			element[i] = pcspec->COLOR_NAME;
 
 			i++;
 			pcspec++;
 		}
 
-		pSetSysColors( i, (unsigned long *) &element[0], (unsigned long *) &rgbcolor[0] );
+		pSetSysColors(i, (unsigned long*)&element[0], (unsigned long*)&rgbcolor[0]);
 
-	} else {         // for daylight colors, use default windows colors as saved....
+	} else { // for daylight colors, use default windows colors as saved....
 
 		RestoreSystemColors();
 	}

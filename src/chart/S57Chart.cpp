@@ -39,6 +39,7 @@
 #include <global/OCPN.h>
 #include <global/System.h>
 #include <global/GUI.h>
+#include <global/ColorManager.h>
 
 #include <windows/compatibility.h>
 
@@ -48,9 +49,7 @@
 #include <OCPNRegionIterator.h>
 #include <OCPNMemDC.h>
 #include <OCPNBitmap.h>
-
 #include <MessageBox.h>
-#include <UserColors.h>
 #include <ChartCanvas.h>
 #include <LogMessageOnce.h>
 #include <PositionConvert.h>
@@ -1646,14 +1645,17 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const OCPNRe
 	// As a convenience, while we are creating the stencil or depth mask,
 	// also render the default "NODTA" background if selected
 	if (b_render_nodta) {
-		wxColour color = GetGlobalColor(_T ( "NODTA" ));
+		wxColour color = global::OCPN::get().color().get_color(_T("NODTA"));
 		float r, g, b;
 		if (color.IsOk()) {
 			r = color.Red() / 255.0;
 			g = color.Green() / 255.0;
 			b = color.Blue() / 255.0;
-		} else
-			r = g = b = 0;
+		} else {
+			r = 0;
+			g = 0;
+			b = 0;
+		}
 
 		glColor3f(r, g, b);
 		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE); // enable color buffer
@@ -1737,7 +1739,7 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const wxRect
 	// As a convenience, while we are creating the stencil or depth mask,
 	// also render the default "NODTA" background if selected
 	if (b_render_nodta) {
-		wxColour color = GetGlobalColor(_T("NODTA"));
+		wxColour color = global::OCPN::get().color().get_color(_T("NODTA"));
 		float r, g, b;
 		if (color.IsOk()) {
 			r = color.Red() / 255.0;
@@ -1934,7 +1936,7 @@ bool s57chart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 
 		// Create a mask
 		if (b_overlay) {
-			wxColour nodat = GetGlobalColor(_T ( "NODTA" ));
+			wxColour nodat = global::OCPN::get().color().get_color(_T("NODTA"));
 			wxColour nodat_sub = nodat;
 
 #ifdef ocpnUSE_ocpnBitmap
@@ -2213,7 +2215,7 @@ int s57chart::DCRenderRect(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 #endif
 
 	// Preset background
-	wxColour color = GetGlobalColor(_T("NODTA"));
+	wxColour color = global::OCPN::get().color().get_color(_T("NODTA"));
 	unsigned char r, g, b;
 	if (color.IsOk()) {
 		r = color.Red();

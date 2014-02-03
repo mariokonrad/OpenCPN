@@ -28,11 +28,11 @@
 #include <StyleManager.h>
 #include <Style.h>
 #include <Config.h>
-#include <UserColors.h>
 #include <MarkIcon.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
+#include <global/ColorManager.h>
 
 #include <algorithm>
 
@@ -267,7 +267,7 @@ wxImageList* WayPointman::Getpmarkicon_image_list(void)
 		mdc.SetBackground(wxBrush(unused_color));
 		mdc.Clear();
 		mdc.DrawBitmap(bmp0, 0, 0);
-		wxPen red(GetGlobalColor(_T( "URED" )), 2);
+		wxPen red(global::OCPN::get().color().get_color(_T( "URED" )), 2);
 		mdc.SetPen(red);
 		int xm = bmp.GetWidth();
 		int ym = bmp.GetHeight();

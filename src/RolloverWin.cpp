@@ -25,7 +25,9 @@
 #include <timers.h>
 #include <ocpnDC.h>
 #include <FontMgr.h>
-#include <UserColors.h>
+
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 #include <wx/bitmap.h>
 #include <wx/dcmemory.h>
@@ -85,21 +87,23 @@ void RolloverWin::SetBitmap(int rollover)
 	mdc.Blit(0, 0, m_size.x, m_size.y, cdc, m_position.x + canvasPos.x, m_position.y + canvasPos.y);
 	delete cdc;
 
+	const global::ColorManager& colors = global::OCPN::get().color();
 	ocpnDC dc(mdc);
 
 	switch (rollover) {
 		case AIS_ROLLOVER:
-			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, GetGlobalColor(_T("YELO1")), 172);
+			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, colors.get_color(_T("YELO1")), 172);
 			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("AISRollover")));
 			break;
 
 		case TC_ROLLOVER:
-			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 0.0, GetGlobalColor(_T("YELO1")), 255);
+			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 0.0, colors.get_color(_T("YELO1")), 255);
 			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("TideCurrentGraphRollover")));
 			break;
+
 		default:
 		case LEG_ROLLOVER:
-			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, GetGlobalColor(_T("YELO1")), 172);
+			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, colors.get_color(_T("YELO1")), 172);
 			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("RouteLegInfoRollover")));
 			break;
 	}

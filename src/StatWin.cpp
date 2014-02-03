@@ -27,8 +27,11 @@
 #include <TextStatWin.h>
 #include <StyleManager.h>
 #include <Style.h>
-#include <UserColors.h>
+
 #include <chart/ChartDB.h>
+
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 extern chart::ChartDB* ChartData;
 extern ocpnStyle::StyleManager* g_StyleManager;
@@ -54,8 +57,9 @@ StatWin::StatWin(wxWindow* win)
 	int y;
 	GetClientSize(&x, &y);
 
-	m_backBrush = wxBrush(GetGlobalColor(_T("UIBDR")), wxSOLID);
-	SetBackgroundColour(GetGlobalColor(_T("UIBDR")));
+	const global::ColorManager& colors = global::OCPN::get().color();
+	m_backBrush = wxBrush(colors.get_color(_T("UIBDR")), wxSOLID);
+	SetBackgroundColour(colors.get_color(_T("UIBDR")));
 
 	// on WXMSW, this prevents flashing on color scheme change
 	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
@@ -126,7 +130,7 @@ int StatWin::GetFontHeight()
 
 void StatWin::SetColorScheme(global::ColorScheme cs)
 {
-	m_backBrush = wxBrush(GetGlobalColor(_T("UIBDR")), wxSOLID);
+	m_backBrush = wxBrush(global::OCPN::get().color().get_color(_T("UIBDR")), wxSOLID);
 
 	// Also apply color scheme to all known children
 	pPiano->SetColorScheme(cs);

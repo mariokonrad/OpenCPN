@@ -24,16 +24,6 @@
 #include "UserColors.h"
 #include <stdint.h>
 
-#include <global/OCPN.h> // FIXME:TEMP
-
-/// FIXME: this function is to be deleted as soon as the transition to global::OCPN
-///        is done for the global color/scheme. It also gets easier to write a
-///        unit test, once this is gone.
-wxColour GetGlobalColor(wxString colorName)
-{
-	return global::OCPN::get().color().get_color(colorName); // TEMP
-}
-
 namespace {
 
 struct Description

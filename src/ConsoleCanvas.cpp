@@ -30,10 +30,10 @@
 #include <FontMgr.h>
 #include <RoutePoint.h>
 #include <Route.h>
-#include <UserColors.h>
 #include <MagneticVariation.h>
 
 #include <global/OCPN.h>
+#include <global/ColorManager.h>
 #include <global/Navigation.h>
 #include <global/GUI.h>
 
@@ -129,7 +129,7 @@ ConsoleCanvas::~ConsoleCanvas()
 
 void ConsoleCanvas::SetColorScheme(global::ColorScheme cs)
 {
-	wxColour color = GetGlobalColor(_T("DILG1" /*UIBDR*/));
+	wxColour color = global::OCPN::get().color().get_color(_T("DILG1"));
 
 	pbackBrush = wxTheBrushList->FindOrCreateBrush(color, wxSOLID);
 	SetBackgroundColour(color);

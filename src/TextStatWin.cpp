@@ -22,10 +22,11 @@
  **************************************************************************/
 
 #include "TextStatWin.h"
-#include "PianoWin.h"
-#include "dychart.h"
+#include <PianoWin.h>
+#include <dychart.h>
 
-#include <UserColors.h>
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 #include <chart/ChartDB.h>
 
@@ -34,12 +35,12 @@ BEGIN_EVENT_TABLE(TextStatWin, wxWindow)
 	EVT_SIZE(TextStatWin::OnSize)
 END_EVENT_TABLE()
 
-TextStatWin::TextStatWin(wxFrame * frame)
-	: wxWindow(frame, wxID_ANY, wxPoint( 20, 20 ), wxSize( 5, 5 ), wxSIMPLE_BORDER)
+TextStatWin::TextStatWin(wxFrame* frame)
+	: wxWindow(frame, wxID_ANY, wxPoint(20, 20), wxSize(5, 5), wxSIMPLE_BORDER)
+	, bTextSet(false)
 {
-	SetBackgroundColour(GetGlobalColor(_T("UIBDR")));
+	SetBackgroundColour(global::OCPN::get().color().get_color(_T("UIBDR")));
 	pText = new wxString();
-	bTextSet = false;
 }
 
 TextStatWin::~TextStatWin(void)
@@ -47,19 +48,20 @@ TextStatWin::~TextStatWin(void)
 	delete pText;
 }
 
-void TextStatWin::OnSize(wxSizeEvent &)
-{}
-
-void TextStatWin::OnPaint(wxPaintEvent &)
+void TextStatWin::OnSize(wxSizeEvent&)
 {
-	wxPaintDC dc( this );
-	dc.DrawText( *pText, 0, 0 );
 }
 
-void TextStatWin::TextDraw(const wxString & text)
+void TextStatWin::OnPaint(wxPaintEvent&)
+{
+	wxPaintDC dc(this);
+	dc.DrawText(*pText, 0, 0);
+}
+
+void TextStatWin::TextDraw(const wxString& text)
 {
 	*pText = text;
 	bTextSet = true;
-	Refresh( true );
+	Refresh(true);
 }
 

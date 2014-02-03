@@ -22,10 +22,10 @@
  **************************************************************************/
 
 #include "DimeControl.h"
-#include <UserColors.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/ColorManager.h>
 
 #include <wx/bmpcbox.h>
 #include <wx/listbook.h>
@@ -47,13 +47,14 @@ void DimeControl(wxWindow* ctrl)
 	if (NULL == ctrl)
 		return;
 
-	wxColour col = GetGlobalColor(_T("DILG0")); // Dialog Background white
-	wxColour col1 = GetGlobalColor(_T("DILG1")); // Dialog Background
-	wxColour back_color = GetGlobalColor(_T("DILG1")); // Control Background
-	wxColour text_color = GetGlobalColor(_T("DILG3")); // Text
-	wxColour uitext = GetGlobalColor(_T("UITX1")); // Menu Text, derived from UINFF
-	wxColour udkrd = GetGlobalColor(_T("UDKRD"));
-	wxColour gridline = GetGlobalColor(_T("GREY2"));
+	const global::ColorManager& colors = global::OCPN::get().color();
+	wxColour col = colors.get_color(_T("DILG0")); // Dialog Background white
+	wxColour col1 = colors.get_color(_T("DILG1")); // Dialog Background
+	wxColour back_color = colors.get_color(_T("DILG1")); // Control Background
+	wxColour text_color = colors.get_color(_T("DILG3")); // Text
+	wxColour uitext = colors.get_color(_T("UITX1")); // Menu Text, derived from UINFF
+	wxColour udkrd = colors.get_color(_T("UDKRD"));
+	wxColour gridline = colors.get_color(_T("GREY2"));
 
 	DimeControl(ctrl, col, col1, back_color, text_color, uitext, udkrd, gridline);
 }

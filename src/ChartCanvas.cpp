@@ -70,7 +70,6 @@
 #include <GUI_IDs.h>
 #include <AnchorDist.h>
 #include <Config.h>
-#include <UserColors.h>
 #include <Layer.h>
 #include <PositionConvert.h>
 #include <Units.h>
@@ -95,6 +94,7 @@
 #include <global/GUI.h>
 #include <global/AIS.h>
 #include <global/Navigation.h>
+#include <global/ColorManager.h>
 
 #include <ais/ais.h>
 #include <ais/AIS_Decoder.h>
@@ -133,7 +133,7 @@ extern chart::ChartBase* Current_Ch;
 extern double g_ChartNotRenderScaleFactor;
 extern chart::ChartDB* ChartData;
 extern bool g_bHDTValid;
-extern ConsoleCanvas    *console;
+extern ConsoleCanvas* console;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern RouteList* pRouteList;
 extern Config* pConfig;
@@ -447,7 +447,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 {
 	parent_frame = (MainFrame*)frame; // save a pointer to parent
 
-	SetBackgroundColour(GetGlobalColor(_T("NODTA")));
+	SetBackgroundColour(global::OCPN::get().color().get_color(_T("NODTA")));
 	SetBackgroundStyle(
 		wxBG_STYLE_CUSTOM); // on WXMSW, this prevents flashing on color scheme change
 
@@ -1803,10 +1803,12 @@ void ChartCanvas::ShowBrightnessLevelTimedPopup(int brightness, int min, int max
 	wxBitmap bmp(bmpsx, bmpsx);
 	wxMemoryDC mdc(bmp);
 
-	mdc.SetTextForeground(GetGlobalColor(_T("GREEN4")));
-	mdc.SetBackground(wxBrush(GetGlobalColor(_T("UINFD"))));
+	const global::ColorManager& colors = global::OCPN::get().color();
+
+	mdc.SetTextForeground(colors.get_color(_T("GREEN4")));
+	mdc.SetBackground(wxBrush(colors.get_color(_T("UINFD"))));
 	mdc.SetPen(wxPen(wxColour(0, 0, 0)));
-	mdc.SetBrush(wxBrush(GetGlobalColor(_T("UINFD"))));
+	mdc.SetBrush(wxBrush(colors.get_color(_T("UINFD"))));
 	mdc.Clear();
 
 	mdc.DrawRectangle(0, 0, bmpsx, bmpsy);
@@ -2931,24 +2933,25 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	if (GetVP().GetBBox().LineIntersect(nav.pos.lon(), nav.pos.lat(), pred.lon(), pred.lat()))
 		drawit++;
 
+	const global::ColorManager& colors = global::OCPN::get().color();
+
 	// Do the draw if either the ship or prediction is within the current VPoint
 	if (drawit) {
 		int img_height;
 
-		wxColour pred_colour;
-		pred_colour = GetGlobalColor(_T("URED"));
+		wxColour pred_colour = colors.get_color(_T("URED"));
 		if (SHIP_NORMAL != m_ownship_state)
-			pred_colour = GetGlobalColor(_T("GREY1"));
+			pred_colour = colors.get_color(_T("GREY1"));
 
 		// Establish ship color
 		// It changes color based on GPS and Chart accuracy/availability
-		wxColour ship_color(GetGlobalColor(_T("URED"))); // default is OK
+		wxColour ship_color(colors.get_color(_T("URED"))); // default is OK
 
 		if (SHIP_NORMAL != m_ownship_state)
-			ship_color = GetGlobalColor(_T("GREY1"));
+			ship_color = colors.get_color(_T("GREY1"));
 
 		if (SHIP_LOWACCURACY == m_ownship_state)
-			ship_color = GetGlobalColor(_T("YELO1"));
+			ship_color = colors.get_color(_T("YELO1"));
 
 		if (GetVP().chart_scale > 300000) // According to S52, this should be 50,000
 		{
@@ -2957,7 +2960,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 			if (SHIP_NORMAL == m_ownship_state)
 				dc.SetBrush(wxBrush(ship_color, wxTRANSPARENT));
 			else
-				dc.SetBrush(wxBrush(GetGlobalColor(_T ( "YELO1" ))));
+				dc.SetBrush(wxBrush(colors.get_color(_T("YELO1"))));
 
 			dc.DrawEllipse(lShipMidPoint.x - 10, lShipMidPoint.y - 10, 20, 20);
 			dc.DrawEllipse(lShipMidPoint.x - 6, lShipMidPoint.y - 6, 12, 12);
@@ -3091,7 +3094,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 						ownship_icon[i].y = (int)(py) + lShipMidPoint.y;
 					}
 
-					wxPen ppPen1(GetGlobalColor(_T ( "UBLCK" )), 1, wxSOLID);
+					wxPen ppPen1(colors.get_color(_T("UBLCK")), 1, wxSOLID);
 					dc.SetPen(ppPen1);
 					dc.SetBrush(wxBrush(ship_color));
 
@@ -3111,8 +3114,8 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				if (m_pos_image_user)
 					circle_rad = 1;
 
-				dc.SetPen(wxPen(GetGlobalColor(_T("UBLCK")), 1));
-				dc.SetBrush(wxBrush(GetGlobalColor(_T("UIBCK"))));
+				dc.SetPen(wxPen(colors.get_color(_T("UBLCK")), 1));
+				dc.SetBrush(wxBrush(colors.get_color(_T("UIBCK"))));
 				dc.StrokeCircle(lGPSPoint.x, lGPSPoint.y, circle_rad);
 			} else { // Fixed bitmap icon.
 				wxPoint rot_ctr(pos_image.GetWidth() / 2, pos_image.GetHeight() / 2);
@@ -3137,8 +3140,8 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				if (m_pos_image_user)
 					circle_rad = 1;
 
-				dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" )), 1));
-				dc.SetBrush(wxBrush(GetGlobalColor(_T ( "UIBCK" ))));
+				dc.SetPen(wxPen(colors.get_color(_T("UBLCK")), 1));
+				dc.SetBrush(wxBrush(colors.get_color(_T("UIBCK"))));
 				dc.StrokeCircle(lShipMidPoint.x, lShipMidPoint.y, circle_rad);
 
 				// Maintain dirty box,, missing in __WXMSW__ library
@@ -3186,14 +3189,14 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				dash_long3[1] = cog_predictor_width * dash_long[1];
 
 				if (cog_predictor_width > 1) {
-					wxPen ppPen3(GetGlobalColor(_T("UBLCK")), 1, wxUSER_DASH);
+					wxPen ppPen3(colors.get_color(_T("UBLCK")), 1, wxUSER_DASH);
 					ppPen3.SetDashes(2, dash_long3);
 					dc.SetPen(ppPen3);
 					dc.StrokeLine(lGPSPoint.x + GPSOffsetPixels.x, lGPSPoint.y + GPSOffsetPixels.y,
 								  lPredPoint.x + GPSOffsetPixels.x,
 								  lPredPoint.y + GPSOffsetPixels.y);
 				}
-				wxPen ppPen1(GetGlobalColor(_T("UBLCK")), 1, wxSOLID);
+				wxPen ppPen1(colors.get_color(_T("UBLCK")), 1, wxSOLID);
 				dc.SetPen(ppPen1);
 				dc.SetBrush(wxBrush(pred_colour));
 
@@ -3216,7 +3219,7 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 
 			wxPen ppPen1(pred_colour, 2, wxSOLID);
 			dc.SetPen(ppPen1);
-			dc.SetBrush(wxBrush(GetGlobalColor(_T("GREY2"))));
+			dc.SetBrush(wxBrush(colors.get_color(_T("GREY2"))));
 
 			dc.StrokeCircle(lHeadPoint.x + GPSOffsetPixels.x, lHeadPoint.y + GPSOffsetPixels.y, 4);
 		}
@@ -3237,9 +3240,9 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 							  + pow((double)(lShipMidPoint.y - r.y), 2));
 			int pix_radius = (int)lpp;
 
-			wxPen ppPen1(GetGlobalColor(_T("URED")), 2);
+			wxPen ppPen1(colors.get_color(_T("URED")), 2);
 			dc.SetPen(ppPen1);
-			dc.SetBrush(wxBrush(GetGlobalColor(_T("URED")), wxTRANSPARENT));
+			dc.SetBrush(wxBrush(colors.get_color(_T("URED")), wxTRANSPARENT));
 
 			for (int i = 1; i <= view.NavAidRadarRingsNumberVisible; i++)
 				dc.StrokeCircle(lShipMidPoint.x, lShipMidPoint.y, i * pix_radius);
@@ -3348,6 +3351,7 @@ void CalcGridText(double latlon, double spacing, bool bPostfix, char* text)
 void ChartCanvas::GridDraw(ocpnDC& dc)
 {
 	const global::GUI::View& view = global::OCPN::get().gui().view();
+	const global::ColorManager& colors = global::OCPN::get().color();
 
 	if (!(view.display_grid && (fabs(GetVP().rotation) < 1e-5)
 		  && ((fabs(GetVP().skew) < 1e-9) || g_bskew_comp)))
@@ -3363,12 +3367,12 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 	double gridlonMinor;
 	wxCoord w;
 	wxCoord h;
-	wxPen GridPen(GetGlobalColor(_T ( "SNDG1" )), 1, wxSOLID);
+	wxPen GridPen(colors.get_color(_T("SNDG1")), 1, wxSOLID);
 	wxFont* font = wxTheFontList->FindOrCreateFont(
-		8, wxFONTFAMILY_SWISS, wxNORMAL, wxFONTWEIGHT_NORMAL, FALSE, wxString(_T ( "Arial" )));
+		8, wxFONTFAMILY_SWISS, wxNORMAL, wxFONTWEIGHT_NORMAL, FALSE, wxString(_T("Arial")));
 	dc.SetPen(GridPen);
 	dc.SetFont(*font);
-	dc.SetTextForeground(GetGlobalColor(_T ( "SNDG1" )));
+	dc.SetTextForeground(colors.get_color(_T("SNDG1")));
 
 	w = m_canvas_width;
 	h = m_canvas_height;
@@ -3449,6 +3453,8 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 
 void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 {
+	const global::ColorManager& colors = global::OCPN::get().color();
+
 	int x_origin = global::OCPN::get().gui().view().display_grid ? 60 : 20;
 	int y_origin = m_canvas_height - 50;
 
@@ -3461,8 +3467,8 @@ void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 
 		int l1 = (y_origin - r.y) / 5;
 
-		wxPen pen1(GetGlobalColor(_T("SNDG2")), 3, wxSOLID);
-		wxPen pen2(GetGlobalColor(_T("SNDG1")), 3, wxSOLID);
+		wxPen pen1(colors.get_color(_T("SNDG2")), 3, wxSOLID);
+		wxPen pen2(colors.get_color(_T("SNDG1")), 3, wxSOLID);
 
 		for (int i = 0; i < 5; i++) {
 			int y = l1 * i;
@@ -3482,8 +3488,8 @@ void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 
 		int l1 = (y_origin - r.y) / 10;
 
-		wxPen pen1(GetGlobalColor(_T("SCLBR")), 3, wxSOLID);
-		wxPen pen2(GetGlobalColor(_T("CHDRD")), 3, wxSOLID);
+		wxPen pen1(colors.get_color(_T("SCLBR")), 3, wxSOLID);
+		wxPen pen2(colors.get_color(_T("CHDRD")), 3, wxSOLID);
 
 		for (int i = 0; i < 10; i++) {
 			int y = l1 * i;
@@ -3500,6 +3506,7 @@ void ChartCanvas::ScaleBarDraw(ocpnDC& dc)
 void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 {
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+	const global::ColorManager& colors = global::OCPN::get().color();
 
 	if (!g_pAIS || !g_bShowAIS || !ais.ShowAreaNotices)
 		return;
@@ -3529,10 +3536,10 @@ void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 				pen_save = dc.GetPen();
 				brush_save = dc.GetBrush();
 
-				yellow = GetGlobalColor(_T("YELO1"));
+				yellow = colors.get_color(_T("YELO1"));
 				yellow.Set(yellow.Red(), yellow.Green(), yellow.Blue(), 64);
 
-				green = GetGlobalColor(_T("GREEN4"));
+				green = colors.get_color(_T("GREEN4"));
 				green.Set(green.Red(), green.Green(), green.Blue(), 64);
 
 				pen.SetColour(yellow);
@@ -3718,6 +3725,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	const global::ColorManager& colors = global::OCPN::get().color();
 
 	// Do the draw if conditions indicate
 	if (drawit) {
@@ -3848,28 +3856,28 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				ais_real_size[i].y = (int)round(py);
 			}
 
-		dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" ))));
+		dc.SetPen(wxPen(colors.get_color(_T("UBLCK"))));
 
 		// Default color is green
-		wxBrush target_brush = wxBrush(GetGlobalColor(_T ( "UINFG" )));
+		wxBrush target_brush = wxBrush(colors.get_color(_T("UINFG")));
 
 		// Euro Inland targets render slightly differently
 		if (td->b_isEuroInland)
-			target_brush = wxBrush(GetGlobalColor(_T ( "TEAL1" )));
+			target_brush = wxBrush(colors.get_color(_T("TEAL1")));
 
 		// and....
 		if (!td->b_nameValid)
-			target_brush = wxBrush(GetGlobalColor(_T ( "CHYLW" )));
+			target_brush = wxBrush(colors.get_color(_T("CHYLW")));
 		if ((td->Class == AIS_DSC) && (td->ShipType == 12)) // distress
-			target_brush = wxBrush(GetGlobalColor(_T ( "URED" )));
+			target_brush = wxBrush(colors.get_color(_T("URED")));
 		if (td->b_SarAircraftPosnReport)
-			target_brush = wxBrush(GetGlobalColor(_T ( "UINFG" )));
+			target_brush = wxBrush(colors.get_color(_T("UINFG")));
 
 		if ((td->n_alarm_state == AIS_ALARM_SET) && (td->bCPA_Valid))
-			target_brush = wxBrush(GetGlobalColor(_T ( "URED" )));
+			target_brush = wxBrush(colors.get_color(_T("URED")));
 
 		if (td->b_positionDoubtful)
-			target_brush = wxBrush(GetGlobalColor(_T ( "UINFF" )));
+			target_brush = wxBrush(colors.get_color(_T("UINFF")));
 
 		// Check for alarms here, maintained by AIS class timer tick
 		if (((td->n_alarm_state == AIS_ALARM_SET) && (td->bCPA_Valid))
@@ -3886,7 +3894,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				GetVP().pix_height);
 
 			if (res != geo::Invisible) {
-				wxPen ppPen2(GetGlobalColor(_T ( "URED" )), 2, wxUSER_DASH);
+				wxPen ppPen2(colors.get_color(_T("URED")), 2, wxUSER_DASH);
 				ppPen2.SetDashes(2, dash_long);
 				dc.SetPen(ppPen2);
 
@@ -3917,19 +3925,19 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				GetVP().pix_height);
 
 			if (ores != geo::Invisible) {
-				wxColour yellow = GetGlobalColor(_T("YELO1"));
+				wxColour yellow = colors.get_color(_T("YELO1"));
 				dc.SetPen(wxPen(yellow, 4));
 				dc.StrokeLine(tCPAPoint.x, tCPAPoint.y, oCPAPoint.x, oCPAPoint.y);
 
-				wxPen ppPen2(GetGlobalColor(_T("URED")), 2, wxUSER_DASH);
+				wxPen ppPen2(colors.get_color(_T("URED")), 2, wxUSER_DASH);
 				ppPen2.SetDashes(2, dash_long);
 				dc.SetPen(ppPen2);
 				dc.StrokeLine(tCPAPoint.x, tCPAPoint.y, oCPAPoint.x, oCPAPoint.y);
 
 				// Draw little circles at the ends of the CPA alert line
-				wxBrush br(GetGlobalColor(_T("BLUE3")));
+				wxBrush br(colors.get_color(_T("BLUE3")));
 				dc.SetBrush(br);
-				dc.SetPen(wxPen(GetGlobalColor(_T("UBLK"))));
+				dc.SetPen(wxPen(colors.get_color(_T("UBLK"))));
 
 				// Using the true ends, not the clipped ends
 				dc.StrokeCircle(tCPAPoint_unclipped.x, tCPAPoint_unclipped.y, 5);
@@ -3945,28 +3953,28 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				GetVP().pix_height);
 
 			if (ownres != geo::Invisible) {
-				wxPen ppPen2(GetGlobalColor(_T("URED")), 2, wxUSER_DASH);
+				wxPen ppPen2(colors.get_color(_T("URED")), 2, wxUSER_DASH);
 				ppPen2.SetDashes(2, dash_long);
 				dc.SetPen(ppPen2);
 
 				dc.StrokeLine(oShipPoint.x, oShipPoint.y, oCPAPoint.x, oCPAPoint.y);
 			} // TR : till here
 
-			dc.SetPen(wxPen(GetGlobalColor(_T("UBLCK"))));
-			dc.SetBrush(wxBrush(GetGlobalColor(_T("URED"))));
+			dc.SetPen(wxPen(colors.get_color(_T("UBLCK"))));
+			dc.SetBrush(wxBrush(colors.get_color(_T("URED"))));
 		}
 
 		// Highlight the AIS target symbol if an alert dialog is currently open for it
 		if (g_pais_alert_dialog_active && g_pais_alert_dialog_active->IsShown()) {
 			if (g_pais_alert_dialog_active->Get_Dialog_MMSI() == td->MMSI)
-				JaggyCircle(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x,
+				JaggyCircle(dc, wxPen(colors.get_color(_T("URED")), 2), TargetPoint.x,
 							TargetPoint.y, 100);
 		}
 
 		// Highlight the AIS target symbol if a query dialog is currently open for it
 		if (g_pais_query_dialog_active && g_pais_query_dialog_active->IsShown()) {
 			if (g_pais_query_dialog_active->GetMMSI() == td->MMSI)
-				TargetFrame(dc, wxPen(GetGlobalColor(_T("UBLCK")), 2), TargetPoint.x,
+				TargetFrame(dc, wxPen(colors.get_color(_T("UBLCK")), 2), TargetPoint.x,
 							TargetPoint.y, 25);
 		}
 
@@ -3996,7 +4004,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 					if (g_ais_cog_predictor_width > 1) {
 						// Draw a 1 pixel wide black line
-						wxPen narrow_pen(GetGlobalColor(_T("UBLCK")), 1);
+						wxPen narrow_pen(colors.get_color(_T("UBLCK")), 1);
 						dc.SetPen(narrow_pen);
 						dc.StrokeLine(pixx, pixy, pixx1, pixy1);
 					}
@@ -4094,9 +4102,9 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			ais_tri_icon[2] = SarRot[8];
 			dc.StrokePolygon(3, ais_tri_icon, TargetPoint.x, TargetPoint.y);
 
-			wxPen target_outline_pen(GetGlobalColor(_T ( "UBLCK" )), 2);
+			wxPen target_outline_pen(colors.get_color(_T("UBLCK")), 2);
 			dc.SetPen(target_outline_pen);
-			dc.SetBrush(wxBrush(GetGlobalColor(_T ( "UBLCK" )), wxTRANSPARENT));
+			dc.SetBrush(wxBrush(colors.get_color(_T("UBLCK")), wxTRANSPARENT));
 			dc.StrokePolygon(9, SarRot, TargetPoint.x, TargetPoint.y);
 
 			// second half
@@ -4143,11 +4151,11 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			dc.StrokePolygon(3, ais_tri_icon, TargetPoint.x, TargetPoint.y);
 
 			dc.SetPen(target_outline_pen);
-			dc.SetBrush(wxBrush(GetGlobalColor(_T ( "UBLCK" )), wxTRANSPARENT));
+			dc.SetBrush(wxBrush(colors.get_color(_T("UBLCK")), wxTRANSPARENT));
 			dc.StrokePolygon(9, SarRot, TargetPoint.x, TargetPoint.y);
 
 		} else { // ship class A or B or a Buddy or DSC
-			wxPen target_pen(GetGlobalColor(_T("UBLCK")), 1);
+			wxPen target_pen(colors.get_color(_T("UBLCK")), 1);
 
 			dc.SetPen(target_pen);
 			dc.SetBrush(target_brush);
@@ -4171,18 +4179,18 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				dc.StrokePolygon(3, ais_tri_icon, TargetPoint.x, TargetPoint.y);
 
 				dc.SetPen(target_pen);
-				dc.SetBrush(wxBrush(GetGlobalColor(_T("UBLCK")), wxTRANSPARENT));
+				dc.SetBrush(wxBrush(colors.get_color(_T("UBLCK")), wxTRANSPARENT));
 				dc.StrokePolygon(4, ais_quad_icon, TargetPoint.x, TargetPoint.y);
 
 			} else
 				dc.StrokePolygon(4, ais_quad_icon, TargetPoint.x, TargetPoint.y);
 
 			if (view.DrawAISSize && bcan_draw_size) {
-				dc.SetBrush(wxBrush(GetGlobalColor(_T("UBLCK")), wxTRANSPARENT));
+				dc.SetBrush(wxBrush(colors.get_color(_T("UBLCK")), wxTRANSPARENT));
 				dc.StrokePolygon(6, ais_real_size, TargetPoint.x, TargetPoint.y);
 			}
 
-			dc.SetBrush(wxBrush(GetGlobalColor(_T("SHIPS"))));
+			dc.SetBrush(wxBrush(colors.get_color(_T("SHIPS"))));
 			int navstatus = td->NavStatus;
 
 			// HSC usually have correct ShipType but navstatus == 0...
@@ -4273,7 +4281,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 			// Draw the inactive cross-out line
 			if (!td->b_active) {
-				dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" )), 2));
+				dc.SetPen(wxPen(colors.get_color(_T("UBLCK")), 2));
 
 				wxPoint p1 = transrot(wxPoint(-14, 0), theta, TargetPoint);
 				wxPoint p2 = transrot(wxPoint(14, 0), theta, TargetPoint);
@@ -4281,7 +4289,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				dc.CalcBoundingBox(p1.x, p1.y);
 				dc.CalcBoundingBox(p2.x, p2.y);
 
-				dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" )), 1));
+				dc.SetPen(wxPen(colors.get_color(_T("UBLCK")), 1));
 			}
 
 			// European Inland AIS define a "stbd-stbd" meeting sign, a blue paddle.
@@ -4306,8 +4314,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 					ais_flag_icon[i].y = (int)round(py);
 				}
 
-				dc.SetBrush(wxBrush(GetGlobalColor(_T ( "UINFB" ))));
-				dc.SetPen(wxPen(GetGlobalColor(_T ( "CHWHT" )), 2));
+				dc.SetBrush(wxBrush(colors.get_color(_T("UINFB"))));
+				dc.SetPen(wxPen(colors.get_color(_T("CHWHT")), 2));
 				dc.StrokePolygon(4, ais_flag_icon, TargetPoint.x, TargetPoint.y);
 			}
 		}
@@ -4340,7 +4348,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 			wxPoint TrackPointA;
 			wxPoint TrackPointB;
 
-			dc.SetPen(wxPen(GetGlobalColor(_T("CHMGD")), 2));
+			dc.SetPen(wxPen(colors.get_color(_T("CHMGD")), 2));
 
 			// First point
 			ais::AISTargetTrackList::iterator track_point = td->m_ptrack.begin();
@@ -4361,7 +4369,9 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 void ChartCanvas::draw_ais_ARPA(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush& target_brush,
 								const ais::AIS_Target_Data* td) const
 {
-	wxPen target_pen(GetGlobalColor(_T("UBLCK")), 2);
+	const global::ColorManager& colors = global::OCPN::get().color();
+
+	wxPen target_pen(colors.get_color(_T("UBLCK")), 2);
 
 	dc.SetPen(target_pen);
 	dc.SetBrush(target_brush);
@@ -4370,11 +4380,11 @@ void ChartCanvas::draw_ais_ARPA(ocpnDC& dc, const wxPoint& TargetPoint, const wx
 	dc.StrokeCircle(TargetPoint.x, TargetPoint.y, 1);
 	// Draw the inactive cross-out line
 	if (!td->b_active) {
-		dc.SetPen(wxPen(GetGlobalColor(_T("UBLCK")), 2));
+		dc.SetPen(wxPen(colors.get_color(_T("UBLCK")), 2));
 		dc.StrokeLine(TargetPoint.x - 14, TargetPoint.y, TargetPoint.x + 14, TargetPoint.y);
 		dc.CalcBoundingBox(TargetPoint.x - 14, TargetPoint.y);
 		dc.CalcBoundingBox(TargetPoint.x + 14, TargetPoint.y);
-		dc.SetPen(wxPen(GetGlobalColor(_T("UBLCK")), 1));
+		dc.SetPen(wxPen(colors.get_color(_T("UBLCK")), 1));
 	}
 }
 
@@ -4383,11 +4393,13 @@ void ChartCanvas::draw_ais_ATON(ocpnDC& dc, const wxPoint& TargetPoint, const wx
 {
 	using namespace ais;
 
+	const global::ColorManager& colors = global::OCPN::get().color();
+
 	wxPen aton_pen;
 	if ((td->NavStatus == ATON_VIRTUAL_OFFPOSITION) || (td->NavStatus == ATON_REAL_OFFPOSITION))
-		aton_pen = wxPen(GetGlobalColor(_T("URED")), 2);
+		aton_pen = wxPen(colors.get_color(_T("URED")), 2);
 	else
-		aton_pen = wxPen(GetGlobalColor(_T("UBLCK")), 2);
+		aton_pen = wxPen(colors.get_color(_T("UBLCK")), 2);
 
 	bool b_virt = (td->NavStatus == ATON_VIRTUAL) | (td->NavStatus == ATON_VIRTUAL_ONPOSITION)
 				  | (td->NavStatus == ATON_VIRTUAL_OFFPOSITION);
@@ -4398,16 +4410,20 @@ void ChartCanvas::draw_ais_ATON(ocpnDC& dc, const wxPoint& TargetPoint, const wx
 void ChartCanvas::draw_ais_BASE(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush&,
 								const ais::AIS_Target_Data*) const
 {
-	Base_Square(dc, wxPen(GetGlobalColor(_T("UBLCK")), 2), TargetPoint.x, TargetPoint.y, 8);
+	const global::ColorManager& colors = global::OCPN::get().color();
+
+	Base_Square(dc, wxPen(colors.get_color(_T("UBLCK")), 2), TargetPoint.x, TargetPoint.y, 8);
 }
 
 void ChartCanvas::draw_ais_SART(ocpnDC& dc, const wxPoint& TargetPoint, const wxBrush&,
 								const ais::AIS_Target_Data* td) const
 {
+	const global::ColorManager& colors = global::OCPN::get().color();
+
 	if (td->NavStatus == 14) // active
-		SART_Render(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y, 8);
+		SART_Render(dc, wxPen(colors.get_color(_T("URED")), 2), TargetPoint.x, TargetPoint.y, 8);
 	else
-		SART_Render(dc, wxPen(GetGlobalColor(_T("UGREN")), 2), TargetPoint.x, TargetPoint.y, 8);
+		SART_Render(dc, wxPen(colors.get_color(_T("UGREN")), 2), TargetPoint.x, TargetPoint.y, 8);
 }
 
 void ChartCanvas::JaggyCircle(ocpnDC& dc, wxPen pen, int x, int y, int radius)
@@ -4574,13 +4590,14 @@ void ChartCanvas::AnchorWatchDraw(ocpnDC& dc)
 	// FIXME: code duplication
 	// Just for prototyping, visual alert for anchorwatch goes here
 
+	const global::ColorManager& colors = global::OCPN::get().color();
 	global::Navigation& nav = global::OCPN::get().nav();
 
 	bool play_sound = false;
 	if (pAnchorWatchPoint1 && nav.anchor().AlertOn1) {
 		if (nav.anchor().AlertOn1) {
 			wxPoint TargetPoint = GetCanvasPointPix(pAnchorWatchPoint1->get_position());
-			JaggyCircle(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
+			JaggyCircle(dc, wxPen(colors.get_color(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
 						100);
 			play_sound = true;
 		}
@@ -4591,7 +4608,7 @@ void ChartCanvas::AnchorWatchDraw(ocpnDC& dc)
 	if (pAnchorWatchPoint2 && nav.anchor().AlertOn2) {
 		if (nav.anchor().AlertOn2) {
 			wxPoint TargetPoint = GetCanvasPointPix(pAnchorWatchPoint2->get_position());
-			JaggyCircle(dc, wxPen(GetGlobalColor(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
+			JaggyCircle(dc, wxPen(colors.get_color(_T("URED")), 2), TargetPoint.x, TargetPoint.y,
 						100);
 			play_sound = true;
 		}
@@ -7668,7 +7685,7 @@ void ChartCanvas::RenderAllChartOutlines(ocpnDC& dc, const ViewPort& vp)
 	if (Current_Ch && (Current_Ch->GetChartType() == CHART_TYPE_CM93COMP)) {
 		cm93compchart* pch = (cm93compchart*)Current_Ch;
 		if (pch) {
-			wxPen mPen(GetGlobalColor(_T("UINFM")), 1, wxSOLID);
+			wxPen mPen(global::OCPN::get().color().get_color(_T("UINFM")), 1, wxSOLID);
 			dc.SetPen(mPen);
 			pch->RenderNextSmallerCellOutlines(dc, vp);
 		}
@@ -7705,14 +7722,14 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 			if (vp.GetBBox().Intersect(box, 0) != geo::BoundingBox::_OUT) {
 				// chart is not outside of viewport
 				b_draw = true;
-				lon_bias = -360.;
+				lon_bias = -360.0;
 			}
 		} else {
 			box.Translate(360.0, 0.0);
 			if (vp.GetBBox().Intersect(box, 0) != geo::BoundingBox::_OUT) {
 				// chart is not outside of viewport
 				b_draw = true;
-				lon_bias = 360.;
+				lon_bias = 360.0;
 			}
 		}
 	}
@@ -7723,7 +7740,7 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 		if (vp.GetBBox().Intersect(box, 0) != geo::BoundingBox::_OUT) {
 			// chart is not outside of viewport
 			b_draw = true;
-			lon_bias = -360.;
+			lon_bias = -360.0;
 		}
 	}
 
@@ -7733,15 +7750,16 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 	int nPly = ChartData->GetDBPlyPoint(dbIndex, 0, &plylat, &plylon);
 
 	using namespace chart;
+	const global::ColorManager& colors = global::OCPN::get().color();
 
 	if (ChartData->GetDBChartType(dbIndex) == CHART_TYPE_S57)
-		dc.SetPen(wxPen(GetGlobalColor(_T("UINFG")), 1, wxSOLID));
+		dc.SetPen(wxPen(colors.get_color(_T("UINFG")), 1, wxSOLID));
 	else if (ChartData->GetDBChartType(dbIndex) == CHART_TYPE_CM93)
-		dc.SetPen(wxPen(GetGlobalColor(_T("YELO1")), 1, wxSOLID));
+		dc.SetPen(wxPen(colors.get_color(_T("YELO1")), 1, wxSOLID));
 	else
-		dc.SetPen(wxPen(GetGlobalColor(_T("UINFR")), 1, wxSOLID));
+		dc.SetPen(wxPen(colors.get_color(_T("UINFR")), 1, wxSOLID));
 
-	//        Are there any aux ply entries?
+	// Are there any aux ply entries?
 	int nAuxPlyEntries = ChartData->GetnAuxPlyEntries(dbIndex);
 	if (0 == nAuxPlyEntries) { // There are no aux Ply Point entries
 		wxPoint r1;
@@ -7921,9 +7939,10 @@ void RenderExtraRouteLegInfo(ocpnDC& dc, wxPoint ref_point, wxString s)
 	yp = ref_point.y + h;
 	yp += hilite_offset;
 
-	dc.AlphaBlending(xp, yp, w, h, 0.0, GetGlobalColor(_T ( "YELO1" )), 172);
+	const global::ColorManager& colors = global::OCPN::get().color();
 
-	dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" ))));
+	dc.AlphaBlending(xp, yp, w, h, 0.0, colors.get_color(_T("YELO1")), 172);
+	dc.SetPen(wxPen(colors.get_color(_T("UBLCK"))));
 	dc.DrawText(s, xp, yp);
 }
 
@@ -8006,9 +8025,10 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 		yp = r_rband.y;
 		yp += hilite_offset;
 
-		dc.AlphaBlending(xp, yp, w, h, 0.0, GetGlobalColor(_T ( "YELO1" )), 172);
+		const global::ColorManager& colors = global::OCPN::get().color();
 
-		dc.SetPen(wxPen(GetGlobalColor(_T ( "UBLCK" ))));
+		dc.AlphaBlending(xp, yp, w, h, 0.0, colors.get_color(_T("YELO1")), 172);
+		dc.SetPen(wxPen(colors.get_color(_T("UBLCK"))));
 		dc.DrawText(routeInfo, xp, yp);
 
 		wxString s0;
@@ -8698,7 +8718,7 @@ void ChartCanvas::EmbossOverzoomIndicator(ocpnDC& dc)
 
 					cm93compchart* pch = (cm93compchart*)Current_Ch;
 					if (pch) {
-						wxPen mPen(GetGlobalColor(_T("UINFM")), 2, wxSHORT_DASH);
+						wxPen mPen(global::OCPN::get().color().get_color(_T("UINFM")), 2, wxSHORT_DASH);
 						dc.SetPen(mPen);
 						pch->RenderNextSmallerCellOutlines(dc, GetVP());
 					}
@@ -9132,8 +9152,10 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, const geo::LatLonBoundingBo
 			lAnchorPoint2 = GetCanvasPointPix(pAnchorWatchPoint2->get_position());
 		}
 
-		wxPen ppPeng(GetGlobalColor(_T("UGREN")), 2);
-		wxPen ppPenr(GetGlobalColor(_T("URED")), 2);
+		const global::ColorManager& colors = global::OCPN::get().color();
+
+		wxPen ppPeng(colors.get_color(_T("UGREN")), 2);
+		wxPen ppPenr(colors.get_color(_T("URED")), 2);
 
 		wxBrush* ppBrush = wxTheBrushList->FindOrCreateBrush(wxColour(0, 0, 0), wxTRANSPARENT);
 		dc.SetBrush(*ppBrush);
@@ -9192,14 +9214,16 @@ double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BBox, bool bRebuildSelList,
 									 bool bforce_redraw_tides, bool bdraw_mono_for_mask)
 {
-	wxPen* pblack_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFD")), 1, wxSOLID);
-	wxPen* pyelo_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("YELO1")), 1, wxSOLID);
-	wxPen* pblue_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("BLUE2")), 1, wxSOLID);
+	const global::ColorManager& colors = global::OCPN::get().color();
+
+	wxPen* pblack_pen = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFD")), 1, wxSOLID);
+	wxPen* pyelo_pen = wxThePenList->FindOrCreatePen(colors.get_color(_T("YELO1")), 1, wxSOLID);
+	wxPen* pblue_pen = wxThePenList->FindOrCreatePen(colors.get_color(_T("BLUE2")), 1, wxSOLID);
 
 	wxBrush* pgreen_brush
-		= wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("GREEN1")), wxSOLID);
-	wxBrush* brc_1 = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("BLUE2")), wxSOLID);
-	wxBrush* brc_2 = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("YELO1")), wxSOLID);
+		= wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("GREEN1")), wxSOLID);
+	wxBrush* brc_1 = wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("BLUE2")), wxSOLID);
+	wxBrush* brc_2 = wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("YELO1")), wxSOLID);
 
 	wxFont* dFont = FontMgr::Get().GetFont(_("ExtendedTideIcon"), 12);
 	dc.SetTextForeground(FontMgr::Get().GetFontColor(_("ExtendedTideIcon")));
@@ -9439,12 +9463,14 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 	double lon_last = 0.0;
 	double lat_last = 0.0;
 
-	wxPen* pblack_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFD")), 1, wxSOLID);
-	wxPen* porange_pen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFO")), 1, wxSOLID);
+	const global::ColorManager& colors = global::OCPN::get().color();
+
+	wxPen* pblack_pen = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFD")), 1, wxSOLID);
+	wxPen* porange_pen = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFO")), 1, wxSOLID);
 	wxBrush* porange_brush
-		= wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFO")), wxSOLID);
+		= wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("UINFO")), wxSOLID);
 	wxBrush* pblack_brush
-		= wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFD")), wxSOLID);
+		= wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("UINFD")), wxSOLID);
 
 	double skew_angle = GetVPRotation();
 

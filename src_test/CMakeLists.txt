@@ -11,7 +11,7 @@ message(STATUS "CMAKE_CXX_FLAGS_DEBUG  : ${CMAKE_CXX_FLAGS_DEBUG}")
 message(STATUS "CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
 message(STATUS "CMAKE_INSTALL_PREFIX   : ${CMAKE_CMAKE_INSTALL_PREFIX}")
 
-file(GLOB_RECURSE TEST_SRC . "*.cpp")
+file(GLOB_RECURSE TEST_SRC ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
 
 message(STATUS "Tests found: ${TEST_SRC}")
 
@@ -19,8 +19,11 @@ message(STATUS "Tests found: ${TEST_SRC}")
 #       link against libraries (for example: libgeo instead of geo/Position)
 #   OR: the built files should be built with coverage
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
 add_executable(testrunner
 	${TEST_SRC}
+	${CMAKE_SOURCE_DIR}/src/UserColors.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/Position.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/BoundingBox.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/Polygon.cpp
@@ -31,6 +34,7 @@ add_executable(testrunner
 	)
 
 target_link_libraries(testrunner
+	${wxWidgets_LIBRARIES}
 	gmock
 	)
 

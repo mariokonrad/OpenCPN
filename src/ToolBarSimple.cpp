@@ -30,12 +30,11 @@
 #include <OCPNFloatingToolbarDialog.h>
 #include <ToolTipWin.h>
 #include <ToolBarTool.h>
-
-#include <UserColors.h>
 #include <MainFrame.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/ColorManager.h>
 
 #include <plugin/PlugInManager.h>
 
@@ -310,7 +309,7 @@ void ToolBarSimple::SetColorScheme(global::ColorScheme)
 		m_pToolTipWin = NULL;
 	}
 
-	m_toolOutlineColour = GetGlobalColor(_T("UIBDR"));
+	m_toolOutlineColour = global::OCPN::get().color().get_color(_T("UIBDR"));
 }
 
 bool ToolBarSimple::Realize()

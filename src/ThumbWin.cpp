@@ -23,7 +23,9 @@
 
 #include "ThumbWin.h"
 #include <chart/ChartBase.h>
-#include <UserColors.h>
+
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 #include <cstdlib>
 #include <cmath>
@@ -37,13 +39,13 @@ BEGIN_EVENT_TABLE(ThumbWin, wxWindow)
 	EVT_PAINT(ThumbWin::OnPaint)
 END_EVENT_TABLE()
 
-
-ThumbWin::ThumbWin(wxWindow * parent)
-	: wxWindow(parent, wxID_ANY, wxPoint( 20, 20 ), wxSize( 5, 5 ), wxSIMPLE_BORDER)
+ThumbWin::ThumbWin(wxWindow* parent)
+	: wxWindow(parent, wxID_ANY, wxPoint(20, 20), wxSize(5, 5), wxSIMPLE_BORDER)
+	, pThumbChart(NULL)
 {
-	pThumbChart = NULL;
-	m_max_size.x = m_max_size.y = 100;
-	Show( false );
+	m_max_size.x = 100;
+	m_max_size.y = 100;
+	Show(false);
 }
 
 ThumbWin::~ThumbWin()
@@ -52,43 +54,48 @@ ThumbWin::~ThumbWin()
 
 void ThumbWin::Resize(void)
 {
-	if (pThumbChart) {
-		if (pThumbChart->GetThumbData()->pDIBThumb) {
-			int newheight = std::min(m_max_size.y, pThumbChart->GetThumbData()->pDIBThumb->GetHeight());
-			int newwidth = std::min(m_max_size.x, pThumbChart->GetThumbData()->pDIBThumb->GetWidth());
-			SetSize(0, 0, newwidth, newheight);
-		}
+	if (!pThumbChart)
+		return;
+
+	if (pThumbChart->GetThumbData()->pDIBThumb) {
+		int newheight = std::min(m_max_size.y, pThumbChart->GetThumbData()->pDIBThumb->GetHeight());
+		int newwidth = std::min(m_max_size.x, pThumbChart->GetThumbData()->pDIBThumb->GetWidth());
+		SetSize(0, 0, newwidth, newheight);
 	}
 }
 
-void ThumbWin::SetMaxSize(wxSize const &max_size)
+void ThumbWin::SetMaxSize(wxSize const& max_size)
 {
 	m_max_size = max_size;
 }
 
-void ThumbWin::OnPaint(wxPaintEvent &)
+void ThumbWin::OnPaint(wxPaintEvent&)
 {
-	wxPaintDC dc( this );
+	wxPaintDC dc(this);
 
-	if (pThumbChart) {
-		if (pThumbChart->GetThumbData()) {
-			if (pThumbChart->GetThumbData()->pDIBThumb)
-				dc.DrawBitmap(*(pThumbChart->GetThumbData()->pDIBThumb), 0, 0, false);
+	if (!pThumbChart)
+		return;
 
-			wxPen ppPen(GetGlobalColor(_T("CHBLK") ), 1, wxSOLID);
-			dc.SetPen(ppPen);
-			wxBrush yBrush(GetGlobalColor(_T("CHYLW")), wxSOLID);
-			dc.SetBrush(yBrush);
-			dc.DrawCircle(pThumbChart->GetThumbData()->ShipX, pThumbChart->GetThumbData()->ShipY, 6);
+	if (pThumbChart->GetThumbData()) {
+		if (pThumbChart->GetThumbData()->pDIBThumb) {
+			dc.DrawBitmap(*(pThumbChart->GetThumbData()->pDIBThumb), 0, 0, false);
 		}
+
+		const global::ColorManager& colors = global::OCPN::get().color();
+
+		wxPen ppPen(colors.get_color(_T("CHBLK")), 1, wxSOLID);
+		dc.SetPen(ppPen);
+		wxBrush yBrush(colors.get_color(_T("CHYLW")), wxSOLID);
+		dc.SetBrush(yBrush);
+		dc.DrawCircle(pThumbChart->GetThumbData()->ShipX, pThumbChart->GetThumbData()->ShipY, 6);
 	}
 }
 
-const wxBitmap & ThumbWin::GetBitmap(void)
+const wxBitmap& ThumbWin::GetBitmap(void)
 {
-	if( pThumbChart ) {
-		if( pThumbChart->GetThumbData() ) {
-			if( pThumbChart->GetThumbData()->pDIBThumb )
+	if (pThumbChart) {
+		if (pThumbChart->GetThumbData()) {
+			if (pThumbChart->GetThumbData()->pDIBThumb)
 				m_bitmap = *(pThumbChart->GetThumbData()->pDIBThumb);
 		}
 	}

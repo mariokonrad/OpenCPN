@@ -22,20 +22,20 @@
  **************************************************************************/
 
 #include "OCPNFloatingToolbarDialog.h"
-#include "GrabberWin.h"
-#include "ToolbarMOBDialog.h"
-#include "ToolBarSimple.h"
-#include "StyleManager.h"
-#include "Style.h"
-#include "MessageBox.h"
-#include "GUI_IDs.h"
+#include <GrabberWin.h>
+#include <ToolbarMOBDialog.h>
+#include <ToolBarSimple.h>
+#include <StyleManager.h>
+#include <Style.h>
+#include <MessageBox.h>
+#include <GUI_IDs.h>
 
 #include <ChartCanvas.h>
 #include <MainFrame.h>
-#include <UserColors.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
+#include <global/ColorManager.h>
 
 #include <wx/sizer.h>
 #include <wx/menu.h>
@@ -54,7 +54,7 @@ BEGIN_EVENT_TABLE(OCPNFloatingToolbarDialog, wxDialog)
 END_EVENT_TABLE()
 
 OCPNFloatingToolbarDialog::OCPNFloatingToolbarDialog(
-		wxWindow * parent,
+		wxWindow* parent,
 		wxPoint position,
 		long orient)
 {
@@ -106,20 +106,22 @@ void OCPNFloatingToolbarDialog::OnWindowCreate(wxWindowCreateEvent &)
 
 void OCPNFloatingToolbarDialog::SetColorScheme(global::ColorScheme cs)
 {
-	wxColour back_color = GetGlobalColor(_T("GREY2"));
+	const global::ColorManager& colors = global::OCPN::get().color();
+
+	wxColour back_color = colors.get_color(_T("GREY2"));
 
 	// Set background
 	SetBackgroundColour(back_color);
 	ClearBackground();
 
 	if (m_ptoolbar) {
-		wxColour back_color = GetGlobalColor(_T("GREY2"));
+		wxColour back_color = colors.get_color(_T("GREY2"));
 
 		// Set background
 		m_ptoolbar->SetBackgroundColour(back_color);
 		m_ptoolbar->ClearBackground();
 
-		m_ptoolbar->SetToggledBackgroundColour(GetGlobalColor(_T("GREY1")));
+		m_ptoolbar->SetToggledBackgroundColour(colors.get_color(_T("GREY1")));
 
 		m_ptoolbar->SetColorScheme(cs);
 		m_ptoolbar->Refresh(true);
@@ -478,13 +480,14 @@ void OCPNFloatingToolbarDialog::OnToolLeftClick(wxCommandEvent& event)
 ToolBarSimple* OCPNFloatingToolbarDialog::GetToolbar()
 {
 	if (!m_ptoolbar) {
+		const global::ColorManager& colors = global::OCPN::get().color();
 		long winstyle = wxNO_BORDER | wxTB_FLAT | m_orient;
 
 		m_ptoolbar = new ToolBarSimple(this, -1, wxPoint(-1, -1), wxSize(-1, -1), winstyle);
 
-		m_ptoolbar->SetBackgroundColour(GetGlobalColor(_T("GREY2")));
+		m_ptoolbar->SetBackgroundColour(colors.get_color(_T("GREY2")));
 		m_ptoolbar->ClearBackground();
-		m_ptoolbar->SetToggledBackgroundColour(GetGlobalColor(_T("GREY1")));
+		m_ptoolbar->SetToggledBackgroundColour(colors.get_color(_T("GREY1")));
 		m_ptoolbar->SetColorScheme(global::OCPN::get().gui().view().color_scheme);
 
 		SetGeometry();

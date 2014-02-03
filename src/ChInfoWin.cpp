@@ -23,12 +23,13 @@
 
 #include "ChInfoWin.h"
 
-#include <UserColors.h>
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 #include <wx/dcclient.h>
 
 BEGIN_EVENT_TABLE(ChInfoWin, wxWindow)
-	EVT_PAINT ( ChInfoWin::OnPaint )
+	EVT_PAINT(ChInfoWin::OnPaint)
 	EVT_ERASE_BACKGROUND(ChInfoWin::OnEraseBackground)
 END_EVENT_TABLE()
 
@@ -52,21 +53,26 @@ void ChInfoWin::OnEraseBackground(wxEraseEvent&)
 
 void ChInfoWin::OnPaint(wxPaintEvent&)
 {
-	int width, height;
+	int width;
+	int height;
 	GetClientSize(&width, &height);
 	wxPaintDC dc(this);
 
-	dc.SetBrush(wxBrush(GetGlobalColor(_T ( "UIBCK" ))));
-	dc.SetPen(wxPen(GetGlobalColor(_T ( "UITX1" ))));
+	const global::ColorManager& colors = global::OCPN::get().color();
+
+	dc.SetBrush(wxBrush(colors.get_color(_T("UIBCK"))));
+	dc.SetPen(wxPen(colors.get_color(_T("UITX1"))));
 	dc.DrawRectangle(0, 0, width, height);
 }
 
 void ChInfoWin::SetBitmap()
 {
-	SetBackgroundColour(GetGlobalColor(_T ( "UIBCK" )));
+	const global::ColorManager& colors = global::OCPN::get().color();
 
-	m_pInfoTextCtl->SetBackgroundColour(GetGlobalColor(_T ( "UIBCK" )));
-	m_pInfoTextCtl->SetForegroundColour(GetGlobalColor(_T ( "UITX1" )));
+	SetBackgroundColour(colors.get_color(_T("UIBCK")));
+
+	m_pInfoTextCtl->SetBackgroundColour(colors.get_color(_T("UIBCK")));
+	m_pInfoTextCtl->SetForegroundColour(colors.get_color(_T("UITX1")));
 
 	m_pInfoTextCtl->SetSize(1, 1, m_size.x - 2, m_size.y - 2);
 	m_pInfoTextCtl->SetLabel(m_string);

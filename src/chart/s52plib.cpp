@@ -25,12 +25,12 @@
 #include <dychart.h>
 #include <ocpn_pixel.h>
 #include <FontMgr.h>
-#include <UserColors.h>
 
 #include <util/crc32.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
+#include <global/ColorManager.h>
 
 #include <chart/RazdsParser.h>
 #include <chart/RenderFromHPGL.h>
@@ -3300,59 +3300,59 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 {
 	char* str = (char*)rules->INSTstr;
 
-	//    extract the parameters from the string
-	//    And creating a unique string hash as we go
+	// extract the parameters from the string
+	// And creating a unique string hash as we go
 	wxString inst(str, wxConvUTF8);
 	wxString carc_hash;
 
 	wxStringTokenizer tkz(inst, _T ( ",;" ));
 
-	//    outline color
+	// outline color
 	wxString outline_color = tkz.GetNextToken();
 	carc_hash += outline_color;
 	carc_hash += _T(".");
 
-	//    outline width
+	// outline width
 	wxString slong = tkz.GetNextToken();
 	long outline_width;
 	slong.ToLong(&outline_width);
 	carc_hash += slong;
 	carc_hash += _T(".");
 
-	//    arc color
+	// arc color
 	wxString arc_color = tkz.GetNextToken();
 	carc_hash += arc_color;
 	carc_hash += _T(".");
 
-	//    arc width
+	// arc width
 	slong = tkz.GetNextToken();
 	long arc_width;
 	slong.ToLong(&arc_width);
 	carc_hash += slong;
 	carc_hash += _T(".");
 
-	//    sectr1
+	// sectr1
 	slong = tkz.GetNextToken();
 	double sectr1;
 	slong.ToDouble(&sectr1);
 	carc_hash += slong;
 	carc_hash += _T(".");
 
-	//    sectr2
+	// sectr2
 	slong = tkz.GetNextToken();
 	double sectr2;
 	slong.ToDouble(&sectr2);
 	carc_hash += slong;
 	carc_hash += _T(".");
 
-	//    arc radius
+	// arc radius
 	slong = tkz.GetNextToken();
 	long radius;
 	slong.ToLong(&radius);
 	carc_hash += slong;
 	carc_hash += _T(".");
 
-	//    sector radius
+	// sector radius
 	slong = tkz.GetNextToken();
 	long sector_radius;
 	slong.ToLong(&sector_radius);
@@ -3386,12 +3386,12 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		mdc.SetBackground(wxBrush(m_unused_wxColor));
 		mdc.Clear();
 
-		//    Adjust sector math for wxWidgets API
+		// Adjust sector math for wxWidgets API
 		double sb;
 		double se;
 
-//      For some reason, the __WXMSW__ build flips the sense of
-//      start and end angles on DrawEllipticArc()
+		// For some reason, the __WXMSW__ build flips the sense of
+		// start and end angles on DrawEllipticArc()
 #ifndef __WXMSW__
 		if (sectr2 > sectr1) {
 			sb = 90 - sectr1;
@@ -3456,8 +3456,8 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 
 		wxBitmap* sbm = NULL;
 
-		//    Do not need to actually render the symbol for OpenGL mode
-		//    We just need the extents calculated above...
+		// Do not need to actually render the symbol for OpenGL mode
+		// We just need the extents calculated above...
 		if (m_pdc) {
 			//    Draw the outer border
 			wxColour color = getwxColour(outline_color);
@@ -3483,22 +3483,20 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 
 			mdc.SelectObject(wxNullBitmap);
 
-			//          Get smallest containing bitmap
+			// Get smallest containing bitmap
 			sbm = new wxBitmap(bm.GetSubBitmap(wxRect(bm_orgx, bm_orgy, bm_width, bm_height)));
 
-			//                  delete pbm;
-
-			//      Make the mask
+			// Make the mask
 			wxMask* pmask = new wxMask(*sbm, m_unused_wxColor);
 
-			//      Associate the mask with the bitmap
+			// Associate the mask with the bitmap
 			sbm->SetMask(pmask);
 
 			// delete any old private data
 			ClearRulesCache(rules->razRule);
 		}
 
-		//      Save the bitmap ptr and aux parms in the rule
+		// Save the bitmap ptr and aux parms in the rule
 		prule->pixelPtr = sbm;
 		prule->parm0 = ID_wxBitmap;
 		prule->parm1 = m_colortable_index;
@@ -3523,12 +3521,11 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 
 			rad = (int)(radius * m_display_pix_per_mm);
 
-			//    Render the symbology as a zero based Display List
+			// Render the symbology as a zero based Display List
 
-			//    Draw wide outline arc
+			// Draw wide outline arc
 			glLineWidth(wxMax(g_GLMinLineWidth, 0.5));
 			wxColour colorb = getwxColour(outline_color);
-			//                  glColor4ub( colorb.Red(), colorb.Green(), colorb.Blue(), 255 );
 			glColor4ub(colorb.Red(), colorb.Green(), colorb.Blue(), 150);
 			glLineWidth(wxMax(g_GLMinLineWidth, outline_width));
 
@@ -3540,7 +3537,7 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 				glVertex2d(rad * sin(a), -rad * cos(a));
 			glEnd();
 
-			//    Draw narrower color arc, overlaying the drawn outline.
+			// Draw narrower color arc, overlaying the drawn outline.
 			colorb = getwxColour(arc_color);
 			glColor4ub(colorb.Red(), colorb.Green(), colorb.Blue(), 255);
 			glLineWidth(wxMax(g_GLMinLineWidth, (float)arc_width + 0.8));
@@ -3550,11 +3547,11 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 				glVertex2d(rad * sin(a), -rad * cos(a));
 			glEnd();
 
-			//    Draw the sector legs
+			// Draw the sector legs
 			if (sector_radius > 0) {
 				int leg_len = (int)(sector_radius * m_display_pix_per_mm);
 
-				wxColour c = GetGlobalColor(_T ( "CHBLK" ));
+				wxColour c = global::OCPN::get().color().get_color(_T("CHBLK"));
 				glColor4ub(c.Red(), c.Green(), c.Blue(), c.Alpha());
 				glLineWidth(wxMax(g_GLMinLineWidth, (float)0.7));
 
@@ -3582,11 +3579,11 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 
 			glEndList();
 
-			//    Record the existence of this display list in the searchable hashmap
+			// Record the existence of this display list in the searchable hashmap
 			m_CARC_hashmap[carc_hash] = carc_list;
 		}
 
-		//      Save the list and OpenGL specific parameters in the rule
+		// Save the list and OpenGL specific parameters in the rule
 		prule->pixelPtr = (void*)1;
 		prule->parm0 = ID_GLIST;
 		prule->parm7 = m_CARC_hashmap[carc_hash];
@@ -3597,11 +3594,11 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 	int b_width = prule->parm5;
 	int b_height = prule->parm6;
 
-	//  Render arcs at object's x/y
+	// Render arcs at object's x/y
 	wxPoint r;
 	GetPointPixSingle(rzRules, rzRules->obj->y, rzRules->obj->x, &r, vp);
 
-	//      Now render the symbol
+	// Now render the symbol
 	if (!m_pdc) { // opengl
 #ifdef ocpnUSE_GL
 
@@ -3615,18 +3612,18 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 
 #endif
 	} else {
-		//      Get the bitmap into a memory dc
+		// Get the bitmap into a memory dc
 		wxMemoryDC mdc;
 		mdc.SelectObject((wxBitmap&)(*((wxBitmap*)(rules->razRule->pixelPtr))));
 
-		//      Blit it into the target dc, using mask
+		// Blit it into the target dc, using mask
 		m_pdc->Blit(r.x + rules->razRule->parm2, r.y + rules->razRule->parm3, b_width, b_height,
 					&mdc, 0, 0, wxCOPY, true);
 
 		mdc.SelectObject(wxNullBitmap);
 
-		//    Draw the sector legs directly on the target DC
-		//    so that anti-aliasing works against the drawn image (cannot be cached...)
+		// Draw the sector legs directly on the target DC
+		// so that anti-aliasing works against the drawn image (cannot be cached...)
 		if (sector_radius > 0) {
 			int leg_len = (int)(sector_radius * m_display_pix_per_mm);
 
@@ -3634,15 +3631,7 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 			dash1[0] = (int)(3.6 * m_display_pix_per_mm); // 8// Long dash  <---------+
 			dash1[1] = (int)(1.8 * m_display_pix_per_mm); // 2// Short gap            |
 
-			/*
-			   wxPen *pthispen = new wxPen(*wxBLACK_PEN);
-			   pthispen->SetStyle(wxUSER_DASH);
-			   pthispen->SetDashes( 2, dash1 );
-			//      Undocumented "feature":  Pen must be fully specified <<<BEFORE>>> setting into
-			DC
-			pdc->SetPen ( *pthispen );
-			 */
-			wxColour c = GetGlobalColor(_T ( "CHBLK" ));
+			wxColour c = global::OCPN::get().color().get_color(_T("CHBLK"));
 			double a = (sectr1 - 90) * M_PI / 180;
 			int x = r.x + (int)(leg_len * cos(a));
 			int y = r.y + (int)(leg_len * sin(a));
@@ -3655,8 +3644,8 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		}
 	}
 
-	//  Update the object Bounding box,
-	//  so that subsequent drawing operations will redraw the item fully
+	// Update the object Bounding box,
+	// so that subsequent drawing operations will redraw the item fully
 
 	double plat, plon;
 	geo::BoundingBox symbox;

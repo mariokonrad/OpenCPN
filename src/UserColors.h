@@ -31,8 +31,6 @@
 
 #include <global/ColorManager.h>
 
-wxColour GetGlobalColor(wxString);
-
 /// This class manages colors in respect to the color scheme.
 ///
 /// It comes with its own color set, and is able to get colors

@@ -27,11 +27,11 @@
 #include <ocpnDC.h>
 #include <RouteProp.h>
 #include <ChartCanvas.h>
-#include <UserColors.h>
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 #include <global/GUI.h>
+#include <global/ColorManager.h>
 
 #include <geo/GeoRef.h>
 
@@ -357,15 +357,16 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 	RoutePoint* prp = *route_point;
 
 	// Establish basic colour
+	const global::ColorManager& colors = global::OCPN::get().color();
 	wxColour basic_colour;
 	if (m_bRunning || prp->m_IconName.StartsWith(_T("xmred"))) {
-		basic_colour = GetGlobalColor(_T("URED"));
+		basic_colour = colors.get_color(_T("URED"));
 	} else if (prp->m_IconName.StartsWith(_T("xmblue"))) {
-		basic_colour = GetGlobalColor(_T("BLUE3"));
+		basic_colour = colors.get_color(_T("BLUE3"));
 	} else if (prp->m_IconName.StartsWith(_T("xmgreen"))) {
-		basic_colour = GetGlobalColor(_T("UGREN"));
+		basic_colour = colors.get_color(_T("UGREN"));
 	} else {
-		basic_colour = GetGlobalColor(_T("CHMGD"));
+		basic_colour = colors.get_color(_T("CHMGD"));
 	}
 
 	int style = wxSOLID;

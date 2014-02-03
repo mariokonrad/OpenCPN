@@ -32,7 +32,6 @@
 #include <Multiplexer.h>
 #include <Select.h>
 #include <Config.h>
-#include <UserColors.h>
 #include <App.h>
 
 #include <util/Vector2D.h>
@@ -42,6 +41,7 @@
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 #include <global/GUI.h>
+#include <global/ColorManager.h>
 
 #include <plugin/PlugInManager.h>
 
@@ -999,6 +999,7 @@ void Routeman::DeleteTrack(Route* pRoute)
 void Routeman::SetColorScheme(global::ColorScheme)
 {
 	const global::GUI::View& view = global::OCPN::get().gui().view();
+	const global::ColorManager& colors = global::OCPN::get().color();
 
 	m_pActiveRoutePointPen
 		= wxThePenList->FindOrCreatePen(wxColour(0, 0, 255), view.route_line_width, wxSOLID);
@@ -1007,16 +1008,17 @@ void Routeman::SetColorScheme(global::ColorScheme)
 
 	// Or in something like S-52 compliance
 
-	m_pRoutePen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFB")), view.route_line_width,
-												wxSOLID);
-	m_pSelectedRoutePen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UINFO")),
+	m_pRoutePen = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFB")),
+												view.route_line_width, wxSOLID);
+	m_pSelectedRoutePen = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFO")),
 														view.route_line_width, wxSOLID);
-	m_pActiveRoutePen = wxThePenList->FindOrCreatePen(GetGlobalColor(_T("UARTE")),
+	m_pActiveRoutePen = wxThePenList->FindOrCreatePen(colors.get_color(_T("UARTE")),
 													  view.route_line_width, wxSOLID);
 
-	m_pRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFB")), wxSOLID);
-	m_pSelectedRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("UINFO")), wxSOLID);
-	m_pActiveRouteBrush = wxTheBrushList->FindOrCreateBrush(GetGlobalColor(_T("PLRTE")), wxSOLID);
+	m_pRouteBrush = wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("UINFB")), wxSOLID);
+	m_pSelectedRouteBrush
+		= wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("UINFO")), wxSOLID);
+	m_pActiveRouteBrush = wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("PLRTE")), wxSOLID);
 }
 
 wxString Routeman::GetRouteReverseMessage(void) const

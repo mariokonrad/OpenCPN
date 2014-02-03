@@ -27,11 +27,11 @@
 #include <MessageBox.h>
 #include <ViewPort.h>
 #include <PositionConvert.h>
-#include <UserColors.h>
 #include <ocpn_pixel.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
+#include <global/ColorManager.h>
 
 #include <geo/GeoRef.h>
 
@@ -391,7 +391,7 @@ wxString toSDMM_PlugIn(int NEflag, double a, bool hi_precision)
 
 wxColour GetBaseGlobalColor(wxString colorName)
 {
-	return GetGlobalColor(colorName);
+	return global::OCPN::get().color().get_color(colorName);
 }
 
 int OCPNMessageBox_PlugIn(wxWindow* parent, const wxString& message, const wxString& caption,

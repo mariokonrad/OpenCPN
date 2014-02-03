@@ -22,9 +22,10 @@
  **************************************************************************/
 
 #include "ToolTipWin.h"
-#include "FontMgr.h"
+#include <FontMgr.h>
 
-#include <UserColors.h>
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 #include <wx/dcclient.h>
 #include <wx/dcmemory.h>
@@ -39,8 +40,10 @@ ToolTipWin::ToolTipWin(wxWindow* parent)
 {
 	m_pbm = NULL;
 
-	m_back_color = GetGlobalColor(_T("UIBCK"));
-	m_text_color = GetGlobalColor(_T("UITX1"));
+	const global::ColorManager& colors = global::OCPN::get().color();
+
+	m_back_color = colors.get_color(_T("UIBCK"));
+	m_text_color = colors.get_color(_T("UITX1"));
 
 	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 	SetBackgroundColour(m_back_color);
@@ -54,7 +57,7 @@ ToolTipWin::~ToolTipWin()
 
 void ToolTipWin::SetColorScheme(global::ColorScheme)
 {
-	m_back_color = GetGlobalColor(_T("UIBCK"));
+	m_back_color = global::OCPN::get().color().get_color(_T("UIBCK"));
 	m_text_color = FontMgr::Get().GetFontColor(_("ToolTips"));
 }
 

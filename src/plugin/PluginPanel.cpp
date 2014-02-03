@@ -27,7 +27,8 @@
 #include <plugin/PluginListPanel.h>
 #include <plugin/PluginListPanel.h>
 
-#include <UserColors.h>
+#include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 #include <wx/sizer.h>
 #include <wx/stattext.h>
@@ -111,14 +112,16 @@ void PluginPanel::OnPluginSelected(wxMouseEvent&)
 
 void PluginPanel::SetSelected(bool selected)
 {
+	const global::ColorManager& colors = global::OCPN::get().color();
+
 	m_bSelected = selected;
 	if (selected) {
-		SetBackgroundColour(GetGlobalColor(_T("DILG1")));
+		SetBackgroundColour(colors.get_color(_T("DILG1")));
 		m_pDescription->SetLabel(m_pPlugin->m_long_description);
 		m_pButtons->Show(true);
 		Layout();
 	} else {
-		SetBackgroundColour(GetGlobalColor(_T("DILG0")));
+		SetBackgroundColour(colors.get_color(_T("DILG0")));
 		m_pDescription->SetLabel(m_pPlugin->m_short_description);
 		m_pButtons->Show(false);
 		Layout();

@@ -26,7 +26,7 @@
 
 namespace global {
 
-OCPN * OCPN::instance = NULL;
+OCPN* OCPN::instance = NULL;
 
 OCPN::OCPN()
 	: gui_instance(NULL)
@@ -34,6 +34,7 @@ OCPN::OCPN()
 	, ais_instance(NULL)
 	, wdt_instance(NULL)
 	, sys_instance(NULL)
+	, color_instance(NULL)
 {}
 
 OCPN::OCPN(const OCPN&)

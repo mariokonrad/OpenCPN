@@ -25,6 +25,7 @@ add_executable(testrunner
 	${TEST_SRC}
 	${CMAKE_SOURCE_DIR}/src/UserColors.cpp
 	${CMAKE_SOURCE_DIR}/src/navigation/AnchorDist.cpp
+	${CMAKE_SOURCE_DIR}/src/navigation/MagneticVariation.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/Position.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/BoundingBox.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/Polygon.cpp
@@ -35,6 +36,7 @@ add_executable(testrunner
 	)
 
 target_link_libraries(testrunner
+	global
 	${wxWidgets_LIBRARIES}
 	gmock
 	)

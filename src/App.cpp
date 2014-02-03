@@ -287,6 +287,7 @@ App::App()
 	, nav_instance(NULL)
 	, wdt_instance(NULL)
 	, sys_instance(NULL)
+	, colors_instance(NULL)
 	, start_fullscreen(false)
 	, first_run(false)
 	, logger(NULL)
@@ -400,6 +401,9 @@ void App::inject_global_instances()
 
 	sys_instance = new global::OCPN_System;
 	global::OCPN::get().inject(sys_instance);
+
+	colors_instance = new UserColors;
+	global::OCPN::get().inject(colors_instance);
 }
 
 void App::establish_home_location()
@@ -1813,10 +1817,12 @@ int App::OnExit()
 #endif
 #endif
 
+	delete colors_instance;
 	delete gui_instance;
 	delete nav_instance;
 	delete wdt_instance;
 	delete sys_instance;
+	delete ais_instance;
 
 	return true;
 }

@@ -720,6 +720,7 @@ SET(SRC_GPX
 
 SET(HDR_GLOBAL
 	src/global/ColorScheme.h
+	src/global/ColorManager.h
 	src/global/GUI.h
 	src/global/Navigation.h
 	src/global/WatchDog.h

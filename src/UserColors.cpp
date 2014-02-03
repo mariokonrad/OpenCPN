@@ -295,3 +295,31 @@ void DeInitializeUserColors(void)
 	user_color_hash_table.clear();
 }
 
+
+UserColors::UserColors()
+{
+	// FIXME: NOT IMPLEMENTED
+}
+
+UserColors::~UserColors()
+{
+	// FIXME: NOT IMPLEMENTED
+}
+
+wxColour UserColors::get(const wxString& color_name) const
+{
+	// FIXME: NOT IMPLEMENTED
+	return wxColour();
+}
+
+void UserColors::set_current(global::ColorScheme scheme)
+{
+	// FIXME: NOT IMPLEMENTED
+}
+
+global::ColorScheme UserColors::get_current() const
+{
+	// FIXME: NOT IMPLEMENTED
+	return global::GLOBAL_COLOR_SCHEME_INVALID;
+}
+

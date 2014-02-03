@@ -107,5 +107,15 @@ System& OCPN::sys()
 	return *sys_instance;
 }
 
+void OCPN::inject(ColorManager* color)
+{
+	color_instance = color;
+}
+
+ColorManager& OCPN::color()
+{
+	return *color_instance;
+}
+
 }
 

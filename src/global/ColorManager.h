@@ -21,56 +21,30 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GLOBAL__OCPN__H__
-#define __GLOBAL__OCPN__H__
+#ifndef __GLOBAL__COLORMANAGER__H__
+#define __GLOBAL__COLORMANAGER__H__
+
+#include <global/ColorScheme.h>
+#include <wx/colour.h>
 
 namespace global {
 
-class GUI;
-class Navigation;
-class AIS;
-class WatchDog;
-class System;
-class ColorManager;
-
-class OCPN
+/// Manages the color scheme.
+class ColorManager
 {
-private:
-	static OCPN* instance;
-
-	GUI* gui_instance;
-	Navigation* nav_instance;
-	AIS* ais_instance;
-	WatchDog* wdt_instance;
-	System* sys_instance;
-	ColorManager* color_instance;
-
-private:
-	OCPN();
-	OCPN(const OCPN&);
-	~OCPN();
-	OCPN& operator=(const OCPN&);
-
 public:
-	static OCPN& get();
+	virtual ~ColorManager()
+	{
+	}
 
-	void inject(GUI*);
-	GUI& gui();
+	/// Returns the color corresponding to the specified name.
+	virtual wxColour get(const wxString& color_name) const = 0;
 
-	void inject(Navigation*);
-	Navigation& nav();
+	/// Sets the current color scheme.
+	virtual void set_current(ColorScheme scheme) = 0;
 
-	void inject(AIS*);
-	AIS& ais();
-
-	void inject(WatchDog*);
-	WatchDog& wdt();
-
-	void inject(System*);
-	System& sys();
-
-	void inject(ColorManager*);
-	ColorManager& color();
+	/// Returns the current color scheme.
+	virtual ColorScheme get_current() const = 0;
 };
 
 }

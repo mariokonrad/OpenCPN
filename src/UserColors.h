@@ -27,9 +27,22 @@
 #include <wx/colour.h>
 #include <wx/string.h>
 
+#include <global/ColorManager.h>
+
 void setup_current_user_color(const wxString &);
 void InitializeUserColors(void);
 void DeInitializeUserColors(void);
 wxColour GetGlobalColor(wxString);
+
+class UserColors : public global::ColorManager
+{
+public:
+	UserColors();
+	virtual ~UserColors();
+
+	virtual wxColour get(const wxString& color_name) const;
+	virtual void set_current(global::ColorScheme scheme);
+	virtual global::ColorScheme get_current() const;
+};
 
 #endif

@@ -294,7 +294,8 @@ void DeInitializeUserColors(void)
 
 
 UserColors::UserColors()
-	: chart_color_provider(NULL)
+	: color_scheme(global::GLOBAL_COLOR_SCHEME_DAY)
+	, chart_color_provider(NULL)
 {
 	// FIXME: NOT IMPLEMENTED
 }
@@ -311,18 +312,45 @@ void UserColors::inject_chart_color_provider(global::ColorProvider* provider)
 
 wxColour UserColors::get_color(const wxString& color_name) const
 {
-	// FIXME: NOT IMPLEMENTED
-	return wxColour();
+	wxColour result;
+
+	if (chart_color_provider) {
+		result = chart_color_provider->get_color(color_name);
+	}
+
+	// read color from mapping
+	if (!result .Ok()) {
+		if (pcurrent_user_color_hash)
+			result = (*pcurrent_user_color_hash)[color_name];
+	}
+
+	// Default
+	if (!result.Ok()) {
+		result.Set(128, 128, 128); // Simple Grey
+	}
+
+	return result;
 }
 
 void UserColors::set_current(global::ColorScheme scheme)
 {
-	// FIXME: NOT IMPLEMENTED
+	switch (scheme) {
+		case global::GLOBAL_COLOR_SCHEME_DAY:
+		case global::GLOBAL_COLOR_SCHEME_DUSK:
+		case global::GLOBAL_COLOR_SCHEME_NIGHT:
+			color_scheme = scheme;
+			// FIXME: NOT IMPLEMENTED
+			break;
+
+		case global::GLOBAL_COLOR_SCHEME_INVALID:
+		case global::GLOBAL_COLOR_SCHEME_RGB:
+		case global::GLOBAL_COLOR_SCHEME_MAX:
+			break;
+	}
 }
 
 global::ColorScheme UserColors::get_current() const
 {
-	// FIXME: NOT IMPLEMENTED
-	return global::GLOBAL_COLOR_SCHEME_INVALID;
+	return color_scheme;
 }
 

@@ -46,6 +46,7 @@ public:
 	virtual global::ColorScheme get_current() const;
 
 private:
+	global::ColorScheme color_scheme;
 	global::ColorProvider* chart_color_provider;
 };
 

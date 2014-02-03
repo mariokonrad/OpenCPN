@@ -54,7 +54,7 @@ public:
 		int Show_Target_Name_Scale;
 		bool WayPointPreventDragging;
 		bool ConfirmObjectDelete;
-		ColorScheme color_scheme;
+		ColorScheme color_scheme; // FIXME: is this really needed after the introduction of ColorManager/ColorProvider?
 		double initial_scale_ppm;
 		bool smooth_pan_zoom;
 		bool display_grid; // Flag indicating weather the lat/lon grid should be displayed

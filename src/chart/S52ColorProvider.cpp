@@ -23,10 +23,8 @@
 
 #include "S52ColorProvider.h"
 
-#ifdef USE_S57 // FIXME: remove this preprocessor stuff
-	#include <chart/s52s57.h>
+#ifdef USE_S57
 	#include <chart/s52plib.h>
-	#include <chart/ColorTable.h>
 	extern chart::s52plib* ps52plib;
 #endif
 

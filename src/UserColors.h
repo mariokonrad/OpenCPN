@@ -31,11 +31,12 @@
 
 #include <global/ColorManager.h>
 
-void setup_current_user_color(const wxString &);
-void InitializeUserColors(void);
-void DeInitializeUserColors(void);
 wxColour GetGlobalColor(wxString);
 
+/// This class manages colors in respect to the color scheme.
+///
+/// It comes with its own color set, and is able to get colors
+/// from a chart color provider.
 class UserColors : public global::ColorManager
 {
 public:

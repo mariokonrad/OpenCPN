@@ -1422,8 +1422,6 @@ bool App::OnInit()
 	gpIDX = NULL;
 	gpIDXn = 0;
 
-	InitializeUserColors();
-
 	wxPoint position;
 	wxSize new_frame_size;
 	setup_frame_size_and_position(position, new_frame_size);
@@ -1771,8 +1769,6 @@ int App::OnExit()
 	delete pWayPointMan;
 
 	LogMessageOnce::destroy();
-
-	DeInitializeUserColors();
 
 	delete pLayerList;
 

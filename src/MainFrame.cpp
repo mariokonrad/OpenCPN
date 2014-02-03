@@ -584,7 +584,7 @@ void MainFrame::SetAndApplyColorScheme(global::ColorScheme cs)
 		ps52plib->SetPLIBColorScheme(SchemeName);
 #endif
 
-	setup_current_user_color(SchemeName);
+	global::OCPN::get().color().set_current(global::OCPN::get().gui().view().color_scheme);
 	SetSystemColors(cs);
 
 	if (chart_canvas)

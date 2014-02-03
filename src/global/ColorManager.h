@@ -39,7 +39,10 @@ public:
 	{
 	}
 
-	/// Injects a chart colors provider
+	/// Injects a chart colors provider.
+	///
+	/// @note The implementing class must not assume ownership of
+	///       the specified color provider.
 	virtual void inject_chart_color_provider(ColorProvider*) = 0;
 
 	/// Sets the current color scheme.

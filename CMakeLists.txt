@@ -905,6 +905,9 @@ SET(HDRS
 	src/print/PrintTable.h
 	src/print/PrintCell.h
 
+	src/navigation/AnchorDist.h
+	src/navigation/MagneticVariation.h
+
 	src/OCPN_Version.h
 	src/ocpn_pixel.h
 	src/Units.h
@@ -918,9 +921,7 @@ SET(HDRS
 	src/ChartCanvas.h
 	src/MemoryStatus.h
 	src/MainFrame.h
-	src/MagneticVariation.h
 	src/GUI_IDs.h
-	src/AnchorDist.h
 	src/SerialPorts.h
 	src/decl_exp.h
 	src/ocpnDC.h
@@ -1032,12 +1033,13 @@ SET(SRCS
 	src/print/PrintTable.cpp
 	src/print/PrintCell.cpp
 
+	src/navigation/AnchorDist.cpp
+	src/navigation/MagneticVariation.cpp
+
 	src/OCPN_Version.cpp
 	src/MemoryStatus.cpp
-	src/AnchorDist.cpp
 	src/SerialPorts.cpp
 	src/MainFrame.cpp
-	src/MagneticVariation.cpp
 	src/MessageBox.cpp
 	src/TimedPopupWin.cpp
 	src/AnnunText.cpp

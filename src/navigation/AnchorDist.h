@@ -21,12 +21,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __ANCHORDIST__H__
-#define __ANCHORDIST__H__
+#ifndef __NAVIGATION__ANCHORDIST__H__
+#define __NAVIGATION__ANCHORDIST__H__
+
+namespace navigation {
 
 double AnchorDistFix(
-		double const d,
-		double const AnchorPointMinDist,
-		double const AnchorPointMaxDist);
+	const double d,
+	const double AnchorPointMinDist,
+	const double AnchorPointMaxDist);
+
+}
 
 #endif

@@ -24,6 +24,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(testrunner
 	${TEST_SRC}
 	${CMAKE_SOURCE_DIR}/src/UserColors.cpp
+	${CMAKE_SOURCE_DIR}/src/navigation/AnchorDist.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/Position.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/BoundingBox.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/Polygon.cpp

@@ -89,9 +89,7 @@
 #include <MyPrintout.h>
 #include <OCPNFloatingToolbarDialog.h>
 #include <StatusBar.h>
-#include <MagneticVariation.h>
 #include <GUI_IDs.h>
-#include <AnchorDist.h>
 #include <MemoryStatus.h>
 #include <Config.h>
 #include <Units.h>
@@ -102,6 +100,9 @@
 #include <plugin/OCPN_MsgEvent.h>
 
 #include <tide/TCMgr.h>
+
+#include <navigation/AnchorDist.h>
+#include <navigation/MagneticVariation.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -2961,7 +2962,7 @@ bool MainFrame::check_anchorwatch(const RoutePoint* watch_point) const
 	const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
 	double d = anchor.AWMax;
 	watch_point->GetName().ToDouble(&d);
-	d = AnchorDistFix(d, anchor.PointMinDist, anchor.AWMax);
+	d = navigation::AnchorDistFix(d, anchor.PointMinDist, anchor.AWMax);
 	bool toofar = false;
 	bool tooclose = false;
 	if (d >= 0.0)

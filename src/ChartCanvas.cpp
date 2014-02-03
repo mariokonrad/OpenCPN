@@ -29,7 +29,6 @@
 #include <wx/listimpl.cpp>
 
 #include "ChartCanvas.h"
-#include <MagneticVariation.h>
 #include <ocpnDC.h>
 #include <RouteManagerDialog.h>
 #include <GoToPositionDialog.h>
@@ -68,7 +67,6 @@
 #include <TCWin.h>
 #include <StatusBar.h>
 #include <GUI_IDs.h>
-#include <AnchorDist.h>
 #include <Config.h>
 #include <Layer.h>
 #include <PositionConvert.h>
@@ -77,6 +75,9 @@
 #include <windows/compatibility.h>
 
 #include <plugin/PlugInManager.h>
+
+#include <navigation/AnchorDist.h>
+#include <navigation/MagneticVariation.h>
 
 #include <geo/LineClip.h>
 #include <geo/Geodesic.h>
@@ -9192,7 +9193,7 @@ double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 		const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
 
 		pAnchorWatchPoint->GetName().ToDouble(&d1);
-		d1 = AnchorDistFix(d1, anchor.PointMinDist, anchor.AWMax);
+		d1 = navigation::AnchorDistFix(d1, anchor.PointMinDist, anchor.AWMax);
 		dabs = fabs(d1 / 1852.0);
 		geo::Position t = geo::ll_gc_ll(pAnchorWatchPoint->get_position(), 0, dabs);
 		wxPoint r1 = GetCanvasPointPix(t);

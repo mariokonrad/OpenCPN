@@ -23,10 +23,10 @@
 
 #include "AIS_Target_Data.h"
 #include <ChartCanvas.h>
-#include <MainFrame.h>
 #include <PositionConvert.h>
 #include <Units.h>
-#include <MagneticVariation.h>
+
+#include <navigation/MagneticVariation.h>
 
 #include <global/OCPN.h>
 #include <global/AIS.h>

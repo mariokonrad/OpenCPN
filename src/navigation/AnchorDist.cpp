@@ -23,6 +23,8 @@
 
 #include "AnchorDist.h"
 
+namespace navigation {
+
 /// A helper function to check for proper parameters of anchor watch.
 ///
 /// @param[in] d Distacnce in meter to check against boundaries.
@@ -32,9 +34,9 @@
 ///   the maximum, the maximum will return. In all other cases the distance itself
 ///   is valid and will be returned.
 double AnchorDistFix(
-		double const d,
-		double const AnchorPointMinDist,
-		double const AnchorPointMaxDist)
+		const double d,
+		const double AnchorPointMinDist,
+		const double AnchorPointMaxDist)
 {
 	if (d >= 0.0)
 		if (d < AnchorPointMinDist)
@@ -49,5 +51,7 @@ double AnchorDistFix(
 		return -AnchorPointMaxDist;
 	else
 		return d;
+}
+
 }
 

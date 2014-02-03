@@ -21,8 +21,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __MAGNETICVARIATION__H__
-#define __MAGNETICVARIATION__H__
+#ifndef __NAVIGATION__MAGNETICVARIATION__H__
+#define __NAVIGATION__MAGNETICVARIATION__H__
 
 namespace navigation {
 

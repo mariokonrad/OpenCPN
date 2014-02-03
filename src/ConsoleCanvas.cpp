@@ -30,7 +30,8 @@
 #include <FontMgr.h>
 #include <RoutePoint.h>
 #include <Route.h>
-#include <MagneticVariation.h>
+
+#include <navigation/MagneticVariation.h>
 
 #include <global/OCPN.h>
 #include <global/ColorManager.h>

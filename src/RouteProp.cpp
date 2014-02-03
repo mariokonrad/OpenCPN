@@ -35,8 +35,9 @@
 #include <MainFrame.h>
 #include <DimeControl.h>
 #include <Units.h>
-#include <MagneticVariation.h>
 #include <Daylight.h>
+
+#include <navigation/MagneticVariation.h>
 
 #include <geo/GeoRef.h>
 

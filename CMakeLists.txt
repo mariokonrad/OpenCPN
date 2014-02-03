@@ -718,31 +718,6 @@ SET(SRC_GPX
 	src/gpx/ParseGPXDateTime.cpp
 	)
 
-SET(HDR_GLOBAL
-	src/global/ColorScheme.h
-	src/global/ColorManager.h
-	src/global/ColorProvider.h
-	src/global/GUI.h
-	src/global/Navigation.h
-	src/global/WatchDog.h
-	src/global/System.h
-	src/global/OCPN.h
-	src/global/OCPN_GUI.h
-	src/global/OCPN_Navigation.h
-	src/global/OCPN_AIS.h
-	src/global/OCPN_WatchDog.h
-	src/global/OCPN_System.h
-	)
-
-SET(SRC_GLOBAL
-	src/global/OCPN.cpp
-	src/global/OCPN_GUI.cpp
-	src/global/OCPN_Navigation.cpp
-	src/global/OCPN_AIS.cpp
-	src/global/OCPN_WatchDog.cpp
-	src/global/OCPN_System.cpp
-	)
-
 SET(SRC_TIDE
 	src/tide/Station_Data.cpp
 	src/tide/IDX_entry.cpp
@@ -792,6 +767,29 @@ SET(SRC_SOUND
 SET(HDR_SOUND
 	src/sound/OCPNSoundData.h
 	src/sound/OCPN_Sound.h
+	)
+
+add_library(global STATIC
+	src/global/OCPN.cpp
+	src/global/OCPN_GUI.cpp
+	src/global/OCPN_Navigation.cpp
+	src/global/OCPN_AIS.cpp
+	src/global/OCPN_WatchDog.cpp
+	src/global/OCPN_System.cpp
+
+	src/global/ColorScheme.h
+	src/global/ColorManager.h
+	src/global/ColorProvider.h
+	src/global/GUI.h
+	src/global/Navigation.h
+	src/global/WatchDog.h
+	src/global/System.h
+	src/global/OCPN.h
+	src/global/OCPN_GUI.h
+	src/global/OCPN_Navigation.h
+	src/global/OCPN_AIS.h
+	src/global/OCPN_WatchDog.h
+	src/global/OCPN_System.h
 	)
 
 add_library(geo STATIC
@@ -892,7 +890,6 @@ SET(HDR_CHART
 SET(HDRS
 	${HDR_AIS}
 	${HDR_GPX}
-	${HDR_GLOBAL}
 	${HDR_TIDE}
 	${HDR_PLUGIN}
 	${HDR_SOUND}
@@ -1024,7 +1021,6 @@ SET(HDRS
 SET(SRCS
 	${SRC_AIS}
 	${SRC_GPX}
-	${SRC_GLOBAL}
 	${SRC_TIDE}
 	${SRC_PLUGIN}
 	${SRC_SOUND}
@@ -1476,6 +1472,7 @@ if(APPLE)
 		${wxWidgets_LIBRARIES}
 		NMEA0183
 		${EXTRA_LIBS}
+		global
 		geo
 		util
 		)
@@ -1495,6 +1492,7 @@ If(NOT APPLE)
 		${wxWidgets_LIBRARIES}
 		NMEA0183
 		${EXTRA_LIBS}
+		global
 		geo
 		util
 		)

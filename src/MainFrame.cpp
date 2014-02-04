@@ -187,7 +187,6 @@ RouteManagerDialog* pRouteManagerDialog;
 bool bDBUpdateInProgress;
 ThumbWin* pthumbwin;
 tide::TCMgr* ptcmgr;
-wxString g_uploadConnection;
 volatile int quitflag;
 ArrayOfConnPrm* g_pConnectionParams;
 wxDateTime g_start_time;

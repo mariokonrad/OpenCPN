@@ -92,6 +92,7 @@
 #include <tide/TCMgr.h>
 
 #include <global/OCPN.h>
+#include <global/System.h>
 #include <global/GUI.h>
 #include <global/AIS.h>
 #include <global/Navigation.h>
@@ -160,7 +161,6 @@ extern wxString g_AW2GUID;
 extern OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 extern RouteManagerDialog* pRouteManagerDialog;
 GoToPositionDialog* pGoToPositionDialog;
-extern wxString g_uploadConnection;
 
 #ifdef USE_S57
 extern chart::s52plib* ps52plib;
@@ -9641,10 +9641,12 @@ void ChartCanvas::DrawArrow(ocpnDC& dc, int x, int y, double rot_angle, double s
 
 wxString ChartCanvas::FindValidUploadPort()
 {
+	const global::System::Config& sys = global::OCPN::get().sys().config();
+
 	wxString port;
 	// Try to use the saved persistent upload port first
-	if (!g_uploadConnection.IsEmpty() && g_uploadConnection.StartsWith(_T("Serial"))) {
-		port = g_uploadConnection;
+	if (!sys.uploadConnection.IsEmpty() && sys.uploadConnection.StartsWith(_T("Serial"))) {
+		port = sys.uploadConnection;
 	} else if (g_pConnectionParams) {
 		// If there is no persistent upload port recorded (yet)
 		// then use the first available serial connection which has output defined.

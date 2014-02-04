@@ -96,7 +96,6 @@ extern int g_GroupIndex;
 
 extern wxString g_GPS_Ident;
 extern bool g_bGarminHostUpload;
-extern wxString g_uploadConnection;
 
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern wxArrayString TideCurrentDataSet;
@@ -518,9 +517,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	load_view();
 
-	global::OCPN::get().sys().set_config_memory_footprint(
-		read_long(_T("MemFootprintTargetMB"), 200 * 1024));
-
+	sys.set_config_memory_footprint(read_long(_T("MemFootprintTargetMB"), 200 * 1024));
 	sys.set_config_COMPortCheck(read_long(_T("WindowsComPortMax"), 32));
 
 	gui.set_view_quilt_enable(read_bool(_T("ChartQuilting"), false));
@@ -565,7 +562,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_view_show_layers(read_bool(_T("ShowLayers"), true));
 	gui.set_auto_anchor_mark(read_bool(_T("AutoAnchorDrop")));
 	gui.set_view_show_active_route_highway(read_bool(_T("ShowActiveRouteHighway"), true));
-	Read(_T("MostRecentGPSUploadConnection"), &g_uploadConnection, _T(""));
+	sys.set_config_uploadConnection(read_string(_T("MostRecentGPSUploadConnection")));
 
 	sys.set_config_SDMMFormat(read_long(_T("SDMMFormat"), 0));
 	sys.set_config_DistanceFormat(read_long(_T("DistanceFormat"), 0));
@@ -1533,7 +1530,7 @@ void Config::UpdateSettings()
 	Write(_T("SDMMFormat"), sys.config().SDMMFormat);
 	Write(_T("DistanceFormat"), sys.config().DistanceFormat);
 	Write(_T("SpeedFormat"), sys.config().SpeedFormat);
-	Write(_T("MostRecentGPSUploadConnection"), g_uploadConnection);
+	Write(_T("MostRecentGPSUploadConnection"), sys.config().uploadConnection);
 
 	Write(_T("FilterNMEA_Avg"), g_bfilter_cogsog);
 	Write(_T("FilterNMEA_Sec"), g_COGFilterSec);

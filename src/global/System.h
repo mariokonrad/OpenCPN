@@ -108,6 +108,7 @@ public:
 		int SpeedFormat;
 
 		int COMPortCheck; /// Number of COM ports on windows to be checked
+		wxString uploadConnection;
 	};
 
 	virtual const Config& config() const = 0;
@@ -127,6 +128,7 @@ public:
 	virtual void set_config_DistanceFormat(int) = 0;
 	virtual void set_config_SpeedFormat(int) = 0;
 	virtual void set_config_COMPortCheck(int) = 0;
+	virtual void set_config_uploadConnection(const wxString&) = 0;
 
 public:
 	struct Debug

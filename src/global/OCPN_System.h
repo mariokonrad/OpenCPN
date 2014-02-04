@@ -70,6 +70,7 @@ public: // config
 	virtual void set_config_DistanceFormat(int);
 	virtual void set_config_SpeedFormat(int);
 	virtual void set_config_COMPortCheck(int);
+	virtual void set_config_uploadConnection(const wxString&);
 
 public: // debug
 	virtual const Debug& debug() const;

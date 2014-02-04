@@ -26,13 +26,14 @@
 #include <RoutePoint.h>
 #include <SerialPorts.h>
 
+#include <global/OCPN.h>
+#include <global/System.h>
+
 #include <wx/combobox.h>
 #include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/statbox.h>
 #include <wx/stattext.h>
-
-extern wxString g_uploadConnection;
 
 IMPLEMENT_DYNAMIC_CLASS(SendToGpsDlg, wxDialog)
 
@@ -118,8 +119,9 @@ void SendToGpsDlg::CreateControls(const wxString& WXUNUSED(hint))
 	delete pSerialArray;
 
 	// Make the proper inital selection
-	if (!g_uploadConnection.IsEmpty())
-		m_itemCommListBox->SetValue(g_uploadConnection);
+	const global::System::Config& sys = global::OCPN::get().sys().config();
+	if (!sys.uploadConnection.IsEmpty())
+		m_itemCommListBox->SetValue(sys.uploadConnection);
 	else
 		m_itemCommListBox->SetSelection(0);
 
@@ -159,7 +161,7 @@ void SendToGpsDlg::OnSendClick(wxCommandEvent& event)
 {
 	// Get the selected comm port
 	wxString src = m_itemCommListBox->GetValue();
-	g_uploadConnection = src; // save for persistence
+	global::OCPN::get().sys().set_config_uploadConnection(src);
 
 	// And send it out
 	if (m_pRoute)

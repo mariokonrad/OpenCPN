@@ -856,6 +856,7 @@ int PI_PLIBRenderAreaToDC(wxDC* pdc, PI_S57Obj* pObj, PlugIn_ViewPort* vp, wxRec
 int PI_PLIBRenderAreaToGL(const wxGLContext& glcc, PI_S57Obj* pObj, PlugIn_ViewPort* vp,
 						  wxRect& render_rect)
 {
+#ifdef ocpnUSE_GL
 	//  Create and populate a compatible s57 Object
 	S57Obj cobj;
 
@@ -885,6 +886,7 @@ int PI_PLIBRenderAreaToGL(const wxGLContext& glcc, PI_S57Obj* pObj, PlugIn_ViewP
 	//  Update the PLIB context after the render operation
 	UpdatePIObjectPlibContext(pObj, &cobj);
 
+#endif
 	return 1;
 }
 

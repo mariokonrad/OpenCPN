@@ -632,13 +632,13 @@ polyout  *triangulate_polygon(int ncontours, int cntr[], double (*vertices)[2])
 	construct_trapezoids(n);
 	nmonpoly = monotonate_trapezoids(n);
 
-	//    Check polys
-	//    There are some bugs in this code, yet.
-	//    Especially, some poly chains are corrupt, and there
-	//    is some over-writing of input data somewhere.
-	//    Check for these conditions peephole-wise, and ignore
-	//    any triangualtion results if found.   Sigh....
-	//    Todo:  Look at this some more
+	// Check polys
+	// There are some bugs in this code, yet.
+	// Especially, some poly chains are corrupt, and there
+	// is some over-writing of input data somewhere.
+	// Check for these conditions peephole-wise, and ignore
+	// any triangualtion results if found.   Sigh....
+	// TODO:  Look at this some more
 
 	for (i = 0; i < nmonpoly; i++)
 	{
@@ -661,8 +661,6 @@ polyout  *triangulate_polygon(int ncontours, int cntr[], double (*vertices)[2])
 				q = mchain[q].next;
 			}
 
-			if(vert[vt0].pt.y < 5.0)
-				return NULL;
 
 			p = mchain[p].next;
 		}

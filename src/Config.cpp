@@ -1549,7 +1549,7 @@ void Config::UpdateSettings()
 
 	Write(_T("CourseUpMode"), nav.CourseUp);
 	Write(_T("COGUPAvgSeconds"), nav.COGAvgSec);
-	Write(_T("ShowMag"), nav.MagneticAPB);
+	Write(_T("UseMagAPB"), nav.MagneticAPB);
 
 	Write(_T("OwnshipCOGPredictorMinutes"), ownship.predictor_minutes);
 	Write(_T("OwnshipCOGPredictorWidth"), ownship.cog_predictor_width);

@@ -337,11 +337,11 @@ void Route::DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint* rpn)
 void Route::DrawSegment(ocpnDC& dc, wxPoint* rp1, wxPoint* rp2, const ViewPort& VP, bool bdraw_arrow)
 {
 	if (m_bRtIsSelected)
-		dc.SetPen(*g_pRouteMan->GetSelectedRoutePen());
+		dc.SetPen(g_pRouteMan->GetSelectedRoutePen());
 	else if (m_bRtIsActive)
-		dc.SetPen(*g_pRouteMan->GetActiveRoutePen());
+		dc.SetPen(g_pRouteMan->GetActiveRoutePen());
 	else
-		dc.SetPen(*g_pRouteMan->GetRoutePen());
+		dc.SetPen(g_pRouteMan->GetRoutePen());
 
 	RenderSegment(dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow);
 }
@@ -352,8 +352,8 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 		return;
 
 	if (m_bVisible && m_bRtIsSelected) {
-		dc.SetPen(*g_pRouteMan->GetSelectedRoutePen());
-		dc.SetBrush(*g_pRouteMan->GetSelectedRouteBrush());
+		dc.SetPen(g_pRouteMan->GetSelectedRoutePen());
+		dc.SetBrush(g_pRouteMan->GetSelectedRouteBrush());
 	} else if (m_bVisible) {
 		int style = wxSOLID;
 		int width = global::OCPN::get().gui().view().route_line_width;
@@ -363,7 +363,7 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 		if (m_width != STYLE_UNDEFINED)
 			width = m_width;
 		if (m_Colour == wxEmptyString) {
-			col = g_pRouteMan->GetRoutePen()->GetColour();
+			col = g_pRouteMan->GetRoutePen().GetColour();
 		} else {
 			for (unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(wxString); i++) {
 				if (m_Colour == ::GpxxColorNames[i]) {
@@ -377,8 +377,8 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 	}
 
 	if (m_bVisible && m_bRtIsActive) {
-		dc.SetPen(*g_pRouteMan->GetActiveRoutePen());
-		dc.SetBrush(*g_pRouteMan->GetActiveRouteBrush());
+		dc.SetPen(g_pRouteMan->GetActiveRoutePen());
+		dc.SetBrush(g_pRouteMan->GetActiveRouteBrush());
 	}
 
 	wxPoint rpt1;

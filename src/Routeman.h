@@ -77,16 +77,13 @@ public:
 	double GetCurrentSegmentCourse() const;
 	int GetXTEDir() const;
 
-	wxPen* GetRoutePen(void);
-	wxPen* GetSelectedRoutePen(void);
-	wxPen* GetActiveRoutePen(void);
-	wxPen* GetActiveRoutePointPen(void);
-	wxPen* GetRoutePointPen(void);
-	wxBrush* GetRouteBrush(void);
-	wxBrush* GetSelectedRouteBrush(void);
-	wxBrush* GetActiveRouteBrush(void);
-	wxBrush* GetActiveRoutePointBrush(void);
-	wxBrush* GetRoutePointBrush(void);
+	const wxPen& GetRoutePen(void) const;
+	const wxPen& GetSelectedRoutePen(void) const;
+	const wxPen& GetActiveRoutePen(void) const;
+	const wxPen& GetActiveRoutePointPen(void) const;
+	const wxPen& GetRoutePointPen(void) const;
+	const wxBrush& GetSelectedRouteBrush(void) const;
+	const wxBrush& GetActiveRouteBrush(void) const;
 
 	wxString GetRouteReverseMessage(void) const;
 

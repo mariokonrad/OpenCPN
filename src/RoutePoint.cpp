@@ -266,11 +266,11 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	if (m_IconName == _T("empty") && !m_bShowName && !m_bPtIsSelected)
 		return;
 
-	wxPen* pen;
+	wxColour route_point_color;
 	if (m_bBlink)
-		pen = g_pRouteMan->GetActiveRoutePointPen();
+		route_point_color = g_pRouteMan->GetActiveRoutePointPen().GetColour();
 	else
-		pen = g_pRouteMan->GetRoutePointPen();
+		route_point_color = g_pRouteMan->GetRoutePointPen().GetColour();
 
 	// Substitue icon?
 	wxBitmap* pbm;
@@ -304,10 +304,10 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	hilitebox.y -= r.y;
 	hilitebox.Inflate(2);
 
-	//  Highlite any selected point
+	// Highlite any selected point
 	if (m_bPtIsSelected) {
 		dc.AlphaBlending(r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height,
-						 0.0, pen->GetColour(), transparency);
+						 0.0, route_point_color, transparency);
 	}
 
 	bool bDrawHL = false;

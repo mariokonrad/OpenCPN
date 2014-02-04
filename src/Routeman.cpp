@@ -516,54 +516,39 @@ int Routeman::GetXTEDir() const
 	return XTEDir;
 }
 
-wxPen* Routeman::GetRoutePen(void)
+const wxPen& Routeman::GetRoutePen(void) const
 {
-	return m_pRoutePen;
+	return *m_pRoutePen;
 }
 
-wxPen* Routeman::GetSelectedRoutePen(void)
+const wxPen& Routeman::GetSelectedRoutePen(void) const
 {
-	return m_pSelectedRoutePen;
+	return *m_pSelectedRoutePen;
 }
 
-wxPen* Routeman::GetActiveRoutePen(void)
+const wxPen& Routeman::GetActiveRoutePen(void) const
 {
-	return m_pActiveRoutePen;
+	return *m_pActiveRoutePen;
 }
 
-wxPen* Routeman::GetActiveRoutePointPen(void)
+const wxPen& Routeman::GetActiveRoutePointPen(void) const
 {
-	return m_pActiveRoutePointPen;
+	return *m_pActiveRoutePointPen;
 }
 
-wxPen* Routeman::GetRoutePointPen(void)
+const wxPen& Routeman::GetRoutePointPen(void) const
 {
-	return m_pRoutePointPen;
+	return *m_pRoutePointPen;
 }
 
-wxBrush* Routeman::GetRouteBrush(void)
+const wxBrush& Routeman::GetSelectedRouteBrush(void) const
 {
-	return m_pRouteBrush;
+	return *m_pSelectedRouteBrush;
 }
 
-wxBrush* Routeman::GetSelectedRouteBrush(void)
+const wxBrush& Routeman::GetActiveRouteBrush(void) const
 {
-	return m_pSelectedRouteBrush;
-}
-
-wxBrush* Routeman::GetActiveRouteBrush(void)
-{
-	return m_pActiveRouteBrush;
-}
-
-wxBrush* Routeman::GetActiveRoutePointBrush(void)
-{
-	return m_pActiveRoutePointBrush;
-}
-
-wxBrush* Routeman::GetRoutePointBrush(void)
-{
-	return m_pRoutePointBrush;
+	return *m_pActiveRouteBrush;
 }
 
 bool Routeman::DeactivateRoute(bool b_arrival)

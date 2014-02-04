@@ -586,7 +586,7 @@ void MarkInfoImpl::build_hyperlink_list()
 
 	const Hyperlinks& linklist = m_pRoutePoint->m_HyperlinkList;
 	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
-		add_hyperlink(i->DescrText, i->Link, m_pRoutePoint->m_bIsInLayer);
+		add_hyperlink(i->desc(), i->url(), m_pRoutePoint->m_bIsInLayer);
 	}
 }
 
@@ -639,10 +639,8 @@ void MarkInfoImpl::OnDeleteLink(wxCommandEvent& event)
 	// FIXME: use find_if
 	Hyperlinks& linklist = m_pRoutePoint->m_HyperlinkList;
 	for (Hyperlinks::iterator i = linklist.begin(); i != linklist.end(); ++i) {
-		wxString Link = i->Link;
-		wxString Descr = i->DescrText;
-		if (Link == findurl
-			&& (Descr == findlabel || (Link == findlabel && Descr == wxEmptyString))) {
+		if (i->url() == findurl
+			&& (i->desc() == findlabel || (i->url() == findlabel && i->desc() == wxEmptyString))) {
 
 			// found hyperlink to delete, repopulate GUI list
 			linklist.erase(i);
@@ -671,11 +669,11 @@ void MarkInfoImpl::OnEditLink(wxCommandEvent& event)
 	Hyperlinks& linklist = m_pRoutePoint->m_HyperlinkList;
 	// FIXME: use find_if
 	for (Hyperlinks::iterator i = linklist.begin(); i != linklist.end(); ++i) {
-		if ((i->Link == findurl)
-			&& ((i->DescrText == findlabel)
-				|| ((i->Link == findlabel) && (i->DescrText == wxEmptyString)))) {
-			i->Link = m_pLinkProp->m_textCtrlLinkUrl->GetValue();
-			i->DescrText = m_pLinkProp->m_textCtrlLinkDescription->GetValue();
+		if ((i->url() == findurl)
+			&& ((i->desc() == findlabel)
+				|| ((i->url() == findlabel) && (i->desc() == wxEmptyString)))) {
+			*i = Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
+						   m_pLinkProp->m_textCtrlLinkUrl->GetValue(), i->type());
 			wxHyperlinkCtrl* h
 				= static_cast<wxHyperlinkCtrl*>(m_scrolledWindowLinks->FindWindowByLabel(findlabel));
 			if (h) {

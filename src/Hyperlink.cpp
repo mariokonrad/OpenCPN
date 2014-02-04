@@ -23,9 +23,9 @@
 
 #include "Hyperlink.h"
 
-Hyperlink::Hyperlink(const wxString& desc, const wxString& link, const wxString& type)
+Hyperlink::Hyperlink(const wxString& desc, const wxString& url, const wxString& type)
 	: DescrText(desc)
-	, Link(link)
+	, Link(url)
 	, LType(type)
 {
 }
@@ -35,5 +35,20 @@ Hyperlink::Hyperlink(const Hyperlink& other)
 	, Link(other.Link)
 	, LType(other.LType)
 {
+}
+
+const wxString& Hyperlink::desc() const
+{
+	return DescrText;
+}
+
+const wxString& Hyperlink::url() const
+{
+	return Link;
+}
+
+const wxString& Hyperlink::type() const
+{
+	return LType;
 }
 

@@ -498,17 +498,17 @@ bool NavObjectCollection::GPXCreateWpt(
 		for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
 
 			pugi::xml_node child_link = node.append_child("link");
-			wxCharBuffer buffer = i->Link.ToUTF8();
+			wxCharBuffer buffer = i->url().ToUTF8();
 			if (buffer.data())
 				child_link.append_attribute("href") = buffer.data();
 
-			buffer = i->DescrText.ToUTF8();
+			buffer = i->desc().ToUTF8();
 			if (buffer.data()) {
 				child = child_link.append_child("text");
 				child.append_child(pugi::node_pcdata).set_value(buffer.data());
 			}
 
-			buffer = i->LType.ToUTF8();
+			buffer = i->type().ToUTF8();
 			if (buffer.data() && (strlen(buffer.data()) > 0)) {
 				child = child_link.append_child("type");
 				child.append_child(pugi::node_pcdata).set_value(buffer.data());
@@ -590,17 +590,17 @@ bool NavObjectCollection::GPXCreateTrk(
 	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
 
 		pugi::xml_node child_link = node.append_child("link");
-		wxCharBuffer buffer = i->Link.ToUTF8();
+		wxCharBuffer buffer = i->url().ToUTF8();
 		if (buffer.data())
 			child_link.append_attribute("href") = buffer.data();
 
-		buffer = i->DescrText.ToUTF8();
+		buffer = i->desc().ToUTF8();
 		if (buffer.data()) {
 			child = child_link.append_child("text");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
 
-		buffer = i->LType.ToUTF8();
+		buffer = i->type().ToUTF8();
 		if (buffer.data() && (strlen(buffer.data()) > 0)) {
 			child = child_link.append_child("type");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
@@ -695,17 +695,17 @@ bool NavObjectCollection::GPXCreateRoute(
 	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
 
 		pugi::xml_node child_link = node.append_child("link");
-		wxCharBuffer buffer = i->Link.ToUTF8();
+		wxCharBuffer buffer = i->url().ToUTF8();
 		if (buffer.data())
 			child_link.append_attribute("href") = buffer.data();
 
-		buffer = i->DescrText.ToUTF8();
+		buffer = i->desc().ToUTF8();
 		if (buffer.data()) {
 			child = child_link.append_child("text");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
 
-		buffer = i->LType.ToUTF8();
+		buffer = i->type().ToUTF8();
 		if (buffer.data() && (strlen(buffer.data()) > 0)) {
 			child = child_link.append_child("type");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());

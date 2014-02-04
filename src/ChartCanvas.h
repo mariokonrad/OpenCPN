@@ -250,9 +250,10 @@ public:
 	glChartCanvas* GetglCanvas(); // FIXME: breaks encapsulation
 #endif
 
-	// FIXME: move public attributes to private
-	bool m_bFollow;
-	TCWin* pCwin;
+	bool follow() const;
+	void set_follow(bool);
+
+	void reset_tide_window();
 
 private:
 	ViewPort VPoint;
@@ -264,6 +265,9 @@ private:
 	void draw_ais_ATON(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*) const;
 	void draw_ais_BASE(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*) const;
 	void draw_ais_SART(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*) const;
+
+	bool m_bFollow;
+	TCWin* pCwin;
 
 	ChInfoWin* m_pCIWin;
 

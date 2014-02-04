@@ -932,6 +932,21 @@ ChartCanvas::~ChartCanvas()
 #endif
 }
 
+bool ChartCanvas::follow() const
+{
+	return m_bFollow;
+}
+
+void ChartCanvas::set_follow(bool value)
+{
+	m_bFollow = value;
+}
+
+void ChartCanvas::reset_tide_window()
+{
+	pCwin == NULL;
+}
+
 int ChartCanvas::GetCanvasChartNativeScale()
 {
 	int ret = 1;

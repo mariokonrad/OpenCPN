@@ -847,7 +847,7 @@ ToolBarSimple* MainFrame::CreateAToolbar()
 	}
 
 	if (pConfig)
-		tb->ToggleTool(ID_FOLLOW, chart_canvas->m_bFollow);
+		tb->ToggleTool(ID_FOLLOW, chart_canvas->follow());
 
 #ifdef USE_S57
 	if (pConfig && ps52plib)
@@ -991,7 +991,7 @@ void MainFrame::UpdateToolbar(global::ColorScheme cs)
 
 	if (g_toolbar) {
 		//  Re-establish toggle states
-		g_toolbar->ToggleTool(ID_FOLLOW, chart_canvas->m_bFollow);
+		g_toolbar->ToggleTool(ID_FOLLOW, chart_canvas->follow());
 		g_toolbar->ToggleTool(ID_CURRENT, chart_canvas->GetbShowCurrent());
 		g_toolbar->ToggleTool(ID_TIDE, chart_canvas->GetbShowTide());
 	}
@@ -2008,7 +2008,7 @@ void MainFrame::ToggleAnchor(void)
 
 void MainFrame::TogglebFollow(void)
 {
-	if (!chart_canvas->m_bFollow)
+	if (!chart_canvas->follow())
 		SetbFollow();
 	else
 		ClearbFollow();
@@ -2016,8 +2016,8 @@ void MainFrame::TogglebFollow(void)
 
 void MainFrame::SetbFollow(void)
 {
-	chart_canvas->m_bFollow = true;
-	SetToolbarItemState(ID_FOLLOW, chart_canvas->m_bFollow);
+	chart_canvas->set_follow(true);
+	SetToolbarItemState(ID_FOLLOW, chart_canvas->follow());
 	DoChartUpdate();
 	chart_canvas->ReloadVP();
 }
@@ -2028,8 +2028,8 @@ void MainFrame::ClearbFollow(void)
 
 	// Center the screen on the GPS position, for lack of a better place
 	nav.set_view_point(nav.get_data().pos);
-	chart_canvas->m_bFollow = false;
-	SetToolbarItemState(ID_FOLLOW, chart_canvas->m_bFollow);
+	chart_canvas->set_follow(false);
+	SetToolbarItemState(ID_FOLLOW, chart_canvas->follow());
 	DoChartUpdate();
 	chart_canvas->ReloadVP();
 }
@@ -2120,7 +2120,7 @@ void MainFrame::SurfaceToolbar(void)
 void MainFrame::JumpToPosition(const geo::Position& pos, double scale)
 {
 	global::OCPN::get().nav().set_view_point(pos);
-	chart_canvas->m_bFollow = false;
+	chart_canvas->set_follow(false);
 	DoChartUpdate();
 
 	chart_canvas->SetViewPoint(pos, scale, 0, chart_canvas->GetVPRotation());
@@ -2669,7 +2669,7 @@ void MainFrame::SetupQuiltMode(void)
 
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 			double tLat, tLon;
-			if (chart_canvas->m_bFollow == true) {
+			if (chart_canvas->follow()) {
 				tLat = nav.pos.lat();
 				tLon = nav.pos.lon();
 			} else {
@@ -3030,9 +3030,9 @@ void MainFrame::test_unit_test_1()
 	if (!g_unit_test_1)
 		return;
 
-	chart_canvas->m_bFollow = false;
+	chart_canvas->set_follow(false);
 	if (g_toolbar)
-		g_toolbar->ToggleTool(ID_FOLLOW, chart_canvas->m_bFollow);
+		g_toolbar->ToggleTool(ID_FOLLOW, chart_canvas->follow());
 
 	if (ChartData) {
 		if (ut_index < ChartData->GetChartTableEntries()) {
@@ -3273,7 +3273,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 
 	if (!gps.valid) {
 		chart_canvas->SetOwnShipState(SHIP_INVALID);
-		if (chart_canvas->m_bFollow)
+		if (chart_canvas->follow())
 			chart_canvas->UpdateShips();
 	}
 
@@ -3311,7 +3311,7 @@ void MainFrame::OnFrameTimer1(wxTimerEvent &)
 	// In follow mode, if there has already been a full screen refresh,
 	// there is no need to check ownship or AIS,
 	// since they will be always drawn on the full screen paint.
-	if ((!chart_canvas->m_bFollow) || nav.get_data().CourseUp) {
+	if ((!chart_canvas->follow()) || nav.get_data().CourseUp) {
 		chart_canvas->UpdateShips();
 		chart_canvas->UpdateAIS();
 		chart_canvas->UpdateAlerts();
@@ -3815,7 +3815,7 @@ void MainFrame::setup_viewpoint()
 	// Setup the view
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	geo::Position zpos;
-	if (chart_canvas->m_bFollow) {
+	if (chart_canvas->follow()) {
 		zpos = nav.pos;
 	} else {
 		zpos = nav.view_point;
@@ -4045,7 +4045,7 @@ bool MainFrame::DoChartUpdate(void)
 	// Otherwise, use view point gotten from click on chart canvas, or other means
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	if (chart_canvas->m_bFollow == true) {
+	if (chart_canvas->follow()) {
 		tLat = nav.pos.lat();
 		tLon = nav.pos.lon();
 		vp_pos = nav.pos;
@@ -4317,7 +4317,7 @@ bool MainFrame::DoChartUpdate(void)
 			else { // otherwise, match scale if elected.
 				double proposed_scale_onscreen;
 
-				if (chart_canvas->m_bFollow) { // autoset the scale only if in autofollow
+				if (chart_canvas->follow()) { // autoset the scale only if in autofollow
 					double new_scale_ppm
 						= Current_Ch->GetNearestPreferredScalePPM(chart_canvas->GetVPScale());
 					proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
@@ -4338,7 +4338,7 @@ bool MainFrame::DoChartUpdate(void)
 					proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
 				}
 
-				if (chart_canvas->m_bFollow) { // bounds-check the scale only if in autofollow
+				if (chart_canvas->follow()) { // bounds-check the scale only if in autofollow
 					proposed_scale_onscreen
 						= wxMin(proposed_scale_onscreen,
 								Current_Ch->GetNormalScaleMax(chart_canvas->GetCanvasScaleFactor(),
@@ -4358,7 +4358,7 @@ bool MainFrame::DoChartUpdate(void)
 												   chart_canvas->GetVPRotation());
 		}
 	} else { // No change in Chart Stack
-		if ((chart_canvas->m_bFollow) && Current_Ch)
+		if (chart_canvas->follow() && Current_Ch)
 			bNewView |= chart_canvas->SetViewPoint(vp_pos, chart_canvas->GetVPScale(),
 												   Current_Ch->GetChartSkew() * M_PI / 180.0,
 												   chart_canvas->GetVPRotation());

@@ -1647,7 +1647,7 @@ void Config::UpdateSettings()
 	// Various Options
 	SetPath(_T("/Settings/GlobalState"));
 	if (cc1)
-		Write(_T("bFollow"), cc1->m_bFollow);
+		Write(_T("bFollow"), cc1->follow());
 	Write(_T("nColorScheme"), static_cast<int>(gFrame->GetColorScheme()));
 
 	write_frame();

@@ -284,7 +284,7 @@ TCWin::~TCWin()
 void TCWin::OKEvent(wxCommandEvent& WXUNUSED(event))
 {
 	Hide();
-	pParent->pCwin = NULL;
+	pParent->reset_tide_window();
 	if (--gpIDXn == 0)
 		gpIDX = NULL;
 	delete m_pTCRolloverWin;
@@ -296,7 +296,7 @@ void TCWin::OKEvent(wxCommandEvent& WXUNUSED(event))
 void TCWin::OnCloseWindow(wxCloseEvent& WXUNUSED(event))
 {
 	Hide();
-	pParent->pCwin = NULL;
+	pParent->reset_tide_window();
 	if (--gpIDXn == 0)
 		gpIDX = NULL;
 	delete m_pTCRolloverWin;

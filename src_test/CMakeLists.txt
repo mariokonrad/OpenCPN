@@ -12,8 +12,11 @@ message(STATUS "CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
 message(STATUS "CMAKE_INSTALL_PREFIX   : ${CMAKE_CMAKE_INSTALL_PREFIX}")
 
 file(GLOB_RECURSE TEST_SRC ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
-
-message(STATUS "Tests found: ${TEST_SRC}")
+message(STATUS "Tests found: ${TEST_NAME}")
+foreach(TEST_FILE ${TEST_SRC})
+	string(REGEX REPLACE ".*src_test/" "" TEST_NAME ${TEST_FILE})
+	message(STATUS ":  ${TEST_NAME}")
+endforeach(TEST_FILE)
 
 # TODO: instead of compile/link to individual files, the tests should
 #       link against libraries (for example: libgeo instead of geo/Position)

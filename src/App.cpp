@@ -143,10 +143,8 @@ extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern int gpIDXn;
 extern double g_COGAvg;
-extern bool g_bskew_comp;
 extern PlugInManager* g_pi_manager;
 extern bool g_bportable;
-extern bool g_bdisable_opengl;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern wxArrayString TideCurrentDataSet;
 extern wxPlatformInfo* g_pPlatform;
@@ -310,7 +308,7 @@ bool App::OnCmdLineParsed(wxCmdLineParser& parser)
 {
 	g_unit_test_1 = parser.Found(_T("unit_test_1"));
 	g_bportable = parser.Found(_T("p"));
-	g_bdisable_opengl = parser.Found(_T("no_opengl"));
+	global::OCPN::get().gui().set_disable_opengl(parser.Found(_T("no_opengl")));
 	start_fullscreen = parser.Found(_T("fullscreen"));
 
 	return true;
@@ -652,19 +650,21 @@ void App::validate_OpenGL()
 {
 	// Validate OpenGL functionality, if selected
 
+	global::GUI& gui = global::OCPN::get().gui();
+
 #ifdef ocpnUSE_GL
 
 #ifdef __WXMSW__
-	if (!g_bdisable_opengl) {
+	if (!gui.view().disable_opengl) {
 		wxFileName fn(wxApp::GetTraits()->GetStandardPaths().GetExecutablePath());
-		g_bdisable_opengl = !TestGLCanvas(fn.GetPathWithSep());
-		if (g_bdisable_opengl)
+		gui.set_disable_opengl(!TestGLCanvas(fn.GetPathWithSep()));
+		if (gui.view().disable_opengl)
 			wxLogMessage(_T("OpenGL disabled due to test app failure."));
 	}
 #endif
 
 #else
-    g_bdisable_opengl = true;
+	gui.set_disable_opengl(true);
 #endif
 }
 
@@ -813,7 +813,7 @@ void App::setup_for_empty_config(bool novicemode)
 		nav.set_PlanSpeed(6.0);
 		gui.set_view_fullscreen_quilt(true);
 		gui.set_view_quilt_enable(true);
-		g_bskew_comp = false;
+		gui.set_skew_comp(false);
 		ais.set_ShowAreaNotices(false);
 		gui.set_DrawAISSize(false);
 		gui.set_ShowAISName(false);
@@ -1718,7 +1718,7 @@ bool App::OnInit()
 	// We need a deferred resize to get glDrawPixels() to work right.
 	// So we set a trigger to generate a resize after 5 seconds....
 	// See the "UniChrome" hack elsewhere
-	if (!g_bdisable_opengl) {
+	if (!view.disable_opengl) {
 		glChartCanvas* pgl = (glChartCanvas*)cc1->GetglCanvas();
 		if (pgl && (pgl->GetRendererString().Find(_T("UniChrome")) != wxNOT_FOUND)) {
 			gFrame->m_defer_size = gFrame->GetSize();

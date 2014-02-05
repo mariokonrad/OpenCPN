@@ -70,6 +70,9 @@ public:
 		int NavAidRadarRingsStepUnits;
 		bool ShowMag;
 		int current_arrow_scale;
+		bool skew_comp;
+		bool opengl;
+		bool disable_opengl; // FIXME: isn't this redundant?
 	};
 
 	virtual const View& view() const = 0;
@@ -103,6 +106,9 @@ public:
 	virtual void set_NavAidRadarRingsStepUnits(int) = 0;
 	virtual void set_ShowMag(bool) = 0;
 	virtual void set_current_arrow_scale(int) = 0;
+	virtual void set_skew_comp(bool) = 0;
+	virtual void set_opengl(bool) = 0;
+	virtual void set_disable_opengl(bool) = 0;
 
 public:
 	struct Frame

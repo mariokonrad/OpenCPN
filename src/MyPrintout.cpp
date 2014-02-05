@@ -24,8 +24,10 @@
 #include "MyPrintout.h"
 #include <ChartCanvas.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 extern ChartCanvas* cc1;
-extern bool g_bopengl;
 
 MyPrintout::MyPrintout(const wxChar* title)
 	: wxPrintout(title)
@@ -104,7 +106,7 @@ void MyPrintout::DrawPageOne(wxDC* dc)
 
 	// Get the latest bitmap as rendered by the ChartCanvas
 
-	if (g_bopengl) {
+	if (global::OCPN::get().gui().view().opengl) {
 #ifdef ocpnUSE_GL
 		int gsx = cc1->GetglCanvas()->GetSize().x;
 		int gsy = cc1->GetglCanvas()->GetSize().y;

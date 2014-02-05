@@ -238,11 +238,8 @@ ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 Multiplexer* g_pMUX;
 wxRect g_blink_rect;
 double g_COGAvg;
-bool g_bskew_comp;
-bool g_bopengl;
 PlugInManager* g_pi_manager;
 bool g_bportable;
-bool g_bdisable_opengl;
 chart::ChartGroupArray* g_pGroupArray;
 int g_GroupIndex;
 wxString g_GPS_Ident;
@@ -3843,10 +3840,12 @@ void MainFrame::SetChartUpdatePeriod(const ViewPort& vp)
 {
 	// Set the chart update period based upon chart skew and skew compensator
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	default_ChartUpdatePeriod = 1; // General default
 
 	if (!vp.is_quilt()) {
-		if (g_bskew_comp && (fabs(vp.skew)) > 0.01)
+		if (view.skew_comp && (fabs(vp.skew)) > 0.01)
 			default_ChartUpdatePeriod = g_SkewCompUpdatePeriod;
 	}
 

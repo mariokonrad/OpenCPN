@@ -45,6 +45,7 @@
 #include <MemoryStatus.h>
 
 #include <global/OCPN.h>
+#include <global/GUI.h>
 #include <global/System.h>
 
 #ifdef USE_S57
@@ -55,7 +56,6 @@ namespace chart { class s52plib; }
 
 extern chart::ChartBase* Current_Ch;
 extern ThumbWin* pthumbwin;
-extern bool g_bopengl;
 extern ChartCanvas* cc1;
 extern int g_GroupIndex;
 extern chart::s52plib* ps52plib;
@@ -141,7 +141,7 @@ void ChartDB::PurgeCache()
 		delete Ch;
 
 		// The glCanvas may be cacheing some information for this chart
-		if (g_bopengl && cc1)
+		if (global::OCPN::get().gui().view().opengl && cc1)
 			cc1->PurgeGLCanvasChartCache(Ch);
 
 		delete pce;
@@ -178,7 +178,7 @@ void ChartDB::PurgeCacheUnusedCharts(bool b_force)
 
 					// The glCanvas may be cacheing some information (i.e. texture tiles) for
 					// this chart
-					if (g_bopengl && cc1)
+					if (global::OCPN::get().gui().view().opengl && cc1)
 						cc1->PurgeGLCanvasChartCache(Ch);
 
 					// And delete the chart
@@ -677,7 +677,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 						delete pDeleteCandidate;
 
 						// The glCanvas may be cacheing some information for this chart
-						if (g_bopengl && cc1)
+						if (global::OCPN::get().gui().view().opengl && cc1)
 							cc1->PurgeGLCanvasChartCache(pDeleteCandidate);
 
 						// remove the cache entry
@@ -722,7 +722,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 					delete pDeleteCandidate;
 
 					// The glCanvas may be cacheing some information for this chart
-					if (g_bopengl && cc1)
+					if (global::OCPN::get().gui().view().opengl && cc1)
 						cc1->PurgeGLCanvasChartCache(pDeleteCandidate);
 
 					// remove the cache entry

@@ -40,7 +40,6 @@
 extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 extern MainFrame* gFrame;
 extern ChartCanvas* cc1;
-extern bool g_bopengl;
 
 namespace ais
 {
@@ -92,7 +91,7 @@ bool AISTargetAlertDialog::Create(int target_mmsi, wxWindow* parent, AIS_Decoder
 	SetFont(*fp_font);
 
 	CreateControls();
-	if (!g_bopengl && CanSetTransparent())
+	if (!global::OCPN::get().gui().view().opengl && CanSetTransparent())
 		SetTransparent(192);
 	DimeControl(this);
 
@@ -190,7 +189,7 @@ void AISTargetAlertDialog::UpdateText()
 	}
 
 	DimeControl(this);
-	if (!g_bopengl && CanSetTransparent())
+	if (!global::OCPN::get().gui().view().opengl && CanSetTransparent())
 		SetTransparent(192);
 }
 

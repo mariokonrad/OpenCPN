@@ -181,6 +181,21 @@ void OCPN_GUI::set_current_arrow_scale(int value)
 	data_view.current_arrow_scale = value;
 }
 
+void OCPN_GUI::set_skew_comp(bool value)
+{
+	data_view.skew_comp = value;
+}
+
+void OCPN_GUI::set_opengl(bool value)
+{
+	data_view.opengl = value;
+}
+
+void OCPN_GUI::set_disable_opengl(bool value)
+{
+	data_view.disable_opengl = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

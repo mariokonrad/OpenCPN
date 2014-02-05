@@ -38,6 +38,9 @@ public: // view
 	MOCK_METHOD1(set_NavAidRadarRingsStepUnits, void(int));
 	MOCK_METHOD1(set_ShowMag, void(bool));
 	MOCK_METHOD1(set_current_arrow_scale, void(int));
+	MOCK_METHOD1(set_skew_comp, void(bool));
+	MOCK_METHOD1(set_opengl, void(bool));
+	MOCK_METHOD1(set_disable_opengl, void(bool));
 
 public: // frame
 	MOCK_CONST_METHOD0(frame, const ::global::GUI::Frame&());

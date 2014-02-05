@@ -28,6 +28,7 @@
 #include <ChartCanvas.h>
 
 #include <global/OCPN.h>
+#include <global/GUI.h>
 #include <global/Navigation.h>
 #include <global/ColorManager.h>
 
@@ -40,7 +41,6 @@ END_EVENT_TABLE()
 
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern ChartCanvas* cc1;
-extern bool g_bskew_comp;
 
 FloatingCompassWindow::FloatingCompassWindow(wxWindow* parent)
 {
@@ -175,7 +175,7 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 	if ((fabs(cc1->GetVPRotation()) > 0.01) || (fabs(cc1->GetVPSkew()) > 0.01)) {
 		rose_angle = -cc1->GetVPRotation();
 
-		if (!nav.CourseUp && !g_bskew_comp)
+		if (!nav.CourseUp && !global::OCPN::get().gui().view().skew_comp)
 			rose_angle = -cc1->GetVPRotation() - cc1->GetVPSkew();
 
 		b_need_refresh = true;

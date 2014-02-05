@@ -73,6 +73,9 @@ public: // view
 	virtual void set_NavAidRadarRingsStepUnits(int);
 	virtual void set_ShowMag(bool);
 	virtual void set_current_arrow_scale(int);
+	virtual void set_skew_comp(bool);
+	virtual void set_opengl(bool);
+	virtual void set_disable_opengl(bool);
 
 public: // frame
 	virtual const Frame& frame() const;

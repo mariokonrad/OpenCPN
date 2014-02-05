@@ -33,14 +33,13 @@
 #include <geo/GeoRef.h>
 
 #include <global/OCPN.h>
+#include <global/GUI.h>
 #include <global/Navigation.h>
 
 #ifndef __WXMSW__
 	#include <signal.h>
 	#include <setjmp.h>
 #endif
-
-extern bool g_bskew_comp;
 
 #ifndef __WXMSW__
 extern struct sigaction sa_all;
@@ -453,7 +452,8 @@ void ViewPort::SetBoxes(void)
 
 	// Specify the minimum required rectangle in unrotated screen space which will supply full
 	// screen data after specified rotation
-	if ((g_bskew_comp && (fabs(skew) > 0.001)) || (fabs(rotation) > 0.001)) {
+	if ((global::OCPN::get().gui().view().skew_comp && (fabs(skew) > 0.001))
+		|| (fabs(rotation) > 0.001)) {
 
 		double rotator = rotation;
 		rotator -= skew;

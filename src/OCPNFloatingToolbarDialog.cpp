@@ -42,7 +42,6 @@
 
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern ChartCanvas* cc1;
-extern bool g_bopengl;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern MainFrame* gFrame;
 
@@ -255,7 +254,7 @@ void OCPNFloatingToolbarDialog::MouseEvent(wxMouseEvent& event)
 void OCPNFloatingToolbarDialog::FadeTimerEvent(wxTimerEvent&)
 {
 	if (global::OCPN::get().gui().toolbar().transparent) {
-		if (!g_bopengl)
+		if (!global::OCPN::get().gui().view().opengl)
 			DoFade(128);
 	}
 

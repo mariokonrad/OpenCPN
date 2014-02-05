@@ -88,9 +88,6 @@ static wxString GetOCPNKnownLanguage(wxString lang_canonical, wxString *lang_dir
 extern MainFrame* gFrame;
 extern ChartCanvas* cc1;
 
-extern bool g_bskew_comp;
-extern bool g_bopengl;
-
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern Multiplexer* g_pMUX;
 extern bool g_bfilter_cogsog;
@@ -112,7 +109,6 @@ extern chart::s52plib *ps52plib;
 #endif
 
 extern bool g_bportable;
-extern bool g_bdisable_opengl;
 
 extern chart::ChartGroupArray* g_pGroupArray;
 extern ocpnStyle::StyleManager* g_StyleManager;
@@ -1362,7 +1358,7 @@ void options::CreatePanel_Display(size_t parent, int border_size, int WXUNUSED(g
 	// OpenGL Render checkbox
 	pOpenGL = new wxCheckBox(itemPanelUI, ID_OPENGLBOX, _("Use Accelerated Graphics (OpenGL)"));
 	itemStaticBoxSizerCDO->Add(pOpenGL, 1, wxALL, border_size);
-	pOpenGL->Enable(!g_bdisable_opengl);
+	pOpenGL->Enable(!global::OCPN::get().gui().view().disable_opengl);
 
 	// Smooth Pan/Zoom checkbox
 	pSmoothPanZoom
@@ -1676,7 +1672,7 @@ void options::CreatePanel_UI(size_t parent, int border_size, int WXUNUSED(group_
 	pTransparentToolbar
 		= new wxCheckBox(itemPanelFont, ID_TRANSTOOLBARCHECKBOX, _("Enable Transparent Toolbar"));
 	miscOptions->Add(pTransparentToolbar, 0, wxALL, border_size);
-	if (g_bopengl)
+	if (global::OCPN::get().gui().view().opengl)
 		pTransparentToolbar->Disable();
 
 	wxFlexGridSizer* pFormatGrid = new wxFlexGridSizer(2);
@@ -1947,8 +1943,8 @@ void options::SetInitialSettings()
 	pCDOQuilting->SetValue(view.quilt_enable);
 	pFullScreenQuilt->SetValue(!view.fullscreen_quilt);
 	pSDepthUnits->SetValue(view.show_depth_units);
-	pSkewComp->SetValue(g_bskew_comp);
-	pOpenGL->SetValue(g_bopengl);
+	pSkewComp->SetValue(view.skew_comp);
+	pOpenGL->SetValue(view.opengl);
 	pSmoothPanZoom->SetValue(view.smooth_pan_zoom);
 	if (view.enable_zoom_to_cursor || pEnableZoomToCursor->GetValue()) {
 		pSmoothPanZoom->SetValue(false);
@@ -2530,7 +2526,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 	gui.set_view_fullscreen_quilt(!pFullScreenQuilt->GetValue());
 
 	gui.set_view_show_depth_units(pSDepthUnits->GetValue());
-	g_bskew_comp = pSkewComp->GetValue();
+	gui.set_skew_comp(pSkewComp->GetValue());
 	bool temp_bopengl = pOpenGL->GetValue();
 	gui.set_smooth_pan_zoom(pSmoothPanZoom->GetValue());
 
@@ -2714,7 +2710,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 #ifdef USE_S57
 	// Handle Vector Charts Tab
 
-	global::OCPN::get().gui().set_cm93_zoom_factor(m_pSlider_CM93_Zoom->GetValue());
+	gui.set_cm93_zoom_factor(m_pSlider_CM93_Zoom->GetValue());
 
 	int nOBJL = ps57CtlListBox->GetCount();
 
@@ -2731,14 +2727,14 @@ void options::OnApplyClick(wxCommandEvent& event)
 	}
 
 	if (ps52plib) {
-		if (temp_bopengl != g_bopengl) {
-			//    We need to do this now to handle the screen refresh that
-			//    is automatically generated on Windows at closure of the options dialog...
+		if (temp_bopengl != gui.view().opengl) {
+			// We need to do this now to handle the screen refresh that
+			// is automatically generated on Windows at closure of the options dialog...
 			ps52plib->FlushSymbolCaches();
 			ps52plib->ClearCNSYLUPArray(); // some CNSY depends on renderer (e.g. CARC)
 			ps52plib->GenerateStateHash();
 
-			g_bopengl = temp_bopengl;
+			gui.set_opengl(temp_bopengl);
 		}
 
 		enum chart::DisCat nset = chart::OTHER;

@@ -194,10 +194,6 @@ extern PlugInManager* g_pi_manager;
 
 extern wxAuiManager* g_pauimgr;
 
-extern bool g_bskew_comp;
-extern bool g_bopengl;
-extern bool g_bdisable_opengl;
-
 extern wxProgressDialog* s_ProgDialog;
 
 extern bool g_b_assume_azerty;
@@ -461,7 +457,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	VPoint.Invalidate();
 
 #ifdef ocpnUSE_GL
-	if (!g_bdisable_opengl) {
+	if (!global::OCPN::get().gui().view().disable_opengl) {
 		wxLogMessage(_T("Creating glChartCanvas"));
 		m_glcc = new glChartCanvas(this);
 
@@ -927,7 +923,7 @@ ChartCanvas::~ChartCanvas()
 	delete m_pos_image_user_yellow_night;
 	delete undo;
 #ifdef ocpnUSE_GL
-	if (!g_bdisable_opengl)
+	if (!global::OCPN::get().gui().view().disable_opengl)
 		delete m_glcc;
 #endif
 }
@@ -1768,7 +1764,7 @@ void ChartCanvas::SetColorScheme(global::ColorScheme cs)
 	CreateOZEmbossMapData(cs);
 
 #ifdef ocpnUSE_GL
-	if (g_bopengl && m_glcc)
+	if (global::OCPN::get().gui().view().opengl && m_glcc)
 		m_glcc->ClearAllRasterTextures();
 #endif
 
@@ -2110,7 +2106,7 @@ wxPoint ChartCanvas::GetCanvasPointPix(const geo::Position& pos)
 	bool bUseVP = true;
 
 	if (Current_Ch && (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_RASTER)
-		&& (((fabs(GetVP().rotation) < 0.01) && !g_bskew_comp)
+		&& (((fabs(GetVP().rotation) < 0.01) && !global::OCPN::get().gui().view().skew_comp)
 			|| ((Current_Ch->GetChartProjectionType() != PROJECTION_MERCATOR)
 				&& (Current_Ch->GetChartProjectionType() != PROJECTION_POLYCONIC)))) {
 		chart::ChartBaseBSB* Cur_BSB_Ch = dynamic_cast<chart::ChartBaseBSB*>(Current_Ch);
@@ -2154,7 +2150,7 @@ geo::Position ChartCanvas::GetCanvasPixPoint(int x, int y)
 	bool bUseVP = true;
 
 	if (Current_Ch && (Current_Ch->GetChartFamily() == chart::CHART_FAMILY_RASTER)
-		&& (((fabs(GetVP().rotation) < 0.01) && !g_bskew_comp)
+		&& (((fabs(GetVP().rotation) < 0.01) && !global::OCPN::get().gui().view().skew_comp)
 			|| ((Current_Ch->GetChartProjectionType() != PROJECTION_MERCATOR)
 				&& (Current_Ch->GetChartProjectionType() != PROJECTION_POLYCONIC)))) {
 		chart::ChartBaseBSB* Cur_BSB_Ch = dynamic_cast<chart::ChartBaseBSB*>(Current_Ch);
@@ -2198,7 +2194,7 @@ bool ChartCanvas::do_smooth_scrolling() const
 
 	bool smooth = true
 		&& view.smooth_pan_zoom
-		&& g_bopengl
+		&& view.opengl
 		&& !view.enable_zoom_to_cursor
 		;
 
@@ -2510,7 +2506,7 @@ void ChartCanvas::ReloadVP(bool b_adjust)
 void ChartCanvas::LoadVP(const ViewPort& vp, bool b_adjust)
 {
 #ifdef ocpnUSE_GL
-	if (g_bopengl) {
+	if (global::OCPN::get().gui().view().opengl) {
 		m_glcc->Invalidate();
 		if (m_glcc->GetSize().x != VPoint.pix_width || m_glcc->GetSize().y != VPoint.pix_height)
 			m_glcc->SetSize(VPoint.pix_width, VPoint.pix_height);
@@ -2589,7 +2585,7 @@ bool ChartCanvas::SetViewPoint(const geo::Position& pos, double scale_ppm, doubl
 		m_cache_vp.Invalidate();
 
 #ifdef ocpnUSE_GL
-		if (g_bopengl)
+		if (global::OCPN::get().gui().view().opengl)
 			m_glcc->Invalidate();
 #endif
 	}
@@ -2726,7 +2722,7 @@ bool ChartCanvas::SetViewPoint(const geo::Position& pos, double scale_ppm, doubl
 
 			VPoint.SetBoxes();
 
-			//    If this quilt will be a perceptible delta from the existing quilt, then refresh
+			// If this quilt will be a perceptible delta from the existing quilt, then refresh
 			// the entire screen
 			if (m_pQuilt->IsQuiltDelta(VPoint)) {
 				//  Allow the quilt to adjust the new ViewPort for performance optimization
@@ -2738,12 +2734,12 @@ bool ChartCanvas::SetViewPoint(const geo::Position& pos, double scale_ppm, doubl
 				unsigned long hash1 = m_pQuilt->GetXStackHash();
 				m_pQuilt->Compose(VPoint);
 
-				//      If the extended chart stack has changed, invalidate any cached render bitmap
+				// If the extended chart stack has changed, invalidate any cached render bitmap
 
 				if (m_pQuilt->GetXStackHash() != hash1) {
 					m_bm_cache_vp.Invalidate();
 #ifdef ocpnUSE_GL
-					if (g_bopengl)
+					if (global::OCPN::get().gui().view().opengl)
 						m_glcc->Invalidate();
 #endif
 				}
@@ -3370,7 +3366,7 @@ void ChartCanvas::GridDraw(ocpnDC& dc)
 	const global::ColorManager& colors = global::OCPN::get().color();
 
 	if (!(view.display_grid && (fabs(GetVP().rotation) < 1e-5)
-		  && ((fabs(GetVP().skew) < 1e-9) || g_bskew_comp)))
+		  && ((fabs(GetVP().skew) < 1e-9) || view.skew_comp)))
 		return;
 
 	double lat;
@@ -3773,7 +3769,7 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 		// Of course, if the target reported a valid HDG, then use it for icon
 		if ((int)(td->HDG) != 511) {
 			theta = ((td->HDG - 90) * M_PI / 180.0) + GetVP().rotation;
-			if (!g_bskew_comp && !nav.CourseUp)
+			if (!view.skew_comp && !nav.CourseUp)
 				theta += GetVP().skew;
 		}
 
@@ -4832,22 +4828,22 @@ void ChartCanvas::OnSize(wxSizeEvent& event)
 	// for new canvas size
 	SetVPScale(GetVPScale());
 
-	double display_size_meters = wxGetDisplaySizeMM().GetWidth()
-								 / 1000.; // gives screen size(width) in meters
+	// gives screen size(width) in meters
+	double display_size_meters = wxGetDisplaySizeMM().GetWidth() / 1000.0;
 	m_canvas_scale_factor = wxGetDisplaySize().GetWidth() / display_size_meters;
 
-	m_absolute_min_scale_ppm = m_canvas_width / (0.95 * geo::WGS84_semimajor_axis_meters
-												 * M_PI); // something like 180 degrees
+	// something like 180 degrees
+	m_absolute_min_scale_ppm = m_canvas_width / (0.95 * geo::WGS84_semimajor_axis_meters * M_PI);
 
 #ifdef USE_S57
 	if (ps52plib)
 		ps52plib->SetPPMM(m_canvas_scale_factor / 1000.0);
 #endif
 
-	//  Inform the parent Frame that I am being resized...
+	// Inform the parent Frame that I am being resized...
 	gFrame->ProcessCanvasResize();
 
-	//    Set up the scroll margins
+	// Set up the scroll margins
 	xr_margin = (m_canvas_width * 95) / 100;
 	xl_margin = (m_canvas_width * 5) / 100;
 	yt_margin = (m_canvas_height * 5) / 100;
@@ -4881,11 +4877,11 @@ void ChartCanvas::OnSize(wxSizeEvent& event)
 	SetVPScale(GetVPScale());
 
 #ifdef ocpnUSE_GL
-	if (g_bopengl && m_glcc) {
+	if (global::OCPN::get().gui().view().opengl && m_glcc) {
 		m_glcc->OnSize(event);
 	}
 #endif
-	//  Invalidate the whole window
+	// Invalidate the whole window
 	ReloadVP();
 }
 
@@ -6207,7 +6203,10 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 	contextMenu->Append(ID_DEF_MENU_DROP_WP, _menuText(_("Drop Mark"), _T("Ctrl-M")));
 
-	if (!global::OCPN::get().nav().gps().valid)
+	const global::Navigation& nav = global::OCPN::get().nav();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
+	if (!nav.gps().valid)
 		contextMenu->Append(ID_DEF_MENU_MOVE_BOAT_HERE, _("Move Boat Here"));
 
 	if (!(g_pRouteMan->GetpActiveRoute() || (seltype & SelectItem::TYPE_MARKPOINT)))
@@ -6215,11 +6214,11 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 	contextMenu->Append(ID_DEF_MENU_GOTOPOSITION, _("Center View..."));
 
-	if (!global::OCPN::get().nav().get_data().CourseUp)
+	if (!nav.get_data().CourseUp)
 		contextMenu->Append(ID_DEF_MENU_COGUP, _("Course Up Mode"));
 	else {
 		if (!VPoint.is_quilt() && Current_Ch && (fabs(Current_Ch->GetChartSkew()) > 0.01)
-			&& !g_bskew_comp)
+			&& !view.skew_comp)
 			contextMenu->Append(ID_DEF_MENU_NORTHUP, _("Chart Up Mode"));
 		else
 			contextMenu->Append(ID_DEF_MENU_NORTHUP, _("North Up Mode"));
@@ -7905,7 +7904,7 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 bool ChartCanvas::PurgeGLCanvasChartCache(chart::ChartBase* pc)
 {
 #ifdef ocpnUSE_GL
-	if (g_bopengl && m_glcc)
+	if (global::OCPN::get().gui().view().opengl && m_glcc)
 		m_glcc->PurgeChartTextures(pc);
 #endif
 	return true;
@@ -8072,6 +8071,8 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 {
 	wxPaintDC dc(this);
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	// Paint updates may have been externally disabled (temporarily, to avoid Yield() recursion performance loss)
 	// It is important that the wxPaintDC is built, even if we elect to not process this paint message.
 	// Otherwise, the paint message may not be removed from the message queue, esp on Windows. (FS#1213)
@@ -8081,10 +8082,10 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 		return;
 
 #ifdef ocpnUSE_GL
-	if (!g_bdisable_opengl)
-		m_glcc->Show(g_bopengl);
+	if (!view.disable_opengl)
+		m_glcc->Show(view.opengl);
 
-	if (g_bopengl) {
+	if (view.opengl) {
 		if (!s_in_update) { // no recursion allowed, seen on lo-spec Mac
 			s_in_update++;
 			m_glcc->Update();
@@ -8144,7 +8145,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 
 	// If in skew compensation mode, with a skewed VP shown, we may be able to use the cached
 	// rotated bitmap
-	if (g_bskew_comp && (fabs(VPoint.skew) > 0.01))
+	if (view.skew_comp && (fabs(VPoint.skew) > 0.01))
 		b_rcache_ok = !b_newview;
 
 	//  Make a special VP
@@ -8324,7 +8325,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	wxMemoryDC* pChartDC = &temp_dc;
 	wxMemoryDC rotd_dc;
 
-	if (((fabs(GetVP().rotation) > 0.01)) || (g_bskew_comp && (fabs(GetVP().skew) > 0.01))) {
+	if (((fabs(GetVP().rotation) > 0.01)) || (view.skew_comp && (fabs(GetVP().skew) > 0.01))) {
 
 		//  Can we use the current rotated image cache?
 		if (!b_rcache_ok) {
@@ -8390,10 +8391,10 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 
 	wxPoint offset = m_roffset;
 
-	//        Save the PixelCache viewpoint for next time
+	// Save the PixelCache viewpoint for next time
 	m_cache_vp = VPoint;
 
-	//    Set up a scratch DC for overlay objects
+	// Set up a scratch DC for overlay objects
 	wxRegion rgn_blit;
 	wxMemoryDC mscratch_dc;
 	mscratch_dc.SelectObject(*pscratch_bm);
@@ -8402,7 +8403,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	mscratch_dc.DestroyClippingRegion();
 	mscratch_dc.SetClippingRegion(rgn_chart);
 
-	//    Blit the externally invalidated areas of the chart onto the scratch dc
+	// Blit the externally invalidated areas of the chart onto the scratch dc
 	rgn_blit = ru;
 	wxRegionIterator upd(rgn_blit); // get the update rect list
 	while (upd) {
@@ -8413,7 +8414,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 		upd++;
 	}
 
-	//    Draw the rest of the overlay objects directly on the scratch dc
+	// Draw the rest of the overlay objects directly on the scratch dc
 	ocpnDC scratch_dc(mscratch_dc);
 	DrawOverlayObjects(scratch_dc, ru);
 
@@ -8436,7 +8437,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 		// Get a copy of the screen
 		q_dc.Blit(0, 0, GetVP().pix_width, GetVP().pix_height, &mscratch_dc, 0, 0);
 
-		//  Draw a rectangle over the screen with a stipple brush
+		// Draw a rectangle over the screen with a stipple brush
 		wxBrush qbr(*wxBLACK, wxFDIAGONAL_HATCH);
 		q_dc.SetBrush(qbr);
 		q_dc.DrawRectangle(0, 0, GetVP().pix_width, GetVP().pix_height);
@@ -8458,7 +8459,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	// Deselect the chart bitmap from the temp_dc, so that it will not be destroyed in the
 	// temp_dc dtor
 	temp_dc.SelectObject(wxNullBitmap);
-	//    And for the scratch bitmap
+	// And for the scratch bitmap
 	mscratch_dc.SelectObject(wxNullBitmap);
 
 	dc.DestroyClippingRegion();
@@ -8502,7 +8503,7 @@ int ChartCanvas::GetNextContextMenuId()
 bool ChartCanvas::SetCursor(const wxCursor& c)
 {
 #ifdef ocpnUSE_GL
-	if (g_bopengl)
+	if (global::OCPN::get().gui().view().opengl)
 		return m_glcc->SetCursor(c);
 #endif
 	return wxWindow::SetCursor(c);
@@ -8525,7 +8526,7 @@ void ChartCanvas::Refresh(bool eraseBackground, const wxRect* rect)
 		m_RolloverPopupTimer.Start(500, wxTIMER_ONE_SHOT);
 
 #ifdef ocpnUSE_GL
-	if (g_bopengl) {
+	if (global::OCPN::get().gui().view().opengl) {
 
 		m_glcc->Refresh(eraseBackground,
 						NULL); // We always are going to render the entire screen anyway, so make
@@ -8554,7 +8555,7 @@ void ChartCanvas::Refresh(bool eraseBackground, const wxRect* rect)
 
 void ChartCanvas::Update()
 {
-	if (g_bopengl) {
+	if (global::OCPN::get().gui().view().opengl) {
 #ifdef ocpnUSE_GL
 		m_glcc->Update();
 #endif
@@ -8580,7 +8581,7 @@ void ChartCanvas::EmbossCanvas_DC(ocpnDC& dc, EmbossData& emboss, int x, int y)
 
 	wxImage snip_img = snip_bmp.ConvertToImage();
 
-	//  Apply Emboss map to the snip image
+	// Apply Emboss map to the snip image
 	unsigned char* pdata = snip_img.GetData();
 	if (pdata) {
 		for (int y = 0; y < emboss.height(); y++) {
@@ -9480,6 +9481,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 	double lat_last = 0.0;
 
 	const global::ColorManager& colors = global::OCPN::get().color();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 
 	wxPen* pblack_pen = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFD")), 1, wxSOLID);
 	wxPen* porange_pen = wxThePenList->FindOrCreatePen(colors.get_color(_T("UINFO")), 1, wxSOLID);
@@ -9490,7 +9492,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 
 	double skew_angle = GetVPRotation();
 
-	if (!global::OCPN::get().nav().get_data().CourseUp && !g_bskew_comp)
+	if (!global::OCPN::get().nav().get_data().CourseUp && !view.skew_comp)
 		skew_angle = GetVPRotation() + GetVPSkew();
 
 	if (bdraw_mono_for_mask) {
@@ -9520,11 +9522,11 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 		double lat = pIDX->IDX_lat;
 
 		char type = pIDX->IDX_type; // Entry "TCtcIUu" identifier
-		if (((type == 'c') || (type == 'C')) && (1 /*pIDX->IDX_Useable*/)) {
+		if ((type == 'c') || (type == 'C')) {
 
-			//  TODO This is a ---HACK---
-			//  try to avoid double current arrows.  Select the first in the list only
-			//  Proper fix is to correct the TCDATA index file for depth indication
+			// TODO This is a ---HACK---
+			// try to avoid double current arrows.  Select the first in the list only
+			// Proper fix is to correct the TCDATA index file for depth indication
 			bool b_dup = false;
 			if ((type == 'c') && (lat == lat_last) && (lon == lon_last))
 				b_dup = true;
@@ -9756,7 +9758,7 @@ WORD* g_pSavedGammaMap;
 static int InitScreenBrightness(void)
 {
 #ifdef __WIN32__
-	if (g_bopengl) {
+	if (global::OCPN::get().gui().view().opengl) {
 		HDC hDC;
 		BOOL bbr;
 
@@ -9779,8 +9781,8 @@ static int InitScreenBrightness(void)
 			}
 		}
 
-		//    Interface is ready, so....
-		//    Get some storage
+		// Interface is ready, so....
+		// Get some storage
 		if (!g_pSavedGammaMap) {
 			g_pSavedGammaMap = (WORD*)malloc(3 * 256 * sizeof(WORD));
 
@@ -9789,9 +9791,9 @@ static int InitScreenBrightness(void)
 			ReleaseDC(NULL, hDC); // Release the DC
 		}
 
-		//    On Windows hosts, try to adjust the registry to allow full range setting of Gamma
+		// On Windows hosts, try to adjust the registry to allow full range setting of Gamma
 		// table
-		//    This is an undocumented Windows hack.....
+		// This is an undocumented Windows hack.....
 		wxRegKey* pRegKey = new wxRegKey(
 			_T("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ICM"));
 		if (!pRegKey->Exists())
@@ -9838,7 +9840,7 @@ static int InitScreenBrightness(void)
 		return 1;
 	}
 #else
-	//    Look for "xcalib" application
+	// Look for "xcalib" application
 	wxString cmd(_T ( "xcalib -version" ));
 
 	wxArrayString output;
@@ -9895,10 +9897,10 @@ static int SetScreenBrightness(int brightness)
 {
 #ifdef __WIN32__
 
-	//    Under Windows, we use the SetDeviceGammaRamp function which exists in some (most modern?)
+	// Under Windows, we use the SetDeviceGammaRamp function which exists in some (most modern?)
 	// versions of gdi32.dll
-	//    Load the required library dll, if not already in place
-	if (g_bopengl) {
+	// Load the required library dll, if not already in place
+	if (global::OCPN::get().gui().view().opengl) {
 		if (g_pcurtain) {
 			g_pcurtain->Close();
 			g_pcurtain->Destroy();

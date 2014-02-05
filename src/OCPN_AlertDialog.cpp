@@ -26,8 +26,6 @@
 #include <global/OCPN.h>
 #include <global/GUI.h>
 
-extern bool g_bopengl;
-
 IMPLEMENT_CLASS(OCPN_AlertDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(OCPN_AlertDialog, wxDialog)
@@ -75,7 +73,7 @@ bool OCPN_AlertDialog::Create(
 
 	m_pparent = parent;
 
-	if (!g_bopengl && CanSetTransparent())
+	if (!view.opengl && CanSetTransparent())
 		SetTransparent(192);
 
 	return true;

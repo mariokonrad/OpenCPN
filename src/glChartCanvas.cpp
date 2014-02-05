@@ -56,10 +56,8 @@
 
 extern ChartCanvas* cc1;
 extern chart::s52plib* ps52plib;
-extern bool g_bopengl;
 extern bool g_b_useStencil;
 extern PlugInManager* g_pi_manager;
-extern bool g_bskew_comp;
 extern chart::ChartBase* Current_Ch;
 extern bool g_bquiting;
 extern ThumbWin* pthumbwin;
@@ -422,7 +420,7 @@ void glChartCanvas::OnActivate(wxActivateEvent& event)
 
 void glChartCanvas::OnSize(wxSizeEvent& event)
 {
-	if (!g_bopengl) {
+	if (!global::OCPN::get().gui().view().opengl) {
 		SetSize(cc1->GetVP().pix_width, cc1->GetVP().pix_height);
 		event.Skip();
 		return;
@@ -520,8 +518,10 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 	SetCurrent();
 #endif
 
-	Show(g_bopengl);
-	if (!g_bopengl) {
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
+	Show(view.opengl);
+	if (!view.opengl) {
 		event.Skip();
 		return;
 	}
@@ -705,10 +705,12 @@ void glChartCanvas::GrowData(int size)
 
 void glChartCanvas::SetClipRegion(const ViewPort& vp, OCPNRegion& region, bool b_clear)
 {
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	if (g_b_useStencil) {
 		glPushMatrix();
 
-		if (((fabs(vp.rotation) > 0.01)) || (g_bskew_comp && (fabs(vp.skew) > 0.01))) {
+		if (((fabs(vp.rotation) > 0.01)) || (view.skew_comp && (fabs(vp.skew) > 0.01))) {
 
 			// Shift texture drawing positions to account for the larger chart rectangle
 			// needed to cover the screen on rotated images
@@ -776,7 +778,7 @@ void glChartCanvas::SetClipRegion(const ViewPort& vp, OCPNRegion& region, bool b
 	} else { //  Use depth buffer for clipping
 		glPushMatrix();
 
-		if (((fabs(vp.rotation) > 0.01)) || (g_bskew_comp && (fabs(vp.skew) > 0.01))) {
+		if (((fabs(vp.rotation) > 0.01)) || (view.skew_comp && (fabs(vp.skew) > 0.01))) {
 
 			// Shift texture drawing positions to account for the larger chart rectangle
 			// needed to cover the screen on rotated images
@@ -1034,7 +1036,8 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 	double xt = 0.0;
 	double yt = 0.0;
 
-	if (((fabs(vp.rotation) > 0.01)) || (g_bskew_comp && (fabs(vp.skew) > 0.01))) {
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+	if (((fabs(vp.rotation) > 0.01)) || (view.skew_comp && (fabs(vp.skew) > 0.01))) {
 		// Shift texture drawing positions to account for the larger chart rectangle
 		// needed to cover the screen on rotated images
 		double w = vp.pix_width;
@@ -1042,7 +1045,7 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 		xt = (R.width - (w * scalefactor / n_basemult)) / 2;
 		yt = (R.height - (h * scalefactor / n_basemult)) / 2;
 
-		//    Rotations occur around 0,0, so calculate a post-rotate translation factor
+		// Rotations occur around 0,0, so calculate a post-rotate translation factor
 		double angle = vp.rotation;
 		angle -= vp.skew;
 		double ddx = (scalefactor / n_basemult) * (w * cos(-angle) - h * sin(-angle) - w) / 2;

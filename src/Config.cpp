@@ -70,9 +70,6 @@ extern LayerList* pLayerList;
 extern int g_LayerIdx;
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern WayPointman* pWayPointMan;
-extern bool g_bskew_comp;
-extern bool g_bopengl;
-extern bool g_bdisable_opengl;
 
 #ifdef USE_S57
 extern chart::s52plib* ps52plib;
@@ -529,10 +526,10 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	cog_avg_sec = wxMin(cog_avg_sec, MAX_COG_AVERAGE_SECONDS); // Bound the array size
 	nav.set_COGAvgSec(cog_avg_sec);
 
-	Read(_T("SkewToNorthUp"), &g_bskew_comp, 0);
-	Read(_T("OpenGL"), &g_bopengl, 0);
-	if (g_bdisable_opengl)
-		g_bopengl = false;
+	gui.set_skew_comp(read_bool(_T("SkewToNorthUp")));
+	gui.set_opengl(read_bool(_T("OpenGL")));
+	if (gui.view().disable_opengl)
+		gui.set_opengl(false);
 
 	Read(_T("ActiveChartGroup"), &g_GroupIndex, 0);
 
@@ -1540,8 +1537,8 @@ void Config::UpdateSettings()
 
 	write_cm93();
 
-	Write(_T("SkewToNorthUp"), g_bskew_comp);
-	Write(_T("OpenGL"), g_bopengl);
+	Write(_T("SkewToNorthUp"), view.skew_comp);
+	Write(_T("OpenGL"), view.opengl);
 	Write(_T("SmoothPanZoom"), view.smooth_pan_zoom);
 
 	Write(_T("CourseUpMode"), nav.CourseUp);

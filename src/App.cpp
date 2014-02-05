@@ -293,7 +293,8 @@ App::App()
 	, logger(NULL)
 	, old_logger(NULL)
 	, file_log(NULL)
-{}
+{
+}
 
 void App::OnInitCmdLine(wxCmdLineParser& parser)
 {
@@ -310,7 +311,6 @@ bool App::OnCmdLineParsed(wxCmdLineParser& parser)
 	g_bportable = parser.Found(_T("p"));
 	global::OCPN::get().gui().set_disable_opengl(parser.Found(_T("no_opengl")));
 	start_fullscreen = parser.Found(_T("fullscreen"));
-
 	return true;
 }
 
@@ -650,11 +650,10 @@ void App::validate_OpenGL()
 {
 	// Validate OpenGL functionality, if selected
 
-	global::GUI& gui = global::OCPN::get().gui();
-
 #ifdef ocpnUSE_GL
 
 #ifdef __WXMSW__
+	global::GUI& gui = global::OCPN::get().gui();
 	if (!gui.view().disable_opengl) {
 		wxFileName fn(wxApp::GetTraits()->GetStandardPaths().GetExecutablePath());
 		gui.set_disable_opengl(!TestGLCanvas(fn.GetPathWithSep()));
@@ -664,7 +663,7 @@ void App::validate_OpenGL()
 #endif
 
 #else
-	gui.set_disable_opengl(true);
+	global::OCPN::get().gui().set_disable_opengl(true);
 #endif
 }
 
@@ -1030,10 +1029,10 @@ void App::set_init_chart_dir()
 
 bool App::OnInit()
 {
+	inject_global_instances();
+
 	if (!wxApp::OnInit())
 		return false;
-
-	inject_global_instances();
 
 	int mem_total = 0;
 	int mem_initial = 0;

@@ -109,6 +109,8 @@ public:
 
 		int COMPortCheck; /// Number of COM ports on windows to be checked
 		wxString uploadConnection;
+		wxString GPS_Ident;
+		bool GarminHostUpload;
 	};
 
 	virtual const Config& config() const = 0;
@@ -129,6 +131,8 @@ public:
 	virtual void set_config_SpeedFormat(int) = 0;
 	virtual void set_config_COMPortCheck(int) = 0;
 	virtual void set_config_uploadConnection(const wxString&) = 0;
+	virtual void set_config_GPS_Ident(const wxString&) = 0;
+	virtual void set_config_GarminHostUpload(bool) = 0;
 
 public:
 	struct Debug

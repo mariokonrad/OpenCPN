@@ -240,7 +240,6 @@ PlugInManager* g_pi_manager;
 bool g_bportable;
 chart::ChartGroupArray* g_pGroupArray;
 int g_GroupIndex;
-wxString g_GPS_Ident;
 wxProgressDialog* s_ProgDialog;
 wxArrayString TideCurrentDataSet;
 
@@ -294,7 +293,6 @@ bool g_b_assume_azerty;
 int g_click_stop;
 std::vector<int> g_quilt_noshow_index_array;
 bool g_bquiting;
-bool g_bGarminHostUpload;
 wxAuiManager* g_pauimgr;
 wxMenu* g_FloatingToolbarConfigMenu;
 OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;

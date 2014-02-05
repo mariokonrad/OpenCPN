@@ -88,9 +88,6 @@ extern wxString g_default_wp_icon;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern int g_GroupIndex;
 
-extern wxString g_GPS_Ident;
-extern bool g_bGarminHostUpload;
-
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern wxArrayString TideCurrentDataSet;
 
@@ -435,11 +432,12 @@ long Config::read_long(const wxString& entry, long default_value) const
 	return value;
 }
 
-wxString Config::read_string(const wxString& entry) const
+wxString Config::read_string(const wxString& entry, const wxString& default_value) const
 {
-	wxString value;
+	wxString value = default_value;
 
-	Read(entry, &value);
+	if (!Read(entry, &value))
+		return default_value;
 	return value;
 }
 
@@ -493,8 +491,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_view_show_overzoom_emboss(read_bool(_T("ShowOverzoomEmbossWarning"), true));
 	sys.set_config_autosave_interval_seconds(read_long(_T("AutosaveIntervalSeconds"), 300));
 
-	Read(_T("GPSIdent"), &g_GPS_Ident, wxT("Generic"));
-	Read(_T("UseGarminHostUpload"), &g_bGarminHostUpload, 0);
+	sys.set_config_GPS_Ident(read_string(_T("GPSIdent"), _T("Generic")));
+	sys.set_config_GarminHostUpload(read_bool(_T("UseGarminHostUpload")));
 
 	sys.set_config_nmea_use_gll(read_bool(_T("UseNMEA_GLL"), true));
 
@@ -769,8 +767,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	Read(_T("InitChartDir"), &init_chart_dir); // Get the Directory name
 	if (!init_chart_dir.IsEmpty()) {
 		// don't overwrite on second pass
-		if (global::OCPN::get().sys().data().init_chart_dir.IsEmpty()) {
-			global::OCPN::get().sys().set_init_chart_dir(init_chart_dir);
+		if (sys.data().init_chart_dir.IsEmpty()) {
+			sys.set_init_chart_dir(init_chart_dir);
 		}
 	}
 
@@ -778,7 +776,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	wxString tc_data_directory;
 	Read(_T("TCDataDir"), &tc_data_directory);
-	global::OCPN::get().sys().set_tc_data_dir(tc_data_directory);
+	sys.set_tc_data_dir(tc_data_directory);
 
 	SetPath(_T("/Settings/GlobalState"));
 	Read(_T("nColorScheme"), &read_int, 0);
@@ -820,7 +818,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 							 ConnectionParams::FindAddress(port)) == g_pConnectionParams->end()) {
 				g_pConnectionParams->push_back(
 					ConnectionParams(port, wxAtoi(xRate), (b_garmin_host == 1)));
-				g_bGarminHostUpload = (b_garmin_host == 1);
+				sys.set_config_GarminHostUpload(b_garmin_host == 1);
 			}
 		}
 		if (iteration == 1) {
@@ -1578,8 +1576,8 @@ void Config::UpdateSettings()
 
 	write_toolbar();
 
-	Write(_T("GPSIdent"), g_GPS_Ident);
-	Write(_T("UseGarminHostUpload"), g_bGarminHostUpload);
+	Write(_T("GPSIdent"), sys.config().GPS_Ident);
+	Write(_T("UseGarminHostUpload"), sys.config().GarminHostUpload);
 
 	Write(_T("PlanSpeed"), wxString::Format(_T("%g"), track.PlanSpeed));
 

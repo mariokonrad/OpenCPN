@@ -71,6 +71,8 @@ public: // config
 	virtual void set_config_SpeedFormat(int);
 	virtual void set_config_COMPortCheck(int);
 	virtual void set_config_uploadConnection(const wxString&);
+	virtual void set_config_GPS_Ident(const wxString&);
+	virtual void set_config_GarminHostUpload(bool);
 
 public: // debug
 	virtual const Debug& debug() const;

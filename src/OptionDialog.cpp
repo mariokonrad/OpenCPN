@@ -97,9 +97,6 @@ extern int g_SOGFilterSec;
 extern PlugInManager* g_pi_manager;
 extern ocpnStyle::StyleManager* g_StyleManager;
 
-extern wxString g_GPS_Ident;
-extern bool g_bGarminHostUpload;
-
 extern wxLocale *plocale_def_lang;
 extern sound::OCPN_Sound g_anchorwatch_sound;
 
@@ -491,15 +488,17 @@ void options::CreatePanel_NMEA(size_t parent, int WXUNUSED(border_size),
 								   wxDefaultPosition, wxDefaultSize, 0);
 	bSizer161->Add(m_cbNMEADebug, 0, wxALL, cb_space);
 
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
+
 	m_cbFurunoGP3X = new wxCheckBox(m_pNMEAForm, wxID_ANY, _("Format uploads for Furuno GP3X"),
 									wxDefaultPosition, wxDefaultSize, 0);
-	m_cbFurunoGP3X->SetValue(g_GPS_Ident == _T("FurunoGP3X"));
+	m_cbFurunoGP3X->SetValue(cfg.GPS_Ident == _T("FurunoGP3X"));
 	bSizer161->Add(m_cbFurunoGP3X, 0, wxALL, cb_space);
 
 	m_cbGarminUploadHost
 		= new wxCheckBox(m_pNMEAForm, wxID_ANY, _("Use Garmin GRMN (Host) mode for uploads"),
 						 wxDefaultPosition, wxDefaultSize, 0);
-	m_cbGarminUploadHost->SetValue(g_bGarminHostUpload);
+	m_cbGarminUploadHost->SetValue(cfg.GarminHostUpload);
 	bSizer161->Add(m_cbGarminUploadHost, 0, wxALL, cb_space);
 
 	m_cbAPBMagnetic
@@ -863,7 +862,7 @@ void options::CreatePanel_NMEA(size_t parent, int WXUNUSED(border_size),
 	col6.SetText(_("Filters"));
 	m_lcSources->InsertColumn(6, col6);
 
-	//  Build the image list
+	// Build the image list
 	wxBitmap unchecked_bmp(16, 16), checked_bmp(16, 16);
 
 	{
@@ -2701,11 +2700,11 @@ void options::OnApplyClick(wxCommandEvent& event)
 		}
 	}
 
-	g_bGarminHostUpload = m_cbGarminUploadHost->GetValue();
+	sys.set_config_GarminHostUpload(m_cbGarminUploadHost->GetValue());
 	if (m_cbFurunoGP3X->GetValue())
-		g_GPS_Ident = _T("FurunoGP3X");
+		sys.set_config_GPS_Ident(_T("FurunoGP3X"));
 	else
-		g_GPS_Ident = _T("Generic");
+		sys.set_config_GPS_Ident(_T("Generic"));
 
 #ifdef USE_S57
 	// Handle Vector Charts Tab

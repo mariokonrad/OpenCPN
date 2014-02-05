@@ -27,6 +27,7 @@
 
 #include <global/OCPN.h>
 #include <global/AIS.h>
+#include <global/System.h>
 
 #include <plugin/PlugInManager.h>
 
@@ -37,8 +38,6 @@
 #include <wx/gauge.h>
 
 extern PlugInManager* g_pi_manager;
-extern wxString g_GPS_Ident;
-extern bool g_bGarminHostUpload;
 
 Multiplexer::Multiplexer()
 {
@@ -295,10 +294,11 @@ bool Multiplexer::SendRouteToGPS(Route* pr, const wxString& com_name, bool bsend
 		StopAndRemoveStream(old_stream);
 	}
 
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
+
 #ifdef USE_GARMINHOST
 #ifdef __WXMSW__
-	if (com_name.Upper().Matches(_T("*GARMIN*"))) // Garmin USB Mode
-	{
+	if (com_name.Upper().Matches(_T("*GARMIN*"))) { // Garmin USB Mode
 		int v_init = Garmin_GPS_Init(wxString(_T("usb:")));
 
 		if (v_init < 0) {
@@ -338,7 +338,7 @@ bool Multiplexer::SendRouteToGPS(Route* pr, const wxString& com_name, bool bsend
 	}
 #endif
 
-	if (g_bGarminHostUpload) {
+	if (cfg.GarminHostUpload) {
 		int ret_val;
 		if (pProgress) {
 			pProgress->SetValue(20);
@@ -463,7 +463,7 @@ ret_point:
 					 node != pr->pRoutePointList->end(); ++node) {
 					RoutePoint* prp = *node;
 
-					if (g_GPS_Ident == _T("Generic")) {
+					if (cfg.GPS_Ident == _T("Generic")) {
 						if (prp->latitude() < 0.0)
 							oNMEA0183.Wpl.Position.Latitude.Set(-prp->latitude(), _T("S"));
 						else
@@ -478,8 +478,8 @@ ret_point:
 
 						oNMEA0183.Wpl.Write(snt);
 
-					} else if (g_GPS_Ident == _T("FurunoGP3X")) {
-						oNMEA0183.TalkerID = _T ( "PFEC," );
+					} else if (cfg.GPS_Ident == _T("FurunoGP3X")) {
+						oNMEA0183.TalkerID = _T("PFEC,");
 
 						if (prp->latitude() < 0.0)
 							oNMEA0183.GPwpl.Position.Latitude.Set(-prp->latitude(), _T("S"));
@@ -526,11 +526,11 @@ ret_point:
 			oNMEA0183.Rte.TypeOfRoute = CompleteRoute;
 
 			if (pr->m_RouteNameString.IsEmpty())
-				oNMEA0183.Rte.RouteName = _T ( "1" );
+				oNMEA0183.Rte.RouteName = _T("1");
 			else
 				oNMEA0183.Rte.RouteName = pr->m_RouteNameString;
 
-			if (g_GPS_Ident == _T("FurunoGP3X")) {
+			if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 				oNMEA0183.Rte.RouteName = _T("01");
 				oNMEA0183.TalkerID = _T("GP");
 			}
@@ -544,7 +544,7 @@ ret_point:
 				RoutePoint* prp = *node;
 				wxString name = prp->GetName().Truncate(6);
 
-				if (g_GPS_Ident == _T("FurunoGP3X")) {
+				if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 					name = prp->GetName();
 					name += _T("000000");
 					name.Truncate(6);
@@ -567,9 +567,9 @@ ret_point:
 				tNMEA0183.Rte.Empty();
 				tNMEA0183.Rte.TypeOfRoute = CompleteRoute;
 
-				if (g_GPS_Ident != _T("FurunoGP3X")) {
+				if (cfg.GPS_Ident != _T("FurunoGP3X")) {
 					if (pr->m_RouteNameString.IsEmpty())
-						tNMEA0183.Rte.RouteName = _T ( "1" );
+						tNMEA0183.Rte.RouteName = _T("1");
 					else
 						tNMEA0183.Rte.RouteName = pr->m_RouteNameString;
 
@@ -592,7 +592,7 @@ ret_point:
 				while (i != pr->pRoutePointList->end()) {
 					RoutePoint* prp = *i;
 					unsigned int name_len = prp->GetName().Truncate(6).Len();
-					if (g_GPS_Ident == _T("FurunoGP3X"))
+					if (cfg.GPS_Ident == _T("FurunoGP3X"))
 						name_len = 7; // six chars, with leading space for "Skip Code"
 
 					if (bnew_sentence) {
@@ -622,7 +622,7 @@ ret_point:
 				while (node != pr->pRoutePointList->end()) {
 					RoutePoint* prp = *node;
 					wxString name = prp->GetName().Truncate(6);
-					if (g_GPS_Ident == _T("FurunoGP3X")) {
+					if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 						name = prp->GetName();
 						name += _T("000000");
 						name.Truncate(6);
@@ -640,7 +640,7 @@ ret_point:
 						oNMEA0183.Rte.Empty();
 						oNMEA0183.Rte.TypeOfRoute = CompleteRoute;
 
-						if (g_GPS_Ident != _T("FurunoGP3X")) {
+						if (cfg.GPS_Ident != _T("FurunoGP3X")) {
 							if (pr->m_RouteNameString.IsEmpty())
 								oNMEA0183.Rte.RouteName = _T("1");
 							else
@@ -698,7 +698,7 @@ ret_point:
 				wxLogMessage(msg);
 			}
 
-			if (g_GPS_Ident == _T("FurunoGP3X")) {
+			if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 				wxString term;
 				term.Printf(_T("$PFEC,GPxfr,CTL,E%c%c"), 0x0d, 0x0a);
 
@@ -791,7 +791,8 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, w
 #endif
 
 	// Are we using Garmin Host mode for uploads?
-	if (g_bGarminHostUpload) {
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
+	if (cfg.GarminHostUpload) {
 		wxString short_com = com_name.Mid(7);
 		// Initialize the Garmin receiver, build required Jeeps internal data structures
 		int v_init = Garmin_GPS_Init(short_com);
@@ -872,7 +873,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, w
 		if (pProgress)
 			pProgress->SetRange(100);
 
-		if (g_GPS_Ident == _T("Generic")) {
+		if (cfg.GPS_Ident == _T("Generic")) {
 			if (prp->latitude() < 0.0)
 				oNMEA0183.Wpl.Position.Latitude.Set(-prp->latitude(), _T("S"));
 			else
@@ -885,7 +886,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, w
 
 			oNMEA0183.Wpl.To = prp->GetName().Truncate(6);
 			oNMEA0183.Wpl.Write(snt);
-		} else if (g_GPS_Ident == _T("FurunoGP3X")) {
+		} else if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 			oNMEA0183.TalkerID = _T("PFEC,");
 
 			if (prp->latitude() < 0.0)
@@ -916,7 +917,7 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, w
 		msg.Trim();
 		wxLogMessage(msg);
 
-		if (g_GPS_Ident == _T("FurunoGP3X")) {
+		if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 			wxString term;
 			term.Printf(_T("$PFEC,GPxfr,CTL,E%c%c"), 0x0d, 0x0a);
 

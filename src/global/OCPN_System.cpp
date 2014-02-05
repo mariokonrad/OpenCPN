@@ -190,6 +190,16 @@ void OCPN_System::set_config_uploadConnection(const wxString& value)
 	data_config.uploadConnection = value;
 }
 
+void OCPN_System::set_config_GPS_Ident(const wxString& value)
+{
+	data_config.GPS_Ident = value;
+}
+
+void OCPN_System::set_config_GarminHostUpload(bool value)
+{
+	data_config.GarminHostUpload = value;
+}
+
 const System::Debug& OCPN_System::debug() const
 {
 	return data_debug;

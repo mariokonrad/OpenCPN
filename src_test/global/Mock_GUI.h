@@ -41,6 +41,8 @@ public: // view
 	MOCK_METHOD1(set_skew_comp, void(bool));
 	MOCK_METHOD1(set_opengl, void(bool));
 	MOCK_METHOD1(set_disable_opengl, void(bool));
+	MOCK_METHOD1(set_ChartNotRenderScaleFactor, void(double));
+	MOCK_METHOD1(set_SkewCompUpdatePeriod, void(int));
 
 public: // frame
 	MOCK_CONST_METHOD0(frame, const ::global::GUI::Frame&());

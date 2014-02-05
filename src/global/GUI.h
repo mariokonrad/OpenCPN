@@ -73,6 +73,8 @@ public:
 		bool skew_comp;
 		bool opengl;
 		bool disable_opengl; // FIXME: isn't this redundant?
+		double ChartNotRenderScaleFactor;
+		int SkewCompUpdatePeriod;
 	};
 
 	virtual const View& view() const = 0;
@@ -109,6 +111,8 @@ public:
 	virtual void set_skew_comp(bool) = 0;
 	virtual void set_opengl(bool) = 0;
 	virtual void set_disable_opengl(bool) = 0;
+	virtual void set_ChartNotRenderScaleFactor(double) = 0;
+	virtual void set_SkewCompUpdatePeriod(int) = 0;
 
 public:
 	struct Frame

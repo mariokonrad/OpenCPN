@@ -64,7 +64,6 @@
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern MainFrame* gFrame;
-extern double g_ChartNotRenderScaleFactor;
 extern RouteList* pRouteList;
 extern LayerList* pLayerList;
 extern int g_LayerIdx;
@@ -81,8 +80,6 @@ extern wxString g_AW2GUID;
 extern bool g_bfilter_cogsog;
 extern int g_COGFilterSec;
 extern int g_SOGFilterSec;
-
-extern int g_SkewCompUpdatePeriod;
 
 extern int g_ais_cog_predictor_width;
 
@@ -545,11 +542,11 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	sys.set_config_restore_stackindex(read_long(_T("InitialStackIndex")));
 	sys.set_config_restore_dbindex(read_long(_T("InitialdBIndex"), -1));
 
-	Read(_T("ChartNotRenderScaleFactor"), &g_ChartNotRenderScaleFactor, 1.5);
+	gui.set_ChartNotRenderScaleFactor(read_double(_T("ChartNotRenderScaleFactor"), 1.5));
 
 	load_cm93(display_width, display_height);
 
-	Read(_T("SkewCompUpdatePeriod"), &g_SkewCompUpdatePeriod, 10);
+	gui.set_SkewCompUpdatePeriod(read_long(_T("SkewCompUpdatePeriod"), 10));
 
 	sys.set_config_SetSystemTime(read_bool(_T("SetSystemTime")));
 	Read(_T("ShowDebugWindows"), &m_bShowDebugWindows, 1);
@@ -1514,7 +1511,7 @@ void Config::UpdateSettings()
 	write_system_config();
 
 	Write(_T("UIStyle"), g_StyleManager->GetStyleNextInvocation());
-	Write(_T("ChartNotRenderScaleFactor"), g_ChartNotRenderScaleFactor);
+	Write(_T("ChartNotRenderScaleFactor"), view.ChartNotRenderScaleFactor);
 
 	Write(_T("ShowDebugWindows"), m_bShowDebugWindows);
 	Write(_T("SetSystemTime"), sys.config().SetSystemTime);

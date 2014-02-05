@@ -132,7 +132,6 @@ extern void catch_signals(int signo);
 
 extern chart::ChartBase* Current_Vector_Ch;
 extern chart::ChartBase* Current_Ch;
-extern double g_ChartNotRenderScaleFactor;
 extern chart::ChartDB* ChartData;
 extern bool g_bHDTValid;
 extern ConsoleCanvas* console;
@@ -1214,8 +1213,9 @@ bool ChartCanvas::IsChartQuiltableRef(int db_index) const
 
 bool ChartCanvas::IsChartLargeEnoughToRender(chart::ChartBase* chart, const ViewPort& vp) const
 {
-	double chartMaxScale = chart->GetNormalScaleMax(GetCanvasScaleFactor(), GetCanvasWidth());
-	return (chartMaxScale * g_ChartNotRenderScaleFactor > vp.chart_scale);
+	const double chart_not_render_scale_factor = global::OCPN::get().gui().view().ChartNotRenderScaleFactor;
+	const double chartMaxScale = chart->GetNormalScaleMax(GetCanvasScaleFactor(), GetCanvasWidth());
+	return chartMaxScale * chart_not_render_scale_factor > vp.chart_scale;
 }
 
 void ChartCanvas::CancelMeasureRoute()

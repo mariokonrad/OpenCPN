@@ -170,7 +170,6 @@ chart::ChartBase* Current_Ch;
 chart::ChartDB* ChartData;
 chart::ChartStack* pCurrentStack;
 wxString* pdir_list[20];
-double g_ChartNotRenderScaleFactor;
 RouteList* pRouteList;
 bool g_bIsNewLayer;
 int g_LayerIdx;
@@ -201,7 +200,6 @@ wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
 bool g_bfilter_cogsog;
 int g_COGFilterSec;
 int g_SOGFilterSec;
-int g_SkewCompUpdatePeriod;
 
 #ifdef USE_S57
 namespace chart { class S57RegistrarMgr; }
@@ -3846,7 +3844,7 @@ void MainFrame::SetChartUpdatePeriod(const ViewPort& vp)
 
 	if (!vp.is_quilt()) {
 		if (view.skew_comp && (fabs(vp.skew)) > 0.01)
-			default_ChartUpdatePeriod = g_SkewCompUpdatePeriod;
+			default_ChartUpdatePeriod = view.SkewCompUpdatePeriod;
 	}
 
 	m_ChartUpdatePeriod = default_ChartUpdatePeriod;

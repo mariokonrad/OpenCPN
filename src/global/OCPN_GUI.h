@@ -76,6 +76,8 @@ public: // view
 	virtual void set_skew_comp(bool);
 	virtual void set_opengl(bool);
 	virtual void set_disable_opengl(bool);
+	virtual void set_ChartNotRenderScaleFactor(double);
+	virtual void set_SkewCompUpdatePeriod(int);
 
 public: // frame
 	virtual const Frame& frame() const;

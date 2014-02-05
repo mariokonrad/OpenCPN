@@ -196,6 +196,16 @@ void OCPN_GUI::set_disable_opengl(bool value)
 	data_view.disable_opengl = value;
 }
 
+void OCPN_GUI::set_ChartNotRenderScaleFactor(double value)
+{
+	data_view.ChartNotRenderScaleFactor = value;
+}
+
+void OCPN_GUI::set_SkewCompUpdatePeriod(int value)
+{
+	data_view.SkewCompUpdatePeriod = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

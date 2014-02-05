@@ -381,22 +381,22 @@ void Config::load_fonts(int iteration)
 	if (0 == iteration) {
 		wxString str;
 		long dummy;
-		wxString* pval = new wxString;
+		wxString val;
 		wxArrayString deleteList;
 
 		bool bCont = GetFirstEntry(str, dummy);
 		while (bCont) {
-			Read(str, pval);
+			Read(str, &val);
 
 			if (str.StartsWith(_T("Font"))) {
 				// Convert pre 3.1 setting. Can't delete old entries from inside the
 				// GetNextEntry() loop, so we need to save those and delete outside.
 				deleteList.Add(str);
-				wxString oldKey = pval->BeforeFirst(_T(':'));
+				wxString oldKey = val.BeforeFirst(_T(':'));
 				str = FontMgr::GetFontConfigKey(oldKey);
 			}
 
-			FontMgr::Get().LoadFontNative(str, *pval);
+			FontMgr::Get().LoadFontNative(str, val);
 			bCont = GetNextEntry(str, dummy);
 		}
 
@@ -404,7 +404,6 @@ void Config::load_fonts(int iteration)
 			DeleteEntry(deleteList[i]);
 		}
 		deleteList.Clear();
-		delete pval;
 	}
 }
 

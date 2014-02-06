@@ -24,6 +24,8 @@
 #ifndef __GLOBAL__RUNTIME__H__
 #define __GLOBAL__RUNTIME__H__
 
+#include <wx/datetime.h>
+
 namespace global {
 
 class Runtime
@@ -36,10 +38,13 @@ public:
 public:
 	struct Data
 	{
+		wxDateTime app_start_time;
+		wxDateTime loglast_time;
 	};
 
 	virtual const Data& data() const = 0;
-	//virtual void set_() = 0;
+	virtual void set_app_start_time(const wxDateTime&) = 0;
+	virtual void set_loglast_time(const wxDateTime&) = 0;
 };
 
 }

@@ -30,10 +30,15 @@ const Runtime::Data& OCPN_Runtime::data() const
 	return data_data;
 }
 
-// void OCPN_System::set_home_location(value)
-// {
-//	data_data. = value;
-// }
+void OCPN_Runtime::set_app_start_time(const wxDateTime& value)
+{
+	data_data.app_start_time = value;
+}
+
+void OCPN_Runtime::set_loglast_time(const wxDateTime& value)
+{
+	data_data.loglast_time = value;
+}
 
 }
 

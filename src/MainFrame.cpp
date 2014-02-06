@@ -108,6 +108,7 @@
 #include <global/GUI.h>
 #include <global/AIS.h>
 #include <global/System.h>
+#include <global/Runtime.h>
 #include <global/Navigation.h>
 #include <global/WatchDog.h>
 #include <global/ColorManager.h>
@@ -188,8 +189,6 @@ ThumbWin* pthumbwin;
 tide::TCMgr* ptcmgr;
 volatile int quitflag;
 ArrayOfConnPrm* g_pConnectionParams;
-wxDateTime g_start_time;
-wxDateTime g_loglast_time;
 sound::OCPN_Sound g_anchorwatch_sound;
 RoutePoint* pAnchorWatchPoint1;
 RoutePoint* pAnchorWatchPoint2;
@@ -1083,7 +1082,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 			watching_anchor |= (pAnchorWatchPoint2->m_IconName.StartsWith(_T("anchor")));
 
 		wxDateTime now = wxDateTime::Now();
-		wxTimeSpan uptime = now.Subtract(g_start_time);
+		wxTimeSpan uptime = now.Subtract(global::OCPN::get().run().data().app_start_time);
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
@@ -3124,14 +3123,16 @@ void MainFrame::onTimer_play_bells_on_log()
 
 void MainFrame::onTimer_log_message()
 {
+	global::Runtime& run = global::OCPN::get().run();
+
 	// Send current nav status data to log file on every half hour
 	wxDateTime lognow = wxDateTime::Now().MakeGMT();
-	wxTimeSpan logspan = lognow.Subtract(g_loglast_time);
+	wxTimeSpan logspan = lognow.Subtract(run.data().loglast_time);
 	if ((logspan.IsLongerThan(wxTimeSpan(0, 30, 0, 0))) || (lognow.GetMinute() == 0)
 		|| (lognow.GetMinute() == 30)) {
 		if (logspan.IsLongerThan(wxTimeSpan(0, 1, 0, 0))) {
 			wxLogMessage(prepare_logbook_message(lognow));
-			g_loglast_time = lognow;
+			run.set_loglast_time(lognow);
 
 			const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 			if ((lognow.GetHour() == 0) && (lognow.GetMinute() == 0) && track.TrackDaily)

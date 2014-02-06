@@ -129,8 +129,6 @@ extern StatWin* stats;
 extern ConsoleCanvas* console;
 ChartCanvas* cc1;
 wxString gExe_path;
-extern wxDateTime g_start_time;
-extern wxDateTime g_loglast_time;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
 extern ocpnStyle::StyleManager* g_StyleManager;
@@ -1092,11 +1090,13 @@ bool App::OnInit()
 	// This needs to be set early to catch numerics in config file.
 	setlocale(LC_NUMERIC, "C");
 
-	g_start_time = wxDateTime::Now();
+	global::Runtime& run = global::OCPN::get().run();
+	run.set_app_start_time(wxDateTime::Now());
 
-	g_loglast_time = g_start_time;
-	g_loglast_time.MakeGMT();
-	g_loglast_time.Subtract(wxTimeSpan(0, 29, 0, 0)); // give 1 minute for GPS to get a fix
+	wxDateTime log_last_time = run.data().app_start_time;
+	log_last_time.MakeGMT();
+	log_last_time.Subtract(wxTimeSpan(0, 29, 0, 0)); // give 1 minute for GPS to get a fix
+	run.set_loglast_time(log_last_time);
 
 	global::OCPN::get().nav().set_anchor_PointMinDist(5.0);
 
@@ -1746,7 +1746,7 @@ int App::OnExit()
 
 	wxDateTime lognow = wxDateTime::Now().MakeGMT();
 	wxLogMessage(MainFrame::prepare_logbook_message(lognow));
-	g_loglast_time = lognow;
+	global::OCPN::get().run().set_loglast_time(lognow);
 
 	if (ptcmgr)
 		delete ptcmgr;

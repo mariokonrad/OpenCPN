@@ -35,7 +35,8 @@ private:
 
 public: // data
 	virtual const Data& data() const;
-	//virtual void set_();
+	virtual void set_app_start_time(const wxDateTime&);
+	virtual void set_loglast_time(const wxDateTime&);
 };
 
 }

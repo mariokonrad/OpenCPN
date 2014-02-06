@@ -41,6 +41,11 @@ ValueFilter::size_type ValueFilter::size() const
 	return values.size();
 }
 
+void ValueFilter::resize(size_type n)
+{
+	values.resize(n);
+}
+
 double ValueFilter::get() const
 {
 	if (size() == 0)

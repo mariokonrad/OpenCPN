@@ -37,6 +37,7 @@ public:
 	virtual ~ValueFilter();
 
 	size_type size() const;
+	void resize(size_type);
 	virtual double get() const;
 	virtual void push(double);
 

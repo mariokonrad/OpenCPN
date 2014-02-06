@@ -77,15 +77,19 @@ TEST_F(Test_ValueFilter, push_different_intermediate_values)
 {
 	util::ValueFilter f(4);
 
-	EXPECT_EQ(0.0, f.get());
+	EXPECT_EQ((0.0 + 0.0 + 0.0 + 0.0), f.get());
 	f.push(1.0);
-	EXPECT_EQ(1.0 / 4.0, f.get());
+	EXPECT_EQ((1.0 + 0.0 + 0.0 + 0.0) / 4.0, f.get());
 	f.push(2.0);
-	EXPECT_EQ(3.0 / 4.0, f.get());
+	EXPECT_EQ((1.0 + 2.0 + 0.0 + 0.0) / 4.0, f.get());
 	f.push(4.0);
-	EXPECT_EQ(7.0 / 4.0, f.get());
+	EXPECT_EQ((1.0 + 2.0 + 4.0 + 0.0) / 4.0, f.get());
 	f.push(8.0);
-	EXPECT_EQ(15.0 / 4.0, f.get());
+	EXPECT_EQ((1.0 + 2.0 + 4.0 + 8.0) / 4.0, f.get());
+	f.push(16.0);
+	EXPECT_EQ((2.0 + 4.0 + 8.0 + 16.0) / 4.0, f.get());
+	f.push(32.0);
+	EXPECT_EQ((4.0 + 8.0 + 16.0 + 32.0) / 4.0, f.get());
 }
 
 TEST_F(Test_ValueFilter, push_different_intermediate_values_repeated_get)
@@ -111,6 +115,52 @@ TEST_F(Test_ValueFilter, push_different_intermediate_values_repeated_get)
 	EXPECT_EQ(15.0 / 4.0, f.get());
 	EXPECT_EQ(15.0 / 4.0, f.get());
 	EXPECT_EQ(15.0 / 4.0, f.get());
+}
+
+TEST_F(Test_ValueFilter, resize_downsize)
+{
+	util::ValueFilter f(4);
+
+	f.push(1.0);
+	f.push(2.0);
+	f.push(4.0);
+	f.push(8.0);
+	EXPECT_EQ((1.0 + 2.0 + 4.0 + 8.0) / 4.0, f.get());
+
+	f.resize(2);
+	EXPECT_EQ((1.0 + 2.0) / 2.0, f.get());
+}
+
+TEST_F(Test_ValueFilter, resize_upsize)
+{
+	util::ValueFilter f(2);
+
+	f.push(1.0);
+	f.push(2.0);
+	EXPECT_EQ((1.0 + 2.0) / 2.0, f.get());
+
+	f.resize(4);
+	EXPECT_EQ((1.0 + 2.0 + 0.0 + 0.0) / 4.0, f.get());
+
+	f.push(4.0);
+	EXPECT_EQ((2.0 + 0.0 + 0.0 + 4.0) / 4.0, f.get());
+
+	f.push(8.0);
+	EXPECT_EQ((0.0 + 0.0 + 4.0 + 8.0) / 4.0, f.get());
+}
+
+TEST_F(Test_ValueFilter, resize_same_size)
+{
+	util::ValueFilter f(4);
+
+	f.push(1.0);
+	f.push(2.0);
+	f.push(4.0);
+	f.push(8.0);
+	EXPECT_EQ((1.0 + 2.0 + 4.0 + 8.0) / 4.0, f.get());
+
+	f.resize(4);
+	EXPECT_EQ((1.0 + 2.0 + 4.0 + 8.0) / 4.0, f.get());
 }
 
 }

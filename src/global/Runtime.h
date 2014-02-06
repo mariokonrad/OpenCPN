@@ -21,124 +21,27 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "OCPN.h"
-#include <cstdlib>
+#ifndef __GLOBAL__RUNTIME__H__
+#define __GLOBAL__RUNTIME__H__
 
 namespace global {
 
-OCPN* OCPN::instance = NULL;
-
-OCPN::OCPN()
-	: gui_instance(NULL)
-	, nav_instance(NULL)
-	, ais_instance(NULL)
-	, wdt_instance(NULL)
-	, sys_instance(NULL)
-	, run_instance(NULL)
-	, color_instance(NULL)
-{}
-
-OCPN::OCPN(const OCPN&)
+class Runtime
 {
-}
-
-OCPN::~OCPN()
-{
-}
-
-OCPN& OCPN::operator=(const OCPN&)
-{
-	return *this;
-}
-
-OCPN& OCPN::get()
-{
-	if (!instance) {
-		instance = new OCPN;
+public:
+	virtual ~Runtime()
+	{
 	}
-	return *instance;
-}
 
-void OCPN::clear()
-{
-	gui_instance = NULL;
-	nav_instance = NULL;
-	ais_instance = NULL;
-	wdt_instance = NULL;
-	sys_instance = NULL;
-	run_instance = NULL;
-	color_instance = NULL;
-}
+public:
+	struct Data
+	{
+	};
 
-void OCPN::inject(GUI* gui)
-{
-	gui_instance = gui;
-}
-
-GUI& OCPN::gui()
-{
-	return *gui_instance;
-}
-
-void OCPN::inject(Navigation* nav)
-{
-	nav_instance = nav;
-}
-
-Navigation& OCPN::nav()
-{
-	return *nav_instance;
-}
-
-void OCPN::inject(AIS* ais)
-{
-	ais_instance = ais;
-}
-
-AIS& OCPN::ais()
-{
-	return *ais_instance;
-}
-
-void OCPN::inject(WatchDog* wdt)
-{
-	wdt_instance = wdt;
-}
-
-WatchDog& OCPN::wdt()
-{
-	return *wdt_instance;
-}
-
-void OCPN::inject(System* sys)
-{
-	sys_instance = sys;
-}
-
-System& OCPN::sys()
-{
-	return *sys_instance;
-}
-
-void OCPN::inject(Runtime* run)
-{
-	run_instance = run;
-}
-
-Runtime& OCPN::run()
-{
-	return *run_instance;
-}
-
-void OCPN::inject(ColorManager* color)
-{
-	color_instance = color;
-}
-
-ColorManager& OCPN::color()
-{
-	return *color_instance;
-}
+	virtual const Data& data() const = 0;
+	//virtual void set_() = 0;
+};
 
 }
 
+#endif

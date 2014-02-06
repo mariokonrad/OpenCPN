@@ -31,6 +31,7 @@ class Navigation;
 class AIS;
 class WatchDog;
 class System;
+class Runtime;
 class ColorManager;
 
 class OCPN
@@ -43,6 +44,7 @@ private:
 	AIS* ais_instance;
 	WatchDog* wdt_instance;
 	System* sys_instance;
+	Runtime* run_instance;
 	ColorManager* color_instance;
 
 private:
@@ -53,6 +55,7 @@ private:
 
 public:
 	static OCPN& get();
+	void clear();
 
 	void inject(GUI*);
 	GUI& gui();
@@ -68,6 +71,9 @@ public:
 
 	void inject(System*);
 	System& sys();
+
+	void inject(Runtime*);
+	Runtime& run();
 
 	void inject(ColorManager*);
 	ColorManager& color();

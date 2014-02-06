@@ -36,7 +36,7 @@ public:
 	}
 
 public:
-	struct Data
+	struct Data // FIXME: shouldn't this be 'config' and most part of config 'data'?
 	{
 		wxString home_location;
 		wxString private_data_dir;

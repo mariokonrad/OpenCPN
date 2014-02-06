@@ -776,6 +776,7 @@ add_library(global STATIC
 	src/global/OCPN_AIS.cpp
 	src/global/OCPN_WatchDog.cpp
 	src/global/OCPN_System.cpp
+	src/global/OCPN_Runtime.cpp
 
 	src/global/ColorScheme.h
 	src/global/ColorManager.h
@@ -784,12 +785,14 @@ add_library(global STATIC
 	src/global/Navigation.h
 	src/global/WatchDog.h
 	src/global/System.h
+	src/global/Runtime.h
 	src/global/OCPN.h
 	src/global/OCPN_GUI.h
 	src/global/OCPN_Navigation.h
 	src/global/OCPN_AIS.h
 	src/global/OCPN_WatchDog.h
 	src/global/OCPN_System.h
+	src/global/OCPN_Runtime.h
 	)
 
 add_library(geo STATIC

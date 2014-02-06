@@ -68,6 +68,7 @@
 #include <global/OCPN_AIS.h>
 #include <global/OCPN_WatchDog.h>
 #include <global/OCPN_System.h>
+#include <global/OCPN_Runtime.h>
 
 #ifdef __WXMSW__
 	#include <WinConsole.h>
@@ -283,6 +284,7 @@ App::App()
 	, nav_instance(NULL)
 	, wdt_instance(NULL)
 	, sys_instance(NULL)
+	, run_instance(NULL)
 	, colors_instance(NULL)
 	, s52_color_provider(NULL)
 	, start_fullscreen(false)
@@ -398,6 +400,9 @@ void App::inject_global_instances()
 
 	sys_instance = new global::OCPN_System;
 	global::OCPN::get().inject(sys_instance);
+
+	run_instance = new global::OCPN_Runtime;
+	global::OCPN::get().inject(run_instance);
 
 	colors_instance = new UserColors;
 	global::OCPN::get().inject(colors_instance);
@@ -1818,12 +1823,14 @@ int App::OnExit()
 #endif
 #endif
 
+	global::OCPN::get().clear();
 	delete colors_instance;
 	delete s52_color_provider;
 	delete gui_instance;
 	delete nav_instance;
 	delete wdt_instance;
 	delete sys_instance;
+	delete run_instance;
 	delete ais_instance;
 
 	return true;

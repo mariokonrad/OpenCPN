@@ -38,6 +38,7 @@ class OCPN_Navigation;
 class OCPN_AIS;
 class OCPN_WatchDog;
 class OCPN_System;
+class OCPN_Runtime;
 class ColorManager;
 class ColorProvider;
 }
@@ -85,6 +86,7 @@ private:
 	global::OCPN_AIS* ais_instance;
 	global::OCPN_WatchDog* wdt_instance;
 	global::OCPN_System* sys_instance;
+	global::OCPN_Runtime* run_instance;
 	global::ColorManager* colors_instance;
 
 	global::ColorProvider* s52_color_provider;

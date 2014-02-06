@@ -206,6 +206,21 @@ void OCPN_GUI::set_SkewCompUpdatePeriod(int value)
 	data_view.SkewCompUpdatePeriod = value;
 }
 
+void OCPN_GUI::set_GroupIndex(int value)
+{
+	data_view.GroupIndex = value;
+}
+
+void OCPN_GUI::set_ais_cog_predictor_width(int value)
+{
+	data_view.ais_cog_predictor_width = value;
+}
+
+void OCPN_GUI::set_default_wp_icon(const wxString& value)
+{
+	data_view.default_wp_icon = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

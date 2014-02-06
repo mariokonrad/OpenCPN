@@ -195,9 +195,6 @@ extern wxProgressDialog* s_ProgDialog;
 
 extern bool g_b_assume_azerty;
 
-extern int g_GroupIndex;
-extern wxString g_default_wp_icon;
-
 S57QueryDialog* g_pObjectQueryDialog = NULL;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern ArrayOfConnPrm* g_pConnectionParams;
@@ -208,8 +205,6 @@ extern sound::OCPN_Sound g_anchorwatch_sound;
 static int mouse_x;
 static int mouse_y;
 static bool mouse_leftisdown;
-
-int g_ais_cog_predictor_width;
 
 // FIXME: (semi-)globals?
 static int r_gamma_mult = 1;
@@ -1521,7 +1516,8 @@ void ChartCanvas::OnKeyDown(wxKeyEvent& event)
 
 			case 13: // Ctrl M // Drop Marker at cursor
 			{
-				RoutePoint* pWP = new RoutePoint(m_cursor_pos, g_default_wp_icon, wxEmptyString);
+				const global::GUI::View& view = global::OCPN::get().gui().view();
+				RoutePoint* pWP = new RoutePoint(m_cursor_pos, view.default_wp_icon, wxEmptyString);
 				pWP->m_bIsolatedMark = true; // This is an isolated mark
 				pSelect->AddSelectableRoutePoint(m_cursor_pos, pWP);
 				pConfig->AddNewWayPoint(pWP, -1); // use auto next num
@@ -1549,8 +1545,9 @@ void ChartCanvas::OnKeyDown(wxKeyEvent& event)
 
 			case 15: // Ctrl O - Drop Marker at boat's position
 			{
+				const global::GUI::View& view = global::OCPN::get().gui().view();
 				const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-				RoutePoint* pWP = new RoutePoint(nav.pos, g_default_wp_icon, wxEmptyString);
+				RoutePoint* pWP = new RoutePoint(nav.pos, view.default_wp_icon, wxEmptyString);
 				pWP->m_bIsolatedMark = true; // This is an isolated mark
 				pSelect->AddSelectableRoutePoint(nav.pos, pWP);
 				pConfig->AddNewWayPoint(pWP, -1); // use auto next num
@@ -4007,12 +4004,13 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 					&pixx, &pixy, &pixx1, &pixy1, 0, GetVP().pix_width, 0, GetVP().pix_height);
 
 				if ((res != geo::Invisible) && (td->b_active)) {
+					const global::GUI::View& view = global::OCPN::get().gui().view();
 					// Draw a wider coloured line
-					wxPen wide_pen(target_brush.GetColour(), g_ais_cog_predictor_width);
+					wxPen wide_pen(target_brush.GetColour(), view.ais_cog_predictor_width);
 					dc.SetPen(wide_pen);
 					dc.StrokeLine(pixx, pixy, pixx1, pixy1);
 
-					if (g_ais_cog_predictor_width > 1) {
+					if (view.ais_cog_predictor_width > 1) {
 						// Draw a 1 pixel wide black line
 						wxPen narrow_pen(colors.get_color(_T("UBLCK")), 1);
 						dc.SetPen(narrow_pen);
@@ -6276,7 +6274,8 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 					(wxObjectEventFunction)(wxEventFunction) & ChartCanvas::PopupMenuHandler);
 		}
 
-		subMenuChart->Check(ID_DEF_MENU_GROUPBASE + g_GroupIndex, true);
+		subMenuChart->Check(ID_DEF_MENU_GROUPBASE + global::OCPN::get().gui().view().GroupIndex,
+							true);
 	}
 
 	// Add PlugIn Context Menu items
@@ -7029,11 +7028,12 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			break;
 
 		case ID_DEF_MENU_GOTO_HERE: {
+			const global::GUI::View& view = global::OCPN::get().gui().view();
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			RoutePoint* pWP_dest = new RoutePoint(zpos, g_default_wp_icon, wxEmptyString);
+			RoutePoint* pWP_dest = new RoutePoint(zpos, view.default_wp_icon, wxEmptyString);
 			pSelect->AddSelectableRoutePoint(zpos, pWP_dest);
 
-			RoutePoint* pWP_src = new RoutePoint(nav.pos, g_default_wp_icon, wxEmptyString);
+			RoutePoint* pWP_src = new RoutePoint(nav.pos, view.default_wp_icon, wxEmptyString);
 			pSelect->AddSelectableRoutePoint(nav.pos, pWP_src);
 
 			Route* temp_route = new Route();
@@ -7058,7 +7058,8 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		} break;
 
 		case ID_DEF_MENU_DROP_WP: {
-			RoutePoint* pWP = new RoutePoint(zpos, g_default_wp_icon, wxEmptyString);
+			const global::GUI::View& view = global::OCPN::get().gui().view();
+			RoutePoint* pWP = new RoutePoint(zpos, view.default_wp_icon, wxEmptyString);
 			pWP->m_bIsolatedMark = true; // This is an isolated mark
 			pSelect->AddSelectableRoutePoint(zpos, pWP);
 			pConfig->AddNewWayPoint(pWP, -1); // use auto next num
@@ -7076,8 +7077,9 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			break;
 
 		case ID_WP_MENU_GOTO: {
+			const global::GUI::View& view = global::OCPN::get().gui().view();
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			RoutePoint* pWP_src = new RoutePoint(nav.pos, g_default_wp_icon, wxEmptyString);
+			RoutePoint* pWP_src = new RoutePoint(nav.pos, view.default_wp_icon, wxEmptyString);
 			pSelect->AddSelectableRoutePoint(nav.pos, pWP_src);
 
 			Route* temp_route = new Route();
@@ -7666,7 +7668,8 @@ void ChartCanvas::ShowAISTargetList(void)
 
 void ChartCanvas::RenderAllChartOutlines(ocpnDC& dc, const ViewPort& vp)
 {
-	if (!global::OCPN::get().gui().view().show_outlines)
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+	if (!view.show_outlines)
 		return;
 
 	int nEntry = ChartData->GetChartTableEntries();
@@ -7676,12 +7679,12 @@ void ChartCanvas::RenderAllChartOutlines(ocpnDC& dc, const ViewPort& vp)
 	for (int i = 0; i < nEntry; i++) {
 		ChartTableEntry* pt = (ChartTableEntry*)&ChartData->GetChartTableEntry(i);
 
-		//    Check to see if the candidate chart is in the currently active group
+		// Check to see if the candidate chart is in the currently active group
 		bool b_group_draw = false;
-		if (g_GroupIndex > 0) {
+		if (view.GroupIndex > 0) {
 			for (unsigned int ig = 0; ig < pt->GetGroupArray().size(); ig++) {
 				int index = pt->GetGroupArray().at(ig);
-				if (g_GroupIndex == index) {
+				if (view.GroupIndex == index) {
 					b_group_draw = true;
 					break;
 				}

@@ -239,7 +239,6 @@ double g_COGAvg;
 PlugInManager* g_pi_manager;
 bool g_bportable;
 chart::ChartGroupArray* g_pGroupArray;
-int g_GroupIndex;
 wxProgressDialog* s_ProgDialog;
 wxArrayString TideCurrentDataSet;
 
@@ -282,7 +281,6 @@ AboutDialog* g_pAboutDlg; // FIXME: MainFrame only
 int g_sticky_chart; // FIXME: MainFrame only
 
 bool g_bShowAIS;
-wxString g_default_wp_icon;
 Track* g_pActiveTrack;
 int g_total_NMEAerror_messages;
 CM93DSlide* pCM93DetailSlider;
@@ -1407,7 +1405,7 @@ void MainFrame::SetGroupIndex(int index)
 	// Get the currently displayed chart native scale, and the current ViewPort
 	int current_chart_native_scale = chart_canvas->GetCanvasChartNativeScale();
 
-	g_GroupIndex = new_index;
+	global::OCPN::get().gui().set_GroupIndex(new_index);
 
 	// Invalidate the "sticky" chart on group change, since it might not be in the new group
 	g_sticky_chart = -1;
@@ -1708,8 +1706,8 @@ void MainFrame::ActivateMOB(void)
 	if (gps.valid && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
 		// Create a point that is one mile along the present course
 		geo::Position zpos = geo::ll_gc_ll(nav.pos, nav.cog, 1.0);
-		RoutePoint* pWP_src
-			= new RoutePoint(zpos, g_default_wp_icon, wxString(_("1.0 NM along COG")));
+		RoutePoint* pWP_src = new RoutePoint(zpos, global::OCPN::get().gui().view().default_wp_icon,
+											 wxString(_("1.0 NM along COG")));
 		pSelect->AddSelectableRoutePoint(zpos, pWP_src);
 
 		Route* temp_route = new Route;
@@ -2255,11 +2253,12 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 		}
 	}
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 	if (((rr & VISIT_CHARTS) && ((rr & CHANGE_CHARTS) || (rr & FORCE_UPDATE) || (rr & SCAN_UPDATE)))
 		|| (rr & GROUPS_CHANGED)) {
 		ScrubGroupArray();
 		ChartData->ApplyGroupArray(g_pGroupArray);
-		SetGroupIndex(g_GroupIndex);
+		SetGroupIndex(view.GroupIndex);
 	}
 
 	if (rr & GROUPS_CHANGED) {
@@ -2277,7 +2276,6 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 		g_pActiveTrack->SetPrecision(global::OCPN::get().nav().get_track().TrackPrecision);
 	}
 
-	const global::GUI::View& view = global::OCPN::get().gui().view();
 	if ((bPrevQuilt != view.quilt_enable) || (bPrevFullScreenQuilt != view.fullscreen_quilt)) {
 		chart_canvas->SetQuiltMode(view.quilt_enable);
 		SetupQuiltMode();

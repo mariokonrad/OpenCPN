@@ -43,7 +43,6 @@
 
 extern ais::AISTargetQueryDialog* g_pais_query_dialog_active; // FIXME: this dialog may exist only once, pseudo-singleton
 extern ais::AIS_Decoder* g_pAIS;
-extern wxString g_default_wp_icon;
 extern Select* pSelect;
 extern Config* pConfig;
 extern RouteManagerDialog* pRouteManagerDialog;
@@ -104,7 +103,8 @@ void AISTargetQueryDialog::OnIdWptCreateClick(wxCommandEvent&)
 		AIS_Target_Data* td = g_pAIS->Get_Target_Data_From_MMSI(m_MMSI);
 		if (td) {
 			geo::Position pos(td->Lat, td->Lon);
-			RoutePoint* pWP = new RoutePoint(pos, g_default_wp_icon, wxEmptyString);
+			RoutePoint* pWP = new RoutePoint(pos, global::OCPN::get().gui().view().default_wp_icon,
+											 wxEmptyString);
 			pWP->m_bIsolatedMark = true; // This is an isolated mark
 			pSelect->AddSelectableRoutePoint(pos, pWP);
 			pConfig->AddNewWayPoint(pWP, -1); // use auto next num

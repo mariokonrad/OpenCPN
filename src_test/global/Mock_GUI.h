@@ -43,6 +43,9 @@ public: // view
 	MOCK_METHOD1(set_disable_opengl, void(bool));
 	MOCK_METHOD1(set_ChartNotRenderScaleFactor, void(double));
 	MOCK_METHOD1(set_SkewCompUpdatePeriod, void(int));
+	MOCK_METHOD1(set_GroupIndex, void(int));
+	MOCK_METHOD1(set_ais_cog_predictor_width, void(int));
+	MOCK_METHOD1(set_default_wp_icon, void(const wxString&));
 
 public: // frame
 	MOCK_CONST_METHOD0(frame, const ::global::GUI::Frame&());

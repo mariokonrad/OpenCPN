@@ -57,7 +57,6 @@ namespace chart { class s52plib; }
 extern chart::ChartBase* Current_Ch;
 extern ThumbWin* pthumbwin;
 extern ChartCanvas* cc1;
-extern int g_GroupIndex;
 extern chart::s52plib* ps52plib;
 
 namespace chart {
@@ -273,11 +272,12 @@ int ChartDB::BuildChartStack(ChartStack* cstk, float lat, float lon)
 
 		ChartTableEntry* pt = (ChartTableEntry*)&GetChartTableEntry(db_index);
 
-		//    Check to see if the candidate chart is in the currently active group
+		// Check to see if the candidate chart is in the currently active group
+		const int group_index = global::OCPN::get().gui().view().GroupIndex;
 		bool b_group_add = false;
-		if (g_GroupIndex > 0) {
+		if (group_index> 0) {
 			for (unsigned int ig = 0; ig < pt->GetGroupArray().size(); ig++) {
-				if (g_GroupIndex == pt->GetGroupArray()[ig]) {
+				if (group_index == pt->GetGroupArray()[ig]) {
 					b_group_add = true;
 					break;
 				}

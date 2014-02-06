@@ -46,7 +46,6 @@ extern chart::ChartDB* ChartData;
 extern chart::s52plib* ps52plib;
 extern chart::ChartStack* pCurrentStack;
 extern ChartCanvas* cc1;
-extern int g_GroupIndex;
 
 using chart::ChartTableEntry;
 
@@ -957,7 +956,8 @@ bool Quilt::BuildExtendedChartStackAndCandidateArray(bool b_fullscreen, int ref_
 			if (ChartData->GetDBChartType(i) == chart::CHART_TYPE_CM93COMP)
 				continue;
 
-			if ((g_GroupIndex > 0) && (!ChartData->IsChartInGroup(i, g_GroupIndex)))
+			const global::GUI::View& view = global::OCPN::get().gui().view();
+			if ((view.GroupIndex > 0) && (!ChartData->IsChartInGroup(i, view.GroupIndex)))
 				continue;
 
 			geo::BoundingBox chart_box;

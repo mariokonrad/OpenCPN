@@ -54,7 +54,6 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 extern Config* pConfig;
 extern MainFrame* gFrame;
 extern ChartCanvas* cc1;
-extern wxString g_default_wp_icon;
 extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
 
@@ -747,7 +746,8 @@ void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent&)
 
 	if (pAISTarget) {
 		geo::Position pos(pAISTarget->Lat, pAISTarget->Lon);
-		RoutePoint* pWP = new RoutePoint(pos, g_default_wp_icon, wxEmptyString);
+		RoutePoint* pWP
+			= new RoutePoint(pos, global::OCPN::get().gui().view().default_wp_icon, wxEmptyString);
 		pWP->m_bIsolatedMark = true; // This is an isolated mark
 		pSelect->AddSelectableRoutePoint(pos, pWP);
 		pConfig->AddNewWayPoint(pWP, -1); // use auto next num

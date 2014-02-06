@@ -78,12 +78,7 @@ extern bool g_bfilter_cogsog;
 extern int g_COGFilterSec;
 extern int g_SOGFilterSec;
 
-extern int g_ais_cog_predictor_width;
-
-extern wxString g_default_wp_icon;
-
 extern chart::ChartGroupArray* g_pGroupArray;
-extern int g_GroupIndex;
 
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern wxArrayString TideCurrentDataSet;
@@ -522,7 +517,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	if (gui.view().disable_opengl)
 		gui.set_opengl(false);
 
-	Read(_T("ActiveChartGroup"), &g_GroupIndex, 0);
+	gui.set_GroupIndex(read_long(_T("ActiveChartGroup")));
 
 	sys.set_config_GPU_MemSize(read_long(_T("GPUMemorySize"), 256));
 
@@ -645,7 +640,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	int show_target_name_scale = Read(_T("ShowAISTargetNameScale"), 250000L);
 	gui.set_Show_Target_Name_Scale(wxMax(5000, show_target_name_scale));
 	ais.set_WplIsAprsPosition(read_bool(_T("bWplIsAprsPositionReport"), true));
-	Read(_T("AISCOGPredictorWidth"), &g_ais_cog_predictor_width, 3);
+	gui.set_ais_cog_predictor_width(read_long(_T("AISCOGPredictorWidth"), 3));
 
 	ais.set_AIS_CPA_Alert_Audio(read_bool(_T("bAISAlertAudio")));
 	ais.set_AIS_Alert_Sound_File(read_string(_T("AISAlertAudioFile")));
@@ -1091,7 +1086,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	gui.set_track_line_width(read_long(_T("TrackLineWidth"), 3));
 
 	gui.set_current_arrow_scale(read_long(_T("CurrentArrowScale"), 100));
-	Read(_T("DefaultWPIcon"), &g_default_wp_icon, _T("triangle"));
+	gui.set_default_wp_icon(read_string(_T("DefaultWPIcon"), _T("triangle")));
 
 	return (0);
 }
@@ -1567,7 +1562,7 @@ void Config::UpdateSettings()
 
 	Write(_T("InitialStackIndex"), sys.config().restore_stackindex);
 	Write(_T("InitialdBIndex"), sys.config().restore_dbindex);
-	Write(_T("ActiveChartGroup"), g_GroupIndex);
+	Write(_T("ActiveChartGroup"), view.GroupIndex);
 
 	Write(_T("AnchorWatch1GUID"), anchor.AW1GUID);
 	Write(_T("AnchorWatch2GUID"), anchor.AW2GUID);
@@ -1666,7 +1661,7 @@ void Config::UpdateSettings()
 	Write(_T("bShowAISName"), view.ShowAISName);
 	Write(_T("ShowAISTargetNameScale"), view.Show_Target_Name_Scale);
 	Write(_T("bWplIsAprsPositionReport"), ais.WplIsAprsPosition);
-	Write(_T("AISCOGPredictorWidth"), g_ais_cog_predictor_width);
+	Write(_T("AISCOGPredictorWidth"), view.ais_cog_predictor_width);
 
 	write_ais_alert_dialog();
 	write_ais_query_dialog();
@@ -1787,7 +1782,7 @@ void Config::UpdateSettings()
 	Write(_T("TrackPrecision"), track.TrackPrecision);
 
 	Write(_T("CurrentArrowScale"), view.current_arrow_scale);
-	Write(_T("DefaultWPIcon"), g_default_wp_icon);
+	Write(_T("DefaultWPIcon"), view.default_wp_icon);
 
 	Flush();
 }

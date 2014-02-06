@@ -75,6 +75,9 @@ public:
 		bool disable_opengl; // FIXME: isn't this redundant?
 		double ChartNotRenderScaleFactor;
 		int SkewCompUpdatePeriod;
+		int GroupIndex;
+		int ais_cog_predictor_width;
+		wxString default_wp_icon;
 	};
 
 	virtual const View& view() const = 0;
@@ -113,6 +116,9 @@ public:
 	virtual void set_disable_opengl(bool) = 0;
 	virtual void set_ChartNotRenderScaleFactor(double) = 0;
 	virtual void set_SkewCompUpdatePeriod(int) = 0;
+	virtual void set_GroupIndex(int) = 0;
+	virtual void set_ais_cog_predictor_width(int) = 0;
+	virtual void set_default_wp_icon(const wxString&) = 0;
 
 public:
 	struct Frame

@@ -78,6 +78,9 @@ public: // view
 	virtual void set_disable_opengl(bool);
 	virtual void set_ChartNotRenderScaleFactor(double);
 	virtual void set_SkewCompUpdatePeriod(int);
+	virtual void set_GroupIndex(int);
+	virtual void set_ais_cog_predictor_width(int);
+	virtual void set_default_wp_icon(const wxString&);
 
 public: // frame
 	virtual const Frame& frame() const;

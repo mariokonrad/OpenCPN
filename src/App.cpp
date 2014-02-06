@@ -163,7 +163,6 @@ extern Config* pConfig;
 extern Select* pSelect;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
-extern int g_GroupIndex;
 extern wxAuiManager* g_pauimgr;
 extern MainFrame* gFrame;
 
@@ -1647,10 +1646,11 @@ bool App::OnInit()
 	ChartData->ApplyGroupArray(g_pGroupArray);
 
 	// Make sure that the Selected Group is sensible...
-	if (g_GroupIndex > (int)g_pGroupArray->size())
-		g_GroupIndex = 0;
-	if (!gFrame->CheckGroup(g_GroupIndex))
-		g_GroupIndex = 0;
+	global::GUI& gui = global::OCPN::get().gui();
+	if (gui.view().GroupIndex > (int)g_pGroupArray->size())
+		gui.set_GroupIndex(0);
+	if (!gFrame->CheckGroup(gui.view().GroupIndex))
+		gui.set_GroupIndex(0);
 
 	// Delete any stack built by no-chart startup case
 	if (pCurrentStack)

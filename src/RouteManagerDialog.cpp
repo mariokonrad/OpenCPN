@@ -139,7 +139,6 @@ extern WayPointman* pWayPointMan;
 extern MarkInfoImpl* pMarkPropDialog;
 extern MainFrame* gFrame;
 extern Select* pSelect;
-extern wxString g_default_wp_icon;
 
 struct SortContext
 {
@@ -1876,9 +1875,10 @@ void RouteManagerDialog::OnWptToggleVisibility(wxMouseEvent& event)
 
 void RouteManagerDialog::OnWptNewClick(wxCommandEvent&)
 {
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	RoutePoint* pWP = new RoutePoint(nav.pos, g_default_wp_icon, wxEmptyString);
+	RoutePoint* pWP = new RoutePoint(nav.pos, view.default_wp_icon, wxEmptyString);
 	pWP->m_bIsolatedMark = true; // This is an isolated mark
 	pSelect->AddSelectableRoutePoint(nav.pos, pWP);
 	pConfig->AddNewWayPoint(pWP, -1); // use auto next num
@@ -2022,9 +2022,10 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 	if (!wp)
 		return;
 
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
-	RoutePoint* pWP_src = new RoutePoint(nav.pos, g_default_wp_icon, wxEmptyString);
+	RoutePoint* pWP_src = new RoutePoint(nav.pos, view.default_wp_icon, wxEmptyString);
 	pSelect->AddSelectableRoutePoint(nav.pos, pWP_src);
 
 	Route* temp_route = new Route();

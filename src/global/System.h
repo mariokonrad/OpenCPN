@@ -111,6 +111,9 @@ public:
 		wxString uploadConnection;
 		wxString GPS_Ident;
 		bool GarminHostUpload;
+		bool filter_cogsog;
+		int COGFilterSec;
+		int SOGFilterSec;
 	};
 
 	virtual const Config& config() const = 0;
@@ -133,6 +136,9 @@ public:
 	virtual void set_config_uploadConnection(const wxString&) = 0;
 	virtual void set_config_GPS_Ident(const wxString&) = 0;
 	virtual void set_config_GarminHostUpload(bool) = 0;
+	virtual void set_config_filter_cogsog(bool) = 0;
+	virtual void set_config_COGFilterSec(int) = 0;
+	virtual void set_config_SOGFilterSec(int) = 0;
 
 public:
 	struct Debug

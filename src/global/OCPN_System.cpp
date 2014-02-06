@@ -200,6 +200,21 @@ void OCPN_System::set_config_GarminHostUpload(bool value)
 	data_config.GarminHostUpload = value;
 }
 
+void OCPN_System::set_config_filter_cogsog(bool value)
+{
+	data_config.filter_cogsog = value;
+}
+
+void OCPN_System::set_config_COGFilterSec(int value)
+{
+	data_config.COGFilterSec = value;
+}
+
+void OCPN_System::set_config_SOGFilterSec(int value)
+{
+	data_config.SOGFilterSec = value;
+}
+
 const System::Debug& OCPN_System::debug() const
 {
 	return data_debug;

@@ -90,9 +90,6 @@ extern ChartCanvas* cc1;
 
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern Multiplexer* g_pMUX;
-extern bool g_bfilter_cogsog;
-extern int g_COGFilterSec;
-extern int g_SOGFilterSec;
 
 extern PlugInManager* g_pi_manager;
 extern ocpnStyle::StyleManager* g_StyleManager;
@@ -1932,9 +1929,9 @@ void options::SetInitialSettings()
 		pSettingsCB1->SetValue(m_pConfig->show_debug_windows());
 
 	m_cbNMEADebug->SetValue(NMEALogWindow::Get().Active());
-	m_cbFilterSogCog->SetValue(g_bfilter_cogsog);
+	m_cbFilterSogCog->SetValue(cfg.filter_cogsog);
 
-	m_tFilterSec->SetValue(wxString::Format(_T("%d"), g_COGFilterSec));
+	m_tFilterSec->SetValue(wxString::Format(_T("%d"), cfg.COGFilterSec));
 
 	pCOGUPUpdateSecs->SetValue(wxString::Format(_T("%d"), nav.COGAvgSec));
 
@@ -2529,13 +2526,14 @@ void options::OnApplyClick(wxCommandEvent& event)
 	bool temp_bopengl = pOpenGL->GetValue();
 	gui.set_smooth_pan_zoom(pSmoothPanZoom->GetValue());
 
-	g_bfilter_cogsog = m_cbFilterSogCog->GetValue();
+	sys.set_config_filter_cogsog(m_cbFilterSogCog->GetValue());
 
 	long filter_val = 1;
 	m_tFilterSec->GetValue().ToLong(&filter_val);
-	g_COGFilterSec = wxMin(static_cast<int>(filter_val), MAX_COGSOG_FILTER_SECONDS);
-	g_COGFilterSec = wxMax(g_COGFilterSec, 1);
-	g_SOGFilterSec = g_COGFilterSec;
+	filter_val = wxMin(filter_val, MAX_COGSOG_FILTER_SECONDS);
+	filter_val = wxMax(filter_val, 1);
+	sys.set_config_COGFilterSec(filter_val);
+	sys.set_config_SOGFilterSec(filter_val);
 
 	long update_val = 1;
 	pCOGUPUpdateSecs->GetValue().ToLong(&update_val);

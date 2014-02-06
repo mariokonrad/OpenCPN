@@ -74,10 +74,6 @@ extern WayPointman* pWayPointMan;
 extern chart::s52plib* ps52plib;
 #endif
 
-extern bool g_bfilter_cogsog;
-extern int g_COGFilterSec;
-extern int g_SOGFilterSec;
-
 extern chart::ChartGroupArray* g_pGroupArray;
 
 extern ocpnStyle::StyleManager* g_StyleManager;
@@ -488,11 +484,12 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	sys.set_config_nmea_use_gll(read_bool(_T("UseNMEA_GLL"), true));
 
-	Read(_T("FilterNMEA_Avg"), &g_bfilter_cogsog, 0);
-	Read(_T("FilterNMEA_Sec"), &g_COGFilterSec, 1);
-	g_COGFilterSec = wxMin(g_COGFilterSec, MAX_COGSOG_FILTER_SECONDS);
-	g_COGFilterSec = wxMax(g_COGFilterSec, 1);
-	g_SOGFilterSec = g_COGFilterSec;
+	sys.set_config_filter_cogsog(read_bool(_T("FilterNMEA_Avg")));
+	long filter_time_sec = read_long(_T("FilterNMEA_Sec"), 1);
+	filter_time_sec = wxMin(filter_time_sec, MAX_COGSOG_FILTER_SECONDS);
+	filter_time_sec = wxMax(filter_time_sec, 1);
+	sys.set_config_COGFilterSec(filter_time_sec);
+	sys.set_config_SOGFilterSec(filter_time_sec);
 
 	gui.set_ShowMag(read_bool(_T("ShowMag")));
 	nav.set_user_var(read_double(_T("UserMagVariation"), 0.0));
@@ -1516,8 +1513,8 @@ void Config::UpdateSettings()
 	Write(_T("SpeedFormat"), sys.config().SpeedFormat);
 	Write(_T("MostRecentGPSUploadConnection"), sys.config().uploadConnection);
 
-	Write(_T("FilterNMEA_Avg"), g_bfilter_cogsog);
-	Write(_T("FilterNMEA_Sec"), g_COGFilterSec);
+	Write(_T("FilterNMEA_Avg"), sys.config().filter_cogsog);
+	Write(_T("FilterNMEA_Sec"), sys.config().COGFilterSec);
 
 	Write(_T("ShowMag"), view.ShowMag);
 	Write(_T("UserMagVariation"), wxString::Format(_T("%.2f"), nav.user_var));

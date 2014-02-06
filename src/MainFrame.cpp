@@ -196,9 +196,6 @@ ToolBarSimple* g_toolbar;
 ocpnStyle::StyleManager* g_StyleManager;
 wxPrintData* g_printData = (wxPrintData*)NULL;
 wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
-bool g_bfilter_cogsog;
-int g_COGFilterSec;
-int g_SOGFilterSec;
 
 #ifdef USE_S57
 namespace chart { class S57RegistrarMgr; }
@@ -2279,6 +2276,7 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 		SetupQuiltMode();
 	}
 
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
 	if (nav.CourseUp) {
@@ -2307,7 +2305,7 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 	for (int i = 0; i < MAX_COGSOG_FILTER_SECONDS; i++) {
 		COGFilterTable[i] = stuffcog;
 	}
-	sog_filter.resize(g_SOGFilterSec);
+	sog_filter.resize(cfg.SOGFilterSec);
 	sog_filter.fill(wxIsNaN(nav.sog) ? 0.0 : nav.sog);
 
 	SetChartUpdatePeriod(chart_canvas->GetVP()); // Pick up changes to skew compensator
@@ -5313,7 +5311,9 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 
 void MainFrame::filter_cog()
 {
-	if (!g_bfilter_cogsog)
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
+
+	if (!cfg.filter_cogsog)
 		return;
 
 	global::Navigation& nav = global::OCPN::get().nav();
@@ -5326,12 +5326,12 @@ void MainFrame::filter_cog()
 	double cog_last = nav.get_data().cog; // most recent reported value
 
 	// Make a hole in array
-	for (int i = g_COGFilterSec - 1; i > 0; i--)
+	for (int i = cfg.COGFilterSec - 1; i > 0; i--)
 		COGFilterTable[i] = COGFilterTable[i - 1];
 	COGFilterTable[0] = cog_last;
 
 	double sum = 0.0;
-	for (int i = 0; i < g_COGFilterSec; i++) {
+	for (int i = 0; i < cfg.COGFilterSec; i++) {
 		double adder = COGFilterTable[i];
 
 		if (fabs(adder - m_COGFilterLast) > 180.0) {
@@ -5343,7 +5343,7 @@ void MainFrame::filter_cog()
 
 		sum += adder;
 	}
-	sum /= g_COGFilterSec;
+	sum /= cfg.COGFilterSec;
 
 	if (sum < 0.0)
 		sum += 360.0;
@@ -5356,7 +5356,9 @@ void MainFrame::filter_cog()
 
 void MainFrame::filter_sog()
 {
-	if (!g_bfilter_cogsog)
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
+
+	if (!cfg.filter_cogsog)
 		return;
 
 	global::Navigation& nav = global::OCPN::get().nav();
@@ -5367,7 +5369,7 @@ void MainFrame::filter_sog()
 
 	// the resizing is necessary to adapt to possible configuration changes.
 	// if no changes occur, this has no effect.
-	sog_filter.resize(g_SOGFilterSec);
+	sog_filter.resize(cfg.SOGFilterSec);
 
 	sog_filter.push(nav.get_data().sog);
 	nav.set_speed_over_ground(sog_filter.get());

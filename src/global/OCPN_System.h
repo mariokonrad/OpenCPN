@@ -73,6 +73,9 @@ public: // config
 	virtual void set_config_uploadConnection(const wxString&);
 	virtual void set_config_GPS_Ident(const wxString&);
 	virtual void set_config_GarminHostUpload(bool);
+	virtual void set_config_filter_cogsog(bool);
+	virtual void set_config_COGFilterSec(int);
+	virtual void set_config_SOGFilterSec(int);
 
 public: // debug
 	virtual const Debug& debug() const;

@@ -282,7 +282,6 @@ int g_total_NMEAerror_messages;
 CM93DSlide* pCM93DetailSlider;
 wxLocale* plocale_def_lang;
 bool g_b_assume_azerty;
-int g_click_stop;
 std::vector<int> g_quilt_noshow_index_array;
 bool g_bquiting;
 wxAuiManager* g_pauimgr;
@@ -503,7 +502,7 @@ void MainFrame::OnEraseBackground(wxEraseEvent&)
 
 void MainFrame::OnMaximize(wxMaximizeEvent&)
 {
-	g_click_stop = 0;
+	chart_canvas->reset_click_stop();
 }
 
 bool MainFrame::hasStatusBar() const

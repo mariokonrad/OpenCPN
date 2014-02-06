@@ -181,8 +181,6 @@ extern ChartCanvas* cc1;
 
 extern double g_COGAvg; // only needed for debug....
 
-extern int g_click_stop;
-
 extern chart::ChartStack* pCurrentStack;
 extern bool g_bquiting;
 extern ais::AISTargetListDialog* g_pAISTargetList;
@@ -433,6 +431,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	, m_bzooming_in(false)
 	, m_bzooming_out(false)
 	, m_b_paint_enable(true)
+	, click_stop(0)
 {
 	parent_frame = (MainFrame*)frame; // save a pointer to parent
 
@@ -865,7 +864,7 @@ ChartCanvas::~ChartCanvas()
 {
 	delete pThumbDIBShow;
 
-	//    Delete Cursors
+	// Delete Cursors
 	delete pCursorLeft;
 	delete pCursorRight;
 	delete pCursorUp;
@@ -918,6 +917,11 @@ ChartCanvas::~ChartCanvas()
 	if (!global::OCPN::get().gui().view().disable_opengl)
 		delete m_glcc;
 #endif
+}
+
+void ChartCanvas::reset_click_stop()
+{
+	click_stop = 0;
 }
 
 bool ChartCanvas::follow() const
@@ -5195,8 +5199,8 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 	// by clicking on the chart surface.
 	// We need to avoid an unintentional pan by eating some clicks...
 	if (event.LeftDown() || event.LeftUp() || event.Dragging()) {
-		if (g_click_stop > 0) {
-			g_click_stop--;
+		if (click_stop > 0) {
+			click_stop--;
 			return;
 		}
 	}
@@ -6259,7 +6263,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 #ifdef __WXMSW__
 	// If we dismiss the context menu without action, we need to discard some mouse events....
 	// Eat the next 2 button events, which happen as down-up on MSW XP
-	g_click_stop = 2;
+	click_stop = 2;
 #endif
 
 	// ChartGroup SubMenu
@@ -7603,7 +7607,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 			break;
 		}
-	} // switch
+	}
 
 	//  Chart Groups....
 	if ((event.GetId() >= ID_DEF_MENU_GROUPBASE)
@@ -7611,7 +7615,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		gFrame->SetGroupIndex(event.GetId() - ID_DEF_MENU_GROUPBASE);
 	}
 
-	g_click_stop = 0; // Context menu was processed, all is well
+	click_stop = 0; // Context menu was processed, all is well
 }
 
 void ChartCanvas::FinishRoute(void)

@@ -255,6 +255,8 @@ public:
 
 	void reset_tide_window();
 
+	void reset_click_stop();
+
 private:
 	ViewPort VPoint;
 	void PositionConsole(void);
@@ -570,6 +572,8 @@ private:
 	wxCursor* pCursorArrow;
 	wxCursor* pCursorCross;
 	wxBitmap* pscratch_bm;
+
+	int click_stop;
 };
 
 #endif

@@ -286,8 +286,6 @@ wxString g_default_wp_icon;
 Track* g_pActiveTrack;
 int g_total_NMEAerror_messages;
 CM93DSlide* pCM93DetailSlider;
-wxString g_AW1GUID;
-wxString g_AW2GUID;
 wxLocale* plocale_def_lang;
 bool g_b_assume_azerty;
 int g_click_stop;

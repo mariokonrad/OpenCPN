@@ -165,6 +165,16 @@ void OCPN_Navigation::set_anchor_AWMax(long value)
 	data_anchor.AWMax = value;
 }
 
+void OCPN_Navigation::set_anchor_AW1GUID(const wxString& value)
+{
+	data_anchor.AW1GUID = value;
+}
+
+void OCPN_Navigation::set_anchor_AW2GUID(const wxString& value)
+{
+	data_anchor.AW2GUID = value;
+}
+
 const Navigation::GPS& OCPN_Navigation::gps() const
 {
 	return data_gps;

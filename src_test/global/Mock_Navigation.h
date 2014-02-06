@@ -41,6 +41,8 @@ public: // anchor
 	MOCK_METHOD1(set_anchor_AlertOn2, void(bool));
 	MOCK_METHOD1(set_anchor_AWDefault, void(long));
 	MOCK_METHOD1(set_anchor_AWMax, void(long));
+	MOCK_METHOD1(set_anchor_AW1GUID, void(const wxString&));
+	MOCK_METHOD1(set_anchor_AW2GUID, void(const wxString&));
 
 public: // gps
 	MOCK_CONST_METHOD0(gps, const ::global::Navigation::GPS&());

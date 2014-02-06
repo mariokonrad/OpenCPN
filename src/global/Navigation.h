@@ -25,6 +25,7 @@
 #define __GLOBAL__NAVIGATION__H__
 
 #include <geo/Position.h>
+#include <wx/string.h>
 
 namespace global {
 
@@ -101,6 +102,8 @@ public:
 		bool AlertOn2;
 		long AWDefault;
 		long AWMax;
+		wxString AW1GUID;
+		wxString AW2GUID;
 	};
 
 	virtual const Anchor& anchor() const = 0;
@@ -109,6 +112,8 @@ public:
 	virtual void set_anchor_AlertOn2(bool) = 0;
 	virtual void set_anchor_AWDefault(long) = 0;
 	virtual void set_anchor_AWMax(long) = 0;
+	virtual void set_anchor_AW1GUID(const wxString&) = 0;
+	virtual void set_anchor_AW2GUID(const wxString&) = 0;
 
 public:
 	struct GPS

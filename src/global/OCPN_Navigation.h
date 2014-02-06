@@ -72,6 +72,8 @@ public: // anchor
 	virtual void set_anchor_AlertOn2(bool);
 	virtual void set_anchor_AWDefault(long);
 	virtual void set_anchor_AWMax(long);
+	virtual void set_anchor_AW1GUID(const wxString&);
+	virtual void set_anchor_AW2GUID(const wxString&);
 
 public: // gps
 	virtual const GPS& gps() const;

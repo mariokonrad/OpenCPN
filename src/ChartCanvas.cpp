@@ -154,8 +154,6 @@ extern Track* g_pActiveTrack;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
-extern wxString g_AW1GUID;
-extern wxString g_AW2GUID;
 
 extern OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 extern RouteManagerDialog* pRouteManagerDialog;
@@ -7127,10 +7125,10 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		case ID_WP_MENU_DELPOINT: {
 			if (m_pFoundRoutePoint == pAnchorWatchPoint1) {
 				pAnchorWatchPoint1 = NULL;
-				g_AW1GUID.Clear();
+				global::OCPN::get().nav().set_anchor_AW1GUID(_T(""));
 			} else if (m_pFoundRoutePoint == pAnchorWatchPoint2) {
 				pAnchorWatchPoint2 = NULL;
-				g_AW2GUID.Clear();
+				global::OCPN::get().nav().set_anchor_AW2GUID(_T(""));
 			}
 
 			if (m_pFoundRoutePoint && !(m_pFoundRoutePoint->m_bIsInLayer)
@@ -7173,17 +7171,17 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		case ID_WP_MENU_CLEAR_ANCHORWATCH:
 			if (pAnchorWatchPoint1 == m_pFoundRoutePoint) {
 				pAnchorWatchPoint1 = NULL;
-				g_AW1GUID.Clear();
+				global::OCPN::get().nav().set_anchor_AW1GUID(_T(""));
 			} else if (pAnchorWatchPoint2 == m_pFoundRoutePoint) {
 				pAnchorWatchPoint2 = NULL;
-				g_AW2GUID.Clear();
+				global::OCPN::get().nav().set_anchor_AW2GUID(_T(""));
 			}
 			break;
 
 		case ID_WP_MENU_SET_ANCHORWATCH:
 			if (pAnchorWatchPoint1 == NULL) {
 				pAnchorWatchPoint1 = m_pFoundRoutePoint;
-				g_AW1GUID = pAnchorWatchPoint1->m_GUID;
+				global::OCPN::get().nav().set_anchor_AW1GUID(pAnchorWatchPoint1->m_GUID);
 				wxString nn = m_pFoundRoutePoint->GetName();
 				if (nn.IsNull()) {
 					nn.Printf(_T("%d m"), global::OCPN::get().nav().anchor().AWDefault);
@@ -7191,7 +7189,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 				}
 			} else if (pAnchorWatchPoint2 == NULL) {
 				pAnchorWatchPoint2 = m_pFoundRoutePoint;
-				g_AW2GUID = pAnchorWatchPoint2->m_GUID;
+				global::OCPN::get().nav().set_anchor_AW2GUID(pAnchorWatchPoint2->m_GUID);
 				wxString nn = m_pFoundRoutePoint->GetName();
 				if (nn.IsNull()) {
 					nn.Printf(_T("%d m"), global::OCPN::get().nav().anchor().AWDefault);

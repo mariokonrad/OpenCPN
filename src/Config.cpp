@@ -74,9 +74,6 @@ extern WayPointman* pWayPointMan;
 extern chart::s52plib* ps52plib;
 #endif
 
-extern wxString g_AW1GUID;
-extern wxString g_AW2GUID;
-
 extern bool g_bfilter_cogsog;
 extern int g_COGFilterSec;
 extern int g_SOGFilterSec;
@@ -533,8 +530,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	load_toolbar();
 
-	Read(_T("AnchorWatch1GUID"), &g_AW1GUID, _T(""));
-	Read(_T("AnchorWatch2GUID"), &g_AW2GUID, _T(""));
+	nav.set_anchor_AW1GUID(read_string(_T("AnchorWatch1GUID"), _T("")));
+	nav.set_anchor_AW2GUID(read_string(_T("AnchorWatch2GUID"), _T("")));
 
 	sys.set_config_restore_stackindex(read_long(_T("InitialStackIndex")));
 	sys.set_config_restore_dbindex(read_long(_T("InitialdBIndex"), -1));
@@ -1499,6 +1496,7 @@ void Config::UpdateSettings()
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	const global::Navigation::Route& route = global::OCPN::get().nav().route();
 	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
+	const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
 	const global::System& sys = global::OCPN::get().sys();
 
 	// Global options and settings
@@ -1571,8 +1569,8 @@ void Config::UpdateSettings()
 	Write(_T("InitialdBIndex"), sys.config().restore_dbindex);
 	Write(_T("ActiveChartGroup"), g_GroupIndex);
 
-	Write(_T("AnchorWatch1GUID"), g_AW1GUID);
-	Write(_T("AnchorWatch2GUID"), g_AW2GUID);
+	Write(_T("AnchorWatch1GUID"), anchor.AW1GUID);
+	Write(_T("AnchorWatch2GUID"), anchor.AW2GUID);
 
 	write_toolbar();
 

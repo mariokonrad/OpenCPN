@@ -156,8 +156,6 @@ extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
 extern Routeman* g_pRouteMan;
 extern WayPointman* pWayPointMan;
-extern wxString g_AW1GUID;
-extern wxString g_AW2GUID;
 extern chart::ChartStack* pCurrentStack;
 extern int g_unit_test_1;
 extern OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
@@ -1677,11 +1675,12 @@ bool App::OnInit()
 		gFrame->TrackOn();
 
 	// Re-enable anchor watches if set in config file
-	if (!g_AW1GUID.IsEmpty()) {
-		pAnchorWatchPoint1 = pWayPointMan->find(g_AW1GUID);
+	const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
+	if (!anchor.AW1GUID.IsEmpty()) {
+		pAnchorWatchPoint1 = pWayPointMan->find(anchor.AW1GUID);
 	}
-	if (!g_AW2GUID.IsEmpty()) {
-		pAnchorWatchPoint2 = pWayPointMan->find(g_AW2GUID);
+	if (!anchor.AW2GUID.IsEmpty()) {
+		pAnchorWatchPoint2 = pWayPointMan->find(anchor.AW2GUID);
 	}
 
 	stats->Show(true);

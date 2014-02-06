@@ -385,9 +385,8 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos, 
 	// Clear the NMEA Filter tables
 	for (int i = 0; i < MAX_COGSOG_FILTER_SECONDS; i++) {
 		COGFilterTable[i] = 0.0;
-		SOGFilterTable[i] = 0.0;
 	}
-	m_COGFilterLast = 0.;
+	m_COGFilterLast = 0.0;
 	m_last_bGPSValid = false;
 
 	global::Navigation& nav = global::OCPN::get().nav();
@@ -2302,17 +2301,14 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 
 	// Stuff the Filter tables
 	double stuffcog = 0.0;
-	double stuffsog = 0.0;
 	if (!wxIsNaN(nav.cog))
 		stuffcog = nav.cog;
-	if (!wxIsNaN(nav.sog))
-		stuffsog = nav.sog;
 
 	for (int i = 0; i < MAX_COGSOG_FILTER_SECONDS; i++) {
 		COGFilterTable[i] = stuffcog;
-		SOGFilterTable[i] = stuffsog;
 	}
-	m_COGFilterLast = stuffcog;
+	sog_filter.resize(g_SOGFilterSec);
+	sog_filter.fill(wxIsNaN(nav.sog) ? 0.0 : nav.sog);
 
 	SetChartUpdatePeriod(chart_canvas->GetVP()); // Pick up changes to skew compensator
 
@@ -5105,7 +5101,8 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
 	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
-	FilterCogSog();
+	filter_cog();
+	filter_sog();
 
 	// If speed over ground is greater than some threshold, we determine that we are "cruising"
 	if (nav.sog > 3.0)
@@ -5314,76 +5311,74 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 #endif // ocpnUPDATE_SYSTEM_TIME
 }
 
-void MainFrame::FilterCogSog(void)
+void MainFrame::filter_cog()
 {
+	if (!g_bfilter_cogsog)
+		return;
+
 	global::Navigation& nav = global::OCPN::get().nav();
 
-	if (g_bfilter_cogsog) {
-		// If the data are undefined, leave the array intact
-		if (!wxIsNaN(nav.get_data().cog)) {
-			// Simple averaging filter for COG
-			double cog_last = nav.get_data().cog; // most recent reported value
+	// If the data are undefined, leave the array intact
+	if (wxIsNaN(nav.get_data().cog))
+		return;
 
-			// Make a hole in array
-			for (int i = g_COGFilterSec - 1; i > 0; i--)
-				COGFilterTable[i] = COGFilterTable[i - 1];
-			COGFilterTable[0] = cog_last;
+	// Simple averaging filter for COG
+	double cog_last = nav.get_data().cog; // most recent reported value
 
-			double sum = 0.0;
-			for (int i = 0; i < g_COGFilterSec; i++) {
-				double adder = COGFilterTable[i];
+	// Make a hole in array
+	for (int i = g_COGFilterSec - 1; i > 0; i--)
+		COGFilterTable[i] = COGFilterTable[i - 1];
+	COGFilterTable[0] = cog_last;
 
-				if (fabs(adder - m_COGFilterLast) > 180.0) {
-					if ((adder - m_COGFilterLast) > 0.0)
-						adder -= 360.0;
-					else
-						adder += 360.0;
-				}
+	double sum = 0.0;
+	for (int i = 0; i < g_COGFilterSec; i++) {
+		double adder = COGFilterTable[i];
 
-				sum += adder;
-			}
-			sum /= g_COGFilterSec;
-
-			if (sum < 0.0)
-				sum += 360.0;
-			else if (sum >= 360.0)
-				sum -= 360.0;
-
-			nav.set_course_over_ground(sum);
-			m_COGFilterLast = sum;
+		if (fabs(adder - m_COGFilterLast) > 180.0) {
+			if ((adder - m_COGFilterLast) > 0.0)
+				adder -= 360.0;
+			else
+				adder += 360.0;
 		}
 
-		global::Navigation& nav = global::OCPN::get().nav();
-
-		//    If the data are undefined, leave the array intact
-		// FIXME: perfect opportunity to move such a filter to a separate class, dare I mention
-		// "unit test"
-		if (!wxIsNaN(nav.get_data().sog)) {
-			//    Simple averaging filter for SOG
-			double sog_last = nav.get_data().sog; // most recent reported value
-
-			//    Make a hole in array
-			for (int i = g_SOGFilterSec - 1; i > 0; i--)
-				SOGFilterTable[i] = SOGFilterTable[i - 1];
-			SOGFilterTable[0] = sog_last;
-
-			double sum = 0.0;
-			for (int i = 0; i < g_SOGFilterSec; ++i) {
-				sum += SOGFilterTable[i];
-			}
-			sum /= g_SOGFilterSec;
-
-			nav.set_speed_over_ground(sum);
-		}
+		sum += adder;
 	}
+	sum /= g_COGFilterSec;
+
+	if (sum < 0.0)
+		sum += 360.0;
+	else if (sum >= 360.0)
+		sum -= 360.0;
+
+	nav.set_course_over_ground(sum);
+	m_COGFilterLast = sum;
 }
 
-void MainFrame::StopSockets(void)
+void MainFrame::filter_sog()
+{
+	if (!g_bfilter_cogsog)
+		return;
+
+	global::Navigation& nav = global::OCPN::get().nav();
+
+	// If the data are undefined, leave the array intact
+	if (wxIsNaN(nav.get_data().sog))
+		return;
+
+	// the resizing is necessary to adapt to possible configuration changes.
+	// if no changes occur, this has no effect.
+	sog_filter.resize(g_SOGFilterSec);
+
+	sog_filter.push(nav.get_data().sog);
+	nav.set_speed_over_ground(sog_filter.get());
+}
+
+void MainFrame::StopSockets()
 {
 	// TODO: Can be removed?
 }
 
-void MainFrame::ResumeSockets(void)
+void MainFrame::ResumeSockets()
 {
 	// TODO: Can be removed?
 }

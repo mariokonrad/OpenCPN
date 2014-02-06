@@ -40,6 +40,8 @@
 #include <ChartDirInfo.h>
 #include <NMEA_Msg_Container.h>
 
+#include <util/ValueFilter.h>
+
 #include <geo/Position.h>
 
 #include <global/ColorScheme.h>
@@ -122,8 +124,8 @@ public:
 	int DoOptionsDialog();
 	int ProcessOptionsDialog(int resultFlags, options* dialog);
 	void DoPrint(void);
-	void StopSockets(void);
-	void ResumeSockets(void);
+	void StopSockets();
+	void ResumeSockets();
 	void TogglebFollow(void);
 	void ToggleFullScreen();
 	void SetbFollow(void);
@@ -251,7 +253,8 @@ private:
 
 	bool CheckAndAddPlugInTool(ToolBarSimple* tb);
 	bool AddDefaultPositionPlugInTools(ToolBarSimple* tb);
-	void FilterCogSog(void);
+	void filter_cog();
+	void filter_sog();
 	void SetChartUpdatePeriod(const ViewPort& vp);
 
 	void ApplyGlobalColorSchemetoStatusBar(void);
@@ -289,7 +292,7 @@ private:
 
 	double m_COGFilterLast;
 	double COGFilterTable[MAX_COGSOG_FILTER_SECONDS];
-	double SOGFilterTable[MAX_COGSOG_FILTER_SECONDS];
+	util::ValueFilter sog_filter;
 
 	static int default_ChartUpdatePeriod;
 	int m_ChartUpdatePeriod;

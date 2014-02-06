@@ -163,5 +163,35 @@ TEST_F(Test_ValueFilter, resize_same_size)
 	EXPECT_EQ((1.0 + 2.0 + 4.0 + 8.0) / 4.0, f.get());
 }
 
+TEST_F(Test_ValueFilter, fill)
+{
+	util::ValueFilter f(4);
+
+	EXPECT_EQ(0.0, f.get());
+
+	f.fill(1.0);
+	EXPECT_EQ(1.0, f.get());
+
+	f.fill(2.0);
+	EXPECT_EQ(2.0, f.get());
+}
+
+TEST_F(Test_ValueFilter, fill_after_resize)
+{
+	util::ValueFilter f(2);
+
+	EXPECT_EQ(0.0, f.get());
+
+	f.push(1.0);
+	f.push(2.0);
+	EXPECT_EQ(3.0 / 2.0, f.get());
+
+	f.resize(4);
+	EXPECT_EQ(3.0 / 4.0, f.get());
+
+	f.fill(2.0);
+	EXPECT_EQ(2.0, f.get());
+}
+
 }
 

@@ -33,11 +33,12 @@ class ValueFilter
 public:
 	typedef std::vector<double>::size_type size_type;
 
-	ValueFilter(size_type size);
+	ValueFilter(size_type size = 0);
 	virtual ~ValueFilter();
 
 	size_type size() const;
 	void resize(size_type);
+	virtual void fill(double);
 	virtual double get() const;
 	virtual void push(double);
 

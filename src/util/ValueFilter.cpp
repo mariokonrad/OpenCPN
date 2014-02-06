@@ -46,6 +46,11 @@ void ValueFilter::resize(size_type n)
 	values.resize(n);
 }
 
+void ValueFilter::fill(double value)
+{
+	std::fill(values.begin(), values.end(), value);
+}
+
 double ValueFilter::get() const
 {
 	if (size() == 0)

@@ -256,7 +256,7 @@ if(WIN32)
 		set(CMAKE_C_FLAGS                     "/MD  /O2  /Ob2 ${C_WARN_FLAGS}")
 		set(CMAKE_C_FLAGS_DEBUG               "/MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${C_WARN_FLAGS}")
 		set(CMAKE_C_FLAGS_MINSIZEREL          "/MD  /O1  /Ob1 /D NDEBUG ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_RELEASE             "/MD  /O2  /Ob2 /D NDEBUG ${C_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS_RELEASE             "/MD  /O2  /Ob2 /D _DEBUG ${C_WARN_FLAGS}")
 		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "/MD  /O2  /Ob1 /D NDEBUG /Zi ${C_WARN_FLAGS}")
 		set(CMAKE_CXX_FLAGS                   "/MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
 		set(CMAKE_CXX_FLAGS_RELEASE           "/MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
@@ -910,6 +910,8 @@ SET(HDRS
 
 	src/navigation/AnchorDist.h
 	src/navigation/MagneticVariation.h
+	src/navigation/RouteTracker.h
+	src/navigation/DefaultRouteTracker.h
 
 	src/OCPN_Version.h
 	src/ocpn_pixel.h
@@ -1038,6 +1040,7 @@ SET(SRCS
 
 	src/navigation/AnchorDist.cpp
 	src/navigation/MagneticVariation.cpp
+	src/navigation/DefaultRouteTracker.cpp
 
 	src/OCPN_Version.cpp
 	src/MemoryStatus.cpp

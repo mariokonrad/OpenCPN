@@ -36,6 +36,7 @@ OCPN::OCPN()
 	, sys_instance(NULL)
 	, run_instance(NULL)
 	, color_instance(NULL)
+	, tracker_instance(NULL)
 {}
 
 OCPN::OCPN(const OCPN&)
@@ -68,11 +69,12 @@ void OCPN::clear()
 	sys_instance = NULL;
 	run_instance = NULL;
 	color_instance = NULL;
+	tracker_instance = NULL;
 }
 
-void OCPN::inject(GUI* gui)
+void OCPN::inject(GUI* instance)
 {
-	gui_instance = gui;
+	gui_instance = instance;
 }
 
 GUI& OCPN::gui()
@@ -80,9 +82,9 @@ GUI& OCPN::gui()
 	return *gui_instance;
 }
 
-void OCPN::inject(Navigation* nav)
+void OCPN::inject(Navigation* instance)
 {
-	nav_instance = nav;
+	nav_instance = instance;
 }
 
 Navigation& OCPN::nav()
@@ -90,9 +92,9 @@ Navigation& OCPN::nav()
 	return *nav_instance;
 }
 
-void OCPN::inject(AIS* ais)
+void OCPN::inject(AIS* instance)
 {
-	ais_instance = ais;
+	ais_instance = instance;
 }
 
 AIS& OCPN::ais()
@@ -100,9 +102,9 @@ AIS& OCPN::ais()
 	return *ais_instance;
 }
 
-void OCPN::inject(WatchDog* wdt)
+void OCPN::inject(WatchDog* instance)
 {
-	wdt_instance = wdt;
+	wdt_instance = instance;
 }
 
 WatchDog& OCPN::wdt()
@@ -110,9 +112,9 @@ WatchDog& OCPN::wdt()
 	return *wdt_instance;
 }
 
-void OCPN::inject(System* sys)
+void OCPN::inject(System* instance)
 {
-	sys_instance = sys;
+	sys_instance = instance;
 }
 
 System& OCPN::sys()
@@ -120,9 +122,9 @@ System& OCPN::sys()
 	return *sys_instance;
 }
 
-void OCPN::inject(Runtime* run)
+void OCPN::inject(Runtime* instance)
 {
-	run_instance = run;
+	run_instance = instance;
 }
 
 Runtime& OCPN::run()
@@ -130,14 +132,24 @@ Runtime& OCPN::run()
 	return *run_instance;
 }
 
-void OCPN::inject(ColorManager* color)
+void OCPN::inject(ColorManager* instance)
 {
-	color_instance = color;
+	color_instance = instance;
 }
 
 ColorManager& OCPN::color()
 {
 	return *color_instance;
+}
+
+void OCPN::inject(navigation::RouteTracker* instance)
+{
+	tracker_instance = instance;
+}
+
+navigation::RouteTracker& OCPN::tracker()
+{
+	return *tracker_instance;
 }
 
 }

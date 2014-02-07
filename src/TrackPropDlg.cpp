@@ -35,6 +35,10 @@
 #include <Config.h>
 #include <Units.h>
 
+#include <global/OCPN.h>
+
+#include <navigation/RouteTracker.h>
+
 #include <geo/GeoRef.h>
 
 #include <plugin/PlugInManager.h>
@@ -42,7 +46,6 @@
 #include <gpx/gpx.h>
 
 extern RouteList* pRouteList;
-extern Track* g_pActiveTrack;
 extern Routeman* g_pRouteMan;
 extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
@@ -646,7 +649,8 @@ bool TrackPropDlg::IsThisTrackExtendable()
 {
 	m_pExtendRoute = NULL;
 	m_pExtendPoint = NULL;
-	if (m_pRoute == g_pActiveTrack || m_pRoute->m_bIsInLayer)
+
+	if (global::OCPN::get().tracker().is_active_track(m_pRoute) || m_pRoute->m_bIsInLayer)
 		return false;
 
 	RoutePoint* pLastPoint = m_pRoute->GetPoint(1);
@@ -817,7 +821,7 @@ void TrackPropDlg::OnTrackPropListClick(wxListEvent&)
 		if (prp) {
 			prp->m_bPtIsSelected = true; // highlight the routepoint
 
-			if (!(m_pRoute->m_bIsInLayer) && !(m_pRoute == g_pActiveTrack)
+			if (!(m_pRoute->m_bIsInLayer) && !global::OCPN::get().tracker().is_active_track(m_pRoute)
 				&& !(m_pRoute->m_bRtIsActive)) {
 				m_nSelected = selected_no + 1;
 				m_sdbBtmBtnsSizerSplit->Enable(true);

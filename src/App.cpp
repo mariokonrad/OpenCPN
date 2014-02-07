@@ -53,6 +53,8 @@
 
 #include <plugin/PlugInManager.h>
 
+#include <navigation/DefaultRouteTracker.h>
+
 #include <chart/ChartStack.h>
 #include <chart/ChartDB.h>
 #include <chart/ChartDummy.h>
@@ -285,6 +287,7 @@ App::App()
 	, run_instance(NULL)
 	, colors_instance(NULL)
 	, s52_color_provider(NULL)
+	, tracker_instance(NULL)
 	, start_fullscreen(false)
 	, first_run(false)
 	, logger(NULL)
@@ -409,6 +412,9 @@ void App::inject_global_instances()
 	s52_color_provider = new chart::S52ColorProvider;
 	colors_instance->inject_chart_color_provider(s52_color_provider);
 #endif
+
+	tracker_instance = new navigation::DefaultRouteTracker;
+	global::OCPN::get().inject(tracker_instance);
 }
 
 void App::establish_home_location()
@@ -571,12 +577,6 @@ void App::determine_world_map_location()
 	sys.set_world_map_location(location);
 }
 
-void App::TrackOff(void)
-{
-	if (gFrame)
-		gFrame->TrackOff();
-}
-
 void App::install_signal_handler()
 {
 #ifndef __WXMSW__
@@ -592,7 +592,7 @@ void App::install_signal_handler()
 
 	sigaction(SIGUSR1, NULL, &sa_all_old); // save existing action for this signal
 
-	//      Register my request for some signals
+	// Register my request for some signals
 	sigaction(SIGUSR1, &sa_all, NULL);
 
 	sigaction(SIGUSR1, NULL, &sa_all_old); // inspect existing action for this signal
@@ -1677,7 +1677,7 @@ bool App::OnInit()
 
 	// Start up a new track if enabled in config file
 	if (global::OCPN::get().ais().get_data().TrackCarryOver)
-		gFrame->TrackOn();
+		global::OCPN::get().tracker().start();
 
 	// Re-enable anchor watches if set in config file
 	const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();

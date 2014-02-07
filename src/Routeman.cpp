@@ -43,6 +43,8 @@
 #include <global/GUI.h>
 #include <global/ColorManager.h>
 
+#include <navigation/RouteTracker.h>
+
 #include <plugin/PlugInManager.h>
 
 #include <algorithm>
@@ -67,7 +69,6 @@ extern Config* pConfig;
 
 extern wxRect g_blink_rect;
 
-extern Track* g_pActiveTrack;
 extern RouteProp* pRoutePropDialog;
 extern RouteManagerDialog* pRouteManagerDialog;
 extern Multiplexer* g_pMUX;
@@ -968,17 +969,19 @@ void Routeman::DeleteTrack(Route* pRoute)
 		}
 	}
 
-	if ((Track*)pRoute == g_pActiveTrack) {
-		g_pActiveTrack = NULL;
-		m_pparent_app->TrackOff();
+	navigation::RouteTracker& tracker = global::OCPN::get().tracker();
+	if (tracker.is_active_track(pRoute)) {
+		tracker.stop(false, false);
 	}
 
 	delete pRoute;
 
 	::wxEndBusyCursor();
 
-	if (pprog)
+	if (pprog) {
 		delete pprog;
+		pprog = NULL;
+	}
 }
 
 void Routeman::SetColorScheme(global::ColorScheme)

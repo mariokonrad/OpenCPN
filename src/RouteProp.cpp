@@ -38,6 +38,7 @@
 #include <Daylight.h>
 
 #include <navigation/MagneticVariation.h>
+#include <navigation/RouteTracker.h>
 
 #include <geo/GeoRef.h>
 
@@ -68,7 +69,6 @@ extern ChartCanvas* cc1;
 extern Select* pSelect;
 extern Routeman* g_pRouteMan;
 extern RouteManagerDialog* pRouteManagerDialog;
-extern Track* g_pActiveTrack;
 extern RouteList* pRouteList;
 extern PlugInManager* g_pi_manager;
 extern MainFrame* gFrame;
@@ -671,7 +671,7 @@ void RouteProp::OnRoutepropListClick(wxListEvent& event)
 		if (prp) {
 			prp->m_bPtIsSelected = true; // highlight the routepoint
 
-			if (!(m_pRoute->m_bIsInLayer) && !(m_pRoute == g_pActiveTrack)
+			if (!(m_pRoute->m_bIsInLayer) && !global::OCPN::get().tracker().is_active_track(m_pRoute)
 				&& !(m_pRoute->m_bRtIsActive)) {
 				m_nSelected = selected_no + 1;
 				m_SplitButton->Enable(true);

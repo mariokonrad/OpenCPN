@@ -47,6 +47,8 @@
 #include <global/Navigation.h>
 #include <global/GUI.h>
 
+#include <navigation/RouteTracker.h>
+
 #include <iostream>
 #include <algorithm>
 
@@ -134,7 +136,6 @@ extern Routeman* g_pRouteMan;
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern chart::ChartBase* Current_Ch;
-extern Track* g_pActiveTrack;
 extern WayPointman* pWayPointMan;
 extern MarkInfoImpl* pMarkPropDialog;
 extern MainFrame* gFrame;
@@ -1424,7 +1425,7 @@ void RouteManagerDialog::UpdateTrkListCtrl()
 		li.SetData(index);
 		li.SetText(_T(""));
 
-		if (g_pActiveTrack == trk) {
+		if (global::OCPN::get().tracker().is_active_track(trk)) {
 			wxFont font = *wxNORMAL_FONT;
 			font.SetWeight(wxFONTWEIGHT_BOLD);
 			li.SetFont(font);
@@ -1516,8 +1517,9 @@ void RouteManagerDialog::OnTrkToggleVisibility(wxMouseEvent& event)
 
 void RouteManagerDialog::OnTrkNewClick(wxCommandEvent&)
 {
-	gFrame->TrackOff();
-	gFrame->TrackOn();
+	navigation::RouteTracker& tracker = global::OCPN::get().tracker();
+	tracker.stop();
+	tracker.start();
 
 	UpdateTrkListCtrl();
 }

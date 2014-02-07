@@ -103,6 +103,7 @@
 
 #include <navigation/AnchorDist.h>
 #include <navigation/MagneticVariation.h>
+#include <navigation/RouteTracker.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -272,12 +273,10 @@ wxPlatformInfo* g_pPlatform; // FIXME: App only
 
 wxToolBarToolBase* m_pAISTool; // FIXME: MainFrame only
 int g_nAIS_activity_timer; // FIXME: MainFrame only
-bool g_bTrackActive; // FIXME: MainFrame only
 AboutDialog* g_pAboutDlg; // FIXME: MainFrame only
 int g_sticky_chart; // FIXME: MainFrame only
 
 bool g_bShowAIS;
-Track* g_pActiveTrack;
 int g_total_NMEAerror_messages;
 CM93DSlide* pCM93DetailSlider;
 wxLocale* plocale_def_lang;
@@ -848,7 +847,7 @@ ToolBarSimple* MainFrame::CreateAToolbar()
 	tb->SetToolNormalBitmapEx(m_pAISTool, initiconName);
 	m_lastAISiconName = initiconName;
 
-	tb->ToggleTool(ID_TRACK, g_bTrackActive);
+	tb->ToggleTool(ID_TRACK, global::OCPN::get().tracker().is_active());
 
 	SetStatusBarPane(-1); // don't show help on status bar
 
@@ -1120,9 +1119,9 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 	global::OCPN::get().gui().set_frame_maximized(IsMaximized());
 
 	// Record the current state of tracking
-	global::OCPN::get().ais().set_TrackCarryOver(g_bTrackActive);
-
-	TrackOff();
+	navigation::RouteTracker& tracker = global::OCPN::get().tracker();
+	global::OCPN::get().ais().set_TrackCarryOver(tracker.is_active());
+	tracker.stop();
 
 	if (pCurrentStack) {
 		global::System& sys = global::OCPN::get().sys();
@@ -1618,12 +1617,14 @@ void MainFrame::OnToolLeftClick(wxCommandEvent& event)
 			toolLeftClick_ROUTEMANAGER();
 			break;
 
-		case ID_TRACK:
-			if (!g_bTrackActive)
-				TrackOn();
-			else
-				TrackOff(true);
-			break;
+		case ID_TRACK: {
+			navigation::RouteTracker& tracker = global::OCPN::get().tracker();
+			if (tracker.is_active()) {
+				tracker.stop(true);
+			} else {
+				tracker.start();
+			}
+		} break;
 
 		case ID_TBSTATBOX:
 			ToggleCourseUp();
@@ -1744,103 +1745,6 @@ void MainFrame::ActivateMOB(void)
 	mob_message += _T("   ");
 	mob_message += toSDMM(2, nav.pos.lon());
 	wxLogMessage(mob_message);
-}
-void MainFrame::TrackOn(void)
-{
-	g_bTrackActive = true;
-	g_pActiveTrack = new Track();
-
-	pRouteList->push_back(g_pActiveTrack);
-	g_pActiveTrack->Start();
-
-	if (g_toolbar)
-		g_toolbar->ToggleTool(ID_TRACK, g_bTrackActive);
-
-	if (pRouteManagerDialog && pRouteManagerDialog->IsShown()) {
-		pRouteManagerDialog->UpdateTrkListCtrl();
-		pRouteManagerDialog->UpdateRouteListCtrl();
-	}
-
-	wxJSONValue v;
-	wxDateTime now;
-	now = now.Now().ToUTC();
-	wxString name = g_pActiveTrack->m_RouteNameString;
-	if (name.IsEmpty()) {
-		RoutePoint* rp = g_pActiveTrack->GetPoint(1);
-		if (rp && rp->GetCreateTime().IsValid())
-			name = rp->GetCreateTime().FormatISODate() + _T(" ")
-				   + rp->GetCreateTime().FormatISOTime();
-		else
-			name = _("(Unnamed Track)");
-	}
-	v[_T("Name")] = name;
-	v[_T("GUID")] = g_pActiveTrack->m_GUID;
-	wxString msg_id(_T("OCPN_TRK_ACTIVATED"));
-	g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
-}
-
-Track* MainFrame::TrackOff(bool do_add_point)
-{
-	Track* return_val = g_pActiveTrack;
-
-	if (g_pActiveTrack) {
-		wxJSONValue v;
-		wxString msg_id(_T("OCPN_TRK_DEACTIVATED"));
-		v[_T("GUID")] = g_pActiveTrack->m_GUID;
-		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
-
-		g_pActiveTrack->Stop(do_add_point);
-
-		if (g_pActiveTrack->GetnPoints() < 2) {
-			g_pRouteMan->DeleteRoute(g_pActiveTrack);
-			return_val = NULL;
-		} else {
-			const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
-
-			if (track.TrackDaily) {
-				Track* pExtendTrack = g_pActiveTrack->DoExtendDaily();
-				if (pExtendTrack) {
-					g_pRouteMan->DeleteRoute(g_pActiveTrack);
-					return_val = pExtendTrack;
-				}
-			}
-		}
-	}
-
-	g_pActiveTrack = NULL;
-	g_bTrackActive = false;
-
-	if (pRouteManagerDialog && pRouteManagerDialog->IsShown()) {
-		pRouteManagerDialog->UpdateTrkListCtrl();
-		pRouteManagerDialog->UpdateRouteListCtrl();
-	}
-
-	if (g_toolbar)
-		g_toolbar->ToggleTool(ID_TRACK, g_bTrackActive);
-
-	return return_val;
-}
-
-void MainFrame::TrackMidnightRestart(void)
-{
-	if (!g_pActiveTrack)
-		return;
-
-	Track* pPreviousTrack = TrackOff(true);
-	TrackOn();
-
-	// Set the restarted track's current state such that the current track point's attributes match
-	// the attributes of the last point of the track that was just stopped at midnight.
-
-	if (pPreviousTrack) {
-		RoutePoint* pMidnightPoint = pPreviousTrack->GetLastPoint();
-		g_pActiveTrack->AdjustCurrentTrackPoint(pMidnightPoint);
-	}
-
-	if (pRouteManagerDialog && pRouteManagerDialog->IsShown()) {
-		pRouteManagerDialog->UpdateTrkListCtrl();
-		pRouteManagerDialog->UpdateRouteListCtrl();
-	}
 }
 
 void MainFrame::ToggleCourseUp(void)
@@ -2266,8 +2170,9 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 
 	pConfig->UpdateSettings();
 
-	if (g_pActiveTrack) {
-		g_pActiveTrack->SetPrecision(global::OCPN::get().nav().get_track().TrackPrecision);
+	navigation::RouteTracker& tracker = global::OCPN::get().tracker();
+	if (tracker.is_active()) {
+		tracker.set_precision(global::OCPN::get().nav().get_track().TrackPrecision);
 	}
 
 	if ((bPrevQuilt != view.quilt_enable) || (bPrevFullScreenQuilt != view.fullscreen_quilt)) {
@@ -3129,7 +3034,7 @@ void MainFrame::onTimer_log_message()
 
 			const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 			if ((lognow.GetHour() == 0) && (lognow.GetMinute() == 0) && track.TrackDaily)
-				TrackMidnightRestart();
+				global::OCPN::get().tracker().restart();
 
 			onTimer_play_bells_on_log();
 		}
@@ -4697,7 +4602,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 				v[i][_T("error")] = false;
 				v[i][_T("name")] = name;
 				v[i][_T("GUID")] = (*it)->m_GUID;
-				if (g_pActiveTrack == (*it) && !mode)
+				if (global::OCPN::get().tracker().is_active_track(*it) && !mode)
 					v[i][_T("active")] = true;
 				else
 					v[i][_T("active")] = (*it)->IsActive();

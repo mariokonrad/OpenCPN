@@ -43,6 +43,11 @@ class ColorManager;
 class ColorProvider;
 }
 
+namespace navigation
+{
+class RouteTracker;
+}
+
 class App : public wxApp
 {
 	DECLARE_EVENT_TABLE()
@@ -54,7 +59,6 @@ public:
 	void OnInitCmdLine(wxCmdLineParser& parser);
 	bool OnCmdLineParsed(wxCmdLineParser& parser);
 	void OnActivateApp(wxActivateEvent& event);
-	void TrackOff(void);
 
 	wxSingleInstanceChecker* m_checker;
 
@@ -88,8 +92,8 @@ private:
 	global::OCPN_System* sys_instance;
 	global::OCPN_Runtime* run_instance;
 	global::ColorManager* colors_instance;
-
 	global::ColorProvider* s52_color_provider;
+	navigation::RouteTracker* tracker_instance;
 
 	bool start_fullscreen;
 	bool first_run;

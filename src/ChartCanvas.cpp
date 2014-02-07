@@ -78,6 +78,7 @@
 
 #include <navigation/AnchorDist.h>
 #include <navigation/MagneticVariation.h>
+#include <navigation/RouteTracker.h>
 
 #include <geo/LineClip.h>
 #include <geo/Geodesic.h>
@@ -149,7 +150,6 @@ extern MarkInfoImpl* pMarkPropDialog;
 extern RouteProp* pRoutePropDialog;
 extern TrackPropDlg* pTrackPropDialog;
 extern MarkInfoImpl* pMarkInfoDialog;
-extern Track* g_pActiveTrack;
 
 extern chart::ChartGroupArray* g_pGroupArray;
 extern RoutePoint* pAnchorWatchPoint1;
@@ -936,7 +936,7 @@ void ChartCanvas::set_follow(bool value)
 
 void ChartCanvas::reset_tide_window()
 {
-	pCwin == NULL;
+	pCwin = NULL;
 }
 
 int ChartCanvas::GetCanvasChartNativeScale()
@@ -4666,12 +4666,10 @@ void ChartCanvas::UpdateShips()
 	ocpnDC ocpndc = ocpnDC(temp_dc);
 	ShipDraw(ocpndc);
 
-	if (g_pActiveTrack && g_pActiveTrack->IsRunning()) {
-		RoutePoint* p = g_pActiveTrack->GetLastPoint();
-		if (p) {
-			wxPoint px = cc1->GetCanvasPointPix(p->get_position());
-			ocpndc.CalcBoundingBox(px.x, px.y);
-		}
+	const navigation::RouteTracker& tracker = global::OCPN::get().tracker();
+	if (tracker.has_active_track() && tracker.is_running()) {
+		wxPoint px = cc1->GetCanvasPointPix(tracker.get_last_position());
+		ocpndc.CalcBoundingBox(px.x, px.y);
 	}
 
 	ship_draw_rect = wxRect(temp_dc.MinX(), temp_dc.MinY(), temp_dc.MaxX() - temp_dc.MinX(),
@@ -7536,8 +7534,8 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 			if (dlg_return == wxID_YES) {
 
-				if ((Track*)(m_pSelectedTrack) == g_pActiveTrack)
-					parent_frame->TrackOff();
+				if (global::OCPN::get().tracker().is_active_track(m_pSelectedTrack))
+					global::OCPN::get().tracker().stop();
 
 				pConfig->DeleteConfigRoute(m_pSelectedTrack);
 

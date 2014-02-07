@@ -24,6 +24,8 @@
 #ifndef __GLOBAL__OCPN__H__
 #define __GLOBAL__OCPN__H__
 
+namespace navigation { class RouteTracker; }
+
 namespace global {
 
 class GUI;
@@ -36,23 +38,6 @@ class ColorManager;
 
 class OCPN
 {
-private:
-	static OCPN* instance;
-
-	GUI* gui_instance;
-	Navigation* nav_instance;
-	AIS* ais_instance;
-	WatchDog* wdt_instance;
-	System* sys_instance;
-	Runtime* run_instance;
-	ColorManager* color_instance;
-
-private:
-	OCPN();
-	OCPN(const OCPN&);
-	~OCPN();
-	OCPN& operator=(const OCPN&);
-
 public:
 	static OCPN& get();
 	void clear();
@@ -77,6 +62,26 @@ public:
 
 	void inject(ColorManager*);
 	ColorManager& color();
+
+	void inject(navigation::RouteTracker*);
+	navigation::RouteTracker& tracker();
+
+private:
+	OCPN();
+	OCPN(const OCPN&);
+	~OCPN();
+	OCPN& operator=(const OCPN&);
+
+	static OCPN* instance;
+
+	GUI* gui_instance;
+	Navigation* nav_instance;
+	AIS* ais_instance;
+	WatchDog* wdt_instance;
+	System* sys_instance;
+	Runtime* run_instance;
+	ColorManager* color_instance;
+	navigation::RouteTracker* tracker_instance;
 };
 
 }

@@ -6,7 +6,7 @@ rmdir /q/s build
 mkdir build
 cd build
 
-goto debug_build_vs2010
+goto release_build_vs2010
 
 :debug_build_vs2010
 echo "BUILD: debug, visual studio 2010"

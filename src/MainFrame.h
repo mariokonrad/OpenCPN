@@ -136,8 +136,6 @@ public:
 	void ToggleRocks(void);
 	bool ToggleLights(bool doToggle = true, bool temporary = false);
 	void ToggleAnchor(void);
-	void TrackOn(void);
-	Track* TrackOff(bool do_add_point = false);
 	void TrackMidnightRestart(void);
 	int GetnChartStack(void);
 	void SetToolbarItemState(int tool_id, bool state);

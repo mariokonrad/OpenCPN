@@ -299,12 +299,39 @@ App::App()
 
 void App::OnInitCmdLine(wxCmdLineParser& parser)
 {
-	// Add some OpenCPN specific command line options
-	parser.AddSwitch(_T("unit_test_1"));
-	parser.AddSwitch(_T("p"));
-	parser.AddSwitch(_T("no_opengl"));
-	parser.AddSwitch(_T("fullscreen"));
-	parser.AddSwitch(_T("winconsole"));
+	static const wxCmdLineEntryDesc OPTIONS[] =
+	{
+		{
+			wxCMD_LINE_SWITCH, NULL, _T("unit_test_1"),
+			_T("executes a specific test"),
+			wxCMD_LINE_VAL_NONE, 0
+		},
+		{
+			wxCMD_LINE_SWITCH, _T("p"), _T("portable"),
+			_T("enables the 'portable' behaviour"),
+			wxCMD_LINE_VAL_NONE, 0
+		},
+		{
+			wxCMD_LINE_SWITCH, NULL, _T("no_opengl"),
+			_T("disables OpenGL, even if it's compiled in"),
+			wxCMD_LINE_VAL_NONE, 0
+		},
+		{
+			wxCMD_LINE_SWITCH, NULL, _T("fullscreen"),
+			_T("starts the application in full screen"),
+			wxCMD_LINE_VAL_NONE, 0
+		},
+#ifdef __WXMSW__
+		{
+			wxCMD_LINE_SWITCH, NULL, _T("winconsole"),
+			_T("enables the console output on Windows"),
+			wxCMD_LINE_VAL_NONE, 0
+		},
+#endif
+		{ wxCMD_LINE_NONE, NULL, NULL, NULL, wxCMD_LINE_VAL_NONE, 0 }
+	};
+
+	parser.SetDesc(OPTIONS);
 }
 
 bool App::OnCmdLineParsed(wxCmdLineParser& parser)
@@ -313,7 +340,11 @@ bool App::OnCmdLineParsed(wxCmdLineParser& parser)
 	g_bportable = parser.Found(_T("p"));
 	global::OCPN::get().gui().set_disable_opengl(parser.Found(_T("no_opengl")));
 	start_fullscreen = parser.Found(_T("fullscreen"));
+
+#ifdef __WXMSW__
 	win_console = parser.Found(_T("winconsole"));
+#endif
+
 	return true;
 }
 

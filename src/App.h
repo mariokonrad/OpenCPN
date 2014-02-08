@@ -100,6 +100,8 @@ private:
 	wxLog* logger;
 	wxLog* old_logger;
 	FILE* file_log;
+
+	bool win_console;
 };
 
 #endif

@@ -293,6 +293,7 @@ App::App()
 	, logger(NULL)
 	, old_logger(NULL)
 	, file_log(NULL)
+	, win_console(false)
 {
 }
 
@@ -303,6 +304,7 @@ void App::OnInitCmdLine(wxCmdLineParser& parser)
 	parser.AddSwitch(_T("p"));
 	parser.AddSwitch(_T("no_opengl"));
 	parser.AddSwitch(_T("fullscreen"));
+	parser.AddSwitch(_T("winconsole"));
 }
 
 bool App::OnCmdLineParsed(wxCmdLineParser& parser)
@@ -311,6 +313,7 @@ bool App::OnCmdLineParsed(wxCmdLineParser& parser)
 	g_bportable = parser.Found(_T("p"));
 	global::OCPN::get().gui().set_disable_opengl(parser.Found(_T("no_opengl")));
 	start_fullscreen = parser.Found(_T("fullscreen"));
+	win_console = parser.Found(_T("winconsole"));
 	return true;
 }
 
@@ -1154,8 +1157,9 @@ bool App::OnInit()
 	old_logger = wxLog::SetActiveTarget(logger);
 
 #ifdef __WXMSW__
-	// Un-comment the following to establish a separate console window as a target for printf() in Windows
-	// RedirectIOToConsole();
+	if (win_console) {
+		RedirectIOToConsole();
+	}
 #endif
 
 #ifndef __WXMSW__

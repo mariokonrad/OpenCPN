@@ -20,8 +20,8 @@ goto end
 :release_build_vs2010
 echo "BUILD: release, visual studio 2010"
 cmake -G "Visual Studio 10" -DCMAKE_BUILD_TYPE=Release %~dp0
-cmake --build . --config Release
 cmake --build . --target unittest
+cmake --build . --config Release
 cpack -G NSIS -C Release
 cpack -G ZIP  -C Release
 goto end

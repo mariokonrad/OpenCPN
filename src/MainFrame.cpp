@@ -143,10 +143,6 @@
 #endif
 #endif
 
-#ifdef __WXMSW__
-void RedirectIOToConsole();
-#endif
-
 using chart::ChartBase;
 
 

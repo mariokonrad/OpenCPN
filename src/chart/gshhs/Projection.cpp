@@ -163,8 +163,8 @@ void Projection::map2screen(double x, double y, int* i, int* j) const
 	if (y >= 90)
 		y = 89.9;
 
-	*i = round(scale * (x - xW));
-	*j = H / 2 + round(scale * (PY - radToDeg(log(tan(degToRad(y) / 2 + M_PI_4)))));
+	*i = static_cast<int>(round(scale * (x - xW)));
+	*j = H / 2 + static_cast<int>(round(scale * (PY - radToDeg(log(tan(degToRad(y) / 2 + M_PI_4))))));
 }
 
 void Projection::map2screenDouble(double x, double y, double* i, double* j) const

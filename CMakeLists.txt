@@ -1142,7 +1142,7 @@ SET(SRCS
 	src/OCPN_AlertDialog.cpp
 	)
 
-SET( PACKAGE_HEADERS "" )
+set(PACKAGE_HEADERS "")
 
 if(OPENGL_GLU_FOUND)
 	set(HDRS ${HDRS}
@@ -1355,6 +1355,8 @@ if(WIN32)
 	set(SRCS ${SRCS}
 		src/windows/compatibility.cpp
 		src/windows/compatibility.h
+		src/WinConsole.cpp
+		src/WinConsole.h
 		${CMAKE_CURRENT_BINARY_DIR}/src/opencpn.rc
 		)
 endif(WIN32)
@@ -1418,13 +1420,6 @@ endif(xAPPLE)
 
 if(WIN32)
 	add_executable(${PACKAGE_NAME} WIN32 ${HDRS} ${SRCS})
-endif(WIN32)
-
-if(WIN32)
-	set(SRCS ${SRCS}
-		src/WinConsole.h
-		src/WinConsole.cpp
-		)
 endif(WIN32)
 
 

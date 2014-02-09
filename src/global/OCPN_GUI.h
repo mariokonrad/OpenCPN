@@ -81,6 +81,8 @@ public: // view
 	virtual void set_GroupIndex(int);
 	virtual void set_ais_cog_predictor_width(int);
 	virtual void set_default_wp_icon(const wxString&);
+	virtual void set_useStencil(bool);
+	virtual void set_GLMinLineWidth(double);
 
 public: // frame
 	virtual const Frame& frame() const;

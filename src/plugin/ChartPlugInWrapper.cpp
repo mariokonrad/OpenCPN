@@ -30,6 +30,7 @@
 #include <ocpn_pixel.h>
 
 #include <global/OCPN.h>
+#include <global/GUI.h>
 #include <global/System.h>
 #include <global/ColorManager.h>
 
@@ -46,7 +47,6 @@
 #include <wx/bitmap.h>
 
 extern wxString gExe_path;
-extern bool g_b_useStencil;
 extern PlugInManager* g_pi_manager;
 
 #ifdef USE_S57
@@ -273,7 +273,8 @@ bool ChartPlugInWrapper::RenderRegionViewOnGL(const wxGLContext& glc, const View
 		wxRegion r = rg.ConvertTowxRegion();
 		PlugInChartBaseGL* ppicb_gl = dynamic_cast<PlugInChartBaseGL*>(m_ppicb);
 		if (ppicb_gl) {
-			ppicb_gl->RenderRegionViewOnGL(glc, pivp, r, g_b_useStencil);
+			const bool use_stencil = global::OCPN::get().gui().view().useStencil;
+			ppicb_gl->RenderRegionViewOnGL(glc, pivp, r, use_stencil);
 		}
 		return true;
 	} else

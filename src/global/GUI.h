@@ -78,6 +78,8 @@ public:
 		int GroupIndex;
 		int ais_cog_predictor_width;
 		wxString default_wp_icon;
+		bool useStencil;
+		double GLMinLineWidth;
 	};
 
 	virtual const View& view() const = 0;
@@ -119,6 +121,8 @@ public:
 	virtual void set_GroupIndex(int) = 0;
 	virtual void set_ais_cog_predictor_width(int) = 0;
 	virtual void set_default_wp_icon(const wxString&) = 0;
+	virtual void set_useStencil(bool) = 0;
+	virtual void set_GLMinLineWidth(double) = 0;
 
 public:
 	struct Frame

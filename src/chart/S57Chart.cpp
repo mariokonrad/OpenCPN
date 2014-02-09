@@ -75,13 +75,12 @@
 
 extern chart::s52plib* ps52plib;
 extern S57ClassRegistrar* g_poRegistrar;
-extern bool g_b_useStencil;
 extern ChartCanvas* cc1;
 extern chart::ChartBase* Current_Ch;
 
 extern wxProgressDialog *s_ProgDialog;
 
-static jmp_buf env_ogrf;                    // the context saved by setjmp();
+static jmp_buf env_ogrf; // the context saved by setjmp();
 
 namespace chart {
 
@@ -1623,8 +1622,9 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const OCPNRe
 							   bool b_render_nodta)
 {
 #ifdef ocpnUSE_GL
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 
-	if (g_b_useStencil) {
+	if (view.useStencil) {
 		// Create a stencil buffer for clipping to the region
 		glEnable(GL_STENCIL_TEST);
 		glStencilMask(0x1); // write only into bit 0 of the stencil buffer
@@ -1668,7 +1668,7 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const OCPNRe
 	while (upd.HaveRects()) {
 		wxRect rect = upd.GetRect();
 
-		if (g_b_useStencil) {
+		if (view.useStencil) {
 			glBegin(GL_QUADS);
 
 			glVertex2f(rect.x, rect.y);
@@ -1699,7 +1699,7 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const OCPNRe
 		upd.NextRect();
 	}
 
-	if (g_b_useStencil) {
+	if (view.useStencil) {
 		// Now set the stencil ops to subsequently render only where the stencil bit is "1"
 		glStencilFunc(GL_EQUAL, 1, 1);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
@@ -1717,8 +1717,9 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const wxRect
 							   bool b_render_nodta)
 {
 #ifdef ocpnUSE_GL
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 
-	if (g_b_useStencil) {
+	if (view.useStencil) {
 		// Create a stencil buffer for clipping to the region
 		glEnable(GL_STENCIL_TEST);
 		glStencilMask(0x1); // write only into bit 0 of the stencil buffer
@@ -1754,7 +1755,7 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const wxRect
 		glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE); // disable color buffer
 	}
 
-	if (g_b_useStencil) {
+	if (view.useStencil) {
 		glBegin(GL_QUADS);
 
 		glVertex2f(Rect.x, Rect.y);
@@ -1780,7 +1781,7 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const wxRect
 		glEnd();
 	}
 
-	if (g_b_useStencil) {
+	if (view.useStencil) {
 		// Now set the stencil ops to subsequently render only where the stencil bit is "1"
 		glStencilFunc(GL_EQUAL, 1, 1);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
@@ -1797,39 +1798,38 @@ void s57chart::SetClipRegionGL(const wxGLContext&, const ViewPort&, const wxRect
 bool s57chart::DoRenderRectOnGL(const wxGLContext& glc, const ViewPort& VPoint, wxRect& rect)
 {
 #ifdef ocpnUSE_GL
-	int i;
 	ObjRazRules* top;
-	ObjRazRules* crnt;
 
 	ViewPort tvp = VPoint; // FIXME: undo const  TODO fix this in PLIB
 
-	if (g_b_useStencil)
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+	if (view.useStencil)
 		glEnable(GL_STENCIL_TEST);
 	else
 		glEnable(GL_DEPTH_TEST);
 
 	// Render the areas quickly
-	for (i = 0; i < PRIO_NUM; ++i) {
+	for (int i = 0; i < PRIO_NUM; ++i) {
 		if (ps52plib->m_nBoundaryStyle == SYMBOLIZED_BOUNDARIES)
 			top = razRules[i][4]; // Area Symbolized Boundaries
 		else
 			top = razRules[i][3]; // Area Plain Boundaries
 
 		while (top != NULL) {
-			crnt = top;
+			ObjRazRules* crnt = top;
 			top = top->next; // next object
 			ps52plib->RenderAreaToGL(glc, crnt, tvp, rect);
 		}
 	}
 
 	// Render the lines and points
-	for (i = 0; i < PRIO_NUM; ++i) {
+	for (int i = 0; i < PRIO_NUM; ++i) {
 		if (ps52plib->m_nBoundaryStyle == SYMBOLIZED_BOUNDARIES)
 			top = razRules[i][4]; // Area Symbolized Boundaries
 		else
 			top = razRules[i][3]; // Area Plain Boundaries
 		while (top != NULL) {
-			crnt = top;
+			ObjRazRules* crnt = top;
 			top = top->next; // next object
 			ps52plib->RenderObjectToGL(glc, crnt, tvp, rect);
 		}
@@ -1847,7 +1847,7 @@ bool s57chart::DoRenderRectOnGL(const wxGLContext& glc, const ViewPort& VPoint, 
 			top = razRules[i][1]; // Paper Chart Points Points
 
 		while (top != NULL) {
-			crnt = top;
+			ObjRazRules* crnt = top;
 			top = top->next;
 			ps52plib->RenderObjectToGL(glc, crnt, tvp, rect);
 		}

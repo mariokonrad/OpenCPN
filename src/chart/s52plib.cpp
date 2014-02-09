@@ -29,6 +29,7 @@
 #include <util/crc32.h>
 
 #include <global/OCPN.h>
+#include <global/GUI.h>
 #include <global/System.h>
 #include <global/ColorManager.h>
 
@@ -56,15 +57,13 @@
 #include <wx/textfile.h>
 
 #ifdef __MSVC__
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
-#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__ )
-#define new DEBUG_NEW
+	#define _CRTDBG_MAP_ALLOC
+	#include <crtdbg.h>
+	#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__ )
+	#define new DEBUG_NEW
 #endif
 
 extern chart::s52plib* ps52plib;
-extern bool g_b_useStencil;
-extern double g_GLMinLineWidth;
 
 namespace chart {
 
@@ -254,7 +253,7 @@ s52plib::s52plib(const wxString& PLib, bool b_forceLegacy)
 
 	HPGL = new RenderFromHPGL(this);
 
-	g_GLMinLineWidth = 0.;
+	global::OCPN::get().gui().set_GLMinLineWidth(0.0);
 }
 
 s52plib::~s52plib()
@@ -423,7 +422,7 @@ void s52plib::SetGLRendererString(const wxString& renderer)
 	// Detect this case, and adjust the render parameters.
 
 	if (renderer.Upper().Find(_T("MESA")) != wxNOT_FOUND)
-		g_GLMinLineWidth = 1.2;
+		global::OCPN::get().gui().set_GLMinLineWidth(1.2);
 }
 
 // Update the S52 Conditional Symbology Parameter Set to reflect the
@@ -2464,7 +2463,8 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 	}
 
 #ifdef ocpnUSE_GL
-	else { // OpenGL mode
+	else {
+		// OpenGL mode
 		glPushAttrib(GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT | GL_ENABLE_BIT); // Save state
 
 		glColor3ub(c->R, c->G, c->B);
@@ -2472,16 +2472,18 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		glDisable(GL_LINE_SMOOTH);
 		glDisable(GL_BLEND);
 
-		//    Set drawing width
+		const float min_line_width = global::OCPN::get().gui().view().GLMinLineWidth;
+
+		// Set drawing width
 		if (w > 1) {
 			GLint parms[2];
 			glGetIntegerv(GL_ALIASED_LINE_WIDTH_RANGE, &parms[0]);
 			if (w > parms[1])
-				glLineWidth(wxMax(g_GLMinLineWidth, parms[1]));
+				glLineWidth(wxMax(min_line_width, parms[1]));
 			else
-				glLineWidth(wxMax(g_GLMinLineWidth, w));
+				glLineWidth(wxMax(min_line_width, w));
 		} else
-			glLineWidth(wxMax(g_GLMinLineWidth, 1));
+			glLineWidth(wxMax(min_line_width, 1));
 
 		if (!strncmp(str, "DASH", 4)) {
 			glLineStipple(1, 0x3F3F);
@@ -2494,7 +2496,7 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 	}
 #endif
 
-	//    Get a true pixel clipping/bounding box from the vp
+	// Get a true pixel clipping/bounding box from the vp
 	wxPoint pbb = vp.GetPixFromLL(vp.get_position());
 	int xmin_ = pbb.x - vp.rv_rect.width / 2;
 	int xmax_ = xmin_ + vp.rv_rect.width;
@@ -2503,10 +2505,9 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 
 	int x0, y0, x1, y1;
 
-	//  Get the current display priority from the LUP
-	int priority_current
-		= rzRules->LUP->DPRI
-		  - '0'; // TODO fix this hack by putting priority into object during _insertRules
+	// Get the current display priority from the LUP
+	// TODO fix this hack by putting priority into object during _insertRules
+	int priority_current = rzRules->LUP->DPRI - '0';
 
 	if (rzRules->obj->m_n_lsindex) {
 		VE_Hash* ve_hash;
@@ -3102,10 +3103,13 @@ void s52plib::draw_lc_poly(wxDC* pdc, wxColor& color, int width, wxPoint* ptp, i
 	} // if pdc
 
 #ifdef ocpnUSE_GL
-	else { // opengl
-		//    Set up the color
+	else {
+		// opengl
+		// Set up the color
+		const float min_line_width = global::OCPN::get().gui().view().GLMinLineWidth;
+
 		glColor4ub(color.Red(), color.Green(), color.Blue(), color.Alpha());
-		glLineWidth(wxMax(g_GLMinLineWidth, (float)width * 0.7));
+		glLineWidth(wxMax(min_line_width, 0.7f * width));
 
 		int start_seg = 0;
 		int end_seg = npt - 1;
@@ -3117,7 +3121,13 @@ void s52plib::draw_lc_poly(wxDC* pdc, wxColor& color, int width, wxPoint* ptp, i
 			inc = -1;
 		}
 
-		float dx, dy, seg_len, theta, cth, sth, tdeg;
+		float dx;
+		float dy;
+		float seg_len;
+		float theta;
+		float cth;
+		float sth;
+		float tdeg;
 
 		bool done = false;
 		int iseg = start_seg;
@@ -3158,7 +3168,7 @@ void s52plib::draw_lc_poly(wxDC* pdc, wxColor& color, int width, wxPoint* ptp, i
 
 					glPushAttrib(GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT); // Save state
 
-					//      Enable anti-aliased lines, at best quality
+					// Enable anti-aliased lines, at best quality
 					glEnable(GL_LINE_SMOOTH);
 					glEnable(GL_BLEND);
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -3194,7 +3204,7 @@ void s52plib::draw_lc_poly(wxDC* pdc, wxColor& color, int width, wxPoint* ptp, i
 					// finish segment
 					glPushAttrib(GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT); // Save state
 
-					//      Enable anti-aliased lines, at best quality
+					// Enable anti-aliased lines, at best quality
 					glEnable(GL_LINE_SMOOTH);
 					glEnable(GL_BLEND);
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -3241,7 +3251,7 @@ int s52plib::RenderMPS(ObjRazRules* rzRules, Rules*, const ViewPort& vp)
 			ObjRazRules* point_rzRules = new ObjRazRules;
 			*point_rzRules = *rzRules; // take a copy of attributes, etc
 
-			//  Need a new LUP
+			// Need a new LUP
 			LUPrec* NewLUP = new LUPrec;
 
 			*NewLUP = *(rzRules->LUP); // copy the parent's LUP
@@ -3250,12 +3260,12 @@ int s52plib::RenderMPS(ObjRazRules* rzRules, Rules*, const ViewPort& vp)
 
 			point_rzRules->LUP = NewLUP;
 
-			//  Need a new S57Obj
+			// Need a new S57Obj
 			S57Obj* point_obj = new S57Obj;
 			*point_obj = *(rzRules->obj);
 			point_rzRules->obj = point_obj;
 
-			//  Touchup the new items
+			// Touchup the new items
 			point_rzRules->obj->bCS_Added = false;
 			point_rzRules->obj->bIsClone = true;
 			point_rzRules->obj->npt = 1;
@@ -3276,11 +3286,11 @@ int s52plib::RenderMPS(ObjRazRules* rzRules, Rules*, const ViewPort& vp)
 			previous_rzRules = point_rzRules;
 		}
 
-		//   Top of the chain is previous_rzRules
+		// Top of the chain is previous_rzRules
 		rzRules->child = previous_rzRules;
 	}
 
-	//   Walk the chain, drawing..
+	// Walk the chain, drawing..
 	ObjRazRules* current = rzRules->child;
 	while (current) {
 		if (m_pdc)
@@ -3415,8 +3425,8 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		// This will properly establish the drawing box in the dc
 
 		int border_fluff = 4; // by how much should the blit bitmap be "fluffed"
-		if (fabs(sectr2 - sectr1) != 360) // not necessary for all-round lights
-		{
+		if (fabs(sectr2 - sectr1) != 360) {
+			// not necessary for all-round lights
 			mdc.ResetBoundingBox();
 
 			wxPen* pblockpen = wxThePenList->FindOrCreatePen(*wxBLACK, 10, wxSOLID);
@@ -3431,11 +3441,11 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 				end_angle = se;
 			}
 
-			int x0 = (width / 2) + (int)(rad * cos(start_angle * M_PI / 180.));
-			int y0 = (height / 2) - (int)(rad * sin(start_angle * M_PI / 180.));
+			int x0 = (width / 2) + (int)(rad * cos(start_angle * M_PI / 180.0));
+			int y0 = (height / 2) - (int)(rad * sin(start_angle * M_PI / 180.0));
 			for (double a = start_angle + .1; a <= end_angle; a += 2.0) {
-				int x = (width / 2) + (int)(rad * cos(a * M_PI / 180.));
-				int y = (height / 2) - (int)(rad * sin(a * M_PI / 180.));
+				int x = (width / 2) + (int)(rad * cos(a * M_PI / 180.0));
+				int y = (height / 2) - (int)(rad * sin(a * M_PI / 180.0));
 				mdc.DrawLine(x0, y0, x, y);
 				x0 = x;
 				y0 = y;
@@ -3459,7 +3469,7 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 		// Do not need to actually render the symbol for OpenGL mode
 		// We just need the extents calculated above...
 		if (m_pdc) {
-			//    Draw the outer border
+			// Draw the outer border
 			wxColour color = getwxColour(outline_color);
 
 			wxPen* pthispen = wxThePenList->FindOrCreatePen(color, outline_width, wxSOLID);
@@ -3523,11 +3533,13 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 
 			// Render the symbology as a zero based Display List
 
+			const float min_line_width = global::OCPN::get().gui().view().GLMinLineWidth;
+
 			// Draw wide outline arc
-			glLineWidth(wxMax(g_GLMinLineWidth, 0.5));
+			glLineWidth(wxMax(min_line_width, 0.5));
 			wxColour colorb = getwxColour(outline_color);
 			glColor4ub(colorb.Red(), colorb.Green(), colorb.Blue(), 150);
-			glLineWidth(wxMax(g_GLMinLineWidth, outline_width));
+			glLineWidth(wxMax(min_line_width, outline_width));
 
 			if (sectr1 > sectr2)
 				sectr2 += 360;
@@ -3540,7 +3552,7 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 			// Draw narrower color arc, overlaying the drawn outline.
 			colorb = getwxColour(arc_color);
 			glColor4ub(colorb.Red(), colorb.Green(), colorb.Blue(), 255);
-			glLineWidth(wxMax(g_GLMinLineWidth, (float)arc_width + 0.8));
+			glLineWidth(wxMax(min_line_width, 0.8f + arc_width));
 
 			glBegin(GL_LINE_STRIP);
 			for (double a = sectr1 * M_PI / 180.0; a <= sectr2 * M_PI / 180.; a += 2 * M_PI / 200)
@@ -3553,7 +3565,7 @@ int s52plib::RenderCARC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 
 				wxColour c = global::OCPN::get().color().get_color(_T("CHBLK"));
 				glColor4ub(c.Red(), c.Green(), c.Blue(), c.Alpha());
-				glLineWidth(wxMax(g_GLMinLineWidth, (float)0.7));
+				glLineWidth(wxMax(min_line_width, 0.7f));
 
 				glLineStipple(1, 0x3F3F);
 				glEnable(GL_LINE_STIPPLE);
@@ -3773,7 +3785,7 @@ int s52plib::DoRenderObject(wxDC* pdcin, ObjRazRules* rzRules, const ViewPort& v
 					rzRules->obj->bCS_Added = 1; // mark the object
 				}
 
-				//    The CS procedure may have changed the Display Category of the Object, need to
+				// The CS procedure may have changed the Display Category of the Object, need to
 				// check again for visibility
 				if (ObjectRenderCheckCat(rzRules, vp)) {
 
@@ -4268,7 +4280,7 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 	xmid = ptp[imid].x;
 	ymid = ptp[imid].y;
 
-	//      Create edge arrays using fast integer DDA
+	// Create edge arrays using fast integer DDA
 	int m, x, dy, count;
 	bool cw;
 
@@ -4319,7 +4331,7 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 		}
 
 		double ddfSum = 0;
-		//      Check the triangle edge winding direction
+		// Check the triangle edge winding direction
 		ddfSum += (xmin / 1) * (ymax / 1) - (ymin / 1) * (xmax / 1);
 		ddfSum += (xmax / 1) * (ymid / 1) - (ymax / 1) * (xmid / 1);
 		ddfSum += (xmid / 1) * (ymin / 1) - (ymid / 1) * (xmin / 1);
@@ -4369,17 +4381,16 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 			}
 		}
 
-		//      Check the triangle edge winding direction
+		// Check the triangle edge winding direction
 		long dfSum = 0;
 		dfSum += xmin * ymax - ymin * xmax;
 		dfSum += xmax * ymid - ymax * xmid;
 		dfSum += xmid * ymin - ymid * xmin;
 
 		cw = dfSum < 0;
+	}
 
-	} // else
-
-	//      if cw is true, redge is actually on the right
+	// if cw is true, redge is actually on the right
 
 	int y1 = ymax;
 	int y2 = ymin;
@@ -4400,7 +4411,7 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 	int lclip = pb_spec->lclip;
 	int rclip = pb_spec->rclip;
 
-	//              Clip the triangle
+	// Clip the triangle
 	if (cw) {
 		for (int iy = y2; iy <= y1; iy++) {
 			if (ledge[iy] < lclip) {
@@ -4435,7 +4446,7 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 		}
 	}
 
-	//              Fill the triangle
+	// Fill the triangle
 
 	int ya = y2;
 	int yb = y1;
@@ -4469,10 +4480,10 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 
 				if (ledge[iyp] != -1) {
 
-					//    This would be considered a failure of the dda algorithm
-					//    Happens on very high zoom, with very large triangles.
-					//    The integers of the dda algorithm don't have enough bits...
-					//    Anyway, just ignore this triangle if it happens
+					// This would be considered a failure of the dda algorithm
+					// Happens on very high zoom, with very large triangles.
+					// The integers of the dda algorithm don't have enough bits...
+					// Anyway, just ignore this triangle if it happens
 					if (ix > ixm)
 						continue;
 
@@ -4480,8 +4491,8 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 
 					unsigned char* px = py + xoff;
 
-					if (pPatt_spec) // Pattern
-					{
+					if (pPatt_spec) {
+						// Pattern
 						int y_stagger = (iyp - pPatt_spec->y) / patt_size_y;
 						int x_stagger_off = 0;
 						if ((y_stagger & 1) && pPatt_spec->b_stagger)
@@ -4507,8 +4518,8 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 							*px++ = b;
 							ix++;
 						}
-					} else // No Pattern
-					{
+					} else {
+						// No Pattern
 #if defined(__WXGTK__) && defined(__INTEL__)
 #define memset3(dest, value, count)                          \
 	__asm__ __volatile__("cmp $0,%2\n\t"                     \
@@ -4560,7 +4571,8 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 
 				unsigned char* py = pix_buff + yoff;
 
-				int ix, ixm;
+				int ix;
+				int ixm;
 				if (cw) {
 					ix = ledge[iyp];
 					ixm = redge[iyp];
@@ -4570,10 +4582,10 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 				}
 
 				if (ledge[iyp] != -1) {
-					//    This would be considered a failure of the dda algorithm
-					//    Happens on very high zoom, with very large triangles.
-					//    The integers of the dda algorithm don't have enough bits...
-					//    Anyway, just ignore this triangle if it happens
+					// This would be considered a failure of the dda algorithm
+					// Happens on very high zoom, with very large triangles.
+					// The integers of the dda algorithm don't have enough bits...
+					// Anyway, just ignore this triangle if it happens
 					if (ix > ixm)
 						continue;
 
@@ -4595,24 +4607,6 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 
 						while (ix <= ixm) {
 							int patt_x = abs(((ix - pPatt_spec->x) + x_stagger_off) % patt_size_x);
-							/*
-							   if(pPatt_spec->depth == 24)
-							   {
-							   unsigned char *pp = pp0 + (patt_x * 3);
-
-							//  Todo    This line assumes unused_color is always 0,0,0
-							if( pp[0] && pp[1] && pp[2] ) {
-							 *px++ = *pp++;
-							 *px++ = *pp++;
-							 *px++ = *pp++;
-							 px++;
-							 } else {
-							 px += 4;
-							//                                                      pp += 4;
-							}
-							}
-							else
-							 */
 							{
 								unsigned char* pp = pp0 + (patt_x * 4);
 								unsigned char alpha = pp[3];
@@ -4632,8 +4626,8 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 							}
 							ix++;
 						}
-					} else // No Pattern
-					{
+					} else {
+						// No Pattern
 						int* pxi = (int*)px;
 						while (ix <= ixm) {
 							*pxi++ = color_int;
@@ -4656,7 +4650,9 @@ int s52plib::dda_tri(wxPoint* ptp, S52color* c, render_canvas_parms* pb_spec,
 inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int ybot, S52color* c,
 							 render_canvas_parms* pb_spec, render_canvas_parms* pPatt_spec)
 {
-	unsigned char r = 0, g = 0, b = 0;
+	unsigned char r = 0;
+	unsigned char g = 0;
+	unsigned char b = 0;
 
 	if (NULL != c) {
 		if (pb_spec->b_revrgb) {
@@ -4683,7 +4679,7 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 
 	int m, x, dy, count;
 
-	//    Left edge
+	// Left edge
 	int xmax = segs[lseg].x;
 	int xmin = segs[lseg + 1].x;
 	int ymax = segs[lseg].y;
@@ -4702,8 +4698,8 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 	int y_dda_limit = wxMin(ybot, ymax);
 	y_dda_limit = wxMin(y_dda_limit, 1499); // don't overrun edge array
 
-	//    Some peephole optimization:
-	//    if xmax and xmin are both < 0, arrange to simply fill the ledge array with 0
+	// Some peephole optimization:
+	// if xmax and xmin are both < 0, arrange to simply fill the ledge array with 0
 	if ((xmax < 0) && (xmin < 0)) {
 		xmax = -2;
 		xmin = -2;
@@ -4738,14 +4734,10 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 	}
 
 	if ((ytop < ymin) || (ybot > ymax)) {
-		//            printf ( "### ledge out of range\n" );
 		ret_val = 1;
-		//            r=255;
-		//            g=0;
-		//            b=0;
 	}
 
-	//    Right edge
+	// Right edge
 	xmax = segs[rseg].x;
 	xmin = segs[rseg + 1].x;
 	ymax = segs[rseg].y;
@@ -4762,17 +4754,16 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 		xmin = a;
 	}
 
-	//    Some peephole optimization:
-	//    if xmax and xmin are both < 0, arrange to simply fill the redge array with -1
-	//    This may induce special clip case below, and cause trap not to be rendered
+	// Some peephole optimization:
+	// if xmax and xmin are both < 0, arrange to simply fill the redge array with -1
+	// This may induce special clip case below, and cause trap not to be rendered
 	if ((xmax < 0) && (xmin < 0)) {
 		xmax = -1;
 		xmin = -1;
 	}
 
-		//    if xmax and xmin are both > rclip, arrange to simply fill the redge array with rclip +
-		// 1
-		//    This may induce special clip case below, and cause trap not to be rendered
+		// if xmax and xmin are both > rclip, arrange to simply fill the redge array with rclip + 1
+		// This may induce special clip case below, and cause trap not to be rendered
 		else if ((xmax > rclip) && (xmin > rclip)) {
 		xmax = rclip + 1;
 		xmin = rclip + 1;
@@ -4802,14 +4793,10 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 	}
 
 	if ((ytop < ymin) || (ybot > ymax)) {
-		//            printf ( "### redge out of range\n" );
 		ret_val = 1;
-		//            r=255;
-		//            g=0;
-		//            b=0;
 	}
 
-	//    Clip trapezoid to height spec
+	// Clip trapezoid to height spec
 	int y1 = ybot;
 	int y2 = ytop;
 
@@ -4826,7 +4813,7 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 	if (y2 < ybt)
 		y2 = ybt;
 
-	//   Clip the trapezoid to width
+	// Clip the trapezoid to width
 	for (int iy = y2; iy <= y1; iy++) {
 		if (ledge[iy] < lclip) {
 			if (redge[iy] < lclip)
@@ -4843,7 +4830,7 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 		}
 	}
 
-	//    Fill the trapezoid
+	// Fill the trapezoid
 
 	int ya = y2;
 	int yb = y1;
@@ -4868,20 +4855,18 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 
 				unsigned char* py = pix_buff + yoff;
 
-				int ix, ixm;
+				int ix;
+				int ixm;
 				ix = ledge[iyp];
 				ixm = redge[iyp];
 
-				//                        if(debug) printf("iyp %d, ix %d, ixm %d\n", iyp, ix, ixm);
-				//                           int ix = ledge[iyp];
-				//                            if(ix != -1)                    // special clip case
 				if (ledge[iyp] != -1) {
 					int xoff = (ix - pb_spec->x) * 3;
 
 					unsigned char* px = py + xoff;
 
-					if (pPatt_spec) // Pattern
-					{
+					if (pPatt_spec) {
+						// Pattern
 						int y_stagger = (iyp - pPatt_spec->y) / patt_size_y;
 						int x_stagger_off = 0;
 						if ((y_stagger & 1) && pPatt_spec->b_stagger)
@@ -4892,23 +4877,6 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 
 						while (ix <= ixm) {
 							int patt_x = abs(((ix - pPatt_spec->x) + x_stagger_off) % patt_size_x);
-							/*
-							   if(pPatt_spec->depth == 24)
-							   {
-							   unsigned char *pp = pp0 + (patt_x * 3);
-
-							//  Todo    This line assumes unused_color is always 0,0,0
-							if( pp[0] && pp[1] && pp[2] ) {
-							 *px++ = *pp++;
-							 *px++ = *pp++;
-							 *px++ = *pp++;
-							 } else {
-							 px += 3;
-							 pp += 3;
-							 }
-							 }
-							 else
-							 */
 							{
 								unsigned char* pp = pp0 + (patt_x * 4);
 								unsigned char alpha = pp[3];
@@ -4928,8 +4896,8 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 
 							ix++;
 						}
-					} else // No Pattern
-					{
+					} else {
+						// No Pattern
 #if defined(__WXGTK__WITH_OPTIMIZE_0) && defined(__INTEL__)
 #define memset3d(dest, value, count)                         \
 	__asm__ __volatile__("cmp $0,%2\n\t"                     \
@@ -5001,24 +4969,7 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 
 						while (ix <= ixm) {
 							int patt_x = abs(((ix - pPatt_spec->x) + x_stagger_off) % patt_size_x);
-							/*
-							   if(pPatt_spec->depth == 24)
-							   {
-							   unsigned char *pp = pp0 + (patt_x * 3);
 
-							//  Todo    This line assumes unused_color is always 0,0,0
-							if( pp[0] && pp[1] && pp[2] ) {
-							 *px++ = *pp++;
-							 *px++ = *pp++;
-							 *px++ = *pp++;
-							 px++;
-							 } else {
-							 px += 4;
-							//                                                      pp += 3;
-							}
-							}
-							else
-							 */
 							{
 								unsigned char* pp = pp0 + (patt_x * 4);
 								unsigned char alpha = pp[3];
@@ -5036,10 +4987,11 @@ inline int s52plib::dda_trap(wxPoint* segs, int lseg, int rseg, int ytop, int yb
 								} else
 									px += 4;
 							}
+
 							ix++;
 						}
-					} else // No Pattern
-					{
+					} else {
+						// No Pattern
 						int* pxi = (int*)px;
 						while (ix <= ixm) {
 							*pxi++ = color_int;
@@ -5085,14 +5037,14 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 			tp_box.SetMax(p_tp->maxx, p_tp->maxy);
 			bool b_greenwich = false;
 			if (BBView.GetMaxX() > 360.0) {
-				geo::BoundingBox bbRight(0.0, BBView.GetMinY(), BBView.GetMaxX() - 360.,
+				geo::BoundingBox bbRight(0.0, BBView.GetMinY(), BBView.GetMaxX() - 360.0,
 										 BBView.GetMaxY());
 				if (bbRight.Intersect(tp_box, margin) != geo::BoundingBox::_OUT)
 					b_greenwich = true;
 			}
 
 			if (b_greenwich || (BBView.Intersect(tp_box, margin) != geo::BoundingBox::_OUT)) {
-				//      Get and convert the points
+				// Get and convert the points
 				wxPoint* pr = ptp;
 
 				double* pvert_list = p_tp->p_vertex;
@@ -5156,8 +5108,7 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 		} // while
 		free(ptp);
 		free(pp3);
-	} // if pPolyTessGeo
-		else if (obj->pPolyTrapGeo) {
+	} else if (obj->pPolyTrapGeo) {
 		if (!rzRules->obj->pPolyTrapGeo->IsOk())
 			rzRules->obj->pPolyTrapGeo->BuildTess();
 
@@ -5170,7 +5121,7 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 				->IsOk() /*&& (obj->Index == 7) && ( obj->pPolyTrapGeo->GetnVertexMax() < 1000)*/) {
 			PolyTrapGroup* ptg = obj->pPolyTrapGeo->Get_PolyTrapGroup_head();
 
-			//  Convert the segment array to screen coordinates
+			// Convert the segment array to screen coordinates
 			int nVertex = obj->pPolyTrapGeo->GetnVertexMax();
 			wxPoint* ptp = (wxPoint*)malloc((nVertex + 1) * sizeof(wxPoint));
 
@@ -5189,8 +5140,8 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 				int lseg = ptraps->ilseg;
 				int rseg = ptraps->irseg;
 
-				//    Get the screen co-ordinates of top and bottom of trapezoid,
-				//    understanding that ptraps->hiy is the upper line
+				// Get the screen co-ordinates of top and bottom of trapezoid,
+				// understanding that ptraps->hiy is the upper line
 				wxPoint pr;
 				GetPointPixSingle(rzRules, ptraps->hiy, 0., &pr, vp);
 				int trap_y_top = pr.y;
@@ -5204,22 +5155,9 @@ void s52plib::RenderToBufferFilledPolygon(ObjRazRules* rzRules, S57Obj* obj, S52
 
 				int trap_height = trap_y_bot - trap_y_top;
 
-				//    Clip the trapezoid array to the render_canvas_parms dimensions
+				// Clip the trapezoid array to the render_canvas_parms dimensions
 				if ((trap_y_top >= pb_spec->y - trap_height)
 					&& (trap_y_bot <= pb_spec->y + pb_spec->height + trap_height)) {
-					/*
-					   if(obj->Index == 7)
-					   {
-					   int clip_top =  pb_spec->y - trap_height;
-					   int clip_bot = pb_spec->y + pb_spec->height + trap_height;
-					   printf("Trap %d pb_spec-> %d clip_top %d clip_bot %d\n", i, pb_spec->y,
-					   clip_top, clip_bot);
-					   printf("Trap %d  lseg: %d   rseg: %d   loy: %d   hiy: %d\n", i, lseg, rseg,
-					   trap_y_top, trap_y_bot);
-					   }
-					 */
-					//                              if((lseg == 66) && (trap_y_top < 0))
-					//                                    cs.B = 128;
 					dda_trap(ptp, lseg, rseg, trap_y_top, trap_y_bot, cd, pb_spec, pPatt_spec);
 				}
 
@@ -5337,7 +5275,7 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 	const geo::BoundingBox& BBView = vp.GetBBox();
 	//  Allow a little slop in calculating whether a triangle
 	//  is within the requested Viewport
-	double margin = BBView.GetWidth() * .05;
+	double margin = BBView.GetWidth() * 0.05;
 
 	wxPoint* ptp;
 	if (rzRules->obj->pPolyTessGeo) {
@@ -5348,10 +5286,12 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 	} else
 		return 0;
 
-	if (g_b_useStencil) {
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
+	if (view.useStencil) {
 		glPushAttrib(GL_STENCIL_BUFFER_BIT);
 
-		//    Use masked bit "1" of the stencil buffer to create a stencil for the area of interest
+		// Use masked bit "1" of the stencil buffer to create a stencil for the area of interest
 
 		glEnable(GL_STENCIL_TEST);
 		glStencilMask(0x2); // write only into bit 1 of the stencil buffer
@@ -5374,21 +5314,21 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 
 		glColor3f(1, 1, 0);
 
-		//    Overall chart clip buffer was set at z=0.5
-		//    Draw this clip geometry at z = .25, so still respecting the previously established
+		// Overall chart clip buffer was set at z=0.5
+		// Draw this clip geometry at z = .25, so still respecting the previously established
 		// clip region
-		//    Subsequent drawing to this area at z=.25  will pass only this area if using
+		// Subsequent drawing to this area at z=.25  will pass only this area if using
 		// glDepthFunc(GL_EQUAL);
 
-		//    TODO  If this fails, consider the uncertainty of GL_EQUAL on floating point comparison
-		z_clip_geom = .25;
-		z_tex_geom = .25;
+		// TODO: If this fails, consider the uncertainty of GL_EQUAL on floating point comparison
+		z_clip_geom = 0.25;
+		z_tex_geom = 0.25;
 	}
 
-	//  Render the geometry
+	// Render the geometry
 	{
 		// Generate a Display list if using Depth Buffer clipping, for use later
-		if (!g_b_useStencil) {
+		if (!view.useStencil) {
 			clip_list = glGenLists(1);
 			glNewList(clip_list, GL_COMPILE);
 		}
@@ -5462,15 +5402,15 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 				}
 			} // if bbox
 			p_tp = p_tp->p_next; // pick up the next in chain
-		} // while
+		}
 
-		if (!g_b_useStencil) {
+		if (!view.useStencil) {
 			glEndList();
 			glCallList(clip_list);
 		}
 
-		if (g_b_useStencil) {
-			//    Now set the stencil ops to subsequently render only where the stencil bit is "2"
+		if (view.useStencil) {
+			// Now set the stencil ops to subsequently render only where the stencil bit is "2"
 			glStencilFunc(GL_EQUAL, 2, 2);
 			glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 			glColorMask(true, true, true, true); // Re-enable the color buffer
@@ -5480,7 +5420,7 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 			glDepthMask(GL_FALSE); // disable depth buffer
 		}
 
-		//    Get the pattern definition
+		// Get the pattern definition
 		if ((rules->razRule->pixelPtr == NULL) || (rules->razRule->parm1 != m_colortable_index)
 			|| (rules->razRule->parm0 != ID_GL_PATT_SPEC)) {
 			render_canvas_parms* patt_spec
@@ -5493,10 +5433,10 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 			rules->razRule->parm0 = ID_GL_PATT_SPEC;
 		}
 
-		//  Render the Area using the pattern spec stored in the rules
+		// Render the Area using the pattern spec stored in the rules
 		render_canvas_parms* ppatt_spec = (render_canvas_parms*)rules->razRule->pixelPtr;
 
-		//    Has the pattern been uploaded as a texture?
+		// Has the pattern been uploaded as a texture?
 		if (!ppatt_spec->OGL_tex_name) {
 			GLuint tex_name;
 			glGenTextures(1, &tex_name);
@@ -5518,8 +5458,8 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-		int xr = obj_xmin; // 0;
-		int yr = obj_ymin; // 0;
+		int xr = obj_xmin;
+		int yr = obj_ymin;
 		int h = ppatt_spec->height;
 		int w = ppatt_spec->width;
 
@@ -5562,19 +5502,19 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 
-		//    If using DepthBuffer clipping, we need to
-		//    undo the sub-clip area for this feature render.
-		//    Otherwise, subsequent AP renders with also honor this sub-clip region.
+		// If using DepthBuffer clipping, we need to
+		// undo the sub-clip area for this feature render.
+		// Otherwise, subsequent AP renders with also honor this sub-clip region.
 
-		//    We do this by rendering the geometry again with the depth(Z) value
-		//    set to the global clipping value.
-		//    For efficiency, we use the display list created above,
-		//    translated appropriately in z direction
+		// We do this by rendering the geometry again with the depth(Z) value
+		// set to the global clipping value.
+		// For efficiency, we use the display list created above,
+		// translated appropriately in z direction
 
-		//    Note that this is not required for stencil buffer clipping,
-		//    since the relevent bit (2) is cleared on any subsequent AP renders.
+		// Note that this is not required for stencil buffer clipping,
+		// since the relevent bit (2) is cleared on any subsequent AP renders.
 
-		if (!g_b_useStencil) {
+		if (!view.useStencil) {
 
 			glEnable(GL_DEPTH_TEST); // to use the depth test
 			glDepthFunc(GL_LEQUAL); // Respect global render mask in depth buffer
@@ -5583,9 +5523,9 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 
 			glColor3f(1, 1, 0);
 
-			glTranslatef(0, 0, .25); // Cause depth buffer rending at z = 0.5
+			glTranslatef(0, 0, 0.25); // Cause depth buffer rending at z = 0.5
 			glCallList(clip_list); // Re-Render the clip geometry
-			glTranslatef(0, 0, -.25); // undo translation (may not be required....)
+			glTranslatef(0, 0, -0.25); // undo translation (may not be required....)
 
 			glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE); // re-enable color buffer
 			glDepthMask(GL_FALSE); // disable depth buffer
@@ -5593,7 +5533,7 @@ int s52plib::RenderToGLAP(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp
 			glDeleteLists(clip_list, 1);
 		}
 
-		//    Restore the previous state
+		// Restore the previous state
 		glPopAttrib();
 	}
 

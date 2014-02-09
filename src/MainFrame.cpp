@@ -55,7 +55,6 @@
 #endif
 
 #include <algorithm>
-#include <iostream> // TEMP
 
 #include "MainFrame.h"
 #include <dychart.h>
@@ -138,10 +137,9 @@
 #endif
 
 #ifdef __WXMSW__
-//#define __MSVC__LEAK
-#ifdef __MSVC__LEAK
-#include "Stackwalker.h"
-#endif
+	#ifdef __MSVC__LEAK
+		#include "Stackwalker.h"
+	#endif
 #endif
 
 using chart::ChartBase;
@@ -197,7 +195,6 @@ wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
 
 #ifdef USE_S57
 namespace chart { class S57RegistrarMgr; }
-
 chart::s52plib* ps52plib;
 chart::S57ClassRegistrar* g_poRegistrar;
 chart::S57RegistrarMgr* m_pRegistrarMan;
@@ -284,8 +281,6 @@ wxAuiManager* g_pauimgr;
 wxMenu* g_FloatingToolbarConfigMenu;
 OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 FloatingCompassWindow* g_FloatingCompassDialog;
-bool g_b_useStencil;
-double g_GLMinLineWidth;
 
 #ifdef __MSVC__
 #define _CRTDBG_MAP_ALLOC
@@ -310,7 +305,7 @@ DEFINE_EVENT_TYPE(EVT_THREADMSG)
 //------------------------------------------------------------------------------
 
 #ifdef __WXGTK__
-#include "bitmaps/opencpn.xpm"
+	#include "bitmaps/opencpn.xpm"
 #endif
 
 enum

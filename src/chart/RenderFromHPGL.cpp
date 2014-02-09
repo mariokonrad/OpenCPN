@@ -26,11 +26,12 @@
 
 #include <chart/s52plib.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #include <wx/dc.h>
 #include <wx/tokenzr.h>
 #include <wx/log.h>
-
-extern double g_GLMinLineWidth;
 
 namespace chart {
 
@@ -98,9 +99,11 @@ void RenderFromHPGL::SetPen() // FIXME: prime candidate for polymorphism
 #ifdef ocpnUSE_GL
 	if (renderToOpenGl) {
 		if (!havePushedOpenGlAttrib) {
+			const float min_line_width = global::OCPN::get().gui().view().GLMinLineWidth;
+
 			glPushAttrib(GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_HINT_BIT);
 			glColor4ub(penColor.Red(), penColor.Green(), penColor.Blue(), penColor.Alpha());
-			glLineWidth(wxMax(g_GLMinLineWidth, (float)penWidth * 0.7));
+			glLineWidth(wxMax(min_line_width, 0.7f * penWidth));
 			glEnable(GL_LINE_SMOOTH);
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

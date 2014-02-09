@@ -56,7 +56,6 @@
 
 extern ChartCanvas* cc1;
 extern chart::s52plib* ps52plib;
-extern bool g_b_useStencil;
 extern PlugInManager* g_pi_manager;
 extern chart::ChartBase* Current_Ch;
 extern bool g_bquiting;
@@ -558,9 +557,10 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 		glGetIntegerv(GL_STENCIL_BITS, &sb);
 		glDisable(GL_STENCIL_TEST);
 
-		g_b_useStencil = false;
+		bool use_stencil = false;
 		if (!bad_stencil_code && stencil && (sb == 8))
-			g_b_useStencil = true;
+			use_stencil = true;
+		global::OCPN::get().gui().set_useStencil(use_stencil);
 
 		m_b_useFBO = false; // default is false
 
@@ -600,7 +600,7 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 		}
 
 		if (m_b_useFBO && !m_b_useFBOStencil)
-			g_b_useStencil = false;
+			global::OCPN::get().gui().set_useStencil(false);
 
 		if (m_b_useFBO) {
 			wxLogMessage(_T("OpenGL-> Using Framebuffer Objects"));
@@ -612,7 +612,7 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 		} else
 			wxLogMessage(_T("OpenGL-> Framebuffer Objects unavailable"));
 
-		if (g_b_useStencil)
+		if (view.useStencil)
 			wxLogMessage(_T("OpenGL-> Using Stencil buffer clipping"));
 		else
 			wxLogMessage(_T("OpenGL-> Using Depth buffer clipping"));
@@ -635,13 +635,13 @@ void glChartCanvas::OnPaint(wxPaintEvent& event)
 	// performance loss)
 	if (!m_b_paint_enable)
 		return;
+
 	// Recursion test, sometimes seen on GTK systems when wxBusyCursor is activated
 	if (s_in_glpaint)
 		return;
+
 	s_in_glpaint++;
-
 	render();
-
 	s_in_glpaint--;
 }
 
@@ -707,7 +707,7 @@ void glChartCanvas::SetClipRegion(const ViewPort& vp, OCPNRegion& region, bool b
 {
 	const global::GUI::View& view = global::OCPN::get().gui().view();
 
-	if (g_b_useStencil) {
+	if (view.useStencil) {
 		glPushMatrix();
 
 		if (((fabs(vp.rotation) > 0.01)) || (view.skew_comp && (fabs(vp.skew) > 0.01))) {
@@ -775,7 +775,8 @@ void glChartCanvas::SetClipRegion(const ViewPort& vp, OCPNRegion& region, bool b
 
 		glPopMatrix();
 
-	} else { //  Use depth buffer for clipping
+	} else {
+		// Use depth buffer for clipping
 		glPushMatrix();
 
 		if (((fabs(vp.rotation) > 0.01)) || (view.skew_comp && (fabs(vp.skew) > 0.01))) {
@@ -947,8 +948,9 @@ void glChartCanvas::RenderRasterChartRegionGL(chart::ChartBase* chart, ViewPort&
 					delete ptd;
 					itt = pTextureHash->begin(); // reset the iterator
 				}
-			} else
+			} else {
 				++itt;
+			}
 		}
 	}
 
@@ -1434,7 +1436,7 @@ void glChartCanvas::render()
 	glLoadIdentity();
 	gluOrtho2D(0, (GLint)w, (GLint)h, 0);
 
-	if (g_b_useStencil) {
+	if (global::OCPN::get().gui().view().useStencil) {
 		glEnable(GL_STENCIL_TEST);
 		glStencilMask(0xff);
 		glClear(GL_STENCIL_BUFFER_BIT);

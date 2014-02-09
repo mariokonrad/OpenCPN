@@ -25,6 +25,9 @@
 #include "ocpnDC.h"
 #include <dychart.h>
 
+#include <global/OCPN.h>
+#include <global/GUI.h>
+
 #ifdef __MSVC__
 	#include <windows.h>
 #endif
@@ -40,8 +43,6 @@
 #include <wx/dcmemory.h>
 #include <wx/log.h>
 #include <wx/image.h>
-
-extern double g_GLMinLineWidth;
 
 wxArrayPtrVoid ocpnDC::gTesselatorVertices;
 
@@ -339,10 +340,11 @@ void ocpnDC::DrawLine(wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiq
 			glDisable(GL_LINE_STIPPLE);
 
 			bool b_draw_thick = false;
+			const float min_line_width = global::OCPN::get().gui().view().GLMinLineWidth;
 
-			float pen_width = wxMax(g_GLMinLineWidth, m_pen.GetWidth());
+			float pen_width = wxMax(min_line_width, m_pen.GetWidth());
 
-			//      Enable anti-aliased lines, at best quality
+			// Enable anti-aliased lines, at best quality
 			if (b_hiqual) {
 				SetGLStipple();
 
@@ -375,9 +377,9 @@ void ocpnDC::DrawLine(wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiq
 					glLineWidth(pen_width);
 			}
 
-			if (b_draw_thick)
+			if (b_draw_thick) {
 				DrawGLThickLine(x1, y1, x2, y2, m_pen, b_hiqual);
-			else {
+			} else {
 				wxDash* dashes;
 				int n_dashes = m_pen.GetDashes(&dashes);
 				if (n_dashes) {
@@ -440,11 +442,12 @@ void ocpnDC::DrawLines(int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset
 		SetGLAttrs(b_hiqual);
 
 		bool b_draw_thick = false;
+		const float min_line_width = global::OCPN::get().gui().view().GLMinLineWidth;
 
 		glDisable(GL_LINE_STIPPLE);
 		SetGLStipple();
 
-		//      Enable anti-aliased lines, at best quality
+		// Enable anti-aliased lines, at best quality
 		if (b_hiqual) {
 			if (m_pen.GetWidth() > 1) {
 				GLint parms[2];
@@ -452,9 +455,9 @@ void ocpnDC::DrawLines(int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset
 				if (m_pen.GetWidth() > parms[1])
 					b_draw_thick = true;
 				else
-					glLineWidth(wxMax(g_GLMinLineWidth, m_pen.GetWidth()));
+					glLineWidth(wxMax(min_line_width, m_pen.GetWidth()));
 			} else
-				glLineWidth(wxMax(g_GLMinLineWidth, 1));
+				glLineWidth(wxMax(min_line_width, 1));
 		} else {
 			if (m_pen.GetWidth() > 1) {
 				GLint parms[2];
@@ -462,12 +465,12 @@ void ocpnDC::DrawLines(int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset
 				if (m_pen.GetWidth() > parms[1])
 					b_draw_thick = true;
 				else
-					glLineWidth(wxMax(g_GLMinLineWidth, m_pen.GetWidth()));
+					glLineWidth(wxMax(min_line_width, m_pen.GetWidth()));
 			} else
-				glLineWidth(wxMax(g_GLMinLineWidth, 1));
+				glLineWidth(wxMax(min_line_width, 1));
 		}
 
-		if (b_draw_thick /*m_pen.GetWidth() > 1*/) {
+		if (b_draw_thick) {
 			wxPoint p0 = points[0];
 			for (int i = 1; i < n; i++) {
 				DrawGLThickLine(p0.x + xoffset, p0.y + yoffset, points[i].x + xoffset,
@@ -1007,8 +1010,9 @@ bool ocpnDC::ConfigurePen()
 #ifdef ocpnUSE_GL
 	wxColour c = m_pen.GetColour();
 	int width = m_pen.GetWidth();
+	const float min_line_width = global::OCPN::get().gui().view().GLMinLineWidth;
 	glColor4ub(c.Red(), c.Green(), c.Blue(), c.Alpha());
-	glLineWidth(wxMax(g_GLMinLineWidth, width));
+	glLineWidth(wxMax(min_line_width, width));
 #endif
 	return true;
 }

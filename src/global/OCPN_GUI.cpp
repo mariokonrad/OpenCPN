@@ -221,6 +221,16 @@ void OCPN_GUI::set_default_wp_icon(const wxString& value)
 	data_view.default_wp_icon = value;
 }
 
+void OCPN_GUI::set_useStencil(bool value)
+{
+	data_view.useStencil = value;
+}
+
+void OCPN_GUI::set_GLMinLineWidth(double value)
+{
+	data_view.GLMinLineWidth = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

@@ -69,20 +69,18 @@ extern LayerList* pLayerList;
 extern int g_LayerIdx;
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern WayPointman* pWayPointMan;
+extern chart::ChartGroupArray* g_pGroupArray;
+extern ocpnStyle::StyleManager* g_StyleManager;
+extern wxArrayString TideCurrentDataSet;
 
 #ifdef USE_S57
 extern chart::s52plib* ps52plib;
 #endif
 
-extern chart::ChartGroupArray* g_pGroupArray;
-
-extern ocpnStyle::StyleManager* g_StyleManager;
-extern wxArrayString TideCurrentDataSet;
-
 Config::Config(
-		const wxString & appName,
-		const wxString & vendorName,
-		const wxString & LocalFileName)
+		const wxString& appName,
+		const wxString& vendorName,
+		const wxString& LocalFileName)
 	: wxFileConfig(appName, vendorName, LocalFileName, wxString(_T("")))
 	, navobjbackups(0)
 	, st_bFollow(false)

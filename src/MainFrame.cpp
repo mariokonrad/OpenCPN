@@ -270,7 +270,6 @@ int g_nAIS_activity_timer; // FIXME: MainFrame only
 AboutDialog* g_pAboutDlg; // FIXME: MainFrame only
 int g_sticky_chart; // FIXME: MainFrame only
 
-bool g_bShowAIS;
 int g_total_NMEAerror_messages;
 CM93DSlide* pCM93DetailSlider;
 wxLocale* plocale_def_lang;
@@ -829,7 +828,7 @@ ToolBarSimple* MainFrame::CreateAToolbar()
 #endif
 
 	wxString initiconName;
-	if (g_bShowAIS) {
+	if (global::OCPN::get().gui().view().ShowAIS) {
 		tb->SetToolShortHelp(ID_AIS, _("Hide AIS Targets"));
 		initiconName = _T("AIS");
 	} else {
@@ -1416,16 +1415,19 @@ void MainFrame::SetGroupIndex(int index)
 
 void MainFrame::toolLeftClick_AIS()
 {
-	g_bShowAIS = !g_bShowAIS;
+	global::GUI& gui = global::OCPN::get().gui();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
+	gui.set_ShowAIS(!view.ShowAIS);
 	if (g_toolbar) {
-		if (g_bShowAIS)
+		if (view.ShowAIS)
 			g_toolbar->SetToolShortHelp(ID_AIS, _("Hide AIS Targets"));
 		else
 			g_toolbar->SetToolShortHelp(ID_AIS, _("Show AIS Targets"));
 	}
 	if (m_pAISTool && g_toolbar) {
 		wxString iconName;
-		if (g_bShowAIS)
+		if (view.ShowAIS)
 			iconName = _T("AIS");
 		else
 			iconName = _T("AIS_Disabled");
@@ -3238,12 +3240,14 @@ void MainFrame::TouchAISActive(void)
 	if ((!g_pAIS->IsAISSuppressed()) && (!g_pAIS->IsAISAlertGeneral())) {
 		g_nAIS_activity_timer = 5; // seconds
 
+		const global::GUI::View& view = global::OCPN::get().gui().view();
+
 		wxString iconName = _T("AIS_Normal_Active");
 		if (g_pAIS->IsAISAlertGeneral())
 			iconName = _T("AIS_AlertGeneral_Active");
 		if (g_pAIS->IsAISSuppressed())
 			iconName = _T("AIS_Suppressed_Active");
-		if (!g_bShowAIS)
+		if (!view.ShowAIS)
 			iconName = _T("AIS_Disabled");
 
 		if (m_lastAISiconName != iconName) {
@@ -3265,16 +3269,17 @@ void MainFrame::UpdateAISTool(void)
 		return;
 
 	bool b_update = false;
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 
 	wxString iconName = _T("AIS");
 	if (g_pAIS->IsAISSuppressed())
 		iconName = _T("AIS_Suppressed");
 	if (g_pAIS->IsAISAlertGeneral())
 		iconName = _T("AIS_AlertGeneral");
-	if (!g_bShowAIS)
+	if (!view.ShowAIS)
 		iconName = _T("AIS_Disabled");
 
-	//  Manage timeout for AIS activity indicator
+	// Manage timeout for AIS activity indicator
 	if (g_nAIS_activity_timer) {
 		g_nAIS_activity_timer--;
 
@@ -3286,7 +3291,7 @@ void MainFrame::UpdateAISTool(void)
 				iconName = _T("AIS_Suppressed_Active");
 			if (g_pAIS->IsAISAlertGeneral())
 				iconName = _T("AIS_AlertGeneral_Active");
-			if (!g_bShowAIS)
+			if (!view.ShowAIS)
 				iconName = _T("AIS_Disabled");
 		}
 	}

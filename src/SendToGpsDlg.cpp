@@ -157,7 +157,7 @@ void SendToGpsDlg::CreateControls(const wxString& WXUNUSED(hint))
 	m_SendButton->SetDefault();
 }
 
-void SendToGpsDlg::OnSendClick(wxCommandEvent& event)
+void SendToGpsDlg::OnSendClick(wxCommandEvent& WXUNUSED(event))
 {
 	// Get the selected comm port
 	wxString src = m_itemCommListBox->GetValue();
@@ -172,7 +172,7 @@ void SendToGpsDlg::OnSendClick(wxCommandEvent& event)
 	Close();
 }
 
-void SendToGpsDlg::OnCancelClick(wxCommandEvent& event)
+void SendToGpsDlg::OnCancelClick(wxCommandEvent& WXUNUSED(event))
 {
 	Close();
 }

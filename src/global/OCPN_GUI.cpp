@@ -231,6 +231,11 @@ void OCPN_GUI::set_GLMinLineWidth(double value)
 	data_view.GLMinLineWidth = value;
 }
 
+void OCPN_GUI::set_ShowAIS(bool value)
+{
+	data_view.ShowAIS = value;
+}
+
 const GUI::Frame& OCPN_GUI::frame() const
 {
 	return data_frame;

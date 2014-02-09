@@ -48,6 +48,7 @@ public: // view
 	MOCK_METHOD1(set_default_wp_icon, void(const wxString&));
 	MOCK_METHOD1(set_useStencil, void(bool));
 	MOCK_METHOD1(set_GLMinLineWidth, void(double));
+	MOCK_METHOD1(set_ShowAIS, void(bool));
 
 public: // frame
 	MOCK_CONST_METHOD0(frame, const ::global::GUI::Frame&());

@@ -83,6 +83,7 @@ public: // view
 	virtual void set_default_wp_icon(const wxString&);
 	virtual void set_useStencil(bool);
 	virtual void set_GLMinLineWidth(double);
+	virtual void set_ShowAIS(bool);
 
 public: // frame
 	virtual const Frame& frame() const;

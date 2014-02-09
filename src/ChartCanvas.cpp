@@ -134,7 +134,6 @@ extern void catch_signals(int signo);
 extern chart::ChartBase* Current_Vector_Ch;
 extern chart::ChartBase* Current_Ch;
 extern chart::ChartDB* ChartData;
-extern bool g_bHDTValid;
 extern ConsoleCanvas* console;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern RouteList* pRouteList;
@@ -169,17 +168,12 @@ extern ais::AIS_Decoder* g_pAIS;
 extern MainFrame* gFrame;
 extern StatWin* stats;
 
-// AIS Global configuration
-extern bool g_bShowAIS;
-
 extern ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 
 extern CM93DSlide* pCM93DetailSlider;
 
 extern ChartCanvas* cc1;
-
-extern double g_COGAvg; // only needed for debug....
 
 extern chart::ChartStack* pCurrentStack;
 extern bool g_bquiting;
@@ -1851,11 +1845,13 @@ void ChartCanvas::RotateTimerEvent(wxTimerEvent&)
 
 void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 {
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+
 	bool b_need_refresh = false;
 
 	// Handle the AIS Rollover Window first
 	bool showAISRollover = false;
-	if (g_pAIS && g_pAIS->GetNumTargets() && g_bShowAIS) {
+	if (g_pAIS && g_pAIS->GetNumTargets() && view.ShowAIS) {
 		SelectItem* pFind
 			= pSelectAIS->FindSelection(m_cursor_pos, SelectItem::TYPE_AISTARGET);
 		if (pFind) {
@@ -3518,8 +3514,9 @@ void ChartCanvas::AISDrawAreaNotices(ocpnDC& dc)
 {
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 	const global::ColorManager& colors = global::OCPN::get().color();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 
-	if (!g_pAIS || !g_bShowAIS || !ais.ShowAreaNotices)
+	if (!g_pAIS || !view.ShowAIS || !ais.ShowAreaNotices)
 		return;
 
 	wxDateTime now = wxDateTime::Now();
@@ -3633,8 +3630,8 @@ void ChartCanvas::AISDraw(ocpnDC& dc)
 		return;
 
 	// Toggling AIS display on and off
-
-	if (!g_bShowAIS)
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+	if (!view.ShowAIS)
 		return;
 
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
@@ -6123,8 +6120,9 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	}
 
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
+	const global::GUI::View& view = global::OCPN::get().gui().view();
 	bool ais_areanotice = false;
-	if (g_pAIS && g_bShowAIS && ais.ShowAreaNotices) {
+	if (g_pAIS && view.ShowAIS && ais.ShowAreaNotices) {
 
 		AIS_Target_Hash* an_sources = g_pAIS->GetAreaNoticeSourcesList();
 
@@ -6202,7 +6200,6 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	contextMenu->Append(ID_DEF_MENU_DROP_WP, _menuText(_("Drop Mark"), _T("Ctrl-M")));
 
 	const global::Navigation& nav = global::OCPN::get().nav();
-	const global::GUI::View& view = global::OCPN::get().gui().view();
 
 	if (!nav.gps().valid)
 		contextMenu->Append(ID_DEF_MENU_MOVE_BOAT_HERE, _("Move Boat Here"));
@@ -6559,7 +6556,8 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 	std::vector<Ais8_001_22*> area_notices;
 
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
-	if (g_pAIS && g_bShowAIS && ais.ShowAreaNotices) {
+	const global::GUI::View& view = global::OCPN::get().gui().view();
+	if (g_pAIS && view.ShowAIS && ais.ShowAreaNotices) {
 		AIS_Target_Hash* an_sources = g_pAIS->GetAreaNoticeSourcesList();
 
 		float vp_scale = GetVPScale();

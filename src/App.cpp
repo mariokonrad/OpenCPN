@@ -143,7 +143,6 @@ extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern int gpIDXn;
-extern double g_COGAvg;
 extern PlugInManager* g_pi_manager;
 extern bool g_bportable;
 extern chart::ChartGroupArray* g_pGroupArray;
@@ -152,7 +151,6 @@ extern wxPlatformInfo* g_pPlatform;
 extern wxLocale* plocale_def_lang;
 extern bool g_b_assume_azerty;
 extern wxAuiManager* g_pauimgr;
-extern bool g_bShowAIS;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
 extern Routeman* g_pRouteMan;
@@ -1273,14 +1271,14 @@ bool App::OnInit()
 	// Init the Selectable Tide/Current Items List
 	pSelectTC = new Select;
 
-	//  Increase the select radius for tide/current stations
+	// Increase the select radius for tide/current stations
 	pSelectTC->SetSelectPixelRadius(25);
 
 	// Init the Selectable AIS Target List
 	pSelectAIS = new Select;
 
 	// Initially AIS display is always on
-	g_bShowAIS = true;
+	global::OCPN::get().gui().set_ShowAIS(true);
 	g_pais_query_dialog_active = NULL;
 
 	determine_config_file();

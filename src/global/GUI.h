@@ -80,6 +80,7 @@ public:
 		wxString default_wp_icon;
 		bool useStencil;
 		double GLMinLineWidth;
+		bool ShowAIS;
 	};
 
 	virtual const View& view() const = 0;
@@ -123,6 +124,7 @@ public:
 	virtual void set_default_wp_icon(const wxString&) = 0;
 	virtual void set_useStencil(bool) = 0;
 	virtual void set_GLMinLineWidth(double) = 0;
+	virtual void set_ShowAIS(bool) = 0;
 
 public:
 	struct Frame

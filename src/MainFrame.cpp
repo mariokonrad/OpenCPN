@@ -83,7 +83,6 @@
 #include <FontMgr.h>
 #include <NMEALogWindow.h>
 #include <Layer.h>
-#include <OCP_DataStreamInput_Thread.h>
 #include <TrackPropDlg.h>
 #include <RouteManagerDialog.h>
 #include <MyPrintout.h>
@@ -269,7 +268,6 @@ int g_nAIS_activity_timer; // FIXME: MainFrame only
 AboutDialog* g_pAboutDlg; // FIXME: MainFrame only
 int g_sticky_chart; // FIXME: MainFrame only
 
-int g_total_NMEAerror_messages = 0;
 CM93DSlide* pCM93DetailSlider;
 wxLocale* plocale_def_lang;
 bool g_b_assume_azerty;
@@ -450,6 +448,8 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos, 
 	m_COGFilterLast = 0.;
 
 	g_sticky_chart = -1;
+
+	global::OCPN::get().sys().set_debug_total_NMEAerror_messages(0);
 }
 
 MainFrame::~MainFrame()
@@ -4719,8 +4719,8 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 
 	wxString str_buf = wxString(event.GetNMEAString().c_str(), wxConvUTF8);
 
-	if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
-		g_total_NMEAerror_messages++;
+	if ((debug.nmea > 0) && (debug.total_NMEAerror_messages < debug.nmea)) {
+		global::OCPN::get().sys().inc_debug_total_NMEAerror_messages();
 		wxLogMessage(_T("MEH.NMEA Sentence received..."));
 	}
 
@@ -4730,8 +4730,8 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 
 	if (event.GetStream()) {
 		if (!event.GetStream()->ChecksumOK(str_buf)) {
-			if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
-				g_total_NMEAerror_messages++;
+			if ((debug.nmea > 0) && (debug.total_NMEAerror_messages < debug.nmea)) {
+				global::OCPN::get().sys().inc_debug_total_NMEAerror_messages();
 				wxLogMessage(_T(">>>>>>NMEA Sentence Checksum Bad..."));
 			}
 			return;
@@ -4969,15 +4969,15 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 				pos_valid = true;
 			}
 		} else {
-			if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
-				g_total_NMEAerror_messages++;
+			if ((debug.nmea > 0) && (debug.total_NMEAerror_messages < debug.nmea)) {
+				global::OCPN::get().sys().inc_debug_total_NMEAerror_messages();
 				wxLogMessage(_T("   Invalid AIVDO Sentence..."));
 			}
 		}
 	} else {
 		bis_recognized_sentence = false;
-		if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
-			g_total_NMEAerror_messages++;
+		if ((debug.nmea > 0) && (debug.total_NMEAerror_messages < debug.nmea)) {
+			global::OCPN::get().sys().inc_debug_total_NMEAerror_messages();
 			wxLogMessage(_T("   Unrecognized NMEA Sentence..."));
 		}
 	}

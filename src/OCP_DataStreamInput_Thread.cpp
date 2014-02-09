@@ -41,8 +41,6 @@ extern MainFrame* gFrame;
 #ifdef __WXMSW__
 	#include <global/OCPN.h>
 	#include <global/System.h>
-
-	extern int g_total_NMEAerror_messages;
 #endif
 
 enum DS_ENUM_BUFFER_STATE
@@ -493,8 +491,8 @@ HandleASuccessfulRead:
 		const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 		if (dwRead > 0) {
-			if ((g_total_NMEAerror_messages < debug.nmea) && (debug.nmea > 1000)) {
-				g_total_NMEAerror_messages++;
+			if ((debug.total_NMEAerror_messages < debug.nmea) && (debug.nmea > 1000)) {
+				global::OCPN::get().sys().inc_debug_total_NMEAerror_messages();
 				ThreadMessage(wxString::Format(_T("NMEA activity...%d bytes"), dwRead));
 			}
 
@@ -511,8 +509,8 @@ HandleASuccessfulRead:
 
 				nchar--;
 			}
-			if ((g_total_NMEAerror_messages < debug.nmea) && (debug.nmea > 1000)) {
-				g_total_NMEAerror_messages++;
+			if ((debug.total_NMEAerror_messages < debug.nmea) && (debug.nmea > 1000)) {
+				global::OCPN::get().sys().inc_debug_total_NMEAerror_messages();
 				wxString msg1 = _T("Buffer is: ");
 				int nc = dwRead;
 				char* pb = szBuf;

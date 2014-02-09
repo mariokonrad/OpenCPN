@@ -245,5 +245,15 @@ void OCPN_System::set_debug_s57(bool value)
 	data_debug.s57 = value;
 }
 
+void OCPN_System::set_debug_total_NMEAerror_messages(int value)
+{
+	data_debug.total_NMEAerror_messages = value;
+}
+
+void OCPN_System::inc_debug_total_NMEAerror_messages()
+{
+	data_debug.total_NMEAerror_messages++;
+}
+
 }
 

@@ -148,6 +148,10 @@ public:
 		bool ogl;
 		bool cm93;
 		bool s57;
+		int total_NMEAerror_messages;
+/*
+int g_total_NMEAerror_messages = 0;
+*/
 	};
 
 	virtual const Debug& debug() const = 0;
@@ -156,6 +160,8 @@ public:
 	virtual void set_debug_ogl(bool) = 0;
 	virtual void set_debug_cm93(bool) = 0;
 	virtual void set_debug_s57(bool) = 0;
+	virtual void set_debug_total_NMEAerror_messages(int) = 0;
+	virtual void inc_debug_total_NMEAerror_messages() = 0;
 };
 
 }

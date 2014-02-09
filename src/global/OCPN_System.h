@@ -84,6 +84,8 @@ public: // debug
 	virtual void set_debug_ogl(bool);
 	virtual void set_debug_cm93(bool);
 	virtual void set_debug_s57(bool);
+	virtual void set_debug_total_NMEAerror_messages(int);
+	virtual void inc_debug_total_NMEAerror_messages();
 };
 
 }

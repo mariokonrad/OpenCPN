@@ -31,12 +31,12 @@
 #endif
 
 #define DS_RX_BUFFER_SIZE 4096
-#define MAX_OUT_QUEUE_MESSAGE_LENGTH    100
+#define MAX_OUT_QUEUE_MESSAGE_LENGTH 100
 
 extern const wxEventType wxEVT_OCPN_DATASTREAM;
 
 #include "MainFrame.h"
-extern MainFrame * gFrame;
+extern MainFrame* gFrame;
 
 #ifdef __WXMSW__
 	#include <global/OCPN.h>
@@ -60,7 +60,7 @@ OCP_DataStreamInput_Thread::OCP_DataStreamInput_Thread(
 		wxMutex *pout_mutex,
 		dsPortType io_select)
 {
-	m_launcher = Launcher;                          // This thread's immediate "parent"
+	m_launcher = Launcher; // This thread's immediate "parent"
 
 	m_pMessageTarget = MessageTarget;
 
@@ -73,10 +73,10 @@ OCP_DataStreamInput_Thread::OCP_DataStreamInput_Thread(
 	rx_buffer = new char[DS_RX_BUFFER_SIZE + 1];
 	temp_buf = new char[DS_RX_BUFFER_SIZE + 1];
 
-	put_ptr = rx_buffer;                            // local circular queue
+	put_ptr = rx_buffer; // local circular queue
 	tak_ptr = rx_buffer;
 
-	m_baud = 4800;                                  // default
+	m_baud = 4800; // default
 	long lbaud;
 	if(strBaudRate.ToLong(&lbaud))
 		m_baud = static_cast<int>(lbaud);
@@ -294,7 +294,7 @@ void* OCP_DataStreamInput_Thread::Entry()
 	bool not_done;
 	HANDLE hSerialComm = (HANDLE)(-1);
 
-	//    Request the com port from the comm manager
+	// Request the com port from the comm manager
 	if ((m_gps_fd = OpenComPortPhysical(m_PortName, m_baud)) < 0) {
 		wxString msg(_T("NMEA input device open failed: "));
 		msg.Append(m_PortName);
@@ -495,9 +495,7 @@ HandleASuccessfulRead:
 		if (dwRead > 0) {
 			if ((g_total_NMEAerror_messages < debug.nmea) && (debug.nmea > 1000)) {
 				g_total_NMEAerror_messages++;
-				wxString msg;
-				msg.Printf(_T("NMEA activity...%d bytes"), dwRead);
-				ThreadMessage(msg);
+				ThreadMessage(wxString::Format(_T("NMEA activity...%d bytes"), dwRead));
 			}
 
 			int nchar = dwRead;

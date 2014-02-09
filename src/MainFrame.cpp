@@ -226,7 +226,6 @@ ais::AISTargetAlertDialog* g_pais_alert_dialog_active;
 ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 Multiplexer* g_pMUX;
 wxRect g_blink_rect;
-double g_COGAvg;
 PlugInManager* g_pi_manager;
 bool g_bportable;
 chart::ChartGroupArray* g_pGroupArray;
@@ -270,7 +269,7 @@ int g_nAIS_activity_timer; // FIXME: MainFrame only
 AboutDialog* g_pAboutDlg; // FIXME: MainFrame only
 int g_sticky_chart; // FIXME: MainFrame only
 
-int g_total_NMEAerror_messages;
+int g_total_NMEAerror_messages = 0;
 CM93DSlide* pCM93DetailSlider;
 wxLocale* plocale_def_lang;
 bool g_b_assume_azerty;
@@ -343,6 +342,7 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos, 
 	, VAR_Rx(false) // Most likely installations have no ownship heading information
 	, bFirstAuto(true)
 	, VPRotate(0.0)
+	, COGAvg(0.0)
 {
 	m_ulLastNEMATicktime = 0;
 	m_pStatusBar = NULL;
@@ -1750,7 +1750,7 @@ void MainFrame::ToggleCourseUp(void)
 	if (nav.CourseUp) {
 
 		// Stuff the COGAvg table in case COGUp is selected
-		double stuff = 0.;
+		double stuff = 0.0;
 		if (!wxIsNaN(nav.cog))
 			stuff = nav.cog;
 
@@ -1758,7 +1758,7 @@ void MainFrame::ToggleCourseUp(void)
 			for (int i = 0; i < nav.COGAvgSec; i++)
 				COGTable[i] = stuff;
 		}
-		g_COGAvg = stuff;
+		COGAvg = stuff;
 	}
 
 	DoCOGSet();
@@ -2187,7 +2187,7 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 				COGTable[i] = stuff;
 		}
 
-		g_COGAvg = stuff;
+		COGAvg = stuff;
 
 		// Short circuit the COG timer to force immediate refresh of canvas in case COGUp is
 		// selected
@@ -3335,7 +3335,7 @@ void MainFrame::DoCOGSet(void)
 	double old_VPRotate = VPRotate;
 
 	if (nav.CourseUp)
-		VPRotate = -g_COGAvg * M_PI / 180.0;
+		VPRotate = -COGAvg * M_PI / 180.0;
 	else
 		VPRotate = 0.0;
 
@@ -3938,7 +3938,7 @@ bool MainFrame::DoChartUpdate(void)
 
 		// on lookahead mode, adjust the vp center point
 		if (chart_canvas && global::OCPN::get().gui().view().lookahead_mode) {
-			double angle = g_COGAvg + (chart_canvas->GetVPRotation() * 180.0 / M_PI);
+			double angle = COGAvg + (chart_canvas->GetVPRotation() * 180.0 / M_PI);
 			double pixel_deltay = fabs(cos(angle * M_PI / 180.0)) * chart_canvas->GetCanvasHeight()
 								  / 4;
 			double pixel_deltax = fabs(sin(angle * M_PI / 180.0)) * chart_canvas->GetCanvasWidth()
@@ -3960,7 +3960,7 @@ bool MainFrame::DoChartUpdate(void)
 
 			double meters_to_shift = cos(nav.pos.lat() * M_PI / 180.0) * pixel_delta
 									 / chart_canvas->GetVPScale();
-			double dir_to_shift = g_COGAvg;
+			double dir_to_shift = COGAvg;
 			vp_pos = geo::ll_gc_ll(nav.pos, dir_to_shift, meters_to_shift / 1852.0);
 		}
 	} else {
@@ -4721,9 +4721,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 
 	if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
 		g_total_NMEAerror_messages++;
-		wxString msg(_T("MEH.NMEA Sentence received..."));
-		msg.Append(str_buf);
-		wxLogMessage(msg);
+		wxLogMessage(_T("MEH.NMEA Sentence received..."));
 	}
 
 	//  The message must be at least reasonably formed...
@@ -4734,9 +4732,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 		if (!event.GetStream()->ChecksumOK(str_buf)) {
 			if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
 				g_total_NMEAerror_messages++;
-				wxString msg(_T(">>>>>>NMEA Sentence Checksum Bad..."));
-				msg.Append(str_buf);
-				wxLogMessage(msg);
+				wxLogMessage(_T(">>>>>>NMEA Sentence Checksum Bad..."));
 			}
 			return;
 		}
@@ -4975,18 +4971,14 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 		} else {
 			if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
 				g_total_NMEAerror_messages++;
-				wxString msg(_T("   Invalid AIVDO Sentence..."));
-				msg.Append(str_buf);
-				wxLogMessage(msg);
+				wxLogMessage(_T("   Invalid AIVDO Sentence..."));
 			}
 		}
 	} else {
 		bis_recognized_sentence = false;
 		if ((debug.nmea > 0) && (g_total_NMEAerror_messages < debug.nmea)) {
 			g_total_NMEAerror_messages++;
-			wxString msg(_T("   Unrecognized NMEA Sentence..."));
-			msg.Append(str_buf);
-			wxLogMessage(msg);
+			wxLogMessage(_T("   Unrecognized NMEA Sentence..."));
 		}
 	}
 
@@ -5092,8 +5084,8 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 			for (int i = 0; i < nav.COGAvgSec; i++) {
 				double adder = COGTable[i];
 
-				if (fabs(adder - g_COGAvg) > 180.0) {
-					if ((adder - g_COGAvg) > 0.0)
+				if (fabs(adder - COGAvg) > 180.0) {
+					if ((adder - COGAvg) > 0.0)
 						adder -= 360.0;
 					else
 						adder += 360.0;
@@ -5108,9 +5100,10 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 			else if (sum >= 360.0)
 				sum -= 360.0;
 
-			g_COGAvg = sum;
-		} else
-			g_COGAvg = nav.cog;
+			COGAvg = sum;
+		} else {
+			COGAvg = nav.cog;
+		}
 	}
 
 #ifdef ocpnUPDATE_SYSTEM_TIME

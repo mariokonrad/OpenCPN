@@ -325,6 +325,7 @@ private:
 	wxRect last_tb_rect;
 	bool bFirstAuto;
 	double VPRotate; // Viewport rotation angle, used on "Course Up" mode
+	double COGAvg;
 };
 
 #endif

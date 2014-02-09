@@ -229,8 +229,8 @@ bool PlugInManager::LoadAllPlugIns(const wxString& plugin_dir)
 				// The common name is available without initialization and startup of the PlugIn
 				pic->m_common_name = pic->m_pplugin->GetCommonName();
 
-				//    Check the config file to see if this PlugIn is user-enabled
-				wxString config_section = (_T ( "/PlugIns/" ));
+				// Check the config file to see if this PlugIn is user-enabled
+				wxString config_section = (_T("/PlugIns/"));
 				config_section += pic->m_common_name;
 				pConfig->SetPath(config_section);
 				pConfig->Read(_T("bEnabled"), &pic->m_bEnabled);

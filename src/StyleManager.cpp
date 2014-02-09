@@ -97,7 +97,7 @@ Style& StyleManager::current()
 	return *currentStyle;
 }
 
-void StyleManager::Init(const wxString& fromPath)
+void StyleManager::Init(const wxString& fromPath) // FIXME: method too long, refactoring
 {
 	TiXmlDocument doc;
 
@@ -115,7 +115,6 @@ void StyleManager::Init(const wxString& fromPath)
 	// We allow any number of styles to load from files called style<something>.xml
 
 	bool more = dir.GetFirst(&filename, _T("style*.xml"), wxDIR_FILES);
-
 	if (!more) {
 		wxLogMessage(_T("No styles found at: ") + fromPath);
 		return;
@@ -144,7 +143,7 @@ void StyleManager::Init(const wxString& fromPath)
 		TiXmlHandle hRoot(doc.RootElement());
 
 		wxString root = wxString(doc.RootElement()->Value(), wxConvUTF8);
-		if (root != _T("styles" )) {
+		if (root != _T("styles")) {
 			wxLogMessage(_T("    StyleManager: Expected XML Root <styles> not found."));
 			continue;
 		}

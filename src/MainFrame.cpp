@@ -55,6 +55,7 @@
 #endif
 
 #include <algorithm>
+#include <iostream> // TEMP
 
 #include "MainFrame.h"
 #include <dychart.h>
@@ -797,7 +798,7 @@ ToolBarSimple* MainFrame::CreateAToolbar()
 					wxITEM_NORMAL);
 
 	CheckAndAddPlugInTool(tb);
-	tipString = _("About OpenCPN");
+	tipString = _("About OpenCPN"); // FIXME: this toolbar tool should always be visible
 	if (_toolbarConfigMenuUtil(ID_HELP, tipString))
 		tb->AddTool(ID_HELP, _T("help"), style.GetToolIcon(_T("help"), ocpnStyle::TOOLICON_NORMAL),
 					tipString, wxITEM_NORMAL);

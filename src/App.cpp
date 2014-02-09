@@ -297,7 +297,7 @@ App::App()
 {
 }
 
-void App::OnInitCmdLine(wxCmdLineParser& parser)
+void App::OnInitCmdLine(wxCmdLineParser& parser) // FIXME: add option to set configuration to default (config-reset)
 {
 	static const wxCmdLineEntryDesc OPTIONS[] =
 	{

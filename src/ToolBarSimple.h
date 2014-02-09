@@ -77,10 +77,7 @@ public:
 
 	wxToolBarToolBase* AddTool(int toolid, const wxString& label, const wxBitmap& bitmap,
 							   const wxString& shortHelp = wxEmptyString,
-							   wxItemKind kind = wxITEM_NORMAL)
-	{
-		return AddTool(toolid, label, bitmap, wxNullBitmap, kind, shortHelp);
-	}
+							   wxItemKind kind = wxITEM_NORMAL);
 
 	wxToolBarToolBase* InsertTool(size_t pos, int id, const wxString& label, const wxBitmap& bitmap,
 								  const wxBitmap& bmpDisabled, wxItemKind kind,

@@ -125,6 +125,12 @@ wxToolBarToolBase* ToolBarSimple::DoAddTool(int id, const wxString& label, const
 }
 
 wxToolBarToolBase* ToolBarSimple::AddTool(int toolid, const wxString& label, const wxBitmap& bitmap,
+										  const wxString& shortHelp, wxItemKind kind)
+{
+	return AddTool(toolid, label, bitmap, wxNullBitmap, kind, shortHelp);
+}
+
+wxToolBarToolBase* ToolBarSimple::AddTool(int toolid, const wxString& label, const wxBitmap& bitmap,
 										  const wxBitmap& bmpDisabled, wxItemKind kind,
 										  const wxString& shortHelp, const wxString& longHelp,
 										  wxObject* data)

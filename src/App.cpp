@@ -130,7 +130,6 @@ namespace sound { extern bool portaudio_initialized; }
 extern StatWin* stats;
 extern ConsoleCanvas* console;
 ChartCanvas* cc1;
-wxString gExe_path;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
 extern ocpnStyle::StyleManager* g_StyleManager;
@@ -144,7 +143,6 @@ extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern int gpIDXn;
 extern PlugInManager* g_pi_manager;
-extern bool g_bportable;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern wxArrayString TideCurrentDataSet;
 extern wxPlatformInfo* g_pPlatform;
@@ -335,7 +333,7 @@ void App::OnInitCmdLine(wxCmdLineParser& parser) // FIXME: add option to set con
 bool App::OnCmdLineParsed(wxCmdLineParser& parser)
 {
 	g_unit_test_1 = parser.Found(_T("unit_test_1"));
-	g_bportable = parser.Found(_T("p"));
+	global::OCPN::get().sys().set_config_portable(parser.Found(_T("p")));
 	global::OCPN::get().gui().set_disable_opengl(parser.Found(_T("no_opengl")));
 	start_fullscreen = parser.Found(_T("fullscreen"));
 
@@ -462,7 +460,7 @@ void App::establish_home_location()
 	home_location.Append(std_path.GetUserConfigDir());
 #endif
 
-	if (g_bportable) {
+	if (sys.config().portable) {
 		home_location.Clear();
 		wxFileName f(std_path.GetExecutablePath());
 		home_location.Append(f.GetPath());
@@ -499,7 +497,7 @@ void App::determine_config_file()
 	config_file.Append(_T("opencpn.conf"));
 #endif
 
-	if (g_bportable) {
+	if (sys.config().portable) {
 		config_file = sys.data().home_location;
 #ifdef __WXMSW__
 		config_file += _T("opencpn.ini");
@@ -568,9 +566,9 @@ void App::install_crash_reporting()
 	// Take screenshot of the app window at the moment of crash
 	crAddScreenshot2(CR_AS_PROCESS_WINDOWS | CR_AS_USE_JPEG_FORMAT, 95);
 
-	//  Mark some files to add to the crash report
+	// Mark some files to add to the crash report
 	wxString home_data_crash = std_path_crash.GetConfigDir();
-	if (g_bportable) {
+	if (global::OCPN::get().sys().config().portable) {
 		wxFileName f(std_path_crash.GetExecutablePath());
 		home_data_crash = f.GetPath();
 	}
@@ -703,13 +701,14 @@ void App::setup_s57()
 {
 #ifdef USE_S57
 	const global::System::Data& sys = global::OCPN::get().sys().data();
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
 
 	// Set up a useable CPL library error handler for S57 stuff
 	CPLSetErrorHandler(OCPN_CPLErrorHandler);
 
 	// Init the s57 chart object, specifying the location of the required csv files
 	wxString csv_location = sys.sound_data_location + _T("s57data");
-	if (g_bportable) {
+	if (cfg.portable) {
 		csv_location = _T(".");
 		appendOSDirSlash(csv_location);
 		csv_location.Append(_T("s57data"));
@@ -724,7 +723,7 @@ void App::setup_s57()
 		appendOSDirSlash(senc_prefix);
 		senc_prefix.Append(_T("SENC"));
 	}
-	if (g_bportable) {
+	if (cfg.portable) {
 		wxFileName f(senc_prefix);
 		if (f.MakeRelativeTo(sys.private_data_dir))
 			senc_prefix = f.GetFullPath();
@@ -878,6 +877,7 @@ void App::setup_for_empty_config(bool novicemode)
 void App::check_tide_current()
 {
 	const global::System::Data& sys = global::OCPN::get().sys().data();
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
 
 	// Check the global Tide/Current data source array
 	// If empty, preset one default (US) Ascii data source
@@ -885,7 +885,7 @@ void App::check_tide_current()
 		wxString default_tcdata = sys.sound_data_location + _T("tcdata")
 								  + wxFileName::GetPathSeparator() + _T("HARMONIC.IDX");
 
-		if (g_bportable) {
+		if (cfg.portable) {
 			wxFileName f(default_tcdata);
 			f.MakeRelativeTo(sys.private_data_dir);
 			TideCurrentDataSet.Add(f.GetFullPath());
@@ -898,6 +898,7 @@ void App::check_tide_current()
 void App::check_ais_alarm_sound_file()
 {
 	const global::System::Data& sys = global::OCPN::get().sys().data();
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
 	const global::AIS::Data& ais = global::OCPN::get().ais().get_data();
 
 	// Check the global AIS alarm sound file. If empty, preset default.
@@ -906,7 +907,7 @@ void App::check_ais_alarm_sound_file()
 								 + wxFileName::GetPathSeparator() + _T("2bells.wav");
 
 		wxString filename;
-		if (g_bportable) {
+		if (cfg.portable) {
 			wxFileName f(default_sound);
 			f.MakeRelativeTo(sys.private_data_dir);
 			filename = f.GetFullPath();
@@ -1019,7 +1020,8 @@ void App::setup_layers()
 void App::determine_chartlist_filename()
 {
 	wxString filename;
-	const global::System::Data & sys = global::OCPN::get().sys().data();
+	const global::System::Data& sys = global::OCPN::get().sys().data();
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
 
 	// Establish location and name of chart database
 #ifdef __WXMSW__
@@ -1031,7 +1033,7 @@ void App::determine_chartlist_filename()
 	filename.Append(_T("chartlist.dat"));
 #endif
 
-	if (g_bportable) {
+	if (cfg.portable) {
 		filename.Clear();
 #ifdef __WXMSW__
 		filename.Append(_T("CHRTLIST.DAT"));
@@ -1052,7 +1054,7 @@ void App::set_init_chart_dir()
 
 	// Establish guessed location of chart tree
 	if (path.IsEmpty()) {
-		if (!g_bportable) {
+		if (!sys.config().portable) {
 			path.Append(wxApp::GetTraits()->GetStandardPaths().GetDocumentsDir());
 			sys.set_init_chart_dir(path);
 		}
@@ -1069,17 +1071,19 @@ bool App::OnInit()
 	int mem_total = 0;
 	int mem_initial = 0;
 
+	global::GUI& gui = global::OCPN::get().gui();
+
 	// default values for toolbar
-	global::OCPN::get().gui().set_toolbar_config(_T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"));
+	gui.set_toolbar_config(_T("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"));
 
 	// default value is DAY
-	global::OCPN::get().gui().set_color_scheme(global::GLOBAL_COLOR_SCHEME_DAY);
+	gui.set_color_scheme(global::GLOBAL_COLOR_SCHEME_DAY);
 
 #ifdef __WXMSW__
 	// On Windows
 	// We allow only one instance unless the portable option is used
 	m_checker = new wxSingleInstanceChecker(_T("OpenCPN"));
-	if (!g_bportable) {
+	if (!global::OCPN::get().sys().config().portable) {
 		if (m_checker->IsAnotherRunning())
 			return false; // exit quietly
 	}
@@ -1223,9 +1227,10 @@ bool App::OnInit()
 	wxString sound_data_location = std_path.GetDataDir();
 	appendOSDirSlash(sound_data_location);
 
-	gExe_path = std_path.GetExecutablePath();
+	sys.set_exe_path(std_path.GetExecutablePath());
 
-	if (g_bportable)
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
+	if (cfg.portable)
 		sound_data_location = sys.data().home_location;
 
 	sys.set_sound_data_location(sound_data_location);
@@ -1244,7 +1249,7 @@ bool App::OnInit()
 	sys.set_private_data_dir(std_path.GetUserDataDir()); // should be ~/.opencpn
 #endif
 
-	if (g_bportable)
+	if (cfg.portable)
 		sys.set_private_data_dir(sys.data().home_location);
 
 	// Get the PlugIns directory location
@@ -1256,7 +1261,7 @@ bool App::OnInit()
 	plugin_dir += _T("\\plugins");
 #endif
 
-	if (g_bportable) {
+	if (cfg.portable) {
 		plugin_dir = sys.data().home_location;
 		plugin_dir += _T("plugins");
 	}
@@ -1465,7 +1470,7 @@ bool App::OnInit()
 
 	// Create the main frame window
 	wxString myframe_window_title = wxT("OpenCPN ") + ocpn::Version().get_short();
-	if (g_bportable) {
+	if (cfg.portable) {
 		myframe_window_title += _(" -- [Portable(-p) executing from ");
 		myframe_window_title += sys.data().home_location;
 		myframe_window_title += _T("]");
@@ -1684,7 +1689,6 @@ bool App::OnInit()
 	ChartData->ApplyGroupArray(g_pGroupArray);
 
 	// Make sure that the Selected Group is sensible...
-	global::GUI& gui = global::OCPN::get().gui();
 	if (gui.view().GroupIndex > (int)g_pGroupArray->size())
 		gui.set_GroupIndex(0);
 	if (!gFrame->CheckGroup(gui.view().GroupIndex))

@@ -226,7 +226,6 @@ ais::AISTargetQueryDialog* g_pais_query_dialog_active;
 Multiplexer* g_pMUX;
 wxRect g_blink_rect;
 PlugInManager* g_pi_manager;
-bool g_bportable;
 chart::ChartGroupArray* g_pGroupArray;
 wxProgressDialog* s_ProgDialog;
 wxArrayString TideCurrentDataSet;

@@ -52,6 +52,7 @@ public:
 		wxString csv_location;
 		wxString SENCPrefix;
 		wxString UserPresLibData;
+		wxString exe_path;
 	};
 
 	virtual const Data& data() const = 0;
@@ -69,6 +70,7 @@ public:
 	virtual void set_csv_location(const wxString&) = 0;
 	virtual void set_SENCPrefix(const wxString&) = 0;
 	virtual void set_UserPresLibData(const wxString&) = 0;
+	virtual void set_exe_path(const wxString&) = 0;
 
 public:
 	struct Config
@@ -114,6 +116,7 @@ public:
 		bool filter_cogsog;
 		int COGFilterSec;
 		int SOGFilterSec;
+		bool portable; ///< The application is running in portable mode.
 	};
 
 	virtual const Config& config() const = 0;
@@ -139,6 +142,7 @@ public:
 	virtual void set_config_filter_cogsog(bool) = 0;
 	virtual void set_config_COGFilterSec(int) = 0;
 	virtual void set_config_SOGFilterSec(int) = 0;
+	virtual void set_config_portable(bool) = 0;
 
 public:
 	struct Debug

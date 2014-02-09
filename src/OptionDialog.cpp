@@ -102,8 +102,6 @@ extern sound::OCPN_Sound g_anchorwatch_sound;
 extern chart::s52plib *ps52plib;
 #endif
 
-extern bool g_bportable;
-
 extern chart::ChartGroupArray* g_pGroupArray;
 extern ocpnStyle::StyleManager* g_StyleManager;
 
@@ -2258,6 +2256,7 @@ void options::OnCharHook(wxKeyEvent& event)
 void options::OnButtonaddClick(wxCommandEvent& event)
 {
 	const global::System::Data& sys = global::OCPN::get().sys().data();
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
 
 	wxDirDialog* dirSelector
 		= new wxDirDialog(this, _("Add a directory containing chart files"), sys.init_chart_dir,
@@ -2267,10 +2266,10 @@ void options::OnButtonaddClick(wxCommandEvent& event)
 		wxString selDir = dirSelector->GetPath();
 		wxFileName dirname = wxFileName(selDir);
 
-		if (!g_bportable)
+		if (!cfg.portable)
 			global::OCPN::get().sys().set_init_chart_dir(dirname.GetPath());
 
-		if (g_bportable) {
+		if (cfg.portable) {
 			wxFileName f(selDir);
 			f.MakeRelativeTo(sys.home_location);
 			pActiveChartsList->Append(f.GetFullPath());
@@ -3151,20 +3150,24 @@ void options::OnPageChange(wxListbookEvent& event)
 
 void options::OnButtonSelectSound(wxCommandEvent&)
 {
-	wxString sound_dir = global::OCPN::get().sys().data().sound_data_location;
+	const global::System::Data& sys = global::OCPN::get().sys().data();
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
+
+	wxString sound_dir = sys.sound_data_location;
 	sound_dir.Append(_T("sounds"));
 
-	wxFileDialog* openDialog = new wxFileDialog( // FIXME: memory leak
-		this, _("Select Sound File"), sound_dir, wxT(""),
-		_("WAV files (*.wav)|*.wav|All files (*.*)|*.*"), wxFD_OPEN);
+	// FIXME: memory leak
+	wxFileDialog* openDialog
+		= new wxFileDialog(this, _("Select Sound File"), sound_dir, wxT(""),
+						   _("WAV files (*.wav)|*.wav|All files (*.*)|*.*"), wxFD_OPEN);
 
 	if (openDialog->ShowModal() != wxID_OK)
 		return;
 
 	global::AIS& ais = global::OCPN::get().ais();
-	if (g_bportable) {
+	if (cfg.portable) {
 		wxFileName f(openDialog->GetPath());
-		f.MakeRelativeTo(global::OCPN::get().sys().data().home_location);
+		f.MakeRelativeTo(sys.home_location);
 		ais.set_AIS_Alert_Sound_File(f.GetFullPath());
 	} else {
 		ais.set_AIS_Alert_Sound_File(openDialog->GetPath());
@@ -3281,6 +3284,7 @@ static wxString GetOCPNKnownLanguage(wxString lang_canonical, wxString* lang_dir
 
 void options::OnInsertTideDataLocation(wxCommandEvent&)
 {
+	const global::System::Config& cfg = global::OCPN::get().sys().config();
 	global::System& sys = global::OCPN::get().sys();
 
 	wxFileDialog openDialog(
@@ -3291,7 +3295,7 @@ void options::OnInsertTideDataLocation(wxCommandEvent&)
 	if (response == wxID_OK) {
 		wxString sel_file = openDialog.GetPath();
 
-		if (g_bportable) {
+		if (cfg.portable) {
 			wxFileName f(sel_file);
 			f.MakeRelativeTo(sys.data().home_location);
 			tcDataSelected->Append(f.GetFullPath());
@@ -3302,7 +3306,7 @@ void options::OnInsertTideDataLocation(wxCommandEvent&)
 		// Record the currently selected directory for later use
 		wxFileName fn(sel_file);
 		wxString data_dir = fn.GetPath();
-		if (g_bportable) {
+		if (cfg.portable) {
 			wxFileName f(data_dir);
 			f.MakeRelativeTo(sys.data().home_location);
 			sys.set_tc_data_dir(f.GetFullPath());

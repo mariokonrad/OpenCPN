@@ -46,7 +46,6 @@
 #include <wx/image.h>
 #include <wx/bitmap.h>
 
-extern wxString gExe_path;
 extern PlugInManager* g_pi_manager;
 
 #ifdef USE_S57
@@ -403,7 +402,7 @@ int OCPNMessageBox_PlugIn(wxWindow* parent, const wxString& message, const wxStr
 
 wxString GetOCPN_ExePath(void)
 {
-	return gExe_path;
+	return global::OCPN::get().sys().data().exe_path;
 }
 
 wxString *GetpPlugInLocation() // FIXME: please, in the future, try to omit such interfaces

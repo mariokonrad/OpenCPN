@@ -51,6 +51,7 @@ public: // data
 	virtual void set_csv_location(const wxString&);
 	virtual void set_SENCPrefix(const wxString&);
 	virtual void set_UserPresLibData(const wxString&);
+	virtual void set_exe_path(const wxString&);
 
 public: // config
 	virtual const Config& config() const;
@@ -76,6 +77,7 @@ public: // config
 	virtual void set_config_filter_cogsog(bool);
 	virtual void set_config_COGFilterSec(int);
 	virtual void set_config_SOGFilterSec(int);
+	virtual void set_config_portable(bool);
 
 public: // debug
 	virtual const Debug& debug() const;

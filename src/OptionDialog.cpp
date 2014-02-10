@@ -2355,6 +2355,15 @@ ConnectionParams::ListType options::getConParamOutputListType() const
 
 ConnectionParams options::createConnectionParams() const
 {
+	return ConnectionParams(
+		getConParamConnectionType(), getConParamNetworkProtocol(), m_tNetAddress->GetValue(),
+		wxAtoi(m_tNetPort->GetValue()), wxAtoi(m_choiceBaudRate->GetStringSelection()),
+		wxAtoi(m_choicePriority->GetStringSelection()), m_cbCheckCRC->GetValue(),
+		m_cbGarminHost->GetValue(), m_tcInputStc->GetValue(), getConParamInputListType(),
+		m_cbOutput->GetValue(), m_tcOutputStc->GetValue(), getConParamOutputListType(),
+		m_comboPort->GetValue().BeforeFirst(' '), m_connection_enabled);
+
+/*
 	ConnectionParams prm;
 
 	prm.Valid = true;
@@ -2363,7 +2372,7 @@ ConnectionParams options::createConnectionParams() const
 
 	// Save the existing addr/port to allow closing of existing port
 	prm.LastNetworkAddress = prm.NetworkAddress;
-	prm.NetworkPort = prm.NetworkPort;
+	prm.LastNetworkPort = prm.NetworkPort;
 
 	prm.NetworkAddress = m_tNetAddress->GetValue();
 	prm.NetworkPort = wxAtoi(m_tNetPort->GetValue());
@@ -2382,6 +2391,7 @@ ConnectionParams options::createConnectionParams() const
 	prm.b_IsSetup = false;
 
 	return prm;
+*/
 }
 
 bool options::CreateConnectionParamsFromSelectedItem(ConnectionParams& prm)
@@ -2630,12 +2640,12 @@ void options::OnApplyClick(wxCommandEvent& event)
 	// If the stream selected exists, capture some of its existing parameters
 	// to facility identification and allow stop and restart of the stream
 	wxString lastAddr;
-	int lastPort;
+	int lastPort = 0;
 	if (itemIndex >= 0) {
 		int params_index = m_lcSources->GetItemData(itemIndex);
 		const ConnectionParams& cpo = g_pConnectionParams->at(params_index);
-		lastAddr = cpo.NetworkAddress;
-		lastPort = cpo.NetworkPort;
+		lastAddr = cpo.getNetworkAddress();
+		lastPort = cpo.getNetworkPort();
 	}
 
 	if (!connectionsaved) {
@@ -2650,8 +2660,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 			}
 
 			// Record the previous parameters, if any
-			cp.LastNetworkAddress = lastAddr;
-			cp.LastNetworkPort = lastPort;
+			cp.set_last(lastAddr, lastPort);
 
 			FillSourceList();
 			m_lcSources->SetItemState(itemIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
@@ -2692,7 +2701,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 				g_pMUX->AddStream(dstr);
 
-				cp.b_IsSetup = true;
+				cp.set_setup(true);
 			}
 		}
 	}
@@ -2778,8 +2787,8 @@ void options::OnApplyClick(wxCommandEvent& event)
 		double dval;
 
 		if ((m_SafetyCtl->GetValue()).ToDouble(&dval)) {
-			chart::S52_setMarinerParam(chart::S52_MAR_SAFETY_DEPTH,
-									   dval); // controls sounding display
+			// controls sounding display
+			chart::S52_setMarinerParam(chart::S52_MAR_SAFETY_DEPTH, dval);
 			chart::S52_setMarinerParam(chart::S52_MAR_SAFETY_CONTOUR, dval); // controls colour
 		}
 
@@ -3522,35 +3531,35 @@ void options::SetDSFormRWStates()
 
 void options::SetConnectionParams(const ConnectionParams& cp)
 {
-	m_comboPort->Select(m_comboPort->FindString(cp.Port));
-	m_comboPort->SetValue(cp.Port);
-	m_cbCheckCRC->SetValue(cp.ChecksumCheck);
-	m_cbGarminHost->SetValue(cp.Garmin);
-	m_cbOutput->SetValue(cp.Output);
-	if (cp.InputSentenceListType == ConnectionParams::WHITELIST)
+	m_comboPort->Select(m_comboPort->FindString(cp.getPort()));
+	m_comboPort->SetValue(cp.getPort());
+	m_cbCheckCRC->SetValue(cp.isChecksumCheck());
+	m_cbGarminHost->SetValue(cp.isGarmin());
+	m_cbOutput->SetValue(cp.isOutput());
+	if (cp.getInputSentenceListType() == ConnectionParams::WHITELIST)
 		m_rbIAccept->SetValue(true);
 	else
 		m_rbIIgnore->SetValue(true);
-	if (cp.OutputSentenceListType == ConnectionParams::WHITELIST)
+	if (cp.getOutputSentenceListType() == ConnectionParams::WHITELIST)
 		m_rbOAccept->SetValue(true);
 	else
 		m_rbOIgnore->SetValue(true);
-	m_tcInputStc->SetValue(StringArrayToString(cp.InputSentenceList));
-	m_tcOutputStc->SetValue(StringArrayToString(cp.OutputSentenceList));
-	m_choiceBaudRate->Select(m_choiceBaudRate->FindString(wxString::Format(_T("%d"), cp.Baudrate)));
-	m_choiceSerialProtocol->Select(cp.Protocol); // TODO
-	m_choicePriority->Select(m_choicePriority->FindString(wxString::Format(_T("%d"), cp.Priority)));
+	m_tcInputStc->SetValue(StringArrayToString(cp.getInputSentenceList()));
+	m_tcOutputStc->SetValue(StringArrayToString(cp.getOutputSentenceList()));
+	m_choiceBaudRate->Select(m_choiceBaudRate->FindString(wxString::Format(_T("%d"), cp.getBaudrate())));
+	m_choiceSerialProtocol->Select(cp.getProtocol()); // TODO
+	m_choicePriority->Select(m_choicePriority->FindString(wxString::Format(_T("%d"), cp.getPriority())));
 
-	m_tNetAddress->SetValue(cp.NetworkAddress);
+	m_tNetAddress->SetValue(cp.getNetworkAddress());
 
-	if (cp.NetworkPort == 0)
+	if (cp.getNetworkPort() == 0)
 		m_tNetPort->SetValue(_T(""));
 	else
-		m_tNetPort->SetValue(wxString::Format(wxT("%i"), cp.NetworkPort));
+		m_tNetPort->SetValue(wxString::Format(wxT("%i"), cp.getNetworkPort()));
 
-	if (cp.NetProtocol == ConnectionParams::TCP)
+	if (cp.getNetProtocol() == ConnectionParams::TCP)
 		m_rbNetProtoTCP->SetValue(true);
-	else if (cp.NetProtocol == ConnectionParams::UDP)
+	else if (cp.getNetProtocol() == ConnectionParams::UDP)
 		m_rbNetProtoUDP->SetValue(true);
 	else
 		m_rbNetProtoGPSD->SetValue(true);
@@ -3607,7 +3616,7 @@ void options::FillSourceList()
 	for (size_t i = 0; i < g_pConnectionParams->size(); i++) {
 		wxListItem li;
 		li.SetId(i);
-		li.SetImage(g_pConnectionParams->at(i).bEnabled ? 1 : 0);
+		li.SetImage(g_pConnectionParams->at(i).isEnabled() ? 1 : 0);
 		li.SetData(i);
 		li.SetText(_T(""));
 
@@ -3616,7 +3625,7 @@ void options::FillSourceList()
 		m_lcSources->SetItem(itemIndex, 1, g_pConnectionParams->at(i).GetSourceTypeStr());
 		m_lcSources->SetItem(itemIndex, 2, g_pConnectionParams->at(i).GetAddressStr());
 		wxString prio_str;
-		prio_str.Printf(_T("%d"), g_pConnectionParams->at(i).Priority);
+		prio_str.Printf(_T("%d"), g_pConnectionParams->at(i).getPriority());
 		m_lcSources->SetItem(itemIndex, 3, prio_str);
 		m_lcSources->SetItem(itemIndex, 4, g_pConnectionParams->at(i).GetParametersStr());
 		m_lcSources->SetItem(itemIndex, 5, g_pConnectionParams->at(i).GetOutputValueStr());

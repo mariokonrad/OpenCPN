@@ -21,16 +21,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CONNECTIONPARAMS_H__
-#define __CONNECTIONPARAMS_H__
+#ifndef __CONNECTIONPARAMS__H__
+#define __CONNECTIONPARAMS__H__
 
 #include <wx/string.h>
 #include <wx/arrstr.h>
 #include <vector>
 
+/// This class represents connection parameters.
 class ConnectionParams
 {
-	friend class options; // only this class is allowed to fully construct
 public:
 	enum ConnectionType {
 		SERIAL = 0,
@@ -80,6 +80,14 @@ public:
 	ConnectionParams(const wxString& configStr);
 	ConnectionParams(const wxString& port, int baudrate, bool is_garmin = false);
 
+	ConnectionParams(ConnectionType conn_type, NetworkProtocol net_protocol,
+					 const wxString& net_address, int net_port, int baudrate, int priority,
+					 bool checksum_check, bool is_garmin, const wxString& input_sentece_list,
+					 ConnectionParams::ListType input_list_type, bool is_output,
+					 const wxString& output_sentece_list,
+					 ConnectionParams::ListType output_list_type, const wxString& port,
+					 bool enabled);
+
 	wxString Serialize();
 	void Deserialize(const wxString& configStr);
 
@@ -91,6 +99,9 @@ public:
 	wxString GetDSPort() const;
 	wxString GetLastDSPort();
 
+	const wxString& getNetworkAddress() const;
+	int getNetworkPort() const;
+
 	bool isSetup() const;
 	bool isEnabled() const;
 	bool isOutput() const;
@@ -100,6 +111,7 @@ public:
 	int getBaudrate() const;
 	int getPriority() const;
 	const wxString& getPort() const;
+	DataProtocol getProtocol() const;
 
 	ListType getInputSentenceListType() const;
 	const wxArrayString& getInputSentenceList() const;
@@ -108,6 +120,11 @@ public:
 
 	void enableOutput(const wxString& sentence);
 	void toggleEnabled();
+
+	void set_last(const wxString& address, int port);
+	void set_setup(bool);
+
+	NetworkProtocol getNetProtocol() const;
 
 	static ConnectionParams createOutput(const wxString& port, const wxString& sentence);
 

@@ -78,6 +78,39 @@ ConnectionParams::ConnectionParams(const wxString& port, int baudrate, bool is_g
 {
 }
 
+ConnectionParams::ConnectionParams(ConnectionType conn_type, NetworkProtocol net_protocol,
+								   const wxString& net_address, int net_port, int baudrate,
+								   int priority, bool checksum_check, bool is_garmin,
+								   const wxString& input_sentence_list,
+								   ConnectionParams::ListType input_list_type, bool is_output,
+								   const wxString& output_sentence_list,
+								   ConnectionParams::ListType output_list_type,
+								   const wxString& port, bool enabled)
+	: Type(conn_type)
+	, NetProtocol(net_protocol)
+	, NetworkAddress(net_address)
+	, NetworkPort(net_port)
+	, LastNetworkAddress(wxEmptyString)
+	, LastNetworkPort(0)
+	, Protocol(PROTO_NMEA0183)
+	, Port(port)
+	, Baudrate(baudrate)
+	, ChecksumCheck(checksum_check)
+	, Garmin(is_garmin)
+	, GarminUpload(false)
+	, FurunoGP3X(false)
+	, Output(is_output)
+	, InputSentenceListType(input_list_type)
+	, OutputSentenceListType(output_list_type)
+	, Priority(priority)
+	, bEnabled(enabled)
+	, Valid(true)
+	, b_IsSetup(false)
+{
+	InputSentenceList = wxStringTokenize(input_sentence_list, _T(","));
+	OutputSentenceList = wxStringTokenize(output_sentence_list, _T(","));
+}
+
 ConnectionParams ConnectionParams::createOutput(const wxString& port, const wxString& sentence)
 {
 	ConnectionParams param(port, 4800);
@@ -94,18 +127,18 @@ void ConnectionParams::Deserialize(const wxString& configStr)
 		return;
 	}
 
-	Type = (ConnectionType)wxAtoi(prms[0]);
-	NetProtocol = (NetworkProtocol)wxAtoi(prms[1]);
+	Type = static_cast<ConnectionType>(wxAtoi(prms[0]));
+	NetProtocol = static_cast<NetworkProtocol>(wxAtoi(prms[1]));
 	NetworkAddress = prms[2];
-	NetworkPort = (ConnectionType)wxAtoi(prms[3]);
-	Protocol = (DataProtocol)wxAtoi(prms[4]);
+	NetworkPort = static_cast<ConnectionType>(wxAtoi(prms[3]));
+	Protocol = static_cast<DataProtocol>(wxAtoi(prms[4]));
 	Port = prms[5];
 	Baudrate = wxAtoi(prms[6]);
 	ChecksumCheck = !!wxAtoi(prms[7]);
 	Output = !!wxAtoi(prms[8]);
-	InputSentenceListType = (ListType)wxAtoi(prms[9]);
+	InputSentenceListType = static_cast<ListType>(wxAtoi(prms[9]));
 	InputSentenceList = wxStringTokenize(prms[10], _T(","));
-	OutputSentenceListType = (ListType)wxAtoi(prms[11]);
+	OutputSentenceListType = static_cast<ListType>(wxAtoi(prms[11]));
 	OutputSentenceList = wxStringTokenize(prms[12], _T(","));
 	Priority = wxAtoi(prms[13]);
 	Garmin = !!wxAtoi(prms[14]);
@@ -136,6 +169,37 @@ wxString ConnectionParams::Serialize()
 							Port.c_str(), Baudrate, ChecksumCheck, Output, InputSentenceListType,
 							istcs.c_str(), OutputSentenceListType, ostcs.c_str(), Priority, Garmin,
 							GarminUpload, FurunoGP3X, bEnabled);
+}
+
+const wxString& ConnectionParams::getNetworkAddress() const
+{
+	return NetworkAddress;
+}
+
+int ConnectionParams::getNetworkPort() const
+{
+	return NetworkPort;
+}
+
+ConnectionParams::DataProtocol ConnectionParams::getProtocol() const
+{
+	return Protocol;
+}
+
+void ConnectionParams::set_last(const wxString& address, int port)
+{
+	LastNetworkAddress = address;
+	LastNetworkPort = port;
+}
+
+void ConnectionParams::set_setup(bool value)
+{
+	b_IsSetup = value;
+}
+
+ConnectionParams::NetworkProtocol ConnectionParams::getNetProtocol() const
+{
+	return NetProtocol;
 }
 
 wxString ConnectionParams::GetSourceTypeStr() const

@@ -59,7 +59,6 @@ public:
 
 	geo::Position pos1;
 	geo::Position pos2;
-	bool m_bIsSelected;
 
 	// (mis-)used as one of the following:
 	// - RoutePoint

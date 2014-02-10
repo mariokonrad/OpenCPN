@@ -64,7 +64,6 @@ bool Select::AddSelectableRoutePoint(const geo::Position& pos, RoutePoint* pRout
 {
 	SelectItem* pSelItem = new SelectItem(SelectItem::TYPE_ROUTEPOINT);
 	pSelItem->pos1 = pos;
-	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd;
 
 	if (pRoutePointAdd->m_bIsInLayer)
@@ -85,7 +84,6 @@ bool Select::AddSelectableRouteSegment(
 	SelectItem* pSelItem = new SelectItem(SelectItem::TYPE_ROUTESEGMENT);
 	pSelItem->pos1 = pos1;
 	pSelItem->pos2 = pos2;
-	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd1;
 	pSelItem->route_point = pRoutePointAdd2;
 	pSelItem->route = pRoute;
@@ -218,7 +216,6 @@ SelectItem* Select::AddSelectablePoint(const geo::Position& pos, const void* pda
 	SelectItem* pSelItem = new SelectItem(fseltype);
 	if (pSelItem) {
 		pSelItem->pos1 = pos;
-		pSelItem->m_bIsSelected = false;
 		pSelItem->m_pData1 = pdata;
 		select_items.push_back(pSelItem);
 	}
@@ -294,7 +291,6 @@ bool Select::AddSelectableTrackSegment(
 	SelectItem *pSelItem = new SelectItem(SelectItem::TYPE_TRACKSEGMENT);
 	pSelItem->pos1 = pos1;
 	pSelItem->pos2 = pos2;
-	pSelItem->m_bIsSelected = false;
 	pSelItem->m_pData1 = pRoutePointAdd1;
 	pSelItem->route_point = pRoutePointAdd2;
 	pSelItem->route = pRoute;

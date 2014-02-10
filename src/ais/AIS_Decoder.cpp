@@ -761,10 +761,10 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 
 	if (mmsi || (!string_to_parse.IsEmpty() && (string_to_parse.Len() < AIS_MAX_MESSAGE_LEN))) {
 
-		//  Create the bit accessible string
+		// Create the bit accessible string
 		AIS_Bitstring strbit(string_to_parse.mb_str());
 
-		//  Extract the MMSI
+		// Extract the MMSI
 		if (!mmsi)
 			mmsi = strbit.GetInt(9, 30);
 		long mmsi_long = mmsi;
@@ -963,15 +963,14 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 			if (!dse_mmsi)
 				pTargetData->RecentPeriod = pTargetData->PositionReportTicks - last_report_ticks;
 
-			//  If this is not an ownship message, update the AIS Target in the Selectable list, and
+			// If this is not an ownship message, update the AIS Target in the Selectable list, and
 			// update the CPA info
 			if (!pTargetData->b_OwnShip) {
 				if (pTargetData->b_positionOnceValid) {
-					SelectItem* pSel = pSelectAIS->AddSelectablePoint(
+					pSelectAIS->AddSelectablePoint(
 						geo::Position(pTargetData->Lat, pTargetData->Lon),
-						reinterpret_cast<void*>(mmsi_long),
-						SelectItem::TYPE_AISTARGET); // FIXME: void * misuse
-					pSel->SetUserData(mmsi);
+						reinterpret_cast<void*>(mmsi_long), SelectItem::TYPE_AISTARGET,
+						mmsi); // FIXME: void * misuse
 				}
 
 				// Calculate CPA info for this target immediately
@@ -987,15 +986,14 @@ AIS_Error AIS_Decoder::Decode(const wxString& str)
 				delete pTargetData; // this target is not going to be used
 				m_n_targets--;
 			} else {
-				//  If this is not an ownship message, update the AIS Target in the Selectable list
-				//  even if the message type was not recognized
+				// If this is not an ownship message, update the AIS Target in the Selectable list
+				// even if the message type was not recognized
 				if (!pTargetData->b_OwnShip) {
 					if (pTargetData->b_positionOnceValid) {
-						SelectItem* pSel = pSelectAIS->AddSelectablePoint(
+						pSelectAIS->AddSelectablePoint(
 							geo::Position(pTargetData->Lat, pTargetData->Lon),
-							reinterpret_cast<void*>(mmsi_long),
-							SelectItem::TYPE_AISTARGET); // FIXME: void * misuse
-						pSel->SetUserData(mmsi);
+							reinterpret_cast<void*>(mmsi_long), SelectItem::TYPE_AISTARGET,
+							mmsi); // FIXME: void * misuse
 					}
 				}
 			}

@@ -62,7 +62,8 @@ public:
 
 	// Generic Point Support
 	// e.g. Tides/Currents and AIS Targets
-	SelectItem* AddSelectablePoint(const geo::Position& pos, const void* data, SelectItem::Type fseltype);
+	void AddSelectablePoint(const geo::Position& pos, const void* data, SelectItem::Type fseltype,
+							int user_data = 0);
 	bool DeleteAllPoints(void);
 	bool DeleteSelectablePoint(void* data, unsigned long SeltypeToDelete);
 	bool ModifySelectablePoint(const geo::Position& pos, void* data, unsigned long fseltype);

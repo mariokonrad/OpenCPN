@@ -9474,12 +9474,11 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 										bool bRebuildSelList, bool bforce_redraw_currents,
 										bool bdraw_mono_for_mask)
 {
-	float tcvalue, dir;
+	float tcvalue;
+	float dir;
 	bool bnew_val;
 	char sbuf[20];
 	wxFont* pTCFont;
-	double lon_last = 0.0;
-	double lat_last = 0.0;
 
 	const global::ColorManager& colors = global::OCPN::get().color();
 	const global::GUI::View& view = global::OCPN::get().gui().view();
@@ -9517,10 +9516,10 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 	if (bRebuildSelList)
 		pSelectTC->DeleteAllSelectableTypePoints(SelectItem::TYPE_CURRENTPOINT);
 
+	geo::Position pos_last(0.0, 0.0);
 	for (int i = 1; i < ptcmgr->Get_max_IDX() + 1; i++) {
 		const tide::IDX_entry* pIDX = ptcmgr->GetIDX_entry(i);
-		double lon = pIDX->IDX_lon;
-		double lat = pIDX->IDX_lat;
+		geo::Position pos(pIDX->IDX_lat, pIDX->IDX_lon);
 
 		char type = pIDX->IDX_type; // Entry "TCtcIUu" identifier
 		if ((type == 'c') || (type == 'C')) {
@@ -9529,16 +9528,16 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 			// try to avoid double current arrows.  Select the first in the list only
 			// Proper fix is to correct the TCDATA index file for depth indication
 			bool b_dup = false;
-			if ((type == 'c') && (lat == lat_last) && (lon == lon_last))
+			if ((type == 'c') && (pos == pos_last))
 				b_dup = true;
 
-			if (!b_dup && (BBox.PointInBox(lon, lat, 0))) {
+			if (!b_dup && (BBox.PointInBox(pos.lon(), pos.lat(), 0))) {
 
-				//    Manage the point selection list
+				// Manage the point selection list
 				if (bRebuildSelList)
-					pSelectTC->AddSelectablePoint(geo::Position(lat, lon), pIDX, SelectItem::TYPE_CURRENTPOINT);
+					pSelectTC->AddSelectablePoint(pos, pIDX, SelectItem::TYPE_CURRENTPOINT);
 
-				wxPoint r = GetCanvasPointPix(geo::Position(lat, lon));
+				wxPoint r = GetCanvasPointPix(pos);
 
 				wxPoint d[4];
 				int dd = 6;
@@ -9564,7 +9563,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 						if (bnew_val || bforce_redraw_currents) {
 
 							// Get the display pixel location of the current station
-							wxPoint cpoint = GetCanvasPointPix(geo::Position(lat, lon));
+							wxPoint cpoint = GetCanvasPointPix(pos);
 							int pixxc = cpoint.x;
 							int pixyc = cpoint.y;
 
@@ -9591,8 +9590,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 					}
 				}
 			}
-			lon_last = lon;
-			lat_last = lat;
+			pos_last = pos;
 		}
 	}
 }

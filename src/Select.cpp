@@ -210,16 +210,14 @@ bool Select::UpdateSelectableRouteSegments(const RoutePoint* prp)
 	return ret;
 }
 
-SelectItem* Select::AddSelectablePoint(const geo::Position& pos, const void* pdata,
-									   SelectItem::Type fseltype)
+void Select::AddSelectablePoint(const geo::Position& pos, const void* pdata,
+								SelectItem::Type fseltype, int user_data)
 {
 	SelectItem* pSelItem = new SelectItem(fseltype);
-	if (pSelItem) {
-		pSelItem->pos1 = pos;
-		pSelItem->m_pData1 = pdata;
-		select_items.push_back(pSelItem);
-	}
-	return pSelItem;
+	pSelItem->pos1 = pos;
+	pSelItem->m_pData1 = pdata;
+	pSelItem->SetUserData(user_data);
+	select_items.push_back(pSelItem);
 }
 
 bool Select::DeleteAllPoints(void)

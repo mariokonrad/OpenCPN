@@ -113,8 +113,8 @@ Route* Routeman::FindRouteContainingWaypoint(const RoutePoint* pWP)
 		Route* route = *i;
 
 		RoutePointList::const_iterator point
-			= std::find(route->pRoutePointList->begin(), route->pRoutePointList->end(), pWP);
-		if (point != route->pRoutePointList->end())
+			= std::find(route->routepoints().begin(), route->routepoints().end(), pWP);
+		if (point != route->routepoints().end())
 			return route;
 	}
 
@@ -128,8 +128,8 @@ Routeman::RouteArray* Routeman::GetRouteArrayContaining(const RoutePoint* pWP)
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
 		RoutePointList::const_iterator point
-			= std::find(route->pRoutePointList->begin(), route->pRoutePointList->end(), pWP);
-		if (point != route->pRoutePointList->end())
+			= std::find(route->routepoints().begin(), route->routepoints().end(), pWP);
+		if (point != route->routepoints().end())
 			pArray->push_back(route);
 	}
 
@@ -151,7 +151,7 @@ RoutePoint* Routeman::FindBestActivatePoint(Route* pR, const geo::Position& pos,
 	RoutePoint* best_point = NULL;
 	double min_time_found = 1e6;
 
-	for (RoutePointList::iterator i = pR->pRoutePointList->begin(); i != pR->pRoutePointList->end();
+	for (RoutePointList::iterator i = pR->routepoints().begin(); i != pR->routepoints().end();
 		 ++i) {
 
 		RoutePoint* pn = *i;
@@ -182,7 +182,7 @@ bool Routeman::ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint)
 	if (pStartPoint) {
 		pActivePoint = pStartPoint;
 	} else {
-		pActivePoint = pActiveRoute->pRoutePointList->front();
+		pActivePoint = pActiveRoute->routepoints().front();
 	}
 
 	wxJSONValue v;
@@ -217,14 +217,14 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 	v[_T("GUID")] = pRP_target->guid();
 	v[_T("WP_activated")] = pRP_target->GetName();
 
-	for (RoutePointList::iterator point = pActiveRoute->pRoutePointList->begin();
-		 point != pActiveRoute->pRoutePointList->end(); ++point) {
+	for (RoutePointList::iterator point = pActiveRoute->routepoints().begin();
+		 point != pActiveRoute->routepoints().end(); ++point) {
 		RoutePoint* pn = *point;
 		pn->m_bBlink = false; // turn off all blinking points
 		pn->m_bIsActive = false;
 	}
 
-	RoutePointList::iterator point = pActiveRoute->pRoutePointList->begin();
+	RoutePointList::iterator point = pActiveRoute->routepoints().begin();
 	RoutePoint* prp_first = *point;
 
 	//  If activating first point in route, create a "virtual" waypoint at present position
@@ -242,7 +242,7 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 		prp_first->m_bBlink = false;
 		++point;
 		RoutePoint* np_prev = prp_first;
-		for (; point != pActiveRoute->pRoutePointList->end(); ++point) {
+		for (; point != pActiveRoute->routepoints().end(); ++point) {
 			if (*point == pRP_target) {
 				pActiveRouteSegmentBeginPoint = np_prev;
 				break;
@@ -759,8 +759,8 @@ bool Routeman::DoesRouteContainSharedPoints(const Route* pRoute)
 
 	// walk the route, looking at each point to see if it is used by another route
 	// or is isolated
-	for (RoutePointList::const_iterator point = pRoute->pRoutePointList->begin();
-		 point != pRoute->pRoutePointList->end(); ++point) {
+	for (RoutePointList::const_iterator point = pRoute->routepoints().begin();
+		 point != pRoute->routepoints().end(); ++point) {
 
 		// check all other routes to see if this point appears in any other route
 		RouteArray* pRA = GetRouteArrayContaining(*point);
@@ -776,8 +776,8 @@ bool Routeman::DoesRouteContainSharedPoints(const Route* pRoute)
 	}
 
 	// Now walk the route again, looking for isolated type shared waypoints
-	for (RoutePointList::const_iterator point = pRoute->pRoutePointList->begin();
-		 point != pRoute->pRoutePointList->end(); ++point) {
+	for (RoutePointList::const_iterator point = pRoute->routepoints().begin();
+		 point != pRoute->routepoints().end(); ++point) {
 		if ((*point)->m_bKeepXRoute)
 			return true;
 	}
@@ -803,8 +803,8 @@ void Routeman::DeleteRoute(Route* pRoute)
 	pRouteList->erase(std::find(pRouteList->begin(), pRouteList->end(), pRoute));
 
 	// walk the route, tentatively deleting/marking points used only by this route
-	RoutePointList::iterator pnode = pRoute->pRoutePointList->begin();
-	while (pnode != pRoute->pRoutePointList->end()) {
+	RoutePointList::iterator pnode = pRoute->routepoints().begin();
+	while (pnode != pRoute->routepoints().end()) {
 		RoutePoint* prp = *pnode;
 
 		// check all other routes to see if this point appears in any other route
@@ -820,13 +820,13 @@ void Routeman::DeleteRoute(Route* pRoute)
 
 				// Remove all instances of this point from the list.
 				RoutePointList::iterator pdnode = pnode;
-				while (pdnode != pRoute->pRoutePointList->end()) {
-					pRoute->pRoutePointList->erase(pdnode);
-					pdnode = std::find(pRoute->pRoutePointList->begin(),
-									   pRoute->pRoutePointList->end(), prp);
+				while (pdnode != pRoute->routepoints().end()) {
+					pRoute->routepoints().erase(pdnode);
+					pdnode = std::find(pRoute->routepoints().begin(), pRoute->routepoints().end(),
+									   prp);
 				}
 
-				pnode = pRoute->pRoutePointList->end();
+				pnode = pRoute->routepoints().end();
 				delete prp;
 			} else {
 				prp->m_bDynamicName = false;
@@ -835,10 +835,10 @@ void Routeman::DeleteRoute(Route* pRoute)
 			}
 		}
 
-		if (pnode != pRoute->pRoutePointList->end()) {
+		if (pnode != pRoute->routepoints().end()) {
 			++pnode;
 		} else {
-			pnode = pRoute->pRoutePointList->begin(); // restart the list
+			pnode = pRoute->routepoints().begin(); // restart the list
 		}
 	}
 
@@ -922,7 +922,7 @@ void Routeman::DeleteTrack(Route* pRoute)
 	::wxBeginBusyCursor();
 
 	wxProgressDialog *pprog = NULL;
-	int count = pRoute->pRoutePointList->size();
+	int count = pRoute->routepoints().size();
 	if (count > 200) {
 		pprog = new wxProgressDialog(
 			_("OpenCPN Track Delete"),
@@ -940,8 +940,8 @@ void Routeman::DeleteTrack(Route* pRoute)
 
 	// walk the route, tentatively deleting/marking points used only by this route
 	int ic = 0;
-	RoutePointList::iterator pnode = pRoute->pRoutePointList->begin();
-	while (pnode != pRoute->pRoutePointList->end()) {
+	RoutePointList::iterator pnode = pRoute->routepoints().begin();
+	while (pnode != pRoute->routepoints().end()) {
 		if (pprog) {
 			pprog->Update(ic, wxString::Format(_T("%d/%d"), ic, count));
 			ic++;
@@ -960,15 +960,15 @@ void Routeman::DeleteTrack(Route* pRoute)
 				pSelect->DeleteSelectablePoint(prp, SelectItem::TYPE_ROUTEPOINT);
 				pConfig->enable_changeset_update();
 
-				pRoute->pRoutePointList->erase(pnode);
-				pnode = pRoute->pRoutePointList->end();
+				pRoute->routepoints().erase(pnode);
+				pnode = pRoute->routepoints().end();
 				delete prp;
 			}
 		}
-		if (pnode != pRoute->pRoutePointList->end()) {
+		if (pnode != pRoute->routepoints().end()) {
 			++pnode;
 		} else {
-			pnode = pRoute->pRoutePointList->begin();
+			pnode = pRoute->routepoints().begin();
 		}
 	}
 

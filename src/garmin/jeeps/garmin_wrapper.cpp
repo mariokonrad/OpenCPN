@@ -154,8 +154,8 @@ int Garmin_GPS_SendWaypoints(wxString& port_name, RoutePointList* wplist)
 // all waypoint packets) is returned in the "size" argument.
 GPS_SWay** Garmin_GPS_Create_A200_Route(Route* pr, int route_number, int* size)
 {
-	RoutePointList* wplist = pr->pRoutePointList;
-	int nPoints = wplist->size();
+	RoutePointList& wplist = pr->routepoints();
+	int nPoints = wplist.size();
 
 	// Create the array of GPS_PWays
 	// There will be one extra for the route header
@@ -181,7 +181,7 @@ GPS_SWay** Garmin_GPS_Create_A200_Route(Route* pr, int route_number, int* size)
 	// Elements 1..n are waypoints
 	for (int i = 1; i < *size; i++) {
 		GPS_PWay pway = ppway[i];
-		RoutePoint* prp = wplist->at(i - 1);
+		RoutePoint* prp = wplist.at(i - 1);
 
 		pway->lat = prp->latitude();
 		pway->lon = prp->longitude();
@@ -210,8 +210,8 @@ GPS_SWay** Garmin_GPS_Create_A200_Route(Route* pr, int route_number, int* size)
 // packets and waypoint packets) is returned in the "size" argument.
 GPS_SWay** Garmin_GPS_Create_A201_Route(Route* pr, int route_number, int* size)
 {
-	RoutePointList* wplist = pr->pRoutePointList;
-	int nPoints = wplist->size();
+	RoutePointList& wplist = pr->routepoints();
+	int nPoints = wplist.size();
 
 	// Create the array of GPS_PWays
 	// There will be one for the route header, n for each way point
@@ -241,7 +241,7 @@ GPS_SWay** Garmin_GPS_Create_A201_Route(Route* pr, int route_number, int* size)
 		if (i % 2 == 1) {
 			// Odd
 			GPS_PWay pway = ppway[i];
-			RoutePoint* prp = wplist->at((i - 1) / 2);
+			RoutePoint* prp = wplist.at((i - 1) / 2);
 
 			pway->lat = prp->latitude();
 			pway->lon = prp->longitude();

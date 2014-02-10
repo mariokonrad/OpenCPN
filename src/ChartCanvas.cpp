@@ -1974,11 +1974,11 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 					// Compute and display cumulative distance from route start point to current
 					// leg end point.
 
-					if (segShow_point_a != pr->pRoutePointList->front()) {
+					if (segShow_point_a != pr->routepoints().front()) {
 						float dist_to_endleg = 0;
-						RoutePointList::iterator node = pr->pRoutePointList->begin();
+						RoutePointList::iterator node = pr->routepoints().begin();
 						++node;
-						for (; node != pr->pRoutePointList->end(); ++node) {
+						for (; node != pr->routepoints().end(); ++node) {
 							RoutePoint* prp = *node;
 							dist_to_endleg += prp->m_seg_len;
 							if (prp->IsSame(segShow_point_a))

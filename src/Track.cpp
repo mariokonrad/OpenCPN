@@ -210,7 +210,7 @@ void Track::OnTimerTrack(wxTimerEvent&)
 		// continuously update track beginning point timestamp if no movement.
 		if ((trackPointState == firstPoint) && !track.TrackDaily) {
 			wxDateTime now = wxDateTime::Now();
-			pRoutePointList->front()->SetCreateTime(now.ToUTC());
+			routepoints().front()->SetCreateTime(now.ToUTC());
 		}
 	}
 
@@ -308,9 +308,9 @@ void Track::AddPointNow(bool do_add_point)
 													   m_lastStoredTP->get_position());
 					double xte = GetXTE(m_fixedTP, m_lastStoredTP, m_removeTP);
 					if (xte < m_allowedMaxXTE / wxMax(1.0, 2.0 - dist * 2.0)) {
-						pRoutePointList->pop_back();
-						pRoutePointList->pop_back();
-						pRoutePointList->push_back(m_lastStoredTP);
+						routepoints().pop_back();
+						routepoints().pop_back();
+						routepoints().push_back(m_lastStoredTP);
 						SetnPoints();
 						pSelect->DeletePointSelectableTrackSegments(m_removeTP);
 						pSelect->AddSelectableTrackSegment(m_fixedTP->get_position(),
@@ -353,7 +353,7 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 
 	unsigned short int FromSegNo = 1;
 
-	RoutePointList::iterator route_point = pRoutePointList->begin();
+	RoutePointList::iterator route_point = routepoints().begin();
 	RoutePoint* prp = *route_point;
 
 	// Establish basic colour
@@ -395,7 +395,7 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 	DrawPointWhich(dc, 1, &rpt);
 
 	++route_point;
-	while (route_point != pRoutePointList->end()) {
+	while (route_point != routepoints().end()) {
 		RoutePoint* prp = *route_point;
 		unsigned short int ToSegNo = prp->m_GPXTrkSegNo;
 
@@ -430,7 +430,7 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this mess
 {
 	Route* route = new Route();
-	RoutePointList::iterator prpnode = pRoutePointList->begin();
+	RoutePointList::iterator prpnode = routepoints().begin();
 	RoutePoint* pWP_src = *prpnode;
 	RoutePointList::iterator prpnodeX;
 	RoutePoint* pWP_dst;
@@ -445,7 +445,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 	int ic = 0;
 	int next_ic = 0;
 	int back_ic = 0;
-	int nPoints = pRoutePointList->size();
+	int nPoints = routepoints().size();
 	bool isProminent = true;
 	double delta_dist;
 	double leg_speed = 0.1;
@@ -468,7 +468,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 	++prpnode;
 
-	while (prpnode != pRoutePointList->end()) {
+	while (prpnode != routepoints().end()) {
 		RoutePoint* prp = *prpnode;
 		prpnodeX = prpnode;
 		pWP_dst = pWP_src;
@@ -511,7 +511,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 				prp_OK = prp;
 		}
 
-		while (prpnodeX != pRoutePointList->end()) {
+		while (prpnodeX != routepoints().end()) {
 			RoutePoint* prpX = *prpnodeX;
 			double xte = GetXTE(pWP_src, prpX, prp);
 			if (isProminent || (xte > track.TrackDeltaDistance)) {
@@ -528,14 +528,14 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 				pWP_src = pWP_dst;
 				next_ic = 0;
-				prpnodeX = pRoutePointList->end();
+				prpnodeX = routepoints().end();
 				prp_OK = NULL;
 			}
 
-			if (prpnodeX != pRoutePointList->end())
+			if (prpnodeX != routepoints().end())
 				--prpnodeX;
 			if (back_ic-- <= 0)
-				prpnodeX = pRoutePointList->end();
+				prpnodeX = routepoints().end();
 		}
 
 		if (prp_OK) {
@@ -556,7 +556,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 
 	// add last point, if needed
 	if (delta_dist >= track.TrackDeltaDistance) {
-		pWP_dst = new RoutePoint(pRoutePointList->back()->get_position(), icon, _T(""));
+		pWP_dst = new RoutePoint(routepoints().back()->get_position(), icon, _T(""));
 		route->AddPoint(pWP_dst);
 		pWP_dst->m_bShowName = false;
 		pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
@@ -601,7 +601,7 @@ int Track::Simplify(double maxDelta)
 
 	::wxBeginBusyCursor();
 
-	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
+	for (RoutePointList::iterator i = routepoints().begin(); i != routepoints().end(); ++i) {
 		RoutePoint* routepoint = *i;
 		routepoint->m_bIsActive = false;
 		pointlist.push_back(routepoint);
@@ -610,12 +610,12 @@ int Track::Simplify(double maxDelta)
 	DouglasPeuckerReducer(pointlist, 0, pointlist.size() - 1, maxDelta);
 
 	pSelect->DeleteAllSelectableTrackSegments(this);
-	pRoutePointList->clear();
+	routepoints().clear();
 
 	for (size_t i = 0; i < pointlist.size(); i++) {
 		if (pointlist[i]->m_bIsActive) {
 			pointlist[i]->m_bIsActive = false;
-			pRoutePointList->push_back(pointlist[i]);
+			routepoints().push_back(pointlist[i]);
 		} else {
 			delete pointlist[i];
 			reduction++;

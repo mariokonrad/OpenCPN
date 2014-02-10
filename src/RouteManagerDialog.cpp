@@ -1228,8 +1228,8 @@ struct TrackCompareCreateTime
 {
 	bool operator()(Track* a, Track* b) const // FIXME: RoutePoint::GetCreateTime is a lazy initialization mess
 	{
-		RoutePoint* start1 = a->pRoutePointList->front();
-		RoutePoint* start2 = b->pRoutePointList->front();
+		RoutePoint* start1 = a->routepoints().front();
+		RoutePoint* start2 = b->routepoints().front();
 		if (start1->GetCreateTime() > start2->GetCreateTime())
 			return true;
 		return false;
@@ -1348,8 +1348,8 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 					continue;
 				}
 
-				for (RoutePointList::iterator route_point = mergeTrack->pRoutePointList->begin();
-					 route_point != mergeTrack->pRoutePointList->end(); ++route_point) {
+				for (RoutePointList::iterator route_point = mergeTrack->routepoints().begin();
+					 route_point != mergeTrack->routepoints().end(); ++route_point) {
 					RoutePoint* rPoint = *route_point;
 					RoutePoint* newPoint = new RoutePoint(rPoint->get_position(), _T("empty"), _T(""));
 					newPoint->m_bShowName = false;
@@ -2351,8 +2351,8 @@ void RouteManagerDialog::ToggleLayerContentsNames(Layer* layer)
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
 		if (route->m_bIsInLayer && (route->m_LayerID == layer->getID())) {
-			for (RoutePointList::iterator j = route->pRoutePointList->begin();
-				 j != route->pRoutePointList->end(); ++j) {
+			for (RoutePointList::iterator j = route->routepoints().begin();
+				 j != route->routepoints().end(); ++j) {
 				(*j)->m_bShowName = layer->HasVisibleNames();
 			}
 		}

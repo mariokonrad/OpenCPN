@@ -113,7 +113,7 @@ KmlPastebufferType Kml::ParseTrack(TiXmlNode* node, wxString& name)
 			pointCounter++;
 		}
 
-		RoutePointList::iterator rpnode = parsedTrack->pRoutePointList->begin();
+		RoutePointList::iterator rpnode = parsedTrack->routepoints().begin();
 
 		wxDateTime whenTime;
 
@@ -467,8 +467,8 @@ wxString Kml::MakeKmlFromRoute(Route* route, bool insertSeq)
 
 	std::stringstream lineStringCoords;
 
-	RoutePointList* pointList = route->pRoutePointList;
-	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
+	const RoutePointList& pointList = route->routepoints();
+	for (RoutePointList::const_iterator node = pointList.begin(); node != pointList.end(); ++node) {
 		const RoutePoint* routepoint = *node;
 		if (!routepoint->is_in_track()) {
 			lineStringCoords << PointPlacemark(document, routepoint);
@@ -519,8 +519,8 @@ wxString Kml::MakeKmlFromTrack(Track* track)
 	TiXmlElement* gxTrack = new TiXmlElement("gx:Track");
 	pmTrack->LinkEndChild(gxTrack);
 
-	RoutePointList* pointList = track->pRoutePointList;
-	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
+	RoutePointList& pointList = track->routepoints();
+	for (RoutePointList::iterator node = pointList.begin(); node != pointList.end(); ++node) {
 		RoutePoint* routepoint = *node;
 		if (routepoint->is_in_track()) {
 			TiXmlElement* when = new TiXmlElement("when");
@@ -532,7 +532,7 @@ wxString Kml::MakeKmlFromTrack(Track* track)
 			when->LinkEndChild(whenVal);
 		}
 	}
-	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
+	for (RoutePointList::iterator node = pointList.begin(); node != pointList.end(); ++node) {
 		const RoutePoint* routepoint = *node;
 		if (routepoint->is_in_track()) {
 			TiXmlElement* coord = new TiXmlElement("gx:coord");

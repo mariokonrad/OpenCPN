@@ -444,12 +444,12 @@ ret_point:
 			NMEA0183 oNMEA0183;
 			oNMEA0183.TalkerID = _T("EC");
 
-			int nProg = pr->pRoutePointList->size() + 1;
+			int nProg = pr->routepoints().size() + 1;
 			if (pProgress)
 				pProgress->SetRange(100);
 
 			int progress_stall = 500;
-			if (pr->pRoutePointList->size() > 10)
+			if (pr->routepoints().size() > 10)
 				progress_stall = 200;
 
 			if (!pProgress)
@@ -459,8 +459,8 @@ ret_point:
 			if (bsend_waypoints) {
 
 				int ip = 1;
-				for (RoutePointList::iterator node = pr->pRoutePointList->begin();
-					 node != pr->pRoutePointList->end(); ++node) {
+				for (RoutePointList::iterator node = pr->routepoints().begin();
+					 node != pr->routepoints().end(); ++node) {
 					RoutePoint* prp = *node;
 
 					if (cfg.GPS_Ident == _T("Generic")) {
@@ -540,8 +540,8 @@ ret_point:
 			oNMEA0183.Rte.message_number = 1;
 
 			// add the waypoints
-			for (RoutePointList::iterator node = pr->pRoutePointList->begin();
-				 node != pr->pRoutePointList->end(); ++node) {
+			for (RoutePointList::iterator node = pr->routepoints().begin();
+				 node != pr->routepoints().end(); ++node) {
 				RoutePoint* prp = *node;
 				wxString name = prp->GetName();
 				name.Truncate(6);
@@ -590,8 +590,8 @@ ret_point:
 				bool bnew_sentence = true;
 				int sent_len = 0;
 
-				RoutePointList::iterator i = pr->pRoutePointList->begin();
-				while (i != pr->pRoutePointList->end()) {
+				RoutePointList::iterator i = pr->routepoints().begin();
+				while (i != pr->routepoints().end()) {
 					RoutePoint* prp = *i;
 					wxString name = prp->GetName();
 					name.Truncate(6);
@@ -622,8 +622,8 @@ ret_point:
 				int n_run = 1;
 				bnew_sentence = true;
 
-				RoutePointList::iterator node = pr->pRoutePointList->begin();
-				while (node != pr->pRoutePointList->end()) {
+				RoutePointList::iterator node = pr->routepoints().begin();
+				while (node != pr->routepoints().end()) {
 					RoutePoint* prp = *node;
 					wxString name = prp->GetName();
 					name.Truncate(6);

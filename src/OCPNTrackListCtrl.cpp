@@ -102,22 +102,20 @@ wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 {
 	if (!m_pRoute)
 		return wxEmptyString;
-	if (!m_pRoute->pRoutePointList)
+	if (m_pRoute->routepoints().size() == 0)
 		return wxEmptyString;
-	if (m_pRoute->pRoutePointList->size() == 0)
-		return wxEmptyString;
-	if (item >= static_cast<long>(m_pRoute->pRoutePointList->size()))
+	if (item >= static_cast<long>(m_pRoute->routepoints().size()))
 		return wxEmptyString;
 
-	RoutePoint* point = m_pRoute->pRoutePointList->at(item);
+	RoutePoint* point = m_pRoute->routepoints().at(item);
 
 	double distance = 0.0;
 	double bearing = 0.0;
 	double speed = 0.0;
 
 	// calculate distance, bearing and speed between the current point and its predecessor
-	if ((item > 0) && (item < static_cast<long>(m_pRoute->pRoutePointList->size()))) {
-		RoutePoint* previous = m_pRoute->pRoutePointList->at(item - 1);
+	if ((item > 0) && (item < static_cast<long>(m_pRoute->routepoints().size()))) {
+		RoutePoint* previous = m_pRoute->routepoints().at(item - 1);
 		geo::DistanceBearingMercator(point->get_position(), previous->get_position(), &bearing,
 									 &distance);
 		double dt

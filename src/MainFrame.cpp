@@ -4489,11 +4489,11 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 				// collect the data.
 				int i = 1;
 				wxJSONValue v;
-				for (RoutePointList::iterator itp = (*it)->pRoutePointList->begin();
-					 itp != (*it)->pRoutePointList->end(); itp++) {
+				for (RoutePointList::iterator itp = (*it)->routepoints().begin();
+					 itp != (*it)->routepoints().end(); itp++) {
 					v[_T("lat")] = (*itp)->latitude();
 					v[_T("lon")] = (*itp)->longitude();
-					v[_T("TotalNodes")] = (*it)->pRoutePointList->size();
+					v[_T("TotalNodes")] = (*it)->routepoints().size();
 					v[_T("NodeNr")] = i;
 					v[_T("error")] = false;
 					i++;
@@ -4534,8 +4534,8 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 
 				wxJSONValue v;
 				int i = 0;
-				for (RoutePointList::iterator itp = (*it)->pRoutePointList->begin();
-					 itp != (*it)->pRoutePointList->end(); itp++) {
+				for (RoutePointList::iterator itp = (*it)->routepoints().begin();
+					 itp != (*it)->routepoints().end(); itp++) {
 					v[i][_T("error")] = false;
 					v[i][_T("lat")] = (*itp)->latitude();
 					v[i][_T("lon")] = (*itp)->longitude();

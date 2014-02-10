@@ -662,11 +662,11 @@ void RouteProp::OnRoutepropListClick(wxListEvent& event)
 
 	m_pRoute->ClearHighlights();
 
-	RoutePointList::iterator i = m_pRoute->pRoutePointList->begin();
-	while ((i != m_pRoute->pRoutePointList->end()) && itemno--) { // FIXME: this is basically an indexed access
+	RoutePointList::iterator i = m_pRoute->routepoints().begin();
+	while ((i != m_pRoute->routepoints().end()) && itemno--) { // FIXME: this is basically an indexed access
 		++i;
 	}
-	if (i != m_pRoute->pRoutePointList->end()) {
+	if (i != m_pRoute->routepoints().end()) {
 		RoutePoint* prp = *i;
 		if (prp) {
 			prp->m_bPtIsSelected = true; // highlight the routepoint
@@ -772,7 +772,7 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 		if (m_pEnroutePoint && m_bStartNow)
 			Start_LMT_Offset = long((m_pEnroutePoint->longitude()) * 3600.0 / 15.0);
 		else
-			Start_LMT_Offset = long((m_pRoute->pRoutePointList->front()->longitude()) * 3600.0 / 15.0);
+			Start_LMT_Offset = long((m_pRoute->routepoints().front()->longitude()) * 3600.0 / 15.0);
 	}
 
 	// Reorganize dialog for route or track display
@@ -828,8 +828,8 @@ void RouteProp::InitializeList()
 
 		// Iterate on Route Points, inserting blank fields starting with index 0
 		int in = 0;
-		for (RoutePointList::iterator route_point = m_pRoute->pRoutePointList->begin();
-			 route_point != m_pRoute->pRoutePointList->end(); ++route_point) {
+		for (RoutePointList::iterator route_point = m_pRoute->routepoints().begin();
+			 route_point != m_pRoute->routepoints().end(); ++route_point) {
 			m_wpList->InsertItem(in, _T(""), 0);
 			m_wpList->SetItemPtrData(in, (wxUIntPtr)(*route_point));
 			in++;
@@ -928,7 +928,7 @@ void RouteProp::update_route_properties()
 			if (m_pEnroutePoint)
 				Start_LMT_Offset = static_cast<long>(m_pEnroutePoint->longitude() * 3600.0 / 15.0);
 			else
-				Start_LMT_Offset = static_cast<long>(m_pRoute->pRoutePointList->front()->longitude() * 3600.0 / 15.0);
+				Start_LMT_Offset = static_cast<long>(m_pRoute->routepoints().front()->longitude() * 3600.0 / 15.0);
 		}
 	}
 
@@ -994,8 +994,8 @@ void RouteProp::update_route_properties()
 
 	wxString nullify = _T("----");
 
-	RoutePointList::iterator node = m_pRoute->pRoutePointList->begin();
-	while (node != m_pRoute->pRoutePointList->end()) {
+	RoutePointList::iterator node = m_pRoute->routepoints().begin();
+	while (node != m_pRoute->routepoints().end()) {
 		RoutePoint* prp = *node;
 		long item_line_index = i + stopover_count;
 
@@ -1054,7 +1054,7 @@ void RouteProp::update_route_properties()
 		double course = 10;
 		double tmp_leg_dist = 23;
 		RoutePointList::iterator next_node = node + 1;
-		RoutePoint* _next_prp = (next_node != m_pRoute->pRoutePointList->end()) ? *next_node : NULL;
+		RoutePoint* _next_prp = (next_node != m_pRoute->routepoints().end()) ? *next_node : NULL;
 		if (_next_prp) {
 			geo::DistanceBearingMercator(_next_prp->get_position(), prp->get_position(), &course,
 										 &tmp_leg_dist);

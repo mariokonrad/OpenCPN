@@ -2048,9 +2048,9 @@ void Config::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath, bool
 bool Config::WptIsInRouteList(const RoutePoint* pr)
 {
 	for (RouteList::const_iterator j = pRouteList->begin(); j != pRouteList->end(); ++j) {
-		const RoutePointList* pRoutePointList = (*j)->pRoutePointList;
-		for (RoutePointList::const_iterator i = pRoutePointList->begin();
-			 i != pRoutePointList->end(); ++i) {
+		const RoutePointList& routepoints = (*j)->routepoints();
+		for (RoutePointList::const_iterator i = routepoints.begin();
+			 i != routepoints.end(); ++i) {
 			if (pr->IsSame(*i)) {
 				return true;
 			}

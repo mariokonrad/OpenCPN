@@ -491,7 +491,7 @@ void TrackPropDlg::InitializeList()
 		return;
 
 	m_lcPoints->set_route(m_pRoute);
-	m_lcPoints->set_lmt_offset((m_pRoute->pRoutePointList->front()->latitude()) * 3600.0 / 15.0);
+	m_lcPoints->set_lmt_offset((m_pRoute->routepoints().front()->latitude()) * 3600.0 / 15.0);
 	m_lcPoints->SetItemCount(m_pRoute->GetnPoints());
 }
 
@@ -812,11 +812,11 @@ void TrackPropDlg::OnTrackPropListClick(wxListEvent&)
 
 	m_pRoute->ClearHighlights();
 
-	RoutePointList::iterator i = m_pRoute->pRoutePointList->begin();
-	while ((i != m_pRoute->pRoutePointList->end()) && itemno--) { // FIXME: this is basically an indexed access
+	RoutePointList::iterator i = m_pRoute->routepoints().begin();
+	while ((i != m_pRoute->routepoints().end()) && itemno--) { // FIXME: this is basically an indexed access
 		++i;
 	}
-	if (i != m_pRoute->pRoutePointList->end()) {
+	if (i != m_pRoute->routepoints().end()) {
 		RoutePoint* prp = *i;
 		if (prp) {
 			prp->m_bPtIsSelected = true; // highlight the routepoint

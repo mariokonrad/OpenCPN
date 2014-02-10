@@ -111,6 +111,9 @@ public:
 	const wxString& guid() const;
 	void set_guid(const wxString&);
 
+	const RoutePointList& routepoints() const;
+	RoutePointList& routepoints();
+
 	bool m_bRtIsSelected;
 	bool m_bRtIsActive;
 	RoutePoint* m_pRouteActivePoint;
@@ -135,13 +138,13 @@ public:
 	wxString m_TimeDisplayFormat;
 	Hyperlinks m_HyperlinkList;
 
-	wxArrayString RoutePointGUIDList;
-	RoutePointList* pRoutePointList;
-
 	geo::BoundingBox RBBox;
 	wxRect active_pt_rect;
 	wxString m_Colour;
 	bool m_btemp;
+
+protected:
+	RoutePointList* pRoutePointList;
 
 private:
 	bool CalculateCrossesIDL();
@@ -153,6 +156,7 @@ private:
 	double m_ArrivalRadius;
 	bool m_bcrosses_idl;
 	wxString m_GUID;
+	wxArrayString RoutePointGUIDList;
 };
 
 typedef std::vector<Route*> RouteList;

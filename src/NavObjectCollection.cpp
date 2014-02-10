@@ -646,8 +646,8 @@ bool NavObjectCollection::GPXCreateTrk(
 		child.append_child(pugi::node_pcdata).set_value(pRoute->m_Colour.mb_str());
 	}
 
-	RoutePointList* pRoutePointList = pRoute->pRoutePointList;
-	RoutePointList::const_iterator route_point = pRoutePointList->begin();
+	RoutePointList& routePointList = pRoute->routepoints();
+	RoutePointList::const_iterator route_point = routePointList.begin();
 
 	unsigned short int GPXTrkSegNo1 = 1;
 	do {
@@ -655,15 +655,15 @@ bool NavObjectCollection::GPXCreateTrk(
 
 		pugi::xml_node seg = node.append_child("trkseg");
 
-		while ((route_point != pRoutePointList->end()) && (GPXTrkSegNo2 == GPXTrkSegNo1)) {
+		while ((route_point != routePointList.end()) && (GPXTrkSegNo2 == GPXTrkSegNo1)) {
 			GPXCreateWpt(seg.append_child("trkpt"), *route_point, OPT_TRACKPT);
 			++route_point;
-			if (route_point != pRoutePointList->end()) {
+			if (route_point != routePointList.end()) {
 				GPXTrkSegNo2 = (*route_point)->m_GPXTrkSegNo;
 			}
 		}
 		GPXTrkSegNo1 = GPXTrkSegNo2;
-	} while (route_point != pRoutePointList->end());
+	} while (route_point != routePointList.end());
 
 	return true;
 }
@@ -772,8 +772,8 @@ bool NavObjectCollection::GPXCreateRoute(
 		child.append_child(pugi::node_pcdata).set_value(pRoute->m_Colour.mb_str());
 	}
 
-	const RoutePointList* list = pRoute->pRoutePointList;
-	for (RoutePointList::const_iterator i = list->begin(); i != list->end(); ++i) {
+	const RoutePointList& list = pRoute->routepoints();
+	for (RoutePointList::const_iterator i = list.begin(); i != list.end(); ++i) {
 		GPXCreateWpt(node.append_child("rtept"), *i, OPT_ROUTEPT);
 	}
 
@@ -796,8 +796,8 @@ void NavObjectCollection::InsertRouteA(Route* pTentRoute)
 		if (g_pRouteMan->RouteExists(pTentRoute->guid())) {
 			pTentRoute->set_guid(GpxDocument::GetUUID());
 			// Now also change guids for the routepoints
-			for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
-				 node != pTentRoute->pRoutePointList->end(); ++node) {
+			for (RoutePointList::iterator node = pTentRoute->routepoints().begin();
+				 node != pTentRoute->routepoints().end(); ++node) {
 				(*node)->set_guid(GpxDocument::GetUUID());
 				// FIXME: !!!! the shared waypoint gets part of both the routes -> not goood at all
 			}
@@ -815,8 +815,8 @@ void NavObjectCollection::InsertRouteA(Route* pTentRoute)
 		geo::Position prev_pos;
 		RoutePoint* prev_pConfPoint = NULL;
 
-		for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
-			 node != pTentRoute->pRoutePointList->end(); ++node) {
+		for (RoutePointList::iterator node = pTentRoute->routepoints().begin();
+			 node != pTentRoute->routepoints().end(); ++node) {
 			RoutePoint* prp = *node;
 
 			if (ip) {
@@ -831,8 +831,8 @@ void NavObjectCollection::InsertRouteA(Route* pTentRoute)
 		}
 	} else {
 		// walk the route, deleting points used only by this route
-		for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
-			 node != pTentRoute->pRoutePointList->end(); ++node) {
+		for (RoutePointList::iterator node = pTentRoute->routepoints().begin();
+			 node != pTentRoute->routepoints().end(); ++node) {
 			RoutePoint* prp = *node;
 
 			// check all other routes to see if this point appears in any other route
@@ -874,8 +874,8 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 		geo::Position prev_pos;
 		RoutePoint* prev_pConfPoint = NULL;
 
-		for (RoutePointList::iterator node = pTentTrack->pRoutePointList->begin();
-			 node != pTentTrack->pRoutePointList->end(); ++node) {
+		for (RoutePointList::iterator node = pTentTrack->routepoints().begin();
+			 node != pTentTrack->routepoints().end(); ++node) {
 			RoutePoint* prp = *node;
 
 			if (ip)
@@ -888,8 +888,8 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 		}
 	} else {
 		// walk the route, deleting points used only by this route
-		for (RoutePointList::iterator node = pTentTrack->pRoutePointList->begin();
-			 node != pTentTrack->pRoutePointList->end(); ++node) {
+		for (RoutePointList::iterator node = pTentTrack->routepoints().begin();
+			 node != pTentTrack->routepoints().end(); ++node) {
 			RoutePoint* prp = *node;
 
 			// check all other routes to see if this point appears in any other route
@@ -911,8 +911,8 @@ void NavObjectCollection::UpdateRouteA(Route* pTentRoute)
 {
 	Route* rt = g_pRouteMan->RouteExists(pTentRoute->guid());
 	if (rt) {
-		for (RoutePointList::iterator node = pTentRoute->pRoutePointList->begin();
-			 node != pTentRoute->pRoutePointList->end(); ++node) {
+		for (RoutePointList::iterator node = pTentRoute->routepoints().begin();
+			 node != pTentRoute->routepoints().end(); ++node) {
 			RoutePoint* prp = *node;
 			RoutePoint* ex_rp = rt->GetPoint(prp->guid());
 			if (ex_rp) {
@@ -961,7 +961,7 @@ bool NavObjectCollection::CreateNavObjGPXTracks(void)
 {
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* track = *i;
-		if (track->pRoutePointList->size()) {
+		if (track->routepoints().size()) {
 			if (track->m_bIsTrack && (!track->m_bIsInLayer) && (!track->m_btemp))
 				GPXCreateTrk(m_gpx_root.append_child("trk"), track);
 		}

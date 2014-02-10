@@ -161,6 +161,16 @@ void Route::SetnPoints(void)
 	m_nPoints = pRoutePointList->size();
 }
 
+const RoutePointList& Route::routepoints() const
+{
+	return *pRoutePointList;
+}
+
+RoutePointList& Route::routepoints()
+{
+	return *pRoutePointList;
+}
+
 // The following is used only for route splitting, assumes just created, empty route
 void Route::CloneRoute(Route* psourceroute, int start_nPoint, int end_nPoint,
 					   const wxString& suffix)

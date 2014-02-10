@@ -125,8 +125,8 @@ bool Select::DeleteAllSelectableRoutePoints(Route* pr)
 			RoutePoint* ps = const_cast<RoutePoint*>(reinterpret_cast<const RoutePoint*>(item->m_pData1));
 
 			RoutePointList::iterator j
-				= std::find(pr->pRoutePointList->begin(), pr->pRoutePointList->end(), ps);
-			if (j != pr->pRoutePointList->end()) {
+				= std::find(pr->routepoints().begin(), pr->routepoints().end(), ps);
+			if (j != pr->routepoints().end()) {
 				delete item;
 				select_items.erase(i);
 				i = select_items.begin();
@@ -140,12 +140,12 @@ bool Select::DeleteAllSelectableRoutePoints(Route* pr)
 
 bool Select::AddAllSelectableRoutePoints(Route* pr)
 {
-	if (pr->pRoutePointList->size() == 0)
+	if (pr->routepoints().size() == 0)
 		return false;
 
-	RoutePointList* points = pr->pRoutePointList;
+	const RoutePointList& points = pr->routepoints();
 
-	for (RoutePointList::iterator i = points->begin(); i != points->end(); ++i) {
+	for (RoutePointList::const_iterator i = points.begin(); i != points.end(); ++i) {
 		AddSelectableRoutePoint((*i)->get_position(), *i);
 	}
 
@@ -156,13 +156,13 @@ bool Select::AddAllSelectableRouteSegments(Route* pr)
 {
 	// FIXME: almost code duplication of Select::AddAllSelectableTrackSegments(Route* pr)
 
-	if (pr->pRoutePointList->size() == 0)
+	if (pr->routepoints().size() == 0)
 		return false;
 
-	RoutePointList::iterator i = pr->pRoutePointList->begin();
+	RoutePointList::iterator i = pr->routepoints().begin();
 	RoutePoint* prp0 = *i;
 	++i;
-	while (i != pr->pRoutePointList->end()) {
+	while (i != pr->routepoints().end()) {
 		RoutePoint* prp = *i;
 		AddSelectableRouteSegment(prp0->get_position(), prp->get_position(), prp0, prp, pr);
 		prp0 = prp;
@@ -175,13 +175,13 @@ bool Select::AddAllSelectableTrackSegments(Route* pr)
 {
 	// FIXME: almost code duplication of Select::AddAllSelectableRouteSegments(Route* pr)
 
-	if (pr->pRoutePointList->size() == 0)
+	if (pr->routepoints().size() == 0)
 		return false;
 
-	RoutePointList::iterator i = pr->pRoutePointList->begin();
+	RoutePointList::iterator i = pr->routepoints().begin();
 	RoutePoint* prp0 = *i;
 	++i;
-	while (i != pr->pRoutePointList->end()) {
+	while (i != pr->routepoints().end()) {
 		RoutePoint* prp = *i;
 		AddSelectableTrackSegment(prp0->get_position(), prp->get_position(), prp0, prp, pr);
 		prp0 = prp;

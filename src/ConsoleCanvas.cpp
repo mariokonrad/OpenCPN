@@ -320,8 +320,8 @@ void ConsoleCanvas::UpdateRouteData()
 			Route* prt = g_pRouteMan->GetpActiveRoute();
 
 			int n_addflag = 0;
-			for (RoutePointList::iterator node = prt->pRoutePointList->begin();
-				 node != prt->pRoutePointList->end(); ++node) {
+			for (RoutePointList::iterator node = prt->routepoints().begin();
+				 node != prt->routepoints().end(); ++node) {
 				RoutePoint* prp = *node;
 				if (n_addflag)
 					trng += prp->m_seg_len;

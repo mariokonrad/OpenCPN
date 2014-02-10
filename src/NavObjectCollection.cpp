@@ -265,11 +265,9 @@ Track * NavObjectCollection::GPXLoadTrack1(
 					 ext_child = ext_child.next_sibling()) {
 					wxString ext_name = wxString::FromUTF8(ext_child.name());
 					if (ext_name == _T ( "opencpn:start" )) {
-						pTentTrack->m_RouteStartString
-							= wxString::FromUTF8(ext_child.first_child().value());
+						pTentTrack->set_startString(wxString::FromUTF8(ext_child.first_child().value()));
 					} else if (ext_name == _T ( "opencpn:end" )) {
-						pTentTrack->m_RouteEndString
-							= wxString::FromUTF8(ext_child.first_child().value());
+						pTentTrack->set_endString(wxString::FromUTF8(ext_child.first_child().value()));
 					} else if (ext_name == _T ( "opencpn:viz" )) {
 						wxString viz = wxString::FromUTF8(ext_child.first_child().value());
 						b_propviz = true;
@@ -300,8 +298,8 @@ Track * NavObjectCollection::GPXLoadTrack1(
 			}
 		}
 
-		pTentTrack->m_RouteNameString = RouteName;
-		pTentTrack->m_RouteDescription = DescString;
+		pTentTrack->set_name(RouteName);
+		pTentTrack->set_description(DescString);
 
 		if (b_propviz) {
 			pTentTrack->SetVisible(b_viz);
@@ -393,11 +391,9 @@ Route * NavObjectCollection::GPXLoadRoute1(
 					wxString ext_name = wxString::FromUTF8(ext_child.name());
 
 					if (ext_name == _T("opencpn:start")) {
-						pTentRoute->m_RouteStartString
-							= wxString::FromUTF8(ext_child.first_child().value());
+						pTentRoute->set_startString(wxString::FromUTF8(ext_child.first_child().value()));
 					} else if (ext_name == _T("opencpn:end")) {
-						pTentRoute->m_RouteEndString
-							= wxString::FromUTF8(ext_child.first_child().value());
+						pTentRoute->set_endString(wxString::FromUTF8(ext_child.first_child().value()));
 					} else if (ext_name == _T("opencpn:viz")) {
 						wxString viz = wxString::FromUTF8(ext_child.first_child().value());
 						b_propviz = true;
@@ -425,8 +421,8 @@ Route * NavObjectCollection::GPXLoadRoute1(
 			}
 		}
 
-		pTentRoute->m_RouteNameString = RouteName;
-		pTentRoute->m_RouteDescription = DescString;
+		pTentRoute->set_name(RouteName);
+		pTentRoute->set_description(DescString);
 
 		if (b_propviz) {
 			pTentRoute->SetVisible(b_viz);
@@ -569,16 +565,16 @@ bool NavObjectCollection::GPXCreateTrk(
 {
 	pugi::xml_node child;
 
-	if (pRoute->m_RouteNameString.Len()) {
-		wxCharBuffer buffer = pRoute->m_RouteNameString.ToUTF8();
+	if (pRoute->get_name().Len()) {
+		wxCharBuffer buffer = pRoute->get_name().ToUTF8();
 		if (buffer.data()) {
 			child = node.append_child("name");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
 	}
 
-	if (pRoute->m_RouteDescription.Len()) {
-		wxCharBuffer buffer = pRoute->m_RouteDescription.ToUTF8();
+	if (pRoute->get_description().Len()) {
+		wxCharBuffer buffer = pRoute->get_description().ToUTF8();
 		if (buffer.data()) {
 			child = node.append_child("desc");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
@@ -615,16 +611,16 @@ bool NavObjectCollection::GPXCreateTrk(
 	child = child_ext.append_child("opencpn:viz");
 	child.append_child(pugi::node_pcdata).set_value(pRoute->IsVisible() == true ? "1" : "0");
 
-	if (pRoute->m_RouteStartString.Len()) {
-		wxCharBuffer buffer = pRoute->m_RouteStartString.ToUTF8();
+	if (pRoute->get_startString().Len()) {
+		wxCharBuffer buffer = pRoute->get_startString().ToUTF8();
 		if (buffer.data()) {
 			child = child_ext.append_child("opencpn:start");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
 	}
 
-	if (pRoute->m_RouteEndString.Len()) {
-		wxCharBuffer buffer = pRoute->m_RouteEndString.ToUTF8();
+	if (pRoute->get_endString().Len()) {
+		wxCharBuffer buffer = pRoute->get_endString().ToUTF8();
 		if (buffer.data()) {
 			child = child_ext.append_child("opencpn:end");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
@@ -670,20 +666,20 @@ bool NavObjectCollection::GPXCreateTrk(
 
 bool NavObjectCollection::GPXCreateRoute(
 		pugi::xml_node node,
-		Route * pRoute)
+		Route* pRoute)
 {
 	pugi::xml_node child;
 
-	if (pRoute->m_RouteNameString.Len()) {
-		wxCharBuffer buffer = pRoute->m_RouteNameString.ToUTF8();
+	if (pRoute->get_name().Len()) {
+		wxCharBuffer buffer = pRoute->get_name().ToUTF8();
 		if (buffer.data()) {
 			child = node.append_child("name");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
 	}
 
-	if (pRoute->m_RouteDescription.Len()) {
-		wxCharBuffer buffer = pRoute->m_RouteDescription.ToUTF8();
+	if (pRoute->get_description().Len()) {
+		wxCharBuffer buffer = pRoute->get_description().ToUTF8();
 		if (buffer.data()) {
 			child = node.append_child("desc");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
@@ -720,16 +716,16 @@ bool NavObjectCollection::GPXCreateRoute(
 	child = child_ext.append_child("opencpn:viz");
 	child.append_child(pugi::node_pcdata).set_value(pRoute->IsVisible() == true ? "1" : "0");
 
-	if (pRoute->m_RouteStartString.Len()) {
-		wxCharBuffer buffer = pRoute->m_RouteStartString.ToUTF8();
+	if (pRoute->get_startString().Len()) {
+		wxCharBuffer buffer = pRoute->get_startString().ToUTF8();
 		if (buffer.data()) {
 			child = child_ext.append_child("opencpn:start");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());
 		}
 	}
 
-	if (pRoute->m_RouteEndString.Len()) {
-		wxCharBuffer buffer = pRoute->m_RouteEndString.ToUTF8();
+	if (pRoute->get_endString().Len()) {
+		wxCharBuffer buffer = pRoute->get_endString().ToUTF8();
 		if (buffer.data()) {
 			child = child_ext.append_child("opencpn:end");
 			child.append_child(pugi::node_pcdata).set_value(buffer.data());

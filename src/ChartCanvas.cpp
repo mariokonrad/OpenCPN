@@ -1952,10 +1952,10 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 					else
 						s.Append(_("Layer Route: "));
 
-					if (pr->m_RouteNameString.IsEmpty())
+					if (pr->get_name().IsEmpty())
 						s.Append(_("(unnamed)"));
 					else
-						s.Append(pr->m_RouteNameString);
+						s.Append(pr->get_name());
 
 					s << _T("\n") << _("Total Length: ")
 					  << FormatDistanceAdaptive(pr->m_route_length) << _T("\n") << _("Leg: from ")
@@ -6865,7 +6865,7 @@ void pupHandler_PasteRoute()
 	if ((mergepoints && answer == wxID_YES) && (existingWaypointCounter == pasted->GetnPoints())) {
 		for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 			Route* route = *i;
-			if (pasted->m_RouteNameString == route->m_RouteNameString) {
+			if (pasted->get_name() == route->get_name()) {
 				createNewRoute = false;
 				break;
 			}
@@ -6877,7 +6877,7 @@ void pupHandler_PasteRoute()
 
 	if (createNewRoute) {
 		newRoute = new Route();
-		newRoute->m_RouteNameString = pasted->m_RouteNameString;
+		newRoute->set_name(pasted->get_name());
 	}
 
 	for (int i = 1; i <= pasted->GetnPoints(); i++) {
@@ -6947,7 +6947,7 @@ void pupHandler_PasteTrack()
 	RoutePoint* newPoint;
 	RoutePoint* prevPoint = NULL;
 
-	newTrack->m_RouteNameString = pasted->m_RouteNameString;
+	newTrack->set_name(pasted->get_name());
 
 	for (int i = 1; i <= pasted->GetnPoints(); i++) {
 		RoutePoint* curPoint = pasted->GetPoint(i);
@@ -7037,10 +7037,10 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 			pSelect->AddSelectableRouteSegment(nav.pos, zpos, pWP_src, pWP_dest, temp_route);
 
-			temp_route->m_RouteNameString = _("Temporary GOTO Route");
-			temp_route->m_RouteStartString = _("Here");
+			temp_route->set_name(_("Temporary GOTO Route"));
+			temp_route->set_startString(_("Here"));
 
-			temp_route->m_RouteEndString = _("There");
+			temp_route->set_endString(_("There"));
 
 			temp_route->m_bDeleteOnArrival = true;
 
@@ -7090,9 +7090,9 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 				name = _("(Unnamed Waypoint)");
 			wxString rteName = _("Go to ");
 			rteName.Append(name);
-			temp_route->m_RouteNameString = rteName;
-			temp_route->m_RouteStartString = _("Here");
-			temp_route->m_RouteEndString = name;
+			temp_route->set_name(rteName);
+			temp_route->set_startString(_("Here"));
+			temp_route->set_endString(name);
 			temp_route->m_bDeleteOnArrival = true;
 
 			if (g_pRouteMan->GetpActiveRoute())

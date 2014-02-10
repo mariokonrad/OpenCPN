@@ -724,14 +724,14 @@ void RouteManagerDialog::UpdateRouteListCtrl()
 
 		long idx = m_pRouteListCtrl->InsertItem(li);
 
-		wxString name = (*it)->m_RouteNameString;
+		wxString name = (*it)->get_name();
 		if (name.IsEmpty())
 			name = _("(Unnamed Route)");
 		m_pRouteListCtrl->SetItem(idx, rmROUTENAME, name);
 
-		wxString startend = (*it)->m_RouteStartString;
-		if (!(*it)->m_RouteEndString.IsEmpty())
-			startend.append(_(" - ") + (*it)->m_RouteEndString);
+		wxString startend = (*it)->get_startString();
+		if (!(*it)->get_endString().IsEmpty())
+			startend.append(_(" - ") + (*it)->get_endString());
 		m_pRouteListCtrl->SetItem(idx, rmROUTEDESC, startend);
 	}
 
@@ -999,9 +999,9 @@ void RouteManagerDialog::OnRteReverseClick(wxCommandEvent&)
 	pSelect->AddAllSelectableRouteSegments(route);
 
 	// update column 2 - create a UpdateRouteItem(index) instead?
-	wxString startend = route->m_RouteStartString;
-	if (!route->m_RouteEndString.IsEmpty())
-		startend.append(_(" - ") + route->m_RouteEndString);
+	wxString startend = route->get_startString();
+	if (!route->get_endString().IsEmpty())
+		startend.append(_(" - ") + route->get_endString());
 	m_pRouteListCtrl->SetItem(item, 2, startend);
 
 	pConfig->UpdateRoute(route);
@@ -1027,8 +1027,8 @@ void RouteManagerDialog::OnRteExportClick(wxCommandEvent&)
 
 		if (route) {
 			list.push_back(route);
-			if (route->m_RouteNameString != wxEmptyString)
-				suggested_name = route->m_RouteNameString;
+			if (route->get_name() != wxEmptyString)
+				suggested_name = route->get_name();
 		}
 	}
 
@@ -1304,7 +1304,7 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 					break;
 				long list_index = m_pTrkListCtrl->GetItemData(item);
 				const Track* track = dynamic_cast<const Track*>(pRouteList->at(list_index));
-				csvString << track->m_RouteNameString << _T("\t")
+				csvString << track->get_name() << _T("\t")
 						  << wxString::Format(_T("%.1f"), track->m_route_length) << _T("\t")
 						  << _T("\n");
 			}
@@ -1432,7 +1432,7 @@ void RouteManagerDialog::UpdateTrkListCtrl()
 		}
 		long idx = m_pTrkListCtrl->InsertItem(li);
 
-		wxString name = trk->m_RouteNameString;
+		wxString name = trk->get_name();
 		if (name.IsEmpty()) {
 			RoutePoint* rp = trk->GetPoint(1);
 			if (rp && rp->GetCreateTime().IsValid())
@@ -1612,8 +1612,8 @@ void RouteManagerDialog::OnTrkExportClick(wxCommandEvent&)
 
 		if (proute_to_export) {
 			list.push_back(proute_to_export);
-			if (proute_to_export->m_RouteNameString != wxEmptyString)
-				suggested_name = proute_to_export->m_RouteNameString;
+			if (proute_to_export->get_name() != wxEmptyString)
+				suggested_name = proute_to_export->get_name();
 		}
 	}
 
@@ -2043,10 +2043,10 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 		name = _("(Unnamed Waypoint)");
 	wxString rteName = _("Go to ");
 	rteName.Append(name);
-	temp_route->m_RouteNameString = rteName;
-	temp_route->m_RouteStartString = _("Here");
+	temp_route->set_name(rteName);
+	temp_route->set_startString(_("Here"));
 
-	temp_route->m_RouteEndString = name;
+	temp_route->set_endString(name);
 	temp_route->m_bDeleteOnArrival = true;
 
 	if (g_pRouteMan->GetpActiveRoute())

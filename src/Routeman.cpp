@@ -186,7 +186,7 @@ bool Routeman::ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint)
 	}
 
 	wxJSONValue v;
-	v[_T("Route_activated")] = pRouteToActivate->m_RouteNameString;
+	v[_T("Route_activated")] = pRouteToActivate->get_name();
 	v[_T("GUID")] = pRouteToActivate->guid();
 	wxString msg_id(_T("OCPN_RTE_ACTIVATED"));
 	g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
@@ -566,13 +566,13 @@ bool Routeman::DeactivateRoute(bool b_arrival)
 
 	wxJSONValue v;
 	if (!b_arrival) {
-		v[_T("Route_deactivated")] = pActiveRoute->m_RouteNameString;
+		v[_T("Route_deactivated")] = pActiveRoute->get_name();
 		v[_T("GUID")] = pActiveRoute->guid();
 		wxString msg_id(_T("OCPN_RTE_DEACTIVATED"));
 		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 	} else {
 		v[_T("GUID")] = pActiveRoute->guid();
-		v[_T("Route_ended")] = pActiveRoute->m_RouteNameString;
+		v[_T("Route_ended")] = pActiveRoute->get_name();
 		wxString msg_id(_T("OCPN_RTE_ENDED"));
 		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 	}

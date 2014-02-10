@@ -1973,9 +1973,9 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 		pWP_src = pWP;
 	}
 
-	route->m_RouteNameString = proute->m_NameString;
-	route->m_RouteStartString = proute->m_StartString;
-	route->m_RouteEndString = proute->m_EndString;
+	route->set_name(proute->m_NameString);
+	route->set_startString(proute->m_StartString);
+	route->set_endString(proute->m_EndString);
 	route->set_guid(proute->m_GUID);
 	route->m_btemp = (b_permanent == false);
 
@@ -2051,9 +2051,9 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 		pWP_src = pWP;
 	}
 
-	track->m_RouteNameString = ptrack->m_NameString;
-	track->m_RouteStartString = ptrack->m_StartString;
-	track->m_RouteEndString = ptrack->m_EndString;
+	track->set_name(ptrack->m_NameString);
+	track->set_startString(ptrack->m_StartString);
+	track->set_endString(ptrack->m_EndString);
 	track->set_guid(ptrack->m_GUID);
 	track->m_btemp = (b_permanent == false);
 

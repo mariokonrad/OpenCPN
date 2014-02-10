@@ -1706,9 +1706,9 @@ void MainFrame::ActivateMOB(void)
 
 		pSelect->AddSelectableRouteSegment(nav.pos, zpos, pWP_src, pWP_MOB, temp_route);
 
-		temp_route->m_RouteNameString = _("Temporary MOB Route");
-		temp_route->m_RouteStartString = _("Assumed 1 Mile Point");
-		temp_route->m_RouteEndString = mob_label;
+		temp_route->set_name(_("Temporary MOB Route"));
+		temp_route->set_startString(_("Assumed 1 Mile Point"));
+		temp_route->set_endString(mob_label);
 		temp_route->m_bDeleteOnArrival = false;
 		temp_route->SetRouteArrivalRadius(-1.0); // never arrives
 		temp_route->RebuildGUIDList(); // ensure the GUID list is intact and good
@@ -4475,7 +4475,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 		for (RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); ++it) {
 			wxString name = wxEmptyString; // FIXME: why? 'name' is never used
 			if ((*it)->IsTrack() && (*it)->guid() == trk_id) {
-				name = (*it)->m_RouteNameString;
+				name = (*it)->get_name();
 				if (name.IsEmpty()) {
 					RoutePoint* rp = (*it)->GetPoint(1);
 					if (rp && rp->GetCreateTime().IsValid())
@@ -4526,7 +4526,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 			wxJSONValue v;
 
 			if (!(*it)->IsTrack() && (*it)->guid() == route_id) {
-				name = (*it)->m_RouteNameString;
+				name = (*it)->get_name();
 				if (name.IsEmpty())
 					name = _("(Unnamed Route)");
 
@@ -4584,7 +4584,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 						continue;
 				v[0][_T("isTrack")] = !mode;
 
-				wxString name = (*it)->m_RouteNameString;
+				wxString name = (*it)->get_name();
 				if (name.IsEmpty() && !mode) {
 					RoutePoint* rp = (*it)->GetPoint(1);
 					if (rp && rp->GetCreateTime().IsValid())

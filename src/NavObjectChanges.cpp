@@ -129,9 +129,9 @@ bool NavObjectChanges::ApplyChanges(void)
 					Route* pExisting = g_pRouteMan->RouteExists(pTrack->guid());
 					if (!strcmp(child.first_child().value(), "update")) {
 						if (pExisting) {
-							pExisting->m_RouteNameString = pTrack->m_RouteNameString;
-							pExisting->m_RouteStartString = pTrack->m_RouteStartString;
-							pExisting->m_RouteEndString = pTrack->m_RouteEndString;
+							pExisting->set_name(pTrack->get_name());
+							pExisting->set_startString(pTrack->get_startString());
+							pExisting->set_endString(pTrack->get_endString());
 						}
 					} else if (!strcmp(child.first_child().value(), "delete")) {
 						if (pExisting)

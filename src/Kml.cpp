@@ -76,7 +76,7 @@ int Kml::ParseCoordinates(TiXmlNode* node, dPointList& points)
 KmlPastebufferType Kml::ParseTrack(TiXmlNode* node, wxString& name)
 {
 	parsedTrack = new Track();
-	parsedTrack->m_RouteNameString = name;
+	parsedTrack->set_name(name);
 
 	if (0 == strncmp(node->ToElement()->Value(), "LineString", 10)) {
 		dPointList coordinates;
@@ -280,7 +280,7 @@ KmlPastebufferType Kml::ParsePasteBuffer()
 	bool foundTrack = false;
 	TiXmlElement* element = docHandle.FirstChild("Document").FirstChild("name").ToElement();
 	if (element)
-		parsedRoute->m_RouteNameString = wxString(element->GetText(), wxConvUTF8);
+		parsedRoute->set_name(wxString(element->GetText(), wxConvUTF8));
 
 	placemark = docHandle.FirstChild("Document").FirstChild("Placemark").ToElement();
 	for (; placemark; placemark = placemark->NextSiblingElement()) {
@@ -461,8 +461,8 @@ wxString Kml::MakeKmlFromRoute(Route* route, bool insertSeq)
 	seqCounter = 0;
 	TiXmlDocument xmlDoc;
 	wxString name = _("OpenCPN Route");
-	if (route->m_RouteNameString.Length())
-		name = route->m_RouteNameString;
+	if (route->get_name().Length())
+		name = route->get_name();
 	TiXmlElement* document = StandardHead(xmlDoc, name);
 
 	std::stringstream lineStringCoords;
@@ -504,8 +504,8 @@ wxString Kml::MakeKmlFromTrack(Track* track)
 {
 	TiXmlDocument xmlDoc;
 	wxString name = _("OpenCPN Track");
-	if (track->m_RouteNameString.Length())
-		name = track->m_RouteNameString;
+	if (track->get_name().Length())
+		name = track->get_name();
 	TiXmlElement* document = StandardHead(xmlDoc, name);
 
 	TiXmlElement* pmTrack = new TiXmlElement("Placemark");
@@ -513,7 +513,7 @@ wxString Kml::MakeKmlFromTrack(Track* track)
 
 	TiXmlElement* pmName = new TiXmlElement("name");
 	pmTrack->LinkEndChild(pmName);
-	TiXmlText* pmNameVal = new TiXmlText(track->m_RouteNameString.mb_str(wxConvUTF8));
+	TiXmlText* pmNameVal = new TiXmlText(track->get_name().mb_str(wxConvUTF8));
 	pmName->LinkEndChild(pmNameVal);
 
 	TiXmlElement* gxTrack = new TiXmlElement("gx:Track");

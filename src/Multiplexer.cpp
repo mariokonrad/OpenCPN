@@ -526,10 +526,10 @@ ret_point:
 			oNMEA0183.Rte.Empty();
 			oNMEA0183.Rte.TypeOfRoute = CompleteRoute;
 
-			if (pr->m_RouteNameString.IsEmpty())
+			if (pr->get_name().IsEmpty())
 				oNMEA0183.Rte.RouteName = _T("1");
 			else
-				oNMEA0183.Rte.RouteName = pr->m_RouteNameString;
+				oNMEA0183.Rte.RouteName = pr->get_name();
 
 			if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 				oNMEA0183.Rte.RouteName = _T("01");
@@ -570,10 +570,10 @@ ret_point:
 				tNMEA0183.Rte.TypeOfRoute = CompleteRoute;
 
 				if (cfg.GPS_Ident != _T("FurunoGP3X")) {
-					if (pr->m_RouteNameString.IsEmpty())
+					if (pr->get_name().IsEmpty())
 						tNMEA0183.Rte.RouteName = _T("1");
 					else
-						tNMEA0183.Rte.RouteName = pr->m_RouteNameString;
+						tNMEA0183.Rte.RouteName = pr->get_name();
 
 				} else {
 					tNMEA0183.Rte.RouteName = _T("01");
@@ -646,10 +646,10 @@ ret_point:
 						oNMEA0183.Rte.TypeOfRoute = CompleteRoute;
 
 						if (cfg.GPS_Ident != _T("FurunoGP3X")) {
-							if (pr->m_RouteNameString.IsEmpty())
+							if (pr->get_name().IsEmpty())
 								oNMEA0183.Rte.RouteName = _T("1");
 							else
-								oNMEA0183.Rte.RouteName = pr->m_RouteNameString;
+								oNMEA0183.Rte.RouteName = pr->get_name();
 						} else {
 							oNMEA0183.Rte.RouteName = _T("01");
 						}

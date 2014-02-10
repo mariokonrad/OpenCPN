@@ -114,16 +114,25 @@ public:
 	const RoutePointList& routepoints() const;
 	RoutePointList& routepoints();
 
+	const wxString& get_name() const;
+	void set_name(const wxString&);
+
+	const wxString& get_startString() const;
+	void set_startString(const wxString&);
+
+	const wxString& get_endString() const;
+	void set_endString(const wxString&);
+
+	const wxString& get_description() const;
+	void set_description(const wxString&);
+
 	bool m_bRtIsSelected;
 	bool m_bRtIsActive;
 	RoutePoint* m_pRouteActivePoint;
 	bool m_bIsBeingCreated;
 	double m_route_length;
 	double m_route_time;
-	wxString m_RouteNameString;
-	wxString m_RouteStartString;
-	wxString m_RouteEndString;
-	wxString m_RouteDescription;
+
 	bool m_bIsTrack; // TODO should use class type instead
 	RoutePoint* m_pLastAddedPoint;
 	bool m_bDeleteOnArrival;
@@ -148,6 +157,11 @@ protected:
 
 private:
 	bool CalculateCrossesIDL();
+
+	wxString m_RouteNameString;
+	wxString m_RouteStartString;
+	wxString m_RouteEndString;
+	wxString m_RouteDescription;
 
 	int m_nPoints;
 	int m_nm_sequence;

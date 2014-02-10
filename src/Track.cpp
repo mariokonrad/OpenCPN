@@ -157,8 +157,8 @@ Track* Track::DoExtendDaily()
 			begin = 2;
 		pSelect->DeleteAllSelectableTrackSegments(pExtendRoute);
 		wxString suffix = _T("");
-		if (this->m_RouteNameString.IsNull()) {
-			suffix = pExtendRoute->m_RouteNameString;
+		if (get_name().IsNull()) {
+			suffix = pExtendRoute->get_name();
 			if (suffix.IsNull())
 				suffix = wxDateTime::Today().FormatISODate();
 		}
@@ -168,8 +168,8 @@ Track* Track::DoExtendDaily()
 		this->ClearHighlights();
 		return (Track*)pExtendRoute;
 	} else {
-		if (this->m_RouteNameString.IsNull())
-			this->m_RouteNameString = wxDateTime::Today().FormatISODate();
+		if (get_name().IsNull())
+			set_name(wxDateTime::Today().FormatISODate());
 		return NULL;
 	}
 }
@@ -563,9 +563,9 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 		pSelect->AddSelectableRouteSegment(pWP_src->get_position(), pWP_dst->get_position(),
 										   pWP_src, pWP_dst, route);
 	}
-	route->m_RouteNameString = m_RouteNameString;
-	route->m_RouteStartString = m_RouteStartString;
-	route->m_RouteEndString = m_RouteEndString;
+	route->set_name(get_name());
+	route->set_startString(get_startString());
+	route->set_endString(get_endString());
 	route->m_bDeleteOnArrival = false;
 
 	return route;

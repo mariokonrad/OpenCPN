@@ -171,6 +171,46 @@ RoutePointList& Route::routepoints()
 	return *pRoutePointList;
 }
 
+const wxString& Route::get_name() const
+{
+	return m_RouteNameString;
+}
+
+void Route::set_name(const wxString& value)
+{
+	m_RouteNameString = value;
+}
+
+const wxString& Route::get_startString() const
+{
+	return m_RouteStartString;
+}
+
+void Route::set_startString(const wxString& value)
+{
+	m_RouteStartString = value;
+}
+
+const wxString& Route::get_endString() const
+{
+	return m_RouteEndString;
+}
+
+void Route::set_endString(const wxString& value)
+{
+	m_RouteEndString = value;
+}
+
+const wxString& Route::get_description() const
+{
+	return m_RouteDescription;
+}
+
+void Route::set_description(const wxString& value)
+{
+	m_RouteDescription = value;
+}
+
 // The following is used only for route splitting, assumes just created, empty route
 void Route::CloneRoute(Route* psourceroute, int start_nPoint, int end_nPoint,
 					   const wxString& suffix)

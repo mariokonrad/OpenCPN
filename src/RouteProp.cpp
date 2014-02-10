@@ -288,9 +288,9 @@ void RouteProp::OnRoutepropCopyTxtClick(wxCommandEvent&)
 	wxString eol("\n", wxConvUTF8);
 	wxString csvString;
 
-	csvString << this->GetTitle() << eol << _("Name") << tab << m_pRoute->m_RouteNameString << eol
-			  << _("Depart From") << tab << m_pRoute->m_RouteStartString << eol << _("Destination")
-			  << tab << m_pRoute->m_RouteEndString << eol << _("Total Distance") << tab
+	csvString << this->GetTitle() << eol << _("Name") << tab << m_pRoute->get_name() << eol
+			  << _("Depart From") << tab << m_pRoute->get_startString() << eol << _("Destination")
+			  << tab << m_pRoute->get_endString() << eol << _("Total Distance") << tab
 			  << m_TotalDistCtl->GetValue() << eol << _("Speed (Kts)") << tab
 			  << m_PlanSpeedCtl->GetValue() << eol << _("Departure Time (m/d/y h:m)") << tab
 			  << m_StartTimeCtl->GetValue() << eol << _("Time Enroute") << tab
@@ -790,9 +790,9 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 		}
 
 		// Fill in some top pane properties from the Route member elements
-		m_RouteNameCtl->SetValue(m_pRoute->m_RouteNameString);
-		m_RouteStartCtl->SetValue(m_pRoute->m_RouteStartString);
-		m_RouteDestCtl->SetValue(m_pRoute->m_RouteEndString);
+		m_RouteNameCtl->SetValue(m_pRoute->get_name());
+		m_RouteStartCtl->SetValue(m_pRoute->get_startString());
+		m_RouteDestCtl->SetValue(m_pRoute->get_endString());
 		m_RouteNameCtl->SetFocus();
 	} else {
 		m_RouteNameCtl->Clear();
@@ -1313,9 +1313,9 @@ bool RouteProp::SaveChanges(void)
 
 	if (m_pRoute && !m_pRoute->m_bIsInLayer) {
 		//  Get User input Text Fields
-		m_pRoute->m_RouteNameString = m_RouteNameCtl->GetValue();
-		m_pRoute->m_RouteStartString = m_RouteStartCtl->GetValue();
-		m_pRoute->m_RouteEndString = m_RouteDestCtl->GetValue();
+		m_pRoute->set_name(m_RouteNameCtl->GetValue());
+		m_pRoute->set_startString(m_RouteStartCtl->GetValue());
+		m_pRoute->set_endString(m_RouteDestCtl->GetValue());
 		if (m_chColor->GetSelection() == 0)
 			m_pRoute->m_Colour = wxEmptyString;
 		else
@@ -1341,7 +1341,7 @@ bool RouteProp::SaveChanges(void)
 
 	if (m_pRoute->IsActive() || ((Track*)m_pRoute)->IsRunning()) {
 		wxJSONValue v;
-		v[_T("Name")] = m_pRoute->m_RouteNameString;
+		v[_T("Name")] = m_pRoute->get_name();
 		v[_T("GUID")] = m_pRoute->guid();
 		wxString msg_id(_T("OCPN_TRK_ACTIVATED"));
 		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);

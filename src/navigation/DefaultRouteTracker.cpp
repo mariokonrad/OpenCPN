@@ -187,7 +187,7 @@ void DefaultRouteTracker::notify_plugins_start() const
 	//        application sending actively data to plugins (observer pattern)
 
 	wxJSONValue v;
-	wxString name = track->m_RouteNameString;
+	wxString name = track->get_name();
 	if (name.IsEmpty()) {
 		const RoutePoint* rp = track->GetPoint(1);
 		if (rp && rp->GetCreateTime().IsValid())

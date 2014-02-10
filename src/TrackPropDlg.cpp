@@ -524,10 +524,10 @@ bool TrackPropDlg::UpdateProperties()
 	}
 	bSizerLinks->Fit(m_scrolledWindowLinks);
 
-	m_tName->SetValue(m_pRoute->m_RouteNameString);
-	m_tFrom->SetValue(m_pRoute->m_RouteStartString);
-	m_tTo->SetValue(m_pRoute->m_RouteEndString);
-	m_tDescription->SetValue(m_pRoute->m_RouteDescription);
+	m_tName->SetValue(m_pRoute->get_name());
+	m_tFrom->SetValue(m_pRoute->get_startString());
+	m_tTo->SetValue(m_pRoute->get_endString());
+	m_tDescription->SetValue(m_pRoute->get_description());
 
 	m_tTotDistance->SetValue(_T(""));
 	m_tTimeEnroute->SetValue(_T(""));
@@ -745,9 +745,9 @@ void TrackPropDlg::OnTrackPropCopyTxtClick(wxCommandEvent&)
 	wxString eol("\n", wxConvUTF8);
 	wxString csvString;
 
-	csvString << this->GetTitle() << eol << _("Name") << tab << m_pRoute->m_RouteNameString << eol
-			  << _("Depart From") << tab << m_pRoute->m_RouteStartString << eol << _("Destination")
-			  << tab << m_pRoute->m_RouteEndString << eol << _("Total Distance") << tab
+	csvString << this->GetTitle() << eol << _("Name") << tab << m_pRoute->get_name() << eol
+			  << _("Depart From") << tab << m_pRoute->get_startString() << eol << _("Destination")
+			  << tab << m_pRoute->get_endString() << eol << _("Total Distance") << tab
 			  << m_tTotDistance->GetValue() << eol << _("Speed") << tab << m_tAvgSpeed->GetValue()
 			  << eol << _("Departure Time (m/d/y h:m)") << tab
 			  << m_pRoute->GetPoint(1)->GetCreateTime().Format() << eol << _("Time Enroute") << tab
@@ -854,8 +854,8 @@ void TrackPropDlg::OnExportBtnClick(wxCommandEvent&)
 	wxString suggested_name = _("track");
 	RouteList list;
 	list.push_back(m_pRoute);
-	if (m_pRoute->m_RouteNameString != wxEmptyString)
-		suggested_name = m_pRoute->m_RouteNameString;
+	if (m_pRoute->get_name() != wxEmptyString)
+		suggested_name = m_pRoute->get_name();
 	pConfig->ExportGPXRoutes(this, &list, suggested_name);
 }
 
@@ -1052,10 +1052,10 @@ bool TrackPropDlg::SaveChanges(void)
 {
 	if (m_pRoute && !m_pRoute->m_bIsInLayer) {
 		// Get User input Text Fields
-		m_pRoute->m_RouteNameString = m_tName->GetValue();
-		m_pRoute->m_RouteStartString = m_tFrom->GetValue();
-		m_pRoute->m_RouteEndString = m_tTo->GetValue();
-		m_pRoute->m_RouteDescription = m_tDescription->GetValue();
+		m_pRoute->set_name(m_tName->GetValue());
+		m_pRoute->set_startString(m_tFrom->GetValue());
+		m_pRoute->set_endString(m_tTo->GetValue());
+		m_pRoute->set_description(m_tDescription->GetValue());
 		m_pRoute->SetVisible(m_cbShow->GetValue());
 		if (m_cColor->GetSelection() == 0)
 			m_pRoute->m_Colour = wxEmptyString;
@@ -1070,7 +1070,7 @@ bool TrackPropDlg::SaveChanges(void)
 
 	if (static_cast<Track*>(m_pRoute)->IsRunning()) {
 		wxJSONValue v;
-		v[_T("Name")] = m_pRoute->m_RouteNameString;
+		v[_T("Name")] = m_pRoute->get_name();
 		v[_T("GUID")] = m_pRoute->guid();
 		wxString msg_id(_T("OCPN_TRK_ACTIVATED"));
 		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);

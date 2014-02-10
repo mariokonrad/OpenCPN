@@ -21,12 +21,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __SELECT_H__
-#define __SELECT_H__
+#ifndef __SELECT__H__
+#define __SELECT__H__
 
-#include "SelectItem.h"
-#include <RoutePoint.h>
-#include <Route.h>
+#include <SelectItem.h>
+
+class Route;
+class RoutePoint;
 
 class Select
 {

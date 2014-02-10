@@ -23,15 +23,21 @@
 
 #include "SelectItem.h"
 
-SelectItem::SelectItem()
+SelectItem::SelectItem(unsigned long selection_type)
 	: m_pData1(0)
 	, route_point(0)
 	, route(0)
+	, m_seltype(selection_type)
 	, user_data(0)
 {}
 
 SelectItem::~SelectItem()
 {}
+
+unsigned long SelectItem::type() const
+{
+	return m_seltype;
+}
 
 int SelectItem::GetUserData(void) const
 {

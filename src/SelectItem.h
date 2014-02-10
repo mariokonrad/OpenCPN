@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __SELECTITEM_H__
-#define __SELECTITEM_H__
+#ifndef __SELECTITEM__H__
+#define __SELECTITEM__H__
 
 #include <geo/Position.h>
 #include <list>
@@ -30,9 +30,11 @@
 class Route;
 class RoutePoint;
 
+/// This class holds data of a selected item (whatever it is).
 class SelectItem
 {
 public:
+	/// Enumeration of what the selected item is.
 	enum Type
 	{
 		TYPE_UNKNOWN      = 0x0001,
@@ -47,15 +49,16 @@ public:
 	};
 
 public:
-	SelectItem();
+	SelectItem(unsigned long);
 	~SelectItem();
+
+	unsigned long type() const;
 
 	int GetUserData(void) const;
 	void SetUserData(int data);
 
 	geo::Position pos1;
 	geo::Position pos2;
-	unsigned long m_seltype; // bitcombination of Type
 	bool m_bIsSelected;
 
 	// (mis-)used as one of the following:
@@ -69,6 +72,7 @@ public:
 	Route* route;
 
 private:
+	unsigned long m_seltype; // bit combination of Type
 	int user_data;
 };
 

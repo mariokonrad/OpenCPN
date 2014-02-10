@@ -519,11 +519,12 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString& data_file_path)
 			pIDX->num_nodes = num_nodes;
 			pIDX->num_csts = num_csts;
 			pIDX->num_epochs = num_epochs;
-			pIDX->m_cst_speeds = m_cst_speeds;
-			pIDX->m_cst_nodes = m_cst_nodes;
-			pIDX->m_cst_epochs = m_cst_epochs;
 			pIDX->first_year = m_first_year;
-			pIDX->m_work_buffer = m_work_buffer;
+// FIXME: plain memory sharing, refactoring
+			pIDX->m_cst_speeds = &m_cst_speeds;
+			pIDX->m_cst_nodes = &m_cst_nodes;
+			pIDX->m_cst_epochs = &m_cst_epochs;
+			pIDX->m_work_buffer = &m_work_buffer;
 		}
 	}
 	free(ptiderec);

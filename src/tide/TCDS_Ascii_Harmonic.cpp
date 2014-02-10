@@ -107,11 +107,12 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadData(const wxString& data_file_path)
 			pIDX->num_nodes = num_nodes;
 			pIDX->num_csts = num_csts;
 			pIDX->num_epochs = num_epochs;
-			pIDX->m_cst_speeds = m_cst_speeds;
-			pIDX->m_cst_nodes = m_cst_nodes;
-			pIDX->m_cst_epochs = m_cst_epochs;
 			pIDX->first_year = m_first_year;
-			pIDX->m_work_buffer = m_work_buffer;
+// FIXME: plain memory sharing, refactoring
+			pIDX->m_cst_speeds = &m_cst_speeds;
+			pIDX->m_cst_nodes = &m_cst_nodes;
+			pIDX->m_cst_epochs = &m_cst_epochs;
+			pIDX->m_work_buffer = &m_work_buffer;
 		}
 	}
 
@@ -310,7 +311,6 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString& data_fi
 
 	m_cst_epochs.clear();
 	m_cst_epochs.resize(num_csts, std::vector<double>(num_epochs));
-
 	for (int i = 0; i < num_csts; i++) {
 		if (EOF == fscanf(fp, "%s", linrec))
 			return TC_HARM_FILE_CORRUPT;
@@ -332,7 +332,6 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicConstants(const wxString& data_fi
 
 	m_cst_nodes.clear();
 	m_cst_nodes.resize(num_csts, std::vector<double>(num_nodes));
-
 	for (int a = 0; a < num_csts; a++) {
 		fscanf(fp, "%s", linrec);
 		for (b = 0; b < num_nodes; b++)

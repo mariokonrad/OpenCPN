@@ -579,11 +579,11 @@ static double time2mean(time_t t, IDX_entry* pIDX)
 		happy_new_year(pIDX, new_year);
 
 	for (a = 0; a < pIDX->num_csts; a++) {
-		if (pIDX->m_cst_speeds[a] < 6e-6) {
-			tide += pIDX->m_work_buffer[a]
-					* cos(pIDX->m_cst_speeds[a]
+		if (pIDX->cst_speeds(a) < 6e-6) {
+			tide += pIDX->work_buf(a)
+					* cos(pIDX->cst_speeds(a)
 						  * ((long)(t - pIDX->epoch) + pIDX->pref_sta_data->meridian)
-						  + pIDX->m_cst_epochs[a][pIDX->epoch_year - pIDX->first_year]
+						  + pIDX->cst_epochs(a, pIDX->epoch_year - pIDX->first_year)
 						  - pIDX->pref_sta_data->epoch[a]);
 		}
 	}
@@ -804,13 +804,13 @@ static double _time2dt_tide(time_t t, int deriv, IDX_entry* pIDX)
 
 	tempd = M_PI / 2.0 * deriv;
 	for (a = 0; a < pIDX->num_csts; a++) {
-		term = pIDX->m_work_buffer[a]
-			   * cos(tempd + pIDX->m_cst_speeds[a]
+		term = pIDX->work_buf(a)
+			   * cos(tempd + pIDX->cst_speeds(a)
 							 * ((long)(t - pIDX->epoch) + pIDX->pref_sta_data->meridian)
-					 + pIDX->m_cst_epochs[a][pIDX->epoch_year - pIDX->first_year]
+					 + pIDX->cst_epochs(a, pIDX->epoch_year - pIDX->first_year)
 					 - pIDX->pref_sta_data->epoch[a]);
 		for (b = deriv; b > 0; b--)
-			term *= pIDX->m_cst_speeds[a];
+			term *= pIDX->cst_speeds(a);
 		dt_tide += term;
 	}
 	return dt_tide;
@@ -947,7 +947,7 @@ static void figure_max_amplitude(IDX_entry* pIDX)
 			double year_amp = 0.0;
 
 			for (a = 0; a < pIDX->num_csts; a++)
-				year_amp += pIDX->pref_sta_data->amplitude[a] * pIDX->m_cst_nodes[a][i];
+				year_amp += pIDX->pref_sta_data->amplitude[a] * pIDX->cst_nodes(a, i);
 			if (year_amp > pIDX->max_amplitude)
 				pIDX->max_amplitude = year_amp;
 		}
@@ -961,8 +961,8 @@ static void figure_multipliers(IDX_entry* pIDX, int year)
 
 	figure_max_amplitude(pIDX);
 	for (a = 0; a < pIDX->num_csts; a++) {
-		pIDX->m_work_buffer[a] = pIDX->pref_sta_data->amplitude[a]
-								 * pIDX->m_cst_nodes[a][year - pIDX->first_year]
+		pIDX->work_buf(a) = pIDX->pref_sta_data->amplitude[a]
+								 * pIDX->cst_nodes(a, year - pIDX->first_year)
 								 / pIDX->max_amplitude; // BOGUS_amplitude?
 	}
 }

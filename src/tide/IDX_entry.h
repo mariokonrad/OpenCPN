@@ -50,6 +50,26 @@ public:
 	IDX_entry();
 	~IDX_entry();
 
+	double cst_speeds(unsigned int x) const
+	{
+		return (*m_cst_speeds)[x];
+	}
+
+	double cst_nodes(unsigned int x, unsigned int y) const
+	{
+		return (*m_cst_nodes)[x][y];
+	}
+
+	double cst_epochs(unsigned int x, unsigned int y) const
+	{
+		return (*m_cst_epochs)[x][y];
+	}
+
+	double& work_buf(unsigned int x)
+	{
+		return (*m_work_buffer)[x];
+	}
+
 	source_data_t source_data_type;
 	TCDataSource* pDataSource;
 	char source_ident[MAXNAMELEN]; // actually, the file name
@@ -94,10 +114,12 @@ public:
 	int num_nodes; // These are copies of relevant data pointers
 	int num_csts; // allocated during invariant harmonic loading
 	int num_epochs; // and owned by the DataSource
-	std::vector<double> m_cst_speeds;
-	std::vector<std::vector<double> > m_cst_nodes;
-	std::vector<std::vector<double> > m_cst_epochs;
-	std::vector<double> m_work_buffer;
+
+	std::vector<double> *m_cst_speeds; /// shared data with either Ascii_Harmonic or Binary_Harmonic
+	std::vector<std::vector<double> > *m_cst_nodes; /// shared data with either Ascii_Harmonic or Binary_Harmonic
+	std::vector<std::vector<double> > *m_cst_epochs; /// shared data with either Ascii_Harmonic or Binary_Harmonic
+	std::vector<double> *m_work_buffer; /// shared data with either Ascii_Harmonic or Binary_Harmonic
+
 	int first_year;
 	time_t epoch;
 	int epoch_year;

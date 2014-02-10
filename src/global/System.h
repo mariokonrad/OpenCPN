@@ -153,9 +153,6 @@ public:
 		bool cm93;
 		bool s57;
 		int total_NMEAerror_messages;
-/*
-int g_total_NMEAerror_messages = 0;
-*/
 	};
 
 	virtual const Debug& debug() const = 0;

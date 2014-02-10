@@ -68,7 +68,7 @@ Route::SameGUID::SameGUID(const wxString& guid)
 
 bool Route::SameGUID::operator()(const Route* route) const
 {
-	return route && (guid == route->m_GUID);
+	return route && (guid == route->guid());
 }
 
 Route::Route(void)
@@ -76,7 +76,6 @@ Route::Route(void)
 	, m_bRtIsActive(false)
 	, m_pRouteActivePoint(NULL)
 	, m_bIsBeingCreated(false)
-	, m_bIsBeingEdited(false)
 	, m_route_length(0.0)
 	, m_route_time(0.0)
 	, m_bIsTrack(false)
@@ -178,7 +177,7 @@ void Route::CloneRoute(Route* psourceroute, int start_nPoint, int end_nPoint,
 		else {
 			RoutePoint* psourcepoint = psourceroute->GetPoint(i);
 			RoutePoint* ptargetpoint
-				= new RoutePoint(psourcepoint->get_position(), psourcepoint->m_IconName,
+				= new RoutePoint(psourcepoint->get_position(), psourcepoint->icon_name(),
 								 psourcepoint->GetName(), _T(""), false);
 
 			AddPoint(ptargetpoint, false);
@@ -213,7 +212,7 @@ void Route::CloneTrack(Route* psourceroute, int start_nPoint, int end_nPoint,
 
 		RoutePoint* psourcepoint = psourceroute->GetPoint(i);
 		RoutePoint* ptargetpoint
-			= new RoutePoint(psourcepoint->get_position(), psourcepoint->m_IconName,
+			= new RoutePoint(psourcepoint->get_position(), psourcepoint->icon_name(),
 							 psourcepoint->GetName(), _T(""), false);
 
 		AddPoint(ptargetpoint, false);
@@ -237,7 +236,7 @@ void Route::CloneTrack(Route* psourceroute, int start_nPoint, int end_nPoint,
 
 void Route::CloneAddedRoutePoint(RoutePoint* ptargetpoint, RoutePoint* psourcepoint)
 {
-	ptargetpoint->m_MarkDescription = psourcepoint->m_MarkDescription;
+	ptargetpoint->set_description(psourcepoint->get_description());
 	ptargetpoint->m_bKeepXRoute = psourcepoint->m_bKeepXRoute;
 	ptargetpoint->m_bIsVisible = psourcepoint->m_bIsVisible;
 	ptargetpoint->m_bPtIsSelected = false;
@@ -258,7 +257,7 @@ void Route::CloneAddedTrackPoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 	// This is a hack, need to undo the action of Route::AddPoint
 	ptargetpoint->m_bIsInRoute = false;
 	ptargetpoint->m_bIsInTrack = true;
-	ptargetpoint->m_MarkDescription = psourcepoint->m_MarkDescription;
+	ptargetpoint->set_description(psourcepoint->get_description());
 	ptargetpoint->m_bKeepXRoute = psourcepoint->m_bKeepXRoute;
 	ptargetpoint->m_bIsVisible = psourcepoint->m_bIsVisible;
 	ptargetpoint->m_bPtIsSelected = false;
@@ -275,7 +274,7 @@ void Route::CloneAddedTrackPoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 
 void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc)
 {
-	if (pNewPoint->m_bIsolatedMark) {
+	if (pNewPoint->is_isolated()) {
 		pNewPoint->m_bKeepXRoute = true;
 	}
 	pNewPoint->m_bIsolatedMark = false; // definitely no longer isolated
@@ -297,7 +296,7 @@ void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_de
 	m_pLastAddedPoint = pNewPoint;
 
 	if (b_rename_in_sequence && pNewPoint->GetName().IsEmpty() && !pNewPoint->m_bKeepXRoute) {
-		pNewPoint->SetName(wxString::Format(_T ( "%03d" ), m_nPoints));
+		pNewPoint->SetName(wxString::Format(_T("%03d"), m_nPoints));
 		pNewPoint->m_bDynamicName = true;
 	}
 }
@@ -323,7 +322,7 @@ RoutePoint* Route::GetPoint(const wxString& guid)
 {
 	// FIXME: use find_if
 	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
-		if (guid == (*i)->m_GUID)
+		if (guid == (*i)->guid())
 			return *i;
 	}
 	return NULL;
@@ -577,7 +576,7 @@ RoutePoint* Route::InsertPointBefore(RoutePoint* pRP, double rlat, double rlon, 
 	pRoutePointList->insert(i, newpoint);
 
 	int nRP = i - pRoutePointList->begin();
-	RoutePointGUIDList.Insert(pRP->m_GUID, nRP);
+	RoutePointGUIDList.Insert(pRP->guid(), nRP);
 
 	m_nPoints++;
 
@@ -611,6 +610,16 @@ int Route::GetIndexOf(RoutePoint* prp)
 	return 1 + (i - pRoutePointList->begin());
 }
 
+const wxString& Route::guid() const
+{
+	return m_GUID;
+}
+
+void Route::set_guid(const wxString& value)
+{
+	m_GUID = value;
+}
+
 void Route::DeletePoint(RoutePoint* rp, bool bRenamePoints)
 {
 	// n.b. must delete Selectables  and update config before deleting the point
@@ -623,8 +632,8 @@ void Route::DeletePoint(RoutePoint* rp, bool bRenamePoints)
 
 	pRoutePointList->erase(std::find(pRoutePointList->begin(), pRoutePointList->end(), rp));
 
-	if ((rp->m_GUID.Len()) && (wxNOT_FOUND != RoutePointGUIDList.Index(rp->m_GUID)))
-		RoutePointGUIDList.Remove(rp->m_GUID);
+	if ((rp->guid().Len()) && (wxNOT_FOUND != RoutePointGUIDList.Index(rp->guid())))
+		RoutePointGUIDList.Remove(rp->guid());
 
 	delete rp;
 
@@ -654,8 +663,8 @@ void Route::RemovePoint(RoutePoint* rp, bool bRenamePoints)
 	pSelect->DeleteAllSelectableRouteSegments(this);
 
 	pRoutePointList->erase(std::find(pRoutePointList->begin(), pRoutePointList->end(), rp));
-	if (wxNOT_FOUND != RoutePointGUIDList.Index(rp->m_GUID))
-		RoutePointGUIDList.Remove(rp->m_GUID);
+	if (wxNOT_FOUND != RoutePointGUIDList.Index(rp->guid()))
+		RoutePointGUIDList.Remove(rp->guid());
 	m_nPoints -= 1;
 
 	// check all other routes to see if this point appears in any other route
@@ -769,7 +778,7 @@ bool Route::CalculateCrossesIDL(void)
 	return idl_cross;
 }
 
-void Route::CalculateDCRect(wxDC& dc_route, wxRect* prect, const ViewPort&)
+void Route::CalculateDCRect(wxDC& dc_route, wxRect& prect, const ViewPort&)
 {
 	dc_route.ResetBoundingBox();
 	dc_route.DestroyClippingRegion();
@@ -791,10 +800,10 @@ void Route::CalculateDCRect(wxDC& dc_route, wxRect* prect, const ViewPort&)
 	}
 
 	// Retrieve the drawing extents
-	prect->x = dc_route.MinX() - 1;
-	prect->y = dc_route.MinY() - 1;
-	prect->width = dc_route.MaxX() - dc_route.MinX() + 2;
-	prect->height = dc_route.MaxY() - dc_route.MinY() + 2;
+	prect.x = dc_route.MinX() - 1;
+	prect.y = dc_route.MinY() - 1;
+	prect.width = dc_route.MaxX() - dc_route.MinX() + 2;
+	prect.height = dc_route.MaxY() - dc_route.MinY() + 2;
 }
 
 //  Update the route segment lengths, storing each segment length in <destination> point.
@@ -845,10 +854,10 @@ void Route::UpdateSegmentDistances(double planspeed)
 				double vmg = 0.0;
 				wxDateTime etd;
 
-				if (prp0->m_MarkDescription.Find(_T("VMG=")) != wxNOT_FOUND) {
+				if (prp0->get_description().Find(_T("VMG=")) != wxNOT_FOUND) {
 					wxString s_vmg
-						= (prp0->m_MarkDescription.Mid(prp0->m_MarkDescription.Find(_T("VMG="))
-													   + 4)).BeforeFirst(';');
+						= (prp0->get_description().Mid(prp0->get_description().Find(_T("VMG=")) + 4))
+							  .BeforeFirst(';');
 					if (!s_vmg.ToDouble(&vmg))
 						vmg = planspeed;
 				}
@@ -862,10 +871,10 @@ void Route::UpdateSegmentDistances(double planspeed)
 				}
 
 				prp0->m_seg_etd = wxInvalidDateTime;
-				if (prp0->m_MarkDescription.Find(_T("ETD=")) != wxNOT_FOUND) {
+				if (prp0->get_description().Find(_T("ETD=")) != wxNOT_FOUND) {
 					wxString s_etd
-						= (prp0->m_MarkDescription.Mid(prp0->m_MarkDescription.Find(_T("ETD="))
-													   + 4)).BeforeFirst(';');
+						= (prp0->get_description().Mid(prp0->get_description().Find(_T("ETD=")) + 4))
+							  .BeforeFirst(';');
 					const wxChar* parse_return = etd.ParseDateTime(s_etd);
 					if (parse_return) {
 						wxString tz(parse_return);
@@ -925,7 +934,7 @@ void Route::RebuildGUIDList(void)
 	RoutePointGUIDList.Clear();
 	for (RoutePointList::const_iterator i = pRoutePointList->begin(); i != pRoutePointList->end();
 		 ++i) {
-		RoutePointGUIDList.Add((*i)->m_GUID);
+		RoutePointGUIDList.Add((*i)->guid());
 	}
 }
 

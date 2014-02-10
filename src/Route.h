@@ -76,7 +76,7 @@ public:
 	void DeSelectRoute();
 	void CalculateBBox();
 	void UpdateSegmentDistances(double planspeed = -1.0);
-	void CalculateDCRect(wxDC& dc_route, wxRect* prect, const ViewPort& VP);
+	void CalculateDCRect(wxDC& dc_route, wxRect& prect, const ViewPort& VP);
 	int GetnPoints(void) const;
 	void SetnPoints(void);
 	void Reverse(bool bRenamePoints = false);
@@ -108,11 +108,13 @@ public:
 	double GetRouteArrivalRadius(void) const;
 	void SetRouteArrivalRadius(double radius);
 
+	const wxString& guid() const;
+	void set_guid(const wxString&);
+
 	bool m_bRtIsSelected;
 	bool m_bRtIsActive;
 	RoutePoint* m_pRouteActivePoint;
 	bool m_bIsBeingCreated;
-	bool m_bIsBeingEdited;
 	double m_route_length;
 	double m_route_time;
 	wxString m_RouteNameString;
@@ -122,7 +124,6 @@ public:
 	bool m_bIsTrack; // TODO should use class type instead
 	RoutePoint* m_pLastAddedPoint;
 	bool m_bDeleteOnArrival;
-	wxString m_GUID;
 	bool m_bIsInLayer;
 	int m_LayerID;
 	int m_width;
@@ -151,6 +152,7 @@ private:
 	bool m_bListed;
 	double m_ArrivalRadius;
 	bool m_bcrosses_idl;
+	wxString m_GUID;
 };
 
 typedef std::vector<Route*> RouteList;

@@ -126,7 +126,7 @@ bool NavObjectChanges::ApplyChanges(void)
 					pugi::xml_node xchild = object.child("extensions");
 					pugi::xml_node child = xchild.child("opencpn:action");
 
-					Route* pExisting = g_pRouteMan->RouteExists(pTrack->m_GUID);
+					Route* pExisting = g_pRouteMan->RouteExists(pTrack->guid());
 					if (!strcmp(child.first_child().value(), "update")) {
 						if (pExisting) {
 							pExisting->m_RouteNameString = pTrack->m_RouteNameString;
@@ -152,7 +152,7 @@ bool NavObjectChanges::ApplyChanges(void)
 						} else if (!strcmp(child.first_child().value(), "update")) {
 							UpdateRouteA(pRoute);
 						} else if (!strcmp(child.first_child().value(), "delete")) {
-							Route* pExisting = g_pRouteMan->RouteExists(pRoute->m_GUID);
+							Route* pExisting = g_pRouteMan->RouteExists(pRoute->guid());
 							if (pExisting)
 								g_pRouteMan->DeleteRoute(pExisting);
 						} else

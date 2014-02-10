@@ -5038,15 +5038,11 @@ void ChartCanvas::FindRoutePointsAtCursor(float, bool setBeingEdited)
 
 		if (brp_viz) {
 			// Use route array to rubberband all affected routes
-			if (m_pEditRouteArray) { // Editing Waypoint as part of route
-				for (unsigned int ir = 0; ir < m_pEditRouteArray->size(); ++ir) {
-					Route* pr = static_cast<Route*>(m_pEditRouteArray->at(ir));
-					pr->m_bIsBeingEdited = setBeingEdited;
-				}
+			if (m_pEditRouteArray) {
+				// Editing Waypoint as part of route
 				m_bRouteEditing = setBeingEdited;
-
-			} else { // editing Mark
-				frp->m_bIsBeingEdited = setBeingEdited;
+			} else {
+				// editing Mark
 				m_bMarkEditing = setBeingEdited;
 			}
 
@@ -5365,7 +5361,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 			RoutePoint* pNearbyPoint
 				= pWayPointMan->GetNearbyWaypoint(m_cursor_pos, nearby_radius_meters);
-			if (pNearbyPoint && (pNearbyPoint != m_prev_pMousePoint) && !pNearbyPoint->m_bIsInTrack
+			if (pNearbyPoint && (pNearbyPoint != m_prev_pMousePoint) && !pNearbyPoint->is_in_track()
 				&& !pNearbyPoint->m_bIsInLayer) {
 				int dlg_return;
 #ifndef __WXOSX__
@@ -5529,7 +5525,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			} else if (!pMarkPropDialog->IsShown() && view.WayPointPreventDragging)
 				DraggingAllowed = false;
 
-			if (m_pRoutePointEditTarget && (m_pRoutePointEditTarget->m_IconName == _T("mob")))
+			if (m_pRoutePointEditTarget && (m_pRoutePointEditTarget->icon_name() == _T("mob")))
 				DraggingAllowed = false;
 
 			if (m_pRoutePointEditTarget->m_bIsInLayer)
@@ -5555,7 +5551,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 						// navigating to an isolated waypoint on a temporary route
 						if (g_pRouteMan->IsRouteValid(pr)) {
 							wxRect route_rect;
-							pr->CalculateDCRect(m_dc_route, &route_rect, VPoint);
+							pr->CalculateDCRect(m_dc_route, route_rect, VPoint);
 							pre_rect.Union(route_rect);
 						}
 					}
@@ -5591,7 +5587,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 						Route* pr = (Route*)m_pEditRouteArray->at(ir);
 						if (g_pRouteMan->IsRouteValid(pr)) {
 							wxRect route_rect;
-							pr->CalculateDCRect(m_dc_route, &route_rect, VPoint);
+							pr->CalculateDCRect(m_dc_route, route_rect, VPoint);
 							post_rect.Union(route_rect);
 						}
 					}
@@ -5612,7 +5608,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				DraggingAllowed = false;
 			}
 
-			if (m_pRoutePointEditTarget && (m_pRoutePointEditTarget->m_IconName == _T("mob")))
+			if (m_pRoutePointEditTarget && (m_pRoutePointEditTarget->icon_name() == _T("mob")))
 				DraggingAllowed = false;
 
 			if (m_pRoutePointEditTarget->m_bIsInLayer)
@@ -5640,7 +5636,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 				// Get the update rectangle for the un-edited mark
 				wxRect pre_rect;
-				m_pRoutePointEditTarget->CalculateDCRect(m_dc_route, &pre_rect);
+				m_pRoutePointEditTarget->CalculateDCRect(m_dc_route, pre_rect);
 				if ((lppmax > pre_rect.width / 2) || (lppmax > pre_rect.height / 2))
 					pre_rect.Inflate((int)(lppmax - (pre_rect.width / 2)),
 									 (int)(lppmax - (pre_rect.height / 2)));
@@ -5659,7 +5655,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 				// Get the update rectangle for the edited mark
 				wxRect post_rect;
-				m_pRoutePointEditTarget->CalculateDCRect(m_dc_route, &post_rect);
+				m_pRoutePointEditTarget->CalculateDCRect(m_dc_route, post_rect);
 				if ((lppmax > post_rect.width / 2) || (lppmax > post_rect.height / 2))
 					post_rect.Inflate((int)(lppmax - (post_rect.width / 2)),
 									  (int)(lppmax - (post_rect.height / 2)));
@@ -5693,8 +5689,6 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 						if (g_pRouteMan->IsRouteValid(pr)) {
 							pr->CalculateBBox();
 							pr->UpdateSegmentDistances();
-							pr->m_bIsBeingEdited = false;
-
 							pConfig->UpdateRoute(pr);
 						}
 					}
@@ -5735,7 +5729,6 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			if (m_pRoutePointEditTarget) {
 				pConfig->UpdateWayPoint(m_pRoutePointEditTarget);
 				undo->AfterUndoableAction(m_pRoutePointEditTarget);
-				m_pRoutePointEditTarget->m_bIsBeingEdited = false;
 				m_pRoutePointEditTarget->m_bPtIsSelected = false;
 			}
 			m_pRoutePointEditTarget = NULL;
@@ -6428,7 +6421,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 			menuWaypoint->Append(ID_WPT_MENU_COPY, _("Copy as KML"));
 
-			if (m_pFoundRoutePoint->m_IconName != _T("mob"))
+			if (m_pFoundRoutePoint->icon_name() != _T("mob"))
 				menuWaypoint->Append(ID_RT_MENU_DELPOINT, _("Delete"));
 
 			wxString port = FindValidUploadPort();
@@ -6462,7 +6455,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 
 			menuWaypoint->Append(ID_WPT_MENU_COPY, _("Copy as KML"));
 
-			if (m_pFoundRoutePoint->m_IconName != _T("mob"))
+			if (m_pFoundRoutePoint->icon_name() != _T("mob"))
 				menuWaypoint->Append(ID_WP_MENU_DELPOINT, _("Delete"));
 
 			wxString port = FindValidUploadPort();
@@ -6787,7 +6780,7 @@ void pupHandler_PasteWaypoint()
 		= pWayPointMan->GetNearbyWaypoint(pasted->get_position(), nearby_radius_meters);
 
 	int answer = wxID_NO;
-	if (nearPoint && !nearPoint->m_bIsInTrack && !nearPoint->m_bIsInLayer) {
+	if (nearPoint && !nearPoint->is_in_track() && !nearPoint->m_bIsInLayer) {
 		wxString msg;
 		msg << _("There is an existing waypoint at the same location as the one you are pasting. ")
 			<< _("Would you like to merge the pasted data with it?\n\n");
@@ -6798,7 +6791,7 @@ void pupHandler_PasteWaypoint()
 
 	if (answer == wxID_YES) {
 		nearPoint->SetName(pasted->GetName());
-		nearPoint->m_MarkDescription = pasted->m_MarkDescription;
+		nearPoint->set_description(pasted->get_description());
 		if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 			pRouteManagerDialog->UpdateWptListCtrl();
 	}
@@ -6894,7 +6887,7 @@ void pupHandler_PasteRoute()
 			newPoint
 				= pWayPointMan->GetNearbyWaypoint(curPoint->get_position(), nearby_radius_meters);
 			newPoint->SetName(curPoint->GetName());
-			newPoint->m_MarkDescription = curPoint->m_MarkDescription;
+			newPoint->set_description(curPoint->get_description());
 
 			if (createNewRoute)
 				newRoute->AddPoint(newPoint);
@@ -6903,7 +6896,7 @@ void pupHandler_PasteRoute()
 
 			newPoint = new RoutePoint(*curPoint);
 			newPoint->m_bIsolatedMark = false;
-			newPoint->m_IconName = _T("circle");
+			newPoint->set_icon_name(_T("circle"));
 			newPoint->m_bIsVisible = true;
 			newPoint->m_bShowName = false;
 			newPoint->m_bKeepXRoute = false;
@@ -7134,7 +7127,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			}
 
 			if (m_pFoundRoutePoint && !(m_pFoundRoutePoint->m_bIsInLayer)
-				&& (m_pFoundRoutePoint->m_IconName != _T("mob"))) {
+				&& (m_pFoundRoutePoint->icon_name() != _T("mob"))) {
 
 				// If the WP belongs to an invisible route, we come here instead of to
 				// ID_RT_MENU_DELPOINT
@@ -7183,7 +7176,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		case ID_WP_MENU_SET_ANCHORWATCH:
 			if (pAnchorWatchPoint1 == NULL) {
 				pAnchorWatchPoint1 = m_pFoundRoutePoint;
-				global::OCPN::get().nav().set_anchor_AW1GUID(pAnchorWatchPoint1->m_GUID);
+				global::OCPN::get().nav().set_anchor_AW1GUID(pAnchorWatchPoint1->guid());
 				wxString nn = m_pFoundRoutePoint->GetName();
 				if (nn.IsNull()) {
 					nn.Printf(_T("%d m"), global::OCPN::get().nav().anchor().AWDefault);
@@ -7191,7 +7184,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 				}
 			} else if (pAnchorWatchPoint2 == NULL) {
 				pAnchorWatchPoint2 = m_pFoundRoutePoint;
-				global::OCPN::get().nav().set_anchor_AW2GUID(pAnchorWatchPoint2->m_GUID);
+				global::OCPN::get().nav().set_anchor_AW2GUID(pAnchorWatchPoint2->guid());
 				wxString nn = m_pFoundRoutePoint->GetName();
 				if (nn.IsNull()) {
 					nn.Printf(_T("%d m"), global::OCPN::get().nav().anchor().AWDefault);
@@ -9141,7 +9134,7 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, const geo::LatLonBoundingBo
 		 i != pWayPointMan->waypoints().end(); ++i) {
 		RoutePoint* point = *i;
 		if (point) {
-			if (bDrawMarksOnly && (point->m_bIsInRoute || point->m_bIsInTrack)) {
+			if (bDrawMarksOnly && (point->m_bIsInRoute || point->is_in_track())) {
 				continue;
 			} else {
 				if (BltBBox.GetValid()) {

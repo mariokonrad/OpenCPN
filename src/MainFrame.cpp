@@ -1061,9 +1061,9 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 	if (global::OCPN::get().gui().view().auto_anchor_mark) {
 		bool watching_anchor = false;
 		if (pAnchorWatchPoint1)
-			watching_anchor = (pAnchorWatchPoint1->m_IconName.StartsWith(_T("anchor")));
+			watching_anchor = (pAnchorWatchPoint1->icon_name().StartsWith(_T("anchor")));
 		if (pAnchorWatchPoint2)
-			watching_anchor |= (pAnchorWatchPoint2->m_IconName.StartsWith(_T("anchor")));
+			watching_anchor |= (pAnchorWatchPoint2->icon_name().StartsWith(_T("anchor")));
 
 		wxDateTime now = wxDateTime::Now();
 		wxTimeSpan uptime = now.Subtract(global::OCPN::get().run().data().app_start_time);
@@ -1718,7 +1718,7 @@ void MainFrame::ActivateMOB(void)
 		g_pRouteMan->ActivateRoute(temp_route, pWP_MOB);
 
 		wxJSONValue v;
-		v[_T("GUID")] = temp_route->m_GUID;
+		v[_T("GUID")] = temp_route->guid();
 		wxString msg_id(_T("OCPN_MAN_OVERBOARD"));
 		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 	}
@@ -4474,7 +4474,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 
 		for (RouteList::iterator it = pRouteList->begin(); it != pRouteList->end(); ++it) {
 			wxString name = wxEmptyString; // FIXME: why? 'name' is never used
-			if ((*it)->IsTrack() && (*it)->m_GUID == trk_id) {
+			if ((*it)->IsTrack() && (*it)->guid() == trk_id) {
 				name = (*it)->m_RouteNameString;
 				if (name.IsEmpty()) {
 					RoutePoint* rp = (*it)->GetPoint(1);
@@ -4525,7 +4525,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 			wxString name = wxEmptyString;
 			wxJSONValue v;
 
-			if (!(*it)->IsTrack() && (*it)->m_GUID == route_id) {
+			if (!(*it)->IsTrack() && (*it)->guid() == route_id) {
 				name = (*it)->m_RouteNameString;
 				if (name.IsEmpty())
 					name = _("(Unnamed Route)");
@@ -4540,7 +4540,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 					v[i][_T("lat")] = (*itp)->latitude();
 					v[i][_T("lon")] = (*itp)->longitude();
 					v[i][_T("WPName")] = (*itp)->GetName();
-					v[i][_T("WPDescription")] = (*itp)->GetDescription();
+					v[i][_T("WPDescription")] = (*itp)->get_description();
 					const Hyperlinks& hyperlinks = (*itp)->m_HyperlinkList;
 					int n = 1;
 					for (Hyperlinks::const_iterator link = hyperlinks.begin(); link != hyperlinks.end(); ++link) {
@@ -4597,7 +4597,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 
 				v[i][_T("error")] = false;
 				v[i][_T("name")] = name;
-				v[i][_T("GUID")] = (*it)->m_GUID;
+				v[i][_T("GUID")] = (*it)->guid();
 				if (global::OCPN::get().tracker().is_active_track(*it) && !mode)
 					v[i][_T("active")] = true;
 				else

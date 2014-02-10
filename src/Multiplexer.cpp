@@ -474,7 +474,8 @@ ret_point:
 						else
 							oNMEA0183.Wpl.Position.Longitude.Set(prp->longitude(), _T("E"));
 
-						oNMEA0183.Wpl.To = prp->GetName().Truncate(6);
+						wxString name = prp->GetName();
+						oNMEA0183.Wpl.To = name.Truncate(6);
 
 						oNMEA0183.Wpl.Write(snt);
 
@@ -542,7 +543,8 @@ ret_point:
 			for (RoutePointList::iterator node = pr->pRoutePointList->begin();
 				 node != pr->pRoutePointList->end(); ++node) {
 				RoutePoint* prp = *node;
-				wxString name = prp->GetName().Truncate(6);
+				wxString name = prp->GetName();
+				name.Truncate(6);
 
 				if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 					name = prp->GetName();
@@ -591,7 +593,9 @@ ret_point:
 				RoutePointList::iterator i = pr->pRoutePointList->begin();
 				while (i != pr->pRoutePointList->end()) {
 					RoutePoint* prp = *i;
-					unsigned int name_len = prp->GetName().Truncate(6).Len();
+					wxString name = prp->GetName();
+					name.Truncate(6);
+					unsigned int name_len = name.Len();
 					if (cfg.GPS_Ident == _T("FurunoGP3X"))
 						name_len = 7; // six chars, with leading space for "Skip Code"
 
@@ -621,7 +625,8 @@ ret_point:
 				RoutePointList::iterator node = pr->pRoutePointList->begin();
 				while (node != pr->pRoutePointList->end()) {
 					RoutePoint* prp = *node;
-					wxString name = prp->GetName().Truncate(6);
+					wxString name = prp->GetName();
+					name.Truncate(6);
 					if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 						name = prp->GetName();
 						name += _T("000000");
@@ -884,7 +889,8 @@ bool Multiplexer::SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, w
 			else
 				oNMEA0183.Wpl.Position.Longitude.Set(prp->longitude(), _T("E"));
 
-			oNMEA0183.Wpl.To = prp->GetName().Truncate(6);
+			wxString name = prp->GetName();
+			oNMEA0183.Wpl.To = name.Truncate(6);
 			oNMEA0183.Wpl.Write(snt);
 		} else if (cfg.GPS_Ident == _T("FurunoGP3X")) {
 			oNMEA0183.TalkerID = _T("PFEC,");

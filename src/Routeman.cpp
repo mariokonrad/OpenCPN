@@ -187,7 +187,7 @@ bool Routeman::ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint)
 
 	wxJSONValue v;
 	v[_T("Route_activated")] = pRouteToActivate->m_RouteNameString;
-	v[_T("GUID")] = pRouteToActivate->m_GUID;
+	v[_T("GUID")] = pRouteToActivate->guid();
 	wxString msg_id(_T("OCPN_RTE_ACTIVATED"));
 	g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 
@@ -214,7 +214,7 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 	pActivePoint = pRP_target;
 	pActiveRoute->m_pRouteActivePoint = pRP_target;
 
-	v[_T("GUID")] = pRP_target->m_GUID;
+	v[_T("GUID")] = pRP_target->guid();
 	v[_T("WP_activated")] = pRP_target->GetName();
 
 	for (RoutePointList::iterator point = pActiveRoute->pRoutePointList->begin();
@@ -285,7 +285,7 @@ bool Routeman::ActivateNextPoint(Route* pr, bool skipped)
 		pActivePoint->m_bIsActive = false;
 
 		v[_T("isSkipped")] = skipped;
-		v[_T("GUID")] = pActivePoint->m_GUID;
+		v[_T("GUID")] = pActivePoint->guid();
 		v[_T("WP_arrived")] = pActivePoint->GetName();
 	}
 	int n_index_active = pActiveRoute->GetIndexOf(pActivePoint);
@@ -296,7 +296,7 @@ bool Routeman::ActivateNextPoint(Route* pr, bool skipped)
 
 		pActivePoint = pActiveRoute->GetPoint(n_index_active + 1);
 		v[_T("Next_WP")] = pActivePoint->GetName();
-		v[_T("GUID")] = pActivePoint->m_GUID;
+		v[_T("GUID")] = pActivePoint->guid();
 
 		pActivePoint->m_bBlink = true;
 		pActivePoint->m_bIsActive = true;
@@ -567,11 +567,11 @@ bool Routeman::DeactivateRoute(bool b_arrival)
 	wxJSONValue v;
 	if (!b_arrival) {
 		v[_T("Route_deactivated")] = pActiveRoute->m_RouteNameString;
-		v[_T("GUID")] = pActiveRoute->m_GUID;
+		v[_T("GUID")] = pActiveRoute->guid();
 		wxString msg_id(_T("OCPN_RTE_DEACTIVATED"));
 		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 	} else {
-		v[_T("GUID")] = pActiveRoute->m_GUID;
+		v[_T("GUID")] = pActiveRoute->guid();
 		v[_T("Route_ended")] = pActiveRoute->m_RouteNameString;
 		wxString msg_id(_T("OCPN_RTE_ENDED"));
 		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
@@ -608,8 +608,10 @@ bool Routeman::UpdateAutopilot()
 		else
 			m_NMEA0183.Rmb.DirectionToSteer = Right;
 
-		m_NMEA0183.Rmb.To = pActivePoint->GetName().Truncate(6);
-		m_NMEA0183.Rmb.From = pActiveRouteSegmentBeginPoint->GetName().Truncate(6);
+		wxString name = pActivePoint->GetName();
+		m_NMEA0183.Rmb.To = name.Truncate(6);
+		name = pActiveRouteSegmentBeginPoint->GetName();
+		m_NMEA0183.Rmb.From = name.Truncate(6);
 
 		if (pActivePoint->latitude() < 0.0)
 			m_NMEA0183.Rmb.DestinationPosition.Latitude.Set(-pActivePoint->latitude(), _T("S"));
@@ -707,7 +709,8 @@ bool Routeman::UpdateAutopilot()
 		// We never pass the perpendicular, since we declare arrival before reaching this point
 		m_NMEA0183.Apb.IsPerpendicular = NFalse;
 
-		m_NMEA0183.Apb.To = pActivePoint->GetName().Truncate(6);
+		wxString name = pActivePoint->GetName();
+		m_NMEA0183.Apb.To = name.Truncate(6);
 
 		double brg1;
 		double dist1;
@@ -775,7 +778,7 @@ bool Routeman::DoesRouteContainSharedPoints(const Route* pRoute)
 	// Now walk the route again, looking for isolated type shared waypoints
 	for (RoutePointList::const_iterator point = pRoute->pRoutePointList->begin();
 		 point != pRoute->pRoutePointList->end(); ++point) {
-		if ((*point)->m_bKeepXRoute == true)
+		if ((*point)->m_bKeepXRoute)
 			return true;
 	}
 
@@ -807,7 +810,7 @@ void Routeman::DeleteRoute(Route* pRoute)
 		// check all other routes to see if this point appears in any other route
 		Route* pcontainer_route = FindRouteContainingWaypoint(prp);
 
-		if (pcontainer_route == NULL && prp->m_bIsInRoute) {
+		if (pcontainer_route == NULL && prp->is_in_route()) {
 			prp->m_bIsInRoute = false; // Take this point out of this (and only) route
 			if (!prp->m_bKeepXRoute) {
 				// This does not need to be done with navobj.xml storage, since the waypoints are

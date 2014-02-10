@@ -54,7 +54,7 @@ RoutePoint::SameGUID::SameGUID(const wxString& guid)
 
 bool RoutePoint::SameGUID::operator()(const RoutePoint* point) const
 {
-	return point && (guid == point->m_GUID);
+	return point && (guid == point->guid());
 }
 
 RoutePoint::RoutePoint()
@@ -62,7 +62,6 @@ RoutePoint::RoutePoint()
 	, m_seg_vmg(0.0)
 	, m_seg_etd(wxInvalidDateTime)
 	, m_bPtIsSelected(false)
-	, m_bIsBeingEdited(false)
 	, m_bIsInRoute(false)
 	, m_bIsInTrack(false)
 	, m_bIsolatedMark(false)
@@ -99,7 +98,6 @@ RoutePoint::RoutePoint(const RoutePoint& orig)
 	m_seg_etd = orig.m_seg_etd;
 	m_bDynamicName = orig.m_bDynamicName;
 	m_bPtIsSelected = orig.m_bPtIsSelected;
-	m_bIsBeingEdited = orig.m_bIsBeingEdited;
 	m_bIsActive = orig.m_bIsActive;
 	m_bBlink = orig.m_bBlink;
 	m_bIsInRoute = orig.m_bIsInRoute;
@@ -131,7 +129,6 @@ RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, con
 	, m_seg_vmg(0.0)
 	, m_seg_etd(wxInvalidDateTime)
 	, m_bPtIsSelected(false)
-	, m_bIsBeingEdited(false)
 	, m_bIsInRoute(false)
 	, m_bIsInTrack(false)
 	, m_bIsolatedMark(false)
@@ -139,7 +136,7 @@ RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, con
 	, m_bIsVisible(true)
 	, m_bIsListed(true)
 	, m_bIsActive(false)
-	, m_IconName(wxEmptyString)
+	, m_IconName(icon_ident)
 	, m_pMarkFont(NULL)
 	, m_pbmIcon(NULL)
 	, m_bBlink(false)
@@ -163,7 +160,6 @@ RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, con
 		m_GUID = GpxDocument::GetUUID();
 
 	// Get Icon bitmap
-	m_IconName = icon_ident;
 	ReLoadIcon();
 
 	SetName(name);
@@ -189,6 +185,21 @@ RoutePoint::~RoutePoint(void)
 		pWayPointMan->remove(this);
 
 	m_HyperlinkList.clear();
+}
+
+bool RoutePoint::is_isolated() const
+{
+	return m_bIsolatedMark;
+}
+
+bool RoutePoint::is_in_route() const
+{
+	return m_bIsInRoute;
+}
+
+bool RoutePoint::is_in_track() const
+{
+	return m_bIsInTrack;
 }
 
 int RoutePoint::get_layer_ID() const
@@ -245,7 +256,7 @@ void RoutePoint::CalculateNameExtents(void)
 
 void RoutePoint::ReLoadIcon(void)
 {
-	m_pbmIcon = pWayPointMan->GetIconBitmap(m_IconName);
+	m_pbmIcon = pWayPointMan->GetIconBitmap(icon_name());
 }
 
 void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
@@ -259,7 +270,7 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	if (NULL != rpn)
 		*rpn = r;
 
-	if (!m_bIsVisible /*&& !m_bIsInTrack*/) // pjotrc 2010.02.13, 2011.02.24
+	if (!m_bIsVisible) // pjotrc 2010.02.13, 2011.02.24
 		return;
 
 	// Optimization, especially apparent on tracks in normal cases
@@ -285,6 +296,7 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	// Calculate the mark drawing extents
 	wxRect r1(r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2); // the bitmap extents
 
+	// FIXME: late load of name
 	if (m_bShowName) {
 		if (0 == m_pMarkFont) {
 			m_pMarkFont = FontMgr::Get().GetFont(_("Marks"));
@@ -332,15 +344,15 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 		}
 	}
 
-	//  Save the current draw rectangle in the current DC
-	//    This will be useful for fast icon redraws
+	// Save the current draw rectangle in the current DC
+	// This will be useful for fast icon redraws FIXME:there must be another solution for this
 	CurrentRect_in_DC.x = r.x + hilitebox.x;
 	CurrentRect_in_DC.y = r.y + hilitebox.y;
 	CurrentRect_in_DC.width = hilitebox.width;
 	CurrentRect_in_DC.height = hilitebox.height;
 
 	if (m_bBlink)
-		g_blink_rect = CurrentRect_in_DC; // also save for global blinker
+		g_blink_rect = CurrentRect_in_DC; // also save for global blinker FIXME: sideeffect
 }
 
 const geo::Position& RoutePoint::get_position() const
@@ -363,7 +375,7 @@ double RoutePoint::longitude() const
 	return position.lon();
 }
 
-void RoutePoint::CalculateDCRect(wxDC& dc, wxRect* prect)
+void RoutePoint::CalculateDCRect(wxDC& dc, wxRect& prect)
 {
 	dc.ResetBoundingBox();
 	dc.DestroyClippingRegion();
@@ -373,10 +385,10 @@ void RoutePoint::CalculateDCRect(wxDC& dc, wxRect* prect)
 	Draw(odc, NULL);
 
 	// Retrieve the drawing extents
-	prect->x = dc.MinX() - 1;
-	prect->y = dc.MinY() - 1;
-	prect->width = dc.MaxX() - dc.MinX() + 2; // Mouse Poop?
-	prect->height = dc.MaxY() - dc.MinY() + 2;
+	prect.x = dc.MinX() - 1;
+	prect.y = dc.MinY() - 1;
+	prect.width = dc.MaxX() - dc.MinX() + 2; // Mouse Poop?
+	prect.height = dc.MaxY() - dc.MinY() + 2;
 }
 
 bool RoutePoint::IsSame(const RoutePoint* pOtherRP) const
@@ -438,12 +450,37 @@ void RoutePoint::SetNameShown(bool viz)
 	m_bShowName = viz;
 }
 
-wxString RoutePoint::GetName(void) const
+const wxString& RoutePoint::guid() const
+{
+	return m_GUID;
+}
+
+void RoutePoint::set_guid(const wxString& value)
+{
+	m_GUID = value;
+}
+
+const wxString& RoutePoint::icon_name() const
+{
+	return m_IconName;
+}
+
+void RoutePoint::set_icon_name(const wxString& value)
+{
+	m_IconName = value;
+}
+
+const wxString& RoutePoint::GetName(void) const
 {
 	return m_MarkName;
 }
 
-wxString RoutePoint::GetDescription(void) const
+void RoutePoint::set_description(const wxString& desc)
+{
+	m_MarkDescription = desc;
+}
+
+const wxString& RoutePoint::get_description(void) const
 {
 	return m_MarkDescription;
 }

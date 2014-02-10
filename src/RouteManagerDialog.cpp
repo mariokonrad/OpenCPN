@@ -1710,7 +1710,7 @@ void RouteManagerDialog::UpdateWptListCtrl(RoutePoint* rp_select, bool b_retain_
 	for (RoutePointList::const_iterator i = waypoints.begin(); i != waypoints.end(); ++i) {
 		const RoutePoint* rp = *i;
 		if (rp && rp->IsListed()) {
-			if (rp->m_bIsInTrack || rp->m_bIsInRoute) {
+			if (rp->is_in_track() || rp->is_in_route()) {
 				if (!rp->m_bKeepXRoute) {
 					continue;
 				}
@@ -1980,7 +1980,7 @@ void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent&)
 		for (unsigned int i = 0; i < list.size(); i++) {
 			RoutePoint* wp = list.at(i);
 			if (wp) {
-				if (wp->m_bIsInRoute || wp->m_bIsInTrack) {
+				if (wp->is_in_route() || wp->is_in_track()) {
 					if (wxYES
 						== OCPNMessageBox(this, _("The waypoint you want to delete is used in a route, do you really want to delete it?"),
 										  _("OpenCPN Alert"), wxYES_NO))

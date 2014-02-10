@@ -139,7 +139,7 @@ Track* Track::DoExtendDaily()
 
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
-		if (!route->m_bIsInLayer && route->m_bIsTrack && (route->m_GUID != this->m_GUID)) {
+		if (!route->m_bIsInLayer && route->m_bIsTrack && (route->guid() != this->guid())) {
 			RoutePoint* track_node = route->GetLastPoint();
 			if (track_node->GetCreateTime() <= pLastPoint->GetCreateTime()) {
 				if (!pExtendPoint || track_node->GetCreateTime() > pExtendPoint->GetCreateTime()) {
@@ -359,11 +359,11 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 	// Establish basic colour
 	const global::ColorManager& colors = global::OCPN::get().color();
 	wxColour basic_colour;
-	if (m_bRunning || prp->m_IconName.StartsWith(_T("xmred"))) {
+	if (m_bRunning || prp->icon_name().StartsWith(_T("xmred"))) {
 		basic_colour = colors.get_color(_T("URED"));
-	} else if (prp->m_IconName.StartsWith(_T("xmblue"))) {
+	} else if (prp->icon_name().StartsWith(_T("xmblue"))) {
 		basic_colour = colors.get_color(_T("BLUE3"));
-	} else if (prp->m_IconName.StartsWith(_T("xmgreen"))) {
+	} else if (prp->icon_name().StartsWith(_T("xmgreen"))) {
 		basic_colour = colors.get_color(_T("UGREN"));
 	} else {
 		basic_colour = colors.get_color(_T("CHMGD"));

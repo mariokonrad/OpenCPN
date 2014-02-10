@@ -1832,7 +1832,7 @@ bool AddCustomWaypointIcon(wxBitmap* pimage, wxString key, wxString description)
 
 bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 {
-	//  Validate the waypoint parameters a little bit
+	// Validate the waypoint parameters a little bit
 
 	// Make sure that this GUID is indeed unique in the Routepoint list
 	if (pWayPointMan->find(pwaypoint->m_GUID) != NULL)
@@ -1855,7 +1855,7 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 		}
 	}
 
-	pWP->m_MarkDescription = pwaypoint->m_MarkDescription;
+	pWP->set_description(pwaypoint->m_MarkDescription);
 	pWP->m_btemp = (b_permanent == false);
 
 	pSelect->AddSelectableRoutePoint(geo::Position(pwaypoint->m_lat, pwaypoint->m_lon), pWP);
@@ -1899,9 +1899,9 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 		geo::Position position_save = prp->get_position();
 
 		prp->set_position(geo::Position(pwaypoint->m_lat, pwaypoint->m_lon));
-		prp->m_IconName = pwaypoint->m_IconName;
+		prp->set_icon_name(pwaypoint->m_IconName);
 		prp->SetName(pwaypoint->m_MarkName);
-		prp->m_MarkDescription = pwaypoint->m_MarkDescription;
+		prp->set_description(pwaypoint->m_MarkDescription);
 
 		//  Transcribe (clone) the html HyperLink List, if present
 
@@ -1958,7 +1958,7 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 			}
 		}
 
-		pWP->m_MarkDescription = pwp->m_MarkDescription;
+		pWP->set_description(pwp->m_MarkDescription);
 		pWP->m_bShowName = false;
 		pWP->SetCreateTime(pwp->m_CreateTime);
 
@@ -1976,7 +1976,7 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 	route->m_RouteNameString = proute->m_NameString;
 	route->m_RouteStartString = proute->m_StartString;
 	route->m_RouteEndString = proute->m_EndString;
-	route->m_GUID = proute->m_GUID;
+	route->set_guid(proute->m_GUID);
 	route->m_btemp = (b_permanent == false);
 
 	pRouteList->push_back(route);
@@ -2036,7 +2036,7 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 		RoutePoint* pWP = new RoutePoint(geo::Position(pwp->m_lat, pwp->m_lon), pwp->m_IconName,
 										 pwp->m_MarkName, pwp->m_GUID);
 
-		pWP->m_MarkDescription = pwp->m_MarkDescription;
+		pWP->set_description(pwp->m_MarkDescription);
 		pWP->m_bShowName = false;
 		pWP->SetCreateTime(pwp->m_CreateTime);
 
@@ -2054,7 +2054,7 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 	track->m_RouteNameString = ptrack->m_NameString;
 	track->m_RouteStartString = ptrack->m_StartString;
 	track->m_RouteEndString = ptrack->m_EndString;
-	track->m_GUID = ptrack->m_GUID;
+	track->set_guid(ptrack->m_GUID);
 	track->m_btemp = (b_permanent == false);
 
 	pRouteList->push_back(track);

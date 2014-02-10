@@ -459,7 +459,7 @@ RoutePoint* WayPointman::GetOtherNearbyWaypoint(
 
 	for (RoutePointList::const_iterator i = points.begin(); i != points.end(); ++i) {
 		RoutePoint* pr = *i;
-		if (within_distance(pr, pos, radius_meters) && (pr->m_GUID == guid))
+		if (within_distance(pr, pos, radius_meters) && (pr->guid() == guid))
 			return pr;
 	}
 	return NULL;
@@ -482,8 +482,8 @@ bool WayPointman::SharedWptsExist()
 		if (true
 			&& prp->m_bKeepXRoute
 			&& (false
-				|| prp->m_bIsInRoute
-				|| prp->m_bIsInTrack
+				|| prp->is_in_route()
+				|| prp->is_in_track()
 				|| prp == pAnchorWatchPoint1
 				|| prp == pAnchorWatchPoint2))
 			return true;
@@ -500,9 +500,9 @@ void WayPointman::DeleteAllWaypoints(bool b_delete_used)
 		RoutePoint* prp = *i;
 
 		// if argument is false, then only delete non-route waypoints
-		if (!prp->m_bIsInLayer && (prp->m_IconName != _T("mob"))
+		if (!prp->m_bIsInLayer && (prp->icon_name() != _T("mob"))
 			&& ((b_delete_used && prp->m_bKeepXRoute)
-				|| ((!prp->m_bIsInRoute) && (!prp->m_bIsInTrack) && !(prp == pAnchorWatchPoint1)
+				|| (!prp->is_in_route() && !prp->is_in_track() && !(prp == pAnchorWatchPoint1)
 					&& !(prp == pAnchorWatchPoint2)))) {
 			DestroyWaypoint(prp);
 			delete prp;
@@ -629,7 +629,7 @@ void WayPointman::setWayPointListingVisibilityOnLayer(int layer_id, bool visible
 {
 	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
 		RoutePoint* rp = *i;
-		if (rp && !rp->m_bIsInTrack && rp->m_bIsolatedMark && (rp->get_layer_ID() == layer_id)) {
+		if (rp && !rp->is_in_track() && rp->m_bIsolatedMark && (rp->get_layer_ID() == layer_id)) {
 			rp->SetListed(visible);
 		}
 	}

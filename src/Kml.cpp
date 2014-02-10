@@ -187,7 +187,7 @@ KmlPastebufferType Kml::ParseOnePlacemarkPoint(TiXmlNode* node, wxString& WXUNUS
 	parsedRoutePoint->set_position(geo::Position(newLat, newLon));
 	parsedRoutePoint->m_bIsolatedMark = true;
 	parsedRoutePoint->m_bPtIsSelected = false;
-	parsedRoutePoint->m_MarkDescription = pointDescr;
+	parsedRoutePoint->set_description(pointDescr);
 	parsedRoutePoint->SetName(pointName);
 
 	return KML_PASTE_WAYPOINT;
@@ -358,7 +358,7 @@ std::string Kml::PointPlacemark(TiXmlElement* document, const RoutePoint* routep
 	pmPoint->LinkEndChild(pointDescr);
 
 	bool descrIsPlainText = true;
-	wxCharBuffer descrString = routepoint->m_MarkDescription.mb_str(wxConvUTF8);
+	wxCharBuffer descrString = routepoint->get_description().mb_str(wxConvUTF8);
 
 	if (insertQtVlmExtendedData) {
 		// Does the RoutePoint description parse as XML with an <ExtendedData> root tag?
@@ -392,7 +392,7 @@ std::string Kml::PointPlacemark(TiXmlElement* document, const RoutePoint* routep
 				= new TiXmlText(wxString::Format(_T("%04d"), seqCounter).mb_str(wxConvUTF8));
 			seq->LinkEndChild(snVal);
 
-			if (routepoint->m_MarkDescription.Length()) {
+			if (routepoint->get_description().Length()) {
 				TiXmlElement* data = new TiXmlElement("Data");
 				data->SetAttribute("name", "Description");
 				extendedData->LinkEndChild(data);
@@ -470,7 +470,7 @@ wxString Kml::MakeKmlFromRoute(Route* route, bool insertSeq)
 	RoutePointList* pointList = route->pRoutePointList;
 	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
 		const RoutePoint* routepoint = *node;
-		if (!routepoint->m_bIsInTrack) {
+		if (!routepoint->is_in_track()) {
 			lineStringCoords << PointPlacemark(document, routepoint);
 			seqCounter++;
 		}
@@ -522,7 +522,7 @@ wxString Kml::MakeKmlFromTrack(Track* track)
 	RoutePointList* pointList = track->pRoutePointList;
 	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
 		RoutePoint* routepoint = *node;
-		if (routepoint->m_bIsInTrack) {
+		if (routepoint->is_in_track()) {
 			TiXmlElement* when = new TiXmlElement("when");
 			gxTrack->LinkEndChild(when);
 
@@ -534,7 +534,7 @@ wxString Kml::MakeKmlFromTrack(Track* track)
 	}
 	for (RoutePointList::iterator node = pointList->begin(); node != pointList->end(); ++node) {
 		const RoutePoint* routepoint = *node;
-		if (routepoint->m_bIsInTrack) {
+		if (routepoint->is_in_track()) {
 			TiXmlElement* coord = new TiXmlElement("gx:coord");
 			gxTrack->LinkEndChild(coord);
 			wxString coordStr = wxString::Format(_T("%f %f 0.0"), routepoint->longitude(),

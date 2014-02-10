@@ -340,7 +340,7 @@ bool RouteProp::IsThisRouteExtendable()
 		// remove invisible & own routes from choices
 		for (int i = pEditRouteArray->size(); i > 0; --i) {
 			Route* route = static_cast<Route*>(pEditRouteArray->at(i - 1));
-			if (!route->IsVisible() || (route->m_GUID == m_pRoute->m_GUID))
+			if (!route->IsVisible() || (route->guid() == m_pRoute->guid()))
 				pEditRouteArray->erase(pEditRouteArray->begin() + i - 1); // FIXME: altering container while iterating
 		}
 
@@ -353,8 +353,8 @@ bool RouteProp::IsThisRouteExtendable()
 				geo::Position rpos = pLastPoint->get_position();
 
 				m_pExtendPoint = pWayPointMan->GetOtherNearbyWaypoint(rpos, nearby_radius_meters,
-																	  pLastPoint->m_GUID);
-				if (m_pExtendPoint && !m_pExtendPoint->m_bIsInTrack) {
+																	  pLastPoint->guid());
+				if (m_pExtendPoint && !m_pExtendPoint->is_in_track()) {
 					Routeman::RouteArray* pCloseWPRouteArray
 						= g_pRouteMan->GetRouteArrayContaining(m_pExtendPoint);
 					if (pCloseWPRouteArray) {
@@ -365,7 +365,7 @@ bool RouteProp::IsThisRouteExtendable()
 						for (int i = pEditRouteArray->size(); i > 0; --i) {
 							Route* route = static_cast<Route*>(pEditRouteArray->at(i - 1));
 							// FIXME: altering container while iterating
-							if (!route->IsVisible() || (route->m_GUID == m_pRoute->m_GUID))
+							if (!route->IsVisible() || (route->guid() == m_pRoute->guid()))
 								pEditRouteArray->erase(pEditRouteArray->begin() + i - 1);
 						}
 					}
@@ -989,7 +989,7 @@ void RouteProp::update_route_properties()
 
 	if (m_pRoute->m_bRtIsActive) {
 		if (m_pEnroutePoint && m_bStartNow)
-			enroute = (m_pRoute->GetPoint(1)->m_GUID == m_pEnroutePoint->m_GUID);
+			enroute = (m_pRoute->GetPoint(1)->guid() == m_pEnroutePoint->guid());
 	}
 
 	wxString nullify = _T("----");
@@ -1011,7 +1011,7 @@ void RouteProp::update_route_properties()
 			m_wpList->SetItem(item_line_index, 1, prp->GetName());
 		// Store Dewcription
 		if (arrival)
-			m_wpList->SetItem(item_line_index, 9, prp->GetDescription());
+			m_wpList->SetItem(item_line_index, 9, prp->get_description());
 
 		// Distance
 		// Note that Distance/Bearing for Leg 000 is as from current position
@@ -1022,7 +1022,7 @@ void RouteProp::update_route_properties()
 
 		starting_point = (i == 0) && enroute;
 		if (m_pEnroutePoint && !starting_point)
-			starting_point = (prp->m_GUID == m_pEnroutePoint->m_GUID);
+			starting_point = (prp->guid() == m_pEnroutePoint->guid());
 
 		if (starting_point) {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
@@ -1098,17 +1098,18 @@ void RouteProp::update_route_properties()
 		}
 
 		// Lat/Lon
-		wxString tlat = toSDMM(1, prp->latitude(), prp->m_bIsInTrack); // low precision for routes
+		wxString tlat = toSDMM(1, prp->latitude(), prp->is_in_track()); // low precision for routes
 		if (arrival)
 			m_wpList->SetItem(item_line_index, 4, tlat);
 
-		wxString tlon = toSDMM(2, prp->longitude(), prp->m_bIsInTrack);
+		wxString tlon = toSDMM(2, prp->longitude(), prp->is_in_track());
 		if (arrival)
 			m_wpList->SetItem(item_line_index, 5, tlon);
 
 		tide_form = _T("");
 
-		long LMT_Offset = static_cast<long>(prp->longitude() * 3600.0 / 15.0); // offset in seconds from UTC for given location (-1 hr / 15 deg W)
+		// offset in seconds from UTC for given location (-1 hr / 15 deg W)
+		long LMT_Offset = static_cast<long>(prp->longitude() * 3600.0 / 15.0);
 
 		// Time to each waypoint or creation date for tracks
 		if (i == 0 && enroute) {
@@ -1341,7 +1342,7 @@ bool RouteProp::SaveChanges(void)
 	if (m_pRoute->IsActive() || ((Track*)m_pRoute)->IsRunning()) {
 		wxJSONValue v;
 		v[_T("Name")] = m_pRoute->m_RouteNameString;
-		v[_T("GUID")] = m_pRoute->m_GUID;
+		v[_T("GUID")] = m_pRoute->guid();
 		wxString msg_id(_T("OCPN_TRK_ACTIVATED"));
 		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 	}

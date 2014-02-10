@@ -535,8 +535,8 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 		m_checkBoxVisible->Enable(true);
 	}
 	m_textName->SetValue(m_pRoutePoint->GetName());
-	m_textDescription->SetValue(m_pRoutePoint->m_MarkDescription);
-	m_textCtrlExtDescription->SetValue(m_pRoutePoint->m_MarkDescription);
+	m_textDescription->SetValue(m_pRoutePoint->get_description());
+	m_textCtrlExtDescription->SetValue(m_pRoutePoint->get_description());
 	m_bitmapIcon->SetBitmap(*m_pRoutePoint->m_pbmIcon);
 	wxWindowList kids = m_scrolledWindowLinks->GetChildren();
 	for (unsigned int i = 0; i < kids.size(); i++) {
@@ -553,7 +553,7 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	m_scrolledWindowLinks->DestroyChildren();
 	m_checkBoxShowName->SetValue(m_pRoutePoint->m_bShowName);
 	m_checkBoxVisible->SetValue(m_pRoutePoint->m_bIsVisible);
-	m_textCtrlGuid->SetValue(m_pRoutePoint->m_GUID);
+	m_textCtrlGuid->SetValue(m_pRoutePoint->guid());
 
 	build_hyperlink_list();
 	bSizerLinks->Fit(m_scrolledWindowLinks);
@@ -566,7 +566,7 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 		icons = pWayPointMan->Getpmarkicon_image_list();
 	for (int i = 0; i < pWayPointMan->GetNumIcons(); ++i) {
 		const wxString ps = pWayPointMan->GetIconDescription(i);
-		if (pWayPointMan->GetIconKey(i) == m_pRoutePoint->m_IconName)
+		if (pWayPointMan->GetIconKey(i) == m_pRoutePoint->icon_name())
 			iconToSelect = i;
 		if (fillCombo && icons)
 			m_bcomboBoxIcon->Append(ps, icons->GetBitmap(i));
@@ -613,7 +613,7 @@ void MarkInfoImpl::SetRoutePoint(RoutePoint* pRP)
 
 	m_lat_save = m_pRoutePoint->latitude();
 	m_lon_save = m_pRoutePoint->longitude();
-	m_IconName_save = m_pRoutePoint->m_IconName;
+	m_IconName_save = m_pRoutePoint->icon_name();
 	m_bShowName_save = m_pRoutePoint->m_bShowName;
 	m_bIsVisible_save = m_pRoutePoint->m_bIsVisible;
 
@@ -749,12 +749,12 @@ bool MarkInfoImpl::SaveChanges()
 
 	// Get User input Text Fields
 	m_pRoutePoint->SetName(m_textName->GetValue());
-	m_pRoutePoint->m_MarkDescription = m_textDescription->GetValue();
+	m_pRoutePoint->set_description(m_textDescription->GetValue());
 	m_pRoutePoint->SetVisible(m_checkBoxVisible->GetValue());
 	m_pRoutePoint->SetNameShown(m_checkBoxShowName->GetValue());
 	m_pRoutePoint->set_position(
 		geo::Position(fromDMM(m_textLatitude->GetValue()), fromDMM(m_textLongitude->GetValue())));
-	m_pRoutePoint->m_IconName = pWayPointMan->GetIconKey(m_bcomboBoxIcon->GetSelection());
+	m_pRoutePoint->set_icon_name(pWayPointMan->GetIconKey(m_bcomboBoxIcon->GetSelection()));
 	m_pRoutePoint->ReLoadIcon();
 
 	// Here is some logic....
@@ -763,7 +763,7 @@ bool MarkInfoImpl::SaveChanges()
 	// This is later used for re-numbering points on actions like
 	// Insert Point, Delete Point, Append Point, etc
 
-	if (m_pRoutePoint->m_bIsInRoute) {
+	if (m_pRoutePoint->is_in_route()) {
 		bool b_name_is_numeric = true;
 		for (unsigned int i = 0; i < m_pRoutePoint->GetName().Len(); i++) {
 			if (wxChar('0') > m_pRoutePoint->GetName()[i])
@@ -776,7 +776,7 @@ bool MarkInfoImpl::SaveChanges()
 	} else
 		m_pRoutePoint->m_bDynamicName = false;
 
-	if (m_pRoutePoint->m_bIsInRoute) {
+	if (m_pRoutePoint->is_in_route()) {
 		// Update the route segment selectables
 		pSelect->UpdateSelectableRouteSegments(m_pRoutePoint);
 
@@ -821,7 +821,7 @@ void MarkInfoImpl::OnMarkInfoCancelClick(wxCommandEvent& event)
 		m_pRoutePoint->SetVisible(m_bIsVisible_save);
 		m_pRoutePoint->SetNameShown(m_bShowName_save);
 		m_pRoutePoint->set_position(geo::Position(m_lat_save, m_lon_save));
-		m_pRoutePoint->m_IconName = m_IconName_save;
+		m_pRoutePoint->set_icon_name(m_IconName_save);
 		m_pRoutePoint->ReLoadIcon();
 
 		m_pRoutePoint->m_HyperlinkList = m_pMyLinkList;

@@ -121,12 +121,14 @@ int Garmin_GPS_SendWaypoints(wxString& port_name, RoutePointList* wplist)
 
 		pway->lat = prp->latitude();
 		pway->lon = prp->longitude();
-		strncpy(pway->ident, (prp->GetName().Truncate(6)).mb_str(), 6);
+
+		wxString name = prp->GetName();
+		name.Truncate(6);
+		strncpy(pway->ident, name.mb_str(), 6);
 	}
 
 	// Transmit the list to the GPS receiver
-	int xfer_result = GPS_Command_Send_Waypoint(port_name.mb_str(), ppway, nPoints,
-												0 /*int (*cb)(GPS_PWay *)*/);
+	int xfer_result = GPS_Command_Send_Waypoint(port_name.mb_str(), ppway, nPoints, 0);
 	ret_val = xfer_result;
 
 	// Free all the memory
@@ -176,14 +178,17 @@ GPS_SWay** Garmin_GPS_Create_A200_Route(Route* pr, int route_number, int* size)
 	strncpy(pway->rte_ident, (pr->m_RouteNameString.Truncate(255)).mb_str(), 255);
 	strncpy(pway->rte_cmnt, (pr->m_RouteNameString.Truncate(19)).mb_str(), 19);
 
-	//    Elements 1..n are waypoints
+	// Elements 1..n are waypoints
 	for (int i = 1; i < *size; i++) {
 		GPS_PWay pway = ppway[i];
 		RoutePoint* prp = wplist->at(i - 1);
 
 		pway->lat = prp->latitude();
 		pway->lon = prp->longitude();
-		strncpy(pway->ident, (prp->GetName().Truncate(6)).mb_str(), 6);
+
+		wxString name = prp->GetName();
+		name.Truncate(6);
+		strncpy(pway->ident, name.mb_str(), 6);
 	}
 
 	return ppway;
@@ -240,7 +245,10 @@ GPS_SWay** Garmin_GPS_Create_A201_Route(Route* pr, int route_number, int* size)
 
 			pway->lat = prp->latitude();
 			pway->lon = prp->longitude();
-			strncpy(pway->ident, (prp->GetName().Truncate(6)).mb_str(), 6);
+
+			wxString name = prp->GetName();
+			name.Truncate(6);
+			strncpy(pway->ident, name.mb_str(), 6);
 		} else {
 			// Even
 			// Apparently, 0 filled links are OK

@@ -56,6 +56,7 @@ public:
 	RoutePoint(const RoutePoint& orig);
 	RoutePoint();
 	~RoutePoint(void);
+
 	void Draw(ocpnDC& dc, wxPoint* rpn = NULL);
 	void ReLoadIcon(void);
 
@@ -67,7 +68,7 @@ public:
 	double latitude() const;
 	double longitude() const;
 
-	void CalculateDCRect(wxDC& dc, wxRect* prect);
+	void CalculateDCRect(wxDC& dc, wxRect& prect); // FIXME: this 'calculation' uses Draw, having side effects
 
 	bool IsSame(const RoutePoint* pOtherRP) const;
 	bool IsVisible() const;
@@ -76,10 +77,12 @@ public:
 	void SetVisible(bool viz = true);
 	void SetListed(bool viz = true);
 	void SetNameShown(bool viz = true);
-	wxString GetName(void) const;
-	wxString GetDescription(void) const;
+	const wxString& GetName(void) const;
 
 	void SetName(const wxString& name);
+
+	void set_description(const wxString& desc);
+	const wxString& get_description(void) const;
 
 	void SetCourse(double course);
 	double GetCourse() const;
@@ -87,7 +90,7 @@ public:
 	void SetDistance(double distance);
 	double GetDistance() const;
 
-	bool SendToGPS(const wxString& com_name, wxGauge* pProgress);
+	bool SendToGPS(const wxString& com_name, wxGauge* pProgress); // FIXME: this class does way too much
 
 	const wxString& get_time_string() const;
 	void set_time_string(const wxString& time_string);
@@ -96,6 +99,16 @@ public:
 	int get_layer_ID() const;
 	void set_layer_ID(int);
 
+	bool is_in_route() const;
+	bool is_in_track() const;
+
+	bool is_isolated() const;
+
+	const wxString& guid() const;
+	void set_guid(const wxString&);
+
+	const wxString& icon_name() const;
+	void set_icon_name(const wxString&);
 
 	// FIXME: move attributes to private
 
@@ -104,22 +117,19 @@ public:
 	wxDateTime m_seg_etd;
 
 	bool m_bPtIsSelected;
-	bool m_bIsBeingEdited;
 
-	bool m_bIsInRoute;
-	bool m_bIsInTrack;
+	bool m_bIsInRoute; // FIXME: resolve this
+	bool m_bIsInTrack; // FIXME: resolve this
 
 	bool m_bIsolatedMark; // This is an isolated mark
 
-	bool m_bKeepXRoute; // This is a mark which is part of a route/track
-	//  and is also an isolated mark, so should not be deleted with route
+	// This is a mark which is part of a route/track and is also an isolated mark,
+	// so should not be deleted with route
+	bool m_bKeepXRoute;
 
 	bool m_bIsVisible; // true if should be drawn, false if invisible
 	bool m_bIsListed;
 	bool m_bIsActive;
-	wxString m_MarkDescription;
-	wxString m_GUID;
-	wxString m_IconName;
 
 	wxBitmap* m_pbmIcon;
 	bool m_bBlink;
@@ -146,6 +156,9 @@ private:
 	wxString m_MarkName;
 	wxDateTime m_CreateTimeX;
 	wxString m_timestring;
+	wxString m_MarkDescription;
+	wxString m_IconName;
+	wxString m_GUID;
 
 	wxFont* m_pMarkFont;
 	wxColour m_FontColor;

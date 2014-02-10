@@ -197,7 +197,7 @@ void DefaultRouteTracker::notify_plugins_start() const
 			name = _("(Unnamed Track)");
 	}
 	v[_T("Name")] = name;
-	v[_T("GUID")] = track->m_GUID;
+	v[_T("GUID")] = track->guid();
 	g_pi_manager->SendJSONMessageToAllPlugins(wxString(_T("OCPN_TRK_ACTIVATED")), v);
 }
 
@@ -207,7 +207,7 @@ void DefaultRouteTracker::notify_plugins_stop() const
 	//        application sending actively data to plugins (observer pattern)
 
 	wxJSONValue v;
-	v[_T("GUID")] = track->m_GUID;
+	v[_T("GUID")] = track->guid();
 	g_pi_manager->SendJSONMessageToAllPlugins(wxString(_T("OCPN_TRK_DEACTIVATED")), v);
 }
 

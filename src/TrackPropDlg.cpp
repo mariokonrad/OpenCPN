@@ -659,7 +659,7 @@ bool TrackPropDlg::IsThisTrackExtendable()
 
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
-		if (route->m_bIsTrack && route->IsVisible() && (route->m_GUID != m_pRoute->m_GUID)) {
+		if (route->m_bIsTrack && route->IsVisible() && (route->guid() != m_pRoute->guid())) {
 			RoutePoint* track_node = route->GetLastPoint();
 			if (track_node->GetCreateTime().IsValid()) {
 				if (track_node->GetCreateTime() <= pLastPoint->GetCreateTime())
@@ -1071,7 +1071,7 @@ bool TrackPropDlg::SaveChanges(void)
 	if (static_cast<Track*>(m_pRoute)->IsRunning()) {
 		wxJSONValue v;
 		v[_T("Name")] = m_pRoute->m_RouteNameString;
-		v[_T("GUID")] = m_pRoute->m_GUID;
+		v[_T("GUID")] = m_pRoute->guid();
 		wxString msg_id(_T("OCPN_TRK_ACTIVATED"));
 		g_pi_manager->SendJSONMessageToAllPlugins(msg_id, v);
 	}

@@ -243,7 +243,7 @@ void Route::CloneAddedRoutePoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 	ptargetpoint->m_pbmIcon = psourcepoint->m_pbmIcon;
 	ptargetpoint->m_bShowName = psourcepoint->m_bShowName;
 	ptargetpoint->m_bBlink = psourcepoint->m_bBlink;
-	ptargetpoint->m_bBlink = psourcepoint->m_bDynamicName;
+	ptargetpoint->m_bDynamicName = psourcepoint->m_bDynamicName;
 	ptargetpoint->CurrentRect_in_DC = psourcepoint->CurrentRect_in_DC;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetX;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetY;
@@ -264,7 +264,7 @@ void Route::CloneAddedTrackPoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 	ptargetpoint->m_pbmIcon = psourcepoint->m_pbmIcon;
 	ptargetpoint->m_bShowName = psourcepoint->m_bShowName;
 	ptargetpoint->m_bBlink = psourcepoint->m_bBlink;
-	ptargetpoint->m_bBlink = psourcepoint->m_bDynamicName;
+	ptargetpoint->m_bDynamicName = psourcepoint->m_bDynamicName;
 	ptargetpoint->CurrentRect_in_DC = psourcepoint->CurrentRect_in_DC;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetX;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetY;

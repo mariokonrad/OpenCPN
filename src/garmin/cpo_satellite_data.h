@@ -24,6 +24,8 @@
 #ifndef __GARMIN__CPO_SATELLITE_DATA__H__
 #define __GARMIN__CPO_SATELLITE_DATA__H__
 
+namespace garmin {
+
 // Packet structure for Pkt_ID = 114 (Satellite Data Record)
 // The status bit field represents a set of booleans described below:
 //   Bit Meaning when bit is one (1)
@@ -38,5 +40,7 @@ struct cpo_sat_data
 	short         azmth;  // satellite azimuth in degrees
 	unsigned char status; // status bit-field
 };
+
+}
 
 #endif

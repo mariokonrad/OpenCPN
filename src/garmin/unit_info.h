@@ -24,13 +24,17 @@
 #ifndef __GARMIN__UNIT_INFO__H__
 #define __GARMIN__UNIT_INFO__H__
 
-typedef struct garmin_unit_info // FIXME: holy fucking repetition batman, this is defined in datastream, nmea and garmin/jeeps/gpsusb
+namespace garmin {
+
+struct unit_info_type // FIXME: holy fucking repetition batman, this is defined in datastream, nmea and garmin/jeeps/gpsusb
 {
 	unsigned long serial_number;
 	unsigned long unit_id;
 	unsigned long unit_version;
-	char * os_identifier; // In case the OS has another name for it.
-	char * product_identifier; // From the hardware itself.
-} unit_info_type;
+	char* os_identifier; // In case the OS has another name for it.
+	char* product_identifier; // From the hardware itself.
+};
+
+}
 
 #endif

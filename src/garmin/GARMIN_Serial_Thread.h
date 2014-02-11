@@ -21,39 +21,41 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GARMIN_SERIAL_THREAD__H__
-#define __GARMIN_SERIAL_THREAD__H__
+#ifndef __GARMIN__GARMIN_SERIAL_THREAD__H__
+#define __GARMIN__GARMIN_SERIAL_THREAD__H__
 
 #include <wx/thread.h>
 #include <wx/string.h>
 
-class GarminProtocolHandler;
-class DataStream;
 class wxEvtHandler;
+class DataStream;
+
+namespace garmin {
+
+class GarminProtocolHandler;
 
 // Garmin Serial Port Worker Thread
 //
 // This thread manages reading the positioning data stream from the declared Garmin GRMN Mode serial device
 class GARMIN_Serial_Thread : public wxThread
 {
-	public:
-		GARMIN_Serial_Thread(
-				GarminProtocolHandler * parent,
-				DataStream * GParentStream,
-				wxEvtHandler * MessageTarget,
-				wxString port);
-		virtual ~GARMIN_Serial_Thread(void);
-		void *Entry();
-		void string(wxCharBuffer mb_str);
+public:
+	GARMIN_Serial_Thread(GarminProtocolHandler* parent, DataStream* GParentStream,
+						 wxEvtHandler* MessageTarget, wxString port);
+	virtual ~GARMIN_Serial_Thread(void);
+	void* Entry();
+	void string(wxCharBuffer mb_str);
 
-	private:
-		wxEvtHandler * m_pMessageTarget;
-		GarminProtocolHandler * m_parent;
-		DataStream * m_parent_stream;
+private:
+	wxEvtHandler* m_pMessageTarget;
+	GarminProtocolHandler* m_parent;
+	DataStream* m_parent_stream;
 
-		wxString m_port;
-		bool m_bconnected;
-		bool m_bdetected;
+	wxString m_port;
+	bool m_bconnected;
+	bool m_bdetected;
 };
+
+}
 
 #endif

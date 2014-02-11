@@ -21,8 +21,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GARMIN_USB_THREAD__H__
-#define __GARMIN_USB_THREAD__H__
+#ifndef __GARMIN__GARMIN_USB_THREAD__H__
+#define __GARMIN__GARMIN_USB_THREAD__H__
 
 #include <wx/thread.h>
 #include <wx/event.h>
@@ -32,6 +32,9 @@
 #include <garmin/usb_packet.h>
 
 class DataStream;
+
+namespace garmin {
+
 class GarminProtocolHandler;
 
 // Garmin USB Worker Thread
@@ -39,34 +42,32 @@ class GarminProtocolHandler;
 // This thread manages reading the positioning data stream from the declared Garmin USB device
 class GARMIN_USB_Thread : public wxThread
 {
-	public:
-		GARMIN_USB_Thread(
-				GarminProtocolHandler * parent,
-				DataStream *GParentStream,
-				wxEvtHandler *MessageTarget,
-				unsigned int device_handle,
-				size_t max_tx_size);
-		virtual ~GARMIN_USB_Thread(void);
-		void *Entry();
+public:
+	GARMIN_USB_Thread(GarminProtocolHandler* parent, DataStream* GParentStream,
+					  wxEvtHandler* MessageTarget, unsigned int device_handle, size_t max_tx_size);
+	virtual ~GARMIN_USB_Thread(void);
+	void* Entry();
 
-	private:
-		DataStream * m_parent_stream;
+private:
+	DataStream* m_parent_stream;
 
-		int gusb_win_get(garmin_usb_packet *ibuf, size_t sz);
-		int gusb_win_get_bulk(garmin_usb_packet *ibuf, size_t sz);
-		int gusb_cmd_get(garmin_usb_packet *ibuf, size_t sz);
+	int gusb_win_get(garmin_usb_packet* ibuf, size_t sz);
+	int gusb_win_get_bulk(garmin_usb_packet* ibuf, size_t sz);
+	int gusb_cmd_get(garmin_usb_packet* ibuf, size_t sz);
 
-		wxEvtHandler * m_pMessageTarget;
-		GarminProtocolHandler * m_parent;
+	wxEvtHandler* m_pMessageTarget;
+	GarminProtocolHandler* m_parent;
 
-		int m_receive_state;
-		cpo_sat_data m_sat_data[12];
-		unit_info_type grmin_unit_info[2];
-		int m_nSats;
-		int m_max_tx_size;
+	int m_receive_state;
+	cpo_sat_data m_sat_data[12];
+	unit_info_type grmin_unit_info[2];
+	int m_nSats;
+	int m_max_tx_size;
 #ifdef __WXMSW__
-		HANDLE m_usb_handle;
+	HANDLE m_usb_handle;
 #endif
 };
+
+}
 
 #endif

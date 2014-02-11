@@ -21,8 +21,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GARMINPROTOCOLHANDLER__H__
-#define __GARMINPROTOCOLHANDLER__H__
+#ifndef __GARMIN__GARMINPROTOCOLHANDLER__H__
+#define __GARMIN__GARMINPROTOCOLHANDLER__H__
 
 #include <wx/event.h>
 #include <wx/timer.h>
@@ -35,66 +35,71 @@
 	#include <garmin/usb_packet.h>
 #endif
 
+class DataStream;
+
+namespace garmin
+{
+
 class GARMIN_Serial_Thread;
 class GARMIN_USB_Thread;
-class DataStream;
 
 class GarminProtocolHandler : public wxEvtHandler
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		GarminProtocolHandler(DataStream *parent, wxEvtHandler *MessageTarget,  bool bsel_usb);
-		virtual ~GarminProtocolHandler();
+public:
+	GarminProtocolHandler(DataStream* parent, wxEvtHandler* MessageTarget, bool bsel_usb);
+	virtual ~GarminProtocolHandler();
 
-		void Close(void);
+	void Close(void);
 
-		void StopIOThread(bool b_pause);
-		void RestartIOThread(void);
+	void StopIOThread(bool b_pause);
+	void RestartIOThread(void);
 
-		void StopSerialThread(void);
+	void StopSerialThread(void);
 
-		void OnTimerGarmin1(wxTimerEvent & event);
+	void OnTimerGarmin1(wxTimerEvent& event);
 
-		bool FindGarminDeviceInterface();
+	bool FindGarminDeviceInterface();
 
-		wxEvtHandler            *m_pMainEventHandler;
-		DataStream              *m_pparent;
+	wxEvtHandler* m_pMainEventHandler;
+	DataStream* m_pparent;
 
-		int                     m_max_tx_size;
-		int                     m_receive_state;
-		cpo_sat_data            m_sat_data[12];
-		unit_info_type          grmin_unit_info[2];
-		int                     m_nSats;
-		wxTimer                 TimerGarmin1;
+	int m_max_tx_size;
+	int m_receive_state;
+	cpo_sat_data m_sat_data[12];
+	unit_info_type grmin_unit_info[2];
+	int m_nSats;
+	wxTimer TimerGarmin1;
 
-		int                     m_Thread_run_flag;
-		GARMIN_Serial_Thread    *m_garmin_serial_thread;
-		GARMIN_USB_Thread       *m_garmin_usb_thread;
-		bool                    m_bneed_int_reset;
-		int                     m_ndelay;
-		bool                    m_bOK;
-		bool                    m_busb;
-		wxString                m_port;
+	int m_Thread_run_flag;
+	GARMIN_Serial_Thread* m_garmin_serial_thread;
+	GARMIN_USB_Thread* m_garmin_usb_thread;
+	bool m_bneed_int_reset;
+	int m_ndelay;
+	bool m_bOK;
+	bool m_busb;
+	wxString m_port;
 
 #ifdef __WXMSW__
-		HANDLE garmin_usb_start();
-		bool ResetGarminUSBDriver();
-		bool IsGarminPlugged();
-		bool gusb_syncup(void);
+	HANDLE garmin_usb_start();
+	bool ResetGarminUSBDriver();
+	bool IsGarminPlugged();
+	bool gusb_syncup(void);
 
-		int gusb_win_get(garmin_usb_packet *ibuf, size_t sz);
-		int gusb_win_get_bulk(garmin_usb_packet *ibuf, size_t sz);
-		int gusb_win_send(const garmin_usb_packet *opkt, size_t sz);
+	int gusb_win_get(garmin_usb_packet* ibuf, size_t sz);
+	int gusb_win_get_bulk(garmin_usb_packet* ibuf, size_t sz);
+	int gusb_win_send(const garmin_usb_packet* opkt, size_t sz);
 
-		int gusb_cmd_send(const garmin_usb_packet *opkt, size_t sz);
-		int gusb_cmd_get(garmin_usb_packet *ibuf, size_t sz);
+	int gusb_cmd_send(const garmin_usb_packet* opkt, size_t sz);
+	int gusb_cmd_get(garmin_usb_packet* ibuf, size_t sz);
 
-		HANDLE m_usb_handle;
+	HANDLE m_usb_handle;
 
-		WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam);
+	WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam);
 #endif
 };
 
+}
 
 #endif

@@ -31,7 +31,8 @@
 #include "dychart.h"
 #include <OCPN_DataStreamEvent.h>
 #include <OCP_DataStreamInput_Thread.h>
-#include <GarminProtocolHandler.h>
+
+#include <garmin/GarminProtocolHandler.h>
 
 #include <garmin/jeeps/garmin_wrapper.h>
 
@@ -45,8 +46,8 @@
 #include <wx/log.h>
 
 #ifndef __WXMSW__
-#include <arpa/inet.h>
-#include <netinet/tcp.h>
+	#include <arpa/inet.h>
+	#include <netinet/tcp.h>
 #endif
 
 #if !defined(NAN)
@@ -133,9 +134,9 @@ void DataStream::Open(void)
 
 			if ((wxNOT_FOUND != port_uc.Find(_T("USB")))
 				&& (wxNOT_FOUND != port_uc.Find(_T("GARMIN")))) {
-				m_GarminHandler = new GarminProtocolHandler(this, m_consumer, true);
+				m_GarminHandler = new garmin::GarminProtocolHandler(this, m_consumer, true);
 			} else if (m_bGarmin_GRMN_mode) {
-				m_GarminHandler = new GarminProtocolHandler(this, m_consumer, false);
+				m_GarminHandler = new garmin::GarminProtocolHandler(this, m_consumer, false);
 			} else {
 				m_connection_type = ConnectionParams::SERIAL;
 				wxString comx;

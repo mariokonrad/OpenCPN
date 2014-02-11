@@ -903,6 +903,9 @@ SET(HDRS
 	src/garmin/cpo_satellite_data.h
 	src/garmin/unit_info.h
 	src/garmin/usb_packet.h
+	src/garmin/GARMIN_Serial_Thread.h
+	src/garmin/GARMIN_USB_Thread.h
+	src/garmin/GarminProtocolHandler.h
 
 	src/print/Table.h
 	src/print/PrintTable.h
@@ -917,9 +920,6 @@ SET(HDRS
 	src/ocpn_pixel.h
 	src/Units.h
 	src/DataStream.h
-	src/GARMIN_Serial_Thread.h
-	src/GARMIN_USB_Thread.h
-	src/GarminProtocolHandler.h
 	src/Config.h
 	src/LogMessageOnce.h
 	src/DimeControl.h
@@ -1042,6 +1042,10 @@ SET(SRCS
 	src/navigation/MagneticVariation.cpp
 	src/navigation/DefaultRouteTracker.cpp
 
+	src/garmin/GARMIN_Serial_Thread.cpp
+	src/garmin/GARMIN_USB_Thread.cpp
+	src/garmin/GarminProtocolHandler.cpp
+
 	src/OCPN_Version.cpp
 	src/MemoryStatus.cpp
 	src/SerialPorts.cpp
@@ -1127,9 +1131,6 @@ SET(SRCS
 	src/OCPNFloatingToolbarDialog.cpp
 	src/FloatingCompassWindow.cpp
 	src/DataStream.cpp
-	src/GARMIN_Serial_Thread.cpp
-	src/GARMIN_USB_Thread.cpp
-	src/GarminProtocolHandler.cpp
 	src/OCPN_DataStreamEvent.cpp
 	src/ConnectionParams.cpp
 	src/OCP_DataStreamInput_Thread.cpp

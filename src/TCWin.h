@@ -45,8 +45,14 @@ class TCWin : public wxDialog
 	DECLARE_EVENT_TABLE()
 
 public:
-	TCWin(ChartCanvas* parent, int x, int y, void* pvIDX);
+	TCWin(ChartCanvas* parent, int x, int y, tide::IDX_entry* pvIDX);
 	virtual ~TCWin();
+
+	void Resize(void);
+	void RePosition(void);
+
+private:
+	typedef std::vector<wxPoint> SplineList;
 
 	void OnSize(wxSizeEvent& event);
 	void OnPaint(wxPaintEvent& event);
@@ -56,11 +62,6 @@ public:
 	void NXEvent(wxCommandEvent& event);
 	void PREvent(wxCommandEvent& event);
 	void OnCloseWindow(wxCloseEvent& event);
-	void Resize(void);
-	void RePosition(void);
-
-private:
-	typedef std::vector<wxPoint> SplineList;
 
 	wxTextCtrl* m_ptextctrl;
 	wxTimer m_TCWinPopupTimer;

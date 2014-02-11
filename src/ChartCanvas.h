@@ -369,7 +369,7 @@ private:
 	void DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& BBox, bool bRebuildSelList,
 							   bool bforce_redraw_currents, bool bdraw_mono = false);
 
-	void DrawTCWindow(int x, int y, void* pIDX);
+	void DrawTCWindow(int x, int y, tide::IDX_entry* pIDX);
 
 	void RenderAllChartOutlines(ocpnDC& dc, const ViewPort& vp);
 	void RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp);

@@ -70,8 +70,10 @@ BEGIN_EVENT_TABLE(TCWin, wxWindow)
 	EVT_TIMER(TCWININF_TIMER, TCWin::OnTCWinPopupTimerEvent)
 END_EVENT_TABLE()
 
-// Define a constructor
-TCWin::TCWin(ChartCanvas* parent, int x, int y, void* pvIDX)
+// constructor
+TCWin::TCWin(ChartCanvas* parent, int x, int y, tide::IDX_entry* pvIDX)
+	: pIDX(pvIDX)
+	, pParent(parent)
 {
 	// As a display optimization....
 	// if current color scheme is other than DAY,
@@ -89,9 +91,6 @@ TCWin::TCWin(ChartCanvas* parent, int x, int y, void* pvIDX)
 	wxDialog::Create(parent, wxID_ANY, wxString(_T("test")), wxPoint(x, y), wxSize(550, 480),
 					 wstyle);
 
-	pParent = parent;
-
-	pIDX = (tide::IDX_entry*)pvIDX;
 	gpIDXn++;
 
 	// Set up plot type
@@ -351,7 +350,7 @@ void TCWin::Resize(void)
 void TCWin::RePosition(void)
 {
 	// position the window
-	geo::Position pos(pIDX->IDX_lon, pIDX->IDX_lat);
+	geo::Position pos(pIDX->IDX_lon, pIDX->IDX_lat); // TODO: check wheather or not lat/lon reversal is true
 
 	wxPoint r = pParent->GetCanvasPointPix(pos);
 	pParent->ClientToScreen(&r.x, &r.y);

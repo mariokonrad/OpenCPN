@@ -761,7 +761,7 @@ void AISTargetListDialog::OnTargetCreateWpt(wxCommandEvent&)
 	}
 }
 
-void AISTargetListDialog::OnShowAllTracks(wxCommandEvent& event)
+void AISTargetListDialog::OnShowAllTracks(wxCommandEvent& WXUNUSED(event))
 {
 	AIS_Target_Hash::iterator it;
 	AIS_Target_Hash* current_targets = m_pdecoder->GetTargetList();
@@ -774,7 +774,7 @@ void AISTargetListDialog::OnShowAllTracks(wxCommandEvent& event)
 	UpdateAISTargetList();
 }
 
-void AISTargetListDialog::OnHideAllTracks(wxCommandEvent& event)
+void AISTargetListDialog::OnHideAllTracks(wxCommandEvent& WXUNUSED(event))
 {
 	AIS_Target_Hash::iterator it;
 	AIS_Target_Hash* current_targets = m_pdecoder->GetTargetList();
@@ -787,7 +787,7 @@ void AISTargetListDialog::OnHideAllTracks(wxCommandEvent& event)
 	UpdateAISTargetList();
 }
 
-void AISTargetListDialog::OnToggleTrack(wxCommandEvent& event)
+void AISTargetListDialog::OnToggleTrack(wxCommandEvent& WXUNUSED(event))
 {
 	long selItemID = m_pListCtrlAISTargets->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if (selItemID == -1)

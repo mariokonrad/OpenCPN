@@ -5997,7 +5997,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				m_pIDXCandidate = pIDX_best_candidate;
 
 				if (0 == seltype) {
-					DrawTCWindow(x, y, (void*)pIDX_best_candidate);
+					DrawTCWindow(x, y, pIDX_best_candidate);
 					Refresh(false);
 					bseltc = true;
 				} else
@@ -6006,7 +6006,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				m_pIDXCandidate = (tide::IDX_entry*)pFindTide->m_pData1;
 
 				if (0 == seltype) {
-					DrawTCWindow(x, y, (void*)pFindTide->m_pData1);
+					DrawTCWindow(x, y, m_pIDXCandidate);
 					Refresh(false);
 					bseltc = true;
 				} else
@@ -7268,14 +7268,14 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		}
 
 		case ID_DEF_MENU_CURRENTINFO: {
-			DrawTCWindow(popx, popy, (void*)m_pIDXCandidate);
+			DrawTCWindow(popx, popy, m_pIDXCandidate);
 			Refresh(false);
 
 			break;
 		}
 
 		case ID_DEF_MENU_TIDEINFO: {
-			DrawTCWindow(popx, popy, (void*)m_pIDXCandidate);
+			DrawTCWindow(popx, popy, m_pIDXCandidate);
 			Refresh(false);
 
 			break;
@@ -9588,7 +9588,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 	}
 }
 
-void ChartCanvas::DrawTCWindow(int x, int y, void* pvIDX)
+void ChartCanvas::DrawTCWindow(int x, int y, tide::IDX_entry* pvIDX)
 {
 	pCwin = new TCWin(this, x, y, pvIDX);
 }

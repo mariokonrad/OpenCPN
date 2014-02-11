@@ -28,6 +28,8 @@
 #include <string>
 #include <ctime>
 
+#include <util/shared.h>
+
 namespace tide {
 
 class TCDataSource;
@@ -50,25 +52,10 @@ public:
 	IDX_entry();
 	~IDX_entry();
 
-	double cst_speeds(unsigned int x) const
-	{
-		return (*m_cst_speeds)[x];
-	}
-
-	double cst_nodes(unsigned int x, unsigned int y) const
-	{
-		return (*m_cst_nodes)[x][y];
-	}
-
-	double cst_epochs(unsigned int x, unsigned int y) const
-	{
-		return (*m_cst_epochs)[x][y];
-	}
-
-	double& work_buf(unsigned int x)
-	{
-		return (*m_work_buffer)[x];
-	}
+	double cst_speeds(unsigned int x) const;
+	double cst_nodes(unsigned int x, unsigned int y) const;
+	double cst_epochs(unsigned int x, unsigned int y) const;
+	double& work_buf(unsigned int x);
 
 	source_data_t source_data_type;
 	TCDataSource* pDataSource;
@@ -115,10 +102,10 @@ public:
 	int num_csts; // allocated during invariant harmonic loading
 	int num_epochs; // and owned by the DataSource
 
-	std::vector<double> *m_cst_speeds; /// shared data with either Ascii_Harmonic or Binary_Harmonic
-	std::vector<std::vector<double> > *m_cst_nodes; /// shared data with either Ascii_Harmonic or Binary_Harmonic
-	std::vector<std::vector<double> > *m_cst_epochs; /// shared data with either Ascii_Harmonic or Binary_Harmonic
-	std::vector<double> *m_work_buffer; /// shared data with either Ascii_Harmonic or Binary_Harmonic
+	util::shared<std::vector<double> > m_cst_speeds; /// shared data (Ascii_Harmonic or Binary_Harmonic)
+	util::shared<std::vector<std::vector<double> > > m_cst_nodes; /// shared data (Ascii_Harmonic or Binary_Harmonic)
+	util::shared<std::vector<std::vector<double> > > m_cst_epochs; /// shared data (Ascii_Harmonic or Binary_Harmonic)
+	util::shared<std::vector<double> > m_work_buffer; /// shared data (Ascii_Harmonic or Binary_Harmonic)
 
 	int first_year;
 	time_t epoch;

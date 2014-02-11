@@ -108,7 +108,6 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadData(const wxString& data_file_path)
 			pIDX->num_csts = num_csts;
 			pIDX->num_epochs = num_epochs;
 			pIDX->first_year = m_first_year;
-// FIXME: plain memory sharing, refactoring
 			pIDX->m_cst_speeds = &m_cst_speeds;
 			pIDX->m_cst_nodes = &m_cst_nodes;
 			pIDX->m_cst_epochs = &m_cst_epochs;

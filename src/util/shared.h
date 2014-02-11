@@ -3,7 +3,7 @@
  * Project:  OpenCPN
  *
  ***************************************************************************
- *   Copyright (C) 2013 by David S. Register                               *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,70 +21,63 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "IDX_entry.h"
+#ifndef __UTIL__SHARED__H__
+#define __UTIL__SHARED__H__
 
-namespace tide {
+namespace util {
 
-IDX_entry::IDX_entry()
-	: source_data_type(SOURCE_TYPE_UNKNOWN)
-	, pDataSource(NULL)
-	, IDX_rec_num(0)
-	, IDX_type(0)
-	, IDX_lon(0.0)
-	, IDX_lat(0.0)
-	, IDX_ht_time_off(0)
-	, IDX_ht_mpy(0.0f)
-	, IDX_ht_off(0.0f)
-	, IDX_lt_time_off(0)
-	, IDX_lt_mpy(0.0f)
-	, IDX_lt_off(0.0f)
-	, IDX_sta_num(0)
-	, IDX_flood_dir(0)
-	, IDX_ebb_dir(0)
-	, IDX_Useable(0)
-	, Valid15(0)
-	, Value15(0.0f)
-	, Dir15(0.0f)
-	, Ret15(false)
-	, IDX_ref_file_num(0)
-	, IDX_ref_dbIndex(0)
-	, max_amplitude(0.0)
-	, have_offsets(0)
-	, station_tz_offset(0)
-	, IDX_time_zone(0)
-	, pref_sta_data(NULL)
-	, num_nodes(0)
-	, num_csts(0)
-	, num_epochs(0)
-	, first_year(0)
-	, epoch(0)
-	, epoch_year(0)
+/// This is a very lightweight implementation of a shared "resource" (pointer).
+///
+/// Ultimately this should be replaced by the shared pointer (std::shared_ptr or
+/// boost::shared_ptr) as soon as possible. Since this software does not use
+/// boost (nor want the additional dependency) and is not using C++11 (or newer),
+/// this template helps to maintain code semantics.
+///
+/// @note This "lightweight" implementation does not do any reference counting or
+///       memory management whatsoever. It just provides access to a pointer
+///       and represents a shared resoruce.
+template <class T>
+class shared
 {
+public:
+	shared()
+		: data(0)
+	{}
+
+	shared(T* data)
+		: data(data)
+	{}
+
+	T* operator->() const
+	{
+		return data;
+	}
+
+	T& operator*() const
+	{
+		return *data;
+	}
+
+	shared& operator=(T* data)
+	{
+		this->data = data;
+		return *this;
+	}
+
+	bool operator==(T* other) const
+	{
+		return data == other;
+	}
+
+	void reset(T* data = 0)
+	{
+		this->data = data;
+	}
+
+private:
+	T* data;
+};
+
 }
 
-IDX_entry::~IDX_entry()
-{
-}
-
-double IDX_entry::cst_speeds(unsigned int x) const
-{
-	return (*m_cst_speeds)[x];
-}
-
-double IDX_entry::cst_nodes(unsigned int x, unsigned int y) const
-{
-	return (*m_cst_nodes)[x][y];
-}
-
-double IDX_entry::cst_epochs(unsigned int x, unsigned int y) const
-{
-	return (*m_cst_epochs)[x][y];
-}
-
-double& IDX_entry::work_buf(unsigned int x)
-{
-	return (*m_work_buffer)[x];
-}
-
-}
-
+#endif

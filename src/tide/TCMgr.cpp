@@ -31,6 +31,7 @@
 
 #include <libtcd/tcd.h>
 
+#include <geo/Position.h>
 #include <geo/GeoRef.h>
 
 #include <cstdlib>
@@ -409,7 +410,7 @@ int TCMgr::GetNextBigEvent(time_t* tm, int idx)
 	return 0;
 }
 
-int TCMgr::station_idx_name_types(const wxString& prefix, double xlat, double xlon,
+int TCMgr::station_idx_name_types(const wxString& prefix, const geo::Position& pos,
 								  std::vector<char> types) const
 {
 	int jx = 0;
@@ -425,8 +426,8 @@ int TCMgr::station_idx_name_types(const wxString& prefix, double xlat, double xl
 		if (type_found && locnx.StartsWith(prefix)) {
 			double brg;
 			double dist;
-			geo::DistanceBearingMercator(geo::Position(xlat, xlon),
-										 geo::Position(idx->IDX_lat, idx->IDX_lon), &brg, &dist);
+			geo::DistanceBearingMercator(pos, geo::Position(idx->IDX_lat, idx->IDX_lon), &brg,
+										 &dist);
 			if (dist < min_dist) {
 				min_dist = dist;
 				jx = j;
@@ -436,22 +437,22 @@ int TCMgr::station_idx_name_types(const wxString& prefix, double xlat, double xl
 	return jx;
 }
 
-int TCMgr::GetStationIDXbyName(const wxString& prefix, double xlat, double xlon) const
+int TCMgr::GetStationIDXbyName(const wxString& prefix, const geo::Position& pos) const
 {
 	std::vector<char> types;
 	types.push_back('t');
 	types.push_back('T');
 
-	return station_idx_name_types(prefix, xlat, xlon, types);
+	return station_idx_name_types(prefix, pos, types);
 }
 
-int TCMgr::GetStationIDXbyNameType(const wxString& prefix, double xlat, double xlon,
+int TCMgr::GetStationIDXbyNameType(const wxString& prefix, const geo::Position& pos,
 								   char type) const
 {
 	std::vector<char> types;
 	types.push_back(type);
 
-	return station_idx_name_types(prefix, xlat, xlon, types);
+	return station_idx_name_types(prefix, pos, types);
 }
 
 static double time2tide(time_t t, IDX_entry* pIDX)

@@ -36,6 +36,8 @@
 #include <vector>
 #include <cmath>
 
+namespace geo { class Position; }
+
 namespace tide {
 
 class IDX_entry;
@@ -63,11 +65,11 @@ public:
 
 	const IDX_entry* GetIDX_entry(int index) const;
 	int Get_max_IDX() const;
-	int GetStationIDXbyName(const wxString& prefix, double xlat, double xlon) const;
-	int GetStationIDXbyNameType(const wxString& prefix, double xlat, double xlon, char type) const;
+	int GetStationIDXbyName(const wxString& prefix, const geo::Position& pos) const;
+	int GetStationIDXbyNameType(const wxString& prefix, const geo::Position& pos, char type) const;
 
 private:
-	int station_idx_name_types(const wxString& prefix, double xlat, double xlon,
+	int station_idx_name_types(const wxString& prefix, const geo::Position& pos,
 							   std::vector<char> types) const;
 	void PurgeData();
 

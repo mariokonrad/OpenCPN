@@ -1136,7 +1136,7 @@ void RouteProp::update_route_properties()
 					int jx = 0;
 					if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
 						tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
-						jx = ptcmgr->GetStationIDXbyName(tide_form, prp->latitude(), prp->longitude());
+						jx = ptcmgr->GetStationIDXbyName(tide_form, prp->get_position());
 					}
 					if (gpIDX || jx) {
 						time_t tm = act_starttime.GetTicks();
@@ -1176,7 +1176,7 @@ void RouteProp::update_route_properties()
 						int jx = 0;
 						if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
 							tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
-							jx = ptcmgr->GetStationIDXbyName(tide_form, prp->latitude(), prp->longitude());
+							jx = ptcmgr->GetStationIDXbyName(tide_form, prp->get_position());
 						}
 						if (gpIDX || jx) {
 							time_t tm = ueta.GetTicks();
@@ -1284,7 +1284,7 @@ wxString RouteProp::MakeTideInfo(int jx, time_t tm, int tz_selection, long LMT_O
 	if (gpIDX) {
 		ev = ptcmgr->GetNextBigEvent(
 			&tm, ptcmgr->GetStationIDXbyName(wxString(gpIDX->IDX_station_name, wxConvUTF8),
-											 gpIDX->IDX_lat, gpIDX->IDX_lon));
+											 geo::Position(gpIDX->IDX_lat, gpIDX->IDX_lon)));
 	} else
 		ev = ptcmgr->GetNextBigEvent(&tm, jx);
 

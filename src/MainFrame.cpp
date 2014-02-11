@@ -3847,7 +3847,7 @@ void MainFrame::UpdateControlBar( void )
 		stats->pPiano->SetActiveKeyArray( piano_active_chart_index_array );
 	}
 
-	//    Set up the TMerc and Skew arrays
+	// Set up the TMerc and Skew arrays
 	std::vector<int> piano_skew_chart_index_array;
 	std::vector<int> piano_tmerc_chart_index_array;
 	std::vector<int> piano_poly_chart_index_array;
@@ -3888,7 +3888,7 @@ void MainFrame::UpdateControlBar( void )
 //----------------------------------------------------------------------------------
 bool MainFrame::DoChartUpdate(void)
 {
-	double tLat, tLon;           // Chart Stack location
+	geo::Position tpos;
 	geo::Position vp_pos; // view port location
 
 	bool bNewChart = false;
@@ -3928,8 +3928,7 @@ bool MainFrame::DoChartUpdate(void)
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 
 	if (chart_canvas->follow()) {
-		tLat = nav.pos.lat();
-		tLon = nav.pos.lon();
+		tpos = nav.pos;
 		vp_pos = nav.pos;
 
 		// on lookahead mode, adjust the vp center point
@@ -3961,8 +3960,7 @@ bool MainFrame::DoChartUpdate(void)
 		}
 	} else {
 		vp_pos = global::OCPN::get().nav().get_data().view_point;
-		tLat = vp_pos.lat();
-		tLon = vp_pos.lat();
+		tpos = vp_pos;
 	}
 
 	if (chart_canvas->GetQuiltMode()) {
@@ -3974,7 +3972,7 @@ bool MainFrame::DoChartUpdate(void)
 			pCurrentStack = new chart::ChartStack;
 		}
 
-		ChartData->BuildChartStack(pCurrentStack, tLat, tLon);
+		ChartData->BuildChartStack(pCurrentStack, tpos.lat(), tpos.lon());
 		pCurrentStack->SetCurrentEntryFromdbIndex(current_db_index);
 
 		if (bFirstAuto) {
@@ -4068,7 +4066,7 @@ bool MainFrame::DoChartUpdate(void)
 		pCurrentStack = new ChartStack;
 
 	// Build a chart stack based on tLat, tLon
-	if (0 == ChartData->BuildChartStack(&WorkStack, tLat, tLon, g_sticky_chart)) { // Bogus Lat, Lon?
+	if (0 == ChartData->BuildChartStack(&WorkStack, tpos.lat(), tpos.lon(), g_sticky_chart)) { // Bogus Lat, Lon?
 		if (NULL == pDummyChart) {
 			pDummyChart = new chart::ChartDummy;
 			bNewChart = true;
@@ -4085,8 +4083,7 @@ bool MainFrame::DoChartUpdate(void)
 		if (!chart_canvas->GetVP().IsValid())
 			set_scale = 1.0 / 200000.0;
 
-		bNewView |= chart_canvas->SetViewPoint(geo::Position(tLat, tLon), set_scale, 0,
-											   chart_canvas->GetVPRotation());
+		bNewView |= chart_canvas->SetViewPoint(tpos, set_scale, 0, chart_canvas->GetVPRotation());
 
 		// If the chart stack has just changed, there is new status
 		if (!ChartData->EqualStacks(&WorkStack, pCurrentStack)) {
@@ -4239,11 +4236,13 @@ bool MainFrame::DoChartUpdate(void)
 												   Current_Ch->GetChartSkew() * M_PI / 180.0,
 												   chart_canvas->GetVPRotation());
 		}
-	} else { // No change in Chart Stack
-		if (chart_canvas->follow() && Current_Ch)
+	} else {
+		// No change in Chart Stack
+		if (chart_canvas->follow() && Current_Ch) {
 			bNewView |= chart_canvas->SetViewPoint(vp_pos, chart_canvas->GetVPScale(),
 												   Current_Ch->GetChartSkew() * M_PI / 180.0,
 												   chart_canvas->GetVPRotation());
+		}
 	}
 
 update_finish:
@@ -4257,7 +4256,7 @@ update_finish:
 	if (bNewPiano)
 		UpdateControlBar();
 
-	//  Update the ownship position on thumbnail chart, if shown
+	// Update the ownship position on thumbnail chart, if shown
 	if (pthumbwin && pthumbwin->IsShown()) {
 		if (pthumbwin->pThumbChart) {
 			if (pthumbwin->pThumbChart->UpdateThumbData(nav.pos))

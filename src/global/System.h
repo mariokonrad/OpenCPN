@@ -24,6 +24,7 @@
 #ifndef __GLOBAL__SYSTEM__H__
 #define __GLOBAL__SYSTEM__H__
 
+#include <vector>
 #include <wx/string.h>
 
 namespace global {
@@ -53,6 +54,8 @@ public:
 		wxString SENCPrefix;
 		wxString UserPresLibData;
 		wxString exe_path;
+
+		std::vector<wxString> current_tide_dataset;
 	};
 
 	virtual const Data& data() const = 0;
@@ -71,6 +74,7 @@ public:
 	virtual void set_SENCPrefix(const wxString&) = 0;
 	virtual void set_UserPresLibData(const wxString&) = 0;
 	virtual void set_exe_path(const wxString&) = 0;
+	virtual void set_current_tide_dataset(const std::vector<wxString>&) = 0;
 
 public:
 	struct Config

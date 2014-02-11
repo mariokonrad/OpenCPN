@@ -52,6 +52,7 @@ public: // data
 	virtual void set_SENCPrefix(const wxString&);
 	virtual void set_UserPresLibData(const wxString&);
 	virtual void set_exe_path(const wxString&);
+	virtual void set_current_tide_dataset(const std::vector<wxString>&);
 
 public: // config
 	virtual const Config& config() const;

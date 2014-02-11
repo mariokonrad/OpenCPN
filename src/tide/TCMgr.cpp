@@ -116,17 +116,17 @@ bool TCMgr::IsReady(void) const
 	return bTCMReady;
 }
 
-wxArrayString TCMgr::GetDataSet(void)
+const std::vector<wxString>& TCMgr::GetDataSet(void) const
 {
 	return m_sourcefile_array;
 }
 
-TC_Error_Code TCMgr::LoadDataSources(wxArrayString& sources)
+TC_Error_Code TCMgr::LoadDataSources(const std::vector<wxString>& sources)
 {
 	PurgeData();
 
 	// Take a copy of dataset file name array
-	m_sourcefile_array.Clear();
+	m_sourcefile_array.clear();
 	m_sourcefile_array = sources;
 
 	// Arrange for the index array to begin counting at "one", FIXME: why?
@@ -135,11 +135,11 @@ TC_Error_Code TCMgr::LoadDataSources(wxArrayString& sources)
 
 	for (unsigned int i = 0; i < sources.size(); i++) {
 		TCDataSource* s = new TCDataSource;
-		TC_Error_Code r = s->LoadData(sources.Item(i));
+		TC_Error_Code r = s->LoadData(sources.at(i));
 		if (r != TC_NO_ERROR) {
 			wxString msg;
 			msg.Printf(_T("   Error loading Tide/Currect data source %s "),
-					   sources.Item(i).c_str());
+					   sources.at(i).c_str());
 			if (r == TC_FILE_NOT_FOUND)
 				msg += _T("Error Code: TC_FILE_NOT_FOUND");
 			else {

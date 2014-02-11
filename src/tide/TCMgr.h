@@ -46,9 +46,9 @@ public:
 	TCMgr();
 	~TCMgr();
 
-	TC_Error_Code LoadDataSources(wxArrayString& sources);
+	TC_Error_Code LoadDataSources(const std::vector<wxString>& sources);
 
-	wxArrayString GetDataSet(void);
+	const std::vector<wxString>& GetDataSet(void) const;
 	bool IsReady(void) const;
 
 	bool GetTideOrCurrent(time_t t, int idx, float& value, float& dir);
@@ -78,7 +78,7 @@ private:
 	wxString pmru_file_name;
 
 	std::vector<TCDataSource*> m_source_array;
-	wxArrayString m_sourcefile_array;
+	std::vector<wxString> m_sourcefile_array;
 	std::vector<IDX_entry*> m_Combined_IDX_array;
 };
 

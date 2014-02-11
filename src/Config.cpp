@@ -71,7 +71,6 @@ extern ArrayOfConnPrm* g_pConnectionParams;
 extern WayPointman* pWayPointMan;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern ocpnStyle::StyleManager* g_StyleManager;
-extern wxArrayString TideCurrentDataSet;
 
 #ifdef USE_S57
 extern chart::s52plib* ps52plib;
@@ -328,7 +327,7 @@ void Config::load_tide_datasources()
 {
 	// Tide/Current Data Sources
 	SetPath(_T("/TideCurrentDataSources"));
-	TideCurrentDataSet.Clear();
+	std::vector<wxString> dataset;
 	if (GetNumberOfEntries()) {
 		wxString str;
 		wxString val;
@@ -336,10 +335,12 @@ void Config::load_tide_datasources()
 		bool bCont = GetFirstEntry(str, dummy);
 		while (bCont) {
 			Read(str, &val); // Get a file name
-			TideCurrentDataSet.Add(val);
+			dataset.push_back(val);
 			bCont = GetNextEntry(str, dummy);
 		}
 	}
+
+	global::OCPN::get().sys().set_current_tide_dataset(dataset);
 }
 
 void Config::load_fonts(int iteration)
@@ -1753,9 +1754,9 @@ void Config::UpdateSettings()
 	// Tide/Current Data Sources
 	DeleteGroup(_T("/TideCurrentDataSources"));
 	SetPath(_T("/TideCurrentDataSources"));
-	unsigned int iDirMax = TideCurrentDataSet.Count();
-	for (unsigned int id = 0; id < iDirMax; ++id) {
-		Write(wxString::Format(_T("tcds%d"), id), TideCurrentDataSet.Item(id));
+	const std::vector<wxString>& tide_dataset = global::OCPN::get().sys().data().current_tide_dataset;
+	for (unsigned int id = 0; id < tide_dataset.size(); ++id) {
+		Write(wxString::Format(_T("tcds%d"), id), tide_dataset[id]);
 	}
 
 	SetPath(_T("/Settings/Others"));

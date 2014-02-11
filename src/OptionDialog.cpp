@@ -108,8 +108,6 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 // Some constants
 #define ID_CHOICE_NMEA  wxID_HIGHEST + 1
 
-extern wxArrayString TideCurrentDataSet;
-
 extern ais::AIS_Decoder* g_pAIS;
 
 options* g_pOptions;
@@ -1274,8 +1272,9 @@ void options::CreatePanel_TidesCurrents(size_t parent, int border_size, int grou
 
 	// Populate Selection List Control with the contents
 	// of the Global static array
-	for (unsigned int id = 0; id < TideCurrentDataSet.Count(); id++) {
-		tcDataSelected->Append(TideCurrentDataSet.Item(id));
+	const std::vector<wxString>& tide_dataset = global::OCPN::get().sys().data().current_tide_dataset;
+	for (unsigned int id = 0; id < tide_dataset.size(); id++) {
+		tcDataSelected->Append(tide_dataset.at(id));
 	}
 
 	// Add the "Insert/Remove" buttons
@@ -2857,15 +2856,13 @@ void options::OnApplyClick(wxCommandEvent& event)
 	m_returnChanges |= k_plugins;
 	m_returnChanges |= k_tides;
 
-	// Pick up all the entries in the DataSelected control
-	// and update the global static array
-	TideCurrentDataSet.Clear();
-	int nEntry = tcDataSelected->GetCount();
-
+	// Pick up all the entries in the DataSelected control and update the global static array
+	const int nEntry = tcDataSelected->GetCount();
+	std::vector<wxString> tide_dataset;
 	for (int i = 0; i < nEntry; i++) {
-		wxString s = tcDataSelected->GetString(i);
-		TideCurrentDataSet.Add(s);
+		tide_dataset.push_back(tcDataSelected->GetString(i));
 	}
+	global::OCPN::get().sys().set_current_tide_dataset(tide_dataset);
 
 	if (event.GetId() == ID_APPLY) {
 		gFrame->ProcessOptionsDialog(m_returnChanges, this);

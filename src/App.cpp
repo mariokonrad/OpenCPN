@@ -144,7 +144,6 @@ extern int g_StartTimeTZ;
 extern int gpIDXn;
 extern PlugInManager* g_pi_manager;
 extern chart::ChartGroupArray* g_pGroupArray;
-extern wxArrayString TideCurrentDataSet;
 extern wxPlatformInfo* g_pPlatform;
 extern wxLocale* plocale_def_lang;
 extern bool g_b_assume_azerty;
@@ -881,17 +880,19 @@ void App::check_tide_current()
 
 	// Check the global Tide/Current data source array
 	// If empty, preset one default (US) Ascii data source
-	if (!TideCurrentDataSet.size()) {
+	if (!sys.current_tide_dataset.size()) {
 		wxString default_tcdata = sys.sound_data_location + _T("tcdata")
 								  + wxFileName::GetPathSeparator() + _T("HARMONIC.IDX");
 
+			std::vector<wxString> dataset;
 		if (cfg.portable) {
 			wxFileName f(default_tcdata);
 			f.MakeRelativeTo(sys.private_data_dir);
-			TideCurrentDataSet.Add(f.GetFullPath());
+			dataset.push_back(f.GetFullPath());
 		} else {
-			TideCurrentDataSet.Add(default_tcdata);
+			dataset.push_back(default_tcdata);
 		}
+		global::OCPN::get().sys().set_current_tide_dataset(dataset);
 	}
 }
 

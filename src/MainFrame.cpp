@@ -228,7 +228,6 @@ wxRect g_blink_rect;
 PlugInManager* g_pi_manager;
 chart::ChartGroupArray* g_pGroupArray;
 wxProgressDialog* s_ProgDialog;
-wxArrayString TideCurrentDataSet;
 
 #ifndef __WXMSW__
 struct sigaction sa_all;
@@ -5280,47 +5279,49 @@ void MainFrame::ResumeSockets()
 
 void MainFrame::LoadHarmonics()
 {
-	if(!ptcmgr) {
+	std::vector<wxString> data_set = global::OCPN::get().sys().data().current_tide_dataset;
+
+	if (!ptcmgr) {
 		ptcmgr = new tide::TCMgr;
-		ptcmgr->LoadDataSources(TideCurrentDataSet);
-		return ;
+		ptcmgr->LoadDataSources(data_set);
+		return;
 	}
 
 	bool b_newdataset = false;
 
 	// Test both ways
-	wxArrayString test = ptcmgr->GetDataSet();
-	for(unsigned int i=0 ; i < test.size() ; i++) {
+	std::vector<wxString> test = ptcmgr->GetDataSet();
+	for (unsigned int i = 0; i < test.size(); i++) {
 		bool b_foundi = false;
-		for(unsigned int j=0 ; j < TideCurrentDataSet.size() ; j++) {
-			if(TideCurrentDataSet.Item(j) == test.Item(i)) {
+		for (unsigned int j = 0; j < data_set.size(); j++) {
+			if (data_set.at(j) == test.at(i)) {
 				b_foundi = true;
-				break;              // j loop
+				break; // j loop
 			}
 		}
-		if(!b_foundi) {
+		if (!b_foundi) {
 			b_newdataset = true;
-			break;                  //  i loop
+			break; //  i loop
 		}
 	}
 
-	test = TideCurrentDataSet;
-	for(unsigned int i=0 ; i < test.size() ; i++) {
+	test = data_set;
+	for (unsigned int i = 0; i < test.size(); i++) {
 		bool b_foundi = false;
-		for(unsigned int j=0 ; j < ptcmgr->GetDataSet().size() ; j++) {
-			if(ptcmgr->GetDataSet().Item(j) == test.Item(i)) {
+		for (unsigned int j = 0; j < ptcmgr->GetDataSet().size(); j++) {
+			if (ptcmgr->GetDataSet().at(j) == test.at(i)) {
 				b_foundi = true;
-				break;              // j loop
+				break; // j loop
 			}
 		}
-		if(!b_foundi) {
+		if (!b_foundi) {
 			b_newdataset = true;
-			break;                  //  i loop
+			break; //  i loop
 		}
 	}
 
-	if(b_newdataset)
-		ptcmgr->LoadDataSources(TideCurrentDataSet);
+	if (b_newdataset)
+		ptcmgr->LoadDataSources(data_set);
 }
 
 void appendOSDirSlash(wxString & s)

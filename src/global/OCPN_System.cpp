@@ -105,6 +105,11 @@ void OCPN_System::set_exe_path(const wxString& value)
 	data_data.exe_path = value;
 }
 
+void OCPN_System::set_current_tide_dataset(const std::vector<wxString>& value)
+{
+	data_data.current_tide_dataset = value;
+}
+
 const System::Config& OCPN_System::config() const
 {
 	return data_config;

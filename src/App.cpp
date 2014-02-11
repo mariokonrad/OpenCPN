@@ -144,7 +144,6 @@ extern int g_StartTimeTZ;
 extern int gpIDXn;
 extern PlugInManager* g_pi_manager;
 extern chart::ChartGroupArray* g_pGroupArray;
-extern wxPlatformInfo* g_pPlatform;
 extern wxLocale* plocale_def_lang;
 extern bool g_b_assume_azerty;
 extern wxAuiManager* g_pauimgr;
@@ -161,6 +160,8 @@ extern Select* pSelectTC;
 extern Select* pSelectAIS;
 extern wxAuiManager* g_pauimgr;
 extern MainFrame* gFrame;
+
+static wxPlatformInfo* s_pPlatform = NULL;
 
 #ifdef __WXMSW__
 bool TestGLCanvas(wxString& prog_dir)
@@ -1093,7 +1094,7 @@ bool App::OnInit()
 	install_crash_reporting();
 	seed_random_generator();
 
-	g_pPlatform = new wxPlatformInfo;
+	s_pPlatform = new wxPlatformInfo;
 
 #ifdef __WXMSW__
 	// On MSW, force the entire process to run on one CPU core only
@@ -1142,7 +1143,7 @@ bool App::OnInit()
 	// processes.
 	// Seems to only happen for W98
 
-	if (g_pPlatform->GetOperatingSystemId() == wxOS_WINDOWS_9X)
+	if (s_pPlatform->GetOperatingSystemId() == wxOS_WINDOWS_9X)
 		SetUnhandledExceptionFilter(&MyUnhandledExceptionFilter);
 #endif
 
@@ -1845,7 +1846,7 @@ int App::OnExit()
 	DeInitAllocCheck();
 #endif
 
-	delete g_pPlatform;
+	delete s_pPlatform;
 	delete g_pauimgr;
 
 	delete plocale_def_lang;

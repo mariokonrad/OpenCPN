@@ -259,8 +259,6 @@ DWORD color_inactiveborder;
 
 #endif
 
-wxPlatformInfo* g_pPlatform; // FIXME: App only
-
 wxToolBarToolBase* m_pAISTool; // FIXME: MainFrame only
 int g_nAIS_activity_timer; // FIXME: MainFrame only
 AboutDialog* g_pAboutDlg; // FIXME: MainFrame only

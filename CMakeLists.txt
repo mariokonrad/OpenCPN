@@ -824,6 +824,7 @@ add_library(util STATIC
 	src/util/ValueFilter.h
 	src/util/crc32.cpp
 	src/util/crc32.h
+	src/util/math.h
 	)
 
 SET(SRC_CHART

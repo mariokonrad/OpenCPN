@@ -74,6 +74,8 @@
 
 #include <windows/compatibility.h>
 
+#include <util/math.h>
+
 #include <plugin/PlugInManager.h>
 
 #include <navigation/AnchorDist.h>
@@ -2764,7 +2766,7 @@ bool ChartCanvas::SetViewPoint(const geo::Position& pos, double scale_ppm, doubl
 		// roughly 10 % of lat range, in NM
 		double delta_y = (VPoint.GetBBox().GetMaxY() - VPoint.GetBBox().GetMinY()) * 60.0 * 0.10;
 
-		//  Make sure the two points are in phase longitudinally
+		// Make sure the two points are in phase longitudinally
 		double lon_norm = VPoint.longitude();
 		if (lon_norm > 180.0)
 			lon_norm -= 360.0;
@@ -2776,7 +2778,7 @@ bool ChartCanvas::SetViewPoint(const geo::Position& pos, double scale_ppm, doubl
 		wxPoint r1 = GetCanvasPointPix(t); // TODO: cleanup
 		wxPoint r = GetCanvasPointPix(geo::Position(VPoint.latitude(), lon_norm));
 
-		m_true_scale_ppm = sqrt(pow((double)(r.y - r1.y), 2) + pow((double)(r.x - r1.x), 2))
+		m_true_scale_ppm = sqrt(util::sqr((double)(r.y - r1.y)) + util::sqr((double)(r.x - r1.x)))
 						   / (delta_y * 1852.0);
 
 		// A fall back in case of very high zoom-out, giving delta_y == 0
@@ -2880,8 +2882,8 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 		= atan2((double)(lPredPoint.y - lShipMidPoint.y), (double)(lPredPoint.x - lShipMidPoint.x));
 	cog_rad += M_PI;
 
-	double lpp = sqrt(pow((double)(lPredPoint.x - lShipMidPoint.x), 2)
-					  + pow((double)(lPredPoint.y - lShipMidPoint.y), 2));
+	double lpp = sqrt(util::sqr((double)(lPredPoint.x - lShipMidPoint.x))
+					  + util::sqr((double)(lPredPoint.y - lShipMidPoint.y)));
 
 	// Is predicted point in the VPoint?
 	if (GetVP().GetBBox().PointInBox(pred.lon(), pred.lat(), 0))
@@ -2922,8 +2924,8 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 	double ndelta_pix = 10.0;
 	bool b_render_hdt = false;
 	if (!wxIsNaN(global::OCPN::get().nav().get_data().hdt)) {
-		double dist = sqrt(pow((double)(lHeadPoint.x - lPredPoint.x), 2)
-						   + pow((double)(lHeadPoint.y - lPredPoint.y), 2));
+		double dist = sqrt(util::sqr((double)(lHeadPoint.x - lPredPoint.x))
+						   + util::sqr((double)(lHeadPoint.y - lPredPoint.y)));
 		if (dist > ndelta_pix && !wxIsNaN(nav.sog))
 			b_render_hdt = true;
 	}
@@ -3016,8 +3018,8 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 				wxPoint2DDouble b_point = GetVP().GetDoublePixFromLL(ship_bow);
 				wxPoint2DDouble a_point = GetVP().GetDoublePixFromLL(nav.pos);
 
-				double shipLength_px = sqrt(pow((double)(b_point.m_x - a_point.m_x), 2)
-											+ pow((double)(b_point.m_y - a_point.m_y), 2));
+				double shipLength_px = sqrt(util::sqr((double)(b_point.m_x - a_point.m_x))
+											+ util::sqr((double)(b_point.m_y - a_point.m_y)));
 
 				// And in mm
 				double shipLength_mm = shipLength_px / screenResolution;
@@ -3243,8 +3245,8 @@ void ChartCanvas::ShipDraw(ocpnDC& dc)
 			geo::Position t = geo::ll_gc_ll(nav.pos, 0, factor);
 			wxPoint r = GetCanvasPointPix(t);
 
-			double lpp = sqrt(pow((double)(lShipMidPoint.x - r.x), 2)
-							  + pow((double)(lShipMidPoint.y - r.y), 2));
+			double lpp = sqrt(util::sqr((double)(lShipMidPoint.x - r.x))
+							  + util::sqr((double)(lShipMidPoint.y - r.y)));
 			int pix_radius = (int)lpp;
 
 			wxPen ppPen1(colors.get_color(_T("URED")), 2);
@@ -3996,9 +3998,8 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 
 			// Don't draw the COG line  and predictor point if zoomed far out.... or if target
 			// lost/inactive
-			double l = pow(pow((double)(PredPoint.x - TargetPoint.x), 2)
-						   + pow((double)(PredPoint.y - TargetPoint.y), 2),
-						   0.5);
+			double l = sqrt(util::sqr((double)(PredPoint.x - TargetPoint.x))
+							+ util::sqr((double)(PredPoint.y - TargetPoint.y)));
 
 			if (l > 24) {
 				geo::ClipResult res = geo::cohen_sutherland_line_clip_i(
@@ -9196,20 +9197,19 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, const geo::LatLonBoundingBo
 double ChartCanvas::GetAnchorWatchRadiusPixels(RoutePoint* pAnchorWatchPoint)
 {
 	double lpp = 0.0;
-	double d1 = 0.0;
-	double dabs;
 
 	if (pAnchorWatchPoint) {
 		const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
 
+		double d1 = 0.0;
 		pAnchorWatchPoint->GetName().ToDouble(&d1);
 		d1 = navigation::AnchorDistFix(d1, anchor.PointMinDist, anchor.AWMax);
-		dabs = fabs(d1 / 1852.0);
+		double dabs = fabs(d1 / 1852.0);
 		geo::Position t = geo::ll_gc_ll(pAnchorWatchPoint->get_position(), 0, dabs);
 		wxPoint r1 = GetCanvasPointPix(t);
 		wxPoint lAnchorPoint = GetCanvasPointPix(pAnchorWatchPoint->get_position());
-		lpp = sqrt(pow((double)(lAnchorPoint.x - r1.x), 2) // FIXME
-				   + pow((double)(lAnchorPoint.y - r1.y), 2));
+		lpp = sqrt(util::sqr((double)(lAnchorPoint.x - r1.x))
+				   + util::sqr((double)(lAnchorPoint.y - r1.y)));
 
 		// This is an entry watch
 		if (d1 < 0.0)

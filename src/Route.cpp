@@ -33,6 +33,8 @@
 
 #include <windows/compatibility.h>
 
+#include <util/math.h>
+
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/Navigation.h>
@@ -54,12 +56,6 @@ extern Multiplexer* g_pMUX;
 
 const double Route::DEFAULT_SPEED = 5.0;
 const int Route::STYLE_UNDEFINED = -1;
-
-template <typename T>
-static T sqr(T a)
-{
-	return a * a;
-}
 
 Route::SameGUID::SameGUID(const wxString& guid)
 	: guid(guid)
@@ -465,8 +461,8 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 
 			double pix_full_circle = geo::WGS84_semimajor_axis_meters * geo::mercator_k0 * 2.0 * M_PI
 									 * VP.view_scale();
-			double dp = sqr(static_cast<double>(rpt1.x - rpt2.x))
-						+ sqr(static_cast<double>(rpt1.y - rpt2.y));
+			double dp = util::sqr(static_cast<double>(rpt1.x - rpt2.x))
+						+ util::sqr(static_cast<double>(rpt1.y - rpt2.y));
 			double dtest;
 			int adder = 0;
 			if (b_1_on && !b_2_on) {
@@ -475,8 +471,8 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 				else
 					adder = -static_cast<int>(pix_full_circle);
 
-				dtest = sqr(static_cast<double>(rpt1.x - (rpt2.x + adder)))
-						+ sqr(static_cast<double>(rpt1.y - rpt2.y));
+				dtest = util::sqr(static_cast<double>(rpt1.x - (rpt2.x + adder)))
+						+ util::sqr(static_cast<double>(rpt1.y - rpt2.y));
 
 				if (dp < dtest)
 					adder = 0;
@@ -488,8 +484,8 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 				else
 					adder = -static_cast<int>(pix_full_circle);
 
-				dtest = sqr(static_cast<double>(rpt2.x - (rpt1.x + adder)))
-						+ sqr(static_cast<double>(rpt1.y - rpt2.y));
+				dtest = util::sqr(static_cast<double>(rpt2.x - (rpt1.x + adder)))
+						+ util::sqr(static_cast<double>(rpt1.y - rpt2.y));
 
 				if (dp < dtest)
 					adder = 0;
@@ -502,8 +498,8 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 				else
 					adder = -static_cast<int>(pix_full_circle);
 
-				dtest = sqr(static_cast<double>(rpt2.x - (rpt1.x + adder)))
-						+ sqr(static_cast<double>(rpt1.y - rpt2.y));
+				dtest = util::sqr(static_cast<double>(rpt2.x - (rpt1.x + adder)))
+						+ util::sqr(static_cast<double>(rpt1.y - rpt2.y));
 
 				if (dp < dtest)
 					adder = 0;
@@ -579,7 +575,8 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const View
 		// and constrain the arrow to be no more than xx% of the line length
 		double nom_arrow_size = 20.;
 		double max_arrow_to_leg = .20;
-		double lpp = sqrt(sqr(static_cast<double>(xa - xb)) + sqr(static_cast<double>(ya - yb)));
+		double lpp = sqrt(util::sqr(static_cast<double>(xa - xb))
+						  + util::sqr(static_cast<double>(ya - yb)));
 
 		double icon_size = icon_scale_factor * nom_arrow_size;
 		if (icon_size > (lpp * max_arrow_to_leg))

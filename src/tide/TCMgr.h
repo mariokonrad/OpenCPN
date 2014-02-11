@@ -67,6 +67,8 @@ public:
 	int GetStationIDXbyNameType(const wxString& prefix, double xlat, double xlon, char type) const;
 
 private:
+	int station_idx_name_types(const wxString& prefix, double xlat, double xlon,
+							   std::vector<char> types) const;
 	void PurgeData();
 
 	void LoadMRU(void);

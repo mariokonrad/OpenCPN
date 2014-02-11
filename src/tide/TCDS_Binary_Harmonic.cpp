@@ -22,12 +22,14 @@
  **************************************************************************/
 
 #include "TCDS_Binary_Harmonic.h"
+
 #include <tide/IDX_entry.h>
-#include <tide/TCMgr.h>
+
+#include <windows/compatibility.h>
 
 #include <libtcd/tcd.h>
 
-#include <windows/compatibility.h>
+#include <cmath>
 
 namespace tide {
 

@@ -24,7 +24,7 @@
  **************************************************************************/
 
 #include "TCMgr.h"
-#include "dychart.h"
+#include <dychart.h>
 
 #include <tide/IDX_entry.h>
 #include <tide/Station_Data.h>
@@ -39,6 +39,8 @@
 
 #include <wx/datetime.h>
 #include <wx/log.h>
+
+#include <algorithm>
 
 namespace tide {
 
@@ -407,26 +409,26 @@ int TCMgr::GetNextBigEvent(time_t* tm, int idx)
 	return 0;
 }
 
-int TCMgr::GetStationIDXbyName(const wxString& prefix, double xlat, double xlon) const
+int TCMgr::station_idx_name_types(const wxString& prefix, double xlat, double xlon,
+								  std::vector<char> types) const
 {
-	const IDX_entry* lpIDX;
 	int jx = 0;
-	wxString locn;
-	double distx = 100000.0;
+	double min_dist = 100000.0;
 
 	for (int j = 1; j < Get_max_IDX() + 1; j++) {
-		lpIDX = GetIDX_entry(j);
-		char type = lpIDX->IDX_type; // Entry "TCtcIUu" identifier
-		wxString locnx(lpIDX->IDX_station_name, wxConvUTF8);
+		const IDX_entry* idx = GetIDX_entry(j);
+		wxString locnx(idx->IDX_station_name, wxConvUTF8);
 
-		if (((type == 't') || (type == 'T')) // only Tides
-			&& (locnx.StartsWith(prefix))) {
-			double brg, dist;
+		const bool type_found = std::find(types.begin(), types.end(), idx->IDX_type) != types.end();
+
+		// only Tides
+		if (type_found && locnx.StartsWith(prefix)) {
+			double brg;
+			double dist;
 			geo::DistanceBearingMercator(geo::Position(xlat, xlon),
-										 geo::Position(lpIDX->IDX_lat, lpIDX->IDX_lon), &brg,
-										 &dist);
-			if (dist < distx) {
-				distx = dist;
+										 geo::Position(idx->IDX_lat, idx->IDX_lon), &brg, &dist);
+			if (dist < min_dist) {
+				min_dist = dist;
 				jx = j;
 			}
 		}
@@ -434,31 +436,22 @@ int TCMgr::GetStationIDXbyName(const wxString& prefix, double xlat, double xlon)
 	return jx;
 }
 
+int TCMgr::GetStationIDXbyName(const wxString& prefix, double xlat, double xlon) const
+{
+	std::vector<char> types;
+	types.push_back('t');
+	types.push_back('T');
+
+	return station_idx_name_types(prefix, xlat, xlon, types);
+}
+
 int TCMgr::GetStationIDXbyNameType(const wxString& prefix, double xlat, double xlon,
 								   char type) const
 {
-	const IDX_entry* lpIDX;
-	int jx = 0;
-	wxString locn;
-	double distx = 100000.0;
+	std::vector<char> types;
+	types.push_back(type);
 
-	for (int j = 1; j < Get_max_IDX() + 1; j++) {
-		lpIDX = GetIDX_entry(j);
-		char typep = lpIDX->IDX_type; // Entry "TCtcIUu" identifier
-		wxString locnx(lpIDX->IDX_station_name, wxConvUTF8);
-
-		if ((type == typep) && (locnx.StartsWith(prefix))) {
-			double brg, dist;
-			geo::DistanceBearingMercator(geo::Position(xlat, xlon),
-										 geo::Position(lpIDX->IDX_lat, lpIDX->IDX_lon), &brg,
-										 &dist);
-			if (dist < distx) {
-				distx = dist;
-				jx = j;
-			}
-		}
-	}
-	return jx;
+	return station_idx_name_types(prefix, xlat, xlon, types);
 }
 
 static double time2tide(time_t t, IDX_entry* pIDX)

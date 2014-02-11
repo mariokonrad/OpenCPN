@@ -34,36 +34,33 @@ class wxBoxSizer;
 
 class FloatingCompassWindow : public wxDialog
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		FloatingCompassWindow(wxWindow * parent);
-		virtual ~FloatingCompassWindow();
-		void OnPaint(wxPaintEvent & event);
-		wxBitmap CreateBmp(bool bnew = false);
-		void UpdateStatus(bool newColorScheme = false);
+public:
+	FloatingCompassWindow(wxWindow* parent);
+	virtual ~FloatingCompassWindow();
+	wxBitmap CreateBmp(bool bnew = false);
+	void UpdateStatus(bool newColorScheme = false);
+	void SetColorScheme(global::ColorScheme cs);
+	int GetXOffset(void) const;
+	int GetYOffset(void) const;
 
-		void OnClose(wxCloseEvent & event);
-		void OnToolLeftClick(wxCommandEvent & event);
-		void MouseEvent(wxMouseEvent & event);
-		void SetColorScheme(global::ColorScheme cs);
-		int GetXOffset(void) const;
-		int GetYOffset(void) const;
+private:
+	void OnPaint(wxPaintEvent& event);
 
-	private:
-		wxBitmap m_StatBmp;
-		wxBitmap m_MaskBmp;
-		wxStaticBitmap * m_pStatBoxToolStaticBmp;
+	wxBitmap m_StatBmp;
+	wxBitmap m_MaskBmp;
+	wxStaticBitmap* m_pStatBoxToolStaticBmp;
 
-		wxWindow * m_pparent;
-		wxBoxSizer * m_topSizer;
-		wxString m_lastgpsIconName;
-		double m_rose_angle;
+	wxWindow* m_pparent;
+	wxBoxSizer* m_topSizer;
+	wxString m_lastgpsIconName;
+	double m_rose_angle;
 
-		wxBitmap _img_compass;
-		wxBitmap _img_gpsRed;
-		int m_xoffset;
-		int m_yoffset;
+	wxBitmap _img_compass;
+	wxBitmap _img_gpsRed;
+	int m_xoffset;
+	int m_yoffset;
 };
 
 #endif

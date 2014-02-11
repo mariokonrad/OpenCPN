@@ -3386,7 +3386,7 @@ void MainFrame::UpdateGPSCompassStatusBox(bool b_force_new)
 	int y_offset = 0;
 	int size_x = 0;
 	int size_y = 0;
-	int cc1_edge_comp = 2;
+	const int cc1_edge_comp = 2;
 
 	if (g_FloatingToolbarDialog) {
 		x_offset = g_FloatingCompassDialog->GetXOffset();

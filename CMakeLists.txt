@@ -1355,8 +1355,8 @@ if(WIN32)
 	set(SRCS ${SRCS}
 		src/windows/compatibility.cpp
 		src/windows/compatibility.h
-		src/WinConsole.cpp
-		src/WinConsole.h
+		src/windows/WinConsole.cpp
+		src/windows/WinConsole.h
 		${CMAKE_CURRENT_BINARY_DIR}/src/opencpn.rc
 		)
 endif(WIN32)

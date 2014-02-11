@@ -26,15 +26,13 @@
 
 #include <wx/dialog.h>
 
-#include <Route.h>
 #include <global/ColorScheme.h>
 
 #define ID_ROUTEPRINTSELECTION 9000
-#define ID_ROUTEPRINT_SELECTION_OK 9001
-#define ID_ROUTEPRINT_SELECTION_CANCEL 9002
 
 class wxButton;
 class wxCheckBox;
+class Route;
 
 class RoutePrintSelection : public wxDialog
 {
@@ -66,6 +64,7 @@ public:
 
 	static bool ShowToolTips();
 
+private:
 	wxButton* m_CancelButton;
 	wxButton* m_OKButton;
 	wxCheckBox* m_checkBoxWPName;

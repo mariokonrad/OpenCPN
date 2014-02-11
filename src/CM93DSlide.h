@@ -21,51 +21,37 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CM93DSLIDE_H__
-#define __CM93DSLIDE_H__
+#ifndef __CM93DSLIDE__H__
+#define __CM93DSLIDE__H__
 
 #include <wx/dialog.h>
 
 class wxSlider;
 
-class CM93DSlide: public wxDialog
+class CM93DSlide : public wxDialog
 {
-		DECLARE_EVENT_TABLE()
+	DECLARE_EVENT_TABLE()
 
-	public:
-		CM93DSlide(
-			wxWindow * parent,
-			wxWindowID id,
-			int value,
-			int minValue,
-			int maxValue,
-			const wxPoint & pos = wxDefaultPosition,
-			const wxSize & size = wxDefaultSize,
-			long style = 0,
-			const wxString& title = _T(""));
+public:
+	CM93DSlide(wxWindow* parent, wxWindowID id, int value, int minValue, int maxValue,
+			   const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize,
+			   long style = 0, const wxString& title = _T(""));
 
-		virtual ~CM93DSlide(void);
+	virtual ~CM93DSlide(void);
 
-		void Init(void);
+	void Init(void);
 
-		bool Create(
-				wxWindow * parent,
-				wxWindowID id,
-				int value,
-				int minValue,
-				int maxValue,
-				const wxPoint & pos,
-				const wxSize & size,
-				long style,
-				const wxString & title);
+	bool Create(wxWindow* parent, wxWindowID id, int value, int minValue, int maxValue,
+				const wxPoint& pos, const wxSize& size, long style, const wxString& title);
 
-		void OnCancelClick(wxCommandEvent& event);
-		void OnMove(wxMoveEvent& event);
-		void OnChangeValue(wxScrollEvent& event);
-		void OnClose(wxCloseEvent& event);
+private:
+	void OnCancelClick(wxCommandEvent& event);
+	void OnMove(wxMoveEvent& event);
+	void OnChangeValue(wxScrollEvent& event);
+	void OnClose(wxCloseEvent& event);
 
-		wxSlider * m_pCM93DetailSlider;
-		wxWindow * m_pparent;
+	wxSlider* m_pCM93DetailSlider;
+	wxWindow* m_pparent;
 };
 
 #endif

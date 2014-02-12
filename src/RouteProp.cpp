@@ -24,7 +24,6 @@
 #include "RouteProp.h"
 #include <Select.h>
 #include <Track.h>
-#include <Routeman.h>
 #include <WayPointman.h>
 #include <RouteManagerDialog.h>
 #include <MessageBox.h>
@@ -39,6 +38,7 @@
 
 #include <navigation/MagneticVariation.h>
 #include <navigation/RouteTracker.h>
+#include <navigation/RouteManager.h>
 
 #include <geo/GeoRef.h>
 
@@ -67,7 +67,6 @@ extern Config* pConfig;
 extern WayPointman* pWayPointMan;
 extern ChartCanvas* cc1;
 extern Select* pSelect;
-extern Routeman* g_pRouteMan;
 extern RouteManagerDialog* pRouteManagerDialog;
 extern RouteList* pRouteList;
 extern PlugInManager* g_pi_manager;
@@ -222,10 +221,12 @@ void RouteProp::OnRoutepropSplitClick(wxCommandEvent&)
 
 		pConfig->DeleteConfigRoute(m_pRoute);
 
+		navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
 		if (!m_pTail->m_bIsTrack) {
 			pSelect->DeleteAllSelectableRoutePoints(m_pRoute);
 			pSelect->DeleteAllSelectableRouteSegments(m_pRoute);
-			g_pRouteMan->DeleteRoute(m_pRoute);
+			routemanager.DeleteRoute(m_pRoute);
 			pSelect->AddAllSelectableRouteSegments(m_pTail);
 			pSelect->AddAllSelectableRoutePoints(m_pTail);
 			pSelect->AddAllSelectableRouteSegments(m_pHead);
@@ -233,7 +234,7 @@ void RouteProp::OnRoutepropSplitClick(wxCommandEvent&)
 		} else {
 			pSelect->DeleteAllSelectableTrackSegments(m_pRoute);
 			m_pRoute->ClearHighlights();
-			g_pRouteMan->DeleteTrack(m_pRoute);
+			routemanager.DeleteTrack(m_pRoute);
 			pSelect->AddAllSelectableTrackSegments(m_pTail);
 			pSelect->AddAllSelectableTrackSegments(m_pHead);
 		}
@@ -333,9 +334,12 @@ bool RouteProp::IsThisRouteExtendable()
 	if (m_pRoute->m_bRtIsActive || m_pRoute->m_bIsInLayer)
 		return false;
 
+	using navigation::RouteManager;
+	RouteManager& routemanager = global::OCPN::get().routeman();
+
 	if (!m_pRoute->m_bIsTrack) {
 		RoutePoint* pLastPoint = m_pRoute->GetLastPoint();
-		Routeman::RouteArray edit_routes = g_pRouteMan->GetRouteArrayContaining(pLastPoint);
+		RouteManager::RouteArray edit_routes = routemanager.GetRouteArrayContaining(pLastPoint);
 
 		// remove invisible & own routes from choices
 		for (int i = edit_routes.size(); i > 0; --i) {
@@ -356,8 +360,8 @@ bool RouteProp::IsThisRouteExtendable()
 				m_pExtendPoint = pWayPointMan->GetOtherNearbyWaypoint(rpos, nearby_radius_meters,
 																	  pLastPoint->guid());
 				if (m_pExtendPoint && !m_pExtendPoint->is_in_track()) {
-					Routeman::RouteArray close_wp_routes
-						= g_pRouteMan->GetRouteArrayContaining(m_pExtendPoint);
+					RouteManager::RouteArray close_wp_routes
+						= routemanager.GetRouteArrayContaining(m_pExtendPoint);
 					if (!close_wp_routes.empty()) {
 						edit_routes = close_wp_routes;
 
@@ -1371,7 +1375,7 @@ void RouteProp::OnStartTimeCtlUpdated(wxCommandEvent&)
 	wxDateTime d;
 	if (stime.StartsWith(_T(">"))) {
 		if (m_pRoute->m_bRtIsActive) {
-			m_pEnroutePoint = g_pRouteMan->GetpActivePoint();
+			m_pEnroutePoint = global::OCPN::get().routeman().GetpActivePoint();
 		}
 		m_bStartNow = true;
 		d = wxDateTime::Now();
@@ -1411,7 +1415,7 @@ void RouteProp::OnRoutepropCancelClick(wxCommandEvent& event)
 	// Look in the route list to be sure the raoute is still available
 	// (May have been deleted by RouteMangerDialog...)
 
-	if (g_pRouteMan->RouteExists(m_pRoute))
+	if (global::OCPN::get().routeman().RouteExists(m_pRoute))
 		m_pRoute->ClearHighlights();
 
 	Hide();
@@ -1425,7 +1429,7 @@ void RouteProp::OnRoutepropOkClick(wxCommandEvent& event)
 	// Look in the route list to be sure the route is still available
 	// (May have been deleted by RouteManagerDialog...)
 
-	if (g_pRouteMan->RouteExists(m_pRoute)) {
+	if (global::OCPN::get().routeman().RouteExists(m_pRoute)) {
 		SaveChanges(); // write changes to globals and update config
 		m_pRoute->ClearHighlights();
 	}

@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "RoutePoint.h"
-#include <Routeman.h>
 #include <WayPointman.h>
 #include <Multiplexer.h>
 #include <FontMgr.h>
@@ -30,6 +29,10 @@
 #include <ocpnDC.h>
 #include <ChartCanvas.h>
 #include <MainFrame.h>
+
+#include <global/OCPN.h>
+
+#include <navigation/RouteManager.h>
 
 #include <gpx/ParseGPXDateTime.h>
 #include <gpx/GpxDocument.h>
@@ -41,7 +44,6 @@ extern WayPointman* pWayPointMan;
 extern bool g_bIsNewLayer;
 extern int g_LayerIdx;
 extern ChartCanvas* cc1;
-extern Routeman* g_pRouteMan;
 extern wxRect g_blink_rect;
 extern Multiplexer* g_pMUX;
 extern MainFrame* gFrame;
@@ -277,11 +279,13 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	if (m_IconName == _T("empty") && !m_bShowName && !m_bPtIsSelected)
 		return;
 
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
 	wxColour route_point_color;
 	if (m_bBlink)
-		route_point_color = g_pRouteMan->GetActiveRoutePointPen().GetColour();
+		route_point_color = routemanager.GetActiveRoutePointPen().GetColour();
 	else
-		route_point_color = g_pRouteMan->GetRoutePointPen().GetColour();
+		route_point_color = routemanager.GetRoutePointPen().GetColour();
 
 	// Substitue icon?
 	wxBitmap* pbm;

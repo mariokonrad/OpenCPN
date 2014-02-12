@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "Undo.h"
-#include <Routeman.h>
 #include <WayPointman.h>
 #include <RouteManagerDialog.h>
 #include <MarkInfo.h>
@@ -31,13 +30,16 @@
 #include <MainFrame.h>
 #include <Config.h>
 
+#include <global/OCPN.h>
+
+#include <navigation/RouteManager.h>
+
 #include <tinyxml/tinyxml.h>
 
 #include <wx/file.h>
 #include <wx/datetime.h>
 #include <wx/clipbrd.h>
 
-extern Routeman* g_pRouteMan;
 extern Config* pConfig;
 extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
@@ -82,8 +84,10 @@ void Undo::doUndoMoveWaypoint(UndoAction* action)
 			pMarkPropDialog->UpdateProperties(true);
 	}
 
-	Routeman::RouteArray routes = g_pRouteMan->GetRouteArrayContaining(currentPoint);
-	for (Routeman::RouteArray::iterator i = routes.begin(); i != routes.end(); ++i) {
+	using navigation::RouteManager;
+	RouteManager::RouteArray routes
+		= global::OCPN::get().routeman().GetRouteArrayContaining(currentPoint);
+	for (RouteManager::RouteArray::iterator i = routes.begin(); i != routes.end(); ++i) {
 		Route* route = *i;
 		route->CalculateBBox();
 		route->UpdateSegmentDistances();

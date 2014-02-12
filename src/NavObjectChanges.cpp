@@ -23,14 +23,16 @@
 
 #include "NavObjectChanges.h"
 #include <RoutePoint.h>
-#include <Routeman.h>
 #include <Track.h>
 #include <WayPointman.h>
 #include <Select.h>
 
+#include <global/OCPN.h>
+
+#include <navigation/RouteManager.h>
+
 extern WayPointman* pWayPointMan;
 extern Select* pSelect;
-extern Routeman* g_pRouteMan;
 
 NavObjectChanges::NavObjectChanges()
 	: NavObjectCollection()
@@ -119,14 +121,15 @@ bool NavObjectChanges::ApplyChanges(void)
 					delete pWp;
 			}
 		} else {
+			navigation::RouteManager& routemanager = global::OCPN::get().routeman();
 			if (!strcmp(object.name(), "trk")) {
 				Track* pTrack = GPXLoadTrack1(object, false, false, false, 0);
 
-				if (pTrack && g_pRouteMan) {
+				if (pTrack) {
 					pugi::xml_node xchild = object.child("extensions");
 					pugi::xml_node child = xchild.child("opencpn:action");
 
-					Route* pExisting = g_pRouteMan->RouteExists(pTrack->guid());
+					Route* pExisting = routemanager.RouteExists(pTrack->guid());
 					if (!strcmp(child.first_child().value(), "update")) {
 						if (pExisting) {
 							pExisting->set_name(pTrack->get_name());
@@ -135,7 +138,7 @@ bool NavObjectChanges::ApplyChanges(void)
 						}
 					} else if (!strcmp(child.first_child().value(), "delete")) {
 						if (pExisting)
-							g_pRouteMan->DeleteTrack(pExisting);
+							routemanager.DeleteTrack(pExisting);
 					} else
 						delete pTrack;
 				}
@@ -143,7 +146,7 @@ bool NavObjectChanges::ApplyChanges(void)
 				if (!strcmp(object.name(), "rte")) {
 					Route* pRoute = GPXLoadRoute1(object, true, false, false, 0);
 
-					if (pRoute && g_pRouteMan) {
+					if (pRoute) {
 						pugi::xml_node xchild = object.child("extensions");
 						pugi::xml_node child = xchild.child("opencpn:action");
 
@@ -152,9 +155,9 @@ bool NavObjectChanges::ApplyChanges(void)
 						} else if (!strcmp(child.first_child().value(), "update")) {
 							UpdateRouteA(pRoute);
 						} else if (!strcmp(child.first_child().value(), "delete")) {
-							Route* pExisting = g_pRouteMan->RouteExists(pRoute->guid());
+							Route* pExisting = routemanager.RouteExists(pRoute->guid());
 							if (pExisting)
-								g_pRouteMan->DeleteRoute(pExisting);
+								routemanager.DeleteRoute(pExisting);
 						} else
 							delete pRoute;
 					}

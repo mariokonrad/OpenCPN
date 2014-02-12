@@ -149,7 +149,6 @@ extern bool g_b_assume_azerty;
 extern wxAuiManager* g_pauimgr;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
-extern Routeman* g_pRouteMan;
 extern WayPointman* pWayPointMan;
 extern chart::ChartStack* pCurrentStack;
 extern int g_unit_test_1;
@@ -284,6 +283,7 @@ App::App()
 	, colors_instance(NULL)
 	, s52_color_provider(NULL)
 	, tracker_instance(NULL)
+	, route_manager_instance(NULL)
 	, start_fullscreen(false)
 	, first_run(false)
 	, logger(NULL)
@@ -445,6 +445,9 @@ void App::inject_global_instances()
 
 	tracker_instance = new navigation::DefaultRouteTracker;
 	global::OCPN::get().inject(tracker_instance);
+
+	route_manager_instance = new Routeman;
+	global::OCPN::get().inject(route_manager_instance);
 }
 
 void App::establish_home_location()
@@ -1269,9 +1272,6 @@ bool App::OnInit()
 	}
 	global::OCPN::get().sys().set_plugin_dir(plugin_dir);
 
-	// Init the Route Manager
-	g_pRouteMan = new Routeman;
-
 	// Init the Selectable Route Items List
 	pSelect = new Select;
 
@@ -1801,7 +1801,6 @@ int App::OnExit()
 		delete logger;
 	}
 
-	delete g_pRouteMan;
 	delete pWayPointMan;
 
 	LogMessageOnce::destroy();
@@ -1857,6 +1856,8 @@ int App::OnExit()
 #endif
 
 	global::OCPN::get().clear();
+	delete route_manager_instance;
+	delete tracker_instance;
 	delete colors_instance;
 	delete s52_color_provider;
 	delete gui_instance;

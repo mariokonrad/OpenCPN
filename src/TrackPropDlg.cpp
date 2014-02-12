@@ -25,7 +25,6 @@
 
 #include <OCPNTrackListCtrl.h>
 #include <Track.h>
-#include <Routeman.h>
 #include <Select.h>
 #include <RouteManagerDialog.h>
 #include <RoutePrintSelection.h>
@@ -38,6 +37,7 @@
 #include <global/OCPN.h>
 
 #include <navigation/RouteTracker.h>
+#include <navigation/RouteManager.h>
 
 #include <geo/GeoRef.h>
 
@@ -46,7 +46,6 @@
 #include <gpx/gpx.h>
 
 extern RouteList* pRouteList;
-extern Routeman* g_pRouteMan;
 extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
 extern Config* pConfig;
@@ -691,7 +690,7 @@ void TrackPropDlg::OnExtendBtnClick(wxCommandEvent&)
 		pSelect->AddAllSelectableTrackSegments(m_pExtendRoute);
 		pSelect->DeleteAllSelectableTrackSegments(m_pRoute);
 		m_pRoute->ClearHighlights();
-		g_pRouteMan->DeleteTrack(m_pRoute);
+		global::OCPN::get().routeman().DeleteTrack(m_pRoute);
 
 		SetTrackAndUpdate(m_pExtendRoute);
 		UpdateProperties();
@@ -725,7 +724,7 @@ void TrackPropDlg::OnSplitBtnClick(wxCommandEvent&)
 
 		pSelect->DeleteAllSelectableRoutePoints(m_pRoute);
 		pSelect->DeleteAllSelectableRouteSegments(m_pRoute);
-		g_pRouteMan->DeleteRoute(m_pRoute);
+		global::OCPN::get().routeman().DeleteRoute(m_pRoute);
 		pSelect->AddAllSelectableRouteSegments(m_pTail);
 		pSelect->AddAllSelectableRoutePoints(m_pTail);
 		pSelect->AddAllSelectableRouteSegments(m_pHead);
@@ -1084,7 +1083,7 @@ void TrackPropDlg::OnOKBtnClick(wxCommandEvent& event)
 	// Look in the route list to be sure the route is still available
 	// (May have been deleted by RouteManagerDialog...)
 
-	if (g_pRouteMan->RouteExists(m_pRoute)) {
+	if (global::OCPN::get().routeman().RouteExists(m_pRoute)) {
 		SaveChanges(); // write changes to globals and update config
 		m_pRoute->ClearHighlights();
 	}
@@ -1106,7 +1105,7 @@ void TrackPropDlg::OnCancelBtnClick(wxCommandEvent& event)
 	// Look in the route list to be sure the raoute is still available
 	// (May have been deleted by RouteMangerDialog...)
 
-	if (g_pRouteMan->RouteExists(m_pRoute))
+	if (global::OCPN::get().routeman().RouteExists(m_pRoute))
 		m_pRoute->ClearHighlights();
 
 	Hide();

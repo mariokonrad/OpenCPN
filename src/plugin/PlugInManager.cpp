@@ -32,7 +32,6 @@
 #include <OptionDialog.h>
 #include <Multiplexer.h>
 #include <StatWin.h>
-#include <Routeman.h>
 #include <FontMgr.h>
 #include <OCPN_DataStreamEvent.h>
 #include <WayPointman.h>
@@ -48,6 +47,8 @@
 #include <global/OCPN.h>
 #include <global/System.h>
 #include <global/ColorManager.h>
+
+#include <navigation/RouteManager.h>
 
 #include <geo/GeoRef.h>
 
@@ -83,7 +84,6 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 extern options* g_pOptions;
 extern Multiplexer* g_pMUX;
 extern StatWin* stats;
-extern Routeman* g_pRouteMan;
 extern WayPointman* pWayPointMan;
 extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
@@ -1642,8 +1642,10 @@ bool GetRoutepointGPX(RoutePoint* pRoutePoint, char* buffer, unsigned int buffer
 
 bool GetActiveRoutepointGPX(char* buffer, unsigned int buffer_length)
 {
-	if (g_pRouteMan->IsAnyRouteActive())
-		return GetRoutepointGPX(g_pRouteMan->GetpActivePoint(), buffer, buffer_length);
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
+	if (routemanager.IsAnyRouteActive())
+		return GetRoutepointGPX(routemanager.GetpActivePoint(), buffer, buffer_length);
 	else
 		return false;
 }
@@ -1990,10 +1992,12 @@ bool DeletePlugInRoute(wxString& GUID)
 {
 	bool b_found = false;
 
-	//  Find the Route
-	Route* pRoute = g_pRouteMan->FindRouteByGUID(GUID);
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
+	// Find the Route
+	Route* pRoute = routemanager.FindRouteByGUID(GUID);
 	if (pRoute) {
-		g_pRouteMan->DeleteRoute(pRoute);
+		routemanager.DeleteRoute(pRoute);
 		b_found = true;
 	}
 	return b_found;
@@ -2003,14 +2007,16 @@ bool UpdatePlugInRoute(PlugIn_Route* proute)
 {
 	bool b_found = false;
 
-	//  Find the Route
-	Route* pRoute = g_pRouteMan->FindRouteByGUID(proute->m_GUID);
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
+	// Find the Route
+	Route* pRoute = routemanager.FindRouteByGUID(proute->m_GUID);
 	if (pRoute)
 		b_found = true;
 
 	if (b_found) {
 		bool b_permanent = (pRoute->m_btemp == false);
-		g_pRouteMan->DeleteRoute(pRoute);
+		routemanager.DeleteRoute(pRoute);
 
 		b_found = AddPlugInRoute(proute, b_permanent);
 	}
@@ -2068,10 +2074,12 @@ bool DeletePluginTrack(wxString& GUID)
 {
 	bool b_found = false;
 
-	//  Find the Route
-	Route* pRoute = g_pRouteMan->FindRouteByGUID(GUID);
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
+	// Find the Route
+	Route* pRoute = routemanager.FindRouteByGUID(GUID);
 	if (pRoute) {
-		g_pRouteMan->DeleteTrack((Track*)pRoute);
+		routemanager.DeleteTrack((Track*)pRoute);
 		b_found = true;
 	}
 
@@ -2085,14 +2093,16 @@ bool UpdatePlugInTrack(PlugIn_Track* ptrack)
 {
 	bool b_found = false;
 
-	//  Find the Track
-	Route* pRoute = g_pRouteMan->FindRouteByGUID(ptrack->m_GUID);
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
+	// Find the Track
+	Route* pRoute = routemanager.FindRouteByGUID(ptrack->m_GUID);
 	if (pRoute)
 		b_found = true;
 
 	if (b_found) {
 		bool b_permanent = (pRoute->m_btemp == false);
-		g_pRouteMan->DeleteTrack((Track*)pRoute);
+		routemanager.DeleteTrack((Track*)pRoute);
 
 		b_found = AddPlugInTrack(ptrack, b_permanent);
 	}

@@ -29,7 +29,6 @@
 #include <Track.h>
 #include <RouteProp.h>
 #include <MarkInfo.h>
-#include <Routeman.h>
 #include <Layer.h>
 #include <SendToGpsDlg.h>
 #include <TrackPropDlg.h>
@@ -48,6 +47,7 @@
 #include <global/GUI.h>
 
 #include <navigation/RouteTracker.h>
+#include <navigation/RouteManager.h>
 
 #include <iostream>
 #include <algorithm>
@@ -132,7 +132,6 @@ extern RouteList* pRouteList;
 extern LayerList* pLayerList;
 extern RouteProp* pRoutePropDialog;
 extern TrackPropDlg* pTrackPropDialog;
-extern Routeman* g_pRouteMan;
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern chart::ChartBase* Current_Ch;
@@ -776,7 +775,7 @@ void RouteManagerDialog::UpdateRteButtons()
 		route = pRouteList->at(item_index);
 	}
 
-	if (!g_pRouteMan->IsAnyRouteActive()) {
+	if (!global::OCPN::get().routeman().IsAnyRouteActive()) {
 		btnRteActivate->Enable(enable1);
 		if (enable1)
 			btnRteActivate->SetLabel(_("Activate"));
@@ -870,7 +869,7 @@ void RouteManagerDialog::OnRteDeleteClick(wxCommandEvent&)
 			Route* route = list.at(i);
 			if (route) {
 				pConfig->DeleteConfigRoute(route);
-				g_pRouteMan->DeleteRoute(route);
+				global::OCPN::get().routeman().DeleteRoute(route);
 			}
 		}
 
@@ -890,12 +889,13 @@ void RouteManagerDialog::OnRteDeleteAllClick(wxCommandEvent&)
 									wxString(_("OpenCPN Alert")), wxYES_NO);
 
 	if (dialog_ret == wxID_YES) {
-		if (g_pRouteMan->GetpActiveRoute())
-			g_pRouteMan->DeactivateRoute();
+		navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+		if (routemanager.GetpActiveRoute())
+			routemanager.DeactivateRoute();
 
 		cc1->CancelMouseRoute();
 
-		g_pRouteMan->DeleteAllRoutes();
+		routemanager.DeleteAllRoutes();
 
 		m_lastRteItem = -1;
 		UpdateRouteListCtrl();
@@ -990,7 +990,7 @@ void RouteManagerDialog::OnRteReverseClick(wxCommandEvent&)
 	if (route->m_bIsInLayer)
 		return;
 
-	int ask_return = OCPNMessageBox(this, g_pRouteMan->GetRouteReverseMessage(),
+	int ask_return = OCPNMessageBox(this, global::OCPN::get().routeman().GetRouteReverseMessage(),
 									_("Rename Waypoints?"), wxYES_NO);
 	bool rename = (ask_return == wxID_YES);
 
@@ -1050,7 +1050,7 @@ void RouteManagerDialog::OnRteActivateClick(wxCommandEvent&)
 
 	if (!route)
 		return;
-
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
 	if (!route->m_bRtIsActive) {
 		if (!route->IsVisible()) {
 			route->SetVisible(true);
@@ -1061,9 +1061,9 @@ void RouteManagerDialog::OnRteActivateClick(wxCommandEvent&)
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		RoutePoint* best_point = route->FindBestActivatePoint(nav.pos, nav.cog);
-		g_pRouteMan->ActivateRoute(route, best_point);
+		routemanager.ActivateRoute(route, best_point);
 	} else {
-		g_pRouteMan->DeactivateRoute();
+		routemanager.DeactivateRoute();
 	}
 
 	UpdateRouteListCtrl();
@@ -1086,7 +1086,7 @@ void RouteManagerDialog::OnRteToggleVisibility(wxMouseEvent& event)
 
 		int wpts_set_viz = wxID_YES;
 		bool togglesharedwpts = true;
-		bool has_shared_wpts = g_pRouteMan->DoesRouteContainSharedPoints(route);
+		bool has_shared_wpts = global::OCPN::get().routeman().DoesRouteContainSharedPoints(route);
 
 		if (has_shared_wpts && route->IsVisible()) {
 			wpts_set_viz = OCPNMessageBox(this, _("Do you also want to make the shared waypoints being part of this route invisible?"),
@@ -1374,7 +1374,7 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 			for (unsigned int i = 0; i < deleteList.size(); i++) {
 				Track* deleteTrack = deleteList.at(i);
 				pConfig->DeleteConfigRoute(deleteTrack);
-				g_pRouteMan->DeleteTrack(deleteTrack);
+				global::OCPN::get().routeman().DeleteTrack(deleteTrack);
 			}
 
 			mergeList.clear();
@@ -1581,7 +1581,7 @@ void RouteManagerDialog::OnTrkDeleteClick(wxCommandEvent&)
 			Track* track = dynamic_cast<Track*>(list.at(i));
 			if (track) {
 				pConfig->DeleteConfigRoute(track);
-				g_pRouteMan->DeleteTrack(track);
+				global::OCPN::get().routeman().DeleteTrack(track);
 			}
 		}
 
@@ -1665,7 +1665,7 @@ void RouteManagerDialog::OnTrkDeleteAllClick(wxCommandEvent&)
 									wxString(_("OpenCPN Alert")), wxYES_NO);
 
 	if (dialog_ret == wxID_YES) {
-		g_pRouteMan->DeleteAllTracks();
+		global::OCPN::get().routeman().DeleteAllTracks();
 	}
 
 	m_lastTrkItem = -1;
@@ -2048,11 +2048,10 @@ void RouteManagerDialog::OnWptGoToClick(wxCommandEvent&)
 	temp_route->set_endString(name);
 	temp_route->m_bDeleteOnArrival = true;
 
-	if (g_pRouteMan->GetpActiveRoute())
-		g_pRouteMan->DeactivateRoute();
-
-	g_pRouteMan->ActivateRoute(temp_route, wp);
-
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+	if (routemanager.GetpActiveRoute())
+		routemanager.DeactivateRoute();
+	routemanager.ActivateRoute(temp_route, wp);
 	UpdateRouteListCtrl();
 }
 
@@ -2243,6 +2242,8 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent&)
 	if (!layer)
 		return;
 
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
 	// Process Tracks and Routes in this layer
 	// FIXME: container altering iterating, iterate through copy of list, only elements are
 	// interesting
@@ -2254,9 +2255,9 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent&)
 			pRoute->m_bIsInLayer = false;
 			pRoute->m_LayerID = 0;
 			if (!pRoute->m_bIsTrack) {
-				g_pRouteMan->DeleteRoute(pRoute);
+				routemanager.DeleteRoute(pRoute);
 			} else {
-				g_pRouteMan->DeleteTrack(pRoute);
+				routemanager.DeleteTrack(pRoute);
 			}
 		}
 		node = next;

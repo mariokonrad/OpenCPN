@@ -38,12 +38,13 @@
 #include <CM93DSlide.h>
 #include <RolloverWin.h>
 #include <ViewPort.h>
-#include <Routeman.h>
 #include <timers.h>
 
 #include <geo/Position.h>
 
 #include <ais/AISTargetQueryDialog.h>
+
+#include <navigation/RouteManager.h>
 
 #include <chart/S57Sector.h>
 
@@ -292,7 +293,7 @@ private:
 	Route* m_pMouseRoute;
 	Route* m_pSelectedRoute;
 	Route* m_pSelectedTrack;
-	Routeman::RouteArray m_EditRouteArray;
+	navigation::RouteManager::RouteArray m_EditRouteArray;
 	RoutePoint* m_pFoundRoutePoint;
 	RoutePoint* m_pFoundRoutePointSecond;
 

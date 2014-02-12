@@ -24,17 +24,19 @@
 #include "NavObjectCollection.h"
 
 #include <RoutePoint.h>
-#include <Routeman.h>
 #include <WayPointman.h>
 #include <Track.h>
 #include <Select.h>
 #include <Config.h>
 
+#include <global/OCPN.h>
+
+#include <navigation/RouteManager.h>
+
 #include <gpx/ParseGPXDateTime.h>
 #include <gpx/GpxDocument.h>
 
 extern WayPointman* pWayPointMan;
-extern Routeman* g_pRouteMan;
 extern Config* pConfig;
 
 extern RouteList* pRouteList;
@@ -786,10 +788,12 @@ void NavObjectCollection::InsertRouteA(Route* pTentRoute)
 	if (pTentRoute->GetnPoints() < 2)
 		bAddroute = false;
 
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
 	// TODO  All this trouble for a tentative route.......Should make some Route methods????
 	if (bAddroute) {
 		// We are importing a different route with the same guid, so let's generate it a new guid
-		if (g_pRouteMan->RouteExists(pTentRoute->guid())) {
+		if (routemanager.RouteExists(pTentRoute->guid())) {
 			pTentRoute->set_guid(GpxDocument::GetUUID());
 			// Now also change guids for the routepoints
 			for (RoutePointList::iterator node = pTentRoute->routepoints().begin();
@@ -832,7 +836,7 @@ void NavObjectCollection::InsertRouteA(Route* pTentRoute)
 			RoutePoint* prp = *node;
 
 			// check all other routes to see if this point appears in any other route
-			Route* pcontainer_route = g_pRouteMan->FindRouteContainingWaypoint(prp);
+			Route* pcontainer_route = routemanager.FindRouteContainingWaypoint(prp);
 
 			if (pcontainer_route == NULL) {
 				prp->m_bIsInRoute = false; // Take this point out of this (and only) track/route
@@ -889,7 +893,8 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 			RoutePoint* prp = *node;
 
 			// check all other routes to see if this point appears in any other route
-			Route* pcontainer_route = g_pRouteMan->FindRouteContainingWaypoint(prp);
+			Route* pcontainer_route
+				= global::OCPN::get().routeman().FindRouteContainingWaypoint(prp);
 
 			if (pcontainer_route == NULL) {
 				prp->m_bIsInRoute = false; // Take this point out of this (and only) track/route
@@ -905,7 +910,7 @@ void NavObjectCollection::InsertTrack(Route* pTentTrack)
 
 void NavObjectCollection::UpdateRouteA(Route* pTentRoute)
 {
-	Route* rt = g_pRouteMan->RouteExists(pTentRoute->guid());
+	Route* rt = global::OCPN::get().routeman().RouteExists(pTentRoute->guid());
 	if (rt) {
 		for (RoutePointList::iterator node = pTentRoute->routepoints().begin();
 			 node != pTentRoute->routepoints().end(); ++node) {

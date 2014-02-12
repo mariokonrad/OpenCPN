@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "Route.h"
-#include <Routeman.h>
 #include <WayPointman.h>
 #include <ocpnDC.h>
 #include <Multiplexer.h>
@@ -40,6 +39,8 @@
 #include <global/Navigation.h>
 #include <global/ColorManager.h>
 
+#include <navigation/RouteManager.h>
+
 #include <geo/GeoRef.h>
 #include <geo/LineClip.h>
 
@@ -49,7 +50,6 @@
 #include <algorithm>
 
 extern WayPointman* pWayPointMan;
-extern Routeman* g_pRouteMan;
 extern Select* pSelect;
 extern Config* pConfig;
 extern Multiplexer* g_pMUX;
@@ -381,12 +381,14 @@ void Route::DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint* rpn)
 
 void Route::DrawSegment(ocpnDC& dc, wxPoint* rp1, wxPoint* rp2, const ViewPort& VP, bool bdraw_arrow)
 {
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
 	if (m_bRtIsSelected)
-		dc.SetPen(g_pRouteMan->GetSelectedRoutePen());
+		dc.SetPen(routemanager.GetSelectedRoutePen());
 	else if (m_bRtIsActive)
-		dc.SetPen(g_pRouteMan->GetActiveRoutePen());
+		dc.SetPen(routemanager.GetActiveRoutePen());
 	else
-		dc.SetPen(g_pRouteMan->GetRoutePen());
+		dc.SetPen(routemanager.GetRoutePen());
 
 	RenderSegment(dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow);
 }
@@ -396,9 +398,11 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 	if (m_nPoints == 0)
 		return;
 
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
 	if (m_bVisible && m_bRtIsSelected) {
-		dc.SetPen(g_pRouteMan->GetSelectedRoutePen());
-		dc.SetBrush(g_pRouteMan->GetSelectedRouteBrush());
+		dc.SetPen(routemanager.GetSelectedRoutePen());
+		dc.SetBrush(routemanager.GetSelectedRouteBrush());
 	} else if (m_bVisible) {
 		int style = wxSOLID;
 		int width = global::OCPN::get().gui().view().route_line_width;
@@ -408,7 +412,7 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 		if (m_width != STYLE_UNDEFINED)
 			width = m_width;
 		if (m_Colour == wxEmptyString) {
-			col = g_pRouteMan->GetRoutePen().GetColour();
+			col = routemanager.GetRoutePen().GetColour();
 		} else {
 			for (unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(wxString); i++) {
 				if (m_Colour == ::GpxxColorNames[i]) {
@@ -422,8 +426,8 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 	}
 
 	if (m_bVisible && m_bRtIsActive) {
-		dc.SetPen(g_pRouteMan->GetActiveRoutePen());
-		dc.SetBrush(g_pRouteMan->GetActiveRouteBrush());
+		dc.SetPen(routemanager.GetActiveRoutePen());
+		dc.SetBrush(routemanager.GetActiveRouteBrush());
 	}
 
 	wxPoint rpt1;
@@ -703,8 +707,10 @@ void Route::DeletePoint(RoutePoint* rp, bool bRenamePoints)
 
 void Route::RemovePoint(RoutePoint* rp, bool bRenamePoints)
 {
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
 	if (rp->m_bIsActive && this->IsActive()) // FS#348
-		g_pRouteMan->DeactivateRoute();
+		routemanager.DeactivateRoute();
 
 	pSelect->DeleteAllSelectableRoutePoints(this);
 	pSelect->DeleteAllSelectableRouteSegments(this);
@@ -715,7 +721,7 @@ void Route::RemovePoint(RoutePoint* rp, bool bRenamePoints)
 	m_nPoints -= 1;
 
 	// check all other routes to see if this point appears in any other route
-	Route* pcontainer_route = g_pRouteMan->FindRouteContainingWaypoint(rp);
+	Route* pcontainer_route = routemanager.FindRouteContainingWaypoint(rp);
 
 	if (pcontainer_route == NULL) {
 		rp->m_bIsInRoute = false; // Take this point out of this (and only) route

@@ -26,7 +26,6 @@
 #include <AnnunText.h>
 #include <CDI.h>
 #include <MainFrame.h>
-#include <Routeman.h>
 #include <FontMgr.h>
 #include <RoutePoint.h>
 #include <Route.h>
@@ -38,13 +37,14 @@
 #include <global/Navigation.h>
 #include <global/GUI.h>
 
+#include <navigation/RouteManager.h>
+
 #include <cstdlib>
 #include <cmath>
 #include <ctime>
 
 #include <wx/datetime.h>
 
-extern Routeman* g_pRouteMan;
 extern MainFrame* gFrame;
 
 enum eMenuItems {
@@ -151,7 +151,7 @@ void ConsoleCanvas::OnPaint(wxPaintEvent&)
 {
 	wxPaintDC dc(this);
 
-	if (g_pRouteMan->GetpActiveRoute()) {
+	if (global::OCPN::get().routeman().GetpActiveRoute()) {
 		if (m_bNeedClear) {
 			pThisLegText->Refresh();
 			m_bNeedClear = false;
@@ -232,16 +232,17 @@ void ConsoleCanvas::OnContextMenuSelection(wxCommandEvent& event)
 
 void ConsoleCanvas::UpdateRouteData()
 {
-	if (!g_pRouteMan->GetpActiveRoute())
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+	if (!routemanager.GetpActiveRoute())
 		return;
 
-	if (!g_pRouteMan->is_data_valid())
+	if (!routemanager.is_data_valid())
 		return;
 
 	// Range
 	wxString srng;
-	float rng = g_pRouteMan->GetCurrentRngToActivePoint();
-	float nrng = g_pRouteMan->GetCurrentRngToActiveNormalArrival();
+	float rng = routemanager.GetCurrentRngToActivePoint();
+	float nrng = routemanager.GetCurrentRngToActiveNormalArrival();
 
 	// show if there is more than 10% difference in ranges, etc...
 	double deltarng = fabs(rng - nrng);
@@ -261,7 +262,7 @@ void ConsoleCanvas::UpdateRouteData()
 		pRNG->SetAValue(srng);
 
 	// Brg
-	float dcog = g_pRouteMan->GetCurrentBrgToActivePoint();
+	float dcog = routemanager.GetCurrentBrgToActivePoint();
 	if (dcog >= 359.5)
 		dcog = 0;
 
@@ -276,9 +277,9 @@ void ConsoleCanvas::UpdateRouteData()
 
 	// XTE
 	wxString str_buf;
-	str_buf.Printf(_T("%6.2f"), g_pRouteMan->GetCurrentXTEToActivePoint());
+	str_buf.Printf(_T("%6.2f"), routemanager.GetCurrentXTEToActivePoint());
 	pXTE->SetAValue(str_buf);
-	if (g_pRouteMan->GetXTEDir() < 0)
+	if (routemanager.GetXTEDir() < 0)
 		pXTE->SetALabel(wxString(_("XTE         L")));
 	else
 		pXTE->SetALabel(wxString(_("XTE         R")));
@@ -290,7 +291,7 @@ void ConsoleCanvas::UpdateRouteData()
 	double VMG = 0.0;
 	if (!wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
 		double BRG;
-		BRG = g_pRouteMan->GetCurrentBrgToActivePoint();
+		BRG = routemanager.GetCurrentBrgToActivePoint();
 		VMG = nav.sog * cos((BRG - nav.cog) * M_PI / 180.0);
 		str_buf.Printf(_T("%6.2f"), VMG);
 	} else
@@ -317,7 +318,7 @@ void ConsoleCanvas::UpdateRouteData()
 	// Remainder of route
 	float trng = rng;
 
-	Route* prt = g_pRouteMan->GetpActiveRoute();
+	Route* prt = routemanager.GetpActiveRoute();
 
 	int n_addflag = 0;
 	for (RoutePointList::iterator node = prt->routepoints().begin();

@@ -65,7 +65,6 @@
 #include <Track.h>
 #include <StyleManager.h>
 #include <Style.h>
-#include <Routeman.h>
 #include <StatWin.h>
 #include <PianoWin.h>
 #include <ConsoleCanvas.h>
@@ -103,6 +102,7 @@
 #include <navigation/AnchorDist.h>
 #include <navigation/MagneticVariation.h>
 #include <navigation/RouteTracker.h>
+#include <navigation/RouteManager.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -172,7 +172,6 @@ int g_LayerIdx;
 Select* pSelect;
 Select* pSelectTC;
 Select* pSelectAIS;
-Routeman* g_pRouteMan;
 WayPointman* pWayPointMan;
 MarkInfoImpl* pMarkPropDialog;
 RouteProp* pRoutePropDialog;
@@ -571,8 +570,7 @@ void MainFrame::SetAndApplyColorScheme(global::ColorScheme cs)
 	if (console)
 		console->SetColorScheme(cs);
 
-	if (g_pRouteMan)
-		g_pRouteMan->SetColorScheme(cs);
+	global::OCPN::get().routeman().SetColorScheme(cs);
 
 	if (pMarkPropDialog)
 		pMarkPropDialog->SetColorScheme(cs);
@@ -1710,9 +1708,10 @@ void MainFrame::ActivateMOB(void)
 		temp_route->SetRouteArrivalRadius(-1.0); // never arrives
 		temp_route->RebuildGUIDList(); // ensure the GUID list is intact and good
 
-		if (g_pRouteMan->GetpActiveRoute())
-			g_pRouteMan->DeactivateRoute();
-		g_pRouteMan->ActivateRoute(temp_route, pWP_MOB);
+		navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+		if (routemanager.GetpActiveRoute())
+			routemanager.DeactivateRoute();
+		routemanager.ActivateRoute(temp_route, pWP_MOB);
 
 		wxJSONValue v;
 		v[_T("GUID")] = temp_route->guid();
@@ -2877,11 +2876,13 @@ bool MainFrame::is_route_blink_odd() const
 
 void MainFrame::onTimer_update_active_route()
 {
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+
 	// Update the active route, if any
-	if (g_pRouteMan->UpdateProgress()) {
+	if (routemanager.UpdateProgress()) {
 		++route_blinker_tick;
 		// This RefreshRect will cause any active routepoint to blink
-		if (g_pRouteMan->GetpActiveRoute())
+		if (routemanager.GetpActiveRoute())
 			chart_canvas->RefreshRect(g_blink_rect, false);
 	}
 }

@@ -24,7 +24,10 @@
 #ifndef __GLOBAL__OCPN__H__
 #define __GLOBAL__OCPN__H__
 
-namespace navigation { class RouteTracker; }
+namespace navigation {
+class RouteTracker;
+class RouteManager;
+}
 
 namespace global {
 
@@ -66,6 +69,9 @@ public:
 	void inject(navigation::RouteTracker*);
 	navigation::RouteTracker& tracker();
 
+	void inject(navigation::RouteManager*);
+	navigation::RouteManager& routeman();
+
 private:
 	OCPN();
 	OCPN(const OCPN&);
@@ -82,6 +88,7 @@ private:
 	Runtime* run_instance;
 	ColorManager* color_instance;
 	navigation::RouteTracker* tracker_instance;
+	navigation::RouteManager* route_manager_instance;
 };
 
 }

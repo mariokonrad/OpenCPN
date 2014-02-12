@@ -26,13 +26,16 @@
 #include <LinkPropDlg.h>
 #include <WayPointman.h>
 #include <Select.h>
-#include <Routeman.h>
 #include <PositionConvert.h>
 #include <PositionParser.h>
 #include <RouteManagerDialog.h>
 #include <Config.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
+
+#include <global/OCPN.h>
+
+#include <navigation/RouteManager.h>
 
 #include <wx/notebook.h>
 #include <wx/sizer.h>
@@ -46,7 +49,6 @@ extern Select* pSelect;
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern RouteManagerDialog* pRouteManagerDialog;
-extern Routeman* g_pRouteMan;
 
 MarkInfoDef::MarkInfoDef(
 		wxWindow * parent,
@@ -780,9 +782,12 @@ bool MarkInfoImpl::SaveChanges()
 		// Update the route segment selectables
 		pSelect->UpdateSelectableRouteSegments(m_pRoutePoint);
 
+		using navigation::RouteManager;
+
 		// Get an array of all routes using this point
-		Routeman::RouteArray routes = g_pRouteMan->GetRouteArrayContaining(m_pRoutePoint);
-		for (Routeman::RouteArray::iterator i = routes.begin(); i != routes.end(); ++i) {
+		RouteManager::RouteArray routes
+			= global::OCPN::get().routeman().GetRouteArrayContaining(m_pRoutePoint);
+		for (RouteManager::RouteArray::iterator i = routes.begin(); i != routes.end(); ++i) {
 			Route* route = *i;
 			route->CalculateBBox();
 			route->UpdateSegmentDistances();

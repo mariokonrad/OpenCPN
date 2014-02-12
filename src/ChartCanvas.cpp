@@ -37,7 +37,6 @@
 #include <dychart.h>
 #include <StyleManager.h>
 #include <Style.h>
-#include <Routeman.h>
 #include <StatWin.h>
 #include <Track.h>
 #include <Kml.h>
@@ -81,6 +80,7 @@
 #include <navigation/AnchorDist.h>
 #include <navigation/MagneticVariation.h>
 #include <navigation/RouteTracker.h>
+#include <navigation/RouteManager.h>
 
 #include <geo/LineClip.h>
 #include <geo/Geodesic.h>
@@ -141,7 +141,6 @@ extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern RouteList* pRouteList;
 extern Config* pConfig;
 extern Select* pSelect;
-extern Routeman* g_pRouteMan;
 extern ThumbWin* pthumbwin;
 extern tide::TCMgr* ptcmgr;
 extern Select* pSelectTC;
@@ -1214,7 +1213,7 @@ void ChartCanvas::CancelMeasureRoute()
 {
 	m_bMeasure_Active = false;
 	m_nMeasureState = 0;
-	g_pRouteMan->DeleteRoute(m_pMeasureRoute);
+	global::OCPN::get().routeman().DeleteRoute(m_pMeasureRoute);
 	m_pMeasureRoute = NULL;
 }
 
@@ -1305,7 +1304,7 @@ void ChartCanvas::OnKeyDown(wxKeyEvent& event)
 			if (!parent_frame->nRoute_State) // no measure tool if currently creating route
 			{
 				if (m_bMeasure_Active) {
-					g_pRouteMan->DeleteRoute(m_pMeasureRoute);
+					global::OCPN::get().routeman().DeleteRoute(m_pMeasureRoute);
 					m_pMeasureRoute = NULL;
 				}
 
@@ -1532,10 +1531,10 @@ void ChartCanvas::OnKeyDown(wxKeyEvent& event)
 
 			case 14: // Ctrl N - Activate next waypoint in a route
 			{
-				if (Route* r = g_pRouteMan->GetpActiveRoute()) {
+				if (Route* r = global::OCPN::get().routeman().GetpActiveRoute()) {
 					int indexActive = r->GetIndexOf(r->m_pRouteActivePoint);
 					if ((indexActive + 1) <= r->GetnPoints()) {
-						g_pRouteMan->ActivateNextPoint(r, true);
+						global::OCPN::get().routeman().ActivateNextPoint(r, true);
 						Refresh(false);
 					}
 				}
@@ -1599,14 +1598,13 @@ void ChartCanvas::OnKeyDown(wxKeyEvent& event)
 				if (m_bMeasure_Active) {
 					m_bMeasure_Active = false;
 					m_nMeasureState = 0;
-					g_pRouteMan->DeleteRoute(m_pMeasureRoute);
+					global::OCPN::get().routeman().DeleteRoute(m_pMeasureRoute);
 					m_pMeasureRoute = NULL;
 					gFrame->SurfaceToolbar();
 					Refresh(false);
 				}
 
-				if (parent_frame->nRoute_State) // creating route?
-				{
+				if (parent_frame->nRoute_State) { // creating route?
 					FinishRoute();
 					gFrame->SurfaceToolbar();
 					Refresh(false);
@@ -1616,19 +1614,19 @@ void ChartCanvas::OnKeyDown(wxKeyEvent& event)
 
 			case 7: // Ctrl G
 				switch (gamma_state) {
-					case(0) :
+					case 0:
 						r_gamma_mult = 0;
 						g_gamma_mult = 1;
 						b_gamma_mult = 0;
 						gamma_state = 1;
 						break;
-					case(1) :
+					case 1:
 						r_gamma_mult = 1;
 						g_gamma_mult = 0;
 						b_gamma_mult = 0;
 						gamma_state = 2;
 						break;
-					case(2) :
+					case 2:
 						r_gamma_mult = 1;
 						g_gamma_mult = 1;
 						b_gamma_mult = 1;
@@ -5020,7 +5018,7 @@ void ChartCanvas::FindRoutePointsAtCursor(float, bool setBeingEdited)
 		RoutePoint* frp = (RoutePoint*)pFind->m_pData1;
 
 		// Get an array of all routes using this point
-		m_EditRouteArray = g_pRouteMan->GetRouteArrayContaining(frp);
+		m_EditRouteArray = global::OCPN::get().routeman().GetRouteArrayContaining(frp);
 
 		// Use route array to determine actual visibility for the point
 		bool brp_viz = false;
@@ -5381,7 +5379,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 					// check all other routes to see if this point appears in any other route
 					// If it appears in NO other route, then it should e considered an isolated mark
-					if (!g_pRouteMan->FindRouteContainingWaypoint(pMousePoint))
+					if (!global::OCPN::get().routeman().FindRouteContainingWaypoint(pMousePoint))
 						pMousePoint->m_bKeepXRoute = true;
 				}
 			}
@@ -5549,7 +5547,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 						// Route may be gone due to drgging close to ownship with
 						// "Delete On Arrival" state set, as in the case of
 						// navigating to an isolated waypoint on a temporary route
-						if (g_pRouteMan->IsRouteValid(pr)) {
+						if (global::OCPN::get().routeman().IsRouteValid(pr)) {
 							wxRect route_rect;
 							pr->CalculateDCRect(m_dc_route, route_rect, VPoint);
 							pre_rect.Union(route_rect);
@@ -5585,7 +5583,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				if (!m_EditRouteArray.empty()) {
 					for (unsigned int ir = 0; ir < m_EditRouteArray.size(); ir++) {
 						Route* pr = m_EditRouteArray.at(ir);
-						if (g_pRouteMan->IsRouteValid(pr)) {
+						if (global::OCPN::get().routeman().IsRouteValid(pr)) {
 							wxRect route_rect;
 							pr->CalculateDCRect(m_dc_route, route_rect, VPoint);
 							post_rect.Union(route_rect);
@@ -5686,7 +5684,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				if (!m_EditRouteArray.empty()) {
 					for (unsigned int ir = 0; ir < m_EditRouteArray.size(); ir++) {
 						Route* pr = m_EditRouteArray.at(ir);
-						if (g_pRouteMan->IsRouteValid(pr)) {
+						if (global::OCPN::get().routeman().IsRouteValid(pr)) {
 							pr->CalculateBBox();
 							pr->UpdateSegmentDistances();
 							pConfig->UpdateRoute(pr);
@@ -5699,7 +5697,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					if (!m_EditRouteArray.empty()) {
 						for (unsigned int ir = 0; ir < m_EditRouteArray.size(); ir++) {
 							Route* pr = m_EditRouteArray.at(ir);
-							if (g_pRouteMan->IsRouteValid(pr)) {
+							if (global::OCPN::get().routeman().IsRouteValid(pr)) {
 								if (!pr->IsTrack() && pRoutePropDialog->getRoute() == pr) {
 									pRoutePropDialog->SetRouteAndUpdate(pr);
 									pRoutePropDialog->UpdateProperties();
@@ -5839,12 +5837,13 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 					RoutePoint* prp = (RoutePoint*)item->m_pData1; // candidate
 
 					// Get an array of all routes using this point
-					Routeman::RouteArray route_array = g_pRouteMan->GetRouteArrayContaining(prp);
+					navigation::RouteManager::RouteArray route_array
+						= global::OCPN::get().routeman().GetRouteArrayContaining(prp);
 
 					// Use route array (if any) to determine actual visibility for this point
 					bool brp_viz = false;
 					if (!route_array.empty()) {
-						for (Routeman::RouteArray::iterator i = route_array.begin();
+						for (navigation::RouteManager::RouteArray::iterator i = route_array.begin();
 							 i != route_array.end(); ++i) {
 							Route* pr = *i;
 							if (pr->IsVisible()) {
@@ -6194,7 +6193,8 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 	if (!nav.gps().valid)
 		contextMenu->Append(ID_DEF_MENU_MOVE_BOAT_HERE, _("Move Boat Here"));
 
-	if (!(g_pRouteMan->GetpActiveRoute() || (seltype & SelectItem::TYPE_MARKPOINT)))
+	if (!(global::OCPN::get().routeman().GetpActiveRoute()
+		  || (seltype & SelectItem::TYPE_MARKPOINT)))
 		contextMenu->Append(ID_DEF_MENU_GOTO_HERE, _("Navigate To Here"));
 
 	contextMenu->Append(ID_DEF_MENU_GOTOPOSITION, _("Center View..."));
@@ -6447,7 +6447,7 @@ void ChartCanvas::CanvasPopupMenu(int x, int y, int seltype)
 		} else {
 			menuWaypoint->Append(ID_WP_MENU_PROPERTIES, _("Properties..."));
 
-			if (!g_pRouteMan->GetpActiveRoute())
+			if (!global::OCPN::get().routeman().GetpActiveRoute())
 				menuWaypoint->Append(ID_WP_MENU_GOTO, _("Navigate To This"));
 
 			menuWaypoint->Append(ID_WPT_MENU_COPY, _("Copy as KML"));
@@ -6689,19 +6689,19 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 
 void ChartCanvas::RemovePointFromRoute(RoutePoint* point, Route* route)
 {
-	//  Rebuild the route selectables
+	// Rebuild the route selectables
 	pSelect->DeleteAllSelectableRoutePoints(route);
 	pSelect->DeleteAllSelectableRouteSegments(route);
 
 	route->RemovePoint(point);
 
-	//  Check for 1 point routes. If we are creating a route, this is an undo, so keep the 1 point.
+	// Check for 1 point routes. If we are creating a route, this is an undo, so keep the 1 point.
 	if ((route->GetnPoints() <= 1) && (parent_frame->nRoute_State == 0)) {
 		pConfig->DeleteConfigRoute(route);
-		g_pRouteMan->DeleteRoute(route);
+		global::OCPN::get().routeman().DeleteRoute(route);
 		route = NULL;
 	}
-	//  Add this point back into the selectables
+	// Add this point back into the selectables
 	pSelect->AddSelectableRoutePoint(point->get_position(), point);
 
 	if (pRoutePropDialog && (pRoutePropDialog->IsShown())) {
@@ -7041,10 +7041,11 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 			temp_route->m_bDeleteOnArrival = true;
 
-			if (g_pRouteMan->GetpActiveRoute())
-				g_pRouteMan->DeactivateRoute();
+			navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+			if (routemanager.GetpActiveRoute())
+				routemanager.DeactivateRoute();
 
-			g_pRouteMan->ActivateRoute(temp_route, pWP_dest);
+			routemanager.ActivateRoute(temp_route, pWP_dest);
 		} break;
 
 		case ID_DEF_MENU_DROP_WP: {
@@ -7092,10 +7093,11 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			temp_route->set_endString(name);
 			temp_route->m_bDeleteOnArrival = true;
 
-			if (g_pRouteMan->GetpActiveRoute())
-				g_pRouteMan->DeactivateRoute();
+			navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+			if (routemanager.GetpActiveRoute())
+				routemanager.DeactivateRoute();
 
-			g_pRouteMan->ActivateRoute(temp_route, m_pFoundRoutePoint);
+			routemanager.ActivateRoute(temp_route, m_pFoundRoutePoint);
 		} break;
 
 		case ID_DEF_MENU_COGUP:
@@ -7129,8 +7131,8 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 				// If the WP belongs to an invisible route, we come here instead of to
 				// ID_RT_MENU_DELPOINT
 				// Check it, and if so then remove the point from its routes
-				Routeman::RouteArray route_array
-					= g_pRouteMan->GetRouteArrayContaining(m_pFoundRoutePoint);
+				navigation::RouteManager::RouteArray route_array
+					= global::OCPN::get().routeman().GetRouteArrayContaining(m_pFoundRoutePoint);
 				if (!route_array.empty()) {
 					pWayPointMan->DestroyWaypoint(m_pFoundRoutePoint);
 					m_pFoundRoutePoint = NULL;
@@ -7207,7 +7209,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 		case ID_DEF_MENU_DEACTIVATE_MEASURE:
 			m_bMeasure_Active = false;
 			m_nMeasureState = 0;
-			g_pRouteMan->DeleteRoute(m_pMeasureRoute);
+			global::OCPN::get().routeman().DeleteRoute(m_pMeasureRoute);
 			m_pMeasureRoute = NULL;
 			gFrame->SurfaceToolbar();
 			Refresh(false);
@@ -7281,8 +7283,9 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 				break;
 
 			pSelect->DeleteAllSelectableRouteSegments(m_pSelectedRoute);
-			int ask_return = OCPNMessageBox(this, g_pRouteMan->GetRouteReverseMessage(),
-											_("Rename Waypoints?"), wxYES_NO);
+			int ask_return
+				= OCPNMessageBox(this, global::OCPN::get().routeman().GetRouteReverseMessage(),
+								 _("Rename Waypoints?"), wxYES_NO);
 			m_pSelectedRoute->Reverse(ask_return == wxID_YES);
 			pSelect->AddAllSelectableRouteSegments(m_pSelectedRoute);
 			pConfig->UpdateRoute(m_pSelectedRoute);
@@ -7302,14 +7305,15 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			}
 
 			if (dlg_return == wxID_YES) {
-				if (g_pRouteMan->GetpActiveRoute() == m_pSelectedRoute)
-					g_pRouteMan->DeactivateRoute();
+				navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+				if (routemanager.GetpActiveRoute() == m_pSelectedRoute)
+					routemanager.DeactivateRoute();
 
 				if (m_pSelectedRoute->m_bIsInLayer)
 					break;
 
 				pConfig->DeleteConfigRoute(m_pSelectedRoute);
-				g_pRouteMan->DeleteRoute(m_pSelectedRoute);
+				routemanager.DeleteRoute(m_pSelectedRoute);
 				if (pRoutePropDialog && (pRoutePropDialog->IsShown())
 					&& (m_pSelectedRoute == pRoutePropDialog->getRoute())) {
 					pRoutePropDialog->Hide();
@@ -7334,18 +7338,18 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 		case ID_RT_MENU_ACTIVATE: {
 			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			if (g_pRouteMan->GetpActiveRoute())
-				g_pRouteMan->DeactivateRoute();
+			navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+			if (routemanager.GetpActiveRoute())
+				routemanager.DeactivateRoute();
 
 			RoutePoint* best_point = m_pSelectedRoute->FindBestActivatePoint(nav.pos, nav.cog);
-			g_pRouteMan->ActivateRoute(m_pSelectedRoute, best_point);
+			routemanager.ActivateRoute(m_pSelectedRoute, best_point);
 			m_pSelectedRoute->m_bRtIsSelected = false;
-
 			break;
 		}
 
 		case ID_RT_MENU_DEACTIVATE:
-			g_pRouteMan->DeactivateRoute();
+			global::OCPN::get().routeman().DeactivateRoute();
 			m_pSelectedRoute->m_bRtIsSelected = false;
 
 			break;
@@ -7453,7 +7457,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 				m_pFoundRoutePoint = NULL;
 
 				// Selected route may have been deleted as one-point route, so check it
-				if (!g_pRouteMan->IsRouteValid(m_pSelectedRoute))
+				if (!global::OCPN::get().routeman().IsRouteValid(m_pSelectedRoute))
 					m_pSelectedRoute = NULL;
 
 				if (pRoutePropDialog && (pRoutePropDialog->IsShown())) {
@@ -7481,8 +7485,9 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			break;
 
 		case ID_RT_MENU_ACTPOINT:
-			if (g_pRouteMan->GetpActiveRoute() == m_pSelectedRoute) {
-				g_pRouteMan->ActivateRoutePoint(m_pSelectedRoute, m_pFoundRoutePoint);
+			if (global::OCPN::get().routeman().GetpActiveRoute() == m_pSelectedRoute) {
+				global::OCPN::get().routeman().ActivateRoutePoint(m_pSelectedRoute,
+																  m_pFoundRoutePoint);
 				m_pSelectedRoute->m_bRtIsSelected = false;
 			}
 
@@ -7492,8 +7497,8 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			break;
 
 		case ID_RT_MENU_ACTNXTPOINT:
-			if (g_pRouteMan->GetpActiveRoute() == m_pSelectedRoute) {
-				g_pRouteMan->ActivateNextPoint(m_pSelectedRoute, true);
+			if (global::OCPN::get().routeman().GetpActiveRoute() == m_pSelectedRoute) {
+				global::OCPN::get().routeman().ActivateNextPoint(m_pSelectedRoute, true);
 				m_pSelectedRoute->m_bRtIsSelected = false;
 			}
 
@@ -7524,7 +7529,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 				pConfig->DeleteConfigRoute(m_pSelectedTrack);
 
-				g_pRouteMan->DeleteTrack(m_pSelectedTrack);
+				global::OCPN::get().routeman().DeleteTrack(m_pSelectedTrack);
 
 				if (pTrackPropDialog && (pTrackPropDialog->IsShown())
 					&& (m_pSelectedTrack == pTrackPropDialog->GetTrack())) {
@@ -7617,7 +7622,7 @@ void ChartCanvas::FinishRoute(void)
 			if (m_pMouseRoute->GetnPoints() > 1) {
 				pConfig->AddNewRoute(m_pMouseRoute, -1); // use auto next num
 			} else {
-				g_pRouteMan->DeleteRoute(m_pMouseRoute);
+				global::OCPN::get().routeman().DeleteRoute(m_pMouseRoute);
 				m_pMouseRoute = NULL;
 			}
 

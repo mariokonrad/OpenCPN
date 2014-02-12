@@ -23,7 +23,6 @@
 
 #include "WayPointman.h"
 #include <RoutePoint.h>
-#include <Routeman.h>
 #include <Select.h>
 #include <StyleManager.h>
 #include <Style.h>
@@ -33,6 +32,8 @@
 #include <global/OCPN.h>
 #include <global/System.h>
 #include <global/ColorManager.h>
+
+#include <navigation/RouteManager.h>
 
 #include <algorithm>
 
@@ -45,7 +46,6 @@
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
-extern Routeman* g_pRouteMan;
 extern Config* pConfig;
 extern Select* pSelect;
 
@@ -520,24 +520,27 @@ void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_change
 	if (!route_point)
 		return;
 
+	using navigation::RouteManager;
+
 	// Get a list of all routes containing this point
 	// and remove the point from them all
 	// FIXME: handling the list of route should be one in the route list manager, not here
-	Routeman::RouteArray route_array = g_pRouteMan->GetRouteArrayContaining(route_point);
+	RouteManager& routemanager = global::OCPN::get().routeman();
+	RouteManager::RouteArray route_array = routemanager.GetRouteArrayContaining(route_point);
 	if (!route_array.empty()) {
 
-		for (Routeman::RouteArray::iterator i = route_array.begin(); i != route_array.end(); ++i) {
+		for (RouteManager::RouteArray::iterator i = route_array.begin(); i != route_array.end(); ++i) {
 			Route* route = *i;
 			route->RemovePoint(route_point);
 		}
 
 		// Scrub the routes, looking for one-point routes
-		for (Routeman::RouteArray::iterator i = route_array.begin(); i != route_array.end(); ++i) {
+		for (RouteManager::RouteArray::iterator i = route_array.begin(); i != route_array.end(); ++i) {
 			Route* route = *i;
 			if (route->GetnPoints() < 2) {
 				pConfig->disable_changeset_update();
 				pConfig->DeleteConfigRoute(route);
-				g_pRouteMan->DeleteRoute(route);
+				routemanager.DeleteRoute(route);
 				pConfig->enable_changeset_update();
 			}
 		}

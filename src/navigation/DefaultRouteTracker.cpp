@@ -26,18 +26,18 @@
 #include <plugin/PlugInManager.h>
 #include <ToolBarSimple.h>
 #include <RouteManagerDialog.h>
-#include <Routeman.h>
 #include <GUI_IDs.h>
 #include <Track.h>
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 
+#include <navigation/RouteManager.h>
+
 extern PlugInManager* g_pi_manager;
 extern ToolBarSimple* g_toolbar;
 extern RouteManagerDialog* pRouteManagerDialog;
 extern RouteList* pRouteList;
-extern Routeman* g_pRouteMan;
 
 namespace navigation {
 
@@ -77,17 +77,18 @@ Track* DefaultRouteTracker::do_stop(bool do_add_point, bool process_track)
 	Track* return_val = track;
 
 	if (track && process_track) {
+		navigation::RouteManager& routemanager = global::OCPN::get().routeman();
 		notify_plugins_stop();
 		track->Stop(do_add_point);
 		if (track->GetnPoints() < 2) {
-			g_pRouteMan->DeleteRoute(track);
+			routemanager.DeleteRoute(track);
 			return_val = NULL;
 		} else {
 			const global::Navigation::Track& nav_track = global::OCPN::get().nav().get_track();
 			if (nav_track.TrackDaily) {
 				Track* extended_track = track->DoExtendDaily();
 				if (extended_track) {
-					g_pRouteMan->DeleteRoute(track);
+					routemanager.DeleteRoute(track);
 					return_val = extended_track;
 				}
 			}

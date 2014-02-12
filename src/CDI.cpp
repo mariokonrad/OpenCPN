@@ -22,17 +22,16 @@
  **************************************************************************/
 
 #include "CDI.h"
-#include <Routeman.h>
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 #include <global/ColorManager.h>
 
+#include <navigation/RouteManager.h>
+
 #include <cmath>
 
 #include <wx/dcmemory.h>
-
-extern Routeman* g_pRouteMan;
 
 BEGIN_EVENT_TABLE(CDI, wxWindow)
 	EVT_PAINT(CDI::OnPaint)
@@ -78,16 +77,17 @@ void CDI::OnPaint(wxPaintEvent&)
 	int path_length = sy * 3;
 	int pix_per_xte = 120;
 
-	if (g_pRouteMan->GetpActiveRoute()) {
-		const double angle = 90 - (g_pRouteMan->GetCurrentSegmentCourse()
+	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
+	if (routemanager.GetpActiveRoute()) {
+		const double angle = 90 - (routemanager.GetCurrentSegmentCourse()
 								   - global::OCPN::get().nav().get_data().cog);
 
 		double dy = path_length * sin(angle * M_PI / 180.0);
 		double dx = path_length * cos(angle * M_PI / 180.0);
 
 		int xtedir;
-		xtedir = g_pRouteMan->GetXTEDir();
-		double xte = g_pRouteMan->GetCurrentXTEToActivePoint();
+		xtedir = routemanager.GetXTEDir();
+		double xte = routemanager.GetCurrentXTEToActivePoint();
 
 		const double sin_90_angle = sin((90 - angle) * M_PI / 180.0);
 		const double cos_90_angle = cos((90 - angle) * M_PI / 180.0);

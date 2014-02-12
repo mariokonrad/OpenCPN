@@ -335,19 +335,20 @@ bool RouteProp::IsThisRouteExtendable()
 
 	if (!m_pRoute->m_bIsTrack) {
 		RoutePoint* pLastPoint = m_pRoute->GetLastPoint();
-		Routeman::RouteArray* pEditRouteArray = g_pRouteMan->GetRouteArrayContaining(pLastPoint);
+		Routeman::RouteArray edit_routes = g_pRouteMan->GetRouteArrayContaining(pLastPoint);
 
 		// remove invisible & own routes from choices
-		for (int i = pEditRouteArray->size(); i > 0; --i) {
-			Route* route = static_cast<Route*>(pEditRouteArray->at(i - 1));
+		for (int i = edit_routes.size(); i > 0; --i) {
+			Route* route = edit_routes.at(i - 1);
 			if (!route->IsVisible() || (route->guid() == m_pRoute->guid()))
-				pEditRouteArray->erase(pEditRouteArray->begin() + i - 1); // FIXME: altering container while iterating
+				// FIXME: altering container while iterating
+				edit_routes.erase(edit_routes.begin() + i - 1);
 		}
 
-		if (pEditRouteArray->size() == 1) {
+		if (edit_routes.size() == 1) {
 			m_pExtendPoint = pLastPoint;
 		} else {
-			if (pEditRouteArray->size() == 0) {
+			if (edit_routes.size() == 0) {
 
 				int nearby_radius_meters = static_cast<int>(8.0 / cc1->GetCanvasTrueScale());
 				geo::Position rpos = pLastPoint->get_position();
@@ -355,35 +356,32 @@ bool RouteProp::IsThisRouteExtendable()
 				m_pExtendPoint = pWayPointMan->GetOtherNearbyWaypoint(rpos, nearby_radius_meters,
 																	  pLastPoint->guid());
 				if (m_pExtendPoint && !m_pExtendPoint->is_in_track()) {
-					Routeman::RouteArray* pCloseWPRouteArray
+					Routeman::RouteArray close_wp_routes
 						= g_pRouteMan->GetRouteArrayContaining(m_pExtendPoint);
-					if (pCloseWPRouteArray) {
-						pEditRouteArray = pCloseWPRouteArray; // FIXME: the original pEditRouteArray
-															  // ist lost, MEMORY LEAK
+					if (!close_wp_routes.empty()) {
+						edit_routes = close_wp_routes;
 
 						// remove invisible & own routes from choices
-						for (int i = pEditRouteArray->size(); i > 0; --i) {
-							Route* route = static_cast<Route*>(pEditRouteArray->at(i - 1));
+						for (int i = edit_routes.size(); i > 0; --i) {
+							Route* route = static_cast<Route*>(edit_routes.at(i - 1));
 							// FIXME: altering container while iterating
 							if (!route->IsVisible() || (route->guid() == m_pRoute->guid()))
-								pEditRouteArray->erase(pEditRouteArray->begin() + i - 1);
+								edit_routes.erase(edit_routes.begin() + i - 1);
 						}
 					}
 				}
 			}
 		}
 
-		if (pEditRouteArray->size() == 1) {
-			Route* route = static_cast<Route*>(pEditRouteArray->at(0));
+		if (edit_routes.size() == 1) {
+			Route* route = edit_routes.at(0);
 			int fm = route->GetIndexOf(m_pExtendPoint) + 1;
 			int to = route->GetnPoints();
 			if (fm <= to) {
 				m_pExtendRoute = route;
-				delete pEditRouteArray;
 				return true;
 			}
 		}
-		delete pEditRouteArray;
 	}
 	return false;
 }

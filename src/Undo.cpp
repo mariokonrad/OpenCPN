@@ -82,15 +82,12 @@ void Undo::doUndoMoveWaypoint(UndoAction* action)
 			pMarkPropDialog->UpdateProperties(true);
 	}
 
-	Routeman::RouteArray* routeArray = g_pRouteMan->GetRouteArrayContaining(currentPoint);
-	if (routeArray) {
-		for (Routeman::RouteArray::iterator i = routeArray->begin(); i != routeArray->end(); ++i) {
-			Route* route = static_cast<Route*>(*i);
-			route->CalculateBBox();
-			route->UpdateSegmentDistances();
-			pConfig->UpdateRoute(route);
-		}
-		delete routeArray;
+	Routeman::RouteArray routes = g_pRouteMan->GetRouteArrayContaining(currentPoint);
+	for (Routeman::RouteArray::iterator i = routes.begin(); i != routes.end(); ++i) {
+		Route* route = *i;
+		route->CalculateBBox();
+		route->UpdateSegmentDistances();
+		pConfig->UpdateRoute(route);
 	}
 }
 

@@ -292,7 +292,7 @@ private:
 	Route* m_pMouseRoute;
 	Route* m_pSelectedRoute;
 	Route* m_pSelectedTrack;
-	Routeman::RouteArray* m_pEditRouteArray;
+	Routeman::RouteArray m_EditRouteArray;
 	RoutePoint* m_pFoundRoutePoint;
 	RoutePoint* m_pFoundRoutePointSecond;
 

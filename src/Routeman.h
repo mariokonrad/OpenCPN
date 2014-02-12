@@ -103,7 +103,7 @@ public:
 
 	Route* FindRouteByGUID(const wxString& guid) const;
 	Route* FindRouteContainingWaypoint(const RoutePoint* pWP) const;
-	RouteArray* GetRouteArrayContaining(const RoutePoint* pWP); // FIXME: returns std container
+	RouteArray GetRouteArrayContaining(const RoutePoint* pWP); // FIXME: returns std container
 	bool DoesRouteContainSharedPoints(const Route* pRoute);
 
 	bool ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint = NULL);

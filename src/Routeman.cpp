@@ -118,24 +118,19 @@ Route* Routeman::FindRouteContainingWaypoint(const RoutePoint* pWP) const
 	return NULL;
 }
 
-Routeman::RouteArray* Routeman::GetRouteArrayContaining(const RoutePoint* pWP)
+Routeman::RouteArray Routeman::GetRouteArrayContaining(const RoutePoint* pWP)
 {
-	RouteArray* pArray = new RouteArray; // FIXME: return std container
+	RouteArray routes;
 
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
 		RoutePointList::const_iterator point
 			= std::find(route->routepoints().begin(), route->routepoints().end(), pWP);
 		if (point != route->routepoints().end())
-			pArray->push_back(route);
+			routes.push_back(route);
 	}
 
-	if (pArray->size()) {
-		return pArray;
-	} else {
-		delete pArray;
-		return NULL;
-	}
+	return routes;
 }
 
 bool Routeman::ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint)
@@ -726,15 +721,12 @@ bool Routeman::DoesRouteContainSharedPoints(const Route* pRoute)
 		 point != pRoute->routepoints().end(); ++point) {
 
 		// check all other routes to see if this point appears in any other route
-		RouteArray* pRA = GetRouteArrayContaining(*point); // FIXME: BUG: MEMORY LEAK
-		if (pRA) {
-			for (unsigned int ir = 0; ir < pRA->size(); ++ir) {
-				Route* route = static_cast<Route*>(pRA->at(ir));
-				if (route == pRoute)
-					continue;
-				else
-					return true;
-			}
+		RouteArray routes = GetRouteArrayContaining(*point);
+		for (unsigned int ir = 0; ir < routes.size(); ++ir) { // FIXME: std::find
+			if (pRoute == routes[ir])
+				continue;
+			else
+				return true;
 		}
 	}
 

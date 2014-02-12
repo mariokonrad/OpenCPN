@@ -523,17 +523,17 @@ void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_change
 	// Get a list of all routes containing this point
 	// and remove the point from them all
 	// FIXME: handling the list of route should be one in the route list manager, not here
-	Routeman::RouteArray * route_array = g_pRouteMan->GetRouteArrayContaining(route_point); // FIXME: return a std container
-	if (route_array) {
+	Routeman::RouteArray route_array = g_pRouteMan->GetRouteArrayContaining(route_point);
+	if (!route_array.empty()) {
 
-		for (Routeman::RouteArray::iterator i = route_array->begin(); i != route_array->end(); ++i) {
-			Route * route = static_cast<Route *>(*i);
+		for (Routeman::RouteArray::iterator i = route_array.begin(); i != route_array.end(); ++i) {
+			Route* route = *i;
 			route->RemovePoint(route_point);
 		}
 
 		// Scrub the routes, looking for one-point routes
-		for (Routeman::RouteArray::iterator i = route_array->begin(); i != route_array->end(); ++i) {
-			Route * route = static_cast<Route *>(*i);
+		for (Routeman::RouteArray::iterator i = route_array.begin(); i != route_array.end(); ++i) {
+			Route* route = *i;
 			if (route->GetnPoints() < 2) {
 				pConfig->disable_changeset_update();
 				pConfig->DeleteConfigRoute(route);
@@ -541,8 +541,6 @@ void WayPointman::DestroyWaypoint(RoutePoint * route_point, bool b_update_change
 				pConfig->enable_changeset_update();
 			}
 		}
-
-		delete route_array;
 	}
 
 	// Now it is safe to delete the point

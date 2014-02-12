@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CONCANV_H__
-#define __CONCANV_H__
+#ifndef __CONSOLECANVAS_H__
+#define __CONSOLECANVAS_H__
 
 #include <wx/dialog.h>
 #include <global/ColorScheme.h>
@@ -46,12 +46,12 @@ public:
 	void UpdateFonts(void);
 	void SetColorScheme(global::ColorScheme cs);
 	void LegRoute();
-	void OnContextMenu(wxContextMenuEvent& event);
-	void OnContextMenuSelection(wxCommandEvent& event);
 	void RefreshConsoleData(void);
 	void clear_background(void);
 
 private:
+	void OnContextMenu(wxContextMenuEvent& event);
+	void OnContextMenuSelection(wxCommandEvent& event);
 	void OnPaint(wxPaintEvent& event);
 	void OnShow(wxShowEvent& event);
 

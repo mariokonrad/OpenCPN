@@ -29,7 +29,6 @@
 
 #include <chart/ChartGroup.h>
 
-#include <CDI.h>
 #include <ChartDirectoryInfo.h>
 
 #include <vector>

@@ -34,8 +34,10 @@ class CDI : public wxWindow
 public:
 	CDI(wxWindow* parent, wxWindowID id, long style, const wxString& name);
 
-	void OnPaint(wxPaintEvent& event);
 	void SetColorScheme(global::ColorScheme cs);
+
+private:
+	void OnPaint(wxPaintEvent& event);
 
 	wxBrush* m_pbackBrush;
 	wxBrush* m_proadBrush;

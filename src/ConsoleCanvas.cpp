@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "ConsoleCanvas.h"
-#include "dychart.h"
+#include <dychart.h>
 #include <AnnunText.h>
 #include <CDI.h>
 #include <MainFrame.h>
@@ -107,7 +107,7 @@ ConsoleCanvas::ConsoleCanvas(wxWindow* frame)
 	pTTG->SetALabel(_T("TTG"));
 	m_pitemBoxSizerLeg->Add(pTTG, 1, wxALIGN_LEFT | wxALL, 2);
 
-	//    Create CDI Display Window
+	// Create CDI Display Window
 
 	pCDI = new CDI(this, -1, wxSIMPLE_BORDER, _T("CDI"));
 	m_pitemBoxSizerLeg->AddSpacer(5);
@@ -232,154 +232,152 @@ void ConsoleCanvas::OnContextMenuSelection(wxCommandEvent& event)
 
 void ConsoleCanvas::UpdateRouteData()
 {
-	wxString str_buf;
+	if (!g_pRouteMan->GetpActiveRoute())
+		return;
 
-	if (g_pRouteMan->GetpActiveRoute()) {
-		if (g_pRouteMan->is_data_valid()) {
+	if (!g_pRouteMan->is_data_valid())
+		return;
 
-			// Range
-			wxString srng;
-			float rng = g_pRouteMan->GetCurrentRngToActivePoint();
-			float nrng = g_pRouteMan->GetCurrentRngToActiveNormalArrival();
+	// Range
+	wxString srng;
+	float rng = g_pRouteMan->GetCurrentRngToActivePoint();
+	float nrng = g_pRouteMan->GetCurrentRngToActiveNormalArrival();
 
-			double deltarng = fabs(rng - nrng);
-			if ((deltarng > 0.01) && ((deltarng / rng) > 0.10)
-				&& (rng < 10.0)) // show if there is more than 10% difference in ranges, etc...
-			{
-				if (nrng < 10.0)
-					srng.Printf(_T("%5.2f/%5.2f"), rng, nrng);
-				else
-					srng.Printf(_T("%5.1f/%5.1f"), rng, nrng);
-			} else {
-				if (rng < 10.0)
-					srng.Printf(_T("%6.2f"), rng);
-				else
-					srng.Printf(_T("%6.1f"), rng);
-			}
-
-			if (!m_bShowRouteTotal)
-				pRNG->SetAValue(srng);
-
-			// Brg
-			float dcog = g_pRouteMan->GetCurrentBrgToActivePoint();
-			if (dcog >= 359.5)
-				dcog = 0;
-
-			wxString cogstr;
-			if (global::OCPN::get().gui().view().ShowMag)
-				cogstr << wxString::Format(wxString("%6.0f(M)", wxConvUTF8),
-										   navigation::GetTrueOrMag(dcog));
-			else
-				cogstr << wxString::Format(wxString("%6.0f", wxConvUTF8),
-										   navigation::GetTrueOrMag(dcog));
-
-			pBRG->SetAValue(cogstr);
-
-			// XTE
-			str_buf.Printf(_T("%6.2f"), g_pRouteMan->GetCurrentXTEToActivePoint());
-			pXTE->SetAValue(str_buf);
-			if (g_pRouteMan->GetXTEDir() < 0)
-				pXTE->SetALabel(wxString(_("XTE         L")));
-			else
-				pXTE->SetALabel(wxString(_("XTE         R")));
-
-			// VMG
-			// VMG is always to next waypoint, not to end of route
-			// VMG is SOG x cosine (difference between COG and BRG to Waypoint)
-			const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-			double VMG = 0.;
-			if (!wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
-				double BRG;
-				BRG = g_pRouteMan->GetCurrentBrgToActivePoint();
-				VMG = nav.sog * cos((BRG - nav.cog) * M_PI / 180.0);
-				str_buf.Printf(_T("%6.2f"), VMG);
-			} else
-				str_buf = _T("---");
-
-			pVMG->SetAValue(str_buf);
-
-			// TTG
-			// In all cases, ttg/eta are declared invalid if VMG <= 0.
-
-			// If showing only "this leg", use VMG for calculation of ttg
-			wxString ttg_s;
-			if ((VMG > 0.0) && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
-				float ttg_sec = (rng / VMG) * 3600.0;
-				wxTimeSpan ttg_span(0, 0, long(ttg_sec), 0);
-				ttg_s = ttg_span.Format();
-			} else {
-				ttg_s = _T("---");
-			}
-
-			if (!m_bShowRouteTotal)
-				pTTG->SetAValue(ttg_s);
-
-			// Remainder of route
-			float trng = rng;
-
-			Route* prt = g_pRouteMan->GetpActiveRoute();
-
-			int n_addflag = 0;
-			for (RoutePointList::iterator node = prt->routepoints().begin();
-				 node != prt->routepoints().end(); ++node) {
-				RoutePoint* prp = *node;
-				if (n_addflag)
-					trng += prp->m_seg_len;
-
-				if (prp == prt->m_pRouteActivePoint)
-					n_addflag++;
-			}
-
-			// total rng
-			wxString strng;
-			if (trng < 10.0)
-				strng.Printf(_T("%6.2f"), trng);
-			else
-				strng.Printf(_T("%6.1f"), trng);
-
-			if (m_bShowRouteTotal)
-				pRNG->SetAValue(strng);
-
-			// total ttg
-			// If showing total route ttg/ETA, use speed over ground for calculation
-
-			wxString tttg_s;
-			wxTimeSpan tttg_span;
-			if (VMG > 0.) {
-				float tttg_sec = (trng / nav.sog) * 3600.0;
-				tttg_span = wxTimeSpan::Seconds((long)tttg_sec);
-				tttg_s = tttg_span.Format();
-			} else {
-				tttg_span = wxTimeSpan::Seconds(0);
-				tttg_s = _T("---");
-			}
-
-			if (m_bShowRouteTotal)
-				pTTG->SetAValue(tttg_s);
-
-			// total ETA to be shown on XTE panel
-			if (m_bShowRouteTotal) {
-				wxDateTime dtnow, eta;
-				dtnow.SetToCurrent();
-				eta = dtnow.Add(tttg_span);
-				wxString seta;
-
-				if (VMG > 0.)
-					seta = eta.Format(_T("%H:%M"));
-				else
-					seta = _T("---");
-
-				pXTE->SetAValue(seta);
-				pXTE->SetALabel(wxString(_("ETA          ")));
-			}
-
-			pRNG->Refresh();
-			pBRG->Refresh();
-			pVMG->Refresh();
-			pTTG->Refresh();
-			pXTE->Refresh();
-		}
+	// show if there is more than 10% difference in ranges, etc...
+	double deltarng = fabs(rng - nrng);
+	if ((deltarng > 0.01) && ((deltarng / rng) > 0.10) && (rng < 10.0)) {
+		if (nrng < 10.0)
+			srng.Printf(_T("%5.2f/%5.2f"), rng, nrng);
+		else
+			srng.Printf(_T("%5.1f/%5.1f"), rng, nrng);
+	} else {
+		if (rng < 10.0)
+			srng.Printf(_T("%6.2f"), rng);
+		else
+			srng.Printf(_T("%6.1f"), rng);
 	}
+
+	if (!m_bShowRouteTotal)
+		pRNG->SetAValue(srng);
+
+	// Brg
+	float dcog = g_pRouteMan->GetCurrentBrgToActivePoint();
+	if (dcog >= 359.5)
+		dcog = 0;
+
+	wxString cogstr;
+	if (global::OCPN::get().gui().view().ShowMag)
+		cogstr << wxString::Format(wxString("%6.0f(M)", wxConvUTF8),
+								   navigation::GetTrueOrMag(dcog));
+	else
+		cogstr << wxString::Format(wxString("%6.0f", wxConvUTF8), navigation::GetTrueOrMag(dcog));
+
+	pBRG->SetAValue(cogstr);
+
+	// XTE
+	wxString str_buf;
+	str_buf.Printf(_T("%6.2f"), g_pRouteMan->GetCurrentXTEToActivePoint());
+	pXTE->SetAValue(str_buf);
+	if (g_pRouteMan->GetXTEDir() < 0)
+		pXTE->SetALabel(wxString(_("XTE         L")));
+	else
+		pXTE->SetALabel(wxString(_("XTE         R")));
+
+	// VMG
+	// VMG is always to next waypoint, not to end of route
+	// VMG is SOG x cosine (difference between COG and BRG to Waypoint)
+	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
+	double VMG = 0.0;
+	if (!wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
+		double BRG;
+		BRG = g_pRouteMan->GetCurrentBrgToActivePoint();
+		VMG = nav.sog * cos((BRG - nav.cog) * M_PI / 180.0);
+		str_buf.Printf(_T("%6.2f"), VMG);
+	} else
+		str_buf = _T("---");
+
+	pVMG->SetAValue(str_buf);
+
+	// TTG
+	// In all cases, ttg/eta are declared invalid if VMG <= 0.
+
+	// If showing only "this leg", use VMG for calculation of ttg
+	wxString ttg_s;
+	if ((VMG > 0.0) && !wxIsNaN(nav.cog) && !wxIsNaN(nav.sog)) {
+		float ttg_sec = (rng / VMG) * 3600.0;
+		wxTimeSpan ttg_span(0, 0, long(ttg_sec), 0);
+		ttg_s = ttg_span.Format();
+	} else {
+		ttg_s = _T("---");
+	}
+
+	if (!m_bShowRouteTotal)
+		pTTG->SetAValue(ttg_s);
+
+	// Remainder of route
+	float trng = rng;
+
+	Route* prt = g_pRouteMan->GetpActiveRoute();
+
+	int n_addflag = 0;
+	for (RoutePointList::iterator node = prt->routepoints().begin();
+		 node != prt->routepoints().end(); ++node) {
+		RoutePoint* prp = *node;
+		if (n_addflag)
+			trng += prp->m_seg_len;
+
+		if (prp == prt->m_pRouteActivePoint)
+			n_addflag++;
+	}
+
+	// total rng
+	wxString strng;
+	if (trng < 10.0)
+		strng.Printf(_T("%6.2f"), trng);
+	else
+		strng.Printf(_T("%6.1f"), trng);
+
+	if (m_bShowRouteTotal)
+		pRNG->SetAValue(strng);
+
+	// total ttg
+	// If showing total route ttg/ETA, use speed over ground for calculation
+
+	wxString tttg_s;
+	wxTimeSpan tttg_span;
+	if (VMG > 0.) {
+		float tttg_sec = (trng / nav.sog) * 3600.0;
+		tttg_span = wxTimeSpan::Seconds((long)tttg_sec);
+		tttg_s = tttg_span.Format();
+	} else {
+		tttg_span = wxTimeSpan::Seconds(0);
+		tttg_s = _T("---");
+	}
+
+	if (m_bShowRouteTotal)
+		pTTG->SetAValue(tttg_s);
+
+	// total ETA to be shown on XTE panel
+	if (m_bShowRouteTotal) {
+		wxDateTime dtnow, eta;
+		dtnow.SetToCurrent();
+		eta = dtnow.Add(tttg_span);
+		wxString seta;
+
+		if (VMG > 0.0)
+			seta = eta.Format(_T("%H:%M"));
+		else
+			seta = _T("---");
+
+		pXTE->SetAValue(seta);
+		pXTE->SetALabel(wxString(_("ETA          ")));
+	}
+
+	pRNG->Refresh();
+	pBRG->Refresh();
+	pVMG->Refresh();
+	pTTG->Refresh();
+	pXTE->Refresh();
 }
 
 void ConsoleCanvas::RefreshConsoleData(void)

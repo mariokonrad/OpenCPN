@@ -49,7 +49,7 @@ DefaultRouteTracker::DefaultRouteTracker()
 
 DefaultRouteTracker::~DefaultRouteTracker()
 {
-	stop();
+	do_stop(false, true, false); // no need to notify anyone during destruction
 }
 
 void DefaultRouteTracker::start()
@@ -61,7 +61,9 @@ void DefaultRouteTracker::start()
 	track = new Track; // FIXME: this should be delegated to some sort of factory
 	pRouteList->push_back(track);
 
-	track->Start(); // FIXME: this is actually a problem: tracks should not receive position events themselfes.
+	// FIXME: this is actually a problem: tracks should not receive position events themselfes. it
+	//        should be the tracker that receives the position events.
+	track->Start();
 
 	notify_toolbar();
 	notify_routemanager();
@@ -72,7 +74,12 @@ void DefaultRouteTracker::stop(bool do_add_point, bool process_track)
 	do_stop(do_add_point, process_track);
 }
 
-Track* DefaultRouteTracker::do_stop(bool do_add_point, bool process_track)
+/// Stops the tracking.
+///
+/// @param[in] do_add_point Add the pending point to the track, if a tracking is active.
+/// @param[in] process_track Do general processing of the current track.
+/// @param[in] do_notify Notify route manager, toolbar, etc. about the stopping.
+Track* DefaultRouteTracker::do_stop(bool do_add_point, bool process_track, bool do_notify)
 {
 	Track* return_val = track;
 
@@ -98,8 +105,10 @@ Track* DefaultRouteTracker::do_stop(bool do_add_point, bool process_track)
 	track = NULL;
 	active = false;
 
-	notify_routemanager();
-	notify_toolbar();
+	if (do_notify) {
+		notify_routemanager();
+		notify_toolbar();
+	}
 
 	return return_val;
 }

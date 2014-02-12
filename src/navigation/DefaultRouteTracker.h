@@ -50,7 +50,7 @@ public:
 	virtual geo::Position get_last_position() const;
 
 private:
-	Track* do_stop(bool, bool = true);
+	Track* do_stop(bool, bool = true, bool do_notify = true);
 	void notify_toolbar() const;
 	void notify_routemanager() const;
 	void notify_plugins_start() const;

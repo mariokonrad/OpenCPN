@@ -1009,6 +1009,11 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 
 	b_inCloseWindow = true;
 
+	FrameTimer1.Stop();
+	FrameCOGTimer.Stop();
+	FrameTCTimer.Stop();
+	MemFootTimer.Stop();
+
 	::wxSetCursor(wxCURSOR_WAIT);
 
 	// If we happen to have the measure tool open on Ctrl-Q quit
@@ -1041,8 +1046,6 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 	wxLogMessage(_T("opencpn::MainFrame exiting cleanly."));
 
 	quitflag++;
-
-	FrameTimer1.Stop();
 
 	g_pMUX->ClearStreams();
 
@@ -1098,8 +1101,6 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 			pConfig->AddNewWayPoint(pWP, -1); // use auto next num
 		}
 	}
-
-	FrameTimer1.Stop();
 
 	global::OCPN::get().gui().set_frame_maximized(IsMaximized());
 

@@ -1856,8 +1856,6 @@ int App::OnExit()
 #endif
 
 	global::OCPN::get().clear();
-	delete route_manager_instance;
-	delete tracker_instance;
 	delete colors_instance;
 	delete s52_color_provider;
 	delete gui_instance;
@@ -1866,6 +1864,8 @@ int App::OnExit()
 	delete sys_instance;
 	delete run_instance;
 	delete ais_instance;
+	delete route_manager_instance;
+	delete tracker_instance;
 
 	return true;
 }

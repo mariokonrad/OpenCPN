@@ -88,7 +88,7 @@ ChartDB::~ChartDB()
 	delete pChartCache;
 }
 
-bool ChartDB::LoadBinary(const wxString& filename, ArrayOfCDI& dir_array_check)
+bool ChartDB::LoadBinary(const wxString& filename, const ChartDirectories& dir_array_check)
 {
 	m_dir_array = dir_array_check;
 	return ChartDatabase::Read(filename);

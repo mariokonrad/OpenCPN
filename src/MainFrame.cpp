@@ -2023,7 +2023,7 @@ int MainFrame::DoOptionsDialog()
 
 	// Pass two working pointers for Chart Dir Dialog
 	optionsDlg.SetCurrentDirList(ChartData->GetChartDirArray());
-	ArrayOfCDI* pWorkDirArray = new ArrayOfCDI; // FIXME: dynamic allocation, to be used in dialog,
+	ChartDirectories* pWorkDirArray = new ChartDirectories; // FIXME: dynamic allocation, to be used in dialog,
 												// deletion later... in this method
 	optionsDlg.SetWorkDirListPtr(pWorkDirArray);
 
@@ -2113,7 +2113,7 @@ int MainFrame::DoOptionsDialog()
 
 int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 {
-	ArrayOfCDI* pWorkDirArray = dialog->GetWorkDirListPtr();
+	ChartDirectories* pWorkDirArray = dialog->GetWorkDirListPtr();
 	if ((rr & VISIT_CHARTS)
 		&& ((rr & CHANGE_CHARTS) || (rr & FORCE_UPDATE) || (rr & SCAN_UPDATE))) {
 
@@ -2378,11 +2378,8 @@ void MainFrame::ChartsRefresh(int dbi_hint, const ViewPort& vp, bool b_purge)
 	::wxEndBusyCursor();
 }
 
-bool MainFrame::UpdateChartDatabaseInplace(
-		ArrayOfCDI & DirArray,
-		bool b_force,
-		bool b_prog,
-		const wxString & ChartListFileName)
+bool MainFrame::UpdateChartDatabaseInplace(ChartDirectories& DirArray, bool b_force, bool b_prog,
+										   const wxString& ChartListFileName)
 {
 	bool b_run = FrameTimer1.IsRunning();
 	FrameTimer1.Stop(); // stop other asynchronous activity

@@ -55,7 +55,7 @@ public:
 	ChartDB(MainFrame* parent);
 	virtual ~ChartDB();
 
-	bool LoadBinary(const wxString& filename, ArrayOfCDI& dir_array_check);
+	bool LoadBinary(const wxString& filename, const ChartDirectories& dir_array_check);
 	bool SaveBinary(const wxString& filename);
 
 	int BuildChartStack(ChartStack* cstk, float lat, float lon);

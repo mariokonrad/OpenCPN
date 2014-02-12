@@ -30,7 +30,7 @@
 #include <chart/ChartGroup.h>
 
 #include <CDI.h>
-#include <ChartDirInfo.h>
+#include <ChartDirectoryInfo.h>
 
 #include <vector>
 
@@ -54,7 +54,7 @@ public:
 					 wxSize small_button_size);
 
 	void CompletePanel(void);
-	void SetDBDirs(ArrayOfCDI& array);
+	void SetDBDirs(const ChartDirectories& array);
 	void SetGroupArray(chart::ChartGroupArray* pGroupArray);
 	void SetInitialSettings();
 	void CompleteInitialSettings();
@@ -76,7 +76,6 @@ public:
 	void OnGroupPageChange(wxNotebookEvent& event);
 	void OnNewGroup(wxCommandEvent& event);
 	void OnDeleteGroup(wxCommandEvent& event);
-
 
 private:
 	int FindGroupBranch(chart::ChartGroup* pGroup, wxTreeCtrl* ptree, wxTreeItemId item,
@@ -101,7 +100,7 @@ private:
 	wxTreeCtrl* lastSelectedCtl;
 	wxTreeItemId lastDeletedItem;
 	wxNotebook* m_GroupNB;
-	ArrayOfCDI m_db_dirs;
+	ChartDirectories m_db_dirs;
 	int m_GroupSelectedPage;
 	wxFont* iFont;
 

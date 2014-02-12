@@ -157,7 +157,7 @@ const wxString& ChartDatabase::GetDBFileName() const
 	return m_DBFileName;
 }
 
-const ArrayOfCDI& ChartDatabase::GetChartDirArray() const
+const ChartDirectories& ChartDatabase::GetChartDirArray() const
 {
 	return m_dir_array;
 }
@@ -474,9 +474,14 @@ wxString ChartDatabase::GetFullChartInfo(ChartBase* pc, int dbIndex, int* char_w
 	return r;
 }
 
+void ChartDatabase::SetChartDirArray(const ChartDirectories& array)
+{
+	m_dir_array = array;
+}
+
 // Create Chart Table Database by directory search
 // resulting in valid pChartTable in (this)
-bool ChartDatabase::Create(ArrayOfCDI& dir_array, wxProgressDialog* pprog)
+bool ChartDatabase::Create(ChartDirectories& dir_array, wxProgressDialog* pprog)
 {
 	m_dir_array = dir_array;
 
@@ -496,7 +501,7 @@ bool ChartDatabase::Create(ArrayOfCDI& dir_array, wxProgressDialog* pprog)
 
 // Update existing ChartTable Database by directory search
 // resulting in valid pChartTable in (this)
-bool ChartDatabase::Update(ArrayOfCDI& dir_array, bool bForce, wxProgressDialog* pprog)
+bool ChartDatabase::Update(ChartDirectories& dir_array, bool bForce, wxProgressDialog* pprog)
 {
 	m_dir_array = dir_array;
 
@@ -515,7 +520,6 @@ bool ChartDatabase::Update(ArrayOfCDI& dir_array, bool bForce, wxProgressDialog*
 
 	// Do a dB Version upgrade if the current one is obsolete
 	if (s_dbVersion != DB_VERSION_CURRENT) {
-
 		chartTable.Clear();
 		lbForce = true;
 		s_dbVersion = DB_VERSION_CURRENT; // Update the static indicator
@@ -524,7 +528,7 @@ bool ChartDatabase::Update(ArrayOfCDI& dir_array, bool bForce, wxProgressDialog*
 
 	// Get the new charts
 
-	for (ArrayOfCDI::iterator i = dir_array.begin(); i != dir_array.end(); ++i) {
+	for (ChartDirectories::iterator i = dir_array.begin(); i != dir_array.end(); ++i) {
 		wxString dir_magic;
 		TraverseDirAndAddCharts(*i, pprog, dir_magic, lbForce);
 		i->magic_number = dir_magic;
@@ -576,7 +580,7 @@ int ChartDatabase::DisableChart(const wxString& PathToDisable)
 // If bupdate is true, also search the existing database for a name match.
 // If target chart is already in database, mark the entry valid and skip additional processing
 int ChartDatabase::TraverseDirAndAddCharts(
-		const ChartDirInfo& dir_info,
+		const ChartDirectoryInfo& dir_info,
 		wxProgressDialog* pprog,
 		wxString& dir_magic,
 		bool bForce)
@@ -1128,28 +1132,20 @@ bool ChartDatabase::AddSingleChart(wxString& ChartFullPath)
 
 	// Update (clone) the CDI array
 	bool bcfound = false;
-	ArrayOfCDI NewChartDirArray;
-
-	ArrayOfCDI ChartDirArray = GetChartDirArray();
-	for (unsigned int i = 0; i < ChartDirArray.size(); i++) {
-		ChartDirInfo cdi = ChartDirArray.at(i);
-
-		ChartDirInfo newcdi = cdi;
+	ChartDirectories NewChartDirArray;
+	for (unsigned int i = 0; i < GetChartDirArray().size(); i++) {
+		ChartDirectoryInfo newcdi = GetChartDirArray().at(i);
 
 		// If entry is found that matches this cell, clear the magic number.
 		if (newcdi.fullpath == dir_name) {
 			newcdi.magic_number = _T("");
 			bcfound = true;
 		}
-
 		NewChartDirArray.push_back(newcdi);
 	}
 
 	if (!bcfound) {
-		ChartDirInfo cdi;
-		cdi.fullpath = dir_name;
-		cdi.magic_number = _T("");
-		NewChartDirArray.push_back(cdi);
+		NewChartDirArray.push_back(ChartDirectoryInfo(dir_name, _T("")));
 	}
 
 	// Update the database master copy of the CDI array
@@ -1159,8 +1155,7 @@ bool ChartDatabase::AddSingleChart(wxString& ChartFullPath)
 	m_chartDirs.Clear();
 
 	for (unsigned int i = 0; i < GetChartDirArray().size(); i++) {
-		ChartDirInfo cdi = GetChartDirArray().at(i);
-		m_chartDirs.Add(cdi.fullpath);
+		m_chartDirs.Add(GetChartDirArray().at(i).fullpath);
 	}
 
 	return rv;
@@ -1198,26 +1193,19 @@ bool ChartDatabase::RemoveSingleChart(wxString& ChartFullPath)
 	if (!IsChartDirUsed(fd)) {
 
 		// Clone a new array, removing the unused directory,
-		ArrayOfCDI NewChartDirArray;
-
-		ArrayOfCDI ChartDirArray = GetChartDirArray();
-		for (unsigned int i = 0; i < ChartDirArray.size(); i++) {
-			ChartDirInfo cdi = ChartDirArray.at(i);
-
-			ChartDirInfo newcdi = cdi;
-
+		ChartDirectories NewChartDirArray;
+		for (unsigned int i = 0; i < GetChartDirArray().size(); i++) {
+			ChartDirectoryInfo newcdi = GetChartDirArray().at(i);
 			if (newcdi.fullpath != fd)
 				NewChartDirArray.push_back(newcdi);
 		}
-
 		SetChartDirArray(NewChartDirArray);
 	}
 
 	//  Update the list of chart dirs.
 	m_chartDirs.Clear();
 	for (unsigned int i = 0; i < GetChartDirArray().size(); i++) {
-		ChartDirInfo cdi = GetChartDirArray().at(i);
-		m_chartDirs.Add(cdi.fullpath);
+		m_chartDirs.Add(GetChartDirArray().at(i).fullpath);
 	}
 
 	return rv;

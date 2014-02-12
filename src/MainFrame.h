@@ -37,7 +37,7 @@
 #endif
 
 #include "nmea0183.h"
-#include <ChartDirInfo.h>
+#include <ChartDirectoryInfo.h>
 #include <NMEA_Msg_Container.h>
 
 #include <util/ValueFilter.h>
@@ -199,7 +199,7 @@ public:
 
 	void ActivateMOB(void);
 	void UpdateGPSCompassStatusBox(bool b_force_new = false);
-	bool UpdateChartDatabaseInplace(ArrayOfCDI& DirArray, bool b_force, bool b_prog,
+	bool UpdateChartDatabaseInplace(ChartDirectories& DirArray, bool b_force, bool b_prog,
 									const wxString& ChartListFileName);
 
 	bool m_bdefer_resize;

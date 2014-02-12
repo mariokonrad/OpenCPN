@@ -1022,7 +1022,7 @@ SET(HDRS
 	src/OCPN_AlertDialog.h
 	src/NMEA_Msg_Container.h
 	src/MessageBox.h
-	src/ChartDirInfo.h
+	src/ChartDirectoryInfo.h
 	)
 
 SET(SRCS

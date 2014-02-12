@@ -1432,13 +1432,9 @@ wxXmlDocument GetChartDatabaseEntryXML(int dbIndex, bool b_getGeom)
 bool UpdateChartDBInplace(wxArrayString dir_array, bool b_force_update, bool b_ProgressDialog)
 {
 	// Make an array of CDI
-	ArrayOfCDI ChartDirArray;
+	ChartDirectories ChartDirArray;
 	for (unsigned int i = 0; i < dir_array.size(); i++) {
-		wxString dirname = dir_array.Item(i);
-		ChartDirInfo cdi;
-		cdi.fullpath = dirname;
-		cdi.magic_number = _T("");
-		ChartDirArray.push_back(cdi);
+		ChartDirArray.push_back(ChartDirectoryInfo(dir_array.Item(i), _T("")));
 	}
 
 	bool b_ret = gFrame->UpdateChartDatabaseInplace(ChartDirArray, b_force_update, b_ProgressDialog,
@@ -1471,8 +1467,8 @@ int AddChartToDBInPlace(wxString& full_path, bool WXUNUSED(b_ProgressDialog))
 			pConfig->UpdateChartDirs(ChartData->GetChartDirArray());
 			ChartData->SaveBinary(global::OCPN::get().sys().data().chartlist_filename);
 
-			//  Completely reload the chart database, for a fresh start
-			ArrayOfCDI XnewChartDirArray;
+			// Completely reload the chart database, for a fresh start
+			ChartDirectories XnewChartDirArray;
 			pConfig->LoadChartDirArray(XnewChartDirArray);
 			delete ChartData;
 			ChartData = new chart::ChartDB(gFrame);
@@ -1499,8 +1495,8 @@ int RemoveChartFromDBInPlace(wxString& full_path)
 		pConfig->UpdateChartDirs(ChartData->GetChartDirArray());
 		ChartData->SaveBinary(global::OCPN::get().sys().data().chartlist_filename);
 
-		//  Completely reload the chart database, for a fresh start
-		ArrayOfCDI XnewChartDirArray;
+		// Completely reload the chart database, for a fresh start
+		ChartDirectories XnewChartDirArray;
 		pConfig->LoadChartDirArray(XnewChartDirArray);
 		delete ChartData;
 		ChartData = new chart::ChartDB(gFrame);

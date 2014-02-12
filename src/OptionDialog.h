@@ -35,7 +35,7 @@
 #include <plugin/PlugInManager.h>
 #include <chart/ChartDatabase.h>
 #include <MainFrame.h>
-#include <ChartDirInfo.h>
+#include <ChartDirectoryInfo.h>
 #include <GUI_IDs.h>
 
 class wxGenericDirCtrl;
@@ -93,9 +93,9 @@ public:
 	void SetInitChartDir(const wxString& dir);
 	void SetInitialSettings();
 
-	void SetCurrentDirList(ArrayOfCDI p);
-	void SetWorkDirListPtr(ArrayOfCDI* p);
-	ArrayOfCDI* GetWorkDirListPtr();
+	void SetCurrentDirList(const ChartDirectories& p);
+	void SetWorkDirListPtr(ChartDirectories* p); // FIXME
+	ChartDirectories* GetWorkDirListPtr(); // FIXME
 	void SetConfigPtr(Config* p);
 	void OnDebugcheckbox1Click(wxCommandEvent& event);
 	void OnDirctrlSelChanged(wxTreeEvent& event);
@@ -382,9 +382,6 @@ public:
 
 	wxCheckBox* pSettingsCB1;
 
-	ArrayOfCDI m_CurrentDirList;
-	ArrayOfCDI* m_pWorkDirList;
-
 	Config* m_pConfig;
 
 	wxString m_init_chart_dir;
@@ -413,6 +410,9 @@ private:
 							 wxSize small_button_size);
 	void CreatePanel_UI(size_t parent, int border_size, int group_item_spacing,
 						wxSize small_button_size);
+
+	ChartDirectories m_CurrentDirList;
+	ChartDirectories* m_pWorkDirList;
 
 	int m_returnChanges;
 	wxListBox* tcDataSelected;

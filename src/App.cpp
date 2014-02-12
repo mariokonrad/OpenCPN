@@ -1583,7 +1583,7 @@ bool App::OnInit()
 	bool b_SetInitialPoint = false;
 
 	// Build the initial chart dir array
-	ArrayOfCDI ChartDirArray;
+	ChartDirectories ChartDirArray;
 	pConfig->LoadChartDirArray(ChartDirArray);
 
 #ifdef __WXMSW__
@@ -1600,12 +1600,7 @@ bool App::OnInit()
 			wxStringTokenizer tkz(dirs, _T(";"));
 			while (tkz.HasMoreTokens()) {
 				wxString token = tkz.GetNextToken();
-
-				ChartDirInfo cdi;
-				cdi.fullpath = token.Trim();
-				cdi.magic_number = _T("");
-
-				ChartDirArray.push_back(cdi);
+				ChartDirArray.push_back(ChartDirectoryInfo(token.Trim(), _T("")));
 				ndirs++;
 			}
 		}
@@ -1640,8 +1635,7 @@ bool App::OnInit()
 
 			wxString line(_("Rebuilding chart database from configuration file entries..."));
 			// The following 3 strings are embeded in wxProgressDialog but must be included by
-			// xgettext
-			// to be localized properly. See {wxWidgets}src/generic/progdlgg.cpp:190
+			// xgettext to be localized properly. See {wxWidgets}src/generic/progdlgg.cpp:190
 			wxString dummy1 = _("Elapsed time : ");
 			wxString dummy2 = _("Estimated time : ");
 			wxString dummy3 = _("Remaining time : ");

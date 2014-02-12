@@ -1154,7 +1154,7 @@ bool Config::LoadLayers(const wxString& path)
 	return true;
 }
 
-bool Config::LoadChartDirArray(ArrayOfCDI& ChartDirArray)
+bool Config::LoadChartDirArray(ChartDirectories& ChartDirArray)
 {
 	// Chart Directories
 	SetPath(_T("/ChartDirectories"));
@@ -1194,11 +1194,8 @@ bool Config::LoadChartDirArray(ArrayOfCDI& ChartDirArray)
 					new_dir.Prepend(global::OCPN::get().sys().data().sound_data_location);
 					dirname = new_dir;
 				}
-				ChartDirInfo cdi;
-				cdi.fullpath = dirname.BeforeFirst('^');
-				cdi.magic_number = dirname.AfterFirst('^');
-
-				ChartDirArray.push_back(cdi);
+				ChartDirArray.push_back(
+					ChartDirectoryInfo(dirname.BeforeFirst('^'), dirname.AfterFirst('^')));
 			}
 
 			bCont = pConfig->GetNextEntry(str, dummy);
@@ -1296,7 +1293,7 @@ bool Config::DeleteWayPoint(RoutePoint* pWP) // FIXME: does this really belong t
 	return true;
 }
 
-bool Config::UpdateChartDirs(const ArrayOfCDI& dir_array)
+bool Config::UpdateChartDirs(const ChartDirectories& dir_array)
 {
 	SetPath(_T("/ChartDirectories"));
 	int iDirMax = GetNumberOfEntries();
@@ -1309,7 +1306,7 @@ bool Config::UpdateChartDirs(const ArrayOfCDI& dir_array)
 		}
 	}
 
-	for (ArrayOfCDI::const_iterator i = dir_array.begin(); i != dir_array.end(); ++i) {
+	for (ChartDirectories::const_iterator i = dir_array.begin(); i != dir_array.end(); ++i) {
 		Write(wxString::Format(_T("ChartDir%d"), i - dir_array.begin() + 1),
 			  i->fullpath + _T("^") + i->magic_number);
 	}

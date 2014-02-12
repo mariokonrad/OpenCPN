@@ -1087,7 +1087,7 @@ void options::CreatePanel_ChartsLoad(size_t WXUNUSED(parent), int border_size,
 	// Currently loaded chart dirs
 	if (pActiveChartsList) {
 		pActiveChartsList->Clear();
-		for (ArrayOfCDI::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end();
+		for (ChartDirectories::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end();
 			 ++i) {
 			if (!i->fullpath.IsEmpty())
 				pActiveChartsList->Append(i->fullpath);
@@ -1899,7 +1899,7 @@ void options::SetInitialSettings()
 	const global::Navigation::Route& route = global::OCPN::get().nav().route();
 	const global::Navigation::Track& track = global::OCPN::get().nav().get_track();
 
-	for (ArrayOfCDI::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end();
+	for (ChartDirectories::const_iterator i = m_CurrentDirList.begin(); i != m_CurrentDirList.end();
 		 ++i) {
 		if (!i->fullpath.IsEmpty()) {
 			if (pActiveChartsList) {
@@ -2303,9 +2303,9 @@ void options::UpdateWorkArrayFromTextCtl()
 
 			// scan the current array to find a match
 			// if found, add the info to the work list, preserving the magic number
-			// If not found, make a new ChartDirInfo, and add it
+			// If not found, make a new chart directory information, and add it
 			bool b_added = false;
-			for (ArrayOfCDI::const_iterator dir = m_CurrentDirList.begin();
+			for (ChartDirectories::const_iterator dir = m_CurrentDirList.begin();
 				 dir != m_CurrentDirList.end(); ++dir) {
 				if (dir->fullpath == dirname) {
 					m_pWorkDirList->push_back(*dir);
@@ -2314,9 +2314,7 @@ void options::UpdateWorkArrayFromTextCtl()
 				}
 			}
 			if (!b_added) {
-				ChartDirInfo cdin;
-				cdin.fullpath = dirname;
-				m_pWorkDirList->push_back(cdin);
+				m_pWorkDirList->push_back(ChartDirectoryInfo(dirname));
 			}
 		}
 	}
@@ -2477,7 +2475,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 		UpdateWorkArrayFromTextCtl();
 	} else {
 		m_pWorkDirList->clear();
-		for (ArrayOfCDI::const_iterator dir = m_CurrentDirList.begin();
+		for (ChartDirectories::const_iterator dir = m_CurrentDirList.begin();
 			 dir != m_CurrentDirList.end(); ++dir) { // FIXME: use std::copy
 			m_pWorkDirList->push_back(*dir);
 		}
@@ -2916,8 +2914,8 @@ void options::OnButtondeleteClick(wxCommandEvent& event)
 
 	if (m_pWorkDirList) {
 		pActiveChartsList->Clear();
-		for (ArrayOfCDI::const_iterator dir = m_pWorkDirList->begin(); dir != m_pWorkDirList->end();
-			 ++dir) {
+		for (ChartDirectories::const_iterator dir = m_pWorkDirList->begin();
+			 dir != m_pWorkDirList->end(); ++dir) {
 			if (!dir->fullpath.IsEmpty()) {
 				pActiveChartsList->Append(dir->fullpath);
 			}
@@ -3741,17 +3739,17 @@ void options::SetInitChartDir(const wxString& dir)
 	m_init_chart_dir = dir;
 }
 
-void options::SetCurrentDirList(ArrayOfCDI p)
+void options::SetCurrentDirList(const ChartDirectories& p)
 {
 	m_CurrentDirList = p;
 }
 
-void options::SetWorkDirListPtr(ArrayOfCDI* p)
+void options::SetWorkDirListPtr(ChartDirectories* p) // FIXME
 {
 	m_pWorkDirList = p;
 }
 
-ArrayOfCDI* options::GetWorkDirListPtr()
+ChartDirectories* options::GetWorkDirListPtr() // FIXME
 {
 	return m_pWorkDirList;
 }

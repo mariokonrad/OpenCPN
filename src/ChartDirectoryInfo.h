@@ -21,20 +21,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __CHARTDIRIINFO__H__
-#define __CHARTDIRIINFO__H__
+#ifndef __CHARTDIRECTORYINFO__H__
+#define __CHARTDIRECTORYINFO__H__
 
 #include <vector>
 #include <wx/string.h>
 
-// A small class used in an array to describe chart directories
-class ChartDirInfo
+/// Holds information about a chart directory.
+class ChartDirectoryInfo
 {
-	public:
-		wxString fullpath;
-		wxString magic_number;
+public:
+	ChartDirectoryInfo(const wxString& fullpath, const wxString& magic_number = wxString())
+		: fullpath(fullpath)
+		, magic_number(magic_number)
+	{}
+
+	wxString fullpath;
+	wxString magic_number;
 };
 
-typedef std::vector<ChartDirInfo> ArrayOfCDI; // FIXME: choose a more semantically correct name
+typedef std::vector<ChartDirectoryInfo> ChartDirectories;
 
 #endif

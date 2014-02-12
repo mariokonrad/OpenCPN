@@ -35,7 +35,7 @@
 #include <vector>
 
 #include <MainFrame.h>
-#include <ChartDirInfo.h>
+#include <ChartDirectoryInfo.h>
 
 #include <chart/ChartBase.h>
 #include <chart/ChartTableHeader.h>
@@ -63,8 +63,8 @@ public:
 	ChartDatabase();
 	virtual ~ChartDatabase() {};
 
-	bool Create(ArrayOfCDI& dir_array, wxProgressDialog* pprog);
-	bool Update(ArrayOfCDI& dir_array, bool bForce, wxProgressDialog* pprog);
+	bool Create(ChartDirectories& dir_array, wxProgressDialog* pprog);
+	bool Update(ChartDirectories& dir_array, bool bForce, wxProgressDialog* pprog);
 
 	bool Read(const wxString& filePath);
 	bool Write(const wxString& filePath);
@@ -73,9 +73,9 @@ public:
 	bool RemoveSingleChart(wxString& ChartFullPath);
 
 	const wxString& GetDBFileName() const;
-	const ArrayOfCDI& GetChartDirArray() const;
+	const ChartDirectories& GetChartDirArray() const;
 	const wxArrayString& GetChartDirArrayString() const;
-    void SetChartDirArray( ArrayOfCDI array ){ m_dir_array = array; }
+	void SetChartDirArray(const ChartDirectories& array);
 
 	void UpdateChartClassDescriptorArray(void);
 
@@ -113,7 +113,7 @@ protected:
 
 	wxString getChartClassName(int type, const wxString& ext) const;
 
-	ArrayOfCDI m_dir_array;
+	ChartDirectories m_dir_array;
 
 private:
 	ChartTableEntry& GetWritableChartTableEntry(int index);
@@ -123,7 +123,7 @@ private:
 							  const chart::ChartClassDescriptor& chart_desc,
 							  wxProgressDialog* pprog);
 
-	int TraverseDirAndAddCharts(const ChartDirInfo& dir_info, wxProgressDialog* pprog,
+	int TraverseDirAndAddCharts(const ChartDirectoryInfo& dir_info, wxProgressDialog* pprog,
 								wxString& dir_magic, bool bForce);
 	bool DetectDirChange(const wxString& dir_path, const wxString& magic, wxString& new_magic,
 						 wxProgressDialog* pprog) const;

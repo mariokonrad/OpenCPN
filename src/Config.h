@@ -24,7 +24,7 @@
 #ifndef __CONFIG__H__
 #define __CONFIG__H__
 
-#include <ChartDirInfo.h>
+#include <ChartDirectoryInfo.h>
 #include <chart/ChartDatabase.h>
 #include <RoutePoint.h>
 #include <Route.h>
@@ -55,8 +55,8 @@ public:
 	virtual void CreateConfigGroups(const chart::ChartGroupArray* pGroupArray);
 	virtual void DestroyConfigGroups(void);
 
-	virtual bool UpdateChartDirs(const ArrayOfCDI& dirarray);
-	virtual bool LoadChartDirArray(ArrayOfCDI& ChartDirArray);
+	virtual bool UpdateChartDirs(const ChartDirectories& dirarray);
+	virtual bool LoadChartDirArray(ChartDirectories& ChartDirArray);
 	virtual void UpdateSettings();
 	virtual void UpdateNavObj();
 

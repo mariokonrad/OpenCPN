@@ -65,7 +65,7 @@ ChartGroupsUI::~ChartGroupsUI()
 	m_DirCtrlArray.clear();
 }
 
-void ChartGroupsUI::SetDBDirs(ArrayOfCDI& array)
+void ChartGroupsUI::SetDBDirs(const ChartDirectories& array)
 {
 	m_db_dirs = array;
 }
@@ -86,7 +86,7 @@ void ChartGroupsUI::PopulateTrees()
 	// Fill in the "Active chart" tree control
 	// from the options dialog "Active Chart Directories" list
 	wxArrayString dir_array;
-	for (ArrayOfCDI::const_iterator i = m_db_dirs.begin(); i != m_db_dirs.end(); ++i) {
+	for (ChartDirectories::const_iterator i = m_db_dirs.begin(); i != m_db_dirs.end(); ++i) {
 		if (!i->fullpath.IsEmpty())
 			dir_array.push_back(i->fullpath);
 	}
@@ -97,7 +97,7 @@ void ChartGroupsUI::PopulateTrees()
 	// Fill in the Page 0 tree control
 	// from the options dialog "Active Chart Directories" list
 	wxArrayString dir_array0;
-	for (ArrayOfCDI::const_iterator i = m_db_dirs.begin(); i != m_db_dirs.end(); ++i) {
+	for (ChartDirectories::const_iterator i = m_db_dirs.begin(); i != m_db_dirs.end(); ++i) {
 		if (!i->fullpath.IsEmpty())
 			dir_array0.push_back(i->fullpath);
 	}

@@ -378,7 +378,7 @@ wxBitmap* WayPointman::GetIconBitmap(const wxString& icon_key)
 	return pmi ? pmi->bitmap : NULL;
 }
 
-wxBitmap * WayPointman::GetIconBitmap(int index)
+wxBitmap* WayPointman::GetIconBitmap(int index)
 {
 	if (index < 0)
 		return NULL;
@@ -408,9 +408,9 @@ wxString WayPointman::GetIconKey(int index) const
 	return icons[index]->name;
 }
 
-int WayPointman::GetIconIndex(const wxBitmap* pbm)
+int WayPointman::GetIconIndex(const wxBitmap* pbm) const
 {
-	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
+	for (Icons::const_iterator i = icons.begin(); i != icons.end(); ++i) {
 		if ((*i)->bitmap == pbm)
 			return i - icons.begin();
 	}
@@ -418,9 +418,9 @@ int WayPointman::GetIconIndex(const wxBitmap* pbm)
 	return -1;
 }
 
-int WayPointman::GetXIconIndex(const wxBitmap* pbm)
+int WayPointman::GetXIconIndex(const wxBitmap* pbm) const
 {
-	for (unsigned int i = 0; i < icons.size(); i++) {
+	for (unsigned int i = 0; i < icons.size(); ++i) {
 		if (icons[i]->bitmap == pbm)
 			return i + m_markicon_image_list_base_count;
 	}
@@ -475,7 +475,7 @@ void WayPointman::ClearRoutePointFonts(void)
 	}
 }
 
-bool WayPointman::SharedWptsExist()
+bool WayPointman::SharedWptsExist() const
 {
 	for (RoutePointList::const_iterator i = points.begin(); i != points.end(); ++i) {
 		const RoutePoint* prp = *i;

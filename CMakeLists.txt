@@ -917,6 +917,7 @@ SET(HDRS
 	src/navigation/RouteTracker.h
 	src/navigation/DefaultRouteTracker.h
 	src/navigation/RouteManager.h
+	src/navigation/WaypointManager.h
 
 	src/OCPN_Version.h
 	src/ocpn_pixel.h

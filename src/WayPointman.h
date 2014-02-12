@@ -24,63 +24,62 @@
 #ifndef __WAYPOINTMAN__H__
 #define __WAYPOINTMAN__H__
 
-#include <wx/string.h>
-#include <wx/imaglist.h>
-
-#include <global/ColorScheme.h>
-#include <geo/Position.h>
-#include <RoutePoint.h>
-
 #include <vector>
+#include <wx/imaglist.h>
+#include <navigation/WaypointManager.h>
 
 namespace ocpnStyle { class Style; }
 
-class RoutePoint;
 class MarkIcon;
 class wxBitmap;
 
-class WayPointman
+class WayPointman : public navigation::WaypointManager
 {
 public:
 	WayPointman();
-	~WayPointman();
-	wxBitmap* GetIconBitmap(const wxString& icon_key);
-	int GetIconIndex(const wxBitmap* pbm);
-	int GetXIconIndex(const wxBitmap* pbm);
-	int GetNumIcons(void) const;
-	RoutePoint* GetNearbyWaypoint(const geo::Position& pos, double radius_meters);
-	RoutePoint* GetOtherNearbyWaypoint(const geo::Position& pos, double radius_meters,
+	virtual ~WayPointman();
+
+	// waypoints
+	virtual void DeleteAllWaypoints(bool b_delete_used);
+	virtual void DestroyWaypoint(RoutePoint* pRp, bool b_update_changeset = true);
+	virtual void deleteWayPointOnLayer(int layer_id);
+	virtual RoutePoint* GetNearbyWaypoint(const geo::Position& pos, double radius_meters);
+	virtual RoutePoint* GetOtherNearbyWaypoint(const geo::Position& pos, double radius_meters,
 									   const wxString& guid);
-	void SetColorScheme(global::ColorScheme cs);
-	bool SharedWptsExist();
-	void DeleteAllWaypoints(bool b_delete_used);
-	void DestroyWaypoint(RoutePoint* pRp, bool b_update_changeset = true);
-	void ClearRoutePointFonts(void);
+	virtual RoutePoint* WaypointExists(const wxString& name, const geo::Position& pos);
+	virtual bool SharedWptsExist() const;
+	virtual void setWayPointVisibilityOnLayer(int layer_id, bool visible);
+	virtual void setWayPointNameVisibilityOnLayer(int layer_id, bool visible);
+	virtual void setWayPointListingVisibilityOnLayer(int layer_id, bool visible);
+	virtual void push_back(RoutePoint*);
+	virtual void remove(RoutePoint*);
+	virtual RoutePoint* find(const wxString& guid);
+	virtual bool contains(const RoutePoint* point) const;
+	virtual const RoutePointList& waypoints() const;
+	virtual RoutePointList& waypoints(); // FIXME: temporary
+
+	// icon
+	virtual wxBitmap* GetIconBitmap(const wxString& icon_key);
+	virtual wxBitmap* GetIconBitmap(int index);
+	virtual wxString GetIconDescription(int index) const;
+	virtual int GetIconIndex(const wxBitmap* pbm) const;
+	virtual wxString GetIconKey(int index) const;
+	virtual int GetNumIcons(void) const;
+	virtual bool DoesIconExist(const wxString& icon_key) const;
+	virtual wxImageList* Getpmarkicon_image_list(void);
+	virtual void ProcessIcon(wxBitmap pimage, const wxString& key, const wxString& description);
+	virtual int GetXIconIndex(const wxBitmap* pbm) const;
+
+	// gui
+	virtual void ClearRoutePointFonts(void);
+	virtual void SetColorScheme(global::ColorScheme cs);
+
+	// special
 	void ProcessIcons(ocpnStyle::Style& style);
-	bool DoesIconExist(const wxString& icon_key) const;
-	wxBitmap* GetIconBitmap(int index);
-	wxString GetIconDescription(int index) const;
-	wxString GetIconKey(int index) const;
-	wxImageList* Getpmarkicon_image_list(void);
-	void ProcessIcon(wxBitmap pimage, const wxString& key, const wxString& description);
-
-	RoutePoint* WaypointExists(const wxString& name, const geo::Position& pos);
-
-	void deleteWayPointOnLayer(int layer_id);
-	void setWayPointVisibilityOnLayer(int layer_id, bool visible);
-	void setWayPointNameVisibilityOnLayer(int layer_id, bool visible);
-	void setWayPointListingVisibilityOnLayer(int layer_id, bool visible);
-
-	void push_back(RoutePoint*);
-	void remove(RoutePoint*);
-	RoutePoint* find(const wxString& guid);
-	bool contains(const RoutePoint* point) const;
-
-	const RoutePointList& waypoints() const;
-	RoutePointList& waypoints(); // FIXME: temporary
 
 private:
-	bool within_distance(const RoutePoint* point, const geo::Position& pos, double radius_meters) const;
+	bool within_distance(const RoutePoint* point, const geo::Position& pos,
+						 double radius_meters) const;
 
 	typedef std::vector<MarkIcon*> Icons;
 

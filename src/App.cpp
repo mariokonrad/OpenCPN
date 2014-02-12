@@ -1270,7 +1270,7 @@ bool App::OnInit()
 	global::OCPN::get().sys().set_plugin_dir(plugin_dir);
 
 	// Init the Route Manager
-	g_pRouteMan = new Routeman(this);
+	g_pRouteMan = new Routeman;
 
 	// Init the Selectable Route Items List
 	pSelect = new Select;

@@ -31,7 +31,6 @@
 #include <Multiplexer.h>
 #include <Select.h>
 #include <Config.h>
-#include <App.h>
 
 #include <util/Vector2D.h>
 
@@ -74,12 +73,11 @@ extern Multiplexer* g_pMUX;
 
 extern PlugInManager* g_pi_manager;
 
-Routeman::Routeman(App* parent)
+Routeman::Routeman()
+	: pActiveRoute(NULL)
+	, pActivePoint(NULL)
+	, pRouteActivatePoint(NULL)
 {
-	m_pparent_app = parent;
-	pActiveRoute = NULL;
-	pActivePoint = NULL;
-	pRouteActivatePoint = NULL;
 }
 
 Routeman::~Routeman()
@@ -106,7 +104,7 @@ bool Routeman::IsRouteValid(const Route* pRoute) const
 }
 
 // Make a 2-D search to find the route containing a given waypoint
-Route* Routeman::FindRouteContainingWaypoint(const RoutePoint* pWP)
+Route* Routeman::FindRouteContainingWaypoint(const RoutePoint* pWP) const
 {
 	for (RouteList::iterator i = pRouteList->begin(); i != pRouteList->end(); ++i) {
 		Route* route = *i;
@@ -762,7 +760,7 @@ bool Routeman::DoesRouteContainSharedPoints(const Route* pRoute)
 		 point != pRoute->routepoints().end(); ++point) {
 
 		// check all other routes to see if this point appears in any other route
-		RouteArray* pRA = GetRouteArrayContaining(*point);
+		RouteArray* pRA = GetRouteArrayContaining(*point); // FIXME: BUG: MEMORY LEAK
 		if (pRA) {
 			for (unsigned int ir = 0; ir < pRA->size(); ++ir) {
 				Route* route = static_cast<Route*>(pRA->at(ir));
@@ -1011,9 +1009,11 @@ void Routeman::SetColorScheme(global::ColorScheme)
 	m_pActiveRouteBrush = wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("PLRTE")), wxSOLID);
 }
 
-wxString Routeman::GetRouteReverseMessage(void) const
+const wxString& Routeman::GetRouteReverseMessage(void) const
 {
-	return wxString(_("Waypoints can be renamed to reflect the new order, the names will be '001', '002' etc.\n\nDo you want to rename the waypoints?"));
+	static const wxString MESSAGE(_("Waypoints can be renamed to reflect the new order, the names will be '001', '002' etc.\n\nDo you want to rename the waypoints?"));
+
+	return MESSAGE;
 }
 
 Route* Routeman::FindRouteByGUID(const wxString& guid) const

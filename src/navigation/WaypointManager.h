@@ -25,13 +25,13 @@
 #define __NAVIGATION__WAYPOINTMANAGER__H__
 
 #include <wx/string.h>
+#include <wx/imaglist.h>
 #include <global/ColorScheme.h>
 #include <RoutePoint.h>
 
 namespace geo { class Position; }
 
 class wxBitmap;
-class wxImageList;
 
 namespace navigation {
 

@@ -24,7 +24,6 @@
 #include "MarkInfo.h"
 #include <RouteProp.h>
 #include <LinkPropDlg.h>
-#include <WayPointman.h>
 #include <Select.h>
 #include <PositionConvert.h>
 #include <PositionParser.h>
@@ -36,6 +35,7 @@
 #include <global/OCPN.h>
 
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <wx/notebook.h>
 #include <wx/sizer.h>
@@ -44,7 +44,6 @@
 #include <wx/tglbtn.h>
 #include <wx/clipbrd.h>
 
-extern WayPointman* pWayPointMan;
 extern Select* pSelect;
 extern Config* pConfig;
 extern ChartCanvas* cc1;
@@ -560,15 +559,18 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	build_hyperlink_list();
 	bSizerLinks->Fit(m_scrolledWindowLinks);
 
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+
 	// Iterate on the Icon Descriptions, filling in the control
 	int iconToSelect = 0;
 	bool fillCombo = m_bcomboBoxIcon->GetCount() == 0;
 	wxImageList* icons = NULL;
-	if (fillCombo)
-		icons = pWayPointMan->Getpmarkicon_image_list();
-	for (int i = 0; i < pWayPointMan->GetNumIcons(); ++i) {
-		const wxString ps = pWayPointMan->GetIconDescription(i);
-		if (pWayPointMan->GetIconKey(i) == m_pRoutePoint->icon_name())
+	if (fillCombo) {
+		icons = waypointmanager.Getpmarkicon_image_list();
+	}
+	for (int i = 0; i < waypointmanager.GetNumIcons(); ++i) {
+		const wxString ps = waypointmanager.GetIconDescription(i);
+		if (waypointmanager.GetIconKey(i) == m_pRoutePoint->icon_name())
 			iconToSelect = i;
 		if (fillCombo && icons)
 			m_bcomboBoxIcon->Append(ps, icons->GetBitmap(i));
@@ -756,7 +758,8 @@ bool MarkInfoImpl::SaveChanges()
 	m_pRoutePoint->SetNameShown(m_checkBoxShowName->GetValue());
 	m_pRoutePoint->set_position(
 		geo::Position(fromDMM(m_textLatitude->GetValue()), fromDMM(m_textLongitude->GetValue())));
-	m_pRoutePoint->set_icon_name(pWayPointMan->GetIconKey(m_bcomboBoxIcon->GetSelection()));
+	m_pRoutePoint->set_icon_name(
+		global::OCPN::get().waypointman().GetIconKey(m_bcomboBoxIcon->GetSelection()));
 	m_pRoutePoint->ReLoadIcon();
 
 	// Here is some logic....
@@ -968,7 +971,7 @@ void MarkInfoImpl::ValidateMark(void)
 	// Look in the master list of Waypoints to see if the currently selected waypoint is still valid
 	// It may have been deleted as part of a route
 
-	if (!pWayPointMan->contains(m_pRoutePoint))
+	if (!global::OCPN::get().waypointman().contains(m_pRoutePoint))
 		m_pRoutePoint = NULL;
 }
 

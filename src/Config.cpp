@@ -28,7 +28,6 @@
 #include <MainFrame.h>
 #include <Layer.h>
 #include <ConnectionParams.h>
-#include <WayPointman.h>
 #include <Route.h>
 #include <RoutePoint.h>
 #include <NavObjectCollection.h>
@@ -43,6 +42,10 @@
 #ifdef USE_S57
 	#include <chart/s52plib.h>
 #endif
+
+#include <global/OCPN.h>
+
+#include <navigation/WaypointManager.h>
 
 #include <chart/ChartDatabase.h>
 #include <chart/s52utils.h>
@@ -68,7 +71,6 @@ extern RouteList* pRouteList;
 extern LayerList* pLayerList;
 extern int g_LayerIdx;
 extern ArrayOfConnPrm* g_pConnectionParams;
-extern WayPointman* pWayPointMan;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern ocpnStyle::StyleManager* g_StyleManager;
 
@@ -1898,10 +1900,12 @@ void Config::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer)
 
 	::wxBeginBusyCursor();
 
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+
 	NavObjectCollection* pgpx = new NavObjectCollection;
 
 	wxProgressDialog* pprog = NULL;
-	int count = static_cast<int>(pWayPointMan->waypoints().size());
+	int count = static_cast<int>(waypointmanager.waypoints().size());
 	if (count > 200) {
 		pprog = new wxProgressDialog(_("Export GPX file"), _T("0/0"), count, NULL,
 									 wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_ELAPSED_TIME
@@ -1913,8 +1917,8 @@ void Config::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer)
 	// WPTs
 	int ic = 0;
 
-	for (RoutePointList::const_iterator i = pWayPointMan->waypoints().begin();
-		 i != pWayPointMan->waypoints().end(); ++i) {
+	for (RoutePointList::const_iterator i = waypointmanager.waypoints().begin();
+		 i != waypointmanager.waypoints().end(); ++i) {
 		if (pprog) {
 			pprog->Update(ic, wxString::Format(_T("%d/%d"), ic, count));
 			ic++;

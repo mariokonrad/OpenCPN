@@ -47,6 +47,7 @@ namespace navigation
 {
 class RouteTracker;
 class RouteManager;
+class WaypointManager;
 }
 
 class App : public wxApp
@@ -96,6 +97,7 @@ private:
 	global::ColorProvider* s52_color_provider;
 	navigation::RouteTracker* tracker_instance;
 	navigation::RouteManager* route_manager_instance;
+	navigation::WaypointManager* waypoint_manager_instance;
 
 	bool start_fullscreen;
 	bool first_run;

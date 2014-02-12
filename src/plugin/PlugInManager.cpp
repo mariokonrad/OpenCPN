@@ -34,7 +34,6 @@
 #include <StatWin.h>
 #include <FontMgr.h>
 #include <OCPN_DataStreamEvent.h>
-#include <WayPointman.h>
 #include <RouteManagerDialog.h>
 #include <NavObjectCollection.h>
 #include <Units.h>
@@ -49,6 +48,7 @@
 #include <global/ColorManager.h>
 
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <geo/GeoRef.h>
 
@@ -84,7 +84,6 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 extern options* g_pOptions;
 extern Multiplexer* g_pMUX;
 extern StatWin* stats;
-extern WayPointman* pWayPointMan;
 extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
 extern RouteList* pRouteList;
@@ -1824,7 +1823,7 @@ wxString GetNewGUID(void)
 
 bool AddCustomWaypointIcon(wxBitmap* pimage, wxString key, wxString description)
 {
-	pWayPointMan->ProcessIcon(*pimage, key, description);
+	global::OCPN::get().waypointman().ProcessIcon(*pimage, key, description);
 	return true;
 }
 
@@ -1833,7 +1832,7 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 	// Validate the waypoint parameters a little bit
 
 	// Make sure that this GUID is indeed unique in the Routepoint list
-	if (pWayPointMan->find(pwaypoint->m_GUID) != NULL)
+	if (global::OCPN::get().waypointman().find(pwaypoint->m_GUID) != NULL)
 		return false;
 
 	RoutePoint* pWP
@@ -1870,13 +1869,13 @@ bool DeleteSingleWaypoint(wxString& GUID)
 {
 	// Find the RoutePoint
 	bool b_found = false;
-	RoutePoint* prp = pWayPointMan->find(GUID);
+	RoutePoint* prp = global::OCPN::get().waypointman().find(GUID);
 
 	if (prp)
 		b_found = true;
 
 	if (b_found) {
-		pWayPointMan->DestroyWaypoint(prp);
+		global::OCPN::get().waypointman().DestroyWaypoint(prp);
 		if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 			pRouteManagerDialog->UpdateWptListCtrl();
 	}
@@ -1888,7 +1887,7 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 {
 	// Find the RoutePoint
 	bool b_found = false;
-	RoutePoint* prp = pWayPointMan->find(pwaypoint->m_GUID);
+	RoutePoint* prp = global::OCPN::get().waypointman().find(pwaypoint->m_GUID);
 
 	if (prp)
 		b_found = true;

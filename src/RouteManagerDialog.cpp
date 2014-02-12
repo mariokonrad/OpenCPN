@@ -25,7 +25,6 @@
 #include "dychart.h"
 #include <MessageBox.h>
 #include <Select.h>
-#include <WayPointman.h>
 #include <Track.h>
 #include <RouteProp.h>
 #include <MarkInfo.h>
@@ -48,6 +47,7 @@
 
 #include <navigation/RouteTracker.h>
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <iostream>
 #include <algorithm>
@@ -135,7 +135,6 @@ extern TrackPropDlg* pTrackPropDialog;
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern chart::ChartBase* Current_Ch;
-extern WayPointman* pWayPointMan;
 extern MarkInfoImpl* pMarkPropDialog;
 extern MainFrame* gFrame;
 extern Select* pSelect;
@@ -622,7 +621,8 @@ void RouteManagerDialog::Create()
 	m_pRouteListCtrl->AssignImageList(imglist, wxIMAGE_LIST_SMALL);
 	// Assign will handle destroy, Set will not. It's OK, that's what we want
 	m_pTrkListCtrl->SetImageList(imglist, wxIMAGE_LIST_SMALL);
-	m_pWptListCtrl->SetImageList(pWayPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL);
+	m_pWptListCtrl->SetImageList(global::OCPN::get().waypointman().Getpmarkicon_image_list(),
+								 wxIMAGE_LIST_SMALL);
 	m_pLayListCtrl->SetImageList(imglist, wxIMAGE_LIST_SMALL);
 
 	SetColorScheme();
@@ -1698,14 +1698,16 @@ void RouteManagerDialog::UpdateWptListCtrl(RoutePoint* rp_select, bool b_retain_
 			selected_id = m_pWptListCtrl->GetItemData(item);
 	}
 
-	//  Freshen the image list
-	m_pWptListCtrl->SetImageList(pWayPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL);
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+
+	// Freshen the image list
+	m_pWptListCtrl->SetImageList(waypointmanager.Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL);
 
 	m_pWptListCtrl->DeleteAllItems();
 
 	const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 	int index = 0;
-	const RoutePointList& waypoints = pWayPointMan->waypoints();
+	const RoutePointList& waypoints = waypointmanager.waypoints();
 	for (RoutePointList::const_iterator i = waypoints.begin(); i != waypoints.end(); ++i) {
 		const RoutePoint* rp = *i;
 		if (rp && rp->IsListed()) {
@@ -1717,8 +1719,8 @@ void RouteManagerDialog::UpdateWptListCtrl(RoutePoint* rp_select, bool b_retain_
 
 			wxListItem li;
 			li.SetId(index);
-			li.SetImage(rp->IsVisible() ? pWayPointMan->GetIconIndex(rp->m_pbmIcon)
-										: pWayPointMan->GetXIconIndex(rp->m_pbmIcon));
+			li.SetImage(rp->IsVisible() ? waypointmanager.GetIconIndex(rp->m_pbmIcon)
+										: waypointmanager.GetXIconIndex(rp->m_pbmIcon));
 			li.SetData(const_cast<RoutePoint*>(rp));
 			li.SetText(_T(""));
 			long idx = m_pWptListCtrl->InsertItem(li);
@@ -1771,6 +1773,8 @@ void RouteManagerDialog::UpdateWptListCtrl(RoutePoint* rp_select, bool b_retain_
 
 void RouteManagerDialog::UpdateWptListCtrlViz()
 {
+	const navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+
 	long item = -1;
 	for (;;) {
 		item = m_pWptListCtrl->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_DONTCARE);
@@ -1778,8 +1782,8 @@ void RouteManagerDialog::UpdateWptListCtrlViz()
 			break;
 
 		RoutePoint* pRP = (RoutePoint*)m_pWptListCtrl->GetItemData(item);
-		int image = pRP->IsVisible() ? pWayPointMan->GetIconIndex(pRP->m_pbmIcon)
-									 : pWayPointMan->GetXIconIndex(pRP->m_pbmIcon);
+		int image = pRP->IsVisible() ? waypointmanager.GetIconIndex(pRP->m_pbmIcon)
+									 : waypointmanager.GetXIconIndex(pRP->m_pbmIcon);
 
 		m_pWptListCtrl->SetItemImage(item, image);
 	}
@@ -1855,15 +1859,17 @@ void RouteManagerDialog::OnWptToggleVisibility(wxMouseEvent& event)
 	int flags = 0;
 	long clicked_index = m_pWptListCtrl->HitTest(pos, flags);
 
-	//    Clicking Visibility column?
+	const navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+
+	// Clicking Visibility column?
 	if (clicked_index > -1 && event.GetX() < m_pWptListCtrl->GetColumnWidth(colTRKVISIBLE)) {
 		// Process the clicked item
 		RoutePoint* wp = (RoutePoint*)m_pWptListCtrl->GetItemData(clicked_index);
 
 		wp->SetVisible(!wp->IsVisible());
 		m_pWptListCtrl->SetItemImage(clicked_index,
-									 wp->IsVisible() ? pWayPointMan->GetIconIndex(wp->m_pbmIcon)
-													 : pWayPointMan->GetXIconIndex(wp->m_pbmIcon));
+									 wp->IsVisible() ? waypointmanager.GetIconIndex(wp->m_pbmIcon)
+													 : waypointmanager.GetXIconIndex(wp->m_pbmIcon));
 
 		pConfig->UpdateWayPoint(wp);
 
@@ -1976,6 +1982,7 @@ void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent&)
 	}
 
 	if (busy) {
+		navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
 		for (unsigned int i = 0; i < list.size(); i++) {
 			RoutePoint* wp = list.at(i);
 			if (wp) {
@@ -1983,9 +1990,9 @@ void RouteManagerDialog::OnWptDeleteClick(wxCommandEvent&)
 					if (wxYES
 						== OCPNMessageBox(this, _("The waypoint you want to delete is used in a route, do you really want to delete it?"),
 										  _("OpenCPN Alert"), wxYES_NO))
-						pWayPointMan->DestroyWaypoint(wp);
+						waypointmanager.DestroyWaypoint(wp);
 				} else {
-					pWayPointMan->DestroyWaypoint(wp);
+					waypointmanager.DestroyWaypoint(wp);
 				}
 			}
 		}
@@ -2104,8 +2111,12 @@ void RouteManagerDialog::OnWptSendToGPSClick(wxCommandEvent&)
 void RouteManagerDialog::OnWptDeleteAllClick(wxCommandEvent&)
 {
 	wxString prompt;
-	int buttons, type;
-	if (!pWayPointMan->SharedWptsExist()) {
+	int buttons;
+	int type;
+
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+
+	if (!waypointmanager.SharedWptsExist()) {
 		prompt = _("Are you sure you want to delete <ALL> waypoints?");
 		buttons = wxYES_NO;
 		type = 1;
@@ -2116,9 +2127,9 @@ void RouteManagerDialog::OnWptDeleteAllClick(wxCommandEvent&)
 	}
 	int answer = OCPNMessageBox(this, prompt, wxString(_("OpenCPN Alert")), buttons);
 	if (answer == wxID_YES)
-		pWayPointMan->DeleteAllWaypoints(true);
+		waypointmanager.DeleteAllWaypoints(true);
 	if (answer == wxID_NO && type == 2)
-		pWayPointMan->DeleteAllWaypoints(false); // only delete unused waypoints
+		waypointmanager.DeleteAllWaypoints(false); // only delete unused waypoints
 
 	if (pMarkPropDialog) {
 		pMarkPropDialog->SetRoutePoint(NULL);
@@ -2264,7 +2275,7 @@ void RouteManagerDialog::OnLayDeleteClick(wxCommandEvent&)
 	}
 
 	// Process waypoints in this layer
-	pWayPointMan->deleteWayPointOnLayer(layer->getID());
+	global::OCPN::get().waypointman().deleteWayPointOnLayer(layer->getID());
 
 	if (pMarkPropDialog) {
 		pMarkPropDialog->SetRoutePoint(NULL);
@@ -2317,7 +2328,8 @@ void RouteManagerDialog::ToggleLayerContentsOnChart(Layer* layer)
 	}
 
 	// Process waypoints in this layer
-	pWayPointMan->setWayPointVisibilityOnLayer(layer->getID(), layer->IsVisibleOnChart());
+	global::OCPN::get().waypointman().setWayPointVisibilityOnLayer(layer->getID(),
+																   layer->IsVisibleOnChart());
 
 	UpdateRouteListCtrl();
 	UpdateTrkListCtrl();
@@ -2359,7 +2371,8 @@ void RouteManagerDialog::ToggleLayerContentsNames(Layer* layer)
 	}
 
 	// Process waypoints in this layer
-	pWayPointMan->setWayPointNameVisibilityOnLayer(layer->getID(), layer->HasVisibleNames());
+	global::OCPN::get().waypointman().setWayPointNameVisibilityOnLayer(layer->getID(),
+																	   layer->HasVisibleNames());
 	UpdateLayButtons();
 	cc1->Refresh();
 }
@@ -2404,7 +2417,8 @@ void RouteManagerDialog::ToggleLayerContentsOnListing(Layer* layer)
 	// n.b.  If the waypoint belongs to a track, and is not shared, then do not list it.
 	// This is a performance optimization, allowing large track support.
 
-	pWayPointMan->setWayPointListingVisibilityOnLayer(layer->getID(), layer->IsVisibleOnListing());
+	global::OCPN::get().waypointman().setWayPointListingVisibilityOnLayer(
+		layer->getID(), layer->IsVisibleOnListing());
 
 	UpdateRouteListCtrl();
 	UpdateTrkListCtrl();

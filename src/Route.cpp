@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "Route.h"
-#include <WayPointman.h>
 #include <ocpnDC.h>
 #include <Multiplexer.h>
 #include <Select.h>
@@ -40,6 +39,7 @@
 #include <global/ColorManager.h>
 
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <geo/GeoRef.h>
 #include <geo/LineClip.h>
@@ -49,7 +49,6 @@
 
 #include <algorithm>
 
-extern WayPointman* pWayPointMan;
 extern Select* pSelect;
 extern Config* pConfig;
 extern Multiplexer* g_pMUX;
@@ -1012,8 +1011,9 @@ void Route::SetListed(bool visible)
 
 void Route::AssembleRoute(void)
 {
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
 	for (unsigned int ip = 0; ip < RoutePointGUIDList.size(); ++ip) {
-		RoutePoint* point = pWayPointMan->find(RoutePointGUIDList[ip]);
+		RoutePoint* point = waypointmanager.find(RoutePointGUIDList[ip]);
 		if (point)
 			AddPoint(point);
 	}

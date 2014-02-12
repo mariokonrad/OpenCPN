@@ -24,7 +24,6 @@
 #include "RouteProp.h"
 #include <Select.h>
 #include <Track.h>
-#include <WayPointman.h>
 #include <RouteManagerDialog.h>
 #include <MessageBox.h>
 #include <RoutePrintSelection.h>
@@ -39,6 +38,7 @@
 #include <navigation/MagneticVariation.h>
 #include <navigation/RouteTracker.h>
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <geo/GeoRef.h>
 
@@ -64,7 +64,6 @@ extern int g_StartTimeTZ;
 extern tide::IDX_entry* gpIDX;
 extern tide::TCMgr* ptcmgr;
 extern Config* pConfig;
-extern WayPointman* pWayPointMan;
 extern ChartCanvas* cc1;
 extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
@@ -357,8 +356,8 @@ bool RouteProp::IsThisRouteExtendable()
 				int nearby_radius_meters = static_cast<int>(8.0 / cc1->GetCanvasTrueScale());
 				geo::Position rpos = pLastPoint->get_position();
 
-				m_pExtendPoint = pWayPointMan->GetOtherNearbyWaypoint(rpos, nearby_radius_meters,
-																	  pLastPoint->guid());
+				m_pExtendPoint = global::OCPN::get().waypointman().GetOtherNearbyWaypoint(
+					rpos, nearby_radius_meters, pLastPoint->guid());
 				if (m_pExtendPoint && !m_pExtendPoint->is_in_track()) {
 					RouteManager::RouteArray close_wp_routes
 						= routemanager.GetRouteArrayContaining(m_pExtendPoint);

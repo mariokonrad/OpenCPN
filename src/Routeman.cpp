@@ -24,7 +24,6 @@
 #include "Routeman.h"
 #include "dychart.h"
 #include <StyleManager.h>
-#include <WayPointman.h>
 #include <ConsoleCanvas.h>
 #include <RouteProp.h>
 #include <RouteManagerDialog.h>

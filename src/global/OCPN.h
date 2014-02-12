@@ -27,6 +27,7 @@
 namespace navigation {
 class RouteTracker;
 class RouteManager;
+class WaypointManager;
 }
 
 namespace global {
@@ -72,6 +73,9 @@ public:
 	void inject(navigation::RouteManager*);
 	navigation::RouteManager& routeman();
 
+	void inject(navigation::WaypointManager*);
+	navigation::WaypointManager& waypointman();
+
 private:
 	OCPN();
 	OCPN(const OCPN&);
@@ -89,6 +93,7 @@ private:
 	ColorManager* color_instance;
 	navigation::RouteTracker* tracker_instance;
 	navigation::RouteManager* route_manager_instance;
+	navigation::WaypointManager* waypoint_manager_instance;
 };
 
 }

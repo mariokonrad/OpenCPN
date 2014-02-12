@@ -50,6 +50,46 @@ extern Config* pConfig;
 extern Select* pSelect;
 
 WayPointman::WayPointman()
+	: m_nGUID(0)
+{
+}
+
+WayPointman::~WayPointman()
+{
+	// route points are not being free here, they must be released explicitly
+	// using 'clean_points'. this is because route points remove themselfes
+	// from the waypoint manager, in this case while the waypoint manager
+	// is being destroyed.
+	// this issue certainly needs to be addressed, but this way it works for now.
+
+	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
+		MarkIcon* pmi = *i;
+		delete pmi->bitmap; // FIXME: let MarkIcon handle its own resources
+		delete pmi;
+	}
+	icons.clear();
+	icon_image_list.RemoveAll();
+}
+
+void WayPointman::clean_points()
+{
+	// FIXME: resource handling mess:
+	// Two step here, since the RoutePoint dtor also touches the
+	// RoutePoint list.
+	// Copy the master RoutePoint list to a temporary list,
+	// then clear and delete objects from the temp list
+	RoutePointList temp_list;
+	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
+		temp_list.push_back(*i);
+	}
+	for (RoutePointList::iterator i = temp_list.begin(); i != temp_list.end(); ++i)
+		delete *i;
+	temp_list.clear();
+
+	points.clear();
+}
+
+void WayPointman::initialize()
 {
 	ProcessIcons(g_StyleManager->current());
 
@@ -86,34 +126,7 @@ WayPointman::WayPointman()
 			}
 		}
 	}
-
 	m_nGUID = 0;
-}
-
-WayPointman::~WayPointman()
-{
-	// FIXME: resource handling mess:
-	// Two step here, since the RoutePoint dtor also touches the
-	// RoutePoint list.
-	// Copy the master RoutePoint list to a temporary list,
-	// then clear and delete objects from the temp list
-	RoutePointList temp_list;
-	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
-		temp_list.push_back(*i);
-	}
-	for (RoutePointList::iterator i = temp_list.begin(); i != temp_list.end(); ++i)
-		delete *i;
-	temp_list.clear();
-
-	points.clear();
-
-	for (Icons::iterator i = icons.begin(); i != icons.end(); ++i) {
-		MarkIcon* pmi = *i;
-		delete pmi->bitmap; // FIXME: let MarkIcon handle its own resources
-		delete pmi;
-	}
-	icons.clear();
-	icon_image_list.RemoveAll();
 }
 
 void WayPointman::ProcessIcons(ocpnStyle::Style& style)

@@ -61,7 +61,6 @@
 #include <ChartCanvas.h>
 #include <TimedPopupWin.h>
 #include <MessageBox.h>
-#include <WayPointman.h>
 #include <Track.h>
 #include <StyleManager.h>
 #include <Style.h>
@@ -103,6 +102,7 @@
 #include <navigation/MagneticVariation.h>
 #include <navigation/RouteTracker.h>
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -172,7 +172,6 @@ int g_LayerIdx;
 Select* pSelect;
 Select* pSelectTC;
 Select* pSelectAIS;
-WayPointman* pWayPointMan;
 MarkInfoImpl* pMarkPropDialog;
 RouteProp* pRoutePropDialog;
 TrackPropDlg* pTrackPropDialog;
@@ -558,8 +557,7 @@ void MainFrame::SetAndApplyColorScheme(global::ColorScheme cs)
 	if (chart_canvas)
 		chart_canvas->SetColorScheme(cs);
 
-	if (pWayPointMan)
-		pWayPointMan->SetColorScheme(cs);
+	global::OCPN::get().waypointman().SetColorScheme(cs);
 
 	if (ChartData)
 		ChartData->ApplyColorSchemeToCachedCharts(cs);
@@ -1074,8 +1072,9 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 			// This will prevent clutter and database congestion....
 
 			// FIXME: refactoring: access to the waypoint managers private data
-			for (RoutePointList::iterator i = pWayPointMan->waypoints().begin();
-				 i != pWayPointMan->waypoints().end(); ++i) {
+			navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+			for (RoutePointList::iterator i = waypointmanager.waypoints().begin();
+				 i != waypointmanager.waypoints().end(); ++i) {
 				RoutePoint* pr = *i;
 				if (pr->GetName().StartsWith(_T("Anchorage"))) {
 					double a = nav.pos.lat() - pr->latitude();
@@ -1361,9 +1360,7 @@ void MainFrame::UpdateAllFonts()
 		g_pais_query_dialog_active = NULL;
 	}
 
-	if (pWayPointMan)
-		pWayPointMan->ClearRoutePointFonts();
-
+	global::OCPN::get().waypointman().ClearRoutePointFonts();
 	chart_canvas->Refresh();
 }
 

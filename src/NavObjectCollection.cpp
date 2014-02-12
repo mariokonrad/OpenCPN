@@ -24,7 +24,6 @@
 #include "NavObjectCollection.h"
 
 #include <RoutePoint.h>
-#include <WayPointman.h>
 #include <Track.h>
 #include <Select.h>
 #include <Config.h>
@@ -32,11 +31,11 @@
 #include <global/OCPN.h>
 
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <gpx/ParseGPXDateTime.h>
 #include <gpx/GpxDocument.h>
 
-extern WayPointman* pWayPointMan;
 extern Config* pConfig;
 
 extern RouteList* pRouteList;
@@ -231,7 +230,7 @@ Track * NavObjectCollection::GPXLoadTrack1(
 						pWp->m_bIsInRoute = false; // Hack
 						pWp->m_bIsInTrack = true;
 						pWp->m_GPXTrkSegNo = GPXSeg;
-						pWayPointMan->push_back(pWp);
+						global::OCPN::get().waypointman().push_back(pWp);
 					}
 				}
 			} else if (ChildName == _T("name")) {
@@ -339,6 +338,8 @@ Route * NavObjectCollection::GPXLoadRoute1(
 	Route* pTentRoute = NULL;
 	Hyperlinks linklist;
 
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+
 	wxString Name = wxString::FromUTF8(wpt_node.name());
 	if (Name == _T("rte")) {
 		pTentRoute = new Route();
@@ -351,14 +352,15 @@ Route * NavObjectCollection::GPXLoadRoute1(
 			if (ChildName == _T("rtept")) {
 				pWp = GPXLoadWaypoint1(tschild, _T("square"), _T(""), b_fullviz, b_layer,
 									   b_layerviz, layer_id);
-				RoutePoint* erp = pWayPointMan->find(pWp->guid());
+				RoutePoint* erp = waypointmanager.find(pWp->guid());
 				if (erp != NULL)
 					pWp = erp;
 				pTentRoute->AddPoint(pWp, false, true); // defer BBox calculation
 				pWp->m_bIsInRoute = true; // Hack
 				pWp->m_bIsInTrack = false;
-				if (erp == NULL)
-					pWayPointMan->push_back(pWp);
+				if (erp == NULL) {
+					waypointmanager.push_back(pWp);
+				}
 			} else if (ChildName == _T("name")) {
 				RouteName = wxString::FromUTF8(tschild.first_child().value());
 			} else if (ChildName == _T("desc")) {
@@ -936,7 +938,7 @@ bool NavObjectCollection::CreateNavObjGPXPoints(void)
 	// Routepoints that are not in any Route
 	// as indicated by isolated mark indicator (false)
 
-	const RoutePointList& waypoints = pWayPointMan->waypoints();
+	const RoutePointList& waypoints = global::OCPN::get().waypointman().waypoints();
 	RoutePointList::const_iterator end = waypoints.end();
 	for (RoutePointList::const_iterator i = waypoints.begin(); i != end; ++i) {
 		const RoutePoint* point = *i;
@@ -1051,6 +1053,8 @@ bool NavObjectCollection::SaveFile(const wxString filename)
 
 bool NavObjectCollection::LoadAllGPXObjects()
 {
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+
 	pugi::xml_node objects = this->child("gpx");
 
 	for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling()) {
@@ -1061,10 +1065,9 @@ bool NavObjectCollection::LoadAllGPXObjects()
 
 			if (pWp) {
 				RoutePoint* pExisting
-					= pWayPointMan->WaypointExists(pWp->GetName(), pWp->get_position());
+					= waypointmanager.WaypointExists(pWp->GetName(), pWp->get_position());
 				if (!pExisting) {
-					if (NULL != pWayPointMan)
-						pWayPointMan->push_back(pWp);
+					waypointmanager.push_back(pWp);
 					pSelect->AddSelectableRoutePoint(pWp->get_position(), pWp);
 				} else
 					delete pWp;
@@ -1083,9 +1086,6 @@ bool NavObjectCollection::LoadAllGPXObjects()
 
 int NavObjectCollection::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
 {
-	if (!pWayPointMan)
-		return 0;
-
 	int n_obj = 0;
 	pugi::xml_node objects = this->child("gpx");
 
@@ -1096,7 +1096,7 @@ int NavObjectCollection::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
 			pWp->m_bIsolatedMark = true; // This is an isolated mark
 
 			if (pWp) {
-				pWayPointMan->push_back(pWp);
+				global::OCPN::get().waypointman().push_back(pWp);
 				pSelect->AddSelectableRoutePoint(pWp->get_position(), pWp);
 				n_obj++;
 			} else

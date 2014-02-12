@@ -24,14 +24,13 @@
 #include "NavObjectChanges.h"
 #include <RoutePoint.h>
 #include <Track.h>
-#include <WayPointman.h>
 #include <Select.h>
 
 #include <global/OCPN.h>
 
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
-extern WayPointman* pWayPointMan;
 extern Select* pSelect;
 
 NavObjectChanges::NavObjectChanges()
@@ -90,6 +89,8 @@ bool NavObjectChanges::ApplyChanges(void)
 {
 	// Let's reconstruct the unsaved changes
 
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+
 	pugi::xml_node objects = this->child("gpx");
 
 	for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling()) {
@@ -97,26 +98,29 @@ bool NavObjectChanges::ApplyChanges(void)
 			RoutePoint* pWp
 				= GPXLoadWaypoint1(object, _T("circle"), _T(""), false, false, false, 0);
 
-			if (pWp && pWayPointMan) {
+			if (pWp) {
 				pWp->m_bIsolatedMark = true;
 				RoutePoint* pExisting
-					= pWayPointMan->WaypointExists(pWp->GetName(), pWp->get_position());
+					= waypointmanager.WaypointExists(pWp->GetName(), pWp->get_position());
 
 				pugi::xml_node xchild = object.child("extensions");
 				pugi::xml_node child = xchild.child("opencpn:action");
 
 				if (!strcmp(child.first_child().value(), "add")) {
-					if (!pExisting)
-						pWayPointMan->push_back(pWp);
+					if (!pExisting) {
+						waypointmanager.push_back(pWp);
+					}
 					pSelect->AddSelectableRoutePoint(pWp->get_position(), pWp);
 				} else if (!strcmp(child.first_child().value(), "update")) {
-					if (pExisting)
-						pWayPointMan->remove(pExisting);
-					pWayPointMan->push_back(pWp);
+					if (pExisting) {
+						waypointmanager.remove(pExisting);
+					}
+					waypointmanager.push_back(pWp);
 					pSelect->AddSelectableRoutePoint(pWp->get_position(), pWp);
 				} else if (!strcmp(child.first_child().value(), "delete")) {
-					if (pExisting)
-						pWayPointMan->DestroyWaypoint(pExisting);
+					if (pExisting) {
+						waypointmanager.DestroyWaypoint(pExisting);
+					}
 				} else
 					delete pWp;
 			}

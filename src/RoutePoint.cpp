@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "RoutePoint.h"
-#include <WayPointman.h>
 #include <Multiplexer.h>
 #include <FontMgr.h>
 #include <MessageBox.h>
@@ -33,6 +32,7 @@
 #include <global/OCPN.h>
 
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <gpx/ParseGPXDateTime.h>
 #include <gpx/GpxDocument.h>
@@ -40,7 +40,6 @@
 #include <wx/dcscreen.h>
 #include <wx/tokenzr.h>
 
-extern WayPointman* pWayPointMan;
 extern bool g_bIsNewLayer;
 extern int g_LayerIdx;
 extern ChartCanvas* cc1;
@@ -168,8 +167,8 @@ RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, con
 
 	// Possibly add the waypoint to the global list maintained by the waypoint manager
 
-	if (bAddToList && NULL != pWayPointMan)
-		pWayPointMan->push_back(this);
+	if (bAddToList)
+		global::OCPN::get().waypointman().push_back(this); // FIXME: refactoring
 
 	m_bIsInLayer = g_bIsNewLayer;
 	if (m_bIsInLayer) {
@@ -182,10 +181,7 @@ RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, con
 
 RoutePoint::~RoutePoint(void)
 {
-	// FIXME: what a mess: Remove this point from the global waypoint list
-	if (pWayPointMan)
-		pWayPointMan->remove(this);
-
+	global::OCPN::get().waypointman().remove(this); // FIXME: refactoring
 	m_HyperlinkList.clear();
 }
 
@@ -258,7 +254,7 @@ void RoutePoint::CalculateNameExtents(void)
 
 void RoutePoint::ReLoadIcon(void)
 {
-	m_pbmIcon = pWayPointMan->GetIconBitmap(icon_name());
+	m_pbmIcon = global::OCPN::get().waypointman().GetIconBitmap(icon_name());
 }
 
 void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
@@ -272,7 +268,7 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	if (NULL != rpn)
 		*rpn = r;
 
-	if (!m_bIsVisible) // pjotrc 2010.02.13, 2011.02.24
+	if (!m_bIsVisible)
 		return;
 
 	// Optimization, especially apparent on tracks in normal cases
@@ -290,7 +286,7 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	// Substitue icon?
 	wxBitmap* pbm;
 	if ((m_bIsActive) && (m_IconName != _T("mob")))
-		pbm = pWayPointMan->GetIconBitmap(_T("activepoint"));
+		pbm = global::OCPN::get().waypointman().GetIconBitmap(_T("activepoint"));
 	else
 		pbm = m_pbmIcon;
 

@@ -25,7 +25,6 @@
 #define __WAYPOINTMAN__H__
 
 #include <vector>
-#include <wx/imaglist.h>
 #include <navigation/WaypointManager.h>
 
 namespace ocpnStyle { class Style; }
@@ -76,6 +75,8 @@ public:
 
 	// special
 	void ProcessIcons(ocpnStyle::Style& style);
+	void initialize();
+	void clean_points();
 
 private:
 	bool within_distance(const RoutePoint* point, const geo::Position& pos,

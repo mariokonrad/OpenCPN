@@ -30,8 +30,6 @@
 #include <StyleManager.h>
 #include <Style.h>
 #include <FloatingCompassWindow.h>
-#include <Routeman.h>
-#include <WayPointman.h>
 #include <ThumbWin.h>
 #include <StatWin.h>
 #include <PianoWin.h>
@@ -46,6 +44,8 @@
 #include <UserColors.h>
 #include <Layer.h>
 #include <OCPN_Version.h>
+#include <Routeman.h>
+#include <WayPointman.h>
 
 #include <windows/compatibility.h>
 
@@ -149,7 +149,6 @@ extern bool g_b_assume_azerty;
 extern wxAuiManager* g_pauimgr;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
-extern WayPointman* pWayPointMan;
 extern chart::ChartStack* pCurrentStack;
 extern int g_unit_test_1;
 extern OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
@@ -284,6 +283,7 @@ App::App()
 	, s52_color_provider(NULL)
 	, tracker_instance(NULL)
 	, route_manager_instance(NULL)
+	, waypoint_manager_instance(NULL)
 	, start_fullscreen(false)
 	, first_run(false)
 	, logger(NULL)
@@ -448,6 +448,10 @@ void App::inject_global_instances()
 
 	route_manager_instance = new Routeman;
 	global::OCPN::get().inject(route_manager_instance);
+
+	// init the waypoint manager (must be after UI style init).
+	waypoint_manager_instance = new WayPointman;
+	global::OCPN::get().inject(waypoint_manager_instance);
 }
 
 void App::establish_home_location()
@@ -1322,8 +1326,7 @@ bool App::OnInit()
 	}
 
 	// Init the WayPoint Manager (Must be after UI Style init).
-	pWayPointMan = new WayPointman();
-	pWayPointMan->ProcessIcons(g_StyleManager->current());
+	dynamic_cast<WayPointman*>(waypoint_manager_instance)->initialize();
 
 	// Open/Create the Config Object (Must be after UI Style init).
 	pConfig = new Config(wxString(_T("")), wxString(_T("")), sys.data().config_file);
@@ -1715,10 +1718,10 @@ bool App::OnInit()
 	// Re-enable anchor watches if set in config file
 	const global::Navigation::Anchor& anchor = global::OCPN::get().nav().anchor();
 	if (!anchor.AW1GUID.IsEmpty()) {
-		pAnchorWatchPoint1 = pWayPointMan->find(anchor.AW1GUID);
+		pAnchorWatchPoint1 = waypoint_manager_instance->find(anchor.AW1GUID);
 	}
 	if (!anchor.AW2GUID.IsEmpty()) {
-		pAnchorWatchPoint2 = pWayPointMan->find(anchor.AW2GUID);
+		pAnchorWatchPoint2 = waypoint_manager_instance->find(anchor.AW2GUID);
 	}
 
 	stats->Show(true);
@@ -1801,10 +1804,9 @@ int App::OnExit()
 		delete logger;
 	}
 
-	delete pWayPointMan;
-
 	LogMessageOnce::destroy();
 
+	dynamic_cast<WayPointman*>(waypoint_manager_instance)->clean_points();
 	delete pLayerList;
 
 #ifdef USE_S57
@@ -1865,6 +1867,7 @@ int App::OnExit()
 	delete run_instance;
 	delete ais_instance;
 	delete route_manager_instance;
+	delete waypoint_manager_instance;
 	delete tracker_instance;
 
 	return true;

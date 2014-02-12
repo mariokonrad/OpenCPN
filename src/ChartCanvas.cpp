@@ -42,7 +42,6 @@
 #include <Kml.h>
 #include <ConsoleCanvas.h>
 #include <ThumbWin.h>
-#include <WayPointman.h>
 #include <MainFrame.h>
 #include <RouteProp.h>
 #include <MarkInfo.h>
@@ -81,6 +80,7 @@
 #include <navigation/MagneticVariation.h>
 #include <navigation/RouteTracker.h>
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <geo/LineClip.h>
 #include <geo/Geodesic.h>
@@ -145,7 +145,6 @@ extern ThumbWin* pthumbwin;
 extern tide::TCMgr* ptcmgr;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
-extern WayPointman* pWayPointMan;
 extern MarkInfoImpl* pMarkPropDialog;
 extern RouteProp* pRoutePropDialog;
 extern TrackPropDlg* pTrackPropDialog;
@@ -751,9 +750,10 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 	// Look for user defined ownship image
 	// This may be found in the shared data location along with other user defined icons.
 	// and will be called "ownship.xpm" or "ownship.png"
-	if (pWayPointMan && pWayPointMan->DoesIconExist(_T("ownship"))) {
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+	if (waypointmanager.DoesIconExist(_T("ownship"))) {
 		m_pos_image_user_day = new wxImage;
-		*m_pos_image_user_day = pWayPointMan->GetIconBitmap(_T("ownship"))->ConvertToImage();
+		*m_pos_image_user_day = waypointmanager.GetIconBitmap(_T("ownship"))->ConvertToImage();
 		m_pos_image_user_day->InitAlpha();
 
 		int gimg_width = m_pos_image_user_day->GetWidth();
@@ -5357,8 +5357,8 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			int nearby_sel_rad_pix = 8;
 			double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
 
-			RoutePoint* pNearbyPoint
-				= pWayPointMan->GetNearbyWaypoint(m_cursor_pos, nearby_radius_meters);
+			RoutePoint* pNearbyPoint = global::OCPN::get().waypointman().GetNearbyWaypoint(
+				m_cursor_pos, nearby_radius_meters);
 			if (pNearbyPoint && (pNearbyPoint != m_prev_pMousePoint) && !pNearbyPoint->is_in_track()
 				&& !pNearbyPoint->m_bIsInLayer) {
 				int dlg_return;
@@ -6773,8 +6773,9 @@ void pupHandler_PasteWaypoint()
 	int nearby_sel_rad_pix = 8;
 	double nearby_radius_meters = nearby_sel_rad_pix / cc1->GetCanvasTrueScale();
 
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
 	RoutePoint* nearPoint
-		= pWayPointMan->GetNearbyWaypoint(pasted->get_position(), nearby_radius_meters);
+		= waypointmanager.GetNearbyWaypoint(pasted->get_position(), nearby_radius_meters);
 
 	int answer = wxID_NO;
 	if (nearPoint && !nearPoint->is_in_track() && !nearPoint->m_bIsInLayer) {
@@ -6798,7 +6799,7 @@ void pupHandler_PasteWaypoint()
 		newPoint->m_bIsolatedMark = true;
 		pSelect->AddSelectableRoutePoint(newPoint->get_position(), newPoint);
 		pConfig->AddNewWayPoint(newPoint, -1);
-		pWayPointMan->push_back(newPoint);
+		waypointmanager.push_back(newPoint);
 		if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 			pRouteManagerDialog->UpdateWptListCtrl();
 	}
@@ -6831,7 +6832,8 @@ void pupHandler_PasteRoute()
 
 	for (int i = 1; i <= pasted->GetnPoints(); i++) {
 		curPoint = pasted->GetPoint(i); // NB! n starts at 1 !
-		nearPoint = pWayPointMan->GetNearbyWaypoint(curPoint->get_position(), nearby_radius_meters);
+		nearPoint = global::OCPN::get().waypointman().GetNearbyWaypoint(curPoint->get_position(),
+																		nearby_radius_meters);
 		if (nearPoint) {
 			mergepoints = true;
 			existingWaypointCounter++;
@@ -6877,12 +6879,13 @@ void pupHandler_PasteRoute()
 		newRoute->set_name(pasted->get_name());
 	}
 
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
 	for (int i = 1; i <= pasted->GetnPoints(); i++) {
 		curPoint = pasted->GetPoint(i);
 		if (answer == wxID_YES && curPoint->m_bPtIsSelected) {
 			curPoint->m_bPtIsSelected = false;
 			newPoint
-				= pWayPointMan->GetNearbyWaypoint(curPoint->get_position(), nearby_radius_meters);
+				= waypointmanager.GetNearbyWaypoint(curPoint->get_position(), nearby_radius_meters);
 			newPoint->SetName(curPoint->GetName());
 			newPoint->set_description(curPoint->get_description());
 
@@ -6901,7 +6904,7 @@ void pupHandler_PasteRoute()
 			newRoute->AddPoint(newPoint);
 			pSelect->AddSelectableRoutePoint(newPoint->get_position(), newPoint);
 			pConfig->AddNewWayPoint(newPoint, -1);
-			pWayPointMan->push_back(newPoint);
+			waypointmanager.push_back(newPoint);
 		}
 		if (i > 1 && createNewRoute)
 			pSelect->AddSelectableRouteSegment(prevPoint->get_position(), curPoint->get_position(),
@@ -7133,16 +7136,16 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 				// Check it, and if so then remove the point from its routes
 				navigation::RouteManager::RouteArray route_array
 					= global::OCPN::get().routeman().GetRouteArrayContaining(m_pFoundRoutePoint);
+				navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
 				if (!route_array.empty()) {
-					pWayPointMan->DestroyWaypoint(m_pFoundRoutePoint);
+					waypointmanager.DestroyWaypoint(m_pFoundRoutePoint);
 					m_pFoundRoutePoint = NULL;
 				} else {
 					undo->BeforeUndoableAction(UndoAction::Undo_DeleteWaypoint, m_pFoundRoutePoint,
 											   UndoAction::Undo_IsOrphanded, m_pFoundPoint);
 					pConfig->DeleteWayPoint(m_pFoundRoutePoint);
 					pSelect->DeleteSelectablePoint(m_pFoundRoutePoint, SelectItem::TYPE_ROUTEPOINT);
-					if (NULL != pWayPointMan)
-						pWayPointMan->remove(m_pFoundRoutePoint);
+					waypointmanager.remove(m_pFoundRoutePoint);
 					m_pFoundRoutePoint = NULL;
 					undo->AfterUndoableAction(NULL);
 				}
@@ -7453,7 +7456,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 				if (m_pSelectedRoute->m_bIsInLayer)
 					break;
 
-				pWayPointMan->DestroyWaypoint(m_pFoundRoutePoint);
+				global::OCPN::get().waypointman().DestroyWaypoint(m_pFoundRoutePoint);
 				m_pFoundRoutePoint = NULL;
 
 				// Selected route may have been deleted as one-point route, so check it
@@ -9129,8 +9132,9 @@ void ChartCanvas::DrawAllWaypointsInBBox(ocpnDC& dc, const geo::LatLonBoundingBo
 		wxDCClipper(*pdc, clipregion);
 	}
 
-	for (RoutePointList::iterator i = pWayPointMan->waypoints().begin();
-		 i != pWayPointMan->waypoints().end(); ++i) {
+	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
+	for (RoutePointList::iterator i = waypointmanager.waypoints().begin();
+		 i != waypointmanager.waypoints().end(); ++i) {
 		RoutePoint* point = *i;
 		if (point) {
 			if (bDrawMarksOnly && (point->m_bIsInRoute || point->is_in_track())) {

@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "Undo.h"
-#include <WayPointman.h>
 #include <RouteManagerDialog.h>
 #include <MarkInfo.h>
 #include <Select.h>
@@ -33,6 +32,7 @@
 #include <global/OCPN.h>
 
 #include <navigation/RouteManager.h>
+#include <navigation/WaypointManager.h>
 
 #include <tinyxml/tinyxml.h>
 
@@ -43,7 +43,6 @@
 extern Config* pConfig;
 extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
-extern WayPointman* pWayPointMan;
 extern ChartCanvas* cc1;
 extern MainFrame* gFrame;
 extern MarkInfoImpl* pMarkPropDialog;
@@ -100,8 +99,7 @@ void Undo::doUndoDeleteWaypoint(UndoAction * action)
 	RoutePoint* point = reinterpret_cast<RoutePoint*>(action->before[0]);
 	pSelect->AddSelectableRoutePoint(point->get_position(), point);
 	pConfig->AddNewWayPoint(point, -1);
-	if (NULL != pWayPointMan)
-		pWayPointMan->push_back(point);
+	global::OCPN::get().waypointman().push_back(point);
 	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 		pRouteManagerDialog->UpdateWptListCtrl();
 }
@@ -111,8 +109,7 @@ void Undo::doRedoDeleteWaypoint(UndoAction * action)
 	RoutePoint* point = reinterpret_cast<RoutePoint*>(action->before[0]);
 	pConfig->DeleteWayPoint(point);
 	pSelect->DeleteSelectablePoint(point, SelectItem::TYPE_ROUTEPOINT);
-	if (NULL != pWayPointMan)
-		pWayPointMan->remove(point);
+	global::OCPN::get().waypointman().remove(point);
 	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 		pRouteManagerDialog->UpdateWptListCtrl();
 }
@@ -131,8 +128,7 @@ void Undo::doUndoAppendWaypoint(UndoAction* action)
 	if (action->beforeType[0] == UndoAction::Undo_IsOrphanded) {
 		pConfig->DeleteWayPoint(point);
 		pSelect->DeleteSelectablePoint(point, SelectItem::TYPE_ROUTEPOINT);
-		if (NULL != pWayPointMan)
-			pWayPointMan->remove(point);
+		global::OCPN::get().waypointman().remove(point);
 	}
 
 	if (noRouteLeftToRedo) {

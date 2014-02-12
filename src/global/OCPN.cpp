@@ -38,6 +38,7 @@ OCPN::OCPN()
 	, color_instance(NULL)
 	, tracker_instance(NULL)
 	, route_manager_instance(NULL)
+	, waypoint_manager_instance(NULL)
 {}
 
 OCPN::OCPN(const OCPN&)
@@ -72,6 +73,7 @@ void OCPN::clear()
 	color_instance = NULL;
 	tracker_instance = NULL;
 	route_manager_instance = NULL;
+	waypoint_manager_instance = NULL;
 }
 
 void OCPN::inject(GUI* instance)
@@ -162,6 +164,16 @@ void OCPN::inject(navigation::RouteManager* instance)
 navigation::RouteManager& OCPN::routeman()
 {
 	return *route_manager_instance;
+}
+
+void OCPN::inject(navigation::WaypointManager* instance)
+{
+	waypoint_manager_instance = instance;
+}
+
+navigation::WaypointManager& OCPN::waypointman()
+{
+	return *waypoint_manager_instance;
 }
 
 }

@@ -27,60 +27,59 @@
 #include "nmea0183.h"
 #include <RouteManager.h>
 
-class Routeman
+class Routeman : public navigation::RouteManager
 {
 public:
-	typedef RouteManager::RouteArray RouteArray;
-
 	Routeman();
-	~Routeman();
+	virtual ~Routeman();
 
-	void DeleteRoute(Route* pRoute);
-	void DeleteAllRoutes(void);
-	void DeleteAllTracks(void);
+	// route handling
+	virtual bool ActivateNextPoint(Route* pr, bool skipped);
+	virtual bool ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint = NULL);
+	virtual bool ActivateRoutePoint(Route* pA, RoutePoint* pRP);
+	virtual bool DeactivateRoute(bool b_arrival = false);
+	virtual void DeleteAllRoutes(void);
+	virtual void DeleteRoute(Route* pRoute);
+	virtual bool DoesRouteContainSharedPoints(const Route* pRoute);
+	virtual Route* FindRouteByGUID(const wxString& guid) const;
+	virtual Route* FindRouteContainingWaypoint(const RoutePoint* pWP) const;
+	virtual Route* GetpActiveRoute();
+	virtual RoutePoint* GetpActivePoint();
+	virtual bool IsRouteValid(const Route* pRoute) const;
+	virtual bool RouteExists(const Route* route) const;
+	virtual Route* RouteExists(const wxString& guid) const;
+	virtual bool IsAnyRouteActive(void) const;
+	virtual RouteArray GetRouteArrayContaining(const RoutePoint* pWP);
 
-	void DeleteTrack(Route* pRoute);
+	// track handling
+	virtual void DeleteAllTracks(void);
+	virtual void DeleteTrack(Route* pRoute);
 
-	Route* FindRouteByGUID(const wxString& guid) const;
-	Route* FindRouteContainingWaypoint(const RoutePoint* pWP) const;
-	RouteArray GetRouteArrayContaining(const RoutePoint* pWP);
-	bool DoesRouteContainSharedPoints(const Route* pRoute);
+	// navigation
+	virtual double GetCurrentRngToActivePoint() const;
+	virtual double GetCurrentBrgToActivePoint() const;
+	virtual double GetCurrentRngToActiveNormalArrival() const;
+	virtual double GetCurrentXTEToActivePoint() const;
+	virtual double GetCurrentSegmentCourse() const;
+	virtual int GetXTEDir() const;
 
-	bool ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint = NULL);
-	bool ActivateRoutePoint(Route* pA, RoutePoint* pRP);
-	bool ActivateNextPoint(Route* pr, bool skipped);
+	// gui
+	virtual const wxBrush& GetActiveRouteBrush(void) const;
+	virtual const wxPen& GetActiveRoutePointPen(void) const;
+	virtual const wxPen& GetActiveRoutePen(void) const;
+	virtual const wxBrush& GetSelectedRouteBrush(void) const;
+	virtual const wxPen& GetRoutePen(void) const;
+	virtual const wxPen& GetRoutePointPen(void) const;
+	virtual const wxPen& GetSelectedRoutePen(void) const;
+	virtual void SetColorScheme(global::ColorScheme cs);
 
-	bool UpdateProgress();
-	bool UpdateAutopilot();
-	bool DeactivateRoute(bool b_arrival = false);
-	bool IsAnyRouteActive(void) const;
-	void SetColorScheme(global::ColorScheme cs);
-
-	Route* GetpActiveRoute();
-	RoutePoint* GetpActivePoint();
-	double GetCurrentRngToActivePoint() const;
-	double GetCurrentBrgToActivePoint() const;
-	double GetCurrentRngToActiveNormalArrival() const;
-	double GetCurrentXTEToActivePoint() const;
-	double GetCurrentSegmentCourse() const;
-	int GetXTEDir() const;
-
-	const wxPen& GetRoutePen(void) const;
-	const wxPen& GetSelectedRoutePen(void) const;
-	const wxPen& GetRoutePointPen(void) const;
-	const wxBrush& GetActiveRouteBrush(void) const;
-	const wxPen& GetActiveRoutePointPen(void) const;
-	const wxPen& GetActiveRoutePen(void) const;
-	const wxBrush& GetSelectedRouteBrush(void) const;
-
-	const wxString& GetRouteReverseMessage(void) const;
-
-	Route* RouteExists(const wxString& guid) const;
-	bool RouteExists(const Route* route) const;
-	bool IsRouteValid(const Route* pRoute) const;
-	bool is_data_valid() const;
+	// misc
+	virtual bool is_data_valid() const;
+	virtual bool UpdateProgress();
+	virtual const wxString& GetRouteReverseMessage(void) const;
 
 private:
+	bool UpdateAutopilot();
 	void DoAdvance(void);
 
 	bool m_bDataValid;

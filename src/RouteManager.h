@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __ROUTEMANAGER__H__
-#define __ROUTEMANAGER__H__
+#ifndef __NAVIGATION__ROUTEMANAGER__H__
+#define __NAVIGATION__ROUTEMANAGER__H__
 
 #include <global/ColorScheme.h>
 #include <vector>
@@ -32,7 +32,9 @@ class RoutePoint;
 class wxBrush;
 class wxPen;
 
-/// Interface for route managers. FIXME: in the future, this will be used as interface to the routemanager (globally)
+namespace navigation {
+
+/// Interface for route managers.
 class RouteManager
 {
 public:
@@ -47,15 +49,16 @@ public:
 	virtual bool DeactivateRoute(bool b_arrival = false) = 0;
 	virtual void DeleteAllRoutes(void) = 0;
 	virtual void DeleteRoute(Route* pRoute) = 0;
-	virtual bool DoesRouteContainSharedPoints(const Route* pRoute) const = 0;
+	virtual bool DoesRouteContainSharedPoints(const Route* pRoute) = 0; // FIXME: should be const
 	virtual Route* FindRouteByGUID(const wxString& guid) const = 0;
 	virtual Route* FindRouteContainingWaypoint(const RoutePoint* pWP) const = 0;
 	virtual Route* GetpActiveRoute() = 0;
 	virtual RoutePoint* GetpActivePoint() = 0;
 	virtual bool IsRouteValid(const Route* pRoute) const = 0;
 	virtual bool RouteExists(const Route* route) const = 0;
+	virtual Route* RouteExists(const wxString& guid) const = 0; // FIXME: wrong, RouteExists should return a bool
 	virtual bool IsAnyRouteActive(void) const = 0;
-	virtual std::vector<Route*> GetRouteArrayContaining(const RoutePoint* pWP) const = 0;
+	virtual RouteArray GetRouteArrayContaining(const RoutePoint* pWP) = 0; // FIXME: should be const
 
 	// track handling
 	virtual void DeleteAllTracks(void) = 0;
@@ -70,6 +73,7 @@ public:
 	virtual int GetXTEDir() const = 0;
 
 	// gui
+	virtual const wxBrush& GetActiveRouteBrush(void) const = 0;
 	virtual const wxPen& GetActiveRoutePointPen(void) const = 0;
 	virtual const wxPen& GetActiveRoutePen(void) const = 0;
 	virtual const wxBrush& GetSelectedRouteBrush(void) const = 0;
@@ -81,6 +85,9 @@ public:
 	// misc
 	virtual bool is_data_valid() const = 0;
 	virtual bool UpdateProgress() = 0;
+	virtual const wxString& GetRouteReverseMessage(void) const = 0; // FIXME: refactoring, this does not belong here
 };
+
+}
 
 #endif

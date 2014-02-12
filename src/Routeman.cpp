@@ -138,40 +138,6 @@ Routeman::RouteArray* Routeman::GetRouteArrayContaining(const RoutePoint* pWP)
 	}
 }
 
-RoutePoint* Routeman::FindBestActivatePoint(Route* pR, const geo::Position& pos, double cog,
-											double WXUNUSED(sog))
-{
-	if (!pR)
-		return NULL;
-
-	// Walk thru all the points to find the "best"
-	RoutePoint* best_point = NULL;
-	double min_time_found = 1e6;
-
-	for (RoutePointList::iterator i = pR->routepoints().begin(); i != pR->routepoints().end();
-		 ++i) {
-
-		RoutePoint* pn = *i;
-
-		double brg;
-		double dist;
-		geo::DistanceBearingMercator(pn->get_position(), pos, &brg, &dist);
-
-		double angle = brg - cog;
-		double soa = cos(angle * M_PI / 180.0);
-
-		double time_to_wp = dist / soa;
-
-		if (time_to_wp > 0) {
-			if (time_to_wp < min_time_found) {
-				min_time_found = time_to_wp;
-				best_point = pn;
-			}
-		}
-	}
-	return best_point;
-}
-
 bool Routeman::ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint)
 {
 	pActiveRoute = pRouteToActivate;

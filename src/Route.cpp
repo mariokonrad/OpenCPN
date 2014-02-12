@@ -1086,3 +1086,32 @@ bool Route::IsEqualTo(Route* ptargetroute)
 	return true;
 }
 
+/// Walk through all route points to find the best fitting (nearest).
+/// This method returns NULL if no routepoints are found.
+RoutePoint* Route::FindBestActivatePoint(const geo::Position& pos, double cog)
+{
+	RoutePoint* best_point = NULL;
+	double min_time_found = 1e6;
+
+	for (RoutePointList::iterator i = routepoints().begin(); i != routepoints().end(); ++i) {
+		RoutePoint* pn = *i;
+
+		double brg;
+		double dist;
+		geo::DistanceBearingMercator(pn->get_position(), pos, &brg, &dist);
+
+		double angle = brg - cog;
+		double soa = cos(angle * M_PI / 180.0);
+
+		double time_to_wp = dist / soa;
+
+		if (time_to_wp > 0) {
+			if (time_to_wp < min_time_found) {
+				min_time_found = time_to_wp;
+				best_point = pn;
+			}
+		}
+	}
+	return best_point;
+}
+

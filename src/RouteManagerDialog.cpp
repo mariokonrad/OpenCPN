@@ -1060,8 +1060,7 @@ void RouteManagerDialog::OnRteActivateClick(wxCommandEvent&)
 		ZoomtoRoute(route);
 
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
-		RoutePoint* best_point
-			= g_pRouteMan->FindBestActivatePoint(route, nav.pos, nav.cog, nav.sog);
+		RoutePoint* best_point = route->FindBestActivatePoint(nav.pos, nav.cog);
 		g_pRouteMan->ActivateRoute(route, best_point);
 	} else {
 		g_pRouteMan->DeactivateRoute();

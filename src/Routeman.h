@@ -109,7 +109,6 @@ public:
 	bool ActivateRoute(Route* pRouteToActivate, RoutePoint* pStartPoint = NULL);
 	bool ActivateRoutePoint(Route* pA, RoutePoint* pRP);
 	bool ActivateNextPoint(Route* pr, bool skipped);
-	RoutePoint* FindBestActivatePoint(Route* pR, const geo::Position& pos, double cog, double sog); // FIXME: move this to 'Route'
 
 	bool UpdateProgress();
 	bool UpdateAutopilot();

@@ -93,6 +93,7 @@ public:
 	void ClearHighlights(void);
 	void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const ViewPort& VP, bool bdraw_arrow,
 					   int hilite_width = 0);
+	RoutePoint* FindBestActivatePoint(const geo::Position& pos, double cog);
 
 	bool CrossesIDL() const;
 	void SetVisible(bool visible = true, bool includeWpts = true);

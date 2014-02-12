@@ -7342,9 +7342,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			if (g_pRouteMan->GetpActiveRoute())
 				g_pRouteMan->DeactivateRoute();
 
-			RoutePoint* best_point = g_pRouteMan->FindBestActivatePoint(
-				m_pSelectedRoute, nav.pos, nav.cog, nav.sog);
-
+			RoutePoint* best_point = m_pSelectedRoute->FindBestActivatePoint(nav.pos, nav.cog);
 			g_pRouteMan->ActivateRoute(m_pSelectedRoute, best_point);
 			m_pSelectedRoute->m_bRtIsSelected = false;
 

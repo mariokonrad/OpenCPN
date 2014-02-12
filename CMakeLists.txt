@@ -973,6 +973,7 @@ SET(HDRS
 	src/ConsoleCanvas.h
 	src/ViewPort.h
 	src/Track.h
+	src/RouteManager.h
 	src/Routeman.h
 	src/WayPointman.h
 	src/RouteManagerDialog.h

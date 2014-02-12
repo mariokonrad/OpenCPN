@@ -25,7 +25,7 @@
 #define __ROUTEMAN__H__
 
 #include "nmea0183.h"
-#include <RouteManager.h>
+#include <navigation/RouteManager.h>
 
 class Routeman : public navigation::RouteManager
 {

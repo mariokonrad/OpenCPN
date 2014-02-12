@@ -916,6 +916,7 @@ SET(HDRS
 	src/navigation/MagneticVariation.h
 	src/navigation/RouteTracker.h
 	src/navigation/DefaultRouteTracker.h
+	src/navigation/RouteManager.h
 
 	src/OCPN_Version.h
 	src/ocpn_pixel.h
@@ -973,7 +974,6 @@ SET(HDRS
 	src/ConsoleCanvas.h
 	src/ViewPort.h
 	src/Track.h
-	src/RouteManager.h
 	src/Routeman.h
 	src/WayPointman.h
 	src/RouteManagerDialog.h

@@ -5495,7 +5495,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 
 			RoutePoint* pMousePoint
 				= new RoutePoint(m_cursor_pos, wxString(_T("circle")), wxEmptyString);
-			pMousePoint->m_bShowName = false;
+			pMousePoint->set_show_name(false);
 
 			m_pMeasureRoute->AddPoint(pMousePoint);
 
@@ -6898,7 +6898,7 @@ void pupHandler_PasteRoute()
 			newPoint->m_bIsolatedMark = false;
 			newPoint->set_icon_name(_T("circle"));
 			newPoint->set_visible(true);
-			newPoint->m_bShowName = false;
+			newPoint->set_show_name(false);
 			newPoint->m_bKeepXRoute = false;
 
 			newRoute->AddPoint(newPoint);
@@ -6953,7 +6953,7 @@ void pupHandler_PasteTrack()
 		RoutePoint* curPoint = pasted->GetPoint(i);
 
 		newPoint = new RoutePoint(*curPoint);
-		newPoint->m_bShowName = false;
+		newPoint->set_show_name(false);
 		newPoint->set_visible(false);
 		newPoint->m_GPXTrkSegNo = 1;
 

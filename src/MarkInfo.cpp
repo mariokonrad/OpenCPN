@@ -552,7 +552,7 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 		}
 	}
 	m_scrolledWindowLinks->DestroyChildren();
-	m_checkBoxShowName->SetValue(m_pRoutePoint->m_bShowName);
+	m_checkBoxShowName->SetValue(m_pRoutePoint->is_show_name());
 	m_checkBoxVisible->SetValue(m_pRoutePoint->is_visible());
 	m_textCtrlGuid->SetValue(m_pRoutePoint->guid());
 
@@ -588,7 +588,7 @@ void MarkInfoImpl::build_hyperlink_list()
 	if (!m_pRoutePoint)
 		return;
 
-	const Hyperlinks& linklist = m_pRoutePoint->m_HyperlinkList;
+	const Hyperlinks& linklist = m_pRoutePoint->get_hyperlinks();
 	for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
 		add_hyperlink(i->desc(), i->url(), m_pRoutePoint->m_bIsInLayer);
 	}
@@ -618,10 +618,10 @@ void MarkInfoImpl::SetRoutePoint(RoutePoint* pRP)
 	m_lat_save = m_pRoutePoint->latitude();
 	m_lon_save = m_pRoutePoint->longitude();
 	m_IconName_save = m_pRoutePoint->icon_name();
-	m_bShowName_save = m_pRoutePoint->m_bShowName;
+	m_bShowName_save = m_pRoutePoint->is_show_name();
 	m_bIsVisible_save = m_pRoutePoint->is_visible();
 
-	m_pMyLinkList = m_pRoutePoint->m_HyperlinkList;
+	m_pMyLinkList = m_pRoutePoint->get_hyperlinks();
 }
 
 void MarkInfoImpl::hyperlinkContextMenu(wxMouseEvent& event)
@@ -706,9 +706,9 @@ void MarkInfoImpl::OnAddLink(wxCommandEvent& event)
 		bSizerLinks->Fit(m_scrolledWindowLinks);
 		this->Fit();
 
-		m_pRoutePoint->m_HyperlinkList.push_back(
-			Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
-					  m_pLinkProp->m_textCtrlLinkUrl->GetValue(), wxEmptyString));
+		m_pRoutePoint->add_link(Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
+										  m_pLinkProp->m_textCtrlLinkUrl->GetValue(),
+										  wxEmptyString));
 	}
 	sbSizerLinks->Layout();
 	event.Skip();
@@ -764,7 +764,7 @@ bool MarkInfoImpl::SaveChanges()
 
 	// Here is some logic....
 	// If the Markname is completely numeric, and is part of a route,
-	// Then declare it to be of attribute m_bDynamicName = true
+	// Then declare it to be of attribute dynamic name == true
 	// This is later used for re-numbering points on actions like
 	// Insert Point, Delete Point, Append Point, etc
 
@@ -777,9 +777,9 @@ bool MarkInfoImpl::SaveChanges()
 				b_name_is_numeric = false;
 		}
 
-		m_pRoutePoint->m_bDynamicName = b_name_is_numeric;
+		m_pRoutePoint->set_dynamic_name(b_name_is_numeric);
 	} else
-		m_pRoutePoint->m_bDynamicName = false;
+		m_pRoutePoint->set_dynamic_name(false);
 
 	if (m_pRoutePoint->is_in_route()) {
 		// Update the route segment selectables

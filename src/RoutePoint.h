@@ -116,6 +116,15 @@ public:
 	bool is_visible() const;
 	void set_visible(bool);
 
+	bool is_show_name() const;
+	void set_show_name(bool);
+
+	bool is_dynamic_name() const;
+	void set_dynamic_name(bool);
+
+	const Hyperlinks& get_hyperlinks() const;
+	void add_link(const Hyperlink&);
+
 	// FIXME: move attributes to private
 
 	double m_seg_len; // length in NMI to this point, undefined for starting point
@@ -137,8 +146,6 @@ public:
 	bool m_bIsActive;
 
 	wxBitmap* m_pbmIcon;
-	bool m_bDynamicName;
-	bool m_bShowName;
 	wxRect CurrentRect_in_DC;
 	int m_NameLocationOffsetX;
 	int m_NameLocationOffsetY;
@@ -148,9 +155,9 @@ public:
 	double m_routeprop_course; // course from this waypoint to the next waypoint if in a route.
 	double m_routeprop_distance; // distance from this waypoint to the next waypoint if in a route.
 
-	Hyperlinks m_HyperlinkList;
 	bool m_btemp;
 
+	Hyperlinks m_HyperlinkList; // FIXME: move this to private
 private:
 	void CalculateNameExtents(void);
 
@@ -159,6 +166,8 @@ private:
 
 	bool m_bBlink;
 	bool m_bIsVisible; // true if should be drawn, false if invisible
+	bool m_bShowName;
+	bool m_bDynamicName;
 	wxString m_MarkName;
 	wxDateTime m_CreateTimeX;
 	wxString m_timestring;

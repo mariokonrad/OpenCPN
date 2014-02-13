@@ -1351,7 +1351,7 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 					 route_point != mergeTrack->routepoints().end(); ++route_point) {
 					RoutePoint* rPoint = *route_point;
 					RoutePoint* newPoint = new RoutePoint(rPoint->get_position(), _T("empty"), _T(""));
-					newPoint->m_bShowName = false;
+					newPoint->set_show_name(false);
 					newPoint->set_visible(true);
 					newPoint->m_GPXTrkSegNo = 1;
 
@@ -2365,7 +2365,7 @@ void RouteManagerDialog::ToggleLayerContentsNames(Layer* layer)
 		if (route->m_bIsInLayer && (route->m_LayerID == layer->getID())) {
 			for (RoutePointList::iterator j = route->routepoints().begin();
 				 j != route->routepoints().end(); ++j) {
-				(*j)->m_bShowName = layer->HasVisibleNames();
+				(*j)->set_show_name(layer->HasVisibleNames());
 			}
 		}
 	}

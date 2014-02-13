@@ -1094,7 +1094,7 @@ void MainFrame::OnCloseWindow(wxCloseEvent&)
 			wxString name = now.Format();
 			name.Prepend(_("Anchorage created "));
 			RoutePoint* pWP = new RoutePoint(nav.pos, _T("anchorage"), name);
-			pWP->m_bShowName = false;
+			pWP->set_show_name(false);
 			pWP->m_bIsolatedMark = true;
 
 			pConfig->AddNewWayPoint(pWP, -1); // use auto next num
@@ -4533,7 +4533,7 @@ void MainFrame::OnEvtPlugInMessage(OCPN_MsgEvent& event)
 					v[i][_T("lon")] = (*itp)->longitude();
 					v[i][_T("WPName")] = (*itp)->GetName();
 					v[i][_T("WPDescription")] = (*itp)->get_description();
-					const Hyperlinks& hyperlinks = (*itp)->m_HyperlinkList;
+					const Hyperlinks& hyperlinks = (*itp)->get_hyperlinks();
 					int n = 1;
 					for (Hyperlinks::const_iterator link = hyperlinks.begin(); link != hyperlinks.end(); ++link) {
 						v[i][_T("WPLink") + wxString::Format(_T("%d"), n)] = link->url();

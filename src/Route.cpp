@@ -286,9 +286,9 @@ void Route::CloneAddedRoutePoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 	ptargetpoint->set_visible(psourcepoint->is_visible());
 	ptargetpoint->m_bPtIsSelected = false;
 	ptargetpoint->m_pbmIcon = psourcepoint->m_pbmIcon;
-	ptargetpoint->m_bShowName = psourcepoint->m_bShowName;
+	ptargetpoint->set_show_name(psourcepoint->is_show_name());
 	ptargetpoint->set_blink(psourcepoint->is_blink());
-	ptargetpoint->m_bDynamicName = psourcepoint->m_bDynamicName;
+	ptargetpoint->set_dynamic_name(psourcepoint->is_dynamic_name());
 	ptargetpoint->CurrentRect_in_DC = psourcepoint->CurrentRect_in_DC;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetX;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetY;
@@ -307,9 +307,9 @@ void Route::CloneAddedTrackPoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 	ptargetpoint->set_visible(psourcepoint->is_visible());
 	ptargetpoint->m_bPtIsSelected = false;
 	ptargetpoint->m_pbmIcon = psourcepoint->m_pbmIcon;
-	ptargetpoint->m_bShowName = psourcepoint->m_bShowName;
+	ptargetpoint->set_show_name(psourcepoint->is_show_name());
 	ptargetpoint->set_blink(psourcepoint->is_blink());
-	ptargetpoint->m_bDynamicName = psourcepoint->m_bDynamicName;
+	ptargetpoint->set_dynamic_name(psourcepoint->is_dynamic_name());
 	ptargetpoint->CurrentRect_in_DC = psourcepoint->CurrentRect_in_DC;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetX;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetY;
@@ -342,7 +342,7 @@ void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_de
 
 	if (b_rename_in_sequence && pNewPoint->GetName().IsEmpty() && !pNewPoint->m_bKeepXRoute) {
 		pNewPoint->SetName(wxString::Format(_T("%03d"), m_nPoints));
-		pNewPoint->m_bDynamicName = true;
+		pNewPoint->set_dynamic_name(true);
 	}
 }
 
@@ -619,7 +619,7 @@ RoutePoint* Route::InsertPointBefore(RoutePoint* pRP, double rlat, double rlon, 
 	RoutePoint* newpoint
 		= new RoutePoint(geo::Position(rlat, rlon), wxString(_T("diamond")), GetNewMarkSequenced());
 	newpoint->m_bIsInRoute = true;
-	newpoint->m_bDynamicName = true;
+	newpoint->set_dynamic_name(true);
 	newpoint->SetNameShown(false);
 
 	RoutePointList::iterator i = std::find(pRoutePointList->begin(), pRoutePointList->end(), pRP);
@@ -724,7 +724,7 @@ void Route::RemovePoint(RoutePoint* rp, bool bRenamePoints)
 
 	if (pcontainer_route == NULL) {
 		rp->m_bIsInRoute = false; // Take this point out of this (and only) route
-		rp->m_bDynamicName = false;
+		rp->set_dynamic_name(false);
 		rp->m_bIsolatedMark = true; // This has become an isolated mark
 	}
 
@@ -1027,7 +1027,7 @@ void Route::RenameRoutePoints(void)
 	int count = 1;
 	for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end(); ++i) {
 		RoutePoint* prp = *i;
-		if (prp->m_bDynamicName) {
+		if (prp->is_dynamic_name()) {
 			prp->SetName(wxString::Format(_T("%03d"), count));
 		}
 		++count;

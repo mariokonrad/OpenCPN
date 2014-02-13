@@ -72,8 +72,6 @@ RoutePoint::RoutePoint()
 	, m_IconName(wxEmptyString)
 	, m_pMarkFont(NULL)
 	, m_pbmIcon(NULL)
-	, m_bDynamicName(false)
-	, m_bShowName(true)
 	, CurrentRect_in_DC(0, 0, 0, 0)
 	, m_NameLocationOffsetX(-10)
 	, m_NameLocationOffsetY(8)
@@ -83,6 +81,8 @@ RoutePoint::RoutePoint()
 	, m_LayerID(0)
 	, m_bBlink(false)
 	, m_bIsVisible(true)
+	, m_bShowName(true)
+	, m_bDynamicName(false)
 	, m_MarkName(wxEmptyString)
 {
 	m_CreateTimeX = wxDateTime::Now();
@@ -140,14 +140,14 @@ RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, con
 	, m_IconName(icon_ident)
 	, m_pMarkFont(NULL)
 	, m_pbmIcon(NULL)
-	, m_bBlink(false)
-	, m_bDynamicName(false)
-	, m_bShowName(true)
 	, CurrentRect_in_DC(0, 0, 0, 0)
 	, m_NameLocationOffsetX(-10)
 	, m_NameLocationOffsetY(8)
 	, m_GPXTrkSegNo(1)
 	, m_bIsInLayer(false)
+	, m_bBlink(false)
+	, m_bShowName(true)
+	, m_bDynamicName(false)
 	, m_btemp(false)
 	, position(pos)
 	, m_LayerID(0)
@@ -528,5 +528,35 @@ bool RoutePoint::is_visible() const
 void RoutePoint::set_visible(bool value)
 {
 	m_bIsVisible = value;
+}
+
+bool RoutePoint::is_show_name() const
+{
+	return m_bShowName;
+}
+
+void RoutePoint::set_show_name(bool value)
+{
+	m_bShowName = value;
+}
+
+bool RoutePoint::is_dynamic_name() const
+{
+	return m_bDynamicName;
+}
+
+void RoutePoint::set_dynamic_name(bool value)
+{
+	m_bDynamicName = value;
+}
+
+const Hyperlinks& RoutePoint::get_hyperlinks() const
+{
+	return m_HyperlinkList;
+}
+
+void RoutePoint::add_link(const Hyperlink& link)
+{
+	m_HyperlinkList.push_back(link);
 }
 

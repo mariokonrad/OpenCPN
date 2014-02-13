@@ -184,7 +184,7 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 	RoutePointList::iterator point = pActiveRoute->routepoints().begin();
 	RoutePoint* prp_first = *point;
 
-	//  If activating first point in route, create a "virtual" waypoint at present position
+	// If activating first point in route, create a "virtual" waypoint at present position
 	if (pRP_target == prp_first) {
 		if (pRouteActivatePoint)
 			delete pRouteActivatePoint;
@@ -192,7 +192,7 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 		const global::Navigation::Data& nav = global::OCPN::get().nav().get_data();
 		// Current location
 		pRouteActivatePoint = new RoutePoint(nav.pos, _T(""), _T(""), _T(""), false);
-		pRouteActivatePoint->m_bShowName = false;
+		pRouteActivatePoint->set_show_name(false);
 
 		pActiveRouteSegmentBeginPoint = pRouteActivatePoint;
 	} else {
@@ -783,7 +783,7 @@ void Routeman::DeleteRoute(Route* pRoute)
 				pnode = pRoute->routepoints().end();
 				delete prp;
 			} else {
-				prp->m_bDynamicName = false;
+				prp->set_dynamic_name(false);
 				prp->m_bIsolatedMark = true; // This has become an isolated mark
 				prp->m_bKeepXRoute = false; // and is no longer part of a route
 			}

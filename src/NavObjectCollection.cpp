@@ -159,11 +159,11 @@ RoutePoint* NavObjectCollection::GPXLoadWaypoint1(
 	pWP->m_bIsolatedMark = bshared; // This is an isolated mark
 
 	if (b_propvizname)
-		pWP->m_bShowName = bviz_name;
+		pWP->set_show_name(bviz_name);
 	else if (b_fullviz)
-		pWP->m_bShowName = true;
+		pWP->set_show_name(true);
 	else
-		pWP->m_bShowName = false;
+		pWP->set_show_name(false);
 
 	if (b_propviz)
 		pWP->set_visible(bviz);
@@ -178,7 +178,7 @@ RoutePoint* NavObjectCollection::GPXLoadWaypoint1(
 	}
 
 	pWP->m_bKeepXRoute = bshared;
-	pWP->m_bDynamicName = bauto_name;
+	pWP->set_dynamic_name(bauto_name);
 
 	if (TimeString.Len()) {
 		pWP->set_time_string(TimeString);
@@ -494,7 +494,7 @@ bool NavObjectCollection::GPXCreateWpt(
 
 	// Hyperlinks
 	if (flags & OUT_HYPERLINKS) {
-		const Hyperlinks& linklist = pr->m_HyperlinkList;
+		const Hyperlinks& linklist = pr->get_hyperlinks();
 		for (Hyperlinks::const_iterator i = linklist.begin(); i != linklist.end(); ++i) {
 
 			pugi::xml_node child_link = node.append_child("link");
@@ -545,12 +545,12 @@ bool NavObjectCollection::GPXCreateWpt(
 			child.append_child(pugi::node_pcdata).set_value("0");
 		}
 
-		if ((flags & OUT_VIZ_NAME) && pr->m_bShowName) {
+		if ((flags & OUT_VIZ_NAME) && pr->is_show_name()) {
 			child = child_ext.append_child("opencpn:viz_name");
 			child.append_child(pugi::node_pcdata).set_value("1");
 		}
 
-		if ((flags & OUT_AUTO_NAME) && pr->m_bDynamicName) {
+		if ((flags & OUT_AUTO_NAME) && pr->is_dynamic_name()) {
 			child = child_ext.append_child("opencpn:auto_name");
 			child.append_child(pugi::node_pcdata).set_value("1");
 		}

@@ -1768,16 +1768,16 @@ void PlugInPlaySound(wxString& sound_file)
 
 // PlugInWaypoint implementation
 PlugIn_Waypoint::PlugIn_Waypoint()
+	: m_HyperlinkList(NULL)
 {
-	m_HyperlinkList = NULL;
 }
 
 PlugIn_Waypoint::PlugIn_Waypoint(double lat, double lon, const wxString& icon_ident,
 								 const wxString& wp_name, const wxString& GUID)
+	: m_HyperlinkList(NULL)
 {
 	wxDateTime now = wxDateTime::Now();
 	m_CreateTime = now.ToUTC();
-	m_HyperlinkList = NULL;
 
 	m_lat = lat;
 	m_lon = lon;
@@ -1847,7 +1847,7 @@ bool AddSingleWaypoint(PlugIn_Waypoint* pwaypoint, bool b_permanent)
 			for (Plugin_HyperlinkList::iterator linknode = pwaypoint->m_HyperlinkList->begin();
 				 linknode != pwaypoint->m_HyperlinkList->end(); ++linknode) {
 				Plugin_Hyperlink* link = *linknode;
-				pWP->m_HyperlinkList.push_back(Hyperlink(link->DescrText, link->Link, link->Type));
+				pWP->add_link(Hyperlink(link->DescrText, link->Link, link->Type));
 			}
 		}
 	}
@@ -1908,8 +1908,7 @@ bool UpdateSingleWaypoint(PlugIn_Waypoint* pwaypoint)
 				for (Plugin_HyperlinkList::iterator linknode = pwaypoint->m_HyperlinkList->begin();
 					 linknode != pwaypoint->m_HyperlinkList->end(); ++linknode) {
 					Plugin_Hyperlink* link = *linknode;
-					prp->m_HyperlinkList.push_back(
-						Hyperlink(link->DescrText, link->Link, link->Type));
+					prp->add_link(Hyperlink(link->DescrText, link->Link, link->Type));
 				}
 			}
 		}
@@ -1949,14 +1948,13 @@ bool AddPlugInRoute(PlugIn_Route* proute, bool b_permanent)
 				for (Plugin_HyperlinkList::iterator linknode = pwp->m_HyperlinkList->begin();
 					 linknode != pwp->m_HyperlinkList->end(); ++linknode) {
 					Plugin_Hyperlink* link = *linknode;
-					pWP->m_HyperlinkList.push_back(
-						Hyperlink(link->DescrText, link->Link, link->Type));
+					pWP->add_link(Hyperlink(link->DescrText, link->Link, link->Type));
 				}
 			}
 		}
 
 		pWP->set_description(pwp->m_MarkDescription);
-		pWP->m_bShowName = false;
+		pWP->set_show_name(false);
 		pWP->SetCreateTime(pwp->m_CreateTime);
 
 		route->AddPoint(pWP);
@@ -2038,7 +2036,7 @@ bool AddPlugInTrack(PlugIn_Track* ptrack, bool b_permanent)
 										 pwp->m_MarkName, pwp->m_GUID);
 
 		pWP->set_description(pwp->m_MarkDescription);
-		pWP->m_bShowName = false;
+		pWP->set_show_name(false);
 		pWP->SetCreateTime(pwp->m_CreateTime);
 
 		track->AddPoint(pWP);

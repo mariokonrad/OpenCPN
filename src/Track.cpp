@@ -220,7 +220,7 @@ void Track::OnTimerTrack(wxTimerEvent&)
 RoutePoint* Track::AddNewPoint(util::Vector2D point, wxDateTime time)
 {
 	RoutePoint* rPoint = new RoutePoint(geo::Position(point.lat, point.lon), _T("empty"), _T(""));
-	rPoint->m_bShowName = false;
+	rPoint->set_show_name(false);
 	rPoint->set_visible(true);
 	rPoint->m_GPXTrkSegNo = 1;
 	rPoint->SetCreateTime(time);
@@ -460,7 +460,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 	pWP_dst = new RoutePoint(pWP_src->get_position(), icon, _T(""));
 	route->AddPoint(pWP_dst);
 
-	pWP_dst->m_bShowName = false;
+	pWP_dst->set_show_name(false);
 
 	pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 
@@ -488,7 +488,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 				geo::Position t = geo::ll_gc_ll(pWP_src->get_position(), delta_hdg, delta_dist);
 				pWP_dst = new RoutePoint(t, icon, _T(""));
 				route->AddPoint(pWP_dst);
-				pWP_dst->m_bShowName = false;
+				pWP_dst->set_show_name(false);
 				pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 
 				pSelect->AddSelectableRouteSegment(pWP_src->get_position(), pWP_dst->get_position(),
@@ -519,7 +519,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 				pWP_dst = new RoutePoint(prp_OK->get_position(), icon, _T(""));
 
 				route->AddPoint(pWP_dst);
-				pWP_dst->m_bShowName = false;
+				pWP_dst->set_show_name(false);
 
 				pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 
@@ -558,7 +558,7 @@ Route* Track::RouteFromTrack(wxProgressDialog* pprog) // FIXME: clean up this me
 	if (delta_dist >= track.TrackDeltaDistance) {
 		pWP_dst = new RoutePoint(routepoints().back()->get_position(), icon, _T(""));
 		route->AddPoint(pWP_dst);
-		pWP_dst->m_bShowName = false;
+		pWP_dst->set_show_name(false);
 		pSelect->AddSelectableRoutePoint(pWP_dst->get_position(), pWP_dst);
 		pSelect->AddSelectableRouteSegment(pWP_src->get_position(), pWP_dst->get_position(),
 										   pWP_src, pWP_dst, route);

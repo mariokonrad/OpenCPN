@@ -553,7 +553,7 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	}
 	m_scrolledWindowLinks->DestroyChildren();
 	m_checkBoxShowName->SetValue(m_pRoutePoint->m_bShowName);
-	m_checkBoxVisible->SetValue(m_pRoutePoint->m_bIsVisible);
+	m_checkBoxVisible->SetValue(m_pRoutePoint->is_visible());
 	m_textCtrlGuid->SetValue(m_pRoutePoint->guid());
 
 	build_hyperlink_list();
@@ -619,7 +619,7 @@ void MarkInfoImpl::SetRoutePoint(RoutePoint* pRP)
 	m_lon_save = m_pRoutePoint->longitude();
 	m_IconName_save = m_pRoutePoint->icon_name();
 	m_bShowName_save = m_pRoutePoint->m_bShowName;
-	m_bIsVisible_save = m_pRoutePoint->m_bIsVisible;
+	m_bIsVisible_save = m_pRoutePoint->is_visible();
 
 	m_pMyLinkList = m_pRoutePoint->m_HyperlinkList;
 }

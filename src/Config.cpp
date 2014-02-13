@@ -1928,7 +1928,7 @@ void Config::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer)
 
 		bool b_add = true;
 
-		if (bviz_only && !pr->m_bIsVisible)
+		if (bviz_only && !pr->is_visible())
 			b_add = false;
 
 		if (pr->m_bIsInLayer && !blayer)

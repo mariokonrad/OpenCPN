@@ -221,7 +221,7 @@ RoutePoint* Track::AddNewPoint(util::Vector2D point, wxDateTime time)
 {
 	RoutePoint* rPoint = new RoutePoint(geo::Position(point.lat, point.lon), _T("empty"), _T(""));
 	rPoint->m_bShowName = false;
-	rPoint->m_bIsVisible = true;
+	rPoint->set_visible(true);
 	rPoint->m_GPXTrkSegNo = 1;
 	rPoint->SetCreateTime(time);
 	AddPoint(rPoint);

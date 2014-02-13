@@ -166,14 +166,14 @@ RoutePoint* NavObjectCollection::GPXLoadWaypoint1(
 		pWP->m_bShowName = false;
 
 	if (b_propviz)
-		pWP->m_bIsVisible = bviz;
+		pWP->set_visible(bviz);
 	else if (b_fullviz)
-		pWP->m_bIsVisible = true;
+		pWP->set_visible(true);
 
 	if (b_layer) {
 		pWP->m_bIsInLayer = true;
 		pWP->set_layer_ID(layer_id);
-		pWP->m_bIsVisible = b_layerviz;
+		pWP->set_visible(b_layerviz);
 		pWP->SetListed(false);
 	}
 
@@ -540,7 +540,7 @@ bool NavObjectCollection::GPXCreateWpt(
 			child.append_child(pugi::node_pcdata).set_value(pr->guid().mb_str());
 		}
 
-		if ((flags & OUT_VIZ) && !pr->m_bIsVisible) {
+		if ((flags & OUT_VIZ) && !pr->is_visible()) {
 			child = child_ext.append_child("opencpn:viz");
 			child.append_child(pugi::node_pcdata).set_value("0");
 		}

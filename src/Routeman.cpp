@@ -177,7 +177,7 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 	for (RoutePointList::iterator point = pActiveRoute->routepoints().begin();
 		 point != pActiveRoute->routepoints().end(); ++point) {
 		RoutePoint* pn = *point;
-		pn->m_bBlink = false; // turn off all blinking points
+		pn->set_blink(false); // turn off all blinking points
 		pn->m_bIsActive = false;
 	}
 
@@ -196,7 +196,7 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 
 		pActiveRouteSegmentBeginPoint = pRouteActivatePoint;
 	} else {
-		prp_first->m_bBlink = false;
+		prp_first->set_blink(false);
 		++point;
 		RoutePoint* np_prev = prp_first;
 		for (; point != pActiveRoute->routepoints().end(); ++point) {
@@ -208,7 +208,7 @@ bool Routeman::ActivateRoutePoint(Route* pA, RoutePoint* pRP_target)
 		}
 	}
 
-	pRP_target->m_bBlink = true; // blink the active point
+	pRP_target->set_blink(true); // blink the active point
 	pRP_target->m_bIsActive = true; // and active
 
 	g_blink_rect = pRP_target->CurrentRect_in_DC; // set up global blinker
@@ -238,7 +238,7 @@ bool Routeman::ActivateNextPoint(Route* pr, bool skipped)
 {
 	wxJSONValue v;
 	if (pActivePoint) {
-		pActivePoint->m_bBlink = false;
+		pActivePoint->set_blink(false);
 		pActivePoint->m_bIsActive = false;
 
 		v[_T("isSkipped")] = skipped;
@@ -255,7 +255,7 @@ bool Routeman::ActivateNextPoint(Route* pr, bool skipped)
 		v[_T("Next_WP")] = pActivePoint->GetName();
 		v[_T("GUID")] = pActivePoint->guid();
 
-		pActivePoint->m_bBlink = true;
+		pActivePoint->set_blink(true);
 		pActivePoint->m_bIsActive = true;
 		g_blink_rect = pActivePoint->CurrentRect_in_DC; // set up global blinker
 
@@ -512,7 +512,7 @@ const wxBrush& Routeman::GetActiveRouteBrush(void) const
 bool Routeman::DeactivateRoute(bool b_arrival)
 {
 	if (pActivePoint) {
-		pActivePoint->m_bBlink = false;
+		pActivePoint->set_blink(false);
 		pActivePoint->m_bIsActive = false;
 	}
 

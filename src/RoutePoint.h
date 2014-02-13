@@ -110,6 +110,12 @@ public:
 	const wxString& icon_name() const;
 	void set_icon_name(const wxString&);
 
+	bool is_blink() const;
+	void set_blink(bool);
+
+	bool is_visible() const;
+	void set_visible(bool);
+
 	// FIXME: move attributes to private
 
 	double m_seg_len; // length in NMI to this point, undefined for starting point
@@ -127,12 +133,10 @@ public:
 	// so should not be deleted with route
 	bool m_bKeepXRoute;
 
-	bool m_bIsVisible; // true if should be drawn, false if invisible
 	bool m_bIsListed;
 	bool m_bIsActive;
 
 	wxBitmap* m_pbmIcon;
-	bool m_bBlink;
 	bool m_bDynamicName;
 	bool m_bShowName;
 	wxRect CurrentRect_in_DC;
@@ -153,6 +157,8 @@ private:
 	geo::Position position;
 	int m_LayerID;
 
+	bool m_bBlink;
+	bool m_bIsVisible; // true if should be drawn, false if invisible
 	wxString m_MarkName;
 	wxDateTime m_CreateTimeX;
 	wxString m_timestring;

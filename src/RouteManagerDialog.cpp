@@ -1352,7 +1352,7 @@ void RouteManagerDialog::OnTrkMenuSelected(wxCommandEvent& event)
 					RoutePoint* rPoint = *route_point;
 					RoutePoint* newPoint = new RoutePoint(rPoint->get_position(), _T("empty"), _T(""));
 					newPoint->m_bShowName = false;
-					newPoint->m_bIsVisible = true;
+					newPoint->set_visible(true);
 					newPoint->m_GPXTrkSegNo = 1;
 
 					newPoint->SetCreateTime(rPoint->GetCreateTime());

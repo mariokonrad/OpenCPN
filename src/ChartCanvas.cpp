@@ -6897,7 +6897,7 @@ void pupHandler_PasteRoute()
 			newPoint = new RoutePoint(*curPoint);
 			newPoint->m_bIsolatedMark = false;
 			newPoint->set_icon_name(_T("circle"));
-			newPoint->m_bIsVisible = true;
+			newPoint->set_visible(true);
 			newPoint->m_bShowName = false;
 			newPoint->m_bKeepXRoute = false;
 
@@ -6954,7 +6954,7 @@ void pupHandler_PasteTrack()
 
 		newPoint = new RoutePoint(*curPoint);
 		newPoint->m_bShowName = false;
-		newPoint->m_bIsVisible = false;
+		newPoint->set_visible(false);
 		newPoint->m_GPXTrkSegNo = 1;
 
 		newPoint->SetCreateTime(curPoint->GetCreateTime());

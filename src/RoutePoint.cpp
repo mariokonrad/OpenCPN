@@ -67,13 +67,11 @@ RoutePoint::RoutePoint()
 	, m_bIsInTrack(false)
 	, m_bIsolatedMark(false)
 	, m_bKeepXRoute(false)
-	, m_bIsVisible(true)
 	, m_bIsListed(true)
 	, m_bIsActive(false)
 	, m_IconName(wxEmptyString)
 	, m_pMarkFont(NULL)
 	, m_pbmIcon(NULL)
-	, m_bBlink(false)
 	, m_bDynamicName(false)
 	, m_bShowName(true)
 	, CurrentRect_in_DC(0, 0, 0, 0)
@@ -83,6 +81,8 @@ RoutePoint::RoutePoint()
 	, m_bIsInLayer(false)
 	, m_btemp(false)
 	, m_LayerID(0)
+	, m_bBlink(false)
+	, m_bIsVisible(true)
 	, m_MarkName(wxEmptyString)
 {
 	m_CreateTimeX = wxDateTime::Now();
@@ -508,5 +508,25 @@ double RoutePoint::GetDistance() const
 void RoutePoint::clear_font()
 {
 	m_pMarkFont = NULL;
+}
+
+bool RoutePoint::is_blink() const
+{
+	return m_bBlink;
+}
+
+void RoutePoint::set_blink(bool value)
+{
+	m_bBlink = value;
+}
+
+bool RoutePoint::is_visible() const
+{
+	return m_bIsVisible;
+}
+
+void RoutePoint::set_visible(bool value)
+{
+	m_bIsVisible = value;
 }
 

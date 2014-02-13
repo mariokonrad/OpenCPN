@@ -283,11 +283,11 @@ void Route::CloneAddedRoutePoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 {
 	ptargetpoint->set_description(psourcepoint->get_description());
 	ptargetpoint->m_bKeepXRoute = psourcepoint->m_bKeepXRoute;
-	ptargetpoint->m_bIsVisible = psourcepoint->m_bIsVisible;
+	ptargetpoint->set_visible(psourcepoint->is_visible());
 	ptargetpoint->m_bPtIsSelected = false;
 	ptargetpoint->m_pbmIcon = psourcepoint->m_pbmIcon;
 	ptargetpoint->m_bShowName = psourcepoint->m_bShowName;
-	ptargetpoint->m_bBlink = psourcepoint->m_bBlink;
+	ptargetpoint->set_blink(psourcepoint->is_blink());
 	ptargetpoint->m_bDynamicName = psourcepoint->m_bDynamicName;
 	ptargetpoint->CurrentRect_in_DC = psourcepoint->CurrentRect_in_DC;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetX;
@@ -304,11 +304,11 @@ void Route::CloneAddedTrackPoint(RoutePoint* ptargetpoint, RoutePoint* psourcepo
 	ptargetpoint->m_bIsInTrack = true;
 	ptargetpoint->set_description(psourcepoint->get_description());
 	ptargetpoint->m_bKeepXRoute = psourcepoint->m_bKeepXRoute;
-	ptargetpoint->m_bIsVisible = psourcepoint->m_bIsVisible;
+	ptargetpoint->set_visible(psourcepoint->is_visible());
 	ptargetpoint->m_bPtIsSelected = false;
 	ptargetpoint->m_pbmIcon = psourcepoint->m_pbmIcon;
 	ptargetpoint->m_bShowName = psourcepoint->m_bShowName;
-	ptargetpoint->m_bBlink = psourcepoint->m_bBlink;
+	ptargetpoint->set_blink(psourcepoint->is_blink());
 	ptargetpoint->m_bDynamicName = psourcepoint->m_bDynamicName;
 	ptargetpoint->CurrentRect_in_DC = psourcepoint->CurrentRect_in_DC;
 	ptargetpoint->m_NameLocationOffsetX = psourcepoint->m_NameLocationOffsetX;
@@ -843,11 +843,11 @@ void Route::CalculateDCRect(wxDC& dc_route, wxRect& prect, const ViewPort&)
 		for (RoutePointList::iterator i = pRoutePointList->begin(); i != pRoutePointList->end();
 			 ++i) {
 			RoutePoint* prp2 = *i;
-			bool blink_save = prp2->m_bBlink;
-			prp2->m_bBlink = false;
+			bool blink_save = prp2->is_blink();
+			prp2->set_blink(false);
 			ocpnDC odc_route(dc_route);
 			prp2->Draw(odc_route, NULL);
-			prp2->m_bBlink = blink_save;
+			prp2->set_blink(blink_save);
 		}
 	}
 

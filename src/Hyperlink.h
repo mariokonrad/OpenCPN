@@ -21,14 +21,27 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __HYPERLINK_H__
-#define __HYPERLINK_H__
+#ifndef __HYPERLINK__H__
+#define __HYPERLINK__H__
 
 #include <wx/string.h>
 #include <vector>
 
+/// This class represents a hyperlink.
 class Hyperlink
 {
+public:
+	class Finder
+	{
+	public:
+		Finder(const wxString& url, const wxString& label);
+		bool operator()(const Hyperlink& link) const;
+
+	private:
+		wxString url;
+		wxString label;
+	};
+
 public:
 	Hyperlink(const wxString& desc, const wxString& url, const wxString& type);
 	Hyperlink(const Hyperlink& other);

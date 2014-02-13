@@ -23,6 +23,18 @@
 
 #include "Hyperlink.h"
 
+Hyperlink::Finder::Finder(const wxString& url, const wxString& label)
+	: url(url)
+	, label(label)
+{
+}
+
+bool Hyperlink::Finder::operator()(const Hyperlink& link) const
+{
+	return (link.url() == url)
+		   && ((link.desc() == label) || (link.url() == label && link.desc() == wxEmptyString));
+}
+
 Hyperlink::Hyperlink(const wxString& desc, const wxString& url, const wxString& type)
 	: DescrText(desc)
 	, Link(url)

@@ -44,17 +44,19 @@
 #include <wx/tglbtn.h>
 #include <wx/clipbrd.h>
 
+#include <algorithm>
+
 extern Select* pSelect;
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern RouteManagerDialog* pRouteManagerDialog;
 
 MarkInfoDef::MarkInfoDef(
-		wxWindow * parent,
+		wxWindow* parent,
 		wxWindowID id,
-		const wxString & title,
-		const wxPoint & pos,
-		const wxSize & size,
+		const wxString& title,
+		const wxPoint& pos,
+		const wxSize& size,
 		long style)
 {
 	long wstyle = style;
@@ -640,17 +642,14 @@ void MarkInfoImpl::OnDeleteLink(wxCommandEvent& event)
 	// remove all links, re-insert all non-deleted in the loop below
 	m_scrolledWindowLinks->DestroyChildren();
 
-	// FIXME: use find_if
-	Hyperlinks& linklist = m_pRoutePoint->m_HyperlinkList;
-	for (Hyperlinks::iterator i = linklist.begin(); i != linklist.end(); ++i) {
-		if (i->url() == findurl
-			&& (i->desc() == findlabel || (i->url() == findlabel && i->desc() == wxEmptyString))) {
+	Hyperlinks& links = m_pRoutePoint->m_HyperlinkList;
 
-			// found hyperlink to delete, repopulate GUI list
-			linklist.erase(i);
-			build_hyperlink_list();
-			break;
-		}
+	Hyperlinks::iterator link
+		= std::find_if(links.begin(), links.end(), Hyperlink::Finder(findurl, findlabel));
+	if (link != links.end()) {
+		// found hyperlink to delete, repopulate GUI list
+		links.erase(link);
+		build_hyperlink_list();
 	}
 
 	m_scrolledWindowLinks->InvalidateBestSize();
@@ -661,8 +660,9 @@ void MarkInfoImpl::OnDeleteLink(wxCommandEvent& event)
 
 void MarkInfoImpl::OnEditLink(wxCommandEvent& event)
 {
-	wxString findurl = m_pEditedLink->GetURL();
-	wxString findlabel = m_pEditedLink->GetLabel();
+	const wxString findurl = m_pEditedLink->GetURL();
+	const wxString findlabel = m_pEditedLink->GetLabel();
+
 	m_pLinkProp->m_textCtrlLinkDescription->SetValue(findlabel);
 	m_pLinkProp->m_textCtrlLinkUrl->SetValue(findurl);
 	if (m_pLinkProp->ShowModal() != wxID_OK) {
@@ -670,20 +670,18 @@ void MarkInfoImpl::OnEditLink(wxCommandEvent& event)
 		return;
 	}
 
-	Hyperlinks& linklist = m_pRoutePoint->m_HyperlinkList;
-	// FIXME: use find_if
-	for (Hyperlinks::iterator i = linklist.begin(); i != linklist.end(); ++i) {
-		if ((i->url() == findurl)
-			&& ((i->desc() == findlabel)
-				|| ((i->url() == findlabel) && (i->desc() == wxEmptyString)))) {
-			*i = Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
-						   m_pLinkProp->m_textCtrlLinkUrl->GetValue(), i->type());
-			wxHyperlinkCtrl* h
-				= static_cast<wxHyperlinkCtrl*>(m_scrolledWindowLinks->FindWindowByLabel(findlabel));
-			if (h) {
-				h->SetLabel(m_pLinkProp->m_textCtrlLinkDescription->GetValue());
-				h->SetURL(m_pLinkProp->m_textCtrlLinkUrl->GetValue());
-			}
+	Hyperlinks& links = m_pRoutePoint->m_HyperlinkList;
+
+	Hyperlinks::iterator link
+		= std::find_if(links.begin(), links.end(), Hyperlink::Finder(findurl, findlabel));
+	if (link != links.end()) {
+		*link = Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
+						  m_pLinkProp->m_textCtrlLinkUrl->GetValue(), link->type());
+		wxHyperlinkCtrl* h = static_cast
+			<wxHyperlinkCtrl*>(m_scrolledWindowLinks->FindWindowByLabel(findlabel));
+		if (h) {
+			h->SetLabel(m_pLinkProp->m_textCtrlLinkDescription->GetValue());
+			h->SetURL(m_pLinkProp->m_textCtrlLinkUrl->GetValue());
 		}
 	}
 

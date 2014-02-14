@@ -33,7 +33,6 @@ class GpxDocument : public TiXmlDocument
 {
 public:
 	GpxDocument();
-	GpxDocument(const wxString& filename);
 	virtual ~GpxDocument();
 
 	bool LoadFile(const wxString& filename);

@@ -33,11 +33,15 @@
 
 namespace gpx {
 
-GpxDocument::GpxDocument(const wxString& filename)
+GpxDocument::GpxDocument()
 {
-	LoadFile(filename);
-	// FIXME: we should probably validate if the file is GPX DTD compliant and die if not... BUT we
-	// would need a dependency to some validating parser.
+	PopulateEmptyDocument(_T("OpenCPN"));
+	AddCustomNamespace(_T("xmlns:opencpn"), _T("http://www.opencpn.org"));
+	SeedRandom();
+}
+
+GpxDocument::~GpxDocument()
+{
 }
 
 bool GpxDocument::LoadFile(const wxString& filename)
@@ -55,9 +59,10 @@ bool GpxDocument::LoadFile(const wxString& filename)
 #ifdef wxHAS_REGEX_ADVANCED
 	re_compile_flags |= wxRE_ADVANCED;
 #endif
-	bool b
-		= re.Compile(wxT("&(?!amp;|lt;|gt;|apos;|quot;|#[0-9]{1,};|#x[0-f]{1,};)"),
-					 re_compile_flags); // Should find all the non-XML entites to be encoded as text
+	// Should find all the non-XML entites to be encoded as text
+	bool b = re.Compile(wxT("&(?!amp;|lt;|gt;|apos;|quot;|#[0-9]{1,};|#x[0-f]{1,};)"),
+						re_compile_flags);
+
 	wxFFile file(filename);
 	wxString s;
 	if (file.IsOpened()) {
@@ -86,6 +91,7 @@ bool GpxDocument::LoadFile(const wxString& filename)
 											  filename.c_str(), cnt));
 		}
 	}
+
 	wxFFile gpxfile;
 	wxString gpxfilename = wxFileName::CreateTempFileName(wxT("gpx"), &gpxfile);
 	gpxfile.Write(s);
@@ -93,26 +99,17 @@ bool GpxDocument::LoadFile(const wxString& filename)
 	bool res = TiXmlDocument::LoadFile((const char*)gpxfilename.mb_str());
 
 	if (!res) {
-		wxString msg = _T("Failed to load ");
-		msg << filename;
-		msg << _T(": ");
-		msg << wxString(TiXmlDocument::ErrorDesc(), wxConvUTF8);
-		wxLogMessage(msg);
+		wxLogMessage(_T("Failed to load ") + filename + _T(": ")
+					 + wxString(TiXmlDocument::ErrorDesc(), wxConvUTF8));
 	}
 	::wxRemoveFile(gpxfilename);
+
 	return res;
 }
 
 bool GpxDocument::SaveFile(const wxString& filename)
 {
 	return TiXmlDocument::SaveFile((const char*)filename.mb_str());
-}
-
-GpxDocument::GpxDocument()
-{
-	PopulateEmptyDocument(_T("OpenCPN"));
-	AddCustomNamespace(_T("xmlns:opencpn"), _T("http://www.opencpn.org"));
-	SeedRandom();
 }
 
 void GpxDocument::SeedRandom()
@@ -123,10 +120,6 @@ void GpxDocument::SeedRandom()
 	long seed = x.GetMillisecond();
 	seed *= x.GetTicks();
 	srand(seed);
-}
-
-GpxDocument::~GpxDocument()
-{
 }
 
 // RFC4122 version 4 compliant random UUIDs generator.
@@ -172,8 +165,9 @@ wxString GpxDocument::GetUUID(void)
 
 int GpxDocument::GetRandomNumber(int range_min, int range_max)
 {
-	long u = (long)wxRound(((double)rand() / ((double)(RAND_MAX) + 1) * (range_max - range_min))
-						   + range_min);
+	int d = range_max - range_min;
+
+	long u = (long)wxRound(((double)rand() / ((double)(RAND_MAX) + 1) * d) + range_min);
 	return (int)u;
 }
 

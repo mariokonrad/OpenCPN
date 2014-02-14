@@ -24,11 +24,12 @@
 #ifndef __GPX__GPXROOTELEMENT__H__
 #define __GPX__GPXROOTELEMENT__H__
 
-#include <wx/string.h>
 #include <tinyxml/tinyxml.h>
+#include <gpx/GpxTrkElement.h>
 #include <gpx/GpxWptElement.h>
 #include <gpx/GpxRteElement.h>
-#include <gpx/GpxTrkElement.h>
+
+class wxString;
 
 namespace gpx {
 

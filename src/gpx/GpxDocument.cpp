@@ -70,8 +70,7 @@ bool GpxDocument::LoadFile(const wxString& filename)
 			file.Seek(0);
 			file.ReadAll(&s, wxConvISO8859_1);
 			wxLogMessage(wxString::Format(
-				wxT("File %s seems not to be well-formed UTF-8 XML, used fallback ASCII format "
-					"conversion - some text information might have not been imported."),
+				wxT("File %s seems not to be well-formed UTF-8 XML, used fallback ASCII format conversion - some text information might have not been imported."),
 				filename.c_str()));
 		}
 
@@ -83,8 +82,7 @@ bool GpxDocument::LoadFile(const wxString& filename)
 		if (!s.Contains(wxT("![CDATA["))) {
 			int cnt = re.ReplaceAll(&s, wxT("&amp;"));
 			if (cnt > 0)
-				wxLogMessage(wxString::Format(wxT("File %s seems broken, %i occurences of '&' were "
-												  "replaced with '&amp;' to try to fix it."),
+				wxLogMessage(wxString::Format(wxT("File %s seems broken, %i occurences of '&' were replaced with '&amp;' to try to fix it."),
 											  filename.c_str(), cnt));
 		}
 	}

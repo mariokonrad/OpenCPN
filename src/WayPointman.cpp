@@ -333,7 +333,9 @@ void WayPointman::remove(RoutePoint* route_point)
 	if (!route_point)
 		return;
 
-	points.erase(std::find(points.begin(), points.end(), route_point));
+	RoutePointList::iterator i = std::find(points.begin(), points.end(), route_point);
+	if (i != points.end())
+		points.erase(i);
 }
 
 RoutePoint* WayPointman::find(const wxString& guid)

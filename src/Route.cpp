@@ -94,7 +94,7 @@ Route::Route(void)
 	, m_bcrosses_idl(false)
 {
 	pRoutePointList = new RoutePointList;
-	m_GUID = GpxDocument::GetUUID();
+	m_GUID = gpx::GpxDocument::GetUUID();
 	m_ArrivalRadius = global::OCPN::get().nav().route().arrival_circle_radius;
 	RBBox.Reset();
 }
@@ -413,9 +413,9 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 		if (m_Colour == wxEmptyString) {
 			col = routemanager.GetRoutePen().GetColour();
 		} else {
-			for (unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(wxString); i++) {
-				if (m_Colour == ::GpxxColorNames[i]) {
-					col = ::GpxxColors[i];
+			for (unsigned int i = 0; i < sizeof(gpx::GpxxColorNames) / sizeof(wxString); i++) {
+				if (m_Colour == gpx::GpxxColorNames[i]) {
+					col = gpx::GpxxColors[i];
 					break;
 				}
 			}

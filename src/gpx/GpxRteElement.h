@@ -21,13 +21,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPXRTEELEMENT__H__
-#define __GPXRTEELEMENT__H__
+#ifndef __GPX__GPXRTEELEMENT__H__
+#define __GPX__GPXRTEELEMENT__H__
 
 #include <wx/string.h>
 #include <tinyxml/tinyxml.h>
-#include "GpxWptElement.h"
-#include "GpxLinkElement.h"
+#include <gpx/GpxWptElement.h>
+#include <gpx/GpxLinkElement.h>
+
+namespace gpx {
 
 class GpxExtensionsElement;
 
@@ -35,25 +37,21 @@ class GpxExtensionsElement;
 
 class GpxRteElement : public TiXmlElement
 {
-	public:
-		GpxRteElement(
-				const wxString & name = _T(""),
-				const wxString & cmt = _T(""),
-				const wxString & desc = _T(""),
-				const wxString & src = _T(""),
-				ListOfGpxLinks * links = NULL,
-				int number = -1,
-				const wxString & type = _T(""),
-				GpxExtensionsElement * extensions = NULL,
-				ListOfGpxWpts * waypoints = NULL);
+public:
+	GpxRteElement(const wxString& name = _T(""), const wxString& cmt = _T(""),
+				  const wxString& desc = _T(""), const wxString& src = _T(""),
+				  ListOfGpxLinks* links = NULL, int number = -1, const wxString& type = _T(""),
+				  GpxExtensionsElement* extensions = NULL, ListOfGpxWpts* waypoints = NULL);
 
-		void AppendRtePoint(GpxWptElement * rtept);
-		void SetSimpleExtension(const wxString & name, const wxString & value);
+	void AppendRtePoint(GpxWptElement* rtept);
+	void SetSimpleExtension(const wxString& name, const wxString& value);
 
-	private:
-		void SetProperty(const wxString & name, const wxString & value);
+private:
+	void SetProperty(const wxString& name, const wxString& value);
 };
 
 WX_DECLARE_LIST(GpxRteElement, ListOfGpxRoutes);
+
+}
 
 #endif

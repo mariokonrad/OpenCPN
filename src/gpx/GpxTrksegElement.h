@@ -21,25 +21,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPXTRKSEGELEMENT__H__
-#define __GPXTRKSEGELEMENT__H__
+#ifndef __GPX__GPXTRKSEGELEMENT__H__
+#define __GPX__GPXTRKSEGELEMENT__H__
 
-#include <wx/string.h>
-#include "tinyxml/tinyxml.h"
-#include "GpxWptElement.h"
+#include <tinyxml/tinyxml.h>
+#include <gpx/GpxWptElement.h>
+
+namespace gpx {
 
 class GpxExtensionsElement;
 
 class GpxTrksegElement : public TiXmlElement
 {
-	public:
-		GpxTrksegElement(
-				ListOfGpxWpts * waypoints = NULL,
-				GpxExtensionsElement * extensions = NULL);
+public:
+	GpxTrksegElement(ListOfGpxWpts* waypoints = NULL, GpxExtensionsElement* extensions = NULL);
 
-		void AppendTrkPoint(GpxWptElement * trkpt);
+	void AppendTrkPoint(GpxWptElement* trkpt);
 };
 
 WX_DECLARE_LIST(GpxTrksegElement, ListOfGpxTrksegs);
+
+}
 
 #endif

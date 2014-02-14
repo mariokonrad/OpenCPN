@@ -415,7 +415,7 @@ Route * NavObjectCollection::GPXLoadRoute1(
 					} else if (ext_name == _T("opencpn:planned_speed")) {
 						pTentRoute->m_PlannedSpeed = atof(ext_child.first_child().value());
 					} else if (ext_name == _T("opencpn:planned_departure")) {
-						ParseGPXDateTime(pTentRoute->m_PlannedDeparture,
+						gpx::ParseGPXDateTime(pTentRoute->m_PlannedDeparture,
 										 wxString::FromUTF8(ext_child.first_child().value()));
 					} else if (ext_name == _T("opencpn:time_display")) {
 						pTentRoute->m_TimeDisplayFormat
@@ -796,11 +796,11 @@ void NavObjectCollection::InsertRouteA(Route* pTentRoute)
 	if (bAddroute) {
 		// We are importing a different route with the same guid, so let's generate it a new guid
 		if (routemanager.RouteExists(pTentRoute->guid())) {
-			pTentRoute->set_guid(GpxDocument::GetUUID());
+			pTentRoute->set_guid(gpx::GpxDocument::GetUUID());
 			// Now also change guids for the routepoints
 			for (RoutePointList::iterator node = pTentRoute->routepoints().begin();
 				 node != pTentRoute->routepoints().end(); ++node) {
-				(*node)->set_guid(GpxDocument::GetUUID());
+				(*node)->set_guid(gpx::GpxDocument::GetUUID());
 				// FIXME: !!!! the shared waypoint gets part of both the routes -> not goood at all
 			}
 		}

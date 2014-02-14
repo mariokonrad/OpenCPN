@@ -379,9 +379,9 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 	if (m_Colour == wxEmptyString) {
 		col = basic_colour;
 	} else {
-		for (unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(wxString); i++) {
-			if (m_Colour == ::GpxxColorNames[i]) {
-				col = ::GpxxColors[i];
+		for (unsigned int i = 0; i < sizeof(gpx::GpxxColorNames) / sizeof(wxString); i++) {
+			if (m_Colour == gpx::GpxxColorNames[i]) {
+				col = gpx::GpxxColors[i];
 				break;
 			}
 		}

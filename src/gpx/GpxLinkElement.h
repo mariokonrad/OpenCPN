@@ -21,22 +21,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPXLINKELEMENT__H__
-#define __GPXLINKELEMENT__H__
+#ifndef __GPX__GPXLINKELEMENT__H__
+#define __GPX__GPXLINKELEMENT__H__
 
-#include <wx/string.h>
 #include <wx/list.h>
 #include <tinyxml/tinyxml.h>
 
+class wxString;
+
+namespace gpx
+{
+
 class GpxLinkElement : public TiXmlElement
 {
-	public:
-		GpxLinkElement(
-				const wxString & uri,
-				const wxString & description,
-				const wxString & mime_type);
+public:
+	GpxLinkElement(const wxString& uri, const wxString& description, const wxString& mime_type);
 };
 
 WX_DECLARE_LIST(GpxLinkElement, ListOfGpxLinks);
+
+}
 
 #endif

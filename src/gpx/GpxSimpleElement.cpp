@@ -23,12 +23,16 @@
 
 #include "GpxSimpleElement.h"
 
-GpxSimpleElement::GpxSimpleElement(
-		const wxString & element_name,
-		const wxString & element_value)
+#include <wx/string.h>
+
+namespace gpx {
+
+GpxSimpleElement::GpxSimpleElement(const wxString& element_name, const wxString& element_value)
 	: TiXmlElement(element_name.ToUTF8())
 {
-      TiXmlText * value = new TiXmlText(element_value.ToUTF8());
-      LinkEndChild(value);
+	TiXmlText* value = new TiXmlText(element_value.ToUTF8());
+	LinkEndChild(value);
+}
+
 }
 

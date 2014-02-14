@@ -577,23 +577,23 @@ bool TrackPropDlg::UpdateProperties()
 	if (m_pRoute->m_Colour == wxEmptyString) {
 		m_cColor->Select(0);
 	} else {
-		for (unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(wxString); i++) {
-			if (m_pRoute->m_Colour == ::GpxxColorNames[i]) {
+		for (unsigned int i = 0; i < sizeof(gpx::GpxxColorNames) / sizeof(wxString); i++) {
+			if (m_pRoute->m_Colour == gpx::GpxxColorNames[i]) {
 				m_cColor->Select(i + 1);
 				break;
 			}
 		}
 	}
 
-	for (unsigned int i = 0; i < sizeof(::StyleValues) / sizeof(int); i++) {
-		if (m_pRoute->m_style == ::StyleValues[i]) {
+	for (unsigned int i = 0; i < sizeof(gpx::StyleValues) / sizeof(int); i++) {
+		if (m_pRoute->m_style == gpx::StyleValues[i]) {
 			m_cStyle->Select(i);
 			break;
 		}
 	}
 
-	for (unsigned int i = 0; i < sizeof(::WidthValues) / sizeof(int); i++) {
-		if (m_pRoute->m_width == ::WidthValues[i]) {
+	for (unsigned int i = 0; i < sizeof(gpx::WidthValues) / sizeof(int); i++) {
+		if (m_pRoute->m_width == gpx::WidthValues[i]) {
 			m_cWidth->Select(i);
 			break;
 		}
@@ -1059,9 +1059,9 @@ bool TrackPropDlg::SaveChanges(void)
 		if (m_cColor->GetSelection() == 0)
 			m_pRoute->m_Colour = wxEmptyString;
 		else
-			m_pRoute->m_Colour = ::GpxxColorNames[m_cColor->GetSelection() - 1];
-		m_pRoute->m_style = ::StyleValues[m_cStyle->GetSelection()];
-		m_pRoute->m_width = ::WidthValues[m_cWidth->GetSelection()];
+			m_pRoute->m_Colour = gpx::GpxxColorNames[m_cColor->GetSelection() - 1];
+		m_pRoute->m_style = gpx::StyleValues[m_cStyle->GetSelection()];
+		m_pRoute->m_width = gpx::WidthValues[m_cWidth->GetSelection()];
 
 		pConfig->UpdateRoute(m_pRoute);
 		pConfig->UpdateSettings();

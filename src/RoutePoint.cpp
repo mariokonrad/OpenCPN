@@ -86,7 +86,7 @@ RoutePoint::RoutePoint()
 	, m_MarkName(wxEmptyString)
 {
 	m_CreateTimeX = wxDateTime::Now();
-	m_GUID = GpxDocument::GetUUID();
+	m_GUID = gpx::GpxDocument::GetUUID();
 	ReLoadIcon();
 }
 
@@ -121,7 +121,7 @@ RoutePoint::RoutePoint(const RoutePoint& orig)
 	ReLoadIcon();
 
 	m_bIsInLayer = orig.m_bIsInLayer;
-	m_GUID = GpxDocument::GetUUID();
+	m_GUID = gpx::GpxDocument::GetUUID();
 }
 
 RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, const wxString& name,
@@ -158,7 +158,7 @@ RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, con
 	if (!pGUID.IsEmpty())
 		m_GUID = pGUID;
 	else
-		m_GUID = GpxDocument::GetUUID();
+		m_GUID = gpx::GpxDocument::GetUUID();
 
 	// Get Icon bitmap
 	ReLoadIcon();
@@ -221,7 +221,7 @@ void RoutePoint::set_time_string(const wxString& time_string)
 	m_timestring = time_string;
 	if (!m_CreateTimeX.IsValid()) {
 		if (m_timestring.size())
-			ParseGPXDateTime(m_CreateTimeX, m_timestring);
+			gpx::ParseGPXDateTime(m_CreateTimeX, m_timestring);
 	}
 }
 

@@ -22,14 +22,22 @@
  **************************************************************************/
 
 #include "GpxxExtensionsElement.h"
-#include "GpxSimpleElement.h"
+#include <gpx/GpxSimpleElement.h>
 
-GpxxExtensionsElement::GpxxExtensionsElement(const wxString & element_name)
+#include <wx/string.h>
+
+namespace gpx
+{
+
+GpxxExtensionsElement::GpxxExtensionsElement(const wxString& element_name)
 	: TiXmlElement(element_name.mb_str())
 {
 	if (element_name.EndsWith(_T("RouteExtension"))) {
-		GpxSimpleElement * g = new GpxSimpleElement(wxString(_T("gpxx:IsAutoNamed")), _T("false")); //FIXME: the namespace should be taken from element_name...
+		// FIXME: the namespace should be taken from element_name...
+		GpxSimpleElement* g = new GpxSimpleElement(wxString(_T("gpxx:IsAutoNamed")), _T("false"));
 		LinkEndChild(g);
 	}
+}
+
 }
 

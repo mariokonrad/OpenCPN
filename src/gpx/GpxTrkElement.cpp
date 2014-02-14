@@ -22,22 +22,18 @@
  **************************************************************************/
 
 #include "GpxTrkElement.h"
-#include "GpxExtensionsElement.h"
-#include "GpxSimpleElement.h"
-
+#include <gpx/GpxExtensionsElement.h>
+#include <gpx/GpxSimpleElement.h>
 #include <wx/listimpl.cpp>
+
+namespace gpx {
+
 WX_DEFINE_LIST(ListOfGpxTracks);
 
-GpxTrkElement::GpxTrkElement(
-		const wxString & name,
-		const wxString & cmt,
-		const wxString & desc,
-		const wxString & src,
-		ListOfGpxLinks * links,
-		int number,
-		const wxString & type,
-		GpxExtensionsElement * extensions,
-		ListOfGpxTrksegs * segments)
+GpxTrkElement::GpxTrkElement(const wxString& name, const wxString& cmt, const wxString& desc,
+							 const wxString& src, ListOfGpxLinks* links, int number,
+							 const wxString& type, GpxExtensionsElement* extensions,
+							 ListOfGpxTrksegs* segments)
 	: TiXmlElement("trk")
 {
 	if (!name.IsEmpty())
@@ -105,5 +101,7 @@ void GpxTrkElement::SetSimpleExtension(const wxString& name, const wxString& val
 		else
 			exts->LinkEndChild(new GpxSimpleElement(name, value));
 	}
+}
+
 }
 

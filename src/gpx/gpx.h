@@ -21,10 +21,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPX__H__
-#define __GPX__H__
+#ifndef __GPX__GPX__H__
+#define __GPX__GPX__H__
 
-#include <wx/wx.h>
+#include <wx/colour.h>
+#include <wx/string.h>
+
+namespace gpx {
 
 // The last color defined by Garmin is transparent - we ignore it
 const wxString GpxxColorNames[] =
@@ -91,5 +94,7 @@ const int WidthValues[] =
 	 9,
 	10
 };
+
+}
 
 #endif

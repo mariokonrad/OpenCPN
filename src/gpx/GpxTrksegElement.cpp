@@ -22,14 +22,14 @@
  **************************************************************************/
 
 #include "GpxTrksegElement.h"
-#include "GpxExtensionsElement.h"
-
+#include <gpx/GpxExtensionsElement.h>
 #include <wx/listimpl.cpp>
+
+namespace gpx {
+
 WX_DEFINE_LIST(ListOfGpxTrksegs);
 
-GpxTrksegElement::GpxTrksegElement(
-		ListOfGpxWpts * waypoints,
-		GpxExtensionsElement * extensions)
+GpxTrksegElement::GpxTrksegElement(ListOfGpxWpts* waypoints, GpxExtensionsElement* extensions)
 	: TiXmlElement("trkseg")
 {
 	if (waypoints) {
@@ -46,5 +46,7 @@ void GpxTrksegElement::AppendTrkPoint(GpxWptElement* trkpt)
 {
 	// FIXME: can be reused for route and track segment
 	LinkEndChild(trkpt);
+}
+
 }
 

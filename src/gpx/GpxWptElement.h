@@ -21,23 +21,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPXWPTELEMENT__H__
-#define __GPXWPTELEMENT__H__
+#ifndef __GPX__GPXWPTELEMENT__H__
+#define __GPX__GPXWPTELEMENT__H__
 
 #include <wx/string.h>
 #include <wx/datetime.h>
 #include <tinyxml/tinyxml.h>
-#include "GpxLinkElement.h"
+#include <gpx/GpxLinkElement.h>
+
+namespace gpx {
 
 // Waypoint types
-#define GPX_WPT_WAYPOINT (char *)"wpt"
-#define GPX_WPT_ROUTEPOINT (char *)"rtept"
-#define GPX_WPT_TRACKPOINT (char *)"trkpt"
+#define GPX_WPT_WAYPOINT (char*) "wpt"
+#define GPX_WPT_ROUTEPOINT (char*) "rtept"
+#define GPX_WPT_TRACKPOINT (char*) "trkpt"
 
 class GpxExtensionsElement;
 
-enum GpxFixType
-{
+enum GpxFixType {
 	fix_undefined,
 	fix_none,
 	fix_2d,
@@ -50,43 +51,26 @@ enum GpxFixType
 
 class GpxWptElement : public TiXmlElement
 {
-	public:
-		GpxWptElement(
-				char * waypoint_type,
-				double lat,
-				double lon,
-				double ele = 0,
-				wxDateTime * time = NULL,
-				double magvar = 0,
-				double geoidheight = -1,
-				const wxString & name = _T(""),
-				const wxString & cmt = _T(""),
-				const wxString & desc = _T(""),
-				const wxString & src = _T(""),
-				ListOfGpxLinks * links = NULL,
-				const wxString & sym = _T(""),
-				const wxString & type = _T(""),
-				GpxFixType fixtype = fix_undefined,
-				int sat = -1,
-				double hdop = -1,
-				double vdop = -1,
-				double pdop = -1,
-				double ageofgpsdata = -1,
-				int dgpsid = -1,
-				GpxExtensionsElement * extensions = NULL);
+public:
+	GpxWptElement(char* waypoint_type, double lat, double lon, double ele = 0,
+				  wxDateTime* time = NULL, double magvar = 0, double geoidheight = -1,
+				  const wxString& name = _T(""), const wxString& cmt = _T(""),
+				  const wxString& desc = _T(""), const wxString& src = _T(""),
+				  ListOfGpxLinks* links = NULL, const wxString& sym = _T(""),
+				  const wxString& type = _T(""), GpxFixType fixtype = fix_undefined, int sat = -1,
+				  double hdop = -1, double vdop = -1, double pdop = -1, double ageofgpsdata = -1,
+				  int dgpsid = -1, GpxExtensionsElement* extensions = NULL);
 
-		void SetSimpleExtension(
-			const wxString & name,
-			const wxString & value);
+	void SetSimpleExtension(const wxString& name, const wxString& value);
 
-	private:
-		void SetProperty(
-			const wxString & name,
-			const wxString & value);
+private:
+	void SetProperty(const wxString& name, const wxString& value);
 
-		wxString FixTypeToStr(GpxFixType fixtype);
+	wxString FixTypeToStr(GpxFixType fixtype);
 };
 
 WX_DECLARE_LIST(GpxWptElement, ListOfGpxWpts);
+
+}
 
 #endif

@@ -21,44 +21,45 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPXROOTELEMENT__H__
-#define __GPXROOTELEMENT__H__
+#ifndef __GPX__GPXROOTELEMENT__H__
+#define __GPX__GPXROOTELEMENT__H__
 
 #include <wx/string.h>
 #include <tinyxml/tinyxml.h>
-#include "GpxWptElement.h"
-#include "GpxRteElement.h"
-#include "GpxTrkElement.h"
+#include <gpx/GpxWptElement.h>
+#include <gpx/GpxRteElement.h>
+#include <gpx/GpxTrkElement.h>
+
+namespace gpx {
 
 class GpxMetadataElement;
 
 class GpxRootElement : public TiXmlElement
 {
-	public:
-		GpxRootElement(
-				const wxString & creator,
-				GpxMetadataElement * metadata = NULL,
-				ListOfGpxWpts * waypoints = NULL,
-				ListOfGpxRoutes * routes = NULL,
-				ListOfGpxTracks * tracks = NULL,
-				GpxExtensionsElement * extensions = NULL);
+public:
+	GpxRootElement(const wxString& creator, GpxMetadataElement* metadata = NULL,
+				   ListOfGpxWpts* waypoints = NULL, ListOfGpxRoutes* routes = NULL,
+				   ListOfGpxTracks* tracks = NULL, GpxExtensionsElement* extensions = NULL);
 
-		void AddWaypoint(GpxWptElement * waypoint);
-		void AddRoute(GpxRteElement * route);
-		void AddTrack(GpxTrkElement * track);
-		void SetMetadata(GpxMetadataElement * metadata);
-		void RemoveMetadata();
-		void SetExtensions(GpxExtensionsElement * extensions);
-		void RemoveExtensions();
-	private:
-		GpxWptElement * first_waypoint;
-		GpxWptElement * last_waypoint;
-		GpxRteElement * first_route;
-		GpxRteElement * last_route;
-		GpxTrkElement * first_track;
-		GpxTrkElement * last_track;
-		GpxMetadataElement * my_metadata;
-		GpxExtensionsElement * my_extensions;
+	void AddWaypoint(GpxWptElement* waypoint);
+	void AddRoute(GpxRteElement* route);
+	void AddTrack(GpxTrkElement* track);
+	void SetMetadata(GpxMetadataElement* metadata);
+	void RemoveMetadata();
+	void SetExtensions(GpxExtensionsElement* extensions);
+	void RemoveExtensions();
+
+private:
+	GpxWptElement* first_waypoint;
+	GpxWptElement* last_waypoint;
+	GpxRteElement* first_route;
+	GpxRteElement* last_route;
+	GpxTrkElement* first_track;
+	GpxTrkElement* last_track;
+	GpxMetadataElement* my_metadata;
+	GpxExtensionsElement* my_extensions;
 };
+
+}
 
 #endif

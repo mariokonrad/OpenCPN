@@ -22,35 +22,21 @@
  **************************************************************************/
 
 #include "GpxWptElement.h"
-#include "GpxExtensionsElement.h"
-#include "GpxSimpleElement.h"
-
+#include <gpx/GpxExtensionsElement.h>
+#include <gpx/GpxSimpleElement.h>
 #include <wx/listimpl.cpp>
+
+namespace gpx {
+
 WX_DEFINE_LIST(ListOfGpxWpts);
 
-GpxWptElement::GpxWptElement(
-		char * waypoint_type,
-		double lat,
-		double lon,
-		double ele,
-		wxDateTime * time,
-		double magvar,
-		double geoidheight,
-		const wxString & name,
-		const wxString & cmt,
-		const wxString & desc,
-		const wxString & src,
-		ListOfGpxLinks * links,
-		const wxString & sym,
-		const wxString & type,
-		GpxFixType fixtype,
-		int sat,
-		double hdop,
-		double vdop,
-		double pdop,
-		double ageofgpsdata,
-		int dgpsid,
-		GpxExtensionsElement * extensions)
+GpxWptElement::GpxWptElement(char* waypoint_type, double lat, double lon, double ele,
+							 wxDateTime* time, double magvar, double geoidheight,
+							 const wxString& name, const wxString& cmt, const wxString& desc,
+							 const wxString& src, ListOfGpxLinks* links, const wxString& sym,
+							 const wxString& type, GpxFixType fixtype, int sat, double hdop,
+							 double vdop, double pdop, double ageofgpsdata, int dgpsid,
+							 GpxExtensionsElement* extensions)
 	: TiXmlElement(waypoint_type)
 {
 	SetAttribute("lat", wxString::Format(_T("%.9f"), lat).ToUTF8());
@@ -61,7 +47,9 @@ GpxWptElement::GpxWptElement(
 
 	if (time)
 		if (time->IsValid())
-			SetProperty(wxString(_T("time")), time->FormatISODate().Append(_T("T")).Append(time->FormatISOTime()).Append(_T("Z")));
+			SetProperty(wxString(_T("time")),
+						time->FormatISODate().Append(_T("T")).Append(time->FormatISOTime()).Append(
+							_T("Z")));
 	if (magvar != 0)
 		SetProperty(wxString(_T("magvar")), wxString::Format(_T("%f"), magvar));
 	if (geoidheight != -1)
@@ -79,7 +67,10 @@ GpxWptElement::GpxWptElement(
 			LinkEndChild(*link);
 		}
 	}
-	if (!sym.IsEmpty() /*&& (sym != _T("empty"))*/) //"empty" is a valid symbol for us, we need to preserve it, otherwise it would be non existent and replaced by a circle on next load...
+
+	// "empty" is a valid symbol for us, we need to preserve it, otherwise it would be non existent
+	// and replaced by a circle on next load...
+	if (!sym.IsEmpty())
 		SetProperty(wxString(_T("sym")), sym);
 	if (!type.IsEmpty())
 		SetProperty(wxString(_T("type")), type);
@@ -103,8 +94,7 @@ GpxWptElement::GpxWptElement(
 
 wxString GpxWptElement::FixTypeToStr(GpxFixType fixtype)
 {
-	switch(fixtype)
-	{
+	switch (fixtype) {
 		case fix_none:
 			return wxString(_T("none"));
 		case fix_2d:
@@ -120,12 +110,12 @@ wxString GpxWptElement::FixTypeToStr(GpxFixType fixtype)
 	}
 }
 
-void GpxWptElement::SetSimpleExtension(const wxString &name, const wxString &value)
+void GpxWptElement::SetSimpleExtension(const wxString& name, const wxString& value)
 {
-	//FIXME: if the extensions don't exist, we should create them
-	TiXmlElement * exts = FirstChildElement("extensions");
+	// FIXME: if the extensions don't exist, we should create them
+	TiXmlElement* exts = FirstChildElement("extensions");
 	if (exts) {
-		TiXmlElement * ext = exts->FirstChildElement(name.ToUTF8());
+		TiXmlElement* ext = exts->FirstChildElement(name.ToUTF8());
 		if (ext)
 			exts->ReplaceChild(ext, GpxSimpleElement(name, value));
 		else
@@ -133,17 +123,16 @@ void GpxWptElement::SetSimpleExtension(const wxString &name, const wxString &val
 	}
 }
 
-void GpxWptElement::SetProperty(const wxString &name, const wxString &value)
+void GpxWptElement::SetProperty(const wxString& name, const wxString& value)
 {
-	//FIXME: doesn't care about order so it can be absolutely wrong, have to redo this code if it has to be used by something else than the constructor
-	//then it can be made public
-	GpxSimpleElement *element = new GpxSimpleElement(name, value);
-	TiXmlElement *curelement = FirstChildElement();
+	// FIXME: doesn't care about order so it can be absolutely wrong, have to redo this code if it
+	// has to be used by something else than the constructor
+	// then it can be made public
+	GpxSimpleElement* element = new GpxSimpleElement(name, value);
+	TiXmlElement* curelement = FirstChildElement();
 	bool found = false;
-	while(curelement)
-	{
-		if((const char *)curelement->Value() == (const char *)name.ToUTF8())
-		{
+	while (curelement) {
+		if ((const char*)curelement->Value() == (const char*)name.ToUTF8()) {
 			ReplaceChild(curelement, *element);
 			element->Clear();
 			delete element;
@@ -154,5 +143,7 @@ void GpxWptElement::SetProperty(const wxString &name, const wxString &value)
 	}
 	if (!found)
 		LinkEndChild(element);
+}
+
 }
 

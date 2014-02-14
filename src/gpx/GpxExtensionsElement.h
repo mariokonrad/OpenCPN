@@ -21,16 +21,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPXEXTENSIONELEMENT__H__
-#define __GPXEXTENSIONELEMENT__H__
+#ifndef __GPX__GPXEXTENSIONELEMENT__H__
+#define __GPX__GPXEXTENSIONELEMENT__H__
 
-#include <wx/string.h>
 #include <tinyxml/tinyxml.h>
+
+namespace gpx {
 
 class GpxExtensionsElement : public TiXmlElement
 {
-	public:
-		GpxExtensionsElement();
+public:
+	GpxExtensionsElement();
 };
+
+}
 
 #endif

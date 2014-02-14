@@ -1250,23 +1250,23 @@ bool RouteProp::UpdateProperties()
 	if (m_pRoute->m_Colour == wxEmptyString) {
 		m_chColor->Select(0);
 	} else {
-		for (unsigned int i = 0; i < sizeof(::GpxxColorNames) / sizeof(::GpxxColorNames[0]); i++) {
-			if (m_pRoute->m_Colour == ::GpxxColorNames[i]) {
+		for (unsigned int i = 0; i < sizeof(gpx::GpxxColorNames) / sizeof(gpx::GpxxColorNames[0]); i++) {
+			if (m_pRoute->m_Colour == gpx::GpxxColorNames[i]) {
 				m_chColor->Select(i + 1);
 				break;
 			}
 		}
 	}
 
-	for (unsigned int i = 0; i < sizeof(::StyleValues) / sizeof(::StyleValues[0]); i++) {
-		if (m_pRoute->m_style == ::StyleValues[i]) {
+	for (unsigned int i = 0; i < sizeof(gpx::StyleValues) / sizeof(gpx::StyleValues[0]); i++) {
+		if (m_pRoute->m_style == gpx::StyleValues[i]) {
 			m_chStyle->Select(i);
 			break;
 		}
 	}
 
-	for (unsigned int i = 0; i < sizeof(::WidthValues) / sizeof(::WidthValues[0]); i++) {
-		if (m_pRoute->m_width == ::WidthValues[i]) {
+	for (unsigned int i = 0; i < sizeof(gpx::WidthValues) / sizeof(gpx::WidthValues[0]); i++) {
+		if (m_pRoute->m_width == gpx::WidthValues[i]) {
 			m_chWidth->Select(i);
 			break;
 		}
@@ -1320,9 +1320,9 @@ bool RouteProp::SaveChanges(void)
 		if (m_chColor->GetSelection() == 0)
 			m_pRoute->m_Colour = wxEmptyString;
 		else
-			m_pRoute->m_Colour = ::GpxxColorNames[m_chColor->GetSelection() - 1];
-		m_pRoute->m_style = ::StyleValues[m_chStyle->GetSelection()];
-		m_pRoute->m_width = ::WidthValues[m_chWidth->GetSelection()];
+			m_pRoute->m_Colour = gpx::GpxxColorNames[m_chColor->GetSelection() - 1];
+		m_pRoute->m_style = gpx::StyleValues[m_chStyle->GetSelection()];
+		m_pRoute->m_width = gpx::WidthValues[m_chWidth->GetSelection()];
 		m_pRoute->m_PlannedDeparture = g_StartTime;
 		m_pRoute->m_PlannedSpeed = m_planspeed;
 		switch (g_StartTimeTZ) {

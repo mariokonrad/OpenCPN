@@ -22,22 +22,18 @@
  **************************************************************************/
 
 #include "GpxRteElement.h"
-#include "GpxExtensionsElement.h"
-#include "GpxSimpleElement.h"
-
+#include <gpx/GpxExtensionsElement.h>
+#include <gpx/GpxSimpleElement.h>
 #include <wx/listimpl.cpp>
+
+namespace gpx {
+
 WX_DEFINE_LIST(ListOfGpxRoutes);
 
-GpxRteElement::GpxRteElement(
-		const wxString & name,
-		const wxString & cmt,
-		const wxString & desc,
-		const wxString & src,
-		ListOfGpxLinks * links,
-		int number,
-		const wxString & type,
-		GpxExtensionsElement * extensions,
-		ListOfGpxWpts * waypoints)
+GpxRteElement::GpxRteElement(const wxString& name, const wxString& cmt, const wxString& desc,
+							 const wxString& src, ListOfGpxLinks* links, int number,
+							 const wxString& type, GpxExtensionsElement* extensions,
+							 ListOfGpxWpts* waypoints)
 	: TiXmlElement("rte")
 {
 	if (!name.IsEmpty())
@@ -48,8 +44,7 @@ GpxRteElement::GpxRteElement(
 		SetProperty(wxString(_T("desc")), desc);
 	if (!src.IsEmpty())
 		SetProperty(wxString(_T("src")), src);
-	if (links)
-	{
+	if (links) {
 		for (ListOfGpxLinks::iterator link = links->begin(); link != links->end(); ++link) {
 			LinkEndChild(*link);
 		}
@@ -62,24 +57,23 @@ GpxRteElement::GpxRteElement(
 		LinkEndChild(extensions);
 	if (waypoints) {
 		for (ListOfGpxWpts::iterator wpt = waypoints->begin(); wpt != waypoints->end(); ++wpt) {
-			//TODO: Here we should check whether the waypoint is a *rtept*
+			// TODO: Here we should check whether the waypoint is a *rtept*
 			AppendRtePoint(*wpt);
 		}
 	}
 }
 
-void GpxRteElement::SetProperty(const wxString &name, const wxString &value)
+void GpxRteElement::SetProperty(const wxString& name, const wxString& value)
 {
-	//FIXME: doesn't care about order so it can be absolutely wrong, have to redo this code if it has to be used by something else than the constructor
-	//then it can be made public
-	//FIXME: can be reused for route and track
-	GpxSimpleElement *element = new GpxSimpleElement(name, value);
-	TiXmlElement *curelement = FirstChildElement();
+	// FIXME: doesn't care about order so it can be absolutely wrong, have to redo this code if it
+	// has to be used by something else than the constructor
+	// then it can be made public
+	// FIXME: can be reused for route and track
+	GpxSimpleElement* element = new GpxSimpleElement(name, value);
+	TiXmlElement* curelement = FirstChildElement();
 	bool found = false;
-	while(curelement)
-	{
-		if((const char *)curelement->Value() == (const char *)name.ToUTF8())
-		{
+	while (curelement) {
+		if ((const char*)curelement->Value() == (const char*)name.ToUTF8()) {
 			ReplaceChild(curelement, *element);
 			element->Clear();
 			delete element;
@@ -92,23 +86,26 @@ void GpxRteElement::SetProperty(const wxString &name, const wxString &value)
 		LinkEndChild(element);
 }
 
-void GpxRteElement::AppendRtePoint(GpxWptElement *rtept)
+void GpxRteElement::AppendRtePoint(GpxWptElement* rtept)
 {
-	//FIXME: doesn't care about order so it can be absolutely wrong, have to redo this code if it has to be used by something else than the constructor
-	//FIXME: can be reused for route and track segment
+	// FIXME: doesn't care about order so it can be absolutely wrong, have to redo this code if it
+	// has to be used by something else than the constructor
+	// FIXME: can be reused for route and track segment
 	LinkEndChild(rtept);
 }
 
-void GpxRteElement::SetSimpleExtension(const wxString &name, const wxString &value)
+void GpxRteElement::SetSimpleExtension(const wxString& name, const wxString& value)
 {
-	//FIXME: if the extensions don't exist, we should create them
-	TiXmlElement * exts = FirstChildElement("extensions");
+	// FIXME: if the extensions don't exist, we should create them
+	TiXmlElement* exts = FirstChildElement("extensions");
 	if (exts) {
-		TiXmlElement * ext = exts->FirstChildElement(name.ToUTF8());
+		TiXmlElement* ext = exts->FirstChildElement(name.ToUTF8());
 		if (ext)
 			exts->ReplaceChild(ext, GpxSimpleElement(name, value));
 		else
 			exts->LinkEndChild(new GpxSimpleElement(name, value));
 	}
+}
+
 }
 

@@ -1818,7 +1818,7 @@ PlugIn_Track::~PlugIn_Track(void)
 
 wxString GetNewGUID(void)
 {
-	return GpxDocument::GetUUID();
+	return gpx::GpxDocument::GetUUID();
 }
 
 bool AddCustomWaypointIcon(wxBitmap* pimage, wxString key, wxString description)

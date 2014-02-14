@@ -21,29 +21,34 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPXDOCUMENT__H__
-#define __GPXDOCUMENT__H__
+#ifndef __GPX__GPXDOCUMENT__H__
+#define __GPX__GPXDOCUMENT__H__
 
 #include <wx/string.h>
 #include <tinyxml/tinyxml.h>
 
+namespace gpx {
+
 class GpxDocument : public TiXmlDocument
 {
-	public:
-		GpxDocument();
-		GpxDocument(const wxString & filename);
-		virtual ~GpxDocument();
+public:
+	GpxDocument();
+	GpxDocument(const wxString& filename);
+	virtual ~GpxDocument();
 
-		bool LoadFile(const wxString & filename);
-		bool SaveFile(const wxString & filename);
-		void AddCustomNamespace(const wxString & name, const wxString & url);
+	bool LoadFile(const wxString& filename);
+	bool SaveFile(const wxString& filename);
+	void AddCustomNamespace(const wxString& name, const wxString& url);
 
-		// RFC4122 version 4 compliant random UUIDs generator.
-		static wxString GetUUID(void);
-	private:
-		static int GetRandomNumber(int min, int max);
-		void PopulateEmptyDocument(const wxString & creator);
-		void SeedRandom();
+	// RFC4122 version 4 compliant random UUIDs generator.
+	static wxString GetUUID(void);
+
+private:
+	static int GetRandomNumber(int min, int max);
+	void PopulateEmptyDocument(const wxString& creator);
+	void SeedRandom();
 };
+
+}
 
 #endif

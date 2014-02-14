@@ -21,12 +21,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPXMETADATAELEMENT__H__
-#define __GPXMETADATAELEMENT__H__
+#ifndef __GPX__GPXMETADATAELEMENT__H__
+#define __GPX__GPXMETADATAELEMENT__H__
 
-#include <wx/string.h>
-#include <wx/datetime.h>
 #include <tinyxml/tinyxml.h>
+
+class wxString;
+class wxDateTime;
+
+namespace gpx {
 
 class GpxPersonElement;
 class GpxCopyrightElement;
@@ -36,17 +39,13 @@ class GpxExtensionsElement;
 
 class GpxMetadataElement : public TiXmlElement
 {
-	public:
-		GpxMetadataElement(
-			const wxString & name,
-			const wxString & desc,
-			GpxPersonElement * author,
-			GpxCopyrightElement * copyright,
-			GpxLinkElement * link,
-			wxDateTime * time,
-			const wxString & keywords,
-			GpxBoundsElement * bounds,
-			GpxExtensionsElement * extensions);
+public:
+	GpxMetadataElement(const wxString& name, const wxString& desc, GpxPersonElement* author,
+					   GpxCopyrightElement* copyright, GpxLinkElement* link, wxDateTime* time,
+					   const wxString& keywords, GpxBoundsElement* bounds,
+					   GpxExtensionsElement* extensions);
 };
+
+}
 
 #endif

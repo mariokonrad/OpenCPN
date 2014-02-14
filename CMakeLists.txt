@@ -704,7 +704,6 @@ SET(HDR_GPX
 	)
 
 SET(SRC_GPX
-	src/gpx/gpx.cpp
 	src/gpx/GpxDocument.cpp
 	src/gpx/GpxSimpleElement.cpp
 	src/gpx/GpxTrksegElement.cpp

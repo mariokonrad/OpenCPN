@@ -21,37 +21,36 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPXTRKELEMENT__H__
-#define __GPXTRKELEMENT__H__
+#ifndef __GPX__GPXTRKELEMENT__H__
+#define __GPX__GPXTRKELEMENT__H__
 
-#include <wx/string.h>
 #include <tinyxml/tinyxml.h>
-#include "GpxLinkElement.h"
-#include "GpxTrksegElement.h"
+#include <gpx/GpxLinkElement.h>
+#include <gpx/GpxTrksegElement.h>
+
+class wxString;
+
+namespace gpx {
 
 class GpxExtensionsElement;
 
 class GpxTrkElement : public TiXmlElement
 {
-	public:
-		GpxTrkElement(
-				const wxString & name = _T(""),
-				const wxString & cmt = _T(""),
-				const wxString & desc = _T(""),
-				const wxString & src = _T(""),
-				ListOfGpxLinks * links = NULL,
-				int number = -1,
-				const wxString & type = _T(""),
-				GpxExtensionsElement * extensions = NULL,
-				ListOfGpxTrksegs * segments = NULL);
+public:
+	GpxTrkElement(const wxString& name = _T(""), const wxString& cmt = _T(""),
+				  const wxString& desc = _T(""), const wxString& src = _T(""),
+				  ListOfGpxLinks* links = NULL, int number = -1, const wxString& type = _T(""),
+				  GpxExtensionsElement* extensions = NULL, ListOfGpxTrksegs* segments = NULL);
 
-		void AppendTrkSegment(GpxTrksegElement * trkseg);
-		void SetSimpleExtension(const wxString & name, const wxString & value);
+	void AppendTrkSegment(GpxTrksegElement* trkseg);
+	void SetSimpleExtension(const wxString& name, const wxString& value);
 
-	private:
-		void SetProperty(const wxString & name, const wxString & value);
+private:
+	void SetProperty(const wxString& name, const wxString& value);
 };
 
 WX_DECLARE_LIST(GpxTrkElement, ListOfGpxTracks);
+
+}
 
 #endif

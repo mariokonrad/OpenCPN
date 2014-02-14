@@ -28,6 +28,10 @@
 
 class wxDateTime;
 
-const wxChar * ParseGPXDateTime(wxDateTime & dt, const wxChar * datetime);
+namespace gpx {
+
+const wxChar* ParseGPXDateTime(wxDateTime& dt, const wxChar* datetime);
+
+}
 
 #endif

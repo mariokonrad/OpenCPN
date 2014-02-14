@@ -22,16 +22,14 @@
  **************************************************************************/
 
 #include "GpxRootElement.h"
-#include "GpxMetadataElement.h"
-#include "GpxExtensionsElement.h"
+#include <gpx/GpxMetadataElement.h>
+#include <gpx/GpxExtensionsElement.h>
 
-GpxRootElement::GpxRootElement(
-		const wxString & creator,
-		GpxMetadataElement * metadata,
-		ListOfGpxWpts * waypoints,
-		ListOfGpxRoutes * routes,
-		ListOfGpxTracks * tracks,
-		GpxExtensionsElement * extensions)
+namespace gpx {
+
+GpxRootElement::GpxRootElement(const wxString& creator, GpxMetadataElement* metadata,
+							   ListOfGpxWpts* waypoints, ListOfGpxRoutes* routes,
+							   ListOfGpxTracks* tracks, GpxExtensionsElement* extensions)
 	: TiXmlElement("gpx")
 {
 	my_extensions = NULL;
@@ -43,15 +41,17 @@ GpxRootElement::GpxRootElement(
 	first_track = NULL;
 	last_track = NULL;
 
-	SetAttribute ( "version", "1.1" );
-	SetAttribute ( "creator", creator.ToUTF8() );
-	SetAttribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" );
-	SetAttribute( "xmlns", "http://www.topografix.com/GPX/1/1" );
-	SetAttribute( "xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3" );
-	SetAttribute( "xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" );
+	SetAttribute("version", "1.1");
+	SetAttribute("creator", creator.ToUTF8());
+	SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+	SetAttribute("xmlns", "http://www.topografix.com/GPX/1/1");
+	SetAttribute("xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+	SetAttribute("xsi:schemaLocation",
+				 "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
 	SetMetadata(metadata);
 	if (waypoints) {
-		for (ListOfGpxWpts::iterator waypoint = waypoints->begin(); waypoint != waypoints->end(); ++waypoint) {
+		for (ListOfGpxWpts::iterator waypoint = waypoints->begin(); waypoint != waypoints->end();
+			 ++waypoint) {
 			AddWaypoint(*waypoint);
 		}
 	}
@@ -68,122 +68,113 @@ GpxRootElement::GpxRootElement(
 	SetExtensions(extensions);
 }
 
-void GpxRootElement::AddWaypoint(GpxWptElement *waypoint)
+void GpxRootElement::AddWaypoint(GpxWptElement* waypoint)
 {
 	bool b_was_cloned = true;
 
 	if (last_waypoint)
-		last_waypoint = (GpxWptElement *)InsertAfterChild(last_waypoint, *waypoint );
+		last_waypoint = (GpxWptElement*)InsertAfterChild(last_waypoint, *waypoint);
 	else if (my_metadata)
-		last_waypoint = (GpxWptElement *)InsertAfterChild(my_metadata, *waypoint);
+		last_waypoint = (GpxWptElement*)InsertAfterChild(my_metadata, *waypoint);
 	else if (first_route)
-		last_waypoint = (GpxWptElement *)InsertBeforeChild(first_route, *waypoint);
+		last_waypoint = (GpxWptElement*)InsertBeforeChild(first_route, *waypoint);
 	else if (first_track)
-		last_waypoint = (GpxWptElement *)InsertBeforeChild(first_track, *waypoint);
+		last_waypoint = (GpxWptElement*)InsertBeforeChild(first_track, *waypoint);
 	else if (my_extensions)
-		last_waypoint = (GpxWptElement *)InsertBeforeChild(my_extensions, *waypoint);
-	else
-	{
-		last_waypoint = (GpxWptElement *)LinkEndChild(waypoint);
+		last_waypoint = (GpxWptElement*)InsertBeforeChild(my_extensions, *waypoint);
+	else {
+		last_waypoint = (GpxWptElement*)LinkEndChild(waypoint);
 		b_was_cloned = false;
 	}
 
 	if (!first_waypoint)
 		first_waypoint = last_waypoint;
 
-	if(b_was_cloned)
-	{
+	if (b_was_cloned) {
 		waypoint->Clear();
 		delete waypoint;
 	}
 }
 
-void GpxRootElement::AddRoute(GpxRteElement *route)
+void GpxRootElement::AddRoute(GpxRteElement* route)
 {
 	bool b_was_cloned = true;
 
 	if (last_route)
-		last_route = (GpxRteElement *)InsertAfterChild(last_route, *route);
+		last_route = (GpxRteElement*)InsertAfterChild(last_route, *route);
 	else if (last_waypoint)
-		last_route = (GpxRteElement *)InsertAfterChild(last_waypoint, *route);
+		last_route = (GpxRteElement*)InsertAfterChild(last_waypoint, *route);
 	else if (my_metadata)
-		last_route = (GpxRteElement *)InsertAfterChild(my_metadata, *route);
+		last_route = (GpxRteElement*)InsertAfterChild(my_metadata, *route);
 	else if (first_track)
-		last_route = (GpxRteElement *)InsertBeforeChild(first_track, *route);
+		last_route = (GpxRteElement*)InsertBeforeChild(first_track, *route);
 	else if (my_extensions)
-		last_route = (GpxRteElement *)InsertBeforeChild(my_extensions, *route);
-	else
-	{
-		last_route = (GpxRteElement *)LinkEndChild(route);
+		last_route = (GpxRteElement*)InsertBeforeChild(my_extensions, *route);
+	else {
+		last_route = (GpxRteElement*)LinkEndChild(route);
 		b_was_cloned = false;
 	}
 
 	if (!first_route)
 		first_route = last_route;
 
-	if(b_was_cloned)
-	{
+	if (b_was_cloned) {
 		route->Clear();
 		delete route;
 	}
 }
 
-void GpxRootElement::AddTrack(GpxTrkElement *track)
+void GpxRootElement::AddTrack(GpxTrkElement* track)
 {
 	bool b_was_cloned = true;
 
 	if (last_track)
-		last_track = (GpxTrkElement *)InsertAfterChild(last_track, *track);
+		last_track = (GpxTrkElement*)InsertAfterChild(last_track, *track);
 	else if (last_route)
-		last_track = (GpxTrkElement *)InsertAfterChild(last_route, *track);
+		last_track = (GpxTrkElement*)InsertAfterChild(last_route, *track);
 	else if (last_waypoint)
-		last_track = (GpxTrkElement *)InsertAfterChild(last_waypoint, *track);
+		last_track = (GpxTrkElement*)InsertAfterChild(last_waypoint, *track);
 	else if (my_metadata)
-		last_track = (GpxTrkElement *)InsertAfterChild(my_metadata, *track);
+		last_track = (GpxTrkElement*)InsertAfterChild(my_metadata, *track);
 	else if (my_extensions)
-		last_track = (GpxTrkElement *)InsertBeforeChild(my_extensions, *track);
-	else
-	{
-		last_track = (GpxTrkElement *)LinkEndChild(track);
+		last_track = (GpxTrkElement*)InsertBeforeChild(my_extensions, *track);
+	else {
+		last_track = (GpxTrkElement*)LinkEndChild(track);
 		b_was_cloned = false;
 	}
 
 	if (!first_track)
 		first_track = last_track;
 
-	if(b_was_cloned)
-	{
+	if (b_was_cloned) {
 		track->Clear();
 		delete track;
 	}
 }
 
-void GpxRootElement::SetMetadata(GpxMetadataElement *metadata)
+void GpxRootElement::SetMetadata(GpxMetadataElement* metadata)
 {
 	bool b_was_cloned = true;
 
 	if (!metadata)
 		RemoveMetadata();
-	else
-	{
-		if(my_metadata)
-			my_metadata = (GpxMetadataElement *)ReplaceChild(my_metadata, *metadata);
+	else {
+		if (my_metadata)
+			my_metadata = (GpxMetadataElement*)ReplaceChild(my_metadata, *metadata);
 		else if (first_waypoint)
-			my_metadata = (GpxMetadataElement *)InsertBeforeChild(first_waypoint, *metadata);
+			my_metadata = (GpxMetadataElement*)InsertBeforeChild(first_waypoint, *metadata);
 		else if (first_route)
-			my_metadata = (GpxMetadataElement *)InsertBeforeChild(first_route, *metadata);
+			my_metadata = (GpxMetadataElement*)InsertBeforeChild(first_route, *metadata);
 		else if (first_track)
-			my_metadata = (GpxMetadataElement *)InsertBeforeChild(first_track, *metadata);
+			my_metadata = (GpxMetadataElement*)InsertBeforeChild(first_track, *metadata);
 		else if (my_extensions)
-			my_metadata = (GpxMetadataElement *)InsertBeforeChild(my_extensions, *metadata);
-		else
-		{
+			my_metadata = (GpxMetadataElement*)InsertBeforeChild(my_extensions, *metadata);
+		else {
 			b_was_cloned = false;
-			my_metadata = (GpxMetadataElement *)LinkEndChild(metadata);
+			my_metadata = (GpxMetadataElement*)LinkEndChild(metadata);
 		}
 
-		if(b_was_cloned)
-		{
+		if (b_was_cloned) {
 			metadata->Clear();
 			delete metadata;
 		}
@@ -192,23 +183,21 @@ void GpxRootElement::SetMetadata(GpxMetadataElement *metadata)
 
 void GpxRootElement::RemoveMetadata()
 {
-	if(my_metadata)
+	if (my_metadata)
 		RemoveChild(my_metadata);
 	delete my_metadata;
 	my_metadata = NULL;
 }
 
-void GpxRootElement::SetExtensions(GpxExtensionsElement *extensions)
+void GpxRootElement::SetExtensions(GpxExtensionsElement* extensions)
 {
 	if (!extensions)
 		RemoveExtensions();
-	else
-	{
-		if(!my_extensions)
-			my_extensions = (GpxExtensionsElement *)LinkEndChild(extensions);
-		else
-		{
-			my_extensions = (GpxExtensionsElement *)ReplaceChild(my_extensions, *extensions);
+	else {
+		if (!my_extensions)
+			my_extensions = (GpxExtensionsElement*)LinkEndChild(extensions);
+		else {
+			my_extensions = (GpxExtensionsElement*)ReplaceChild(my_extensions, *extensions);
 			extensions->Clear();
 			delete extensions;
 		}
@@ -217,9 +206,11 @@ void GpxRootElement::SetExtensions(GpxExtensionsElement *extensions)
 
 void GpxRootElement::RemoveExtensions()
 {
-	if(my_extensions)
+	if (my_extensions)
 		RemoveChild(my_extensions);
 	delete my_extensions;
 	my_extensions = NULL;
+}
+
 }
 

@@ -23,8 +23,12 @@
 
 #include "GpxExtensionsElement.h"
 
+namespace gpx {
+
 GpxExtensionsElement::GpxExtensionsElement()
 	: TiXmlElement("extensions")
 {
+}
+
 }
 

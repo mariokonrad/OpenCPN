@@ -22,7 +22,8 @@
  **************************************************************************/
 
 #include "GpxDocument.h"
-#include "GpxRootElement.h"
+
+#include <gpx/GpxRootElement.h>
 
 #include <wx/regex.h>
 #include <wx/ffile.h>
@@ -30,47 +31,61 @@
 #include <wx/log.h>
 #include <wx/utils.h>
 
-GpxDocument::GpxDocument(const wxString & filename)
+namespace gpx {
+
+GpxDocument::GpxDocument(const wxString& filename)
 {
 	LoadFile(filename);
-	//FIXME: we should probably validate if the file is GPX DTD compliant and die if not... BUT we would need a dependency to some validating parser.
+	// FIXME: we should probably validate if the file is GPX DTD compliant and die if not... BUT we
+	// would need a dependency to some validating parser.
 }
 
-bool GpxDocument::LoadFile(const wxString & filename)
+bool GpxDocument::LoadFile(const wxString& filename)
 {
 	SeedRandom();
-	wxRegEx re; //We try to fix popularily broken GPX files. Unencoded '&' is an illegal character in XML, but seems higly popular amongst users (and perhaps even vendors not aware of what XML is...)
-	//The same as above is true for '<' but it would be harder to solve - it's illegal just inside a value, not when it starts a tag
+
+	// We try to fix popularily broken GPX files. Unencoded '&' is an illegal character
+	// in XML, but seems higly popular amongst users (and perhaps even vendors not aware
+	// of what XML is...)
+	wxRegEx re;
+
+	// The same as above is true for '<' but it would be harder to solve - it's illegal just inside
+	// a value, not when it starts a tag
 	int re_compile_flags = wxRE_ICASE;
 #ifdef wxHAS_REGEX_ADVANCED
 	re_compile_flags |= wxRE_ADVANCED;
 #endif
-	bool b = re.Compile(wxT("&(?!amp;|lt;|gt;|apos;|quot;|#[0-9]{1,};|#x[0-f]{1,};)"), re_compile_flags); //Should find all the non-XML entites to be encoded as text
+	bool b
+		= re.Compile(wxT("&(?!amp;|lt;|gt;|apos;|quot;|#[0-9]{1,};|#x[0-f]{1,};)"),
+					 re_compile_flags); // Should find all the non-XML entites to be encoded as text
 	wxFFile file(filename);
 	wxString s;
-	if(file.IsOpened()) {
+	if (file.IsOpened()) {
 		file.ReadAll(&s, wxConvUTF8);
 
-		//Fallback for not-well formed (non-UTF8) GPX files
-		//the "garbage" characters are lost, but the important part of the information should survive...
-		if (s == wxEmptyString)
-		{
+		// Fallback for not-well formed (non-UTF8) GPX files
+		// the "garbage" characters are lost, but the important part of the information should
+		// survive...
+		if (s == wxEmptyString) {
 			file.Seek(0);
 			file.ReadAll(&s, wxConvISO8859_1);
-			wxLogMessage(wxString::Format(wxT("File %s seems not to be well-formed UTF-8 XML, used fallback ASCII format conversion - some text information might have not been imported."), filename.c_str()));
+			wxLogMessage(wxString::Format(
+				wxT("File %s seems not to be well-formed UTF-8 XML, used fallback ASCII format "
+					"conversion - some text information might have not been imported."),
+				filename.c_str()));
 		}
 
 		file.Close();
 	}
-	if(b)
-	{
-		//CDATA handling makes this task way too complex for regular expressions to handle,
+	if (b) {
+		// CDATA handling makes this task way too complex for regular expressions to handle,
 		// so we do nothing and just let the possible damage happen...
-		if (!s.Contains(wxT("![CDATA[")))
-		{
+		if (!s.Contains(wxT("![CDATA["))) {
 			int cnt = re.ReplaceAll(&s, wxT("&amp;"));
 			if (cnt > 0)
-				wxLogMessage(wxString::Format(wxT("File %s seems broken, %i occurences of '&' were replaced with '&amp;' to try to fix it."), filename.c_str(), cnt));
+				wxLogMessage(wxString::Format(wxT("File %s seems broken, %i occurences of '&' were "
+												  "replaced with '&amp;' to try to fix it."),
+											  filename.c_str(), cnt));
 		}
 	}
 	wxFFile gpxfile;
@@ -79,18 +94,18 @@ bool GpxDocument::LoadFile(const wxString & filename)
 	gpxfile.Close();
 	bool res = TiXmlDocument::LoadFile((const char*)gpxfilename.mb_str());
 
-	if( ! res ) {
+	if (!res) {
 		wxString msg = _T("Failed to load ");
 		msg << filename;
 		msg << _T(": ");
-		msg << wxString( TiXmlDocument::ErrorDesc(), wxConvUTF8 );
-		wxLogMessage( msg );
+		msg << wxString(TiXmlDocument::ErrorDesc(), wxConvUTF8);
+		wxLogMessage(msg);
 	}
 	::wxRemoveFile(gpxfilename);
 	return res;
 }
 
-bool GpxDocument::SaveFile(const wxString & filename)
+bool GpxDocument::SaveFile(const wxString& filename)
 {
 	return TiXmlDocument::SaveFile((const char*)filename.mb_str());
 }
@@ -104,7 +119,8 @@ GpxDocument::GpxDocument()
 
 void GpxDocument::SeedRandom()
 {
-	/* Fill with random. Miliseconds hopefully good enough for our usage, reading /dev/random would be much better on linux and system guid function on Windows as well */
+	// Fill with random. Miliseconds hopefully good enough for our usage, reading /dev/random would
+	// be much better on linux and system guid function on Windows as well
 	wxDateTime x = wxDateTime::UNow();
 	long seed = x.GetMillisecond();
 	seed *= x.GetTicks();
@@ -119,7 +135,8 @@ GpxDocument::~GpxDocument()
 wxString GpxDocument::GetUUID(void)
 {
 	wxString str;
-	struct {
+	struct UUID
+	{
 		int time_low;
 		int time_mid;
 		int time_hi_and_version;
@@ -127,9 +144,12 @@ wxString GpxDocument::GetUUID(void)
 		int clock_seq_low;
 		int node_hi;
 		int node_low;
-	} uuid;
+	};
 
-	uuid.time_low = GetRandomNumber(0, 2147483647);//FIXME: the max should be set to something like MAXINT32, but it doesn't compile un gcc...
+	UUID uuid;
+
+	// FIXME: the max should be set to something like MAXINT32, but it doesn't compile un gcc...
+	uuid.time_low = GetRandomNumber(0, 2147483647);
 	uuid.time_mid = GetRandomNumber(0, 65535);
 	uuid.time_hi_and_version = GetRandomNumber(0, 65535);
 	uuid.clock_seq_hi_and_rsv = GetRandomNumber(0, 255);
@@ -137,43 +157,41 @@ wxString GpxDocument::GetUUID(void)
 	uuid.node_hi = GetRandomNumber(0, 65535);
 	uuid.node_low = GetRandomNumber(0, 2147483647);
 
-	/* Set the two most significant bits (bits 6 and 7) of the
-	 * clock_seq_hi_and_rsv to zero and one, respectively. */
+	// Set the two most significant bits (bits 6 and 7) of the
+	// clock_seq_hi_and_rsv to zero and one, respectively.
 	uuid.clock_seq_hi_and_rsv = (uuid.clock_seq_hi_and_rsv & 0x3F) | 0x80;
 
-	/* Set the four most significant bits (bits 12 through 15) of the
-	 * time_hi_and_version field to 4 */
+	// Set the four most significant bits (bits 12 through 15) of the
+	// time_hi_and_version field to 4
 	uuid.time_hi_and_version = (uuid.time_hi_and_version & 0x0fff) | 0x4000;
 
-	str.Printf(_T("%08x-%04x-%04x-%02x%02x-%04x%08x"),
-			uuid.time_low,
-			uuid.time_mid,
-			uuid.time_hi_and_version,
-			uuid.clock_seq_hi_and_rsv,
-			uuid.clock_seq_low,
-			uuid.node_hi,
-			uuid.node_low);
+	str.Printf(_T("%08x-%04x-%04x-%02x%02x-%04x%08x"), uuid.time_low, uuid.time_mid,
+			   uuid.time_hi_and_version, uuid.clock_seq_hi_and_rsv, uuid.clock_seq_low,
+			   uuid.node_hi, uuid.node_low);
 
 	return str;
 }
 
 int GpxDocument::GetRandomNumber(int range_min, int range_max)
 {
-	long u = (long)wxRound(((double)rand() / ((double)(RAND_MAX) + 1) * (range_max - range_min)) + range_min);
+	long u = (long)wxRound(((double)rand() / ((double)(RAND_MAX) + 1) * (range_max - range_min))
+						   + range_min);
 	return (int)u;
 }
 
-void GpxDocument::AddCustomNamespace(const wxString & name, const wxString & url)
+void GpxDocument::AddCustomNamespace(const wxString& name, const wxString& url)
 {
 	RootElement()->SetAttribute(name.ToUTF8(), url.ToUTF8());
 }
 
-void GpxDocument::PopulateEmptyDocument(const wxString & creator)
+void GpxDocument::PopulateEmptyDocument(const wxString& creator)
 {
-	TiXmlDeclaration * decl = new TiXmlDeclaration( "1.0", "utf-8", "" );
-	GpxRootElement * gpx_root = new GpxRootElement(creator);
+	TiXmlDeclaration* decl = new TiXmlDeclaration("1.0", "utf-8", "");
+	GpxRootElement* gpx_root = new GpxRootElement(creator);
 
 	LinkEndChild(decl);
 	LinkEndChild(gpx_root);
+}
+
 }
 

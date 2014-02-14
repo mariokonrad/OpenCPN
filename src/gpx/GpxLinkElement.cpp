@@ -22,23 +22,25 @@
  **************************************************************************/
 
 #include "GpxLinkElement.h"
-#include "GpxSimpleElement.h"
-
+#include <gpx/GpxSimpleElement.h>
 #include <wx/listimpl.cpp>
+
+namespace gpx {
+
 WX_DEFINE_LIST(ListOfGpxLinks);
 
-GpxLinkElement::GpxLinkElement(
-		const wxString & uri,
-		const wxString & description,
-		const wxString & mime_type)
+GpxLinkElement::GpxLinkElement(const wxString& uri, const wxString& description,
+							   const wxString& mime_type)
 	: TiXmlElement("link")
 {
-	SetAttribute("href", uri.ToUTF8()); //TODO: some checks?
-	if(!description.IsEmpty()) {
-		GpxSimpleElement * g = new GpxSimpleElement(wxString(_T("text")), description);
+	SetAttribute("href", uri.ToUTF8()); // TODO: some checks?
+	if (!description.IsEmpty()) {
+		GpxSimpleElement* g = new GpxSimpleElement(wxString(_T("text")), description);
 		LinkEndChild(g);
 	}
-	if(!mime_type.IsEmpty())
+	if (!mime_type.IsEmpty())
 		LinkEndChild(new GpxSimpleElement(wxString(_T("type")), mime_type));
+}
+
 }
 

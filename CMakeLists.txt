@@ -686,37 +686,6 @@ SET(SRC_AIS
 	src/ais/AIS_Target_Data.cpp
 	)
 
-SET(HDR_GPX
-	src/gpx/gpx.h
-	src/gpx/GpxDocument.h
-	src/gpx/GpxSimpleElement.h
-	src/gpx/GpxLinkElement.h
-	src/gpx/GpxPersonElement.h
-	src/gpx/GpxCopyrightElement.h
-	src/gpx/GpxExtensionsElement.h
-	src/gpx/GpxBoundsElement.h
-	src/gpx/GpxMetadataElement.h
-	src/gpx/GpxxExtensionsElement.h
-	src/gpx/GpxTrkElement.h
-	src/gpx/GpxWptElement.h
-	src/gpx/GpxRteElement.h
-	src/gpx/ParseGPXDateTime.h
-	)
-
-SET(SRC_GPX
-	src/gpx/GpxDocument.cpp
-	src/gpx/GpxSimpleElement.cpp
-	src/gpx/GpxTrksegElement.cpp
-	src/gpx/GpxTrkElement.cpp
-	src/gpx/GpxRteElement.cpp
-	src/gpx/GpxLinkElement.cpp
-	src/gpx/GpxWptElement.cpp
-	src/gpx/GpxxExtensionsElement.cpp
-	src/gpx/GpxExtensionsElement.cpp
-	src/gpx/GpxRootElement.cpp
-	src/gpx/ParseGPXDateTime.cpp
-	)
-
 SET(SRC_TIDE
 	src/tide/Station_Data.cpp
 	src/tide/IDX_entry.cpp
@@ -766,6 +735,35 @@ SET(SRC_SOUND
 SET(HDR_SOUND
 	src/sound/OCPNSoundData.h
 	src/sound/OCPN_Sound.h
+	)
+
+add_library(gpx STATIC
+	src/gpx/GpxDocument.cpp
+	src/gpx/GpxSimpleElement.cpp
+	src/gpx/GpxTrksegElement.cpp
+	src/gpx/GpxTrkElement.cpp
+	src/gpx/GpxRteElement.cpp
+	src/gpx/GpxLinkElement.cpp
+	src/gpx/GpxWptElement.cpp
+	src/gpx/GpxxExtensionsElement.cpp
+	src/gpx/GpxExtensionsElement.cpp
+	src/gpx/GpxRootElement.cpp
+	src/gpx/ParseGPXDateTime.cpp
+
+	src/gpx/gpx.h
+	src/gpx/GpxDocument.h
+	src/gpx/GpxSimpleElement.h
+	src/gpx/GpxLinkElement.h
+	src/gpx/GpxPersonElement.h
+	src/gpx/GpxCopyrightElement.h
+	src/gpx/GpxExtensionsElement.h
+	src/gpx/GpxBoundsElement.h
+	src/gpx/GpxMetadataElement.h
+	src/gpx/GpxxExtensionsElement.h
+	src/gpx/GpxTrkElement.h
+	src/gpx/GpxWptElement.h
+	src/gpx/GpxRteElement.h
+	src/gpx/ParseGPXDateTime.h
 	)
 
 add_library(global STATIC
@@ -892,7 +890,6 @@ SET(HDR_CHART
 
 SET(HDRS
 	${HDR_AIS}
-	${HDR_GPX}
 	${HDR_TIDE}
 	${HDR_PLUGIN}
 	${HDR_SOUND}
@@ -1028,7 +1025,6 @@ SET(HDRS
 
 SET(SRCS
 	${SRC_AIS}
-	${SRC_GPX}
 	${SRC_TIDE}
 	${SRC_PLUGIN}
 	${SRC_SOUND}
@@ -1479,6 +1475,7 @@ if(APPLE)
 		NMEA0183
 		${EXTRA_LIBS}
 		global
+		gpx
 		geo
 		util
 		)
@@ -1499,6 +1496,7 @@ If(NOT APPLE)
 		NMEA0183
 		${EXTRA_LIBS}
 		global
+		gpx
 		geo
 		util
 		)

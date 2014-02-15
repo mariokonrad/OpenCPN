@@ -737,35 +737,6 @@ SET(HDR_SOUND
 	src/sound/OCPN_Sound.h
 	)
 
-add_library(gpx STATIC
-	src/gpx/GpxDocument.cpp
-	src/gpx/GpxSimpleElement.cpp
-	src/gpx/GpxTrksegElement.cpp
-	src/gpx/GpxTrkElement.cpp
-	src/gpx/GpxRteElement.cpp
-	src/gpx/GpxLinkElement.cpp
-	src/gpx/GpxWptElement.cpp
-	src/gpx/GpxxExtensionsElement.cpp
-	src/gpx/GpxExtensionsElement.cpp
-	src/gpx/GpxRootElement.cpp
-	src/gpx/ParseGPXDateTime.cpp
-
-	src/gpx/gpx.h
-	src/gpx/GpxDocument.h
-	src/gpx/GpxSimpleElement.h
-	src/gpx/GpxLinkElement.h
-	src/gpx/GpxPersonElement.h
-	src/gpx/GpxCopyrightElement.h
-	src/gpx/GpxExtensionsElement.h
-	src/gpx/GpxBoundsElement.h
-	src/gpx/GpxMetadataElement.h
-	src/gpx/GpxxExtensionsElement.h
-	src/gpx/GpxTrkElement.h
-	src/gpx/GpxWptElement.h
-	src/gpx/GpxRteElement.h
-	src/gpx/ParseGPXDateTime.h
-	)
-
 add_library(global STATIC
 	src/global/OCPN.cpp
 	src/global/OCPN_GUI.cpp
@@ -896,6 +867,9 @@ SET(HDRS
 	${HDR_PLUGIN}
 	${HDR_SOUND}
 	${HDR_CHART}
+
+	src/gpx/gpx.h
+	src/gpx/ParseGPXDateTime.h
 
 	src/tide/TCMgr.h
 
@@ -1031,6 +1005,8 @@ SET(SRCS
 	${SRC_PLUGIN}
 	${SRC_SOUND}
 	${SRC_CHART}
+
+	src/gpx/ParseGPXDateTime.cpp
 
 	src/tide/TCMgr.cpp
 
@@ -1477,7 +1453,6 @@ if(APPLE)
 		NMEA0183
 		${EXTRA_LIBS}
 		global
-		gpx
 		geo
 		util
 		)
@@ -1498,7 +1473,6 @@ If(NOT APPLE)
 		NMEA0183
 		${EXTRA_LIBS}
 		global
-		gpx
 		geo
 		util
 		)

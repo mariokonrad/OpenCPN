@@ -96,6 +96,7 @@ public:
 	void SetCurrentDirList(const ChartDirectories& p);
 	void SetWorkDirListPtr(ChartDirectories* p); // FIXME
 	ChartDirectories* GetWorkDirListPtr(); // FIXME
+	void UpdateDisplayedChartDirList(const ChartDirectories& p);
 	void SetConfigPtr(Config* p);
 	void OnDebugcheckbox1Click(wxCommandEvent& event);
 	void OnDirctrlSelChanged(wxTreeEvent& event);

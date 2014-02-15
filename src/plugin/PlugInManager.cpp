@@ -88,6 +88,7 @@ extern Select* pSelect;
 extern RouteManagerDialog* pRouteManagerDialog;
 extern RouteList* pRouteList;
 extern PlugInManager* g_pi_manager;
+extern options* g_options;
 
 // Some static helper funtions
 // Scope is local to this module
@@ -1473,8 +1474,8 @@ int AddChartToDBInPlace(wxString& full_path, bool WXUNUSED(b_ProgressDialog))
 			ChartData = new chart::ChartDB(gFrame);
 			ChartData->LoadBinary(global::OCPN::get().sys().data().chartlist_filename, XnewChartDirArray);
 
-			for (int i = 0; i < ChartData->GetChartTableEntries(); i++) {
-				const chart::ChartTableEntry& pcte = ChartData->GetChartTableEntry(i);
+			if (g_options) {
+				g_options->UpdateDisplayedChartDirList(ChartData->GetChartDirArray());
 			}
 
 			ViewPort vp;
@@ -1500,6 +1501,10 @@ int RemoveChartFromDBInPlace(wxString& full_path)
 		delete ChartData;
 		ChartData = new chart::ChartDB(gFrame);
 		ChartData->LoadBinary(global::OCPN::get().sys().data().chartlist_filename, XnewChartDirArray);
+
+		if (g_options) {
+			g_options->UpdateDisplayedChartDirList(ChartData->GetChartDirArray());
+		}
 
 		ViewPort vp;
 		gFrame->ChartsRefresh(-1, vp);

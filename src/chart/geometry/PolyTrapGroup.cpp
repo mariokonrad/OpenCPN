@@ -46,16 +46,30 @@ PolyTrapGroup::PolyTrapGroup(ExtendedGeometry* pxGeom)
 	, trap_array(NULL)
 	, m_trap_error(0)
 {
+	// transfering ownership
+
 	nContours = pxGeom->n_contours;
 	pn_vertex = pxGeom->contour_array;
 	ptrapgroup_geom = pxGeom->vertex_array;
+
+	pxGeom->contour_array = NULL;
+	pxGeom->vertex_array = NULL;
 }
 
 PolyTrapGroup::~PolyTrapGroup()
 {
-	free(pn_vertex); // FIXME: potential 'double free' of allocated data, see ~ExtendedGeometry
-	free(ptrapgroup_geom);
-	free(trap_array);
+	if (pn_vertex) {
+		free(pn_vertex);
+		pn_vertex = NULL;
+	}
+	if (ptrapgroup_geom) {
+		free(ptrapgroup_geom);
+		ptrapgroup_geom = NULL;
+	}
+	if (trap_array) {
+		free(trap_array);
+		trap_array = NULL;
+	}
 }
 
 }}

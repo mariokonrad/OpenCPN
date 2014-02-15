@@ -52,8 +52,12 @@ ExtendedGeometry::ExtendedGeometry()
 
 ExtendedGeometry::~ExtendedGeometry()
 {
-	free(vertex_array);
+	if (vertex_array) {
+		free(vertex_array);
+		vertex_array = NULL;
+	}
 	delete [] contour_array;
+	contour_array = NULL;
 }
 
 void ExtendedGeometry::set_contour_array(const int* data, int n)

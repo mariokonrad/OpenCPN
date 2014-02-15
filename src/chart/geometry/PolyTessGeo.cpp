@@ -142,6 +142,9 @@ static bool ispolysame(polyout* p1, polyout* p2)
 {
 	int i2;
 
+	if (p1->index_hash != p2->index_hash)
+		return false;
+
 	if (p1->nvert != p2->nvert)
 		return false;
 

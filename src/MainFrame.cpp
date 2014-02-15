@@ -226,6 +226,7 @@ wxRect g_blink_rect;
 PlugInManager* g_pi_manager;
 chart::ChartGroupArray* g_pGroupArray;
 wxProgressDialog* s_ProgDialog;
+options* g_options;
 
 #ifndef __WXMSW__
 struct sigaction sa_all;
@@ -2013,21 +2014,21 @@ int MainFrame::DoOptionsDialog()
 	static wxSize lastWindowSize(0, 0);
 
 	::wxBeginBusyCursor();
-	options optionsDlg(this, -1, _("Options"));
+	g_options = new options(this, -1, _("Options"));
 	::wxEndBusyCursor();
 
-	optionsDlg.SetInitChartDir(global::OCPN::get().sys().data().init_chart_dir);
+	g_options->SetInitChartDir(global::OCPN::get().sys().data().init_chart_dir);
 
 	// Pass two working pointers for Chart Dir Dialog
-	optionsDlg.SetCurrentDirList(ChartData->GetChartDirArray());
+	g_options->SetCurrentDirList(ChartData->GetChartDirArray());
 	ChartDirectories* pWorkDirArray = new ChartDirectories; // FIXME: dynamic allocation, to be used in dialog,
 												// deletion later... in this method
-	optionsDlg.SetWorkDirListPtr(pWorkDirArray);
+	g_options->SetWorkDirListPtr(pWorkDirArray);
 
 	// Pass a ptr to MyConfig, for updates
-	optionsDlg.SetConfigPtr(pConfig);
+	g_options->SetConfigPtr(pConfig);
 
-	optionsDlg.SetInitialSettings();
+	g_options->SetInitialSettings();
 
 	bDBUpdateInProgress = true;
 
@@ -2039,7 +2040,7 @@ int MainFrame::DoOptionsDialog()
 
 	bool b_sub = false;
 	if (g_FloatingToolbarDialog && g_FloatingToolbarDialog->IsShown()) {
-		wxRect bx_rect = optionsDlg.GetScreenRect();
+		wxRect bx_rect = g_options->GetScreenRect();
 		wxRect tb_rect = g_FloatingToolbarDialog->GetScreenRect();
 		if (tb_rect.Intersects(bx_rect))
 			b_sub = true;
@@ -2054,26 +2055,26 @@ int MainFrame::DoOptionsDialog()
 #endif
 
 	if (lastPage >= 0)
-		optionsDlg.m_pListbook->SetSelection(lastPage);
-	optionsDlg.lastWindowPos = lastWindowPos;
+		g_options->m_pListbook->SetSelection(lastPage);
+	g_options->lastWindowPos = lastWindowPos;
 	if (lastWindowPos != wxPoint(0, 0)) {
-		optionsDlg.Move(lastWindowPos);
-		optionsDlg.SetSize(lastWindowSize);
+		g_options->Move(lastWindowPos);
+		g_options->SetSize(lastWindowSize);
 	} else {
-		optionsDlg.Center();
+		g_options->Center();
 	}
 
 	if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->DisableTooltips();
 
-	int rr = optionsDlg.ShowModal();
+	int rr = g_options->ShowModal();
 
 	if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->EnableTooltips();
 
-	lastPage = optionsDlg.lastPage;
-	lastWindowPos = optionsDlg.lastWindowPos;
-	lastWindowSize = optionsDlg.lastWindowSize;
+	lastPage = g_options->lastPage;
+	lastWindowPos = g_options->lastWindowPos;
+	lastWindowSize = g_options->lastWindowSize;
 
 	if (b_sub) {
 		SurfaceToolbar();
@@ -2086,7 +2087,7 @@ int MainFrame::DoOptionsDialog()
 
 	bool ret_val = false;
 	if (rr) {
-		ProcessOptionsDialog(rr, &optionsDlg);
+		ProcessOptionsDialog(rr, g_options);
 		ret_val = true;
 	}
 
@@ -2104,6 +2105,11 @@ int MainFrame::DoOptionsDialog()
 #endif
 
 	Refresh(false);
+
+	// FIXME: this is not exactly thread safe, but the original version wasn't as well
+	options* tmp = g_options;
+	g_options = NULL;
+	delete tmp;
 
 	return ret_val;
 }
@@ -2139,14 +2145,15 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 	}
 
 	const global::GUI::View& view = global::OCPN::get().gui().view();
+	bool b_groupchange = false;
 	if (((rr & VISIT_CHARTS) && ((rr & CHANGE_CHARTS) || (rr & FORCE_UPDATE) || (rr & SCAN_UPDATE)))
 		|| (rr & GROUPS_CHANGED)) {
-		ScrubGroupArray();
+		b_groupchange = ScrubGroupArray();
 		ChartData->ApplyGroupArray(g_pGroupArray);
 		SetGroupIndex(view.GroupIndex);
 	}
 
-	if (rr & GROUPS_CHANGED) {
+	if ((rr & GROUPS_CHANGED) || b_groupchange) {
 		pConfig->DestroyConfigGroups();
 		pConfig->CreateConfigGroups(g_pGroupArray);
 	}
@@ -2262,13 +2269,15 @@ bool MainFrame::existsChartDataTableEntryStartingWith(const wxString& element_ro
 	return false;
 }
 
-void MainFrame::ScrubGroupArray()
+bool MainFrame::ScrubGroupArray()
 {
 	// FIXME: clean up this method, move things to their right places
 
 	// For each group,
 	// make sure that each group element (dir or chart) references at least oneitem in the database.
 	// If not, remove the element.
+
+	bool change = false;
 
 	for (chart::ChartGroupArray::iterator i = g_pGroupArray->begin(); i != g_pGroupArray->end(); ++i) {
 		chart::ChartGroup* pGroup = *i;
@@ -2281,11 +2290,14 @@ void MainFrame::ScrubGroupArray()
 				delete element;
 				pGroup->m_element_array.erase(j);
 				j = pGroup->m_element_array.begin(); // j was invalidated by 'erase'
+				change = true;
 			} else {
 				++j;
 			}
 		}
 	}
+
+	return change;
 }
 
 // Flav: This method reloads all charts for convenience

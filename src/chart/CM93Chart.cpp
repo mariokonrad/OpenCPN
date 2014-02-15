@@ -31,11 +31,13 @@
 
 #include <chart/geometry/ExtendedGeometry.h>
 #include <chart/geometry/PolyTessGeo.h>
+#include <chart/geometry/PolyTessGeoTrap.h>
 
 #include <geo/GeoRef.h>
 #include <geo/Polygon.h>
 
 #include <global/OCPN.h>
+#include <global/GUI.h>
 #include <global/System.h>
 
 #include <windows/compatibility.h>
@@ -53,7 +55,6 @@ static bool s_b_busy_shown; // FIXME
 
 namespace chart {
 
-using geometry::PolyTessGeo;
 using geometry::ExtendedGeometry;
 
 typedef std::vector<M_COVR_Desc*> List_Of_M_COVR_Desc;
@@ -2235,7 +2236,20 @@ S57Obj * cm93chart::CreateS57Obj(
 			xgeom->y_offset = m_CIB->transform_y_origin - trans_WGS84_offset_y;
 
 			// Set up a deferred tesselation
-			pobj->pPolyTessGeo = new PolyTessGeo(xgeom);
+			// If OpnGL is not available, use the trapezoid tesselator instead of the triangle tesselator
+			// Two reasons for this:
+			// a.  Tri tesselator is buggy, some tris not rendered correctly
+			// b.  Tri tesselator is slower than trapezoids for direct rendering
+			//
+			// note: PolyTessTrapGroup takes ownership of geometry data
+#ifdef ocpnUSE_GL
+			if (global::OCPN::get().gui().view().opengl)
+				pobj->pPolyTessGeo = new geometry::PolyTessGeo(xgeom);
+			else
+				pobj->pPolyTrapGeo = new geometry::PolyTessGeoTrap(xgeom);
+#else
+			pobj->pPolyTrapGeo = new geometry::PolyTessGeoTrap(xgeom);
+#endif
 
 			break;
 		}

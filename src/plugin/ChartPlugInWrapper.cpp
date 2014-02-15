@@ -397,7 +397,7 @@ wxColour GetBaseGlobalColor(wxString colorName)
 int OCPNMessageBox_PlugIn(wxWindow* parent, const wxString& message, const wxString& caption,
 						  int style, int x, int y)
 {
-	return OCPNMessageBox(parent, message, caption, style, 10, x, y);
+	return OCPNMessageBox(parent, message, caption, style, 100, x, y);
 }
 
 wxString GetOCPN_ExePath(void)

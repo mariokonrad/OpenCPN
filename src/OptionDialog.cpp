@@ -2285,6 +2285,19 @@ void options::OnButtonaddClick(wxCommandEvent& event)
 	event.Skip();
 }
 
+void options::UpdateDisplayedChartDirList(const ChartDirectories& p)
+{
+	if (pActiveChartsList) {
+		pActiveChartsList->Clear();
+		unsigned int nDir = p.size();
+		for (unsigned int i = 0; i < nDir; i++) {
+			wxString dirname = p.at(i).fullpath;
+			if (!dirname.IsEmpty())
+				pActiveChartsList->Append(dirname);
+		}
+	}
+}
+
 void options::UpdateWorkArrayFromTextCtl()
 {
 	wxString dirname;

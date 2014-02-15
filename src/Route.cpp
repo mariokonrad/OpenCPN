@@ -32,6 +32,7 @@
 #include <windows/compatibility.h>
 
 #include <util/math.h>
+#include <util/uuid.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -45,7 +46,6 @@
 #include <geo/LineClip.h>
 
 #include <gpx/gpx.h>
-#include <gpx/GpxDocument.h>
 
 #include <algorithm>
 
@@ -94,7 +94,7 @@ Route::Route(void)
 	, m_bcrosses_idl(false)
 {
 	pRoutePointList = new RoutePointList;
-	m_GUID = gpx::GpxDocument::GetUUID();
+	m_GUID = wxString(util::uuid().c_str(), wxConvUTF8);
 	m_ArrivalRadius = global::OCPN::get().nav().route().arrival_circle_radius;
 	RBBox.Reset();
 }

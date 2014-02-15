@@ -21,28 +21,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.           *
  **************************************************************************/
 
-#ifndef __GPX__GPXDOCUMENT__H__
-#define __GPX__GPXDOCUMENT__H__
+#ifndef __UTIL__UUID__H__
+#define __UTIL__UUID__H__
 
-#include <wx/string.h>
-#include <tinyxml/tinyxml.h>
+#include <string>
 
-namespace gpx {
+namespace util {
 
-class GpxDocument : public TiXmlDocument
-{
-public:
-	GpxDocument();
-	virtual ~GpxDocument();
-
-	bool LoadFile(const wxString& filename);
-	bool SaveFile(const wxString& filename);
-	void AddCustomNamespace(const wxString& name, const wxString& url);
-
-private:
-	void SeedRandom();
-	void PopulateEmptyDocument(const wxString& creator);
-};
+std::string uuid();
 
 }
 

@@ -822,6 +822,8 @@ add_library(util STATIC
 	src/util/crc32.cpp
 	src/util/crc32.h
 	src/util/math.h
+	src/util/uuid.cpp
+	src/util/uuid.h
 	)
 
 SET(SRC_CHART

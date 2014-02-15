@@ -30,11 +30,12 @@
 
 #include <global/OCPN.h>
 
+#include <util/uuid.h>
+
 #include <navigation/RouteManager.h>
 #include <navigation/WaypointManager.h>
 
 #include <gpx/ParseGPXDateTime.h>
-#include <gpx/GpxDocument.h>
 
 extern Config* pConfig;
 
@@ -796,11 +797,11 @@ void NavObjectCollection::InsertRouteA(Route* pTentRoute)
 	if (bAddroute) {
 		// We are importing a different route with the same guid, so let's generate it a new guid
 		if (routemanager.RouteExists(pTentRoute->guid())) {
-			pTentRoute->set_guid(gpx::GpxDocument::GetUUID());
+			pTentRoute->set_guid(wxString(util::uuid().c_str(), wxConvUTF8));
 			// Now also change guids for the routepoints
 			for (RoutePointList::iterator node = pTentRoute->routepoints().begin();
 				 node != pTentRoute->routepoints().end(); ++node) {
-				(*node)->set_guid(gpx::GpxDocument::GetUUID());
+				(*node)->set_guid(wxString(util::uuid().c_str(), wxConvUTF8));
 				// FIXME: !!!! the shared waypoint gets part of both the routes -> not goood at all
 			}
 		}

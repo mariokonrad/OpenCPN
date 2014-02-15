@@ -31,11 +31,12 @@
 
 #include <global/OCPN.h>
 
+#include <util/uuid.h>
+
 #include <navigation/RouteManager.h>
 #include <navigation/WaypointManager.h>
 
 #include <gpx/ParseGPXDateTime.h>
-#include <gpx/GpxDocument.h>
 
 #include <wx/dcscreen.h>
 #include <wx/tokenzr.h>
@@ -86,7 +87,7 @@ RoutePoint::RoutePoint()
 	, m_MarkName(wxEmptyString)
 {
 	m_CreateTimeX = wxDateTime::Now();
-	m_GUID = gpx::GpxDocument::GetUUID();
+	m_GUID = wxString(util::uuid().c_str(), wxConvUTF8);
 	ReLoadIcon();
 }
 
@@ -121,7 +122,7 @@ RoutePoint::RoutePoint(const RoutePoint& orig)
 	ReLoadIcon();
 
 	m_bIsInLayer = orig.m_bIsInLayer;
-	m_GUID = gpx::GpxDocument::GetUUID();
+	m_GUID = wxString(util::uuid().c_str(), wxConvUTF8);
 }
 
 RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, const wxString& name,
@@ -158,7 +159,7 @@ RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, con
 	if (!pGUID.IsEmpty())
 		m_GUID = pGUID;
 	else
-		m_GUID = gpx::GpxDocument::GetUUID();
+		m_GUID = wxString(util::uuid().c_str(), wxConvUTF8);
 
 	// Get Icon bitmap
 	ReLoadIcon();

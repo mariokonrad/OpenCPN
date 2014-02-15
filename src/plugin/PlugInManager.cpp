@@ -64,7 +64,7 @@
 #include <ais/AIS_Decoder.h>
 #include <ais/AIS_Target_Data.h>
 
-#include <gpx/GpxDocument.h>
+#include <util/uuid.h>
 
 #include <typeinfo>
 
@@ -1818,7 +1818,7 @@ PlugIn_Track::~PlugIn_Track(void)
 
 wxString GetNewGUID(void)
 {
-	return gpx::GpxDocument::GetUUID();
+	return wxString(util::uuid().c_str(), wxConvUTF8);
 }
 
 bool AddCustomWaypointIcon(wxBitmap* pimage, wxString key, wxString description)

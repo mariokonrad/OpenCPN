@@ -26,6 +26,8 @@
 #include <cstdio>
 #include <cstdlib>
 
+#include <windows/compatibility.h>
+
 namespace util {
 
 static int random_number(int high, int low)

@@ -50,6 +50,11 @@ class RouteManager;
 class WaypointManager;
 }
 
+namespace tide
+{
+class TideCurrentManager;
+}
+
 class App : public wxApp
 {
 	DECLARE_EVENT_TABLE()
@@ -98,6 +103,7 @@ private:
 	navigation::RouteTracker* tracker_instance;
 	navigation::RouteManager* route_manager_instance;
 	navigation::WaypointManager* waypoint_manager_instance;
+	tide::TideCurrentManager* tidecurrent_manager_instance;
 
 	bool start_fullscreen;
 	bool first_run;

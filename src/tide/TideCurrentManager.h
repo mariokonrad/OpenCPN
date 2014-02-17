@@ -24,61 +24,46 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __TIDE__TCMGR_H__
-#define __TIDE__TCMGR_H__
+#ifndef __TIDE__TIDECURRENTMANAGER__H__
+#define __TIDE__TIDECURRENTMANAGER__H__
 
-#include <tide/TideCurrentManager.h>
-#include <tide/Station_Data.h>
-#include <tide/TCDataSource.h>
+#include <tide/TC_Error_Code.h>
+#include <wx/string.h>
+#include <vector>
+
+namespace geo { class Position; }
 
 namespace tide {
 
-class TCMgr : public TideCurrentManager
+class IDX_entry;
+
+/// Interface to the tides manager.
+class TideCurrentManager
 {
 public:
-	TCMgr();
-	virtual ~TCMgr();
+	virtual ~TideCurrentManager()
+	{
+	}
 
-	virtual TC_Error_Code LoadDataSources(const std::vector<wxString> & sources);
+	virtual TC_Error_Code LoadDataSources(const std::vector<wxString>& sources) = 0;
+	virtual const std::vector<wxString>& GetDataSet(void) const = 0;
+	virtual bool IsReady(void) const = 0;
 
-	virtual const std::vector<wxString>& GetDataSet(void)const;
-	virtual bool IsReady(void)const;
-
-	virtual bool GetTideOrCurrent(time_t t, int idx, float & value, float & dir);
-	virtual bool GetTideOrCurrent15(time_t t, int idx, float & tcvalue, float & dir,
-									bool & bnew_val);
-	virtual bool GetTideFlowSens(time_t t, int sch_step, int idx, float & tcvalue_now,
-								 float & tcvalue_prev, bool & w_t);
+	virtual bool GetTideOrCurrent(time_t t, int idx, float& value, float& dir) = 0;
+	virtual bool GetTideOrCurrent15(time_t t, int idx, float& tcvalue, float& dir, bool& bnew_val)
+		= 0;
+	virtual bool GetTideFlowSens(time_t t, int sch_step, int idx, float& tcvalue_now,
+								 float& tcvalue_prev, bool& w_t) = 0;
 	virtual void GetHightOrLowTide(time_t t, int sch_step_1, int sch_step_2, float tide_val,
-								   bool w_t, int idx, float & tcvalue, time_t & tctime);
+								   bool w_t, int idx, float& tcvalue, time_t& tctime) = 0;
 
-	virtual int GetStationTimeOffset(IDX_entry * pIDX);
-	virtual int GetNextBigEvent(time_t * tm, int idx);
+	virtual int GetStationTimeOffset(IDX_entry* pIDX) = 0;
+	virtual int GetNextBigEvent(time_t* tm, int idx) = 0;
 
-	virtual const IDX_entry* GetIDX_entry(int index) const;
-	virtual int Get_max_IDX() const;
+	virtual int GetStationIDXbyName(const wxString& prefix, const geo::Position& pos) const = 0;
 
-	virtual int GetStationIDXbyName(const wxString & prefix, const geo::Position & pos) const;
-
-	int GetStationIDXbyNameType(const wxString & prefix, const geo::Position & pos,
-								char type) const; // FIXME: unused
-
-private:
-	int station_idx_name_types(const wxString & prefix, const geo::Position & pos,
-							   std::vector<char> types) const;
-	void PurgeData();
-
-	void LoadMRU(void);
-	void SaveMRU(void);
-	void AddMRU(Station_Data* psd);
-	void FreeMRU(void);
-
-	bool bTCMReady;
-	wxString pmru_file_name;
-
-	std::vector<TCDataSource*> m_source_array;
-	std::vector<wxString> m_sourcefile_array;
-	std::vector<IDX_entry*> m_Combined_IDX_array;
+	virtual const IDX_entry* GetIDX_entry(int index) const = 0;
+	virtual int Get_max_IDX() const = 0;
 };
 
 }

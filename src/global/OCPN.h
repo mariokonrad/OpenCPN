@@ -30,6 +30,10 @@ class RouteManager;
 class WaypointManager;
 }
 
+namespace tide {
+class TideCurrentManager;
+}
+
 namespace global {
 
 class GUI;
@@ -76,6 +80,9 @@ public:
 	void inject(navigation::WaypointManager*);
 	navigation::WaypointManager& waypointman();
 
+	void inject(tide::TideCurrentManager*);
+	tide::TideCurrentManager& tidecurrentman();
+
 private:
 	OCPN();
 	OCPN(const OCPN&);
@@ -94,6 +101,7 @@ private:
 	navigation::RouteTracker* tracker_instance;
 	navigation::RouteManager* route_manager_instance;
 	navigation::WaypointManager* waypoint_manager_instance;
+	tide::TideCurrentManager* tidecurrent_manager_instance;
 };
 
 }

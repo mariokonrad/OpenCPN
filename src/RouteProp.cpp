@@ -42,8 +42,8 @@
 
 #include <geo/GeoRef.h>
 
+#include <tide/TideCurrentManager.h>
 #include <tide/IDX_entry.h>
-#include <tide/TCMgr.h>
 
 #include <plugin/PlugInManager.h>
 
@@ -62,7 +62,6 @@
 extern wxDateTime g_StartTime;
 extern int g_StartTimeTZ;
 extern tide::IDX_entry* gpIDX;
-extern tide::TCMgr* ptcmgr;
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern Select* pSelect;
@@ -1133,11 +1132,12 @@ void RouteProp::update_route_properties()
 				time_form.Append(GetDaylightString(getDaylightStatus(prp->get_position(), act_starttime)));
 				time_form.Append(_T(")"));
 
-				if (ptcmgr) {
+				if (global::OCPN::get().tidecurrentman().IsReady()) {
 					int jx = 0;
 					if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
 						tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
-						jx = ptcmgr->GetStationIDXbyName(tide_form, prp->get_position());
+						jx = global::OCPN::get().tidecurrentman().GetStationIDXbyName(
+							tide_form, prp->get_position());
 					}
 					if (gpIDX || jx) {
 						time_t tm = act_starttime.GetTicks();
@@ -1173,11 +1173,12 @@ void RouteProp::update_route_properties()
 					time_form.Append(GetDaylightString(getDaylightStatus(prp->get_position(), ueta)));
 					time_form.Append(_T(")"));
 
-					if (ptcmgr) {
+					if (global::OCPN::get().tidecurrentman().IsReady()) {
 						int jx = 0;
 						if (prp->GetName().Find(_T("@~~")) != wxNOT_FOUND) {
 							tide_form = prp->GetName().Mid(prp->GetName().Find(_T("@~~")) + 3);
-							jx = ptcmgr->GetStationIDXbyName(tide_form, prp->get_position());
+							jx = global::OCPN::get().tidecurrentman().GetStationIDXbyName(
+								tide_form, prp->get_position());
 						}
 						if (gpIDX || jx) {
 							time_t tm = ueta.GetTicks();
@@ -1282,12 +1283,15 @@ wxString RouteProp::MakeTideInfo(int jx, time_t tm, int tz_selection, long LMT_O
 	int ev = 0;
 	wxString tide_form;
 
+	tide::TideCurrentManager& tcmanager = global::OCPN::get().tidecurrentman();
+
 	if (gpIDX) {
-		ev = ptcmgr->GetNextBigEvent(
-			&tm, ptcmgr->GetStationIDXbyName(wxString(gpIDX->IDX_station_name, wxConvUTF8),
-											 geo::Position(gpIDX->IDX_lat, gpIDX->IDX_lon)));
-	} else
-		ev = ptcmgr->GetNextBigEvent(&tm, jx);
+		ev = tcmanager.GetNextBigEvent(
+			&tm, tcmanager.GetStationIDXbyName(wxString(gpIDX->IDX_station_name, wxConvUTF8),
+											   geo::Position(gpIDX->IDX_lat, gpIDX->IDX_lon)));
+	} else {
+		ev = tcmanager.GetNextBigEvent(&tm, jx);
+	}
 
 	wxDateTime dtm;
 	dtm.Set(tm).MakeUTC(); // apparently Set works as from LT
@@ -1297,7 +1301,7 @@ wxString RouteProp::MakeTideInfo(int jx, time_t tm, int tz_selection, long LMT_O
 		tide_form.Printf(_T("HW: "));
 	tide_form.Append(ts2s(dtm, tz_selection, LMT_Offset, DISPLAY_FORMAT));
 	if (!gpIDX) {
-		wxString locn(ptcmgr->GetIDX_entry(jx)->IDX_station_name, wxConvUTF8);
+		wxString locn(tcmanager.GetIDX_entry(jx)->IDX_station_name, wxConvUTF8);
 		tide_form.Append(_T(" @~~"));
 		tide_form.Append(locn);
 	}

@@ -90,9 +90,10 @@
 #include <chart/ChartStack.h>
 #include <chart/ChartBaseBSB.h>
 
+#include <tide/TideCurrentManager.h>
 #include <tide/IDX_entry.h>
 #include <tide/tide_time.h>
-#include <tide/TCMgr.h>
+#include <tide/Station_Data.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
@@ -142,7 +143,6 @@ extern RouteList* pRouteList;
 extern Config* pConfig;
 extern Select* pSelect;
 extern ThumbWin* pthumbwin;
-extern tide::TCMgr* ptcmgr;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
 extern MarkInfoImpl* pMarkPropDialog;
@@ -9287,10 +9287,12 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 	wxDateTime this_now = wxDateTime::Now();
 	time_t t_this_now = this_now.GetTicks();
 
+	tide::TideCurrentManager& tcmanager = global::OCPN::get().tidecurrentman();
+
 	double lon_last = 0.0;
 	double lat_last = 0.0;
-	for (int i = 1; i < ptcmgr->Get_max_IDX() + 1; i++) {
-		const tide::IDX_entry* pIDX = ptcmgr->GetIDX_entry(i);
+	for (int i = 1; i < tcmanager.Get_max_IDX() + 1; i++) {
+		const tide::IDX_entry* pIDX = tcmanager.GetIDX_entry(i);
 
 		char type = pIDX->IDX_type; // Entry "TCtcIUu" identifier
 		if ((type == 't') || (type == 'T')) { // only Tides
@@ -9347,15 +9349,16 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 							bool wt;
 							// define if flood or edd in the last ten minutes and verify if data
 							// are useable
-							if (ptcmgr->GetTideFlowSens(t_this_now, tide::BACKWARD_TEN_MINUTES_STEP,
-														pIDX->IDX_rec_num, nowlev, val, wt)) {
+							if (tcmanager.GetTideFlowSens(t_this_now,
+														  tide::BACKWARD_TEN_MINUTES_STEP,
+														  pIDX->IDX_rec_num, nowlev, val, wt)) {
 
 								// search forward the first HW or LW near "now" ( starting at
 								// "now" - ten minutes )
-								ptcmgr->GetHightOrLowTide(t_this_now + tide::BACKWARD_TEN_MINUTES_STEP,
-														  tide::FORWARD_TEN_MINUTES_STEP,
-														  tide::FORWARD_ONE_MINUTES_STEP, val, wt,
-														  pIDX->IDX_rec_num, val, tctime);
+								tcmanager.GetHightOrLowTide(
+									t_this_now + tide::BACKWARD_TEN_MINUTES_STEP,
+									tide::FORWARD_TEN_MINUTES_STEP, tide::FORWARD_ONE_MINUTES_STEP,
+									val, wt, pIDX->IDX_rec_num, val, tctime);
 								if (wt) {
 									httime = tctime;
 									htleve = val;
@@ -9366,15 +9369,20 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 								wt = !wt;
 
 								// then search opposite tide near "now"
-								if (tctime > t_this_now) // search backward
-									ptcmgr->GetHightOrLowTide(t_this_now, tide::BACKWARD_TEN_MINUTES_STEP,
-															  tide::BACKWARD_ONE_MINUTES_STEP, nowlev, wt,
-															  pIDX->IDX_rec_num, val, tctime);
-								else
+								if (tctime > t_this_now) {
+									// search backward
+									tcmanager.GetHightOrLowTide(
+										t_this_now, tide::BACKWARD_TEN_MINUTES_STEP,
+										tide::BACKWARD_ONE_MINUTES_STEP, nowlev, wt,
+										pIDX->IDX_rec_num, val, tctime);
+								} else {
 									// or search forward
-									ptcmgr->GetHightOrLowTide(t_this_now, tide::FORWARD_TEN_MINUTES_STEP,
-															  tide::FORWARD_ONE_MINUTES_STEP, nowlev, wt,
-															  pIDX->IDX_rec_num, val, tctime);
+									tcmanager.GetHightOrLowTide(
+										t_this_now, tide::FORWARD_TEN_MINUTES_STEP,
+										tide::FORWARD_ONE_MINUTES_STEP, nowlev, wt,
+										pIDX->IDX_rec_num, val, tctime);
+								}
+
 								if (wt) {
 									httime = tctime;
 									htleve = val;
@@ -9511,9 +9519,11 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 	if (bRebuildSelList)
 		pSelectTC->DeleteAllSelectableTypePoints(SelectItem::TYPE_CURRENTPOINT);
 
+	tide::TideCurrentManager& tcmanager = global::OCPN::get().tidecurrentman();
+
 	geo::Position pos_last(0.0, 0.0);
-	for (int i = 1; i < ptcmgr->Get_max_IDX() + 1; i++) {
-		const tide::IDX_entry* pIDX = ptcmgr->GetIDX_entry(i);
+	for (int i = 1; i < tcmanager.Get_max_IDX() + 1; i++) {
+		const tide::IDX_entry* pIDX = tcmanager.GetIDX_entry(i);
 		geo::Position pos(pIDX->IDX_lat, pIDX->IDX_lon);
 
 		char type = pIDX->IDX_type; // Entry "TCtcIUu" identifier
@@ -9545,7 +9555,7 @@ void ChartCanvas::DrawAllCurrentsInBBox(ocpnDC& dc, const geo::LatLonBoundingBox
 				d[3].x = r.x - dd;
 				d[3].y = r.y;
 
-				if (ptcmgr->GetTideOrCurrent15(now, i, tcvalue, dir, bnew_val)) {
+				if (tcmanager.GetTideOrCurrent15(now, i, tcvalue, dir, bnew_val)) {
 					porange_pen->SetWidth(1);
 					dc.SetPen(*pblack_pen);
 					dc.SetBrush(*porange_brush);

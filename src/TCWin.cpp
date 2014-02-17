@@ -34,9 +34,10 @@
 #include <global/GUI.h>
 #include <global/ColorManager.h>
 
+#include <tide/TideCurrentManager.h>
 #include <tide/tide_time.h>
 #include <tide/IDX_entry.h>
-#include <tide/TCMgr.h>
+#include <tide/Station_Data.h>
 
 #include <algorithm>
 
@@ -44,7 +45,6 @@
 
 extern int gpIDXn;
 extern tide::IDX_entry* gpIDX;
-extern tide::TCMgr* ptcmgr;
 
 enum
 {
@@ -146,7 +146,7 @@ TCWin::TCWin(ChartCanvas* parent, int x, int y, tide::IDX_entry* pvIDX)
 
 	int diff_mins = diff.GetMinutes();
 
-	int station_offset = ptcmgr->GetStationTimeOffset(pIDX);
+	int station_offset = global::OCPN::get().tidecurrentman().GetStationTimeOffset(pIDX);
 
 	m_corr_mins = station_offset - diff_mins;
 	if (this_now.IsDST())
@@ -440,13 +440,15 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 
 			wxBeginBusyCursor();
 
+			tide::TideCurrentManager& tcmanager = global::OCPN::get().tidecurrentman();
+
 			// get tide flow sens ( flood or ebb ? )
-			ptcmgr->GetTideFlowSens(m_t_graphday_00_at_station, tide::BACKWARD_ONE_HOUR_STEP,
-									pIDX->IDX_rec_num, tcv[0], val, wt);
+			tcmanager.GetTideFlowSens(m_t_graphday_00_at_station, tide::BACKWARD_ONE_HOUR_STEP,
+									  pIDX->IDX_rec_num, tcv[0], val, wt);
 
 			for (int i = 0; i < 26; i++) {
 				int tt = m_t_graphday_00_at_station + (i * tide::FORWARD_ONE_HOUR_STEP);
-				ptcmgr->GetTideOrCurrent(tt, pIDX->IDX_rec_num, tcv[i], dir);
+				tcmanager.GetTideOrCurrent(tt, pIDX->IDX_rec_num, tcv[i], dir);
 				if (tcv[i] > tcmax)
 					tcmax = tcv[i];
 
@@ -456,9 +458,9 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 					if (!((tcv[i] > val) == wt)) { // if tide flow sens change
 						float tcvalue; // look backward for HW or LW
 						time_t tctime;
-						ptcmgr->GetHightOrLowTide(tt, tide::BACKWARD_TEN_MINUTES_STEP,
-												  tide::BACKWARD_ONE_MINUTES_STEP, tcv[i], wt,
-												  pIDX->IDX_rec_num, tcvalue, tctime);
+						tcmanager.GetHightOrLowTide(tt, tide::BACKWARD_TEN_MINUTES_STEP,
+													tide::BACKWARD_ONE_MINUTES_STEP, tcv[i], wt,
+													pIDX->IDX_rec_num, tcvalue, tctime);
 
 						wxDateTime tcd; // write date
 						wxString s, s1;
@@ -570,7 +572,7 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 
 		// More Info
 
-		int station_offset = ptcmgr->GetStationTimeOffset(pIDX);
+		int station_offset = global::OCPN::get().tidecurrentman().GetStationTimeOffset(pIDX);
 		int h = station_offset / 60;
 		int m = station_offset - (h * 60);
 		if (m_graphday.IsDST())
@@ -579,7 +581,7 @@ void TCWin::OnPaint(wxPaintEvent& WXUNUSED(event))
 
 		// Make the "nice" (for the US) station time-zone string, brutally by hand
 		wxString mtz;
-		switch (ptcmgr->GetStationTimeOffset(pIDX)) {
+		switch (global::OCPN::get().tidecurrentman().GetStationTimeOffset(pIDX)) {
 			case -240:
 				mtz = _T( "AST" );
 				break;
@@ -705,7 +707,7 @@ void TCWin::OnTCWinPopupTimerEvent(wxTimerEvent& WXUNUSED(event))
 		p.Append(_T("\n"));
 
 		// set tide level or current speed at that time
-		ptcmgr->GetTideOrCurrent(tt, pIDX->IDX_rec_num, t, d);
+		global::OCPN::get().tidecurrentman().GetTideOrCurrent(tt, pIDX->IDX_rec_num, t, d);
 		s.Printf(_T("%3.2f "),
 				 (t < 0 && CURRENT_PLOT == m_plot_type) ? -t : t); // always positive if current
 		p.Append(s);

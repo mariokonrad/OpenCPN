@@ -96,7 +96,7 @@
 #include <plugin/PlugInManager.h>
 #include <plugin/OCPN_MsgEvent.h>
 
-#include <tide/TCMgr.h>
+#include <tide/TideCurrentManager.h>
 
 #include <navigation/AnchorDist.h>
 #include <navigation/MagneticVariation.h>
@@ -179,7 +179,6 @@ MarkInfoImpl* pMarkInfoDialog;
 RouteManagerDialog* pRouteManagerDialog;
 bool bDBUpdateInProgress;
 ThumbWin* pthumbwin;
-tide::TCMgr* ptcmgr;
 volatile int quitflag;
 ArrayOfConnPrm* g_pConnectionParams;
 sound::OCPN_Sound g_anchorwatch_sound;
@@ -1453,7 +1452,7 @@ void MainFrame::toolLeftClick_CURRENT()
 {
 	LoadHarmonics();
 
-	if (ptcmgr->IsReady()) {
+	if (global::OCPN::get().tidecurrentman().IsReady()) {
 		chart_canvas->SetbShowCurrent(!chart_canvas->GetbShowCurrent());
 		if (g_toolbar)
 			g_toolbar->ToggleTool(ID_CURRENT, chart_canvas->GetbShowCurrent());
@@ -1479,7 +1478,7 @@ void MainFrame::toolLeftClick_TIDE()
 {
 	LoadHarmonics();
 
-	if (ptcmgr->IsReady()) {
+	if (global::OCPN::get().tidecurrentman().IsReady()) {
 		chart_canvas->SetbShowTide(!chart_canvas->GetbShowTide());
 		if (g_toolbar)
 			g_toolbar->ToggleTool(ID_TIDE, chart_canvas->GetbShowTide());
@@ -5340,16 +5339,13 @@ void MainFrame::LoadHarmonics()
 {
 	std::vector<wxString> data_set = global::OCPN::get().sys().data().current_tide_dataset;
 
-	if (!ptcmgr) {
-		ptcmgr = new tide::TCMgr;
-		ptcmgr->LoadDataSources(data_set);
-		return;
-	}
+	tide::TideCurrentManager& tcmanager = global::OCPN::get().tidecurrentman();
+	tcmanager.LoadDataSources(data_set);
 
 	bool b_newdataset = false;
 
 	// Test both ways
-	std::vector<wxString> test = ptcmgr->GetDataSet();
+	std::vector<wxString> test = tcmanager.GetDataSet();
 	for (unsigned int i = 0; i < test.size(); i++) {
 		bool b_foundi = false;
 		for (unsigned int j = 0; j < data_set.size(); j++) {
@@ -5367,8 +5363,8 @@ void MainFrame::LoadHarmonics()
 	test = data_set;
 	for (unsigned int i = 0; i < test.size(); i++) {
 		bool b_foundi = false;
-		for (unsigned int j = 0; j < ptcmgr->GetDataSet().size(); j++) {
-			if (ptcmgr->GetDataSet().at(j) == test.at(i)) {
+		for (unsigned int j = 0; j < tcmanager.GetDataSet().size(); j++) {
+			if (tcmanager.GetDataSet().at(j) == test.at(i)) {
 				b_foundi = true;
 				break; // j loop
 			}
@@ -5380,7 +5376,7 @@ void MainFrame::LoadHarmonics()
 	}
 
 	if (b_newdataset)
-		ptcmgr->LoadDataSources(data_set);
+		tcmanager.LoadDataSources(data_set);
 }
 
 void appendOSDirSlash(wxString & s)

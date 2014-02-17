@@ -176,5 +176,15 @@ navigation::WaypointManager& OCPN::waypointman()
 	return *waypoint_manager_instance;
 }
 
+void OCPN::inject(tide::TideCurrentManager* instance)
+{
+	tidecurrent_manager_instance = instance;
+}
+
+tide::TideCurrentManager& OCPN::tidecurrentman()
+{
+	return *tidecurrent_manager_instance;
+}
+
 }
 

@@ -135,7 +135,6 @@ extern RoutePoint* pAnchorWatchPoint2;
 extern ocpnStyle::StyleManager* g_StyleManager;
 extern bool bDBUpdateInProgress;
 extern ThumbWin* pthumbwin;
-extern tide::TCMgr* ptcmgr;
 extern tide::IDX_entry* gpIDX;
 extern chart::ChartDB* ChartData;
 extern ais::AISTargetQueryDialog* g_pais_query_dialog_active;
@@ -284,6 +283,7 @@ App::App()
 	, tracker_instance(NULL)
 	, route_manager_instance(NULL)
 	, waypoint_manager_instance(NULL)
+	, tidecurrent_manager_instance(NULL)
 	, start_fullscreen(false)
 	, first_run(false)
 	, logger(NULL)
@@ -452,6 +452,9 @@ void App::inject_global_instances()
 	// init the waypoint manager (must be after UI style init).
 	waypoint_manager_instance = new WayPointman;
 	global::OCPN::get().inject(waypoint_manager_instance);
+
+	tidecurrent_manager_instance = new tide::TCMgr;
+	global::OCPN::get().inject(tidecurrent_manager_instance);
 }
 
 void App::establish_home_location()
@@ -1784,9 +1787,6 @@ int App::OnExit()
 	wxLogMessage(MainFrame::prepare_logbook_message(lognow));
 	global::OCPN::get().run().set_loglast_time(lognow);
 
-	if (ptcmgr)
-		delete ptcmgr;
-
 	wxLogMessage(_T("opencpn::App exiting cleanly...\n"));
 	delete pConfig;
 	delete pSelect;
@@ -1869,6 +1869,7 @@ int App::OnExit()
 	delete route_manager_instance;
 	delete waypoint_manager_instance;
 	delete tracker_instance;
+	delete tidecurrent_manager_instance;
 
 	return true;
 }

@@ -871,6 +871,7 @@ SET(HDRS
 	src/gpx/gpx.h
 	src/gpx/ParseGPXDateTime.h
 
+	src/tide/TideCurrentManager.h
 	src/tide/TCMgr.h
 
 	src/garmin/cpo_satellite_data.h

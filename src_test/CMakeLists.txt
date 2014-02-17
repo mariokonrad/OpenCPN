@@ -36,6 +36,7 @@ add_executable(testrunner
 	${CMAKE_SOURCE_DIR}/src/util/Vector2D.cpp
 	${CMAKE_SOURCE_DIR}/src/util/ValueFilter.cpp
 	${CMAKE_SOURCE_DIR}/src/util/crc32.cpp
+	${CMAKE_SOURCE_DIR}/src/util/uuid.cpp
 	)
 
 target_link_libraries(testrunner

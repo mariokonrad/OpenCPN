@@ -3611,7 +3611,7 @@ double MainFrame::GetBestVPScale(chart::ChartBase* pchart)
 		double new_scale_ppm = pchart->GetNearestPreferredScalePPM(chart_canvas->GetVPScale());
 		proposed_scale_onscreen = chart_canvas->GetCanvasScaleFactor() / new_scale_ppm;
 	} else {
-		//  This logic will bring the new chart onscreen at roughly twice the true paper scale
+		// This logic will bring the new chart onscreen at roughly twice the true paper scale
 		// equivalent.
 		proposed_scale_onscreen = pchart->GetNativeScale() / 2;
 		double equivalent_vp_scale = chart_canvas->GetCanvasScaleFactor() / proposed_scale_onscreen;
@@ -3759,7 +3759,7 @@ void MainFrame::SetChartThumbnail(int index)
 		wxRect thumb_rect_in_parent = pthumbwin->GetRect();
 		pthumbwin->pThumbChart = NULL;
 		pthumbwin->Show( false );
-		chart_canvas->RefreshRect( thumb_rect_in_parent, FALSE );
+		chart_canvas->RefreshRect(thumb_rect_in_parent, FALSE);
 		return;
 	}
 
@@ -3770,7 +3770,7 @@ void MainFrame::SetChartThumbnail(int index)
 	if ((ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_KAP)
 			|| (ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_GEO)
 			|| (ChartData->GetCSChartType( pCurrentStack, index) == CHART_TYPE_PLUGIN)) {
-		ChartBase *new_pThumbChart = ChartData->OpenChartFromStack( pCurrentStack, index );
+		ChartBase* new_pThumbChart = ChartData->OpenChartFromStack(pCurrentStack, index);
 		if (new_pThumbChart) { // chart opened ok
 			const global::Navigation::Data & nav = global::OCPN::get().nav().get_data();
 			ThumbData *pTD = new_pThumbChart->GetThumbData(150, 150, nav.pos);
@@ -3785,7 +3785,7 @@ void MainFrame::SetChartThumbnail(int index)
 				// Simplistic overlap avoidance works only when toolbar is at top of screen.
 				if (g_FloatingToolbarDialog) {
 					if (g_FloatingToolbarDialog->GetScreenRect().Intersects( pthumbwin->GetScreenRect())) {
-						pthumbwin->Move( wxPoint( 4, g_FloatingToolbarDialog->GetSize().y + 4 ) );
+						pthumbwin->Move(wxPoint(4, g_FloatingToolbarDialog->GetSize().y + 4));
 					}
 				}
 			} else {
@@ -3795,7 +3795,7 @@ void MainFrame::SetChartThumbnail(int index)
 				chart_canvas->Refresh(false);
 			}
 		} else {                          // some problem opening chart
-			wxString fp = ChartData->GetFullPath( pCurrentStack, index );
+			wxString fp = ChartData->GetFullPath(pCurrentStack, index);
 			fp.Prepend(_T("    chart1.cpp:SetChartThumbnail...Could not open chart "));
 			wxLogMessage(fp);
 			pthumbwin->pThumbChart = NULL;
@@ -3820,7 +3820,7 @@ void MainFrame::SetChartThumbnail(int index)
 	}
 }
 
-void MainFrame::UpdateControlBar( void )
+void MainFrame::UpdateControlBar(void)
 {
 	if (!chart_canvas)
 		return;
@@ -3834,25 +3834,27 @@ void MainFrame::UpdateControlBar( void )
 	std::vector<int> piano_chart_index_array;
 	std::vector<int> empty_piano_chart_index_array;
 
-	if(chart_canvas->GetQuiltMode() ) {
+	if (chart_canvas->GetQuiltMode()) {
 		piano_chart_index_array = chart_canvas->GetQuiltExtendedStackdbIndexArray();
 		stats->pPiano->SetKeyArray(piano_chart_index_array);
 
-		std::vector<int> piano_active_chart_index_array = chart_canvas->GetQuiltCandidatedbIndexArray();
+		std::vector<int> piano_active_chart_index_array
+			= chart_canvas->GetQuiltCandidatedbIndexArray();
 		stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 
-		std::vector<int> piano_eclipsed_chart_index_array = chart_canvas->GetQuiltEclipsedStackdbIndexArray();
+		std::vector<int> piano_eclipsed_chart_index_array
+			= chart_canvas->GetQuiltEclipsedStackdbIndexArray();
 		stats->pPiano->SetSubliteIndexArray(piano_eclipsed_chart_index_array);
 
 		stats->pPiano->SetNoshowIndexArray(g_quilt_noshow_index_array);
 
 	} else {
-		piano_chart_index_array = ChartData->GetCSArray( pCurrentStack );
+		piano_chart_index_array = ChartData->GetCSArray(pCurrentStack);
 		stats->pPiano->SetKeyArray(piano_chart_index_array);
 
 		std::vector<int> piano_active_chart_index_array;
-		piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex() );
-		stats->pPiano->SetActiveKeyArray( piano_active_chart_index_array );
+		piano_active_chart_index_array.push_back(pCurrentStack->GetCurrentEntrydbIndex());
+		stats->pPiano->SetActiveKeyArray(piano_active_chart_index_array);
 	}
 
 	// Set up the TMerc and Skew arrays
@@ -3860,8 +3862,9 @@ void MainFrame::UpdateControlBar( void )
 	std::vector<int> piano_tmerc_chart_index_array;
 	std::vector<int> piano_poly_chart_index_array;
 
-	for( unsigned int ino = 0; ino < piano_chart_index_array.size(); ino++ ) {
-		const chart::ChartTableEntry &ctei = ChartData->GetChartTableEntry(piano_chart_index_array[ino]);
+	for (unsigned int ino = 0; ino < piano_chart_index_array.size(); ino++) {
+		const chart::ChartTableEntry& ctei
+			= ChartData->GetChartTableEntry(piano_chart_index_array[ino]);
 		double skew_norm = ctei.GetChartSkew();
 		if (skew_norm > 180.0)
 			skew_norm -= 360.0;
@@ -3869,15 +3872,13 @@ void MainFrame::UpdateControlBar( void )
 		if (ctei.GetChartProjectionType() == PROJECTION_TRANSVERSE_MERCATOR)
 			piano_tmerc_chart_index_array.push_back(piano_chart_index_array[ino]);
 		else // Polyconic skewed charts should show as skewed
-			if( ctei.GetChartProjectionType() == PROJECTION_POLYCONIC ) {
-				if( fabs( skew_norm ) > 1.0)
-					piano_skew_chart_index_array.push_back(piano_chart_index_array[ino]);
-				else
-					piano_poly_chart_index_array.push_back(piano_chart_index_array[ino]);
-			} else
-				if( fabs( skew_norm ) > 1.0)
-					piano_skew_chart_index_array.push_back(piano_chart_index_array[ino]);
-
+			if (ctei.GetChartProjectionType() == PROJECTION_POLYCONIC) {
+			if (fabs(skew_norm) > 1.0)
+				piano_skew_chart_index_array.push_back(piano_chart_index_array[ino]);
+			else
+				piano_poly_chart_index_array.push_back(piano_chart_index_array[ino]);
+		} else if (fabs(skew_norm) > 1.0)
+			piano_skew_chart_index_array.push_back(piano_chart_index_array[ino]);
 	}
 	stats->pPiano->SetSkewIndexArray(piano_skew_chart_index_array);
 	stats->pPiano->SetTmercIndexArray(piano_tmerc_chart_index_array);
@@ -3887,13 +3888,10 @@ void MainFrame::UpdateControlBar( void )
 	stats->Refresh(true);
 }
 
-//----------------------------------------------------------------------------------
-//      DoChartUpdate
-//      Create a chartstack based on current lat/lon.
-//      Update Current_Ch, using either current chart, if still in stack, or
-//      smallest scale new chart in stack if not.
-//      Return true if a Refresh(false) was called within.
-//----------------------------------------------------------------------------------
+// Create a chartstack based on current lat/lon.
+// Update Current_Ch, using either current chart, if still in stack, or
+// smallest scale new chart in stack if not.
+// Return true if a Refresh(false) was called within.
 bool MainFrame::DoChartUpdate(void)
 {
 	geo::Position tpos;
@@ -4306,8 +4304,8 @@ void MainFrame::RemoveChartFromQuilt(int dbIndex)
 
 // Piano window Popup Menu Handlers and friends
 
-static int menu_selected_dbIndex;
-static int menu_selected_index;
+static int menu_selected_dbIndex; // FIXME
+static int menu_selected_index; // FIXME
 
 void MainFrame::PianoPopupMenu(int, int, int selected_index, int selected_dbIndex)
 {
@@ -4636,7 +4634,7 @@ bool MainFrame::EvalPriority(const wxString& message, DataStream* pDS)
 		stream_name = pDS->GetPort();
 	}
 
-	//  If the message type has never been seen before...
+	// If the message type has never been seen before...
 	if (NMEA_Msg_Hash.find(msg_type) == NMEA_Msg_Hash.end()) {
 		NMEA_Msg_Container* pcontainer = new NMEA_Msg_Container;
 		pcontainer->current_priority = -1; //  guarantee to execute the next clause
@@ -4651,9 +4649,8 @@ bool MainFrame::EvalPriority(const wxString& message, DataStream* pDS)
 
 	int old_priority = pcontainer->current_priority;
 
-	//  If the message has been seen before, and the priority is greater than or equal to current
-	// priority,
-	//  then simply update the record
+	// If the message has been seen before, and the priority is greater than or equal to current
+	// priority, then simply update the record
 	if (stream_priority >= pcontainer->current_priority) {
 		pcontainer->receipt_time = wxDateTime::Now();
 		pcontainer->current_priority = stream_priority;
@@ -4662,11 +4659,11 @@ bool MainFrame::EvalPriority(const wxString& message, DataStream* pDS)
 		bret = true;
 	}
 
-		//  If the message has been seen before, and the priority is less than the current priority,
-		//  then if the time since the last recorded message is greater than GPS_TIMEOUT_SECONDS
-		//  then update the record with the new priority and stream.
-		//  Otherwise, ignore the message as too low a priority
-		else {
+	// If the message has been seen before, and the priority is less than the current priority,
+	// then if the time since the last recorded message is greater than GPS_TIMEOUT_SECONDS
+	// then update the record with the new priority and stream.
+	// Otherwise, ignore the message as too low a priority
+	else {
 		if ((wxDateTime::Now().GetTicks() - pcontainer->receipt_time.GetTicks())
 			> GPS_TIMEOUT_SECONDS) {
 			pcontainer->receipt_time = wxDateTime::Now();
@@ -4680,7 +4677,7 @@ bool MainFrame::EvalPriority(const wxString& message, DataStream* pDS)
 
 	wxString new_port = pcontainer->stream_name;
 
-	//  If the data source or priority has changed for this message type, emit a log entry
+	// If the data source or priority has changed for this message type, emit a log entry
 	if (pcontainer->current_priority != old_priority || new_port != old_port) {
 		wxString logmsg
 			= wxString::Format(_T("Changing NMEA Datasource for %s to %s (Priority: %i)"),
@@ -4710,14 +4707,245 @@ void MainFrame::gps_debug(const NMEA0183& nmea, const wxString& str_buf) const
 	wxLogMessage(msg);
 }
 
-void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this method is way to long
+void MainFrame::nmea_rmc(NMEAProcessContext& context) // TEMP: refactoring of method interface
 {
-	wxString sfixtime;
-	bool pos_valid = false;
-	bool bis_recognized_sentence = true;
 	bool ll_valid = true;
 
+	if (m_NMEA0183.Rmc.IsDataValid == NTrue) {
+		if (!wxIsNaN(m_NMEA0183.Rmc.Position.Latitude.Latitude)) {
+			double llt = m_NMEA0183.Rmc.Position.Latitude.Latitude;
+			int lat_deg_int = (int)(llt / 100);
+			double lat_deg = lat_deg_int;
+			double lat_min = llt - (lat_deg * 100);
+			double lat = lat_deg + (lat_min / 60.0);
+			if (m_NMEA0183.Rmc.Position.Latitude.Northing == South)
+				lat = -lat;
+			global::OCPN::get().nav().set_latitude(lat);
+		} else {
+			ll_valid = false;
+		}
+
+		if (!wxIsNaN(m_NMEA0183.Rmc.Position.Longitude.Longitude)) {
+			double lln = m_NMEA0183.Rmc.Position.Longitude.Longitude;
+			int lon_deg_int = (int)(lln / 100);
+			double lon_deg = lon_deg_int;
+			double lon_min = lln - (lon_deg * 100);
+			double lon = lon_deg + (lon_min / 60.0);
+			if (m_NMEA0183.Rmc.Position.Longitude.Easting == West)
+				lon = -lon;
+			global::OCPN::get().nav().set_longitude(lon);
+		} else {
+			ll_valid = false;
+		}
+
+		global::Navigation& nav = global::OCPN::get().nav();
+		nav.set_speed_over_ground(m_NMEA0183.Rmc.SpeedOverGroundKnots);
+		nav.set_course_over_ground(m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue);
+
+		const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+
+		if (!wxIsNaN(m_NMEA0183.Rmc.MagneticVariation)) {
+			if (m_NMEA0183.Rmc.MagneticVariationDirection == East)
+				nav.set_magn_var(m_NMEA0183.Rmc.MagneticVariation);
+			else if (m_NMEA0183.Rmc.MagneticVariationDirection == West)
+				nav.set_magn_var(-m_NMEA0183.Rmc.MagneticVariation);
+
+			VAR_Rx = true;
+			global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
+		}
+
+		context.fixtime = m_NMEA0183.Rmc.UTCTime;
+
+		if (ll_valid) {
+			global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
+			m_fixtime = wxDateTime::Now().GetTicks();
+		}
+		context.pos_valid = ll_valid;
+	}
+}
+
+void MainFrame::nmea_hdt(NMEAProcessContext&)
+{
 	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+
+	global::OCPN::get().nav().set_heading_true(m_NMEA0183.Hdt.DegreesTrue);
+	if (!wxIsNaN(m_NMEA0183.Hdt.DegreesTrue)) {
+		HDT_Rx = true;
+		global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
+	}
+}
+
+void MainFrame::nmea_hdg(NMEAProcessContext&)
+{
+	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+
+	global::Navigation& nav = global::OCPN::get().nav();
+	nav.set_heading_magn(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees);
+	if (!wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees))
+		global::OCPN::get().wdt().set_hdx_watchdog(wdt.gps_watchdog_timeout_ticks);
+
+	if (m_NMEA0183.Hdg.MagneticVariationDirection == East)
+		nav.set_magn_var(m_NMEA0183.Hdg.MagneticVariationDegrees);
+	else if (m_NMEA0183.Hdg.MagneticVariationDirection == West)
+		nav.set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
+
+	if (!wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees)) {
+		VAR_Rx = true;
+		global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
+	}
+}
+
+void MainFrame::nmea_hdm(NMEAProcessContext&)
+{
+	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+
+	global::OCPN::get().nav().set_heading_magn(m_NMEA0183.Hdm.DegreesMagnetic);
+	if (!wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic))
+		global::OCPN::get().wdt().set_hdx_watchdog(wdt.gps_watchdog_timeout_ticks);
+}
+
+void MainFrame::nmea_vtg(NMEAProcessContext&)
+{
+	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+
+	global::Navigation& nav = global::OCPN::get().nav();
+	if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots))
+		nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
+	if (!wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
+		nav.set_course_over_ground(m_NMEA0183.Vtg.TrackDegreesTrue);
+	if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots) && !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
+		global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
+}
+
+void MainFrame::nmea_gsv(NMEAProcessContext&)
+{
+	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+
+	global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
+	global::Navigation& nav = global::OCPN::get().nav();
+	nav.set_gps_SatsInView(m_NMEA0183.Gsv.SatsInView);
+	nav.set_gps_SatValid(true);
+}
+
+void MainFrame::nmea_gll(NMEAProcessContext& context)
+{
+	if (!global::OCPN::get().sys().config().nmea_UseGLL)
+		return;
+
+	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+
+	bool ll_valid = true;
+
+	if (m_NMEA0183.Gll.IsDataValid == NTrue) {
+		if (!wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude)) {
+			double llt = m_NMEA0183.Gll.Position.Latitude.Latitude;
+			int lat_deg_int = (int)(llt / 100);
+			double lat_deg = lat_deg_int;
+			double lat_min = llt - (lat_deg * 100);
+			double lat = lat_deg + (lat_min / 60.0);
+			if (m_NMEA0183.Gll.Position.Latitude.Northing == South)
+				lat = -lat;
+			global::OCPN::get().nav().set_latitude(lat);
+		} else {
+			ll_valid = false;
+		}
+
+		if (!wxIsNaN(m_NMEA0183.Gll.Position.Longitude.Longitude)) {
+			double lln = m_NMEA0183.Gll.Position.Longitude.Longitude;
+			int lon_deg_int = (int)(lln / 100);
+			double lon_deg = lon_deg_int;
+			double lon_min = lln - (lon_deg * 100);
+			double lon = lon_deg + (lon_min / 60.0);
+			if (m_NMEA0183.Gll.Position.Longitude.Easting == West)
+				lon = -lon;
+			global::OCPN::get().nav().set_longitude(lon);
+		} else {
+			ll_valid = false;
+		}
+
+		context.fixtime = m_NMEA0183.Gll.UTCTime;
+
+		if (ll_valid) {
+			global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
+			m_fixtime = wxDateTime::Now().GetTicks();
+		}
+		context.pos_valid = ll_valid;
+	}
+}
+
+void MainFrame::nmea_gga(NMEAProcessContext& context)
+{
+	const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+
+	global::Navigation& nav = global::OCPN::get().nav();
+
+	bool ll_valid = true;
+
+	if (m_NMEA0183.Gga.GPSQuality > 0) {
+		if (!wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude)) {
+			double llt = m_NMEA0183.Gga.Position.Latitude.Latitude;
+			int lat_deg_int = (int)(llt / 100);
+			double lat_deg = lat_deg_int;
+			double lat_min = llt - (lat_deg * 100);
+			double lat = lat_deg + (lat_min / 60.0);
+			if (m_NMEA0183.Gga.Position.Latitude.Northing == South)
+				lat = -lat;
+			nav.set_latitude(lat);
+		} else {
+			ll_valid = false;
+		}
+
+		if (!wxIsNaN(m_NMEA0183.Gga.Position.Longitude.Longitude)) {
+			double lln = m_NMEA0183.Gga.Position.Longitude.Longitude;
+			int lon_deg_int = (int)(lln / 100);
+			double lon_deg = lon_deg_int;
+			double lon_min = lln - (lon_deg * 100);
+			double lon = lon_deg + (lon_min / 60.0);
+			if (m_NMEA0183.Gga.Position.Longitude.Easting == West)
+				lon = -lon;
+			nav.set_longitude(lon);
+		} else {
+			ll_valid = false;
+		}
+
+		context.fixtime = m_NMEA0183.Gga.UTCTime;
+
+		if (ll_valid) {
+			global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
+			m_fixtime = wxDateTime::Now().GetTicks();
+		}
+		context.pos_valid = ll_valid;
+
+		global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
+		nav.set_gps_SatsInView(m_NMEA0183.Gga.NumberOfSatellitesInUse);
+		nav.set_gps_SatValid(true);
+	}
+}
+
+void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event)
+{
+	struct Entry
+	{
+		wxString ID;
+		void (MainFrame::*sentence)(NMEAProcessContext&); // TODO: this gets easier with c++11
+	};
+
+	static const Entry ENTRIES[] =
+	{
+		{ _T("RMC"), &MainFrame::nmea_rmc },
+		{ _T("HDT"), &MainFrame::nmea_hdt },
+		{ _T("HDG"), &MainFrame::nmea_hdg },
+		{ _T("HDM"), &MainFrame::nmea_hdm },
+		{ _T("VTG"), &MainFrame::nmea_vtg },
+		{ _T("GSV"), &MainFrame::nmea_gsv },
+		{ _T("GLL"), &MainFrame::nmea_gll },
+		{ _T("GGA"), &MainFrame::nmea_gga },
+	};
+
+	NMEAProcessContext nmea_context = { false, _T("") };
+
+	bool bis_recognized_sentence = true;
+
 	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	wxString str_buf = wxString(event.GetNMEAString().c_str(), wxConvUTF8);
@@ -4747,203 +4975,29 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 
 	m_NMEA0183 << str_buf;
 	if (m_NMEA0183.PreParse()) {
-		if (m_NMEA0183.LastSentenceIDReceived == _T("RMC")) {
-			if (m_NMEA0183.Parse()) {
-				if (m_NMEA0183.Rmc.IsDataValid == NTrue) {
-					if (!wxIsNaN(m_NMEA0183.Rmc.Position.Latitude.Latitude)) {
-						double llt = m_NMEA0183.Rmc.Position.Latitude.Latitude;
-						int lat_deg_int = (int)(llt / 100);
-						double lat_deg = lat_deg_int;
-						double lat_min = llt - (lat_deg * 100);
-						double lat = lat_deg + (lat_min / 60.0);
-						if (m_NMEA0183.Rmc.Position.Latitude.Northing == South)
-							lat = -lat;
-						global::OCPN::get().nav().set_latitude(lat);
-					} else
-						ll_valid = false;
 
-					if (!wxIsNaN(m_NMEA0183.Rmc.Position.Longitude.Longitude)) {
-						double lln = m_NMEA0183.Rmc.Position.Longitude.Longitude;
-						int lon_deg_int = (int)(lln / 100);
-						double lon_deg = lon_deg_int;
-						double lon_min = lln - (lon_deg * 100);
-						double lon = lon_deg + (lon_min / 60.0);
-						if (m_NMEA0183.Rmc.Position.Longitude.Easting == West)
-							lon = -lon;
-						global::OCPN::get().nav().set_longitude(lon);
-					} else
-						ll_valid = false;
-
-					global::Navigation& nav = global::OCPN::get().nav();
-					nav.set_speed_over_ground(m_NMEA0183.Rmc.SpeedOverGroundKnots);
-					nav.set_course_over_ground(m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue);
-
-					if (!wxIsNaN(m_NMEA0183.Rmc.MagneticVariation)) {
-						if (m_NMEA0183.Rmc.MagneticVariationDirection == East)
-							global::OCPN::get().nav().set_magn_var(
-								m_NMEA0183.Rmc.MagneticVariation);
-						else if (m_NMEA0183.Rmc.MagneticVariationDirection == West)
-							global::OCPN::get().nav().set_magn_var(
-								-m_NMEA0183.Rmc.MagneticVariation);
-
-						VAR_Rx = true;
-						global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
-					}
-
-					sfixtime = m_NMEA0183.Rmc.UTCTime;
-
-					if (ll_valid) {
-						global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
-						m_fixtime = wxDateTime::Now().GetTicks();
-					}
-					pos_valid = ll_valid;
-				}
-			} else if (debug.nmea > 0) {
-				gps_debug(m_NMEA0183, str_buf);
+		// search for the appropriate sentence handler
+		const Entry* entry = NULL;
+		for (size_t i = 0; i < sizeof(ENTRIES) / sizeof(ENTRIES[0]); ++i) {
+			if (m_NMEA0183.LastSentenceIDReceived == ENTRIES[i].ID) {
+				entry = &ENTRIES[i];
+				break;
 			}
-		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDT")) {
+		}
+
+		// execute the handler, if found. this is done outside the searching loop
+		// because it would increase the nested depth and it is invariant.
+		if (entry) {
 			if (m_NMEA0183.Parse()) {
-				global::OCPN::get().nav().set_heading_true(m_NMEA0183.Hdt.DegreesTrue);
-				if (!wxIsNaN(m_NMEA0183.Hdt.DegreesTrue)) {
-					HDT_Rx = true;
-					global::OCPN::get().wdt().set_hdt_watchdog(wdt.gps_watchdog_timeout_ticks);
-				}
-			} else if (debug.nmea > 0) {
-				gps_debug(m_NMEA0183, str_buf);
-			}
-		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDG")) {
-			if (m_NMEA0183.Parse()) {
-				global::Navigation& nav = global::OCPN::get().nav();
-				nav.set_heading_magn(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees);
-				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees))
-					global::OCPN::get().wdt().set_hdx_watchdog(wdt.gps_watchdog_timeout_ticks);
-
-				if (m_NMEA0183.Hdg.MagneticVariationDirection == East)
-					nav.set_magn_var(m_NMEA0183.Hdg.MagneticVariationDegrees);
-				else if (m_NMEA0183.Hdg.MagneticVariationDirection == West)
-					nav.set_magn_var(-m_NMEA0183.Hdg.MagneticVariationDegrees);
-
-				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticVariationDegrees)) {
-					VAR_Rx = true;
-					global::OCPN::get().wdt().set_var_watchdog(wdt.gps_watchdog_timeout_ticks);
-				}
-			} else if (debug.nmea > 0) {
-				gps_debug(m_NMEA0183, str_buf);
-			}
-		} else if (m_NMEA0183.LastSentenceIDReceived == _T("HDM")) {
-			if (m_NMEA0183.Parse()) {
-				global::OCPN::get().nav().set_heading_magn(m_NMEA0183.Hdm.DegreesMagnetic);
-				if (!wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic))
-					global::OCPN::get().wdt().set_hdx_watchdog(wdt.gps_watchdog_timeout_ticks);
-			} else if (debug.nmea > 0) {
-				gps_debug(m_NMEA0183, str_buf);
-			}
-		} else if (m_NMEA0183.LastSentenceIDReceived == _T("VTG")) {
-			if (m_NMEA0183.Parse()) {
-				global::Navigation& nav = global::OCPN::get().nav();
-				if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots))
-					nav.set_speed_over_ground(m_NMEA0183.Vtg.SpeedKnots);
-				if (!wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
-					nav.set_course_over_ground(m_NMEA0183.Vtg.TrackDegreesTrue);
-				if (!wxIsNaN(m_NMEA0183.Vtg.SpeedKnots)
-					&& !wxIsNaN(m_NMEA0183.Vtg.TrackDegreesTrue))
-					global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
-			} else if (debug.nmea > 0) {
-				gps_debug(m_NMEA0183, str_buf);
-			}
-		} else if (m_NMEA0183.LastSentenceIDReceived == _T("GSV")) {
-			if (m_NMEA0183.Parse()) {
-				global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
-				global::Navigation& nav = global::OCPN::get().nav();
-				nav.set_gps_SatsInView(m_NMEA0183.Gsv.SatsInView);
-				nav.set_gps_SatValid(true);
-			} else if (debug.nmea > 0) {
-				gps_debug(m_NMEA0183, str_buf);
-			}
-		} else if (global::OCPN::get().sys().config().nmea_UseGLL
-				   && m_NMEA0183.LastSentenceIDReceived == _T("GLL")) {
-			if (m_NMEA0183.Parse()) {
-				if (m_NMEA0183.Gll.IsDataValid == NTrue) {
-					if (!wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude)) {
-						double llt = m_NMEA0183.Gll.Position.Latitude.Latitude;
-						int lat_deg_int = (int)(llt / 100);
-						double lat_deg = lat_deg_int;
-						double lat_min = llt - (lat_deg * 100);
-						double lat = lat_deg + (lat_min / 60.0);
-						if (m_NMEA0183.Gll.Position.Latitude.Northing == South)
-							lat = -lat;
-						global::OCPN::get().nav().set_latitude(lat);
-					} else
-						ll_valid = false;
-
-					if (!wxIsNaN(m_NMEA0183.Gll.Position.Longitude.Longitude)) {
-						double lln = m_NMEA0183.Gll.Position.Longitude.Longitude;
-						int lon_deg_int = (int)(lln / 100);
-						double lon_deg = lon_deg_int;
-						double lon_min = lln - (lon_deg * 100);
-						double lon = lon_deg + (lon_min / 60.0);
-						if (m_NMEA0183.Gll.Position.Longitude.Easting == West)
-							lon = -lon;
-						global::OCPN::get().nav().set_longitude(lon);
-					} else
-						ll_valid = false;
-
-					sfixtime = m_NMEA0183.Gll.UTCTime;
-
-					if (ll_valid) {
-						global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
-						m_fixtime = wxDateTime::Now().GetTicks();
-					}
-					pos_valid = ll_valid;
-				}
-			} else if (debug.nmea > 0) {
-				gps_debug(m_NMEA0183, str_buf);
-			}
-		} else if (m_NMEA0183.LastSentenceIDReceived == _T("GGA")) {
-			if (m_NMEA0183.Parse()) {
-				if (m_NMEA0183.Gga.GPSQuality > 0) {
-					if (!wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude)) {
-						double llt = m_NMEA0183.Gga.Position.Latitude.Latitude;
-						int lat_deg_int = (int)(llt / 100);
-						double lat_deg = lat_deg_int;
-						double lat_min = llt - (lat_deg * 100);
-						double lat = lat_deg + (lat_min / 60.0);
-						if (m_NMEA0183.Gga.Position.Latitude.Northing == South)
-							lat = -lat;
-						global::OCPN::get().nav().set_latitude(lat);
-					} else
-						ll_valid = false;
-
-					if (!wxIsNaN(m_NMEA0183.Gga.Position.Longitude.Longitude)) {
-						double lln = m_NMEA0183.Gga.Position.Longitude.Longitude;
-						int lon_deg_int = (int)(lln / 100);
-						double lon_deg = lon_deg_int;
-						double lon_min = lln - (lon_deg * 100);
-						double lon = lon_deg + (lon_min / 60.0);
-						if (m_NMEA0183.Gga.Position.Longitude.Easting == West)
-							lon = -lon;
-						global::OCPN::get().nav().set_longitude(lon);
-					} else
-						ll_valid = false;
-
-					sfixtime = m_NMEA0183.Gga.UTCTime;
-
-					if (ll_valid) {
-						global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
-						m_fixtime = wxDateTime::Now().GetTicks();
-					}
-					pos_valid = ll_valid;
-
-					global::OCPN::get().wdt().set_sat_watchdog(wdt.sat_watchdog_timeout_ticks);
-					global::Navigation& nav = global::OCPN::get().nav();
-					nav.set_gps_SatsInView(m_NMEA0183.Gga.NumberOfSatellitesInUse);
-					nav.set_gps_SatValid(true);
-				}
+				(this->*(entry->sentence))(nmea_context);
 			} else if (debug.nmea > 0) {
 				gps_debug(m_NMEA0183, str_buf);
 			}
 		}
+
 	} else if (str_buf.Mid(1, 5).IsSameAs(_T("AIVDO"))) {
+		const global::WatchDog::Data& wdt = global::OCPN::get().wdt().get_data();
+
 		// Process ownship (AIVDO) messages from any source
 		GenericPosDatEx gpd;
 		ais::AIS_Error nerr = ais::AIS_GENERIC_ERROR;
@@ -4969,7 +5023,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 			if (!wxIsNaN(gpd.kLat) && !wxIsNaN(gpd.kLon)) {
 				global::OCPN::get().wdt().set_gps_watchdog(wdt.gps_watchdog_timeout_ticks);
 				m_fixtime = wxDateTime::Now().GetTicks();
-				pos_valid = true;
+				nmea_context.pos_valid = true;
 			}
 		} else {
 			if ((debug.nmea > 0) && (debug.total_NMEAerror_messages < debug.nmea)) {
@@ -4986,7 +5040,7 @@ void MainFrame::OnEvtOCPN_NMEA(OCPN_DataStreamEvent& event) // FIXME: this metho
 	}
 
 	if (bis_recognized_sentence)
-		PostProcessNNEA(pos_valid, sfixtime);
+		PostProcessNNEA(nmea_context.pos_valid, nmea_context.fixtime);
 }
 
 void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
@@ -5138,7 +5192,7 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 		wxString fix_time_format
 			= Fix_Time.Format(_T("%Y-%m-%dT%H:%M:%S")); // this should show as LOCAL
 
-		//          Compare the server (fix) time to the current system time
+		// Compare the server (fix) time to the current system time
 		wxDateTime sdt;
 		sdt.SetToCurrent();
 		wxDateTime cwxft = Fix_Time; // take a copy
@@ -5147,17 +5201,17 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 
 		int b = (ts.GetSeconds()).ToLong();
 
-		//          Correct system time if necessary
-		//      Only set the time if wrong by more than 1 minute, and less than 2 hours
-		//      This should eliminate bogus times which may come from faulty GPS units
+		// Correct system time if necessary
+		// Only set the time if wrong by more than 1 minute, and less than 2 hours
+		// This should eliminate bogus times which may come from faulty GPS units
 
 		if ((abs(b) > 60) && (abs(b) < (2 * 60 * 60))) {
 
 #ifdef __WXMSW__
-			//      Fix up the fix_time to convert to GMT
+			// Fix up the fix_time to convert to GMT
 			Fix_Time = Fix_Time.ToGMT();
 
-			//    Code snippet following borrowed from wxDateCtrl, MSW
+			// Code snippet following borrowed from wxDateCtrl, MSW
 
 			const wxDateTime::Tm tm(Fix_Time.GetTm());
 
@@ -5176,9 +5230,9 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 
 #else
 
-			//      This contortion sets the system date/time on POSIX host
-			//      Requires the following line in /etc/sudoers
-			//          nav ALL=NOPASSWD:/bin/date -s *
+			// This contortion sets the system date/time on POSIX host
+			// Requires the following line in /etc/sudoers
+			//   nav ALL=NOPASSWD:/bin/date -s *
 
 			wxString msg;
 			msg.Printf(_T("Setting system time, delta t is %d seconds"), b);
@@ -5200,8 +5254,8 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 #endif //__WXMSW__
 			m_bTimeIsSet = true;
 
-		} // if needs correction
-	} // if valid time
+		}
+	}
 
 #endif // ocpnUPDATE_SYSTEM_TIME
 }

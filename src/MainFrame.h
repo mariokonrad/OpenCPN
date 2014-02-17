@@ -210,6 +210,12 @@ public:
 	bool is_route_blink_odd() const;
 
 private:
+	struct NMEAProcessContext
+	{
+		bool pos_valid;
+		wxString fixtime;
+	};
+
 	void activate_chart(chart::ChartBase* tentative);
 	void setup_viewpoint();
 	void refresh_pianobar();
@@ -241,6 +247,15 @@ private:
 	void toolLeftClick_CURRENT();
 	void toolLeftClick_TIDE();
 	void toolLeftClick_ROUTEMANAGER();
+
+	void nmea_rmc(NMEAProcessContext&);
+	void nmea_hdt(NMEAProcessContext&);
+	void nmea_hdg(NMEAProcessContext&);
+	void nmea_hdm(NMEAProcessContext&);
+	void nmea_vtg(NMEAProcessContext&);
+	void nmea_gsv(NMEAProcessContext&);
+	void nmea_gll(NMEAProcessContext&);
+	void nmea_gga(NMEAProcessContext&);
 
 	// Toolbar support
 	ToolBarSimple* CreateAToolbar();

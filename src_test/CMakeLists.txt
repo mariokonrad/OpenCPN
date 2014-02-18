@@ -24,8 +24,16 @@ endforeach(TEST_FILE)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
+if(WIN32)
+	set(PLATFORM_SRC
+		${CMAKE_SOURCE_DIR}/src/windows/compatibility.cpp
+		${CMAKE_SOURCE_DIR}/src/windows/compatibility.h
+		)
+endif()
+
 add_executable(testrunner
 	${TEST_SRC}
+	${PLATFORM_SRC}
 	${CMAKE_SOURCE_DIR}/src/UserColors.cpp
 	${CMAKE_SOURCE_DIR}/src/navigation/AnchorDist.cpp
 	${CMAKE_SOURCE_DIR}/src/navigation/MagneticVariation.cpp

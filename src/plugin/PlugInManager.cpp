@@ -900,7 +900,8 @@ void PlugInManager::SendMessageToAllPlugins(const wxString& message_id,
 					}
 					case 108:
 					case 109:
-					case 110: {
+					case 110:
+					case 111: {
 						opencpn_plugin_18* ppi = dynamic_cast<opencpn_plugin_18*>(pic->m_pplugin);
 						if (ppi)
 							ppi->SetPluginMessage(decouple_message_id, decouple_message_body);

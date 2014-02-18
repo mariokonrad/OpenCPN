@@ -385,13 +385,12 @@ static wxString* _UDWHAZ03(S57Obj* obj, double depth_value, ObjRazRules* rzRules
 
 		// get area DEPARE & DRGARE that intersect this point/line/area
 
-		ListOfS57Obj* pobj_list;
+		ListOfS57Obj* pobj_list = NULL;
 
 		if (obj->m_chart_context->chart)
 			pobj_list = obj->m_chart_context->chart->GetAssociatedObjects(obj);
 		else {
-			wxString* ret_str = new wxString(udwhaz03str);
-			return ret_str;
+			danger = false;
 		}
 
 		for (ListOfS57Obj::iterator node = pobj_list->begin(); node != pobj_list->end(); ++node) {
@@ -418,7 +417,7 @@ static wxString* _UDWHAZ03(S57Obj* obj, double depth_value, ObjRazRules* rzRules
 		delete pobj_list;
 	}
 
-	if (true == danger) {
+	if (danger) {
 		int watlev;
 		GetIntAttr(obj, "WATLEV", watlev);
 

@@ -44,7 +44,6 @@ extern ChartCanvas* cc1;
 
 FloatingCompassWindow::FloatingCompassWindow(wxWindow* parent)
 {
-	m_pparent = parent;
 	long wstyle = wxNO_BORDER | wxFRAME_NO_TASKBAR;
 #ifndef __WXMAC__
 	wstyle |= wxFRAME_SHAPED;

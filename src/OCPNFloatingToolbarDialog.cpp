@@ -52,25 +52,26 @@ BEGIN_EVENT_TABLE(OCPNFloatingToolbarDialog, wxDialog)
 	EVT_WINDOW_CREATE(OCPNFloatingToolbarDialog::OnWindowCreate)
 END_EVENT_TABLE()
 
-OCPNFloatingToolbarDialog::OCPNFloatingToolbarDialog(
-		wxWindow* parent,
-		wxPoint position,
-		long orient)
+OCPNFloatingToolbarDialog::OCPNFloatingToolbarDialog(wxWindow* parent, wxPoint position,
+													 long orient)
+	: m_ptoolbar(NULL)
+	, m_orient(orient)
+	, m_opacity(255)
+	, m_position(position)
+	, m_dock_x(0)
+	, m_dock_y(0)
+	, m_block(false)
 {
-	m_pparent = parent;
 	long wstyle = wxNO_BORDER | wxFRAME_NO_TASKBAR;
 #ifndef __WXMAC__
 	wstyle |= wxFRAME_SHAPED;
 #endif
-
-	m_ptoolbar = NULL;
 
 #ifdef __WXOSX__
 	wstyle |= wxSTAY_ON_TOP;
 #endif
 	wxDialog::Create(parent, -1, _T("ocpnToolbarDialog"), wxPoint(-1, -1), wxSize(-1, -1), wstyle);
 
-	m_opacity = 255;
 	m_fade_timer.SetOwner(this, FADE_TIMER);
 	if (global::OCPN::get().gui().toolbar().transparent) {
 		m_fade_timer.Start(5000);
@@ -78,17 +79,9 @@ OCPNFloatingToolbarDialog::OCPNFloatingToolbarDialog(
 
 	m_pGrabberwin = new GrabberWin(this);
 
-	m_position = position;
-	m_orient = orient;
-
 	// A top-level sizer
 	m_topSizer = new wxBoxSizer(wxHORIZONTAL);
 	SetSizer(m_topSizer);
-
-	// Set initial "Dock" parameters
-	m_dock_x = 0;
-	m_dock_y = 0;
-	m_block = false;
 
 	Hide();
 }
@@ -153,8 +146,8 @@ void OCPNFloatingToolbarDialog::RePosition()
 	if (m_block)
 		return;
 
-	if (m_pparent && m_ptoolbar) {
-		wxSize cs = m_pparent->GetClientSize();
+	if (GetParent() && m_ptoolbar) {
+		wxSize cs = GetParent()->GetClientSize();
 		if (-1 == m_dock_x)
 			m_position.x = 0;
 		else if (1 == m_dock_x)
@@ -171,7 +164,7 @@ void OCPNFloatingToolbarDialog::RePosition()
 		m_position.x = wxMax(0, m_position.x);
 		m_position.y = wxMax(0, m_position.y);
 
-		wxPoint screen_pos = m_pparent->ClientToScreen(m_position);
+		wxPoint screen_pos = GetParent()->ClientToScreen(m_position);
 		Move(screen_pos);
 	}
 }
@@ -210,7 +203,7 @@ void OCPNFloatingToolbarDialog::ShowTooltips()
 
 void OCPNFloatingToolbarDialog::ToggleOrientation()
 {
-	wxPoint old_screen_pos = m_pparent->ClientToScreen(m_position);
+	wxPoint old_screen_pos = GetParent()->ClientToScreen(m_position);
 
 	if (m_orient == wxTB_HORIZONTAL) {
 		m_orient = wxTB_VERTICAL;
@@ -277,8 +270,8 @@ void OCPNFloatingToolbarDialog::RefreshFadeTimer()
 
 void OCPNFloatingToolbarDialog::MoveDialogInScreenCoords(wxPoint posn, wxPoint posn_old)
 {
-	wxPoint pos_in_parent = m_pparent->ScreenToClient(posn);
-	wxPoint pos_in_parent_old = m_pparent->ScreenToClient(posn_old);
+	wxPoint pos_in_parent = GetParent()->ScreenToClient(posn);
+	wxPoint pos_in_parent_old = GetParent()->ScreenToClient(posn_old);
 
 	// "Docking" support
 #define DOCK_MARGIN 40
@@ -291,7 +284,7 @@ void OCPNFloatingToolbarDialog::MoveDialogInScreenCoords(wxPoint posn, wxPoint p
 			m_dock_x = -1;
 		}
 	} else if (pos_in_parent.x > pos_in_parent_old.x) { // moving right
-		int max_right = m_pparent->GetClientSize().x - GetSize().x;
+		int max_right = GetParent()->GetClientSize().x - GetSize().x;
 		if (pos_in_parent.x > (max_right - DOCK_MARGIN)) {
 			pos_in_parent.x = max_right;
 			m_dock_x = 1;
@@ -306,7 +299,7 @@ void OCPNFloatingToolbarDialog::MoveDialogInScreenCoords(wxPoint posn, wxPoint p
 			m_dock_y = -1;
 		}
 	} else if (pos_in_parent.y > pos_in_parent_old.y) { // moving down
-		int max_down = m_pparent->GetClientSize().y - GetSize().y;
+		int max_down = GetParent()->GetClientSize().y - GetSize().y;
 		if (pos_in_parent.y > (max_down - DOCK_MARGIN)) {
 			pos_in_parent.y = max_down;
 			m_dock_y = 1;
@@ -315,7 +308,7 @@ void OCPNFloatingToolbarDialog::MoveDialogInScreenCoords(wxPoint posn, wxPoint p
 
 	m_position = pos_in_parent;
 
-	wxPoint final_pos = m_pparent->ClientToScreen(pos_in_parent);
+	wxPoint final_pos = GetParent()->ClientToScreen(pos_in_parent);
 
 	Move(final_pos);
 }
@@ -339,12 +332,12 @@ void OCPNFloatingToolbarDialog::Realize()
 	// Update "Dock" parameters
 	if (m_position.x == 0)
 		m_dock_x = -1;
-	else if (m_position.x == m_pparent->GetClientSize().x - GetSize().x)
+	else if (m_position.x == GetParent()->GetClientSize().x - GetSize().x)
 		m_dock_x = 1;
 
 	if (m_position.y == 0)
 		m_dock_y = -1;
-	else if (m_position.y == m_pparent->GetClientSize().y - GetSize().y)
+	else if (m_position.y == GetParent()->GetClientSize().y - GetSize().y)
 		m_dock_y = 1;
 
 	// Now create a bitmap mask forthe frame shape.
@@ -472,7 +465,7 @@ void OCPNFloatingToolbarDialog::OnToolLeftClick(wxCommandEvent& event)
 	// Since Dialog events don't propagate automatically, we send it explicitly
 	// (instead of relying on event.Skip()). Send events up the window hierarchy
 
-	m_pparent->GetEventHandler()->AddPendingEvent(event);
+	GetParent()->GetEventHandler()->AddPendingEvent(event);
 	gFrame->Raise();
 }
 

@@ -74,7 +74,6 @@ public:
 private:
 	void DoFade(int value);
 
-	wxWindow* m_pparent;
 	ToolBarSimple* m_ptoolbar;
 	wxBoxSizer* m_topSizer;
 

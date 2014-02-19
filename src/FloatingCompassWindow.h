@@ -52,7 +52,6 @@ private:
 	wxBitmap m_MaskBmp;
 	wxStaticBitmap* m_pStatBoxToolStaticBmp;
 
-	wxWindow* m_pparent;
 	wxBoxSizer* m_topSizer;
 	wxString m_lastgpsIconName;
 	double m_rose_angle;

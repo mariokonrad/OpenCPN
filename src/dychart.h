@@ -24,8 +24,6 @@
 #ifndef __DYCHART__H__
 #define __DYCHART__H__
 
-#define CACHE_N_LIMIT_DEFAULT 20 // Cache no more than n charts
-
 // If defined, update the system time using GPS receiver data.
 // Time update is applied if the system time and GPS time differ
 // by more than one minute, and only once per session.

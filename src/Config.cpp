@@ -453,7 +453,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	g_StyleManager->SetStyle(uiStyle);
 
 	if (iteration == 0) {
-		sys.set_config_CacheLimit(read_long(_T("NCacheLimit"), CACHE_N_LIMIT_DEFAULT));
+		// default value for caching: 20 chart
+		sys.set_config_CacheLimit(read_long(_T("NCacheLimit"), 20));
 
 		int mem_limit = 0;
 		Read(_T("MEMCacheLimit"), &mem_limit, 0);

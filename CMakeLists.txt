@@ -250,20 +250,34 @@ if(WIN32)
 	add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
 
 	if(MSVC)
+		# EH   : exception handling model
+		# W1   : warning level 1
+		# MD   : multithreaded DLL
+		# MDd  : multithreaded DLL (debugging)
+		# O1   : optimization: small
+		# O2   : optimization: fast
+		# Od   : optimization: disabled
+		# Ob0  : optimization: inline (disabled)
+		# Ob1  : optimization: inline (inline, __inline)
+		# Ob2  : optimization: inline (inline, __inline, compiler)
+		# D    : define symbol
+		# Z1   : complete debugging information
+		# RTC1 : runtime error checking
+
 		set(C_WARN_FLAGS   "/W1 /EHsc")
 		set(CXX_WARN_FLAGS "/W3 /EHsc")
 
-		set(CMAKE_C_FLAGS                     "/MD  /O2  /Ob2 ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_DEBUG               "/MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_MINSIZEREL          "/MD  /O1  /Ob1 /D NDEBUG ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_RELEASE             "/MD  /O2  /Ob2 /D _DEBUG ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "/MD  /O2  /Ob1 /D NDEBUG /Zi ${C_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS                   "/MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELEASE           "/MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_DEBUG             "/MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_MINSIZEREL        "/MD  /O1  /Ob1 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELEASE           "/MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/MD  /O2  /Ob1 /D NDEBUG /Zi ${CXX_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS                     "/nologo /MD  /O2  /Ob2 ${C_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS_DEBUG               "/nologo /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${C_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS_MINSIZEREL          "/nologo /MD  /O1  /Ob1 /D NDEBUG ${C_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS_RELEASE             "/nologo /MD  /O2  /Ob2 /D _DEBUG ${C_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "/nologo /MD  /O2  /Ob1 /D NDEBUG /Zi ${C_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS                   "/nologo /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_RELEASE           "/nologo /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_DEBUG             "/nologo /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_MINSIZEREL        "/nologo /MD  /O1  /Ob1 /D NDEBUG ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_RELEASE           "/nologo /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/nologo /MD  /O2  /Ob1 /D NDEBUG /Zi ${CXX_WARN_FLAGS}")
 	endif(MSVC)
 endif(WIN32)
 

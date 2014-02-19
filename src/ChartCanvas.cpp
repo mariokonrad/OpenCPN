@@ -7289,7 +7289,8 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			int ask_return
 				= OCPNMessageBox(this, global::OCPN::get().routeman().GetRouteReverseMessage(),
 								 _("Rename Waypoints?"), wxYES_NO);
-			m_pSelectedRoute->Reverse(ask_return == wxID_YES);
+			if (ask_return != wxID_CANCEL)
+				m_pSelectedRoute->Reverse(ask_return == wxID_YES);
 			pSelect->AddAllSelectableRouteSegments(m_pSelectedRoute);
 			pConfig->UpdateRoute(m_pSelectedRoute);
 			if (pRoutePropDialog && (pRoutePropDialog->IsShown())) {

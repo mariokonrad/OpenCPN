@@ -158,7 +158,7 @@ static void Get_CM93_Cell_Origin(int cellindex, int /*scale*/, double* lat, doub
 {
 	// Longitude
 	double idx1 = cellindex % 10000;
-	double lont = ( idx1 / 3.0);
+	double lont = (idx1 / 3.0);
 
 	*lon = lont;
 
@@ -174,8 +174,7 @@ int Get_CM93_CellIndex(double lat, double lon, int scale)
 	int retval = 0;
 
 	int dval;
-	switch ( scale )
-	{
+	switch (scale) {
 		case 20000000: dval = 120; break;         // Z
 		case  3000000: dval =  60; break;         // A
 		case  1000000: dval =  30; break;         // B
@@ -189,24 +188,22 @@ int Get_CM93_CellIndex(double lat, double lon, int scale)
 
 	// Longitude
 	double lon1 = (lon + 360.0) * 3.0;                    // basic cell size is 20 minutes
-	while ( lon1 >= 1080.0)
+	while (lon1 >= 1080.0)
 		lon1 -= 1080.0;
-	unsigned short lon2 = ( unsigned short ) floor ( lon1 /dval );      // normalize
+	unsigned short lon2 = static_cast<unsigned short>(floor(lon1 / dval)); // normalize
 	unsigned short lon3 = lon2 * dval;
 
 	retval = lon3;
 
 	// Latitude
-	double lat1 = ( lat * 3.0) + 270.0 - 30;
-	unsigned short lat2 = ( unsigned short ) floor ( lat1 / dval );      // normalize
+	double lat1 = (lat * 3.0) + 270.0 - 30;
+	unsigned short lat2 = static_cast<unsigned short>(floor(lat1 / dval)); // normalize
 	unsigned short lat3 = lat2 * dval;
 
-
-	retval += ( lat3 + 30 ) * 10000;
+	retval += (lat3 + 30) * 10000;
 
 	return retval;
 }
-
 
 // FIXME: move chart decoding to separate class
 static unsigned char Table_0[] =
@@ -906,7 +903,7 @@ double cm93chart::GetNormalScaleMin(double WXUNUSED(canvas_scale_factor), bool W
 	return 1.0;
 }
 
-double cm93chart::GetNormalScaleMax(double WXUNUSED(canvas_scale_factor)) const
+double cm93chart::GetNormalScaleMax(double WXUNUSED(canvas_scale_factor), int WXUNUSED(canvas_width)) const
 {
 	switch ( GetNativeScale() )
 	{

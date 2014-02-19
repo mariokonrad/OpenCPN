@@ -49,11 +49,11 @@ public:
 	void Activate(void);
 	void Deactivate(void);
 
-	double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
-	double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
+	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
+	virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
 	int GetNativeScale(void) const;
 
-	wxString GetPubDate();
+	virtual wxString GetPubDate() const;
 
 	void SetVPParms(const ViewPort& vpt);
 	void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);

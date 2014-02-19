@@ -54,8 +54,8 @@ public:
 
 	void ResetSubcellKey();
 
-	double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
-	double GetNormalScaleMax(double canvas_scale_factor) const;
+	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
+	virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
 
 	bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
 	void SetVPParms(const ViewPort& vpt);

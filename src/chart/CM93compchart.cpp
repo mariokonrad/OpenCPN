@@ -209,7 +209,7 @@ InitReturn cm93compchart::Init(const wxString& name, ChartInitFlag flags)
 		}
 	} else {
 		// Get the cm93 cell database prefix
-		path = fn.GetPath((int)(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME));
+		path = fn.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME);
 
 		// Remove two subdirectories from the passed file name
 		// This will give a normal CM93 root
@@ -346,7 +346,7 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 	const global::System::Debug& debug = global::OCPN::get().sys().debug();
 
 	if (debug.cm93)
-		printf("\non SetVPParms, cmscale:%d, %c\n", cmscale, (char)('A' + cmscale - 1));
+		printf("\non SetVPParms, cmscale:%d, %c\n", cmscale, static_cast<char>('A' + cmscale - 1));
 
 	wxChar ext;
 	bool cellscale_is_useable = false;
@@ -357,15 +357,15 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 		while (NULL == m_pcm93chart_array[cmscale]) {
 			if (Is_CM93Cell_Present(m_prefixComposite, vpt.latitude(), vpt.longitude(), cmscale)) {
 				if (debug.cm93)
-					printf(" chart %c at VP clat/clon is present\n", (char)('A' + cmscale - 1));
+					printf(" chart %c at VP clat/clon is present\n", static_cast<char>('A' + cmscale - 1));
 
 				m_pcm93chart_array[cmscale] = new cm93chart();
 
-				ext = (wxChar)('A' + cmscale - 1);
+				ext = static_cast<wxChar>('A' + cmscale - 1);
 				if (cmscale == 0)
 					ext = 'Z';
 
-				wxString file_dummy = _T ( "CM93." );
+				wxString file_dummy = _T("CM93.");
 				file_dummy << ext;
 
 				m_pcm93chart_array[cmscale]->SetCM93Dict(m_pDictComposite);
@@ -385,7 +385,7 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 				cmscale--; // revert to larger scale if selected is not present
 				if (debug.cm93)
 					printf(" no %c scale chart present, adjusting cmscale to %c\n",
-						   (char)('A' + cmscale), (char)('A' + cmscale - 1));
+						   static_cast<char>('A' + cmscale), static_cast<char>('A' + cmscale - 1));
 			}
 		}
 
@@ -420,12 +420,12 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 
 			if (!m_pcm93chart_current->GetCoverSet()->GetCoverCount()) {
 				if (debug.cm93)
-					printf(" chart %c has no M_COVR\n", (char)('A' + cmscale - 1));
+					printf(" chart %c has no M_COVR\n", static_cast<char>('A' + cmscale - 1));
 			}
 
 			if (m_pcm93chart_current->IsPointInLoadedM_COVR(xc, yc)) {
 				if (debug.cm93)
-					printf(" chart %c contains clat/clon\n", (char)('A' + cmscale - 1));
+					printf(" chart %c contains clat/clon\n", static_cast<char>('A' + cmscale - 1));
 
 				cellscale_is_useable = true;
 				break;
@@ -465,7 +465,7 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 									  // stop already...
 				if (debug.cm93)
 					printf(" VP is not in M_COVR, adjusting cmscale to %c\n",
-						   (char)('A' + cmscale - 1));
+						   static_cast<char>('A' + cmscale - 1));
 			}
 		}
 	}
@@ -474,7 +474,7 @@ int cm93compchart::PrepareChartScale(const ViewPort& vpt, int cmscale)
 }
 
 // Populate the member bool array describing which chart scales are available at any location
-wxString cm93compchart::GetPubDate()
+wxString cm93compchart::GetPubDate() const
 {
 	wxString data;
 
@@ -490,7 +490,7 @@ int cm93compchart::GetNativeScale() const
 	if (m_pcm93chart_current)
 		return m_pcm93chart_current->GetNativeScale();
 	else
-		return (int)1e8;
+		return static_cast<int>(1e8);
 }
 
 double cm93compchart::GetNormalScaleMin(double, bool b_allow_overzoom) const
@@ -608,7 +608,7 @@ bool cm93compchart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPor
 
 	if (debug.cm93) {
 		printf("\nOn DoRenderRegionViewOnGL Ref scale is %d, %c %g\n", m_cmscale,
-			   (char)('A' + m_cmscale - 1), VPoint.view_scale());
+			   static_cast<char>('A' + m_cmscale - 1), VPoint.view_scale());
 		debug_dump_rects(Region, VPoint.rv_rect);
 	}
 
@@ -656,7 +656,7 @@ bool cm93compchart::DoRenderRegionViewOnGL(const wxGLContext& glc, const ViewPor
 					if (m_pcm93chart_current) {
 						if (debug.cm93)
 							printf("  In DRRVOD,  add quilt patch at %d, %c\n", m_cmscale,
-								   (char)('A' + m_cmscale - 1));
+								   static_cast<char>('A' + m_cmscale - 1));
 
 						OCPNRegion sscale_region = GetValidScreenCanvasRegion(vp_positive, Region);
 
@@ -812,7 +812,7 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 
 	if (debug.cm93) {
 		printf("\nOn DoRenderRegionViewOnDC Ref scale is %d, %c\n", m_cmscale,
-			   (char)('A' + m_cmscale - 1));
+			   static_cast<char>('A' + m_cmscale - 1));
 		debug_dump_rects(Region);
 	}
 
@@ -891,7 +891,7 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 					if (m_pcm93chart_current) {
 						if (debug.cm93)
 							printf("  In DRRVOD,  add quilt patch at %d, %c\n", m_cmscale,
-								   (char)('A' + m_cmscale - 1));
+								   static_cast<char>('A' + m_cmscale - 1));
 
 						m_pcm93chart_current->RenderRegionViewOnDC(build_dc, vp_positive, Region);
 
@@ -983,7 +983,6 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 				// vp_positive.vpBBox.Intersect(pmcd->m_covr_bbox)) || !(_OUT ==
 				// vp.vpBBox.Intersect(pmcd->m_covr_bbox)))
 				{
-
 					geo::PointF* p = pmcd->pvertices;
 					wxPoint* pwp = m_pcm93chart_current->GetDrawBuffer(pmcd->m_nvertices);
 
@@ -1149,9 +1148,9 @@ bool cm93compchart::RenderNextSmallerCellOutlines(ocpnDC& dc, const ViewPort& vp
 
 		if (global::OCPN::get().sys().debug().cm93) {
 			printf(" RenderNextSmallerCellOutline, base chart scale is %c\n",
-				   (char)('A' + m_cmscale - 1));
+				   static_cast<char>('A' + m_cmscale - 1));
 			printf("    top_scale: %8.0f   VP.chart_scale: %8.0f\n", top_scale, vp.chart_scale);
-			printf("    nss_max is %c\n", (char)('A' + nss_max - 1));
+			printf("    nss_max is %c\n", static_cast<char>('A' + nss_max - 1));
 		}
 
 		int nss = m_cmscale +1;
@@ -1190,7 +1189,7 @@ bool cm93compchart::RenderNextSmallerCellOutlines(ocpnDC& dc, const ViewPort& vp
 				// skip rendering the A scale outlines
 				bool mcr = psc->UpdateCovrSet(vp);
 
-				//    Render the chart outlines
+				// Render the chart outlines
 				if (mcr) {
 					covr_set* pcover = psc->GetCoverSet();
 
@@ -1199,7 +1198,7 @@ bool cm93compchart::RenderNextSmallerCellOutlines(ocpnDC& dc, const ViewPort& vp
 
 						M_COVR_Desc* mcd = pcover->GetCover(im);
 
-						//    Case:  vpBBox is completely inside the mcd box
+						// Case:  vpBBox is completely inside the mcd box
 						if (!(BoundingBox::_OUT
 							  == vp_positive.GetBBox().Intersect(mcd->m_covr_bbox))
 							|| !(BoundingBox::_OUT == vp.GetBBox().Intersect(mcd->m_covr_bbox))) {
@@ -1366,7 +1365,7 @@ bool cm93compchart::AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed)
 
 	if (global::OCPN::get().sys().debug().cm93)
 		printf("  In AdjustVP,  adjustment subchart scale is %c\n",
-			   (char)('A' + cmscale_actual - 1));
+			   static_cast<char>('A' + cmscale_actual - 1));
 
 	// We always need to do a VP adjustment, independent of this method's return value.
 	// so, do an AdjustVP() based on the chart scale that WILL BE USED
@@ -1500,18 +1499,18 @@ cm93_dictionary* cm93compchart::FindAndLoadDictFromDir(const wxString& dir)
 	while (!bdone) {
 		path = fnc.GetPath(wxPATH_GET_VOLUME); // get path without sep
 
-		wxString msg = _T ( " Looking harder for CM93 dictionary in " );
+		wxString msg = _T(" Looking harder for CM93 dictionary in ");
 		msg.Append(path);
 		wxLogMessage(msg);
 
 		if ((path.Len() == 0) || path.IsSameAs(fnc.GetPathSeparator())) {
 			bdone = true;
-			wxLogMessage(_T ( "Early break1" ));
+			wxLogMessage(_T("Early break1"));
 			break;
 		}
 
 		// Abort the search loop if the directory tree does not contain some indication of CM93
-		if ((wxNOT_FOUND == path.Lower().Find(_T ( "cm93" )))) {
+		if ((wxNOT_FOUND == path.Lower().Find(_T("cm93")))) {
 			bdone = true;
 			wxLogMessage(_T ( "Early break2" ));
 			break;
@@ -1533,7 +1532,7 @@ cm93_dictionary* cm93compchart::FindAndLoadDictFromDir(const wxString& dir)
 
 	if (found_dict_file_name.Len()) {
 		wxFileName fnd(found_dict_file_name);
-		wxString dpath = fnd.GetPath((int)(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME));
+		wxString dpath = fnd.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME);
 
 		if (pdict->LoadDictionary(dpath))
 			retval = pdict;

@@ -53,15 +53,17 @@ public:
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
 	void SetColorScheme(global::ColorScheme cs);
-	void CreateControls();
-	void OnGoToPosCancelClick(wxCommandEvent& event);
-	void OnGoToPosOkClick(wxCommandEvent& event);
-	void OnPositionCtlUpdated(wxCommandEvent& event);
 	void CheckPasteBufferForPosition();
 
 	static bool ShowToolTips();
 
 private:
+	void OnGoToPosCancelClick(wxCommandEvent& event);
+	void OnGoToPosOkClick(wxCommandEvent& event);
+	void OnPositionCtlUpdated(wxCommandEvent& event);
+
+	void CreateControls();
+
 	wxTextCtrl* m_MarkLatCtl;
 	wxTextCtrl* m_MarkLonCtl;
 	wxButton* m_CancelButton;

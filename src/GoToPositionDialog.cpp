@@ -151,10 +151,10 @@ void GoToPositionDialog::SetColorScheme(global::ColorScheme)
 
 bool GoToPositionDialog::ShowToolTips()
 {
-	return TRUE;
+	return true;
 }
 
-void GoToPositionDialog::OnGoToPosCancelClick(wxCommandEvent & event)
+void GoToPositionDialog::OnGoToPosCancelClick(wxCommandEvent& event)
 {
 	Hide();
 	cc1->ReloadVP();
@@ -163,8 +163,8 @@ void GoToPositionDialog::OnGoToPosCancelClick(wxCommandEvent & event)
 
 void GoToPositionDialog::OnGoToPosOkClick(wxCommandEvent& event)
 {
-	double lat;
-	double lon;
+	double lat = 0.0;
+	double lon = 0.0;
 
 	if (m_MarkLatCtl->GetValue().Length() == 0)
 		goto noGo;

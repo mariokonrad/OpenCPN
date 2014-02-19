@@ -24,23 +24,6 @@
 #ifndef __DYCHART__H__
 #define __DYCHART__H__
 
-// If defined, update the system time using GPS receiver data.
-// Time update is applied if the system time and GPS time differ
-// by more than one minute, and only once per session.
-// On Linux, this option requires root privileges, obtained by sudo.
-// Thus, the following line is required in etc/sudoers:
-//
-//     nav ALL=NOPASSWD:/bin/date -s *
-//
-// Where "nav" is the user's user name.
-//
-// Also, the opencpn configuration file must contain the key
-// [Settings]
-//     SetSystemTime=1
-// For security, this option is not available on the "Options" dialog
-#define ocpnUPDATE_SYSTEM_TIME
-
-
 // Microsoft compiler warning suppression
 #ifdef __MSVC__
 #pragma warning(disable:4114)

@@ -916,6 +916,7 @@ SET(HDRS
 	src/ChartCanvas.h
 	src/MemoryStatus.h
 	src/MainFrame.h
+	src/SystemTime.h
 	src/GUI_IDs.h
 	src/SerialPorts.h
 	src/decl_exp.h
@@ -1041,6 +1042,7 @@ SET(SRCS
 	src/MemoryStatus.cpp
 	src/SerialPorts.cpp
 	src/MainFrame.cpp
+	src/SystemTime.cpp
 	src/MessageBox.cpp
 	src/TimedPopupWin.cpp
 	src/AnnunText.cpp

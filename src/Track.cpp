@@ -370,7 +370,7 @@ void Track::Draw(ocpnDC& dc, const ViewPort& VP)
 	}
 
 	int style = wxSOLID;
-	int width = global::OCPN::get().gui().view().route_line_width;
+	int width = global::OCPN::get().gui().view().track_line_width;
 	wxColour col;
 	if (m_style != STYLE_UNDEFINED)
 		style = m_style;

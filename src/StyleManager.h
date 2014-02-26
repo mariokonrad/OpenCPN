@@ -28,19 +28,19 @@
 
 #include <vector>
 
+class TiXmlElement;
+
 namespace ocpnStyle {
 
 class Style;
 
-class StyleManager
+class StyleManager // FIXME: provide interface for global access
 {
 public:
 	typedef std::vector<wxString> StyleNames;
 
-public:
-	StyleManager(void);
-	~StyleManager(void);
-	StyleManager(const wxString& configDir);
+	StyleManager();
+	~StyleManager();
 
 	bool IsOK() const;
 	void Init(const wxString& fromPath);
@@ -55,6 +55,27 @@ public:
 
 private:
 	typedef std::vector<Style*> Styles;
+
+	// FIXME: move style reading from XML into separate class, 'StyleFactory' perhaps
+
+	void read_description(Style* style, TiXmlElement* node) const;
+	void read_chart_status_icon(Style* style, TiXmlElement* node) const;
+	void read_chart_status_window(Style* style, TiXmlElement* node) const;
+	void read_embossed_indicators(Style* style, TiXmlElement* node) const;
+	void read_graphics_file(Style* style, TiXmlElement* node) const;
+	void read_active_route(Style* style, TiXmlElement* node) const;
+	void read_icons(Style* style, TiXmlElement* node) const;
+	void read_tools(Style* style, TiXmlElement* node) const;
+	void read_tool_compass(Style* style, TiXmlElement* node) const;
+	void read_tool_attr_margin(Style* style, TiXmlElement* node, int orientation) const;
+	void read_tool_attr_toggled_location(Style* style, TiXmlElement* node, int orientation) const;
+	void read_tool_attr_toolbar_start(Style* style, TiXmlElement* node, int orientation) const;
+	void read_tool_attr_toolbar_end(Style* style, TiXmlElement* node, int orientation) const;
+	void read_tool_attr_toolbar_corners(Style* style, TiXmlElement* node, int orientation) const;
+	void read_tool_attr_background_location(Style* style, TiXmlElement* node, int orientation) const;
+	void read_tool_attr_active_location(Style* style, TiXmlElement* node, int orientation) const;
+	void read_tool_attr_size(Style* style, TiXmlElement* node, int orientation) const;
+	void read_tool_attr_icon_offset(Style* style, TiXmlElement* node, int orientation) const;
 
 	bool isOK;
 	Styles styles;

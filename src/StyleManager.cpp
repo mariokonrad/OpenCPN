@@ -60,7 +60,7 @@ StyleManager::StyleNames StyleManager::GetStyleNames() const
 	return names;
 }
 
-StyleManager::StyleManager(void)
+StyleManager::StyleManager()
 	: isOK(false)
 	, currentStyle(NULL)
 {
@@ -72,15 +72,7 @@ StyleManager::StyleManager(void)
 	SetStyle(_T(""));
 }
 
-StyleManager::StyleManager(const wxString& configDir)
-	: isOK(false)
-	, currentStyle(NULL)
-{
-	Init(configDir);
-	SetStyle(_T(""));
-}
-
-StyleManager::~StyleManager(void)
+StyleManager::~StyleManager()
 {
 	for (Styles::const_iterator i = styles.begin(); i != styles.end(); ++i)
 		delete *i;
@@ -95,6 +87,314 @@ const Style& StyleManager::current() const
 Style& StyleManager::current()
 {
 	return *currentStyle;
+}
+
+void StyleManager::read_description(Style* style, TiXmlElement* node) const
+{
+	style->description = wxString(node->GetText(), wxConvUTF8);
+}
+
+void StyleManager::read_chart_status_icon(Style* style, TiXmlElement* node) const
+{
+	int w = 0;
+	node->QueryIntAttribute("width", &w);
+	style->chartStatusIconWidth = w;
+}
+
+void StyleManager::read_chart_status_window(Style* style, TiXmlElement* node) const
+{
+	style->chartStatusWindowTransparent
+		= wxString(node->Attribute("transparent"), wxConvUTF8).Lower().IsSameAs(_T("true"));
+}
+
+void StyleManager::read_embossed_indicators(Style* style, TiXmlElement* node) const
+{
+	style->embossFont = wxString(node->Attribute("font"), wxConvUTF8);
+	node->QueryIntAttribute("size", &(style->embossHeight));
+}
+
+void StyleManager::read_graphics_file(Style* style, TiXmlElement* node) const
+{
+	style->graphicsFile = wxString(node->Attribute("name"), wxConvUTF8);
+}
+
+void StyleManager::read_active_route(Style* style, TiXmlElement* node) const
+{
+	TiXmlHandle handle(node);
+	TiXmlElement* tag = handle.Child("font-color", 0).ToElement();
+	if (tag) {
+		int r, g, b;
+		tag->QueryIntAttribute("r", &r);
+		tag->QueryIntAttribute("g", &g);
+		tag->QueryIntAttribute("b", &b);
+		style->consoleFontColor = wxColour(r, g, b);
+	}
+	tag = handle.Child("text-background-location", 0).ToElement();
+	if (tag) {
+		int x, y, w, h;
+		tag->QueryIntAttribute("x", &x);
+		tag->QueryIntAttribute("y", &y);
+		tag->QueryIntAttribute("width", &w);
+		tag->QueryIntAttribute("height", &h);
+		style->consoleTextBackgroundLoc = wxPoint(x, y);
+		style->consoleTextBackgroundSize = wxSize(w, h);
+	}
+}
+
+void StyleManager::read_icons(Style* style, TiXmlElement* node) const
+{
+	TiXmlElement* iconNode = node->FirstChild()->ToElement();
+
+	for (; iconNode; iconNode = iconNode->NextSiblingElement()) {
+		wxString nodeType(iconNode->Value(), wxConvUTF8);
+		if (nodeType == _T("icon")) {
+			Icon* icon = new Icon;
+			style->icons.push_back(icon);
+			icon->name = wxString(iconNode->Attribute("name"), wxConvUTF8);
+			style->iconIndex[icon->name] = style->icons.size() - 1;
+			TiXmlHandle handle(iconNode);
+			TiXmlElement* tag = handle.Child("icon-location", 0).ToElement();
+			if (tag) {
+				int x;
+				int y;
+				tag->QueryIntAttribute("x", &x);
+				tag->QueryIntAttribute("y", &y);
+				icon->iconLoc = wxPoint(x, y);
+			}
+			tag = handle.Child("size", 0).ToElement();
+			if (tag) {
+				int x;
+				int y;
+				tag->QueryIntAttribute("x", &x);
+				tag->QueryIntAttribute("y", &y);
+				icon->size = wxSize(x, y);
+			}
+		}
+	}
+}
+
+void StyleManager::read_tool_compass(Style* style, TiXmlElement* node) const
+{
+	TiXmlElement* attrNode = node->FirstChild()->ToElement();
+	for (; attrNode; attrNode = attrNode->NextSiblingElement()) {
+		wxString nodeType(attrNode->Value(), wxConvUTF8);
+		if (nodeType == _T("margin")) {
+			attrNode->QueryIntAttribute("top", &style->compassMarginTop);
+			attrNode->QueryIntAttribute("right", &style->compassMarginRight);
+			attrNode->QueryIntAttribute("bottom", &style->compassMarginBottom);
+			attrNode->QueryIntAttribute("left", &style->compassMarginLeft);
+			continue;
+		}
+		if (nodeType == _T("compass-corners")) {
+			int r;
+			attrNode->QueryIntAttribute("radius", &r);
+			style->compasscornerRadius = r;
+			continue;
+		}
+		if (nodeType == _T("offset")) {
+			attrNode->QueryIntAttribute("x", &style->compassXoffset);
+			attrNode->QueryIntAttribute("y", &style->compassYoffset);
+			continue;
+		}
+	}
+}
+
+void StyleManager::read_tool_attr_margin(Style* style, TiXmlElement* node, int orientation) const
+{
+	node->QueryIntAttribute("top", &style->toolMarginTop[orientation]);
+	node->QueryIntAttribute("right", &style->toolMarginRight[orientation]);
+	node->QueryIntAttribute("bottom", &style->toolMarginBottom[orientation]);
+	node->QueryIntAttribute("left", &style->toolMarginLeft[orientation]);
+	wxString invis = wxString(node->Attribute("invisible"), wxConvUTF8);
+	style->marginsInvisible = (invis.Lower() == _T("true"));
+}
+
+void StyleManager::read_tool_attr_toggled_location(Style* style, TiXmlElement* node,
+												   int orientation) const
+{
+	int x, y;
+	node->QueryIntAttribute("x", &x);
+	node->QueryIntAttribute("y", &y);
+	style->toggledBGlocation[orientation] = wxPoint(x, y);
+	x = 0;
+	y = 0;
+	node->QueryIntAttribute("width", &x);
+	node->QueryIntAttribute("height", &y);
+	style->toggledBGSize[orientation] = wxSize(x, y);
+}
+
+void StyleManager::read_tool_attr_toolbar_start(Style* style, TiXmlElement* node,
+												int orientation) const
+{
+	int x;
+	int y;
+	node->QueryIntAttribute("x", &x);
+	node->QueryIntAttribute("y", &y);
+	style->toolbarStartLoc[orientation] = wxPoint(x, y);
+	x = 0;
+	y = 0;
+	node->QueryIntAttribute("width", &x);
+	node->QueryIntAttribute("height", &y);
+	style->toolbarStartSize[orientation] = wxSize(x, y);
+}
+
+void StyleManager::read_tool_attr_toolbar_end(Style* style, TiXmlElement* node,
+											  int orientation) const
+{
+	int x;
+	int y;
+	node->QueryIntAttribute("x", &x);
+	node->QueryIntAttribute("y", &y);
+	style->toolbarEndLoc[orientation] = wxPoint(x, y);
+	x = 0;
+	y = 0;
+	node->QueryIntAttribute("width", &x);
+	node->QueryIntAttribute("height", &y);
+	style->toolbarEndSize[orientation] = wxSize(x, y);
+}
+
+void StyleManager::read_tool_attr_toolbar_corners(Style* style, TiXmlElement* node,
+												  int orientation) const
+{
+	int r;
+	node->QueryIntAttribute("radius", &r);
+	style->cornerRadius[orientation] = r;
+}
+
+void StyleManager::read_tool_attr_background_location(Style* style, TiXmlElement* node,
+													  int orientation) const
+{
+	int x, y;
+	node->QueryIntAttribute("x", &x);
+	node->QueryIntAttribute("y", &y);
+	style->normalBGlocation[orientation] = wxPoint(x, y);
+	style->hasBackground = true;
+}
+
+void StyleManager::read_tool_attr_active_location(Style* style, TiXmlElement* node,
+												  int orientation) const
+{
+	int x, y;
+	node->QueryIntAttribute("x", &x);
+	node->QueryIntAttribute("y", &y);
+	style->activeBGlocation[orientation] = wxPoint(x, y);
+}
+
+void StyleManager::read_tool_attr_size(Style* style, TiXmlElement* node, int orientation) const
+{
+	int x, y;
+	node->QueryIntAttribute("x", &x);
+	node->QueryIntAttribute("y", &y);
+	style->toolSize[orientation] = wxSize(x, y);
+}
+
+void StyleManager::read_tool_attr_icon_offset(Style* style, TiXmlElement* node,
+											  int orientation) const
+{
+	int x, y;
+	node->QueryIntAttribute("x", &x);
+	node->QueryIntAttribute("y", &y);
+	style->verticalIconOffset = wxSize(x, y);
+}
+
+void StyleManager::read_tools(Style* style, TiXmlElement* node) const
+{
+	TiXmlElement* toolNode = node->FirstChild()->ToElement();
+	for (; toolNode; toolNode = toolNode->NextSiblingElement()) {
+		wxString nodeType(toolNode->Value(), wxConvUTF8);
+
+		if (nodeType == _T("horizontal") || nodeType == _T("vertical")) {
+			int orientation = 0;
+			if (nodeType == _T("vertical"))
+				orientation = 1;
+
+			TiXmlElement* attrNode = toolNode->FirstChild()->ToElement();
+			for (; attrNode; attrNode = attrNode->NextSiblingElement()) {
+				wxString nodeType(attrNode->Value(), wxConvUTF8);
+				if (nodeType == _T("separation")) {
+					attrNode->QueryIntAttribute("distance", &style->toolSeparation[orientation]);
+					continue;
+				}
+				if (nodeType == _T("margin")) {
+					read_tool_attr_margin(style, attrNode, orientation);
+					continue;
+				}
+				if (nodeType == _T("toggled-location")) {
+					read_tool_attr_toggled_location(style, attrNode, orientation);
+					continue;
+				}
+				if (nodeType == _T("toolbar-start")) {
+					read_tool_attr_toolbar_start(style, attrNode, orientation);
+					continue;
+				}
+				if (nodeType == _T("toolbar-end")) {
+					read_tool_attr_toolbar_end(style, attrNode, orientation);
+					continue;
+				}
+				if (nodeType == _T("toolbar-corners")) {
+					read_tool_attr_toolbar_corners(style, attrNode, orientation);
+					continue;
+				}
+				if (nodeType == _T("background-location")) {
+					read_tool_attr_background_location(style, attrNode, orientation);
+					continue;
+				}
+				if (nodeType == _T("active-location")) {
+					read_tool_attr_active_location(style, attrNode, orientation);
+					continue;
+				}
+				if (nodeType == _T("size")) {
+					read_tool_attr_size(style, attrNode, orientation);
+					continue;
+				}
+				if (nodeType == _T("icon-offset")) {
+					read_tool_attr_icon_offset(style, attrNode, orientation);
+					continue;
+				}
+			}
+			continue;
+		}
+		if (nodeType == _T("compass")) {
+			read_tool_compass(style, toolNode);
+		}
+
+		if (nodeType == _T("tool")) {
+			Tool* tool = new Tool();
+			style->tools.push_back(tool);
+			tool->name = wxString(toolNode->Attribute("name"), wxConvUTF8);
+			style->toolIndex[tool->name] = style->tools.size() - 1;
+			TiXmlHandle toolHandle(toolNode);
+			TiXmlElement* toolTag = toolHandle.Child("icon-location", 0).ToElement();
+			if (toolTag) {
+				int x, y;
+				toolTag->QueryIntAttribute("x", &x);
+				toolTag->QueryIntAttribute("y", &y);
+				tool->iconLoc = wxPoint(x, y);
+			}
+			toolTag = toolHandle.Child("rollover-location", 0).ToElement();
+			if (toolTag) {
+				int x, y;
+				toolTag->QueryIntAttribute("x", &x);
+				toolTag->QueryIntAttribute("y", &y);
+				tool->rolloverLoc = wxPoint(x, y);
+			}
+			toolTag = toolHandle.Child("disabled-location", 0).ToElement();
+			if (toolTag) {
+				int x, y;
+				toolTag->QueryIntAttribute("x", &x);
+				toolTag->QueryIntAttribute("y", &y);
+				tool->disabledLoc = wxPoint(x, y);
+			}
+			toolTag = toolHandle.Child("size", 0).ToElement();
+			if (toolTag) {
+				int x, y;
+				toolTag->QueryIntAttribute("x", &x);
+				toolTag->QueryIntAttribute("y", &y);
+				tool->customSize = wxSize(x, y);
+			}
+			continue;
+		}
+	}
 }
 
 void StyleManager::Init(const wxString& fromPath) // FIXME: method too long, refactoring
@@ -154,7 +454,7 @@ void StyleManager::Init(const wxString& fromPath) // FIXME: method too long, ref
 
 			if (wxString(styleElem->Value(), wxConvUTF8) == _T("style")) {
 
-				Style* style = new Style();
+				Style* style = new Style;
 				styles.push_back(style);
 
 				style->name = wxString(styleElem->Attribute("name"), wxConvUTF8);
@@ -165,260 +465,35 @@ void StyleManager::Init(const wxString& fromPath) // FIXME: method too long, ref
 					wxString nodeType(subNode->Value(), wxConvUTF8);
 
 					if (nodeType == _T("description")) {
-						style->description = wxString(subNode->GetText(), wxConvUTF8);
+						read_description(style, subNode);
 						continue;
 					}
 					if (nodeType == _T("chart-status-icon")) {
-						int w = 0;
-						subNode->QueryIntAttribute("width", &w);
-						style->chartStatusIconWidth = w;
+						read_chart_status_icon(style, subNode);
 						continue;
 					}
 					if (nodeType == _T("chart-status-window")) {
-						style->chartStatusWindowTransparent
-							= wxString(subNode->Attribute("transparent"), wxConvUTF8)
-								  .Lower()
-								  .IsSameAs(_T("true"));
+						read_chart_status_window(style, subNode);
 						continue;
 					}
 					if (nodeType == _T("embossed-indicators")) {
-						style->embossFont = wxString(subNode->Attribute("font"), wxConvUTF8);
-						subNode->QueryIntAttribute("size", &(style->embossHeight));
+						read_embossed_indicators(style, subNode);
 						continue;
 					}
 					if (nodeType == _T("graphics-file")) {
-						style->graphicsFile = wxString(subNode->Attribute("name"), wxConvUTF8);
-						isOK = true; // If we got this far we are at least partially OK...
+						read_graphics_file(style, subNode);
+						isOK = true; // If we got this far we are at least partially OK... FIXME
 						continue;
 					}
 					if (nodeType == _T("active-route")) {
-						TiXmlHandle handle(subNode);
-						TiXmlElement* tag = handle.Child("font-color", 0).ToElement();
-						if (tag) {
-							int r, g, b;
-							tag->QueryIntAttribute("r", &r);
-							tag->QueryIntAttribute("g", &g);
-							tag->QueryIntAttribute("b", &b);
-							style->consoleFontColor = wxColour(r, g, b);
-						}
-						tag = handle.Child("text-background-location", 0).ToElement();
-						if (tag) {
-							int x, y, w, h;
-							tag->QueryIntAttribute("x", &x);
-							tag->QueryIntAttribute("y", &y);
-							tag->QueryIntAttribute("width", &w);
-							tag->QueryIntAttribute("height", &h);
-							style->consoleTextBackgroundLoc = wxPoint(x, y);
-							style->consoleTextBackgroundSize = wxSize(w, h);
-						}
+						read_active_route(style, subNode);
 						continue;
 					}
 					if (nodeType == _T("icons")) {
-						TiXmlElement* iconNode = subNode->FirstChild()->ToElement();
-
-						for (; iconNode; iconNode = iconNode->NextSiblingElement()) {
-							wxString nodeType(iconNode->Value(), wxConvUTF8);
-							if (nodeType == _T("icon")) {
-								Icon* icon = new Icon();
-								style->icons.push_back(icon);
-								icon->name = wxString(iconNode->Attribute("name"), wxConvUTF8);
-								style->iconIndex[icon->name] = style->icons.size() - 1;
-								TiXmlHandle handle(iconNode);
-								TiXmlElement* tag = handle.Child("icon-location", 0).ToElement();
-								if (tag) {
-									int x;
-									int y;
-									tag->QueryIntAttribute("x", &x);
-									tag->QueryIntAttribute("y", &y);
-									icon->iconLoc = wxPoint(x, y);
-								}
-								tag = handle.Child("size", 0).ToElement();
-								if (tag) {
-									int x;
-									int y;
-									tag->QueryIntAttribute("x", &x);
-									tag->QueryIntAttribute("y", &y);
-									icon->size = wxSize(x, y);
-								}
-							}
-						}
+						read_icons(style, subNode);
 					}
 					if (nodeType == _T("tools")) {
-						TiXmlElement* toolNode = subNode->FirstChild()->ToElement();
-						for (; toolNode; toolNode = toolNode->NextSiblingElement()) {
-							wxString nodeType(toolNode->Value(), wxConvUTF8);
-
-							if (nodeType == _T("horizontal") || nodeType == _T("vertical")) {
-								int orientation = 0;
-								if (nodeType == _T("vertical"))
-									orientation = 1;
-
-								TiXmlElement* attrNode = toolNode->FirstChild()->ToElement();
-								for (; attrNode; attrNode = attrNode->NextSiblingElement()) {
-									wxString nodeType(attrNode->Value(), wxConvUTF8);
-									if (nodeType == _T("separation")) {
-										attrNode->QueryIntAttribute(
-											"distance", &style->toolSeparation[orientation]);
-										continue;
-									}
-									if (nodeType == _T("margin")) {
-										attrNode->QueryIntAttribute(
-											"top", &style->toolMarginTop[orientation]);
-										attrNode->QueryIntAttribute(
-											"right", &style->toolMarginRight[orientation]);
-										attrNode->QueryIntAttribute(
-											"bottom", &style->toolMarginBottom[orientation]);
-										attrNode->QueryIntAttribute(
-											"left", &style->toolMarginLeft[orientation]);
-										wxString invis = wxString(attrNode->Attribute("invisible"),
-																  wxConvUTF8);
-										style->marginsInvisible = (invis.Lower() == _T("true"));
-										continue;
-									}
-									if (nodeType == _T("toggled-location")) {
-										int x, y;
-										attrNode->QueryIntAttribute("x", &x);
-										attrNode->QueryIntAttribute("y", &y);
-										style->toggledBGlocation[orientation] = wxPoint(x, y);
-										x = 0;
-										y = 0;
-										attrNode->QueryIntAttribute("width", &x);
-										attrNode->QueryIntAttribute("height", &y);
-										style->toggledBGSize[orientation] = wxSize(x, y);
-										continue;
-									}
-									if (nodeType == _T("toolbar-start")) {
-										int x;
-										int y;
-										attrNode->QueryIntAttribute("x", &x);
-										attrNode->QueryIntAttribute("y", &y);
-										style->toolbarStartLoc[orientation] = wxPoint(x, y);
-										x = 0;
-										y = 0;
-										attrNode->QueryIntAttribute("width", &x);
-										attrNode->QueryIntAttribute("height", &y);
-										style->toolbarStartSize[orientation] = wxSize(x, y);
-										continue;
-									}
-									if (nodeType == _T("toolbar-end")) {
-										int x;
-										int y;
-										attrNode->QueryIntAttribute("x", &x);
-										attrNode->QueryIntAttribute("y", &y);
-										style->toolbarEndLoc[orientation] = wxPoint(x, y);
-										x = 0;
-										y = 0;
-										attrNode->QueryIntAttribute("width", &x);
-										attrNode->QueryIntAttribute("height", &y);
-										style->toolbarEndSize[orientation] = wxSize(x, y);
-										continue;
-									}
-									if (nodeType == _T("toolbar-corners")) {
-										int r;
-										attrNode->QueryIntAttribute("radius", &r);
-										style->cornerRadius[orientation] = r;
-										continue;
-									}
-									if (nodeType == _T("background-location")) {
-										int x, y;
-										attrNode->QueryIntAttribute("x", &x);
-										attrNode->QueryIntAttribute("y", &y);
-										style->normalBGlocation[orientation] = wxPoint(x, y);
-										style->hasBackground = true;
-										continue;
-									}
-									if (nodeType == _T("active-location")) {
-										int x, y;
-										attrNode->QueryIntAttribute("x", &x);
-										attrNode->QueryIntAttribute("y", &y);
-										style->activeBGlocation[orientation] = wxPoint(x, y);
-										continue;
-									}
-									if (nodeType == _T("size")) {
-										int x, y;
-										attrNode->QueryIntAttribute("x", &x);
-										attrNode->QueryIntAttribute("y", &y);
-										style->toolSize[orientation] = wxSize(x, y);
-										continue;
-									}
-									if (nodeType == _T("icon-offset")) {
-										int x, y;
-										attrNode->QueryIntAttribute("x", &x);
-										attrNode->QueryIntAttribute("y", &y);
-										style->verticalIconOffset = wxSize(x, y);
-										continue;
-									}
-								}
-								continue;
-							}
-							if (nodeType == _T("compass")) {
-
-								TiXmlElement* attrNode = toolNode->FirstChild()->ToElement();
-								for (; attrNode; attrNode = attrNode->NextSiblingElement()) {
-									wxString nodeType(attrNode->Value(), wxConvUTF8);
-									if (nodeType == _T("margin")) {
-										attrNode->QueryIntAttribute("top",
-																	&style->compassMarginTop);
-										attrNode->QueryIntAttribute("right",
-																	&style->compassMarginRight);
-										attrNode->QueryIntAttribute("bottom",
-																	&style->compassMarginBottom);
-										attrNode->QueryIntAttribute("left",
-																	&style->compassMarginLeft);
-										continue;
-									}
-									if (nodeType == _T("compass-corners")) {
-										int r;
-										attrNode->QueryIntAttribute("radius", &r);
-										style->compasscornerRadius = r;
-										continue;
-									}
-									if (nodeType == _T("offset")) {
-										attrNode->QueryIntAttribute("x", &style->compassXoffset);
-										attrNode->QueryIntAttribute("y", &style->compassYoffset);
-										continue;
-									}
-								}
-							}
-
-							if (nodeType == _T("tool")) {
-								Tool* tool = new Tool();
-								style->tools.push_back(tool);
-								tool->name = wxString(toolNode->Attribute("name"), wxConvUTF8);
-								style->toolIndex[tool->name] = style->tools.size() - 1;
-								TiXmlHandle toolHandle(toolNode);
-								TiXmlElement* toolTag
-									= toolHandle.Child("icon-location", 0).ToElement();
-								if (toolTag) {
-									int x, y;
-									toolTag->QueryIntAttribute("x", &x);
-									toolTag->QueryIntAttribute("y", &y);
-									tool->iconLoc = wxPoint(x, y);
-								}
-								toolTag = toolHandle.Child("rollover-location", 0).ToElement();
-								if (toolTag) {
-									int x, y;
-									toolTag->QueryIntAttribute("x", &x);
-									toolTag->QueryIntAttribute("y", &y);
-									tool->rolloverLoc = wxPoint(x, y);
-								}
-								toolTag = toolHandle.Child("disabled-location", 0).ToElement();
-								if (toolTag) {
-									int x, y;
-									toolTag->QueryIntAttribute("x", &x);
-									toolTag->QueryIntAttribute("y", &y);
-									tool->disabledLoc = wxPoint(x, y);
-								}
-								toolTag = toolHandle.Child("size", 0).ToElement();
-								if (toolTag) {
-									int x, y;
-									toolTag->QueryIntAttribute("x", &x);
-									toolTag->QueryIntAttribute("y", &y);
-									tool->customSize = wxSize(x, y);
-								}
-								continue;
-							}
-						}
+						read_tools(style, subNode);
 						continue;
 					}
 				}

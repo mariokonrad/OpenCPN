@@ -27,7 +27,7 @@
 #include <OCPNFloatingToolbarDialog.h>
 #include <MessageBox.h>
 #include <Multiplexer.h>
-#include <StyleManager.h>
+#include <DefaultStyleManager.h>
 #include <Style.h>
 #include <FloatingCompassWindow.h>
 #include <ThumbWin.h>
@@ -1315,7 +1315,7 @@ bool App::OnInit()
 	}
 
 	// Now initialize UI Style.
-	g_StyleManager = new ocpnStyle::StyleManager();
+	g_StyleManager = new ocpnStyle::DefaultStyleManager;
 
 	if (!g_StyleManager->IsOK()) {
 		wxString msg = _("Failed to initialize the user interface. ");

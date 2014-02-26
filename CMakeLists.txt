@@ -992,6 +992,7 @@ SET(HDRS
 	src/Tool.h
 	src/Icon.h
 	src/StyleManager.h
+	src/DefaultStyleManager.h
 	src/ToolBarSimple.h
 	src/ToolTipWin.h
 	src/ToolBarTool.h
@@ -1115,7 +1116,7 @@ SET(SRCS
 	src/Style.cpp
 	src/Tool.cpp
 	src/Icon.cpp
-	src/StyleManager.cpp
+	src/DefaultStyleManager.cpp
 	src/ToolBarSimple.cpp
 	src/ToolTipWin.cpp
 	src/ToolBarTool.cpp

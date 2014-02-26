@@ -27,7 +27,6 @@
 
 #include <geo/GeoRef.h>
 
-#include <StyleManager.h>
 #include <DataStream.h>
 #include <Select.h>
 #include <ChartCanvas.h>

@@ -103,7 +103,6 @@ extern chart::s52plib *ps52plib;
 #endif
 
 extern chart::ChartGroupArray* g_pGroupArray;
-extern ocpnStyle::StyleManager* g_StyleManager;
 
 // Some constants
 #define ID_CHOICE_NMEA  wxID_HIGHEST + 1

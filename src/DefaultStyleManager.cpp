@@ -21,7 +21,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "StyleManager.h"
+#include "DefaultStyleManager.h"
 #include <Style.h>
 #include <Icon.h>
 #include <Tool.h>
@@ -35,22 +35,22 @@
 
 namespace ocpnStyle {
 
-bool StyleManager::IsOK() const
+bool DefaultStyleManager::IsOK() const
 {
 	return isOK;
 }
 
-void StyleManager::SetStyleNextInvocation(const wxString& name)
+void DefaultStyleManager::SetStyleNextInvocation(const wxString& name)
 {
 	nextInvocationStyle = name;
 }
 
-const wxString& StyleManager::GetStyleNextInvocation() const
+const wxString& DefaultStyleManager::GetStyleNextInvocation() const
 {
 	return nextInvocationStyle;
 }
 
-StyleManager::StyleNames StyleManager::GetStyleNames() const
+StyleManager::StyleNames DefaultStyleManager::GetStyleNames() const
 {
 	StyleNames names;
 
@@ -60,7 +60,7 @@ StyleManager::StyleNames StyleManager::GetStyleNames() const
 	return names;
 }
 
-StyleManager::StyleManager()
+DefaultStyleManager::DefaultStyleManager()
 	: isOK(false)
 	, currentStyle(NULL)
 {
@@ -72,53 +72,53 @@ StyleManager::StyleManager()
 	SetStyle(_T(""));
 }
 
-StyleManager::~StyleManager()
+DefaultStyleManager::~DefaultStyleManager()
 {
 	for (Styles::const_iterator i = styles.begin(); i != styles.end(); ++i)
 		delete *i;
 	styles.clear();
 }
 
-const Style& StyleManager::current() const
+const Style& DefaultStyleManager::current() const
 {
 	return *currentStyle;
 }
 
-Style& StyleManager::current()
+Style& DefaultStyleManager::current()
 {
 	return *currentStyle;
 }
 
-void StyleManager::read_description(Style* style, TiXmlElement* node) const
+void DefaultStyleManager::read_description(Style* style, TiXmlElement* node) const
 {
 	style->description = wxString(node->GetText(), wxConvUTF8);
 }
 
-void StyleManager::read_chart_status_icon(Style* style, TiXmlElement* node) const
+void DefaultStyleManager::read_chart_status_icon(Style* style, TiXmlElement* node) const
 {
 	int w = 0;
 	node->QueryIntAttribute("width", &w);
 	style->chartStatusIconWidth = w;
 }
 
-void StyleManager::read_chart_status_window(Style* style, TiXmlElement* node) const
+void DefaultStyleManager::read_chart_status_window(Style* style, TiXmlElement* node) const
 {
 	style->chartStatusWindowTransparent
 		= wxString(node->Attribute("transparent"), wxConvUTF8).Lower().IsSameAs(_T("true"));
 }
 
-void StyleManager::read_embossed_indicators(Style* style, TiXmlElement* node) const
+void DefaultStyleManager::read_embossed_indicators(Style* style, TiXmlElement* node) const
 {
 	style->embossFont = wxString(node->Attribute("font"), wxConvUTF8);
 	node->QueryIntAttribute("size", &(style->embossHeight));
 }
 
-void StyleManager::read_graphics_file(Style* style, TiXmlElement* node) const
+void DefaultStyleManager::read_graphics_file(Style* style, TiXmlElement* node) const
 {
 	style->graphicsFile = wxString(node->Attribute("name"), wxConvUTF8);
 }
 
-void StyleManager::read_active_route(Style* style, TiXmlElement* node) const
+void DefaultStyleManager::read_active_route(Style* style, TiXmlElement* node) const
 {
 	TiXmlHandle handle(node);
 	TiXmlElement* tag = handle.Child("font-color", 0).ToElement();
@@ -141,7 +141,7 @@ void StyleManager::read_active_route(Style* style, TiXmlElement* node) const
 	}
 }
 
-void StyleManager::read_icons(Style* style, TiXmlElement* node) const
+void DefaultStyleManager::read_icons(Style* style, TiXmlElement* node) const
 {
 	TiXmlElement* iconNode = node->FirstChild()->ToElement();
 
@@ -173,7 +173,7 @@ void StyleManager::read_icons(Style* style, TiXmlElement* node) const
 	}
 }
 
-void StyleManager::read_tool_compass(Style* style, TiXmlElement* node) const
+void DefaultStyleManager::read_tool_compass(Style* style, TiXmlElement* node) const
 {
 	TiXmlElement* attrNode = node->FirstChild()->ToElement();
 	for (; attrNode; attrNode = attrNode->NextSiblingElement()) {
@@ -199,7 +199,7 @@ void StyleManager::read_tool_compass(Style* style, TiXmlElement* node) const
 	}
 }
 
-void StyleManager::read_tool_attr_margin(Style* style, TiXmlElement* node, int orientation) const
+void DefaultStyleManager::read_tool_attr_margin(Style* style, TiXmlElement* node, int orientation) const
 {
 	node->QueryIntAttribute("top", &style->toolMarginTop[orientation]);
 	node->QueryIntAttribute("right", &style->toolMarginRight[orientation]);
@@ -209,7 +209,7 @@ void StyleManager::read_tool_attr_margin(Style* style, TiXmlElement* node, int o
 	style->marginsInvisible = (invis.Lower() == _T("true"));
 }
 
-void StyleManager::read_tool_attr_toggled_location(Style* style, TiXmlElement* node,
+void DefaultStyleManager::read_tool_attr_toggled_location(Style* style, TiXmlElement* node,
 												   int orientation) const
 {
 	int x, y;
@@ -223,7 +223,7 @@ void StyleManager::read_tool_attr_toggled_location(Style* style, TiXmlElement* n
 	style->toggledBGSize[orientation] = wxSize(x, y);
 }
 
-void StyleManager::read_tool_attr_toolbar_start(Style* style, TiXmlElement* node,
+void DefaultStyleManager::read_tool_attr_toolbar_start(Style* style, TiXmlElement* node,
 												int orientation) const
 {
 	int x;
@@ -238,7 +238,7 @@ void StyleManager::read_tool_attr_toolbar_start(Style* style, TiXmlElement* node
 	style->toolbarStartSize[orientation] = wxSize(x, y);
 }
 
-void StyleManager::read_tool_attr_toolbar_end(Style* style, TiXmlElement* node,
+void DefaultStyleManager::read_tool_attr_toolbar_end(Style* style, TiXmlElement* node,
 											  int orientation) const
 {
 	int x;
@@ -253,7 +253,7 @@ void StyleManager::read_tool_attr_toolbar_end(Style* style, TiXmlElement* node,
 	style->toolbarEndSize[orientation] = wxSize(x, y);
 }
 
-void StyleManager::read_tool_attr_toolbar_corners(Style* style, TiXmlElement* node,
+void DefaultStyleManager::read_tool_attr_toolbar_corners(Style* style, TiXmlElement* node,
 												  int orientation) const
 {
 	int r;
@@ -261,7 +261,7 @@ void StyleManager::read_tool_attr_toolbar_corners(Style* style, TiXmlElement* no
 	style->cornerRadius[orientation] = r;
 }
 
-void StyleManager::read_tool_attr_background_location(Style* style, TiXmlElement* node,
+void DefaultStyleManager::read_tool_attr_background_location(Style* style, TiXmlElement* node,
 													  int orientation) const
 {
 	int x, y;
@@ -271,7 +271,7 @@ void StyleManager::read_tool_attr_background_location(Style* style, TiXmlElement
 	style->hasBackground = true;
 }
 
-void StyleManager::read_tool_attr_active_location(Style* style, TiXmlElement* node,
+void DefaultStyleManager::read_tool_attr_active_location(Style* style, TiXmlElement* node,
 												  int orientation) const
 {
 	int x, y;
@@ -280,7 +280,7 @@ void StyleManager::read_tool_attr_active_location(Style* style, TiXmlElement* no
 	style->activeBGlocation[orientation] = wxPoint(x, y);
 }
 
-void StyleManager::read_tool_attr_size(Style* style, TiXmlElement* node, int orientation) const
+void DefaultStyleManager::read_tool_attr_size(Style* style, TiXmlElement* node, int orientation) const
 {
 	int x, y;
 	node->QueryIntAttribute("x", &x);
@@ -288,7 +288,7 @@ void StyleManager::read_tool_attr_size(Style* style, TiXmlElement* node, int ori
 	style->toolSize[orientation] = wxSize(x, y);
 }
 
-void StyleManager::read_tool_attr_icon_offset(Style* style, TiXmlElement* node,
+void DefaultStyleManager::read_tool_attr_icon_offset(Style* style, TiXmlElement* node,
 											  int orientation) const
 {
 	int x, y;
@@ -297,7 +297,7 @@ void StyleManager::read_tool_attr_icon_offset(Style* style, TiXmlElement* node,
 	style->verticalIconOffset = wxSize(x, y);
 }
 
-void StyleManager::read_tools(Style* style, TiXmlElement* node) const
+void DefaultStyleManager::read_tools(Style* style, TiXmlElement* node) const
 {
 	TiXmlElement* toolNode = node->FirstChild()->ToElement();
 	for (; toolNode; toolNode = toolNode->NextSiblingElement()) {
@@ -397,7 +397,7 @@ void StyleManager::read_tools(Style* style, TiXmlElement* node) const
 	}
 }
 
-void StyleManager::Init(const wxString& fromPath) // FIXME: method too long, refactoring
+void DefaultStyleManager::Init(const wxString& fromPath) // FIXME: method too long, refactoring
 {
 	TiXmlDocument doc;
 
@@ -444,7 +444,7 @@ void StyleManager::Init(const wxString& fromPath) // FIXME: method too long, ref
 
 		wxString root = wxString(doc.RootElement()->Value(), wxConvUTF8);
 		if (root != _T("styles")) {
-			wxLogMessage(_T("    StyleManager: Expected XML Root <styles> not found."));
+			wxLogMessage(_T("    DefaultStyleManager: Expected XML Root <styles> not found."));
 			continue;
 		}
 
@@ -502,7 +502,7 @@ void StyleManager::Init(const wxString& fromPath) // FIXME: method too long, ref
 	}
 }
 
-void StyleManager::SetStyle(wxString name)
+void DefaultStyleManager::SetStyle(const wxString& name)
 {
 	Style* style = NULL;
 	bool ok = true;

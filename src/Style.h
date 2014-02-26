@@ -50,7 +50,7 @@ wxBitmap ConvertTo24Bit(wxColor bgColor, wxBitmap front);
 class Style
 {
 	// because StyleManager is doing the initialization, it has to be friend.
-	friend class StyleManager;
+	friend class DefaultStyleManager;
 
 public:
 	Style(void);

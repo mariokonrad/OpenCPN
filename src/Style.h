@@ -24,17 +24,18 @@
 #ifndef __STYLES__H__
 #define __STYLES__H__
 
+#include <global/ColorScheme.h>
+
 #include <wx/bitmap.h>
 #include <wx/string.h>
-#include <global/ColorScheme.h>
+
 #include <vector>
+#include <map>
 
 namespace ocpnStyle {
 
 class Icon;
 class Tool;
-
-WX_DECLARE_STRING_HASH_MAP(int, intHash);
 
 enum StyleToolIconTypes {
 	TOOLICON_NORMAL,
@@ -110,6 +111,7 @@ public:
 private:
 	typedef std::vector<Icon*> Icons;
 	typedef std::vector<Tool*> Tools;
+	typedef std::map<wxString, int> IndexMap;
 
 	wxString name;
 	wxString description;
@@ -134,9 +136,9 @@ private:
 	wxPoint activeBGlocation[2];
 	wxPoint normalBGlocation[2];
 	wxSize verticalIconOffset;
-	intHash toolIndex;
+	IndexMap toolIndex; // being filled by StyleManager
 	Icons icons;
-	intHash iconIndex;
+	IndexMap iconIndex; // being filled by StyleManager
 	wxBitmap* graphics;
 
 	wxColor consoleFontColor;

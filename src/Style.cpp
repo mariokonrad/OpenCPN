@@ -259,7 +259,7 @@ bool Style::HasToolbarEnd() const
 wxBitmap Style::GetIcon(const wxString& name)
 {
 	// FIXME: do not use lazy initialization, styles are initialized by StyleManager
-	intHash::iterator index = iconIndex.find(name);
+	IndexMap::iterator index = iconIndex.find(name);
 
 	if (index == iconIndex.end()) {
 		wxLogMessage(_T("The requested icon was not found in the style: ") + name);
@@ -282,7 +282,7 @@ wxBitmap Style::GetIcon(const wxString& name)
 wxBitmap Style::GetToolIcon(const wxString& toolname, int iconType, bool rollover)
 {
 	// FIXME: do not use lazy initialization, styles are initialized by StyleManager
-	intHash::iterator index = toolIndex.find(toolname);
+	IndexMap::iterator index = toolIndex.find(toolname);
 
 	if (index == toolIndex.end()) {
 		return wxBitmap(GetToolSize().x, GetToolSize().y, 1);

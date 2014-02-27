@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "ToolBarSimple.h"
-#include <FontMgr.h>
 #include <GrabberWin.h>
 #include <ToolbarMOBDialog.h>
 #include <OCPNFloatingToolbarDialog.h>

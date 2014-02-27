@@ -26,7 +26,6 @@
 #include <AnnunText.h>
 #include <CDI.h>
 #include <MainFrame.h>
-#include <FontMgr.h>
 #include <RoutePoint.h>
 #include <Route.h>
 

@@ -24,13 +24,17 @@
 #ifndef KML_H
 #define KML_H
 
-#include <vector>
-#include <tinyxml/tinyxml.h>
 #include <wx/string.h>
+
+#include <vector>
 
 class Route;
 class RoutePoint;
 class Track;
+
+class TiXmlNode;
+class TiXmlDocument;
+class TiXmlElement;
 
 enum KmlPastebufferType {
 	KML_PASTE_WAYPOINT,

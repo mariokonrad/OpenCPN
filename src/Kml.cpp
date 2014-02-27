@@ -29,6 +29,8 @@
 #include <global/OCPN.h>
 #include <global/Navigation.h>
 
+#include <tinyxml/tinyxml.h>
+
 #include <wx/file.h>
 #include <wx/datetime.h>
 #include <wx/clipbrd.h>

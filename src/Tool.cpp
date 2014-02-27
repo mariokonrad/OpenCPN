@@ -24,21 +24,26 @@
 
 #include "Tool.h"
 
-namespace ocpnStyle {
+namespace gui {
 
 Tool::Tool(void)
+	: iconLoaded(false)
+	, rolloverLoaded(false)
+	, rolloverToggledLoaded(false)
+	, disabledLoaded(false)
+	, activeLoaded(false)
+	, toggledLoaded(false)
 {
-	Unload();
 }
 
 void Tool::Unload(void)
 {
-	iconLoaded= false;
+	iconLoaded = false;
 	rolloverLoaded = false;
 	rolloverToggledLoaded = false;
 	disabledLoaded = false;
-	activeLoaded =false;
-	toggledLoaded =false;
+	activeLoaded = false;
+	toggledLoaded = false;
 }
 
 }

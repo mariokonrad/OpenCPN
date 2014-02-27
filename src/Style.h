@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __STYLES__H__
-#define __STYLES__H__
+#ifndef __GUI__STYLE__H__
+#define __GUI__STYLE__H__
 
 #include <global/ColorScheme.h>
 
@@ -32,7 +32,7 @@
 #include <vector>
 #include <map>
 
-namespace ocpnStyle {
+namespace gui {
 
 class Icon;
 class Tool;

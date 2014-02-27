@@ -127,7 +127,7 @@ void OCPNFloatingToolbarDialog::SetGeometry()
 	if (!m_ptoolbar)
 		return;
 
-	const ocpnStyle::Style& style = global::OCPN::get().styleman().current();
+	const gui::Style& style = global::OCPN::get().styleman().current();
 	m_ptoolbar->SetToolBitmapSize(style.GetToolSize());
 
 	wxSize tool_size = m_ptoolbar->GetToolBitmapSize();
@@ -317,7 +317,7 @@ void OCPNFloatingToolbarDialog::Realize()
 	if (!m_ptoolbar)
 		return;
 
-	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
+	gui::Style& style = global::OCPN::get().styleman().current();
 
 	m_ptoolbar->Realize();
 

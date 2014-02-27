@@ -128,7 +128,7 @@ void WayPointman::initialize()
 	m_nGUID = 0;
 }
 
-void WayPointman::ProcessIcons(ocpnStyle::Style& style)
+void WayPointman::ProcessIcons(gui::Style& style)
 {
 	ProcessIcon(style.GetIcon(_T("empty")), _T("empty"), _T("Empty"));
 	ProcessIcon(style.GetIcon(_T("airplane")), _T("airplane"), _T("Airplane"));

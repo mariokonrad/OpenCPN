@@ -22,26 +22,26 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPNSTYLE__ICON__H__
-#define __OCPNSTYLE__ICON__H__
+#ifndef __GUI__ICON__H__
+#define __GUI__ICON__H__
 
 #include <wx/string.h>
 #include <wx/bitmap.h>
 #include <wx/gdicmn.h>
 
-namespace ocpnStyle {
+namespace gui {
 
 class Icon
 {
 public:
+	Icon(void);
+	void Unload(void);
+
 	wxString name;
 	wxPoint iconLoc;
 	wxSize size;
 	wxBitmap icon;
 	bool loaded;
-
-	Icon(void);
-	void Unload(void);
 };
 
 }

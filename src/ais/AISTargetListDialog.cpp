@@ -336,7 +336,7 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 		wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_HRULES | wxLC_VRULES | wxBORDER_SUNKEN | wxLC_VIRTUAL);
 	wxImageList* imglist = new wxImageList(16, 16, true, 2);
 
-	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
+	gui::Style& style = global::OCPN::get().styleman().current();
 	imglist->Add(style.GetIcon(_T("sort_asc")));
 	imglist->Add(style.GetIcon(_T("sort_desc")));
 

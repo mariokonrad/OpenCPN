@@ -1315,7 +1315,7 @@ bool App::OnInit()
 	}
 
 	// Now initialize UI Style.
-	style_manager_instance = new ocpnStyle::DefaultStyleManager;
+	style_manager_instance = new gui::DefaultStyleManager;
 	if (!style_manager_instance->IsOK()) {
 		wxString msg = _("Failed to initialize the user interface. ");
 		msg << _("OpenCPN cannot start. ");
@@ -1547,7 +1547,7 @@ bool App::OnInit()
 
 	stats = new StatWin(cc1);
 	stats->SetColorScheme(view.color_scheme);
-	ocpnStyle::Style& style = style_manager_instance->current();
+	gui::Style& style = style_manager_instance->current();
 	if (cc1->GetQuiltMode()) {
 		stats->pPiano->SetVizIcon(new wxBitmap(style.GetIcon(_T("viz"))));
 		stats->pPiano->SetInVizIcon(new wxBitmap(style.GetIcon(_T("redX"))));
@@ -1814,7 +1814,7 @@ int App::OnExit()
 	CSVDeaccess(NULL);
 #endif
 
-	global::OCPN::get().inject(static_cast<ocpnStyle::StyleManager*>(NULL));
+	global::OCPN::get().inject(static_cast<gui::StyleManager*>(NULL));
 	delete style_manager_instance;
 	style_manager_instance = NULL;
 

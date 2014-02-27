@@ -457,7 +457,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 
 	// Build the cursors
 
-	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
+	gui::Style& style = global::OCPN::get().styleman().current();
 
 #if defined(__WXGTK__) || defined(__WXOSX__)
 	wxImage ICursorLeft = style.GetIcon(_T("left")).ConvertToImage();
@@ -8847,7 +8847,7 @@ void ChartCanvas::EmbossDepthScale(ocpnDC& dc)
 
 void ChartCanvas::CreateDepthUnitEmbossMaps(global::ColorScheme cs)
 {
-	const ocpnStyle::Style& style = global::OCPN::get().styleman().current();
+	const gui::Style& style = global::OCPN::get().styleman().current();
 	const wxString& embossFont = style.getEmbossFont();
 
 	wxFont font;
@@ -8876,7 +8876,7 @@ void ChartCanvas::CreateOZEmbossMapData(global::ColorScheme cs)
 	delete m_pEM_OverZoom;
 	m_pEM_OverZoom = NULL;
 
-	const ocpnStyle::Style& style = global::OCPN::get().styleman().current();
+	const gui::Style& style = global::OCPN::get().styleman().current();
 	const wxString& embossFont = style.getEmbossFont();
 
 	wxFont font;

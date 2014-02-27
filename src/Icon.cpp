@@ -24,11 +24,11 @@
 
 #include "Icon.h"
 
-namespace ocpnStyle {
+namespace gui {
 
 Icon::Icon(void)
+	: loaded(false)
 {
-	Unload();
 }
 
 void Icon::Unload(void)

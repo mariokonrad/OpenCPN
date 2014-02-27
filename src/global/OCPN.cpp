@@ -188,12 +188,12 @@ tide::TideCurrentManager& OCPN::tidecurrentman()
 	return *tidecurrent_manager_instance;
 }
 
-void OCPN::inject(ocpnStyle::StyleManager* instance)
+void OCPN::inject(gui::StyleManager* instance)
 {
 	style_manager_instance = instance;
 }
 
-ocpnStyle::StyleManager& OCPN::styleman()
+gui::StyleManager& OCPN::styleman()
 {
 	return *style_manager_instance;
 }

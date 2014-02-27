@@ -1639,10 +1639,10 @@ void options::CreatePanel_UI(size_t parent, int border_size, int WXUNUSED(group_
 
 	m_itemStyleListBox = new wxChoice(itemPanelFont, ID_STYLESCOMBOBOX);
 
-	const ocpnStyle::StyleManager& styleman = global::OCPN::get().styleman();
+	const gui::StyleManager& styleman = global::OCPN::get().styleman();
 
-	ocpnStyle::StyleManager::StyleNames style_names = styleman.GetStyleNames();
-	for (ocpnStyle::StyleManager::StyleNames::const_iterator i = style_names.begin();
+	gui::StyleManager::StyleNames style_names = styleman.GetStyleNames();
+	for (gui::StyleManager::StyleNames::const_iterator i = style_names.begin();
 		 i != style_names.end(); ++i) {
 		m_itemStyleListBox->Append(*i);
 	}
@@ -1765,7 +1765,7 @@ void options::CreateControls()
 	m_pListbook
 		= new wxListbook(itemDialog1, ID_NOTEBOOK, wxDefaultPosition, wxSize(-1, -1), wxLB_TOP);
 	m_topImgList = new wxImageList(40, 40, true, 1);
-	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
+	gui::Style& style = global::OCPN::get().styleman().current();
 
 #if wxCHECK_VERSION(2, 8, 12)
 	m_topImgList->Add(style.GetIcon(_T("Display")));
@@ -2806,7 +2806,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 		if (sys.data().locale != locale_old)
 			m_returnChanges |= LOCALE_CHANGED;
 
-		ocpnStyle::StyleManager& styleman = global::OCPN::get().styleman();
+		gui::StyleManager& styleman = global::OCPN::get().styleman();
 
 		wxString oldStyle = styleman.current().getName();
 		styleman.SetStyleNextInvocation(m_itemStyleListBox->GetStringSelection());

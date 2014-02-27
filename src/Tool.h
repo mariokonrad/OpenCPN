@@ -22,39 +22,39 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPNSTYLE__TOOL__H__
-#define __OCPNSTYLE__TOOL__H__
+#ifndef __GUI__TOOL__H__
+#define __GUI__TOOL__H__
 
 #include <wx/string.h>
 #include <wx/bitmap.h>
 #include <wx/gdicmn.h>
 
-namespace ocpnStyle {
+namespace gui {
 
 class Tool
 {
-	public:
-		wxString name;
-		wxPoint iconLoc;
-		wxPoint rolloverLoc;
-		wxPoint disabledLoc;
-		wxPoint activeLoc;
-		wxBitmap icon;
-		wxBitmap rollover;
-		wxBitmap rolloverToggled;
-		wxBitmap disabled;
-		wxBitmap active;
-		wxBitmap toggled;
-		bool iconLoaded;
-		bool rolloverLoaded;
-		bool rolloverToggledLoaded;
-		bool disabledLoaded;
-		bool activeLoaded;
-		bool toggledLoaded;
-		wxSize customSize;
+public:
+	Tool(void);
+	void Unload(void);
 
-		Tool(void);
-		void Unload(void);
+	wxString name;
+	wxPoint iconLoc;
+	wxPoint rolloverLoc;
+	wxPoint disabledLoc;
+	wxPoint activeLoc;
+	wxBitmap icon;
+	wxBitmap rollover;
+	wxBitmap rolloverToggled;
+	wxBitmap disabled;
+	wxBitmap active;
+	wxBitmap toggled;
+	bool iconLoaded;
+	bool rolloverLoaded;
+	bool rolloverToggledLoaded;
+	bool disabledLoaded;
+	bool activeLoaded;
+	bool toggledLoaded;
+	wxSize customSize;
 };
 
 }

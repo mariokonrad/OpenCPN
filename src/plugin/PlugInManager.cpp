@@ -66,13 +66,13 @@
 
 #include <util/uuid.h>
 
-#include <typeinfo>
-
 #include <wx/wx.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
 #include <wx/aui/aui.h>
 #include <wx/statline.h>
+
+#include <typeinfo>
 
 extern Config* pConfig;
 extern ais::AIS_Decoder* g_pAIS;
@@ -1089,7 +1089,7 @@ void PlugInManager::SetToolbarItemState(int item, bool toggle)
 
 void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap* bitmap, wxBitmap* bmpRollover)
 {
-	ocpnStyle::StyleManager& styleman = global::OCPN::get().styleman();
+	gui::StyleManager& styleman = global::OCPN::get().styleman();
 
 	for (unsigned int i = 0; i < m_PlugInToolbarTools.size(); i++) {
 		PlugInToolbarToolContainer* pttc = m_PlugInToolbarTools.Item(i);

@@ -21,14 +21,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPNSTYLE__STYLEMANAGER__H__
-#define __OCPNSTYLE__STYLEMANAGER__H__
+#ifndef __GUI__STYLEMANAGER__H__
+#define __GUI__STYLEMANAGER__H__
 
 #include <wx/string.h>
 
 #include <vector>
 
-namespace ocpnStyle {
+namespace gui {
 
 class Style;
 

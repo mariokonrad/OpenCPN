@@ -27,7 +27,7 @@
 #include <vector>
 #include <navigation/WaypointManager.h>
 
-namespace ocpnStyle { class Style; }
+namespace gui { class Style; }
 
 class MarkIcon;
 class wxBitmap;
@@ -74,7 +74,7 @@ public:
 	virtual void SetColorScheme(global::ColorScheme cs);
 
 	// special
-	void ProcessIcons(ocpnStyle::Style& style);
+	void ProcessIcons(gui::Style& style);
 	void initialize();
 	void clean_points();
 

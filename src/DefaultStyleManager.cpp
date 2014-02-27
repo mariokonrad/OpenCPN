@@ -25,15 +25,18 @@
 #include <Style.h>
 #include <Icon.h>
 #include <Tool.h>
-#include <tinyxml/tinyxml.h>
+
 #include <global/OCPN.h>
 #include <global/System.h>
+
+#include <tinyxml/tinyxml.h>
+
 #include <wx/filename.h>
 #include <wx/dir.h>
 #include <wx/log.h>
 #include <wx/image.h>
 
-namespace ocpnStyle {
+namespace gui {
 
 bool DefaultStyleManager::IsOK() const
 {

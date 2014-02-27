@@ -52,7 +52,7 @@ FloatingCompassWindow::FloatingCompassWindow(wxWindow* parent)
 #endif
 	wxDialog::Create(parent, -1, _T(""), wxPoint(0, 0), wxSize(-1, -1), wstyle);
 
-	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
+	gui::Style& style = global::OCPN::get().styleman().current();
 	_img_compass = style.GetIcon(_T("CompassRose"));
 	_img_gpsRed = style.GetIcon(_T("gpsRed"));
 
@@ -111,7 +111,7 @@ void FloatingCompassWindow::UpdateStatus(bool bnew)
 wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 {
 	wxString gpsIconName;
-	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
+	gui::Style& style = global::OCPN::get().styleman().current();
 
 	// In order to draw a horizontal compass window when the toolbar is vertical, we
 	// need to save away the sizes and backgrounds for the two icons.
@@ -227,7 +227,7 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 			wxBitmap iconBm;
 
 			if (style.HasBackground()) {
-				iconBm = ocpnStyle::MergeBitmaps(compassBg, BMPRose, wxSize(0, 0));
+				iconBm = gui::MergeBitmaps(compassBg, BMPRose, wxSize(0, 0));
 			} else {
 				iconBm = BMPRose;
 			}
@@ -238,7 +238,7 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 			m_rose_angle = rose_angle;
 
 			if (style.HasBackground()) {
-				iconBm = ocpnStyle::MergeBitmaps(gpsBg, style.GetIcon(gpsIconName), wxSize(0, 0));
+				iconBm = gui::MergeBitmaps(gpsBg, style.GetIcon(gpsIconName), wxSize(0, 0));
 			} else {
 				iconBm = style.GetIcon(gpsIconName);
 			}

@@ -187,7 +187,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 				if (m_noshow_index_array[ino] == key_db_index) { // chart is in the noshow list
 					if (m_pInVizIconBmp && m_pInVizIconBmp->IsOk())
 						dc.DrawBitmap(
-							ocpnStyle::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pInVizIconBmp),
+							gui::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pInVizIconBmp),
 							box.x + 4, box.y + 3, false);
 					break;
 				}
@@ -199,7 +199,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 					// chart is in the list
 					if (m_pSkewIconBmp && m_pSkewIconBmp->IsOk())
 						dc.DrawBitmap(
-							ocpnStyle::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pSkewIconBmp),
+							gui::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pSkewIconBmp),
 							box.x + box.width - m_pSkewIconBmp->GetWidth() - 4, box.y + 2, false);
 					break;
 				}
@@ -210,7 +210,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 				if (m_tmerc_index_array.at(ino) == key_db_index) { // chart is in the list
 					if (m_pTmercIconBmp && m_pTmercIconBmp->IsOk())
 						dc.DrawBitmap(
-							ocpnStyle::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pTmercIconBmp),
+							gui::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pTmercIconBmp),
 							box.x + box.width - m_pTmercIconBmp->GetWidth() - 4, box.y + 2, false);
 					break;
 				}
@@ -221,7 +221,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 				if (m_poly_index_array.at(ino) == key_db_index) { // chart is in the list
 					if (m_pPolyIconBmp && m_pPolyIconBmp->IsOk())
 						dc.DrawBitmap(
-							ocpnStyle::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pPolyIconBmp),
+							gui::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pPolyIconBmp),
 							box.x + box.width - m_pPolyIconBmp->GetWidth() - 4, box.y + 2, false);
 					break;
 				}

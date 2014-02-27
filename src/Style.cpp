@@ -39,7 +39,7 @@
 #include <wx/dcmemory.h>
 #include <wx/toolbar.h>
 
-namespace ocpnStyle {
+namespace gui {
 
 // This function can be used to create custom bitmap blending for platforms
 // where 32 bit bitmap ops are broken. Can hopefully be removed for wxWidgets 3.0...

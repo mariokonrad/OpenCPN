@@ -55,7 +55,7 @@ namespace tide
 class TideCurrentManager;
 }
 
-namespace ocpnStyle
+namespace gui
 {
 class StyleManager;
 }
@@ -109,7 +109,7 @@ private:
 	navigation::RouteManager* route_manager_instance;
 	navigation::WaypointManager* waypoint_manager_instance;
 	tide::TideCurrentManager* tidecurrent_manager_instance;
-	ocpnStyle::StyleManager* style_manager_instance;
+	gui::StyleManager* style_manager_instance;
 
 	bool start_fullscreen;
 	bool first_run;

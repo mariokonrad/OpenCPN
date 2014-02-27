@@ -21,14 +21,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPNSTYLE__DEFAULTSTYLEMANAGER__H__
-#define __OCPNSTYLE__DEFAULTSTYLEMANAGER__H__
+#ifndef __GUI__DEFAULTSTYLEMANAGER__H__
+#define __GUI__DEFAULTSTYLEMANAGER__H__
 
 #include <StyleManager.h>
 
 class TiXmlElement;
 
-namespace ocpnStyle {
+namespace gui {
 
 class DefaultStyleManager : public StyleManager
 {

@@ -4629,16 +4629,16 @@ bool MainFrame::EvalPriority(const wxString& message, DataStream* pDS)
 	}
 
 	// If the message type has never been seen before...
-	if (NMEA_Msg_Hash.find(msg_type) == NMEA_Msg_Hash.end()) {
+	if (nmea_msg_prio_container.find(msg_type) == nmea_msg_prio_container.end()) {
 		NMEA_Msg_Container* pcontainer = new NMEA_Msg_Container;
 		pcontainer->current_priority = -1; //  guarantee to execute the next clause
 		pcontainer->stream_name = stream_name;
 		pcontainer->receipt_time = wxDateTime::Now();
 
-		NMEA_Msg_Hash[msg_type] = pcontainer;
+		nmea_msg_prio_container[msg_type] = pcontainer; // FIXME: memory leak
 	}
 
-	NMEA_Msg_Container* pcontainer = NMEA_Msg_Hash[msg_type];
+	NMEA_Msg_Container* pcontainer = nmea_msg_prio_container[msg_type];
 	wxString old_port = pcontainer->stream_name;
 
 	int old_priority = pcontainer->current_priority;

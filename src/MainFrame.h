@@ -316,7 +316,7 @@ private:
 	bool bPrevQuilt;
 	bool bPrevFullScreenQuilt;
 
-	MsgPriorityHash NMEA_Msg_Hash;
+	NMEAMsgPriorityMap nmea_msg_prio_container;
 	wxString m_VDO_accumulator;
 
 	time_t m_fixtime;

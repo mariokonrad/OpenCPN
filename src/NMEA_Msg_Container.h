@@ -27,15 +27,17 @@
 #include <wx/datetime.h>
 #include <wx/string.h>
 
+#include <map>
+
 // A class to contain NMEA messages, their receipt time, and their source priority
 class NMEA_Msg_Container
 {
-	public:
-		wxDateTime receipt_time;
-		int current_priority;
-		wxString stream_name;
+public:
+	wxDateTime receipt_time;
+	int current_priority;
+	wxString stream_name;
 };
 
-WX_DECLARE_STRING_HASH_MAP(NMEA_Msg_Container *, MsgPriorityHash);
+typedef std::map<wxString, NMEA_Msg_Container*> NMEAMsgPriorityMap;
 
 #endif

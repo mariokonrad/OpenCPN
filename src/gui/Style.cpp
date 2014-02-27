@@ -126,6 +126,17 @@ bool Style::HasToolbarEnd() const
 	return toolbarEndLoc[currentOrientation] != wxPoint(0,0);
 }
 
+const wxBitmap* Style::getGraphics() const
+{
+	return graphics;
+}
+
+void Style::setGraphics(wxBitmap* bitmap)
+{
+	// FIXME
+	graphics = bitmap;
+}
+
 // Tools and Icons perform on-demand loading and dimming of bitmaps.
 // Changing color scheme invalidatres all loaded bitmaps.
 
@@ -436,6 +447,31 @@ void Style::SetOrientation(long orient)
 int Style::GetOrientation() const
 {
 	return currentOrientation;
+}
+
+const wxSize& Style::get_consoleTextBackgroundSize() const
+{
+	return consoleTextBackgroundSize;
+}
+
+const wxPoint& Style::get_consoleTextBackgroundLoc() const
+{
+	return consoleTextBackgroundLoc;
+}
+
+void Style::set_consoleTextBackground(const wxBitmap& bitmap)
+{
+	consoleTextBackground = bitmap;
+}
+
+const wxString& Style::config_path() const
+{
+	return myConfigFileDir;
+}
+
+const wxString& Style::graphics_filename() const
+{
+	return graphicsFile;
 }
 
 void Style::SetColorScheme(global::ColorScheme cs)

@@ -46,8 +46,7 @@ enum StyleToolIconTypes {
 
 class Style
 {
-	// because StyleManager is doing the initialization, it has to be friend.
-	friend class DefaultStyleManager;
+	friend class XMLStyleReader;
 
 public:
 	Style(const wxString& path);
@@ -104,6 +103,17 @@ public:
 	int getChartStatusIconWidth() const;
 	const wxString& getName() const;
 	bool isMarginsInvisible() const;
+
+	const wxBitmap* getGraphics() const;
+	void setGraphics(wxBitmap*);
+
+	const wxSize& get_consoleTextBackgroundSize() const;
+	const wxPoint& get_consoleTextBackgroundLoc() const;
+
+	void set_consoleTextBackground(const wxBitmap&);
+
+	const wxString& config_path() const;
+	const wxString& graphics_filename() const;
 
 private:
 	typedef std::vector<Icon*> Icons;

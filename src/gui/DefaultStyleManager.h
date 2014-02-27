@@ -26,11 +26,9 @@
 
 #include <gui/StyleManager.h>
 
-class TiXmlElement;
-class TiXmlDocument;
-
 namespace gui {
 
+/// The default implementation of style management.
 class DefaultStyleManager : public StyleManager
 {
 public:
@@ -53,29 +51,6 @@ private:
 
 	void Init(const wxString& path);
 	std::vector<wxString> enumerate_style_files(const wxString& path) const;
-
-	// FIXME: move style reading from XML into separate class, 'StyleFactory' perhaps
-
-	void read_doc(TiXmlDocument& doc, const wxString& path);
-	bool read_style(Style* style, TiXmlElement* node) const;
-	void read_description(Style* style, TiXmlElement* node) const;
-	void read_chart_status_icon(Style* style, TiXmlElement* node) const;
-	void read_chart_status_window(Style* style, TiXmlElement* node) const;
-	void read_embossed_indicators(Style* style, TiXmlElement* node) const;
-	void read_graphics_file(Style* style, TiXmlElement* node) const;
-	void read_active_route(Style* style, TiXmlElement* node) const;
-	void read_icons(Style* style, TiXmlElement* node) const;
-	void read_tools(Style* style, TiXmlElement* node) const;
-	void read_tool_compass(Style* style, TiXmlElement* node) const;
-	void read_tool_attr_margin(Style* style, TiXmlElement* node, int orientation) const;
-	void read_tool_attr_toggled_location(Style* style, TiXmlElement* node, int orientation) const;
-	void read_tool_attr_toolbar_start(Style* style, TiXmlElement* node, int orientation) const;
-	void read_tool_attr_toolbar_end(Style* style, TiXmlElement* node, int orientation) const;
-	void read_tool_attr_toolbar_corners(Style* style, TiXmlElement* node, int orientation) const;
-	void read_tool_attr_background_location(Style* style, TiXmlElement* node, int orientation) const;
-	void read_tool_attr_active_location(Style* style, TiXmlElement* node, int orientation) const;
-	void read_tool_attr_size(Style* style, TiXmlElement* node, int orientation) const;
-	void read_tool_attr_icon_offset(Style* style, TiXmlElement* node, int orientation) const;
 
 	Styles styles;
 	Style* currentStyle;

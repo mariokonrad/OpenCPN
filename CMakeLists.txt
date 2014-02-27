@@ -911,6 +911,8 @@ SET(HDRS
 	src/gui/Icon.h
 	src/gui/StyleManager.h
 	src/gui/DefaultStyleManager.h
+	src/gui/StyleReader.h
+	src/gui/XMLStyleReader.h
 
 	src/OCPN_Version.h
 	src/ocpn_pixel.h
@@ -1045,6 +1047,7 @@ SET(SRCS
 	src/gui/Tool.cpp
 	src/gui/Icon.cpp
 	src/gui/DefaultStyleManager.cpp
+	src/gui/XMLStyleReader.cpp
 
 	src/OCPN_Version.cpp
 	src/MemoryStatus.cpp

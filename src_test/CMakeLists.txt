@@ -35,6 +35,11 @@ add_executable(testrunner
 	${TEST_SRC}
 	${PLATFORM_SRC}
 	${CMAKE_SOURCE_DIR}/src/UserColors.cpp
+	${CMAKE_SOURCE_DIR}/src/MergeBitmaps.cpp
+	${CMAKE_SOURCE_DIR}/src/gui/XMLStyleReader.cpp
+	${CMAKE_SOURCE_DIR}/src/gui/Icon.cpp
+	${CMAKE_SOURCE_DIR}/src/gui/Tool.cpp
+	${CMAKE_SOURCE_DIR}/src/gui/Style.cpp
 	${CMAKE_SOURCE_DIR}/src/navigation/AnchorDist.cpp
 	${CMAKE_SOURCE_DIR}/src/navigation/MagneticVariation.cpp
 	${CMAKE_SOURCE_DIR}/src/geo/Position.cpp
@@ -49,6 +54,7 @@ add_executable(testrunner
 
 target_link_libraries(testrunner
 	global
+	tinyxml
 	${wxWidgets_LIBRARIES}
 	gmock
 	)

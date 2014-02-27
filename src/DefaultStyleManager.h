@@ -27,6 +27,7 @@
 #include <StyleManager.h>
 
 class TiXmlElement;
+class TiXmlDocument;
 
 namespace gui {
 
@@ -50,11 +51,13 @@ public:
 private:
 	typedef std::vector<Style*> Styles;
 
-	void Init(const wxString& fromPath);
+	void Init(const wxString& path);
 	std::vector<wxString> enumerate_style_files(const wxString& path) const;
 
 	// FIXME: move style reading from XML into separate class, 'StyleFactory' perhaps
 
+	void read_doc(TiXmlDocument& doc, const wxString& path);
+	void read_style(Style* style, TiXmlElement* node);
 	void read_description(Style* style, TiXmlElement* node) const;
 	void read_chart_status_icon(Style* style, TiXmlElement* node) const;
 	void read_chart_status_window(Style* style, TiXmlElement* node) const;
@@ -74,7 +77,7 @@ private:
 	void read_tool_attr_size(Style* style, TiXmlElement* node, int orientation) const;
 	void read_tool_attr_icon_offset(Style* style, TiXmlElement* node, int orientation) const;
 
-	bool isOK;
+	bool isOK; // FIXME: this is just silly
 	Styles styles;
 	Style* currentStyle;
 	wxString nextInvocationStyle;

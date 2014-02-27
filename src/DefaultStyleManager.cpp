@@ -428,16 +428,93 @@ std::vector<wxString> DefaultStyleManager::enumerate_style_files(const wxString&
 	return files;
 }
 
-void DefaultStyleManager::Init(const wxString& fromPath) // FIXME: method too long, refactoring
+void DefaultStyleManager::read_style(Style* style, TiXmlElement* node)
 {
-	std::vector<wxString> filenames = enumerate_style_files(fromPath);
+	TiXmlElement* subNode = node->FirstChild()->ToElement();
+	for (; subNode; subNode = subNode->NextSiblingElement()) {
+		wxString nodeType(subNode->Value(), wxConvUTF8);
+
+		if (nodeType == _T("description")) {
+			read_description(style, subNode);
+			continue;
+		}
+		if (nodeType == _T("chart-status-icon")) {
+			read_chart_status_icon(style, subNode);
+			continue;
+		}
+		if (nodeType == _T("chart-status-window")) {
+			read_chart_status_window(style, subNode);
+			continue;
+		}
+		if (nodeType == _T("embossed-indicators")) {
+			read_embossed_indicators(style, subNode);
+			continue;
+		}
+		if (nodeType == _T("graphics-file")) {
+			read_graphics_file(style, subNode);
+			isOK = true; // If we got this far we are at least partially OK... FIXME: this is just silly
+			continue;
+		}
+		if (nodeType == _T("active-route")) {
+			read_active_route(style, subNode);
+			continue;
+		}
+		if (nodeType == _T("icons")) {
+			read_icons(style, subNode);
+		}
+		if (nodeType == _T("tools")) {
+			read_tools(style, subNode);
+			continue;
+		}
+	}
+}
+
+/// Reads style information from the specified document.
+///
+/// This method creates new style objects, depending on wheather
+/// or not enough style information could be obtained from the
+/// specified document or not.
+void DefaultStyleManager::read_doc(TiXmlDocument& doc, const wxString& path)
+{
+	TiXmlHandle hRoot(doc.RootElement());
+
+	wxString root = wxString(doc.RootElement()->Value(), wxConvUTF8);
+	if (root != _T("styles")) {
+		wxLogMessage(_T("    DefaultStyleManager: Expected XML Root <styles> not found."));
+		return;
+	}
+
+	// FIXME: remove the whole UTF8 conversion for finding nodes, it is useless.
+	//        TinyXML returns either 'const char*' or 'const std::string&' anyways
+	//        The 'styles.xml' also should contain an XML-header in general, example:
+	//          <?xml version="1.0" encoding="US-ASCII" ?>
+
+	TiXmlElement* styleElem = hRoot.FirstChild().Element();
+	for (; styleElem; styleElem = styleElem->NextSiblingElement()) {
+
+		if (wxString(styleElem->Value(), wxConvUTF8) != _T("style"))
+			continue;
+
+		Style* style = new Style;
+		styles.push_back(style);
+
+		style->name = wxString(styleElem->Attribute("name"), wxConvUTF8);
+		style->myConfigFileDir = path;
+
+		read_style(style, styleElem);
+	}
+}
+
+void DefaultStyleManager::Init(const wxString& path)
+{
+	std::vector<wxString> filenames = enumerate_style_files(path);
 	if (filenames.empty()) {
-		wxLogMessage(_T("No styles found at: ") + fromPath);
+		wxLogMessage(_T("No styles found at: ") + path);
 		return;
 	}
 
 	for (std::vector<wxString>::const_iterator fn = filenames.begin(); fn != filenames.end(); ++fn) {
-		wxString fullFilePath = fromPath + *fn;
+		wxString fullFilePath = path + *fn;
 		TiXmlDocument doc;
 
 		if (!doc.LoadFile((const char*)fullFilePath.mb_str())) {
@@ -447,70 +524,7 @@ void DefaultStyleManager::Init(const wxString& fromPath) // FIXME: method too lo
 
 		wxLogMessage(_T("Styles loading from ") + fullFilePath);
 
-		TiXmlHandle hRoot(doc.RootElement());
-
-		wxString root = wxString(doc.RootElement()->Value(), wxConvUTF8);
-		if (root != _T("styles")) {
-			wxLogMessage(_T("    DefaultStyleManager: Expected XML Root <styles> not found."));
-			continue;
-		}
-
-		// FIXME: remove the whole UTF8 conversion for finding nodes, it is useless.
-		//        TinyXML returns either 'const char*' or 'const std::string&' anyways
-		//        The 'styles.xml' also should contain an XML-header in general, example:
-		//          <?xml version="1.0" encoding="US-ASCII" ?>
-
-		TiXmlElement* styleElem = hRoot.FirstChild().Element();
-
-		for (; styleElem; styleElem = styleElem->NextSiblingElement()) {
-
-			if (wxString(styleElem->Value(), wxConvUTF8) != _T("style"))
-				continue;
-
-			Style* style = new Style;
-			styles.push_back(style);
-
-			style->name = wxString(styleElem->Attribute("name"), wxConvUTF8);
-			style->myConfigFileDir = fromPath;
-
-			TiXmlElement* subNode = styleElem->FirstChild()->ToElement();
-			for (; subNode; subNode = subNode->NextSiblingElement()) {
-				wxString nodeType(subNode->Value(), wxConvUTF8);
-
-				if (nodeType == _T("description")) {
-					read_description(style, subNode);
-					continue;
-				}
-				if (nodeType == _T("chart-status-icon")) {
-					read_chart_status_icon(style, subNode);
-					continue;
-				}
-				if (nodeType == _T("chart-status-window")) {
-					read_chart_status_window(style, subNode);
-					continue;
-				}
-				if (nodeType == _T("embossed-indicators")) {
-					read_embossed_indicators(style, subNode);
-					continue;
-				}
-				if (nodeType == _T("graphics-file")) {
-					read_graphics_file(style, subNode);
-					isOK = true; // If we got this far we are at least partially OK... FIXME
-					continue;
-				}
-				if (nodeType == _T("active-route")) {
-					read_active_route(style, subNode);
-					continue;
-				}
-				if (nodeType == _T("icons")) {
-					read_icons(style, subNode);
-				}
-				if (nodeType == _T("tools")) {
-					read_tools(style, subNode);
-					continue;
-				}
-			}
-		}
+		read_doc(doc, path);
 	}
 }
 

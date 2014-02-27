@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include "Style.h"
+#include <MergeBitmaps.h>
 #include <Icon.h>
 #include <Tool.h>
 
@@ -40,133 +41,6 @@
 #include <wx/toolbar.h>
 
 namespace gui {
-
-// This function can be used to create custom bitmap blending for platforms
-// where 32 bit bitmap ops are broken. Can hopefully be removed for wxWidgets 3.0...
-
-wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset)
-{
-	wxBitmap merged(back.GetWidth(), back.GetHeight(), back.GetDepth());
-#if (!wxCHECK_VERSION(2,9,4) && (defined(__WXGTK__) || defined(__WXMAC__)))
-
-	// Manual alpha blending for broken wxWidgets platforms.
-	merged.UseAlpha();
-	back.UseAlpha();
-	front.UseAlpha();
-
-	wxImage im_front = front.ConvertToImage();
-	wxImage im_back = back.ConvertToImage();
-	// Only way to make result have alpha channel in wxW 2.8.
-	wxImage im_result = back.ConvertToImage();
-
-	unsigned char* presult = im_result.GetData();
-	unsigned char* pback = im_back.GetData();
-	unsigned char* pfront = im_front.GetData();
-
-	unsigned char* afront = NULL;
-	if (im_front.HasAlpha())
-		afront = im_front.GetAlpha();
-
-	unsigned char* aback = NULL;
-	if (im_back.HasAlpha())
-		aback = im_back.GetAlpha();
-
-	unsigned char* aresult = NULL;
-	if (im_result.HasAlpha())
-		aresult = im_result.GetAlpha();
-
-	// Do alpha blending, associative version of "over" operator.
-
-	for (int i = 0; i < back.GetHeight(); i++) {
-		for (int j = 0; j < back.GetWidth(); j++) {
-
-			int fX = j - offset.x;
-			int fY = i - offset.y;
-
-			bool inFront = true;
-			if (fX < 0 || fY < 0)
-				inFront = false;
-			if (fX >= front.GetWidth())
-				inFront = false;
-			if (fY >= front.GetHeight())
-				inFront = false;
-
-			if (inFront) {
-				double alphaF = (double)(*afront++) / 256.0;
-				double alphaB = (double)(*aback++) / 256.0;
-				double alphaRes = alphaF + alphaB * (1.0 - alphaF);
-				unsigned char a = alphaRes * 256;
-				*aresult++ = a;
-				unsigned char r = (*pfront++ * alphaF + *pback++ * alphaB * (1.0 - alphaF))
-								  / alphaRes;
-				*presult++ = r;
-				unsigned char g = (*pfront++ * alphaF + *pback++ * alphaB * (1.0 - alphaF))
-								  / alphaRes;
-				*presult++ = g;
-				unsigned char b = (*pfront++ * alphaF + *pback++ * alphaB * (1.0 - alphaF))
-								  / alphaRes;
-				*presult++ = b;
-			} else {
-				*aresult++ = *aback++;
-				*presult++ = *pback++;
-				*presult++ = *pback++;
-				*presult++ = *pback++;
-			}
-		}
-	}
-
-	merged = wxBitmap(im_result);
-
-#else
-	wxMemoryDC mdc(merged);
-	mdc.DrawBitmap(back, 0, 0, true);
-	mdc.DrawBitmap(front, offset.x, offset.y, true);
-	mdc.SelectObject(wxNullBitmap);
-#endif
-
-	return merged;
-}
-
-// The purpouse of ConvertTo24Bit is to take an icon with 32 bit depth and alpha
-// channel and put it in a 24 bit deep bitmap with no alpha, that can be safely
-// drawn in the crappy wxWindows implementations.
-
-wxBitmap ConvertTo24Bit(wxColor bgColor, wxBitmap front)
-{
-	if (front.GetDepth() == 24)
-		return front;
-
-	wxBitmap result(front.GetWidth(), front.GetHeight(), 24);
-#if !wxCHECK_VERSION(2, 9, 4)
-	front.UseAlpha();
-#endif
-
-	wxImage im_front = front.ConvertToImage();
-	wxImage im_result = result.ConvertToImage();
-
-	unsigned char* presult = im_result.GetData();
-	unsigned char* pfront = im_front.GetData();
-
-	unsigned char* afront = NULL;
-	if (im_front.HasAlpha())
-		afront = im_front.GetAlpha();
-
-	for (int i = 0; i < result.GetWidth(); i++) {
-		for (int j = 0; j < result.GetHeight(); j++) {
-
-			double alphaF = (double)(*afront++) / 256.0;
-			unsigned char r = *pfront++ * alphaF + bgColor.Red() * (1.0 - alphaF);
-			*presult++ = r;
-			unsigned char g = *pfront++ * alphaF + bgColor.Green() * (1.0 - alphaF);
-			*presult++ = g;
-			unsigned char b = *pfront++ * alphaF + bgColor.Blue() * (1.0 - alphaF);
-			*presult++ = b;
-		}
-	}
-
-	result = wxBitmap(im_result);
-	return result;
-}
 
 bool Style::HasBackground() const
 {

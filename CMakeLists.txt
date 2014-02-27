@@ -988,6 +988,7 @@ SET(HDRS
 	src/UndoAction.h
 	src/AboutDialog.h
 	src/ProjectionType.h
+	src/MergeBitmaps.h
 	src/Style.h
 	src/Tool.h
 	src/Icon.h
@@ -1113,6 +1114,7 @@ SET(SRCS
 	src/Undo.cpp
 	src/UndoAction.cpp
 	src/AboutDialog.cpp
+	src/MergeBitmaps.cpp
 	src/Style.cpp
 	src/Tool.cpp
 	src/Icon.cpp

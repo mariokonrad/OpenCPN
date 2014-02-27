@@ -22,9 +22,9 @@
  **************************************************************************/
 
 #include "FloatingCompassWindow.h"
+#include <MergeBitmaps.h>
 #include <StyleManager.h>
 #include <Style.h>
-
 #include <ChartCanvas.h>
 
 #include <global/OCPN.h>
@@ -227,7 +227,7 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 			wxBitmap iconBm;
 
 			if (style.HasBackground()) {
-				iconBm = gui::MergeBitmaps(compassBg, BMPRose, wxSize(0, 0));
+				iconBm = MergeBitmaps(compassBg, BMPRose, wxSize(0, 0));
 			} else {
 				iconBm = BMPRose;
 			}
@@ -238,7 +238,7 @@ wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 			m_rose_angle = rose_angle;
 
 			if (style.HasBackground()) {
-				iconBm = gui::MergeBitmaps(gpsBg, style.GetIcon(gpsIconName), wxSize(0, 0));
+				iconBm = MergeBitmaps(gpsBg, style.GetIcon(gpsIconName), wxSize(0, 0));
 			} else {
 				iconBm = style.GetIcon(gpsIconName);
 			}

@@ -186,9 +186,8 @@ void PianoWin::OnPaint(wxPaintEvent&)
 			for (unsigned int ino = 0; ino < m_noshow_index_array.size(); ino++) {
 				if (m_noshow_index_array[ino] == key_db_index) { // chart is in the noshow list
 					if (m_pInVizIconBmp && m_pInVizIconBmp->IsOk())
-						dc.DrawBitmap(
-							gui::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pInVizIconBmp),
-							box.x + 4, box.y + 3, false);
+						dc.DrawBitmap(ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pInVizIconBmp),
+									  box.x + 4, box.y + 3, false);
 					break;
 				}
 			}
@@ -198,9 +197,9 @@ void PianoWin::OnPaint(wxPaintEvent&)
 				if (m_skew_index_array.at(ino) == key_db_index) {
 					// chart is in the list
 					if (m_pSkewIconBmp && m_pSkewIconBmp->IsOk())
-						dc.DrawBitmap(
-							gui::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pSkewIconBmp),
-							box.x + box.width - m_pSkewIconBmp->GetWidth() - 4, box.y + 2, false);
+						dc.DrawBitmap(ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pSkewIconBmp),
+									  box.x + box.width - m_pSkewIconBmp->GetWidth() - 4, box.y + 2,
+									  false);
 					break;
 				}
 			}
@@ -209,9 +208,9 @@ void PianoWin::OnPaint(wxPaintEvent&)
 			for (unsigned int ino = 0; ino < m_tmerc_index_array.size(); ino++) {
 				if (m_tmerc_index_array.at(ino) == key_db_index) { // chart is in the list
 					if (m_pTmercIconBmp && m_pTmercIconBmp->IsOk())
-						dc.DrawBitmap(
-							gui::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pTmercIconBmp),
-							box.x + box.width - m_pTmercIconBmp->GetWidth() - 4, box.y + 2, false);
+						dc.DrawBitmap(ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pTmercIconBmp),
+									  box.x + box.width - m_pTmercIconBmp->GetWidth() - 4,
+									  box.y + 2, false);
 					break;
 				}
 			}
@@ -220,9 +219,9 @@ void PianoWin::OnPaint(wxPaintEvent&)
 			for (unsigned int ino = 0; ino < m_poly_index_array.size(); ino++) {
 				if (m_poly_index_array.at(ino) == key_db_index) { // chart is in the list
 					if (m_pPolyIconBmp && m_pPolyIconBmp->IsOk())
-						dc.DrawBitmap(
-							gui::ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pPolyIconBmp),
-							box.x + box.width - m_pPolyIconBmp->GetWidth() - 4, box.y + 2, false);
+						dc.DrawBitmap(ConvertTo24Bit(dc.GetBrush().GetColour(), *m_pPolyIconBmp),
+									  box.x + box.width - m_pPolyIconBmp->GetWidth() - 4, box.y + 2,
+									  false);
 					break;
 				}
 			}
@@ -407,5 +406,45 @@ void PianoWin::SetActiveKey(int iactive)
 void PianoWin::SetRoundedRectangles(bool val)
 {
 	m_brounded = val;
+}
+
+// The purpouse of ConvertTo24Bit is to take an icon with 32 bit depth and alpha
+// channel and put it in a 24 bit deep bitmap with no alpha, that can be safely
+// drawn in the crappy wxWindows implementations.
+wxBitmap PianoWin::ConvertTo24Bit(wxColor bgColor, wxBitmap front)
+{
+	if (front.GetDepth() == 24)
+		return front;
+
+	wxBitmap result(front.GetWidth(), front.GetHeight(), 24);
+#if !wxCHECK_VERSION(2, 9, 4)
+	front.UseAlpha();
+#endif
+
+	wxImage im_front = front.ConvertToImage();
+	wxImage im_result = result.ConvertToImage();
+
+	unsigned char* presult = im_result.GetData();
+	unsigned char* pfront = im_front.GetData();
+
+	unsigned char* afront = NULL;
+	if (im_front.HasAlpha())
+		afront = im_front.GetAlpha();
+
+	for (int i = 0; i < result.GetWidth(); i++) {
+		for (int j = 0; j < result.GetHeight(); j++) {
+
+			double alphaF = (double)(*afront++) / 256.0;
+			unsigned char r = *pfront++ * alphaF + bgColor.Red() * (1.0 - alphaF);
+			*presult++ = r;
+			unsigned char g = *pfront++ * alphaF + bgColor.Green() * (1.0 - alphaF);
+			*presult++ = g;
+			unsigned char b = *pfront++ * alphaF + bgColor.Blue() * (1.0 - alphaF);
+			*presult++ = b;
+		}
+	}
+
+	result = wxBitmap(im_result);
+	return result;
 }
 

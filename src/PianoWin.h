@@ -24,12 +24,13 @@
 #ifndef __PIANOWIN__H__
 #define __PIANOWIN__H__
 
-#include <wx/window.h>
-#include <wx/brush.h>
-#include <vector>
 #include <global/ColorScheme.h>
 
-class wxBitmap;
+#include <wx/window.h>
+#include <wx/brush.h>
+#include <wx/bitmap.h>
+
+#include <vector>
 
 class PianoWin : public wxWindow
 {
@@ -64,6 +65,8 @@ public:
 	void SetRoundedRectangles(bool val);
 
 private:
+	wxBitmap ConvertTo24Bit(wxColor bgColor, wxBitmap front);
+
 	int m_nRegions;
 	int m_index_last;
 	int m_hover_icon_last;

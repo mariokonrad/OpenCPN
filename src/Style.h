@@ -44,9 +44,6 @@ enum StyleToolIconTypes {
 	TOOLICON_ACTIVE
 };
 
-wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset);
-wxBitmap ConvertTo24Bit(wxColor bgColor, wxBitmap front);
-
 class Style
 {
 	// because StyleManager is doing the initialization, it has to be friend.

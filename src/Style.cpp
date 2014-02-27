@@ -29,16 +29,14 @@
 #include <global/OCPN.h>
 #include <global/ColorManager.h>
 
-#include <tinyxml/tinyxml.h>
-
-#include <cstdlib>
-
 #include <wx/filename.h>
 #include <wx/dir.h>
 #include <wx/image.h>
 #include <wx/log.h>
 #include <wx/dcmemory.h>
 #include <wx/toolbar.h>
+
+#include <cstdlib>
 
 namespace gui {
 
@@ -144,12 +142,15 @@ wxBitmap Style::GetIcon(const wxString& name)
 
 	if (icon->loaded)
 		return icon->icon;
+
+	// extract icon from bitmap
 	if (icon->size.x == 0)
 		icon->size = toolSize[currentOrientation];
 	wxRect location(icon->iconLoc, icon->size);
 	wxBitmap bm = graphics->GetSubBitmap(location);
 	icon->icon = SetBitmapBrightness(bm);
 	icon->loaded = true;
+
 	return icon->icon;
 }
 
@@ -176,7 +177,7 @@ wxBitmap Style::GetToolIcon(const wxString& toolname, int iconType, bool rollove
 				size = toolSize[currentOrientation];
 			wxRect location(tool->iconLoc, size);
 
-			//  If rollover icon does not exist, use the defult icon
+			// If rollover icon does not exist, use the defult icon
 			if (rollover) {
 				if ((tool->rolloverLoc.x != 0) || (tool->rolloverLoc.y != 0))
 					location = wxRect(tool->rolloverLoc, size);

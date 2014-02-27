@@ -51,6 +51,7 @@ private:
 	typedef std::vector<Style*> Styles;
 
 	void Init(const wxString& fromPath);
+	std::vector<wxString> enumerate_style_files(const wxString& path) const;
 
 	// FIXME: move style reading from XML into separate class, 'StyleFactory' perhaps
 

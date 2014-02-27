@@ -25,13 +25,15 @@
 
 #include "ChartSymbols.h"
 
-#include <cstdlib>
+#include <chart/ColorTable.h>
+
+#include <tinyxml/tinyxml.h>
 
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/image.h>
 
-#include <chart/ColorTable.h>
+#include <cstdlib>
 
 namespace chart {
 

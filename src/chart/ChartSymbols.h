@@ -24,8 +24,6 @@
 #ifndef __CHART__CHARTSYMBOLS__H__
 #define __CHART__CHARTSYMBOLS__H__
 
-#include <vector>
-
 #include <chart/s52plib.h>
 #include <chart/Lookup.h>
 #include <chart/SymbolSizeInfo.h>
@@ -33,7 +31,10 @@
 #include <chart/OCPNPattern.h>
 #include <chart/LineStyle.h>
 
-#include <tinyxml/tinyxml.h>
+#include <vector>
+#include <map>
+
+class TiXmlElement;
 
 namespace chart {
 

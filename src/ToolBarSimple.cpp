@@ -42,7 +42,6 @@
 
 extern OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 extern ToolBarSimple* g_toolbar;
-extern ocpnStyle::StyleManager* g_StyleManager;
 extern MainFrame* gFrame;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 
@@ -189,7 +188,7 @@ bool ToolBarSimple::DoInsertTool(size_t WXUNUSED(pos), wxToolBarToolBase* toolBa
 		}
 	}
 
-	const ocpnStyle::Style& style = g_StyleManager->current();
+	const ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 	tool->m_x = m_xPos;
 	if (tool->m_x == wxDefaultCoord)
 		tool->m_x = style.GetLeftMargin();
@@ -289,7 +288,7 @@ void ToolBarSimple::KillTooltip()
 
 	if (m_last_ro_tool) {
 		if (m_last_ro_tool->IsEnabled()) {
-			ocpnStyle::Style& style = g_StyleManager->current();
+			ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 			if (m_last_ro_tool->IsToggled()) {
 				m_last_ro_tool->SetNormalBitmap(
 					style.GetToolIcon(m_last_ro_tool->GetToolname(), ocpnStyle::TOOLICON_TOGGLED));
@@ -320,7 +319,7 @@ void ToolBarSimple::SetColorScheme(global::ColorScheme)
 
 bool ToolBarSimple::Realize()
 {
-	ocpnStyle::Style& style = g_StyleManager->current();
+	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 
 	m_currentRowsOrColumns = 0;
 	m_LineCount = 1;
@@ -657,7 +656,7 @@ void ToolBarSimple::DrawTool(wxToolBarToolBase* tool)
 void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 {
 	ToolBarTool* tool = static_cast<ToolBarTool*>(toolBase);
-	ocpnStyle::Style& style = g_StyleManager->current();
+	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 
 	PrepareDC(dc);
 
@@ -1130,7 +1129,7 @@ void ToolBarSimple::OnMouseEnter(int id)
 void ToolBarSimple::SetToolNormalBitmapEx(wxToolBarToolBase* tool, const wxString& iconName)
 {
 	if (tool) {
-		wxBitmap bmp = g_StyleManager->current().GetToolIcon(iconName, ocpnStyle::TOOLICON_NORMAL);
+		wxBitmap bmp = global::OCPN::get().styleman().current().GetToolIcon(iconName, ocpnStyle::TOOLICON_NORMAL);
 		tool->SetNormalBitmap(bmp);
 		ToolBarTool* otool = static_cast<ToolBarTool*>(tool);
 		if (otool)

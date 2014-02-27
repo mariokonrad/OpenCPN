@@ -34,6 +34,10 @@ namespace tide {
 class TideCurrentManager;
 }
 
+namespace ocpnStyle {
+class StyleManager;
+}
+
 namespace global {
 
 class GUI;
@@ -83,6 +87,9 @@ public:
 	void inject(tide::TideCurrentManager*);
 	tide::TideCurrentManager& tidecurrentman();
 
+	void inject(ocpnStyle::StyleManager*);
+	ocpnStyle::StyleManager& styleman();
+
 private:
 	OCPN();
 	OCPN(const OCPN&);
@@ -102,6 +109,7 @@ private:
 	navigation::RouteManager* route_manager_instance;
 	navigation::WaypointManager* waypoint_manager_instance;
 	tide::TideCurrentManager* tidecurrent_manager_instance;
+	ocpnStyle::StyleManager* style_manager_instance;
 };
 
 }

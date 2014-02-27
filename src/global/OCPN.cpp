@@ -39,6 +39,7 @@ OCPN::OCPN()
 	, tracker_instance(NULL)
 	, route_manager_instance(NULL)
 	, waypoint_manager_instance(NULL)
+	, style_manager_instance(NULL)
 {}
 
 OCPN::OCPN(const OCPN&)
@@ -74,6 +75,7 @@ void OCPN::clear()
 	tracker_instance = NULL;
 	route_manager_instance = NULL;
 	waypoint_manager_instance = NULL;
+	style_manager_instance = NULL;
 }
 
 void OCPN::inject(GUI* instance)
@@ -184,6 +186,16 @@ void OCPN::inject(tide::TideCurrentManager* instance)
 tide::TideCurrentManager& OCPN::tidecurrentman()
 {
 	return *tidecurrent_manager_instance;
+}
+
+void OCPN::inject(ocpnStyle::StyleManager* instance)
+{
+	style_manager_instance = instance;
+}
+
+ocpnStyle::StyleManager& OCPN::styleman()
+{
+	return *style_manager_instance;
 }
 
 }

@@ -43,7 +43,6 @@
 #include <wx/image.h>
 #include <wx/dcmemory.h>
 
-extern ocpnStyle::StyleManager* g_StyleManager;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
 extern Config* pConfig;
@@ -91,7 +90,7 @@ void WayPointman::clean_points()
 
 void WayPointman::initialize()
 {
-	ProcessIcons(g_StyleManager->current());
+	ProcessIcons(global::OCPN::get().styleman().current());
 
 	// Load user defined icons.
 
@@ -351,7 +350,7 @@ bool WayPointman::contains(const RoutePoint* point) const
 
 void WayPointman::SetColorScheme(global::ColorScheme)
 {
-	ProcessIcons(g_StyleManager->current());
+	ProcessIcons(global::OCPN::get().styleman().current());
 
 	for (RoutePointList::iterator i = points.begin(); i != points.end(); ++i) {
 		(*i)->ReLoadIcon();

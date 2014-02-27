@@ -40,7 +40,6 @@
 #include <wx/sizer.h>
 #include <wx/menu.h>
 
-extern ocpnStyle::StyleManager* g_StyleManager;
 extern ChartCanvas* cc1;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern MainFrame* gFrame;
@@ -128,7 +127,7 @@ void OCPNFloatingToolbarDialog::SetGeometry()
 	if (!m_ptoolbar)
 		return;
 
-	const ocpnStyle::Style& style = g_StyleManager->current();
+	const ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 	m_ptoolbar->SetToolBitmapSize(style.GetToolSize());
 
 	wxSize tool_size = m_ptoolbar->GetToolBitmapSize();
@@ -217,7 +216,7 @@ void OCPNFloatingToolbarDialog::ToggleOrientation()
 
 	wxPoint grabber_point_abs = ClientToScreen(m_pGrabberwin->GetPosition());
 
-	g_StyleManager->current().SetOrientation(m_orient);
+	global::OCPN::get().styleman().current().SetOrientation(m_orient);
 	m_ptoolbar->InvalidateBitmaps();
 
 	SetGeometry();
@@ -318,7 +317,7 @@ void OCPNFloatingToolbarDialog::Realize()
 	if (!m_ptoolbar)
 		return;
 
-	ocpnStyle::Style& style = g_StyleManager->current();
+	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 
 	m_ptoolbar->Realize();
 

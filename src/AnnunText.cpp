@@ -31,8 +31,6 @@
 
 #include <wx/dcmemory.h>
 
-extern ocpnStyle::StyleManager* g_StyleManager;
-
 BEGIN_EVENT_TABLE(AnnunText, wxWindow)
 	EVT_PAINT(AnnunText::OnPaint)
 END_EVENT_TABLE()
@@ -89,7 +87,7 @@ void AnnunText::SetColorScheme(global::ColorScheme)
 {
 	m_pbackBrush = wxTheBrushList->FindOrCreateBrush(
 		global::OCPN::get().color().get_color(_T("UBLCK")), wxSOLID);
-	m_text_color = g_StyleManager->current().getConsoleFontColor();
+	m_text_color = global::OCPN::get().styleman().current().getConsoleFontColor();
 }
 
 void AnnunText::RefreshFonts()
@@ -135,7 +133,7 @@ void AnnunText::OnPaint(wxPaintEvent &)
 	mdc.SetBackground(*m_pbackBrush);
 	mdc.Clear();
 
-	const wxBitmap& background = g_StyleManager->current().getConsoleTextBackground();
+	const wxBitmap& background = global::OCPN::get().styleman().current().getConsoleTextBackground();
 	if (background.IsOk())
 		mdc.DrawBitmap(background, 0, 0);
 

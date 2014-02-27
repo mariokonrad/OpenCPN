@@ -92,7 +92,6 @@ extern ArrayOfConnPrm* g_pConnectionParams;
 extern Multiplexer* g_pMUX;
 
 extern PlugInManager* g_pi_manager;
-extern ocpnStyle::StyleManager* g_StyleManager;
 
 extern wxLocale *plocale_def_lang;
 extern sound::OCPN_Sound g_anchorwatch_sound;
@@ -1640,12 +1639,14 @@ void options::CreatePanel_UI(size_t parent, int border_size, int WXUNUSED(group_
 
 	m_itemStyleListBox = new wxChoice(itemPanelFont, ID_STYLESCOMBOBOX);
 
-	ocpnStyle::StyleManager::StyleNames style_names = g_StyleManager->GetStyleNames();
+	const ocpnStyle::StyleManager& styleman = global::OCPN::get().styleman();
+
+	ocpnStyle::StyleManager::StyleNames style_names = styleman.GetStyleNames();
 	for (ocpnStyle::StyleManager::StyleNames::const_iterator i = style_names.begin();
 		 i != style_names.end(); ++i) {
 		m_itemStyleListBox->Append(*i);
 	}
-	m_itemStyleListBox->SetStringSelection(g_StyleManager->current().getName());
+	m_itemStyleListBox->SetStringSelection(styleman.current().getName());
 	itemStyleStaticBoxSizer->Add(m_itemStyleListBox, 1, wxEXPAND | wxALL, border_size);
 
 	wxStaticBox* miscOptionsBox
@@ -1764,7 +1765,7 @@ void options::CreateControls()
 	m_pListbook
 		= new wxListbook(itemDialog1, ID_NOTEBOOK, wxDefaultPosition, wxSize(-1, -1), wxLB_TOP);
 	m_topImgList = new wxImageList(40, 40, true, 1);
-	ocpnStyle::Style& style = g_StyleManager->current();
+	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 
 #if wxCHECK_VERSION(2, 8, 12)
 	m_topImgList->Add(style.GetIcon(_T("Display")));
@@ -2371,36 +2372,6 @@ ConnectionParams options::createConnectionParams() const
 		m_cbGarminHost->GetValue(), m_tcInputStc->GetValue(), getConParamInputListType(),
 		m_cbOutput->GetValue(), m_tcOutputStc->GetValue(), getConParamOutputListType(),
 		m_comboPort->GetValue().BeforeFirst(' '), m_connection_enabled);
-
-/*
-	ConnectionParams prm;
-
-	prm.Valid = true;
-	prm.Type = getConParamConnectionType();
-	prm.NetProtocol = getConParamNetworkProtocol();
-
-	// Save the existing addr/port to allow closing of existing port
-	prm.LastNetworkAddress = prm.NetworkAddress;
-	prm.LastNetworkPort = prm.NetworkPort;
-
-	prm.NetworkAddress = m_tNetAddress->GetValue();
-	prm.NetworkPort = wxAtoi(m_tNetPort->GetValue());
-	prm.Baudrate = wxAtoi(m_choiceBaudRate->GetStringSelection());
-	prm.Priority = wxAtoi(m_choicePriority->GetStringSelection());
-	prm.ChecksumCheck = m_cbCheckCRC->GetValue();
-	prm.Garmin = m_cbGarminHost->GetValue();
-	prm.InputSentenceList = wxStringTokenize(m_tcInputStc->GetValue(), _T(","));
-	prm.InputSentenceListType = getConParamInputListType();
-	prm.Output = m_cbOutput->GetValue();
-	prm.OutputSentenceList = wxStringTokenize(m_tcOutputStc->GetValue(), _T(","));
-	prm.OutputSentenceListType = getConParamOutputListType();
-	prm.Port = m_comboPort->GetValue().BeforeFirst(' ');
-	prm.Protocol = ConnectionParams::PROTO_NMEA0183;
-	prm.bEnabled = m_connection_enabled;
-	prm.b_IsSetup = false;
-
-	return prm;
-*/
 }
 
 bool options::CreateConnectionParamsFromSelectedItem(ConnectionParams& prm)
@@ -2835,9 +2806,11 @@ void options::OnApplyClick(wxCommandEvent& event)
 		if (sys.data().locale != locale_old)
 			m_returnChanges |= LOCALE_CHANGED;
 
-		wxString oldStyle = g_StyleManager->current().getName();
-		g_StyleManager->SetStyleNextInvocation(m_itemStyleListBox->GetStringSelection());
-		if (g_StyleManager->GetStyleNextInvocation() != oldStyle) {
+		ocpnStyle::StyleManager& styleman = global::OCPN::get().styleman();
+
+		wxString oldStyle = styleman.current().getName();
+		styleman.SetStyleNextInvocation(m_itemStyleListBox->GetStringSelection());
+		if (styleman.GetStyleNextInvocation() != oldStyle) {
 			m_returnChanges |= STYLE_CHANGED;
 		}
 		wxSizeEvent nullEvent;

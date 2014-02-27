@@ -132,7 +132,6 @@ extern ConsoleCanvas* console;
 ChartCanvas* cc1;
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;
-extern ocpnStyle::StyleManager* g_StyleManager;
 extern bool bDBUpdateInProgress;
 extern ThumbWin* pthumbwin;
 extern tide::IDX_entry* gpIDX;
@@ -284,6 +283,7 @@ App::App()
 	, route_manager_instance(NULL)
 	, waypoint_manager_instance(NULL)
 	, tidecurrent_manager_instance(NULL)
+	, style_manager_instance(NULL)
 	, start_fullscreen(false)
 	, first_run(false)
 	, logger(NULL)
@@ -1315,9 +1315,8 @@ bool App::OnInit()
 	}
 
 	// Now initialize UI Style.
-	g_StyleManager = new ocpnStyle::DefaultStyleManager;
-
-	if (!g_StyleManager->IsOK()) {
+	style_manager_instance = new ocpnStyle::DefaultStyleManager;
+	if (!style_manager_instance->IsOK()) {
 		wxString msg = _("Failed to initialize the user interface. ");
 		msg << _("OpenCPN cannot start. ");
 		msg << _("The necessary configuration files were not found. ");
@@ -1327,6 +1326,7 @@ bool App::OnInit()
 		w.ShowModal();
 		exit(EXIT_FAILURE);
 	}
+	global::OCPN::get().inject(style_manager_instance);
 
 	// Init the WayPoint Manager (Must be after UI Style init).
 	dynamic_cast<WayPointman*>(waypoint_manager_instance)->initialize();
@@ -1547,7 +1547,7 @@ bool App::OnInit()
 
 	stats = new StatWin(cc1);
 	stats->SetColorScheme(view.color_scheme);
-	ocpnStyle::Style& style = g_StyleManager->current();
+	ocpnStyle::Style& style = style_manager_instance->current();
 	if (cc1->GetQuiltMode()) {
 		stats->pPiano->SetVizIcon(new wxBitmap(style.GetIcon(_T("viz"))));
 		stats->pPiano->SetInVizIcon(new wxBitmap(style.GetIcon(_T("redX"))));
@@ -1814,7 +1814,9 @@ int App::OnExit()
 	CSVDeaccess(NULL);
 #endif
 
-	delete g_StyleManager;
+	global::OCPN::get().inject(static_cast<ocpnStyle::StyleManager*>(NULL));
+	delete style_manager_instance;
+	style_manager_instance = NULL;
 
 #ifdef USE_S57
 #ifdef __WXMSW__

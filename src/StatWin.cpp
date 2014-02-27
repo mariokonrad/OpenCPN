@@ -34,7 +34,6 @@
 #include <global/ColorManager.h>
 
 extern chart::ChartDB* ChartData;
-extern ocpnStyle::StyleManager* g_StyleManager;
 
 BEGIN_EVENT_TABLE(StatWin, wxDialog)
 	EVT_PAINT(StatWin::OnPaint)
@@ -95,7 +94,7 @@ void StatWin::ReSize()
 
 void StatWin::OnPaint(wxPaintEvent &)
 {
-	if (g_StyleManager->current().isChartStatusWindowTransparent())
+	if (global::OCPN::get().styleman().current().isChartStatusWindowTransparent())
 		return;
 
 	wxPaintDC dc(this);

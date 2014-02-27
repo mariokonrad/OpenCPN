@@ -188,7 +188,6 @@ extern wxProgressDialog* s_ProgDialog;
 extern bool g_b_assume_azerty;
 
 S57QueryDialog* g_pObjectQueryDialog = NULL;
-extern ocpnStyle::StyleManager* g_StyleManager;
 extern ArrayOfConnPrm* g_pConnectionParams;
 
 extern sound::OCPN_Sound g_anchorwatch_sound;
@@ -458,7 +457,7 @@ ChartCanvas::ChartCanvas(wxFrame* frame)
 
 	// Build the cursors
 
-	ocpnStyle::Style& style = g_StyleManager->current();
+	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 
 #if defined(__WXGTK__) || defined(__WXOSX__)
 	wxImage ICursorLeft = style.GetIcon(_T("left")).ConvertToImage();
@@ -8848,7 +8847,7 @@ void ChartCanvas::EmbossDepthScale(ocpnDC& dc)
 
 void ChartCanvas::CreateDepthUnitEmbossMaps(global::ColorScheme cs)
 {
-	const ocpnStyle::Style& style = g_StyleManager->current();
+	const ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 	const wxString& embossFont = style.getEmbossFont();
 
 	wxFont font;
@@ -8877,7 +8876,7 @@ void ChartCanvas::CreateOZEmbossMapData(global::ColorScheme cs)
 	delete m_pEM_OverZoom;
 	m_pEM_OverZoom = NULL;
 
-	const ocpnStyle::Style& style = g_StyleManager->current();
+	const ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 	const wxString& embossFont = style.getEmbossFont();
 
 	wxFont font;

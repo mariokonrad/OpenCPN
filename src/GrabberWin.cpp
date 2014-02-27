@@ -32,7 +32,6 @@
 
 #include <wx/dcclient.h>
 
-extern ocpnStyle::StyleManager* g_StyleManager;
 extern MainFrame* gFrame;
 
 BEGIN_EVENT_TABLE(GrabberWin, wxPanel)
@@ -45,7 +44,7 @@ GrabberWin::GrabberWin(wxWindow * parent)
 	: m_bLeftDown(false)
 	, m_bRightDown(false)
 {
-	m_pbitmap = g_StyleManager->current().GetIcon(_T("grabber"));
+	m_pbitmap = global::OCPN::get().styleman().current().GetIcon(_T("grabber"));
 
 	Create(parent, -1);
 
@@ -65,7 +64,7 @@ void GrabberWin::SetColorScheme(global::ColorScheme)
 
 	SetBackgroundColour(back_color);
 	ClearBackground();
-	m_pbitmap = g_StyleManager->current().GetIcon(_T("grabber"));
+	m_pbitmap = global::OCPN::get().styleman().current().GetIcon(_T("grabber"));
 }
 
 void GrabberWin::MouseEvent(wxMouseEvent& event)

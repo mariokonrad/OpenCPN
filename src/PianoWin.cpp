@@ -36,7 +36,6 @@ BEGIN_EVENT_TABLE(PianoWin, wxWindow)
 	EVT_MOUSE_EVENTS(PianoWin::MouseEvent)
 END_EVENT_TABLE()
 
-extern ocpnStyle::StyleManager* g_StyleManager;
 extern chart::ChartDB* ChartData;
 extern MainFrame* gFrame;
 
@@ -229,14 +228,15 @@ void PianoWin::OnPaint(wxPaintEvent&)
 			}
 		}
 #ifndef __WXMAC__
-		if (g_StyleManager->current().isChartStatusWindowTransparent())
+		if (global::OCPN::get().styleman().current().isChartStatusWindowTransparent()) {
 			((wxDialog*)GetParent())->SetShape(wxRegion(shape, *wxBLACK, 0));
+		}
 	} else {
 		// SetShape() with a completely empty shape doesn't work, and leaving the shape
 		// but hiding the window causes artifacts when dragging in GL mode on MSW.
 		// The best solution found so far is to show just a single pixel, this is less
 		// disturbing than flashing piano keys when dragging. (wxWidgets 2.8)
-		if (g_StyleManager->current().isChartStatusWindowTransparent())
+		if (global::OCPN::get().styleman().current().isChartStatusWindowTransparent())
 			((wxDialog*)GetParent())->SetShape(wxRegion(wxRect(0, 0, 1, 1)));
 #endif
 	}
@@ -285,7 +285,7 @@ void PianoWin::FormatKeys(void)
 		int width;
 		int height;
 		GetClientSize(&width, &height);
-		int kw = g_StyleManager->current().getChartStatusIconWidth();
+		int kw = global::OCPN::get().styleman().current().getChartStatusIconWidth();
 		if (!kw)
 			kw = width / nKeys;
 

@@ -39,7 +39,6 @@ BEGIN_EVENT_TABLE(FloatingCompassWindow, wxWindow)
 	EVT_PAINT(FloatingCompassWindow::OnPaint)
 END_EVENT_TABLE()
 
-extern ocpnStyle::StyleManager* g_StyleManager;
 extern ChartCanvas* cc1;
 
 FloatingCompassWindow::FloatingCompassWindow(wxWindow* parent)
@@ -53,7 +52,7 @@ FloatingCompassWindow::FloatingCompassWindow(wxWindow* parent)
 #endif
 	wxDialog::Create(parent, -1, _T(""), wxPoint(0, 0), wxSize(-1, -1), wstyle);
 
-	ocpnStyle::Style& style = g_StyleManager->current();
+	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 	_img_compass = style.GetIcon(_T("CompassRose"));
 	_img_gpsRed = style.GetIcon(_T("gpsRed"));
 
@@ -112,7 +111,7 @@ void FloatingCompassWindow::UpdateStatus(bool bnew)
 wxBitmap FloatingCompassWindow::CreateBmp(bool newColorScheme)
 {
 	wxString gpsIconName;
-	ocpnStyle::Style& style = g_StyleManager->current();
+	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 
 	// In order to draw a horizontal compass window when the toolbar is vertical, we
 	// need to save away the sizes and backgrounds for the two icons.

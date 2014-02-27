@@ -72,7 +72,6 @@ extern LayerList* pLayerList;
 extern int g_LayerIdx;
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern chart::ChartGroupArray* g_pGroupArray;
-extern ocpnStyle::StyleManager* g_StyleManager;
 
 #ifdef USE_S57
 extern chart::s52plib* ps52plib;
@@ -450,7 +449,7 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 
 	wxString uiStyle;
 	Read(_T("UIStyle"), &uiStyle, wxT(""));
-	g_StyleManager->SetStyle(uiStyle);
+	global::OCPN::get().styleman().SetStyle(uiStyle);
 
 	if (iteration == 0) {
 		// default value for caching: 20 chart
@@ -1496,7 +1495,7 @@ void Config::UpdateSettings()
 	write_view();
 	write_system_config();
 
-	Write(_T("UIStyle"), g_StyleManager->GetStyleNextInvocation());
+	Write(_T("UIStyle"), global::OCPN::get().styleman().GetStyleNextInvocation());
 	Write(_T("ChartNotRenderScaleFactor"), view.ChartNotRenderScaleFactor);
 
 	Write(_T("ShowDebugWindows"), m_bShowDebugWindows);

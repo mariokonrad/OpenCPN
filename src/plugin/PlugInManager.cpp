@@ -80,7 +80,6 @@ extern wxAuiManager* g_pauimgr;
 extern wxLocale* plocale_def_lang;
 extern chart::ChartDB* ChartData;
 extern MainFrame* gFrame;
-extern ocpnStyle::StyleManager* g_StyleManager;
 extern options* g_pOptions;
 extern Multiplexer* g_pMUX;
 extern StatWin* stats;
@@ -1018,7 +1017,7 @@ int PlugInManager::AddToolbarTool(wxString label, wxBitmap* bitmap, wxBitmap* WX
 	pttc->label = label;
 
 	if (!bitmap->IsOk()) {
-		pttc->bitmap_day = new wxBitmap(g_StyleManager->current().GetIcon(_T("default_pi")));
+		pttc->bitmap_day = new wxBitmap(global::OCPN::get().styleman().current().GetIcon(_T("default_pi")));
 	} else {
 		// Force a non-reference copy of the bitmap from the PlugIn
 		pttc->bitmap_day = new wxBitmap(*bitmap);
@@ -1090,6 +1089,8 @@ void PlugInManager::SetToolbarItemState(int item, bool toggle)
 
 void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap* bitmap, wxBitmap* bmpRollover)
 {
+	ocpnStyle::StyleManager& styleman = global::OCPN::get().styleman();
+
 	for (unsigned int i = 0; i < m_PlugInToolbarTools.size(); i++) {
 		PlugInToolbarToolContainer* pttc = m_PlugInToolbarTools.Item(i);
 		if (pttc->id == item) {
@@ -1099,7 +1100,7 @@ void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap* bitmap, wxBitmap* 
 			delete pttc->bitmap_Rollover;
 
 			if (!bitmap->IsOk()) {
-				pttc->bitmap_day = new wxBitmap(g_StyleManager->current().GetIcon(_T("default_pi")));
+				pttc->bitmap_day = new wxBitmap(styleman.current().GetIcon(_T("default_pi")));
 			} else {
 				// Force a non-reference copy of the bitmap from the PlugIn
 				pttc->bitmap_day = new wxBitmap(*bitmap);
@@ -1107,7 +1108,7 @@ void PlugInManager::SetToolbarItemBitmaps(int item, wxBitmap* bitmap, wxBitmap* 
 			}
 
 			if (!bmpRollover->IsOk()) {
-				pttc->bitmap_Rollover = new wxBitmap(g_StyleManager->current().GetIcon(_T("default_pi")));
+				pttc->bitmap_Rollover = new wxBitmap(styleman.current().GetIcon(_T("default_pi")));
 			} else {
 				// Force a non-reference copy of the bitmap from the PlugIn
 				pttc->bitmap_Rollover = new wxBitmap(*bmpRollover);
@@ -2153,7 +2154,7 @@ int opencpn_plugin::GetPlugInVersionMinor()
 
 wxBitmap* opencpn_plugin::GetPlugInBitmap()
 {
-	return new wxBitmap(g_StyleManager->current().GetIcon(_T("default_pi")));
+	return new wxBitmap(global::OCPN::get().styleman().current().GetIcon(_T("default_pi")));
 }
 
 wxString opencpn_plugin::GetCommonName()

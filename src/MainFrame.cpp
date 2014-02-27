@@ -186,7 +186,6 @@ sound::OCPN_Sound g_anchorwatch_sound;
 RoutePoint* pAnchorWatchPoint1;
 RoutePoint* pAnchorWatchPoint2;
 ToolBarSimple* g_toolbar;
-ocpnStyle::StyleManager* g_StyleManager;
 wxPrintData* g_printData = (wxPrintData*)NULL;
 wxPageSetupData* g_pageSetupData = (wxPageSetupData*)NULL;
 
@@ -544,7 +543,7 @@ void MainFrame::SetAndApplyColorScheme(global::ColorScheme cs)
 			break;
 	}
 
-	g_StyleManager->current().SetColorScheme(cs);
+	global::OCPN::get().styleman().current().SetColorScheme(cs);
 	chart_canvas->GetWorldBackgroundChart()->SetColorScheme(cs);
 
 #ifdef USE_S57
@@ -668,7 +667,7 @@ ToolBarSimple* MainFrame::CreateAToolbar()
 	if (!tb)
 		return 0;
 
-	ocpnStyle::Style& style = g_StyleManager->current();
+	ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 
 	wxString tipString;
 
@@ -2478,7 +2477,7 @@ void MainFrame::SetupQuiltMode(void)
 
 		stats->pPiano->SetNoshowIndexArray(g_quilt_noshow_index_array);
 
-		ocpnStyle::Style& style = g_StyleManager->current();
+		ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 
 		stats->pPiano->SetVizIcon(new wxBitmap(style.GetIcon(_T("viz"))));
 		stats->pPiano->SetInVizIcon(new wxBitmap(style.GetIcon(_T("redX"))));
@@ -2535,7 +2534,7 @@ void MainFrame::SetupQuiltMode(void)
 		stats->pPiano->SetVizIcon(NULL);
 		stats->pPiano->SetInVizIcon(NULL);
 
-		ocpnStyle::Style& style = g_StyleManager->current();
+		ocpnStyle::Style& style = global::OCPN::get().styleman().current();
 
 		stats->pPiano->SetTMercIcon(new wxBitmap(style.GetIcon(_T("tmercprj"))));
 		stats->pPiano->SetSkewIcon(new wxBitmap(style.GetIcon(_T("skewprj"))));

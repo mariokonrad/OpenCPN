@@ -22,8 +22,8 @@
  **************************************************************************/
 
 #include "AboutDialog.h"
-#include "StyleManager.h"
-#include "Style.h"
+#include <StyleManager.h>
+#include <Style.h>
 
 #include <ChartCanvas.h>
 #include <DimeControl.h>
@@ -42,8 +42,6 @@
 #include <wx/bmpbuttn.h>
 #include <wx/dataobj.h>
 #include <wx/html/htmlwin.h>
-
-extern ocpnStyle::StyleManager* g_StyleManager;
 
 static char AboutText[] =
 {
@@ -272,7 +270,7 @@ void AboutDialog::CreateControls()
 	wxButton* copyLog = new wxButton(itemDialog1, ID_COPYLOG, _("Copy Log File to Clipboard"));
 	buttonSizer->Add(copyLog, 1, wxALL | wxEXPAND, 3);
 
-	wxBitmap donate_bmp = g_StyleManager->current().GetIcon(_T("donate"));
+	wxBitmap donate_bmp = global::OCPN::get().styleman().current().GetIcon(_T("donate"));
 
 	wxButton* donateButton = new wxBitmapButton(itemDialog1, ID_DONATE, donate_bmp,
 												wxDefaultPosition, wxDefaultSize, 0);

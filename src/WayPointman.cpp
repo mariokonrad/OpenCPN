@@ -24,10 +24,11 @@
 #include "WayPointman.h"
 #include <RoutePoint.h>
 #include <Select.h>
-#include <StyleManager.h>
-#include <Style.h>
 #include <Config.h>
 #include <MarkIcon.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
@@ -35,13 +36,13 @@
 
 #include <navigation/RouteManager.h>
 
-#include <algorithm>
-
 #include <wx/imaglist.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
 #include <wx/image.h>
 #include <wx/dcmemory.h>
+
+#include <algorithm>
 
 extern RoutePoint* pAnchorWatchPoint1;
 extern RoutePoint* pAnchorWatchPoint2;

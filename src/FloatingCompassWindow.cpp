@@ -23,9 +23,10 @@
 
 #include "FloatingCompassWindow.h"
 #include <MergeBitmaps.h>
-#include <StyleManager.h>
-#include <Style.h>
 #include <ChartCanvas.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

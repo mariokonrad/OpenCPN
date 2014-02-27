@@ -32,7 +32,6 @@
 #include <RoutePoint.h>
 #include <NavObjectCollection.h>
 #include <NavObjectChanges.h>
-#include <StyleManager.h>
 #include <NMEALogWindow.h>
 #include <FontMgr.h>
 #include <MessageBox.h>
@@ -42,6 +41,8 @@
 #ifdef USE_S57
 	#include <chart/s52plib.h>
 #endif
+
+#include <gui/StyleManager.h>
 
 #include <global/OCPN.h>
 

@@ -25,8 +25,9 @@
 #include <dychart.h>
 #include <PianoWin.h>
 #include <TextStatWin.h>
-#include <StyleManager.h>
-#include <Style.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <chart/ChartDB.h>
 

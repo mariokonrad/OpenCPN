@@ -25,13 +25,13 @@
 #include <GrabberWin.h>
 #include <ToolbarMOBDialog.h>
 #include <ToolBarSimple.h>
-#include <StyleManager.h>
-#include <Style.h>
 #include <MessageBox.h>
 #include <GUI_IDs.h>
-
 #include <ChartCanvas.h>
 #include <MainFrame.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

@@ -906,6 +906,12 @@ SET(HDRS
 	src/navigation/RouteManager.h
 	src/navigation/WaypointManager.h
 
+	src/gui/Style.h
+	src/gui/Tool.h
+	src/gui/Icon.h
+	src/gui/StyleManager.h
+	src/gui/DefaultStyleManager.h
+
 	src/OCPN_Version.h
 	src/ocpn_pixel.h
 	src/Units.h
@@ -989,11 +995,6 @@ SET(HDRS
 	src/AboutDialog.h
 	src/ProjectionType.h
 	src/MergeBitmaps.h
-	src/Style.h
-	src/Tool.h
-	src/Icon.h
-	src/StyleManager.h
-	src/DefaultStyleManager.h
 	src/ToolBarSimple.h
 	src/ToolTipWin.h
 	src/ToolBarTool.h
@@ -1039,6 +1040,11 @@ SET(SRCS
 	src/garmin/GARMIN_Serial_Thread.cpp
 	src/garmin/GARMIN_USB_Thread.cpp
 	src/garmin/GarminProtocolHandler.cpp
+
+	src/gui/Style.cpp
+	src/gui/Tool.cpp
+	src/gui/Icon.cpp
+	src/gui/DefaultStyleManager.cpp
 
 	src/OCPN_Version.cpp
 	src/MemoryStatus.cpp
@@ -1115,10 +1121,6 @@ SET(SRCS
 	src/UndoAction.cpp
 	src/AboutDialog.cpp
 	src/MergeBitmaps.cpp
-	src/Style.cpp
-	src/Tool.cpp
-	src/Icon.cpp
-	src/DefaultStyleManager.cpp
 	src/ToolBarSimple.cpp
 	src/ToolTipWin.cpp
 	src/ToolBarTool.cpp

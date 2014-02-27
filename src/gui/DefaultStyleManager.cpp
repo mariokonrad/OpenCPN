@@ -22,9 +22,10 @@
  **************************************************************************/
 
 #include "DefaultStyleManager.h"
-#include <Style.h>
-#include <Icon.h>
-#include <Tool.h>
+
+#include <gui/Style.h>
+#include <gui/Icon.h>
+#include <gui/Tool.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>

@@ -22,12 +22,12 @@
  **************************************************************************/
 
 #include "AboutDialog.h"
-#include <StyleManager.h>
-#include <Style.h>
-
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 #include <OCPN_Version.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>

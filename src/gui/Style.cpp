@@ -23,8 +23,9 @@
 
 #include "Style.h"
 #include <MergeBitmaps.h>
-#include <Icon.h>
-#include <Tool.h>
+
+#include <gui/Icon.h>
+#include <gui/Tool.h>
 
 #include <global/OCPN.h>
 #include <global/ColorManager.h>

@@ -63,8 +63,6 @@
 #include <TimedPopupWin.h>
 #include <MessageBox.h>
 #include <Track.h>
-#include <StyleManager.h>
-#include <Style.h>
 #include <StatWin.h>
 #include <PianoWin.h>
 #include <ConsoleCanvas.h>
@@ -93,6 +91,9 @@
 #include <Units.h>
 #include <NavObjectChanges.h>
 #include <PositionConvert.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <plugin/PlugInManager.h>
 #include <plugin/OCPN_MsgEvent.h>

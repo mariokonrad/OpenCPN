@@ -22,8 +22,7 @@
  **************************************************************************/
 
 #include "Routeman.h"
-#include "dychart.h"
-#include <StyleManager.h>
+#include <dychart.h>
 #include <ConsoleCanvas.h>
 #include <RouteProp.h>
 #include <RouteManagerDialog.h>
@@ -34,6 +33,8 @@
 #include <util/Vector2D.h>
 
 #include <geo/GeoRef.h>
+
+#include <gui/StyleManager.h>
 
 #include <global/OCPN.h>
 #include <global/Navigation.h>

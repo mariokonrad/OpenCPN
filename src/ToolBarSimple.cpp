@@ -22,8 +22,6 @@
  **************************************************************************/
 
 #include "ToolBarSimple.h"
-#include <StyleManager.h>
-#include <Style.h>
 #include <FontMgr.h>
 #include <GrabberWin.h>
 #include <ToolbarMOBDialog.h>
@@ -31,6 +29,9 @@
 #include <ToolTipWin.h>
 #include <ToolBarTool.h>
 #include <MainFrame.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

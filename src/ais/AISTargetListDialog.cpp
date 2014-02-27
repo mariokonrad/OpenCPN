@@ -23,8 +23,6 @@
 
 #include "AISTargetListDialog.h"
 #include <OCPNListCtrl.h>
-#include <StyleManager.h>
-#include <Style.h>
 #include <Select.h>
 #include <RouteManagerDialog.h>
 #include <Undo.h>
@@ -32,6 +30,9 @@
 #include <DimeControl.h>
 #include <Config.h>
 #include <MainFrame.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

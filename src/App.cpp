@@ -27,8 +27,6 @@
 #include <OCPNFloatingToolbarDialog.h>
 #include <MessageBox.h>
 #include <Multiplexer.h>
-#include <DefaultStyleManager.h>
-#include <Style.h>
 #include <FloatingCompassWindow.h>
 #include <ThumbWin.h>
 #include <StatWin.h>
@@ -46,6 +44,9 @@
 #include <OCPN_Version.h>
 #include <Routeman.h>
 #include <WayPointman.h>
+
+#include <gui/DefaultStyleManager.h>
+#include <gui/Style.h>
 
 #include <windows/compatibility.h>
 

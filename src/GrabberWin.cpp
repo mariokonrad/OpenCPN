@@ -23,9 +23,10 @@
 
 #include "GrabberWin.h"
 #include <OCPNFloatingToolbarDialog.h>
-#include <StyleManager.h>
-#include <Style.h>
 #include <MainFrame.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <global/OCPN.h>
 #include <global/ColorManager.h>

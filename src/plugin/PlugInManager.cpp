@@ -26,8 +26,6 @@
 #include <MainFrame.h>
 #include <Track.h>
 #include <ocpnDC.h>
-#include <StyleManager.h>
-#include <Style.h>
 #include <Select.h>
 #include <OptionDialog.h>
 #include <Multiplexer.h>
@@ -46,6 +44,9 @@
 #include <global/OCPN.h>
 #include <global/System.h>
 #include <global/ColorManager.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <navigation/RouteManager.h>
 #include <navigation/WaypointManager.h>

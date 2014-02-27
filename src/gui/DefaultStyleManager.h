@@ -24,7 +24,7 @@
 #ifndef __GUI__DEFAULTSTYLEMANAGER__H__
 #define __GUI__DEFAULTSTYLEMANAGER__H__
 
-#include <StyleManager.h>
+#include <gui/StyleManager.h>
 
 class TiXmlElement;
 class TiXmlDocument;

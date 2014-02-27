@@ -47,8 +47,6 @@
 #include "OptionDialog.h"
 #include <dychart.h>
 #include <MainFrame.h>
-#include <StyleManager.h>
-#include <Style.h>
 #include <MessageBox.h>
 #include <DataStream.h>
 #include <Multiplexer.h>
@@ -62,6 +60,9 @@
 #include <SerialPorts.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <ais/AIS_Decoder.h>
 #include <ais/ais.h>

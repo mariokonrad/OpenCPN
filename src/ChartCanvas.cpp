@@ -35,8 +35,6 @@
 #include <TimedPopupWin.h>
 #include <MessageBox.h>
 #include <dychart.h>
-#include <StyleManager.h>
-#include <Style.h>
 #include <StatWin.h>
 #include <Track.h>
 #include <Kml.h>
@@ -69,6 +67,9 @@
 #include <Layer.h>
 #include <PositionConvert.h>
 #include <Units.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <windows/compatibility.h>
 

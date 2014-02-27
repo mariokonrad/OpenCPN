@@ -23,8 +23,9 @@
 
 #include "AnnunText.h"
 #include <FontMgr.h>
-#include <StyleManager.h>
-#include <Style.h>
+
+#include <gui/StyleManager.h>
+#include <gui/Style.h>
 
 #include <global/OCPN.h>
 #include <global/ColorManager.h>

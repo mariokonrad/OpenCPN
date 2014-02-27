@@ -150,8 +150,8 @@ void DefaultStyleManager::read_icons(Style* style, TiXmlElement* node) const
 	TiXmlElement* iconNode = node->FirstChild()->ToElement();
 
 	for (; iconNode; iconNode = iconNode->NextSiblingElement()) {
-		wxString nodeType(iconNode->Value(), wxConvUTF8);
-		if (nodeType == _T("icon")) {
+		std::string nodeType = iconNode->ValueStr();
+		if (nodeType == "icon") {
 			Icon* icon = new Icon;
 			style->icons.push_back(icon);
 			icon->name = wxString(iconNode->Attribute("name"), wxConvUTF8);
@@ -181,21 +181,21 @@ void DefaultStyleManager::read_tool_compass(Style* style, TiXmlElement* node) co
 {
 	TiXmlElement* attrNode = node->FirstChild()->ToElement();
 	for (; attrNode; attrNode = attrNode->NextSiblingElement()) {
-		wxString nodeType(attrNode->Value(), wxConvUTF8);
-		if (nodeType == _T("margin")) {
+		std::string nodeType = attrNode->ValueStr();
+		if (nodeType == "margin") {
 			attrNode->QueryIntAttribute("top", &style->compassMarginTop);
 			attrNode->QueryIntAttribute("right", &style->compassMarginRight);
 			attrNode->QueryIntAttribute("bottom", &style->compassMarginBottom);
 			attrNode->QueryIntAttribute("left", &style->compassMarginLeft);
 			continue;
 		}
-		if (nodeType == _T("compass-corners")) {
+		if (nodeType == "compass-corners") {
 			int r;
 			attrNode->QueryIntAttribute("radius", &r);
 			style->compasscornerRadius = r;
 			continue;
 		}
-		if (nodeType == _T("offset")) {
+		if (nodeType == "offset") {
 			attrNode->QueryIntAttribute("x", &style->compassXoffset);
 			attrNode->QueryIntAttribute("y", &style->compassYoffset);
 			continue;
@@ -284,7 +284,8 @@ void DefaultStyleManager::read_tool_attr_active_location(Style* style, TiXmlElem
 	style->activeBGlocation[orientation] = wxPoint(x, y);
 }
 
-void DefaultStyleManager::read_tool_attr_size(Style* style, TiXmlElement* node, int orientation) const
+void DefaultStyleManager::read_tool_attr_size(Style* style, TiXmlElement* node,
+											  int orientation) const
 {
 	int x, y;
 	node->QueryIntAttribute("x", &x);
@@ -292,8 +293,7 @@ void DefaultStyleManager::read_tool_attr_size(Style* style, TiXmlElement* node, 
 	style->toolSize[orientation] = wxSize(x, y);
 }
 
-void DefaultStyleManager::read_tool_attr_icon_offset(Style* style, TiXmlElement* node,
-											  int orientation) const
+void DefaultStyleManager::read_tool_attr_icon_offset(Style* style, TiXmlElement* node, int) const
 {
 	int x, y;
 	node->QueryIntAttribute("x", &x);
@@ -305,64 +305,64 @@ void DefaultStyleManager::read_tools(Style* style, TiXmlElement* node) const
 {
 	TiXmlElement* toolNode = node->FirstChild()->ToElement();
 	for (; toolNode; toolNode = toolNode->NextSiblingElement()) {
-		wxString nodeType(toolNode->Value(), wxConvUTF8);
+		std::string nodeType = toolNode->ValueStr();
 
-		if (nodeType == _T("horizontal") || nodeType == _T("vertical")) {
+		if (nodeType == "horizontal" || nodeType == "vertical") {
 			int orientation = 0;
-			if (nodeType == _T("vertical"))
+			if (nodeType == "vertical")
 				orientation = 1;
 
 			TiXmlElement* attrNode = toolNode->FirstChild()->ToElement();
 			for (; attrNode; attrNode = attrNode->NextSiblingElement()) {
-				wxString nodeType(attrNode->Value(), wxConvUTF8);
-				if (nodeType == _T("separation")) {
+				std::string type = attrNode->ValueStr();
+				if (type == "separation") {
 					attrNode->QueryIntAttribute("distance", &style->toolSeparation[orientation]);
 					continue;
 				}
-				if (nodeType == _T("margin")) {
+				if (type == "margin") {
 					read_tool_attr_margin(style, attrNode, orientation);
 					continue;
 				}
-				if (nodeType == _T("toggled-location")) {
+				if (type == "toggled-location") {
 					read_tool_attr_toggled_location(style, attrNode, orientation);
 					continue;
 				}
-				if (nodeType == _T("toolbar-start")) {
+				if (type == "toolbar-start") {
 					read_tool_attr_toolbar_start(style, attrNode, orientation);
 					continue;
 				}
-				if (nodeType == _T("toolbar-end")) {
+				if (type == "toolbar-end") {
 					read_tool_attr_toolbar_end(style, attrNode, orientation);
 					continue;
 				}
-				if (nodeType == _T("toolbar-corners")) {
+				if (type == "toolbar-corners") {
 					read_tool_attr_toolbar_corners(style, attrNode, orientation);
 					continue;
 				}
-				if (nodeType == _T("background-location")) {
+				if (type == "background-location") {
 					read_tool_attr_background_location(style, attrNode, orientation);
 					continue;
 				}
-				if (nodeType == _T("active-location")) {
+				if (type == "active-location") {
 					read_tool_attr_active_location(style, attrNode, orientation);
 					continue;
 				}
-				if (nodeType == _T("size")) {
+				if (type == "size") {
 					read_tool_attr_size(style, attrNode, orientation);
 					continue;
 				}
-				if (nodeType == _T("icon-offset")) {
+				if (type == "icon-offset") {
 					read_tool_attr_icon_offset(style, attrNode, orientation);
 					continue;
 				}
 			}
 			continue;
 		}
-		if (nodeType == _T("compass")) {
+		if (nodeType == "compass") {
 			read_tool_compass(style, toolNode);
 		}
 
-		if (nodeType == _T("tool")) {
+		if (nodeType == "tool") {
 			Tool* tool = new Tool();
 			style->tools.push_back(tool);
 			tool->name = wxString(toolNode->Attribute("name"), wxConvUTF8);
@@ -437,37 +437,37 @@ bool DefaultStyleManager::read_style(Style* style, TiXmlElement* node) const
 
 	TiXmlElement* subNode = node->FirstChild()->ToElement();
 	for (; subNode; subNode = subNode->NextSiblingElement()) {
-		wxString nodeType(subNode->Value(), wxConvUTF8);
+		std::string nodeType = subNode->ValueStr();
 
-		if (nodeType == _T("description")) {
+		if (nodeType == "description") {
 			read_description(style, subNode);
 			continue;
 		}
-		if (nodeType == _T("chart-status-icon")) {
+		if (nodeType == "chart-status-icon") {
 			read_chart_status_icon(style, subNode);
 			continue;
 		}
-		if (nodeType == _T("chart-status-window")) {
+		if (nodeType == "chart-status-window") {
 			read_chart_status_window(style, subNode);
 			continue;
 		}
-		if (nodeType == _T("embossed-indicators")) {
+		if (nodeType == "embossed-indicators") {
 			read_embossed_indicators(style, subNode);
 			continue;
 		}
-		if (nodeType == _T("graphics-file")) {
+		if (nodeType == "graphics-file") {
 			read_graphics_file(style, subNode);
 			enough_data = true;
 			continue;
 		}
-		if (nodeType == _T("active-route")) {
+		if (nodeType == "active-route") {
 			read_active_route(style, subNode);
 			continue;
 		}
-		if (nodeType == _T("icons")) {
+		if (nodeType == "icons") {
 			read_icons(style, subNode);
 		}
-		if (nodeType == _T("tools")) {
+		if (nodeType == "tools") {
 			read_tools(style, subNode);
 			continue;
 		}
@@ -485,21 +485,16 @@ void DefaultStyleManager::read_doc(TiXmlDocument& doc, const wxString& path)
 {
 	TiXmlHandle hRoot(doc.RootElement());
 
-	wxString root = wxString(doc.RootElement()->Value(), wxConvUTF8);
-	if (root != _T("styles")) {
+	std::string root = doc.RootElement()->ValueStr();
+	if (root != "styles") {
 		wxLogMessage(_T("    DefaultStyleManager: Expected XML Root <styles> not found."));
 		return;
 	}
 
-	// FIXME: remove the whole UTF8 conversion for finding nodes, it is useless.
-	//        TinyXML returns either 'const char*' or 'const std::string&' anyways
-	//        The 'styles.xml' also should contain an XML-header in general, example:
-	//          <?xml version="1.0" encoding="US-ASCII" ?>
-
 	TiXmlElement* styleElem = hRoot.FirstChild().Element();
 	for (; styleElem; styleElem = styleElem->NextSiblingElement()) {
 
-		if (wxString(styleElem->Value(), wxConvUTF8) != _T("style"))
+		if (styleElem->ValueStr() != "style")
 			continue;
 
 		Style* style = new Style(path);

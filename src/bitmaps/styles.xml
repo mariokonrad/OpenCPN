@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
 <styles>
 	<style name="Traditional">
 		<graphics-file name="toolicons_traditional.png" />
@@ -952,7 +953,6 @@
 			</icon>
 		</icons>
 	</style>
-
 	<style name="Journeyman Flat">
 		<description>Inspired by the grey winter skies over Rio de la Plata</description>
 		<graphics-file name="toolicons_journeyman_flat.png" />

@@ -504,8 +504,9 @@ bool Style::isMarginsInvisible() const
 	return marginsInvisible;
 }
 
-Style::Style(void)
+Style::Style(const wxString& path)
 	: graphics(NULL)
+	, myConfigFileDir(path)
 {
 	currentOrientation = 0;
 	colorscheme = global::GLOBAL_COLOR_SCHEME_DAY;
@@ -516,7 +517,7 @@ Style::Style(void)
 	embossHeight = 40;
 	embossFont = wxEmptyString;
 
-	//  Set compass window style defauilts
+	// Set compass window style defauilts
 	compassMarginTop = 4;
 	compassMarginRight = 0;
 	compassMarginBottom = 4;
@@ -525,14 +526,14 @@ Style::Style(void)
 	compassXoffset = 0;
 	compassYoffset = 0;
 
-	for( int i = 0; i < 2; i++ ) {
-		toolbarStartLoc[i] = wxPoint( 0, 0 );
-		toolbarEndLoc[i] = wxPoint( 0, 0 );
+	for (int i = 0; i < 2; i++) {
+		toolbarStartLoc[i] = wxPoint(0, 0);
+		toolbarEndLoc[i] = wxPoint(0, 0);
 		cornerRadius[i] = 0;
 	}
 }
 
-Style::~Style(void)
+Style::~Style()
 {
 	for (Tools::iterator tool = tools.begin(); tool != tools.end(); ++tool)
 		delete *tool;

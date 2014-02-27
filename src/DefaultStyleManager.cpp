@@ -38,9 +38,33 @@
 
 namespace gui {
 
-bool DefaultStyleManager::IsOK() const
+DefaultStyleManager::DefaultStyleManager()
+	: currentStyle(NULL)
 {
-	return isOK;
+}
+
+DefaultStyleManager::~DefaultStyleManager()
+{
+	for (Styles::const_iterator i = styles.begin(); i != styles.end(); ++i)
+		delete *i;
+	styles.clear();
+}
+
+bool DefaultStyleManager::initialize()
+{
+	const global::System::Data& sys = global::OCPN::get().sys().data();
+
+	Init(sys.sound_data_location + _T("uidata") + wxFileName::GetPathSeparator());
+	Init(sys.home_location);
+	Init(sys.home_location + _T(".opencpn") + wxFileName::GetPathSeparator());
+	SetStyle(_T(""));
+
+	return !styles.empty();
+}
+
+const Style& DefaultStyleManager::current() const
+{
+	return *currentStyle;
 }
 
 void DefaultStyleManager::SetStyleNextInvocation(const wxString& name)
@@ -61,30 +85,6 @@ StyleManager::StyleNames DefaultStyleManager::GetStyleNames() const
 		names.push_back((*i)->name);
 
 	return names;
-}
-
-DefaultStyleManager::DefaultStyleManager()
-	: isOK(false)
-	, currentStyle(NULL)
-{
-	const global::System::Data& sys = global::OCPN::get().sys().data();
-
-	Init(sys.sound_data_location + _T("uidata") + wxFileName::GetPathSeparator());
-	Init(sys.home_location);
-	Init(sys.home_location + _T(".opencpn") + wxFileName::GetPathSeparator());
-	SetStyle(_T(""));
-}
-
-DefaultStyleManager::~DefaultStyleManager()
-{
-	for (Styles::const_iterator i = styles.begin(); i != styles.end(); ++i)
-		delete *i;
-	styles.clear();
-}
-
-const Style& DefaultStyleManager::current() const
-{
-	return *currentStyle;
 }
 
 Style& DefaultStyleManager::current()
@@ -428,8 +428,12 @@ std::vector<wxString> DefaultStyleManager::enumerate_style_files(const wxString&
 	return files;
 }
 
-void DefaultStyleManager::read_style(Style* style, TiXmlElement* node)
+bool DefaultStyleManager::read_style(Style* style, TiXmlElement* node) const
 {
+	bool enough_data = false;
+
+	style->name = wxString(node->Attribute("name"), wxConvUTF8);
+
 	TiXmlElement* subNode = node->FirstChild()->ToElement();
 	for (; subNode; subNode = subNode->NextSiblingElement()) {
 		wxString nodeType(subNode->Value(), wxConvUTF8);
@@ -452,7 +456,7 @@ void DefaultStyleManager::read_style(Style* style, TiXmlElement* node)
 		}
 		if (nodeType == _T("graphics-file")) {
 			read_graphics_file(style, subNode);
-			isOK = true; // If we got this far we are at least partially OK... FIXME: this is just silly
+			enough_data = true;
 			continue;
 		}
 		if (nodeType == _T("active-route")) {
@@ -467,6 +471,8 @@ void DefaultStyleManager::read_style(Style* style, TiXmlElement* node)
 			continue;
 		}
 	}
+
+	return enough_data;
 }
 
 /// Reads style information from the specified document.
@@ -495,13 +501,12 @@ void DefaultStyleManager::read_doc(TiXmlDocument& doc, const wxString& path)
 		if (wxString(styleElem->Value(), wxConvUTF8) != _T("style"))
 			continue;
 
-		Style* style = new Style;
-		styles.push_back(style);
-
-		style->name = wxString(styleElem->Attribute("name"), wxConvUTF8);
-		style->myConfigFileDir = path;
-
-		read_style(style, styleElem);
+		Style* style = new Style(path);
+		if (read_style(style, styleElem)) {
+			styles.push_back(style);
+		} else {
+			delete style;
+		}
 	}
 }
 

@@ -42,7 +42,7 @@ public:
 	{
 	}
 
-	virtual bool IsOK() const = 0;
+	virtual bool initialize() = 0;
 	virtual void SetStyle(const wxString& name) = 0;
 	virtual void SetStyleNextInvocation(const wxString& name) = 0;
 	virtual const wxString& GetStyleNextInvocation() const = 0;

@@ -1316,7 +1316,7 @@ bool App::OnInit()
 
 	// Now initialize UI Style.
 	style_manager_instance = new gui::DefaultStyleManager;
-	if (!style_manager_instance->IsOK()) {
+	if (!style_manager_instance->initialize()) {
 		wxString msg = _("Failed to initialize the user interface. ");
 		msg << _("OpenCPN cannot start. ");
 		msg << _("The necessary configuration files were not found. ");

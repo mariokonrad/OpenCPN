@@ -37,7 +37,7 @@ public:
 	DefaultStyleManager();
 	virtual ~DefaultStyleManager();
 
-	virtual bool IsOK() const;
+	virtual bool initialize();
 	virtual void SetStyle(const wxString& name);
 
 	virtual void SetStyleNextInvocation(const wxString& name);
@@ -57,7 +57,7 @@ private:
 	// FIXME: move style reading from XML into separate class, 'StyleFactory' perhaps
 
 	void read_doc(TiXmlDocument& doc, const wxString& path);
-	void read_style(Style* style, TiXmlElement* node);
+	bool read_style(Style* style, TiXmlElement* node) const;
 	void read_description(Style* style, TiXmlElement* node) const;
 	void read_chart_status_icon(Style* style, TiXmlElement* node) const;
 	void read_chart_status_window(Style* style, TiXmlElement* node) const;
@@ -77,7 +77,6 @@ private:
 	void read_tool_attr_size(Style* style, TiXmlElement* node, int orientation) const;
 	void read_tool_attr_icon_offset(Style* style, TiXmlElement* node, int orientation) const;
 
-	bool isOK; // FIXME: this is just silly
 	Styles styles;
 	Style* currentStyle;
 	wxString nextInvocationStyle;

@@ -50,8 +50,8 @@ class Style
 	friend class DefaultStyleManager;
 
 public:
-	Style(void);
-	~Style(void);
+	Style(const wxString& path);
+	~Style();
 
 	wxBitmap GetNormalBG() const;
 	wxBitmap GetActiveBG() const;

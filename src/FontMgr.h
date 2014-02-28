@@ -26,10 +26,10 @@
 
 #include <FontDesc.h>
 
-#include <vector>
-
 #include <wx/colour.h>
 #include <wx/string.h>
+
+#include <vector>
 
 class wxFont;
 
@@ -66,7 +66,7 @@ class FontMgr
 
 		static FontMgr * instance;
 
-		typedef std::vector<FontDesc *> FontList;
+		typedef std::vector<gui::FontDesc *> FontList;
 		FontList fontlist;
 };
 

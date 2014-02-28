@@ -21,29 +21,29 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __FONTDESC_H__
-#define __FONTDESC_H__
+#ifndef __GUI__FONTDESC_H__
+#define __GUI__FONTDESC_H__
 
 #include <wx/string.h>
 #include <wx/colour.h>
 
 class wxFont;
 
+namespace gui {
+
 class FontDesc
 {
-	public:
-		FontDesc(
-				wxString DialogString,
-				wxString ConfigString,
-				wxFont * pFont,
-				wxColour color);
-		~FontDesc();
+public:
+	FontDesc(wxString DialogString, wxString ConfigString, wxFont* pFont, wxColour color);
+	~FontDesc();
 
-		wxString m_dialogstring;
-		wxString m_configstring;
-		wxFont * m_font;
-		wxColour m_color;
-		wxString m_nativeInfo;
+	wxString m_dialogstring;
+	wxString m_configstring;
+	wxFont* m_font;
+	wxColour m_color;
+	wxString m_nativeInfo;
 };
+
+}
 
 #endif

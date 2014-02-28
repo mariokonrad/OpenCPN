@@ -26,12 +26,12 @@
 #include <global/OCPN.h>
 #include <global/System.h>
 
-#include <locale>
-
 #include <wx/gdicmn.h>
 #include <wx/tokenzr.h>
 #include <wx/font.h>
 #include <wx/utils.h>
+
+#include <locale>
 
 FontMgr* FontMgr::instance = NULL;
 
@@ -113,7 +113,7 @@ wxFont* FontMgr::GetFont(const wxString& TextElement, int default_size)
 	wxString nativefont = GetSimpleNativeFont(new_size);
 	wxFont* nf = wxFont::New(nativefont);
 
-	FontDesc* pnewfd = new FontDesc(TextElement, configkey, nf, *wxBLACK);
+	gui::FontDesc* pnewfd = new gui::FontDesc(TextElement, configkey, nf, *wxBLACK);
 	fontlist.push_back(pnewfd);
 
 	return pnewfd->m_font;
@@ -176,7 +176,7 @@ bool FontMgr::SetFont(const wxString& TextElement, wxFont* pFont, wxColour color
 {
 	// Look thru the font list for a match
 	for (FontList::iterator i = fontlist.begin(); i != fontlist.end(); ++i) {
-		FontDesc* pmfd = *i;
+		gui::FontDesc* pmfd = *i;
 		if (pmfd->m_dialogstring == TextElement) {
 			// TODO Think about this
 			//
@@ -216,7 +216,7 @@ const wxString& FontMgr::GetNativeDesc(int i) const
 
 wxString FontMgr::GetFullConfigDesc(int i) const
 {
-	const FontDesc* pfd = fontlist.at(i);
+	const gui::FontDesc* pfd = fontlist.at(i);
 	wxString ret = pfd->m_dialogstring;
 	ret.Append(_T(":"));
 	ret.Append(pfd->m_nativeInfo);
@@ -240,7 +240,7 @@ void FontMgr::LoadFontNative(const wxString& ConfigString, const wxString& Nativ
 
 	// Search for a match in the list
 	for (FontList::iterator i = fontlist.begin(); i != fontlist.end(); ++i) {
-		FontDesc* pmfd = *i;
+		gui::FontDesc* pmfd = *i;
 		if (pmfd->m_configstring == ConfigString) {
 			pmfd->m_nativeInfo = nativefont;
 			wxFont* nf = pmfd->m_font->New(pmfd->m_nativeInfo);
@@ -265,7 +265,7 @@ void FontMgr::LoadFontNative(const wxString& ConfigString, const wxString& Nativ
 #endif
 	delete nf0;
 
-	FontDesc* pnewfd = new FontDesc(dialogstring, ConfigString, nf, color);
+	gui::FontDesc* pnewfd = new gui::FontDesc(dialogstring, ConfigString, nf, color);
 	fontlist.push_back(pnewfd);
 }
 

@@ -24,11 +24,9 @@
 #include "FontDesc.h"
 #include <wx/font.h>
 
-FontDesc::FontDesc(
-		wxString DialogString,
-		wxString ConfigString,
-		wxFont * pFont,
-		wxColour color)
+namespace gui {
+
+FontDesc::FontDesc(wxString DialogString, wxString ConfigString, wxFont* pFont, wxColour color)
 	: m_dialogstring(DialogString)
 	, m_configstring(ConfigString)
 	, m_font(pFont)
@@ -41,5 +39,7 @@ FontDesc::~FontDesc()
 {
 	delete m_font;
 	m_font = NULL;
+}
+
 }
 

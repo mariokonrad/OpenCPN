@@ -24,8 +24,6 @@
 #ifndef __FONTMGR_H__
 #define __FONTMGR_H__
 
-#include <FontDesc.h>
-
 #include <wx/colour.h>
 #include <wx/string.h>
 
@@ -33,41 +31,43 @@
 
 class wxFont;
 
+namespace gui { class FontDesc; }
+
 /// Manages the font list.
 ///
 /// Singleton.
 class FontMgr
 {
-	public:
-		static FontMgr & Get();
+public:
+	static FontMgr& Get();
 
-		wxFont * GetFont(const wxString & TextElement, int default_size = 0);
-		wxColour GetFontColor(const wxString &TextElement) const;
+	wxFont* GetFont(const wxString& TextElement, int default_size = 0);
+	wxColour GetFontColor(const wxString& TextElement) const;
 
-		int GetNumFonts(void) const;
-		const wxString & GetConfigString(int i) const;
-		const wxString & GetDialogString(int i) const;
-		const wxString & GetNativeDesc(int i) const;
-		wxString GetFullConfigDesc(int i) const;
-		static wxString GetFontConfigKey(const wxString &description);
+	int GetNumFonts(void) const;
+	const wxString& GetConfigString(int i) const;
+	const wxString& GetDialogString(int i) const;
+	const wxString& GetNativeDesc(int i) const;
+	wxString GetFullConfigDesc(int i) const;
+	static wxString GetFontConfigKey(const wxString& description);
 
-		void LoadFontNative(const wxString & ConfigString, const wxString & NativeDesc);
-		bool SetFont(const wxString & TextElement, wxFont * pFont, wxColour color);
+	void LoadFontNative(const wxString& ConfigString, const wxString& NativeDesc);
+	bool SetFont(const wxString& TextElement, wxFont* pFont, wxColour color);
 
-	private: // private for singleton
-		FontMgr();
-		~FontMgr();
-		FontMgr(const FontMgr &) {}
-		FontMgr & operator=(const FontMgr &) { return *this; }
+private: // private for singleton
+	FontMgr();
+	~FontMgr();
+	FontMgr(const FontMgr&) {}
+	FontMgr& operator=(const FontMgr&) { return *this; }
 
-	private:
-		wxFont * find_font(const wxString & text_element);
-		wxString GetSimpleNativeFont(int size);
+private:
+	wxFont* find_font(const wxString& text_element);
+	wxString GetSimpleNativeFont(int size);
 
-		static FontMgr * instance;
+	static FontMgr* instance;
 
-		typedef std::vector<gui::FontDesc *> FontList;
-		FontList fontlist;
+	typedef std::vector<gui::FontDesc*> FontList;
+	FontList fontlist;
 };
 
 #endif

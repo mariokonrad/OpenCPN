@@ -913,6 +913,7 @@ SET(HDRS
 	src/gui/DefaultStyleManager.h
 	src/gui/StyleReader.h
 	src/gui/XMLStyleReader.h
+	src/gui/FontDesc.h
 
 	src/OCPN_Version.h
 	src/ocpn_pixel.h
@@ -962,7 +963,6 @@ SET(HDRS
 	src/SelectItem.h
 	src/Select.h
 	src/FontMgr.h
-	src/FontDesc.h
 	src/NMEALogWindow.h
 	src/WindowDestroyListener.h
 	src/TTYWindow.h
@@ -1048,6 +1048,7 @@ SET(SRCS
 	src/gui/Icon.cpp
 	src/gui/DefaultStyleManager.cpp
 	src/gui/XMLStyleReader.cpp
+	src/gui/FontDesc.cpp
 
 	src/OCPN_Version.cpp
 	src/MemoryStatus.cpp
@@ -1088,7 +1089,6 @@ SET(SRCS
 	src/SelectItem.cpp
 	src/Select.cpp
 	src/FontMgr.cpp
-	src/FontDesc.cpp
 	src/NMEALogWindow.cpp
 	src/TTYWindow.cpp
 	src/TTYScroll.cpp

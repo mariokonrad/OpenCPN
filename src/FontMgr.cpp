@@ -23,6 +23,8 @@
 
 #include "FontMgr.h"
 
+#include <gui/FontDesc.h>
+
 #include <global/OCPN.h>
 #include <global/System.h>
 

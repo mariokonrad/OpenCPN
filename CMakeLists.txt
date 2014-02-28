@@ -176,12 +176,12 @@ set(PREFIX_LIB "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
 ################################################################################
 # include paths
 ################################################################################
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories("${CMAKE_SOURCE_DIR}/src")
 
 # platform specific include directories
 
 if(WIN32)
-	include_directories(${CMAKE_SOURCE_DIR}/src/windows)
+	include_directories("${CMAKE_SOURCE_DIR}/src/windows")
 endif(WIN32)
 
 if(APPLE)
@@ -311,13 +311,13 @@ endif(OPENGL_GLU_FOUND)
 # gmock (external)
 ################################################################################
 
-set(gmock_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(gmock_INCLUDE_DIR ${gmock_INSTALL_DIR}/include)
-set(gmock_LIBRARY_DIR ${gmock_INSTALL_DIR}/lib)
+set(gmock_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
+set(gmock_INCLUDE_DIR "${gmock_INSTALL_DIR}/include")
+set(gmock_LIBRARY_DIR "${gmock_INSTALL_DIR}/lib")
 
 ExternalProject_Add(extern_gmock
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gmock
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/gmock-1.7.0
+	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/gmock"
+	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/gmock-1.7.0"
 	# configure
 	CMAKE_ARGS
 		-DCMAKE_INSTALL_PREFIX=${gmock_INSTALL_DIR}
@@ -345,13 +345,13 @@ include_directories(${gmock_INCLUDE_DIR})
 # zlib (external)
 ################################################################################
 
-set(zlib_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(zlib_INCLUDE_DIR ${zlib_INSTALL_DIR}/include)
-set(zlib_LIBRARY_DIR ${zlib_INSTALL_DIR}/lib)
+set(zlib_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
+set(zlib_INCLUDE_DIR "${zlib_INSTALL_DIR}/include")
+set(zlib_LIBRARY_DIR "${zlib_INSTALL_DIR}/lib")
 
 ExternalProject_Add(extern_zlib
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/zlib
-	URL ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/zlib-1.2.8.tar.gz
+	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/zlib"
+	URL "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/zlib-1.2.8.tar.gz"
 	URL_MD5 44d667c142d7cda120332623eab69f40
 	CMAKE_ARGS
 		-DCMAKE_BUILD_TYPE=Release
@@ -377,13 +377,13 @@ include_directories(${zlib_INCLUDE_DIR})
 # bzip2
 ################################################################################
 
-set(bzip2_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(bzip2_INCLUDE_DIR ${bzip2_INSTALL_DIR}/include)
-set(bzip2_LIBRARY_DIR ${bzip2_INSTALL_DIR}/lib)
+set(bzip2_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
+set(bzip2_INCLUDE_DIR "${bzip2_INSTALL_DIR}/include")
+set(bzip2_LIBRARY_DIR "${bzip2_INSTALL_DIR}/lib")
 
 ExternalProject_Add(extern_bzip2
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/bzip2
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/bzip2-1.0.6
+	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/bzip2"
+	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/bzip2-1.0.6"
 	# configure
 	CMAKE_ARGS
 		-DCMAKE_INSTALL_PREFIX=${bzip2_INSTALL_DIR}
@@ -411,14 +411,14 @@ include_directories(${bzip2_INCLUDE_DIR})
 # pugixml (external)
 ################################################################################
 
-set(pugixml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(pugixml_INCLUDE_DIR ${pugixml_INSTALL_DIR}/include)
-set(pugixml_LIBRARY_DIR ${pugixml_INSTALL_DIR}/lib)
+set(pugixml_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
+set(pugixml_INCLUDE_DIR "${pugixml_INSTALL_DIR}/include")
+set(pugixml_LIBRARY_DIR "${pugixml_INSTALL_DIR}/lib")
 
 ExternalProject_Add(extern_pugixml
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/pugixml
+	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/pugixml"
 	# configure
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/pugixml-1.2/scripts
+	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/pugixml-1.2/scripts"
 	CMAKE_ARGS
 		-DCMAKE_INSTALL_PREFIX=${pugixml_INSTALL_DIR}
 		-DBUILD_SHARED_LIBS=OFF
@@ -446,13 +446,13 @@ include_directories(${pugixml_INCLUDE_DIR})
 # tinyxml (external)
 ################################################################################
 
-set(tinyxml_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(tinyxml_INCLUDE_DIR ${tinyxml_INSTALL_DIR}/include)
-set(tinyxml_LIBRARY_DIR ${tinyxml_INSTALL_DIR}/lib)
+set(tinyxml_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
+set(tinyxml_INCLUDE_DIR "${tinyxml_INSTALL_DIR}/include")
+set(tinyxml_LIBRARY_DIR "${tinyxml_INSTALL_DIR}/lib")
 
 ExternalProject_Add(extern_tinyxml
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/tinyxml
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/tinyxml-2.6.2
+	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/tinyxml"
+	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/tinyxml-2.6.2"
 	# configure
 	CMAKE_ARGS
 		-DCMAKE_INSTALL_PREFIX=${tinyxml_INSTALL_DIR}
@@ -482,13 +482,13 @@ add_definitions("-DTIXML_USE_STL")
 # libtcd (external)
 ################################################################################
 
-set(tcd_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(tcd_INCLUDE_DIR ${tcd_INSTALL_DIR}/include)
-set(tcd_LIBRARY_DIR ${tcd_INSTALL_DIR}/lib)
+set(tcd_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
+set(tcd_INCLUDE_DIR "${tcd_INSTALL_DIR}/include")
+set(tcd_LIBRARY_DIR "${tcd_INSTALL_DIR}/lib")
 
 ExternalProject_Add(extern_tcd
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/tcd
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/libtcd-2.2.5
+	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/tcd"
+	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/libtcd-2.2.5"
 	# configure
 	CMAKE_ARGS
 		-DCMAKE_INSTALL_PREFIX=${tcd_INSTALL_DIR}
@@ -516,13 +516,13 @@ include_directories(${tcd_INCLUDE_DIR})
 # wxJSON (external)
 ################################################################################
 
-set(wxjson_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/local)
-set(wxjson_INCLUDE_DIR ${wxjson_INSTALL_DIR}/include)
-set(wxjson_LIBRARY_DIR ${wxjson_INSTALL_DIR}/lib)
+set(wxjson_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
+set(wxjson_INCLUDE_DIR "${wxjson_INSTALL_DIR}/include")
+set(wxjson_LIBRARY_DIR "${wxjson_INSTALL_DIR}/lib")
 
 ExternalProject_Add(extern_wxjson
-	PREFIX ${CMAKE_CURRENT_BINARY_DIR}/wxjson
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src_extern/wxJSON-1.2.1
+	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/wxjson"
+	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/wxJSON-1.2.1"
 	# configure
 	CMAKE_ARGS
 		-DCMAKE_INSTALL_PREFIX=${wxjson_INSTALL_DIR}
@@ -624,8 +624,8 @@ FIND_PACKAGE(Gettext REQUIRED)
 # Enable CrashReporting for Windows
 if(WIN32)
 	add_definitions(-DOCPN_USE_CRASHRPT)
-	include_directories(${CMAKE_SOURCE_DIR}/buildwin/crashrpt)
-	set(EXTRA_LIBS ${EXTRA_LIBS} ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.lib)
+	include_directories("${CMAKE_SOURCE_DIR}/buildwin/crashrpt")
+	set(EXTRA_LIBS ${EXTRA_LIBS} "${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.lib")
 	set(CMAKE_EXE_LINKER_FLAGS /DEBUG)
 endif(WIN32)
 
@@ -675,8 +675,8 @@ SET(SRC_NMEA0183
 	src/nmea0183/apb.hpp
 	)
 
-add_library(NMEA0183 STATIC ${SRC_NMEA0183})
-include_directories(${CMAKE_SOURCE_DIR}/src/nmea0183)
+add_library(nmea0183 STATIC ${SRC_NMEA0183})
+include_directories("${CMAKE_SOURCE_DIR}/src/nmea0183")
 
 
 SET(HDR_AIS
@@ -1282,7 +1282,7 @@ if (USE_S57)
 
 	add_library(S57ENC STATIC ${SRC_S57ENC})
 	add_dependencies(S57ENC tinyxml)
-	include_directories(${CMAKE_SOURCE_DIR}/src/mygdal)
+	include_directories("${CMAKE_SOURCE_DIR}/src/mygdal")
 	set(EXTRA_LIBS ${EXTRA_LIBS} S57ENC)
 else (USE_S57)
 	message (STATUS "S57 ENC support: disabled")
@@ -1341,7 +1341,7 @@ if (USE_GARMINHOST)
 	endif(WIN32)
 
 	add_library(GARMINHOST STATIC ${SRC_GARMINHOST})
-	include_directories(${CMAKE_SOURCE_DIR}/src/garmin/jeeps)
+	include_directories("${CMAKE_SOURCE_DIR}/src/garmin/jeeps")
 	set(EXTRA_LIBS ${EXTRA_LIBS} GARMINHOST)
 
 	if(WIN32)
@@ -1427,30 +1427,30 @@ endif(WIN32)
 
 
 if(APPLE)
-	set_source_files_properties(${gshhs} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/gshhs )
-	set_source_files_properties(${uiData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/uidata  )
-	set_source_files_properties(${s57data} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/s57data  )
-	set_source_files_properties(${tcData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/tcdata  )
-	set_source_files_properties(data/license.txt PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport )
+	set_source_files_properties(${gshhs} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/gshhs)
+	set_source_files_properties(${uiData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/uidata)
+	set_source_files_properties(${s57data} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/s57data)
+	set_source_files_properties(${tcData} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/tcdata)
+	set_source_files_properties(data/license.txt PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport)
 
-	FILE(GLOB SOUND_FILES ${CMAKE_SOURCE_DIR}/data/sounds/*)
+	FILE(GLOB SOUND_FILES "${CMAKE_SOURCE_DIR}/data/sounds/*")
 	FOREACH (_currentSoundFile ${SOUND_FILES})
 		SET_SOURCE_FILES_PROPERTIES(
 			${_currentSoundFile} PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/sounds )
 	ENDFOREACH (_currentSoundFile )
 
-	SET_SOURCE_FILES_PROPERTIES(data/doc/help_web.html PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/doc )
-	SET_SOURCE_FILES_PROPERTIES(data/doc/help_en_US.html PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/doc )
+	SET_SOURCE_FILES_PROPERTIES(data/doc/help_web.html PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/doc)
+	SET_SOURCE_FILES_PROPERTIES(data/doc/help_en_US.html PROPERTIES MACOSX_PACKAGE_LOCATION SharedSupport/doc)
 
 	FILE(GLOB DOC_FILES "${CMAKE_SOURCE_DIR}/data/doc/images/*")
 	FOREACH (_currentDocFile ${DOC_FILES})
 		SET_SOURCE_FILES_PROPERTIES(
 		${_currentDocFile}
-		PROPERTIES MACOSX_PACKAGE_LOCATION "SharedSupport/doc/images" )
-	ENDFOREACH (_currentDocFile )
+		PROPERTIES MACOSX_PACKAGE_LOCATION "SharedSupport/doc/images")
+	ENDFOREACH (_currentDocFile)
 
 	SET_SOURCE_FILES_PROPERTIES(buildosx/opencpn.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
-	SET_SOURCE_FILES_PROPERTIES(buildosx/MainMenu.xib PROPERTIES MACOSX_PACKAGE_LOCATION Resources/English.lproj )
+	SET_SOURCE_FILES_PROPERTIES(buildosx/MainMenu.xib PROPERTIES MACOSX_PACKAGE_LOCATION Resources/English.lproj)
 	SET(MACOSX_BUNDLE_ICON_FILE opencpn.icns)
 
 	ADD_EXECUTABLE(${PACKAGE_NAME} MACOSX_BUNDLE
@@ -1476,7 +1476,7 @@ if(APPLE)
 
 	target_link_libraries(${PACKAGE_NAME}
 		${wxWidgets_LIBRARIES}
-		NMEA0183
+		nmea0183
 		${EXTRA_LIBS}
 		global
 		geo
@@ -1496,7 +1496,7 @@ If(NOT APPLE)
 		tcd
 		wxjson
 		${wxWidgets_LIBRARIES}
-		NMEA0183
+		nmea0183
 		${EXTRA_LIBS}
 		global
 		geo
@@ -1526,7 +1526,7 @@ ENDIF(UNIX)
 # Certain older Cmake FindGTK2 modules ( e.g. cmake-2.8.0-2) do not yield all of the required link libraries
 # So, add them manually.  These declarations may be redundant in some architectures, but do no harm.
 IF(UNIX)
-	target_link_libraries( ${PACKAGE_NAME} dl )
+	target_link_libraries(${PACKAGE_NAME} dl)
 ENDIF(UNIX)
 
 IF(GTK2_FOUND)
@@ -1540,15 +1540,27 @@ IF(NOT APPLE)
 	ENDIF(WIN32)
 
 	IF(UNIX AND NOT APPLE)
-		INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME DESTINATION ${PREFIX_BIN} PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+		INSTALL(TARGETS ${PACKAGE_NAME}
+			RUNTIME DESTINATION
+				${PREFIX_BIN}
+			PERMISSIONS
+				OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 	ENDIF(UNIX AND NOT APPLE)
 
 	IF(WIN32)
 		SET(PREFIX_PKGDATA ".")
 	ENDIF(WIN32)
 
-	INSTALL(FILES ${gshhs} DESTINATION ${PREFIX_PKGDATA}/gshhs PERMISSIONS OWNER_READ  OWNER_WRITE GROUP_READ WORLD_READ)
-	INSTALL(FILES ${uiData} DESTINATION ${PREFIX_PKGDATA}/uidata PERMISSIONS OWNER_READ  OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES ${gshhs}
+		DESTINATION
+			${PREFIX_PKGDATA}/gshhs
+		PERMISSIONS
+			OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES ${uiData}
+		DESTINATION
+			${PREFIX_PKGDATA}/uidata
+		PERMISSIONS
+			OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
 
 	IF (USE_S57)
 		INSTALL(FILES ${s57data} DESTINATION ${PREFIX_PKGDATA}/s57data PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
@@ -1660,12 +1672,12 @@ IF(WIN32 AND NOT UNIX)
 	INSTALL(DIRECTORY buildwin/vc10/ DESTINATION ".\\\\vc10" )
 	#INSTALL(DIRECTORY buildwin/NSIS_Unicode/Bitmaps/ DESTINATION ".\\\\NSISBmps" ) #Gunther
 
-	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.dll DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashSender1401.exe DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/crashrpt_lang.ini DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/dbghelp.dll DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/crashrpt/PrivacyPolicy.txt DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-	INSTALL(FILES ${CMAKE_SOURCE_DIR}/buildwin/ocpn_gltest1.exe DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES "${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.dll"    DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES "${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashSender1401.exe" DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES "${CMAKE_SOURCE_DIR}/buildwin/crashrpt/crashrpt_lang.ini"   DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES "${CMAKE_SOURCE_DIR}/buildwin/crashrpt/dbghelp.dll"         DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES "${CMAKE_SOURCE_DIR}/buildwin/crashrpt/PrivacyPolicy.txt"   DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+	INSTALL(FILES "${CMAKE_SOURCE_DIR}/buildwin/ocpn_gltest1.exe"             DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
 ENDIF(WIN32 AND NOT UNIX)
 
 MESSAGE (STATUS "")
@@ -1770,30 +1782,30 @@ IF(UNIX AND NOT APPLE)
 ENDIF(UNIX AND NOT APPLE)
 
 IF(WIN32 AND NOT UNIX)
-	configure_file(${CMAKE_SOURCE_DIR}/src/opencpn.rc.in ${CMAKE_CURRENT_BINARY_DIR}/src/opencpn.rc)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_GERMAN.nsh.in       ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_GERMAN.nsh       @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_FRENCH.nsh.in       ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_FRENCH.nsh       @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_CZECH.nsh.in        ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_CZECH.nsh        @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_DANISH.nsh.in       ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_DANISH.nsh       @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_SPANISH.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_SPANISH.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_ITALIAN.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_ITALIAN.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_DUTCH.nsh.in        ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_DUTCH.nsh        @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_POLISH.nsh.in       ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_POLISH.nsh       @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_PORTUGUESEBR.nsh.in ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_PORTUGUESEBR.nsh @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_PORTUGUESE.nsh.in   ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_PORTUGUESE.nsh   @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_RUSSIAN.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_RUSSIAN.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_SWEDISH.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_SWEDISH.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_FINNISH.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_FINNISH.nsh      @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_NORWEGIAN.nsh.in    ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_NORWEGIAN.nsh    @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_CHINESETW.nsh.in    ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_CHINESETW.nsh    @ONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_TURKISH.nsh.in      ${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_TURKISH.nsh      @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/src/opencpn.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/src/opencpn.rc")
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_GERMAN.nsh.in"       "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_GERMAN.nsh"       @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_FRENCH.nsh.in"       "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_FRENCH.nsh"       @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_CZECH.nsh.in"        "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_CZECH.nsh"        @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_DANISH.nsh.in"       "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_DANISH.nsh"       @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_SPANISH.nsh.in"      "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_SPANISH.nsh"      @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_ITALIAN.nsh.in"      "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_ITALIAN.nsh"      @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_DUTCH.nsh.in"        "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_DUTCH.nsh"        @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_POLISH.nsh.in"       "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_POLISH.nsh"       @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_PORTUGUESEBR.nsh.in" "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_PORTUGUESEBR.nsh" @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_PORTUGUESE.nsh.in"   "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_PORTUGUESE.nsh"   @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_RUSSIAN.nsh.in"      "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_RUSSIAN.nsh"      @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_SWEDISH.nsh.in"      "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_SWEDISH.nsh"      @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_FINNISH.nsh.in"      "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_FINNISH.nsh"      @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_NORWEGIAN.nsh.in"    "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_NORWEGIAN.nsh"    @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_CHINESETW.nsh.in"    "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_CHINESETW.nsh"    @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode/LanguageFiles/Langstrings_TURKISH.nsh.in"      "${CPACK_BUILDWIN_BINARY_DIR}/NSIS_Unicode/Include/Langstrings_TURKISH.nsh"      @ONLY)
 ENDIF(WIN32 AND NOT UNIX)
 
 if(NOT SKIP_VERSION_CONFIG)
-	configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/src/version.h)
+	configure_file(version.h.in "${CMAKE_CURRENT_BINARY_DIR}/src/version.h")
 endif(NOT SKIP_VERSION_CONFIG)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/src)
+include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 
 # this dummy target is necessary to make sure the ADDITIONAL_MAKE_CLEAN_FILES directive is executed.
 # apparently, the base CMakeLists.txt file must have "some" target to activate all the clean steps.

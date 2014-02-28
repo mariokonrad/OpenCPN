@@ -41,6 +41,51 @@
 
 namespace gui {
 
+Style::Style(const wxString& path)
+	: graphics(NULL)
+	, compassMarginTop(4)
+	, compassMarginRight(0)
+	, compassMarginBottom(4)
+	, compassMarginLeft(4)
+	, compasscornerRadius(3)
+	, compassXoffset(0)
+	, compassYoffset(0)
+	, marginsInvisible(false)
+	, chartStatusIconWidth(0)
+	, chartStatusWindowTransparent(false)
+	, embossHeight(40)
+	, embossFont(wxEmptyString)
+	, myConfigFileDir(path)
+	, currentOrientation(0)
+	, colorscheme(global::GLOBAL_COLOR_SCHEME_DAY)
+	, hasBackground(false)
+{
+	for (int i = 0; i < 2; i++) {
+		toolbarStartLoc[i] = wxPoint(0, 0);
+		toolbarEndLoc[i] = wxPoint(0, 0);
+		cornerRadius[i] = 0;
+	}
+}
+
+Style::~Style()
+{
+	for (Tools::iterator tool = tools.begin(); tool != tools.end(); ++tool)
+		delete *tool;
+	tools.clear();
+
+	for (Icons::iterator icon = icons.begin(); icon != icons.end(); ++icon)
+		delete *icon;
+	icons.clear();
+
+	if (graphics) {
+		delete graphics;
+		graphics = NULL;
+	}
+
+	toolIndex.clear();
+	iconIndex.clear();
+}
+
 bool Style::HasBackground() const
 {
 	return hasBackground;
@@ -129,12 +174,6 @@ bool Style::HasToolbarEnd() const
 const wxBitmap* Style::getGraphics() const
 {
 	return graphics;
-}
-
-void Style::setGraphics(wxBitmap* bitmap)
-{
-	// FIXME
-	graphics = bitmap;
 }
 
 // Tools and Icons perform on-demand loading and dimming of bitmaps.
@@ -449,21 +488,6 @@ int Style::GetOrientation() const
 	return currentOrientation;
 }
 
-const wxSize& Style::get_consoleTextBackgroundSize() const
-{
-	return consoleTextBackgroundSize;
-}
-
-const wxPoint& Style::get_consoleTextBackgroundLoc() const
-{
-	return consoleTextBackgroundLoc;
-}
-
-void Style::set_consoleTextBackground(const wxBitmap& bitmap)
-{
-	consoleTextBackground = bitmap;
-}
-
 const wxString& Style::config_path() const
 {
 	return myConfigFileDir;
@@ -541,52 +565,35 @@ bool Style::isMarginsInvisible() const
 	return marginsInvisible;
 }
 
-Style::Style(const wxString& path)
-	: graphics(NULL)
-	, myConfigFileDir(path)
+bool Style::load_graphics()
 {
-	currentOrientation = 0;
-	colorscheme = global::GLOBAL_COLOR_SCHEME_DAY;
-	marginsInvisible = false;
-	hasBackground = false;
-	chartStatusIconWidth = 0;
-	chartStatusWindowTransparent = false;
-	embossHeight = 40;
-	embossFont = wxEmptyString;
+	wxString path = config_path() + wxFileName::GetPathSeparator() + graphics_filename();
 
-	// Set compass window style defauilts
-	compassMarginTop = 4;
-	compassMarginRight = 0;
-	compassMarginBottom = 4;
-	compassMarginLeft = 4;
-	compasscornerRadius = 3;
-	compassXoffset = 0;
-	compassYoffset = 0;
-
-	for (int i = 0; i < 2; i++) {
-		toolbarStartLoc[i] = wxPoint(0, 0);
-		toolbarEndLoc[i] = wxPoint(0, 0);
-		cornerRadius[i] = 0;
+	if (!wxFileName::FileExists(path)) {
+		wxLogMessage(_T("Styles graphics file not found: ") + path);
+		return false;
 	}
+
+	wxImage img; // Only image does PNG LoadFile properly on GTK.
+	if (!img.LoadFile(path, wxBITMAP_TYPE_PNG)) {
+		wxLogMessage(_T("Styles graphics file failed to load: ") + path);
+		return false;
+	}
+
+	graphics = new wxBitmap(img);
+	set_console_background_image();
+
+	// FIXME: load all icons of this style, should be done here not in GetIcon
+
+	return true;
 }
 
-Style::~Style()
+void Style::set_console_background_image()
 {
-	for (Tools::iterator tool = tools.begin(); tool != tools.end(); ++tool)
-		delete *tool;
-	tools.clear();
-
-	for (Icons::iterator icon = icons.begin(); icon != icons.end(); ++icon)
-		delete *icon;
-	icons.clear();
-
-	if (graphics) {
-		delete graphics;
-		graphics = NULL;
+	if ((consoleTextBackgroundSize.x) && (consoleTextBackgroundSize.y)) {
+		consoleTextBackground = getGraphics()->GetSubBitmap(
+			wxRect(consoleTextBackgroundLoc, consoleTextBackgroundSize));
 	}
-
-	toolIndex.clear();
-	iconIndex.clear();
 }
 
 }

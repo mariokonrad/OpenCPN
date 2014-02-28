@@ -105,20 +105,18 @@ public:
 	bool isMarginsInvisible() const;
 
 	const wxBitmap* getGraphics() const;
-	void setGraphics(wxBitmap*);
-
-	const wxSize& get_consoleTextBackgroundSize() const;
-	const wxPoint& get_consoleTextBackgroundLoc() const;
-
-	void set_consoleTextBackground(const wxBitmap&);
 
 	const wxString& config_path() const;
 	const wxString& graphics_filename() const;
+
+	bool load_graphics();
 
 private:
 	typedef std::vector<Icon*> Icons;
 	typedef std::vector<Tool*> Tools;
 	typedef std::map<wxString, int> IndexMap;
+
+	void set_console_background_image();
 
 	wxString name;
 	wxString description;

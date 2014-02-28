@@ -136,72 +136,39 @@ void DefaultStyleManager::Init(const wxString& path)
 	}
 }
 
-void DefaultStyleManager::SetStyle(const wxString& name)
+Style* DefaultStyleManager::select_style(const wxString& name)
 {
-	Style* style = NULL;
-	bool ok = true;
-
-	if (currentStyle)
-		currentStyle->Unload();
-	else
-		ok = false;
-
-	bool selectFirst = false;
-
-	if (name.Length() == 0)
-		selectFirst = true;
+	bool select_first = name.size() == 0;
 
 	for (Styles::iterator i = styles.begin(); i != styles.end(); ++i) {
-		style = *i;
-		if (style->getName() == name || selectFirst) {
-			if (style->getGraphics()) {
-				currentStyle = style;
-				ok = true;
-				break;
-			}
-
-			// FIXME: move the stuff to style
-
-			wxString fullFilePath = style->config_path() + wxFileName::GetPathSeparator()
-									+ style->graphics_filename();
-
-			if (!wxFileName::FileExists(fullFilePath)) {
-				wxLogMessage(_T("Styles Graphics File not found: ") + fullFilePath);
-				ok = false;
-				if (selectFirst)
-					continue;
-				break;
-			}
-
-			wxImage img; // Only image does PNG LoadFile properly on GTK.
-
-			if (!img.LoadFile(fullFilePath, wxBITMAP_TYPE_PNG)) {
-				wxLogMessage(_T("Styles Graphics File failed to load: ") + fullFilePath);
-				ok = false;
-				break;
-			}
-			style->setGraphics(new wxBitmap(img)); // FIXME: not to be done here, stop this lazy init already
-			currentStyle = style;
-			ok = true;
-			break;
+		Style* style = *i;
+		if (select_first || style->getName() == name) {
+			return style;
 		}
 	}
 
-	if (!ok) {
+	return NULL;
+}
+
+void DefaultStyleManager::SetStyle(const wxString& name)
+{
+	Style* style = select_style(name);
+	if (!style) {
 		wxLogMessage(_T("The requested style was not found: ") + name);
 		return;
 	}
 
-	if (style) {
-		if ((style->get_consoleTextBackgroundSize().x)
-			&& (style->get_consoleTextBackgroundSize().y)) {
-			style->set_consoleTextBackground(style->getGraphics()->GetSubBitmap(wxRect(
-				style->get_consoleTextBackgroundLoc(), style->get_consoleTextBackgroundSize())));
+	if (!style->getGraphics()) {
+		if (!style->load_graphics()) {
+			return;
 		}
 	}
 
-	if (style)
-		nextInvocationStyle = style->getName();
+	if (currentStyle)
+		currentStyle->Unload();
+	currentStyle = style;
+
+	nextInvocationStyle = style->getName();
 }
 
 }

@@ -51,6 +51,7 @@ private:
 
 	void Init(const wxString& path);
 	std::vector<wxString> enumerate_style_files(const wxString& path) const;
+	Style* select_style(const wxString& name);
 
 	Styles styles;
 	Style* currentStyle;

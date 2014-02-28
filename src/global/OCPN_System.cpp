@@ -230,6 +230,11 @@ void OCPN_System::set_config_portable(bool value)
 	data_config.portable = value;
 }
 
+void OCPN_System::set_config_assume_azerty(bool value)
+{
+	data_config.assume_azerty = value;
+}
+
 const System::Debug& OCPN_System::debug() const
 {
 	return data_debug;

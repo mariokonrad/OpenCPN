@@ -79,6 +79,7 @@ public: // config
 	virtual void set_config_COGFilterSec(int);
 	virtual void set_config_SOGFilterSec(int);
 	virtual void set_config_portable(bool);
+	virtual void set_config_assume_azerty(bool);
 
 public: // debug
 	virtual const Debug& debug() const;

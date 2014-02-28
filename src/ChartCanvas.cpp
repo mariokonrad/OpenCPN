@@ -186,8 +186,6 @@ extern wxAuiManager* g_pauimgr;
 
 extern wxProgressDialog* s_ProgDialog;
 
-extern bool g_b_assume_azerty;
-
 S57QueryDialog* g_pObjectQueryDialog = NULL;
 extern ArrayOfConnPrm* g_pConnectionParams;
 
@@ -1301,8 +1299,7 @@ void ChartCanvas::OnKeyDown(wxKeyEvent& event)
 			break;
 		}
 		case WXK_F4:
-			if (!parent_frame->nRoute_State) // no measure tool if currently creating route
-			{
+			if (!parent_frame->nRoute_State) { // no measure tool if currently creating route
 				if (m_bMeasure_Active) {
 					global::OCPN::get().routeman().DeleteRoute(m_pMeasureRoute);
 					m_pMeasureRoute = NULL;
@@ -1394,14 +1391,13 @@ void ChartCanvas::OnKeyDown(wxKeyEvent& event)
 			break;
 	}
 
-	if (event.GetKeyCode() < 128) // ascii
-	{
+	if (event.GetKeyCode() < 128) {// ascii
 		char key_char = (char)event.GetKeyCode();
 		if (m_modkeys == wxMOD_CONTROL)
 			key_char -= 64;
 
 		// Handle both QWERTY and AZERTY keyboard separately for a few control codes
-		if (!g_b_assume_azerty) {
+		if (!global::OCPN::get().sys().config().assume_azerty) {
 			switch (key_char) {
 				case '+':
 				case '+' - 64:

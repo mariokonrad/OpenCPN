@@ -121,6 +121,7 @@ public:
 		int COGFilterSec;
 		int SOGFilterSec;
 		bool portable; ///< The application is running in portable mode.
+		bool assume_azerty;
 	};
 
 	virtual const Config& config() const = 0;
@@ -147,6 +148,7 @@ public:
 	virtual void set_config_COGFilterSec(int) = 0;
 	virtual void set_config_SOGFilterSec(int) = 0;
 	virtual void set_config_portable(bool) = 0;
+	virtual void set_config_assume_azerty(bool) = 0;
 
 public:
 	struct Debug

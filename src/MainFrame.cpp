@@ -162,7 +162,6 @@ chart::ChartBase* Current_Vector_Ch;
 chart::ChartBase* Current_Ch;
 chart::ChartDB* ChartData;
 chart::ChartStack* pCurrentStack;
-wxString* pdir_list[20];
 RouteList* pRouteList;
 bool g_bIsNewLayer;
 int g_LayerIdx;
@@ -260,7 +259,6 @@ int g_sticky_chart; // FIXME: MainFrame only
 
 CM93DSlide* pCM93DetailSlider;
 wxLocale* plocale_def_lang;
-bool g_b_assume_azerty;
 std::vector<int> g_quilt_noshow_index_array;
 bool g_bquiting;
 wxAuiManager* g_pauimgr;

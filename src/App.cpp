@@ -144,7 +144,6 @@ extern int gpIDXn;
 extern PlugInManager* g_pi_manager;
 extern chart::ChartGroupArray* g_pGroupArray;
 extern wxLocale* plocale_def_lang;
-extern bool g_b_assume_azerty;
 extern wxAuiManager* g_pauimgr;
 extern FloatingCompassWindow* g_FloatingCompassDialog;
 extern LayerList* pLayerList;
@@ -155,7 +154,6 @@ extern Config* pConfig;
 extern Select* pSelect;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
-extern wxAuiManager* g_pauimgr;
 extern MainFrame* gFrame;
 
 static wxPlatformInfo* s_pPlatform = NULL;
@@ -1417,10 +1415,11 @@ bool App::OnInit()
 
 	// French language locale is assumed to include the AZERTY keyboard
 	// This applies to either the system language, or to OpenCPN language selection
+	sys.set_config_assume_azerty(false); // default value
 	if (loc_lang_canonical == _T("fr_FR"))
-		g_b_assume_azerty = true;
+		sys.set_config_assume_azerty(true);
 	if (def_lang_canonical == _T("fr_FR"))
-		g_b_assume_azerty = true;
+		sys.set_config_assume_azerty(true);
 
 	// Send the Welcome/warning message if it has never been sent before,
 	// or if the version string has changed at all

@@ -60,9 +60,7 @@
 #include <dychart.h>
 #include <SystemTime.h>
 #include <ChartCanvas.h>
-#include <TimedPopupWin.h>
 #include <MessageBox.h>
-#include <Track.h>
 #include <StatWin.h>
 #include <PianoWin.h>
 #include <ConsoleCanvas.h>
@@ -79,17 +77,14 @@
 #include <Select.h>
 #include <FontMgr.h>
 #include <NMEALogWindow.h>
-#include <Layer.h>
 #include <TrackPropDlg.h>
 #include <RouteManagerDialog.h>
 #include <MyPrintout.h>
 #include <OCPNFloatingToolbarDialog.h>
 #include <StatusBar.h>
 #include <GUI_IDs.h>
-#include <MemoryStatus.h>
 #include <Config.h>
 #include <Units.h>
-#include <NavObjectChanges.h>
 #include <PositionConvert.h>
 
 #include <gui/StyleManager.h>

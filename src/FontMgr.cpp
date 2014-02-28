@@ -35,15 +35,6 @@
 
 #include <locale>
 
-FontMgr* FontMgr::instance = NULL;
-
-FontMgr& FontMgr::Get()
-{
-	if (!instance)
-		instance = new FontMgr;
-	return *instance;
-}
-
 FontMgr::FontMgr()
 {
 }
@@ -66,7 +57,7 @@ wxColour FontMgr::GetFontColor(const wxString& TextElement) const
 	return wxColour(0, 0, 0);
 }
 
-wxString FontMgr::GetFontConfigKey(const wxString& description)
+wxString FontMgr::GetFontConfigKey(const wxString& description) const
 {
 	// Create the configstring by combining the locale with
 	// a hash of the font description. Hash is used because the i18n

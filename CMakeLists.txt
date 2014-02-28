@@ -914,6 +914,7 @@ SET(HDRS
 	src/gui/StyleReader.h
 	src/gui/XMLStyleReader.h
 	src/gui/FontDesc.h
+	src/gui/FontManager.h
 
 	src/OCPN_Version.h
 	src/ocpn_pixel.h

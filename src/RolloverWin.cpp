@@ -24,7 +24,8 @@
 #include "RolloverWin.h"
 #include <timers.h>
 #include <ocpnDC.h>
-#include <FontMgr.h>
+
+#include <gui/FontManager.h>
 
 #include <global/OCPN.h>
 #include <global/ColorManager.h>
@@ -90,21 +91,22 @@ void RolloverWin::SetBitmap(int rollover)
 	const global::ColorManager& colors = global::OCPN::get().color();
 	ocpnDC dc(mdc);
 
+	const gui::FontManager& fonts = global::OCPN::get().font();
 	switch (rollover) {
 		case AIS_ROLLOVER:
 			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, colors.get_color(_T("YELO1")), 172);
-			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("AISRollover")));
+			mdc.SetTextForeground(fonts.GetFontColor(_("AISRollover")));
 			break;
 
 		case TC_ROLLOVER:
 			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 0.0, colors.get_color(_T("YELO1")), 255);
-			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("TideCurrentGraphRollover")));
+			mdc.SetTextForeground(fonts.GetFontColor(_("TideCurrentGraphRollover")));
 			break;
 
 		default:
 		case LEG_ROLLOVER:
 			dc.AlphaBlending(0, 0, m_size.x, m_size.y, 6.0, colors.get_color(_T("YELO1")), 172);
-			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("RouteLegInfoRollover")));
+			mdc.SetTextForeground(fonts.GetFontColor(_("RouteLegInfoRollover")));
 			break;
 	}
 
@@ -148,20 +150,20 @@ void RolloverWin::SetBestPosition(
 	int h;
 	int w;
 
-	wxFont* dFont;
+	gui::FontManager& fonts = global::OCPN::get().font();
+	wxFont* dFont = NULL;
 	switch (rollover) {
-
 		case AIS_ROLLOVER:
-			dFont = FontMgr::Get().GetFont(_("AISRollover"), 12);
+			dFont = fonts.GetFont(_("AISRollover"), 12);
 			break;
 
 		case TC_ROLLOVER:
-			dFont = FontMgr::Get().GetFont(_("TideCurrentGraphRollover"), 12);
+			dFont = fonts.GetFont(_("TideCurrentGraphRollover"), 12);
 			break;
 
 		default:
 		case LEG_ROLLOVER:
-			dFont = FontMgr::Get().GetFont(_("RouteLegInfoRollover"), 12);
+			dFont = fonts.GetFont(_("RouteLegInfoRollover"), 12);
 			break;
 	}
 

@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "AISTargetAlertDialog.h"
-#include "FontMgr.h"
 
 #include <ChartCanvas.h>
 #include <DimeControl.h>
@@ -30,6 +29,8 @@
 
 #include <ais/AIS_Decoder.h>
 #include <ais/AIS_Target_Data.h>
+
+#include <gui/FontManager.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -79,7 +80,7 @@ bool AISTargetAlertDialog::Create(int target_mmsi, wxWindow* parent, AIS_Decoder
 	m_target_mmsi = target_mmsi;
 	m_pdecoder = pdecoder;
 
-	wxFont* dFont = FontMgr::Get().GetFont(_("AISTargetAlert"), 12);
+	wxFont* dFont = global::OCPN::get().font().GetFont(_("AISTargetAlert"), 12);
 	int font_size = wxMax(8, dFont->GetPointSize());
 	wxString face = dFont->GetFaceName();
 #ifdef __WXGTK__
@@ -153,7 +154,7 @@ void AISTargetAlertDialog::UpdateText()
 		wxColor bg = GetBackgroundColour();
 		m_pAlertTextCtl->SetBackgroundColour(bg);
 
-		wxFont* dFont = FontMgr::Get().GetFont(_("AISTargetQuery"), 12);
+		wxFont* dFont = global::OCPN::get().font().GetFont(_("AISTargetQuery"), 12);
 		wxString face = dFont->GetFaceName();
 		int sizes[7];
 		for (int i = -2; i < 5; i++) {

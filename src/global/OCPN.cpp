@@ -40,6 +40,7 @@ OCPN::OCPN()
 	, route_manager_instance(NULL)
 	, waypoint_manager_instance(NULL)
 	, style_manager_instance(NULL)
+	, font_manager_instance(NULL)
 {}
 
 OCPN::OCPN(const OCPN&)
@@ -76,6 +77,7 @@ void OCPN::clear()
 	route_manager_instance = NULL;
 	waypoint_manager_instance = NULL;
 	style_manager_instance = NULL;
+	font_manager_instance = NULL;
 }
 
 void OCPN::inject(GUI* instance)
@@ -196,6 +198,16 @@ void OCPN::inject(gui::StyleManager* instance)
 gui::StyleManager& OCPN::styleman()
 {
 	return *style_manager_instance;
+}
+
+void OCPN::inject(gui::FontManager* instance)
+{
+	font_manager_instance = instance;
+}
+
+gui::FontManager& OCPN::font()
+{
+	return *font_manager_instance;
 }
 
 }

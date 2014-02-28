@@ -75,7 +75,6 @@
 #include <OCPN_DataStreamEvent.h>
 #include <Multiplexer.h>
 #include <Select.h>
-#include <FontMgr.h>
 #include <NMEALogWindow.h>
 #include <TrackPropDlg.h>
 #include <RouteManagerDialog.h>
@@ -87,6 +86,7 @@
 #include <Units.h>
 #include <PositionConvert.h>
 
+#include <gui/FontManager.h>
 #include <gui/StyleManager.h>
 #include <gui/Style.h>
 
@@ -1240,7 +1240,7 @@ void MainFrame::ODoSetSize(void)
 		font_size = wxMax(10, font_size); // beats me...
 #endif
 
-		wxFont* templateFont = FontMgr::Get().GetFont(_("StatusBar"), 12);
+		wxFont* templateFont = global::OCPN::get().font().GetFont(_("StatusBar"), 12);
 		font_size += templateFont->GetPointSize() - 10;
 
 		font_size = wxMin(font_size, 12);

@@ -36,6 +36,7 @@ class TideCurrentManager;
 
 namespace gui {
 class StyleManager;
+class FontManager;
 }
 
 namespace global {
@@ -90,6 +91,9 @@ public:
 	void inject(gui::StyleManager*);
 	gui::StyleManager& styleman();
 
+	void inject(gui::FontManager*);
+	gui::FontManager& font();
+
 private:
 	OCPN();
 	OCPN(const OCPN&);
@@ -110,6 +114,7 @@ private:
 	navigation::WaypointManager* waypoint_manager_instance;
 	tide::TideCurrentManager* tidecurrent_manager_instance;
 	gui::StyleManager* style_manager_instance;
+	gui::FontManager* font_manager_instance;
 };
 
 }

@@ -23,11 +23,12 @@
 
 #include "RoutePoint.h"
 #include <Multiplexer.h>
-#include <FontMgr.h>
 #include <MessageBox.h>
 #include <ocpnDC.h>
 #include <ChartCanvas.h>
 #include <MainFrame.h>
+
+#include <gui/FontManager.h>
 
 #include <global/OCPN.h>
 
@@ -300,8 +301,9 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	// FIXME: late load of name
 	if (m_bShowName) {
 		if (0 == m_pMarkFont) {
-			m_pMarkFont = FontMgr::Get().GetFont(_("Marks"));
-			m_FontColor = FontMgr::Get().GetFontColor(_("Marks"));
+			gui::FontManager& fonts = global::OCPN::get().font();
+			m_pMarkFont = fonts.GetFont(_("Marks"));
+			m_FontColor = fonts.GetFontColor(_("Marks"));
 			CalculateNameExtents();
 		}
 

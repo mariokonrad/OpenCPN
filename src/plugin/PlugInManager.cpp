@@ -30,7 +30,6 @@
 #include <OptionDialog.h>
 #include <Multiplexer.h>
 #include <StatWin.h>
-#include <FontMgr.h>
 #include <OCPN_DataStreamEvent.h>
 #include <RouteManagerDialog.h>
 #include <NavObjectCollection.h>
@@ -45,6 +44,7 @@
 #include <global/System.h>
 #include <global/ColorManager.h>
 
+#include <gui/FontManager.h>
 #include <gui/StyleManager.h>
 #include <gui/Style.h>
 
@@ -1368,7 +1368,7 @@ bool GetGlobalColor(wxString colorName, wxColour* pcolour)
 
 wxFont* OCPNGetFont(wxString TextElement, int default_size)
 {
-	return FontMgr::Get().GetFont(TextElement, default_size);
+	return global::OCPN::get().font().GetFont(TextElement, default_size);
 }
 
 wxString* GetpSharedDataLocation(void) // FIXME: stupid interface, really, I mean it

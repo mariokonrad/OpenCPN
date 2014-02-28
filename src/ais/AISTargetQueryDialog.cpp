@@ -23,7 +23,6 @@
 
 #include "AISTargetQueryDialog.h"
 
-#include <FontMgr.h>
 #include <Select.h>
 #include <RouteManagerDialog.h>
 #include <Undo.h>
@@ -34,6 +33,8 @@
 #include <ais/ais.h>
 #include <ais/AIS_Target_Data.h>
 #include <ais/AIS_Decoder.h>
+
+#include <gui/FontManager.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -138,7 +139,7 @@ bool AISTargetQueryDialog::Create(wxWindow* parent, wxWindowID id, const wxStrin
 	if (!wxDialog::Create(parent, id, caption, pos, size, wstyle))
 		return false;
 
-	wxFont* dFont = FontMgr::Get().GetFont(_("AISTargetQuery"), 12);
+	wxFont* dFont = global::OCPN::get().font().GetFont(_("AISTargetQuery"), 12);
 	int font_size = wxMax(8, dFont->GetPointSize());
 	wxString face = dFont->GetFaceName();
 #ifdef __WXGTK__
@@ -197,7 +198,7 @@ void AISTargetQueryDialog::UpdateText()
 
 	AIS_Target_Data* td = g_pAIS->Get_Target_Data_From_MMSI(m_MMSI);
 	if (td) {
-		wxFont* dFont = FontMgr::Get().GetFont(_("AISTargetQuery"), 12);
+		wxFont* dFont = global::OCPN::get().font().GetFont(_("AISTargetQuery"), 12);
 		wxString face = dFont->GetFaceName();
 		int sizes[7];
 		for (int i = -2; i < 5; i++) {

@@ -58,6 +58,7 @@ class TideCurrentManager;
 namespace gui
 {
 class StyleManager;
+class FontManager;
 }
 
 class App : public wxApp
@@ -110,6 +111,7 @@ private:
 	navigation::WaypointManager* waypoint_manager_instance;
 	tide::TideCurrentManager* tidecurrent_manager_instance;
 	gui::StyleManager* style_manager_instance;
+	gui::FontManager* font_manager_instance;
 
 	bool start_fullscreen;
 	bool first_run;

@@ -52,7 +52,6 @@
 #include <Quilt.h>
 #include <SelectItem.h>
 #include <Select.h>
-#include <FontMgr.h>
 #include <SendToGpsDlg.h>
 #include <OCPNRegion.h>
 #include <FloatingCompassWindow.h>
@@ -68,6 +67,7 @@
 #include <PositionConvert.h>
 #include <Units.h>
 
+#include <gui/FontManager.h>
 #include <gui/StyleManager.h>
 #include <gui/Style.h>
 
@@ -4335,8 +4335,9 @@ void ChartCanvas::AISDrawTarget(ais::AIS_Target_Data* td, ocpnDC& dc)
 				tgt_name = tgt_name.substr(0, tgt_name.find(_T("Unknown"), 0));
 
 				if (tgt_name != wxEmptyString) {
-					dc.SetFont(*FontMgr::Get().GetFont(_("AIS Target Name"), 12));
-					dc.SetTextForeground(FontMgr::Get().GetFontColor(_("AIS Target Name")));
+					gui::FontManager& fonts = global::OCPN::get().font();
+					dc.SetFont(*fonts.GetFont(_("AIS Target Name"), 12));
+					dc.SetTextForeground(fonts.GetFontColor(_("AIS Target Name")));
 
 					int w, h;
 					dc.GetTextExtent(tgt_name, &w, &h);
@@ -6628,8 +6629,10 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 		if (!lightsVis)
 			gFrame->ToggleLights(true, true);
 
+		gui::FontManager& fonts = global::OCPN::get().font();
+
 		wxString objText;
-		wxFont* dFont = FontMgr::Get().GetFont(_("ObjectQuery"), 12);
+		wxFont* dFont = fonts.GetFont(_("ObjectQuery"), 12);
 		wxString face = dFont->GetFaceName();
 
 		if (NULL == g_pObjectQueryDialog) {
@@ -6641,7 +6644,7 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 		}
 
 		wxColor bg = g_pObjectQueryDialog->GetBackgroundColour();
-		wxColor fg = FontMgr::Get().GetFontColor(_("ObjectQuery"));
+		wxColor fg = fonts.GetFontColor(_("ObjectQuery"));
 
 		objText.Printf(_T("<html><body bgcolor=#%02x%02x%02x><font color=#%02x%02x%02x face="),
 					   bg.Red(), bg.Blue(), bg.Green(), fg.Red(), fg.Blue(), fg.Green());
@@ -7932,7 +7935,7 @@ wxString ChartCanvas::FormatDistanceAdaptive(double distance)
 
 void RenderExtraRouteLegInfo(ocpnDC& dc, wxPoint ref_point, wxString s)
 {
-	wxFont* dFont = FontMgr::Get().GetFont(_("RouteLegInfoRollover"), 12);
+	wxFont* dFont = global::OCPN::get().font().GetFont(_("RouteLegInfoRollover"), 12);
 	dc.SetFont(*dFont);
 
 	int w;
@@ -8021,7 +8024,7 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 
 		routeInfo << _T(" ") << FormatDistanceAdaptive(dist);
 
-		wxFont* dFont = FontMgr::Get().GetFont(_("RouteLegInfoRollover"), 12);
+		wxFont* dFont = global::OCPN::get().font().GetFont(_("RouteLegInfoRollover"), 12);
 		dc.SetFont(*dFont);
 
 		int w, h;
@@ -9239,8 +9242,9 @@ void ChartCanvas::DrawAllTidesInBBox(ocpnDC& dc, const geo::LatLonBoundingBox& B
 	wxBrush* brc_1 = wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("BLUE2")), wxSOLID);
 	wxBrush* brc_2 = wxTheBrushList->FindOrCreateBrush(colors.get_color(_T("YELO1")), wxSOLID);
 
-	wxFont* dFont = FontMgr::Get().GetFont(_("ExtendedTideIcon"), 12);
-	dc.SetTextForeground(FontMgr::Get().GetFontColor(_("ExtendedTideIcon")));
+	gui::FontManager& fonts = global::OCPN::get().font();
+	wxFont* dFont = fonts.GetFont(_("ExtendedTideIcon"), 12);
+	dc.SetTextForeground(fonts.GetFontColor(_("ExtendedTideIcon")));
 	int font_size = wxMax(8, dFont->GetPointSize());
 	wxFont* plabelFont = wxTheFontList->FindOrCreateFont(font_size, dFont->GetFamily(),
 														 dFont->GetStyle(), dFont->GetWeight());

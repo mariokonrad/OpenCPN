@@ -21,39 +21,34 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __FONTMGR__H__
-#define __FONTMGR__H__
+#ifndef __GUI__FONTMANAGER__H__
+#define __GUI__FONTMANAGER__H__
 
-#include <gui/FontManager.h>
+#include <wx/colour.h>
+#include <wx/string.h>
 
-#include <vector>
+class wxFont;
 
-namespace gui { class FontDesc; }
+namespace gui {
 
-/// Manages the font list.
-class FontMgr : public gui::FontManager
+/// Interface for font managers.
+class FontManager
 {
 public:
-	FontMgr();
-	virtual ~FontMgr();
+	virtual ~FontManager()
+	{}
 
-	virtual const wxString& GetConfigString(int i) const;
-	virtual const wxString& GetDialogString(int i) const;
-	virtual wxFont* GetFont(const wxString& TextElement, int default_size = 0);
-	virtual wxColour GetFontColor(const wxString& TextElement) const;
-	virtual wxString GetFullConfigDesc(int i) const;
-	virtual int GetNumFonts(void) const;
-	virtual void LoadFontNative(const wxString& ConfigString, const wxString& NativeDesc);
-	virtual bool SetFont(const wxString& TextElement, wxFont* pFont, wxColour color);
-	virtual wxString GetFontConfigKey(const wxString& description) const;
-
-private:
-	const wxString& GetNativeDesc(int i) const; // FIXME: delete?
-	wxFont* find_font(const wxString& text_element);
-	wxString GetSimpleNativeFont(int size);
-
-	typedef std::vector<gui::FontDesc*> FontList;
-	FontList fontlist;
+	virtual const wxString& GetConfigString(int i) const = 0;
+	virtual const wxString& GetDialogString(int i) const = 0;
+	virtual wxFont* GetFont(const wxString& TextElement, int default_size = 0) = 0;
+	virtual wxColour GetFontColor(const wxString& TextElement) const = 0;
+	virtual wxString GetFullConfigDesc(int i) const = 0;
+	virtual int GetNumFonts(void) const = 0;
+	virtual void LoadFontNative(const wxString& ConfigString, const wxString& NativeDesc) = 0;
+	virtual bool SetFont(const wxString& TextElement, wxFont* pFont, wxColour color) = 0;
+	virtual wxString GetFontConfigKey(const wxString& description) const = 0;
 };
+
+}
 
 #endif

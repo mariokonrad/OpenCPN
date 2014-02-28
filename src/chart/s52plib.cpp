@@ -24,9 +24,10 @@
 #include "s52plib.h"
 #include <dychart.h>
 #include <ocpn_pixel.h>
-#include <FontMgr.h>
 
 #include <util/crc32.h>
+
+#include <gui/FontManager.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -49,12 +50,12 @@
 #include <geo/LineClip.h>
 #include <geo/Polygon.h>
 
-#include <cmath>
-#include <cstdlib>
-
 #include <wx/image.h>
 #include <wx/tokenzr.h>
 #include <wx/textfile.h>
+
+#include <cmath>
+#include <cstdlib>
 
 #ifdef __MSVC__
 	#define _CRTDBG_MAP_ALLOC
@@ -1724,7 +1725,7 @@ bool s52plib::RenderText(wxDC* pdc, S52_TextC* ptext, int x, int y, wxRect* pRec
 		}
 
 		if (bdraw) {
-			wxColour wcolor = FontMgr::Get().GetFontColor(_("ChartTexts"));
+			wxColour wcolor = global::OCPN::get().font().GetFontColor(_("ChartTexts"));
 			if (wcolor == *wxBLACK)
 				wcolor = wxColour(ptext->pcol->R, ptext->pcol->G, ptext->pcol->B);
 			pdc->SetTextForeground(wcolor);
@@ -1862,7 +1863,7 @@ int s52plib::RenderT_All(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp,
 				else
 					fontweight = wxFONTWEIGHT_BOLD;
 
-				wxFont* templateFont = FontMgr::Get().GetFont(_("ChartTexts"), 24);
+				wxFont* templateFont = global::OCPN::get().font().GetFont(_("ChartTexts"), 24);
 
 				// NOAA ENC fles requests font size up to 20 points, which looks very
 				// disproportioned. Let's scale those sizes down to more reasonable values.

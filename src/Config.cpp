@@ -33,7 +33,6 @@
 #include <NavObjectCollection.h>
 #include <NavObjectChanges.h>
 #include <NMEALogWindow.h>
-#include <FontMgr.h>
 #include <MessageBox.h>
 
 #include <windows/compatibility.h>
@@ -43,6 +42,7 @@
 #endif
 
 #include <gui/StyleManager.h>
+#include <gui/FontManager.h>
 
 #include <global/OCPN.h>
 
@@ -365,6 +365,7 @@ void Config::load_fonts(int iteration)
 #endif
 
 	if (0 == iteration) {
+		gui::FontManager& fonts = global::OCPN::get().font();
 		wxString str;
 		long dummy;
 		wxString val;
@@ -379,10 +380,10 @@ void Config::load_fonts(int iteration)
 				// GetNextEntry() loop, so we need to save those and delete outside.
 				deleteList.Add(str);
 				wxString oldKey = val.BeforeFirst(_T(':'));
-				str = FontMgr::GetFontConfigKey(oldKey);
+				str = fonts.GetFontConfigKey(oldKey);
 			}
 
-			FontMgr::Get().LoadFontNative(str, val);
+			fonts.LoadFontNative(str, val);
 			bCont = GetNextEntry(str, dummy);
 		}
 
@@ -1743,11 +1744,12 @@ void Config::UpdateSettings()
 
 	SetPath(font_path);
 
-	int nFonts = FontMgr::Get().GetNumFonts();
+	gui::FontManager& fonts = global::OCPN::get().font();
+	int nFonts = fonts.GetNumFonts();
 
 	for (int i = 0; i < nFonts; i++) {
-		wxString cfstring(FontMgr::Get().GetConfigString(i));
-		wxString valstring = FontMgr::Get().GetFullConfigDesc(i);
+		wxString cfstring(fonts.GetConfigString(i));
+		wxString valstring = fonts.GetFullConfigDesc(i);
 		Write(cfstring, valstring);
 	}
 

@@ -22,7 +22,8 @@
  **************************************************************************/
 
 #include "ToolTipWin.h"
-#include <FontMgr.h>
+
+#include <gui/FontManager.h>
 
 #include <global/OCPN.h>
 #include <global/ColorManager.h>
@@ -58,7 +59,7 @@ ToolTipWin::~ToolTipWin()
 void ToolTipWin::SetColorScheme(global::ColorScheme)
 {
 	m_back_color = global::OCPN::get().color().get_color(_T("UIBCK"));
-	m_text_color = FontMgr::Get().GetFontColor(_("ToolTips"));
+	m_text_color = global::OCPN::get().font().GetFontColor(_("ToolTips"));
 }
 
 void ToolTipWin::SetString(const wxString& s)
@@ -77,7 +78,7 @@ void ToolTipWin::SetBitmap()
 
 	wxClientDC cdc(GetParent());
 
-	wxFont* plabelFont = FontMgr::Get().GetFont(_("ToolTips"));
+	wxFont* plabelFont = global::OCPN::get().font().GetFont(_("ToolTips"));
 	cdc.GetTextExtent(m_string, &w, &h, NULL, NULL, plabelFont);
 
 	m_size.x = w + 8;

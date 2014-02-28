@@ -22,8 +22,8 @@
  **************************************************************************/
 
 #include "AnnunText.h"
-#include <FontMgr.h>
 
+#include <gui/FontManager.h>
 #include <gui/StyleManager.h>
 #include <gui/Style.h>
 
@@ -93,8 +93,10 @@ void AnnunText::SetColorScheme(global::ColorScheme)
 
 void AnnunText::RefreshFonts()
 {
-	m_plabelFont = FontMgr::Get().GetFont(m_LegendTextElement);
-	m_pvalueFont = FontMgr::Get().GetFont(m_ValueTextElement);
+	gui::FontManager& fonts = global::OCPN::get().font();
+
+	m_plabelFont = fonts.GetFont(m_LegendTextElement);
+	m_pvalueFont = fonts.GetFont(m_ValueTextElement);
 
 	CalculateMinSize();
 }
@@ -140,17 +142,19 @@ void AnnunText::OnPaint(wxPaintEvent &)
 
 	mdc.SetTextForeground(m_text_color);
 
+	const gui::FontManager& fonts = global::OCPN::get().font();
+
 	if (m_plabelFont) {
 		mdc.SetFont(*m_plabelFont);
-		if (m_pbackBrush->GetColour() != FontMgr::Get().GetFontColor(_("Console Legend")))
-			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("Console Legend")));
+		if (m_pbackBrush->GetColour() != fonts.GetFontColor(_("Console Legend")))
+			mdc.SetTextForeground(fonts.GetFontColor(_("Console Legend")));
 		mdc.DrawText(m_label, 5, 2);
 	}
 
 	if (m_pvalueFont) {
 		mdc.SetFont(*m_pvalueFont);
-		if (m_pbackBrush->GetColour() != FontMgr::Get().GetFontColor(_("Console Value")))
-			mdc.SetTextForeground(FontMgr::Get().GetFontColor(_("Console Value")));
+		if (m_pbackBrush->GetColour() != fonts.GetFontColor(_("Console Value")))
+			mdc.SetTextForeground(fonts.GetFontColor(_("Console Value")));
 
 		int w, h;
 		mdc.GetTextExtent(m_value, &w, &h);

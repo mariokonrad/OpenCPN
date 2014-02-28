@@ -34,7 +34,6 @@
 #include <ConsoleCanvas.h>
 #include <GUI_IDs.h>
 #include <LogMessageOnce.h>
-
 #include <MemoryStatus.h>
 #include <CM93DSlide.h>
 #include <ChartCanvas.h>
@@ -44,6 +43,7 @@
 #include <OCPN_Version.h>
 #include <Routeman.h>
 #include <WayPointman.h>
+#include <FontMgr.h>
 
 #include <gui/DefaultStyleManager.h>
 #include <gui/Style.h>
@@ -285,6 +285,7 @@ App::App()
 	, waypoint_manager_instance(NULL)
 	, tidecurrent_manager_instance(NULL)
 	, style_manager_instance(NULL)
+	, font_manager_instance(NULL)
 	, start_fullscreen(false)
 	, first_run(false)
 	, logger(NULL)
@@ -456,6 +457,9 @@ void App::inject_global_instances()
 
 	tidecurrent_manager_instance = new tide::TCMgr;
 	global::OCPN::get().inject(tidecurrent_manager_instance);
+
+	font_manager_instance = new FontMgr;
+	global::OCPN::get().inject(font_manager_instance);
 }
 
 void App::establish_home_location()
@@ -1873,6 +1877,7 @@ int App::OnExit()
 	delete waypoint_manager_instance;
 	delete tracker_instance;
 	delete tidecurrent_manager_instance;
+	delete font_manager_instance;
 
 	return true;
 }

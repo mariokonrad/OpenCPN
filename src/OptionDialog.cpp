@@ -50,7 +50,6 @@
 #include <MessageBox.h>
 #include <DataStream.h>
 #include <Multiplexer.h>
-#include <FontMgr.h>
 #include <NMEALogWindow.h>
 #include <SentenceListDlg.h>
 #include <ChartGroupsUI.h>
@@ -61,6 +60,7 @@
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 
+#include <gui/FontManager.h>
 #include <gui/StyleManager.h>
 #include <gui/Style.h>
 
@@ -1607,12 +1607,13 @@ void options::CreatePanel_UI(size_t parent, int border_size, int WXUNUSED(group_
 
 	m_itemFontElementListBox = new wxChoice(itemPanelFont, ID_CHOICE_FONTELEMENT);
 
+	const gui::FontManager& fonts = global::OCPN::get().font();
 	const global::System::Data& sys = global::OCPN::get().sys().data();
-	int nFonts = FontMgr::Get().GetNumFonts();
+	int nFonts = fonts.GetNumFonts();
 	for (int it = 0; it < nFonts; it++) {
-		const wxString& t = FontMgr::Get().GetDialogString(it);
+		const wxString& t = fonts.GetDialogString(it);
 
-		if (FontMgr::Get().GetConfigString(it).StartsWith(sys.locale)) {
+		if (fonts.GetConfigString(it).StartsWith(sys.locale)) {
 			m_itemFontElementListBox->Append(t);
 		}
 	}
@@ -2937,8 +2938,10 @@ void options::OnChooseFont(wxCommandEvent& event)
 	wxFont* psfont;
 	wxFontData font_data;
 
-	wxFont* pif = FontMgr::Get().GetFont(sel_text_element);
-	wxColour init_color = FontMgr::Get().GetFontColor(sel_text_element);
+	gui::FontManager& fonts = global::OCPN::get().font();
+
+	wxFont* pif = fonts.GetFont(sel_text_element);
+	wxColour init_color = fonts.GetFontColor(sel_text_element);
 
 	wxFontData init_font_data;
 	if (pif)
@@ -2956,7 +2959,7 @@ void options::OnChooseFont(wxCommandEvent& event)
 		wxFont font = font_data.GetChosenFont();
 		psfont = new wxFont(font);
 		wxColor color = font_data.GetColour();
-		FontMgr::Get().SetFont(sel_text_element, psfont, color);
+		fonts.SetFont(sel_text_element, psfont, color);
 
 		pParent->UpdateAllFonts();
 	}
@@ -2971,8 +2974,10 @@ void options::OnChooseFontColor(wxCommandEvent& event)
 
 	wxColourData colour_data;
 
-	wxFont* pif = FontMgr::Get().GetFont(sel_text_element);
-	wxColour init_color = FontMgr::Get().GetFontColor(sel_text_element);
+	gui::FontManager& fonts = global::OCPN::get().font();
+
+	wxFont* pif = fonts.GetFont(sel_text_element);
+	wxColour init_color = fonts.GetFontColor(sel_text_element);
 
 	wxColourData init_colour_data;
 	init_colour_data.SetColour(init_color);
@@ -2984,7 +2989,7 @@ void options::OnChooseFontColor(wxCommandEvent& event)
 		colour_data = dg.GetColourData();
 
 		wxColor color = colour_data.GetColour();
-		FontMgr::Get().SetFont(sel_text_element, pif, color);
+		fonts.SetFont(sel_text_element, pif, color);
 
 		pParent->UpdateAllFonts();
 	}

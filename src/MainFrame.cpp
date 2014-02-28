@@ -421,10 +421,10 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos, 
 
 	// Establish the entry points in USER32.DLL for system color control
 
-	wxDynamicLibrary dllUser32( _T("user32.dll") );
+	wxDynamicLibrary dllUser32(_T("user32.dll"));
 
-	pSetSysColors = (SetSysColors_t) dllUser32.GetSymbol( wxT("SetSysColors") );
-	pGetSysColor = (GetSysColor_t) dllUser32.GetSymbol( wxT("GetSysColor") );
+	pSetSysColors = (SetSysColors_t)dllUser32.GetSymbol(wxT("SetSysColors"));
+	pGetSysColor = (GetSysColor_t)dllUser32.GetSymbol(wxT("GetSysColor"));
 
 	SaveSystemColors();
 #endif
@@ -5290,34 +5290,24 @@ void appendOSDirSlash(wxString & s)
 
 #define NCOLORS 40
 
-typedef struct _MSW_COLOR_SPEC {
+typedef struct _MSW_COLOR_SPEC
+{
 	int COLOR_NAME;
 	wxString S52_RGB_COLOR;
 	int SysRGB_COLOR;
 } MSW_COLOR_SPEC;
 
-MSW_COLOR_SPEC color_spec[] = { { COLOR_MENU, _T("UIBCK"), 0 }, { COLOR_MENUTEXT, _T("UITX1"), 0 },
-	{ COLOR_BTNSHADOW, _T("UIBCK"), 0 },                        // Menu Frame
-	{ -1, _T(""), 0 } };
+MSW_COLOR_SPEC color_spec[] = { { COLOR_MENU, _T("UIBCK"), 0 },
+								{ COLOR_MENUTEXT, _T("UITX1"), 0 },
+								{ COLOR_BTNSHADOW, _T("UIBCK"), 0 }, // Menu Frame
+								{ -1, _T(""), 0 } };
 
 void SaveSystemColors()
 {
-	/*
-	   color_3dface = pGetSysColor(COLOR_3DFACE);
-	   color_3dhilite = pGetSysColor(COLOR_3DHILIGHT);
-	   color_3dshadow = pGetSysColor(COLOR_3DSHADOW);
-	   color_3ddkshadow = pGetSysColor(COLOR_3DDKSHADOW);
-	   color_3dlight = pGetSysColor(COLOR_3DLIGHT);
-	   color_activecaption = pGetSysColor(COLOR_ACTIVECAPTION);
-	   color_gradientactivecaption = pGetSysColor(27); //COLOR_3DLIGHT);
-	   color_captiontext = pGetSysColor(COLOR_CAPTIONTEXT);
-	   color_windowframe = pGetSysColor(COLOR_WINDOWFRAME);
-	   color_inactiveborder = pGetSysColor(COLOR_INACTIVEBORDER);
-	 */
-	//    Record the default system color in my substitution structure
-	MSW_COLOR_SPEC *pcspec = &color_spec[0];
-	while( pcspec->COLOR_NAME != -1 ) {
-		pcspec->SysRGB_COLOR = pGetSysColor( pcspec->COLOR_NAME );
+	// Record the default system color in my substitution structure
+	MSW_COLOR_SPEC* pcspec = &color_spec[0];
+	while (pcspec->COLOR_NAME != -1) {
+		pcspec->SysRGB_COLOR = pGetSysColor(pcspec->COLOR_NAME);
 		pcspec++;
 	}
 }
@@ -5328,8 +5318,8 @@ void RestoreSystemColors()
 	int rgbcolor[NCOLORS];
 	int i = 0;
 
-	MSW_COLOR_SPEC *pcspec = &color_spec[0];
-	while( pcspec->COLOR_NAME != -1 ) {
+	MSW_COLOR_SPEC* pcspec = &color_spec[0];
+	while (pcspec->COLOR_NAME != -1) {
 		element[i] = pcspec->COLOR_NAME;
 		rgbcolor[i] = pcspec->SysRGB_COLOR;
 
@@ -5337,8 +5327,7 @@ void RestoreSystemColors()
 		i++;
 	}
 
-	pSetSysColors( i, (unsigned long *) &element[0], (unsigned long *) &rgbcolor[0] );
-
+	pSetSysColors(i, (unsigned long*)&element[0], (unsigned long*)&rgbcolor[0]);
 }
 
 #endif

@@ -104,9 +104,6 @@
 
 unsigned int malloc_max;
 
-// FIXME: this global data CLUSTERFUCK, people... seriously... this was bad even in the 60ties
-// this list of 'extern's has doubles, will sort them out later
-
 extern void appendOSDirSlash(wxString &);
 void RestoreSystemColors();
 
@@ -155,8 +152,6 @@ extern Select* pSelect;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
 extern MainFrame* gFrame;
-
-static wxPlatformInfo* s_pPlatform = NULL;
 
 #ifdef __WXMSW__
 bool TestGLCanvas(wxString& prog_dir)
@@ -1107,8 +1102,6 @@ bool App::OnInit()
 	install_crash_reporting();
 	seed_random_generator();
 
-	s_pPlatform = new wxPlatformInfo;
-
 #ifdef __WXMSW__
 	// On MSW, force the entire process to run on one CPU core only
 	// This resolves some difficulty with wxThread syncronization
@@ -1156,7 +1149,8 @@ bool App::OnInit()
 	// processes.
 	// Seems to only happen for W98
 
-	if (s_pPlatform->GetOperatingSystemId() == wxOS_WINDOWS_9X)
+	wxPlatformInfo platform;
+	if (platform.GetOperatingSystemId() == wxOS_WINDOWS_9X)
 		SetUnhandledExceptionFilter(&MyUnhandledExceptionFilter);
 #endif
 
@@ -1847,7 +1841,6 @@ int App::OnExit()
 	DeInitAllocCheck();
 #endif
 
-	delete s_pPlatform;
 	delete g_pauimgr;
 
 	delete plocale_def_lang;

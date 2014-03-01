@@ -34,7 +34,7 @@ include(ExternalProject)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Let cmake find additional modules private to opencpn
-SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/")
+SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 ################################################################################
 # project information
@@ -308,250 +308,17 @@ else(OPENGL_GLU_FOUND)
 endif(OPENGL_GLU_FOUND)
 
 ################################################################################
-# gmock (external)
+# external sources and libraries
 ################################################################################
 
-set(gmock_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
-set(gmock_INCLUDE_DIR "${gmock_INSTALL_DIR}/include")
-set(gmock_LIBRARY_DIR "${gmock_INSTALL_DIR}/lib")
-
-ExternalProject_Add(extern_gmock
-	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/gmock"
-	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/gmock-1.7.0"
-	# configure
-	CMAKE_ARGS
-		-DCMAKE_INSTALL_PREFIX=${gmock_INSTALL_DIR}
-		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
-		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
-		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
-		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
-		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
-		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
-	# install
-	INSTALL_DIR ${gmock_INSTALL_DIR}
-	)
-
-add_library(gmock STATIC IMPORTED)
-set_target_properties(gmock
-	PROPERTIES
-		IMPORTED_LOCATION
-			${gmock_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}gmock${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(gmock extern_gmock)
-include_directories(${gmock_INCLUDE_DIR})
-
-################################################################################
-# zlib (external)
-################################################################################
-
-set(zlib_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
-set(zlib_INCLUDE_DIR "${zlib_INSTALL_DIR}/include")
-set(zlib_LIBRARY_DIR "${zlib_INSTALL_DIR}/lib")
-
-ExternalProject_Add(extern_zlib
-	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/zlib"
-	URL "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/zlib-1.2.8.tar.gz"
-	URL_MD5 44d667c142d7cda120332623eab69f40
-	CMAKE_ARGS
-		-DCMAKE_BUILD_TYPE=Release
-		-DCMAKE_INSTALL_PREFIX=${zlib_INSTALL_DIR}
-		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
-		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
-		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
-		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
-		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
-		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
-	)
-
-add_library(zlib STATIC IMPORTED)
-set_target_properties(zlib
-	PROPERTIES
-		IMPORTED_LOCATION
-			${zlib_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}z${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(zlib extern_zlib)
-include_directories(${zlib_INCLUDE_DIR})
-
-################################################################################
-# bzip2
-################################################################################
-
-set(bzip2_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
-set(bzip2_INCLUDE_DIR "${bzip2_INSTALL_DIR}/include")
-set(bzip2_LIBRARY_DIR "${bzip2_INSTALL_DIR}/lib")
-
-ExternalProject_Add(extern_bzip2
-	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/bzip2"
-	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/bzip2-1.0.6"
-	# configure
-	CMAKE_ARGS
-		-DCMAKE_INSTALL_PREFIX=${bzip2_INSTALL_DIR}
-		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
-		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
-		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
-		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
-		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
-		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
-	# install
-	INSTALL_DIR ${bzip2_INSTALL_DIR}
-	)
-
-add_library(bzip2 STATIC IMPORTED)
-set_target_properties(bzip2
-	PROPERTIES
-		IMPORTED_LOCATION
-			${bzip2_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}bzip2${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(bzip2 extern_bzip2)
-include_directories(${bzip2_INCLUDE_DIR})
-
-################################################################################
-# pugixml (external)
-################################################################################
-
-set(pugixml_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
-set(pugixml_INCLUDE_DIR "${pugixml_INSTALL_DIR}/include")
-set(pugixml_LIBRARY_DIR "${pugixml_INSTALL_DIR}/lib")
-
-ExternalProject_Add(extern_pugixml
-	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/pugixml"
-	# configure
-	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/pugixml-1.2/scripts"
-	CMAKE_ARGS
-		-DCMAKE_INSTALL_PREFIX=${pugixml_INSTALL_DIR}
-		-DBUILD_SHARED_LIBS=OFF
-		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
-		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
-		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
-		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
-		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
-		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
-	# install
-	INSTALL_DIR ${pugixml_INSTALL_DIR}
-	)
-
-add_library(pugixml STATIC IMPORTED)
-set_target_properties(pugixml
-	PROPERTIES
-		IMPORTED_LOCATION
-			${pugixml_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}pugixml${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(pugixml extern_pugixml)
-include_directories(${pugixml_INCLUDE_DIR})
-
-################################################################################
-# tinyxml (external)
-################################################################################
-
-set(tinyxml_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
-set(tinyxml_INCLUDE_DIR "${tinyxml_INSTALL_DIR}/include")
-set(tinyxml_LIBRARY_DIR "${tinyxml_INSTALL_DIR}/lib")
-
-ExternalProject_Add(extern_tinyxml
-	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/tinyxml"
-	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/tinyxml-2.6.2"
-	# configure
-	CMAKE_ARGS
-		-DCMAKE_INSTALL_PREFIX=${tinyxml_INSTALL_DIR}
-		-DUSE_STL=ON
-		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
-		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
-		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
-		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
-		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
-		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
-	# install
-	INSTALL_DIR ${tinyxml_INSTALL_DIR}
-	)
-
-add_library(tinyxml STATIC IMPORTED)
-set_target_properties(tinyxml
-	PROPERTIES
-		IMPORTED_LOCATION
-			${tinyxml_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}tinyxml${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(tinyxml extern_tinyxml)
-include_directories(${tinyxml_INCLUDE_DIR})
-add_definitions("-DTIXML_USE_STL")
-
-################################################################################
-# libtcd (external)
-################################################################################
-
-set(tcd_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
-set(tcd_INCLUDE_DIR "${tcd_INSTALL_DIR}/include")
-set(tcd_LIBRARY_DIR "${tcd_INSTALL_DIR}/lib")
-
-ExternalProject_Add(extern_tcd
-	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/tcd"
-	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/libtcd-2.2.5"
-	# configure
-	CMAKE_ARGS
-		-DCMAKE_INSTALL_PREFIX=${tcd_INSTALL_DIR}
-		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
-		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
-		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
-		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
-		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
-		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
-	# install
-	INSTALL_DIR ${tcd_INSTALL_DIR}
-	)
-
-add_library(tcd STATIC IMPORTED)
-set_target_properties(tcd
-	PROPERTIES
-		IMPORTED_LOCATION
-			${tcd_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}tcd${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(tcd extern_tcd)
-include_directories(${tcd_INCLUDE_DIR})
-
-################################################################################
-# wxJSON (external)
-################################################################################
-
-set(wxjson_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
-set(wxjson_INCLUDE_DIR "${wxjson_INSTALL_DIR}/include")
-set(wxjson_LIBRARY_DIR "${wxjson_INSTALL_DIR}/lib")
-
-ExternalProject_Add(extern_wxjson
-	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/wxjson"
-	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/wxJSON-1.2.1"
-	# configure
-	CMAKE_ARGS
-		-DCMAKE_INSTALL_PREFIX=${wxjson_INSTALL_DIR}
-		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
-		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
-		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
-		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
-		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
-		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
-	# install
-	INSTALL_DIR ${wxjson_INSTALL_DIR}
-	)
-
-add_library(wxjson STATIC IMPORTED)
-set_target_properties(wxjson
-	PROPERTIES
-		IMPORTED_LOCATION
-			${wxjson_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}wxjson${CMAKE_STATIC_LIBRARY_SUFFIX}
-	)
-add_dependencies(wxjson extern_wxjson)
-include_directories(${wxjson_INCLUDE_DIR})
-add_definitions("-DwxJSON_USE_STL")
-
-################################################################################
-# GDAL (external)
-################################################################################
-
-# TODO
+include(ExternGmock)
+include(ExternZlib)
+include(ExternBzip2)
+include(ExternPugixml)
+include(ExternTinyXML)
+include(ExternTcd)
+include(ExternWxJson)
+# TODO: GDAL
 
 ################################################################################
 # wxWidgets
@@ -596,7 +363,7 @@ IF (NOT WIN32 AND NOT APPLE)
 	ENDIF (GTK2_FOUND)
 
 	IF(UNIX)
-		INCLUDE("FindPortaudio.cmake")
+		INCLUDE(FindPortaudio)
 		IF (PORTAUDIO_FOUND)
 			MESSAGE (STATUS "Portaudio Found")
 			INCLUDE_DIRECTORIES(${PORTAUDIO_INCLUDE_DIRS})

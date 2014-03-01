@@ -1,0 +1,33 @@
+message(STATUS "Extern: wxJSON 1.2.1")
+
+set(wxjson_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/local")
+set(wxjson_INCLUDE_DIR "${wxjson_INSTALL_DIR}/include")
+set(wxjson_LIBRARY_DIR "${wxjson_INSTALL_DIR}/lib")
+
+ExternalProject_Add(extern_wxjson
+	PREFIX "${CMAKE_CURRENT_BINARY_DIR}/wxjson"
+	SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_extern/wxJSON-1.2.1"
+	# configure
+	CMAKE_ARGS
+		-DCMAKE_INSTALL_PREFIX=${wxjson_INSTALL_DIR}
+		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+		-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+		-DCMAKE_C_FLAGS_DEBUG=${CMAKE_C_FLAGS_DEBUG}
+		-DCMAKE_C_FLAGS_RELEASE=${CMAKE_C_FLAGS_RELEASE}
+		-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+		-DCMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}
+		-DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
+	# install
+	INSTALL_DIR ${wxjson_INSTALL_DIR}
+	)
+
+add_library(wxjson STATIC IMPORTED)
+set_target_properties(wxjson
+	PROPERTIES
+		IMPORTED_LOCATION
+			${wxjson_LIBRARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}wxjson${CMAKE_STATIC_LIBRARY_SUFFIX}
+	)
+add_dependencies(wxjson extern_wxjson)
+include_directories(${wxjson_INCLUDE_DIR})
+add_definitions("-DwxJSON_USE_STL")
+

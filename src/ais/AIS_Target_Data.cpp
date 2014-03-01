@@ -501,7 +501,7 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 
 	wxString tcpaStr;
 	if (bCPA_Valid)
-		tcpaStr << _T("</b> ") << _("in") << _T("<b>") << FormatTimeAdaptive((int)(TCPA * 60.0));
+		tcpaStr << _T("</b> ") << _("in ") << _T("<b>") << FormatTimeAdaptive(static_cast<int>(TCPA * 60.0));
 
 	if (bCPA_Valid) {
 		html << vertSpacer << rowStart << _T("<font size=-2>") << _("CPA") << _T("</font>")
@@ -522,7 +522,7 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 	if (b_SarAircraftPosnReport) {
 		wxString altStr;
 		if (altitude != 4095)
-			altStr.Printf(_T("%4d M"), altitude);
+			altStr.Printf(_T("%4d m"), altitude);
 		else
 			altStr = _("Unknown");
 

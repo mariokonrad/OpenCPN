@@ -22,10 +22,15 @@
  **************************************************************************/
 
 #include "SerialPorts.h"
-#include <wx/log.h>
+
+#include <MessageBox.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
+
+#include <wx/log.h>
+#include <wx/utils.h>
+#include <wx/intl.h>
 
 #ifdef __WXGTK__
 	extern "C" int wait(int *); // POSIX wait() for process
@@ -456,5 +461,49 @@ wxArrayString* EnumerateSerialPorts(void)
 
 #endif
 	return preturn;
+}
+
+bool CheckSerialAccess(void)
+{
+	bool bret = true;
+
+#ifdef __WXGTK__
+
+	// Who owns /dev/ttyS0?
+
+	wxArrayString result1;
+	wxExecute(_T("stat -c %G /dev/ttyS0"), result1);
+
+	wxString group = result1[0];
+
+	//  Is the current user in this group?
+	wxString user = wxGetUserId();
+	wxArrayString result2;
+	wxExecute(_T("groups ") + user, result2);
+
+	wxString user_groups = result2[0];
+
+	if (user_groups.Find(group) == wxNOT_FOUND)
+		bret = false;
+
+	if (!bret) {
+		wxString msg = _("OpenCPN requires access to serial ports to use serial NMEA data.\n\
+You currently do not have permission to access the serial ports on this system.\n\n\
+It is suggested that you exit OpenCPN now,\n\
+and add yourself to the correct group to enable serial port access.\n\n\
+You may do so by executing the following command from the linux command line:\n\n\
+                sudo usermod -a -G ");
+
+		msg += group;
+		msg += _T(" ");
+		msg += user;
+		msg += _T("\n");
+
+		OCPNMessageBox(NULL, msg, wxString(_("OpenCPN Info")), wxICON_INFORMATION | wxOK, 30);
+	}
+
+#endif
+
+	return bret;
 }
 

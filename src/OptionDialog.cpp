@@ -108,8 +108,11 @@ extern chart::ChartGroupArray* g_pGroupArray;
 #define ID_CHOICE_NMEA  wxID_HIGHEST + 1
 
 extern ais::AIS_Decoder* g_pAIS;
+extern bool g_bserial_access_checked;
 
 options* g_pOptions;
+
+extern "C" bool CheckSerialAccess(void);
 
 IMPLEMENT_DYNAMIC_CLASS(options, wxDialog)
 
@@ -3339,6 +3342,15 @@ void options::OnConnValChange(wxCommandEvent& event)
 
 void options::OnTypeSerialSelected(wxCommandEvent& event)
 {
+#ifdef __WXGTK__
+	if (!g_bserial_access_checked) {
+		if (!CheckSerialAccess()) {
+			// FIXME: empty?
+		}
+		g_bserial_access_checked = true;
+	}
+#endif
+
 	OnConnValChange(event);
 	SetNMEAFormToSerial();
 }
@@ -3575,7 +3587,14 @@ void options::SetDefaultConnectionParams()
 	m_choiceBaudRate->Select(m_choiceBaudRate->FindString(_T("4800")));
 	m_choicePriority->Select(m_choicePriority->FindString(_T("1")));
 
-	m_rbTypeSerial->SetValue(true);
+	bool bserial = true;
+#ifdef __WXGTK__
+	if (!g_bserial_access_checked)
+		bserial = false;
+#endif
+	m_rbTypeSerial->SetValue(bserial);
+	m_rbTypeNet->SetValue(!bserial);
+
 	SetNMEAFormToSerial();
 	m_connection_enabled = true;
 }

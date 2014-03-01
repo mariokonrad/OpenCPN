@@ -26,6 +26,7 @@
 
 #include <wx/arrstr.h>
 
-wxArrayString * EnumerateSerialPorts(void);
+wxArrayString* EnumerateSerialPorts(void);
+extern "C" bool CheckSerialAccess(void);
 
 #endif

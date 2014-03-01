@@ -85,6 +85,7 @@
 #include <Config.h>
 #include <Units.h>
 #include <PositionConvert.h>
+#include <SerialPorts.h>
 
 #include <gui/FontManager.h>
 #include <gui/StyleManager.h>
@@ -265,6 +266,7 @@ wxAuiManager* g_pauimgr;
 wxMenu* g_FloatingToolbarConfigMenu;
 OCPNFloatingToolbarDialog* g_FloatingToolbarDialog;
 FloatingCompassWindow* g_FloatingCompassDialog;
+bool g_bserial_access_checked;
 
 #ifdef __MSVC__
 #define _CRTDBG_MAP_ALLOC
@@ -380,6 +382,18 @@ MainFrame::MainFrame(wxFrame* frame, const wxString& title, const wxPoint& pos, 
 	for (size_t i = 0; i < g_pConnectionParams->size(); i++) {
 		const ConnectionParams& cp = g_pConnectionParams->at(i);
 		if (cp.isEnabled()) {
+
+#ifdef __WXGTK__
+			if (cp.GetDSPort().Contains(_T("Serial"))) {
+				if (!g_bserial_access_checked) {
+					if (!CheckSerialAccess()) {
+						// FIXME: empty?
+					}
+					g_bserial_access_checked = true;
+				}
+			}
+#endif
+
 			dsPortType port_type = cp.isOutput() ? DS_TYPE_INPUT_OUTPUT : DS_TYPE_INPUT;
 			DataStream* dstr = new DataStream(g_pMUX, cp.GetDSPort(),
 											  wxString::Format(wxT("%i"), cp.getBaudrate()),

@@ -6535,10 +6535,12 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 
 	ChartBase* target_chart = GetChartAtCursor();
 	if (target_chart) {
-		if (target_chart->GetChartType() == CHART_TYPE_PLUGIN)
+		if ((target_chart->GetChartType() == CHART_TYPE_PLUGIN)
+			&& (target_chart->GetChartFamily() == CHART_FAMILY_VECTOR)) {
 			target_plugin_chart = dynamic_cast<ChartPlugInWrapper*>(target_chart);
-		else
+		} else {
 			Chs57 = dynamic_cast<s57chart*>(target_chart);
+		}
 	}
 	std::vector<Ais8_001_22*> area_notices;
 

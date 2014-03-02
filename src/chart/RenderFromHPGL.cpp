@@ -30,6 +30,7 @@
 #include <global/GUI.h>
 
 #include <wx/dc.h>
+#include <wx/dcgraph.h>
 #include <wx/tokenzr.h>
 #include <wx/log.h>
 

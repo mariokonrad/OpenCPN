@@ -40,6 +40,7 @@
 
 #include <wx/mstream.h>
 #include <wx/tokenzr.h>
+#include <wx/geometry.h>
 
 #define TESS_VERT   0  // constants describing preferred tess orientation
 #define TESS_HORZ   1

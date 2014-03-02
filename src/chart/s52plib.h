@@ -26,9 +26,6 @@
 #ifndef _S52PLIB_H_
 #define _S52PLIB_H_
 
-#include <vector>
-#include <list>
-
 #include "s52s57.h"
 
 class wxGLContext;
@@ -39,8 +36,12 @@ class wxGLContext;
 #include <wx/dcgraph.h>
 #include <wx/hashmap.h>
 
+#include <vector>
+#include <list>
+
 class ViewPort;
 class PixelCache;
+class wxPoint2DDouble;
 
 namespace chart {
 

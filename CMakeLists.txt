@@ -250,6 +250,11 @@ if(WIN32)
 	add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
 
 	if(MSVC)
+
+		# Visual Studio (2012) does not support variadric templates and tries to emulate
+		# them, but google mock uses them up to 10 arguments.
+		add_definitions(-D_VARIADIC_MAX=10)
+
 		# EH   : exception handling model
 		# W1   : warning level 1
 		# MD   : multithreaded DLL

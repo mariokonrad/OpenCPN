@@ -249,12 +249,15 @@ if(WIN32)
 	add_definitions(-DUSE_PRAGMA_MESSAGE=1)
 	add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
 
+	set(COMMON_DEFINES "/nologo")
+
+	# Visual Studio (2012) does not support variadric templates and tries to emulate
+	# them up to 5 (default) arguments, but google mock uses them up to 10 arguments.
+	if (MSVC11)
+		set(COMMON_DEFINES "${COMMON_DEFINES} /D _VARIADIC_MAX=10")
+	endif()
+
 	if(MSVC)
-
-		# Visual Studio (2012) does not support variadric templates and tries to emulate
-		# them, but google mock uses them up to 10 arguments.
-		add_definitions(-D_VARIADIC_MAX=10)
-
 		# EH   : exception handling model
 		# W1   : warning level 1
 		# MD   : multithreaded DLL
@@ -272,17 +275,17 @@ if(WIN32)
 		set(C_WARN_FLAGS   "/W1 /EHsc")
 		set(CXX_WARN_FLAGS "/W3 /EHsc")
 
-		set(CMAKE_C_FLAGS                     "/nologo /MD  /O2  /Ob2 ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_DEBUG               "/nologo /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_MINSIZEREL          "/nologo /MD  /O1  /Ob1 /D NDEBUG ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_RELEASE             "/nologo /MD  /O2  /Ob2 /D _DEBUG ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "/nologo /MD  /O2  /Ob1 /D NDEBUG /Zi ${C_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS                   "/nologo /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELEASE           "/nologo /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_DEBUG             "/nologo /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_MINSIZEREL        "/nologo /MD  /O1  /Ob1 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELEASE           "/nologo /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "/nologo /MD  /O2  /Ob1 /D NDEBUG /Zi ${CXX_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS                     "${COMMON_DEFINES} /MD  /O2  /Ob2 ${C_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS_DEBUG               "${COMMON_DEFINES} /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${C_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS_MINSIZEREL          "${COMMON_DEFINES} /MD  /O1  /Ob1 /D NDEBUG ${C_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS_RELEASE             "${COMMON_DEFINES} /MD  /O2  /Ob2 /D _DEBUG ${C_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "${COMMON_DEFINES} /MD  /O2  /Ob1 /D NDEBUG /Zi ${C_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS                   "${COMMON_DEFINES} /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_RELEASE           "${COMMON_DEFINES} /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_DEBUG             "${COMMON_DEFINES} /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_MINSIZEREL        "${COMMON_DEFINES} /MD  /O1  /Ob1 /D NDEBUG ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_RELEASE           "${COMMON_DEFINES} /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
+		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "${COMMON_DEFINES} /MD  /O2  /Ob1 /D NDEBUG /Zi ${CXX_WARN_FLAGS}")
 	endif(MSVC)
 endif(WIN32)
 
@@ -1440,9 +1443,20 @@ ENDIF(GETTEXT_MSGFMT_EXECUTABLE)
 
 # On Windows builds, copy the wxWidgets dlls and helpers to the executable directory
 IF(WIN32 AND NOT UNIX)
-	INSTALL(DIRECTORY wxWidgets/ DESTINATION "." )
-	INSTALL(DIRECTORY buildwin/vc10/ DESTINATION ".\\\\vc10" )
-	#INSTALL(DIRECTORY buildwin/NSIS_Unicode/Bitmaps/ DESTINATION ".\\\\NSISBmps" ) #Gunther
+	INSTALL(FILES "${wxWidgets_LIB_DIR}/wxbase28u_net_vc_custom.dll" DESTINATION ".")
+	INSTALL(FILES "${wxWidgets_LIB_DIR}/wxbase28u_vc_custom.dll"     DESTINATION ".")
+	INSTALL(FILES "${wxWidgets_LIB_DIR}/wxbase28u_xml_vc_custom.dll" DESTINATION ".")
+	INSTALL(FILES "${wxWidgets_LIB_DIR}/wxmsw28u_adv_vc_custom.dll"  DESTINATION ".")
+	INSTALL(FILES "${wxWidgets_LIB_DIR}/wxmsw28u_aui_vc_custom.dll"  DESTINATION ".")
+	INSTALL(FILES "${wxWidgets_LIB_DIR}/wxmsw28u_core_vc_custom.dll" DESTINATION ".")
+	INSTALL(FILES "${wxWidgets_LIB_DIR}/wxmsw28u_gl_vc_custom.dll"   DESTINATION ".")
+	INSTALL(FILES "${wxWidgets_LIB_DIR}/wxmsw28u_html_vc_custom.dll" DESTINATION ".")
+
+	if (MSVC10)
+		INSTALL(DIRECTORY buildwin/vc10/ DESTINATION ".\\\\vc10")
+	elseif(MSVC11)
+		INSTALL(DIRECTORY buildwin/vc11/ DESTINATION ".\\\\vc11" )
+	endif()
 
 	INSTALL(FILES "${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashRpt1401.dll"    DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
 	INSTALL(FILES "${CMAKE_SOURCE_DIR}/buildwin/crashrpt/CrashSender1401.exe" DESTINATION ${PREFIX_PKGDATA} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
@@ -1489,28 +1503,34 @@ IF(WIN32 AND NOT UNIX)
 	SET(CPACK_NSIS_INSTALLED_ICON_NAME "opencpn.exe")
 	SET(CPACK_NSIS_PACKAGE_NAME_LC "opencpn")
 
-	#  These lines set the name of the Windows Start Menu shortcut and the icon that goes with it
+	# These lines set the name of the Windows Start Menu shortcut and the icon that goes with it
 	SET(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${PACKAGE_VERSION}")
 	SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/src/bitmaps\\\\opencpn.ico")
 	SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}_setup" )
-	SET(CPACK_NSIS_DIR "${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode")  #Gunther
-	SET(CPACK_BUILDWIN_DIR "${CMAKE_SOURCE_DIR}/buildwin")  #Gunther
+	SET(CPACK_NSIS_DIR "${CMAKE_SOURCE_DIR}/buildwin/NSIS_Unicode")
+	SET(CPACK_BUILDWIN_DIR "${CMAKE_SOURCE_DIR}/buildwin")
 	set(CPACK_BUILDWIN_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/buildwin")
 
-	# Install the VC100 Redistributable
-	SET(vc10_redist "vcredist_x86.exe")
+	# Install the VC Redistributable
+	SET(vc_redist "vcredist_x86.exe")
 
-	STRING( REPLACE "/" "\\\\" Temp_vc10_redist ${vc10_redist} )
-	GET_FILENAME_COMPONENT( VC10_FILE_NAME ${vc10_redist} NAME )
+	if(MSVC11)
+		set(VC_DIR "vc11")
+	else()
+		set(VC_DIR "vc10")
+	endif()
+
+	STRING(REPLACE "/" "\\\\" Temp_vc_redist ${vc_redist})
+	GET_FILENAME_COMPONENT(VC_FILE_NAME ${vc_redist} NAME)
 	SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS ${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}
-			"ExecWait '\\\"$INSTDIR\\\\vc10\\\\${VC10_FILE_NAME}\\\" /q /norestart' $0\\n"
-			" Remove folder\\n  RMDir /r \\\"$INSTDIR\\\\vc10\\\"\\n\\n" )
+			"ExecWait '\\\"$INSTDIR\\\\${VC_DIR}\\\\${VC_FILE_NAME}\\\" /q /norestart' $0\\n"
+			" Remove folder\\n  RMDir /r \\\"$INSTDIR\\\\${VC_DIR}\\\"\\n\\n" )
 
 ELSE(WIN32 AND NOT UNIX)
 	SET(CPACK_PACKAGE_INSTALL_DIRECTORY ${PACKAGE_NAME})
 	SET(CPACK_STRIP_FILES "bin/opencpn.exe")
 	SET(CPACK_SOURCE_STRIP_FILES "")
-	SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${PACKAGE_VERSION}-${PACKAGE_RELEASE}_${ARCH}" )
+	SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${PACKAGE_VERSION}-${PACKAGE_RELEASE}_${ARCH}")
 ENDIF(WIN32 AND NOT UNIX)
 
 SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/data/license.txt")

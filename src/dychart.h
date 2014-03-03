@@ -24,17 +24,6 @@
 #ifndef __DYCHART__H__
 #define __DYCHART__H__
 
-// Microsoft compiler warning suppression
-#ifdef __MSVC__
-#pragma warning(disable:4114)
-#pragma warning(disable:4284)  // This one is to do with "reverse iterator UDT..." Huh?
-#endif
-
-
-// Following definition required by GDAL
-#define notdef 1
-
-
 // Windows specific
 #ifdef __WXMSW__
     #include "wx/msw/private.h"
@@ -58,25 +47,6 @@
 	#define USE_CPL
 	#include "cpl_port.h"
 #endif
-
-
-// FIXME: not sure if this is necessary
-// Define __POSIX__ to imply posix thread model compatibility
-// Especially used for communication port multithreading.
-//
-// Posix thread model is available on selected platforms, see code.
-#ifdef __POSIX__
-	#undef __POSIX__
-#endif
-
-#ifdef  __WXOSX__
-	#define __POSIX__
-#endif
-
-#ifdef  __WXGTK__
-	#define __POSIX__
-#endif
-
 
 // Enable GTK Display Optimization
 // Note this requires libgtk+2-devel

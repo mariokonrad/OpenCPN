@@ -200,17 +200,20 @@ if(NOT WIN32 AND NOT APPLE)
 	#set(CXX_WARN_FLAGS "-Wall -Wextra -Wold-style-cast -Woverloaded-virtual -Wmissing-declarations -Wuninitialized -Winit-self")
 	set(CXX_WARN_FLAGS "-Wall -Wextra")
 
-	set(CMAKE_C_FLAGS                  "-O2 -fPIC ${C_WARN_FLAGS}")
-	set(CMAKE_C_FLAGS_DEBUG            "-O0 -fPIC ${C_WARN_FLAGS} -ggdb")
-	set(CMAKE_C_FLAGS_MINSIZEREL       "-O2 -fPIC ${C_WARN_FLAGS}")
-	set(CMAKE_C_FLAGS_RELEASE          "-O3 -fPIC ${C_WARN_FLAGS}")
-	set(CMAKE_C_FLAGS_RELWITHDEBINFO   "-O3 -fPIC ${C_WARN_FLAGS} -ggdb")
+	set(COMMON_DEFINES "-fPIC")
+	set(COMMON_DEFINES "${COMMON_DEFINES} -Dnotdef=1") # GDAL
 
-	set(CMAKE_CXX_FLAGS                "-O2 -fPIC ${CXX_WARN_FLAGS}")
-	set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -fPIC ${CXX_WARN_FLAGS} -ggdb")
-	set(CMAKE_CXX_FLAGS_MINSIZEREL     "-O2 -fPIC ${CXX_WARN_FLAGS}")
-	set(CMAKE_CXX_FLAGS_RELEASE        "-O3 -fPIC ${CXX_WARN_FLAGS}")
-	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -fPIC ${CXX_WARN_FLAGS} -ggdb")
+	set(CMAKE_C_FLAGS                  "${COMMON_DEFINES} ${C_WARN_FLAGS} -O2")
+	set(CMAKE_C_FLAGS_DEBUG            "${COMMON_DEFINES} ${C_WARN_FLAGS} -O0 -ggdb")
+	set(CMAKE_C_FLAGS_MINSIZEREL       "${COMMON_DEFINES} ${C_WARN_FLAGS} -O2")
+	set(CMAKE_C_FLAGS_RELEASE          "${COMMON_DEFINES} ${C_WARN_FLAGS} -O3")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO   "${COMMON_DEFINES} ${C_WARN_FLAGS} -O3 -ggdb")
+
+	set(CMAKE_CXX_FLAGS                "${COMMON_DEFINES} ${CXX_WARN_FLAGS} -O2")
+	set(CMAKE_CXX_FLAGS_DEBUG          "${COMMON_DEFINES} ${CXX_WARN_FLAGS} -O0 -ggdb")
+	set(CMAKE_CXX_FLAGS_MINSIZEREL     "${COMMON_DEFINES} ${CXX_WARN_FLAGS} -O2")
+	set(CMAKE_CXX_FLAGS_RELEASE        "${COMMON_DEFINES} ${CXX_WARN_FLAGS} -O3")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${COMMON_DEFINES} ${CXX_WARN_FLAGS} -O3 -ggdb")
 
 	set(CMAKE_EXE_LINKER_FLAGS         "-O2 -Wall -Wextra")
 	set(CMAKE_SHARED_LINKER_FLAGS      "-O2 -Wall -Wextra")
@@ -222,17 +225,19 @@ if(APPLE)
 	add_definitions("-g -fno-strict-aliasing")
 	add_definitions("-Wno-deprecated -Wno-deprecated-declarations")
 
-	set(CMAKE_C_FLAGS                  "-O2 -arch ${ARCH}")
-	set(CMAKE_C_FLAGS_DEBUG            "-O0 -arch ${ARCH} -g")
-	set(CMAKE_C_FLAGS_MINSIZEREL       "-O2 -arch ${ARCH}")
-	set(CMAKE_C_FLAGS_RELEASE          "-O3 -arch ${ARCH}")
-	set(CMAKE_C_FLAGS_RELWITHDEBINFO   "-O3 -arch ${ARCH} -g")
+	set(COMMON_DEFINES "${COMMON_DEFINES} -Dnotdef=1") # GDAL
 
-	set(CMAKE_CXX_FLAGS                "-O2 -arch ${ARCH}")
-	set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -arch ${ARCH} -g")
-	set(CMAKE_CXX_FLAGS_MINSIZEREL     "-O2 -arch ${ARCH}")
-	set(CMAKE_CXX_FLAGS_RELEASE        "-O3 -arch ${ARCH}")
-	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -arch ${ARCH} -g")
+	set(CMAKE_C_FLAGS                  "${COMMON_DEFINES} -O2 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_DEBUG            "${COMMON_DEFINES} -O0 -arch ${ARCH} -g")
+	set(CMAKE_C_FLAGS_MINSIZEREL       "${COMMON_DEFINES} -O2 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_RELEASE          "${COMMON_DEFINES} -O3 -arch ${ARCH}")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO   "${COMMON_DEFINES} -O3 -arch ${ARCH} -g")
+
+	set(CMAKE_CXX_FLAGS                "${COMMON_DEFINES} -O2 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_DEBUG          "${COMMON_DEFINES} -O0 -arch ${ARCH} -g")
+	set(CMAKE_CXX_FLAGS_MINSIZEREL     "${COMMON_DEFINES} -O2 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_RELEASE        "${COMMON_DEFINES} -O3 -arch ${ARCH}")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${COMMON_DEFINES} -O3 -arch ${ARCH} -g")
 
 	set(CMAKE_EXE_LINKER_FLAGS         "-O2 -arch ${ARCH}")
 	set(CMAKE_SHARED_LINKER_FLAGS      "-O2 -arch ${ARCH}")
@@ -250,11 +255,16 @@ if(WIN32)
 	add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
 
 	set(COMMON_DEFINES "/nologo")
+	set(COMMON_DEFINES "${COMMON_DEFINES} /Dnotdef=1") # GDAL
+
+	# warning suppression
+	set(COMMON_DEFINES "${COMMON_DEFINES} /wd4114") # same type qualifier used more than once
+	set(COMMON_DEFINES "${COMMON_DEFINES} /wd4284") # This one is to do with "reverse iterator UDT..." Huh?
 
 	# Visual Studio (2012) does not support variadric templates and tries to emulate
 	# them up to 5 (default) arguments, but google mock uses them up to 10 arguments.
 	if (MSVC11)
-		set(COMMON_DEFINES "${COMMON_DEFINES} /D _VARIADIC_MAX=10")
+		set(COMMON_DEFINES "${COMMON_DEFINES} /D_VARIADIC_MAX=10")
 	endif()
 
 	if(MSVC)
@@ -275,17 +285,17 @@ if(WIN32)
 		set(C_WARN_FLAGS   "/W1 /EHsc")
 		set(CXX_WARN_FLAGS "/W3 /EHsc")
 
-		set(CMAKE_C_FLAGS                     "${COMMON_DEFINES} /MD  /O2  /Ob2 ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_DEBUG               "${COMMON_DEFINES} /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_MINSIZEREL          "${COMMON_DEFINES} /MD  /O1  /Ob1 /D NDEBUG ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_RELEASE             "${COMMON_DEFINES} /MD  /O2  /Ob2 /D _DEBUG ${C_WARN_FLAGS}")
-		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "${COMMON_DEFINES} /MD  /O2  /Ob1 /D NDEBUG /Zi ${C_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS                   "${COMMON_DEFINES} /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELEASE           "${COMMON_DEFINES} /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_DEBUG             "${COMMON_DEFINES} /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1 ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_MINSIZEREL        "${COMMON_DEFINES} /MD  /O1  /Ob1 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELEASE           "${COMMON_DEFINES} /MD  /O2  /Ob2 /D NDEBUG ${CXX_WARN_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "${COMMON_DEFINES} /MD  /O2  /Ob1 /D NDEBUG /Zi ${CXX_WARN_FLAGS}")
+		set(CMAKE_C_FLAGS                     "${COMMON_DEFINES} ${C_WARN_FLAGS} /MD  /O2  /Ob2")
+		set(CMAKE_C_FLAGS_DEBUG               "${COMMON_DEFINES} ${C_WARN_FLAGS} /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1")
+		set(CMAKE_C_FLAGS_MINSIZEREL          "${COMMON_DEFINES} ${C_WARN_FLAGS} /MD  /O1  /Ob1 /D NDEBUG")
+		set(CMAKE_C_FLAGS_RELEASE             "${COMMON_DEFINES} ${C_WARN_FLAGS} /MD  /O2  /Ob2 /D _DEBUG")
+		set(CMAKE_C_FLAGS_RELWITHDEBINFO      "${COMMON_DEFINES} ${C_WARN_FLAGS} /MD  /O2  /Ob1 /D NDEBUG /Zi")
+		set(CMAKE_CXX_FLAGS                   "${COMMON_DEFINES} ${CXX_WARN_FLAGS} /MD  /O2  /Ob2 /D NDEBUG")
+		set(CMAKE_CXX_FLAGS_RELEASE           "${COMMON_DEFINES} ${CXX_WARN_FLAGS} /MD  /O2  /Ob2 /D NDEBUG")
+		set(CMAKE_CXX_FLAGS_DEBUG             "${COMMON_DEFINES} ${CXX_WARN_FLAGS} /MDd /Ob0 /Od  /D _DEBUG /Zi /RTC1")
+		set(CMAKE_CXX_FLAGS_MINSIZEREL        "${COMMON_DEFINES} ${CXX_WARN_FLAGS} /MD  /O1  /Ob1 /D NDEBUG")
+		set(CMAKE_CXX_FLAGS_RELEASE           "${COMMON_DEFINES} ${CXX_WARN_FLAGS} /MD  /O2  /Ob2 /D NDEBUG")
+		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO    "${COMMON_DEFINES} ${CXX_WARN_FLAGS} /MD  /O2  /Ob1 /D NDEBUG /Zi")
 	endif(MSVC)
 endif(WIN32)
 

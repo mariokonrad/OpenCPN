@@ -26,7 +26,7 @@
 #include <DataStream.h>
 #include <dychart.h>
 
-#ifdef __POSIX__
+#if defined(__WXGTK__) || defined(__WXOSX__)
 	#include <sys/termios.h>
 #endif
 
@@ -103,8 +103,8 @@ void OCP_DataStreamInput_Thread::OnExit(void)
 // Sadly, the thread itself must implement the underlying OS serial port
 // in a very machine specific way....
 
-#ifdef __POSIX__
-//    Entry Point
+#if defined(__WXGTK__) || defined(__WXOSX__)
+// Entry Point
 void* OCP_DataStreamInput_Thread::Entry()
 {
 	bool not_done = true;
@@ -273,7 +273,7 @@ thread_exit:
 	return 0;
 }
 
-#endif //__POSIX__
+#endif
 
 
 #ifdef __WXMSW__
@@ -629,7 +629,7 @@ bool OCP_DataStreamInput_Thread::SetOutMsg(const wxString& msg)
 	}
 }
 
-#ifdef __POSIX__
+#if defined(__WXGTK__) || defined(__WXOSX__)
 
 int OCP_DataStreamInput_Thread::OpenComPortPhysical(const wxString& com_name, int baud_rate)
 {
@@ -762,7 +762,7 @@ bool OCP_DataStreamInput_Thread::CheckComPortPhysical(int port_descriptor)
 	return false;
 }
 
-#endif            // __POSIX__
+#endif
 
 #ifdef __WXMSW__
 int OCP_DataStreamInput_Thread::OpenComPortPhysical(const wxString& com_name, int baud_rate)

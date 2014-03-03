@@ -24,6 +24,9 @@
 #include "Multiplexer.h"
 #include <NMEALogWindow.h>
 #include <OCPN_DataStreamEvent.h>
+#include <DataStream.h>
+#include <Route.h>
+#include <RoutePoint.h>
 
 #include <global/OCPN.h>
 #include <global/AIS.h>
@@ -37,47 +40,45 @@
 
 #include <wx/gauge.h>
 
+#include <algorithm>
+
 extern PlugInManager* g_pi_manager;
 
 Multiplexer::Multiplexer()
+	: m_aisconsumer(NULL)
+	, m_gpsconsumer(NULL)
 {
-	m_aisconsumer = NULL;
-	m_gpsconsumer = NULL;
 	Connect(wxEVT_OCPN_DATASTREAM,
-			(wxObjectEventFunction)(wxEventFunction) & Multiplexer::OnEvtStream);
-	m_pdatastreams = new wxArrayOfDataStreams();
+			(wxObjectEventFunction)(wxEventFunction) &Multiplexer::OnEvtStream);
 }
 
 Multiplexer::~Multiplexer()
 {
 	ClearStreams();
-	delete m_pdatastreams;
 }
 
 void Multiplexer::AddStream(DataStream* stream)
 {
-	m_pdatastreams->Add(stream);
+	datastreams.push_back(stream);
 }
 
 void Multiplexer::StopAllStreams()
 {
-	for (size_t i = 0; i < m_pdatastreams->Count(); i++) {
-		m_pdatastreams->Item(i)->Close();
-	}
+	for (DataStreams::iterator i = datastreams.begin(); i != datastreams.end(); ++i)
+		(*i)->Close();
 }
 
 void Multiplexer::ClearStreams()
 {
-	for (size_t i = 0; i < m_pdatastreams->Count(); i++) {
-		m_pdatastreams->Item(i)->Close();
-	}
-	m_pdatastreams->Clear();
+	StopAllStreams();
+	// FIXME: delete objects?
+	datastreams.clear();
 }
 
 DataStream* Multiplexer::FindStream(const wxString& port)
 {
-	for (size_t i = 0; i < m_pdatastreams->Count(); i++) {
-		DataStream* stream = m_pdatastreams->Item(i);
+	for (DataStreams::iterator i = datastreams.begin(); i != datastreams.end(); ++i) {
+		DataStream* stream = *i;
 		if (stream && stream->GetPort() == port)
 			return stream;
 	}
@@ -89,10 +90,10 @@ void Multiplexer::StopAndRemoveStream(DataStream* stream)
 	if (stream)
 		stream->Close();
 
-	if (m_pdatastreams) {
-		int index = m_pdatastreams->Index(stream);
-		if (wxNOT_FOUND != index)
-			m_pdatastreams->RemoveAt(index);
+	DataStreams::iterator i = std::find(datastreams.begin(), datastreams.end(), stream);
+	if (i != datastreams.end()) {
+		datastreams.erase(i);
+		// FIXME: delete object?
 	}
 }
 
@@ -123,10 +124,7 @@ void Multiplexer::LogOutputMessage(const wxString& msg, wxString stream_name, bo
 		LogOutputMessageColor(msg, stream_name, _T("<BLUE>"));
 }
 
-void Multiplexer::LogInputMessage(
-		const wxString & msg,
-		const wxString & stream_name,
-		bool b_filter)
+void Multiplexer::LogInputMessage(const wxString& msg, const wxString& stream_name, bool b_filter)
 {
 	if (NMEALogWindow::Get().Active()) {
 		wxDateTime now = wxDateTime::Now();
@@ -147,8 +145,8 @@ void Multiplexer::LogInputMessage(
 void Multiplexer::SendNMEAMessage(const wxString& msg)
 {
 	// Send to all the outputs
-	for (size_t i = 0; i < m_pdatastreams->Count(); i++) {
-		DataStream* s = m_pdatastreams->Item(i);
+	for (DataStreams::iterator i = datastreams.begin(); i != datastreams.end(); ++i) {
+		DataStream* s = *i;
 		if (s->IsOk()
 			&& (s->GetIoSelect() == DS_TYPE_INPUT_OUTPUT || s->GetIoSelect() == DS_TYPE_OUTPUT)) {
 			bool bout_filter = true;
@@ -223,30 +221,30 @@ void Multiplexer::OnEvtStream(OCPN_DataStreamEvent& event)
 			g_pi_manager->SendNMEASentenceToAllPlugIns(message);
 
 		// Send to all the other outputs
-		for (size_t i = 0; i < m_pdatastreams->Count(); i++) {
-			DataStream* s = m_pdatastreams->Item(i);
-			if (s->IsOk()) {
-				if ((s->GetConnectionType() == ConnectionParams::SERIAL)
-					|| (s->GetPort() != port)) {
-					if (s->GetIoSelect() == DS_TYPE_INPUT_OUTPUT || s->GetIoSelect()
-																	== DS_TYPE_OUTPUT) {
-						bool bout_filter = true;
+		for (DataStreams::iterator i = datastreams.begin(); i != datastreams.end(); ++i) {
+			DataStream* s = *i;
+			if (!s->IsOk())
+				continue;
 
-						bool bxmit_ok = true;
-						if (s->SentencePassesFilter(message, ConnectionParams::FILTER_OUTPUT)) {
-							bxmit_ok = s->SendSentence(message);
-							bout_filter = false;
-						}
+			if ((s->GetConnectionType() == ConnectionParams::SERIAL) || (s->GetPort() != port)) {
+				if ((s->GetIoSelect() == DS_TYPE_INPUT_OUTPUT)
+					|| (s->GetIoSelect() == DS_TYPE_OUTPUT)) {
+					bool bout_filter = true;
 
-						// Send to the Debug Window, if open
-						if (!bout_filter) {
-							if (bxmit_ok)
-								LogOutputMessageColor(message, s->GetPort(), _T("<BLUE>"));
-							else
-								LogOutputMessageColor(message, s->GetPort(), _T("<RED>"));
-						} else
-							LogOutputMessageColor(message, s->GetPort(), _T("<AMBER>"));
+					bool bxmit_ok = true;
+					if (s->SentencePassesFilter(message, ConnectionParams::FILTER_OUTPUT)) {
+						bxmit_ok = s->SendSentence(message);
+						bout_filter = false;
 					}
+
+					// Send to the Debug Window, if open
+					if (!bout_filter) {
+						if (bxmit_ok)
+							LogOutputMessageColor(message, s->GetPort(), _T("<BLUE>"));
+						else
+							LogOutputMessageColor(message, s->GetPort(), _T("<RED>"));
+					} else
+						LogOutputMessageColor(message, s->GetPort(), _T("<AMBER>"));
 				}
 			}
 		}
@@ -255,18 +253,19 @@ void Multiplexer::OnEvtStream(OCPN_DataStreamEvent& event)
 
 void Multiplexer::SaveStreamProperties(DataStream* stream)
 {
-	if (stream) {
-		port_save = stream->GetPort();
-		baud_rate_save = stream->GetBaudRate();
-		port_type_save = stream->GetPortType();
-		priority_save = stream->GetPriority();
-		input_sentence_list_save = stream->GetInputSentenceList();
-		input_sentence_list_type_save = stream->GetInputSentenceListType();
-		output_sentence_list_save = stream->GetOutputSentenceList();
-		output_sentence_list_type_save = stream->GetOutputSentenceListType();
-		bchecksum_check_save = stream->GetChecksumCheck();
-		bGarmin_GRMN_mode_save = stream->GetGarminMode();
-	}
+	if (!stream)
+		return;
+
+	port_save = stream->GetPort();
+	baud_rate_save = stream->GetBaudRate();
+	port_type_save = stream->GetPortType();
+	priority_save = stream->GetPriority();
+	input_sentence_list_save = stream->GetInputSentenceList();
+	input_sentence_list_type_save = stream->GetInputSentenceListType();
+	output_sentence_list_save = stream->GetOutputSentenceList();
+	output_sentence_list_type_save = stream->GetOutputSentenceListType();
+	bchecksum_check_save = stream->GetChecksumCheck();
+	bGarmin_GRMN_mode_save = stream->GetGarminMode();
 }
 
 bool Multiplexer::CreateAndRestoreSavedStreamProperties()
@@ -287,6 +286,8 @@ bool Multiplexer::CreateAndRestoreSavedStreamProperties()
 bool Multiplexer::SendRouteToGPS(Route* pr, const wxString& com_name, bool bsend_waypoints,
 								 wxGauge* pProgress)
 {
+	// FIXME: refactoring of method: too long, preprocessor stuff
+
 	bool ret_bool = false;
 	DataStream* old_stream = FindStream(com_name);
 	if (old_stream) {
@@ -334,7 +335,7 @@ bool Multiplexer::SendRouteToGPS(Route* pr, const wxString& com_name, bool bsend
 				ret_bool = true;
 		}
 
-		goto ret_point_1;
+		goto ret_point_1; // FIXME: spaghetti code
 	}
 #endif
 
@@ -394,46 +395,40 @@ bool Multiplexer::SendRouteToGPS(Route* pr, const wxString& com_name, bool bsend
 
 			ret_bool = false;
 			goto ret_point;
-		} else
+		} else {
 			ret_bool = true;
+		}
 
 ret_point:
 
-		if ( pProgress )
-		{
-			pProgress->SetValue ( 100 );
+		if (pProgress) {
+			pProgress->SetValue(100);
 			pProgress->Refresh();
 			pProgress->Update();
 		}
 
-		wxMilliSleep ( 500 );
+		wxMilliSleep(500);
 
-		goto ret_point_1;
-	}
-	else
+			goto ret_point_1;
+	} else
 #endif //USE_GARMINHOST
 
 	{
 		{ // Standard NMEA mode
 
-			//  If the port was temporarily closed, reopen as I/O type
-			//  Otherwise, open another port using default properties
+			// If the port was temporarily closed, reopen as I/O type
+			// Otherwise, open another port using default properties
 			wxString baud;
 
-			if( old_stream ) {
+			if (old_stream) {
 				baud = baud_rate_save;
-			}
-			else {
+			} else {
 				baud = _T("4800");
 			}
 
-			DataStream *dstr = new DataStream( this,
-					com_name,
-					baud,
-					DS_TYPE_INPUT_OUTPUT,
-					0 );
+			DataStream* dstr = new DataStream(this, com_name, baud, DS_TYPE_INPUT_OUTPUT, 0);
 
-			//  Wait up to 1 seconds for Datastream secondary thread to come up
+			// Wait up to 1 seconds for Datastream secondary thread to come up
 			int timeout = 0;
 			while (!dstr->IsSecThreadActive() && (timeout < 10)) {
 				wxMilliSleep(100);
@@ -728,7 +723,7 @@ ret_point:
 
 			ret_bool = true;
 
-			//  All finished with the temp port
+			// All finished with the temp port
 			dstr->Close();
 		}
 	}
@@ -743,6 +738,8 @@ ret_point_1:
 
 bool Multiplexer::SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, wxGauge* pProgress)
 {
+	// FIXME: refactoring of method: too long, preprocessor stuff
+
 	bool ret_bool = false;
 	DataStream* old_stream = FindStream(com_name);
 	if (old_stream) {

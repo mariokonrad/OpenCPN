@@ -24,14 +24,18 @@
 #ifndef __MULTIPLEXER_H__
 #define __MULTIPLEXER_H__
 
-#include <DataStream.h>
-#include <Route.h>
-#include <RoutePoint.h>
+#include <dsPortType.h>
+#include <ConnectionParams.h>
+
+#include <wx/event.h>
+
+#include <vector>
 
 class wxGauge;
 class OCPN_DataStreamEvent;
-
-WX_DEFINE_ARRAY(DataStream*, wxArrayOfDataStreams); // FIXME: replace with std container
+class DataStream;
+class Route;
+class RoutePoint;
 
 class Multiplexer : public wxEvtHandler
 {
@@ -54,14 +58,16 @@ public:
 						wxGauge* pProgress);
 	bool SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, wxGauge* pProgress);
 
-	void OnEvtStream(OCPN_DataStreamEvent& event);
 	void LogOutputMessage(const wxString& msg, wxString stream_name, bool b_filter);
 	void LogOutputMessageColor(const wxString& msg, const wxString& stream_name,
 							   const wxString& color);
 	void LogInputMessage(const wxString& msg, const wxString& stream_name, bool b_filter);
 
 private:
-	wxArrayOfDataStreams* m_pdatastreams;
+	void OnEvtStream(OCPN_DataStreamEvent& event);
+
+	typedef std::vector<DataStream*> DataStreams;
+	DataStreams datastreams;
 
 	wxEvtHandler* m_aisconsumer;
 	wxEvtHandler* m_gpsconsumer;

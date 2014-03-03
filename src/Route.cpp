@@ -588,8 +588,8 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const View
 
 		for (int i = 0; i < 7; i++) {
 			int j = i * 2;
-			double pxa = (double)(s_arrow_icon[j]);
-			double pya = (double)(s_arrow_icon[j + 1]);
+			double pxa = static_cast<double>(s_arrow_icon[j]);
+			double pya = static_cast<double>(s_arrow_icon[j + 1]);
 
 			pya *= icon_scale_factor;
 			pxa *= icon_scale_factor;
@@ -597,8 +597,8 @@ void Route::RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, const View
 			double px = (pxa * sin(theta)) + (pya * cos(theta));
 			double py = (pya * sin(theta)) - (pxa * cos(theta));
 
-			icon[i].x = (int)(px) + xb;
-			icon[i].y = (int)(py) + yb;
+			icon[i].x = static_cast<int>(px) + xb;
+			icon[i].y = static_cast<int>(py) + yb;
 		}
 		wxPen savePen = dc.GetPen();
 		dc.SetPen(*wxTRANSPARENT_PEN);
@@ -936,8 +936,8 @@ void Route::UpdateSegmentDistances(double planspeed)
 							prp0->m_seg_etd = etd;
 						else if (tz.Find(_T("LMT")) != wxNOT_FOUND) {
 							prp0->m_seg_etd = etd;
-							long lmt_offset = (long)((prp0->longitude() * 3600.0) / 15.0);
-							wxTimeSpan lmt(0, 0, (int)lmt_offset, 0);
+							long lmt_offset = static_cast<long>((prp0->longitude() * 3600.0) / 15.0);
+							wxTimeSpan lmt(0, 0, static_cast<int>(lmt_offset), 0);
 							prp0->m_seg_etd -= lmt;
 						} else
 							prp0->m_seg_etd = etd.ToUTC();

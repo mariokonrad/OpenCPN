@@ -29,6 +29,8 @@
 	#include <wx/dcmemory.h>
 #endif
 
+namespace graphics {
+
 // This function can be used to create custom bitmap blending for platforms
 // where 32 bit bitmap ops are broken. Can hopefully be removed for wxWidgets 3.0...
 wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset)
@@ -112,5 +114,7 @@ wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset)
 #endif
 
 	return merged;
+}
+
 }
 

@@ -22,7 +22,8 @@
  **************************************************************************/
 
 #include "Style.h"
-#include <MergeBitmaps.h>
+
+#include <graphics/MergeBitmaps.h>
 
 #include <gui/Icon.h>
 #include <gui/Tool.h>
@@ -241,14 +242,14 @@ wxBitmap Style::GetToolIcon(const wxString& toolname, int iconType, bool rollove
 
 			wxBitmap bm = graphics->GetSubBitmap(location);
 			if (hasBackground) {
-				bm = MergeBitmaps(GetNormalBG(), bm, wxSize(0, 0));
+				bm = graphics::MergeBitmaps(GetNormalBG(), bm, wxSize(0, 0));
 			} else {
 				wxBitmap bg(GetToolSize().x, GetToolSize().y);
 				wxMemoryDC mdc(bg);
 				mdc.SetBackground(wxBrush(global::OCPN::get().color().get_color(_T("GREY2")), wxSOLID));
 				mdc.Clear();
 				mdc.SelectObject(wxNullBitmap);
-				bm = MergeBitmaps(bg, bm, wxSize(0, 0));
+				bm = graphics::MergeBitmaps(bg, bm, wxSize(0, 0));
 			}
 			if (rollover) {
 				tool->rollover = SetBitmapBrightness(bm);
@@ -292,7 +293,7 @@ wxBitmap Style::GetToolIcon(const wxString& toolname, int iconType, bool rollove
 				location.x -= verticalIconOffset.x;
 				location.y -= verticalIconOffset.y;
 			}
-			wxBitmap bm = MergeBitmaps(GetToggledBG(), graphics->GetSubBitmap(location), offset);
+			wxBitmap bm = graphics::MergeBitmaps(GetToggledBG(), graphics->GetSubBitmap(location), offset);
 			if (rollover) {
 				tool->rolloverToggled = SetBitmapBrightness(bm);
 				tool->rolloverToggledLoaded = true;
@@ -317,7 +318,7 @@ wxBitmap Style::GetToolIcon(const wxString& toolname, int iconType, bool rollove
 				location.y -= verticalIconOffset.y;
 			}
 			if (hasBackground) {
-				bm = MergeBitmaps(GetNormalBG(), bm, wxSize(0, 0));
+				bm = graphics::MergeBitmaps(GetNormalBG(), bm, wxSize(0, 0));
 			}
 			tool->disabled = SetBitmapBrightness(bm);
 			tool->disabledLoaded = true;
@@ -343,7 +344,7 @@ wxBitmap Style::BuildPluginIcon(const wxBitmap* bm, int iconType) const
 				wxSize offset
 					= wxSize(bg.GetWidth() - bm->GetWidth(), bg.GetHeight() - bm->GetHeight());
 				offset /= 2;
-				iconbm = MergeBitmaps(bg, *bm, offset);
+				iconbm = graphics::MergeBitmaps(bg, *bm, offset);
 			} else {
 				wxBitmap bg(GetToolSize().x, GetToolSize().y);
 				wxMemoryDC mdc(bg);
@@ -352,12 +353,12 @@ wxBitmap Style::BuildPluginIcon(const wxBitmap* bm, int iconType) const
 				mdc.SetBackground(wxBrush(global::OCPN::get().color().get_color(_T("GREY2")), wxSOLID));
 				mdc.Clear();
 				mdc.SelectObject(wxNullBitmap);
-				iconbm = MergeBitmaps(bg, *bm, offset);
+				iconbm = graphics::MergeBitmaps(bg, *bm, offset);
 			}
 			break;
 
 		case TOOLICON_TOGGLED:
-			iconbm = MergeBitmaps(GetToggledBG(), *bm, wxSize(0, 0));
+			iconbm = graphics::MergeBitmaps(GetToggledBG(), *bm, wxSize(0, 0));
 			break;
 	}
 	return iconbm;

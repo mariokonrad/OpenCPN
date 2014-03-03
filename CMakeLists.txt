@@ -691,6 +691,8 @@ SET(HDRS
 	src/gui/FontDesc.h
 	src/gui/FontManager.h
 
+	src/graphics/MergeBitmaps.h
+
 	src/OCPN_Version.h
 	src/ocpn_pixel.h
 	src/Units.h
@@ -771,7 +773,6 @@ SET(HDRS
 	src/UndoAction.h
 	src/AboutDialog.h
 	src/ProjectionType.h
-	src/MergeBitmaps.h
 	src/ToolBarSimple.h
 	src/ToolTipWin.h
 	src/ToolBarTool.h
@@ -824,6 +825,8 @@ SET(SRCS
 	src/gui/DefaultStyleManager.cpp
 	src/gui/XMLStyleReader.cpp
 	src/gui/FontDesc.cpp
+
+	src/graphics/MergeBitmaps.cpp
 
 	src/OCPN_Version.cpp
 	src/MemoryStatus.cpp
@@ -897,7 +900,6 @@ SET(SRCS
 	src/Undo.cpp
 	src/UndoAction.cpp
 	src/AboutDialog.cpp
-	src/MergeBitmaps.cpp
 	src/ToolBarSimple.cpp
 	src/ToolTipWin.cpp
 	src/ToolBarTool.cpp

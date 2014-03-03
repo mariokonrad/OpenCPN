@@ -21,11 +21,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __MERGEBITMAPS__H__
-#define __MERGEBITMAPS__H__
+#ifndef __GRAPHICS__MERGEBITMAPS__H__
+#define __GRAPHICS__MERGEBITMAPS__H__
 
 #include <wx/bitmap.h>
 
+namespace graphics {
+
 wxBitmap MergeBitmaps(wxBitmap back, wxBitmap front, wxSize offset);
+
+}
 
 #endif

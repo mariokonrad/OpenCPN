@@ -114,6 +114,9 @@ private:
 
 	static bool WptIsInRouteList(const RoutePoint* pr);
 
+	static const double START_LAT;
+	static const double START_LON;
+
 	wxString visibleLayers;
 	wxString invisibleLayers;
 	int navobjbackups;

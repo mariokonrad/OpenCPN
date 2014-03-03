@@ -35,10 +35,6 @@
 #define notdef 1
 
 
-// default starting position
-#define START_LAT   33.358 //  Georgetown, SC (Ver 1.2.4)
-#define START_LON  -79.282
-
 // Windows specific
 #ifdef __WXMSW__
     #include "wx/msw/private.h"

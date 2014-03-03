@@ -78,6 +78,10 @@ extern chart::ChartGroupArray* g_pGroupArray;
 extern chart::s52plib* ps52plib;
 #endif
 
+// default starting position: Georgetown, SC (Ver 1.2.4)
+const double Config::START_LAT =  33.358;
+const double Config::START_LON = -79.282;
+
 Config::Config(
 		const wxString& appName,
 		const wxString& vendorName,

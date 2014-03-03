@@ -24,10 +24,7 @@
 #ifndef __DYCHART__H__
 #define __DYCHART__H__
 
-// Windows specific
-#ifdef __WXMSW__
-    #include "wx/msw/private.h"
-#endif
+#include <wx/wx.h>
 
 #ifdef __MSVC__66
         #ifdef _DEBUG

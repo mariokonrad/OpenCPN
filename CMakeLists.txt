@@ -708,7 +708,6 @@ SET(HDRS
 	src/ocpnDC.h
 	src/App.h
 	src/UserColors.h
-	src/X11FontPicker.h
 	src/StatusBar.h
 	src/OCPNMemDC.h
 	src/OCPNBitmap.h
@@ -836,7 +835,6 @@ SET(SRCS
 	src/AnnunText.cpp
 	src/CDI.cpp
 	src/MyPrintout.cpp
-	src/X11FontPicker.cpp
 	src/ocpn_pixel.cpp
 	src/OCPNMemDC.cpp
 	src/OCPNBitmap.cpp
@@ -1138,6 +1136,13 @@ if(WIN32)
 		${CMAKE_CURRENT_BINARY_DIR}/src/opencpn.rc
 		)
 endif(WIN32)
+
+if(UNIX)
+	set(SRCS ${SRCS}
+		src/linux/X11FontPicker.cpp
+		src/linux/X11FontPicker.h
+		)
+endif()
 
 # Various data files
 set(gshhs

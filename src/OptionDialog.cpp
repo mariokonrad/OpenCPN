@@ -31,7 +31,7 @@
 #include <wx/dirdlg.h>
 
 #if defined(__WXX11__)
-	#include "X11FontPicker.h"
+	#include <linux/X11FontPicker.h>
 #else
 	#include <wx/fontdlg.h>
 #endif

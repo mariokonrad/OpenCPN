@@ -25,8 +25,6 @@
 #include <NMEALogWindow.h>
 #include <OCPN_DataStreamEvent.h>
 #include <DataStream.h>
-#include <Route.h>
-#include <RoutePoint.h>
 
 #include <global/OCPN.h>
 #include <global/AIS.h>

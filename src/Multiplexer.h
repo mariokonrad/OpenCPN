@@ -26,6 +26,8 @@
 
 #include <dsPortType.h>
 #include <ConnectionParams.h>
+#include <Route.h>
+#include <RoutePoint.h>
 
 #include <wx/event.h>
 
@@ -34,8 +36,6 @@
 class wxGauge;
 class OCPN_DataStreamEvent;
 class DataStream;
-class Route;
-class RoutePoint;
 
 class Multiplexer : public wxEvtHandler
 {

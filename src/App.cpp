@@ -268,6 +268,7 @@ END_EVENT_TABLE()
 App::App()
 	: gui_instance(NULL)
 	, nav_instance(NULL)
+	, ais_instance(NULL)
 	, wdt_instance(NULL)
 	, sys_instance(NULL)
 	, run_instance(NULL)
@@ -285,6 +286,7 @@ App::App()
 	, old_logger(NULL)
 	, file_log(NULL)
 	, win_console(false)
+	, m_checker(NULL)
 {
 }
 
@@ -1759,7 +1761,7 @@ bool App::OnInit()
 	// So we set a trigger to generate a resize after 5 seconds....
 	// See the "UniChrome" hack elsewhere
 	if (!view.disable_opengl) {
-		glChartCanvas* pgl = (glChartCanvas*)cc1->GetglCanvas();
+		glChartCanvas* pgl = static_cast<glChartCanvas*>(cc1->GetglCanvas());
 		if (pgl && (pgl->GetRendererString().Find(_T("UniChrome")) != wxNOT_FOUND)) {
 			gFrame->m_defer_size = gFrame->GetSize();
 			gFrame->SetSize(gFrame->m_defer_size.x - 10, gFrame->m_defer_size.y);
@@ -1842,12 +1844,8 @@ int App::OnExit()
 #endif
 
 	delete g_pauimgr;
-
 	delete plocale_def_lang;
-
-#ifdef __WXMSW__
 	delete m_checker;
-#endif
 
 #ifdef OCPN_USE_CRASHRPT
 #ifndef _DEBUG

@@ -73,8 +73,6 @@ public:
 	bool OnCmdLineParsed(wxCmdLineParser& parser);
 	void OnActivateApp(wxActivateEvent& event);
 
-	wxSingleInstanceChecker* m_checker;
-
 private:
 	void inject_global_instances();
 	void establish_home_location();
@@ -120,6 +118,7 @@ private:
 	FILE* file_log;
 
 	bool win_console;
+	wxSingleInstanceChecker* m_checker;
 };
 
 #endif

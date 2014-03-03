@@ -45,49 +45,42 @@ class wxTextCtrl;
 
 class AboutDialog : public wxDialog
 {
-		DECLARE_DYNAMIC_CLASS(AboutDialog)
-		DECLARE_EVENT_TABLE()
+	DECLARE_DYNAMIC_CLASS(AboutDialog)
+	DECLARE_EVENT_TABLE()
 
-	public:
-		AboutDialog();
-		AboutDialog(
-				wxWindow * parent,
-				const wxString & license_data_Locn,
-				wxWindowID id = ID_DIALOG,
-				const wxString & caption = SYMBOL_ABOUT_TITLE,
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxSize(500, 500),
+public:
+	AboutDialog();
+	AboutDialog(wxWindow* parent, const wxString& license_data_Locn, wxWindowID id = ID_DIALOG,
+				const wxString& caption = SYMBOL_ABOUT_TITLE,
+				const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500, 500),
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	void Update();
 
-		bool Create(
-				wxWindow* parent,
-				wxWindowID id = ID_DIALOG,
-				const wxString & caption = SYMBOL_ABOUT_TITLE,
-				const wxPoint & pos = wxDefaultPosition,
-				const wxSize & size = wxSize(500, 500),
+private:
+	bool Create(wxWindow* parent, wxWindowID id = ID_DIALOG,
+				const wxString& caption = SYMBOL_ABOUT_TITLE,
+				const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500, 500),
 				long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	void CreateControls();
+	void OnXidOkClick(wxCommandEvent& event);
+	void OnPageChange(wxNotebookEvent& event);
+	void OnDonateClick(wxCommandEvent& event);
+	void OnCopyClick(wxCommandEvent& event);
 
-		void CreateControls();
-		void OnXidOkClick( wxCommandEvent& event );
-		void OnPageChange(wxNotebookEvent& event);
-		void OnDonateClick( wxCommandEvent& event );
-		void OnCopyClick( wxCommandEvent& event );
-		void Update();
+	wxWindow* m_parent;
+	wxString m_dataLocn;
+	wxHtmlWindow* m_ptips_window;
+	bool m_btips_loaded;
 
-		wxWindow * m_parent;
-		wxString m_dataLocn;
-		wxHtmlWindow * m_ptips_window;
-		bool m_btips_loaded;
+	wxPanel* itemPanelAbout;
+	wxPanel* itemPanelAuthors;
+	wxPanel* itemPanelLicense;
+	wxPanel* itemPanelTips;
 
-		wxPanel * itemPanelAbout;
-		wxPanel * itemPanelAuthors;
-		wxPanel * itemPanelLicense;
-		wxPanel * itemPanelTips;
-
-		wxTextCtrl * pAboutTextCtl;
-		wxTextCtrl * pAuthorTextCtl;
-		wxTextCtrl * pLicenseTextCtl;
-		wxNotebook * pNotebook;
+	wxTextCtrl* pAboutTextCtl;
+	wxTextCtrl* pAuthorTextCtl;
+	wxTextCtrl* pLicenseTextCtl;
+	wxNotebook* pNotebook;
 };
 
 #endif

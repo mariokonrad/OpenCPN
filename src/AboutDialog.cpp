@@ -147,18 +147,34 @@ END_EVENT_TABLE()
 
 AboutDialog::AboutDialog()
 	: m_parent(NULL)
+	, m_dataLocn(wxEmptyString)
+	, m_ptips_window(NULL)
+	, m_btips_loaded(false)
+	, itemPanelAbout(NULL)
+	, itemPanelAuthors(NULL)
+	, itemPanelLicense(NULL)
+	, itemPanelTips(NULL)
+	, pAboutTextCtl(NULL)
+	, pAuthorTextCtl(NULL)
+	, pLicenseTextCtl(NULL)
+	, pNotebook(NULL)
 {}
 
-AboutDialog::AboutDialog(
-		wxWindow * parent,
-		const wxString & license_data_Locn,
-		wxWindowID id,
-		const wxString & caption,
-		const wxPoint & pos,
-		const wxSize & size,
-		long style)
+AboutDialog::AboutDialog(wxWindow* parent, const wxString& license_data_Locn, wxWindowID id,
+						 const wxString& caption, const wxPoint& pos, const wxSize& size,
+						 long style)
 	: m_parent(parent)
 	, m_dataLocn(license_data_Locn)
+	, m_ptips_window(NULL)
+	, m_btips_loaded(false)
+	, itemPanelAbout(NULL)
+	, itemPanelAuthors(NULL)
+	, itemPanelLicense(NULL)
+	, itemPanelTips(NULL)
+	, pAboutTextCtl(NULL)
+	, pAuthorTextCtl(NULL)
+	, pLicenseTextCtl(NULL)
+	, pNotebook(NULL)
 {
 #ifdef __WXOSX__
 	style |= wxSTAY_ON_TOP;
@@ -166,14 +182,8 @@ AboutDialog::AboutDialog(
 	Create(parent, id, caption, pos, size, style);
 }
 
-
-bool AboutDialog::Create(
-		wxWindow * parent,
-		wxWindowID id,
-		const wxString & caption,
-		const wxPoint & pos,
-		const wxSize & size,
-		long style)
+bool AboutDialog::Create(wxWindow* parent, wxWindowID id, const wxString& caption,
+						 const wxPoint& pos, const wxSize& size, long style)
 {
 	SetExtraStyle(GetExtraStyle() | wxWS_EX_BLOCK_EVENTS);
 	wxDialog::Create(parent, id, caption, pos, size, style);

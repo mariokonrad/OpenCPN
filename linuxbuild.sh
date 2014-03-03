@@ -160,6 +160,13 @@ function exec_cppcheck()
 		--platform=unix64 \
 		--language=c++ \
 		--force \
+		-DocpnUSE_GL \
+		-D__WXGTK__ \
+		-D__POSIX__ \
+		-U__WXMSW__ \
+		-U__WXX11__ \
+		-U__WXOSX__ \
+		-U__WXMAC__ \
 		$(find src -name "*.cpp" -o -name "*.h" -type f)
 }
 

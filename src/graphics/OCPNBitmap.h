@@ -21,13 +21,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPNBITMAP__H__
-#define __OCPNBITMAP__H__
+#ifndef __GRAPHICS__OCPNBITMAP__H__
+#define __GRAPHICS__OCPNBITMAP__H__
 
+#include <graphics/ocpn_pixel.h>
 #include <wx/bitmap.h>
-#include "ocpn_pixel.h"
 
 class wxImage;
+
+namespace graphics {
 
 /// Derived from wxBitmap
 ///
@@ -76,5 +78,7 @@ class OCPNBitmap : public wxBitmap // TODO: right now, this class is never used 
 		bool CreateFromocpnXImage(ocpnXImage * poXI, int width, int height, int depth);
 #endif
 };
+
+}
 
 #endif

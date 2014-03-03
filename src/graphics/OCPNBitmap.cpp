@@ -28,8 +28,9 @@
 
 #define M_BMPDATA wx_static_cast(wxBitmapRefData*, m_refData)
 
-IMPLEMENT_DYNAMIC_CLASS(OCPNBitmap, wxBitmap)
+namespace graphics {
 
+IMPLEMENT_DYNAMIC_CLASS(OCPNBitmap, wxBitmap)
 
 OCPNBitmap::OCPNBitmap()
 {
@@ -102,7 +103,7 @@ bool OCPNBitmap::CreateFromData( void *pPix, int width, int height, int depth )
 
 	XImage *img = NULL;
 
-	//    Do some basic setup in the parent wxBitmap class
+	// Do some basic setup in the parent wxBitmap class
 	Create(width, height, -1);
 
 	Display *xdisplay = (Display *)GetDisplay();
@@ -110,13 +111,14 @@ bool OCPNBitmap::CreateFromData( void *pPix, int width, int height, int depth )
 	ocpnXImage *pXI = new ocpnXImage(width, height);
 	img = pXI->m_img;
 
-	//    Faster render from a 24 or 32 bit pixel buffer
+	// Faster render from a 24 or 32 bit pixel buffer
 
 	if((pPix != NULL ) && (NULL != img))
 	{
 		unsigned char* data = (unsigned char *)pPix;
-		if(depth == 32)                          // special fast case
+		if(depth == 32)
 		{
+// special fast case
 			for (int y = 0; y < height; y++)
 			{
 				char *pd = img->data + (y * img->bytes_per_line);
@@ -531,6 +533,8 @@ bool OCPNBitmap::CreateFromImage( const wxImage& image, int depth )
 	return TRUE;
 }
 #endif // __WXMSW__
+
+}
 
 #endif
 

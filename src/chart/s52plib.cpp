@@ -23,7 +23,8 @@
 
 #include "s52plib.h"
 #include <dychart.h>
-#include <ocpn_pixel.h>
+
+#include <graphics/ocpn_pixel.h>
 
 #include <util/crc32.h>
 

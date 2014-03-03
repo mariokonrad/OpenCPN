@@ -23,6 +23,17 @@
 
 #include "ChartBaseBSB.h"
 
+#include <sys/stat.h>
+
+#include <chart/PlyPoint.h>
+
+#include <windows/compatibility.h>
+
+#include <graphics/OCPNBitmap.h>
+#include <graphics/ocpn_pixel.h>
+
+#include <OCPNRegionIterator.h>
+
 #include <wx/dir.h>
 #include <wx/stream.h>
 #include <wx/wfstream.h>
@@ -31,16 +42,6 @@
 #include <wx/image.h>
 #include <wx/fileconf.h>
 #include <wx/log.h>
-
-#include <sys/stat.h>
-
-#include <chart/PlyPoint.h>
-
-#include <windows/compatibility.h>
-
-#include <ocpn_pixel.h>
-#include <OCPNRegionIterator.h>
-#include <OCPNBitmap.h>
 
 #include <algorithm>
 
@@ -810,7 +811,7 @@ wxBitmap* ChartBaseBSB::CreateThumbnail(int tnx, int tny, global::ColorScheme cs
 	wxBitmap* retBMP;
 
 #ifdef ocpnUSE_ocpnBitmap
-	wxBitmap* bmx2 = new OCPNBitmap(pPixTN, des_width, des_height, -1);
+	wxBitmap* bmx2 = new graphics::OCPNBitmap(pPixTN, des_width, des_height, -1);
 	wxImage imgx2 = bmx2->ConvertToImage();
 	imgx2.Rescale(des_width / 4, des_height / 4, wxIMAGE_QUALITY_HIGH);
 	retBMP = new wxBitmap(imgx2);
@@ -1677,10 +1678,10 @@ bool ChartBaseBSB::RenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 	if (pPixCache) {
 		if ((pPixCache->GetWidth() != dest.width) || (pPixCache->GetHeight() != dest.height)) {
 			delete pPixCache;
-			pPixCache = new PixelCache(dest.width, dest.height, BPP);
+			pPixCache = new graphics::PixelCache(dest.width, dest.height, BPP);
 		}
 	} else
-		pPixCache = new PixelCache(dest.width, dest.height, BPP);
+		pPixCache = new graphics::PixelCache(dest.width, dest.height, BPP);
 
 	m_cached_scale_ppm = VPoint.view_scale();
 	m_last_vprect = dest;
@@ -2394,11 +2395,11 @@ int* ChartBaseBSB::GetPalettePtr(BSB_Color_Capability color_index)
 PaletteDir ChartBaseBSB::GetPaletteDir(void)
 {
 	// make a pixel cache
-	PixelCache* pc = new PixelCache(4, 4, BPP);
-	RGBO r = pc->GetRGBO();
+	graphics::PixelCache* pc = new graphics::PixelCache(4, 4, BPP);
+	graphics::RGBO r = pc->GetRGBO();
 	delete pc;
 
-	if (r == RGB)
+	if (r == graphics::RGB)
 		return PaletteFwd;
 	else
 		return PaletteRev;

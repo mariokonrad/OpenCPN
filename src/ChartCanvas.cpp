@@ -44,7 +44,6 @@
 #include <RouteProp.h>
 #include <MarkInfo.h>
 #include <TrackPropDlg.h>
-#include <ocpn_pixel.h>
 #include <Undo.h>
 #include <Multiplexer.h>
 #include <timers.h>
@@ -57,7 +56,6 @@
 #include <FloatingCompassWindow.h>
 #include <S57QueryDialog.h>
 #include <OCPNFloatingToolbarDialog.h>
-#include <OCPNMemDC.h>
 #include <EmbossData.h>
 #include <TCWin.h>
 #include <StatusBar.h>
@@ -66,6 +64,9 @@
 #include <Layer.h>
 #include <PositionConvert.h>
 #include <Units.h>
+
+#include <graphics/ocpn_pixel.h>
+#include <graphics/OCPNMemDC.h>
 
 #include <gui/FontManager.h>
 #include <gui/StyleManager.h>
@@ -8105,7 +8106,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	geo::BoundingBox BltBBox;
 
 #ifdef ocpnUSE_DIBSECTION
-	OCPNMemDC temp_dc;
+	graphics::OCPNMemDC temp_dc;
 #else
 	wxMemoryDC temp_dc;
 #endif
@@ -8354,9 +8355,9 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 
 				m_b_rot_hidef = false;
 
-				ri = Image_Rotate(base_image, angle,
-								  wxPoint(GetVP().rv_rect.width / 2, GetVP().rv_rect.height / 2),
-								  m_b_rot_hidef, &m_roffset);
+				ri = graphics::Image_Rotate(base_image, angle, wxPoint(GetVP().rv_rect.width / 2,
+																	   GetVP().rv_rect.height / 2),
+											m_b_rot_hidef, &m_roffset);
 
 				if ((rot_vp.view_scale() == VPoint.view_scale())
 					&& (rot_vp.rotation == VPoint.rotation) && (rot_vp.latitude() == VPoint.latitude())
@@ -8425,7 +8426,7 @@ void ChartCanvas::OnPaint(wxPaintEvent&)
 	// quiting?
 	if (g_bquiting) {
 #ifdef ocpnUSE_DIBSECTION
-		OCPNMemDC q_dc;
+		graphics::OCPNMemDC q_dc;
 #else
 		wxMemoryDC q_dc;
 #endif

@@ -22,9 +22,13 @@
  **************************************************************************/
 
 #include "S57Chart.h"
-
-#include <geo/GeoRef.h>
-#include <geo/Polygon.h>
+#include <dychart.h>
+#include <ocpnDC.h>
+#include <OCPNRegionIterator.h>
+#include <MessageBox.h>
+#include <ChartCanvas.h>
+#include <LogMessageOnce.h>
+#include <PositionConvert.h>
 
 #include <chart/geometry/PolyTessGeo.h>
 #include <chart/geometry/PolyTessGeoTrap.h>
@@ -32,32 +36,28 @@
 #include <chart/geometry/PolyTriGroup.h>
 #include <chart/geometry/PolyTrapGroup.h>
 
+#include <windows/compatibility.h>
+
 #include <chart/s52utils.h>
 #include <chart/s52plib.h>
 #include <chart/S57Light.h>
+
+#include <geo/GeoRef.h>
+#include <geo/Polygon.h>
+
+#include <graphics/ocpn_pixel.h>
+#include <graphics/OCPNBitmap.h>
+#include <graphics/OCPNMemDC.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>
 #include <global/GUI.h>
 #include <global/ColorManager.h>
 
-#include <windows/compatibility.h>
+#include <cpl_csv.h>
+#include <setjmp.h>
 
-#include <dychart.h>
-#include <ocpn_pixel.h>
-#include <ocpnDC.h>
-#include <OCPNRegionIterator.h>
-#include <OCPNMemDC.h>
-#include <OCPNBitmap.h>
-#include <MessageBox.h>
-#include <ChartCanvas.h>
-#include <LogMessageOnce.h>
-#include <PositionConvert.h>
-
-#include "cpl_csv.h"
-#include "setjmp.h"
-
-#include "mygdal/ogr_s57.h"
+#include <mygdal/ogr_s57.h>
 
 #include <wx/image.h>
 #include <wx/tokenzr.h>
@@ -1916,9 +1916,11 @@ bool s57chart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 		dc_clone.SelectObject(*m_pCloneBM);
 
 #ifdef ocpnUSE_DIBSECTION
-		OCPNMemDC memdc, dc_org;
+		graphics::OCPNMemDC memdc;
+		graphics::OCPNMemDC dc_org;
 #else
-		wxMemoryDC memdc, dc_org;
+		wxMemoryDC memdc;
+		wxMemoryDC dc_org;
 #endif
 
 		pDIB->SelectIntoDC(dc_org);
@@ -2098,11 +2100,11 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 			desy = -rul.y;
 		}
 
-		OCPNMemDC dc_last;
+		graphics::OCPNMemDC dc_last;
 		pDIB->SelectIntoDC(dc_last);
 
-		OCPNMemDC dc_new;
-		PixelCache* pDIBNew = new PixelCache(VPoint.pix_width, VPoint.pix_height, BPP);
+		graphics::OCPNMemDC dc_new;
+		graphics::PixelCache* pDIBNew = new graphics::PixelCache(VPoint.pix_width, VPoint.pix_height, BPP);
 		pDIBNew->SelectIntoDC(dc_new);
 
 		dc_new.Blit(desx, desy, wu, hu, (wxDC*)&dc_last, srcx, srcy, wxCOPY);
@@ -2170,7 +2172,7 @@ bool s57chart::DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint,
 
 	} else if (bNewVP || (NULL == pDIB)) {
 		delete pDIB;
-		pDIB = new PixelCache(VPoint.pix_width, VPoint.pix_height, BPP); // destination
+		pDIB = new graphics::PixelCache(VPoint.pix_width, VPoint.pix_height, BPP); // destination
 
 		wxRect full_rect(0, 0, VPoint.pix_width, VPoint.pix_height);
 		pDIB->SelectIntoDC(dc);
@@ -2261,8 +2263,8 @@ int s57chart::DCRenderRect(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* rect
 
 // Convert the Private render canvas into a bitmap
 #ifdef ocpnUSE_ocpnBitmap
-	OCPNBitmap* pREN
-		= new OCPNBitmap(pb_spec.pix_buff, pb_spec.width, pb_spec.height, pb_spec.depth);
+	graphics::OCPNBitmap* pREN
+		= new graphics::OCPNBitmap(pb_spec.pix_buff, pb_spec.width, pb_spec.height, pb_spec.depth);
 #else
 	wxImage* prender_image = new wxImage(pb_spec.width, pb_spec.height, false);
 	prender_image->SetData((unsigned char*)pb_spec.pix_buff);
@@ -2645,7 +2647,7 @@ InitReturn s57chart::PostInit(ChartInitFlag, global::ColorScheme cs)
 	if (ThumbFileName.FileExists()) {
 		wxBitmap* pBMP_NEW;
 #ifdef ocpnUSE_ocpnBitmap
-		pBMP_NEW = new OCPNBitmap;
+		pBMP_NEW = new graphics::OCPNBitmap;
 #else
 		pBMP_NEW = new wxBitmap;
 #endif
@@ -2813,9 +2815,11 @@ bool s57chart::BuildThumbnail(const wxString& bmpname)
 	ps52plib->m_nDisplayCategory = MARINERS_STANDARD;
 
 #ifdef ocpnUSE_DIBSECTION
-	OCPNMemDC memdc, dc_org;
+	graphics::OCPNMemDC memdc;
+	graphics::OCPNMemDC dc_org;
 #else
-	wxMemoryDC memdc, dc_org;
+	wxMemoryDC memdc;
+	wxMemoryDC dc_org;
 #endif
 
 	// set the color scheme

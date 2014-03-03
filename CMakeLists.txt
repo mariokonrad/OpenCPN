@@ -692,9 +692,11 @@ SET(HDRS
 	src/gui/FontManager.h
 
 	src/graphics/MergeBitmaps.h
+	src/graphics/OCPNBitmap.h
+	src/graphics/ocpn_pixel.h
+	src/graphics/OCPNMemDC.h
 
 	src/OCPN_Version.h
-	src/ocpn_pixel.h
 	src/Units.h
 	src/DataStream.h
 	src/Config.h
@@ -711,8 +713,6 @@ SET(HDRS
 	src/App.h
 	src/UserColors.h
 	src/StatusBar.h
-	src/OCPNMemDC.h
-	src/OCPNBitmap.h
 	src/TimedPopupWin.h
 	src/AnnunText.h
 	src/CDI.h
@@ -827,6 +827,9 @@ SET(SRCS
 	src/gui/FontDesc.cpp
 
 	src/graphics/MergeBitmaps.cpp
+	src/graphics/OCPNBitmap.cpp
+	src/graphics/ocpn_pixel.cpp
+	src/graphics/OCPNMemDC.cpp
 
 	src/OCPN_Version.cpp
 	src/MemoryStatus.cpp
@@ -838,9 +841,6 @@ SET(SRCS
 	src/AnnunText.cpp
 	src/CDI.cpp
 	src/MyPrintout.cpp
-	src/ocpn_pixel.cpp
-	src/OCPNMemDC.cpp
-	src/OCPNBitmap.cpp
 	src/ocpnDC.cpp
 	src/DimeControl.cpp
 	src/ChartCanvas.cpp

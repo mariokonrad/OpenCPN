@@ -33,9 +33,6 @@
 #include <wx/wfstream.h>
 #include <wx/dynarray.h>
 
-#include <vector>
-#include <list>
-
 #include <ogrsf_frmts.h>
 #include "iso8211.h"
 #include "gdal.h"
@@ -47,11 +44,15 @@
 #include <chart/S57Sector.h>
 #include <chart/ChartBase.h>
 
+#include <vector>
+#include <list>
+
 class ocpnBitmap;
-class PixelCache;
 class OGRS57DataSource;
 class ocpnDC;
 class S57Reader;
+
+namespace graphics { class PixelCache; }
 
 namespace chart {
 
@@ -262,7 +263,7 @@ private:
 	ObjRazRules* razRules[PRIO_NUM][LUPNAME_NUM];
 
 	wxArrayString* m_tmpup_array;
-	PixelCache* pDIB;
+	graphics::PixelCache* pDIB;
 
 	wxBitmap* m_pCloneBM;
 	wxMask* m_pMask;

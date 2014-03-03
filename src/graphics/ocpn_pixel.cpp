@@ -35,16 +35,8 @@
  * Brian Paul  Sep, 20, 1995  brianp@ssec.wisc.edu
  */
 
-// For compilers that support precompilation, includes "wx.h".
-#include "wx/wxprec.h"
-#ifndef WX_PRECOMP
-#include "wx/wx.h"
-#endif
-
-
 #include "ocpn_pixel.h"
-#include "dychart.h"
-#include "OCPNMemDC.h"
+#include <graphics/OCPNMemDC.h>
 
 #ifndef WX_PRECOMP
 #include <stdio.h>
@@ -90,7 +82,10 @@
 
 extern unsigned int malloc_max;
 
+namespace graphics {
+
 #ifdef  __WXX11__
+
 
 #ifdef ocpUSE_MITSHM
 /*
@@ -688,5 +683,7 @@ wxImage Image_Rotate(wxImage& base_image, double angle, const wxPoint& centre_of
 		delete[] alpha;
 
 	return rotated;
+}
+
 }
 

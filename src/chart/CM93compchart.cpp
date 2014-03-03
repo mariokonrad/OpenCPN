@@ -841,7 +841,7 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 				// This chart scale does not fully cover the region
 // Render the target scale chart on a temp dc for safekeeping
 #ifdef ocpnUSE_DIBSECTION
-				OCPNMemDC temp_dc;
+				graphics::OCPNMemDC temp_dc;
 #else
 				wxMemoryDC temp_dc;
 #endif
@@ -866,7 +866,7 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 
 // Clear the quilt
 #ifdef ocpnUSE_DIBSECTION
-				OCPNMemDC dumm_dc;
+				graphics::OCPNMemDC dumm_dc;
 #else
 				wxMemoryDC dumm_dc;
 #endif
@@ -883,7 +883,7 @@ bool cm93compchart::DoRenderRegionViewOnDC(wxMemoryDC& dc, const ViewPort& VPoin
 					cmscale_next--;
 					m_cmscale = PrepareChartScale(vp_positive, cmscale_next);
 #ifdef ocpnUSE_DIBSECTION
-					OCPNMemDC build_dc;
+					graphics::OCPNMemDC build_dc;
 #else
 					wxMemoryDC build_dc;
 #endif

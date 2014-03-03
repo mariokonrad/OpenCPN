@@ -27,12 +27,13 @@
 #include <MessageBox.h>
 #include <ViewPort.h>
 #include <PositionConvert.h>
-#include <ocpn_pixel.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
 #include <global/System.h>
 #include <global/ColorManager.h>
+
+#include <graphics/ocpn_pixel.h>
 
 #include <geo/GeoRef.h>
 

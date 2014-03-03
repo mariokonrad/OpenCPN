@@ -22,10 +22,10 @@
  **************************************************************************/
 
 #include "Quilt.h"
-#include <ocpn_pixel.h>
 #include <OCPNRegionIterator.h>
-
 #include <ChartCanvas.h>
+
+#include <graphics/ocpn_pixel.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>
@@ -38,7 +38,7 @@
 #include <algorithm>
 
 #ifdef ocpnUSE_DIBSECTION
-	#include "OCPNMemDC.h"
+	#include <graphics/OCPNMemDC.h>
 #endif
 
 extern std::vector<int> g_quilt_noshow_index_array;
@@ -1830,7 +1830,7 @@ void Quilt::ComputeRenderRegion(const ViewPort& vp, OCPNRegion& chart_region)
 bool Quilt::RenderQuiltRegionViewOnDC(wxMemoryDC& dc, const ViewPort& vp, OCPNRegion& chart_region)
 {
 #ifdef ocpnUSE_DIBSECTION
-	OCPNMemDC tmp_dc;
+	graphics::OCPNMemDC tmp_dc;
 #else
 	wxMemoryDC tmp_dc;
 #endif

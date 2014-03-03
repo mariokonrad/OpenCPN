@@ -24,11 +24,11 @@
 #ifndef __CHART__CHARTIMG__H__
 #define __CHART__CHARTIMG__H__
 
-#include <chart/ChartBase.h>
-#include <chart/Refpoint.h>
-
 #include <OCPNRegion.h>
 #include <ViewPort.h>
+
+#include <chart/ChartBase.h>
+#include <chart/Refpoint.h>
 
 #include <geo/GeoRef.h>
 
@@ -39,7 +39,7 @@ class wxBufferedInputStream;
 class wxFileInputStream;
 class wxImage;
 
-class PixelCache;
+namespace graphics { class PixelCache; }
 
 namespace chart {
 
@@ -179,7 +179,7 @@ protected:
 	InitReturn PreInit(const wxString& name, ChartInitFlag init_flags, global::ColorScheme cs);
 	InitReturn PostInit(void);
 
-	PixelCache* pPixCache;
+	graphics::PixelCache* pPixCache;
 
 	int Size_X; // Chart native pixel dimensions
 	int Size_Y;

@@ -23,12 +23,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef _OCPN_PIXEL_H_
-#define _OCPN_PIXEL_H_
+#ifndef __GRAPHICS__OCPN_PIXEL__H__
+#define __GRAPHICS__OCPN_PIXEL__H__
 
-#include "dychart.h"
+#include <dychart.h>
 
 #include <wx/image.h>
+
+namespace graphics {
 
 wxImage Image_Rotate(
 		wxImage & base_image,
@@ -37,6 +39,7 @@ wxImage Image_Rotate(
 		bool interpolating,
 		wxPoint * offset_after_rotation);
 
+}
 
 // Specify the Pixel Cache type
 // Only one of the following must be selected
@@ -127,14 +130,15 @@ wxImage Image_Rotate(
 
 #include <wx/dcmemory.h>
 
+namespace graphics {
+
+class OCPNBitmap;
+
 enum RGBO
 {
 	RGB = 0,
 	BGR
 };
-
-class OCPNBitmap;
-
 
 
 #ifdef __PIX_CACHE_X11IMAGE__
@@ -211,6 +215,7 @@ class PixelCache
 #endif
 };
 
+}
 
 #ifdef ocpnUSE_ocpnBitmap
 	#ifdef __WXMSW__

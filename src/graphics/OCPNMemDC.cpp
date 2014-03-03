@@ -21,31 +21,53 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPNMEMDC__H__
-#define __OCPNMEMDC__H__
+#include "OCPNMemDC.h"
 
-#include <wx/dcmemory.h>
-#include "ocpn_pixel.h"
+namespace graphics {
 
-class OCPNMemDC : public wxMemoryDC
+IMPLEMENT_DYNAMIC_CLASS(OCPNMemDC, wxMemoryDC)
+
+OCPNMemDC::OCPNMemDC()
 {
-		DECLARE_DYNAMIC_CLASS(OCPNMemDC)
+}
 
-	public:
-		OCPNMemDC();
-
-		// Satisfy wxX11 2.8.0
-		void SelectObject(wxBitmap& bitmap){wxMemoryDC::SelectObject(bitmap);}
-
-		// Add a method to select a DIB section directly into the DC
-#ifdef ocpnUSE_DIBSECTION
-		void SelectObject(wxDIB & dib);
-#endif
 
 #ifdef ocpnUSE_DIBSECTION
-	private:
-		wxDIB * m_pselectedDIB;
-#endif
-};
+void OCPNMemDC::SelectObject(wxDIB& dib)
+{
+	// select old bitmap out of the device context
+	if ( m_oldBitmap )
+	{
+		::SelectObject(GetHdc(), (HBITMAP) m_oldBitmap);
+		if ( m_selectedBitmap.Ok() )
+		{
+			m_selectedBitmap = wxNullBitmap;
+		}
+	}
+
+	// check for whether the bitmap is already selected into a device context
+	//    wxASSERT_MSG( !bitmap.GetSelectedInto() ||
+	//                  (bitmap.GetSelectedInto() == this),
+	//                  wxT("Bitmap is selected in another wxMemoryDC, delete the first wxMemoryDC or use SelectObject(NULL)") );
+
+	m_pselectedDIB = &dib;
+	HBITMAP hDIB = m_pselectedDIB->GetHandle();
+	if ( !hDIB)
+		return; // already selected
+
+
+	hDIB = (HBITMAP)::SelectObject(GetHdc(), hDIB);
+
+	if ( !hDIB )
+	{
+		wxLogLastError(wxT("SelectObject(OCPNMemDC, DIB)"));
+		wxFAIL_MSG(wxT("Couldn't select a DIB into OCPNMemDC"));
+	} else if (!m_oldBitmap) {
+		m_oldBitmap = hDIB;
+	}
+}
 
 #endif
+
+}
+

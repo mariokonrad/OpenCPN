@@ -50,6 +50,17 @@ public:
 		wxString guid;
 	};
 
+	// Route segment to the current routepoint.
+	class Segment
+	{
+	public:
+		Segment();
+
+		double length; // length of the segment in nautical miles
+		double vmg;
+		wxDateTime etd; // estimated time to destination
+	};
+
 public:
 	RoutePoint(const geo::Position& pos, const wxString& icon_ident, const wxString& name,
 			   const wxString& pGUID = _T(""), bool bAddToList = true);
@@ -127,9 +138,7 @@ public:
 
 	// FIXME: move attributes to private
 
-	double m_seg_len; // length in NMI to this point, undefined for starting point
-	double m_seg_vmg;
-	wxDateTime m_seg_etd;
+	Segment segment; // segment from the last route point to this one, invalid for the starting point
 
 	bool m_bPtIsSelected;
 

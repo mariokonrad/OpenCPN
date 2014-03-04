@@ -1976,7 +1976,7 @@ void ChartCanvas::OnRolloverPopupTimerEvent(wxTimerEvent&)
 						++node;
 						for (; node != pr->routepoints().end(); ++node) {
 							RoutePoint* prp = *node;
-							dist_to_endleg += prp->m_seg_len;
+							dist_to_endleg += prp->segment.length;
 							if (prp->IsSame(segShow_point_a))
 								break;
 						}

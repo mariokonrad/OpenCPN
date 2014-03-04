@@ -333,10 +333,10 @@ void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_de
 		CalculateBBox();
 
 	if (m_pLastAddedPoint)
-		pNewPoint->m_seg_len
+		pNewPoint->segment.length
 			= geo::DistGreatCircle(m_pLastAddedPoint->get_position(), pNewPoint->get_position());
 
-	m_route_length += pNewPoint->m_seg_len;
+	m_route_length += pNewPoint->segment.length;
 
 	m_pLastAddedPoint = pNewPoint;
 
@@ -897,7 +897,7 @@ void Route::UpdateSegmentDistances(double planspeed)
 			geo::DistanceBearingMercator(geo::Position(slat1, slon1), geo::Position(slat2, slon2), &brg, &dd);
 
 			// And store in Point 2
-			prp->m_seg_len = dd;
+			prp->segment.length = dd;
 
 			route_len += dd;
 
@@ -924,10 +924,10 @@ void Route::UpdateSegmentDistances(double planspeed)
 					legspeed = vmg;
 				if (legspeed > 0.1 && legspeed < 1000.0) {
 					route_time += dd / legspeed;
-					prp->m_seg_vmg = legspeed;
+					prp->segment.vmg = legspeed;
 				}
 
-				prp0->m_seg_etd = wxInvalidDateTime;
+				prp0->segment.etd = wxInvalidDateTime;
 				if (prp0->get_description().Find(_T("ETD=")) != wxNOT_FOUND) {
 					wxString s_etd
 						= (prp0->get_description().Mid(prp0->get_description().Find(_T("ETD=")) + 4))
@@ -937,14 +937,14 @@ void Route::UpdateSegmentDistances(double planspeed)
 						wxString tz(parse_return);
 
 						if (tz.Find(_T("UT")) != wxNOT_FOUND)
-							prp0->m_seg_etd = etd;
+							prp0->segment.etd = etd;
 						else if (tz.Find(_T("LMT")) != wxNOT_FOUND) {
-							prp0->m_seg_etd = etd;
+							prp0->segment.etd = etd;
 							long lmt_offset = static_cast<long>((prp0->longitude() * 3600.0) / 15.0);
 							wxTimeSpan lmt(0, 0, static_cast<int>(lmt_offset), 0);
-							prp0->m_seg_etd -= lmt;
+							prp0->segment.etd -= lmt;
 						} else
-							prp0->m_seg_etd = etd.ToUTC();
+							prp0->segment.etd = etd.ToUTC();
 					}
 				}
 			}

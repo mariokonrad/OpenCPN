@@ -60,11 +60,15 @@ bool RoutePoint::SameGUID::operator()(const RoutePoint* point) const
 	return point && (guid == point->guid());
 }
 
+RoutePoint::Segment::Segment()
+	: length(0.0)
+	, vmg(0.0)
+	, etd(wxInvalidDateTime)
+{
+}
+
 RoutePoint::RoutePoint()
-	: m_seg_len(0.0)
-	, m_seg_vmg(0.0)
-	, m_seg_etd(wxInvalidDateTime)
-	, m_bPtIsSelected(false)
+	: m_bPtIsSelected(false)
 	, m_bIsInRoute(false)
 	, m_bIsInTrack(false)
 	, m_bIsolatedMark(false)
@@ -99,9 +103,7 @@ RoutePoint::RoutePoint(const RoutePoint& orig)
 {
 	m_MarkName = orig.GetName();
 	position = orig.position;
-	m_seg_len = orig.m_seg_len;
-	m_seg_vmg = orig.m_seg_vmg;
-	m_seg_etd = orig.m_seg_etd;
+	segment = orig.segment;
 	m_bDynamicName = orig.m_bDynamicName;
 	m_bPtIsSelected = orig.m_bPtIsSelected;
 	m_bIsActive = orig.m_bIsActive;
@@ -131,10 +133,7 @@ RoutePoint::RoutePoint(const RoutePoint& orig)
 
 RoutePoint::RoutePoint(const geo::Position& pos, const wxString& icon_ident, const wxString& name,
 					   const wxString& pGUID, bool bAddToList)
-	: m_seg_len(0.0)
-	, m_seg_vmg(0.0)
-	, m_seg_etd(wxInvalidDateTime)
-	, m_bPtIsSelected(false)
+	: m_bPtIsSelected(false)
 	, m_bIsInRoute(false)
 	, m_bIsInTrack(false)
 	, m_bIsolatedMark(false)

@@ -324,7 +324,7 @@ void ConsoleCanvas::UpdateRouteData()
 		 node != prt->routepoints().end(); ++node) {
 		RoutePoint* prp = *node;
 		if (n_addflag)
-			trng += prp->m_seg_len;
+			trng += prp->segment.length;
 
 		if (prp == prt->m_pRouteActivePoint)
 			n_addflag++;

@@ -100,7 +100,7 @@ wxString ts2s(wxDateTime ts, int tz_selection, long LMT_offset, int format)
 			s.Append(ts.FromUTC().Format(f));
 			break;
 		case 2:
-			wxTimeSpan lmt(0, 0, (int)LMT_offset, 0);
+			wxTimeSpan lmt(0, 0, static_cast<int>(LMT_offset), 0);
 			s.Append(ts.Add(lmt).Format(f));
 			if (format != INPUT_FORMAT)
 				s.Append(_T(" LMT"));
@@ -108,19 +108,19 @@ wxString ts2s(wxDateTime ts, int tz_selection, long LMT_offset, int format)
 	return s;
 }
 
-IMPLEMENT_DYNAMIC_CLASS( RouteProp, wxDialog )
+IMPLEMENT_DYNAMIC_CLASS(RouteProp, wxDialog)
 
-BEGIN_EVENT_TABLE( RouteProp, wxDialog )
-	EVT_TEXT( ID_PLANSPEEDCTL, RouteProp::OnPlanSpeedCtlUpdated )
-	EVT_TEXT_ENTER( ID_STARTTIMECTL, RouteProp::OnStartTimeCtlUpdated )
-	EVT_RADIOBOX ( ID_TIMEZONESEL, RouteProp::OnTimeZoneSelected )
-	EVT_BUTTON( ID_ROUTEPROP_CANCEL, RouteProp::OnRoutepropCancelClick )
-	EVT_BUTTON( ID_ROUTEPROP_OK, RouteProp::OnRoutepropOkClick )
-	EVT_LIST_ITEM_SELECTED( ID_LISTCTRL, RouteProp::OnRoutepropListClick )
-	EVT_LIST_ITEM_SELECTED( ID_TRACKLISTCTRL, RouteProp::OnRoutepropListClick )
-	EVT_BUTTON( ID_ROUTEPROP_SPLIT, RouteProp::OnRoutepropSplitClick )
-	EVT_BUTTON( ID_ROUTEPROP_EXTEND, RouteProp::OnRoutepropExtendClick )
-	EVT_BUTTON( ID_ROUTEPROP_PRINT, RouteProp::OnRoutepropPrintClick )
+BEGIN_EVENT_TABLE(RouteProp, wxDialog)
+	EVT_TEXT(ID_PLANSPEEDCTL, RouteProp::OnPlanSpeedCtlUpdated)
+	EVT_TEXT_ENTER(ID_STARTTIMECTL, RouteProp::OnStartTimeCtlUpdated)
+	EVT_RADIOBOX(ID_TIMEZONESEL, RouteProp::OnTimeZoneSelected)
+	EVT_BUTTON(ID_ROUTEPROP_CANCEL, RouteProp::OnRoutepropCancelClick)
+	EVT_BUTTON(ID_ROUTEPROP_OK, RouteProp::OnRoutepropOkClick)
+	EVT_LIST_ITEM_SELECTED(ID_LISTCTRL, RouteProp::OnRoutepropListClick)
+	EVT_LIST_ITEM_SELECTED(ID_TRACKLISTCTRL, RouteProp::OnRoutepropListClick)
+	EVT_BUTTON(ID_ROUTEPROP_SPLIT, RouteProp::OnRoutepropSplitClick)
+	EVT_BUTTON(ID_ROUTEPROP_EXTEND, RouteProp::OnRoutepropExtendClick)
+	EVT_BUTTON(ID_ROUTEPROP_PRINT, RouteProp::OnRoutepropPrintClick)
 END_EVENT_TABLE()
 
 long RouteProp::Start_LMT_Offset = 0;
@@ -199,13 +199,13 @@ void RouteProp::OnRoutepropSplitClick(wxCommandEvent&)
 
 	if ((m_nSelected > 1) && (m_nSelected < m_pRoute->GetnPoints())) {
 		if (m_pRoute->m_bIsTrack) {
-			m_pHead = new Track();
-			m_pTail = new Track();
+			m_pHead = new Track;
+			m_pTail = new Track;
 			m_pHead->CloneTrack(m_pRoute, 1, m_nSelected, _("_A"));
 			m_pTail->CloneTrack(m_pRoute, m_nSelected, m_pRoute->GetnPoints(), _("_B"));
 		} else {
-			m_pHead = new Route();
-			m_pTail = new Route();
+			m_pHead = new Route;
+			m_pTail = new Route;
 			m_pHead->CloneRoute(m_pRoute, 1, m_nSelected, _("_A"));
 			m_pTail->CloneRoute(m_pRoute, m_nSelected, m_pRoute->GetnPoints(), _("_B"));
 		}
@@ -624,15 +624,13 @@ void RouteProp::CreateControls()
 	m_wpList->InsertColumn(8, _("Next tide event"), wxLIST_FORMAT_LEFT, 90);
 	m_wpList->InsertColumn(9, _("Description"), wxLIST_FORMAT_LEFT,
 						   90); // additional columt with WP description
-	if (show_mag)
-		m_wpList->InsertColumn(
-			10, _("Course (M)"), wxLIST_FORMAT_LEFT,
-			80); // additional columt with WP new course. Is it same like "bearing" of the next WP.
-	else
-		m_wpList->InsertColumn(10, _("Course"), wxLIST_FORMAT_LEFT, 80); // additional columt with
-																		 // WP new course. Is it
-																		 // same like "bearing" of
-																		 // the next WP.
+	if (show_mag) {
+		// additional columt with WP new course. Is it same like "bearing" of the next WP.
+		m_wpList->InsertColumn(10, _("Course (M)"), wxLIST_FORMAT_LEFT, 80);
+	} else {
+		// additional columt with WP new course. Is it same like "bearing" of the next WP.
+		m_wpList->InsertColumn(10, _("Course"), wxLIST_FORMAT_LEFT, 80);
+	}
 	m_wpList->Hide();
 
 	Connect(wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,
@@ -770,9 +768,9 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 	if (m_pRoute) {
 		// Calculate  LMT offset from the first point in the route
 		if (m_pEnroutePoint && m_bStartNow)
-			Start_LMT_Offset = long((m_pEnroutePoint->longitude()) * 3600.0 / 15.0);
+			Start_LMT_Offset = static_cast<long>((m_pEnroutePoint->longitude()) * 3600.0 / 15.0);
 		else
-			Start_LMT_Offset = long((m_pRoute->routepoints().front()->longitude()) * 3600.0 / 15.0);
+			Start_LMT_Offset = static_cast<long>((m_pRoute->routepoints().front()->longitude()) * 3600.0 / 15.0);
 	}
 
 	// Reorganize dialog for route or track display
@@ -833,7 +831,7 @@ void RouteProp::InitializeList()
 			m_wpList->InsertItem(in, _T(""), 0);
 			m_wpList->SetItemPtrData(in, (wxUIntPtr)(*route_point));
 			in++;
-			if ((*route_point)->m_seg_etd.IsValid()) {
+			if ((*route_point)->segment.etd.IsValid()) {
 				m_wpList->InsertItem(in, _T(""), 0);
 				in++;
 			}
@@ -843,7 +841,8 @@ void RouteProp::InitializeList()
 		m_PlanSpeedCtl->SetValue(wxString::Format(_T("%5.2f"), m_planspeed));
 
 		if (m_starttime.IsValid()) {
-			m_StartTimeCtl->SetValue(ts2s(m_starttime, m_tz_selection, (int)Start_LMT_Offset, INPUT_FORMAT));
+			m_StartTimeCtl->SetValue(ts2s(m_starttime, m_tz_selection,
+										  static_cast<int>(Start_LMT_Offset), INPUT_FORMAT));
 		} else
 			m_StartTimeCtl->Clear();
 	}
@@ -953,7 +952,8 @@ void RouteProp::update_route_properties()
 
 	// Total length
 	if (!m_pEnroutePoint) {
-		m_TotalDistCtl->SetValue(wxString::Format(wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(m_pRoute->m_route_length)));
+		m_TotalDistCtl->SetValue(wxString::Format(wxT("%5.2f ") + getUsrDistanceUnit(),
+												  toUsrDistance(m_pRoute->m_route_length)));
 	} else {
 		m_TotalDistCtl->Clear();
 	}
@@ -1037,13 +1037,13 @@ void RouteProp::update_route_properties()
 				geo::DistanceBearingMercator(prp->get_position(), geo::Position(slat, slon), &brg,
 											 &leg_dist);
 				if (i == 0)
-					joining_time
-						= wxTimeSpan::Seconds((long)wxRound((leg_dist * 3600.0) / leg_speed));
+					joining_time = wxTimeSpan::Seconds(
+						static_cast<long>(wxRound((leg_dist * 3600.0) / leg_speed)));
 			}
 			enroute = true;
 		} else {
-			if (prp->m_seg_vmg > 0.0)
-				leg_speed = prp->m_seg_vmg;
+			if (prp->segment.vmg > 0.0)
+				leg_speed = prp->segment.vmg;
 			else
 				leg_speed = m_planspeed;
 		}
@@ -1119,10 +1119,10 @@ void RouteProp::update_route_properties()
 				time_form.Append(_T(": "));
 
 				if (!arrival) {
-					wxDateTime etd = prp->m_seg_etd;
+					wxDateTime etd = prp->segment.etd;
 					if (etd.IsValid() && etd.IsLaterThan(m_starttime)) {
 						stopover_time += etd.Subtract(m_starttime);
-						act_starttime = prp->m_seg_etd;
+						act_starttime = prp->segment.etd;
 					}
 				}
 
@@ -1153,7 +1153,7 @@ void RouteProp::update_route_properties()
 			if (leg_speed) {
 				if (arrival && enroute)
 					tsec += 3600 * leg_dist / leg_speed; // time in seconds to arrive here
-				wxTimeSpan time(0, 0, (int)tsec, 0);
+				wxTimeSpan time(0, 0, static_cast<int>(tsec), 0);
 
 				if (m_starttime.IsValid()) {
 
@@ -1161,10 +1161,10 @@ void RouteProp::update_route_properties()
 					ueta.Add(time + stopover_time + joining_time);
 
 					if (!arrival) {
-						wxDateTime etd = prp->m_seg_etd;
+						wxDateTime etd = prp->segment.etd;
 						if (etd.IsValid() && etd.IsLaterThan(ueta)) {
 							stopover_time += etd.Subtract(ueta);
-							ueta = prp->m_seg_etd;
+							ueta = prp->segment.etd;
 						}
 					}
 
@@ -1218,7 +1218,7 @@ void RouteProp::update_route_properties()
 		// if stopover (ETD) found, loop for next output line for the same point
 		// with departure time & tide information
 
-		if (arrival && (prp->m_seg_etd.IsValid())) {
+		if (arrival && (prp->segment.etd.IsValid())) {
 			stopover_count++;
 			arrival = false;
 		} else {
@@ -1317,7 +1317,7 @@ bool RouteProp::SaveChanges(void)
 	m_StartTimeCtl->Clear();
 
 	if (m_pRoute && !m_pRoute->m_bIsInLayer) {
-		//  Get User input Text Fields
+		// Get User input Text Fields
 		m_pRoute->set_name(m_RouteNameCtl->GetValue());
 		m_pRoute->set_startString(m_RouteStartCtl->GetValue());
 		m_pRoute->set_endString(m_RouteDestCtl->GetValue());
@@ -1371,7 +1371,7 @@ void RouteProp::OnPlanSpeedCtlUpdated(wxCommandEvent& event)
 
 void RouteProp::OnStartTimeCtlUpdated(wxCommandEvent&)
 {
-	//  Fetch the value, and see if it is a "reasonable" time
+	// Fetch the value, and see if it is a "reasonable" time
 	wxString stime = m_StartTimeCtl->GetValue();
 	int tz_selection = pDispTz->GetSelection();
 
@@ -1398,7 +1398,7 @@ void RouteProp::OnStartTimeCtlUpdated(wxCommandEvent&)
 			if (tz_selection == 1)
 				m_starttime = d.ToUTC();
 			if (tz_selection == 2) {
-				wxTimeSpan glmt(0, 0, (int)Start_LMT_Offset, 0);
+				wxTimeSpan glmt(0, 0, static_cast<int>(Start_LMT_Offset), 0);
 				m_starttime -= glmt;
 			}
 		}

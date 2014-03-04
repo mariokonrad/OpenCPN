@@ -32,10 +32,6 @@
 #include <wx/cmdline.h>
 #include <wx/snglinst.h>
 
-#ifdef __WXMSW__
-#include "wx/msw/private.h"
-#endif
-
 #include "nmea0183.h"
 #include <ChartDirectoryInfo.h>
 #include <NMEA_Msg_Container.h>

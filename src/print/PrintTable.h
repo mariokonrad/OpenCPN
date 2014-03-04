@@ -30,10 +30,6 @@
 #include <iostream>
 #include <vector>
 
-#ifdef __WXMSW__
-	#include <wx/msw/private.h>
-#endif
-
 namespace print {
 
 ///\brief Extension of a class Table with printing into dc.

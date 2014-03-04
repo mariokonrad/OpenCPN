@@ -38,8 +38,6 @@
 #include "ocpn_pixel.h"
 #include <graphics/OCPNMemDC.h>
 
-#ifndef WX_PRECOMP
-#include <stdio.h>
 #include <wx/list.h>
 #include <wx/utils.h>
 #include <wx/app.h>
@@ -47,13 +45,11 @@
 #include <wx/dcmemory.h>
 #include <wx/bitmap.h>
 #include <wx/icon.h>
-#endif
-
 
 #ifdef __WXMSW__
-#include <wx/msw/private.h>
-#include <wx/log.h>
-#include <wx/msw/dib.h>
+	#include <wx/wx.h>
+	#include <wx/log.h>
+	#include <wx/msw/dib.h>
 #endif
 
 #include <wx/bitmap.h>
@@ -65,19 +61,20 @@
 #include <wx/gdicmn.h>
 #include <wx/palette.h>
 
+#include <cstdio>
 
 // missing from mingw32 header
 #ifndef CLR_INVALID
-#define CLR_INVALID ((COLORREF)-1)
-#endif // no CLR_INVALID
+	#define CLR_INVALID ((COLORREF)-1)
+#endif
 
 
 #ifdef ocpnUSE_ocpnBitmap
-#ifdef __WXX11__
-#include <sys/ipc.h>
-#include <sys/shm.h>
-#include <X11/extensions/XShm.h>
-#endif
+	#ifdef __WXX11__
+		#include <sys/ipc.h>
+		#include <sys/shm.h>
+		#include <X11/extensions/XShm.h>
+	#endif
 #endif
 
 extern unsigned int malloc_max;

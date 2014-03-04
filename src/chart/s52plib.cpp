@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "s52plib.h"
-#include <dychart.h>
 
 #include <graphics/ocpn_pixel.h>
 

@@ -24,7 +24,6 @@
 #include "OCP_DataStreamInput_Thread.h"
 #include <OCPN_DataStreamEvent.h>
 #include <DataStream.h>
-#include <dychart.h>
 
 #if defined(__WXGTK__) || defined(__WXOSX__)
 	#include <sys/termios.h>
@@ -35,7 +34,7 @@
 
 extern const wxEventType wxEVT_OCPN_DATASTREAM;
 
-#include "MainFrame.h"
+#include <MainFrame.h>
 extern MainFrame* gFrame;
 
 #ifdef __WXMSW__

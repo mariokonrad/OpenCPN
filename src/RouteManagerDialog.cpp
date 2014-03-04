@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "RouteManagerDialog.h"
-#include "dychart.h"
 #include <MessageBox.h>
 #include <Select.h>
 #include <Track.h>

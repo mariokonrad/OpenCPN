@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "S57Chart.h"
-#include <dychart.h>
 #include <ocpnDC.h>
 #include <OCPNRegionIterator.h>
 #include <MessageBox.h>

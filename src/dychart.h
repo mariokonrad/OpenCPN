@@ -24,12 +24,4 @@
 #ifndef __DYCHART__H__
 #define __DYCHART__H__
 
-#include <wx/wx.h>
-
-// Use the CPL Portability library only if S57 is enabled
-#ifdef USE_S57
-	#define USE_CPL
-	#include "cpl_port.h"
-#endif
-
 #endif

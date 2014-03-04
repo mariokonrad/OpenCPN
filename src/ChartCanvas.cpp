@@ -34,7 +34,6 @@
 #include <GoToPositionDialog.h>
 #include <TimedPopupWin.h>
 #include <MessageBox.h>
-#include <dychart.h>
 #include <StatWin.h>
 #include <Track.h>
 #include <Kml.h>

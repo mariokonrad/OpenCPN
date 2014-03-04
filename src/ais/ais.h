@@ -24,6 +24,9 @@
 #ifndef __AIS__AIS__H__
 #define __AIS__AIS__H__
 
+#include <ais/AIS_Bitstring.h>
+#include <ais/AISTargetListDialog.h>
+
 #include <wx/datetime.h>
 #include <wx/listctrl.h>
 #include <wx/spinctrl.h>
@@ -33,12 +36,7 @@
 
 #include <vector>
 
-#include "dychart.h"
-
-#include <ais/AIS_Bitstring.h>
-#include <ais/AISTargetListDialog.h>
-
-#define TIMER_AIS_MSEC      998
+#define TIMER_AIS_MSEC        998
 #define TIMER_AIS_AUDIO_MSEC 2000
 
 #define ID_ACKNOWLEDGE        10001

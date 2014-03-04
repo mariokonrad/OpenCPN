@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "ConsoleCanvas.h"
-#include <dychart.h>
 #include <AnnunText.h>
 #include <CDI.h>
 #include <MainFrame.h>

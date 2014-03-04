@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "StatWin.h"
-#include <dychart.h>
 #include <PianoWin.h>
 #include <TextStatWin.h>
 

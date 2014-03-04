@@ -21,10 +21,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include <iostream>
-#include <sstream>
-#include <vector>
+#include "PrintTable.h"
 
+#include <wx/wx.h>
 #include <wx/print.h>
 #include <wx/printdlg.h>
 #include <wx/artprov.h>
@@ -43,8 +42,6 @@
 	#include <wx/dialog.h>
 #endif
 
-#include "dychart.h"
-
 #ifdef __WXMSW__
 	#include <stdlib.h>
 	#include <math.h>
@@ -52,7 +49,9 @@
 	#include <psapi.h>
 #endif
 
-#include "PrintTable.h"
+#include <iostream>
+#include <sstream>
+#include <vector>
 
 
 namespace print {

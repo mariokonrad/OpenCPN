@@ -24,7 +24,6 @@
 #include "TCWin.h"
 #include <timers.h>
 #include <RolloverWin.h>
-#include <dychart.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
 

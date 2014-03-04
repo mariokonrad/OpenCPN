@@ -23,7 +23,6 @@
 
 #include "glChartCanvas.h"
 #include <glTextureDescriptor.h>
-#include <dychart.h>
 #include <Quilt.h>
 #include <ChInfoWin.h>
 #include <ThumbWin.h>

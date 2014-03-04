@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "Routeman.h"
-#include <dychart.h>
 #include <ConsoleCanvas.h>
 #include <RouteProp.h>
 #include <RouteManagerDialog.h>

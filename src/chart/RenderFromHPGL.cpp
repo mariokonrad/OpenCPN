@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "RenderFromHPGL.h"
-#include "dychart.h"
 
 #include <chart/s52plib.h>
 

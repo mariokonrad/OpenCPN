@@ -22,11 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "wx/wx.h"
 #endif //precompiled headers
 
-//#include "dychart.h"        // for some compile time fixups
-//#include "cutil.h"
 #include <stdlib.h>
-
-//#include <QDateTime>
 
 #include "GribRecord.h"
 

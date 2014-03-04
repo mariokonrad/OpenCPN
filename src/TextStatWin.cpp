@@ -23,7 +23,6 @@
 
 #include "TextStatWin.h"
 #include <PianoWin.h>
-#include <dychart.h>
 
 #include <global/OCPN.h>
 #include <global/ColorManager.h>

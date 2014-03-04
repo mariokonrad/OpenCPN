@@ -24,7 +24,6 @@
  **************************************************************************/
 
 #include "TCMgr.h"
-#include <dychart.h>
 
 #include <tide/IDX_entry.h>
 #include <tide/Station_Data.h>
@@ -34,14 +33,16 @@
 #include <geo/Position.h>
 #include <geo/GeoRef.h>
 
-#include <cstdlib>
-#include <cmath>
-#include <ctime>
+#include <windows/compatibility.h>
 
 #include <wx/datetime.h>
 #include <wx/log.h>
 
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
 #include <algorithm>
+
 
 namespace tide {
 

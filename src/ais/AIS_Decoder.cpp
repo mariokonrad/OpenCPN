@@ -21,6 +21,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include <wx/wx.h>
+#include <wx/tokenzr.h>
+
 #include "AIS_Decoder.h"
 
 #include <ais/AIS_Target_Data.h>
@@ -41,8 +44,6 @@
 #include <global/GUI.h>
 #include <global/Navigation.h>
 #include <global/AIS.h>
-
-#include <wx/tokenzr.h>
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;

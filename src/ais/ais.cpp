@@ -22,18 +22,11 @@
  **************************************************************************/
 
 #include "ais.h"
-
-#include "dychart.h"
-
-#include <geo/GeoRef.h>
-
 #include <DataStream.h>
 #include <Select.h>
 #include <ChartCanvas.h>
 
-#include <cstdlib>
-#include <cmath>
-#include <ctime>
+#include <geo/GeoRef.h>
 
 #include <wx/wx.h>
 #include <wx/tokenzr.h>
@@ -41,6 +34,10 @@
 #include <wx/sound.h>
 #include <wx/wfstream.h>
 #include <wx/imaglist.h>
+
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;

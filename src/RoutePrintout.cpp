@@ -22,11 +22,11 @@
  **************************************************************************/
 
 #include "RoutePrintout.h"
-#include "dychart.h"
 #include <PositionConvert.h>
 #include <Route.h>
 #include <Units.h>
 
+#include <wx/wx.h>
 #include <wx/print.h>
 #include <wx/printdlg.h>
 #include <wx/artprov.h>

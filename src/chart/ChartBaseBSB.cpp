@@ -21,6 +21,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include <wx/wx.h>
+#include <wx/dir.h>
+#include <wx/stream.h>
+#include <wx/wfstream.h>
+#include <wx/tokenzr.h>
+#include <wx/filename.h>
+#include <wx/image.h>
+#include <wx/fileconf.h>
+#include <wx/log.h>
+
 #include "ChartBaseBSB.h"
 
 #include <sys/stat.h>
@@ -33,15 +43,6 @@
 #include <graphics/ocpn_pixel.h>
 
 #include <OCPNRegionIterator.h>
-
-#include <wx/dir.h>
-#include <wx/stream.h>
-#include <wx/wfstream.h>
-#include <wx/tokenzr.h>
-#include <wx/filename.h>
-#include <wx/image.h>
-#include <wx/fileconf.h>
-#include <wx/log.h>
 
 #include <algorithm>
 

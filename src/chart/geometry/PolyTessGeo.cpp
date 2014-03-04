@@ -26,7 +26,6 @@
 #include <ogr_geometry.h>
 
 #include <windows/compatibility.h>
-#include <dychart.h>
 
 #include <geo/BoundingBox.h>
 #include <geo/GeoRef.h>

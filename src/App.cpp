@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "App.h"
-#include <dychart.h>
 #include <Select.h>
 #include <OCPNFloatingToolbarDialog.h>
 #include <MessageBox.h>

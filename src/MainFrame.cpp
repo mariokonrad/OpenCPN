@@ -37,6 +37,8 @@
 #include <wx/image.h>
 #include <wx/apptrait.h>
 
+#include <windows/compatibility.h>
+
 #if wxCHECK_VERSION(2, 9, 0)
 	#include <wx/dialog.h>
 #endif
@@ -48,8 +50,6 @@
 	#include <psapi.h>
 #endif
 
-#include <windows/compatibility.h>
-
 #ifndef __WXMSW__
 	#include <signal.h>
 #endif
@@ -57,7 +57,6 @@
 #include <algorithm>
 
 #include "MainFrame.h"
-#include <dychart.h>
 #include <SystemTime.h>
 #include <ChartCanvas.h>
 #include <MessageBox.h>

@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "Units.h"
-#include <dychart.h>
 
 #include <global/OCPN.h>
 #include <global/System.h>

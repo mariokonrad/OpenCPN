@@ -23,7 +23,6 @@
 
 #include "Config.h"
 
-#include <dychart.h>
 #include <ChartCanvas.h>
 #include <MainFrame.h>
 #include <Layer.h>

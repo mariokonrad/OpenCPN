@@ -26,19 +26,12 @@
 #ifndef __GRAPHICS__OCPN_PIXEL__H__
 #define __GRAPHICS__OCPN_PIXEL__H__
 
-#include <dychart.h>
-
 #include <wx/image.h>
 
 namespace graphics {
 
-wxImage Image_Rotate(
-		wxImage & base_image,
-		double angle,
-		const wxPoint & centre_of_rotation,
-		bool interpolating,
-		wxPoint * offset_after_rotation);
-
+wxImage Image_Rotate(wxImage& base_image, double angle, const wxPoint& centre_of_rotation,
+					 bool interpolating, wxPoint* offset_after_rotation);
 }
 
 // Specify the Pixel Cache type

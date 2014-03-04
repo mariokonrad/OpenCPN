@@ -22,7 +22,6 @@
  **************************************************************************/
 
 #include "PlugInManager.h"
-#include "dychart.h"
 #include <MainFrame.h>
 #include <Track.h>
 #include <ocpnDC.h>

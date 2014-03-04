@@ -24,7 +24,6 @@
 #ifndef __CHART__CHARTBASE__H__
 #define __CHART__CHARTBASE__H__
 
-#include "dychart.h"
 #include <ThumbData.h>
 #include <ProjectionType.h>
 

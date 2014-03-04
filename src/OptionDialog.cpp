@@ -45,7 +45,6 @@
 #endif
 
 #include "OptionDialog.h"
-#include <dychart.h>
 #include <MainFrame.h>
 #include <MessageBox.h>
 #include <DataStream.h>

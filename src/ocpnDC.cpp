@@ -23,7 +23,6 @@
  **************************************************************************/
 
 #include "ocpnDC.h"
-#include <dychart.h>
 
 #include <global/OCPN.h>
 #include <global/GUI.h>

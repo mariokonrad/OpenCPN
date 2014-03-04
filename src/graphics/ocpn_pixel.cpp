@@ -35,31 +35,28 @@
  * Brian Paul  Sep, 20, 1995  brianp@ssec.wisc.edu
  */
 
+#include <wx/wx.h>
+#include <wx/app.h>
+
 #include "ocpn_pixel.h"
 #include <graphics/OCPNMemDC.h>
 
 #include <wx/list.h>
 #include <wx/utils.h>
-#include <wx/app.h>
 #include <wx/palette.h>
 #include <wx/dcmemory.h>
 #include <wx/bitmap.h>
 #include <wx/icon.h>
-
-#ifdef __WXMSW__
-	#include <wx/wx.h>
-	#include <wx/log.h>
-	#include <wx/msw/dib.h>
-#endif
-
-#include <wx/bitmap.h>
-#include <wx/icon.h>
 #include <wx/log.h>
+#include <wx/bitmap.h>
 #include <wx/image.h>
-#include <wx/app.h>
 #include <wx/math.h>
 #include <wx/gdicmn.h>
 #include <wx/palette.h>
+
+#ifdef __WXMSW__
+	#include <wx/msw/dib.h>
+#endif
 
 #include <cstdio>
 

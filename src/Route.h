@@ -24,10 +24,10 @@
 #ifndef __ROUTE_H__
 #define __ROUTE_H__
 
-#include <vector>
-
 #include <RoutePoint.h>
 #include <geo/BoundingBox.h>
+
+#include <vector>
 
 #define RTE_TIME_DISP_UTC _T("UTC")
 #define RTE_TIME_DISP_PC _T("PC")
@@ -171,7 +171,9 @@ private:
 	double m_ArrivalRadius;
 	bool m_bcrosses_idl;
 	wxString m_GUID;
-	wxArrayString RoutePointGUIDList;
+
+	typedef std::vector<wxString> GUIDs;
+	GUIDs routePointGUIDs;
 };
 
 typedef std::vector<Route*> RouteList;

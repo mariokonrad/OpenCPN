@@ -348,7 +348,7 @@ void Route::AddPoint(RoutePoint* pNewPoint, bool b_rename_in_sequence, bool b_de
 
 void Route::AddTentativePoint(const wxString& GUID)
 {
-	RoutePointGUIDList.Add(GUID);
+	routePointGUIDs.push_back(GUID);
 }
 
 RoutePoint* Route::GetPoint(int nWhichPoint)
@@ -626,8 +626,7 @@ RoutePoint* Route::InsertPointBefore(RoutePoint* pRP, double rlat, double rlon, 
 	RoutePointList::iterator i = std::find(pRoutePointList->begin(), pRoutePointList->end(), pRP);
 	pRoutePointList->insert(i, newpoint);
 
-	int nRP = i - pRoutePointList->begin();
-	RoutePointGUIDList.Insert(pRP->guid(), nRP);
+	routePointGUIDs.insert(routePointGUIDs.begin() + (i - pRoutePointList->begin()), pRP->guid());
 
 	m_nPoints++;
 
@@ -683,8 +682,11 @@ void Route::DeletePoint(RoutePoint* rp, bool bRenamePoints)
 
 	pRoutePointList->erase(std::find(pRoutePointList->begin(), pRoutePointList->end(), rp));
 
-	if ((rp->guid().Len()) && (wxNOT_FOUND != RoutePointGUIDList.Index(rp->guid())))
-		RoutePointGUIDList.Remove(rp->guid());
+	if (rp->guid().Len() > 0) {
+		GUIDs::iterator i = std::find(routePointGUIDs.begin(), routePointGUIDs.end(), rp->guid());
+		if (i != routePointGUIDs.end())
+			routePointGUIDs.erase(i);
+	}
 
 	delete rp;
 
@@ -709,15 +711,17 @@ void Route::RemovePoint(RoutePoint* rp, bool bRenamePoints)
 {
 	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
 
-	if (rp->m_bIsActive && this->IsActive()) // FS#348
+	if (rp->m_bIsActive && this->IsActive())
 		routemanager.DeactivateRoute();
 
 	pSelect->DeleteAllSelectableRoutePoints(this);
 	pSelect->DeleteAllSelectableRouteSegments(this);
 
 	pRoutePointList->erase(std::find(pRoutePointList->begin(), pRoutePointList->end(), rp));
-	if (wxNOT_FOUND != RoutePointGUIDList.Index(rp->guid()))
-		RoutePointGUIDList.Remove(rp->guid());
+	GUIDs::iterator index
+		= std::find(routePointGUIDs.begin(), routePointGUIDs.end(), rp->guid());
+	if (index != routePointGUIDs.end())
+		routePointGUIDs.erase(index);
 	m_nPoints -= 1;
 
 	// check all other routes to see if this point appears in any other route
@@ -958,14 +962,7 @@ void Route::Reverse(bool bRenamePoints)
 {
 	RebuildGUIDList(); // ensure the GUID list is intact and good
 
-	// Reverse the GUID list
-	wxArrayString ArrayTemp;
-
-	int ncount = RoutePointGUIDList.size();
-	for (int i = 0; i < ncount; ++i)
-		ArrayTemp.Add(RoutePointGUIDList[ncount - 1 - i]);
-
-	RoutePointGUIDList = ArrayTemp;
+	std::reverse(routePointGUIDs.begin(), routePointGUIDs.end());
 
 	pRoutePointList->clear();
 	m_nPoints = 0;
@@ -984,10 +981,10 @@ void Route::Reverse(bool bRenamePoints)
 
 void Route::RebuildGUIDList(void)
 {
-	RoutePointGUIDList.Clear();
+	routePointGUIDs.clear();
 	for (RoutePointList::const_iterator i = pRoutePointList->begin(); i != pRoutePointList->end();
 		 ++i) {
-		RoutePointGUIDList.Add((*i)->guid());
+		routePointGUIDs.push_back((*i)->guid());
 	}
 }
 
@@ -1013,8 +1010,8 @@ void Route::SetListed(bool visible)
 void Route::AssembleRoute(void)
 {
 	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
-	for (unsigned int ip = 0; ip < RoutePointGUIDList.size(); ++ip) {
-		RoutePoint* point = waypointmanager.find(RoutePointGUIDList[ip]);
+	for (GUIDs::const_iterator ip = routePointGUIDs.begin(); ip != routePointGUIDs.end(); ++ip) {
+		RoutePoint* point = waypointmanager.find(*ip);
 		if (point)
 			AddPoint(point);
 	}

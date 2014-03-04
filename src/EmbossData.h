@@ -24,7 +24,11 @@
 #ifndef __EMBOSSDATA__H__
 #define __EMBOSSDATA__H__
 
-#include "dychart.h"
+#ifdef __WXMSW__
+	#include "GL/gl.h"  // local copy for Windows
+#else
+	#include <GL/gl.h>
+#endif
 
 class EmbossData
 {

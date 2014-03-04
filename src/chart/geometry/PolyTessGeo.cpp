@@ -42,14 +42,23 @@
 #include <wx/tokenzr.h>
 #include <wx/geometry.h>
 
+#ifdef __WXMSW__
+	#include "GL/gl.h"  // local copy for Windows
+	#include "GL/glu.h"
+	#include "GL/glext.h"
+	#include <windows.h>
+#else
+	#include <GL/gl.h>
+	#include <GL/glu.h>
+	#include <GL/glext.h>
+#endif
+
 #define TESS_VERT   0  // constants describing preferred tess orientation
 #define TESS_HORZ   1
 
 #define EQUAL_EPS 1.0e-7   // tolerance value
 
 using chart::pt;
-
-
 
 #ifdef USE_GLU_TESS
 static int s_nvcall;

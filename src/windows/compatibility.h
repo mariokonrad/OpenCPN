@@ -3,6 +3,13 @@
 
 #ifdef __MSVC__
 
+#ifdef __MSVC__66
+	#ifdef _DEBUG
+		#define _CRTDBG_MAP_ALLOC
+		#include <crtdbg.h>
+	#endif
+#endif
+
 #define _USE_MATH_DEFINES
 #include <cmath>
 

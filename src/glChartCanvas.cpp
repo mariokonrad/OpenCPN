@@ -50,6 +50,17 @@
 
 #include <wx/tokenzr.h>
 
+#ifdef __WXMSW__
+	#include "GL/gl.h"  // local copy for Windows
+	#include "GL/glu.h"
+	#include "GL/glext.h"
+	#include <windows.h>
+#else
+	#include <GL/gl.h>
+	#include <GL/glu.h>
+	#include <GL/glext.h>
+#endif
+
 #ifndef GL_DEPTH_STENCIL_ATTACHMENT
 	#define GL_DEPTH_STENCIL_ATTACHMENT  0x821A
 #endif

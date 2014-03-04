@@ -197,7 +197,7 @@ if(NOT WIN32 AND NOT APPLE)
 	add_definitions("-g -fno-strict-aliasing")
 
 	set(C_WARN_FLAGS "-Wall -Wextra")
-	#set(CXX_WARN_FLAGS "-Wall -Wextra -Wold-style-cast -Woverloaded-virtual -Wmissing-declarations -Wuninitialized -Winit-self")
+	#set(CXX_WARN_FLAGS "-Wall -Wextra -Wold-style-cast -Wunreachable-code -Woverloaded-virtual -Wmissing-declarations -Wuninitialized -Winit-self")
 	set(CXX_WARN_FLAGS "-Wall -Wextra")
 
 	set(COMMON_DEFINES "-fPIC")

@@ -55,6 +55,17 @@
 #include <wx/tokenzr.h>
 #include <wx/textfile.h>
 
+#ifdef __WXMSW__
+	#include "GL/gl.h"  // local copy for Windows
+	#include "GL/glu.h"
+	#include "GL/glext.h"
+	#include <windows.h>
+#else
+	#include <GL/gl.h>
+	#include <GL/glu.h>
+	#include <GL/glext.h>
+#endif
+
 #include <cmath>
 #include <cstdlib>
 
@@ -6618,8 +6629,8 @@ GLuint txfEstablishTexture(TexFont* txf, GLuint texobj, GLboolean setupMipmaps)
 		}
 	} else {
 #if defined(GL_VERSION_1_1) || defined(GL_EXT_texture)
-		/* Use GL_INTENSITY4 as internal texture format since we want to use as
-		   little texture memory as possible. */
+		// Use GL_INTENSITY4 as internal texture format since we want to use as
+		// little texture memory as possible.
 		if (setupMipmaps) {
 			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_INTENSITY4, txf->tex_width, txf->tex_height,
 							  GL_LUMINANCE, GL_UNSIGNED_BYTE, txf->teximage);

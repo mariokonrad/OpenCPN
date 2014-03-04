@@ -23,9 +23,11 @@
 
 #include "glTextureDescriptor.h"
 
+#include <cstdlib>
+
 glTextureDescriptor::glTextureDescriptor()
 {
-	for (int i = 0; i < 10; i++)
+	for (unsigned int i = 0; i < sizeof(map_array) / sizeof(map_array[0]); ++i)
 		map_array[i] = NULL;
 
 	tex_mult = -1;
@@ -38,7 +40,7 @@ glTextureDescriptor::glTextureDescriptor()
 
 glTextureDescriptor::~glTextureDescriptor()
 {
-	for (int i = 0; i < 10; ++i)
+	for (unsigned int i = 0; i < sizeof(map_array) / sizeof(map_array[0]); ++i)
 		::free(map_array[i]);
 }
 

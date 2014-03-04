@@ -26,18 +26,11 @@
 
 #include <wx/wx.h>
 
-#ifdef __MSVC__66
-        #ifdef _DEBUG
-            #define _CRTDBG_MAP_ALLOC
-            #include <crtdbg.h>
-        #endif
-#endif
-
-#ifdef __MSVC__
-	#define _putenv _putenv  // This is for MSVC
-#else
-	#define _putenv putenv   // This is for other Windows compiler
-#endif
+//#ifdef __MSVC__
+//	#define _putenv _putenv  // This is for MSVC
+//#else
+//	#define _putenv putenv   // This is for other Windows compiler
+//#endif
 
 // Use the CPL Portability library only if S57 is enabled
 #ifdef USE_S57
@@ -53,20 +46,6 @@
 #ifdef __WXGTK__
 	#ifdef ocpnUSE_GTK_OPTIMIZE
 		#include <gtk/gtk.h>
-	#endif
-#endif
-
-#ifndef OCPN_GL_INCLUDES
-	#define OCPN_GL_INCLUDES 1
-	#ifdef __WXMSW__
-		#include "GL/gl.h"  // local copy for Windows
-		#include "GL/glu.h"
-		#include "GL/glext.h"
-		#include <windows.h>
-	#else
-		#include <GL/gl.h>
-		#include <GL/glu.h>
-		#include <GL/glext.h>
 	#endif
 #endif
 

@@ -35,7 +35,16 @@
 #include <vector>
 
 #ifdef ocpnUSE_GL
-#include <wx/glcanvas.h>
+	#include <wx/glcanvas.h>
+	#ifdef __WXMSW__
+		#include "GL/gl.h"  // local copy for Windows
+		#include "GL/glu.h"
+		#include "GL/glext.h"
+	#else
+		#include <GL/gl.h>
+		#include <GL/glu.h>
+		#include <GL/glext.h>
+	#endif
 #endif
 
 #include <wx/graphics.h>
@@ -46,8 +55,7 @@
 
 wxArrayPtrVoid ocpnDC::gTesselatorVertices;
 
-//----------------------------------------------------------------------------
-/* pass the dc to the constructor, or NULL to use opengl */
+// pass the dc to the constructor, or NULL to use opengl
 ocpnDC::ocpnDC(wxGLCanvas & canvas)
 	: glcanvas(&canvas)
 	, dc(NULL)
@@ -280,7 +288,7 @@ void ocpnDC::DrawGLThickLine(double x1, double y1, double x2, double y2, wxPen p
 		double lspace = t1 * dashes[1];
 
 		while (lrun < lpix) {
-			//    Dash
+			// Dash
 			double xb = xa + ldraw * cos(angle);
 			double yb = ya + ldraw * sin(angle);
 
@@ -304,7 +312,7 @@ void ocpnDC::DrawGLThickLine(double x1, double y1, double x2, double y2, wxPen p
 			ya = yb;
 			lrun += ldraw;
 
-			//    Space
+			// Space
 			xb = xa + lspace * cos(angle);
 			yb = ya + lspace * sin(angle);
 
@@ -397,12 +405,11 @@ void ocpnDC::DrawLine(wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiq
 					double lspace = t1 * dashes[1];
 
 					while (lrun < lpix) {
-						//    Dash
+						// Dash
 						double xb = xa + ldraw * cosa;
 						double yb = ya + ldraw * sina;
 
-						if ((lrun + ldraw) >= lpix) // last segment is partial draw
-						{
+						if ((lrun + ldraw) >= lpix) { // last segment is partial draw
 							xb = x2;
 							yb = y2;
 						}
@@ -568,8 +575,14 @@ void ocpnDC::DrawRoundedRectangle(wxCoord x, wxCoord y, wxCoord w, wxCoord h, wx
 		dc->DrawRoundedRectangle(x, y, w, h, r);
 #ifdef ocpnUSE_GL
 	else {
-		wxCoord x0 = x, x1 = x + r, x2 = x + w - r, x3 = x + h;
-		wxCoord y0 = y, y1 = y + r, y2 = y + h - r, y3 = y + h;
+		wxCoord x0 = x;
+		wxCoord x1 = x + r;
+		wxCoord x2 = x + w - r;
+		wxCoord x3 = x + h;
+		wxCoord y0 = y;
+		wxCoord y1 = y + r;
+		wxCoord y2 = y + h - r;
+		wxCoord y3 = y + h;
 		if (ConfigureBrush()) {
 			glBegin(GL_QUADS);
 			glVertex2i(x0, y1);

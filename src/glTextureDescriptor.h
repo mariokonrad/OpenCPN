@@ -21,25 +21,29 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __GLTEXTUREDESCRIPTOR_H__
-#define __GLTEXTUREDESCRIPTOR_H__
+#ifndef __GLTEXTUREDESCRIPTOR__H__
+#define __GLTEXTUREDESCRIPTOR__H__
 
-#include "dychart.h"
+#ifdef __WXMSW__
+	#include "GL/gl.h"  // local copy for Windows
+#else
+	#include <GL/gl.h>
+#endif
 
 class glTextureDescriptor
 {
-	public:
-		glTextureDescriptor();
-		~glTextureDescriptor();
+public:
+	glTextureDescriptor();
+	~glTextureDescriptor();
 
-		GLuint tex_name;
-		int tex_mult;
-		int level_min;
-		int level_max;
-		int base_size;
-		int GPU_base;
+	GLuint tex_name;
+	int tex_mult;
+	int level_min;
+	int level_max;
+	int base_size;
+	int GPU_base;
 
-		unsigned char * map_array[10];
+	unsigned char* map_array[10];
 };
 
 #endif

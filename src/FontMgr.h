@@ -48,7 +48,6 @@ public:
 	virtual wxString GetFontConfigKey(const wxString& description) const;
 
 private:
-	const wxString& GetNativeDesc(int i) const; // FIXME: delete?
 	wxFont* find_font(const wxString& text_element);
 	wxString GetSimpleNativeFont(int size);
 

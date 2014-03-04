@@ -202,11 +202,6 @@ const wxString& FontMgr::GetDialogString(int i) const
 	return fontlist.at(i)->m_dialogstring;
 }
 
-const wxString& FontMgr::GetNativeDesc(int i) const
-{
-	return fontlist.at(i)->m_nativeInfo;
-}
-
 wxString FontMgr::GetFullConfigDesc(int i) const
 {
 	const gui::FontDesc* pfd = fontlist.at(i);

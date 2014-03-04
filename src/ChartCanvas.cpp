@@ -5196,8 +5196,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 	if (s_ProgDialog)
 		return;
 
-	if ((m_bMeasure_Active && (m_nMeasureState >= 2)) || (parent_frame->nRoute_State > 1)
-		|| (parent_frame->nRoute_State) > 1) {
+	if ((m_bMeasure_Active && (m_nMeasureState >= 2)) || (parent_frame->nRoute_State) > 1) {
 		wxPoint p = ClientToScreen(wxPoint(x, y));
 		gFrame->SubmergeToolbarIfOverlap(p.x, p.y, 20);
 	}
@@ -8618,7 +8617,7 @@ void ChartCanvas::EmbossCanvas_DC(ocpnDC& dc, EmbossData& emboss, int x, int y)
 	result_dc.SelectObject(wxNullBitmap);
 }
 
-void ChartCanvas::EmbossCanvas_GL(ocpnDC& dc, EmbossData& emboss, int x, int y)
+void ChartCanvas::EmbossCanvas_GL(ocpnDC&, EmbossData& emboss, int x, int y)
 {
 #ifdef ocpnUSE_GL
 	const double factor = 200;

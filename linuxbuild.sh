@@ -163,10 +163,18 @@ function exec_cppcheck()
 		-DocpnUSE_GL \
 		-D__WXGTK__ \
 		-D__POSIX__ \
+		-DUSE_S57 \
+		-D__GNUC__ \
+		-DocpnUSE_GTK_OPTIMIZE \
+		-U__MSVC__ \
+		-U__MSVC__66 \
 		-U__WXMSW__ \
 		-U__WXX11__ \
 		-U__WXOSX__ \
 		-U__WXMAC__ \
+		-UOCPN_USE_CRASHRPT \
+		-U__MSVC__LEAK \
+		-U_DEBUG \
 		$(find src -name "*.cpp" -o -name "*.h" -type f)
 }
 

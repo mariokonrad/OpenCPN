@@ -29,9 +29,9 @@
 
 #include <navigation/RouteManager.h>
 
-#include <cmath>
-
 #include <wx/dcmemory.h>
+
+#include <cmath>
 
 BEGIN_EVENT_TABLE(CDI, wxWindow)
 	EVT_PAINT(CDI::OnPaint)
@@ -43,6 +43,9 @@ CDI::CDI(
 		long style,
 		const wxString& name)
 	: wxWindow(parent, id, wxDefaultPosition, wxDefaultSize, style, name)
+	, m_pbackBrush(NULL)
+	, m_proadBrush(NULL)
+	, m_proadPen(NULL)
 {
 	SetMinSize(wxSize(10, 150));
 }

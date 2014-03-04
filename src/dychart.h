@@ -26,27 +26,10 @@
 
 #include <wx/wx.h>
 
-//#ifdef __MSVC__
-//	#define _putenv _putenv  // This is for MSVC
-//#else
-//	#define _putenv putenv   // This is for other Windows compiler
-//#endif
-
 // Use the CPL Portability library only if S57 is enabled
 #ifdef USE_S57
 	#define USE_CPL
 	#include "cpl_port.h"
-#endif
-
-// Enable GTK Display Optimization
-// Note this requires libgtk+2-devel
-// which is not often available on basic systems.
-// On standard linux platforms, configure will set
-// ocpnUSE_GTK_OPTIMIZE if possible, i.e. if libgtk+2-devel is installed
-#ifdef __WXGTK__
-	#ifdef ocpnUSE_GTK_OPTIMIZE
-		#include <gtk/gtk.h>
-	#endif
 #endif
 
 #endif

@@ -67,6 +67,7 @@ void DefaultRouteTracker::start()
 
 	notify_toolbar();
 	notify_routemanager();
+	notify_plugins_start();
 }
 
 void DefaultRouteTracker::stop(bool do_add_point, bool process_track)

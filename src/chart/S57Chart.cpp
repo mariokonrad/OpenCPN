@@ -5975,9 +5975,9 @@ wxString s57chart::CreateObjDescriptions(ListOfObjRazRules* rule_list)
 			t.normalize_lon();
 
 			positionString.Clear();
-			positionString += toSDMM(1, t.lat());
+			positionString += PositionConvert::lat(t.lat());
 			positionString << _T(" ");
-			positionString += toSDMM(2, t.lon());
+			positionString += PositionConvert::lon(t.lon());
 
 			if (isLight) {
 				curLight = new chart::S57Light;

@@ -122,8 +122,8 @@ RoutePrintout::RoutePrintout(
 			table << cell;
 		}
 		if (toPrintOut[PRINT_WP_POSITION]) {
-			wxString point_position = toSDMM(1, point->latitude(), point->is_in_track()) + _T( "\n" )
-									  + toSDMM(2, point->longitude(), point->is_in_track());
+			wxString point_position = PositionConvert::lat(point->latitude(), point->is_in_track()) + _T( "\n" )
+									  + PositionConvert::lon(point->longitude(), point->is_in_track());
 			std::string cell(point_position.mb_str());
 			table << cell;
 		}

@@ -27,13 +27,41 @@
 #include <global/OCPN.h>
 #include <global/System.h>
 
+
+wxString PositionConvert::lat(double a, bool high_precision)
+{
+	return toSDMM(1, a, high_precision);
+}
+
+wxString PositionConvert::lon(double a, bool high_precision)
+{
+	return toSDMM(2, a, high_precision);
+}
+
+geo::Position PositionConvert::pos(const wxString& lat_str, const wxString& lon_str)
+{
+	return geo::Position(lat(lat_str), lon(lon_str));
+}
+
+double PositionConvert::lat(const wxString& s)
+{
+	// TODO: implement better parser
+	return fromDMM(s);
+}
+
+double PositionConvert::lon(const wxString& s)
+{
+	// TODO: implement better parser
+	return fromDMM(s);
+}
+
 /// Formats the coordinates to string.
 ///
 /// @param[in] NEflag 1:latitude (N/S), 2:longitude (E/W)
 /// @param[in] a Coordinate (latitude or longitude, depending on NEflag)
 /// @param[in] hi_precision If set to not 0, the position is printed more detailed.
 /// @return The position as string.
-wxString toSDMM(int NEflag, double a, bool hi_precision) // FIXME: this interface is silly
+wxString PositionConvert::toSDMM(int NEflag, double a, bool hi_precision) // FIXME: this interface is silly
 {
 	wxString s;
 	double mpy;
@@ -155,7 +183,7 @@ wxString toSDMM(int NEflag, double a, bool hi_precision) // FIXME: this interfac
 // 122°18.621' W
 // 122w 18 37
 // -122.31035
-double fromDMM(wxString sdms)
+double PositionConvert::fromDMM(wxString sdms)
 {
 	wchar_t buf[64];
 	char narrowbuf[64];

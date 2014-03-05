@@ -1098,11 +1098,11 @@ void RouteProp::update_route_properties()
 		}
 
 		// Lat/Lon
-		wxString tlat = toSDMM(1, prp->latitude(), prp->is_in_track()); // low precision for routes
+		wxString tlat = PositionConvert::lat(prp->latitude(), prp->is_in_track()); // low precision for routes
 		if (arrival)
 			m_wpList->SetItem(item_line_index, 4, tlat);
 
-		wxString tlon = toSDMM(2, prp->longitude(), prp->is_in_track());
+		wxString tlon = PositionConvert::lon(prp->longitude(), prp->is_in_track());
 		if (arrival)
 			m_wpList->SetItem(item_line_index, 5, tlon);
 

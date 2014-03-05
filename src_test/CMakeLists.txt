@@ -35,6 +35,7 @@ add_executable(testrunner
 	${TEST_SRC}
 	${PLATFORM_SRC}
 	${CMAKE_SOURCE_DIR}/src/UserColors.cpp
+	${CMAKE_SOURCE_DIR}/src/PositionConvert.cpp
 	${CMAKE_SOURCE_DIR}/src/graphics/MergeBitmaps.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/XMLStyleReader.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/Icon.cpp

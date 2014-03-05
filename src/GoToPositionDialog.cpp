@@ -171,8 +171,8 @@ void GoToPositionDialog::OnGoToPosOkClick(wxCommandEvent& event)
 	if (m_MarkLonCtl->GetValue().Length() == 0)
 		goto noGo;
 
-	lat = fromDMM(m_MarkLatCtl->GetValue());
-	lon = fromDMM(m_MarkLonCtl->GetValue());
+	lat = PositionConvert::lat(m_MarkLatCtl->GetValue());
+	lon = PositionConvert::lon(m_MarkLonCtl->GetValue());
 
 	if (lat == 0.0 && lon == 0.0)
 		goto noGo;

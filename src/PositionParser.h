@@ -27,6 +27,8 @@
 #include <wx/string.h>
 #include <geo/Position.h>
 
+/// FIXME: position conversion and parsing (see PositionConvert) does almost the
+///        same. they have to be merged.
 class PositionParser
 {
 public:

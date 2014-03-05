@@ -31,8 +31,8 @@ PositionParser::PositionParser(const wxString& src)
 	: parsedOk(false)
 {
 	if (FindSeparator(src)) {
-		latitude = fromDMM(latitudeString);
-		longitude = fromDMM(longitudeString);
+		latitude = PositionConvert::lat(latitudeString);
+		longitude = PositionConvert::lon(longitudeString);
 		if ((latitude != 0.0) && (longitude != 0.0))
 			parsedOk = true;
 	}

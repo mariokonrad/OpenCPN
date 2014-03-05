@@ -2051,9 +2051,9 @@ void ChartCanvas::OnCursorTrackTimerEvent(wxTimerEvent&)
 		if (parent_frame->hasStatusBar()) {
 			wxString s1;
 			s1 += _T(" ");
-			s1 += toSDMM(1, cursor.lat());
+			s1 += PositionConvert::lat(cursor.lat());
 			s1 += _T("   ");
-			s1 += toSDMM(2, cursor.lon());
+			s1 += PositionConvert::lon(cursor.lon());
 			parent_frame->SetStatusText(s1, STAT_FIELD_CURSOR_LL);
 
 			double brg;
@@ -5252,9 +5252,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 				show_cursor_lon -= 360.0;
 
 			wxString s1 = _T(" ");
-			s1 += toSDMM(1, show_cursor_lat);
+			s1 += PositionConvert::lat(show_cursor_lat);
 			s1 += _T("   ");
-			s1 += toSDMM(2, show_cursor_lon);
+			s1 += PositionCovnert::lon(show_cursor_lon);
 			parent_frame->SetStatusText(s1, STAT_FIELD_CURSOR_LL);
 
 			double brg;

@@ -500,8 +500,8 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	if (!m_pRoutePoint)
 		return true;
 
-	m_textLatitude->SetValue(::toSDMM(1, m_pRoutePoint->latitude()));
-	m_textLongitude->SetValue(::toSDMM(2, m_pRoutePoint->longitude()));
+	m_textLatitude->SetValue(PositionConvert::lat(m_pRoutePoint->latitude()));
+	m_textLongitude->SetValue(PositionConvert::lon(m_pRoutePoint->longitude()));
 	m_lat_save = m_pRoutePoint->latitude();
 	m_lon_save = m_pRoutePoint->longitude();
 
@@ -755,7 +755,7 @@ bool MarkInfoImpl::SaveChanges()
 	m_pRoutePoint->SetVisible(m_checkBoxVisible->GetValue());
 	m_pRoutePoint->SetNameShown(m_checkBoxShowName->GetValue());
 	m_pRoutePoint->set_position(
-		geo::Position(fromDMM(m_textLatitude->GetValue()), fromDMM(m_textLongitude->GetValue())));
+		PositionConvert::pos(m_textLatitude->GetValue(), m_textLongitude->GetValue()));
 	m_pRoutePoint->set_icon_name(
 		global::OCPN::get().waypointman().GetIconKey(m_bcomboBoxIcon->GetSelection()));
 	m_pRoutePoint->ReLoadIcon();
@@ -838,7 +838,7 @@ void MarkInfoImpl::OnPositionCtlUpdated(wxCommandEvent&)
 {
 	if (!m_pRoutePoint->m_bIsInLayer) {
 		// Fetch the control values, convert to degrees
-		geo::Position pos(fromDMM(m_textLatitude->GetValue()), fromDMM(m_textLongitude->GetValue()));
+		geo::Position pos = PositionConvert::pos(m_textLatitude->GetValue(), m_textLongitude->GetValue());
 		m_pRoutePoint->set_position(pos);
 		pSelect->ModifySelectablePoint(pos, (void*)m_pRoutePoint, SelectItem::TYPE_ROUTEPOINT);
 	}
@@ -862,8 +862,8 @@ void MarkInfoImpl::OnRightClick(wxCommandEvent& event)
 void MarkInfoDef::OnCopyPasteLatLon(wxCommandEvent& event)
 {
 	// Fetch the control values, convert to degrees
-	double lat = fromDMM(m_textLatitude->GetValue());
-	double lon = fromDMM(m_textLongitude->GetValue());
+	double lat = PositionConvert::lat(m_textLatitude->GetValue());
+	double lon = PositionConvert::lon(m_textLongitude->GetValue());
 
 	wxString result;
 
@@ -899,8 +899,8 @@ void MarkInfoDef::OnCopyPasteLatLon(wxCommandEvent& event)
 			break;
 
 		case ID_RCLK_MENU_COPY_LL:
-			result << toSDMM(1, lat, true) << _T('\t');
-			result << toSDMM(2, lon, true);
+			result << PositionConvert::lat(lat, true) << _T('\t');
+			result << PositionConvert::lon(lon, true);
 			break;
 	}
 

@@ -387,7 +387,11 @@ void ChartPlugInWrapper::latlong_to_chartpix(const geo::Position& pos, double& p
 
 wxString toSDMM_PlugIn(int NEflag, double a, bool hi_precision)
 {
-	return toSDMM(NEflag, a, hi_precision);
+	if (NEflag == 1) {
+		return PositionConvert::lat(a, hi_precision);
+	} else {
+		return PositionConvert::lon(a, hi_precision);
+	}
 }
 
 wxColour GetBaseGlobalColor(wxString colorName)

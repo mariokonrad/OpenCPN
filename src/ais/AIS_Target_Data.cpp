@@ -368,9 +368,9 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 
 		html << vertSpacer << rowStart << _("Position") << posTypeStr
 			 << _T("</font></td><td align=right><font size=-2>") << _("Report Age")
-			 << _T("</font></td></tr>") << rowStartH << _T("<b>") << toSDMM(1, Lat)
+			 << _T("</font></td></tr>") << rowStartH << _T("<b>") << PositionConvert::lat(Lat)
 			 << _T("</b></td><td align=right><b>") << FormatTimeAdaptive(target_age) << rowEnd
-			 << rowStartH << _T("<b>") << toSDMM(2, Lon) << rowEnd;
+			 << rowStartH << _T("<b>") << PositionConvert::lon(Lon) << rowEnd;
 	}
 
 	wxString courseStr, sogStr, hdgStr, rotStr, rngStr, brgStr, destStr, etaStr;

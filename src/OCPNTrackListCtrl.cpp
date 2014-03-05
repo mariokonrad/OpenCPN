@@ -141,10 +141,10 @@ wxString OCPNTrackListCtrl::OnGetItemText(long item, long column) const
 			return wxString::Format(_T("%03.0f \u00B0T"), bearing);
 
 		case COLUMN_LATITUDE:
-			return toSDMM(1, point->latitude(), 1);
+			return PositionConvert::lat(point->latitude(), true);
 
 		case COLUMN_LONGITUDE:
-			return toSDMM(2, point->longitude(), 1);
+			return PositionConvert::lon(point->longitude(), true);
 
 		case COLUMN_TIMESTAMP:
 			if (!point->GetCreateTime().IsValid())

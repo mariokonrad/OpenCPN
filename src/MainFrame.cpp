@@ -1729,9 +1729,9 @@ void MainFrame::ActivateMOB(void)
 	mob_message += _T(" Time: ");
 	mob_message += mob_time.Format();
 	mob_message += _T("  Position: ");
-	mob_message += toSDMM(1, nav.pos.lat());
+	mob_message += PositionConvert::lat(nav.pos.lat());
 	mob_message += _T("   ");
-	mob_message += toSDMM(2, nav.pos.lon());
+	mob_message += PositionConvert::lon(nav.pos.lon());
 	wxLogMessage(mob_message);
 }
 
@@ -3060,7 +3060,8 @@ void MainFrame::onTimer_update_status_cursor_position()
 	geo::Position cursor = chart_canvas->GetCursorLatLon();
 
 	if (GetStatusBar()) {
-		wxString s1 = _T(" ") + toSDMM(1, cursor.lat()) + _T("   ") + toSDMM(2, cursor.lon());
+		wxString s1 = _T(" ") + PositionConvert::lat(cursor.lat()) + _T("   ")
+					  + PositionConvert::lon(cursor.lon());
 		SetStatusText(s1, STAT_FIELD_CURSOR_LL);
 	}
 }
@@ -5100,9 +5101,9 @@ void MainFrame::PostProcessNNEA(bool pos_valid, const wxString& sfixtime)
 
 		wxString s1(tick_buf, wxConvUTF8);
 		s1 += _(" Ship ");
-		s1 += toSDMM(1, nav.pos.lat());
+		s1 += PositionConvert::lat(nav.pos.lat());
 		s1 += _T("   ");
-		s1 += toSDMM(2, nav.pos.lon());
+		s1 += PositionConvert::lon(nav.pos.lon());
 		SetStatusText(s1, STAT_FIELD_TICK);
 
 		wxString over_ground;

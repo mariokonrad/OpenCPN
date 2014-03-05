@@ -62,7 +62,10 @@ OCPNMessageDialog::OCPNMessageDialog(wxWindow* parent, const wxString& message,
 {
 	m_style = style;
 	wxBoxSizer* topsizer = new wxBoxSizer(wxVERTICAL);
+
+#if wxUSE_STATBMP || wxUSE_STATTEXT
 	wxBoxSizer* icon_text = new wxBoxSizer(wxHORIZONTAL);
+#endif
 
 #if wxUSE_STATBMP
 	// 1) icon

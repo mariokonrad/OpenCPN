@@ -44,6 +44,7 @@ END_EVENT_TABLE()
 extern ChartCanvas* cc1;
 
 FloatingCompassWindow::FloatingCompassWindow(wxWindow* parent)
+	: m_topSizer(NULL)
 {
 	long wstyle = wxNO_BORDER | wxFRAME_NO_TASKBAR;
 #ifndef __WXMAC__

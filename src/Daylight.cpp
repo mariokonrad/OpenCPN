@@ -84,39 +84,29 @@ static double FNrange(double x)
 static double getDaylightEvent(const geo::Position& pos, int riset, double altitude, int y, int m, int d)
 {
 	double day = FNday(y, m, d, 0);
-	double days, correction;
 	double utold = M_PI;
 	double utnew = 0.0;
 	double sinalt = sin(altitude * (M_PI / 180.0)); // go for the sunrise/sunset altitude first
 	double sinphi = sin(pos.lat() * (M_PI / 180.0));
 	double cosphi = cos(pos.lon() * (M_PI / 180.0));
 	double g = pos.lon() * (M_PI / 180.0);
-	double t;
-	double L;
-	double G;
-	double ec;
-	double lambda;
-	double E;
-	double obl;
-	double delta;
-	double GHA;
-	double cosc;
 	int limit = 12;
 	while ((fabs(utold - utnew) > 0.001)) {
 		if (limit-- <= 0)
 			return (-1.0);
-		days = day + utnew / (2.0 * M_PI);
-		t = days / 36525.0;
+		double days = day + utnew / (2.0 * M_PI);
+		double t = days / 36525.0;
 		// get arguments of Sun's orbit
-		L = FNrange(4.8949504201433 + 628.331969753199 * t);
-		G = FNrange(6.2400408 + 628.3019501 * t);
-		ec = 0.033423 * sin(G) + 0.00034907 * sin(2 * G);
-		lambda = L + ec;
-		E = -1.0 * ec + 0.0430398 * sin(2 * lambda) - 0.00092502 * sin(4.0 * lambda);
-		obl = 0.409093 - 0.0002269 * t;
-		delta = asin(sin(obl) * sin(lambda));
-		GHA = utold - M_PI + E;
-		cosc = (sinalt - sinphi * sin(delta)) / (cosphi * cos(delta));
+		double L = FNrange(4.8949504201433 + 628.331969753199 * t);
+		double G = FNrange(6.2400408 + 628.3019501 * t);
+		double ec = 0.033423 * sin(G) + 0.00034907 * sin(2 * G);
+		double lambda = L + ec;
+		double E = -1.0 * ec + 0.0430398 * sin(2 * lambda) - 0.00092502 * sin(4.0 * lambda);
+		double obl = 0.409093 - 0.0002269 * t;
+		double delta = asin(sin(obl) * sin(lambda));
+		double GHA = utold - M_PI + E;
+		double cosc = (sinalt - sinphi * sin(delta)) / (cosphi * cos(delta));
+		double correction = 0.0;
 		if (cosc > 1.0)
 			correction = 0.0;
 		else if (cosc < -1.0)

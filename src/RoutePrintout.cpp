@@ -58,12 +58,15 @@
 #define PRINT_WP_DESCRIPTION 4
 
 RoutePrintout::RoutePrintout(
-		std::vector<bool> _toPrintOut,
-		Route * route,
-		const wxChar * title)
+		std::vector<bool> toPrintOut,
+		Route* route,
+		const wxChar* title)
 	: MyPrintout(title)
+	, myDC(NULL)
 	, myRoute(route)
-	, toPrintOut(_toPrintOut)
+	, toPrintOut(toPrintOut)
+	, pageToPrint(0)
+	, numberOfPages(0)
 {
 	// Let's have at least some device units margin
 	marginX = 5;
@@ -147,7 +150,7 @@ RoutePrintout::RoutePrintout(
 
 bool RoutePrintout::HasPage(int num) const
 {
-	return num > 0 || num <= 1;
+	return num > 0 || num <= 1; // FIXME: bug, this is always true
 }
 
 void RoutePrintout::GetPageInfo(int* minPage, int* maxPage, int* selPageFrom, int* selPageTo)

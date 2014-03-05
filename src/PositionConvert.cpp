@@ -202,8 +202,8 @@ double PositionConvert::fromDMM(wxString sdms)
 	replhelper = wxString::FromUTF8("·");
 	sdms.Replace(replhelper, _T("."));
 
-	replhelper = wxString::FromUTF8(
-		"s. š."); // Another example: cs.wikipedia.org (someone was too active translating...)
+	// Another example: cs.wikipedia.org (someone was too active translating...)
+	replhelper = wxString::FromUTF8("s. š.");
 	sdms.Replace(replhelper, _T("N"));
 	replhelper = wxString::FromUTF8("j. š.");
 	sdms.Replace(replhelper, _T("S"));

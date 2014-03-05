@@ -21,23 +21,12 @@ class Test_MagneticVariation : public ::testing::Test
 public:
 	virtual void SetUp()
 	{
-		init();
+		global::OCPN::get().clear();
 	}
 
 	virtual void TearDown()
 	{
-		init();
-	}
-
-private:
-	void init()
-	{
-		global::OCPN::get().inject(static_cast<global::GUI*>(NULL));
-		global::OCPN::get().inject(static_cast<global::Navigation*>(NULL));
-		global::OCPN::get().inject(static_cast<global::AIS*>(NULL));
-		global::OCPN::get().inject(static_cast<global::WatchDog*>(NULL));
-		global::OCPN::get().inject(static_cast<global::System*>(NULL));
-		global::OCPN::get().inject(static_cast<global::ColorManager*>(NULL));
+		global::OCPN::get().clear();
 	}
 };
 

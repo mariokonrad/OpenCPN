@@ -5254,7 +5254,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event)
 			wxString s1 = _T(" ");
 			s1 += PositionConvert::lat(show_cursor_lat);
 			s1 += _T("   ");
-			s1 += PositionCovnert::lon(show_cursor_lon);
+			s1 += PositionConvert::lon(show_cursor_lon);
 			parent_frame->SetStatusText(s1, STAT_FIELD_CURSOR_LL);
 
 			double brg;

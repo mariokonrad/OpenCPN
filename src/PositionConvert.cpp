@@ -187,11 +187,7 @@ double PositionConvert::fromDMM(wxString sdms)
 {
 	wchar_t buf[64];
 	char narrowbuf[64];
-	int i;
-	int len;
-	int top = 0;
-	double stk[32];
-	double sign = 1;
+	double sign = 1.0;
 
 	// First round of string modifications to accomodate some known strange formats
 	wxString replhelper;
@@ -217,9 +213,9 @@ double PositionConvert::fromDMM(wxString sdms)
 		sdms.Replace(_T("-"), _T(" "));
 
 	wcsncpy(buf, sdms.wc_str(wxConvUTF8), 64);
-	len = wcslen(buf);
+	int len = wcslen(buf);
 
-	for (i = 0; i < len; i++) {
+	for (int i = 0; i < len; i++) {
 		wchar_t c = buf[i];
 		if ((c >= '0' && c <= '9') || c == '-' || c == '.' || c == '+') {
 			narrowbuf[i] = c;
@@ -230,13 +226,14 @@ double PositionConvert::fromDMM(wxString sdms)
 			continue;
 		}
 		if ((c | 32) == 'w' || (c | 32) == 's')
-			sign = -1; // These mean "negate" (note case insensitivity)
+			sign = -1.0; // These mean "negate" (note case insensitivity)
 		narrowbuf[i] = 0; // Replace everything else with nuls
 	}
 
 	// Build a stack of doubles
-	stk[0] = stk[1] = stk[2] = 0;
-	for (i = 0; i < len; i++) {
+	unsigned int top = 0;
+	double stk[3] = { 0.0, 0.0, 0.0 };
+	for (int i = 0; (i < len) && (top < sizeof(stk) / sizeof(stk[0])); ++i) {
 		while (i < len && narrowbuf[i] == 0)
 			i++;
 		if (i != len) {

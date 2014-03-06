@@ -183,11 +183,13 @@ wxString PositionConvert::toSDMM(int NEflag, double a, bool hi_precision) // FIX
 // 122°18.621' W
 // 122w 18 37
 // -122.31035
-double PositionConvert::fromDMM(wxString sdms)
+double PositionConvert::fromDMM(const wxString& position)
 {
 	wchar_t buf[64];
 	char narrowbuf[64];
 	double sign = 1.0;
+
+	wxString sdms = position;
 
 	// First round of string modifications to accomodate some known strange formats
 	wxString replhelper;

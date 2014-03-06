@@ -44,7 +44,7 @@ public:
 
 private:
 	static wxString toSDMM(int NEflag, double a, bool hi_precision);
-	static double fromDMM(wxString);
+	static double fromDMM(const wxString&);
 };
 
 #endif

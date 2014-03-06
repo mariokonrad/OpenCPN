@@ -38,12 +38,13 @@ public:
 	const wxString& GetLongitudeString() const;
 	double GetLatitude() const;
 	double GetLongitude() const;
-	bool FindSeparator(const wxString& src);
 	bool IsOk() const;
 
 	geo::Position get() const;
 
 private:
+	bool FindSeparator(const wxString& src);
+
 	wxString source;
 	wxString separator;
 	wxString latitudeString;

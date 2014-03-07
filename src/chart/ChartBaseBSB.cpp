@@ -224,7 +224,7 @@ double ChartBaseBSB::GetNormalScaleMax(double canvas_scale_factor, int WXUNUSED(
 	return (canvas_scale_factor / m_ppm_avg) * 4.0; // excessive underscale is slow, and unreadable
 }
 
-double ChartBaseBSB::GetNearestPreferredScalePPM(double target_scale_ppm)
+double ChartBaseBSB::GetNearestPreferredScalePPM(double target_scale_ppm) const
 {
 	// changed from 32 to 64 to allow super small
 	// scale BSB charts as quilt base
@@ -232,7 +232,7 @@ double ChartBaseBSB::GetNearestPreferredScalePPM(double target_scale_ppm)
 }
 
 double ChartBaseBSB::GetClosestValidNaturalScalePPM(double target_scale, double scale_factor_min,
-													double scale_factor_max)
+													double scale_factor_max) const
 {
 	double chart_1x_scale = GetPPM();
 

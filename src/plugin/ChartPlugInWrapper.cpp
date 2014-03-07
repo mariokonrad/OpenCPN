@@ -321,7 +321,7 @@ void ChartPlugInWrapper::SetColorScheme(global::ColorScheme cs, bool bApplyImmed
 		m_ppicb->SetColorScheme(cs, bApplyImmediate);
 }
 
-double ChartPlugInWrapper::GetNearestPreferredScalePPM(double target_scale_ppm)
+double ChartPlugInWrapper::GetNearestPreferredScalePPM(double target_scale_ppm) const
 {
 	if (m_ppicb)
 		return m_ppicb->GetNearestPreferredScalePPM(target_scale_ppm);

@@ -115,7 +115,7 @@ public:
 
 	virtual bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
 
-	virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
+	virtual double GetNearestPreferredScalePPM(double target_scale_ppm) const;
 
 	void SetFullExtent(Extent& ext);
 	bool GetChartExtent(Extent& ext) const;

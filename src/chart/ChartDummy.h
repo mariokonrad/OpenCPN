@@ -51,7 +51,7 @@ public:
 	virtual bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
 	virtual void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);
 	virtual void SetColorScheme(global::ColorScheme cs, bool bApplyImmediate);
-	virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
+	virtual double GetNearestPreferredScalePPM(double target_scale_ppm) const;
 
 private:
 	bool RenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint);

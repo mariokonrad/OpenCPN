@@ -723,7 +723,7 @@ void s57chart::SetNativeScale(int s)
 	m_Chart_Scale = s;
 }
 
-double s57chart::GetNearestPreferredScalePPM(double target_scale_ppm)
+double s57chart::GetNearestPreferredScalePPM(double target_scale_ppm) const
 {
 	return target_scale_ppm;
 }

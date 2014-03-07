@@ -67,7 +67,7 @@ InitReturn ChartDummy::Init(const wxString& WXUNUSED(name), ChartInitFlag WXUNUS
 	return INIT_OK;
 }
 
-double ChartDummy::GetNearestPreferredScalePPM(double target_scale_ppm)
+double ChartDummy::GetNearestPreferredScalePPM(double target_scale_ppm) const
 {
 	return target_scale_ppm;
 }

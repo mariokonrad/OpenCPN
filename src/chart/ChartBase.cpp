@@ -83,7 +83,7 @@ OcpnProjType ChartBase::GetChartProjectionType() const
 	return m_projection;
 }
 
-wxDateTime ChartBase::GetEditionDate(void)
+wxDateTime ChartBase::GetEditionDate(void) const
 {
 	return m_EdDate;
 }
@@ -188,7 +188,7 @@ int ChartBase::GetCOVRTablenPoints(int iTable) const
 	return m_pCOVRTablePoints[iTable];
 }
 
-float * ChartBase::GetCOVRTableHead(int iTable)
+float* ChartBase::GetCOVRTableHead(int iTable) const
 {
 	return m_pCOVRTable[iTable];
 }
@@ -208,7 +208,7 @@ int ChartBase::GetNoCOVRTablenPoints(int iTable) const
 	return m_pNoCOVRTablePoints[iTable];
 }
 
-float * ChartBase::GetNoCOVRTableHead(int iTable)
+float* ChartBase::GetNoCOVRTableHead(int iTable) const
 {
 	return m_pNoCOVRTable[iTable];
 }

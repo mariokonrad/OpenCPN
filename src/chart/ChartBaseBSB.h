@@ -116,7 +116,7 @@ public:
 									  const OCPNRegion& Region);
 
 	virtual bool AdjustVP(const ViewPort& vp_last, ViewPort& vp_proposed);
-	virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
+	virtual double GetNearestPreferredScalePPM(double target_scale_ppm) const;
 
 	void GetValidCanvasRegion(const ViewPort& VPoint, OCPNRegion* pValidRegion);
 
@@ -155,7 +155,7 @@ protected:
 	int* GetPalettePtr(BSB_Color_Capability);
 
 	double GetClosestValidNaturalScalePPM(double target_scale, double scale_factor_min,
-										  double scale_factor_max);
+										  double scale_factor_max) const;
 
 	double GetPPM() const;
 

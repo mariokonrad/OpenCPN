@@ -2448,7 +2448,7 @@ void PlugInChartBase::GetValidCanvasRegion(const PlugIn_ViewPort &, wxRegion *)
 void PlugInChartBase::SetColorScheme(int, bool)
 {}
 
-double PlugInChartBase::GetNearestPreferredScalePPM(double)
+double PlugInChartBase::GetNearestPreferredScalePPM(double) const
 {
 	return 1.0;
 }

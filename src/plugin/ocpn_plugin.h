@@ -258,7 +258,7 @@ public:
 
 	virtual double GetNormalScaleMin(double canvas_scale_factor, bool b_allow_overzoom) const;
 	virtual double GetNormalScaleMax(double canvas_scale_factor, int canvas_width) const;
-	virtual double GetNearestPreferredScalePPM(double target_scale_ppm);
+	virtual double GetNearestPreferredScalePPM(double target_scale_ppm) const;
 
 	virtual bool GetChartExtent(ExtentPI* pext);
 

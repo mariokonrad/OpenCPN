@@ -100,7 +100,7 @@ public:
 	virtual bool GetChartExtent(Extent& ext) const = 0;
 
 	virtual OcpnProjType GetChartProjectionType() const;
-	virtual wxDateTime GetEditionDate(void);
+	virtual wxDateTime GetEditionDate(void) const;
 	virtual wxString GetPubDate() const;
 	virtual int GetNativeScale() const;
 	wxString GetFullPath() const;
@@ -131,17 +131,17 @@ public:
 
 	virtual void SetColorScheme(global::ColorScheme cs, bool bApplyImmediate = true) = 0;
 
-	virtual double GetNearestPreferredScalePPM(double target_scale_ppm) = 0;
+	virtual double GetNearestPreferredScalePPM(double target_scale_ppm) const = 0;
 
 	virtual int GetCOVREntries() const;
 	virtual int GetCOVRTablePoints(int iTable) const;
 	virtual int GetCOVRTablenPoints(int iTable) const;
-	virtual float* GetCOVRTableHead(int iTable);
+	virtual float* GetCOVRTableHead(int iTable) const;
 
 	virtual int GetNoCOVREntries() const;
 	virtual int GetNoCOVRTablePoints(int iTable) const;
 	virtual int GetNoCOVRTablenPoints(int iTable) const;
-	virtual float* GetNoCOVRTableHead(int iTable);
+	virtual float* GetNoCOVRTableHead(int iTable) const;
 
 protected:
 	int m_Chart_Scale;
@@ -162,7 +162,7 @@ protected:
 	wxDateTime m_EdDate;
 	wxBitmap* pcached_bitmap;
 	ThumbData* pThumbData;
-	global::ColorScheme m_global_color_scheme; // FIXME: get rid of this attribute, it is redundant to global information
+	global::ColorScheme m_global_color_scheme;
 	bool bReadyToRender;
 	double Chart_Error_Factor;
 	double m_Chart_Skew;

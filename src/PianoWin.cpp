@@ -129,7 +129,7 @@ void PianoWin::OnPaint(wxPaintEvent&)
 			if (-1 == key_db_index)
 				continue;
 
-			if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_S57) {
+			if (ChartData->GetDBChartFamily(m_key_array.at(i)) == chart::CHART_FAMILY_VECTOR) {
 				dc.SetBrush(m_vBrush);
 				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
 					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list

@@ -4883,7 +4883,7 @@ void MainFrame::nmea_gga(NMEAProcessContext& context)
 	bool ll_valid = true;
 
 	if (m_NMEA0183.Gga.GPSQuality > 0) {
-		if (!wxIsNaN(m_NMEA0183.Gll.Position.Latitude.Latitude)) {
+		if (!wxIsNaN(m_NMEA0183.Gga.Position.Latitude.Latitude)) {
 			double llt = m_NMEA0183.Gga.Position.Latitude.Latitude;
 			int lat_deg_int = (int)(llt / 100);
 			double lat_deg = lat_deg_int;

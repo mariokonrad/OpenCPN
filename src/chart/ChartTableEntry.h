@@ -28,6 +28,7 @@
 #include <wx/string.h>
 #include <string>
 #include <chart/ChartType.h>
+#include <chart/ChartFamily.h>
 
 class wxInputStream;
 class wxOutputStream;
@@ -83,6 +84,7 @@ public:
 
 private:
 	std::string read_path(wxInputStream& is) const;
+	void read_18(wxInputStream& is);
 	void read_17(wxInputStream& is);
 	void read_16(wxInputStream& is);
 	void read_15(wxInputStream& is);
@@ -91,6 +93,7 @@ private:
 private:
 	int EntryOffset;
 	ChartTypeEnum ChartType;
+	ChartFamilyEnum ChartFamily;
 	float LatMax;
 	float LatMin;
 	float LonMax;

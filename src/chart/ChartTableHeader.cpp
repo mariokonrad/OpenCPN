@@ -27,8 +27,8 @@
 
 namespace chart {
 
-static const int DB_VERSION_PREVIOUS = 16;
-static const int DB_VERSION_CURRENT = 17;
+static const int DB_VERSION_PREVIOUS = 17;
+static const int DB_VERSION_CURRENT = 18;
 
 void ChartTableHeader::Read(wxInputStream &is)
 {
@@ -48,8 +48,7 @@ bool ChartTableHeader::CheckValid()
 {
 	char vb[5];
 	sprintf(vb, "V%03d", DB_VERSION_CURRENT);
-	if (strncmp(vb, dbVersion, sizeof(dbVersion)))
-	{
+	if (strncmp(vb, dbVersion, sizeof(dbVersion))) {
 		wxString msg;
 		char vbo[5];
 		memcpy(vbo, dbVersion, 4);
@@ -58,23 +57,19 @@ bool ChartTableHeader::CheckValid()
 		msg.Prepend(wxT("   Warning: found incorrect chart db version: "));
 		wxLogMessage(msg);
 
-		return false;       // no match....
+		// return false;       // no match....
 
-		/*
 		// Try previous version....
 		sprintf(vb, "V%03d", DB_VERSION_PREVIOUS);
 		if (strncmp(vb, dbVersion, sizeof(dbVersion)))
-		return false;
-		else
-		{
-		wxLogMessage(_T("   Scheduling db upgrade to current db version on Options->Charts page visit..."));
-		return true;
+			return false;
+		else {
+			wxLogMessage(_T("   Scheduling db upgrade to current db version on Options->Charts ")
+						 _T("page visit..."));
+			return true;
 		}
-		 */
 
-	}
-	else
-	{
+	} else {
 		wxString msg;
 		char vbo[5];
 		memcpy(vbo, dbVersion, 4);

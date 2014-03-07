@@ -42,7 +42,7 @@ WX_DEFINE_OBJARRAY(ChartTable);
 
 using chart::ChartClassDescriptor;
 
-static const int DB_VERSION_CURRENT = 17; // FIXME: duplicate
+static const int DB_VERSION_CURRENT = 18; // FIXME: duplicate
 
 int s_dbVersion; // Database version currently in use at runtime
 

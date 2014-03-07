@@ -35,6 +35,30 @@ namespace chart {
 
 extern int s_dbVersion;
 
+struct ChartTableEntry_onDisk_18
+{
+	int EntryOffset;
+	int ChartType;
+	int ChartFamily;
+	float LatMax;
+	float LatMin;
+	float LonMax;
+	float LonMin;
+
+	int Scale;
+	int edition_date;
+	int file_date;
+
+	int nPlyEntries;
+	int nAuxPlyEntries;
+
+	float skew;
+	int ProjectionType;
+	bool bValid;
+
+	int nNoCovrPlyEntries;
+};
+
 struct ChartTableEntry_onDisk_17
 {
 	int EntryOffset;
@@ -235,6 +259,7 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 	fullpath = theChart.GetFullPath().mb_str(wxConvUTF8);
 
 	ChartType = theChart.GetChartType();
+	ChartFamily = theChart.GetChartFamily();
 	Scale = theChart.GetNativeScale();
 
 	Skew = theChart.GetChartSkew();
@@ -397,18 +422,22 @@ int ChartTableEntry::GetChartType() const
 
 int ChartTableEntry::GetChartFamily() const
 {
-	switch (ChartType) {
-		case CHART_TYPE_KAP:
-		case CHART_TYPE_GEO:
-			return chart::CHART_FAMILY_RASTER;
+	if (s_dbVersion < 18) {
+		switch (ChartType) {
+			case CHART_TYPE_KAP:
+			case CHART_TYPE_GEO:
+				return chart::CHART_FAMILY_RASTER;
 
-		case CHART_TYPE_S57:
-		case CHART_TYPE_CM93:
-		case CHART_TYPE_CM93COMP:
-			return chart::CHART_FAMILY_VECTOR;
+			case CHART_TYPE_S57:
+			case CHART_TYPE_CM93:
+			case CHART_TYPE_CM93COMP:
+				return chart::CHART_FAMILY_VECTOR;
 
-		default:
-			return chart::CHART_FAMILY_UNKNOWN;
+			default:
+				return chart::CHART_FAMILY_UNKNOWN;
+		}
+	} else {
+		return ChartFamily;
 	}
 }
 
@@ -424,6 +453,69 @@ std::string ChartTableEntry::read_path(wxInputStream& is) const
 		path += c;
 	}
 	return path;
+}
+
+void ChartTableEntry::read_18(wxInputStream& is)
+{
+	fullpath = read_path(is);
+	wxLogVerbose(_T("  Chart %s"), fullpath.c_str());
+
+	// Create and populate the helper members
+	m_filename = wxFileName(wxString(fullpath.c_str(), wxConvUTF8)).GetFullName();
+
+	// Read the table entry
+	ChartTableEntry_onDisk_18 cte;
+	is.Read(&cte, sizeof(ChartTableEntry_onDisk_18));
+
+	// Transcribe the elements....
+	EntryOffset = cte.EntryOffset;
+	ChartType = static_cast<ChartTypeEnum>(cte.ChartType);
+	ChartFamily = static_cast<ChartFamilyEnum>(cte.ChartFamily);
+	LatMax = cte.LatMax;
+	LatMin = cte.LatMin;
+	LonMax = cte.LonMax;
+	LonMin = cte.LonMin;
+
+	Skew = cte.skew;
+	ProjectionType = cte.ProjectionType;
+
+	Scale = cte.Scale;
+	edition_date = cte.edition_date;
+	file_date = cte.file_date;
+
+	nPlyEntries = cte.nPlyEntries;
+	nAuxPlyEntries = cte.nAuxPlyEntries;
+
+	nNoCovrPlyEntries = cte.nNoCovrPlyEntries;
+
+	bValid = cte.bValid;
+
+	if (nPlyEntries) {
+		pPlyTable = new float[nPlyEntries * 2];
+		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
+	}
+
+	if (nAuxPlyEntries) {
+		pAuxPlyTable = (float**)malloc(nAuxPlyEntries * sizeof(float*));
+		pAuxCntTable = new int[nAuxPlyEntries];
+		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
+
+		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
+			is.Read(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
+		}
+	}
+
+	if (nNoCovrPlyEntries) {
+		pNoCovrCntTable = new int[nNoCovrPlyEntries];
+		is.Read(pNoCovrCntTable, nNoCovrPlyEntries * sizeof(int));
+
+		pNoCovrPlyTable = (float**)malloc(nNoCovrPlyEntries * sizeof(float*));
+		for (int i = 0; i < nNoCovrPlyEntries; i++) {
+			pNoCovrPlyTable[i] = (float *)malloc(pNoCovrCntTable[i] * 2 * sizeof(float));
+			is.Read(pNoCovrPlyTable[i], pNoCovrCntTable[i] * 2 * sizeof(float));
+		}
+	}
 }
 
 void ChartTableEntry::read_17(wxInputStream & is)
@@ -628,6 +720,7 @@ bool ChartTableEntry::Read(const ChartDatabase * pDb, wxInputStream & is)
 
 	// Allow reading of current db format, and maybe others
 	switch (pDb->GetVersion()) {
+		case 18: read_18(is); break;
 		case 17: read_17(is); break;
 		case 16: read_16(is); break;
 		case 15: read_15(is); break;
@@ -643,11 +736,12 @@ bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& 
 
 	// Write the current version type only
 	// Create an on_disk table entry
-	ChartTableEntry_onDisk_17 cte;
+	ChartTableEntry_onDisk_18 cte;
 
 	// Transcribe the elements....
 	cte.EntryOffset = EntryOffset;
 	cte.ChartType = ChartType;
+	cte.ChartFamily = ChartFamily;
 	cte.LatMax = LatMax;
 	cte.LatMin = LatMin;
 	cte.LonMax = LonMax;
@@ -667,7 +761,7 @@ bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& 
 
 	cte.nNoCovrPlyEntries = nNoCovrPlyEntries;
 
-	os.Write(&cte, sizeof(ChartTableEntry_onDisk_17));
+	os.Write(&cte, sizeof(ChartTableEntry_onDisk_18));
 	wxLogVerbose(_T("  Wrote Chart %s"), fullpath.c_str());
 
 	// Write out the tables

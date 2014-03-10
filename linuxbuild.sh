@@ -436,6 +436,12 @@ while [ $# -ne 0 ] ; do
 	shift
 done
 
+# cppcheck does not need directories
+if [ ${opt_cppcheck} -ne 0 ] ; then
+	exec_cppcheck
+	exit 0
+fi
+
 # ensure defaults
 if [ ${#opt_actions[*]} -eq 0 ] ; then
 	add_action "prepare"
@@ -518,11 +524,6 @@ fi
 if [ ${opt_understand} -ne 0 ] ; then
 	exec_prepare
 	exec_understand
-	exit 0
-fi
-
-if [ ${opt_cppcheck} -ne 0 ] ; then
-	exec_cppcheck
 	exit 0
 fi
 

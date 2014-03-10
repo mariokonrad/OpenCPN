@@ -271,38 +271,6 @@ EXCEPTION_POINTERS* eps = 0;
 #endif
 
 
-#ifdef STANDALONE
-
-int main(argc, argv)
-	int argc;
-	char *argv[];
-{
-	int n, nmonpoly, genus;
-	int op[SEGSIZE][3], i, ntriangles;
-
-	if ((argc < 2) || ((n = read_segments(argv[1], &genus)) < 0))
-	{
-		fprintf(stderr, "usage: triangulate <filename>\n");
-		exit(1);
-	}
-
-	initialise(n);
-
-
-	construct_trapezoids(n);
-	nmonpoly = monotonate_trapezoids(n);
-	ntriangles = triangulate_monotone_polygons(n, nmonpoly, op);
-
-	for (i = 0; i < ntriangles; i++)
-		printf("triangle #%d: %d %d %d\n", i,
-				op[i][0], op[i][1], op[i][2]);
-
-	return 0;
-}
-
-
-#else  /* Not standalone. Use this as an interface routine */
-
 #define SEGSIZE 200           /* max# of segments. Determines how */
 /* many points can be specified as */
 /* input. If your datasets have large */
@@ -573,18 +541,14 @@ polyout* triangulate_polygon(int ncontours, int cntr[], double (*vertices)[2])
 
 	sigaction(SIGSEGV, &sa_all, &sa_all_old); // save existing action for this signal
 
-	if (sigsetjmp(env, 1)) //  Something in the below code block faulted....
-	{
-
+	if (sigsetjmp(env, 1)) { //  Something in the below code block faulted....
 		ret_val = 0;
-
 		sigaction(SIGSEGV, &sa_all_old, NULL); // reset signal handler
-
+		printf("ERROR: SIGSEGV in %s:%d\n", __FILE__, __LINE__);
 		return ret_val;
 	}
 
 	ret_val = do_triangulate_polygon(ncontours, cntr, vertices);
-
 	sigaction(SIGSEGV, &sa_all_old, NULL); // reset signal handler
 
 #endif
@@ -823,11 +787,8 @@ int is_point_inside_polygon(double vertex[2])
 	return _greater_than_equal_to(&seg[rseg].v1, &seg[rseg].v0);
 }
 
-#endif /* STANDALONE */
 
-
-//      Start of old file misc.c
-
+// Start of old file misc.c
 
 #include "triangulate.h"
 #include <time.h>
@@ -4325,27 +4286,26 @@ int int_trapezate_polygon(int ncontours, int cntr[], double (*vertices)[2], itra
 		*iseg_return = NULL;
 	}
 #else
-	//    In a Posix environment, use sigaction, etc.. to catch bad code in the tesselator
-	//    Polygons producing faults will not be drawn
+	// In a Posix environment, use sigaction, etc.. to catch bad code in the tesselator
+	// Polygons producing faults will not be drawn
 
-	sigaction(SIGSEGV, &sa_all, &sa_all_old);             // save existing action for this signal
+	sigaction(SIGSEGV, &sa_all, &sa_all_old); // save existing action for this signal
 
-	if(sigsetjmp(env, 1))             //  Something in the below code block faulted....
-	{
-
+	if (sigsetjmp(env, 1)) { //  Something in the below code block faulted....
 		ret_val = 1;
 		*n_traps = 0;
 		*trap_return = NULL;
 		*iseg_return = NULL;
 
-		sigaction(SIGSEGV, &sa_all_old, NULL);        // reset signal handler
+		sigaction(SIGSEGV, &sa_all_old, NULL); // reset signal handler
+		printf("ERROR: SIGSEGV in %s:%d\n", __FILE__, __LINE__);
 
 		return ret_val;
 	}
 
-	ret_val = do_int_trapezate_polygon(ncontours, cntr, vertices, trap_return,iseg_return, n_traps);
-
-	sigaction(SIGSEGV, &sa_all_old, NULL);        // reset signal handler
+	ret_val
+		= do_int_trapezate_polygon(ncontours, cntr, vertices, trap_return, iseg_return, n_traps);
+	sigaction(SIGSEGV, &sa_all_old, NULL); // reset signal handler
 
 #endif
 

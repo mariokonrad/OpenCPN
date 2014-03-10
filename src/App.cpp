@@ -209,7 +209,7 @@ int CALLBACK CrashCallback(CR_CRASH_CALLBACK_INFO* pInfo)
 //      Signal Handlers
 //-----------------------------------------------------------------------
 #ifndef __WXMSW__
-sigjmp_buf env;                    // the context saved by sigsetjmp();
+sigjmp_buf env;
 extern volatile int quitflag;
 
 //These are the signals possibly expected

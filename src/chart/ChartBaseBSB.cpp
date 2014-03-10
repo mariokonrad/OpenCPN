@@ -57,7 +57,7 @@ using std::min;
 struct sigaction sa_all_chart;
 struct sigaction sa_all_previous;
 
-sigjmp_buf env_chart; // the context saved by sigsetjmp();
+sigjmp_buf env_chart;
 
 void catch_signals_chart(int signo)
 {
@@ -1975,6 +1975,7 @@ bool ChartBaseBSB::GetAndScaleData(unsigned char* ppn, wxRect& source, int WXUNU
 			// Something in the below code block faulted....
 			sigaction(SIGSEGV, &sa_all_previous, NULL); // reset signal handler
 
+			wxLogMessage(wxString::Format(_T("ERROR: SIGSEGV in %s:%d"), __FILE__, __LINE__));
 			wxLogMessage(_T("   Caught SIGSEGV on GetandScaleData, Factor < 1"));
 			wxLogMessage(wxString::Format(
 				_T("   m_raster_scale_factor:  %g   source.width: %d  dest.y: %d dest.x: %d dest.width: %d  dest.height: %d "),

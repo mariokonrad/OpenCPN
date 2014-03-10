@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include <wx/wx.h>
+#include <wx/log.h>
 
 #include "ViewPort.h"
 
@@ -44,7 +45,7 @@
 #ifndef __WXMSW__
 extern struct sigaction sa_all;
 extern struct sigaction sa_all_old;
-extern sigjmp_buf env; // the context saved by sigsetjmp();
+extern sigjmp_buf env;
 void catch_signals(int signo);
 #endif
 
@@ -398,6 +399,7 @@ OCPNRegion ViewPort::GetVPRegionIntersect(
 
 	if (sigsetjmp(env, 1)) { //  Something in the below code block faulted....
 		sigaction(SIGSEGV, &sa_all_old, NULL); // reset signal handler
+		wxLogMessage(wxString::Format(_T("ERROR: SIGSEGV in %s:%d"), __FILE__, __LINE__));
 		return Region;
 	} else {
 		OCPNRegion r = OCPNRegion(n, pp);

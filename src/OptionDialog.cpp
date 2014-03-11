@@ -3768,3 +3768,78 @@ void options::SetConfigPtr(Config* p)
 	m_pConfig = p;
 }
 
+void options::OnBaudrateChoice(wxCommandEvent& event)
+{
+	OnConnValChange(event);
+}
+
+void options::OnProtocolChoice(wxCommandEvent& event)
+{
+	OnConnValChange(event);
+}
+
+void options::OnCrcCheck(wxCommandEvent& event)
+{
+	OnValChange(event);
+}
+
+void options::OnCbOutput(wxCommandEvent& event)
+{
+	OnConnValChange(event);
+}
+
+size_t options::get_pageDisplay() const
+{
+	return m_pageDisplay;
+}
+
+size_t options::get_pageConnections() const
+{
+	return m_pageConnections;
+}
+
+size_t options::get_pageCharts() const
+{
+	return m_pageCharts;
+}
+
+size_t options::get_pageShips() const
+{
+	return m_pageShips;
+}
+
+size_t options::get_pageUI() const
+{
+	return m_pageUI;
+}
+
+size_t options::get_pagePlugins() const
+{
+	return m_pagePlugins;
+}
+
+void options::set_last_window_pos(const wxPoint& pos)
+{
+	lastWindowPos = pos;
+}
+
+int options::get_lastPage() const
+{
+	return lastPage;
+}
+
+const wxPoint& options::get_lastWindowPos() const
+{
+	return lastWindowPos;
+}
+
+const wxSize& options::get_lastWindowSize() const
+{
+	return lastWindowSize;
+}
+
+void options::set_page_selection(int page)
+{
+	m_pListbook->SetSelection(page);
+}
+

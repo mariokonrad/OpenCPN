@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef _OPTIONS_H_
-#define _OPTIONS_H_
+#ifndef __OPTIONS__H__
+#define __OPTIONS__H__
 
 #include <wx/listbook.h>
 #include <wx/dirctrl.h>
@@ -98,6 +98,23 @@ public:
 	ChartDirectories* GetWorkDirListPtr(); // FIXME
 	void UpdateDisplayedChartDirList(const ChartDirectories& p);
 	void SetConfigPtr(Config* p);
+
+	size_t get_pageDisplay() const;
+	size_t get_pageConnections() const;
+	size_t get_pageCharts() const;
+	size_t get_pageShips() const;
+	size_t get_pageUI() const;
+	size_t get_pagePlugins() const;
+
+	void set_last_window_pos(const wxPoint&);
+
+	int get_lastPage() const;
+	const wxPoint& get_lastWindowPos() const;
+	const wxSize& get_lastWindowSize() const;
+
+	void set_page_selection(int);
+
+private:
 	void OnDebugcheckbox1Click(wxCommandEvent& event);
 	void OnDirctrlSelChanged(wxTreeEvent& event);
 	void OnButtonaddClick(wxCommandEvent& event);
@@ -150,7 +167,7 @@ public:
 	chart::ChartGroupArray* m_pGroupArray;
 	int m_groups_changed;
 
-	//    For General Options
+	// For General Options
 	wxCheckBox* pDebugShowStat;
 	wxCheckBox* pPrintShowIcon;
 	wxCheckBox* pCDOOutlines;
@@ -176,7 +193,7 @@ public:
 
 	int k_tides;
 
-	//    For GPS Page
+	// For GPS Page
 	wxListCtrl* m_lcSources;
 	wxButton* m_buttonAdd;
 	wxButton* m_buttonRemove;
@@ -236,25 +253,13 @@ public:
 	void OnTypeSerialSelected(wxCommandEvent& event);
 	void OnTypeNetSelected(wxCommandEvent& event);
 	void OnNetProtocolSelected(wxCommandEvent& event);
-	void OnBaudrateChoice(wxCommandEvent& event)
-	{
-		OnConnValChange(event);
-	}
-	void OnProtocolChoice(wxCommandEvent& event)
-	{
-		OnConnValChange(event);
-	}
-	void OnCrcCheck(wxCommandEvent& event)
-	{
-		OnValChange(event);
-	}
+	void OnBaudrateChoice(wxCommandEvent& event);
+	void OnProtocolChoice(wxCommandEvent& event);
+	void OnCrcCheck(wxCommandEvent& event);
 	void OnRbAcceptInput(wxCommandEvent& event);
 	void OnRbIgnoreInput(wxCommandEvent& event);
 	void OnBtnIStcs(wxCommandEvent& event);
-	void OnCbOutput(wxCommandEvent& event)
-	{
-		OnConnValChange(event);
-	}
+	void OnCbOutput(wxCommandEvent& event);
 	void OnRbOutput(wxCommandEvent& event);
 	void OnBtnOStcs(wxCommandEvent& event);
 	void OnConnValChange(wxCommandEvent& event);
@@ -265,7 +270,7 @@ public:
 	bool connectionsaved;
 	bool m_connection_enabled;
 
-	//    For "S57" page
+	// For "S57" page
 	wxFlexGridSizer* vectorPanel;
 	wxScrolledWindow* ps57Ctl;
 	wxCheckListBox* ps57CtlListBox;
@@ -292,7 +297,7 @@ public:
 	wxCheckBox* pSEnableCM93Offset;
 	int k_vectorcharts;
 
-	//    For "Charts" page
+	// For "Charts" page
 	wxStaticBoxSizer* activeSizer;
 	wxBoxSizer* chartPanel;
 	wxTextCtrl* pSelCtl;
@@ -302,7 +307,7 @@ public:
 	wxCheckBox* pScanCheckBox;
 	int k_charts;
 
-	//    For "AIS" Page
+	// For "AIS" Page
 	wxCheckBox* m_pCheck_CPA_Max;
 	wxTextCtrl* m_pText_CPA_Max;
 	wxCheckBox* m_pCheck_CPA_Warn;
@@ -333,7 +338,7 @@ public:
 	wxTextCtrl* m_pText_Show_Target_Name_Scale;
 	wxCheckBox* m_pCheck_Wpl_Aprs;
 	wxCheckBox* m_pCheck_ShowAllCPA;
-	//    For Ship page
+	// For Ship page
 	wxFlexGridSizer* realSizes;
 	wxTextCtrl* m_pOSLength;
 	wxTextCtrl* m_pOSWidth;
@@ -345,17 +350,17 @@ public:
 	wxBoxSizer* ownShip;
 	wxTextCtrl* m_pText_ACRadius;
 
-	//    For Fonts page
+	// For Fonts page
 	wxBoxSizer* m_itemBoxSizerFontPanel;
 	wxChoice* m_itemFontElementListBox;
 	wxChoice* m_itemStyleListBox;
 	wxChoice* m_itemLangListBox;
 	bool m_bVisitLang;
 
-	//    For "AIS Options"
+	// For "AIS Options"
 	wxComboBox* m_itemAISListBox;
 
-	//    For "PlugIns" Panel
+	// For "PlugIns" Panel
 	PluginListPanel* m_pPlugInCtrl;
 	int k_plugins;
 

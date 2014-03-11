@@ -2055,8 +2055,8 @@ int MainFrame::DoOptionsDialog()
 #endif
 
 	if (lastPage >= 0)
-		g_options->m_pListbook->SetSelection(lastPage);
-	g_options->lastWindowPos = lastWindowPos;
+		g_options->set_page_selection(lastPage);
+	g_options->set_last_window_pos(lastWindowPos);
 	if (lastWindowPos != wxPoint(0, 0)) {
 		g_options->Move(lastWindowPos);
 		g_options->SetSize(lastWindowSize);
@@ -2072,9 +2072,9 @@ int MainFrame::DoOptionsDialog()
 	if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->EnableTooltips();
 
-	lastPage = g_options->lastPage;
-	lastWindowPos = g_options->lastWindowPos;
-	lastWindowSize = g_options->lastWindowSize;
+	lastPage = g_options->get_lastPage();
+	lastWindowPos = g_options->get_lastWindowPos();
+	lastWindowSize = g_options->get_lastWindowSize();
 
 	if (b_sub) {
 		SurfaceToolbar();

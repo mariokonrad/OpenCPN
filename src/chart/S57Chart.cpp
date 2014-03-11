@@ -3757,7 +3757,9 @@ int s57chart::BuildSENCFile(const wxString& FullPath000, const wxString& SENCFil
 	last_applied_update
 		= ValidateAndCountUpdates(file000, SENCfile.GetPath(), LastUpdateDate, true);
 
-	wxLogMessage(wxString::Format(_T("ENC update number is %3d"), last_applied_update));
+	if (last_applied_update > 0) {
+		wxLogMessage(wxString::Format(_T("ENC update number is %3d"), last_applied_update));
+	}
 
 	fprintf(fps57, "UPDT=%d\n", last_applied_update);
 
@@ -3927,10 +3929,6 @@ abort_point:
 		} else
 			ret_code = BUILD_SENC_OK;
 	}
-
-	if (bbad_update)
-		OCPNMessageBox(NULL, _T("Errors encountered processing ENC update file(s).\nENC features may be incomplete or inaccurate."),
-					   _T("OpenCPN Create SENC"), wxOK | wxICON_EXCLAMATION);
 
 	return ret_code;
 }
@@ -4195,12 +4193,12 @@ int s57chart::BuildRAZFromSENCFile(const wxString& FullPath)
 
 					// Get first connected node
 					int inode = *index_run++;
-					if ((inode >= 0)) {
+					if (inode) {
 						if (m_vc_hash.find(inode) == m_vc_hash.end()) {
 							// Must be a bad index in the SENC file
 							// Stuff a recognizable flag to indicate invalidity
 							index_run--;
-							*index_run = -1;
+							*index_run = 0;
 							index_run++;
 						}
 					}
@@ -4210,12 +4208,12 @@ int s57chart::BuildRAZFromSENCFile(const wxString& FullPath)
 
 					//  Get last connected node
 					int jnode = *index_run++;
-					if ((jnode >= 0)) {
+					if (jnode) {
 						if (m_vc_hash.find(jnode) == m_vc_hash.end()) {
 							// Must be a bad index in the SENC file
 							// Stuff a recognizable flag to indicate invalidity
 							index_run--;
-							*index_run = -2;
+							*index_run = 0;
 							index_run++;
 						}
 					}

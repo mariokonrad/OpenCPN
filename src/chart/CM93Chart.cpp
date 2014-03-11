@@ -1552,10 +1552,10 @@ chart::geometry::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileO
 
 				ip--; // skip the last point in each segment
 
-				ret_ptr->pvector_index[iseg * 3 + 0] = -1; // first connected node
+				ret_ptr->pvector_index[iseg * 3 + 0] = 0; // first connected node
 				ret_ptr->pvector_index[iseg * 3 + 1]
 					= pgd->index + m_current_cell_vearray_offset; // edge index
-				ret_ptr->pvector_index[iseg * 3 + 2] = -2; // last connected node
+				ret_ptr->pvector_index[iseg * 3 + 2] = 0; // last connected node
 
 				if ((cur_end_point.x == start_point.x) && (cur_end_point.y == start_point.y)) {
 					// done with a ring
@@ -1581,7 +1581,7 @@ chart::geometry::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileO
 					n_prev_vertex_index = ip;
 					ncontours++;
 				}
-					iseg++;
+				iseg++;
 			}
 
 			ret_ptr->n_max_edge_points = n_max_points;
@@ -1680,10 +1680,10 @@ chart::geometry::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileO
 					}
 				}
 
-				ret_ptr->pvector_index[iseg * 3 + 0] = -1; // first connected node
+				ret_ptr->pvector_index[iseg * 3 + 0] = 0; // first connected node
 				ret_ptr->pvector_index[iseg * 3 + 1]
 					= pgd->index + m_current_cell_vearray_offset; // edge index
-				ret_ptr->pvector_index[iseg * 3 + 2] = -2; // last connected node
+				ret_ptr->pvector_index[iseg * 3 + 2] = 0; // last connected node
 
 			}
 
@@ -1741,8 +1741,7 @@ chart::geometry::ExtendedGeometry* cm93chart::BuildGeom(Object* pobject, wxFileO
 		}
 
 		case 16:
-			break; // this is the case of objects with children
-		// the parent has no geometry.....
+			break; // this is the case of objects with children the parent has no geometry.....
 
 		default: {
 			wxPrintf(_T ( "Unexpected geomtype %d for Feature %d\n" ), geomtype, iobject);

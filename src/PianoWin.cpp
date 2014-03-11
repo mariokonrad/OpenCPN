@@ -135,23 +135,29 @@ void PianoWin::OnPaint(wxPaintEvent&)
 					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
 						dc.SetBrush(m_svBrush);
 				}
-			} else if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_CM93) {
-				dc.SetBrush(m_cBrush);
-				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
-					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
-						dc.SetBrush(m_scBrush);
-				}
-			} else if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_CM93COMP) {
-				dc.SetBrush(m_cBrush);
-				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
-					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
-						dc.SetBrush(m_scBrush);
-				}
 			} else {
 				dc.SetBrush(m_tBrush);
+
+				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
+					// chart is in the active list
+					if (m_active_index_array.at(ino) == key_db_index)
+						dc.SetBrush(m_slBrush);
+				}
+			}
+
+			if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_CM93) {
+				dc.SetBrush(m_cBrush);
 				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
 					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
-						dc.SetBrush(m_slBrush);
+						dc.SetBrush(m_scBrush);
+				}
+			}
+
+			if (ChartData->GetDBChartType(m_key_array.at(i)) == chart::CHART_TYPE_CM93COMP) {
+				dc.SetBrush(m_cBrush);
+				for (unsigned int ino = 0; ino < m_active_index_array.size(); ino++) {
+					if (m_active_index_array.at(ino) == key_db_index) // chart is in the active list
+						dc.SetBrush(m_scBrush);
 				}
 			}
 

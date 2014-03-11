@@ -424,7 +424,8 @@ public:
 class VE_Element
 {
 public:
-	VE_Element(int index, int count, double* points = NULL, int max_priority = -99)
+	VE_Element(unsigned int index, unsigned int count, double* points = NULL,
+			   int max_priority = -99)
 		: index(index)
 		, nCount(count)
 		, pPoints(points)
@@ -439,8 +440,8 @@ public:
 	{}
 
 public:
-	int index;
-	int nCount;
+	unsigned int index;
+	unsigned int nCount;
 	double* pPoints;
 	int max_priority;
 };

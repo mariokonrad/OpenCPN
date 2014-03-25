@@ -1997,7 +1997,12 @@ void MainFrame::JumpToPosition(const geo::Position& pos, double scale)
 	chart_canvas->set_follow(false);
 	DoChartUpdate();
 
-	chart_canvas->SetViewPoint(pos, scale, 0, chart_canvas->GetVPRotation());
+	if (!chart_canvas->GetQuiltMode()) {
+		chart_canvas->SetViewPoint(pos, scale, Current_Ch->GetChartSkew() * M_PI / 180.0,
+								   chart_canvas->GetVPRotation());
+	} else {
+		chart_canvas->SetViewPoint(pos, scale, 0, chart_canvas->GetVPRotation());
+	}
 	chart_canvas->ReloadVP();
 
 	SetToolbarItemState(ID_FOLLOW, false);

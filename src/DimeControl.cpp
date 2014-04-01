@@ -103,7 +103,7 @@ void DimeControl(
 			((wxStaticText*)win)->SetForegroundColour(uitext);
 
 		else if (win->IsKindOf(CLASSINFO(wxBitmapComboBox))) {
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 0) && !wxCHECK_VERSION(3, 0, 0)
 			if (((wxBitmapComboBox*)win)->GetTextCtrl())
 				((wxBitmapComboBox*)win)->GetTextCtrl()->SetBackgroundColour(col);
 #else

@@ -3717,8 +3717,10 @@ void MainFrame::setup_viewpoint()
 
 	double best_scale = GetBestVPScale(Current_Ch);
 
-	chart_canvas->SetViewPoint(zpos, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0,
-							   chart_canvas->GetVPRotation());
+	if (Current_Ch) {
+		chart_canvas->SetViewPoint(zpos, best_scale, Current_Ch->GetChartSkew() * M_PI / 180.0,
+								   chart_canvas->GetVPRotation());
+	}
 	SetChartUpdatePeriod(chart_canvas->GetVP());
 	UpdateGPSCompassStatusBox(); // Pick up the rotation
 }

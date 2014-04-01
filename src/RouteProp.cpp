@@ -734,6 +734,9 @@ void RouteProp::SetDialogTitle(const wxString& title)
 
 void RouteProp::SetRouteAndUpdate(Route* pR)
 {
+	if (NULL == pR)
+		return;
+
 	// Fetch any config file values
 
 	m_tz_selection = 1;
@@ -1420,6 +1423,8 @@ void RouteProp::OnRoutepropCancelClick(wxCommandEvent& event)
 
 	if (global::OCPN::get().routeman().RouteExists(m_pRoute))
 		m_pRoute->ClearHighlights();
+
+	m_bStartNow = false;
 
 	Hide();
 	cc1->Refresh(false);

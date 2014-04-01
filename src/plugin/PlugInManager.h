@@ -85,8 +85,8 @@ struct BlackListedPlugin
 };
 
 const BlackListedPlugin PluginBlacklist[] = {
-	{ _T("aisradar_pi"), 0, 95, false, true },
-	{ _T("radar_pi"),    0, 95, false, true }, // GCC alias for aisradar_pi
+	{ _T("aisradar_pi"), 0, 95, true, true },
+	{ _T("radar_pi"),    0, 95, true, true }, // GCC alias for aisradar_pi
 };
 
 

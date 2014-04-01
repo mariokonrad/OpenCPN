@@ -801,8 +801,10 @@ void NavObjectCollection::InsertRouteA(Route* pTentRoute)
 			// Now also change guids for the routepoints
 			for (RoutePointList::iterator node = pTentRoute->routepoints().begin();
 				 node != pTentRoute->routepoints().end(); ++node) {
-				(*node)->set_guid(wxString(util::uuid().c_str(), wxConvUTF8));
-				// FIXME: !!!! the shared waypoint gets part of both the routes -> not goood at all
+				RoutePoint* route_point = *node;
+				if (route_point && route_point->m_bIsolatedMark) {
+					route_point->set_guid(wxString(util::uuid().c_str(), wxConvUTF8));
+				}
 			}
 		}
 

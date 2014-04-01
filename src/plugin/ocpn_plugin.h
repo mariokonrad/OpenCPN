@@ -68,6 +68,7 @@ class wxFileConfig;
 class wxNotebook;
 class wxFont;
 class wxAuiManager;
+class wxScrolledWindow;
 namespace geo { class Position; }
 
 //---------------------------------------------------------------------------------------------------------

@@ -474,18 +474,27 @@ bool PlugInManager::CheckBlacklistedPlugin(opencpn_plugin* plugin)
 				&& PluginBlacklist[i].version_major == major
 				&& PluginBlacklist[i].version_minor == minor)) {
 			wxString msg;
+			wxString msg1;
 			if (PluginBlacklist[i].hard) {
 				msg = wxString::Format(
 					_("PlugIn %s (%s), version %i.%i was detected.\n This version is known to be unstable and will not be loaded.\n Please update this PlugIn at the opencpn.org website."),
 					PluginBlacklist[i].name.c_str(), plugin->GetCommonName().c_str(), major, minor),
 				_("Blacklisted plugin detected...");
+				msg1 = wxString::Format(_T("    PlugIn %s (%s), version %i.%i was detected. Hard ")
+										_T("blacklisted. Not loaded."),
+										PluginBlacklist[i].name.c_str(),
+										plugin->GetCommonName().c_str(), major, minor);
 			} else {
 				msg = wxString::Format(
 					_("PlugIn %s (%s), version %i.%i was detected.\n This version is known to be unstable.\n Please update this PlugIn at the opencpn.org website."),
 					PluginBlacklist[i].name.c_str(), plugin->GetCommonName().c_str(), major, minor),
 				_("Blacklisted plugin detected...");
+				msg1 = wxString::Format(
+					_T("    PlugIn %s (%s), version %i.%i was detected. Soft blacklisted. Loaded."),
+					PluginBlacklist[i].name.c_str(), plugin->GetCommonName().c_str(), major, minor);
 			}
 
+			wxLogMessage(msg1);
 			OCPNMessageBox(NULL, msg, wxString(_("OpenCPN Info")), wxICON_INFORMATION | wxOK, 5);
 			return PluginBlacklist[i].hard;
 		}
@@ -553,6 +562,10 @@ PlugInContainer* PlugInManager::LoadPlugIn(wxString plugin_file)
 	int ver = (api_major * 100) + api_minor;
 	pic->m_api_version = ver;
 
+	int pi_major = plug_in->GetPlugInVersionMajor();
+	int pi_minor = plug_in->GetPlugInVersionMinor();
+	int pi_ver = (pi_major * 100) + pi_minor;
+
 	if (CheckBlacklistedPlugin(plug_in)) {
 		delete plugin;
 		delete pic;
@@ -584,12 +597,23 @@ PlugInContainer* PlugInManager::LoadPlugIn(wxString plugin_file)
 			pic->m_pplugin = dynamic_cast<opencpn_plugin_110*>(plug_in);
 			break;
 
+		case 111:
+			pic->m_pplugin = dynamic_cast<opencpn_plugin_111*>(plug_in);
+			break;
+
 		default:
 			break;
 	}
 
 	if (pic->m_pplugin) {
-		wxLogMessage(_T("  ") + plugin_file + wxString::Format(_T(" Version detected: %d"), ver));
+		wxString msg = _T("  ");
+		msg += plugin_file;
+		wxString msg1;
+		msg1.Printf(_T("\n              API Version detected: %d"), ver);
+		msg += msg1;
+		msg1.Printf(_T("\n              PlugIn Version detected: %d"), pi_ver);
+		msg += msg1;
+		wxLogMessage(msg);
 	} else {
 		wxLogMessage(_T("    ") + plugin_file + _T(" cannot be loaded"));
 	}

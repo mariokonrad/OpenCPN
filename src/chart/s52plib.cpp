@@ -2555,8 +2555,11 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 				unsigned int enode = *index_run_x;
 				if (enode) {
 					VE_Element* pedge = (*ve_hash)[enode];
-					if (pedge->nCount > nls_max)
-						nls_max = pedge->nCount;
+					if (pedge) {
+						if (pedge->nCount > nls_max) {
+							nls_max = pedge->nCount;
+						}
+					}
 				}
 				index_run_x += 2;
 			}
@@ -2591,19 +2594,23 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 			unsigned int enode = *index_run++;
 			VE_Element* pedge = (*ve_hash)[enode];
 
-			//  Here we decide to draw or not based on the highest priority seen for this segment
-			//  That is, if this segment is going to be drawn at a higher priority later, then
-			// "continue", and don't draw it here.
-			if (pedge->max_priority != priority_current)
-				continue;
+			int nls = 0;
 
-			int nls = pedge->nCount;
+			if (pedge) {
+				// Here we decide to draw or not based on the highest priority seen for this segment
+				// That is, if this segment is going to be drawn at a higher priority later, then
+				// "continue", and don't draw it here.
+				if (pedge->max_priority != priority_current)
+					continue;
 
-			ppt = pedge->pPoints;
-			for (int ip = 0; ip < nls; ip++) {
-				easting = *ppt++;
-				northing = *ppt++;
-				GetPointPixSingle(rzRules, (float)northing, (float)easting, &ptp[ip + 1], vp);
+				nls = pedge->nCount;
+
+				ppt = pedge->pPoints;
+				for (int ip = 0; ip < nls; ip++) {
+					easting = *ppt++;
+					northing = *ppt++;
+					GetPointPixSingle(rzRules, (float)northing, (float)easting, &ptp[ip + 1], vp);
+				}
 			}
 
 			//  Get last connected node
@@ -2821,9 +2828,9 @@ int s52plib::RenderLC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 
 	int isym_len = rules->razRule->pos.line.bnbox_w.SYHL;
 	float sym_len = isym_len * canvas_pix_per_mm / 100;
-	float sym_factor = 1.0; /// 1.50;                        // gives nicer effect
+	float sym_factor = 1.0;
 
-	//      Create a color for drawing adjustments outside of HPGL renderer
+	// Create a color for drawing adjustments outside of HPGL renderer
 	char* tcolptr = rules->razRule->colRef.LCRF;
 	S52color* c = getColor(tcolptr + 1); // +1 skips "n" in HPGL SPn format
 	int w = 1; // arbitrary width
@@ -2855,12 +2862,14 @@ int s52plib::RenderLC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 			int* index_run_x = rzRules->obj->m_lsindex_array;
 			for (int imseg = 0; imseg < rzRules->obj->m_n_lsindex; imseg++) {
 				index_run_x++; // Skip cNode
-				//  Get the edge
+				// Get the edge
 				unsigned int enode = *index_run_x;
 				if (enode) {
 					VE_Element* pedge = (*ve_hash)[enode];
-					if (pedge->nCount > nls_max)
-						nls_max = pedge->nCount;
+					if (pedge) {
+						if (pedge->nCount > nls_max)
+							nls_max = pedge->nCount;
+					}
 				}
 				index_run_x += 2;
 			}
@@ -2896,19 +2905,22 @@ int s52plib::RenderLC(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 			unsigned int enode = *index_run++;
 			VE_Element* pedge = (*ve_hash)[enode];
 
-			//  Here we decide to draw or not based on the highest priority seen for this segment
-			//  That is, if this segment is going to be drawn at a higher priority later, then don't
-			// draw it here.
-			if (pedge->max_priority != priority_current)
-				continue;
+			int nls = 0;
+			if (pedge) {
+				// Here we decide to draw or not based on the highest priority seen for this segment
+				// That is, if this segment is going to be drawn at a higher priority later, then
+				// don't draw it here.
+				if (pedge->max_priority != priority_current)
+					continue;
 
-			int nls = pedge->nCount;
+				nls = pedge->nCount;
 
-			ppt = pedge->pPoints;
-			for (int ip = 0; ip < nls; ip++) {
-				easting = *ppt++;
-				northing = *ppt++;
-				GetPointPixSingle(rzRules, (float)northing, (float)easting, &ptp[ip + 1], vp);
+				ppt = pedge->pPoints;
+				for (int ip = 0; ip < nls; ip++) {
+					easting = *ppt++;
+					northing = *ppt++;
+					GetPointPixSingle(rzRules, (float)northing, (float)easting, &ptp[ip + 1], vp);
+				}
 			}
 
 			//  Get last connected node
@@ -4060,16 +4072,20 @@ int s52plib::PrioritizeLineFeature(ObjRazRules* rzRules, int npriority)
 		int* index_run = rzRules->obj->m_lsindex_array;
 
 		for (int iseg = 0; iseg < rzRules->obj->m_n_lsindex; iseg++) {
-			//  Get first connected node
+			// Get first connected node
 			index_run++;
 
-			//  Get the edge
+			// Get the edge
 			int enode = *index_run++;
 
 			VE_Element* pedge = (*edge_hash)[enode];
-			pedge->max_priority = npriority;
 
-			index_run++; // Get last connected node
+			// Set priority
+			if (pedge)
+				pedge->max_priority = npriority;
+
+			// Get last connected node
+			index_run++;
 		}
 	}
 

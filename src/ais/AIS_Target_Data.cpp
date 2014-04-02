@@ -182,7 +182,7 @@ wxString AIS_Target_Data::BuildQueryResult(void)
 	wxString IMOstr, MMSIstr, ClassStr;
 
 	html << tableStart << _T("<tr><td nowrap colspan=2>");
-	if ((Class != AIS_BASE) && (Class != AIS_SART)) {
+	if (Class != AIS_SART) {
 		if (b_nameValid) {
 			html << _T("<font size=+2><i><b>") << GetFullName();
 			html << _T("</b></i></font>&nbsp;&nbsp;<b>");
